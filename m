@@ -2,214 +2,360 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E8D8EC4332F
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 03:06:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27A70C4332F
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 03:11:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229782AbiJUDGp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Oct 2022 23:06:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33352 "EHLO
+        id S229802AbiJUDLs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Oct 2022 23:11:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229808AbiJUDGl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2022 23:06:41 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71F06170456
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 20:06:37 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id ud5so466707ejc.4
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 20:06:37 -0700 (PDT)
+        with ESMTP id S229670AbiJUDLa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2022 23:11:30 -0400
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 790E9120ED3
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 20:11:28 -0700 (PDT)
+Received: by mail-io1-xd2d.google.com with SMTP id y80so1278049iof.3
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 20:11:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RcGIjlKkvU8dPIjOOzv5U3Vuriqtlb0zz0jV58Scfes=;
-        b=SSz9e6ju30rYJIC5KDdKw55e8EUitEaVVOfYLS2P0uLxbkzDC4nS+HkT7qEdKNj+bG
-         TGtb4KGGJUn6xgoOkZbOmLNPOsjNkmWFbexVBd1hfSz5BBgFe+2iB6vPf6iDyAODy8xX
-         BZIAcx5YFhBqlI/4hZuJKL62vq8LCdyFPaVImMIuecvZjmJGm74sW55/zskzQJbKg8Mp
-         p47CRx1Qx/2wQqDScpbG34+u+sP9zXUMIcV8TeaiFNK6/hjts04uuxr0MOXnHH608XZi
-         BTZgNeivCVToVa5sGI2/314KHbjRkSodz61yQMmkOzfZAAlpjqtgMt7/VrcO+H8oANcD
-         GsdA==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=qFZz7RRfX406N+lMw1r4LEdeljGhFpY+TsTMUATnl8E=;
+        b=SvwYkPuP48lQu0MIYaoyAz47zAQF+DfOHH17UAxpXQOUMTGL5aHdic4X4b5TCcG3m3
+         ByJkNOO/5TcFHajK7SbiZ0c0JUrCPeHYwFlt0oueFIgoGewau9ZShYIyYQV8Z6CErL3y
+         1wteJ5vkRNvKYKV/XldxIVzf2tCET/w5bCx5xGdeUR978dcIuWs+9wVk6+U/zSBIR44Y
+         vR+vP4bu5SYbew4DKfMJnomUtshu40ZI6Ted2EkWuOwT2MVsnGviAPX2Vwxi/2NQiaTI
+         yJ1l2ECtz/3r6lDDZ8JJI0E7WNZUNpT+JYQnJJROXdkoobuUiJQMvJUuSX/waCGXtC6w
+         ulSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RcGIjlKkvU8dPIjOOzv5U3Vuriqtlb0zz0jV58Scfes=;
-        b=rWb6oQj3zPgn1ZM5wHLr6xYu0lixPGlFrD9vqoAC+xNYO12JdmkaR7w4dNuNLulOMh
-         WPF5LKEOVpCNKpAJwtHdKFVKLAkfQtBTbTonnxm8e0opz6hFu+dTXJ7K8M7Q13Gs+U2F
-         nxuhCbhiQl2ysFgLV+v/XrcX0M7cPAC7TGf9X6N4wDRejTIepBiLMrlx8xA1KDi8xlJV
-         Dyf1Iomw4xM4W9Uz1W4LMXykhdmRaYt+0sMubB3Ac4khvFVHtMfjNSqtsJu9gH3WwlcK
-         Gy8DcNacUtCVmRTR4j7U3goi0u0flZHeEkdkmFwYDO+z1WbG7SMb49dCA6fuAHRDX2oy
-         T4Ng==
-X-Gm-Message-State: ACrzQf3qgws4R8sDVyj7DTaqJLBU3QVh/sN/XzikANpLt9c2KElSMULk
-        OyEslupHBpQFH7N1apiviia3RqgsuwrgVw==
-X-Google-Smtp-Source: AMsMyM6HWiNZ4i7LFgcZ9QTIfHGBILR3tdK9efE4fy+Idnm94wp1qJbpMMEiX2jSq3Yoym00Hipegw==
-X-Received: by 2002:a17:907:d9e:b0:78e:2ff7:72f4 with SMTP id go30-20020a1709070d9e00b0078e2ff772f4mr13120046ejc.608.1666321595633;
-        Thu, 20 Oct 2022 20:06:35 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id p7-20020a170906784700b0078d9e26db54sm11109425ejm.88.2022.10.20.20.06.34
+        bh=qFZz7RRfX406N+lMw1r4LEdeljGhFpY+TsTMUATnl8E=;
+        b=Eqf9z18uVq4wmQWC+UvAnSUv6KPVjtVV8hiYEwmELkM+VxaGkc0X2LjXtL0hgQMfi0
+         UlH4Xn5Y9kb16637+FbAV0/THKDHqdcsIlzvrp1NrWIPIAZyzzKjOwBt6mtvMDb4/nr9
+         PHD+SXT5RiDBJNkKOjyS4KgKgEbRn1jfuM+QU24T5CrKipoXnYKfRO5TzGuAoaC3CvdQ
+         qT1144vVVKcKi1q30KUd074EGHbn+bwd4NjMknMs6j6QdpcwUO/qVk0uKl419+CGcLOV
+         l+zBqsF6er6WyHnM6DzWKbBHm9xzEUw6WcrYf07Jt8MMYfV3o1LRwdk/fWmQObDrZJZN
+         5HRA==
+X-Gm-Message-State: ACrzQf3ezceeKLGJr2uDZIz9+/ekJynTfeqKaNt8weP0oIm7zYJJk46v
+        BmMt0ifQqbdvZDzLgTM/H5YaWNBsZsMsW2ng
+X-Google-Smtp-Source: AMsMyM4KqudZRaQ/R9I62CpMd9sdLubmmlQy6XJRtnRPEXQgnTxWa6E7uYGs9gp+k3hSd/B0IfibIA==
+X-Received: by 2002:a6b:3fd5:0:b0:6bc:76e8:b3c0 with SMTP id m204-20020a6b3fd5000000b006bc76e8b3c0mr11925218ioa.132.1666321887480;
+        Thu, 20 Oct 2022 20:11:27 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id cx4-20020a056638490400b00363cce75bffsm3755656jab.151.2022.10.20.20.11.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Oct 2022 20:06:34 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oliMj-006kwb-2r;
-        Fri, 21 Oct 2022 05:06:33 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     git@vger.kernel.org, emilyshaffer@google.com,
-        phillip.wood123@gmail.com
-Subject: Re: [PATCH v3 2/6] run-command: add hide_output to
- run_processes_parallel_opts
-Date:   Fri, 21 Oct 2022 04:54:27 +0200
-References: <https://lore.kernel.org/git/20221011232604.839941-1-calvinwan@google.com/>
- <20221020232532.1128326-3-calvinwan@google.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <20221020232532.1128326-3-calvinwan@google.com>
-Message-ID: <221021.86lep9g9ja.gmgdl@evledraar.gmail.com>
+        Thu, 20 Oct 2022 20:11:27 -0700 (PDT)
+Date:   Thu, 20 Oct 2022 23:11:25 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Cc:     jacob@initialcommit.io, peff@peff.net, gitster@pobox.com,
+        avarab@gmail.com
+Subject: [PATCH v2 0/6] shortlog: introduce `--group=<format>`
+Message-ID: <cover.1666320509.git.me@ttaylorr.com>
+References: <cover.1665448437.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cover.1665448437.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Here is a reroll of my series to implement arbitrary pretty formats as
+shortlog `--group`'s, based on a suggestion from Jacob Stopak.
 
-On Thu, Oct 20 2022, Calvin Wan wrote:
+The changes are somewhat minimal, including a rebase onto the current
+tip of master. Less minimal, however, is dropping the reimplementation
+of `--group=trailer:<key>` in terms of the format group, since this
+ended up being more trouble than it was worth.
 
-> Output from child processes and callbacks may not be necessary to
-> print out for every invoker of run_processes_parallel. Add
-> hide_output as an option to not print said output.
->
-> Signed-off-by: Calvin Wan <calvinwan@google.com>
-> ---
->  run-command.c               | 8 +++++---
->  run-command.h               | 9 +++++++++
->  t/helper/test-run-command.c | 6 ++++++
->  t/t0061-run-command.sh      | 6 ++++++
->  4 files changed, 26 insertions(+), 3 deletions(-)
->
-> diff --git a/run-command.c b/run-command.c
-> index 03787bc7f5..3aa28ad6dc 100644
-> --- a/run-command.c
-> +++ b/run-command.c
-> @@ -1603,7 +1603,8 @@ static void pp_cleanup(struct parallel_processes *pp,
->  	 * When get_next_task added messages to the buffer in its last
->  	 * iteration, the buffered output is non empty.
->  	 */
-> -	strbuf_write(&pp->buffered_output, stderr);
-> +	if (!opts->hide_output)
-> +		strbuf_write(&pp->buffered_output, stderr);
->  	strbuf_release(&pp->buffered_output);
->  
->  	sigchain_pop_common();
-> @@ -1754,7 +1755,7 @@ static int pp_collect_finished(struct parallel_processes *pp,
->  			pp->pfd[i].fd = -1;
->  		child_process_init(&pp->children[i].process);
->  
-> -		if (opts->ungroup) {
-> +		if (opts->ungroup || opts->hide_output) {
->  			; /* no strbuf_*() work to do here */
->  		} else if (i != pp->output_owner) {
->  			strbuf_addbuf(&pp->buffered_output, &pp->children[i].err);
-> @@ -1826,7 +1827,8 @@ void run_processes_parallel(const struct run_process_parallel_opts *opts)
->  				pp.children[i].state = GIT_CP_WAIT_CLEANUP;
->  		} else {
->  			pp_buffer_stderr(&pp, opts, output_timeout);
-> -			pp_output(&pp);
-> +			if (!opts->hide_output)
-> +				pp_output(&pp);
->  		}
->  		code = pp_collect_finished(&pp, opts);
->  		if (code) {
-> diff --git a/run-command.h b/run-command.h
-> index b4584c3698..4570812c08 100644
-> --- a/run-command.h
-> +++ b/run-command.h
-> @@ -496,6 +496,11 @@ struct run_process_parallel_opts
->  	 */
->  	unsigned int ungroup:1;
->  
-> +	/**
-> +	 * hide_output: see 'hide_output' in run_processes_parallel() below.
-> +	 */
-> +	unsigned int hide_output:1;
-> +
->  	/**
->  	 * get_next_task: See get_next_task_fn() above. This must be
->  	 * specified.
-> @@ -547,6 +552,10 @@ struct run_process_parallel_opts
->   * NULL "struct strbuf *out" parameter, and are responsible for
->   * emitting their own output, including dealing with any race
->   * conditions due to writing in parallel to stdout and stderr.
-> + * 
-> + * If the "hide_output" option is set, any output in the "struct strbuf
-> + * *out" parameter will not be printed by this function. This includes
-> + * output from child processes as well as callbacks.
->   */
->  void run_processes_parallel(const struct run_process_parallel_opts *opts);
->  
-> diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-> index e9b41419a0..1af443db4d 100644
-> --- a/t/helper/test-run-command.c
-> +++ b/t/helper/test-run-command.c
-> @@ -446,6 +446,12 @@ int cmd__run_command(int argc, const char **argv)
->  		opts.ungroup = 1;
->  	}
->  
-> +	if (!strcmp(argv[1], "--hide-output")) {
-> +		argv += 1;
-> +		argc -= 1;
-> +		opts.hide_output = 1;
-> +	}
-> +
->  	if (!strcmp(argv[1], "--pipe-output")) {
->  		argv += 1;
->  		argc -= 1;
-> diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-> index e50e57db89..a0219f6093 100755
-> --- a/t/t0061-run-command.sh
-> +++ b/t/t0061-run-command.sh
-> @@ -180,6 +180,12 @@ test_expect_success 'run_command runs ungrouped in parallel with more tasks than
->  	test_line_count = 4 err
->  '
->  
-> +test_expect_success 'run_command hides output when run in parallel' '
-> +	test-tool run-command --hide-output run-command-parallel 4 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>err &&
-> +	test_must_be_empty out &&
-> +	test_must_be_empty err
-> +'
-> +
->  cat >expect <<-EOF
->  preloaded output of a child
->  asking for a quick stop
+There are also a handful of small tweaks throughout based on feedback
+from Peff.
 
-I may just be missing something, but doesn't "struct child_process"
-already have e.g. "no_stderr", "no_stdout" etc. that we can use?
-I.e. isn't this thing equivalent to running:
+Thanks in advance for your review.
 
-	your-command >/dev/null 2>/dev/null
+Jeff King (1):
+  shortlog: accept `--date`-related options
 
-Which is what the non-parallel API already supports.
+Taylor Blau (5):
+  shortlog: make trailer insertion a noop when appropriate
+  shortlog: extract `--group` fragment for translation
+  shortlog: support arbitrary commit format `--group`s
+  shortlog: implement `--group=author` in terms of `--group=<format>`
+  shortlog: implement `--group=committer` in terms of `--group=<format>`
 
-Now, IIRC if you just set that in the "get_next_task" callback it won't
-work in the parallel API, or you'll block waiting for I/O that'll never
-come or whatever.
+ Documentation/git-shortlog.txt |  8 ++++
+ builtin/log.c                  |  1 +
+ builtin/shortlog.c             | 83 +++++++++++++++++++++++-----------
+ shortlog.h                     |  5 ++
+ t/t4201-shortlog.sh            | 51 +++++++++++++++++++++
+ 5 files changed, 121 insertions(+), 27 deletions(-)
 
-But that'll be because the parallel interface currently only suppors a
-subset of the full "child_process" combination of options, and maybe it
-doesn't grok this.
-
-But if that's the case we should just extend the API to support
-"no_stdout", "no_stderr" etc., no?
-
-I.e. hypothetically the parallel one could support 100% of the "struct
-child_process" combination of options, we just haven't bothered yet.
-
-But I don't see why the parallel API should grow options that we already
-have in "struct child_process", instead we should set them there, and it
-should gradually learn to deal with them.
-
-I think it's also fine to have some basic sanity checks there, e.g. I
-could see how for something like this we don't want to support piping
-only some children to /dev/null but not others, and that it should be
-all or nothing (maybe it makes state management when we loop over them
-easier).
-
-Or again, maybe I'm missing something...
+Range-diff against v1:
+1:  eaec59daa1 < -:  ---------- Documentation: extract date-options.txt
+2:  b587b8ea4a ! 1:  58baccbaa8 shortlog: accept `--date`-related options
+    @@ Metadata
+      ## Commit message ##
+         shortlog: accept `--date`-related options
+     
+    -    Prepare for the future patch which will introduce arbitrary pretty
+    -    formats via the `--group` argument.
+    +    Prepare for a future patch which will introduce arbitrary pretty formats
+    +    via the `--group` argument.
+     
+         To allow additional customizability (for example, to support something
+         like `git shortlog -s --group='%aD' --date='format:%Y-%m' ...` (which
+         groups commits by the datestring 'YYYY-mm' according to author date), we
+         must store off the `--date` parsed from calling `parse_revision_opt()`.
+     
+    +    Note that this also affects custom output `--format` strings in `git
+    +    shortlog`. Though this is a behavior change, this is arguably fixing a
+    +    long-standing bug (ie., that `--format` strings are not affected by
+    +    `--date` specifiers as they should be).
+    +
+         Signed-off-by: Jeff King <peff@peff.net>
+         Signed-off-by: Taylor Blau <me@ttaylorr.com>
+     
+      ## Documentation/git-shortlog.txt ##
+    -@@ Documentation/git-shortlog.txt: options or the revision range, when confusion arises.
+    - :git-shortlog: 1
+    - include::rev-list-options.txt[]
+    +@@ Documentation/git-shortlog.txt: OPTIONS
+      
+    -+include::date-options.txt[]
+    + 	Each pretty-printed commit will be rewrapped before it is shown.
+    + 
+    ++--date=<format>::
+    ++	With a `--group=format:<format>`, show dates formatted
+    ++	according to the given date string. (See the `--date` options
+    ++	in the "COMMIT FORMATTING" section of linkgit:git-log[1].)
+     +
+    - MAPPING AUTHORS
+    - ---------------
+    - 
+    + --group=<type>::
+    + 	Group commits based on `<type>`. If no `--group` option is
+    + 	specified, the default is `author`. `<type>` is one of:
+     
+      ## builtin/shortlog.c ##
+     @@ builtin/shortlog.c: void shortlog_add_commit(struct shortlog *log, struct commit *commit)
+    @@ shortlog.h: struct shortlog {
+      
+      	enum {
+      		SHORTLOG_GROUP_AUTHOR = (1 << 0),
+    +
+    + ## t/t4201-shortlog.sh ##
+    +@@ t/t4201-shortlog.sh: test_expect_success 'pretty format' '
+    + 	test_cmp expect log.predictable
+    + '
+    + 
+    ++test_expect_success 'pretty format (with --date)' '
+    ++	sed "s/SUBJECT/2005-04-07 OBJECT_NAME/" expect.template >expect &&
+    ++	git shortlog --format="%ad %H" --date=short HEAD >log &&
+    ++	fuzz log >log.predictable &&
+    ++	test_cmp expect log.predictable
+    ++'
+    ++
+    + test_expect_success '--abbrev' '
+    + 	sed s/SUBJECT/OBJID/ expect.template >expect &&
+    + 	git shortlog --format="%h" --abbrev=35 HEAD >log &&
+-:  ---------- > 2:  7decccad7c shortlog: make trailer insertion a noop when appropriate
+3:  c3f50465cb = 3:  3665488fc9 shortlog: extract `--group` fragment for translation
+4:  6f38990cc2 ! 4:  4a36c0ca4e shortlog: support arbitrary commit format `--group`s
+    @@ Documentation/git-shortlog.txt: OPTIONS
+         example, if your project uses `Reviewed-by` trailers, you might want
+         to see who has been reviewing with
+         `git shortlog -ns --group=trailer:reviewed-by`.
+    -+ - `<format>`, any string accepted by the `--format` option of 'git log'.
+    -+   (See the "PRETTY FORMATS" section of linkgit:git-log[1].)
+    ++ - `format:<format>`, any string accepted by the `--format` option of
+    ++   'git log'. (See the "PRETTY FORMATS" section of
+    ++   linkgit:git-log[1].)
+      +
+      Note that commits that do not include the trailer will not be counted.
+      Likewise, commits with multiple trailers (e.g., multiple signoffs) may
+    @@ builtin/shortlog.c: static void insert_records_from_trailers(struct shortlog *lo
+     +
+     +		format_commit_message(commit, item->string, &buf, ctx);
+     +
+    -+		if (strset_add(dups, buf.buf))
+    ++		if (!(log->format.nr > 1 || log->trailers.nr) ||
+    ++		    strset_add(dups, buf.buf))
+     +			insert_one_record(log, buf.buf, oneline);
+     +	}
+     +
+    @@ builtin/shortlog.c: static void insert_records_from_trailers(struct shortlog *lo
+      {
+      	struct strbuf ident = STRBUF_INIT;
+     @@ builtin/shortlog.c: void shortlog_add_commit(struct shortlog *log, struct commit *commit)
+    - 	if (log->groups & SHORTLOG_GROUP_TRAILER) {
+    - 		insert_records_from_trailers(log, &dups, commit, &ctx, oneline_str);
+    + 			insert_one_record(log, ident.buf, oneline_str);
+      	}
+    + 	insert_records_from_trailers(log, &dups, commit, &ctx, oneline_str);
+     +	insert_records_from_format(log, &dups, commit, &ctx, oneline_str);
+      
+      	strset_clear(&dups);
+    @@ builtin/shortlog.c: static int parse_group_option(const struct option *opt, cons
+      		log->groups |= SHORTLOG_GROUP_TRAILER;
+      		string_list_append(&log->trailers, field);
+     -	} else
+    -+	} else if (strchrnul(arg, '%')) {
+    ++	} else if (skip_prefix(arg, "format:", &field)) {
+    ++		log->groups |= SHORTLOG_GROUP_FORMAT;
+    ++		string_list_append(&log->format, field);
+    ++	} else if (strchr(arg, '%')) {
+     +		log->groups |= SHORTLOG_GROUP_FORMAT;
+     +		string_list_append(&log->format, arg);
+     +	} else {
+    @@ t/t4201-shortlog.sh: test_expect_success 'shortlog --group=trailer:signed-off-by
+      	test_cmp expect actual
+      '
+      
+    -+test_expect_success 'shortlog --group=<format>' '
+    ++test_expect_success 'shortlog --group=format' '
+    ++	git shortlog -s --date="format:%Y" --group="format:%cN (%cd)" \
+    ++		HEAD >actual &&
+    ++	cat >expect <<-\EOF &&
+    ++	     4	C O Mitter (2005)
+    ++	     1	Sin Nombre (2005)
+    ++	EOF
+    ++	test_cmp expect actual
+    ++'
+    ++
+    ++test_expect_success 'shortlog --group=<format> DWIM' '
+     +	git shortlog -s --date="format:%Y" --group="%cN (%cd)" HEAD >actual &&
+    ++	test_cmp expect actual
+    ++'
+    ++
+    ++test_expect_success 'shortlog multiple --group=format' '
+    ++	git shortlog -s --date="format:%Y" --group="format:%cN (%cd)" \
+    ++		HEAD >actual &&
+     +	cat >expect <<-\EOF &&
+     +	     4	C O Mitter (2005)
+     +	     1	Sin Nombre (2005)
+     +	EOF
+     +	test_cmp expect actual
+     +'
+    ++
+    ++test_expect_success 'shortlog bogus --group' '
+    ++	test_must_fail git shortlog --group=bogus HEAD 2>err &&
+    ++	grep "unknown group type" err
+    ++'
+     +
+      test_expect_success 'trailer idents are split' '
+      	cat >expect <<-\EOF &&
+      	     2	C O Mitter
+    +@@ t/t4201-shortlog.sh: test_expect_success 'shortlog can match multiple groups' '
+    + 	test_cmp expect actual
+    + '
+    + 
+    ++test_expect_success 'shortlog can match multiple format groups' '
+    ++	cat >expect <<-\EOF &&
+    ++	     2	User B <b@example.com>
+    ++	     1	A U Thor <author@example.com>
+    ++	     1	User A <a@example.com>
+    ++	EOF
+    ++	git shortlog -ns \
+    ++		--group="%(trailers:valueonly,key=some-trailer)" \
+    ++		--group="%(trailers:valueonly,key=another-trailer)" \
+    ++		-2 HEAD >actual.raw &&
+    ++	grep -v "^$" actual.raw >actual &&
+    ++	test_cmp expect actual
+    ++'
+    ++
+    + test_expect_success 'set up option selection tests' '
+    + 	git commit --allow-empty -F - <<-\EOF
+    + 	subject
+5:  55a6ef7bc0 ! 5:  f0044682be shortlog: implement `--group=author` in terms of `--group=<format>`
+    @@ builtin/log.c: static void make_cover_letter(struct rev_info *rev, int use_separ
+      	log.in2 = 4;
+      	log.file = rev->diffopt.file;
+      	log.groups = SHORTLOG_GROUP_AUTHOR;
+    -+	shortlog_init_group(&log);
+    ++	shortlog_finish_setup(&log);
+      	for (i = 0; i < nr; i++)
+      		shortlog_add_commit(&log, list[i]);
+      
+    @@ builtin/shortlog.c: void shortlog_init(struct shortlog *log)
+      	log->format.strdup_strings = 1;
+      }
+      
+    -+void shortlog_init_group(struct shortlog *log)
+    ++void shortlog_finish_setup(struct shortlog *log)
+     +{
+    -+	if (!log->groups)
+    -+		log->groups = SHORTLOG_GROUP_AUTHOR;
+    -+
+     +	if (log->groups & SHORTLOG_GROUP_AUTHOR)
+     +		string_list_append(&log->format,
+     +				   log->email ? "%aN <%aE>" : "%aN");
+    ++
+    ++	string_list_sort(&log->trailers);
+     +}
+     +
+      int cmd_shortlog(int argc, const char **argv, const char *prefix)
+      {
+      	struct shortlog log = { STRING_LIST_INIT_NODUP };
+     @@ builtin/shortlog.c: int cmd_shortlog(int argc, const char **argv, const char *prefix)
+    - 	log.file = rev.diffopt.file;
+    - 	log.date_mode = rev.date_mode;
+      
+    --	if (!log.groups)
+    --		log.groups = SHORTLOG_GROUP_AUTHOR;
+    -+	shortlog_init_group(&log);
+    -+
+    - 	string_list_sort(&log.trailers);
+    + 	if (!log.groups)
+    + 		log.groups = SHORTLOG_GROUP_AUTHOR;
+    +-	string_list_sort(&log.trailers);
+    ++	shortlog_finish_setup(&log);
+      
+      	/* assume HEAD if from a tty */
+    + 	if (!nongit && !rev.pending.nr && isatty(0))
+     
+      ## shortlog.h ##
+     @@ shortlog.h: struct shortlog {
+      };
+      
+      void shortlog_init(struct shortlog *log);
+    -+void shortlog_init_group(struct shortlog *log);
+    ++void shortlog_finish_setup(struct shortlog *log);
+      
+      void shortlog_add_commit(struct shortlog *log, struct commit *commit);
+      
+6:  814ee4b8d8 ! 6:  6a9e204177 shortlog: implement `--group=committer` in terms of `--group=<format>`
+    @@ builtin/shortlog.c: void shortlog_add_commit(struct shortlog *log, struct commit
+     -		    strset_add(&dups, ident.buf))
+     -			insert_one_record(log, ident.buf, oneline_str);
+     -	}
+    - 	if (log->groups & SHORTLOG_GROUP_TRAILER) {
+    - 		insert_records_from_trailers(log, &dups, commit, &ctx, oneline_str);
+    - 	}
+    + 	insert_records_from_trailers(log, &dups, commit, &ctx, oneline_str);
+      	insert_records_from_format(log, &dups, commit, &ctx, oneline_str);
+      
+      	strset_clear(&dups);
+    @@ builtin/shortlog.c: void shortlog_add_commit(struct shortlog *log, struct commit
+      	strbuf_release(&oneline);
+      }
+      
+    -@@ builtin/shortlog.c: void shortlog_init_group(struct shortlog *log)
+    +@@ builtin/shortlog.c: void shortlog_finish_setup(struct shortlog *log)
+      	if (log->groups & SHORTLOG_GROUP_AUTHOR)
+      		string_list_append(&log->format,
+      				   log->email ? "%aN <%aE>" : "%aN");
+     +	if (log->groups & SHORTLOG_GROUP_COMMITTER)
+     +		string_list_append(&log->format,
+     +				   log->email ? "%cN <%cE>" : "%cN");
+    - }
+      
+    - int cmd_shortlog(int argc, const char **argv, const char *prefix)
+    + 	string_list_sort(&log->trailers);
+    + }
+7:  02adc297e7 < -:  ---------- shortlog: implement `--group=trailer` in terms of `--group=<format>`
+-- 
+2.38.0.16.g393fd4c6db
