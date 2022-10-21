@@ -2,176 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FB12C38A2D
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 21:46:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A5C6C433FE
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 21:48:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229588AbiJUVqU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Oct 2022 17:46:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37706 "EHLO
+        id S229732AbiJUVsl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Oct 2022 17:48:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbiJUVqS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2022 17:46:18 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB1F92995D6
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 14:46:16 -0700 (PDT)
-Received: (qmail 14463 invoked by uid 109); 21 Oct 2022 21:46:16 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 Oct 2022 21:46:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16538 invoked by uid 111); 21 Oct 2022 21:46:16 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 Oct 2022 17:46:16 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 21 Oct 2022 17:46:15 -0400
-From:   Jeff King <peff@peff.net>
-To:     git@vger.kernel.org
-Cc:     Jan =?utf-8?Q?Pokorn=C3=BD?= <poki@fnusa.cz>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH 3/4] repack: use tempfiles for signal cleanup
-Message-ID: <Y1MTJz3wy5xDEPEH@coredump.intra.peff.net>
-References: <Y1MR7V8kGolLd8eh@coredump.intra.peff.net>
+        with ESMTP id S229588AbiJUVsk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2022 17:48:40 -0400
+Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62540326E0
+        for <git@vger.kernel.org>; Fri, 21 Oct 2022 14:48:39 -0700 (PDT)
+Received: by mail-il1-x12d.google.com with SMTP id g13so2394711ile.0
+        for <git@vger.kernel.org>; Fri, 21 Oct 2022 14:48:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=LA0TJCvN42SSWUiKum3FGBwr2ZKCRJJyZN3gGLOV2NI=;
+        b=F9IXADVfZSserB5asJ621+r8QjTa1ApicKyE5i8qZSwJZXDQSzuwqEkKNMnAPCR4Bh
+         fkY3Yuj9+3D5I6trQZ72iqIujmkGJ74p8aVA6SRMLaw8wahaSQqahSHb7cWRan36Vf+J
+         wOwa4StmvFX43nTJz/8/5DKQoXMwwq30GseO5ssOwkoLr8Lt5m9BcG9hz3Vu3YYL+R5n
+         QJNahWmHJT3EuqsZJ/cn3Cr6fmzHTQas/J+gsq+tXMXvuFCYtVRLWqtt20c8Ykfzvlfc
+         neRWg+hNZVNTBiGHU5Z/xLE1Rjjr7FkraFmNUtSMhtwB8ySAnM113NU75C86H5MHqBtg
+         9gjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LA0TJCvN42SSWUiKum3FGBwr2ZKCRJJyZN3gGLOV2NI=;
+        b=hCdzzHWM2JDpYWVgcLxVwzqkOFezjmJZuAEuyOxz3pZQyaQl9dAXpP6i4EFxivGzZp
+         N7kitzMlkhZc45kr9tg5IZ7xLZ+v4tdLI0p5uYK4Lo/HPymc3l0wa7bl5ekNusVs/4AH
+         PcEJ0p3z5enfEOMyqukM6z7X8PjPEtAtchtYemol2Q2jVVmuANOovjwssM3c95FY2+aU
+         5pvoiYlQcbmODzNIzStUkF6h1K6+2GIK8/2G+5XKyetw9Z8ZK8YiZXPF1rmVhJlXGtIR
+         gCsZmRQDDszkbLQKI0pkuQSPYmkWIvyeTFZWIb2QaA0YohqrcBBwq+nMmOl4EKio3NKO
+         lxpA==
+X-Gm-Message-State: ACrzQf2WiIO8XJ3iOxq1TJl4qwbtY877M//FLZTJkbBt0qSdE2PXjzv/
+        Ab4hUsDXkmgKVRN68uCU/L+oNIfD9rlLFHRT
+X-Google-Smtp-Source: AMsMyM737MxtlDfu6E+Dh6txH3jfxYRGVDwr8XdFRHKs85cP5FCARolFo8rkftNY42UiCNpU0zpIbA==
+X-Received: by 2002:a05:6e02:20cd:b0:2f9:b5d4:94b8 with SMTP id 13-20020a056e0220cd00b002f9b5d494b8mr16300707ilq.144.1666388918635;
+        Fri, 21 Oct 2022 14:48:38 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id h1-20020a05660208c100b006aed243a244sm4884642ioz.54.2022.10.21.14.48.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 21 Oct 2022 14:48:38 -0700 (PDT)
+Date:   Fri, 21 Oct 2022 17:48:36 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Yuri <yuri@rawbw.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: 'git commit .' in a subdirectory also commits staged files in
+ other subdirectories
+Message-ID: <Y1MTtNcUHyv76UEV@nand.local>
+References: <3a4dfad5-0f2e-14d8-61f2-779616de1ae0@tsoft.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y1MR7V8kGolLd8eh@coredump.intra.peff.net>
+In-Reply-To: <3a4dfad5-0f2e-14d8-61f2-779616de1ae0@tsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When git-repack exits due to a signal, it tries to clean up by calling
-its remove_temporary_files() function, which walks through the packs dir
-looking for ".tmp-$$-pack-*" files to delete (where "$$" is the pid of
-the current process).
+Hi Yuri,
 
-The biggest problem here is that remove_temporary_files() is not safe to
-call in a signal handler. It uses opendir(), which isn't on the POSIX
-async-signal-safe list. The details will be platform-specific, but a
-likely issue is that it needs to allocate memory; if we receive a signal
-while inside malloc(), etc, we'll conflict on the allocator lock and
-deadlock with ourselves.
+On Fri, Oct 21, 2022 at 12:40:51PM -0700, Yuri wrote:
+> I had several staged files in various subdirectories of the cloned
+> repository tree.
+>
+> 'git commit .' in one of them attempted to commit all of them, not
+> only the files in that subdirectory.
+>
+> This is a very unreasonable behavior, because while being in any
+> subdirectory 'git commit .' should only affect that subdirectory, and
+> not files elsewhere.
 
-We can fix this by just cleaning up the files directly, without walking
-the directory. We already know the complete list of .tmp-* files that
-were generated, because we recorded them via populate_pack_exts(). When
-we find files there, we can use register_tempfile() to record the
-filenames. If we receive a signal, then the tempfile API will clean them
-up for us, and it's async-safe and pretty battle-tested.
+That isn't right, though I can't reproduce what you describe from your
+report. Try this script out:
 
-Note that this is slightly racier than the existing scheme. We don't
-record the filenames until pack-objects tells us the hash over stdout.
-So during the period between it generating the file and reporting the
-hash, we'd fail to clean up. However, that period is very small. During
-most of the pack generation process pack-objects is using its own
-internal tempfiles. It's only at the very end that it moves them into
-the names git-repack expects, and then it immediately reports the name
-to us. Given that cleanup like this is best effort (after all, we may
-get SIGKILL), this level of race is acceptable.
+--- >8 ---
+#!/bin/sh
 
-When we register the tempfiles, we'll record them locally and use the
-result to call rename_tempfile(), rather than renaming by hand.  This
-isn't strictly necessary, as once we've renamed the files they're gone,
-and the tempfile API's cleanup unlink() would simply become a pointless
-noop. But managing the lifetimes of the tempfile objects is the cleanest
-thing to do, and the tempfile pointers naturally fill the same role as
-the old booleans.
+rm -fr repo
+git init repo
+cd repo
 
-This patch also fixes another small problem. We only hook signals, and
-don't set up an atexit handler. So if we see an error that causes us to
-die(), we'll leave the .tmp-* files in place. But since the tempfile API
-handles this for us, this is now fixed for free. The new test covers
-this by stimulating a failure of pack-objects when generating a cruft
-pack. Before this patch, the .tmp-* file for the main pack would have
-been left, but now we correctly clean it up.
+mkdir -p dir
+touch dir/c
+touch a
+touch b
+git add a b dir/c
+git commit -m "a"
 
-Reported-by: Jan Pokorný <poki@fnusa.cz>
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/repack.c  | 17 ++++-------------
- t/t7700-repack.sh |  8 ++++++++
- 2 files changed, 12 insertions(+), 13 deletions(-)
+date >>b
+date >>dir/c
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index b5bd9e5fed..15b6f24626 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -122,13 +122,6 @@ static void remove_temporary_files(void)
- 	strbuf_release(&buf);
- }
- 
--static void remove_pack_on_signal(int signo)
--{
--	remove_temporary_files();
--	sigchain_pop(signo);
--	raise(signo);
--}
--
- /*
-  * Adds all packs hex strings to either fname_nonkept_list or
-  * fname_kept_list based on whether each pack has a corresponding
-@@ -248,7 +241,7 @@ static struct {
- };
- 
- struct generated_pack_data {
--	char exts[ARRAY_SIZE(exts)];
-+	struct tempfile *tempfiles[ARRAY_SIZE(exts)];
- };
- 
- static struct generated_pack_data *populate_pack_exts(const char *name)
-@@ -265,7 +258,7 @@ static struct generated_pack_data *populate_pack_exts(const char *name)
- 		if (stat(path.buf, &statbuf))
- 			continue;
- 
--		data->exts[i] = 1;
-+		data->tempfiles[i] = register_tempfile(path.buf);
- 	}
- 
- 	strbuf_release(&path);
-@@ -867,8 +860,6 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		split_pack_geometry(geometry, geometric_factor);
- 	}
- 
--	sigchain_push_common(remove_pack_on_signal);
--
- 	prepare_pack_objects(&cmd, &po_args);
- 
- 	show_progress = !po_args.quiet && isatty(2);
-@@ -1020,14 +1011,14 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 			fname_old = mkpathdup("%s-%s%s",
- 					packtmp, item->string, exts[ext].name);
- 
--			if (data->exts[ext]) {
-+			if (data->tempfiles[ext]) {
- 				struct stat statbuffer;
- 				if (!stat(fname_old, &statbuffer)) {
- 					statbuffer.st_mode &= ~(S_IWUSR | S_IWGRP | S_IWOTH);
- 					chmod(fname_old, statbuffer.st_mode);
- 				}
- 
--				if (rename(fname_old, fname))
-+				if (rename_tempfile(&data->tempfiles[ext], fname))
- 					die_errno(_("renaming '%s' failed"), fname_old);
- 			} else if (!exts[ext].optional)
- 				die(_("missing required file: %s"), fname_old);
-diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-index ca45c4cd2c..592016f64a 100755
---- a/t/t7700-repack.sh
-+++ b/t/t7700-repack.sh
-@@ -432,6 +432,14 @@ test_expect_success TTY '--quiet disables progress' '
- 	test_must_be_empty stderr
- '
- 
-+test_expect_success 'clean up .tmp-* packs on error' '
-+	test_must_fail git \
-+		-c repack.cruftwindow=bogus \
-+		repack -ad --cruft &&
-+	find $objdir/pack -name '.tmp-*' >tmpfiles &&
-+	test_must_be_empty tmpfiles
-+'
-+
- test_expect_success 'setup for update-server-info' '
- 	git init update-server-info &&
- 	test_commit -C update-server-info message
--- 
-2.38.1.496.ga614b0e9bd
+(
+  cd dir
 
+  git commit . -m "dir"
+)
+--- 8< ---
+
+`repo` ends up wtih the contents of dir/c committed, but b is still
+modified (and its latest changes not part of the most recent commit).
+
+Can you share a reproduction script?
+
+Thanks,
+Taylor
