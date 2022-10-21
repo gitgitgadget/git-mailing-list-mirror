@@ -2,73 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F8C1C433FE
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 18:24:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0F3DC38A2D
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 18:32:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230037AbiJUSYW convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Fri, 21 Oct 2022 14:24:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60260 "EHLO
+        id S229633AbiJUScD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Oct 2022 14:32:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229913AbiJUSYV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2022 14:24:21 -0400
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B6D82764E3
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 11:24:19 -0700 (PDT)
-Received: by mail-il1-f178.google.com with SMTP id q11so2063262ilj.10
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 11:24:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9tkQs1heeSSYFFjMFAjI1GjSY4UdbfyyzvxrcDUZbnk=;
-        b=hWO7nZx/X81Ky6lXxqmyBCnnFzSzLeuZClQTAZlCdW04rBDiYP4QwpFpyUlxALkSFB
-         msdYv5mB2RBhbRoWgcEDfESDA1XnehWLEY41YS5xW1L+sm5fgZ/BHicGviFKpe6egH9l
-         Ic/illu/q6eRzgYTi+EvAYztMgXu5ZqzoZ1ykXOIOe0Qv0P8+zU0UhAyeK92saCplPgb
-         2j1perPuJ/7Zbj4VZN/1IujKX83Qrkvt00Hn0HcKTSd2tO2p+z4exW/3NVt95IU8hVb8
-         Z4GdfVOwkDyUDBdSDkHpGzcW2qdSdVKrlsfe4dx8KXOwXE6BAm0mONfrrQPfQhE1/BUu
-         6Ovw==
-X-Gm-Message-State: ACrzQf2eznx8QEi+cAWGtKTCq3DPCzlg/PbYpYxF16/YEPILM0wKIgtC
-        11VwrFfqi2kfrz/LjN4cd9O/YwtgwwbHeT0HsfbfeYjhGOk=
-X-Google-Smtp-Source: AMsMyM5E0TjICU5nkcOLOCXDO4DKsD6oIwhlOOcY2aIY21AuWDTDdYSLR6wvEBHkS938+fmeZXMJuqG5p9wxOgQDx0s=
-X-Received: by 2002:a05:6e02:2141:b0:2fa:c219:6158 with SMTP id
- d1-20020a056e02214100b002fac2196158mr13541567ilv.48.1666376658271; Fri, 21
- Oct 2022 11:24:18 -0700 (PDT)
+        with ESMTP id S229441AbiJUScB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2022 14:32:01 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFF8822D5EB
+        for <git@vger.kernel.org>; Fri, 21 Oct 2022 11:32:00 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3E6FC15ACB4;
+        Fri, 21 Oct 2022 14:32:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=DMq68CB3XR2gSVxsWL/A9Bw/OXePqeyGtW43Iq
+        /+WL4=; b=jlWqxWw3J4JCrOeHiTGLsC9mYagLgb/pNcBi77m1Ln43cbb8pVOzMC
+        GQFA6yHy+8po7BjbtXo93Tpl6UTqb67j1MTs11CwDqcVZ9OPWMKA2NeP2KE4KhUs
+        LC/MsIv9YJ/1Wa+XT+AOXqLMoCkpv9SgQZgXrxzsL0C7R4y8+c4p4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 2ABB815ACB3;
+        Fri, 21 Oct 2022 14:32:00 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 88AAA15ACB2;
+        Fri, 21 Oct 2022 14:31:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 3/3] git_parse_signed(): avoid integer overflow
+References: <pull.1389.git.1666359915.gitgitgadget@gmail.com>
+        <f058f391c3821b341a15fda9ae9fd20dda6a0494.1666359915.git.gitgitgadget@gmail.com>
+Date:   Fri, 21 Oct 2022 11:31:58 -0700
+In-Reply-To: <f058f391c3821b341a15fda9ae9fd20dda6a0494.1666359915.git.gitgitgadget@gmail.com>
+        (Phillip Wood via GitGitGadget's message of "Fri, 21 Oct 2022 13:45:14
+        +0000")
+Message-ID: <xmqqpmeljae9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1390.git.1666365219.gitgitgadget@gmail.com>
- <86a842d50345f6d4d0b16c78d565474be6f8068a.1666365220.git.gitgitgadget@gmail.com>
- <221021.86mt9pdtcw.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221021.86mt9pdtcw.gmgdl@evledraar.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 21 Oct 2022 14:24:07 -0400
-Message-ID: <CAPig+cRszqyrPFHSaB92_kiQ60huXw2rWZbCh+JsGKetnChJUQ@mail.gmail.com>
-Subject: Re: [PATCH 9/9] subtree: fix split after annotated tag was squashed merged
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Luke Shumaker <lukeshu@datawire.io>,
-        Thomas Koutcher <thomas.koutcher@online.fr>,
-        James Limbouris <james@digitalmatter.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: A63F22D0-516E-11ED-9C8C-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 21, 2022 at 12:48 PM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> On Fri, Oct 21 2022, Philippe Blain via GitGitGadget wrote:
-> > +# Usage: find_existing_splits DIR REV [REPOSITORY]
-> >  find_existing_splits () {
-> > +     assert test $# = 2 -o $# = 3
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> This "test" syntax is considered unportable, I'm too lazy to dig up the
-> reference, but we've removed it in the past. Maybe it's OK with
-> git-subtree.sh", but anyway, it's esay enough to change...
+> git_parse_signed() checks that the absolute value of the parsed string
+> is less than or equal to a caller supplied maximum value. When
+> calculating the absolute value there is a integer overflow if `val ==
+> INTMAX_MIN`.
 
-You may be referring to POSIX[1] long considering -o/-a to be
-obsolescent, and GNU warning[2] against them for a couple decades or
-more.
+It is a problem that is worth looking into.
 
-[1]: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/test.html#tag_20_128_16
-[2]: https://www.gnu.org/savannah-checkouts/gnu/autoconf/manual/autoconf-2.70/html_node/Limitations-of-Builtins.html
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  config.c | 11 ++++++-----
+>  1 file changed, 6 insertions(+), 5 deletions(-)
+>
+> diff --git a/config.c b/config.c
+> index b7fb68026d8..aad3e00341d 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -1160,8 +1160,10 @@ static int git_parse_signed(const char *value, intmax_t *ret, intmax_t max)
+>  	if (value && *value) {
+>  		char *end;
+>  		intmax_t val;
+> -		uintmax_t uval;
+> -		uintmax_t factor;
+> +		intmax_t factor;
+> +
+> +		if (max < 0)
+> +			BUG("max must be a positive integer");
+
+In parse_signed(), would we expect to accept end-user input that is
+a negative integer?  We must.  Otherwise we would not be calling a
+"signed" parser.  Now, are there cases where the valid value range
+is bounded by a negative integer at the top?  No current callers may
+pass such a value, but is it reasonable to add such a new constraints
+to an existing API function?
+
