@@ -2,81 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9FBCC433FE
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 01:39:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15064C433FE
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 01:43:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229491AbiJUBjE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Oct 2022 21:39:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35046 "EHLO
+        id S229788AbiJUBnW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Oct 2022 21:43:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229691AbiJUBjB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2022 21:39:01 -0400
-Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5765A23082B
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 18:39:00 -0700 (PDT)
-Received: by mail-il1-x133.google.com with SMTP id u2so897183ilv.6
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 18:39:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EX6u9oCHhoMdG4KgVqZBSGxxEF/oPpfQgOWs1Eh2JYQ=;
-        b=uAX9vTYXgCIvdLtdnWong3cNPAuA69aLpwzgI0gQYAOPTs06ad7LxbToC3QRC5JhB0
-         bIAOpEh8BXq4SKxLUQTNnE7Eq7ZIxoSup1B2yQyeboxtAkOhENgRBmFSzVlE1ZQVtvM7
-         akWC3/VrtTXz9Wk4Va7BFb5xhaXeQYsaGPXF19kb7ASVE9G2V4itVEpso5V/Mi44nIRL
-         Lq74SlyjlVCY361MrIusHJGyozEjP2CzMkm3IVGjbeMx+FfvNC3wH8cTlVB45OAzcxru
-         8QduZ2ccUnQT4jOyXmWZuknzfzYYpmDL4NeIwj71UUCS4KeNpJ/HY1dRQXM00YpzYbrj
-         7k2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EX6u9oCHhoMdG4KgVqZBSGxxEF/oPpfQgOWs1Eh2JYQ=;
-        b=YWfqylDN8MWqJ/wT4GmaF//IiNzIBLFGz1RvLM49AV8J4QoC7dLIx45UH97YhuEbsx
-         TmOw4iNMDmQBtOKOIQhtybFZp0qbbD87rzIJx9aNMXN3VXId0iWN6AAD3axzLSIf0gtA
-         Ge5hd01Gz+OzvqyZgSGnOXK7OUytSZJwq5TvyYrQ3LHIMLT2eZfcMvcE+R4aLP9P61hB
-         2pXS+Us27UsSdRSc458Ihn1xEu2inSWg1BoR2ng/FbXCIpWpcKyhTbOg4N5QVDBbsd90
-         unCBoeOExovMMLWijvHRtjRLn0/gxnl5BcM75wM7Or1vcMgpEYK0U3jR+NDGmFk/RYDD
-         /MZg==
-X-Gm-Message-State: ACrzQf2ekDNJTSz32i06J+/1fe4NupxXbA5UtB2eS5RprC7ILgCDPsPz
-        biS7LLJHi/SrXZkxcvJcBH1hJNXL+UIiJ042
-X-Google-Smtp-Source: AMsMyM4KeTqa6PmqbyeWLjMYnA7kouxRCa5UGgyFCsE3p/pnVNSeXRNxk+GlF87czkIoAhDGFDUBkA==
-X-Received: by 2002:a05:6e02:1549:b0:2fa:f6e3:e2c8 with SMTP id j9-20020a056e02154900b002faf6e3e2c8mr11614971ilu.252.1666316339732;
-        Thu, 20 Oct 2022 18:38:59 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id c10-20020a023f4a000000b00362a6fd6acbsm3692680jaf.32.2022.10.20.18.38.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Oct 2022 18:38:59 -0700 (PDT)
-Date:   Thu, 20 Oct 2022 21:38:57 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, jacob@initialcommit.io, gitster@pobox.com
-Subject: Re: [PATCH 7/7] shortlog: implement `--group=trailer` in terms of
- `--group=<format>`
-Message-ID: <Y1H4MeYXv06mjKg0@nand.local>
-References: <cover.1665448437.git.me@ttaylorr.com>
- <02adc297e7661cbc25302b9f5659d2356b8b5008.1665448437.git.me@ttaylorr.com>
- <Y0TL8unKev9TPytJ@coredump.intra.peff.net>
+        with ESMTP id S229633AbiJUBnT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2022 21:43:19 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 205742339BD
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 18:43:19 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 63D1F15249A;
+        Thu, 20 Oct 2022 21:43:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=5adGmETgf5HFJv72L2yZ6tl2vu5r2wZgvNOTbGcDd+k=; b=pwzL
+        K7C8KrZMV9DYGjkev64RnE1b+bG1tPtetcjbiHLcMZmf8JWSTONxTqVV7UpO1hrW
+        2OxQD095Nksd9S10nKim+LWb0+qQijfHcuIgy2Ll14gmhgLeFV1nmc3luw4vErE1
+        +zAvYuUqm5bI4BSDeo+4z/u9f+FALKohkiAHH5o=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4BC36152499;
+        Thu, 20 Oct 2022 21:43:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 9C696152498;
+        Thu, 20 Oct 2022 21:43:17 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Heather Lapointe <alpha@alphaservcomputing.solutions>
+Cc:     Heather Lapointe via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3 0/9] archive: Add --recurse-submodules to git-archive
+ command
+References: <pull.1359.v2.git.git.1665660960.gitgitgadget@gmail.com>
+        <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com>
+        <xmqqo7u9t1zf.fsf@gitster.g>
+        <CAFwvh9BwV=NEtF_gsh9Tr8gHz02=78m4MCBQbuXk5SzKCAm4RA@mail.gmail.com>
+        <xmqqy1tbssa8.fsf@gitster.g> <xmqqwn8vpmr3.fsf@gitster.g>
+        <xmqqfsfjnvbu.fsf@gitster.g>
+Date:   Thu, 20 Oct 2022 18:43:16 -0700
+Message-ID: <xmqq8rlaossr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y0TL8unKev9TPytJ@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: BC5F6ABC-50E1-11ED-BE58-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 10, 2022 at 09:50:42PM -0400, Jeff King wrote:
-> Hmph. So that's _probably_ OK, but I have to wonder if this is going too
-> far. The resulting code is not that much shorter, and IMHO is actually a
-> little more complicated, because of this hack and the extra util bit.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks for a careful analysis, as always. "Additional complexity" and
-"slower" are both usually not worth it in isolation, but it's definitely
-difficult to advocate for doing both at the same time ;-).
+> It seems to have cleared the "submodule tests no longer can use
+> submodules with file:// without tweaking the config" issue I saw
+> earlier.  It seems to give us a segfault in win+VS test, though.
+>
+> https://github.com/git/git/actions/runs/3285647856/jobs/5413033844#step:5:245
 
-Let's drop this patch and let the `--group=trailer` bits continue to
-benefit from your optimizations.
+Here is a pair of CI run that attributes the breakage to this topic:
 
-Thanks,
-Taylor
+  https://github.com/git/git/actions/runs/3293333066
+
+is one CI run on 'seen' that has this topic and everything else in
+flight.  This topic is at the tip of 'seen' when this CI run was
+done, and win+VS test (8) seems to be failing the same way as the
+previous one I reported earlier above.
+
+Dropping the merge of this topic (i.e. "git reset --hard HEAD^") out
+of 'seen' and running CI again: 
+
+  https://github.com/git/git/actions/runs/3293553109
+
+we can see that all tests pass there, which unfortunately is a rare
+event these days (well, the segfaulting code is something this topic
+adds, so it is not surprising that the rest of the topics in flight
+would not segfault the same way).
+
+Do you need help from somebody equipped with Windows knowledge and
+build/test environment?  As I do not do Windows or macOS, I cannot
+offer to be one myself, but the development community is full of
+capable folks and help is often a request away.
+
+Thanks.
