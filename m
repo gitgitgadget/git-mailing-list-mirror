@@ -2,117 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA4C6C38A2D
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 22:12:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94904C433FE
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 22:20:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229484AbiJUWMJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Oct 2022 18:12:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44864 "EHLO
+        id S229876AbiJUWUY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Oct 2022 18:20:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbiJUWMH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2022 18:12:07 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B84E92441B8
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 15:12:06 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id e15so3493261iof.2
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 15:12:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=e9+UVn7e49caN96I2kN0XsKbtVOASLah5o34t6kB3YU=;
-        b=vsx0qLeSYbcffQZtSzBu368EgxKYPRE7nrWlE2GU27mNkIyvS699E/qIQ61d99S5Lx
-         U/ddUuOxgoRoWscZ7zKl8CUpUR6ox4aL1tuYr/RsDTCjKXh5tJNEV2SQGv8y828bI3ql
-         YoAUi1pjTI3pM9hEnqkZP9PB46S8h4BHxA4sSg75MkT4j5oW+V87tcxcd5inxkEpewJe
-         6KYjjXKqgyj4FZdDWhDwbmAZRQB7CR4YP0XC4hafx579mK79mVW868c5sDVplaF+tu35
-         foa1duEbFbbnXjQdjiP2IbIk2MVlL662gGbOmhkw9c9xjNEw2BBfPerZWTbk2INPYTs0
-         Hrjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e9+UVn7e49caN96I2kN0XsKbtVOASLah5o34t6kB3YU=;
-        b=G41tTbBCPyEbzG5d/RpkH+f57f9KnqFVEmtU3/C11tb9mJ9Q2GPSNVWTsBRNYXB2I7
-         qj5jSfPCU5fhfeTMlQE1MticjYqZ5B9HDcvT42c9LZaTrsC/AAnTGNm8u+mG2z7ochxC
-         wG0JXlVNb54WcuNJhqFOD+LdrZum5rk2W9jcwGxEN/3W7g+FdEDAA1YnilFqTt5H0GJy
-         HYYUsIvhhQlGSovqxTHMHGOuwtXDz8+L2a+vCTdR+btWWdDfr5HaACbcRk/OetuHO0/q
-         V7tpK63uLpHQCKWmBRBMIcs/v4RPt5r2Ny1CvI8lrqjEPrjux5GWplVYxsIysGnKJv05
-         tovw==
-X-Gm-Message-State: ACrzQf2BinDDnDBEC4SOIX8wJH1xIP8dkTCmM4z/kifKFmrA+WZknmej
-        XgavoTRK51tapjMf7jmOX108CQ==
-X-Google-Smtp-Source: AMsMyM4hwNhwdxM/gdZo9CvorJIIubWjWi1HJ30dtLD39k0X+vJ2tMChe3qry5p14T/EeufIs9aB+w==
-X-Received: by 2002:a6b:3f04:0:b0:6bc:75c4:586a with SMTP id m4-20020a6b3f04000000b006bc75c4586amr14646577ioa.83.1666390326143;
-        Fri, 21 Oct 2022 15:12:06 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d5-20020a026205000000b0036332a07adcsm4544622jac.173.2022.10.21.15.12.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 15:12:05 -0700 (PDT)
-Date:   Fri, 21 Oct 2022 18:12:04 -0400
-From:   Taylor Blau <me@ttaylorr.com>
+        with ESMTP id S229736AbiJUWUE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2022 18:20:04 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4DAEBF77
+        for <git@vger.kernel.org>; Fri, 21 Oct 2022 15:20:00 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4E39C159529;
+        Fri, 21 Oct 2022 18:19:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=yWX3wHG3DTxlQzYtGBW4a7f2HaCC4+TIUIcsll
+        wXcvk=; b=hTU7gV9XTIY1rGir5bnWLtTiyAdiBiGl9uhu6tFxQtbS8bp9e0UqZK
+        sgC80Z2zFsY4p50cp6R0LcdUSHEffi52F+9VNRVyXhM19/m+Qvt59N+UkBj0B8rm
+        SBiKSuW8GKmOEUBkfs80QPWeoUB5CNzbSegpJnSUiRJAejSUktzvQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 44412159528;
+        Fri, 21 Oct 2022 18:19:57 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AB70A159527;
+        Fri, 21 Oct 2022 18:19:56 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, jacob@initialcommit.io, gitster@pobox.com
-Subject: Re: [PATCH 4/7] shortlog: support arbitrary commit format `--group`s
-Message-ID: <Y1MZNISVkOFFXX9D@nand.local>
-References: <cover.1665448437.git.me@ttaylorr.com>
- <6f38990cc2ea8460ce37437e0770784d9b712dab.1665448437.git.me@ttaylorr.com>
- <Y0TDDvzeCxIMFbG5@coredump.intra.peff.net>
- <Y0TF0M6UzLS9r6iM@nand.local>
- <Y0TOpVF+Y70YJHzx@coredump.intra.peff.net>
- <Y1IGeuudJj18sDPz@nand.local>
- <Y1IsWt0ZrW+0hy1v@coredump.intra.peff.net>
+Cc:     git@vger.kernel.org, Jan =?utf-8?Q?Pokorn=C3=BD?= <poki@fnusa.cz>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 1/4] repack: convert "names" util bitfield to array
+References: <Y1MR7V8kGolLd8eh@coredump.intra.peff.net>
+        <Y1MSWAx+baTklfLL@coredump.intra.peff.net>
+Date:   Fri, 21 Oct 2022 15:19:55 -0700
+In-Reply-To: <Y1MSWAx+baTklfLL@coredump.intra.peff.net> (Jeff King's message
+        of "Fri, 21 Oct 2022 17:42:48 -0400")
+Message-ID: <xmqqtu3wizuc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y1IsWt0ZrW+0hy1v@coredump.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7E753666-518E-11ED-B386-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 21, 2022 at 01:21:30AM -0400, Jeff King wrote:
-> On Thu, Oct 20, 2022 at 10:39:54PM -0400, Taylor Blau wrote:
->
-> > --- 8< ---
-> > diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
-> > index 0abe5354fc..566d581e1b 100755
-> > --- a/t/t4201-shortlog.sh
-> > +++ b/t/t4201-shortlog.sh
-> > @@ -356,6 +356,19 @@ test_expect_success 'shortlog can match multiple groups' '
-> >  	test_cmp expect actual
-> >  '
-> >
-> > +test_expect_success 'shortlog can match multiple format groups' '
-> > +	cat >expect <<-\EOF &&
-> > +	     2	User B <b@example.com>
-> > +	     1	A U Thor <author@example.com>
-> > +	     1	User A <a@example.com>
-> > +	EOF
-> > +	git shortlog -ns \
-> > +		--group="%(trailers:valueonly,separator=%0x00,key=some-trailer)" \
-> > +		--group="%(trailers:valueonly,separator=%0x00,key=another-trailer)" \
-> > +		-2 HEAD >actual &&
-> > +	test_cmp expect actual
-> > +'
-> > +
-> >  test_expect_success 'set up option selection tests' '
-> >  	git commit --allow-empty -F - <<-\EOF
-> >  	subject
-> > --- >8 ---
-> >
-> > The gross bit there really is the 'separator=%0x00' thing, since the
-> > "trailers" pretty format gives us a NL character already. I suppose that
-> > you could do something like this on top instead:
->
-> IMHO the new test should avoid using trailers entirely, to avoid the
-> notion that they are necessary to create the duplicate situation. In a
-> normal repository, the most obvious one is just asking about both
-> authors and committers:
->
->   git shortlog --group=format:%cn --group=format:%an
+Jeff King <peff@peff.net> writes:
 
-Yeah, that's fair. I was worried enough about whether or not this was
-going to cause significant test fallout, but it ended up being extremely
-straightforward and simplified the tests nicely. Thanks!
+> We keep a string_list "names" containing the hashes of packs generated
+> on our behalf by pack-objects. The util field of each item is treated as
+> a bitfield that tells us which extensions (.pack, .idx, .rev, etc) are
+> present for each name.
+>
+> Let's switch this to allocating a real array. That will give us room in
+> a future patch to store more data than just a single bit per extension.
+> And it makes the code a little easier to read, as we avoid casting back
+> and forth between uintptr_t and a void pointer.
+>
+> Since the only thing we're storing is an array, we could just allocate
+> it directly. But instead I've put it into a named struct here. That
+> further increases readability around the casts, and in particular helps
+> differentiate us from other string_lists in the same file which use
+> their util field differently. E.g., the existing_*_packs lists still do
+> bit-twiddling, but their bits have different meaning than the ones in
+> "names". This makes it hard to grep around the code to see how the util
+> fields are used; now you can look for "generated_pack_data".
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  builtin/repack.c | 22 ++++++++++++++--------
+>  1 file changed, 14 insertions(+), 8 deletions(-)
+>
+> diff --git a/builtin/repack.c b/builtin/repack.c
+> index a5bacc7797..8e71230bf7 100644
+> --- a/builtin/repack.c
+> +++ b/builtin/repack.c
+> @@ -247,11 +247,15 @@ static struct {
+>  	{".idx"},
+>  };
+>  
+> -static unsigned populate_pack_exts(char *name)
+> +struct generated_pack_data {
+> +	char exts[ARRAY_SIZE(exts)];
+> +};
 
-Thanks,
-Taylor
+OK, so instead of a single "unsigned" word holding six bits (the
+number of elements in the exts[] array), we have one byte per the
+file extension.  Since ...
+
+> +static struct generated_pack_data *populate_pack_exts(const char *name)
+>  {
+>  	struct stat statbuf;
+>  	struct strbuf path = STRBUF_INIT;
+> -	unsigned ret = 0;
+> +	struct generated_pack_data *data = xcalloc(1, sizeof(*data));
+
+... this is allocated a real piece of storage and the function
+returns a pointer to it, ...
+
+> -		item->util = (void *)(uintptr_t)populate_pack_exts(item->string);
+> +		item->util = populate_pack_exts(item->string);
+
+... we no longer need to cast but the value can go straight to the
+.util member, and ...
+
+> -	string_list_clear(&names, 0);
+> +	string_list_clear(&names, 1);
+
+... we now need to free these structs pointed at by the .util
+member.
+
+All make sense.
