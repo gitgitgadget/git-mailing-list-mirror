@@ -2,144 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0001FC38A2D
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 23:10:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DAE2C433FE
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 23:20:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229679AbiJUXK4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Oct 2022 19:10:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60206 "EHLO
+        id S229717AbiJUXUw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Oct 2022 19:20:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbiJUXKz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2022 19:10:55 -0400
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3F6F22C616
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 16:10:53 -0700 (PDT)
-Received: by mail-io1-xd2f.google.com with SMTP id e15so3577584iof.2
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 16:10:53 -0700 (PDT)
+        with ESMTP id S229484AbiJUXUv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2022 19:20:51 -0400
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FC2E19ABE5
+        for <git@vger.kernel.org>; Fri, 21 Oct 2022 16:20:50 -0700 (PDT)
+Received: by mail-il1-x135.google.com with SMTP id u10so2449094ilm.5
+        for <git@vger.kernel.org>; Fri, 21 Oct 2022 16:20:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hZYXickauaDJJnLR8UvPalyET45jousg0fxL+vzijPk=;
-        b=ylawnhSGs+OP2kadmV01Su3ELF3DbjS4z0+Q4+G3jP4Uq/EVJ8Ra5UjftN4AthCQRn
-         GHNjhUtu2FHYNapMW/GNUz316Mlldea3k00JXJ2noNmLvCWp882WojUQDP/7d4qrPLeX
-         fx/O2liMaQ2xcWwAc/nMe3XlWPUReuO3/J16UCxmNtDJ018+OlqdR1/LEPJRcBp5ddYV
-         aC3NE0jKiR/7nDnIUtp0wh3Og9oKPdUkSkCq5i6X/54T5HN1PxQmvX1ASkxDm7rUVkkW
-         XeETRv78Od/ZZq0OPAl+Ufph0gSdACh22dF23Ftn0uyQEQUgesWOXAYYgRJOg+HnrVZX
-         mp1Q==
+        bh=M1bR4KLNcfJfbt7bRiu7K77OpwRUiF8sm7glZXebr6Q=;
+        b=o7BwQfOIOk5oFKvfYc3/A/m087r+tcbybl8gKJBnNqBImxBcrucUQY0j0Yy5mCNpnD
+         q787Xymul0caWpNmt79+SAfOEW00NyiBVWpWsBrIZ1maeOrpMBlXsOuq5R3gYxmsZALY
+         n/01P2XglsFq23b+THgUhR6uMp0YelsmZk4l5/MWbx4T+JWPkDHoZQuFeSnu+Ya9v2Ih
+         y8C7aMa7YzNfjOIitEkIatzHuR2PYbfX3rfssz3WsLUj0mo7bHSkhd/bjid7tZQSApU4
+         IT+Dz3LVPYXR4+6vLnkl/qqFwncd2s5q7u8I8bIf8b1iUAOECKEPRwHbjrPSDW5USXle
+         SEYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hZYXickauaDJJnLR8UvPalyET45jousg0fxL+vzijPk=;
-        b=ksmarr8kGnsLtwuLCQn1naGG9zeBGjsV4uHSBCoR462dxitNIX8komNZovhsfULmoQ
-         d2DcUPVGUwLAGErfnpgBQ4KQCqchk5hBEorpIOKK2J4+JaHHIgkiuwDkGXPxnWb8YXmG
-         Cpdys7SkVX1PXRxLUYe7jHH93bvwZcUe901fcREl9L7yC26XRdpxo54Z++DFgxOAxqC0
-         hanLibBfL9Bu/E4rC8197ih0mizUuqxBj8DapiW6l/uEKFPHW7FCW1FsBMpB06TQQwvO
-         qTGmTgtdFh5lZqc7rP/uH3uHi0uhgwsa6715Ot/xEkbtGKn0jzmdSmVewBUBTJF9Jg5d
-         Ybrg==
-X-Gm-Message-State: ACrzQf2xNbyXOY6ZxD9MdEq6b7j4/oZvY8vv9ELnIWuGJYJb9hZDE3aI
-        kFJSR0ioxlQOBVIGyVKsJeM2Pw==
-X-Google-Smtp-Source: AMsMyM4/TJtHaUV5pfomqHENl2Jm5OPmepnspsCad05hDMUKWlz/uL7pFDCJvvT7JYg/Xkk+hwOvYw==
-X-Received: by 2002:a05:6602:14c1:b0:689:34d0:a0ef with SMTP id b1-20020a05660214c100b0068934d0a0efmr14502396iow.69.1666393853139;
-        Fri, 21 Oct 2022 16:10:53 -0700 (PDT)
+        bh=M1bR4KLNcfJfbt7bRiu7K77OpwRUiF8sm7glZXebr6Q=;
+        b=y9cq5wz5DfbhZ3oRXH2YG2IKl85HdSXXHaPaGZebnyLfEaYh0C/0Vy2NUlAQd/EzlA
+         C7PmW5DQH8hWryQmgnAzdBqxYDcUuYyu+zXqNHDcTNvwtCnWA6TSNzuPGLIoxQ0/QGvr
+         S9cLhfCbLbDJPA1UR577ePB/srIz15QZU6sJMec8u0s6Jr8AcuqW+te4gbfhU/eqUuuR
+         JPI8vFBJAe4WF8DCQ8VhKiwKayi+XWrbC7Q/2wyQuVgfr8exQuNpYjV3ZikeLg9GG0Zn
+         MQLLKVkN3ZnAK8pb2t8u2pua7WqkBJuOKk4/SDIl/9kAGcnyri1fPmYkMxlnf7/r4H9r
+         a49g==
+X-Gm-Message-State: ACrzQf3s5WBs1dXVuFPa61ZaLOhgtyjk7UCfkZtDgqVNlqMU7rq/yqct
+        kH9tSZ5AXXk13P7RhruJC0UHg2bnVd3qYiZo
+X-Google-Smtp-Source: AMsMyM4B/xzgXv3NhMuXXirMMs6YmhYjDI1eZkUJoccWjqhgTOvamPWfRaVr0ePUegohHAJQlYatFg==
+X-Received: by 2002:a05:6e02:19c8:b0:2fa:a5c2:f837 with SMTP id r8-20020a056e0219c800b002faa5c2f837mr16030288ill.1.1666394449735;
+        Fri, 21 Oct 2022 16:20:49 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id a18-20020a027352000000b0036348f096acsm4728725jae.6.2022.10.21.16.10.52
+        by smtp.gmail.com with ESMTPSA id p8-20020a92d688000000b002fa40226722sm4460236iln.84.2022.10.21.16.20.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 16:10:52 -0700 (PDT)
-Date:   Fri, 21 Oct 2022 19:10:47 -0400
+        Fri, 21 Oct 2022 16:20:49 -0700 (PDT)
+Date:   Fri, 21 Oct 2022 19:20:48 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org, Jan =?utf-8?Q?Pokorn=C3=BD?= <poki@fnusa.cz>
-Subject: Re: [PATCH 1/4] repack: convert "names" util bitfield to array
-Message-ID: <Y1Mm9zTX3XwN3IWu@nand.local>
+Subject: Re: [PATCH 2/4] repack: populate extension bits incrementally
+Message-ID: <Y1MpUHBQtq8uP5Uy@nand.local>
 References: <Y1MR7V8kGolLd8eh@coredump.intra.peff.net>
- <Y1MSWAx+baTklfLL@coredump.intra.peff.net>
+ <Y1MSkubbDBh0Ma1G@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Y1MSWAx+baTklfLL@coredump.intra.peff.net>
+In-Reply-To: <Y1MSkubbDBh0Ma1G@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 21, 2022 at 05:42:48PM -0400, Jeff King wrote:
-> We keep a string_list "names" containing the hashes of packs generated
-> on our behalf by pack-objects. The util field of each item is treated as
-> a bitfield that tells us which extensions (.pack, .idx, .rev, etc) are
-> present for each name.
+On Fri, Oct 21, 2022 at 05:43:46PM -0400, Jeff King wrote:
+> There are two small problems with this:
 >
-> Let's switch this to allocating a real array. That will give us room in
-> a future patch to store more data than just a single bit per extension.
-> And it makes the code a little easier to read, as we avoid casting back
-> and forth between uintptr_t and a void pointer.
+>   - repack_promisor_objects() may have added entries to "names", and
+>     already called populate_pack_exts() for them. This is mostly just
+>     wasteful, as we'll stat() the filename with each possible extension,
+>     get the same result, and just overwrite our bits. But it makes the
+>     code flow confusing, and it will become a problem if we try to make
+>     populate_pack_exts() do more things.
 
-Thanks, this is a nice summary that matches my own recollection from
-working in this area.
-
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index a5bacc7797..8e71230bf7 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
-> @@ -247,11 +247,15 @@ static struct {
->  	{".idx"},
->  };
+Hmm. I agree with you that repack_promisor_objects() calling
+populate_pack_exts() itself is at best weird, and at worst wasteful.
 >
-> -static unsigned populate_pack_exts(char *name)
-> +struct generated_pack_data {
-> +	char exts[ARRAY_SIZE(exts)];
-> +};
+>   - it would be nice to record the generated filenames as soon as
+>     possible. We don't currently use them for cleaning up from a failed
+>     operation, but a future patch will do so.
 
-Makes sense, this replaces the individual bits of the `void *` we were
-treating as an array of "which extensions associated with this pack were
-generated by pack-objects"?
+That said, I think that it's worth having a single spot within
+cmd_repack() that is responsible for populating the generated pack
+extensions, since it protects against a caller forgetting to do so (and
+then tricking repack into thinking that we didn't generate *any* of the
+corresponding extensions).
 
-> +
-> +static struct generated_pack_data *populate_pack_exts(const char *name)
->  {
->  	struct stat statbuf;
->  	struct strbuf path = STRBUF_INIT;
-> -	unsigned ret = 0;
-> +	struct generated_pack_data *data = xcalloc(1, sizeof(*data));
+But I'm sure future patch you're referring to cares about knowing
+these as soon as possible, since that's the point of this series ;-).
 
-I'm nitpicking, but we could replace this with;
+I think a reasonable middle ground here is to do something like the
+following on top of this patch:
 
-  struct generated_pack_data *data;
+--- >8 ---
+diff --git a/builtin/repack.c b/builtin/repack.c
+index b5bd9e5fed..16a941f48b 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -1002,6 +1002,12 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 			return ret;
+ 	}
 
-  CALLOC_ARRAY(data, 1);
++	for_each_string_list_item(item, &names) {
++		if (!item->util)
++			BUG("missing generated_pack_data for pack %s",
++			    item->string);
++	}
++
+ 	string_list_sort(&names);
 
-so that we don't have to rely on calling sizeof(*data). But
-sizeof(*data) will always give us the right answer anyway, even if the
-name of data's type changed, so what you have is fine, too.
+ 	close_object_store(the_repository->objects);
+--- 8< ---
 
-> @@ -261,11 +265,11 @@ static unsigned populate_pack_exts(char *name)
->  		if (stat(path.buf, &statbuf))
->  			continue;
->
-> -		ret |= (1 << i);
-> +		data->exts[i] = 1;
+which still lets you eagerly keep track of the generated pack extensions
+while also protecting against forgetful callers. Obviously we're relying
+on a runtime check which is going to be somewhat weaker. But I think
 
-Great. I'm happy to see this bit-twiddling go away, but..
-
-> @@ -320,7 +324,7 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
->  					  line.buf);
->  		write_promisor_file(promisor_name, NULL, 0);
->
-> -		item->util = (void *)(uintptr_t)populate_pack_exts(item->string);
-> +		item->util = populate_pack_exts(item->string);
-
-I'm even happier to see this go away ;-).
-
-> @@ -1115,7 +1121,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
->  		write_midx_file(get_object_directory(), NULL, NULL, flags);
->  	}
->
-> -	string_list_clear(&names, 0);
-> +	string_list_clear(&names, 1);
-
-Good. Now that we're actually allocating memory in the `->util` field,
-we care about freeing it, too. Thanks for remembering this.
+The patch itself looks good.
 
 Thanks,
 Taylor
