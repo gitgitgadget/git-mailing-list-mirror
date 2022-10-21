@@ -2,77 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67F11C433FE
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 03:14:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA2F7C433FE
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 03:15:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229875AbiJUDOR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 20 Oct 2022 23:14:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48986 "EHLO
+        id S229868AbiJUDP6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 20 Oct 2022 23:15:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229587AbiJUDOQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Oct 2022 23:14:16 -0400
-Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E171C13C1FA
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 20:14:14 -0700 (PDT)
-Received: by mail-il1-x12f.google.com with SMTP id y17so972330ilq.8
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 20:14:14 -0700 (PDT)
+        with ESMTP id S229915AbiJUDPy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Oct 2022 23:15:54 -0400
+Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91F481382C8
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 20:15:35 -0700 (PDT)
+Received: by mail-io1-xd2b.google.com with SMTP id p16so1274460iod.6
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 20:15:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZhQZCyHYgWs6sKsA3o+G/79DCEhUrr5zzdcVndlv1HE=;
-        b=LivKO9m+e8Kd/Z9qvfFggbLNNNHGs59Qt6ZdpeKkvJxZIU+Hvpg5ufaE1dB0wVzP9g
-         CixT36ud6/MDd/I0HZVjXGb8sWE+kkh3d9hQXqQ+8y4uN1OpAldXRmrbfwSeeQNGPvVo
-         vR4GWpHUiIUykWlJRQWYfd2rMOxsngKLnDH9MjMkMqoDU8xGCjp6GorYN8gXL43PlVK0
-         pQ/4OvP2jWK3MM0xR9WWWThxY2AU0i926Q0U288+FD3lTrotMQLX16oI1EXjDc7nF38W
-         va35dPdLvHcRIUiEVQxz8iAyovmcZtHiVE8BqgkbGXz23vxEn+pPuTgo/+L3zIaYrBSj
-         nBkQ==
+        bh=eamp3O1e7leJjRskoKZkbVh52ljXEQ3jeKl0kUiou8A=;
+        b=EFg4fos4u2lQDMAvpt/tqLNF3iu2iYihdewNan5It9GQrT79tygUWtCMwSs30BoCfx
+         0wG+yuTAcVEy80dZGNJt7OpOzMp/TQYVcCLcnspFeQP4gbMpTUK+Zjegpu9wIsmBubPY
+         /gMjal491uRvWjlj5Ru9D5YaRrMK/BwVYoEWw5JWZkbAyz5Qmp/1bqXaFHRYtufQ6ebw
+         PwQGHbsLYk51uyxdGm+LxHLGq8pIyfD6/y/5UmNPPWMssNvP/MUyNu9KwKAI+c/xAu59
+         WBvzWUIZ+EfIVvqPdmjEE6frOfJfUSu2c/ryq1a4ktyjeukyTASSCNp4TrislRwMxyST
+         qCcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZhQZCyHYgWs6sKsA3o+G/79DCEhUrr5zzdcVndlv1HE=;
-        b=i5AlLo823Q8efIkf/gr3QuWO0DItPWidPYmY6qPDby1Kcx4QBn0ulI/heAp7iBDW/y
-         mH84kkyClZT7CohLen5nU6w/gn2Tn4enaHvxK6aR/t7j0c0p+7ycMxFfP4JMHY7//vUa
-         e2wS62L8H8G9dKBWe5PPFVJAd5seU+yjiSqmhqo1klo4TTA0c6DvD9mU8UFDMevD1MEA
-         m8EvGx+yEnOLlFsirdvcxrv71wraoi1SrqFOwx1OnRXGvNez6NGJ6OqJ9AyEIxP12gba
-         Nhf/5QVCyVPQi5eY/hxWXczCQR/4+aIDlBdKRw77A//xDbQ2VJ5qLwl8ld/7lz5ukWxV
-         p7/w==
-X-Gm-Message-State: ACrzQf1BSJEsqoimucRszBEvMPhU8vb/PI79hTgVj6P3ZJTZvCZLfpNO
-        y2+gabM7mzSjYoAdvMRmZssOyw==
-X-Google-Smtp-Source: AMsMyM5TSES/y1SV6GMAH2gEUiWVOhbKjJL/tpadStTtMTZzYI1tZrHMzwEUpbbUYIaj2Dd2f5y4Gw==
-X-Received: by 2002:a05:6e02:b4d:b0:2fa:6084:db2e with SMTP id f13-20020a056e020b4d00b002fa6084db2emr13132498ilu.95.1666322054284;
-        Thu, 20 Oct 2022 20:14:14 -0700 (PDT)
+        bh=eamp3O1e7leJjRskoKZkbVh52ljXEQ3jeKl0kUiou8A=;
+        b=JHjhe5JTPuCSbhXroPNOyCMuBh1y8/u55e8f+w1zDR0qB7fhyHSF6v2FtP1zZdv/un
+         faLkl3j3D7DESP+6iERA2S3JzNE0G6cuj2ZgBpytjBtWVfBhrnFcaxj8znOGljbNUzoo
+         pB/W+/1mPAjBuIDycAtmwIfQ6PqOhH7tS0UDTyEQM09/tqbt1bNSulIzHFvn4c6Y+vaA
+         bTrzzYLwhDst2Uv5LPbL/XmN09WA5MGg27giBTYQqS8A6sL130zCXfkI0eoLoHwzw3HQ
+         LKP5sSPjyGpJl35fFV/WJb/b9WZQFrHoRK5LXVwHSLCyQ1yd9+y7x3Hb7qnmw4VdRizU
+         QnAg==
+X-Gm-Message-State: ACrzQf34jRYMRk23rEq457tL4zKVRfmy5e0xLD60HcNVfMMNyrdg1Jfo
+        QDMGVdhJvwxtEhfpjrnHPtnOeg==
+X-Google-Smtp-Source: AMsMyM4oYQbqW4T7x+pO9sCC2OBd4ZQAceiwuWdg/POcGxfgq+s/1FDiV+RtmdPLWUhdzAUBptV50g==
+X-Received: by 2002:a05:6638:3285:b0:356:4df5:5d10 with SMTP id f5-20020a056638328500b003564df55d10mr13815973jav.19.1666322134953;
+        Thu, 20 Oct 2022 20:15:34 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id a3-20020a923303000000b002f947700951sm3617568ilf.82.2022.10.20.20.14.13
+        by smtp.gmail.com with ESMTPSA id f10-20020a056602088a00b006bb7764890dsm4106432ioz.45.2022.10.20.20.15.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 20 Oct 2022 20:14:13 -0700 (PDT)
-Date:   Thu, 20 Oct 2022 23:14:12 -0400
+        Thu, 20 Oct 2022 20:15:34 -0700 (PDT)
+Date:   Thu, 20 Oct 2022 23:15:33 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, vdye@github.com, derrickstolee@github.com
-Subject: Re: [PATCH] repack: don't remove .keep packs with
- `--pack-kept-objects`
-Message-ID: <Y1IOhH2jAwHHrLY+@nand.local>
-References: <6a012cd625c1d197ede91c85299cbfb37adf356b.1666059872.git.me@ttaylorr.com>
- <Y05NwIfY/906b2Vd@coredump.intra.peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: tb/remove-unused-pack-bitmap
+Message-ID: <Y1IO1egsi9vZPiUo@nand.local>
+References: <xmqqa65rnuvv.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Y05NwIfY/906b2Vd@coredump.intra.peff.net>
+In-Reply-To: <xmqqa65rnuvv.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 18, 2022 at 02:54:56AM -0400, Jeff King wrote:
-> So the patch looks good to me as-is (and sorry for the verbose review;
-> we've just had enough tricky corner cases in this repack code that I
-> wanted to make sure I understood all the implications).
+On Wed, Oct 19, 2022 at 06:31:16PM -0700, Junio C Hamano wrote:
+> * tb/remove-unused-pack-bitmap (2022-10-17) 1 commit
+>  - builtin/repack.c: remove redundant pack-based bitmaps
+>
+>  When creating a multi-pack bitmap, remove per-pack bitmap files
+>  unconditionally as they will never be consulted.
+>
+>  Will merge to 'next'?
+>  source: <1e0ef7ee7ff5feb323c77e594cd65433fb1d99f7.1666061096.git.me@ttaylorr.com>
 
-Yeah, I agree that this is probably premature optimization, but in
-practice it doesn't hurt much. Copying it was definitely intentional,
-and I share your general unease about changing it in this patch.
+Yeah, this one is ready to go, per Peff's review:
+
+  https://lore.kernel.org/git/Y05HrVT9HxxDiXc2@coredump.intra.peff.net/
 
 Thanks,
 Taylor
