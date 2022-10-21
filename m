@@ -2,123 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4081DC433FE
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 16:42:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC92FC433FE
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 16:47:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231392AbiJUQmU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Oct 2022 12:42:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54174 "EHLO
+        id S231448AbiJUQra (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Oct 2022 12:47:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231359AbiJUQmD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2022 12:42:03 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3498288664
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 09:39:04 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id a13so8076155edj.0
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 09:39:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=SoGXX5u2ORLY4HwroHbPyErpC2a1f4xcDzzFjER2gcY=;
-        b=SCINYdjpoMZ+6WCTR3vDz6v5XoxfAHWtjAhu194oh1GzgakeCktLgSvqDCyRY4sGHg
-         /cjuM20Zlf9QiOGevS4ezUdMDzI6ZZsnjjbmWxv1mWVwGY/ZDnUdNXtvNr9+ccLOp7yD
-         Z1HQKdhgdjb6xIFJDk/G6crCZmHGRsCXqc6mtqgCRGiNCeTyHX/LLAXJZxC5dztb7R5m
-         lI83H54r0KOdZAINg1rwB//bwC7RgXiEzzbnxHD+EWfk2a4mVAsp60I0Przq7YeUWAb+
-         pP7tFtGVeVhoHzKDLwZvCUYP/k1e/VCuOECMkIb7YYnjX5icyCIxhsV6Eht9cJSGjTCU
-         /c1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SoGXX5u2ORLY4HwroHbPyErpC2a1f4xcDzzFjER2gcY=;
-        b=EWGf7JoOkKElsbzjQnTwSrSWb3eSYvYr+hy/9IUIhQ2AftH/HuUGijM/c+KTuHYISu
-         ybSkkf9MjLpxxxN5z1GNpdXr7KCjisoQxGFOr62dzVtkd95mt4/83lIpMn0OYna7Vbu+
-         9UOT4T6AegFvuBua63B+VNgfkTEz8AYmhcaShPCmA7N00JpcWqItoD1Rr9BXA2OBMCnv
-         ujsIOcBAIJ0oeaFwO6O+whLblDXBietYp2ZdFX0kmyxF5jnyj0H4ZzDNmW4gEBG07Deb
-         f58yiqSobmr+RkG1ceBRvKZLGAJCCPXiCQp0oOi9imllJ30tOPq/NJgh7fSapXzPfqql
-         elhw==
-X-Gm-Message-State: ACrzQf3Hv3UrQZbQD/xIRIITjbYCDvkUpu1jFvUtGMEK4E4Lrbh21P+b
-        FaHPTeskr+B7Mce2wp30f5QRxZxXDzWDIw==
-X-Google-Smtp-Source: AMsMyM6Hzqd9uORdL261CAihdGVEyKDGiyK2QhtKCLd78O0nUPA5MYiwQG8Zpy24IjsSKcTdfnbfbA==
-X-Received: by 2002:a05:6402:371b:b0:460:ff7d:f511 with SMTP id ek27-20020a056402371b00b00460ff7df511mr7754328edb.148.1666370337362;
-        Fri, 21 Oct 2022 09:38:57 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id ce12-20020a170906b24c00b007815ca7ae57sm11762931ejb.212.2022.10.21.09.38.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 09:38:56 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1olv2t-0075g2-0k;
-        Fri, 21 Oct 2022 18:38:55 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Luke Shumaker <lukeshu@datawire.io>,
-        Thomas Koutcher <thomas.koutcher@online.fr>,
-        James Limbouris <james@digitalmatter.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH 9/9] subtree: fix split after annotated tag was squashed
- merged
-Date:   Fri, 21 Oct 2022 18:37:34 +0200
-References: <pull.1390.git.1666365219.gitgitgadget@gmail.com>
- <86a842d50345f6d4d0b16c78d565474be6f8068a.1666365220.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <86a842d50345f6d4d0b16c78d565474be6f8068a.1666365220.git.gitgitgadget@gmail.com>
-Message-ID: <221021.86mt9pdtcw.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229441AbiJUQrQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2022 12:47:16 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C516126C459
+        for <git@vger.kernel.org>; Fri, 21 Oct 2022 09:46:51 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 40F6C15A2E3;
+        Fri, 21 Oct 2022 12:42:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EBJJxCowRBoJAJaavm4KNBEsYY4WG/t2hN1mbE
+        rQq4A=; b=lceKmaki7Aw0qVUaBcTaaBcH5FPU5QUJSI42u/lKL+CjmjVhruoD3P
+        Y33sflkDr9HjU8dqhzpuzo2yXo3H2/FXoEFHtEZqzeosvzrzNbimIO45IeIHeY96
+        mZGbamWnOG6sisNuUEOt1ZvDqPy2zVcXsbzhCEQOOtzOZkV94RyyU=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 3880715A2E2;
+        Fri, 21 Oct 2022 12:42:59 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9DFB415A2E1;
+        Fri, 21 Oct 2022 12:42:58 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Julia Ramer via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, git-security@googlegroups.com,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Julia Ramer <prplr@github.com>,
+        Keanen Wold <keanenwold@github.com>,
+        Veronica Giaudrone <veronica.Giaudrone@microsoft.com>,
+        Bri Brothers <brbrot@microsoft.com>,
+        Taylor Blau <me@ttaylorr.com>, Julia Ramer <gitprplr@gmail.com>
+Subject: Re: [PATCH v3] embargoed releases: also describe the git-security
+ list and the process
+References: <pull.1345.v2.git.1666142160427.gitgitgadget@gmail.com>
+        <pull.1345.v3.git.1666338109778.gitgitgadget@gmail.com>
+Date:   Fri, 21 Oct 2022 09:42:57 -0700
+In-Reply-To: <pull.1345.v3.git.1666338109778.gitgitgadget@gmail.com> (Julia
+        Ramer via GitGitGadget's message of "Fri, 21 Oct 2022 07:41:49 +0000")
+Message-ID: <xmqqo7u5m8ku.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: 6B8F7482-515F-11ED-8582-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Julia Ramer via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Fri, Oct 21 2022, Philippe Blain via GitGitGadget wrote:
-
-> From: Philippe Blain <levraiphilippeblain@gmail.com>
+> From: Julia Ramer <gitprplr@gmail.com>
 >
-> The previous commit fixed a failure in 'git subtree merge --squash' when
-> the previous squash-merge merged an annotated tag of the subtree
-> repository which is missing locally.
+> With the recent turnover on the git-security list, questions came up how
+> things are usually run. Rather than answering questions individually,
+> extend Git's existing documentation about security vulnerabilities to
+> describe the git-security mailing list, how things are run on that list,
+> and what to expect throughout the process from the time a security bug
+> is reported all the way to the time when a fix is released.
 >
-> The same failure happens in 'git subtree split', either directly or when
-> called by 'git subtree push', under the same circumstances: 'cmd_split'
-> invokes 'find_existing_splits', which loops through previous commits and
-> invokes 'git rev-parse' (via 'process_subtree_split_trailer') on the
-> value of any 'git subtree-split' trailer it finds. This fails if this
-> value is the hash of an annotated tag which is missing locally.
->
-> Add a new optional argument 'repository' to 'cmd_split' and
-> 'find_existing_splits', and invoke 'cmd_split' with that argument from
-> 'cmd_push'. This allows 'process_subtree_split_trailer' to try to fetch
-> the missing tag from the 'repository' if it's not available locally,
-> mirroring the new behaviour of 'git subtree pull' and 'git subtree
-> merge'.
->
-> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Helped-by: Taylor Blau <me@ttaylorr.com>
+> Signed-off-by: Julia Ramer <gitprplr@gmail.com>
 > ---
->  contrib/subtree/git-subtree.sh     | 26 ++++++++++++++++++--------
->  contrib/subtree/git-subtree.txt    |  7 ++++++-
->  contrib/subtree/t/t7900-subtree.sh | 12 ++++++++++++
->  3 files changed, 36 insertions(+), 9 deletions(-)
->
-> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-> index 2c67989fe8a..10c9c87839a 100755
-> --- a/contrib/subtree/git-subtree.sh
-> +++ b/contrib/subtree/git-subtree.sh
-> @@ -453,14 +453,19 @@ find_latest_squash () {
->  	done || exit $?
->  }
->  
-> -# Usage: find_existing_splits DIR REV
-> +# Usage: find_existing_splits DIR REV [REPOSITORY]
->  find_existing_splits () {
-> -	assert test $# = 2
-> +	assert test $# = 2 -o $# = 3
 
-This "test" syntax is considered unportable, I'm too lazy to dig up the
-reference, but we've removed it in the past. Maybe it's OK with
-git-subtree.sh", but anyway, it's esay enough to change...
+Thanks.  Everything looks good, except for a few minor things.
 
-...but looking at "master" I see one instance of it in git-subtree.sh
-already, so maybe nobody cares...
+> +Typical timeline
+> +----------------
+
+A much better section title; I like it.
+
+> +- Code review can take place in a variety of different locations,
+> +  depending on context. These are: patches sent inline on the
+> +  git-security list, a private fork on GitHub associated with the
+> +  draft security advisory, or the git/cabal repository.
+
+Here, we name "the git/cabal repository" but the word never appears
+again in the document, we later refer to the same thing "private
+repositories that are owned by the Git project, with tightly
+controlled access", but to outsiders, it is not clear that they are
+the same thing.  Perhaps writing
+
+    ..., or the git/cabal repository (private repository owned by
+    the Git project with tightly controlled access).
+
+here, and replacing the later reference with just "the git/cabal
+repository", would be sufficient.
+
+> +  Contributors working on a fix should consider beginning by sending
+> +  patches to the git-security list (inline with the original thread),
+> +  since they are accessible to all subscribers, along with the original
+> +  reporter.
+
+Mark-up glitch.  This one is formatted as a <pre>...text...</pre>
+under the above bullet point.  Logically this is still a part of the
+above bullet point (i.e. its second paragraph), so we'd need to
+replace the blank line above this second paragraph with a line with
+single '+' and nothing else on it, and de-dent this second paragraph.
+
+Or we can make it a separate bullet point, which may make it simpler
+to read in the source form.
+
+> +- Once the review has settled and everyone involved in the review agrees that
+> +  the patches are ready, the Git maintainer, and others determine a release date
+> +  as well as the release trains that are serviced. The decision regarding which
+
+We typically know how involved the final changes would be (i.e. the
+minimum time it would take for us and involved others to prepare the
+release) way before all the t's are crossed and i's are dotted in
+the patches, so setting the release date may be done much earlier.
+
+> +- While the Git community does its best to accommodate the specific timeline
+> +  requests of the various binary packagers, the nature of the issue may preclude
+> +  a prolonged release schedule. For fixes deemed urgent, it may be in the best
+> +  interest of the Git users community to shorten the disclosure and release
+> +  timeline, and packagers may need to adapt accordingly.
+
+I briefly wondered if we need to say something about stakeholders
+other than packagers (e.g. hosting sites), but it would probably be
+obvious to readers that those who can deploy before releasing their
+version of the sources have enough flexibility to cope better, so
+the above would be fine.
+
+> +- Subsequently, branches with the fixes are pushed to private repositories that
+> +  are owned by the Git project, with tightly controlled access.
+
+    ... with the fixes are pushed to the git/cabal repository.
+
+> +- The tags are created by the Git maintainer and pushed to the same
+> +  repositories.
+
+Just like "review can take place in multiple places; contributors
+are encouraged to start from ..." was made into a single bullet
+point, "branches are privately published to git/cabal; tags are
+added to the same repository." may flow well in the same single
+bullet.  I dunno.
+
+> +- Less than a week before the release, a mail with the relevant information is
+> +  sent to <distros@vs.openwall.org> (see below), a list used to pre-announce
+> +  embargoed releases of open source projects to the stakeholders of all major
+> +  distributions of Linux as well as other OSes. This includes a Git bundle
+> +  of the tagged version(s), but no further specifics of the vulnerability.
+
+I am not sure how much value it adds to have ", but no further..."
+at the end.  Anybody who sees this e-mail has the Git bundle, which
+is relative to the last stable release, and can be used to create
+the full source of the releases by anybody who has access to the
+public Git repositories.  The source includes the release notes in
+the Documentation/RelNotes/ directory that describe everything to
+know about the vulnerabilities the releases address.
+
+    ... This includes a Git bundle of the tagged version(s), using
+    which the full source code for the releases can be created by
+    the recipients to prepare their release artifacts in a clone of
+    the public Git repository.
+
