@@ -2,65 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E5501C433FE
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 21:41:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4DEEEC38A2D
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 21:42:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229497AbiJUVlI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Oct 2022 17:41:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49678 "EHLO
+        id S229894AbiJUVmv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Oct 2022 17:42:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54668 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229587AbiJUVlH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2022 17:41:07 -0400
+        with ESMTP id S229867AbiJUVmu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2022 17:42:50 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 750C71A853A
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 14:41:03 -0700 (PDT)
-Received: (qmail 14433 invoked by uid 109); 21 Oct 2022 21:41:02 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 970462A79C9
+        for <git@vger.kernel.org>; Fri, 21 Oct 2022 14:42:49 -0700 (PDT)
+Received: (qmail 14441 invoked by uid 109); 21 Oct 2022 21:42:49 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 Oct 2022 21:41:02 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 Oct 2022 21:42:49 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16413 invoked by uid 111); 21 Oct 2022 21:41:03 -0000
+Received: (qmail 16435 invoked by uid 111); 21 Oct 2022 21:42:49 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 Oct 2022 17:41:03 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 Oct 2022 17:42:49 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 21 Oct 2022 17:41:01 -0400
+Date:   Fri, 21 Oct 2022 17:42:48 -0400
 From:   Jeff King <peff@peff.net>
 To:     git@vger.kernel.org
 Cc:     Jan =?utf-8?Q?Pokorn=C3=BD?= <poki@fnusa.cz>,
         Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH 0/4] repack tempfile-cleanup signal deadlock
-Message-ID: <Y1MR7V8kGolLd8eh@coredump.intra.peff.net>
+Subject: [PATCH 1/4] repack: convert "names" util bitfield to array
+Message-ID: <Y1MSWAx+baTklfLL@coredump.intra.peff.net>
+References: <Y1MR7V8kGolLd8eh@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <Y1MR7V8kGolLd8eh@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here's a series which should fix the deadlock Jan reported in:
+We keep a string_list "names" containing the hashes of packs generated
+on our behalf by pack-objects. The util field of each item is treated as
+a bitfield that tells us which extensions (.pack, .idx, .rev, etc) are
+present for each name.
 
-  https://lore.kernel.org/git/00af268377fb7c3b8efd059482ee7449b71f48b1.camel@fnusa.cz/
+Let's switch this to allocating a real array. That will give us room in
+a future patch to store more data than just a single bit per extension.
+And it makes the code a little easier to read, as we avoid casting back
+and forth between uintptr_t and a void pointer.
 
-I split it into a new thread since the problem here is distinct from the
-one fixed in that thread (but they're indeed the same class of problem).
-The fix is along the same lines as what I showed there, switching to
-using the tempfile API. But this has the cleanups I noted there, plus
-nice things like commit messages and tests.
+Since the only thing we're storing is an array, we could just allocate
+it directly. But instead I've put it into a named struct here. That
+further increases readability around the casts, and in particular helps
+differentiate us from other string_lists in the same file which use
+their util field differently. E.g., the existing_*_packs lists still do
+bit-twiddling, but their bits have different meaning than the ones in
+"names". This makes it hard to grep around the code to see how the util
+fields are used; now you can look for "generated_pack_data".
 
-As I noted there, pack-objects is still happy to leave its internal
-tempfiles sitting around. I didn't tackle that in this series, since it
-really is orthogonal, at least in terms of implementation.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/repack.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
-I've cc'd Taylor for review. The main problem here goes all the way back
-to a1bbc6c017 (repack: rewrite the shell script in C, 2013-09-15), but
-the solution is enabled by your more recent populate_pack_ext(), etc.
+diff --git a/builtin/repack.c b/builtin/repack.c
+index a5bacc7797..8e71230bf7 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -247,11 +247,15 @@ static struct {
+ 	{".idx"},
+ };
+ 
+-static unsigned populate_pack_exts(char *name)
++struct generated_pack_data {
++	char exts[ARRAY_SIZE(exts)];
++};
++
++static struct generated_pack_data *populate_pack_exts(const char *name)
+ {
+ 	struct stat statbuf;
+ 	struct strbuf path = STRBUF_INIT;
+-	unsigned ret = 0;
++	struct generated_pack_data *data = xcalloc(1, sizeof(*data));
+ 	int i;
+ 
+ 	for (i = 0; i < ARRAY_SIZE(exts); i++) {
+@@ -261,11 +265,11 @@ static unsigned populate_pack_exts(char *name)
+ 		if (stat(path.buf, &statbuf))
+ 			continue;
+ 
+-		ret |= (1 << i);
++		data->exts[i] = 1;
+ 	}
+ 
+ 	strbuf_release(&path);
+-	return ret;
++	return data;
+ }
+ 
+ static void repack_promisor_objects(const struct pack_objects_args *args,
+@@ -320,7 +324,7 @@ static void repack_promisor_objects(const struct pack_objects_args *args,
+ 					  line.buf);
+ 		write_promisor_file(promisor_name, NULL, 0);
+ 
+-		item->util = (void *)(uintptr_t)populate_pack_exts(item->string);
++		item->util = populate_pack_exts(item->string);
+ 
+ 		free(promisor_name);
+ 	}
+@@ -994,7 +998,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	string_list_sort(&names);
+ 
+ 	for_each_string_list_item(item, &names) {
+-		item->util = (void *)(uintptr_t)populate_pack_exts(item->string);
++		item->util = populate_pack_exts(item->string);
+ 	}
+ 
+ 	close_object_store(the_repository->objects);
+@@ -1003,6 +1007,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	 * Ok we have prepared all new packfiles.
+ 	 */
+ 	for_each_string_list_item(item, &names) {
++		struct generated_pack_data *data = item->util;
++
+ 		for (ext = 0; ext < ARRAY_SIZE(exts); ext++) {
+ 			char *fname, *fname_old;
+ 
+@@ -1011,7 +1017,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 			fname_old = mkpathdup("%s-%s%s",
+ 					packtmp, item->string, exts[ext].name);
+ 
+-			if (((uintptr_t)item->util) & ((uintptr_t)1 << ext)) {
++			if (data->exts[ext]) {
+ 				struct stat statbuffer;
+ 				if (!stat(fname_old, &statbuffer)) {
+ 					statbuffer.st_mode &= ~(S_IWUSR | S_IWGRP | S_IWOTH);
+@@ -1115,7 +1121,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 		write_midx_file(get_object_directory(), NULL, NULL, flags);
+ 	}
+ 
+-	string_list_clear(&names, 0);
++	string_list_clear(&names, 1);
+ 	string_list_clear(&existing_nonkept_packs, 0);
+ 	string_list_clear(&existing_kept_packs, 0);
+ 	clear_pack_geometry(geometry);
+-- 
+2.38.1.496.ga614b0e9bd
 
-  [1/4]: repack: convert "names" util bitfield to array
-  [2/4]: repack: populate extension bits incrementally
-  [3/4]: repack: use tempfiles for signal cleanup
-  [4/4]: repack: drop remove_temporary_files()
-
- builtin/repack.c  | 78 ++++++++++++++---------------------------------
- t/t7700-repack.sh | 16 ++++++++++
- 2 files changed, 39 insertions(+), 55 deletions(-)
-
--Peff
