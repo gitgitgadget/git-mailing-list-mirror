@@ -2,112 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A5C6C433FE
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 21:48:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97C0AC3A59D
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 21:48:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229732AbiJUVsl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Oct 2022 17:48:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40436 "EHLO
+        id S229752AbiJUVsm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Oct 2022 17:48:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229588AbiJUVsk (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229633AbiJUVsk (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 21 Oct 2022 17:48:40 -0400
-Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62540326E0
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C186E275B80
         for <git@vger.kernel.org>; Fri, 21 Oct 2022 14:48:39 -0700 (PDT)
-Received: by mail-il1-x12d.google.com with SMTP id g13so2394711ile.0
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 14:48:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LA0TJCvN42SSWUiKum3FGBwr2ZKCRJJyZN3gGLOV2NI=;
-        b=F9IXADVfZSserB5asJ621+r8QjTa1ApicKyE5i8qZSwJZXDQSzuwqEkKNMnAPCR4Bh
-         fkY3Yuj9+3D5I6trQZ72iqIujmkGJ74p8aVA6SRMLaw8wahaSQqahSHb7cWRan36Vf+J
-         wOwa4StmvFX43nTJz/8/5DKQoXMwwq30GseO5ssOwkoLr8Lt5m9BcG9hz3Vu3YYL+R5n
-         QJNahWmHJT3EuqsZJ/cn3Cr6fmzHTQas/J+gsq+tXMXvuFCYtVRLWqtt20c8Ykfzvlfc
-         neRWg+hNZVNTBiGHU5Z/xLE1Rjjr7FkraFmNUtSMhtwB8ySAnM113NU75C86H5MHqBtg
-         9gjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LA0TJCvN42SSWUiKum3FGBwr2ZKCRJJyZN3gGLOV2NI=;
-        b=hCdzzHWM2JDpYWVgcLxVwzqkOFezjmJZuAEuyOxz3pZQyaQl9dAXpP6i4EFxivGzZp
-         N7kitzMlkhZc45kr9tg5IZ7xLZ+v4tdLI0p5uYK4Lo/HPymc3l0wa7bl5ekNusVs/4AH
-         PcEJ0p3z5enfEOMyqukM6z7X8PjPEtAtchtYemol2Q2jVVmuANOovjwssM3c95FY2+aU
-         5pvoiYlQcbmODzNIzStUkF6h1K6+2GIK8/2G+5XKyetw9Z8ZK8YiZXPF1rmVhJlXGtIR
-         gCsZmRQDDszkbLQKI0pkuQSPYmkWIvyeTFZWIb2QaA0YohqrcBBwq+nMmOl4EKio3NKO
-         lxpA==
-X-Gm-Message-State: ACrzQf2WiIO8XJ3iOxq1TJl4qwbtY877M//FLZTJkbBt0qSdE2PXjzv/
-        Ab4hUsDXkmgKVRN68uCU/L+oNIfD9rlLFHRT
-X-Google-Smtp-Source: AMsMyM737MxtlDfu6E+Dh6txH3jfxYRGVDwr8XdFRHKs85cP5FCARolFo8rkftNY42UiCNpU0zpIbA==
-X-Received: by 2002:a05:6e02:20cd:b0:2f9:b5d4:94b8 with SMTP id 13-20020a056e0220cd00b002f9b5d494b8mr16300707ilq.144.1666388918635;
-        Fri, 21 Oct 2022 14:48:38 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id h1-20020a05660208c100b006aed243a244sm4884642ioz.54.2022.10.21.14.48.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 14:48:38 -0700 (PDT)
-Date:   Fri, 21 Oct 2022 17:48:36 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Yuri <yuri@rawbw.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: 'git commit .' in a subdirectory also commits staged files in
- other subdirectories
-Message-ID: <Y1MTtNcUHyv76UEV@nand.local>
-References: <3a4dfad5-0f2e-14d8-61f2-779616de1ae0@tsoft.com>
+Received: (qmail 14476 invoked by uid 109); 21 Oct 2022 21:48:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 Oct 2022 21:48:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16555 invoked by uid 111); 21 Oct 2022 21:48:39 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 Oct 2022 17:48:39 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 21 Oct 2022 17:48:38 -0400
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Cc:     Jan =?utf-8?Q?Pokorn=C3=BD?= <poki@fnusa.cz>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH 4/4] repack: drop remove_temporary_files()
+Message-ID: <Y1MTtgOOWNovPawH@coredump.intra.peff.net>
+References: <Y1MR7V8kGolLd8eh@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <3a4dfad5-0f2e-14d8-61f2-779616de1ae0@tsoft.com>
+In-Reply-To: <Y1MR7V8kGolLd8eh@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Yuri,
+After we've successfully finished the repack, we call
+remove_temporary_files(), which looks for and removes any files matching
+".tmp-$$-pack-*", where $$ is the pid of the current process. But this
+is pointless. If we make it this far in the process, we've already
+renamed these tempfiles into place, and there is nothing left to delete.
 
-On Fri, Oct 21, 2022 at 12:40:51PM -0700, Yuri wrote:
-> I had several staged files in various subdirectories of the cloned
-> repository tree.
->
-> 'git commit .' in one of them attempted to commit all of them, not
-> only the files in that subdirectory.
->
-> This is a very unreasonable behavior, because while being in any
-> subdirectory 'git commit .' should only affect that subdirectory, and
-> not files elsewhere.
+Nor is there a point in trying to call it to clean up when we _aren't_
+successful. It's not safe for using in a signal handler, and the
+previous commit already handed that job over to the tempfile API.
 
-That isn't right, though I can't reproduce what you describe from your
-report. Try this script out:
+It might seem like it would be useful to clean up stray .tmp files left
+by other invocations of git-repack. But it won't clean those files; it
+only matches ones with its pid, and leaves the rest. Fortunately, those
+are cleaned up naturally by successive calls to git-repack; we'll
+consider .tmp-*.pack the same as normal packfiles, so "repack -ad", etc,
+will roll up their contents and eventually delete them.
 
---- >8 ---
-#!/bin/sh
+The one case that could matter is if pack-objects generates an extension
+we don't know about, like ".tmp-pack-$$-$hash.some-new-ext". The current
+code will quietly delete such a file, while after this patch we'd leave
+it in place. In practice this doesn't happen, and would be indicative of
+a bug. Leaving the file as cruft is arguably a better behavior, as it
+means somebody is more likely to eventually notice and fix the bug.  If
+we really wanted to be paranoid, we could scan for and warn about such
+files, but that seems like overkill.
 
-rm -fr repo
-git init repo
-cd repo
+There's nothing to test with regard to the removal of this function. It
+was doing nothing, so the behavior should be the same.  However, we can
+verify (and protect) our assumption that "repack -ad" will eventually
+remove stray files by adding a test for that.
 
-mkdir -p dir
-touch dir/c
-touch a
-touch b
-git add a b dir/c
-git commit -m "a"
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ builtin/repack.c  | 32 --------------------------------
+ t/t7700-repack.sh |  8 ++++++++
+ 2 files changed, 8 insertions(+), 32 deletions(-)
 
-date >>b
-date >>dir/c
-
-(
-  cd dir
-
-  git commit . -m "dir"
-)
---- 8< ---
-
-`repo` ends up wtih the contents of dir/c committed, but b is still
-modified (and its latest changes not part of the most recent commit).
-
-Can you share a reproduction script?
-
-Thanks,
-Taylor
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 15b6f24626..68294c7bc7 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -91,37 +91,6 @@ static int repack_config(const char *var, const char *value, void *cb)
+ 	return git_default_config(var, value, cb);
+ }
+ 
+-/*
+- * Remove temporary $GIT_OBJECT_DIRECTORY/pack/.tmp-$$-pack-* files.
+- */
+-static void remove_temporary_files(void)
+-{
+-	struct strbuf buf = STRBUF_INIT;
+-	size_t dirlen, prefixlen;
+-	DIR *dir;
+-	struct dirent *e;
+-
+-	dir = opendir(packdir);
+-	if (!dir)
+-		return;
+-
+-	/* Point at the slash at the end of ".../objects/pack/" */
+-	dirlen = strlen(packdir) + 1;
+-	strbuf_addstr(&buf, packtmp);
+-	/* Hold the length of  ".tmp-%d-pack-" */
+-	prefixlen = buf.len - dirlen;
+-
+-	while ((e = readdir(dir))) {
+-		if (strncmp(e->d_name, buf.buf + dirlen, prefixlen))
+-			continue;
+-		strbuf_setlen(&buf, dirlen);
+-		strbuf_addstr(&buf, e->d_name);
+-		unlink(buf.buf);
+-	}
+-	closedir(dir);
+-	strbuf_release(&buf);
+-}
+-
+ /*
+  * Adds all packs hex strings to either fname_nonkept_list or
+  * fname_kept_list based on whether each pack has a corresponding
+@@ -1106,7 +1075,6 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 
+ 	if (run_update_server_info)
+ 		update_server_info(0);
+-	remove_temporary_files();
+ 
+ 	if (git_env_bool(GIT_TEST_MULTI_PACK_INDEX, 0)) {
+ 		unsigned flags = 0;
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index 592016f64a..edcda849b9 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -440,6 +440,14 @@ test_expect_success 'clean up .tmp-* packs on error' '
+ 	test_must_be_empty tmpfiles
+ '
+ 
++test_expect_success 'repack -ad cleans up old .tmp-* packs' '
++	git rev-parse HEAD >input &&
++	git pack-objects $objdir/pack/.tmp-1234 <input &&
++	git repack -ad &&
++	find $objdir/pack -name '.tmp-*' >tmpfiles &&
++	test_must_be_empty tmpfiles
++'
++
+ test_expect_success 'setup for update-server-info' '
+ 	git init update-server-info &&
+ 	test_commit -C update-server-info message
+-- 
+2.38.1.496.ga614b0e9bd
