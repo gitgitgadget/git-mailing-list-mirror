@@ -2,100 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AE1AC433FE
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 21:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3E39C433FE
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 21:59:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229894AbiJUV55 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Oct 2022 17:57:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35800 "EHLO
+        id S229897AbiJUV7R (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Oct 2022 17:59:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229838AbiJUV54 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2022 17:57:56 -0400
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E8F32A935E
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 14:57:54 -0700 (PDT)
-Received: by mail-io1-xd34.google.com with SMTP id p16so3465668iod.6
-        for <git@vger.kernel.org>; Fri, 21 Oct 2022 14:57:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=TABLeno2e9HQZG7t3KMWohdeU4utIphTqqpVnYTz5kU=;
-        b=AkhGGGSGEogY9F1EX/uBldDE8/Rp5mcNR15tjTSGx9m2mooTry7xI8k1fVRBdN7AGY
-         oTOeavTAxxCwSvyN7qqexXrDzxDzuUMRRyub/89MJT8epdGEoxMKkfvDdr3vwp8SBBQT
-         vct3QpEyGFv8ZlU8RIQ6YhKtq4WwcS4S2HCrpalDsdkGH4nX9jZ4BUkApo2Oartj2bua
-         sHZvUv76Paf3qafkjG9HT0e1f3Yl48LUrCQ6NUCNn6PwCoX7rQVn2eZGUC07TrrFtpSn
-         zvYHrFwuJkSEMTxqwUg/SkIeW8cKVqCjvisVZnyxOqsbjO+/sd+XGRjMq4dhV3Z0BzZC
-         8DVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TABLeno2e9HQZG7t3KMWohdeU4utIphTqqpVnYTz5kU=;
-        b=Zju/fMYch1mCNofx+/9fmSyFiTerqMKpEw5ZxHlZbuKmIu+Gzz/RcNfHwazf90rHKr
-         /75u8OACC6p/Mo2ZWqo2t5N85blxWE6ar+qJad1CwxT/lDCWnFkQOENSePBfpmFZZjhe
-         bP0nOWnv8eKbg9YHAlY130veXU2pd6yCJ6t/+dTBgcJTHMME8BDV3CX07lWxOSoQAbmA
-         DhPf/pKBeFfCnWOw7J7B7rEZRi5xCmNk8pS7GnW6b0Uv1CR+olJ16uYYoLAaPQ0FVqsX
-         Pr2inmu6m8/A95vE+BOGFm63sozdNVrzPKL/mxAq/Qea4u9zUgX7UnspDSSVzRYZ+AeW
-         RJJw==
-X-Gm-Message-State: ACrzQf1zbgXS/OlbBc/TSioPZdQupw4GOPvkwMmwuyPhRKE0SOpEvFI7
-        cr9k/VJ7fCK2LYfsFMe/0TwQ+Gh9G8vH6Y2f
-X-Google-Smtp-Source: AMsMyM6aL/3lj6oEkpHyRBLMBYUFp2U1OZSgG6neJ03PbvootE30incW5HI2IHQlvVis69DfMFhwxQ==
-X-Received: by 2002:a05:6602:2d06:b0:6bc:e0aa:7ff2 with SMTP id c6-20020a0566022d0600b006bce0aa7ff2mr13592354iow.173.1666389473606;
-        Fri, 21 Oct 2022 14:57:53 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id g8-20020a02bb88000000b0036ee761e2f4sm100857jan.159.2022.10.21.14.57.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 21 Oct 2022 14:57:53 -0700 (PDT)
-Date:   Fri, 21 Oct 2022 17:57:52 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, jacob@initialcommit.io, gitster@pobox.com,
-        avarab@gmail.com
-Subject: Re: [PATCH v2 2/6] shortlog: make trailer insertion a noop when
- appropriate
-Message-ID: <Y1MV4DEa8y0I5W/8@nand.local>
-References: <cover.1665448437.git.me@ttaylorr.com>
- <cover.1666320509.git.me@ttaylorr.com>
- <7decccad7ccb39eed67bab87ed665beccf5d392f.1666320509.git.me@ttaylorr.com>
- <Y1IwVIoVsl1FVklI@coredump.intra.peff.net>
+        with ESMTP id S229633AbiJUV7P (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2022 17:59:15 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 877E22A935E
+        for <git@vger.kernel.org>; Fri, 21 Oct 2022 14:59:14 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 848E01C013E;
+        Fri, 21 Oct 2022 17:59:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=CApB/HkWRMBP
+        /ajChfMX0sOQB0KUaT5AwEH6kYILJyE=; b=k+2+BjAqhIat2bZyPxk3tygKwUys
+        f6FVKGSabRU2cG3JrgxvN4pFKhFsiBTDvBcomjg25tpPaqCz/y/ax5Pqrc7Mhjc6
+        9ol1UhyAAKcf32yh5wpMPWG4Lk/rT63tsgstcRBgveSbem5XL/tHlXLZ4tC/BEcK
+        cixjjJkizddG48o=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7CBA11C013C;
+        Fri, 21 Oct 2022 17:59:13 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id A80AD1C013B;
+        Fri, 21 Oct 2022 17:59:10 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     git@vger.kernel.org, alexander.s.m@gmail.com,
+        Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v5 1/1] diff.c: When appropriate, use utf8_strwidth()
+References: <CA+VDVVVmi99i6ZY64tg8RkVXDc5gOzQP_SH12zhDKRkUnhWFgw@mail.gmail.com>
+        <20220914151333.3309-1-tboegi@web.de> <xmqqpmfx52qj.fsf@gitster.g>
+        <20220926184308.5oaaoopod36igq6i@tb-raspi4>
+        <xmqq35bv1gu5.fsf@gitster.g>
+        <20221020154608.jndql5sio3jyii3z@tb-raspi4>
+        <xmqqy1tas85w.fsf@gitster.g>
+        <20221021151909.z3nejpnnt2wmmkry@tb-raspi4>
+Date:   Fri, 21 Oct 2022 14:59:09 -0700
+In-Reply-To: <20221021151909.z3nejpnnt2wmmkry@tb-raspi4> ("Torsten
+        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Fri, 21 Oct 2022 17:19:09
+ +0200")
+Message-ID: <xmqq35bgkfde.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y1IwVIoVsl1FVklI@coredump.intra.peff.net>
+X-Pobox-Relay-ID: 97C6BFB6-518B-11ED-9C65-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 21, 2022 at 01:38:28AM -0400, Jeff King wrote:
-> On Thu, Oct 20, 2022 at 11:11:32PM -0400, Taylor Blau wrote:
->
-> > When there are no trailers to insert, it is natural that
-> > insert_records_from_trailers() should return without having done any
-> > work.
-> >
-> > But instead we guard this call unnecessarily by first checking whether
-> > `log->groups` has the `SHORTLOG_GROUP_TRAILER` bit set.
-> >
-> > Prepare to match a similar pattern in the future where a function which
-> > inserts records of a certain type does no work when no specifiers
-> > matching that type are given.
->
-> The patch looks good. And knowing what the rest of the series looks
-> like, this is clearly the right thing to do. But I wonder if the
-> rationale would be easier if it came at the end. Then rather than
-> "prepare to match a similar pattern in the future", you can just say
-> "it's weird that we check the bit for SHORTLOG_GROUP_TRAILER but nothing
-> else; let's make them consistent".
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
-Hmm. I see what you're saying, but in fact by this point in the series
-there are two other spots in shortlog_add_commit() that check whether
-individual bits are set (one for SHORTLOG_GROUP_AUTHOR, and another for
-SHORTLOG_GROUP_COMMITTER).
+> For the moment I don't have any spare time to spend on Git.
+> All your comments are noted, and I hope to get time to address them lat=
+er.
+> If you kick out the branch from seen and the whats cooking list,
+> that would be fine with me.
 
-So I think that the semi-awkward commit message may in fact be the least
-awkward thing to do here ;-).
+I'd rather not waste the efforts so far.  I am tempted to queue the
+following on top or squash it in.
 
-Thanks,
-Taylor
+----- >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
+Subject: [PATCH] diff: leave NEEDWORK notes in show_stats() function
+
+The previous step made an attempt to correctly compute display
+columns allocated and padded different parts of diffstat output.
+There are at least two known codepaths in the function that still
+mixes up display widths and byte length that need to be fixed.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ diff.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/diff.c b/diff.c
+index 2751cae131..1d222d87b2 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2675,6 +2675,11 @@ static void show_stats(struct diffstat_t *data, st=
+ruct diff_options *options)
+ 	 * making the line longer than the maximum width.
+ 	 */
+=20
++	/*
++	 * NEEDSWORK: line_prefix is often used for "log --graph" output
++	 * and contains ANSI-colored string.  utf8_strnwidth() should be
++	 * used to correctly count the display width instead of strlen().
++	 */
+ 	if (options->stat_width =3D=3D -1)
+ 		width =3D term_columns() - strlen(line_prefix);
+ 	else
+@@ -2750,6 +2755,16 @@ static void show_stats(struct diffstat_t *data, st=
+ruct diff_options *options)
+ 			char *slash;
+ 			prefix =3D "...";
+ 			len -=3D 3;
++			/*
++			 * NEEDSWORK: (name_len - len) counts the display
++			 * width, which would be shorter than the byte
++			 * length of the corresponding substring.
++			 * Advancing "name" by that number of bytes does
++			 * *NOT* skip over that many columns, so it is
++			 * very likely that chomping the pathname at the
++			 * slash we will find starting from "name" will
++			 * leave the resulting string still too long.
++			 */
+ 			name +=3D name_len - len;
+ 			slash =3D strchr(name, '/');
+ 			if (slash)
+--=20
+2.38.1-320-g901e6a2134
+
