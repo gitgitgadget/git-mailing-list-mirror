@@ -2,113 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DF17C433FE
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 05:03:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18537C4332F
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 05:19:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229542AbiJUFDo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Oct 2022 01:03:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41130 "EHLO
+        id S229765AbiJUFTm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Oct 2022 01:19:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229596AbiJUFDm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2022 01:03:42 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1B8C1DED67
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 22:03:41 -0700 (PDT)
-Received: (qmail 10434 invoked by uid 109); 21 Oct 2022 05:03:41 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 Oct 2022 05:03:41 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1131 invoked by uid 111); 21 Oct 2022 05:03:42 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 Oct 2022 01:03:42 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 21 Oct 2022 01:03:40 -0400
-From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, jacob@initialcommit.io, gitster@pobox.com
-Subject: Re: [PATCH 5/7] shortlog: implement `--group=author` in terms of
- `--group=<format>`
-Message-ID: <Y1IoLBvVfo+pIC+6@coredump.intra.peff.net>
-References: <cover.1665448437.git.me@ttaylorr.com>
- <55a6ef7bc0082818fa51a0915c43002ede5c449f.1665448437.git.me@ttaylorr.com>
- <Y0TIMlrrifYKuBnR@coredump.intra.peff.net>
- <Y0TLf/J22ioQ5UCt@nand.local>
- <Y1H9xdDJS+xKW8mS@nand.local>
+        with ESMTP id S229597AbiJUFTj (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2022 01:19:39 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 440051F2E0
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 22:19:34 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id l22so2653897edj.5
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 22:19:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ymkatz.net; s=g;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=GQcV9M/TvJg/DVxaYB0GtGr0AR5Ka6QtwZE2NfsL6/s=;
+        b=cAVmHIcmEQanskBePPylzq3AfonAEdknhw0HTOB76x8ZGW8ThgEGx3A1gx794yHDcF
+         uuRNXe5aQTSz98msfEWG44GwzQQGymBT9SS+oe8lcskHHy74teUaZIlPVU7TkSbbNSrd
+         2aEjF/Mo8dun9jt2RjEXwp6QfLoyEz8dn9E+4=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GQcV9M/TvJg/DVxaYB0GtGr0AR5Ka6QtwZE2NfsL6/s=;
+        b=SoVwsOnQoG0tRw/NjfalPmqaHxwoypk+O8xhIdJ+3K9viAz/x6TXNnE4oWcw0QdJ1K
+         rMqAPmei301XQF7Pr9jUGmbzTN8ktSJw3o2itAQ8hxPf/5UlxxNC3Ux8+OjjpF6tJAYp
+         Mca/9d7FX4p7y4YejwSv4y8tvye6+A4+nDVC0Rr3jOa4CT6aRZPmx7UoimvJcfDdCrW9
+         /uMdRSnZECwtmaJ0+VfHuVPpPjPqQcPRY1eHPoqOU2q1RNeWeGw6BSQHv4pouY0APZRk
+         AuPCW7DVwZGpObHxa14CyLwYylK+O/DYCx6qC7r72FOttii1lQpcoLK6zypooiId9kLO
+         FGZQ==
+X-Gm-Message-State: ACrzQf0LpbN2GkvHz+SbKTUx3B4jTC2+LJAoel3N3RxJ3mrfnPx0KzYU
+        mlbnYyOQNvROnJtUYGsjweA/VfRq9ZA04CXW
+X-Google-Smtp-Source: AMsMyM65XC1wISv6yzWPoTw7RBO3Xj9ocHu/mLFQLrrwcd1b3/wKqW1R3na10Q8Z1DtONrPMIoCfpQ==
+X-Received: by 2002:a05:6402:2712:b0:45d:de37:f828 with SMTP id y18-20020a056402271200b0045dde37f828mr14837554edd.317.1666329571583;
+        Thu, 20 Oct 2022 22:19:31 -0700 (PDT)
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com. [209.85.218.46])
+        by smtp.gmail.com with ESMTPSA id br16-20020a170906d15000b00772061034dbsm11088813ejb.182.2022.10.20.22.19.30
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 20 Oct 2022 22:19:30 -0700 (PDT)
+Received: by mail-ej1-f46.google.com with SMTP id k2so4531594ejr.2
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 22:19:30 -0700 (PDT)
+X-Received: by 2002:a17:907:743:b0:740:ef93:2ffc with SMTP id
+ xc3-20020a170907074300b00740ef932ffcmr14284561ejb.514.1666329570027; Thu, 20
+ Oct 2022 22:19:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y1H9xdDJS+xKW8mS@nand.local>
+From:   Yehuda Katz <yehuda@ymkatz.net>
+Date:   Fri, 21 Oct 2022 01:19:12 -0400
+X-Gmail-Original-Message-ID: <CAGBAQ45f6D=XsyiOmumpAnE+OxQpuZXhMsVegrHKsxaN5mc3eQ@mail.gmail.com>
+Message-ID: <CAGBAQ45f6D=XsyiOmumpAnE+OxQpuZXhMsVegrHKsxaN5mc3eQ@mail.gmail.com>
+Subject: Change in behavior of included safe.directory in system config
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 20, 2022 at 10:02:45PM -0400, Taylor Blau wrote:
+There seems to be some change in behavior, either to included files or
+to safe.directory between Git 2.36.0 and 2.38.0. I don't see any
+explanation in the release notes.
+I push out a system configuration with a configuration management tool
+which is why it is in a separate file.
+If I put the safe.directory configuration in the main system config,
+it works. I don't understand why this is because the value is still
+shown when running a config list.
 
-> > > > -	if (log->groups & SHORTLOG_GROUP_AUTHOR) {
-> > > > -		strbuf_reset(&ident);
-> > > > -		format_commit_message(commit,
-> > > > -				      log->email ? "%aN <%aE>" : "%aN",
-> > > > -				      &ident, &ctx);
-> > > > -		if (!HAS_MULTI_BITS(log->groups) ||
-> > > > -		    strset_add(&dups, ident.buf))
-> > > > -			insert_one_record(log, ident.buf, oneline_str);
-> > > > -	}
-> > >
-> > > This loses the HAS_MULTI_BITS() optimization. The idea there is that if
-> > > you have a single group-by that can't produce multiple outputs, then
-> > > there's no need to do duplicate detection.
-> > >
-> > > The equivalent in an all-formats world is something like:
-> > >
-> > >   log.format.nr > 1 && !log.trailers.nr
-> > >
-> > > (because trailers are special in that one trailer key can produce
-> > > multiple idents for a single commit).
-> 
-> Hmm. Shouldn't that "&& !log.trailers.nr" be an "|| log.trailers.nr"? It
-> doesn't seem to make sense to say "there are things that could produce
-> multiple outputs" if there's more than one format _and_ no trailers.
+Basic config:
+[root@myhost myproject]# pwd
+/opt/myproject
+[root@myhost myproject]# cat /etc/gitconfig
+[include]
+        path = /etc/gitconfig.d/myproject
+[root@myhost myproject]# cat /etc/gitconfig.d/myproject
+[safe]
+        directory = /opt/myproject
 
-Yeah. I was thinking of it as "is it OK to not de-dup", but of course it
-is the other way around because of the "!". And regardless of which way
-you write the conditional, the two sides must agree. ;)
+With the old version:
+[root@myhost myproject]# git --version
+git version 2.36.0
+[root@myhost myproject]# git config --list --show-scope
+system  include.path=/etc/gitconfig.d/myproject
+system  safe.directory=/opt/myproject
+local   core.repositoryformatversion=0
+local   core.filemode=true
+local   core.bare=false
+local   core.logallrefupdates=true
+local   remote.origin.url=git@gitlab.example.com:me/myproject.git
+local   remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+local   branch.master.remote=origin
+local   branch.master.merge=refs/heads/master
+[root@myhost myproject]# git pull
+Already up to date.
+[root@myhost myproject]#
 
-> The logic should read "there are things that could produce multiple
-> outputs if there is more than one format *or* at least one trailer".
-> 
-> So I think the right change would be:
-> 
-> --- >8 ---
-> diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-> index 95ceab7649..7e1b56e2aa 100644
-> --- a/builtin/shortlog.c
-> +++ b/builtin/shortlog.c
-> @@ -216,7 +216,8 @@ static void insert_records_from_format(struct shortlog *log,
-> 
->  		format_commit_message(commit, item->string, &buf, ctx);
-> 
-> -		if (strset_add(dups, buf.buf))
-> +		if (!(log->format.nr > 1 || log->trailers.nr) ||
-> +		    strset_add(dups, buf.buf))
->  			insert_one_record(log, buf.buf, oneline);
->  	}
-> --- 8< ---
-> 
-> Yeah?
+After the upgrade:
+[root@myhost myproject]# git --version
+git version 2.38.0
+[root@myhost myproject]# git config --list --show-scope
+system  include.path=/etc/gitconfig.d/puppet
+system  safe.directory=/opt/myproject
+[root@myhost myproject]# git pull
+fatal: detected dubious ownership in repository at '/opt/myproject'
+To add an exception for this directory, call:
 
-Right. I wondered if it might be a little clearer to drop the outer "!",
-which yields:
-
-  if ((log->format.nr <= 1 && !log->trailers.nr) ||
-      strset_add(dups, buf.buf))
-
-but it is not really any less confusing. If we gave that first part of
-the conditional a name, like:
-
-  if (!needs_dedup(log) || strset_add(dups, buf.buf))
-
-maybe that is better. I dunno.
-
-Regardless, what you wrote above is correct. Thanks for catching it.
-
--Peff
+        git config --global --add safe.directory /opt/myproject
+[root@myhost myproject]#
