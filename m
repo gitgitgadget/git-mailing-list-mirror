@@ -2,91 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F915C4332F
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 06:04:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA32DC4332F
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 06:07:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229976AbiJUGEd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Oct 2022 02:04:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57882 "EHLO
+        id S229976AbiJUGHE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Oct 2022 02:07:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229981AbiJUGEa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2022 02:04:30 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7B48DF9C
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 23:04:24 -0700 (PDT)
-Received: (qmail 10636 invoked by uid 109); 21 Oct 2022 06:04:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 Oct 2022 06:04:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2141 invoked by uid 111); 21 Oct 2022 06:04:25 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 Oct 2022 02:04:25 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 21 Oct 2022 02:04:23 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UnViw6lu?= Justo <rjusto@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        Victoria Dye <vdye@github.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: force -O0 when compiling with SANITIZE=leak
-Message-ID: <Y1I2Z9K4iaAr+GiP@coredump.intra.peff.net>
-References: <Y07yeEQu+C7AH7oN@nand.local>
- <Y08BPbWBj7SNluXq@coredump.intra.peff.net>
- <Y08JZVDgJpJvrBiz@coredump.intra.peff.net>
- <221018.86k04whkgf.gmgdl@evledraar.gmail.com>
- <Y0+i1G5ybdhUGph2@coredump.intra.peff.net>
- <939ccb0c-005c-4f98-a6ca-3f8e5cda1641@gmail.com>
+        with ESMTP id S229864AbiJUGHC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2022 02:07:02 -0400
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 850B81F8130
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 23:06:59 -0700 (PDT)
+Received: by mail-ej1-f53.google.com with SMTP id bj12so4559462ejb.13
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 23:06:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QZZvyaZPW18MjptjsRbk0tNqYQwJwabDtYUc5frIZuE=;
+        b=wDbz3GZPLXdbtd6rxSxNCYVFW0W3/ffw7Hly/kfhq8zC6VLLzf8dkwmjRtUQPXV+5E
+         CDMfYkqFsD0GowtgtnvOziOaRk77H5Q2E4qz7aHaZgmy70JVi+hq51CN/Cd3dJmkYXnT
+         3w722WhHa3H3llH8q9VsDA4ey0GoslHLUj0I447No5iKy4AQpPQcnzvduBMHkKEYGoez
+         UbW5SFiwxdDwsJ450yKr4oPgxT+qnjjQyMoBykIgKauy/HV/PRt7DtAMSbDcTKuYYabG
+         qYkLWbN8RGJy51SiiTnQkb0M9mqd/BrdWvE/wfeHroVMtVgst4totI2Db7yyi0dfQNPv
+         wPFw==
+X-Gm-Message-State: ACrzQf04ETyKmSu3WzLORTnrlaj5eBjRGeDm2vAVEaaPkFn7k5Wh/Gmj
+        3uZQekbssqc6myJ4L32zTOK9Sl4weyOF1HcNqRQ=
+X-Google-Smtp-Source: AMsMyM6SiT5ZoocZVfXE+ILq/dIvwcrwcYaLYRg3utXZl42ShZG0Qugb6XrBWSD22IpxA5BIbI+qaVqmEfkfA8UuZhc=
+X-Received: by 2002:a17:907:60c7:b0:78e:1cc:57de with SMTP id
+ hv7-20020a17090760c700b0078e01cc57demr14079872ejc.33.1666332417613; Thu, 20
+ Oct 2022 23:06:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <939ccb0c-005c-4f98-a6ca-3f8e5cda1641@gmail.com>
+References: <5E2E10BE-6EEB-4C78-A489-5899400DA937@gmail.com>
+ <CA+JQ7M-NA9UYafMurb9MAo5bp6djdzRP7ChAbdmzU+nmrkXTNw@mail.gmail.com>
+ <DB5611E0-6B1C-4711-BB9F-72F6E8F39506@gmail.com> <CA+JQ7M92x03FPWM6qWjG=FYPxCYs8xcC_HRWLnkwj4iqA9KK=w@mail.gmail.com>
+ <46A1CB40-BBEE-43FC-9626-588718518B4A@gmail.com>
+In-Reply-To: <46A1CB40-BBEE-43FC-9626-588718518B4A@gmail.com>
+From:   Erik Cervin Edin <erik@cervined.in>
+Date:   Fri, 21 Oct 2022 08:06:21 +0200
+Message-ID: <CA+JQ7M-7qEu8ooQp_g1+5pownA13VbPvJQSb-snKP3=7yfyCEw@mail.gmail.com>
+Subject: Re: Cloning remotely under git for Windows not working
+To:     "W. Ekkehard Blanz" <ekkehard.blanz@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 20, 2022 at 08:57:31PM +0200, Rubén Justo wrote:
+On Fri, Oct 21, 2022 at 12:00 AM W. Ekkehard Blanz
+<ekkehard.blanz@gmail.com> wrote:
+>
+> How do I convince git to use Powershell as its shell of choice when it arrives over ssh at my target Windows box?  Unfortunately,
+>     git help clone
+> Does not give me any indication how to do that.
 
-> "-O2" is what goes public, testing it, directly or indirectly, is useful.
-> Another thing is the pay-off..
-
-Sort of. The leak-check build itself is not what goes public, so we have
-already diverged from a release build. But yes, if there were cases that
--O2 caught that -O0 did not, that would be of interest.
-
-But are there?
-
-I.e., we already know of false positives with -O2. Are there false
-negatives with -O0?
-
-The example you give below goes the other way:
-
-> "False positives" makes me think the leak checker does its best.  And the
-> compiler.  This "-O0 leak" is ignored by both, with "-O2":
-> 
-> 	void func()
-> 	{
-> 		malloc(1024);
-> 		exit(1);
-> 	}
-
-It is a false negative with -O2. Which again seems to argue for using
--O0.
-
-> UNLEAK(), "-O0" as a /second opinion/ /confirmation/, some attention to the
-> false positives,... are things that doesn't sound so bad.  Maybe there is a
-> better way.  Dunno.
-
-I don't know why we'd want to prefer -O2 if we know it produces worse
-results, but don't have any cases where it produce better ones (or even
-a plausible explanation for why it might). Sure, we could squelch its
-false positives with UNLEAK(), but:
-
-  - that's per-site work, versus setting -O0 once
-
-  - UNLEAK() suppresses false positives, but it also would suppress true
-    positives (e.g., if the code later changed and somebody introduced a
-    leak). It seems better to avoid that if possible.
-
--Peff
+AFAIK, the remote choses the default shell of ssh sessions so you
+either change that or somehow launch a different subshell with the
+client. The former should be easier
+https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_server_configuration
+the latter is talked about somewhere in here
+https://github.com/PowerShell/Win32-OpenSSH/issues/752
+if my memory serves me correctly. I chose the former
