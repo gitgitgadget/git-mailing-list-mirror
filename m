@@ -2,112 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18537C4332F
-	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 05:19:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28773C433FE
+	for <git@archiver.kernel.org>; Fri, 21 Oct 2022 05:21:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229765AbiJUFTm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 21 Oct 2022 01:19:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54086 "EHLO
+        id S229489AbiJUFVf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 21 Oct 2022 01:21:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229597AbiJUFTj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Oct 2022 01:19:39 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 440051F2E0
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 22:19:34 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id l22so2653897edj.5
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 22:19:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ymkatz.net; s=g;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=GQcV9M/TvJg/DVxaYB0GtGr0AR5Ka6QtwZE2NfsL6/s=;
-        b=cAVmHIcmEQanskBePPylzq3AfonAEdknhw0HTOB76x8ZGW8ThgEGx3A1gx794yHDcF
-         uuRNXe5aQTSz98msfEWG44GwzQQGymBT9SS+oe8lcskHHy74teUaZIlPVU7TkSbbNSrd
-         2aEjF/Mo8dun9jt2RjEXwp6QfLoyEz8dn9E+4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GQcV9M/TvJg/DVxaYB0GtGr0AR5Ka6QtwZE2NfsL6/s=;
-        b=SoVwsOnQoG0tRw/NjfalPmqaHxwoypk+O8xhIdJ+3K9viAz/x6TXNnE4oWcw0QdJ1K
-         rMqAPmei301XQF7Pr9jUGmbzTN8ktSJw3o2itAQ8hxPf/5UlxxNC3Ux8+OjjpF6tJAYp
-         Mca/9d7FX4p7y4YejwSv4y8tvye6+A4+nDVC0Rr3jOa4CT6aRZPmx7UoimvJcfDdCrW9
-         /uMdRSnZECwtmaJ0+VfHuVPpPjPqQcPRY1eHPoqOU2q1RNeWeGw6BSQHv4pouY0APZRk
-         AuPCW7DVwZGpObHxa14CyLwYylK+O/DYCx6qC7r72FOttii1lQpcoLK6zypooiId9kLO
-         FGZQ==
-X-Gm-Message-State: ACrzQf0LpbN2GkvHz+SbKTUx3B4jTC2+LJAoel3N3RxJ3mrfnPx0KzYU
-        mlbnYyOQNvROnJtUYGsjweA/VfRq9ZA04CXW
-X-Google-Smtp-Source: AMsMyM65XC1wISv6yzWPoTw7RBO3Xj9ocHu/mLFQLrrwcd1b3/wKqW1R3na10Q8Z1DtONrPMIoCfpQ==
-X-Received: by 2002:a05:6402:2712:b0:45d:de37:f828 with SMTP id y18-20020a056402271200b0045dde37f828mr14837554edd.317.1666329571583;
-        Thu, 20 Oct 2022 22:19:31 -0700 (PDT)
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com. [209.85.218.46])
-        by smtp.gmail.com with ESMTPSA id br16-20020a170906d15000b00772061034dbsm11088813ejb.182.2022.10.20.22.19.30
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 20 Oct 2022 22:19:30 -0700 (PDT)
-Received: by mail-ej1-f46.google.com with SMTP id k2so4531594ejr.2
-        for <git@vger.kernel.org>; Thu, 20 Oct 2022 22:19:30 -0700 (PDT)
-X-Received: by 2002:a17:907:743:b0:740:ef93:2ffc with SMTP id
- xc3-20020a170907074300b00740ef932ffcmr14284561ejb.514.1666329570027; Thu, 20
- Oct 2022 22:19:30 -0700 (PDT)
+        with ESMTP id S229991AbiJUFVc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Oct 2022 01:21:32 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2EAB1A0F92
+        for <git@vger.kernel.org>; Thu, 20 Oct 2022 22:21:31 -0700 (PDT)
+Received: (qmail 10466 invoked by uid 109); 21 Oct 2022 05:21:31 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 21 Oct 2022 05:21:31 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1448 invoked by uid 111); 21 Oct 2022 05:21:32 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 21 Oct 2022 01:21:32 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 21 Oct 2022 01:21:30 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org, jacob@initialcommit.io, gitster@pobox.com
+Subject: Re: [PATCH 4/7] shortlog: support arbitrary commit format `--group`s
+Message-ID: <Y1IsWt0ZrW+0hy1v@coredump.intra.peff.net>
+References: <cover.1665448437.git.me@ttaylorr.com>
+ <6f38990cc2ea8460ce37437e0770784d9b712dab.1665448437.git.me@ttaylorr.com>
+ <Y0TDDvzeCxIMFbG5@coredump.intra.peff.net>
+ <Y0TF0M6UzLS9r6iM@nand.local>
+ <Y0TOpVF+Y70YJHzx@coredump.intra.peff.net>
+ <Y1IGeuudJj18sDPz@nand.local>
 MIME-Version: 1.0
-From:   Yehuda Katz <yehuda@ymkatz.net>
-Date:   Fri, 21 Oct 2022 01:19:12 -0400
-X-Gmail-Original-Message-ID: <CAGBAQ45f6D=XsyiOmumpAnE+OxQpuZXhMsVegrHKsxaN5mc3eQ@mail.gmail.com>
-Message-ID: <CAGBAQ45f6D=XsyiOmumpAnE+OxQpuZXhMsVegrHKsxaN5mc3eQ@mail.gmail.com>
-Subject: Change in behavior of included safe.directory in system config
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Y1IGeuudJj18sDPz@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There seems to be some change in behavior, either to included files or
-to safe.directory between Git 2.36.0 and 2.38.0. I don't see any
-explanation in the release notes.
-I push out a system configuration with a configuration management tool
-which is why it is in a separate file.
-If I put the safe.directory configuration in the main system config,
-it works. I don't understand why this is because the value is still
-shown when running a config list.
+On Thu, Oct 20, 2022 at 10:39:54PM -0400, Taylor Blau wrote:
 
-Basic config:
-[root@myhost myproject]# pwd
-/opt/myproject
-[root@myhost myproject]# cat /etc/gitconfig
-[include]
-        path = /etc/gitconfig.d/myproject
-[root@myhost myproject]# cat /etc/gitconfig.d/myproject
-[safe]
-        directory = /opt/myproject
+> --- 8< ---
+> diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
+> index 0abe5354fc..566d581e1b 100755
+> --- a/t/t4201-shortlog.sh
+> +++ b/t/t4201-shortlog.sh
+> @@ -356,6 +356,19 @@ test_expect_success 'shortlog can match multiple groups' '
+>  	test_cmp expect actual
+>  '
+> 
+> +test_expect_success 'shortlog can match multiple format groups' '
+> +	cat >expect <<-\EOF &&
+> +	     2	User B <b@example.com>
+> +	     1	A U Thor <author@example.com>
+> +	     1	User A <a@example.com>
+> +	EOF
+> +	git shortlog -ns \
+> +		--group="%(trailers:valueonly,separator=%0x00,key=some-trailer)" \
+> +		--group="%(trailers:valueonly,separator=%0x00,key=another-trailer)" \
+> +		-2 HEAD >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'set up option selection tests' '
+>  	git commit --allow-empty -F - <<-\EOF
+>  	subject
+> --- >8 ---
+> 
+> The gross bit there really is the 'separator=%0x00' thing, since the
+> "trailers" pretty format gives us a NL character already. I suppose that
+> you could do something like this on top instead:
 
-With the old version:
-[root@myhost myproject]# git --version
-git version 2.36.0
-[root@myhost myproject]# git config --list --show-scope
-system  include.path=/etc/gitconfig.d/myproject
-system  safe.directory=/opt/myproject
-local   core.repositoryformatversion=0
-local   core.filemode=true
-local   core.bare=false
-local   core.logallrefupdates=true
-local   remote.origin.url=git@gitlab.example.com:me/myproject.git
-local   remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
-local   branch.master.remote=origin
-local   branch.master.merge=refs/heads/master
-[root@myhost myproject]# git pull
-Already up to date.
-[root@myhost myproject]#
+IMHO the new test should avoid using trailers entirely, to avoid the
+notion that they are necessary to create the duplicate situation. In a
+normal repository, the most obvious one is just asking about both
+authors and committers:
 
-After the upgrade:
-[root@myhost myproject]# git --version
-git version 2.38.0
-[root@myhost myproject]# git config --list --show-scope
-system  include.path=/etc/gitconfig.d/puppet
-system  safe.directory=/opt/myproject
-[root@myhost myproject]# git pull
-fatal: detected dubious ownership in repository at '/opt/myproject'
-To add an exception for this directory, call:
+  git shortlog --group=format:%cn --group=format:%an
 
-        git config --global --add safe.directory /opt/myproject
-[root@myhost myproject]#
+Most commits will have the same value for both, but we want to credit
+the commit to them only once.
+
+Of course in our fake test-lib world, authors and committers are
+different by default. :-/
+
+But it's easy enough to make more normal-looking commits, perhaps like:
+
+diff --git a/t/t4201-shortlog.sh b/t/t4201-shortlog.sh
+index 0abe5354fc..f0ff8a1714 100755
+--- a/t/t4201-shortlog.sh
++++ b/t/t4201-shortlog.sh
+@@ -356,6 +356,20 @@ test_expect_success 'shortlog can match multiple groups' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'shortlog can match multiple format groups' '
++	GIT_COMMITTER_NAME=$GIT_AUTHOR_NAME \
++		git commit --allow-empty -m "identical names" &&
++	cat >expect <<-\EOF &&
++	     2	A U Thor
++	     1	C O Mitter
++	EOF
++	git shortlog -ns \
++		--group=%cn \
++		--group=%an \
++		-2 HEAD >actual &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'set up option selection tests' '
+ 	git commit --allow-empty -F - <<-\EOF
+ 	subject
+
+You could also get fancier by dropping "-s" and making sure that the
+commits were attributed as expected, but I think the count covers
+things.
+
+-Peff
