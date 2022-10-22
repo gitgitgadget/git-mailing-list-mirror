@@ -2,315 +2,239 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0AFAC04A95
-	for <git@archiver.kernel.org>; Sat, 22 Oct 2022 11:44:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AD5BC433FE
+	for <git@archiver.kernel.org>; Sat, 22 Oct 2022 15:46:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229667AbiJVLoK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Oct 2022 07:44:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44968 "EHLO
+        id S229494AbiJVPqN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Oct 2022 11:46:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230314AbiJVLnz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Oct 2022 07:43:55 -0400
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0E55B85
-        for <git@vger.kernel.org>; Sat, 22 Oct 2022 04:43:48 -0700 (PDT)
-Received: by mail-yb1-xb33.google.com with SMTP id j7so6119000ybb.8
-        for <git@vger.kernel.org>; Sat, 22 Oct 2022 04:43:48 -0700 (PDT)
+        with ESMTP id S229449AbiJVPqK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Oct 2022 11:46:10 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B1B624AADA
+        for <git@vger.kernel.org>; Sat, 22 Oct 2022 08:46:08 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id m29-20020a05600c3b1d00b003c6bf423c71so7175228wms.0
+        for <git@vger.kernel.org>; Sat, 22 Oct 2022 08:46:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=vk0uvnHUBzpZGfSwPcDxGbnCpFOHd3J9s/r1TKblGUI=;
-        b=XifwdxHPPZ26m1mUnB9RN5A74bw8//hpBiFJJcGYJnuRntk+ZUjJKetYh8OhNAhDYq
-         jSBGczxbPwW9LQ/RdMG0AqgKaLk1EF5pn6a+PZusF9qmnJ1Tvd5xQsMWmU/BA42VJz6U
-         fLOu1bS2mP0XzB+s5PNzPq7XhtVK+NTzWmAQYPtyMxxgv630HG0aN2lgCWtnR+14OvAK
-         gVE/CCKkDg3SOXGVASIjek8m8/1MWlg3xQ4i+ZoL11Pru1ko74xmeHdeVd0Y2nVUt0Gf
-         x79nIRnKe5FXY9xwkQLmenSzY4eqXcm9/IQu4mY4Xx0ukaj9wiMqqumMcU3nrdATYr1T
-         fsmw==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=zZQEqSkvYJEUyPWCQx2roN1Yh8GYsB4xueLYOWIpc7A=;
+        b=CuQT+n6oYo1agN0dWbB6kq3WSGI1NTWvkPTCsYdsZn2djdd0bS1oweyobt4PVdDdzq
+         8gVZsi/aUHOzry+nQHfgF6Vzc9BCVytRNzzc12TWFJ+TE7deyuqPBGM2hGndib2hF+Rh
+         /EKYXJr2ttbintGQioQ/hmxjboabuXAT7PRvUMNXworMMokH8V4VQ4qUZWNquJ0+ZT7Z
+         gkgTscKME5x1e/O9rmappX1l3BUhRqeuJPZXSDZZIsfCCAmJHwshoeQbqvvC5Q9Jzl+Z
+         x1sAjIT5mFDuEuQyb3Sn5CkhZD9DOwPfT4uMS0fkObcYlgrdn4isEXoeFNdOtQl/yAGU
+         b77A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=vk0uvnHUBzpZGfSwPcDxGbnCpFOHd3J9s/r1TKblGUI=;
-        b=Mno8sh4n3EUyzubaY2BjS9ebeD8hX+exsxyg6R9ECidqbb/NjtoVTJT0ovC8N6Uo1S
-         RLeCBP+pycTzbarf3s3acmXTzoZlh1Lcn1iZgSj2LN3AUxL8KLTEgoQ47PqLbpuuoJow
-         PJ5syUr712CznGU9TH6ywIPJZxIzk9ZSxWwcoPwJZ/GDLVIe5Q1SCM0ZAPq4Q3mj+7Uf
-         YcoRzaMF7nxJ/SuKjsRaksQ7AybkIBsgvgFFe83s0wwgvW6H3UtJEk6uscdtSLdVfX6F
-         19NWTFmaaIDre2I5K56mNuyhJ9x6rJ2PgBbztv3O2lgqo6h+JWAH8/1sTJkIxx+cSOYl
-         X4Dw==
-X-Gm-Message-State: ACrzQf0wTLDsShJxEyXHkQKSCXTs28vnnM+/zXbzLfQvfmqDjAKBud/s
-        x1DbgAEblSM2t/R4ewEvhY97xHWAeZOoNquL9NLo5fnj2ME9isxxXpnHfw==
-X-Google-Smtp-Source: AMsMyM6gl2b9XNIA8syKUvQ8Vn0pV2dWCtOGDuRiYRODiK8e+qPF4+siqZ7qZSwWLK0m87/0jEzBrRGTv7+m7pKIl2Q=
-X-Received: by 2002:a25:888f:0:b0:6a8:f77c:4f96 with SMTP id
- d15-20020a25888f000000b006a8f77c4f96mr20561400ybl.103.1666439027818; Sat, 22
- Oct 2022 04:43:47 -0700 (PDT)
+        bh=zZQEqSkvYJEUyPWCQx2roN1Yh8GYsB4xueLYOWIpc7A=;
+        b=RD4J19qtLH41NBvvTGVNwt1nfaSEsYiBs1bxAYZlpb8Tb9Y+ydABkVOV8I/PpEkjT6
+         AOvr/gN/G56HvtVkcqIX5fkQLSK/4uslWYtoWBhtLO7d+QLrwBpov5MDJTKX1SvN3mIG
+         ksx41KYOe0YQUvMjpb729HrmjNZNJ5BkALUv1pmSL41+45bFmEx3nfyI+h55Ac/4XpwJ
+         zQHrpq7N1saQmQXyM6tUq99rkw66nAluUe9sdlU07wJUtF8dHf4QA2PgkWb2KQKSJLBe
+         kYkiZCB6PaElKkUKocrWu/IEGSOulK/p3VE9Mch5AekXec1fNwSHSBUIx4kIT7lS56G9
+         4Vew==
+X-Gm-Message-State: ACrzQf0X8xnXMOnL/yzkqE29mcJdyoOpjj19jdITOblT/iQJ7mu3KNpT
+        Y5UF0kOkb/ayo1zuUsRrbd82emnsyis=
+X-Google-Smtp-Source: AMsMyM5Gv2GvCdPfjdMFDyn6+DMV5qZxk8H4zYxRnA+C8SYYNLOo9XIP3gFVomwB+Atdc5JQVDXZPQ==
+X-Received: by 2002:a05:600c:2f08:b0:3c6:befc:9778 with SMTP id r8-20020a05600c2f0800b003c6befc9778mr16556824wmn.101.1666453566167;
+        Sat, 22 Oct 2022 08:46:06 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l15-20020a05600012cf00b002365b759b65sm2353219wrx.86.2022.10.22.08.46.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 22 Oct 2022 08:46:05 -0700 (PDT)
+Message-Id: <pull.1392.git.1666453564661.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 22 Oct 2022 15:46:04 +0000
+Subject: [PATCH] pack-objects: introduce --exclude-delta=<pattern> option
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-From:   NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
-Date:   Sat, 22 Oct 2022 14:43:36 +0300
-Message-ID: <CA+PPyiGtoO4HYA+Z8_te5d0oBLYAxcXeZdTH17AJYaoZ32ObfQ@mail.gmail.com>
-Subject: [OUTREACHY] Unify ref-filter formats with other --pretty
- formats[Draft proposal]
-To:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Hariom verma <hariom18599@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>,
+        James Ramsay <james@jramsay.com.au>,
+        ZheNing Hu <adlternative@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi team,
-I would like to have reviews on my
-
-Google Docs link:https://docs.google.com/document/d/1Kdx8DVWF3c5pwV5-A8Z4n-=
-SoRHlMDncI1gNeGCiLNsE/edit?usp=3Dsharing
-
-Name:Nsengiyumva Wilberforce
-
-Major:Software engineering
-
-Mobile no.:+256 785065399
-
-Email:nsengiyumvawilberforce@gmail.com
-
-IRC:wilber4c
-
-Github:nsengiyumva-wilberforce
-
-Linkedin:https://www.linkedin.com/in/nsengiyumva-wilberforce-623664192/
-
-Time Zone:EAT (UTC + 03:00)
-
-
-About me
-
-I am doing a Bachelor of Science in software engineering at Makerere
-university in my 4th year(final). I spend most of my time writing PHP
-applications. I am also interested in Java and embedded systems
-development and I have participated in embedded systems development
-projects like AdEMNEA.
-
-
-
-Microproject
-
-When I was browsing the outreachy projects on outreachy website, I was
-super excited about Git because I use it in most of my college work.
-At first, it was intimidating for me to introduce myself to the
-community. But I am glad I took a step. I am glad that I completed my
-microproject and the whole process gave me confidence on how to submit
-patches, communicate with the community members and interestingly, it
-was a big learning process for me.  The following are the details
-about my microproject with public-inbox links to different versions.
-
-
-Mailing List for the microproject:
-https://lore.kernel.org/git/pull.1362.v4.git.git.1665772130030.gitgitgadget=
-@gmail.com/
-
-Github:  https://github.com/git/git/pull/1362
-
-Status: next
-
-
-Proposed Project
-
-Abstract
-
-Git has an old problem of duplicated implementations of some logic.
-For example, Git had at least 4 different implementations to format
-command output for different commands. The foremost aim of this
-project is to simplify codebase by getting rid of duplication of a
-similar logic and, as a result, simplify adding new functionality.
-The current task is to reuse ref-filter formatting logic to minimize
-code duplication and to have one unified interface to extract all
-needed data from the object and to print it properly.
-
-Previous Work
-
-Hariom Verma contributed(final report) tremendously towards =E2=80=9CUnifyi=
-ng
-Git=E2=80=99s format languages=E2=80=9D during his 2020 GSoC internship. Ha=
-riom
-finished most of the formatting options and this will help me build on
-his work.  His work looks smart and understandable thus adding on his
-work will be easy. And also his blog is very fabulous, it=E2=80=99s a shoot=
-ing
-point for me to start understanding the codebase very well. Hariom
-mentions in his report that 30 % of the log related tests are failing,
-he also mentions that the cause of tests failure is because of the
-missing mailmap logic and mbox/email commit format. Hariom also says
-it does not handle unknown formatting options. I plan to start with
-his advice about the cause of the failure of these tests and then
-intuitively refactor them into something cool.
-
-Summary of remaining tasks by Hariom
-
--Around 30% log related tests are failing
-
--Teach pretty-lib.{c,h} to handle incorrect formatting option
-
--Email/MBoxed commit format needs work
-
-Some useful mailing lists links from Hariom
-
-Improvements to ref-filter
-Fix trailers atom bugs and improved tests
-
-Unify trailer logic for pretty.{c,h} and ref-filter.{c, h}
-
-
-Olga<olyatelezhnaya@gmail.com> has done great work in =E2=80=9CUnifying Git=
-=E2=80=99s
-format languages=E2=80=9D during Outreachy Round 15 and continued even afte=
-r
-that [from 28-09-2017 to 04-04-2019]. Her work is mostly related to
-`cat-file` and `ref-filter`.
-
-She already did a pretty nice job in preparing ref-filter for more
-general usage of its formatting logic. It will give me the possibility
-to make the migration of pretty.c easier.
-
-The Plan
-
-My task is to look at how pretty formats are different from ref-filter
-formats. When some format is supported by the pretty formats but not
-by the ref-filter formats, and should prepare some patches to support
-the ref-filter format. I will basically build on Hariom=E2=80=99s previous
-work
-
-Step 1:List down all the formats supported by the pretty format but
-are not supported by the ref-filter format
-
-Step 2:Read through different patches related pretty and ref-filter
-formats submitted by different contributors to get a solid and a
-thorough understanding of the pretty and ref-filter formats.
-
-Step 3:Understanding an implementation of one or two pretty formats,
-and then look at how it was implemented in ref-filter format. This is
-going to give me direction to refactor the remaining pretty formats
-
-Step 4(possible approach): Pick one format option at a time and
-convert it to use ref-filter option format
-
-Estimated Timeline
-
-Time Period
-
-
-
-period: December 5,2022 - January 2, 2023
-Community bonding
-tasks
--understanding all the logic of pretty.* and ref-filter.*
-
-(what functions are used and how all formatting process is going)
-
--Working with mentors and identifying the best candidates to be converted f=
-irst.
-
--Converting a couple of formatting options to reuse ref-filter formatting l=
-ogic.
-
--Update Documentation.
-
-
-period: December 25, 2022
-
-Christmas celebrations: Join my parents for celebrations
-
-period: January 1, 2023:
-New year=E2=80=99s day holiday:Join my parents for celebrations
-
-period: January 3 - February 3, 2023
-Coding Phase 1
-tasks
-
--Add on Hariom=E2=80=99s work:Converting more formatting options to reuse
-ref-filter formatting logic.
-
--Finish his incomplete work
-
--Update Documentation.
-
--Possibly look at Olga=E2=80=99s work
-
-period: January 18, 2023: Cake cutting with my  friends
-My Birthday:cake cutting
-
-period:From January 6 - January 18, 2023:
-Semester Exams: I will be working for a few hours per day and always
-be available to reply to any communication
-
-period:February 3 - March 3, 2023
-Coding Phase 2
-tasks
--Final touch-ups and bug fixes(if any)
-
--Update Documentation
-
--Wrapping up.
-
-Blogging about Git
-
-I do love writing a lot however much I have not taken time to put out
-my personal opinions and thinking. Being an avid reader, I think it=E2=80=
-=99s
-now my time to start letting other people read what I write, to let
-people know what I think, what I am doing with my life. And guess
-what, I am super excited to start with Git.
-
-Availability
-
-I can easily devote 50 hours per week since my college just requires
-15 hours per week. I plan even to work more extra hours for my
-internship tasks when time allows.
-
-
-Post Outreachy
-
-Apart from being an Outreachy intern, I plan to remain a member of git
-community even after my internship, because I believe there is more
-today even after the Outreachy internship
-
-Here are some other things I=E2=80=99d like to do beyond Outreachy
-
-Mentor other students
-
-Doing code reviews for other contributors
-
-May be complete the work that I will have left pending after my internship
-
-Keep learning from all of you...
-
-Experience with Open Source
-
-I have little  experience with open source, so I hope to learn a lot
-through my internship with Git from you all.
-
-
-Motivation
-
-Git being a world=E2=80=99s best developer version control system, I feel
-overjoyed that even my little first patch was accepted. The community
-is very welcoming, the people there answer questions very first and
-this turns everything overwhelming to a simple process
-
-
-Closing remarks (Optional)
-
-I am a consistent and passionate learner. Even if solving a problem
-may look tricky to me, I just give it all my 100% time and think of
-1000s of ways to approach it. I know I do not have the required
-expertise to begin working with a skilled team like Git but I believe
-in learning slowly by slowly until I will make it to the peak.
-
-
-I hope you consider and give me a chance to work with git. It=E2=80=99s a
-great hope I have that this opportunity is bringing me closer to my
-dreams. Thanks for your consideration.
-
-
-Best Regards
-
-Nsengiyumva wilberforce
+From: ZheNing Hu <adlternative@gmail.com>
+
+The server uses delta compression during git clone to reduce
+the amount of data transferred over the network, but delta
+compression for large binary blobs often does not reduce
+storage size significantly and wastes a lot of CPU. Git now
+disables delta compression for objects that meet these conditions:
+
+1. files that have -delta set in .gitattributes
+2. files that its size exceed the big_file_threshold
+
+However, in 1, .gitattributes needs to be set manually by the user,
+and in most cases the user does not actively set it, and it is not
+something that can be actively adjusted on the server aside. In 2,
+the big_file_threshold now defaults to 512MB, and many binary files
+smaller than that will be uselessly delta-compressed, and this is
+made worse if the server actively increases the big_file_threshold.
+
+Therefore, we need a way to be able to actively skip the delta
+compression of some files on the server. Introduces the
+`-exclude-delta=<pattern>` option, which can be used to disable delta
+compression for objects that satisfy the pattern.
+
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+    pack-objects: introduce --exclude-delta= option
+    
+    While analyzing some repositories using git filter-repo -analyze, I
+    noticed that many huge binaries in the repositories were
+    delta-compressed without much reduction in size.
+    
+    $ cat .git/filter-repo/analysis/path-all-sizes.txt | more === All paths
+    by reverse accumulated size === Format: unpacked size, packed size, date
+    deleted, path name 23816778 23765921 2022-08-22
+    managed/src/universal/ybc/ybc-1.0.0-b1-linux-x86_64.tar.gz 22504398
+    22445676 2022-08-22
+    managed/src/universal/ybc/ybc-1.0.0-b1-el8-aarch64.tar.gz 11726471
+    6424233 2022-08-09 managed/yba-installer/yba-installer_linux_amd64
+    294644800 5794201 src/yb/master/catalog_manager.cc 2912780 2872186
+    docs/static/images/yp/tables-view-ycql.png 2992192 2634232
+    docs/static/images/yb-cloud/cloud-clusters-backups.png 2757095 2501915
+    docs/static/images/deploy/aws/aws-cf-configure-options.png ...
+    
+    The current solution to avoid delta compression is not very suitable for
+    git servers. First, files that exceed the big_file_threshold are not
+    delta compressed, but the above analysis indicates that many big binary
+    files do not exceed the the big_file_threshold (default to 512MB).
+    Second, there is not .gitattrbutes to disable delta compression for
+    them, we also don't really can let repo administrators add it manually.
+    
+    But we can also see that the large files in these repositories often
+    have some common characteristics: they end in ".tar.gz"or “.png". So
+    perhaps we can take advantage of this feature and disable delta
+    compression on the server for some common type binary files.
+    
+    This is currently implemented by command line parameters
+    --exclude-delta=<pattern>. But maybe we can also try passing it through
+    git config.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1392%2Fadlternative%2Fadl%2Fpack-object-no-try-delta-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1392/adlternative/adl/pack-object-no-try-delta-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1392
+
+ Documentation/git-pack-objects.txt |  6 +++++-
+ builtin/pack-objects.c             | 28 +++++++++++++++++++++++++++-
+ 2 files changed, 32 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index a9995a932ca..92cfee83df5 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 	[--no-reuse-delta] [--delta-base-offset] [--non-empty]
+ 	[--local] [--incremental] [--window=<n>] [--depth=<n>]
+ 	[--revs [--unpacked | --all]] [--keep-pack=<pack-name>]
+-	[--cruft] [--cruft-expiration=<time>]
++	[--cruft] [--cruft-expiration=<time>] [--exclude-delta=<file>]
+ 	[--stdout [--filter=<filter-spec>] | <base-name>]
+ 	[--shallow] [--keep-true-parents] [--[no-]sparse] < <object-list>
+ 
+@@ -221,6 +221,10 @@ depth is 4095.
+ 	This flag tells the command not to reuse existing deltas
+ 	but compute them from scratch.
+ 
++--exclude-delta=<pattern>::
++	Delta compression will not be attempted for blobs for paths
++	matching pattern. See linkgit:gitignore[5] for pattern details.
++
+ --no-reuse-object::
+ 	This flag tells the command not to reuse existing object data at all,
+ 	including non deltified object, forcing recompression of everything.
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 3658c05cafc..ab9cff98e3a 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -272,6 +272,8 @@ static struct commit **indexed_commits;
+ static unsigned int indexed_commits_nr;
+ static unsigned int indexed_commits_alloc;
+ 
++static struct pattern_list *exclude_delta_patterns;
++
+ static void index_commit_for_bitmap(struct commit *commit)
+ {
+ 	if (indexed_commits_nr >= indexed_commits_alloc) {
+@@ -1315,13 +1317,20 @@ static void write_pack_file(void)
+ static int no_try_delta(const char *path)
+ {
+ 	static struct attr_check *check;
++	int dtype;
+ 
+ 	if (!check)
+ 		check = attr_check_initl("delta", NULL);
+ 	git_check_attr(the_repository->index, path, check);
+ 	if (ATTR_FALSE(check->items[0].value))
+ 		return 1;
+-	return 0;
++
++	return exclude_delta_patterns &&
++		path_matches_pattern_list(path,
++					  strlen(path),
++					  path, &dtype,
++					  exclude_delta_patterns,
++					  the_repository->index) == MATCHED;
+ }
+ 
+ /*
+@@ -4149,6 +4158,19 @@ static int option_parse_cruft_expiration(const struct option *opt,
+ 	return 0;
+ }
+ 
++static int option_parse_exclude_delta(const struct option *opt,
++					 const char *arg, int unset)
++{
++	BUG_ON_OPT_NEG(unset);
++
++	if (!exclude_delta_patterns)
++		exclude_delta_patterns = xcalloc(1, sizeof(*exclude_delta_patterns));
++
++	if (arg)
++		add_pattern(arg, "", 0, exclude_delta_patterns, 0);
++	return 0;
++}
++
+ struct po_filter_data {
+ 	unsigned have_revs:1;
+ 	struct rev_info revs;
+@@ -4242,6 +4264,9 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 		OPT_CALLBACK_F(0, "cruft-expiration", NULL, N_("time"),
+ 		  N_("expire cruft objects older than <time>"),
+ 		  PARSE_OPT_OPTARG, option_parse_cruft_expiration),
++		OPT_CALLBACK_F(0, "exclude-delta", NULL, N_("pattern"),
++		  N_("disable delta compression for files matching pattern"),
++		  PARSE_OPT_NONEG, option_parse_exclude_delta),
+ 		OPT_BOOL(0, "sparse", &sparse,
+ 			 N_("use the sparse reachability algorithm")),
+ 		OPT_BOOL(0, "thin", &thin,
+@@ -4514,6 +4539,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 
+ cleanup:
+ 	strvec_clear(&rp);
++	FREE_AND_NULL(exclude_delta_patterns);
+ 
+ 	return 0;
+ }
+
+base-commit: 1fc3c0ad407008c2f71dd9ae1241d8b75f8ef886
+-- 
+gitgitgadget
