@@ -2,65 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9DB5C04A95
-	for <git@archiver.kernel.org>; Sat, 22 Oct 2022 21:00:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61196C433FE
+	for <git@archiver.kernel.org>; Sat, 22 Oct 2022 21:16:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229690AbiJVVA4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Oct 2022 17:00:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43460 "EHLO
+        id S229875AbiJVVQm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Oct 2022 17:16:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52524 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229692AbiJVVAy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Oct 2022 17:00:54 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFB3BDF63
-        for <git@vger.kernel.org>; Sat, 22 Oct 2022 14:00:52 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 559B91BBE81;
-        Sat, 22 Oct 2022 17:00:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SI6kbDPu5e+85F/PXz9rFsWqmM8gX5tGMSO3fY
-        cl7uM=; b=PZpdTcidTqtdXFSTLjEBhaRfr//3S4gw9m5/JoENZ6hVUKcWkuEu/2
-        QoZl0fqeYhMLRkgGygTL3nM2b9CVJPhpCyiagduC6AxBq50memhULztpkV9M8N4r
-        Lr5knYhwN4s6MY9QQtYOeZql6uU1itUAnFRN+pi9skS/FlQv++wWY=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4D10B1BBE80;
-        Sat, 22 Oct 2022 17:00:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7B2251BBE7F;
-        Sat, 22 Oct 2022 17:00:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 2/3] config: require at least one digit when parsing
- numbers
-References: <pull.1389.git.1666359915.gitgitgadget@gmail.com>
-        <cd753602e48a2faa0d59edca2f6fab0fe753f0f6.1666359915.git.gitgitgadget@gmail.com>
-        <Y1L+Qv+cs1bjqjK9@coredump.intra.peff.net>
-        <xmqqilkbhhlw.fsf@gitster.g>
-        <Y1RRrK4/2vr/YPfz@coredump.intra.peff.net>
-Date:   Sat, 22 Oct 2022 14:00:47 -0700
-In-Reply-To: <Y1RRrK4/2vr/YPfz@coredump.intra.peff.net> (Jeff King's message
-        of "Sat, 22 Oct 2022 16:25:16 -0400")
-Message-ID: <xmqq7d0rh8u8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229819AbiJVVQl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Oct 2022 17:16:41 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 746609DDAF
+        for <git@vger.kernel.org>; Sat, 22 Oct 2022 14:16:39 -0700 (PDT)
+Received: (qmail 21388 invoked by uid 109); 22 Oct 2022 21:16:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 22 Oct 2022 21:16:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4173 invoked by uid 111); 22 Oct 2022 21:16:39 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 22 Oct 2022 17:16:39 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sat, 22 Oct 2022 17:16:38 -0400
+From:   Jeff King <peff@peff.net>
+To:     Michael McClimon <michael@mcclimon.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] setup: allow Git.pm to do unsafe repo checking
+Message-ID: <Y1Rdtog/XQV0YLj0@coredump.intra.peff.net>
+References: <20221016212236.12453-1-michael@mcclimon.org>
+ <20221022011931.43992-1-michael@mcclimon.org>
+ <20221022011931.43992-3-michael@mcclimon.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 9AB9AB22-524C-11ED-A875-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20221022011931.43992-3-michael@mcclimon.org>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Fri, Oct 21, 2022 at 09:19:32PM -0400, Michael McClimon wrote:
 
-> I admit I don't care much either way, though.
+> diff --git a/perl/Git.pm b/perl/Git.pm
+> index cf15ead6..002c29bb 100644
+> --- a/perl/Git.pm
+> +++ b/perl/Git.pm
+> @@ -1674,6 +1674,7 @@ sub _cmd_exec {
+>  sub _setup_git_cmd_env {
+>  	my $self = shift;
+>  	if ($self) {
+> +		$ENV{GIT_PERL_FORCE_OWNERSHIP_CHECK} = 1;
+>  		$self->repo_path() and $ENV{'GIT_DIR'} = $self->repo_path();
+>  		$self->repo_path() and $self->wc_path()
+>  			and $ENV{'GIT_WORK_TREE'} = $self->wc_path();
 
-Me neither.  If the patch were to make --default=m mean "one mega unit"
-instead of "zero mega unit", then I may care a bit more, though.
+I'm not familiar enough with Git.pm to know if this is the right spot.
+But we'd not want to break the case where GIT_DIR is set already. I.e.:
+
+  GIT_DIR=/path/to/repo.git perl -MGit -e 'Git->repository'
+
+should continue to work regardless of the ownership of repo.git. Only
+the repo-discovery phase would want to force the ownership check.
+
+Again, I'm not too familiar with Git.pm, but it seems it ought to be
+asking Git: are we in a valid Git repo, and if so where is it? Something
+like:
+
+  my $git_dir = `git rev-parse --absolute-git-dir`;
+  $? and die "nope, not in a git repo";
+
+  # later, when we run git commands, we do specify this; the script may
+  # have chdir()'d in the meantime, and we want to make sure we are
+  # referring to the same repo via the object.
+  local $ENV{GIT_DIR} = abs_path($git_dir);
+  ...run some git command...
+
+Looking at the code, we even seem to do that first part! But if it
+returns an error, then we go on to check for a bare repository
+ourselves by looking for refs/, objects/, etc. Which is just...weird.
+
+It feels like this try/catch should just go away:
+
+diff --git a/perl/Git.pm b/perl/Git.pm
+index cf15ead664..7a7d8a2987 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -177,13 +177,7 @@ sub repository {
+ 		-d $opts{Directory} or throw Error::Simple("Directory not found: $opts{Directory} $!");
+ 
+ 		my $search = Git->repository(WorkingCopy => $opts{Directory});
+-		my $dir;
+-		try {
+-			$dir = $search->command_oneline(['rev-parse', '--git-dir'],
+-			                                STDERR => 0);
+-		} catch Git::Error::Command with {
+-			$dir = undef;
+-		};
++		my $dir = $search->command_oneline(['rev-parse', '--git-dir']);
+ 
+ 		require Cwd;
+ 		if ($dir) {
+
+And then the code below that to check for bare/not-bare should be using
+"git rev-parse --is-bare-repository" or similar. Something like:
+
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 7a7d8a2987..280df9cee1 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -179,8 +179,14 @@ sub repository {
+ 		my $search = Git->repository(WorkingCopy => $opts{Directory});
+ 		my $dir = $search->command_oneline(['rev-parse', '--git-dir']);
+ 
++		# could be merged with command above to be more efficient; or
++		# could probably use --show-toplevel to avoid prefix query
++		# below
++		my $bare = $search->command_oneline(['rev-parse', '--is-bare-repository'])
++		             eq 'true';
++
+ 		require Cwd;
+-		if ($dir) {
++		if (!$bare) {
+ 			require File::Spec;
+ 			File::Spec->file_name_is_absolute($dir) or $dir = $opts{Directory} . '/' . $dir;
+ 			$opts{Repository} = Cwd::abs_path($dir);
+@@ -198,21 +204,6 @@ sub repository {
+ 			$opts{WorkingSubdir} = $prefix;
+ 
+ 		} else {
+-			# A bare repository? Let's see...
+-			$dir = $opts{Directory};
+-
+-			unless (-d "$dir/refs" and -d "$dir/objects" and -e "$dir/HEAD") {
+-				# Mimic git-rev-parse --git-dir error message:
+-				throw Error::Simple("fatal: Not a git repository: $dir");
+-			}
+-			my $search = Git->repository(Repository => $dir);
+-			try {
+-				$search->command('symbolic-ref', 'HEAD');
+-			} catch Git::Error::Command with {
+-				# Mimic git-rev-parse --git-dir error message:
+-				throw Error::Simple("fatal: Not a git repository: $dir");
+-			};
+-
+ 			$opts{Repository} = Cwd::abs_path($dir);
+ 		}
+ 
+
+But given how much more complicated the current code is, I wonder if I
+am missing some case. Or perhaps this code is just so old that it used
+to do this stuff itself (because rev-parse didn't give us so much help).
+
+-Peff
