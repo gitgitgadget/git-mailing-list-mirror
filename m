@@ -2,244 +2,315 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8AB95C433FE
-	for <git@archiver.kernel.org>; Sat, 22 Oct 2022 11:06:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C0AFAC04A95
+	for <git@archiver.kernel.org>; Sat, 22 Oct 2022 11:44:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231173AbiJVLGV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 22 Oct 2022 07:06:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39812 "EHLO
+        id S229667AbiJVLoK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 22 Oct 2022 07:44:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230337AbiJVLF5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Oct 2022 07:05:57 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 907D511A09
-        for <git@vger.kernel.org>; Sat, 22 Oct 2022 03:23:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1666434217; bh=ldMuo0dYSwK/TwEBiuG31QIspikxn4M3LoYq8U8Xfq4=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=KQCoCm3E21WfM6UHPuxP2c3TgalN62mG9BaaAs9237gIwtak6pgVvEd2VFXZVx2Xk
-         2MmhAKJfu6ew3VP2hOGfjsM2k5PVkuAtMp3zmbiySuanwEFSVnCeEV/Qvx5T5ZvO0g
-         QddTmiB/c4WqHt+qRI8IxhCSI8kTvmVacUrOXZ4VL29mRis+gIBhFz2Xgl+gvp4BEx
-         /Btx0tft7mzvu8ee5PZPKonq5+H59Kh0zJYLwau2jV9pYaIvQ1HPUfG3MGpfkJgAHR
-         Y8Nn6hyW2wXQPrVK0zvpYPOEEKippW5FXvlbq0VBgmAWc5fTO1edGcaAbqIvjY1bYh
-         PJs0VEdQ6Z6JQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.23.161]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M1aE3-1onXPo2yTb-002mgw; Sat, 22
- Oct 2022 10:09:27 +0200
-Message-ID: <80fe7c62-2c59-a715-3a8b-2dc2331d8e37@web.de>
-Date:   Sat, 22 Oct 2022 10:09:26 +0200
+        with ESMTP id S230314AbiJVLnz (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Oct 2022 07:43:55 -0400
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0E55B85
+        for <git@vger.kernel.org>; Sat, 22 Oct 2022 04:43:48 -0700 (PDT)
+Received: by mail-yb1-xb33.google.com with SMTP id j7so6119000ybb.8
+        for <git@vger.kernel.org>; Sat, 22 Oct 2022 04:43:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=vk0uvnHUBzpZGfSwPcDxGbnCpFOHd3J9s/r1TKblGUI=;
+        b=XifwdxHPPZ26m1mUnB9RN5A74bw8//hpBiFJJcGYJnuRntk+ZUjJKetYh8OhNAhDYq
+         jSBGczxbPwW9LQ/RdMG0AqgKaLk1EF5pn6a+PZusF9qmnJ1Tvd5xQsMWmU/BA42VJz6U
+         fLOu1bS2mP0XzB+s5PNzPq7XhtVK+NTzWmAQYPtyMxxgv630HG0aN2lgCWtnR+14OvAK
+         gVE/CCKkDg3SOXGVASIjek8m8/1MWlg3xQ4i+ZoL11Pru1ko74xmeHdeVd0Y2nVUt0Gf
+         x79nIRnKe5FXY9xwkQLmenSzY4eqXcm9/IQu4mY4Xx0ukaj9wiMqqumMcU3nrdATYr1T
+         fsmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vk0uvnHUBzpZGfSwPcDxGbnCpFOHd3J9s/r1TKblGUI=;
+        b=Mno8sh4n3EUyzubaY2BjS9ebeD8hX+exsxyg6R9ECidqbb/NjtoVTJT0ovC8N6Uo1S
+         RLeCBP+pycTzbarf3s3acmXTzoZlh1Lcn1iZgSj2LN3AUxL8KLTEgoQ47PqLbpuuoJow
+         PJ5syUr712CznGU9TH6ywIPJZxIzk9ZSxWwcoPwJZ/GDLVIe5Q1SCM0ZAPq4Q3mj+7Uf
+         YcoRzaMF7nxJ/SuKjsRaksQ7AybkIBsgvgFFe83s0wwgvW6H3UtJEk6uscdtSLdVfX6F
+         19NWTFmaaIDre2I5K56mNuyhJ9x6rJ2PgBbztv3O2lgqo6h+JWAH8/1sTJkIxx+cSOYl
+         X4Dw==
+X-Gm-Message-State: ACrzQf0wTLDsShJxEyXHkQKSCXTs28vnnM+/zXbzLfQvfmqDjAKBud/s
+        x1DbgAEblSM2t/R4ewEvhY97xHWAeZOoNquL9NLo5fnj2ME9isxxXpnHfw==
+X-Google-Smtp-Source: AMsMyM6gl2b9XNIA8syKUvQ8Vn0pV2dWCtOGDuRiYRODiK8e+qPF4+siqZ7qZSwWLK0m87/0jEzBrRGTv7+m7pKIl2Q=
+X-Received: by 2002:a25:888f:0:b0:6a8:f77c:4f96 with SMTP id
+ d15-20020a25888f000000b006a8f77c4f96mr20561400ybl.103.1666439027818; Sat, 22
+ Oct 2022 04:43:47 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.0
-Subject: Re: [PATCH 3/3] git_parse_signed(): avoid integer overflow
-To:     Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1389.git.1666359915.gitgitgadget@gmail.com>
- <f058f391c3821b341a15fda9ae9fd20dda6a0494.1666359915.git.gitgitgadget@gmail.com>
- <xmqqpmeljae9.fsf@gitster.g>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqpmeljae9.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
+From:   NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
+Date:   Sat, 22 Oct 2022 14:43:36 +0300
+Message-ID: <CA+PPyiGtoO4HYA+Z8_te5d0oBLYAxcXeZdTH17AJYaoZ32ObfQ@mail.gmail.com>
+Subject: [OUTREACHY] Unify ref-filter formats with other --pretty
+ formats[Draft proposal]
+To:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Hariom verma <hariom18599@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:/jXz5DXKuhERSQUzGnmIbr/ui0e20F2l1xUXpprIFvGBbAQBCXn
- Ys/xxT2VBtxpqw33QRBonENdbjCVlGSgtXDQuCweBOiLS5+x85Z5A8sNCske2ReXrvqmdQV
- wRVM5ZxbiVETuDfFVG1Rg9PlBiA8pev8KFb+DDOhESTm5H94Fojv6R7c73fwYIVAC7iHJVW
- /Jg2ZjTIZzHzqmrUcAHrA==
-UI-OutboundReport: notjunk:1;M01:P0:pbL5Q52HJjY=;aFDrwveLOHQjmz+mkd+Gy5DDfPN
- u1H2wfscCm5Zmb1M4Zh6Eib6IOLP+m4PIugIfBspUmrtuLMR8f9vE03OqgMTXYvIhHZ/yDG2y
- 4EOb9nM5QxZzaxgiNQEjP/Q2RCUmQAWTduWm/+sEhtujuOJIooqRnFrykh025Re0Jtu4ey+LB
- Nv0QjVPr8DftHvRKYjf3j0qoE5QB6hC+avQtrTOrlkb+bS6n+ZruVuaUSC9FGa6LbfWuEPHci
- k/c8OtltQdzCVQjQXY+PCdt2pXK69HyDyeCTHOxC9qMe+6MGO2EiUmCppbZcQl0GlMURZB7hW
- bvjJ6aSxMpswKemTrwOTn1gSk0Cdhx+Yp/P6EXkHKzqOAcPHnfkZQMYcrDpW0gyBWc46FCYfP
- B/Xz4OT64RSxdnfqN8xQrJ76keFcITT6nLUVUgs7/JM0IqauKsHCLBXTWF+Pd5gm+Palimsoh
- EjbHmUP3bYugn6F7SZwIrZqo1TFNhBRX4vcmYIeBiJsU6O/Jx0s5F/qvYwFDLs+avlNtGp+Wd
- 5Z/LesO31yYxBf0jhNs4+XaPDnwASypIP4P/TkXUxMhzFoJmGPIdzSYMvWBCPw5hO7U8xx8l9
- kxmAzafwY4aII37gG7Vdmay8Ff2Ja7QLgXuzRHfbvVuGw5Eua6/Nog8KB233LO9VyCbAZbKj7
- 6rrbxJBwBUSraOZrXwuAIpChcVHvKsiUvsFNDtzOn1xbhseZqAsIRc7oleNskxR1rKSOYfRjU
- u67I1c8lj0psXEuzW9n5AGkUKL1tzHdLWrw93sqsoMQVR+mPSqWNi0ceJMhgFl/Th1dVusDn5
- +1wkHDu9TtvSUQuPDzW6zMz3S7QGSLWTQW6u2T/akt1XCjjbZ6wDiOThaWf1WWra7Sex1G+LW
- lQBJhQ0S2dUXfBKr4Lw6iljHZpjbvcRCx0RS4IK6gkEza6qx1KhYRmOKywbh8aQiFZ+aiJA51
- c42dcg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 21.10.22 um 20:31 schrieb Junio C Hamano:
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> git_parse_signed() checks that the absolute value of the parsed string
->> is less than or equal to a caller supplied maximum value. When
->> calculating the absolute value there is a integer overflow if `val =3D=
-=3D
->> INTMAX_MIN`.
->
-> It is a problem that is worth looking into.
->
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->>  config.c | 11 ++++++-----
->>  1 file changed, 6 insertions(+), 5 deletions(-)
->>
->> diff --git a/config.c b/config.c
->> index b7fb68026d8..aad3e00341d 100644
->> --- a/config.c
->> +++ b/config.c
->> @@ -1160,8 +1160,10 @@ static int git_parse_signed(const char *value, i=
-ntmax_t *ret, intmax_t max)
->>  	if (value && *value) {
->>  		char *end;
->>  		intmax_t val;
->> -		uintmax_t uval;
->> -		uintmax_t factor;
->> +		intmax_t factor;
->> +
->> +		if (max < 0)
->> +			BUG("max must be a positive integer");
->
-> In parse_signed(), would we expect to accept end-user input that is
-> a negative integer?  We must.  Otherwise we would not be calling a
-> "signed" parser.  Now, are there cases where the valid value range
-> is bounded by a negative integer at the top?  No current callers may
-> pass such a value, but is it reasonable to add such a new constraints
-> to an existing API function?
+Hi team,
+I would like to have reviews on my
 
-Hmm, if minimum and maximum are not symmetric, then we need to supply
-both, don't we?
+Google Docs link:https://docs.google.com/document/d/1Kdx8DVWF3c5pwV5-A8Z4n-=
+SoRHlMDncI1gNeGCiLNsE/edit?usp=3Dsharing
 
-=2D-- >8 ---
-Subject: [PATCH] config: let git_parse_signed() check minimum
+Name:Nsengiyumva Wilberforce
 
-git_parse_signed() checks that the absolute value of the parsed string
-is less than or equal to a caller supplied maximum value.  When
-calculating the absolute value there is a integer overflow if `val =3D=3D
-INTMAX_MIN`.
+Major:Software engineering
 
-Avoid overflow during sign inversion by supplying the minimum value to
-the function as well.  Make `factor` signed to avoid promoting the
-division results in the limit check line to unsigned, but check whether
-it's positive.
+Mobile no.:+256 785065399
 
-Add a new macro, minimum_signed_value_of_type, and use it in the callers
-of git_parse_signed() to provide the newly required minimum value.  It
-calculates the minimum for a given type using division instead of right
-shift because the latter is implementation-defined for signed types,
-and we need an arithmetic right shift here, not a logical one.
+Email:nsengiyumvawilberforce@gmail.com
 
-Original-patch-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
-git_config_get_expiry_in_days() could use git_parse_int(), but that's
-a different topic.
+IRC:wilber4c
 
- config.c          | 28 +++++++++++++++++-----------
- git-compat-util.h |  2 ++
- 2 files changed, 19 insertions(+), 11 deletions(-)
+Github:nsengiyumva-wilberforce
 
-diff --git a/config.c b/config.c
-index cbb5a3bab7..7cf196dc84 100644
-=2D-- a/config.c
-+++ b/config.c
-@@ -1155,26 +1155,24 @@ static uintmax_t get_unit_factor(const char *end)
- 	return 0;
- }
+Linkedin:https://www.linkedin.com/in/nsengiyumva-wilberforce-623664192/
 
--static int git_parse_signed(const char *value, intmax_t *ret, intmax_t ma=
-x)
-+static int git_parse_signed(const char *value, intmax_t *ret,
-+			    intmax_t min, intmax_t max)
- {
- 	if (value && *value) {
- 		char *end;
- 		intmax_t val;
--		uintmax_t uval;
--		uintmax_t factor;
-+		intmax_t factor;
+Time Zone:EAT (UTC + 03:00)
 
- 		errno =3D 0;
- 		val =3D strtoimax(value, &end, 0);
- 		if (errno =3D=3D ERANGE)
- 			return 0;
- 		factor =3D get_unit_factor(end);
--		if (!factor) {
-+		if (factor < 1) {
- 			errno =3D EINVAL;
- 			return 0;
- 		}
--		uval =3D val < 0 ? -val : val;
--		if (unsigned_mult_overflows(factor, uval) ||
--		    factor * uval > max) {
-+		if (val < min / factor || val > max / factor) {
- 			errno =3D ERANGE;
- 			return 0;
- 		}
-@@ -1218,7 +1216,9 @@ static int git_parse_unsigned(const char *value, uin=
-tmax_t *ret, uintmax_t max)
- static int git_parse_int(const char *value, int *ret)
- {
- 	intmax_t tmp;
--	if (!git_parse_signed(value, &tmp, maximum_signed_value_of_type(int)))
-+	if (!git_parse_signed(value, &tmp,
-+			      minimum_signed_value_of_type(int),
-+			      maximum_signed_value_of_type(int)))
- 		return 0;
- 	*ret =3D tmp;
- 	return 1;
-@@ -1227,7 +1227,9 @@ static int git_parse_int(const char *value, int *ret=
-)
- static int git_parse_int64(const char *value, int64_t *ret)
- {
- 	intmax_t tmp;
--	if (!git_parse_signed(value, &tmp, maximum_signed_value_of_type(int64_t)=
-))
-+	if (!git_parse_signed(value, &tmp,
-+			      minimum_signed_value_of_type(int64_t),
-+			      maximum_signed_value_of_type(int64_t)))
- 		return 0;
- 	*ret =3D tmp;
- 	return 1;
-@@ -1245,7 +1247,9 @@ int git_parse_ulong(const char *value, unsigned long=
- *ret)
- int git_parse_ssize_t(const char *value, ssize_t *ret)
- {
- 	intmax_t tmp;
--	if (!git_parse_signed(value, &tmp, maximum_signed_value_of_type(ssize_t)=
-))
-+	if (!git_parse_signed(value, &tmp,
-+			      minimum_signed_value_of_type(ssize_t),
-+			      maximum_signed_value_of_type(ssize_t)))
- 		return 0;
- 	*ret =3D tmp;
- 	return 1;
-@@ -2751,7 +2755,9 @@ int git_config_get_expiry_in_days(const char *key, t=
-imestamp_t *expiry, timestam
- 	if (git_config_get_string_tmp(key, &expiry_string))
- 		return 1; /* no such thing */
 
--	if (git_parse_signed(expiry_string, &days, maximum_signed_value_of_type(=
-int))) {
-+	if (git_parse_signed(expiry_string, &days,
-+			     minimum_signed_value_of_type(int),
-+			     maximum_signed_value_of_type(int))) {
- 		const int scale =3D 86400;
- 		*expiry =3D now - days * scale;
- 		return 0;
-diff --git a/git-compat-util.h b/git-compat-util.h
-index ea53ea4a78..35425c373b 100644
-=2D-- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -112,6 +112,8 @@ struct strbuf;
+About me
 
- #define bitsizeof(x)  (CHAR_BIT * sizeof(x))
+I am doing a Bachelor of Science in software engineering at Makerere
+university in my 4th year(final). I spend most of my time writing PHP
+applications. I am also interested in Java and embedded systems
+development and I have participated in embedded systems development
+projects like AdEMNEA.
 
-+#define minimum_signed_value_of_type(a) \
-+    (INTMAX_MIN / ((intmax_t)1 << (bitsizeof(intmax_t) - bitsizeof(a))))
- #define maximum_signed_value_of_type(a) \
-     (INTMAX_MAX >> (bitsizeof(intmax_t) - bitsizeof(a)))
 
-=2D-
-2.38.1
+
+Microproject
+
+When I was browsing the outreachy projects on outreachy website, I was
+super excited about Git because I use it in most of my college work.
+At first, it was intimidating for me to introduce myself to the
+community. But I am glad I took a step. I am glad that I completed my
+microproject and the whole process gave me confidence on how to submit
+patches, communicate with the community members and interestingly, it
+was a big learning process for me.  The following are the details
+about my microproject with public-inbox links to different versions.
+
+
+Mailing List for the microproject:
+https://lore.kernel.org/git/pull.1362.v4.git.git.1665772130030.gitgitgadget=
+@gmail.com/
+
+Github:  https://github.com/git/git/pull/1362
+
+Status: next
+
+
+Proposed Project
+
+Abstract
+
+Git has an old problem of duplicated implementations of some logic.
+For example, Git had at least 4 different implementations to format
+command output for different commands. The foremost aim of this
+project is to simplify codebase by getting rid of duplication of a
+similar logic and, as a result, simplify adding new functionality.
+The current task is to reuse ref-filter formatting logic to minimize
+code duplication and to have one unified interface to extract all
+needed data from the object and to print it properly.
+
+Previous Work
+
+Hariom Verma contributed(final report) tremendously towards =E2=80=9CUnifyi=
+ng
+Git=E2=80=99s format languages=E2=80=9D during his 2020 GSoC internship. Ha=
+riom
+finished most of the formatting options and this will help me build on
+his work.  His work looks smart and understandable thus adding on his
+work will be easy. And also his blog is very fabulous, it=E2=80=99s a shoot=
+ing
+point for me to start understanding the codebase very well. Hariom
+mentions in his report that 30 % of the log related tests are failing,
+he also mentions that the cause of tests failure is because of the
+missing mailmap logic and mbox/email commit format. Hariom also says
+it does not handle unknown formatting options. I plan to start with
+his advice about the cause of the failure of these tests and then
+intuitively refactor them into something cool.
+
+Summary of remaining tasks by Hariom
+
+-Around 30% log related tests are failing
+
+-Teach pretty-lib.{c,h} to handle incorrect formatting option
+
+-Email/MBoxed commit format needs work
+
+Some useful mailing lists links from Hariom
+
+Improvements to ref-filter
+Fix trailers atom bugs and improved tests
+
+Unify trailer logic for pretty.{c,h} and ref-filter.{c, h}
+
+
+Olga<olyatelezhnaya@gmail.com> has done great work in =E2=80=9CUnifying Git=
+=E2=80=99s
+format languages=E2=80=9D during Outreachy Round 15 and continued even afte=
+r
+that [from 28-09-2017 to 04-04-2019]. Her work is mostly related to
+`cat-file` and `ref-filter`.
+
+She already did a pretty nice job in preparing ref-filter for more
+general usage of its formatting logic. It will give me the possibility
+to make the migration of pretty.c easier.
+
+The Plan
+
+My task is to look at how pretty formats are different from ref-filter
+formats. When some format is supported by the pretty formats but not
+by the ref-filter formats, and should prepare some patches to support
+the ref-filter format. I will basically build on Hariom=E2=80=99s previous
+work
+
+Step 1:List down all the formats supported by the pretty format but
+are not supported by the ref-filter format
+
+Step 2:Read through different patches related pretty and ref-filter
+formats submitted by different contributors to get a solid and a
+thorough understanding of the pretty and ref-filter formats.
+
+Step 3:Understanding an implementation of one or two pretty formats,
+and then look at how it was implemented in ref-filter format. This is
+going to give me direction to refactor the remaining pretty formats
+
+Step 4(possible approach): Pick one format option at a time and
+convert it to use ref-filter option format
+
+Estimated Timeline
+
+Time Period
+
+
+
+period: December 5,2022 - January 2, 2023
+Community bonding
+tasks
+-understanding all the logic of pretty.* and ref-filter.*
+
+(what functions are used and how all formatting process is going)
+
+-Working with mentors and identifying the best candidates to be converted f=
+irst.
+
+-Converting a couple of formatting options to reuse ref-filter formatting l=
+ogic.
+
+-Update Documentation.
+
+
+period: December 25, 2022
+
+Christmas celebrations: Join my parents for celebrations
+
+period: January 1, 2023:
+New year=E2=80=99s day holiday:Join my parents for celebrations
+
+period: January 3 - February 3, 2023
+Coding Phase 1
+tasks
+
+-Add on Hariom=E2=80=99s work:Converting more formatting options to reuse
+ref-filter formatting logic.
+
+-Finish his incomplete work
+
+-Update Documentation.
+
+-Possibly look at Olga=E2=80=99s work
+
+period: January 18, 2023: Cake cutting with my  friends
+My Birthday:cake cutting
+
+period:From January 6 - January 18, 2023:
+Semester Exams: I will be working for a few hours per day and always
+be available to reply to any communication
+
+period:February 3 - March 3, 2023
+Coding Phase 2
+tasks
+-Final touch-ups and bug fixes(if any)
+
+-Update Documentation
+
+-Wrapping up.
+
+Blogging about Git
+
+I do love writing a lot however much I have not taken time to put out
+my personal opinions and thinking. Being an avid reader, I think it=E2=80=
+=99s
+now my time to start letting other people read what I write, to let
+people know what I think, what I am doing with my life. And guess
+what, I am super excited to start with Git.
+
+Availability
+
+I can easily devote 50 hours per week since my college just requires
+15 hours per week. I plan even to work more extra hours for my
+internship tasks when time allows.
+
+
+Post Outreachy
+
+Apart from being an Outreachy intern, I plan to remain a member of git
+community even after my internship, because I believe there is more
+today even after the Outreachy internship
+
+Here are some other things I=E2=80=99d like to do beyond Outreachy
+
+Mentor other students
+
+Doing code reviews for other contributors
+
+May be complete the work that I will have left pending after my internship
+
+Keep learning from all of you...
+
+Experience with Open Source
+
+I have little  experience with open source, so I hope to learn a lot
+through my internship with Git from you all.
+
+
+Motivation
+
+Git being a world=E2=80=99s best developer version control system, I feel
+overjoyed that even my little first patch was accepted. The community
+is very welcoming, the people there answer questions very first and
+this turns everything overwhelming to a simple process
+
+
+Closing remarks (Optional)
+
+I am a consistent and passionate learner. Even if solving a problem
+may look tricky to me, I just give it all my 100% time and think of
+1000s of ways to approach it. I know I do not have the required
+expertise to begin working with a skilled team like Git but I believe
+in learning slowly by slowly until I will make it to the peak.
+
+
+I hope you consider and give me a chance to work with git. It=E2=80=99s a
+great hope I have that this opportunity is bringing me closer to my
+dreams. Thanks for your consideration.
+
+
+Best Regards
+
+Nsengiyumva wilberforce
