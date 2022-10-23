@@ -2,114 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EE7CC3A59D
-	for <git@archiver.kernel.org>; Sun, 23 Oct 2022 18:08:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01B32ECAAA1
+	for <git@archiver.kernel.org>; Sun, 23 Oct 2022 20:07:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230396AbiJWSIg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 23 Oct 2022 14:08:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39480 "EHLO
+        id S229882AbiJWUHi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 23 Oct 2022 16:07:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230383AbiJWSId (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Oct 2022 14:08:33 -0400
-Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFA395D125
-        for <git@vger.kernel.org>; Sun, 23 Oct 2022 11:08:32 -0700 (PDT)
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5B0271CD597;
-        Sun, 23 Oct 2022 14:08:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=6+rdmfyibHPJrJf79UDvgqt/dIX4Xoz20chn38
-        q56HM=; b=ehzQqvzYKb1RkW1IoxgAYjJnJLx3h1VnV+k2+9Ej4CYMWu0h4PLVM/
-        F5vV8BJJ8uC2IVGUPbdqzFt+VJWgLq9U6PyzMsj4lBJXeMg5kgyeultj3otJvRdz
-        3za13ICDQHCoDzsn9j+7yRzPxs9AuFKOIjVWJ4reSJxwQAHiHy+pc=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 443FE1CD596;
-        Sun, 23 Oct 2022 14:08:30 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 689381CD595;
-        Sun, 23 Oct 2022 14:08:27 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Jan =?utf-8?Q?Pokorn=C3=BD?= <poki@fnusa.cz>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v2 4/5] repack: use tempfiles for signal cleanup
-References: <Y1M3fVnixJHvKiSg@coredump.intra.peff.net>
-        <Y1M3oie5dPrRaOni@coredump.intra.peff.net>
-        <Y1RUI8ny2mexxwKm@coredump.intra.peff.net>
-        <xmqqtu3vflau.fsf@gitster.g>
-        <Y1VzPY4zQyZbVAsm@coredump.intra.peff.net>
-Date:   Sun, 23 Oct 2022 11:08:26 -0700
-In-Reply-To: <Y1VzPY4zQyZbVAsm@coredump.intra.peff.net> (Jeff King's message
-        of "Sun, 23 Oct 2022 13:00:45 -0400")
-Message-ID: <xmqqlep6fm5h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229956AbiJWUHh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Oct 2022 16:07:37 -0400
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90CDE5C940
+        for <git@vger.kernel.org>; Sun, 23 Oct 2022 13:07:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1666555654; bh=f8cdcTIPc54W8KBhJtkvp9LuMG2pte8TIMr+Jl5Om8w=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=eXsULCMEMt1nzNDQmXObMabsQIzxAlxNzYBN42lpXDVouomjZCyu+BYYnGzsWOsQZ
+         EjChlmDHgEVoE61lo8Go4hjgqhBeqlZQU8XmWl01yx4YwJ2brDqg3xbnq1nVjwwZoG
+         jWBv/XE7/KRs5/ok+ujyNrVkrwNFj8VTniTWACILdxWdonb20pBkP+H1vTjWFUlu6v
+         n/ilWSiueMYgN852s7YQfI/RI8m/j1dP/4oV8CAQVnla7cgcQQTDMrEKtWYs18McPC
+         SaJmIDQ1Xsu46a37nKFhO/jMnN/I36giQECde+OoF/tmXUhZW9jjuDKkCU9kJdOgE3
+         HeOq19F7+hHXg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MBB3s-1oxAVF1y5G-00D4RW; Sun, 23
+ Oct 2022 22:02:23 +0200
+Date:   Sun, 23 Oct 2022 22:02:22 +0200
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, alexander.s.m@gmail.com,
+        Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v5 1/1] diff.c: When appropriate, use utf8_strwidth()
+Message-ID: <20221023200222.o6p7d6qor5sygdgb@tb-raspi4>
+References: <CA+VDVVVmi99i6ZY64tg8RkVXDc5gOzQP_SH12zhDKRkUnhWFgw@mail.gmail.com>
+ <20220914151333.3309-1-tboegi@web.de>
+ <xmqqpmfx52qj.fsf@gitster.g>
+ <20220926184308.5oaaoopod36igq6i@tb-raspi4>
+ <xmqq35bv1gu5.fsf@gitster.g>
+ <20221020154608.jndql5sio3jyii3z@tb-raspi4>
+ <xmqqy1tas85w.fsf@gitster.g>
+ <20221021151909.z3nejpnnt2wmmkry@tb-raspi4>
+ <xmqq35bgkfde.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B160441A-52FD-11ED-8028-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqq35bgkfde.fsf@gitster.g>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:KWTGT/CMqoB0IykMG1GUxYEuY2Jd6DeVYBiEIuGYIDh+uWLop4C
+ P6u80xH6L6ZskTDVsPjwDmaBBWeyc773RLH8lfzB4eUbOi5NYYH/a4UkPHJvIXo33bn//Ev
+ BD63uTWKX5OjLhwx0yaD01L83BsiqkX0goTFori6YwhhmapnGTw5T1Rk8rXAFl5ZU5moFR+
+ 3LkBy7jb8nQtHEpVlDqBw==
+UI-OutboundReport: notjunk:1;M01:P0:/tmgnK+LWY8=;VZGMdfU2TcSu161znUWWgpNmaTy
+ Kp2R/r6QEr7z0akadn3mUc7nWTn7rx7QM8zqMEvnwRotmcv2QylQ3IPGnl6Ty5ILdjTvuoupG
+ ZAcgIv8ydDzI559CBYK1nBPUfXWsUbav7Pd8JWRg1TuOFkKLyEbHwmGMTcHsfXaC14PRwwqW3
+ E9DfWtwD0CesDU+RJzZPtWPYVO1CEL+bqGXBNrhbihPmPKN25srZOsAWPSk62Yxp2XUq8Pfpy
+ 8Xk8ctJq+R4m7A/Hb6K6YxEMDTUbN7uhtWnNkJn1xnRB5KI2V8Iz2jOoB3vXwlvZfIOZ11lMU
+ PyD47bg+dhQDdDhD2kZjM1lhECwxVDjDBKMYgpAcriSJSqnQAykDLd07nwsxYUy5iNdE79KP7
+ Q9yLFF0IEeC/lefv1VILTqqqnMnL7EWJjOiAbVztTUo6czCAle4UZanqFNFZ492X/25CrGVPS
+ bo2J45a4N8KfkmNn4Ye5c7e7CJFo4zkfpeaR+tYMf7E3+oysQIf5xhno78t4AbzL0Wy7rgQVn
+ uKUK/4ZeZWauDGWmUtTffffkfFUC+ZsyMNtM1XQbnN+w23p8cSAYGyBbp07+3WXCnilmMZ5gL
+ rJywC4JJxc86ta3nyRGlxI3oax1beJFEnwwu70bOwQhs73DgzdzyEVjmN7Lmd+zTEyRfL/xOX
+ 52gouRvGOfbbBk8dDle5FXZcaiT9nWPI4JftvPspnWjWcmltcNg01Zwe7IbvpxovXqAYwUT7A
+ xdXJ6rHQdvlR7u7NcQMYVGRy67breCS4VRrLtoTKttX43cR/E4mGVD032PrWs9i3rLmO3eIBC
+ puoOoUPeNNNzyyjMeyd5zGD5/o0VUVpFRglBywVnE52NO2yg1GtT0GXTxkWPYuYy4YZ3UzqdD
+ dHkoTzrLBkxswhMSplXGGDjrLiW6mMgIfrWaAmbXvhjns9IVBmvIgh8aZOFxMe0PU/EG5ov9+
+ 2deGcbQOdbfVUk1YMF+IyufzDq4=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> Here's a patch on top of of jk/repack-tempfile-cleanup that adjusts the
-> test (and should make the immediate racy CI pain go away). It gives some
-> explanation why the third option isn't as interesting as you'd think. If
-> somebody later wants to add such a "pack-objects died" error, we can
-> adjust sigpipe handling there.
-
-An extremely simplified alternative would be just to say !  instead
-of test_must_fail, which essentially is ok=anycrash ;-)
-
-I did try the same exact patch before going to bed last night but
-t7700 somehow failed some other steps in my local tests and I gave
-up digging further X-<.  One step at a time...
-
-Will queue.  Thanks.
-
-> -- >8 --
-> Subject: [PATCH] t7700: annotate cruft-pack failure with ok=sigpipe
+On Fri, Oct 21, 2022 at 02:59:09PM -0700, Junio C Hamano wrote:
+> Torsten B=F6gershausen <tboegi@web.de> writes:
 >
-> One of our tests intentionally causes the cruft-pack generation phase of
-> repack to fail, in order to stimulate an exit from repack at the desired
-> moment. It does so by feeding a bogus option argument to pack-objects.
-> This is a simple and reliable way to get pack-objects to fail, but it
-> has one downside: pack-objects will die before reading its stdin, which
-> means the caller repack may racily get SIGPIPE writing to it.
+> > For the moment I don't have any spare time to spend on Git.
+> > All your comments are noted, and I hope to get time to address them la=
+ter.
+> > If you kick out the branch from seen and the whats cooking list,
+> > that would be fine with me.
 >
-> For the purposes of this test, that's OK. We are checking whether repack
-> cleans up already-created .tmp files, and it will do so whether it exits
-> or dies by signal (because the tempfile API hooks both).
+> I'd rather not waste the efforts so far.  I am tempted to queue the
+> following on top or squash it in.
 >
-> But we have to tell test_must_fail that either outcome is OK, or it
-> complains about the signal. Arguably this is a workaround (compared to
-> fixing repack), as repack dying to SIGPIPE means that it loses the
-> opportunity to give a more detailed message. But we don't actually write
-> such a message anyway; we rely on pack-objects to have written something
-> useful to stderr, and it does. In either case (signal or exit), that is
-> the main thing the user will see.
+> ----- >8 --------- >8 --------- >8 --------- >8 --------- >8 -----
+> Subject: [PATCH] diff: leave NEEDWORK notes in show_stats() function
 >
-> Signed-off-by: Jeff King <peff@peff.net>
+> The previous step made an attempt to correctly compute display
+> columns allocated and padded different parts of diffstat output.
+> There are at least two known codepaths in the function that still
+> mixes up display widths and byte length that need to be fixed.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > ---
->  t/t7700-repack.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  diff.c | 15 +++++++++++++++
+>  1 file changed, 15 insertions(+)
 >
-> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
-> index edcda849b9..9164acbe02 100755
-> --- a/t/t7700-repack.sh
-> +++ b/t/t7700-repack.sh
-> @@ -433,7 +433,7 @@ test_expect_success TTY '--quiet disables progress' '
->  '
->  
->  test_expect_success 'clean up .tmp-* packs on error' '
-> -	test_must_fail git \
-> +	test_must_fail ok=sigpipe git \
->  		-c repack.cruftwindow=bogus \
->  		repack -ad --cruft &&
->  	find $objdir/pack -name '.tmp-*' >tmpfiles &&
+> diff --git a/diff.c b/diff.c
+> index 2751cae131..1d222d87b2 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -2675,6 +2675,11 @@ static void show_stats(struct diffstat_t *data, s=
+truct diff_options *options)
+>  	 * making the line longer than the maximum width.
+>  	 */
+>
+> +	/*
+> +	 * NEEDSWORK: line_prefix is often used for "log --graph" output
+> +	 * and contains ANSI-colored string.  utf8_strnwidth() should be
+> +	 * used to correctly count the display width instead of strlen().
+> +	 */
+>  	if (options->stat_width =3D=3D -1)
+>  		width =3D term_columns() - strlen(line_prefix);
+>  	else
+> @@ -2750,6 +2755,16 @@ static void show_stats(struct diffstat_t *data, s=
+truct diff_options *options)
+>  			char *slash;
+>  			prefix =3D "...";
+>  			len -=3D 3;
+> +			/*
+> +			 * NEEDSWORK: (name_len - len) counts the display
+> +			 * width, which would be shorter than the byte
+> +			 * length of the corresponding substring.
+> +			 * Advancing "name" by that number of bytes does
+> +			 * *NOT* skip over that many columns, so it is
+> +			 * very likely that chomping the pathname at the
+> +			 * slash we will find starting from "name" will
+> +			 * leave the resulting string still too long.
+> +			 */
+>  			name +=3D name_len - len;
+>  			slash =3D strchr(name, '/');
+>  			if (slash)
+
+
+That looks good to me -
+my preferred version would be a patch on it's own on top.
