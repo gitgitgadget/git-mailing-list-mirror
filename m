@@ -2,93 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8637CECAAA1
-	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 17:02:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E750C38A2D
+	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 18:22:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230319AbiJXRCj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Oct 2022 13:02:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56218 "EHLO
+        id S231538AbiJXSWm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Oct 2022 14:22:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235097AbiJXRBx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2022 13:01:53 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38C18193EFF
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 08:38:46 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id bu30so16885458wrb.8
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 08:38:45 -0700 (PDT)
+        with ESMTP id S231350AbiJXSWR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2022 14:22:17 -0400
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 177B867C82
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 10:02:59 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id 187so2616889ybe.1
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 10:02:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=z6+ES+2r7/g2CFpEvk+QI66BIymB0gjrO2GhHAWh+yk=;
-        b=bsHQy7W2XGDxnqxMbAxW0omzxluvewbUv23OfEq5uMOMJWcIRIDWqkkKN4LXUBawCM
-         0e9NJxUP4VxvqqOOkEJ/r/ySgwaxkv0Kv4+g2ObPvWkQgisieRgpYAt+VI2UyRDj46Mo
-         1tr8cHYf1kFnrirpP6ODcGOwwOYlYkCcPQp1tl/8t9NUma6ErwEwy7ZpWnAs9SFt1x51
-         BUwdZfXeT80bO69HDvTgPerzPCIKsojG7nDcirq459Z2Sm4IXQm4W1FSSn90TcnKpTyF
-         8k9PlXuXUNM8zP/WTFRPkPvB1uHf4OPAxq9zRrWMOkplX6sdSXSpxNdfQtwykyUEcvFg
-         0+iQ==
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=rIRgL+fUAJ+cm023/f47fQ7Qwz6zIipIpcEEz4h2Bzs=;
+        b=lsi5tdSOOGv8HOptmFZjlpYicl4W2RrZQrlkYuYL1RULTao5O7Ux2PdVOe3zBH49sk
+         xRPXTsUm8dKOdr5LMhbL1/V0ZfESMrN0YOJKVdjnQkgOfXpLSd2JnF/uWNDUTqtIiUHk
+         Rc5eaZg31oplOZ6xsUHd2n1AE2+fevv2GukfPaFeinwMgJXHdUz5X6fnd6tm84Qn/Kts
+         HUTSEvN3XINE3HhRZEVE4Z2Ut8g/hsov+eznWvzlR87OpQAsAJQoW9cFa1GVP95y7p2i
+         kdi6HJj3gjF67wxz5UCS69ujiGSHUfmI1CySjAwcUkvcjcqR+XTX0JH1j+TySyvDFsiC
+         TFVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=z6+ES+2r7/g2CFpEvk+QI66BIymB0gjrO2GhHAWh+yk=;
-        b=jYzujpjCdUmD2Uv7CdxT63/pjJ2ipP2dj0GOyRhpPsQ7TZGIwTJfY4iIeDYaVmTxLN
-         ylSxMVcT4uFb1LnrO5Ylw/VbOdulVHFO6YwCihNPaVWejvDrwlf3kG3nfBx0B41xGFw0
-         3CeXFTm1n/LfxvDc5oIqkzyodS4gNQe2fogxi3FeVWKvjWHPQajyuazrMj7TiatRoNnH
-         1tT6sXLaK9M9lOkphjyqoE2BpusQB+M/Gp9oYZpQDL8DVvgPZDeUzhN2h+5fgraavGv5
-         c/iyJKbIgA3+miXzoSdgDyHAyllk1olPR0tJFLKts0IMESNa6Mdc6d+hML1gOwOfIIWY
-         sIvw==
-X-Gm-Message-State: ACrzQf0ZYWBuHE4QALK5Ys6/sVYHBpM3XhTuD+NuYG7bgi5L3dnVPMC8
-        g7LxykdvwPUCJ9mCJec/5tNOBlGWF6s=
-X-Google-Smtp-Source: AMsMyM4s9dyXToqlsJxjU6XVbXUO+2DNKA77MnoRvA9Vm/ZfcKr7QcwkY0RDe0qcekyDPl+CM9DHLw==
-X-Received: by 2002:a5d:4b04:0:b0:235:f22b:6621 with SMTP id v4-20020a5d4b04000000b00235f22b6621mr14953838wrq.462.1666623640128;
-        Mon, 24 Oct 2022 08:00:40 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ay24-20020a5d6f18000000b002366e8eee11sm4183260wrb.101.2022.10.24.08.00.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Oct 2022 08:00:39 -0700 (PDT)
-Message-Id: <pull.1369.git.git.1666623639.gitgitgadget@gmail.com>
-From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 24 Oct 2022 15:00:36 +0000
-Subject: [PATCH 0/2] Document fsck msg ids
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=rIRgL+fUAJ+cm023/f47fQ7Qwz6zIipIpcEEz4h2Bzs=;
+        b=fMHfH+OXVSVjQnX1Yoz7CBW0aUHS5AOawVP0+J/Pygu5MIYgkfVheSgW2ty+eskyLy
+         B4k5K8k2oyrQWbKFwl028yEfDyglKNfb2M8fd/LUosEa+q1/3xr+S0PRrS3f5WEE0rWr
+         hPg2HnozhDXJifNnc9gOooYvai4IZwpP+9mqQyYQLSNkXCQgE8XUw2yrMrZUKUwb6AJH
+         v+/zCAhfrBwthNpfaH8uYDcNf4oJBwaG7EmJC58ZWONBHiwTd4f0pnf0QhcenOBTOxig
+         2zdddaohS/hAKu6sBmx7sosh/YSDssHNl9OABVHdS7BetweUQOQZ4iG0NVOTZV8SCVR5
+         xYng==
+X-Gm-Message-State: ACrzQf3+Q4ymPXULchP25zNpPoyIeio4803RbBvHr3DZ0NVBBGbQ2NJa
+        9w2KU2xvdrAJMMGIoEAjBW1HBUm2Rj/L9r6xKXFHZA==
+X-Google-Smtp-Source: AMsMyM6jUmkwnOHnUxxhgJwuS5qiKjtjscDfHVBpArfmj6lonLVCXDfw5NvC892JROIPWxJAfevxErdhEeKmIgnnYDA=
+X-Received: by 2002:a5b:7c5:0:b0:6c1:12dc:3f94 with SMTP id
+ t5-20020a5b07c5000000b006c112dc3f94mr30394754ybq.640.1666630867238; Mon, 24
+ Oct 2022 10:01:07 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     John Cai <johncai86@gmail.com>
+References: <20221020232532.1128326-2-calvinwan@google.com> <xmqq4jvxpw46.fsf@gitster.g>
+In-Reply-To: <xmqq4jvxpw46.fsf@gitster.g>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Mon, 24 Oct 2022 10:00:56 -0700
+Message-ID: <CAFySSZABaWSKw_OxyPEU=C_iLOmPa=pPahWaeta=JaAf2q_GEg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/6] run-command: add pipe_output_fn to run_processes_parallel_opts
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, emilyshaffer@google.com, avarab@gmail.com,
+        phillip.wood123@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-fsck does a number of checks, and prints warning or error messages based on
-the type of check. The only place the config values that control whether to
-ignore these checks are documented is through git-help(1). However, often
-times peoples' first instinct to look for a list of valid config values is
-in the documentation page for git-config(1). These fsck. configuration
-values can be hard to find.
+> In my review of one of the previous rounds, I asked which part of
+> this functionality fits the name "pipe", and I do not think I got a
+> satisfactory answer.  And after re-reading the patch in this round,
+> with the in-header comments, it still is not clear to me.
+>
+> It looks more like sending the duplicate of the normal output to a
+> side channel, somewhat like the "tee" utility, but I am not sure if
+> that is the intended way to be used.
+>
 
-Document these so that both git-config and git-fsck documentation has a list
-of valid s.
-
-Patch [1/2] removes an unused msg-id BAD_TAG_OBJECT Patch [2/2] adds a
-fsck-msgids.txt that lists msg-ids that fsck checks for
-
-John Cai (2):
-  fsck: remove the unused BAD_TAG_OBJECT
-  fsck: document msg-id
-
- Documentation/config/fsck.txt |   5 ++
- Documentation/fsck-msgids.txt | 133 ++++++++++++++++++++++++++++++++++
- fsck.h                        |   1 -
- 3 files changed, 138 insertions(+), 1 deletion(-)
- create mode 100644 Documentation/fsck-msgids.txt
-
-
-base-commit: 45c9f05c44b1cb6bd2d6cb95a22cf5e3d21d5b63
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1369%2Fjohn-cai%2Fjc%2Fdocument-fsck-msg-id-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1369/john-cai/jc/document-fsck-msg-id-v1
-Pull-Request: https://github.com/git/git/pull/1369
--- 
-gitgitgadget
+In this case, I was hoping "pipe" would refer to the redirection of
+output from the child processes to a separate custom function, but
+I can see that duplication != redirection. Maybe something like
+"parse_child_output" or "parse_output" would make sense, however,
+I didn't want to imply with that name that the only functionality is to
+parse output. Besides that, I don't really have any other ideas of
+what I can name it...
