@@ -2,181 +2,240 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D61BEFA373F
-	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 16:10:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41A5FFA373F
+	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 16:16:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233172AbiJXQKh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Oct 2022 12:10:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48796 "EHLO
+        id S233967AbiJXQP7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Oct 2022 12:15:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233745AbiJXQJJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2022 12:09:09 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD9622E9F5
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 07:59:42 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id m29-20020a05600c3b1d00b003c6bf423c71so10191115wms.0
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 07:59:42 -0700 (PDT)
+        with ESMTP id S234628AbiJXQPD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2022 12:15:03 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF10E122BC5
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 08:02:43 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id bk15so16670232wrb.13
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 08:02:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=t70zD9u4QyJOFLJtAsQtNnnx/aU1oF7oKkTWzJZ/sKw=;
-        b=nCoe0cKjncFUMcEu8yOLvYN/Vce63i/dIvNNFeCznj8BqYJ54QGzOrWNXXB+jTMd7T
-         RqEvvTrNQTmM8SdIQHn9mZoVcb4I77xTYF7MGRDRn4Op93xxAaw6CYgo9fK3HV1T8frs
-         3h7ML/sUAWiEzPTvPeDbDCE2gcpKEHphYPbf94ycPeYBFcBWbOzh/ZjfOetS6NAGthzV
-         tojDJV9NP4pP8vZ9lXj/8awAsjmfdY8UYp0hZnwek/IEVtxqbnIfKkhdji66ff/xyX/t
-         4Xvv24oJvVUnYb1TtZrt17MzSUqtLJog/RTU3SGzPSTL2E5AIiIZLqhHOVcPtzBZbenY
-         D+Nw==
+        bh=Wa9VpWbTJ5lcs5o0642+BwrCyc0FRaAoqyXXjMGk3Hs=;
+        b=WdahxIIvajnOnG85vUqnaesxy8/r8kUHcB+UzkGotM03iu7QquoJOHNLkRLuenexE8
+         5UMahKVaTx8kVtI2s1b2mhDDGEFyLGTt/kbYrsVkdxzzrxvUkPseBVpmj1VXo9xZKjnR
+         KNFfMcNlhAlFhyVWxtpMWwRE9nqY4hju5cFv7ifEBLpiZqInD6rAtmPzM01w9bI0/4nU
+         sRaBWBWNP9WTK6+5YiUNu7iaomSGdCYF7DhZnKXXRDSbxzo2sl9gSi+M/JllCq/Oza9N
+         hcy38cv5xA+Vc0pAOjfdDv7n4ViWHESbkQ69Y6Iz0qlT0sTVOPJyB9uGZog23ZHJTzXw
+         g5Vg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=t70zD9u4QyJOFLJtAsQtNnnx/aU1oF7oKkTWzJZ/sKw=;
-        b=OD4THFFFhZfB1xk94mIiPQ53luysWOUTD8I4JKbXPmrljqe+SXTte8evItOEoN+tit
-         hVRbNMwI6AC4cqgAt+07+ol50m/Gz1gkq14++FGwg3geapVCC2yQekWvgPn/mCmm9ExV
-         H4WznJlYEjAQ8PaGSMTOWoVbM09Oxw6d57M4xBC7KtCKijyeYQJl69lJWgP8HNmXJT99
-         lamYy7oJdn54XMoQRan81nSFVCdWHZUHVL244JgsKFpYVbok+UpCGt6v0dC22maPzBxP
-         HdFqIZncYWoABUp0SpZRW3ssoCooqUryckiMRDhMEYnvc0NXKElQbzDN/8g0vjhjvgMe
-         4fQQ==
-X-Gm-Message-State: ACrzQf2+FqsZtYAzg0J2eUrqwYJONebkVb1Ml3Y9FuCic/KOuWTnRJbJ
-        SeDJvtNTPMo5v47YEZBiEeGShoiETDU=
-X-Google-Smtp-Source: AMsMyM4FvHk3T/Y8FQNcOkOMS9Dkw2fLxboQaKwc4ekQ2TUdLVwkDlKCHzPMQnkDvy3tzMqwTpyktA==
-X-Received: by 2002:a05:600c:35cf:b0:3c6:e957:b403 with SMTP id r15-20020a05600c35cf00b003c6e957b403mr36494890wmq.162.1666618875814;
-        Mon, 24 Oct 2022 06:41:15 -0700 (PDT)
+        bh=Wa9VpWbTJ5lcs5o0642+BwrCyc0FRaAoqyXXjMGk3Hs=;
+        b=LmBizbK5bpWqdbsoq554Dms5mWN9oyep58vL9CiR/buNRwcho831yuOryfseY1dMRM
+         /sOzoNHtq1P2fLEaGX1wvcbaJ8dTnDmleT5Jr2J80IJzz6joyHCUJH69sn7dTJpSqPVr
+         hyCD/UVoXIOLAcreDDTUUzHc8m56InLbOcAmjwGrEWZSdDynbkiKzN/dRvImBvTsEP5T
+         dJmMegvD9m6OHCvf5DJnpME3qWauHrO3Hau9Zrg6r3Rh1Wpj/HAWTnt6clJPj/XBX9ro
+         BiJGTqBE4DGHLW1vKsTwyNlYboFrIk9Mjazgi3Auedkj4iIz3uifdfwO3/mfizL7BVo3
+         T8Ag==
+X-Gm-Message-State: ACrzQf1i6w0q83B3F/Hwv2vXSa3+FKWGuW8t6LtVX/Lrof47ZCEviKnr
+        IJWWc/8+y2q4A5+zoRuY0doQatFWVps=
+X-Google-Smtp-Source: AMsMyM4VYycOSVAorS1GNvA4hCl+GkNKwKn3I6833S1ju5vPw0X40Wv8hWjXkemqWCF5p8Afuk7Skw==
+X-Received: by 2002:a05:6000:168c:b0:231:7950:1114 with SMTP id y12-20020a056000168c00b0023179501114mr21183104wrd.484.1666623642339;
+        Mon, 24 Oct 2022 08:00:42 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m10-20020adffa0a000000b002305cfb9f3dsm25829703wrr.89.2022.10.24.06.41.15
+        by smtp.gmail.com with ESMTPSA id r20-20020a05600c35d400b003b47e75b401sm8831244wmq.37.2022.10.24.08.00.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Oct 2022 06:41:15 -0700 (PDT)
-Message-Id: <79c6406d492ab629d5d042edaf1507888d5378c0.1666618868.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1373.v4.git.1666618868.gitgitgadget@gmail.com>
-References: <pull.1373.v3.git.1666290489.gitgitgadget@gmail.com>
-        <pull.1373.v4.git.1666618868.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 24 Oct 2022 13:41:05 +0000
-Subject: [PATCH v4 6/8] trace2: convert ctx.thread_name from strbuf to pointer
+        Mon, 24 Oct 2022 08:00:41 -0700 (PDT)
+Message-Id: <3aec3d2c9ca65a37a367c3a7c9081bbd4cd44ae0.1666623639.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1369.git.git.1666623639.gitgitgadget@gmail.com>
+References: <pull.1369.git.git.1666623639.gitgitgadget@gmail.com>
+From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 24 Oct 2022 15:00:38 +0000
+Subject: [PATCH 2/2] fsck: document msg-id
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
+Cc:     John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhost@microsoft.com>
+From: John Cai <johncai86@gmail.com>
 
-Convert the `tr2tls_thread_ctx.thread_name` field from a `strbuf`
-to a "const char*" pointer.
+The git-config documentation lacks mention of specific <msg-id> that
+are supported. While git-help --config will display a list of these options,
+often developers' first instinct is to consult the git docs to find valid
+config values.
 
-The `thread_name` field is a constant string that is constructed when
-the context is created.  Using a (non-const) `strbuf` structure for it
-caused some confusion in the past because it implied that someone
-could rename a thread after it was created.  That usage was not
-intended.  Change it to a const pointer to make the intent more clear.
+Add a section under the docs for fsck.<msg-id> with the msg-ids that
+git-fsck recognizes.
 
-Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+Signed-off-by: John Cai <johncai86@gmail.com>
 ---
- trace2/tr2_tgt_event.c |  2 +-
- trace2/tr2_tgt_perf.c  |  2 +-
- trace2/tr2_tls.c       | 16 +++++++++-------
- trace2/tr2_tls.h       |  2 +-
- 4 files changed, 12 insertions(+), 10 deletions(-)
+ Documentation/config/fsck.txt |   5 ++
+ Documentation/fsck-msgids.txt | 133 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 138 insertions(+)
+ create mode 100644 Documentation/fsck-msgids.txt
 
-diff --git a/trace2/tr2_tgt_event.c b/trace2/tr2_tgt_event.c
-index 37a3163be12..52f9356c695 100644
---- a/trace2/tr2_tgt_event.c
-+++ b/trace2/tr2_tgt_event.c
-@@ -90,7 +90,7 @@ static void event_fmt_prepare(const char *event_name, const char *file,
+diff --git a/Documentation/config/fsck.txt b/Documentation/config/fsck.txt
+index 450e8c38e34..b0632075f22 100644
+--- a/Documentation/config/fsck.txt
++++ b/Documentation/config/fsck.txt
+@@ -35,6 +35,11 @@ allow new instances of the same breakages go unnoticed.
+ Setting an unknown `fsck.<msg-id>` value will cause fsck to die, but
+ doing the same for `receive.fsck.<msg-id>` and `fetch.fsck.<msg-id>`
+ will only cause git to warn.
+++
++The following `<msg-id>` are supported:
+++
++
++include::../fsck-msgids.txt[]
  
- 	jw_object_string(jw, "event", event_name);
- 	jw_object_string(jw, "sid", tr2_sid_get());
--	jw_object_string(jw, "thread", ctx->thread_name.buf);
-+	jw_object_string(jw, "thread", ctx->thread_name);
- 
- 	/*
- 	 * In brief mode, only emit <time> on these 2 event types.
-diff --git a/trace2/tr2_tgt_perf.c b/trace2/tr2_tgt_perf.c
-index 8cb792488c8..59ca58f862d 100644
---- a/trace2/tr2_tgt_perf.c
-+++ b/trace2/tr2_tgt_perf.c
-@@ -108,7 +108,7 @@ static void perf_fmt_prepare(const char *event_name,
- 
- 	strbuf_addf(buf, "d%d | ", tr2_sid_depth());
- 	strbuf_addf(buf, "%-*s | %-*s | ", TR2_MAX_THREAD_NAME,
--		    ctx->thread_name.buf, TR2FMT_PERF_MAX_EVENT_NAME,
-+		    ctx->thread_name, TR2FMT_PERF_MAX_EVENT_NAME,
- 		    event_name);
- 
- 	len = buf->len + TR2FMT_PERF_REPO_WIDTH;
-diff --git a/trace2/tr2_tls.c b/trace2/tr2_tls.c
-index 4f7c516ecb6..3a67532aae4 100644
---- a/trace2/tr2_tls.c
-+++ b/trace2/tr2_tls.c
-@@ -35,6 +35,7 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_base_name,
- 					     uint64_t us_thread_start)
- {
- 	struct tr2tls_thread_ctx *ctx = xcalloc(1, sizeof(*ctx));
-+	struct strbuf buf = STRBUF_INIT;
- 
- 	/*
- 	 * Implicitly "tr2tls_push_self()" to capture the thread's start
-@@ -47,12 +48,13 @@ struct tr2tls_thread_ctx *tr2tls_create_self(const char *thread_base_name,
- 
- 	ctx->thread_id = tr2tls_locked_increment(&tr2_next_thread_id);
- 
--	strbuf_init(&ctx->thread_name, 0);
-+	strbuf_init(&buf, 0);
- 	if (ctx->thread_id)
--		strbuf_addf(&ctx->thread_name, "th%02d:", ctx->thread_id);
--	strbuf_addstr(&ctx->thread_name, thread_base_name);
--	if (ctx->thread_name.len > TR2_MAX_THREAD_NAME)
--		strbuf_setlen(&ctx->thread_name, TR2_MAX_THREAD_NAME);
-+		strbuf_addf(&buf, "th%02d:", ctx->thread_id);
-+	strbuf_addstr(&buf, thread_base_name);
-+	if (buf.len > TR2_MAX_THREAD_NAME)
-+		strbuf_setlen(&buf, TR2_MAX_THREAD_NAME);
-+	ctx->thread_name = strbuf_detach(&buf, NULL);
- 
- 	pthread_setspecific(tr2tls_key, ctx);
- 
-@@ -95,7 +97,7 @@ void tr2tls_unset_self(void)
- 
- 	pthread_setspecific(tr2tls_key, NULL);
- 
--	strbuf_release(&ctx->thread_name);
-+	free((char *)ctx->thread_name);
- 	free(ctx->array_us_start);
- 	free(ctx);
- }
-@@ -113,7 +115,7 @@ void tr2tls_pop_self(void)
- 	struct tr2tls_thread_ctx *ctx = tr2tls_get_self();
- 
- 	if (!ctx->nr_open_regions)
--		BUG("no open regions in thread '%s'", ctx->thread_name.buf);
-+		BUG("no open regions in thread '%s'", ctx->thread_name);
- 
- 	ctx->nr_open_regions--;
- }
-diff --git a/trace2/tr2_tls.h b/trace2/tr2_tls.h
-index 3ac4380d829..65836b1399c 100644
---- a/trace2/tr2_tls.h
-+++ b/trace2/tr2_tls.h
-@@ -15,7 +15,7 @@
- #define TR2_MAX_THREAD_NAME (24)
- 
- struct tr2tls_thread_ctx {
--	struct strbuf thread_name;
-+	const char *thread_name;
- 	uint64_t *array_us_start;
- 	size_t alloc;
- 	size_t nr_open_regions; /* plays role of "nr" in ALLOC_GROW */
+ fsck.skipList::
+ 	The path to a list of object names (i.e. one unabbreviated SHA-1 per
+diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
+new file mode 100644
+index 00000000000..888fa3308b7
+--- /dev/null
++++ b/Documentation/fsck-msgids.txt
+@@ -0,0 +1,133 @@
++--
++`badDate`;;
++	Invalid date format in an author/committer line.
++
++`badEmail`;;
++	Invalid email format in an author/committer line.
++
++`badFilemode`;;
++	A tree contains a bad filemode entry.
++
++`badName`;;
++	An author/committer name is empty.
++
++`badObjectSha1`;;
++	An object has a bad sha1.
++
++`badParentSha1`;;
++	A commit object has a bad parent sha1.
++
++`badTagName`;;
++	A tag has an invalid format.
++
++`badTimezone`;;
++	Found an invalid time zone in an author/committer line.
++
++`badTree`;;
++	A tree cannot be parsed.
++
++`badTreeSha1`;;
++	A tree has an invalid format.
++
++`badType`;;
++	Found an invalid object type.
++
++`duplicateEntries`;;
++	A tree contains duplicate file entries.
++
++`emptyName`;;
++	A path contains an empty name.
++
++`fullPathName`;;
++	A path contains the full path starting with "/".
++
++`gitAttributesSymlink`;;
++	`.gitattributes` is a symlink.
++
++`gitignoreSymlink`;;
++	`.gitignore` is a symlink.
++
++`gitmodulesBlob`;;
++	A non-blob found at `.gitmodules`.
++
++`gitmodulesMissing`;;
++	Unable to read `.gitmodules` blob.
++
++`gitmodulesName`;;
++	A submodule name is invalid.
++
++`gitmodulesParse`;;
++	Could not parse `.gitmodules` blob.
++
++`gitmodulesLarge`;
++	`.gitmodules` blob is too large to parse.
++
++`gitmodulesPath`;;
++	`.gitmodules` path is invalid.
++
++`gitmodulesSymlink`;;
++	`.gitmodules` is a symlink.
++
++`gitmodulesUpdate`;;
++	Found an invalid submodule update setting.
++
++`gitmodulesUrl`;;
++	Found an invalid submodule url.
++
++`hasDot`;;
++	A tree contains an entry named `.`.
++
++`hasDotdot`;;
++	A tree contains an entry named `..`.
++
++`hasDotgit`;;
++	A tree contains an entry named `.git`.
++
++`mailmapSymlink`;;
++	`.mailmap` is a symlink.
++
++`missingAuthor`;;
++	Author is missing.
++
++`missingCommitter`;;
++	Committer is missing.
++
++`missingEmail`;;
++	Email is missing in an author/committer line.
++
++`missingNameBeforeEmail`;;
++	Missing space before an email in an author/committer line.
++
++`missingObject`;;
++	Missing `object` line in tag object.
++
++`missingSpaceBeforeDate`;;
++	Missing space before date in an author/committer line.
++
++`missingSpaceBeforeEmail`;;
++	Missing space before the email in author/committer line.
++
++`missingTag`;;
++	Unexpected end after `type` line in a tag object.
++
++`missingTypeEntry`;;
++	Missing `type` line in a tag object.
++
++`multipleAuthors`;;`
++	Multiple author lines found in a commit.
++
++`nulInCommit`;;
++	Found a NUL byte in the commit object body.
++
++`treeNotSorted`;;
++	A tree is not properly sorted.
++
++`unknownType`;;
++	Found an unknown object type.
++
++`zeroPaddingDate`;;
++	Found a zero padded date in an author/commiter line.
++
++`zeroPaddedFilemode`;;
++	Found a zero padded filemode in a tree.
++--
 -- 
 gitgitgadget
-
