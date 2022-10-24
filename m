@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DDA9FA373D
-	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 21:55:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64515FA373D
+	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 21:55:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231428AbiJXVzf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Oct 2022 17:55:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46944 "EHLO
+        id S231487AbiJXVzs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Oct 2022 17:55:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231458AbiJXVzT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2022 17:55:19 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ACCA3B978
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 13:09:07 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id b20-20020a05600c4e1400b003cc28585e2fso3953832wmq.1
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 13:09:07 -0700 (PDT)
+        with ESMTP id S231467AbiJXVzV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2022 17:55:21 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D6DDD0393
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 13:09:08 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id j15so7294499wrq.3
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 13:09:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Sp9Tg5X1RJCYKhvef62590LNA9REDWAdl/Lhvjci9/c=;
-        b=bzdvrylCLTO9oMbVns2Ck+MeePn/KMnhYDckkznQTkJYNMwq2prXHDV0sBic3pnwNz
-         sfcAQcvoWHsFfVdBl1BkI6O9gNUBFDG4QxuQuyEd+CG48Si7O1IZw4uWdIDrq138oiPh
-         VNCpdoO403ig/5qtFNCTXoz30W5lkVOeOk666Ug3OdEJjuALZcTHnU9Kt0UXDFzHrGBA
-         c+sUB76HieQEvpf0/Oa3sq/g2kj2+RhRSZjVp+scren9RBsWmA5ec28yqyd+BTEN1hWC
-         4Jbd4f16So9lA/Q2sm0D30J7Hb4a115bQDQzBOmJNcCdeB/g8Mr7ZzXTH1PBM4d5rDin
-         zvlQ==
+        bh=IVeQ/mWty2Tpibi+Iyhp7FnN8iq0Jx9ktGkbazpbcxU=;
+        b=RDCC/YwrJwLnhOGO+5zdm1DPHOSYgst04TMGc/zt0RuWRh2pzxurB9J/vlMWDUCpkp
+         ynPq0XCITcFkxa5yqVLGVnxFHISxFFqD3ey521ph5Q1hH9csQBB/d3x8dJR3ImPVRb8E
+         lHA6mObFEK5UHNYp+CLO4H3RdD7b5Zknh7Umo4pI50r8RjQvS045nR2pfF4MZ7YQCqnJ
+         rfg1rqpqWRyKzj2llT9vKQZQUKcAv2y0c0xRkMfloN7cnm7iq7TBv/C1DwHq7TsT+1/C
+         MfUqgweMGdIzwfGFcQmT2kbwBI2RbBmHK8JAJDg+p8BxBMb/KZY21jMeEFDi1vO/jKCo
+         avyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Sp9Tg5X1RJCYKhvef62590LNA9REDWAdl/Lhvjci9/c=;
-        b=Ll+DO51ZKNnVsCApkE7/zI5KkIhCYKMjsz6ewcSbeMO/QKingBqZmm1txL2RfKWOtg
-         Z3vYyqaThLhqwB+IoGD0hJq4t3LKGWnarthoR8w2S7O1aaQOZJ1xNuIvk2GaVqMJUrI7
-         DGiOhax/F9UOCDU/CHWS/oaKPcXAILc1H2JWY9lwtFe+koNdz4vQIBqEeJYqnMfzDp81
-         oQMvCxK4MVp+y59Y6PenP2PadmG8YA6uRh6e0hBhyX/tA4cRpvANCxxWLhHfNkPgPOYB
-         RQHkQu89ianxllPYKGbtQvNXVcl6vtweoNDAWwsYUAi68D4W8TZpSmCIZ/tXqGgHV22T
-         Pw7g==
-X-Gm-Message-State: ACrzQf2ZCnEB4lEnRJGz9exFgtk1fosnZQG4F7jeyUMcqGNkfaB5j+FG
-        Yw0bd5t6zTEm8spuBzV85Z6peJ0tQUw=
-X-Google-Smtp-Source: AMsMyM4GL0334oK18Fd08RM44oeUNqptRkYCF8+KeuYyVkFN2NrlLhyaRw/gXMOoGSTPvyUvRjLaMw==
-X-Received: by 2002:a7b:cc0c:0:b0:3c5:a58f:afbc with SMTP id f12-20020a7bcc0c000000b003c5a58fafbcmr23775388wmh.169.1666642067850;
-        Mon, 24 Oct 2022 13:07:47 -0700 (PDT)
+        bh=IVeQ/mWty2Tpibi+Iyhp7FnN8iq0Jx9ktGkbazpbcxU=;
+        b=YEGZZOIhA19dQTozZ6JzLO7oy3LsN2EQVuQajomMDuwikYu9cl4ydpyuwFPt+SmGq+
+         TqWfvknZ+tVs4EwotlwLGit4OlKnnbSxH6vamz/N7Nj+ZQjHEBush6JuqBBGJCDbSt5Q
+         0bjbTw1Ev+SxMdHaikwUWloHkN/ojmBhK79AelPpF5iHrufMEzpbtpE8Dg7v9qAwAcFA
+         94/MecvDSHX3VwjC+Y6WduwqpQgNw36UpW6LIu5So1MLvT4cZNUS8CQhhMPgtoytmOnE
+         gZ8+FGbUz7E1gr2Sm7//iM2G/J4kcTEW91qReU32Gtu1gZtZx80sx8TdZgV5SOH57SBY
+         WNNA==
+X-Gm-Message-State: ACrzQf1eice7BzqvSqS04ITmKZqszuuW0lKRRaYgbg9Buk9dy4OsdcDp
+        soizxITQSorME09BUgRER8I2exAxaO4=
+X-Google-Smtp-Source: AMsMyM7hq6JKUlUNHj0ulZ1A2Q92j32cY455lacVDd/etUCtuYLhqD5mcbCgeEWeG0eP/0kNFT+qoQ==
+X-Received: by 2002:a5d:6c63:0:b0:230:8257:be9e with SMTP id r3-20020a5d6c63000000b002308257be9emr21662006wrz.606.1666642069247;
+        Mon, 24 Oct 2022 13:07:49 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t7-20020adfe107000000b0022da3977ec5sm452535wrz.113.2022.10.24.13.07.47
+        by smtp.gmail.com with ESMTPSA id k21-20020a05600c0b5500b003cdf141f363sm698056wmr.11.2022.10.24.13.07.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Oct 2022 13:07:47 -0700 (PDT)
-Message-Id: <321757ef919bc75e58108d6e6bef4aaeeb4b326a.1666642065.git.gitgitgadget@gmail.com>
+        Mon, 24 Oct 2022 13:07:48 -0700 (PDT)
+Message-Id: <ec4a2422d5b65efcbe8722f7f25f4b6ef6911302.1666642065.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1359.v5.git.1666642064.gitgitgadget@gmail.com>
 References: <pull.1359.v4.git.1666307815.gitgitgadget@gmail.com>
         <pull.1359.v5.git.1666642064.gitgitgadget@gmail.com>
 From:   "Jerry Zhang via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 24 Oct 2022 20:07:39 +0000
-Subject: [PATCH v5 1/6] patch-id: fix stable patch id for binary / header-only
+Date:   Mon, 24 Oct 2022 20:07:40 +0000
+Subject: [PATCH v5 2/6] patch-id: use stable patch-id for rebases
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,170 +68,142 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jerry Zhang <jerry@skydio.com>
 
-Patch-ids for binary patches are found by hashing the object
-ids of the before and after objects in succession. However in
-the --stable case, there is a bug where hunks are not flushed
-for binary and header-only patch ids, which would always result
-in a patch-id of 0000. The --unstable case is currently correct.
-
-Reorder the logic to branch into 3 cases for populating the
-patch body: header-only which populates nothing, binary which
-populates the object ids, and normal which populates the text
-diff. All branches will end up flushing the hunk.
-
-Don't populate the ---a/ and +++b/ lines for binary diffs, to correspond
-to those lines not being present in the "git diff" text output.
-This is necessary because we advertise that the patch-id calculated
-internally and used in format-patch is the same that what the
-builtin "git patch-id" would produce when piped from a diff.
-
-Update the test to run on both binary and normal files.
+Git doesn't persist patch-ids during the rebase process, so there is
+no need to specifically invoke the unstable variant. Use the stable
+logic for all internal patch-id calculations to minimize the number of
+code paths and improve test coverage.
 
 Signed-off-by: Jerry Zhang <jerry@skydio.com>
 ---
- diff.c                     | 58 +++++++++++++++++++-------------------
- t/t3419-rebase-patch-id.sh | 34 +++++++++++++++-------
- 2 files changed, 53 insertions(+), 39 deletions(-)
+ builtin/log.c |  2 +-
+ diff.c        | 12 ++++--------
+ diff.h        |  2 +-
+ patch-ids.c   | 10 +++++-----
+ patch-ids.h   |  2 +-
+ 5 files changed, 12 insertions(+), 16 deletions(-)
 
+diff --git a/builtin/log.c b/builtin/log.c
+index ee19dc5d450..e72869afb36 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1763,7 +1763,7 @@ static void prepare_bases(struct base_tree_info *bases,
+ 		struct object_id *patch_id;
+ 		if (*commit_base_at(&commit_base, commit))
+ 			continue;
+-		if (commit_patch_id(commit, &diffopt, &oid, 0, 1))
++		if (commit_patch_id(commit, &diffopt, &oid, 0))
+ 			die(_("cannot get patch id"));
+ 		ALLOC_GROW(bases->patch_id, bases->nr_patch_id + 1, bases->alloc_patch_id);
+ 		patch_id = bases->patch_id + bases->nr_patch_id;
 diff --git a/diff.c b/diff.c
-index 648f6717a55..c15169e4b06 100644
+index c15169e4b06..199b63dbcc3 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -6253,46 +6253,46 @@ static int diff_get_patch_id(struct diff_options *options, struct object_id *oid
- 		if (p->one->mode == 0) {
- 			patch_id_add_string(&ctx, "newfilemode");
- 			patch_id_add_mode(&ctx, p->two->mode);
--			patch_id_add_string(&ctx, "---/dev/null");
--			patch_id_add_string(&ctx, "+++b/");
--			the_hash_algo->update_fn(&ctx, p->two->path, len2);
- 		} else if (p->two->mode == 0) {
- 			patch_id_add_string(&ctx, "deletedfilemode");
- 			patch_id_add_mode(&ctx, p->one->mode);
--			patch_id_add_string(&ctx, "---a/");
--			the_hash_algo->update_fn(&ctx, p->one->path, len1);
--			patch_id_add_string(&ctx, "+++/dev/null");
--		} else {
--			patch_id_add_string(&ctx, "---a/");
--			the_hash_algo->update_fn(&ctx, p->one->path, len1);
--			patch_id_add_string(&ctx, "+++b/");
--			the_hash_algo->update_fn(&ctx, p->two->path, len2);
+@@ -6206,7 +6206,7 @@ static void patch_id_add_mode(git_hash_ctx *ctx, unsigned mode)
+ }
+ 
+ /* returns 0 upon success, and writes result into oid */
+-static int diff_get_patch_id(struct diff_options *options, struct object_id *oid, int diff_header_only, int stable)
++static int diff_get_patch_id(struct diff_options *options, struct object_id *oid, int diff_header_only)
+ {
+ 	struct diff_queue_struct *q = &diff_queued_diff;
+ 	int i;
+@@ -6293,21 +6293,17 @@ static int diff_get_patch_id(struct diff_options *options, struct object_id *oid
+ 				return error("unable to generate patch-id diff for %s",
+ 					     p->one->path);
  		}
- 
--		if (diff_header_only)
--			continue;
--
--		if (fill_mmfile(options->repo, &mf1, p->one) < 0 ||
--		    fill_mmfile(options->repo, &mf2, p->two) < 0)
--			return error("unable to read files to diff");
--
--		if (diff_filespec_is_binary(options->repo, p->one) ||
-+		if (diff_header_only) {
-+			/* don't do anything since we're only populating header info */
-+		} else if (diff_filespec_is_binary(options->repo, p->one) ||
- 		    diff_filespec_is_binary(options->repo, p->two)) {
- 			the_hash_algo->update_fn(&ctx, oid_to_hex(&p->one->oid),
- 					the_hash_algo->hexsz);
- 			the_hash_algo->update_fn(&ctx, oid_to_hex(&p->two->oid),
- 					the_hash_algo->hexsz);
--			continue;
--		}
--
--		xpp.flags = 0;
--		xecfg.ctxlen = 3;
--		xecfg.flags = XDL_EMIT_NO_HUNK_HDR;
--		if (xdi_diff_outf(&mf1, &mf2, NULL,
--				  patch_id_consume, &data, &xpp, &xecfg))
--			return error("unable to generate patch-id diff for %s",
--				     p->one->path);
-+		} else {
-+			if (p->one->mode == 0) {
-+				patch_id_add_string(&ctx, "---/dev/null");
-+				patch_id_add_string(&ctx, "+++b/");
-+				the_hash_algo->update_fn(&ctx, p->two->path, len2);
-+			} else if (p->two->mode == 0) {
-+				patch_id_add_string(&ctx, "---a/");
-+				the_hash_algo->update_fn(&ctx, p->one->path, len1);
-+				patch_id_add_string(&ctx, "+++/dev/null");
-+			} else {
-+				patch_id_add_string(&ctx, "---a/");
-+				the_hash_algo->update_fn(&ctx, p->one->path, len1);
-+				patch_id_add_string(&ctx, "+++b/");
-+				the_hash_algo->update_fn(&ctx, p->two->path, len2);
-+			}
- 
-+			if (fill_mmfile(options->repo, &mf1, p->one) < 0 ||
-+			    fill_mmfile(options->repo, &mf2, p->two) < 0)
-+				return error("unable to read files to diff");
-+			xpp.flags = 0;
-+			xecfg.ctxlen = 3;
-+			xecfg.flags = XDL_EMIT_NO_HUNK_HDR;
-+			if (xdi_diff_outf(&mf1, &mf2, NULL,
-+					  patch_id_consume, &data, &xpp, &xecfg))
-+				return error("unable to generate patch-id diff for %s",
-+					     p->one->path);
-+		}
- 		if (stable)
- 			flush_one_hunk(oid, &ctx);
+-		if (stable)
+-			flush_one_hunk(oid, &ctx);
++		flush_one_hunk(oid, &ctx);
  	}
-diff --git a/t/t3419-rebase-patch-id.sh b/t/t3419-rebase-patch-id.sh
-index 295040f2fe3..d24e55aac8d 100755
---- a/t/t3419-rebase-patch-id.sh
-+++ b/t/t3419-rebase-patch-id.sh
-@@ -43,15 +43,16 @@ test_expect_success 'setup: 500 lines' '
- 	git add newfile &&
- 	git commit -q -m "add small file" &&
  
--	git cherry-pick main >/dev/null 2>&1
--'
-+	git cherry-pick main >/dev/null 2>&1 &&
+-	if (!stable)
+-		the_hash_algo->final_oid_fn(oid, &ctx);
+-
+ 	return 0;
+ }
  
--test_expect_success 'setup attributes' '
--	echo "file binary" >.gitattributes
-+	git branch -f squashed main &&
-+	git checkout -q -f squashed &&
-+	git reset -q --soft HEAD~2 &&
-+	git commit -q -m squashed
- '
+-int diff_flush_patch_id(struct diff_options *options, struct object_id *oid, int diff_header_only, int stable)
++int diff_flush_patch_id(struct diff_options *options, struct object_id *oid, int diff_header_only)
+ {
+ 	struct diff_queue_struct *q = &diff_queued_diff;
+ 	int i;
+-	int result = diff_get_patch_id(options, oid, diff_header_only, stable);
++	int result = diff_get_patch_id(options, oid, diff_header_only);
  
- test_expect_success 'detect upstream patch' '
--	git checkout -q main &&
-+	git checkout -q main^{} &&
- 	scramble file &&
- 	git add file &&
- 	git commit -q -m "change big file again" &&
-@@ -61,14 +62,27 @@ test_expect_success 'detect upstream patch' '
- 	test_must_be_empty revs
- '
+ 	for (i = 0; i < q->nr; i++)
+ 		diff_free_filepair(q->queue[i]);
+diff --git a/diff.h b/diff.h
+index 8ae18e5ab1e..fd33caeb25d 100644
+--- a/diff.h
++++ b/diff.h
+@@ -634,7 +634,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option);
+ int run_diff_index(struct rev_info *revs, unsigned int option);
  
-+test_expect_success 'detect upstream patch binary' '
-+	echo "file binary" >.gitattributes &&
-+	git checkout -q other^{} &&
-+	git rebase main &&
-+	git rev-list main...HEAD~ >revs &&
-+	test_must_be_empty revs &&
-+	test_when_finished "rm .gitattributes"
-+'
-+
- test_expect_success 'do not drop patch' '
--	git branch -f squashed main &&
--	git checkout -q -f squashed &&
--	git reset -q --soft HEAD~2 &&
--	git commit -q -m squashed &&
- 	git checkout -q other^{} &&
- 	test_must_fail git rebase squashed &&
--	git rebase --quit
-+	test_when_finished "git rebase --abort"
-+'
-+
-+test_expect_success 'do not drop patch binary' '
-+	echo "file binary" >.gitattributes &&
-+	git checkout -q other^{} &&
-+	test_must_fail git rebase squashed &&
-+	test_when_finished "git rebase --abort" &&
-+	test_when_finished "rm .gitattributes"
- '
+ int do_diff_cache(const struct object_id *, struct diff_options *);
+-int diff_flush_patch_id(struct diff_options *, struct object_id *, int, int);
++int diff_flush_patch_id(struct diff_options *, struct object_id *, int);
+ void flush_one_hunk(struct object_id *result, git_hash_ctx *ctx);
  
- test_done
+ int diff_result_code(struct diff_options *, int);
+diff --git a/patch-ids.c b/patch-ids.c
+index 46c6a8f3eab..31534466266 100644
+--- a/patch-ids.c
++++ b/patch-ids.c
+@@ -11,7 +11,7 @@ static int patch_id_defined(struct commit *commit)
+ }
+ 
+ int commit_patch_id(struct commit *commit, struct diff_options *options,
+-		    struct object_id *oid, int diff_header_only, int stable)
++		    struct object_id *oid, int diff_header_only)
+ {
+ 	if (!patch_id_defined(commit))
+ 		return -1;
+@@ -22,7 +22,7 @@ int commit_patch_id(struct commit *commit, struct diff_options *options,
+ 	else
+ 		diff_root_tree_oid(&commit->object.oid, "", options);
+ 	diffcore_std(options);
+-	return diff_flush_patch_id(options, oid, diff_header_only, stable);
++	return diff_flush_patch_id(options, oid, diff_header_only);
+ }
+ 
+ /*
+@@ -48,11 +48,11 @@ static int patch_id_neq(const void *cmpfn_data,
+ 	b = container_of(entry_or_key, struct patch_id, ent);
+ 
+ 	if (is_null_oid(&a->patch_id) &&
+-	    commit_patch_id(a->commit, opt, &a->patch_id, 0, 0))
++	    commit_patch_id(a->commit, opt, &a->patch_id, 0))
+ 		return error("Could not get patch ID for %s",
+ 			oid_to_hex(&a->commit->object.oid));
+ 	if (is_null_oid(&b->patch_id) &&
+-	    commit_patch_id(b->commit, opt, &b->patch_id, 0, 0))
++	    commit_patch_id(b->commit, opt, &b->patch_id, 0))
+ 		return error("Could not get patch ID for %s",
+ 			oid_to_hex(&b->commit->object.oid));
+ 	return !oideq(&a->patch_id, &b->patch_id);
+@@ -82,7 +82,7 @@ static int init_patch_id_entry(struct patch_id *patch,
+ 	struct object_id header_only_patch_id;
+ 
+ 	patch->commit = commit;
+-	if (commit_patch_id(commit, &ids->diffopts, &header_only_patch_id, 1, 0))
++	if (commit_patch_id(commit, &ids->diffopts, &header_only_patch_id, 1))
+ 		return -1;
+ 
+ 	hashmap_entry_init(&patch->ent, oidhash(&header_only_patch_id));
+diff --git a/patch-ids.h b/patch-ids.h
+index ab6c6a68047..490d7393716 100644
+--- a/patch-ids.h
++++ b/patch-ids.h
+@@ -20,7 +20,7 @@ struct patch_ids {
+ };
+ 
+ int commit_patch_id(struct commit *commit, struct diff_options *options,
+-		    struct object_id *oid, int, int);
++		    struct object_id *oid, int);
+ int init_patch_ids(struct repository *, struct patch_ids *);
+ int free_patch_ids(struct patch_ids *);
+ 
 -- 
 gitgitgadget
 
