@@ -2,115 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C2D9FA3740
-	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 20:59:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E0DDC38A2D
+	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 20:59:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232161AbiJXU7g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Oct 2022 16:59:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33560 "EHLO
+        id S233845AbiJXU7l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Oct 2022 16:59:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235299AbiJXU7F (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2022 16:59:05 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 044CEB48AB
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 12:05:10 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id y13so5211936pfp.7
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 12:05:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/65QXB1aoRxcs4Xsc5r9OGnY0ge7BQ1M2LEBHMwsoVk=;
-        b=SJcbj01m4TgaBuPEtnV0Zw1qExJ+2msR2EWArvxL3V7N0A90xcT+VmeBUjAxIpCkKA
-         0sfR3Hr0NaOCuqRcKp6R3VEkDCqDmaT0YNJiBTeVNGyxwmHyHijTAwL5/snmUSCOxqgv
-         /PyI1GGc8/RUkXReGknclnmIPjyGVsmrCNHWJoQhkgNxTBMQSFeunwWP46XGSJQzWZgj
-         9VRSNfdqREqZH2w5dGVDk+fjl4EwHTxz8GnDFlfrqWJrK+LXGnPO8HQG/MLAoafAgf6D
-         EZKhhP9vANLj5zdPVKWlb4cZn5CV/tgfK1dOQyEtm63HvhsAoylk42fcK7zTm/l202Qb
-         arWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/65QXB1aoRxcs4Xsc5r9OGnY0ge7BQ1M2LEBHMwsoVk=;
-        b=x38CR0yFR8BZBAqDTDbXOMSUlLOATyjIH0bDtTVk0SMoUWvypkK4LSt8ewlKKyZZDm
-         ZDzBF/3wVkKnTeCJpZuBHvBCQeMT6glDF5hPQxHeEbGYi5B0B/Yu/TOLJWHzUVZyCzU2
-         d8AR4IAnlzsV3xAM/S/zwegImgL80hlGc2fwiMqhA3QWmFQrU6kLGC5q2beYFbq5o6OV
-         aBSPIZkT0IlE+sX4eJZp2wxL9g8wp7kMBBsukg/qARH9gKsKdzuJ2lMa58qRRO2NXAgC
-         hclIEM6hhF7q8BES8ozu16N5jtbOppVacvAyti5S7/RWR+k/52OX9Yds2Uj5YyqJx07u
-         csUg==
-X-Gm-Message-State: ACrzQf2LAo7D3ZRqPJcWcgzcL08g32zvcNcdVPHQF0updRWBrqPbbKhR
-        V3am7thKrc2dDKTPVst0a7A86OgVtylypoiZ
-X-Google-Smtp-Source: AMsMyM5WRkLqoZ1K/bOt2lHkpcEaYH9v0upV/STzN2P5ug3yTBok4rcnCrH5eA+7e2XnBfjOGB1x+A==
-X-Received: by 2002:a05:6e02:2147:b0:300:184b:702f with SMTP id d7-20020a056e02214700b00300184b702fmr2095412ilv.88.1666637745940;
-        Mon, 24 Oct 2022 11:55:45 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id k3-20020a0566022a4300b0067c47eb46desm194864iov.47.2022.10.24.11.55.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Oct 2022 11:55:45 -0700 (PDT)
-Date:   Mon, 24 Oct 2022 14:55:44 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     Jacob Stopak <jacob@initialcommit.io>, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH 6/7] shortlog: implement `--group=author` in terms of
- `--group=<format>`
-Message-ID: <6a373815bf5cd92da762c7cf5e40c0cecaa33be5.1666637725.git.me@ttaylorr.com>
-References: <cover.1665448437.git.me@ttaylorr.com>
- <cover.1666637725.git.me@ttaylorr.com>
+        with ESMTP id S235449AbiJXU7X (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2022 16:59:23 -0400
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B3D61958C3
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 12:05:39 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B617F1CAFFB;
+        Mon, 24 Oct 2022 15:04:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=q1xni537Jn/R7/o6xmfWuJWU+b3RfaueHYrHNH
+        TkprQ=; b=CmTuXfY+DvIw0wVnHTPexec3zKQCCxZAjcJeN821SbV/aomdF4a35e
+        1h+D7Lmot9EU+RCOwpwGy5DE0L06y/yCk0a/r/zSAGPgxgaEI466LQ9YrlQFrwBH
+        wkuD6M41o9sCPPEGzfap0lbTPegs2Qw3VppW/ypmoybCiQs1ELzL4=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AE75E1CAFFA;
+        Mon, 24 Oct 2022 15:04:40 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id BB31E1CAFF9;
+        Mon, 24 Oct 2022 15:04:37 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org, emilyshaffer@google.com, avarab@gmail.com,
+        phillip.wood123@gmail.com
+Subject: Re: [PATCH v3 1/6] run-command: add pipe_output_fn to
+ run_processes_parallel_opts
+References: <20221020232532.1128326-2-calvinwan@google.com>
+        <xmqq4jvxpw46.fsf@gitster.g>
+        <CAFySSZABaWSKw_OxyPEU=C_iLOmPa=pPahWaeta=JaAf2q_GEg@mail.gmail.com>
+Date:   Mon, 24 Oct 2022 12:04:36 -0700
+In-Reply-To: <CAFySSZABaWSKw_OxyPEU=C_iLOmPa=pPahWaeta=JaAf2q_GEg@mail.gmail.com>
+        (Calvin Wan's message of "Mon, 24 Oct 2022 10:00:56 -0700")
+Message-ID: <xmqqilk9rqkb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1666637725.git.me@ttaylorr.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: B4AAF2C4-53CE-11ED-9130-C2DA088D43B2-77302942!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of handling SHORTLOG_GROUP_AUTHOR separately, reimplement it as
-a special case of the new `--group=<format>` mode, where the author mode
-is a shorthand for `--group='%aN <%aE>'.
+Calvin Wan <calvinwan@google.com> writes:
 
-Note that we still need to keep the SHORTLOG_GROUP_AUTHOR enum since it
-has a different meaning in `read_from_stdin()`, where it is still used
-for a different purpose.
+>> In my review of one of the previous rounds, I asked which part of
+>> this functionality fits the name "pipe", and I do not think I got a
+>> satisfactory answer.  And after re-reading the patch in this round,
+>> with the in-header comments, it still is not clear to me.
+>>
+>> It looks more like sending the duplicate of the normal output to a
+>> side channel, somewhat like the "tee" utility, but I am not sure if
+>> that is the intended way to be used.
+>>
+>
+> In this case, I was hoping "pipe" would refer to the redirection of
+> output from the child processes to a separate custom function, but
+> I can see that duplication != redirection. Maybe something like
+> "parse_child_output" or "parse_output" would make sense, however,
+> I didn't want to imply with that name that the only functionality is to
+> parse output. Besides that, I don't really have any other ideas of
+> what I can name it...
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- builtin/shortlog.c | 13 ++++---------
- 1 file changed, 4 insertions(+), 9 deletions(-)
+Yeah, parsing is not to the point.  Sending a copy of output to
+elsewhere is, so redirect is a better word than parse.  And piping
+is not the only form of redirection, either.  If duplication is
+really the point, then either giving it a name with a word that
+signals "duplication" would make more sense.  "send_copy_fn"?  I am
+not good at naming.
 
-diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-index 808bae9baa..f6032c6328 100644
---- a/builtin/shortlog.c
-+++ b/builtin/shortlog.c
-@@ -253,15 +253,6 @@ void shortlog_add_commit(struct shortlog *log, struct commit *commit)
- 	}
- 	oneline_str = oneline.len ? oneline.buf : "<none>";
- 
--	if (log->groups & SHORTLOG_GROUP_AUTHOR) {
--		strbuf_reset(&ident);
--		format_commit_message(commit,
--				      log->email ? "%aN <%aE>" : "%aN",
--				      &ident, &ctx);
--		if (!HAS_MULTI_BITS(log->groups) ||
--		    strset_add(&dups, ident.buf))
--			insert_one_record(log, ident.buf, oneline_str);
--	}
- 	if (log->groups & SHORTLOG_GROUP_COMMITTER) {
- 		strbuf_reset(&ident);
- 		format_commit_message(commit,
-@@ -383,6 +374,10 @@ void shortlog_init(struct shortlog *log)
- 
- void shortlog_finish_setup(struct shortlog *log)
- {
-+	if (log->groups & SHORTLOG_GROUP_AUTHOR)
-+		string_list_append(&log->format,
-+				   log->email ? "%aN <%aE>" : "%aN");
-+
- 	string_list_sort(&log->trailers);
- }
- 
--- 
-2.38.0.16.g393fd4c6db
+As a name that is not end-user facing, it is tempting to assume that
+the readers have basic knowledge of Unix concepts and call it
+"tee_fn", but it would be way too cryptic to uninitiated, so I would
+not recommend it.
 
+Hmm...
