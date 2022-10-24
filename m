@@ -2,195 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60E10C38A2D
-	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 10:28:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBF2CECAAA1
+	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 11:18:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229634AbiJXK2F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Oct 2022 06:28:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60202 "EHLO
+        id S229686AbiJXLSY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Oct 2022 07:18:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229544AbiJXK2D (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2022 06:28:03 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E080E2018A
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 03:28:01 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id x2so2159482edd.2
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 03:28:01 -0700 (PDT)
+        with ESMTP id S229850AbiJXLSV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2022 07:18:21 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA0405FDC1
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 04:18:17 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id b12so29935475edd.6
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 04:18:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=xL5fWXNSgYWF9V/dsChwr3ZteLLiZGCy4lJZXIm1lXU=;
-        b=pAi56r3d1SsQv2/43l1cq1R93CBof5//6GoWmJe1yXKyRqt4ailZYhIsXPqkFUgK2p
-         K1/Ob/9HJSZB3YWz9yErqFRmdrCOmtsTWsMZR/sxUssGD1xRHr3b1/poUtvFqnFNUylo
-         jaiFQVaV0SNBS+hTjOq7GOFnGp8IyiE65CebgNSEHhPotYCxT165MG86A9owBEJIvMrC
-         Owkt7ubnCSwBizzQY5UQE4ekJ+TxN58UrxU5xK8fLd33QjJSVsSvkjhtaOrzdYH1F3NC
-         MWKk3qunTfa/MXBxrUPuKMryhrOd2cCAiV6FTT+Ln76tC8G1pA/ZwapgbRS5xMu5BNyP
-         zfAg==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=CGKzjFGfI+LnHQkWu8LgyoHjqRDqV+203AOxit1jr/s=;
+        b=luuF18royS6lwpicT9Q4iNg0v8C0c2plReJS+ZbRYaoJbGmwclz9m8gHylxsY1TVOT
+         SkwVl3ha4tLsUvfSb90oGRx1Ky99w1xZVIiyxcN03Jf9brdbC7LkXAQCvvAaaJP2u+AG
+         cnJmdcZ8BSd49bq7N1Ef35u9RXYVU3s+uwCKcJDuLOIAzMxpUGNnRs8jkoC5lZx3uZqp
+         uDGM5Gq0HIJBwO6BTbktcHyueUccCCXfH5YfxJmJw5pXGW3zH6IZy8V3VoOic5815/BA
+         lQ2SRGLeT9OS/Kng1A9WFle1d3mvoGZK6x0194XMPa64Uz+JyFEWbqaQNdk4HasK8Wru
+         jTPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xL5fWXNSgYWF9V/dsChwr3ZteLLiZGCy4lJZXIm1lXU=;
-        b=EI8Wz1vHAMHs01D0+Ys+LUsHCSfVeNLEtUBZxr9wOWOUW2Ytk5tBnqx53IzSRb9FFa
-         0BSk093lMPEdvVexmQ0AJvoEbwfAGKZ3c5v2/PTvLwajSWotGJk7tVx3ibkDAswbqE4y
-         OlRq4Tp78mIa/kolaUHaBmaG+2/D/EP/l706t2Wfy/SWi65O7074YvtRtfvDE3sl22w0
-         iNiSMG+xP1h6vw89GLlVR68Xd84cTraBQ5atC5mbVIZ1YDn12PKjNrfEN9nOokCBz7QG
-         6zvI3V13+Tz6ProzbSXlS8OhP8ytHpdOwMl/R3kkiA1SbSfPNrfKdvC66j29A109TeVB
-         dGvg==
-X-Gm-Message-State: ACrzQf1lVI8soZ9TZm3ukMBvwkI+RyTo9CpUBwH1lwjapM3a6B55EfC7
-        B8EH4gpFyb35M1deH2czoyA=
-X-Google-Smtp-Source: AMsMyM4yL0NvHmYa+8Ba82ti2vnZo/OYmvKE3sYy+QRvorMx008UEufpQ0indsE9PoOOCXzMZb0alg==
-X-Received: by 2002:a17:907:25c5:b0:782:978d:c3da with SMTP id ae5-20020a17090725c500b00782978dc3damr26674398ejc.623.1666607280313;
-        Mon, 24 Oct 2022 03:28:00 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CGKzjFGfI+LnHQkWu8LgyoHjqRDqV+203AOxit1jr/s=;
+        b=6yhqhwcYco3iYynO3olnv4ZVjeem6Im1+vNbKxddQWiIKkVTRn8MjqwHJVez7QHlFW
+         k2mOojBDtrv+DHqZL1NM1UGYCAvIAXsfbb27yVFV6VD0m3BHluFLiJhFtz/xQo0eZNRa
+         TSVkjd0dhFiPnn4M+To0occSLlWdSKDitwFeV7SkpP3uGR6/UhXL8cTiVAyNzs6BlUoY
+         HQdsDzX457kv2tp4GelSevBmBqNllbxtoetBe/93lC0aDdW8LAFOKAvN42g0ArmN2uw1
+         ryzO94ZvGCI2McI4OZ8qhJtKYxs4IY84vVhCEMrLMzeIgAkjCz0dyidWmq6LRmTYwIhC
+         LQzQ==
+X-Gm-Message-State: ACrzQf2izmQ7HbSc5KgeyYDv1lJ07pUIomQXUrif8D/cFXN9cEQsbtaw
+        U5bBiU9K2GE84E9xsv1SxAMIeB4oaD0=
+X-Google-Smtp-Source: AMsMyM6h0CeiLRuJmDbX++lKnrsq8A5RJ42LrEAzjgF0K0xZGElCeM6xLbGgcZSs71KqEhXDUqH8jg==
+X-Received: by 2002:a17:906:fc6:b0:72f:d080:416 with SMTP id c6-20020a1709060fc600b0072fd0800416mr27501825ejk.1.1666610296229;
+        Mon, 24 Oct 2022 04:18:16 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id u1-20020a1709061da100b0073bdf71995dsm15279603ejh.139.2022.10.24.03.27.59
+        by smtp.gmail.com with ESMTPSA id gw22-20020a170906f15600b0073d7ab84375sm15585310ejb.92.2022.10.24.04.18.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Oct 2022 03:27:59 -0700 (PDT)
+        Mon, 24 Oct 2022 04:18:15 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1omugY-007aYY-2r;
-        Mon, 24 Oct 2022 12:27:58 +0200
+        id 1omvTC-007bs8-1n;
+        Mon, 24 Oct 2022 13:18:14 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: chainlint.pl's new "deparse" output (was: [PATCH v2] [...])
-Date:   Mon, 24 Oct 2022 11:57:36 +0200
-References: <pull.1324.git.git.1663023888412.gitgitgadget@gmail.com>
- <pull.1324.v2.git.git.1663041707260.gitgitgadget@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Michael McClimon <michael@mcclimon.org>, git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] setup: allow Git.pm to do unsafe repo checking
+Date:   Mon, 24 Oct 2022 12:57:29 +0200
+References: <20221016212236.12453-1-michael@mcclimon.org>
+ <20221022011931.43992-1-michael@mcclimon.org>
+ <20221022011931.43992-3-michael@mcclimon.org>
+ <221022.86eduzeiek.gmgdl@evledraar.gmail.com>
+ <Y1RY38RULkqd9pBN@coredump.intra.peff.net>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <pull.1324.v2.git.git.1663041707260.gitgitgadget@gmail.com>
-Message-ID: <221024.865yg9ecsx.gmgdl@evledraar.gmail.com>
+In-reply-to: <Y1RY38RULkqd9pBN@coredump.intra.peff.net>
+Message-ID: <221024.861qqxeah5.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-[Please ignore the just-sent empty
-https://lore.kernel.org/git/221024.86a65lee8i.gmgdl@evledraar.gmail.com/;
-local PBCAK problem :)]
+On Sat, Oct 22 2022, Jeff King wrote:
 
-On Tue, Sep 13 2022, Eric Sunshine via GitGitGadget wrote:
-
-> From: Eric Sunshine <sunshine@sunshineco.com>
+> On Sat, Oct 22, 2022 at 09:45:14PM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
 >
-> When `chainlint.pl` detects problems in a test definition, it emits the
-> test definition with "?!FOO?!" annotations highlighting the problems it
-> discovered. For instance, given this problematic test:
+>> The vulnerability safe.directory was supposed to address was one where
+>> you'd set your fsmonitor hook via a config variable, so running "diff",
+>> "status" etc. would unexpectedly execute arbitrary code.
+>>=20
+>> Especially on Windows where apparently the equivalent of the root of a
+>> shared mounted volume routinely has global write permissions (user's
+>> subdirectories being less permissive).
+>>=20
+>> An alternative I raised on the security list was to narrowly target just
+>> the fsmonitor config, since that was the vulnerability.
+>>
+>> [...]
+>>
+>> I'm unaware of any other variable(s) that provide a similar vector, and
+>> safe.directory is encouraging users (especially in core.sharedRepository
+>> settings) to mark a dir as "safe", and we'd then later have an exploit
+>> from a user with rw access who'd use the fsmonitor hook vector.
 >
->     test_expect_success 'discombobulate frobnitz' '
->         git frob babble &&
->         (echo balderdash; echo gnabgib) >expect &&
->         for i in three two one
->         do
->             git nitfol $i
->         done >actual
->         test_cmp expect actual
->     '
+> Here are a few off the top of my head that you can trigger via git-diff:
 >
-> chainlint.pl will output:
+>   - core.pager will run an arbitrary program
 >
->     # chainlint: t1234-confusing.sh
->     # chainlint: discombobulate frobnitz
->     git frob babble &&
->     (echo balderdash ; ?!AMP?! echo gnabgib) >expect &&
->     for i in three two one
->     do
->     git nitfol $i ?!LOOP?!
->     done >actual ?!AMP?!
->     test_cmp expect actual
+>   - pager.diff will run an arbitrary program
+>
+>   - diff.*.textconv runs an arbitrary program; you need matching
+>     .gitattributes, but those are under the control of the repository.
+>     (not diff.*.command, though, as you need to pass --ext-diff)
+>
+>   - browser/man paths if you run "git diff --help"
+>
+> And of course as you expand the set of commands there are more options.
+> E.g., credential helper commands if you do anything that wants auth,
+> interactive diff-filter for "add -p", hooks for git-commit, git-push,
+> etc. Those commands are less likely to be run in an untrusted repository
+> than inspection commands like "status" or "diff", but the boundary is
+> getting quite fuzzy.
+>
+> fsmonitor _might_ be the only one that is triggered by git-prompt.sh,
+> because it has a limited command palette, generally reads (or sends to
+> /dev/null) the stdout of commands (preventing pager invocation), and
+> doesn't do text diffs (so no textconv). Even if true, I'm not sure if
+> that's a good place to draw the line, though. People do tend to run "git
+> log" themselves.
 
-I've noticed that chainlint.pl is better in some ways, but that the
-"deparse" output tends to be quite jarring. but I can't find version of
-it that emitted this "will output" here.
+Right, by "a similar" vector I meant the unexpected execution of
+fsmonitor as there was software in the wild that was running "status"
+for the user.
 
-Before this patch, or fb41727b7ed (t: retire unused chainlint.sed,
-2022-09-01) we'd emit this instead:
-	
-	git frob babble &&
-	( echo balderdash ; ?!AMP?! echo gnabgib ) > expect &&
-	for i in three two one
-	do
-	git nitfol $i ?!LOOP?!
-	done > actual ?!AMP?!
-	test_cmp expect actual
+These are also a problem, but my understanding of that issue is that if
+it wasn't for the fsmonitor issue we'd have put that in the bucket of
+not running arbitrary commands on a .git you just copied to somewhere,
+i.e. that issue was already known.
 
-The difference is in whitespace, e.g. "( ", not "(", "> " not ">".  This
-is just because it's emitting "raw" tokenizer tokens.
+The difference being that users might have that implicit "status"
+running if they cd'd to /mnt/$USER/subdir and there was a hostile
+/mnt/.git, but would be much less likely to run "git diff" or whatever
+in such a subdir, unless they'd initialized a .git in say
+/mnt/$USER/subdir, at which point we'd ignore the /mnt/.git.
 
-Was there maybe some local version where the whitespace munging you're
-doing against $checked was different & this commit message was left
-over?
+Anyway, that's more into the "would it have been a CVE?" territory, so
+let's leave that for now.
 
-Anyway, that sort of an aside, but I did go hunting for the version with slightly better whitespace output.
+The important point/question I have is whether we can think of any such
+config variable understood by the code that uses Git.pm.
 
-But to get to the actual point: I've found the new chainlint.pl output
-harder to read sometimes, because it goes through this parse & deparse
-state, so you're preserving "\n"''s.
+The only ones I can think are the "sendemail.{to,cc}Cmd" variables.
 
-Whereas the old "sed" output also sucked because we couldn't note where
-the issue was, but we spewed out the test source verbatim.
+I'm just pointing out that the reason we ended up with the facility (per
+my understand) was among other things:
 
-But it seem to me that we could get much better output if the
-ShellParser/Lexer etc. just kept enough state to emit "startcol",
-"endcol" and "linenum" along with every token, or something like that
-(you might want offsets from the beginning of the parsed source
-instead).
+ * A. There were too many config variables to exhaustively audit on the
+   security list and be sure we caught them all, and ...
+ * B. ...such a change would probably be larger, which ...
+ * C. ...given the embargo & desire to keep security patches minimal
+   warranted the more general safe.directory approach.
+ * D. You can talk about on the public list, or not have a zero-day, but
+   not both :)
 
-Then when it has errors it could emit the actual source passed in, and
-even do gcc/clang-style underlining.
+Now, we may come up with a reason "E" for extending this at this point,
+e.g. maybe just being consistent is reason enough.
 
-I poked at getting that working for a few minutes, but quickly saw that
-someone more familiar with the code could do it much quicker, so
-consider the above a feature request :)
-
-Another thing: When a test *ends* in a "&&" (common when you copy/paste
-e.g. "test_cmp expect actual &&\n" from another test) it doesn't spot
-it, but instead we get all the way to the eval/117, i.e. "broken
-&&-chain or run-away HERE-DOC".
-
-More feature requests (because for some reason you've got infinite time,
-but I don't :): This software is really close to being able to also
-change the tests on the fly. If you could define callbacks where you
-could change subsets of the parse stream, say a single command like:
-
-	grep some.*rx file
-
-Tokenized as:
-
-	["grep", "some.*rx" "file"]
-
-If you could define an interface to have a callback function e.g. as:
-
-	sub munge_line_tokens {
-		my $t = shift;
-
-                return unless $t->[0] eq "grep"; # no changes
-                my @t = @$t;
-
-                return [qw(if ! grep), @t[1..$#t],
-                	qw(then cat), $t[-1], qw(&& false fi)];
-	}
-
-So we could rewrite that into:
-
-        if ! grep some.*rx foo
-	then
-		cat foo &&
-		false
-	fi
-
-And other interesting auto-fixups and borderline coccinelle
-transformations, e.g. changing our various:
-
-	test "$(git ...) = "" &&
-
-Into:
-
-	git ... >out &&
-	test_must_be_empty out
+But in this case "A" doesn't apply, it's maybe 20-30 config variables,
+and it's easy to skim the git-{send-email,svn} docs to see what they
+are. "B" might be the case, but taht's OK since we're past "D" here,
+ditto "C" not applying.
