@@ -2,207 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 843DBECAAA1
-	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 19:08:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F59DFA373F
+	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 19:54:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232949AbiJXTIC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Oct 2022 15:08:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34460 "EHLO
+        id S232673AbiJXTx7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Oct 2022 15:53:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232960AbiJXTHj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2022 15:07:39 -0400
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 270ABB515E
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 10:46:44 -0700 (PDT)
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-3691e040abaso91981207b3.9
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 10:46:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yN4OWPoq/tSDL2xNyEejQDHUqJCDAb0XLYncPUdsBFg=;
-        b=Xd1wb9DXevr/lMJd7KHWiUBavFND114mkISMTp4/O9S6L46XDoyCze+5u9Ooo5xAyR
-         IVOhfI5NRLRz5bfDVpOwCP+B1Bwy+8e9/pgLIKayYzbMdoEf/U98BIQaGc3oWvB0yBfP
-         NLWeKfziJLAdesVoTs3JZ1h6RqXP+CDpS0Ok+G3Rk/Ytj2zAUiBDxWwL+la3nFQWnMin
-         qMwZ+rS5iGJRC2aO5OF/SHaNrJloO5Z8ekyo4QoC2anz3CrCc19+e6AJBDEgmK6EhDUW
-         QXVn1PF1vQcfLjhPXyWxP0LoywqDyjB4fMMJuYzHHgUP47i5tMeBOQ8VPOaT5AqmWX7b
-         6hOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yN4OWPoq/tSDL2xNyEejQDHUqJCDAb0XLYncPUdsBFg=;
-        b=CKmM88FbGIpBMAGq09P5tSzUdjXLzr9f62IZTb/mNf/BYZqEPGh5JqsEVwdEJcBrpC
-         +my6TheVKYJyRZraEfPlhK//ydltnSij/Ps5XO6VHUqIsQoDFMZQrLXB18acQxH2V3CV
-         u4Vw/5roKc/wK3j6R3XkSuRioXN82tEvua3yuHjibWfnr29xLKT90xzU5bnwp/uRt8Is
-         k8ZrhHa90e8klm9ehOPFWJOKi6Ti7uFHDXi4gWNXENb6EHU15xivDJSuzKp7PgCQhxuV
-         YAvwV1K28V/Xm0eaCQaMCr7thcU4PPgitdjAzOymlns+7lURR7PV46shO7iq89KCyBbb
-         NBQA==
-X-Gm-Message-State: ACrzQf3jk/V632Z7SllQ9vlceUg7BwDkOqiok/TuE6gUwfr/85epxyK0
-        B0EzkbXQv01G99sujY/n1stvNeUOT2LvVGXQEuK8xSYl/Nk=
-X-Google-Smtp-Source: AMsMyM7zxYuSuhiBOBVGI3xkIdYx3i3WBZ8sQo3iiDiK72494Yc7a6rrdX+Y1wonHX2pOVKT7BJh7Mnb/h42rrifVxw=
-X-Received: by 2002:a25:a288:0:b0:6ca:e3de:ae75 with SMTP id
- c8-20020a25a288000000b006cae3deae75mr7212266ybi.391.1666631599207; Mon, 24
- Oct 2022 10:13:19 -0700 (PDT)
+        with ESMTP id S231742AbiJXTxN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2022 15:53:13 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B9E22A436
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 11:17:47 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 61D9A1B6030;
+        Mon, 24 Oct 2022 14:16:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=JnjukhcSzNeGheTTy1wzCPbElZO2lwGRjhfmY1
+        8K2bQ=; b=EDrLAEf7bNxv6Tx3ht5U5yp5QBtTCVonNZLEtDOzorlCaV+Nkm1QUK
+        CMobGIo4k3KLoErBYOXaBFCaKOEBiaqkxCkgs9Y5fGauqv+zjdqGpJSY2yQ/IfJ1
+        q1ZnrNW0n9q/Zm2HdoVYKamI6D89NmtSk9gGmgnNXFm/J+4GBtmIc=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 5B91F1B602F;
+        Mon, 24 Oct 2022 14:16:54 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 871CB1B602E;
+        Mon, 24 Oct 2022 14:16:51 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH 1/2] fsck: remove the unused BAD_TAG_OBJECT
+References: <pull.1369.git.git.1666623639.gitgitgadget@gmail.com>
+        <f32ff5dc4eed5bffe8bb0759c408c3d0861ddb50.1666623639.git.gitgitgadget@gmail.com>
+        <xmqqwn8ptb0p.fsf@gitster.g>
+Date:   Mon, 24 Oct 2022 11:16:50 -0700
+In-Reply-To: <xmqqwn8ptb0p.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+        24 Oct 2022 09:57:26 -0700")
+Message-ID: <xmqq4jvtt7cd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20221020232532.1128326-2-calvinwan@google.com> <221021.86h6zxg8ds.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221021.86h6zxg8ds.gmgdl@evledraar.gmail.com>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Mon, 24 Oct 2022 10:13:08 -0700
-Message-ID: <CAFySSZDoZ5sVRchwAiE-ixOxhpe7UL5e-y+b5+wVXwQnLdqreQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/6] run-command: add pipe_output_fn to run_processes_parallel_opts
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, emilyshaffer@google.com,
-        phillip.wood123@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 08455EEE-53C8-11ED-88A6-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 20, 2022 at 8:31 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Thu, Oct 20 2022, Calvin Wan wrote:
->
-> > Add pipe_output_fn as an optionally set function in
-> > run_process_parallel_opts. If set, output from each child process is
-> > first separately stored in 'out' and then piped to the callback
-> > function when the child process finishes to allow for separate parsing.
->
-> The "when[...]finish[ed]" here seems a bit odd to me. Why isn't the API
-> to just stream this to callbacks as it comes in.
->
-> Then if a caller only cares about the output at the very end they can
-> manage that state between their streaming callbacks and "finish"
-> callback, i.e. buffer it & flush it themselves.
+Junio C Hamano <gitster@pobox.com> writes:
 
-That's a good idea. This also lets me remove the 'out' variable from
-parallel_process.children.
+> "John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+>> From: John Cai <johncai86@gmail.com>
+>>
+>> The BAD_TAG_OBJECT msg-id is not being used anymore, so we can remove
+>> it.
+>
+> Do you have a ready reference to the change that made it no longer
+> needed (or stopped detecting the error the message was meant to be
+> issued against)?
 
->
-> > diff --git a/run-command.c b/run-command.c
-> > index c772acd743..03787bc7f5 100644
-> > --- a/run-command.c
-> > +++ b/run-command.c
-> > @@ -1503,6 +1503,7 @@ struct parallel_processes {
-> >               enum child_state state;
-> >               struct child_process process;
-> >               struct strbuf err;
-> > +             struct strbuf out;
-> >               void *data;
-> >       } *children;
-> >       /*
-> > @@ -1560,6 +1561,9 @@ static void pp_init(struct parallel_processes *pp=
-,
-> >
-> >       if (!opts->get_next_task)
-> >               BUG("you need to specify a get_next_task function");
-> > +
-> > +     if (opts->pipe_output && opts->ungroup)
-> > +             BUG("pipe_output and ungroup are incompatible with each o=
-ther");
-> >
-> >       CALLOC_ARRAY(pp->children, n);
-> >       if (!opts->ungroup)
-> > @@ -1567,6 +1571,8 @@ static void pp_init(struct parallel_processes *pp=
-,
-> >
-> >       for (size_t i =3D 0; i < n; i++) {
-> >               strbuf_init(&pp->children[i].err, 0);
-> > +             if (opts->pipe_output)
-> > +                     strbuf_init(&pp->children[i].out, 0);
->
-> Even if we're not using this, let's init it for simplicity. We don't use
-> the "err" with ungroup and we're init-ing that, and...
+2175a0c6 (fsck: stop checking tag->tagged, 2019-10-18) stopped
+checking the tagged object referred to by a tag object, which the
+error message BAD_TAG_OBJECT was about.  Since then the
+BAD_TAG_OBJECT message is no longer used.
 
-ack.
 
->
-> >               child_process_init(&pp->children[i].process);
-> >               if (pp->pfd) {
-> >                       pp->pfd[i].events =3D POLLIN | POLLHUP;
-> > @@ -1586,6 +1592,7 @@ static void pp_cleanup(struct parallel_processes =
-*pp,
-> >       trace_printf("run_processes_parallel: done");
-> >       for (size_t i =3D 0; i < opts->processes; i++) {
-> >               strbuf_release(&pp->children[i].err);
-> > +             strbuf_release(&pp->children[i].out);
->
-> ...here you're strbuf_relese()-ing a string that was never init'd, it's
-> not segfaulting because we check sb->alloc, and since we calloc'd this
-> whole thing it'll be 0, but let's just init it so it's a proper strbuf
-> (with slopbuf). It's cheap.
 
-ack.
-
-> > +/**
-> > + * This callback is called on every child process that finished proces=
-sing.
-> > + *
-> > + * "struct strbuf *process_out" contains the output from the finished =
-child
-> > + * process.
-> > + *
-> > + * pp_cb is the callback cookie as passed into run_processes_parallel,
-> > + * pp_task_cb is the callback cookie as passed into get_next_task_fn.
-> > + *
-> > + * This function is incompatible with "ungroup"
-> > + */
-> > +typedef void (*pipe_output_fn)(struct strbuf *process_out,
-> > +                            void *pp_cb,
-> > +                            void *pp_task_cb);
-> > +
-> >  /**
-> >   * This callback is called on every child process that finished proces=
-sing.
-> >   *
-> > @@ -493,6 +508,12 @@ struct run_process_parallel_opts
-> >        */
-> >       start_failure_fn start_failure;
-> >
-> > +     /**
-> > +      * pipe_output: See pipe_output_fn() above. This should be
-> > +      * NULL unless process specific output is needed
-> > +      */
-> > +     pipe_output_fn pipe_output;
-> > +
-> >       /**
-> >        * task_finished: See task_finished_fn() above. This can be
-> >        * NULL to omit any special handling.
-> > diff --git a/t/helper/test-run-command.c b/t/helper/test-run-command.c
-> > index 3ecb830f4a..e9b41419a0 100644
-> > --- a/t/helper/test-run-command.c
-> > +++ b/t/helper/test-run-command.c
-> > @@ -52,6 +52,13 @@ static int no_job(struct child_process *cp,
-> >       return 0;
-> >  }
-> >
-> > +static void pipe_output(struct strbuf *process_out,
-> > +                     void *pp_cb,
-> > +                     void *pp_task_cb)
-> > +{
-> > +     fprintf(stderr, "%s", process_out->buf);
->
-> maybe print this with split lines prefixed with something so wour tests
-> can see that something actually happened here, & test-cmp it so we can
-> see what went where, as opposed to...
->
-> > +test_expect_success 'run_command runs in parallel with more jobs avail=
-able than tasks --pipe-output' '
-> > +     test-tool run-command --pipe-output run-command-parallel 5 sh -c =
-"printf \"%s\n%s\n\" Hello World" >out 2>err &&
-> > +     test_must_be_empty out &&
-> > +     test_line_count =3D 20 err
-> > +'
->
-> Just checking the number of lines, which seems to leave a lot of leeway
-> for the output being mixed up in all sorts of ways & the test to still
-> pass..
->
-> (ditto below)
-
-ack.
