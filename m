@@ -2,133 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EF786FA3742
-	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 20:35:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B5BFC67871
+	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 20:38:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232864AbiJXUe7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Oct 2022 16:34:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55212 "EHLO
+        id S234607AbiJXUiL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Oct 2022 16:38:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234424AbiJXUeC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2022 16:34:02 -0400
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06E618B2FD
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 11:44:56 -0700 (PDT)
-Received: by mail-io1-f48.google.com with SMTP id o65so8486460iof.4
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 11:44:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2YrgxEGKeBuj3GypGtTRliNnBQ2QnIM7SpuB885mI8k=;
-        b=6TnORhzy+q84xbCre8I1c5tdWGITYwWwNhMEhcBdiTKmn7JKKpsp+B/5fA804TYAmS
-         foczeFuW54UAeHxXjMgNdu1BGDFiI2FLC4CC/F0R8hlrWa9T9b/u+ocQ89t7Nhrrvwt5
-         P7KHTNKenGCk+CZnoXWPGgY57aG2mbLoh3vx9duInVl80lV39z7TB0zCFbapSv6Hwrnc
-         UQy7gXxe90fF3MAawVlpoyn7BcbLGd+LIJ1L5u0tkFelePoSTfWYoImdz3+6x3MoBNSM
-         jDGj96Fa7zjFd/1SlShwCZ2XwrNKVkPVk2P44e87avtYKmRmLmezMmGm0vx4t4zQQFPN
-         8oUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2YrgxEGKeBuj3GypGtTRliNnBQ2QnIM7SpuB885mI8k=;
-        b=LVKLigVG2LasgdPalg8RgV59duDqXuD+bQGRL1ioouA/fZLgMUbwdTWHRfVt/4MmMt
-         4WgWdNUhZQ5MdvQSwuOe+eiBjngid4iQcF2MquPXjnNHL4obn5VKpT1xo/GbyXP13mF3
-         /FAkG/DuvdR/ZBnLX+7flEgUngIRvvluTHBSqNJmCPSRkxNnpMUv4wVppGCNkw2sGIHw
-         GNIS6ZDQpbBnRsEVOcEIspf+NRjg/PqDxlA53InqWK9MGeTxly6apcmODUBtq+2s1xqy
-         ZzULI4O3M+d38vEz6z7u8Ls10oqwtfn/ynRzGLyCk0Zb0rkvrXw+snxd3/Kf4v3TYB60
-         Diew==
-X-Gm-Message-State: ACrzQf0hey45hmUlOsBAeho1NaeIZ81eRtKYMEtSG0gYe0P6+ScZLuSd
-        kXzU57KAGEYqNYw0VRpwwfH+l/beVO3MvxVp
-X-Google-Smtp-Source: AMsMyM5pFLrRjMWnih8r0mv7yJsIocPXC32u5z9Wc/8C5gGjOJbqn+zroePXL9tz0mRly9O0X1zPaA==
-X-Received: by 2002:a05:6602:134f:b0:6a4:cd04:7842 with SMTP id i15-20020a056602134f00b006a4cd047842mr21605445iov.172.1666636990963;
-        Mon, 24 Oct 2022 11:43:10 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 2-20020a056e0220c200b002ffa449535asm216572ilq.74.2022.10.24.11.43.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Oct 2022 11:43:10 -0700 (PDT)
-Date:   Mon, 24 Oct 2022 14:43:09 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Victoria Dye <vdye@github.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: [PATCH 3/4] builtin/repack.c: write cruft packs to arbitrary
- locations
-Message-ID: <c0f4ec92a057fdab905447bb917ff09e9bcaaab3.1666636974.git.me@ttaylorr.com>
-References: <cover.1666636974.git.me@ttaylorr.com>
+        with ESMTP id S234470AbiJXUh2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2022 16:37:28 -0400
+Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E713711C01
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 11:48:58 -0700 (PDT)
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 957DD14FDE1;
+        Mon, 24 Oct 2022 12:39:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=l7Kz42FVJFMf2VR01i3Of75qEDfNKPfkPdTjs1
+        EGRw8=; b=xCmq39lgHf+8ecGGewSKweLMQTmW2yot1cfz69g58WYy3LzaBjVimm
+        st9KxlnpVWhBazdybnXkn7K9DRYy/gdzmBikcPkebYsgC66igerRPowQXLJZ7VCP
+        tljg441SsWBs8aYO9YtsGcgt+lFvdFx6WKU7gDFUZMfit1tjgWJao=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8C10C14FDE0;
+        Mon, 24 Oct 2022 12:39:33 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E59D914FDDF;
+        Mon, 24 Oct 2022 12:39:32 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Cc:     Philip Oakley <philipoakley@iee.email>,
+        GitList <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 3/3] glossary: add reachability bitmap description
+References: <pull.1282.git.1657385781.gitgitgadget@gmail.com>
+        <20221022222539.2333-1-philipoakley@iee.email>
+        <20221022222539.2333-4-philipoakley@iee.email>
+        <CAPOJW5zmYC9q8+aXh9-kZnvT28GQ1ud3LenFi9qxV4DVdCWKxg@mail.gmail.com>
+Date:   Mon, 24 Oct 2022 09:39:31 -0700
+In-Reply-To: <CAPOJW5zmYC9q8+aXh9-kZnvT28GQ1ud3LenFi9qxV4DVdCWKxg@mail.gmail.com>
+        (Abhradeep Chakraborty's message of "Mon, 24 Oct 2022 13:13:46 +0530")
+Message-ID: <xmqq1qqxuqf0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1666636974.git.me@ttaylorr.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 703063B8-53BA-11ED-9786-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the following commit, a new write_cruft_pack() caller will be added
-which wants to write a cruft pack to an arbitrary location. Prepare for
-this by adding a parameter which controls the destination of the cruft
-pack.
+Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com> writes:
 
-For now, provide "packtmp" so that this commit does not change any
-behavior.
+> Small correction here - A repository may have multiple bitmaps (one
+> for each selected commit from the preferred packfile or a
+> multi-pack-index) but it can have only one ".bitmap" file (as of now).
+> Bitmaps for the selected commits are stored in that ".bitmap" file.
+> So I think the below lines (or similar) will work  -
+>
+>     The bitmaps are stored in a ".bitmap" file. A repository may have
+>     at most one ".bitmap" file. The file may belong to either one pack, or the
+>     repository's multi-pack-index (if it exists).
+>
+> Feel free to rephrase it accordingly.
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- builtin/repack.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+Sounds good to me.  Or Philip's original can be tweaked minimally to
+say "... may have at most one bitmap file (which stores multiple
+bitmaps)".
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 1184e8c257..a5386ac893 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -662,6 +662,7 @@ static int write_midx_included_packs(struct string_list *include,
- }
- 
- static int write_cruft_pack(const struct pack_objects_args *args,
-+			    const char *destination,
- 			    const char *pack_prefix,
- 			    const char *cruft_expiration,
- 			    struct string_list *names,
-@@ -673,8 +674,10 @@ static int write_cruft_pack(const struct pack_objects_args *args,
- 	struct string_list_item *item;
- 	FILE *in, *out;
- 	int ret;
-+	const char *scratch;
-+	int local = skip_prefix(destination, packdir, &scratch);
- 
--	prepare_pack_objects(&cmd, args, packtmp);
-+	prepare_pack_objects(&cmd, args, destination);
- 
- 	strvec_push(&cmd.args, "--cruft");
- 	if (cruft_expiration)
-@@ -714,7 +717,12 @@ static int write_cruft_pack(const struct pack_objects_args *args,
- 		if (line.len != the_hash_algo->hexsz)
- 			die(_("repack: Expecting full hex object ID lines only "
- 			      "from pack-objects."));
--		string_list_append(names, line.buf);
-+                /*
-+		 * avoid putting packs written outside of the repository in the
-+		 * list of names
-+		 */
-+		if (local)
-+			string_list_append(names, line.buf);
- 	}
- 	fclose(out);
- 
-@@ -986,7 +994,7 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
- 		cruft_po_args.local = po_args.local;
- 		cruft_po_args.quiet = po_args.quiet;
- 
--		ret = write_cruft_pack(&cruft_po_args, pack_prefix,
-+		ret = write_cruft_pack(&cruft_po_args, packtmp, pack_prefix,
- 				       cruft_expiration, &names,
- 				       &existing_nonkept_packs,
- 				       &existing_kept_packs);
--- 
-2.38.0.16.g393fd4c6db
-
+Thanks.
