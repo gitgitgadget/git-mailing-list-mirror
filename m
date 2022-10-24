@@ -2,75 +2,194 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B5BFC67871
-	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 20:38:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98715FA3743
+	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 20:45:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234607AbiJXUiL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Oct 2022 16:38:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48290 "EHLO
+        id S234764AbiJXUpa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Oct 2022 16:45:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234470AbiJXUh2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2022 16:37:28 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E713711C01
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 11:48:58 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 957DD14FDE1;
-        Mon, 24 Oct 2022 12:39:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=l7Kz42FVJFMf2VR01i3Of75qEDfNKPfkPdTjs1
-        EGRw8=; b=xCmq39lgHf+8ecGGewSKweLMQTmW2yot1cfz69g58WYy3LzaBjVimm
-        st9KxlnpVWhBazdybnXkn7K9DRYy/gdzmBikcPkebYsgC66igerRPowQXLJZ7VCP
-        tljg441SsWBs8aYO9YtsGcgt+lFvdFx6WKU7gDFUZMfit1tjgWJao=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 8C10C14FDE0;
-        Mon, 24 Oct 2022 12:39:33 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id E59D914FDDF;
-        Mon, 24 Oct 2022 12:39:32 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Cc:     Philip Oakley <philipoakley@iee.email>,
-        GitList <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 3/3] glossary: add reachability bitmap description
-References: <pull.1282.git.1657385781.gitgitgadget@gmail.com>
-        <20221022222539.2333-1-philipoakley@iee.email>
-        <20221022222539.2333-4-philipoakley@iee.email>
-        <CAPOJW5zmYC9q8+aXh9-kZnvT28GQ1ud3LenFi9qxV4DVdCWKxg@mail.gmail.com>
-Date:   Mon, 24 Oct 2022 09:39:31 -0700
-In-Reply-To: <CAPOJW5zmYC9q8+aXh9-kZnvT28GQ1ud3LenFi9qxV4DVdCWKxg@mail.gmail.com>
-        (Abhradeep Chakraborty's message of "Mon, 24 Oct 2022 13:13:46 +0530")
-Message-ID: <xmqq1qqxuqf0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S235094AbiJXUoE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2022 16:44:04 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97AAA2B4179
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 11:51:53 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id v130-20020a1cac88000000b003bcde03bd44so10523765wme.5
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 11:51:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bgvP+EfEeBEpK52rgweCQ966i9jJvLPWYqTsCyOBurQ=;
+        b=GnnsIWHGgNHS/kAWUuhCVMXENvM0SRKJwjUi8gf7U/sM9p2yISbBaz9nUkzfywAH/f
+         yFz7OLBDhpsim9cbuJkDsPpbn+uvNEQg9H9NCeJgcOmHzygD4GA56dY+Nxj67/bD1rbQ
+         NiuCg44Zr1a7PDJIU0F+GNWEm/dxg9kvVDQ75tIEyezmxwi6tUA3FCicUVO4OTCl3J7M
+         xO8n/NYaGytfQ5oVZakSoKW9NWfsClaamGAZw+1lMv3+lqkjHeCtQfYEo0Yvsa9lny/y
+         3nQc+go1nQzBUsZZZ/zzIltmS5Yb5mtLV/fDTrC6Rzx5ojbU6k3x3fDNqNneNMNj5aVd
+         pjpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bgvP+EfEeBEpK52rgweCQ966i9jJvLPWYqTsCyOBurQ=;
+        b=H9KGCkGIJ5mtGui4yAQDkWgatVDur18+TDmbTK2bS7ASbHzpen0L/ibD6LNu9SipP2
+         4Js8xWmpuqtG3I2dd1RsMNS7Z93FRsqscW45d+gWo2GWgPDtM3vsT0P0DqqAu0Imxs1a
+         1QujNUnpEdWYpngZ/eMcghk5RthsWcfZ4KZp4AkXG9fONx8837pgZN19uBP9Y4HVsD9r
+         dnQcZPouxVD+Jx0Zetl/7KlSEOJmqudJS7hs1nrywFuGwH3rOw9tWsWGpJRVUpAzAQFx
+         986pvu7wpL0XT384boHgkuIE4u/SMvBPEaQRNhkkRwjhUrdEu2ld22tfRMl+Ytbsrl/W
+         TlYQ==
+X-Gm-Message-State: ACrzQf0dKEixea15QXge/0i4l6nwhrtNeYHAuiMaWpiggEdwmP3zsE3B
+        TdTvRBJ09dztlheU+vKUPvv/ufnzmiY=
+X-Google-Smtp-Source: AMsMyM4XCxY2G/2/Z3UVSF+NcxrhplyGN1Bp32lOH0mM22zz3srtOZtTdTUTmkojL9fD4a3JBdOzBw==
+X-Received: by 2002:a05:600c:310f:b0:3c6:ff0a:c41 with SMTP id g15-20020a05600c310f00b003c6ff0a0c41mr21717065wmo.91.1666618870002;
+        Mon, 24 Oct 2022 06:41:10 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id u2-20020a7bcb02000000b003a531c7aa66sm1389wmj.1.2022.10.24.06.41.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Oct 2022 06:41:09 -0700 (PDT)
+Message-Id: <pull.1373.v4.git.1666618868.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1373.v3.git.1666290489.gitgitgadget@gmail.com>
+References: <pull.1373.v3.git.1666290489.gitgitgadget@gmail.com>
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 24 Oct 2022 13:40:59 +0000
+Subject: [PATCH v4 0/8] Trace2 timers and counters and some cleanup
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 703063B8-53BA-11ED-9786-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Jeff Hostetler <git@jeffhostetler.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com> writes:
+Here is version 4 of this series to add timers and counters to Trace2.
 
-> Small correction here - A repository may have multiple bitmaps (one
-> for each selected commit from the preferred packfile or a
-> multi-pack-index) but it can have only one ".bitmap" file (as of now).
-> Bitmaps for the selected commits are stored in that ".bitmap" file.
-> So I think the below lines (or similar) will work  -
->
->     The bitmaps are stored in a ".bitmap" file. A repository may have
->     at most one ".bitmap" file. The file may belong to either one pack, or the
->     repository's multi-pack-index (if it exists).
->
-> Feel free to rephrase it accordingly.
+Changes since V3:
 
-Sounds good to me.  Or Philip's original can be tweaked minimally to
-say "... may have at most one bitmap file (which stores multiple
-bitmaps)".
+ * Fixed typo in the new thread-name documentation.
+ * Use a simpler NS_TO_SEC() macro for reporting the timer values.
 
-Thanks.
+Jeff Hostetler (8):
+  trace2: use size_t alloc,nr_open_regions in tr2tls_thread_ctx
+  tr2tls: clarify TLS terminology
+  api-trace2.txt: elminate section describing the public trace2 API
+  trace2: rename the thread_name argument to trace2_thread_start
+  trace2: improve thread-name documentation in the thread-context
+  trace2: convert ctx.thread_name from strbuf to pointer
+  trace2: add stopwatch timers
+  trace2: add global counter mechanism
+
+ Documentation/technical/api-trace2.txt | 190 +++++++++++++++++--------
+ Makefile                               |   2 +
+ t/helper/test-trace2.c                 | 187 ++++++++++++++++++++++++
+ t/t0211-trace2-perf.sh                 |  95 +++++++++++++
+ t/t0211/scrub_perf.perl                |   6 +
+ trace2.c                               | 121 +++++++++++++++-
+ trace2.h                               | 101 +++++++++++--
+ trace2/tr2_ctr.c                       | 101 +++++++++++++
+ trace2/tr2_ctr.h                       | 104 ++++++++++++++
+ trace2/tr2_tgt.h                       |  16 +++
+ trace2/tr2_tgt_event.c                 |  47 +++++-
+ trace2/tr2_tgt_normal.c                |  39 +++++
+ trace2/tr2_tgt_perf.c                  |  43 +++++-
+ trace2/tr2_tls.c                       |  34 +++--
+ trace2/tr2_tls.h                       |  55 ++++---
+ trace2/tr2_tmr.c                       | 182 +++++++++++++++++++++++
+ trace2/tr2_tmr.h                       | 140 ++++++++++++++++++
+ 17 files changed, 1361 insertions(+), 102 deletions(-)
+ create mode 100644 trace2/tr2_ctr.c
+ create mode 100644 trace2/tr2_ctr.h
+ create mode 100644 trace2/tr2_tmr.c
+ create mode 100644 trace2/tr2_tmr.h
+
+
+base-commit: 3dcec76d9df911ed8321007b1d197c1a206dc164
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1373%2Fjeffhostetler%2Ftrace2-stopwatch-v4-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1373/jeffhostetler/trace2-stopwatch-v4-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1373
+
+Range-diff vs v3:
+
+ 1:  6e7e4f3187e = 1:  6e7e4f3187e trace2: use size_t alloc,nr_open_regions in tr2tls_thread_ctx
+ 2:  9dee7a75903 = 2:  9dee7a75903 tr2tls: clarify TLS terminology
+ 3:  804dab9e1a7 = 3:  804dab9e1a7 api-trace2.txt: elminate section describing the public trace2 API
+ 4:  9adf9cee1a9 = 4:  9adf9cee1a9 trace2: rename the thread_name argument to trace2_thread_start
+ 5:  8cb206b7632 ! 5:  acfae17548c trace2: improve thread-name documentation in the thread-context
+     @@ trace2/tr2_tls.h: struct tr2tls_thread_ctx {
+      + * Subsequent threads are given a non-zero thread_id and a thread_name
+      + * constructed from the id and a thread base name (which is usually just
+      + * the name of the thread-proc function).  For example:
+     -+ *     { .thread_id=10, .thread_name="th10fsm-listen" }
+     ++ *     { .thread_id=10, .thread_name="th10:fsm-listen" }
+      + * This helps to identify and distinguish messages from concurrent threads.
+      + * The ctx.thread_name field is truncated if necessary to help with column
+      + * alignment in printf-style messages.
+ 6:  8a89e1aa238 = 6:  79c6406d492 trace2: convert ctx.thread_name from strbuf to pointer
+ 7:  8e701109976 ! 7:  a10c1bd96bb trace2: add stopwatch timers
+     @@ trace2/tr2_tgt.h
+      +struct tr2_timer_metadata;
+      +struct tr2_timer;
+      +
+     -+#define NS_PER_SEC_D ((double)1000*1000*1000)
+     ++#define NS_TO_SEC(ns) ((double)(ns) / 1.0e9)
+       
+       /*
+        * Function prototypes for a TRACE2 "target" vtable.
+     @@ trace2/tr2_tgt_event.c: static void fn_data_json_fl(const char *file, int line,
+      +{
+      +	const char *event_name = is_final_data ? "timer" : "th_timer";
+      +	struct json_writer jw = JSON_WRITER_INIT;
+     -+	double t_total = ((double)timer->total_ns) / NS_PER_SEC_D;
+     -+	double t_min = ((double)timer->min_ns) / NS_PER_SEC_D;
+     -+	double t_max = ((double)timer->max_ns) / NS_PER_SEC_D;
+     ++	double t_total = NS_TO_SEC(timer->total_ns);
+     ++	double t_min = NS_TO_SEC(timer->min_ns);
+     ++	double t_max = NS_TO_SEC(timer->max_ns);
+      +
+      +	jw_object_begin(&jw, 0);
+      +	event_fmt_prepare(event_name, __FILE__, __LINE__, NULL, &jw);
+     @@ trace2/tr2_tgt_normal.c: static void fn_printf_va_fl(const char *file, int line,
+      +{
+      +	const char *event_name = is_final_data ? "timer" : "th_timer";
+      +	struct strbuf buf_payload = STRBUF_INIT;
+     -+	double t_total = ((double)timer->total_ns) / NS_PER_SEC_D;
+     -+	double t_min = ((double)timer->min_ns) / NS_PER_SEC_D;
+     -+	double t_max = ((double)timer->max_ns) / NS_PER_SEC_D;
+     ++	double t_total = NS_TO_SEC(timer->total_ns);
+     ++	double t_min = NS_TO_SEC(timer->min_ns);
+     ++	double t_max = NS_TO_SEC(timer->max_ns);
+      +
+      +	strbuf_addf(&buf_payload, ("%s %s/%s"
+      +				   " intervals:%"PRIu64
+     @@ trace2/tr2_tgt_perf.c: static void fn_printf_va_fl(const char *file, int line,
+      +{
+      +	const char *event_name = is_final_data ? "timer" : "th_timer";
+      +	struct strbuf buf_payload = STRBUF_INIT;
+     -+	double t_total = ((double)timer->total_ns) / NS_PER_SEC_D;
+     -+	double t_min = ((double)timer->min_ns) / NS_PER_SEC_D;
+     -+	double t_max = ((double)timer->max_ns) / NS_PER_SEC_D;
+     ++	double t_total = NS_TO_SEC(timer->total_ns);
+     ++	double t_min = NS_TO_SEC(timer->min_ns);
+     ++	double t_max = NS_TO_SEC(timer->max_ns);
+      +
+      +	strbuf_addf(&buf_payload, ("name:%s"
+      +				   " intervals:%"PRIu64
+ 8:  5cd8bdde884 ! 8:  b359a49cec9 trace2: add global counter mechanism
+     @@ trace2/tr2_tgt.h: struct repository;
+      +struct tr2_counter_metadata;
+      +struct tr2_counter;
+       
+     - #define NS_PER_SEC_D ((double)1000*1000*1000)
+     + #define NS_TO_SEC(ns) ((double)(ns) / 1.0e9)
+       
+      @@ trace2/tr2_tgt.h: typedef void(tr2_tgt_evt_timer_t)(const struct tr2_timer_metadata *meta,
+       				  const struct tr2_timer *timer,
+
+-- 
+gitgitgadget
