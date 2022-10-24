@@ -2,83 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8196BC38A2D
-	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 00:40:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B1A2C67871
+	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 00:52:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229851AbiJYAkw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Oct 2022 20:40:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34086 "EHLO
+        id S230404AbiJYAwf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Oct 2022 20:52:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230157AbiJYAkh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2022 20:40:37 -0400
-Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A75AF72FD3
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 16:08:54 -0700 (PDT)
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 594E81CC067;
-        Mon, 24 Oct 2022 19:08:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=VHdmmWE90jD9UH6c7xaUQiRUyPQBwma5MDvoy1
-        uynpo=; b=k36AGDC063xsPnY6EWsOrYNuE1ecOzkHzv89wKByduFFeS92oTXSB3
-        ykK4yt10kyxh3pcUnpjPwFLcotsipcduA8TR3AG4DvsWiIktBkrAJ0JE6tH5JlrY
-        +9Px/0U1ueqZZGCuYQlBBhnOpIg2MeLvwthC0asCd7zO83A3C4/DA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 5254F1CC066;
-        Mon, 24 Oct 2022 19:08:51 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 81DB11CC065;
-        Mon, 24 Oct 2022 19:08:48 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Julia Ramer via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, git-security@googlegroups.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Julia Ramer <prplr@github.com>,
-        Keanen Wold <keanenwold@github.com>,
-        Veronica Giaudrone <veronica.Giaudrone@microsoft.com>,
-        Bri Brothers <brbrot@microsoft.com>,
-        Taylor Blau <me@ttaylorr.com>, Julia Ramer <gitprplr@gmail.com>
-Subject: Re: [PATCH v4] embargoed releases: also describe the git-security
- list and the process
-References: <pull.1345.v3.git.1666338109778.gitgitgadget@gmail.com>
-        <pull.1345.v4.git.1666649239302.gitgitgadget@gmail.com>
-Date:   Mon, 24 Oct 2022 16:08:47 -0700
-In-Reply-To: <pull.1345.v4.git.1666649239302.gitgitgadget@gmail.com> (Julia
-        Ramer via GitGitGadget's message of "Mon, 24 Oct 2022 22:07:19 +0000")
-Message-ID: <xmqqa65krf9c.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S231187AbiJYAwP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2022 20:52:15 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6215E7330A
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 16:33:19 -0700 (PDT)
+Received: (qmail 4497 invoked by uid 109); 24 Oct 2022 23:33:18 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 24 Oct 2022 23:33:18 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 11773 invoked by uid 111); 24 Oct 2022 23:33:18 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 24 Oct 2022 19:33:18 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 24 Oct 2022 19:33:17 -0400
+From:   Jeff King <peff@peff.net>
+To:     Michael McClimon <michael@mcclimon.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] setup: allow Git.pm to do unsafe repo checking
+Message-ID: <Y1cgvTcMk6OT4axk@coredump.intra.peff.net>
+References: <20221016212236.12453-1-michael@mcclimon.org>
+ <20221022011931.43992-1-michael@mcclimon.org>
+ <20221022011931.43992-3-michael@mcclimon.org>
+ <Y1Rdtog/XQV0YLj0@coredump.intra.peff.net>
+ <Y1Rp+7R7e+LFa5k6@coredump.intra.peff.net>
+ <Y1R6ecMO+6X8tFlF@newk>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: D134A792-53F0-11ED-AC83-C2DA088D43B2-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Y1R6ecMO+6X8tFlF@newk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Julia Ramer via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Sat, Oct 22, 2022 at 07:19:21PM -0400, Michael McClimon wrote:
 
-> From: Julia Ramer <gitprplr@gmail.com>
->
-> With the recent turnover on the git-security list, questions came up how
-> things are usually run. Rather than answering questions individually,
-> extend Git's existing documentation about security vulnerabilities to
-> describe the git-security mailing list, how things are run on that list,
-> and what to expect throughout the process from the time a security bug
-> is reported all the way to the time when a fix is released.
->
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Helped-by: Taylor Blau <me@ttaylorr.com>
-> Signed-off-by: Julia Ramer <gitprplr@gmail.com>
-> ---
->     embargoed releases: also describe the git-security list and the process
->     
->     Changes since v3:
->     
->      * minor formatting corrections
->      * clarified the language based on v3 feedback
+> > I prepared it on top of your fix in the mm/git-pm-try-catch-syntax-fix
+> > branch. That's not strictly necessary, since my patch deletes the line
+> > you fixed. :) But I think it's nicer to use your fix as the starting
+> > point, since it means the test runs but produces the wrong behavior,
+> > rather than barfing with a syntax error.
+> 
+> My vanity thanks you for this, even if it's not strictly necessary. As a
+> professional programmer with roughly no C chops and a long-time admirer of the
+> Git project, all I _really_ wanted to do was to fix a thing that was in my
+> wheelhouse so that I could say I have a commit in the history. (This isn't a
+> good reason on its own, of course, but I'm happy it was useful even if the
+> line is immediately deleted!)
 
-Thanks, this version I am happy with.
+:) I think it makes my patch easier to understand, but I'm glad you are
+getting some you, too. Finding the original issue and the ensuing
+discussion was as much (or more) effort than the actual fix. Thanks for
+starting it!
+
+-Peff
