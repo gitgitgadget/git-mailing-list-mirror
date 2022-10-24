@@ -2,108 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5627FC38A2D
-	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 07:44:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72408FA373D
+	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 07:57:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229972AbiJXHow (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Oct 2022 03:44:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38016 "EHLO
+        id S230091AbiJXH55 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Oct 2022 03:57:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230052AbiJXHo3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2022 03:44:29 -0400
-Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com [IPv6:2607:f8b0:4864:20::e2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD76561D66
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 00:44:02 -0700 (PDT)
-Received: by mail-vs1-xe2a.google.com with SMTP id q127so2209156vsa.7
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 00:44:02 -0700 (PDT)
+        with ESMTP id S230236AbiJXH5w (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2022 03:57:52 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D2FF5D107
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 00:57:51 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id g12so2000854wrs.10
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 00:57:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=56vilAbJlrYRRvfkJ8zXzvNesVY2lnPetLjWvBT+Zi4=;
-        b=hQuIWzpC3ddWtGPE4I/jrMifVUO25ngsxGv7BnSaCWp2EFkQa+bw3hW/8mqYuM4qmz
-         XmMmuTCOlXIKbIRn2unkR/omqW9uUSdmmeQw+DQIY6+eOuhoq7GcC0PxOinCUnR441ZG
-         6Jn5Sanj9B+Jp9Yl34xlNatZybpZjO76Iexr9qpFJmh9DaJlcLw75DP18vqCAKzWhoDT
-         luiI6TFxvJm3T6dOsY3cSJ5BctagsDcNXwGS6g4s1qVIUTAIRMMHUgOSnsKboHUXFvhZ
-         +zBSK+2XVTntVF4OaXhDniOZyj0At+1+miIfzGQ6gmef1VrAxIZxVUUgnloI1pvbcDqq
-         yVxg==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=/b4kpopHfyn9SW8RnlH0tuEZV1fQ/tDEqkPaqxF16kM=;
+        b=ankCh7mMrQ+PIDxSCKMBgpDDeJ2TCCGxsyPxm+1wkuQbfYPC6xLfl4KP72rRnYSGr/
+         fDqRqeb9dPE/th4s59VAguxSMLOaSqEorz6ahZ552x+hnb0avkogTid3gCAmlW/vRVPw
+         07DU4/o8LfW7PJYMuYE3ytbwcOLTZdLc5H0ZWKn1+AUUmbtKrb4rbik5adkkRjo70+pf
+         U0rgED+Rh4NTfv5FBvXG2Y/DXCjKqfKCNX7jzDF3R0jg/KbBFjF3Anvt0hpvFiPcLHid
+         tOIIaGjVTIzDScndWN2+oTuvVqIsroplaqgN9Dj4xZ91TpTw1Ew/E3PlK/3MWq959qRB
+         hUsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=56vilAbJlrYRRvfkJ8zXzvNesVY2lnPetLjWvBT+Zi4=;
-        b=pd3p6jXuEBWevPIudH1aq9kAtyYeSRTnDQbVUOhpU+6LeWaCIewXcoU7i9oY2H/qhj
-         xpRDNjxLul+Wb5q5BY0iiEgE8UWQdu9vSrZGD4rocnDPH6PO925W+1P5eBUlM9ARJVOK
-         i0I/iNx6dB3XMwI/0cfooQ6dARgISTnYljvf4Eg373/o5N7m6w+lqCRXMPKAtumVcXFR
-         ZuhhFJYOK7whi9aUNcfi7Fl7W8+6zHMSwq8Vw8+d/4iWPOz5kERySh7K7aFO8LWbI8Q9
-         vdn6o3cCMCa6EGoNl+YYVp/uRVzeGPZB/2GaPpr/wJ7NHZabzqTFusAssVmb2RzciAD5
-         XZtA==
-X-Gm-Message-State: ACrzQf1K9percI28nPUIKfw1qBXSAuc8emZ1AfGNO9ejbkBCihtt64nA
-        Cq5T8ozopIQkTzKVnkP0X8WLU8fUAB6IaUvDJYU=
-X-Google-Smtp-Source: AMsMyM5RUtz4mJ+3CvMpOWUIuAUyCkgSrc1Hq5rRFQqX60/YpWDHKFWOaK8VQXFKjuQU9f+syl6+9m0wAoJoAgBhfLc=
-X-Received: by 2002:a67:a409:0:b0:398:a30e:156a with SMTP id
- n9-20020a67a409000000b00398a30e156amr17783005vse.38.1666597436984; Mon, 24
- Oct 2022 00:43:56 -0700 (PDT)
+        bh=/b4kpopHfyn9SW8RnlH0tuEZV1fQ/tDEqkPaqxF16kM=;
+        b=gBENedU3LH8C5yw2wm3nbuPz8H+i5t+wUUoL7Mb/3kMdvuwx6Pqj0Rneq6uidz2v9p
+         nMozc1yEdQUPerphkmSGOWeseIyR5gl1lFCfCOEF0BSsPcOH8t7gtQLvKJZUGbefdJNX
+         hwJklzNV8IxySZA+8lvER6k5HKnu8Z0EmW9SPfFYHajIVoelt58XAuLfvVN473CoePU4
+         3QCISI8Ojy4GAmi46P4HtgVcQ1XFo8B99sfPA227WoIG9Bydfc8jgJRv1cdVZTiRhhN1
+         2Z3jlcX67VvdpLvfdWKKHICpQbr/5dy6LSj+PUPWfvEaFhrjrYstz+/NeJF10+thLiCj
+         sUdA==
+X-Gm-Message-State: ACrzQf2bkASxBEnmPwYAAmSktkvBiMaRdUEbSqHR/XwVyv/Ahmc9tqpk
+        7h6B0PpDqJxlH+7zU/qZIRlgm3V2PHI=
+X-Google-Smtp-Source: AMsMyM5TDsjPPF//fRhwhqFXgcgWYyjSDRT2TV7epPw/+gOXjmxnfhEkv9N7JF/w2kZZAT+DZoZUZw==
+X-Received: by 2002:a5d:64c4:0:b0:231:3d94:6eb2 with SMTP id f4-20020a5d64c4000000b002313d946eb2mr19990347wri.580.1666598269631;
+        Mon, 24 Oct 2022 00:57:49 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id i9-20020a1c5409000000b003b4868eb71bsm7362705wmb.25.2022.10.24.00.57.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 24 Oct 2022 00:57:49 -0700 (PDT)
+Message-Id: <pull.1393.git.1666598268697.gitgitgadget@gmail.com>
+From:   "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 24 Oct 2022 07:57:48 +0000
+Subject: [PATCH] docs: clarify that credential discards unrecognised
+ attributes
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1282.git.1657385781.gitgitgadget@gmail.com>
- <20221022222539.2333-1-philipoakley@iee.email> <20221022222539.2333-4-philipoakley@iee.email>
-In-Reply-To: <20221022222539.2333-4-philipoakley@iee.email>
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Date:   Mon, 24 Oct 2022 13:13:46 +0530
-Message-ID: <CAPOJW5zmYC9q8+aXh9-kZnvT28GQ1ud3LenFi9qxV4DVdCWKxg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] glossary: add reachability bitmap description
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     M Hickford <mirth.hickford@gmail.com>,
+        M Hickford <mirth.hickford@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hey Philip,
-Glad that you're working on this :)
+From: M Hickford <mirth.hickford@gmail.com>
 
-On Sun, Oct 23, 2022 at 3:55 AM Philip Oakley <philipoakley@iee.email> wrote:
->
-> Describe the purpose of the reachability bitmap.
->
-> Signed-off-by: Philip Oakley <philipoakley@iee.email>
-> ---
->  Documentation/glossary-content.txt | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-> index 97050826e5..3d67b452aa 100644
-> --- a/Documentation/glossary-content.txt
-> +++ b/Documentation/glossary-content.txt
-> @@ -508,6 +508,14 @@ exclude;;
->         <<def_tree_object,trees>> to the trees or <<def_blob_object,blobs>>
->         that they contain.
->
-> +[[def_reachability_bitmap]]reachability bitmaps::
-> +       Reachability bitmaps store information about the
-> +       <<def_reachable,reachability>> of a selected set of objects in
-> +       a packfile, or a multi-pack index (MIDX) to speed up object search.
+It was previously unclear how unrecognised attributes are handled.
 
-Looks good to me. Initially I thought that we could explain it more
-but as you already linked the "reachability" here, we don't need to.
+Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+---
+    docs: clarify that credential discards unrecognised attributes
+    
+    It was previously unclear how unrecognised attributes are handled.
+    
+    Signed-off-by: M Hickford mirth.hickford@gmail.com
 
-> +       A repository may have at
-> +       most one bitmap. The bitmap may belong to either one pack, or the
-> +       repository's multi-pack index (if it exists).
-> +
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1393%2Fhickford%2Funrecognised-attributes-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1393/hickford/unrecognised-attributes-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1393
 
-Small correction here - A repository may have multiple bitmaps (one
-for each selected commit from the preferred packfile or a
-multi-pack-index) but it can have only one ".bitmap" file (as of now).
-Bitmaps for the selected commits are stored in that ".bitmap" file.
-So I think the below lines (or similar) will work  -
+ Documentation/git-credential.txt | 2 ++
+ Documentation/gitcredentials.txt | 1 +
+ 2 files changed, 3 insertions(+)
 
-    The bitmaps are stored in a ".bitmap" file. A repository may have
-    at most one ".bitmap" file. The file may belong to either one pack, or the
-    repository's multi-pack-index (if it exists).
+diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
+index f18673017f5..ac2818b9f66 100644
+--- a/Documentation/git-credential.txt
++++ b/Documentation/git-credential.txt
+@@ -160,6 +160,8 @@ empty string.
+ Components which are missing from the URL (e.g., there is no
+ username in the example above) will be left unset.
+ 
++Unrecognised attributes are silently discarded.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/Documentation/gitcredentials.txt b/Documentation/gitcredentials.txt
+index 80517b4eb2c..e856e3c8330 100644
+--- a/Documentation/gitcredentials.txt
++++ b/Documentation/gitcredentials.txt
+@@ -269,6 +269,7 @@ stdout in the same format (see linkgit:git-credential[1] for common
+ attributes). A helper is free to produce a subset, or even no values at
+ all if it has nothing useful to provide. Any provided attributes will
+ overwrite those already known about by Git's credential subsystem.
++Unrecognised attributes are silently discarded.
+ 
+ While it is possible to override all attributes, well behaving helpers
+ should refrain from doing so for any attribute other than username and
 
-Feel free to rephrase it accordingly.
-
-Thanks :)
+base-commit: 1fc3c0ad407008c2f71dd9ae1241d8b75f8ef886
+-- 
+gitgitgadget
