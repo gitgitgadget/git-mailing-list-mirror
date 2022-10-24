@@ -2,211 +2,158 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9664CC67871
-	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 21:55:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0998DC67871
+	for <git@archiver.kernel.org>; Mon, 24 Oct 2022 22:00:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230020AbiJXVzx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Oct 2022 17:55:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38664 "EHLO
+        id S231720AbiJXWAx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 24 Oct 2022 18:00:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231462AbiJXVzX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2022 17:55:23 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87580D73C0
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 13:09:11 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id l14-20020a05600c1d0e00b003c6ecc94285so34021wms.1
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 13:09:11 -0700 (PDT)
+        with ESMTP id S231635AbiJXWAb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Oct 2022 18:00:31 -0400
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8B2B6335
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 13:14:23 -0700 (PDT)
+Received: by mail-wr1-f46.google.com with SMTP id k8so9162548wrh.1
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 13:14:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XDiTOXUGdKhpxdMZy+MPQMIrlEQ28JbmaVB9D6yDnM4=;
-        b=LVyWuVQ5uOK8TwVt4PQ0v0S3AjaTN5Nfwr4o+TPHkpgPeBWa/qfsqrrvA1nDRpR15u
-         MZHJSKGLQ7+oEzK9Q7aOPqFiV16IGXN+cMKw2Jshm8aREkolHdoyIoVLxe15L1cvWQ+r
-         vp0gkGzwmiWn3F9QJYrvEF5LAUYR/0UQJaXjgR0FHLI9yo9LP7YK7pHNG0DiIcZ+ztul
-         8pOEvPtR/7IcmD3vLJ4vnis/rNzJXfdSsCMLIKvnnPXQCzfhBXHECh2tiraYjViWPPi9
-         Y89N6mXbfCsdLQ30lz/slZTQuOnze3jbw99mcrYmZl+gTf/9MJWv7IOzrO7i0yihm+0a
-         tDHA==
+        bh=BlQSiLtbi0RlDaWNAPZHvTvJPixAwsGGjeelhDvJ/C4=;
+        b=fYhAxvCQkxcOtCraqh/Ulp6witp8Fcp/R5PwKipB93HjPBKBOrljeWGlMv2L3w70pD
+         AWlFG+lJdGPCCj+KVsDlOAYlTur5zabUl4BjphjRNLFnRqS1x6a8ng1ne4Yt55oxO0dx
+         pYr8vP9+KNyHs63zLFrVQ/YBp5ki9YXrFa1qf37dyClKuB4MHRyJHZka8BvP5g2Z6f5f
+         BI8QQhSvtGwqDSKym0dX6dH6uP0wnWwdXcG0iX/XPaLhoDCF7PCVgcxhs3ExzCroEc4H
+         t0tP3R8NgRs4GBez4PNwR8M9U85tknwRuSacWUe19ODTL7zt/MctXkFUn8tkwh14OLl8
+         eI0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XDiTOXUGdKhpxdMZy+MPQMIrlEQ28JbmaVB9D6yDnM4=;
-        b=CnbLwY0bN4s9F394TrPb/Wzfl91WQgw/E7WF/uZ+J6DP2FwXHhB+sOOaxFPMmVbpKe
-         nHm5kLvT9dOwsUGSu4rAxt3t/n+/MxwR3NbsFm/ySFeR2x7EwSonoARHWE2kJX20cO5Z
-         76TuCDiruGcbcSp1vIYvI+0zL7Kq7GVEhpzlcyxk4A7egnBXXJulcdupHgHM4eYQ41DP
-         NoWO5ziOvhOfAB18XWgK+pnVDUPBdmdY8H3fiPf7p9zbvoK30kNNC2QHbHEh+JGNVaLX
-         Hg+0K6R6KG2NzmfFNUYAoBU+1AitrPQtw/bj1IKy3X+K/jE+Wovm8r/lg/BGzTpoY8m5
-         XJOg==
-X-Gm-Message-State: ACrzQf2UKdVVWxNzKK0hxbz1fJvphRJv2YH+ywmBSNxzrx81GCwmgzDe
-        gWUZemThQVhgWlOS/s14fSvRAjJ3zQQ=
-X-Google-Smtp-Source: AMsMyM7n4hb5D6bLs/V7ogKsphKGHR7dMZXjOtEjYJcEXO362YCd0a9VwBhg53U/6kVJdiH8+SvIoA==
-X-Received: by 2002:a05:600c:4e8a:b0:3c6:de26:9d6e with SMTP id f10-20020a05600c4e8a00b003c6de269d6emr23996296wmq.117.1666642070514;
-        Mon, 24 Oct 2022 13:07:50 -0700 (PDT)
+        bh=BlQSiLtbi0RlDaWNAPZHvTvJPixAwsGGjeelhDvJ/C4=;
+        b=ggzk4KrL2jQ9tr0+OErAoq+KM/V4Ly/c9xhEsnG+GEcXtvZZK4byd/h++Rq+xYUgi2
+         nHyj/nuQaG6kWzppiM92KXyqj83IADI863zhdIbCpc7bRWejXnYZekVuzeEO/BHE+qNP
+         23F0AefsYbT3BlT9zb1nb0zEC77sj5PobCDQTy9wK6S1v8+o13VY6w9LGZhzSIujbYKO
+         LgEgHC7/BXv/T3WmYgJKYTeZJIl1g4bkRRA/A8pT96F9/YFezXWJkrPLEkb8//idTNFG
+         6PPDkoQ1nnHKFgGwojIgsFOCoqmN7FV2hsdHLaFFkEsXhdry4xpJZVufcTnStNe1IbVd
+         1Lqg==
+X-Gm-Message-State: ACrzQf0RniIevq07JgIM7PJNRsGTJ6hAEM/DRSqHvKidKFCTKzdstiV6
+        GcqIPUD+UEbgl4pvoIagF6z4LalGt9w=
+X-Google-Smtp-Source: AMsMyM4vVxZ+0+hzGniPwTX+lU2r5Juqko8U7V5RuTGUmPQ9l1AZrEBMIfRcr41HDciSHrTafNRgXg==
+X-Received: by 2002:a05:6000:144d:b0:231:5786:f763 with SMTP id v13-20020a056000144d00b002315786f763mr22605034wrx.313.1666642066734;
+        Mon, 24 Oct 2022 13:07:46 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l3-20020adfa383000000b002366eb01e07sm487686wrb.114.2022.10.24.13.07.49
+        by smtp.gmail.com with ESMTPSA id j23-20020a05600c1c1700b003b4ff30e566sm20970wms.3.2022.10.24.13.07.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Oct 2022 13:07:49 -0700 (PDT)
-Message-Id: <815013553133cddae5baf9d3dca00f8318e250f7.1666642065.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1359.v5.git.1666642064.gitgitgadget@gmail.com>
+        Mon, 24 Oct 2022 13:07:46 -0700 (PDT)
+Message-Id: <pull.1359.v5.git.1666642064.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1359.v4.git.1666307815.gitgitgadget@gmail.com>
 References: <pull.1359.v4.git.1666307815.gitgitgadget@gmail.com>
-        <pull.1359.v5.git.1666642064.gitgitgadget@gmail.com>
 From:   "Jerry Zhang via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 24 Oct 2022 20:07:41 +0000
-Subject: [PATCH v5 3/6] builtin: patch-id: fix patch-id with binary diffs
+Date:   Mon, 24 Oct 2022 20:07:38 +0000
+Subject: [PATCH v5 0/6] patch-id fixes and improvements
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Jerry Zhang <jerry@skydio.com>, Jerry Zhang <Jerry@skydio.com>
+Cc:     Jerry Zhang <jerry@skydio.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jerry Zhang <Jerry@skydio.com>
+These patches add fixes and features to the "git patch-id" command, mostly
+discovered through our usage of patch-id in the revup project
+(https://github.com/Skydio/revup). On top of that I've tried to make general
+cleanup changes where I can.
 
-"git patch-id" currently doesn't produce correct output if the
-incoming diff has any binary files. Add logic to get_one_patchid
-to handle the different possible styles of binary diff. This
-attempts to keep resulting patch-ids identical to what would be
-produced by the counterpart logic in diff.c, that is it produces
-the id by hashing the a and b oids in succession.
+Summary:
 
-In general we handle binary diffs by first caching the object ids from
-the "index" line and using those if we then find an indication
-that the diff is binary.
+1: Fixed a bug in the combination of --stable with binary files and
+header-only, and expanded the test to cover both binary and non-binary
+files.
 
-The input could contain patches generated with "git diff --binary". This
-currently breaks the parse logic and results in multiple patch-ids
-output for a single commit. Here we have to skip the contents of the
-patch itself since those do not go into the patch id. --binary
-implies --full-index so the object ids are always available.
+2: Switch internal usage of patch-id in rebase / cherry-pick to use the
+stable variant to reduce the number of code paths and improve testing for
+bugs like above.
 
-When the diff is generated with --full-index there is no patch content
-to skip over.
+3: Fixed bugs with patch-id and binary diffs. Previously patch-id did not
+behave correctly for binary diffs regardless of whether "--binary" was given
+to "diff".
 
-When a diff is generated without --full-index or --binary, it will
-contain abbreviated object ids. This will still result in a sufficiently
-unique patch-id when hashed, but does not match internal patch id
-output. We'll call this ok for now as we already need specialized
-arguments to diff in order to match internal patch id (namely -U3).
+4: Fixed bugs with patch-id and mode changes. Previously mode changes were
+incorrectly excluded from the patch-id.
 
-Signed-off-by: Jerry Zhang <Jerry@skydio.com>
----
- builtin/patch-id.c  | 36 ++++++++++++++++++++++++++++++++++--
- t/t4204-patch-id.sh | 29 ++++++++++++++++++++++++++++-
- 2 files changed, 62 insertions(+), 3 deletions(-)
+5: Add a new "--include-whitespace" mode to patch-id that prevents
+whitespace from being stripped during id calculation. Also add a config
+option for the same behavior.
 
-diff --git a/builtin/patch-id.c b/builtin/patch-id.c
-index 881fcf32732..e7a31123142 100644
---- a/builtin/patch-id.c
-+++ b/builtin/patch-id.c
-@@ -61,6 +61,8 @@ static int get_one_patchid(struct object_id *next_oid, struct object_id *result,
- {
- 	int patchlen = 0, found_next = 0;
- 	int before = -1, after = -1;
-+	int diff_is_binary = 0;
-+	char pre_oid_str[GIT_MAX_HEXSZ + 1], post_oid_str[GIT_MAX_HEXSZ + 1];
- 	git_hash_ctx ctx;
- 
- 	the_hash_algo->init_fn(&ctx);
-@@ -88,14 +90,44 @@ static int get_one_patchid(struct object_id *next_oid, struct object_id *result,
- 
- 		/* Parsing diff header?  */
- 		if (before == -1) {
--			if (starts_with(line, "index "))
-+			if (starts_with(line, "GIT binary patch") ||
-+			    starts_with(line, "Binary files")) {
-+				diff_is_binary = 1;
-+				before = 0;
-+				the_hash_algo->update_fn(&ctx, pre_oid_str,
-+							 strlen(pre_oid_str));
-+				the_hash_algo->update_fn(&ctx, post_oid_str,
-+							 strlen(post_oid_str));
-+				if (stable)
-+					flush_one_hunk(result, &ctx);
- 				continue;
--			else if (starts_with(line, "--- "))
-+			} else if (skip_prefix(line, "index ", &p)) {
-+				char *oid1_end = strstr(line, "..");
-+				char *oid2_end = NULL;
-+				if (oid1_end)
-+					oid2_end = strstr(oid1_end, " ");
-+				if (!oid2_end)
-+					oid2_end = line + strlen(line) - 1;
-+				if (oid1_end != NULL && oid2_end != NULL) {
-+					*oid1_end = *oid2_end = '\0';
-+					strlcpy(pre_oid_str, p, GIT_MAX_HEXSZ + 1);
-+					strlcpy(post_oid_str, oid1_end + 2, GIT_MAX_HEXSZ + 1);
-+				}
-+				continue;
-+			} else if (starts_with(line, "--- "))
- 				before = after = 1;
- 			else if (!isalpha(line[0]))
- 				break;
- 		}
- 
-+		if (diff_is_binary) {
-+			if (starts_with(line, "diff ")) {
-+				diff_is_binary = 0;
-+				before = -1;
-+			}
-+			continue;
-+		}
-+
- 		/* Looking for a valid hunk header?  */
- 		if (before == 0 && after == 0) {
- 			if (starts_with(line, "@@ -")) {
-diff --git a/t/t4204-patch-id.sh b/t/t4204-patch-id.sh
-index a730c0db985..cdc5191aa8d 100755
---- a/t/t4204-patch-id.sh
-+++ b/t/t4204-patch-id.sh
-@@ -42,7 +42,7 @@ calc_patch_id () {
- }
- 
- get_top_diff () {
--	git log -p -1 "$@" -O bar-then-foo --
-+	git log -p -1 "$@" -O bar-then-foo --full-index --
- }
- 
- get_patch_id () {
-@@ -61,6 +61,33 @@ test_expect_success 'patch-id detects inequality' '
- 	get_patch_id notsame &&
- 	! test_cmp patch-id_main patch-id_notsame
- '
-+test_expect_success 'patch-id detects equality binary' '
-+	cat >.gitattributes <<-\EOF &&
-+	foo binary
-+	bar binary
-+	EOF
-+	get_patch_id main &&
-+	get_patch_id same &&
-+	git log -p -1 --binary main >top-diff.output &&
-+	calc_patch_id <top-diff.output main_binpatch &&
-+	git log -p -1 --binary same >top-diff.output &&
-+	calc_patch_id <top-diff.output same_binpatch &&
-+	test_cmp patch-id_main patch-id_main_binpatch &&
-+	test_cmp patch-id_same patch-id_same_binpatch &&
-+	test_cmp patch-id_main patch-id_same &&
-+	test_when_finished "rm .gitattributes"
-+'
-+
-+test_expect_success 'patch-id detects inequality binary' '
-+	cat >.gitattributes <<-\EOF &&
-+	foo binary
-+	bar binary
-+	EOF
-+	get_patch_id main &&
-+	get_patch_id notsame &&
-+	! test_cmp patch-id_main patch-id_notsame &&
-+	test_when_finished "rm .gitattributes"
-+'
- 
- test_expect_success 'patch-id supports git-format-patch output' '
- 	get_patch_id main &&
+6: Remove unused prefix from patch-id logic.
+
+V1->V2: Fixed comment style V2->V3: The ---/+++ lines no longer get added to
+the patch-id of binary diffs. Also added patches 3-7 in the series. V3->V4:
+Dropped patch7. Updated flag name to --verbatim. Updated commit message
+descriptions. V4->V5: Updated commit message for patch 6.
+
+Signed-off-by: Jerry Zhang jerry@skydio.com
+
+Jerry Zhang (6):
+  patch-id: fix stable patch id for binary / header-only
+  patch-id: use stable patch-id for rebases
+  builtin: patch-id: fix patch-id with binary diffs
+  patch-id: fix patch-id for mode changes
+  builtin: patch-id: add --verbatim as a command mode
+  builtin: patch-id: remove unused diff-tree prefix
+
+ Documentation/git-patch-id.txt |  24 ++++---
+ builtin/log.c                  |   2 +-
+ builtin/patch-id.c             | 113 ++++++++++++++++++++++++---------
+ diff.c                         |  75 +++++++++++-----------
+ diff.h                         |   2 +-
+ patch-ids.c                    |  10 +--
+ patch-ids.h                    |   2 +-
+ t/t3419-rebase-patch-id.sh     |  63 +++++++++++++++---
+ t/t4204-patch-id.sh            |  95 +++++++++++++++++++++++++--
+ 9 files changed, 287 insertions(+), 99 deletions(-)
+
+
+base-commit: 45c9f05c44b1cb6bd2d6cb95a22cf5e3d21d5b63
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1359%2Fjerry-skydio%2Fjerry%2Frevup%2Fmaster%2Fpatch_ids-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1359/jerry-skydio/jerry/revup/master/patch_ids-v5
+Pull-Request: https://github.com/gitgitgadget/git/pull/1359
+
+Range-diff vs v4:
+
+ 1:  321757ef919 = 1:  321757ef919 patch-id: fix stable patch id for binary / header-only
+ 2:  ec4a2422d5b = 2:  ec4a2422d5b patch-id: use stable patch-id for rebases
+ 3:  81501355313 = 3:  81501355313 builtin: patch-id: fix patch-id with binary diffs
+ 4:  bb0b4add03c = 4:  bb0b4add03c patch-id: fix patch-id for mode changes
+ 5:  b160f2ae49f = 5:  b160f2ae49f builtin: patch-id: add --verbatim as a command mode
+ 6:  dcdfac7a153 ! 6:  eef2a32f008 builtin: patch-id: remove unused diff-tree prefix
+     @@ Metadata
+       ## Commit message ##
+          builtin: patch-id: remove unused diff-tree prefix
+      
+     -    From a "git grep" of the repo, no command, including diff-tree itself,
+     -    produces diff output with "diff-tree " prefixed in the header.
+     +    The last git version that had "diff-tree" in the header text
+     +    of "git diff-tree" output was v1.3.0 from 2006. The header text
+     +    was changed from "diff-tree" to "commit" in 91539833
+     +    ("Log message printout cleanups").
+      
+     -    Thus remove its handling in "patch-id".
+     +    Given how long ago this change was made, it is highly unlikely that
+     +    anyone is still feeding in outputs from that git version.
+     +
+     +    Remove the handling of the "diff-tree" prefix and document the
+     +    source of the other prefixes so that the overall functionality
+     +    is more clear.
+      
+          Signed-off-by: Jerry Zhang <Jerry@skydio.com>
+      
+
 -- 
 gitgitgadget
-
