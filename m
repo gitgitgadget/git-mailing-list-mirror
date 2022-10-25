@@ -2,179 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 173EAC38A2D
-	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 05:13:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3810CC38A2D
+	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 07:57:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230190AbiJYFNC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Oct 2022 01:13:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45034 "EHLO
+        id S231303AbiJYH46 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 25 Oct 2022 03:56:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229851AbiJYFMz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2022 01:12:55 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35FF2103DB5
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 22:12:54 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 02AB7154EA8;
-        Tue, 25 Oct 2022 01:12:53 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=QkQaLiNWlUaqfzdrmXrtZAEQImZCgSVQ7s62ag
-        aGqZE=; b=pRGf7FbiXEwzgweq+pnUD3PWpDLggVUUx8ZlHivykcXz4RHHCE63ia
-        r45kSSyqkwgr1+2NrXdwLEmVHPhRdbK99pC5LnU5VSsD26oCErdKGQ2kPifwDjPm
-        +GcqL04ez3p07DExPTOy1hr/c4p/5iM95MQh3iP0CJS+drymJb8sE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id EDFB8154EA7;
-        Tue, 25 Oct 2022 01:12:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 5EE16154EA6;
-        Tue, 25 Oct 2022 01:12:52 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
-Subject: [PATCH] Documentation: add lint-fsck-msgids
-References: <pull.1369.git.git.1666623639.gitgitgadget@gmail.com>
-        <pull.1369.v2.git.git.1666667864.gitgitgadget@gmail.com>
-        <xmqqwn8oplsh.fsf@gitster.g>
-Date:   Mon, 24 Oct 2022 22:12:51 -0700
-In-Reply-To: <xmqqwn8oplsh.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-        24 Oct 2022 21:30:38 -0700")
-Message-ID: <xmqqa65kpju4.fsf_-_@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S231894AbiJYH45 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2022 03:56:57 -0400
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C94F167F50
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 00:56:55 -0700 (PDT)
+Received: by mail-ed1-f53.google.com with SMTP id y12so14715702edc.9
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 00:56:55 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PHlqXlfi4MF8pqnSR3GMYHreZ08l1fDZEjdtRE8ilYg=;
+        b=Kp3v8zR0FJlzm6hHFAWzTAuZZqypUuZVBMsy1BArzK/1AJrs5WdqrK5F28y8UbUkPn
+         YASHpDCXPrDAqURs6HNOi1gMtzq9zKIQ5QHApJG4DH+iwISI7mAYSjbxl0e/sEJdNQW4
+         UR0S6sendy2TraLQTtyhtcm50fktM0vKWvk5mvFhUgaGUflN2FV8gBXKBDwXBMmvyDSI
+         BjNeEM/axKvR2vVbdWG0twBwezJwnknfie/COrFDkGRktvYcC+cD0xzWqvhEJy2xPz3h
+         v9u/6+OO7wvTJNiQhqqPatJWhG3BbHC0tl9AIBzYa/QoqOZuxVaJMueYNRWqnStTakXA
+         nSeA==
+X-Gm-Message-State: ACrzQf1Z11QL98Y7RSQPI2Pu10VJTIzuTvbV4WMDIAJaN8T4K2qX+ARP
+        eWPHQznaDaS4o9lU1JVUBXnO97mDLLh3FA7Ip5gdfs7uuzQ=
+X-Google-Smtp-Source: AMsMyM64dEIb6JuA7SrlJGwN8x8n1K1j+pMQ/OjqvY3L5vw7/JqC2uDY7myvDkcfpooMeh9hvNmlqlEukMk0kPliKx0=
+X-Received: by 2002:a05:6402:4301:b0:45d:422b:5d5d with SMTP id
+ m1-20020a056402430100b0045d422b5d5dmr33586675edc.153.1666684613328; Tue, 25
+ Oct 2022 00:56:53 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: AD2856D6-5423-11ED-8CA5-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
+References: <491oWe6HDMJXQK2Ru2VbzFrlUajNlVhnIErZZ1dxUaPpCElsgpASAEQFc2Zi1R4G53hAIMHopETEJn7E_TzeeC6uOzGBffQDRK2AWYPIxKQ=@protonmail.com>
+In-Reply-To: <491oWe6HDMJXQK2Ru2VbzFrlUajNlVhnIErZZ1dxUaPpCElsgpASAEQFc2Zi1R4G53hAIMHopETEJn7E_TzeeC6uOzGBffQDRK2AWYPIxKQ=@protonmail.com>
+From:   Erik Cervin Edin <erik@cervined.in>
+Date:   Tue, 25 Oct 2022 09:56:15 +0200
+Message-ID: <CA+JQ7M_woJmQdaB24-eNxSRJLN4GPgTyZcPfKsXAkP+B1QOT-Q@mail.gmail.com>
+Subject: Re: Adding --force-if-newer flag to git push
+To:     Sergey <sryze@protonmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-During the initial development of the fsck-msgids.txt feature, it
-has become apparent that it is very much error prone to make sure
-the description in the documentation file are sorted and correctly
-match what is in the fsck.h header file.
+On Sat, Oct 22, 2022 at 7:02 PM Sergey <sryze@protonmail.com> wrote:
+>
+> Sometimes I find that a feature like this would be useful when I work on multiple different computers and I want to just push all local branches to the repo at once to sync it with whatever is the latest version. I know that using --force is kind of frowned upon in the Git community, so this is probably not the best idea because it would promote usage of this feature among the users. I just wanted to know your opinions and see if someone else would find it useul or it's just a dumb idea.
 
-Add a quick-and-dirty Perl script and doc-lint target to sanity
-check that the fsck-msgids.txt is consistent with the error type
-list in the fsck.h header file.
+Once you know the relevant options, it's pretty trivial to roll your
+own script/workflow/configuration that suits your own work case. I'll
+share how I solve the problem you describe. First, I'd like to mention
+  git pull --rebase
+which is basically
+  git fetch origin && git rebase @{upstream}
+or
+  git pull --rebase=merges
+which is basically
+  git fetch origin && git rebase --rebase-merges @{upstream}
+This does a fetch and afterwards, attempts to rebase any local changes
+on top of the remote tracking branch. I'd recommend this approach over
+force pushing. It keeps forced history rewrites away from the upstream
+repository, which is generally best reserved for "truer" or more
+finished work. It also allows for better recovery, in case you mess
+up, chances are your history is preserved in the reflog. This can be
+configured as the default either globally, per repo or per branch
+https://git-scm.com/docs/git-config#Documentation/git-config.txt-pullrebase
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+Be aware that there are potential situations where this will not
+automagically resolve the difference in history in a way that you may
+expect and I'd only configure this as default if you feel comfortable
+rolling back in case that situation arises. As a starting point, you
+can manually initialize the rebase using @{upstream} or @{U}
+ git fetch
+ git rebase @{U}
 
- * So the quick-and-dirty one gets repackaged with minimum polish to
-   become such a lint-doc checker.  With the MISSING_TREE_OBJECT
-   removed from fsck.h header, and the fixes to the msgids.txt
-   documentation applied, the result passes the check.
+If you want to investigate the divergence between a local branch and
+its upstream, there are several commands that may be useful depending
+on exactly how you want to compare them (often situational in my
+experience.) The see which is newer you can run
+  git show -q --format=fuller HEAD HEAD@{U}
+but sometimes you want to know more say, how do the trees differ
+  git log --online --graph HEAD...HEAD@{U}
+or perhaps the difference in contents
+  git diff HEAD HEAD@{U}
+etc. etc.
 
- Documentation/Makefile              | 11 +++++
- Documentation/lint-fsck-msgids.perl | 70 +++++++++++++++++++++++++++++
- 2 files changed, 81 insertions(+)
- create mode 100755 Documentation/lint-fsck-msgids.perl
-
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index d47acb2e25..5e1a7f655c 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -476,8 +476,19 @@ $(LINT_DOCS_MAN_SECTION_ORDER): .build/lint-docs/man-section-order/%.ok: %.txt
- .PHONY: lint-docs-man-section-order
- lint-docs-man-section-order: $(LINT_DOCS_MAN_SECTION_ORDER)
- 
-+.PHONY: lint-docs-fsck-msgids
-+LINT_DOCS_FSCK_MSGIDS = .build/lint-docs/fsck-msgids.ok
-+$(LINT_DOCS_FSCK_MSGIDS): lint-fsck-msgids.perl
-+$(LINT_DOCS_FSCK_MSGIDS): ../fsck.h fsck-msgids.txt
-+	$(call mkdir_p_parent_template)
-+	$(QUIET_GEN)$(PERL_PATH) lint-fsck-msgids.perl \
-+		../fsck.h fsck-msgids.txt $@
-+
-+lint-docs-fsck-msgids: $(LINT_DOCS_FSCK_MSGIDS)
-+
- ## Lint: list of targets above
- .PHONY: lint-docs
-+lint-docs: lint-docs-fsck-msgids
- lint-docs: lint-docs-gitlink
- lint-docs: lint-docs-man-end-blurb
- lint-docs: lint-docs-man-section-order
-diff --git a/Documentation/lint-fsck-msgids.perl b/Documentation/lint-fsck-msgids.perl
-new file mode 100755
-index 0000000000..1233ffe815
---- /dev/null
-+++ b/Documentation/lint-fsck-msgids.perl
-@@ -0,0 +1,70 @@
-+#!/usr/bin/perl
-+
-+my ($fsck_h, $fsck_msgids_txt, $okfile) = @ARGV;
-+
-+my (%in_fsck_h, $fh, $bad);
-+
-+open($fh, "<", "$fsck_h") or die;
-+while (<$fh>) {
-+	if (/^\s+FUNC\(([0-9A-Z_]+), ([A-Z]+)\)/) {
-+		my ($name, $severity) = ($1, $2);
-+		my ($first) = 1;
-+		$name = join('',
-+			     map {
-+				     y/A-Z/a-z/;
-+				     if (!$first) {
-+					     s/^(.)/uc($1)/e;
-+				     } else {
-+					     $first = 0;
-+				     }
-+				     $_;
-+			     }
-+			     split(/_/, $name));
-+		$in_fsck_h{$name} = $severity;
-+	}
-+}
-+close($fh);
-+
-+open($fh, "<", "$fsck_msgids_txt") or die;
-+my ($previous, $current);
-+while (<$fh>) {
-+	if (!defined $current) {
-+		if (/^\`([a-zA-Z0-9]*)\`::/) {
-+			$current = $1;
-+			if ((defined $previous) &&
-+			    ($current le $previous)) {
-+				print STDERR "$previous >= $current in doc\n";
-+				$bad = 1;
-+			}
-+		}
-+	} elsif (/^\s+\(([A-Z]+)\) /) {
-+		my ($level) = $1;
-+		if (!exists $in_fsck_h{$current}) {
-+			print STDERR "$current does not exist in fsck.h\n";
-+			$bad = 1;
-+		} elsif ($in_fsck_h{$current} eq "") {
-+			print STDERR "$current defined twice\n";
-+			$bad = 1;
-+		} elsif ($in_fsck_h{$current} ne $level) {
-+			print STDERR "$current severity $level != $in_fsck_h{$current}\n";
-+			$bad = 1;
-+		}
-+		$previous = $current;
-+		$in_fsck_h{$current} = ""; # mark as seen.
-+		undef $current;
-+	}
-+}
-+close($fh);
-+
-+for my $key (keys %in_fsck_h) {
-+	if ($in_fsck_h{$key} ne "") {
-+		print STDERR "$key not explained in doc.\n";
-+		$bad = 1;
-+	}
-+}
-+
-+die if ($bad);
-+
-+open($fh, ">", "$okfile");
-+print $fh "good\n";
-+close($fh);
--- 
-2.38.1-359-g84c4c6d5a5
-
+Happy hunting!
