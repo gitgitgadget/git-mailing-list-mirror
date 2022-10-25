@@ -2,121 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F7E0FA3742
-	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 09:48:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CD0BC38A2D
+	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 10:01:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231704AbiJYJsN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Oct 2022 05:48:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33054 "EHLO
+        id S231164AbiJYKBx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Oct 2022 06:01:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231361AbiJYJsG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2022 05:48:06 -0400
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 172B5111B99
-        for <git@vger.kernel.org>; Tue, 25 Oct 2022 02:48:05 -0700 (PDT)
-Received: by mail-pl1-x633.google.com with SMTP id d9so488832pll.7
-        for <git@vger.kernel.org>; Tue, 25 Oct 2022 02:48:05 -0700 (PDT)
+        with ESMTP id S231892AbiJYJ7t (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2022 05:59:49 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B48E4BBF24
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 02:54:27 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id g12so7100012wrs.10
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 02:54:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:user-agent:mime-version:date:message-id:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=1WI5LjDWB48bwOthOo6jWx6cGlJ9LsH0e1DqeHKdLtM=;
-        b=W2Vl2aIo7MqOmF64e6DfO/pIk3Edd3Bq7jkEHgmGu817oMdkcNXQcIX3gngfI/FIkY
-         gnY9jOYDOe9ilaONMpZsiVmlwnZ4gjzlINI4Ancr7RocXjsYS+GmsmpHLXFh0/L11Y9H
-         FW9hwVFlW+wJdOcJXw2iXITuhR2dxI+ec5bzjq3r9v23qgknGAQLJ1mmIVsqAtYCs6ew
-         zGPvVCZmub9MOffRShtMUyC0scvk60LVQfydBY7LrJHfPaj65R3as5f0lg38VTljAJcI
-         lCPZSzT2Z/CySAkVP0r2ebFWlg+ClUSxY5XDz24vDXdGJW3iWtDXLfWEnJMqgNXARDw1
-         h34w==
+        bh=2zQ3aCYrWpCSDXCvexSOCtBHE6Wyo+gLuJexUzuyfAo=;
+        b=cznlHZVis1vDAuu5YW2B81CRI+YJWWQs/Q+96ZA4VXem4mYlTgniP0NxXwRWtxc9HP
+         OyYKGWdrJjKMeR/99qi6Q7SiAzR+xGqf1yXXtSYrtguNyfwRgaaRkXd5x6NDKqoKL6e5
+         esp+kjazfzNMmkjeBggem7+qtUsw+AUQ7zlwRlGjpz/Uol0Oi3OODYZkl9dbzoVPclsN
+         MI7WQFg8UGNO8+Z+qfW/OfEIxEh5YpYP7ilPYuNgo7N1lt9px1ZHrVEAQcIGHUWzBkcd
+         slY7MMZxb3RkbwQMKjxxSVi05UVaC6q2P9QMYmig2s81FeGc95DUQZKG+6IBbZd3/Vix
+         6CpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:user-agent:mime-version:date:message-id:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1WI5LjDWB48bwOthOo6jWx6cGlJ9LsH0e1DqeHKdLtM=;
-        b=1oGmtufBeyqFLTki3+L84Vw//ggv3nO4q7ZUUvTT0nBDumapLOw8rk3tP6O/W5fz8Y
-         i2jCZHvS9a/8nqikNeXRG1bqEXO/K0sx3rcyseBkKLEwCkGtQqMcG9w2lPuGePtl4EuD
-         o8DOtsS1oGtRt+EcnGamfsQpIFeKDIiN0aaYsH1w14JPa7dDwzIUXoYiYHgq74151jxk
-         aGpz9voF22DY2jDlflgN0Ajp6dX3tFaX90L0xLXNjptwM/oCaMLduq43HBRlggNklqrN
-         Jo8p+yib8N9ONjEXVYGZJohuKzcr4yErNvdqO0Bk2FFjrrI8A0GT1ACWL6kG5X+Br+qq
-         z0bw==
-X-Gm-Message-State: ACrzQf3ckq5KS12OlRpEJ4x4PtSQ3BBfoYgEP1AMQkCwXdcEn2ldGxf5
-        V+/g1NuWlKQfSGW3l2v2wDbY4uNNTqj9k61TS44=
-X-Google-Smtp-Source: AMsMyM4GJzCQmUZ2NNPkB4GPl+3aph01z9AbDBjdbxNU2FTe23tHLl8oHT5CXBKWkkK6aq9hzbDA6aGLVntXg8dG9jc=
-X-Received: by 2002:a17:90b:3d8b:b0:20d:3e7f:32d3 with SMTP id
- pq11-20020a17090b3d8b00b0020d3e7f32d3mr42529175pjb.22.1666691284449; Tue, 25
- Oct 2022 02:48:04 -0700 (PDT)
+        bh=2zQ3aCYrWpCSDXCvexSOCtBHE6Wyo+gLuJexUzuyfAo=;
+        b=JtKcJdBS5D+vUAjcUmmfGdpX6YTZ5o/qftHTfPfKnEbHdWeRWB2TioHu6KALtHj8lL
+         OrAoRyl8EPybeQV0RhI1h/fB8kzYD42SIJkOTLD3+fIT7l5oD3n+FqfMnrk9/PcB5RVy
+         HgwSQHQ6EvvIl0CnDP/yTots/mx4ywaen1pi0nn72YA2kBBVzrcz1SyaAKbX6ZF57Pt4
+         E6jCs/XyfzkHqY4qDcVj6piU+nGpmVK5fuHN3DX8o0OmifRIADin37lNNOChcHXOaIID
+         3jIK8D1MUnEWKT+N7CaU5+C9qe6qkTLJ/czfjbuJaVTXqHJudpS8HeedQWrH3WFtkY5N
+         PDxQ==
+X-Gm-Message-State: ACrzQf3W2ZltaoNiDKxL3fhJH+Y8MzO3fYhhswtgVdZGX6rNCau4lcri
+        uQXskbTyHd1ABrnL4qbyTrY=
+X-Google-Smtp-Source: AMsMyM4FPvSmEi3paQXZvtZHGV8bV2MhErJWO+KWpXGZ5dpsEE7FpItzSeCSrY7ZCOxg+u1ibUeBgg==
+X-Received: by 2002:a5d:5a8c:0:b0:22c:bc97:6fe2 with SMTP id bp12-20020a5d5a8c000000b0022cbc976fe2mr24133832wrb.640.1666691666051;
+        Tue, 25 Oct 2022 02:54:26 -0700 (PDT)
+Received: from [192.168.1.74] ([31.185.185.144])
+        by smtp.gmail.com with ESMTPSA id j12-20020a05600c410c00b003c83465ccbfsm10284599wmi.35.2022.10.25.02.54.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 25 Oct 2022 02:54:25 -0700 (PDT)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <cb034574-8753-d641-c166-ae2c34b1c589@dunelm.org.uk>
+Date:   Tue, 25 Oct 2022 10:54:24 +0100
 MIME-Version: 1.0
-References: <CADUYy5vwfOJOFBQ+zUmkrsxGO=E9N5vUbsVRgjBn_MMY2X6H=A@mail.gmail.com>
- <Y1XcQctK/SkDZCbt@tapette.crustytoothpaste.net>
-In-Reply-To: <Y1XcQctK/SkDZCbt@tapette.crustytoothpaste.net>
-From:   shubham sharma <shubhamsharma4060@gmail.com>
-Date:   Tue, 25 Oct 2022 15:17:28 +0530
-Message-ID: <CADUYy5sv-rc-hRB9xV2uK05k+S2G7AADiA9w6iD8pzoYMPQqGw@mail.gmail.com>
-Subject: Re: waitpid errors with shell aliases
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        shubham sharma <shubhamsharma4060@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 2/3] config: require at least one digit when parsing
+ numbers
+To:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Jeff King <peff@peff.net>
+References: <pull.1389.git.1666359915.gitgitgadget@gmail.com>
+ <cd753602e48a2faa0d59edca2f6fab0fe753f0f6.1666359915.git.gitgitgadget@gmail.com>
+ <xmqqwn8tjazb.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqwn8tjazb.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Junio
 
-/bin/sh -> GNU bash, version 5.1.4(1)-release (x86_64-pc-linux-gnu)
-OS -> Arch Linux
-Kernel: Linux 5.4.86-1-lts
-Architecture: x86-64
-git -> git version 2.30.0
+On 21/10/2022 19:19, Junio C Hamano wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> @@ -1167,6 +1167,10 @@ static int git_parse_signed(const char *value, intmax_t *ret, intmax_t max)
+>>   		val = strtoimax(value, &end, 0);
+>>   		if (errno == ERANGE)
+>>   			return 0;
+>> +		if (end == value) {
+>> +			errno = EINVAL;
+>> +			return 0;
+>> +		}
+> 
+> This means well, but doesn't strto*() family of functions silently
+> ignore leading blanks, e.g.
+> 
+>      l = strtol("  432k", &end, 0);
+> 	... l == 432, *end = k ...
+> 
+> If you really want to reject a string with no number before the
+> optional unit, end at this point may not match value.  With " k" as
+> input, value would point at the space at the beginning, and end
+> would point at 'k'.
 
-Thanks,
-Shubham
+It only skips the space if it sees a digit, if it does not find anything 
+to convert it sets *end = start. Using peff's trick for testing this 
+patch we can see there is no change in behavior if there is leading 
+whitespace
 
-On Mon, Oct 24, 2022 at 5:58 AM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2022-10-21 at 09:26:11, shubham sharma wrote:
-> > Hi,
-> >
-> > I am using git shell aliases in config and was facing some weird
-> > error. The error is not reproducible in all runs and occurs randomly
-> > between runs...consider the minimal config(alias section) below for
-> > usage idea:
-> >
-> > [alias]
-> >     A = "!f(){ \
-> >         ( \
-> >               // implementation
-> >               git \"$1\"; \
-> >         ) 250<dir/tmp; \
-> >     }; f"
-> >     B = "!f(){ \
-> >         ssh <server> <command>; \
-> >     }; f"
-> >     C= "!f(){ \
-> >         git A B; \
-> >     }; f"
-> >
-> > when firing "git C" from shell,in some cases(not deterministically reproducible)
-> > i observed weird waitpid errors of the type :
-> >
-> > error: waitpid for f(){         ssh <server> <command>;    }; f
-> > failed: No child processes
-> > fatal: while expanding alias 'B': 'f(){       ssh <server> <command>;
-> >      }; f': No child processes
-> > error: waitpid for f(){     (//implementation; git "$1"; )250<dir/tmp;
-> >    }; f failed: No child processes
-> > fatal: while expanding alias 'A': 'f(){        (//implementation; git
-> > "$1"; )250<dir/tmp;      }; f': No child processes
-> > error: waitpid for f(){    git A B;    }; f failed: No child processes
-> > fatal: while expanding alias 'C': 'f(){       git A B;      }; f': No
-> > child processes
-> >
-> > can anyone please help as to what could possibly be the reason for this?
->
-> Could you tell us what OS and version of Git you're running, and what
-> shell /bin/sh is?  I could imagine that there might be some weirdness on
-> Windows with the shell, but I would find an ECHILD to be surprising on
-> Unix.
-> --
-> brian m. carlson (he/him or they/them)
-> Toronto, Ontario, CA
+$ bin-wrappers/git config --int --default " m" some.key
+fatal: bad numeric config value ' m' for 'some.key': invalid unit
+
+$ git config --int --default " m" some.key
+fatal: bad numeric config value ' m' for 'some.key': invalid unit
+
+> It does not look _too_ bad if we just let such an empty string
+> through and interpreted it as zero.  Is that a problem?  Who are we
+> trying to help?
+
+My reasoning was that a single units factor is likely to be the result 
+of some kind of bad edit and defaulting to zero when the user thought 
+they set a large value is not likely to be helpful. Having said that I'm 
+not that wedded to this patch if you feel it would be better to drop it.
+
+Best Wishes
+
+Phillip
