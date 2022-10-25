@@ -2,161 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 670F1FA373E
-	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 18:24:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E544C38A2D
+	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 18:25:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231429AbiJYSYg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Oct 2022 14:24:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53444 "EHLO
+        id S231363AbiJYSZY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Oct 2022 14:25:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230428AbiJYSYe (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2022 14:24:34 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E667923E8F
-        for <git@vger.kernel.org>; Tue, 25 Oct 2022 11:24:33 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id 63so1514661iov.8
-        for <git@vger.kernel.org>; Tue, 25 Oct 2022 11:24:33 -0700 (PDT)
+        with ESMTP id S231310AbiJYSZX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2022 14:25:23 -0400
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA318E22C5
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 11:25:22 -0700 (PDT)
+Received: by mail-io1-xd2c.google.com with SMTP id r142so11109645iod.11
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 11:25:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=content-transfer-encoding:content-disposition:mime-version
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=l1BYp/cZWJgrUwpX9zZXa9Rhu0jJBg9rL2jtlZTEUJw=;
-        b=wv5xjEK4D7FHmnVdUJxXXUPAx2Q7Py6DpWbtB1ve2ydamcjGi61y+dO3/5MwYzmD6Y
-         ClwMErZqyeSikMsOQcagS2UaZhrlh/KZCFKi4x2qMrghyMUMy1HHo2cTmtMcfFMizH54
-         PZdHf1BQLJkGTGM8ny8YdguGbmRReGJDF8whgCncQnSyzR/WNnhEawSVtOVz5YI8UKZW
-         Q8WdDUIdspdZYj4S9O5JRRffQ1wBGkuAeU7SsTSnvd1FIXCtp7EKKYOJ4iH+wui2wkzb
-         SXg81afpX2xDEqZ8dxzTn8m7ebkLncNJOHK5YapgDCl4Lna6jrlEU/vjPDW8bqFEOIIG
-         uq2g==
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=h0H3Y7Ov9pNnaI+ya8JdeaMNDx+/cT3Yny7W2vIXj24=;
+        b=LLckcXUeaArClZPW5CeZGorEdTHUejd2RPyjwJOEWyJCqoDJpmyRgw3/5VCVFy7Hty
+         GUCtMmfFuCUF7H4lPyeuVg9dL3VLRGDNN9ujTURAZvnfWsbKBekhxbGf7yZVTazyLMc/
+         E5Ti/NJBlSvkwTXE6rmp+/y8Fm1AthIhzCyRk7RLrH5kggAvVlvSqp6gFjTucFk0cCuv
+         rJkHJnrTDisk7pE0H/rEurr5/Ap8dX34FqcCjVHI2hYvSwShMbWZWptdy8TiYkCbaLFn
+         euQoZB+gxvBSHV1QmISdljSyJb/MgZx8h1gdjeqNUqTCL5ieDQ0NSRlJ2XtaRRaU25au
+         QK/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-disposition:mime-version
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=l1BYp/cZWJgrUwpX9zZXa9Rhu0jJBg9rL2jtlZTEUJw=;
-        b=0gzjmit0WS0HdMc2yubNqi9e+XlV+NAyOEZBSXZvij71NtQOmMpDgzmDuXtKycVWzI
-         8WLvggYfYIS6NRzYZUr9MrGj1MlHAVh8IjjuGkMWyhO7OnJmstw402UQG/lFFHc327JK
-         UoOx59i0hotqq4HO6rE7oAJYb28DeXCkn3s3qWCZjydHAkoIcqeF6qe6nds9HHlzqbBs
-         zAbyqapdrbRgsyvGsn+V4p18eKmZ3jeO9lz2kw9V2eZlwsg60PLbamPvaoxlfesWsxJh
-         zzkbLDZqElk3pHbjPDoFnuCb/YXA1pouvJfVrnww/LtF8X7H/mm/B01EpkYlcpOqHkjJ
-         +5lA==
-X-Gm-Message-State: ACrzQf1n3awYXD7QoBy7OhzoGDT2ZPkkhdMuu1bT8AtazRScT3qOGqD3
-        Nx7DtC3NDyukT6CKPwDLRXAMhbzamrZZyCn8
-X-Google-Smtp-Source: AMsMyM4emyflOopLczUo6/nAkqHKe0VHwxJkGqaqkGznctWRHwe7WIh+OjisKIZ8DHd/xp6JNOzsnw==
-X-Received: by 2002:a05:6638:2513:b0:364:11d7:a96a with SMTP id v19-20020a056638251300b0036411d7a96amr25881781jat.35.1666722273080;
-        Tue, 25 Oct 2022 11:24:33 -0700 (PDT)
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=h0H3Y7Ov9pNnaI+ya8JdeaMNDx+/cT3Yny7W2vIXj24=;
+        b=kI7V2zk4CqsCeWqRf5HCKc59CvMyAXMxyj3kvNGqHcTa6chJQAuzX1vGEqD7x0SvXe
+         DSqpjc9EpahUbEtA+iqzf1zP1fc5IZjojyhiB1DqiS9QqWrzlT2JYAZoPGoZmk3jv7b1
+         pNqr2t11HCkhHlnPKQiTxge/SIcLsQab/aQ5AihJRKo0v3ZAA1+c4iBbcTirK8/O2H/C
+         AbIn4G38nVxnTplRnOIIEahkRKz/8xqjpgluKkoX9d7XYqVnyvlRakinsTJu1MDdyB2c
+         dfKkib3maNRuWeSke/ZKuQR/3x1OvP8zpxFpWMEhgW+rXnk1tFlCndQWC/UbFivZULSA
+         JZ3w==
+X-Gm-Message-State: ACrzQf0dzN189iLhkp/sK0z+oYgZM+Jftc5N9EXRqyG9A2qZD9SEoOPj
+        yMJvUxnL9zZUDry0G8RwOw9lLd46XebvPQ2D
+X-Google-Smtp-Source: AMsMyM794u7TUfn567OnO/vuzxoBlQMyUEGhkM8P/RW275mOkhXwBC+j29+3HV49PXYYxnS4OdhdBg==
+X-Received: by 2002:a02:62cc:0:b0:363:d7ea:f3d with SMTP id d195-20020a0262cc000000b00363d7ea0f3dmr25341751jac.120.1666722322015;
+        Tue, 25 Oct 2022 11:25:22 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id 2-20020a056e0220c200b002ffa449535asm1232879ilq.74.2022.10.25.11.24.32
+        by smtp.gmail.com with ESMTPSA id e24-20020a026d58000000b003633b78ee12sm1133495jaf.75.2022.10.25.11.25.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Oct 2022 11:24:32 -0700 (PDT)
-Date:   Tue, 25 Oct 2022 14:24:31 -0400
+        Tue, 25 Oct 2022 11:25:21 -0700 (PDT)
+Date:   Tue, 25 Oct 2022 14:25:20 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     git@vger.kernel.org, git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        =?utf-8?B?7KCV7J6s7Jqw?= <thebound7@gmail.com>
-Subject: [PATCH] apply: reject patches larger than ~1 GiB
-Message-ID: <70f5763834dff373a5573a99ec4cdfa36cadf34c.1666722251.git.me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Victoria Dye <vdye@github.com>
+Subject: [PATCH] midx.c: clear auxiliary MIDX files first
+Message-ID: <bf36093cd6d7ac83b16241b0199b3a8c904e6774.1666722316.git.me@ttaylorr.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The apply code is not prepared to handle extremely large files. It uses
-"int" in some places, and "unsigned long" in others.
+Since they were added in c528e17966 (pack-bitmap: write multi-pack
+bitmaps, 2021-08-31), the routine to remove MIDXs removed the
+multi-pack-index file itself before removing its associated .bitmap and
+.rev file(s), if any.
 
-This combination leads to unfortunate problems when switching between
-the two types. Using "int" prevents us from handling large files, since
-large offsets will wrap around and spill into small negative values,
-which can result in wrong behavior (like accessing the patch buffer with
-a negative offset).
+This creates a window where a MIDX's .bitmap file exists without its
+corresponding MIDX. If a reader tries to load a MIDX bitmap during that
+time, they will get a warning, and the MIDX bitmap code will gracefully
+degrade.
 
-Converting from "unsigned long" to "int" also has truncation problems
-even on LLP64 platforms where "long" is the same size as "int", since
-the former is unsigned but the latter is not.
+Remove this window entirely by removing the MIDX last, and removing its
+auxiliary files first.
 
-To avoid potential overflow and truncation issues in `git apply`, apply
-similar treatment as in dcd1742e56 (xdiff: reject files larger than
-~1GB, 2015-09-24), where the xdiff code was taught to reject large
-files for similar reasons.
+The order here is important, too. We remove the MIDX's .bitmap file
+ahead of its .rev, since callers try and read the .bitmap first. The
+.rev file is no longer generated by modern versions of Git, but cleaning
+up old ones generated by previous versions of Git is still important to
+do.
 
-The maximum size was chosen somewhat arbitrarily, but picking a value
-just shy of a gigabyte allows us to double it without overflowing 2^31-1
-(after which point our value would wrap around to a negative number).
-To give ourselves a bit of extra margin, the maximum patch size is a MiB
-smaller than a full GiB, which gives us some slop in case we allocate
-"(records + 1) * sizeof(int)" or similar.
-
-Luckily, the security implications of these conversion issues are
-relatively uninteresting, because a victim needs to be convinced to
-apply a malicious patch.
-
-Reported-by: 정재우 <thebound7@gmail.com>
-Suggested-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- apply.c                    | 12 +++++++++++-
- t/t4141-apply-too-large.sh | 23 +++++++++++++++++++++++
- 2 files changed, 34 insertions(+), 1 deletion(-)
- create mode 100755 t/t4141-apply-too-large.sh
+ midx.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index 2b7cd930ef..850604c191 100644
---- a/apply.c
-+++ b/apply.c
-@@ -386,9 +386,19 @@ static void say_patch_name(FILE *output, const char *fmt, struct patch *patch)
+diff --git a/midx.c b/midx.c
+index 3a8dcfe98e..994129aecd 100644
+--- a/midx.c
++++ b/midx.c
+@@ -1619,12 +1619,12 @@ void clear_midx_file(struct repository *r)
+ 		r->objects->multi_pack_index = NULL;
+ 	}
  
- #define SLOP (16)
+-	if (remove_path(midx.buf))
+-		die(_("failed to clear multi-pack-index at %s"), midx.buf);
+-
+ 	clear_midx_files_ext(r->objects->odb->path, ".bitmap", NULL);
+ 	clear_midx_files_ext(r->objects->odb->path, ".rev", NULL);
  
-+/*
-+ * apply.c isn't equipped to handle arbitrarily large patches, because
-+ * it intermingles `unsigned long` with `int` for the type used to store
-+ * buffer lengths.
-+ *
-+ * Only process patches that are just shy of 1 GiB large in order to
-+ * avoid any truncation or overflow issues.
-+ */
-+#define MAX_APPLY_SIZE (1024UL * 1024 * 1023)
++	if (remove_path(midx.buf))
++		die(_("failed to clear multi-pack-index at %s"), midx.buf);
 +
- static int read_patch_file(struct strbuf *sb, int fd)
- {
--	if (strbuf_read(sb, fd, 0) < 0)
-+	if (strbuf_read(sb, fd, 0) < 0 || sb->len >= MAX_APPLY_SIZE)
- 		return error_errno("git apply: failed to read");
+ 	strbuf_release(&midx);
+ }
  
- 	/*
-diff --git a/t/t4141-apply-too-large.sh b/t/t4141-apply-too-large.sh
-new file mode 100755
-index 0000000000..58742d4fc5
---- /dev/null
-+++ b/t/t4141-apply-too-large.sh
-@@ -0,0 +1,23 @@
-+#!/bin/sh
-+
-+test_description='git apply with too-large patch'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
-+. ./test-lib.sh
-+
-+test_expect_success EXPENSIVE 'git apply rejects patches that are too large' '
-+	sz=$((1024 * 1024 * 1023)) &&
-+	{
-+		cat <<-\EOF &&
-+		diff --git a/file b/file
-+		new file mode 100644
-+		--- /dev/null
-+		+++ b/file
-+		@@ -0,0 +1 @@
-+		EOF
-+		test-tool genzeros
-+	} | test_copy_bytes $sz | test_must_fail git apply 2>err &&
-+	grep "git apply: failed to read" err
-+'
-+
-+test_done
 -- 
 2.38.0.16.g393fd4c6db
