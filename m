@@ -2,184 +2,377 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E241CC04A95
-	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 10:21:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 568D4C38A2D
+	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 10:30:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232427AbiJYKVI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Oct 2022 06:21:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34518 "EHLO
+        id S231377AbiJYKaH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Oct 2022 06:30:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232255AbiJYKUu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2022 06:20:50 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EDB41162C1
-        for <git@vger.kernel.org>; Tue, 25 Oct 2022 03:17:31 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id b12so35516118edd.6
-        for <git@vger.kernel.org>; Tue, 25 Oct 2022 03:17:31 -0700 (PDT)
+        with ESMTP id S231494AbiJYK3j (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2022 06:29:39 -0400
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFBA672B7C
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 03:29:09 -0700 (PDT)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-333a4a5d495so108807537b3.10
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 03:29:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=+Jf5osTvqsn4F/TOOKJ3MHbkMax/gjttHTdSZyZf3ck=;
-        b=WcUjSh23+lBiu4BuctummsurdikCjetktuydyAXF/hbTE3piT3TEcFmEJ2OJHwmmpO
-         o52sxzQSF2VYN+bmFYNTpbrXzCnSSjFzXH2fov46K+/R0WdxmxbMKegBt3TfoNN5EH5e
-         QWu3qz3HXrgMS8k7tnYCs5Uf/AfyCKQbosLusVq19uRzr4vawkWSkZk6XpxPYzxVJdJ6
-         mx4JEkPmELRQMrTNPCXwBQg9Nb86dEut0IDw3fp4BGdaRAyVXI/dpua5KiuH3ckanHdZ
-         UN5mzn4rEmMJMWqnROLhjhj/RRa1/eJArUOtzQa11HWYKgpbMVPjhwIvy6ZRYxA65Qdm
-         0uuA==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0Gek/QOlIdoBJG6/2APIcte30/wPoD4++iPIou3lly4=;
+        b=WSmw6Xq5rRuti9ETkW2m4XxXDC88ixrLfjVyEhvSp6RIpcJGsPpc+U1+h+dIy52qIu
+         lSDlxIbb8FtfzyL+Tr5Q+8MHLNgOe6Dmz222BGjOJ1J1aEV1eol2E207KZzAumeU5wBP
+         NipLZa/sQEP3lWCkIaJCnf3ySkx8akRAuuahpC91+iKSiloIs2SvTFYNmae8Pd1sW0Dm
+         Zca7dh862nr1EAYjNBhUwneZ5yY+7rOmUX3rq556zi/Ro8f40dyzbUnHv4XZ7MKJtAoa
+         0OkBUPtGUwFWZB0IyCTkRM+LpoNYMcM/lVbx0Bp3Nw1WpPXp8TWZNbssZu58852XH2QJ
+         1PbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+Jf5osTvqsn4F/TOOKJ3MHbkMax/gjttHTdSZyZf3ck=;
-        b=a07q6Sja+odg0DQ+AUyk5ggkog9j0L1DtVFL+7MgtqbVBFUI5/uKHLRwa057ai5QRk
-         NWl7rfc6ZMSy4kWhvf6+uafDjCUvKkawU+9U9ZNYt/AoaXN3F1EV+XMS9oO/ynwfxlhR
-         VHv6ql7BeiSuuRuSybhSJyOPzPaj89p5hSSP7v8W3lZU1Tlp1UdgCe+q7egE4IklgVCl
-         m7DJbHnULa0d1M9vl3Hfq4ittlUf6DEGbB3+plEwjeyqColnTc0ja/tYJkZH3lXL6Es3
-         inLJsn+JEOuGhSyDSP8nxKkp8uwDx+Gi7qFf/iQWNVMSPa1WF5AAFmym9huBIxSy6L4I
-         odjw==
-X-Gm-Message-State: ACrzQf2H5a5cuS4rMDNBBwdoihTdOcHeEruQJxEbdkCQvMmAAhj1WsBW
-        /isbHwmUehmeOhaLwtE2Pojfxt3QrCk=
-X-Google-Smtp-Source: AMsMyM6cIQDgWfBtQhejTIUE34CKZ81UYQz1G/FOPkpx/h01XFwDaKqonAIM98N6D4ASxWJTSwL/IQ==
-X-Received: by 2002:a05:6402:f2a:b0:461:eff7:bae8 with SMTP id i42-20020a0564020f2a00b00461eff7bae8mr5617217eda.322.1666693049787;
-        Tue, 25 Oct 2022 03:17:29 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id ka3-20020a170907990300b0073cd7cc2c81sm1132433ejc.181.2022.10.25.03.17.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Oct 2022 03:17:29 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1onGzw-007v6J-1M;
-        Tue, 25 Oct 2022 12:17:28 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: chainlint.pl's new "deparse" output (was: [PATCH v2] [...])
-Date:   Tue, 25 Oct 2022 12:07:43 +0200
-References: <pull.1324.git.git.1663023888412.gitgitgadget@gmail.com>
- <pull.1324.v2.git.git.1663041707260.gitgitgadget@gmail.com>
- <221024.865yg9ecsx.gmgdl@evledraar.gmail.com>
- <CAPig+cT=cWYT6kicNWT+6RxfiKKMyVz72H3_9kwkF-f4Vuoe1w@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <CAPig+cT=cWYT6kicNWT+6RxfiKKMyVz72H3_9kwkF-f4Vuoe1w@mail.gmail.com>
-Message-ID: <221025.86o7u0cimf.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0Gek/QOlIdoBJG6/2APIcte30/wPoD4++iPIou3lly4=;
+        b=JQzI+WmxUgjxOO6TDqzVcNVGGHFsQP+FiEcxgsw7T3lh/LcMw2Qfj+z0LSXTder5PV
+         XO0iDOFIBLeDVFInYaSqMaeHuvbfrqLnyN/8UgamYfkgMn2YTpPJHPJ6wWG92pXkEPGx
+         lgzrBpI66DJjAynEApSUYNHsgT9dS3zEDWfKWyJ3jr2Xp+2qndL923Zipy15S1pJiQu8
+         K9Hlgo9aLkhw6tLpNFub4C3iXGSTG8/aK6OzdNfWv7Vdk2+GlSWrycmQqMRUPHhLhbSX
+         oD8B/VnQL1ZNaP5l/wGnFwT43XFEpgVcwR+ZCyHTlZs+G3S95loWON4sJBRlw9hWLkwW
+         mz/A==
+X-Gm-Message-State: ACrzQf0py0FBKDnh+4nVd06DRvsyef2eQI/6i1Iou95b4meJS/BMe1Um
+        Tbk4REnvRvZRCHOSl9+VHH2orPoJxBWR2cMzeTuDZpnbT6qMoJB7
+X-Google-Smtp-Source: AMsMyM4mmIES1BDOadM6TmTJF46/v8ntBiH+Vlw+RxQveowybpo3OF166Pvw6g2XyBVHJh+Po/YKoYZ5L9iAb90sn9M=
+X-Received: by 2002:a81:7444:0:b0:368:f790:eaa3 with SMTP id
+ p65-20020a817444000000b00368f790eaa3mr22910135ywc.439.1666693748871; Tue, 25
+ Oct 2022 03:29:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <CA+PPyiGtoO4HYA+Z8_te5d0oBLYAxcXeZdTH17AJYaoZ32ObfQ@mail.gmail.com>
+ <CAP8UFD0J_vWkMjZAm3=LeS3KvZ3xzpkFXRWHLisuN7AbUui+BQ@mail.gmail.com>
+In-Reply-To: <CAP8UFD0J_vWkMjZAm3=LeS3KvZ3xzpkFXRWHLisuN7AbUui+BQ@mail.gmail.com>
+From:   NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
+Date:   Tue, 25 Oct 2022 13:28:57 +0300
+Message-ID: <CA+PPyiH1GpHePrG7G7oyNJR_LD76A4qKDG=gnHcVLW_qj-DYqA@mail.gmail.com>
+Subject: Re: [OUTREACHY] Unify ref-filter formats with other --pretty
+ formats[Draft proposal]
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, Hariom verma <hariom18599@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Christian
 
-On Tue, Oct 25 2022, Eric Sunshine wrote:
 
-> On Mon, Oct 24, 2022 at 6:28 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->> On Tue, Sep 13 2022, Eric Sunshine via GitGitGadget wrote:
->> > When `chainlint.pl` detects problems in a test definition, it emits the
->> > test definition with "?!FOO?!" annotations highlighting the problems it
->> > discovered. For instance, given this problematic test:
->> >
->> >     test_expect_success 'discombobulate frobnitz' '
->> >         (echo balderdash; echo gnabgib) >expect &&
->> >     '
->> >
->> > chainlint.pl will output:
->> >
->> >     # chainlint: t1234-confusing.sh
->> >     # chainlint: discombobulate frobnitz
->> >     (echo balderdash ; ?!AMP?! echo gnabgib) >expect &&
->>
->> I've noticed that chainlint.pl is better in some ways, but that the
->> "deparse" output tends to be quite jarring. but I can't find version of
->> it that emitted this "will output" here.
+> It looks like the links don't appear on the text version that you sent
+
+Let me have a look at them and do the update.
+
+> There might be a bit of work by a recent GSoC student too
+
+Thanks for the reminder, let me make more research on this. but if
+anyone could point me to any other recent work, it would be great for
+me.
+
 >
-> There is no such version.
-> [...]
-> No, I botched the commit message. I typed the example test in by hand
-> and then, also by hand, typed in the example output, forgetting to
-> insert the spaces which you correctly noted are missing from the
-> example output. I should have run the example test through
-> chainlint.pl and copy/pasted its output into the commit message. (I
-> did, in fact, run the sample test through chanlint.pl _after_
-> hand-typing the example output, and compared them by eye but missed
-> most of the whitespace differences.)
+> How long do you think it would take? If it's not too long you might
+> want to do that now, so that perhaps you can better estimate how much
+> work is left.
+
+
+Oh, thank you for this. I do not know how I did not think about it. I
+am also going to do research about it.
+
+> Maybe s/related/related to/
+
+
+I seem not to understand this comment, may be give me some light about it
+
+> s/Understanding/Understand/
+
+ I seem not to understand this comment, may be give me some light about it
+
+> Updating the documentation is usually part of the patches that are
+> sent. So I don't think you need to make it a separate point.
+
+Noted!
+
+> I don't think Outreachy requires 50 hours of work per week. That seems
+> a bit too much if you also attend college.
+
+Thank you for the advice, I could do 40 then.
+
+thanks big for the review,
+I am going to send the updated proposal ASAP
+
+Best Regards,
+Wilberforce
+
+
+On Tue, Oct 25, 2022 at 12:00 AM Christian Couder
+<christian.couder@gmail.com> wrote:
 >
->> Anyway, that sort of an aside, but I did go hunting for the version with=
- slightly better whitespace output.
+> Hi Wilberforce,
 >
-> Sorry, my fault for a faulty commit message.
-
-No worries!
-
->> But to get to the actual point: I've found the new chainlint.pl output
->> harder to read sometimes, because it goes through this parse & deparse
->> state, so you're preserving "\n"''s.
->>
->> Whereas the old "sed" output also sucked because we couldn't note where
->> the issue was, but we spewed out the test source verbatim.
+> On Sat, Oct 22, 2022 at 1:43 PM NSENGIYUMVA WILBERFORCE
+> <nsengiyumvawilberforce@gmail.com> wrote:
+> >
+> > Hi team,
+> > I would like to have reviews on my
+> >
+> > Google Docs link:https://docs.google.com/document/d/1Kdx8DVWF3c5pwV5-A8=
+Z4n-SoRHlMDncI1gNeGCiLNsE/edit?usp=3Dsharing
 >
-> Somewhat verbatim. chainlint.sed did swallow blank lines and comment
-> lines, and it folded multi-line strings into one-line strings.
-
-Yeah, it had a lot of edge cases, the new one's much better overall. I
-just sometimes found it jarring to look at code that's not /quite/ my
-version now, but anyway... :)
-
->> But it seem to me that we could get much better output if the
->> ShellParser/Lexer etc. just kept enough state to emit "startcol",
->> "endcol" and "linenum" along with every token, or something like that
->> (you might want offsets from the beginning of the parsed source
->> instead).
->>
->> Then when it has errors it could emit the actual source passed in, and
->> even do gcc/clang-style underlining.
->>
->> I poked at getting that working for a few minutes, but quickly saw that
->> someone more familiar with the code could do it much quicker, so
->> consider the above a feature request :)
+> Thanks for sending us a draft proposal!
 >
-> Yes, there should be better integration between the lexer and parser
-> for emitting errors. Unfortunately, it didn't occur to me during
-> implementation, and I only thought about it when Peff mentioned the
-> difficult-to-read output in a different part of this discussion.
+> > Microproject
+> >
+> > When I was browsing the outreachy projects on outreachy website, I was
+> > super excited about Git because I use it in most of my college work.
+> > At first, it was intimidating for me to introduce myself to the
+> > community. But I am glad I took a step. I am glad that I completed my
+> > microproject and the whole process gave me confidence on how to submit
+> > patches, communicate with the community members and interestingly, it
+> > was a big learning process for me.  The following are the details
+> > about my microproject with public-inbox links to different versions.
+> >
+> > Mailing List for the microproject:
+> > https://lore.kernel.org/git/pull.1362.v4.git.git.1665772130030.gitgitga=
+dget@gmail.com/
+> >
+> > Github:  https://github.com/git/git/pull/1362
+> >
+> > Status: next
 >
-> An alternative, somewhat hacky approach, might be to simply retain
-> whitespace as tokens in the token stream. That would require less
-> retrofitting of the lexer, though perhaps more complexity/ugliness in
-> the parser. It wouldn't give you gcc/clang-level underlining, etc.,
-> but would more or less preserve whitespace in the test definition.
-> Definitely not a proper solution, but perhaps "good enough".
-
-Yeah, maybe.
-
->> Another thing: When a test *ends* in a "&&" (common when you copy/paste
->> e.g. "test_cmp expect actual &&\n" from another test) it doesn't spot
->> it, but instead we get all the way to the eval/117, i.e. "broken
->> &&-chain or run-away HERE-DOC".
+> Thanks for your work on this!
 >
-> Yes, I recall considering that case and others, but decided that
-> that's probably outside the scope of the linter. In particular, a
-> trailing "&&" is a plain old syntax error, and the shell itself is
-> perfectly capable of diagnosing that problem along with all other
-> syntax errors, and you'll find out about syntax errors in your code
-> when the shell tries running it. The linter, on the other hand, is
-> meant to catch semantic problems (per the project's best-practices) in
-> what is assumed to be syntactically valid shell code. I suppose the
-> linter could be made to complain about this syntax error and others,
-> but it seems unnecessary to bloat it by duplicating behavior already
-> provided by the shell itself.
-
-FWIW I thought it would be nice because it sometimes takes 10s or
-whatever to get to the syntax error by running the test, but the linter
-can find it right away.
-
-> It is unfortunate, though, that the shell's "syntax error" output gets
-> swallowed by the eval/117 checker in test-lib.sh and turned into a
-> somewhat less useful message. I'm not quite sure how we can fix the
-> eval/117 checker to not swallow genuine syntax errors like that,
-> unless we perhaps specially recognize exit code 2 and, um, do
+> > Proposed Project
+> >
+> > Abstract
+> >
+> > Git has an old problem of duplicated implementations of some logic.
+> > For example, Git had at least 4 different implementations to format
+> > command output for different commands. The foremost aim of this
+> > project is to simplify codebase by getting rid of duplication of a
+> > similar logic and, as a result, simplify adding new functionality.
+> > The current task is to reuse ref-filter formatting logic to minimize
+> > code duplication and to have one unified interface to extract all
+> > needed data from the object and to print it properly.
+> >
+> > Previous Work
+> >
+> > Hariom Verma contributed(final report) tremendously towards =E2=80=9CUn=
+ifying
+> > Git=E2=80=99s format languages=E2=80=9D during his 2020 GSoC internship=
+. Hariom
+> > finished most of the formatting options and this will help me build on
+> > his work.  His work looks smart and understandable thus adding on his
+> > work will be easy. And also his blog is very fabulous, it=E2=80=99s a s=
+hooting
+> > point for me to start understanding the codebase very well. Hariom
+> > mentions in his report that 30 % of the log related tests are failing,
+> > he also mentions that the cause of tests failure is because of the
+> > missing mailmap logic and mbox/email commit format. Hariom also says
+> > it does not handle unknown formatting options. I plan to start with
+> > his advice about the cause of the failure of these tests and then
+> > intuitively refactor them into something cool.
+> >
+> > Summary of remaining tasks by Hariom
+> >
+> > -Around 30% log related tests are failing
+> >
+> > -Teach pretty-lib.{c,h} to handle incorrect formatting option
+> >
+> > -Email/MBoxed commit format needs work
+> >
+> > Some useful mailing lists links from Hariom
+>
+> It looks like the links don't appear on the text version that you sent.
+>
+> > Improvements to ref-filter
+> > Fix trailers atom bugs and improved tests
+> >
+> > Unify trailer logic for pretty.{c,h} and ref-filter.{c, h}
+> >
+> > Olga<olyatelezhnaya@gmail.com> has done great work in =E2=80=9CUnifying=
+ Git=E2=80=99s
+> > format languages=E2=80=9D during Outreachy Round 15 and continued even =
+after
+> > that [from 28-09-2017 to 04-04-2019]. Her work is mostly related to
+> > `cat-file` and `ref-filter`.
+> >
+> > She already did a pretty nice job in preparing ref-filter for more
+> > general usage of its formatting logic. It will give me the possibility
+> > to make the migration of pretty.c easier.
+>
+> There might be a bit of work by a recent GSoC student too.
+>
+> > The Plan
+> >
+> > My task is to look at how pretty formats are different from ref-filter
+> > formats. When some format is supported by the pretty formats but not
+> > by the ref-filter formats, and should prepare some patches to support
+> > the ref-filter format. I will basically build on Hariom=E2=80=99s previ=
+ous
+> > work
+> >
+> > Step 1:List down all the formats supported by the pretty format but
+> > are not supported by the ref-filter format
+>
+> How long do you think it would take? If it's not too long you might
+> want to do that now, so that perhaps you can better estimate how much
+> work is left.
+>
+> > Step 2:Read through different patches related pretty and ref-filter
+>
+> Maybe s/related/related to/
+>
+> > formats submitted by different contributors to get a solid and a
+> > thorough understanding of the pretty and ref-filter formats.
+> >
+> > Step 3:Understanding an implementation of one or two pretty formats,
+>
+> s/Understanding/Understand/
+>
+> > and then look at how it was implemented in ref-filter format. This is
+> > going to give me direction to refactor the remaining pretty formats
+> >
+> > Step 4(possible approach): Pick one format option at a time and
+> > convert it to use ref-filter option format
+>
+> Ok.
+>
+> > Estimated Timeline
+> >
+> > Time Period
+> >
+> >
+> >
+> > period: December 5,2022 - January 2, 2023
+> > Community bonding
+> > tasks
+> > -understanding all the logic of pretty.* and ref-filter.*
+> >
+> > (what functions are used and how all formatting process is going)
+> >
+> > -Working with mentors and identifying the best candidates to be convert=
+ed first.
+> >
+> > -Converting a couple of formatting options to reuse ref-filter formatti=
+ng logic.
+> >
+> > -Update Documentation.
+>
+> Updating the documentation is usually part of the patches that are
+> sent. So I don't think you need to make it a separate point.
+>
+> > period: December 25, 2022
+> >
+> > Christmas celebrations: Join my parents for celebrations
+> >
+> > period: January 1, 2023:
+> > New year=E2=80=99s day holiday:Join my parents for celebrations
+> >
+> > period: January 3 - February 3, 2023
+> > Coding Phase 1
+> > tasks
+> >
+> > -Add on Hariom=E2=80=99s work:Converting more formatting options to reu=
+se
+> > ref-filter formatting logic.
+> >
+> > -Finish his incomplete work
+> >
+> > -Update Documentation.
+> >
+> > -Possibly look at Olga=E2=80=99s work
+> >
+> > period: January 18, 2023: Cake cutting with my  friends
+> > My Birthday:cake cutting
+> >
+> > period:From January 6 - January 18, 2023:
+> > Semester Exams: I will be working for a few hours per day and always
+> > be available to reply to any communication
+> >
+> > period:February 3 - March 3, 2023
+> > Coding Phase 2
+> > tasks
+> > -Final touch-ups and bug fixes(if any)
+> >
+> > -Update Documentation
+> >
+> > -Wrapping up.
+>
+> Ok.
+>
+> > Blogging about Git
+> >
+> > I do love writing a lot however much I have not taken time to put out
+> > my personal opinions and thinking. Being an avid reader, I think it=E2=
+=80=99s
+> > now my time to start letting other people read what I write, to let
+> > people know what I think, what I am doing with my life. And guess
+> > what, I am super excited to start with Git.
+>
+> Great!
+>
+> > Availability
+> >
+> > I can easily devote 50 hours per week since my college just requires
+> > 15 hours per week. I plan even to work more extra hours for my
+> > internship tasks when time allows.
+>
+> I don't think Outreachy requires 50 hours of work per week. That seems
+> a bit too much if you also attend college.
+>
+> > Post Outreachy
+> >
+> > Apart from being an Outreachy intern, I plan to remain a member of git
+> > community even after my internship, because I believe there is more
+> > today even after the Outreachy internship
+>
+> I am not sure I properly understand this last sentence.
+>
+> > Here are some other things I=E2=80=99d like to do beyond Outreachy
+> >
+> > Mentor other students
+> >
+> > Doing code reviews for other contributors
+> >
+> > May be complete the work that I will have left pending after my interns=
+hip
+> >
+> > Keep learning from all of you...
+>
+> Great!
+>
+> > Experience with Open Source
+> >
+> > I have little  experience with open source, so I hope to learn a lot
+> > through my internship with Git from you all.
+> >
+> > Motivation
+> >
+> > Git being a world=E2=80=99s best developer version control system, I fe=
+el
+> > overjoyed that even my little first patch was accepted. The community
+> > is very welcoming, the people there answer questions very first and
+> > this turns everything overwhelming to a simple process
+> >
+> > Closing remarks (Optional)
+> >
+> > I am a consistent and passionate learner. Even if solving a problem
+> > may look tricky to me, I just give it all my 100% time and think of
+> > 1000s of ways to approach it. I know I do not have the required
+> > expertise to begin working with a skilled team like Git but I believe
+> > in learning slowly by slowly until I will make it to the peak.
+> >
+> > I hope you consider and give me a chance to work with git. It=E2=80=99s=
+ a
+> > great hope I have that this opportunity is bringing me closer to my
+> > dreams. Thanks for your consideration.
+>
+> Great, thanks!
+> Christian.
