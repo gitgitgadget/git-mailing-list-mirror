@@ -2,299 +2,192 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 269FBC38A2D
-	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 03:17:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EA00C38A2D
+	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 04:06:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231132AbiJYDRz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 24 Oct 2022 23:17:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51764 "EHLO
+        id S230194AbiJYEGH convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 25 Oct 2022 00:06:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230404AbiJYDRt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Oct 2022 23:17:49 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC77987FAA
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 20:17:48 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id v11so7522181wmd.1
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 20:17:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PXAbPnpG9/e7RPm2f7J+QrCtJK4rPtZwk5sbBdfnomw=;
-        b=ietbcc+MfDeezRVo68ZaNABwSELBeMLO7QRFojt0GTcphfdLApjkXt4chP0JqQSM3V
-         H8gthk6Zqc0g+n33Hq6r7Sh/BovWD5Io7FwMoc2YpjQFFAmTgmt8j6WSq+h4HecVlTem
-         5qdgTxqEz6SLZG4etJ4ZmYhtH8kL3ciXsyUCpGUD9ElOjt2OaY9yiVyCEJPQgSibEsqI
-         h395kdPLDJ52619MfAboh4J9+WUpdGY80Q2drEOVZsum8SgWAXajAht8F8LtJlBw40YQ
-         mkVXEdtlTXbtkbC/h6tewDyi5GcXvQMSnF2vpWhokbdb9XWtj7Mg4sjukMYsssKcABAU
-         tkqw==
+        with ESMTP id S230505AbiJYEGC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2022 00:06:02 -0400
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DB37DFF7
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 21:05:58 -0700 (PDT)
+Received: by mail-il1-f180.google.com with SMTP id 7so3297471ilg.11
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 21:05:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PXAbPnpG9/e7RPm2f7J+QrCtJK4rPtZwk5sbBdfnomw=;
-        b=tnPkGNdNx1ywdUdWLfuNfUCz1mrGsdaeJMos/fi9u5YJ8diLUpuLNUcAqVP8S9TpKk
-         Wtpflegiz5VNUSXKryEjjCF2m/W3t82n8UJ/JClHSQ3udF/NclSRw2UndzBp4u4/fMPT
-         VgmUoP0sxd6/pnA3ib4gHs2wjrUC5M7sznL8YGOrPcpVzduY1WXqhWdqdZQolsq8Wmfp
-         S1QSdmw1n4qbT9x9S894MNMpfas+2Ax8gj9g2tYmBEhn8ssdiOwCtBaFXBjczt4yMG4J
-         fZ615cphGFTre0hsaX8Qj7pVunEVzqNMujtVKLNtCfXDwNEunGkdhT+5jYw/fHOjAxzD
-         9/sQ==
-X-Gm-Message-State: ACrzQf2B45Dd0OMEOb+aP6hayGzKKB2/+ofYy5XrXPmoH0jUWcyVoDgV
-        r+BaIWN/L+yh0z699r970bEnSd5tO6o=
-X-Google-Smtp-Source: AMsMyM4J+rFRzZKSJX+1Dy0l7EnYTO+oEmzQpnzb/w2vDrf8H1F0v3xZQ3fkR6idFPjfJUgO2/+q7A==
-X-Received: by 2002:a05:600c:88a:b0:3c6:cc34:abf with SMTP id l10-20020a05600c088a00b003c6cc340abfmr43226681wmp.147.1666667867182;
-        Mon, 24 Oct 2022 20:17:47 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h6-20020adfa4c6000000b002206203ed3dsm1265319wrb.29.2022.10.24.20.17.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Oct 2022 20:17:46 -0700 (PDT)
-Message-Id: <ad43adab435e9fadd7b896928e234a38c9bb16a6.1666667864.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1369.v2.git.git.1666667864.gitgitgadget@gmail.com>
-References: <pull.1369.git.git.1666623639.gitgitgadget@gmail.com>
-        <pull.1369.v2.git.git.1666667864.gitgitgadget@gmail.com>
-From:   "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 25 Oct 2022 03:17:44 +0000
-Subject: [PATCH v2 2/2] fsck: document msg-id
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=kK/LjLOp38Fsam+QKr2bNhm8OzqCEqKndM5MJb7goMo=;
+        b=KL6YE5rtIyECYwmIiidmYQ+Y2p9AjexxUvLA1mnjbg/86Cz3bA1eSg0r4I309sgfsZ
+         +OXVZ60t1tkIN1DbYmFPJH5FI8U/6W9O6vG2b9vUWK8xnsqOUwP9EJLjJXwfonca0sNx
+         7bGYLZDtInyBIf0N5Bpcrfd2+gJEPxQ8b9LTlaq3gchKXEqLhBMZOuE8T3rvH7NnXdhY
+         go9R+F0pjOsiA95mpQiIT1uWod7JQ1RmNvuKkT+clqzyPOkeI35mRMcVoPcQIh4HnPx2
+         vhFNdDcM8yhItjU3S+EgcTpsN89iF5pF4mlW0jG4bxShL9yxl9JVD4/+TXwxtUX1qZl2
+         Qmvw==
+X-Gm-Message-State: ACrzQf0u0NcEHhH1fXcPOUsFCIHCqs+tZ52OSIOQHpE8MSkaCvb6Ip8I
+        3sNPLD+74SUgqGIvmBxXE2JasycZK1RW8ENASLA=
+X-Google-Smtp-Source: AMsMyM5y2qlIRaW3hJqgiiXEI4gO6CBpaSrjSnAI0GonrPabtI6nW7DmBNaZzNfaqwMPFW2H9KMB6Gg5w9k9Qj5Mdng=
+X-Received: by 2002:a05:6e02:b2f:b0:2fa:1c95:5c98 with SMTP id
+ e15-20020a056e020b2f00b002fa1c955c98mr23884507ilu.249.1666670757344; Mon, 24
+ Oct 2022 21:05:57 -0700 (PDT)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     John Cai <johncai86@gmail.com>, John Cai <johncai86@gmail.com>
+References: <pull.1324.git.git.1663023888412.gitgitgadget@gmail.com>
+ <pull.1324.v2.git.git.1663041707260.gitgitgadget@gmail.com> <221024.865yg9ecsx.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221024.865yg9ecsx.gmgdl@evledraar.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 25 Oct 2022 00:05:46 -0400
+Message-ID: <CAPig+cT=cWYT6kicNWT+6RxfiKKMyVz72H3_9kwkF-f4Vuoe1w@mail.gmail.com>
+Subject: Re: chainlint.pl's new "deparse" output (was: [PATCH v2] [...])
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: John Cai <johncai86@gmail.com>
+On Mon, Oct 24, 2022 at 6:28 AM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> On Tue, Sep 13 2022, Eric Sunshine via GitGitGadget wrote:
+> > When `chainlint.pl` detects problems in a test definition, it emits the
+> > test definition with "?!FOO?!" annotations highlighting the problems it
+> > discovered. For instance, given this problematic test:
+> >
+> >     test_expect_success 'discombobulate frobnitz' '
+> >         (echo balderdash; echo gnabgib) >expect &&
+> >     '
+> >
+> > chainlint.pl will output:
+> >
+> >     # chainlint: t1234-confusing.sh
+> >     # chainlint: discombobulate frobnitz
+> >     (echo balderdash ; ?!AMP?! echo gnabgib) >expect &&
+>
+> I've noticed that chainlint.pl is better in some ways, but that the
+> "deparse" output tends to be quite jarring. but I can't find version of
+> it that emitted this "will output" here.
 
-The documentation lacks mention of specific <msg-id> that are supported.
-While git-help --config will display a list of these options, often
-developers' first instinct is to consult the git docs to find valid
-config values.
+There is no such version.
 
-Add a list of fsck error messages, and link to it from the git-fsck
-documentation.
+> Before this patch, or fb41727b7ed (t: retire unused chainlint.sed,
+> 2022-09-01) we'd emit this instead:
+>
+>         ( echo balderdash ; ?!AMP?! echo gnabgib ) > expect &&
+>
+> The difference is in whitespace, e.g. "( ", not "(", "> " not ">".  This
+> is just because it's emitting "raw" tokenizer tokens.
+>
+> Was there maybe some local version where the whitespace munging you're
+> doing against $checked was different & this commit message was left
+> over?
 
-Signed-off-by: John Cai <johncai86@gmail.com>
-Helped-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/config/fsck.txt |   4 +
- Documentation/fsck-msgids.txt | 149 ++++++++++++++++++++++++++++++++++
- Documentation/git-fsck.txt    |  12 +++
- fsck.h                        |   6 ++
- 4 files changed, 171 insertions(+)
- create mode 100644 Documentation/fsck-msgids.txt
+No, I botched the commit message. I typed the example test in by hand
+and then, also by hand, typed in the example output, forgetting to
+insert the spaces which you correctly noted are missing from the
+example output. I should have run the example test through
+chainlint.pl and copy/pasted its output into the commit message. (I
+did, in fact, run the sample test through chanlint.pl _after_
+hand-typing the example output, and compared them by eye but missed
+most of the whitespace differences.)
 
-diff --git a/Documentation/config/fsck.txt b/Documentation/config/fsck.txt
-index 450e8c38e34..a3c865df567 100644
---- a/Documentation/config/fsck.txt
-+++ b/Documentation/config/fsck.txt
-@@ -35,6 +35,10 @@ allow new instances of the same breakages go unnoticed.
- Setting an unknown `fsck.<msg-id>` value will cause fsck to die, but
- doing the same for `receive.fsck.<msg-id>` and `fetch.fsck.<msg-id>`
- will only cause git to warn.
-++
-+See `Fsck Messages` section of linkgit:git-fsck[1] for supported
-+values of `<msg-id>`.
-+
- 
- fsck.skipList::
- 	The path to a list of object names (i.e. one unabbreviated SHA-1 per
-diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
-new file mode 100644
-index 00000000000..08e19bac8ad
---- /dev/null
-+++ b/Documentation/fsck-msgids.txt
-@@ -0,0 +1,149 @@
-+`badDate`::
-+	(ERROR) Invalid date format in an author/committer line.
-+
-+`badDateOverflow`::
-+	(ERROR) Invalid date value in an author/committer line.
-+
-+`badEmail`::
-+	(ERROR) Invalid email format in an author/committer line.
-+
-+`badFilemode`::
-+	(INFO) A tree contains a bad filemode entry.
-+
-+`badName`::
-+	(ERROR) An author/committer name is empty.
-+
-+`badObjectSha1`::
-+	(ERROR) An object has a bad sha1.
-+
-+`badParentSha1`::
-+	(ERROR) A commit object has a bad parent sha1.
-+
-+`badTagName`::
-+	(INFO) A tag has an invalid format.
-+
-+`badTimezone`::
-+	(ERROR) Found an invalid time zone in an author/committer line.
-+
-+`badTree`::
-+	(ERROR) A tree cannot be parsed.
-+
-+`badTreeSha1`::
-+	(ERROR) A tree has an invalid format.
-+
-+`badType`::
-+	(ERROR) Found an invalid object type.
-+
-+`duplicateEntries`::
-+	(ERROR) A tree contains duplicate file entries.
-+
-+`emptyName`::
-+	(WARN) A path contains an empty name.
-+
-+`extraHeaderEntry`::
-+	(IGNORE) Extra headers found after `tagger`.
-+
-+`fullPathName`::
-+	(WARN) A path contains the full path starting with "/".
-+
-+`gitAttributesSymlink`::
-+	(INFO) `.gitattributes` is a symlink.
-+
-+`gitignoreSymlink`::
-+	(INFO) `.gitignore` is a symlink.
-+
-+`gitmodulesBlob`::
-+	(ERROR) A non-blob found at `.gitmodules`.
-+
-+`gitmodulesMissing`::
-+	(ERROR) Unable to read `.gitmodules` blob.
-+
-+`gitmodulesName`::
-+	(ERROR) A submodule name is invalid.
-+
-+`gitmodulesParse`::
-+	(INFO) Could not parse `.gitmodules` blob.
-+
-+`gitmodulesLarge`;
-+	(ERROR) `.gitmodules` blob is too large to parse.
-+
-+`gitmodulesPath`::
-+	(ERROR) `.gitmodules` path is invalid.
-+
-+`gitmodulesSymlink`::
-+	(ERROR) `.gitmodules` is a symlink.
-+
-+`gitmodulesUpdate`::
-+	(ERROR) Found an invalid submodule update setting.
-+
-+`gitmodulesUrl`::
-+	(ERROR) Found an invalid submodule url.
-+
-+`hasDot`::
-+	(WARN) A tree contains an entry named `.`.
-+
-+`hasDotdot`::
-+	(WARN) A tree contains an entry named `..`.
-+
-+`hasDotgit`::
-+	(WARN) A tree contains an entry named `.git`.
-+
-+`mailmapSymlink`::
-+	(INFO) `.mailmap` is a symlink.
-+
-+`missingAuthor`::
-+	(ERROR) Author is missing.
-+
-+`missingCommitter`::
-+	(ERROR) Committer is missing.
-+
-+`missingEmail`::
-+	(ERROR) Email is missing in an author/committer line.
-+
-+`missingNameBeforeEmail`::
-+	(ERROR) Missing name before an email in an author/committer line.
-+
-+`missingObject`::
-+	(ERROR) Missing `object` line in tag object.
-+
-+`missingSpaceBeforeDate`::
-+	(ERROR) Missing space before date in an author/committer line.
-+
-+`missingSpaceBeforeEmail`::
-+	(ERROR) Missing space before the email in author/committer line.
-+
-+`missingTag`::
-+	(ERROR) Unexpected end after `type` line in a tag object.
-+
-+`missingTagEntry`::
-+	(ERROR) Missing `tag` line in a tag object.
-+
-+`missingTypeEntry`::
-+	(ERROR) Missing `type` line in a tag object.
-+
-+`multipleAuthors`::
-+	(ERROR) Multiple author lines found in a commit.
-+
-+`nulInCommit`::
-+	(WARN) Found a NUL byte in the commit object body.
-+
-+`nulInHeader`::
-+	(FATAL) NUL byte exists in the object header.
-+
-+`nulInSha1`::
-+	(WARN) Tree contains entries pointing to a null sha1.
-+
-+`treeNotSorted`::
-+	(ERROR) A tree is not properly sorted.
-+
-+`unknownType`::
-+	(ERROR) Found an unknown object type.
-+
-+`unterminatedHeader`::
-+	(FATAL) Missing end-of-line in the object header.
-+
-+`zeroPaddingDate`::
-+	(ERROR) Found a zero padded date in an author/commiter line.
-+
-+`zeroPaddedFilemode`::
-+	(WARN) Found a zero padded filemode in a tree.
-diff --git a/Documentation/git-fsck.txt b/Documentation/git-fsck.txt
-index 29318ea957e..b6a0f8a085c 100644
---- a/Documentation/git-fsck.txt
-+++ b/Documentation/git-fsck.txt
-@@ -152,6 +152,18 @@ hash mismatch <object>::
- 	object database value.
- 	This indicates a serious data integrity problem.
- 
-+
-+FSCK MESSAGES
-+-------------
-+
-+The following lists the types of errors `git fsck` detects and what
-+each error means, with their default severity.  The severity of the
-+error, other than those that are marked as "(FATAL)", can be tweaked
-+by setting the corresponding `fsck.<msg-id>` configuration variable.
-+
-+include::fsck-msgids.txt[]
-+
-+
- Environment Variables
- ---------------------
- 
-diff --git a/fsck.h b/fsck.h
-index 7d99f6ea337..8355fd4c8f5 100644
---- a/fsck.h
-+++ b/fsck.h
-@@ -13,6 +13,12 @@ enum fsck_msg_type {
- 	FSCK_WARN,
- };
- 
-+/*
-+ * Documentation/fsck-msgids.txt documents these; when
-+ * modifying this list in any way, make sure to keep the
-+ * two in sync.
-+ */
-+
- #define FOREACH_FSCK_MSG_ID(FUNC) \
- 	/* fatal errors */ \
- 	FUNC(NUL_IN_HEADER, FATAL) \
--- 
-gitgitgadget
+> Anyway, that sort of an aside, but I did go hunting for the version with slightly better whitespace output.
+
+Sorry, my fault for a faulty commit message.
+
+> But to get to the actual point: I've found the new chainlint.pl output
+> harder to read sometimes, because it goes through this parse & deparse
+> state, so you're preserving "\n"''s.
+>
+> Whereas the old "sed" output also sucked because we couldn't note where
+> the issue was, but we spewed out the test source verbatim.
+
+Somewhat verbatim. chainlint.sed did swallow blank lines and comment
+lines, and it folded multi-line strings into one-line strings.
+
+> But it seem to me that we could get much better output if the
+> ShellParser/Lexer etc. just kept enough state to emit "startcol",
+> "endcol" and "linenum" along with every token, or something like that
+> (you might want offsets from the beginning of the parsed source
+> instead).
+>
+> Then when it has errors it could emit the actual source passed in, and
+> even do gcc/clang-style underlining.
+>
+> I poked at getting that working for a few minutes, but quickly saw that
+> someone more familiar with the code could do it much quicker, so
+> consider the above a feature request :)
+
+Yes, there should be better integration between the lexer and parser
+for emitting errors. Unfortunately, it didn't occur to me during
+implementation, and I only thought about it when Peff mentioned the
+difficult-to-read output in a different part of this discussion.
+
+An alternative, somewhat hacky approach, might be to simply retain
+whitespace as tokens in the token stream. That would require less
+retrofitting of the lexer, though perhaps more complexity/ugliness in
+the parser. It wouldn't give you gcc/clang-level underlining, etc.,
+but would more or less preserve whitespace in the test definition.
+Definitely not a proper solution, but perhaps "good enough".
+
+> Another thing: When a test *ends* in a "&&" (common when you copy/paste
+> e.g. "test_cmp expect actual &&\n" from another test) it doesn't spot
+> it, but instead we get all the way to the eval/117, i.e. "broken
+> &&-chain or run-away HERE-DOC".
+
+Yes, I recall considering that case and others, but decided that
+that's probably outside the scope of the linter. In particular, a
+trailing "&&" is a plain old syntax error, and the shell itself is
+perfectly capable of diagnosing that problem along with all other
+syntax errors, and you'll find out about syntax errors in your code
+when the shell tries running it. The linter, on the other hand, is
+meant to catch semantic problems (per the project's best-practices) in
+what is assumed to be syntactically valid shell code. I suppose the
+linter could be made to complain about this syntax error and others,
+but it seems unnecessary to bloat it by duplicating behavior already
+provided by the shell itself.
+
+It is unfortunate, though, that the shell's "syntax error" output gets
+swallowed by the eval/117 checker in test-lib.sh and turned into a
+somewhat less useful message. I'm not quite sure how we can fix the
+eval/117 checker to not swallow genuine syntax errors like that,
+unless we perhaps specially recognize exit code 2 and, um, do
+something...
+
+> More feature requests (because for some reason you've got infinite time,
+> but I don't :): This software is really close to being able to also
+> change the tests on the fly. If you could define callbacks where you
+> could change subsets of the parse stream, say a single command like:
+>
+>         grep some.*rx file
+>
+> So we could rewrite that into:
+>
+>         if ! grep some.*rx foo
+>         then
+>                 cat foo &&
+>                 false
+>         fi
+>
+> And other interesting auto-fixups and borderline coccinelle
+> transformations, e.g. changing our various:
+>
+>         test "$(git ...) = "" &&
+>
+> Into:
+>
+>         git ... >out &&
+>         test_must_be_empty out
+
+The lexer/parser implemented for chainlint.pl might indeed be useful
+for such transformations. I could imagine a tool which someone runs on
+an old-style test script to help update it to modern conventions,
+after which the person would, of course, carefully check all the
+applied transformations. That's not something we'd necessarily want to
+do project-wide, but might be handy when already working on a test
+script for some other reason.
