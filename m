@@ -2,86 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 070C7C04A95
-	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 13:50:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59EDDC04A95
+	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 15:36:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231459AbiJYNuW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Oct 2022 09:50:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55026 "EHLO
+        id S231946AbiJYPg0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Oct 2022 11:36:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231230AbiJYNuU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2022 09:50:20 -0400
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DA922D742
-        for <git@vger.kernel.org>; Tue, 25 Oct 2022 06:50:18 -0700 (PDT)
-Received: by mail-pg1-x52e.google.com with SMTP id 78so11483050pgb.13
-        for <git@vger.kernel.org>; Tue, 25 Oct 2022 06:50:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pXzXgjqSnYC7HAFsXnm7gMhdM2Bu/sUwDnZEhVnnmnA=;
-        b=m8JQhrt7PkUSM9nuTALw9JDrvf+7A25oO7sGrOsmRJcnjpEuiXuMk5glC85B+49rpG
-         kfIcfpe6rFrDTd47jxtVuVyCay6N3GPhjw8ZB4Y7SZRaYs0mcpjvVri+1TtSn4nkQXRE
-         uGvxqMRke8l3gMrGkpfGacpyVSKGXUZTFlehFiduCH6miIjBBDyahY9F2+5KIhCbvcbM
-         P7HaH68UQxfK6223gLSi4IXg9/c2M8fnYXaUXclPY3GoWc3ZLl1oXsqd2ZNu9VzIlZOe
-         jDpmVhDdcNMqJjd1qBVNZT17rJrTlPir3Yof5DhLQF3h4STg4ZQ9NKu7P3/chBJnqNHL
-         127Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pXzXgjqSnYC7HAFsXnm7gMhdM2Bu/sUwDnZEhVnnmnA=;
-        b=I1Taw7wtVS3JAywDBtNz/szMHrMvGxqxGz23bxrFLAjPTBkAfwAnrTOJoHCLtG4njI
-         Afrthi+pGjIazeaP776TFIdTK6Ezej/JEEVjhMXs49kmZGimoTOVqwsbSicJnmYkCaWb
-         OafNq33XncVzmPlU8FRPEeLRoUgzdh/mDTS0VwmuGLAmdPkYoGAC10GbX4IelcI0sU/f
-         lFDZeSDSM03Rqbfdy/nErAYcyO2dQFWtnd81EL5klvOhIik4xVH1uzjVtS7xh3qIrfoP
-         BxNwtS41MmNl3N/Suk4qcPABbtdzaMgRn3/vcZbR0Y+II4FtJrH4r9ZlalXgoBebztM8
-         coQA==
-X-Gm-Message-State: ACrzQf1b2z2q5Q6LneHwuosohE+4dBdLzqVlH+y9iyFTc/MzeGYZgcxr
-        O0X2yZAp2ijCQIUVh5y3UDGH2nlfHnk=
-X-Google-Smtp-Source: AMsMyM43g4/DrHkqPikfJlFfzDgnW8S2XJ9xSBuBWOUADateobsh4Wsaj22LrZGYti9+L1pVlwVVuA==
-X-Received: by 2002:a63:485f:0:b0:458:764a:2224 with SMTP id x31-20020a63485f000000b00458764a2224mr32459772pgk.620.1666705817537;
-        Tue, 25 Oct 2022 06:50:17 -0700 (PDT)
-Received: from localhost ([2001:ee0:500b:6370:da47:cda5:dbd5:6e77])
-        by smtp.gmail.com with ESMTPSA id u16-20020a170903125000b00178ac4e70dcsm1254342plh.185.2022.10.25.06.50.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Oct 2022 06:50:17 -0700 (PDT)
-Date:   Tue, 25 Oct 2022 20:50:13 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
-Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-        Hariom verma <hariom18599@gmail.com>
-Subject: Re: [OUTREACHY] Unify ref-filter formats with other --pretty
- formats[Draft proposal]
-Message-ID: <Y1fplaDdGTvfRPdO@danh.dev>
-References: <CA+PPyiGtoO4HYA+Z8_te5d0oBLYAxcXeZdTH17AJYaoZ32ObfQ@mail.gmail.com>
- <CAP8UFD0J_vWkMjZAm3=LeS3KvZ3xzpkFXRWHLisuN7AbUui+BQ@mail.gmail.com>
- <CA+PPyiH1GpHePrG7G7oyNJR_LD76A4qKDG=gnHcVLW_qj-DYqA@mail.gmail.com>
+        with ESMTP id S232351AbiJYPgX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2022 11:36:23 -0400
+Received: from pb-smtp21.pobox.com (pb-smtp21.pobox.com [173.228.157.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3655316EA2E
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 08:36:21 -0700 (PDT)
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7F6A01BE9D6;
+        Tue, 25 Oct 2022 11:36:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=HiQ2CncR8LxYFqeIl+VK8Pj4A6WT1NcUW6tZz8
+        MRm90=; b=fbMIJ+Xw/+4363/toh51GSjlWLu5RpBAz9S/jLWCrf4ZLH6et9Q8pf
+        F1XQv5fzByHjoeOHiIMDOnpGliWKebbd7K9/Ye8n0VhwWN7InaNg9wTWdFw2CW8c
+        KzMYGYlLoynYiv4pUUio/sTOa4LfeDSSRnl/WEEeAnoaT4ny0/niU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 77FE81BE9D5;
+        Tue, 25 Oct 2022 11:36:18 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 342B71BE9D4;
+        Tue, 25 Oct 2022 11:36:15 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: Re: [PATCH v4 0/8] Trace2 timers and counters and some cleanup
+References: <pull.1373.v3.git.1666290489.gitgitgadget@gmail.com>
+        <pull.1373.v4.git.1666618868.gitgitgadget@gmail.com>
+        <0e58bd35-4f40-ce9e-1088-f7c004527aee@github.com>
+Date:   Tue, 25 Oct 2022 08:36:13 -0700
+In-Reply-To: <0e58bd35-4f40-ce9e-1088-f7c004527aee@github.com> (Derrick
+        Stolee's message of "Tue, 25 Oct 2022 08:27:20 -0400")
+Message-ID: <xmqq5yg7q5jm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+PPyiH1GpHePrG7G7oyNJR_LD76A4qKDG=gnHcVLW_qj-DYqA@mail.gmail.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: C2FA870C-547A-11ED-BC4C-B31D44D1D7AA-77302942!pb-smtp21.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-10-25 13:28:57+0300, NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com> wrote:
-> >> Step 2:Read through different patches related pretty and ref-filter
-> > Maybe s/related/related to/
-> 
-> I seem not to understand this comment, may be give me some light about it
+Derrick Stolee <derrickstolee@github.com> writes:
 
-Apply s/related/related to/ filter (by ed (editor)/sed (stream editor)/vi (visual))
-on top of previous (deleted by you, restored by me) comments.
+> On 10/24/2022 9:40 AM, Jeff Hostetler via GitGitGadget wrote:
+>> Here is version 4 of this series to add timers and counters to Trace2.
+>> 
+>> Changes since V3:
+>> 
+>>  * Fixed typo in the new thread-name documentation.
+>>  * Use a simpler NS_TO_SEC() macro for reporting the timer values.
+>> 
+>> Jeff Hostetler (8):
+>>   trace2: use size_t alloc,nr_open_regions in tr2tls_thread_ctx
+>>   tr2tls: clarify TLS terminology
+>>   api-trace2.txt: elminate section describing the public trace2 API
+>>   trace2: rename the thread_name argument to trace2_thread_start
+>>   trace2: improve thread-name documentation in the thread-context
+>>   trace2: convert ctx.thread_name from strbuf to pointer
+>>   trace2: add stopwatch timers
+>>   trace2: add global counter mechanism
+>
+> I re-read the series as well as looked at the range-diffs for the
+> previous two versions. I continue to think this is a high-quality
+> series and I've used it multiple times in my personal development
+> workflow to investigate certain performance things. I'm looking
+> forward to this being merged so we can all use it.
 
-Which will yield:
+I agree with your assessment.  Let's move it forward.
 
-> >> Step 2:Read through different patches related to pretty and ref-filter
-
-IOW, the comment asked you to change the text with that filter.
-
--- 
-Danh
+Thanks, all.
