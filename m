@@ -2,122 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CD0BC38A2D
-	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 10:01:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D554C04A95
+	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 10:03:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231164AbiJYKBx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Oct 2022 06:01:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33312 "EHLO
+        id S231528AbiJYKDc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Oct 2022 06:03:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52072 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231892AbiJYJ7t (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2022 05:59:49 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B48E4BBF24
-        for <git@vger.kernel.org>; Tue, 25 Oct 2022 02:54:27 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id g12so7100012wrs.10
-        for <git@vger.kernel.org>; Tue, 25 Oct 2022 02:54:27 -0700 (PDT)
+        with ESMTP id S232054AbiJYKDA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2022 06:03:00 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3448EDBBCB
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 02:55:41 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id g12so7104438wrs.10
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 02:55:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:user-agent:mime-version:date:message-id:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2zQ3aCYrWpCSDXCvexSOCtBHE6Wyo+gLuJexUzuyfAo=;
-        b=cznlHZVis1vDAuu5YW2B81CRI+YJWWQs/Q+96ZA4VXem4mYlTgniP0NxXwRWtxc9HP
-         OyYKGWdrJjKMeR/99qi6Q7SiAzR+xGqf1yXXtSYrtguNyfwRgaaRkXd5x6NDKqoKL6e5
-         esp+kjazfzNMmkjeBggem7+qtUsw+AUQ7zlwRlGjpz/Uol0Oi3OODYZkl9dbzoVPclsN
-         MI7WQFg8UGNO8+Z+qfW/OfEIxEh5YpYP7ilPYuNgo7N1lt9px1ZHrVEAQcIGHUWzBkcd
-         slY7MMZxb3RkbwQMKjxxSVi05UVaC6q2P9QMYmig2s81FeGc95DUQZKG+6IBbZd3/Vix
-         6CpA==
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=eu3nFRBuq2qzFKGiA31mMNdH7U37WBlyoF0eKz8QDGw=;
+        b=queTDyUulXQilXDogOja68brBXWnR4cZW7RtjneqcMkHNAjC+KB8619+F4ibCzOYnA
+         Nfpcgozc+zkyHyhT7FTx7wl2F0NuFLZr6ND31YpkEnlXGJgCghnZRm0qVZvY/4Mj6SJz
+         Er6I+1zUlj4MH7ygXff9GhmzkzdXTNnJ2rwUPWAXhXUr/r6qn2Y6oDqSiy6HIJxTPUYF
+         Uzciqv7T/QFG2g0RMkTNj52EykelENmscz5cl9hjYWoAZWNmcDJM9aBfOkP+xUQ9RjRL
+         IDfNFsZLJQu+EL+H7jWKk5QVxQ7Xd+j0PrOjopUb+9oVrnHJVHapNo81+n8XXnD2LSUA
+         UnYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:user-agent:mime-version:date:message-id:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2zQ3aCYrWpCSDXCvexSOCtBHE6Wyo+gLuJexUzuyfAo=;
-        b=JtKcJdBS5D+vUAjcUmmfGdpX6YTZ5o/qftHTfPfKnEbHdWeRWB2TioHu6KALtHj8lL
-         OrAoRyl8EPybeQV0RhI1h/fB8kzYD42SIJkOTLD3+fIT7l5oD3n+FqfMnrk9/PcB5RVy
-         HgwSQHQ6EvvIl0CnDP/yTots/mx4ywaen1pi0nn72YA2kBBVzrcz1SyaAKbX6ZF57Pt4
-         E6jCs/XyfzkHqY4qDcVj6piU+nGpmVK5fuHN3DX8o0OmifRIADin37lNNOChcHXOaIID
-         3jIK8D1MUnEWKT+N7CaU5+C9qe6qkTLJ/czfjbuJaVTXqHJudpS8HeedQWrH3WFtkY5N
-         PDxQ==
-X-Gm-Message-State: ACrzQf3W2ZltaoNiDKxL3fhJH+Y8MzO3fYhhswtgVdZGX6rNCau4lcri
-        uQXskbTyHd1ABrnL4qbyTrY=
-X-Google-Smtp-Source: AMsMyM4FPvSmEi3paQXZvtZHGV8bV2MhErJWO+KWpXGZ5dpsEE7FpItzSeCSrY7ZCOxg+u1ibUeBgg==
-X-Received: by 2002:a5d:5a8c:0:b0:22c:bc97:6fe2 with SMTP id bp12-20020a5d5a8c000000b0022cbc976fe2mr24133832wrb.640.1666691666051;
-        Tue, 25 Oct 2022 02:54:26 -0700 (PDT)
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eu3nFRBuq2qzFKGiA31mMNdH7U37WBlyoF0eKz8QDGw=;
+        b=mr8PVvaDXC2GruK+6T2ST8UPTHdW+NrADKFtV4EyydaSkkS5bsVBRYWfdZAc+7gWSB
+         aYRIWl4CcCI4f57dGjRlMcIFNGqPFdI2fAFar0Mr+ZMkc8HyhmMWjtPoovNT120aYTt8
+         WuMyUuFQJaeHOMd4qhmQqZONBvxyUb7QbkLMfcoSKlvxoeOa0tDD9I272R+TU0ithA0n
+         TnBvRLkCR0q+8oAvjVxOrzf/Jr+y/1vdatl5dWgaFEnCjQyvZ5S2Mu0zV9LlnYDJhwWw
+         5KgQN0g6YtSgY8Z1xOV0LgkVIlD7aJtYGbyKnsDiCGgqRTAJBiFXYCQj94skqEhNHTiU
+         arvw==
+X-Gm-Message-State: ACrzQf2GGBUcTHOkYbt/uiFt3YuTSamGXjsdDXT7/rrqeYrsb9h2ZKaQ
+        km21IBA3JZWn2wsBjfXEGQI=
+X-Google-Smtp-Source: AMsMyM72rTI6C36jSAu/Dh5nATnLuR4R3xDfN1lN7Tcx9YFc2jWSHPgKQjdU2WWS15oHkQanw2zWoQ==
+X-Received: by 2002:a05:6000:184d:b0:22f:4ef4:47a7 with SMTP id c13-20020a056000184d00b0022f4ef447a7mr24515754wri.563.1666691740116;
+        Tue, 25 Oct 2022 02:55:40 -0700 (PDT)
 Received: from [192.168.1.74] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id j12-20020a05600c410c00b003c83465ccbfsm10284599wmi.35.2022.10.25.02.54.25
+        by smtp.gmail.com with ESMTPSA id k3-20020a5d6283000000b0023677e1157fsm2041799wru.56.2022.10.25.02.55.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Oct 2022 02:54:25 -0700 (PDT)
+        Tue, 25 Oct 2022 02:55:39 -0700 (PDT)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <cb034574-8753-d641-c166-ae2c34b1c589@dunelm.org.uk>
-Date:   Tue, 25 Oct 2022 10:54:24 +0100
+Message-ID: <69b91e29-af50-81db-8173-8b42a76ae1fb@dunelm.org.uk>
+Date:   Tue, 25 Oct 2022 10:55:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.0
 Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [PATCH 2/3] config: require at least one digit when parsing
  numbers
-To:     Junio C Hamano <gitster@pobox.com>,
+Content-Language: en-US
+To:     Jeff King <peff@peff.net>,
         Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 References: <pull.1389.git.1666359915.gitgitgadget@gmail.com>
  <cd753602e48a2faa0d59edca2f6fab0fe753f0f6.1666359915.git.gitgitgadget@gmail.com>
- <xmqqwn8tjazb.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqwn8tjazb.fsf@gitster.g>
+ <Y1L+Qv+cs1bjqjK9@coredump.intra.peff.net>
+In-Reply-To: <Y1L+Qv+cs1bjqjK9@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
+Hi Peff
 
-On 21/10/2022 19:19, Junio C Hamano wrote:
-> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> @@ -1167,6 +1167,10 @@ static int git_parse_signed(const char *value, intmax_t *ret, intmax_t max)
->>   		val = strtoimax(value, &end, 0);
->>   		if (errno == ERANGE)
->>   			return 0;
->> +		if (end == value) {
->> +			errno = EINVAL;
->> +			return 0;
->> +		}
+On 21/10/2022 21:17, Jeff King wrote:
+> On Fri, Oct 21, 2022 at 01:45:13PM +0000, Phillip Wood via GitGitGadget wrote:
 > 
-> This means well, but doesn't strto*() family of functions silently
-> ignore leading blanks, e.g.
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> If the input to strtoimax() or strtoumax() does not contain any digits
+>> then they return zero and set `end` to point to the start of the input
+>> string.  git_parse_[un]signed() do not check `end` and so fail to return
+>> an error and instead return a value of zero if the input string is a
+>> valid units factor without any digits (e.g "k").
 > 
->      l = strtol("  432k", &end, 0);
-> 	... l == 432, *end = k ...
+> This one is easier to test than the last. Just:
 > 
-> If you really want to reject a string with no number before the
-> optional unit, end at this point may not match value.  With " k" as
-> input, value would point at the space at the beginning, and end
-> would point at 'k'.
+>    git config --int --default='m' some.key
 
-It only skips the space if it sees a digit, if it does not find anything 
-to convert it sets *end = start. Using peff's trick for testing this 
-patch we can see there is no change in behavior if there is leading 
-whitespace
-
-$ bin-wrappers/git config --int --default " m" some.key
-fatal: bad numeric config value ' m' for 'some.key': invalid unit
-
-$ git config --int --default " m" some.key
-fatal: bad numeric config value ' m' for 'some.key': invalid unit
-
-> It does not look _too_ bad if we just let such an empty string
-> through and interpreted it as zero.  Is that a problem?  Who are we
-> trying to help?
-
-My reasoning was that a single units factor is likely to be the result 
-of some kind of bad edit and defaulting to zero when the user thought 
-they set a large value is not likely to be helpful. Having said that I'm 
-not that wedded to this patch if you feel it would be better to drop it.
+Thanks for posting that, I'd forgotten about the --int flag for git config.
 
 Best Wishes
 
 Phillip
+
+> works. And even playing devil's advocate, I can't think of a case where
+> anybody would rely on the current behavior.
+> 
+> -Peff
