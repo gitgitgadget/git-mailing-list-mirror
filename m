@@ -2,64 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8E22CC04A95
-	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 13:22:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CF3BC04A95
+	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 13:29:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232798AbiJYNWZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Oct 2022 09:22:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51062 "EHLO
+        id S229629AbiJYN3c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Oct 2022 09:29:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231681AbiJYNWW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2022 09:22:22 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1CA512344F
-        for <git@vger.kernel.org>; Tue, 25 Oct 2022 06:22:20 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id y16so10474496wrt.12
-        for <git@vger.kernel.org>; Tue, 25 Oct 2022 06:22:20 -0700 (PDT)
+        with ESMTP id S230057AbiJYN3a (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2022 09:29:30 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 274EABF7
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 06:29:26 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id bu30so20996421wrb.8
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 06:29:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=WD2al8aAwXWYU2MsTDrAOIkbbQJFt8lbOMBE+SHWtIk=;
-        b=R7aETPOVsPqaX3rIdIZG1WSdK8pWfzQyP+6HmITUvmqrwYXoKobqvGO/NM0Hnm9/ip
-         Tt+GLcQJ1Njmeg4ctTgHlkljgDMm/g1/ZHn07FsfxPKUdX/ZateKMqjwMi1ZZbGQeap8
-         15xqn2EYxdMLlzRvRfjf12ESRGjBX2+gn+0Sun3yG5JDwniaOSzNZkDjsV59971acywt
-         37HELKVcYi1nIL/VgF5P9j7Bv9Sb/VX4ICLaWeVDkUDZbGNuFkJjRA1SlZrh6LWjJjOP
-         0qvZ/vHNdsKkgRQsaHCrk1k8cHITZfqZBjqSKbiq29rtjnuSgpm6Wo4F7xH6zLYoZD/g
-         4uig==
+        bh=WS7eIjyfzCe3EjGyPOCAWK4uQzmOygz0iianFU4BIog=;
+        b=i94bIDrPqlE7jKjlNKHLxiXqmNjMj38VcNJ8fS7wulNdA/imPoef7P8EEEw/w5WT8D
+         queO27OXLJZ81DuNzt+wgJgdDeRfvV6VS0Y+jEVcXmu3UdR0ZgIxCsv0HpMurDA3uaN+
+         09pWEhHIfOYchAGpQLhzEJBIlJpE4tGESmOKkwcLBxPNC85mC7IXMP36PViHzKNcTlyp
+         80rPjJ64xRZs20WMoAk/NdTnL8sgkNINL6wyDesdMgxG9s15xSHZRI9QK+OgY/4zH9WU
+         YqpaM9b8NYBk3kJX2x7h3757yUw6v2xur3T3lYVjuheBWCGzQfFBJ2K/r6TiZgVXe30j
+         RxPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WD2al8aAwXWYU2MsTDrAOIkbbQJFt8lbOMBE+SHWtIk=;
-        b=76o6QcZvUU4Dp13ECJ+wN/NBg9mJ4nl/LsHLUMMDzOs0vw32hG6mXTj/p0cksV9H8R
-         Z1+xXmv126hp+iPLPg8kjhgRYZc9cMOlqX24zvAUuVBRdtMvOeAywuCSSOEKwwFJ5s5v
-         mc73THvz5zOX0Y7ajx/KJjQAkkHVzyM6SveuogM8A6jLnB1VHEB/zN0WXuh+yrayWSr/
-         OzXe+KF1jV+sdGy+46hZJWvPxuyfnEr0XT4xvlnxKOvsnEQfqcfzu/xKEzwV/f+5r8vQ
-         3Wvc/84gfNZDrk8aLCnkFnvVFhp31NxFZ7NC/U9xb7FOaWzJAb/U5JRp/frAivANCHJM
-         pg7g==
-X-Gm-Message-State: ACrzQf0voPLE3+CUnFnIOxm+dyUwc0Hb/YCiRAAM0yJKb8/6yohAP1Im
-        Pswzsi72Ev8PxOgzsds9inE=
-X-Google-Smtp-Source: AMsMyM5dxLLbHRrpcsLalFRMqptrLAxvBXlpai/nm50oyml4vopR9PMSd8omHh3P8AFexqJydEZthw==
-X-Received: by 2002:a05:6000:1287:b0:236:712d:2545 with SMTP id f7-20020a056000128700b00236712d2545mr7223094wrx.52.1666704139315;
-        Tue, 25 Oct 2022 06:22:19 -0700 (PDT)
+        bh=WS7eIjyfzCe3EjGyPOCAWK4uQzmOygz0iianFU4BIog=;
+        b=LQxqTDJQNCryUUcyNjCJo6ITotxkg8GIfnXmEEHUifChSzP5TvrzsNzDnusiJJ9WSC
+         L7oaBGyVGtqTCEjOW12HylfxBIUKH0jl20zWybEm6bzbPqlklygbP9sDj6SCuvCptXll
+         nCH2+CmBEg5OdTq5s3HS9uvvzmbOp2hgFyhuy92egLdBC4go8AwSwQgKI3cIkTj1Q1oL
+         aM3kePQtdBaD6FEsQHdVULIL0M9ZcCN99qaSKnNBshOXn0/qwEIi8Lts7Abz3W3mjCm6
+         VHaNq1lPeUsr3UqQurSrPVNeZ7w9fF8E6qy6+sv7c6BKw1Zi3Dd2QIqw2owUt2M2WnTj
+         xXxQ==
+X-Gm-Message-State: ACrzQf3NTDBYV72TAfPYPCyKnzJRsI4qtIxDTWC1fg7vgLxw/SbbR8FJ
+        cifIw2T9H9Sv7xeIz8tGTNM=
+X-Google-Smtp-Source: AMsMyM6FDfa3hhtXIBHlARTiTE1a5mZ0DKMj1oqionaFC5tFNUNrbqWoTc88K6369aT84b2HKVoVvQ==
+X-Received: by 2002:adf:ef4e:0:b0:236:6608:f6ce with SMTP id c14-20020adfef4e000000b002366608f6cemr9807314wrp.85.1666704564576;
+        Tue, 25 Oct 2022 06:29:24 -0700 (PDT)
 Received: from [192.168.1.74] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id y5-20020adfd085000000b002364c77bcacsm2516468wrh.38.2022.10.25.06.22.18
+        by smtp.gmail.com with ESMTPSA id j17-20020a05600c191100b003b47b913901sm2932356wmq.1.2022.10.25.06.29.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Oct 2022 06:22:18 -0700 (PDT)
+        Tue, 25 Oct 2022 06:29:24 -0700 (PDT)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <a083087d-969c-55dd-2ac7-5aaf4e7c7ff6@dunelm.org.uk>
-Date:   Tue, 25 Oct 2022 14:22:17 +0100
+Message-ID: <c3d27586-f5b5-4e3f-9cbb-8cd31ac8887e@dunelm.org.uk>
+Date:   Tue, 25 Oct 2022 14:29:23 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 0/9] cmake: fix *nix & general issues, no test-lib.sh
- editing, ctest in CI
+Subject: Re: [PATCH 6/9] cmake: use GIT_TEST_BUILD_DIR instead of editing hack
 Content-Language: en-US
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
@@ -68,31 +67,63 @@ Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Victoria Dye <vdye@github.com>,
         Eric Sunshine <ericsunshine@gmail.com>
 References: <cover-0.9-00000000000-20221021T091013Z-avarab@gmail.com>
- <49d65210-583b-67a2-1ad5-c7166e81396e@dunelm.org.uk>
- <221021.86zgdpdud6.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221021.86zgdpdud6.gmgdl@evledraar.gmail.com>
+ <patch-6.9-45f1a4e6f93-20221021T091013Z-avarab@gmail.com>
+ <d6e2baab-be26-66d1-f07c-134eb6fe06fd@dunelm.org.uk>
+ <221021.868rl9faf2.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221021.868rl9faf2.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 21/10/2022 16:55, Ævar Arnfjörð Bjarmason wrote:
+On 21/10/2022 15:43, Ævar Arnfjörð Bjarmason wrote:
 > 
 > On Fri, Oct 21 2022, Phillip Wood wrote:
+>> Lets squash that commit into this one, so we can see how it is used
+>> when it is added.
 > 
->> On 21/10/2022 10:44, Ævar Arnfjörð Bjarmason wrote:
->>
->> I think this series contains a couple of interesting ideas[...]
+> Heh, I did that to begin with, but found that the commit message &
+> change was too long & trying to explain two different things.
 > 
-> c'mon :) Getting it to a 100%[1] pass rate on *nix from 76%[2] & having
-> "ctest" running in CI now is a bit more than an interesting idea :)
+> Since GIT_TEST_BUILD_DIR (like GIT_TEST_INSTALLED) is something you can
+> use stand-alone I prefer to keep it this way. The commit message shows
+> how you can use it without anything to do with cmake, and then later
+> (here) we can use it for cmake...
 
-It's certainly useful, I didn't think the fix which is "make the scripts 
-executable" was particularly interesting. I'm more interested in the 
-ideas around making the tests run without editing them or writing 
-GIT-BUILD-DIR and being able to change the arguments passed to tests 
-when running ctest.
+We're only adding it because we want to use it with cmake though and the 
+only way to see if the previous patch is correct is to start using it.
+
+>>>    file(GLOB test_scipts "${CMAKE_SOURCE_DIR}/t/t[0-9]*.sh")
+>>>      #test
+>>>    foreach(tsh ${test_scipts})
+>>>    	add_test(NAME ${tsh}
+>>> -		COMMAND ${SH_EXE} ${tsh}
+>>> +		COMMAND env GIT_TEST_BUILD_DIR=${CMAKE_BINARY_DIR} ${SH_EXE} ${tsh}
+>>
+>> I'm not sure about using env on windows,
+> 
+> In general, if it didn't work a lot of our test suite would fail, so
+> it's definitely supported, and since this is only used to run tests it
+> should be OK with portability.
+> 
+> But I don't have a Windows dev environment other than the CI, are you
+> able to test this & check if it works?
+
+I keep meaning to set up a git build on windows but I haven't got round 
+to it. Using "sh -c" also gives us more flexibility in later patches.
+
+>> can we use ${SH_EXE} -c
+>> instead to avoid creating an extra process?
+>>
+>> 	COMMAND ${SH_EXE} -c [[GIT_TEST_BUILD_DIR="$1"; . "$2"]]
+>> 	"${tsh}" "${CMAKE_BINARY_DIR}" "${tsh}"
+> 
+> Neat, so that "[[...]]" syntax makes sure we don't have any quoting
+> issues?
+
+Yes, it works like lua. 
+https://cmake.org/cmake/help/latest/manual/cmake-language.7.html#bracket-argument
 
 Best Wishes
 
