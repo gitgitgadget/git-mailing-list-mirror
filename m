@@ -2,81 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B927FA3743
-	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 04:16:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 21FCAC38A2D
+	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 04:31:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230292AbiJYEQB convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 25 Oct 2022 00:16:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58080 "EHLO
+        id S230078AbiJYEa5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Oct 2022 00:30:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229915AbiJYEP6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2022 00:15:58 -0400
-Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6A94E0EB
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 21:15:56 -0700 (PDT)
-Received: by mail-io1-f49.google.com with SMTP id y80so9422985iof.3
-        for <git@vger.kernel.org>; Mon, 24 Oct 2022 21:15:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3Rp34NfcsxqpDh4Vocl330oagrzZAXfpFm+Iw4r3SMM=;
-        b=PRc8Tbel+EZGHFPRs/7GWuSALQJ5Kh9fTCoGgDoeN/H86EEAUZmoPFt4ObjzbE+PlA
-         vMBl/W6y5BhuVUCKUQasb0VKndVWepIoyteSXshybgFXGwrGl1gLTY7uxGgnfdXkQY5P
-         /WdYIyNivPUjp/I54/qGcLXrsSjDy4zIhrJQQ5B0reNHUfzyjLsZ914MzAbIKxVQiKG1
-         2py9mYHN5X+dCc+yENFNTOLmw13VlPIuCemEFBOcG3gIkjaT8UUUJjWB4+EuWIbrJvlk
-         kXtIkaETulBsiUgYZ7i4qWqK581VDf+WoQ4nzflnRGK/0SNL4ZNOgV3jCNBPwI4lmmxM
-         i/cg==
-X-Gm-Message-State: ACrzQf30dWPzvroTuVxANAEtVJbmV02xx4lo3SfLYa11dgKKC0w+uxRq
-        Jg2sMou/DEsEoX5VJEGk16PfiJ4miHetnb4osBE=
-X-Google-Smtp-Source: AMsMyM7KhxkJvpfifc7S5rZh5P34UtZ/3d4ztt1wTdRiEfpTIpZ2JdFDfhHCGbMq2nGxCl2f6c6HBGe6APWSN9ZTlqw=
-X-Received: by 2002:a05:6638:134f:b0:372:8558:1e34 with SMTP id
- u15-20020a056638134f00b0037285581e34mr6001505jad.285.1666671356056; Mon, 24
- Oct 2022 21:15:56 -0700 (PDT)
+        with ESMTP id S230516AbiJYEav (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2022 00:30:51 -0400
+Received: from pb-smtp2.pobox.com (pb-smtp2.pobox.com [64.147.108.71])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F4B53C8DA
+        for <git@vger.kernel.org>; Mon, 24 Oct 2022 21:30:42 -0700 (PDT)
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id BE9EF143AC6;
+        Tue, 25 Oct 2022 00:30:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=rtHor4j5qLXvH9fto0sTQsvtFQltVOkVFuBr5Y
+        +nKno=; b=OZb4MB13BhgWDHsExJeU6JZq0r7OCIYT6ifPgLDa9uz6oBVZqUi0va
+        91USob23DJsdwwvhkUPMP8LH2kw5e/BJd8MMfbM+R9EXxX/sLzlfQv1vF6BN5T3q
+        k6TeGeoudw7FzwbihCrC5xEbLVlX0fnpGCFmKPbITmUofzHK2RNzE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id B5BA9143AC4;
+        Tue, 25 Oct 2022 00:30:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [34.83.5.33])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 30514143AC3;
+        Tue, 25 Oct 2022 00:30:39 -0400 (EDT)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH v2 0/2] Document fsck msg ids
+References: <pull.1369.git.git.1666623639.gitgitgadget@gmail.com>
+        <pull.1369.v2.git.git.1666667864.gitgitgadget@gmail.com>
+Date:   Mon, 24 Oct 2022 21:30:38 -0700
+In-Reply-To: <pull.1369.v2.git.git.1666667864.gitgitgadget@gmail.com> (John
+        Cai via GitGitGadget's message of "Tue, 25 Oct 2022 03:17:42 +0000")
+Message-ID: <xmqqwn8oplsh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1324.git.git.1663023888412.gitgitgadget@gmail.com>
- <pull.1324.v2.git.git.1663041707260.gitgitgadget@gmail.com>
- <221024.865yg9ecsx.gmgdl@evledraar.gmail.com> <CAPig+cT=cWYT6kicNWT+6RxfiKKMyVz72H3_9kwkF-f4Vuoe1w@mail.gmail.com>
-In-Reply-To: <CAPig+cT=cWYT6kicNWT+6RxfiKKMyVz72H3_9kwkF-f4Vuoe1w@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 25 Oct 2022 00:15:45 -0400
-Message-ID: <CAPig+cQhsGpOa1XqfOj-zV1esc_uEkOPGg3hVUkSWrkVma+GNQ@mail.gmail.com>
-Subject: Re: chainlint.pl's new "deparse" output (was: [PATCH v2] [...])
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
+X-Pobox-Relay-ID: C741F8FC-541D-11ED-9BCF-307A8E0A682E-77302942!pb-smtp2.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Oct 25, 2022 at 12:05 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On Mon, Oct 24, 2022 at 6:28 AM Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
-> > Another thing: When a test *ends* in a "&&" (common when you copy/paste
-> > e.g. "test_cmp expect actual &&\n" from another test) it doesn't spot
-> > it, but instead we get all the way to the eval/117, i.e. "broken
-> > &&-chain or run-away HERE-DOC".
->
-> Yes, I recall considering that case and others, but decided that
-> that's probably outside the scope of the linter. [...]
->
-> It is unfortunate, though, that the shell's "syntax error" output gets
-> swallowed by the eval/117 checker in test-lib.sh and turned into a
-> somewhat less useful message. I'm not quite sure how we can fix the
-> eval/117 checker to not swallow genuine syntax errors like that,
-> unless we perhaps specially recognize exit code 2 and, um, do
-> something...
+"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Another "fix" would be to drop the eval/117 checker altogether. I
-retained it as a final safeguard in case something slipped past
-chainlint.pl, however, I'm not sure how much value the eval/117
-checker really has since it misses so many real-world cases, such as
-any &&-chain break in the body of a compound context (if/fi,
-case/esac, for/done, while/done, (...), {...}, $(...), etc.).
-Moreover, we see now that it's also obscuring useful error messages
-(such as "syntax error") from the shell itself. So, dropping it may be
-an option(?).
+> Patch [1/2] removes an unused msg-id BAD_TAG_OBJECT Patch [2/2] adds a
+> fsck-msgids.txt that lists msg-ids that fsck checks for
+>
+> Since v1:
+>
+>  * provided a full list of error messages along with corresponding default
+>    severity
+>  * no longer including the whole list in git-config
+>  * add a comment in fsck.h to remind developers to keep the documentation
+>    accurate when making changes to the list of error messages
+
+Thanks.  I did a bit of sanity checking and it made my earlier
+suspicion stronger.  We MUST have at least an automated checker to
+check the doc against the fsck.h header, if not an automated
+generator of the doc from the fsck.h header.
+
+ * Just like your [1/2] pointed out an error type that is no longer
+   in use, MISSING_TREE_OBJECT is not used.  It seems that this was
+   never used since it was introduced at 159e7b08 (fsck: detect
+   gitmodules files, 2018-05-02)
+
+ * A few items were misspelled.
+
+ * A handful items were missing.
+
+The latter two are shown in the attached, which I am tempted to just
+squash into your 2/2.  I think the MISSING_TREE_OBJECT one deserves
+a separate commit between 1/2 and 2/2.
+
+ Documentation/fsck-msgids.txt | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
+
+diff --git c/Documentation/fsck-msgids.txt w/Documentation/fsck-msgids.txt
+index 08e19bac8a..7af76ff99a 100644
+--- c/Documentation/fsck-msgids.txt
++++ w/Documentation/fsck-msgids.txt
+@@ -43,10 +43,10 @@
+ `extraHeaderEntry`::
+ 	(IGNORE) Extra headers found after `tagger`.
+ 
+-`fullPathName`::
++`fullPathname`::
+ 	(WARN) A path contains the full path starting with "/".
+ 
+-`gitAttributesSymlink`::
++`gitattributesSymlink`::
+ 	(INFO) `.gitattributes` is a symlink.
+ 
+ `gitignoreSymlink`::
+@@ -55,6 +55,9 @@
+ `gitmodulesBlob`::
+ 	(ERROR) A non-blob found at `.gitmodules`.
+ 
++`gitmodulesLarge`::
++	(ERROR) The `.gitmodules` file is too large to parse.
++
+ `gitmodulesMissing`::
+ 	(ERROR) Unable to read `.gitmodules` blob.
+ 
+@@ -118,6 +121,15 @@
+ `missingTagEntry`::
+ 	(ERROR) Missing `tag` line in a tag object.
+ 
++`missingTaggerEntry`::
++	(INFO) Missing `tagger` line in a tag object.
++
++`missingTree`::
++	(ERROR) Missing `tree` line in a commit object.
++
++`missingType`::
++	(ERROR) Invalid type value on the `type` line in a tag object.
++
+ `missingTypeEntry`::
+ 	(ERROR) Missing `type` line in a tag object.
+ 
+@@ -130,7 +142,7 @@
+ `nulInHeader`::
+ 	(FATAL) NUL byte exists in the object header.
+ 
+-`nulInSha1`::
++`nullSha1`::
+ 	(WARN) Tree contains entries pointing to a null sha1.
+ 
+ `treeNotSorted`::
+@@ -142,7 +154,7 @@
+ `unterminatedHeader`::
+ 	(FATAL) Missing end-of-line in the object header.
+ 
+-`zeroPaddingDate`::
++`zeroPaddedDate`::
+ 	(ERROR) Found a zero padded date in an author/commiter line.
+ 
+ `zeroPaddedFilemode`::
