@@ -2,109 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E544C38A2D
-	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 18:25:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C364C38A2D
+	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 18:52:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231363AbiJYSZY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Oct 2022 14:25:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55308 "EHLO
+        id S231696AbiJYSwE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Oct 2022 14:52:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231310AbiJYSZX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2022 14:25:23 -0400
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA318E22C5
-        for <git@vger.kernel.org>; Tue, 25 Oct 2022 11:25:22 -0700 (PDT)
-Received: by mail-io1-xd2c.google.com with SMTP id r142so11109645iod.11
-        for <git@vger.kernel.org>; Tue, 25 Oct 2022 11:25:22 -0700 (PDT)
+        with ESMTP id S233040AbiJYSwC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2022 14:52:02 -0400
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94278C34EC
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 11:51:59 -0700 (PDT)
+Received: by mail-yb1-xb2b.google.com with SMTP id r3so15830226yba.5
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 11:51:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=h0H3Y7Ov9pNnaI+ya8JdeaMNDx+/cT3Yny7W2vIXj24=;
-        b=LLckcXUeaArClZPW5CeZGorEdTHUejd2RPyjwJOEWyJCqoDJpmyRgw3/5VCVFy7Hty
-         GUCtMmfFuCUF7H4lPyeuVg9dL3VLRGDNN9ujTURAZvnfWsbKBekhxbGf7yZVTazyLMc/
-         E5Ti/NJBlSvkwTXE6rmp+/y8Fm1AthIhzCyRk7RLrH5kggAvVlvSqp6gFjTucFk0cCuv
-         rJkHJnrTDisk7pE0H/rEurr5/Ap8dX34FqcCjVHI2hYvSwShMbWZWptdy8TiYkCbaLFn
-         euQoZB+gxvBSHV1QmISdljSyJb/MgZx8h1gdjeqNUqTCL5ieDQ0NSRlJ2XtaRRaU25au
-         QK/A==
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=bnZLyx/yTIY7bE7SqqFMRvJ8upFxYoP1MUSxPPiHtm8=;
+        b=a1+RNYpO/T3bjbIZEBsffUEwBni+uZ2pwqRTdK3Sm9orTCdATBAT766Jc7F+89yP15
+         l8q2oHkXV/25oX0YTtyiI6u+chqR639rD4Ws2dM0PwM3QInLwbAbTYaALg2wV+epwMGn
+         vtlOp8L4ZuxIOPBbZl2hR4ptldyadlrC/TGTkpC7hqSSJJGHfJ5NIQTCDb6c96VNy2eh
+         yutoZLmVdrMG8GvZBD5bcNkAPr5BW90eyWnWRSYjQ9osk3oaBtFvbS1EWv+T1izEGx1o
+         xxxjNLOjOln1uB+OA/o44sqIT4abfc9ORQzzMFoMHYQw0LtSHBtE4nWoDgfYGIZ0uv7D
+         gC7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=h0H3Y7Ov9pNnaI+ya8JdeaMNDx+/cT3Yny7W2vIXj24=;
-        b=kI7V2zk4CqsCeWqRf5HCKc59CvMyAXMxyj3kvNGqHcTa6chJQAuzX1vGEqD7x0SvXe
-         DSqpjc9EpahUbEtA+iqzf1zP1fc5IZjojyhiB1DqiS9QqWrzlT2JYAZoPGoZmk3jv7b1
-         pNqr2t11HCkhHlnPKQiTxge/SIcLsQab/aQ5AihJRKo0v3ZAA1+c4iBbcTirK8/O2H/C
-         AbIn4G38nVxnTplRnOIIEahkRKz/8xqjpgluKkoX9d7XYqVnyvlRakinsTJu1MDdyB2c
-         dfKkib3maNRuWeSke/ZKuQR/3x1OvP8zpxFpWMEhgW+rXnk1tFlCndQWC/UbFivZULSA
-         JZ3w==
-X-Gm-Message-State: ACrzQf0dzN189iLhkp/sK0z+oYgZM+Jftc5N9EXRqyG9A2qZD9SEoOPj
-        yMJvUxnL9zZUDry0G8RwOw9lLd46XebvPQ2D
-X-Google-Smtp-Source: AMsMyM794u7TUfn567OnO/vuzxoBlQMyUEGhkM8P/RW275mOkhXwBC+j29+3HV49PXYYxnS4OdhdBg==
-X-Received: by 2002:a02:62cc:0:b0:363:d7ea:f3d with SMTP id d195-20020a0262cc000000b00363d7ea0f3dmr25341751jac.120.1666722322015;
-        Tue, 25 Oct 2022 11:25:22 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id e24-20020a026d58000000b003633b78ee12sm1133495jaf.75.2022.10.25.11.25.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 25 Oct 2022 11:25:21 -0700 (PDT)
-Date:   Tue, 25 Oct 2022 14:25:20 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Victoria Dye <vdye@github.com>
-Subject: [PATCH] midx.c: clear auxiliary MIDX files first
-Message-ID: <bf36093cd6d7ac83b16241b0199b3a8c904e6774.1666722316.git.me@ttaylorr.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bnZLyx/yTIY7bE7SqqFMRvJ8upFxYoP1MUSxPPiHtm8=;
+        b=fSNNviJ8LXDJzD3ThaZKpfHVpxETkjO+pZVqXba0IxoCa0J5lymXTiJ+8hNz5e0FPR
+         HaAuOj3dE6EKSyNyyDo1PyyCdl7DjeYx4mn6HKLwW3eDr+1ECMFDVsYzzzWbi+PWXqKp
+         tql6YFuJPnH5PCGZhUkMW73Q38d3P4xQKUNpXQ67nPefPa8uF07HWh4DdHuyM+RS8+gK
+         dtMBo4lhLkjarraG5DXOHEhq8KHMbzBkQA9obbQvrACA6vuihVbLgvOBhpEb6TZNa2eX
+         qW/nPSlWBmDLwjNWKi8kNVBFsRTW4hNCHxPFmkB9xpk7VzShljm0MJ9nuWYQqmpIQksv
+         QIRw==
+X-Gm-Message-State: ACrzQf1CZfIwXlEzdzOVOv18PlPq+1ycexNueqo+tbi15BMYetwvBoSg
+        0CJ2Xez/9wPNsnDAB1oMzvC0t9buhHh8/zR0cKTa0g==
+X-Google-Smtp-Source: AMsMyM4hBdVoYi6mYi49X+1VuWgTAXV6jXbd4AsaX82+QGwsoqx1EfoxE+WNecczDfWaEtMzxK3H/aZoPwFGJ/fY3OI=
+X-Received: by 2002:a5b:7c5:0:b0:6c1:12dc:3f94 with SMTP id
+ t5-20020a5b07c5000000b006c112dc3f94mr36152897ybq.640.1666723918746; Tue, 25
+ Oct 2022 11:51:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <20221020232532.1128326-2-calvinwan@google.com>
+ <xmqq4jvxpw46.fsf@gitster.g> <CAFySSZABaWSKw_OxyPEU=C_iLOmPa=pPahWaeta=JaAf2q_GEg@mail.gmail.com>
+ <xmqqilk9rqkb.fsf@gitster.g>
+In-Reply-To: <xmqqilk9rqkb.fsf@gitster.g>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Tue, 25 Oct 2022 11:51:47 -0700
+Message-ID: <CAFySSZADNEAnZ5S+hM44207XBedaN-FozUHU5MeS+8eTyLrhqQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/6] run-command: add pipe_output_fn to run_processes_parallel_opts
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, emilyshaffer@google.com, avarab@gmail.com,
+        phillip.wood123@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since they were added in c528e17966 (pack-bitmap: write multi-pack
-bitmaps, 2021-08-31), the routine to remove MIDXs removed the
-multi-pack-index file itself before removing its associated .bitmap and
-.rev file(s), if any.
+On Mon, Oct 24, 2022 at 12:04 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Calvin Wan <calvinwan@google.com> writes:
+>
+> >> In my review of one of the previous rounds, I asked which part of
+> >> this functionality fits the name "pipe", and I do not think I got a
+> >> satisfactory answer.  And after re-reading the patch in this round,
+> >> with the in-header comments, it still is not clear to me.
+> >>
+> >> It looks more like sending the duplicate of the normal output to a
+> >> side channel, somewhat like the "tee" utility, but I am not sure if
+> >> that is the intended way to be used.
+> >>
+> >
+> > In this case, I was hoping "pipe" would refer to the redirection of
+> > output from the child processes to a separate custom function, but
+> > I can see that duplication != redirection. Maybe something like
+> > "parse_child_output" or "parse_output" would make sense, however,
+> > I didn't want to imply with that name that the only functionality is to
+> > parse output. Besides that, I don't really have any other ideas of
+> > what I can name it...
+>
+> Yeah, parsing is not to the point.  Sending a copy of output to
+> elsewhere is, so redirect is a better word than parse.  And piping
+> is not the only form of redirection, either.  If duplication is
+> really the point, then either giving it a name with a word that
+> signals "duplication" would make more sense.  "send_copy_fn"?  I am
+> not good at naming.
+>
+> As a name that is not end-user facing, it is tempting to assume that
+> the readers have basic knowledge of Unix concepts and call it
+> "tee_fn", but it would be way too cryptic to uninitiated, so I would
+> not recommend it.
+>
+> Hmm...
 
-This creates a window where a MIDX's .bitmap file exists without its
-corresponding MIDX. If a reader tries to load a MIDX bitmap during that
-time, they will get a warning, and the MIDX bitmap code will gracefully
-degrade.
+Throwing some more ideas out there:
+split_duplicate_fn
+duplicate_output_fn
+dup_output_fn
 
-Remove this window entirely by removing the MIDX last, and removing its
-auxiliary files first.
-
-The order here is important, too. We remove the MIDX's .bitmap file
-ahead of its .rev, since callers try and read the .bitmap first. The
-.rev file is no longer generated by modern versions of Git, but cleaning
-up old ones generated by previous versions of Git is still important to
-do.
-
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- midx.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/midx.c b/midx.c
-index 3a8dcfe98e..994129aecd 100644
---- a/midx.c
-+++ b/midx.c
-@@ -1619,12 +1619,12 @@ void clear_midx_file(struct repository *r)
- 		r->objects->multi_pack_index = NULL;
- 	}
- 
--	if (remove_path(midx.buf))
--		die(_("failed to clear multi-pack-index at %s"), midx.buf);
--
- 	clear_midx_files_ext(r->objects->odb->path, ".bitmap", NULL);
- 	clear_midx_files_ext(r->objects->odb->path, ".rev", NULL);
- 
-+	if (remove_path(midx.buf))
-+		die(_("failed to clear multi-pack-index at %s"), midx.buf);
-+
- 	strbuf_release(&midx);
- }
- 
--- 
-2.38.0.16.g393fd4c6db
+As you mention, it's not end-user facing so we should pick a name
+that's close enough (and any confusion can always be resolved by
+comments)
