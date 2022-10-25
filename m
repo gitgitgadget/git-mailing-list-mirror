@@ -2,137 +2,190 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 30ECFC38A2D
-	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 10:06:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 266F9C38A2D
+	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 10:10:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232198AbiJYKGN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Oct 2022 06:06:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36434 "EHLO
+        id S232296AbiJYKKr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Oct 2022 06:10:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232161AbiJYKFn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2022 06:05:43 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DFF61799BC
-        for <git@vger.kernel.org>; Tue, 25 Oct 2022 03:00:06 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id m29-20020a05600c3b1d00b003c6bf423c71so11527556wms.0
-        for <git@vger.kernel.org>; Tue, 25 Oct 2022 03:00:05 -0700 (PDT)
+        with ESMTP id S232153AbiJYKKD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2022 06:10:03 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 713EA10AC0B
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 03:03:01 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id d3so9653565ljl.1
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 03:03:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=mMC80kpxhr025gsYo7o7txGFVX2l6i5sBlsz2snaOdY=;
-        b=hvNPkAQJINDqUed60lNX5kWcSnbkXBwdninmA0qEv+z2XQA++VZ7L+KoItv2b3vGk7
-         jsvkh9S5DPUu3mldoa/EG65QaWq8iL2BrGB1VUyLLeoQqo+dVyJQDFllnTtF+jJ7WKzc
-         L/W7V/4NiUuh9MODte2UN7EJohOhibIXUL6glPnEkY0WHCai4bsbDDmlJeqWPCa8yRA8
-         TvRyHHRWKSDMw1Ys6tn1BlXUIWyqdx5GDFdO1HbZEZKfhKrNvYJlsJAnwaPuJIJ4tMCU
-         9UMlZ+7yTeyDJAxFw3CeaSEkmbM+4Fnl45CIQxu8y81AXPthZwdIWAIApMeEgwlpe483
-         uVjA==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qqsi1BiSgX/uzsS2B+MzrBr/MjMRNzZzx/4J1kRlErk=;
+        b=jBhT8Xpks+2Qf9AhEUasfr6hH2dVX1n2ZwiWxsjMZbPB3J0ta10bPqps7ehGmuPX2G
+         nCW+s7PZjbtpsnQOj1prCWobd9dN+bRdYGqwwsMeceJxjnft0mDmMyuOmc1lhUy4QS8y
+         AfFuzdjjV3JDAwhshUtqF6w7mMbjYnBCcllDwkeQMW0i4TPZ8YQKePL9f8xCNjDp611Q
+         486M7UPQ45bgAM1t9zRE/rI1UzROV7PtWhOgTR/oUhRo1gNT+pU9KSOAtNwJIZmCHjVM
+         0lIs+Lv4CWDC1UJd3/zLvC1jEydDIR1nDLnLtk/G//xAWQzIbO1lRwFnh7ovnuIh3q8G
+         pL7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mMC80kpxhr025gsYo7o7txGFVX2l6i5sBlsz2snaOdY=;
-        b=5WWCAHCkv3gzTIiycS0LFY2hdxz4oAGFavLDB9eF+Uw0aPnKpaEUuGsCU6+CC0lmLz
-         fz3bkQmuVWmR6wo4gUnMc/0ZU75sOH1aZ+yK6frlHxouNYeuRHY5aEN+oEnwoEnmA74T
-         K3sutcQz5CnaKjab4Q4/8xX14h6eiFWQttvUpX+JekNtxolU5G2b4S359xHIv6CJR/x7
-         klfpNLnTjIlvf4399uXZpns8P0sxoOOF+PDSMq7k5xld9lr2fzk6pVTOu2B/Mie9ThZF
-         g3VSNLqCtlt9gXOvtpPea24Gc/yyuTmskHBeD/EEdlacachnbg+7wI0BrPTNYNxxjG60
-         EVpg==
-X-Gm-Message-State: ACrzQf1zeHYVk5edM8xb/qb5koBCXZx1If3H5K/2sR8kmtH0pZuUmVDH
-        4/O6kemzmpa1KMqw8QVJUnU=
-X-Google-Smtp-Source: AMsMyM6qoc/LdUR6pw/rwTywSCmj2Grrq6AkA7Zc7tLT/zGy6EDX8Sex/afMTP/ldJZUsHeSoilvrA==
-X-Received: by 2002:a05:600c:4e47:b0:3c6:fc59:5eff with SMTP id e7-20020a05600c4e4700b003c6fc595effmr26226861wmq.18.1666692004587;
-        Tue, 25 Oct 2022 03:00:04 -0700 (PDT)
-Received: from [192.168.1.74] ([31.185.185.144])
-        by smtp.gmail.com with ESMTPSA id m64-20020a1c2643000000b003c5490ed8a6sm10545866wmm.8.2022.10.25.03.00.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 25 Oct 2022 03:00:04 -0700 (PDT)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <190de302-0898-50a1-1a9d-ab1ccc5c6bb8@dunelm.org.uk>
-Date:   Tue, 25 Oct 2022 11:00:02 +0100
+        bh=qqsi1BiSgX/uzsS2B+MzrBr/MjMRNzZzx/4J1kRlErk=;
+        b=KPn/aQau3g/A7M6sDUp3NDBOrYJeT6h+5nkrL/0FbBBBJCUWlZucJT15qhPE5UsF6e
+         YZjZP0r/IopMjfYyLKxQGYcaKAl6Z4OX45jYl9uhRGkEZiMv1FnINQDUGMw80V/j6n6F
+         hKMJQnX03ylUtizAaWxqzB9yiBIqyJtkJRMpaqnzaYO1VBk3Y6vsZffZH3il3bNPUYqN
+         xNoPDuXAiDCERvuGAkDLpdsUh1mkSYkV2TijulGuO+Je+8TsjbCyE9fDIz3zNUjkGfKT
+         fyGhXpxLMwazm9QZjSrihSg6SguS6xA3M8S2JvfHJ7HI0vJXIdamrmD31lQMmqIQlZfN
+         R/dA==
+X-Gm-Message-State: ACrzQf2V08gxljv0QuiW4BtFQrt+dGunFT7Cq02SjDKFRJMVwjU9tID6
+        PcP6IqFA1G0CWLFqIaC7QlZVDc+FTZs=
+X-Google-Smtp-Source: AMsMyM7V+Cn23OrI0kARBXGmMarfnTPfrrNEsZE0BEltkbHw+KmshJ/P2aO6CCZB8M44eRKf6RaHRQ==
+X-Received: by 2002:a17:907:8a24:b0:78d:cd60:1022 with SMTP id sc36-20020a1709078a2400b0078dcd601022mr31272897ejc.384.1666692168729;
+        Tue, 25 Oct 2022 03:02:48 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id s14-20020a170906960e00b00780ab5a9116sm1123001ejx.211.2022.10.25.03.02.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Oct 2022 03:02:47 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1onGlh-007uet-35;
+        Tue, 25 Oct 2022 12:02:45 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: Parallelism defaults and config options
+Date:   Tue, 25 Oct 2022 11:48:51 +0200
+References: <CAFySSZAbsPuyPVX0+DQzArny2CEWs+GpQqJ3AOxUB_ffo8B3SQ@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <CAFySSZAbsPuyPVX0+DQzArny2CEWs+GpQqJ3AOxUB_ffo8B3SQ@mail.gmail.com>
+Message-ID: <221025.86sfjccjay.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 3/3] git_parse_signed(): avoid integer overflow
-Content-Language: en-US
-To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.1389.git.1666359915.gitgitgadget@gmail.com>
- <f058f391c3821b341a15fda9ae9fd20dda6a0494.1666359915.git.gitgitgadget@gmail.com>
- <xmqqpmeljae9.fsf@gitster.g> <80fe7c62-2c59-a715-3a8b-2dc2331d8e37@web.de>
- <xmqqv8obhkeb.fsf@gitster.g> <c24c3ac9-0de6-62f6-607f-2d8f69ca9fa8@web.de>
-In-Reply-To: <c24c3ac9-0de6-62f6-607f-2d8f69ca9fa8@web.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/10/2022 06:57, René Scharfe wrote:
-> Am 22.10.22 um 18:51 schrieb Junio C Hamano:
->> René Scharfe <l.s.r@web.de> writes:
->>
->>>>> +		if (max < 0)
->>>>> +			BUG("max must be a positive integer");
->>>>
->>>> In parse_signed(), would we expect to accept end-user input that is
->>>> a negative integer?  We must.  Otherwise we would not be calling a
->>>> "signed" parser.  Now, are there cases where the valid value range
->>>> is bounded by a negative integer at the top?  No current callers may
->>>> pass such a value, but is it reasonable to add such a new constraints
->>>> to an existing API function?
->>>
->>> Hmm, if minimum and maximum are not symmetric, then we need to supply
->>> both, don't we?
->>
->> Ah, thanks for injecting doze of sanity---I totally missed that the
->> bound was about the absolute value, so we can say "this is signed,
->> and the allowed values are (-3, -2, -1, 0, 1, 2, 3).  If so, then the
->> "reject negative max" in the posted patch is not a problem as I said
->> above.  I somehow thought that giving -1 as "max" would allow callers
->> to say "non-negative numbers are not allowed".  But that is not what
->> is going on.
-> 
-> Right, currently the value of `max` is used to check the absolute value,
-> i.e. it imposes a limit in both the positive and negative direction.
-> 
->> Allowing callers to specify both lower and uppoer bounds so that
->> they can say "the allowed values are (-1, 0, 1, 2, 3)", while it
->> might make it more useful, is a separate new feature development and
->> outside the scope of "let's tighten the parsing of end user input"
->> Phillip has here.
-> 
-> Allowing arbitrary limits in both directions might be a new feature, but
-> it's required if we want to support the full range of values.  E.g. on
-> my system INT_MAX is 2147483647 and INT_MIN is -2147483647-1.  Currently
-> git_parse_int() rejects INT_MIN as out of range.
-> 
-> In my eyes the assumption that a single limit can be used to check both
-> directions of the signed number line is flawed and caused the undefined
-> behavior.  Dropping it avoids tricky calculations that try to infer the
-> lower limit somehow and opens the full range of values to us.
-> 
-> That said, I'm not sure how useful the values INT_MIN, INT64_MIN and
-> SSIZE_MIN (which unlike SSIZE_MAX is not defined by POSIX [*]) actually
-> are. But doing the checks properly requires separate min and max values.
 
-I'm happy to go either way, while I agree passing separate limits to 
-allow INT_MIN is technically correct I'm not sure anyone has complained 
-that the current code is too restrictive.
+On Mon, Oct 24 2022, Calvin Wan wrote:
 
-Best Wishes
+> While trying to figure out how I was going to set the default
+> parallelism in cw/submodule-status-in-parallel, I noticed some
+> discrepancies between how all the parallelism config options are set in
+> git. I wanted to discuss what we can do now to make them more consistent
+> and also what the standard should be for the future. Here is a list of
+> parallelism config options in git (let me know if I missed any) and how
+> they're set:
 
-Phillip
+Yeah, I've noticed this before & found it odd, thanks for trying to make
+it sensible.
 
-> René
-> 
-> 
-> [*] Perhaps git_parse_ssize_t() should reject values less than -1; only
-> that single negative number is needed to represent errors or unlimited.
+> grep.threads: if unset or set to 0, git uses number of logical cores.
+> index.threads: if unset or set to 0/true, git uses number of logical
+>   cores. If set to 1/false, multithreading is disabled
+> pack.threads: if unset or set to 0, git uses number of logical cores.
+>   (documentation doesn't mention what default is)
+> checkout.workers: if unset, defaults to 1. If set to < 1, git uses
+>   number of logical cores
+> fetch.parallel: if unset, defaults to 1. If set to 0, git uses number of
+>   logical cores (documentation says reasonable default)
+> http.maxRequests: if unset, defaults to 5. If set to < 1, git uses the
+>   default 5.
+> submodule.fetchJobs: if unset, defaults to 1. If set to 0, git uses
+>   number of logical cores (documentation says reasonable default)
+
+Aside from anything we come up with, I think it's fine to change the
+defaults, i.e. to make some of these parallel by default where they
+aren't now.
+
+> The first inconsistency is the difference in language used to describe
+> when each option is set to "online_cpus()". Some are explicit while
+> others omit it or use language such as "reasonable default". Being
+> explicit for all of the options is probably the easiest documentation
+> fix.
+
+Ideally I think a documentation fix would be to just have these point at
+the same text, e.g. a "parent" option could explain all the details, and
+they could each point to that.
+
+> The next inconsistency is for values < 1. Most options use online_cpus()
+> when set to 0 except index.threads which is a special case of its own.
+> Some options error out when set to a negative number while
+> checkout.workers falls back to online_cpus() and http.maxRequests falls
+> back to 5. I don't think we can fix this retroactively unless we decide
+> that all config options will be set to online_cpus() if the value is
+> negative. Should that be the case going forward or should 0 be the only
+> special cased value for now? I can see an argument for allowing other
+> negative values to be configured in the future for different defaulting
+> options.
+
+We also have other options, like warning() on negative values if we
+think it's worth making these consistent while slightly annoying
+existing users.
+
+I think it's safe to say that by far the majority of git users aren't
+tweaking these at all, so we have a lot of leeway for sensible changes.
+
+> The final inconsistency is how values are defaulted if unset. Some
+> default to online_cpus() while others default to 1 (http.maxRequests is
+> 5). I want to call out grep.threads specifically here -- on my machine
+> with 48 cores, the default is actually SLOWER than using 1 thread. This
+> is because the grep operation is heavily IO bound, so creating too many
+> threads adds overhead every time the read head changes. Interestingly,
+> this option runs optimally at 4 since that's how many PCIe lanes my SSD
+> uses. While it makes sense to default processor heavy operations to
+> online_cpus(), does it make sense to do the same for IO heavy
+> operations? (I wasn't able to find an equivalent of online_cpus() for
+> drive reading capabilities.) And what about operations that have a fair
+> mix of each?
+
+First, http.maxRequests is different from any of the rest, it'll impact
+3rd party servers. So we should treat it differently. I'd think unless
+we have solid evidence for something else we should just leave that one
+be, and certainly not have it be some function of online_cpus().
+
+> The safe option is to default to 1 process for many of these config
+> options, but we trade off in improving the experience for the average
+> user that is unaware of these options. If we're already defaulting to
+> online_cpus() for grep.threads and selecting 5 for http.maxRequests,
+> then why not do the same for other options? My suggestion would be
+> defaulting IO dominant operations to min(4, online_cpus()) since that
+> seems like the standard number of lanes for people using SSDs. I would
+> also default operations that have a mix of both to
+> min(8, online_cpus()).
+
+I haven't thought/tested what the defaults *should* be, but I think it's
+a fair assumption that the current defaults were probably picked on the
+basis of a few ad-hoc tests on some person's laptop :)
+
+I.e. the 48 core case you mention etc. is likely to be untested & wasn't
+thought of at the time.
+
+I think *structurally* the best approach is something like having a
+family of config variables like:
+	
+	core.jobs: [(false | 1)|(0 | true) | [2..Inf] ]
+	core.jobs.IOBound: [(false | 1)|(0 | true) | [2..Inf]]
+	core.jobs.CPUBound: [(false | 1)|(0 | true) | [2..Inf]]
+
+Note that it's "0 or true" and "1 or false", not a mistake, i.e. that
+matches our current defaults. You'd set it to "true" to get the "yes, I
+want it parallel" setting.
+
+We'd have these take priority from each other, so "grep.threads" would
+override "core.jobs.IOBound", which in turn would override "core.jobs".
+
+The common case would be that you wouldn't set either "core.jobs" or
+"grep.threads", so we'd default to "core.jobs.IOBound", which we'd set
+to some sensible default.
+
+All of that's off-the-cuff, but hopefully has some worthwhile
+feedback. In particular I think leaving our docs in a state where we
+don't have to repeat ourselves (sometimes inaccurately) would be nice,
+whether it's via includes or because we point to a "parent" variable.
+
+
+	
+
+
