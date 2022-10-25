@@ -2,145 +2,172 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DD1AC38A2D
-	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 19:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 377ABC38A2D
+	for <git@archiver.kernel.org>; Tue, 25 Oct 2022 20:02:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231549AbiJYT2n (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 25 Oct 2022 15:28:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59272 "EHLO
+        id S232656AbiJYUCK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 25 Oct 2022 16:02:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230324AbiJYT2m (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Oct 2022 15:28:42 -0400
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A141D0CF6
-        for <git@vger.kernel.org>; Tue, 25 Oct 2022 12:28:40 -0700 (PDT)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 46D4E15989A;
-        Tue, 25 Oct 2022 15:28:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Y5ousCfYPaKu
-        kfY1HcRyCOTFUcBaSzO+QRqFz26yuKg=; b=oSxspugwqEnfb7uboLW+QwXVF2aH
-        jGmqhU7qxJxqzgdlMej+tv2/gKLx/OA0JHRWUubSXMJlKCusCSvklBtMlswoV66Q
-        gFT5FATwLUHaTsWGMyu3VXaqCQnzYvaoipjwKLifxhNuAmL/vPoay6noh8bonSRe
-        ovop9seDkNs0W+c=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 3E5FC159899;
-        Tue, 25 Oct 2022 15:28:39 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [34.83.5.33])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8E7BE159898;
-        Tue, 25 Oct 2022 15:28:38 -0400 (EDT)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH] branch: error and informative messages
-References: <3f63d53d-2e14-ffe0-6263-2a15f83453ad@gmail.com>
-        <xmqq5ygaul5k.fsf@gitster.g>
-        <faf7a985-f6ef-f20a-3857-031396124d60@gmail.com>
-Date:   Tue, 25 Oct 2022 12:28:37 -0700
-In-Reply-To: <faf7a985-f6ef-f20a-3857-031396124d60@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-        message of "Tue, 25 Oct 2022 01:39:02 +0200")
-Message-ID: <xmqqzgdjn1ne.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229682AbiJYUCI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Oct 2022 16:02:08 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14527119BF0
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 13:02:07 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id sc25so15514224ejc.12
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 13:02:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ILoFiiWwWmpgLtI2DZbdDXpZzD9wNv9OQhEiBdgmZzg=;
+        b=TiG1XyjL20aATqx3OriG7VZ7WfzfQrPSFPK4kGhakz0jNubiLnBrArsOu8vSjRzaGd
+         LSnxil9E0w6nvnTXTZcH6EAZPjEsoQ7/Avpz7HjFDn/R0hgUoMm4VbrWR0SCHUVN5A0w
+         8FsdDtjo0xMyZS7paShcaymxHgxnKDaNg4X+gpnq5myFkjAsehvd5pDklr1bpQaa2pmx
+         W+WfBPlpQcnKbIOqACWSCdUeJnTfIOIOylhDBqfSpCalus76vvxAlALGwk8xiOYEoPmy
+         lZuI3rfh6rVfHK4hP907LI0cGYa0MNrCQItPIQ/C9gp1mDJk0GjXvLfeTvhLVm6Ukj9z
+         mavQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ILoFiiWwWmpgLtI2DZbdDXpZzD9wNv9OQhEiBdgmZzg=;
+        b=5YOiENgeYoTGLVBb7W2aCbcm3avUzYkf4cjKKVA1KK8SzYbPX9SKaWvgU/3xUbeFCW
+         S6bzEWgibluzYbdMyao9NR/MC0OOa8+lJv6maN4SeLfjTwiXhSyOYSyfr9jyj2b31ruU
+         z39ZC8Xz1zK3p34tGx0sMo8ldv9kXSfrFKFx/Uw5g2SeVdkBcNbrUOpCFyCvV9Gaa8f9
+         DfxkB1TG5daJ8Q7TYz58jLeup+Rm63yJRIMUyNyPGFHUS2MggE2cW8830aQyNJ5dtNSe
+         JMc7NL8ckAT1YGWr8k7wHL5Zsr283M7XAdMm4sNdn61ksjdOZAzgFVNSuYC4YzZ7/7Y4
+         Efaw==
+X-Gm-Message-State: ACrzQf0rPLjpxHU64o5TfhMCvHHouIuViDDMIMXMjYuYYzn2iKrNlPX7
+        mPOnWxt1lF5maFSIp7u8wAYanTWecbs=
+X-Google-Smtp-Source: AMsMyM6KyOczd80LKkBc8oAPiP3dEGIlitXPpZcR8irC2f+WE9r3l/aAftp5KdqwQkPIILxLBDNU8w==
+X-Received: by 2002:a17:907:75e6:b0:7a1:848:20cb with SMTP id jz6-20020a17090775e600b007a1084820cbmr16689724ejc.745.1666728124912;
+        Tue, 25 Oct 2022 13:02:04 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id sh39-20020a1709076ea700b0073dc8d0eabesm1905595ejc.15.2022.10.25.13.02.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 25 Oct 2022 13:02:03 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1onQ7e-008DMk-2m;
+        Tue, 25 Oct 2022 22:02:02 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Calvin Wan <calvinwan@google.com>
+Cc:     git@vger.kernel.org, emilyshaffer@google.com,
+        phillip.wood123@gmail.com
+Subject: Re: [PATCH v3 2/6] run-command: add hide_output to
+ run_processes_parallel_opts
+Date:   Tue, 25 Oct 2022 21:32:13 +0200
+References: <20221020232532.1128326-3-calvinwan@google.com>
+ <221021.86lep9g9ja.gmgdl@evledraar.gmail.com>
+ <CAFySSZCFrfhdKuOT=kxqPPBGBD0T2FtD4vJHfa9M3cMAPCSBtA@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <CAFySSZCFrfhdKuOT=kxqPPBGBD0T2FtD4vJHfa9M3cMAPCSBtA@mail.gmail.com>
+Message-ID: <221025.86fsfbd64l.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 39DFC858-549B-11ED-BDC0-2AEEC5D8090B-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rub=C3=A9n Justo <rjusto@gmail.com> writes:
 
->>> 	- "no such branch '%s'"
->>> 	- "branch '%s' does not exist"
->>> 	- "invalid branch name: '%s'"
->>> 	+ "no branch named '%s'"
+On Mon, Oct 24 2022, Calvin Wan wrote:
+
+>> I may just be missing something, but doesn't "struct child_process"
+>> already have e.g. "no_stderr", "no_stdout" etc. that we can use?
+>> I.e. isn't this thing equivalent to running:
+>>
+>>         your-command >/dev/null 2>/dev/null
+>>
+>> Which is what the non-parallel API already supports.
+>>
+>> Now, IIRC if you just set that in the "get_next_task" callback it won't
+>> work in the parallel API, or you'll block waiting for I/O that'll never
+>> come or whatever.
+>>
+>> But that'll be because the parallel interface currently only suppors a
+>> subset of the full "child_process" combination of options, and maybe it
+>> doesn't grok this.
+>>
+>> But if that's the case we should just extend the API to support
+>> "no_stdout", "no_stderr" etc., no?
+>>
+>> I.e. hypothetically the parallel one could support 100% of the "struct
+>> child_process" combination of options, we just haven't bothered yet.
+>>
+>> But I don't see why the parallel API should grow options that we already
+>> have in "struct child_process", instead we should set them there, and it
+>> should gradually learn to deal with them.
+>>
+>> I think it's also fine to have some basic sanity checks there, e.g. I
+>> could see how for something like this we don't want to support piping
+>> only some children to /dev/null but not others, and that it should be
+>> all or nothing (maybe it makes state management when we loop over them
+>> easier).
+>>
+>> Or again, maybe I'm missing something...
 >
-> Yes, I had doubts with the third.  The error is referring to the source=
- branch
-> in the copy/rename operation, so I think it makes sense to say that the=
- branch
-> doesn't exist, even if it couldn't.
+> Shouldn't the options that are set in "child_process" be abstracted away
+> from "parallel_processes"?
 
-OK.  As long as it refers to a branch that ought to exist, then
-using the fourth one is perfectly fine.
+In general yes, and no :)
 
-> I prefer a single term like 'modify' as I find it less confuse than 'se=
-t or
-> unset'.
+Our main interafce should probably be "just set
+these in the 'struct child_process' we hand you", but the parallel API
+might want to assert certain things about those settings, as some of
+them may conflict with its assumptions.
 
-OK.
+> Setting "no_stdout", "no_stderr", etc. in a
+> "child_process" shouldn't imply that we still pass the stdout and stderr to
+>  "parallel_processes" and then we send the output to "/dev/null".
 
-Some folks find it unsure and confusing if 'modification' includes
-'deleting/unsetting', and that was why I brought up 'set or unset'.
+Sure, but if they're not producing any output because it's being piped
+to /dev/null how worthwhile is it to optimize that?
 
->>>  - "%s" and "'%s'" was used to format a branch name in different
->>>    messages.  "'%s'" has been used to normalize as it's the more
->>>    frequently used in this file and very common in the rest of the
->>>    codebase.  The opposite has been done for options: "-a" used vs
->>>    "'-a'".
-> ...
-> Same reasoning as above.  It is a system-chosen term, but the message
-> has not a placeholder to put a value, we're using a literal.
+We still can optimize it, but I still think the interface should just be
+the equivalent of:
 
-I doubt that "same reasoning" is sensible. I'll welcome input from
-others, but=20
+	parallel -k -j100% 'sleep 0.0$RANDOM && echo {} >/dev/null' ::: {1..100}
 
-    $ git grep '"[^"'\'']*'\''--[a-z]' \*.c
+Whereas what you seem to be trying to implement is the equivalent of a:
 
-looked very reasonable, and after imagining the output with them
-losing the single quote around the option name, I would think they
-are better with the quotes around them.
+	parallel -u -j100% 'sleep 0.0$RANDOM && echo {} ::: {1..100} >/dev/null
 
->>> Finally, let's change the return code on error for --edit-description=
-,
->>> from -1 to 1.
->>=20
->> OK.  That last one may be better to be a separate patch, as these
->> wording changes are subject to discussion and bikeshedding.
->
-> Mmm, I thought about that.  This change is one that we've been delaying=
- because
-> it might break something due to a change in the way we report errors.  =
-We're
-> specifically changing this here and the change is small, so I found app=
-ropriate
-> to do it here.
+Except as an option to the parallel API, but the end result seems to be
+equivalent.
 
-Not really.  Nobody reads error messages, but programs can react to
-exit codes.  It is more important to get the latter right.
+> That being said, I can understand the aversion to adding an option like
+> this that doesn't also add support for stdout and stderr. I can remove this
+> patch and instead reset the buffer inside of pipe_output and task_finished
+> in a later patch
 
->> This does not fall into any of the categories the proposed log
->> message discussed.  Rather, it looks more like "the code
->> subjectively looks better this way".  It happens to much my
->> subjective taste, but that does not change the fact that we
->> shouldn't distract reviewers with such an unrelated change in the
->> same patch.
-> =20
-> It certainly looks subjectively better, and in less lines...
+I'm not necessarily opposed to it, just puzzled about it, maybe I don't
+have the full picture.
 
-As I said, it does not matter.  It is outside the scope of "improve
-error messages" and should be done outside the series, or at lesat
-as a separate step in the series.
+In general I highly recomend looking at whatever GNU parallel is doing,
+and seeing if new features in run-command.[ch] can map to that mental
+model.
 
->> And that should be a separate patch, that can be reviewed and
->> applied regardless of the rest of "error messages cleanup" topic.
->
-> Good point.  I didn't think about that and it also goes in the line of
-> the previous patches in this file.  I'll review that.  Also gives a goo=
-d
-> opportunity to fix that repeated code /... if (copy) ... else if
-> (rename)/.
+Our API is basically a small subset of its featureset, and I've found it
+useful both to steal ideas from there, and to test
+assumptions. E.g. "ungroup" is just a straight rip-off of the
+"--ungroup" option, it's also had to think about combining various
+options we don't have yet (but might want).
 
-OK.  But again, that is outside the topic of "improve error
-messages".
+In that case the supervisor API/parallel(1) needs to do something
+special, but for "I don't want output" it seems best to just do that at
+the worker level, i.e. equivalent to piping to /dev/null.
 
-Thanks.
+Having a bias towards that approach also makes it easier to convert
+things to running in parallel, i.e. you just (mostly) keep your current
+"struct child_process", and don't need to find the equivalents in the
+parallel API.
+
+
+
+
+
+
+
 
