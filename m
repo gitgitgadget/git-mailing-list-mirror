@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D12D6C38A2D
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 14:21:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B73DC433FE
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 14:21:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234275AbiJZOVE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 10:21:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42360 "EHLO
+        id S234279AbiJZOVH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 10:21:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234082AbiJZOU5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 10:20:57 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88BA943301
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:20:56 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id t25so16159615ejb.8
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:20:56 -0700 (PDT)
+        with ESMTP id S234255AbiJZOU6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 10:20:58 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01B30F88CD
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:20:58 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id y14so21664061ejd.9
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:20:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6vOHKiAGJsQWxkU3/tPJB3lIbnQfQ7gWezXRvf8tQws=;
-        b=g2aoKL8nSLQpE2TSaJmFkQ9Ify2UnLXHbzPRRnrYP6J1LQztRAjTLaRR42i6+L+5yi
-         GxrXYZMCWTKHTTrqr66GTGfkEFWy5mMu0llDOqWFzAILghzqcDegJS24pGmnOkO9vy/7
-         lypWD2OjtX365123JQlpSt9nJIBXtSlCz9+yXmE0uFl+hRSb8DyiLC+sLMTEy6PQqUZW
-         nndscNgB6V8vCLvBnxVcTUbI+13/CTxon05utLbtbqICj00mzwMJFzJ0CxUNXbCfudvK
-         43ekhN45YpPKT2YHvzZriya9GgPVAnDzhJDEFKg8Dn0zIEQpdVtD+JUS14JnOrG7Nl2H
-         ewIQ==
+        bh=Xo9k/61/MxTyZ8l58tMG1c5o6lYM9hJ9CRky7qiFLck=;
+        b=alE1kPe0zumqAImqR7cLcfS80zaTgMyRAeHtzDQ49kq1eLK9a74Z81OcWQoKs/iHCo
+         ImCkOJ5cESX9LYlYcqbwZGtppNf7aPLTDKvgqmymen7VayHFLNzVSQeRVOVB15qoeKcR
+         4YQf+lAL9L2GNbmFWhyBrhKdH+cx1sg3mHWOjCE0fJlcXWjKYzkBY+F/c5KB7p3jFR/K
+         b4ZmYT+JqC9Tut5aXfdRnEyZeUTWpCLeHxNGoljqdnbZ06P0s4GiJzCWjyIsyKCPn+sU
+         OYrHA5bSoVs+gFAcnMzLzEiNEXk2UkCAhhvwwOi841R2a4seum0sa0Ep2ip/g+IXVBKZ
+         BboA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6vOHKiAGJsQWxkU3/tPJB3lIbnQfQ7gWezXRvf8tQws=;
-        b=KZ05sN9l0Kprk+QYdrYCs/SUPN17h2m7UK6anYIz0dhWd1yo69Aa2gcGha7W1ADHH8
-         jxt2uDGS22982Y9ywtsjKrmYBwWWhBizbEBq476G6+oXqhLAsWkfE1DkmDw6cnfKChb5
-         /4r57C+BRS9k6xR4HPIMTLxqlNIpfuU8LPbOHjdKiY+YYtRT+xzWeODqCRz9MJS5Z6EU
-         uANkQAYW8xgMhOuMsog5W8c5pfmQr7KqYtdltwTf/zZKQJW1uOL6Uqh7WtlVqVmWMDRL
-         pxdclQPpKYL1o+/7Sznc6iaxTmy1KHHFEKtJ2x2+0VQldzDIM/Jfs1/nTHm9SltG73p+
-         JLAQ==
-X-Gm-Message-State: ACrzQf3HDc9fs27kLA0pjgwMVTB94rJiQxGx0OcydShc6rZmnjFOy0ej
-        e1zntXHmbM7rvq7dfqvfIooCVBSpqQk=
-X-Google-Smtp-Source: AMsMyM6Tiq7Wwpx+rTgRVhgHHYbEQXQW6dNRe/Y/Cs88wCQ/molrIjOahWdzt7n2/UmrmKqgLEy75Q==
-X-Received: by 2002:a17:907:75d2:b0:7a0:72b8:236a with SMTP id jl18-20020a17090775d200b007a072b8236amr20899166ejc.47.1666794054645;
-        Wed, 26 Oct 2022 07:20:54 -0700 (PDT)
+        bh=Xo9k/61/MxTyZ8l58tMG1c5o6lYM9hJ9CRky7qiFLck=;
+        b=QysQfMUMMKjhW5nr4Ku3tra1D6OqD9P/DqLspHI2u04P2aWRyh3nm5qAOAHLxMbSp3
+         MH9x7zBvLbUw2NlQT/FFlhTnWj1f7RmeKyjhDkeLoWGijNE2BXoXR/CHCE9ykTNCDRKK
+         1hN8lsgdM6iRL4Dg/DXtQucGuSmDkkKrARW9vRVHav9Ta6yN3Eg+S1NdoSE0rHyNi/ar
+         v/FAOdeU2MgGmk1n2Evr3KnekwboDwd1EGaMq53oeyLGmyI9gLc0zEnUPGYuX2osX3Q1
+         CV/hAVzPzxIA9bZB8hAfFDLyE0428q5mBxmaKtil8N9ecWEpYhJfdQHZ2Va4dmGzgT6R
+         pHfw==
+X-Gm-Message-State: ACrzQf0nb/beHmzlZE+15siZwmHes9MpZqcJabWidMZ/m9iL4qEmQCRE
+        H/v1KTySHzXZyehU00kAJQt3zcIu+FU=
+X-Google-Smtp-Source: AMsMyM6FuYmQpaB4e6YFP87VuldAGgIsC/Hx6F6o7Sjs5yuHxZkDbmer1ZhJCJjslcwRBhJlKVp7VA==
+X-Received: by 2002:a17:906:c151:b0:78d:cdbc:9fb7 with SMTP id dp17-20020a170906c15100b0078dcdbc9fb7mr36402827ejc.688.1666794056054;
+        Wed, 26 Oct 2022 07:20:56 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id d11-20020a50ea8b000000b004619f024864sm3605565edo.81.2022.10.26.07.20.53
+        by smtp.gmail.com with ESMTPSA id d11-20020a50ea8b000000b004619f024864sm3605565edo.81.2022.10.26.07.20.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 26 Oct 2022 07:20:54 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 01/12] Makefile + shared.mak: rename and indent $(QUIET_SPATCH_T)
-Date:   Wed, 26 Oct 2022 16:20:28 +0200
-Message-Id: <patch-v4-01.12-c0306e3c397-20221026T141005Z-avarab@gmail.com>
+Subject: [PATCH v4 02/12] cocci rules: remove unused "F" metavariable from pending rule
+Date:   Wed, 26 Oct 2022 16:20:29 +0200
+Message-Id: <patch-v4-02.12-14e757cc020-20221026T141005Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1251.g3eefdfb5e7a
 In-Reply-To: <cover-v4-00.12-00000000000-20221026T141005Z-avarab@gmail.com>
 References: <cover-v3-00.11-00000000000-20221014T152552Z-avarab@gmail.com> <cover-v4-00.12-00000000000-20221026T141005Z-avarab@gmail.com>
@@ -69,50 +69,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In f7ff6597a75 (cocci: add a "coccicheck-test" target and test *.cocci
-rules, 2022-07-05) we abbreviated "_TEST" to "_T" to have it align
-with the rest of the "="'s above it.
+Fix an issue with a rule added in 9b45f499818 (object-store: prepare
+has_{sha1, object}_file to handle any repo, 2018-11-13). We've been
+spewing out this warning into our $@.log since that rule was added:
 
-Subsequent commits will add more QUIET_SPATCH_* variables, so let's
-stop abbreviating this, and indent it in preparation for adding more
-of these variables.
+	warning: rule starting on line 21: metavariable F not used in the - or context code
+
+We should do a better job of scouring our coccinelle log files for
+such issues, but for now let's fix this as a one-off.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile   | 2 +-
- shared.mak | 6 ++++--
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ contrib/coccinelle/the_repository.pending.cocci | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/Makefile b/Makefile
-index 85f03c6aed1..0ca1781510e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3168,7 +3168,7 @@ $(COCCI_TEST_RES_GEN): .build/%.res : %.c
- $(COCCI_TEST_RES_GEN): .build/%.res : %.res
- $(COCCI_TEST_RES_GEN): .build/contrib/coccinelle/tests/%.res : contrib/coccinelle/%.cocci
- 	$(call mkdir_p_parent_template)
--	$(QUIET_SPATCH_T)$(SPATCH) $(SPATCH_FLAGS) \
-+	$(QUIET_SPATCH_TEST)$(SPATCH) $(SPATCH_FLAGS) \
- 		--very-quiet --no-show-diff \
- 		--sp-file $< -o $@ \
- 		$(@:.build/%.res=%.c) && \
-diff --git a/shared.mak b/shared.mak
-index 33f43edbf9a..96b06acc455 100644
---- a/shared.mak
-+++ b/shared.mak
-@@ -69,8 +69,10 @@ ifndef V
- 	QUIET_SP       = @echo '   ' SP $<;
- 	QUIET_HDR      = @echo '   ' HDR $(<:hcc=h);
- 	QUIET_RC       = @echo '   ' RC $@;
--	QUIET_SPATCH   = @echo '   ' SPATCH $<;
--	QUIET_SPATCH_T = @echo '   ' SPATCH TEST $(@:.build/%=%);
-+
-+## Used in "Makefile": SPATCH
-+	QUIET_SPATCH			= @echo '   ' SPATCH $<;
-+	QUIET_SPATCH_TEST		= @echo '   ' SPATCH TEST $(@:.build/%=%);
+diff --git a/contrib/coccinelle/the_repository.pending.cocci b/contrib/coccinelle/the_repository.pending.cocci
+index 072ea0d9228..747d382ff5f 100644
+--- a/contrib/coccinelle/the_repository.pending.cocci
++++ b/contrib/coccinelle/the_repository.pending.cocci
+@@ -20,7 +20,6 @@ expression E;
  
- ## Used in "Documentation/Makefile"
- 	QUIET_ASCIIDOC	= @echo '   ' ASCIIDOC $@;
+ @@
+ expression E;
+-expression F;
+ @@
+ - has_object_file_with_flags(
+ + repo_has_object_file_with_flags(the_repository,
 -- 
 2.38.0.1251.g3eefdfb5e7a
 
