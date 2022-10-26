@@ -2,120 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 493D9C433FE
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 14:57:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB5B7C433FE
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 15:17:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234440AbiJZO5h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 10:57:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58382 "EHLO
+        id S234369AbiJZPRY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 11:17:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234438AbiJZO5P (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 10:57:15 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 421DB915EA
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:57:03 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id v1so26775443wrt.11
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:57:03 -0700 (PDT)
+        with ESMTP id S234493AbiJZPRX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 11:17:23 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 884191213ED
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 08:17:21 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id v130-20020a1cac88000000b003bcde03bd44so1763406wme.5
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 08:17:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nLGBnao98U2XU+whEDXV4L3xqjUvQE7lEuTJMFWwHFw=;
-        b=DwTJzDvepG7zTJhwN9uKoU1+PKM0uEa544wQTxHleuJvf+JSt+GQefP2vQ0apRKrHF
-         Cq2brP2OeikGBKzEafjU4VgLLv5lSTVN3u1D45I3nVUXgdr+hgr1ddXMVFSeA8ucqjXa
-         kyajds6lfUStGPlhi0LvbNzjVRelj+jyUCUAe4uh1Ba/3VqLTG9/3LAtFdrxlfVSXmj5
-         +i1D//jIe3p/CUrzf+zz+TdyL4aVuPKs3zkyUcXQROmGDBC+KskrdPbbIYMMQgNbQ7Bh
-         bp+7lnxCI8DMunJKdcozOncTw9xJ62/1fiKpBDARfB+wTa8mmzl207bkGGM5fx8EHQTM
-         JluA==
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8lxIJdGydgdYcu+ecAjYikevcuM3DXF7pT4TpU5JnRE=;
+        b=Lk8dyk9+FSjzN15C+QhIlcSun/Uc2dlVe0hXyoWx+jkeVsQstPMevUhMHJtJan1den
+         x518hT7etxKF3TGW2/iiiNk+ih5R1Kii1Q4XAvGGrMAcdVQcIq0cbp/yPEL83lHKkQgM
+         JxokW8GsAA4oJ8KdZbHa7Sh6XUSCwJCcB1xZJ1LMP/YyLzM5ElHjghzaXs9YbNoJDP84
+         0utS5HZ7X3idClqdqrJZcjjNZD6IvRWiuMMzBk+XGOB7shiArXWjvGQ0EWRKcjheWgvO
+         Z6Zic0PRoSr76zoy+Nvd4VaHcLUTFl9uWe4kv67nh6MI9lBvVMpwORl8L0nwGMtxsQ/e
+         B/Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nLGBnao98U2XU+whEDXV4L3xqjUvQE7lEuTJMFWwHFw=;
-        b=rINV29tj+jcKCqNSW1bnzuyvxWvKV0XzaA9+kjAMRp3NQPMqvVGwKAdQrA1UrHnuhb
-         iiMQz8dg7pF6uoGViqn6oxOnrREiYOmgdhkY9A4dEUD1KEFRvpVO84Eex/TAfq8steQu
-         LxFxcqiwlaSFQqr04VMxnKmq8kg6QT0sTYcaLPiRItZh9HWF3aSIzqOs3LqaEumz6PWk
-         1JQPnrTbCCI7xdbdGnK7jjXWvoQG6d0WvJCqwl6NO4YofdlPQDFx4oGBQWb2mDWXXDfh
-         uJqTdlrSvfuGODrMew4keuh1kWO6C1FJRegAE3VLz0otfmjWL2lpiNJ1GzQ0Pbix/Hab
-         oPRQ==
-X-Gm-Message-State: ACrzQf3kmwjVsLTictIimVaPB+azlIPK76iwZEwHrlfF5v/p31DfRFd3
-        BCxfS45OeS0BK3rSMRrbt4hSXdXXjxWG7g==
-X-Google-Smtp-Source: AMsMyM6nyxLspiEsV6v3lmTDWi3ngwbLcHHS9v3DBaTU8WRAYu4zcmhDcQt27KoIOJ76uwhUfCqPew==
-X-Received: by 2002:a5d:5270:0:b0:236:60c6:6e80 with SMTP id l16-20020a5d5270000000b0023660c66e80mr14752279wrc.140.1666796221387;
-        Wed, 26 Oct 2022 07:57:01 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i25-20020a1c5419000000b003c7084d072csm2180351wmb.28.2022.10.26.07.57.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Oct 2022 07:57:00 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Mike Hommey <mh@glandium.org>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Glen Choo <chooglen@google.com>,
-        Eric DeCosta <edecosta@mathworks.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v4 9/9] Makefile: discuss SHAttered in *_SHA{1,256} discussion
-Date:   Wed, 26 Oct 2022 16:56:47 +0200
-Message-Id: <patch-v4-9.9-9045ff9c4ed-20221026T145255Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.38.0.1251.g3eefdfb5e7a
-In-Reply-To: <cover-v4-0.9-00000000000-20221026T145255Z-avarab@gmail.com>
-References: <cover-v3-0.9-00000000000-20221020T223946Z-avarab@gmail.com> <cover-v4-0.9-00000000000-20221026T145255Z-avarab@gmail.com>
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8lxIJdGydgdYcu+ecAjYikevcuM3DXF7pT4TpU5JnRE=;
+        b=0Oa3BS0lOGqb2+ZgShZ/qfEirl58rIV2Tq33INkO/UwZGnCHzXTjQjqvFMoIl+/JDc
+         wd5x/GVmAUljctXbJIGEF2XrWukqo3vqcumwek2eQ5w8OBYsnnIqkpu+pIZZ6eAc8sba
+         ylUkvb/ue32F7Q9Jc1pGeWz0OzW5s4nHs544QJait4Ku7MW7HKWB9HHKZIpYEYypprhz
+         ekJkowampb/A/GFMEtfZ+XxyMyifN/dCQUjJw61M0cscvpJJRlXxJlsXBCS4RQUf4PvQ
+         ma5LYm43a3VNIYJ4QGD8hi7JQ/usI2+pAI2L+nKiVimT1yIqqb3BFeooLNqKhTrJUb3O
+         UqtQ==
+X-Gm-Message-State: ACrzQf3I8Mo4Wx5etrZR8IFMfDM8u504/QiDiAMbed7qQLndoNRrAWVo
+        dpfBupD+XK78CdAb9k9ge6Q=
+X-Google-Smtp-Source: AMsMyM4B9STplHRc9hGSx+Rd2RDv3gSlR26OjtMQiZVD35bVb0qhCsdCdY1kgy1pjFoDdOfQ8cbWVw==
+X-Received: by 2002:a7b:c455:0:b0:3c6:bd0e:f9b0 with SMTP id l21-20020a7bc455000000b003c6bd0ef9b0mr2866243wmi.21.1666797440041;
+        Wed, 26 Oct 2022 08:17:20 -0700 (PDT)
+Received: from [192.168.1.74] ([31.185.185.144])
+        by smtp.gmail.com with ESMTPSA id p6-20020a05600c358600b003c6b9749505sm2137394wmq.30.2022.10.26.08.17.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 26 Oct 2022 08:17:19 -0700 (PDT)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <8af26af0-548d-52c8-9752-1a265af8fd54@dunelm.org.uk>
+Date:   Wed, 26 Oct 2022 16:17:13 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 3/8] rebase --merge: fix reflog when continuing
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
+        <avarab@gmail.com>, Calvin Wan <calvinwan@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Glen Choo <chooglen@google.com>, Victoria Dye <vdye@github.com>
+References: <pull.1150.v3.git.1665567312.gitgitgadget@gmail.com>
+ <pull.1150.v4.git.1666344108.gitgitgadget@gmail.com>
+ <2c965f4b97c1773abc6b844b87fa64c5d6d1524c.1666344108.git.gitgitgadget@gmail.com>
+ <xmqqk04tm62o.fsf@gitster.g>
+ <86699708-d631-fb49-482c-af27204a3570@dunelm.org.uk>
+ <xmqqczafopc0.fsf@gitster.g>
+In-Reply-To: <xmqqczafopc0.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Let's mention the SHAttered attack and more generally why we use the
-sha1collisiondetection backend by default, and note that for SHA-256
-the user should feel free to pick any of the supported backends as far
-as hashing security is concerned.
+Hi Junio
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Makefile | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+On 25/10/2022 17:11, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>>>> Both of these will be fixed in a future series that
+>>>> stops the sequencer calling setenv().
+>>> If it gets fixed in a future step in the same series, that is a
+>>> different matter, but if it is easy enough not to deliberately
+>>> introduce a new leak, we'd prefer to do so.
+>>
+>> It's a couple of patches to fix which are more or less finished, I'm
+>> planning to send them once this series is in next.
+> 
+> So we will do the "add a known breakage of the same kind as there
+> exists others, and then later fix them all up, including the one
+> that is added by this series, because fixes are non-trivial and this
+> topic is easier to finish if we allowed to add a known breakage"
+> approach?  Just making sure it is what you plan to do.
 
-diff --git a/Makefile b/Makefile
-index a0ca6456b85..805e88ed5fd 100644
---- a/Makefile
-+++ b/Makefile
-@@ -481,6 +481,16 @@ include shared.mak
- #
- # === SHA-1 backend ===
- #
-+# ==== Security ====
-+#
-+# Due to the SHAttered (https://shattered.io) attack vector on SHA-1
-+# it's strongly recommended to use the sha1collisiondetection
-+# counter-cryptanalysis library for SHA-1 hashing (DC_SHA1).
-+#
-+# If you know that you can trust the repository contents, or where
-+# potential SHA-1 attacks are otherwise mitigated the backends listed
-+# in "Other SHA-1 implementations" are faster than DC_SHA1.
-+#
- # ==== Default SHA-1 backend ====
- #
- # If no *_SHA1 backend is picked we'll fall back on using the default.
-@@ -525,6 +535,11 @@ include shared.mak
- #
- # === SHA-256 backend ===
- #
-+# ==== Security ====
-+#
-+# Unlike SHA-1 the SHA-256 algorithm does not suffer from any known
-+# vulnerabilities, so any implementation will do.
-+#
- # ==== Default SHA-256 backend ====
- #
- # If no *_SHA256 backend is picked we'll fall fall back on using the
--- 
-2.38.0.1251.g3eefdfb5e7a
+Yes, that's right
 
+Thanks
+
+Phillip
+
+> Thanks.
