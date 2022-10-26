@@ -2,141 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DA64C433FE
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 17:51:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 78877C38A2D
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 18:29:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234196AbiJZRvx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 13:51:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55268 "EHLO
+        id S234335AbiJZS3z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 14:29:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233683AbiJZRvv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 13:51:51 -0400
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4340A664F3
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 10:51:50 -0700 (PDT)
-Received: by mail-pl1-x631.google.com with SMTP id d24so14890621pls.4
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 10:51:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oO08gldFKi+WREGGPAvDDhU+7ybd1ZsKx2g1zyjnrw4=;
-        b=OMwcspdakU2YSY3vbGSmP9egpJdvimOJ626Zq5sPlQXjJhpyrIshT6S5uadCiZHlNQ
-         omZrTrvwlZJPrs1M9lMD6efk5/uimTtFZHVfg4bYL+hWz4f3KdKszQQRnpdMdQp60KTi
-         BNdouWYnCQNUg+Ggq0ZYfOjh0f7A6cXfCis1v1m3ta7Bj18qOx5yTKxFfWwTylYo+umC
-         9JmeqM1SJ7YEbJKi7Wsg9qS8Slq11KKxG5zU7v/APmFCijll83Ur20G+cOtLmL0IUYlW
-         8YzJea6WmF/ionKkbVqvWzFgqCMfvp7k6j0BrH3BDTAmDUegAm9gbji8YfEZrmyhJNGV
-         MX+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oO08gldFKi+WREGGPAvDDhU+7ybd1ZsKx2g1zyjnrw4=;
-        b=mgqZPFW2qGEyoEnlpIkNvhOHFobTaqMotsCmAvuIGM/Gbqsa8vnyg0+E16oyivxnxR
-         Hg67lBMRgC8hMn3znkomvcVZmHtoTaIN6yYpEljqhOvqp/4GG6H1V52gvFESQyTSh2sa
-         UInHB4Z6n/ODhqVZFKz0HBR5S/aD/Co78ywBbQAGUqtcWbkZ9SO+yd9eGuVpAE6Bo1m6
-         ngtKe4xHOeQU/y2YeczRUdebjM2275U4vx9b5JuxrhUMv7QE4jiPolnRraaZN0gVE8HM
-         Iep6h5j70qNH2Ltthsrb+O310lFD0BAdZu97lWkBa7dh8A3n5XdHCEbzZSTNmndOkTsg
-         6CjA==
-X-Gm-Message-State: ACrzQf3FKMi2xxWulNTxm2RQz8xxSTq3OFx24IikmyiT5oiF8AJE+Ed6
-        6H7DVmn33wfphT+kKKDKHw73QJPwMSY=
-X-Google-Smtp-Source: AMsMyM5FAxZ8x9zqtlBd2X964PoxTYuuRji+6UQJAGSVxn5cgoz0z8rWNvrj+Z/4Fem4oePKUayVWA==
-X-Received: by 2002:a17:90b:4b09:b0:213:655c:158b with SMTP id lx9-20020a17090b4b0900b00213655c158bmr1838748pjb.119.1666806709656;
-        Wed, 26 Oct 2022 10:51:49 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id g12-20020a17090a708c00b001f559e00473sm1348367pjk.43.2022.10.26.10.51.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Oct 2022 10:51:49 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 1/3] Makefile: factor sed-powered '#!/bin/sh' munging
- into a variable
-References: <cover-0.5-00000000000-20220901T130817Z-avarab@gmail.com>
-        <cover-v2-0.3-00000000000-20221026T143533Z-avarab@gmail.com>
-        <patch-v2-1.3-fc6c5a6a8df-20221026T143534Z-avarab@gmail.com>
-Date:   Wed, 26 Oct 2022 10:51:48 -0700
-Message-ID: <xmqq1qquiibv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S234393AbiJZS3N (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 14:29:13 -0400
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78360E31A3
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 11:29:11 -0700 (PDT)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 8797ECA1253;
+        Wed, 26 Oct 2022 14:29:10 -0400 (EDT)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 471A3CC833C;
+        Wed, 26 Oct 2022 14:29:10 -0400 (EDT)
+Subject: Re: [PATCH] index: add trace2 region for clear skip worktree
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Anh Le via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Timothy Jones <timothy@canva.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>, Anh Le <anh@canva.com>
+References: <pull.1368.git.git.1666742722502.gitgitgadget@gmail.com>
+ <xmqq35bbmfz6.fsf@gitster.g>
+ <d4103788-5153-11f2-487f-5cc795d261a8@jeffhostetler.com>
+ <xmqq8rl2lgl3.fsf@gitster.g>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <0bb8dc64-aad1-e3c1-66ef-c2e8d6600189@jeffhostetler.com>
+Date:   Wed, 26 Oct 2022 14:29:09 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.0; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq8rl2lgl3.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: mailmunge 3.09 on 209.68.5.199
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> Reduce the amount of magical copy/pasting in the Makefile by factoring
-> the munging of "#!/bin/sh" on the first line of a shellscript into a
-> variable we can re-use in the various rules that need to do so.
 
-At least when taken standalone, this looks more like replacing one
-magical copy pasting with another magical one, the difference being
-that the latter is not immediately obvious without referring back to
-the definition of the variable.
+On 10/26/22 12:01 PM, Junio C Hamano wrote:
+> Jeff Hostetler <git@jeffhostetler.com> writes:
+> 
+>> In the worst case, we walk the entire index and lstat() for a
+>> significant number of skipped-and-not-present files, then near
+>> the end of the loop, we find a skipped-but-present directory
+>> and have to restart the loop.  The second pass will still run
+>> the full loop again.  Will the second pass actually see any
+>> skipped cache-entries?  Will it re-lstat() them?  Could the
+>> `goto restart` just be a `break` or `return`?
+>>
+>> I haven't had time to look under the hood here, but I was
+>> hoping that these two counters would help the series author
+>> collect telemetry over many runs and gain more insight into
+>> the perf problem.
+> 
+> Without being able to answer these questions, would we be able to
+> interpret the numbers reported from these counters?
+> 
+>> Continuing the example from above, if we've already paid the
+>> costs to lstat() the 95% sparse files AND THEN near the bottom
+>> of the loop we have to do a restart, then we should expect
+>> this loop to be doubly slow.  It was my hope that this combination
+>> of counters would help us understand the variations in perf.
+> 
+> Yes, I understand that double-counting may give some clue to detect
+> that, but it just looked roundabout way to do that.  Perhaps
+> counting the path inspected during the first iteration and the path
+> inspected during the second iteration, separately, without the "how
+> many times did we repeat?", would give you a better picture?  "After
+> inspecting 2400 paths, we need to go back and then ended up scanning
+> 3000 paths in the flattened index in the second round" would be
+> easier to interpret than "We needed flattening, and scanned 5400
+> paths in total in the two iterations".
 
-If we need to change the replacement wholesale in a later step, then
-it might give us a good trade off, but otherwise I am not sure why
-this is a good idea that is worth the churn.  
+Good point and I was wondering about whether we might see "2 x 95%"
+values for path_count in really slow cases.  And yes, it would be
+better to have `int path_count[2]` and tally each loop pass
+independently.
 
-When adding or updating these actions, in the original, you can typo
-SHELL_PATH_SQ, but you can typo cmd_munge_script_sed_shell_path_arg
-in the updated to break it the same way.  So...?
+I guess I was looking for a first-order "where is the pain?" knowing
+that we could always dig deeper later.  That is, is the lstat's or
+is it the ensure-full and index rewrite?  Or both?
 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  Makefile | 12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
->
-> diff --git a/Makefile b/Makefile
-> index 85f03c6aed1..45b22d33513 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2344,8 +2344,12 @@ GIT-SCRIPT-DEFINES: FORCE
->  		echo "$$FLAGS" >$@; \
->              fi
->  
-> +define cmd_munge_script_sed_shell_path_arg
-> +'1s|#!.*/sh|#!$(SHELL_PATH_SQ)|'
-> +endef
-> +
->  define cmd_munge_script
-> -sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-> +sed -e $(call cmd_munge_script_sed_shell_path_arg) \
->      -e 's|@SHELL_PATH@|$(SHELL_PATH_SQ)|' \
->      -e 's|@@DIFF@@|$(DIFF_SQ)|' \
->      -e 's|@@LOCALEDIR@@|$(localedir_SQ)|g' \
-> @@ -2447,7 +2451,7 @@ git-instaweb: git-instaweb.sh GIT-SCRIPT-DEFINES
->  else # NO_PERL
->  $(SCRIPT_PERL_GEN) git-instaweb: % : unimplemented.sh
->  	$(QUIET_GEN) \
-> -	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-> +	sed -e $(call cmd_munge_script_sed_shell_path_arg) \
->  	    -e 's|@@REASON@@|NO_PERL=$(NO_PERL)|g' \
->  	    unimplemented.sh >$@+ && \
->  	chmod +x $@+ && \
-> @@ -2468,7 +2472,7 @@ $(SCRIPT_PYTHON_GEN): % : %.py
->  else # NO_PYTHON
->  $(SCRIPT_PYTHON_GEN): % : unimplemented.sh
->  	$(QUIET_GEN) \
-> -	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-> +	sed -e $(call cmd_munge_script_sed_shell_path_arg) \
->  	    -e 's|@@REASON@@|NO_PYTHON=$(NO_PYTHON)|g' \
->  	    unimplemented.sh >$@+ && \
->  	chmod +x $@+ && \
-> @@ -3061,7 +3065,7 @@ all:: $(TEST_PROGRAMS) $(test_bindir_programs)
->  
->  bin-wrappers/%: wrap-for-bin.sh
->  	$(call mkdir_p_parent_template)
-> -	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
-> +	$(QUIET_GEN)sed -e $(call cmd_munge_script_sed_shell_path_arg) \
->  	     -e 's|@@BUILD_DIR@@|$(shell pwd)|' \
->  	     -e 's|@@PROG@@|$(patsubst test-%,t/helper/test-%,$(@F))$(if $(filter-out $(BINDIR_PROGRAMS_NO_X),$(@F)),$(X),)|' < $< > $@ && \
->  	chmod +x $@
+We have other places that do lstat() over the cache-entries and have
+added code to spread the loop across n threads.  I doubt that is needed
+here and I didn't want to lead with it.
+
+
+> 
+>> WRT the `intmax_t` vs just `int`: either is fine.
+> 
+> I thought "int" was supposed to be natural machine word, while
+> incrementing "intmax_t" is allowed to be much slower than "int".
+> Do we expect more than 2 billion paths?
+> 
+
+You're right.  An `int` would be fine here.
+
+Thanks,
+Jeff
