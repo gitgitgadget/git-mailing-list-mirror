@@ -2,95 +2,184 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E905FFA373E
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 14:34:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF876C433FE
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 14:42:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234208AbiJZOeu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 10:34:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44130 "EHLO
+        id S233993AbiJZOmr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 10:42:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234083AbiJZOep (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 10:34:45 -0400
-Received: from mail-oa1-x2a.google.com (mail-oa1-x2a.google.com [IPv6:2001:4860:4864:20::2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6E8314D2E
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:34:44 -0700 (PDT)
-Received: by mail-oa1-x2a.google.com with SMTP id 586e51a60fabf-13c2cfd1126so1401228fac.10
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:34:44 -0700 (PDT)
+        with ESMTP id S233766AbiJZOmm (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 10:42:42 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D52D10043D
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:42:41 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id l16-20020a05600c4f1000b003c6c0d2a445so1739924wmq.4
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:42:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oB9ZhxZCgs60tVUGHY8QAMhXlIHxB32mHrlzkHOjXJI=;
-        b=TmN6wc2C4Dsp0UsCRE02sQ4OcYLqOpqBYOaiaK7tCtUkP2eIy8zT4DXjQeLOs8zixt
-         +g2fUlC8aoV5mRScsw25J39vvr8HDIYCwZ0EyJoIphQljNuddxvGWX6ma3YM5PWHaUvK
-         H9pTaNBhblzdpqHbbLEsBeEYCAe5NlIgBF/AeM8zvdNx9B7p4AwUePu0EZan5GeeQ0Hv
-         +mWewGT4W5fAtQa93UtYZQ4JINVG0Vzt83bryNlXUk8QOI3UHndVOb2sdefeDny500sx
-         DUvfuSUBFh8uZja5y9SSKlFm0v9gW2EZ1NLn/hLwkJXht9ppFnAqYf+2XgvMVswwqSbU
-         Z7tQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=An4+CAvgLQfNQMBhYk+Fp3+6gtJzwv5lPiP54wa8t3o=;
+        b=CFrvqcOIVT4ZGmnD+H6gbJnddtkiNdhOnP2BxYrORObgGV45OQ4J/UPRGscBsNyo84
+         HvfQqPGlziH64fBve3G4SEennjtKh8jqwQA2aBR/IeepcTWx5MLdOuKSmX2CxNwqfreN
+         0SW4xAacv7dfkR4ATAnEPZaJYNkb4nMEpRQ9bPknNQt2VcEdpu2os6dWxc4CR5UcLD0n
+         FON+pom6clZZ71329Jdd0kc8JEnE0Ny1E1lKfaaV6cmwnG4oyZszmJxi/0KApUa1Pz6f
+         1aUBc8pdBrfp9axLUi/QAThjrYnbTFvXq9FgSklKa66ZYSppfq/luV7GP3yuAVC5U0tX
+         00jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oB9ZhxZCgs60tVUGHY8QAMhXlIHxB32mHrlzkHOjXJI=;
-        b=8QhhPRvVzK55XurX5eMD2uk0YtBTTwE4nyxfN02K1/xBAprzZdHpOTb5Nil6Yuvfmz
-         uu3f9ennT6daCecslAQmxVYd/GaHCdPIi2lpy0LxJz83ewKZ8m73lSh/kFts70FHshEb
-         iRUzN9zB7qvAUj7nkqJ6OrTeTcuf1YBoKP31rfwoSityggRfIQqC7oD4KGUUs4VNWglI
-         TWyd/ASRqPod2n/55l+MJL4zRunBpS+9CrM/KSFkxFcJOXW7GoBIqrNwiWHPTqLjKfVI
-         NKGN1QzTBu3df6zcdl+xzfB5p6jWELBhQ3G/D06h1vaBca9QnqH1WZglrWxZUJQsj769
-         qJQw==
-X-Gm-Message-State: ACrzQf3Gn00sRo/nLp6fKZGLz0nyicKaOxQYq4ekKcJJyieezxUHTFWF
-        GHU/Y1bfuPJznBr5YpEsBBAT
-X-Google-Smtp-Source: AMsMyM7IpCyM9ll7RGVftXkgVunE2FBlqz8GICoWgqdnrd8t1qZ+K4e6vPtjm7X1jw223y57xGbn1w==
-X-Received: by 2002:a05:6870:c1c7:b0:13c:2cfc:9b70 with SMTP id i7-20020a056870c1c700b0013c2cfc9b70mr1098458oad.102.1666794883842;
-        Wed, 26 Oct 2022 07:34:43 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:b472:9a5:ecfe:20c7? ([2600:1700:e72:80a0:b472:9a5:ecfe:20c7])
-        by smtp.gmail.com with ESMTPSA id a19-20020a056870d19300b00127fbb7afffsm3173207oac.5.2022.10.26.07.34.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Oct 2022 07:34:43 -0700 (PDT)
-Message-ID: <0267162a-098b-2280-46b6-51932a8df6c3@github.com>
-Date:   Wed, 26 Oct 2022 10:34:41 -0400
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=An4+CAvgLQfNQMBhYk+Fp3+6gtJzwv5lPiP54wa8t3o=;
+        b=sVkqGGxhR3ynsy62076QOk9cLUmSMODm4Xvr0uaAJELd3CPgQbCiQcq6nQVDVXHHSw
+         6FgzN0aH+xybL+F5MxzpiAITj1i+w06MV7Dw3fuW4wq/2L6L2AB2Wlgyyi8CiFMEmwdJ
+         Fm3PGF7SmP1BWftJFz38qyo94vZ0yAy4nDuRePUAKeV3cwqFr0v5p9B+ypzUlS/tF6vY
+         AQ3LsilQkHuJkrjMmImSjEc0F1Gv4DbP/O0fKOEBNqrlnx3cfA9UW6zDClTu5MLRzV9E
+         NdOAGcUiL73bv7pV5+EaqyRNENmMoZ79VFCDYwSJGd3PGRYx58M20CIpm1zLy4dgwWia
+         cLWg==
+X-Gm-Message-State: ACrzQf1QL3bAKv5yaSeogVemT8byf61FzJ9uscVPP23axbXLMpscPI+h
+        wFrzfS7t5OnaBBkJKwYEknhTKITprGf/qw==
+X-Google-Smtp-Source: AMsMyM5tyiM2Bu4iQaKHvtuqLCeU2vQGELrB5FmOGEVtyqY1OFpuGHLo7+Yu/1MQiUfqcOpp3dQ8zA==
+X-Received: by 2002:a05:600c:198d:b0:3c9:a5e8:add6 with SMTP id t13-20020a05600c198d00b003c9a5e8add6mr2788318wmq.110.1666795359686;
+        Wed, 26 Oct 2022 07:42:39 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id n5-20020a05600c304500b003a84375d0d1sm1934367wmh.44.2022.10.26.07.42.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Oct 2022 07:42:38 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/3] Makefile: fix issues with bin-wrappers/% rule
+Date:   Wed, 26 Oct 2022 16:42:34 +0200
+Message-Id: <cover-v2-0.3-00000000000-20221026T143533Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.38.0.1251.g3eefdfb5e7a
+In-Reply-To: <cover-0.5-00000000000-20220901T130817Z-avarab@gmail.com>
+References: <cover-0.5-00000000000-20220901T130817Z-avarab@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH v5 00/12] Bundle URIs III: Parse and download from bundle
- lists
-Content-Language: en-US
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
-        avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
-        Glen Choo <chooglen@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Teng Long <dyroneteng@gmail.com>
-References: <pull.1333.v4.git.1665417859.gitgitgadget@gmail.com>
- <pull.1333.v5.git.1665579160.gitgitgadget@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <pull.1333.v5.git.1665579160.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/12/2022 8:52 AM, Derrick Stolee via GitGitGadget wrote:
-> This is the third series building the bundle URI feature. It is built on top
-> of ds/bundle-uri-clone, which introduced 'git clone --bundle-uri=' where is
-> a URI to a bundle file. This series adds the capability of downloading and
-> parsing a bundle list and then downloading the URIs in that list.
-> 
-> The core functionality of bundle lists is implemented by creating data
-> structures from a list of key-value pairs. These pairs can come from a
-> plain-text file in Git config format, but in the future, we will support the
-> list being supplied by packet lines over Git's protocol v2 in the
-> 'bundle-uri' command (reserved for the next series).
+This simple topic fixes issues with the bin-wrappers/% rules, as seen
+in the range-diff below this never worked properly:
 
-This version has been available for a while now without comment. Could
-we consider it for merging to 'next' soon?
+	make bin-wrappers/git
 
-I want to wait for this series to merge into 'master' before sending
-part IV on top, which advertises bundle URIs over protocol v2.
+I.e. we'd make the scirpt, but not "git".
 
-Thanks,
--Stolee
+I originally sent this as [1] in response to a topic that's since
+landed, i.e. that topic needed to add more conditions to the "match
+this, but not that" part of the current rule.
+
+As 3/3 notes that's because we were previously squashing 3 Makefile
+variables into one, and then having to heurisitcally match their
+contents to figure out which item originally came from which variable.
+
+The 3/3 here simply avoids squashing all that data together, so we
+don't need to guess after the fact.
+
+For the v2 I squashed the previous 3 commits together, they were
+incrementally improving the rule, now we do it all at once.
+
+1. https://lore.kernel.org/git/cover-0.5-00000000000-20220901T130817Z-avarab@gmail.com/
+
+Ævar Arnfjörð Bjarmason (3):
+  Makefile: factor sed-powered '#!/bin/sh' munging into a variable
+  Makefile: define "TEST_{PROGRAM,OBJS}" variables earlier
+  Makefile: simplify $(test_bindir_programs) rule by splitting it up
+
+ Makefile | 67 ++++++++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 48 insertions(+), 19 deletions(-)
+
+Range-diff against v1:
+1:  40033143cdd = 1:  fc6c5a6a8df Makefile: factor sed-powered '#!/bin/sh' munging into a variable
+2:  fe54dacaad2 = 2:  6dcb49f25c4 Makefile: define "TEST_{PROGRAM,OBJS}" variables earlier
+3:  9d4ac628f0c ! 3:  400f487e30d Makefile: simplify $(test_bindir_programs) rule by splitting it up
+    @@ Commit message
+         Which will show an empty diff, i.e. we've correctly dealt with the
+         combination of $(SHELL_PATH), $(X) and these three variables here.
+     
+    +    This also fixes an issue with the "bin-wrappers/" scripts have never had properly declared
+    +    dependency information, i.e. this has never worked:
+    +
+    +            make clean &&
+    +            make bin-wrappers/git &&
+    +            # the script is there, but no "./git" is built
+    +            ./bin-wrappers/git
+    +
+    +    There was no reason not to have that work, just as most things
+    +    generated by the Makefile have proper dependency information.
+    +
+    +    Before this commit doing this would have been painful, but now it's
+    +    easy to pass this as a parameter to our "bin_wrappers_template"
+    +
+         1. ea925196f1b (build dashless "bin-wrappers" directory similar to
+            installed bindir, 2009-12-02)
+         2. e6e7530d10b (test helpers: move test-* to t/helper/ subdirectory,
+    @@ Makefile: GIT-PYTHON-VARS: FORCE
+     +endef
+      
+     -all:: $(test_bindir_programs)
+    -+BW_BINDIR_PROGRAMS_NEED_X = $(BINDIR_PROGRAMS_NEED_X:%=bin-wrappers/%)
+    -+BIN_WRAPPERS += $(BW_BINDIR_PROGRAMS_NEED_X)
+    -+$(BW_BINDIR_PROGRAMS_NEED_X): wrap-for-bin.sh
+    -+	$(call mkdir_p_parent_template)
+    -+	$(QUIET_GEN)$(call cmd_munge_bin_wrappers_script,$(@F),,$X)
+    ++define bin_wrappers_template
+    ++
+    ++## bin_wrappers_template
+    ++# 1 = $(1)
+    ++# 2 = $(2)
+    ++# 3 = $(3)
+    ++# 4 = $(4)
+    ++BW_$(1) = $$($(1):%=bin-wrappers/%)
+    ++BIN_WRAPPERS += $$(BW_$(1))
+    ++all:: $$(BW_$(1))
+    ++$$(BW_$(1)): bin-wrappers/% : $(3)%$(4)
+    ++$$(BW_$(1)): wrap-for-bin.sh
+    ++	$$(call mkdir_p_parent_template)
+    ++	$$(QUIET_GEN)$$(call cmd_munge_bin_wrappers_script,$(2),$(3),$(4))
+    ++endef
+      
+     -bin-wrappers/%: wrap-for-bin.sh
+    -+BW_BINDIR_PROGRAMS_NO_X = $(BINDIR_PROGRAMS_NO_X:%=bin-wrappers/%)
+    -+BIN_WRAPPERS += $(BW_BINDIR_PROGRAMS_NO_X)
+    -+$(BW_BINDIR_PROGRAMS_NO_X): wrap-for-bin.sh
+    - 	$(call mkdir_p_parent_template)
+    +-	$(call mkdir_p_parent_template)
+     -	$(QUIET_GEN)sed -e $(call cmd_munge_script_sed_shell_path_arg) \
+     -	     -e 's|@@BUILD_DIR@@|$(shell pwd)|' \
+     -	     -e 's|@@PROG@@|$(patsubst test-%,t/helper/test-%,$(@F))$(if $(filter-out $(BINDIR_PROGRAMS_NO_X),$(@F)),$(X),)|' < $< > $@ && \
+     -	chmod +x $@
+    -+	$(QUIET_GEN)$(call cmd_munge_bin_wrappers_script,$(@F))
+    -+
+    -+BW_TEST_PROGRAMS_NEED_X = $(TEST_PROGRAMS_NEED_X:%=bin-wrappers/%)
+    -+BIN_WRAPPERS += $(BW_TEST_PROGRAMS_NEED_X)
+    -+$(BW_TEST_PROGRAMS_NEED_X): wrap-for-bin.sh
+    -+	$(call mkdir_p_parent_template)
+    -+	$(QUIET_GEN)$(call cmd_munge_bin_wrappers_script,$(@F),t/helper/,$X)
+    ++define bin_wrappers_templates
+    ++$(call bin_wrappers_template,BINDIR_PROGRAMS_NEED_X,'$$(@F)',,$$X)
+    ++$(call bin_wrappers_template,BINDIR_PROGRAMS_NO_X,'$$(@F)')
+    ++$(call bin_wrappers_template,TEST_PROGRAMS_NEED_X,'$$(@F)',t/helper/,$$X)
+    ++endef
+    ++$(eval $(call bin_wrappers_templates))
+     +
+     +all:: $(BIN_WRAPPERS)
+      
+4:  cbbf458433f < -:  ----------- Makefile: define bin-wrappers/% rules with a template
+5:  560dee80b4a < -:  ----------- Makefile: fix "make clean && make bin-wrappers/$NAME" dependencies
+-- 
+2.38.0.1251.g3eefdfb5e7a
+
