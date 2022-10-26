@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E9215C433FE
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 14:56:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AADBFA373E
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 14:57:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234403AbiJZO46 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 10:56:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57016 "EHLO
+        id S234396AbiJZO47 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 10:56:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234397AbiJZO4y (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234398AbiJZO4y (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 26 Oct 2022 10:56:54 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55FC9104D21
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:56:52 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id o4so18572068wrq.6
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:56:52 -0700 (PDT)
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 611DF105349
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:56:53 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id c3-20020a1c3503000000b003bd21e3dd7aso1726559wma.1
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:56:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=RmAYxpnO5NIxJiHfHXn492PTt3rtZjgNMJO4mNOAsY8=;
-        b=nKDHRNZvfCF/3pLP45K2g3Pe5+F6Mx/dLdBZKVlMkHO1aDBZZrWz9LcfYILPcBpnX7
-         3Z80ny+7XrudeLP5Pr/NQHxwb5RM9rZziOCSDG2JLuGiGX+ZEbCCBFt79wDfOej/uIfS
-         2jkJHa2jQLjkPpp2xtaohtGl2yvk7rzkNGxyiwJV7spQs1MRzDLdPRHlcAwVxHcVS25z
-         9vnBtP6wHHsmn1M/Cgk0ia7sRh4N0Zzfk3PZYmFM5qcQmdPYGpddHisGvBQ+DL0/g4YI
-         dLONSwglBST9vjHX2RwnhP+6bxEGdFks3N+ztub8Y9jM7rPlzjyhNPVU/f3t2ZuXemq4
-         qhkA==
+        bh=Swt+MOs31FvqgWRyhn+9o3+Ad1nvEaqzb/Of8gQbUA4=;
+        b=A4xKqRFz5DvNVpKXl031oGJo+K6fbTMk+Bh0Pr70J5yshMzBuRrqSqFd1flF5DBfqP
+         21s299U1NGknjhb6/OSdS/a23Gk8OCFq21qqUeMSTowGp45o/F5GGWyHOnJYK4Y9PTkW
+         cE2JflUFuHYBUVHwK2jlQZe7H4Rw6pdp4MZO6pKjfzUJ7bAyWKjWCjTXh8riw0Wl/ejn
+         q139fw43/St5zzcPt2esbYkllhp9EBmAUMjDnmIPxefKBIbi4Y2ac+IB3H2Oi4+614Gi
+         WAgcs8YXjtrqw4QHW+dqTWD5kT2EvBBjf+cgpbuhyiXgYYyNUb4ZhhzZzEWRGQHzQm/F
+         Vv4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=RmAYxpnO5NIxJiHfHXn492PTt3rtZjgNMJO4mNOAsY8=;
-        b=NXyyOPleq2Lrwgs3zSwMn4zekLHivwD76f8E4phm0uL4ZOusOFAcncBsZbjP6CYeZX
-         0Pqtl/1FbSYdI21NDQ+BVfeTnZj55t50CG7hR+MFNd1eolq1zv3ffSrkd2vtzl/CRt8Q
-         YsUTp345aF2damj5M8gTc06ARK4sLPO/GY2hKNqsFQwBWSho3QA3feZmfwskYUg5eVIb
-         A6rTpqUiZTYegtp94b+GRTX1yItVEFL/KfWfZnfnhXG6g5KrfiavEBhkglPkvBVYpwnP
-         C46X5esjTCpwIyIyJff7bDAqgJFP2JUa43qHQ/aXClCyDLAdg3W0ejXWAa3s2jJo9J3I
-         Fs9Q==
-X-Gm-Message-State: ACrzQf2qGcgvQmw+PawLvaEheqyk6YShYdaRddA6ZGjOqKIx3hfwHON8
-        CUu+EJK51IimTn5TnJ2OOcCFYaOfHMygEw==
-X-Google-Smtp-Source: AMsMyM7j5gyLH6Lmeh4kPc+2OYQL+N0XGNPip5B1G62E2yx/AmabCgS+yyMIh2XzdJdndgxXRfuBCw==
-X-Received: by 2002:adf:e446:0:b0:236:773b:c6f0 with SMTP id t6-20020adfe446000000b00236773bc6f0mr9833159wrm.55.1666796210148;
-        Wed, 26 Oct 2022 07:56:50 -0700 (PDT)
+        bh=Swt+MOs31FvqgWRyhn+9o3+Ad1nvEaqzb/Of8gQbUA4=;
+        b=ZV9SHm4TkKGivIp36IssAnhBsuVW/OMTwc9tJu4u9i6JszJlhfWkG4W4inx8Ec6bvH
+         UNmkKwSWfQq+8ZWI5vs04QdFoEmDeisIyRLHeHTIId1FHgixtO7z0wXOKBHyFXowN4/q
+         swiekj1hiDK0xVhn0Z6B1ETAayaSOC+TA5KtDccxF1IIqc/uNVBxUs9nN8MsPzhWhUgN
+         hODtNXQabFX5Y62ECUrc0Iiis2uK44Y9nbg0g4fd/OWzueJsCbQQI+ki1ieZ8CasZCgI
+         6K/cSg+SQ6Gi5nZBQfFH1wZ70TtqK7FoMtZtKIQadRbPlmMMNFjAAUcdAXxXogHeZrrJ
+         giMQ==
+X-Gm-Message-State: ACrzQf0fXxSzNVPx761vbrO2NM0Goz7KGc4zmJNkMC+JZpDLzFN4xJPZ
+        SxT4tbZrwn2Ty4qudzgHD1R7tZr5/RyTAg==
+X-Google-Smtp-Source: AMsMyM7hkf3Mf/cW2SIE/ftQ/E+4nJcUu/0pkRWt1mBt7nen1FqjsTRZ/cNz2za2z1LPA7qu0GWJrg==
+X-Received: by 2002:a05:600c:3d18:b0:3cf:4c1e:5812 with SMTP id bh24-20020a05600c3d1800b003cf4c1e5812mr2352918wmb.192.1666796211327;
+        Wed, 26 Oct 2022 07:56:51 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i25-20020a1c5419000000b003c7084d072csm2180351wmb.28.2022.10.26.07.56.49
+        by smtp.gmail.com with ESMTPSA id i25-20020a1c5419000000b003c7084d072csm2180351wmb.28.2022.10.26.07.56.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Oct 2022 07:56:49 -0700 (PDT)
+        Wed, 26 Oct 2022 07:56:50 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,12 +60,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Mike Hommey <mh@glandium.org>,
         Eric DeCosta <edecosta@mathworks.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 0/9] Makefile & docs: document SHA-{1,256} behavior, fix bug
-Date:   Wed, 26 Oct 2022 16:56:38 +0200
-Message-Id: <cover-v4-0.9-00000000000-20221026T145255Z-avarab@gmail.com>
+Subject: [PATCH v4 1/9] Makefile: always (re)set DC_SHA1 on fallback
+Date:   Wed, 26 Oct 2022 16:56:39 +0200
+Message-Id: <patch-v4-1.9-11e92d15616-20221026T145255Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1251.g3eefdfb5e7a
-In-Reply-To: <cover-v3-0.9-00000000000-20221020T223946Z-avarab@gmail.com>
-References: <cover-v3-0.9-00000000000-20221020T223946Z-avarab@gmail.com>
+In-Reply-To: <cover-v4-0.9-00000000000-20221026T145255Z-avarab@gmail.com>
+References: <cover-v3-0.9-00000000000-20221020T223946Z-avarab@gmail.com> <cover-v4-0.9-00000000000-20221026T145255Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,111 +73,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a documentation update to get to the eventual goal of making
-DC_SHA1 the defaul on OSX. First we need to stop claiming that OpenSSL
-is still our default everywhere, etc.
+Fix an edge case introduced in in e6b07da2780 (Makefile: make DC_SHA1
+the default, 2017-03-17), when DC_SHA1 was made the default fallback
+we started unconditionally adding to BASIC_CFLAGS and LIB_OBJS, so
+we'd use the sha1collisiondetection by default.
 
-For v3 see:
-https://lore.kernel.org/git/cover-v3-0.9-00000000000-20221020T223946Z-avarab@gmail.com/;
-The updates here are all typos/grammar etc. issues spotted by Eric
-Sunshine, thanks!
+But the "DC_SHA1" variable remained unset, so e.g.:
 
-Junio: This v4 introduces a minor conflict with the subsequent DC_SHA1
-topic[1], but you haven't picked that one up either, so I'm assuming
-if you're interested in this at all it's better to cook this first.
+	make test DC_SHA1= T=t0013*.sh
 
-In case you want both It's easily solved (just keep the other topic's
-post-image). I.e. Eric pointed out a better wording for a paragraph,
-but it's the one we're mostly removing/rewriting in [1].
+Would skip the sha1collisiondetection tests, as we'd write
+"DC_SHA1=''" to "GIT-BUILD-OPTIONS", but if we manually removed that
+test prerequisite we'd pass the test (which we couldn't if we weren't
+using sha1collisiondetection).
 
-1. https://lore.kernel.org/git/cover-v2-0.4-00000000000-20221019T010222Z-avarab@gmail.com/
+So let's have the fallback assignment use the 'override' directive
+instead of the ":=" simply expanded variable introduced in
+e6b07da2780. In this case we explicitly want to override the user's
+choice.
 
-Ævar Arnfjörð Bjarmason (9):
-  Makefile: always (re)set DC_SHA1 on fallback
-  INSTALL: remove discussion of SHA-1 backends
-  Makefile: correct DC_SHA1 documentation
-  Makefile: create and use sections for "define" flag listing
-  Makefile: rephrase the discussion of *_SHA1 knobs
-  Makefile: document default SHA-256 backend
-  Makefile: document SHA-1 and SHA-256 default and selection order
-  Makefile: document default SHA-1 backend on OSX
-  Makefile: discuss SHAttered in *_SHA{1,256} discussion
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- INSTALL  |   4 -
- Makefile | 259 +++++++++++++++++++++++++++++++++++--------------------
- 2 files changed, 165 insertions(+), 98 deletions(-)
-
-Range-diff against v3:
- 1:  ef3c5be11e0 =  1:  11e92d15616 Makefile: always (re)set DC_SHA1 on fallback
- 2:  017a0a9791c =  2:  abbe25f56b3 INSTALL: remove discussion of SHA-1 backends
- 3:  62dd2d5708d =  3:  b0bd35987c0 Makefile: correct DC_SHA1 documentation
- 4:  933bef576b3 =  4:  d0451d6c3a3 Makefile: create and use sections for "define" flag listing
- 5:  5b18198c477 !  5:  b956d1c2640 Makefile: rephrase the discussion of *_SHA1 knobs
-    @@ Makefile: include shared.mak
-      #
-     -# Define OPENSSL_SHA1 environment variable when running make to link
-     -# with the SHA1 routine from openssl library.
-    -+# Define OPENSSL_SHA1 to link to the the SHA-1 routines from
-    -+# the OpenSSL library.
-    ++# Define OPENSSL_SHA1 to link to the SHA-1 routines from the OpenSSL
-    ++# library.
-      #
-      # === SHA-256 backend ===
-      #
- 6:  73685592aba =  6:  1e4695d0ba0 Makefile: document default SHA-256 backend
- 7:  05edcfb9cd9 !  7:  847be3d32e2 Makefile: document SHA-1 and SHA-256 default and selection order
-    @@ Commit message
-         we'd error out if conflicting flags were provided, but per the
-         discussion downhtread of[1] the consensus was to keep theses semantics.
-     
-    -    This behavior make it easier to e.g. integrate with autoconf-like
-    +    This behavior makes it easier to e.g. integrate with autoconf-like
-         systems, where the configuration can provide everything it can
-         support, and Git is tasked with picking the first one it prefers.
-     
-    @@ Makefile: include shared.mak
-      #
-     +# ==== Default SHA-1 backend ====
-     +#
-    -+# If no *_SHA1 backend is picked we'll fall fall back on using the
-    -+# default.
-    ++# If no *_SHA1 backend is picked we'll fall back on using the default.
-     +#
-     +# Multiple *_SHA1 backends can be selected, the first supported one
-     +# listed in "Other SHA-1 implementations" will be picked.
-    @@ Makefile: include shared.mak
-     -# Define BLK_SHA1 to make use of optimized C SHA-1 routines bundled
-     -# with git (in the block-sha1/ directory).
-     -#
-    - # Define OPENSSL_SHA1 to link to the the SHA-1 routines from
-    - # the OpenSSL library.
-    + # Define OPENSSL_SHA1 to link to the SHA-1 routines from the OpenSSL
-    + # library.
-      #
-     +# Define BLK_SHA1 to make use of optimized C SHA-1 routines bundled
-     +# with git (in the block-sha1/ directory).
- 8:  859e69fbe9f !  8:  0af3ea78eaf Makefile: document default SHA-1 backend on OSX
-    @@ Makefile: include shared.mak
-      #
-     +# Define NO_APPLE_COMMON_CRYPTO on OSX to opt-out of using the
-     +# "APPLE_COMMON_CRYPTO" backend for SHA-1, which is currently the
-    -+# default on that OS. We'll define NO_APPLE_COMMON_CRYPTO on Mac OS
-    -+# 10.4 or older ("Tiger", released in early 2005).
-    ++# default on that OS. On macOS 01.4 (Tiger) or older,
-    ++# NO_APPLE_COMMON_CRYPTO is defined by default.
-     +#
-      # === SHA-256 backend ===
-      #
- 9:  c1f27255d3e !  9:  9045ff9c4ed Makefile: discuss SHAttered in *_SHA{1,256} discussion
-    @@ Makefile: include shared.mak
-     +#
-      # ==== Default SHA-1 backend ====
-      #
-    - # If no *_SHA1 backend is picked we'll fall fall back on using the
-    + # If no *_SHA1 backend is picked we'll fall back on using the default.
-     @@ Makefile: include shared.mak
-      #
-      # === SHA-256 backend ===
+diff --git a/Makefile b/Makefile
+index 85f03c6aed1..744bd4344f4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1823,7 +1823,7 @@ ifdef APPLE_COMMON_CRYPTO
+ 	COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
+ 	BASIC_CFLAGS += -DSHA1_APPLE
+ else
+-	DC_SHA1 := YesPlease
++	override DC_SHA1 = YesPlease
+ 	BASIC_CFLAGS += -DSHA1_DC
+ 	LIB_OBJS += sha1dc_git.o
+ ifdef DC_SHA1_EXTERNAL
 -- 
 2.38.0.1251.g3eefdfb5e7a
 
