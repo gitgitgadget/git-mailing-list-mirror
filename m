@@ -2,70 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2388BC433FE
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 21:23:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEB5AC38A2D
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 21:25:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233356AbiJZVXW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 17:23:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59334 "EHLO
+        id S233393AbiJZVZF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 17:25:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233282AbiJZVXV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 17:23:21 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 476091290B9
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 14:23:20 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id a5so11725788qkl.6
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 14:23:20 -0700 (PDT)
+        with ESMTP id S233378AbiJZVZD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 17:25:03 -0400
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E5FA19C0A
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 14:25:01 -0700 (PDT)
+Received: by mail-qt1-x833.google.com with SMTP id h24so11022485qta.7
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 14:25:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=q49HR09PevPgestYOpoBlLpmgNZ83wvCLoW4V4RLBAA=;
-        b=ClkM60WPbulzdN6ATKrYRdYRRWBx6EBfjBS7NuTadpEz24SPAkOxvlOWuKK6pYxFpb
-         qRSR7X4IgQhMOrA23psLsTBJi4KBF/6Y8mMNZuBdUEef86wEr4sudUies3J40qjONbyV
-         VA9FLk95UbCkDm7dicAygQ2lYnBKPPt1LMyP5HBFjOPH5Q/r9b7Pglw2KsMjLn4/I8f1
-         DW71ZKHYuK6VlA0gYET55ZAOgLJja7qTPljqBqBZzFg5teMA2QIXAsRLOKjk48C7LmiB
-         jA3t7VoyAJ9WHnoQLGAg/GvdVfec42UjWM2+moZGIH+4vzsuqmmm12aQz5k7lAvpcDZ3
-         +yEw==
+        bh=gWlungKrYJ0clazixPf5msvUSK2SzSKe000tyNBgNGQ=;
+        b=ky1uIuPCG4dG8J7zLO1zzHMqysv4moho8bKqNjjVvq4TSrmYpADK/pdQoRH5gJDNBW
+         ZeOZ+ITMzaZEHEIcHkarc+WO3G+LSyvtNF8bWIfmTQlXZ56hqrBn5oFJk6ubuN3XLsQG
+         kUtOrmnZwTc461Amf9hmhw349/aB64K87MuNKxsYi6mXgQ2MJCaO8XMC8AlNnlzdEI0c
+         /e6W0dGIii+mmXVojzwDp5a4w/ccL5zGoJL3ZT8UCXJTbZBoi3GZ7cdNNQfcVMhTLT1R
+         B3XjNeIPyjvERww1YRWmj1Sk/FSdAudsdDu9ZQwGX0TYS1EUKwDu4+lDr9QYey4lhE6p
+         0SZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:from:references:cc:to:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=q49HR09PevPgestYOpoBlLpmgNZ83wvCLoW4V4RLBAA=;
-        b=lTgji+A5vjUR9qg2EnqyzDZYC52Hrq5yorPPWjD74k5cQ3lrEwgsBOhbHwDc8alR3T
-         uF5geYFcVVxUH38qp9c8hMh4TFkQAJFwoC/UORx6TV5ug2ZMWNyK6oOkRYVRPfLwH1Z5
-         CMAQ+RhBnensDJER+Pa5+9/WK4PH4u5ZsS/rPyl1vYgwYJUfHsmfR7dA5VEWiOe/LkZ9
-         nQatIDNYzTvkK6ft96sclWuKhRlnTvs1MTr41RCD+MLDx+Fm0oQZCzMH1+QiAMTHItIu
-         5zZS7RqK7EoqQ+pU+xbHXHdVZnLAvR7bSkmj0euWqIQD2V6UJukPworp1nVZaHDIPFYR
-         2PNA==
-X-Gm-Message-State: ACrzQf1ITufYVdX+BDpEx2MS5MsVwvPR44wK3EaW7dsnaTNsJM0RBS5G
-        J4fj++sicRydj3TmXjzWL1ZPoDDP8WXtvg==
-X-Google-Smtp-Source: AMsMyM65v2z3oKPojCoNYMVmShA67fIiL4Ol/jxvSVesAHW4ltieaJekHYTnS6XJdbRnTHAnIQJQZA==
-X-Received: by 2002:a37:e118:0:b0:6ec:565e:f2d8 with SMTP id c24-20020a37e118000000b006ec565ef2d8mr32494066qkm.719.1666819399370;
-        Wed, 26 Oct 2022 14:23:19 -0700 (PDT)
+        bh=gWlungKrYJ0clazixPf5msvUSK2SzSKe000tyNBgNGQ=;
+        b=jWFerWJl9XDpQ9mCFhBFUKyTHud/ZhUNYrh1TY5z7xZSMjtuHmi72Dv4teaFpTgEyq
+         QyLkjrqZyTxNvnkUCAE81E/EXfkznZ8VMiPqtLTzpfZHUK+M0WTGbOOmH9fBE6niHQMz
+         JzzhhwtQPMU5xoac5psLLsD+27kGnfPSbrA1HHGK9EjaPi1oVZmvNI8/41E4jMh1PQoh
+         RtOCfoiZR2N1zWrW/BG9yhz5eZARfWWDzcppsGLuwaLeShGYqC8W7ug9IB0wOMPSAMks
+         DiWsgoGPsCqqrueE5FejQllMjLM/8WX9Vm2VDx8uhC0sZugV9F9tqhjpx1uud+h7J1k0
+         fYRw==
+X-Gm-Message-State: ACrzQf2SkxVKv4xobnrKaL8UKy69Oj9PX6KmaZoIGDSmXBsdO9fM/P+A
+        41S5X1h7gItVLMvdTPzGirZYWSeyvXBz7Q==
+X-Google-Smtp-Source: AMsMyM7hYl/AH40PnEB2fI5sIzYS+BR9GDzgCOrT7HhCqDsknIxXdHOqlJLmIPxJrln/RccdJeGzzQ==
+X-Received: by 2002:a05:622a:554:b0:39c:ef65:bc66 with SMTP id m20-20020a05622a055400b0039cef65bc66mr38884552qtx.550.1666819500754;
+        Wed, 26 Oct 2022 14:25:00 -0700 (PDT)
 Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id u6-20020a37ab06000000b006eed094dcdasm4484252qke.70.2022.10.26.14.23.18
+        by smtp.gmail.com with ESMTPSA id fg16-20020a05622a581000b003a4c3c4d2d4sm2460137qtb.49.2022.10.26.14.24.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Oct 2022 14:23:18 -0700 (PDT)
-Subject: Re: [PATCH 3/9] subtree: add 'die_incompatible_opt' function to
- reduce duplication
+        Wed, 26 Oct 2022 14:25:00 -0700 (PDT)
+Subject: Re: [PATCH 4/9] subtree: prefix die messages with 'fatal'
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Luke Shumaker <lukeshu@datawire.io>,
         Thomas Koutcher <thomas.koutcher@online.fr>,
         James Limbouris <james@digitalmatter.com>
 References: <pull.1390.git.1666365219.gitgitgadget@gmail.com>
- <c890f55f59994231be6114f76f020510eb824453.1666365220.git.gitgitgadget@gmail.com>
- <221021.86v8oddtuj.gmgdl@evledraar.gmail.com>
+ <a70fda5582d6bd84b8bedaba33768d3886846090.1666365220.git.gitgitgadget@gmail.com>
+ <221021.86r0z1dtjq.gmgdl@evledraar.gmail.com>
 From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <949edc06-8252-6995-addf-cfba398f73dd@gmail.com>
-Date:   Wed, 26 Oct 2022 17:23:17 -0400
+Message-ID: <3f8e9f2f-aa98-f152-46d3-21f69dc2d3bb@gmail.com>
+Date:   Wed, 26 Oct 2022 17:24:59 -0400
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
  Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <221021.86v8oddtuj.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221021.86r0z1dtjq.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: fr
 Content-Transfer-Encoding: 8bit
@@ -73,94 +72,64 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar,
 
-Le 2022-10-21 à 12:22, Ævar Arnfjörð Bjarmason a écrit :
+
+Le 2022-10-21 à 12:30, Ævar Arnfjörð Bjarmason a écrit :
 > 
 > On Fri, Oct 21 2022, Philippe Blain via GitGitGadget wrote:
 > 
 >> From: Philippe Blain <levraiphilippeblain@gmail.com>
 >>
->> 9a3e3ca2ba (subtree: be stricter about validating flags, 2021-04-27)
->> added validation code to check that options given to 'git subtree <cmd>'
->> made sense with the command being used.
->>
->> Refactor these checks by adding a 'die_incompatible_opt' function to
->> reduce code duplication.
+>> Just as was done in 0008d12284 (submodule: prefix die messages with
+>> 'fatal', 2021-07-10) for 'git-submodule.sh', make the 'die' messages
+>> outputed by 'git-subtree.sh' more in line with the rest of the code base
+>> by prefixing them with "fatal: ", and do not capitalize their first
+>> letter.
 > 
-> This looks good, but...
+> I don't really care since we're unlikely to ever give git-subtree the
+> i18n treatment, so translators don't need to worry about the churn.
 > 
->> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
->> ---
->>  contrib/subtree/git-subtree.sh | 32 ++++++++++++++++++++------------
->>  1 file changed, 20 insertions(+), 12 deletions(-)
->>
->> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
->> index 49ef493ef92..f5eab198c80 100755
->> --- a/contrib/subtree/git-subtree.sh
->> +++ b/contrib/subtree/git-subtree.sh
->> @@ -102,6 +102,14 @@ assert () {
->>  	fi
->>  }
->>  
->> +# Usage: die_incompatible_opt OPTION COMMAND
->> +die_incompatible_opt () {
->> +	assert test "$#" = 2
->> +	opt="$1"
->> +	arg_command="$2"
->> +	die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
->> +}
->> +
->>  main () {
->>  	if test $# -eq 0
->>  	then
->> @@ -176,16 +184,16 @@ main () {
->>  			arg_debug=1
->>  			;;
->>  		--annotate)
->> -			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
->> +			test -n "$allow_split" || die_incompatible_opt "$opt" "$arg_command"
->>  			arg_split_annotate="$1"
->>  			shift
->>  			;;
+> But given how few in-tree-users we have of "die" and "git-sh-setup" this
+> would be much shorter & future-proof as just e.g. (untested):
+> 	
+> 	diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+> 	index 7562a395c24..0d8f87c5a20 100755
+> 	--- a/contrib/subtree/git-subtree.sh
+> 	+++ b/contrib/subtree/git-subtree.sh
+> 	@@ -25,6 +25,8 @@ then
+> 	 	exit 126
+> 	 fi
+> 	 
+> 	+GIT_SH_SETUP_DIE_PREFIX='fatal: '
+> 	+
+> 	 OPTS_SPEC="\
+> 	 git subtree add   --prefix=<prefix> <commit>
+> 	 git subtree add   --prefix=<prefix> <repository> <ref>
+> 	diff --git a/git-sh-setup.sh b/git-sh-setup.sh
+> 	index ce273fe0e48..81456d7266e 100644
+> 	--- a/git-sh-setup.sh
+> 	+++ b/git-sh-setup.sh
+> 	@@ -53,7 +53,7 @@ die () {
+> 	 die_with_status () {
+> 	 	status=$1
+> 	 	shift
+> 	-	printf >&2 '%s\n' "$*"
+> 	+	printf >&2 '%s%s\n' "$GIT_SH_SETUP_DIE_PREFIX" "$*"
+> 	 	exit "$status"
+> 	 }
+> 	 
+>> -		die "assertion failed: $*"
+>> +		die "fatal: assertion failed: $*"
 > 
-> Since this is all in this form I wonder why not (maybe adding some "local" and/or "&&" too while at it):
+> Then you could just leave this, but...
 > 
-> 	die_if_other_opt {
-> 		assert test "$#" = 3
-> 		other="$1"
->                 shift
->                 if test -z "$other"
-> 		then
-> 			return
-> 		fi
-> 		[...the rest of your version]
-> 	}
+>> -		die "Unknown command '$arg_command'"
+>> +		die "fatal: unknown command '$arg_command'"
 > 
-> Then:
-> 
->>  		--no-annotate)
->> -			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
->> +			test -n "$allow_split" || die_incompatible_opt "$opt" "$arg_command"
-> 
-> Instead of this:
-> 
-> 	die_if_other_opt "$allow_split" "$opt" "$arg_command"
-> 
-> Or actually just:
-> 
-> 	die_if_other_opt "$allow_split"
-> 
-> Maybe you disagree, but since the function will see the variables & this
-> is purely a helper for this getopts parse loop I think it's fine just to
-> assume we can read "$opt" and "$arg_command" there..., so, urm, maybe just:
-> 
-> 	test -n "$allow_split" || die_incompatible_opt
-> 
-> ? :) Anyway, an easy bike shed, you should go for whatever variant you
-> prefer :) Thanks for indulging me.
-> 
+> ...would still need to change these for the capitalization change.
+>
 
-Thanks for your suggestion, but I think I'll stick to what I have for now :)
+Yeah, I guess to this could be done in a later refactor if someone wishes.
 
-Philippe.
+It would probably require changes to other tests scripts (since there are other users
+of 'die'), though, and so would widen the scope of the series a bit too much, I would say. 
