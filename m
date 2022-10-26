@@ -2,208 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C9222C433FE
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 22:48:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EED27FA373D
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 23:28:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229441AbiJZWsZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 18:48:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54892 "EHLO
+        id S233825AbiJZX2j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 19:28:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229995AbiJZWsQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 18:48:16 -0400
-Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5EC7201B9
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 15:48:14 -0700 (PDT)
-Received: by mail-pf1-x44a.google.com with SMTP id k131-20020a628489000000b0056b3e1a9629so7577849pfd.8
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 15:48:14 -0700 (PDT)
+        with ESMTP id S234071AbiJZX2M (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 19:28:12 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B7335D71E
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 16:27:46 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id q9so25976243ejd.0
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 16:27:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=cn9KahdmcSxrw0ZWCGrj0RDrDBgLXiNLj80ZvbQJC0E=;
-        b=sD7/Eck7xzHGENPZdmI8z4aLPyGHTeQsOD0uFi6Kk8W0uSchCqQkF8t4InBdtBaU8B
-         qI1JkD5qZvsqiQz+4FcwQURnlfzBvgBz86A1uKGPTUHc9BCchcday771iL1q7RvsBjhV
-         B38FqnV77iIrZ8EbjOiKiF8HmM3YfIS7Ps86R6bsbD5NIa76iuRNq16CVf0HfF9agIHs
-         ayK+FJIw8uH2edcx/q/x3pk0JhSa3C/+Qx8Nok+zecuAgwAe03tk/zkPiyZPoiont7lb
-         Ca4S+iFnFoKmjnzbeOz5mLxrsXQcPWen2vmB/y0YUw+VUtU3ZB8YHSVQjKmmsd/0Z1Q5
-         6dgg==
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ja34sd2i5OU2lVRVcF0kJIRAp497Bo1Q31vEqwvyyQ4=;
+        b=c7NMJTdgfcoimDOd3XwKNE9phVjNydpBpDVzDJcSugSnZIHiK7YGIov6vL07aweiik
+         5x6QA3VCi4y++RJZ4gF3DnGawynJd1GcTRXnBO73iiLZjxT7HsWIzK4s14MwPwo6qu+G
+         vBIf2L88KoSh9UgDN4RCmH1gUGLIlUvste0DFpGTJoxxhr+EaMj5mGr9PWwx7j6LjlTl
+         D8P8O94LPzlfV1mSPpJzZ5HHK3WIcMdd79M+nG1GB8/JUJnvIicN2TE7Vg97fyiQNyH3
+         Wl6CHtCiyrg77MDlw5M3UoxQiEMnitXrcFnDZ0gxGyhkauDsVNgSBQo7K3QGt3rcpr6d
+         nYsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cn9KahdmcSxrw0ZWCGrj0RDrDBgLXiNLj80ZvbQJC0E=;
-        b=ne8RGDO+ggqnzFmjKm8+n91fI0QJsCXnr4NgY7Nnx31McI9FZeYScXmSyJwDvH4W0w
-         Yi5WtR9s0HntLJ7LeyGEcGQo/wnCZ5J/814oLx5Ky4xTnBNyqqWxwVC6G/K/dkrMAn6Y
-         rOrFW51DfB0wjRboNWNDRRXuIY1fOaYIuYmqPcGCHJP/kzaA280fCsrDO3z+WmA9vnXh
-         2xiX9ImYdnvIabj90FYFa551M/xggjTPZCKf8lPaqXxVMGY0v9PjKg72FS7w6lUcpUsV
-         ks5xZf0tRSTG71aLe3S5dlQOcajE2uRaI+8s+FXSI3TP9QBW2s9yrKXjd95zCu8W7NBP
-         ADMQ==
-X-Gm-Message-State: ACrzQf3KSC2o8ZJWcbIikvMtu6CrRnX7LHPlTR1xrIclh/UwW8+GurpO
-        mnHR0al7qX+dd1NGFNEZfqQZG0Ge9mrqUA==
-X-Google-Smtp-Source: AMsMyM4f/PTCwKbl3iPOCPHBYXRzNLzyVJJhPZDgPKBZ5Qs/G1sgYieaYs0EM9TenoXiTvLP0RzhMy8aZG97CQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:2288:b0:56b:fe9d:b4b7 with SMTP
- id f8-20020a056a00228800b0056bfe9db4b7mr14196173pfe.79.1666824494381; Wed, 26
- Oct 2022 15:48:14 -0700 (PDT)
-Date:   Wed, 26 Oct 2022 15:48:12 -0700
-In-Reply-To: <d3d1738e670d5dbf1378fc5c3209b2e98234a771.1665973401.git.gitgitgadget@gmail.com>
-Mime-Version: 1.0
-References: <pull.1359.v2.git.git.1665660960.gitgitgadget@gmail.com>
- <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com> <d3d1738e670d5dbf1378fc5c3209b2e98234a771.1665973401.git.gitgitgadget@gmail.com>
-Message-ID: <kl6lk04mqk0j.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v3 4/9] tree: handle submodule case for read_tree_at properly
-From:   Glen Choo <chooglen@google.com>
-To:     Heather Lapointe via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     "=?utf-8?Q?Ren=C3=A9?= Scharfe" <l.s.r@web.de>,
-        Heather Lapointe <alpha@alphaservcomputing.solutions>
-Content-Type: text/plain; charset="UTF-8"
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ja34sd2i5OU2lVRVcF0kJIRAp497Bo1Q31vEqwvyyQ4=;
+        b=y/VQe0WsDgr5AudWMgx/oYPpb+VVGAxjThGEVd/iq0jzsr3k14Fx43yvhHjz+c45JX
+         xJQXb+Jt4oqfU4GXdxWWZAcjXnLSxj9mK+moGHgELTtC0TB4+hSv9gviUemlf18a6+2k
+         IYFs6M2ekzzEK4AC7/hIMeDPAiXTEdG2KzxFFchQgmhe/R4Djf8L/6vSe5pQ0dhHR/D9
+         YlNA+5gCSkfwrtghYX1RNdhyUvDZoLCSGpjNM1L7qKqtO/dVrVGZqcBJH3Tg9wP7O19m
+         /CGiGjYFgVmQgnY1JFx9g9LNtUO9ClwftW6gShI+DzWlUbueiK4mSYVLnCvh/5svEHUR
+         bD8A==
+X-Gm-Message-State: ACrzQf0/WujhSZqAjske+rLsWfXkx2eVW+iQQ/zZrs1QwsqRXuGo+qFe
+        LvP7b0JmXTPJdNP84dXOA7DNexAorpV+Tw==
+X-Google-Smtp-Source: AMsMyM6xB80WereMCnbAC2gCRClNtl64ma4QvV93Yy4bV+8ZiNp1eLwDUy5ayZ2Y+Q83GHMbSP0EzA==
+X-Received: by 2002:a17:907:2ceb:b0:78d:b765:c50d with SMTP id hz11-20020a1709072ceb00b0078db765c50dmr39411485ejc.73.1666826864864;
+        Wed, 26 Oct 2022 16:27:44 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id ky3-20020a170907778300b007a0b28c324dsm3566172ejc.126.2022.10.26.16.27.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Oct 2022 16:27:43 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1onpoE-008zrl-1o;
+        Thu, 27 Oct 2022 01:27:42 +0200
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Teng Long <dyroneteng@gmail.com>, gitster@pobox.com,
+        derrickstolee@github.com, git@vger.kernel.org,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH 0/1] pack-bitmap.c: avoid exposing absolute paths
+Date:   Thu, 27 Oct 2022 01:19:16 +0200
+References: <xmqqtu5zyndk.fsf@gitster.g>
+ <20220829024803.47496-1-tenglong.tl@alibaba-inc.com>
+ <Y1mp23NHB0qzKsPR@nand.local>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <Y1mp23NHB0qzKsPR@nand.local>
+Message-ID: <221027.86czaeb1xt.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Heather Lapointe via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> @@ -47,40 +48,73 @@ int read_tree_at(struct repository *r,
->  			return -1;
->  		}
->  
-> -		if (S_ISDIR(entry.mode))
-> +		if (S_ISDIR(entry.mode)) {
->  			oidcpy(&oid, &entry.oid);
-> -		else if (S_ISGITLINK(entry.mode)) {
-> -			struct commit *commit;
->  
-> -			commit = lookup_commit(r, &entry.oid);
-> +			len = tree_entry_len(&entry);
-> +			strbuf_add(base, entry.path, len);
-> +			strbuf_addch(base, '/');
-> +			retval = read_tree_at(r, lookup_tree(r, &oid),
-> +						base, pathspec,
-> +						fn, context);
-> +			strbuf_setlen(base, oldlen);
-> +			if (retval)
-> +				return -1;
-> +		} else if (pathspec->recurse_submodules && S_ISGITLINK(entry.mode)) {
-> +			struct commit *commit;
-> +			struct repository subrepo;
-> +			struct repository* subrepo_p = &subrepo;
-> +			struct tree* submodule_tree;
-> +			char *submodule_rel_path;
-> +			int name_base_len = 0;
-> +
-> +			len = tree_entry_len(&entry);
-> +			strbuf_add(base, entry.path, len);
-> +			submodule_rel_path = base->buf;
-> +			// repo_submodule_init expects a path relative to submodule_prefix
-> +			if (r->submodule_prefix) {
-> +				name_base_len = strlen(r->submodule_prefix);
-> +				// we should always expect to start with submodule_prefix
-> +				assert(!strncmp(submodule_rel_path, r->submodule_prefix, name_base_len));
-> +				// strip the prefix
-> +				submodule_rel_path += name_base_len;
-> +				// if submodule_prefix doesn't end with a /, we want to get rid of that too
-> +				if (is_dir_sep(submodule_rel_path[0])) {
-> +					submodule_rel_path++;
-> +				}
-> +			}
-> +
-> +			if (repo_submodule_init(subrepo_p, r, submodule_rel_path, null_oid()))
-> +				die("couldn't init submodule %s", base->buf);
-> +
-> +			if (repo_read_index(subrepo_p) < 0)
-> +				die("index file corrupt");
-> +
-> +			commit = lookup_commit(subrepo_p, &entry.oid);
->  			if (!commit)
-> -				die("Commit %s in submodule path %s%s not found",
-> +				die("Commit %s in submodule path %s not found",
->  				    oid_to_hex(&entry.oid),
-> -				    base->buf, entry.path);
-> -
-> -			// FIXME: This is the wrong repo instance (it refers to the superproject)
-> -			// it will always fail as is (will fix in later patch)
-> -			// This current codepath isn't executed by any existing callbacks
-> -			// so it wouldn't show up as an issue at this time.
-> -			if (repo_parse_commit(r, commit))
-> -				die("Invalid commit %s in submodule path %s%s",
-> +				    base->buf);
-> +
-> +			if (repo_parse_commit(subrepo_p, commit))
-> +				die("Invalid commit %s in submodule path %s",
->  				    oid_to_hex(&entry.oid),
-> -				    base->buf, entry.path);
-> +				    base->buf);
->  
-> -			oidcpy(&oid, get_commit_tree_oid(commit));
-> -		}
-> -		else
-> -			continue;
-> +			submodule_tree = repo_get_commit_tree(subrepo_p, commit);
-> +			oidcpy(&oid, submodule_tree ? &submodule_tree->object.oid : NULL);
->  
-> -		len = tree_entry_len(&entry);
-> -		strbuf_add(base, entry.path, len);
-> -		strbuf_addch(base, '/');
-> -		retval = read_tree_at(r, lookup_tree(r, &oid),
-> -				      base, pathspec,
-> -				      fn, context);
-> -		strbuf_setlen(base, oldlen);
-> -		if (retval)
-> -			return -1;
-> +			strbuf_addch(base, '/');
-> +
-> +			retval = read_tree_at(subrepo_p, lookup_tree(subrepo_p, &oid),
-> +						base, pathspec,
-> +						fn, context);
-> +			if (retval)
-> +			    die("failed to read tree for %s", base->buf);
-> +			strbuf_setlen(base, oldlen);
-> +			repo_clear(subrepo_p);
-> +		}
-> +		// else, this is a file (or a submodule, but no pathspec->recurse_submodules)
+On Wed, Oct 26 2022, Taylor Blau wrote:
 
-In this patch, we say that we can ignore a submodule when
-pathspec->recurse_submodules is 0, but unless I'm missing something, I
-don't think that's the case. The preimage is:
+> On Mon, Aug 29, 2022 at 10:48:03AM +0800, Teng Long wrote:
+>> > If the "ignoring extra" is a totally expected situation (e.g. it is
+>> > not suprising if we always ignore the bitmapfile in the alternate
+>> > when we have our own), perhaps we should squelch the warning in such
+>> > expected cases altogether (while warning other cases where we see
+>> > more bitmap files than we expect to see, which may be an anomaly
+>> > worth warning about), and that may be an improvement worth spending
+>> > development cycles on, but I am not sure about this one.
+>>
+>> That's exactly good suggestion. In my opinion, I think to avoid the sensitive
+>> warning and the same time we keep some information to let the users know "Oh,
+>> there are some extra existing bitmaps we just ignored then maybe can do some
+>> optimization works", but I think just remove the total warning here is
+>> reasonable also, i'm good with it.
+>
+> I think that it is somewhat of a step backwards to remove it entirely,
+> but let me qualify that a little bit.
+>
+> At GitHub, we actually *do* remove this warning entirely:
 
-		else if (S_ISGITLINK(entry.mode)) {
-			struct commit *commit;
+You at GitHub also added it entirely :) => fff42755efc (pack-bitmap: add
+support for bitmap indexes, 2013-12-21).
 
-			commit = lookup_commit(r, &entry.oid);
-			if (!commit)
-				die("Commit %s in submodule path %s%s not found",
-				    oid_to_hex(&entry.oid),
-				    base->buf, entry.path);
+Anyway, I'm fine with removing it. From skimming that commit it was
+probably added for no particularly strong reason. But I found the
+omission of "it was added in xyz commit" to be sometihng that could be
+added to the commit message in this case, and....
 
-      /* ... */
-			if (repo_parse_commit(r, commit))
-				die("Invalid commit %s in submodule path %s%s",
-				    oid_to_hex(&entry.oid),
-				    base->buf, entry.path);
+> You could also imagine adding a configuration knob here to control
+> whether or not the warning is shown, but I find that to be kind of
+> gross.
 
-			oidcpy(&oid, get_commit_tree_oid(commit));
-		}
-		else
-			continue;
+FWIW I don't find that to be particularly gross. I think it's fine to
+just delete it.
 
-		len = tree_entry_len(&entry);
-		strbuf_add(base, entry.path, len);
-		strbuf_addch(base, '/');
-		retval = read_tree_at(r, lookup_tree(r, &oid),
-				      base, pathspec,
-				      fn, context);
+But isn't this a general sign that we should perhaps have different
+output when "pack-objects" and the like is run "locally", v.s. when
+we're running via some server process, and end up spewing a message out
+that the user can't do anything about?
 
-which isn't a no-op since we actually do recurse into the gitlink. I
-don't know whether the subsequent call actually succeeds though (e.g.
-maybe it always failed and it was just a de facto no-op?), but that's
-much harder to prove. Since this function has callers outside of "git
-archive", it would be better to be conservative and keep the original
-behavior in the S_ISGITLINK(entry.mode) && !pathspec->recurse_submodules
-case.
-
->  	}
->  	return 0;
->  }
-> -- 
-> gitgitgadget
