@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3AADBFA373E
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 14:57:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6061BC38A2D
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 14:57:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234396AbiJZO47 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 10:56:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57024 "EHLO
+        id S234400AbiJZO5B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 10:57:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234398AbiJZO4y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 10:56:54 -0400
+        with ESMTP id S234390AbiJZO4z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 10:56:55 -0400
 Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 611DF105349
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:56:53 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id c3-20020a1c3503000000b003bd21e3dd7aso1726559wma.1
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:56:53 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70276FF8E2
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:56:54 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id c7-20020a05600c0ac700b003c6cad86f38so1719807wmr.2
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:56:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Swt+MOs31FvqgWRyhn+9o3+Ad1nvEaqzb/Of8gQbUA4=;
-        b=A4xKqRFz5DvNVpKXl031oGJo+K6fbTMk+Bh0Pr70J5yshMzBuRrqSqFd1flF5DBfqP
-         21s299U1NGknjhb6/OSdS/a23Gk8OCFq21qqUeMSTowGp45o/F5GGWyHOnJYK4Y9PTkW
-         cE2JflUFuHYBUVHwK2jlQZe7H4Rw6pdp4MZO6pKjfzUJ7bAyWKjWCjTXh8riw0Wl/ejn
-         q139fw43/St5zzcPt2esbYkllhp9EBmAUMjDnmIPxefKBIbi4Y2ac+IB3H2Oi4+614Gi
-         WAgcs8YXjtrqw4QHW+dqTWD5kT2EvBBjf+cgpbuhyiXgYYyNUb4ZhhzZzEWRGQHzQm/F
-         Vv4Q==
+        bh=Pf6O//4dVRpGaDvAxuSK9y56rQ/6FNWtjqvSoedG12s=;
+        b=VsRijWAqDiKh2OU1PJpq++wcsWJolesgxw5GfWn3Pxq4VM6nl7A6LSHsovrnq3XCgH
+         0vPqW+phivQ2Gq15xYZaTBcexprOPG4/GYfICkTH7DOjJOlAv+oPjBs9Fbe/Owl+CUIC
+         Gyxne3G5SS7HD0MluBJx/UWYmDq+IS/47f0rfhejtmamEJA/4Nl8QqmW5nsE7jnWL/P7
+         q7mkIalQW9I3KB0bmF/YzprifGS3Trw+5bwcNEZQgo+Qj8elH0RnXkCp80uR+auud3ke
+         IeW4yLA81cccOQyB0NrSNHiQiap+dUi+TOgoTIm05DGvhAiTTVWer8ua1qOcNgghmxqX
+         iVgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Swt+MOs31FvqgWRyhn+9o3+Ad1nvEaqzb/Of8gQbUA4=;
-        b=ZV9SHm4TkKGivIp36IssAnhBsuVW/OMTwc9tJu4u9i6JszJlhfWkG4W4inx8Ec6bvH
-         UNmkKwSWfQq+8ZWI5vs04QdFoEmDeisIyRLHeHTIId1FHgixtO7z0wXOKBHyFXowN4/q
-         swiekj1hiDK0xVhn0Z6B1ETAayaSOC+TA5KtDccxF1IIqc/uNVBxUs9nN8MsPzhWhUgN
-         hODtNXQabFX5Y62ECUrc0Iiis2uK44Y9nbg0g4fd/OWzueJsCbQQI+ki1ieZ8CasZCgI
-         6K/cSg+SQ6Gi5nZBQfFH1wZ70TtqK7FoMtZtKIQadRbPlmMMNFjAAUcdAXxXogHeZrrJ
-         giMQ==
-X-Gm-Message-State: ACrzQf0fXxSzNVPx761vbrO2NM0Goz7KGc4zmJNkMC+JZpDLzFN4xJPZ
-        SxT4tbZrwn2Ty4qudzgHD1R7tZr5/RyTAg==
-X-Google-Smtp-Source: AMsMyM7hkf3Mf/cW2SIE/ftQ/E+4nJcUu/0pkRWt1mBt7nen1FqjsTRZ/cNz2za2z1LPA7qu0GWJrg==
-X-Received: by 2002:a05:600c:3d18:b0:3cf:4c1e:5812 with SMTP id bh24-20020a05600c3d1800b003cf4c1e5812mr2352918wmb.192.1666796211327;
-        Wed, 26 Oct 2022 07:56:51 -0700 (PDT)
+        bh=Pf6O//4dVRpGaDvAxuSK9y56rQ/6FNWtjqvSoedG12s=;
+        b=pxt4jxZd5aOBgjI8OFEHL5VD6d4wsX2KVxtd8H34Y4m2EjgyNngjt70KqgzY6Za/Va
+         b4cuRcKM+v7nnw/LPHcZ0vLR6wRJeEPncKY6YlDJV4e7ODaazryAk+xTpQd0vwHFCGb1
+         KmRWua4Zt8RiABWsc0ZkPSEzzKUeRgjCjxU7QCJFK660KWlLJaXOrZuRNh3qmqjhMedJ
+         ar8ODZ5sWe+cVdRht4DkAmYCNfWpH75tdtYyirmWdG68wuA7RPpClrYKFToHRHEsywuC
+         OBLUCBHOXwrQaTwhfl0D+nuYKZeNU/hnVJSAk0ctyaEVClmyUeHPClbb5xdRuZR6H8q+
+         HFCw==
+X-Gm-Message-State: ACrzQf3G3ywIdK1xmdatoIFlb4r/6H2AvwNt4fPn7ApWqI3ww9nS6wqL
+        1iFgf/m5NAeW8soWtGVFksk3Nzj2tP2alw==
+X-Google-Smtp-Source: AMsMyM7/BL5eMVs70RFzMa+IPtUsM6+uiQdTOM4NGRtE+azQt+cxDkxJiYNB0oDRjcfzj0w5NhjZRA==
+X-Received: by 2002:a05:600c:3594:b0:3ca:f978:5b97 with SMTP id p20-20020a05600c359400b003caf9785b97mr2885537wmq.64.1666796212665;
+        Wed, 26 Oct 2022 07:56:52 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id i25-20020a1c5419000000b003c7084d072csm2180351wmb.28.2022.10.26.07.56.50
+        by smtp.gmail.com with ESMTPSA id i25-20020a1c5419000000b003c7084d072csm2180351wmb.28.2022.10.26.07.56.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Oct 2022 07:56:50 -0700 (PDT)
+        Wed, 26 Oct 2022 07:56:51 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Mike Hommey <mh@glandium.org>,
         Eric DeCosta <edecosta@mathworks.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 1/9] Makefile: always (re)set DC_SHA1 on fallback
-Date:   Wed, 26 Oct 2022 16:56:39 +0200
-Message-Id: <patch-v4-1.9-11e92d15616-20221026T145255Z-avarab@gmail.com>
+Subject: [PATCH v4 2/9] INSTALL: remove discussion of SHA-1 backends
+Date:   Wed, 26 Oct 2022 16:56:40 +0200
+Message-Id: <patch-v4-2.9-abbe25f56b3-20221026T145255Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1251.g3eefdfb5e7a
 In-Reply-To: <cover-v4-0.9-00000000000-20221026T145255Z-avarab@gmail.com>
 References: <cover-v3-0.9-00000000000-20221020T223946Z-avarab@gmail.com> <cover-v4-0.9-00000000000-20221026T145255Z-avarab@gmail.com>
@@ -73,43 +73,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix an edge case introduced in in e6b07da2780 (Makefile: make DC_SHA1
-the default, 2017-03-17), when DC_SHA1 was made the default fallback
-we started unconditionally adding to BASIC_CFLAGS and LIB_OBJS, so
-we'd use the sha1collisiondetection by default.
+The claim that OpenSSL is the default SHA-1 backend hasn't been true
+since e6b07da2780 (Makefile: make DC_SHA1 the default, 2017-03-17),
+but more importantly tweaking the SHA-1 backend isn't something that's
+common enough to warrant discussing in the INSTALL document, so let's
+remove this paragraph.
 
-But the "DC_SHA1" variable remained unset, so e.g.:
-
-	make test DC_SHA1= T=t0013*.sh
-
-Would skip the sha1collisiondetection tests, as we'd write
-"DC_SHA1=''" to "GIT-BUILD-OPTIONS", but if we manually removed that
-test prerequisite we'd pass the test (which we couldn't if we weren't
-using sha1collisiondetection).
-
-So let's have the fallback assignment use the 'override' directive
-instead of the ":=" simply expanded variable introduced in
-e6b07da2780. In this case we explicitly want to override the user's
-choice.
+This discussion was originally added in c538d2d34ab (Add some
+installation notes in INSTALL, 2005-06-17) when tweaking the default
+backend was more common. The current wording was added in
+5beb577db8c (INSTALL: Describe dependency knobs from Makefile,
+2009-09-10).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ INSTALL | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 85f03c6aed1..744bd4344f4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1823,7 +1823,7 @@ ifdef APPLE_COMMON_CRYPTO
- 	COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
- 	BASIC_CFLAGS += -DSHA1_APPLE
- else
--	DC_SHA1 := YesPlease
-+	override DC_SHA1 = YesPlease
- 	BASIC_CFLAGS += -DSHA1_DC
- 	LIB_OBJS += sha1dc_git.o
- ifdef DC_SHA1_EXTERNAL
+diff --git a/INSTALL b/INSTALL
+index 89b15d71df5..33447883974 100644
+--- a/INSTALL
++++ b/INSTALL
+@@ -133,10 +133,6 @@ Issues of note:
+ 	  you are using libcurl older than 7.34.0.  Otherwise you can use
+ 	  NO_OPENSSL without losing git-imap-send.
+ 
+-	  By default, git uses OpenSSL for SHA1 but it will use its own
+-	  library (inspired by Mozilla's) with either NO_OPENSSL or
+-	  BLK_SHA1.
+-
+ 	- "libcurl" library is used for fetching and pushing
+ 	  repositories over http:// or https://, as well as by
+ 	  git-imap-send if the curl version is >= 7.34.0. If you do
 -- 
 2.38.0.1251.g3eefdfb5e7a
 
