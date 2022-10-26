@@ -2,136 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A251C38A2D
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 08:57:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A862C433FE
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 09:36:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233302AbiJZI5H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 04:57:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49786 "EHLO
+        id S233318AbiJZJgw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 05:36:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233283AbiJZI5F (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 04:57:05 -0400
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A5189B84B
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 01:57:03 -0700 (PDT)
-Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
-        by smtp-out1.suse.de (Postfix) with ESMTP id CF8CD22055
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 08:57:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1666774621; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=ZVurcytagxdx7k4guAtd5drKRItACGvEgaqQCKY0MfU=;
-        b=HeZRT00Of4nMdwukRltBHzG3+e50fCefpJIKmEmjB2BLtoT9igjyvSc+HTlzqYVz9e2DQs
-        AnI8mLSqY3Y+O/cdFn2XlmMnl95ijB5mSFg1N55Pw7OYkvMTKPZuM9hHPT4bPonxK74OsL
-        HTUNhZoS/tSBmGlfuAWSN+uuF88NWO0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1666774621;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=ZVurcytagxdx7k4guAtd5drKRItACGvEgaqQCKY0MfU=;
-        b=0nQuOFkfpEHElCG+OiTnyOPk4pZamQoxTgzvM0A5VOndgK40n8sUj6QAgAv9aqQmJarMTy
-        GnbD7H/BSLFPhoAw==
-Received: from kitsune.suse.cz (kitsune.suse.cz [10.100.12.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by relay2.suse.de (Postfix) with ESMTPS id C252B2C141
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 08:57:01 +0000 (UTC)
-Date:   Wed, 26 Oct 2022 10:57:00 +0200
-From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To:     git@vger.kernel.org
-Subject: Re: [PATCH] apply: Allow creating files with git patches
-Message-ID: <20221026085700.GC28810@kitsune.suse.cz>
-References: <20221026083204.21333-1-msuchanek@suse.de>
+        with ESMTP id S233350AbiJZJgr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 05:36:47 -0400
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8472FB7F58
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 02:36:46 -0700 (PDT)
+Received: by mail-pf1-x42f.google.com with SMTP id y13so10176250pfp.7
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 02:36:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=hPsAxpqrr2kf31bIqNxHPe3Z8YxPlZh0+vid/HRxbOE=;
+        b=GcLLKMW+7+r7vaA2gUYU3PdJLfmcTtrIyqeSSnU3q1YUeCK9jA3j7vskimqZaJztl1
+         F4cdQunl76Rg/Tu+1D+cj/c+ABSl7huocvJu4zMaC5GjMrfUJ2Z0MwwOb5cerTD3RTzu
+         Yn2cOS8fySSIay/gfflkA2x+fa7Lufr4KWhpyhBtc8GycxjckVvnH3KBc5fLfAMWBmKp
+         ZmhG6/aV3oZEElUg/iRZUhG0JkB47c/6uphZA8OXMlJl9aKTGuAxH7Xgwn0L5PSdd3yo
+         mUfXWlJrUlY0Kk2RbyQp20iBvrcbFVGzr+URSLOFA57evjfEDzkELt1M/x2UeoLaTM2b
+         yLAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hPsAxpqrr2kf31bIqNxHPe3Z8YxPlZh0+vid/HRxbOE=;
+        b=aee+JHwZoxLxAA/RLvBFS/Oqa26V9dIQFJ/LZ7+IFUhqlw0k/J+FUb7Rril11m9W1F
+         9jXZtWi/PImJhUP1yd98NskugwvQdNJ+zykHiLRhgMLiRVDqnBAUQso2UZPslzGIaRqc
+         YkGPMe5EfDxSb5zbqIfzCCp5w7o+UozkThIjScFtgslc/ZpvgiSyHmAuebU2PQ0BK2Tr
+         wvLzD/wlxg+TgQp0953xBXAp0oOSKPNeAnYUY4iDsPEoxrnWivvHiEG/DSdBSPghKPfO
+         1gELaEhf2ZAUWOV+5DMgQpbVDvFl3Zrqq0Q6JYJwz1hvoBUUcmsqFAfwuMVatzJw/GK8
+         EqKA==
+X-Gm-Message-State: ACrzQf1cDfjJtA/i+0eKLTm3ccfrTKmCMcKzMWsCox53UOWt/nPJNPZa
+        KVhjfBES6fD7CRW9cn/JMvJoA4UCbX8=
+X-Google-Smtp-Source: AMsMyM5YIaGP0BcEqoV1YMHpdB1XGyKAKEKWwbBfX+oqV7PZyNa0OjoVHnIymP8DQ8ho1gXqJnaWxw==
+X-Received: by 2002:a63:4b5f:0:b0:43c:428d:507c with SMTP id k31-20020a634b5f000000b0043c428d507cmr35302944pgl.607.1666777005946;
+        Wed, 26 Oct 2022 02:36:45 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id bw6-20020a17090af60600b0020ad26fa65dsm813251pjb.56.2022.10.26.02.36.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Oct 2022 02:36:45 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     M Hickford <mirth.hickford@gmail.com>
+Cc:     bagasdotme@gmail.com, git@vger.kernel.org
+Subject: Re: Thanks
+References: <84143b0c-139b-63c5-519f-8d4a44254976@gmail.com>
+        <20221026043905.1654-1-mirth.hickford@gmail.com>
+Date:   Wed, 26 Oct 2022 02:36:45 -0700
+Message-ID: <xmqqeduvkjte.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221026083204.21333-1-msuchanek@suse.de>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+M Hickford <mirth.hickford@gmail.com> writes:
 
-looking closer the patch really is malformed:
+>> > (first message using git send-email, hopefully I followed the instructions correctly)
+>>
+>> You messed up the thread (you broke it).
+>
+> Curious. The thread overview "5+ messages" at
+> https://lore.kernel.org/git/20221025015116.4730-1-mirth.hickford@gmail.com/#related
+> looks okay to me. I followed the git send-email instructions
+> setting the In-Reply-To header. I changed the subject -- maybe
+> that confused some clients? Thanks for the tips.
 
---------- series --------
-newfile.patch -p2
------ newfile.patch -----
-Patch description
+Your In-Reply-To: header looked OK to me.  Some webmail platforms
+break the thread when Subject: is edited, but that is their bug.  As
+long as you keep the In-Reply-To: chain correct, retitling the
+message as necessary is indeed encouraged practice.
 
-diff --git a/someproject/uselesss.c b/someproject/uselesss.c
-new file mode 100644
---- /dev/null
-+++ b/uselesss.c
-@@ -0,0 +1,3 @@
-+/*
-+ * This patch creates a useless file
-+ */
--------------------------
-
-Not sure if it is desirable to handle better, and if there is even a
-better way.
-
-Thanks
-
-Michal
-
-
-On Wed, Oct 26, 2022 at 10:32:04AM +0200, Michal Suchanek wrote:
-> In git 2.38.0 it is not possible to create a file with apply when the diff
-> looks like git diff.
-> 
-> It either complains that the source file is not /dev/null or that it is
-> not the same as the destination.
-> 
-> something.patch
-> No author found in something.patch
-> ---
-> Sometext
-> 
-> Author: A. U. Thor <au@thor.com>
-> gitdiff_verify_name: line: b/somefile.c
-> @@ -0,0 +1,379 @@
-> +/*
-> ...
-> , isnull: 0, *name: somefile.c, side: 1, another: (null)
-> error: git apply: bad git-diff - inconsistent new filename on line 80
-> 
-> something.patch
-> No author found in something.patch
-> ---
-> Sometext
-> 
-> Author: A. U. Thor <au@thor.com>
-> gitdiff_verify_name: line: a/somefile.c
-> +++ b/somefile.c
-> @@ -0,0 +1,379 @@
-> +/*
-> ...
-> , isnull: 1, *name: (null), side: 0
-> error: git apply: bad git-diff - expected /dev/null on line 80
-> 
-> Signed-off-by: Michal Suchanek <msuchanek@suse.de>
-> ---
->  apply.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/apply.c b/apply.c
-> index 2b7cd930ef..9dd01da271 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -928,7 +928,7 @@ static int gitdiff_verify_name(struct gitdiff_data *state,
->  			return error(_("git apply: bad git-diff - expected /dev/null, got %s on line %d"),
->  				     *name, state->linenr);
->  		another = find_name(state->root, line, NULL, state->p_value, TERM_TAB);
-> -		if (!another || strcmp(another, *name)) {
-> +		if (another && strcmp(another, *name)) {
->  			free(another);
->  			return error((side == DIFF_NEW_NAME) ?
->  			    _("git apply: bad git-diff - inconsistent new filename on line %d") :
-> -- 
-> 2.38.0
-> 
