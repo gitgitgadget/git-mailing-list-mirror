@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF876C433FE
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 14:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEF68C38A2D
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 14:43:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233993AbiJZOmr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 10:42:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41990 "EHLO
+        id S233978AbiJZOm7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 10:42:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233766AbiJZOmm (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 10:42:42 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D52D10043D
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:42:41 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id l16-20020a05600c4f1000b003c6c0d2a445so1739924wmq.4
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:42:41 -0700 (PDT)
+        with ESMTP id S233972AbiJZOmo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 10:42:44 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6D81FF8F4
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:42:42 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id j15so16198728wrq.3
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:42:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=An4+CAvgLQfNQMBhYk+Fp3+6gtJzwv5lPiP54wa8t3o=;
-        b=CFrvqcOIVT4ZGmnD+H6gbJnddtkiNdhOnP2BxYrORObgGV45OQ4J/UPRGscBsNyo84
-         HvfQqPGlziH64fBve3G4SEennjtKh8jqwQA2aBR/IeepcTWx5MLdOuKSmX2CxNwqfreN
-         0SW4xAacv7dfkR4ATAnEPZaJYNkb4nMEpRQ9bPknNQt2VcEdpu2os6dWxc4CR5UcLD0n
-         FON+pom6clZZ71329Jdd0kc8JEnE0Ny1E1lKfaaV6cmwnG4oyZszmJxi/0KApUa1Pz6f
-         1aUBc8pdBrfp9axLUi/QAThjrYnbTFvXq9FgSklKa66ZYSppfq/luV7GP3yuAVC5U0tX
-         00jg==
+        bh=8aVpwlWcyMR68gPLacnzzKILaBVUZKmEWikwJZsA0Eg=;
+        b=lZuGup/6925jPR4F/8GE2M4+6D0ne/bp7ILOU6vB/jUUMLK9BB3l4iVEXI3b35phwf
+         93umBKbln+/WyB3us1fvROxXWch3s7y7Jm5crJTSWWxEQO7vjCWwpXypECBpOZlI/uAT
+         aoCbVdNGWEWE7H9pP67P7GDsWQoiV3mJtuDbeQUR9+W/28H8v58cjOyB6FII/mvK4KrX
+         jKvIfbIjMDLP+ju6iGNVw1ra8zHxXPzX+kGqj4wRrUZiaiXphOIgZ7ALKUpythod7WiF
+         0R9dteHuiP+jQEoz9f0kHSh8PAWJ3C59vUqAKK3PrXNDwD7Abw2HPJXPNpivvlDbID4j
+         h97A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=An4+CAvgLQfNQMBhYk+Fp3+6gtJzwv5lPiP54wa8t3o=;
-        b=sVkqGGxhR3ynsy62076QOk9cLUmSMODm4Xvr0uaAJELd3CPgQbCiQcq6nQVDVXHHSw
-         6FgzN0aH+xybL+F5MxzpiAITj1i+w06MV7Dw3fuW4wq/2L6L2AB2Wlgyyi8CiFMEmwdJ
-         Fm3PGF7SmP1BWftJFz38qyo94vZ0yAy4nDuRePUAKeV3cwqFr0v5p9B+ypzUlS/tF6vY
-         AQ3LsilQkHuJkrjMmImSjEc0F1Gv4DbP/O0fKOEBNqrlnx3cfA9UW6zDClTu5MLRzV9E
-         NdOAGcUiL73bv7pV5+EaqyRNENmMoZ79VFCDYwSJGd3PGRYx58M20CIpm1zLy4dgwWia
-         cLWg==
-X-Gm-Message-State: ACrzQf1QL3bAKv5yaSeogVemT8byf61FzJ9uscVPP23axbXLMpscPI+h
-        wFrzfS7t5OnaBBkJKwYEknhTKITprGf/qw==
-X-Google-Smtp-Source: AMsMyM5tyiM2Bu4iQaKHvtuqLCeU2vQGELrB5FmOGEVtyqY1OFpuGHLo7+Yu/1MQiUfqcOpp3dQ8zA==
-X-Received: by 2002:a05:600c:198d:b0:3c9:a5e8:add6 with SMTP id t13-20020a05600c198d00b003c9a5e8add6mr2788318wmq.110.1666795359686;
-        Wed, 26 Oct 2022 07:42:39 -0700 (PDT)
+        bh=8aVpwlWcyMR68gPLacnzzKILaBVUZKmEWikwJZsA0Eg=;
+        b=R8qRZLL4aM5+DnXwnM3dmWA9uu53HXwgBeprCQgHD7w90SIjPfst0xG1ni7CmVxNZy
+         f4v1fRAuwsFiEoj2alrUQITW43qkXokYA+JtECDFrex2wxH/lDzypfJaD1mDc7kRmyei
+         Xka7wizwPfRUe68RuccL3QUnbrhptcrnXpmwCZfHeIJiS/g72LtaOzQzc2wHOsj39jNc
+         OnphXSJjbu7kHbqtSuo4XuBPpCXepxVPiqNr6MwVvCrFCrlEJrSIJWUEvJNxX6BkTNiY
+         pSzsv6L2c4fJwDpeh4po6Q2Ul6QCUAE0sKW0YrdOFNe2c+0bzp/3cGQdDSNp9qDRn/UE
+         A9Ow==
+X-Gm-Message-State: ACrzQf0NdgAhImy+XcYQKOFOgNo1F/aNE8ph6MR2/Tl9eP+Q6YqC1y+K
+        Lo1pT/C2TBgmHfu7x900/fsvIsaPgvgOuQ==
+X-Google-Smtp-Source: AMsMyM6sup8d5xbZdsWMlTS4F8ekX/TpUkbzocnqmG9Pd3l13mZZL4GN58az1sUOEOm9qix1Tw/IFQ==
+X-Received: by 2002:a5d:6485:0:b0:236:4ed2:409c with SMTP id o5-20020a5d6485000000b002364ed2409cmr20452691wri.110.1666795360858;
+        Wed, 26 Oct 2022 07:42:40 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n5-20020a05600c304500b003a84375d0d1sm1934367wmh.44.2022.10.26.07.42.38
+        by smtp.gmail.com with ESMTPSA id n5-20020a05600c304500b003a84375d0d1sm1934367wmh.44.2022.10.26.07.42.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Oct 2022 07:42:38 -0700 (PDT)
+        Wed, 26 Oct 2022 07:42:40 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,12 +58,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <derrickstolee@github.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 0/3] Makefile: fix issues with bin-wrappers/% rule
-Date:   Wed, 26 Oct 2022 16:42:34 +0200
-Message-Id: <cover-v2-0.3-00000000000-20221026T143533Z-avarab@gmail.com>
+Subject: [PATCH v2 1/3] Makefile: factor sed-powered '#!/bin/sh' munging into a variable
+Date:   Wed, 26 Oct 2022 16:42:35 +0200
+Message-Id: <patch-v2-1.3-fc6c5a6a8df-20221026T143534Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1251.g3eefdfb5e7a
-In-Reply-To: <cover-0.5-00000000000-20220901T130817Z-avarab@gmail.com>
-References: <cover-0.5-00000000000-20220901T130817Z-avarab@gmail.com>
+In-Reply-To: <cover-v2-0.3-00000000000-20221026T143533Z-avarab@gmail.com>
+References: <cover-0.5-00000000000-20220901T130817Z-avarab@gmail.com> <cover-v2-0.3-00000000000-20221026T143533Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,115 +71,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This simple topic fixes issues with the bin-wrappers/% rules, as seen
-in the range-diff below this never worked properly:
+Reduce the amount of magical copy/pasting in the Makefile by factoring
+the munging of "#!/bin/sh" on the first line of a shellscript into a
+variable we can re-use in the various rules that need to do so.
 
-	make bin-wrappers/git
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ Makefile | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-I.e. we'd make the scirpt, but not "git".
-
-I originally sent this as [1] in response to a topic that's since
-landed, i.e. that topic needed to add more conditions to the "match
-this, but not that" part of the current rule.
-
-As 3/3 notes that's because we were previously squashing 3 Makefile
-variables into one, and then having to heurisitcally match their
-contents to figure out which item originally came from which variable.
-
-The 3/3 here simply avoids squashing all that data together, so we
-don't need to guess after the fact.
-
-For the v2 I squashed the previous 3 commits together, they were
-incrementally improving the rule, now we do it all at once.
-
-1. https://lore.kernel.org/git/cover-0.5-00000000000-20220901T130817Z-avarab@gmail.com/
-
-Ævar Arnfjörð Bjarmason (3):
-  Makefile: factor sed-powered '#!/bin/sh' munging into a variable
-  Makefile: define "TEST_{PROGRAM,OBJS}" variables earlier
-  Makefile: simplify $(test_bindir_programs) rule by splitting it up
-
- Makefile | 67 ++++++++++++++++++++++++++++++++++++++++----------------
- 1 file changed, 48 insertions(+), 19 deletions(-)
-
-Range-diff against v1:
-1:  40033143cdd = 1:  fc6c5a6a8df Makefile: factor sed-powered '#!/bin/sh' munging into a variable
-2:  fe54dacaad2 = 2:  6dcb49f25c4 Makefile: define "TEST_{PROGRAM,OBJS}" variables earlier
-3:  9d4ac628f0c ! 3:  400f487e30d Makefile: simplify $(test_bindir_programs) rule by splitting it up
-    @@ Commit message
-         Which will show an empty diff, i.e. we've correctly dealt with the
-         combination of $(SHELL_PATH), $(X) and these three variables here.
-     
-    +    This also fixes an issue with the "bin-wrappers/" scripts have never had properly declared
-    +    dependency information, i.e. this has never worked:
-    +
-    +            make clean &&
-    +            make bin-wrappers/git &&
-    +            # the script is there, but no "./git" is built
-    +            ./bin-wrappers/git
-    +
-    +    There was no reason not to have that work, just as most things
-    +    generated by the Makefile have proper dependency information.
-    +
-    +    Before this commit doing this would have been painful, but now it's
-    +    easy to pass this as a parameter to our "bin_wrappers_template"
-    +
-         1. ea925196f1b (build dashless "bin-wrappers" directory similar to
-            installed bindir, 2009-12-02)
-         2. e6e7530d10b (test helpers: move test-* to t/helper/ subdirectory,
-    @@ Makefile: GIT-PYTHON-VARS: FORCE
-     +endef
-      
-     -all:: $(test_bindir_programs)
-    -+BW_BINDIR_PROGRAMS_NEED_X = $(BINDIR_PROGRAMS_NEED_X:%=bin-wrappers/%)
-    -+BIN_WRAPPERS += $(BW_BINDIR_PROGRAMS_NEED_X)
-    -+$(BW_BINDIR_PROGRAMS_NEED_X): wrap-for-bin.sh
-    -+	$(call mkdir_p_parent_template)
-    -+	$(QUIET_GEN)$(call cmd_munge_bin_wrappers_script,$(@F),,$X)
-    ++define bin_wrappers_template
-    ++
-    ++## bin_wrappers_template
-    ++# 1 = $(1)
-    ++# 2 = $(2)
-    ++# 3 = $(3)
-    ++# 4 = $(4)
-    ++BW_$(1) = $$($(1):%=bin-wrappers/%)
-    ++BIN_WRAPPERS += $$(BW_$(1))
-    ++all:: $$(BW_$(1))
-    ++$$(BW_$(1)): bin-wrappers/% : $(3)%$(4)
-    ++$$(BW_$(1)): wrap-for-bin.sh
-    ++	$$(call mkdir_p_parent_template)
-    ++	$$(QUIET_GEN)$$(call cmd_munge_bin_wrappers_script,$(2),$(3),$(4))
-    ++endef
-      
-     -bin-wrappers/%: wrap-for-bin.sh
-    -+BW_BINDIR_PROGRAMS_NO_X = $(BINDIR_PROGRAMS_NO_X:%=bin-wrappers/%)
-    -+BIN_WRAPPERS += $(BW_BINDIR_PROGRAMS_NO_X)
-    -+$(BW_BINDIR_PROGRAMS_NO_X): wrap-for-bin.sh
-    - 	$(call mkdir_p_parent_template)
-    +-	$(call mkdir_p_parent_template)
-     -	$(QUIET_GEN)sed -e $(call cmd_munge_script_sed_shell_path_arg) \
-     -	     -e 's|@@BUILD_DIR@@|$(shell pwd)|' \
-     -	     -e 's|@@PROG@@|$(patsubst test-%,t/helper/test-%,$(@F))$(if $(filter-out $(BINDIR_PROGRAMS_NO_X),$(@F)),$(X),)|' < $< > $@ && \
-     -	chmod +x $@
-    -+	$(QUIET_GEN)$(call cmd_munge_bin_wrappers_script,$(@F))
-    -+
-    -+BW_TEST_PROGRAMS_NEED_X = $(TEST_PROGRAMS_NEED_X:%=bin-wrappers/%)
-    -+BIN_WRAPPERS += $(BW_TEST_PROGRAMS_NEED_X)
-    -+$(BW_TEST_PROGRAMS_NEED_X): wrap-for-bin.sh
-    -+	$(call mkdir_p_parent_template)
-    -+	$(QUIET_GEN)$(call cmd_munge_bin_wrappers_script,$(@F),t/helper/,$X)
-    ++define bin_wrappers_templates
-    ++$(call bin_wrappers_template,BINDIR_PROGRAMS_NEED_X,'$$(@F)',,$$X)
-    ++$(call bin_wrappers_template,BINDIR_PROGRAMS_NO_X,'$$(@F)')
-    ++$(call bin_wrappers_template,TEST_PROGRAMS_NEED_X,'$$(@F)',t/helper/,$$X)
-    ++endef
-    ++$(eval $(call bin_wrappers_templates))
-     +
-     +all:: $(BIN_WRAPPERS)
-      
-4:  cbbf458433f < -:  ----------- Makefile: define bin-wrappers/% rules with a template
-5:  560dee80b4a < -:  ----------- Makefile: fix "make clean && make bin-wrappers/$NAME" dependencies
+diff --git a/Makefile b/Makefile
+index 85f03c6aed1..45b22d33513 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2344,8 +2344,12 @@ GIT-SCRIPT-DEFINES: FORCE
+ 		echo "$$FLAGS" >$@; \
+             fi
+ 
++define cmd_munge_script_sed_shell_path_arg
++'1s|#!.*/sh|#!$(SHELL_PATH_SQ)|'
++endef
++
+ define cmd_munge_script
+-sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
++sed -e $(call cmd_munge_script_sed_shell_path_arg) \
+     -e 's|@SHELL_PATH@|$(SHELL_PATH_SQ)|' \
+     -e 's|@@DIFF@@|$(DIFF_SQ)|' \
+     -e 's|@@LOCALEDIR@@|$(localedir_SQ)|g' \
+@@ -2447,7 +2451,7 @@ git-instaweb: git-instaweb.sh GIT-SCRIPT-DEFINES
+ else # NO_PERL
+ $(SCRIPT_PERL_GEN) git-instaweb: % : unimplemented.sh
+ 	$(QUIET_GEN) \
+-	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
++	sed -e $(call cmd_munge_script_sed_shell_path_arg) \
+ 	    -e 's|@@REASON@@|NO_PERL=$(NO_PERL)|g' \
+ 	    unimplemented.sh >$@+ && \
+ 	chmod +x $@+ && \
+@@ -2468,7 +2472,7 @@ $(SCRIPT_PYTHON_GEN): % : %.py
+ else # NO_PYTHON
+ $(SCRIPT_PYTHON_GEN): % : unimplemented.sh
+ 	$(QUIET_GEN) \
+-	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
++	sed -e $(call cmd_munge_script_sed_shell_path_arg) \
+ 	    -e 's|@@REASON@@|NO_PYTHON=$(NO_PYTHON)|g' \
+ 	    unimplemented.sh >$@+ && \
+ 	chmod +x $@+ && \
+@@ -3061,7 +3065,7 @@ all:: $(TEST_PROGRAMS) $(test_bindir_programs)
+ 
+ bin-wrappers/%: wrap-for-bin.sh
+ 	$(call mkdir_p_parent_template)
+-	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
++	$(QUIET_GEN)sed -e $(call cmd_munge_script_sed_shell_path_arg) \
+ 	     -e 's|@@BUILD_DIR@@|$(shell pwd)|' \
+ 	     -e 's|@@PROG@@|$(patsubst test-%,t/helper/test-%,$(@F))$(if $(filter-out $(BINDIR_PROGRAMS_NO_X),$(@F)),$(X),)|' < $< > $@ && \
+ 	chmod +x $@
 -- 
 2.38.0.1251.g3eefdfb5e7a
 
