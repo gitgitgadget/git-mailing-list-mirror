@@ -2,107 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73AC0C433FE
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 16:55:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DA64C433FE
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 17:51:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233682AbiJZQzF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 12:55:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39002 "EHLO
+        id S234196AbiJZRvx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 13:51:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233126AbiJZQzD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 12:55:03 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AA0D15FFF
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 09:55:02 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id i3so15897750pfc.11
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 09:55:02 -0700 (PDT)
+        with ESMTP id S233683AbiJZRvv (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 13:51:51 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4340A664F3
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 10:51:50 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id d24so14890621pls.4
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 10:51:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kzibGMmDVPB6HoOZTUQmxvTU5yAbOV7KP3G1SFR3+Gk=;
-        b=CAT9eC3NP8AdMleisum8tyVgauidbRH9EhJozWOv6OCbXwLfPcnwiyYRvBHtwaHAm8
-         ZborwhwNCnj0jzh+c6AUym+cLT7zeWFikMhBKe1OkYVtSJp96z0bXxjXSiop4TOX/EeA
-         1vFtRfsTqh5bIGKVeYzxOc3AQtk1mG99fXvbLxsTBjfaySNfm11x1vh8ob+WLND9y4xK
-         xMGF87K8gxDf3nF5JYzoGTJ5fh0vdWmOvPFHhovRPy0n1dgqc9ifOep2HahQCr56NMc7
-         yB3kClMEjxAb4Kma9aXNN+tJ6q9JCtb/GPUR9yhAxZLHd9ALp6tHbTs1k+47J3+/GZBe
-         VDCg==
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oO08gldFKi+WREGGPAvDDhU+7ybd1ZsKx2g1zyjnrw4=;
+        b=OMwcspdakU2YSY3vbGSmP9egpJdvimOJ626Zq5sPlQXjJhpyrIshT6S5uadCiZHlNQ
+         omZrTrvwlZJPrs1M9lMD6efk5/uimTtFZHVfg4bYL+hWz4f3KdKszQQRnpdMdQp60KTi
+         BNdouWYnCQNUg+Ggq0ZYfOjh0f7A6cXfCis1v1m3ta7Bj18qOx5yTKxFfWwTylYo+umC
+         9JmeqM1SJ7YEbJKi7Wsg9qS8Slq11KKxG5zU7v/APmFCijll83Ur20G+cOtLmL0IUYlW
+         8YzJea6WmF/ionKkbVqvWzFgqCMfvp7k6j0BrH3BDTAmDUegAm9gbji8YfEZrmyhJNGV
+         MX+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=kzibGMmDVPB6HoOZTUQmxvTU5yAbOV7KP3G1SFR3+Gk=;
-        b=bZiIXusHIHEMMvN1XBCHcGj7kDE5Z/lIHCjVIUHJZfJ1U6PmkutztS+Q/s3qkp6oal
-         mcm9J4lLLUOVXiIgdw58Ef1giPnZL6P//mfcWA24dBEnp2+T3S2trJUwHdQAs9MwfM0D
-         eQjVog1uXBWq53v4UVFv/QEfzoYTFzmEM5IW8MxIyRrCVm4/Meq8uaajBLafUX3bp3+t
-         GL49noi4qeumHXUws7ngIucHcbgS96yBlSa8Ta9twtBsBpHLc/ZvkawTBYg1oGseg5/R
-         nDFuiwQRiChtTUz0pvpIRbvaMnv4kGoIuLUXoPnz2M0W2qNa5pW0MX4p9wn6wuEUyxZK
-         9v8g==
-X-Gm-Message-State: ACrzQf198AOIC1Y8fekhweXRcXgiAcy3MOaVanHXEgxpRZvpByTOkBqP
-        hiswpgz1Dw2uuSyraKDJizw=
-X-Google-Smtp-Source: AMsMyM6ncdduND6WouLv3922d9qy2PeBgSIUkAZXOle15vChHgBtvYxQ14ucsL4Ns0ObHh5ly8+1Rg==
-X-Received: by 2002:a63:91:0:b0:461:f509:2a31 with SMTP id 139-20020a630091000000b00461f5092a31mr37728142pga.108.1666803301429;
-        Wed, 26 Oct 2022 09:55:01 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oO08gldFKi+WREGGPAvDDhU+7ybd1ZsKx2g1zyjnrw4=;
+        b=mgqZPFW2qGEyoEnlpIkNvhOHFobTaqMotsCmAvuIGM/Gbqsa8vnyg0+E16oyivxnxR
+         Hg67lBMRgC8hMn3znkomvcVZmHtoTaIN6yYpEljqhOvqp/4GG6H1V52gvFESQyTSh2sa
+         UInHB4Z6n/ODhqVZFKz0HBR5S/aD/Co78ywBbQAGUqtcWbkZ9SO+yd9eGuVpAE6Bo1m6
+         ngtKe4xHOeQU/y2YeczRUdebjM2275U4vx9b5JuxrhUMv7QE4jiPolnRraaZN0gVE8HM
+         Iep6h5j70qNH2Ltthsrb+O310lFD0BAdZu97lWkBa7dh8A3n5XdHCEbzZSTNmndOkTsg
+         6CjA==
+X-Gm-Message-State: ACrzQf3FKMi2xxWulNTxm2RQz8xxSTq3OFx24IikmyiT5oiF8AJE+Ed6
+        6H7DVmn33wfphT+kKKDKHw73QJPwMSY=
+X-Google-Smtp-Source: AMsMyM5FAxZ8x9zqtlBd2X964PoxTYuuRji+6UQJAGSVxn5cgoz0z8rWNvrj+Z/4Fem4oePKUayVWA==
+X-Received: by 2002:a17:90b:4b09:b0:213:655c:158b with SMTP id lx9-20020a17090b4b0900b00213655c158bmr1838748pjb.119.1666806709656;
+        Wed, 26 Oct 2022 10:51:49 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id n5-20020a170902e54500b0018699e6afd8sm3127476plf.265.2022.10.26.09.55.00
+        by smtp.gmail.com with ESMTPSA id g12-20020a17090a708c00b001f559e00473sm1348367pjk.43.2022.10.26.10.51.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Oct 2022 09:55:00 -0700 (PDT)
+        Wed, 26 Oct 2022 10:51:49 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Calvin Wan <calvinwan@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Glen Choo <chooglen@google.com>, Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH v4 3/8] rebase --merge: fix reflog when continuing
-References: <pull.1150.v3.git.1665567312.gitgitgadget@gmail.com>
-        <pull.1150.v4.git.1666344108.gitgitgadget@gmail.com>
-        <2c965f4b97c1773abc6b844b87fa64c5d6d1524c.1666344108.git.gitgitgadget@gmail.com>
-        <xmqqk04tm62o.fsf@gitster.g>
-        <86699708-d631-fb49-482c-af27204a3570@dunelm.org.uk>
-        <xmqqczafopc0.fsf@gitster.g>
-        <8af26af0-548d-52c8-9752-1a265af8fd54@dunelm.org.uk>
-Date:   Wed, 26 Oct 2022 09:55:00 -0700
-In-Reply-To: <8af26af0-548d-52c8-9752-1a265af8fd54@dunelm.org.uk> (Phillip
-        Wood's message of "Wed, 26 Oct 2022 16:17:13 +0100")
-Message-ID: <xmqq7d0mikyj.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 1/3] Makefile: factor sed-powered '#!/bin/sh' munging
+ into a variable
+References: <cover-0.5-00000000000-20220901T130817Z-avarab@gmail.com>
+        <cover-v2-0.3-00000000000-20221026T143533Z-avarab@gmail.com>
+        <patch-v2-1.3-fc6c5a6a8df-20221026T143534Z-avarab@gmail.com>
+Date:   Wed, 26 Oct 2022 10:51:48 -0700
+Message-ID: <xmqq1qquiibv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> Hi Junio
+> Reduce the amount of magical copy/pasting in the Makefile by factoring
+> the munging of "#!/bin/sh" on the first line of a shellscript into a
+> variable we can re-use in the various rules that need to do so.
+
+At least when taken standalone, this looks more like replacing one
+magical copy pasting with another magical one, the difference being
+that the latter is not immediately obvious without referring back to
+the definition of the variable.
+
+If we need to change the replacement wholesale in a later step, then
+it might give us a good trade off, but otherwise I am not sure why
+this is a good idea that is worth the churn.  
+
+When adding or updating these actions, in the original, you can typo
+SHELL_PATH_SQ, but you can typo cmd_munge_script_sed_shell_path_arg
+in the updated to break it the same way.  So...?
+
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  Makefile | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
 >
-> On 25/10/2022 17:11, Junio C Hamano wrote:
->> Phillip Wood <phillip.wood123@gmail.com> writes:
->> 
->>>>> Both of these will be fixed in a future series that
->>>>> stops the sequencer calling setenv().
->>>> If it gets fixed in a future step in the same series, that is a
->>>> different matter, but if it is easy enough not to deliberately
->>>> introduce a new leak, we'd prefer to do so.
->>>
->>> It's a couple of patches to fix which are more or less finished, I'm
->>> planning to send them once this series is in next.
->> So we will do the "add a known breakage of the same kind as there
->> exists others, and then later fix them all up, including the one
->> that is added by this series, because fixes are non-trivial and this
->> topic is easier to finish if we allowed to add a known breakage"
->> approach?  Just making sure it is what you plan to do.
->
-> Yes, that's right
-
-OK, I do not mind as long as we leave a NEEDSWORK note to tell
-others that we know the leak and promise to fix it soon (so they do
-not waste their effort to fix it independently).
-
-Thanks.
+> diff --git a/Makefile b/Makefile
+> index 85f03c6aed1..45b22d33513 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2344,8 +2344,12 @@ GIT-SCRIPT-DEFINES: FORCE
+>  		echo "$$FLAGS" >$@; \
+>              fi
+>  
+> +define cmd_munge_script_sed_shell_path_arg
+> +'1s|#!.*/sh|#!$(SHELL_PATH_SQ)|'
+> +endef
+> +
+>  define cmd_munge_script
+> -sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+> +sed -e $(call cmd_munge_script_sed_shell_path_arg) \
+>      -e 's|@SHELL_PATH@|$(SHELL_PATH_SQ)|' \
+>      -e 's|@@DIFF@@|$(DIFF_SQ)|' \
+>      -e 's|@@LOCALEDIR@@|$(localedir_SQ)|g' \
+> @@ -2447,7 +2451,7 @@ git-instaweb: git-instaweb.sh GIT-SCRIPT-DEFINES
+>  else # NO_PERL
+>  $(SCRIPT_PERL_GEN) git-instaweb: % : unimplemented.sh
+>  	$(QUIET_GEN) \
+> -	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+> +	sed -e $(call cmd_munge_script_sed_shell_path_arg) \
+>  	    -e 's|@@REASON@@|NO_PERL=$(NO_PERL)|g' \
+>  	    unimplemented.sh >$@+ && \
+>  	chmod +x $@+ && \
+> @@ -2468,7 +2472,7 @@ $(SCRIPT_PYTHON_GEN): % : %.py
+>  else # NO_PYTHON
+>  $(SCRIPT_PYTHON_GEN): % : unimplemented.sh
+>  	$(QUIET_GEN) \
+> -	sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+> +	sed -e $(call cmd_munge_script_sed_shell_path_arg) \
+>  	    -e 's|@@REASON@@|NO_PYTHON=$(NO_PYTHON)|g' \
+>  	    unimplemented.sh >$@+ && \
+>  	chmod +x $@+ && \
+> @@ -3061,7 +3065,7 @@ all:: $(TEST_PROGRAMS) $(test_bindir_programs)
+>  
+>  bin-wrappers/%: wrap-for-bin.sh
+>  	$(call mkdir_p_parent_template)
+> -	$(QUIET_GEN)sed -e '1s|#!.*/sh|#!$(SHELL_PATH_SQ)|' \
+> +	$(QUIET_GEN)sed -e $(call cmd_munge_script_sed_shell_path_arg) \
+>  	     -e 's|@@BUILD_DIR@@|$(shell pwd)|' \
+>  	     -e 's|@@PROG@@|$(patsubst test-%,t/helper/test-%,$(@F))$(if $(filter-out $(BINDIR_PROGRAMS_NO_X),$(@F)),$(X),)|' < $< > $@ && \
+>  	chmod +x $@
