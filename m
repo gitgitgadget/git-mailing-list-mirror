@@ -2,60 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03B5FC433FE
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 05:51:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A5ADC433FE
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 05:55:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232200AbiJZFvg convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Wed, 26 Oct 2022 01:51:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44096 "EHLO
+        id S232939AbiJZFzM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 01:55:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230075AbiJZFvf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 01:51:35 -0400
-X-Greylist: delayed 31321 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 25 Oct 2022 22:51:32 PDT
-Received: from symantec13.comsats.net.pk (Symantec13.comsats.net.pk [203.124.41.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D695B03F4
-        for <git@vger.kernel.org>; Tue, 25 Oct 2022 22:51:31 -0700 (PDT)
-X-AuditID: cb7c294e-9d1ff70000000b0e-ee-63588ed94aae
-Received: from host201505.comsatshosting.com (host201505.comsatshosting.com [210.56.11.66])
-        (using TLS with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (Client did not present a certificate)
-        by symantec13.comsats.net.pk (Symantec Messaging Gateway) with SMTP id E1.91.02830.ADE88536; Wed, 26 Oct 2022 06:35:22 +0500 (PKT)
-Received: from [103.145.253.52] (UnknownHost [103.145.253.52]) by host201505.comsatshosting.com with SMTP;
-   Wed, 26 Oct 2022 02:07:27 +0500
-Message-ID: <E1.91.02830.ADE88536@symantec13.comsats.net.pk>
-Content-Type: text/plain; charset="iso-8859-1"
+        with ESMTP id S232896AbiJZFzJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 01:55:09 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6568A2E685
+        for <git@vger.kernel.org>; Tue, 25 Oct 2022 22:55:06 -0700 (PDT)
+Received: (qmail 11155 invoked by uid 109); 26 Oct 2022 05:55:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 26 Oct 2022 05:55:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2106 invoked by uid 111); 26 Oct 2022 05:55:07 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 26 Oct 2022 01:55:07 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 26 Oct 2022 01:55:04 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        =?utf-8?B?7KCV7J6s7Jqw?= <thebound7@gmail.com>
+Subject: Re: [PATCH] apply: reject patches larger than ~1 GiB
+Message-ID: <Y1jLuMN6biwR87ga@coredump.intra.peff.net>
+References: <70f5763834dff373a5573a99ec4cdfa36cadf34c.1666722251.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-Content-Description: Mail message body
-Subject: Compliment,
-To:     git@vger.kernel.org
-From:   "Wahid Majrooh" <whlexp@riazeda.com.pk>
-Date:   Tue, 25 Oct 2022 14:02:06 -0700
-Reply-To: wfnngaf@gmail.com
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Tf0hTURTHu9vTvaY3n2+rXdcvWBSVudIsDUQkiBQtCnJJUfncrs7cD9l7
-        mlbEsv6oGaJlhQNFKRXTyJQ0AjOGYRoDMQOtqCiLXESFJPVf987NvX8O533Ovd9zzvfyWCV/
-        X6VnSx0SdjkEmyFazUymx+xNelNXYN5xa0aV7pmqVWSB7Pm+dYfAMXWGBdtKK7Fre2ah2vqr
-        ZYApvw6q5vxdUW5g94DlLOJS0ZdHAaUHqFmeG1Wghb810YsfdQBdu9+upKcgl4Eav7YDmis5
-        I5q+2Ri9yOPRWNMss8gTUUfbd3KeJfkm9McjUazhtGiu3hM8ouV06Mdok4rm0VwSGhnvUtCc
-        4TaimuaaIOe51Wiyp52pB9Ar6+aVdfPKunkj3VoBcw8kiNV2gXhjTt5pNDvtoiCJRgeWjOVl
-        fYBY9fL8loOPweAr7AMcCwyxcGJzgZmPEirJNR/IZRWGlTDl+VEzv6LIaam2CqL1lKvChkWD
-        Fg7lkpNwCRdV2MoMemjPI1SzRB34jGjDEnkbH0CsklzzTxM1aBGqz2KXc1HMB1azjEEHC668
-        FniuRJBwGcbl2BWuFrMs96i3ewJwvick6hmH04ENCObQXvEuXIKrikttUvgCUdKmkQonrwTH
-        WwvZBpOZXyUvyCdUsMt9IJuNJWPO7afbieWCXSwtCelq4AzdOTZMg5oJ8FIOgXwYRvTGwUXA
-        9rYNDSnZ/mBsqRsm0T9I44epCRL/DHieKfngPnodzDxAp6ZC1grH0jr6VXD0AZk6TlagnfVr
-        YG034StlPNI8/B8EwD7yrhp4mGrHkr8ksg4P9RTGhGBwGwS9dJv4EIvoBYgvCuJLT7OJ+iIJ
-        ktyX4zdM1JcQDflyhEI+DCNSejcYq051u7M+29JSXTpTy+m8ibjLXU/Htbc/raiY7Uw+2Wfb
-        3bJs7Oq3wIY0nFAyqmntGGLa2quyd61Pjvl9Bw5npn7OvzMbp8q0uE0L/nMxMEXD2Qfe3l3o
-        n9+2+WNOUuX8w5QHV3dkWNUXBhs6v5zo+f5iT+H6f+9rF0Z0iT+r8t8ZGNEqJG9VukThP7/I
-        psRABAAA
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <70f5763834dff373a5573a99ec4cdfa36cadf34c.1666722251.git.me@ttaylorr.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Compliment,
+On Tue, Oct 25, 2022 at 02:24:31PM -0400, Taylor Blau wrote:
 
-It will be a pleasure to discuss an important issue with you on area of Investment. My name is Wahid from Kabul
+> To avoid potential overflow and truncation issues in `git apply`, apply
+> similar treatment as in dcd1742e56 (xdiff: reject files larger than
+> ~1GB, 2015-09-24), where the xdiff code was taught to reject large
+> files for similar reasons.
 
+I think this is a reasonable stopgap measure. In the case of xdiff, we
+knew that we were working with text files. Is that always true here,
+though? I.e., after this patch are we blocked from handling a 1GB binary
+diff patch?
 
-Majrooh
+I'm mostly asking from a devil's advocate position. Even if the answer
+is yes, I think this may still be the right thing to do, at least in the
+short term.
 
+> The maximum size was chosen somewhat arbitrarily, but picking a value
+> just shy of a gigabyte allows us to double it without overflowing 2^31-1
+> (after which point our value would wrap around to a negative number).
+> To give ourselves a bit of extra margin, the maximum patch size is a MiB
+> smaller than a full GiB, which gives us some slop in case we allocate
+> "(records + 1) * sizeof(int)" or similar.
+
+This was eerily familiar, and I wondered what "records" meant in
+apply.c. But that is just the example from xdiff. :) I agree that the
+same "extra margin" argument makes sense here, just out of caution.
+
+> +/*
+> + * apply.c isn't equipped to handle arbitrarily large patches, because
+> + * it intermingles `unsigned long` with `int` for the type used to store
+> + * buffer lengths.
+> + *
+> + * Only process patches that are just shy of 1 GiB large in order to
+> + * avoid any truncation or overflow issues.
+> + */
+> +#define MAX_APPLY_SIZE (1024UL * 1024 * 1023)
+> +
+>  static int read_patch_file(struct strbuf *sb, int fd)
+>  {
+> -	if (strbuf_read(sb, fd, 0) < 0)
+> +	if (strbuf_read(sb, fd, 0) < 0 || sb->len >= MAX_APPLY_SIZE)
+>  		return error_errno("git apply: failed to read");
+
+The patch itself looks reasonable. We'll potentially allocate an
+unbounded amount of RAM before rejecting the patch, but there's not an
+easy fix there without teaching strbuf_read() to accept a maximum.
+
+It's probably not worth worrying about given the attack surface here
+(it's not like anybody is reading patches from a socket that will cause
+a DoS).
+
+-Peff
