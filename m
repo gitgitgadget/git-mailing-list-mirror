@@ -2,121 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B7EE7C38A2D
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 18:52:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 499E8C38A2D
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 18:54:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233166AbiJZSwg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 14:52:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53868 "EHLO
+        id S234329AbiJZSyr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 14:54:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229995AbiJZSwe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 14:52:34 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73FFF7EFED
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 11:52:31 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id y14so23935127ejd.9
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 11:52:31 -0700 (PDT)
+        with ESMTP id S234237AbiJZSyo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 14:54:44 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AA023B9AF
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 11:54:43 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id io19so10115659plb.8
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 11:54:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=UF4VTLxWiX4hcBu/79iBCI8HwveG4JdNMM+NTz1Djmg=;
-        b=Tzi1Ax+8W4pPcQ7pqPm3F6VCrTekwKCYs7IyeKdzeDTMe2QJzonQO6x56tFHmYQWVu
-         vChp7s9miqYBGWUfOHQ6m+81MhRFhYbHJByUtNBcwnS3Vk5waYNwvVDcQ0NnG0vtrdaL
-         JvNqMxiFkga7WCsR7PFgnXvRd8qMoscCpPOz+RdQLryZOFxdwfRq/FIdASMumbwFRSMa
-         k91L2Ly2rCg+ETIonEqAHHLT+CevhbGWF51edH44bIiC6ILAY4RSlWZgrwfvcntP09eB
-         GfsDkwDOg8WWeBapaNi9aAA4M0V1zW/M5Iw0ZJ+TL0MVI/67EdvqDLn8QBzCHCl2dW/O
-         qxvA==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kwQ36s9pINkPEwWFZbJzZDLLbCozBZVYhKPJo0vrr2w=;
+        b=i3iCnMEO+3C+FI+ICe4FMCXdxoWD8dy4qsG5BiVEMspYCT1VFM7ewLhcGdm6Sci4Y2
+         OPvOEPw+pgHN7dDrQXDEDabZvTRZbmFiZxcbRSLBaj8nGXayHWwI4w1Ne/e9Emhl0vn9
+         OZKpidJPAXGTjJ/+AEap3fPk0a7P2vL5wP3c+T/ACIv6bZv7jI5V+NgE+6LAAOsI5iji
+         DYsruP2CXQbYhTcj2thGVDxW2G/mXDo5dlELgdpyDMHrwzFkaNoEMAj5cItXfLr/7RUt
+         6McMor87/dGPEf2GDIoaKapmEMUdR98Kf+vleQwHL0wEgC1GWEPDiX8tS+KMMAY6Hzl7
+         heyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UF4VTLxWiX4hcBu/79iBCI8HwveG4JdNMM+NTz1Djmg=;
-        b=YjytEzbz7Jh7DXbFMBhDAuHYyPLDcvDNzKOkWKuVpsAY8vRg/CsNQeXcaqSbrDgLoH
-         1nzZqT5p9+hB9R0Tlq6VoEWYXLr99Ca7Yy4v1j31CXqkSsQXxmEfziq0UHYpn/QguYd4
-         lOaz9icMiPT/NVOLBfJbNgdHdO+jbqa9jdM+RgVsgj7skavw609CkW9hTLTXU/fKrbkF
-         9ZEy03pJz9DnY/sRMyp11QsiPb6BcSQMvk1FrgyM6+DLwyS0kqc4C0elD7m+otdt3Jny
-         Qsx+SBidw+jU9tfhdka9zt42ps2Qr9z0KKNi5IXGTs+vhc9vF0RMdlT6u9T+RLIxU+gW
-         RlRg==
-X-Gm-Message-State: ACrzQf2HSN5N3h8vmUE9y0j0FXFeOwVWGsmpHxIfgfvf/axHagz3Ych4
-        vu4+8bxhxUPfjVibDkkfUKk=
-X-Google-Smtp-Source: AMsMyM4RhHwj3r6QO/h52sCCXlbyfzxlxAhNIgwsFgsHZzo8UdLFJWEMtJGm/tJnlnrjZyzeZt8DMg==
-X-Received: by 2002:a17:907:d04:b0:76e:e208:27ba with SMTP id gn4-20020a1709070d0400b0076ee20827bamr40277537ejc.652.1666810349896;
-        Wed, 26 Oct 2022 11:52:29 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id z6-20020a50eb46000000b00458dc7e8ecasm4002661edp.72.2022.10.26.11.52.29
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=kwQ36s9pINkPEwWFZbJzZDLLbCozBZVYhKPJo0vrr2w=;
+        b=YSQny5DzDVg0Bavb/ZGZQSANapj5C3kEaRTFvgx2HMYco7JBDomsbdrgtJdRj983TS
+         S6DOGHmlSr/Htt0gUQFsp7ZPweofTcfyKveCFvCOywqfKxYQnwFanZ69IP8s4Y13RtHj
+         REUESc3TyOh0IxF3zQJz+BNUxjDz08X20fsDpIQ2yxMdJg8ynIxezWFkPy1eqINYbRwh
+         WXEKgfRBI5HltRyLKOGjo+L8pL533e4JxXSP/wRIDFPI12sDrdT4eFVrq+HO4CViwhks
+         jT7e4kccLcvW/izFiP/q0A6d2Epeuznx1/uBX0PiF0yOyNZVGe75fZuST2O6OG/AKU5J
+         AZCQ==
+X-Gm-Message-State: ACrzQf3E0HGDvZi2cwNcQyyMl7K86lhUIevZSMpmBQJWkHyOguTO5pbW
+        MeAxiOr9RtuqojXpq6+7bAw=
+X-Google-Smtp-Source: AMsMyM4aSpHBQcWwroXy0OU35ES8BS9U53HUighUxfy7KPbx3vHA9U3k1F9SeALOJUPs/Fi5ra4HEQ==
+X-Received: by 2002:a17:90a:6394:b0:212:f19e:16a3 with SMTP id f20-20020a17090a639400b00212f19e16a3mr5766109pjj.231.1666810482850;
+        Wed, 26 Oct 2022 11:54:42 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id y76-20020a62644f000000b0056bc1a41209sm3322655pfb.33.2022.10.26.11.54.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Oct 2022 11:52:29 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1onlVs-008qLa-1F;
-        Wed, 26 Oct 2022 20:52:28 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
+        Wed, 26 Oct 2022 11:54:42 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
+        Glen Choo <chooglen@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Teng Long <dyroneteng@gmail.com>,
         Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 2/3] Makefile: define "TEST_{PROGRAM,OBJS}" variables
- earlier
-Date:   Wed, 26 Oct 2022 20:47:43 +0200
-References: <cover-0.5-00000000000-20220901T130817Z-avarab@gmail.com>
- <cover-v2-0.3-00000000000-20221026T143533Z-avarab@gmail.com>
- <patch-v2-2.3-6dcb49f25c4-20221026T143534Z-avarab@gmail.com>
- <xmqqsfjailak.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <xmqqsfjailak.fsf@gitster.g>
-Message-ID: <221026.86y1t2beoj.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH v5 12/12] bundle-uri: suppress stderr from remote-https
+References: <pull.1333.v4.git.1665417859.gitgitgadget@gmail.com>
+        <pull.1333.v5.git.1665579160.gitgitgadget@gmail.com>
+        <5729ff2af4bb56a68624b7942b8afa67601adb43.1665579160.git.gitgitgadget@gmail.com>
+Date:   Wed, 26 Oct 2022 11:54:41 -0700
+In-Reply-To: <5729ff2af4bb56a68624b7942b8afa67601adb43.1665579160.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Wed, 12 Oct 2022
+        12:52:39 +0000")
+Message-ID: <xmqqmt9ih0um.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-On Wed, Oct 26 2022, Junio C Hamano wrote:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+> From: Derrick Stolee <derrickstolee@github.com>
 >
->> Define the variables that make up TEST_OBJS earlier, and don't go back
->> & forth in their definition. Before we'd first append $X to
->> $(TEST_PROGRAMS), and then substitute $X back out of it to define
->> $(TEST_OBJS). Let's instead add a new $(TEST_PROGRAM_OBJS) variable,
->> which avoids this needless back & forth substitution.
+> When downloading bundles from a git-remote-https subprocess, the bundle
+> URI logic wants to be opportunistic and download as much as possible and
+> work with what did succeed. This is particularly important in the "any"
+> mode, where any single bundle success will work.
 >
-> Makes sense, I guess.  So TEST_OBJS is no longer used?
-
-Yes, sorry I'll clarify that in a re-roll.
-
->>  TEST_PROGRAMS =3D $(patsubst %,t/helper/%$X,$(TEST_PROGRAMS_NEED_X))
->> +all:: $(TEST_PROGRAMS)
+> If the URI is not available, the git-remote-https process will die()
+> with a "fatal:" error message, even though that error is not actually
+> fatal to the super process. Since stderr is passed through, it looks
+> like a fatal error to the user.
 >
-> This change is not necessary to achieve the stated goal of this
-> step, though.  It is one of those "while at it" distraction that
-> consumes our already constrained reviewer bandwidth, no?
+> Suppress stderr to avoid these errors from bubbling to the surface. The
+> bundle URI API adds its own warning() messages on these failures.
+>
+> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+> ---
+>  bundle-uri.c                |  1 +
+>  t/t5558-clone-bundle-uri.sh | 16 ++++++++++++++--
+>  2 files changed, 15 insertions(+), 2 deletions(-)
 
-I figured this would be better use of that bandwith, since the reviewer
-doesn't need to wonder why these are still spread befo/after the main
-body of the change.
-
-Not everyone is keenly aware of the at first odd way a Makefile is read
-(per "3.7 How 'make' Reads a Makefile" in the GNU make manual).
-
-But I'm happy to eject this part if that helps, but...
-
-> Having said that, "all::" being able to be built up with independent
-> pieces shine here in this split from the original.  It probably is
-> easier to reason about while seeing this isolated area of Makefile
-> what is being done to TEST_PROGRAMS.
-
-...here I'm not quite sure if you want to keep it after all or nat...
-
-> The rest of the patch is quite straight-forward renaming of
-> TEST_OBJS to TEST_PROGRAM_OBJS and an improvement of how the
-> elements on the list are computed from the source-of-truth list that
-> is TEST_PROGRAMS_NEED_X that looks correct.
-
-Thanks for the quick review!
+So this is the same in spirit as [11/12] to squelch errors from an
+action that we are prepared to fail.  If we had an easy way to
+squelch only one class of errors (e.g. the resource no longer exists
+at the URI) while allowing others to pass (e.g. we downloaded but it
+was corrupt), that might be even better when somebody is debugging
+the thing, but to an end user, it is a hopefully ignorable failure
+either way, as long as there are other alternatives in the set of
+bundles in the "any" mode.
