@@ -2,96 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3FC8C433FE
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 20:15:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D5F5C38A2D
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 20:28:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235204AbiJZUPz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 16:15:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59024 "EHLO
+        id S234111AbiJZU2v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 16:28:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235206AbiJZUPx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 16:15:53 -0400
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A713965815
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 13:15:50 -0700 (PDT)
-Received: by mail-il1-x12e.google.com with SMTP id 7so6607839ilg.11
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 13:15:50 -0700 (PDT)
+        with ESMTP id S233491AbiJZU2u (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 16:28:50 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD1B6A23F4
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 13:28:49 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id e4so12680295pfl.2
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 13:28:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wmTZS19p6YPkvfPbNDk4/UyQewqYRDltDS5+Pq38oP4=;
-        b=w+0L7wB3EswG503IgjFFYlEo85rbo5+b8CGThuIh4E8B1YQZTFLjBXjeFcFfeDzcXG
-         KlIeCV4Ytw35G5bogszFT3Tml2+awTERqE9HMCsI0bqZeaJ0D2IAY+vYpxRnYDEmbK4Q
-         6kXyZlYBpVGn5O5jqU0wfAwjCiA3zBBaeZmfpXNai9ossXgCHT4MntPk2zJ+VJ8kFfQm
-         3wwQDDNYaixkBtFQTsJiMgdfkEIDoTFx2Bw2m0GWkNbuDlYntfew2bR/VDp9ZJaC05fT
-         Y0v2Fyg+hTxY6CGTK7uQ+5TwtSt3Xer1TRMzWsb10DUiyCsNwcVZDyZal+JNCyxXSJke
-         giTg==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vzW2J2k8damr1k7RmD15OFHXEOvK06Hq4001CENN+r8=;
+        b=OnOivbgZQKnEXX2Tj26nU97mEOJzFRL/g0bbE3WxL7KU1oju9FiQ4ez2BqZMPvhSky
+         fy2pqmIPRHooqHt9adRwFwKf8UE7bqDCtr7ycD5eTkya2lxZh1bWW6BFCbh7FCIBc3TF
+         BMes1AkbtpTe+Mg+Zzr3AndfkcLFirKjESw7h4n6YMKb16uwTh/EGZCGiaaQzK4Xvs02
+         cCXRLSXknIC0v4KfiulRrG9Wq5QvaV+5ovKkXDR5W2yRcnuOvW/Ci9nrTls/YJ79mg75
+         sVKZb885De97fnRK/2h80VxPRJhXNHkEPjhDOYYkaHUHxj/BPyO9LNUArhpXhOPsmcmV
+         /eEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wmTZS19p6YPkvfPbNDk4/UyQewqYRDltDS5+Pq38oP4=;
-        b=n2w+gFsw8tLKLIWCkcUDjELaeI39kFm5O5YcIt1iZrlKT/GU/OrjGsYMtp0MN6qyY9
-         Okf11vGQKSV29KDTJJfCrTsfi74cJRXftdwcDjm+us5UmyNlZPQYEqdG8tTTTAWPFTv1
-         sD8Fjnaaa8Qz15I5L9yMBs8vD89Z8SnnfZkuS9LLTDOa0THC9pVJYEmVQNgS0zPZ2X8f
-         JgS9DraBc+bKKXjzFB3MKPlBItzlaYiQAZok2i0g06ZvJtX5y2rO81pgx5yOceo5xG9G
-         M1JFN3P9yplfnYFlIfVx5JVLwEA67qzfjTuDY6biifLk3vqfbKZ3barpDOBJtT/iy0JT
-         /nXQ==
-X-Gm-Message-State: ACrzQf0jgSOjWTY1jpaJPABo9f5SoZUYUPvk87WVaShxUY3veRPzBBl6
-        OOGwnBuYELV/1vVztDiPQMO4d4VZ1VTnpVXA
-X-Google-Smtp-Source: AMsMyM6VIJYCPKhxTNZEQFdt9Bj986DZys6uvFIuFRp20Z+t2JDS7Wcing9z5k8u03o+mbWVH5Mm0w==
-X-Received: by 2002:a05:6e02:174f:b0:2fa:5a18:96de with SMTP id y15-20020a056e02174f00b002fa5a1896demr28469063ill.52.1666815349771;
-        Wed, 26 Oct 2022 13:15:49 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id k12-20020a056e021a8c00b002fb78f6c166sm2410363ilv.10.2022.10.26.13.15.49
+        bh=vzW2J2k8damr1k7RmD15OFHXEOvK06Hq4001CENN+r8=;
+        b=kcOFF6KCc0UUMCheqKrTIQG1Xzdo+PxYij3Xop+xLFl7a6DMYIqbO66+X21EMHZs97
+         fwIpuaao1Re/54UJyU5UjPYJNjHk0FEEQPDNYscOtcaGMGWlqkETyNEwS31OSRHRzsgR
+         WB9VHhL//PPgMVTNbQcafxQY08sfIQzqKC2Mq/7hcwvhzWpsgtCPJZ8p1tK8AVhmZc6g
+         U5fqmtc/eqFMb/ScCKvTP7r+YuU0SIB46vY8qiGQ4oUD+uGNtlJF8kSd4UhhszEYEnF5
+         Z4oj8vobYyZi1l8wXC0t1Q6mO2EtZTsccQBxhWY40Yi5guA5W8+pbmo6feyJvsD1L5eu
+         aJpA==
+X-Gm-Message-State: ACrzQf2rxU1kUS9U+H69HBdioQVlKVr1n+3fieV+UgashBR1mBVMKpRm
+        nmrfDJZrEco2Yx2C8omddK8=
+X-Google-Smtp-Source: AMsMyM5o++S5lYZEDWGHu4U2t2BUpCNuwv11beFRYlX4VJBC9/7BiYjY+Rz9k5EYkB0i2xHi2EHySQ==
+X-Received: by 2002:a05:6a00:cd1:b0:563:8df5:2b8b with SMTP id b17-20020a056a000cd100b005638df52b8bmr45957973pfv.67.1666816129084;
+        Wed, 26 Oct 2022 13:28:49 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id i11-20020a056a00224b00b0056be2a3c87csm3390329pfu.154.2022.10.26.13.28.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Oct 2022 13:15:49 -0700 (PDT)
-Date:   Wed, 26 Oct 2022 16:15:48 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     git@vger.kernel.org, git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Documentation/howto/maintain-git.txt: fix Meta/redo-jch.sh
- invocation
-Message-ID: <4ba057094ae6b1bd5c18583f23f7f99232034c72.1666815325.git.me@ttaylorr.com>
+        Wed, 26 Oct 2022 13:28:48 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v2 3/3] Makefile: simplify $(test_bindir_programs) rule
+ by splitting it up
+References: <cover-0.5-00000000000-20220901T130817Z-avarab@gmail.com>
+        <cover-v2-0.3-00000000000-20221026T143533Z-avarab@gmail.com>
+        <patch-v2-3.3-400f487e30d-20221026T143534Z-avarab@gmail.com>
+        <xmqqr0yuh144.fsf@gitster.g>
+        <221026.86tu3qbd03.gmgdl@evledraar.gmail.com>
+Date:   Wed, 26 Oct 2022 13:28:47 -0700
+In-Reply-To: <221026.86tu3qbd03.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 26 Oct 2022 21:14:29 +0200")
+Message-ID: <xmqq5yg6gwhs.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The Meta/redo-jch.sh script is generated a few lines earlier by running:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-    $ Meta/Reintegrate master..seen >Meta/redo-jch.sh
+> Are you asking if "define"'s execute in some context outside the purview
+> of rules, so that if you $(call) one from within a rule and it errors,
+> that we won't clean up the file?
 
-But the resulting script is not necessarily executable. Later mentions
-of this script invoke it with sh (instead of directly), but this one is
-an odd one out.
+Not at all.
 
-Update the documentation to invoke the Meta/redo-jch.sh script with sh
-in case the maintainer has not made the script executable.
+I was wondering why the defined sequance does not end in
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
-Noticed while reading and following along with
-Documentation/howto/maintain-git.txt.
+	...
+	<$> >$@+ && \
+	chmod +x $@+ && \
+	mv $@+ $@
 
- Documentation/howto/maintain-git.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+like many other command sequences in the Makefile.  As I said, I did
+remember we had discussed delete-on-error; I just didn't recall if
+we do depend on it already.
 
-diff --git a/Documentation/howto/maintain-git.txt b/Documentation/howto/maintain-git.txt
-index a67130debb..215e2edb0f 100644
---- a/Documentation/howto/maintain-git.txt
-+++ b/Documentation/howto/maintain-git.txt
-@@ -256,7 +256,7 @@ by doing the following:
-    merged to 'next', add it at the end of the list.  Then:
+> I can drop them, FWIW I've found it quite handy to add these to ad-hoc
+> debug templates. E.g. you can run:
+> 	
+> 	$ make -f /dev/null -E '$(eval $(file <Makefile))' -E '$(error $(call bin_wrappers_template,a,b,c,d))'
+> 	make: *** 
+> 	## bin_wrappers_template
+> 	# 1 = a
+> 	# 2 = b
+> 	# 3 = c
+> 	# 4 = d
 
-      $ git checkout -B jch master
--     $ Meta/redo-jch.sh -c1
-+     $ sh Meta/redo-jch.sh -c1
+OK.  That use pattern was what I was missing.
+> ...
+> So you see what the parameters expand to. Maybe just changing the
+> heading to:
+>
+> 	## bin_wrappers_template: $(1..N) below for manual "$(error $(call ..." deubgging
 
-    to rebuild the 'jch' branch from scratch.  "-c1" tells the script
-    to stop merging at the first line that begins with '###'
---
-2.38.0.16.g393fd4c6db
+Yeah, it would be totally useless without such an instruction.
