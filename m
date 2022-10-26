@@ -2,143 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 176FEC38A2D
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 16:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73AC0C433FE
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 16:55:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233785AbiJZQrw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 12:47:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49132 "EHLO
+        id S233682AbiJZQzF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 12:55:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233774AbiJZQru (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 12:47:50 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A30EDCEB6
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 09:47:48 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id e129so15386053pgc.9
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 09:47:48 -0700 (PDT)
+        with ESMTP id S233126AbiJZQzD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 12:55:03 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AA0D15FFF
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 09:55:02 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id i3so15897750pfc.11
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 09:55:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WxnmMkuSNNd5WjhmQn0aDn6wteauKJmWwtIGac9qTgg=;
-        b=Getqvusl5BEcntfvoRs46nbU4SIT0CU80/Lwz3KickzCmuDMF5WJpMqtRceYS6P9Ro
-         PaFxFq3hvJBeft+ayXcaA8XC1PptAFODyL02EJUC581nQdnQygQn1Hhm12njM8eyiEB6
-         xlGvdyIKeWJ4CAhhh2zrpRH4/L/6hkVSqfgy11H91pua8A52uQi/mc0a9GoFZ56RCDSG
-         w25phXR3YrUTW9qR3af1gGBpCeibWrYoF4WhOh30LOBc8yYKbCWs5H1bZun1yjmBsP4K
-         AtsbknmqjUi8YJ4aKaKpzJBZooljzNmtWzK70hY+6qvH3c3bZds85TgIiS2M1uCg7JCV
-         kg3w==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kzibGMmDVPB6HoOZTUQmxvTU5yAbOV7KP3G1SFR3+Gk=;
+        b=CAT9eC3NP8AdMleisum8tyVgauidbRH9EhJozWOv6OCbXwLfPcnwiyYRvBHtwaHAm8
+         ZborwhwNCnj0jzh+c6AUym+cLT7zeWFikMhBKe1OkYVtSJp96z0bXxjXSiop4TOX/EeA
+         1vFtRfsTqh5bIGKVeYzxOc3AQtk1mG99fXvbLxsTBjfaySNfm11x1vh8ob+WLND9y4xK
+         xMGF87K8gxDf3nF5JYzoGTJ5fh0vdWmOvPFHhovRPy0n1dgqc9ifOep2HahQCr56NMc7
+         yB3kClMEjxAb4Kma9aXNN+tJ6q9JCtb/GPUR9yhAxZLHd9ALp6tHbTs1k+47J3+/GZBe
+         VDCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WxnmMkuSNNd5WjhmQn0aDn6wteauKJmWwtIGac9qTgg=;
-        b=2wmVwByFfQCK746IYYUUFIa7xwkstEz4vNUA3vq53dqQ6yMcasOPaOluhkcY08Y/Fu
-         Nv2zqy/EPt/MF6IcMqWhKbGqjNDg5Q3xmenQNK/j97Ogqz7zvJZNA/KhD3fccTWfcvfZ
-         9QYdo2UNQxWsOKkNvQ4HnGouq2tEZkG4eht8vFfFo/6DfeSvIICVLXXF/E/hY+9g9WoZ
-         HW2S111vmXsW3iGoLTbAtHVByeNA/Fs09bEavKY5yMegVMFItX6YpyKw3077sb6RXMGy
-         T6xJw2nJBmAQ98Rsj5BSmUUzzLDDK3XrPzOJsBLSb83V1z7GZD31V7qckrWL6lSgahZt
-         Xkcw==
-X-Gm-Message-State: ACrzQf1bzQf1U7Nm2rd5g7ECknL4cwPt5n9XiZrlpM+f6vMomGdTkZFg
-        lvHP4SVYP24tXjsgCsoI6KI=
-X-Google-Smtp-Source: AMsMyM503rA/PV7Tn7gPGzU2TS/TcqLzuUdzR9c8ghuOyACdJptkv5KZwNo7bld3RMewY5l06ARwKg==
-X-Received: by 2002:a63:fb53:0:b0:46e:e210:f026 with SMTP id w19-20020a63fb53000000b0046ee210f026mr19128490pgj.29.1666802867943;
-        Wed, 26 Oct 2022 09:47:47 -0700 (PDT)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=kzibGMmDVPB6HoOZTUQmxvTU5yAbOV7KP3G1SFR3+Gk=;
+        b=bZiIXusHIHEMMvN1XBCHcGj7kDE5Z/lIHCjVIUHJZfJ1U6PmkutztS+Q/s3qkp6oal
+         mcm9J4lLLUOVXiIgdw58Ef1giPnZL6P//mfcWA24dBEnp2+T3S2trJUwHdQAs9MwfM0D
+         eQjVog1uXBWq53v4UVFv/QEfzoYTFzmEM5IW8MxIyRrCVm4/Meq8uaajBLafUX3bp3+t
+         GL49noi4qeumHXUws7ngIucHcbgS96yBlSa8Ta9twtBsBpHLc/ZvkawTBYg1oGseg5/R
+         nDFuiwQRiChtTUz0pvpIRbvaMnv4kGoIuLUXoPnz2M0W2qNa5pW0MX4p9wn6wuEUyxZK
+         9v8g==
+X-Gm-Message-State: ACrzQf198AOIC1Y8fekhweXRcXgiAcy3MOaVanHXEgxpRZvpByTOkBqP
+        hiswpgz1Dw2uuSyraKDJizw=
+X-Google-Smtp-Source: AMsMyM6ncdduND6WouLv3922d9qy2PeBgSIUkAZXOle15vChHgBtvYxQ14ucsL4Ns0ObHh5ly8+1Rg==
+X-Received: by 2002:a63:91:0:b0:461:f509:2a31 with SMTP id 139-20020a630091000000b00461f5092a31mr37728142pga.108.1666803301429;
+        Wed, 26 Oct 2022 09:55:01 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id cw15-20020a056a00450f00b00562019b961asm3176599pfb.188.2022.10.26.09.47.47
+        by smtp.gmail.com with ESMTPSA id n5-20020a170902e54500b0018699e6afd8sm3127476plf.265.2022.10.26.09.55.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Oct 2022 09:47:47 -0700 (PDT)
+        Wed, 26 Oct 2022 09:55:00 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 2/3] Makefile: define "TEST_{PROGRAM,OBJS}" variables
- earlier
-References: <cover-0.5-00000000000-20220901T130817Z-avarab@gmail.com>
-        <cover-v2-0.3-00000000000-20221026T143533Z-avarab@gmail.com>
-        <patch-v2-2.3-6dcb49f25c4-20221026T143534Z-avarab@gmail.com>
-Date:   Wed, 26 Oct 2022 09:47:47 -0700
-Message-ID: <xmqqsfjailak.fsf@gitster.g>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Calvin Wan <calvinwan@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        Glen Choo <chooglen@google.com>, Victoria Dye <vdye@github.com>
+Subject: Re: [PATCH v4 3/8] rebase --merge: fix reflog when continuing
+References: <pull.1150.v3.git.1665567312.gitgitgadget@gmail.com>
+        <pull.1150.v4.git.1666344108.gitgitgadget@gmail.com>
+        <2c965f4b97c1773abc6b844b87fa64c5d6d1524c.1666344108.git.gitgitgadget@gmail.com>
+        <xmqqk04tm62o.fsf@gitster.g>
+        <86699708-d631-fb49-482c-af27204a3570@dunelm.org.uk>
+        <xmqqczafopc0.fsf@gitster.g>
+        <8af26af0-548d-52c8-9752-1a265af8fd54@dunelm.org.uk>
+Date:   Wed, 26 Oct 2022 09:55:00 -0700
+In-Reply-To: <8af26af0-548d-52c8-9752-1a265af8fd54@dunelm.org.uk> (Phillip
+        Wood's message of "Wed, 26 Oct 2022 16:17:13 +0100")
+Message-ID: <xmqq7d0mikyj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Define the variables that make up TEST_OBJS earlier, and don't go back
-> & forth in their definition. Before we'd first append $X to
-> $(TEST_PROGRAMS), and then substitute $X back out of it to define
-> $(TEST_OBJS). Let's instead add a new $(TEST_PROGRAM_OBJS) variable,
-> which avoids this needless back & forth substitution.
+> Hi Junio
+>
+> On 25/10/2022 17:11, Junio C Hamano wrote:
+>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>> 
+>>>>> Both of these will be fixed in a future series that
+>>>>> stops the sequencer calling setenv().
+>>>> If it gets fixed in a future step in the same series, that is a
+>>>> different matter, but if it is easy enough not to deliberately
+>>>> introduce a new leak, we'd prefer to do so.
+>>>
+>>> It's a couple of patches to fix which are more or less finished, I'm
+>>> planning to send them once this series is in next.
+>> So we will do the "add a known breakage of the same kind as there
+>> exists others, and then later fix them all up, including the one
+>> that is added by this series, because fixes are non-trivial and this
+>> topic is easier to finish if we allowed to add a known breakage"
+>> approach?  Just making sure it is what you plan to do.
+>
+> Yes, that's right
 
-Makes sense, I guess.  So TEST_OBJS is no longer used?
+OK, I do not mind as long as we leave a NEEDSWORK note to tell
+others that we know the leak and promise to fix it soon (so they do
+not waste their effort to fix it independently).
 
->  TEST_PROGRAMS = $(patsubst %,t/helper/%$X,$(TEST_PROGRAMS_NEED_X))
-> +all:: $(TEST_PROGRAMS)
-
-This change is not necessary to achieve the stated goal of this
-step, though.  It is one of those "while at it" distraction that
-consumes our already constrained reviewer bandwidth, no?
-
-Having said that, "all::" being able to be built up with independent
-pieces shine here in this split from the original.  It probably is
-easier to reason about while seeing this isolated area of Makefile
-what is being done to TEST_PROGRAMS.
-
-The rest of the patch is quite straight-forward renaming of
-TEST_OBJS to TEST_PROGRAM_OBJS and an improvement of how the
-elements on the list are computed from the source-of-truth list that
-is TEST_PROGRAMS_NEED_X that looks correct.
-
-> +TEST_PROGRAM_OBJS += $(patsubst %,t/helper/%.o,$(TEST_PROGRAMS_NEED_X))
-> +.PRECIOUS: $(TEST_PROGRAM_OBJS)
-
->  # List built-in command $C whose implementation cmd_$C() is not in
->  # builtin/$C.o but is linked in as part of some other command.
-> @@ -2543,10 +2548,8 @@ REFTABLE_TEST_OBJS += reftable/stack_test.o
->  REFTABLE_TEST_OBJS += reftable/test_framework.o
->  REFTABLE_TEST_OBJS += reftable/tree_test.o
->  
-> -TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS)) $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
-> -
->  .PHONY: test-objs
-> -test-objs: $(TEST_OBJS)
-> +test-objs: $(TEST_PROGRAM_OBJS)
->  
->  GIT_OBJS += $(LIB_OBJS)
->  GIT_OBJS += $(BUILTIN_OBJS)
-> @@ -2562,7 +2565,7 @@ scalar-objs: $(SCALAR_OBJS)
->  OBJECTS += $(GIT_OBJS)
->  OBJECTS += $(SCALAR_OBJS)
->  OBJECTS += $(PROGRAM_OBJS)
-> -OBJECTS += $(TEST_OBJS)
-> +OBJECTS += $(TEST_PROGRAM_OBJS)
->  OBJECTS += $(XDIFF_OBJS)
->  OBJECTS += $(FUZZ_OBJS)
->  OBJECTS += $(REFTABLE_OBJS) $(REFTABLE_TEST_OBJS)
-> @@ -3061,7 +3064,7 @@ endif
->  
->  test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
->  
-> -all:: $(TEST_PROGRAMS) $(test_bindir_programs)
-> +all:: $(test_bindir_programs)
->  
->  bin-wrappers/%: wrap-for-bin.sh
->  	$(call mkdir_p_parent_template)
-> @@ -3087,8 +3090,6 @@ perf: all
->  
->  .PHONY: test perf
->  
-> -.PRECIOUS: $(TEST_OBJS)
-> -
->  t/helper/test-tool$X: $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
->  
->  t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS) $(REFTABLE_TEST_LIB)
+Thanks.
