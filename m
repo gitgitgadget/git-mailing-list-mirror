@@ -2,69 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEB5AC38A2D
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 21:25:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BF45C433FE
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 21:27:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233393AbiJZVZF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 17:25:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34338 "EHLO
+        id S233419AbiJZV07 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 17:26:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233378AbiJZVZD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 17:25:03 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E5FA19C0A
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 14:25:01 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id h24so11022485qta.7
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 14:25:01 -0700 (PDT)
+        with ESMTP id S233167AbiJZV06 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 17:26:58 -0400
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64FB77B5BC
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 14:26:57 -0700 (PDT)
+Received: by mail-qt1-x82e.google.com with SMTP id cr19so11081783qtb.0
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 14:26:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gWlungKrYJ0clazixPf5msvUSK2SzSKe000tyNBgNGQ=;
-        b=ky1uIuPCG4dG8J7zLO1zzHMqysv4moho8bKqNjjVvq4TSrmYpADK/pdQoRH5gJDNBW
-         ZeOZ+ITMzaZEHEIcHkarc+WO3G+LSyvtNF8bWIfmTQlXZ56hqrBn5oFJk6ubuN3XLsQG
-         kUtOrmnZwTc461Amf9hmhw349/aB64K87MuNKxsYi6mXgQ2MJCaO8XMC8AlNnlzdEI0c
-         /e6W0dGIii+mmXVojzwDp5a4w/ccL5zGoJL3ZT8UCXJTbZBoi3GZ7cdNNQfcVMhTLT1R
-         B3XjNeIPyjvERww1YRWmj1Sk/FSdAudsdDu9ZQwGX0TYS1EUKwDu4+lDr9QYey4lhE6p
-         0SZw==
+        bh=W5cF/ChoOfo8K9iROQ8phCW6CaAex46mWsjj1vArtV4=;
+        b=o4yPm38eb5cZvQ+EzahTVXEgiE3OwIpFI58jPfFtvxMr7r/ozRK0gLhgnAV1hbP7x7
+         wVY+1+x+MwdEgI6gFuumvOhQ7q+oXjJIPV20RN/Kslzs5eCJvYTZhobmXcvAsVFC446N
+         Swd3PISHpItazhUU33wLy1I1oP5/TcANC8FuKs8B90YtTL4d2loyVyc9QPsLH6OzKPIX
+         f93h1lByawoTdz32qkq52mAYzkg1WlVU9lpmpCFRZvaZNDFkfRKwuJi1WechwZRmWTGR
+         Ek0LDwJCNpE9rbYlo1e6toN/h+FK8j81Ckr7zquu+t78hfadFyktT66DmNeXDrus0RFF
+         AGMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:from:references:cc:to:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gWlungKrYJ0clazixPf5msvUSK2SzSKe000tyNBgNGQ=;
-        b=jWFerWJl9XDpQ9mCFhBFUKyTHud/ZhUNYrh1TY5z7xZSMjtuHmi72Dv4teaFpTgEyq
-         QyLkjrqZyTxNvnkUCAE81E/EXfkznZ8VMiPqtLTzpfZHUK+M0WTGbOOmH9fBE6niHQMz
-         JzzhhwtQPMU5xoac5psLLsD+27kGnfPSbrA1HHGK9EjaPi1oVZmvNI8/41E4jMh1PQoh
-         RtOCfoiZR2N1zWrW/BG9yhz5eZARfWWDzcppsGLuwaLeShGYqC8W7ug9IB0wOMPSAMks
-         DiWsgoGPsCqqrueE5FejQllMjLM/8WX9Vm2VDx8uhC0sZugV9F9tqhjpx1uud+h7J1k0
-         fYRw==
-X-Gm-Message-State: ACrzQf2SkxVKv4xobnrKaL8UKy69Oj9PX6KmaZoIGDSmXBsdO9fM/P+A
-        41S5X1h7gItVLMvdTPzGirZYWSeyvXBz7Q==
-X-Google-Smtp-Source: AMsMyM7hYl/AH40PnEB2fI5sIzYS+BR9GDzgCOrT7HhCqDsknIxXdHOqlJLmIPxJrln/RccdJeGzzQ==
-X-Received: by 2002:a05:622a:554:b0:39c:ef65:bc66 with SMTP id m20-20020a05622a055400b0039cef65bc66mr38884552qtx.550.1666819500754;
-        Wed, 26 Oct 2022 14:25:00 -0700 (PDT)
+        bh=W5cF/ChoOfo8K9iROQ8phCW6CaAex46mWsjj1vArtV4=;
+        b=cIOrCGzej+Tx9/iIOpswL9DU4yvLbnkX4oelClLXLgSGfdtdHQcvUVwRWdXBaVSM8A
+         u9ea1VIrB+Bw8n9gNBHrc1Rk+NQ8idde/mqAReStlUKOQgYtWh18Xy1T/9Aur8yqH3/7
+         QyhjhGjCGAeXlvA2i49Au2QFiI+fEywvYsuLxXvszCpl3WECSRrUN1U3jVllYbL4GFXM
+         bVOyeheqrVyEmhSPMb1/JLCFwFlNRSuM/r+AKB66XB+fHQN9LOo33kD1GFUz76ZeZDSa
+         nBrekhjcWLnG6KwEoN/1CkkqZVJddjMyOawztR+qvqCuQmFmXi3EuX8FYHyQeLR0UUVv
+         aLAQ==
+X-Gm-Message-State: ACrzQf0XyTNMdP/pKgVxDgcuexxo0fm68kYgQRZysURNrqzAKEz/hDG5
+        fJq7hg6T1QZjTJBR/TlPfL0=
+X-Google-Smtp-Source: AMsMyM5TdHVQtoDfOIh16nRzhL8wPQBn3K3tsJO8qTMEluj5XU58cLHbGptsGfcumQPlJhfcAJ6OgA==
+X-Received: by 2002:a05:622a:4c8:b0:39c:d6d2:32f7 with SMTP id q8-20020a05622a04c800b0039cd6d232f7mr37952374qtx.517.1666819616563;
+        Wed, 26 Oct 2022 14:26:56 -0700 (PDT)
 Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id fg16-20020a05622a581000b003a4c3c4d2d4sm2460137qtb.49.2022.10.26.14.24.59
+        by smtp.gmail.com with ESMTPSA id o19-20020a05620a2a1300b006ee9d734479sm4796225qkp.33.2022.10.26.14.26.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Oct 2022 14:25:00 -0700 (PDT)
-Subject: Re: [PATCH 4/9] subtree: prefix die messages with 'fatal'
+        Wed, 26 Oct 2022 14:26:56 -0700 (PDT)
+Subject: Re: [PATCH 9/9] subtree: fix split after annotated tag was squashed
+ merged
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Luke Shumaker <lukeshu@datawire.io>,
         Thomas Koutcher <thomas.koutcher@online.fr>,
         James Limbouris <james@digitalmatter.com>
 References: <pull.1390.git.1666365219.gitgitgadget@gmail.com>
- <a70fda5582d6bd84b8bedaba33768d3886846090.1666365220.git.gitgitgadget@gmail.com>
- <221021.86r0z1dtjq.gmgdl@evledraar.gmail.com>
+ <86a842d50345f6d4d0b16c78d565474be6f8068a.1666365220.git.gitgitgadget@gmail.com>
+ <221021.86mt9pdtcw.gmgdl@evledraar.gmail.com>
 From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <3f8e9f2f-aa98-f152-46d3-21f69dc2d3bb@gmail.com>
-Date:   Wed, 26 Oct 2022 17:24:59 -0400
+Message-ID: <b83b8c41-07c9-ba5a-93a0-ed0ae4c9d3cd@gmail.com>
+Date:   Wed, 26 Oct 2022 17:26:55 -0400
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
  Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <221021.86r0z1dtjq.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221021.86mt9pdtcw.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: fr
 Content-Transfer-Encoding: 8bit
@@ -74,62 +75,61 @@ X-Mailing-List: git@vger.kernel.org
 
 
 
-Le 2022-10-21 à 12:30, Ævar Arnfjörð Bjarmason a écrit :
+Le 2022-10-21 à 12:37, Ævar Arnfjörð Bjarmason a écrit :
 > 
 > On Fri, Oct 21 2022, Philippe Blain via GitGitGadget wrote:
 > 
 >> From: Philippe Blain <levraiphilippeblain@gmail.com>
 >>
->> Just as was done in 0008d12284 (submodule: prefix die messages with
->> 'fatal', 2021-07-10) for 'git-submodule.sh', make the 'die' messages
->> outputed by 'git-subtree.sh' more in line with the rest of the code base
->> by prefixing them with "fatal: ", and do not capitalize their first
->> letter.
+>> The previous commit fixed a failure in 'git subtree merge --squash' when
+>> the previous squash-merge merged an annotated tag of the subtree
+>> repository which is missing locally.
+>>
+>> The same failure happens in 'git subtree split', either directly or when
+>> called by 'git subtree push', under the same circumstances: 'cmd_split'
+>> invokes 'find_existing_splits', which loops through previous commits and
+>> invokes 'git rev-parse' (via 'process_subtree_split_trailer') on the
+>> value of any 'git subtree-split' trailer it finds. This fails if this
+>> value is the hash of an annotated tag which is missing locally.
+>>
+>> Add a new optional argument 'repository' to 'cmd_split' and
+>> 'find_existing_splits', and invoke 'cmd_split' with that argument from
+>> 'cmd_push'. This allows 'process_subtree_split_trailer' to try to fetch
+>> the missing tag from the 'repository' if it's not available locally,
+>> mirroring the new behaviour of 'git subtree pull' and 'git subtree
+>> merge'.
+>>
+>> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+>> ---
+>>  contrib/subtree/git-subtree.sh     | 26 ++++++++++++++++++--------
+>>  contrib/subtree/git-subtree.txt    |  7 ++++++-
+>>  contrib/subtree/t/t7900-subtree.sh | 12 ++++++++++++
+>>  3 files changed, 36 insertions(+), 9 deletions(-)
+>>
+>> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+>> index 2c67989fe8a..10c9c87839a 100755
+>> --- a/contrib/subtree/git-subtree.sh
+>> +++ b/contrib/subtree/git-subtree.sh
+>> @@ -453,14 +453,19 @@ find_latest_squash () {
+>>  	done || exit $?
+>>  }
+>>  
+>> -# Usage: find_existing_splits DIR REV
+>> +# Usage: find_existing_splits DIR REV [REPOSITORY]
+>>  find_existing_splits () {
+>> -	assert test $# = 2
+>> +	assert test $# = 2 -o $# = 3
 > 
-> I don't really care since we're unlikely to ever give git-subtree the
-> i18n treatment, so translators don't need to worry about the churn.
+> This "test" syntax is considered unportable, I'm too lazy to dig up the
+> reference, but we've removed it in the past. Maybe it's OK with
+> git-subtree.sh", but anyway, it's esay enough to change...
 > 
-> But given how few in-tree-users we have of "die" and "git-sh-setup" this
-> would be much shorter & future-proof as just e.g. (untested):
-> 	
-> 	diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-> 	index 7562a395c24..0d8f87c5a20 100755
-> 	--- a/contrib/subtree/git-subtree.sh
-> 	+++ b/contrib/subtree/git-subtree.sh
-> 	@@ -25,6 +25,8 @@ then
-> 	 	exit 126
-> 	 fi
-> 	 
-> 	+GIT_SH_SETUP_DIE_PREFIX='fatal: '
-> 	+
-> 	 OPTS_SPEC="\
-> 	 git subtree add   --prefix=<prefix> <commit>
-> 	 git subtree add   --prefix=<prefix> <repository> <ref>
-> 	diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-> 	index ce273fe0e48..81456d7266e 100644
-> 	--- a/git-sh-setup.sh
-> 	+++ b/git-sh-setup.sh
-> 	@@ -53,7 +53,7 @@ die () {
-> 	 die_with_status () {
-> 	 	status=$1
-> 	 	shift
-> 	-	printf >&2 '%s\n' "$*"
-> 	+	printf >&2 '%s%s\n' "$GIT_SH_SETUP_DIE_PREFIX" "$*"
-> 	 	exit "$status"
-> 	 }
-> 	 
->> -		die "assertion failed: $*"
->> +		die "fatal: assertion failed: $*"
+> ...but looking at "master" I see one instance of it in git-subtree.sh
+> already, so maybe nobody cares...
 > 
-> Then you could just leave this, but...
-> 
->> -		die "Unknown command '$arg_command'"
->> +		die "fatal: unknown command '$arg_command'"
-> 
-> ...would still need to change these for the capitalization change.
->
 
-Yeah, I guess to this could be done in a later refactor if someone wishes.
+I did not know it was not portable, in fact I used this form because while
+reading the rest of the script I found that was the style used already. 
 
-It would probably require changes to other tests scripts (since there are other users
-of 'die'), though, and so would widen the scope of the series a bit too much, I would say. 
+So I guess I would leave this as a further cleanup for someone wishing to make
+'git subtree' more POSIX...
