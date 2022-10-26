@@ -2,131 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB380C433FE
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 13:31:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46A8DC433FE
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 14:13:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233056AbiJZNbe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 09:31:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37486 "EHLO
+        id S234210AbiJZONW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 10:13:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232848AbiJZNbd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 09:31:33 -0400
-Received: from mail-qt1-x832.google.com (mail-qt1-x832.google.com [IPv6:2607:f8b0:4864:20::832])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DB097C773
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 06:31:31 -0700 (PDT)
-Received: by mail-qt1-x832.google.com with SMTP id a24so9819436qto.10
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 06:31:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nlkH7/skqaFL9oGXONS/tvJ2/6cnyioMemX6hX+QXnM=;
-        b=VO9tsmlwBdr/b0mC8DrCBBu82ltdbtmnzqSAvyB9IJ4msKUwDoZoWJgDwSxDC5R1ot
-         LmSAXcEVKyl6Use1llBFZnsVRR4HimeTYZCZsqENp311GBcCc/mHDvy5OnH89KSr0+E2
-         e4FFtzUQXVc9Fk266Kg902qasFrlKtUlu95Zk++xOtRtnEbZ+gJ7lVbN/Qvqrbhm7mqh
-         MHwu9JM3wMfjJ8DVWObHKNnP29vKIqv9D33DKEMgmS5VXdJuv14iF+WzYbaRUdwH41kM
-         QWGx7NzASNxzlNy/j1Z2exvLButRNo4/qOYNvSgmleKsJSbggsupiGStPsOUEBGMJBUL
-         TKyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nlkH7/skqaFL9oGXONS/tvJ2/6cnyioMemX6hX+QXnM=;
-        b=AfhdlqTwVu+LiOt08JrwSfCTubseiHuXU9yTNY+nJOdaP8OpHqamUnO3UKGMgVJ7BW
-         1okUG3OhsdAz6I9gz4wnJxOBO6mRxgql5aAi5LAWEhxAdqslA3BxCJTWlR9akZIknOKU
-         scMiVdwmseEQ/AzwcMu4YbzeIWMm38vUVzptWuxNPph1B5vTC62iO3QZbyJP/kDwYuJ3
-         Bozffs35++L8FZnCHCvhAbDgmDft5x3huT4jv2hs/7T97CjHbZjyiaiPv3CAz87QYq6z
-         7XUmqSDcIKh0+cHQRFEqSRrd5/QN06/jhVKdMKV3lm5qFAumx3htlok1IEuHjoOPkgid
-         NFLA==
-X-Gm-Message-State: ACrzQf1WXRvY9QHheyknH6Mv05Ligvkzv7lwlHNvxaF5kTNRtSVe8HRj
-        D8nbXYjOAaijdixPmm/+jAAd9wTPUrQQ
-X-Google-Smtp-Source: AMsMyM503jrsx8H+d1aByCW3ZGCYOQAFUsPmsKhkKeN/ArOVGHZcra3I3ggEyJgxBYa73X5BG1hExQ==
-X-Received: by 2002:ac8:5741:0:b0:39b:ddca:545 with SMTP id 1-20020ac85741000000b0039bddca0545mr36135765qtx.630.1666791090227;
-        Wed, 26 Oct 2022 06:31:30 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e72:80a0:84fb:805a:cf4:e815? ([2600:1700:e72:80a0:84fb:805a:cf4:e815])
-        by smtp.gmail.com with ESMTPSA id t23-20020a37ea17000000b006cf19068261sm3890684qkj.116.2022.10.26.06.31.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Oct 2022 06:31:29 -0700 (PDT)
-Message-ID: <143a588a-c98b-733b-2b23-34a87ca89431@github.com>
-Date:   Wed, 26 Oct 2022 09:31:28 -0400
+        with ESMTP id S232823AbiJZONV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 10:13:21 -0400
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01BE510DE4E
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:13:19 -0700 (PDT)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 261CDCA125E;
+        Wed, 26 Oct 2022 10:13:19 -0400 (EDT)
+Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id D964ACC831D;
+        Wed, 26 Oct 2022 10:13:18 -0400 (EDT)
+Subject: Re: [PATCH] index: add trace2 region for clear skip worktree
+To:     Junio C Hamano <gitster@pobox.com>,
+        Anh Le via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Timothy Jones <timothy@canva.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>, Anh Le <anh@canva.com>
+References: <pull.1368.git.git.1666742722502.gitgitgadget@gmail.com>
+ <xmqq35bbmfz6.fsf@gitster.g>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+Message-ID: <d4103788-5153-11f2-487f-5cc795d261a8@jeffhostetler.com>
+Date:   Wed, 26 Oct 2022 10:13:18 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.0; rv:68.0)
+ Gecko/20100101 Thunderbird/68.8.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.13.1
-Subject: Re: [PATCH] midx.c: clear auxiliary MIDX files first
+In-Reply-To: <xmqq35bbmfz6.fsf@gitster.g>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-To:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Victoria Dye <vdye@github.com>
-References: <bf36093cd6d7ac83b16241b0199b3a8c904e6774.1666722316.git.me@ttaylorr.com>
- <Y1jIo1dPl0M2TSHo@coredump.intra.peff.net>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <Y1jIo1dPl0M2TSHo@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Scanned-By: mailmunge 3.09 on 209.68.5.199
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10/26/22 1:41 AM, Jeff King wrote:
-> On Tue, Oct 25, 2022 at 02:25:20PM -0400, Taylor Blau wrote:
+
+
+On 10/25/22 11:16 PM, Junio C Hamano wrote:
+> "Anh Le via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
->> Since they were added in c528e17966 (pack-bitmap: write multi-pack
->> bitmaps, 2021-08-31), the routine to remove MIDXs removed the
->> multi-pack-index file itself before removing its associated .bitmap and
->> .rev file(s), if any.
+>> From: Anh Le <anh@canva.com>
 >>
->> This creates a window where a MIDX's .bitmap file exists without its
->> corresponding MIDX. If a reader tries to load a MIDX bitmap during that
->> time, they will get a warning, and the MIDX bitmap code will gracefully
->> degrade.
+>> In a large repository using sparse checkout, checking
+>> whether a file marked with skip worktree is present
+>> on disk and its skip worktree bit should be cleared
+>> can take a considerable amount of time. Add a trace2
+>> region to surface this information.
 >>
->> Remove this window entirely by removing the MIDX last, and removing its
->> auxiliary files first.
+>> Signed-off-by: Anh Le <anh@canva.com>
+>> ---
+>>      index: add trace2 region for clear skip worktree
+>>      
+>>      In large repository using sparse checkout, checking whether a file
+>>      marked with skip worktree is present on disk and its skip worktree bit
+>>      should be cleared can take a considerable amount of time. Add a trace2
+>>      region to surface this information.
 > 
-> We remove that window, but don't we create a new one where a reader may
-> see the midx but not the bitmap? That won't generate a warning (it just
-> looks like a midx that never had a bitmap generated), but it will cause
-> the reader to follow the slow, non-bitmap path.
+> It is easy to see that the change is no-op from functionality's
+> standpoint.  The condition under which ce->ce_flags loses the
+> CE_SKIP_WORKTREE bit is the same as before, and the only change is
+> that in the iteration a couple of variables are incremented, which
+> may (or may not) have performance impact, but shouldn't break
+> correctness.
+> 
+> I am not sure about the value of these counters, honestly.
 
-Yes, this is the worrisome direction. The midx is read first, then that
-points to the .bitmap file (based on its trailing hash). If the midx isn't
-there, then the .bitmap will not be read.
+I suggested adding the counters while the series was still over
+on GitGitGadget.
 
-> Ideally this would just be atomic, but short of stuffing the metadata
-> into the same file, we can't do that. But the replacement of the midx
-> file itself is atomic, and I'd think everything would (or should at
-> least) follow from there.
+The original goal was to measure the time spent in that loop
+with the region_enter/region_leave events.  They will tell you
+whether the loop was slow or not and you can compare that with
+other (peer or containing) regions to see if it significant.
 
-The interesting case here is that this is in clear_midx_file(), which
-is called when repacking to a single pack and no longer needing a midx
-file. So it's not using the atomic rewrite from the midx writing code,
-but instead the "atomic" deletion.
+However, it doesn't tell us anything about WHY it was slow or
+was slower than another instance.  The path_count gives us a
+simple estimate on the number of lstat() calls -- which is
+one of frequent sources of slowness.  Yes, it is bounded by
+`istate->cache_nr`, but if I have a repo with 1M cache-entries
+and 95% are sparse, this loop is going to be much slower than
+if only 5% are sparse.
 
-In this case, a reader will check for the midx first, before looking
-for individual packs. Further, the new pack is written, but the old
-packs have not been deleted (or the midx would be invalid). So the
-new code introduces the window where a midx exists without a bitmap,
-so some readers will act as if no bitmap exists on-disk.
+The restart_count (which we only expect to be 0 or 1), will
+tell us whether or not at some point mid-loop we had to fully
+inflate the index -- which is another source of slowness.
+Granted, `ensure_full_index()` probably contains a region of
+its own, so the restart_count here may not absolutely necessary,
+but in the context of this loop -- this counter may point to the
+other smoking gun.
 
-This was always possible before, too: the midx could be read by a
-reader process before the repack process deletes that file. However,
-if the reader does not also gain a handle on the corresponding
-.bitmap before the repack process deletes that file, too, then the
-reader is also left thinking that no .bitmap exists.
+In the worst case, we walk the entire index and lstat() for a
+significant number of skipped-and-not-present files, then near
+the end of the loop, we find a skipped-but-present directory
+and have to restart the loop.  The second pass will still run
+the full loop again.  Will the second pass actually see any
+skipped cache-entries?  Will it re-lstat() them?  Could the
+`goto restart` just be a `break` or `return`?
 
-I think the old code is more correct, here. The window is slightly
-smaller, and the new code creates a window where the filesystem
-doesn't need to change for readers to get an imperfect view of
-things.
+I haven't had time to look under the hood here, but I was
+hoping that these two counters would help the series author
+collect telemetry over many runs and gain more insight into
+the perf problem.
 
-Aside: in these cases where a .bitmap file is not found for a midx,
-do we fall back to trying to find a .bitmap file for a pack-file?
-That would assuage most of the concerns here about what happens in
-this window where the repack has a new .pack/.bitmap pair but the
-old midx still exists (without a .bitmap, depending on timing).
+Continuing the example from above, if we've already paid the
+costs to lstat() the 95% sparse files AND THEN near the bottom
+of the loop we have to do a restart, then we should expect
+this loop to be doubly slow.  It was my hope that this combination
+of counters would help us understand the variations in perf.
 
-Thanks,
--Stolee
+WRT the `intmax_t` vs just `int`: either is fine.  I suggested
+the former because that is what `trace2_data_intmax()` takes.
+I really don't expect any usage to overflow a regular 32bit int.
 
+[...]
+>> +	trace2_data_intmax("index", istate->repo, "clear_skip_worktree_from_present_files/path_count", path_count);
+>> +	trace2_data_intmax("index", istate->repo, "clear_skip_worktree_from_present_files/restart_count", restart_count);
+
+One thing I forgot to mention in my GGG suggestion was to only
+emit these data events if the counter is > 0.  We've been trying
+to avoid logging zeroes.
+
+>> +	trace2_region_leave("index", "clear_skip_worktree_from_present_files", istate->repo);
+[...]
+
+Jeff
