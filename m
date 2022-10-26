@@ -2,70 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 986B3C433FE
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 21:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2388BC433FE
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 21:23:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233274AbiJZVVg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 17:21:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57962 "EHLO
+        id S233356AbiJZVXW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 17:23:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229904AbiJZVVf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 17:21:35 -0400
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B80AD127BF7
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 14:21:34 -0700 (PDT)
-Received: by mail-qt1-x835.google.com with SMTP id l28so11025693qtv.4
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 14:21:34 -0700 (PDT)
+        with ESMTP id S233282AbiJZVXV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 17:23:21 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 476091290B9
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 14:23:20 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id a5so11725788qkl.6
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 14:23:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=X0HdX+rNpk2PEu8St306+wOutaTyqlfDvcRpm3HSKyM=;
-        b=q4WsZMrCUTvj//Cz1tER24MK7gJrQwEpFbw0fzExRmuuJV+nBXnTeUwN+74fkAGxkV
-         mxe/6tiDr1oHrYdAkntJ5GVchPUoKuNGVjyF77lPnsvEnHnv3lrDP0Q9mcwB50+6rx8w
-         hcYNLzxqT4HJ8mMXpMgnskILJS49jhvO7v38mq8klJFDbBbqnawThE6GwajuivyQQOr2
-         Jj1RWQMkkPwQVahRFberICzgFQpNfR9nhcToCVvEsVkqS4rwBt8rtarOnCRr9/xNvF+n
-         ohqxzJpe47OhU+Q0+4E/R187I+PES9vWw3iJupq8ZZu/92xluuo8Ts4pYcBo+TTS6Nl+
-         26pA==
+        bh=q49HR09PevPgestYOpoBlLpmgNZ83wvCLoW4V4RLBAA=;
+        b=ClkM60WPbulzdN6ATKrYRdYRRWBx6EBfjBS7NuTadpEz24SPAkOxvlOWuKK6pYxFpb
+         qRSR7X4IgQhMOrA23psLsTBJi4KBF/6Y8mMNZuBdUEef86wEr4sudUies3J40qjONbyV
+         VA9FLk95UbCkDm7dicAygQ2lYnBKPPt1LMyP5HBFjOPH5Q/r9b7Pglw2KsMjLn4/I8f1
+         DW71ZKHYuK6VlA0gYET55ZAOgLJja7qTPljqBqBZzFg5teMA2QIXAsRLOKjk48C7LmiB
+         jA3t7VoyAJ9WHnoQLGAg/GvdVfec42UjWM2+moZGIH+4vzsuqmmm12aQz5k7lAvpcDZ3
+         +yEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:from:references:cc:to:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=X0HdX+rNpk2PEu8St306+wOutaTyqlfDvcRpm3HSKyM=;
-        b=yyswRW0N789C8zgTyqeOKeBcgSBPoUUqAxDjRwGHx5EqYHPccm4gr0QaXCi/IUxcQW
-         KYAw5RclNiaGSiKDZ7VDEJT+DWUPtY+Q/McUIRaFA1xgTABVMI6G2NxGI9IrGx0/bTNr
-         GayOC9EoNOVZdRzxX/Hlccv7UE3YMWCjFUGtulFiY5/sb2dSX0OKKdyNCuHH0e+FtCE5
-         CB+Auc0PngfR7YtMMABMZAroRzwudV/2pTqTKrIEex8g7XQpOKZxCiiPriF6qlD9YrYu
-         c64ptKqnbd84GzOdNrqNMd+Bv/SS+qZCLnr0Y3+iq+71KAd2G5PuwSfh732lk2W3L/n8
-         N+yA==
-X-Gm-Message-State: ACrzQf1u8bFg57kZDJRFp3phfz28m9TQqfNqKLbGbRLJOq1jMH9Wd1P2
-        hsGPS28F0/p9D4lHLAkeKDMTwR4Lh1v1iw==
-X-Google-Smtp-Source: AMsMyM6ki/cyuxLDGtwqPXm6/O99KaATtW1H2pPGEMtoILZqpDwybP0PdncogF7PfXyJAj0FozwhUg==
-X-Received: by 2002:ac8:7d01:0:b0:39c:ebdf:490c with SMTP id g1-20020ac87d01000000b0039cebdf490cmr39126200qtb.179.1666819293794;
-        Wed, 26 Oct 2022 14:21:33 -0700 (PDT)
+        bh=q49HR09PevPgestYOpoBlLpmgNZ83wvCLoW4V4RLBAA=;
+        b=lTgji+A5vjUR9qg2EnqyzDZYC52Hrq5yorPPWjD74k5cQ3lrEwgsBOhbHwDc8alR3T
+         uF5geYFcVVxUH38qp9c8hMh4TFkQAJFwoC/UORx6TV5ug2ZMWNyK6oOkRYVRPfLwH1Z5
+         CMAQ+RhBnensDJER+Pa5+9/WK4PH4u5ZsS/rPyl1vYgwYJUfHsmfR7dA5VEWiOe/LkZ9
+         nQatIDNYzTvkK6ft96sclWuKhRlnTvs1MTr41RCD+MLDx+Fm0oQZCzMH1+QiAMTHItIu
+         5zZS7RqK7EoqQ+pU+xbHXHdVZnLAvR7bSkmj0euWqIQD2V6UJukPworp1nVZaHDIPFYR
+         2PNA==
+X-Gm-Message-State: ACrzQf1ITufYVdX+BDpEx2MS5MsVwvPR44wK3EaW7dsnaTNsJM0RBS5G
+        J4fj++sicRydj3TmXjzWL1ZPoDDP8WXtvg==
+X-Google-Smtp-Source: AMsMyM65v2z3oKPojCoNYMVmShA67fIiL4Ol/jxvSVesAHW4ltieaJekHYTnS6XJdbRnTHAnIQJQZA==
+X-Received: by 2002:a37:e118:0:b0:6ec:565e:f2d8 with SMTP id c24-20020a37e118000000b006ec565ef2d8mr32494066qkm.719.1666819399370;
+        Wed, 26 Oct 2022 14:23:19 -0700 (PDT)
 Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id n17-20020a05620a295100b006ce1bfbd603sm4587646qkp.124.2022.10.26.14.21.32
+        by smtp.gmail.com with ESMTPSA id u6-20020a37ab06000000b006eed094dcdasm4484252qke.70.2022.10.26.14.23.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 26 Oct 2022 14:21:33 -0700 (PDT)
-Subject: Re: [PATCH 1/9] test-lib-functions: mark 'test_commit' variables as
- 'local'
-To:     Junio C Hamano <gitster@pobox.com>,
+        Wed, 26 Oct 2022 14:23:18 -0700 (PDT)
+Subject: Re: [PATCH 3/9] subtree: add 'die_incompatible_opt' function to
+ reduce duplication
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Luke Shumaker <lukeshu@datawire.io>,
         Thomas Koutcher <thomas.koutcher@online.fr>,
         James Limbouris <james@digitalmatter.com>
 References: <pull.1390.git.1666365219.gitgitgadget@gmail.com>
- <832e910aadc47309392feed69927c2e8693cbfc5.1666365220.git.gitgitgadget@gmail.com>
- <xmqq8rl8kht3.fsf@gitster.g>
+ <c890f55f59994231be6114f76f020510eb824453.1666365220.git.gitgitgadget@gmail.com>
+ <221021.86v8oddtuj.gmgdl@evledraar.gmail.com>
 From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <3a41e02f-c1fb-64ed-377b-4e4168f2adae@gmail.com>
-Date:   Wed, 26 Oct 2022 17:21:31 -0400
+Message-ID: <949edc06-8252-6995-addf-cfba398f73dd@gmail.com>
+Date:   Wed, 26 Oct 2022 17:23:17 -0400
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
  Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <xmqq8rl8kht3.fsf@gitster.g>
+In-Reply-To: <221021.86v8oddtuj.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: fr
 Content-Transfer-Encoding: 8bit
@@ -73,42 +73,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Ævar,
 
-Le 2022-10-21 à 17:06, Junio C Hamano a écrit :
-> "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Le 2022-10-21 à 12:22, Ævar Arnfjörð Bjarmason a écrit :
+> 
+> On Fri, Oct 21 2022, Philippe Blain via GitGitGadget wrote:
 > 
 >> From: Philippe Blain <levraiphilippeblain@gmail.com>
 >>
->> Some variables in 'test_commit' have names that are common enough that
->> it is very likely that test authors might use them in a test. If they do
->> so and use 'test_commit' between setting such a variable and using it,
->> the variable value from 'test_commit' will leak back into the test and
->> most likely break it.
+>> 9a3e3ca2ba (subtree: be stricter about validating flags, 2021-04-27)
+>> added validation code to check that options given to 'git subtree <cmd>'
+>> made sense with the command being used.
 >>
->> Prevent that by marking all variables in 'test_commit' as 'local'. This
->> allow a subsequent commit to use a 'tag' variable.
+>> Refactor these checks by adding a 'die_incompatible_opt' function to
+>> reduce code duplication.
 > 
-> This is the right thing to do, if done onn day 1 of the project, and
-> it is the right thing to do for the longer term health of the
-> project.  But it is a bit scary thing to do in the middle.
+> This looks good, but...
 > 
-> I wonder if there is an easy way to detect that a set of callers of
-> test_commit are relying on the fact that calling test_commit without
-> passing --author option cleared their $author variable (similarly
-> for other variables that are cleared or set to a known value as a
-> side effect of calling test_commit).  If their correctness depends
-> on $author becoming empty after calling the script today, they will
-> get broken by this change.
+>> Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
+>> ---
+>>  contrib/subtree/git-subtree.sh | 32 ++++++++++++++++++++------------
+>>  1 file changed, 20 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+>> index 49ef493ef92..f5eab198c80 100755
+>> --- a/contrib/subtree/git-subtree.sh
+>> +++ b/contrib/subtree/git-subtree.sh
+>> @@ -102,6 +102,14 @@ assert () {
+>>  	fi
+>>  }
+>>  
+>> +# Usage: die_incompatible_opt OPTION COMMAND
+>> +die_incompatible_opt () {
+>> +	assert test "$#" = 2
+>> +	opt="$1"
+>> +	arg_command="$2"
+>> +	die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+>> +}
+>> +
+>>  main () {
+>>  	if test $# -eq 0
+>>  	then
+>> @@ -176,16 +184,16 @@ main () {
+>>  			arg_debug=1
+>>  			;;
+>>  		--annotate)
+>> -			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+>> +			test -n "$allow_split" || die_incompatible_opt "$opt" "$arg_command"
+>>  			arg_split_annotate="$1"
+>>  			shift
+>>  			;;
 > 
-> While it is OK to argue that they deserve it, we would have to be
-> finding and fixing them ourselves after all.
+> Since this is all in this form I wonder why not (maybe adding some "local" and/or "&&" too while at it):
+> 
+> 	die_if_other_opt {
+> 		assert test "$#" = 3
+> 		other="$1"
+>                 shift
+>                 if test -z "$other"
+> 		then
+> 			return
+> 		fi
+> 		[...the rest of your version]
+> 	}
+> 
+> Then:
+> 
+>>  		--no-annotate)
+>> -			test -n "$allow_split" || die "The '$opt' flag does not make sense with 'git subtree $arg_command'."
+>> +			test -n "$allow_split" || die_incompatible_opt "$opt" "$arg_command"
+> 
+> Instead of this:
+> 
+> 	die_if_other_opt "$allow_split" "$opt" "$arg_command"
+> 
+> Or actually just:
+> 
+> 	die_if_other_opt "$allow_split"
+> 
+> Maybe you disagree, but since the function will see the variables & this
+> is purely a helper for this getopts parse loop I think it's fine just to
+> assume we can read "$opt" and "$arg_command" there..., so, urm, maybe just:
+> 
+> 	test -n "$allow_split" || die_incompatible_opt
+> 
+> ? :) Anyway, an easy bike shed, you should go for whatever variant you
+> prefer :) Thanks for indulging me.
+> 
 
-Isn't the fact that the test suite passes with this change enough for us
-to be confident that nothing is broken by it ?
+Thanks for your suggestion, but I think I'll stick to what I have for now :)
 
-In any case, I did a quick manual grep of each of the variables and could not
-find a test that uses these names, so I think we are safe.
-
-Thanks,
 Philippe.
