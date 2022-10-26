@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC423C38A2D
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 14:43:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6C11C38A2D
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 14:43:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234071AbiJZOnM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 10:43:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42074 "EHLO
+        id S234369AbiJZOnP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 10:43:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234230AbiJZOm6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 10:42:58 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A247F103DA6
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:42:46 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id n14so6114689wmq.3
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:42:46 -0700 (PDT)
+        with ESMTP id S234397AbiJZOnH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 10:43:07 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B8B11187A5
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:42:56 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id a14so23927547wru.5
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 07:42:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=uCKw8x6Xc1xO7S9fTawrj4RoSzKiCNF20006exH6gOs=;
-        b=mg5KG+LwXu4DEDBB27GH8tNlXbazT9Rgmrt27+mZNvyvLOnSX8FGKwxAJluJwFpiwG
-         h42ONtT2Jcj0NmiBWAm3j6jp1hLXX97Q4/pnzMUnH57v8aqtr02inL98R4c4dpkGtMg8
-         z6bS6kWrt92LQ96fDbvN4aYXCTfHDhR5dJefh4nXsF0k31Y+Q/1iwnQ7M0ObUB4a17Qw
-         37kqBf0WXR1Q/EaiESfVHokN/ttQI3/Fn2AZnpsPbm5lqnLK7b/v8yn8snsKm0+PJXvH
-         KsZgVSJ5dED783BQc8SS+GfSS06FgZGdLUM8Wo72gUQEIVVSGCmPQCX1RW/NieVQC0xi
-         zzXQ==
+        bh=WUxGTWd1Un545/fc70fTUCDt1ggCym8VabP5HOMKLmk=;
+        b=lL2NN5gsxWXGXMNjA/NbV1kT9RyeIRgN7uHcMj+JnlHtTG8U0raOHJYWOyRwrcj5Sp
+         yhRBMhQfiWKEVZQaB788cIV583gppvewZIfqXmqRXmTdMz1voUAxdVzvwA2zohCsZTwH
+         kvDxmgVac//f0tSc+4fakckvQqtqtAuh5dTvGy2HcgwlEOkOYgxfG75K6o5zK5zh9sdl
+         u8uIBIL9MjK50EGaWy8EWEDpbVQEGE9it7YB6lEwdzm8vKEdHkW9+fpweZIfwKb4AN4A
+         z+Mf6IvATwn0+4jpaQI2Bc1z2/thYf+ZKI7lFKQy1Wg0YABAHaQixIIVsTEGnsvYhb7v
+         kMrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=uCKw8x6Xc1xO7S9fTawrj4RoSzKiCNF20006exH6gOs=;
-        b=o/96wxe+HREpcPx2fejZo/GtOSWKsS/MWB0wdqrAFX8KqLR1ue3Q6grJ6nhhD2IQvS
-         JMEpDaITyOFuLMU1cgcXIbdPMxAJCfE0L6bS2Mn3VYeAzw+KDpYLUm5nNcxGRB7eccDD
-         4NuAD0YXTJN1oBZW4INQ13ca1JWXBh0bpb0YqTEgLWFE6lfHnxiuEqE/f0Wx47Zi3pZ6
-         +/3hXlAaFe4gHsebv2rX+0SDQ8/3KHICCNsFfOQ7z2eY/wc7oGYMjAqhz8WVPUwdaxKv
-         W+HJP45zvIvki9ERMfVNJS/Moy31ov13aQOWSx0ceGIHLaJkLf+ulrrp4siIegM58vdk
-         HzjA==
-X-Gm-Message-State: ACrzQf3ntsje3xpJeccRUtyyRrZqazgQpn6F6KVRM2DaRrD5ijyrTSan
-        YH+tJRNwEVTc50+44+6y8rcASua1UEVUMg==
-X-Google-Smtp-Source: AMsMyM53UgsWzcJYtE9qJosH8P809RLixt9Ivu7pC6jjEj5Umsh5vKfqcZHQ4jX+oD63T2O/5+SrDg==
-X-Received: by 2002:a05:600c:600e:b0:3c6:fc59:5eda with SMTP id az14-20020a05600c600e00b003c6fc595edamr2796880wmb.30.1666795364815;
-        Wed, 26 Oct 2022 07:42:44 -0700 (PDT)
+        bh=WUxGTWd1Un545/fc70fTUCDt1ggCym8VabP5HOMKLmk=;
+        b=5FbppANqwQs5Nga8wH/CIAh4XQIcApLfatXPRVXMLOrfSckIIuYGczWQMYI7P0/Q2t
+         HXnPUWkazB3zQU5pNGShQ0I8AeFR3w31Vi7hYqM+JwAJ48x7CUskwdUgfZjs6b0rOn+C
+         DqHp/5CT1+atwhOv3Xg907R5ijMh56egeFdgjQmlkPx3F6/qa8Upg7aYCbIokJpbNKTX
+         vKzdzX4+kxVio2UjdcQOec8tIDJY7uhGayi9/u9NsqI7DNiVaSrpaJKK77ixlL8zAmDv
+         ca9ZnnoGPF/30h/qeAMI6IfAEv/uiGI2rFsDmjFqN0cQZujA+kevo/7qbxOvKPwk97is
+         EDow==
+X-Gm-Message-State: ACrzQf0tKI4UkIcW1o0zJgkQhODKqu+5ass+0SjpSk5WGHb2GVY0WLPW
+        BK+LOlA3HxaFxfS5RJ4cBI50zgsY8xdx1Q==
+X-Google-Smtp-Source: AMsMyM7cJ5c8oM+jn8g+/dSb/KBuI7LgCTV8ddbUaLdd8cAdIH8+XWBzKUQ4LJexuqdyXfvpbcxkNA==
+X-Received: by 2002:a05:6000:18a5:b0:230:a3b:bc16 with SMTP id b5-20020a05600018a500b002300a3bbc16mr29226061wri.627.1666795363562;
+        Wed, 26 Oct 2022 07:42:43 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n5-20020a05600c304500b003a84375d0d1sm1934367wmh.44.2022.10.26.07.42.43
+        by smtp.gmail.com with ESMTPSA id n5-20020a05600c304500b003a84375d0d1sm1934367wmh.44.2022.10.26.07.42.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 26 Oct 2022 07:42:44 -0700 (PDT)
+        Wed, 26 Oct 2022 07:42:41 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <derrickstolee@github.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 3/3] Makefile: simplify $(test_bindir_programs) rule by splitting it up
-Date:   Wed, 26 Oct 2022 16:42:37 +0200
-Message-Id: <patch-v2-3.3-400f487e30d-20221026T143534Z-avarab@gmail.com>
+Subject: [PATCH v2 2/3] Makefile: define "TEST_{PROGRAM,OBJS}" variables earlier
+Date:   Wed, 26 Oct 2022 16:42:36 +0200
+Message-Id: <patch-v2-2.3-6dcb49f25c4-20221026T143534Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1251.g3eefdfb5e7a
 In-Reply-To: <cover-v2-0.3-00000000000-20221026T143533Z-avarab@gmail.com>
 References: <cover-0.5-00000000000-20220901T130817Z-avarab@gmail.com> <cover-v2-0.3-00000000000-20221026T143533Z-avarab@gmail.com>
@@ -71,148 +71,92 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the @@PROG@@ substitution was added in [1] it was a simple matter
-of doing a:
+Define the variables that make up TEST_OBJS earlier, and don't go back
+& forth in their definition. Before we'd first append $X to
+$(TEST_PROGRAMS), and then substitute $X back out of it to define
+$(TEST_OBJS). Let's instead add a new $(TEST_PROGRAM_OBJS) variable,
+which avoids this needless back & forth substitution.
 
-	's|@@PROG@@|$(@F)|'
-
-Then when t/helpers were added in [2] followed by the ".exe" needing
-to be appended in [3] this previously simple rule ended up as a dense
-one-liner.
-
-It has been pointed out that this is hard to read[4], but the problem
-isn't the "design of the Makefile syntax". It's we now have to
-after-the-fact determine if we were dealing with a bin-wrapper/ that
-needed to have $(X) appended, a t/helper/, or a non-binary (currently
-only git-cvsserver).
-
-That would be a problem in any language. We're starting out with three
-lists, and then end up having to heuristically determine given a
-member of any of those lists which list that member came from. Let's
-just stop doing that and keep track of what member belongs to which
-list.
-
-We can do this by splitting up the single "bin-wrappers/%" rule into a
-rule for each of the three lists. With the
-"cmd_munge_script_sed_shell_path_arg" define added in a preceding
-commit this is easy, we just need to add a sister template to the
-existing "cmd_munge_script" added in [5].
-
-The "filter-out" added in [6] has now become unnecessary per the
-above, it was an artifact of us losing track of what was in which of
-our lists to begin with.
-
-This change can be tested with e.g.:
-
-	git checkout master &&
-	make SHELL_PATH=/bin/bash X=.exe &&
-	mv bin-wrappers bin-wrappers.master &&
-	<apply this change> &&
-	make SHELL_PATH=/bin/bash X=.exe &&
-	diff -ru bin-wrappers{.master,}
-
-Which will show an empty diff, i.e. we've correctly dealt with the
-combination of $(SHELL_PATH), $(X) and these three variables here.
-
-This also fixes an issue with the "bin-wrappers/" scripts have never had properly declared
-dependency information, i.e. this has never worked:
-
-	make clean &&
-	make bin-wrappers/git &&
-	# the script is there, but no "./git" is built
-	./bin-wrappers/git
-
-There was no reason not to have that work, just as most things
-generated by the Makefile have proper dependency information.
-
-Before this commit doing this would have been painful, but now it's
-easy to pass this as a parameter to our "bin_wrappers_template"
-
-1. ea925196f1b (build dashless "bin-wrappers" directory similar to
-   installed bindir, 2009-12-02)
-2. e6e7530d10b (test helpers: move test-* to t/helper/ subdirectory,
-   2016-04-13)
-3. 3a94cb31d52 (bin-wrappers: append `.exe` to target paths if
-   necessary, 2019-07-29)
-4. https://lore.kernel.org/git/sso99so6-n28s-rq86-8q20-4456r3pn869r@tzk.qr/
-5. 46bac904581 (Do not install shell libraries executable, 2010-01-31)
-6. 7b5c93c6c68" (scalar: include in standard Git build & installation,
-   2022-09-02)
+See daa99a91729 (Makefile: make sure test helpers are rebuilt when
+headers change, 2010-01-26) for how we ended up with the original
+$(TEST_OBJS).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- Makefile | 42 +++++++++++++++++++++++++++++++++---------
- 1 file changed, 33 insertions(+), 9 deletions(-)
+ Makefile | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index a8cfa096dc1..d551a89bbff 100644
+index 45b22d33513..a8cfa096dc1 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -595,6 +595,7 @@ export TCL_PATH TCLTK_PATH
- PTHREAD_LIBS = -lpthread
+@@ -617,7 +617,8 @@ SCRIPT_PYTHON =
+ SCRIPT_SH =
+ SCRIPT_LIB =
+ TEST_BUILTINS_OBJS =
+-TEST_OBJS =
++TEST_PROGRAMS =
++TEST_PROGRAM_OBJS =
+ TEST_PROGRAMS_NEED_X =
+ THIRD_PARTY_SOURCES =
  
- # Guard against environment variables
-+BIN_WRAPPERS =
- BUILTIN_OBJS =
- BUILT_INS =
- COMPAT_CFLAGS =
-@@ -3062,16 +3063,39 @@ GIT-PYTHON-VARS: FORCE
-             fi
- endif
+@@ -795,6 +796,7 @@ TEST_BUILTINS_OBJS += test-wildmatch.o
+ TEST_BUILTINS_OBJS += test-windows-named-pipe.o
+ TEST_BUILTINS_OBJS += test-write-cache.o
+ TEST_BUILTINS_OBJS += test-xml-encode.o
++TEST_PROGRAM_OBJS += $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
  
--test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
-+define cmd_munge_bin_wrappers_script
-+sed \
-+	-e $(call cmd_munge_script_sed_shell_path_arg) \
-+	-e 's|@@BUILD_DIR@@|$(shell pwd)|' \
-+	-e 's|@@PROG@@|$(2)$(1)$(3)|' \
-+	<$< >$@ && \
-+	chmod +x $@
-+endef
+ # Do not add more tests here unless they have extra dependencies. Add
+ # them in TEST_BUILTINS_OBJS above.
+@@ -802,6 +804,9 @@ TEST_PROGRAMS_NEED_X += test-fake-ssh
+ TEST_PROGRAMS_NEED_X += test-tool
  
--all:: $(test_bindir_programs)
-+define bin_wrappers_template
-+
-+## bin_wrappers_template
-+# 1 = $(1)
-+# 2 = $(2)
-+# 3 = $(3)
-+# 4 = $(4)
-+BW_$(1) = $$($(1):%=bin-wrappers/%)
-+BIN_WRAPPERS += $$(BW_$(1))
-+all:: $$(BW_$(1))
-+$$(BW_$(1)): bin-wrappers/% : $(3)%$(4)
-+$$(BW_$(1)): wrap-for-bin.sh
-+	$$(call mkdir_p_parent_template)
-+	$$(QUIET_GEN)$$(call cmd_munge_bin_wrappers_script,$(2),$(3),$(4))
-+endef
+ TEST_PROGRAMS = $(patsubst %,t/helper/%$X,$(TEST_PROGRAMS_NEED_X))
++all:: $(TEST_PROGRAMS)
++TEST_PROGRAM_OBJS += $(patsubst %,t/helper/%.o,$(TEST_PROGRAMS_NEED_X))
++.PRECIOUS: $(TEST_PROGRAM_OBJS)
  
--bin-wrappers/%: wrap-for-bin.sh
--	$(call mkdir_p_parent_template)
--	$(QUIET_GEN)sed -e $(call cmd_munge_script_sed_shell_path_arg) \
--	     -e 's|@@BUILD_DIR@@|$(shell pwd)|' \
--	     -e 's|@@PROG@@|$(patsubst test-%,t/helper/test-%,$(@F))$(if $(filter-out $(BINDIR_PROGRAMS_NO_X),$(@F)),$(X),)|' < $< > $@ && \
--	chmod +x $@
-+define bin_wrappers_templates
-+$(call bin_wrappers_template,BINDIR_PROGRAMS_NEED_X,'$$(@F)',,$$X)
-+$(call bin_wrappers_template,BINDIR_PROGRAMS_NO_X,'$$(@F)')
-+$(call bin_wrappers_template,TEST_PROGRAMS_NEED_X,'$$(@F)',t/helper/,$$X)
-+endef
-+$(eval $(call bin_wrappers_templates))
-+
-+all:: $(BIN_WRAPPERS)
+ # List built-in command $C whose implementation cmd_$C() is not in
+ # builtin/$C.o but is linked in as part of some other command.
+@@ -2543,10 +2548,8 @@ REFTABLE_TEST_OBJS += reftable/stack_test.o
+ REFTABLE_TEST_OBJS += reftable/test_framework.o
+ REFTABLE_TEST_OBJS += reftable/tree_test.o
  
- # GNU make supports exporting all variables by "export" without parameters.
- # However, the environment gets quite big, and some programs have problems
-@@ -3404,7 +3428,7 @@ OTHER_PROGRAMS += $(shell echo *.dll t/helper/*.dll)
- endif
+-TEST_OBJS := $(patsubst %$X,%.o,$(TEST_PROGRAMS)) $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
+-
+ .PHONY: test-objs
+-test-objs: $(TEST_OBJS)
++test-objs: $(TEST_PROGRAM_OBJS)
  
- artifacts-tar:: $(ALL_COMMANDS_TO_INSTALL) $(SCRIPT_LIB) $(OTHER_PROGRAMS) \
--		GIT-BUILD-OPTIONS $(TEST_PROGRAMS) $(test_bindir_programs) \
-+		GIT-BUILD-OPTIONS $(TEST_PROGRAMS) $(BIN_WRAPPERS) \
- 		$(MOFILES)
- 	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1) \
- 		SHELL_PATH='$(SHELL_PATH_SQ)' PERL_PATH='$(PERL_PATH_SQ)'
+ GIT_OBJS += $(LIB_OBJS)
+ GIT_OBJS += $(BUILTIN_OBJS)
+@@ -2562,7 +2565,7 @@ scalar-objs: $(SCALAR_OBJS)
+ OBJECTS += $(GIT_OBJS)
+ OBJECTS += $(SCALAR_OBJS)
+ OBJECTS += $(PROGRAM_OBJS)
+-OBJECTS += $(TEST_OBJS)
++OBJECTS += $(TEST_PROGRAM_OBJS)
+ OBJECTS += $(XDIFF_OBJS)
+ OBJECTS += $(FUZZ_OBJS)
+ OBJECTS += $(REFTABLE_OBJS) $(REFTABLE_TEST_OBJS)
+@@ -3061,7 +3064,7 @@ endif
+ 
+ test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
+ 
+-all:: $(TEST_PROGRAMS) $(test_bindir_programs)
++all:: $(test_bindir_programs)
+ 
+ bin-wrappers/%: wrap-for-bin.sh
+ 	$(call mkdir_p_parent_template)
+@@ -3087,8 +3090,6 @@ perf: all
+ 
+ .PHONY: test perf
+ 
+-.PRECIOUS: $(TEST_OBJS)
+-
+ t/helper/test-tool$X: $(patsubst %,t/helper/%,$(TEST_BUILTINS_OBJS))
+ 
+ t/helper/test-%$X: t/helper/test-%.o GIT-LDFLAGS $(GITLIBS) $(REFTABLE_TEST_LIB)
 -- 
 2.38.0.1251.g3eefdfb5e7a
 
