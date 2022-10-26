@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EEF1BC433FE
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 22:33:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9222C433FE
+	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 22:48:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233548AbiJZWdS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 18:33:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33794 "EHLO
+        id S229441AbiJZWsZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 18:48:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233536AbiJZWdR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 18:33:17 -0400
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 921E4122BE2
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 15:33:16 -0700 (PDT)
-Received: by mail-pf1-x449.google.com with SMTP id i19-20020aa787d3000000b0056bd68d713cso5005027pfo.17
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 15:33:16 -0700 (PDT)
+        with ESMTP id S229995AbiJZWsQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 18:48:16 -0400
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5EC7201B9
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 15:48:14 -0700 (PDT)
+Received: by mail-pf1-x44a.google.com with SMTP id k131-20020a628489000000b0056b3e1a9629so7577849pfd.8
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 15:48:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=eD6J/9Nc74fG6vi1KhqvL0E8+qLW1CP/ZdYxn6myGtI=;
-        b=q4ffpZpnuo54mtatuPOXKiUZ1M0B9yOxkT10TSGe8JtjDgP5K07eODRG6wq6ukV3MJ
-         KQLSiTrS6ONG+4V9LsfqorDsVDf4Is2hbV+aK+iRfQ/fzc49XaKsDyBBiDuDcFhxmvsB
-         Uod5sZ4Cb5fWB+ws7iwLvyB+50+I3Bt5X5BK8ONneixVNdFS1+oKZaKgIeizmyL2vgGV
-         NQ6XQjR7hQlxqhvdCzDi+zMUfJCmdfFbc3k3+1+dVd1/PbpZRblMJ56NEpyz8MvcdFHF
-         IuBtb3km7GhwZdA5SrDl4Vz7fsAoCpBB5ViVa5xkwnwJm+bqg3eQdSxGXRd3wclRXg8H
-         VM6w==
+        bh=cn9KahdmcSxrw0ZWCGrj0RDrDBgLXiNLj80ZvbQJC0E=;
+        b=sD7/Eck7xzHGENPZdmI8z4aLPyGHTeQsOD0uFi6Kk8W0uSchCqQkF8t4InBdtBaU8B
+         qI1JkD5qZvsqiQz+4FcwQURnlfzBvgBz86A1uKGPTUHc9BCchcday771iL1q7RvsBjhV
+         B38FqnV77iIrZ8EbjOiKiF8HmM3YfIS7Ps86R6bsbD5NIa76iuRNq16CVf0HfF9agIHs
+         ayK+FJIw8uH2edcx/q/x3pk0JhSa3C/+Qx8Nok+zecuAgwAe03tk/zkPiyZPoiont7lb
+         Ca4S+iFnFoKmjnzbeOz5mLxrsXQcPWen2vmB/y0YUw+VUtU3ZB8YHSVQjKmmsd/0Z1Q5
+         6dgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eD6J/9Nc74fG6vi1KhqvL0E8+qLW1CP/ZdYxn6myGtI=;
-        b=Rm9VBFUJXJg9vZi9YxtKzZCXLNvMVnVGDfJuhZ0A2nsTU0sLuWcm70AShTM29TJkJk
-         F0LN/qfOWHZAuM1+Z+NDiufFDQrNBUy+1oqdThZTW6BXSAnOf7k7Te75XLNfNlOrH1Lh
-         y5svo+7Mxy2sjTlGO/CCRt3kYTHjch/YFDTKNzWLAcbcNxjPv5N0o90vviNwZ8gU5lYs
-         oDRGLCnhPRwciz4vh0U2Yb+Qzr8euie80WLzx4rqDqlEtSmyepOOgqQ29KWO/JaGK+zH
-         oFNVJIYB3W3AHq+oyKTznQvfO2+Qw45hVyCjICgJWA0NjLNj7ea2aGywsIyuV5h0gowe
-         vtMQ==
-X-Gm-Message-State: ACrzQf2sTREbrmLk0Qpg0JfJFWBecOzhOGVpJGRxTv2pTS388LwjsgyM
-        SlwyaC9kCv9a+vPg71UWzaG/Ivapoj84DQ==
-X-Google-Smtp-Source: AMsMyM79Bx9rAZSh8fDnHhjah05ltxktURSt3sII2Oo15WOkrqH5eFyQqEGVOHqERotDS2+/Rn/dCGiz0Z+w5g==
+        bh=cn9KahdmcSxrw0ZWCGrj0RDrDBgLXiNLj80ZvbQJC0E=;
+        b=ne8RGDO+ggqnzFmjKm8+n91fI0QJsCXnr4NgY7Nnx31McI9FZeYScXmSyJwDvH4W0w
+         Yi5WtR9s0HntLJ7LeyGEcGQo/wnCZ5J/814oLx5Ky4xTnBNyqqWxwVC6G/K/dkrMAn6Y
+         rOrFW51DfB0wjRboNWNDRRXuIY1fOaYIuYmqPcGCHJP/kzaA280fCsrDO3z+WmA9vnXh
+         2xiX9ImYdnvIabj90FYFa551M/xggjTPZCKf8lPaqXxVMGY0v9PjKg72FS7w6lUcpUsV
+         ks5xZf0tRSTG71aLe3S5dlQOcajE2uRaI+8s+FXSI3TP9QBW2s9yrKXjd95zCu8W7NBP
+         ADMQ==
+X-Gm-Message-State: ACrzQf3KSC2o8ZJWcbIikvMtu6CrRnX7LHPlTR1xrIclh/UwW8+GurpO
+        mnHR0al7qX+dd1NGFNEZfqQZG0Ge9mrqUA==
+X-Google-Smtp-Source: AMsMyM4f/PTCwKbl3iPOCPHBYXRzNLzyVJJhPZDgPKBZ5Qs/G1sgYieaYs0EM9TenoXiTvLP0RzhMy8aZG97CQ==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:9405:b0:212:d24e:b3b with SMTP id
- r5-20020a17090a940500b00212d24e0b3bmr6705983pjo.43.1666823596082; Wed, 26 Oct
- 2022 15:33:16 -0700 (PDT)
-Date:   Wed, 26 Oct 2022 15:33:14 -0700
-In-Reply-To: <79959a54eb4c1a0812b1f4643530069a63e549f4.1665973401.git.gitgitgadget@gmail.com>
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:2288:b0:56b:fe9d:b4b7 with SMTP
+ id f8-20020a056a00228800b0056bfe9db4b7mr14196173pfe.79.1666824494381; Wed, 26
+ Oct 2022 15:48:14 -0700 (PDT)
+Date:   Wed, 26 Oct 2022 15:48:12 -0700
+In-Reply-To: <d3d1738e670d5dbf1378fc5c3209b2e98234a771.1665973401.git.gitgitgadget@gmail.com>
 Mime-Version: 1.0
 References: <pull.1359.v2.git.git.1665660960.gitgitgadget@gmail.com>
- <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com> <79959a54eb4c1a0812b1f4643530069a63e549f4.1665973401.git.gitgitgadget@gmail.com>
-Message-ID: <kl6lo7tyqkph.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v3 1/9] tree: do not use the_repository for tree traversal methods.
+ <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com> <d3d1738e670d5dbf1378fc5c3209b2e98234a771.1665973401.git.gitgitgadget@gmail.com>
+Message-ID: <kl6lk04mqk0j.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v3 4/9] tree: handle submodule case for read_tree_at properly
 From:   Glen Choo <chooglen@google.com>
-To:     Alphadelta14 via GitGitGadget <gitgitgadget@gmail.com>,
+To:     Heather Lapointe via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Cc:     "=?utf-8?Q?Ren=C3=A9?= Scharfe" <l.s.r@web.de>,
         Heather Lapointe <alpha@alphaservcomputing.solutions>
@@ -62,75 +62,148 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Alphadelta14 via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Heather Lapointe via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> diff --git a/tree.h b/tree.h
-> index 6efff003e21..cc6402e4738 100644
-> --- a/tree.h
-> +++ b/tree.h
-> @@ -18,15 +18,21 @@ struct tree *lookup_tree(struct repository *r, const struct object_id *oid);
+> @@ -47,40 +48,73 @@ int read_tree_at(struct repository *r,
+>  			return -1;
+>  		}
 >  
->  int parse_tree_buffer(struct tree *item, void *buffer, unsigned long size);
+> -		if (S_ISDIR(entry.mode))
+> +		if (S_ISDIR(entry.mode)) {
+>  			oidcpy(&oid, &entry.oid);
+> -		else if (S_ISGITLINK(entry.mode)) {
+> -			struct commit *commit;
 >  
-> -int parse_tree_gently(struct tree *tree, int quiet_on_missing);
-> -static inline int parse_tree(struct tree *tree)
-> +int repo_parse_tree_gently(struct repository *r, struct tree *tree, int quiet_on_missing);
-> +static inline int repo_parse_tree(struct repository *r, struct tree *tree)
->  {
-> -	return parse_tree_gently(tree, 0);
-> +	return repo_parse_tree_gently(r, tree, 0);
->  }
+> -			commit = lookup_commit(r, &entry.oid);
+> +			len = tree_entry_len(&entry);
+> +			strbuf_add(base, entry.path, len);
+> +			strbuf_addch(base, '/');
+> +			retval = read_tree_at(r, lookup_tree(r, &oid),
+> +						base, pathspec,
+> +						fn, context);
+> +			strbuf_setlen(base, oldlen);
+> +			if (retval)
+> +				return -1;
+> +		} else if (pathspec->recurse_submodules && S_ISGITLINK(entry.mode)) {
+> +			struct commit *commit;
+> +			struct repository subrepo;
+> +			struct repository* subrepo_p = &subrepo;
+> +			struct tree* submodule_tree;
+> +			char *submodule_rel_path;
+> +			int name_base_len = 0;
 > +
-> +#ifndef NO_THE_REPOSITORY_COMPATIBILITY_MACROS
-> +#define parse_tree(tree) repo_parse_tree(the_repository, tree)
-> +#define parse_tree_gently(tree, quiet_on_missing) repo_parse_tree_gently(the_repository, tree, quiet_on_missing)
-> +#define parse_tree_indirect(oid) repo_parse_tree_indirect(the_repository, oid)
-> +#endif
-
-Typically, when we have repo_* and non-repo_* variants, we use a "static
-inline" function, e.g. from refs.h:
-
-  int repo_dwim_ref(struct repository *r, const char *str, int len,
-        struct object_id *oid, char **ref, int nonfatal_dangling_mark);
-
-  static inline int dwim_ref(const char *str, int len, struct object_id *oid,
-          char **ref, int nonfatal_dangling_mark)
-  {
-    return repo_dwim_ref(the_repository, str, len, oid, ref,
-            nonfatal_dangling_mark);
-  }
-
-I think we should do the same here, instead of using "#ifndef
-NO_THE_REPOSITORY_COMPATIBILITY_MACROS".
-
-From I can gather from "git log -S
-NO_THE_REPOSITORY_COMPATIBILITY_MACROS", that macro was introduced
-in e675765235 (diff.c: remove implicit dependency on the_index,
-2018-09-21) and all instances of that macro were introduced around that
-time. At the time, there was an effort to get rid of the_repository and
-the_index almost everywhere (except builtins), and the macro would
-ensure that we did this successfully.
-
-We did such a good job with the_index that we flipped the default from
-NO_THE_INDEX_COMPATIBILITY_MACROS to USE_THE_INDEX_COMPATIBILITY_MACROS
-(f8adbec9fe (cache.h: flip NO_THE_INDEX_COMPATIBILITY_MACROS switch,
-2019-01-24)) but it looks like we never got there with the_repository.
-I couldn't find any instances of "#define
-NO_THE_REPOSITORY_COMPATIBILITY_MACROS", so I think we should just use
-"static inline" instead.
-
-Alternatively, one could get rid of the non-repo_* variant and adjust
-all existing callers to use "struct repository", but that's a lot of
-churn and may conflict with other in-flight series, so that's probably
-left for another time.
-
->  void free_tree_buffer(struct tree *tree);
+> +			len = tree_entry_len(&entry);
+> +			strbuf_add(base, entry.path, len);
+> +			submodule_rel_path = base->buf;
+> +			// repo_submodule_init expects a path relative to submodule_prefix
+> +			if (r->submodule_prefix) {
+> +				name_base_len = strlen(r->submodule_prefix);
+> +				// we should always expect to start with submodule_prefix
+> +				assert(!strncmp(submodule_rel_path, r->submodule_prefix, name_base_len));
+> +				// strip the prefix
+> +				submodule_rel_path += name_base_len;
+> +				// if submodule_prefix doesn't end with a /, we want to get rid of that too
+> +				if (is_dir_sep(submodule_rel_path[0])) {
+> +					submodule_rel_path++;
+> +				}
+> +			}
+> +
+> +			if (repo_submodule_init(subrepo_p, r, submodule_rel_path, null_oid()))
+> +				die("couldn't init submodule %s", base->buf);
+> +
+> +			if (repo_read_index(subrepo_p) < 0)
+> +				die("index file corrupt");
+> +
+> +			commit = lookup_commit(subrepo_p, &entry.oid);
+>  			if (!commit)
+> -				die("Commit %s in submodule path %s%s not found",
+> +				die("Commit %s in submodule path %s not found",
+>  				    oid_to_hex(&entry.oid),
+> -				    base->buf, entry.path);
+> -
+> -			// FIXME: This is the wrong repo instance (it refers to the superproject)
+> -			// it will always fail as is (will fix in later patch)
+> -			// This current codepath isn't executed by any existing callbacks
+> -			// so it wouldn't show up as an issue at this time.
+> -			if (repo_parse_commit(r, commit))
+> -				die("Invalid commit %s in submodule path %s%s",
+> +				    base->buf);
+> +
+> +			if (repo_parse_commit(subrepo_p, commit))
+> +				die("Invalid commit %s in submodule path %s",
+>  				    oid_to_hex(&entry.oid),
+> -				    base->buf, entry.path);
+> +				    base->buf);
 >  
->  /* Parses and returns the tree in the given ent, chasing tags and commits. */
-> -struct tree *parse_tree_indirect(const struct object_id *oid);
-> +struct tree *repo_parse_tree_indirect(struct repository *r, const struct object_id *oid);
+> -			oidcpy(&oid, get_commit_tree_oid(commit));
+> -		}
+> -		else
+> -			continue;
+> +			submodule_tree = repo_get_commit_tree(subrepo_p, commit);
+> +			oidcpy(&oid, submodule_tree ? &submodule_tree->object.oid : NULL);
 >  
->  int cmp_cache_name_compare(const void *a_, const void *b_);
->  
+> -		len = tree_entry_len(&entry);
+> -		strbuf_add(base, entry.path, len);
+> -		strbuf_addch(base, '/');
+> -		retval = read_tree_at(r, lookup_tree(r, &oid),
+> -				      base, pathspec,
+> -				      fn, context);
+> -		strbuf_setlen(base, oldlen);
+> -		if (retval)
+> -			return -1;
+> +			strbuf_addch(base, '/');
+> +
+> +			retval = read_tree_at(subrepo_p, lookup_tree(subrepo_p, &oid),
+> +						base, pathspec,
+> +						fn, context);
+> +			if (retval)
+> +			    die("failed to read tree for %s", base->buf);
+> +			strbuf_setlen(base, oldlen);
+> +			repo_clear(subrepo_p);
+> +		}
+> +		// else, this is a file (or a submodule, but no pathspec->recurse_submodules)
+
+In this patch, we say that we can ignore a submodule when
+pathspec->recurse_submodules is 0, but unless I'm missing something, I
+don't think that's the case. The preimage is:
+
+		else if (S_ISGITLINK(entry.mode)) {
+			struct commit *commit;
+
+			commit = lookup_commit(r, &entry.oid);
+			if (!commit)
+				die("Commit %s in submodule path %s%s not found",
+				    oid_to_hex(&entry.oid),
+				    base->buf, entry.path);
+
+      /* ... */
+			if (repo_parse_commit(r, commit))
+				die("Invalid commit %s in submodule path %s%s",
+				    oid_to_hex(&entry.oid),
+				    base->buf, entry.path);
+
+			oidcpy(&oid, get_commit_tree_oid(commit));
+		}
+		else
+			continue;
+
+		len = tree_entry_len(&entry);
+		strbuf_add(base, entry.path, len);
+		strbuf_addch(base, '/');
+		retval = read_tree_at(r, lookup_tree(r, &oid),
+				      base, pathspec,
+				      fn, context);
+
+which isn't a no-op since we actually do recurse into the gitlink. I
+don't know whether the subsequent call actually succeeds though (e.g.
+maybe it always failed and it was just a de facto no-op?), but that's
+much harder to prove. Since this function has callers outside of "git
+archive", it would be better to be conservative and keep the original
+behavior in the S_ISGITLINK(entry.mode) && !pathspec->recurse_submodules
+case.
+
+>  	}
+>  	return 0;
+>  }
 > -- 
 > gitgitgadget
