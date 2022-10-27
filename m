@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 694A5ECAAA1
-	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 19:32:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 167D6FA3740
+	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 19:37:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235729AbiJ0TcN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Oct 2022 15:32:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36378 "EHLO
+        id S236513AbiJ0Ths (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Oct 2022 15:37:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235420AbiJ0TcL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2022 15:32:11 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9C8062C6
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 12:32:10 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id m6-20020a17090a5a4600b00212f8dffec9so2445712pji.0
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 12:32:10 -0700 (PDT)
+        with ESMTP id S235760AbiJ0Thq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2022 15:37:46 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 631B0635FD
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 12:37:45 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id 4so2669097pli.0
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 12:37:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=U02f2v1nEBHPzy/1LAtCApfEXJXUYDYEl8Rak1b4uGk=;
-        b=R6DpcazW0r4N52qxTE6lmzJ7S/idoPadZJcVnSK8799QvPb9nPMHvTxOxsejtGtoIn
-         uSH+/HoiwiNHqjxvGmovLRbd3b9dObh7PAZDO5TIyvhx4c7ESfBFy81H4DDA/A91BWLO
-         efDhLaVPwIRWMIHug7havr4JAwGRT+uENL2YiVfo2NFTf+riKNyJsuJD6vZXG1jW/oNH
-         DgsUXbXupo3LjFwBLClCCTvNbncNLwKCBP3eOvob2E5buGX+hfcA5ggi9oVm38XEjxbB
-         ZrSTehvhKXywNk+P5vGkJeInE4TIA4xW51UUv1EhhJAfHTJ6Wk3krvBbu/uP+AdRSHDu
-         hTEg==
+        bh=7EoyybQw7Xo68hHZb5V1oKo+P5E+do4xM5X/6qiv61g=;
+        b=MSwG+FMWY8VcTTZ8YEPTFGizCE3EZ2R+7IubuD4CNc4Fa9Nsl9SbVO34T6o+AW9gFZ
+         SRoLjx/rKlQAhJNr6YoWs+8dExmQq4VoYkawiNtM+SIVhBDsQH73kGJU+IlrY7ev2AH8
+         4dFz6RzUqRA1XjyQD8eS5Goy5qlkulzi7PMm3l61fMs0c0LRcjPapR4jNa9hotsZCYco
+         gIK2u4m9fg0yHjapES3mUUXQtCPlx9PIz7Mo7VcsAd8k1Bh0SPrubcg/k6oIzI+SPnvy
+         2kaNgZ6Wi43xZ/NGP2z/INV+23MICGJpQ7IjirlcsdfixYJj3J9c2a0xaeZNX8lo8yFj
+         WoyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=U02f2v1nEBHPzy/1LAtCApfEXJXUYDYEl8Rak1b4uGk=;
-        b=BjfAiw4NgHOXgLB0SeXmai6izV+fLwvJzbqaSijcLcRoqPLdc0vj0uHv+v3CTrOWeN
-         rV04g/c/dkS2Ja4cAuaL8sL+AMUX2MzsmdxD0Y8/MQKG4xQB0lrO4vIHdij7XBMdlako
-         8Op3gxG1OSU4ENABnN1eLxBl0Mj2FnHsxgYBmx9bkzEjgIra3qkYGzutzEn04By8natA
-         v40Cw7Qbl7xNfpRsZdyEISSO4X9FtLE282YdykJog4zeHM5gRIUPgCSWu+K6nAc5Kag3
-         f/Vsg3ozjul3iy10fjzVpj+it/7stI6yQh149NMXUOMSgVlWz3sFdgj8oQNmudxWtyBr
-         QTKw==
-X-Gm-Message-State: ACrzQf1H+jHKFpYDZZsqxvGRBhbW/6S8C0aZl98QX9E8BAoJO7U66yo3
-        OIaR8Q4YkUNJ98HZf2HxOOM=
-X-Google-Smtp-Source: AMsMyM6oo0DQUDGPxxyOdkes4Q91QBqxX8oWQ5tKCjcF9tm7lDwswgCfslt2ShUWfbh6u+Nz4UhloA==
-X-Received: by 2002:a17:903:2303:b0:186:ed93:fc46 with SMTP id d3-20020a170903230300b00186ed93fc46mr4001710plh.172.1666899130122;
-        Thu, 27 Oct 2022 12:32:10 -0700 (PDT)
+        bh=7EoyybQw7Xo68hHZb5V1oKo+P5E+do4xM5X/6qiv61g=;
+        b=i102OjUtL6LDTLixbN40/JrjT+ddJp1Cy5cf19rZQQXeOKNwJDPAm+ssFVqw3Szg3p
+         SiCrSqtiLI67s4g3urDIf/mnC1PF1OH1BWvVlPsxV7RgNywN4HQx79B4wbfWz4axnCa1
+         igHfxI7BMWC1T55HkjvpxqUylwk6T/1DAFmpK2tNFSdtqeYSaFnwDvW8T5nXM5uHVpLg
+         eVKwUvgEucOg4U5kpmaMpqEFt7Zm+etb8gGdDlArCcaGh3UZR955Ocbtoiqq5meRyn+y
+         d7YZLQa+PZsT6T+eBRJTQG9mlbINgLIoWj9YmuI3ePQrSFRqQB59ayUOItmhN7nnlJP4
+         Tl1w==
+X-Gm-Message-State: ACrzQf3HGHX8eJeaPn4J8thglkE7OCauYbR1Nhp/AgFKQVWn/cEfSNrW
+        dvG8+nFskvpqtWESjfIFrU8=
+X-Google-Smtp-Source: AMsMyM7YwwlwjQtwkle7ASBsQKU46ZgG5ZxeXodNyHtLxOnALruV582sTNRyfq3q3eIgrWe9Xj2mFA==
+X-Received: by 2002:a17:90b:f06:b0:212:cb07:fb82 with SMTP id br6-20020a17090b0f0600b00212cb07fb82mr11619110pjb.221.1666899464754;
+        Thu, 27 Oct 2022 12:37:44 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id q12-20020a170902eb8c00b0017f5ad327casm1544492plg.103.2022.10.27.12.32.09
+        by smtp.gmail.com with ESMTPSA id m15-20020a17090a2c0f00b00203ab277966sm3035360pjd.7.2022.10.27.12.37.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Oct 2022 12:32:09 -0700 (PDT)
+        Thu, 27 Oct 2022 12:37:44 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
@@ -56,16 +56,16 @@ Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
         Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
         SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
         <szeder.dev@gmail.com>
-Subject: Re: [PATCH 04/10] string-list API: mark "struct_string_list" to
- "for_each_string_list" const
+Subject: Re: [PATCH 06/10] builtin/gc.c: use
+ "unsorted_string_list_has_string()" where appropriate
 References: <cover-00.10-00000000000-20221026T151328Z-avarab@gmail.com>
-        <patch-04.10-40b3cc9b8d4-20221026T151328Z-avarab@gmail.com>
-Date:   Thu, 27 Oct 2022 12:32:09 -0700
-In-Reply-To: <patch-04.10-40b3cc9b8d4-20221026T151328Z-avarab@gmail.com>
+        <patch-06.10-9c36f17481b-20221026T151328Z-avarab@gmail.com>
+Date:   Thu, 27 Oct 2022 12:37:43 -0700
+In-Reply-To: <patch-06.10-9c36f17481b-20221026T151328Z-avarab@gmail.com>
         (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 26 Oct
- 2022 17:35:17
+ 2022 17:35:19
         +0200")
-Message-ID: <xmqqlep1kqpy.fsf@gitster.g>
+Message-ID: <xmqqh6zpkqgo.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -76,20 +76,15 @@ X-Mailing-List: git@vger.kernel.org
 
 Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> Add a "const" to the "struct string_list *" passed to
-> for_each_string_list().
->
-> This is arguably abuse of the type system, as the
-> "string_list_each_func_t fn" take a "struct string_list_item *",
-> i.e. not one with a "const", and those functions *can* modify those
-> items.
->
-> But as we'll see in a subsequent commit we have other such iteration
-> functions that could benefit from a "const", i.e. to declare that
-> we're not altering the list itself, even though we might be calling
-> functions that alter its values.
+> Refactor a "do I have an element like this?" pattern added in [1] and
+> [2] to use unsorted_string_list_has_string() instead of a
+> for_each_string_list_item() loop.
 
-The callback functions are allowed to (by taking a non-const
-pointer) modify the items, but are there ones that actually modify
-them?
-
+In the longer term, I am not sure if we want to keep such code that
+uses string-list as a "database to be looked up with the string as
+the key".  I am not sure it is worth our review bandwidth to change
+a for-each-string-list that terminates early to its shorthand
+unsorted_string_list_has_string().  Surely each such conversation
+would allow us to lose 4 to 5 lines, but longer term we should be
+discuraging the use of unsorted_string_list_has_string() in the
+first place.
