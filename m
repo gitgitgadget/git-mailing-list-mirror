@@ -2,116 +2,157 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B700ECAAA1
-	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 16:30:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 792BAECAAA1
+	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 16:35:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236087AbiJ0Qa5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Oct 2022 12:30:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36318 "EHLO
+        id S235052AbiJ0QfY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Oct 2022 12:35:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235531AbiJ0Qay (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2022 12:30:54 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B36855FACF
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 09:30:51 -0700 (PDT)
+        with ESMTP id S235597AbiJ0QfU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2022 12:35:20 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D737220356
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 09:35:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1666888237; bh=kuqtjl1KrvCHGy7Dw5u08LE93KqWuDIYSYtIju/2Rns=;
-        h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
-        b=nQhiS/jZE+sjS/rgDgS90Drng+L3GjfYfPH9MHjPqlW9v+HBg6sgZ8lMoSn9bF2/B
-         B3aiRoDlrTGxwEwzG9doO4fcUI7aYFGXvALbUVM2Pn9G4X2BBR1rL58lkk4DJQ5Viq
-         UjMupBhUuSuwsBaqjpzkvvPnP0S6tS9Fgxip22hwXt04onHbFZ0LPsYGcZXsHinmVz
-         0QyotyJ4XJHp/K8B4WUPjTBsPdWdXFdb9s0uhJRwgetEpfDpxWYxF+To/WRFu8cAko
-         u5JXp4dSISktwbfx3Bb5SDfvuZMDO9uZKhdsGQegvNbd6l8Y7RoAhfltfTr0zI69bA
-         W/w7AHZ4zXz4w==
+        t=1666888503; bh=hUPIERufh2YPKYUYEFtjKEriqayeFlciFf3o4OX2rFY=;
+        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
+        b=bmfjlte0CqG7bS41BGFIrw966KnPtoGqdXsNFwqhwmiNSa2OI6aDF3WFFKaL8UQXA
+         o4aLiq86HtfrDqkGiAVx/dcAbcKDbBjWnj6oXv0CDsSLp0a1LwOwxxAhGs3od5G7cU
+         /bwL2H4YCQOxYpbaEE/va/jyvSvVsOijQ1x9G8mixlRKpWkJ+aVtuJ4OWnwPZQleFD
+         ByCxeMREXvRjcWuXwWxvfRRJ5wrpIZdxi/s5PY45pawRBzmMQlra+u6HAWaEnAA9Qa
+         SgBqtS2bhkKrBVkqUcn25awrZuEsoGQjf/xCmX86tDAso3aAoSmqcUXdy3ZEkgFFXE
+         biqxaulnN7Fkw==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.23.191]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mkmzr-1pUYSJ3V5L-00mL24; Thu, 27
- Oct 2022 18:30:36 +0200
-Message-ID: <7407e074-4bd8-b351-7fa4-baf59b41880c@web.de>
-Date:   Thu, 27 Oct 2022 18:30:36 +0200
+Received: from [192.168.178.29] ([79.203.23.191]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MnG2C-1pX1V50w32-00jIOk; Thu, 27
+ Oct 2022 18:35:03 +0200
+Message-ID: <0cae80c0-2576-8be7-48f7-06a0a135961f@web.de>
+Date:   Thu, 27 Oct 2022 18:35:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.4.1
+Subject: [PATCH 1/8] merge: remove always-the-same "verbose" arguments
 Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH 0/8] run-command: remove run_command_v_*()
+References: <7407e074-4bd8-b351-7fa4-baf59b41880c@web.de>
+In-Reply-To: <7407e074-4bd8-b351-7fa4-baf59b41880c@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:XIuCk8h4nUlWIzLPvIu0632nYg/8D+aHcZmpbYfDvYYFKrZi/m5
- lZCkt+RdZRUek8aZyxk7SybZGPEWyy+ldvIov6BDHYyXHi7tBGVLbgIaDwZl4OyZ72zLYxA
- 18FyA0nE7JwFkURC4d3NayN4stwUAratUjzDSIgwjIH1qvktIppJFZIFr1hhPlvxhNe+nwi
- SowErNQbog3zQ++AQCaug==
-UI-OutboundReport: notjunk:1;M01:P0:X3i96CHFjSg=;iqxSjbE7qsSlBe1mDCSXz9mBt5p
- hJqbvizw++zVYOYqOilW9nmOkAcQDVHJGLWdafiShZb9MS5quPzaF7vTZfub+rkKX4/P6XjcG
- rbjWeVwibSrjDbemH11Rk8ch5WIKu/X4RMyJXJLdL3qQy7zbZ3+Ov1qGpKk1gMrV2/Lsoyj9Z
- k+a12z0gtx/N7qfrmSXe2CTkkkVUNJSgXI9nKZAlEW4rgH++3LN+dr5K6k7EdyPMeTl4ZeOuj
- yz4Jcyl4xf5A5l6PrUz/rzDK8qlXnnKk5Ff2CGA32k5KOyj04NimIY15mABgvLaLyUnOBIAnc
- lCysuRYXZBC3oCUyzsjiHlbADei1K0D0fc8VpAjhQGnGzD1UY8yo0JCVHW9WNFZY9MlxIOI5D
- C4bIgOs4SLdUGQMveaO1x24IPka4GcJWW/DxlK0hN/qn+rlDSjZtMXJ725R7eXafrBKqlFPhS
- iQ+udBxmpHwdlP30ioQ31U0nWJeZHjwF7I7auW19Hu1FayvyhRhCSE1rMUesJ8doccMH9eIoo
- vN659U6v0rwSRqRlYI+19aN0dCqX4jWwwrkDEpSNjpP3n3BU8YogBjL/xr+hRUOcfpGYKkCfD
- W1nKDXdBBusiCBpFxvL8ka1LKuw2tUeeyScqWQqM9QlsPM8W4Kyb5KdpFlRW5IOj3HwoxBvP0
- n39VYjJxG36NMK4bfV2meeJiO1jbRCCtZSDw/tqEBe5J8HxgAg7cx/y+Ecd/m5wP6MzxL7/UY
- 7N6Ezy8LK8RGad3R6M/OA6CK7GuMOwd4ZMSGrbxIPOAluB0UfbMqqOgdtwu16XiIYtj5o3KkL
- Dee3tsS13S36+PQPEpFvg27W7uwnjFrrUjXawImszUEdYxXFU1spwjg6dbAj2egCqsmumEjmH
- +0uqhsKqV+R2oIYCjpnixwU8p+yFOnQdT/RSzb2+JcwqG9g5jBT5FTyTbTiqDYrpzoLM4lSPx
- u11OUytCYHfOHDozfV3ugXi9twU=
+X-Provags-ID: V03:K1:czNccu2pYPC9z9jMaMsxf9cE8wqZFFKj30Y9zigKufZyqM3vRnb
+ FNk8il+LbHcHnGrBkHr4Br3bZfIih8mNumSxe+VdIw9Co0+P7//p0XDYcRkBHYXUH1n6mYI
+ h5+kNdUS49gSyx6BGjd98ZhAYH/Xnf5g0qBzasreRKBsS7rGO1cCfH7ofJq9u0J4oujzo7D
+ tp9BzryZTbUThhcUhrGVQ==
+UI-OutboundReport: notjunk:1;M01:P0:6sgb3lW/tO4=;KmUKXCtaZDFyJ6ohgXpp/Gs+XEG
+ 9sdCVfQjqndBrv8fXrAFIMpvU6URbAWmPI0wRa68j30PETOsqMnyrwl/XHgEgIDK8dz6B+bsf
+ QJ4X3Qp+dBHf6wCsKCBfcNgPhP1e01dSRTV7oeQKtsgDDLFHKp8xyAtfwM86QGJLJcKgm+eaz
+ dmVE+XxZOUF78K9FkYG+j1p3x5zmi6ZDccp2gFkylYCgFU4EzmHWttruAPNfkr0c2TqGRiNvv
+ h2rsiVcRSZwPA11O+gKT7bSqAkAkGuSpI5tFdn0LPgpAg8jB1wUEzCGqUAKRz7h1Cju74Z8rx
+ C47nW8Yodb5E1hiFTRZGSbneAHABoZX0alOe+jsjZulgSPgvpf7qpp5l92pjG2GQgdFk9aMC4
+ UBpCSjWyq90L0jBeVa4RuSBL8PldXfUYSVaF6UgBXQ5pq08mo1zQ1dIeADNKEUEgBQ9JO+gq+
+ eR5nzaDUd7dF4NKKWEZc2DPdhzakgYS/PTto8LwVzTFExPie01BaNrQqQM0ieNXTKGHE+yzfk
+ DZheALM/gDzjr5V6vfhsmsmEmADjpibNzw2uK0sEBHw707P7mo+71PXyiwqta3pOZSjCYilQn
+ 7AWpZHaC7MmRK4fNkb9tZjkC/LQ1UYZ3EWtj3Xt4cTjn5G1GMhz6YMo4Cvtvp8Jz+fVQkqIKk
+ fH79K5NHIgNidHyOsfu23YfkJn8qBd4f3pApZAkvPG6uY+xgLiR2XCrP2zS4GWCyGfCCJQRHs
+ EsKfTFkRPF+edOvvpnSJSbRx1FD4gCxZItMUTsJuQ/mrx6MbkvIMPHQGLGOdgXBLSMPdNukHd
+ 7w5qQJu4Q2mWMz0cXhSATwtC2w526vUWH//w5hh6f//AgyTxZp302T5F5UOmzaRaE0z5uW1ic
+ uQhlnQz8zfy0oGIe4SzV9OrXxJxvGhi+43J2dPX7rlm8WX20yuzRr5GhI82YHLfZAznXmRQH0
+ HVW3Fg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Replace the convenience functions run_command_v_opt() et. al. and use
-struct child_process and run_command() directly instead, for an overall
-code reduction and a simpler and more flexible API that allows creating
-argument lists without magic numbers and reduced risk of memory leaks.
+From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 
-This is a broken-out and polished version of the original scratch at
-https://lore.kernel.org/git/9d924a5d-5c72-fbe6-270c-a8f6c5fc5850@web.de/
+Simplify the code that builds the arguments for the "read-tree"
+invocation in reset_hard() and read_empty() to remove the "verbose"
+parameter.
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (1):
-  merge: remove always-the-same "verbose" arguments
+Before 172b6428d06 (do not overwrite untracked during merge from
+unborn branch, 2010-11-14) there was a "reset_hard()" function that
+would be called in two places, one of those passed a "verbose=3D1", the
+other a "verbose=3D0".
 
-Ren=C3=A9 Scharfe (7):
-  bisect--helper: factor out do_bisect_run()
-  use child_process members "args" and "env" directly
-  use child_process member "args" instead of string array variable
-  replace and remove run_command_v_opt_cd_env()
-  replace and remove run_command_v_opt_tr2()
-  replace and remove run_command_v_opt_cd_env_tr2()
-  replace and remove run_command_v_opt()
+After 172b6428d06 when read_empty() was split off from reset_hard()
+both of these functions only had one caller. The "verbose" in
+read_empty() would always be false, and the one in reset_hard() would
+always be true.
 
- add-interactive.c        |   9 ++-
- bisect.c                 |  12 ++--
- builtin/add.c            |  19 +++--
- builtin/am.c             |  12 ++--
- builtin/bisect--helper.c |  68 +++++++++---------
- builtin/clone.c          |  41 ++++++-----
- builtin/difftool.c       |  24 ++++---
- builtin/fetch.c          |   9 ++-
- builtin/gc.c             |  55 ++++++++++-----
- builtin/merge-index.c    |   4 +-
- builtin/merge.c          |  53 ++++++--------
- builtin/pull.c           | 147 +++++++++++++++++++--------------------
- builtin/remote.c         |  40 +++++------
- compat/mingw.c           |  11 +--
- diff.c                   |  27 ++++---
- fsmonitor-ipc.c          |  10 ++-
- git.c                    |  15 ++--
- ll-merge.c               |   7 +-
- merge.c                  |  18 ++---
- run-command.c            |  35 ----------
- run-command.h            |  33 +--------
- scalar.c                 |  13 ++--
- sequencer.c              |  32 ++++-----
- shell.c                  |  17 +++--
- t/helper/test-fake-ssh.c |   7 +-
- t/helper/test-trace2.c   |   4 +-
- tmp-objdir.h             |   4 +-
- 27 files changed, 344 insertions(+), 382 deletions(-)
+There was never a good reason for the code to act this way, it
+happened because the read_empty() function was a copy/pasted and
+adjusted version of reset_hard().
 
+Since we're no longer conditionally adding the "-v" parameter
+here (and we'd only add it for "reset_hard()" we'll be able to move to
+a simpler and safer run-command API in the subsequent commit.
+
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ builtin/merge.c | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
+
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 5900b81729..3bb49d805b 100644
+=2D-- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -345,14 +345,12 @@ static int save_state(struct object_id *stash)
+ 	return rc;
+ }
+
+-static void read_empty(const struct object_id *oid, int verbose)
++static void read_empty(const struct object_id *oid)
+ {
+ 	int i =3D 0;
+ 	const char *args[7];
+
+ 	args[i++] =3D "read-tree";
+-	if (verbose)
+-		args[i++] =3D "-v";
+ 	args[i++] =3D "-m";
+ 	args[i++] =3D "-u";
+ 	args[i++] =3D empty_tree_oid_hex();
+@@ -363,14 +361,13 @@ static void read_empty(const struct object_id *oid, =
+int verbose)
+ 		die(_("read-tree failed"));
+ }
+
+-static void reset_hard(const struct object_id *oid, int verbose)
++static void reset_hard(const struct object_id *oid)
+ {
+ 	int i =3D 0;
+ 	const char *args[6];
+
+ 	args[i++] =3D "read-tree";
+-	if (verbose)
+-		args[i++] =3D "-v";
++	args[i++] =3D "-v";
+ 	args[i++] =3D "--reset";
+ 	args[i++] =3D "-u";
+ 	args[i++] =3D oid_to_hex(oid);
+@@ -385,7 +382,7 @@ static void restore_state(const struct object_id *head=
+,
+ {
+ 	struct strvec args =3D STRVEC_INIT;
+
+-	reset_hard(head, 1);
++	reset_hard(head);
+
+ 	if (is_null_oid(stash))
+ 		goto refresh_cache;
+@@ -1470,7 +1467,7 @@ int cmd_merge(int argc, const char **argv, const cha=
+r *prefix)
+ 					       check_trust_level);
+
+ 		remote_head_oid =3D &remoteheads->item->object.oid;
+-		read_empty(remote_head_oid, 0);
++		read_empty(remote_head_oid);
+ 		update_ref("initial pull", "HEAD", remote_head_oid, NULL, 0,
+ 			   UPDATE_REFS_DIE_ON_ERR);
+ 		goto done;
 =2D-
 2.38.1
