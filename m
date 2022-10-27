@@ -2,81 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A0F5ECAAA1
-	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 20:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD451FA3740
+	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 20:12:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236895AbiJ0ULs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Oct 2022 16:11:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38890 "EHLO
+        id S235962AbiJ0UMi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Oct 2022 16:12:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236906AbiJ0ULg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2022 16:11:36 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 593F289906
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 13:11:35 -0700 (PDT)
-Received: (qmail 17974 invoked by uid 109); 27 Oct 2022 20:11:34 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 27 Oct 2022 20:11:34 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24260 invoked by uid 111); 27 Oct 2022 20:11:34 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 27 Oct 2022 16:11:34 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 27 Oct 2022 16:11:33 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 0/8] run-command: remove run_command_v_*()
-Message-ID: <Y1rl9arDRGay0CHm@coredump.intra.peff.net>
-References: <7407e074-4bd8-b351-7fa4-baf59b41880c@web.de>
+        with ESMTP id S236754AbiJ0UMK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2022 16:12:10 -0400
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB2B489906
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 13:12:09 -0700 (PDT)
+Received: by mail-pg1-x532.google.com with SMTP id 78so2633169pgb.13
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 13:12:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZMWbn3pJxrzDXBjD7BNGl6VMTAn4B8Yh48WGd3Bf8Z0=;
+        b=DaZ2BRDO6N5OsdxtUh65aWx8fudLIaZ8t935qjB/rXdJl29j2l0l7hdaiWW+HTjdBd
+         IT/rGr5t9Y8mVLFnDov04KsxgeeIO5PWkc4ZvqX1ptCJR+L89zSo1ByYTyiqjhikAh4H
+         GLyovSz7OoyQHfapNDhBVHuo+riDptsXyyryRH37jKMxYARN95ST0CjGwEr9o3VsXNtR
+         M20fBh8GtvIPwzZ02wwlN5mHmFSuujf2KL0/CWd2VS7ja90jdgBF51OMJ/+fNDM0Sf7J
+         GD9cgBh9jZBINs9Vm6Lu9RVtW38lr6H6bZqV/3HS2t9ERMPJ9NbU9OF9iNHpJKtfwS/1
+         LMkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZMWbn3pJxrzDXBjD7BNGl6VMTAn4B8Yh48WGd3Bf8Z0=;
+        b=WMDAClSjs/NQC0lDocjGSfC34KPKhgqvK1tYzyg2uBuHjx8aumuuT6xdoIHg3y4gmQ
+         g7I6BQm++hw4t01VWPp9oV/Yml8Gj0LWJOrzm46rDCzVs4dI/Aq7AxevgbyDYfd8jHIG
+         bBTMgnIT/Kn1XhrpPlRX1yMqCYsZE9RWzEXH7E8ZDcVaU4Z7OAk+SBN7Bshk3PtA7tZL
+         L5yyOvrnvLrndPa/8gbr/4x0WGGWTdh6wlVU4yI/IwxGGqNZ9TkkgUBG6o453SktvWlE
+         EOAjnufYEqskLyocnj8tgklwD5OgkPXyDevjMkD6mZGlj1I5BLvjCJ51VFsqwtY/Wkw+
+         nwog==
+X-Gm-Message-State: ACrzQf01AAt9kcsW2bDxEKGLa/yVTST80eg2am3Ha7A7G+fTIs+1aepP
+        TkbeXbbjMdps8D2b2HVhgFg=
+X-Google-Smtp-Source: AMsMyM64AzrpweS0Lx3j2JLIIdppkgHborAMN69Qobnw7OQzyl08fhd/LOHw/KEh5JhbHA6OiE1Dcg==
+X-Received: by 2002:a65:6944:0:b0:43c:da07:5421 with SMTP id w4-20020a656944000000b0043cda075421mr44490334pgq.72.1666901529102;
+        Thu, 27 Oct 2022 13:12:09 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id u13-20020a170902e80d00b001869394a372sm1591069plg.201.2022.10.27.13.12.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Oct 2022 13:12:08 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
+        <szeder.dev@gmail.com>
+Subject: Re: [PATCH 00/10] config API: make "multi" safe, fix numerous
+ segfaults
+References: <cover-00.10-00000000000-20221026T151328Z-avarab@gmail.com>
+Date:   Thu, 27 Oct 2022 13:12:08 -0700
+In-Reply-To: <cover-00.10-00000000000-20221026T151328Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 26 Oct
+ 2022 17:35:13
+        +0200")
+Message-ID: <xmqqsfj9jaav.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <7407e074-4bd8-b351-7fa4-baf59b41880c@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 27, 2022 at 06:30:36PM +0200, René Scharfe wrote:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> Replace the convenience functions run_command_v_opt() et. al. and use
-> struct child_process and run_command() directly instead, for an overall
-> code reduction and a simpler and more flexible API that allows creating
-> argument lists without magic numbers and reduced risk of memory leaks.
-> 
-> This is a broken-out and polished version of the original scratch at
-> https://lore.kernel.org/git/9d924a5d-5c72-fbe6-270c-a8f6c5fc5850@web.de/
+> I also think that part of the config API is a wart, but that we should
+> go for a different solution. It's the only config function that
+> doesn't return an "int" indicating whether we found the key.
 
-I read through this and it all looks fine to me. I was a bit puzzled at
-the layout of your series at first. In particular, the difference
-between cases in patch 4 versus the later ones.
+Overall I saw some things to like in the series, but was not
+impressed by others.  The _multi() thing in the earliest patch is a
+welcome change, giving an option to call nonbool() is a good idea
+(but I have doubts about the exectuion), and "does the key exist?"
+may be a good thing to have.  Others ranged between "Meh?" to "it
+might be good, but why does it have to be done here now?".
 
-I think it is that in patch 4, these are all unambiguously positive
-because we are getting rid of magic numbers (or magically-sized arrays).
-Whereas in patches 5-8, there's nothing inherently wrong with the
-call-sites; but as we get rid of the API wrappers, we convert them. So
-they are collateral damage, so to speak, from the simplification of the
-API.
-
-That makes sense to me, though I could point out that most of the sites
-cleaned up in patch 4 _could_ be converted to look like the ones that
-are converted in 5-8. Obviously that doesn't make sense to do, knowing
-that 5-8 are coming. But if the point in splitting it this way is to
-show that we could stop at patch 4, cleaning up call sites but not
-shrinking the run-command API, then I just want to point out that there
-is another way to do those cleanups. :)
-
-All that said, you will be unsurprised to hear that I am on board with
-the direction of 5-8, so this all looks good to me. I'm just laying out
-my thought process while reviewing.
-
-I also think it would have been fine to just drop the whole API in one
-patch (i.e., squashing 5-8), which makes the intermediate diffs a bit
-shorter. But I do not mind at all having the cases broken out.
-
-Thanks for cleaning this up.
-
--Peff
+Thanks.
