@@ -2,143 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 337ABFA3740
-	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 19:15:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 714D2FA3742
+	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 19:28:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235366AbiJ0TPq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Oct 2022 15:15:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38686 "EHLO
+        id S235447AbiJ0T2I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Oct 2022 15:28:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235213AbiJ0TPo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2022 15:15:44 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02D5E3DF13
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 12:15:44 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id d13-20020a17090a3b0d00b00213519dfe4aso2381124pjc.2
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 12:15:43 -0700 (PDT)
+        with ESMTP id S236610AbiJ0T2F (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2022 15:28:05 -0400
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 168067A51D
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 12:28:00 -0700 (PDT)
+Received: by mail-pg1-x52d.google.com with SMTP id r18so2507906pgr.12
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 12:28:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=l6zm+CkFV1CKuXRhv8YRBtwhEyGmS7YrD1ytJfhKebU=;
-        b=Q9nP8mBXpCveUjWk5KfJ3vBAtjVzmUV2OAzHh3wfxo1GQJb64QZtNs5YnmU8esNnOf
-         86IhDusSLyr0shJO90ydJYbDRhOq12yn4v/6O9+xOGmLr8KfjM6AWC0o7P6dEm1gDj9N
-         TdFjVrpZsQy8MjP3AfYAxLptTvO6q0dCLd5IIYzJem1sCA0RLFQUTW38Xk48joafKJRb
-         Sw+xYtpP1dmfaQ6YU4bBrG9hMtGMRMSphJVItAa0dtFBz6RU2R4H7gOtGK2xpqgLciXh
-         qQSbZR54gy60eebwAo//txvwW5j0ucL9S0y0mPpw4zUAaEH75L9+KH09puySfkudxl0d
-         NTDg==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jSoWVF1EQ6VIqjH0uiNsiUY0acOrZuz7ht4J2MzpIDw=;
+        b=DDC7jlEJPedvuguz/qxJItkuRJzQRO+IDVU2CnUZAcQm5a2UsUKGsk+BzOpxA/66sE
+         l4SU758JfHRutpWg8xCEq4vJfj/Rnwtd4BPy9iA1u2eBy0fTHDZxAT1ZcYxjF92ICv2S
+         1gyHWZmBaBih8Qi3BDRumyfUKUywC8NmS2A/4Wp+p0VLPgSgIRbvNs9reB1E5wfjk9GP
+         wIDy1wLoF9svN+SwtBRVjzDHLNhGa2C7ssBf1MC2naa/0TSo/eBzVoryP3Cq6j1OmuXU
+         633p31Wu0lCXFxn9XBp/uRnWnPYc9zOBM3OKc5POyF7+dmAbzWtz1bwA01AojtqAeJeI
+         sbxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=l6zm+CkFV1CKuXRhv8YRBtwhEyGmS7YrD1ytJfhKebU=;
-        b=rCppkFKfV/gW7Cbw1VaPMPIZRwMMdLvsT4QTfcE7ftdmZix5riRwhrYP6y9P0eMo0H
-         Uguw8V2WrivW/kF1Zvy4qvpIzzOeX1fJlgpDrbdfRisb6Ip8jpzKGqcRTOcK3E8o+TA/
-         uhFQOOUIx0nnXsAumUQq0o5A7lQt+Oko0lTKcFk2/UVgSJpTEW3PiOYvhOtPx+Va7pTn
-         Nnj5Qz0pDFiLw0clWc+XQet2kS+bwpITjKaE5+co9+0xlG/zCgzRZhrXhDN+To2XP1DR
-         L/hAJAoEyu9g5WQi0Jrygj3M2nu13CnkXJtHDAEw+NNMLyRjaRVNqyrQj0gufUgWitOQ
-         U8cA==
-X-Gm-Message-State: ACrzQf1pLLwBK6LWAXd8wzBsgddQUwshWBqlZhXlULpFo1t4OcjZCnYs
-        pJDqVRbNHkGa1w/ekrtPvCp2BCuFBNRtkNtX67k=
-X-Google-Smtp-Source: AMsMyM7hRG6VdC0RkhAW7DCCwvOKBBMSOX5Qjj31LgpyQuhQn3c5GKG4DruDudDT73ybH/65z2xth1mUxTndPY3R6wI=
-X-Received: by 2002:a17:903:2cf:b0:186:61b8:84d3 with SMTP id
- s15-20020a17090302cf00b0018661b884d3mr40920175plk.34.1666898143530; Thu, 27
- Oct 2022 12:15:43 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jSoWVF1EQ6VIqjH0uiNsiUY0acOrZuz7ht4J2MzpIDw=;
+        b=Wg0dCs6YJHpYUEuSct6yzd2kpKnSsJWbClylrCUOPoeCbVNdkZCIAeKS9XLxYQwafo
+         eWGgOS1NRbMhgNKn7JTz9y8d/8KLAzTFr26/tvnQDzjUCtGqWuqiLhdkOwB5ULUtT7Vj
+         3gQ+CA5jIFVJMMksCp/cFL0POt5MUII7GiqO1dPnviyWqXGOgkpKb+DBp1XadkVynmbc
+         hT6ouhGJtmO7e0LmgTLnjJMXab1ZUtkuQqMCTob7faXGK73VE9QcqccDf+tcj8IKxHMD
+         NH8fLhvSBUqBosOKvmKJh/mAaSK1/xv/lt+/xF1/9uiTOj4TmlARgZeS7MBn46SEKwda
+         TAjw==
+X-Gm-Message-State: ACrzQf3zuph9Y50d5UK2vyLp5UyNGVQa+dRLAA/bbubE6Vmz61nIh/R6
+        hKan6fM0p2BBRobTKPtVl5E=
+X-Google-Smtp-Source: AMsMyM6YGKps97Ldq0wWHT4ARSBUHb/wd8cgAqBN5A4aB6Xx1L3aUhNizC/m8j9HrsBuBjRe9JX+6w==
+X-Received: by 2002:a63:6f89:0:b0:45e:cbb1:732 with SMTP id k131-20020a636f89000000b0045ecbb10732mr42783819pgc.162.1666898879542;
+        Thu, 27 Oct 2022 12:27:59 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id n4-20020a170902d2c400b00179e1f08634sm1539364plc.222.2022.10.27.12.27.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Oct 2022 12:27:58 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
+        <szeder.dev@gmail.com>
+Subject: Re: [PATCH 01/10] config API: have *_multi() return an "int" and
+ take a "dest"
+References: <cover-00.10-00000000000-20221026T151328Z-avarab@gmail.com>
+        <patch-01.10-eefa253ab1f-20221026T151328Z-avarab@gmail.com>
+Date:   Thu, 27 Oct 2022 12:27:58 -0700
+In-Reply-To: <patch-01.10-eefa253ab1f-20221026T151328Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 26 Oct
+ 2022 17:35:14
+        +0200")
+Message-ID: <xmqqsfj9kqwx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CAB9Jk9Ay2PPEYKve3DXVmG__yZjO1mgh1MxaKA+wfsF0ZvKRqA@mail.gmail.com>
- <b0008377-2cb5-72ff-e94b-8182065b3436@iee.email> <CAB9Jk9BBddd5d0wKFB0eJw1OMMAQj88J9Bn1Yn1rbK_F1mEs1A@mail.gmail.com>
- <2ed22fa1-4d9d-e50a-18cf-048007272729@iee.email> <CAB9Jk9DPdVmmb2DPDKPm5FLGr-XJa5kNouCYmcjh534Y2z1rVQ@mail.gmail.com>
- <xmqqo7txmazv.fsf@gitster.g> <CAB9Jk9BC1PVxuuNggZuDh1OMe3kdTvCzwkoo7Bkm35nRqAaL4g@mail.gmail.com>
- <xmqq1qqtm7i0.fsf@gitster.g>
-In-Reply-To: <xmqq1qqtm7i0.fsf@gitster.g>
-From:   Angelo Borsotti <angelo.borsotti@gmail.com>
-Date:   Thu, 27 Oct 2022 21:15:31 +0200
-Message-ID: <CAB9Jk9D1g3a+AHoPneMAzc6uTiW89zYQ32cNFJtxFZ71Eh9QHQ@mail.gmail.com>
-Subject: Re: Git add documentation error
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Philip Oakley <philipoakley@iee.email>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> Git tracks contents.  What it means is that you should stop thinking
-> in terms of "changed files".  Each commit (and its tree) represents
-> a complete snapshot.
-
-Sure. I know it well and know that this is one of the most important
-features of git.
-
-> "git add C1.java" is a way to make sure that, if you make a commit,
-> the resulting "snapshot" includes the current contents stored in the
-> C1.java file as you have on the filesystem at the time of issuing
-> "git add" command.
-
-The behavior I have seen tells me that the safest thing to do is to
-have a list of the files of the software, and build a script that makes
-a git add for each of them, to be run each time before I make a commit.
-
-Concerning the fact that changes are somehow "immaterial", this is
-good for a software that is developed by one person, but when there
-are several, and the released software has some unwanted changes
-in it, one may wonder who changed what. It could happen that a developer
-added some changes of his own without telling anybody (perhaps using
-files that he has prepared for a next version).
-
-Have a good night
--Angelo
-
-On Thu, 27 Oct 2022 at 20:44, Junio C Hamano <gitster@pobox.com> wrote:
+> By changing the *_multi() function to return an "int" for the status
+> and to write to a "const struct string_list **dest" parameter we can
+> avoid losing this information. API callers can now do:
 >
-> Angelo Borsotti <angelo.borsotti@gmail.com> writes:
+> 	const struct string_list *dest;
+> 	int ret;
 >
-> > Hi
-> >
-> > I have displayed the contents of the commits with the command you indicate,
-> > but they still look much the same:
-> >
-> > D:\gittest>git ls-tree -r --name-only 91ef45d
-> > C1.java
-> > C2.java
-> > C3.java
-> > C4.java
-> > C5.java
-> >
-> >
-> > D:\gittest>git ls-tree -r --name-only 8ec0c2f
-> > C1.java
-> > C2.java
-> > C3.java
-> > C4.java
-> > C5.java
-> >
-> > I thought that in the second one I would see only the changed file.
+> 	ret = git_config_get_value_multi(key, &dest);
+> 	if (ret < 1)
+> 		die("bad key: %s", key);
+> 	else if (ret)
+> 		; /* key does not exist */
+> 	else
+> 		; /* got key, can use "dest" */
+
+It is a good thing to allow the callers to tell "no such key-value
+pair exists", "key is malformed", and "here are the values for the
+key".  And the above if/else if/else cascade is a reasonable
+interface to give the callers for that (modulo that "negative is
+bad" should be kept to match our API convention).
+
 >
-> Git tracks contents.  What it means is that you should stop thinking
-> in terms of "changed files".  Each commit (and its tree) represents
-> a complete snapshot.  Back when you created 8ec0c2f, did you or did
-> you not have C1.java?  You said you did not modify it, so I assume
-> you did have it.  As a commit is a complete snapshot of the
-> contents, when you list the contents of 8ec0c2f, it should be
-> included.
+> A "get_knownkey_value_multi" variant is also provided, which will
+> BUG() out in the "ret < 1" case. This is useful in the cases where we
+> hardcode the keyname in our source code, and therefore use the more
+> idiomatic pattern of:
 >
-> To put it another way, if you "git checkout --detach 8ec0c2f" in
-> order to go back to the state you were back when you created that
-> commit, do you or do you not want to see C1.java and C2.java?  In
-> order to be able to reproduce the then-current state, of course
-> you do want to see, and because each commit is a complete snapshot,
-> you can see C1 and C2.
->
-> "git add C1.java" is a way to make sure that, if you make a commit,
-> the resulting "snapshot" includes the current contents stored in the
-> C1.java file as you have on the filesystem at the time of issuing
-> "git add" command.  If you made or did not make changes to C1.java
-> before running "git add C1.java" is immaterial.  We may optimize out
-> and make it a no-op if we know you did not make any changes, but it
-> does not change the fact that the resulting commit will store, and
-> more importantly, you will be able to recover, the then-current
-> contents of C1.java out of that commit.
+> 	if (!git_config_get_value_multi(key, &dest)
+> 		; /* got key, can use "dest" */
+> 	else
+> 		; /* key does not exist */
+
+I doubt it is a good idea to add such a specialized interface begin
+with.  Let's not bloat the API for little benefit.
