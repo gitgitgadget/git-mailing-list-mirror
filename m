@@ -2,88 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD451FA3740
-	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 20:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B204FA3740
+	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 20:22:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235962AbiJ0UMi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Oct 2022 16:12:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39298 "EHLO
+        id S236873AbiJ0UWA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Oct 2022 16:22:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236754AbiJ0UMK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2022 16:12:10 -0400
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB2B489906
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 13:12:09 -0700 (PDT)
-Received: by mail-pg1-x532.google.com with SMTP id 78so2633169pgb.13
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 13:12:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZMWbn3pJxrzDXBjD7BNGl6VMTAn4B8Yh48WGd3Bf8Z0=;
-        b=DaZ2BRDO6N5OsdxtUh65aWx8fudLIaZ8t935qjB/rXdJl29j2l0l7hdaiWW+HTjdBd
-         IT/rGr5t9Y8mVLFnDov04KsxgeeIO5PWkc4ZvqX1ptCJR+L89zSo1ByYTyiqjhikAh4H
-         GLyovSz7OoyQHfapNDhBVHuo+riDptsXyyryRH37jKMxYARN95ST0CjGwEr9o3VsXNtR
-         M20fBh8GtvIPwzZ02wwlN5mHmFSuujf2KL0/CWd2VS7ja90jdgBF51OMJ/+fNDM0Sf7J
-         GD9cgBh9jZBINs9Vm6Lu9RVtW38lr6H6bZqV/3HS2t9ERMPJ9NbU9OF9iNHpJKtfwS/1
-         LMkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZMWbn3pJxrzDXBjD7BNGl6VMTAn4B8Yh48WGd3Bf8Z0=;
-        b=WMDAClSjs/NQC0lDocjGSfC34KPKhgqvK1tYzyg2uBuHjx8aumuuT6xdoIHg3y4gmQ
-         g7I6BQm++hw4t01VWPp9oV/Yml8Gj0LWJOrzm46rDCzVs4dI/Aq7AxevgbyDYfd8jHIG
-         bBTMgnIT/Kn1XhrpPlRX1yMqCYsZE9RWzEXH7E8ZDcVaU4Z7OAk+SBN7Bshk3PtA7tZL
-         L5yyOvrnvLrndPa/8gbr/4x0WGGWTdh6wlVU4yI/IwxGGqNZ9TkkgUBG6o453SktvWlE
-         EOAjnufYEqskLyocnj8tgklwD5OgkPXyDevjMkD6mZGlj1I5BLvjCJ51VFsqwtY/Wkw+
-         nwog==
-X-Gm-Message-State: ACrzQf01AAt9kcsW2bDxEKGLa/yVTST80eg2am3Ha7A7G+fTIs+1aepP
-        TkbeXbbjMdps8D2b2HVhgFg=
-X-Google-Smtp-Source: AMsMyM64AzrpweS0Lx3j2JLIIdppkgHborAMN69Qobnw7OQzyl08fhd/LOHw/KEh5JhbHA6OiE1Dcg==
-X-Received: by 2002:a65:6944:0:b0:43c:da07:5421 with SMTP id w4-20020a656944000000b0043cda075421mr44490334pgq.72.1666901529102;
-        Thu, 27 Oct 2022 13:12:09 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id u13-20020a170902e80d00b001869394a372sm1591069plg.201.2022.10.27.13.12.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Oct 2022 13:12:08 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
-        <szeder.dev@gmail.com>
-Subject: Re: [PATCH 00/10] config API: make "multi" safe, fix numerous
- segfaults
-References: <cover-00.10-00000000000-20221026T151328Z-avarab@gmail.com>
-Date:   Thu, 27 Oct 2022 13:12:08 -0700
-In-Reply-To: <cover-00.10-00000000000-20221026T151328Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed, 26 Oct
- 2022 17:35:13
-        +0200")
-Message-ID: <xmqqsfj9jaav.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S235514AbiJ0UV7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2022 16:21:59 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D3EB6F260
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 13:21:58 -0700 (PDT)
+Received: (qmail 18005 invoked by uid 109); 27 Oct 2022 20:21:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 27 Oct 2022 20:21:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24370 invoked by uid 111); 27 Oct 2022 20:21:58 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 27 Oct 2022 16:21:58 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 27 Oct 2022 16:21:57 -0400
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, M Hickford <mirth.hickford@gmail.com>
+Subject: Re: [PATCH] Mention that password could be a personal access token.
+Message-ID: <Y1roZeM6EsPgpHqu@coredump.intra.peff.net>
+References: <pull.1396.git.1666845947898.gitgitgadget@gmail.com>
+ <xmqqk04lmagy.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <xmqqk04lmagy.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+On Thu, Oct 27, 2022 at 10:40:13AM -0700, Junio C Hamano wrote:
 
-> I also think that part of the config API is a wart, but that we should
-> go for a different solution. It's the only config function that
-> doesn't return an "int" indicating whether we found the key.
+> "M Hickford via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+> >  `password`::
+> >  
+> > -	The credential's password, if we are asking it to be stored.
+> > +	The credential's password, if we are asking it to be stored. If the
+> > +	host is a software forge, this could also be a personal access
+> > +	token or OAuth access token.
+> 
+> Is this limited to software forge hosts?
+> 
+> Also, I wonder if the specific "it can be access token and not
+> password" is something worth adding.  If there were a service styled
+> after the good-old "anonymous ftp", it would expect the constant
+> string 'anonymous' as the "username", and would expect to see your
+> identity (e.g. 'mirth.hickford@gmail.com') as the "password".  The
+> point is that it does not matter what it is called on the end-user's
+> side, be it a password or access token or whatever.  It is what the
+> other end that provides the service wants to see after you claimed
+> who you are by providing "username", usually (but not necessarily)
+> in order to prove your claim.
+> 
+> So, I dunno.
 
-Overall I saw some things to like in the series, but was not
-impressed by others.  The _multi() thing in the earliest patch is a
-welcome change, giving an option to call nonbool() is a good idea
-(but I have doubts about the exectuion), and "does the key exist?"
-may be a good thing to have.  Others ranged between "Meh?" to "it
-might be good, but why does it have to be done here now?".
+FWIW, I had the same reaction. From the client perspective for https,
+this is going over basic-auth, and it might be nice to just say so. But
+of course the whole credential system is abstract, so it gets awkward.
+We could probably say something like:
 
-Thanks.
+  The credential's password, if we are asking it to be stored. Note that
+  this may not strictly be a traditional password, but rather any secret
+  string which is used for authentication. For instance, Git's HTTP
+  protocol will generally pass this using an Authorization header;
+  depending on what the server is expecting this may be a password typed
+  by the user, a personal access token, or some other opaque value.
+
+Maybe that is getting too into the weeds. OTOH, anybody reading this far
+into git-credential(1) is probably pretty technical. There may be a
+better way of wording it, too. Another way of thinking about it that
+it's basically any secret that is a single string, and not part of a
+challenge/response protocol. I couldn't find a way to word that which
+didn't end up more confusing, though. ;)
+
+-Peff
