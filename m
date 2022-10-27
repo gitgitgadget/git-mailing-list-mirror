@@ -2,70 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2CBDFA3740
-	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 18:44:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B210FECAAA1
+	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 18:51:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235638AbiJ0So1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Oct 2022 14:44:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54854 "EHLO
+        id S235851AbiJ0Suo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Oct 2022 14:50:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235494AbiJ0So0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2022 14:44:26 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21A109C7D0
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 11:44:25 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id f140so2521664pfa.1
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 11:44:25 -0700 (PDT)
+        with ESMTP id S236245AbiJ0SuX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2022 14:50:23 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30DC839BBC
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 11:50:21 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id h2so2428071pgp.4
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 11:50:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=LtTvPdL3wTdzfonIbshTZVCARGNc+V44LUajke4cSbw=;
-        b=oYg6709NlOpg8TjOMTfgcFl4lQFjNyZ9nalZPinUocdyoTdvoSCaJtsF7XYPzx6XXM
-         ueA5MuLn3bClDkDQPRid/TY7SuH5tH4bJZuzDWElpOuiMVO2Y8OTDiGKD5Zc3nfs2anS
-         flI9v7NoIDKyFmHUM5l8+QHxm7bJDOYGuMLscLiakOEhhgPdxnxl/TzxvQRodzPGG++9
-         lazdFOQ8Nxd8It1M1rQxXnWTBVtcNdYKzKKYc1ulF+pkMnl7Jh7LFjGdtlmkUkJtNAM+
-         VdkuzDcCJIRR45dYExhLbzdo7Xjpr85qOXXcEU76u+Gi4A1hxI/7fWc3nGxpBc0jFcaj
-         kqvw==
+        bh=1nJqo4pVaSjBPJ9HNhFOmx3InzZHRyHFz+ETG87mmL8=;
+        b=bhkVA5+fAvdPuS1PEC827tSvM9G+pIKFPsVrdGgfQmzQ4xdESZfmUeIP/qPBkSAlXy
+         OPUSngwQIn40VCOHtazT+2gIyHX20F6L3u1xXxwcZDtqFLA9nJtFtVn71AbtYYx6zPmS
+         GrMzmQ866vL4lcUJY2JxjWLAIZ5V0D2SeEVhqPwtGMhXgLlzlOJqYg79IF0odvNe1JSF
+         TKu6OXkNBad1dPVlGXCjbup5Q5Ku6SrAw+l/FkRShpHc3cQPtHnMyFAgLta5Cs5Vvkfu
+         LBjjxvk4ila9NazT/NsqoJk0UgWNtdaGj51X4wRI/Nqo9Z3qeOPba3y2S4+79x5E82Pj
+         JDeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=LtTvPdL3wTdzfonIbshTZVCARGNc+V44LUajke4cSbw=;
-        b=3DzRCm0FHBpOa6+FGM3NEtj6vfRNjpXWRIIDKS79P3IptnGnCJtrAz2TSHrvTQBZTr
-         d+/v9Yls9RPVqxTKP3YX7FNYkagUwq4XchMAtdDaH27h8Ef7jyuzF3RyHZN0HPrtyq1a
-         CFqRW9GyGtGIvCTMOwmdNwGfb0o/BJYSFzCEreY5yXW6UOASWl6tqJOZm9Q47dTTwtwf
-         kTs9GXFTZFVk7vUwcQvNrSjZasrh4ie/xVdQenYw5wEOCufTAR8WXq39lFhyL8p92UNN
-         uqjWhOVgC1iwkmebE4tolWhTX4EGU9jhZKQ44/Lf21qSlPUSde0UFbXk5cQkTfjg9OFq
-         ci9w==
-X-Gm-Message-State: ACrzQf18ZZ2DGAvtdV1HkNipnsWZHr/jWuf3QV3IMrQKHPdYocweZulM
-        ZrXWgS/JXnmirda7TVT3XlQ=
-X-Google-Smtp-Source: AMsMyM4ZtUVWaGtsB3F5JO2mju5FRYMN+L/9n8U4aYNJMpPYnSs4/+YczZ4rlHyIOtdu5EuE/4LSTQ==
-X-Received: by 2002:a63:90c4:0:b0:46f:5a21:3b5d with SMTP id a187-20020a6390c4000000b0046f5a213b5dmr2471796pge.210.1666896264531;
-        Thu, 27 Oct 2022 11:44:24 -0700 (PDT)
+        bh=1nJqo4pVaSjBPJ9HNhFOmx3InzZHRyHFz+ETG87mmL8=;
+        b=SZZJCpsyJoLO/+yekfqD2BFWu2r0EXp6soZkNgg49ojevC7DFRtev3GXbw1mzx1DaB
+         Yskec+AdY5Aa/vWCGGUOboYIGbFWje9cXGX9gQZLfR1/Exd9r80BovgS71p/0y73ZMlM
+         1Azz1GvRAtETw1DUezHLZ4KMHgAfztDVeZTmCePAivptLlYgVFI8PhlCfPQZPz2GRVQu
+         ae4rybdYPsU1C0c0JpV9gEb8vAgMUE4Zkv5GysF8n37PD5zYPFEULlisOlf0NPFM2gAK
+         O/R0QKDEEtablyechAj1+LMiQtoClIrt8q86uAd5Y9XgV7lc+H/gP+muK9/MQCHtAYg/
+         2wUA==
+X-Gm-Message-State: ACrzQf148FbahOVfbiA+q5zCcFAtnLElpzDudQrAYcg6kN78Qnj7rPMf
+        /GKv5/pp0UEEHEe3x7Yd0oE=
+X-Google-Smtp-Source: AMsMyM5fwKvzhGtC5BM5OV7s0mUdFMzSDfmBU+GIp/o+dqjgi1mjO/XoV0j/XVMZtMgXuJ5rRwsbyQ==
+X-Received: by 2002:a65:628f:0:b0:43c:dac:646a with SMTP id f15-20020a65628f000000b0043c0dac646amr43447607pgv.397.1666896620602;
+        Thu, 27 Oct 2022 11:50:20 -0700 (PDT)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id z30-20020aa79e5e000000b005626a1c77c8sm1483732pfq.80.2022.10.27.11.44.23
+        by smtp.gmail.com with ESMTPSA id m4-20020a170902db0400b00186a2274382sm1542667plx.76.2022.10.27.11.50.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Oct 2022 11:44:24 -0700 (PDT)
+        Thu, 27 Oct 2022 11:50:20 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Angelo Borsotti <angelo.borsotti@gmail.com>
-Cc:     Philip Oakley <philipoakley@iee.email>,
-        Git List <git@vger.kernel.org>
-Subject: Re: Git add documentation error
-References: <CAB9Jk9Ay2PPEYKve3DXVmG__yZjO1mgh1MxaKA+wfsF0ZvKRqA@mail.gmail.com>
-        <b0008377-2cb5-72ff-e94b-8182065b3436@iee.email>
-        <CAB9Jk9BBddd5d0wKFB0eJw1OMMAQj88J9Bn1Yn1rbK_F1mEs1A@mail.gmail.com>
-        <2ed22fa1-4d9d-e50a-18cf-048007272729@iee.email>
-        <CAB9Jk9DPdVmmb2DPDKPm5FLGr-XJa5kNouCYmcjh534Y2z1rVQ@mail.gmail.com>
-        <xmqqo7txmazv.fsf@gitster.g>
-        <CAB9Jk9BC1PVxuuNggZuDh1OMe3kdTvCzwkoo7Bkm35nRqAaL4g@mail.gmail.com>
-Date:   Thu, 27 Oct 2022 11:44:23 -0700
-In-Reply-To: <CAB9Jk9BC1PVxuuNggZuDh1OMe3kdTvCzwkoo7Bkm35nRqAaL4g@mail.gmail.com>
-        (Angelo Borsotti's message of "Thu, 27 Oct 2022 19:46:52 +0200")
-Message-ID: <xmqq1qqtm7i0.fsf@gitster.g>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Alphadelta14 via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Heather Lapointe <alpha@alphaservcomputing.solutions>
+Subject: Re: [PATCH v3 1/9] tree: do not use the_repository for tree
+ traversal methods.
+References: <20221027180949.1837457-1-jonathantanmy@google.com>
+Date:   Thu, 27 Oct 2022 11:50:19 -0700
+In-Reply-To: <20221027180949.1837457-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Thu, 27 Oct 2022 11:09:49 -0700")
+Message-ID: <xmqqwn8lksno.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,51 +69,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Angelo Borsotti <angelo.borsotti@gmail.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> Hi
+> First of all, let me echo what Glen said [1], that this series is  
+> overall well laid out and makes sense. 
 >
-> I have displayed the contents of the commits with the command you indicate,
-> but they still look much the same:
+> Other reviewers have commented on style issues, but I'll hold off on 
+> making my comments on those and also possible improvements on commit 
+> messages until I can say "besides style and commit messages, I think 
+> that this series is good to merge in". 
 >
-> D:\gittest>git ls-tree -r --name-only 91ef45d
-> C1.java
-> C2.java
-> C3.java
-> C4.java
-> C5.java
+> [1] https://lore.kernel.org/git/kl6lr0yuqlk0.fsf@chooglen-macbookpro.roam.corp.google.com/
 >
+> "Alphadelta14 via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> +			// This current codepath isn't executed by any existing callbacks
+>> +			// so it wouldn't show up as an issue at this time.
 >
-> D:\gittest>git ls-tree -r --name-only 8ec0c2f
-> C1.java
-> C2.java
-> C3.java
-> C4.java
-> C5.java
+> I was a bit confused by this comment, so I looked at the surrounding  
+> code. I think it could be better rephrased as: 
 >
-> I thought that in the second one I would see only the changed file.
+>   All existing callbacks at the time of writing cause this part of the  
+>   code to be skipped when S_ISGITLINK(entry.mode) is true, so this 
+>   wrong behavior does not call any issues. 
+>  
 
-Git tracks contents.  What it means is that you should stop thinking
-in terms of "changed files".  Each commit (and its tree) represents
-a complete snapshot.  Back when you created 8ec0c2f, did you or did
-you not have C1.java?  You said you did not modify it, so I assume
-you did have it.  As a commit is a complete snapshot of the
-contents, when you list the contents of 8ec0c2f, it should be
-included.
+As I already said, I do not think this is "wrong behaviour" to begin
+with.  The current code requires that you'd use add_submodule_odb()
+to make the objects in them accessible and if your program fails to
+do so, as a very natural consequence, you'd not see objects pointed
+by the gitlink.
 
-To put it another way, if you "git checkout --detach 8ec0c2f" in
-order to go back to the state you were back when you created that
-commit, do you or do you not want to see C1.java and C2.java?  In
-order to be able to reproduce the then-current state, of course
-you do want to see, and because each commit is a complete snapshot,
-you can see C1 and C2.
-
-"git add C1.java" is a way to make sure that, if you make a commit,
-the resulting "snapshot" includes the current contents stored in the
-C1.java file as you have on the filesystem at the time of issuing
-"git add" command.  If you made or did not make changes to C1.java
-before running "git add C1.java" is immaterial.  We may optimize out
-and make it a no-op if we know you did not make any changes, but it
-does not change the fact that the resulting commit will store, and
-more importantly, you will be able to recover, the then-current
-contents of C1.java out of that commit.
+Changing that assumption is OK as long as existing callers that
+depend on the current semantics are not broken by such a change, but
+I do not think "wrong behaviour does not call any issues" is a
+correct analysis of the problem.
