@@ -2,133 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 924B5ECAAA1
-	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 17:28:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7E51FA3740
+	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 17:29:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235587AbiJ0R24 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Oct 2022 13:28:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60976 "EHLO
+        id S234595AbiJ0R3t (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Oct 2022 13:29:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234595AbiJ0R2z (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2022 13:28:55 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E10DE18D831
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 10:28:54 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id c24so2235452pls.9
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 10:28:54 -0700 (PDT)
+        with ESMTP id S235786AbiJ0R3r (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2022 13:29:47 -0400
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC4A51A3AC
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 10:29:45 -0700 (PDT)
+Received: by mail-pl1-x649.google.com with SMTP id c10-20020a170902d48a00b001825736b382so1466774plg.15
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 10:29:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=KR9X8cROeNo4sAN1Z8+KKN55cDd7Z5jx9ZjFWA9PvZc=;
-        b=PJfZvWKg/pF/ttJUqFhb+rrCG9zsoAQ2Gv1uKiKW2b1GjRwtLsT60yP6KAwnPor9I+
-         P5cpoWJGhzPuuYgzuY9L/BuSjdPAVaCQ/ZoLj4jUYG84PBhUDK0O4L7Z5ztUeYmwWzPE
-         xLKdxuLS6D2d4fG0qht6/jFV3IzPntfy2RZP0boRSYfJ7Uhvuo41UCm6rAfS6ZLKZLzH
-         Np0lvimB8iL1e6/pH9Ncv121bwlLti/1Nh4O5rMnm+BGPu1P4BC2siYFi4YOS3+PicK1
-         9yrT/A1Ia9t0A+8zvupqEk/CUiq3I2vHfgNyJrXzXM6Cl6Bs9IqjUabQph4VMQ54QhR1
-         Kbvw==
+        bh=7KNEFdHccwzkuh2YebQBM7q/dlp0HVXGNHx1jg+rovU=;
+        b=drFfLDp7sq44OyRnTXbLDB++u3NUjgxMnvYYT9Cr9jwPKwfv5ZLvNOUAIbnWMrlvTe
+         sDJqg07Ba1Q3fFFSBWjg8vejs3JiJpt+kvTS+9a5OXLHicqMayizC/05ZBsHrKmtPWpj
+         rdWQJSP+tsVcIuCgIhqvDPGKRhTdfdkoAnoR6T3RTINA+zhK5GTyTMcKhiydQHLLp80e
+         WsXGB7ggqyDY5FluIROF0tw5+ChuMH5gXuj6DWtdqmNV81G2taXZ8kMKYGKSkntXdLwH
+         tp7RLN+bI1YEGi9K9K6w2dWPgeEmJT/+u5oyhJ2DS5MEA0MBLZvd4Rrix4FaKC6s4O31
+         83rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=KR9X8cROeNo4sAN1Z8+KKN55cDd7Z5jx9ZjFWA9PvZc=;
-        b=myjdYgC19tgPSmyiaIWhLV/B11FY+J/epnYSawwj7zUCzt2vJUrtjIhoh180ve8KC+
-         yW/kLANSWNimhaNJn0y6qL4UcL7hKdNUaZaSQxfKdDQFFW5c8BLrqPYn1FfYsT5m3/ek
-         GOk5Iw3cvOTNr1HRw5y5pHE1phF0zdcCZu25LQ9yNGv7PHNc4IM+ujdyPINmLDXFrJkK
-         WomnMVz1koOULfFQB4xE4Y9hK5l6PqmDrMnRYOCaypnny2sNPkYk24KtZZcNmRwY6uxk
-         RyvTNkBJvvhUDb76TxcM+dAX/++fmsOBszvl7NEAHWt82GeBjRdvckFKRMAOnaBRQXgb
-         RejQ==
-X-Gm-Message-State: ACrzQf0v7Z3Drfk2AI7U3P1EuMMTv8SKhByB4yhf2dwqDCnXfJBBqxM1
-        fAcC9utrbdzwtP+0XtC1Gyo=
-X-Google-Smtp-Source: AMsMyM6E97KV0fwgEJMEUShQzJLv0Ppq0eOn6wTmD/Vuv33pitU6XfcxgzqOJNAU8pCu8RibkORFsQ==
-X-Received: by 2002:a17:903:1d1:b0:17f:6494:f8c3 with SMTP id e17-20020a17090301d100b0017f6494f8c3mr50015563plh.157.1666891734231;
-        Thu, 27 Oct 2022 10:28:54 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id j10-20020a17090a318a00b002130ad34d24sm2967098pjb.4.2022.10.27.10.28.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Oct 2022 10:28:53 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Angelo Borsotti <angelo.borsotti@gmail.com>
-Cc:     Philip Oakley <philipoakley@iee.email>,
-        Git List <git@vger.kernel.org>
-Subject: Re: Git add documentation error
-References: <CAB9Jk9Ay2PPEYKve3DXVmG__yZjO1mgh1MxaKA+wfsF0ZvKRqA@mail.gmail.com>
-        <b0008377-2cb5-72ff-e94b-8182065b3436@iee.email>
-        <CAB9Jk9BBddd5d0wKFB0eJw1OMMAQj88J9Bn1Yn1rbK_F1mEs1A@mail.gmail.com>
-        <2ed22fa1-4d9d-e50a-18cf-048007272729@iee.email>
-        <CAB9Jk9DPdVmmb2DPDKPm5FLGr-XJa5kNouCYmcjh534Y2z1rVQ@mail.gmail.com>
-Date:   Thu, 27 Oct 2022 10:28:52 -0700
-In-Reply-To: <CAB9Jk9DPdVmmb2DPDKPm5FLGr-XJa5kNouCYmcjh534Y2z1rVQ@mail.gmail.com>
-        (Angelo Borsotti's message of "Thu, 27 Oct 2022 18:57:21 +0200")
-Message-ID: <xmqqo7txmazv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        bh=7KNEFdHccwzkuh2YebQBM7q/dlp0HVXGNHx1jg+rovU=;
+        b=pB+2xQ3If5ECL5HNtZzkadfLVYz5ED0WeviekdpShtpdoNVtskbCNcI4pB/UcoF7Bx
+         P7n3/gIG6ITwSduaqZKQPusSHDRoPF5r9nHSFTAnbowmQIYCjX/0H3MwdkWfJcswxURG
+         /uEHhTxP1RQCltGaJj0eiyaChwVGQrpD2w3AaR5BLaxIlT8oWTR6/mxvoEW/Vi+AqqAt
+         d6id/kvJrlTG1sPQ8sz1SkZVCb6p8QQRH4j0NakCfW906RKizezf2cA4DT5pGvH7DYH8
+         yxhvXyX3sfsjfwx7Atg3ZLUAb83JW2wS3zZan7pp9qaRjZf2NILxrEOF/wz0VwRAzDJb
+         6f1w==
+X-Gm-Message-State: ACrzQf1d/QFB3bvl0iJZ2hOVUqK3yP8YuGM81k8MTYi4Vy2zq1zUzhoK
+        59bQHzcdzlBwLqfQUmCrfStMaUgruAAK7Q==
+X-Google-Smtp-Source: AMsMyM55EIV6sfCp/4ncvALSRF1TgyEFTrqh8KKxfStpU5yKvUI4paCr5Z1fXArLfh2yjUKb8d97zQTlAIIoiQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:902:ce86:b0:186:d804:7cb0 with SMTP
+ id f6-20020a170902ce8600b00186d8047cb0mr12517145plg.104.1666891785429; Thu,
+ 27 Oct 2022 10:29:45 -0700 (PDT)
+Date:   Thu, 27 Oct 2022 10:29:43 -0700
+In-Reply-To: <fa90e7cf-4ddc-573a-1859-9e2b6b203f95@web.de>
+Mime-Version: 1.0
+References: <pull.1359.v2.git.git.1665660960.gitgitgadget@gmail.com>
+ <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com> <4672e3d958625cd76eb8056ab434e9a37f52661e.1665973401.git.gitgitgadget@gmail.com>
+ <kl6lh6zqqhvm.fsf@chooglen-macbookpro.roam.corp.google.com> <fa90e7cf-4ddc-573a-1859-9e2b6b203f95@web.de>
+Message-ID: <kl6lczadqins.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v3 8/9] archive: add --recurse-submodules to git-archive command
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?Q?Ren=C3=A9?= Scharfe" <l.s.r@web.de>,
+        Heather Lapointe via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Heather Lapointe <alpha@alphaservcomputing.solutions>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Angelo Borsotti <angelo.borsotti@gmail.com> writes:
+Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 
-> Then I displayed the contents of both commits, and seen that it is pretty much
-> the same:
+> Am 27.10.22 um 01:34 schrieb Glen Choo:
+>> "Heather Lapointe via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>
+>>> index 34549d849f1..f81ef741487 100644
+>>> --- a/archive.c
+>>> +++ b/archive.c
+>>> @@ -213,6 +214,25 @@ static void queue_directory(const struct object_id=
+ *oid,
+>>>  	oidcpy(&d->oid, oid);
+>>>  }
+>>>
+>>> +static void queue_submodule(
+>>> +		struct repository *superproject,
+>>> +		const struct object_id *oid,
+>>> +		struct strbuf *base, const char *filename,
+>>> +		unsigned mode, struct archiver_context *c)
+>>> +{
+>>> +	struct repository subrepo;
+>>> +
+>>> +	if (repo_submodule_init(&subrepo, superproject, filename, null_oid())=
+)
+>>> +		return;
+>>> +
+>>> +	if (repo_read_index(&subrepo) < 0)
+>>> +		die("index file corrupt");
+>>> +
+>>> +    queue_directory(oid, base, filename, mode, c);
+>>> +
+>>> +	repo_clear(&subrepo);
+>>> +}
+>>> +
 >
-> D:\gittest>git show --pretty="" --name-only 91ef45d
-> C2.java
+>> What's much more surprising is that you can delete the entire function
+>> body (even queue_directory()!) and the tests still pass! The tests are
+>> definitely testing what they say they are (I've also checked the
+>> tarballs), so I'm not sure what's going on.
+>>
+>> I commented out queue_directory() in the S_ISDIR case, and the only test
+>> failures I saw were:
+>>
+>> - t5000.68, which uses a glob in its pathspec. I tried using a glob for
+>>   in the archive submodule tests, but I couldn't reproduce the failure.
+>> - t5004.11, which is a really big test case that I didn't bother looking
+>>   deeply into.
+>>
+>> So I'm at a loss as to what queue_directory() actually does.
+> An archive doesn't strictly need directory entries.  If it contains a
+> file with a deeply nested path then extractors will create the parent
+> directory hierarchy regardless.  diff(1) won't notice any difference.
+> Directory entries are mainly included to specify the permission bits.
+
+Thanks. In that case, we should probably also test the case where there
+are empty directories (e.g. when a file is excluded by a pathspec), and
+we should also check the permission bits.
+
 >
-> D:\gittest>git show --pretty="" --name-only 8ec0c2f
-> C2.java
-
-You did not display the contents of these commits, though.  For each
-of these commits, you checked the _difference_ between it and its
-parent.
-
-In the previous sequence
-
->> > I have tested this in the following way: I have two files: C1.java and C2.java
->> >
->> >     > git status
->> >     On branch master
->> >     nothing added to commit
->> >     > ... edit C2.java
->> >     > git status
->> >     On branch master
->> >     Changes not staged for commit:
->> >     (use "git add <file>..." to update what will be committed)
->> >     (use "git restore <file>..." to discard changes in working directory)
->> >         modified:   C2.java
->> >      > git add C1.java
->> >      > git add C2.java
->> >      > git commit -m "commit2"
->> >      D:\gittest>git commit -m "commit1"
->> >      [master 91ef45d] commit1
->> >      1 file changed, 1 insertion(+), 1 deletion(-)
-
-91ef45d, relative to its parent (i.e. the previous state before the
-commit was made), C2.java was modified.  C1.java was not.
-
-So, what you saw
-
-> D:\gittest>git show --pretty="" --name-only 91ef45d
-> C2.java
-
-is very much consistent with what you did.  And the above does not
-mean 91ef45d does not have C1.java.  If you want to "display" the
-contents of commit 91ef45d, you could
-
-	$ git ls-tree -r --name-only 91ef45d
-
-which lists all the contents in commit 91ef45d
-
-or
-
-	$ git diff --name-only $(git hash-object --stdin -t tree </dev/null) 91ef45d
-
-which compares all the contents in commit 91ef45d with a completely
-empty tree.
-
-In them, you'd see both C1 and C2, among other things that you did
-not modify in 91ef45d.
+> t5000.68 checks for the directory entries in the output given by the
+> option --verbose of git archive.  t5004.11 checks the number of archive
+> entries (including directories) using "zipinfo -h".
+>
+> Ren=C3=A9
