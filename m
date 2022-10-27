@@ -2,104 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B210FECAAA1
-	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 18:51:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47E2AFA3740
+	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 18:54:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235851AbiJ0Suo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Oct 2022 14:50:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40822 "EHLO
+        id S235822AbiJ0Syu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Oct 2022 14:54:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236245AbiJ0SuX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2022 14:50:23 -0400
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30DC839BBC
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 11:50:21 -0700 (PDT)
-Received: by mail-pg1-x534.google.com with SMTP id h2so2428071pgp.4
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 11:50:21 -0700 (PDT)
+        with ESMTP id S234965AbiJ0Sys (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2022 14:54:48 -0400
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0CE51A07E
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 11:54:41 -0700 (PDT)
+Received: by mail-yb1-xb4a.google.com with SMTP id h4-20020a5b02c4000000b006bc192d672bso2284688ybp.22
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 11:54:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1nJqo4pVaSjBPJ9HNhFOmx3InzZHRyHFz+ETG87mmL8=;
-        b=bhkVA5+fAvdPuS1PEC827tSvM9G+pIKFPsVrdGgfQmzQ4xdESZfmUeIP/qPBkSAlXy
-         OPUSngwQIn40VCOHtazT+2gIyHX20F6L3u1xXxwcZDtqFLA9nJtFtVn71AbtYYx6zPmS
-         GrMzmQ866vL4lcUJY2JxjWLAIZ5V0D2SeEVhqPwtGMhXgLlzlOJqYg79IF0odvNe1JSF
-         TKu6OXkNBad1dPVlGXCjbup5Q5Ku6SrAw+l/FkRShpHc3cQPtHnMyFAgLta5Cs5Vvkfu
-         LBjjxvk4ila9NazT/NsqoJk0UgWNtdaGj51X4wRI/Nqo9Z3qeOPba3y2S4+79x5E82Pj
-         JDeA==
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=O9pKFc/kew6uvdQm/SNbTVUPgprqeiKF3NqXraS9MTI=;
+        b=fSSqSZLsKmZqAHMYgcafZ0zTP5z7FwDtx+/SYaRLYGtJ9ugdehG2BAwiZeUt38LQ6F
+         A+Ptnh5sJd0TiIK4HjMMZLT7YB6o8q7WocFXq/oYK+rua7iE24tDQGK9PAco1pnBsllt
+         0YSOMxNgJ8vlq3TTNtOKUQQ187pP7X7IH46Oddq2ytgmx8DM9ePGElo9uCIrs413I80L
+         tHFC+GbMBcryEQUsBPA2YRd9oRxS+xjgNWZ73VO7mia/7NG+gL3qamH+sdecPi443Dwl
+         UHFGBGXN9GOArjTnfzp/CZBx4oP4sYkdkocnzz18SUj+6Mt+RdgFMYPV9kYqQ7LdPLyB
+         YA7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=1nJqo4pVaSjBPJ9HNhFOmx3InzZHRyHFz+ETG87mmL8=;
-        b=SZZJCpsyJoLO/+yekfqD2BFWu2r0EXp6soZkNgg49ojevC7DFRtev3GXbw1mzx1DaB
-         Yskec+AdY5Aa/vWCGGUOboYIGbFWje9cXGX9gQZLfR1/Exd9r80BovgS71p/0y73ZMlM
-         1Azz1GvRAtETw1DUezHLZ4KMHgAfztDVeZTmCePAivptLlYgVFI8PhlCfPQZPz2GRVQu
-         ae4rybdYPsU1C0c0JpV9gEb8vAgMUE4Zkv5GysF8n37PD5zYPFEULlisOlf0NPFM2gAK
-         O/R0QKDEEtablyechAj1+LMiQtoClIrt8q86uAd5Y9XgV7lc+H/gP+muK9/MQCHtAYg/
-         2wUA==
-X-Gm-Message-State: ACrzQf148FbahOVfbiA+q5zCcFAtnLElpzDudQrAYcg6kN78Qnj7rPMf
-        /GKv5/pp0UEEHEe3x7Yd0oE=
-X-Google-Smtp-Source: AMsMyM5fwKvzhGtC5BM5OV7s0mUdFMzSDfmBU+GIp/o+dqjgi1mjO/XoV0j/XVMZtMgXuJ5rRwsbyQ==
-X-Received: by 2002:a65:628f:0:b0:43c:dac:646a with SMTP id f15-20020a65628f000000b0043c0dac646amr43447607pgv.397.1666896620602;
-        Thu, 27 Oct 2022 11:50:20 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id m4-20020a170902db0400b00186a2274382sm1542667plx.76.2022.10.27.11.50.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Oct 2022 11:50:20 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     Alphadelta14 via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=O9pKFc/kew6uvdQm/SNbTVUPgprqeiKF3NqXraS9MTI=;
+        b=RZAeF9iAwhyI9mXJglCjJZ/vLvEW+y8Rxf0hfKw/Q5w/SxjleCDmpfmKfBloxU+Y3r
+         ll87vHukANxX0RTYCSPN76Wlaa9ntIzyP4oPCSATg/LCzifnEc6Bbjs8NXmxK1uKVJ74
+         4UbL+JYqaStFFGOxtnxXrrMuCIHJlkc2915vsGLanHjJNs6pz4RMu+vaa/mRCaB60+2m
+         m18+/88mH1K8nkf8MzK5w4EfNOzaW1q9tdevCCwjHiV0d3MqVhQyFR+eIsniItpp3NJJ
+         Rht/vt29qFIj/lpuDE6kk7WOCYnz5vZZk/sCPTcG834PbhKECScv8i6VX/DjB0JL517H
+         0RUA==
+X-Gm-Message-State: ACrzQf0hePXs7+1ZzbOV1V4EN/3mrZ7m0UIXajL/yxCd4c0j/LIIM+Ef
+        bMsBFCi9eyZAQDRiAN581fuiafL8gkEfEYtJ574y
+X-Google-Smtp-Source: AMsMyM7IuGwcCyjm7MFGchYOMbLrwcj8wL1FwOZP//pht5/BSSUrTQDmzgrn/XlIWKN3txcwBZ3OmognrVHEpeKDUO3r
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a05:6902:1141:b0:6ca:aa68:7729 with
+ SMTP id p1-20020a056902114100b006caaa687729mr9586939ybu.26.1666896881072;
+ Thu, 27 Oct 2022 11:54:41 -0700 (PDT)
+Date:   Thu, 27 Oct 2022 11:54:37 -0700
+In-Reply-To: <f88ebbaf17cbf1a0b57336430bd43ade94406f38.1665973401.git.gitgitgadget@gmail.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.38.1.273.g43a17bfeac-goog
+Message-ID: <20221027185437.1842331-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v3 9/9] archive: add tests for git archive --recurse-submodules
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Heather Lapointe via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        "=?UTF-8?q?Ren=C3=A9=20Scharfe?=" <l.s.r@web.de>,
         Heather Lapointe <alpha@alphaservcomputing.solutions>
-Subject: Re: [PATCH v3 1/9] tree: do not use the_repository for tree
- traversal methods.
-References: <20221027180949.1837457-1-jonathantanmy@google.com>
-Date:   Thu, 27 Oct 2022 11:50:19 -0700
-In-Reply-To: <20221027180949.1837457-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Thu, 27 Oct 2022 11:09:49 -0700")
-Message-ID: <xmqqwn8lksno.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+"Heather Lapointe via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> diff --git a/archive.c b/archive.c
+> index f81ef741487..b0a3181f7f5 100644
+> --- a/archive.c
+> +++ b/archive.c
+> @@ -179,7 +179,7 @@ static int write_archive_entry(
+>  		err = write_entry(repo, args, oid, path.buf, path.len, mode, NULL, 0);
+>  		if (err)
+>  			return err;
+> -		return (S_ISDIR(mode) ? READ_TREE_RECURSIVE : 0);
+> +		return READ_TREE_RECURSIVE;
 
-> First of all, let me echo what Glen said [1], that this series is  
-> overall well laid out and makes sense. 
->
-> Other reviewers have commented on style issues, but I'll hold off on 
-> making my comments on those and also possible improvements on commit 
-> messages until I can say "besides style and commit messages, I think 
-> that this series is good to merge in". 
->
-> [1] https://lore.kernel.org/git/kl6lr0yuqlk0.fsf@chooglen-macbookpro.roam.corp.google.com/
->
-> "Alphadelta14 via GitGitGadget" <gitgitgadget@gmail.com> writes:
->> +			// This current codepath isn't executed by any existing callbacks
->> +			// so it wouldn't show up as an issue at this time.
->
-> I was a bit confused by this comment, so I looked at the surrounding  
-> code. I think it could be better rephrased as: 
->
->   All existing callbacks at the time of writing cause this part of the  
->   code to be skipped when S_ISGITLINK(entry.mode) is true, so this 
->   wrong behavior does not call any issues. 
->  
+Should this change be in the previous commit, if this commit is about 
+tests? 
 
-As I already said, I do not think this is "wrong behaviour" to begin
-with.  The current code requires that you'd use add_submodule_odb()
-to make the objects in them accessible and if your program fails to
-do so, as a very natural consequence, you'd not see objects pointed
-by the gitlink.
+> +check_tar() {
+> +	tarfile=$1.tar
+> +	listfile=$1.lst
+> +	dir=$1
+> +	dir_with_prefix=$dir/$2
+> +
+> +	test_expect_success ' extract tar archive' '
+> +		(mkdir $dir && cd $dir && "$TAR" xf -) <$tarfile
+> +	'
+> +}
 
-Changing that assumption is OK as long as existing callers that
-depend on the current semantics are not broken by such a change, but
-I do not think "wrong behaviour does not call any issues" is a
-correct analysis of the problem.
+In the Git test codebase, there is a mix of styles in that some people 
+want each test_expect_success block to be individually runnable (I am 
+one of them), and to some, that's not as important. But this is 
+extremely in the other direction. It would be better if each 
+test_expect_success block tests one thing, but inspecting the resulting 
+archive should all go into the same test_expect_success block that 
+originally created the archive; we should not split each step of 
+inspection into its own block. 
+
+Also, I don't think we need to extract the tar to check it; using "tf" 
+and inspecting the resulting list with "grep" and "! grep" should do. 
+
