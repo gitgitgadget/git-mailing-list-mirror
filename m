@@ -2,201 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A6FEC433FE
-	for <git@archiver.kernel.org>; Wed, 26 Oct 2022 23:34:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44AB3C38A2D
+	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 00:04:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233983AbiJZXed (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 19:34:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41006 "EHLO
+        id S233760AbiJ0AEn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 26 Oct 2022 20:04:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233664AbiJZXeb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 19:34:31 -0400
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7157B102
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 16:34:24 -0700 (PDT)
-Received: by mail-yb1-xb4a.google.com with SMTP id h9-20020a25e209000000b006cbc4084f2eso1045721ybe.23
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 16:34:24 -0700 (PDT)
+        with ESMTP id S233379AbiJ0AEl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Oct 2022 20:04:41 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52D021408A
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 17:04:39 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id y12so16304edc.9
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 17:04:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ITAqOk0HIJFY+aJo9CqD2XNZPso1csvnDJeW933Xkh8=;
-        b=W2/fKUjd+frsA7MCExPEwHa5hJXwymufIDkE0rbwc51O4XZJ/CUM9beqj4frMChLmK
-         o4zodv/Ljc6W9Qo/124EYyl2tN3m9PJkx+6hSSrWOxJTR4FpHjcqRIWmJIeRXC7AV0QO
-         UReeH8jHXCVwAJUt5Kduw6xWzlTy04AjY4I4dXKG10d2/idAI+b22xfzMdG7LzwMGamu
-         UZSkZLvwv4avXQ6NsorV+sgiW3NfWVETmArQJ4BrFYxYfR5YZOxk1igpehyOm5ZjORcO
-         DI2+W+ansVfbfgc4BUtG5LvbM2r8ANazn3Fnhy17E1WpG0maksSy7sDH+ZwY72lWZps8
-         WtyQ==
+        d=canva.com; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=g1VmcQZ3zbaKgUyWL83HE4cBXrq0toBRa9Vv9fuI/18=;
+        b=cZmOYrQrbQj/1fwRngtnrDjA7MRfFfmeCIGNlRVYSQI7B8UOh8JZMVc/1dlvjSmWBd
+         juExac/wLaWFSYFmp/3T8e4DR0cLtx7NslQBg2xcCAp1bR5Nq5nY87xo8SX6KoYjw1or
+         G666UAA4z3PHTn93lYPQYvGX4yFrQzNbk73+mqc+S+AcohsTsw7MewCQhJ5zMMJ0majy
+         DoB6kV8dBKx3vZMnF3M2St69w1XcNIQRAmJgIWK0bop+RmtFJDORXKW7RZ1GflYOBPkN
+         VMDCOvGmBWKO7q79qbYqW30xrANFqcTCiE2vyW9STyl1fO9W0qfbz1J9RYUWXnNPMN5X
+         n7sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ITAqOk0HIJFY+aJo9CqD2XNZPso1csvnDJeW933Xkh8=;
-        b=o861vTAyh09zd8pehDGfFqTsnLdkUlXA6aSDR6xR8vhBQxVWZ3Cjq7EvKeqbgs2HRS
-         B234wfWnufSxYSjHcCoqrL8vp0oh9rXUSUsreNg23tOV2jILZkIj/fM2D4qGr9oQy9GO
-         C73bPiiGjXDpTCZvfIGmmZvMt3SGOgJ9CxXceccWqKSMX+CDxzNL2pIpyZkQZfdUaFtj
-         Z3o8zRbuGeGl3ylBhAFZ7/zLGZGLXYS7PG30JP4kJsRm25Tv7CUxoHw8XOsG137MqQON
-         lu+YTdDms2/AKsRXoF3iYWuSduTyjxm6QcTtHvOES7HqIx6dDnBOqC2gcUI7VcFVX9f/
-         h+jw==
-X-Gm-Message-State: ACrzQf2GFZNJl3qOgm6HkSzUtnBQ+jZzntVtU/GA6hzplo5oTRwD+yb3
-        5RioZES+0x3VWK17tnpXo7xBAfI++/m3qw==
-X-Google-Smtp-Source: AMsMyM7UoVKjXbe19R+bIiiDDp584Utd+fdM4aXvfZFfwtKfylFHGXNxqR+7IOfRmh7GVAFJmAWhRJfqWlb36Q==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a25:8451:0:b0:6be:d8dc:20a7 with SMTP id
- r17-20020a258451000000b006bed8dc20a7mr1ybm.83.1666827263245; Wed, 26 Oct 2022
- 16:34:23 -0700 (PDT)
-Date:   Wed, 26 Oct 2022 16:34:21 -0700
-In-Reply-To: <4672e3d958625cd76eb8056ab434e9a37f52661e.1665973401.git.gitgitgadget@gmail.com>
-Mime-Version: 1.0
-References: <pull.1359.v2.git.git.1665660960.gitgitgadget@gmail.com>
- <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com> <4672e3d958625cd76eb8056ab434e9a37f52661e.1665973401.git.gitgitgadget@gmail.com>
-Message-ID: <kl6lh6zqqhvm.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v3 8/9] archive: add --recurse-submodules to git-archive command
-From:   Glen Choo <chooglen@google.com>
-To:     Heather Lapointe via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     "=?utf-8?Q?Ren=C3=A9?= Scharfe" <l.s.r@web.de>,
-        Heather Lapointe <alpha@alphaservcomputing.solutions>
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=g1VmcQZ3zbaKgUyWL83HE4cBXrq0toBRa9Vv9fuI/18=;
+        b=gfIw9z0HUSJtzJjbim/zn7eGX2EpVjAdsUF+IrqBv3+YQ1+5ZLdGFUSqm3shrqDJXJ
+         o5TaM2j3bKRETFQvUx3J8+K0Uuw4L2wUNtknCYspMbdEJGAFUAqR0JVSB8B8vz/0yY4z
+         WIfUCKGPb4VgPiyS9vsJDHYDBkL2qWIV6xY0m2w4SLZdnLlWcB0Ez/dBTe0nqDtGrTSf
+         uzIHvpM9TDB8hmvthLE8bw3j8R1wzTvqxz+od+qtnYH7Z2KBo25ptuju+93j9Wb6skIx
+         iJXyMuAxHpWvyzeZVcrVPdlXnMHG9PpvTSwMP2rTMnA9tCJHFSf+uFj8qBgTW8Fgtjn3
+         tpxQ==
+X-Gm-Message-State: ACrzQf1FxXM2Xh5/U3M9OjMNiU/uO1HeFN2XRHa5qpGcyYeV5aPWtTtk
+        Ue2TOFN2tUH5YRkhofVtGz/gOTeOi2bBeZK1gIWtNXYaJCS8u+qjPNDLWUwZs/W2bbQkKJ2+bm+
+        xYTKtZ5AVzqw0avg1eXKJNxqLVRKjsf54our+Gc3dw0ZsfxDWlTlnrpnXNMQheB+qft2fntHsiF
+        pzZX6wj3c469IthaqWr6CyHy30wVa41B9el9csoQ==
+X-Google-Smtp-Source: AMsMyM4O+PsPMuWBKtJsbYRp4KKUK9W3yKvndLaqz2wqxayXlOmcScTcm+zGSi1Mt4yhwPKDCLyGy5fkJTDhJqBr/Is=
+X-Received: by 2002:a05:6402:144a:b0:461:8e34:d07b with SMTP id
+ d10-20020a056402144a00b004618e34d07bmr22409017edx.426.1666829077794; Wed, 26
+ Oct 2022 17:04:37 -0700 (PDT)
+MIME-Version: 1.0
+References: <pull.1368.git.git.1666742722502.gitgitgadget@gmail.com>
+ <xmqq35bbmfz6.fsf@gitster.g> <d4103788-5153-11f2-487f-5cc795d261a8@jeffhostetler.com>
+ <xmqq8rl2lgl3.fsf@gitster.g> <0bb8dc64-aad1-e3c1-66ef-c2e8d6600189@jeffhostetler.com>
+In-Reply-To: <0bb8dc64-aad1-e3c1-66ef-c2e8d6600189@jeffhostetler.com>
+From:   Anh Le <anh@canva.com>
+Date:   Thu, 27 Oct 2022 11:04:01 +1100
+Message-ID: <CAOZNrpHkh+FWTLAJhCZVPdh2fo1sq1YfgsG5Ou3vO2013njCaA@mail.gmail.com>
+Subject: Re: [PATCH] index: add trace2 region for clear skip worktree
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Anh Le via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Timothy Jones <timothy@canva.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-CLOUD-SEC-AV-Sent: true
+X-CLOUD-SEC-AV-Info: canva,google_mail,monitor
+X-Gm-Spam: 0
+X-Gm-Phishy: 0
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Heather Lapointe via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Thank you Junio and Jeff for the feedback! I hadn't considered that
+`ensure_full_index()` would mean the loop can only at most restart
+once. I'll action the feedbacks:
+- count both loop iterations separately with int instead of intmax_t
+- remove the restart counter
+- don't log metrics if it's 0
 
-> index 34549d849f1..f81ef741487 100644
-> --- a/archive.c
-> +++ b/archive.c
-> @@ -213,6 +214,25 @@ static void queue_directory(const struct object_id *oid,
->  	oidcpy(&d->oid, oid);
->  }
->  
-> +static void queue_submodule(
-> +		struct repository *superproject,
-> +		const struct object_id *oid,
-> +		struct strbuf *base, const char *filename,
-> +		unsigned mode, struct archiver_context *c)
-> +{
-> +	struct repository subrepo;
-> +
-> +	if (repo_submodule_init(&subrepo, superproject, filename, null_oid()))
-> +		return;
-> +
-> +	if (repo_read_index(&subrepo) < 0)
-> +		die("index file corrupt");
-> +
-> +    queue_directory(oid, base, filename, mode, c);
-> +
-> +	repo_clear(&subrepo);
-> +}
-> +
+Regards,
+Anh
 
-This bit is puzzling to me because we init the submodule, read its
-index, and then don't read objects from it at all. How does this work
-when we aren't reading objects from the submodule we init here? My guess
-is that read_tree() is already doing the heavy lifting of recursing into
-submodules, so we don't need to worry any more about init-ing submodules
-in archive.c, which is great.
 
-So in effect, this is just checking whether we can read the submodule
-and its index. We can drop this check since we already do that check in
-read_tree().
+Regards,
+Anh
 
-What's much more surprising is that you can delete the entire function
-body (even queue_directory()!) and the tests still pass! The tests are
-definitely testing what they say they are (I've also checked the
-tarballs), so I'm not sure what's going on.
 
-I commented out queue_directory() in the S_ISDIR case, and the only test
-failures I saw were:
+On Thu, Oct 27, 2022 at 5:29 AM Jeff Hostetler <git@jeffhostetler.com> wrot=
+e:
+>
+>
+>
+> On 10/26/22 12:01 PM, Junio C Hamano wrote:
+> > Jeff Hostetler <git@jeffhostetler.com> writes:
+> >
+> >> In the worst case, we walk the entire index and lstat() for a
+> >> significant number of skipped-and-not-present files, then near
+> >> the end of the loop, we find a skipped-but-present directory
+> >> and have to restart the loop.  The second pass will still run
+> >> the full loop again.  Will the second pass actually see any
+> >> skipped cache-entries?  Will it re-lstat() them?  Could the
+> >> `goto restart` just be a `break` or `return`?
+> >>
+> >> I haven't had time to look under the hood here, but I was
+> >> hoping that these two counters would help the series author
+> >> collect telemetry over many runs and gain more insight into
+> >> the perf problem.
+> >
+> > Without being able to answer these questions, would we be able to
+> > interpret the numbers reported from these counters?
+> >
+> >> Continuing the example from above, if we've already paid the
+> >> costs to lstat() the 95% sparse files AND THEN near the bottom
+> >> of the loop we have to do a restart, then we should expect
+> >> this loop to be doubly slow.  It was my hope that this combination
+> >> of counters would help us understand the variations in perf.
+> >
+> > Yes, I understand that double-counting may give some clue to detect
+> > that, but it just looked roundabout way to do that.  Perhaps
+> > counting the path inspected during the first iteration and the path
+> > inspected during the second iteration, separately, without the "how
+> > many times did we repeat?", would give you a better picture?  "After
+> > inspecting 2400 paths, we need to go back and then ended up scanning
+> > 3000 paths in the flattened index in the second round" would be
+> > easier to interpret than "We needed flattening, and scanned 5400
+> > paths in total in the two iterations".
+>
+> Good point and I was wondering about whether we might see "2 x 95%"
+> values for path_count in really slow cases.  And yes, it would be
+> better to have `int path_count[2]` and tally each loop pass
+> independently.
+>
+> I guess I was looking for a first-order "where is the pain?" knowing
+> that we could always dig deeper later.  That is, is the lstat's or
+> is it the ensure-full and index rewrite?  Or both?
+>
+> We have other places that do lstat() over the cache-entries and have
+> added code to spread the loop across n threads.  I doubt that is needed
+> here and I didn't want to lead with it.
+>
+>
+> >
+> >> WRT the `intmax_t` vs just `int`: either is fine.
+> >
+> > I thought "int" was supposed to be natural machine word, while
+> > incrementing "intmax_t" is allowed to be much slower than "int".
+> > Do we expect more than 2 billion paths?
+> >
+>
+> You're right.  An `int` would be fine here.
+>
+> Thanks,
+> Jeff
 
-- t5000.68, which uses a glob in its pathspec. I tried using a glob for
-  in the archive submodule tests, but I couldn't reproduce the failure.
-- t5004.11, which is a really big test case that I didn't bother looking
-  deeply into.
+--=20
+**
+** <https://www.canva.com/>Empowering the world to=C2=A0design
+We're hiring,=20
+apply here <https://www.canva.com/careers/>!=C2=A0Check out the latest news=
+ and=20
+learnings from our team on the Canva Newsroom=20
+<https://www.canva.com/newsroom/news/>.
+ <https://twitter.com/canva>=20
+<https://facebook.com/canva> <https://au.linkedin.com/company/canva>=20
+<https://twitter.com/canva>=C2=A0 <https://facebook.com/canva>=C2=A0=20
+<https://www.linkedin.com/company/canva>=C2=A0
+ <https://instagram.com/canva>
 
-So I'm at a loss as to what queue_directory() actually does. My best
-guess at a reproduction would be to make a subdirectory in t5000.68 a
-submodule. If we do find such a reproducing case, we should add it to
-the test suite.
 
->  static int write_directory(
->  		struct repository *repo,
->  		struct archiver_context *c)
-> @@ -228,9 +248,11 @@ static int write_directory(
->  		write_directory(repo, c) ||
->  		write_archive_entry(repo, &d->oid, d->path, d->baselen,
->  				    d->path + d->baselen, d->mode,
-> -				    c) != READ_TREE_RECURSIVE;
-> +				    c);
->  	free(d);
-> -	return ret ? -1 : 0;
-> +	if (ret == READ_TREE_RECURSIVE)
-> +		return 0;
-> +	return ret;
->  }
->  
->  static int queue_or_write_archive_entry(
-> @@ -263,6 +285,11 @@ static int queue_or_write_archive_entry(
->  			return 0;
->  		queue_directory(oid, base, filename, mode, c);
->  		return READ_TREE_RECURSIVE;
-> +	} else if (c->args->recurse_submodules && S_ISGITLINK(mode)) {
-> +		if (is_submodule_active(r, filename)) {
-> +			queue_submodule(r, oid, base, filename, mode, c);
-> +			return READ_TREE_RECURSIVE;
-> +		}
 
-If we are omitting inactive submodules from the archive, we should test
-this behavior.
-
->  	}
->  
->  	if (write_directory(r, c))
-> @@ -446,6 +473,7 @@ static void parse_pathspec_arg(
->  		       PATHSPEC_PREFER_FULL,
->  		       "", pathspec);
->  	ar_args->pathspec.recursive = 1;
-> +	ar_args->pathspec.recurse_submodules = ar_args->recurse_submodules;
->  	if (pathspec) {
->  		while (*pathspec) {
->  			if (**pathspec && !path_exists(repo, ar_args, *pathspec))
-> @@ -609,6 +637,7 @@ static int parse_archive_args(int argc, const char **argv,
->  	int verbose = 0;
->  	int i;
->  	int list = 0;
-> +	int recurse_submodules = 0;
->  	int worktree_attributes = 0;
->  	struct option opts[] = {
->  		OPT_GROUP(""),
-> @@ -623,6 +652,8 @@ static int parse_archive_args(int argc, const char **argv,
->  		  add_file_cb, (intptr_t)&base },
->  		OPT_STRING('o', "output", &output, N_("file"),
->  			N_("write the archive to this file")),
-> +		OPT_BOOL(0, "recurse-submodules", &recurse_submodules,
-> +			N_("include submodules in archive")),
->  		OPT_BOOL(0, "worktree-attributes", &worktree_attributes,
->  			N_("read .gitattributes in working directory")),
->  		OPT__VERBOSE(&verbose, N_("report archived files on stderr")),
-> @@ -686,6 +717,7 @@ static int parse_archive_args(int argc, const char **argv,
->  	args->verbose = verbose;
->  	args->base = base;
->  	args->baselen = strlen(base);
-> +	args->recurse_submodules = recurse_submodules;
->  	args->worktree_attributes = worktree_attributes;
->  
->  	return argc;
-> diff --git a/archive.h b/archive.h
-> index 540a3b12130..1b21484dda6 100644
-> --- a/archive.h
-> +++ b/archive.h
-> @@ -18,6 +18,7 @@ struct archiver_args {
->  	timestamp_t time;
->  	struct pathspec pathspec;
->  	unsigned int verbose : 1;
-> +	unsigned int recurse_submodules : 1;
->  	unsigned int worktree_attributes : 1;
->  	unsigned int convert : 1;
->  	int compression_level;
-> -- 
-> gitgitgadget
