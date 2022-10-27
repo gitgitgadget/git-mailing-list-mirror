@@ -2,331 +2,224 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C63C0FA3742
-	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 11:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 085A6FA3742
+	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 12:12:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235475AbiJ0L6q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Oct 2022 07:58:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34810 "EHLO
+        id S234722AbiJ0MMr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Oct 2022 08:12:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235450AbiJ0L6l (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2022 07:58:41 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C987625C4
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 04:58:39 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id m125so1608300ybb.6
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 04:58:39 -0700 (PDT)
+        with ESMTP id S235551AbiJ0MMq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2022 08:12:46 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E6F0118763
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 05:12:44 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id w14so1819046wru.8
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 05:12:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=K6JDZW8EuS20CYabp+6A+Dk+wcp5qgmjr0y6DZmi704=;
-        b=DYLJmWUYjMZ52WVpWdBHAqLRkxb8p7NnVGlglZNnQXeHsNqyPQodzETNzNqnB24Ivy
-         kxHImvDYGjFYJuqwUmc1XjnGi0LUUaI0YvBYNXOVRBn6wArKpVdAmDO2Rn0C0/DBXmXm
-         HH0018Xd730nDRV1DinMoFkIF399yZcsKFtkvG++O3FjiTz6uSYNZZBHXCTW1JvTsyjX
-         pJn41CDVF/6hE7nFryCMCLNtRtTyZWzfPtHn+UToZwpvxEsWF8bb9ch4b+LoNkm6WOI2
-         OOk4g8DPXj6D6eZUJrHFCj/vehjd35JFKkUxigGUWaa5NGdAd4oi67jy0H+X63XqHsDF
-         bE/A==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=CBt0btTx3YzjPK1bPso763gpKBCIuNkHlhbjc/dl/Tc=;
+        b=Ju8y7QMx7RRLLrToPFxxhLJGQyrqFsP2+2nVznYrxmznuIpaY3GYcEmHI1LOQirHyt
+         jXvySFnCKhRO1t2PzCwAYE/zMV8R/xQ+YVf6uxz2uwzFbZqCry6ZtttL02xC35LzDuF1
+         Ivc9sEVz1a9HcWYiqwV2ckGckm8c9Wcg7kRzHcMSG4NGslaY0rbRD80vC0T6RWwFJ2TE
+         0DGgLvHLH3Gr3jZp+Sp6JeEOeCaMjQsrpUZ15seJ93+AwpE5j1sK5w4neARmGpmLFoDx
+         Bps4WY7A+k6w0qwnfWVisexh7GwIQxyADfOWuRUOegcsRGPf4GPzUq/PmDH5WxGyVKR3
+         ATUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=K6JDZW8EuS20CYabp+6A+Dk+wcp5qgmjr0y6DZmi704=;
-        b=x1E13WuTiRS69T5DErPI07jctXv8FRz3n7RhFHFU+4ar5pvH5VlKztFM/s8hSw7PsL
-         GgLWftHeXVOqfyZ+td+9Y8uUe2Ct7agkIjJ2JiRMaQKnfID88R+LVElGE7YCoqVpA4vU
-         0J3bm6gEDmpwGzvyddH21nMhAPAeYZshvEeIEBaRQdeDf5aTlrM1wXjlkybuwvn2wV1x
-         ZBknAmiCdCmggGOhig0G4cUEp1uX49CskW/o9ugjV3Gewq/vQ0oy6dSzwtXADeOAs8ZX
-         f6smyt2WqVABxRWDin7uX+TgVTNDVMhzSjKPJjReHa0kSYVmE5ZGWWO/7iXZcygu3stk
-         vM7Q==
-X-Gm-Message-State: ACrzQf3DhQ2AVZQ06sPhCjQN7RxY2xflwbXSLxuANb+Jgck6WzwXelXa
-        UsSvXTQsj2PD9MPevip/eYdeTHAAtRiTrDS92r612Xj1+lqxMe0Twuf37SRh
-X-Google-Smtp-Source: AMsMyM5b45OaagrNX9k9m8GTBD/G1Lz2AAb1aInOuGsLrD7CCaVDoGURgfBQTu6MHm5/ir+B/DvYkrEag6Joir/lDiI=
-X-Received: by 2002:a5b:110:0:b0:6be:3546:b761 with SMTP id
- 16-20020a5b0110000000b006be3546b761mr44963433ybx.203.1666871918356; Thu, 27
- Oct 2022 04:58:38 -0700 (PDT)
+        bh=CBt0btTx3YzjPK1bPso763gpKBCIuNkHlhbjc/dl/Tc=;
+        b=lDrEPI+hby40K+MneLcB+iH61AxmXm5fb5wBiYcizJF8SGGkWBGzFL0KMxHtbjxfWD
+         yAsgv9iH5xkxfpBjnOzd6dKdEkTQcFVz6HEzAUXP+CyEI895hgFqUbPshXfJ2I2g3y/e
+         NcLaUSZjHM5w5DZViGcKpzYZIhbLJLQJm2IPIoz52VSkrQUVpqlPnbiL76AZApWoqQz+
+         ovabwo+ONDyXFw4i/2uwwzAkWyT9350fC5+H8GK2ikxO/eYzVoC6W9UnI1c4TywG7paW
+         0nrf/G65/pmO8ABMwjw6tFWZCTGCCT1/buPtbLN+0QE5JdHyPUGE0J4G6d+06jbhinc3
+         wwCg==
+X-Gm-Message-State: ACrzQf3F9eqYXigYrdZXDTm9HZCdPelyuPxHameJnX7uaZArckqUl2QX
+        Zi0Xm2WWgaMFPPZtRyNXc12Fiq04G8o=
+X-Google-Smtp-Source: AMsMyM7v25iVinggXXQIimVVebn0NBcs/D7RMWHs0b0+ttw2yW1jmcT+Sp3RYzc4DJ6oMJRlPeiplg==
+X-Received: by 2002:a05:6000:1885:b0:22e:7869:d43f with SMTP id a5-20020a056000188500b0022e7869d43fmr31760991wri.249.1666872762536;
+        Thu, 27 Oct 2022 05:12:42 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z7-20020a05600c0a0700b003a682354f63sm5307207wmp.11.2022.10.27.05.12.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Oct 2022 05:12:42 -0700 (PDT)
+Message-Id: <pull.1397.git.1666872761355.gitgitgadget@gmail.com>
+From:   "Kyle Zhao via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 27 Oct 2022 12:12:41 +0000
+Subject: [PATCH] merge-tree.c: add --merge-base=<commit> option
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-From:   NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
-Date:   Thu, 27 Oct 2022 14:58:27 +0300
-Message-ID: <CA+PPyiE=baAoVkrghE5GQMt984AcaL=XBAQRsVRbN8w7jQA+ig@mail.gmail.com>
-Subject: [OUTREACHY V2] Unify ref-filter formats with other --pretty formats[proposal]
-To:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        Hariom verma <hariom18599@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, Kyle Zhao <kylezhao@tencent.com>,
+        Kyle Zhao <kylezhao@tencent.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi team,
-I am super excited and eagerly waiting for your comments on my second
-version of the proposal. I have addressed all the comments that I was
-given in the first version.
-
-Google docs link:
-https://docs.google.com/document/d/1Kdx8DVWF3c5pwV5-A8Z4n-SoRHlMDncI1gNeGCi=
-LNsE/edit#
-
-Name:Nsengiyumva Wilberforce
-
-Major:Software engineering
-
-Mobile no.:+256 785065399
-
-Email:nsengiyumvawilberforce@gmail.com
-
-IRC:wilber4c
-
-Github:nsengiyumva-wilberforce
-
-Linkedin:https://www.linkedin.com/in/nsengiyumva-wilberforce-623664192/
-
-Time Zone:EAT (UTC + 03:00)
-
-
-##About me
-
-I am doing a Bachelor of Science in software engineering at Makerere
-university in my 4th year(final). I spend most of my time writing PHP
-applications. I am also interested in Java and embedded systems
-development and I have participated in embedded systems development
-projects like <https://www.ademnea.net/>.
-
-##Microproject
-
-When I was browsing the outreachy projects on outreachy website, I was
-super excited about Git because I use it in most of my college work.
-At first, it was intimidating for me to introduce myself to the
-community. But I am glad I took a step. I am glad that I completed my
-microproject and the whole process gave me confidence on how to submit
-patches, communicate with the community members and interestingly, it
-was a big learning process for me.  The following are the details
-about my microproject with public-inbox links to different versions.
-
-
-Mailing List for the microproject:
-<https://public-inbox.org/git/pull.1362.v4.git.git.1665772130030.gitgitgadg=
-et@gmail.com/>
-
-Github:  <https://github.com/git/git/pull/1362>
-
-Status: next
-
-
-##Proposed Project
-
-Abstract
-
-Git has an old problem of duplicated implementations of some logic.
-For example, Git had at least 4 different implementations to format
-command output for different commands. The foremost aim of this
-project is to simplify codebase by getting rid of duplication of a
-similar logic and, as a result, simplify adding new functionality.
-The current task is to reuse ref-filter formatting logic to minimize
-code duplication and to have one unified interface to extract all
-needed data from the object and to print it properly.
-
-##Previous Work
-
-JayDeep Das(GSoC) tried to =E2=80=9Cadd a new atom =E2=80=98signature=E2=80=
-=99=E2=80=9D. However, I
-have not been able to find his complete work in the public box, it
-seems his work was not complete. According to
-<https://github.com/JDeepD/git-1/commit/85ddfa4b33f2b6f05524e648e7165c72218=
-8093e>
-which was suggested at the outreachy website, it looks like he did not
-complete writing the tests for the signature atom he was unifying.
-Maybe with the help of the mentors, I could plan to start from where
-he stopped from.
-
-Hariom Verma contributed(https://harry-hov.github.io/blogs/posts/the-final-=
-report)
-tremendously towards =E2=80=9CUnifying Git=E2=80=99s format languages=E2=80=
-=9D during his 2020
-GSoC internship. Hariom finished most of the formatting options and
-this will help me build on his work.  His work looks smart and
-understandable thus adding on his work will be easy. And also his blog
-is very fabulous, it=E2=80=99s a shooting point for me to start understandi=
-ng
-the codebase very well. Hariom mentions in his report that 30 % of the
-log related tests are failing, he also mentions that the cause of
-tests failure is because of the missing mailmap logic and mbox/email
-commit format. Hariom also says it does not handle unknown formatting
-options. I plan to start with his advice about the cause of the
-failure of these tests and then intuitively refactor them into
-something cool.
-
-##Summary of remaining tasks by Hariom
-
--Around 30% log related tests are failing
-
--Teach pretty-lib.{c,h} to handle incorrect formatting option
-
--Email/MBoxed commit format needs work
-
-##Some useful mailing lists links from Hariom
-
-- https://public-inbox.org/git/pull.684.v4.git.1598046110.gitgitgadget@gmai=
-l.com/
-
-- https://public-inbox.org/git/pull.707.git.1597841551.gitgitgadget@gmail.c=
-om/
-
-- https://public-inbox.org/git/pull.707.git.1597841551.gitgitgadget@gmail.c=
-om/
-
-
-Olga<olyatelezhnaya@gmail.com> has done great work in =E2=80=9CUnifying Git=
-=E2=80=99s
-format languages=E2=80=9D during Outreachy Round 15 and continued even afte=
-r
-that [from 28-09-2017 to 04-04-2019]. Her work is mostly related to
-`cat-file` and `ref-filter`.
-
-She already did a pretty nice job in preparing ref-filter for more
-general usage of its formatting logic. It will give me the possibility
-to make the migration of pretty.c easier.
-
-##The Plan
-
-My task is to look at how pretty formats are different from ref-filter
-formats. When some format is supported by the pretty formats but not
-by the ref-filter formats, and should prepare some patches to support
-the ref-filter format. I will basically build on Hariom=E2=80=99s previous
-work
-
-Step 1:List down all the formats supported by the pretty format but
-are not supported by the ref-filter format e.g
-
-User formats like %ah, %ch, %d, %D, %(describe[:options]), %S,
-%GG,%G?, %GS, %GK, %GF, %GP, %GT, %gD, %gd, %gn, %gN, %ge, %gE, %gs.
-PS: I am not pretty sure if this list is exhaustive.
-
-Step 2:Maybe s/related/related to/ formats submitted by different
-contributors to get a solid and a thorough understanding of the pretty
-and ref-filter formats.
-
-Step 3:s/Understanding/Understand/, and then look at how it was
-implemented in ref-filter format. This is going to give me direction
-to refactor the remaining pretty formats
-
-Step 4(possible approach): Pick one format option at a time and
-convert it to use ref-filter option format
-
-
-#Estimated Timeline
-
-
-period: December 5,2022 - January 2, 2023
-Community bonding
-tasks
--understanding all the logic of pretty.* and ref-filter.*
-
-(what functions are used and how all formatting process is going)
-
--Working with mentors and identifying the best candidates to be converted f=
-irst.
-
--Converting a couple of formatting options to reuse ref-filter
-formatting logic and update the documentation
-
-
-period: December 25, 2022
-
-Christmas celebrations: Join my parents for celebrations
-
-period: January 1, 2023:
-New year=E2=80=99s day holiday:Join my parents for celebrations
-
-period: January 3 - February 3, 2023
-Coding Phase 1
-tasks
-
--Add on Hariom=E2=80=99s work:Converting more formatting options to reuse
-ref-filter formatting logic.
-
--Finish his incomplete work
-
--Update Documentation.
-
--Possibly look at Olga=E2=80=99s work
-
-period: January 18, 2023: Cake cutting with my  friends
-My Birthday:cake cutting
-
-period:From January 6 - January 18, 2023:
-Semester Exams: I will be working for a few hours per day and always
-be available to reply to any communication
-
-period:February 3 - March 3, 2023
-Coding Phase 2
-tasks
--Final touch-ups and bug fixes(if any)
-
--Update Documentation
-
--Wrapping up.
-Blogging about Git
-
-I do love writing a lot however much I have not taken time to put out
-my personal opinions and thinking. Being an avid reader, I think it=E2=80=
-=99s
-now my time to start letting other people read what I write, to let
-people know what I think, what I am doing with my life. And guess
-what, I am super excited to start with Git.
-
-Availability
-
-I can easily devote 30-40 hours per week since my college just
-requires 15 hours per week. I plan even to work more extra hours for
-my internship tasks when time allows.
-
-
-Post Outreachy
-
-Apart from being an Outreachy intern, I plan to remain a member of git
-community even after my internship, because I believe there is more to
-do even after the Outreachy internship
-
-Here are some other things I=E2=80=99d like to do beyond Outreachy
-
-Mentor other students
-
-Doing code reviews for other contributors
-
-May be complete the work that I will have left pending after my internship
-
-Keep learning from all of you...
-
-Experience with Open Source
-
-I have little  experience with open source, so I hope to learn a lot
-through my internship with Git from you all.
-
-
-Motivation
-
-Git being a world=E2=80=99s best developer version control system, I feel
-overjoyed that even my little first patch was accepted. The community
-is very welcoming, the people there answer questions very first and
-this turns everything overwhelming to a simple process
-
-
-Closing remarks (Optional)
-
-I am a consistent and passionate learner. Even if solving a problem
-may look tricky to me, I just give it all my 100% time and think of
-1000s of ways to approach it. I know I do not have the required
-expertise to begin working with a skilled team like Git but I believe
-in learning slowly by slowly until I will make it to the peak.
-
-
-I hope you consider and give me a chance to work with git. It=E2=80=99s a
-great hope I have that this opportunity is bringing me closer to my
-dreams. Thanks for your consideration.
-
-
-Best Regards
-
-
-Nsengiyumva wilberforce
+From: Kyle Zhao <kylezhao@tencent.com>
+
+This option allows users to specify a merge-base commit for the merge.
+
+It will give our callers more flexibility to use the `git merge-tree`.
+For example:
+
+    git merge-tree --merge-base=<sha1>^1 source-branch <sha1>
+
+This allows us to implement `git cherry-pick` in bare repositories.
+
+Signed-off-by: Kyle Zhao <kylezhao@tencent.com>
+---
+    merge-tree.c: add --merge-base= option
+    
+    Thanks for Elijah's work. I'm very excited that merge-ort is integrated
+    into the git merge-tree, which means that we can use merge-ort in bare
+    repositories to optimize merge performance.
+    
+    In this patch, I introduce a new --merge-base=<commit> option to allow
+    callers to specify a merge-base for the merge. This may allow users to
+    implement git cherry-pick and git rebase in bare repositories with git
+    merge-tree cmd.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1397%2Fkeyu98%2Fkz%2Fmerge-tree-option-merge-base-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1397/keyu98/kz/merge-tree-option-merge-base-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1397
+
+ Documentation/git-merge-tree.txt |  4 +++
+ builtin/merge-tree.c             | 23 +++++++++++++----
+ t/t4301-merge-tree-write-tree.sh | 44 ++++++++++++++++++++++++++++++++
+ 3 files changed, 66 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
+index d6c356740ef..e762209b76d 100644
+--- a/Documentation/git-merge-tree.txt
++++ b/Documentation/git-merge-tree.txt
+@@ -64,6 +64,10 @@ OPTIONS
+ 	share no common history.  This flag can be given to override that
+ 	check and make the merge proceed anyway.
+ 
++--merge-base=<commit>::
++	Instead of finding the merge-bases for <branch1> and <branch2>,
++	specify a merge-base for the merge.
++
+ [[OUTPUT]]
+ OUTPUT
+ ------
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index ae5782917b9..adc461f00f3 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -3,6 +3,7 @@
+ #include "tree-walk.h"
+ #include "xdiff-interface.h"
+ #include "help.h"
++#include "commit.h"
+ #include "commit-reach.h"
+ #include "merge-ort.h"
+ #include "object-store.h"
+@@ -402,6 +403,7 @@ struct merge_tree_options {
+ 	int allow_unrelated_histories;
+ 	int show_messages;
+ 	int name_only;
++	char* merge_base;
+ };
+ 
+ static int real_merge(struct merge_tree_options *o,
+@@ -430,11 +432,18 @@ static int real_merge(struct merge_tree_options *o,
+ 	opt.branch1 = branch1;
+ 	opt.branch2 = branch2;
+ 
+-	/*
+-	 * Get the merge bases, in reverse order; see comment above
+-	 * merge_incore_recursive in merge-ort.h
+-	 */
+-	merge_bases = get_merge_bases(parent1, parent2);
++	if (o->merge_base) {
++		struct commit *c = lookup_commit_reference_by_name(o->merge_base);
++		if (!c)
++			die(_("could not lookup commit %s"), o->merge_base);
++		commit_list_insert(c, &merge_bases);
++	} else {
++		/*
++		 * Get the merge bases, in reverse order; see comment above
++		 * merge_incore_recursive in merge-ort.h
++		 */
++		merge_bases = get_merge_bases(parent1, parent2);
++	}
+ 	if (!merge_bases && !o->allow_unrelated_histories)
+ 		die(_("refusing to merge unrelated histories"));
+ 	merge_bases = reverse_commit_list(merge_bases);
+@@ -505,6 +514,10 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+ 			   &o.allow_unrelated_histories,
+ 			   N_("allow merging unrelated histories"),
+ 			   PARSE_OPT_NONEG),
++		OPT_STRING(0, "merge-base",
++			 &o.merge_base,
++			 N_("commit"),
++			 N_("specify a merge-base commit for the merge")),
+ 		OPT_END()
+ 	};
+ 
+diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
+index 013b77144bd..032ff4a1c3d 100755
+--- a/t/t4301-merge-tree-write-tree.sh
++++ b/t/t4301-merge-tree-write-tree.sh
+@@ -819,4 +819,48 @@ test_expect_success SANITY 'merge-ort fails gracefully in a read-only repository
+ 	test_must_fail git -C read-only merge-tree side1 side2
+ '
+ 
++# specify merge-base as parent of branch2.
++# git merge-tree --merge-base=A O B
++#   Commit O: foo, bar
++#   Commit A: modify foo after Commit O
++#   Commit B: modify bar after Commit A
++#   Expected: foo is unchanged, modify bar
++
++test_expect_success 'specify merge-base as parent of branch2' '
++	# Setup
++	git init base-b2-p && (
++		cd base-b2-p &&
++		echo foo >foo &&
++		echo bar >bar &&
++		git add foo bar &&
++		git commit -m O &&
++
++		git branch O &&
++		git branch A &&
++
++		git checkout A &&
++		echo "A" >foo &&
++		git add foo &&
++		git commit -m A &&
++
++		git checkout -b B &&
++		echo "B" >bar &&
++		git add bar &&
++		git commit -m B
++	) &&
++	# Testing
++	(
++		cd base-b2-p &&
++		TREE_OID=$(git merge-tree --merge-base=A O B) &&
++
++		q_to_tab <<-EOF >expect &&
++		100644 blob $(git rev-parse B:bar)Qbar
++		100644 blob $(git rev-parse O:foo)Qfoo
++		EOF
++
++		git ls-tree $TREE_OID >actual &&
++		test_cmp expect actual
++	)
++'
++
+ test_done
+
+base-commit: db29e6bbaed156ae9025ff0474fd788e58230367
+-- 
+gitgitgadget
