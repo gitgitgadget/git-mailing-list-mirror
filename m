@@ -2,150 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0456ECAAA1
-	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 18:09:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB2F4FA3740
+	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 18:09:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235779AbiJ0SJq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Oct 2022 14:09:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40268 "EHLO
+        id S236015AbiJ0SJ5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Oct 2022 14:09:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235332AbiJ0SJp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2022 14:09:45 -0400
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0534E14037
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 11:09:42 -0700 (PDT)
-Received: by mail-pg1-x534.google.com with SMTP id s196so2303321pgs.3
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 11:09:42 -0700 (PDT)
+        with ESMTP id S236067AbiJ0SJy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2022 14:09:54 -0400
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 373BFD2CA
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 11:09:53 -0700 (PDT)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-367f94b9b16so20423587b3.11
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 11:09:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=akMGvTk6+MfRfK21lt+9X8CjrJASZ8o2geYT0pjo4TQ=;
-        b=g3y7WcsJN4jvu35FTZzzJGL7Iq04VLmfyAKTD9XsdmLqGRYBupjGYmDcst0jJ9kLwl
-         U+zlvc6eIt8yUepsbZnlRAIu3qJLifPAy/RQYSQ0/zQqGQpmvKzeaW0UpVTPle6nDvP0
-         1+hwsHGgnXmLhiSGjJaGYMZDS49pEH/jXJqqskAane/BG1rdmgf8AKxcxKi0odkPwZ9t
-         OBoC4YdEZjBZE1LYeUujKA+WHT/f7X2lbcSG7BXxhNONY/GC0YIhyIfJFeT2RzVmTH6B
-         osA1ImyZyj7/Dri/C1mMpcSyD+Tm01IfxKcx7cfGbOSxzth6JMrTYvnO1z8lUmSyYCaH
-         9mRA==
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=8cHAtG+6xWjZZdjOBw7b8+fWqtYpfaKmefCVMlxh6Wc=;
+        b=I+aw46QDw9LbFzuGd0FcJOwnobat5nuKkahsr+nUzEau7qdRPUCzTPt7kXT9xL0hVk
+         MJRjrF0EMiCr3i0YODeY1R8F8f1CRhYtLdLrv2XzSIXL6Ijvq9Jec+QUik7FPt6tFw/e
+         dx4YCsRwWn8TfdCYrOLLjizvx5ZWheBuox0xbx8hewG1iH0UGMUDwC/ctv1nPf1Y/0eK
+         IUa+Fw568qtXz970KCQObvkRo1aQhlG87i8JcZMZa20xdc2tceO4wspYBmL07a3RQ+92
+         DBh7KCMdaTjMqPEQwAkpX72eHTw+6GZ9pmyeEi12kmARnlpeP5EV8VVzwLYM0XoFM+9L
+         Pzjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=akMGvTk6+MfRfK21lt+9X8CjrJASZ8o2geYT0pjo4TQ=;
-        b=oj3JFsKcAtNoOa2q7qntus7tJ0D/mdb7/2Pj2MWlYXP0eMaa7XcSqp1q4QJVS3eVtB
-         8mR8VJ81DtyQ5kJc/NIBPR1P5F3jEhmynwp8J63bVvJFMcf6r+KWw/Z+NK24aR/yRAgJ
-         IEC6sbhZqDcj20peU4lfF6nS5dXt1Pkfd4VfqxPQ24jNudAKs6kIA6o2pcslSt9el4Sp
-         fXuhQfZDcvr8aaYFVxnu2YyzHiFgJoaanC3vzJ5SUKYAp4g0NBBaD7eqkHHfETwC4yjW
-         JYHkeVSUa8EB199mchjfDpTDjYukQqcGy4cV2Ie8qagNAaNACRHEPM4AfR92mdyL3dv8
-         UNtA==
-X-Gm-Message-State: ACrzQf1JoCbh17dzYelthjFf4F3AffvCcoY1w9zZWbfyfiHCT4Kn+J+0
-        lAJp3TiG9gTvd9Us8sNkers=
-X-Google-Smtp-Source: AMsMyM7TQsbE+rpqOVHU857mBfRaY3NrC36xh7/Jy2ai11SYd7zv8YFGAiqjuAgwMJAtOnM5JtZvvg==
-X-Received: by 2002:a05:6a00:e1b:b0:537:7c74:c405 with SMTP id bq27-20020a056a000e1b00b005377c74c405mr50512078pfb.43.1666894181354;
-        Thu, 27 Oct 2022 11:09:41 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id c4-20020a170902d48400b00186acb14c4asm1517893plg.67.2022.10.27.11.09.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Oct 2022 11:09:40 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Kyle Zhao via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Kyle Zhao <kylezhao@tencent.com>
-Subject: Re: [PATCH] merge-tree.c: add --merge-base=<commit> option
-References: <pull.1397.git.1666872761355.gitgitgadget@gmail.com>
-Date:   Thu, 27 Oct 2022 11:09:39 -0700
-In-Reply-To: <pull.1397.git.1666872761355.gitgitgadget@gmail.com> (Kyle Zhao
-        via GitGitGadget's message of "Thu, 27 Oct 2022 12:12:41 +0000")
-Message-ID: <xmqqczadm93w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8cHAtG+6xWjZZdjOBw7b8+fWqtYpfaKmefCVMlxh6Wc=;
+        b=GmPLylkQ98LjUa27nKY/17PZDgAbD0aAkf1GhfDq15VwgjOkJL79oZMbD4/LE25D7e
+         6YmypdaNFBLwBeNrx2bfxOqJc8R0mWNb3Iz0YFo9z+1hG+u7yFMcr+nMLSr0ZgXeQHor
+         L7afdOBUjqm7erQopuHz6zH1qz3eeU/pwlmch1bwplSmiICrpw3fNMtw0UFe+eSqJFeh
+         9kiur3THnc0uhqjHQQouylRj2KPSyOWkUyZpOjyMBBv8sA7SuUXtRaAPJBAPzlOjqJQq
+         U1Sfmt6Tb8866WlwsP878AbyjuRkvkQqOtgPJInKxvB56qsKZjkK39eeFuEZtkqhEMDn
+         82VA==
+X-Gm-Message-State: ACrzQf0xVJUDuWJmDnJtEkzc+ThnEvUOTvPUNgGMlZs7K6PYT962bRnJ
+        aye2J06mDM1Xp4q2VH2Plc8DSaMHQnYpjoU2JL9n
+X-Google-Smtp-Source: AMsMyM7Gn1k8LcKWzy+JcVP/XHkuDSzAjEafCP7Scb153RzftZUAsPEVwnYu494q8ZD4QCTopZjwZ/p2JP0mMoEMYnAX
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:ca95:0:b0:6cb:ece2:6f5f with
+ SMTP id a143-20020a25ca95000000b006cbece26f5fmr1841214ybg.230.1666894192403;
+ Thu, 27 Oct 2022 11:09:52 -0700 (PDT)
+Date:   Thu, 27 Oct 2022 11:09:49 -0700
+In-Reply-To: <79959a54eb4c1a0812b1f4643530069a63e549f4.1665973401.git.gitgitgadget@gmail.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.38.1.273.g43a17bfeac-goog
+Message-ID: <20221027180949.1837457-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v3 1/9] tree: do not use the_repository for tree traversal methods.
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Alphadelta14 via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        "=?UTF-8?q?Ren=C3=A9=20Scharfe?=" <l.s.r@web.de>,
+        Heather Lapointe <alpha@alphaservcomputing.solutions>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Kyle Zhao via GitGitGadget" <gitgitgadget@gmail.com> writes:
+First of all, let me echo what Glen said [1], that this series is  
+overall well laid out and makes sense. 
 
-> diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
-> index d6c356740ef..e762209b76d 100644
-> --- a/Documentation/git-merge-tree.txt
-> +++ b/Documentation/git-merge-tree.txt
-> @@ -64,6 +64,10 @@ OPTIONS
->  	share no common history.  This flag can be given to override that
->  	check and make the merge proceed anyway.
->  
-> +--merge-base=<commit>::
-> +	Instead of finding the merge-bases for <branch1> and <branch2>,
-> +	specify a merge-base for the merge.
+Other reviewers have commented on style issues, but I'll hold off on 
+making my comments on those and also possible improvements on commit 
+messages until I can say "besides style and commit messages, I think 
+that this series is good to merge in". 
 
-I like adding and exposing this feature to allow the end-user
-specify which commit to use as the base (instead of allowing the
-tool compute it from the two branches), but I wonder if a new option
-is even needed.
+[1] https://lore.kernel.org/git/kl6lr0yuqlk0.fsf@chooglen-macbookpro.roam.corp.google.com/
 
-In the original "trivial merge" mode, the command takes three trees
-without having to have this new option.  In the new "write-tree"
-mode, currently it is incapable of taking the base, but it does not
-have to stay that way.  Wouldn't it be sufficient to update the UI
-to
+"Alphadelta14 via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> +			// This current codepath isn't executed by any existing callbacks
+> +			// so it wouldn't show up as an issue at this time.
 
-    git merge-tree [--write-tree] [<options>] [<base-commit>] <branch1> <branch2>
-    git merge-tree [--trivial-merge] <base-commit> <branch1> <branch2>
+I was a bit confused by this comment, so I looked at the surrounding  
+code. I think it could be better rephrased as: 
 
-IOW, when you want to supply the base, you'd be explicit and ask for
-the new "write-tree" mode, i.e.
-
-    $ git merge-tree --write-tree $(git merge-base branch^ branch) HEAD branch 
-
-would be how you would use merge-tree to cherry-pick the commit at
-the tip of the branch on top of the current commit.
-
-> @@ -402,6 +403,7 @@ struct merge_tree_options {
->  	int allow_unrelated_histories;
->  	int show_messages;
->  	int name_only;
-> +	char* merge_base;
-
-Style.  We write in C, not in C++, and our asterisks stick to
-variables and members of structs, not types.
-
-> -	/*
-> -	 * Get the merge bases, in reverse order; see comment above
-> -	 * merge_incore_recursive in merge-ort.h
-> -	 */
-> -	merge_bases = get_merge_bases(parent1, parent2);
-> +	if (o->merge_base) {
-> +		struct commit *c = lookup_commit_reference_by_name(o->merge_base);
-> +		if (!c)
-> +			die(_("could not lookup commit %s"), o->merge_base);
-> +		commit_list_insert(c, &merge_bases);
-
-Curious.  The original code unconditionally assigned merge_bases, so
-there wasn't a good reason to initialize the variable before this point,
-but this new code assumes that merge_bases to be initialized to NULL.
-
-Luckily, it is initialized in the original code, even though it
-wasn't necessary at all.  So this new code can work correctly.
-Good.
-
-> +	} else {
-> +		/*
-> +		 * Get the merge bases, in reverse order; see comment above
-> +		 * merge_incore_recursive in merge-ort.h
-> +		 */
-> +		merge_bases = get_merge_bases(parent1, parent2);
-> +	}
-
-Yes, this feature was very much lacking and is a welcome addition.
-
-I also have to wonder how this should interact with a topic that is
-in-flight to feed multiple merge-tree requests from the standard
-input to have a single process perform multiple (not necessarily
-related) merges.  Elijah knows much better, but my gut feeling is
-that it shouldn't be hard to allow feeding an extra commit on the
-same line to be used as the base.
-
-Thanks.
+  All existing callbacks at the time of writing cause this part of the  
+  code to be skipped when S_ISGITLINK(entry.mode) is true, so this 
+  wrong behavior does not call any issues. 
+ 
