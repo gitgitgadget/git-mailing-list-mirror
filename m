@@ -2,37 +2,37 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 792BAECAAA1
-	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 16:35:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 33D8EFA3740
+	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 16:36:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235052AbiJ0QfY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Oct 2022 12:35:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45950 "EHLO
+        id S236625AbiJ0QgM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Oct 2022 12:36:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235597AbiJ0QfU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2022 12:35:20 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D737220356
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 09:35:16 -0700 (PDT)
+        with ESMTP id S236612AbiJ0QgG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2022 12:36:06 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BFB05BC97
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 09:36:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1666888503; bh=hUPIERufh2YPKYUYEFtjKEriqayeFlciFf3o4OX2rFY=;
+        t=1666888553; bh=2GRrFBWZ4Y2h4z5MGFMt+f4CSdPpDbxq5Rm/vTOXe3o=;
         h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=bmfjlte0CqG7bS41BGFIrw966KnPtoGqdXsNFwqhwmiNSa2OI6aDF3WFFKaL8UQXA
-         o4aLiq86HtfrDqkGiAVx/dcAbcKDbBjWnj6oXv0CDsSLp0a1LwOwxxAhGs3od5G7cU
-         /bwL2H4YCQOxYpbaEE/va/jyvSvVsOijQ1x9G8mixlRKpWkJ+aVtuJ4OWnwPZQleFD
-         ByCxeMREXvRjcWuXwWxvfRRJ5wrpIZdxi/s5PY45pawRBzmMQlra+u6HAWaEnAA9Qa
-         SgBqtS2bhkKrBVkqUcn25awrZuEsoGQjf/xCmX86tDAso3aAoSmqcUXdy3ZEkgFFXE
-         biqxaulnN7Fkw==
+        b=lplf4KUBfHxvpiVoDV7dPvm0e4DOo6VY2/lzvq5LJyw5yYBdtFkdqrHMRo2vevPwt
+         R3zOmnpsj934TE6mPpK/HP4USbLRM90YNClUXNtUC8y+CuBfSDr6WlK5Pj7viLSHFB
+         n7Z1vXBQzhjQ+iSGPj3XU5DQ9DFhO8aq2qp3AjNdue+v5/dDOmuwiRPO6e4L2OJuc6
+         qJ4BypUqL6ohX6daPSzYIlck1AlVqXC8WE+lRaADEgju1vGor9y3evRzXe5p0pSFGX
+         mn7ePvj+7c5m/rUWyPbRJU8AFM+oVfVGR1w4oer8qPPp64lNUrD2ed59u7UY9dbU4q
+         2xBwb7bhFYohA==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([79.203.23.191]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MnG2C-1pX1V50w32-00jIOk; Thu, 27
- Oct 2022 18:35:03 +0200
-Message-ID: <0cae80c0-2576-8be7-48f7-06a0a135961f@web.de>
-Date:   Thu, 27 Oct 2022 18:35:02 +0200
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MJWsm-1oUN733HXU-00JtMT; Thu, 27
+ Oct 2022 18:35:53 +0200
+Message-ID: <033ebd37-40c7-01bc-e9bb-29d738532125@web.de>
+Date:   Thu, 27 Oct 2022 18:35:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.4.1
-Subject: [PATCH 1/8] merge: remove always-the-same "verbose" arguments
+Subject: [PATCH 2/8] bisect--helper: factor out do_bisect_run()
 Content-Language: en-US
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git List <git@vger.kernel.org>
@@ -43,116 +43,113 @@ References: <7407e074-4bd8-b351-7fa4-baf59b41880c@web.de>
 In-Reply-To: <7407e074-4bd8-b351-7fa4-baf59b41880c@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:czNccu2pYPC9z9jMaMsxf9cE8wqZFFKj30Y9zigKufZyqM3vRnb
- FNk8il+LbHcHnGrBkHr4Br3bZfIih8mNumSxe+VdIw9Co0+P7//p0XDYcRkBHYXUH1n6mYI
- h5+kNdUS49gSyx6BGjd98ZhAYH/Xnf5g0qBzasreRKBsS7rGO1cCfH7ofJq9u0J4oujzo7D
- tp9BzryZTbUThhcUhrGVQ==
-UI-OutboundReport: notjunk:1;M01:P0:6sgb3lW/tO4=;KmUKXCtaZDFyJ6ohgXpp/Gs+XEG
- 9sdCVfQjqndBrv8fXrAFIMpvU6URbAWmPI0wRa68j30PETOsqMnyrwl/XHgEgIDK8dz6B+bsf
- QJ4X3Qp+dBHf6wCsKCBfcNgPhP1e01dSRTV7oeQKtsgDDLFHKp8xyAtfwM86QGJLJcKgm+eaz
- dmVE+XxZOUF78K9FkYG+j1p3x5zmi6ZDccp2gFkylYCgFU4EzmHWttruAPNfkr0c2TqGRiNvv
- h2rsiVcRSZwPA11O+gKT7bSqAkAkGuSpI5tFdn0LPgpAg8jB1wUEzCGqUAKRz7h1Cju74Z8rx
- C47nW8Yodb5E1hiFTRZGSbneAHABoZX0alOe+jsjZulgSPgvpf7qpp5l92pjG2GQgdFk9aMC4
- UBpCSjWyq90L0jBeVa4RuSBL8PldXfUYSVaF6UgBXQ5pq08mo1zQ1dIeADNKEUEgBQ9JO+gq+
- eR5nzaDUd7dF4NKKWEZc2DPdhzakgYS/PTto8LwVzTFExPie01BaNrQqQM0ieNXTKGHE+yzfk
- DZheALM/gDzjr5V6vfhsmsmEmADjpibNzw2uK0sEBHw707P7mo+71PXyiwqta3pOZSjCYilQn
- 7AWpZHaC7MmRK4fNkb9tZjkC/LQ1UYZ3EWtj3Xt4cTjn5G1GMhz6YMo4Cvtvp8Jz+fVQkqIKk
- fH79K5NHIgNidHyOsfu23YfkJn8qBd4f3pApZAkvPG6uY+xgLiR2XCrP2zS4GWCyGfCCJQRHs
- EsKfTFkRPF+edOvvpnSJSbRx1FD4gCxZItMUTsJuQ/mrx6MbkvIMPHQGLGOdgXBLSMPdNukHd
- 7w5qQJu4Q2mWMz0cXhSATwtC2w526vUWH//w5hh6f//AgyTxZp302T5F5UOmzaRaE0z5uW1ic
- uQhlnQz8zfy0oGIe4SzV9OrXxJxvGhi+43J2dPX7rlm8WX20yuzRr5GhI82YHLfZAznXmRQH0
- HVW3Fg==
+X-Provags-ID: V03:K1:aK0Nf2ANXr8FKrBxtAbMIOOklsn078xBGb9DWG9XjrRnp7h1oWZ
+ D3uIvrB/Uu4v7tD3L0Xrs1a4cUZCSw2HRTyjuWtWbKRIbSNoC4AcfYXUKG13D+21nCrAGd/
+ /6aS1+lXfeZi32sqqxCr0fRKPKkNFy1PUO+UzVegrK21D9UcEOeJ2zpC59ZVLzHpmgE2Ua5
+ F4P/SxKnR+9zRyIngMPwg==
+UI-OutboundReport: notjunk:1;M01:P0:hhb4nIaghRM=;5bS4Bv9fBYi55eM3+Tupg7i59Nh
+ FB8G3t/kyZXCEApyG5P/k1QIJrlJJiw7TYzmtRlbsNgpz84YbJhYrOrdqUCwmXp4shiknWJ7M
+ /kDkZwNghopkxnCK9GJrnNFjv2lH+T1DcmsgQh6ab0RfhdL39Zif78B37jaSG1XYkpxEF+5Fv
+ 7T8FDwHMj0U32te5KliTcJFspFIFU5j1Dp9I446en/uqKtBkd278DZ1DrmDNW4cs42SZ70wPg
+ zFWQNW+ZqFPKvvNoQHp3JHqwrqj0++5ZvHPSCmrvSNbPW5jpEC5sJpxybV7QFeTqffHHshcwR
+ 83pBWlvZMny4450lx4qrKqkRtfDVDSR/JqeYmZ/DH3gNkBnQDHQwN2XsUMLZutq0aX6sb+4gv
+ ASkJ2ggAv0gHll9cDy6xV4nl7cjMxlcCknkmKmO7aOBRGNFW+J4xD2WAWC+ic+WHSONfur9vM
+ NlEAPWv1pecWM6c49H4hPjIb4+DwctbnMuddMftW/6e6liacrrlyGPv8FWloPKRe8J71OWdcQ
+ 9jkD9KeaCHwasA2iUzqOPxIP9A0ijDIDoRTHz2z9ZzOiB40dUbpaMRqEbeRRXZ067HmOq4eD0
+ eSASk4ofH+AG7emWRQiehvAm0eDEZsRzoqsEXQEeLI89jNi1amPlnmUo86tqqeVDsRVTwO4SD
+ x2d+aS7ZEkRElfAWKXytbcuwZH+Kc1CO5OyXgwCQCznr/4HrZ3Ymb65IF5PP7GL807fMyI/FO
+ NPSuAl2E2lV6VNedb2ap5fJLK38ZQRKsNhJhPK+yNY0pQJK44z3fJOeDDhPY1uarExL2NEv+v
+ QFdbyUK9oUJpIkCWht3QPKe+b4hhp1eKcZsM7kaetEC0CFkuY3wdkKwntheRHxT+ebruGsnlb
+ gI8g5Jz0O8sa+CwLcrgxai4qLpYh5+XY+ye0X5GN7fWtL+1Kivx2f7pGVebifH1JgC/mMV+4p
+ Mz6S2TTQoKS5o8cuas7aDgEah+w=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Deduplicate the code for reporting and starting the bisect run command
+by moving it to a short helper function.  Use a string array instead of
+a strvec to prepare the arguments, for simplicity.
 
-Simplify the code that builds the arguments for the "read-tree"
-invocation in reset_hard() and read_empty() to remove the "verbose"
-parameter.
-
-Before 172b6428d06 (do not overwrite untracked during merge from
-unborn branch, 2010-11-14) there was a "reset_hard()" function that
-would be called in two places, one of those passed a "verbose=3D1", the
-other a "verbose=3D0".
-
-After 172b6428d06 when read_empty() was split off from reset_hard()
-both of these functions only had one caller. The "verbose" in
-read_empty() would always be false, and the one in reset_hard() would
-always be true.
-
-There was never a good reason for the code to act this way, it
-happened because the read_empty() function was a copy/pasted and
-adjusted version of reset_hard().
-
-Since we're no longer conditionally adding the "-v" parameter
-here (and we'd only add it for "reset_hard()" we'll be able to move to
-a simpler and safer run-command API in the subsequent commit.
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- builtin/merge.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ builtin/bisect--helper.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 5900b81729..3bb49d805b 100644
-=2D-- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -345,14 +345,12 @@ static int save_state(struct object_id *stash)
- 	return rc;
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 28ef7ec2a4..70d1e9d1ad 100644
+=2D-- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -1142,8 +1142,14 @@ static int get_first_good(const char *refname UNUSE=
+D,
+ 	return 1;
  }
 
--static void read_empty(const struct object_id *oid, int verbose)
-+static void read_empty(const struct object_id *oid)
+-static int verify_good(const struct bisect_terms *terms,
+-		       const char **quoted_argv)
++static int do_bisect_run(const char *command)
++{
++	const char *argv[] =3D { command, NULL };
++	printf(_("running %s\n"), command);
++	return run_command_v_opt(argv, RUN_USING_SHELL);
++}
++
++static int verify_good(const struct bisect_terms *terms, const char *comm=
+and)
  {
- 	int i =3D 0;
- 	const char *args[7];
+ 	int rc;
+ 	enum bisect_error res;
+@@ -1163,8 +1169,7 @@ static int verify_good(const struct bisect_terms *te=
+rms,
+ 	if (res !=3D BISECT_OK)
+ 		return -1;
 
- 	args[i++] =3D "read-tree";
--	if (verbose)
--		args[i++] =3D "-v";
- 	args[i++] =3D "-m";
- 	args[i++] =3D "-u";
- 	args[i++] =3D empty_tree_oid_hex();
-@@ -363,14 +361,13 @@ static void read_empty(const struct object_id *oid, =
-int verbose)
- 		die(_("read-tree failed"));
+-	printf(_("running %s\n"), quoted_argv[0]);
+-	rc =3D run_command_v_opt(quoted_argv, RUN_USING_SHELL);
++	rc =3D do_bisect_run(command);
+
+ 	res =3D bisect_checkout(&current_rev, no_checkout);
+ 	if (res !=3D BISECT_OK)
+@@ -1177,7 +1182,6 @@ static int bisect_run(struct bisect_terms *terms, co=
+nst char **argv, int argc)
+ {
+ 	int res =3D BISECT_OK;
+ 	struct strbuf command =3D STRBUF_INIT;
+-	struct strvec run_args =3D STRVEC_INIT;
+ 	const char *new_state;
+ 	int temporary_stdout_fd, saved_stdout;
+ 	int is_first_run =3D 1;
+@@ -1192,11 +1196,8 @@ static int bisect_run(struct bisect_terms *terms, c=
+onst char **argv, int argc)
+ 		return BISECT_FAILED;
+ 	}
+
+-	strvec_push(&run_args, command.buf);
+-
+ 	while (1) {
+-		printf(_("running %s\n"), command.buf);
+-		res =3D run_command_v_opt(run_args.v, RUN_USING_SHELL);
++		res =3D do_bisect_run(command.buf);
+
+ 		/*
+ 		 * Exit code 126 and 127 can either come from the shell
+@@ -1206,7 +1207,7 @@ static int bisect_run(struct bisect_terms *terms, co=
+nst char **argv, int argc)
+ 		 * missing or non-executable script.
+ 		 */
+ 		if (is_first_run && (res =3D=3D 126 || res =3D=3D 127)) {
+-			int rc =3D verify_good(terms, run_args.v);
++			int rc =3D verify_good(terms, command.buf);
+ 			is_first_run =3D 0;
+ 			if (rc < 0) {
+ 				error(_("unable to verify '%s' on good"
+@@ -1273,7 +1274,6 @@ static int bisect_run(struct bisect_terms *terms, co=
+nst char **argv, int argc)
+ 	}
+
+ 	strbuf_release(&command);
+-	strvec_clear(&run_args);
+ 	return res;
  }
 
--static void reset_hard(const struct object_id *oid, int verbose)
-+static void reset_hard(const struct object_id *oid)
- {
- 	int i =3D 0;
- 	const char *args[6];
-
- 	args[i++] =3D "read-tree";
--	if (verbose)
--		args[i++] =3D "-v";
-+	args[i++] =3D "-v";
- 	args[i++] =3D "--reset";
- 	args[i++] =3D "-u";
- 	args[i++] =3D oid_to_hex(oid);
-@@ -385,7 +382,7 @@ static void restore_state(const struct object_id *head=
-,
- {
- 	struct strvec args =3D STRVEC_INIT;
-
--	reset_hard(head, 1);
-+	reset_hard(head);
-
- 	if (is_null_oid(stash))
- 		goto refresh_cache;
-@@ -1470,7 +1467,7 @@ int cmd_merge(int argc, const char **argv, const cha=
-r *prefix)
- 					       check_trust_level);
-
- 		remote_head_oid =3D &remoteheads->item->object.oid;
--		read_empty(remote_head_oid, 0);
-+		read_empty(remote_head_oid);
- 		update_ref("initial pull", "HEAD", remote_head_oid, NULL, 0,
- 			   UPDATE_REFS_DIE_ON_ERR);
- 		goto done;
 =2D-
 2.38.1
