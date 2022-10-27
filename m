@@ -2,101 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 107EEC38A2D
-	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 03:35:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 552C5C38A2D
+	for <git@archiver.kernel.org>; Thu, 27 Oct 2022 04:45:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233987AbiJ0DfV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 26 Oct 2022 23:35:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56674 "EHLO
+        id S233810AbiJ0Epy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Oct 2022 00:45:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233810AbiJ0DfS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Oct 2022 23:35:18 -0400
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E331BF3
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 20:35:14 -0700 (PDT)
-Received: by mail-il1-x12e.google.com with SMTP id o13so260697ilc.7
-        for <git@vger.kernel.org>; Wed, 26 Oct 2022 20:35:14 -0700 (PDT)
+        with ESMTP id S233280AbiJ0Epw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2022 00:45:52 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3D3F4C037
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 21:45:50 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id c7-20020a05600c0ac700b003c6cad86f38so3236503wmr.2
+        for <git@vger.kernel.org>; Wed, 26 Oct 2022 21:45:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jgDMOHkKHCjp7FVgJ3HNQXItIpZnVlrilSOS/Jkta7w=;
-        b=HCyLizas9V2668qfWRG9SlChlujZdO9tfpVQD7qubw5ONgDYmfGUSVmaeuLezWUM7j
-         blX5E6Ud/CWA7qsqtW5kpkAg0KgvYBgNiBgJxSQCrvzDsew5FjyVa59Bu82tbGDGnanm
-         RO/EpdIGTvj1hKUGmB3hz6KZqvfWp77+4WF4WABc6NsSRQkQAMaoOm3GqunnQJi0mEnK
-         cR2JcCo5g6mSKaFTEP1rgfCLn9V1k9Daw7mArSVYNsJHQFVPEgTBHVdMOmbJO7zeFYi5
-         ifx8kmSampCZHtETCqmCsMHAN0L4bErYLEMIKVUBd9kqWW41hb3sVb05+7zkqhbxxSza
-         V1CA==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=EnegFuN5XaMy6ZTRb+rJBeGiKqjgzdEpXXwgWhB44oQ=;
+        b=cjyDzfYkQYK9TMDOoZ26jAff3G0NEw6tTnGNFYmR8+oabNyaebVp44Y5F58i/u1kQJ
+         ZVwFIDW9EzOEhWk71L6IuFCSFJDimsdefPTbfNmRGBZUxa99iVaSZeFHkGSsuoSvfaHJ
+         xwHJ1jNhrxdkHNyfKzm/GPGphc5pXgndoci49FFHuTiXU6BhsqV5PV1knz3rQJgQWkBY
+         VBO1zwnpc7GLgzow1OfOVTVlPjCEbussgLvjukBspJZW64ww+GvXnYAM+HqylRIypcix
+         uJDWsoJ2vGq5kwjzba8T7kO5QUB757WiUBGautQHvV6zUuMdV7KCIL8XPY8TQtDu6bAj
+         m5nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jgDMOHkKHCjp7FVgJ3HNQXItIpZnVlrilSOS/Jkta7w=;
-        b=p/nGJu8nqzMaCODJ01CNqgsKgIKjK9ocqaLrUmR9WBo0tMom4D6Q375tnyVQLW1M0K
-         wF81aWUZWP7faHV66bRmlLRC21Mq3OeYRJr8JDIClZHj18PLWsljA5rEu9xLa3egtqi6
-         aVily95qXvX9xIQKC69XYs8uA7s+BQo1l9anMNK9vZYx3Df/Wr4ZgJT2rWG5/NdkdLq1
-         dAGugDykaNkcNqnsigBv74HmN0Uw1bGXchUtXhUa4kRMoQzZlYK2g44tp7G84iSE8nAf
-         WiNYCogAZVc59fiPMSgCup706QVKhDBP5eEiduSkpupoVrF6a9/iYXWqg8TShtWI50ce
-         86Xw==
-X-Gm-Message-State: ACrzQf2gcaIaUZwxdx+tIqTtEsgZaof83cwwsm0Iwy5c2RCJ6oY9Os5I
-        r7ZRzwWPMkOOeCMNF42hyzsYk6dPWIy0UcnPesuMftYZ
-X-Google-Smtp-Source: AMsMyM5GWWOFPTmWfwbMemnQ33jZgKRrMchs5sv0eNk9amyMWR5h4TiE01w/Ab9W6S0Oyp+ZY+IP9N3pQciFZ9PO1h0=
-X-Received: by 2002:a05:6e02:1905:b0:2ff:a163:8497 with SMTP id
- w5-20020a056e02190500b002ffa1638497mr15933980ilu.147.1666841714286; Wed, 26
- Oct 2022 20:35:14 -0700 (PDT)
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EnegFuN5XaMy6ZTRb+rJBeGiKqjgzdEpXXwgWhB44oQ=;
+        b=OMhOPOu5js7NFhCF5tEDdQ+GwEPk2UnbOYG7p6YCvR+z04wO421N48YaF/w+W0mrbI
+         qOsPk3twNw2SbSrhBe/w+ba+9/AvORGOXXjC5jWVNbajYuYEFI9/6OxFL2+gNTqVBjKr
+         l8t7YiHGhJxgiT9VzbHX5zphegKWSlEDtaa4YM3t7VlG/hiatuIoe9LEoBgE66zmlS9s
+         c078VQ4GAkI1UfY+zWsaXKMjCajyzmoBbOHmSbPoR5AqqgfYHRkSVeezliq/guWRKuMU
+         Rm6CvBZv3UTbDGFwm/EBk72WBE89np1uXlx83EPbfa8LmGgSEv15k3/zhS/3ay97F2ge
+         WMjg==
+X-Gm-Message-State: ACrzQf2w0BbLUAJUWIgggDae+Lk+o113IrHfn4qJXxs5uN2vfyhtfUuM
+        KwzRYcCLPj86PDR6NhAYgfMrL+dz1mQ=
+X-Google-Smtp-Source: AMsMyM5ekOWOFcdca93+eVsN635yLAhhpwoeVV3jAXeXy8EpW6MvI1tpWR/zW+fkuyk/hTENxkr2EA==
+X-Received: by 2002:a05:600c:4f81:b0:3c8:3424:8b9 with SMTP id n1-20020a05600c4f8100b003c8342408b9mr4288022wmq.149.1666845949166;
+        Wed, 26 Oct 2022 21:45:49 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n17-20020a05600c501100b003b4fdbb6319sm2031126wmr.21.2022.10.26.21.45.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 26 Oct 2022 21:45:48 -0700 (PDT)
+Message-Id: <pull.1396.git.1666845947898.gitgitgadget@gmail.com>
+From:   "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 27 Oct 2022 04:45:47 +0000
+Subject: [PATCH] Mention that password could be a personal access token.
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <cover-0.9-00000000000-20221021T091013Z-avarab@gmail.com>
- <cover-v2-00.11-00000000000-20221027T032622Z-avarab@gmail.com> <patch-v2-02.11-9e2470dcb95-20221027T032622Z-avarab@gmail.com>
-In-Reply-To: <patch-v2-02.11-9e2470dcb95-20221027T032622Z-avarab@gmail.com>
-From:   Eric Sunshine <ericsunshine@gmail.com>
-Date:   Wed, 26 Oct 2022 23:35:03 -0400
-Message-ID: <CAPig+cShURmL4JD4M1Pb5PdGXt6aHxKJKsRa6bS-tAQdZ-LhhA@mail.gmail.com>
-Subject: Re: [PATCH v2 02/11] cmake: update instructions for portable CMakeLists.txt
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Victoria Dye <vdye@github.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     M Hickford <mirth.hickford@gmail.com>,
+        M Hickford <mirth.hickford@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Oct 26, 2022 at 11:27 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> The instructions for running CMake went back & forth between *nix,
-> Windows and Visual Studio instructions Let's create headings and split
-> the existing instructions up into those new sections.
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
-> diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/C=
-MakeLists.txt
-> @@ -4,7 +4,48 @@
-> +=3D=3D Building =3D=3D
-> +
-> +One the recipe is created a build recipe will be created.
+From: M Hickford <mirth.hickford@gmail.com>
 
-First sentence seems to be gobbledygook. I _think_ you wanted to say
-"Once the recipe is created, something, something, something", though
-I don't know what "something" was supposed to be.
+These days, the 'password' for a software forge might be personal access
+token or OAuth access token.
 
-> +[...] For Windows
-> +Open contrib/buildsystems/git.sln on Windows and build Git. Or use the
+Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+---
+    Mention that password could be a personal access token.
+    
+    These days, the 'password' for a software forge might be personal access
+    token or OAuth access token.
 
-Too many "Windows".
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1396%2Fhickford%2Fmore-about-credentials-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1396/hickford/more-about-credentials-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1396
 
-> +"msbuild" command-line tool (see our own ".github/workflows/main.yml"
-> +for a real example):
-> +
-> +       msbuild git.sln
-> +
-> +On all other platforms running "cmake" will generate a Makefile, to
-> +build with it run:
+ Documentation/git-credential.txt | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-s/,/;/
+diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
+index f18673017f5..f3bf0bef54b 100644
+--- a/Documentation/git-credential.txt
++++ b/Documentation/git-credential.txt
+@@ -142,7 +142,9 @@ Git understands the following attributes:
+ 
+ `password`::
+ 
+-	The credential's password, if we are asking it to be stored.
++	The credential's password, if we are asking it to be stored. If the
++	host is a software forge, this could also be a personal access
++	token or OAuth access token.
+ 
+ `url`::
+ 
 
-> +       make -C contrib/buildsystems/out
+base-commit: 1fc3c0ad407008c2f71dd9ae1241d8b75f8ef886
+-- 
+gitgitgadget
