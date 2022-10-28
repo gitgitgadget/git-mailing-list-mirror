@@ -2,99 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C5C8ECAAA1
-	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 21:46:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 807C7C38A02
+	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 21:49:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229696AbiJ1Vqp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Oct 2022 17:46:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48964 "EHLO
+        id S229866AbiJ1VtO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Oct 2022 17:49:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230077AbiJ1VqZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2022 17:46:25 -0400
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E0B622C838
-        for <git@vger.kernel.org>; Fri, 28 Oct 2022 14:46:23 -0700 (PDT)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 7373C5A1FB;
-        Fri, 28 Oct 2022 21:46:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1666993582;
-        bh=axA/JZk11XHktHjfVFwlvH6Ibbl4pkGGsLg7iP2Nu6k=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=sdSW1X8V2qvYxvtsQcJQtfLYD40bP9kwRc31RXPDcBgUrTEj1pw1qOtRdbX60x26M
-         5eBNZDkKI9ULhMQOlvPLrxSGdxTReoJQ68dWLaiYnArq4OL5FL/uUp9cJ68WBbWyWM
-         +wqnK5jwzNsJjB7CIrQJvqmVdekCVF4JAly8WF4eLS8prZ/1LBgl4+BNATYaFyZSSC
-         kW3VrZ+wPr9Y8uPSVlcS79EEeXdEKyCDJ41YIVC3/fPeGQn/X6sBVPpZsxSgUgYCUo
-         Qk0YsnF5TmazzBv4c0utwBosKrlKUs/YNtCnZLIqWY/R4iBZqd6uxOWG0BSzS32Iy1
-         MUoMRYJhE6sVDcy79l/+0t9bQW0V97ePrf4r/+9X6GL4ltgFfh4h6gZhBGkG5P+Rp+
-         0JZKeS/U9dTH5LyYvB/aAZ06yzeGB9xTlWc11l+hVFkINliOoNZYLZUKcdoxwL4LFJ
-         ld4CMYRQMhPaky2StP2GqH6zNZfSPP2M90swJmMy7gWqe0nfNOP
-Date:   Fri, 28 Oct 2022 21:46:20 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Julien Moutinho <julm+git@sourcephile.fr>
-Subject: Re: [PATCH] adjust_shared_perm(): leave g+s alone when the group
- does not matter
-Message-ID: <Y1xNrDB10XEcAa0d@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Julien Moutinho <julm+git@sourcephile.fr>
-References: <xmqqr0yrhco6.fsf@gitster.g>
+        with ESMTP id S229696AbiJ1VtL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2022 17:49:11 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B9A024C11E
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 14:49:11 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id t10-20020a17090a4e4a00b0020af4bcae10so5657788pjl.3
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 14:49:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=z6TJgBy2Hz5jg6ec0ty4p4ptx+PEOLJPp+a4LhSsSKg=;
+        b=Gw0M2eVdo9CZB0PA2KDfna3BfWNBrm35vtluq+FIfizw5+zadB9apfrRmEWkCP4cBm
+         en3MZx8kJyKVY4K4Nnu8pgC4JRW/75PZ+/kVca/Jt5HmmJUNjl56uMY8qWiAJ1K3j1Wd
+         cOCK+99lwt19trrlaCQslcSFYIg1vya/vMWz3zRe5hTS67ospTDbowjqB0p4RK7FNT9E
+         truCJEktyeMfEH8HqNJqLhDcwX0fvY67UyoHRsVEVJl2Ow9ZzNuVMbImreMly9TdYFjv
+         n0jEwNf/41X5rNiHG6lZoA4ftL7UrBgUJDeP0CZCjw8BWTqwHUa2HvNG9F0mAnl/v3K5
+         5s1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=z6TJgBy2Hz5jg6ec0ty4p4ptx+PEOLJPp+a4LhSsSKg=;
+        b=JNcRSLwwJfsCKDMzwHGHTjGKLh9h4Rigp2elY+vj9gYZw0KbMDDtW2YFnuIYGGQvi1
+         AXliYOOAmm9iEfF4AtCD7qkcaxo6lZNnUU2O8jUB8WnvD4ESGjG3NrsRs0B/7bP8fcYX
+         2YtAedsvLL02f6C1icQmSCmgsQKnvHb98ARMOaKNktNzZDbtouy5EzXH7D2CpMjFBXJj
+         IY9UPtjWVT7QLd4YNrv8MuGI0puLE9y7bOlFZV6PhvVB/Ys02mD98nhXLWIhmOGlddbD
+         BLwMiwJP5fEjsjcy7OVMAkXu0225cbWUnCtqo+oHv7UsqhCw9tTDHuXW3qN1x+qjhBKP
+         MCNQ==
+X-Gm-Message-State: ACrzQf0YKP7kCj+hcUbzROMyEhINSwtbizY/7DdSsH4dtz8vfLQ8FMIW
+        6ONelydd0drGiT/+a+rYmyE=
+X-Google-Smtp-Source: AMsMyM6K+CBr0jxLvGeX7nf4Vcnp+tdQVIycMp11n6MDc7QjplDjSMOyskDtO5LIMYkNP2ZzCLspVg==
+X-Received: by 2002:a17:90b:390c:b0:211:6e5:6351 with SMTP id ob12-20020a17090b390c00b0021106e56351mr1429816pjb.158.1666993750721;
+        Fri, 28 Oct 2022 14:49:10 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id f6-20020a170902ce8600b0018157b415dbsm3584014plg.63.2022.10.28.14.49.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Oct 2022 14:49:10 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH v3 5/8] submodule: return target of submodule symref
+References: <pull.1321.v2.git.git.1666297238.gitgitgadget@gmail.com>
+        <pull.1321.v3.git.git.1666988096.gitgitgadget@gmail.com>
+        <bd8ffd7cde2feb3853f837778d660c0f47db32ff.1666988096.git.gitgitgadget@gmail.com>
+Date:   Fri, 28 Oct 2022 14:49:09 -0700
+In-Reply-To: <bd8ffd7cde2feb3853f837778d660c0f47db32ff.1666988096.git.gitgitgadget@gmail.com>
+        (Glen Choo via GitGitGadget's message of "Fri, 28 Oct 2022 20:14:53
+        +0000")
+Message-ID: <xmqqfsf7hb56.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="pYxTs3EChqEbmMCI"
-Content-Disposition: inline
-In-Reply-To: <xmqqr0yrhco6.fsf@gitster.g>
-User-Agent: Mutt/2.2.7 (2022-08-07)
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
---pYxTs3EChqEbmMCI
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>  int resolve_gitlink_ref(const char *submodule, const char *refname,
+> -			struct object_id *oid)
+> +			struct object_id *oid, const char **target_out)
+>  {
+>  	struct ref_store *refs;
+>  	int flags;
+> +	const char *target;
+>  
+>  	refs = get_submodule_ref_store(submodule);
+>  
+>  	if (!refs)
+>  		return -1;
+> -
+> -	if (!refs_resolve_ref_unsafe(refs, refname, 0, oid, &flags) ||
+> -	    is_null_oid(oid))
+> +	target = refs_resolve_ref_unsafe(refs, refname, 0, oid, &flags);
+> +	if (!target || is_null_oid(oid))
+>  		return -1;
+> +	if (target_out)
+> +		*target_out = target;
+>  	return 0;
+>  }
 
-On 2022-10-28 at 21:16:09, Junio C Hamano wrote:
-> Julien Moutinho reports that in an environment where directory does
-> not have BSD group semantics and requires g+s (aka FORCE_DIR_SET_GID)
-> but the system cripples chmod() to forbid g+s, adjust_shared_perm()
+Please remind me why we call this underlying helper _unsafe()?
 
-I would personally use a different verb here because I have the
-impression it's offensive, at least when used as a noun.  Perhaps
-"limit" or "restrict" might be more neutral, or we could pick another
-verb which expresses our displeasure at this design (maybe "impair"?)
-but maybe is less likely to be emotionally charged or offend.
+Isn't it because we return a temporary buffer  (static strbuf),
+whose contents is not permanent?
 
-> fails even when the repository is for private use with perm =3D 0600.
->=20
-> When we grant extra access based on group membership (i.e. the
-> directory has either g+r or g+w bit set), which group the directory
-> and its contents are owned by matters.  But otherwise (e.g. perm is
-> set to 0600, in Julien's case), flipping g+s bit is not necessary.
-
-Except for my comment above, I think the patch here addresses the
-proposed issue and looks good, and as usual, is well explained.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---pYxTs3EChqEbmMCI
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY1xNrAAKCRB8DEliiIei
-gfFSAP9pqscjFT3YKWf5BjmgMXhx8pZIQVO47OnUVMkyK53TugD/cX8dKvZnXzHm
-PvZVdnCZ1iUMwA9yuJ4HT5Q7t0ViNQc=
-=WB2Z
------END PGP SIGNATURE-----
-
---pYxTs3EChqEbmMCI--
+I am wondering if we should force the callers who care enough to
+pass the optional **target_out to xstrdup() the result.
