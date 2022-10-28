@@ -2,178 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3691BC38A02
-	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 14:42:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61E49FA3745
+	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 14:42:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230520AbiJ1Om4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Oct 2022 10:42:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52274 "EHLO
+        id S229996AbiJ1Om5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Oct 2022 10:42:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229962AbiJ1Omc (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229689AbiJ1Omc (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 28 Oct 2022 10:42:32 -0400
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FBCA1F0422
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FAA81F0402
         for <git@vger.kernel.org>; Fri, 28 Oct 2022 07:42:28 -0700 (PDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id CAAAB5C0143
-        for <git@vger.kernel.org>; Fri, 28 Oct 2022 10:42:25 -0400 (EDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.nyi.internal (Postfix) with ESMTP id 002F05C00C2
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 10:42:24 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Fri, 28 Oct 2022 10:42:25 -0400
+  by compute5.internal (MEProxy); Fri, 28 Oct 2022 10:42:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; t=1666968145; x=1667054545; bh=HDH+Kl26Ub
-        A69CFf2OAykFP3j8YNeMgBfHDHMGfWd74=; b=yAhZns35iF+bMjuD8Y1CJxiDyq
-        ic4M7XKL7CdC2ZLnqG2JlJArrxRDN65fj2l3c2shFf1QRvCS3NAB0WRpD94yWag6
-        ClOY2ZboQUZ+6ijwOvVSOe+rkd6jgEKxhb5BrYZgTfFnAR/fBRGIZ3uWb39MpK7L
-        mYKN57jBuyi0aE8OuCS95QNCtE2jGJqr1uOZbUwA/ao+kHxu3u4T5aH5Rpjl5JwA
-        WD09imDDTr/jPMSPWX6FmMcyi/hIztDCueqDmtY8yrnKm3ht5DkrOHXHt5H+eoDq
-        pLNleiTE2+f4DK+3G7LgmMvKigcrwwqseY9LHK0YPfurCAFAOPhU7EOJ+CPw==
+        :content-type:date:date:from:from:in-reply-to:message-id
+        :mime-version:reply-to:sender:subject:subject:to:to; s=fm3; t=
+        1666968144; x=1667054544; bh=zhL45LP3r0TUJHVk4G5cEpB9ZXmLTpUysO+
+        ODJMiqjc=; b=H/K/iedqUhOZmfgbeikwMf9wvzC1bi9kB0e0Clh+UnuvVqUamKX
+        Ad7+gpc9pInFRevWItb/t2WyColx6fBOlKy2wW1CzmycWQvgjX618417e0keI43m
+        qrHlUNqGlUIsqt5ZRjfhlG3T0Jm0a7pRFN4q/KPRWWhbF1VPKYRNZmcIj0fcpAXe
+        0o34RIRvSKwCUTB09ummxsCCVMrXnnNjqAl5WJAtO1MMsVxU9c4k8k/fD7Fc/j2e
+        EABrLSLk+rWDfwpNyvcIpx32+OhT8ClGA+xzcLrGjA2lilB+/FfohaX8+v1t2/Pb
+        ZAogCENHfPDXMkGztpBkrATy6ic5H/brOhw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm3; t=1666968145; x=1667054545; bh=HDH+Kl26UbA69CFf2OAykFP3j8YN
-        eMgBfHDHMGfWd74=; b=p9n3leHRoW7GRMI8fjBcnhs8o0Jt/pxEOe6j9rOq6VFz
-        gorZ8A5d0k+bb2n8ZdfvGEjn44BM90yNzL4yP215f9Lo4C5okZW6tqR2mlnrHz9m
-        VJOsuTAp9yWXBtJyB3WxDU6e4zruDzZGD4Z+5bKDMN7d/dPvM2z4Pl2pzqx1nRtJ
-        uA9bgY4rOqy2NLKCEM4RtlqFNjyTpsGutyuSgabVIbxDkfVQm1DLzlekIRKrarYJ
-        eMnwbDwBwtDpItFtCj2Xeu4uStCKejrHBkHqhLfzPgngA86Fry31G2Em9cSvF2Lv
-        r5UOARntrUopnOWtUfjdXOJ2QtR06jeNKqeE7Kp3Ww==
-X-ME-Sender: <xms:UepbY30rPRwCdApFIllHxsMjv5VXwPxhYRIX4wFQGyUHfBFSsOP_Qw>
-    <xme:UepbY2HuT8C1C271X7bXHzo4RkjQUYmeGZQ89kKZ6qhvq44f6iza66DIz5I0r3KqC
-    kSP6ZgB4l7quHpnew>
-X-ME-Received: <xmr:UepbY379_4jGv7lxB-Gg-vqBcG_MjqtylzcfjY_WAG9omq37zlCy0u_9vz07anm0pyAZE6WW226u_HA5FXj5O3OaaAPx_AQWnOejPYX4mZ2BNg>
+        :feedback-id:from:from:in-reply-to:message-id:mime-version
+        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1666968144; x=
+        1667054544; bh=zhL45LP3r0TUJHVk4G5cEpB9ZXmLTpUysO+ODJMiqjc=; b=f
+        TEqmYXFVG1YCQ+nEEiAouEKjHM10sf9NIj33/nFOjAnIYvur1CrO6zYFQZlFioGD
+        DUmJZKz12rK0N2fh01J+uajG5NAQ8Xa0ddK1ZBEEOmnPAJ8fbPROlOtrr6u3Hz4T
+        pK+aM/WdOeOkoqndFLBIW5r20wBZlfHuRa3EHWl507uY9OSCXbkdvDN5k+qf2TJ5
+        saC4/Oczs5MFvorAE2qan3vpcUlvtfY4vtJSo7cTutZesvSJP8pMXdsCM99Pvuu2
+        s548RLGbBsc5X+Nqvy1PnvN83vCuca48zhzgFrQOU8ikve0E1upr35lQUwtp9o4q
+        uaMZNKKYSJ1gJ4TFpqalw==
+X-ME-Sender: <xms:UOpbYyuxH8D7eMZgGwYEyqbFTgaarMds1veD1skOfF_GHjOzHuNePg>
+    <xme:UOpbY3ctRSxMveIqNv5Y6xsdmoL_kiJsKxZ96DINQWoGnJqK9n2qx8KUVyocLnPlP
+    _l7gnjAR7hNsqdzNQ>
+X-ME-Received: <xmr:UOpbY9ydYRPq-h2iNo_YXrxO4CfZpWZrwpUBp1-BjG-6Mq59wb0WrWE88KaAa6oDdfKdaa-7URUeItSF7sEJ4dRpBqcVr7Jny3Y8_23JsLv-0A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrtdeigdejkecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
-    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtdfhvd
-    ejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:UepbY82OyYsFeeWvW7Vlvj8ESKyk5VT7NMhSVnmWZQokQoyGJF0p5g>
-    <xmx:UepbY6G_XUKrzYK8uT2T8sfj_pj6YHCIG8X64pJ_bzUMPqExCgtCyA>
-    <xmx:UepbY9_ZZ0OyFta07ewOJlsz3mDCHCrAfP5q-wBgYj0_3LoO2_-vqg>
-    <xmx:UepbY1wsJZK3yA5tpWxyA49ZvESBI0gPd-hQcywaFZEtdhc6D9SlLA>
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfggtggusehgtderredttd
+    dvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdr
+    ihhmqeenucggtffrrghtthgvrhhnpeejieefvdeuleffgfejudffvdeghfeigfejgfdvvd
+    efudevffefveffhffgkeeiffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+    mhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:UOpbY9NKF4g2qkS_PBWHHxpBvPwqpXJDlLBZLeqEXRfdrqEy0oBLVA>
+    <xmx:UOpbYy8y7A83WAss7SwOTAnwPwg1Ajv5SABeqDE1Xy1_H8bjje-mAQ>
+    <xmx:UOpbY1U04oIwApy1PcjZ5lTbJRdFvAovT6JfRd2sDL9my1E6r-M9QQ>
+    <xmx:UOpbYzL4HpcWW3rpWq1gnwcR03QhQnOrSoaNZs5ZdCKduuoSXt6RFA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 28 Oct 2022 10:42:25 -0400 (EDT)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 50911e7f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+ <git@vger.kernel.org>; Fri, 28 Oct 2022 10:42:24 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 70bb9aa8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
         for <git@vger.kernel.org>;
-        Fri, 28 Oct 2022 14:42:17 +0000 (UTC)
-Date:   Fri, 28 Oct 2022 16:42:23 +0200
+        Fri, 28 Oct 2022 14:42:14 +0000 (UTC)
+Date:   Fri, 28 Oct 2022 16:42:19 +0200
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
-Subject: [PATCH 1/2] connected: allow supplying different view of reachable
- objects
-Message-ID: <a32e3d6146dd41af36f525a744d6cc099b42d6fb.1666967670.git.ps@pks.im>
-References: <cover.1666967670.git.ps@pks.im>
+Subject: [PATCH 0/2] receive-pack: use advertised reference tips to inform
+ connectivity check
+Message-ID: <cover.1666967670.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="9DiQ+um+eoVd8iCe"
+        protocol="application/pgp-signature"; boundary="2YtZw0Tfs3ybVKNC"
 Content-Disposition: inline
-In-Reply-To: <cover.1666967670.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---9DiQ+um+eoVd8iCe
+--2YtZw0Tfs3ybVKNC
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The connectivity check is executed via git-receive-pack(1) to verify
-that a client has provided all references that are required to satisfy a
-set of reference updates. What the connectivity check does is to walk
-the object graph with all reference tips as starting points while all
-preexisting reference tips are marked as uninteresting.
+Hi,
 
-Preexisting references are currently marked uninteresting by passing
-`--not --all` to git-rev-list(1). Some users of the connectivity check
-may have a better picture of which objects should be regarded as
-uninteresting though, e.g. by reusing information from the reference
-advertisement when serving a push.
+this patch series improves the connectivity check done by stateful
+git-receive-pack(1) to only consider references as reachable that have
+been advertised to the client. This has two advantages:
 
-Add a new field to `struct check_connected_options` that allows callers
-to replace the `--not --all` logic with their own set of object IDs they
-regard as uninteresting.
+    - A client shouldn't assume objects to exist that have not been part
+      of the reference advertisement. But if it excluded an object from
+      the packfile that is reachable via any ref that is excluded from
+      the reference advertisement due to `transfer.hideRefs` we'd have
+      accepted the push anyway. I'd argue that this is a bug in the
+      current implementation.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- connected.c | 9 ++++++++-
- connected.h | 7 +++++++
- 2 files changed, 15 insertions(+), 1 deletion(-)
+    - Second, by using advertised refs as inputs instead of `git
+      rev-list --not --all` we avoid looking up all refs that are
+      irrelevant to the current push. This can be a huge performance
+      improvement in repos that have a huge amount of internal, hidden
+      refs. In one of our repos with 7m refs, of which 6.8m are hidden,
+      this speeds up pushes from ~30s to ~4.5s.
 
-diff --git a/connected.c b/connected.c
-index 74a20cb32e..2a4c4e0025 100644
---- a/connected.c
-+++ b/connected.c
-@@ -98,7 +98,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
- 	strvec_push(&rev_list.args, "--stdin");
- 	if (has_promisor_remote())
- 		strvec_push(&rev_list.args, "--exclude-promisor-objects");
--	if (!opt->is_deepening_fetch) {
-+	if (!opt->is_deepening_fetch && !opt->reachable_oids_fn) {
- 		strvec_push(&rev_list.args, "--not");
- 		strvec_push(&rev_list.args, "--all");
- 	}
-@@ -125,6 +125,13 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
-=20
- 	rev_list_in =3D xfdopen(rev_list.in, "w");
-=20
-+	if (opt->reachable_oids_fn) {
-+		const struct object_id *reachable_oid;
-+		while ((reachable_oid =3D opt->reachable_oids_fn(opt->reachable_oids_dat=
-a)) !=3D NULL)
-+			if (fprintf(rev_list_in, "^%s\n", oid_to_hex(reachable_oid)) < 0)
-+				break;
-+	}
-+
- 	do {
- 		/*
- 		 * If index-pack already checked that:
-diff --git a/connected.h b/connected.h
-index 6e59c92aa3..f09c7d7884 100644
---- a/connected.h
-+++ b/connected.h
-@@ -46,6 +46,13 @@ struct check_connected_options {
- 	 * during a fetch.
- 	 */
- 	unsigned is_deepening_fetch : 1;
-+
-+	/*
-+	 * If non-NULL, use this iterator to determine the set of reachable
-+	 * objects instead of marking all references as unreachable.
-+	 */
-+	oid_iterate_fn reachable_oids_fn;
-+	void *reachable_oids_data;
- };
-=20
- #define CHECK_CONNECTED_INIT { 0 }
+One downside is that we need to pass in the object IDs that were part of
+the reference advertisement via the standard input, which is seemingly
+slower than reading them from the refdb. I'm discussing this in the
+second commit.
+
+Patrick
+
+Patrick Steinhardt (2):
+  connected: allow supplying different view of reachable objects
+  receive-pack: use advertised reference tips to inform connectivity
+    check
+
+ builtin/receive-pack.c | 31 ++++++++++++++++++++++---------
+ connected.c            |  9 ++++++++-
+ connected.h            |  7 +++++++
+ 3 files changed, 37 insertions(+), 10 deletions(-)
+
 --=20
 2.38.1
 
 
---9DiQ+um+eoVd8iCe
+--2YtZw0Tfs3ybVKNC
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmNb6k4ACgkQVbJhu7ck
-PpRnsA//WBZZIMoFJI9eHwPeSjds0DlfFSSE6DRE16oMyYIthmB+4kGmmm3CnRxy
-WBo91a+J4DW7LD91mVKgrgqSTnsfqgGRCQigjvkf8ilvdqOZzG/d9hbV2vp2VlOR
-tbHXfZWep7OPGPWI+tTLs2768yQtib6W+cYIR1b+2FLhyxzHOnyUMzOY+57o3+hy
-ji6wJKOIdULDta/biyYwxBhJAXrJAIyxBVTC8jtABdTfZ9Yl8oNBePiLRnMNopbJ
-8vs6QpTgD1I0vnp00G/rsdn7fWVmCEPA7NhRHDd8gGRC37j0e10PPtF/JsnFa4ZU
-dgdgFAnbIS/TZX3+si/S3+ZbsN6f97mYuHD3O6z6hRj8RVOVBUojQJ/nfVez2BS3
-kmO1vH1jN4Ai0LinpnKpITy2mIq5n8ngUQJ9hgNmd8KTfvXMkH2+oQugXS3A08qi
-K9Lx6LDs7hxPyrA/P+sWxf44O/HYQ3Py9Pgh+pWj+lSWXyzCmTy0+LAWk46ze7sr
-ccDnzpLfUOOkag6n5dMt0w/SrHE0y38rLzH24/MSHXnux+gOott8MXkp+XtYLn9z
-x3tjH3/WXY5NVQNyS8wPyfSyAyfsu0RPH+bytTQADt3K+fNEBvz3gY1Eb7lt0sUq
-nWAPepgdYFdXLD2SzxVqjrAQlOR/fyUbBd6Iq0ryFjhgdJoQgD4=
-=e9+M
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmNb6koACgkQVbJhu7ck
+PpS2xQ//SgC3a0L3rVmlY85PC9sSqycB3QR7mWWbf4+lK4uHl6jrxivKFxcP8T7H
+wofUpCIfkB23XpBdcXKFmzMWcITHWCJ3IrkPF1PjbEVzrdxXJV3VWqPLwvcpIqkw
+IU1HaUtRj1L8DRDzpLZEHQykIeTipRhfmB7ZG0WuQdx2SuEcL/5xT785TYWrptUy
+HItMXsiSRfWluB1HFTfA7mSBhGddw4CltlsEFCiRHntltG5HyfU3Vzkc5/FAEOCD
+tPowAXTNsiaGxCxrwbyQEXOMOAis6qPpW2yVEycaZVKpUL8CAfqYAbxNEr2hZBZJ
+rQx3fEfDbdMK9eFDwylTkMagJuYpciEcCnTmPMw1wvgER+jFkFw768r4S4nxYnJt
+cbKDA82uR/chyRSZKbESq9ffyvq21lfnggnxA8urlmEZcgnQ2bPf9+AxXkA2pN5S
+OFS81DHs6jSrgvzyzxgV+ntSlyEbZ5Nkczwp4bFdDFWrdKrLdQxQBfik3pHCBLpy
+NnWLldJEtNEr+C8n4g8oJm4u3+hK/JEGUpZ1h1M6vKRToDnsgUYG4DklhOVkjMBY
+sUuJh5iU+soGZ1Acj1lj+f45V9Y8A7wJHxSa6TK5GHDwYs51AhAnb/8ZvIjHx5m3
+bU5bVWRVPgLCP435qRd7oZPbVxhDYL8z9eVvnhe5wCyQhiQYZG0=
+=A+Ft
 -----END PGP SIGNATURE-----
 
---9DiQ+um+eoVd8iCe--
+--2YtZw0Tfs3ybVKNC--
