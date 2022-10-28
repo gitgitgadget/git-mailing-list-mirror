@@ -2,103 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B953FA3741
-	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 14:23:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2314FECAAA1
+	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 14:23:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229992AbiJ1OXv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Oct 2022 10:23:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60572 "EHLO
+        id S230157AbiJ1OXx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Oct 2022 10:23:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229909AbiJ1OXr (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229916AbiJ1OXr (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 28 Oct 2022 10:23:47 -0400
 Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B7197F088
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C32E7E02C
         for <git@vger.kernel.org>; Fri, 28 Oct 2022 07:23:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1666967007; bh=JKPbEDN6XPCr6BdV20GJIVEo6t57uLeLHvkFR7iC+HA=;
+        t=1666967016; bh=dt2z8Du7H//Tt8VSIAtSD7AI5s10cof5LcWQaPrN5YQ=;
         h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=ZJ+hbwtW1WVj2k6Zwlw1hTXNH8Jtb6MdDWbSVH7ih89W/oh6xP+vfwqLFoEm1tlM9
-         +Reov/ieDHH9vzIAxUqN5Yg/DcWV77CGgTsaM3CvT4oCG6z6PWtnssuI4q6Q/ARbdL
-         Oirfx3bXd9aiji/t9roKlWyr/ZTcWW6NY6J7R3naRwl1eZ2Ze+PlMkRGKwAImVEXqG
-         dAEcaQOZ83eIdfC/R2IvQKYHlFB8GC400/0frBlzMfpDY3NYatzQQuhsRWITv+xcQS
-         kQuD/nX/MIP6wAWix/GnMZo4ObYIRqQF0lmFFBnwzL2yrqy0KA+7nghg3XavO2GTDu
-         TnFlU7tnXrXiA==
+        b=L7PTKA8I6w6oY2ur1hEUx9mUmFihHRzqcB1dE6gjc426aHosCXRe34RV4c1yav2wx
+         HFWeRsKgpkHkKpDoaaM1WVP+Aw3XYpCCevWb+XonvXSUXlegrVctLL4m5l2qTj9Lys
+         oo42Uh07hKQBBBq1dXXJXoNTANz5z5zBtOaPagFrg5eUyA2vDK4dMj+Ua6Dd68ShW5
+         b5baKpDOTB8cdQp8D70KjkRFLbQ4YdiS7tRbBXzrVep2HxqRZHHvT0PME6FVW5C2Sd
+         qtPe1vDEWc/G8xuONUtxSQzuQ3YSOEIqDT7Gj8MBs9DMu+Rz6GnzVgbl+AE/FXsYIU
+         3Vh7aSJBBfSdQ==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.23.191]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MXoYS-1oa2eB1e3g-00Y7qT; Fri, 28
- Oct 2022 16:23:27 +0200
-Message-ID: <f443f3ee-95e6-edec-178a-9a06421e24f6@web.de>
-Date:   Fri, 28 Oct 2022 16:23:26 +0200
+Received: from [192.168.178.29] ([79.203.23.191]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1N0Zs0-1p2WmS1P64-00wVru; Fri, 28
+ Oct 2022 16:23:36 +0200
+Message-ID: <943608ab-340d-8cd3-8812-c0f65909000a@web.de>
+Date:   Fri, 28 Oct 2022 16:23:35 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [PATCH 7/8] replace and remove run_command_v_opt_cd_env_tr2()
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 0/8] run-command: remove run_command_v_*()
+To:     Jeff King <peff@peff.net>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
+        <avarab@gmail.com>
 References: <7407e074-4bd8-b351-7fa4-baf59b41880c@web.de>
- <f26f7974-3e87-2ddf-6eeb-5d97f80a4e0d@web.de>
- <221028.86ilk4ano3.gmgdl@evledraar.gmail.com>
+ <Y1rl9arDRGay0CHm@coredump.intra.peff.net>
+Content-Language: en-US
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <221028.86ilk4ano3.gmgdl@evledraar.gmail.com>
+In-Reply-To: <Y1rl9arDRGay0CHm@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:FE0PznIxybiTITH8T+HLzgXDdDnSgjFmUKy3GzxKQP8hSw7wDgq
- 8eCAlpzMvnhWCyMhpdXdX53rnW6ZkmX2EQsoHl5eVqxU/OCu59+9gTYWixmYd3UsQnaB9Av
- +nECEN7RMdeB5sOrekldZ7WP7eOLGxdqgvf8d73/SC3h/U4h8iycJpv/S+gxZNUabeacAYf
- 5gcDOmFvc9gmt2JheNz7w==
-UI-OutboundReport: notjunk:1;M01:P0:KuibcraO86A=;Ypn0IAeThKeOSZihYPMSJRITX5v
- rxhj5oQmalGqIEHg26iMpksrJEiQG3BJc8LfWQRBUkLmd8Ur8G6Fj4yeBzwzIGkLsm5CxtH4q
- mAefbMuUv36VkYBU8NDkneeYUYt2xO4MWpvjqIL4T1+42vNUaN1p0TobWMHgBLt8c+jbLyHyb
- 0BGMFBpIBO/tQoB5oyU3Qyu9PlgJNohuifaNe2cu4XZHZRL9qlwMOBc1CFqzSUL8OnGS499hL
- GR+lR7FcZ3tim/ngBFtoOf1u6/yRu497xm5fWjfqejy/ayWy0r9qXK7f9kyygvNNtcp+iB8vh
- IzB11RwhKCbqYaGoYWfgBltBntGXhAz3ef+bodIANEycFk9CWtFOtmS2ghPPB7DjC9WGhiwJi
- Y4+dVANW/4Cvj0GavdczLL1fSC9Gkx/DJTCKdQHixsDTEdo3wwYV/TLepyt2J3aGlixLHdEav
- PS19WOAw+AACNjcrmMFkp7VwPuuG+Higj1R3hIVz+YV9260SHi2Wk64BYJYqvU8pjipoA9GOj
- dTAU8GdwvlMh+7gYR2gloHKC/RgX5TnHsh/3W9sEY4GZI9aaRtiwUUEDyX74IycPK/XtYReDU
- NbLa0zz6OkLhXhYCHa1sjvh03uOX/gvzx7fBccQgKXJC7pxQdY3WhsXYAokfdLUFMDgncDaNW
- fEk3hnoXhGYZvGrqBHM6B1r0MAia3n1eyuWFV0VZ7Nk+wBlAceTVeO3lDsNKEnnKbc0FHtJXb
- +xgmASv/zET+03eNUxZdAIV2ZVSzflm6ZG8TUUjOMX+a+h1LTxqw4x40JMt0+LLRoeaFYzZf0
- 3mcPlCliVa9bWH4EJVR/YExEl35QnqBuLnIEoW78u3dK4tutc6Ld2Hvk9Omv5EXbqw/VHUeHC
- X5SsweQ0IsqAFEachkcPxF3kUjcRov1kpJO5FidDbDdv3H+Np+2ws4h9HB2I1XY66uyiVMw2F
- yDrmynlMC1B29PHj7Ae91Q+0cl0=
+X-Provags-ID: V03:K1:bVSKroow3VYL3x41iQLocX3tAIo1fj02CfrTaAf1t1t9SGZoBOV
+ ZX6g7xy/iDhwRbwJ01/wdD/avCD7hCdBPf4S0vbM2DiRkrYHEap66QWXoMot+47hHcJRl6v
+ A2aQc4u+HHx8zwX7y9bsO2i0aKw/dFoYRWFWZ7+9fhL4OV44c0n5ehZCNBLBh1pXXV77ODK
+ kYXKPSnfEydm8PBhYYWMg==
+UI-OutboundReport: notjunk:1;M01:P0:8wIjkAz+b4s=;Tb5eKuTh3/sHCL6eby+378AnLOA
+ H+eCqmPrNdy+P68pNGrMxPx7LITOzecE3j2XsKhKG1cYq3GzqolpKgFUQXjVZW4s7ij/apf0u
+ DlAfaehK6tFtNsNj76GuYl+GRthw6MSSR5ND5+1A4wtAKlQ1dZU4O6rdIco3FPaSPUYgLHCK2
+ rpzceuWvoSzyhdd30kb5Ns6QqgSpqyfDeapmvUq7zpnRtc+JgBXWO4/7toKvrgPy3TWoCOlys
+ rtudoHsZUaLoNpoIB8EwVWNfqsgQCF/TtqhUV+qHTJqT1cSTmkoEodX5K8CKAgAYyptF2fd6e
+ /OL8cy7jbvypClYbRzlAyvOjP4Ko+aYoBI3v4HsnBVHb6iOgSV3ptbbbTMWwtJxbKfcEZGBOw
+ KutwAx9PjmGInMnH5VzYQYXx+zgEOLqHbbikpA/SOhqtlqVjrVupcV+xzZLLSzbZagcmlh3fh
+ rGS9IX7EZuT9jdjNZHBtspyRIOKA66OxvAyWtHWyEcHMIsXsaO22TnrigMtdvCThPFX7peCT3
+ HtVPK0Xcjn3s/Y1YdMrGL2pHatXFIVcwTJBTbyE0M3ckYdbWz8WM/o2ISdSGPsYzbdm1RVPAu
+ oqJb5kWuwYgVelJZ2uuwesdb+7GFly+oHkZ0Q1pB7TXFFdb/Z88jseKLZ5QB3PPJXeowU97sB
+ U94+LprrMHZ70UPrgnAMtwhyDXj1V91/ijaM6BNrNmTy6KqL6R8MhpHEl+/USmh0Nx2H50Pbx
+ UoD6BNAKSCuZ5/zJEk6PLP6+WOKppp491AgAdfOSSNMmExRCporQV3L5lWKqPMZKUQhKlFRx+
+ BPjqMJJJZ2F92BEjszyx93zeE0I+S90WQVSxa93em6NV+n3bUEl+X8pE7RcAxmbQ95L8LczBO
+ rRv9AAFkyQluymt9mFrjEUy3Kl29OHSr0YqgZMult4X0h5mN6bna/P7S//TvhB3ZQEP40ullt
+ ZXmmQHRv8oA1qiYXkgRFGxhrwGI=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 28.10.22 um 00:46 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+Am 27.10.22 um 22:11 schrieb Jeff King:
+> On Thu, Oct 27, 2022 at 06:30:36PM +0200, Ren=C3=A9 Scharfe wrote:
 >
-> On Thu, Oct 27 2022, Ren=C3=A9 Scharfe wrote:
->
->> diff --git a/run-command.h b/run-command.h
->> index 482da7f60c..04bd07dc7a 100644
->> --- a/run-command.h
->> +++ b/run-command.h
->> @@ -233,23 +233,15 @@ int run_auto_maintenance(int quiet);
->>  #define RUN_CLOSE_OBJECT_STORE		(1<<7)
+>> Replace the convenience functions run_command_v_opt() et. al. and use
+>> struct child_process and run_command() directly instead, for an overall
+>> code reduction and a simpler and more flexible API that allows creating
+>> argument lists without magic numbers and reduced risk of memory leaks.
 >>
->>  /**
->> - * Convenience functions that encapsulate a sequence of
->> + * Convenience function that encapsulate a sequence of
+>> This is a broken-out and polished version of the original scratch at
+>> https://lore.kernel.org/git/9d924a5d-5c72-fbe6-270c-a8f6c5fc5850@web.de=
+/
 >
-> Maybe we shouldn't bother, because we remove this altogether in 8/8, but
-> this has a grammar error, should be:
+> I read through this and it all looks fine to me. I was a bit puzzled at
+> the layout of your series at first. In particular, the difference
+> between cases in patch 4 versus the later ones.
 >
-> 	Convenience function that encapsulates a sequence of
+> I think it is that in patch 4, these are all unambiguously positive
+> because we are getting rid of magic numbers (or magically-sized arrays).
+> Whereas in patches 5-8, there's nothing inherently wrong with the
+> call-sites; but as we get rid of the API wrappers, we convert them. So
+> they are collateral damage, so to speak, from the simplification of the
+> API.
 >
-> Or:
->
-> 	A convenience function that encapsulates a sequence of
->
-> Not:
->
-> 	Convenience function that encapsulate a sequence of
+> That makes sense to me, though I could point out that most of the sites
+> cleaned up in patch 4 _could_ be converted to look like the ones that
+> are converted in 5-8. Obviously that doesn't make sense to do, knowing
+> that 5-8 are coming. But if the point in splitting it this way is to
+> show that we could stop at patch 4, cleaning up call sites but not
+> shrinking the run-command API, then I just want to point out that there
+> is another way to do those cleanups. :)
 
-Ah, good catch.
+Yes, almost, except that I think 5-7 are doing necessary pruning and 8
+requires a small leap of faith in the value of simplicity.  And I wanted
+to shrink down and simplify that last patch.
 
->
-> If you're re-rolling I think just dropping this hunk is better.
->
-> It can just go away entirely in 8/8. The pre-image had bad grammar
-> anyway, so not worth fixing just to remove it later.
+Ren=C3=A9
