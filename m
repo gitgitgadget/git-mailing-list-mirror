@@ -2,105 +2,178 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2314FECAAA1
-	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 14:23:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3691BC38A02
+	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 14:42:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230157AbiJ1OXx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Oct 2022 10:23:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60620 "EHLO
+        id S230520AbiJ1Om4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Oct 2022 10:42:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229916AbiJ1OXr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2022 10:23:47 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C32E7E02C
-        for <git@vger.kernel.org>; Fri, 28 Oct 2022 07:23:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1666967016; bh=dt2z8Du7H//Tt8VSIAtSD7AI5s10cof5LcWQaPrN5YQ=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=L7PTKA8I6w6oY2ur1hEUx9mUmFihHRzqcB1dE6gjc426aHosCXRe34RV4c1yav2wx
-         HFWeRsKgpkHkKpDoaaM1WVP+Aw3XYpCCevWb+XonvXSUXlegrVctLL4m5l2qTj9Lys
-         oo42Uh07hKQBBBq1dXXJXoNTANz5z5zBtOaPagFrg5eUyA2vDK4dMj+Ua6Dd68ShW5
-         b5baKpDOTB8cdQp8D70KjkRFLbQ4YdiS7tRbBXzrVep2HxqRZHHvT0PME6FVW5C2Sd
-         qtPe1vDEWc/G8xuONUtxSQzuQ3YSOEIqDT7Gj8MBs9DMu+Rz6GnzVgbl+AE/FXsYIU
-         3Vh7aSJBBfSdQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.23.191]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1N0Zs0-1p2WmS1P64-00wVru; Fri, 28
- Oct 2022 16:23:36 +0200
-Message-ID: <943608ab-340d-8cd3-8812-c0f65909000a@web.de>
-Date:   Fri, 28 Oct 2022 16:23:35 +0200
+        with ESMTP id S229962AbiJ1Omc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2022 10:42:32 -0400
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FBCA1F0422
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 07:42:28 -0700 (PDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.nyi.internal (Postfix) with ESMTP id CAAAB5C0143
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 10:42:25 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Fri, 28 Oct 2022 10:42:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm3; t=1666968145; x=1667054545; bh=HDH+Kl26Ub
+        A69CFf2OAykFP3j8YNeMgBfHDHMGfWd74=; b=yAhZns35iF+bMjuD8Y1CJxiDyq
+        ic4M7XKL7CdC2ZLnqG2JlJArrxRDN65fj2l3c2shFf1QRvCS3NAB0WRpD94yWag6
+        ClOY2ZboQUZ+6ijwOvVSOe+rkd6jgEKxhb5BrYZgTfFnAR/fBRGIZ3uWb39MpK7L
+        mYKN57jBuyi0aE8OuCS95QNCtE2jGJqr1uOZbUwA/ao+kHxu3u4T5aH5Rpjl5JwA
+        WD09imDDTr/jPMSPWX6FmMcyi/hIztDCueqDmtY8yrnKm3ht5DkrOHXHt5H+eoDq
+        pLNleiTE2+f4DK+3G7LgmMvKigcrwwqseY9LHK0YPfurCAFAOPhU7EOJ+CPw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm3; t=1666968145; x=1667054545; bh=HDH+Kl26UbA69CFf2OAykFP3j8YN
+        eMgBfHDHMGfWd74=; b=p9n3leHRoW7GRMI8fjBcnhs8o0Jt/pxEOe6j9rOq6VFz
+        gorZ8A5d0k+bb2n8ZdfvGEjn44BM90yNzL4yP215f9Lo4C5okZW6tqR2mlnrHz9m
+        VJOsuTAp9yWXBtJyB3WxDU6e4zruDzZGD4Z+5bKDMN7d/dPvM2z4Pl2pzqx1nRtJ
+        uA9bgY4rOqy2NLKCEM4RtlqFNjyTpsGutyuSgabVIbxDkfVQm1DLzlekIRKrarYJ
+        eMnwbDwBwtDpItFtCj2Xeu4uStCKejrHBkHqhLfzPgngA86Fry31G2Em9cSvF2Lv
+        r5UOARntrUopnOWtUfjdXOJ2QtR06jeNKqeE7Kp3Ww==
+X-ME-Sender: <xms:UepbY30rPRwCdApFIllHxsMjv5VXwPxhYRIX4wFQGyUHfBFSsOP_Qw>
+    <xme:UepbY2HuT8C1C271X7bXHzo4RkjQUYmeGZQ89kKZ6qhvq44f6iza66DIz5I0r3KqC
+    kSP6ZgB4l7quHpnew>
+X-ME-Received: <xmr:UepbY379_4jGv7lxB-Gg-vqBcG_MjqtylzcfjY_WAG9omq37zlCy0u_9vz07anm0pyAZE6WW226u_HA5FXj5O3OaaAPx_AQWnOejPYX4mZ2BNg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrtdeigdejkecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehgtderre
+    dttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpeehgefhtdefueffheekgfffudelffejtdfhvd
+    ejkedthfehvdelgfetgfdvtedthfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
+X-ME-Proxy: <xmx:UepbY82OyYsFeeWvW7Vlvj8ESKyk5VT7NMhSVnmWZQokQoyGJF0p5g>
+    <xmx:UepbY6G_XUKrzYK8uT2T8sfj_pj6YHCIG8X64pJ_bzUMPqExCgtCyA>
+    <xmx:UepbY9_ZZ0OyFta07ewOJlsz3mDCHCrAfP5q-wBgYj0_3LoO2_-vqg>
+    <xmx:UepbY1wsJZK3yA5tpWxyA49ZvESBI0gPd-hQcywaFZEtdhc6D9SlLA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Fri, 28 Oct 2022 10:42:25 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 50911e7f (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
+        for <git@vger.kernel.org>;
+        Fri, 28 Oct 2022 14:42:17 +0000 (UTC)
+Date:   Fri, 28 Oct 2022 16:42:23 +0200
+From:   Patrick Steinhardt <ps@pks.im>
+To:     git@vger.kernel.org
+Subject: [PATCH 1/2] connected: allow supplying different view of reachable
+ objects
+Message-ID: <a32e3d6146dd41af36f525a744d6cc099b42d6fb.1666967670.git.ps@pks.im>
+References: <cover.1666967670.git.ps@pks.im>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [PATCH 0/8] run-command: remove run_command_v_*()
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
-        <avarab@gmail.com>
-References: <7407e074-4bd8-b351-7fa4-baf59b41880c@web.de>
- <Y1rl9arDRGay0CHm@coredump.intra.peff.net>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <Y1rl9arDRGay0CHm@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:bVSKroow3VYL3x41iQLocX3tAIo1fj02CfrTaAf1t1t9SGZoBOV
- ZX6g7xy/iDhwRbwJ01/wdD/avCD7hCdBPf4S0vbM2DiRkrYHEap66QWXoMot+47hHcJRl6v
- A2aQc4u+HHx8zwX7y9bsO2i0aKw/dFoYRWFWZ7+9fhL4OV44c0n5ehZCNBLBh1pXXV77ODK
- kYXKPSnfEydm8PBhYYWMg==
-UI-OutboundReport: notjunk:1;M01:P0:8wIjkAz+b4s=;Tb5eKuTh3/sHCL6eby+378AnLOA
- H+eCqmPrNdy+P68pNGrMxPx7LITOzecE3j2XsKhKG1cYq3GzqolpKgFUQXjVZW4s7ij/apf0u
- DlAfaehK6tFtNsNj76GuYl+GRthw6MSSR5ND5+1A4wtAKlQ1dZU4O6rdIco3FPaSPUYgLHCK2
- rpzceuWvoSzyhdd30kb5Ns6QqgSpqyfDeapmvUq7zpnRtc+JgBXWO4/7toKvrgPy3TWoCOlys
- rtudoHsZUaLoNpoIB8EwVWNfqsgQCF/TtqhUV+qHTJqT1cSTmkoEodX5K8CKAgAYyptF2fd6e
- /OL8cy7jbvypClYbRzlAyvOjP4Ko+aYoBI3v4HsnBVHb6iOgSV3ptbbbTMWwtJxbKfcEZGBOw
- KutwAx9PjmGInMnH5VzYQYXx+zgEOLqHbbikpA/SOhqtlqVjrVupcV+xzZLLSzbZagcmlh3fh
- rGS9IX7EZuT9jdjNZHBtspyRIOKA66OxvAyWtHWyEcHMIsXsaO22TnrigMtdvCThPFX7peCT3
- HtVPK0Xcjn3s/Y1YdMrGL2pHatXFIVcwTJBTbyE0M3ckYdbWz8WM/o2ISdSGPsYzbdm1RVPAu
- oqJb5kWuwYgVelJZ2uuwesdb+7GFly+oHkZ0Q1pB7TXFFdb/Z88jseKLZ5QB3PPJXeowU97sB
- U94+LprrMHZ70UPrgnAMtwhyDXj1V91/ijaM6BNrNmTy6KqL6R8MhpHEl+/USmh0Nx2H50Pbx
- UoD6BNAKSCuZ5/zJEk6PLP6+WOKppp491AgAdfOSSNMmExRCporQV3L5lWKqPMZKUQhKlFRx+
- BPjqMJJJZ2F92BEjszyx93zeE0I+S90WQVSxa93em6NV+n3bUEl+X8pE7RcAxmbQ95L8LczBO
- rRv9AAFkyQluymt9mFrjEUy3Kl29OHSr0YqgZMult4X0h5mN6bna/P7S//TvhB3ZQEP40ullt
- ZXmmQHRv8oA1qiYXkgRFGxhrwGI=
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="9DiQ+um+eoVd8iCe"
+Content-Disposition: inline
+In-Reply-To: <cover.1666967670.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 27.10.22 um 22:11 schrieb Jeff King:
-> On Thu, Oct 27, 2022 at 06:30:36PM +0200, Ren=C3=A9 Scharfe wrote:
->
->> Replace the convenience functions run_command_v_opt() et. al. and use
->> struct child_process and run_command() directly instead, for an overall
->> code reduction and a simpler and more flexible API that allows creating
->> argument lists without magic numbers and reduced risk of memory leaks.
->>
->> This is a broken-out and polished version of the original scratch at
->> https://lore.kernel.org/git/9d924a5d-5c72-fbe6-270c-a8f6c5fc5850@web.de=
-/
->
-> I read through this and it all looks fine to me. I was a bit puzzled at
-> the layout of your series at first. In particular, the difference
-> between cases in patch 4 versus the later ones.
->
-> I think it is that in patch 4, these are all unambiguously positive
-> because we are getting rid of magic numbers (or magically-sized arrays).
-> Whereas in patches 5-8, there's nothing inherently wrong with the
-> call-sites; but as we get rid of the API wrappers, we convert them. So
-> they are collateral damage, so to speak, from the simplification of the
-> API.
->
-> That makes sense to me, though I could point out that most of the sites
-> cleaned up in patch 4 _could_ be converted to look like the ones that
-> are converted in 5-8. Obviously that doesn't make sense to do, knowing
-> that 5-8 are coming. But if the point in splitting it this way is to
-> show that we could stop at patch 4, cleaning up call sites but not
-> shrinking the run-command API, then I just want to point out that there
-> is another way to do those cleanups. :)
 
-Yes, almost, except that I think 5-7 are doing necessary pruning and 8
-requires a small leap of faith in the value of simplicity.  And I wanted
-to shrink down and simplify that last patch.
+--9DiQ+um+eoVd8iCe
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Ren=C3=A9
+The connectivity check is executed via git-receive-pack(1) to verify
+that a client has provided all references that are required to satisfy a
+set of reference updates. What the connectivity check does is to walk
+the object graph with all reference tips as starting points while all
+preexisting reference tips are marked as uninteresting.
+
+Preexisting references are currently marked uninteresting by passing
+`--not --all` to git-rev-list(1). Some users of the connectivity check
+may have a better picture of which objects should be regarded as
+uninteresting though, e.g. by reusing information from the reference
+advertisement when serving a push.
+
+Add a new field to `struct check_connected_options` that allows callers
+to replace the `--not --all` logic with their own set of object IDs they
+regard as uninteresting.
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ connected.c | 9 ++++++++-
+ connected.h | 7 +++++++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/connected.c b/connected.c
+index 74a20cb32e..2a4c4e0025 100644
+--- a/connected.c
++++ b/connected.c
+@@ -98,7 +98,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+ 	strvec_push(&rev_list.args, "--stdin");
+ 	if (has_promisor_remote())
+ 		strvec_push(&rev_list.args, "--exclude-promisor-objects");
+-	if (!opt->is_deepening_fetch) {
++	if (!opt->is_deepening_fetch && !opt->reachable_oids_fn) {
+ 		strvec_push(&rev_list.args, "--not");
+ 		strvec_push(&rev_list.args, "--all");
+ 	}
+@@ -125,6 +125,13 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+=20
+ 	rev_list_in =3D xfdopen(rev_list.in, "w");
+=20
++	if (opt->reachable_oids_fn) {
++		const struct object_id *reachable_oid;
++		while ((reachable_oid =3D opt->reachable_oids_fn(opt->reachable_oids_dat=
+a)) !=3D NULL)
++			if (fprintf(rev_list_in, "^%s\n", oid_to_hex(reachable_oid)) < 0)
++				break;
++	}
++
+ 	do {
+ 		/*
+ 		 * If index-pack already checked that:
+diff --git a/connected.h b/connected.h
+index 6e59c92aa3..f09c7d7884 100644
+--- a/connected.h
++++ b/connected.h
+@@ -46,6 +46,13 @@ struct check_connected_options {
+ 	 * during a fetch.
+ 	 */
+ 	unsigned is_deepening_fetch : 1;
++
++	/*
++	 * If non-NULL, use this iterator to determine the set of reachable
++	 * objects instead of marking all references as unreachable.
++	 */
++	oid_iterate_fn reachable_oids_fn;
++	void *reachable_oids_data;
+ };
+=20
+ #define CHECK_CONNECTED_INIT { 0 }
+--=20
+2.38.1
+
+
+--9DiQ+um+eoVd8iCe
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmNb6k4ACgkQVbJhu7ck
+PpRnsA//WBZZIMoFJI9eHwPeSjds0DlfFSSE6DRE16oMyYIthmB+4kGmmm3CnRxy
+WBo91a+J4DW7LD91mVKgrgqSTnsfqgGRCQigjvkf8ilvdqOZzG/d9hbV2vp2VlOR
+tbHXfZWep7OPGPWI+tTLs2768yQtib6W+cYIR1b+2FLhyxzHOnyUMzOY+57o3+hy
+ji6wJKOIdULDta/biyYwxBhJAXrJAIyxBVTC8jtABdTfZ9Yl8oNBePiLRnMNopbJ
+8vs6QpTgD1I0vnp00G/rsdn7fWVmCEPA7NhRHDd8gGRC37j0e10PPtF/JsnFa4ZU
+dgdgFAnbIS/TZX3+si/S3+ZbsN6f97mYuHD3O6z6hRj8RVOVBUojQJ/nfVez2BS3
+kmO1vH1jN4Ai0LinpnKpITy2mIq5n8ngUQJ9hgNmd8KTfvXMkH2+oQugXS3A08qi
+K9Lx6LDs7hxPyrA/P+sWxf44O/HYQ3Py9Pgh+pWj+lSWXyzCmTy0+LAWk46ze7sr
+ccDnzpLfUOOkag6n5dMt0w/SrHE0y38rLzH24/MSHXnux+gOott8MXkp+XtYLn9z
+x3tjH3/WXY5NVQNyS8wPyfSyAyfsu0RPH+bytTQADt3K+fNEBvz3gY1Eb7lt0sUq
+nWAPepgdYFdXLD2SzxVqjrAQlOR/fyUbBd6Iq0ryFjhgdJoQgD4=
+=e9+M
+-----END PGP SIGNATURE-----
+
+--9DiQ+um+eoVd8iCe--
