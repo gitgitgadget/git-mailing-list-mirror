@@ -2,107 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05F68ECAAA1
-	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 23:12:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2370AFA3741
+	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 23:43:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229574AbiJ1XMo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Oct 2022 19:12:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42906 "EHLO
+        id S229889AbiJ1XnP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Oct 2022 19:43:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229880AbiJ1XMV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2022 19:12:21 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F85324CC9D
-        for <git@vger.kernel.org>; Fri, 28 Oct 2022 16:12:00 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-360a7ff46c3so55181647b3.12
-        for <git@vger.kernel.org>; Fri, 28 Oct 2022 16:12:00 -0700 (PDT)
+        with ESMTP id S229670AbiJ1XnN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2022 19:43:13 -0400
+Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08B059B841
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 16:43:13 -0700 (PDT)
+Received: by mail-il1-x12b.google.com with SMTP id r1so3743574ilg.6
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 16:43:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Czk5+T5qLE3sCKe+9iMd+0Pj3A3cDgg0g3PYVqrfJ6g=;
-        b=hlP5p6aONqQqLbXq5b+jRUCdcst7D5pRKXYJa29xgh7cRmyVHFTA7QjhKFTu5Q1m1w
-         9H4QdCa8hHIXirWKUB0r2i01Dlse4a6R+b0i0UN4JoiqXxOElCxf9w/9blFVw+l2HQPz
-         yd/zSvaxsDsnpH+VawabAvtgsCyZnV3W8XNR8zFNJu4h+6yeq3PIYblmX25ct+iSSrTA
-         IDl0cuImYMKtFYJ+Bt5F+mkwvlj/V/qUx/NpbZUli/h87RH/sVZevv+xpFi2ZOLwJaZY
-         A/pqfaTTkrAWZbUKPYYld9qi7KjU/Iel47B6BSP5j0juQIKlC41Qfgto7wLoBTGAaB32
-         I4mg==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wxrvkFp30g9RscftVrVw6zduEJ9o2RClRNt5y8mKyis=;
+        b=SYA5vjCwqgxO8MdmIPi5CjwQr4oUO8C1xfBGfp7HrM40PscAU1xkDhEa+lFlg16LPX
+         1vPcah1cqYqH3WlYihfzvrnsKIqYK7gCGQ+gLfDWJY3grGX09QRBA5fCM3CHNQyRif7L
+         hZBgzR6euuy/8YmOgfIIkkKArLeqKbHsLANo7FMF+wJiQN3U4qs4bo+19+vquHb7GOHw
+         4QAXFoXOrckAsle93k/Ql44q/nB5SohwhCKIqYwXHK8t4b2e8Rzd38IuE11GxG4YMfn5
+         OCRp8gFSLuyYcKf0Uv1Sb3V8fB0zkgQ4hMpyBshxuAZ9LErCCFPo/R2x695x7cOceMQn
+         aKiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Czk5+T5qLE3sCKe+9iMd+0Pj3A3cDgg0g3PYVqrfJ6g=;
-        b=HO/K5fdLRkhu1co9aqL30bulVCfk8SoJ1RmWY6ybYNToFMh6DQ+nhrvn28tEhlfF46
-         t/I64T4aLwj0omZEHzctRIux7chYezh+W1TKb8i4/ya1WQfM7BRqtNpgbU5RlEUnWY1j
-         eGjy4Owesf96H7ojyixemw1OvaOBY2Vl6Ioynj6wNIwXRgOHigKQuNChCEkInj80uzYx
-         iF4noPCXjAGGeA05Ijvvg3Mmb9FGuCaqEcIHGoaYnVBtyGlXyPdT+bdVOs+UkihFRS/G
-         4E2B1Z56XfDwYUDBJ6r5eQKk4e5NJY8UfKpiGbuoq3wXF3qFZlxGHE0l3HXGuoZ7xh9y
-         VlUA==
-X-Gm-Message-State: ACrzQf1Vtpw+PiMoVADe1D06g+2hPtM3nrwD+UGvvzj5XSFAxxD8AGHb
-        kgmzdA4gguu82a7YsZBob0ky3pIU8Xxl6g==
-X-Google-Smtp-Source: AMsMyM7SUxbTshc/AwEdMlAhXOf5vEXLifGUji2ZLB3cdVid2+3kBGp6R6EZaqcFip+T1XLDIF/mEkiDn/v0jA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a81:a148:0:b0:36d:451:1ae3 with SMTP id
- y69-20020a81a148000000b0036d04511ae3mr4ywg.412.1666998719518; Fri, 28 Oct
- 2022 16:11:59 -0700 (PDT)
-Date:   Fri, 28 Oct 2022 16:11:58 -0700
-In-Reply-To: <xmqqfsf7hb56.fsf@gitster.g>
-Mime-Version: 1.0
-References: <pull.1321.v2.git.git.1666297238.gitgitgadget@gmail.com>
- <pull.1321.v3.git.git.1666988096.gitgitgadget@gmail.com> <bd8ffd7cde2feb3853f837778d660c0f47db32ff.1666988096.git.gitgitgadget@gmail.com>
- <xmqqfsf7hb56.fsf@gitster.g>
-Message-ID: <kl6l8rkzczlt.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v3 5/8] submodule: return target of submodule symref
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wxrvkFp30g9RscftVrVw6zduEJ9o2RClRNt5y8mKyis=;
+        b=NLD/PHcG0J85oLNJCsVVpWaA1hZCOjNaWVAgfLP6cP8KOYRoW0k93pDVRx3g/s5Wkw
+         XCVAbVvGF2G2GYRmRo+VW3AIjVjxqRKd9n+kLb5B7znJEKUGaH6fEv0v7ilbSybk0xbT
+         9TP3I7DTE2N59YfptdSS3FIGL1EgsqTuxEGrCsLHpE1NgQ8xtfvO48DyTZmHHWFPLgaB
+         XukqyM/iFx55tlTPP7nQS36srMj2KwSscvuK44JI99fR8LK9sVUdX8jcYhew1sPC758f
+         3M46UytwvlwJX/godtS/ObCvit39h3qhs5QiKGrmoqViZaHL7pDfCuYWp/vXViQLrHW7
+         R3ow==
+X-Gm-Message-State: ACrzQf1w9YaXRah+ECo/uWxodkCnSDoiOqLLZGKG3xj4cQtdHFH8rEhs
+        TVufMCGjFTQ3h+mr3kDvo0TNXFbAXlLhbvy9
+X-Google-Smtp-Source: AMsMyM5PcKfVt05LlztH2k02Day5btq/R+Un4/irorHVqrqOXq0Y7oxx1v8JWLgHZY9nrpW+IvzHzQ==
+X-Received: by 2002:a92:6b0e:0:b0:2ff:df3e:995b with SMTP id g14-20020a926b0e000000b002ffdf3e995bmr846630ilc.193.1667000592110;
+        Fri, 28 Oct 2022 16:43:12 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id z14-20020a056638214e00b00363aec42c13sm21731jaj.65.2022.10.28.16.43.11
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Oct 2022 16:43:11 -0700 (PDT)
+Date:   Fri, 28 Oct 2022 19:43:10 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Subject: A note from the (interim) maintainer
+Message-ID: <Y1xpDuyKccCRJCv7@nand.local>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+While Junio is gone for a few weeks, I'll be filling in as interim
+maintainer.
 
-> "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->>  int resolve_gitlink_ref(const char *submodule, const char *refname,
->> -			struct object_id *oid)
->> +			struct object_id *oid, const char **target_out)
->>  {
->>  	struct ref_store *refs;
->>  	int flags;
->> +	const char *target;
->>  
->>  	refs = get_submodule_ref_store(submodule);
->>  
->>  	if (!refs)
->>  		return -1;
->> -
->> -	if (!refs_resolve_ref_unsafe(refs, refname, 0, oid, &flags) ||
->> -	    is_null_oid(oid))
->> +	target = refs_resolve_ref_unsafe(refs, refname, 0, oid, &flags);
->> +	if (!target || is_null_oid(oid))
->>  		return -1;
->> +	if (target_out)
->> +		*target_out = target;
->>  	return 0;
->>  }
->
-> Please remind me why we call this underlying helper _unsafe()?
->
-> Isn't it because we return a temporary buffer  (static strbuf),
-> whose contents is not permanent?
+I am planning on picking up topics from the list to keep things moving
+steadily on "master" and "next". I'll publish the broken-out topics to
+my fork at:
 
-8cad4744ee (Rename resolve_ref() to resolve_ref_unsafe(), 2011-12-12)
-seems to suggest so.
+    git@github.com:ttaylorr/git.git
 
-(For some reason, I thought it was *_unsafe() because it would die(),
-but it obviously doesn't.)
+...which is analogous to how topics are broken out in Junio's own
+fork.
 
-> I am wondering if we should force the callers who care enough to
-> pass the optional **target_out to xstrdup() the result.
+I'll keep the main integration branches up-to-date at the usual spot:
 
-Yes, makes sense. We even have the *_refdup() helper for that.
+    git@github.com:git/git.git
+
+...though note that the other mirrors (including kernel.org) will not
+be kept up-to-date. Junio can push out the state of the main
+integration branches to those mirrors once he is back.
+
+There is nothing new in either of those spots yet. I'll start
+graduating existing topics to master, based on any comments from the
+last "What's Cooking" message [1].
+
+I'll do a new push-out in the next couple of days. If you have a topic
+in flight with no response, I probably just haven't looked at it yet.
+If you don't see it in the next "What's Cooking", though, I probably
+missed it and you should nudge me or resend it.
+
+Thanks,
+Taylor
+
+[1]: https://lore.kernel.org/git/xmqqy1szef49.fsf@gitster.g/
