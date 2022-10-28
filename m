@@ -2,226 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73DCAFA3740
-	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 19:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 922BDECAAA1
+	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 19:16:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229877AbiJ1TOR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Oct 2022 15:14:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33530 "EHLO
+        id S229824AbiJ1TQb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Oct 2022 15:16:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42086 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229455AbiJ1TOE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2022 15:14:04 -0400
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91C6F22C453
-        for <git@vger.kernel.org>; Fri, 28 Oct 2022 12:14:02 -0700 (PDT)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 911B5CA1272;
-        Fri, 28 Oct 2022 15:14:01 -0400 (EDT)
-Received: from jeffhost-mbp.local (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 3DA67CC833D;
-        Fri, 28 Oct 2022 15:14:01 -0400 (EDT)
-Subject: Re: [PATCH v2 6/6] t5556-http-auth: add test for HTTP auth hdr logic
-To:     Derrick Stolee <derrickstolee@github.com>,
-        Matthew John Cheetham via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc:     Lessley Dennington <lessleydennington@gmail.com>,
-        Matthew John Cheetham <mjcheetham@outlook.com>,
-        Matthew John Cheetham <mjcheetham@github.com>
-References: <pull.1352.git.1663097156.gitgitgadget@gmail.com>
- <pull.1352.v2.git.1666372083.gitgitgadget@gmail.com>
- <f3f13ed8c8238f396163dd0e6a3d6c948c2b879b.1666372083.git.gitgitgadget@gmail.com>
- <8593dd49-4d95-ed4f-b414-8170efc138d4@github.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <d61d8881-ce58-de02-2c3b-e3cc812e316a@jeffhostetler.com>
-Date:   Fri, 28 Oct 2022 15:14:00 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.0; rv:68.0)
- Gecko/20100101 Thunderbird/68.8.0
+        with ESMTP id S229678AbiJ1TQ1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2022 15:16:27 -0400
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F81B23478B
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 12:16:26 -0700 (PDT)
+Received: by mail-pf1-x42a.google.com with SMTP id k22so5578749pfd.3
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 12:16:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OMcqE0juTmV8/BEN8V7XjfYgOcWiMO3w0qf0mlPMlwc=;
+        b=gKgmABwIYqDK+KcDdzJ5veQ/V+1jsww8UtrXnDMLhP9VL5m8TlsPBOmLvzlm0yk55J
+         WIXys3OqHye2GLPA7mV2TNu2DSUv0/T1xfwV1VjXSUj7AufySdKFcnoEivcaEcTP40hM
+         CPLwsZ9h3h0XZk2c7UVkaS3hSxb4T4X36lBCiKfFQSDamBFzJGyL9daU10CfUG6Fj1hO
+         AR0OZiQyfxUU4RI5JqJfZ1pbfPjobXwIfN1CReg3UCB7Fg0cQJXburtwJuJFwyYLQgGf
+         C8kX+cq4984GOBu5c1B6YV3BFnnNfBcNzMoA1BGXZ+UwFHVSCzn70yskUatP/SI1TdSC
+         9HDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OMcqE0juTmV8/BEN8V7XjfYgOcWiMO3w0qf0mlPMlwc=;
+        b=Cqc0f1E8sjcAjjtvFQFMfSSXrodxZGPU27/9LPYCQgEI768rD4faq24tFgoIkd9Pfc
+         otMHzlPSOjNByy6RvoZkjGESjPfgNqdDuUv8Z0UctqlsMIN1OESO99P1goHoKjLBcI4E
+         AvARHd46jZXnmShiDmn8HPWceosuJMnjkHSOd8Mva4hJ2XGcnjdYru56H9D+RxHgl2++
+         h5qCbgtpCVnhZZXQNOVMBgfiac55XsETrWAzu94awZXT82BZj2ivksnhhPdePrsTq+tX
+         /kCvMOzWr+Hoz2epJ8WCa/BAwRIzOeEH/8M3aH5XUnwuV2KIAvQNDoIBIKdWsCJDq7F9
+         MW+Q==
+X-Gm-Message-State: ACrzQf14DlDnvkiHdLEOhyKC/qoNbHninnBr7poDfrXAOnQ4OVLQ8OtC
+        hfek+4Jriddh6QVcbBrd0ck=
+X-Google-Smtp-Source: AMsMyM5xs+zw3LMprLmGjFfrqKfoaFMDw0hIHFfoEVoKQFWh2E4WtnMB+D1wjBUa90jt4l8mejl/vA==
+X-Received: by 2002:a05:6a00:15c3:b0:56c:e8d0:aaf1 with SMTP id o3-20020a056a0015c300b0056ce8d0aaf1mr620347pfu.75.1666984585653;
+        Fri, 28 Oct 2022 12:16:25 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id p28-20020aa79e9c000000b0056b9ec7e2desm3140851pfq.125.2022.10.28.12.16.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 28 Oct 2022 12:16:25 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
+        <szeder.dev@gmail.com>
+Subject: Re: [PATCH 09/10] config API: add "string" version of
+ *_value_multi(), fix segfaults
+References: <cover-00.10-00000000000-20221026T151328Z-avarab@gmail.com>
+        <patch-09.10-bda9d504b89-20221026T151328Z-avarab@gmail.com>
+        <xmqq4jvpkpxd.fsf@gitster.g> <xmqqzgdhjb89.fsf@gitster.g>
+        <221028.861qqsajx6.gmgdl@evledraar.gmail.com>
+Date:   Fri, 28 Oct 2022 12:16:24 -0700
+In-Reply-To: <221028.861qqsajx6.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Fri, 28 Oct 2022 01:44:19 +0200")
+Message-ID: <xmqqmt9fiws7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <8593dd49-4d95-ed4f-b414-8170efc138d4@github.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: mailmunge 3.09 on 209.68.5.199
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
+>> Actually, I take it back.  Instead of introducing _string(), how
+>> about introducing _bool() and convert those minority callers that do
+>> want to see boolean values to use the new one, while rejecting NULLs
+>> for everybody else that calls the traditional "get_value" family of
+>> functions?  That would "optimize" for the majority of simpler users,
+>> wouldn't it?
+>
+> I don't think the goal should be just to optimize for those current
+> users, but to leave the config API in a state where it makes sense
+> conceptually.
 
-On 10/28/22 11:08 AM, Derrick Stolee wrote:
-> }
-> 
->> diff --git a/t/helper/test-http-server.c b/t/helper/test-http-server.c
-> 
->> @@ -0,0 +1,1134 @@
->> +#include "config.h"
->> +#include "run-command.h"
->> +#include "strbuf.h"
->> +#include "string-list.h"
->> +#include "trace2.h"
->> +#include "version.h"
->> +#include "dir.h"
->> +#include "date.h"
->> +
->> +#define TR2_CAT "test-http-server"
->> +
->> +static const char *pid_file;
->> +static int verbose;
->> +static int reuseaddr;
->> +
->> +static const char test_http_auth_usage[] =
->> +"http-server [--verbose]\n"
->> +"           [--timeout=<n>] [--init-timeout=<n>] [--max-connections=<n>]\n"
->> +"           [--reuseaddr] [--pid-file=<file>]\n"
->> +"           [--listen=<host_or_ipaddr>]* [--port=<n>]\n"
->> +"           [--anonymous-allowed]\n"
->> +"           [--auth=<scheme>[:<params>] [--auth-token=<scheme>:<token>]]*\n"
->> +;
-> 
-> These are a lot of options to implement all at once. They are probably
-> simple enough, but depending on the implementation and tests, it might
-> be helpful to split this patch into smaller ones that introduce these
-> options along with the tests that exercise each. That will help
-> verify that they are being tested properly instead of needing to track
-> back and forth across the patch for each one.
+It is more like guiding a conceptually clean design using the need
+of the current users to rein in pursuit of theoretical "elegance".
 
-how many of these options were inherited from test-gvfs-protocol or
-from upstream git-daemon?  If most came from git-daemon, it's probably
-easier to see that this was a cut-n-paste from it if it comes over in
-one commit, since all of the OPT_ processing, usage(), and static global
-state vars will come over together I would think -- rather than to build
-up the arg parsing bit by bit.  More on this in a minute...
+> Now, if we don't supply the equivalent of the "raw, but multi-value"
+> function we'll make it hard to use the API, because now you can't think
+> about it as the "multi" just being a list version of what you get with
+> the scalar version.
 
+I am not interested in _bool() variant that "stringifies" NULL to
+"true" at all.  What I was suggesting was:
 
->> +
->> +/* Timeout, and initial timeout */
->> +static unsigned int timeout;
->> +static unsigned int init_timeout;
->> +
->> +static void logreport(const char *label, const char *err, va_list params)
->> +{
->> +	struct strbuf msg = STRBUF_INIT;
->> +
->> +	strbuf_addf(&msg, "[%"PRIuMAX"] %s: ", (uintmax_t)getpid(), label);
->> +	strbuf_vaddf(&msg, err, params);
->> +	strbuf_addch(&msg, '\n');
->> +
->> +	fwrite(msg.buf, sizeof(char), msg.len, stderr);
->> +	fflush(stderr);
->> +
->> +	strbuf_release(&msg);
->> +}
->> +
->> +__attribute__((format (printf, 1, 2)))
->> +static void logerror(const char *err, ...)
->> +{
->> +	va_list params;
->> +	va_start(params, err);
->> +	logreport("error", err, params);
->> +	va_end(params);
->> +}
->> +
->> +__attribute__((format (printf, 1, 2)))
->> +static void loginfo(const char *err, ...)
->> +{
->> +	va_list params;
->> +	if (!verbose)
->> +		return;
->> +	va_start(params, err);
->> +	logreport("info", err, params);
->> +	va_end(params);
->> +}
+ * Reserve the current get and get_multi for those who should have
+   been calling config_error_nonbool() themselves (because your
+   _string() has not been available to them, they were lazy not to
+   bother, leading to NULL dereference given certain end-user data).
+   And do the config_error_nonbool() inside the updated get and
+   get_multi without introducing _string() variant at all.
 
-...Maybe it would be easier to see/diff this large new test server
-if we copied `daemon.c` into this source file in 1 commit and then
-converted it to what you have now in 1 commit -- so that only new
-code shows up here.  For example, all of the above logreport, logerror,
-and loginfo routines would show up as new in the copy commit, but not
-in the edit commit.  However, that may lead to too much noise when
-you actually get into the meat of the auth changes, maybe.
+ * The above alone WILL break callers who are prepared to handle
+   "bool" and "bool plus some other string", because they are fully
+   expecting that the get API will give them NULL but the above
+   update will instead stop before they see the NULL they are
+   prepared to handle themselves.  Introduce _bool variants and make
+   them call them.
 
-
-> I wonder how much of this we need or is just a nice thing. I would
-> err on the side of making things as simple as possible, but being
-> able to debug this test server may be important based on your
-> experience.
-
-i'd vote to keep it.
-
-[...]
->> +static void kill_some_child(void)
-> 
->> +static void check_dead_children(void)
-> 
-> These technically sound methods have unfortunate names.
-> Using something like "connection" over "child" might
-> alleviate some of the horror. (I initially wanted to
-> suggest "subprocess" but you compare live_children to
-> max_connections in the next method, so connection seemed
-> appropriate.)
-
-These names were inherited from `daemon.c` IIRC. I wouldn't change
-them since it'll just introduce noise when diffing.  Especially,
-if we do the copy commit first.
-
-
-[...]
->> +static struct strvec cld_argv = STRVEC_INIT;
->> +static void handle(int incoming, struct sockaddr *addr, socklen_t addrlen)
->> +{
->> +	struct child_process cld = CHILD_PROCESS_INIT;
->> +
->> +	if (max_connections && live_children >= max_connections) {
->> +		kill_some_child();
->> +		sleep(1);  /* give it some time to die */
->> +		check_dead_children();
->> +		if (live_children >= max_connections) {
->> +			close(incoming);
->> +			logerror("Too many children, dropping connection");
->> +			return;
->> +		}
->> +	}
-> 
-> Do we anticipate exercising concurrent requests in our
-> tests? Perhaps it's not worth putting a cap on the
-> connection count so we can keep the test helpers simple.
-
-again, this code was inherited from `daemon.c`, so we could leave it.
-
-[...]
->> +			mod = xmalloc(sizeof(struct auth_module));
->> +			mod->scheme = xstrdup(p[0]->buf);
->> +			mod->challenge_params = p[1] ? xstrdup(p[1]->buf) : NULL;
-> 
-> Here, you xstrdup() into a 'const char *', but you are really
-> passing ownership so it shouldn't be conts.
-
-There is a strbuf_detach() that will let you steal the buffer from the
-strbuf if that would help.
-
-
-[...]
-> This was a lot to read, and the interesting bits are all mixed in
-> with the http server code, which is less interesting to what we
-> are trying to accomplish. It would be beneficial to split this
-> into one or two patches before we actually introduce the tests.
-
-agreed. it is big, but it does make sense.  perhaps doing the
-copy daemon.c commit and then see how this commit diffs from it
-would make it more manageable. (not sure, but worth a try.)
-
-[...]
->  From what I read, I don't think there is much to change in
-> the end result of the code, but it definitely was hard to read
-> the important things when surrounded by many lines of
-> boilerplate.
-
-agreed. i think the end result is good.
-
-Thanks
-Jeff
-
+without any "stringifying" at all.
 
