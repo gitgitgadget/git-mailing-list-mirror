@@ -2,127 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C29D0FA3740
-	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 19:50:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 95A5AC38A02
+	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 19:54:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229750AbiJ1TuA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Oct 2022 15:50:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46536 "EHLO
+        id S229755AbiJ1Tyo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Oct 2022 15:54:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229743AbiJ1Ttt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2022 15:49:49 -0400
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D870E9C22C
-        for <git@vger.kernel.org>; Fri, 28 Oct 2022 12:49:44 -0700 (PDT)
-Received: by mail-io1-xd36.google.com with SMTP id z3so5479500iof.3
-        for <git@vger.kernel.org>; Fri, 28 Oct 2022 12:49:44 -0700 (PDT)
+        with ESMTP id S229531AbiJ1Tyn (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2022 15:54:43 -0400
+Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 541252465F9
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 12:54:42 -0700 (PDT)
+Received: by mail-io1-xd2b.google.com with SMTP id y6so2509265iof.9
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 12:54:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+8gs9XE2ovM4fsuxGfwrysFltUp/IgfMGCeACLdEBSk=;
-        b=CVPL2n8bRrMRbI2reLu5Id3HjI3zpPoy9gR/YkAsWCHUYTCvnqJW5SHUOi7SNwh+6e
-         NtwX3k5NDYM0W4JDkr+oMkuHfkoeCAm13lJBd+PBK9NM08uV+fs9FfZVlgG/lm2iHizf
-         roE/7pXfHpB9gLZwl/XVqr+aRg4i63nlvKaBFa1f23izDcMKz5yY6kqUgADJ+8Vhoyql
-         JhgJTjl9Ug+VwlnUS/mgo5YTfAMKsZ6+caPJ7BseaQSNjogANdQqYEsWLhRtGiQguqRr
-         Hqd2fol58JtSrnIa2AqEZ5p8zpVUBl6BpmGD100aDJnmV4aUnhr56SL9gSxb7TJTprsz
-         txCA==
+        bh=wZT3rPo3t/bYKxR19klDlXAVNuYx/JVlJmY09p/OTQY=;
+        b=O3DDCz200Qd7JhHMhxy8GOw67yHaD72kNl6/HN5HYySNCPcPJLOrszG4ei17Gun0NO
+         Kq4s4SPHtmAKtA8FQIXFTS37D8+LvPbvvA1uer9xMPYhbP3eXyXjkjLCdbSZ0R5VliGs
+         jLl+9QODhqFbU+vtveh1bQnJ6U7vvf6JaqRMLu7i1nGux2DXPPbOgpQp4ean0IeCY4sL
+         UmWL5kDFKllWZs7wM4VkS8rJNPXGszjSlra+jpk0GKw/d3/d4JTxMuMzmogNi3TlFS2r
+         TFtG9JFW9SkfPFTqomx4gKqSl8LaiyttOSnrSPwxqYLcr/+v0PRha0272y5xoyQdEU7O
+         U9Mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+8gs9XE2ovM4fsuxGfwrysFltUp/IgfMGCeACLdEBSk=;
-        b=4aV4FkxSWtbt6w1L9pbhTxMTiluin5Rq2HCJsdvpqo83//dB06y+FwfgldQECy+Kto
-         HQmZPQU/1G9uWd3XEmepy3qZJXTeUpbCiGd66ZubmnXYuLof6Y8PYKFSY1RwJ6OjTunT
-         EgN1uGdMJ+AnzYLM5ftGFBoWy+7gyDb3ryEe0PR7MD30zq/6HYLpP8Awff4slEI/3wa7
-         OwWs86n/k5sIJFW+V44cu4lm4Ks8tUDYdhp45ugrhRu/aM5zYM6szeBK8/kyOt2obLaE
-         +FCO20oCjcuIvG+OaF0X0biOMFKq5GbiVkJUmFzvYxHvfixheK0BlmhhZe5bgHzRgpEh
-         bnAA==
-X-Gm-Message-State: ACrzQf1J+sxU4Z12T7NtfSDC94T5BaoVD2yVNUlGsvtXFRVWq1gX0BpL
-        VE4c3EC+qp/GPwb8X4z6EgNVNWNacXBS/djF
-X-Google-Smtp-Source: AMsMyM5AvLYP6oZ6620Jm3U2hy5s2SXRcmYm41tJXWPGOyBtg/iz2Knq56mpxnWKBxKbj3V2ZKXuUA==
-X-Received: by 2002:a5e:9e01:0:b0:6a4:f730:624c with SMTP id i1-20020a5e9e01000000b006a4f730624cmr574479ioq.107.1666986584299;
-        Fri, 28 Oct 2022 12:49:44 -0700 (PDT)
+        bh=wZT3rPo3t/bYKxR19klDlXAVNuYx/JVlJmY09p/OTQY=;
+        b=bjfMBSigr5UAseSW/WAJcl4NoONPHgdR5wkmNwNfZq0h8nzpxvh1b5X+QvzjGBOhME
+         FzfAGdtQdTzvZnlQ9s7liBA294yrvAq44neleywbVaTu0ldGaI3oaDyI/Z613LAibqCy
+         X6fGL+2DKMVWkVOiGdTaHW8IGYW/ejqBpBH3Hxv14r2U4HYu050j2wha+wdTEr2CG10K
+         1XBhO2BC1P/n5fKIBiSbWtdqkPn+mJhVfU/jGaawogoX7vZSs/3BXymJhGfqiN9W7SiX
+         wr7XZiBB1XQr/vayzf2KfZOTrgH5eNPowyDqsaRGGCgulFI5QV/S56XteMW55wmZuUR5
+         gqRA==
+X-Gm-Message-State: ACrzQf3z1PMCUbOb3IzfXyaZLB7DSUO72mYXDtwwJy59WZqJQihh3ymX
+        LnOjm1EH9B4leC5bxT7MkZg3zg==
+X-Google-Smtp-Source: AMsMyM4j6cMjPvIBXEzexgSwThHINPtUQOH9xVWd7s2G2Ek+VE4UKw9n0DMlkRp36GYyUQCjdA/h6g==
+X-Received: by 2002:a6b:690a:0:b0:6c6:9bb1:a4c7 with SMTP id e10-20020a6b690a000000b006c69bb1a4c7mr588563ioc.92.1666986881639;
+        Fri, 28 Oct 2022 12:54:41 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id n8-20020a056602340800b006ca9e36fec8sm746505ioz.54.2022.10.28.12.49.43
+        by smtp.gmail.com with ESMTPSA id n4-20020a056638110400b00374ff5df5ccsm1993397jal.167.2022.10.28.12.54.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Oct 2022 12:49:43 -0700 (PDT)
-Date:   Fri, 28 Oct 2022 15:49:42 -0400
+        Fri, 28 Oct 2022 12:54:41 -0700 (PDT)
+Date:   Fri, 28 Oct 2022 15:54:40 -0400
 From:   Taylor Blau <me@ttaylorr.com>
 To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         John Cai <johncai86@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 0/3] Implement filtering repacks
-Message-ID: <Y1wyVpHprWGxEDi/@nand.local>
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 0/2] Implement filtering repacks
+Message-ID: <Y1wzgOTiKdBcBba0@nand.local>
 References: <20221012135114.294680-1-christian.couder@gmail.com>
- <xmqqilkm9wv6.fsf@gitster.g>
- <CAP8UFD2HX6rK4TRP6ynUzWn4eoHa1FrbiFOtxBaxX-ZkBF3FJw@mail.gmail.com>
+ <20221025122856.20204-1-christian.couder@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAP8UFD2HX6rK4TRP6ynUzWn4eoHa1FrbiFOtxBaxX-ZkBF3FJw@mail.gmail.com>
+In-Reply-To: <20221025122856.20204-1-christian.couder@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Oct 20, 2022 at 01:23:02PM +0200, Christian Couder wrote:
-> On Fri, Oct 14, 2022 at 6:46 PM Junio C Hamano <gitster@pobox.com> wrote:
-> >
-> > Christian Couder <christian.couder@gmail.com> writes:
-> >
-> > > For example one might want to clone with a filter to avoid too many
-> > > space to be taken by some large blobs, and one might realize after
-> > > some time that a number of the large blobs have still be downloaded
-> > > because some old branches referencing them were checked out. In this
-> > > case a filtering repack could remove some of those large blobs.
-> > >
-> > > Some of the comments on the patch series that John sent were related
-> > > to the possible data loss and repo corruption that a filtering repack
-> > > could cause. It's indeed true that it could be very dangerous, and we
-> > > agree that improvements were needed in this area.
-> >
-> > The wish is understandable, but I do not think this gives a good UI.
-> >
-> > This feature is, from an end-user's point of view, very similar to
-> > "git prune-packed", in that we prune data that is not necessary due
-> > to redundancy.  Nobody runs "prune-packed" directly; most people are
-> > even unaware of it being run on their behalf when they run "git gc".
+On Tue, Oct 25, 2022 at 02:28:54PM +0200, Christian Couder wrote:
+> So there are only 2 patches now in this v2 series:
 >
-> I am Ok with adding the --filter option to `git gc`, or a config
-> option with a similar effect. I wonder how `git gc` should implement
-> that option though.
+>   - Patch 1/2 is a preparatory patch.
 >
-> If we implement a new command called for example `git filter-packed`,
-> similar to `git prune-packed`, then this new command will call `git
-> pack-objects --filter=...`.
+>   - Patch 2/2 introduces the `--filter=<filter-spec>` option.
 
-Conceptually, yes, the two are similar. Though `prune-filtered` is
-necessarily going to differ in implementation from `prune-packed`, since
-we will have to write new pack(s), not just delete loose objects which
-appear in packs already.
+One thing that I wasn't clear on in this or the previous round(s) was
+how we handle setting remote.<name>.promisor and partialclonefilter.
 
-So it's really not just a matter of purely deleting redundant loose
-copies of objects like in the case of prune-packed. Here we really do
-care about potentially writing a new set of packs to satisfy the new
-filter constraint.
+If there is a single remote, then it's obvious that we should set
+promisor to "true" and partialCloneFilter to whatever value of
+`--filter` the user provided when repacking / GCing.
 
-Presumably that tool would implement creating the new packs according to
-the given --filter, and would similarly delete existing packs. That is
-basically what your implementation in repack already does, so I am not
-sure what the difference would be.
+But what happens if there are multiple remotes? Which get the new
+configuration settings modified?
 
-> Yeah. So to sum up, it looks like you are Ok with `git gc
-> --filter=...`  which is fine for me, even if I wonder if `git repack
-> --filter=...` could be a good first step as it is less likely to be
-> used automatically (so safer in a way) and it might be better for
-> implementation related performance reasons.
-
-If we don't intend to have `git repack --filter` part of our backwards
-compatibility guarantee, then I would prefer to see the implementation
-just live in git-gc from start to finish.
+I wonder what breakage happens if we fail to do that (and why such
+breakage isn't yet noticed by CI).
 
 Thanks,
 Taylor
