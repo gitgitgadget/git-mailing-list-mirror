@@ -2,163 +2,207 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3745ECAAA1
-	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 00:23:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E1AFDECAAA1
+	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 00:46:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234916AbiJ1AXA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Oct 2022 20:23:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45872 "EHLO
+        id S234377AbiJ1AqH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Oct 2022 20:46:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234235AbiJ1AW6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2022 20:22:58 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 780F2A0246
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 17:22:57 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id 21so5678574edv.3
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 17:22:57 -0700 (PDT)
+        with ESMTP id S234327AbiJ1AqF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2022 20:46:05 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CFE14B9BB
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 17:46:04 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id h9so5005092wrt.0
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 17:46:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=P35Yv5uVO3Zuy04zErpaBlKgan7Djld9uqZ80afuNu4=;
-        b=MY1KtdV/ZAwR6N48+HMWQ0jBP8Ni6lGoszcy7zY+ff9mPXY4Y1ci97Krs4s8ngOx2z
-         Jj+kS1cr6lYGZ3R6RDounveBkDFo3Ab3WO1osxlXiRUEgqewrugAVAReF0Bje4C0B7q/
-         ggv+kTfHHVf15wk1kMSmrOmRYKYGPvOC5fEvvXjEgnD9FCtDeLplvUVmnuOM0sfh7R/k
-         M5sh6NY65iSycthFTjHl+w4iTp/MSo/AsTKZLgSN4tG35mlyPRk6Jx079MqFalGJ17bj
-         wmJznzb8d56iniAiaglZe3czJxMHXqW37dPfQFlUQw04PPUUcKfYo4vnKJ+fe7Ns34YS
-         /mTA==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oWPqpZYEtT/kkQZFdpfFj+ZWJ1izqjLcz0kxaN8IKqQ=;
+        b=F2L4Dh1Ezj17U6uSgYMmIbfTugiYQj9y1diHnO0+aGppT23iplSnmrNuwq6suzja1o
+         rXKD0YI4iGLOEjK0YG2kTn1tpJUR7gQMeGAsR3Z9rILSuXNitm6F+SiPzHfLcYCMa9qG
+         FlgV4yHa1FwUM/swAJK6yUdvy31DTO67acvv7Kl6sMsNYfOODE8I3vw2Csqwt42hBdFP
+         Id9JzizY2oVMXZdEOfyXDChiBTpIxSMISqQK+hOn6X0eQQl5id/yqgMgJWRJNYdEcgH6
+         2POIhurXNdW0yrfUh0gScqi1CdruHQySiiwhcTe2dhfmZNrxL1wOpMHj/NIxsgdvRFut
+         9E6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P35Yv5uVO3Zuy04zErpaBlKgan7Djld9uqZ80afuNu4=;
-        b=p1XJYxHFFWrMJDC/MTHFz0+0xuz0u8n7PFupXhxlOZG2l8qPtlW43Aiz3UVqMiNaFh
-         H45DleIwhM/6cKqxcxza3Hkw+CjYyE9RqxGIyhaLJOqMu4piZIPwf9aB2I5pS+7XVw24
-         1KwBBUW7/lsZ/bR97QEXh6yhD3OSDi9Gq8lEdJ7gMDMK5s8yCLIt213DkkizqSh9JVaG
-         77gKjvgLgj71v+ZzwH3jXZSLSYtCp2qFPgyaEKXx4p+ZIxr+zb1M6wEDK+fPu5SX4e5T
-         6X3k+RFGPpBMTGDCFwmAfSEHU01kPjf6TA9PsyWyxOAWb+uqkItuc0YtdFSEK3+WfsFX
-         S1OQ==
-X-Gm-Message-State: ACrzQf3qJ72VlYulsSza3yt0/JkzDR0t2TzVQFdJl1tgyTt1/0yINyqG
-        z0dX5hBRWoXBkLoNN7va8FXovROJAv6R7Q==
-X-Google-Smtp-Source: AMsMyM6UwzuFyO8uvu714TbkN17hCm6rI0imltLflfedkH9agfe9+nXV5vzq18soDPxeCagiV9pSgQ==
-X-Received: by 2002:aa7:c252:0:b0:462:aa0d:4144 with SMTP id y18-20020aa7c252000000b00462aa0d4144mr3853399edo.57.1666916575839;
-        Thu, 27 Oct 2022 17:22:55 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id 24-20020a170906311800b007933047f930sm1410896ejx.157.2022.10.27.17.22.54
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oWPqpZYEtT/kkQZFdpfFj+ZWJ1izqjLcz0kxaN8IKqQ=;
+        b=CnKkn1Uy0DpaoVvH9Z1Y32sO9IzA0DFB9Hu7kC5H4QjIlEa/ypNC+XTRfSSd79vPLY
+         leBEeThvPYbixzFBz8/k+LPyPyCG4s3z+at3CqYAf/9suF1ijtWFpnA8MjKHXKe78xK/
+         YjkHSNDdmqZQIQjbfnwBZm4M8M+UyH1o+pm6AuCQZUK6P2xQ3WsyPkG26/4700+hqjZo
+         LJVm8/u7hb+JTGaPns8M1zR2+W/4gmJblcqW+Ealltkm2w4QUOnUDlhDHI9ejv04Yjg3
+         5aDXIFMC9nomZTYlmuvc5KAEwHtt6Nhsb5Iw0kGCTVZtLJIMG3CtLY1xP2VMbAJxtdX+
+         zLGg==
+X-Gm-Message-State: ACrzQf3aoPTm1/eExMhIc0pKgpEIbwE/NiWExTGSLRcGk2OKr4OLixb1
+        mJsMMApowQn1ZHlVG+2L8vXGJI3WI0E=
+X-Google-Smtp-Source: AMsMyM7ewmtplggRDsJPVbidYnlMMM0RGwhe1r5jNed0WLzrpBkrB6HQbUoyqfE2cbfVrCrSXVPKfw==
+X-Received: by 2002:adf:dbc7:0:b0:236:4edb:d7c5 with SMTP id e7-20020adfdbc7000000b002364edbd7c5mr25243808wrj.197.1666917962748;
+        Thu, 27 Oct 2022 17:46:02 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id bh17-20020a05600c3d1100b003cf47fdead5sm2850660wmb.30.2022.10.27.17.46.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Oct 2022 17:22:54 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1ooD9C-009gee-0I;
-        Fri, 28 Oct 2022 02:22:54 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Heather Lapointe via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Heather Lapointe <alpha@alphaservcomputing.solutions>
-Subject: Re: [PATCH v3 9/9] archive: add tests for git archive
- --recurse-submodules
-Date:   Fri, 28 Oct 2022 02:17:11 +0200
-References: <pull.1359.v2.git.git.1665660960.gitgitgadget@gmail.com>
- <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com>
- <f88ebbaf17cbf1a0b57336430bd43ade94406f38.1665973401.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <f88ebbaf17cbf1a0b57336430bd43ade94406f38.1665973401.git.gitgitgadget@gmail.com>
-Message-ID: <221028.86wn8k94pu.gmgdl@evledraar.gmail.com>
+        Thu, 27 Oct 2022 17:46:02 -0700 (PDT)
+Message-Id: <pull.1368.v2.git.git.1666917961644.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1368.git.git.1666742722502.gitgitgadget@gmail.com>
+References: <pull.1368.git.git.1666742722502.gitgitgadget@gmail.com>
+From:   "Anh Le via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 28 Oct 2022 00:46:01 +0000
+Subject: [PATCH v2] index: add trace2 region for clear skip worktree
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Timothy Jones <timothy@canva.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <git@jeffhostetler.com>, Anh Le <anh@canva.com>,
+        Anh Le <anh@canva.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Anh Le <anh@canva.com>
 
-On Mon, Oct 17 2022, Heather Lapointe via GitGitGadget wrote:
+In a large repository using sparse checkout, checking
+whether a file marked with skip worktree is present
+on disk and its skip worktree bit should be cleared
+can take a considerable amount of time. Add a trace2
+region to surface this information, keeping a count of how many paths
+have been checked and separately
+keep counts for after a full index is
+materialised.
 
-> From: Heather Lapointe <alpha@alphaservcomputing.solutions>
+Signed-off-by: Anh Le <anh@canva.com>
+---
+    index: add trace2 region for clear skip worktree
+    
+    In large repository using sparse checkout, checking whether a file
+    marked with skip worktree is present on disk and its skip worktree bit
+    should be cleared can take a considerable amount of time. Add a trace2
+    region to surface this information.
 
-[In addition to what others mentioned]
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1368%2FHaizzz%2Fmaster-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1368/Haizzz/master-v2
+Pull-Request: https://github.com/git/git/pull/1368
 
-> +test_description='git archive --recurse-submodules test'
-> +
-> +. ./test-lib.sh
-> +
-> +check_tar() {
-> +	tarfile=$1.tar
-> +	listfile=$1.lst
+Range-diff vs v1:
 
-This "listfile" is used nowhere?"
+ 1:  7d1bb3cba2a ! 1:  effe6b5b912 index: add trace2 region for clear skip worktree
+     @@ Commit message
+          whether a file marked with skip worktree is present
+          on disk and its skip worktree bit should be cleared
+          can take a considerable amount of time. Add a trace2
+     -    region to surface this information.
+     +    region to surface this information, keeping a count of how many paths
+     +    have been checked and separately
+     +    keep counts for after a full index is
+     +    materialised.
+      
+          Signed-off-by: Anh Le <anh@canva.com>
+      
+     @@ sparse-index.c: void clear_skip_worktree_from_present_files(struct index_state *
+       	int dir_found = 1;
+       
+       	int i;
+     -+	intmax_t path_count = 0;
+     -+	intmax_t restart_count = 0;
+     ++	int path_counts[2] = {0, 0};
+     ++	int restarted = 0;
+       
+       	if (!core_apply_sparse_checkout ||
+       	    sparse_expect_files_outside_of_patterns)
+     @@ sparse-index.c: void clear_skip_worktree_from_present_files(struct index_state *
+      -				ensure_full_index(istate);
+      -				goto restart;
+      +		if (ce_skip_worktree(ce)) {
+     -+			path_count++;
+     ++			path_counts[restarted]++;
+      +			if (path_found(ce->name, &last_dirname, &dir_len, &dir_found)) {
+      +				if (S_ISSPARSEDIR(ce->ce_mode)) {
+      +					ensure_full_index(istate);
+     -+					restart_count++;
+     ++					restarted = 1;
+      +					goto restart;
+      +				}
+      +				ce->ce_flags &= ~CE_SKIP_WORKTREE;
+     @@ sparse-index.c: void clear_skip_worktree_from_present_files(struct index_state *
+      -			ce->ce_flags &= ~CE_SKIP_WORKTREE;
+       		}
+       	}
+     -+	trace2_data_intmax("index", istate->repo, "clear_skip_worktree_from_present_files/path_count", path_count);
+     -+	trace2_data_intmax("index", istate->repo, "clear_skip_worktree_from_present_files/restart_count", restart_count);
+     ++
+     ++	if (path_counts[0] > 0) {
+     ++		trace2_data_intmax("index", istate->repo, "clear_skip_worktree_from_present_files/path_count", path_counts[0]);
+     ++	}
+     ++	if (restarted) {
+     ++		trace2_data_intmax("index", istate->repo, "clear_skip_worktree_from_present_files/full_index/path_count", path_counts[1]);
+     ++	}
+      +	trace2_region_leave("index", "clear_skip_worktree_from_present_files", istate->repo);
+       }
+       
 
-> +	dir=$1
-> +	dir_with_prefix=$dir/$2
 
-Nor dir_with_prefix?
+ sparse-index.c | 26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
 
-> +
-> +	test_expect_success ' extract tar archive' '
-> +		(mkdir $dir && cd $dir && "$TAR" xf -) <$tarfile
+diff --git a/sparse-index.c b/sparse-index.c
+index e4a54ce1943..dbf647949c1 100644
+--- a/sparse-index.c
++++ b/sparse-index.c
+@@ -493,24 +493,38 @@ void clear_skip_worktree_from_present_files(struct index_state *istate)
+ 	int dir_found = 1;
+ 
+ 	int i;
++	int path_counts[2] = {0, 0};
++	int restarted = 0;
+ 
+ 	if (!core_apply_sparse_checkout ||
+ 	    sparse_expect_files_outside_of_patterns)
+ 		return;
+ 
++	trace2_region_enter("index", "clear_skip_worktree_from_present_files", istate->repo);
+ restart:
+ 	for (i = 0; i < istate->cache_nr; i++) {
+ 		struct cache_entry *ce = istate->cache[i];
+ 
+-		if (ce_skip_worktree(ce) &&
+-		    path_found(ce->name, &last_dirname, &dir_len, &dir_found)) {
+-			if (S_ISSPARSEDIR(ce->ce_mode)) {
+-				ensure_full_index(istate);
+-				goto restart;
++		if (ce_skip_worktree(ce)) {
++			path_counts[restarted]++;
++			if (path_found(ce->name, &last_dirname, &dir_len, &dir_found)) {
++				if (S_ISSPARSEDIR(ce->ce_mode)) {
++					ensure_full_index(istate);
++					restarted = 1;
++					goto restart;
++				}
++				ce->ce_flags &= ~CE_SKIP_WORKTREE;
+ 			}
+-			ce->ce_flags &= ~CE_SKIP_WORKTREE;
+ 		}
+ 	}
++
++	if (path_counts[0] > 0) {
++		trace2_data_intmax("index", istate->repo, "clear_skip_worktree_from_present_files/path_count", path_counts[0]);
++	}
++	if (restarted) {
++		trace2_data_intmax("index", istate->repo, "clear_skip_worktree_from_present_files/full_index/path_count", path_counts[1]);
++	}
++	trace2_region_leave("index", "clear_skip_worktree_from_present_files", istate->repo);
+ }
+ 
+ /*
 
-Aside from what Jonathan mentioned, maybe we can just use one variable
-here then?
-
-	mkdir $foo ... <$foo.tar
-
-> +	test_expect_success " validate extra file $path_in_archive" '
-> +		test -f $dir/$path_in_archive &&
-
-Instead use "test_path_is_file", and in general for "test <whatever>"
-check out if we have a wrapper in test-lib-functions.sh.
-
-> +check_not_added() {
-> +	dir=$1
-> +	path_in_archive=$2
-> +
-> +	test_expect_success " validate unpresent file $path_in_archive" '
-> +		! test -f $dir/$path_in_archive &&
-> +		! test -d $dir/$path_in_archive
-
-Don't test for what a thing isn't, but what it is. Can't we do that
-here?
-
-> +test_expect_success 'setup' '
-> +	rm -rf repo_with_submodules submodule1 uninited_repo_with_submodules &&
-
-Don't have a test rm -rf stuff from a previous block, but have
-"test_when_finished" clean up after that previous test instead.
-
-> +	git init repo_with_submodules &&
-> +	git init submodule1 &&
-> +	(
-> +		cd submodule1 &&
-
-This:
-> +		echo "dir1/sub1/file1.txt" > "file1.txt" &&
-> +		git add file1.txt &&
-> +		git commit -m "initialize with file1.txt"
-
-Looks like you can use test_commit instead.
-
-And note you can use -C, so you won't need the sub-shell either, I think.
-> +	) &&
-> +	(
-> +	    cd repo_with_submodules &&
-> +	    echo "file2" > file2.txt &&
-> +	    git add file2.txt &&
-> +	    git commit -m "initialize with file2.txt" &&
-
-Ditto.
-
-> +	    mkdir -p dir1 &&
-
-Let's drop "-p" here, to check for errors.
-
-> +test_expect_success 'archive with recurse, non-init' '
-> +	! git -C uninited_repo_with_submodules archive --recurse-submodules -v HEAD >b2-err.tar
-
-For git, don't use !, use test_must_fail, ! hides segfaults.
-
-Does this test pass when you build with SANITIZE=leak? Then you can do this at the top:
-
-	TEST_PASSES_SANITIZE_LEAK=true
-	. ./test-lib.sh
-
-If you can't test that locally pushing to GitHub CI will tell you...
+base-commit: 1fc3c0ad407008c2f71dd9ae1241d8b75f8ef886
+-- 
+gitgitgadget
