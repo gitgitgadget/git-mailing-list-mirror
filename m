@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1021AC38A02
-	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 20:15:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EE5C4C38A02
+	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 20:15:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230039AbiJ1UPi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Oct 2022 16:15:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33818 "EHLO
+        id S229728AbiJ1UPl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Oct 2022 16:15:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229728AbiJ1UPH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2022 16:15:07 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEB5152FF9
-        for <git@vger.kernel.org>; Fri, 28 Oct 2022 13:15:05 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id k8so8003225wrh.1
-        for <git@vger.kernel.org>; Fri, 28 Oct 2022 13:15:05 -0700 (PDT)
+        with ESMTP id S229674AbiJ1UPI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2022 16:15:08 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C67C53A63
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 13:15:06 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id v1so7959439wrt.11
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 13:15:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hU9HVHrNabwm24/YjLnxK0iByLEvRtPIehyF5akJ4gI=;
-        b=mL+eVFA/z0IxmEVmODwseOXAKjrLHEU6uUy3muwAlp6FrKbB5l0FZw3tJ40Am06dVA
-         585b6g3efIV0Ywm7kN/G0TDetEbxNO3b8PYqtweb0bDdPoYV5gZYVwPIMBl5ARUUUnfV
-         2wQoSXw95MKYtXUK3qrbQgGP5hhZGcln9ko++Dy51BglWD+QSD3bSPoTuOih/GNKGuFM
-         Fk1m6zYgr0OD2hs1sBxgAS7NQmBl7QbW1ezchzW6kpu0BEZSCmVNUKrh8lSDjQ3hsYks
-         xzAqtkleiuaPKs9cgklL8y6D8pk1EdUE22WwuKGDwq0IRQCa5J9XSw8BDSF16bwMaLYS
-         NodQ==
+        bh=Xv5jxGDqP4i8h4L7UXLO2UZHu0ST4taarwBqS9qr/rg=;
+        b=Xx8mZT/X+S7ZDvNDwnLg8ZTXWaTZW0HNEwu3mwE9ONFPhpRSY9fSoMMo/etsBlO2En
+         1lwTi+AXTYUhCRBKlmgtnUKh/13RVzXqEhhFLJgxV17xtfGiSRYoJjCW0kfVV6QlqXEG
+         lA3B+JPXPlBuI6V5wswPI3RYN3XtzqW0MTNjdcs0vstgBPit3Ewy3JkQAsg1FIq+Zbk4
+         GWCnCY45Z5yWhQMF0798aGcG59iDGouha/f9uU4np32pNRwf4ZOsyOpe5T7A8dQoJOop
+         r0wi0/bgPzdubGdx3Ow8IAJYCHpWbcTuvD6yNlzZ9nI5jLWALDnZiTOqRPR8brOghRZ/
+         o9QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hU9HVHrNabwm24/YjLnxK0iByLEvRtPIehyF5akJ4gI=;
-        b=OHYI2ODlkoR5/xtR46rEAN5nIs52auaVumbQ1biF0FGuTX1CVx8vLDGZ3ZOvolKHZe
-         ml+ORhUnn1mFmjyPZVIDrjM8n6LwY5WiFfMRUbMHDJ2gGgQm47VoCFznAlgnd4988t7u
-         BGyGwTEZUCDs/QaOJQEeQG2hkkEeqbK0Ls8tRygEarvwGI5eMXk1rKdCl24jLQGcNLKa
-         z5puEfe5jNMStPNhTQ+ySq3zaRP3mbkgNWUA971Vp7RMkR54jHlbbYnnwk94LXfzQcvc
-         Cbx5rV53mAzzvxuI7esjfO7y20y856hTe5RfrOh6hhqV1sWt/s0YxXA0X3O85Ewf7LhU
-         hrjw==
-X-Gm-Message-State: ACrzQf2y2fVlCchgSX9u2dgxSKa4F91/uk0KdYuHoRQuRM8UavyzWG2W
-        upoTir7+F1TU2J0LWUvtLYrYYKst89w=
-X-Google-Smtp-Source: AMsMyM7cyQ2myKmojNrWDo2gMqGzSXWdKffJYh3A/ATux4AQ0zfjpTSNd5xhr6gw2hAl/rnptYhHQw==
-X-Received: by 2002:a5d:5847:0:b0:231:21fa:ba96 with SMTP id i7-20020a5d5847000000b0023121faba96mr572688wrf.477.1666988103990;
-        Fri, 28 Oct 2022 13:15:03 -0700 (PDT)
+        bh=Xv5jxGDqP4i8h4L7UXLO2UZHu0ST4taarwBqS9qr/rg=;
+        b=ChqWX5Mw6wklSWRNTb5/j8cdPoWiifiB5LE43w7dPCYwEv0CFclQ4yEqbiAROOCDX9
+         LxCkw1hXs2MQeBc7BMzTuPY1SAkFyeIjQAsQKWbpQ7BJBq2h6FBS8vCyUM/6+Y6BCDVU
+         d4uPVFhS3wzwwz6YJnnmaOxf2mcNkNKqbX1wI/5nSKvG9MQbJBFJ7QrGSRmdnic0RMYn
+         jvP7sEcZ/DDvUiNGMdxau29Witjq7EIi2ErcwTWqgMECs+gRcnwlHpHNb8rXi3fROq+m
+         fw80laFxe3c/ZWGxrHZC2MfuBJ9x+PD6UbVJLrufVjK+sFWk1PiaasbUf3g03og41Q5D
+         qgGw==
+X-Gm-Message-State: ACrzQf2wAopv7H8VxxKLrAIHmgEgvGJBiZLIim773j+Zw7429qNVG2bp
+        t3BJ9mFQNaZcpVcWuN9tkkCHNFHTGJg=
+X-Google-Smtp-Source: AMsMyM73jevreLP/JUE40YtXK7UJHqXYpofnqQRjLoPA6enz8+j6mCjcx1S/zjcLtJluzgKsxFfbWw==
+X-Received: by 2002:adf:f843:0:b0:236:9d21:4c79 with SMTP id d3-20020adff843000000b002369d214c79mr560010wrq.606.1666988104886;
+        Fri, 28 Oct 2022 13:15:04 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k1-20020adff281000000b0022ac672654dsm4362098wro.58.2022.10.28.13.15.03
+        by smtp.gmail.com with ESMTPSA id h7-20020a5d6887000000b002356c051b9csm4245926wru.66.2022.10.28.13.15.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Oct 2022 13:15:03 -0700 (PDT)
-Message-Id: <df1f7225f4909547c10c52e818eb5dfd65b3e24c.1666988096.git.gitgitgadget@gmail.com>
+        Fri, 28 Oct 2022 13:15:04 -0700 (PDT)
+Message-Id: <4e402b67145c6e33c13826f1daf1883a66cd9cd4.1666988096.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1321.v3.git.git.1666988096.gitgitgadget@gmail.com>
 References: <pull.1321.v2.git.git.1666297238.gitgitgadget@gmail.com>
         <pull.1321.v3.git.git.1666988096.gitgitgadget@gmail.com>
 From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 28 Oct 2022 20:14:54 +0000
-Subject: [PATCH v3 6/8] submodule update: refactor update targets
+Date:   Fri, 28 Oct 2022 20:14:55 +0000
+Subject: [PATCH v3 7/8] submodule--helper: remove update_data.suboid
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,104 +71,82 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Glen Choo <chooglen@google.com>
 
-Refactor two "git submodule update" code locations so that they no
-longer refer to oids directly. This shrinks a subsequent commit's diff,
-where this code will need to handle branches.
+update_data.suboid's value is only used in update_submodule()'s call
+chain, where it represents the OID of the submodule's HEAD. If the
+submodule is newly cloned, it is set to null_oid().
+
+Instead of checking for the null OID, just check if the submodule is
+newly cloned. This makes update_submodule() the only function where
+update_data.suboid is used, so replace it with a local variable.
+
+As a result, the submodule_up_to_date check is more explicit, which
+makes the next commit slightly easier to reason about.
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- builtin/submodule--helper.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ builtin/submodule--helper.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 9ca138374b7..894be133b3f 100644
+index 894be133b3f..ef76a111c7f 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2255,7 +2255,7 @@ static int fetch_in_submodule(const char *module_path, int depth, int quiet,
- static int run_update_command(const struct update_data *ud, int subforce)
+@@ -1918,7 +1918,6 @@ struct update_data {
+ 	const char *prefix;
+ 	char *displaypath;
+ 	enum submodule_update_type update_default;
+-	struct object_id suboid;
+ 	struct string_list references;
+ 	struct submodule_update_strategy update_strategy;
+ 	struct list_objects_filter_options *filter_options;
+@@ -2346,7 +2345,7 @@ static int run_update_command(const struct update_data *ud, int subforce)
+ 
+ static int run_update_procedure(const struct update_data *ud)
  {
- 	struct child_process cp = CHILD_PROCESS_INIT;
--	char *oid = oid_to_hex(&ud->oid);
-+	const char *update_target = oid_to_hex(&ud->oid);;
- 	int ret;
+-	int subforce = is_null_oid(&ud->suboid) || ud->force;
++	int subforce = ud->just_cloned || ud->force;
  
- 	switch (ud->update_strategy.type) {
-@@ -2285,7 +2285,7 @@ static int run_update_command(const struct update_data *ud, int subforce)
- 		BUG("unexpected update strategy type: %d",
- 		    ud->update_strategy.type);
- 	}
--	strvec_push(&cp.args, oid);
-+	strvec_push(&cp.args, update_target);
- 
- 	cp.dir = ud->sm_path;
- 	prepare_submodule_repo_env(&cp.env);
-@@ -2293,20 +2293,20 @@ static int run_update_command(const struct update_data *ud, int subforce)
- 		switch (ud->update_strategy.type) {
- 		case SM_UPDATE_CHECKOUT:
- 			die_message(_("Unable to checkout '%s' in submodule path '%s'"),
--				    oid, ud->displaypath);
-+				    update_target, ud->displaypath);
- 			/* No "ret" assignment, use "git checkout"'s */
- 			break;
- 		case SM_UPDATE_REBASE:
- 			ret = die_message(_("Unable to rebase '%s' in submodule path '%s'"),
--					  oid, ud->displaypath);
-+					  update_target, ud->displaypath);
- 			break;
- 		case SM_UPDATE_MERGE:
- 			ret = die_message(_("Unable to merge '%s' in submodule path '%s'"),
--					  oid, ud->displaypath);
-+					  update_target, ud->displaypath);
- 			break;
- 		case SM_UPDATE_COMMAND:
- 			ret = die_message(_("Execution of '%s %s' failed in submodule path '%s'"),
--					  ud->update_strategy.command, oid, ud->displaypath);
-+					  ud->update_strategy.command, update_target, ud->displaypath);
- 			break;
- 		default:
- 			BUG("unexpected update strategy type: %d",
-@@ -2322,19 +2322,19 @@ static int run_update_command(const struct update_data *ud, int subforce)
- 	switch (ud->update_strategy.type) {
- 	case SM_UPDATE_CHECKOUT:
- 		printf(_("Submodule path '%s': checked out '%s'\n"),
--		       ud->displaypath, oid);
-+		       ud->displaypath, update_target);
- 		break;
- 	case SM_UPDATE_REBASE:
- 		printf(_("Submodule path '%s': rebased into '%s'\n"),
--		       ud->displaypath, oid);
-+		       ud->displaypath, update_target);
- 		break;
- 	case SM_UPDATE_MERGE:
- 		printf(_("Submodule path '%s': merged in '%s'\n"),
--		       ud->displaypath, oid);
-+		       ud->displaypath, update_target);
- 		break;
- 	case SM_UPDATE_COMMAND:
- 		printf(_("Submodule path '%s': '%s %s'\n"),
--		       ud->displaypath, ud->update_strategy.command, oid);
-+		       ud->displaypath, ud->update_strategy.command, update_target);
- 		break;
- 	default:
- 		BUG("unexpected update strategy type: %d",
-@@ -2521,6 +2521,7 @@ static void update_data_to_args(const struct update_data *update_data,
- 
- static int update_submodule(struct update_data *update_data)
+ 	if (!ud->nofetch) {
+ 		/*
+@@ -2523,6 +2522,7 @@ static int update_submodule(struct update_data *update_data)
  {
-+	int submodule_up_to_date;
+ 	int submodule_up_to_date;
  	int ret;
++	struct object_id suboid;
  
  	ret = determine_submodule_update_strategy(the_repository,
-@@ -2569,7 +2570,8 @@ static int update_submodule(struct update_data *update_data)
+ 						  update_data->just_cloned,
+@@ -2532,10 +2532,8 @@ static int update_submodule(struct update_data *update_data)
+ 	if (ret)
+ 		return ret;
+ 
+-	if (update_data->just_cloned)
+-		oidcpy(&update_data->suboid, null_oid());
+-	else if (resolve_gitlink_ref(update_data->sm_path, "HEAD",
+-				     &update_data->suboid, NULL))
++	if (!update_data->just_cloned &&
++	    resolve_gitlink_ref(update_data->sm_path, "HEAD", &suboid, NULL))
+ 		return die_message(_("Unable to find current revision in submodule path '%s'"),
+ 				   update_data->displaypath);
+ 
+@@ -2570,7 +2568,8 @@ static int update_submodule(struct update_data *update_data)
  		free(remote_ref);
  	}
  
--	if (!oideq(&update_data->oid, &update_data->suboid) || update_data->force) {
-+	submodule_up_to_date = oideq(&update_data->oid, &update_data->suboid);
-+	if (!submodule_up_to_date || update_data->force) {
+-	submodule_up_to_date = oideq(&update_data->oid, &update_data->suboid);
++	submodule_up_to_date = !update_data->just_cloned &&
++		oideq(&update_data->oid, &suboid);
+ 	if (!submodule_up_to_date || update_data->force) {
  		ret = run_update_procedure(update_data);
  		if (ret)
- 			return ret;
+@@ -2583,7 +2582,6 @@ static int update_submodule(struct update_data *update_data)
+ 
+ 		next.prefix = NULL;
+ 		oidcpy(&next.oid, null_oid());
+-		oidcpy(&next.suboid, null_oid());
+ 
+ 		cp.dir = update_data->sm_path;
+ 		cp.git_cmd = 1;
 -- 
 gitgitgadget
 
