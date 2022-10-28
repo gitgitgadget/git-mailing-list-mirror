@@ -2,135 +2,163 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BFE6ECAAA1
-	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 00:09:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3745ECAAA1
+	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 00:23:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234235AbiJ1AJO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 27 Oct 2022 20:09:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48428 "EHLO
+        id S234916AbiJ1AXA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 27 Oct 2022 20:23:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229670AbiJ1AJN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Oct 2022 20:09:13 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C0A480E9D
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 17:09:12 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id ud5so9311622ejc.4
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 17:09:12 -0700 (PDT)
+        with ESMTP id S234235AbiJ1AW6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Oct 2022 20:22:58 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 780F2A0246
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 17:22:57 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id 21so5678574edv.3
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 17:22:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=FRZ/5MkVedWKMB/PAnAGP7xXv3tgOjMmyjZUNtRikrg=;
-        b=gEzkYh5KkI3R037QS2gjSZfdZrwOkgtoTPcFWg69aSgxyVYXe7bIcviNTLL0OhFVNq
-         aGXBjCF+TM0I3471yOxCdOY9lDdp8HVL8M7i5sO4iFl0/KizAWn+9otXGswgP1oduQKg
-         mXjgbvvuVarWB0O4SyDCnqB4rBzRxfHOdKdoSM7lrv7pSpZ1Ohs6U2jCvkMsQ7rFrkBg
-         GTOUtrBFcTaFDpxbKitoZLRW6hcrWp5i0pkRBLt4HFEKwEXuRwRpWmBmLReOaGjISTeb
-         dvGik/cJC1qljkBH2rZ4zn8Q8t/GdlDLpD6c8OPRKXRTNvjlMwlZ6nkY3YMZWhPK9it8
-         NjPQ==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=P35Yv5uVO3Zuy04zErpaBlKgan7Djld9uqZ80afuNu4=;
+        b=MY1KtdV/ZAwR6N48+HMWQ0jBP8Ni6lGoszcy7zY+ff9mPXY4Y1ci97Krs4s8ngOx2z
+         Jj+kS1cr6lYGZ3R6RDounveBkDFo3Ab3WO1osxlXiRUEgqewrugAVAReF0Bje4C0B7q/
+         ggv+kTfHHVf15wk1kMSmrOmRYKYGPvOC5fEvvXjEgnD9FCtDeLplvUVmnuOM0sfh7R/k
+         M5sh6NY65iSycthFTjHl+w4iTp/MSo/AsTKZLgSN4tG35mlyPRk6Jx079MqFalGJ17bj
+         wmJznzb8d56iniAiaglZe3czJxMHXqW37dPfQFlUQw04PPUUcKfYo4vnKJ+fe7Ns34YS
+         /mTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FRZ/5MkVedWKMB/PAnAGP7xXv3tgOjMmyjZUNtRikrg=;
-        b=YJzryj0C4ugFIGyRHzze+5FoYLxBPkddALHmKQeX8umLbfu5zBfk8Ymy+OKLQmts1x
-         4+6kt/QkR2qyu4ISBbPoZEajbe0v6XL0cKBQ5QWMygxEi6kxZSi2WIq8yI9ysy15ujc0
-         yX1EUz4Uqu9S3yROMSC72kWeesQba8JQeaDBr0ECiR2WdBjIeSPVGvU0hqptYDOl46pQ
-         OWVMcTFGOZR0SqiIfNzFPMwfGEEvIUQ3vMkaJUbceD9VemUdQVPoJ6OkHeewt26Xbv/i
-         TjjpkQfAIauUOGQQaLXcm7NCOeHqkdIwhc4vK53VyIqXhailCUHGGYOHEVGXl/LHl11T
-         F3Mg==
-X-Gm-Message-State: ACrzQf1zU3o8SW55PmwLVdZfaqCdr7U/pNK/czx2NjXl4e1IIQo9YHWL
-        RuqdHS3RgIVj0ZuPdHEUAdI=
-X-Google-Smtp-Source: AMsMyM7/KSUvVGOS3bgW4uN9WxqcOMytUi+wYO9B84OUip6IUeFr0bBZp+txJQhmIoInjh8X5epSyA==
-X-Received: by 2002:a17:907:2c72:b0:7a5:47da:5893 with SMTP id ib18-20020a1709072c7200b007a547da5893mr23600858ejc.612.1666915750860;
-        Thu, 27 Oct 2022 17:09:10 -0700 (PDT)
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=P35Yv5uVO3Zuy04zErpaBlKgan7Djld9uqZ80afuNu4=;
+        b=p1XJYxHFFWrMJDC/MTHFz0+0xuz0u8n7PFupXhxlOZG2l8qPtlW43Aiz3UVqMiNaFh
+         H45DleIwhM/6cKqxcxza3Hkw+CjYyE9RqxGIyhaLJOqMu4piZIPwf9aB2I5pS+7XVw24
+         1KwBBUW7/lsZ/bR97QEXh6yhD3OSDi9Gq8lEdJ7gMDMK5s8yCLIt213DkkizqSh9JVaG
+         77gKjvgLgj71v+ZzwH3jXZSLSYtCp2qFPgyaEKXx4p+ZIxr+zb1M6wEDK+fPu5SX4e5T
+         6X3k+RFGPpBMTGDCFwmAfSEHU01kPjf6TA9PsyWyxOAWb+uqkItuc0YtdFSEK3+WfsFX
+         S1OQ==
+X-Gm-Message-State: ACrzQf3qJ72VlYulsSza3yt0/JkzDR0t2TzVQFdJl1tgyTt1/0yINyqG
+        z0dX5hBRWoXBkLoNN7va8FXovROJAv6R7Q==
+X-Google-Smtp-Source: AMsMyM6UwzuFyO8uvu714TbkN17hCm6rI0imltLflfedkH9agfe9+nXV5vzq18soDPxeCagiV9pSgQ==
+X-Received: by 2002:aa7:c252:0:b0:462:aa0d:4144 with SMTP id y18-20020aa7c252000000b00462aa0d4144mr3853399edo.57.1666916575839;
+        Thu, 27 Oct 2022 17:22:55 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id h22-20020a1709063c1600b007ad9028d684sm1418534ejg.104.2022.10.27.17.09.09
+        by smtp.gmail.com with ESMTPSA id 24-20020a170906311800b007933047f930sm1410896ejx.157.2022.10.27.17.22.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 27 Oct 2022 17:09:09 -0700 (PDT)
+        Thu, 27 Oct 2022 17:22:54 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1ooCvt-009gFe-0b;
-        Fri, 28 Oct 2022 02:09:09 +0200
+        id 1ooD9C-009gee-0I;
+        Fri, 28 Oct 2022 02:22:54 +0200
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH 09/10] config API: add "string" version of
- *_value_multi(), fix segfaults
-Date:   Fri, 28 Oct 2022 01:44:19 +0200
-References: <cover-00.10-00000000000-20221026T151328Z-avarab@gmail.com>
- <patch-09.10-bda9d504b89-20221026T151328Z-avarab@gmail.com>
- <xmqq4jvpkpxd.fsf@gitster.g> <xmqqzgdhjb89.fsf@gitster.g>
+To:     Heather Lapointe via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Heather Lapointe <alpha@alphaservcomputing.solutions>
+Subject: Re: [PATCH v3 9/9] archive: add tests for git archive
+ --recurse-submodules
+Date:   Fri, 28 Oct 2022 02:17:11 +0200
+References: <pull.1359.v2.git.git.1665660960.gitgitgadget@gmail.com>
+ <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com>
+ <f88ebbaf17cbf1a0b57336430bd43ade94406f38.1665973401.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <xmqqzgdhjb89.fsf@gitster.g>
-Message-ID: <221028.861qqsajx6.gmgdl@evledraar.gmail.com>
+In-reply-to: <f88ebbaf17cbf1a0b57336430bd43ade94406f38.1665973401.git.gitgitgadget@gmail.com>
+Message-ID: <221028.86wn8k94pu.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Oct 27 2022, Junio C Hamano wrote:
+On Mon, Oct 17 2022, Heather Lapointe via GitGitGadget wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
->>
->>> Fix numerous and mostly long-standing segfaults in consumers of
->>> the *_config_*value_multi() API. As discussed in the preceding commit
->>> an empty key in the config syntax yields a "NULL" string, which these
->>> users would give to strcmp() (or similar), resulting in segfaults.
->>
->> Sounds like a good idea.
->>
->> I would have called them _nonbool(), not _string(), especially
->> because we are not going to have other variants like _int(), though.
->
-> Actually, I take it back.  Instead of introducing _string(), how
-> about introducing _bool() and convert those minority callers that do
-> want to see boolean values to use the new one, while rejecting NULLs
-> for everybody else that calls the traditional "get_value" family of
-> functions?  That would "optimize" for the majority of simpler users,
-> wouldn't it?
+> From: Heather Lapointe <alpha@alphaservcomputing.solutions>
 
-I don't think the goal should be just to optimize for those current
-users, but to leave the config API in a state where it makes sense
-conceptually.
+[In addition to what others mentioned]
 
-For the scalar (single) values we have a low-level "low-level" function,
-and then variants to get it as a bool, path, string, int etc.
+> +test_description='git archive --recurse-submodules test'
+> +
+> +. ./test-lib.sh
+> +
+> +check_tar() {
+> +	tarfile=$1.tar
+> +	listfile=$1.lst
 
-I think a "multi" function should just be the logical result of applying
-one of those "types" to list. I.e. (pseudocode):
+This "listfile" is used nowhere?"
 
-	a_raw =3D get_config_raw("a.key");
-	a_string =3D stringify(a_raw);
+> +	dir=$1
+> +	dir_with_prefix=$dir/$2
 
-And, as a list:
+Nor dir_with_prefix?
 
-	list_raw =3D get_config_raw_multi("a.key");
-	list_strings =3D map { stringify(item) } list_raw;
+> +
+> +	test_expect_success ' extract tar archive' '
+> +		(mkdir $dir && cd $dir && "$TAR" xf -) <$tarfile
 
-Now, if we don't supply the equivalent of the "raw, but multi-value"
-function we'll make it hard to use the API, because now you can't think
-about it as the "multi" just being a list version of what you get with
-the scalar version.
+Aside from what Jonathan mentioned, maybe we can just use one variable
+here then?
 
-E.g. what should we do about "[a]key" in a list API that stringifies by
-default? If you then want "stringified bool" we're only left with bad choic=
-es:
+	mkdir $foo ... <$foo.tar
 
- - If you die that's bed, because that's a legit true value
- - If you coerce it to "" to help the string use case you get the wrong
-   answer, because "[a]key=3D" (empty string) is false, but "[a]key"
-   (value-less) is true.
- - Ditto if you prune it out, as then it won't be seen in the bool list.
+> +	test_expect_success " validate extra file $path_in_archive" '
+> +		test -f $dir/$path_in_archive &&
 
-Which is why I went for the end-state here. I.e. it's now easy to add
-other "multi" variants (we'd need to add coercion, but that's easy
-enough).
+Instead use "test_path_is_file", and in general for "test <whatever>"
+check out if we have a wrapper in test-lib-functions.sh.
+
+> +check_not_added() {
+> +	dir=$1
+> +	path_in_archive=$2
+> +
+> +	test_expect_success " validate unpresent file $path_in_archive" '
+> +		! test -f $dir/$path_in_archive &&
+> +		! test -d $dir/$path_in_archive
+
+Don't test for what a thing isn't, but what it is. Can't we do that
+here?
+
+> +test_expect_success 'setup' '
+> +	rm -rf repo_with_submodules submodule1 uninited_repo_with_submodules &&
+
+Don't have a test rm -rf stuff from a previous block, but have
+"test_when_finished" clean up after that previous test instead.
+
+> +	git init repo_with_submodules &&
+> +	git init submodule1 &&
+> +	(
+> +		cd submodule1 &&
+
+This:
+> +		echo "dir1/sub1/file1.txt" > "file1.txt" &&
+> +		git add file1.txt &&
+> +		git commit -m "initialize with file1.txt"
+
+Looks like you can use test_commit instead.
+
+And note you can use -C, so you won't need the sub-shell either, I think.
+> +	) &&
+> +	(
+> +	    cd repo_with_submodules &&
+> +	    echo "file2" > file2.txt &&
+> +	    git add file2.txt &&
+> +	    git commit -m "initialize with file2.txt" &&
+
+Ditto.
+
+> +	    mkdir -p dir1 &&
+
+Let's drop "-p" here, to check for errors.
+
+> +test_expect_success 'archive with recurse, non-init' '
+> +	! git -C uninited_repo_with_submodules archive --recurse-submodules -v HEAD >b2-err.tar
+
+For git, don't use !, use test_must_fail, ! hides segfaults.
+
+Does this test pass when you build with SANITIZE=leak? Then you can do this at the top:
+
+	TEST_PASSES_SANITIZE_LEAK=true
+	. ./test-lib.sh
+
+If you can't test that locally pushing to GitHub CI will tell you...
