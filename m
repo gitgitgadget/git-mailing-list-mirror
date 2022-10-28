@@ -2,96 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C07F9FA3745
-	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 21:40:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C5C8ECAAA1
+	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 21:46:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229944AbiJ1Vk3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Oct 2022 17:40:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35264 "EHLO
+        id S229696AbiJ1Vqp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Oct 2022 17:46:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbiJ1Vk1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2022 17:40:27 -0400
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCAA5EA9E0
-        for <git@vger.kernel.org>; Fri, 28 Oct 2022 14:40:24 -0700 (PDT)
-Received: by mail-pj1-x1032.google.com with SMTP id r61-20020a17090a43c300b00212f4e9cccdso10999430pjg.5
-        for <git@vger.kernel.org>; Fri, 28 Oct 2022 14:40:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5TGjGPjghyxub3F2jGUufkInPPAPDxHsqh3i/yOadMI=;
-        b=O7YC6DmW3a1BlW+keSnvNtG6s8sLNVfN9ZEw3l83Bc7qklJMs4eJLx0GN/epysSgqW
-         s5jFVQSnelPDOlzKg5PLTVxsfkP1mRpCj8S9yI14XYSHho/g8uIPxdXMKvV6Ghua6UH7
-         SyLfQyhYQSu9V6nAx5ta6okFZ5jMXLDffdOcXEISS/zpObk+HiRxGjMzZyjU8Xw5W6NQ
-         2Na37YmFC7NHlVuzz1rxGsu3iaQ7jOIkydd095f/XgLZa2IPv2MhJcYts09RTpDp6akK
-         8B6Nf0XWPUM2YuzGaFzoiQ0pG6g7c4u7WiaPG/ABLd/vx7QLT/ud+vjOcBim3tuzsSg5
-         /95w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=5TGjGPjghyxub3F2jGUufkInPPAPDxHsqh3i/yOadMI=;
-        b=GP5wS1IO2LoC9OY8HlR+5h9UbetLeYm+mGxbM+lKTceT0pNB1hgLndTbaYrRmfnw6L
-         kiLxxfg/XiRDjwZiq5HrXj9AyygKA1tdjli8y+LdNuzpgD2tsDuj1VdwW4IKPwpnCxAM
-         QPuV9yTduvxlOsIFDX3fxhsRas0Rtt3f3EHXpQiW/lgeQP/vV80Cexi3qaj6z4XAe/4q
-         zRLdGFkLGHu3fvmOp2MFyRYV09B2dgVT8rWloejfJXy+BTzUCuned/yT8F3Z2dUvgQ0d
-         /gF5SrFr0L1D1MczIhnXeBK/OVz+f1CVpHR/GI+F6rQ6ZpUZ3YEtYdDIGCEwkPO1tDvf
-         LSfQ==
-X-Gm-Message-State: ACrzQf23zQfuYLJfg7D+dskmP2b1vWLVCVb3UfuQjxWzUEtkqfLGanSH
-        FW6afy17zalfYognnvlHIl/TfhfDsDE=
-X-Google-Smtp-Source: AMsMyM71r3og9TMd0wzeNatb+YX6jaZ7mtpiuVTFjXQreNWUosjBnPxI1B26Mk5824TU0R/KJ/E0EA==
-X-Received: by 2002:a17:902:8682:b0:186:95c9:5d0 with SMTP id g2-20020a170902868200b0018695c905d0mr1016194plo.25.1666993224145;
-        Fri, 28 Oct 2022 14:40:24 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id w73-20020a627b4c000000b0056baebf23e7sm3360202pfc.141.2022.10.28.14.40.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Oct 2022 14:40:23 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Glen Choo <chooglen@google.com>
-Subject: Re: [PATCH v3 1/8] clone: teach --detach option
-References: <pull.1321.v2.git.git.1666297238.gitgitgadget@gmail.com>
-        <pull.1321.v3.git.git.1666988096.gitgitgadget@gmail.com>
-        <432bc7cb3a42cf39d0033701c2cc677c9109b3dd.1666988096.git.gitgitgadget@gmail.com>
-Date:   Fri, 28 Oct 2022 14:40:22 -0700
-In-Reply-To: <432bc7cb3a42cf39d0033701c2cc677c9109b3dd.1666988096.git.gitgitgadget@gmail.com>
-        (Glen Choo via GitGitGadget's message of "Fri, 28 Oct 2022 20:14:49
-        +0000")
-Message-ID: <xmqqmt9fhbjt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S230077AbiJ1VqZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2022 17:46:25 -0400
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E0B622C838
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 14:46:23 -0700 (PDT)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 7373C5A1FB;
+        Fri, 28 Oct 2022 21:46:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1666993582;
+        bh=axA/JZk11XHktHjfVFwlvH6Ibbl4pkGGsLg7iP2Nu6k=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=sdSW1X8V2qvYxvtsQcJQtfLYD40bP9kwRc31RXPDcBgUrTEj1pw1qOtRdbX60x26M
+         5eBNZDkKI9ULhMQOlvPLrxSGdxTReoJQ68dWLaiYnArq4OL5FL/uUp9cJ68WBbWyWM
+         +wqnK5jwzNsJjB7CIrQJvqmVdekCVF4JAly8WF4eLS8prZ/1LBgl4+BNATYaFyZSSC
+         kW3VrZ+wPr9Y8uPSVlcS79EEeXdEKyCDJ41YIVC3/fPeGQn/X6sBVPpZsxSgUgYCUo
+         Qk0YsnF5TmazzBv4c0utwBosKrlKUs/YNtCnZLIqWY/R4iBZqd6uxOWG0BSzS32Iy1
+         MUoMRYJhE6sVDcy79l/+0t9bQW0V97ePrf4r/+9X6GL4ltgFfh4h6gZhBGkG5P+Rp+
+         0JZKeS/U9dTH5LyYvB/aAZ06yzeGB9xTlWc11l+hVFkINliOoNZYLZUKcdoxwL4LFJ
+         ld4CMYRQMhPaky2StP2GqH6zNZfSPP2M90swJmMy7gWqe0nfNOP
+Date:   Fri, 28 Oct 2022 21:46:20 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Julien Moutinho <julm+git@sourcephile.fr>
+Subject: Re: [PATCH] adjust_shared_perm(): leave g+s alone when the group
+ does not matter
+Message-ID: <Y1xNrDB10XEcAa0d@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Julien Moutinho <julm+git@sourcephile.fr>
+References: <xmqqr0yrhco6.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="pYxTs3EChqEbmMCI"
+Content-Disposition: inline
+In-Reply-To: <xmqqr0yrhco6.fsf@gitster.g>
+User-Agent: Mutt/2.2.7 (2022-08-07)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Glen Choo <chooglen@google.com>
->
-> Teach "git clone" the "--detach" option, which leaves the cloned repo in
-> detached HEAD (like "git checkout --detach"). In addition, if the clone
-> is not bare, do not create the local branch pointed to by the remote's
-> HEAD symref (bare clones always copy all remote branches directly to
-> local branches, so the branch is still created in the bare case).
->
-> This is especially useful in the "submodule.propagateBranches" workflow,
-> where local submodule branches are named after the superproject's
-> branches, so it makes no sense to create a local branch named after the
-> submodule's remote's branch.
+--pYxTs3EChqEbmMCI
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Wouldn't it the same thing to do "git clone -n && git checkout
---detach"?  If this is a pure implementation detail of another
-command and will never be used directly by end users, I am not
-sure if we should add a new option to do this.
+On 2022-10-28 at 21:16:09, Junio C Hamano wrote:
+> Julien Moutinho reports that in an environment where directory does
+> not have BSD group semantics and requires g+s (aka FORCE_DIR_SET_GID)
+> but the system cripples chmod() to forbid g+s, adjust_shared_perm()
 
-Especially because it is probably not hard to perform internally an
-equivalent of "checkout --detach" without forking these days,
-judging from the fact that merges and rebases need to do so.
+I would personally use a different verb here because I have the
+impression it's offensive, at least when used as a noun.  Perhaps
+"limit" or "restrict" might be more neutral, or we could pick another
+verb which expresses our displeasure at this design (maybe "impair"?)
+but maybe is less likely to be emotionally charged or offend.
+
+> fails even when the repository is for private use with perm =3D 0600.
+>=20
+> When we grant extra access based on group membership (i.e. the
+> directory has either g+r or g+w bit set), which group the directory
+> and its contents are owned by matters.  But otherwise (e.g. perm is
+> set to 0600, in Julien's case), flipping g+s bit is not necessary.
+
+Except for my comment above, I think the patch here addresses the
+proposed issue and looks good, and as usual, is well explained.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--pYxTs3EChqEbmMCI
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY1xNrAAKCRB8DEliiIei
+gfFSAP9pqscjFT3YKWf5BjmgMXhx8pZIQVO47OnUVMkyK53TugD/cX8dKvZnXzHm
+PvZVdnCZ1iUMwA9yuJ4HT5Q7t0ViNQc=
+=WB2Z
+-----END PGP SIGNATURE-----
+
+--pYxTs3EChqEbmMCI--
