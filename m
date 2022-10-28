@@ -2,173 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39174C38A02
-	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 05:32:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C394CECAAA1
+	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 05:32:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229642AbiJ1FcL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Oct 2022 01:32:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49612 "EHLO
+        id S229652AbiJ1Fcd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Oct 2022 01:32:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229556AbiJ1FcJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2022 01:32:09 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58A6E1AC1F5
-        for <git@vger.kernel.org>; Thu, 27 Oct 2022 22:32:08 -0700 (PDT)
-Received: (qmail 19393 invoked by uid 109); 28 Oct 2022 05:32:08 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 28 Oct 2022 05:32:08 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31525 invoked by uid 111); 28 Oct 2022 05:32:09 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 28 Oct 2022 01:32:09 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 28 Oct 2022 01:32:06 -0400
-From:   Jeff King <peff@peff.net>
+        with ESMTP id S229668AbiJ1Fcc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2022 01:32:32 -0400
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62D2A1AC1F5
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 22:32:31 -0700 (PDT)
+Received: by mail-pg1-x531.google.com with SMTP id r18so3896221pgr.12
+        for <git@vger.kernel.org>; Thu, 27 Oct 2022 22:32:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=htVoqhbVh1wEGLaflyFEOfskf9CGAI4Oqt3DMPZ1SM4=;
+        b=FUOfbWQy62+PYtBLjZQLFZ7GngbGkL3Aqo7UC0PoERqiTGz2kC1zm6nj0Hq/q45ZN7
+         7jKkdrAU6mrfGyEDdojAKMKLdzP6x9JQSEEc9vWnjLeMy/SXokk3aKnSW2B9L0ZO/eNm
+         xq61DE29A7ExDPLMbDWp/7YC0zDoLWhm9jEyvzhCOyIyEIrGSz3/GeLvY8hEx4/TS3k2
+         UZ2mLCz6eD9nTAuF/Ddrb2bHNR0Ci8Glm3/+En6A7AlLKZvuln7Ifo6dnWBB7Jt8Dn5F
+         sTpMqj4WVFq++8lx0cVaDSkLWWBZzjSE62cjG6tQjbQl7yC9Fs5jMxmAx7j8gODONtlw
+         amiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=htVoqhbVh1wEGLaflyFEOfskf9CGAI4Oqt3DMPZ1SM4=;
+        b=r/tko5+3Y/GynPmBbuvo2N/jmxYwDxIhSGHOdtQuuzZUnlRpVf7X+BESKGzP182nEM
+         7eOpFj/UJGfSAXrY7GC7wd1it7I4Xmjpp8STVc8Y3Wx8sH3qQT29R71seAB5uY1hRYxp
+         NqGgOtP0Y3ghbSHbAgWiLhjJ5u1J8hTlFDJTuXtjWbAP5ZqneU0w6ZcPno0kZWvnZa+W
+         fiVIRFVfRwNkrfklBEjP38cP9t23oaZF0vcJL17RPw1G+3cmdM5W/T6Ze9a8rAMvxPQ5
+         Yt6uBzAWeKtvYkVKZGM+lMca+u2PaNT/hpaiCNC5ttcYcruE1PMNQrO/lfsYOZvXICSE
+         GcGw==
+X-Gm-Message-State: ACrzQf3ydoI9OG8vETrKupTCF4fYoj4FbNuT5qjTK5uvmpZetVpTm04Y
+        TinC5umDuUZ8fHLN5GPScLo=
+X-Google-Smtp-Source: AMsMyM5d4Tqt7CTQbAseDJ8Fwqf+x/tcJwcyEUCR1wuF2N4Ciman+Btjq80jcp2T8w8r5Z0dg5jLPw==
+X-Received: by 2002:a63:1a4c:0:b0:43b:e648:a7a4 with SMTP id a12-20020a631a4c000000b0043be648a7a4mr45608620pgm.7.1666935150752;
+        Thu, 27 Oct 2022 22:32:30 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id ij5-20020a170902ab4500b00172973d3cd9sm2102933plb.55.2022.10.27.22.32.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 27 Oct 2022 22:32:30 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        John Cai <johncai86@gmail.com>
+Cc:     John Cai <johncai86@gmail.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org
 Subject: Re: [PATCH v3 4/4] Documentation: add lint-fsck-msgids
-Message-ID: <Y1tpVqWn5yMYbE21@coredump.intra.peff.net>
 References: <pull.1369.v2.git.git.1666667864.gitgitgadget@gmail.com>
- <20221025224224.2352979-1-gitster@pobox.com>
- <20221025224224.2352979-5-gitster@pobox.com>
- <221026.867d0ncncu.gmgdl@evledraar.gmail.com>
- <Y1jG8p1aARb9+CV+@coredump.intra.peff.net>
- <221026.8635badbz5.gmgdl@evledraar.gmail.com>
- <Y1su99Kc0ex1W7bX@coredump.intra.peff.net>
- <221028.86sfj88xdq.gmgdl@evledraar.gmail.com>
+        <20221025224224.2352979-1-gitster@pobox.com>
+        <20221025224224.2352979-5-gitster@pobox.com>
+        <221026.867d0ncncu.gmgdl@evledraar.gmail.com>
+        <Y1jG8p1aARb9+CV+@coredump.intra.peff.net>
+        <221026.8635badbz5.gmgdl@evledraar.gmail.com>
+        <08A5BC44-24D9-4C8F-A61A-41983A13553A@gmail.com>
+        <221028.86k04k8wbk.gmgdl@evledraar.gmail.com>
+Date:   Thu, 27 Oct 2022 22:32:30 -0700
+In-Reply-To: <221028.86k04k8wbk.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Fri, 28 Oct 2022 05:11:07 +0200")
+Message-ID: <xmqqk04kjyxd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <221028.86sfj88xdq.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 28, 2022 at 04:04:12AM +0200, Ævar Arnfjörð Bjarmason wrote:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> > I think this particular case is tricky in that direction, because it's a
-> > big set of dependencies that aren't necessarily one-to-one. E.g.,
-> > builtin/log.c needs to depend on git-log.txt, but also on git-show.txt
-> > and git-format-patch.txt.
-> 
-> I was thinking of just a generated usage-strings.c or whatever. I.e. one
-> file with every usage string in it. Then you don't need to hunt down
-> which thing goes in which file. We'll just have a variable named
-> "builtin_format_patch_usage". Include it in "builtin.h" and it doesn't
-> matter if that's in builtin/log.c or builtin/format-patch.c.
+> First, for the purposes of this thread I think Jeff and I are far off
+> into the weeds here :)
 
-Yes, though you have the opposite problem, then: what are the source
-files that can produce that usage-strings.c? If your answer is
-"Documentation/git-*.txt", then that is a recipe for flaky dependencies.
+It is good to clearly separate where we would want to draw the line
+for this round, to get the already-worked-on-and-immediately-available
+improvement going, while we envision a future direction for the longer
+term.
 
-We already have one such for config-list.h. Try this:
+> But if we go for that: I think in this case & most I can think of
+> generating the code from the docs is better (as that rough POC I had
+> showed), because:
+>
+>  - You just need a shellscript to scrape the docs to make a *.c or *.h,
+>    whereas you'd need a C compiler to make the docs if it's the other
+>    way around. But more importantly:
+>
+>  - The docs are way easier to scrape with some sed/awk/grep/whatever
+>    few-liner than to scrape C code for generating docs. E.g. see
+>    config-list.h.
 
-  # introduce a new file
-  printf 'foo.bar::\n\ta fake config var\n' \
-    >Documentation/config/foo.txt
+Scraping docs is easier because we do not have to choose from
+multiple choices that are all reasonable ;-).  Either way, the
+source material needs some discipline to keep it scrapable (e.g. to
+keep the doc scrapable, you'd probably keep each entry a single
+line, or a fixed format like "<token>::" followed by "^I(<token>) "
+followed by description.  Nothing forbids us from giving developers
+a similar rule to keep each entry in FOR_EACH_MSG_ID() macro easier
+to scrape, so it is about the same difficulty going either way.
 
-  # it shows up in the output, as expected
-  make
-  ./git help --config-for-completion | grep foo
+But if you choose to make the code the source of truth, you'd have
+to see if it makes more sense to "compile and run" instead of
+scraping.  That's another thing to consider and choose from, which
+makes it harder ;-)
 
-  # now drop it
-  rm Documentation/config/foo.txt
+> But mainly it helps to have a use-case, replacing the linter script with
+> e.g. the *.sh I demo'd might be a marginal improvement. But e.g. "git
+> help -c" uses one of those generated files (config-list.h), and actually
+> does something useful ...
 
-  # oops; make won't rebuild anything, and it's still there
-  make
-  ./git help --config-for-completion | grep foo
+Yes, I've shown how N_("explanation of the error") may fit into the
+existing scheme in a separate message upthread.  If we go from code
+to doc, it would be a reasonable starting point.
 
-The bug is that config-list.h depends on a glob. So we notice when a
-file changes, but not when one goes away. And this isn't just
-hypothetical. Files come and go as you "git checkout" around history (or
-bisect). I don't remember the details, but I'm pretty sure I've gotten
-false positive test failures out of this before (maybe a topic branch
-with a bogus entry that broke t0012 or t9902, and then moving back to
-master doesn't fix it?).
+Whichever way the aout-generation goes, we'd complicate the build
+dependency graph, which is a downside.  Another is that third-party
+consumers of docs now need to generate some docs from the source,
+which may be additional burden for them.
 
-So I'd prefer to avoid introducing more flakiness if we can. You might
-be able to piggy back on command-list.txt in this case (that's what
-makes command-list.h not flaky).
+> Is there a good use-case for the fsck data like that? I'd think that
+> we'd want to make sure the docs are in sync with the code, as in we're
+> not adding new warnings/errors etc. without documenting them. But beyond
+> that maybe not much, and people would just run "git help fsck" to get
+> the list of variables..
 
-> It does mean you need to rebuild the C code for other built-ins every
-> time one of the SYNOPSIS sections changes, but doesn't happen too often.
+"git help fsck-error-codes" that does not have a pre-generated
+documentation (instead we'd just dump the N_("explanation") to the
+output) is certainly tempting.  I am not sure if it would fly well.
+When was the last time you saw a manpage that says "run this command
+and view its output for the most up-to-date list" ;-)?
 
-If it's a c/h combo that only makes the variable names public (not the
-contents of the strings they point to), then it would only trigger a
-rebuild when a command is added or removed.
-
-> I think I either did or was planning to take it out of cache.h as part
-> of that, we put way too much in cache.h.
-> 
-> Even advice.c depends on cache.h for its advice.h *sigh*.
-> 
-> Trying it just now putting advice.h in builtin.h instead leaves 10
-> top-level files not-compiling (and they just need the header).
-> 
-> I think it's fine to include common utilties in our "included by
-> everything" headers, but if we've got ~500 *.c files and something is
-> only needed by ~20 of them (as in this case) we should probably just
-> include it in those 20.
-
-Oh, definitely, we should be shrinking cache.h, and not adding more to
-it. Especially not generated stuff.
-
-> >> 	make file-that-does-not-use-generated-header.o
-> >> 
-> >>    It sucks a bit to have e.g. every *.o depend on command-list.h, when
-> >>    we only use it in 1-2 places, ditto the other headers.
-> > But that is already true of non-generated headers. If your system
-> > doesn't support computed deps, then all objects depend on all headers.
-> 
-> ... this does not build e.g. command-list.h:
-> 
-> 	make clean
-> 	make grep.o
-> 
-> But this does:
-> 
-> 	make clean
-> 	make help.o
-> 
-> Because we've manually declared that.
-
-Right, but...does grep.o actually need command-list.h? If it doesn't
-(and that seems to be the case), then all is working as intended. If
-grep included some other header that included command-list.h, then yeah,
-that would be a bug. But that is true whether grep.c includes it
-directly or not. Any Makefile dependency needs to take into account
-recursive includes.
-
-> > Yes, that sucks for you. But almost nobody actively develops on such a
-> > system, and people building Git to use rarely notice (because they are
-> > doing an initial build, or jumping versions, both of which generally
-> > require recompilation anyway).
-> 
-> I guess I'm "almost nobody" :) Not because I don't use computed deps,
-> but because I tend to e.g. do large interactive rebases with:
-> 
-> 	git rebase -i 'make grep.o'
-> 
-> Or some other subset of our built assets/objects.
-
-I do that all the time, too. But with computed deps, it works (by which
-I mean it rebuilds only stuff needed by grep.o).
-
-I'm not even sure what we're talking about anymore. If you are saying
-that no, we don't want to just say "everything depends on foo.h that is
-generated", I agree. That is wrong to do, and we should specify the
-minimal dependencies where appropriate (and take care to keep that set
-as small as is feasible using small C interfaces).
-
-If you're saying "for people without computed dependencies, everything
-will want to rebuild shell scripts", then I don't care. We decided long
-ago that maintaining a manual list of header dependencies was not worth
-doing, and people with sub-par compilers will have to suffer.
-
-In the email you're replying to, I was trying to express the second one.
-But it sounds like you thought I was trying to argue against the first
-one.
-
--Peff
