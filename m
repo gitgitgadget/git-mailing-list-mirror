@@ -2,303 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BE75FA3742
-	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 15:31:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72B6DECAAA1
+	for <git@archiver.kernel.org>; Fri, 28 Oct 2022 15:49:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230167AbiJ1PbU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Oct 2022 11:31:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41912 "EHLO
+        id S229588AbiJ1PtY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Oct 2022 11:49:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230203AbiJ1PbR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2022 11:31:17 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B1EE1CC746
-        for <git@vger.kernel.org>; Fri, 28 Oct 2022 08:31:16 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id f27so13799262eje.1
-        for <git@vger.kernel.org>; Fri, 28 Oct 2022 08:31:16 -0700 (PDT)
+        with ESMTP id S229531AbiJ1PtX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2022 11:49:23 -0400
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A20A01F1838
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 08:49:22 -0700 (PDT)
+Received: by mail-il1-x133.google.com with SMTP id q18so3133206ils.12
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 08:49:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=nFjK6BLpzT7lVhN8pP3TzuZPE19vdJc+5KwpewTGYyk=;
-        b=eR7S/HHAPVZEzJv9L57JkFlR5hiXtYLv2lB6I4LGcw25zp6AdmR16/cX7nsNi2m7YA
-         vHYUusTe2g4FE3eTIllkmWf1X/1Dg8K5ZxNKl9PDpLgCsm0Rrn2DL8KSXMmOdcRSze1y
-         3jgqUYj4suUyueXoncs0ihuObBLltU95LeVba11clcPwnd7ruVrAfCiN1njlRAGFvRTA
-         mSTUj/LXrx66ymskka1p7uxewy4sxekjjSutGHn0PGWQodGll8I7hShuVXLVQS1ghJW/
-         ovWNPpYqz6rtddUbvnA2KHTFUuoN1e0ggUn2LibJedU81qIEN8mNHWlMIJGgl1+EgkI6
-         OXLg==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Y+qNHwyWLFecga7hkkqeoekMe8xKWDtCG3DGXyrna9w=;
+        b=RqlD0Ga+r81m1an7kZ07aCXu42wtx+mXSbldc56bfMJ507iKZnYZwBU5VoIUme6MdF
+         aSD/urtVYXDRNXovbBMc22ekBgCNcL2Kk94Dby++Mwp/sSOys0NMPN6xDGFmrEAiBlbo
+         5xIC+h66FQFTQqRKsSxOP3K5k4GtfV1DAMUctQ2bOM3E5tmqo+wxD7dmYQYtJ6mcN6mz
+         tNTM7Z3pH91G7c4HVEvnXbaTf6B1f+h2FWcK3h/7Cm3GPKVVVSoh/CQvLNUbqmgsKnp4
+         XcY0YlT76y9suQO/SEMReRS+2yRxFrD0VLproRMx6dEGFlluiwbIRROAGJdILaHJ+keW
+         lqiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nFjK6BLpzT7lVhN8pP3TzuZPE19vdJc+5KwpewTGYyk=;
-        b=gO0n/cmysx7jJyQJyG57pdFuJEWw6R2gDadY0QqI0cj7rSgtuqXwuiLYO4j/PqhiH+
-         T5Ced7BoigGXzEj2CRXX1ZRfPRIwu0sNADQPcmHOpVnUBsXs7FageO8EByC6Rv44TcrE
-         ViM6jbTQz2UynyncUUmKHKHmhPujofCQ+w5g5nMhS1JZMFjPDLCYjbEfvOZYRxQPVwQt
-         XtZlc7eLFOSmE4/qR/5eHmTGJgk/s6f/jOYSiIrXoo5TbQweySug9dHNnmp8Xzpv0jws
-         XUsWzwG8W+FHHOQB158RfyPiy7PGpWv2FyaIIPTUTfGpVT3QXW7Egy1EzkKkjXvtrxrX
-         JY5Q==
-X-Gm-Message-State: ACrzQf0eOysdJfblKjuHsGgyiqXuYs3RtWDAMy0pNv14jCcO8jlFeQNa
-        IfzhlS7e4c2E58xv+PtGSrf0CCJyLmY=
-X-Google-Smtp-Source: AMsMyM4y+8yci8AAqwSMJYm5S8mWYVMfjXOLsRA2ptMTSJnENDmvrsAfWV9MNZdc78w+lOLdfRqg2g==
-X-Received: by 2002:a17:906:5ac2:b0:78d:3358:7694 with SMTP id x2-20020a1709065ac200b0078d33587694mr47464405ejs.276.1666971074714;
-        Fri, 28 Oct 2022 08:31:14 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id fj17-20020a1709069c9100b007a4e02e32ffsm2390029ejc.60.2022.10.28.08.31.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Oct 2022 08:31:14 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1ooRKD-009vds-1O;
-        Fri, 28 Oct 2022 17:31:13 +0200
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] receive-pack: use advertised reference tips to
- inform connectivity check
-Date:   Fri, 28 Oct 2022 17:01:58 +0200
-References: <cover.1666967670.git.ps@pks.im>
- <006e89f384be1227b922fb6fdc8755ae84cac587.1666967670.git.ps@pks.im>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <006e89f384be1227b922fb6fdc8755ae84cac587.1666967670.git.ps@pks.im>
-Message-ID: <221028.867d0k7yny.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y+qNHwyWLFecga7hkkqeoekMe8xKWDtCG3DGXyrna9w=;
+        b=f+fdVjMBRgAYZF8TkKh62OhF7YNNQ5llGidP04R1JpeP0yTMA6BLKAUR661xdknsWG
+         bTByV2ym3sc+HakTd5sLug8nrGLM/4IBL3LXV5nAl8BQS5bRaAI28yQfy+b2+u9gWyDC
+         DY1qlMO/xwDv5BdnCE3S80dPiatDXcQbrqHRhsv1fqWDucTCFZEssCxYH1F2p4S2BDdD
+         D1Y4Sjbrb+pM3IUpS2h9RI1NO8roT4wkQYqvIzF2Ij9tVhHukVsi/g8v9BErT2UXHkaO
+         yG+TknJjcYLnKq3gkCJck7RU0EIFqTsd+DEW43L+YO7e+S87Ta61DWKJqze5/LrTPKua
+         gnxQ==
+X-Gm-Message-State: ACrzQf2Gq3eEEIMrpxvmna7iNpwlTmRKTnb50H7N7ikG829gvggthisk
+        rfTyNbkbVLHbCTcTExXqTH1r
+X-Google-Smtp-Source: AMsMyM6EvAj2fjc+qcV/iLo6elruIsLGIkBWEs1b/AZsYghBLXE9lZsuDnk7gIPuOU+cpsDPw4mOcQ==
+X-Received: by 2002:a05:6e02:1b89:b0:300:55df:175f with SMTP id h9-20020a056e021b8900b0030055df175fmr47037ili.186.1666972161999;
+        Fri, 28 Oct 2022 08:49:21 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:3412:78d7:b093:983e? ([2600:1700:e72:80a0:3412:78d7:b093:983e])
+        by smtp.gmail.com with ESMTPSA id o13-20020a056e02092d00b002f5024d8543sm1714570ilt.38.2022.10.28.08.49.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 28 Oct 2022 08:49:21 -0700 (PDT)
+Message-ID: <313a6619-273c-066e-c3da-a519b38c03af@github.com>
+Date:   Fri, 28 Oct 2022 11:49:20 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+Subject: Re: [PATCH v2] index: add trace2 region for clear skip worktree
+To:     Anh Le via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Timothy Jones <timothy@canva.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <git@jeffhostetler.com>, Anh Le <anh@canva.com>
+References: <pull.1368.git.git.1666742722502.gitgitgadget@gmail.com>
+ <pull.1368.v2.git.git.1666917961644.gitgitgadget@gmail.com>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <pull.1368.v2.git.git.1666917961644.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 10/27/2022 8:46 PM, Anh Le via GitGitGadget wrote:
+> From: Anh Le <anh@canva.com>
+> 
+> In a large repository using sparse checkout, checking
+> whether a file marked with skip worktree is present
+> on disk and its skip worktree bit should be cleared
+> can take a considerable amount of time. Add a trace2
+> region to surface this information, keeping a count of how many paths
+> have been checked and separately
+> keep counts for after a full index is
+> materialised.
+You have some strange line wrapping here. You can wrap them better
+using several editors, but here is brief technique if your core.editor
+is vim (do within 'git commit --amend'):
 
-On Fri, Oct 28 2022, Patrick Steinhardt wrote:
+1. Use "SHIFT+V" to get into visual mode.
+2. Use up and down arrows to select the entire paragraph.
+3. Type "G" then "Q" to word wrap the selection.
+4. Save and close the editor.
+>  	int i;
+> +	int path_counts[2] = {0, 0};
+> +	int restarted = 0;
 
-> When serving a push, git-receive-pack(1) needs to verify that the
-> packfile sent by the client contains all objects that are required by
-> the updated references. This connectivity check works by marking all
-> preexisting references as uninteresting and using the new reference tips
-> as starting point for a graph walk.
->
-> This strategy has the major downside that it will not require any object
-> to be sent by the client that is reachable by any of the repositories'
-> references. While that sounds like it would be indeed what we are after
-> with the connectivity check, it is arguably not. The administrator that
-> manages the server-side Git repository may have configured certain refs
-> to be hidden during the reference advertisement via `transfer.hideRefs`
-> or `receivepack.hideRefs`. Whatever the reason, the result is that the
-> client shouldn't expect that any of those hidden references exists on
-> the remote side, and neither should they assume any of the pointed-to
-> objects to exist except if referenced by any visible reference. But
-> because we treat _all_ local refs as uninteresting in the connectivity
-> check, a client is free to send a packfile that references objects that
-> are only reachable via a hidden reference on the server-side, and we
-> will gladly accept it.
->
-> Besides the correctness issue there is also a performance issue. Git
-> forges tend to do internal bookkeeping to keep alive sets of objects for
-> internal use or make them easy to find via certain references. These
-> references are typically hidden away from the user so that they are
-> neither advertised nor writeable. At GitLab, we have one particular
-> repository that contains a total of 7 million references, of which 6.8
-> million are indeed internal references. With the current connectivity
-> check we are forced to load all these references in order to mark them
-> as uninteresting, and this alone takes around 15 seconds to compute.
->
-> We can fix both of these issues by changing the logic for stateful
-> invocations of git-receive-pack(1) where the reference advertisement and
-> packfile negotiation are served by the same process. Instead of marking
-> all preexisting references as unreachable, we will only mark those that
-> we have announced to the client.
->
-> Besides the stated fix to correctness this also provides a huge boost to
-> performance in the repository mentioned above. Pushing a new commit into
-> this repo with `transfer.hideRefs` set up to hide 6.8 million of 7 refs
-> as it is configured in Gitaly leads to an almost 7.5-fold speedup:
+This count mechanism is a good one. Nice and simple.
 
-Really well explained.
-
->     Benchmark 1: main
->       Time (mean =C2=B1 =CF=83):     29.902 s =C2=B1  0.105 s    [User: 2=
-9.176 s, System: 1.052 s]
->       Range (min =E2=80=A6 max):   29.781 s =E2=80=A6 29.969 s    3 runs
->
->     Benchmark 2: pks-connectivity-check-hide-refs
->       Time (mean =C2=B1 =CF=83):      4.033 s =C2=B1  0.088 s    [User: 4=
-.071 s, System: 0.374 s]
->       Range (min =E2=80=A6 max):    3.953 s =E2=80=A6  4.128 s    3 runs
->
->     Summary
->       'pks-connectivity-check-hide-refs' ran
->         7.42 =C2=B1 0.16 times faster than 'main'
-
-And impressive, thanks!
-
-> Unfortunately, this change comes with a performance hit when refs are
-> not hidden. Executed in the same repository:
->
->     Benchmark 1: main
->       Time (mean =C2=B1 =CF=83):     45.780 s =C2=B1  0.507 s    [User: 4=
-6.908 s, System: 4.838 s]
->       Range (min =E2=80=A6 max):   45.453 s =E2=80=A6 46.364 s    3 runs
->
->     Benchmark 2: pks-connectivity-check-hide-refs
->       Time (mean =C2=B1 =CF=83):     49.886 s =C2=B1  0.282 s    [User: 5=
-1.168 s, System: 5.015 s]
->       Range (min =E2=80=A6 max):   49.589 s =E2=80=A6 50.149 s    3 runs
->
->     Summary
->       'main' ran
->         1.09 =C2=B1 0.01 times faster than 'pks-connectivity-check-hide-r=
-efs'
->
-> This is probably caused by the overhead of reachable tips being passed
-> in via git-rev-list(1)'s standard input, which seems to be slower than
-> reading the references from disk.
->
-> It is debatable what to do about this. If this were only about improving
-> performance then it would be trivial to make the new logic depend on
-> whether or not `transfer.hideRefs` has been configured in the repo. But
-> as explained this is also about correctness, even though this can be
-> considered an edge case. Furthermore, this slowdown is really only
-> noticeable in outliers like the above repository with an unreasonable
-> amount of refs. The same benchmark in linux-stable.git with about
-> 4500 references shows no measurable difference:
-
-Do we have a test that would start failing if we changed the behavior?
-Perhaps such a test is peeking too much behind the curtain, but if it's
-easy come up with one I think it would be most welcome to have it
-alongside this.  to have exposes
-
-> -static void write_head_info(void)
-> +static void write_head_info(struct oidset *announced_objects)
->  {
-> -	static struct oidset seen =3D OIDSET_INIT;
-> -
-> -	for_each_ref(show_ref_cb, &seen);
-> -	for_each_alternate_ref(show_one_alternate_ref, &seen);
-> -	oidset_clear(&seen);
-> +	for_each_ref(show_ref_cb, announced_objects);
-> +	for_each_alternate_ref(show_one_alternate_ref, announced_objects);
->  	if (!sent_capabilities)
->  		show_ref("capabilities^{}", null_oid());
-
-Nit: The variable rename stands out slightly,
-i.e. s/&seen/announced_objects/ not s/&seen/seen/, especially as:
-
->  static void execute_commands(struct command *commands,
->  			     const char *unpacker_error,
->  			     struct shallow_info *si,
-> -			     const struct string_list *push_options)
-> +			     const struct string_list *push_options,
-> +			     struct oidset *announced_oids)
-
-Here we have the same variable, but now it's *_oids, not *objects.
-
-> +	if (oidset_size(announced_oids) !=3D 0) {
-
-Nit as before: The "!=3D 0" can go here.
-
-> @@ -2462,6 +2473,7 @@ int cmd_receive_pack(int argc, const char **argv, c=
-onst char *prefix)
->  {
->  	int advertise_refs =3D 0;
->  	struct command *commands;
-> +	struct oidset announced_oids =3D OIDSET_INIT;
->  	struct oid_array shallow =3D OID_ARRAY_INIT;
->  	struct oid_array ref =3D OID_ARRAY_INIT;
->  	struct shallow_info si;
-> @@ -2524,7 +2536,7 @@ int cmd_receive_pack(int argc, const char **argv, c=
-onst char *prefix)
+>  
+>  	if (!core_apply_sparse_checkout ||
+>  	    sparse_expect_files_outside_of_patterns)
+>  		return;
+>  
+> +	trace2_region_enter("index", "clear_skip_worktree_from_present_files", istate->repo);
+>  restart:
+>  	for (i = 0; i < istate->cache_nr; i++) {
+>  		struct cache_entry *ce = istate->cache[i];
+>  
+> -		if (ce_skip_worktree(ce) &&
+> -		    path_found(ce->name, &last_dirname, &dir_len, &dir_found)) {
+> -			if (S_ISSPARSEDIR(ce->ce_mode)) {
+> -				ensure_full_index(istate);
+> -				goto restart;
+> +		if (ce_skip_worktree(ce)) {
+> +			path_counts[restarted]++;
+> +			if (path_found(ce->name, &last_dirname, &dir_len, &dir_found)) {
+> +				if (S_ISSPARSEDIR(ce->ce_mode)) {
+> +					ensure_full_index(istate);
+> +					restarted = 1;
+> +					goto restart;
+> +				}
+> +				ce->ce_flags &= ~CE_SKIP_WORKTREE;
+>  			}
+> -			ce->ce_flags &= ~CE_SKIP_WORKTREE;
+>  		}
 >  	}
->=20=20
->  	if (advertise_refs || !stateless_rpc) {
-> -		write_head_info();
-> +		write_head_info(&announced_oids);
->  	}
->  	if (advertise_refs)
->  		return 0;
-
-This introduces a memory leak to the function., We probably have other
-ones in code it calls, but from a quick eyeballing not in the function
-itself.
-
-Squashing in / combining it with this should do it, as it never returns
-non-zero (except for calling die()):
-=09
-	diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-	index 44bcea3a5b3..8d5c2fbef1c 100644
-	--- a/builtin/receive-pack.c
-	+++ b/builtin/receive-pack.c
-	@@ -2527,7 +2527,7 @@ int cmd_receive_pack(int argc, const char **argv, co=
-nst char *prefix)
-	 		write_head_info();
-	 	}
-	 	if (advertise_refs)
-	-		return 0;
-	+		goto cleanup;
-=09=20
-	 	packet_reader_init(&reader, 0, NULL, 0,
-	 			   PACKET_READ_CHOMP_NEWLINE |
-	@@ -2587,6 +2587,7 @@ int cmd_receive_pack(int argc, const char **argv, co=
-nst char *prefix)
-	 			update_server_info(0);
-	 		clear_shallow_info(&si);
-	 	}
-	+cleanup:
-	 	if (use_sideband)
-	 		packet_flush(1);
-	 	oid_array_clear(&shallow);
-
-> @@ -2591,6 +2603,7 @@ int cmd_receive_pack(int argc, const char **argv, c=
-onst char *prefix)
->  		packet_flush(1);
->  	oid_array_clear(&shallow);
->  	oid_array_clear(&ref);
-> +	oidset_clear(&announced_oids);
->  	free((void *)push_cert_nonce);
->  	return 0;
->  }
-
-We'll then properly reach this new oidset_clear()> The oid_array_clear()
-are all for variables we're populating after we're past htat "if
-(advertise_refs)".
-
-I think if you're re-rolling this sqashing 1/2 and 2/2 together would be
-an improvement. The 1/2 is tiny, and it's an API that's not used until
-this 1/2. I found myself going back & forth more than helped in
-reviewing this.
-
-Ggoing back a bit this:
-
-> +static const struct object_id *iterate_announced_oids(void *cb_data)
-> +{
-> +	struct oidset_iter *iter =3D cb_data;
-> +	return oidset_iter_next(iter);
-> +}
 > +
-
-Is just used as (from 1/2):
-
-> +	if (opt->reachable_oids_fn) {
-> +		const struct object_id *reachable_oid;
-> +		while ((reachable_oid =3D opt->reachable_oids_fn(opt->reachable_oids_d=
-ata)) !=3D NULL)
-> +			if (fprintf(rev_list_in, "^%s\n", oid_to_hex(reachable_oid)) < 0)
-> +				break;
+> +	if (path_counts[0] > 0) {
+> +		trace2_data_intmax("index", istate->repo, "clear_skip_worktree_from_present_files/path_count", path_counts[0]);
+> +	}
+> +	if (restarted) {
+> +		trace2_data_intmax("index", istate->repo, "clear_skip_worktree_from_present_files/full_index/path_count", path_counts[1]);
 > +	}
 
-After doing above:
+A few style things:
 
-> +	if (oidset_size(announced_oids) !=3D 0) {
-> +		oidset_iter_init(announced_oids, &announced_oids_iter);
-> +		opt.reachable_oids_fn =3D iterate_announced_oids;
-> +		opt.reachable_oids_data =3D &announced_oids_iter;
-> +	}
+1. Use "if (path_counts[0])" to detect a non-zero value.
+2. Don't use { } around a single-line block.
+3. Your lines are quite long, due a lot from your long keys.
+   Shorten the keys (maybe "sparse_path_count" and "restarted_count"
+   is enough context) and consider using a line break in
+   the middle of the parameters.
 
-But I don't see the reason for the indirection, but maybe I'm missing
-something obvious.
+> +	trace2_region_leave("index", "clear_skip_worktree_from_present_files", istate->repo);
 
-Why not just pass the oidset itself and have connected.c iterate through
-it, rather than going thorugh this callback / data indirection?
-
+Thanks,
+-Stolee
