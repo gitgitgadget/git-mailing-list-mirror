@@ -2,143 +2,365 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 61BE1C38A02
-	for <git@archiver.kernel.org>; Sat, 29 Oct 2022 03:02:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 099C1C433FE
+	for <git@archiver.kernel.org>; Sat, 29 Oct 2022 03:43:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229894AbiJ2DC1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Oct 2022 23:02:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48022 "EHLO
+        id S229667AbiJ2DnO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Oct 2022 23:43:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229886AbiJ2DCY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2022 23:02:24 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22F282BC7
-        for <git@vger.kernel.org>; Fri, 28 Oct 2022 20:01:19 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id u24so1146081edd.13
-        for <git@vger.kernel.org>; Fri, 28 Oct 2022 20:01:19 -0700 (PDT)
+        with ESMTP id S229602AbiJ2DnM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2022 23:43:12 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D1A91C8D63
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 20:42:58 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id v130-20020a1cac88000000b003bcde03bd44so7638159wme.5
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 20:42:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=V8yNpg9XZXMeNNgms1SNXPH9wjHkWJCsbbV/B91Klfg=;
-        b=KSwYzJuy8f8nmdBDbNBmMelt+UPF4MKFu3En68onaGO6qaGQyz94cs2Iy2fEv155+r
-         n1O39k5AOCn02URhE5KRIRAVlHY5VqaGEU7TPQA8jg8D0v5bL240JOMAPUs/BTIxS7p1
-         2Iu/HzNqgoI6vl2nkVJO+5XmiAf+udk8QtWdkVhjl19iFFoj0HHMewGYV/BX8olvO5Rv
-         S9pzD7Qa/CSDJZtDjnkwE+3hv5yx8NJUFs71m1psLig98iAElE33m7mQO+z+JQ+Y8pOo
-         Zo+9zJKv+QMAUDO6RQ10ROB3tIBQrqSQdECjnu029AiOswhjoGbfoqUrJBBZcwKYGPGG
-         F7SQ==
+        bh=RzAXIvkXQR6tmHQcdxR/tn1VA1JMPCu/cWahejBx4so=;
+        b=Ufh3/Yz+wVZU35HEwZ2HpA0UhWtCm0WZGp0ttUYC1EddoeljLBs1VgKs9lhqg86Ved
+         Id4wOZHehrHOJSvD0S9sT2FVkwqGs7cDDFjBC8JS94fTgN55CN7n4Xus2W/Q32i0eQFS
+         1yh4Zw8q2/jtIBzfCk8xv7+hCaKT3Ae3oxUshgpSEclqYi2ywpBSYdfya9SivOUn2N9z
+         t01UjZripsC3torc3gwjtD6wEs2guYrcMJ9uoQS6ztk7OStpCrabaz/B7FRukNlittSf
+         U2xKOo6p/a6Uc80WYm08YKBDklKVV3jQFQHiC01Y5J1Iow/11bAvaI8J8zCXqJiKzG6B
+         WTng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=V8yNpg9XZXMeNNgms1SNXPH9wjHkWJCsbbV/B91Klfg=;
-        b=ZP3iXCiVqDHSbuYbFcb4wL5E+NKjFWPvPAC+PADer4NwzmFsIS5jog5C2W5BooRRda
-         QiouPSMphnYY2O1aI72qAfsXZyBZBL0GtwDXJ6j0Nlx7JJ1ojWpfDbsfDUBw4+DRG26D
-         a6dTSiNrnxV+TRE8H+bMm5giUxTNlQUCZcR28fm2M9fWGbMEuKGGIkyeVCsL0Syb219Z
-         wXUXld1lbri8kmTfcd10F8GC9g1/op01Ltgjdik9m7R+FtKYCSjS4Hg+LkVJc6ab3tf0
-         AHNYdVrjaGeAV6lVq+fzipRImZTud9ollRtCzEg0ZZ9Xm3T9Q+DLAFNli5d/KMD5nIyb
-         892A==
-X-Gm-Message-State: ACrzQf1wm3V23OJ/YboR8Z8596UTrhM+2908TrTcRKr3MWUplKOj18f2
-        5F4ofFlGa7a0gNGJl2MkI77gICF8D8KWqQ==
-X-Google-Smtp-Source: AMsMyM6X5+MQgqcGRbw2lE645tTx4rwkWa1djZb/v4icWmjEo00+9TI39mep/bnQ2wEw4J44zOHSIA==
-X-Received: by 2002:a05:6402:294a:b0:461:b661:d903 with SMTP id ed10-20020a056402294a00b00461b661d903mr2298088edb.407.1667012477388;
-        Fri, 28 Oct 2022 20:01:17 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id dy14-20020a05640231ee00b00461621cae1fsm195393edb.16.2022.10.28.20.01.16
+        bh=RzAXIvkXQR6tmHQcdxR/tn1VA1JMPCu/cWahejBx4so=;
+        b=yt6UsL4xsvqWb1B0NB25Hg6Q4QbcIriudySz09NzzbZ03uW6brukTZR/JnnP63EjOr
+         ZKPzsJBucvlmEOCRnYsoU0UNTzRFszJnpv7EvbMV1rL8orLwWmj+0a0OJW5RsdmYfl67
+         wsKOID2YlOL1vyjpdj54DQ57IYXaxYRk0xPRKDEFcDOaK9rBNcuYdPdfQmmoLfOkzKzt
+         4AALNVXDuVLqI7iXubwUWwD2J3IV9TQjAwu+OP/AUDy7eu6vyU6mg/o8nmGx7NQjf1WW
+         u0RVHISAKxw5Vuzf7cOO9z99lZqLQ4KRriigEiYZ+foYivpvsq4RMjFEtumKjB9SdByn
+         FwrA==
+X-Gm-Message-State: ACrzQf0Xo6sTs15L6ibbHllJolwh1b4de+/NDkvwhO/nMb8HihbSCSAl
+        TrloKaAHgBRZpMidA+8TcxLKLPfhktc=
+X-Google-Smtp-Source: AMsMyM7na8Q0Fp/1ywsxjCJKJA8l7aKrCS9AVryl+gsVyuXST0NapAdEZikZSADOi9nb1qj5Kq3U8g==
+X-Received: by 2002:a05:600c:46c7:b0:3c6:f3e6:1f13 with SMTP id q7-20020a05600c46c700b003c6f3e61f13mr11350487wmo.62.1667014976473;
+        Fri, 28 Oct 2022 20:42:56 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q5-20020a5d6585000000b00228cd9f6349sm298325wru.106.2022.10.28.20.42.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Oct 2022 20:01:16 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Calvin Wan <calvinwan@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 3/3] run-command tests: test stdout of run_command_parallel()
-Date:   Sat, 29 Oct 2022 04:59:47 +0200
-Message-Id: <patch-3.3-6d6c2241bf2-20221029T025520Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.38.0.1280.g8136eb6fab2
-In-Reply-To: <cover-0.3-00000000000-20221029T025520Z-avarab@gmail.com>
-References: <cover-0.3-00000000000-20221029T025520Z-avarab@gmail.com>
-MIME-Version: 1.0
+        Fri, 28 Oct 2022 20:42:55 -0700 (PDT)
+Message-Id: <pull.1397.v3.git.1667014975042.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1397.v2.git.1666958144017.gitgitgadget@gmail.com>
+References: <pull.1397.v2.git.1666958144017.gitgitgadget@gmail.com>
+From:   "Kyle Zhao via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 29 Oct 2022 03:42:54 +0000
+Subject: [PATCH v3] merge-tree.c: add --merge-base=<commit> option
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, kylezhao <kylezhao@tencent.com>,
+        Kyle Zhao <kylezhao@tencent.com>,
+        Kyle Zhao <kylezhao@tencent.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Extend the tests added in c553c72eed6 (run-command: add an
-asynchronous parallel child processor, 2015-12-15) to test stdout in
-addition to stderr.
+From: Kyle Zhao <kylezhao@tencent.com>
 
-When the "ungroup" feature was added in fd3aaf53f71 (run-command: add
-an "ungroup" option to run_process_parallel(), 2022-06-07) its tests
-were made to test both the stdout and stderr, but these existing tests
-were left alone. Let's also exhaustively test our expected output
-here.
+This patch will give our callers more flexibility to use `git merge-tree`,
+such as:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+    git merge-tree --write-tree --merge-base=branch^ HEAD branch
+
+This does a merge of HEAD and branch, but uses branch^ as the merge-base.
+
+And the reason why using an option flag instead of a positional argument
+is to allow additional commits passed to merge-tree to be handled via an
+octopus merge in the future.
+
+Signed-off-by: Kyle Zhao <kylezhao@tencent.com>
 ---
- t/t0061-run-command.sh | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+    merge-tree: allow specifying a base commit when --write-tree is passed
+    
+    Thanks for Elijah's work. I'm very excited that merge-ort is integrated
+    into the git merge-tree, which means that we can use merge-ort in bare
+    repositories to optimize merge performance.
+    
+    In this patch, I introduce a new --merge-base=<commit> option to allow
+    callers to specify a merge-base for the merge. This may allow users to
+    implement git cherry-pick and git rebase in bare repositories with git
+    merge-tree cmd.
+    
+    Changes since v1:
+    
+     * Changed merge_incore_recursive() to merge_incore_nonrecursive() when
+       merge-base is specified.
+     * Fixed c style problem.
+     * Moved commit lookup/die logic out to the parsing logic in
+       cmd_merge_tree().
+     * use test_commit for test
+    
+    Changes since v2:
+    
+     * commit message
+     * Rebased on top of en/merge-tree-sequence.
+     * Set opt.ancestor to o->merge_base. Because opt.ancestor is a *char.
+       To make it easier to pass parameters, I moved
+       lookup_commit_reference_by_name() to real_ merge() again.
+     * Added test comment.
 
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index 7b5423eebda..e2411f6a9bd 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -130,7 +130,8 @@ World
- EOF
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1397%2Fkeyu98%2Fkz%2Fmerge-tree-option-merge-base-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1397/keyu98/kz/merge-tree-option-merge-base-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1397
+
+Range-diff vs v2:
+
+ 1:  ab4e5d5ad08 ! 1:  554cbde49e8 merge-tree.c: add --merge-base=<commit> option
+     @@ Commit message
+      
+              git merge-tree --write-tree --merge-base=branch^ HEAD branch
+      
+     -    It would cherry-pick the commit at the tip of the branch on top of the
+     -    current commit even if the repository is bare.
+     +    This does a merge of HEAD and branch, but uses branch^ as the merge-base.
+     +
+     +    And the reason why using an option flag instead of a positional argument
+     +    is to allow additional commits passed to merge-tree to be handled via an
+     +    octopus merge in the future.
+      
+          Signed-off-by: Kyle Zhao <kylezhao@tencent.com>
+      
+     @@ builtin/merge-tree.c
+       #include "merge-ort.h"
+       #include "object-store.h"
+      @@ builtin/merge-tree.c: struct merge_tree_options {
+     - 	int allow_unrelated_histories;
+       	int show_messages;
+       	int name_only;
+     -+	const struct commit *base_commit;
+     + 	int use_stdin;
+     ++	const char *merge_base;
+       };
+       
+       static int real_merge(struct merge_tree_options *o,
+     @@ builtin/merge-tree.c: static int real_merge(struct merge_tree_options *o,
+      -	if (!merge_bases && !o->allow_unrelated_histories)
+      -		die(_("refusing to merge unrelated histories"));
+      -	merge_bases = reverse_commit_list(merge_bases);
+     -+	if (o->base_commit) {
+     ++	if (o->merge_base) {
+     ++		struct commit *base_commit;
+      +		struct tree *base_tree, *parent1_tree, *parent2_tree;
+      +
+     -+		opt.ancestor = "specified merge base";
+     -+		base_tree = get_commit_tree(o->base_commit);
+     ++		base_commit = lookup_commit_reference_by_name(o->merge_base);
+     ++		if (!base_commit)
+     ++			die(_("could not lookup commit %s"), o->merge_base);
+     ++
+     ++		opt.ancestor = o->merge_base;
+     ++		base_tree = get_commit_tree(base_commit);
+      +		parent1_tree = get_commit_tree(parent1);
+      +		parent2_tree = get_commit_tree(parent2);
+      +		merge_incore_nonrecursive(&opt, base_tree, parent1_tree, parent2_tree, &result);
+     @@ builtin/merge-tree.c: static int real_merge(struct merge_tree_options *o,
+       	if (result.clean < 0)
+       		die(_("failure to merge"));
+       
+     -@@ builtin/merge-tree.c: static int real_merge(struct merge_tree_options *o,
+     - 
+     - int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+     - {
+     -+	const char *merge_base = NULL;
+     - 	struct merge_tree_options o = { .show_messages = -1 };
+     - 	int expected_remaining_argc;
+     - 	int original_argc;
+      @@ builtin/merge-tree.c: int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+     - 			   &o.allow_unrelated_histories,
+     - 			   N_("allow merging unrelated histories"),
+     + 			   &o.use_stdin,
+     + 			   N_("perform multiple merges, one per line of input"),
+       			   PARSE_OPT_NONEG),
+      +		OPT_STRING(0, "merge-base",
+     -+			 &merge_base,
+     -+			 N_("commit"),
+     -+			 N_("specify a merge-base for the merge")),
+     ++			   &o.merge_base,
+     ++			   N_("commit"),
+     ++			   N_("specify a merge-base for the merge")),
+       		OPT_END()
+       	};
+       
+     -@@ builtin/merge-tree.c: int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+     - 		usage_with_options(merge_tree_usage, mt_options);
+     - 
+     - 	/* Do the relevant type of merge */
+     --	if (o.mode == MODE_REAL)
+     -+	if (o.mode == MODE_REAL) {
+     -+		if (merge_base) {
+     -+			o.base_commit = lookup_commit_reference_by_name(merge_base);
+     -+			if (!o.base_commit)
+     -+				die(_("could not lookup commit %s"), merge_base);
+     -+		}
+     - 		return real_merge(&o, argv[0], argv[1], prefix);
+     -+	}
+     - 	else
+     - 		return trivial_merge(argv[0], argv[1], argv[2]);
+     - }
+      
+       ## t/t4301-merge-tree-write-tree.sh ##
+     -@@ t/t4301-merge-tree-write-tree.sh: test_expect_success SANITY 'merge-ort fails gracefully in a read-only repository
+     - 	test_must_fail git -C read-only merge-tree side1 side2
+     +@@ t/t4301-merge-tree-write-tree.sh: test_expect_success '--stdin with both a successful and a conflicted merge' '
+     + 	test_cmp expect actual
+       '
+       
+     ++# specify merge-base as parent of branch2
+     ++# git merge-tree --write-tree --merge-base=c2 c1 c3
+     ++#   Commit c1: add file1
+     ++#   Commit c2: add file2 after c1
+     ++#   Commit c3: add file3 after c2
+     ++#   Expected: add file3, and file2 does NOT appear
+     ++
+      +test_expect_success 'specify merge-base as parent of branch2' '
+      +	# Setup
+      +	git init base-b2-p && (
+
+
+ Documentation/git-merge-tree.txt |  4 ++++
+ builtin/merge-tree.c             | 39 ++++++++++++++++++++++++--------
+ t/t4301-merge-tree-write-tree.sh | 30 ++++++++++++++++++++++++
+ 3 files changed, 64 insertions(+), 9 deletions(-)
+
+diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
+index 04bcc416e6e..d9dacb2ce54 100644
+--- a/Documentation/git-merge-tree.txt
++++ b/Documentation/git-merge-tree.txt
+@@ -64,6 +64,10 @@ OPTIONS
+ 	share no common history.  This flag can be given to override that
+ 	check and make the merge proceed anyway.
  
- test_expect_success 'run_command runs in parallel with more jobs available than tasks' '
--	test-tool run-command run-command-parallel 5 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-+	test-tool run-command run-command-parallel 5 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>actual &&
-+	test_must_be_empty out &&
++--merge-base=<commit>::
++	Instead of finding the merge-bases for <branch1> and <branch2>,
++	specify a merge-base for the merge.
++
+ [[OUTPUT]]
+ OUTPUT
+ ------
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index fe853aa8f91..cd25aac6ba6 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -3,6 +3,7 @@
+ #include "tree-walk.h"
+ #include "xdiff-interface.h"
+ #include "help.h"
++#include "commit.h"
+ #include "commit-reach.h"
+ #include "merge-ort.h"
+ #include "object-store.h"
+@@ -403,6 +404,7 @@ struct merge_tree_options {
+ 	int show_messages;
+ 	int name_only;
+ 	int use_stdin;
++	const char *merge_base;
+ };
+ 
+ static int real_merge(struct merge_tree_options *o,
+@@ -432,16 +434,31 @@ static int real_merge(struct merge_tree_options *o,
+ 	opt.branch1 = branch1;
+ 	opt.branch2 = branch2;
+ 
+-	/*
+-	 * Get the merge bases, in reverse order; see comment above
+-	 * merge_incore_recursive in merge-ort.h
+-	 */
+-	merge_bases = get_merge_bases(parent1, parent2);
+-	if (!merge_bases && !o->allow_unrelated_histories)
+-		die(_("refusing to merge unrelated histories"));
+-	merge_bases = reverse_commit_list(merge_bases);
++	if (o->merge_base) {
++		struct commit *base_commit;
++		struct tree *base_tree, *parent1_tree, *parent2_tree;
++
++		base_commit = lookup_commit_reference_by_name(o->merge_base);
++		if (!base_commit)
++			die(_("could not lookup commit %s"), o->merge_base);
++
++		opt.ancestor = o->merge_base;
++		base_tree = get_commit_tree(base_commit);
++		parent1_tree = get_commit_tree(parent1);
++		parent2_tree = get_commit_tree(parent2);
++		merge_incore_nonrecursive(&opt, base_tree, parent1_tree, parent2_tree, &result);
++	} else {
++		/*
++		 * Get the merge bases, in reverse order; see comment above
++		 * merge_incore_recursive in merge-ort.h
++		 */
++		merge_bases = get_merge_bases(parent1, parent2);
++		if (!merge_bases && !o->allow_unrelated_histories)
++			die(_("refusing to merge unrelated histories"));
++		merge_bases = reverse_commit_list(merge_bases);
++		merge_incore_recursive(&opt, merge_bases, parent1, parent2, &result);
++	}
+ 
+-	merge_incore_recursive(&opt, merge_bases, parent1, parent2, &result);
+ 	if (result.clean < 0)
+ 		die(_("failure to merge"));
+ 
+@@ -515,6 +532,10 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+ 			   &o.use_stdin,
+ 			   N_("perform multiple merges, one per line of input"),
+ 			   PARSE_OPT_NONEG),
++		OPT_STRING(0, "merge-base",
++			   &o.merge_base,
++			   N_("commit"),
++			   N_("specify a merge-base for the merge")),
+ 		OPT_END()
+ 	};
+ 
+diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
+index cac85591b52..5b0073d3dcd 100755
+--- a/t/t4301-merge-tree-write-tree.sh
++++ b/t/t4301-merge-tree-write-tree.sh
+@@ -860,4 +860,34 @@ test_expect_success '--stdin with both a successful and a conflicted merge' '
  	test_cmp expect actual
  '
  
-@@ -141,7 +142,8 @@ test_expect_success 'run_command runs ungrouped in parallel with more jobs avail
- '
- 
- test_expect_success 'run_command runs in parallel with as many jobs as tasks' '
--	test-tool run-command run-command-parallel 4 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-+	test-tool run-command run-command-parallel 4 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>actual &&
-+	test_must_be_empty out &&
- 	test_cmp expect actual
- '
- 
-@@ -152,7 +154,8 @@ test_expect_success 'run_command runs ungrouped in parallel with as many jobs as
- '
- 
- test_expect_success 'run_command runs in parallel with more tasks than jobs available' '
--	test-tool run-command run-command-parallel 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-+	test-tool run-command run-command-parallel 3 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>actual &&
-+	test_must_be_empty out &&
- 	test_cmp expect actual
- '
- 
-@@ -172,7 +175,8 @@ asking for a quick stop
- EOF
- 
- test_expect_success 'run_command is asked to abort gracefully' '
--	test-tool run-command run-command-abort 3 false 2>actual &&
-+	test-tool run-command run-command-abort 3 false >out 2>actual &&
-+	test_must_be_empty out &&
- 	test_cmp expect actual
- '
- 
-@@ -187,7 +191,8 @@ no further jobs available
- EOF
- 
- test_expect_success 'run_command outputs ' '
--	test-tool run-command run-command-no-jobs 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
-+	test-tool run-command run-command-no-jobs 3 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>actual &&
-+	test_must_be_empty out &&
- 	test_cmp expect actual
- '
- 
++# specify merge-base as parent of branch2
++# git merge-tree --write-tree --merge-base=c2 c1 c3
++#   Commit c1: add file1
++#   Commit c2: add file2 after c1
++#   Commit c3: add file3 after c2
++#   Expected: add file3, and file2 does NOT appear
++
++test_expect_success 'specify merge-base as parent of branch2' '
++	# Setup
++	git init base-b2-p && (
++		cd base-b2-p &&
++		test_commit c1 file1 &&
++		test_commit c2 file2 &&
++		test_commit c3 file3
++	) &&
++	# Testing
++	(
++		cd base-b2-p &&
++		TREE_OID=$(git merge-tree --write-tree --merge-base=c2 c1 c3) &&
++
++		q_to_tab <<-EOF >expect &&
++		100644 blob $(git rev-parse c1:file1)Qfile1
++		100644 blob $(git rev-parse c3:file3)Qfile3
++		EOF
++
++		git ls-tree $TREE_OID >actual &&
++		test_cmp expect actual
++	)
++'
++
+ test_done
+
+base-commit: ec1edbcb56ac05e9980299b05924c5c1b51d68b4
 -- 
-2.38.0.1280.g8136eb6fab2
-
+gitgitgadget
