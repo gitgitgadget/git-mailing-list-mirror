@@ -2,84 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0515C433FE
-	for <git@archiver.kernel.org>; Sat, 29 Oct 2022 18:00:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 307EAC433FE
+	for <git@archiver.kernel.org>; Sat, 29 Oct 2022 18:02:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229552AbiJ2SAR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 Oct 2022 14:00:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54054 "EHLO
+        id S229608AbiJ2SCc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 Oct 2022 14:02:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbiJ2SAO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Oct 2022 14:00:14 -0400
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C9657E2C
-        for <git@vger.kernel.org>; Sat, 29 Oct 2022 11:00:11 -0700 (PDT)
-Received: by mail-io1-xd2f.google.com with SMTP id p141so6973285iod.6
-        for <git@vger.kernel.org>; Sat, 29 Oct 2022 11:00:11 -0700 (PDT)
+        with ESMTP id S229489AbiJ2SCa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Oct 2022 14:02:30 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37E925D700
+        for <git@vger.kernel.org>; Sat, 29 Oct 2022 11:02:30 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id p141so6976152iod.6
+        for <git@vger.kernel.org>; Sat, 29 Oct 2022 11:02:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=y5B9hta4A4lrgUZc1pXbTHEDteyZxE4OgegU8DZ3hBo=;
-        b=HwlgjH/nYZZgtfUYGcBFkZHdLaUlzUnTudl1WgCSgQbs+w1WOKvlMTjbKGkY1NFxoR
-         mYDAAOyhex0gUisnyt4C8lhzHUzdrSC4fnCJD7zKrHR30Cqhv9HMkrIkY/u3G2i7ZI4I
-         OBNIkgtZR953N8YKZv6rc3tlgCYZweFm5qD6L1fSsfcSIGzu4W+9LW4SHXXHIkGjqzj4
-         1qWxaw9MxTPI6Ovu997IwLppR4p7y4SPgZixz9wOgHvXr6R7jr6AG4lwJMBFNtAnw04H
-         p1eTcP2LzpkzTjn6TtW7t1iTjgxoIuXoOMzQyEn4P8aon3PRHIHtMZxtt/N7j+RS455y
-         yv8w==
+        bh=sAlpLmcko14wz++Y9eX/LI+4Crqo9+xXY9hAIvrzIjo=;
+        b=Uqibxs0YpJv9w4PXTswhDA1wi8jaR51UTc9Q+ilFiUpAnlXuCOKQo7BHg8xeIvGIgy
+         B8xe2z4Zn1Tqea1+xUrtMsPuagShAgTaxXkDYMOrxv28XN/PgsLdLbOPXawSIwLMLrIO
+         qaiCTiMEs28U5N8zywVErYHoED6IqRBVu6KTT5q65n0pXX5tFkp5xXJlp3Go/JbSysnC
+         UXoTLrKG1RjGwiEKJwGiBm8FTk0N78/NFvd3061KKkNNGkqL83GRQKIScYi8o/780EQv
+         yukxu/y8eXpqueFsfwFnTEFjyn7xIw8MPRH5NSv40fsAjgDCjcDealh/ZObs3f0wStvx
+         /N5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=y5B9hta4A4lrgUZc1pXbTHEDteyZxE4OgegU8DZ3hBo=;
-        b=6AoJt6I2mQENYGUq+fH/A1iBoo9OPMgYAjwiF5jyEH8DTRMo4tIE87tShV9iFHv/ve
-         ZkpPU3A5Wm4YF5mUTcMKcGSAJ6J1LCeHQaLh0WRXzVjcmQV6KcI+iVDQoUOGGiYtGmfC
-         y3VGHoBDsENqn10pzYsMtIQCNy7iGLd2rFoiPtGyqyVGyIRFWRTp/DVrClLEQGzgn64T
-         eVXWE824t3BVg6eRxTiHOdn1Ql6FGG3uw3rN+a8PEq4gYZ2fC48KDQTkxo4uO9QGlet6
-         7MuXHNXBbvXKVWHF5hnqw7kWSuc0daCy91E0xoTdX1aEPvXPx4zDT/wubMg6Rim9Z5aR
-         4YKg==
-X-Gm-Message-State: ACrzQf3RvDBBE1MF/vw/EbCsUUACE6xYrvdmLBaAeJd9pdnRrFCcAC7s
-        o/jT443S3pGvmrhGDskC1k7h6Q==
-X-Google-Smtp-Source: AMsMyM5282PmiMeSDw6bOszUlPQj7/yRT3lSrJ0HyM8EQp4Yi9cM+AXjStv0hHysTAc1JrO5mtPUaQ==
-X-Received: by 2002:a02:9090:0:b0:375:451f:a537 with SMTP id x16-20020a029090000000b00375451fa537mr1665402jaf.167.1667066411200;
-        Sat, 29 Oct 2022 11:00:11 -0700 (PDT)
+        bh=sAlpLmcko14wz++Y9eX/LI+4Crqo9+xXY9hAIvrzIjo=;
+        b=3x4sHx8hxeKesUAyeZY3AmMusxEMXjl+3Ku+K1LUFUCGdqwYIeIlzrk9zUrTVgxI0G
+         MLvqWz00rIgH0lm2s5jn/1fA9idGhy6AKwRu5wxbMuIiNaqK3f989QHHusL8jMHoEwHX
+         NlsjfBo5wsBkD7AtL74T6AwM7pVwQfq/cKeOu8gdCPbblid71nzObMjsSX90mPu0Movh
+         HXJo7o7oGkjX3rPqjtk379EfvTof5Va1mbyTEjFNh2BsZKun1GnlVQUcCwEBTn0Ocss2
+         l+3Vruxcm9A3ZR12fPhvBvbsiQiJ+2JquFzlZLtx6risCVYRKvWIAxN1O7259seTQ3SL
+         J7fg==
+X-Gm-Message-State: ACrzQf02mRc8azxb2btIz/8wqd2OGQ5SF5Ux4EF8bEqdO9sTdZprPfrR
+        gv5y1gBxNh/5x3EBDINZ/Sd3dg==
+X-Google-Smtp-Source: AMsMyM6fc+tV9rO1Xo57xZWByZ6M7O2mbsFqdnNchCaGp8GyOzYTpQA8F2+GGLfRpexUOxjXryMk6Q==
+X-Received: by 2002:a5e:8517:0:b0:6c6:fbe7:1c0e with SMTP id i23-20020a5e8517000000b006c6fbe71c0emr2435245ioj.95.1667066549560;
+        Sat, 29 Oct 2022 11:02:29 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id w18-20020a02b0d2000000b00363ff12ca47sm818524jah.125.2022.10.29.11.00.10
+        by smtp.gmail.com with ESMTPSA id q125-20020a6b2a83000000b006bca2c3cbe9sm884286ioq.2.2022.10.29.11.02.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Oct 2022 11:00:10 -0700 (PDT)
-Date:   Sat, 29 Oct 2022 14:00:09 -0400
+        Sat, 29 Oct 2022 11:02:29 -0700 (PDT)
+Date:   Sat, 29 Oct 2022 14:02:27 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Siddharth Asthana <siddharthasthana31@gmail.com>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
-        johncai86@gmail.com, Johannes.Schindelin@gmx.de, avarab@gmail.com
-Subject: Re: [PATCH v3 0/2] Add mailmap mechanism in cat-file options
-Message-ID: <Y11qKQCWvdH5zDYk@nand.local>
-References: <20220916205946.178925-1-siddharthasthana31@gmail.com>
- <20221029102459.82428-1-siddharthasthana31@gmail.com>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] archive-tar: report filter start error only once
+Message-ID: <Y11qsz+xvm6TVYrh@nand.local>
+References: <c51b72e5-1c32-65e4-6faa-04693b623e2e@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221029102459.82428-1-siddharthasthana31@gmail.com>
+In-Reply-To: <c51b72e5-1c32-65e4-6faa-04693b623e2e@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 29, 2022 at 03:54:57PM +0530, Siddharth Asthana wrote:
-> Siddharth Asthana (2):
->   cat-file: add mailmap support to -s option
->   cat-file: add mailmap support to --batch-check option
->
->  Documentation/git-cat-file.txt |  6 +++-
->  builtin/cat-file.c             | 27 ++++++++++++++++
->  t/t4203-mailmap.sh             | 59 ++++++++++++++++++++++++++++++++++
->  3 files changed, 91 insertions(+), 1 deletion(-)
+On Sat, Oct 29, 2022 at 12:06:06PM +0200, René Scharfe wrote:
+> ---
+>  archive-tar.c       | 1 +
+>  t/t5000-tar-tree.sh | 7 +++++++
+>  2 files changed, 8 insertions(+)
 
-This approach in this round looks OK to my eyes. Would some of the
-other reviewers (perhaps Ævar or Christian) chime in and see if they
-agree?
+Looks very reasonable. Will queue, thanks.
 
 Thanks,
 Taylor
