@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8762FA3743
-	for <git@archiver.kernel.org>; Sat, 29 Oct 2022 03:02:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 61BE1C38A02
+	for <git@archiver.kernel.org>; Sat, 29 Oct 2022 03:02:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229460AbiJ2DCZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 28 Oct 2022 23:02:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48016 "EHLO
+        id S229894AbiJ2DC1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 28 Oct 2022 23:02:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229870AbiJ2DCV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Oct 2022 23:02:21 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 083F1219A
-        for <git@vger.kernel.org>; Fri, 28 Oct 2022 20:01:18 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id sc25so17070240ejc.12
-        for <git@vger.kernel.org>; Fri, 28 Oct 2022 20:01:17 -0700 (PDT)
+        with ESMTP id S229886AbiJ2DCY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Oct 2022 23:02:24 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22F282BC7
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 20:01:19 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id u24so1146081edd.13
+        for <git@vger.kernel.org>; Fri, 28 Oct 2022 20:01:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Kwx0yF4Nj9mf19/g/Y2NaXuIhylqEnk2CpPa2nDp/6U=;
-        b=YIwYC0M38c9WsqoHk08TBfRdCIp2E8s68Y5Zb9ba78TUDlMsH/hc/gnpEAXI2Gj1S5
-         GRe6OfCxnmvaJ1Rfr1B+/r83epYBpHhCL9PZn+kQFctJLlSUA+LpdC3Phtdicf5UBtNI
-         DJMDJN8DRjTpI4pYYi8saz4COIyWKPdA1De5rTBOixuwH4PrIRFrThluYRNXFnSVpVV0
-         sZ7RlKYt4IzIvFDJpoDeHYlVYGv6onXhBBUOzZDWVbC2L8DtpOJJZy1NqvjnL5YwKVGM
-         TW+BnJ2OPBua+qW/H389zxgbedegxXXHjGrPkdlDksM+xecUqEzSrRiCv1cV2Plrb2ly
-         55Xg==
+        bh=V8yNpg9XZXMeNNgms1SNXPH9wjHkWJCsbbV/B91Klfg=;
+        b=KSwYzJuy8f8nmdBDbNBmMelt+UPF4MKFu3En68onaGO6qaGQyz94cs2Iy2fEv155+r
+         n1O39k5AOCn02URhE5KRIRAVlHY5VqaGEU7TPQA8jg8D0v5bL240JOMAPUs/BTIxS7p1
+         2Iu/HzNqgoI6vl2nkVJO+5XmiAf+udk8QtWdkVhjl19iFFoj0HHMewGYV/BX8olvO5Rv
+         S9pzD7Qa/CSDJZtDjnkwE+3hv5yx8NJUFs71m1psLig98iAElE33m7mQO+z+JQ+Y8pOo
+         Zo+9zJKv+QMAUDO6RQ10ROB3tIBQrqSQdECjnu029AiOswhjoGbfoqUrJBBZcwKYGPGG
+         F7SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Kwx0yF4Nj9mf19/g/Y2NaXuIhylqEnk2CpPa2nDp/6U=;
-        b=q5pOnWSndadQfbQFripWIeRvJFjTzenZD+Y6ZULAJP3AjrOh1ltcGAW7Y8IlvgUOGa
-         2t8jQ+jZQE2hVZmuwZoqd2/ql7LMdhUtULqWL5Pfm/o/FJkvcMwSku3JYzDkuBCyFKoJ
-         oJTLO1hUL63IrKxgD0JhnGdKJJC9zG1jzqG2ggLywu+wRVsqZsaJcAJNBy32V+1T/hyF
-         CbY8sx9EV1z0DcIBKWe1Z5gj7aMx3ESbR8xOGrVjgVmXl3zq4bSvERcbuKBpVMVZ6L5/
-         TVEJTfMbqZR/aXDX/faoRBWzCJcvpQzS24dNv60nnOeaa7rjAvgkxLEjIQTHa6Kph0UT
-         z+1Q==
-X-Gm-Message-State: ACrzQf3SR3h9tMWuJp5zjFr3/s36TH0xNnnSBi7JXrWpKNdI7M/cCr2I
-        k8nPgnxRLwPZ2Rw3e07v3Y3wxYCc6Oovgw==
-X-Google-Smtp-Source: AMsMyM4omUYWJLTtLFKrG/uQHJd4PwdlUOIivoT5FZ3dEVgVBfn240/lMVPgEBRZuV/ABq6joM7K2g==
-X-Received: by 2002:a17:907:3da5:b0:78e:793:4084 with SMTP id he37-20020a1709073da500b0078e07934084mr2174475ejc.285.1667012476240;
-        Fri, 28 Oct 2022 20:01:16 -0700 (PDT)
+        bh=V8yNpg9XZXMeNNgms1SNXPH9wjHkWJCsbbV/B91Klfg=;
+        b=ZP3iXCiVqDHSbuYbFcb4wL5E+NKjFWPvPAC+PADer4NwzmFsIS5jog5C2W5BooRRda
+         QiouPSMphnYY2O1aI72qAfsXZyBZBL0GtwDXJ6j0Nlx7JJ1ojWpfDbsfDUBw4+DRG26D
+         a6dTSiNrnxV+TRE8H+bMm5giUxTNlQUCZcR28fm2M9fWGbMEuKGGIkyeVCsL0Syb219Z
+         wXUXld1lbri8kmTfcd10F8GC9g1/op01Ltgjdik9m7R+FtKYCSjS4Hg+LkVJc6ab3tf0
+         AHNYdVrjaGeAV6lVq+fzipRImZTud9ollRtCzEg0ZZ9Xm3T9Q+DLAFNli5d/KMD5nIyb
+         892A==
+X-Gm-Message-State: ACrzQf1wm3V23OJ/YboR8Z8596UTrhM+2908TrTcRKr3MWUplKOj18f2
+        5F4ofFlGa7a0gNGJl2MkI77gICF8D8KWqQ==
+X-Google-Smtp-Source: AMsMyM6X5+MQgqcGRbw2lE645tTx4rwkWa1djZb/v4icWmjEo00+9TI39mep/bnQ2wEw4J44zOHSIA==
+X-Received: by 2002:a05:6402:294a:b0:461:b661:d903 with SMTP id ed10-20020a056402294a00b00461b661d903mr2298088edb.407.1667012477388;
+        Fri, 28 Oct 2022 20:01:17 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id dy14-20020a05640231ee00b00461621cae1fsm195393edb.16.2022.10.28.20.01.15
+        by smtp.gmail.com with ESMTPSA id dy14-20020a05640231ee00b00461621cae1fsm195393edb.16.2022.10.28.20.01.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Oct 2022 20:01:15 -0700 (PDT)
+        Fri, 28 Oct 2022 20:01:16 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
         Calvin Wan <calvinwan@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 2/3] submodule tests: reset "trace.out" between "grep" invocations
-Date:   Sat, 29 Oct 2022 04:59:46 +0200
-Message-Id: <patch-2.3-708375e3104-20221029T025520Z-avarab@gmail.com>
+Subject: [PATCH 3/3] run-command tests: test stdout of run_command_parallel()
+Date:   Sat, 29 Oct 2022 04:59:47 +0200
+Message-Id: <patch-3.3-6d6c2241bf2-20221029T025520Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1280.g8136eb6fab2
 In-Reply-To: <cover-0.3-00000000000-20221029T025520Z-avarab@gmail.com>
 References: <cover-0.3-00000000000-20221029T025520Z-avarab@gmail.com>
@@ -70,68 +70,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix test patterns added in 62104ba14af (submodules: allow parallel
-fetching, add tests and documentation, 2015-12-15) and
-a028a1930c6 (fetching submodules: respect `submodule.fetchJobs` config
-option, 2016-02-29).
+Extend the tests added in c553c72eed6 (run-command: add an
+asynchronous parallel child processor, 2015-12-15) to test stdout in
+addition to stderr.
 
-In the former case we were leaving a trace.out file at the top-level
-for any subsequent tests (there are none, currently). Let's clean the
-file up instead.
-
-In the latter case we were testing that a given configuration would
-result in "N tasks" in the log, but we were grepping through the log
-for all previous such tests, when we really meant to clear the logs
-between the "grep" invocations.
-
-In practice this resulted in no logic error, as e.g. "--fetch 7" would
-not print out a "9 tasks" line, but let's be paranoid and stop
-implicitly assuming that that's the case.
-
-This change was originally left out of 51243f9f0f6 (run-command API:
-don't fall back on online_cpus(), 2022-10-12), which added the
-">trace.out" seen at the end of the context.
+When the "ungroup" feature was added in fd3aaf53f71 (run-command: add
+an "ungroup" option to run_process_parallel(), 2022-06-07) its tests
+were made to test both the stdout and stderr, but these existing tests
+were left alone. Let's also exhaustively test our expected output
+here.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/t5526-fetch-submodules.sh | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ t/t0061-run-command.sh | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 75da8acf8f4..b9546ef8e5e 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -178,6 +178,7 @@ test_expect_success "submodule.recurse option triggers recursive fetch" '
+diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
+index 7b5423eebda..e2411f6a9bd 100755
+--- a/t/t0061-run-command.sh
++++ b/t/t0061-run-command.sh
+@@ -130,7 +130,8 @@ World
+ EOF
+ 
+ test_expect_success 'run_command runs in parallel with more jobs available than tasks' '
+-	test-tool run-command run-command-parallel 5 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
++	test-tool run-command run-command-parallel 5 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>actual &&
++	test_must_be_empty out &&
+ 	test_cmp expect actual
  '
  
- test_expect_success "fetch --recurse-submodules -j2 has the same output behaviour" '
-+	test_when_finished "rm -f trace.out" &&
- 	add_submodule_commits &&
- 	(
- 		cd downstream &&
-@@ -705,15 +706,22 @@ test_expect_success "'fetch.recurseSubmodules=on-demand' works also without .git
+@@ -141,7 +142,8 @@ test_expect_success 'run_command runs ungrouped in parallel with more jobs avail
+ '
  
- test_expect_success 'fetching submodules respects parallel settings' '
- 	git config fetch.recurseSubmodules true &&
-+	test_when_finished "rm -f downstream/trace.out" &&
- 	(
- 		cd downstream &&
- 		GIT_TRACE=$(pwd)/trace.out git fetch &&
- 		grep "1 tasks" trace.out &&
-+		>trace.out &&
-+
- 		GIT_TRACE=$(pwd)/trace.out git fetch --jobs 7 &&
- 		grep "7 tasks" trace.out &&
-+		>trace.out &&
-+
- 		git config submodule.fetchJobs 8 &&
- 		GIT_TRACE=$(pwd)/trace.out git fetch &&
- 		grep "8 tasks" trace.out &&
-+		>trace.out &&
-+
- 		GIT_TRACE=$(pwd)/trace.out git fetch --jobs 9 &&
- 		grep "9 tasks" trace.out &&
- 		>trace.out &&
+ test_expect_success 'run_command runs in parallel with as many jobs as tasks' '
+-	test-tool run-command run-command-parallel 4 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
++	test-tool run-command run-command-parallel 4 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>actual &&
++	test_must_be_empty out &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -152,7 +154,8 @@ test_expect_success 'run_command runs ungrouped in parallel with as many jobs as
+ '
+ 
+ test_expect_success 'run_command runs in parallel with more tasks than jobs available' '
+-	test-tool run-command run-command-parallel 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
++	test-tool run-command run-command-parallel 3 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>actual &&
++	test_must_be_empty out &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -172,7 +175,8 @@ asking for a quick stop
+ EOF
+ 
+ test_expect_success 'run_command is asked to abort gracefully' '
+-	test-tool run-command run-command-abort 3 false 2>actual &&
++	test-tool run-command run-command-abort 3 false >out 2>actual &&
++	test_must_be_empty out &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -187,7 +191,8 @@ no further jobs available
+ EOF
+ 
+ test_expect_success 'run_command outputs ' '
+-	test-tool run-command run-command-no-jobs 3 sh -c "printf \"%s\n%s\n\" Hello World" 2>actual &&
++	test-tool run-command run-command-no-jobs 3 sh -c "printf \"%s\n%s\n\" Hello World" >out 2>actual &&
++	test_must_be_empty out &&
+ 	test_cmp expect actual
+ '
+ 
 -- 
 2.38.0.1280.g8136eb6fab2
 
