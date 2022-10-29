@@ -2,119 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D932C38A02
-	for <git@archiver.kernel.org>; Sat, 29 Oct 2022 16:41:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E8D8C433FE
+	for <git@archiver.kernel.org>; Sat, 29 Oct 2022 16:42:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229741AbiJ2Ql2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 Oct 2022 12:41:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47042 "EHLO
+        id S229782AbiJ2Ql3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 Oct 2022 12:41:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229682AbiJ2QlZ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229616AbiJ2QlZ (ORCPT <rfc822;git@vger.kernel.org>);
         Sat, 29 Oct 2022 12:41:25 -0400
 Received: from smtp-out-6.talktalk.net (smtp-out-6.talktalk.net [62.24.135.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEBAE18358
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04C1F1A81B
         for <git@vger.kernel.org>; Sat, 29 Oct 2022 09:41:23 -0700 (PDT)
 Received: from localhost.localdomain ([88.110.102.84])
         by smtp.talktalk.net with SMTP
-        id ootdodzgpnO7EootdoWf28; Sat, 29 Oct 2022 17:41:21 +0100
+        id ootdodzgpnO7EooteoWf2K; Sat, 29 Oct 2022 17:41:22 +0100
 X-Originating-IP: [88.110.102.84]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=X8gs11be c=1 sm=1 tr=0 a=f4UhoLCnUTRb1HgAgoWw0g==:117
  a=f4UhoLCnUTRb1HgAgoWw0g==:17 a=MKtGQD3n3ToA:10 a=1oJP67jkp3AA:10
- a=ldyaYNNxDcoA:10 a=vfaYcDn82YOBLiSa2CoA:9
+ a=ldyaYNNxDcoA:10 a=l4iZrl2lBOJF5wAcl3YA:9
 From:   Philip Oakley <philipoakley@iee.email>
 To:     GitList <git@vger.kernel.org>
 Cc:     Self <philipoakley@iee.email>, Junio C Hamano <gitster@pobox.com>,
         Derrick Stolee <stolee@gmail.com>,
         Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
         Taylor Blau <ttaylorr@github.com>
-Subject: [PATCH v3 1/4] doc: use 'object database' not ODB or abbreviation
-Date:   Sat, 29 Oct 2022 17:41:09 +0100
-Message-Id: <20221029164112.2097-2-philipoakley@iee.email>
+Subject: [PATCH v3 3/4] glossary: add reachability bitmap description
+Date:   Sat, 29 Oct 2022 17:41:11 +0100
+Message-Id: <20221029164112.2097-4-philipoakley@iee.email>
 X-Mailer: git-send-email 2.38.1.windows.1
 In-Reply-To: <20221029164112.2097-1-philipoakley@iee.email>
 References: <20221022222539.2333-1-philipoakley@iee.email>
  <20221029164112.2097-1-philipoakley@iee.email>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfD9Bj+hYmfFgCiNETA+RHPkhKWnVrxfk+s9D8dcUh0IOf++2HDpdsH0eaPQIa2Ktmc9B/xGBBhPd5P99DTutT/CIAYkFJQKA9+9kypQWU8kZiMoXVoWK
- aBDYbFssfYsbPBHGkvv1sUTmk1gE/Cez50m2Z/iAva1SKMEfJk1Kj6zPe0lfZlNKp48z649bB2b5elnxAHRAAqq9fsX+DrdXji9/qfs0gcRSJv/zXtmD5dSU
- oXMrbUJ2NMC0HvUv3b3+Gg+xjvOp1/tW5OkrbxfWWHmxLpayXsOOrjmswSxgMrXnXX32WBX+bB2zCbzEw6JOO3oqZ9lsIfPtAPbGdazzytaQLQj85DKmn1Qe
- dPJg/iBQ
+X-CMAE-Envelope: MS4wfOKsCis3vDScwXOoU+93/5lVtlzNd3Dj8x6CzIUracups1vICUZRpsjtuwrIR1EK0mMVZuRy7Kv6idXopNzlr7ZO56RuNsyCvXphLtdanRddg32GaiUM
+ cmF7PGytbO1myt8ofqqmM+iHG2b43QWL9zdvslSQ7n8zeKx1N+3wF6XVP93Da6sJZIUBHJoSCpvQ+l5KF7vWK/y5YuSvs0uUCOkmQcyx0zJTDMq08GEph58I
+ yJQD4QtQbQBZ1RTaS7m5RqJH5x6LFJLG6hRu75rmN699TxaACh4u3e95Dm4eSAF4PFy+6iovh6iYrhiMrdlXYM2Y1B5+p/D2Bk93O1Zw2RW9qT7sT8Q+BANX
+ 5lXQYKv5
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The abbreviation 'ODB' is used in the technical documentation
-sections for commit-graph and parallel-checkout, along with an
-'odb' option in `git-pack-redundant`, without expansion.
-
-Use 'object database' in full, in those entries. The text has not
-been reflowed to keep the changes minimal.
-
-While in the glossary for `object` terms, add the common`oid`
-abbreviation to its entry.
+Describe the purpose of the reachability bitmap.
 
 Signed-off-by: Philip Oakley <philipoakley@iee.email>
 ---
- Documentation/git-pack-redundant.txt          | 2 +-
- Documentation/glossary-content.txt            | 2 +-
- Documentation/technical/commit-graph.txt      | 2 +-
- Documentation/technical/parallel-checkout.txt | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ Documentation/glossary-content.txt | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/Documentation/git-pack-redundant.txt b/Documentation/git-pack-redundant.txt
-index ee7034b5e5..1132c73956 100644
---- a/Documentation/git-pack-redundant.txt
-+++ b/Documentation/git-pack-redundant.txt
-@@ -34,7 +34,7 @@ OPTIONS
- 
- --alt-odb::
- 	Don't require objects present in packs from alternate object
--	directories to be present in local packs.
-+	database (odb) directories to be present in local packs.
- 
- --verbose::
- 	Outputs some statistics to stderr. Has a small performance penalty.
 diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-index aa2f41f5e7..947ac49606 100644
+index a526710278..5a537268e2 100644
 --- a/Documentation/glossary-content.txt
 +++ b/Documentation/glossary-content.txt
-@@ -262,7 +262,7 @@ This commit is referred to as a "merge commit", or sometimes just a
- 	identified by its <<def_object_name,object name>>. The objects usually
- 	live in `$GIT_DIR/objects/`.
+@@ -508,6 +508,14 @@ exclude;;
+ 	<<def_tree_object,trees>> to the trees or <<def_blob_object,blobs>>
+ 	that they contain.
  
--[[def_object_identifier]]object identifier::
-+[[def_object_identifier]]object identifier (oid)::
- 	Synonym for <<def_object_name,object name>>.
- 
- [[def_object_name]]object name::
-diff --git a/Documentation/technical/commit-graph.txt b/Documentation/technical/commit-graph.txt
-index 90c9760c23..d2a6a13650 100644
---- a/Documentation/technical/commit-graph.txt
-+++ b/Documentation/technical/commit-graph.txt
-@@ -17,7 +17,7 @@ There are two main costs here:
- 
- The commit-graph file is a supplemental data structure that accelerates
- commit graph walks. If a user downgrades or disables the 'core.commitGraph'
--config setting, then the existing ODB is sufficient. The file is stored
-+config setting, then the existing object database is sufficient. The file is stored
- as "commit-graph" either in the .git/objects/info directory or in the info
- directory of an alternate.
- 
-diff --git a/Documentation/technical/parallel-checkout.txt b/Documentation/technical/parallel-checkout.txt
-index e790258a1a..47c9b6183c 100644
---- a/Documentation/technical/parallel-checkout.txt
-+++ b/Documentation/technical/parallel-checkout.txt
-@@ -56,7 +56,7 @@ Rejected Multi-Threaded Solution
- 
- The most "straightforward" implementation would be to spread the set of
- to-be-updated cache entries across multiple threads. But due to the
--thread-unsafe functions in the ODB code, we would have to use locks to
-+thread-unsafe functions in the object database code, we would have to use locks to
- coordinate the parallel operation. An early prototype of this solution
- showed that the multi-threaded checkout would bring performance
- improvements over the sequential code, but there was still too much lock
++[[def_reachability_bitmap]]reachability bitmaps::
++	Reachability bitmaps store information about the
++	<<def_reachable,reachability>> of a selected set of commits in
++	a packfile, or a multi-pack index (MIDX), to speed up object search.
++	The bitmaps are stored in a ".bitmap" file. A repository may have at
++	most one bitmap file in use. The bitmap file may belong to either one
++	pack, or the repository's multi-pack index (if it exists).
++
+ [[def_rebase]]rebase::
+ 	To reapply a series of changes from a <<def_branch,branch>> to a
+ 	different base, and reset the <<def_head,head>> of that branch
 -- 
 2.38.1.windows.1
 
