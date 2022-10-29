@@ -2,124 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FB66C38A02
-	for <git@archiver.kernel.org>; Sat, 29 Oct 2022 14:54:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45D64C433FE
+	for <git@archiver.kernel.org>; Sat, 29 Oct 2022 16:32:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229938AbiJ2OyQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 Oct 2022 10:54:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55034 "EHLO
+        id S229819AbiJ2Qcx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 Oct 2022 12:32:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbiJ2OyP (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Oct 2022 10:54:15 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3348830F72
-        for <git@vger.kernel.org>; Sat, 29 Oct 2022 07:54:13 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id v27so11793831eda.1
-        for <git@vger.kernel.org>; Sat, 29 Oct 2022 07:54:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=d9xKGREHQPnnoXxt0lM1Z9EmhRZYjeGB7UCVrwbt2Xs=;
-        b=k0sjKhrwutqQNy5DQ+J7ATPK+67OH1h0GtuEAD82aEe7JowMesbsMH6o95ORVYoSHJ
-         gU1gOOb5DIa64KQvPOkd6Co/a9kVhh2d2XdOiQ1MF0SA1VLvqRC55eQD417GoL7gKt1/
-         Pao2aIKx8edeaPxdj/TrRSHD1FZXGo5DLGa8q26SHbLEDPCVRZKhxCbBKHSZpQRgF6fd
-         kUNxreJQWp7/tt+Hk/PVj0oYAtB0GzBRZUFRzULiW2AId3101O9k97yDGQiRtJv6zGtX
-         ZZcsBdseDgy3X3J/UDdVgekidaQJnW+lLdnXedSok9R3geeJQv7jYURowhq6U2DmTbvv
-         dp8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=d9xKGREHQPnnoXxt0lM1Z9EmhRZYjeGB7UCVrwbt2Xs=;
-        b=AcRjeGiO8AJNFE9wzhMOlhaILSHLPpImP/WautpUv80pbvEdf0gvhgk7p1mc4wELoK
-         1C5dvdaywnUh+a0aYJZ6+VGPLvo9l+/2xMGO3J9N2VaXt+6ZlZxKFmKv1cJznVC+BcBx
-         NJvcXfiOt/Sm1Mi2G0vQXnGny9P362PdBFekQSnetXFANk5m6fDueI0c3XqAktwowvPF
-         StPLStFVz+qXYMc+or0QpNrMhdQfR34dLpxCbr47q3cZF62qDI0lqil+b6EoPVLVkK2x
-         XHevXlaz3wofckl3nvxbRArkvzbYY7IVGBwCehvB4NrwrGWT69is4f5Q4q0tAXstKsBr
-         Bung==
-X-Gm-Message-State: ACrzQf3deMPwFI2wNRUk3FciqnkWv7AVYXu1fJTT3QtEM7BdaieniuLw
-        he5lECnWVrVqlBY0CgT1D0gOeYJQosrm2wMGU6ETkWt2g2w=
-X-Google-Smtp-Source: AMsMyM5ceLNlzT3G4qHtFg2AFxzyjMt5PqjNASIhJVUOjHqWllZj0J2UyXq67WK/XhZfCV8cHXuWQ5OKFj+SqCmIYn8=
-X-Received: by 2002:a05:6402:3487:b0:45d:2674:d187 with SMTP id
- v7-20020a056402348700b0045d2674d187mr4680221edc.386.1667055251078; Sat, 29
- Oct 2022 07:54:11 -0700 (PDT)
+        with ESMTP id S229663AbiJ2Qcw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Oct 2022 12:32:52 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 917276429
+        for <git@vger.kernel.org>; Sat, 29 Oct 2022 09:32:50 -0700 (PDT)
+Received: from 88-110-102-84.dynamic.dsl.as9105.com ([88.110.102.84] helo=[192.168.1.57])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1ooolM-0009cS-DC;
+        Sat, 29 Oct 2022 17:32:48 +0100
+Message-ID: <d7c818c8-201d-e7d3-f0b9-6d01ab51043c@iee.email>
+Date:   Sat, 29 Oct 2022 17:32:47 +0100
 MIME-Version: 1.0
-From:   Laurent Lyaudet <laurent.lyaudet@gmail.com>
-Date:   Sat, 29 Oct 2022 16:53:59 +0200
-Message-ID: <CAB1LBmsxiRHRpOibHC2c_LLAn-QSQ+qeaKF0TxQ2y8mBqTXoNQ@mail.gmail.com>
-Subject: Maybe default Commits History Simplification could be more sensible
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+Subject: Re: [PATCH v2 2/3] glossary: add "commit graph" description
+Content-Language: en-GB
+To:     Derrick Stolee <derrickstolee@github.com>,
+        GitList <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+References: <pull.1282.git.1657385781.gitgitgadget@gmail.com>
+ <20221022222539.2333-1-philipoakley@iee.email>
+ <20221022222539.2333-3-philipoakley@iee.email>
+ <3a7f43bd-2c48-6a37-7602-f4c938f7f58e@github.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <3a7f43bd-2c48-6a37-7602-f4c938f7f58e@github.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On 25/10/2022 13:31, Derrick Stolee wrote:
+> On 10/22/2022 6:25 PM, Philip Oakley wrote:
+>> Git has an additional "commit graph" capability that supplements the
+>> normal commit object's directed acylic graph (DAG). The supplemental
+>> commit graph file is designed for speed of access.
+>>
+>> Describe the commit graph both from the normative DAG view point and
+>> from the commit graph file perspective.
+> One way to help keep the general term and the file separate is to use
+> different notation. "commit graph" (with a space, no formatting) is the
+> DAG. "`commit-graph`" (with a dash, code formatting) is the file (and
+> its format).
+I did want to have separate entries to make clear the distinction at
+this level.
 
-From here :
-https://git-scm.com/docs/git-log#_history_simplification
-I read :
-> Default mode
-> Simplifies the history to the simplest history explaining the final state of the tree.
-> Simplest because it prunes some side branches if the end result is the same (i.e. merging branches with the same content)
+The use of the hyphenation is good, and there are only a few places
+where that isn't followed, so I'll specifically call out the use of
+hyphenation, and add a patch to update the few places that used the
+generic term inappropriately.
+Using the code formatting for commit-graph would have been extensive.,
 
-But I am kindly questioning if the "explaining the final state of the
-tree." is correct.
-Because I had the following case :
+>> +[[def_commit_graph_general]]commit graph concept, representations and usage::
+>> +	A synonym for the <<def_DAG,DAG>> structure formed by
+>> +	the commits in the object database, <<def_ref,referenced>> by branch tips,
+>> +	using their <<def_chain,chain>> of linked commits.
+>> +	This structure is the definitive commit graph. The
+>> +	graph can be represented in other ways, e.g. the
+>> +	<<def_commit_graph_file,commit graph file>>.
+>> +
+>> +[[def_commit_graph_file]]commit graph file::
+>> +	The commit-graph file is a supplemental representation of
+>> +	the <<def_commit_graph_general,commit graph>> which accelerates
+>> +	commit graph walks. The "commit-graph" file is stored
+>> +	either in the .git/objects/info directory or in the info directory
+>> +	of an alternate object database.
+>> +
+> So this would become:
+>
+> [[def_commit_graph_file]]`commit-graph` file::
+> 	The `commit-graph` file is a supplemental representation of
+> 	the <<def_commit_graph_general,commit graph>> which accelerates
+> 	commit graph walks. The `commit-graph` file is stored either in
+> 	the `.git/objects/info` directory or in the `info` directory of
+> 	an alternate object database.
+>
+> (I did some extra style and word-wrapping changes, too.)
 
-If :
-- commit 1 modifies some lines of file f on a branch b,
-- then commit 2 modifies some of the same lines of f on master,
-- and commit 3 revert commits 2,
--  and then commit 4 merges b on master,
-then without --show-pulls, with git log on file f you see first 3 commits only ;
-and there is no way you can apply these 3 commits in sequence,
-as depicted, and obtain the master's current state.
+I've used some of that. Thanks.
 
-When you use git log on a branch, you expect the default :
-- to give you all that happened to your branch,
-- or to give you a list of commits that applied successively explains
-the current state of the branch.
-I know that with trees a sequence of commits is not sufficient.
-But it would be a good property of default history simplification that
-your current branch state can be obtained with the first parent
-subsequence of displayed commits.
+Philip
+>
+> Other than these nits, I find this to be a clear description.
+>
+> Thanks,
+> -Stolee
 
-Currently, default history simplification for git log on some branch b
-also gives merges of branch b on branch b2, if later on branch b2 is
-merged back on branch b.
-To me this merge commits are less interesting than the merge commit of
-branch b2 on branch b at the end.
-
-I assume that the simplification of merge commits was intended for the
-simple case :
-- create branch b2 from branch b1
-- n commits on branch b2
-- merge branch b2 on b1
-If no modification was made on b1 during that time, I agree that the
-merge commit of b2 on b1 is not interesting.
-In that case, it could explicitly say it displays commits on other
-parents that could have been automatically rebased.
-Like :
-commit hxhxhxhxhxh
-date
-done on branch b2
-merged on branch b1 at date, could have been automatically rebased
-Message : It was a nice commit
-...
-
-But in the case, some common file was touched on b1 during that time,
-then it should give the final merge commit. (Solution 1)
-(I said touched instead of modified because of the revert.)
-Or it should also simplify and remove the commit and its revert on b1.
-(Solution 2)
-I would prefer either Solution 1 or Solution 2 to the current default.
-
-Many UIs above git use default history simplification.
-Github for example uses default history simplification.
-And you cannot customize the commands used with options in these UIs.
-So I hope you will find that having better default is an important topic.
-
-Best regards,
-    Laurent Lyaudet
