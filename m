@@ -2,87 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 454E3C38A02
-	for <git@archiver.kernel.org>; Sat, 29 Oct 2022 16:36:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4ED13C433FE
+	for <git@archiver.kernel.org>; Sat, 29 Oct 2022 16:41:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229682AbiJ2Qgy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 Oct 2022 12:36:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42042 "EHLO
+        id S229720AbiJ2Ql0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 Oct 2022 12:41:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229500AbiJ2Qgx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Oct 2022 12:36:53 -0400
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2D285244A
-        for <git@vger.kernel.org>; Sat, 29 Oct 2022 09:36:52 -0700 (PDT)
-Received: from 88-110-102-84.dynamic.dsl.as9105.com ([88.110.102.84] helo=[192.168.1.57])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1ooopC-0005Pc-A7;
-        Sat, 29 Oct 2022 17:36:46 +0100
-Message-ID: <c49fce45-bbd6-a456-234c-7f9709ae4d51@iee.email>
-Date:   Sat, 29 Oct 2022 17:36:40 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v2 3/3] glossary: add reachability bitmap description
-Content-Language: en-GB
-To:     Derrick Stolee <derrickstolee@github.com>,
-        Junio C Hamano <gitster@pobox.com>,
+        with ESMTP id S229642AbiJ2QlZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Oct 2022 12:41:25 -0400
+Received: from smtp-out-6.talktalk.net (smtp-out-6.talktalk.net [62.24.135.70])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6A5A58B47
+        for <git@vger.kernel.org>; Sat, 29 Oct 2022 09:41:23 -0700 (PDT)
+Received: from localhost.localdomain ([88.110.102.84])
+        by smtp.talktalk.net with SMTP
+        id ootdodzgpnO7EooteoWf2E; Sat, 29 Oct 2022 17:41:22 +0100
+X-Originating-IP: [88.110.102.84]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=X8gs11be c=1 sm=1 tr=0 a=f4UhoLCnUTRb1HgAgoWw0g==:117
+ a=f4UhoLCnUTRb1HgAgoWw0g==:17 a=MKtGQD3n3ToA:10 a=1oJP67jkp3AA:10
+ a=ldyaYNNxDcoA:10 a=L21Qlja0vAKRWb0B7dUA:9
+From:   Philip Oakley <philipoakley@iee.email>
+To:     GitList <git@vger.kernel.org>
+Cc:     Self <philipoakley@iee.email>, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>,
         Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
         Taylor Blau <ttaylorr@github.com>
-Cc:     GitList <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>
-References: <pull.1282.git.1657385781.gitgitgadget@gmail.com>
- <20221022222539.2333-1-philipoakley@iee.email>
- <20221022222539.2333-4-philipoakley@iee.email>
- <CAPOJW5zmYC9q8+aXh9-kZnvT28GQ1ud3LenFi9qxV4DVdCWKxg@mail.gmail.com>
- <xmqq1qqxuqf0.fsf@gitster.g> <746491f4-fb41-92fe-7360-20a845dc21fc@iee.email>
- <c9e90df3-6f70-6422-00db-beb7afda0439@github.com>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <c9e90df3-6f70-6422-00db-beb7afda0439@github.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: [PATCH v3 2/4] glossary: add "commit graph" description
+Date:   Sat, 29 Oct 2022 17:41:10 +0100
+Message-Id: <20221029164112.2097-3-philipoakley@iee.email>
+X-Mailer: git-send-email 2.38.1.windows.1
+In-Reply-To: <20221029164112.2097-1-philipoakley@iee.email>
+References: <20221022222539.2333-1-philipoakley@iee.email>
+ <20221029164112.2097-1-philipoakley@iee.email>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfOKsCis3vDScwXOoU+93/5lVtlzNd3Dj8x6CzIUracups1vICUZRpsjtuwrIR1EK0mMVZuRy7Kv6idXopNzlr7ZO56RuNsyCvXphLtdanRddg32GaiUM
+ cmF7PGytbO1myt8ofqqmM+iHG2b43QWL9zdvslSQ7n8zeKx1N+3wF6XVP93Da6sJZIUBHJoSCpvQ+l5KF7vWK/y5YuSvs0uUCOkmQcyx0zJTDMq08GEph58I
+ yJQD4QtQbQBZ1RTaS7m5RqJH5x6LFJLG6hRu75rmN699TxaACh4u3e95Dm4eSAF4PFy+6iovh6iYrhiMrdlXYM2Y1B5+p/D2Bk93O1Zw2RW9qT7sT8Q+BANX
+ 5lXQYKv5
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 25/10/2022 13:34, Derrick Stolee wrote:
-> On 10/24/2022 5:23 PM, Philip Oakley wrote:
->> On 24/10/2022 17:39, Junio C Hamano wrote:
->>> Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com> writes:
->>>
->>>> Small correction here - A repository may have multiple bitmaps (one
->>>> for each selected commit from the preferred packfile or a
->>>> multi-pack-index) but it can have only one ".bitmap" file (as of now).
->>>> Bitmaps for the selected commits are stored in that ".bitmap" file.
->>>> So I think the below lines (or similar) will work  -
->>>>
->>>>     The bitmaps are stored in a ".bitmap" file. A repository may have
->>>>     at most one ".bitmap" file. The file may belong to either one pack, or the
->>>>     repository's multi-pack-index (if it exists).
->>>>
->>>> Feel free to rephrase it accordingly.
->>> Sounds good to me.  Or Philip's original can be tweaked minimally to
->>> say "... may have at most one bitmap file (which stores multiple
->>> bitmaps)".
->>>
->> Thanks both. I'll tweak the description in a day or so to allow Stolee
->> to comment if required.
-> I added my comments about the commit-graph file, and agree with
-> Abhradeep's suggestions here.
->
-> Adding Taylor as a possible reviewer, too.
->
-> The one thing I will say is that there can be multiple .bitmap
-> files, but Git will only use one of them. Not sure if that is
-> worth being pedantic about here, though.
->
-> We'll need to keep this glossary section in mind in case things
-> change (such as "at most one bitmap file").
->
-> Thanks,
-> -Stolee
-I've gone with the phrase "at most one bitmap file in use." here.
+Git has an additional "commit graph" capability that supplements the
+normal commit object's directed acyclic graph (DAG). The supplemental
+commit graph file is designed for speed of access.
 
-The updated series should be sent shortly.
+Describe the commit graph both from the normative DAG view point and
+from the commit graph file perspective.
 
-Philip.
+Also, clarify the link between the branch ref and branch tip
+by linking to the `ref` glossary entry, matching this commit graph
+entry.
+
+The commit-graph file is also distinguished by its hyphenation.
+
+Subsequent commit catches the few cases where the hyphenation of
+commit-graph was missing.
+
+Signed-off-by: Philip Oakley <philipoakley@iee.email>
+---
+ Documentation/glossary-content.txt | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+index 947ac49606..a526710278 100644
+--- a/Documentation/glossary-content.txt
++++ b/Documentation/glossary-content.txt
+@@ -20,7 +20,7 @@
+ [[def_branch]]branch::
+ 	A "branch" is a line of development.  The most recent
+ 	<<def_commit,commit>> on a branch is referred to as the tip of
+-	that branch.  The tip of the branch is referenced by a branch
++	that branch.  The tip of the branch is <<def_ref,referenced>> by a branch
+ 	<<def_head,head>>, which moves forward as additional development
+ 	is done on the branch.  A single Git
+ 	<<def_repository,repository>> can track an arbitrary number of
+@@ -75,6 +75,21 @@ state in the Git history, by creating a new commit representing the current
+ state of the <<def_index,index>> and advancing <<def_HEAD,HEAD>>
+ to point at the new commit.
+ 
++[[def_commit_graph_general]]commit graph concept, representations and usage::
++	A synonym for the <<def_DAG,DAG>> structure formed by the commits
++	in the object database, <<def_ref,referenced>> by branch tips,
++	using their <<def_chain,chain>> of linked commits.
++	This structure is the definitive commit graph. The
++	graph can be represented in other ways, e.g. the
++	<<def_commit_graph_file,"commit-graph" file>>.
++
++[[def_commit_graph_file]]commit-graph file::
++	The "commit-graph" (normally hyphenated) file is a supplemental
++	representation of the <<def_commit_graph_general,commit graph>>
++	which accelerates commit graph walks. The "commit-graph" file is
++	stored either in the .git/objects/info directory or in the info
++	directory of an alternate object database.
++
+ [[def_commit_object]]commit object::
+ 	An <<def_object,object>> which contains the information about a
+ 	particular <<def_revision,revision>>, such as <<def_parent,parents>>, committer,
+-- 
+2.38.1.windows.1
+
