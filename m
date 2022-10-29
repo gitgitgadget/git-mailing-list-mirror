@@ -2,77 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 307EAC433FE
-	for <git@archiver.kernel.org>; Sat, 29 Oct 2022 18:02:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D1CAC38A02
+	for <git@archiver.kernel.org>; Sat, 29 Oct 2022 18:06:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229608AbiJ2SCc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 Oct 2022 14:02:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56486 "EHLO
+        id S229542AbiJ2SGZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 29 Oct 2022 14:06:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbiJ2SCa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Oct 2022 14:02:30 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37E925D700
-        for <git@vger.kernel.org>; Sat, 29 Oct 2022 11:02:30 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id p141so6976152iod.6
-        for <git@vger.kernel.org>; Sat, 29 Oct 2022 11:02:30 -0700 (PDT)
+        with ESMTP id S229489AbiJ2SGX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Oct 2022 14:06:23 -0400
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A364033368
+        for <git@vger.kernel.org>; Sat, 29 Oct 2022 11:06:22 -0700 (PDT)
+Received: by mail-io1-xd34.google.com with SMTP id p141so6980825iod.6
+        for <git@vger.kernel.org>; Sat, 29 Oct 2022 11:06:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=sAlpLmcko14wz++Y9eX/LI+4Crqo9+xXY9hAIvrzIjo=;
-        b=Uqibxs0YpJv9w4PXTswhDA1wi8jaR51UTc9Q+ilFiUpAnlXuCOKQo7BHg8xeIvGIgy
-         B8xe2z4Zn1Tqea1+xUrtMsPuagShAgTaxXkDYMOrxv28XN/PgsLdLbOPXawSIwLMLrIO
-         qaiCTiMEs28U5N8zywVErYHoED6IqRBVu6KTT5q65n0pXX5tFkp5xXJlp3Go/JbSysnC
-         UXoTLrKG1RjGwiEKJwGiBm8FTk0N78/NFvd3061KKkNNGkqL83GRQKIScYi8o/780EQv
-         yukxu/y8eXpqueFsfwFnTEFjyn7xIw8MPRH5NSv40fsAjgDCjcDealh/ZObs3f0wStvx
-         /N5Q==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cPh4h9hiMm4F8KspYcMx5KxoADCpVzteVUJUcu4T5r0=;
+        b=amdAwkeoHrYHsCgGQN7lKIIUWF9VNcl/k3UNsINd0XlDixKS+Pllh82qkewz98qSTM
+         RQ1tIC6deXqrlyhlTx9ybAUeIWXmlPrvGPwuDa6ZW8q/O2LmFFv+j7iyMswaI5mf3wjB
+         9khCIqGwRGKKn0epOonG31sSqkM09iewgI+W7MpIYIm2CgyZ+kcTZBJg4H1nWpVivQIQ
+         hSi9pc8R6Q80kFsw8kvS52aWhrx979VBVnk6uB2A/B8CAW+X1y56uuorR9Fqp5ywYXkT
+         9dB6mBiafcXbP85WXes+RNWEG5YwzjB1DY+2fzAAD47L+xzKqoiAwyD0vx1iZ54lWiqa
+         dTkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sAlpLmcko14wz++Y9eX/LI+4Crqo9+xXY9hAIvrzIjo=;
-        b=3x4sHx8hxeKesUAyeZY3AmMusxEMXjl+3Ku+K1LUFUCGdqwYIeIlzrk9zUrTVgxI0G
-         MLvqWz00rIgH0lm2s5jn/1fA9idGhy6AKwRu5wxbMuIiNaqK3f989QHHusL8jMHoEwHX
-         NlsjfBo5wsBkD7AtL74T6AwM7pVwQfq/cKeOu8gdCPbblid71nzObMjsSX90mPu0Movh
-         HXJo7o7oGkjX3rPqjtk379EfvTof5Va1mbyTEjFNh2BsZKun1GnlVQUcCwEBTn0Ocss2
-         l+3Vruxcm9A3ZR12fPhvBvbsiQiJ+2JquFzlZLtx6risCVYRKvWIAxN1O7259seTQ3SL
-         J7fg==
-X-Gm-Message-State: ACrzQf02mRc8azxb2btIz/8wqd2OGQ5SF5Ux4EF8bEqdO9sTdZprPfrR
-        gv5y1gBxNh/5x3EBDINZ/Sd3dg==
-X-Google-Smtp-Source: AMsMyM6fc+tV9rO1Xo57xZWByZ6M7O2mbsFqdnNchCaGp8GyOzYTpQA8F2+GGLfRpexUOxjXryMk6Q==
-X-Received: by 2002:a5e:8517:0:b0:6c6:fbe7:1c0e with SMTP id i23-20020a5e8517000000b006c6fbe71c0emr2435245ioj.95.1667066549560;
-        Sat, 29 Oct 2022 11:02:29 -0700 (PDT)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cPh4h9hiMm4F8KspYcMx5KxoADCpVzteVUJUcu4T5r0=;
+        b=cCwnpnadzyyZYLl29nt76yADUN5Th+tZ+EWm4ofEWLjUAOgN/MUokS3lo7Ly81NG5C
+         R+Kj9wubeDI4v2O/5117iQhro03zmFXMj9kp2F4cohAEBpPzi7QY68DkO79BkWs6ev8G
+         Y4PyCP6cCpEVhhcCzsPwhV/sAl7LTtP2Q0rnK+oxu/X0G/pOE9COp+/n8OczOrIk2d4s
+         SgoL/H3PV5BGDXeCyUDfLDnBkrw/5v5h06eMuH+F51q8GeTL2VhVGszgFQk5eVvtv0zL
+         Kxn+sFcL1ZVg1Z3GvsNBm7Xhhjw7wXib3ArF/EVkyfGiVWQ8zrqKUyBDeAwVtwu4Ypo5
+         G9+A==
+X-Gm-Message-State: ACrzQf3Z29XvPqilJ35uBemshqD7+3PuNkH90vJdwtQeYrqP0WWhF6LY
+        gzm1vjjCgWH6Sk7uE3rW1h4muQ==
+X-Google-Smtp-Source: AMsMyM4i95nIW60BmW1pLjeAYBS646vH2b+u9NysWlg2Yo7RW9PM4bSR5MUovl7qSO3AuAYHLwEQQw==
+X-Received: by 2002:a05:6602:154f:b0:6bc:f701:cb37 with SMTP id h15-20020a056602154f00b006bcf701cb37mr2658139iow.136.1667066781975;
+        Sat, 29 Oct 2022 11:06:21 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id q125-20020a6b2a83000000b006bca2c3cbe9sm884286ioq.2.2022.10.29.11.02.28
+        by smtp.gmail.com with ESMTPSA id b96-20020a0295e9000000b003747336e3c2sm834452jai.129.2022.10.29.11.06.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 29 Oct 2022 11:02:29 -0700 (PDT)
-Date:   Sat, 29 Oct 2022 14:02:27 -0400
+        Sat, 29 Oct 2022 11:06:21 -0700 (PDT)
+Date:   Sat, 29 Oct 2022 14:06:20 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] archive-tar: report filter start error only once
-Message-ID: <Y11qsz+xvm6TVYrh@nand.local>
-References: <c51b72e5-1c32-65e4-6faa-04693b623e2e@web.de>
+To:     Siddharth Asthana <siddharthasthana31@gmail.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
+        johncai86@gmail.com
+Subject: Re: [PATCH] doc/cat-file: allow --use-mailmap for --batch options
+Message-ID: <Y11rnKwuR0q47ngq@nand.local>
+References: <20220923193543.58635-1-siddharthasthana31@gmail.com>
+ <20221029092513.73982-1-siddharthasthana31@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c51b72e5-1c32-65e4-6faa-04693b623e2e@web.de>
+In-Reply-To: <20221029092513.73982-1-siddharthasthana31@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 29, 2022 at 12:06:06PM +0200, René Scharfe wrote:
-> ---
->  archive-tar.c       | 1 +
->  t/t5000-tar-tree.sh | 7 +++++++
->  2 files changed, 8 insertions(+)
+Hi Siddharth,
 
-Looks very reasonable. Will queue, thanks.
+On Sat, Oct 29, 2022 at 02:55:13PM +0530, Siddharth Asthana wrote:
+> This patch was previously sent as the first patch of a 3 patch series for
+> adding the mailmap support in git cat-file options:
+> https://lore.kernel.org/git/20220916205946.178925-2-siddharthasthana31@gmail.com/
+
+Why was this split off from the original series? I don't have a problem
+queueing the two topics independently, but an explanation of how the two
+interact would be appreciated.
+
+E.g., does one depend on the other? Are they independent and can be
+merged at will? Should the integrator expect merge conflicts?
 
 Thanks,
 Taylor
