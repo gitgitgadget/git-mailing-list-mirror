@@ -2,81 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03232C38A02
-	for <git@archiver.kernel.org>; Sun, 30 Oct 2022 06:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCE98C38A02
+	for <git@archiver.kernel.org>; Sun, 30 Oct 2022 07:06:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230018AbiJ3Gsg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 Oct 2022 02:48:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36186 "EHLO
+        id S229740AbiJ3HGd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 Oct 2022 03:06:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229991AbiJ3GsS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Oct 2022 02:48:18 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6F6B273D
-        for <git@vger.kernel.org>; Sat, 29 Oct 2022 23:37:06 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id d26so22216824eje.10
-        for <git@vger.kernel.org>; Sat, 29 Oct 2022 23:37:06 -0700 (PDT)
+        with ESMTP id S229441AbiJ3HGb (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Oct 2022 03:06:31 -0400
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE7D3D8
+        for <git@vger.kernel.org>; Sun, 30 Oct 2022 00:06:30 -0700 (PDT)
+Received: by mail-yb1-xb2d.google.com with SMTP id t186so10508437yba.12
+        for <git@vger.kernel.org>; Sun, 30 Oct 2022 00:06:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=sIR8h35mvF6Cg7PnWw8tsGB5mhKXNygFup/ve1SSGbQ=;
-        b=WvAukPysEvqY9U4eqc7LU0aJVsyfQ3vMoaCpQFCPNRxn7hZh2FmtqhigTKg14cvdec
-         WSXbky0JcSq28S5TeCWbHyscsBa2JY8dC+tUK0JGiE2SFCjnRhPMiFaETg3mSMxeEPJm
-         gzFjIAC+NgwI5M9Al8+/9NPas2eOfownDwlYI+X/uwdxNM4uUGw5UIzPwdWvU8jXBLae
-         b7DVtReIhqIcHz4460S8qunLpDTFuuqy7wwoowEOSKD9EDFSq4lzrvmEwirLpOVWLD5F
-         Cz3BQS4UHhoGHabbcLOTN+QlV7Mp/khahLIVofDl+bhdEWJUoF9G1h8yZfZninLbrvS7
-         jm2g==
+        bh=BpdYhltocbhypFpPQEaezYPuja9n4D3XqD35x59QAmY=;
+        b=bol5CWWZYy0/B5tf0Zb37H5FOKaYL74NySXn/+AuBr+sJlgqNmp7Eh/0PUCrIpj91A
+         atCfhti30F+dKqpXOQCO4EoWZOBkmaQRDoX9e9v0lHeCZGwhoIOthsSA+M46572Z0eiK
+         Jazg2x4jidRotdjiciv3eN6EfaVfKbHWAx9qKWHLP/6eMXZJ34jPN8v9eu1XSMIW9rtH
+         U8CEYk135KT34fj9qMbAJ+OTt33Ccgkqn2pj/ZVyXL3ezFwTslElKtgHvZcmyloM+Qj8
+         PTCS+tkXJfVuxPza0bGMsf+nHmwScvCDYCpWfC/ptYLn0yPcbmfXJEchBN6cFM1mSGtp
+         3m6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=sIR8h35mvF6Cg7PnWw8tsGB5mhKXNygFup/ve1SSGbQ=;
-        b=UXw4uyMlMpL4q8VtT0WVH/GTX71FQY8xCFpJ7NKjLabyttSQaMZCcz7Aw81W9jvjC+
-         BaXu1RSYfc9mOZu/jwZbEVJZ4m2Kx9AFxlkpJIKkmE9Gly4WmCERa11Hxph905q8T6Yz
-         oe557NzcgXWsXUX5cv35Jd31JHFJulk3n4b3ffRaZg1rwa2VxWY/U4VFV7zMmr89uyTI
-         zpHLYkKpsdrizqz5urrsEL9DoCym9Z4h2KbJhwUOPaQIf4vfz9LP2Bws98AXmwjaPNDA
-         KsXZ4f7zMqJoumA6XTST6M7dXnMwlGRaZE5lgDikxt6qMbMYl7o1Bs5pU+XbzCjRwC8T
-         sSaA==
-X-Gm-Message-State: ACrzQf0Eo5PEMp8LfAx2QncFYxz4dNefYWYgnqQ6g8ztNfRB3mYDokqz
-        hiRYJSMgwKzcNEDoRWn6Gq7i6Y89/TrHoy9mosQ=
-X-Google-Smtp-Source: AMsMyM6tFADyaXYnyRnSwbBP+mlwIS+DNLKCsakAjkS8SvI7OwSTaxYPGh9aOrWzxWIL0ZlmB1Kf+f75En1dTvL2TU4=
-X-Received: by 2002:a17:906:cc0f:b0:7a0:b91c:855f with SMTP id
- ml15-20020a170906cc0f00b007a0b91c855fmr7200425ejb.26.1667111757239; Sat, 29
- Oct 2022 23:35:57 -0700 (PDT)
+        bh=BpdYhltocbhypFpPQEaezYPuja9n4D3XqD35x59QAmY=;
+        b=ZC36ejq5NiC9kOsgwumtAlPF00rexIK62xj84gH7JI7BcRIjhNqhvW2Xrsq7zo/IaL
+         SxBAwQIzNci+jUZGgGA9bJD1/CVrUP6L0gSIZXYaOIcPoTkOEsRU1Exic1XfGEOh2xLC
+         qc2U4J9Onr1IOMb6zub35Hd/JXmBUIeBE6uWfhGBrRMbdudgBbZqvPXSlCCo4jda/aql
+         0s+lB3J71MRK93QM/pvSsN0gKTiKxR8fXdkTwlye6tmtI/11PLY6Tw6ELP5+YuiTayBC
+         e++cHXhKkdUOipx7DBZ684ZWrCAp9lu/mflPo58XRvYm/tuniWq8X49m6b1aJqQOLJ1v
+         xZwg==
+X-Gm-Message-State: ACrzQf1ZBZFobqZHiov/GYIgTt+Bjidz9hQY4VOJGoTe+5r+Ss/4JZ2L
+        PezNN2EhZkIx98+FYNpTWioYQWMaswANP4wzxx5TexR9
+X-Google-Smtp-Source: AMsMyM5zT7KSudD257q3Ux64xVhRucXzjekGRPpj/JWEHrvTHqI0Hsf85JiaUdNtvOaUPdAYwUOsRHG0FtxshCn3i8g=
+X-Received: by 2002:a5b:6d1:0:b0:6cb:77dc:1cde with SMTP id
+ r17-20020a5b06d1000000b006cb77dc1cdemr6756915ybq.447.1667113590188; Sun, 30
+ Oct 2022 00:06:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1357.git.1663609659.gitgitgadget@gmail.com>
- <4364224f9bddc8f1e40875ebc540b28225317176.1663609659.git.gitgitgadget@gmail.com>
- <xmqqczbdl6wl.fsf@gitster.g> <CAPOJW5yxRETdVk014gQYFud9_Nrt+OQGSVNQ8Pw2wDEMMFMm1Q@mail.gmail.com>
-In-Reply-To: <CAPOJW5yxRETdVk014gQYFud9_Nrt+OQGSVNQ8Pw2wDEMMFMm1Q@mail.gmail.com>
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Date:   Sun, 30 Oct 2022 12:05:45 +0530
-Message-ID: <CAPOJW5z_ZRChNo8PGBmJu=vvjTL2cYL8oTdVwoDRh-UHt2Dy4w@mail.gmail.com>
-Subject: Re: [PATCH 3/5] roaring: teach Git to write roaring bitmaps
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
+References: <20220923193543.58635-1-siddharthasthana31@gmail.com>
+ <20221029092513.73982-1-siddharthasthana31@gmail.com> <Y11rnKwuR0q47ngq@nand.local>
+In-Reply-To: <Y11rnKwuR0q47ngq@nand.local>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sun, 30 Oct 2022 08:06:19 +0100
+Message-ID: <CAP8UFD3J3Q4UTGo5aaDDVth1hXLXAt53322z3TSNWTVRNiJ8Xg@mail.gmail.com>
+Subject: Re: [PATCH] doc/cat-file: allow --use-mailmap for --batch options
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Siddharth Asthana <siddharthasthana31@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, johncai86@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello all,
+Hi Taylor,
 
-It has been a month since I didn't get involved in any open source
-contributions (including Git). This is due to the fact that I was
-focusing more on mastering theories and also that it was a festive
-month. So, I am now resuming my work. There are many things I have to
-cover (including this patch series).
-But before that I want to ask you a question - As you have noticed
-already, the Roaring library has a lot of styling issues (Moreover it
-is using C11). So Should I fix all these issues? or Should I make a
-new library (using Git's compatibility library "git-compat-util.h") by
-taking CRoaring as a reference? The pros are that it would be easier
-to format the bitmap library specific files and it can use Git
-compatible functions.
+On Sat, Oct 29, 2022 at 8:06 PM Taylor Blau <me@ttaylorr.com> wrote:
+>
+> Hi Siddharth,
+>
+> On Sat, Oct 29, 2022 at 02:55:13PM +0530, Siddharth Asthana wrote:
+> > This patch was previously sent as the first patch of a 3 patch series for
+> > adding the mailmap support in git cat-file options:
+> > https://lore.kernel.org/git/20220916205946.178925-2-siddharthasthana31@gmail.com/
+>
+> Why was this split off from the original series? I don't have a problem
+> queueing the two topics independently, but an explanation of how the two
+> interact would be appreciated.
 
-I would love to hear your opinions. Thanks :)
+I think it was split off from the original series because it's a
+documentation fix that could hopefully have graduated faster, and
+could perhaps have made it into v2.38.0. Or perhaps it could make it
+in v2.38.2 if such a bug fix release is made.
+
+> E.g., does one depend on the other? Are they independent and can be
+> merged at will? Should the integrator expect merge conflicts?
+
+The other patch series has some code changes that are independent, but
+the documentation changes it makes should probably go on top of this.
+
+Thanks,
+Christian.
