@@ -2,37 +2,37 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73204FA373D
-	for <git@archiver.kernel.org>; Sun, 30 Oct 2022 11:45:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 359FEFA373D
+	for <git@archiver.kernel.org>; Sun, 30 Oct 2022 11:46:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229667AbiJ3LpZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 Oct 2022 07:45:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48880 "EHLO
+        id S229727AbiJ3Lqa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 Oct 2022 07:46:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbiJ3LpX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Oct 2022 07:45:23 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD62B247
-        for <git@vger.kernel.org>; Sun, 30 Oct 2022 04:45:22 -0700 (PDT)
+        with ESMTP id S229497AbiJ3Lq2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Oct 2022 07:46:28 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89F72247
+        for <git@vger.kernel.org>; Sun, 30 Oct 2022 04:46:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1667130315; bh=Cfb8QYuM+IvFuTs6O759WFqIR9u3UgE/B8Eanz9QL2w=;
+        t=1667130372; bh=OMFxcxxR/9U2amqabgibiRfaHL3ATz069Bsk5rxfbcU=;
         h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=icJTYrYizpNa0Ra0TLb3pEHTL6V/Pa0iwEfc/6rfz6NiUFNIu4X5LfiAOzLY0Dqzl
-         IahANsfIWzle2ur8XqB9VbB61L9r1whAG7z9fM8OPtZUFaaxX4S/j9sROftg+c7f7i
-         4YUQgDdNDJSburRIZS/Bjzych7Kg0v4P2Et9yE1oUZa9Y+JV195gQyYEHzZb4BEtcA
-         nPYgJSXrW1yqsjk2cWXKCP9DVK64vtuHukyUT9lDiy+qzfvWLCDyC5eslo2sWIm+PJ
-         pqcHDDzhDfllR5xtJHRrOdLVpFXDoYPQv/41NuTtNZ51Zng7IZn2/xOP84i1W8RxOb
-         sf+AGPnTUS1Ng==
+        b=I4oZbNUj/XyNX8dRXwOtkJDRVQddKtvFS3L734uK7TRXQwNjuzs5YPO6MoLF9NvKo
+         x9H0dhr2HA6xFAyLRjEeN2EyLMWdQt/VTHkKaMLmqWdcq6IVMhnOaCs0lBrDlLQNb4
+         UA3g36iH1hyCx3cW9fh8/nI9iFvVR/Otj1LDk9J79+RO8u1U3zb5G615MZIbpBuuoQ
+         H1c/iSTL51EuwXbNnJAgFY42ef9XNn9pJmYcv9Oxf+pMNGCQxGa2XSSJkEoMoFemIK
+         cRQxPnkoZegGvDz7QEyXeVNrPe6xIzyj+ASB8IX0sSMCVhfjCidKZm7RsBEgVboOsE
+         Zu9N8iqxjrm9Q==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.23.191]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MRF3I-1oRxhW3lye-00NB32; Sun, 30
- Oct 2022 12:45:14 +0100
-Message-ID: <a9b56eb8-1ef9-0e28-1ea2-85ccad7903d2@web.de>
-Date:   Sun, 30 Oct 2022 12:45:13 +0100
+Received: from [192.168.178.29] ([79.203.23.191]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MsaWF-1p4JVA3NhT-00u07i; Sun, 30
+ Oct 2022 12:46:11 +0100
+Message-ID: <e3a5cf13-d1c7-20b3-3f40-3eaff5a18b67@web.de>
+Date:   Sun, 30 Oct 2022 12:46:11 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.4.1
-Subject: [PATCH v2 02/12] run-command: fix return value comment
+Subject: [PATCH v2 03/12] am: simplify building "show" argument list
 Content-Language: en-US
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git List <git@vger.kernel.org>
@@ -44,63 +44,62 @@ References: <7407e074-4bd8-b351-7fa4-baf59b41880c@web.de>
 In-Reply-To: <ea061164-b36b-485c-963f-8c13e813a47e@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:GXdil/9ckvGQqECzEah0Ni6Bd85u4g1IwVzS3/gl9NPu22YUs9e
- rv9sOO6CykAutKWjyixRbrw8yX+ltMhG+ys10XoZCf+SvzyVJU4E0NvHwSecBkdcAMoHbol
- osAYG667SdOraRggE41usimvE8fG/ATaSXvuwWaeATq94VUh5FPhxVKui9AiGV0iG6aKOgs
- qNjfU/R2AklAYPn2oE6dA==
-UI-OutboundReport: notjunk:1;M01:P0:JIvtRHG7yjI=;2u3RMIm1MYCJ3BuS5knZZoDlqqw
- hc5WRcHlfXlMPkq8VAEon70d22dOPjuTzUxy6hT02G3IuUfhZcGhhWJfGTzlY63zTKUHtX5uQ
- /1yd+TbckG6Yj3ND0qPu3ddtrTK27RDlOgtI1EYuRcyZWJsKT7VY85au86oCj5aF9jBohIsO8
- DQ2kvxbGWH+Sf0pdE913Iy4AiepStimLPhThHmFmOQ7hzfoHOZ1SrgwhBcMjCXpap1rL4GxpE
- PUVrKm6OakX4JGJHDUF+MwnFDECoxyUFNF235BRqFs470br1RHslrSthNIwgwcNlXme3pNIeb
- KhWZDNmcVm7uG6YSfwpSqF56IsQYJvD3NVnIvnVehUdP39nbP9TDHqBgonoJyPcwUcgMPoXh6
- B+FrNsjegcz4EfLAUTBmINlJbxEeZgYkskwi+pFryPt5nK0Ts0qjDEivOWHQJuvlk1osRkE0x
- o8w7D99W6SivWLaaIsINNFCDay+yNw8L6YLWY0U2Q2cDkAqTe6E900l0etx/jLOFMDLbhTzEJ
- cWSAOBBl3plPFxpSCdMbYH1BioWiDnSRazTrx3pwfv9sTpV/cyn9s9lZotdBbrPF2TyOB1e+i
- pFoBAWSwTtEx/+fuvSxWpf1xtmo0wWBKqYIAGqhznjzM1RmN1EfhaO/oVGpeT+j2wm06N2Mtg
- VaabzHdbjTJFBA+5riU/WlJPshvo5n9FOd0vK61klSv9g+4++Sc2IXckb0lnVE/kTVBpQWmPk
- wzFh7YsYkVZqetR4COxLdLbyuPIv4QDOgSS5Lthm0tbHOF+i0cqOc59FmAgLlbDxzem5mkHtA
- CF+QeKY/vVyRGi//Pit1g6nlKg6kQji/zB7t8XOsE4bXBVgT1heTV6u2n8gjfRBlNs4us2F+C
- ELB0Mm2kbBJbGRSIn/m30mxHzPyYIEQm39xaNNpGsR1jivJhj2UelskKsXxCIgBo8B2TNBjSq
- eeOHNC7YRXIfICn35LOKNZaC8Mw=
+X-Provags-ID: V03:K1:9poGmCsvovbM6O3dTwk7oSRIbKB9T5d6mxC4bX9fQERe/kjeDjd
+ KyYo+JwOTFr9he5rDacNK57SFiqnONQz1WDC5ub8vtcur05rFYVUw5Tf07+NSGVVFFPLt3I
+ eE6oEm6FhS//h+DA0+/uZbuH66ETJpLE8vJjo31KLhgNaO/KZcFIbG0DylajYPaEI89n97c
+ J4vUsJ+6Cq5h6kkteOIXg==
+UI-OutboundReport: notjunk:1;M01:P0:d0YNJt9E2KI=;IbfSpF35G67n8X4LuzxvyF1AI7w
+ aPgT0xPGF2teww9FmNzbNZ6G2e4FyRJdkjTOHV2vKZXF30bfQdYDIRZjVfES4qfNqPO/3ey80
+ tt5bJnoixg2olFBOmMWtV8xElkDFjh+dbpI8PwGugJonjlSI5zdHDe0+9KcRAM0wjvNPPzwRu
+ VAJxLaN5IE+m95byH3xEEKOmp2aq8Vz9enwUDB6i00SkqkH006XEOGbStN35Ec9jedNXjy688
+ cRQL0nxpp2JTgJRO4ADLwRelsFWFtxBYGHJkghm/H350hjvphkJ2lP92ByrDv1B01yMVP2wsx
+ AggGSxS2FNn420ytScnd5/bu6Q0weLLeERyBBhPIUE16xwgp62lNkcnXlWUhSaVucEexzafrg
+ GIezpojIMc1IhMWxgS2vVWpBA1dnhzRxpjK+5n81T/FpiOeljHs0CLJTdmyF/+DmFRZuBWNkd
+ QahLOZoEWTykrpSjGzGI+eK3wFd+AqYhvE/5oHuGhufC/zBeDymCn+3cPE2cI+D2aUQeqnUFk
+ VQRZiQE+tRICxBcTsjqsF17OUTC/zeFl5sKlkwWMXowPWhb7LYOybQ4KeqgNXQhu0hfLLXR2c
+ FuapVvu/4I7WySASRdH0m/yDmqwU/B6UbjfJqHAzRRciFbX1adJhi+Nbq1wxsRkr2WfhBrVM+
+ Z44lk8xBsEJ1uajo/9Kcz8f+/W/BgqMRohoEafMW+/3bzOXysxuwIz/DBlpCWy+ewMkmsHtRU
+ hLLh91Jxs9jGVbAGfQmA5uS0tpPIC/TnRe3GYG7E4ZEVzZUcCQoN63XtNH6XcaZy645vuBvgF
+ TuLibmVAnVJof5zBe5IVFHlv1R6U9O6pMCStZORd+ROD3fL6bjsy1YrE7laF9FFJ3d5jl+xyB
+ 9KcHpnP6m3oNOAKro/8uCPQHzIkBwAkQrzTBD+KEryPsqZaJ5vvEC4DZGuoocLcvW3uG/lSl/
+ OdV5ooSRCe7+O3plpd9+SoUFfQ4=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-483bbd4e4c (run-command: introduce child_process_init(), 2014-08-19) and
-2d71608ec0 (run-command: factor out child_process_clear(), 2015-10-24)
-added help texts about child_process_init() and child_process_clear()
-without updating the immediately following documentation of return codes
-that only applied to the preexisting functions.
+Build the string array av during initialization, without any magic
+numbers or heap allocations.  Not duplicating the result of oid_to_hex()
+is safe because run_command_v_opt() duplicates all arguments already.
+(It would even be safe if it didn't, but that's a different story.)
 
-4c4066d95d (run-command: move doc to run-command.h, 2019-11-17) started
-to list the functions explicitly that this paragraph applies to, but
-still wrongly included child_process_init() and child_process_clear().
-Remove their names from that list.
-
-Suggested-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- run-command.h | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ builtin/am.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/run-command.h b/run-command.h
-index e3e1ea01ad..820fc25b02 100644
-=2D-- a/run-command.h
-+++ b/run-command.h
-@@ -150,9 +150,8 @@ struct child_process {
- }
+diff --git a/builtin/am.c b/builtin/am.c
+index 39fea24833..5781e7a95e 100644
+=2D-- a/builtin/am.c
++++ b/builtin/am.c
+@@ -2187,14 +2187,11 @@ static int show_patch(struct am_state *state, enum=
+ show_patch_type sub_mode)
+ 	int len;
 
- /**
-- * The functions: child_process_init, start_command, finish_command,
-- * run_command, run_command_v_opt, run_command_v_opt_cd_env, child_proces=
-s_clear
-- * do the following:
-+ * The functions: start_command, finish_command, run_command,
-+ * run_command_v_opt, run_command_v_opt_cd_env do the following:
-  *
-  * - If a system call failed, errno is set and -1 is returned. A diagnost=
-ic
-  *   is printed.
+ 	if (!is_null_oid(&state->orig_commit)) {
+-		const char *av[4] =3D { "show", NULL, "--", NULL };
+-		char *new_oid_str;
+-		int ret;
++		const char *av[] =3D {
++			"show", oid_to_hex(&state->orig_commit), "--", NULL
++		};
+
+-		av[1] =3D new_oid_str =3D xstrdup(oid_to_hex(&state->orig_commit));
+-		ret =3D run_command_v_opt(av, RUN_GIT_CMD);
+-		free(new_oid_str);
+-		return ret;
++		return run_command_v_opt(av, RUN_GIT_CMD);
+ 	}
+
+ 	switch (sub_mode) {
 =2D-
 2.38.1
