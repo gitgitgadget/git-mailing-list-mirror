@@ -2,37 +2,37 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADDFAC38A02
-	for <git@archiver.kernel.org>; Sun, 30 Oct 2022 11:51:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8222C38A02
+	for <git@archiver.kernel.org>; Sun, 30 Oct 2022 11:52:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229832AbiJ3Lva (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 Oct 2022 07:51:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50372 "EHLO
+        id S229841AbiJ3LwG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 Oct 2022 07:52:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229497AbiJ3Lv2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Oct 2022 07:51:28 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8335BBF65
-        for <git@vger.kernel.org>; Sun, 30 Oct 2022 04:51:25 -0700 (PDT)
+        with ESMTP id S229497AbiJ3LwF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Oct 2022 07:52:05 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CCD1BF65
+        for <git@vger.kernel.org>; Sun, 30 Oct 2022 04:52:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1667130674; bh=xISGsPDPXJcIEmQyC7MBr4WejaokRVxbBRkJkE54phk=;
+        t=1667130716; bh=Fv1hB6tG5iiVpp6Rw+u+dNHfWLutR6Zt9i9eoxFbfrE=;
         h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=Ry2cU6lNhn8Ig3oBFCgyM+pj8rnhZ0n+JR8J09DDGqyVXyzxdQH1wIC1teq4mQm18
-         mUqKMBBAd9bkYpjGSdaUuSM3TeE3TGvMESJ8wS7wXaEd8HhuGIhAm5p2xGq9CfyKyX
-         QqssoWOI3m07XhyKE/3noVGXIs5RiOpwexErvG73xDo3iKNIpPJwIg3Y9+b5hFOLqa
-         6WlrD/xsr5CjByRPINGyU8Vz0fOL7Or6xMcYpGrdMG89JKii9InjK8NIgFvPWO/jUg
-         SUAe+qAN00bQTryXBRFE5DOJvQ8GAkJlWwwNAplO9NgymU2ftECv6ABplet/I2kd5R
-         55X6WlMr1tdHw==
+        b=qnpcQDPgBT5ppGp1KeG39002QihR6WLgobTHgVG577o5XopbtBGzQgvFdQXMQL6t4
+         gFyba+9IYZoy8irmBz/cAhTm3IApr7r8C9oJNi+Egvu36T634mB3xpIc3Whpu5GtCO
+         a4hujIUAm4CNQ6DL/vgaTJvsYq8mwaAs+3/LG+HEUWsJqof3SXfuS9sbrSfY3742fx
+         VI6MOzB7DkV8zDEfIcF3qfem9A2TdTIS7uhbtnQzD14y5RJrj86heejG4SZcg2yFoK
+         M1lGsQn+Eca+f7xVPAlwjsioBYjuoAZQlSu+9xCkrfNABLB749gGtuxBztw5zBjh1d
+         XCm5sia+qpVkQ==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([79.203.23.191]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M8kAH-1ol06d3CGP-004gd7; Sun, 30
- Oct 2022 12:51:14 +0100
-Message-ID: <97566ec6-ad18-a53a-ed1f-2148706fbd25@web.de>
-Date:   Sun, 30 Oct 2022 12:51:14 +0100
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mcpuw-1pNti23H5W-00Zuq1; Sun, 30
+ Oct 2022 12:51:56 +0100
+Message-ID: <d5896e6f-df69-d683-ec16-f83a0179a2fb@web.de>
+Date:   Sun, 30 Oct 2022 12:51:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.4.1
-Subject: [PATCH v2 08/12] use child_process members "args" and "env" directly
+Subject: [PATCH v2 09/12] replace and remove run_command_v_opt_cd_env()
 Content-Language: en-US
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git List <git@vger.kernel.org>
@@ -44,884 +44,111 @@ References: <7407e074-4bd8-b351-7fa4-baf59b41880c@web.de>
 In-Reply-To: <ea061164-b36b-485c-963f-8c13e813a47e@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:lpHuooQHfW3BB2Ej3IaMzfv998ca2MFTZQyeoawmhqSZTH/yLGe
- S0t6dgOa5M9G3NAiMkxioeJnJYzTB40T7xg90sP6mI/7bYohZ8ZITbmXaxtZIgpDlxZfjgF
- qlo/UcyKStMn9YRJnGZE5c01n0MtdW7oVxr4G6FTQHTYaMUFbsRvjNgaw2N/A7bdFm4V1q4
- IW1aoyv3hc2eVnFMDag5A==
-UI-OutboundReport: notjunk:1;M01:P0:ZCuM4R2sk6M=;GAVIsCgqhbnAqSYJfrubenOWhKP
- BMQdBsH4ZQOm2zq7q6+TJot/oIgGKwbdNE6xFO47m8FJM0sSqew+Pk2ysnI8WZF6QGlfJI+an
- Wqzj59IlOOjuEc6OC81iPQLPiyZHhwE0anrIRsBfqWsEbvTzzuzDWBaDS//JeamClAT6szi4y
- 5AU5sjrbSYmDVkHFgMG3UgOZYsay6sKGIdeLA2CHe+n0b42aSiE9O3M5m/ZQsGUygY7mKO2wZ
- Lmt16W2AFblgTRrlA0KErC1safeURYZSj6+xMLo25V/4Pz8TwC1vhz/W51Jh9PY6kLYlX66EX
- Ubno7HWu6WsFKsMW+EcNXDSlWWXNb7bRbQlRFePYDuk+49iOOuNiTjEY97k8Z0zBCV4uqmcTf
- EJ2aDH1Abz8dPJUoNlGv1YZrHglElxmR9pXQsHUMf9aD1ORCYSl5iKAhK5Ou54lJfBRBG0VAV
- CxRX4qt8ClVeAqPoPMXOOMRAQhlkewTy5qWOmcuY7DMTg2bab4ICg1AzlbtBYxHE1EJ/RXitV
- mWLMfaN3ApzlATr9Q0Sl1Oj+vErbbd/N8sQSagkZdLDTksHiSxm72INm34uXU7Uj/GCXxsDug
- GTcHBJahxGPuRTtM2mmP6eT7Pg1JIb0lAI8LOR7W2Cw+tJQPCCIpiuL0ByFm7Nq4WJ65Kgfed
- Fpi+bCYQXIwUls+oWkAm3KO5wuraHzK4F+jqDlZdtwC9GeB8TlFq/wJN+Ry3wRv6spsSOImLP
- JdYAlTip2YVNwIzuCs8uivQ/SM/A0bxU9NF+V+xEMV2aktMCh1IhH8KUAZvyEoEllxThisnxH
- uLO+OsoDdSHHn2ONtdi358K/SBXuam9PZIenwUO77tIhAJAwqnlHnBKGrVziWHMyl1XRdvbU7
- XAhb1sZelmbnwYgTjghRvWTGeQ7ky+5gMz+sNEkHiWkw/pyQtQG9teLCvlvWagQveZ1eL6BMV
- ZRV5DitaAK0WCVdGPIpVWIoH8BE=
+X-Provags-ID: V03:K1:ibnxsrebPLEzKFFT81Rk1UhKwDai2lZgq4BLpc/p4Wt5yY6sDy0
+ LQeqWXaHRzMAne4YJ3WSUoZdBfqfE3dwOjECOKzxolByEFTbuOFzfSOjmfI6ath/4ItX09x
+ lUT1qz1RXHFP58x301us7IutMgHi0JRoRnG5S0X2364dErcXqQm98SWt/fbMUzGz7oTHL4L
+ yMw0EOrWJXND6pvnDLSrg==
+UI-OutboundReport: notjunk:1;M01:P0:2Et6/IyJKQk=;BuTPtJCV4gZNkHtTcfsoFX0hiGK
+ oW2cgNcv2Q1F2KC6hRD3VhfUJjVpyhK9HxZTforqGpCpWpXO1u4rI4p2bT+7HhNp3eDaSuiaU
+ 5savr413KDokJN3kLotznXSh//hqmX3kB0/thzpXe//xvzzXwjhp5dC/aKOBfE9S5C1sRh5is
+ Q3IlxrkS6wIaIlfFAc0E7knaeKpYlmYT0UtEPDtIW2MhrnDlaLgYFngyKraqwZXyczG/eYt4r
+ JbBnZDn0Oiy/A2QoFnedFkK8/KfDNunbHBh2dbLe3dgAsWpaiHClkl4BucKsly8PtHF59fFjS
+ Y9cfxrM4vE2uOkwZwdRYfSV9H9a/FGb3A1iUfthvGa51HZwBRteXAcRAqnbZXfsZGc4VK2Q1I
+ YVkzkCTqaf5XPMDq3ML9CBnveezPlzwBvHrNv8DamAHN8aQGGeaHamoUyrxKFwsMzuCX8F+Pk
+ LorccQbX3mVV2/4IXAEbjvLXgW8OWGQxCww/fbvWJ8H05NrwmagzOAYM30Mf9Bso4uvyQNSS2
+ eDwd8H0cKtlVNV8Fp30SdPcX3cWmcBe4xTnFp5RQ2fF+rhpqY8c7/Sy67bGpe0AEAd2Nrc78P
+ lpU1y9CAfUXpDGomsLcbBWizw2dxqgIBua8fo1az1sY7bxqtR1Yccc6YMyNF/zASpYGE9MQ1w
+ gWVaNu+VgFlXPoI5WCgezHDmdCeOLYnva8ZZdpwGD+UgbJve4VtMk+xKVjq/C7xDv8EiZJc9y
+ KBTi8grB0ZbsueaVcZpSNcWa5BwVAyviMUZQoWZglnkNLd2irz55pO5BaChwc4EVlX+m7OM8g
+ sunAJWBrEhX6ysfdjUZl7bm063d7fIWe3Pl4Pn8tN3V9f4KOT/ZP1Fhi48l3cdRDv72M0wJfB
+ JiOdUUxPydczsceMTfdLUwyvxZ9igCfDyr+wcBC4/NHNlhm0A8jcqd17xNW5KCX+O0Tp0UCSx
+ gJXFzjzEO21rJNqk95TwZgIvZQ0=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Build argument list and environment of child processes by using
-struct child_process and populating its members "args" and "env"
-directly instead of maintaining separate strvecs and letting
-run_command_v_opt() and friends populate these members.  This is
-simpler, shorter and slightly more efficient.
+run_command_v_opt_cd_env() is only used in an example in a comment.  Use
+the struct child_process member "env" and run_command() directly instead
+and then remove the unused convenience function.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- add-interactive.c        |   9 ++-
- builtin/add.c            |  19 +++--
- builtin/bisect--helper.c |  35 +++++-----
- builtin/clone.c          |  33 ++++-----
- builtin/gc.c             |  14 ++--
- builtin/merge.c          |  10 +--
- builtin/pull.c           | 147 +++++++++++++++++++--------------------
- builtin/remote.c         |  26 ++++---
- diff.c                   |  27 ++++---
- git.c                    |  15 ++--
- merge.c                  |  18 ++---
- scalar.c                 |  13 ++--
- sequencer.c              |  25 +++----
- 13 files changed, 185 insertions(+), 206 deletions(-)
+ run-command.c | 7 +------
+ run-command.h | 3 +--
+ tmp-objdir.h  | 6 ++++--
+ 3 files changed, 6 insertions(+), 10 deletions(-)
 
-diff --git a/add-interactive.c b/add-interactive.c
-index f071b2a1b4..ecc5ae1b24 100644
-=2D-- a/add-interactive.c
-+++ b/add-interactive.c
-@@ -997,18 +997,17 @@ static int run_diff(struct add_i_state *s, const str=
-uct pathspec *ps,
- 	count =3D list_and_choose(s, files, opts);
- 	opts->flags =3D 0;
- 	if (count > 0) {
--		struct strvec args =3D STRVEC_INIT;
-+		struct child_process cmd =3D CHILD_PROCESS_INIT;
+diff --git a/run-command.c b/run-command.c
+index c772acd743..954257abb5 100644
+=2D-- a/run-command.c
++++ b/run-command.c
+@@ -1006,7 +1006,7 @@ int run_command(struct child_process *cmd)
 
--		strvec_pushl(&args, "git", "diff", "-p", "--cached",
-+		strvec_pushl(&cmd.args, "git", "diff", "-p", "--cached",
- 			     oid_to_hex(!is_initial ? &oid :
- 					s->r->hash_algo->empty_tree),
- 			     "--", NULL);
- 		for (i =3D 0; i < files->items.nr; i++)
- 			if (files->selected[i])
--				strvec_push(&args,
-+				strvec_push(&cmd.args,
- 					    files->items.items[i].string);
--		res =3D run_command_v_opt(args.v, 0);
--		strvec_clear(&args);
-+		res =3D run_command(&cmd);
- 	}
-
- 	putchar('\n');
-diff --git a/builtin/add.c b/builtin/add.c
-index f84372964c..626c71ec6a 100644
-=2D-- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -240,8 +240,8 @@ static int refresh(int verbose, const struct pathspec =
-*pathspec)
- int run_add_interactive(const char *revision, const char *patch_mode,
- 			const struct pathspec *pathspec)
+ int run_command_v_opt(const char **argv, int opt)
  {
--	int status, i;
--	struct strvec argv =3D STRVEC_INIT;
-+	int i;
-+	struct child_process cmd =3D CHILD_PROCESS_INIT;
- 	int use_builtin_add_i =3D
- 		git_env_bool("GIT_TEST_ADD_I_USE_BUILTIN", -1);
-
-@@ -272,19 +272,18 @@ int run_add_interactive(const char *revision, const =
-char *patch_mode,
- 		return !!run_add_p(the_repository, mode, revision, pathspec);
- 	}
-
--	strvec_push(&argv, "add--interactive");
-+	strvec_push(&cmd.args, "add--interactive");
- 	if (patch_mode)
--		strvec_push(&argv, patch_mode);
-+		strvec_push(&cmd.args, patch_mode);
- 	if (revision)
--		strvec_push(&argv, revision);
--	strvec_push(&argv, "--");
-+		strvec_push(&cmd.args, revision);
-+	strvec_push(&cmd.args, "--");
- 	for (i =3D 0; i < pathspec->nr; i++)
- 		/* pass original pathspec, to be re-parsed */
--		strvec_push(&argv, pathspec->items[i].original);
-+		strvec_push(&cmd.args, pathspec->items[i].original);
-
--	status =3D run_command_v_opt(argv.v, RUN_GIT_CMD);
--	strvec_clear(&argv);
--	return status;
-+	cmd.git_cmd =3D 1;
-+	return run_command(&cmd);
+-	return run_command_v_opt_cd_env(argv, opt, NULL, NULL);
++	return run_command_v_opt_cd_env_tr2(argv, opt, NULL, NULL, NULL);
  }
 
- int interactive_add(const char **argv, const char *prefix, int patch)
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 70d1e9d1ad..5c63ba6994 100644
-=2D-- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -220,18 +220,17 @@ static int bisect_reset(const char *commit)
- 	}
-
- 	if (!ref_exists("BISECT_HEAD")) {
--		struct strvec argv =3D STRVEC_INIT;
-+		struct child_process cmd =3D CHILD_PROCESS_INIT;
-
--		strvec_pushl(&argv, "checkout", branch.buf, "--", NULL);
--		if (run_command_v_opt(argv.v, RUN_GIT_CMD)) {
-+		cmd.git_cmd =3D 1;
-+		strvec_pushl(&cmd.args, "checkout", branch.buf, "--", NULL);
-+		if (run_command(&cmd)) {
- 			error(_("could not check out original"
- 				" HEAD '%s'. Try 'git bisect"
- 				" reset <commit>'."), branch.buf);
- 			strbuf_release(&branch);
--			strvec_clear(&argv);
- 			return -1;
- 		}
--		strvec_clear(&argv);
- 	}
-
- 	strbuf_release(&branch);
-@@ -1098,40 +1097,38 @@ static enum bisect_error bisect_skip(struct bisect=
-_terms *terms, const char **ar
-
- static int bisect_visualize(struct bisect_terms *terms, const char **argv=
-, int argc)
- {
--	struct strvec args =3D STRVEC_INIT;
--	int flags =3D RUN_COMMAND_NO_STDIN, res =3D 0;
-+	struct child_process cmd =3D CHILD_PROCESS_INIT;
- 	struct strbuf sb =3D STRBUF_INIT;
-
- 	if (bisect_next_check(terms, NULL) !=3D 0)
- 		return BISECT_FAILED;
-
-+	cmd.no_stdin =3D 1;
- 	if (!argc) {
- 		if ((getenv("DISPLAY") || getenv("SESSIONNAME") || getenv("MSYSTEM") ||
- 		     getenv("SECURITYSESSIONID")) && exists_in_PATH("gitk")) {
--			strvec_push(&args, "gitk");
-+			strvec_push(&cmd.args, "gitk");
- 		} else {
--			strvec_push(&args, "log");
--			flags |=3D RUN_GIT_CMD;
-+			strvec_push(&cmd.args, "log");
-+			cmd.git_cmd =3D 1;
- 		}
- 	} else {
- 		if (argv[0][0] =3D=3D '-') {
--			strvec_push(&args, "log");
--			flags |=3D RUN_GIT_CMD;
-+			strvec_push(&cmd.args, "log");
-+			cmd.git_cmd =3D 1;
- 		} else if (strcmp(argv[0], "tig") && !starts_with(argv[0], "git"))
--			flags |=3D RUN_GIT_CMD;
-+			cmd.git_cmd =3D 1;
-
--		strvec_pushv(&args, argv);
-+		strvec_pushv(&cmd.args, argv);
- 	}
-
--	strvec_pushl(&args, "--bisect", "--", NULL);
-+	strvec_pushl(&cmd.args, "--bisect", "--", NULL);
-
- 	strbuf_read_file(&sb, git_path_bisect_names(), 0);
--	sq_dequote_to_strvec(sb.buf, &args);
-+	sq_dequote_to_strvec(sb.buf, &cmd.args);
- 	strbuf_release(&sb);
-
--	res =3D run_command_v_opt(args.v, flags);
--	strvec_clear(&args);
--	return res;
-+	return run_command(&cmd);
+ int run_command_v_opt_tr2(const char **argv, int opt, const char *tr2_cla=
+ss)
+@@ -1014,11 +1014,6 @@ int run_command_v_opt_tr2(const char **argv, int op=
+t, const char *tr2_class)
+ 	return run_command_v_opt_cd_env_tr2(argv, opt, NULL, NULL, tr2_class);
  }
 
- static int get_first_good(const char *refname UNUSED,
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 547d6464b3..56e7775dae 100644
-=2D-- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -653,9 +653,9 @@ static void update_head(const struct ref *our, const s=
-truct ref *remote,
-
- static int git_sparse_checkout_init(const char *repo)
- {
--	struct strvec argv =3D STRVEC_INIT;
-+	struct child_process cmd =3D CHILD_PROCESS_INIT;
- 	int result =3D 0;
--	strvec_pushl(&argv, "-C", repo, "sparse-checkout", "set", NULL);
-+	strvec_pushl(&cmd.args, "-C", repo, "sparse-checkout", "set", NULL);
-
- 	/*
- 	 * We must apply the setting in the current process
-@@ -663,12 +663,12 @@ static int git_sparse_checkout_init(const char *repo=
-)
- 	 */
- 	core_apply_sparse_checkout =3D 1;
-
--	if (run_command_v_opt(argv.v, RUN_GIT_CMD)) {
-+	cmd.git_cmd =3D 1;
-+	if (run_command(&cmd)) {
- 		error(_("failed to initialize sparse-checkout"));
- 		result =3D 1;
- 	}
-
--	strvec_clear(&argv);
- 	return result;
- }
-
-@@ -733,37 +733,38 @@ static int checkout(int submodule_progress, int filt=
-er_submodules)
- 			   oid_to_hex(&oid), "1", NULL);
-
- 	if (!err && (option_recurse_submodules.nr > 0)) {
--		struct strvec args =3D STRVEC_INIT;
--		strvec_pushl(&args, "submodule", "update", "--require-init", "--recursi=
-ve", NULL);
-+		struct child_process cmd =3D CHILD_PROCESS_INIT;
-+		strvec_pushl(&cmd.args, "submodule", "update", "--require-init",
-+			     "--recursive", NULL);
-
- 		if (option_shallow_submodules =3D=3D 1)
--			strvec_push(&args, "--depth=3D1");
-+			strvec_push(&cmd.args, "--depth=3D1");
-
- 		if (max_jobs !=3D -1)
--			strvec_pushf(&args, "--jobs=3D%d", max_jobs);
-+			strvec_pushf(&cmd.args, "--jobs=3D%d", max_jobs);
-
- 		if (submodule_progress)
--			strvec_push(&args, "--progress");
-+			strvec_push(&cmd.args, "--progress");
-
- 		if (option_verbosity < 0)
--			strvec_push(&args, "--quiet");
-+			strvec_push(&cmd.args, "--quiet");
-
- 		if (option_remote_submodules) {
--			strvec_push(&args, "--remote");
--			strvec_push(&args, "--no-fetch");
-+			strvec_push(&cmd.args, "--remote");
-+			strvec_push(&cmd.args, "--no-fetch");
- 		}
-
- 		if (filter_submodules && filter_options.choice)
--			strvec_pushf(&args, "--filter=3D%s",
-+			strvec_pushf(&cmd.args, "--filter=3D%s",
- 				     expand_list_objects_filter_spec(&filter_options));
-
- 		if (option_single_branch >=3D 0)
--			strvec_push(&args, option_single_branch ?
-+			strvec_push(&cmd.args, option_single_branch ?
- 					       "--single-branch" :
- 					       "--no-single-branch");
-
--		err =3D run_command_v_opt(args.v, RUN_GIT_CMD);
--		strvec_clear(&args);
-+		cmd.git_cmd =3D 1;
-+		err =3D run_command(&cmd);
- 	}
-
- 	return err;
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 24ea85c7af..a185bec813 100644
-=2D-- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1910,20 +1910,16 @@ static char *schtasks_task_name(const char *freque=
-ncy)
- static int schtasks_remove_task(enum schedule_priority schedule)
- {
- 	const char *cmd =3D "schtasks";
--	int result;
--	struct strvec args =3D STRVEC_INIT;
-+	struct child_process child =3D CHILD_PROCESS_INIT;
- 	const char *frequency =3D get_frequency(schedule);
- 	char *name =3D schtasks_task_name(frequency);
-
- 	get_schedule_cmd(&cmd, NULL);
--	strvec_split(&args, cmd);
--	strvec_pushl(&args, "/delete", "/tn", name, "/f", NULL);
+-int run_command_v_opt_cd_env(const char **argv, int opt, const char *dir,=
+ const char *const *env)
+-{
+-	return run_command_v_opt_cd_env_tr2(argv, opt, dir, env, NULL);
+-}
 -
--	result =3D run_command_v_opt(args.v, 0);
--
--	strvec_clear(&args);
-+	strvec_split(&child.args, cmd);
-+	strvec_pushl(&child.args, "/delete", "/tn", name, "/f", NULL);
- 	free(name);
--	return result;
-+
-+	return run_command(&child);
- }
-
- static int schtasks_remove_tasks(void)
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 3481577145..b3f75f55c8 100644
-=2D-- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -372,22 +372,22 @@ static void reset_hard(const struct object_id *oid)
- static void restore_state(const struct object_id *head,
- 			  const struct object_id *stash)
+ int run_command_v_opt_cd_env_tr2(const char **argv, int opt, const char *=
+dir,
+ 				 const char *const *env, const char *tr2_class)
  {
--	struct strvec args =3D STRVEC_INIT;
-+	struct child_process cmd =3D CHILD_PROCESS_INIT;
-
- 	reset_hard(head);
-
- 	if (is_null_oid(stash))
- 		goto refresh_cache;
-
--	strvec_pushl(&args, "stash", "apply", "--index", "--quiet", NULL);
--	strvec_push(&args, oid_to_hex(stash));
-+	strvec_pushl(&cmd.args, "stash", "apply", "--index", "--quiet", NULL);
-+	strvec_push(&cmd.args, oid_to_hex(stash));
-
- 	/*
- 	 * It is OK to ignore error here, for example when there was
- 	 * nothing to restore.
- 	 */
--	run_command_v_opt(args.v, RUN_GIT_CMD);
--	strvec_clear(&args);
-+	cmd.git_cmd =3D 1;
-+	run_command(&cmd);
-
- refresh_cache:
- 	if (discard_cache() < 0 || read_cache() < 0)
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 403a24d7ca..b21edd767a 100644
-=2D-- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -515,76 +515,75 @@ static void parse_repo_refspecs(int argc, const char=
- **argv, const char **repo,
-  */
- static int run_fetch(const char *repo, const char **refspecs)
- {
--	struct strvec args =3D STRVEC_INIT;
--	int ret;
-+	struct child_process cmd =3D CHILD_PROCESS_INIT;
-
--	strvec_pushl(&args, "fetch", "--update-head-ok", NULL);
-+	strvec_pushl(&cmd.args, "fetch", "--update-head-ok", NULL);
-
- 	/* Shared options */
--	argv_push_verbosity(&args);
-+	argv_push_verbosity(&cmd.args);
- 	if (opt_progress)
--		strvec_push(&args, opt_progress);
-+		strvec_push(&cmd.args, opt_progress);
-
- 	/* Options passed to git-fetch */
- 	if (opt_all)
--		strvec_push(&args, opt_all);
-+		strvec_push(&cmd.args, opt_all);
- 	if (opt_append)
--		strvec_push(&args, opt_append);
-+		strvec_push(&cmd.args, opt_append);
- 	if (opt_upload_pack)
--		strvec_push(&args, opt_upload_pack);
--	argv_push_force(&args);
-+		strvec_push(&cmd.args, opt_upload_pack);
-+	argv_push_force(&cmd.args);
- 	if (opt_tags)
--		strvec_push(&args, opt_tags);
-+		strvec_push(&cmd.args, opt_tags);
- 	if (opt_prune)
--		strvec_push(&args, opt_prune);
-+		strvec_push(&cmd.args, opt_prune);
- 	if (recurse_submodules_cli !=3D RECURSE_SUBMODULES_DEFAULT)
- 		switch (recurse_submodules_cli) {
- 		case RECURSE_SUBMODULES_ON:
--			strvec_push(&args, "--recurse-submodules=3Don");
-+			strvec_push(&cmd.args, "--recurse-submodules=3Don");
- 			break;
- 		case RECURSE_SUBMODULES_OFF:
--			strvec_push(&args, "--recurse-submodules=3Dno");
-+			strvec_push(&cmd.args, "--recurse-submodules=3Dno");
- 			break;
- 		case RECURSE_SUBMODULES_ON_DEMAND:
--			strvec_push(&args, "--recurse-submodules=3Don-demand");
-+			strvec_push(&cmd.args, "--recurse-submodules=3Don-demand");
- 			break;
- 		default:
- 			BUG("submodule recursion option not understood");
- 		}
- 	if (max_children)
--		strvec_push(&args, max_children);
-+		strvec_push(&cmd.args, max_children);
- 	if (opt_dry_run)
--		strvec_push(&args, "--dry-run");
-+		strvec_push(&cmd.args, "--dry-run");
- 	if (opt_keep)
--		strvec_push(&args, opt_keep);
-+		strvec_push(&cmd.args, opt_keep);
- 	if (opt_depth)
--		strvec_push(&args, opt_depth);
-+		strvec_push(&cmd.args, opt_depth);
- 	if (opt_unshallow)
--		strvec_push(&args, opt_unshallow);
-+		strvec_push(&cmd.args, opt_unshallow);
- 	if (opt_update_shallow)
--		strvec_push(&args, opt_update_shallow);
-+		strvec_push(&cmd.args, opt_update_shallow);
- 	if (opt_refmap)
--		strvec_push(&args, opt_refmap);
-+		strvec_push(&cmd.args, opt_refmap);
- 	if (opt_ipv4)
--		strvec_push(&args, opt_ipv4);
-+		strvec_push(&cmd.args, opt_ipv4);
- 	if (opt_ipv6)
--		strvec_push(&args, opt_ipv6);
-+		strvec_push(&cmd.args, opt_ipv6);
- 	if (opt_show_forced_updates > 0)
--		strvec_push(&args, "--show-forced-updates");
-+		strvec_push(&cmd.args, "--show-forced-updates");
- 	else if (opt_show_forced_updates =3D=3D 0)
--		strvec_push(&args, "--no-show-forced-updates");
-+		strvec_push(&cmd.args, "--no-show-forced-updates");
- 	if (set_upstream)
--		strvec_push(&args, set_upstream);
--	strvec_pushv(&args, opt_fetch.v);
-+		strvec_push(&cmd.args, set_upstream);
-+	strvec_pushv(&cmd.args, opt_fetch.v);
-
- 	if (repo) {
--		strvec_push(&args, repo);
--		strvec_pushv(&args, refspecs);
-+		strvec_push(&cmd.args, repo);
-+		strvec_pushv(&cmd.args, refspecs);
- 	} else if (*refspecs)
- 		BUG("refspecs without repo?");
--	ret =3D run_command_v_opt(args.v, RUN_GIT_CMD | RUN_CLOSE_OBJECT_STORE);
--	strvec_clear(&args);
--	return ret;
-+	cmd.git_cmd =3D 1;
-+	cmd.close_object_store =3D 1;
-+	return run_command(&cmd);
- }
+diff --git a/run-command.h b/run-command.h
+index 820fc25b02..05c02485df 100644
+=2D-- a/run-command.h
++++ b/run-command.h
+@@ -151,7 +151,7 @@ struct child_process {
 
  /**
-@@ -653,52 +652,50 @@ static int update_submodules(void)
+  * The functions: start_command, finish_command, run_command,
+- * run_command_v_opt, run_command_v_opt_cd_env do the following:
++ * run_command_v_opt do the following:
+  *
+  * - If a system call failed, errno is set and -1 is returned. A diagnost=
+ic
+  *   is printed.
+@@ -249,7 +249,6 @@ int run_command_v_opt_tr2(const char **argv, int opt, =
+const char *tr2_class);
+  * env (the environment) is to be formatted like environ: "VAR=3DVALUE".
+  * To unset an environment variable use just "VAR".
   */
- static int run_merge(void)
- {
--	int ret;
--	struct strvec args =3D STRVEC_INIT;
-+	struct child_process cmd =3D CHILD_PROCESS_INIT;
+-int run_command_v_opt_cd_env(const char **argv, int opt, const char *dir,=
+ const char *const *env);
+ int run_command_v_opt_cd_env_tr2(const char **argv, int opt, const char *=
+dir,
+ 				 const char *const *env, const char *tr2_class);
 
--	strvec_pushl(&args, "merge", NULL);
-+	strvec_pushl(&cmd.args, "merge", NULL);
-
- 	/* Shared options */
--	argv_push_verbosity(&args);
-+	argv_push_verbosity(&cmd.args);
- 	if (opt_progress)
--		strvec_push(&args, opt_progress);
-+		strvec_push(&cmd.args, opt_progress);
-
- 	/* Options passed to git-merge */
- 	if (opt_diffstat)
--		strvec_push(&args, opt_diffstat);
-+		strvec_push(&cmd.args, opt_diffstat);
- 	if (opt_log)
--		strvec_push(&args, opt_log);
-+		strvec_push(&cmd.args, opt_log);
- 	if (opt_signoff)
--		strvec_push(&args, opt_signoff);
-+		strvec_push(&cmd.args, opt_signoff);
- 	if (opt_squash)
--		strvec_push(&args, opt_squash);
-+		strvec_push(&cmd.args, opt_squash);
- 	if (opt_commit)
--		strvec_push(&args, opt_commit);
-+		strvec_push(&cmd.args, opt_commit);
- 	if (opt_edit)
--		strvec_push(&args, opt_edit);
-+		strvec_push(&cmd.args, opt_edit);
- 	if (cleanup_arg)
--		strvec_pushf(&args, "--cleanup=3D%s", cleanup_arg);
-+		strvec_pushf(&cmd.args, "--cleanup=3D%s", cleanup_arg);
- 	if (opt_ff)
--		strvec_push(&args, opt_ff);
-+		strvec_push(&cmd.args, opt_ff);
- 	if (opt_verify)
--		strvec_push(&args, opt_verify);
-+		strvec_push(&cmd.args, opt_verify);
- 	if (opt_verify_signatures)
--		strvec_push(&args, opt_verify_signatures);
--	strvec_pushv(&args, opt_strategies.v);
--	strvec_pushv(&args, opt_strategy_opts.v);
-+		strvec_push(&cmd.args, opt_verify_signatures);
-+	strvec_pushv(&cmd.args, opt_strategies.v);
-+	strvec_pushv(&cmd.args, opt_strategy_opts.v);
- 	if (opt_gpg_sign)
--		strvec_push(&args, opt_gpg_sign);
-+		strvec_push(&cmd.args, opt_gpg_sign);
- 	if (opt_autostash =3D=3D 0)
--		strvec_push(&args, "--no-autostash");
-+		strvec_push(&cmd.args, "--no-autostash");
- 	else if (opt_autostash =3D=3D 1)
--		strvec_push(&args, "--autostash");
-+		strvec_push(&cmd.args, "--autostash");
- 	if (opt_allow_unrelated_histories > 0)
--		strvec_push(&args, "--allow-unrelated-histories");
-+		strvec_push(&cmd.args, "--allow-unrelated-histories");
-
--	strvec_push(&args, "FETCH_HEAD");
--	ret =3D run_command_v_opt(args.v, RUN_GIT_CMD);
--	strvec_clear(&args);
--	return ret;
-+	strvec_push(&cmd.args, "FETCH_HEAD");
-+	cmd.git_cmd =3D 1;
-+	return run_command(&cmd);
- }
-
- /**
-@@ -879,43 +876,41 @@ static int get_rebase_newbase_and_upstream(struct ob=
-ject_id *newbase,
- static int run_rebase(const struct object_id *newbase,
- 		const struct object_id *upstream)
- {
--	int ret;
--	struct strvec args =3D STRVEC_INIT;
-+	struct child_process cmd =3D CHILD_PROCESS_INIT;
-
--	strvec_push(&args, "rebase");
-+	strvec_push(&cmd.args, "rebase");
-
- 	/* Shared options */
--	argv_push_verbosity(&args);
-+	argv_push_verbosity(&cmd.args);
-
- 	/* Options passed to git-rebase */
- 	if (opt_rebase =3D=3D REBASE_MERGES)
--		strvec_push(&args, "--rebase-merges");
-+		strvec_push(&cmd.args, "--rebase-merges");
- 	else if (opt_rebase =3D=3D REBASE_INTERACTIVE)
--		strvec_push(&args, "--interactive");
-+		strvec_push(&cmd.args, "--interactive");
- 	if (opt_diffstat)
--		strvec_push(&args, opt_diffstat);
--	strvec_pushv(&args, opt_strategies.v);
--	strvec_pushv(&args, opt_strategy_opts.v);
-+		strvec_push(&cmd.args, opt_diffstat);
-+	strvec_pushv(&cmd.args, opt_strategies.v);
-+	strvec_pushv(&cmd.args, opt_strategy_opts.v);
- 	if (opt_gpg_sign)
--		strvec_push(&args, opt_gpg_sign);
-+		strvec_push(&cmd.args, opt_gpg_sign);
- 	if (opt_signoff)
--		strvec_push(&args, opt_signoff);
-+		strvec_push(&cmd.args, opt_signoff);
- 	if (opt_autostash =3D=3D 0)
--		strvec_push(&args, "--no-autostash");
-+		strvec_push(&cmd.args, "--no-autostash");
- 	else if (opt_autostash =3D=3D 1)
--		strvec_push(&args, "--autostash");
-+		strvec_push(&cmd.args, "--autostash");
- 	if (opt_verify_signatures &&
- 	    !strcmp(opt_verify_signatures, "--verify-signatures"))
- 		warning(_("ignoring --verify-signatures for rebase"));
-
--	strvec_push(&args, "--onto");
--	strvec_push(&args, oid_to_hex(newbase));
-+	strvec_push(&cmd.args, "--onto");
-+	strvec_push(&cmd.args, oid_to_hex(newbase));
-
--	strvec_push(&args, oid_to_hex(upstream));
-+	strvec_push(&cmd.args, oid_to_hex(upstream));
-
--	ret =3D run_command_v_opt(args.v, RUN_GIT_CMD);
--	strvec_clear(&args);
--	return ret;
-+	cmd.git_cmd =3D 1;
-+	return run_command(&cmd);
- }
-
- static int get_can_ff(struct object_id *orig_head,
-diff --git a/builtin/remote.c b/builtin/remote.c
-index f0c11fa301..729f6f3643 100644
-=2D-- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1510,37 +1510,35 @@ static int update(int argc, const char **argv, con=
-st char *prefix)
- 			 N_("prune remotes after fetching")),
- 		OPT_END()
- 	};
--	struct strvec fetch_argv =3D STRVEC_INIT;
-+	struct child_process cmd =3D CHILD_PROCESS_INIT;
- 	int default_defined =3D 0;
--	int retval;
-
- 	argc =3D parse_options(argc, argv, prefix, options,
- 			     builtin_remote_update_usage,
- 			     PARSE_OPT_KEEP_ARGV0);
-
--	strvec_push(&fetch_argv, "fetch");
-+	strvec_push(&cmd.args, "fetch");
-
- 	if (prune !=3D -1)
--		strvec_push(&fetch_argv, prune ? "--prune" : "--no-prune");
-+		strvec_push(&cmd.args, prune ? "--prune" : "--no-prune");
- 	if (verbose)
--		strvec_push(&fetch_argv, "-v");
--	strvec_push(&fetch_argv, "--multiple");
-+		strvec_push(&cmd.args, "-v");
-+	strvec_push(&cmd.args, "--multiple");
- 	if (argc < 2)
--		strvec_push(&fetch_argv, "default");
-+		strvec_push(&cmd.args, "default");
- 	for (i =3D 1; i < argc; i++)
--		strvec_push(&fetch_argv, argv[i]);
-+		strvec_push(&cmd.args, argv[i]);
-
--	if (strcmp(fetch_argv.v[fetch_argv.nr-1], "default") =3D=3D 0) {
-+	if (strcmp(cmd.args.v[cmd.args.nr-1], "default") =3D=3D 0) {
- 		git_config(get_remote_default, &default_defined);
- 		if (!default_defined) {
--			strvec_pop(&fetch_argv);
--			strvec_push(&fetch_argv, "--all");
-+			strvec_pop(&cmd.args);
-+			strvec_push(&cmd.args, "--all");
- 		}
- 	}
-
--	retval =3D run_command_v_opt(fetch_argv.v, RUN_GIT_CMD);
--	strvec_clear(&fetch_argv);
--	return retval;
-+	cmd.git_cmd =3D 1;
-+	return run_command(&cmd);
- }
-
- static int remove_all_fetch_refspecs(const char *key)
-diff --git a/diff.c b/diff.c
-index 285d6e2d57..2f1bb18772 100644
-=2D-- a/diff.c
-+++ b/diff.c
-@@ -4301,35 +4301,34 @@ static void run_external_diff(const char *pgm,
- 			      const char *xfrm_msg,
- 			      struct diff_options *o)
- {
--	struct strvec argv =3D STRVEC_INIT;
--	struct strvec env =3D STRVEC_INIT;
-+	struct child_process cmd =3D CHILD_PROCESS_INIT;
- 	struct diff_queue_struct *q =3D &diff_queued_diff;
-
--	strvec_push(&argv, pgm);
--	strvec_push(&argv, name);
-+	strvec_push(&cmd.args, pgm);
-+	strvec_push(&cmd.args, name);
-
- 	if (one && two) {
--		add_external_diff_name(o->repo, &argv, name, one);
-+		add_external_diff_name(o->repo, &cmd.args, name, one);
- 		if (!other)
--			add_external_diff_name(o->repo, &argv, name, two);
-+			add_external_diff_name(o->repo, &cmd.args, name, two);
- 		else {
--			add_external_diff_name(o->repo, &argv, other, two);
--			strvec_push(&argv, other);
--			strvec_push(&argv, xfrm_msg);
-+			add_external_diff_name(o->repo, &cmd.args, other, two);
-+			strvec_push(&cmd.args, other);
-+			strvec_push(&cmd.args, xfrm_msg);
- 		}
- 	}
-
--	strvec_pushf(&env, "GIT_DIFF_PATH_COUNTER=3D%d", ++o->diff_path_counter)=
-;
--	strvec_pushf(&env, "GIT_DIFF_PATH_TOTAL=3D%d", q->nr);
-+	strvec_pushf(&cmd.env, "GIT_DIFF_PATH_COUNTER=3D%d",
-+		     ++o->diff_path_counter);
-+	strvec_pushf(&cmd.env, "GIT_DIFF_PATH_TOTAL=3D%d", q->nr);
-
- 	diff_free_filespec_data(one);
- 	diff_free_filespec_data(two);
--	if (run_command_v_opt_cd_env(argv.v, RUN_USING_SHELL, NULL, env.v))
-+	cmd.use_shell =3D 1;
-+	if (run_command(&cmd))
- 		die(_("external diff died, stopping at %s"), name);
-
- 	remove_tempfile();
--	strvec_clear(&argv);
--	strvec_clear(&env);
- }
-
- static int similarity_index(struct diff_filepair *p)
-diff --git a/git.c b/git.c
-index ee7758dcb0..6662548986 100644
-=2D-- a/git.c
-+++ b/git.c
-@@ -787,7 +787,7 @@ static int run_argv(int *argcp, const char ***argv)
- 		if (!done_alias)
- 			handle_builtin(*argcp, *argv);
- 		else if (get_builtin(**argv)) {
--			struct strvec args =3D STRVEC_INIT;
-+			struct child_process cmd =3D CHILD_PROCESS_INIT;
- 			int i;
-
- 			/*
-@@ -804,18 +804,21 @@ static int run_argv(int *argcp, const char ***argv)
-
- 			commit_pager_choice();
-
--			strvec_push(&args, "git");
-+			strvec_push(&cmd.args, "git");
- 			for (i =3D 0; i < *argcp; i++)
--				strvec_push(&args, (*argv)[i]);
-+				strvec_push(&cmd.args, (*argv)[i]);
-
--			trace_argv_printf(args.v, "trace: exec:");
-+			trace_argv_printf(cmd.args.v, "trace: exec:");
-
- 			/*
- 			 * if we fail because the command is not found, it is
- 			 * OK to return. Otherwise, we just pass along the status code.
- 			 */
--			i =3D run_command_v_opt_tr2(args.v, RUN_SILENT_EXEC_FAILURE |
--						  RUN_CLEAN_ON_EXIT | RUN_WAIT_AFTER_CLEAN, "git_alias");
-+			cmd.silent_exec_failure =3D 1;
-+			cmd.clean_on_exit =3D 1;
-+			cmd.wait_after_clean =3D 1;
-+			cmd.trace2_child_class =3D "git_alias";
-+			i =3D run_command(&cmd);
- 			if (i >=3D 0 || errno !=3D ENOENT)
- 				exit(i);
- 			die("could not execute builtin %s", **argv);
-diff --git a/merge.c b/merge.c
-index 2382ff66d3..445b4f19aa 100644
-=2D-- a/merge.c
-+++ b/merge.c
-@@ -19,22 +19,22 @@ int try_merge_command(struct repository *r,
- 		      const char **xopts, struct commit_list *common,
- 		      const char *head_arg, struct commit_list *remotes)
- {
--	struct strvec args =3D STRVEC_INIT;
-+	struct child_process cmd =3D CHILD_PROCESS_INIT;
- 	int i, ret;
- 	struct commit_list *j;
-
--	strvec_pushf(&args, "merge-%s", strategy);
-+	strvec_pushf(&cmd.args, "merge-%s", strategy);
- 	for (i =3D 0; i < xopts_nr; i++)
--		strvec_pushf(&args, "--%s", xopts[i]);
-+		strvec_pushf(&cmd.args, "--%s", xopts[i]);
- 	for (j =3D common; j; j =3D j->next)
--		strvec_push(&args, merge_argument(j->item));
--	strvec_push(&args, "--");
--	strvec_push(&args, head_arg);
-+		strvec_push(&cmd.args, merge_argument(j->item));
-+	strvec_push(&cmd.args, "--");
-+	strvec_push(&cmd.args, head_arg);
- 	for (j =3D remotes; j; j =3D j->next)
--		strvec_push(&args, merge_argument(j->item));
-+		strvec_push(&cmd.args, merge_argument(j->item));
-
--	ret =3D run_command_v_opt(args.v, RUN_GIT_CMD);
--	strvec_clear(&args);
-+	cmd.git_cmd =3D 1;
-+	ret =3D run_command(&cmd);
-
- 	discard_index(r->index);
- 	if (repo_read_index(r) < 0)
-diff --git a/scalar.c b/scalar.c
-index 6de9c0ee52..03f9e480dd 100644
-=2D-- a/scalar.c
-+++ b/scalar.c
-@@ -69,21 +69,18 @@ static void setup_enlistment_directory(int argc, const=
- char **argv,
-
- static int run_git(const char *arg, ...)
- {
--	struct strvec argv =3D STRVEC_INIT;
-+	struct child_process cmd =3D CHILD_PROCESS_INIT;
- 	va_list args;
- 	const char *p;
--	int res;
-
- 	va_start(args, arg);
--	strvec_push(&argv, arg);
-+	strvec_push(&cmd.args, arg);
- 	while ((p =3D va_arg(args, const char *)))
--		strvec_push(&argv, p);
-+		strvec_push(&cmd.args, p);
- 	va_end(args);
-
--	res =3D run_command_v_opt(argv.v, RUN_GIT_CMD);
--
--	strvec_clear(&argv);
--	return res;
-+	cmd.git_cmd =3D 1;
-+	return run_command(&cmd);
- }
-
- struct scalar_config {
-diff --git a/sequencer.c b/sequencer.c
-index 66eedd2c76..31e24f38f8 100644
-=2D-- a/sequencer.c
-+++ b/sequencer.c
-@@ -3183,18 +3183,15 @@ static int rollback_is_safe(void)
-
- static int reset_merge(const struct object_id *oid)
- {
--	int ret;
--	struct strvec argv =3D STRVEC_INIT;
-+	struct child_process cmd =3D CHILD_PROCESS_INIT;
-
--	strvec_pushl(&argv, "reset", "--merge", NULL);
-+	cmd.git_cmd =3D 1;
-+	strvec_pushl(&cmd.args, "reset", "--merge", NULL);
-
- 	if (!is_null_oid(oid))
--		strvec_push(&argv, oid_to_hex(oid));
-+		strvec_push(&cmd.args, oid_to_hex(oid));
-
--	ret =3D run_command_v_opt(argv.v, RUN_GIT_CMD);
--	strvec_clear(&argv);
--
--	return ret;
-+	return run_command(&cmd);
- }
-
- static int rollback_single_pick(struct repository *r)
-@@ -4866,14 +4863,14 @@ static int pick_commits(struct repository *r,
-
- static int continue_single_pick(struct repository *r, struct replay_opts =
-*opts)
- {
--	struct strvec argv =3D STRVEC_INIT;
--	int ret;
-+	struct child_process cmd =3D CHILD_PROCESS_INIT;
-
- 	if (!refs_ref_exists(get_main_ref_store(r), "CHERRY_PICK_HEAD") &&
- 	    !refs_ref_exists(get_main_ref_store(r), "REVERT_HEAD"))
- 		return error(_("no cherry-pick or revert in progress"));
-
--	strvec_push(&argv, "commit");
-+	cmd.git_cmd =3D 1;
-+	strvec_push(&cmd.args, "commit");
-
- 	/*
- 	 * continue_single_pick() handles the case of recovering from a
-@@ -4886,11 +4883,9 @@ static int continue_single_pick(struct repository *=
-r, struct replay_opts *opts)
- 		 * Include --cleanup=3Dstrip as well because we don't want the
- 		 * "# Conflicts:" messages.
- 		 */
--		strvec_pushl(&argv, "--no-edit", "--cleanup=3Dstrip", NULL);
-+		strvec_pushl(&cmd.args, "--no-edit", "--cleanup=3Dstrip", NULL);
-
--	ret =3D run_command_v_opt(argv.v, RUN_GIT_CMD);
--	strvec_clear(&argv);
--	return ret;
-+	return run_command(&cmd);
- }
-
- static int commit_staged_changes(struct repository *r,
+diff --git a/tmp-objdir.h b/tmp-objdir.h
+index 76efc7edee..237d96b660 100644
+=2D-- a/tmp-objdir.h
++++ b/tmp-objdir.h
+@@ -10,9 +10,11 @@
+  *
+  * Example:
+  *
++ *	struct child_process child =3D CHILD_PROCESS_INIT;
+  *	struct tmp_objdir *t =3D tmp_objdir_create("incoming");
+- *	if (!run_command_v_opt_cd_env(cmd, 0, NULL, tmp_objdir_env(t)) &&
+- *	    !tmp_objdir_migrate(t))
++ *	strvec_push(&child.args, cmd);
++ *	strvec_pushv(&child.env, tmp_objdir_env(t));
++ *	if (!run_command(&child)) && !tmp_objdir_migrate(t))
+  *		printf("success!\n");
+  *	else
+  *		die("failed...tmp_objdir will clean up for us");
 =2D-
 2.38.1
