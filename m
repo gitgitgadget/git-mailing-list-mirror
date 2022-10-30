@@ -2,84 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EC7C5ECAAA1
-	for <git@archiver.kernel.org>; Sun, 30 Oct 2022 18:07:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6237C38A02
+	for <git@archiver.kernel.org>; Sun, 30 Oct 2022 18:14:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229571AbiJ3SHh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 Oct 2022 14:07:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47736 "EHLO
+        id S229553AbiJ3SO2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 Oct 2022 14:14:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbiJ3SHg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Oct 2022 14:07:36 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37E1BE1
-        for <git@vger.kernel.org>; Sun, 30 Oct 2022 11:07:35 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id p141so8286937iod.6
-        for <git@vger.kernel.org>; Sun, 30 Oct 2022 11:07:35 -0700 (PDT)
+        with ESMTP id S229441AbiJ3SO0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Oct 2022 14:14:26 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A1B1DCB
+        for <git@vger.kernel.org>; Sun, 30 Oct 2022 11:14:26 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id q142so2235056iod.5
+        for <git@vger.kernel.org>; Sun, 30 Oct 2022 11:14:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=AUMTe1qJLvYPwIr4iBsm9oQwcDqbTFujApTPARddlZs=;
-        b=QYx98U+oY0JMjQx6XO/XI+SiR+vdHWRTanvYcBLpjHUDxUqi6TakmwfDCSqpeBhdU5
-         KaBaxRAGuUeDRK129n1OqEHYU7E6rxf/WYRun3W+5YNg/p3wJpfBmKEePW+S1QNT/0Uz
-         +Cw+v+8th9dxoPAI6lcE+xwTr/rWNThbGzN5UBZ9H+o0t7tJHaqh+AYJKX3SDw62GHYQ
-         WAdDw9ZROh5/4BzsMvZ9JjPh+w2GH0FRLaEA30/b4gl9W4nPjIzbi3AFIqSAvUwfEOyk
-         CRSZY7DK21KCVrZJzIjs/fKS1yhIIAQX/tgUf4i68/7CIHSaHWKAs79JhWSvJZ5SjRKK
-         M6FA==
+        bh=k1TeHm6AQ1EUnvZGRPhfU4xc5/emo4y6oBCK1ObFNbY=;
+        b=LV2b7SOmuroYG6lcIb0Rf/smbXwJIhf1+vEcnBnh2AQixA0zveO/nkFzKgpuh3xsO/
+         j4WO85JBzT3RenU6jjH803aNatlZqEpvGHThG+6kwPuCdwyK3rAsxCcNH8IegwC6XNNB
+         pT/au6GOVRkV5VzKIOESIoL4gw7y8KtFYq0/0ucu1QEzWM21RmuzUozjHTk057J1WV0y
+         Ti52LaFZTuN9zbiBv7rYlioptg9JsiKYzdPy+/GnqepWUT+BzuvtBJL8gIJpWLwmkBO/
+         AfMGb2U01ukiNd20DDEWSELRZ0J8ErKTl9/vYyq9ApT5Scw9+51hgWr3l6omk8hR7DWB
+         GyFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AUMTe1qJLvYPwIr4iBsm9oQwcDqbTFujApTPARddlZs=;
-        b=E5xvvtB2tUGSNfbRLGQl/3G4n2/yjcwLyMjoLFalk+mNaQOrHE5VuIebAwDjVb8LEf
-         +eu1WO/WBKOCR+MkwSM6SUc0R7HCLG1E4y1HHciFd1bSPHjar41GqEAp8QHi6dPTjBhF
-         tOyzId6vmTnA9+2uSPco4Cv4XdciEUgm4XFFMaf3jR1GhWSfcNVVPnwoaaY6s6B0vdVL
-         874X7iid5RCs5u0oU9WZnXlff9EyimVRsMzMFdXnYzD+Psr3LjGEhryBhyjH+3GsDEhX
-         hI2b0YA+hVdRe6r0mdd8eIaLHnxz9Rs72+OUA8o0RhcP6Ptnb/hQOz7XP3RfSn+3jDVZ
-         1KzA==
-X-Gm-Message-State: ACrzQf0TLjFMLOQFKK3Iz12GCxrKp0nJomVaUxUTDyOV+EkDlYFc0NE+
-        4w3ZNDtzZ5btsRH+n84ZfhH5Vw==
-X-Google-Smtp-Source: AMsMyM7B80i8Z6JAqSlV1FrXPlmAktRdp9utlyVUwY5E+mOhOX0Iv90sOO+hapPino/tkxBNN+NQcw==
-X-Received: by 2002:a05:6638:31c2:b0:363:496e:b5a1 with SMTP id n2-20020a05663831c200b00363496eb5a1mr5414096jav.237.1667153254634;
-        Sun, 30 Oct 2022 11:07:34 -0700 (PDT)
+        bh=k1TeHm6AQ1EUnvZGRPhfU4xc5/emo4y6oBCK1ObFNbY=;
+        b=xTRUtS/2vg5Q0nzOwR2GHc+Cnc2Z2RTLp6xre6CCAdjZN0kcQPlH3STnv0oYkcY9c7
+         yW/Y0dWRb5qypqi3DmkU/q3qGgdyhSWd/Ye2uqdWStIrPe01B67twp45HaPGlD58L6GJ
+         2ioDuSnsbFlbMrDzQ/764d0E3aIz1gejGbpYRaEtj6zSfSF99dCCRTMKgHlXM7e0cXW2
+         /HLLgjwNYIllLBHwpGtqFMyUjJ/iz6dj5XY1FWk5j5WhVt+t+VBLVhHeE28xaHjb5tK3
+         CqvXkrXsrgB/A8Wnh2CEkacuoZfx93o9F2o3LU33hcK3x1dFpwweiGbGXaMiQEwOEDUP
+         yOHg==
+X-Gm-Message-State: ACrzQf3Kjoo6BKjCZf3wpgUdVXa//A25EXBpk4cs2mfR9ZzfJ82Y96Ze
+        TlrrnUitjHZuqUlDZXL0cnEx2w==
+X-Google-Smtp-Source: AMsMyM6HI/tGjV45t5plVt3atCCExVJVINaPuhR3IczVpMt22XKMuVqrYnCnvvQyoPlwjsC6204fRw==
+X-Received: by 2002:a05:6638:150c:b0:363:a4f4:fdc6 with SMTP id b12-20020a056638150c00b00363a4f4fdc6mr5396842jat.185.1667153665525;
+        Sun, 30 Oct 2022 11:14:25 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id v3-20020a02b083000000b00374fe4f0bc3sm1820327jah.158.2022.10.30.11.07.34
+        by smtp.gmail.com with ESMTPSA id o11-20020a056e02068b00b002f9f001de24sm1772109ils.21.2022.10.30.11.14.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 30 Oct 2022 11:07:34 -0700 (PDT)
-Date:   Sun, 30 Oct 2022 14:07:33 -0400
+        Sun, 30 Oct 2022 11:14:25 -0700 (PDT)
+Date:   Sun, 30 Oct 2022 14:14:24 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Siddharth Asthana <siddharthasthana31@gmail.com>,
-        git@vger.kernel.org, gitster@pobox.com, johncai86@gmail.com
-Subject: Re: [PATCH] doc/cat-file: allow --use-mailmap for --batch options
-Message-ID: <Y169Zbtvr33rBQvc@nand.local>
-References: <20220923193543.58635-1-siddharthasthana31@gmail.com>
- <20221029092513.73982-1-siddharthasthana31@gmail.com>
- <Y11rnKwuR0q47ngq@nand.local>
- <CAP8UFD3J3Q4UTGo5aaDDVth1hXLXAt53322z3TSNWTVRNiJ8Xg@mail.gmail.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v3 1/8] clone: teach --detach option
+Message-ID: <Y16/AMeVYgERJuj6@nand.local>
+References: <pull.1321.v2.git.git.1666297238.gitgitgadget@gmail.com>
+ <pull.1321.v3.git.git.1666988096.gitgitgadget@gmail.com>
+ <432bc7cb3a42cf39d0033701c2cc677c9109b3dd.1666988096.git.gitgitgadget@gmail.com>
+ <xmqqmt9fhbjt.fsf@gitster.g>
+ <xmqq7d0jhaw6.fsf@gitster.g>
+ <kl6lbkpvd0de.fsf@chooglen-macbookpro.roam.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAP8UFD3J3Q4UTGo5aaDDVth1hXLXAt53322z3TSNWTVRNiJ8Xg@mail.gmail.com>
+In-Reply-To: <kl6lbkpvd0de.fsf@chooglen-macbookpro.roam.corp.google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 30, 2022 at 08:06:19AM +0100, Christian Couder wrote:
-> > Why was this split off from the original series? I don't have a problem
-> > queueing the two topics independently, but an explanation of how the two
-> > interact would be appreciated.
->
-> I think it was split off from the original series because it's a
-> documentation fix that could hopefully have graduated faster, and
-> could perhaps have made it into v2.38.0. Or perhaps it could make it
-> in v2.38.2 if such a bug fix release is made.
+On Fri, Oct 28, 2022 at 03:55:25PM -0700, Glen Choo wrote:
+> So a better way forward is to add the new flag, which I imagine might
+> be useful to certain end users.
 
-OK. Can we please get an updated round that clearly indicates which
-version it is? There are several messages in this thread with the same
-subject line and it is unclear which one reviewers are happy with.
+Disappointing, though I understand why such a new flag was needed. Do we
+really care about whether or not the branch exists so long as we are
+detached from it, though?
 
 Thanks,
 Taylor
