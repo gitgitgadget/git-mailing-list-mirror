@@ -2,89 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B8EBDFA3740
-	for <git@archiver.kernel.org>; Sun, 30 Oct 2022 11:58:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0B17C38A02
+	for <git@archiver.kernel.org>; Sun, 30 Oct 2022 15:46:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229782AbiJ3L6Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 Oct 2022 07:58:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52186 "EHLO
+        id S229835AbiJ3PqM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 Oct 2022 11:46:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229663AbiJ3L6W (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Oct 2022 07:58:22 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 687EBBF7D
-        for <git@vger.kernel.org>; Sun, 30 Oct 2022 04:58:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1667131093; bh=WGKRpNw2WvaTn4KNGSiujrJYoJK2/0GvD+Q1cn8a7MA=;
-        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=dD+KXnxrkvbRbHy+fF0yWNVJE8mci8vW5jDwuu9C0PC3WE9lDpFYX3bWXJ1SlxjSn
-         ZdDH3jtp3bOEfu1WTGJ5PLHY3ScTMFnB4kUpa6m9EZajTP4KEfoyY/sVEaTOiwTBOy
-         MCCNdm71jw7QbBopvHJdi4p3IQYS6gj8oSUNck1bIy4TjPK937MiwuEPCkRLIuTWC3
-         Dp29L8Q/3zcRBkr7bjh8hMZ9sXZYMcgcy2vqZIKDNWQdQCgHNRHoiaV1mCad9edBpP
-         q0W9eT6+PWMxVDPgZUbIiM5vQTMTMzhVupMTazu8YubsTPLIQiwZoiTyY2HhVN9kNB
-         /tdMq/+qBhcFQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.23.191]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MWQud-1oZMII2OLL-00XvsJ; Sun, 30
- Oct 2022 12:58:13 +0100
-Message-ID: <c14503ea-0b76-464a-02d5-0b001a462083@web.de>
-Date:   Sun, 30 Oct 2022 12:58:13 +0100
+        with ESMTP id S229717AbiJ3PqK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Oct 2022 11:46:10 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A1CCB1F2
+        for <git@vger.kernel.org>; Sun, 30 Oct 2022 08:46:08 -0700 (PDT)
+Received: from 88-110-102-84.dynamic.dsl.as9105.com ([88.110.102.84] helo=[192.168.1.57])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1opAVf-0005hi-AP;
+        Sun, 30 Oct 2022 15:46:06 +0000
+Message-ID: <95d2474c-4f74-414d-4aef-e46f736d21c5@iee.email>
+Date:   Sun, 30 Oct 2022 15:46:03 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [PATCH v2 0/12] run-command: remove run_command_v_*()
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <7407e074-4bd8-b351-7fa4-baf59b41880c@web.de>
- <ea061164-b36b-485c-963f-8c13e813a47e@web.de>
-In-Reply-To: <ea061164-b36b-485c-963f-8c13e813a47e@web.de>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+Subject: Re: Maybe default Commits History Simplification could be more
+ sensible
+Content-Language: en-GB
+To:     Laurent Lyaudet <laurent.lyaudet@gmail.com>, git@vger.kernel.org
+References: <CAB1LBmsxiRHRpOibHC2c_LLAn-QSQ+qeaKF0TxQ2y8mBqTXoNQ@mail.gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <CAB1LBmsxiRHRpOibHC2c_LLAn-QSQ+qeaKF0TxQ2y8mBqTXoNQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:oT6o06FiQ2TuCwUx910KLG23j0wwB/Pz6o+7itLoKpfIalWzdSs
- FD/uaKgkc15gfnk8BP6dfxr5ZGJNNQg5oxTXA6vwX6tb9GMrZc5AQ+B5DyDgGMxDOXFI0vk
- Ckb9LCQ73sYyjzdxepBsAe4QzOf5Y+VSGOH5pLfgr1qa0Owktei9E+YKmzdwokczOJSePUy
- F+NCApozQ9ArqilEyeACA==
-UI-OutboundReport: notjunk:1;M01:P0:fEqPYsaenWk=;C4Wy2+OCPlXQrBQe5/ONLw2MjGp
- CGzSc5Ymzfe9WYHX1Tmu29ELxEBDw1LXlMwsf7xi4VW3JfDLXf6rXKw11pJyh3vKYRK08HdW/
- GTrmteIvTcVnFEeVzx3gw9YV9tt/QTEu9ccJmKn0mUHNxLpX/RfaKXJGgjmMS/9WSEDIvO20e
- fyHl6sbGKaZcqSL/WaccE5dnwaxmdt/Al/JhWTPniLizDeLcON2YdL9qELe+p4w0BOEO737GM
- HrUx/TjxzrlBbq21iMBmzwOlmvTNRylrqdpVTCoaCc4JicQg91IpvJWzZlB05PyMeZ+0EaJnt
- IunjKgj7JjuuGDJO18VhWMUKMUuf8NdpVwxSNdkG/facqsRYswvLwar2d2XTjzJYOiZJJcapP
- nzXYkewEObQ0Kv4HXuxbjHHZM0vLCoAY29fEe40CsqQbkpv1fIZ9BQJ+lm4OaH5t30GDLk/Oj
- 5wi/hxHd82BvFsZJG3sJrAGYhf7u9zhE32rfDY+N7z6+IdIgzSjZv+NC+zY+GsB96eSBMbwvb
- Rqo/HYuKI4y5eRNCwt1cK1l22XvYFKf9356rNo8u+fjTSDlBmtyuvmu7vDTQOTe3irq+Q5akL
- hoobadJ9OysQYh+tWgngUlWIMCyjASAUPS29qk0baymwiF907HuC2ejNIw8mMw6oNTht2W7R2
- MwY+8AKdN/RnqVclEy6kj9gw/3fuMz4pfFNGzzE34N6UwpM8aMdCEmu0ZRd3wRkOEE6jl3Yqa
- jQCk0mwEAGmI7xkOg2ak9EqL3iwS16ksAiNT5+aKSBnIOx1Vf2OKyCQ4qICe/suEPaCPwaFAf
- GdOnZT/o1eBRStoYse5OjvZR/GeSI8hkM0KW/BzfjCZVMGxi3A8poTRXWyGRQXFQThyug0I8x
- lL+hgWcO++qSVX7NiqcDC8uriHWvlBC7aurlZoEL9vrj9CLyFFmI6usMo8WE9qoNRs6QP8DfU
- ivS7LdGUO2/XGg6fRhAqtktQ4nQ=
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 30.10.22 um 12:40 schrieb Ren=C3=A9 Scharfe:
-> Replace the convenience functions run_command_v_opt() et. al. and use
-> struct child_process and run_command() directly instead, for an overall
-> code reduction and a simpler and more flexible API that allows creating
-> argument lists without magic numbers and reduced risk of memory leaks.
+Hi Laurent,
+On 29/10/2022 15:53, Laurent Lyaudet wrote:
+> Hello,
 >
-> Changes since v1:
-> - Do the return value fix earlier; it was only an afterthought before.
->   Keep the colon (no "while at it, ...").
-> - Break out the xstrdup(), oid_to_hex_r() and C99 cleanups.
-> - Convert tricky string arrays before strvecs because =C3=86var didn't l=
-ike
->   the opposite order.
-> - Extend the example code in tmp-objdir.h so it still only requires
->   "cmd".
+> From here :
+> https://git-scm.com/docs/git-log#_history_simplification
+> I read :
+>> Default mode
+>> Simplifies the history to the simplest history explaining the final state of the tree.
+>> Simplest because it prunes some side branches if the end result is the same (i.e. merging branches with the same content)
+> But I am kindly questioning if the "explaining the final state of the
+> tree." is correct.
 
-Forgot one:
-- Fix grammar error in run-command.h added by the series in a comment
-  that goes away at the end.
+Importantly here, we have that a commit is a "snapshot" (of the tree),
+not a 'diff'. Despite all attempts (often within Git) to the contrary, a
+commit is never 'just a diff', though it's easy to be misled.
+> Because I had the following case :
+>
+> If :
+> - commit 1 modifies some lines of file f on a branch b,
+> - then commit 2 modifies some of the same lines of f on master,
+> - and commit 3 revert commits 2,
+> -  and then commit 4 merges b on master,
+> then without --show-pulls, with git log on file f you see first 3 commits only ;
+> and there is no way you can apply these 3 commits
 
-Ren=C3=A9
+Here, we have that distinction between the snapshots [i.e. the tree
+states], and the [false] expectation that commits are [just] diffs that
+can be applied.
+
+>  in sequence,
+> as depicted, and obtain the master's current state.
+>
+> When you use git log on a branch, you expect the default :
+> - to give you all that happened to your branch,
+
+If it was "all" the commits, it wouldn't be a simplification.. ;-)
+
+> - or to give you a list of commits that applied successively explains
+> the current state of the branch.
+
+If we swap that to being .. a list of commits that can be diff'd to
+explain...,
+then it may be a better statement about the simplification.. ?
+> I know that with trees a sequence of commits is not sufficient.
+> But it would be a good property of default history simplification that
+> your current branch state can be obtained with the first parent
+> subsequence of displayed commits.
+>
+> Currently, default history simplification for git log on some branch b
+> also gives merges of branch b on branch b2, if later on branch b2 is
+> merged back on branch b.
+> To me this merge commits are less interesting than the merge commit of
+> branch b2 on branch b at the end.
+>
+> I assume that the simplification of merge commits was intended for the
+> simple case :
+> - create branch b2 from branch b1
+> - n commits on branch b2
+> - merge branch b2 on b1
+> If no modification was made on b1 during that time, I agree that the
+> merge commit of b2 on b1 is not interesting.
+> In that case, it could explicitly say it displays commits on other
+> parents that could have been automatically rebased.
+> Like :
+> commit hxhxhxhxhxh
+> date
+> done on branch b2
+> merged on branch b1 at date, could have been automatically rebased
+> Message : It was a nice commit
+> ...
+>
+> But in the case, some common file was touched on b1 during that time,
+> then it should give the final merge commit. (Solution 1)
+> (I said touched instead of modified because of the revert.)
+> Or it should also simplify and remove the commit and its revert on b1.
+> (Solution 2)
+> I would prefer either Solution 1 or Solution 2 to the current default.
+
+As I understand it, the defaults are, effectively, set relative to the
+needs of the Linux project, for which it was designed.
+> Many UIs above git use default history simplification.
+> Github for example uses default history simplification.
+> And you cannot customize the commands used with options in these UIs.
+
+That sounds useful, but is in the hands of those 'forges'.
+> So I hope you will find that having better default is an important topic.
+>
+> Best regards,
+>     Laurent Lyaudet
+There is a github repo https://github.com/ChuckTest/git-history-test.git
+[1] that can be used to explore the History Simplification man page
+example with files foo, quux and side going through all the different
+TREESAME dances shown in the manual.
+
+I have a side project to see if such repos that demonstrate the man page
+example can be brought into the main Git 'documentation'.
+
+Note that the --graph option also brings in some options as well.
+
+--
+Philip
+
+
+[1] https://groups.google.com/g/git-users/c/n8Rj-YBUJEw/m/S-ADI3sQCAAJ
