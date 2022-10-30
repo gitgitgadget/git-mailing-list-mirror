@@ -2,68 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 00095C38A02
-	for <git@archiver.kernel.org>; Sun, 30 Oct 2022 03:09:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 03232C38A02
+	for <git@archiver.kernel.org>; Sun, 30 Oct 2022 06:48:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229682AbiJ3DJT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 29 Oct 2022 23:09:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33824 "EHLO
+        id S230018AbiJ3Gsg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 Oct 2022 02:48:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229616AbiJ3DJS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Oct 2022 23:09:18 -0400
-Received: from mail-io1-f41.google.com (mail-io1-f41.google.com [209.85.166.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5127495DB
-        for <git@vger.kernel.org>; Sat, 29 Oct 2022 20:09:16 -0700 (PDT)
-Received: by mail-io1-f41.google.com with SMTP id e15so7532142iof.2
-        for <git@vger.kernel.org>; Sat, 29 Oct 2022 20:09:16 -0700 (PDT)
+        with ESMTP id S229991AbiJ3GsS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Oct 2022 02:48:18 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6F6B273D
+        for <git@vger.kernel.org>; Sat, 29 Oct 2022 23:37:06 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id d26so22216824eje.10
+        for <git@vger.kernel.org>; Sat, 29 Oct 2022 23:37:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=sIR8h35mvF6Cg7PnWw8tsGB5mhKXNygFup/ve1SSGbQ=;
+        b=WvAukPysEvqY9U4eqc7LU0aJVsyfQ3vMoaCpQFCPNRxn7hZh2FmtqhigTKg14cvdec
+         WSXbky0JcSq28S5TeCWbHyscsBa2JY8dC+tUK0JGiE2SFCjnRhPMiFaETg3mSMxeEPJm
+         gzFjIAC+NgwI5M9Al8+/9NPas2eOfownDwlYI+X/uwdxNM4uUGw5UIzPwdWvU8jXBLae
+         b7DVtReIhqIcHz4460S8qunLpDTFuuqy7wwoowEOSKD9EDFSq4lzrvmEwirLpOVWLD5F
+         Cz3BQS4UHhoGHabbcLOTN+QlV7Mp/khahLIVofDl+bhdEWJUoF9G1h8yZfZninLbrvS7
+         jm2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1wEgQEvTx9acm4eJk5p7oMCQM7zQfWma49GY3CgtnFE=;
-        b=0gafItCSrttJBxkRVryfTxOaQa1T3muQ/M7evbE2BF+96BCn6Jvz4Gf3RTZnlE89iH
-         KPIPcHf8Et9pBslu27QDFJ0FlWlBBV1o3jKPclYuQ5MCJIKTN5hyaZxPBcMEDAShwlDW
-         hyUAKPvYl199dl9FbUwvM12FYXspfwz83MdFxapoNMfeJ/6zP6bgoZjIDXFS6GGMPQOx
-         L+QXERODsk7F/onqwZznOy3N8mJMJEDM7/ScJ3X1HushW4lceGz/VDlYUsT0SHKnIUFB
-         eHTNNNQg9+8K+1UiWcqZ1G2JSFILEH5hzXHuOgcvLW9orTgrPH6E9eFhvL45StPER6t2
-         yf4w==
-X-Gm-Message-State: ACrzQf1TGPLDaKrsTwoW53k5mAlpuyFPk/4DJA5H4jSlGrWn4MJV86CL
-        IOCt5GWGSY3t+Hg5pSM+OTEG7sg9lj5CfXX9Zyb6aVFZ
-X-Google-Smtp-Source: AMsMyM5UaYhrs5L6zYx/CC2l6AgZiIZCiP2vB4A+IeJRH0WjLah7kkyR4nFAh8XZSlAsp2HueHS9phbJyMverD5SPs8=
-X-Received: by 2002:a05:6638:408a:b0:363:e307:8433 with SMTP id
- m10-20020a056638408a00b00363e3078433mr3517760jam.221.1667099355864; Sat, 29
- Oct 2022 20:09:15 -0700 (PDT)
+        bh=sIR8h35mvF6Cg7PnWw8tsGB5mhKXNygFup/ve1SSGbQ=;
+        b=UXw4uyMlMpL4q8VtT0WVH/GTX71FQY8xCFpJ7NKjLabyttSQaMZCcz7Aw81W9jvjC+
+         BaXu1RSYfc9mOZu/jwZbEVJZ4m2Kx9AFxlkpJIKkmE9Gly4WmCERa11Hxph905q8T6Yz
+         oe557NzcgXWsXUX5cv35Jd31JHFJulk3n4b3ffRaZg1rwa2VxWY/U4VFV7zMmr89uyTI
+         zpHLYkKpsdrizqz5urrsEL9DoCym9Z4h2KbJhwUOPaQIf4vfz9LP2Bws98AXmwjaPNDA
+         KsXZ4f7zMqJoumA6XTST6M7dXnMwlGRaZE5lgDikxt6qMbMYl7o1Bs5pU+XbzCjRwC8T
+         sSaA==
+X-Gm-Message-State: ACrzQf0Eo5PEMp8LfAx2QncFYxz4dNefYWYgnqQ6g8ztNfRB3mYDokqz
+        hiRYJSMgwKzcNEDoRWn6Gq7i6Y89/TrHoy9mosQ=
+X-Google-Smtp-Source: AMsMyM6tFADyaXYnyRnSwbBP+mlwIS+DNLKCsakAjkS8SvI7OwSTaxYPGh9aOrWzxWIL0ZlmB1Kf+f75En1dTvL2TU4=
+X-Received: by 2002:a17:906:cc0f:b0:7a0:b91c:855f with SMTP id
+ ml15-20020a170906cc0f00b007a0b91c855fmr7200425ejb.26.1667111757239; Sat, 29
+ Oct 2022 23:35:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAEjZQXRsMaRYrskmpn5zBCrOt3xNOZ5shoVG82kjS7A3MZQtUQ@mail.gmail.com>
- <CAEjZQXRB47GirGP53njjGMS1gm6ydUUuxOEaj_XQGkkE8wfo5g@mail.gmail.com>
-In-Reply-To: <CAEjZQXRB47GirGP53njjGMS1gm6ydUUuxOEaj_XQGkkE8wfo5g@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 29 Oct 2022 23:09:05 -0400
-Message-ID: <CAPig+cS5psokHgzV0Ri69Wi_Ba-iE9XW8uFeVybwnQuvLWomQw@mail.gmail.com>
-Subject: Re: Soft bug: No chance to sign synthetic commits when using git
- subtree External
-To:     Adam Ryczkowski <adam.ryczkowski@statystyka.net>
-Cc:     git@vger.kernel.org
+References: <pull.1357.git.1663609659.gitgitgadget@gmail.com>
+ <4364224f9bddc8f1e40875ebc540b28225317176.1663609659.git.gitgitgadget@gmail.com>
+ <xmqqczbdl6wl.fsf@gitster.g> <CAPOJW5yxRETdVk014gQYFud9_Nrt+OQGSVNQ8Pw2wDEMMFMm1Q@mail.gmail.com>
+In-Reply-To: <CAPOJW5yxRETdVk014gQYFud9_Nrt+OQGSVNQ8Pw2wDEMMFMm1Q@mail.gmail.com>
+From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
+Date:   Sun, 30 Oct 2022 12:05:45 +0530
+Message-ID: <CAPOJW5z_ZRChNo8PGBmJu=vvjTL2cYL8oTdVwoDRh-UHt2Dy4w@mail.gmail.com>
+Subject: Re: [PATCH 3/5] roaring: teach Git to write roaring bitmaps
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaram <kaartic.sivaraam@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Oct 29, 2022 at 3:32 AM Adam Ryczkowski
-<adam.ryczkowski@statystyka.net> wrote:
-> A week passed and my last message did not get any follow ups
-> (https://lore.kernel.org/git/CAEjZQXRsMaRYrskmpn5zBCrOt3xNOZ5shoVG82kjS7A3MZQtUQ@mail.gmail.com/T/#u).
-> Since it is my first post to the vger.kernel.org and I am using gmail
-> (which feels awkward in the context of this list), it lets me to
-> believe that the message was filtered out from human eyes somehow.
->
-> I would appreciate it if someone responds to this email, just to let
-> me know that the initial message was delivered successfully. Thank
-> you.
+Hello all,
 
-Presence of your initial message in the archive is indicative that it
-made it to the list itself. That nobody responded is likely due to
-there being very few git-subtree users on the list rather than any
-intentional lack of regard for your report. I have, myself, never used
-or looked at git-subtree, hence am of no help on the subject.
+It has been a month since I didn't get involved in any open source
+contributions (including Git). This is due to the fact that I was
+focusing more on mastering theories and also that it was a festive
+month. So, I am now resuming my work. There are many things I have to
+cover (including this patch series).
+But before that I want to ask you a question - As you have noticed
+already, the Roaring library has a lot of styling issues (Moreover it
+is using C11). So Should I fix all these issues? or Should I make a
+new library (using Git's compatibility library "git-compat-util.h") by
+taking CRoaring as a reference? The pros are that it would be easier
+to format the bitmap library specific files and it can use Git
+compatible functions.
+
+I would love to hear your opinions. Thanks :)
