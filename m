@@ -2,215 +2,411 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CC45CC38A02
-	for <git@archiver.kernel.org>; Sun, 30 Oct 2022 10:13:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B6F3FA373D
+	for <git@archiver.kernel.org>; Sun, 30 Oct 2022 11:40:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229746AbiJ3KN4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 Oct 2022 06:13:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58322 "EHLO
+        id S229707AbiJ3Lkm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 Oct 2022 07:40:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229707AbiJ3KNy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Oct 2022 06:13:54 -0400
-Received: from mail-yb1-xb32.google.com (mail-yb1-xb32.google.com [IPv6:2607:f8b0:4864:20::b32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71F15D5F
-        for <git@vger.kernel.org>; Sun, 30 Oct 2022 03:13:52 -0700 (PDT)
-Received: by mail-yb1-xb32.google.com with SMTP id 63so10779584ybq.4
-        for <git@vger.kernel.org>; Sun, 30 Oct 2022 03:13:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ycMutv14yS8B+jimSVRWnZ+1Op+WYRhlHNeWmyNy7x0=;
-        b=mXerSJBTizc//+8PoSmUTyv+V+to1hKdkbTxJRGUFQlrdlcjkSfqwKWd9IUumtFG8J
-         3hO8Zb53MC7VrolJXbdOJHIlApzRxHx6lkpJR6/grEnXhjITtIRSD/PDnfjgnazxJuW7
-         YP8IjIPzI9zfDraa9+NkqErBm3wyPxJp+Tyrd5y/+yZbOhfspxGBMJvj4SY0ZLRr6xYS
-         J3LVxjq0aOmN8YASKT8mk7U5LuH2ejDB+4FKF2c0Yv9XAzxVd6aVWeersu9H5yJVvQmo
-         K7c3ctnvNMjyjzPWCBfAYcdcVDrGLWfrSq8jfq9F0TSEjhtZAvwPaEylDehuAW/EbJ4y
-         JJUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ycMutv14yS8B+jimSVRWnZ+1Op+WYRhlHNeWmyNy7x0=;
-        b=sQcDruYOiDekFqtI3Wqb8IDoWcYBh+8lbvwgjJntxNKeh9b//tO5DxJ7/R6Ptzcerc
-         0vh0oX2FS191ozZB85YRwsg+n0/SMu2+1TiE3zbtNJ36N3c4GinQb7lGutT1oHiKPKiy
-         z/YIu5FBJgLUIqw2zJ560ynCMvte/xtC30MJjWXLzE/q6Tas4dgiVwNqC2/8zIv47DkP
-         OadXCSaN15f8JybWgCAqWU6JFyyPmZjAhBAORAF5l4VmJd9qOcXm8VQCZAXLtraRiHjK
-         MrTkIdIYxTPSdfWLbdXhgcXvxwrt30/PU/hxLMTjJt+0YG0wTCDIu5a9Qju7AW+i93X6
-         1hiQ==
-X-Gm-Message-State: ACrzQf206I4cZiX3zQnKEY+VuzvmXYFnzHPP+gZKVfKP6fdYtLtxRnoP
-        nbHrTtAvnEmIunNf4DyDOYIWYZt75fBiTZJnzCYRKB8UHdejCGkW
-X-Google-Smtp-Source: AMsMyM4Ob6qiG+BiG5RScuLROVOJzMxpVSlCNTeBoWIoRqS5RLB/zAJIvJU5SfL3a/LHCJs2gFRz8v9leEFyGCz8TtQ=
-X-Received: by 2002:a25:c842:0:b0:6cb:fbab:2d3a with SMTP id
- y63-20020a25c842000000b006cbfbab2d3amr7157147ybf.178.1667124831523; Sun, 30
- Oct 2022 03:13:51 -0700 (PDT)
+        with ESMTP id S229497AbiJ3Lkl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Oct 2022 07:40:41 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1BE8B1F2
+        for <git@vger.kernel.org>; Sun, 30 Oct 2022 04:40:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1667130024; bh=tMarVyDTDBTh3Qd130O0BgfBGu1zuls2xCUo11Mm6to=;
+        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
+        b=XihxO8lrfrAUoYxN/scmBe+yZui3gT2ewFf/nUXeEMaQyy+gRqP7P2M1nCrKHZ6VH
+         20DU78+Ok61QGvwH2Rb9E9EKK6v30W/p4HwDSSgiWL+rPQBvxhh6KEPqORwDAx/344
+         Ssm2OjBydfhqL10xRyLd5rcpzL5i+WiBTrjGZJTMwc2GsBfFi9s6F23SbxQhpiMfxF
+         1P5fVwGtSKY6S+25ceCbIJ+7SRcnUtUNCOPMCx4AdjHBhXWa3xUIENrHpVEuoSq14V
+         8KGD+0GRO/EF4BL7VkaZH7Mh5J/YSwuUylSKLdlpvHKlAF1iwGg/gWr5YFVop3iQwo
+         /WFhQfJkZTbhg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.23.191]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1M3m9H-1oopYp0iot-000vxK; Sun, 30
+ Oct 2022 12:40:24 +0100
+Message-ID: <ea061164-b36b-485c-963f-8c13e813a47e@web.de>
+Date:   Sun, 30 Oct 2022 12:40:23 +0100
 MIME-Version: 1.0
-References: <CA+PPyiE=baAoVkrghE5GQMt984AcaL=XBAQRsVRbN8w7jQA+ig@mail.gmail.com>
- <CA+CkUQ_pqQomaA=MO78PsC0oA8GcE0dJ415fpjcLx6k5HNaDiw@mail.gmail.com>
-In-Reply-To: <CA+CkUQ_pqQomaA=MO78PsC0oA8GcE0dJ415fpjcLx6k5HNaDiw@mail.gmail.com>
-From:   NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
-Date:   Sun, 30 Oct 2022 13:13:40 +0300
-Message-ID: <CA+PPyiHQgkaN66DWOuO9UaGqhx4Gcyou_hdMnVrD9AVFmreqpA@mail.gmail.com>
-Subject: Re: [OUTREACHY V2] Unify ref-filter formats with other --pretty formats[proposal]
-To:     Hariom verma <hariom18599@gmail.com>
-Cc:     git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.1
+Subject: [PATCH v2 0/12] run-command: remove run_command_v_*()
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
+        Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <7407e074-4bd8-b351-7fa4-baf59b41880c@web.de>
+In-Reply-To: <7407e074-4bd8-b351-7fa4-baf59b41880c@web.de>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:VyTKoTRV3My+t+26mL1RvhbwENWS0bE+b3vAm48V0ZObO8NlkR6
+ FwXNhCItayb/BylymRN7OZVmSCrCGBiMLs0RcV+TRwhMtFsRLeG8McInntUjL4p1SwW1f+x
+ r0ZHWi3sEeLGGVqiK0WyGWiaju6bGClRSWLJBdpvXr5fw3qhGHl3u8Jqmre/YHMhMWa0Atd
+ UOf17kXqMtbMajXFlGeOg==
+UI-OutboundReport: notjunk:1;M01:P0:pnYGav/U8yc=;b15AQJiziJz8VRDw9zCykA610lf
+ 3kl4GZVmFOfLz0hpPS19mcvjYPtJvHe3ey0eER9f0qbd2WnIVZhDksbXnbGGNAornYAkBM2gh
+ lIQl09xOCQedM1JqIkY4YRK0wZnBneDhkiLBMIpxax1+G1pkU2K+rJpnF/Cy15mY2ipc+Xhdr
+ FI4agls0V/gE1UCUvG7LMBmxKa5Gh0/s6jNNfL71v/CbQuOWC2jGBU+8I8qmp7EdGpEa2qXNt
+ QJ/peBrycD9HFdrE+xAxeM1IS/AntCurJx1gd/M0p6EkCp4p+uUG01stXJJylL4zkR3GJljIO
+ HPe7WhtcaX+nm05+nLnVbkCGIJfibXQjguIdKmiI6bKVwTV+7Xv+58rji7rQoU+sIyntpCQGD
+ pX0Y/C/uS9ghZUzrHvSB5qKAsq72IetT9Q7nCbfaNe1Pr9OFTsPbDutyfBB/edCePTu5gKdRa
+ ymQVlnWHM25b7nERJTul9/73+7x/RhYEEWd76MZGJd7q/WzYVbDEqIiosQhiTCd90dX3Qug5X
+ 5Bp9WUPTtD4Qr2EcpVuhT91kCDbt1dYwy35g02tzj/d4o7GodtG8lnxfq4eWRC5fUOOBXvVjF
+ jzHoO1HkO9x1tuxra6Z9tt+WKMdtvQ5qG7FnYX0AgQmMERO/e5Mzk3z1zm4RUr/ASF1TzosCW
+ ywHHvXls5dRheUVO8HaTbVUGa8UHGCKMfwGKmMylsK5Eq8OoTKdFSWte+y5ZOj6uN1mN92hRG
+ 2rOuK1RA7ktYUhn7EPhBGMbn5AqK02afNvlaarhfPjOH86LeW6/R1TLcaSr03tsbCAvuS08QL
+ q1FnIYGhoHhN+ZsuWz4RhvLOy5yPe2M4rEFXPdgWbVeUuGU6x4j0k8mksSpPwPuzgRChkKS9I
+ uv4T1AEYqNr1R33jC84wHA73RnqVThGiSd0ASq65+jGLOQswld8D3mEozRtwIU0xS4O9eGIhp
+ ZAQODvF60vcIR3pwcPazP2xUgNk=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks Hariom for your comments.
+Replace the convenience functions run_command_v_opt() et. al. and use
+struct child_process and run_command() directly instead, for an overall
+code reduction and a simpler and more flexible API that allows creating
+argument lists without magic numbers and reduced risk of memory leaks.
 
-> I would review the rest later.
+Changes since v1:
+- Do the return value fix earlier; it was only an afterthought before.
+  Keep the colon (no "while at it, ...").
+- Break out the xstrdup(), oid_to_hex_r() and C99 cleanups.
+- Convert tricky string arrays before strvecs because =C3=86var didn't lik=
+e
+  the opposite order.
+- Extend the example code in tmp-objdir.h so it still only requires
+  "cmd".
 
-Ok, thank you
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (1):
+  merge: remove always-the-same "verbose" arguments
 
->  It seems like you used my proposal as a template
+Ren=C3=A9 Scharfe (11):
+  run-command: fix return value comment
+  am: simplify building "show" argument list
+  bisect: simplify building "checkout" argument list
+  bisect--helper: factor out do_bisect_run()
+  sequencer: simplify building argument list in do_exec()
+  use child_process member "args" instead of string array variable
+  use child_process members "args" and "env" directly
+  replace and remove run_command_v_opt_cd_env()
+  replace and remove run_command_v_opt_tr2()
+  replace and remove run_command_v_opt_cd_env_tr2()
+  replace and remove run_command_v_opt()
 
-I used your template.  Yeah in case there are things to add or remove,
-I will do so.
+ add-interactive.c        |   9 ++-
+ bisect.c                 |  12 ++--
+ builtin/add.c            |  19 +++--
+ builtin/am.c             |  12 ++--
+ builtin/bisect--helper.c |  68 +++++++++---------
+ builtin/clone.c          |  41 ++++++-----
+ builtin/difftool.c       |  24 ++++---
+ builtin/fetch.c          |   9 ++-
+ builtin/gc.c             |  55 ++++++++++-----
+ builtin/merge-index.c    |   4 +-
+ builtin/merge.c          |  53 ++++++--------
+ builtin/pull.c           | 147 +++++++++++++++++++--------------------
+ builtin/remote.c         |  40 +++++------
+ compat/mingw.c           |  11 +--
+ diff.c                   |  27 ++++---
+ fsmonitor-ipc.c          |  10 ++-
+ git.c                    |  15 ++--
+ ll-merge.c               |   7 +-
+ merge.c                  |  18 ++---
+ run-command.c            |  35 ----------
+ run-command.h            |  34 +--------
+ scalar.c                 |  13 ++--
+ sequencer.c              |  32 ++++-----
+ shell.c                  |  17 +++--
+ t/helper/test-fake-ssh.c |   7 +-
+ t/helper/test-trace2.c   |   4 +-
+ tmp-objdir.h             |   6 +-
+ 27 files changed, 346 insertions(+), 383 deletions(-)
 
-Thank you so much for your comments, I am working on all of them. i
-hope by the end of today I will finish
+Range-Diff gegen v1:
+ 1:  c0b2b88500 =3D  1:  113a9e0a81 merge: remove always-the-same "verbose=
+" arguments
+ -:  ---------- >  2:  d10e70460b run-command: fix return value comment
+ -:  ---------- >  3:  c8cd913e39 am: simplify building "show" argument li=
+st
+ -:  ---------- >  4:  4bb142e4a9 bisect: simplify building "checkout" arg=
+ument list
+ 2:  387db545d1 =3D  5:  5fcbe94eb4 bisect--helper: factor out do_bisect_r=
+un()
+ -:  ---------- >  6:  962403cf22 sequencer: simplify building argument li=
+st in do_exec()
+ 4:  348bc6d32c !  7:  f1689abe85 use child_process member "args" instead =
+of string array variable
+    @@ Commit message
 
+         Use run_command() with a struct child_process variable and popula=
+te its
+         "args" member directly instead of building a string array and pas=
+sing it
+    -    to run_command_v_opt().  This avoids the use of magic index numbe=
+rs.
+    -
+    - ## bisect.c ##
+    -@@ bisect.c: static struct oid_array skipped_revs;
+    -
+    - static struct object_id *current_bad_oid;
+    -
+    --static const char *argv_checkout[] =3D {"checkout", "-q", NULL, "--"=
+, NULL};
+    --
+    - static const char *term_bad;
+    - static const char *term_good;
+    -
+    -@@ bisect.c: static int is_expected_rev(const struct object_id *oid)
+    - enum bisect_error bisect_checkout(const struct object_id *bisect_rev=
+,
+    - 				  int no_checkout)
+    - {
+    --	char bisect_rev_hex[GIT_MAX_HEXSZ + 1];
+    - 	struct commit *commit;
+    - 	struct pretty_print_context pp =3D {0};
+    - 	struct strbuf commit_msg =3D STRBUF_INIT;
+    -
+    --	oid_to_hex_r(bisect_rev_hex, bisect_rev);
+    - 	update_ref(NULL, "BISECT_EXPECTED_REV", bisect_rev, NULL, 0, UPDATE=
+_REFS_DIE_ON_ERR);
+    -
+    --	argv_checkout[2] =3D bisect_rev_hex;
+    - 	if (no_checkout) {
+    - 		update_ref(NULL, "BISECT_HEAD", bisect_rev, NULL, 0,
+    - 			   UPDATE_REFS_DIE_ON_ERR);
+    - 	} else {
+    --		if (run_command_v_opt(argv_checkout, RUN_GIT_CMD))
+    -+		struct child_process cmd =3D CHILD_PROCESS_INIT;
+    -+
+    -+		cmd.git_cmd =3D 1;
+    -+		strvec_pushl(&cmd.args, "checkout", "-q",
+    -+			     oid_to_hex(bisect_rev), "--", NULL);
+    -+		if (run_command(&cmd))
+    - 			/*
+    - 			 * Errors in `run_command()` itself, signaled by res < 0,
+    - 			 * and errors in the child process, signaled by res > 0
+    -
+    - ## builtin/am.c ##
+    -@@ builtin/am.c: static int show_patch(struct am_state *state, enum s=
+how_patch_type sub_mode)
+    - 	int len;
+    -
+    - 	if (!is_null_oid(&state->orig_commit)) {
+    --		const char *av[4] =3D { "show", NULL, "--", NULL };
+    --		char *new_oid_str;
+    --		int ret;
+    -+		struct child_process cmd =3D CHILD_PROCESS_INIT;
+    -
+    --		av[1] =3D new_oid_str =3D xstrdup(oid_to_hex(&state->orig_commit))=
+;
+    --		ret =3D run_command_v_opt(av, RUN_GIT_CMD);
+    --		free(new_oid_str);
+    --		return ret;
+    -+		strvec_pushl(&cmd.args, "show", oid_to_hex(&state->orig_commit),
+    -+			     "--", NULL);
+    -+		cmd.git_cmd =3D 1;
+    -+		return run_command(&cmd);
+    - 	}
+    -
+    - 	switch (sub_mode) {
+    +    to run_command_v_opt().  This avoids the use of magic index numbe=
+rs and
+    +    makes simplifies the possible addition of more arguments in the f=
+uture.
 
-On Fri, Oct 28, 2022 at 11:05 AM Hariom verma <hariom18599@gmail.com> wrote=
-:
->
-> Hi,
->
-> On Thu, Oct 27, 2022 at 5:28 PM NSENGIYUMVA WILBERFORCE
-> <nsengiyumvawilberforce@gmail.com> wrote:
-> >
-> > ##Proposed Project
-> >
-> > Abstract
-> >
-> > Git has an old problem of duplicated implementations of some logic.
-> > For example, Git had at least 4 different implementations to format
-> > command output for different commands. The foremost aim of this
-> > project is to simplify codebase by getting rid of duplication of a
-> > similar logic and, as a result, simplify adding new functionality.
-> > The current task is to reuse ref-filter formatting logic to minimize
-> > code duplication and to have one unified interface to extract all
-> > needed data from the object and to print it properly.
-> >
-> > ##Previous Work
-> >
-> > JayDeep Das(GSoC) tried to =E2=80=9Cadd a new atom =E2=80=98signature=
-=E2=80=99=E2=80=9D. However, I
-> > have not been able to find his complete work in the public box, it
-> > seems his work was not complete. According to
-> > <https://github.com/JDeepD/git-1/commit/85ddfa4b33f2b6f05524e648e7165c7=
-22188093e>
-> > which was suggested at the outreachy website, it looks like he did not
-> > complete writing the tests for the signature atom he was unifying.
-> > Maybe with the help of the mentors, I could plan to start from where
-> > he stopped from.
->
-> maybe s/stopped from/stopped/
->
-> You can elaborate a bit more on Jaydeep's work.
-> Like,
-> - What tests are missing?
-> - Any dificulties he faced during writing tests?
->
-> Also, in my final report, I mentioned refactoring the signature logic
-> according to Junio's comment
-> (https://public-inbox.org/git/xmqqzh7jcqv7.fsf@gitster.c.googlers.com/).
-> Does Jaydeep's patch respect Junio's comment? I think you can include
-> a bit about this too,
->
-> > Hariom Verma contributed(https://harry-hov.github.io/blogs/posts/the-fi=
-nal-report)
-> > tremendously towards =E2=80=9CUnifying Git=E2=80=99s format languages=
-=E2=80=9D during his 2020
-> > GSoC internship.
->
-> s/Unifying Git=E2=80=99s format languages/Unifying ref-filter formats wit=
-h
-> other --pretty formats/
-> s/during his 2020 GSoC internship/during GSoC'20/
->
-> > Hariom finished most of the formatting options and
-> > this will help me build on his work.  His work looks smart and
-> > understandable thus adding on his work will be easy. And also his blog
-> > is very fabulous, it=E2=80=99s a shooting point for me to start underst=
-anding
-> > the codebase very well.
->
-> It looks more like praise to me. I'm glad you like my work and blogs.
-> But I would like to see some details here.
-> Like work is almost 2+ years old. What changed in pretty.* and
-> ref-filter.* since then?
-> Is my work still compatible with the latest changes?
->
-> > Hariom mentions in his report that 30 % of the
-> > log related tests are failing, he also mentions that the cause of
-> > tests failure is because of the missing mailmap logic and mbox/email
-> > commit format.
->
-> Okay. But see if you can gather more details about failing tests and
-> remaining work.
->
-> > Hariom also says it does not handle unknown formatting
-> > options.
->
-> what do you mean by "it" here?
->
-> > I plan to start with his advice about the cause of the
-> > failure of these tests and then intuitively refactor them into
-> > something cool.
->
-> I didn=E2=80=99t get the line "intuitively refactor them into something c=
-ool".
->
-> > ##Summary of remaining tasks by Hariom
-> >
-> > -Around 30% log related tests are failing
-> >
-> > -Teach pretty-lib.{c,h} to handle incorrect formatting option
-> >
-> > -Email/MBoxed commit format needs work
-> >
-> > ##Some useful mailing lists links from Hariom
-> >
-> > - https://public-inbox.org/git/pull.684.v4.git.1598046110.gitgitgadget@=
-gmail.com/
-> >
-> > - https://public-inbox.org/git/pull.707.git.1597841551.gitgitgadget@gma=
-il.com/
-> >
-> > - https://public-inbox.org/git/pull.707.git.1597841551.gitgitgadget@gma=
-il.com/
-> >
->
-> Okay
->
-> > Olga<olyatelezhnaya@gmail.com> has done great work in =E2=80=9CUnifying=
- Git=E2=80=99s
-> > format languages=E2=80=9D during Outreachy Round 15 and continued even =
-after
-> > that [from 28-09-2017 to 04-04-2019]. Her work is mostly related to
-> > `cat-file` and `ref-filter`.
-> >
-> > She already did a pretty nice job in preparing ref-filter for more
-> > general usage of its formatting logic. It will give me the possibility
-> > to make the migration of pretty.c easier.
->
-> ZheNing Hu continued the Olga's work during GSoC'21. You can tell a
-> bit more about that too.
->
-> --
->
-> I would review the rest later.
->
-> It seems like you used my proposal as a template. Just want to let you
-> know, you are not restricted to using any particular template. Feel
-> free to add or remove any section you find relevant.
->
-> Thanks,
-> Hariom
+      ## builtin/difftool.c ##
+     @@ builtin/difftool.c: static int run_dir_diff(const char *extcmd, in=
+t symlinks, const char *prefix,
+    @@ ll-merge.c: static enum ll_merge_result ll_ext_merge(const struct l=
+l_merge_drive
+      	if (fd < 0)
+      		goto bad;
+
+    - ## sequencer.c ##
+    -@@ sequencer.c: static int error_failed_squash(struct repository *r,
+    -
+    - static int do_exec(struct repository *r, const char *command_line)
+    - {
+    --	const char *child_argv[] =3D { NULL, NULL };
+    -+	struct child_process cmd =3D CHILD_PROCESS_INIT;
+    - 	int dirty, status;
+    -
+    - 	fprintf(stderr, _("Executing: %s\n"), command_line);
+    --	child_argv[0] =3D command_line;
+    --	status =3D run_command_v_opt(child_argv, RUN_USING_SHELL);
+    -+	cmd.use_shell =3D 1;
+    -+	strvec_push(&cmd.args, command_line);
+    -+	status =3D run_command(&cmd);
+    -
+    - 	/* force re-reading of the cache */
+    - 	if (discard_index(r->index) < 0 || repo_read_index(r) < 0)
+    -
+      ## t/helper/test-fake-ssh.c ##
+     @@ t/helper/test-fake-ssh.c: int cmd_main(int argc, const char **argv=
+)
+      	struct strbuf buf =3D STRBUF_INIT;
+ 3:  7745e16df4 =3D  8:  a467a4ecb5 use child_process members "args" and "=
+env" directly
+ 5:  eeaa6aa86d !  9:  dc27358775 replace and remove run_command_v_opt_cd_=
+env()
+    @@ run-command.h
+     @@ run-command.h: struct child_process {
+
+      /**
+    -  * The functions: child_process_init, start_command, finish_command,
+    -- * run_command, run_command_v_opt, run_command_v_opt_cd_env, child_p=
+rocess_clear
+    -- * do the following:
+    -+ * run_command, run_command_v_opt, child_process_clear do the follow=
+ing:
+    +  * The functions: start_command, finish_command, run_command,
+    +- * run_command_v_opt, run_command_v_opt_cd_env do the following:
+    ++ * run_command_v_opt do the following:
+       *
+       * - If a system call failed, errno is set and -1 is returned. A dia=
+gnostic
+       *   is printed.
+    @@ run-command.h: int run_command_v_opt_tr2(const char **argv, int opt=
+, const char
+
+      ## tmp-objdir.h ##
+     @@
+    +  *
+       * Example:
+       *
+    ++ *	struct child_process child =3D CHILD_PROCESS_INIT;
+       *	struct tmp_objdir *t =3D tmp_objdir_create("incoming");
+     - *	if (!run_command_v_opt_cd_env(cmd, 0, NULL, tmp_objdir_env(t)) &&
+     - *	    !tmp_objdir_migrate(t))
+    -+ *	strvec_pushv(&cmd.env, tmp_objdir_env(t));
+    -+ *	if (!run_command(&cmd)) && !tmp_objdir_migrate(t))
+    ++ *	strvec_push(&child.args, cmd);
+    ++ *	strvec_pushv(&child.env, tmp_objdir_env(t));
+    ++ *	if (!run_command(&child)) && !tmp_objdir_migrate(t))
+       *		printf("success!\n");
+       *	else
+       *		die("failed...tmp_objdir will clean up for us");
+ 6:  95b5dcbb66 =3D 10:  dcd65580c6 replace and remove run_command_v_opt_t=
+r2()
+ 7:  5e111ab053 ! 11:  389ec8ef54 replace and remove run_command_v_opt_cd_=
+env_tr2()
+    @@ run-command.h: int run_auto_maintenance(int quiet);
+
+      /**
+     - * Convenience functions that encapsulate a sequence of
+    -+ * Convenience function that encapsulate a sequence of
+    ++ * Convenience function that encapsulates a sequence of
+       * start_command() followed by finish_command(). The argument argv
+       * specifies the program and its arguments. The argument opt is zero
+       * or more of the flags `RUN_COMMAND_NO_STDIN`, `RUN_GIT_CMD`,
+ 8:  f1f438d724 ! 12:  a6e7135e31 replace and remove run_command_v_opt()
+    @@ Commit message
+
+         Suggested-by: Jeff King <peff@peff.net>
+
+    + ## bisect.c ##
+    +@@ bisect.c: enum bisect_error bisect_checkout(const struct object_id=
+ *bisect_rev,
+    + 		update_ref(NULL, "BISECT_HEAD", bisect_rev, NULL, 0,
+    + 			   UPDATE_REFS_DIE_ON_ERR);
+    + 	} else {
+    +-		const char *argv_checkout[] =3D {
+    +-			"checkout", "-q", oid_to_hex(bisect_rev), "--", NULL
+    +-		};
+    ++		struct child_process cmd =3D CHILD_PROCESS_INIT;
+    +
+    +-		if (run_command_v_opt(argv_checkout, RUN_GIT_CMD))
+    ++		cmd.git_cmd =3D 1;
+    ++		strvec_pushl(&cmd.args, "checkout", "-q",
+    ++			     oid_to_hex(bisect_rev), "--", NULL);
+    ++		if (run_command(&cmd))
+    + 			/*
+    + 			 * Errors in `run_command()` itself, signaled by res < 0,
+    + 			 * and errors in the child process, signaled by res > 0
+    +
+    + ## builtin/am.c ##
+    +@@ builtin/am.c: static int show_patch(struct am_state *state, enum s=
+how_patch_type sub_mode)
+    + 	int len;
+    +
+    + 	if (!is_null_oid(&state->orig_commit)) {
+    +-		const char *av[] =3D {
+    +-			"show", oid_to_hex(&state->orig_commit), "--", NULL
+    +-		};
+    ++		struct child_process cmd =3D CHILD_PROCESS_INIT;
+    +
+    +-		return run_command_v_opt(av, RUN_GIT_CMD);
+    ++		strvec_pushl(&cmd.args, "show", oid_to_hex(&state->orig_commit),
+    ++			     "--", NULL);
+    ++		cmd.git_cmd =3D 1;
+    ++		return run_command(&cmd);
+    + 	}
+    +
+    + 	switch (sub_mode) {
+    +
+      ## builtin/bisect--helper.c ##
+     @@ builtin/bisect--helper.c: static enum bisect_error bisect_start(st=
+ruct bisect_terms *terms, const char **a
+      		strbuf_read_file(&start_head, git_path_bisect_start(), 0);
+    @@ run-command.c: int run_command(struct child_process *cmd)
+
+      ## run-command.h ##
+     @@ run-command.h: struct child_process {
+    + }
+
+      /**
+    -  * The functions: child_process_init, start_command, finish_command,
+    -- * run_command, run_command_v_opt, child_process_clear do the follow=
+ing:
+    -+ * run_command, child_process_clear do the following:
+    +- * The functions: start_command, finish_command, run_command,
+    +- * run_command_v_opt do the following:
+    ++ * The functions: start_command, finish_command, run_command do the =
+following:
+       *
+       * - If a system call failed, errno is set and -1 is returned. A dia=
+gnostic
+       *   is printed.
+    @@ run-command.h: int run_command(struct child_process *);
+     -#define RUN_CLOSE_OBJECT_STORE		(1<<7)
+     -
+     -/**
+    -- * Convenience function that encapsulate a sequence of
+    +- * Convenience function that encapsulates a sequence of
+     - * start_command() followed by finish_command(). The argument argv
+     - * specifies the program and its arguments. The argument opt is zero
+     - * or more of the flags `RUN_COMMAND_NO_STDIN`, `RUN_GIT_CMD`,
+    @@ run-command.h: int run_command(struct child_process *);
+       * Execute the given command, sending "in" to its stdin, and capturi=
+ng its
+       * stdout and stderr in the "out" and "err" strbufs. Any of the thre=
+e may
+
+    + ## sequencer.c ##
+    +@@ sequencer.c: static int error_failed_squash(struct repository *r,
+    +
+    + static int do_exec(struct repository *r, const char *command_line)
+    + {
+    +-	const char *child_argv[] =3D { command_line, NULL };
+    ++	struct child_process cmd =3D CHILD_PROCESS_INIT;
+    + 	int dirty, status;
+    +
+    + 	fprintf(stderr, _("Executing: %s\n"), command_line);
+    +-	status =3D run_command_v_opt(child_argv, RUN_USING_SHELL);
+    ++	cmd.use_shell =3D 1;
+    ++	strvec_push(&cmd.args, command_line);
+    ++	status =3D run_command(&cmd);
+    +
+    + 	/* force re-reading of the cache */
+    + 	if (discard_index(r->index) < 0 || repo_read_index(r) < 0)
+    +
+      ## shell.c ##
+     @@ shell.c: static void cd_to_homedir(void)
+      static void run_shell(void)
+ 9:  59677c9598 <  -:  ---------- run-command: fix return value comment
+=2D-
+2.38.1
