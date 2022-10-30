@@ -2,106 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA3EBECAAA1
-	for <git@archiver.kernel.org>; Sun, 30 Oct 2022 19:24:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9B58C38A02
+	for <git@archiver.kernel.org>; Sun, 30 Oct 2022 19:46:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229636AbiJ3TYA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 30 Oct 2022 15:24:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48750 "EHLO
+        id S229743AbiJ3TqY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 30 Oct 2022 15:46:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbiJ3TX7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Oct 2022 15:23:59 -0400
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F325B1D9
-        for <git@vger.kernel.org>; Sun, 30 Oct 2022 12:23:58 -0700 (PDT)
-Received: by mail-io1-xd2d.google.com with SMTP id y6so5391211iof.9
-        for <git@vger.kernel.org>; Sun, 30 Oct 2022 12:23:58 -0700 (PDT)
+        with ESMTP id S229494AbiJ3TqX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Oct 2022 15:46:23 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CE9E7677
+        for <git@vger.kernel.org>; Sun, 30 Oct 2022 12:46:22 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id d26-20020a05683018fa00b0066ab705617aso5773198otf.13
+        for <git@vger.kernel.org>; Sun, 30 Oct 2022 12:46:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=2NfW4sANLCBfMT4pWbLUUEcAoEUBMVenE0d16iP/dWk=;
-        b=rkGBtxBqxWtzGfdsVZKqNUpBawP+UNb0BDDx9G0T9jFr2UOnAhkY+xFtF+2gDFItLf
-         8UBSukKs/mSpeokjju4yrLxQ7duqr6TLmgdm0/w6AWgGoafCSw5MSoKwAPUPdmfsEQzC
-         Lo04pWeQnoJy0P9iNQV6Tm57ye3GIJvT5f63AxMzqsqKwg/w4V4rdq4eHE31g3VIlVNJ
-         HIEL5qWVvC1jRmT7Tbni1FDqU2bTN0Py7yDCa8DkwgKQ5p/7TdGaZpnNSZVcjsZxG7W2
-         2UnPHHICzzvn64cuUFyrwTez9s38Uw1EKGEVRtb+bld4NSUNlsqYC+vAM+l4ZlYKrp4T
-         /bzg==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=C4mSHX17bSsyrxm8+Wi7jFrWRztGpri2C8VwnKS/kTE=;
+        b=B3I23rhCxy8NKYFbhw/lzaG9ZorNauEZy9JQo4Gf+C8k1W7JwD3iHJ2xNCsnqFsm9g
+         viu7gRqndbRWcWB8qX068rClMzN3pwf34bHtdHlISPf/Pk9iGT2AGP4GkeygVwpOMiWg
+         /Jkqp0azvtt867QKS9I2+52uPLO2Iltvc8in3ztB3aoQBavJuyGiDnnsPAjYgi7z8E1E
+         Ic36LQs7TRVgA2LBTxU1klJ4lvZitTX7X9idNl4n+CLMdmNIcRe12P1IXDStWMBTlqt2
+         wU7rAQkdu2FEZNj88XSWpd68I3GUJ0XKfEASo94Fg7zgIeQ60L667qk6Zzi/+elbz2+m
+         F39g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2NfW4sANLCBfMT4pWbLUUEcAoEUBMVenE0d16iP/dWk=;
-        b=mn5SPHS8SsxnZOh14R4tJrY/TJ843S9G+Zqnd/P2nYpxNG92T5G3cX5wk5MNQdZv25
-         BPDdy9sk86LhWUYlHAgFHSzW46ozYYXd0QphuSvjB7Z/vWl/4puti/o1SsQ1V58a10+i
-         0Mf/IHcp1VKUHoOcDWnLS3us6AAiIhykOx6ecS9QxqL594KD4gJrBtC/xsP6ESPaN7gr
-         5yuCv7sPB5+J7vpisGPEOVkt8f5HKP3MeCWFed4/sn9q7rO+V5o2u+P4RWkr/eeKHAY/
-         +Pmnl9/YyULLcVfrbn62P2DqTWDXjiO9PU7B7fhL3g4BNJay7qzJaCBTQ2y1A53wV5gd
-         S76w==
-X-Gm-Message-State: ACrzQf1Z70iAyg0VvF5qY0eCQBSIEoJdCa92PgEKpU2RrN4DxupuQ7Sk
-        AYqGrUViRpegYPB0qNKkEjHexg==
-X-Google-Smtp-Source: AMsMyM7M4Iba+3JShvO3pz4BYpn2OXIFpziI8rxxuUC9uDtHXg4Sg+uYFd+NgPpBZlFMe2jTEsRaMQ==
-X-Received: by 2002:a05:6602:2d83:b0:6bc:9e73:8fa7 with SMTP id k3-20020a0566022d8300b006bc9e738fa7mr4820467iow.94.1667157837440;
-        Sun, 30 Oct 2022 12:23:57 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d6-20020a926806000000b002f9537986f3sm1803868ilc.24.2022.10.30.12.23.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 30 Oct 2022 12:23:57 -0700 (PDT)
-Date:   Sun, 30 Oct 2022 15:23:55 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     GitList <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
-Subject: Re: [PATCH 1/1] pretty-formats: add hard truncation, without
- ellipsis, options
-Message-ID: <Y17PS/2LgRIJKGoo@nand.local>
-References: <20221030185614.3842-1-philipoakley@iee.email>
- <20221030185614.3842-2-philipoakley@iee.email>
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=C4mSHX17bSsyrxm8+Wi7jFrWRztGpri2C8VwnKS/kTE=;
+        b=DXUhdv3wAnY77nIKptmAFTHpbOU9a8hRjTWyxdGAHpYnUVE5881+Nx3V52f54IzhKt
+         zKngvJzeafap5wnJhoXgjWMcPlYGlX3CmuXh0i2WLpl/Zn9aytKSoUWeftttai/FetxN
+         KpSEfn9/YRJQw/0ULYC/0pj0bMKMJ51STX7Xel6KEjemgdp6cikIkYjqreyd66///81L
+         JjKWKQmttJ5R+hRREWguSLX9jnLX3uVEPba9J55Ghw7wfoHlZ38h2Jo83KajmiH7kRCB
+         jJfpfMYUkUVKF/pbw2YTyYHwUidJ7JSIx7lkcjzdjaoYIVInflU7fZdqwYurY8/5udiD
+         c+9Q==
+X-Gm-Message-State: ACrzQf3BNy+SGqB+um+Mv/rHRK4c7tv45/0dQUYmk7lYjYFgahKm8OlW
+        a9j4U4bkiYzb8W1YqGQIBbYN
+X-Google-Smtp-Source: AMsMyM7JLMhXZbZ3PfCS0d+iuKbvtsM9+QYhQ6KCUq6GWO0Tocw1YzzKNK+YKNkx1uvaeruVTDj+nw==
+X-Received: by 2002:a9d:64c3:0:b0:656:d706:1df with SMTP id n3-20020a9d64c3000000b00656d70601dfmr4680489otl.212.1667159181877;
+        Sun, 30 Oct 2022 12:46:21 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e72:80a0:a899:7648:578c:78af? ([2600:1700:e72:80a0:a899:7648:578c:78af])
+        by smtp.gmail.com with ESMTPSA id k6-20020a056870148600b0011f00b027bdsm2106576oab.45.2022.10.30.12.46.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 30 Oct 2022 12:46:21 -0700 (PDT)
+Message-ID: <58841dcd-e732-416f-5ab0-fd5a5d8de4c7@github.com>
+Date:   Sun, 30 Oct 2022 15:46:20 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20221030185614.3842-2-philipoakley@iee.email>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+Subject: Re: [PATCH 3/5] roaring: teach Git to write roaring bitmaps
+To:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Abhradeep Chakraborty via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Kaartic Sivaram <kaartic.sivaraam@gmail.com>
+References: <pull.1357.git.1663609659.gitgitgadget@gmail.com>
+ <4364224f9bddc8f1e40875ebc540b28225317176.1663609659.git.gitgitgadget@gmail.com>
+ <xmqqczbdl6wl.fsf@gitster.g>
+ <CAPOJW5yxRETdVk014gQYFud9_Nrt+OQGSVNQ8Pw2wDEMMFMm1Q@mail.gmail.com>
+ <CAPOJW5z_ZRChNo8PGBmJu=vvjTL2cYL8oTdVwoDRh-UHt2Dy4w@mail.gmail.com>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <CAPOJW5z_ZRChNo8PGBmJu=vvjTL2cYL8oTdVwoDRh-UHt2Dy4w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Oct 30, 2022 at 06:56:14PM +0000, Philip Oakley wrote:
-> Instead of replacing with "..", replace with the empty string "",
-> having adjusted the padding length calculation.
->
-> Needswork:
-> There are no tests for these pretty formats, before or after
-> this change.
+On 10/30/2022 2:35 AM, Abhradeep Chakraborty wrote:
+> Hello all,
+> 
+> It has been a month since I didn't get involved in any open source
+> contributions (including Git). This is due to the fact that I was
+> focusing more on mastering theories and also that it was a festive
+> month. So, I am now resuming my work. There are many things I have to
+> cover (including this patch series).
+> But before that I want to ask you a question - As you have noticed
+> already, the Roaring library has a lot of styling issues (Moreover it
+> is using C11). So Should I fix all these issues? or Should I make a
+> new library (using Git's compatibility library "git-compat-util.h") by
+> taking CRoaring as a reference? The pros are that it would be easier
+> to format the bitmap library specific files and it can use Git
+> compatible functions.
+> 
+> I would love to hear your opinions. Thanks :)
 
-Hmmph. I see some when searching for l?trunc in
-t4205-log-pretty-formats.sh. Is that coverage not sufficient for the
-existing feature?
+I HAVE OPINIONS! :D
 
-If so, it would be nice to see it bulked up to add coverage where we
-are missing some. Either way, we should make sure the new code is
-covered before continuing.
+Mostly, there are two things I'd like for you to keep in mind:
 
-> @@ -1743,6 +1749,16 @@ static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
->  					    padding - 2, len - (padding - 2),
->  					    "..");
->  			break;
-> +		case trunc_left_hard:
-> +			strbuf_utf8_replace(&local_sb,
-> +					    0, len - (padding),
-> +					    "");
-> +			break;
-> +		case trunc_right_hard:
-> +			strbuf_utf8_replace(&local_sb,
-> +					    padding, len - (padding),
-> +					    "");
-> +			break;
+1. Using the library as-is is a great way to prototype and dig in on
+   the performance measurement side. Can you construct or clone enough
+   interesting repositories to get a feeling of the effect of the
+   roaring format compared to the EWAH format? If there is no benefit
+   to switching, then we can save everyone a lot of work by marking
+   that as an incorrect road. However, if there is sufficient evidence
+   that it's working well, then we have established a baseline that
+   the full implementation should match (at least, if not do better).
 
-If I remember correctly, strbuf_utf8_replace() supports taking NULL as
-its last argument, though upon searching I couldn't find any callers
-that behave that way. Can we use that instead of supplying the empty
-string? If not, should we drop support for the NULL-as-last-argument?
+2. Once deciding to do the work, we can think about the reasons to use
+   the existing library over writing our own. The most basic reason is
+   that the library is extensively tested, so we gain all of those
+   benefits. Can we incorporate their test suite into our own? The
+   next main benefit is that we can take any changes from their version
+   into our code with minimal fuss. How often do you think that they
+   have bug fixes or enhancements in the repo? How would those changes
+   translate into our mailing list workflow? If we restyled the library,
+   then we are unlikely to get easy benefits from taking upstream
+   changes, but we could recreate them with manual effort.
+
+3. After carefully considering the benefits/drawbacks of using the
+   existing library, consider the same for writing one from scratch.
+   The most important thing I will say here is that the core idea is
+   rather simple. There may even be ways that we can take advantage
+   of the format and its data structures with the expectations we have
+   in Git repositories that are not always possible for generic
+   databases. We should be able to build a much smaller library that's
+   limited to our needs and customized to our use case. However, we
+   would need to test it carefully, both for correctness and for
+   performance, and that is not a small undertaking.
+
+Hopefully this gives you something to chew on. Investigating each of
+these directions should help you come to a conclusion that you can
+bring to the community as the expert, then we can examine your
+findings to see if we agree.
+
+Remember that code speaks. If you're willing to build it one way,
+then that concrete implementation is already worth more than a
+hypothetical alternative in many regards. That can be a starting
+point to move forward.
 
 Thanks,
-Taylor
+-Stolee
