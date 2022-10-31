@@ -2,140 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E02C0ECAAA1
-	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 20:51:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86392ECAAA1
+	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 20:52:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230058AbiJaUv3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Oct 2022 16:51:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39588 "EHLO
+        id S230106AbiJaUwC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Oct 2022 16:52:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229870AbiJaUv2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2022 16:51:28 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A8561035
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 13:51:26 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id kt23so32416756ejc.7
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 13:51:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=bRTPjZO5BM9gLG+8HeeiKI3H0/rhguA/E8f5QMogsco=;
-        b=PnyCL55NiftfDXKDeg0TwF99Zyh1PsvO4GpV2cDbALEZk29IS/7AfdHhfDPSb6N8wq
-         1l2Glw6RAee2ZarSGY0R6FagnegIf2/F/eOlN7cwQtvNB07u/dl0UZAeYyFMN0zg8qOG
-         912uI05opyCIbS7nrSUZtmG9MtAJFmwfGK/45R7054B/+qn8U5JJmjmC6qVIcV6xuPwH
-         ByALThEfl0hD9gyhzB4di6V2E6/Yv+ImC7lEGWBCp1FzNEcjBytNR7jyEu9D8OQAvFoA
-         i5NB2iBbI8ecQZewCp+PR2H5tHdeiTJsM0J0QcGQ7KKk6cPTL4b5TdAcsEPli8GG7nWT
-         CFoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bRTPjZO5BM9gLG+8HeeiKI3H0/rhguA/E8f5QMogsco=;
-        b=vDJII9eZtWnETVXqtOorMsV1eApzCpEYJpOGncdSU2nv9kIHKdY/CdepeDY6FIVftE
-         0XppQG5azd3uypXNAwowiRYftbIxBWco/vnSXy84wx2PQ+GS6pgFq7pSTY1wS6yyIQsw
-         0H/M6L+9OCj5+3gygvbkElCSo+S2AVPLJfXAv0fIuF0xTxmWMoVIccT0EjrN0nknDGTv
-         c/1rYAkAlan1UKltVHpwktawacQXyME5JdzGDFY30DZG5EwJjbathj01jrhN39YXvFeS
-         YyA7XE5AjN8yw+Qntl7nRGBMij9lLgl8QUv4W2otuyt7wOyLtxMjtCEMxz6GMyaScAox
-         UHxA==
-X-Gm-Message-State: ACrzQf058qgClplHx99fPDlXxV0WmcWo6TVmJNEfUo4aWDyaVqZgf4uV
-        x/wCVrU626+mW2c19lXNhLk=
-X-Google-Smtp-Source: AMsMyM4wo/4vkzykYAUq5GMb2ZtoYjst2TE65/xkTiBau7QGz1cQMzODIUVx0xVnRNEFR7dmVbHVVQ==
-X-Received: by 2002:a17:907:970b:b0:78d:8d70:e4e8 with SMTP id jg11-20020a170907970b00b0078d8d70e4e8mr14210941ejc.614.1667249485116;
-        Mon, 31 Oct 2022 13:51:25 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id b7-20020a17090630c700b0078df26efb7dsm3378008ejb.107.2022.10.31.13.51.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Oct 2022 13:51:24 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1opbki-00AqGv-0N;
-        Mon, 31 Oct 2022 21:51:24 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] t5516/t5601: avoid using `localhost` for failing
- HTTPS requests
-Date:   Mon, 31 Oct 2022 21:49:55 +0100
-References: <pull.1399.git.1667245638.gitgitgadget@gmail.com>
- <25cc0f6d91a9d23eb1b755e1463d672e4958a4e9.1667245639.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <25cc0f6d91a9d23eb1b755e1463d672e4958a4e9.1667245639.git.gitgitgadget@gmail.com>
-Message-ID: <221031.86v8nz67jn.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229870AbiJaUwA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Oct 2022 16:52:00 -0400
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 307991035
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 13:52:00 -0700 (PDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.nyi.internal (Postfix) with ESMTP id 565D55C00D8
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 16:51:59 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute5.internal (MEProxy); Mon, 31 Oct 2022 16:51:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:message-id:mime-version
+        :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1667249519; x=
+        1667335919; bh=kUQhcYJLOoUlQ8QZafqKSPeah7Hf4KKdKc1RNHTtfmg=; b=Y
+        Xs8LilCbGngPr9lfrriJ8ty1/2RXhMtPvpEe85FPjZt01BNJgSKe2Y+WiGcemSZr
+        /HxDTVJGRUHghsyxLXTZ6bL25UynR7MliV1zMH9e1km/j5JUT3kpQ1l+6B5d0NWT
+        Wc2uHv2T1Oj+2SZgClaNmVGwow1IuF11yQiGJ7JIe+Jz0q01MWdviCs5FlxI/LZD
+        XQ2er/52tRELwG68LsNc+r4cyXVMbPlGfYSTVrnWj/SmCTm8LF4pm7Li3TcdTjaK
+        ft/Ua4ozioTYiicPJ/d4A4G8QhBSaww8VHxI29vRWWi7yRL1xpqk4kv9s0hhwqkB
+        MENFBCYHQVIKTChWw6gyw==
+X-ME-Sender: <xms:bjVgY9PN5Ds7ONxNoQbfJKSEvhJ0K1KwK5O8NbcAZZTh_84_aGHorQ>
+    <xme:bjVgY_9Q0REVXJQUvEEr-tlItvYY5i4RjUOy2xsV4-NcYeeXKfCMk4iswLosaqqcn
+    I_NGJKcAf8b30e8>
+X-ME-Received: <xmr:bjVgY8TuWGnPu8c6bQzvv4I7AaDoO5LQijqF0CjpM5QVLuE5e3fYwLZM9wm6CFh5G_dzUpXOU7UStT7UoaB_MXNVqQQkpBrUJYw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrudefgddugeduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtuggfsehttdertd
+    dtredvnecuhfhrohhmpedflfdrucfrrghulhcutfgvvggufdcuoehprhgvvggusehsihhg
+    khhilhhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtfeelueevffelffehfeetkeeihe
+    fhgeefgeetuddviefhgffggfekiefhtefgjeenucffohhmrghinhepjhhprghulhhrvggv
+    ugdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpehprhgvvggusehsihhgkhhilhhlrdgtohhm
+X-ME-Proxy: <xmx:bzVgY5st9Rq7_lVX908Vex8Q9-7sMTKePOV7v42VBiEgx6HYd7BHIA>
+    <xmx:bzVgY1dxhXIMiEErx8fwTu7miLZortNkucF-nAfsVRqLiL7NNhJ2qw>
+    <xmx:bzVgY10IwBVeriWDazXioaIQwNTHFhHl5FnGYamMz1yyB9jFc8vG-w>
+    <xmx:bzVgY2qy9su4S-5sMNw0QXgNvjGw-bnb8bUhrIZkdjJ6pMYhgunfEQ>
+Feedback-ID: i4ce04002:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Mon, 31 Oct 2022 16:51:58 -0400 (EDT)
+Date:   Mon, 31 Oct 2022 13:51:57 -0700
+From:   "J. Paul Reed" <preed@sigkill.com>
+To:     git@vger.kernel.org
+Subject: Odd git-config behavior
+Message-ID: <Y2A1bdiw6kGC65f/@sigkill.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/2.2.3 (2022-04-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Oct 31 2022, Johannes Schindelin via GitGitGadget wrote:
+Hey all,
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> In 6dcbdc0d6616 (remote: create fetch.credentialsInUrl config,
-> 2022-06-06), we added four test cases that validate various behavior
-> around passing credentials as part of the URL (which is considered
-> unsafe in general).
->
-> These tests do not _actually_ try to connect anywhere, but have to use
-> the https:// protocol in order to validate the intended code paths.
->
-> However, using `localhost` for such a connection causes several
-> problems:
->
-> - There might be a web server running on localhost, and we do not
->   actually want to connect to that.
->
-> - The DNS resolver, or the local firewall, might take a substantial
->   amount of time (or forever, whichever comes first) to fail to connect,
->   slowing down the test cases unnecessarily.
->
-> Let's instead use an IPv4 address that is guaranteed never to offer a
-> web server: 224.0.0.1 (which is part of the IP multicast range).
->
-> Incidentally, this seems to fix an issue where the tests fail in the
-> Windows jobs of Git's CI builds.
-> [...]
-> diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-> index 45f0803ed4d..0b386c74818 100755
-> --- a/t/t5601-clone.sh
-> +++ b/t/t5601-clone.sh
-> @@ -72,19 +72,19 @@ test_expect_success 'clone respects GIT_WORK_TREE' '
->  '
->  
->  test_expect_success LIBCURL 'clone warns or fails when using username:password' '
-> -	message="URL '\''https://username:<redacted>@localhost/'\'' uses plaintext credentials" &&
-> -	test_must_fail git -c transfer.credentialsInUrl=allow clone https://username:password@localhost attempt1 2>err &&
-> +	message="URL '\''https://username:<redacted>@224.0.0.1/'\'' uses plaintext credentials" &&
-> +	test_must_fail git -c transfer.credentialsInUrl=allow clone https://username:password@224.0.0.1 attempt1 2>err &&
->  	! grep "$message" err &&
->  
-> -	test_must_fail git -c transfer.credentialsInUrl=warn clone https://username:password@localhost attempt2 2>err &&
-> +	test_must_fail git -c transfer.credentialsInUrl=warn clone https://username:password@224.0.0.1 attempt2 2>err &&
->  	grep "warning: $message" err >warnings &&
->  	test_line_count = 2 warnings &&
->  
-> -	test_must_fail git -c transfer.credentialsInUrl=die clone https://username:password@localhost attempt3 2>err &&
-> +	test_must_fail git -c transfer.credentialsInUrl=die clone https://username:password@224.0.0.1 attempt3 2>err &&
->  	grep "fatal: $message" err >warnings &&
->  	test_line_count = 1 warnings &&
->  
-> -	test_must_fail git -c transfer.credentialsInUrl=die clone https://username:@localhost attempt3 2>err &&
-> +	test_must_fail git -c transfer.credentialsInUrl=die clone https://username:@224.0.0.1 attempt3 2>err &&
->  	grep "fatal: $message" err >warnings &&
->  	test_line_count = 1 warnings
->  '
+I recently ran into interesting behavior with git-config (which I
+originally thought was a bug).
 
-For this one one at least, it eventually gets around to setting up an
-actual httpd server with cloning etc. from $HTTPD_URL.
+I was converting repos from the deprecated core.fsyncObjectFiles to the new
+core.fsync option suite; I wrote some automation to do that, using
+"git config -l" to detect previously-converted repos.
 
-Can't we just do that for both of these tests rather than the the
-224.0.0.0 hack? I.e. the root cause is that we're cleverly faking a
-not-a-server here, and now we're going to add another somewhat clever
-hack on top.
+But then some weekly repo maintenance automation complained about the
+deprecated fsync option being present in some of the repo configs, even
+though I thought those repos had been converted to the new settings.
 
-but since the test coverage is for https:// anyway, and we have other
-https tests against an actual server...
+I did some digging, and it turns out that "git config -l" was reporting
+nothing (no output) in Git 2.37.4. I did some testing, and found that Git
+2.35.1 correctly reporting the repo's config settings.
+
+Interestingly, the maintenance automation runs fsck and some other things,
+and reports the presence of the deprecated fsync setting (which is what
+made me notice); so that code path does read the config and run (and
+complain about the presence of deprecated settings).
+
+I did a git bisect between 2.35.1 and 2.37.4, and it looks like the
+following commit changes the behavior:
+
+8959555cee7ec045958f9b6dd62e541affb7e7d9 is the first bad commit
+commit 8959555cee7ec045958f9b6dd62e541affb7e7d9
+Author: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date:   Wed Mar 2 12:23:04 2022 +0100
+
+    setup_git_directory(): add an owner check for the top-level directory
+    
+    It poses a security risk to search for a git directory outside of the
+    directories owned by the current user.
+
+    [full commit message clipped]
+
+So... my maintenance automation runs as root, and the repo directories are
+uid/gid'd someone else (though, the config file inside the [bare] repo
+happens to be owned by root)... so I suppose what I'm observing is expected
+behavior?
+
+I guess this leaves me with two questions:
+
+    1. Why does "git config" refuse to run due to this security check, but
+       other git commands ("git fsck," at least) run?
+
+    2. I think it might be useful to warn the user that the behavior they're
+       expecting isn't happening due to this security check, instead of just
+       outputting objectively wrong information (i.e. that no config options
+       exist when they actually do exist); I'd be curious what others think.
+
+best,
+preed
+-- 
+J. Paul Reed
+https://jpaulreed.com
+PGP: 0x41AA0EF1
+
