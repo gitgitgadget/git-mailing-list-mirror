@@ -2,104 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 926CFFA3741
-	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 14:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69EBBFA3741
+	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 14:42:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231602AbiJaOaR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Oct 2022 10:30:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48924 "EHLO
+        id S231589AbiJaOmA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Oct 2022 10:42:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231596AbiJaOaO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2022 10:30:14 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6ED86587
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 07:30:13 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id q9so29965560ejd.0
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 07:30:13 -0700 (PDT)
+        with ESMTP id S231652AbiJaOl6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Oct 2022 10:41:58 -0400
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F137764F
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 07:41:58 -0700 (PDT)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-36cbcda2157so109511867b3.11
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 07:41:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=RN5uQaov/rNuDiBdzIQULpFsII2MCxcp7ei/zy4QLRA=;
-        b=Sq6ixnYDtd+aECTJ+EDBLH8m/7ZhgIEp/PnKXbJbyVdPUtiDMxs1DroleVFYioX4ay
-         ogu8N0yCd5QmC+7bylJ71pvf+4K7q+mR+kQ/Q4y9DQjmIRGtLA2NxeV6bpTOam4UvjXx
-         56MZzyXniGJrFPxiIkOl54LmfEXLTjnTun0XpshO+07gS0lh8GdpBTEZiX39r6lxBSQL
-         W4YYy9oklDjahxoniVGIMZoZqSletWBmvKKJccPPxgBkEONRR8SvQpZ2Kr/cHosheEbg
-         1XZydhKnw9E3zMAHO//GnSt9htQX3Ju6F75kDiB5YJYfvty8+clUp1O4iwBkAHZXiG+/
-         Yhxg==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Rwd+PSZCbh5OuPCUPThC72emtMvZ5RFOe4uEU/O/cDE=;
+        b=jgm9Ryjof4WvGsamP2Ra8NrXz5k4ytEWNsLbyekBQb7huN690WTUyYkOWH8VI+7Wq9
+         jqCGhfZmd+MdQxqmj96yyWPGxjZMMu81BaGElzWiJ0g+6AVtHuMHQ6uUyqgD+WjGRPMy
+         mYUB/k8GEcvAT6IWMa4aLkfWEkipR0huHYhCpofPvmemAe0earmQ/XkAC+iIt8ZOY5GX
+         Cz4mZwVfr5Hrigj449s4nXxZBQIKC1yYzC33wsw1C0YZs1nVzS4GNYnMdwIv04xZhPYm
+         0O44N5a0s8Ab8Rbv6PywRdmveHh0TbmDvwp8knNplG6d+thYkXfxWFEVlD/dX5Ftp/wX
+         9RYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RN5uQaov/rNuDiBdzIQULpFsII2MCxcp7ei/zy4QLRA=;
-        b=yONg0Ppli6NZg8c6xLcdcNSCH41Qv64oVoq/MZTpnrUhyq5mZnGSl9qlNiMxzka+pJ
-         k33iXZQkFgCe9q1JkCzPE5JjE/yZzJzv0J7o352HUkGE+X1jAhc9UoGZI90r3qFyeBG0
-         aPqoCJ+BS4YuVxCcSyv3OQ+kV3zpFAl3WGA7ASygn9tQbelqG060KPbSkPeHEgRobX0c
-         na9IkSlbBPxBAz6gVgqTpZbyr4pNTapcPvHWfvX5QrNnmA900l/Ly1/xReQucE71jFzw
-         MavUWetAseurIvZKfHEUHrEM+lT2WUiNmdeFLFW9B0Cf8ZFSuwVUcOJipVfAkiG1Ot95
-         ZeYQ==
-X-Gm-Message-State: ACrzQf3QPP9qmCJdECZnNMtrfNUeUnmT4CvbWld5A8wHchN0bx/SNi96
-        eV+AIrUD28np4fjM16x5/mTqHIlCMe+6hoLn6+Gxpv/xQvY=
-X-Google-Smtp-Source: AMsMyM7esvEbE3uM0ccFo7etgDIG/jA5L7fSL0nCya4MRg/OeLDfap7b1JaFCzGP2xlYz2wPeXcYzej8xw40M1VrIG4=
-X-Received: by 2002:a17:907:9d03:b0:7ad:e310:ea8 with SMTP id
- kt3-20020a1709079d0300b007ade3100ea8mr1665249ejc.400.1667226612208; Mon, 31
- Oct 2022 07:30:12 -0700 (PDT)
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Rwd+PSZCbh5OuPCUPThC72emtMvZ5RFOe4uEU/O/cDE=;
+        b=FKGQgJuEbDp26Mh/LQLvRlTmSY8Y29fU3XRFNJERQkcQh9kPPbk1KlO2SOgjKmcK0O
+         I59/hZqXlOF0IpM7YV+akv1mJ5nP00SCakToUst7ZqxHuTo9uH4bKziTp2sbRpmO74Ad
+         2tHYrySyyVI1vYmQtRhgSeVJLCxdKlwTPsE/+9xhj+JshR84TZBSBhiETpETw4DsCPeb
+         NArzs7tZIbhyyEcHmI474KT6n4CeiBUFrufzjqK7IioR7uNSXEMXYhLnve0fsm1cPJC9
+         Dne8EGXwFdt2zctkxYdVw5iLNxhkUMh8z5ONwhg8tGPYFZGTKvd9Rv76XRDktA/Egqqi
+         Jjvg==
+X-Gm-Message-State: ACrzQf1Lc4idLXlJTfXibxlM/n+Qs2lTHMF1681zshwICwpK9LIsvXzg
+        Pw9KoSq5mKS5LZs3ZRf9F8bhjFsdImRo1V+VS3k=
+X-Google-Smtp-Source: AMsMyM70QvCRfs03Wary8zc1iDo8PNlSTsuWzGQ+Kv08vuYHwqjZRG1cgHMuVcuuPFw2pwzDcvFH7ajv40md7V7DeHQ=
+X-Received: by 2002:a81:a109:0:b0:367:efbe:e1f0 with SMTP id
+ y9-20020a81a109000000b00367efbee1f0mr13176913ywg.365.1667227317208; Mon, 31
+ Oct 2022 07:41:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <pull.1357.git.1663609659.gitgitgadget@gmail.com>
- <4364224f9bddc8f1e40875ebc540b28225317176.1663609659.git.gitgitgadget@gmail.com>
- <xmqqczbdl6wl.fsf@gitster.g> <CAPOJW5yxRETdVk014gQYFud9_Nrt+OQGSVNQ8Pw2wDEMMFMm1Q@mail.gmail.com>
- <CAPOJW5z_ZRChNo8PGBmJu=vvjTL2cYL8oTdVwoDRh-UHt2Dy4w@mail.gmail.com> <58841dcd-e732-416f-5ab0-fd5a5d8de4c7@github.com>
-In-Reply-To: <58841dcd-e732-416f-5ab0-fd5a5d8de4c7@github.com>
-From:   Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>
-Date:   Mon, 31 Oct 2022 20:00:00 +0530
-Message-ID: <CAPOJW5yEa9MZBPFRiKbaQXw3cv7NM6i4sbVh35CVhZ4JN_q8gw@mail.gmail.com>
-Subject: Re: [PATCH 3/5] roaring: teach Git to write roaring bitmaps
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Abhradeep Chakraborty via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaram <kaartic.sivaraam@gmail.com>
+References: <CA+PPyiE=baAoVkrghE5GQMt984AcaL=XBAQRsVRbN8w7jQA+ig@mail.gmail.com>
+ <CA+CkUQ_pqQomaA=MO78PsC0oA8GcE0dJ415fpjcLx6k5HNaDiw@mail.gmail.com> <CAOLTT8QygkMyjFqxsOo8fqh3yWE3najwv+Y8ekr8MP9d_+dotg@mail.gmail.com>
+In-Reply-To: <CAOLTT8QygkMyjFqxsOo8fqh3yWE3najwv+Y8ekr8MP9d_+dotg@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 31 Oct 2022 15:41:45 +0100
+Message-ID: <CAP8UFD2skja6kE+w1vPewueQ2wzEck61wiZMftUyA+q=JZ+SMA@mail.gmail.com>
+Subject: Re: [OUTREACHY V2] Unify ref-filter formats with other --pretty formats[proposal]
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     Hariom verma <hariom18599@gmail.com>,
+        NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>,
+        git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 31, 2022 at 1:16 AM Derrick Stolee <derrickstolee@github.com> wrote:
->
-> On 10/30/2022 2:35 AM, Abhradeep Chakraborty wrote:
-> > Hello all,
-> >
-> > It has been a month since I didn't get involved in any open source
-> > contributions (including Git). This is due to the fact that I was
-> > focusing more on mastering theories and also that it was a festive
-> > month. So, I am now resuming my work. There are many things I have to
-> > cover (including this patch series).
-> > But before that I want to ask you a question - As you have noticed
-> > already, the Roaring library has a lot of styling issues (Moreover it
-> > is using C11). So Should I fix all these issues? or Should I make a
-> > new library (using Git's compatibility library "git-compat-util.h") by
-> > taking CRoaring as a reference? The pros are that it would be easier
-> > to format the bitmap library specific files and it can use Git
-> > compatible functions.
-> >
-> > I would love to hear your opinions. Thanks :)
->
-> I HAVE OPINIONS! :D
->
-> Mostly, there are two things I'd like for you to keep in mind:
->
-> 1. Using the library as-is is a great way to prototype and dig in on
->    the performance measurement side. Can you construct or clone enough
->    interesting repositories to get a feeling of the effect of the
->    roaring format compared to the EWAH format? If there is no benefit
->    to switching, then we can save everyone a lot of work by marking
->    that as an incorrect road. However, if there is sufficient evidence
->    that it's working well, then we have established a baseline that
->    the full implementation should match (at least, if not do better).
+Hi ZheNing and Wilberforce,
 
-Got it. Yeah, I can do it.
+On Mon, Oct 31, 2022 at 3:26 PM ZheNing Hu <adlternative@gmail.com> wrote:
+> Hariom verma <hariom18599@gmail.com> =E4=BA=8E2022=E5=B9=B410=E6=9C=8828=
+=E6=97=A5=E5=91=A8=E4=BA=94 16:08=E5=86=99=E9=81=93=EF=BC=9A
 
-Now I am very much clear about how to proceed with it ;-)
-Thanks for your reply!!
+> > > Olga<olyatelezhnaya@gmail.com> has done great work in =E2=80=9CUnifyi=
+ng Git=E2=80=99s
+> > > format languages=E2=80=9D during Outreachy Round 15 and continued eve=
+n after
+> > > that [from 28-09-2017 to 04-04-2019]. Her work is mostly related to
+> > > `cat-file` and `ref-filter`.
+> > >
+> > > She already did a pretty nice job in preparing ref-filter for more
+> > > general usage of its formatting logic. It will give me the possibilit=
+y
+> > > to make the migration of pretty.c easier.
+> >
+> > ZheNing Hu continued the Olga's work during GSoC'21. You can tell a
+> > bit more about that too.
+>
+> I'm afraid I'm skeptical about the progress of this project. Yes, this
+> project has
+> been going on for too long, probably 3 years, and it is long overdue
+> to be merged
+> into master. Maybe we all need to rethink the nature of this project inst=
+ead of
+> rushing to start writing code.
+>
+> As far as I know, these unified format refactor are easy to implement, bu=
+t as we
+> use more complex parsing logic, there will be a lot of performance degrad=
+ation.
+>
+> I recommend new contributors to perform performance analysis and performa=
+nce
+> optimization directly based on the original developer's patches.
+
+Yeah, I agree that the project to use ref-filter formats in cat-file
+is very hard due to performance issues, and I think we shouldn't
+suggest it anymore as a project to GSoC or Outreachy applicants.
+
+The project we are proposing for Outreachy, and that Wilberforce is
+writing a proposal for, is about unifying "ref-filter formats" with
+"pretty formats" though. So there is no need to touch cat-file code as
+"pretty formats" are not used there. Actually it might not even be
+needed to mention using ref-filter formats in cat-file (and the
+related work made by Olga and ZheNing on this). It could perhaps help
+with understanding the big picture, but that's it.
+
+Thanks,
+Christian.
