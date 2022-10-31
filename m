@@ -2,66 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A3B8EECAAA1
-	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 23:45:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A42C3FA3744
+	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 23:47:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229648AbiJaXp3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Oct 2022 19:45:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37852 "EHLO
+        id S229629AbiJaXrB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Oct 2022 19:47:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229561AbiJaXp1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2022 19:45:27 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1748EE02C
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 16:45:25 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id kt23so33249913ejc.7
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 16:45:24 -0700 (PDT)
+        with ESMTP id S229528AbiJaXq7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Oct 2022 19:46:59 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FF47E08C
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 16:46:58 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id f5so11762242ejc.5
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 16:46:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=So5A5Bxuin7ReGDZj9LrespN4IJIXgAhOTgt8qhsN1Y=;
-        b=eq0e/UiCu/i+yXXS4bB4iD5YTEsbZpN621EQAsR7sBdFYFjDtlFsw0f0LAdFIHjEIx
-         zg4D+WTeegCBXZd41SmbRfOrywpLt4xkVbuN80rMixsoL0BgVL1wloN/vv5ya6vCrA1T
-         knHZkoWjS9E/BSHjZi1wHMn/x4Bl34TB3mYXVPJ0UHDl7RXJwef0MFIcm/7KaMl/3IFD
-         riE8KZZubjhXqilr/0AanelwsNJ1ghlIozfKti4xlrRoJIDVojsO15KrJWh+H15qFZQ4
-         9sIXv7MNUSdLfe2Rnk2CFx9sfweqyaSB/X9ZDHNl6ZTmy/OVaFPtTy+nD6J+Rf0ua284
-         ivpg==
+        bh=qTAOpTOuRJXHhd375phd5Gpt5qIqu6dIGjky922xg/E=;
+        b=I5Ty5tpBYMdT5moEIRH2bYEScAMwp5kbxAJlsaYlU80qBlM073BWrJ7qKkY64GdI5Z
+         jvzyb2gTnXOsxz8zlGrllYNsjHC4E0C8qnBarecVgCQ0PffWRkZTccREcmcBL+1sQr36
+         8Nl8hKaRJ+cxfbFfpgk0fEVnq/eO5qd51rPbLTJCUPWLKBTWU72X4+QFm7zeH7AqNK52
+         xVmDThOs0EZT0x5v4Mgby73ITCcBN3woag/YSQJfaQkuFfty5r7/RsDnvhvg180/fAEF
+         Z9ZNPcE8/6lFfDuzumHz6dGJL4BfjCdAvrnPJaJ0OYHqVr5JEfQQwpEeVkvRht9d92jG
+         ij8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=So5A5Bxuin7ReGDZj9LrespN4IJIXgAhOTgt8qhsN1Y=;
-        b=e+zkZTKKzEhh6k2WYFRjLmnLqLuHF/R1Y6QRl3C4DuZElA9WrggPVH0kD8NKoQ6fJR
-         SsdE4J5k+5x4VbDM7CgPyUauvLSvKYTowWQCcpdOV7C70Ce5nVrrhF7cLCK3F9yXeYvo
-         5kg934NT9a+Cqs6Vp1ebaAMt1dME8iCUc1jSAMB9R2MP97oqON7zU/rSiHmNNUOLFxZy
-         A52FUidX9JlPdfjj+vZRxoGDD8jtZgQYgiBeyUbQkXP7WHZjW+K92nqnNmKl5zvpM7EM
-         FKi6zPnUvOkP8pQ+ALRB91Dv5uYU/kBDNd7ei6clpZXoFyHGd8pnfPUWWYtPYnCDTkaZ
-         iJEA==
-X-Gm-Message-State: ACrzQf3t7pi0cM95n4X2hjtZTxvnvYTILhl9+owRDcLYX+JkbuOnQJ5Y
-        qng2kx5dx6D1w1pA8WH0SURO6UUh/GqH0w==
-X-Google-Smtp-Source: AMsMyM7Z2RJgIxE3YEfGq6nvU6ettuNicNCE8YxnUb1gptnnwPMRWn3XakfYlLzOPDvxNPKIhKy6lQ==
-X-Received: by 2002:a17:907:845:b0:731:2f6c:6dbd with SMTP id ww5-20020a170907084500b007312f6c6dbdmr15356432ejb.551.1667259923373;
-        Mon, 31 Oct 2022 16:45:23 -0700 (PDT)
+        bh=qTAOpTOuRJXHhd375phd5Gpt5qIqu6dIGjky922xg/E=;
+        b=BYaITnrlaXpXR8dHbN742J8YYJWEki5I6L5W4d4vDrIHkwhekepR0TV2AdbNqzgv96
+         mLZ6oaR9SaM5WL1F3XZZ/MhtAEl3bYw/OtGN4w4Y8gd5cNwgoBfAC7G6M9ySjsDPjwWI
+         q4NFsPAtcvA422V//8Zp7pW3K1en9DwHNaIa7ULc+PRdjl7G9p+P/ozirT07/OTPNrPA
+         iyLedVV0c1FAGs+YjtT9D+308tj+9L4LpzT7U8IqYAA/DG4rdcYQ5qGJKf1T1Zo0acxZ
+         Sxue1XXexmJWjePmDOMA4aE6pFV+6+9ulrAL9dbrwDFsvf+v5QkfnbgWc+a9HI7B/7h8
+         AZOw==
+X-Gm-Message-State: ACrzQf1aUSLFFCYDrgHeyrOOqJx9W9aI9UgaoxKcrsiqS7g05yPBjJre
+        sp45CXA56fuJ50kT1jg0wDglaBiZaiB8fQ==
+X-Google-Smtp-Source: AMsMyM4Hw8g10gGvpQo84btvZIJSOfBT3oJV0KbuBFTi6qZgmkWGPw0DLqyWzyUFeogoZCGlfCPkOQ==
+X-Received: by 2002:a17:907:97d5:b0:7ac:5f72:6c1a with SMTP id js21-20020a17090797d500b007ac5f726c1amr15336426ejc.126.1667260017150;
+        Mon, 31 Oct 2022 16:46:57 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id t6-20020a1709063e4600b007abaff3a97asm3490230eji.221.2022.10.31.16.45.22
+        by smtp.gmail.com with ESMTPSA id lb15-20020a170907784f00b0078d22b0bcf2sm3452055ejc.168.2022.10.31.16.46.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Oct 2022 16:45:22 -0700 (PDT)
+        Mon, 31 Oct 2022 16:46:56 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1opeT4-00Aux0-1J;
-        Tue, 01 Nov 2022 00:45:22 +0100
+        id 1opeUa-00Av21-14;
+        Tue, 01 Nov 2022 00:46:56 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Taylor Blau <me@ttaylorr.com>
 Cc:     git@vger.kernel.org
-Subject: ab/cmake-nix-and-ci (was: What's cooking in git.git (Oct 2022, #09;
- Mon, 31))
-Date:   Tue, 01 Nov 2022 00:44:32 +0100
+Subject: ab/make-bin-wrappers (was: What's cooking in git.git (Oct 2022,
+ #09; Mon, 31))
+Date:   Tue, 01 Nov 2022 00:45:24 +0100
 References: <Y19dnb2M+yObnftj@nand.local>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
 In-reply-to: <Y19dnb2M+yObnftj@nand.local>
-Message-ID: <221101.86r0yn5zhp.gmgdl@evledraar.gmail.com>
+Message-ID: <221101.86mt9b5zf3.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -71,22 +71,16 @@ X-Mailing-List: git@vger.kernel.org
 
 On Mon, Oct 31 2022, Taylor Blau wrote:
 
-> * ab/cmake-nix-and-ci (2022-10-30) 11 commits
->  - CI: add a "linux-cmake-test" to run cmake & ctest on linux
->  - cmake: copy over git-p4.py for t983[56] perforce test
->  - cmake: support GIT_TEST_OPTS, abstract away WIN32 defaults
->  - Makefile + cmake: use environment, not GIT-BUILD-DIR
->  - test-lib.sh: support a "GIT_TEST_BUILD_DIR"
->  - cmake: set "USE_LIBPCRE2" in "GIT-BUILD-OPTIONS" for test-lib.sh
->  - cmake & test-lib.sh: add a $GIT_SOURCE_DIR variable
->  - cmake: chmod +x the bin-wrappers/* & SCRIPT_{SH,PERL} & git-p4
->  - cmake: don't copy chainlint.pl to build directory
->  - cmake: update instructions for portable CMakeLists.txt
->  - cmake: don't "mkdir -p" and "cd" in build instructions
+> * ab/make-bin-wrappers (2022-10-30) 3 commits
+>  - Makefile: simplify $(test_bindir_programs) rule by splitting it up
+>  - Makefile: define "TEST_{PROGRAM,OBJS}" variables earlier
+>  - Makefile: factor sed-powered '#!/bin/sh' munging into a variable
 >
->  Fix assorted issues with CTest on *nix machines.
+>  Resolve issues with the bin-wrappers/% rules where "make
+>  bin-wrappers/git" would generate the script but not "git" itself.
 >
 >  Waiting for review.
->  source: <cover-v2-00.11-00000000000-20221027T032622Z-avarab@gmail.com>
+>  source: <cover-v2-0.3-00000000000-20221026T143533Z-avarab@gmail.com>
 
-I'll send a v3 of this (currently waiting on CI to finish).
+I've since sent a v3, hopefully addressing outstanding feedback:
+https://lore.kernel.org/git/cover-v3-0.4-00000000000-20221031T222249Z-avarab@gmail.com/
