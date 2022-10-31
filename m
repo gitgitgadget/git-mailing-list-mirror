@@ -2,100 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7E22ECAAA1
-	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 21:56:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C35CECAAA1
+	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 22:28:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229930AbiJaV4l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Oct 2022 17:56:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51366 "EHLO
+        id S229987AbiJaW2q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Oct 2022 18:28:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229477AbiJaV4j (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2022 17:56:39 -0400
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11057140CA
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 14:56:39 -0700 (PDT)
-Received: by mail-io1-xd34.google.com with SMTP id q142so4863068iod.5
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 14:56:39 -0700 (PDT)
+        with ESMTP id S229971AbiJaW2l (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Oct 2022 18:28:41 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D296F3F
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 15:28:39 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id q9so33049951ejd.0
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 15:28:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=kw4rQpTrDaKefmtyfoADlL0AL9nRFsObWs3FX3VCbPo=;
-        b=WZMxE7ARsn4Q9ONCQVNa4xkYPA4pVoVaTdQAZtnmY9fcDP9IUrv17R3aJirFGkxLiS
-         FlagWKbX56MuxfHwU8/QHOLcXr2dVN16BCTamHwNH5OxqmkI+HCPMZ+2KoPhdEje14Tz
-         tRJRmyg+f2xue9ZZzJiZ8YnUs+DwOgWaM7PUehks7vtk7FpG3dNAN6vR6yMMkIIclX7+
-         4VBzDHZK5YxVy4YtXRwo366nmjfKcO3Ejmd+UJSAGAFtVwRcbZLoH42QWCjVvS+lEn4w
-         fyMJkI0xbDHVgnB8PWz35tw317Wp9pToaRC61NtIXOc5kjIFrMe2GqzI80bru0AKyQ+z
-         N1MA==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Z/ZbTOsMY7dk2EtvvoYT6nXK3sjzCn4Zq0CV2l/qkoU=;
+        b=qB8jXYidV0sjVIOyngYM9i13Tbui5FE74v0yu11V3O2M9oT57TLYnWjog49mQIMTjE
+         NQpV3b3ru8GQmREo5GyimnxF0iGc5RsBzOMVuAx0AvcUiv0T+Q5x741/fFic7C8HYja2
+         NXGKmdtsjWTj/Uzzg26GwY/+1qhRLmlzn/lpo8lY53CXvZk1BdpU4Tjhcb6DCFMWs2Ta
+         qanvg+B9sXAxXaiJHMkUigJX06OSjjgAdcJdGhyUkresAyThmD9dwkDfjiehZJ+EBSfD
+         lLB1ltSPmjQw8HZd+4B7K6KHqQnxcCMzY6VVP2bPrLc4LojvTa9irMPZdFCGBVnOuY29
+         lCKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kw4rQpTrDaKefmtyfoADlL0AL9nRFsObWs3FX3VCbPo=;
-        b=A4X0+gOm7eVEyJLxzjRu6VNf/M8PsS/5jXIjKzQbuavt8vghKVDh69cnLunLen5m9k
-         K0l8bXEN43JXNT61c36dA4VEFOtp5LNMgCb9KFgQuE4J3uhOuMnGtGfzxfR8JSm+bh4R
-         tSyspToj2uw3kPERXrJacPI9fGy9BmgmqF9q+yBLdkKVZtFHvGIjiIcZW/GYTnSMngYk
-         bj5Ai8fs/JR/mWEQ4tiUQodJJDuMsBrm37BbGHlIhDnKQEjMjnZjuouDn2vSdTtn/WiF
-         xrmtqCyOFml5RHBfixuoR8vOFpr9ei261wXijOdpsug96fgKYA40XLwcyDJDb0XoLPwP
-         WG3w==
-X-Gm-Message-State: ACrzQf1nUh3Rm8+2Tk3toOZHY7N8ql/bzp1qUein43i7UfbVDeux9gw8
-        r+R7n6Q+zwrfz2NwH/+ehqNtukv8LQxbrCp9
-X-Google-Smtp-Source: AMsMyM5295Z7IrkLRfWIcDAxe9KAkWLVs5Ag0rYgO1vgOSnM+86yVw6acc9/YAGzeuI2aavfBOtwkA==
-X-Received: by 2002:a02:a04f:0:b0:375:444e:3dc0 with SMTP id f15-20020a02a04f000000b00375444e3dc0mr8120840jah.142.1667253398402;
-        Mon, 31 Oct 2022 14:56:38 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id p8-20020a92d488000000b002ff9ea02044sm1943068ilg.61.2022.10.31.14.56.37
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Z/ZbTOsMY7dk2EtvvoYT6nXK3sjzCn4Zq0CV2l/qkoU=;
+        b=Kh8h2WHQpTQpCGiFuNvlblu2Qo2z77oVibJFeqaHrXEAzZOs/XPlqH3MK2tsHzrxwI
+         kJiygjBxkBeztHki0BKtW/akXJMAA63TpyLtzGtTwTBeUgoIPIOaZ+J1LH158xVg59kz
+         taur3Y5+rnpjt1+PSA/74jn5CRG06pX8Z0lYcNLXz9xUiIp82YbujgQh2kipwEHlg9Cp
+         A19XqY4px70k1iAejUBe6Jpzey+7aIKFWvRk1TVtmhoRV7nYLSxmn72OYWldhKL8/VEX
+         n7xd25+rLi6j8xiAh8uwb4P98EjrOq/9q2MLMeVc4P4HFEwi/oG0dJP9zW8n8z2ZpjUs
+         MqOg==
+X-Gm-Message-State: ACrzQf3zhnN4wOd2UrcKOZdreRVX94ADRHJzprWk1CzKlpIzN+eqeNK/
+        rXwSTB6oie1MHnc9iG5PdSvL6PjbPbyz3g==
+X-Google-Smtp-Source: AMsMyM4QKbqbgTHbcRW5LOiVmOYIQsD0ucrwDJ+/Bz4XjAYJngIU9334efLzNUoHFhAPn08jWoT0IA==
+X-Received: by 2002:a17:906:9f1b:b0:7ad:c66e:ad7d with SMTP id fy27-20020a1709069f1b00b007adc66ead7dmr9435050ejc.432.1667255317631;
+        Mon, 31 Oct 2022 15:28:37 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id a14-20020a1709066d4e00b00781e7d364ebsm3503668ejt.144.2022.10.31.15.28.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Oct 2022 14:56:38 -0700 (PDT)
-Date:   Mon, 31 Oct 2022 17:56:36 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     man dog <dogman888888@gmail.com>, git@vger.kernel.org
-Subject: Re: Bug report: git -L requires excessive memory.
-Message-ID: <Y2BElOFGJ8JinYxC@nand.local>
-References: <CAFOPqVXz2XwzX8vGU7wLuqb2ZuwTuOFAzBLRM_QPk+NJa=eC-g@mail.gmail.com>
- <20221031214554.GA1714@szeder.dev>
+        Mon, 31 Oct 2022 15:28:37 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 0/4] Makefile: untangle bin-wrappers/% rule complexity
+Date:   Mon, 31 Oct 2022 23:28:05 +0100
+Message-Id: <cover-v3-0.4-00000000000-20221031T222249Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.38.0.1280.g8136eb6fab2
+In-Reply-To: <cover-v2-0.3-00000000000-20221026T143533Z-avarab@gmail.com>
+References: <cover-v2-0.3-00000000000-20221026T143533Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221031214554.GA1714@szeder.dev>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 31, 2022 at 10:45:54PM +0100, SZEDER Gábor wrote:
-> 'line-log.c' contains two "NEEDSWORK leaking like a sieve" comments,
-> but you managed to stumble upon yet another case (those two are in the
-> code path handling merge commits, but your history is linear).
+This series untangles the gnarly rule we use to generate
+bin-wrappers/%.
 
-;-).
+It's now complex because we generate it from 3x separate variables,
+and then end up having to do inline pattern matching to decide which
+value comes from where.
 
-> The patch below plugs this leak.
->
->   ---  >8  ---
->
-> diff --git a/line-log.c b/line-log.c
-> index 51d93310a4..b6ea82ac6b 100644
-> --- a/line-log.c
-> +++ b/line-log.c
-> @@ -1195,6 +1195,9 @@ static int process_ranges_ordinary_commit(struct rev_info *rev, struct commit *c
->  	if (parent)
->  		add_line_range(rev, parent, parent_range);
->  	free_line_log_data(parent_range);
-> +	for (int i = 0; i < queue.nr; i++)
-> +		diff_free_filepair(queue.queue[i]);
-> +	free(queue.queue);
->  	return changed;
->  }
->
->   ---  8<  ---
+Instead, we can avoid squashing those values together, so we don't
+have to guess.
 
-Very nice. I wouldn't be surprised if there are other leaks, in the
-line-log code, but fixing one is good regardless. If you resend with
-your S-o-b, I'd be happy to queue it.
+See[1] for the v2. This hopefully addresses all outstanding
+issues/points that were raised. An added 3/4 here makes the eventual
+4/4 smaler.
 
-Thanks,
-Taylor
+1. https://lore.kernel.org/git/cover-v2-0.3-00000000000-20221026T143533Z-avarab@gmail.com/
+
+Ævar Arnfjörð Bjarmason (4):
+  Makefile: factor sed-powered '#!/bin/sh' munging into a variable
+  Makefile: define "TEST_{PROGRAM,OBJS}" variables earlier
+  Makefile: rename "test_bindir_programs" variable, pre-declare
+  Makefile: simplify $(test_bindir_programs) rule by splitting it up
+
+ Makefile | 70 +++++++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 51 insertions(+), 19 deletions(-)
+
+Range-diff against v2:
+1:  fc6c5a6a8df = 1:  c9ce5b78a3a Makefile: factor sed-powered '#!/bin/sh' munging into a variable
+2:  6dcb49f25c4 = 2:  b95c296b6de Makefile: define "TEST_{PROGRAM,OBJS}" variables earlier
+-:  ----------- > 3:  fea93c45898 Makefile: rename "test_bindir_programs" variable, pre-declare
+3:  400f487e30d ! 4:  0ff09495476 Makefile: simplify $(test_bindir_programs) rule by splitting it up
+    @@ Commit message
+         Which will show an empty diff, i.e. we've correctly dealt with the
+         combination of $(SHELL_PATH), $(X) and these three variables here.
+     
+    -    This also fixes an issue with the "bin-wrappers/" scripts have never had properly declared
+    -    dependency information, i.e. this has never worked:
+    +    This also fixes an issue with the "bin-wrappers/" scripts have never
+    +    had properly declared dependency information, i.e. this has never
+    +    worked:
+     
+                 make clean &&
+                 make bin-wrappers/git &&
+    @@ Commit message
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## Makefile ##
+    -@@ Makefile: export TCL_PATH TCLTK_PATH
+    - PTHREAD_LIBS = -lpthread
+    - 
+    - # Guard against environment variables
+    -+BIN_WRAPPERS =
+    - BUILTIN_OBJS =
+    - BUILT_INS =
+    - COMPAT_CFLAGS =
+     @@ Makefile: GIT-PYTHON-VARS: FORCE
+                  fi
+      endif
+      
+    --test_bindir_programs := $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
+    +-BIN_WRAPPERS = $(patsubst %,bin-wrappers/%,$(BINDIR_PROGRAMS_NEED_X) $(BINDIR_PROGRAMS_NO_X) $(TEST_PROGRAMS_NEED_X))
+     +define cmd_munge_bin_wrappers_script
+     +sed \
+     +	-e $(call cmd_munge_script_sed_shell_path_arg) \
+    @@ Makefile: GIT-PYTHON-VARS: FORCE
+     +	chmod +x $@
+     +endef
+      
+    --all:: $(test_bindir_programs)
+    +-all:: $(BIN_WRAPPERS)
+     +define bin_wrappers_template
+     +
+    -+## bin_wrappers_template
+    -+# 1 = $(1)
+    -+# 2 = $(2)
+    -+# 3 = $(3)
+    -+# 4 = $(4)
+    ++### bin_wrappers_template; Parameters:
+    ++## E.g. "BINDIR_PROGRAMS_NEED_X": Variable reference
+    ++# 1='$(1)'
+    ++## E.g. "$(@F)": Passed as $$(1)) to "cmd_munge_bin_wrappers_script"
+    ++# 2='$(2)'
+    ++## E.g. "" or "t/helper": Directory prefix for the wrapped binary
+    ++# 3='$(3)'
+    ++## E.g. "" or "$$X": If $$X: wrapped binary needs X=.exe (for Windows)
+    ++# 4='$(4)'
+     +BW_$(1) = $$($(1):%=bin-wrappers/%)
+     +BIN_WRAPPERS += $$(BW_$(1))
+    -+all:: $$(BW_$(1))
+     +$$(BW_$(1)): bin-wrappers/% : $(3)%$(4)
+     +$$(BW_$(1)): wrap-for-bin.sh
+     +	$$(call mkdir_p_parent_template)
+    @@ Makefile: GIT-PYTHON-VARS: FORCE
+      
+      # GNU make supports exporting all variables by "export" without parameters.
+      # However, the environment gets quite big, and some programs have problems
+    -@@ Makefile: OTHER_PROGRAMS += $(shell echo *.dll t/helper/*.dll)
+    - endif
+    - 
+    - artifacts-tar:: $(ALL_COMMANDS_TO_INSTALL) $(SCRIPT_LIB) $(OTHER_PROGRAMS) \
+    --		GIT-BUILD-OPTIONS $(TEST_PROGRAMS) $(test_bindir_programs) \
+    -+		GIT-BUILD-OPTIONS $(TEST_PROGRAMS) $(BIN_WRAPPERS) \
+    - 		$(MOFILES)
+    - 	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1) \
+    - 		SHELL_PATH='$(SHELL_PATH_SQ)' PERL_PATH='$(PERL_PATH_SQ)'
+-- 
+2.38.0.1280.g8136eb6fab2
+
