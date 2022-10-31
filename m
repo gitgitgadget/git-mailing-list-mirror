@@ -2,89 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77DA4ECAAA1
-	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 17:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 18CEFECAAA1
+	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 17:07:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231847AbiJaRAj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Oct 2022 13:00:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48758 "EHLO
+        id S231476AbiJaRHS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Oct 2022 13:07:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231267AbiJaRAh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2022 13:00:37 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C89011C3A
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 10:00:37 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id 17so6942597pfv.4
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 10:00:37 -0700 (PDT)
+        with ESMTP id S230337AbiJaRHR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Oct 2022 13:07:17 -0400
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99A9D12AF0
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 10:07:14 -0700 (PDT)
+Received: by mail-pf1-x44a.google.com with SMTP id v1-20020aa78081000000b005636d8a1947so5960399pff.0
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 10:07:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=woRk90ggCn3WpZAvhqRIHAVisoiOdyg/V6mm0BHPDoY=;
-        b=atsc46VUv4wYzUq1VmKyUFnwUog8IcvQ8ck9fcKSqLR6q6dp3qhLnW6OlUOKh7Qd7k
-         9MfpFHZvnmd5xPNsMGwvYjJGCWsqVTMcseiR6nIROgDveWBKW3yOVlKd6CJvyF52P7H0
-         vwfzaKDXqBQSZCJedr+rcqrpXhy2xGSTeQcqvstEwXFMAYyqaaB8jZtJuvCJvtn4dPF+
-         RZLQM5syk2cYUfZD98ccGMmVyVZiJoGYdDoKAVeEQULIA1Opkr/K0ubLinEAsIidpVYi
-         7ScLgQxJYCAQO2ytVn6k/GQpnn5JPdwiXdMDXd5xqYWECDxaCL7z0hrsFj3vpXbbYOmy
-         F6oA==
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=g6C/maCL8zSC+KzPjli+3Q15e2JGdgkdEPQ9Di3oVdY=;
+        b=iMRZBab9eoAe9wm0LwEG0Iw8BXipO8vMOJf4qfQRcAy8U8ymAu1pbXYIZbKZ4ZYQgY
+         eP10gVSSkgB+lmPFmzRv3SnIMN+C1LV8NzufBNXcjqS1jXP4OYvOd3stUDP6sXh4xMXh
+         TsfQPqwaxwWXeO6PuG+bitj6XWXT8zwzO2KhFLZjz6qcbMxiRMApNQL/KoapWajZsnWN
+         50yhjcJpsl7sZoc0vu6+n7u+xpa4gGxC+SUQaIsRavPEt1X8AEgQLnvTrbdYepB1WiuX
+         T5h/khYTy8DfRIKFNAQdbjSQvHGn+LHZBGHO7gVDV8IOYlare+pDQ0N/NK5HC+yddU8p
+         2vAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=woRk90ggCn3WpZAvhqRIHAVisoiOdyg/V6mm0BHPDoY=;
-        b=nBDc9jS968dmObKON5d68nwRCDuCy/oneymFRbbNP7E0G+LsJxQQw18X2S8ZHdyuqz
-         Ah6XmL7LNrnNJ6KqocyiVS+9Z8TfU5BOGzpFRpMsK3Ob/6UJnOXX/nWyeLEnMNzrrQAW
-         okVhrIAsy3+vKpEUcCSjJ+1Fi0p2mOcoTPabHqxw+OmvE3gE36jYUOmLdWMBP9vuO+lQ
-         FyZ1SMfj3DPY0ZpTMc8DDfBxrPbe5wTCqlyjygJgSzi+1Wwsau9wVywtYgE5hsSlAANc
-         QNRxW+QO8r9/pcj1cdsLjMOcDbN/t7HIQn1kqEcPjf+T/mk+s3AdXHPZPhqLdnna+hnf
-         vHQQ==
-X-Gm-Message-State: ACrzQf3chv5oEPHtwJnVbgKkgN451fNIJKGFj1vT7Qt1nmv46/yOHFEu
-        oFNQwqctaEqbNk64y7Xwl/mbOJJOqUIv5WSyZL5EYfXaPLM=
-X-Google-Smtp-Source: AMsMyM6nFPREUuNuUp8Wb29gDC3K2N2CB6qTbUO0bCUADKflSjBiU2m/gs5jhEke9fuaCVTZfK6OTg/O6Vsfcnsvwj8=
-X-Received: by 2002:a05:6a00:150e:b0:56c:83b3:d148 with SMTP id
- q14-20020a056a00150e00b0056c83b3d148mr15537149pfu.48.1667235636880; Mon, 31
- Oct 2022 10:00:36 -0700 (PDT)
-MIME-Version: 1.0
-References: <4D2B0F7C-3ABD-44B0-BDFC-D5960BE261DD@gmail.com> <Y1/7+S78dbtyTZWU@nand.local>
-In-Reply-To: <Y1/7+S78dbtyTZWU@nand.local>
-From:   Luna Jernberg <droidbittin@gmail.com>
-Date:   Mon, 31 Oct 2022 18:00:23 +0100
-Message-ID: <CADo9pHisMqe_2hvJkyLVKfGyKAaV14woOQgvE=Yd7i8vaGGkEQ@mail.gmail.com>
-Subject: Re: Large repos mini virtual meetup
-To:     Taylor Blau <me@ttaylorr.com>,
-        Luna Jernberg <droidbittin@gmail.com>
-Cc:     John Cai <johncai86@gmail.com>, git <git@vger.kernel.org>
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=g6C/maCL8zSC+KzPjli+3Q15e2JGdgkdEPQ9Di3oVdY=;
+        b=cl2de7wTnu6rBZPdgPZELQqyCBX9Lo1yxHT7Y7vNiriBMo32Ahgl7UhF3luAZ1XoAM
+         CE7zVNhszw2UFXr+h0BpJlXPA36LAUUcnO48zJ28HvNQfy+eqh9PqCQqN0EwjSAXvLU/
+         FZzcVyQ5YvKB2hHSbiwb5pJ9soUBewOnYO0JwJhhFaanGGsi8WwVNFxmFZbeIm8mAqVB
+         UzB4fTyhFcB7dA1dnkvQQLRsbg0kUsgLMbJAmQiwymmZ5vJPAHq98lvkaur6Ca+LPF4N
+         BNISULd30WC9bkzAaVFmGqWlBE1FM7ONq0Azj+7lqnhdvxubMuy5enxK9myJ8i4ALU0M
+         W8VQ==
+X-Gm-Message-State: ACrzQf0JJgZGbzNjNeKjGP3qK+YNYTJJof5m+1w0JgLckHb/OwoZmHKl
+        sh54+qIX6O6sfJERjQltfxgCJ2WpCxy20g==
+X-Google-Smtp-Source: AMsMyM4Xyi6/93617vivDQv8Azfzjikvh/TJCQ0Geh6L7Be9psTXmxkQJwgK3pMY3wuPYF3IWDUKmo6H4ltBPQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a65:6404:0:b0:46f:a711:c481 with SMTP id
+ a4-20020a656404000000b0046fa711c481mr8362937pgv.262.1667236034198; Mon, 31
+ Oct 2022 10:07:14 -0700 (PDT)
+Date:   Mon, 31 Oct 2022 10:07:12 -0700
+In-Reply-To: <Y16/AMeVYgERJuj6@nand.local>
+Mime-Version: 1.0
+References: <pull.1321.v2.git.git.1666297238.gitgitgadget@gmail.com>
+ <pull.1321.v3.git.git.1666988096.gitgitgadget@gmail.com> <432bc7cb3a42cf39d0033701c2cc677c9109b3dd.1666988096.git.gitgitgadget@gmail.com>
+ <xmqqmt9fhbjt.fsf@gitster.g> <xmqq7d0jhaw6.fsf@gitster.g> <kl6lbkpvd0de.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <Y16/AMeVYgERJuj6@nand.local>
+Message-ID: <kl6l5yfzdirj.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v3 1/8] clone: teach --detach option
+From:   Glen Choo <chooglen@google.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Don't have time to attend as its on my birthday
+Taylor Blau <me@ttaylorr.com> writes:
 
-On Mon, Oct 31, 2022 at 5:53 PM Taylor Blau <me@ttaylorr.com> wrote:
+> On Fri, Oct 28, 2022 at 03:55:25PM -0700, Glen Choo wrote:
+>> So a better way forward is to add the new flag, which I imagine might
+>> be useful to certain end users.
 >
-> On Mon, Oct 31, 2022 at 11:18:37AM -0400, John Cai wrote:
-> > Hi everyone,
-> >
-> > From our contributor's summit back in September, one theme that
-> > emerged was the work around scaling Git for large repositories. In an
-> > effort to gain shared consciousness around the problem space, surface
-> > opportunities for cross collaboration, and deduplicating current
-> > efforts, I am organizing a mini virtual meetup where we can share
-> > about common problems we're trying to solve in scaling Git for large
-> > repositories.
->
-> Thanks for organizing. This sounds like it will be pretty interesting,
-> and I'm looking forward to it.
->
-> > Anyone is welcome to join! Here are the details:
-> >
-> > Google Meet Link: https://meet.google.com/zid-azpu-apa?hs=122&authuser=0
-> > Google Doc for notes: https://docs.google.com/document/d/18Mh6WokkSb3t7xeLsTdAUrSd8xfxZ4Myc-X25sG8b1Y/edit?usp=meetingnotes
-> > Time: Thursday 2022/11/17 11am-12pm PST / 2-3PM EST / 8-9pm CET
->
-> Added to the Git calendar.
+> Disappointing, though I understand why such a new flag was needed. Do we
+> really care about whether or not the branch exists so long as we are
+> detached from it, though?
+
+Yes.
+
+- With submodule branching, the "main" branch should correspond to the
+  gitlink of the superproject's "main" branch. So when we clone, we
+  can't _already_ have a "main" branch coming from the submodule's
+  remote.
+- Without submodule branching, submodules are always in detached HEAD
+  (e.g. when updating the worktree recursively) and no submodule
+  recursing functions create branches, _except_ "git clone
+  --recurse-submodules" (which as we've seen, may create the branch
+  corresponding to the submodule's remote). This just looks like an
+  oversight IMO, which is why I noted that even without branching, "git
+  clone --recurse-submodules" should probably also use "--detach" [1].
+- Outside of submodules, I can imagine there's at least one person who's
+  performed a clone and then "git branch -D master" (maybe followed by
+  "git checkout -b main"), and "git clone --detach" lets them skip the
+  branch deletion.
+
+[1] https://lore.kernel.org/git/5a24d7e9255de407e343ce8bd60edb63293505bb.1666988096.git.gitgitgadget@gmail.com
+
 >
 > Thanks,
 > Taylor
