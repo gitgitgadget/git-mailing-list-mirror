@@ -2,344 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2861BECAAA1
-	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 20:47:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E02C0ECAAA1
+	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 20:51:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230147AbiJaUrS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Oct 2022 16:47:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37618 "EHLO
+        id S230058AbiJaUv3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Oct 2022 16:51:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230155AbiJaUrP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2022 16:47:15 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D18BB13F1F
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 13:47:13 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id sc25so32378432ejc.12
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 13:47:13 -0700 (PDT)
+        with ESMTP id S229870AbiJaUv2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Oct 2022 16:51:28 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A8561035
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 13:51:26 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id kt23so32416756ejc.7
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 13:51:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TzI7xr2/Ek68x4aoJ0O1VCoQrC78Hwo9TrdTaEDxLaA=;
-        b=M+kNo0AHHUbLmDTMmVs2C1S/LWElKLrLUGtVjNwUI4zV9eau0LdqtUP1D39c7QHemr
-         NOmeCNZZsoPws6Gr2DP/QTWsaODgkM5C97ilpKAbZNsOI8+cCqUcDFzX3e0VDyiNKD9N
-         +O8tWFrryB8cVV6Pp0p9Dyf7hcR5DrB3jd3G2MPlZHLHYB5jSg7Nzepl6AAnBSAo7r+p
-         YVrDYFj7r68E5jSBkEp2vIlNTLSXGTeqiXD2VTHYI5y18HentVumnY18Ucr8Enj3lFD5
-         w0KVJZ8jiSri0nzHQRrxFK8lvWxncNdiaNvByLsmvQoMQb26IhoRLHeFlhR+oHcKwCAF
-         Jllg==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bRTPjZO5BM9gLG+8HeeiKI3H0/rhguA/E8f5QMogsco=;
+        b=PnyCL55NiftfDXKDeg0TwF99Zyh1PsvO4GpV2cDbALEZk29IS/7AfdHhfDPSb6N8wq
+         1l2Glw6RAee2ZarSGY0R6FagnegIf2/F/eOlN7cwQtvNB07u/dl0UZAeYyFMN0zg8qOG
+         912uI05opyCIbS7nrSUZtmG9MtAJFmwfGK/45R7054B/+qn8U5JJmjmC6qVIcV6xuPwH
+         ByALThEfl0hD9gyhzB4di6V2E6/Yv+ImC7lEGWBCp1FzNEcjBytNR7jyEu9D8OQAvFoA
+         i5NB2iBbI8ecQZewCp+PR2H5tHdeiTJsM0J0QcGQ7KKk6cPTL4b5TdAcsEPli8GG7nWT
+         CFoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TzI7xr2/Ek68x4aoJ0O1VCoQrC78Hwo9TrdTaEDxLaA=;
-        b=U1AQxpAEHhGIQV62G4ND/a6/5ogc74t0tM29TP8TZilc6DO3cxI5BtCqqr9vx4IHKn
-         pr4u9mg2Gh4Py6vwGi5DQaGjhE/q1L+GcYZ6LOr5tNie5bS2B7alXlenqPsh9wC9CkXA
-         ZvbA2P69vCn493DYKKuNKu8jxb7YDQM0lFUFovfZRopk+O3ZQPaTgORefpKzkdro8ZU/
-         DZGeMgq0MYQiUhg40gXrj2B+PMifkpjDkCS1xNF0CpMF+S6Yykt4w5tbo+/APE6DaoWn
-         4nkbK0T1ZFd/uULub/a6egDVa6179GOo4fxxvO3aCxG++a3/uxpj7jcpDdP+NK71Lhg7
-         BzKA==
-X-Gm-Message-State: ACrzQf33vRLhxMoZof+IS2UsSZXYD00LJXZzJqZwC/1ynmThjG2FriO5
-        m0IlDK/nmzJLuUU1GwkoJpaZYfcy9J9/8w==
-X-Google-Smtp-Source: AMsMyM53QP6leOsM14pjPz9wVMB1vwj/pvPjy3nTDPuHGaOOF6uA81iEqlByHMRIs27cdaz60sxyDQ==
-X-Received: by 2002:a17:907:5c2:b0:77e:def7:65d8 with SMTP id wg2-20020a17090705c200b0077edef765d8mr15225545ejb.487.1667249232052;
-        Mon, 31 Oct 2022 13:47:12 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id kx1-20020a170907774100b007add62dafb7sm1360304ejc.5.2022.10.31.13.47.11
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bRTPjZO5BM9gLG+8HeeiKI3H0/rhguA/E8f5QMogsco=;
+        b=vDJII9eZtWnETVXqtOorMsV1eApzCpEYJpOGncdSU2nv9kIHKdY/CdepeDY6FIVftE
+         0XppQG5azd3uypXNAwowiRYftbIxBWco/vnSXy84wx2PQ+GS6pgFq7pSTY1wS6yyIQsw
+         0H/M6L+9OCj5+3gygvbkElCSo+S2AVPLJfXAv0fIuF0xTxmWMoVIccT0EjrN0nknDGTv
+         c/1rYAkAlan1UKltVHpwktawacQXyME5JdzGDFY30DZG5EwJjbathj01jrhN39YXvFeS
+         YyA7XE5AjN8yw+Qntl7nRGBMij9lLgl8QUv4W2otuyt7wOyLtxMjtCEMxz6GMyaScAox
+         UHxA==
+X-Gm-Message-State: ACrzQf058qgClplHx99fPDlXxV0WmcWo6TVmJNEfUo4aWDyaVqZgf4uV
+        x/wCVrU626+mW2c19lXNhLk=
+X-Google-Smtp-Source: AMsMyM4wo/4vkzykYAUq5GMb2ZtoYjst2TE65/xkTiBau7QGz1cQMzODIUVx0xVnRNEFR7dmVbHVVQ==
+X-Received: by 2002:a17:907:970b:b0:78d:8d70:e4e8 with SMTP id jg11-20020a170907970b00b0078d8d70e4e8mr14210941ejc.614.1667249485116;
+        Mon, 31 Oct 2022 13:51:25 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id b7-20020a17090630c700b0078df26efb7dsm3378008ejb.107.2022.10.31.13.51.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Oct 2022 13:47:11 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [RFC PATCH] fetch: stop emitting duplicate transfer.credentialsInUrl=warn warnings
-Date:   Mon, 31 Oct 2022 21:47:08 +0100
-Message-Id: <RFC-patch-1.1-0266485bc6c-20221031T204149Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.38.0.1280.g8136eb6fab2
-In-Reply-To: <pull.1399.git.1667245638.gitgitgadget@gmail.com>
+        Mon, 31 Oct 2022 13:51:24 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1opbki-00AqGv-0N;
+        Mon, 31 Oct 2022 21:51:24 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] t5516/t5601: avoid using `localhost` for failing
+ HTTPS requests
+Date:   Mon, 31 Oct 2022 21:49:55 +0100
 References: <pull.1399.git.1667245638.gitgitgadget@gmail.com>
+ <25cc0f6d91a9d23eb1b755e1463d672e4958a4e9.1667245639.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <25cc0f6d91a9d23eb1b755e1463d672e4958a4e9.1667245639.git.gitgitgadget@gmail.com>
+Message-ID: <221031.86v8nz67jn.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Improve on 6dcbdc0d661 (remote: create fetch.credentialsInUrl config,
-2022-06-06) by fixing the cases where we emit duplicate warnings,
-which were:
 
- * In the same process, as we'd get the same "struct remote *"
-   again. We could probably save ourselves more work in those scenarios,
-   but adding a flag to the "struct remote" indicating that we've validated
-   the URLs will fix those issues.
-
- * When we invoke e.g. "git-remote-https" (aka. "git-remote-curl")
-   from "git fetch". For those cases let's pass down the equivalent of a
-   "-c transfer.credentialsInUrl=allow", since we know that we've already
-   inspected our remotes in the parent process.
-
-   See 7390f05a3c6 (fetch: after refetch, encourage auto gc repacking,
-   2022-03-28) for prior use of git_config_push_parameter() for this
-   purpose, i.e. to push config parameters before invoking a
-   sub-process.
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
-
-[Grabbing a quote from
-https://lore.kernel.org/git/98fa5270cb720f2f038c4bb9571c7d306ff5d759.1667245639.git.gitgitgadget@gmail.com/
-for a reply]
+On Mon, Oct 31 2022, Johannes Schindelin via GitGitGadget wrote:
 
 > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> It is unclear as to _why_, but under certain circumstances the warning
-> about credentials being passed as part of the URL seems to be swallowed
-> by the `git remote-https` helper in the Windows jobs of Git's CI builds.
+> In 6dcbdc0d6616 (remote: create fetch.credentialsInUrl config,
+> 2022-06-06), we added four test cases that validate various behavior
+> around passing credentials as part of the URL (which is considered
+> unsafe in general).
+>
+> These tests do not _actually_ try to connect anywhere, but have to use
+> the https:// protocol in order to validate the intended code paths.
+>
+> However, using `localhost` for such a connection causes several
+> problems:
+>
+> - There might be a web server running on localhost, and we do not
+>   actually want to connect to that.
+>
+> - The DNS resolver, or the local firewall, might take a substantial
+>   amount of time (or forever, whichever comes first) to fail to connect,
+>   slowing down the test cases unnecessarily.
+>
+> Let's instead use an IPv4 address that is guaranteed never to offer a
+> web server: 224.0.0.1 (which is part of the IP multicast range).
+>
+> Incidentally, this seems to fix an issue where the tests fail in the
+> Windows jobs of Git's CI builds.
+> [...]
+> diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+> index 45f0803ed4d..0b386c74818 100755
+> --- a/t/t5601-clone.sh
+> +++ b/t/t5601-clone.sh
+> @@ -72,19 +72,19 @@ test_expect_success 'clone respects GIT_WORK_TREE' '
+>  '
+>  
+>  test_expect_success LIBCURL 'clone warns or fails when using username:password' '
+> -	message="URL '\''https://username:<redacted>@localhost/'\'' uses plaintext credentials" &&
+> -	test_must_fail git -c transfer.credentialsInUrl=allow clone https://username:password@localhost attempt1 2>err &&
+> +	message="URL '\''https://username:<redacted>@224.0.0.1/'\'' uses plaintext credentials" &&
+> +	test_must_fail git -c transfer.credentialsInUrl=allow clone https://username:password@224.0.0.1 attempt1 2>err &&
+>  	! grep "$message" err &&
+>  
+> -	test_must_fail git -c transfer.credentialsInUrl=warn clone https://username:password@localhost attempt2 2>err &&
+> +	test_must_fail git -c transfer.credentialsInUrl=warn clone https://username:password@224.0.0.1 attempt2 2>err &&
+>  	grep "warning: $message" err >warnings &&
+>  	test_line_count = 2 warnings &&
+>  
+> -	test_must_fail git -c transfer.credentialsInUrl=die clone https://username:password@localhost attempt3 2>err &&
+> +	test_must_fail git -c transfer.credentialsInUrl=die clone https://username:password@224.0.0.1 attempt3 2>err &&
+>  	grep "fatal: $message" err >warnings &&
+>  	test_line_count = 1 warnings &&
+>  
+> -	test_must_fail git -c transfer.credentialsInUrl=die clone https://username:@localhost attempt3 2>err &&
+> +	test_must_fail git -c transfer.credentialsInUrl=die clone https://username:@224.0.0.1 attempt3 2>err &&
+>  	grep "fatal: $message" err >warnings &&
+>  	test_line_count = 1 warnings
+>  '
 
-I think this should fix the root cause of the issue you're seeing. I
-have a larger local branch to fix various issues with this
-credentialsInUrl facility that I hadn't gotten around to submitting:
+For this one one at least, it eventually gets around to setting up an
+actual httpd server with cloning etc. from $HTTPD_URL.
 
-	https://github.com/git/git/compare/master...avar:avar/fix-cred-in-url-warnings-2
+Can't we just do that for both of these tests rather than the the
+224.0.0.0 hack? I.e. the root cause is that we're cleverly faking a
+not-a-server here, and now we're going to add another somewhat clever
+hack on top.
 
-This is a cherry-pick of 7/* of that (the first were doc changes,
-missing test coverage etc).
-
-> Since it is not actually important how many times Git prints the
-> warning/error message, as long as it prints it at least once, let's just
-> make the test a bit more lenient and test for the latter instead of the
-> former, which works around these CI issues.
-
-That being said your change is obviously smaller, so if we'd prefer
-that in first as a band-aid I'm fine with that.
-
-But I'd really like to object to the "it is not actually important how
-many...", it's crappy UX to spew duplicate output at the user, and we
-should avoid it.
-
-So it does matter, and we get it wrong not just in this but also some
-other cases.
-
- builtin/clone.c       |  5 +++-
- builtin/fetch.c       |  4 ++++
- builtin/push.c        |  6 ++++-
- remote.c              | 53 ++++++++++++++++++++++++++++++++-----------
- remote.h              | 14 ++++++++++++
- t/t5516-fetch-push.sh |  2 +-
- t/t5601-clone.sh      |  2 +-
- 7 files changed, 69 insertions(+), 17 deletions(-)
-
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 547d6464b3c..da219b74e43 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -903,12 +903,15 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	int err = 0, complete_refs_before_fetch = 1;
- 	int submodule_progress;
- 	int filter_submodules = 0;
--
-+	enum credentials_in_url cred_in_url_cfg = get_credentials_in_url();
- 	struct transport_ls_refs_options transport_ls_refs_options =
- 		TRANSPORT_LS_REFS_OPTIONS_INIT;
- 
- 	packet_trace_identity("clone");
- 
-+	if (cred_in_url_cfg == CRED_IN_URL_WARN)
-+		git_config_push_parameter("transfer.credentialsInUrl=allow");
-+
- 	git_config(git_clone_config, NULL);
- 
- 	argc = parse_options(argc, argv, prefix, builtin_clone_options,
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b06e454cbdd..34a10e1927f 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -2110,9 +2110,13 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 	struct remote *remote = NULL;
- 	int result = 0;
- 	int prune_tags_ok = 1;
-+	enum credentials_in_url cred_in_url_cfg = get_credentials_in_url();
- 
- 	packet_trace_identity("fetch");
- 
-+	if (cred_in_url_cfg == CRED_IN_URL_WARN)
-+		git_config_push_parameter("transfer.credentialsInUrl=allow");
-+
- 	/* Record the command line for the reflog */
- 	strbuf_addstr(&default_rla, "fetch");
- 	for (i = 1; i < argc; i++) {
-diff --git a/builtin/push.c b/builtin/push.c
-index f0329c62a2d..a4890b1586d 100644
---- a/builtin/push.c
-+++ b/builtin/push.c
-@@ -576,7 +576,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 	struct string_list *push_options;
- 	const struct string_list_item *item;
- 	struct remote *remote;
--
-+	enum credentials_in_url cred_in_url_cfg = get_credentials_in_url();
- 	struct option options[] = {
- 		OPT__VERBOSITY(&verbosity),
- 		OPT_STRING( 0 , "repo", &repo, N_("repository"), N_("repository")),
-@@ -619,6 +619,10 @@ int cmd_push(int argc, const char **argv, const char *prefix)
- 	};
- 
- 	packet_trace_identity("push");
-+
-+	if (cred_in_url_cfg == CRED_IN_URL_WARN)
-+		git_config_push_parameter("transfer.credentialsInUrl=allow");
-+
- 	git_config(git_push_config, &flags);
- 	argc = parse_options(argc, argv, prefix, options, push_usage, 0);
- 	push_options = (push_options_cmdline.nr
-diff --git a/remote.c b/remote.c
-index 60869beebe7..a35da349629 100644
---- a/remote.c
-+++ b/remote.c
-@@ -615,24 +615,42 @@ const char *remote_ref_for_branch(struct branch *branch, int for_push)
- 	return NULL;
- }
- 
--static void validate_remote_url(struct remote *remote)
-+static enum credentials_in_url cred_in_url = CRED_IN_URL_UNKNOWN;
-+enum credentials_in_url get_credentials_in_url(void)
- {
--	int i;
-+	enum credentials_in_url new = CRED_IN_URL_ALLOW;
- 	const char *value;
--	struct strbuf redacted = STRBUF_INIT;
--	int warn_not_die;
-+
-+	if (cred_in_url != CRED_IN_URL_UNKNOWN)
-+		return cred_in_url;
- 
- 	if (git_config_get_string_tmp("transfer.credentialsinurl", &value))
--		return;
-+		goto done;
- 
- 	if (!strcmp("warn", value))
--		warn_not_die = 1;
-+		new = CRED_IN_URL_WARN;
- 	else if (!strcmp("die", value))
--		warn_not_die = 0;
-+		new = CRED_IN_URL_DIE;
- 	else if (!strcmp("allow", value))
--		return;
-+		goto done;
- 	else
--		die(_("unrecognized value transfer.credentialsInUrl: '%s'"), value);
-+		die(_("unrecognized value transfer.credentialsInURL: '%s'"), value);
-+
-+done:
-+	cred_in_url = new;
-+	return cred_in_url;
-+}
-+
-+static void validate_remote_url(struct remote *remote)
-+{
-+	int i;
-+	struct strbuf redacted = STRBUF_INIT;
-+	enum credentials_in_url cfg = get_credentials_in_url();
-+
-+	if (remote->validated_urls)
-+		goto done;
-+	if (cfg == CRED_IN_URL_ALLOW)
-+		goto done;
- 
- 	for (i = 0; i < remote->url_nr; i++) {
- 		struct url_info url_info = { 0 };
-@@ -647,16 +665,25 @@ static void validate_remote_url(struct remote *remote)
- 		strbuf_addstr(&redacted,
- 			      url_info.url + url_info.passwd_off + url_info.passwd_len);
- 
--		if (warn_not_die)
-+		switch (cfg) {
-+		case CRED_IN_URL_WARN:
- 			warning(_("URL '%s' uses plaintext credentials"), redacted.buf);
--		else
-+			break;
-+		case CRED_IN_URL_DIE:
- 			die(_("URL '%s' uses plaintext credentials"), redacted.buf);
--
--loop_cleanup:
-+			break;
-+		case CRED_IN_URL_ALLOW:
-+		case CRED_IN_URL_UNKNOWN:
-+			BUG("unreachable");
-+			break;
-+		}
-+	loop_cleanup:
- 		free(url_info.url);
- 	}
- 
- 	strbuf_release(&redacted);
-+done:
-+	remote->validated_urls = 1;
- }
- 
- static struct remote *
-diff --git a/remote.h b/remote.h
-index 1c4621b414b..5a2da13b4cb 100644
---- a/remote.h
-+++ b/remote.h
-@@ -98,6 +98,8 @@ struct remote {
- 	int prune;
- 	int prune_tags;
- 
-+	int validated_urls;
-+
- 	/**
- 	 * The configured helper programs to run on the remote side, for
- 	 * Git-native protocols.
-@@ -445,4 +447,16 @@ void apply_push_cas(struct push_cas_option *, struct remote *, struct ref *);
- char *relative_url(const char *remote_url, const char *url,
- 		   const char *up_path);
- 
-+enum credentials_in_url {
-+	CRED_IN_URL_UNKNOWN,
-+	CRED_IN_URL_ALLOW,
-+	CRED_IN_URL_WARN,
-+	CRED_IN_URL_DIE,
-+};
-+
-+/**
-+ * Get the transfer.credentialsInUrl config setting as an "enum
-+ * credentials_in_url".
-+ */
-+enum credentials_in_url get_credentials_in_url(void);
- #endif
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 79dc470c014..d01f5cd349f 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1860,7 +1860,7 @@ test_expect_success LIBCURL 'fetch warns or fails when using username:password'
- 
- 	test_must_fail git -c transfer.credentialsInUrl=warn fetch https://username:password@localhost 2>err &&
- 	grep "warning: $message" err >warnings &&
--	test_line_count = 3 warnings &&
-+	test_line_count = 1 warnings &&
- 
- 	test_must_fail git -c transfer.credentialsInUrl=die fetch https://username:password@localhost 2>err &&
- 	grep "fatal: $message" err >warnings &&
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 45f0803ed4d..37adfd9f83b 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -78,7 +78,7 @@ test_expect_success LIBCURL 'clone warns or fails when using username:password'
- 
- 	test_must_fail git -c transfer.credentialsInUrl=warn clone https://username:password@localhost attempt2 2>err &&
- 	grep "warning: $message" err >warnings &&
--	test_line_count = 2 warnings &&
-+	test_line_count = 1 warnings &&
- 
- 	test_must_fail git -c transfer.credentialsInUrl=die clone https://username:password@localhost attempt3 2>err &&
- 	grep "fatal: $message" err >warnings &&
--- 
-2.38.0.1280.g8136eb6fab2
-
+but since the test coverage is for https:// anyway, and we have other
+https tests against an actual server...
