@@ -2,123 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7465ECAAA1
-	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 22:42:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D3F7ECAAA1
+	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 23:20:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229711AbiJaWmN convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 31 Oct 2022 18:42:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53246 "EHLO
+        id S229649AbiJaXUP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Oct 2022 19:20:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229546AbiJaWmM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2022 18:42:12 -0400
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1BD45FE4
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 15:42:11 -0700 (PDT)
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 29VMg7T4069257
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Mon, 31 Oct 2022 18:42:07 -0400 (EDT)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Mark Hills'" <mark@xwax.org>, "'Taylor Blau'" <me@ttaylorr.com>
-Cc:     "=?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
-        <avarab@gmail.com>, <git@vger.kernel.org>,
-        "'Matheus Tavares'" <matheus.bernardino@usp.br>
-References: <2210311614160.25661@stax.localdomain> <221031.86zgdb68p3.gmgdl@evledraar.gmail.com> <Y2Ax5XOgSOOcgo8J@nand.local> <d4db484f-a525-f6db-1bfb-922f788dacd@xwax.org>
-In-Reply-To: <d4db484f-a525-f6db-1bfb-922f788dacd@xwax.org>
-Subject: RE: Consist timestamps within a checkout/clone
-Date:   Mon, 31 Oct 2022 18:42:02 -0400
-Organization: Nexbridge Inc.
-Message-ID: <005e01d8ed7a$020589a0$06109ce0$@nexbridge.com>
+        with ESMTP id S229469AbiJaXUO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Oct 2022 19:20:14 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01F16BC35
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 16:20:12 -0700 (PDT)
+Received: (qmail 3426 invoked by uid 109); 31 Oct 2022 23:20:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 31 Oct 2022 23:20:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16514 invoked by uid 111); 31 Oct 2022 23:20:12 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 31 Oct 2022 19:20:12 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 31 Oct 2022 19:20:11 -0400
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/2] t5516/t5601: avoid using `localhost` for failing
+ HTTPS requests
+Message-ID: <Y2BYKxxkG57XAV/1@coredump.intra.peff.net>
+References: <pull.1399.git.1667245638.gitgitgadget@gmail.com>
+ <25cc0f6d91a9d23eb1b755e1463d672e4958a4e9.1667245639.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQE5LeY8QcVEMy3vCONNDR05zWZotQNAzBDrAUea/T0B/n2Vj680X4pw
-Content-Language: en-ca
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <25cc0f6d91a9d23eb1b755e1463d672e4958a4e9.1667245639.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On October 31, 2022 6:31 PM, Mark Hills wrote:
->On Mon, 31 Oct 2022, Taylor Blau wrote:
->> On Mon, Oct 31, 2022 at 09:21:20PM +0100, Ævar Arnfjörð Bjarmason wrote:
->> > I think you're almost certainly running into the parallel checkout,
->> > which is new in that revision range. Try tweaking checkout.workers
->> > and checkout.thresholdForParallelism (see "man git-config").
->> >
->> > I can't say without looking at the code/Makefile (and even then, I
->> > don't have time to dig here:), but if I had to bet I'd say that your
->> > dependencies have probably always been broken with these checked-in
->> > files, but they happend to work out if they were checked out in
->> > sorted order.
->> >
->> > And now with the parallel checkout they're not guaranteed to do
->> > that, as some workers will "race ahead" and finish in an unpredictable order.
->>
->> Doesn't checkout.thresholdForParallelism only matter when
->> checkout.workers != 1?
->>
->> So what you wrote seems like a reasonable explanation, but only if the
->> original reporter set checkout.workers to imply the non-sequential
->> behavior in the first place.
->>
->> That said...
->>
->>   - I also don't know off-hand of a place where we've defined the order
->>     where Git will checkout files in the working copy. So depending on
->>     that behavior isn't a safe thing to do.
->>
->>   - Committing build artifacts into your repository is generally
->>     discouraged.
->
->If it's undefined and never implemented this is reasonable.
->
->But "generally" is a caveat, so while I agree with the statement it also implies
->there's valid cases outside of that. Ones which used to work, too.
->
->Here are some useful cases I have seen for the combination of build rule +
->checked in file:
->
->- part of a build requires licensed software that's not always available
->
->- part of the build requires large memory that other builders generally do
->  not have available
->
->- part of the build process uses a different platform or some other system
->  requirement
->
->- to fetch data eg. from a URL, with a record of the URL/automation but
->  also a copy of the file as a record and for offline use
->
->So it's useful, to retain repeatable automation but not always build from square
->one.
->
->Generally discouraged to check in build results yes, but I've found it very practical.
->
->> So while I'd guess that setting `checkout.workers` back to "1" (if it
->> wasn't already) will probably restore the existing behavior, counting
->> on that behavior in the first place is wrong.
->
->I think perhaps the tail is wagging the dog here, though.
->
->It's 'wrong' because it doesn't work; but I haven't seen anything to make me think
->this is fundamentally or theoretically flawed.
->
->If we had a transactional file system we'd reasonably expect a checkout to be an
->atomic operation -- same timestamp on the files created in that step. A
->discrepancy in timestamps would be considered incorrect; it would imply an 'order'
->to the checkout which, as you say, is order-less.
->
->Sowhat could be the bad outcomes if Git created files stamped with the point in
->time of the "git checkout"?
+On Mon, Oct 31, 2022 at 07:47:17PM +0000, Johannes Schindelin via GitGitGadget wrote:
 
-Timestamps are written based on when git modifies the file in the working directory. This actually ensures that automation does work. If intermediate contents are checked into repositories (I have people who do this for very justifiable regulatory reasons), the build has to make sure that there are appropriate separations of timestamps (a.k.a. 1 second) at a minimum on UNIX-ish systems. On some other boxes that do not even have timestamps for files (you know who you are) this is moot.
+> In 6dcbdc0d6616 (remote: create fetch.credentialsInUrl config,
+> 2022-06-06), we added four test cases that validate various behavior
+> around passing credentials as part of the URL (which is considered
+> unsafe in general).
+> 
+> These tests do not _actually_ try to connect anywhere, but have to use
+> the https:// protocol in order to validate the intended code paths.
 
-However, there is a use case for maintaining timestamps - specifically for debuggers that check timestamps of source files. It is a big pain to make this work in git - but I script around this by setting the timestamps of files to the commit time when doing release builds, and allowing users to set the timestamp to the same for debugging. It helps but should not change the semantics of dev builds.
+By "actually" here, I assume you mean "they do not expect to succeed".
+But I think the first one (with credentialsInUrl=allow), does try to
+make a connection.
 
--Randall
+> However, using `localhost` for such a connection causes several
+> problems:
+> 
+> - There might be a web server running on localhost, and we do not
+>   actually want to connect to that.
+> 
+> - The DNS resolver, or the local firewall, might take a substantial
+>   amount of time (or forever, whichever comes first) to fail to connect,
+>   slowing down the test cases unnecessarily.
 
+Right. I think we assume that DNS resolution of localhost is fast-ish,
+as we use it in other https tests. But I could certainly imagine a local
+firewall causing issues (especially as this is real port 443, whereas
+our other tests are usually high ports).
+
+> Let's instead use an IPv4 address that is guaranteed never to offer a
+> web server: 224.0.0.1 (which is part of the IP multicast range).
+
+This feels pretty magical. I think it would be pretty unlikely for it to
+have a web server, but I wouldn't be surprised if there are systems
+where we get similar IP-routing hangs.
+
+Is there a reason not to move all of these tests into t5550 or t5551,
+where we have a real http server? That would be less magical, and then
+this first test:
+
+>  test_expect_success LIBCURL 'fetch warns or fails when using username:password' '
+> -	message="URL '\''https://username:<redacted>@localhost/'\'' uses plaintext credentials" &&
+> -	test_must_fail git -c transfer.credentialsInUrl=allow fetch https://username:password@localhost 2>err &&
+> +	message="URL '\''https://username:<redacted>@224.0.0.1/'\'' uses plaintext credentials" &&
+> +	test_must_fail git -c transfer.credentialsInUrl=allow fetch https://username:password@224.0.0.1 2>err &&
+>  	! grep "$message" err &&
+
+could be more robust. It would actually check that we succeeded in using
+the URL.
+
+-Peff
