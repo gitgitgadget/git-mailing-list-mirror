@@ -2,103 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75E24ECAAA1
-	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 16:06:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3AE9ECAAA1
+	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 16:46:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231776AbiJaQGg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Oct 2022 12:06:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37300 "EHLO
+        id S231665AbiJaQq4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Oct 2022 12:46:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231235AbiJaQGf (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2022 12:06:35 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06DCDC78
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 09:06:34 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id l6so10798211pjj.0
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 09:06:34 -0700 (PDT)
+        with ESMTP id S230416AbiJaQqx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Oct 2022 12:46:53 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84F3112A8C
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 09:46:52 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id o65so10210351iof.4
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 09:46:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fkttgzDXIAy0Su/PuJsaG8XW+vo8k7cbUB3P0RujAIg=;
-        b=ItjgARuFQp7ks5aMR+Sl3P84PQvK+qj3kxmneizEfMJY4EbD5CKws37HHlsT6P2jbe
-         2p3hLUO21qL51YRKbhH+V0Wy4NTVafJOUBB5jSn9z8O7IkVOTzCN/g1CAgtfZSzBHgzZ
-         d5V0oz1ro0Aqp3CP0v9Cb9ZCNAF6IelBOMXit8lZ36cHRMwxhplg/ZJiB8C4zkp1T9r9
-         XWbV8RxNAsKzWFDVMs1JgZfwrnV2cZzGbCheRnlsNeBP8j6SHQ9D00Z9lONGd7bXIPih
-         a+dRDdnWy/J9AlYFiT8F7lQgrpAPD1YRKZalGne3rTCk/3Jx+VnwFMZGWKzWzcoaHZuS
-         6YMA==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7+al/lw9sqhaJ1Si2BuFIrQQ3n1x9yxpn03c5mDKosA=;
+        b=f4RmhzkgSWkAvgPgE5W4RoLF6b3uywGF0wErn+fg1r+RAaJ47qiaAfnePs9A2qNTeb
+         ib/sBBhy0prJKO0/Ontjc5u3nS3bfZIn+LvJ3Wt0XotfYeunaZaTtiODrNluziz1SkzX
+         Jwdusibe9FxWkvI+N8Qygnu4RHjQOefrmL8lLjoS7KAkrUVQTn6kdd3FayBh8hpeNBwk
+         Em2ttBUrU9joak99dkJGNeyEu5Wy4OsgJ4eaxNeBhp/R753dAaUPBYLCRPmgmqHOtqJZ
+         rFBVqMwcn7tW4JjTPzfcxIVLy1p8FW5j5P0jDiq6R0Opt+koQoSajvFew/HzSKBmR4qd
+         T+mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=fkttgzDXIAy0Su/PuJsaG8XW+vo8k7cbUB3P0RujAIg=;
-        b=toQcEOusvPhSWBWwt86hR67oJl4xY1kcC/Xg/wXdr7ndWsCwA/KzCMWw7vJ/1HfJf6
-         C3kKzUfodRTexuoil1qshbvn/Iy7kKbEV7mNXZ9fu7qPS9n9JTHj0rPjxn9JDi+HJ0lV
-         eIWfc8ERsUbutqDp3NkRd+QAb/ebmFnAL376dKmZXnGaUjQy+Kx4bcPRYHJMwElgd4Kb
-         4YmIsKFF7QYMgliuXXMYgz4Mgj2y6gIKP3uVCPLAk55J5TZk9BVelHc6qcBqvfYhBaIh
-         xnJ5VmqcGhLKgxndf9or9smA4VduYMg1y47PW9lYovRuyK8RMJvVTRJZJ+l7NOiQG+07
-         wmGQ==
-X-Gm-Message-State: ACrzQf1/kTc0w5Aty8F9ush+6z/V7nUUFXXKDvcxYK1cpXINYv7F2Zil
-        hf4BW6XE/mt+D45dREwAvWQ=
-X-Google-Smtp-Source: AMsMyM5ju7wIclHxxv01m5kGYA0LnJRT9PyhZ43UijaNWitQywMcbq8xuVNu98inyisIEt0UYLku4Q==
-X-Received: by 2002:a17:902:a506:b0:186:8272:bb50 with SMTP id s6-20020a170902a50600b001868272bb50mr14938656plq.45.1667232393394;
-        Mon, 31 Oct 2022 09:06:33 -0700 (PDT)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id w141-20020a627b93000000b00560bb4a57f7sm4919553pfc.179.2022.10.31.09.06.32
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7+al/lw9sqhaJ1Si2BuFIrQQ3n1x9yxpn03c5mDKosA=;
+        b=7LoZYASscZs0Uhjkac8bGTcIaQzhE7ZQN1uSFjKXNPiF115GRIq2lw8VRHJtbjbppB
+         t+qECoIHnL02yT731Sm8s1zMp+Ti85ipH2A8RjuC430mjN1p8+JZn6B+4uJBpaKuDv7k
+         ocN2tl4W/iVWJzZUrK6yWBBASbtafPdUN40txGP+Y11uAbuImpn3V1M57EaS9MBBQqWC
+         9U452AxmNdSKODNg3Xz/PGaYwpnf4J358m3u5I4iAuwhXH4y/sLQvtMQJyQ+Ly67TP6y
+         54NjZJ1FpIve6kAE2ZuAQXAt7T4gfu4NtoRpAyz9ZMycyTk3zaNvo9vzQeTuvr9TiOlh
+         0KiA==
+X-Gm-Message-State: ACrzQf2Ks2LxHTpK6Q186htD8Ub8TYCsRFfg5bDNfvEYrO5VsABo/Bw7
+        p0+G4JKG66LvCXGtmchuzVhS4tTXZ2CJbW+v
+X-Google-Smtp-Source: AMsMyM6vx+62Z050UeAkfAzTSA6boMNPJsNWvpqJ4P0m5BVT/be9K/pCDvASjtnY+Z8UE2lIaXWAvw==
+X-Received: by 2002:a02:290e:0:b0:35a:d680:7aad with SMTP id p14-20020a02290e000000b0035ad6807aadmr7690603jap.62.1667234811746;
+        Mon, 31 Oct 2022 09:46:51 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id k21-20020a023355000000b003634aa4a55asm2949010jak.82.2022.10.31.09.46.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Oct 2022 09:06:32 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Abhradeep Chakraborty <chakrabortyabhradeep79@gmail.com>,
-        Abhradeep Chakraborty via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org,
-        Taylor Blau <me@ttaylorr.com>,
-        Kaartic Sivaram <kaartic.sivaraam@gmail.com>
-Subject: Re: [PATCH 3/5] roaring: teach Git to write roaring bitmaps
-References: <pull.1357.git.1663609659.gitgitgadget@gmail.com>
-        <4364224f9bddc8f1e40875ebc540b28225317176.1663609659.git.gitgitgadget@gmail.com>
-        <xmqqczbdl6wl.fsf@gitster.g>
-        <CAPOJW5yxRETdVk014gQYFud9_Nrt+OQGSVNQ8Pw2wDEMMFMm1Q@mail.gmail.com>
-        <CAPOJW5z_ZRChNo8PGBmJu=vvjTL2cYL8oTdVwoDRh-UHt2Dy4w@mail.gmail.com>
-        <58841dcd-e732-416f-5ab0-fd5a5d8de4c7@github.com>
-Date:   Mon, 31 Oct 2022 09:06:32 -0700
-In-Reply-To: <58841dcd-e732-416f-5ab0-fd5a5d8de4c7@github.com> (Derrick
-        Stolee's message of "Sun, 30 Oct 2022 15:46:20 -0400")
-Message-ID: <xmqqcza8dlkn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Mon, 31 Oct 2022 09:46:51 -0700 (PDT)
+Date:   Mon, 31 Oct 2022 12:46:49 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     John Cai <johncai86@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: Large repos mini virtual meetup
+Message-ID: <Y1/7+S78dbtyTZWU@nand.local>
+References: <4D2B0F7C-3ABD-44B0-BDFC-D5960BE261DD@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <4D2B0F7C-3ABD-44B0-BDFC-D5960BE261DD@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
-
-> I HAVE OPINIONS! :D
+On Mon, Oct 31, 2022 at 11:18:37AM -0400, John Cai wrote:
+> Hi everyone,
 >
-> Mostly, there are two things I'd like for you to keep in mind:
+> From our contributor's summit back in September, one theme that
+> emerged was the work around scaling Git for large repositories. In an
+> effort to gain shared consciousness around the problem space, surface
+> opportunities for cross collaboration, and deduplicating current
+> efforts, I am organizing a mini virtual meetup where we can share
+> about common problems we're trying to solve in scaling Git for large
+> repositories.
 
-Nicely summarised.
+Thanks for organizing. This sounds like it will be pretty interesting,
+and I'm looking forward to it.
 
-Stepping back a bit, we do not care about how the sources to some
-pieces of software we depend on, say OpenSSL, match our style guide.
-It is because we do not even have to see them while working on Git,
-but also because we do not have to maintain it.
+> Anyone is welcome to join! Here are the details:
+>
+> Google Meet Link: https://meet.google.com/zid-azpu-apa?hs=122&authuser=0
+> Google Doc for notes: https://docs.google.com/document/d/18Mh6WokkSb3t7xeLsTdAUrSd8xfxZ4Myc-X25sG8b1Y/edit?usp=meetingnotes
+> Time: Thursday 2022/11/17 11am-12pm PST / 2-3PM EST / 8-9pm CET
 
-So a third-option could be to fill pieces missing from the upstream
-(e.g. big endian support) and contribute them back, and after that
-treat them as just one of the external dependencies, just like we
-happen to have a copy of sha1dc code for convenience but have an
-option to use the upstream code as a submodule.
+Added to the Git calendar.
 
-Assuming that such a "they are just one of our external
-dependencies, just like OpenSSL or cURL libraries" happens, I would
-not worry too much about C11, as long as use of roaring bitmaps can
-be made an optional feature that can be disabled at compile time.
-Bitmaps are used only for local optimization and never transferred
-across repositories, so you having only ewah would not prevent you
-from talking with other people with both ewah and roaring.
-
+Thanks,
+Taylor
