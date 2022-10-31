@@ -2,151 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BD12C38A02
-	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 13:00:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98842ECAAA1
+	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 13:10:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231144AbiJaNAh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Oct 2022 09:00:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41558 "EHLO
+        id S231370AbiJaNK1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Oct 2022 09:10:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229918AbiJaNAe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2022 09:00:34 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E67CAE0BE
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 06:00:33 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id 13so29237887ejn.3
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 06:00:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=mvNUyhgLMtjMUC0zPjP4gciTt7Oyvv1OJcu5IDqRZbo=;
-        b=NZ93zBju9akswj0QjaXbrEsT0dr342/L19lJNWBvVhZPpj2UtMCc3e6iMV4Oz0e0um
-         F68CTpMjKScdxyKHgldJ5yvOBKNrDssqxvwbggCaaYMzFQJd11HTOiPcMpN0+etMUxxf
-         mg/0gREwvuiq3DDYlR6rXkURLdFwkyiAy3kd41U4s/RXdikdE5iJKOl060USMZq4wYX7
-         iTOmtg/rj6JTUTrN7skjhQiKiCaW6UYyPP+VAWewThksghsQHiY93DWgNgn2yawA2+lK
-         m1En4pxDlHEBCChCasy47bXmpTY18mew6e5cl+WGTYqVHOIivm0eFPGD+C8n+13AGGT3
-         /HpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mvNUyhgLMtjMUC0zPjP4gciTt7Oyvv1OJcu5IDqRZbo=;
-        b=IykbB9/eUxF6kEj847iAXRbt/P7t9y+iElnoE6AER7uot2ytAA1XUYJtkXe0xXFRcX
-         WW7e0fxGpsKGgLGY4Npsx/4CPZQqe5V5W0vLTHxz+Q4M29CXK1d3h3Mqr8ov0u+Ex/eG
-         /o2RjF6+vOFsGS6lUUU3BOs5Yds0eISbn+LBP4K5UF2kH5RSzV5A1L61+c4ea25TG1f1
-         wd49GW96Zs1Xh+hSkKtTMRhuSYpRsvK55INgSMkq3NeTLXnvJ7nLopiuUr6KZI4YL+YW
-         uJetGtSsPO5LZdYyJalpyx0JX3yQvRfKM+bHt3FpGpfr6pGgZI+SxwizdeFKQOD6uWy3
-         3RCA==
-X-Gm-Message-State: ACrzQf3XMc62NfWkP2lv7Csl/snNzy2IiHkcsWQKbba3fOkkXn4AzM5F
-        iY3p16WuUYO15ov0IXs+jaw=
-X-Google-Smtp-Source: AMsMyM6kDTRUOtMEg9cVHZr+Y3OqO0AgkbhdgjFDBAKx9Pltz6ZyNpx3MpzRhMrxrxgwbO0oOvksQA==
-X-Received: by 2002:a17:906:8a48:b0:7a5:a8f5:b870 with SMTP id gx8-20020a1709068a4800b007a5a8f5b870mr12230985ejc.458.1667221232325;
-        Mon, 31 Oct 2022 06:00:32 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id b25-20020a17090630d900b00780f24b797dsm2961804ejb.108.2022.10.31.06.00.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Oct 2022 06:00:31 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1opUP1-00AbDH-1D;
-        Mon, 31 Oct 2022 14:00:31 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Calvin Wan <calvinwan@google.com>
-Subject: Re: [PATCH 2/3] submodule tests: reset "trace.out" between "grep"
- invocations
-Date:   Mon, 31 Oct 2022 13:50:07 +0100
-References: <cover-0.3-00000000000-20221029T025520Z-avarab@gmail.com>
- <patch-2.3-708375e3104-20221029T025520Z-avarab@gmail.com>
- <Y12JfADN/YRr9IaJ@nand.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <Y12JfADN/YRr9IaJ@nand.local>
-Message-ID: <221031.86pme86tcg.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229787AbiJaNKZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Oct 2022 09:10:25 -0400
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 778C05F57
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 06:10:24 -0700 (PDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+        by mailout.west.internal (Postfix) with ESMTP id E0E883200976;
+        Mon, 31 Oct 2022 09:10:21 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Mon, 31 Oct 2022 09:10:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm3; t=1667221821; x=1667308221; bh=f//lcxkU91
+        jaRYY2B6zXrpSVPWNhkQvT1MOO/CuHLu4=; b=v2L+taAXWsEkzm8W+18l4Z/bCK
+        bFq5r4t5ItJB/MWFHRcV4we2K0e9nCHiKqid2vxv6ekduhmuOOCW/wuoQTzD5tg9
+        jbWTH+ckAGiAfG6TyGHETKu0NnAEChboWJpZvGJLhuSsQ2gInTxLo8Q87kdqkErX
+        y6/2eOwBSFB3J0eM4XDcH+ChubANU3TFeB3hyhk0chO9pVZFtWkDIM0fYc8XOi9P
+        r/MCmbI0/iszJejE/ibIL9CskBoxSAEY07v229WjdZk4DE3lM+KcjAipsskv9pc9
+        uEBBoCHF1Di8nM4ZsNF8slmbQPySY0ejTi1+vXBXYdmOBqMAZsVifW75ssPA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm3; t=1667221821; x=1667308221; bh=f//lcxkU91jaRYY2B6zXrpSVPWNh
+        kQvT1MOO/CuHLu4=; b=Wj73K6K9X6x5r1DoNoepbWqWa7tft2QncZK+HGs6B3TV
+        J/Y6ZWR4hrToeSu7Bkl2bKdFYXexbv6oCjgBpgGZZrXd3HeYCFWQ0lXb2WdA34s4
+        05GSNGYf6nwZY5Yd14BuMY0JRI3WZYNybP4oCdUi+ygQUi9mL0zQM0Naucf35Gc7
+        OM78Wzzmy8W9KN/pGsocQhL3u4I7v7bwtfpqZrXOdmaK9b/aV8bXvj49biPii86a
+        iYwaGHcIyjtInkSEIKcx24Ip/eYDIbdmYvXiijM2ZcLIP210D8i2l+/2LReBoJxu
+        QYuhOD0vpLrBUy+xbqnLD5saDHObjuobxUUWSpwJVA==
+X-ME-Sender: <xms:PclfY4Q796uCSSB88Lb92MZNssmHpnWuGTGS48vudzwmSLWTwinT_w>
+    <xme:PclfY1wLY_WYMj4Qh8uUJyYXisfWayHwoMKtdSjie318vcK8Z9SsaZkCxdnBBQ3Tl
+    AB1Y3LG6LSCaXn0rQ>
+X-ME-Received: <xmr:PclfY13WkK-Ralfwva8M7Ew2AZx-A7EQ_EvPP5jdLCd6iORhYffFfg_7J-IeNqVYbcdw-l1bAGhYcIGGNhQeTyta0SovQriUtva0nZwdAckLNJs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrudefgdegkecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeigeekle
+    duvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:PclfY8A_4mmg6B8ZsnMPf4BNdsavJk10qWWxNRdtjR-o3wv7BtCcfA>
+    <xmx:PclfYxhp39ubAFgnGpNkJ-me6jsHJwjCT3K1u1_G8mRAasVXNqptBA>
+    <xmx:PclfY4rrkYlJ9PcGRuqkogsv6JrcwwmPDM0FZwnIepizn8h28p3XqA>
+    <xmx:PclfYxKCjX3FAC7boxW7anBY6r4-IKeQXjDPqCbguyJYpcrFMQ-TGA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 31 Oct 2022 09:10:20 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 49f252ee (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 31 Oct 2022 13:10:05 +0000 (UTC)
+Date:   Mon, 31 Oct 2022 14:10:16 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/2] connected: allow supplying different view of
+ reachable objects
+Message-ID: <Y1/JOGihHtMWv240@ncase>
+References: <cover.1666967670.git.ps@pks.im>
+ <a32e3d6146dd41af36f525a744d6cc099b42d6fb.1666967670.git.ps@pks.im>
+ <xmqqr0yrizqm.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="61DDh/MT6dB6DHV6"
+Content-Disposition: inline
+In-Reply-To: <xmqqr0yrizqm.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sat, Oct 29 2022, Taylor Blau wrote:
+--61DDh/MT6dB6DHV6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Sat, Oct 29, 2022 at 04:59:46AM +0200, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
->> index 75da8acf8f4..b9546ef8e5e 100755
->> --- a/t/t5526-fetch-submodules.sh
->> +++ b/t/t5526-fetch-submodules.sh
->> @@ -178,6 +178,7 @@ test_expect_success "submodule.recurse option trigge=
-rs recursive fetch" '
->>  '
->>
->>  test_expect_success "fetch --recurse-submodules -j2 has the same output=
- behaviour" '
->> +	test_when_finished "rm -f trace.out" &&
->>  	add_submodule_commits &&
->>  	(
->>  		cd downstream &&
->> @@ -705,15 +706,22 @@ test_expect_success "'fetch.recurseSubmodules=3Don=
--demand' works also without .git
->>
->>  test_expect_success 'fetching submodules respects parallel settings' '
->>  	git config fetch.recurseSubmodules true &&
->> +	test_when_finished "rm -f downstream/trace.out" &&
->
-> These two seem OK to me, but...
->
->>  	(
->>  		cd downstream &&
->>  		GIT_TRACE=3D$(pwd)/trace.out git fetch &&
->>  		grep "1 tasks" trace.out &&
->> +		>trace.out &&
->> +
->
-> I fail to see why these hunks are necessary. If we specify GIT_TRACE,
-> and don't have a test_must_fail around the execution, then why should we
-> feel obligated to clean up the trace.out after every execution?
+On Fri, Oct 28, 2022 at 11:12:33AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> > diff --git a/connected.c b/connected.c
+> > index 74a20cb32e..2a4c4e0025 100644
+> > --- a/connected.c
+> > +++ b/connected.c
+> > @@ -98,7 +98,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+> >  	strvec_push(&rev_list.args, "--stdin");
+> >  	if (has_promisor_remote())
+> >  		strvec_push(&rev_list.args, "--exclude-promisor-objects");
+> > -	if (!opt->is_deepening_fetch) {
+> > +	if (!opt->is_deepening_fetch && !opt->reachable_oids_fn) {
+> >  		strvec_push(&rev_list.args, "--not");
+> >  		strvec_push(&rev_list.args, "--all");
+> >  	}
+> > @@ -125,6 +125,13 @@ int check_connected(oid_iterate_fn fn, void *cb_da=
+ta,
+> > =20
+> >  	rev_list_in =3D xfdopen(rev_list.in, "w");
+> > =20
+> > +	if (opt->reachable_oids_fn) {
+> > +		const struct object_id *reachable_oid;
+> > +		while ((reachable_oid =3D opt->reachable_oids_fn(opt->reachable_oids=
+_data)) !=3D NULL)
+> > +			if (fprintf(rev_list_in, "^%s\n", oid_to_hex(reachable_oid)) < 0)
+> > +				break;
+> > +	}
+>=20
+> It is good that these individual negative references are fed from
+> the standard input, not on the command line, as they can be many.
+>=20
+> In the original code without the reachable_oids_fn, we refrain from
+> excluding when the is_deepening_fetch bit is set, but here we do not
+> pay attention to the bit at all.  Is that sensible, and if so why?
 
-Because the trace file isn't clobbered by each git command that
-specifies GIT_TRACE, so these tests are basically doing:
+Hm, good point. On a deepening fetch the commits that were the previous
+boundary will likely get replaced by new commits that are at a deeper
+point in history, so they cannot be used as a well-defined boundary.
+Instead, we do a complete graph-walk that doesn't stop at any previously
+known commits at all. At least that's how I understand the code, the
+explanation is likely a bit fuzzy.
 
-	(echo foo; echo bar) >>trace &&
-	grep foo trace &&
+I guess we should thus also pay attention to `is_deepening_fetch` here.
+As this means that `is_deepening_fetch` and `reachable_oids_fn` are
+mutually exclusive I'm inclined to go even further and `die()` if both
+are set at the same time. We only adapt git-receive-pack(1) anyway, so
+we should never run into this situation for now.
 
-        (echo bar) >>trace &&
-	grep bar trace
+Patrick
 
-Now, it just so happens that the earlier command isn't echoing "bar" to
-the file, so this is currently working out.
+--61DDh/MT6dB6DHV6
+Content-Type: application/pgp-signature; name="signature.asc"
 
-But it's a bad pattern to be pretending as though you care about the
-last output (which was the intent of the test), when really what you're
-testing is the combined output of all preceding commands.
+-----BEGIN PGP SIGNATURE-----
 
-This would also be a potenital landmine with "test_must_fail", just
-because the command failed we're not guaranteed to have written nothing
-to the log (and usually we'd get as far as to write something).
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmNfyTcACgkQVbJhu7ck
+PpS7mA/+LsXUVtm01zmBpZTPd6FTUS1pPO7B6dO8riL8n/E6K4Ih9LkmorcmXQ5x
+BoHAnxuiqr0gEfjGjT8O93gEvj9lnIKvq7oLtQFeO/NkqkdA2dERONgjTydUOxtA
+YjM2emcV0LbUXgq6pVdoRiFJabCTPMzQHf9GlEmG1On2ll4xN1EAMCqwgE4zoW9h
+LnnaW7D3fkgVPVd8SJt8UxUbj3f8r5zeOtqAhyCMosSNzMrcoP99SukZxGw2yv1p
+eQ2F/SF2754zu3diLjk3ZbLGYjdaFVflJndpue2h8aRJArO1+L5qxzjQOHiceLmw
+hJVRZiqWQ9ovPA/DSa6igd/MWewzFZpnlAW43GsHvK/L6XEYrov0G5NUqdE8m0oo
+MEmq/8GX0CM6YvmXOSAu9TUfGQFKM2D8xKWimZumoAmTwch4uvdyW2jDNAHvD2Ep
+hvQM+Nj9/ggL+7ha71iYGIS/A8GfeqFaOIM5xw8yq+i0Fm1TwmZeXfPR/53Fu1gX
+5H8rVCKDRxulJEfRdBJpQC4URxbaSnHYOsXr55Ep5BjadNOW+CKx1S0Cz1RwmOgs
+He//bg0xKvXCCC5Tj0Y3m45Z7DSmizFPyUbDpGU88b3IUa+JI0oSDMmdNpvESS3L
+LOpcBZ1OrDHIxYOo6rTP9hm9N3QSlecC7ToNJWCs2lr/lWjO3EA=
+=Gx5Y
+-----END PGP SIGNATURE-----
 
->
-> If we really are concerned about not cleaning up after ourselves, how
-> about writing to a separate file each time?
-
-Better yet would be to refactor this into a function, set that up and
-"test_when_finished" nuke it every time.
-
-But I'm just going for the most minimal change here to not leave this
-landmine in place. My 51243f9f0f6 (run-command API: don't fall back on
-online_cpus(), 2022-10-12) already started using this pattern, and is on
-"master". I think a good incremental step is to do the bare minimum to
-do the same for the rest, and guard any subsequent test from being
-affected by the "trace.out".
-
-So, unless you insist I'd rather just change nothing about this series,
-and not get stuck in various re-rolls/commentary about what's the ideal
-refactoring, once we're starting to do that anyway...
+--61DDh/MT6dB6DHV6--
