@@ -2,85 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A42C3FA3744
-	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 23:47:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADA91ECAAA1
+	for <git@archiver.kernel.org>; Mon, 31 Oct 2022 23:47:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229629AbiJaXrB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Oct 2022 19:47:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38206 "EHLO
+        id S229637AbiJaXrn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Oct 2022 19:47:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229528AbiJaXq7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2022 19:46:59 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FF47E08C
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 16:46:58 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id f5so11762242ejc.5
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 16:46:58 -0700 (PDT)
+        with ESMTP id S229475AbiJaXrk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Oct 2022 19:47:40 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91833E014
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 16:47:39 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id d123so6360896iof.7
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 16:47:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=qTAOpTOuRJXHhd375phd5Gpt5qIqu6dIGjky922xg/E=;
-        b=I5Ty5tpBYMdT5moEIRH2bYEScAMwp5kbxAJlsaYlU80qBlM073BWrJ7qKkY64GdI5Z
-         jvzyb2gTnXOsxz8zlGrllYNsjHC4E0C8qnBarecVgCQ0PffWRkZTccREcmcBL+1sQr36
-         8Nl8hKaRJ+cxfbFfpgk0fEVnq/eO5qd51rPbLTJCUPWLKBTWU72X4+QFm7zeH7AqNK52
-         xVmDThOs0EZT0x5v4Mgby73ITCcBN3woag/YSQJfaQkuFfty5r7/RsDnvhvg180/fAEF
-         Z9ZNPcE8/6lFfDuzumHz6dGJL4BfjCdAvrnPJaJ0OYHqVr5JEfQQwpEeVkvRht9d92jG
-         ij8w==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TzeFBE/02V1+BOVURoUdU4ZJxN6VYDJGPt6PIap9zHQ=;
+        b=EjdOkqEFl3SymQ+cZ7xkEPW7UllW2ht8AUIRRPbQ8+i33eDdZoJ/Sg0b+/CvBaHsBL
+         TxZeHoXmnkE8RDvP7wB4zrq3VszSJ3WpgEuO9PSr99ZBFKUnFJAWCy8Taa//4UhI5rIM
+         0ybibSo6lzJyaKeeh8ZIpalfhiSL4Ins4dBFcJet26TCgr0qNinOvhmy5PB29VGHYCvn
+         G4PNpjxnioykeQo0tgXJLbNbO8/ypiFWbCPDB7LcirD9S1p/5f/kKebf7UTmRG+mXfAR
+         fKRcgxEnfgs6ZkOmIcmH7S8nG6P84jUG+rPA19xpL8P9gN2ksr7Hwdu47LQ96O5SZFA2
+         Hdtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qTAOpTOuRJXHhd375phd5Gpt5qIqu6dIGjky922xg/E=;
-        b=BYaITnrlaXpXR8dHbN742J8YYJWEki5I6L5W4d4vDrIHkwhekepR0TV2AdbNqzgv96
-         mLZ6oaR9SaM5WL1F3XZZ/MhtAEl3bYw/OtGN4w4Y8gd5cNwgoBfAC7G6M9ySjsDPjwWI
-         q4NFsPAtcvA422V//8Zp7pW3K1en9DwHNaIa7ULc+PRdjl7G9p+P/ozirT07/OTPNrPA
-         iyLedVV0c1FAGs+YjtT9D+308tj+9L4LpzT7U8IqYAA/DG4rdcYQ5qGJKf1T1Zo0acxZ
-         Sxue1XXexmJWjePmDOMA4aE6pFV+6+9ulrAL9dbrwDFsvf+v5QkfnbgWc+a9HI7B/7h8
-         AZOw==
-X-Gm-Message-State: ACrzQf1aUSLFFCYDrgHeyrOOqJx9W9aI9UgaoxKcrsiqS7g05yPBjJre
-        sp45CXA56fuJ50kT1jg0wDglaBiZaiB8fQ==
-X-Google-Smtp-Source: AMsMyM4Hw8g10gGvpQo84btvZIJSOfBT3oJV0KbuBFTi6qZgmkWGPw0DLqyWzyUFeogoZCGlfCPkOQ==
-X-Received: by 2002:a17:907:97d5:b0:7ac:5f72:6c1a with SMTP id js21-20020a17090797d500b007ac5f726c1amr15336426ejc.126.1667260017150;
-        Mon, 31 Oct 2022 16:46:57 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id lb15-20020a170907784f00b0078d22b0bcf2sm3452055ejc.168.2022.10.31.16.46.56
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TzeFBE/02V1+BOVURoUdU4ZJxN6VYDJGPt6PIap9zHQ=;
+        b=oOiDAZqK2VWv4oSwNseomnclog7uMvvp0TLfQh12BgO6+qwrLJYRglieYvJvIJzRdU
+         w0ZMjPhPOu/ks2ISMBnoSc7I6P6NYQ/jW9GPgdSlTYDgaFcNuytPXBydaxeq9HpUQPcB
+         pmGOSjEGWNWVQEMrHXsSQm0kIoxJyuxFEcpJiMMLi8f5bksuP40VXH8mHng8Q5i7AVTi
+         kqjOCI2hpy3wJB5+xYQT2FSe3v1wmVgcW2fZpAQjgAfKvUAtv9pQDHMm5Ohkqa1orAj4
+         wc5WzVT5Prvw/Zwf3zQM+zDAd/Dyg5eijw0eoBLQMeFh/ww5xCM4nox+CfXe6SS4quCV
+         LDpw==
+X-Gm-Message-State: ACrzQf1ZCx6h+HYk39TDapnL9dECwQ5kxHbMSSK5YaFSq8xf9xkD6o+0
+        78snbCybsFW9m8heRHHtYKDeQN/WkXb0IWif
+X-Google-Smtp-Source: AMsMyM6is8o3vCBoUbwxCFox4xBaNLtTlZGCer0N8SL/L2B9Dz6WaFEep+GrKNlu7mpgfRBFae79bw==
+X-Received: by 2002:a05:6602:13c2:b0:6bd:26f1:dc21 with SMTP id o2-20020a05660213c200b006bd26f1dc21mr9095909iov.189.1667260058776;
+        Mon, 31 Oct 2022 16:47:38 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id s3-20020a92ae03000000b002f16e7021f6sm2943407ilh.22.2022.10.31.16.47.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Oct 2022 16:46:56 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1opeUa-00Av21-14;
-        Tue, 01 Nov 2022 00:46:56 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Subject: ab/make-bin-wrappers (was: What's cooking in git.git (Oct 2022,
- #09; Mon, 31))
-Date:   Tue, 01 Nov 2022 00:45:24 +0100
-References: <Y19dnb2M+yObnftj@nand.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <Y19dnb2M+yObnftj@nand.local>
-Message-ID: <221101.86mt9b5zf3.gmgdl@evledraar.gmail.com>
+        Mon, 31 Oct 2022 16:47:38 -0700 (PDT)
+Date:   Mon, 31 Oct 2022 19:47:33 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org, git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>
+Subject: [PATCH 0/2] Documentation/howto/maintain-git.txt: a pair of bugfixes
+Message-ID: <cover.1667260044.git.me@ttaylorr.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The documentation on how to use the scripts in 'todo' has a couple of
+small typos that make it confusing when generating the Meta/redo-jch.sh
+and Meta/redo-seen.sh scripts the first time.
 
-On Mon, Oct 31 2022, Taylor Blau wrote:
+Correct these to avoid any confusion in the future.
 
-> * ab/make-bin-wrappers (2022-10-30) 3 commits
->  - Makefile: simplify $(test_bindir_programs) rule by splitting it up
->  - Makefile: define "TEST_{PROGRAM,OBJS}" variables earlier
->  - Makefile: factor sed-powered '#!/bin/sh' munging into a variable
->
->  Resolve issues with the bin-wrappers/% rules where "make
->  bin-wrappers/git" would generate the script but not "git" itself.
->
->  Waiting for review.
->  source: <cover-v2-0.3-00000000000-20221026T143533Z-avarab@gmail.com>
+Note that this branch is based off of 'tb/howto-using-redo-script'.
 
-I've since sent a v3, hopefully addressing outstanding feedback:
-https://lore.kernel.org/git/cover-v3-0.4-00000000000-20221031T222249Z-avarab@gmail.com/
+Thanks in advance for your review.
+
+Taylor Blau (2):
+  Documentation: build redo-jch.sh from master..jch
+  Documentation: build redo-seen.sh from jch..seen
+
+ Documentation/howto/maintain-git.txt | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+-- 
+2.38.0.16.g393fd4c6db
