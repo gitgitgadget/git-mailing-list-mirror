@@ -2,68 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A8F7C4332F
-	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 18:32:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9759C4332F
+	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 18:40:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230184AbiKAScx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Nov 2022 14:32:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49164 "EHLO
+        id S230310AbiKASke (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Nov 2022 14:40:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229587AbiKAScw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2022 14:32:52 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB46D1AF14
-        for <git@vger.kernel.org>; Tue,  1 Nov 2022 11:32:50 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id q9so39343697ejd.0
-        for <git@vger.kernel.org>; Tue, 01 Nov 2022 11:32:50 -0700 (PDT)
+        with ESMTP id S230290AbiKASk2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2022 14:40:28 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEC491BEA9
+        for <git@vger.kernel.org>; Tue,  1 Nov 2022 11:40:27 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id z18so18043442edb.9
+        for <git@vger.kernel.org>; Tue, 01 Nov 2022 11:40:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=Oyq1Zx74XN3cC6I2A33yPdwQmQnGJilmF0WKXYKhboI=;
-        b=a4222JjCkdRavUzcgs1XAKbfiZxe/WFmfPmpM9UWsULQfdf74Ea6gS/O+iOU8QPp/o
-         SczSoqb2KPn/Rn+UwYdDzGprSQRToz8Y85uVPKa+wRwsTKzHc0BkvqJNXw9X+vB3M52G
-         iPxfn6rw7K1DJrcFs+ieXC5cEHA07yzHBjb7bHWm4AOZ3wTnaN30TAl+UhLQ0S7/Li5r
-         OnV/vqSWnOMxd+OOwUUg0PRZI8HQ4xrVywsqWBBHpdcl4be2wbD6+kYPpysUw5zsyeXP
-         bNJ6xo9vhn6Yo8ep9VPdXxPk8b1nGoLwqUF98nKjo9hhnXJ2v2gYiqB61ZNlXUkn32RR
-         rJNA==
+        bh=O0XIdABFbu0MgBTcMSGtB3geuFZhllh8GjdXA6qtmVc=;
+        b=BQU60Bu1atLIebqbnMVnX9S1gee/sXH/YvNz3F3iR0zjOIfEE+qNlCmeA5YlxpFQqI
+         SonotFhPPpmWPyjuRllejHS/oW2DxQI07AJJNvey/gfgKx53KiXhUN5voYmXqjTHVGFV
+         eq2z+xoAM1LOGMeAyCG9G/HPIpgfFnSbbjl/ql6LIy+98iqWASQgRuct3vk63raaJ6hL
+         XlEeeQQ+T4x17SmkduRT3sk6r4cFWFQ24Cev3HrZkkQ+GZhhvGWpr6XLE1AwbYODEuUy
+         WRFDMbhYoGM5D9NMM11rzQJfCilvkX+jZIV0kPzRq0K2CDh5TBoUM55HFNG3vazz3F3X
+         +/ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Oyq1Zx74XN3cC6I2A33yPdwQmQnGJilmF0WKXYKhboI=;
-        b=a7Wwuj4QK5ERzAcKbf2+iNjI1+6eau5xGVaXxvTOJ09hTPVmZlbyR4XMboQiUbnsA6
-         tKuP0NoYHJtg7VSkyuxORb+/RhqxJCENRyh1GDn3V9CS1rV0tsh1e5qa6JuSgB+TLnqs
-         vjuLBDXDuNKRJs8kyte4PJMu8fR1pCqCNacinUmT4HUxl3CCIlIH7LBvAldkXGh9yYDg
-         QAiPPGjzBcScoyH+kblvYt+oYfjLnOQUfGYptHZxpSfySCREGOd0fGMQD8VtWgONiLJT
-         +2mm2svoRcGoP/DlHrYwoutxqDjmsHy0Iirta7NyPFPmgAPTb+4gntw+Ho5mLCo8b9uh
-         fXfA==
-X-Gm-Message-State: ACrzQf0wJEUINPXzjFtm26OodKi4I9pI9TC8n2gx0+msrCOxbCsuuqd0
-        bsIIbC06HoIfz+uEK908fIk=
-X-Google-Smtp-Source: AMsMyM6eChFcAmVkvn0uRLeJ5hh8Rdm8INQj62ZGV4OwLbJ76Rc92vvYpOxIpsHM9z3IpuwH93TyDw==
-X-Received: by 2002:a17:907:7f07:b0:779:7f94:d259 with SMTP id qf7-20020a1709077f0700b007797f94d259mr20082951ejc.525.1667327569121;
-        Tue, 01 Nov 2022 11:32:49 -0700 (PDT)
+        bh=O0XIdABFbu0MgBTcMSGtB3geuFZhllh8GjdXA6qtmVc=;
+        b=WgXTIMPULxC2UCqpBW3tQXd46ywBThbVt66RVjlSo7wfCoSWng/QlV1nFFw+YaACHa
+         RI5hk+1cSjX7GaPOKmEh8GKgcUZDZtvYeEtErM29MyfV1A0kiHDzkIPmn/0ACh6X5El6
+         u6d8z30uyAGClb7Iju+0/DD0RV6Bdik5qlZx3siwrpR7rIzE6W5W0mGJfurhWvuqzxsl
+         qyaBHcbPUkk7KNboEQlWUqBwGeP5U+RNbvxsLnEfF/iwZtTQCtdXiborQulApOmz99UR
+         mzNMwIA5DkurUDlXLKHRH85Z1llKmdsLUQ86r0wiBJun7/2oulH2cEEA12idHRZ3hcun
+         MBSA==
+X-Gm-Message-State: ACrzQf2QOhiTsAT8av5KbEJPoFKll8ijw98pJ+fv6IjvRrcakfpyXhJB
+        SUQEbuZhrGz3goYKbrYjm9M=
+X-Google-Smtp-Source: AMsMyM7zskQ/mFNJCqoCs2XuFITapRD3SxVndfm56R/P/F0dSTgBfkV2aVcDDn429V273/Qi22O3uA==
+X-Received: by 2002:aa7:d797:0:b0:462:1e07:1dd7 with SMTP id s23-20020aa7d797000000b004621e071dd7mr169883edq.293.1667328026229;
+        Tue, 01 Nov 2022 11:40:26 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id qc9-20020a170906d8a900b0078b1ff41f05sm4375361ejb.43.2022.11.01.11.32.48
+        by smtp.gmail.com with ESMTPSA id gy8-20020a170906f24800b007317f017e64sm4460139ejb.134.2022.11.01.11.40.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Nov 2022 11:32:48 -0700 (PDT)
+        Tue, 01 Nov 2022 11:40:25 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1opw48-00BTcA-0m;
-        Tue, 01 Nov 2022 19:32:48 +0100
+        id 1opwBV-00BTt1-11;
+        Tue, 01 Nov 2022 19:40:25 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Mark Hills <mark@xwax.org>
-Cc:     git@vger.kernel.org, Matheus Tavares <matheus.bernardino@usp.br>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Matheus Tavares <matheus.bernardino@usp.br>
 Subject: Re: Consist timestamps within a checkout/clone
-Date:   Tue, 01 Nov 2022 18:46:29 +0100
+Date:   Tue, 01 Nov 2022 19:34:14 +0100
 References: <2210311614160.25661@stax.localdomain>
- <221031.86zgdb68p3.gmgdl@evledraar.gmail.com>
- <a87ebafd-c83-7a1d-d8d2-953bc9a93184@xwax.org>
+        <221031.86zgdb68p3.gmgdl@evledraar.gmail.com>
+        <Y2Ax5XOgSOOcgo8J@nand.local>
+        <d4db484f-a525-f6db-1bfb-922f788dacd@xwax.org>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <a87ebafd-c83-7a1d-d8d2-953bc9a93184@xwax.org>
-Message-ID: <221101.86bkpq4jan.gmgdl@evledraar.gmail.com>
+In-reply-to: <d4db484f-a525-f6db-1bfb-922f788dacd@xwax.org>
+Message-ID: <221101.867d0e4ixy.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -74,123 +76,100 @@ X-Mailing-List: git@vger.kernel.org
 
 On Mon, Oct 31 2022, Mark Hills wrote:
 
-> On Mon, 31 Oct 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Mon, 31 Oct 2022, Taylor Blau wrote:
 >
+>> On Mon, Oct 31, 2022 at 09:21:20PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 B=
+jarmason wrote:
+>> > I think you're almost certainly running into the parallel checkout,
+>> > which is new in that revision range. Try tweaking checkout.workers and
+>> > checkout.thresholdForParallelism (see "man git-config").
+>> >
+>> > I can't say without looking at the code/Makefile (and even then, I don=
+'t
+>> > have time to dig here:), but if I had to bet I'd say that your
+>> > dependencies have probably always been broken with these checked-in
+>> > files, but they happend to work out if they were checked out in sorted
+>> > order.
+>> >
+>> > And now with the parallel checkout they're not guaranteed to do that, =
+as
+>> > some workers will "race ahead" and finish in an unpredictable order.
 >>=20
->> On Mon, Oct 31 2022, Mark Hills wrote:
+>> Doesn't checkout.thresholdForParallelism only matter when
+>> checkout.workers !=3D 1?
 >>=20
->> > Our use case: we commit some compiled objects to the repo, where compi=
-ling=20
->> > is either slow or requires software which is not always available.
->> >
->> > Since upgrading Git 2.26.3 -> 2.32.4 (as part of Alpine Linux OS upgra=
-de)=20
->> > we are noticing a change in build behaviour.
->> >
->> > Now, after a "git clone" we find the Makefile intermittently attemptin=
-g=20
->> > (and failing) some builds that are not intended.
->> >
->> > Indeed, Make is acting reasonably as the source file is sometimes=20
->> > marginally newer than the destination (both checked out by Git), examp=
-le=20
->> > below.
->> >
->> > I've never had to consider consistency timestamps within a Git checkou=
-t=20
->> > until now.
->> >
->> > It's entirely possible there's _never_ a guarantee of consistency here.
->> >
->> > But then something has certainly changed in practice, as this fault ha=
-s=20
->> > gone from never happening to now every couple of days.
->> >
->> > Imaginging I can't be the first person to encounter this, I searched f=
-or=20
->> > existing threads or docs, but overwhemingly the results were question =
-of=20
->> > Git tracking the timestamps (as part of the commit) which this is not;=
+>> So what you wrote seems like a reasonable explanation, but only if the
+>> original reporter set checkout.workers to imply the non-sequential
+>> behavior in the first place.
+>>=20
+>> That said...
+>>=20
+>>   - I also don't know off-hand of a place where we've defined the order
+>>     where Git will checkout files in the working copy. So depending on
+>>     that behavior isn't a safe thing to do.
+>>=20
+>>   - Committing build artifacts into your repository is generally
+>>     discouraged.
+>
+> If it's undefined and never implemented this is reasonable.
+>
+> But "generally" is a caveat, so while I agree with the statement it also=
 =20
->> > it's consistency within one checkout.
->> >
->> > $ git clone --depth 1 file:///path/to/repo.git
->> >
->> > $ stat winner.jpeg
->> >   File: winner.jpeg
->> >   Size: 258243          Blocks: 520        IO Block: 4096   regular fi=
-le
->> > Device: fd07h/64775d    Inode: 33696       Links: 1
->> > Access: (0644/-rw-r--r--)  Uid: (  106/ luthier)   Gid: (  106/ luthie=
-r)
->> > Access: 2022-10-31 16:05:17.756858496 +0000
->> > Modify: 2022-10-31 16:05:17.756858496 +0000
->> > Change: 2022-10-31 16:05:17.756858496 +0000
->> >  Birth: -
->> >
->> > $ stat winner.svg
->> >   File: winner.svg
->> >   Size: 52685           Blocks: 112        IO Block: 4096   regular fi=
-le
->> > Device: fd07h/64775d    Inode: 33697       Links: 1
->> > Access: (0644/-rw-r--r--)  Uid: (  106/ luthier)   Gid: (  106/ luthie=
-r)
->> > Access: 2022-10-31 16:05:17.766859030 +0000
->> > Modify: 2022-10-31 16:05:17.766859030 +0000
->> > Change: 2022-10-31 16:05:17.766859030 +0000
->> >  Birth: -
->> >
->> > Elsewhere in the repository, it's clear the timestamps are not consist=
-ent:
->> >
->> > $ stat Makefile
->> >   File: Makefile
->> >   Size: 8369            Blocks: 24         IO Block: 4096   regular fi=
-le
->> > Device: fd07h/64775d    Inode: 33655       Links: 1
->> > Access: (0644/-rw-r--r--)  Uid: (  106/ luthier)   Gid: (  106/ luthie=
-r)
->> > Access: 2022-10-31 16:05:51.628660212 +0000
->> > Modify: 2022-10-31 16:05:17.746857963 +0000
->> > Change: 2022-10-31 16:05:17.746857963 +0000
->> >  Birth: -
->>=20
->> I think you're almost certainly running into the parallel checkout,
->> which is new in that revision range. Try tweaking checkout.workers and
->> checkout.thresholdForParallelism (see "man git-config").
+> implies there's valid cases outside of that. Ones which used to work, too.
 >
-> Thanks, it will be interesting to try this and I'll report back.
-
-FWIW I was under the impression that we'd made it the default, so unless
-you opted-in it's probably not that.
-
->> I can't say without looking at the code/Makefile (and even then, I don't
->> have time to dig here:), but if I had to bet I'd say that your
->> dependencies have probably always been broken with these checked-in
->> files, but they happend to work out if they were checked out in sorted
->> order.
->>
->> And now with the parallel checkout they're not guaranteed to do that, as
->> some workers will "race ahead" and finish in an unpredictable order.
+> Here are some useful cases I have seen for the combination of build rule =
++=20
+> checked in file:
 >
-> These are very simple Makefile rules, I don't think these dependencies ar=
-e=20
-> broken; but your theory is in good alignment with the observed behaviour.
+> - part of a build requires licensed software that's not always available
 >
-> For example, the rule from the recent case above is:
+> - part of the build requires large memory that other builders generally d=
+o=20
+>   not have available
 >
->   %.jpeg:         %.png
->                   convert $< $(IMFLAGS) $@
+> - part of the build process uses a different platform or some other syste=
+m=20
+>   requirement
 >
->   %.png:          %.svg
->                   inkscape --export-type=3Dpng --export-filename=3D$@ $<
+> - to fetch data eg. from a URL, with a record of the URL/automation but=20
+>   also a copy of the file as a record and for offline use
+>
+> So it's useful, to retain repeatable automation but not always build from=
+=20
+> square one.
+>
+> Generally discouraged to check in build results yes, but I've found it=20
+> very practical.
+>=20=20
+>> So while I'd guess that setting `checkout.workers` back to "1" (if it=20
+>> wasn't already) will probably restore the existing behavior, counting on=
+=20
+>> that behavior in the first place is wrong.
+>
+> I think perhaps the tail is wagging the dog here, though.
+>
+> It's 'wrong' because it doesn't work; but I haven't seen anything to make=
+=20
+> me think this is fundamentally or theoretically flawed.
+>
+> If we had a transactional file system we'd reasonably expect a checkout t=
+o=20
+> be an atomic operation -- same timestamp on the files created in that=20
+> step. A discrepancy in timestamps would be considered incorrect; it would=
+=20
+> imply an 'order' to the checkout which, as you say, is order-less.
+>
+> Sowhat could be the bad outcomes if Git created files stamped with the=20
+> point in time of the "git checkout"?
 
-Grom a glance those don't seem broken to me, but I don't know how it
-interacts with your built assets.
+I agree that it's practical in some scenarios, including checking in
+built assets.
 
-So e.g. if you are checking in your *.jpeg files those will be more
-recent than either the *.png or source *.svn, so they won't be built.
+But those that are doing that need to be aware that combining that sort
+of thing with source control tends to upend your build system's idea of
+the world.
 
-This is fast getting out of scope of Git-specific advice, but you should
-run "make --debug" (there's also sub-debug flags) to see if make's idea
-of the dependency graph matches yours.
+E.g. until recently in git.git we had a po/git.pot in-tree, which is a
+"compiled file" (although a plain-text one) that was checked in, and
+dealing with that in make's dependency graph was a (minor) pain
+sometimes.
