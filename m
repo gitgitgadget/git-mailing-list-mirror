@@ -2,160 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A827FA373D
-	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 09:00:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 26BDAC433FE
+	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 09:12:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229641AbiKAJA2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Nov 2022 05:00:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45712 "EHLO
+        id S229976AbiKAJMf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Nov 2022 05:12:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbiKAJA0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2022 05:00:26 -0400
+        with ESMTP id S229645AbiKAJMd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2022 05:12:33 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F34660DF
-        for <git@vger.kernel.org>; Tue,  1 Nov 2022 02:00:23 -0700 (PDT)
-Received: (qmail 5402 invoked by uid 109); 1 Nov 2022 09:00:22 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBD1E625F
+        for <git@vger.kernel.org>; Tue,  1 Nov 2022 02:12:32 -0700 (PDT)
+Received: (qmail 5429 invoked by uid 109); 1 Nov 2022 09:12:32 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 01 Nov 2022 09:00:22 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 01 Nov 2022 09:12:32 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20982 invoked by uid 111); 1 Nov 2022 09:00:24 -0000
+Received: (qmail 21050 invoked by uid 111); 1 Nov 2022 09:12:33 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 01 Nov 2022 05:00:24 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 01 Nov 2022 05:12:33 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 1 Nov 2022 05:00:22 -0400
+Date:   Tue, 1 Nov 2022 05:12:31 -0400
 From:   Jeff King <peff@peff.net>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/2] receive-pack: use advertised reference tips to
- inform connectivity check
-Message-ID: <Y2DgJi6foPyBhycU@coredump.intra.peff.net>
-References: <cover.1666967670.git.ps@pks.im>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] t5516/t5601: be less strict about the number of
+ credential warnings
+Message-ID: <Y2Di/5Hgp6IdSuuk@coredump.intra.peff.net>
+References: <Y2CDrZNgNZ+flJBK@coredump.intra.peff.net>
+ <Y2CD6GBl6ORqKsug@coredump.intra.peff.net>
+ <221101.861qqn5ovf.gmgdl@evledraar.gmail.com>
+ <Y2DNS0W5vgk2Q3qJ@coredump.intra.peff.net>
+ <221101.86sfj33wmg.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1666967670.git.ps@pks.im>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <221101.86sfj33wmg.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 28, 2022 at 04:42:19PM +0200, Patrick Steinhardt wrote:
+On Tue, Nov 01, 2022 at 09:15:00AM +0100, Ævar Arnfjörð Bjarmason wrote:
 
->     - A client shouldn't assume objects to exist that have not been part
->       of the reference advertisement. But if it excluded an object from
->       the packfile that is reachable via any ref that is excluded from
->       the reference advertisement due to `transfer.hideRefs` we'd have
->       accepted the push anyway. I'd argue that this is a bug in the
->       current implementation.
+> > So I really didn't revisit this commit much at all, and was just trying
+> > to save Dscho (or Taylor) the work of having to rebase it, if we go with
+> > my patch 1.
+> >
+> > IMHO it is OK enough as it is, but if I were writing it from scratch I
+> > probably would have given the rationale that the tests are insiting on a
+> > dumb, sub-optimal behavior. And flakes or inconsistencies aside, they
+> > should be asserting only the presence or absence of the message. And
+> > probably would have left each at "grep" and dropped the test_line_count
+> > totally.
+> 
+> Do you mean that even if we fix the bug and consistently emit one and
+> only one such message you'd like to have the tests not assert that
+> that's the case?
 
-Like others, I don't think this is a bug exactly. We'd never introduce a
-corruption. We're just more lenient with clients than we need to be.
+No, I wouldn't mind it, if that is a bug we've fixed. I just mean that
+the tests as written never wanted to say "3 is the absolute right number
+of times to write this message". They only put "3" there because it made
+things pass.
 
-But I don't think your scheme changes that. In a sense, the tips used by
-"rev-list --not --all" are really an optimization. We will walk the
-history from the to-be-updated ref tips all the way down to the roots if
-we have to. So imagine that I have object X which is not referenced at
-all (neither hidden nor visible ref). We obviously do not advertise it
-to the client, but let's further imagine that a client sends us a pack
-with X..Y, and a request to update some ref to Y.
+> I do think that UX is important enough to test for, particularly if
+> we've had a bug related to that that we've fixed. I.e. if something in
+> the direction of my [1] goes in.
 
-Both before and after your code, if rev-list is able to walk down from Y
-until either we hit all roots or all UNINTERESTING commits, it will be
-satisfied. So as long as the receiving repo actually has all of the
-history leading up to X, it will allow the push, regardless of your
-patch.
+Sure, I don't mind at all a test for it. In the short-term, if you want
+a test that fails, I'd prefer it be separate so that we can test the
+useful existing behavior that _does_ work. If the multiple-messages bug
+is fixed, I don't mind folding them together into a single test that
+passes.
 
-If we wanted to stop being lenient, we'd have to actually check that
-every object we traverse is either reachable, or came from the
-just-pushed pack.
+> > It is not even clear to me that the remote-https is the one being
+> > swallowed (at least, I have not seen an argument or evidence that this
+> > is so; it does seem plausible).
+> 
+> It is the case, the only ones that are going to be duplicated are the
+> "warn" ones, because for "die" we'll die right away in the parent
+> process.
 
+Right, I understand why "die" produces only one. My question was when we
+produce 2 on Windows (sometimes?) but 3 elsewhere, are we sure it is the
+one from remote-https that is eaten, or could it ever be one of the
+others?
 
-There's also a subtle timing issue here. Our connectivity check happens
-after we've finished receiving the pack. So not only are we including
-hidden refs, but we are using the ref state at the end of the push
-(after receiving and processing the incoming pack), rather than the
-beginning.
+In a sense we do not need to worry about "why is it sometimes eaten" if
+the bug is fixed to produce only the one message. But it may point to a
+separate and interesting problem (e.g., is stderr from remote-https not
+reliable?).
 
-From the same "leniency" lens this seems like the wrong thing. But as
-above, it doesn't matter in practice, because these tips are really an
-optimization to tell rev-list that it can stop traversing.
+> >> > @@ -654,7 +654,7 @@ test_expect_success 'push warns or fails when using username:password' '
+> >> >  	test_must_fail git -c transfer.credentialsInUrl=die \
+> >> >  		push $url_userpass 2>err &&
+> >> >  	grep "fatal: $message" err >warnings &&
+> >> > -	test_line_count = 1 warnings
+> >> > +	test_line_count -ge 1 warnings
+> >> >  '
+> >> 
+> >> ...but then why are we modifying these codepaths that have nothing to do
+> >> with invoking the remote helper, i.e. where we die early before we get
+> >> to that?
+> >
+> > If you're arguing that we should only do s/= 3/-ge 1/ for the test that
+> > is flaking, I could buy that.
+> 
+> I'm saying that if we're doing a handwaivy-fix and saying "sometimes the
+> message gets swallowed" and fixing this blindly without checking how it
+> works, then changing "= 1" to "-ge 1" doesn't make sense.
 
-If you think of the connectivity check less as "did the client try to
-cheat" and more as "is it OK to update these refs without introducing a
-corruption", then it makes sense that you'd want to do read the inputs
-to the check as close to the ref update as possible, because it shrinks
-the race window which could introduce corruption.
+Right, I'm fine with that (I perhaps should have said something stronger
+than "I could buy that"). As I said, I was mostly just rebasing Dscho's
+patch and I think it was good enough in the sense that it was
+hand-waving away the whole "there may be more than one" problem.
 
-Imagine a situation like this:
+But I do agree that we'll never see more in the "die" cases, and there
+is no need to change them.
 
-  0. We advertise to client that we have commit X.
+> > I thought the point is that the outer program calling the helper would
+> > consistently produce the error, always yielding at least one instance.
+> > The helper one is generally "extra" and undesired.
+> 
+> Yes, exactly. Which is what my fix[1] the root cause addresses.
+> 
+> Anyway, I'm just trying to help here. If you/Johannes/others want to go
+> with the "hotfix" as-is that's fine my me.
+> 
+> I just don't see what the hurry is, it's been this way for two releases,
+> if it's flaky that's been the case for months, I'd think we could just
+> fix the root cause.
 
-  1. Client starts pushing up a pack with X..Y and asks to update some
-     branch to Y.
+It recently bit me twice, so maybe I am giving it more urgency than it
+deserves (or maybe something changed in CI to make it more likely).
 
-  2. Meanwhile, the branch with X is deleted, and X is pruned.
+I do think it would be nice to fix it. I don't love your patch for the
+reasons I replied there (not your fault; it's inherently a crappy and
+complicated problem). In the meantime, I'd like to see CI fixed, as
+it is wasting developer's time. And that's why I called Dscho's
+loosening "good enough". It is hopefully a temporary state anyway.
 
-  3. Server finishes receiving the pack. All looks good, and then we
-     start a connectivity check.
-
-In the current code, that check starts with the current ref state (with
-X deleted) as a given, and makes sure that we have the objects we need
-to update the refs. After your patches, it would take X as a given, and
-stop traversing when we see it.
-
-That same race exists before your patch, but it's between the time of
-"rev-list --not --all" running and the ref update. After your patch,
-it's between the advertisement and the ref update, which can be a long
-time (hours or even days, if the client is very slow).
-
-In practice I'm not sure how big a deal this is. If we feed the
-now-pruned X to rev-list, it may notice that X went away, though we've
-been reducing the number of checks there in the name of efficiency
-(e.g., if it's still in the commit graph, we'd say "OK, good enough"
-these days, even if we don't have it on disk anymore).
-
-But it feels like a wrong direction to make that race longer if there's
-no need to.
-
-So all that said...
-
->     - Second, by using advertised refs as inputs instead of `git
->       rev-list --not --all` we avoid looking up all refs that are
->       irrelevant to the current push. This can be a huge performance
->       improvement in repos that have a huge amount of internal, hidden
->       refs. In one of our repos with 7m refs, of which 6.8m are hidden,
->       this speeds up pushes from ~30s to ~4.5s.
-
-I like the general direction here of avoiding the hidden refs. The
-client _shouldn't_ have been using them, so we can optimistically assume
-they're useless (and in the case of races or other weirdness, rev-list
-just ends up traversing a bit further).
-
-But we can split the two ideas in your series:
-
-  1. Feed the advertised tips from receive-pack to rev-list.
-
-  2. Avoid traversing from the hidden tips.
-
-Doing (1) gets you (2) for free. But if we don't want to do (1), and I
-don't think we do, we can get (2) by just teaching rev-list to narrow
-the check.
-
-I see some discussion in the other part of the thread, and we may need a
-new rev-list option to do this, as mentioned there. However, you _might_
-be able to do it the existing --exclude mechanism. I.e., something like:
-
-  rev-list --stdin --not --exclude 'refs/hidden/*' --all
-
-The gotchas are:
-
-  - I'm not 100% sure that --exclude globbing and transfer.hideRefs
-    syntax are compatible. You'd want to check.
-
-  - these would have to come on the command line (at least with the
-    current code). Probably nobody has enough hiderefs patterns for that
-    to be a problem (and remember we are passing the glob pattern here,
-    not the 6.8M refs themselves). But it could bite somebody in a
-    pathological case.
+But I would be just as happy to see a similar patch which just changed
+the 2/3 lines to "-ge 1" (or just a straight grep).
 
 -Peff
