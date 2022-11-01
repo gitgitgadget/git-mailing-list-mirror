@@ -2,100 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6FB9C4332F
-	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 22:03:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77610C4332F
+	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 22:12:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231124AbiKAWDd convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 1 Nov 2022 18:03:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43116 "EHLO
+        id S230419AbiKAWMH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Nov 2022 18:12:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230357AbiKAWDb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2022 18:03:31 -0400
-Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5895558A
-        for <git@vger.kernel.org>; Tue,  1 Nov 2022 15:03:28 -0700 (PDT)
-Received: by mail-il1-f177.google.com with SMTP id o13so8551464ilc.7
-        for <git@vger.kernel.org>; Tue, 01 Nov 2022 15:03:28 -0700 (PDT)
+        with ESMTP id S229516AbiKAWMF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2022 18:12:05 -0400
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB89E13D6E
+        for <git@vger.kernel.org>; Tue,  1 Nov 2022 15:12:04 -0700 (PDT)
+Received: by mail-ed1-x535.google.com with SMTP id x2so23800285edd.2
+        for <git@vger.kernel.org>; Tue, 01 Nov 2022 15:12:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=SOTgL0pCF74bJ5pUaMG3hDmHCm2WkkRr6kxzVGvoFbg=;
+        b=MWbkZA4O0P9yZu/wG/h+vG6XEtMTxjRqi1fyTIHktTrumCUJNYbP02DS8WX7i/9JlE
+         btKNOWhe+zu5Vlgi9wKFyEcZclzl7b4S9MYENEU4TC44TVaL0j2HXXDtzs0m+u7o63Zc
+         aGM4Ku9Njo5Y0kEd4x5g2u/K3eDKVyoalBXapESi/qT18AdaDrw8Ax1Gv/K8D3CkeJR/
+         wUlVnAa9vU2e1FurAVrLNJptwLruqwdYW2ktZCyiNI6F+cnIdZk3WtmKZc9EK0nmjhCV
+         rbWue5XU0XQ7qttLwI/bCC47jwX9FAk79tVm0sZAyv1nlGcRfYUlO3VYzH9UrvDzwcuF
+         89nQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/T/ciDLGtT2pDkQbjUPNckbRg2y/hkcTEA4cEf0Rn80=;
-        b=1/BDMrFpT0qsYBvCjF9DSrhwnbEiTKr17WqQI/giLBErLu4C5z+i/Mfbo6L0zxLuLx
-         zd+GJzexKIiMfe0z5P6EbKr9jJWd51SpWTl0hcPoLcB2K75qVXdFtbx9lLvowMx8BqP5
-         wZ0ic/f+xsPEQWRyNdkVWXpDXKBKZompK4GeFVuRqjzo0tdzQWB7BL3LBgzEAiM/xZC+
-         ycPYGzsV6PfWFwnOpFurVQXzyoLgoChbwx6ZEcdg8/Cu6gtEYexW0+U09fZO3pjCLF1m
-         n/Ih6WskuzrziGN9c8N9OOPjwA4t1gjRHfzzKKCWl+UyORQvpqbRWzR352PETgMA8gOS
-         fSEg==
-X-Gm-Message-State: ACrzQf3+5wPzJDrb0GgexOuK28BALGaax4mR1ed6IUcv5yKLX6Z5MWNH
-        OaLtFZsEaFiazDJ9LuCTrpvzRRJuMBLGCeqzbe7bKDDEdR4=
-X-Google-Smtp-Source: AMsMyM6uaj5p8NAKEQE0sEMGEZrcxWwDYvtVsXYnLyvgky/QInnc142aK8fd+24LaK4n7YvMjAq4emEJDbOGaj9YS0w=
-X-Received: by 2002:a05:6e02:1905:b0:2ff:a163:8497 with SMTP id
- w5-20020a056e02190500b002ffa1638497mr13534058ilu.147.1667340208105; Tue, 01
- Nov 2022 15:03:28 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=SOTgL0pCF74bJ5pUaMG3hDmHCm2WkkRr6kxzVGvoFbg=;
+        b=g0AGiuFkRCX8rE1ogXqGwrmhoLJmuknjWpLt3CE+qOFv+9x+BCrFtq4BJoo/4CEMzj
+         F3CbKFN6d5Od2fQy1csWJM8uq7aNgW8Eum9F6lUqDKM+9rkV0z1TYv0JPbolZSRzTJKH
+         lzh//ulMquEby+4qCZjwqYtRl9TYYDbgrhPd6Oc4v+92ZiIzkxZnHN7fMUEsAwUyeVsr
+         AcJ9NpA9DDurJumLqMwkra4y912Uz34MBM1/26Qa+lElXcSb7j21piW9wkYr4B+9nrsM
+         MLzaDC/0vN4F3xY1uFmh3rOxhqRWIWldFtx7bFJ41hvKKPxeyRHMkWpArZt2VVFGzWfS
+         scXg==
+X-Gm-Message-State: ACrzQf09qojkd1OkDW41zuNoOQZEMjFUXZd/U9BIt+7WtqO8RM+pdzAz
+        DHqNSmoOA3spoUgXGHWpy68=
+X-Google-Smtp-Source: AMsMyM42dByh52/RUcKiohCbDmquKFFtIqmrmfHd/Iu5rOFhPphPJjDKHcVFg7ubUjzpM8BWfMUyvQ==
+X-Received: by 2002:aa7:da42:0:b0:461:9465:b019 with SMTP id w2-20020aa7da42000000b004619465b019mr21923630eds.144.1667340723142;
+        Tue, 01 Nov 2022 15:12:03 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id gw18-20020a170906f15200b0078d3a075525sm4671219ejb.56.2022.11.01.15.12.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Nov 2022 15:12:02 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1opzUI-00Bal1-0H;
+        Tue, 01 Nov 2022 23:12:02 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [RFC PATCH] fetch: stop emitting duplicate
+ transfer.credentialsInUrl=warn warnings
+Date:   Tue, 01 Nov 2022 22:57:46 +0100
+References: <pull.1399.git.1667245638.gitgitgadget@gmail.com>
+        <RFC-patch-1.1-0266485bc6c-20221031T204149Z-avarab@gmail.com>
+        <Y2CFRJLFRXvGwFBC@coredump.intra.peff.net>
+        <Y2Doe0ZGb3Zmmmen@coredump.intra.peff.net>
+        <221101.86o7tq4vsn.gmgdl@evledraar.gmail.com>
+        <Y2GI0R6pJmdZNgHn@nand.local>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <Y2GI0R6pJmdZNgHn@nand.local>
+Message-ID: <221101.8635b24959.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <f1a5f758-d81f-5985-9b5d-2f0dbfaac071@opensuse.org>
- <CAN0heSryxTbJXrRs7-aCNb6u9qXJnYjX7++Ji8jd=YeYTJfoaA@mail.gmail.com> <CAN0heSoc+jKxseyyR-=8+ATc8rdY5UyFWZPepaQsGn9m+Hpfmg@mail.gmail.com>
-In-Reply-To: <CAN0heSoc+jKxseyyR-=8+ATc8rdY5UyFWZPepaQsGn9m+Hpfmg@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 1 Nov 2022 18:03:16 -0400
-Message-ID: <CAPig+cS184iKk6icG6ML=X+6Ng=fJyfic8izFyp1hT40cChm4g@mail.gmail.com>
-Subject: Re: git can not be built for s390x since update to git-2.38.0
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Sarah Julia Kriesch <sarah.kriesch@opensuse.org>,
-        git@vger.kernel.org, andreas.stieger@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 1, 2022 at 3:41 PM Martin Ågren <martin.agren@gmail.com> wrote:
-> On Tue, 1 Nov 2022 at 20:05, Martin Ågren <martin.agren@gmail.com> wrote:
-> > > There is no real test error output, but we can identify, that it is
-> > > happening in the test part with check-chainlint.
-> >
-> > > [  387s] make[1]: *** [Makefile:83: check-chainlint] Error 1
+
+On Tue, Nov 01 2022, Taylor Blau wrote:
+
+> On Tue, Nov 01, 2022 at 02:07:39PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> > You can also put it lower in the function, when we actually warn, which
+>> > saves adding to the environment when there is nothing to warn about
+>> > (though this way, we avoid doing the redundant work).
+>> >
+>> > Compared to munging the config, this seems shorter and simpler, and
+>> > there's no chance of us ever getting confused between the fake
+>> > "suppress" value and something the user actually asked for.
+>>
+>> Sure, we can do it with an environment variable, in the end that's all
+>> git_config_push_parameter() is doing too. It's just setting things in
+>> "GIT_CONFIG_PARAMETERS".
+>>
+>> And yes, we can set this in the low-level function instead of with
+>> git_config_push_parameter() in builtin/*.c as I did. I was aiming for
+>> something demonstrably narrow, at the cost of some verbosity.
+>>
+>> But I don't get how other things being equal you think sticking this in
+>> "GIT_CHECKED_CREDENTIALS_IN_URL" instead of "GIT_CONFIG_PARAMETERS"
+>> helps.
 >
-> On further reading, it appears this error happens in the
-> "check-chainlint" target without even checking this environment variable
-> (that happens elsewhere). I doubt my original suggestion will be a
-> complete workaround.
->
-> One approach might be to patch the "check-chainlint" target into a
-> no-op, possibly combined with turning off the chainlinting as I
-> mentioned above. My makefile-foo is unfortunately not sufficiently
-> advanced to immediately spot what might be going on here.
->
-> At any rate, all of the above is just about working around the issue. As
-> for a proper fix, let's hope someone like Eric can chime in.
+> I vaguely prefer calling this GIT_CHECKED_CREDENTIALS_IN_URL instead of
+> stuffing it in the configuration.[...]
 
-Makefile-foo or not, there isn't much to go on here since the `make`
-output doesn't show the actual problem. Squinting at the
-`check-chainlint` target in "t/Makefile", I wonder if the problem is
-with the line-splicing and missing command termination; that is, it
-could just be a shell syntax error which is picked up by more strict
-shells such as `dash`. In particular, in this hunk of code:
+To be clear, I'm asking if there's cases where we think one method or
+the other produces different results, which I understood Jeff hinting
+at.
 
-    { \
-        echo "# chainlint: $(CHAINLINTTMP_SQ)/tests" && \
-        for i in $(CHAINLINTTESTS); do \
-            echo "# chainlint: $$i" && \
-            sed -e '/^[   ]*$$/d' chainlint/$$i.expect; \
-        done \
-    } >'$(CHAINLINTTMP_SQ)'/expect && \
+> Instead, we're saying: "regardless of what value the user assigned
+> transfer.credentialsInUrl, we can avoid looking at it because we have
+> already checked for the presence of credentials in the URL".[...] All
+> other things *aren't* equal here, since we're not lying to
+> sub-processes about configuration values set by the user.
 
-if you add a semicolon after `done` like this:
+The user is asking us to warn about storing certain things in config, we
+know we already warned, so we're looking to flip that value to the
+"quiet" setting.
 
-    done; \
-
-does that fix the problem?
-
-If not, then you may want to remove the "@" from the "@mkdir -p ..."
-in the body of the `check-chainlint` rule in t/Makefile so that `make`
-will print out the actual command(s) it is running, and then invoke
-the target manually with `make -C t check-chainlint`. With the actual
-commands visible, copy/paste in the terminal to run each command
-individually and check the exit status $? after each command
-invocation to find which, if any, is failing.
+If you consider that overriding I don't get how doing so via a different
+environment variable changes anything. It would be doing the same thing,
+just making it less obvious.
