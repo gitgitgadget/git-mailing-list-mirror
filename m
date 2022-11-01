@@ -2,155 +2,178 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F7CAC433FE
-	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 13:55:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDCCBECAAA1
+	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 14:02:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229982AbiKANzR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Nov 2022 09:55:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54460 "EHLO
+        id S230118AbiKAOCz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Nov 2022 10:02:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229824AbiKANzP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2022 09:55:15 -0400
-Received: from CAN01-YQB-obe.outbound.protection.outlook.com (mail-yqbcan01on2115.outbound.protection.outlook.com [40.107.116.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECD001929A
-        for <git@vger.kernel.org>; Tue,  1 Nov 2022 06:55:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=FnTv3+l/ljyPctEgi+w/NONOI0PCnQ1lMZ122cUEN5tb1fYsBSwPWDEklN+nBgw7v7fC8ikmTmzTNY53DvXEjwUIkrH+EsVS0+o5ySImkxGpFaLyPqH95p+/DjJ4IBtIMMP/6VlW0JU0RD861UxmumpHJJLYplSKDnKdLamyqs+VNEP7BcUa4cCd0NZEaWnxUkrh+KcTLxKNavLwZyWIrixv1oCIGKxPqPHlW8zw6n7YSMWazsflmeSSOll3R7aHT6oguJvZFn2q8SPSMk/2oZghp8Z9U10LjenLYOW2ZUOKLxv6eKX9iLGod0Dp9+v8TU9kTOi35e0+92dAeNNY7A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=v60RmpbHIVrseM8UjwSgU2j/ji75Lpm53RUx+Znif2U=;
- b=Ybjbe7M8bcvzP42m/WnGwYeAb3ttSveNZJ/xdvNwkvl/e/gSfR/9T4V63mhDWlExMaV4XLs4ZyD/wX0CsdtLjtqZvM1ZpVCRlO99lNpyPOhAZw+95ONeJ+5MGyiDlbauUXS9RPDK/vQjn9aFC/ADRbfzUzje4+0z4bLjN/Y0eHOwuSZLf8Sb5K3DNY6g8UlPxHYsfW5Nxuwc9ShiWgxmSdfa/kq8gWS1pEppG3hDkp9HLWv3PTVemS+/ly/nY8p0Vri1rAyvSQajGNwvmapX1Kcn4RdDLf43Elu1MZFRLlRdLSmHKZ7mfOPJuYpd+oGhwXNKncftayM2PL49CDuR9A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=xiplink.com; dmarc=pass action=none header.from=xiplink.com;
- dkim=pass header.d=xiplink.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=xiplink.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=v60RmpbHIVrseM8UjwSgU2j/ji75Lpm53RUx+Znif2U=;
- b=QCmvZtRz5LTGx1TzeewGgcewjUV+RkKSyBzcpCkpTc9kOVCMs9Qb2E7/RxH3mErQLUGXLD8GkqtVE6Ex441ArAeR9ISliA2+hW0Ew7lZF76boLMuYk0OQBk2v82x1Lk6p6y2ZRf+AOWrY1VR44RlsLjYQlZpzPv660kbtE5vwvDFDgZdpizjzuz+WnE5qAPdRnGiqbKooCbyn9aFTIfvJF6ht1ZeMHvEP9WfrJ3gKuBHinCPkB2Hjzwwyr+nSl2M6eZDtUllLEjs7xbEhhpYtx+Asphd0up9EGG+lgHJGs6ZaiHedJ2b99GY6LvC6ee2D36dSmsNhRlPPhj2Yek3NQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=xiplink.com;
-Received: from QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c00:30::29)
- by YQXPR01MB5833.CANPRD01.PROD.OUTLOOK.COM (2603:10b6:c01:3a::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5769.19; Tue, 1 Nov
- 2022 13:55:12 +0000
-Received: from QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::1400:5589:c949:bb7b]) by QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
- ([fe80::1400:5589:c949:bb7b%4]) with mapi id 15.20.5769.021; Tue, 1 Nov 2022
- 13:55:12 +0000
-Message-ID: <c060312e-0d35-8439-85dd-920b172c90be@xiplink.com>
-Date:   Tue, 1 Nov 2022 09:55:11 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.2
-Subject: Re: Consist timestamps within a checkout/clone
-Content-Language: en-US
-To:     Mark Hills <mark@xwax.org>, git@vger.kernel.org
-References: <2210311614160.25661@stax.localdomain>
-From:   Marc Branchaud <marcnarc@xiplink.com>
-In-Reply-To: <2210311614160.25661@stax.localdomain>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: YQBPR01CA0136.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:c01:1::36) To QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
- (2603:10b6:c00:30::29)
+        with ESMTP id S229982AbiKAOCx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2022 10:02:53 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A6301A396
+        for <git@vger.kernel.org>; Tue,  1 Nov 2022 07:02:52 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id n12so37147350eja.11
+        for <git@vger.kernel.org>; Tue, 01 Nov 2022 07:02:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=yHN/xbeuwUIUhdjSdfXIB76ZxZ9ltXeeaqb0a2IWO3c=;
+        b=JgUYe6s/nHQKtsLgnJPfv8JCVoj6aUqKn51VtLFI7AzuFah5kiZAQEsnMVOwpm6o+q
+         ixAMcGSqBUdTD7ivaH08FgqdEMrWh+HGOTNnxAvTv5gqN5td/2iRaMDc7GQnRclIrZPm
+         xOUe5r5BjC4cKXzUbVWTnuy3AFfZ/S5tkeAW6FZGAFP9ExDLzo7IBCrDxBdt1bf+fK6G
+         w2+cA7cibKlSzqRgU9jmVSBov8TuQEgrdz2Zv7fR7n/ZMu4dQUQHxZZpmZ2R8rIUBxKZ
+         8uQCzLns7KzIfCbv3K0eDG61wdCCAJsFm6/g6zIMbKwLor0eI7jiYd35CTsFGumSLG2V
+         dnjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yHN/xbeuwUIUhdjSdfXIB76ZxZ9ltXeeaqb0a2IWO3c=;
+        b=ptIP9+uRZz7ULhr/8ypmamClYRiB4k+4vvBz00rRI6Jme3Ub3Wt857ryU/UcZ2Fp9q
+         iZ6G/67Vc96J9JCMr91v0MkyGrB0RT1KZxQj0w0LbfMxQ4vUoOJjupEAg0UoygI+A9h0
+         HzknX6NbqAEoFkk0YvF4leBkY8LMy28D8ifqd+cEXKWZninbTHX8qx+elhS3jjwit1Y8
+         pKKTVtQd/PW8sOP9Hc9T1OyEANzq4L/hgMvVk6InIJ5uYgdzwJGs0xmxusmWraNLAdtC
+         Y85SgGTo5n4O5+9+GLBs47dB1aRsXF1omB6c9X1oe8vEt8BDEH41nXVDk/xVHbB279gr
+         t5Dw==
+X-Gm-Message-State: ACrzQf0IAigcci9OOtLC0EVIr+AJz/cmDxsfYLxyfjI6Jo2a04ZfMLWb
+        SDAQkFcMQSZ5qWiuYixfKRQ=
+X-Google-Smtp-Source: AMsMyM7GIjHJUQ5X2p2nVdVIw9CmyOWxuhJ1lQBoQ6elE5a72Y1UOvvCc68cC1zfGdrIuAmn+Pl++A==
+X-Received: by 2002:a17:906:444d:b0:7ad:eb7f:8697 with SMTP id i13-20020a170906444d00b007adeb7f8697mr3615181ejp.770.1667311370429;
+        Tue, 01 Nov 2022 07:02:50 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id la10-20020a170907780a00b0079dbf06d558sm4172302ejc.184.2022.11.01.07.02.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Nov 2022 07:02:49 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oprqq-00BKy9-1y;
+        Tue, 01 Nov 2022 15:02:48 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [RFC PATCH] fetch: stop emitting duplicate
+ transfer.credentialsInUrl=warn warnings
+Date:   Tue, 01 Nov 2022 14:07:39 +0100
+References: <pull.1399.git.1667245638.gitgitgadget@gmail.com>
+        <RFC-patch-1.1-0266485bc6c-20221031T204149Z-avarab@gmail.com>
+        <Y2CFRJLFRXvGwFBC@coredump.intra.peff.net>
+        <Y2Doe0ZGb3Zmmmen@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <Y2Doe0ZGb3Zmmmen@coredump.intra.peff.net>
+Message-ID: <221101.86o7tq4vsn.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: QB1PR01MB2451:EE_|YQXPR01MB5833:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6e0c2784-a80a-45a6-0853-08dabc10b271
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: M37G/KaeHkkWThsUk0an9YbfkomsvySuEW3xaVPgEtXLL5THrDqFEQJi6NUyVMpq5mduTHKJ+wMn4TGW3vMajX6bHE3SETfGIE+4p6avmM0yo0j3jeAsh2m257UiSw+SVOnRW0024yFb3qE2Yr0c+mP7PPeJJMsDKBHnov3fDSW2c/IOz0oqASDm2MDS0Iyqh82GiNWVFuz8YzqOXinQ5CMaLKoT8sDOaJODn5OFehvMH3/o96gTB6ZLt2/NlVy+cbBKWG+hcaZwL5fnu4dhv/FqrFyX/fM5oWKl76tIckew8oj6n5Jwmju4cqr6IUnnjeyqsNGazbJ6Nas3WDqqN80LqXY/TfkSVMKgmjO/l9E8FAyV+tZfrQXNYIZqKqmN5D8yNRKBzP0VM7Rge87dzjWLvsK9CZ56cIweWiJ4EdizheqCZ0QIOIa0XkAnb2kDq36Gk/Cv6wLihfnypVULhF25oZQkw1QWWczx+jnogyJl/WhH/0bN/xEfUFEZ302IRiiwJYJ0qzsd/Nbd2X60DnlRd+3AtHCAyoMMHBbFkvYYrP7/QniQaFKOTzFwlMxJfQCB5xCb7S0ZtmnQkw78/o3CFOM7zycY1+cbLUILPKV/1PG7Ny2VSpWttVa6X6mgivkJxBFHmp6G4/XJkWYYdQk+WEszhWIS7iRwKn0KvpMzK0xi3EmmI0aAiEvpHPeoc/A4gsaQ+2PAOOBy6MyFdm9uy6SwFlOb0VrNY3SE00qA20Rmrcu790mcm75LEQa7sPTe2fc/zGaeyA6D6U6MRPsIK5WMFjIr7vPekLJnjS+2PyTe82JEXTYDo5QwDi9kMNDvvrGbg8rrZGa+1B0JNw==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230022)(136003)(366004)(346002)(39840400004)(376002)(396003)(451199015)(83380400001)(86362001)(38100700002)(31696002)(5660300002)(2906002)(66556008)(6512007)(26005)(66476007)(66946007)(4001150100001)(41300700001)(8936002)(53546011)(6506007)(966005)(2616005)(186003)(6486002)(8676002)(316002)(478600001)(36756003)(31686004)(45980500001)(43740500002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Y0c5V2VUM0o5M09xMlhoeHh5N3E3WmNzbXFJaUtFMlV4U2tmOXdvQU5jRkEr?=
- =?utf-8?B?V1o5ckNNUG9ZcGJWckg4MW40YWtMUjl1emVXUk9iNko1VFRvV0t4MW1TMmg1?=
- =?utf-8?B?NUMwWUZuWjJKQXh0eE9NMVBJRzU3Uk5sK1BxcmFham4wRUVIdVdwUDBGdm5N?=
- =?utf-8?B?dDlscStOQ1FCODNCSjVEbDNGMTBlcUlobit6MkN2VHV3T0VkdVZScm8wdVQx?=
- =?utf-8?B?QWZTOU9pU3JGTWlBa2owRTZRYm0zY1lHaDh4SExWUnJGNFRvZXlXNXZIaHFn?=
- =?utf-8?B?eVlOV2tZVnpvNVFMeEw1b3AyUDhuamFneVNMc2dvTXFreDBBT29MKy9sSEVV?=
- =?utf-8?B?WHdhdCtSQWc2UXZZeWJWQW1ET05KZnJiM0R5cStXV3ZpNmJWWHlLdzEvcUx4?=
- =?utf-8?B?VHV1V25WQndLY0tKSTcrUXlVRlp0a2syYnZwNEhSazJtTXFvVEI2a05YYXpx?=
- =?utf-8?B?S2R0NXVtenYxWGxSZ290MmUrcWVHKzNTK2Q4bnBTSzdzQUI2b2QrLzgyc2Zq?=
- =?utf-8?B?QnBRa3JpZ0ptSTBDd1dVOHJuV1JIbEE1OG1oOTEvM3RMdm0wU0NrQ3JWWlFS?=
- =?utf-8?B?YmNwZG5Lc0RHQ1dKcktubGxqaVVud1RNajdycGVGSkRuS2o5b0hZb1QzOWFR?=
- =?utf-8?B?bksxYWt6R1pKWjdzcVFuei9HRlNaZzZYNTdDWGNuUVJML3NrWEthMFJqcnpw?=
- =?utf-8?B?aEt5Nnorck5HRmxBV3FSNkpYaDRYVXdUeFVMUXRLcGYycGphZVhnNzIrMmlT?=
- =?utf-8?B?QlVsa2hqQ1VNRnJaZHRWaFZVQUpNVHVyS3JNcnJQUXpIZGxwZldWdE4zd2lv?=
- =?utf-8?B?V1JsQjlLckVmS3FYRnpleVZmVmdSZUdZSHI0SFlkdHFOSmVjS09iVmVyNWFy?=
- =?utf-8?B?bkdPQnR6cmVGRU1HZ0N2UUQ1bDZqODRjNE5pQ0Zqb1hPa1hIdUN2YVE1WjB4?=
- =?utf-8?B?WUFuT25UNFRndU5UUk5pQlorK2FFYmtPS3h1b3hYYWdvdUtQU00vdUNzK09J?=
- =?utf-8?B?WVc2b1hHc21JYlBiSUlOSitvenJMc0Vhd3Q3a213alJlTzlEQ1dvZi9McjZU?=
- =?utf-8?B?em5TSHN4TU9iSDNwQkV3Uk55czVRWlM2K3Z2M2paUlJCRVZRZmVCWmQyeDdG?=
- =?utf-8?B?SFpXRzBGN3NaZThSaDUzRGw1ZFUrMW90MDE1UGxwQ1drbG1iVkVFVVcrcW1n?=
- =?utf-8?B?QXdkLzRhQlFnMzBsOFBlSTBZRW5RY2FoNkNwMWV2clE0cjdibnlUNW5mZkl4?=
- =?utf-8?B?dk55MSt3U3doNXNCWGtSd1dBV2JBUTdFY1ZNT1FqSDh0bS94WS9XSy9jeVA4?=
- =?utf-8?B?SnNaeDhhdzlDajk2R2I2UUxrMGhuN2xNYnBnbE85NkIwN1lXdWIzQktRcW9M?=
- =?utf-8?B?YzV4TUdiWnZQNW1xK2lnRUI5NHlUcHpXdmJPZlIrb1ZyQXlHRU4ySGlBOHRz?=
- =?utf-8?B?cUcxTXE5UDIzNWJocXcvN2VqNHBkVnJtTWZpeVpaN3lYL2NVc0x3NFZWOS9u?=
- =?utf-8?B?VW9JQjZyVTdSSlVjYzIvZUNJMFVvU1kyZi9SR2hzd2RsUVpoVXJpWDFNV1Fj?=
- =?utf-8?B?NGtreVZ3WWZqc2V5NDE2VG1JdU1sSmhveDRxSG5XUjE0V2UwbDZHUEh6REhV?=
- =?utf-8?B?T2lTenBNZ1c2RVIwVlpLbEtSaG8yWEs1RUh1MGVBUmwrQzJmbnJrMHo3ZlpO?=
- =?utf-8?B?TXNiNGg1ampGa1puaVkvQWQ1NmdtTEU1OE9sR1dLSVZFYjBsOXJ5YTRkV1Y1?=
- =?utf-8?B?SXNsUEJud0hHcEJoc1dhR2Q5WU9rVmpzZGxjWFdNaVZXRVlnUU5CL3lpazhK?=
- =?utf-8?B?S3kxdXE4VTRKbkljaUFFVVg1QnhMeVpET0dZWGZ6SDF4ZHBSdGxPaVRkdk1y?=
- =?utf-8?B?SXNWZFY2L1RLMTJUcmtuaHd2QlY0eHVuRFRRUTlTSi9HcHFvbEQ3TkJpVEIv?=
- =?utf-8?B?KzRNb1RSN29VM1dMcE15dENWSkRQRVFiQzZIeWFGdkNSUHpyOFFWMUVlWFB2?=
- =?utf-8?B?MHRtN2t2c3RwS2YxYTkwVFBuRnRVTVBRcUhHelRQVC9CK3VFcUloQjNNV2RE?=
- =?utf-8?B?cnZKNTZISE5qMnBxUVJia1hmay9GeWk1OERLUT09?=
-X-OriginatorOrg: xiplink.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6e0c2784-a80a-45a6-0853-08dabc10b271
-X-MS-Exchange-CrossTenant-AuthSource: QB1PR01MB2451.CANPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Nov 2022 13:55:12.7628
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 14f927ba-c95b-4aa6-b674-375045ee9d4d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: fuP0Ryh99U7dFedWYCDuCA0LKVxtMvYLGcn8mHO2Q/QM3B8Szv/WmAUdCVC4m32f5OwsY1KVEEEogsenFgLelQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: YQXPR01MB5833
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On 2022-10-31 15:01, Mark Hills wrote:
-> Our use case: we commit some compiled objects to the repo, where compiling
-> is either slow or requires software which is not always available.
-> 
-> Since upgrading Git 2.26.3 -> 2.32.4 (as part of Alpine Linux OS upgrade)
-> we are noticing a change in build behaviour.
-> 
-> Now, after a "git clone" we find the Makefile intermittently attempting
-> (and failing) some builds that are not intended.
-> 
-> Indeed, Make is acting reasonably as the source file is sometimes
-> marginally newer than the destination (both checked out by Git), example
-> below.
+On Tue, Nov 01 2022, Jeff King wrote:
 
-A fix for this was proposed in 2018 and dismissed [1].
+> On Mon, Oct 31, 2022 at 10:32:36PM -0400, Jeff King wrote:
+>
+>> On Mon, Oct 31, 2022 at 09:47:08PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 B=
+jarmason wrote:
+>>=20
+>> >  * When we invoke e.g. "git-remote-https" (aka. "git-remote-curl")
+>> >    from "git fetch". For those cases let's pass down the equivalent of=
+ a
+>> >    "-c transfer.credentialsInUrl=3Dallow", since we know that we've al=
+ready
+>> >    inspected our remotes in the parent process.
+>> >=20
+>> >    See 7390f05a3c6 (fetch: after refetch, encourage auto gc repacking,
+>> >    2022-03-28) for prior use of git_config_push_parameter() for this
+>> >    purpose, i.e. to push config parameters before invoking a
+>> >    sub-process.
+>>=20
+>> So I guess I don't have any _specific_ thing that goes wrong with this
+>> approach, but it really feels sketchy to me. We are lying to
+>> sub-processes about the config the user asked for. And again, I see how
+>> it works, but I wonder if this kind of approach would ever backfire on
+>> us. For example, if transfer.credentialsInUrl=3Dwarn ever ended up having
+>> any side effects besides the warning, and the sub-processes ended up
+>> skipping those effects.
+>>=20
+>> I know that's a hypothetical, and probably not even a likely one, but it
+>> just gets my spider sense tingling.
+>
+> So inherently this is going to be ugly because it's crossing process
+> boundaries. But the more minimal fix I was thinking of would be
+> something like this:
+>
+> diff --git a/remote.c b/remote.c
+> index 60869beebe..af5f95c719 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -615,6 +615,14 @@ const char *remote_ref_for_branch(struct branch *bra=
+nch, int for_push)
+>  	return NULL;
+>  }
+>=20=20
+> +static int test_and_set_env(const char *var)
+> +{
+> +	int ret =3D git_env_bool(var, 0);
+> +	if (!ret)
+> +		setenv(var, "1", 0);
+> +	return ret;
+> +}
+> +
+>  static void validate_remote_url(struct remote *remote)
+>  {
+>  	int i;
+> @@ -634,6 +642,9 @@ static void validate_remote_url(struct remote *remote)
+>  	else
+>  		die(_("unrecognized value transfer.credentialsInUrl: '%s'"), value);
+>=20=20
+> +	if (test_and_set_env("GIT_CHECKED_CREDENTIALS_IN_URL"))
+> +		return;
+> +
+>  	for (i =3D 0; i < remote->url_nr; i++) {
+>  		struct url_info url_info =3D { 0 };
+>=20=20
+>
+> You can also put it lower in the function, when we actually warn, which
+> saves adding to the environment when there is nothing to warn about
+> (though this way, we avoid doing the redundant work).
+>
+> Compared to munging the config, this seems shorter and simpler, and
+> there's no chance of us ever getting confused between the fake
+> "suppress" value and something the user actually asked for.
 
-Back then, the problem was that as Git wrote files into a directory 
-sometimes the clock would tick over at a bad time, and we'd end up with 
-some files being "newer" than others.  This would sour Make runs as you 
-describe.
+Sure, we can do it with an environment variable, in the end that's all
+git_config_push_parameter() is doing too. It's just setting things in
+"GIT_CONFIG_PARAMETERS".
 
-Nominally this is caused by putting generated files in the repo, but 
-many times that is unavoidable (e.g. you're forking an upstream that 
-puts automake-generated stuff in the repo).
+And yes, we can set this in the low-level function instead of with
+git_config_push_parameter() in builtin/*.c as I did. I was aiming for
+something demonstrably narrow, at the cost of some verbosity.
 
-IMHO, dismissing the problem back then was a mistake.  At the time I 
-advocated teaching Git to give all the files it touches (creates or 
-modifies) in a directory the same mtime (e.g. the time at the start of 
-the checkout operation).
+But I don't get how other things being equal you think sticking this in
+"GIT_CHECKED_CREDENTIALS_IN_URL" instead of "GIT_CONFIG_PARAMETERS"
+helps.
 
-Instead the decision was to do nothing in Git, and instead let people 
-create their own post-checkout hooks to touch the files.  I (and others) 
-argued this was inadequate, to no avail.
+We already pass config to ourselves like that (and via "-c") in other
+places. Can you think of a case where these would be different?
 
-		M.
+The only ones I can think of are e.g. because we know about
+"GIT_CONFIG_PARAMETERS", and not this new custom variable, e.g. in
+"prepare_other_repo_env()", but those seem like exactly the reason to
+use the existing variable.
 
-[1] https://public-inbox.org/git/20180413170129.15310-1-mgorny@gentoo.org/#r
+I can think of potential pitfalls here, e.g. how does it interact with
+submodules? That's one reason I submitted it as an RFC, the tests need
+to be better (with or without this change). E.g. "git ls-remote" is also
+not covered by the upthread patch.
+
+But that's all separate from what the environment variable is named, or
+if it lives in the config space.
