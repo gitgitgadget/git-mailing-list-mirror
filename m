@@ -2,152 +2,329 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDEBBC433FE
-	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 22:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1210BC43217
+	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 22:57:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231368AbiKAWwv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Nov 2022 18:52:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52912 "EHLO
+        id S230229AbiKAW5l (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Nov 2022 18:57:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231359AbiKAWwQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2022 18:52:16 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17CA11FFBA
-        for <git@vger.kernel.org>; Tue,  1 Nov 2022 15:52:02 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id r14so23896632edc.7
-        for <git@vger.kernel.org>; Tue, 01 Nov 2022 15:52:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=A5xW6N7/nMUpG1e7BVOv1btDovF1oSv1iu9OhV4y0N4=;
-        b=hNA+wIq5fJM7NCYMvSU6fCH0NgQ7AiC99Ng4pESqkmarwfJdcm3QsajWtWfxTpph4V
-         S5cjca5qfaPsn9N/4papikqmhpHPayoXN+M58YKnQ1aakD5qDMJb7291dtM0G8qBfhmH
-         MBuwZi+y2oY846R2uwKxedHq6Xv67+Nc9mOlyuftGe54rvdQht7fF3up/1MpneOnPeKr
-         rtTK4rSH7jnRjYxQp72vOrHOeDF4fK5Be8NRkqRUvOATz2Gn1eiDmHQ9r23ZYhezD5tQ
-         Y9S8f1N+Mx+BmO58qc3Z/a3Zmg9CoRo7qw3hFu9sxTRvlxzDdcDXdS7Lmbwix6wIDfTZ
-         2ojw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=A5xW6N7/nMUpG1e7BVOv1btDovF1oSv1iu9OhV4y0N4=;
-        b=0/q6KUG24L03JRxkou48o6qejO7By3cfNUMthdUOaq8LlVbtSFjhg0yOm6FTJxMeM7
-         wcgVxte7E0V8EzePnlPDvEGtSxyQOIwd29YbgroH1dnYt7rDrKIb9L2wBbqIEfSV/fzv
-         wBJ2bMVY8zndBabu1dV54Y15kWykhRPJtJLFguGORrin5fpakuyE0oV4omO3K2XAX5T/
-         gV9N04AOBIpMfPCJba7iF0U/PTebtqf+USDklFrEiv7GXaiKSZnvZ2Oyb5uOHaO9IpqK
-         +EkUm2dJjwvYVYiLg5E3L4w36sjblNBzpuoV1lxhM8bIyOC1LLRxBLy/urtI51Zs5mVs
-         57Uw==
-X-Gm-Message-State: ACrzQf266aKWybjf7013RnR1ODfVup5KhdBhlYm0Y6obKXcbu/iuAzwW
-        BBegBxeVYu2KEF/CL9A990xpqvx2PFO/4Q==
-X-Google-Smtp-Source: AMsMyM4LGJo36Tf4v/0yQYZ8FRZE/jvuBPPEzHga/zHfuL1bngHGJNIT8wrnoxjiNNXBmsv4ch0VLw==
-X-Received: by 2002:aa7:d40e:0:b0:463:3844:f160 with SMTP id z14-20020aa7d40e000000b004633844f160mr15910463edq.296.1667343120394;
-        Tue, 01 Nov 2022 15:52:00 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id x20-20020aa7d6d4000000b004580862ffdbsm5012689edr.59.2022.11.01.15.51.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Nov 2022 15:51:59 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Victoria Dye <vdye@github.com>,
-        Eric Sunshine <ericsunshine@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v3 12/12] CI: add a "linux-cmake-test" to run cmake & ctest on linux
-Date:   Tue,  1 Nov 2022 23:51:36 +0100
-Message-Id: <patch-v3-12.12-c27f620dfa3-20221101T225022Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.38.0.1280.g8136eb6fab2
-In-Reply-To: <cover-v3-00.12-00000000000-20221101T225022Z-avarab@gmail.com>
-References: <cover-v2-00.11-00000000000-20221027T032622Z-avarab@gmail.com> <cover-v3-00.12-00000000000-20221101T225022Z-avarab@gmail.com>
+        with ESMTP id S229926AbiKAW5k (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2022 18:57:40 -0400
+Received: from smtp-out-4.talktalk.net (smtp-out-4.talktalk.net [62.24.135.68])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75AB010549
+        for <git@vger.kernel.org>; Tue,  1 Nov 2022 15:57:36 -0700 (PDT)
+Received: from localhost.localdomain ([88.110.102.84])
+        by smtp.talktalk.net with SMTP
+        id q0CLor5HjjvYDq0CLoNy5X; Tue, 01 Nov 2022 22:57:34 +0000
+X-Originating-IP: [88.110.102.84]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=N89X6F1B c=1 sm=1 tr=0 a=f4UhoLCnUTRb1HgAgoWw0g==:117
+ a=f4UhoLCnUTRb1HgAgoWw0g==:17 a=MKtGQD3n3ToA:10 a=1oJP67jkp3AA:10
+ a=ldyaYNNxDcoA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=3nsOOYR-AAAA:8
+ a=ybZZDoGAAAAA:8 a=HHGDD-5mAAAA:8 a=KTtj4AJ7g_FhsF5v8b8A:9
+ a=AjGcO6oz07-iQ99wixmX:22 a=X8_4EP2Luv2hi8NvPz5g:22 a=0RhZnL1DYvcuLYC8JZ5M:22
+From:   Philip Oakley <philipoakley@iee.email>
+To:     GitList <git@vger.kernel.org>
+Cc:     Self <philipoakley@iee.email>, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
+Subject: [PATCH v2 0/1] extend the truncating pretty formats
+Date:   Tue,  1 Nov 2022 22:57:23 +0000
+Message-Id: <20221101225724.2165-1-philipoakley@iee.email>
+X-Mailer: git-send-email 2.38.1.windows.1
+In-Reply-To: <20221030185614.3842-1-philipoakley@iee.email>
+References: <20221030185614.3842-1-philipoakley@iee.email>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfKKM5Gls9FiTa5ZTXrD2tQtXPyjwD7IBRJCMOVGTbaE56jV7VA50S2bZhdC8NRAk99HCWyopyicY8tg0WBlRENk0P8G/qNE9J7s2FvwH2xbLZy0s9JYw
+ xq69O7PFnuUXDopiunKgBKC4nPP3lGuDGfCwBLPPO9AoU6QnT6Dd2694+WeIDgIYrqMjqiU/RPzQ/KBEoZQlgFTEVGOvOx81q98sYDmQmagmEWZ+2dRHlinR
+ 4TM7p1kYP5+l/yq8pYUjx3UmKS5++rpd0JOl/UnlggjxVeSdCffqKlCY1L7BJ1LzOf1RWFzralxHuZ0hd9/Suw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since [1] the "cmake" build method should work properly on Linux, but
-as seen in preceding commits there were various bugs in it, which are
-hopefully now all fixed.
+Changes since V1.
 
-To ensure that it doesn't break again let's add a "linux-cmake-ctest"
-target to build and test "cmake" on Linux, in addition to that we'll
-also run the tests with "ctest" instead of "make" or "prove", so we
-can assert that testing with that method works..
+Added tests for the [L]Trunc in both t/t4205-log-pretty-formats and
+t/t6006-rev-list-format matching the existing tests, which I'd missed
+before. Thanks to Taylor for point out my error.
 
-This also stress tests running "cmake" (and "ctest") out of a build
-directory that isn't the top-level. The "vs-build" job uses "cmake"
-since [2], but clobbers the top-level "Makefile" and builds in the
-top-level directory.
+Use NULL rather than the empty string "" const which strbuf_utf8_replace
+accepts. Also remove unnecessary brackets.
 
-That was the reason for why we didn't spot that various tests still
-required missing "mergetools/*" etc, which was fixed by using
-"$GIT_SOURCE_DIR" in a preceding commit.
+Added suggestive examples for which end of the string are left and right
+when truncating, along with middle.
 
-Since the "ci/lib.sh" already creates and exports a
-GIT_TEST_OPTS="..." we'll pick that up in our CI, see the preceding
-commit. Because we pass the "--verbose-log -x
---github-workflow-markup" in the GitHub CI as a result the interaction
-with "handle_failed_tests" here works correctly. I.e. on failure we'll
-have saved "t/test-results/*.{exit,out,markup}" files relevant to the
-failing test(s).
+Aside: no attempt at clarifying the potential man page confusion over
+`<` in the '%<(<N>[,..` placeholder character sequence and subsequent
+entries.
 
-1. f31b6244950 (Merge branch 'yw/cmake-updates', 2022-06-07)
-2. 4c2c38e800f (ci: modification of main.yml to use cmake for vs-build
-   job, 2020-06-26)
+[V1] <20221030185614.3842-1-philipoakley@iee.email> 
+A recent enquiry on the Git-Users list asked for horizontal log graphs
+similar to those used in the manual ASCII art graphs. These use single
+or double character short strings for commits.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- .github/workflows/main.yml |  3 +++
- ci/run-build-and-tests.sh  | 13 +++++++++++--
- 2 files changed, 14 insertions(+), 2 deletions(-)
+The existing pretty pretty-formats are unable to truncate to single or
+double characters because of their use of ellipsis `..`. As a starter,
+let's add left and right hard truncation options to the existing
+options as a preparatory step for potential `--horizontal` graphs.
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index bd6f75b8e0f..68c2e134646 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -238,6 +238,9 @@ jobs:
-             os: ubuntu
-             cc_package: gcc-8
-             pool: ubuntu-latest
-+          - jobname: linux-cmake-ctest
-+            cc: gcc
-+            pool: ubuntu-latest
-           - jobname: osx-clang
-             cc: clang
-             pool: macos-latest
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 8ebff425967..a3ae5ff3972 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -45,10 +45,19 @@ pedantic)
- 	;;
- esac
- 
--group Build make
-+mc=
-+if test "$jobname" = "linux-cmake-ctest"
-+then
-+	cb=contrib/buildsystems
-+	group CMake cmake -S "$cb" -B "$cb/out"
-+	mc="-C $cb/out"
-+fi
-+
-+group Build make $mc
-+
- if test -n "$run_tests"
- then
--	group "Run tests" make test ||
-+	group "Run tests" make $mc test ||
- 	handle_failed_tests
- fi
- check_unignored_build_artifacts
+It is noted that the  truncation options do not have any tests yet.
+
+Also cc'ing Nsengiyumva who has proposed to look at unifying the 
+ref-filter and --pretty formats [1]
+
+--
+Philip
+
+To: Git List <git@vger.kernel.org>
+Cc: NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
+Cc: Taylor Blau <me@ttaylorr.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+
+
+[1] https://lore.kernel.org/git/CA+PPyiE=baAoVkrghE5GQMt984AcaL=XBAQRsVRbN8w7jQA+ig@mail.gmail.com/
+
+Philip Oakley (1):
+  pretty-formats: add hard truncation, without ellipsis, options
+
+ Documentation/pretty-formats.txt | 11 +++---
+ pretty.c                         | 18 ++++++++-
+ t/t4205-log-pretty-formats.sh    | 67 ++++++++++++++++++++++++++++++++
+ t/t6006-rev-list-format.sh       | 45 +++++++++++++++++++++
+ 4 files changed, 135 insertions(+), 6 deletions(-)
+
+1:  0f3a12c66c ! 1:  35f83cac94 pretty-formats: add hard truncation, without ellipsis, options
+    @@ Documentation/pretty-formats.txt: The placeholders are:
+      				  least N columns, padding spaces on
+      				  the right if necessary.  Optionally
+     -				  truncate at the beginning (ltrunc),
+    -+				  truncate (with ellipsis '..') at the beginning (ltrunc),
+    - 				  the middle (mtrunc) or the end
+    - 				  (trunc) if the output is longer than
+    +-				  the middle (mtrunc) or the end
+    +-				  (trunc) if the output is longer than
+     -				  N columns.  Note that truncating
+    ++				  truncate (with ellipsis '..') at the beginning (ltrunc) `..ft`,
+    ++				  the middle (mtrunc) `mi..le` or the end
+    ++				  (trunc) `rig..` if the output is longer than
+     +				  N columns.  Note that truncating with ellipsis
+      				  only works correctly with N >= 2.
+     +				  Use (Trunc|Ltrunc) for hard truncation without ellipsis.
+    @@ pretty.c: static size_t format_and_pad_commit(struct strbuf *sb, /* in UTF-8 */
+      			break;
+     +		case trunc_left_hard:
+     +			strbuf_utf8_replace(&local_sb,
+    -+					    0, len - (padding),
+    -+					    "");
+    ++					    0, len - padding,
+    ++					    NULL);
+     +			break;
+     +		case trunc_right_hard:
+     +			strbuf_utf8_replace(&local_sb,
+    -+					    padding, len - (padding),
+    -+					    "");
+    ++					    padding, len - padding,
+    ++					    NULL);
+     +			break;
+      		case trunc_none:
+      			break;
+      		}
+    +
+    + ## t/t4205-log-pretty-formats.sh ##
+    +@@ t/t4205-log-pretty-formats.sh: test_expect_success 'left alignment formatting with trunc' '
+    + 	test_cmp expected actual
+    + '
+    + 
+    ++test_expect_success 'left alignment formatting with Trunc' '
+    ++	git log --pretty="tformat:%<(10,Trunc)%s" >actual &&
+    ++	qz_to_tab_space <<-\EOF >expected &&
+    ++	message tw
+    ++	message on
+    ++	add bar  Z
+    ++	initial. a
+    ++	EOF
+    ++	test_cmp expected actual
+    ++'
+    ++
+    + test_expect_success 'left alignment formatting with trunc. i18n.logOutputEncoding' '
+    + 	git -c i18n.logOutputEncoding=$test_encoding log --pretty="tformat:%<(10,trunc)%s" >actual &&
+    + 	qz_to_tab_space <<-\EOF | iconv -f utf-8 -t $test_encoding >expected &&
+    +@@ t/t4205-log-pretty-formats.sh: test_expect_success 'left alignment formatting with trunc. i18n.logOutputEncodin
+    + 	test_cmp expected actual
+    + '
+    + 
+    ++test_expect_success 'left alignment formatting with Trunc. i18n.logOutputEncoding' '
+    ++	git -c i18n.logOutputEncoding=$test_encoding log --pretty="tformat:%<(10,Trunc)%s" >actual &&
+    ++	qz_to_tab_space <<-\EOF | iconv -f utf-8 -t $test_encoding >expected &&
+    ++	message tw
+    ++	message on
+    ++	add bar  Z
+    ++	initial. a
+    ++	EOF
+    ++	test_cmp expected actual
+    ++'
+    ++
+    + test_expect_success 'left alignment formatting with ltrunc' '
+    + 	git log --pretty="tformat:%<(10,ltrunc)%s" >actual &&
+    + 	qz_to_tab_space <<-EOF >expected &&
+    +@@ t/t4205-log-pretty-formats.sh: test_expect_success 'left alignment formatting with ltrunc' '
+    + 	test_cmp expected actual
+    + '
+    + 
+    ++test_expect_success 'left alignment formatting with Ltrunc' '
+    ++	git log --pretty="tformat:%<(10,Ltrunc)%s" >actual &&
+    ++	qz_to_tab_space <<-EOF >expected &&
+    ++	essage two
+    ++	essage one
+    ++	add bar  Z
+    ++	an${sample_utf8_part}lich
+    ++	EOF
+    ++	test_cmp expected actual
+    ++'
+    ++
+    ++
+    + test_expect_success 'left alignment formatting with ltrunc. i18n.logOutputEncoding' '
+    + 	git -c i18n.logOutputEncoding=$test_encoding log --pretty="tformat:%<(10,ltrunc)%s" >actual &&
+    + 	qz_to_tab_space <<-EOF | iconv -f utf-8 -t $test_encoding >expected &&
+    +@@ t/t4205-log-pretty-formats.sh: test_expect_success 'left alignment formatting with ltrunc. i18n.logOutputEncodi
+    + 	test_cmp expected actual
+    + '
+    + 
+    ++test_expect_success 'left alignment formatting with Ltrunc. i18n.logOutputEncoding' '
+    ++	git -c i18n.logOutputEncoding=$test_encoding log --pretty="tformat:%<(10,Ltrunc)%s" >actual &&
+    ++	qz_to_tab_space <<-EOF | iconv -f utf-8 -t $test_encoding >expected &&
+    ++	essage two
+    ++	essage one
+    ++	add bar  Z
+    ++	an${sample_utf8_part}lich
+    ++	EOF
+    ++	test_cmp expected actual
+    ++'
+    + test_expect_success 'left alignment formatting with mtrunc' '
+    + 	git log --pretty="tformat:%<(10,mtrunc)%s" >actual &&
+    + 	qz_to_tab_space <<-\EOF >expected &&
+    +@@ t/t4205-log-pretty-formats.sh: test_expect_success 'left/right alignment formatting with stealing' '
+    + 	EOF
+    + 	test_cmp expected actual
+    + '
+    ++
+    ++test_expect_success 'left/right hard alignment formatting with stealing' '
+    ++	git commit --amend -m short --author "long long long <long@me.com>" &&
+    ++	git log --pretty="tformat:%<(10,Trunc)%s%>>(10,Ltrunc)% an" >actual &&
+    ++	cat <<-\EOF >expected &&
+    ++	short long  long long
+    ++	message on   A U Thor
+    ++	add bar      A U Thor
+    ++	initial. a   A U Thor
+    ++	EOF
+    ++	test_cmp expected actual
+    ++'
+    ++
+    + test_expect_success 'left/right alignment formatting with stealing. i18n.logOutputEncoding' '
+    + 	git -c i18n.logOutputEncoding=$test_encoding log --pretty="tformat:%<(10,trunc)%s%>>(10,ltrunc)% an" >actual &&
+    + 	cat <<-\EOF | iconv -f utf-8 -t $test_encoding >expected &&
+    +@@ t/t4205-log-pretty-formats.sh: test_expect_success 'left/right alignment formatting with stealing. i18n.logOutp
+    + 	EOF
+    + 	test_cmp expected actual
+    + '
+    ++test_expect_success 'left/right alignment formatting with stealing. i18n.logOutputEncoding' '
+    ++	git -c i18n.logOutputEncoding=$test_encoding log --pretty="tformat:%<(10,Trunc)%s%>>(10,Ltrunc)% an" >actual &&
+    ++	cat <<-\EOF | iconv -f utf-8 -t $test_encoding >expected &&
+    ++	short long  long long
+    ++	message on   A U Thor
+    ++	add bar      A U Thor
+    ++	initial. a   A U Thor
+    ++	EOF
+    ++	test_cmp expected actual
+    ++'
+    + 
+    + test_expect_success 'strbuf_utf8_replace() not producing NUL' '
+    + 	git log --color --pretty="tformat:%<(10,trunc)%s%>>(10,ltrunc)%C(auto)%d" |
+    +
+    + ## t/t6006-rev-list-format.sh ##
+    +@@ t/t6006-rev-list-format.sh: commit $head1
+    + added (hinzugef${added_utf8_part}gt..
+    + EOF
+    + 
+    ++# ZZZ for a space?
+    ++test_format subject-truncated "%<($truncate_count,Trunc)%s" qz_to_tab_space <<EOF
+    ++commit $head2
+    ++changed (ge${changed_utf8_part}ndert) f
+    ++commit $head1
+    ++added (hinzugef${added_utf8_part}gt)Z
+    ++EOF
+    ++
+    + test_format body %b <<EOF
+    + commit $head2
+    + commit $head1
+    +@@ t/t6006-rev-list-format.sh: commit $head1
+    + added (hinzugef${added_utf8_part_iso88591}gt..
+    + EOF
+    + 
+    ++# need qz qz_to_tab_space
+    ++test_format complex-subject-Trunc "%<($truncate_count,Trunc)%s" qz_to_tab_space <<EOF
+    ++commit $head3
+    ++Test printing of com
+    ++commit $head2
+    ++changed (ge${changed_utf8_part_iso88591}ndert) f
+    ++commit $head1
+    ++added (hinzugef${added_utf8_part_iso88591}gt)Z
+    ++EOF
+    ++
+    + test_format complex-subject-mtrunc "%<($truncate_count,mtrunc)%s" <<EOF
+    + commit $head3
+    + Test prin..ex bodies
+    +@@ t/t6006-rev-list-format.sh: commit $head1
+    + .. (hinzugef${added_utf8_part_iso88591}gt) foo
+    + EOF
+    + 
+    ++test_format complex-subject-Ltrunc "%<($truncate_count,Ltrunc)%s" <<EOF
+    ++commit $head3
+    ++ng of complex bodies
+    ++commit $head2
+    ++anged (ge${changed_utf8_part_iso88591}ndert) foo
+    ++commit $head1
+    ++ed (hinzugef${added_utf8_part_iso88591}gt) foo
+    ++EOF
+    + test_expect_success 'setup expected messages (for test %b)' '
+    + 	cat <<-EOF >expected.utf-8 &&
+    + 	commit $head3
+    +@@ t/t6006-rev-list-format.sh: commit $head1
+    + added (hinzugef${added_utf8_part}gt..
+    + EOF
+    + 
+    ++# need qz_to_tab_space
+    ++test_format complex-subject-commitencoding-unset-Trunc "%<($truncate_count,Trunc)%s" qz_to_tab_space <<EOF
+    ++commit $head3
+    ++Test printing of com
+    ++commit $head2
+    ++changed (ge${changed_utf8_part}ndert) f
+    ++commit $head1
+    ++added (hinzugef${added_utf8_part}gt)Z
+    ++EOF
+    ++
+    + test_format complex-subject-commitencoding-unset-mtrunc "%<($truncate_count,mtrunc)%s" <<EOF
+    + commit $head3
+    + Test prin..ex bodies
+    +@@ t/t6006-rev-list-format.sh: commit $head1
+    + .. (hinzugef${added_utf8_part}gt) foo
+    + EOF
+    + 
+    ++test_format complex-subject-commitencoding-unset-Ltrunc "%<($truncate_count,Ltrunc)%s" <<EOF
+    ++commit $head3
+    ++ng of complex bodies
+    ++commit $head2
+    ++anged (ge${changed_utf8_part}ndert) foo
+    ++commit $head1
+    ++ed (hinzugef${added_utf8_part}gt) foo
+    ++EOF
+    ++
+    + test_format complex-body-commitencoding-unset %b <expected.utf-8
+    + 
+    + test_expect_success '%x00 shows NUL' '
+
 -- 
-2.38.0.1280.g8136eb6fab2
+2.38.1.windows.1
 
