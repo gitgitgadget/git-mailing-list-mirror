@@ -2,182 +2,203 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 22F60C433FE
-	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 08:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B855C433FE
+	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 08:55:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230010AbiKAIaX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Nov 2022 04:30:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56680 "EHLO
+        id S229891AbiKAIzK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Nov 2022 04:55:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229835AbiKAIaT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2022 04:30:19 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 709443B5
-        for <git@vger.kernel.org>; Tue,  1 Nov 2022 01:30:18 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id b2so35318417eja.6
-        for <git@vger.kernel.org>; Tue, 01 Nov 2022 01:30:18 -0700 (PDT)
+        with ESMTP id S229457AbiKAIzI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2022 04:55:08 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D98617E27
+        for <git@vger.kernel.org>; Tue,  1 Nov 2022 01:55:07 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id f16-20020a05600c491000b003cf66a2e7c0so4837750wmp.5
+        for <git@vger.kernel.org>; Tue, 01 Nov 2022 01:55:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=iFmE8fE2Zjc/wp99da/nxrkpMR5sJ3qwbbbFkOi4NxM=;
-        b=jfGkxV7pksIzzZkiqINnMhZcBLqNuce2+xSFRJe2FNPMJ3PCQo9f+1Su2HgTF/hSXX
-         U2UsA+z3Bvo6/FIw0HUVXGvnmmYKVZ83+R+QOY4de4uQP2J8gnLQaMA0eyEgJ2SYRq+R
-         jPv0WBTt0aDzvodwdX2+hoXj1yrAcXCezOEIAaIhlXWpPQi2+GKt5dKZ9LtFbezoW9gH
-         vOlKHXQKgcjDn868gwM09lr3owHV5z5/zzpN7fiLT1eAimWS+kgevkij5dlnn7b0Gn7s
-         yXFdiDVn7sqWfm3Ne+Pcmm+FTX7f9N8F3PDaEOg5y2kmu+/1yvYSqexP+2/liGZL+1T/
-         bBvg==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OtfRFBkBvYZ+0TxzkReWaooklEEA+WZE8J96VQmASAk=;
+        b=j5BAkDVoTmrTaf75K6ttYdvCtZyX19dQZ19oqRby+SRYvRLNQnsGcf4r9E8lXl7fxG
+         t8ECPyMYpbYW77itpkZKckfEoR+MBdw0nG/Z7KCD7UIJWfTHioMk3f4hm0zxtZJ60eoa
+         2Nb5rXfcitWVsQvnp798ZZaDsARdtZbGsfuplveuKQEe3RCJyGdjZb3qrE+j5VKNHqS9
+         cqiqxj7TWpGJjwNQKb/U7MDJbn1m+Ixf4yFAp/H4BT/P4Pt4U59UdU2ZkBUODhP3+Nse
+         9j2a4Jo9B6ajWLAGBAApWAvKBp7zUYmQ4fCubtNHDouQoO+VtzRZ1GYva2MoJ008wi0C
+         MKzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iFmE8fE2Zjc/wp99da/nxrkpMR5sJ3qwbbbFkOi4NxM=;
-        b=bl17RaOeW3s+pbbnQNBFsHOTvBA7WVhhYCOB8nFZt5C7y/+1zYlNl+WQXk5L4yK7Qo
-         gtUWWdHaoXhiCTIVpurNTZ+jOJLLBdtaDyA/fUVD2ySmVkFWHOdHlrZ+aG7HAU8BBnzg
-         7k7ZYObIhpnKpdDT1jBYHqmZQc2JmE/fpGQO2ApVvXRspnFRyF9L6Bpdz0DXMs8J9a2J
-         IbXgeUMimOlrJ/ZYh9IiNgr7hs6apohy2PSZT60EWzCiVHaLEzNglUQj0YQoGuCniOVB
-         mNSGu0T4VwqYQxL5gEBbd5kYkrmlcISvKDjHlT0EUM1HX1+ke3HtbDistmr/+5jhf1IY
-         eE4w==
-X-Gm-Message-State: ACrzQf1VFHpleqh8wUdml6rbwhwbwxM8XFhcC5VcF7WrhBtGUwqAmaJ9
-        msDilhSg0LNc58+Z1R3LFek=
-X-Google-Smtp-Source: AMsMyM6ibCCJ0XYgMSlE8vuXjPwvlLCOXXasaKS2qmeHqLOCFpVBTttVc0acTfw/IvXw/B/fYFRpfQ==
-X-Received: by 2002:a17:907:1c01:b0:78d:eb6e:3807 with SMTP id nc1-20020a1709071c0100b0078deb6e3807mr17345158ejc.481.1667291416911;
-        Tue, 01 Nov 2022 01:30:16 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id t6-20020a1709063e4600b007abaff3a97asm3894832eji.221.2022.11.01.01.30.16
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OtfRFBkBvYZ+0TxzkReWaooklEEA+WZE8J96VQmASAk=;
+        b=Xs+9VGqNEMlGHlj5gYdmNOXUNmMzEtm9gkWV12TAxrhp59f/yusZisTdE81pbwtXRj
+         7yIei8h8yDu6aG8Fic9BkyHxJszSyHK8OCv0PINu3tZtezHJq0LwtCFLJIxmn8DcWTjQ
+         eIuvnsmJnHvPYcvfGALvmvwnEwKNypa87NlPq2RWLSZ6uClvcYU/LvV5g95KSnn8j00w
+         bnziEZqaF+Srj6Dmx+uv/olsbSnqp9omsCFJ0rfb3ROwosfrV3V7pShbuIv9L45WwDeH
+         bgxfZghRdL92T5ZAZ97w67WxYOAAecTrVwpWtuf6xYClb1aDSOH9v0Y8DvRf2P5xLNVx
+         iIBg==
+X-Gm-Message-State: ACrzQf2ouenqkzMfeau59cRbx0ynYylyA0QvlENJdCrjd00Gm0Aa8Ng2
+        0NoFIrJO68bCxvEE2+9zgtjo7P32irE=
+X-Google-Smtp-Source: AMsMyM5QUIXoe+lorM4skccW8Bs0DXrD8MyiEXFVGrdzvujFd1BPYC7fjEXEj1Os/qFVfG6nJ3QVSg==
+X-Received: by 2002:a1c:a3c4:0:b0:3cf:81fd:a039 with SMTP id m187-20020a1ca3c4000000b003cf81fda039mr100035wme.49.1667292905747;
+        Tue, 01 Nov 2022 01:55:05 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l13-20020adfe58d000000b002366f300e57sm9431134wrm.23.2022.11.01.01.55.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Nov 2022 01:30:16 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1opmf1-00BARS-2Q;
-        Tue, 01 Nov 2022 09:30:15 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] t5516/t5601: be less strict about the number of
- credential warnings
-Date:   Tue, 01 Nov 2022 09:15:00 +0100
-References: <Y2CDrZNgNZ+flJBK@coredump.intra.peff.net>
- <Y2CD6GBl6ORqKsug@coredump.intra.peff.net>
- <221101.861qqn5ovf.gmgdl@evledraar.gmail.com>
- <Y2DNS0W5vgk2Q3qJ@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <Y2DNS0W5vgk2Q3qJ@coredump.intra.peff.net>
-Message-ID: <221101.86sfj33wmg.gmgdl@evledraar.gmail.com>
+        Tue, 01 Nov 2022 01:55:05 -0700 (PDT)
+Message-Id: <pull.1397.v4.git.1667292904.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1397.v3.git.1667014975042.gitgitgadget@gmail.com>
+References: <pull.1397.v3.git.1667014975042.gitgitgadget@gmail.com>
+From:   "Kyle Zhao via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 01 Nov 2022 08:55:02 +0000
+Subject: [PATCH v4 0/2] merge-tree: allow specifying a base commit when --write-tree is passed
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Elijah Newren <newren@gmail.com>, kylezhao <kylezhao@tencent.com>,
+        Kyle Zhao <kylezhao@tencent.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thanks for Elijah's work. I'm very excited that merge-ort is integrated into
+the git merge-tree, which means that we can use merge-ort in bare
+repositories to optimize merge performance.
 
-On Tue, Nov 01 2022, Jeff King wrote:
+In this patch, I introduce a new --merge-base=<commit> option to allow
+callers to specify a merge-base for the merge. This may allow users to
+implement git cherry-pick and git rebase in bare repositories with git
+merge-tree cmd.
 
-> On Tue, Nov 01, 2022 at 04:29:31AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> > It is unclear as to _why_, but under certain circumstances the warning
->> > about credentials being passed as part of the URL seems to be swallowed
->> > by the `git remote-https` helper in the Windows jobs of Git's CI build=
-s.
->>=20
->> ..this description dosen't match what the patch is doing, okey, so
->> there's a case where the remote helper swallows the warnings, i.e. we'll
->> emit fewer than we expected...
->
-> So I really didn't revisit this commit much at all, and was just trying
-> to save Dscho (or Taylor) the work of having to rebase it, if we go with
-> my patch 1.
->
-> IMHO it is OK enough as it is, but if I were writing it from scratch I
-> probably would have given the rationale that the tests are insiting on a
-> dumb, sub-optimal behavior. And flakes or inconsistencies aside, they
-> should be asserting only the presence or absence of the message. And
-> probably would have left each at "grep" and dropped the test_line_count
-> totally.
+Changes since v1:
 
-Do you mean that even if we fix the bug and consistently emit one and
-only one such message you'd like to have the tests not assert that
-that's the case?
+ * Changed merge_incore_recursive() to merge_incore_nonrecursive() when
+   merge-base is specified.
+ * Fixed c style problem.
+ * Moved commit lookup/die logic out to the parsing logic in
+   cmd_merge_tree().
+ * use test_commit for test
 
-I do think that UX is important enough to test for, particularly if
-we've had a bug related to that that we've fixed. I.e. if something in
-the direction of my [1] goes in.
+Changes since v2:
 
-> It is not even clear to me that the remote-https is the one being
-> swallowed (at least, I have not seen an argument or evidence that this
-> is so; it does seem plausible).
+ * commit message
+ * Rebased on top of en/merge-tree-sequence.
+ * Set opt.ancestor to o->merge_base. Because opt.ancestor is a *char. To
+   make it easier to pass parameters, I moved
+   lookup_commit_reference_by_name() to real_ merge() again.
+ * Added test comment.
 
-It is the case, the only ones that are going to be duplicated are the
-"warn" ones, because for "die" we'll die right away in the parent
-process.
+Changes since v3:
 
-Which is what I'm trying to get across here, and why I'm a bit
-confused. I.e. I thought you'd agree that we should test that we emit
-exactly one warning if & when we've fixed the underlying issue.
+ * support --merge-base in conjunction with --stdin
 
-That issue is already fixed for "die", so even if you want to loosen up
-the test your [2] should only keep the first line removal/addition in
-the first two hunks, and drop the 3rd one.
+Kyle Zhao (2):
+  merge-tree.c: add --merge-base=<commit> option
+  merge-tree.c: support --merge-base in conjunction with --stdin
 
->> > @@ -654,7 +654,7 @@ test_expect_success 'push warns or fails when usin=
-g username:password' '
->> >  	test_must_fail git -c transfer.credentialsInUrl=3Ddie \
->> >  		push $url_userpass 2>err &&
->> >  	grep "fatal: $message" err >warnings &&
->> > -	test_line_count =3D 1 warnings
->> > +	test_line_count -ge 1 warnings
->> >  '
->>=20
->> ...but then why are we modifying these codepaths that have nothing to do
->> with invoking the remote helper, i.e. where we die early before we get
->> to that?
->
-> If you're arguing that we should only do s/=3D 3/-ge 1/ for the test that
-> is flaking, I could buy that.
+ Documentation/git-merge-tree.txt |  5 +++
+ builtin/merge-tree.c             | 64 ++++++++++++++++++++++++++------
+ t/t4301-merge-tree-write-tree.sh | 51 +++++++++++++++++++++++++
+ 3 files changed, 108 insertions(+), 12 deletions(-)
 
-I'm saying that if we're doing a handwaivy-fix and saying "sometimes the
-message gets swallowed" and fixing this blindly without checking how it
-works, then changing "=3D 1" to "-ge 1" doesn't make sense.
 
-It should be "-ge 0", i.e. surely that "one warning" can get swallowed
-too?
+base-commit: ec1edbcb56ac05e9980299b05924c5c1b51d68b4
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1397%2Fkeyu98%2Fkz%2Fmerge-tree-option-merge-base-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1397/keyu98/kz/merge-tree-option-merge-base-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1397
 
-Now, I know that never happens, because we'll always get at least
-one.
+Range-diff vs v3:
 
-I'm just saying that as soon as you stop to think about that you must
-also come to the conclusion that the "die" ones are OK as-is.
+ 1:  554cbde49e8 ! 1:  bba854fc8fa merge-tree.c: add --merge-base=<commit> option
+     @@ builtin/merge-tree.c
+       #include "merge-ort.h"
+       #include "object-store.h"
+      @@ builtin/merge-tree.c: struct merge_tree_options {
+     - 	int show_messages;
+     - 	int name_only;
+     - 	int use_stdin;
+     -+	const char *merge_base;
+       };
+       
+       static int real_merge(struct merge_tree_options *o,
+     ++		      const char *merge_base,
+     + 		      const char *branch1, const char *branch2,
+     + 		      const char *prefix)
+     + {
+      @@ builtin/merge-tree.c: static int real_merge(struct merge_tree_options *o,
+       	opt.branch1 = branch1;
+       	opt.branch2 = branch2;
+     @@ builtin/merge-tree.c: static int real_merge(struct merge_tree_options *o,
+      -	if (!merge_bases && !o->allow_unrelated_histories)
+      -		die(_("refusing to merge unrelated histories"));
+      -	merge_bases = reverse_commit_list(merge_bases);
+     -+	if (o->merge_base) {
+     ++	if (merge_base) {
+      +		struct commit *base_commit;
+      +		struct tree *base_tree, *parent1_tree, *parent2_tree;
+      +
+     -+		base_commit = lookup_commit_reference_by_name(o->merge_base);
+     ++		base_commit = lookup_commit_reference_by_name(merge_base);
+      +		if (!base_commit)
+     -+			die(_("could not lookup commit %s"), o->merge_base);
+     ++			die(_("could not lookup commit %s"), merge_base);
+      +
+     -+		opt.ancestor = o->merge_base;
+     ++		opt.ancestor = merge_base;
+      +		base_tree = get_commit_tree(base_commit);
+      +		parent1_tree = get_commit_tree(parent1);
+      +		parent2_tree = get_commit_tree(parent2);
+     @@ builtin/merge-tree.c: static int real_merge(struct merge_tree_options *o,
+       	if (result.clean < 0)
+       		die(_("failure to merge"));
+       
+     +@@ builtin/merge-tree.c: int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+     + 	struct merge_tree_options o = { .show_messages = -1 };
+     + 	int expected_remaining_argc;
+     + 	int original_argc;
+     ++	const char *merge_base = NULL;
+     + 
+     + 	const char * const merge_tree_usage[] = {
+     + 		N_("git merge-tree [--write-tree] [<options>] <branch1> <branch2>"),
+      @@ builtin/merge-tree.c: int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+       			   &o.use_stdin,
+       			   N_("perform multiple merges, one per line of input"),
+       			   PARSE_OPT_NONEG),
+      +		OPT_STRING(0, "merge-base",
+     -+			   &o.merge_base,
+     ++			   &merge_base,
+      +			   N_("commit"),
+      +			   N_("specify a merge-base for the merge")),
+       		OPT_END()
+       	};
+       
+     +@@ builtin/merge-tree.c: int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+     + 			if (!split[0] || !split[1] || split[2])
+     + 				die(_("malformed input line: '%s'."), buf.buf);
+     + 			strbuf_rtrim(split[0]);
+     +-			result = real_merge(&o, split[0]->buf, split[1]->buf, prefix);
+     ++			result = real_merge(&o, merge_base, split[0]->buf, split[1]->buf, prefix);
+     + 			if (result < 0)
+     + 				die(_("merging cannot continue; got unclean result of %d"), result);
+     + 			strbuf_list_free(split);
+     +@@ builtin/merge-tree.c: int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+     + 
+     + 	/* Do the relevant type of merge */
+     + 	if (o.mode == MODE_REAL)
+     +-		return real_merge(&o, argv[0], argv[1], prefix);
+     ++		return real_merge(&o, merge_base, argv[0], argv[1], prefix);
+     + 	else
+     + 		return trivial_merge(argv[0], argv[1], argv[2]);
+     + }
+      
+       ## t/t4301-merge-tree-write-tree.sh ##
+      @@ t/t4301-merge-tree-write-tree.sh: test_expect_success '--stdin with both a successful and a conflicted merge' '
+ -:  ----------- > 2:  db47fbc663e merge-tree.c: support --merge-base in conjunction with --stdin
 
-That's because the reason we always get at least one is the same as
-we're always guaranteed to emit just one in the "die" case: The parent
-process emits it, then dies.
-
->> And even if some of this was invoking that remote helper and we were
->> modifying it blindly, then presumably the helper swallowing it would
->> result in 0 some of the time, so "-ge 1" would be wrong.
->>=20
->> (That's not the case, but it's why I think the patch doesn't make much
->> sense).
->
-> I thought the point is that the outer program calling the helper would
-> consistently produce the error, always yielding at least one instance.
-> The helper one is generally "extra" and undesired.
-
-Yes, exactly. Which is what my fix[1] the root cause addresses.
-
-Anyway, I'm just trying to help here. If you/Johannes/others want to go
-with the "hotfix" as-is that's fine my me.
-
-I just don't see what the hurry is, it's been this way for two releases,
-if it's flaky that's been the case for months, I'd think we could just
-fix the root cause.
-
-1. http://lore.kernel.org/git/RFC-patch-1.1-0266485bc6c-20221031T204149Z-av=
-arab@gmail.com
-2. https://lore.kernel.org/git/Y2CD6GBl6ORqKsug@coredump.intra.peff.net/
+-- 
+gitgitgadget
