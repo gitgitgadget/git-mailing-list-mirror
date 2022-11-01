@@ -2,67 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58546FA373D
-	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 07:32:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 34354C433FE
+	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 07:40:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229894AbiKAHcK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Nov 2022 03:32:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51522 "EHLO
+        id S229711AbiKAHj7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Nov 2022 03:39:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbiKAHcJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2022 03:32:09 -0400
+        with ESMTP id S229667AbiKAHj6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2022 03:39:58 -0400
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2CC7515704
-        for <git@vger.kernel.org>; Tue,  1 Nov 2022 00:32:08 -0700 (PDT)
-Received: (qmail 4771 invoked by uid 109); 1 Nov 2022 07:32:07 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25CB315A30
+        for <git@vger.kernel.org>; Tue,  1 Nov 2022 00:39:57 -0700 (PDT)
+Received: (qmail 4798 invoked by uid 109); 1 Nov 2022 07:39:56 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 01 Nov 2022 07:32:07 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 01 Nov 2022 07:39:56 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20292 invoked by uid 111); 1 Nov 2022 07:32:08 -0000
+Received: (qmail 20325 invoked by uid 111); 1 Nov 2022 07:39:58 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 01 Nov 2022 03:32:08 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 01 Nov 2022 03:39:58 -0400
 Authentication-Results: peff.net; auth=none
-Date:   Tue, 1 Nov 2022 03:32:06 -0400
+Date:   Tue, 1 Nov 2022 03:39:55 -0400
 From:   Jeff King <peff@peff.net>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/2] t5516: move plaintext-password tests from t5601 and
- t5516
-Message-ID: <Y2DLdsM2CYY3Z2Sc@coredump.intra.peff.net>
+Subject: Re: [PATCH 2/2] t5516/t5601: be less strict about the number of
+ credential warnings
+Message-ID: <Y2DNS0W5vgk2Q3qJ@coredump.intra.peff.net>
 References: <Y2CDrZNgNZ+flJBK@coredump.intra.peff.net>
- <Y2CD4g9z2yVFA06l@coredump.intra.peff.net>
- <221101.865yfz5pjp.gmgdl@evledraar.gmail.com>
+ <Y2CD6GBl6ORqKsug@coredump.intra.peff.net>
+ <221101.861qqn5ovf.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <221101.865yfz5pjp.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221101.861qqn5ovf.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 01, 2022 at 04:18:32AM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Tue, Nov 01, 2022 at 04:29:31AM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-> Did you consider just using git://; on the WIP branch I linked to where
-> I fixed these tests quite a bit already I left them in their own file in
-> anticipation of having to test that (but didn't finish that yet). I.e.:
+> > It is unclear as to _why_, but under certain circumstances the warning
+> > about credentials being passed as part of the URL seems to be swallowed
+> > by the `git remote-https` helper in the Windows jobs of Git's CI builds.
+> 
+> ..this description dosen't match what the patch is doing, okey, so
+> there's a case where the remote helper swallows the warnings, i.e. we'll
+> emit fewer than we expected...
 
-No, I didn't really consider that. Mostly because I was trying to stick
-with the original intent of 6dcbdc0d66 that created them.
+So I really didn't revisit this commit much at all, and was just trying
+to save Dscho (or Taylor) the work of having to rebase it, if we go with
+my patch 1.
 
-If we toss that out, then in theory that widens the options. And in some
-ways it's nice to use git://, because it has fewer dependencies and so
-is run on more platforms. But it strikes me as a pretty unrealistic
-test, just because credentials in git:// URLs make no sense and are not
-something anybody would do.
+IMHO it is OK enough as it is, but if I were writing it from scratch I
+probably would have given the rationale that the tests are insiting on a
+dumb, sub-optimal behavior. And flakes or inconsistencies aside, they
+should be asserting only the presence or absence of the message. And
+probably would have left each at "grep" and dropped the test_line_count
+totally.
 
-As you note, since the error comes from remote.c, it would still
-trigger. But it's a bit more "white box" testing than I think makes
-sense here. I prefer the original tests' method of trying to create
-plausible real-world scenarios and seeing how they behave (and I think
-my patch even improves that, since having an actual server on the other
-end is the usual case).
+It is not even clear to me that the remote-https is the one being
+swallowed (at least, I have not seen an argument or evidence that this
+is so; it does seem plausible).
+
+> > @@ -654,7 +654,7 @@ test_expect_success 'push warns or fails when using username:password' '
+> >  	test_must_fail git -c transfer.credentialsInUrl=die \
+> >  		push $url_userpass 2>err &&
+> >  	grep "fatal: $message" err >warnings &&
+> > -	test_line_count = 1 warnings
+> > +	test_line_count -ge 1 warnings
+> >  '
+> 
+> ...but then why are we modifying these codepaths that have nothing to do
+> with invoking the remote helper, i.e. where we die early before we get
+> to that?
+
+If you're arguing that we should only do s/= 3/-ge 1/ for the test that
+is flaking, I could buy that. Though like I said, I consider the value
+here to be focusing the purpose of the tests as much as dealing with the
+flake.
+
+I really don't care that much either way, though.
+
+I'd also be fine with a separate test (marked expect_failure) that
+checks the number of messages.
+
+> And even if some of this was invoking that remote helper and we were
+> modifying it blindly, then presumably the helper swallowing it would
+> result in 0 some of the time, so "-ge 1" would be wrong.
+> 
+> (That's not the case, but it's why I think the patch doesn't make much
+> sense).
+
+I thought the point is that the outer program calling the helper would
+consistently produce the error, always yielding at least one instance.
+The helper one is generally "extra" and undesired.
 
 -Peff
