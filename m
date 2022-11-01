@@ -2,207 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93BB0C433FE
-	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 20:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD5FDC4332F
+	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 21:00:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230224AbiKAU4E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Nov 2022 16:56:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51970 "EHLO
+        id S230047AbiKAVAI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Nov 2022 17:00:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229496AbiKAUz6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2022 16:55:58 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F7101DA6E
-        for <git@vger.kernel.org>; Tue,  1 Nov 2022 13:55:56 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id bp15so25049025lfb.13
-        for <git@vger.kernel.org>; Tue, 01 Nov 2022 13:55:56 -0700 (PDT)
+        with ESMTP id S230239AbiKAVAG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2022 17:00:06 -0400
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 835DB1AF3B
+        for <git@vger.kernel.org>; Tue,  1 Nov 2022 14:00:03 -0700 (PDT)
+Received: by mail-il1-x132.google.com with SMTP id 7so8459317ilg.11
+        for <git@vger.kernel.org>; Tue, 01 Nov 2022 14:00:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=cPDNKeE4VzCc/eVkM7CocE0XoUqoA0JqDmFH2huoLsI=;
-        b=kLoTG2P7PDX+YBHnCA+JDoEGev64YzSdvTsiw9RsSYgrhmqJy5QvKauIpdRvOQYy5k
-         jJSnBlgMcC6ObX+BidpMwgQh6Keeg0aLq9ruxUnrQ87QVyL5/cInIxxHBH8+m+Chac0S
-         +KSADRWyzsLjRIm8SOCSqWPQCM+BSN8pX16lD56Ws1mH8bLn6Zvk8oYxgPIDiu2KLB/m
-         D0OGGjXC0dJhFltiwQSFjaMWIj7LO13RXQa0f+2TJxGsm4bpsPixzsBW2gQClUvdPNhz
-         MiYAAYYxKCY8VwkmPLdFiPQ7U1UYUXD1dHgI7sw9UKjJC6qqaSJY/9GH04zNyAwXCLoL
-         5KAQ==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=UvSRLOMl5bDU0FC7xVTr7DVCkuhI1avQII0g1/uaMFM=;
+        b=mXu+5OdbOsEETd2X2B8WDZRKZ3XrVX9gHBhRRjFU1l8ZbLj4cXLuf1t1FwE74uAqO7
+         g8GeGfT6adE1mvlDyP6yuiWZuWzFqLUvZZLVGF0uePWhKmI3z6m8HxF3dvoyB/3XX2ZP
+         ekIdgSpiYAa64mWhAcJl5OzVzq5qExhyUbdpk3DnSzW73teGbDN9bVYp/lvWVWwo38X6
+         98ROaRCVACF7MW8Ed90EvrI01rmyZxSnTLDV1w/Zqpn7duk4wQoA1Blpcz9c0PEW1ZP+
+         +BLqLnX/WPNZLwMMnFcS2roG6DBEbGDskHkNw5ielxX83UbGzHqB5I3gVpOt+3HT4Op1
+         g1IA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cPDNKeE4VzCc/eVkM7CocE0XoUqoA0JqDmFH2huoLsI=;
-        b=ZLvTuvVEA7qerY7vqnW8rqXFPz2ks/6nuBOu7bFSn1ueG9m80c9SGkBgvQISdc341U
-         RkIa8Z6lHcOBmjIo8ugwkCxu/szHYKUeq6v6YPTNkX3iDfQtaXUaALqJCupagkxhHgGw
-         MUxVkR0wfDCluwAd9oJQ24LFc03H1Df9fzLSo4yiKWPQwOnwLoJwn94IFpTMay/w7tmJ
-         QeOwxb/ScBPtvgS5mGD7MgwJBuk/qLqcMHqK3ygbUrNqW16Rl2t2eAvRS8E2C6c25qfH
-         xWhOhOjGkZpA04o86xLPsWKGF15jFneNXVVWbJiVCh/eHXIImnMbdOp9PDA78dTv0A7X
-         wbjg==
-X-Gm-Message-State: ACrzQf1vus7Ybp6L89K9r/3BVou42izgJV/Ac1yMN/CQVScV9EJLwgs9
-        skcXtufraBf/Tt9EoS09Kwff4kGqG+MZpjPXd6aYMaqz1sGmNA==
-X-Google-Smtp-Source: AMsMyM5tfvzoILUqwVMlnoLGKb7I0DpEqPvpRlF++8ISuGxuTV9fIhpRqCCBhV9ERzzdspUX0qji/3/1+Dqb2QZOt7I=
-X-Received: by 2002:a19:7009:0:b0:4b1:11a3:789e with SMTP id
- h9-20020a197009000000b004b111a3789emr1383977lfc.39.1667336154804; Tue, 01 Nov
- 2022 13:55:54 -0700 (PDT)
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UvSRLOMl5bDU0FC7xVTr7DVCkuhI1avQII0g1/uaMFM=;
+        b=Tj5p0YvrIjOG2R7MA+Io+i9ObYCiR0OWFQ2Id8f+c7buwf6E0mhXsyKkRjkC2Fhla7
+         ZfHgOkGHD7b41gjHyA5Iv+aDE67lZ6tFqS3ba2vRaZTfv+74IEM57EeSnRSIhSPhaQZI
+         uJ8EXiZ7DHrghEHbIKmjDjHQ9pyL07cqEBLjnIRwrciBBudwtNFDOkta/WhfbhmngYxp
+         uhQhSoNuqkH7uce4C+jErrg+NLJRNvUJnpw1rJmQkkQMd1DX6vt3ulfHuQsfx6hbEYfn
+         CsAjnvefDaL6HzrBIWtOq3aW7Z45tLMGaLhMBHF6Q3mhnGEXtAt/u4B8OZB4NQbwzE8Z
+         Pomg==
+X-Gm-Message-State: ACrzQf17lpvQQhX2LKd1zwWQLYPLFIo0r96GLIQ+DwKXTx+yI8hslaue
+        UB6Oin50geN+7v8mwEH/97Hfqg==
+X-Google-Smtp-Source: AMsMyM7WVwQCOp0DyWhDBbmW7FMy2I8YkUOocnOE517szfXQbL/rs4SYYJx6ltZn4/U2iJo0BdbAyQ==
+X-Received: by 2002:a92:607:0:b0:2ff:f117:25e with SMTP id x7-20020a920607000000b002fff117025emr11472156ilg.55.1667336402844;
+        Tue, 01 Nov 2022 14:00:02 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id c65-20020a029647000000b00373157978d2sm4224281jai.127.2022.11.01.14.00.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Nov 2022 14:00:02 -0700 (PDT)
+Date:   Tue, 1 Nov 2022 17:00:01 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [RFC PATCH] fetch: stop emitting duplicate
+ transfer.credentialsInUrl=warn warnings
+Message-ID: <Y2GI0R6pJmdZNgHn@nand.local>
+References: <pull.1399.git.1667245638.gitgitgadget@gmail.com>
+ <RFC-patch-1.1-0266485bc6c-20221031T204149Z-avarab@gmail.com>
+ <Y2CFRJLFRXvGwFBC@coredump.intra.peff.net>
+ <Y2Doe0ZGb3Zmmmen@coredump.intra.peff.net>
+ <221101.86o7tq4vsn.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-From:   Anthony Sottile <asottile@umich.edu>
-Date:   Tue, 1 Nov 2022 16:55:42 -0400
-Message-ID: <CA+dzEB=acvDob10gCaWBgVcd3E5VEX+chTKsvxZ3VAUh4Dhrow@mail.gmail.com>
-Subject: smudge filters do not round trip through `git diff` / `git apply`
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <221101.86o7tq4vsn.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-this is boiled down from a larger problem outlined here:
-https://github.com/pre-commit/pre-commit/issues/776
+On Tue, Nov 01, 2022 at 02:07:39PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> > You can also put it lower in the function, when we actually warn, which
+> > saves adding to the environment when there is nothing to warn about
+> > (though this way, we avoid doing the redundant work).
+> >
+> > Compared to munging the config, this seems shorter and simpler, and
+> > there's no chance of us ever getting confused between the fake
+> > "suppress" value and something the user actually asked for.
+>
+> Sure, we can do it with an environment variable, in the end that's all
+> git_config_push_parameter() is doing too. It's just setting things in
+> "GIT_CONFIG_PARAMETERS".
+>
+> And yes, we can set this in the low-level function instead of with
+> git_config_push_parameter() in builtin/*.c as I did. I was aiming for
+> something demonstrably narrow, at the cost of some verbosity.
+>
+> But I don't get how other things being equal you think sticking this in
+> "GIT_CHECKED_CREDENTIALS_IN_URL" instead of "GIT_CONFIG_PARAMETERS"
+> helps.
 
-I've had some time to sit down and poke at this today -- here's my
-minimal reproduction using just `git` and `git-crypt` -- though my
-users have reported this also seems to affect other smudge filters.
+I vaguely prefer calling this GIT_CHECKED_CREDENTIALS_IN_URL instead of
+stuffing it in the configuration. All other things *aren't* equal here,
+since we're not lying to sub-processes about configuration values set
+by the user.
 
-I understand `git-crypt` is not associated with the git project,
-however it was an easy, readily-available smudge filter to demonstrate
-the problem.  I'm using git-crypt 0.6.0 (from ubuntu 22.04).
+Instead, we're saying: "regardless of what value the user assigned
+transfer.credentialsInUrl, we can avoid looking at it because we have
+already checked for the presence of credentials in the URL".
 
-(the key material below is not sensitive -- I generated it afresh in a
-docker container)
-
-```bash
-#!/usr/bin/env bash
-set -euxo pipefail
-
-rm -rf repo
-
-git --version
-git init --quiet repo -b main
-cd repo
-git commit --allow-empty -m 'Initial empty commit'
-
-# determinstic git-crypt key so the output is stable
-base64 -d > keyfile <<EOF
-AEdJVENSWVBUS0VZAAAAAgAAAAAAAAABAAAABAAAAAAAAAADAAAAIIBi0O4iuCHghpYj4Teb6F72
-KjTRHePBTf/6XC6fiVqvAAAABQAAAECTwWTDHfx0/Ytw3IZrVhonb5IPTr7kio27u0prnb8X25ui
-9k4UqrdRQy8ZtBERv6wnHwC8A6q7CamRZ22L4q7UAAAAAA==
-EOF
-git-crypt unlock keyfile
-
-echo 'f filter=git-crypt diff=git-crypt' > .gitattributes
-git add .gitattributes
-echo 'hello world' > f
-git add f
-rm f && touch f
-
-tree="$(git write-tree)"
-! git diff-index \
-    --ignore-submodules \
-    --binary \
-    --exit-code \
-    --no-color \
-    --no-ext-diff \
-    --no-textconv \
-    "$tree" -- > patch
-
-git checkout -- .
-git apply patch || (echo FAILED && cat patch && exit 1)
-```
-
-here's my output:
-
-```console
-$ bash t.sh
-+ rm -rf repo
-+ git --version
-git version 2.38.1.381.gc03801e19c
-+ git init --quiet repo -b main
-+ cd repo
-+ git commit --allow-empty -m 'Initial empty commit'
-[main (root-commit) 97d9520] Initial empty commit
-+ base64 -d
-+ git-crypt unlock keyfile
-+ echo 'f filter=git-crypt diff=git-crypt'
-+ git add .gitattributes
-+ echo 'hello world'
-+ git add f
-+ rm f
-+ touch f
-++ git write-tree
-+ tree=beca08f8b3c0774060f3e28e081ac69a80a1a10d
-+ git diff-index --ignore-submodules --binary --exit-code --no-color
---no-ext-diff --no-textconv beca08f8b3c0774060f3e28e081ac69a80a1a10d
---
-+ git checkout -- .
-+ git apply patch
-error: binary patch to 'f' creates incorrect result (expecting
-2f89279ce748725a41cec60d5025b22efc863b42, got
-e69de29bb2d1d6434b8b29ae775ad8c2e48c5391)
-error: f: patch does not apply
-+ echo FAILED
-FAILED
-+ cat patch
-diff --git a/f b/f
-index ee7d1b67cd31482ae9bc772a0b2d016c81e1c613..2f89279ce748725a41cec60d5025b22efc863b42
-100644
-GIT binary patch
-literal 0
-HcmV?d00001
-
-literal 34
-qcmZQ@_Y83kiVO&0IB9<_f2(d}=e+;CXFaaIzZ@c>%yE8!<X-^jJPz&v
-
-+ exit 1
-```
-
-I traced through the execution and it appears that smudge filters are
-maybe still running despite the `--no-textconv` setting which may
-explain this?
-
-```
-+ GIT_TRACE=2
-+ git diff-index --ignore-submodules --binary --exit-code --no-color
---no-ext-diff --no-textconv beca08f8b3c0774060f3e28e081ac69a80a1a10d
---
-20:40:21.551771 git.c:455               trace: built-in: git
-diff-index --ignore-submodules --binary --exit-code --no-color
---no-ext-diff --no-textconv beca08f8b3c0774060f3e28e081ac69a80a1a10d
---
-20:40:21.552190 run-command.c:668       trace: run_command: '"git-crypt" clean'
-20:40:21.555249 git.c:455               trace: built-in: git rev-parse --git-dir
-```
-
-as shown in the output I'm using the current primary branch revision
-of git -- though I usually use 2.34.1 (ubuntu 22.04)
-
-oddly enough, using `--textconv` instead of `--no-textconv` "fixes" --
-but is unsatisfactory for my use case (I don't want to rely on the
-state of filters installed, etc.)
-
-the error message seems to occur due to the comparison of the hash in
-the `index a...b` line above the patch hunk
-
-`e69de29bb2d1d6434b8b29ae775ad8c2e48c5391` is the hash of an empty file:
-
-```console
-$ git hash-object -w /dev/null
-e69de29bb2d1d6434b8b29ae775ad8c2e48c5391
-```
-
-`2f89279ce748725a41cec60d5025b22efc863b42` appears to be the hash of
-the smudged empty file (I used base64 here since it's binary nonsense
--- I got the contents of this blob by committing the empty file and
-then fished the object out of the git database instead of trying to do
-the patch dance):
-
-```console
-$ base64 -d <<< 'AEdJVENSWVBUAGoDwWO5GXWQ4B1kIQ==' | git hash-object
--w /dev/stdin
-2f89279ce748725a41cec60d5025b22efc863b42
-```
-
-I *believe* the fix here is to avoid smudging in `git diff
---no-textconv` -- I started a patch where I added a `HASH_NO_TEXTCONV`
-flag to `cache.h` but wasn't super sure on where to go from there and
-decided I should ask first whether this is the right approach to take!
-
-anthony
+Thanks,
+Taylor
