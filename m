@@ -2,98 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D4D4FA3740
-	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 01:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 37373FA3740
+	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 01:07:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229480AbiKABGg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Oct 2022 21:06:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49138 "EHLO
+        id S229740AbiKABHk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 31 Oct 2022 21:07:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229740AbiKABGe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2022 21:06:34 -0400
-Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09FB911140
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 18:06:34 -0700 (PDT)
-Received: by mail-il1-x136.google.com with SMTP id o13so744260ilq.6
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 18:06:34 -0700 (PDT)
+        with ESMTP id S229469AbiKABHj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Oct 2022 21:07:39 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 789F515725
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 18:07:37 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id m29-20020a05600c3b1d00b003c6bf423c71so11931648wms.0
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 18:07:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=rU27yuCz34fkxwrG8TTR9yym9w7Mp45S2S4gTzXeZKw=;
-        b=GMMQ53Baw+xVA0OB1hbhx8RVb2DERPLkrNj/JbF7XgQU7WTKA01UBgbAR4G+xz+PWn
-         YVAKAF8MTpDOaqlBCcG6nf69QD7KzFRjYdqhbplNdCYtb/4Pm92FI0e8mDugWHHN8AuB
-         m2MLo1Z6po1iZv/sx4s4QOJBO1JXV5BsNs+jyBDq7YFYCpG22mfDPzrNjluN9qDu1amI
-         T1XZYVMjDA2+GiGrtcFa5kJyNEbjotC7lFWJjjJ16/l/ixeWwNuwtOtcu0A/gSAlKim9
-         mGFmQNvhjyhXhkJILul64cKBo8soGqpNBJPcgQ1ZIwwCV+2IxlXSpjlK/bmPmEa+CEgt
-         2GTQ==
+        d=gmail.com; s=20210112;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=ElUnClzVNiYBMAI4V1eFs+N/728XlqByhCdPE5DvoZk=;
+        b=jTbakDo/VYTaGc5h5qV8sWbGZVB09BtjlvEsIUMeWVGBBpRumwSJjhBuFlGZSoG0Ek
+         IfjuaViVNDNolj35PjzPqVsjtAbHism93svDvEtQelXBvZk6UBgbmwuoYpAY1oVGLugr
+         2fnsloH4IpbjWuJ3rU7DQCcjRSzGgaVXJb9dOzidClFuJ6ZmyYGtOJnXLoE/Wq4j2grv
+         47KkZSynXqGzTw6v3iWx9ePZ8yfCfFhN/LzxONy5r6H0L/Z52QBYzG9vFuEjQ0h7DKx2
+         5AJjLBOMHTSj0IuHqHyWHuXjr3U85d/iZbwg0gWcaZDxzkndBTX1JjbGdJlyt/LWh8/I
+         Io6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rU27yuCz34fkxwrG8TTR9yym9w7Mp45S2S4gTzXeZKw=;
-        b=NksofAPNNgSZJLJtjI4Gnt4fQo8iHNNp2gR9MC4zSJgnW0daOb2dLl2WAwXyulPBen
-         WyI0YypSADVi2JK4MLlLwgwipPvvIkcwV/vJghtHQ/Dl2r10onlagQLoJgCWmf6UM3Zx
-         sS4TzTOyrrikwIb3kWQxbEO+wSJ03UFao+xox0RTc9dmyVPXwTe0s75BeRf+FAoyHjJF
-         bhngdn2+KyFiMPe/r4GhQIV3/FH2mbMmYH+/ZcxrrXHk/Zf5mHY/bfEUOAQYWvsOc1eL
-         zACGNZbxG9RnWjGhwo5R7T//VkeAWGbg68GTVQQihUm9UP/iVCmzHHh7GvbtpNsuzxXY
-         HNyw==
-X-Gm-Message-State: ACrzQf11n9B+B6bs3Nj7AlVVCnSZbUNT82XaCnabhomH2bUV93F5ZwtX
-        Y1u7DJZlMWAndvJvzCTVuLZpgw==
-X-Google-Smtp-Source: AMsMyM4fo+14042zkURCfhzNQkoHSLNziSGqsvuQiprIVnEjhYxJJHklvbqd4fUH9G955JQw+UAVog==
-X-Received: by 2002:a05:6e02:1a8d:b0:2ff:1ffa:a53d with SMTP id k13-20020a056e021a8d00b002ff1ffaa53dmr9108922ilv.175.1667264793330;
-        Mon, 31 Oct 2022 18:06:33 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id f9-20020a056602088900b006bc3bf6e5b5sm3394007ioz.55.2022.10.31.18.06.32
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ElUnClzVNiYBMAI4V1eFs+N/728XlqByhCdPE5DvoZk=;
+        b=bBjEg2h4GkCLZ9jkII7G84mK38k5gyRdr+HdeghDzuG+6nlWJWL+C+3uLR1ghbVinO
+         N5HQledOjc64ussbWGLHGgmufDZv1ufPzFsBQSimEYtMZKItOYlwolHB7qqoyhsLIuhe
+         ECNDwOnQOf1z3r06OSbqEb49JQ6X54QuC8TzJ8rv1QcMWTK9NmJ0LVOB26gx0c0fXhYT
+         BzcO0xdevlFJNUPHjGoC31M4RE09iUYHxwZBJN3KBy55Jwd9omWN0t+welZrxtKcAR0Q
+         qTgxMLCObNx2G479SZKW2KbtTG4oyrgnzkSa57wYqvgsEE+tpvCokFf4fkDTbQ3toLmi
+         eeAQ==
+X-Gm-Message-State: ACrzQf04Lly1dTj0zrvQOp/A13OsMtA6OVUbPTZcuvhs/3HSw+Mg1TbX
+        cYr6J2ASh/ASKmUahGmbwZoPHyryeWE=
+X-Google-Smtp-Source: AMsMyM6ZoeT214eKJZOsFQQrdVJ6VD7MnUZLY+2jGePYdLlN6aPyTfvosm7DCKvt1Fb76XC9DJOGyA==
+X-Received: by 2002:a05:600c:a48:b0:3b9:af1f:1b38 with SMTP id c8-20020a05600c0a4800b003b9af1f1b38mr10169721wmq.185.1667264855771;
+        Mon, 31 Oct 2022 18:07:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id fc6-20020a05600c524600b003c6bbe910fdsm10193001wmb.9.2022.10.31.18.07.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 31 Oct 2022 18:06:33 -0700 (PDT)
-Date:   Mon, 31 Oct 2022 21:06:31 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [RFC PATCH] fetch: stop emitting duplicate
- transfer.credentialsInUrl=warn warnings
-Message-ID: <Y2BxFxZqA9GA40AB@nand.local>
-References: <pull.1399.git.1667245638.gitgitgadget@gmail.com>
- <RFC-patch-1.1-0266485bc6c-20221031T204149Z-avarab@gmail.com>
+        Mon, 31 Oct 2022 18:07:35 -0700 (PDT)
+Message-Id: <pull.1400.git.1667264854.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 01 Nov 2022 01:07:25 +0000
+Subject: [PATCH 0/9] Bundle URIs IV: advertise over protocol v2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <RFC-patch-1.1-0266485bc6c-20221031T204149Z-avarab@gmail.com>
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
+        chooglen@google.com, jonathantanmy@google.com,
+        dyroneteng@gmail.com, Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Oct 31, 2022 at 09:47:08PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> Improve on 6dcbdc0d661 (remote: create fetch.credentialsInUrl config,
-> 2022-06-06) by fixing the cases where we emit duplicate warnings,
-> which were:
->
->  * In the same process, as we'd get the same "struct remote *"
->    again. We could probably save ourselves more work in those scenarios,
->    but adding a flag to the "struct remote" indicating that we've validated
->    the URLs will fix those issues.
->
->  * When we invoke e.g. "git-remote-https" (aka. "git-remote-curl")
->    from "git fetch". For those cases let's pass down the equivalent of a
->    "-c transfer.credentialsInUrl=allow", since we know that we've already
->    inspected our remotes in the parent process.
->
->    See 7390f05a3c6 (fetch: after refetch, encourage auto gc repacking,
->    2022-03-28) for prior use of git_config_push_parameter() for this
->    purpose, i.e. to push config parameters before invoking a
->    sub-process.
+This is based on the recent master batch that included ds/bundle-uri-....
 
-Both make sense. I was skimming the diff before I read the patch message
-here and was scratching my head at the calls to
-git_config_push_parameter().
+Now that git clone --bundle-uri can download a bundle list from a plaintex
+file in config format, we can use the same set of key-value pairs to
+advertise a bundle list over protocol v2. At the end of this series:
 
-But for crossing process boundaries, that makes sense.
+ 1. A server can advertise bundles when uploadPack.advertiseBundleURIs is
+    enabled. The bundle list comes from the server's local config,
+    specifically the bundle.* namespace.
+ 2. A client can notice a server's bundle-uri advertisement and request the
+    bundle list if transfer.bundleURI is enabled. The bundles are downloaded
+    as if the list was advertised from the --bundle-uri option.
+
+Many patches in this series were adapted from Ævar's v2 RFC [1]. He is
+retained as author and I added myself as co-author only if the modifications
+were significant.
+
+[1]
+https://lore.kernel.org/git/RFC-patch-v2-01.13-2fc87ce092b-20220311T155841Z-avarab@gmail.com/
+
+ * Patches 1-5 are mostly taken from [1], again with mostly minor updates.
+   The one major difference is the packet line format being a single
+   key=value format instead of a sequence of pairs. This also means that
+   Patch 4 is entirely new since it feeds these pairs directly from the
+   server's config.
+
+ * Patches 6-9 finish off the ability for the client to notice the
+   capability, request the values, and download bundles before continuing
+   with the rest of the download.
+
+One thing that is not handled here but could be handled in a future change
+is to disconnect from the origin Git server while downloading the bundle
+URIs, then reconnecting afterwards. This does not make any difference for
+HTTPS, but SSH may benefit from the reduced connection time. The git clone
+--bundle-uri option did not suffer from this because the bundles are
+downloaded before the server connection begins.
+
+After this series, there is one more before the original scope of the plan
+is complete: using creation tokens as a heuristic. See [2] for the RFC
+version of those patches.
+
+[2] https://github.com/derrickstolee/git/pull/22
 
 Thanks,
-Taylor
+
+ * Stolee
+
+Derrick Stolee (5):
+  bundle-uri: serve bundle.* keys from config
+  strbuf: reintroduce strbuf_parent_directory()
+  bundle-uri: allow relative URLs in bundle lists
+  bundle-uri: download bundles from an advertised list
+  clone: unbundle the advertised bundles
+
+Ævar Arnfjörð Bjarmason (4):
+  protocol v2: add server-side "bundle-uri" skeleton
+  bundle-uri client: add minimal NOOP client
+  bundle-uri client: add helper for testing server
+  bundle-uri client: add boolean transfer.bundleURI setting
+
+ Documentation/config/transfer.txt      |   6 +
+ Documentation/gitprotocol-v2.txt       | 193 +++++++++++++++++++++
+ builtin/clone.c                        |  23 +++
+ bundle-uri.c                           |  91 +++++++++-
+ bundle-uri.h                           |  27 +++
+ connect.c                              |  47 +++++
+ remote.h                               |   5 +
+ serve.c                                |   6 +
+ strbuf.c                               |   9 +
+ strbuf.h                               |   7 +
+ t/helper/test-bundle-uri.c             |  48 ++++++
+ t/lib-t5730-protocol-v2-bundle-uri.sh  | 229 +++++++++++++++++++++++++
+ t/t5601-clone.sh                       |  59 +++++++
+ t/t5701-git-serve.sh                   |  40 ++++-
+ t/t5730-protocol-v2-bundle-uri-file.sh |  36 ++++
+ t/t5731-protocol-v2-bundle-uri-git.sh  |  17 ++
+ t/t5732-protocol-v2-bundle-uri-http.sh |  17 ++
+ t/t5750-bundle-uri-parse.sh            |  54 ++++++
+ transport-helper.c                     |  13 ++
+ transport-internal.h                   |   7 +
+ transport.c                            |  87 ++++++++++
+ transport.h                            |  23 +++
+ 22 files changed, 1042 insertions(+), 2 deletions(-)
+ create mode 100644 t/lib-t5730-protocol-v2-bundle-uri.sh
+ create mode 100755 t/t5730-protocol-v2-bundle-uri-file.sh
+ create mode 100755 t/t5731-protocol-v2-bundle-uri-git.sh
+ create mode 100755 t/t5732-protocol-v2-bundle-uri-http.sh
+
+
+base-commit: c03801e19cb8ab36e9c0d17ff3d5e0c3b0f24193
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1400%2Fderrickstolee%2Fbundle-redo%2Fadvertise-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1400/derrickstolee/bundle-redo/advertise-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1400
+-- 
+gitgitgadget
