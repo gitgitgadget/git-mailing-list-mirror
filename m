@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFBB9C4332F
-	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 22:36:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C43AC4332F
+	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 22:37:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231349AbiKAWg5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 1 Nov 2022 18:36:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38600 "EHLO
+        id S231405AbiKAWg7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Nov 2022 18:36:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231296AbiKAWgi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Nov 2022 18:36:38 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53EA6201BB
-        for <git@vger.kernel.org>; Tue,  1 Nov 2022 15:36:04 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id f27so40782442eje.1
-        for <git@vger.kernel.org>; Tue, 01 Nov 2022 15:36:04 -0700 (PDT)
+        with ESMTP id S231297AbiKAWgj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2022 18:36:39 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E95A201BD
+        for <git@vger.kernel.org>; Tue,  1 Nov 2022 15:36:05 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id y14so40787638ejd.9
+        for <git@vger.kernel.org>; Tue, 01 Nov 2022 15:36:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wEsGcDbioj3TrSYABwZLxNQdhqiyZAxuNg/HCrBStho=;
-        b=oGAOKJVXUbzuu1Q3b9gF7p/P/j7M5lGQNXgpMEvzEksih0Rgmw7t2HXhGZrapjd1LA
-         iU9K8wwRxBlSzqrRAUDkWqh6YF1pem7tlJG/lVcdi4t+oMFYJnnIdC9y4W+8SGgtQUGR
-         f0H1KdmZ3VMm826cRcP8QK1SrvQuH5pQ50qWw2dZEmgutPFdCAST9tcpe7821EtbsBSb
-         fOLbeSkxyMcwwjUVNGhPuQ4enOwOBTvgUXuJPW85VWAk+mFBlCKH8Ry/98F8vLwnyTmc
-         3TtgLm2ejsqJRmSX+W8mghyxNv9Qtr5dW4BZ3cjClMVk7mNFtWDmHfZUhYyb6WT2MM8+
-         3eIA==
+        bh=Hz75qdjgmxuIXxRyP7RyUMm4W1pPF0rrghOokrjmf9Y=;
+        b=SfvJY1exRXdrrbpw8N9jY4rYv9wNfLpVKxPp5gqeIxtzwdPcib3zNOE/pwM9HQd5qQ
+         W0GY0Ky9DXcIYyMPaOOxeeClki5BhlVN9U5hBclrkyfyyNTSwTKIhVb72tRaFZps9HBz
+         quTiKPbiFsChbzwLe/jsTLzY4XvxOGDPzG6nVJX1Z2m4tLSaVXrm6W2AteoY3kpENLEc
+         ODYdexHzHzYsJZtRf9B/IRHLjdhUd16euPh7xlm5DIwiPZNCDVjhO8lFDgfetK78n8+l
+         Aiu6c2Lan0cezLeHQMDwM+Iu3pFhSipYZiEXqDvViyxu8/2xCVbAY/ly4mLOb5pqFy6b
+         WuOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=wEsGcDbioj3TrSYABwZLxNQdhqiyZAxuNg/HCrBStho=;
-        b=5+fFi4m2Jpu1Gx8PaPAjz1zp133S2OKHOBuDKCE/eRxE+vUDYDx1C3C6JJklWhXARj
-         bEF6VIebbIpnuxPDxdQi1DYoTlALADLExJbxRBNHxlCXViZxYTzhO/PXsRzFKMFUqJUN
-         PTKjtZiW3aLvtJ6JjyfFER1Cy7omgYNQcmjQXJWs2ueDdj6jFlTbDhylUrkQuMRhFgB9
-         VmabeHf3nkkkCu2/f4V7zH+0R7BmgKQQTcIbHqE/vme3ZMyIrYpkpwvU51VZOL1gx7ap
-         /GxhNthzkzoiUEaz4r7kdJ+BrLgzGy8KmhkOWzX00HCYNmqpwc3Lo7EYmNK3zLBJjooZ
-         Q5NQ==
-X-Gm-Message-State: ACrzQf0rCzNacDIK7JkIiFumjdK6/R8yeERi3He8wQwF4baw5avdM7OC
-        BQCV3Rb/9xE5VluTBCd9Xr1dHkuCC1/qzg==
-X-Google-Smtp-Source: AMsMyM7Yo8J0AqXk8Fn0HT/Ffo+Hpb+2xid+SRQQfYiBCwQErBWTq3wLF/1giAwY+r3Sb7c6eas13A==
-X-Received: by 2002:a17:906:8a6f:b0:780:96b4:d19e with SMTP id hy15-20020a1709068a6f00b0078096b4d19emr20317058ejc.624.1667342162571;
-        Tue, 01 Nov 2022 15:36:02 -0700 (PDT)
+        bh=Hz75qdjgmxuIXxRyP7RyUMm4W1pPF0rrghOokrjmf9Y=;
+        b=e8mtes5OGUtdwyBcOt9F7b/V/61iAVBIhOqw8lcL21ZPKddE9+BOP7vqSo6L6b5wDU
+         bWtpbEp8U3NJz3G7BflP0mg+sFrEwwnOPXGyx/MPBPiXfVvl9gLUfNvZFLQUolk6gqta
+         x6ggY5I8N3TRnlQLkAvDLoda6iGBPuO/47TLFWPoo29UxZUrYWTJ3MvJjh2A4EQy0CX8
+         5KEY76ln9azsy7eKvTbqXx8Xy6PS9wgOyUnjj4Useq1qQIeyaNwz8fuMX7s7I7eL7O7c
+         IJ0hlN0vzJni9Vbs/7IgJch5920XDdAIRSALHkZOImp0n4B9/pJZbhcxRilxrYXLBMne
+         24rQ==
+X-Gm-Message-State: ACrzQf0fKminyMjRSu4K831K22NFtEV5nVrU0kktKlvcvjj0nqblKEUS
+        wt993CBqu02xz+MQcIvAwHp3Zhe6h27apA==
+X-Google-Smtp-Source: AMsMyM7nUNYxXoU7Bphrw4NF6Zl2KCOEQnwW/Gc9MLvL6S5M2yJBUHKUFOexx2MTiKneRxJPQAHf5A==
+X-Received: by 2002:a17:906:3b48:b0:7ad:fa67:1daa with SMTP id h8-20020a1709063b4800b007adfa671daamr1990376ejf.653.1667342163518;
+        Tue, 01 Nov 2022 15:36:03 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id rp7-20020a170906d96700b0078dd4c89781sm4693845ejb.35.2022.11.01.15.36.01
+        by smtp.gmail.com with ESMTPSA id rp7-20020a170906d96700b0078dd4c89781sm4693845ejb.35.2022.11.01.15.36.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Nov 2022 15:36:01 -0700 (PDT)
+        Tue, 01 Nov 2022 15:36:02 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 02/13] cocci rules: remove unused "F" metavariable from pending rule
-Date:   Tue,  1 Nov 2022 23:35:44 +0100
-Message-Id: <patch-v5-02.13-d8556f94cb4-20221101T222616Z-avarab@gmail.com>
+Subject: [PATCH v5 03/13] Makefile: add ability to TAB-complete cocci *.patch rules
+Date:   Tue,  1 Nov 2022 23:35:45 +0100
+Message-Id: <patch-v5-03.13-6bf908044eb-20221101T222616Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1280.g8136eb6fab2
 In-Reply-To: <cover-v5-00.13-00000000000-20221101T222616Z-avarab@gmail.com>
 References: <cover-v4-00.12-00000000000-20221026T141005Z-avarab@gmail.com> <cover-v5-00.13-00000000000-20221101T222616Z-avarab@gmail.com>
@@ -69,32 +69,57 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix an issue with a rule added in 9b45f499818 (object-store: prepare
-has_{sha1, object}_file to handle any repo, 2018-11-13). We've been
-spewing out this warning into our $@.log since that rule was added:
-
-	warning: rule starting on line 21: metavariable F not used in the - or context code
-
-We should do a better job of scouring our coccinelle log files for
-such issues, but for now let's fix this as a one-off.
+Declare the contrib/coccinelle/<rule>.cocci.patch rules in such a way
+as to allow TAB-completion, and slightly optimize the Makefile by
+cutting down on the number of $(wildcard) in favor of defining
+"coccicheck" and "coccicheck-pending" in terms of the same
+incrementally filtered list.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- contrib/coccinelle/the_repository.pending.cocci | 1 -
- 1 file changed, 1 deletion(-)
+ Makefile | 17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/contrib/coccinelle/the_repository.pending.cocci b/contrib/coccinelle/the_repository.pending.cocci
-index 072ea0d9228..747d382ff5f 100644
---- a/contrib/coccinelle/the_repository.pending.cocci
-+++ b/contrib/coccinelle/the_repository.pending.cocci
-@@ -20,7 +20,6 @@ expression E;
+diff --git a/Makefile b/Makefile
+index b07ee35e17d..828d332096a 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3144,9 +3144,20 @@ check: $(GENERATED_H)
+ 		exit 1; \
+ 	fi
  
- @@
- expression E;
--expression F;
- @@
- - has_object_file_with_flags(
- + repo_has_object_file_with_flags(the_repository,
++COCCI_GLOB = $(wildcard contrib/coccinelle/*.cocci)
++COCCI_RULES = $(COCCI_GLOB)
++
++COCCICHECK_PENDING = $(filter %.pending.cocci,$(COCCI_RULES))
++COCCICHECK = $(filter-out $(COCCICHECK_PENDING),$(COCCI_RULES))
++
++COCCICHECK_PATCHES = $(COCCICHECK:%=%.patch)
++COCCICHECK_PATCHES_PENDING = $(COCCICHECK_PENDING:%=%.patch)
++
+ COCCI_TEST_RES = $(wildcard contrib/coccinelle/tests/*.res)
+ 
+-%.cocci.patch: %.cocci $(COCCI_SOURCES)
++COCCI_PATCHES = $(COCCI_RULES:%=%.patch)
++$(COCCI_PATCHES): $(COCCI_SOURCES)
++$(COCCI_PATCHES): %.patch: %
+ 	$(QUIET_SPATCH) \
+ 	if test $(SPATCH_BATCH_SIZE) = 0; then \
+ 		limit=; \
+@@ -3183,11 +3194,11 @@ $(COCCI_TEST_RES_GEN): .build/contrib/coccinelle/tests/%.res : contrib/coccinell
+ coccicheck-test: $(COCCI_TEST_RES_GEN)
+ 
+ coccicheck: coccicheck-test
+-coccicheck: $(addsuffix .patch,$(filter-out %.pending.cocci,$(wildcard contrib/coccinelle/*.cocci)))
++coccicheck: $(COCCICHECK_PATCHES)
+ 
+ # See contrib/coccinelle/README
+ coccicheck-pending: coccicheck-test
+-coccicheck-pending: $(addsuffix .patch,$(wildcard contrib/coccinelle/*.pending.cocci))
++coccicheck-pending: $(COCCICHECK_PATCHES_PENDING)
+ 
+ .PHONY: coccicheck coccicheck-pending
+ 
 -- 
 2.38.0.1280.g8136eb6fab2
 
