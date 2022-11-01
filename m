@@ -2,80 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9EC21FA373D
-	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 03:55:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 811F0C433FE
+	for <git@archiver.kernel.org>; Tue,  1 Nov 2022 04:54:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229515AbiKADz1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 31 Oct 2022 23:55:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42008 "EHLO
+        id S229651AbiKAEy1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 1 Nov 2022 00:54:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbiKADz0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Oct 2022 23:55:26 -0400
-Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98C2113FBF
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 20:55:23 -0700 (PDT)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-13be3ef361dso15589531fac.12
-        for <git@vger.kernel.org>; Mon, 31 Oct 2022 20:55:23 -0700 (PDT)
+        with ESMTP id S229609AbiKAEy0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Nov 2022 00:54:26 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79A6F16587
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 21:54:25 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id b11so12191575pjp.2
+        for <git@vger.kernel.org>; Mon, 31 Oct 2022 21:54:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8AAKqVKguR7R9C0R7HDddmQjzj+WlzoHuFea/IudIwI=;
-        b=mKJY2wA+36OEAYf4RoJi49vWfOUso3Jm5LNfLY7ZgR1Sf8/jMDbtGS0WOKUF46J2pV
-         QLlc4yOwzhzxZJ6wQUerCBKSclZQmggRmeSeSIit/vmKeNkqkXmarsnWJvoMplRMcTEg
-         8LEgwrMCoASXA2Qn5SwjvHzPuSEkXZxkv6oI7IfBl7ZJndjgolnjSlzN5YPcU+NhIOEN
-         sxlmLvCneGth7dvCGFx/X24wcdcbBkZIleUUsf7pd9DFgWy6vE4JCTCyKxmJhjlDvvih
-         O0qBB2YZIrAKf9Poyq4PrmiV66D2Pa7WPrszmbj0FMQiyk/IO3oFA658cy9A39pFaT+K
-         hO1A==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WzOuVLs0n5f3LJir06yf4EUVsiL43e//z8aAkwWNPP0=;
+        b=noMhz5qNMwsmUVxwRumSmhkaBXOSRuR0naUgu/PPFBYCKd+aVGIdQyS8aIUBd6cvKc
+         I/+60w/u97gSptXc8eiFq7IqehFWuHdSyMSxxA7/jiTxAWf8AKQds09dTESlSjKnyXsa
+         sMZtFTyYBIw+oV2+jdU7k8pYuUoCFQvlrW9ubOteqFlJ1nfoDuVbPPaWhUJyoq5nfUk5
+         xUchj8zr0A7rWCm5u9KfZ88fhN3mFqVRm1RwjS7tssShOIMfspVPs3yAXQKltnOWSKZ6
+         WpD5AD52vNYcmlTaSjRmtx/C5xW9DpVh1bAopWvZTG5wcQHrzYsgPg4PWm+4wyVl4xNz
+         3eDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8AAKqVKguR7R9C0R7HDddmQjzj+WlzoHuFea/IudIwI=;
-        b=dL+UHAIQFskB0aU49IMOJblstXWkAKHC92ohR+flF6+YL3CjcIUrmR7osiwowuc1Rn
-         2WqaqIcNchQ461aOVguyqv6U6uNnvpTvm46jLlPXOAjxxts7nuL5e5nn7cl9OVzQscDB
-         gJOk+Qmfl7OqF4Rjm+roHWH3wLIJwoXEXO2vNU7RyZ8+iWd+6OMTsXRCucj3D16B7eio
-         eYyWaBBuBivWzhjjNEZpdlG3eqwml6Rg5UPip27AQz3/MQiyOYUYIUgzKFy+zPgGfVYe
-         NjAO3tVeUfBjESbaXPyVW9PWHnAcYkEsUDDLufIOjo5Vm7ALYZecAjLBRJq0uc3mAnIK
-         vmPA==
-X-Gm-Message-State: ACrzQf1uHw6G0/Mup6cEJuf2FFeWfiTy9OH7MF3TjTUKqRkUcUuEru+g
-        emU6fiLmzoy5QRIRyV5Ykhf9t7VLVqbQWUiXn6c=
-X-Google-Smtp-Source: AMsMyM5Ez1ATMuhZWSTyACzyPneMulJ7W+xayhZralRU+Qcqf8Do1c5F2XJepsAU9Id6yisZpt+k7ZA+/pKmd07xowI=
-X-Received: by 2002:a05:6870:8091:b0:13c:50b8:23de with SMTP id
- q17-20020a056870809100b0013c50b823demr15106855oab.183.1667274922719; Mon, 31
- Oct 2022 20:55:22 -0700 (PDT)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=WzOuVLs0n5f3LJir06yf4EUVsiL43e//z8aAkwWNPP0=;
+        b=E5c6v9rLH6rm2yq8OAGQ0FQHbNjY5H4dZwHw4ReSW1j2Yu4+gh35GSoT8lhxYknmWo
+         Wz44rR3P9pneCKkP/oKm+2g5i17vDnLNLx7cRxjJNSuxOsCv317BsbtwF00etrRSsZG8
+         Ui2NxuktiPYTxruQ2H0Y/1LE5wkPvCBkybnOCQ1kG+1zYMZUlyrt28LcjSQ4apiqIMS6
+         YQKjUCtJO/GZxLKrsCBtbBTTncjiJig3yA64gkjVfmWUAeepsmfWfpxucB9o1N5cEPKD
+         IGnJcCgeIouwMcLUAlf3cjBrpEn78RhR2c6THnvx/aowvc0fzKR+xmi2jjWN/FN9+qxG
+         hDrg==
+X-Gm-Message-State: ACrzQf2GoBMcZHnx4kgHJQj6dn5TeYS6idAnXTYx2v8grLR0sbSq3CJO
+        Fm9nbtw/ncg9UxUZqd2KyUM=
+X-Google-Smtp-Source: AMsMyM5cenO/64E+awdWTQQ1NusGciaUANUkjD7fdbo/bCcIHQrxVeSd0J4n1V+T++u2FimdY+P0hg==
+X-Received: by 2002:a17:902:f651:b0:184:6925:d127 with SMTP id m17-20020a170902f65100b001846925d127mr17604282plg.140.1667278464798;
+        Mon, 31 Oct 2022 21:54:24 -0700 (PDT)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id ft10-20020a17090b0f8a00b00210c84b8ae5sm5042208pjb.35.2022.10.31.21.54.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 31 Oct 2022 21:54:24 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] t5516/t5601: be less strict about the number of
+ credential warnings
+References: <Y2CDrZNgNZ+flJBK@coredump.intra.peff.net>
+        <Y2CD6GBl6ORqKsug@coredump.intra.peff.net>
+Date:   Mon, 31 Oct 2022 21:54:23 -0700
+In-Reply-To: <Y2CD6GBl6ORqKsug@coredump.intra.peff.net> (Jeff King's message
+        of "Mon, 31 Oct 2022 22:26:48 -0400")
+Message-ID: <xmqq5yfze0lc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1396.git.1666845947898.gitgitgadget@gmail.com> <xmqqk04lmagy.fsf@gitster.g>
-In-Reply-To: <xmqqk04lmagy.fsf@gitster.g>
-From:   M Hickford <mirth.hickford@gmail.com>
-Date:   Tue, 1 Nov 2022 03:54:46 +0000
-Message-ID: <CAGJzqs=PovTFeVFJAT1HLcKQxHdRjozUACh3Z-x8ih6yuYSb7w@mail.gmail.com>
-Subject: Re: [PATCH] Mention that password could be a personal access token.
-To:     Junio C Hamano <gitster@pobox.com>, peff@peff.net
-Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, M Hickford <mirth.hickford@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 27 Oct 2022 at 18:40, Junio C Hamano <gitster@pobox.com> wrote:
+Jeff King <peff@peff.net> writes:
 
-> Also, I wonder if the specific "it can be access token and not
-> password" is something worth adding.
+> It is unclear as to _why_, but under certain circumstances the warning
+> about credentials being passed as part of the URL seems to be swallowed
+> by the `git remote-https` helper in the Windows jobs of Git's CI builds.
+>
+> Since it is not actually important how many times Git prints the
+> warning/error message, as long as it prints it at least once, ...
 
-Personal access tokens are ubiquitous nowadays, maybe even more common
-than passwords since GitHub disabled passwords last year. I wanted
-to acknowledge this in the docs, even if Git's own behaviour hasn't
-changed. Maybe the introduction to
-https://git-scm.com/docs/gitcredentials would be a better place to do
-that?
+Sorry, but I do not quite see the value of keeping the test to
+expect success in a weakend form.  If we think we are emitting three
+warnings, whether we do so by mistake or by design, and some of them
+are lost and not shown for an unknown reason, is there a guarantee
+that at least one would survive?  And when all three are lost, even
+the test in the weakened form would fail and stop the CI builds, no?
 
-     Git will sometimes need credentials from the user in order to
-perform operations; for example, it may need to ask for a username and
-password in order to access a remote repository over HTTP. **The
-server may accept or expect a personal access token instead of a
-password.**
-
-[1] https://github.blog/changelog/2021-08-12-git-password-authentication-is-shutting-down/
+If we do not know why we are losing some messages, and if we do not
+have resources to track down why, that is perfectly fine.  Fixes can
+be prioritised.  But wouldn't test_expect_failure be a better way to
+express "we think we ought to get 3 but for some reason we may not
+get all of them and we haven't figured it out"?
