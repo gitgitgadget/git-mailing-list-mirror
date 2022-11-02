@@ -2,110 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2AD4C433FE
-	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 17:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA8E4C43217
+	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 17:30:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231440AbiKBR0F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 13:26:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51038 "EHLO
+        id S231621AbiKBRa4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 13:30:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230266AbiKBR0D (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 13:26:03 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE14224BF2
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 10:26:02 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id n191so15569947iod.13
-        for <git@vger.kernel.org>; Wed, 02 Nov 2022 10:26:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=v6HGmABgbrvSUrTkKQFTQ5fRTE0KlHyvIqPPh+4C/go=;
-        b=rfXhBYbhaDxZSqMkuhot1VFAmlU8pDOf/avbls+ZwASRGooK8nlFfTiK88/TUVGsq0
-         KrHpncowD7dXReh2GIJ9thPNIv91D53ewiT+KBFOJQvqqJzmN/Tio9b2NtPiMe5C2FRn
-         R2mukhwydCjWyGf+12zwmXraurDfEy1UXIDEqGM8t4yGpz58/zOt6dfCx371vc55iDzF
-         KnTaiyEXTGCDI2G01ahgqv2O6dJn3ktInN5B1sP4zb/wchGrVuLGcurFQ6HDvPoNw5F0
-         8pITKehNyOWp1iJ12Pbz2sgdgHyQHmsm7nwjc/gOFSLGFMMD+28i6DIdjnf2MAQG/Jwi
-         5Hjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=v6HGmABgbrvSUrTkKQFTQ5fRTE0KlHyvIqPPh+4C/go=;
-        b=h8jIFOeQBMgxubg/BISqO9huQtuNUlujv5me4l9VVHhZVLRkS6SOUKB2ZAGb3sZy4e
-         kVEDDnL71/wExvMJVBtydwbjE5QPo91iT+CaSvXIqAd3LXLZEAI1WMJoyFhOet7Y+vhP
-         1FRjDtFnXyBNhE6VI1nqCyY3eNXpwDFzOXJ00UNlct7xACbhvO3/UihKnrrQ6Ko++Ob0
-         7OkoYB1om+DltZ9iMc9pOTz/utTwFAbgodEmjBJogUviY45EmUFHQm/CorwhAY4O/4nm
-         mXyCP0cPei1u5Oadoq2kYBmtG5SGS3pil0wL1DDhOQP6JOl3HvZcE2pkR74fAvgHaPp7
-         Qsgg==
-X-Gm-Message-State: ACrzQf1OrBC+QLaHyw4qq+hd136LDKLSZ25Piuyiq6XqS1qrgrzNKMPh
-        Oyv2j2cX3hRMiawwGu2sKRqrPm/0a+S7drNT
-X-Google-Smtp-Source: AMsMyM48HkQKcs4GURN4GIeLVflXJOakCH/BFXFoI4jxW3pOVIMZkE7g/mYyCqtT25MHJPzk4KHN1g==
-X-Received: by 2002:a05:6602:2d42:b0:6d2:e10:ecec with SMTP id d2-20020a0566022d4200b006d20e10ececmr11387272iow.117.1667409962103;
-        Wed, 02 Nov 2022 10:26:02 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id q23-20020a02a997000000b00375664a365esm537917jam.1.2022.11.02.10.26.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 10:26:01 -0700 (PDT)
-Date:   Wed, 2 Nov 2022 13:26:00 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: js/bisect-in-c (was: What's cooking in git.git (Oct 2022, #09;
- Mon, 31))
-Message-ID: <Y2KoKO5Sj71Nfa61@nand.local>
-References: <Y19dnb2M+yObnftj@nand.local>
- <221102.86cza52rt0.gmgdl@evledraar.gmail.com>
+        with ESMTP id S231481AbiKBRab (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 13:30:31 -0400
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 829032C655
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 10:30:29 -0700 (PDT)
+Received: from 88-110-102-84.dynamic.dsl.as9105.com ([88.110.102.84] helo=[192.168.1.57])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1oqHZL-0006LA-EE;
+        Wed, 02 Nov 2022 17:30:27 +0000
+Message-ID: <83d3c28b-9b33-fa17-c0ca-85e790e52dad@iee.email>
+Date:   Wed, 2 Nov 2022 17:30:21 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <221102.86cza52rt0.gmgdl@evledraar.gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.1
+Subject: Re: [PATCH v2] Mention that password could be a personal access
+ token.
+Content-Language: en-GB
+To:     Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        M Hickford <mirth.hickford@gmail.com>
+References: <pull.1396.git.1666845947898.gitgitgadget@gmail.com>
+ <pull.1396.v2.git.1667385022103.gitgitgadget@gmail.com>
+ <CAPig+cQ2Tqt8rzvXsRjCsPFTkbq7B06gq2pourKXi5dKNx8oAA@mail.gmail.com>
+ <CAPc5daXmnkGpScihLpTPDXEFOAQF0vm-aWOpeym90X=tktLC2w@mail.gmail.com>
+ <CAPig+cRy66HNfTnNQC4PcAaMR-m-DwUbdETsy0zBX4saG7F4Ng@mail.gmail.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <CAPig+cRy66HNfTnNQC4PcAaMR-m-DwUbdETsy0zBX4saG7F4Ng@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 02, 2022 at 06:22:17PM +0100, Ævar Arnfjörð Bjarmason wrote:
+On 02/11/2022 15:51, Eric Sunshine wrote:
+> On Wed, Nov 2, 2022 at 11:45 AM Junio C Hamano <gitster@pobox.com> wrote:
+>> On Wed, Nov 2, 2022 at 3:55 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>>> How about a different approach, calling it a "secret" first, and then
+>>> defining "secret" as different names for "password".
+>> Or more directly, say "password" and parenthetically add that some hosting
+>> sites may call it with different names like "personal tokens"?
+> I tried the parenthetical approach first but the sentence structure
+> became too complex and more difficult to understand. Having a separate
+> sentence helped simplify. That said, perhap something like this?
 >
-> On Mon, Oct 31 2022, Taylor Blau wrote:
->
-> > What's cooking in git.git (Oct 2022, #09; Mon, 31)
-> > --------------------------------------------------
-> >
-> > * js/bisect-in-c (2022-08-30) 17 commits
-> >  . bisect: no longer try to clean up left-over `.git/head-name` files
-> >  . bisect: remove Cogito-related code
-> >  . Turn `git bisect` into a full built-in
-> >  . bisect: move even the command-line parsing to `bisect--helper`
-> >  . bisect--helper: make `state` optional
-> >  . bisect--helper: calling `bisect_state()` without an argument is a bug
-> >  . bisect: avoid double-quoting when printing the failed command
-> >  . bisect run: fix the error message
-> >  . bisect: verify that a bogus option won't try to start a bisection
-> >  . bisect--helper: migrate to OPT_SUBCOMMAND()
-> >  . bisect--helper: make the order consistently `argc, argv`
-> >  . bisect--helper: make `terms` an explicit singleton
-> >  . bisect--helper: simplify exit code computation
-> >  . bisect--helper: really retire `--bisect-autostart`
-> >  . bisect--helper: really retire --bisect-next-check
-> >  . bisect--helper: retire the --no-log option
-> >  . Merge branch 'sg/parse-options-subcommand' into js/bisect-in-c
-> >
-> >  Final bits of "git bisect.sh" have been rewritten in C.
-> >
-> >  Needs review.
-> >  cf. <xmqqv8pr8903.fsf@gitster.g>
-> >  source: <pull.1132.v6.git.1661885419.gitgitgadget@gmail.com>
->
-> I see this has been ejected out of "seen", presumably due to the
-> outstanding conflicts.
+>     Git will sometimes need credentials from the user in order to
+>     perform operations; for example, it may need to ask for a username
+>     and password in order to access a remote repository over HTTP.  In
 
-If I recall correctly, I ejected this one due to its age and lack of
-attention. If you want to reroll it or if Johannes wants to take a look,
-I'd be appreciative.
-
-Thanks,
-Taylor
+Perhaps s/password/secret 'password'/ here 9above0, and then talk about
+the names for that "secret" in the follow up sentence below.
+>     place of a password, some sites may instead provide a passcode,
+>     personal access token, OAuth access token, etc.  This manual...
+--
+Philip
