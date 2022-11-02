@@ -2,68 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CA8E4C43217
-	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 17:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C494C4332F
+	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 18:51:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231621AbiKBRa4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 13:30:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56864 "EHLO
+        id S231609AbiKBSvK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 14:51:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231481AbiKBRab (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 13:30:31 -0400
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 829032C655
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 10:30:29 -0700 (PDT)
-Received: from 88-110-102-84.dynamic.dsl.as9105.com ([88.110.102.84] helo=[192.168.1.57])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1oqHZL-0006LA-EE;
-        Wed, 02 Nov 2022 17:30:27 +0000
-Message-ID: <83d3c28b-9b33-fa17-c0ca-85e790e52dad@iee.email>
-Date:   Wed, 2 Nov 2022 17:30:21 +0000
+        with ESMTP id S231530AbiKBSvI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 14:51:08 -0400
+X-Greylist: delayed 64 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 02 Nov 2022 11:51:04 PDT
+Received: from pb-smtp20.pobox.com (pb-smtp20.pobox.com [173.228.157.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 746D7E28
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 11:51:04 -0700 (PDT)
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id D31A31CD4AE;
+        Wed,  2 Nov 2022 14:49:56 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=date:from
+        :to:cc:subject:message-id:references:mime-version:content-type
+        :in-reply-to; s=sasl; bh=gdlKiQG0JBntN6VI1XC/YbQJPprSBfwnGMxRAqB
+        AfwU=; b=HfHMIsYFFa1WI96rVI0Q+X2o3RC/3Q21qL1Pm7WeR1h1j+TJnxjuqFQ
+        vhQMmO1rg9SEyNODpD+qMZOs2PJ9lVKIqNutqEoGeP/E1FfhBmzmMyeJ4cUvthTq
+        MFFa5XTQRszP4sKoKAuPqqBYD/GuequCM7G8IGVfpq7gCXsVrC9g=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CB8C71CD4AD;
+        Wed,  2 Nov 2022 14:49:56 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Received: from pobox.com (unknown [108.15.224.39])
+        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id DB52D1CD4AC;
+        Wed,  2 Nov 2022 14:49:52 -0400 (EDT)
+        (envelope-from tmz@pobox.com)
+Date:   Wed, 2 Nov 2022 14:49:49 -0400
+From:   Todd Zullinger <tmz@pobox.com>
+To:     Sarah Julia Kriesch <sarah.kriesch@opensuse.org>
+Cc:     git@vger.kernel.org, andreas.stieger@gmx.de
+Subject: Re: git can not be built for s390x since update to git-2.38.0
+Message-ID: <Y2K7zXDLfJhf/i4y@pobox.com>
+References: <f1a5f758-d81f-5985-9b5d-2f0dbfaac071@opensuse.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v2] Mention that password could be a personal access
- token.
-Content-Language: en-GB
-To:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        M Hickford <mirth.hickford@gmail.com>
-References: <pull.1396.git.1666845947898.gitgitgadget@gmail.com>
- <pull.1396.v2.git.1667385022103.gitgitgadget@gmail.com>
- <CAPig+cQ2Tqt8rzvXsRjCsPFTkbq7B06gq2pourKXi5dKNx8oAA@mail.gmail.com>
- <CAPc5daXmnkGpScihLpTPDXEFOAQF0vm-aWOpeym90X=tktLC2w@mail.gmail.com>
- <CAPig+cRy66HNfTnNQC4PcAaMR-m-DwUbdETsy0zBX4saG7F4Ng@mail.gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <CAPig+cRy66HNfTnNQC4PcAaMR-m-DwUbdETsy0zBX4saG7F4Ng@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f1a5f758-d81f-5985-9b5d-2f0dbfaac071@opensuse.org>
+X-Pobox-Relay-ID: 23191882-5ADF-11ED-B473-C2DA088D43B2-09356542!pb-smtp20.pobox.com
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 02/11/2022 15:51, Eric Sunshine wrote:
-> On Wed, Nov 2, 2022 at 11:45 AM Junio C Hamano <gitster@pobox.com> wrote:
->> On Wed, Nov 2, 2022 at 3:55 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
->>> How about a different approach, calling it a "secret" first, and then
->>> defining "secret" as different names for "password".
->> Or more directly, say "password" and parenthetically add that some hosting
->> sites may call it with different names like "personal tokens"?
-> I tried the parenthetical approach first but the sentence structure
-> became too complex and more difficult to understand. Having a separate
-> sentence helped simplify. That said, perhap something like this?
->
->     Git will sometimes need credentials from the user in order to
->     perform operations; for example, it may need to ask for a username
->     and password in order to access a remote repository over HTTP.  In
+Sarah Julia Kriesch wrote:
+> I am one of the zsystems Maintainers (s390x architecture) at openSUSE and
+> git can not be built any more since the update from 2.37.3 to 2.38.0, and
+> with 2.38.1 afterwards. We have tried to debug it.
 
-Perhaps s/password/secret 'password'/ here 9above0, and then talk about
-the names for that "secret" in the follow up sentence below.
->     place of a password, some sites may instead provide a passcode,
->     personal access token, OAuth access token, etc.  This manual...
---
-Philip
+I don't know if it's of much help, but for what it's worth
+2.38.0 and 2.38.1 been built in Fedora for s390x without
+issue.  Build logs and artifacts for 2.38.1 can be found
+here:
+
+    https://koji.fedoraproject.org/koji/buildinfo?buildID=2077983
+
+-- 
+Todd
