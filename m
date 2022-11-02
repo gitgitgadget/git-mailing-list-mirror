@@ -2,73 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 340AFC433FE
-	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 14:43:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2858C433FE
+	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 14:52:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229533AbiKBOnx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 10:43:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40022 "EHLO
+        id S229935AbiKBOwm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 10:52:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbiKBOnv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 10:43:51 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 542592982B
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 07:43:49 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id b2so45924551eja.6
-        for <git@vger.kernel.org>; Wed, 02 Nov 2022 07:43:49 -0700 (PDT)
+        with ESMTP id S229533AbiKBOwl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 10:52:41 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C636F2A27E
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 07:52:39 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id f5so24421992ejc.5
+        for <git@vger.kernel.org>; Wed, 02 Nov 2022 07:52:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=d+VZYSGf021dazdsImUQXoipEolu0fj6H6yhlsaQ3dQ=;
-        b=QD30Di3RjL9NIxhvVIRlDBaQ22NtcF3MlBS39UzuCX6YmaRvJFMDKVcHhxiYc+8QUG
-         Rmy5WBUDKndleDwqHY+JmsAva6YD2ytD/EHTMEmSSO3n6x0WH5L1Ur6fl/6HlIRdW1sx
-         1zFhuvyUBpFH/y2RGn9IuKzxGT+rBLHsiU9iqqx28vDNW4TMbxD04VKBPZEbqSjfupQb
-         uV9/HsMYpejZfxya5C21uefJqjrituuCuZeg2SlBPsF9KsqP9tslv6un/EJf5nL9uF2n
-         BdgtWt6wP4lFzSMtWkf5yJqBw8ri1sc9O/qnhlIIIxv2+fXjXW8wHGTboDan7qrM47FK
-         u5XQ==
+        bh=9+iHqWr4gPX69W5a0uZbHEoEef9qttRQJ3cFndEWGAU=;
+        b=ndjqpq06kWX1izZoJD2jhv/taQ7nLviqNefU5A9HG1y5cuVa829XyMe/VmcEAxxb3h
+         mkQWjRtQfvvuGuifl750VtbF1j4/6Sn7/Qyh1+HclLpL2i1a/9bAAQ3W+YExGNLJ9tke
+         4GvnHhViXh6v9NxsHHpiErtEh9EKuKK5uIpj6b6m4mYQaKjf26JizGzs/uj0O1sq9YJC
+         hSZVuc/PPXI4a1K6L3l7KAxiHznoysgBy9SVG+ri79lc4txuYa3PuOelx5SDENyP80uT
+         oSA0id2zXEdo/Goh5yDwuLNxC5k3m0vT6Cwux11zKG2kLZ+UYpzMk8emingAbh2ntHnS
+         x8JQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=d+VZYSGf021dazdsImUQXoipEolu0fj6H6yhlsaQ3dQ=;
-        b=GfR/NWTBgYswM3OblhX5yFJ5J/2cxQX0FE7Po0t2LX1yZC8kNhHFP4QXEfKV8nvckL
-         x5izF6X2l5l39VzI+B251c/jEridOm8AJgwLVVzIXm8XpqfvaYUbTOVpJyK6BJk2s7Fa
-         orgqTDvvOY9clEdI5/EwVAH8g6Wca9i/p/VNOIfIsjCQTevTboSETlLZJHtqXlEJZRsD
-         AQV+Lukp1xT4NtrY3UJF3/lxJQ36DtTWfXZevQECn2DYfHOvCg63DzMDN0GvHJcYtqIW
-         Nu3wn5Gro+Kd11Es4bQvkQupr97fZuSb4CWJwLlGcTr5LAsGur8ODCPc2B9vk3n3PHvn
-         wbAQ==
-X-Gm-Message-State: ACrzQf3ydAeisRrF0IfYR5gNaKRjRl+G9HE8C64+uDSQn8FkO3JoJseY
-        P6VN+IAoUJ70wXgcxZgry1A=
-X-Google-Smtp-Source: AMsMyM4icYyLq7AYsCkMU3xqLw5WQ/yrquAdB3xOnZWgeFVAUpI/0YiNJMve2YKxcQ4NGH8AbNMrSg==
-X-Received: by 2002:a17:907:980e:b0:78d:b6ea:25b3 with SMTP id ji14-20020a170907980e00b0078db6ea25b3mr23710771ejc.98.1667400227579;
-        Wed, 02 Nov 2022 07:43:47 -0700 (PDT)
+        bh=9+iHqWr4gPX69W5a0uZbHEoEef9qttRQJ3cFndEWGAU=;
+        b=jaUDOtkZ+yNrzFQo3bKJVab1IgP+0BZQg/EEqyUpGSrMZGKd1pPJDqnJetjcdHGycs
+         yHvp23rjObSuR0D1jZlBSU4A0Q6qEIyNRwF+Lsr0EDAcAkYcuS3yN4unwcl9x/9a+ngR
+         kF7mH+oOK8f5IeQKsX3071TD9nkTuRkTAnx1A9d0cRaBFu7M4a3yUuq4dxjta39UDl5x
+         2dLZWi8LUgv69eaIAPFmz+4j+89CJcxlEz0FENCW88+2f1rE8QbMOHhhn683UFJG292f
+         HedA5ewcO6wHbFAMHM2E9i2C/XosXj9E9ee1LbCsSbwpmW401GUaxJvXUCIRhBHUphcS
+         XN8A==
+X-Gm-Message-State: ACrzQf0mbCXrWiWqnrQZtJdxBfYEOKgBxPQz7A0/rBYd7m0dm53+XCKK
+        wviKIwfjGlIoA2Er0FFfypqbA02HsxqKLg==
+X-Google-Smtp-Source: AMsMyM6mySZTigbkfvgApNJU2N3KLfsfBKylQXGkTtlNruulgoQdWGLpBDoCJBZT4mMIszJSyFyC3w==
+X-Received: by 2002:a17:907:31c1:b0:742:28a3:5d08 with SMTP id xf1-20020a17090731c100b0074228a35d08mr23984822ejb.112.1667400758304;
+        Wed, 02 Nov 2022 07:52:38 -0700 (PDT)
 Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id ce12-20020a170906b24c00b007addcbd402esm3200774ejb.215.2022.11.02.07.43.46
+        by smtp.gmail.com with ESMTPSA id r17-20020a1709061bb100b007789e7b47besm5508320ejg.25.2022.11.02.07.52.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 07:43:47 -0700 (PDT)
+        Wed, 02 Nov 2022 07:52:37 -0700 (PDT)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1oqEy2-00Bocu-1n;
-        Wed, 02 Nov 2022 15:43:46 +0100
+        id 1oqF6b-00BowM-11;
+        Wed, 02 Nov 2022 15:52:37 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Martin Englund <martin@englund.nu>, git@vger.kernel.org
-Subject: Re: gigantic commit messages, was Re: Git Bug Report: out of memory
- using git tag
-Date:   Wed, 02 Nov 2022 15:26:20 +0100
-References: <CABYbkvP=fMmaFUD3bQbeQ-XKiMSP6g-u0p7Vq1Qt_K5=D5WJ+A@mail.gmail.com>
- <Y2EPgICMsmzKvCC8@coredump.intra.peff.net>
- <38d50c30-c6a3-5989-6e01-47c5467d9d6b@gmail.com>
- <Y2IeqOT5Ao1Qa0Zl@coredump.intra.peff.net>
- <CABPp-BGmNqV5H5meMggKYTcTJDxxt5dRT3rZRnRPz496OJn3Vg@mail.gmail.com>
- <Y2I0siBlVOngNUtK@coredump.intra.peff.net>
+To:     Marc Branchaud <marcnarc@xiplink.com>
+Cc:     Mark Hills <mark@xwax.org>, git@vger.kernel.org,
+        =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>
+Subject: Re: Consist timestamps within a checkout/clone
+Date:   Wed, 02 Nov 2022 15:45:17 +0100
+References: <2210311614160.25661@stax.localdomain>
+ <c060312e-0d35-8439-85dd-920b172c90be@xiplink.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <Y2I0siBlVOngNUtK@coredump.intra.peff.net>
-Message-ID: <221102.86pme52z8d.gmgdl@evledraar.gmail.com>
+In-reply-to: <c060312e-0d35-8439-85dd-920b172c90be@xiplink.com>
+Message-ID: <221102.86leot2ytm.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -76,105 +70,76 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Nov 02 2022, Jeff King wrote:
+On Tue, Nov 01 2022, Marc Branchaud wrote:
 
-> On Wed, Nov 02, 2022 at 01:14:59AM -0700, Elijah Newren wrote:
+> On 2022-10-31 15:01, Mark Hills wrote:
+>> Our use case: we commit some compiled objects to the repo, where compiling
+>> is either slow or requires software which is not always available.
+>> Since upgrading Git 2.26.3 -> 2.32.4 (as part of Alpine Linux OS
+>> upgrade)
+>> we are noticing a change in build behaviour.
+>> Now, after a "git clone" we find the Makefile intermittently
+>> attempting
+>> (and failing) some builds that are not intended.
+>> Indeed, Make is acting reasonably as the source file is sometimes
+>> marginally newer than the destination (both checked out by Git), example
+>> below.
 >
->> On Wed, Nov 2, 2022 at 12:51 AM Jeff King <peff@peff.net> wrote:
->> >
->> > Here are patches which fix them both. I may be setting a new record for
->> > the ratio of commit message lines to changed code
->> 
->> It looks like the first patch is 72 lines of commit message for a
->> one-line fix, and the second patch is 61 lines of commit message for a
->> two line fix.
->> 
->> I don't know what the record ratio is, but it's at least 96[1], so
->> clearly you'll need to figure out how to pad your first commit message
->> with at least another 25 lines before this series can be accepted.
->> ;-)
+> A fix for this was proposed in 2018 and dismissed [1].
 >
-> Well, if we want to start digging things up... ;)
+> Back then, the problem was that as Git wrote files into a directory
+> sometimes the clock would tick over at a bad time, and we'd end up
+> with some files being "newer" than others.  This would sour Make runs
+> as you describe.
 >
-> Try this:
+> Nominally this is caused by putting generated files in the repo, but
+> many times that is unavoidable (e.g. you're forking an upstream that 
+> puts automake-generated stuff in the repo).
 >
->   git log --no-merges --no-renames --format='%H %B' -z --numstat '*.c' |
->   perl -0ne '
->     chomp;
->     if (s/^([0-9a-f]{40}) //) {
->       if (defined $commit && $diff) {
->         my $ratio = $body / $diff;
->         print "$ratio $body $diff $commit\n";
->       }
->       $commit = $1;
->       $body = () = /\n/g;
->       $diff = 0;
->     } elsif (/^\s*(\d+)\t/) {
->       # this counts only added lines, under the assumption that
->       # small commits generally remove/add in proportion. Of course
->       # ones that _only_ remove lines have infinite ratios.
->       $diff += $1;
->     } else {
->       die "confusing record: $_\n";
->     }
->   ' |
->   sort -rn |
->   head
+> IMHO, dismissing the problem back then was a mistake.  At the time I
+> advocated teaching Git to give all the files it touches (creates or 
+> modifies) in a directory the same mtime (e.g. the time at the start of
+> the checkout operation).
 >
-> which shows there are a few in the 100's. Pipe through:
+> Instead the decision was to do nothing in Git, and instead let people
+> create their own post-checkout hooks to touch the files.  I (and
+> others) argued this was inadequate, to no avail.
 >
->   awk '{print $4}' |
->   git log --stdin --no-walk=unsorted --stat
+> 		M.
 >
-> for a nicer view. I'm rejecting the top one on the grounds that it's
-> mostly cut-and-paste output, and also that #2 is mine. ;)
+> [1] https://public-inbox.org/git/20180413170129.15310-1-mgorny@gentoo.org/#r
 
-I think that '*.c' is cheating, if anything I should be getting more
-points when you remove that, as I've been over explaining
-adding/removing a compiler flag or something. At least your #2 is tricky
-C code :)
+I think that's the wrong take-away from that thread. Maybe a patch for
+this will get rejected in the end, but in that case it wasn't because
+the git project is never going to take a patch like this.
 
-I haven't bothered to do this, but I think if you --word-diff
---word-diff-regex=. and parse the resulting diff you'd get "better"
-results.
+Maybe it won't, but:
 
-Or, for better & similar (but not the same): compute the levenshtein
-distance of the pre- and post-image, and compute edit distance to commit
-message length.
+ * That commit has no tests
+ * It's clearly controversial behavior, so *if* we add it I think it's
+   better to make it opt-in configurable.
+ * Once that's done, you'd need doc changes etc. for that.
 
-I haven't done that, but just from eyeballing it I think [1] beats your
-[2] by that criteria. Per:
-	
-	$ perl -MText::Levenshtein=distance -wE 'say distance @ARGV' int unsigned
-	6
-	$ perl -MText::Levenshtein=distance -wE 'say distance @ARGV' "" _lf
-	3
+Now, maybe a sufficiently polished version would also be "meh" for
+whatever reason, I just think it's premature to say that a change in
+this direction would never be accepted.
 
-It should get 2x the score v.s. yours, but yours is <2x the
-words/characters.
+That being said, I do wonder if software in the wild is being
+monkeypatched to work around issues with make (or make-like tools)
+whether such a change isn't better advocated in e.g. GNU make itself.
 
-(Edit: But see [4] below)
+If it added "B" to "MAKEFLAGS" if it detected:
 
-There's also e.g. my [3] that's fairly high in the running per your
-"only added lines". But I think it shows the perils of doing that,
-i.e. in general I don't see why you'd omit deletions, that commit
-message is certainly spending most of its time talking about why the
-deletion of the code at hand is OK.
+ * I'm in a git repository
+ * It's the first time I'm running here, or "nothing is built yet"
+ * My dependency graph would be different with "-B"
 
-Once you count deletions it'll get *way* down the list, as it's 11
-deleted lines, 1 added.
+Wouldn't that be what people who want this feature are after?
 
-Hrm, I take some of the above back, I think [4] might be the winner.
-That's just an edit distance of 1, so it's around 2x the commit message
-length of yours if we adjust for your score of 6. (~2.5 by
-characters)[5].
+It's not like it's SCM-agnostic, it already goes to significant trouble
+to cater to RCS and SCCS of all things, so I don't see why they'd
+categorically reject a patch to cater to modern VCS's.
 
-1. 356c4732950 (credential: treat CR/LF as line endings in the
-   credential protocol, 2020-10-03)
-2. aec0bba106d (config: work around gcc-10 -Wstringop-overflow warning,
-   2020-08-04)
-3. f97fe358576 (pickaxe -G: don't special-case create/delete,
-   2021-04-12)
-4. c58bebd4c67 (ci: update Cirrus-CI image to FreeBSD 12.3, 2022-05-25)
-5. All measured with "git show --no-notes --no-patch <commit> | wc",
-   because I was lazy.
+And, unlike Gike, GNU make wouldn't need to guess that munging
+timestamps would fix it, it can compute both versions of the dependency
+graph, so it would know...
