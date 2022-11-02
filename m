@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 01923C4332F
-	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 22:10:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D31F1C43217
+	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 22:10:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231299AbiKBWKD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 18:10:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53200 "EHLO
+        id S231441AbiKBWKE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 18:10:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231363AbiKBWJq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 18:09:46 -0400
+        with ESMTP id S231401AbiKBWJr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 18:09:47 -0400
 Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71521391
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 15:09:44 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id v124-20020a1cac82000000b003cf7a4ea2caso2152615wme.5
-        for <git@vger.kernel.org>; Wed, 02 Nov 2022 15:09:44 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC75162E5
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 15:09:45 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id t1so26840wmi.4
+        for <git@vger.kernel.org>; Wed, 02 Nov 2022 15:09:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OvXDn+rrjem7Hg0M8fnuF0bVApTee9PoBQCoroxyf5w=;
-        b=kBT5ZrvKl8jxYsPKF/j/oAWz/Q0vbLe/F/61pTQs4yuXR6R9UZ9tVfhzU9emx8SjbD
-         S2L5h14W0HfOW7Z91Y4GoEuOAQaSEKnwL9KACvsjDypjA9Sc8ETDrddSZg2rFt3P/42k
-         HaFhy8TDv/jNr5KTcKKx3Dw/gYw/HZ8HZWTJBNbrrTET2UcGUdNJYuqQO446Ccykv8zY
-         KhbTCFCT9/qUxPiRMSCbC6DTcm8fL/PUuQxqFjEs3PXf1++/z7TEoIioXZpRL/b5UNUC
-         sGcamJjTdVSgdbdXDha79EkNnZQMNEQcZcE7nSHJEA0xmHg9IqMRWwY6CdgE0dKFNkU6
-         7ahg==
+        bh=G+u+0cAjz1+TrMNJ0vQOg929e3nZQu9IrtC17YCqzI0=;
+        b=LvuY6CJOkC+PH3kztFVXDVR3jyaRLhEP11xMl1LxSneWIxoRVpwIsMeo5BC0hHx5bp
+         wSiFWPbA9RKK5Km/rSi4tkUU9cm5ilxPvUc61IMaYHY3pw609qzjVn+H9OZ2xtr6NlS/
+         APu2YX+Ucs2hZjOv3nld87dsaNKM6WLew5Xli4XptcgyPdoTn2bOfNiyLGQjmfxT9q8t
+         BYo36xdZJmf0w25usw38ib98IKh5h/wj91sk4El74Jful58lE2N77x7o7iGsS2EHphpM
+         YWMPgeyK0hIMlyvGN+uUdc2Q6NJL0PSdoeZux1UxGpQj9bVxhJ0AZw8ceLHtqdGNJsOC
+         wEMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OvXDn+rrjem7Hg0M8fnuF0bVApTee9PoBQCoroxyf5w=;
-        b=Y5v25LTu1gj27R7eCnzBEKo3LvFe9onGHWlQI+TwCS/WQetVPrxflhwdMegkJlOqze
-         6P1YzsDbrz5VcLRvnSpOiVgWJn/e6QnJzzVgin2sE1GM61oOOUfHAOZKvTcANtqqakuS
-         wpjwwwZDXaFgyeBIieheDvNWF2IFowaWgwyPhQe+rutcLAmbdsu1nVe/KOdA4jSaj8Jk
-         +U78ozGgsYLS9Zfjrdk9Jh6RMbMuYhQgOm6GERfNnLIrlHsFhEoUdABeUT99SLWzOGnv
-         yLQbKpLR08KyGe4QEuji3zzjkHNGxqE9gbFZgjnZVnvNth2c8oywmZ6JpoTnJQ+VuUQ3
-         e8Qw==
-X-Gm-Message-State: ACrzQf2fHuvOpgZOymhUr3BeDNZYkzMU0bE58vz/RVwh6Jn6jAbpD2Xv
-        fMsXhPyHmd6XLWvOXanZL7QB7OR4n0g=
-X-Google-Smtp-Source: AMsMyM6R+1lJ1uqvwriXXexTkIqqA6mRgN3FlT1QrxBCfGX8Yo3ZD3eEF5iGgbS5oe2UZl54bN6xWQ==
-X-Received: by 2002:a05:600c:3594:b0:3ca:f978:5b97 with SMTP id p20-20020a05600c359400b003caf9785b97mr17872003wmq.64.1667426982763;
-        Wed, 02 Nov 2022 15:09:42 -0700 (PDT)
+        bh=G+u+0cAjz1+TrMNJ0vQOg929e3nZQu9IrtC17YCqzI0=;
+        b=cxTVsaU1VZtKWZ8GSIxRyEfFvvyMjClZcn3aZwpL+hsdLNwji7ZixtVgz3Q4z2egu7
+         ZOwag7nUqClz8qdG1wsp+s3bfMVdYOkhqBGIPLF934rD6uyCBO8baJG6KYkc0u6Gyl0p
+         paoPLCjpgFx0I0N/ICX/MzARpFJjcYZRv8C5yqd8aqtsqW9LIoFJx88mGod9lC4Vod24
+         eIKxLNEaBvU/1ZhZD6ErnJ/vGdHCrVQqWqP0qignQt2YY/7dfpKUiLWaOOHWU/nnO683
+         gqR3TTPdix04hmhhnAXqgglUwrH0E5U+swHUIofRJYd1sP9gP2EVBqj++UfD3bAH5KQB
+         C5fA==
+X-Gm-Message-State: ACrzQf12jvZHZx6QM6ZxHjX9r+HoczohCFNTKdtGse5/gOFiMbIHc3LH
+        fJanYJ98f0jHRumoNQGZdJe1WV9ZgV0=
+X-Google-Smtp-Source: AMsMyM4fD//nScuA2zfBOymArF1egI/STwZeNVgVligFN9Cv2Rlx/1X3l6J4KY4B59e+0pQobSIQ0Q==
+X-Received: by 2002:a05:600c:1c04:b0:3cf:5fd2:1f74 with SMTP id j4-20020a05600c1c0400b003cf5fd21f74mr19788245wms.45.1667426983846;
+        Wed, 02 Nov 2022 15:09:43 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q9-20020adfdfc9000000b002366d1cc198sm14236388wrn.41.2022.11.02.15.09.42
+        by smtp.gmail.com with ESMTPSA id l15-20020a5d480f000000b002366eb01e07sm13734936wrq.114.2022.11.02.15.09.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 15:09:42 -0700 (PDT)
-Message-Id: <5fb248c074acff1552874d98b28f746e1e43eac5.1667426970.git.gitgitgadget@gmail.com>
+        Wed, 02 Nov 2022 15:09:43 -0700 (PDT)
+Message-Id: <192f09b9de4d1b93348a4d0cd3b35fd0ea9ba60d.1667426970.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
 References: <pull.1352.v2.git.1666372083.gitgitgadget@gmail.com>
         <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
 From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 02 Nov 2022 22:09:27 +0000
-Subject: [PATCH v3 09/11] test-http-server: pass Git requests to http-backend
+Date:   Wed, 02 Nov 2022 22:09:28 +0000
+Subject: [PATCH v3 10/11] test-http-server: add simple authentication
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,200 +74,240 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-Teach the test-http-sever test helper to forward Git requests to the
-`git-http-backend`.
-
-Introduce a new test script t5556-http-auth.sh that spins up the test
-HTTP server and attempts an `ls-remote` on the served repository,
-without any authentication.
+Add simple authentication to the test-http-server test helper.
+Authentication schemes and sets of valid tokens can be specified via
+command-line arguments. Incoming requests are compared against the set
+of valid schemes and tokens and only approved if a matching token is
+found, or if no auth was provided and anonymous auth is enabled.
 
 Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 ---
- t/helper/test-http-server.c |  56 +++++++++++++++++++
- t/t5556-http-auth.sh        | 105 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 161 insertions(+)
- create mode 100755 t/t5556-http-auth.sh
+ t/helper/test-http-server.c | 188 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 187 insertions(+), 1 deletion(-)
 
 diff --git a/t/helper/test-http-server.c b/t/helper/test-http-server.c
-index 7bde678e264..9f1d6b58067 100644
+index 9f1d6b58067..9a458743d13 100644
 --- a/t/helper/test-http-server.c
 +++ b/t/helper/test-http-server.c
-@@ -305,8 +305,64 @@ done:
- 	return result;
+@@ -18,6 +18,8 @@ static const char test_http_auth_usage[] =
+ "           [--timeout=<n>] [--init-timeout=<n>] [--max-connections=<n>]\n"
+ "           [--reuseaddr] [--pid-file=<file>]\n"
+ "           [--listen=<host_or_ipaddr>]* [--port=<n>]\n"
++"           [--anonymous-allowed]\n"
++"           [--auth=<scheme>[:<params>] [--auth-token=<scheme>:<token>]]*\n"
+ ;
+ 
+ /* Timeout, and initial timeout */
+@@ -358,10 +360,136 @@ static enum worker_result do__git(struct req *req, const char *user)
+ 	return !!res;
  }
  
-+static int is_git_request(struct req *req)
-+{
-+	static regex_t *smart_http_regex;
-+	static int initialized;
++enum auth_result {
++	/* No auth module matches the request. */
++	AUTH_UNKNOWN = 0,
 +
-+	if (!initialized) {
-+		smart_http_regex = xmalloc(sizeof(*smart_http_regex));
-+		if (regcomp(smart_http_regex, "^/(HEAD|info/refs|"
-+			    "objects/info/[^/]+|git-(upload|receive)-pack)$",
-+			    REG_EXTENDED)) {
-+			warning("could not compile smart HTTP regex");
-+			smart_http_regex = NULL;
-+		}
-+		initialized = 1;
++	/* Auth module denied the request. */
++	AUTH_DENY = 1,
++
++	/* Auth module successfully validated the request. */
++	AUTH_ALLOW = 2,
++};
++
++struct auth_module {
++	char *scheme;
++	char *challenge_params;
++	struct string_list *tokens;
++};
++
++static int allow_anonymous;
++static struct auth_module **auth_modules = NULL;
++static size_t auth_modules_nr = 0;
++static size_t auth_modules_alloc = 0;
++
++static struct auth_module *get_auth_module(const char *scheme)
++{
++	int i;
++	struct auth_module *mod;
++	for (i = 0; i < auth_modules_nr; i++) {
++		mod = auth_modules[i];
++		if (!strcasecmp(mod->scheme, scheme))
++			return mod;
 +	}
 +
-+	return smart_http_regex &&
-+		!regexec(smart_http_regex, req->uri_path.buf, 0, NULL, 0);
++	return NULL;
 +}
 +
-+static enum worker_result do__git(struct req *req, const char *user)
++static void add_auth_module(struct auth_module *mod)
 +{
-+	const char *ok = "HTTP/1.1 200 OK\r\n";
-+	struct child_process cp = CHILD_PROCESS_INIT;
-+	int res;
++	ALLOC_GROW(auth_modules, auth_modules_nr + 1, auth_modules_alloc);
++	auth_modules[auth_modules_nr++] = mod;
++}
 +
-+	if (write(1, ok, strlen(ok)) < 0)
-+		return error(_("could not send '%s'"), ok);
++static int is_authed(struct req *req, const char **user, enum worker_result *wr)
++{
++	enum auth_result result = AUTH_UNKNOWN;
++	struct string_list hdrs = STRING_LIST_INIT_NODUP;
++	struct auth_module *mod;
 +
-+	if (user)
-+		strvec_pushf(&cp.env, "REMOTE_USER=%s", user);
++	struct string_list_item *hdr;
++	struct string_list_item *token;
++	const char *v;
++	struct strbuf **split = NULL;
++	int i;
++	char *challenge;
 +
-+	strvec_pushf(&cp.env, "REQUEST_METHOD=%s", req->method);
-+	strvec_pushf(&cp.env, "PATH_TRANSLATED=%s",
-+			req->uri_path.buf);
-+	strvec_push(&cp.env, "SERVER_PROTOCOL=HTTP/1.1");
-+	if (req->query_args.len)
-+		strvec_pushf(&cp.env, "QUERY_STRING=%s",
-+				req->query_args.buf);
-+	if (req->content_type)
-+		strvec_pushf(&cp.env, "CONTENT_TYPE=%s",
-+				req->content_type);
-+	if (req->content_length >= 0)
-+		strvec_pushf(&cp.env, "CONTENT_LENGTH=%" PRIdMAX,
-+				(intmax_t)req->content_length);
-+	cp.git_cmd = 1;
-+	strvec_push(&cp.args, "http-backend");
-+	res = run_command(&cp);
-+	close(1);
-+	close(0);
-+	return !!res;
++	/*
++	 * Check all auth modules and try to validate the request.
++	 * The first module that matches a valid token approves the request.
++	 * If no module is found, or if there is no valid token, then 401 error.
++	 * Otherwise, only permit the request if anonymous auth is enabled.
++	 */
++	for_each_string_list_item(hdr, &req->header_list) {
++		if (skip_iprefix(hdr->string, "Authorization: ", &v)) {
++			split = strbuf_split_str(v, ' ', 2);
++			if (!split[0] || !split[1]) continue;
++
++			/* trim trailing space ' ' */
++			strbuf_setlen(split[0], split[0]->len - 1);
++
++			mod = get_auth_module(split[0]->buf);
++			if (mod) {
++				result = AUTH_DENY;
++
++				for_each_string_list_item(token, mod->tokens) {
++					if (!strcmp(split[1]->buf, token->string)) {
++						result = AUTH_ALLOW;
++						break;
++					}
++				}
++
++				goto done;
++			}
++		}
++	}
++
++done:
++	switch (result) {
++	case AUTH_ALLOW:
++		trace2_printf("%s: auth '%s' ALLOW", TR2_CAT, mod->scheme);
++		*user = "VALID_TEST_USER";
++		*wr = WR_OK;
++		break;
++
++	case AUTH_DENY:
++		trace2_printf("%s: auth '%s' DENY", TR2_CAT, mod->scheme);
++		/* fall-through */
++
++	case AUTH_UNKNOWN:
++		if (result != AUTH_DENY && allow_anonymous)
++			break;
++		for (i = 0; i < auth_modules_nr; i++) {
++			mod = auth_modules[i];
++			if (mod->challenge_params)
++				challenge = xstrfmt("WWW-Authenticate: %s %s",
++						    mod->scheme,
++						    mod->challenge_params);
++			else
++				challenge = xstrfmt("WWW-Authenticate: %s",
++						    mod->scheme);
++			string_list_append(&hdrs, challenge);
++		}
++		*wr = send_http_error(1, 401, "Unauthorized", -1, &hdrs, *wr);
++	}
++
++	strbuf_list_free(split);
++	string_list_clear(&hdrs, 0);
++
++	return result == AUTH_ALLOW ||
++	      (result == AUTH_UNKNOWN && allow_anonymous);
 +}
 +
  static enum worker_result dispatch(struct req *req)
  {
-+	if (is_git_request(req))
-+		return do__git(req, NULL);
++	enum worker_result wr = WR_OK;
++	const char *user = NULL;
 +
++	if (!is_authed(req, &user, &wr))
++		return wr;
++
+ 	if (is_git_request(req))
+-		return do__git(req, NULL);
++		return do__git(req, user);
+ 
  	return send_http_error(1, 501, "Not Implemented", -1, NULL,
  			       WR_OK | WR_HANGUP);
- }
-diff --git a/t/t5556-http-auth.sh b/t/t5556-http-auth.sh
-new file mode 100755
-index 00000000000..78da151f122
---- /dev/null
-+++ b/t/t5556-http-auth.sh
-@@ -0,0 +1,105 @@
-+#!/bin/sh
+@@ -854,6 +982,7 @@ int cmd_main(int argc, const char **argv)
+ 	struct string_list listen_addr = STRING_LIST_INIT_NODUP;
+ 	int worker_mode = 0;
+ 	int i;
++	struct auth_module *mod = NULL;
+ 
+ 	trace2_cmd_name("test-http-server");
+ 	setup_git_directory_gently(NULL);
+@@ -906,6 +1035,63 @@ int cmd_main(int argc, const char **argv)
+ 			pid_file = v;
+ 			continue;
+ 		}
++		if (skip_prefix(arg, "--allow-anonymous", &v)) {
++			allow_anonymous = 1;
++			continue;
++		}
++		if (skip_prefix(arg, "--auth=", &v)) {
++			struct strbuf **p = strbuf_split_str(v, ':', 2);
 +
-+test_description='test http auth header and credential helper interop'
++			if (!p[0]) {
++				error("invalid argument '%s'", v);
++				usage(test_http_auth_usage);
++			}
 +
-+. ./test-lib.sh
++			/* trim trailing ':' */
++			if (p[1])
++				strbuf_setlen(p[0], p[0]->len - 1);
 +
-+test_set_port GIT_TEST_HTTP_PROTOCOL_PORT
++			if (get_auth_module(p[0]->buf)) {
++				error("duplicate auth scheme '%s'\n", p[0]->buf);
++				usage(test_http_auth_usage);
++			}
 +
-+# Setup a repository
-+#
-+REPO_DIR="$(pwd)"/repo
++			mod = xmalloc(sizeof(struct auth_module));
++			mod->scheme = xstrdup(p[0]->buf);
++			mod->challenge_params = p[1] ? xstrdup(p[1]->buf) : NULL;
++			CALLOC_ARRAY(mod->tokens, 1);
++			string_list_init_dup(mod->tokens);
 +
-+# Setup some lookback URLs where test-http-server will be listening.
-+# We will spawn it directly inside the repo directory, so we avoid
-+# any need to configure directory mappings etc - we only serve this
-+# repository from the root '/' of the server.
-+#
-+HOST_PORT=127.0.0.1:$GIT_TEST_HTTP_PROTOCOL_PORT
-+ORIGIN_URL=http://$HOST_PORT/
++			add_auth_module(mod);
 +
-+# The pid-file is created by test-http-server when it starts.
-+# The server will shutdown if/when we delete it (this is easier than
-+# killing it by PID).
-+#
-+PID_FILE="$(pwd)"/pid-file.pid
-+SERVER_LOG="$(pwd)"/OUT.server.log
++			strbuf_list_free(p);
++			continue;
++		}
++		if (skip_prefix(arg, "--auth-token=", &v)) {
++			struct strbuf **p = strbuf_split_str(v, ':', 2);
++			if (!p[0]) {
++				error("invalid argument '%s'", v);
++				usage(test_http_auth_usage);
++			}
 +
-+PATH="$GIT_BUILD_DIR/t/helper/:$PATH" && export PATH
++			if (!p[1]) {
++				error("missing token value '%s'\n", v);
++				usage(test_http_auth_usage);
++			}
 +
-+test_expect_success 'setup repos' '
-+	test_create_repo "$REPO_DIR" &&
-+	git -C "$REPO_DIR" branch -M main
-+'
++			/* trim trailing ':' */
++			strbuf_setlen(p[0], p[0]->len - 1);
 +
-+stop_http_server () {
-+	if ! test -f "$PID_FILE"
-+	then
-+		return 0
-+	fi
-+	#
-+	# The server will shutdown automatically when we delete the pid-file.
-+	#
-+	rm -f "$PID_FILE"
-+	#
-+	# Give it a few seconds to shutdown (mainly to completely release the
-+	# port before the next test start another instance and it attempts to
-+	# bind to it).
-+	#
-+	for k in 0 1 2 3 4
-+	do
-+		if grep -q "Starting graceful shutdown" "$SERVER_LOG"
-+		then
-+			return 0
-+		fi
-+		sleep 1
-+	done
++			mod = get_auth_module(p[0]->buf);
++			if (!mod) {
++				error("auth scheme not defined '%s'\n", p[0]->buf);
++				usage(test_http_auth_usage);
++			}
 +
-+	echo "stop_http_server: timeout waiting for server shutdown"
-+	return 1
-+}
-+
-+start_http_server () {
-+	#
-+	# Launch our server into the background in repo_dir.
-+	#
-+	(
-+		cd "$REPO_DIR"
-+		test-http-server --verbose \
-+			--listen=127.0.0.1 \
-+			--port=$GIT_TEST_HTTP_PROTOCOL_PORT \
-+			--reuseaddr \
-+			--pid-file="$PID_FILE" \
-+			"$@" \
-+			2>"$SERVER_LOG" &
-+	)
-+	#
-+	# Give it a few seconds to get started.
-+	#
-+	for k in 0 1 2 3 4
-+	do
-+		if test -f "$PID_FILE"
-+		then
-+			return 0
-+		fi
-+		sleep 1
-+	done
-+
-+	echo "start_http_server: timeout waiting for server startup"
-+	return 1
-+}
-+
-+per_test_cleanup () {
-+	stop_http_server &&
-+	rm -f OUT.*
-+}
-+
-+test_expect_success 'http auth anonymous no challenge' '
-+	test_when_finished "per_test_cleanup" &&
-+	start_http_server --allow-anonymous &&
-+
-+	# Attempt to read from a protected repository
-+	git ls-remote $ORIGIN_URL
-+'
-+
-+test_done
++			string_list_append(mod->tokens, p[1]->buf);
++			strbuf_list_free(p);
++			continue;
++		}
+ 
+ 		fprintf(stderr, "error: unknown argument '%s'\n", arg);
+ 		usage(test_http_auth_usage);
 -- 
 gitgitgadget
 
