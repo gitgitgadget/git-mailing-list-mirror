@@ -2,71 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08B5AC43219
-	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 15:51:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FD4AC4332F
+	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 16:53:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230305AbiKBPvY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 11:51:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60024 "EHLO
+        id S231150AbiKBQxD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 12:53:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229591AbiKBPvV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 11:51:21 -0400
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 186932AE35
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 08:51:20 -0700 (PDT)
-Received: by mail-io1-f51.google.com with SMTP id p141so15354702iod.6
-        for <git@vger.kernel.org>; Wed, 02 Nov 2022 08:51:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nrZvOHVCipZCTcHel84tE7cdq+wAY6HrIK381XFeqi8=;
-        b=1vdqsqjk41jcbO8g53mnVgwwQOWITJsfG8QSXLjvxlz5mCg/UA2NxLbQw/8z8OOQHQ
-         VrayT/gUZYhlr5CFgd6Lg2bwMW4y4WISN8h5kMjGCmEwBLu2aWF/V64wqBANY6SS8iGR
-         t5R/s80UgmesHBoBjRUCHxiJhO3L48ikIVb0uiLk3uAVHAXUTeIxCPHnbcpEgTspjP7L
-         YO8FACMQMTN3uQej53QSz3hzmUzzbLHX+xwZrY5YzTP2W/nRwjkUevNWEcDvS/C0n4M2
-         XBFadVdt2gg8dL+2GJefXcYR30JBawpmHwo18eSMGmd4atlG+x3/fu0XGZYZ5C7MgkXd
-         H0kA==
-X-Gm-Message-State: ACrzQf0D5EM1b2uiQmw+kxyVjhr5M8sSXclgilsfYIWorUKgunQwKHu/
-        RSq0GPmbZcbIqcXVLClW0Yp50+hd1QWW0eLFW/wyipJhpsE=
-X-Google-Smtp-Source: AMsMyM50ym4WRhJVt2AnB+h20DovaQl/NeaiIFctdoFdFja8MUoPwELysC3flhLmbkvBLvhUErw0mmvLF5iLqSKQ5Dg=
-X-Received: by 2002:a05:6638:134f:b0:372:8558:1e34 with SMTP id
- u15-20020a056638134f00b0037285581e34mr15277425jad.285.1667404279249; Wed, 02
- Nov 2022 08:51:19 -0700 (PDT)
+        with ESMTP id S229551AbiKBQxB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 12:53:01 -0400
+X-Greylist: delayed 181 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 02 Nov 2022 09:52:59 PDT
+Received: from avasout-peh-002.plus.net (avasout-peh-002.plus.net [212.159.14.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B86F2FE
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 09:52:59 -0700 (PDT)
+Received: from [10.0.2.15] ([147.147.167.40])
+        by smtp with ESMTPA
+        id qGvzo4IvNoRCFqGw0oErdj; Wed, 02 Nov 2022 16:49:48 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+        t=1667407788; bh=4W5u95g2vD5KTdi+Qfb53w97OasOD8xMKQXGS8OhyW4=;
+        h=Date:Subject:To:References:From:In-Reply-To;
+        b=a6sCbTuphFaoux/omzXKBBi8g4ICy/QEcwPq7AtaCoHzvMzs5wipSITc+xRdZoOP9
+         Xn0lIigI9T1ssHejOI+gpcNCEhnSOXgDKDvR+Cl6ur/KvmGcsfE/zXkthpgj/ZZHQE
+         Vz33pLLfaUFj9siMXq7nikdDCibaNpuNtI+Pyowc659WEqmoEY7csqNBZHJzCMQGsu
+         pbVYdo3Wg1MfTn4GE1GErYz5Y2EcMiKxPXZ3XZIcSu0bmRC9gb+Xg1Wt6aj/NOb/AG
+         KEbRpmguRqoOb/i+iyK5jkEI9MO7Q1rGwKyZAO3CK1iTDx2YH+/HwMO1H90dv2+eR2
+         2EMLp0UcqAq0w==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=K8IxogaI c=1 sm=1 tr=0 ts=63629fac
+ a=nyqnwr6A7Kzjd6EpZhiMcA==:117 a=nyqnwr6A7Kzjd6EpZhiMcA==:17
+ a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=Oh2cFVv5AAAA:8 a=C8lbFo3dAAAA:20
+ a=kulwNnLLeRbAQUJt3toA:9 a=QEXdDO2ut3YA:10 a=AjGcO6oz07-iQ99wixmX:22
+ a=7KeoIwV6GZqOttXkcoxL:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <eee42f09-32ca-a254-d362-27be1045c558@ramsayjones.plus.com>
+Date:   Wed, 2 Nov 2022 16:49:47 +0000
 MIME-Version: 1.0
-References: <pull.1396.git.1666845947898.gitgitgadget@gmail.com>
- <pull.1396.v2.git.1667385022103.gitgitgadget@gmail.com> <CAPig+cQ2Tqt8rzvXsRjCsPFTkbq7B06gq2pourKXi5dKNx8oAA@mail.gmail.com>
- <CAPc5daXmnkGpScihLpTPDXEFOAQF0vm-aWOpeym90X=tktLC2w@mail.gmail.com>
-In-Reply-To: <CAPc5daXmnkGpScihLpTPDXEFOAQF0vm-aWOpeym90X=tktLC2w@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 2 Nov 2022 11:51:08 -0400
-Message-ID: <CAPig+cRy66HNfTnNQC4PcAaMR-m-DwUbdETsy0zBX4saG7F4Ng@mail.gmail.com>
-Subject: Re: [PATCH v2] Mention that password could be a personal access token.
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        M Hickford <mirth.hickford@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: What's cooking in git.git (Oct 2022, #09; Mon, 31)
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+References: <Y19dnb2M+yObnftj@nand.local>
+Content-Language: en-GB
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <Y19dnb2M+yObnftj@nand.local>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfHVyUmslsp+LIAoxz9f63gWREJeDtf4NzgGM+asGH+xI98elEISyXX96Opgrl5uUgpAFHwHjXVKp6qIDhsB5OJZKcLsZHVQi26pvIB4R74JBQM+fX7zX
+ QkbQFTnNMKI5nSpXa/7GlW4Sih/5mXVmbR7Ku5++9PvoV4Qq/AOHwGa/tB+KgcVM87vciJDtU6kDaj/3AzDzhThKzTT+dINnoS4=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 2, 2022 at 11:45 AM Junio C Hamano <gitster@pobox.com> wrote:
-> On Wed, Nov 2, 2022 at 3:55 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > How about a different approach, calling it a "secret" first, and then
-> > defining "secret" as different names for "password".
->
-> Or more directly, say "password" and parenthetically add that some hosting
-> sites may call it with different names like "personal tokens"?
 
-I tried the parenthetical approach first but the sentence structure
-became too complex and more difficult to understand. Having a separate
-sentence helped simplify. That said, perhap something like this?
 
-    Git will sometimes need credentials from the user in order to
-    perform operations; for example, it may need to ask for a username
-    and password in order to access a remote repository over HTTP.  In
-    place of a password, some sites may instead provide a passcode,
-    personal access token, OAuth access token, etc.  This manual...
+On 31/10/2022 05:31, Taylor Blau wrote:
+> What's cooking in git.git (Oct 2022, #09; Mon, 31)
+> --------------------------------------------------
+[snip]
+> 
+> The following mirrors are currently out-of-date while the usual
+> maintainer is offline.
+> 
+> 	git://git.kernel.org/pub/scm/git/git.git/
+> 	git://repo.or.cz/alt-git.git/
+> 	https://kernel.googlesource.com/pub/scm/git/git/
+> 	https://gitlab.com/git-vcs/git/
+> 
+
+Ah, I wondered why it had gone quiet ... :)
+
+On Linux (same on 32-bit Linux and cygwin):
+
+    $ git config remote.origin.url
+    git://git.kernel.org/pub/scm/git/git.git
+    $ 
+
+[yes, an old curmudgeon!]
+
+Well, I guess I should just enjoy the silence until
+Junio returns. :D
+
+ATB,
+Ramsay Jones
+
+
+
+
