@@ -2,159 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C81A9C4332F
-	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 07:44:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45BFEC433FE
+	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 07:54:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230395AbiKBHoE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 03:44:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57326 "EHLO
+        id S229518AbiKBHyM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 03:54:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbiKBHoC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 03:44:02 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0270B4A4
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 00:44:01 -0700 (PDT)
-Received: (qmail 8946 invoked by uid 109); 2 Nov 2022 07:44:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 02 Nov 2022 07:44:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2926 invoked by uid 111); 2 Nov 2022 07:44:02 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 02 Nov 2022 03:44:02 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 2 Nov 2022 03:44:00 -0400
-From:   Jeff King <peff@peff.net>
-To:     Philippe Blain <levraiphilippeblain@gmail.com>
-Cc:     Martin Englund <martin@englund.nu>, git@vger.kernel.org
-Subject: [PATCH 2/2] ref-filter: fix parsing of signatures with CRLF and no
- body
-Message-ID: <Y2IfwL96Ku/dGuJR@coredump.intra.peff.net>
-References: <Y2IeqOT5Ao1Qa0Zl@coredump.intra.peff.net>
+        with ESMTP id S229462AbiKBHyK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 03:54:10 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF15325283
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 00:54:09 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id f7so19471531edc.6
+        for <git@vger.kernel.org>; Wed, 02 Nov 2022 00:54:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7T1zgORiW9jE0OSFnuxmM1U3AbTkD0IRtj1U4ggiCaU=;
+        b=m9Wf9b+iFWiBlfJDPqEGGKUf3fRqT0ZlyHffCI7uHY3ozNyL/Xl1z0SQGx4tUpEfYE
+         WH5zqwuq71NSjCQO5HZB0yeKyavLupYTw0ySoGSDcjWzLlhPPEiFrPv0FuCZIsZeyqrv
+         2rD01QPGrYGQsjtjGTHyeMWl2+KeR8HVmy6vOF2z7rWin21TDfNXrtq52QokhjEHBWqJ
+         Zxqgg8DYhqBema3JgWf+yl6jqP+plLR9cP80yoPlOOCYOP3zrn98+gMwyi77YbKliE0G
+         uhJQX5uGF5hYRU2Crk5vVU/NpET0QPzyhSk4NUW/FkEbrcw+JTmgXTVbRHPn6KmLeOaz
+         WtpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7T1zgORiW9jE0OSFnuxmM1U3AbTkD0IRtj1U4ggiCaU=;
+        b=Datd3D620yRhJAkxtVR8N9FmfGmwVWyzX8WK3ryfDEMHOjFpxBJ44powKgRXpvN37K
+         guo4UDh268yigd98CGvEJUhZHtuH8Z7UWi880ejAMa1V4aOVLwsqEdjrqGdm0GAMD5Jn
+         CiCFbM1jM6ifaUI5kbAmcWwPsrhxYCS4Ws3fWn3tcEFf6AA2cr3ihzb64tmtA9Jp2EC0
+         LG9vrdboMqYtSx3CL+2jo87nq47tMSyIdPysCFcsqgbFYcwic/lfZDa5eknOi+lKCcBp
+         yU88brCoEz4gCsLcZJAmkPTDX7kJ0xz6BtYe85C7tyS8TAvxuRoypRVAeBK/sCNw/PuV
+         V9EQ==
+X-Gm-Message-State: ACrzQf3s/eJH4dhCCFU5AKPKyQhXIQ/dNIdGfBVg3cqIApvnrrWyuXNh
+        hi7ZGoXdyQWalxBP8bd8MpSHCFouNiDRAQ==
+X-Google-Smtp-Source: AMsMyM7k8ysM3EnQSPE4xvlChZN+MmXeDaWwlVRxh873YkNKwM6Si9UGSVPMAGEiiIJC/8L+Pgf3SA==
+X-Received: by 2002:a05:6402:1219:b0:462:e788:723f with SMTP id c25-20020a056402121900b00462e788723fmr22853402edw.319.1667375647853;
+        Wed, 02 Nov 2022 00:54:07 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id ku11-20020a170907788b00b0073d84a321c8sm5045466ejc.166.2022.11.02.00.54.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Nov 2022 00:54:07 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Glen Choo <chooglen@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 0/8] submodule: tests, cleanup to prepare for built-in
+Date:   Wed,  2 Nov 2022 08:53:57 +0100
+Message-Id: <cover-0.8-00000000000-20221102T074148Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.38.0.1280.g8136eb6fab2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y2IeqOT5Ao1Qa0Zl@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This commit fixes a bug when parsing tags that have CRLF line endings, a
-signature, and no body, like this (the "^M" are marking the CRs):
+I have a topic on-list to remove git-submodule.sh and create a
+builtin/submodule.c, i.e. promoting "git submodule--helper" to the
+"real thing"[1].
 
-  this is the subject^M
-  -----BEGIN PGP SIGNATURE-----^M
-  ^M
-  ...some stuff...^M
-  -----END PGP SIGNATURE-----^M
+Glen gave me a bunch of good feedback on it, including (but not
+limited to) pointing out that we have outstanding dead code in
+[2][3].
 
-When trying to find the start of the body, we look for a blank line
-separating the subject and body. In this case, there isn't one. But we
-search for it using strstr(), which will find the blank line in the
-signature.
+Once I started pulling at that thread things became a lot simpler for
+the re-roll of [1], e.g. the migration of git-submodule.sh's commands
+can squash in the "update" step, as it's no longer a special-case.
 
-In the non-CRLF code path, we check whether the line we found is past
-the start of the signature, and if so, put the body pointer at the start
-of the signature (effectively making the body empty). But the CRLF code
-path doesn't catch the same case, and we end up with the body pointer in
-the middle of the signature field. This has two visible problems:
+But that also made the series larger, and it's conflicted with other
+outstanding patches. First René's strvec() cleanup in submodule.c, and
+currently with Glen's in-flight submodule topic.
 
-  - printing %(contents:subject) will show part of the signature, too,
-    since the subject length is computed as (body - subject)
+So here's "just the prep" part of that split-out. See also [4] and [5]
+for previous "prep" topics, we're getting closer...
 
-  - the length of the body is (sig - body), which makes it negative.
-    Asking for %(contents:body) causes us to cast this to a very large
-    size_t when we feed it to xmemdupz(), which then complains about
-    trying to allocate too much memory.
+This only adds missing test coverage, and deletes dead code that we'd
+otherwise have to account for. Then 8/8 converts submodule--helper to
+use the OPT_SUBCOMMAND() API in 8/8.
 
-These are essentially the same bugs fixed in the previous commit, except
-that they happen when there is a CRLF blank line in the signature,
-rather than no blank line at all. Both are caused by the refactoring in
-9f75ce3d8f (ref-filter: handle CRLF at end-of-line more gracefully,
-2020-10-29).
+CI & branch at: https://github.com/avar/git/tree/avar/submodule-builtin-final-prep
 
-We can fix this by doing the same "sigstart" check that we do in the
-non-CRLF case. And rather than repeat ourselves, we can just use
-short-circuiting OR to collapse both cases into a single conditional.
-I.e., rather than:
+For a peek at the WIP re-roll of [1] that'll come after this:
+https://github.com/avar/git/compare/avar/submodule-builtin-final-prep...avar/submodule-sh-dispatch-to-helper-directly-3
 
-  if (strstr("\n\n"))
-    ...found blank, check if it's in signature...
-  else if (strstr("\r\n\r\n"))
-    ...found blank, check if it's in signature...
-  else
-    ...no blank line found...
+1. https://lore.kernel.org/git/cover-00.10-00000000000-20221017T115544Z-avarab@gmail.com/
+2. https://lore.kernel.org/git/kl6lpmemxg8p.fsf@chooglen-macbookpro.roam.corp.google.com/
+3. https://lore.kernel.org/git/kl6lv8oexiyy.fsf@chooglen-macbookpro.roam.corp.google.com/
+4. 361cbe6d6d2 (Merge branch 'ab/submodule-cleanup', 2022-07-14)
+5. f322e9f51b5 (Merge branch 'ab/submodule-helper-prep', 2022-09-13)
 
-we can collapse this to:
+Ævar Arnfjörð Bjarmason (8):
+  submodule--helper: move "config" to a test-tool
+  submodule tests: add tests for top-level flag output
+  submodule tests: test for a "foreach" blind-spot
+  submodule.c: refactor recursive block out of absorb function
+  submodule API & "absorbgitdirs": remove "----recursive" option
+  submodule--helper: remove --prefix from "absorbgitdirs"
+  submodule--helper: drop "update --prefix <pfx>" for "-C <pfx> update"
+  submodule--helper: use OPT_SUBCOMMAND() API
 
-  if (strstr("\n\n")) ||
-      strstr("\r\n\r\n")))
-    ...found blank, check if it's in signature...
-  else
-    ...no blank line found...
+ builtin/rm.c                           |   3 +-
+ builtin/submodule--helper.c            | 139 ++++++--------------
+ git-submodule.sh                       |   3 +-
+ git.c                                  |   2 +-
+ submodule.c                            |  41 +++---
+ submodule.h                            |   4 +-
+ t/helper/test-submodule.c              |  84 ++++++++++++
+ t/t7400-submodule-basic.sh             |  10 ++
+ t/t7407-submodule-foreach.sh           |   5 +
+ t/t7411-submodule-config.sh            |  28 ++--
+ t/t7418-submodule-sparse-gitmodules.sh |   4 +-
+ t/t7422-submodule-output.sh            | 169 +++++++++++++++++++++++++
+ 12 files changed, 349 insertions(+), 143 deletions(-)
+ create mode 100755 t/t7422-submodule-output.sh
 
-The tests show the problem and the fix. Though it wasn't broken, I
-included contents:signature here to make sure it still behaves as
-expected, but note the shell hackery needed to make it work. A
-less-clever option would be to skip using test_atom and just "append_cr
->expected" ourselves.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- ref-filter.c            |  6 +++---
- t/t6300-for-each-ref.sh | 25 +++++++++++++++++++++++++
- 2 files changed, 28 insertions(+), 3 deletions(-)
-
-diff --git a/ref-filter.c b/ref-filter.c
-index 6c2148c01e..9dc2cd1451 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1375,10 +1375,10 @@ static void find_subpos(const char *buf,
- 	/* subject is first non-empty line */
- 	*sub = buf;
- 	/* subject goes to first empty line before signature begins */
--	if ((eol = strstr(*sub, "\n\n"))) {
-+	if ((eol = strstr(*sub, "\n\n")) ||
-+	    (eol = strstr(*sub, "\r\n\r\n"))) {
- 		eol = eol < sigstart ? eol : sigstart;
--	/* check if message uses CRLF */
--	} else if (! (eol = strstr(*sub, "\r\n\r\n"))) {
-+	} else {
- 		/* treat whole message as subject */
- 		eol = sigstart;
- 	}
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index d7e70027e6..fa38b87441 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -1421,4 +1421,29 @@ test_atom refs/tags/fake-sig-no-blanks contents:subject 'this is the subject'
- test_atom refs/tags/fake-sig-no-blanks contents:body ''
- test_atom refs/tags/fake-sig-no-blanks contents:signature "$sig"
- 
-+test_expect_success 'set up tag with CRLF signature' '
-+	append_cr <<-\EOF |
-+	this is the subject
-+	-----BEGIN PGP SIGNATURE-----
-+
-+	not a real signature, but we just care about
-+	the subject/body parsing. It is important here
-+	that there is a blank line separating this
-+	from the signature header.
-+	-----END PGP SIGNATURE-----
-+	EOF
-+	git tag -F - --cleanup=verbatim fake-sig-crlf
-+'
-+
-+test_atom refs/tags/fake-sig-crlf contents:subject 'this is the subject'
-+test_atom refs/tags/fake-sig-crlf contents:body ''
-+
-+# CRLF is retained in the signature, so we have to pass our expected value
-+# through append_cr. But test_atom requires a shell string, which means command
-+# substitution, and the shell will strip trailing newlines from the output of
-+# the substitution. Hack around it by adding and then removing a dummy line.
-+sig_crlf="$(printf "%s" "$sig" | append_cr; echo dummy)"
-+sig_crlf=${sig_crlf%dummy}
-+test_atom refs/tags/fake-sig-crlf contents:signature "$sig_crlf"
-+
- test_done
 -- 
-2.38.1.677.g4206adeb26
+2.38.0.1280.g8136eb6fab2
+
