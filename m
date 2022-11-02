@@ -2,64 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EC59C433FE
-	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 08:24:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F7C4C433FE
+	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 08:42:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230300AbiKBIYj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 04:24:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58840 "EHLO
+        id S231132AbiKBImS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 04:42:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229950AbiKBIYg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 04:24:36 -0400
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDD9422501
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 01:24:31 -0700 (PDT)
-Received: by mail-io1-f48.google.com with SMTP id l127so14416123iof.12
-        for <git@vger.kernel.org>; Wed, 02 Nov 2022 01:24:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3Yhch1ACVsEVOLr0R2mtR2AjQ4GpydRaGEPzjhRZGZ8=;
-        b=IDHks3Z0K7qEHHVrc7kq06G6ca8fK37JsNbmUHz6IcjIV/UqtguDCYyB1CGjWsNpKu
-         ouroTg45CbkjK8Sr8oHJ1VD4lGeHRNsA2tOILotDNeg4kj/LsUYqZl8FNwO1mdLYVoEz
-         feFUXPQjXUw1qy4cbZP+9Vad0xqjBlq8+J3g9ekG2Ief5YXiEP+XGiY4rvYkFRWw+Uj6
-         wFI4IheezW6ZEmwOUo2VNiPLydtrh3m4CPwR9o3fZq2CjG/LMcMWg5tt0zqo75n9oNgv
-         JM5I61E3iUg6mNe11v4QkkSXhlpb7+BAClsP3fNlXK65E9auAQWrTv4znEAc8dX2+WVQ
-         g5SQ==
-X-Gm-Message-State: ACrzQf0zR5sDvlCd8u6VGj6RuFKM7CFaRfPPqLyueKWHwie1zzsECno6
-        zRqokiyk4mHMV6+J8ab6ZD+UQxnh86r5HFfApuzVq9Go
-X-Google-Smtp-Source: AMsMyM4FAlUiA9IWygFXToJZ1YXSPiMzD26HPe4bwmaHBMHAzJyuD4kMbmaIXKo6WdePAlSlKdgII1C+n+hXIA4lcTA=
-X-Received: by 2002:a05:6638:134f:b0:372:8558:1e34 with SMTP id
- u15-20020a056638134f00b0037285581e34mr14186802jad.285.1667377471109; Wed, 02
- Nov 2022 01:24:31 -0700 (PDT)
+        with ESMTP id S230513AbiKBImQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 04:42:16 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B692624954
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 01:42:14 -0700 (PDT)
+Received: (qmail 9713 invoked by uid 109); 2 Nov 2022 08:42:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 02 Nov 2022 08:42:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3593 invoked by uid 111); 2 Nov 2022 08:42:15 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 02 Nov 2022 04:42:15 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 2 Nov 2022 04:42:13 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH v3 2/2] t5551: be less strict about the number of credential
+ warnings
+Message-ID: <Y2ItZWx+kBmTreGQ@coredump.intra.peff.net>
+References: <pull.1399.git.1667245638.gitgitgadget@gmail.com>
+ <RFC-patch-1.1-0266485bc6c-20221031T204149Z-avarab@gmail.com>
+ <Y2CFRJLFRXvGwFBC@coredump.intra.peff.net>
+ <221101.86a65b5q9q.gmgdl@evledraar.gmail.com>
+ <Y2GHjnuyuwGpY3II@nand.local>
 MIME-Version: 1.0
-References: <CABYbkvP=fMmaFUD3bQbeQ-XKiMSP6g-u0p7Vq1Qt_K5=D5WJ+A@mail.gmail.com>
- <Y2EPgICMsmzKvCC8@coredump.intra.peff.net> <38d50c30-c6a3-5989-6e01-47c5467d9d6b@gmail.com>
- <Y2IeqOT5Ao1Qa0Zl@coredump.intra.peff.net>
-In-Reply-To: <Y2IeqOT5Ao1Qa0Zl@coredump.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 2 Nov 2022 04:24:20 -0400
-Message-ID: <CAPig+cRkHyjoBNEbuUB9+MXnGMRD3W_ynpX4Gco16Y5dVJN=eg@mail.gmail.com>
-Subject: Re: Git Bug Report: out of memory using git tag
-To:     Jeff King <peff@peff.net>
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        Martin Englund <martin@englund.nu>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Y2GHjnuyuwGpY3II@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 2, 2022 at 3:44 AM Jeff King <peff@peff.net> wrote:
-> After sleeping on it, I think I fully understand what's going on. There
-> are actually _two_ bugs, but they are closely related. ;)
->
-> Here are patches which fix them both. I may be setting a new record for
-> the ratio of commit message lines to changed code. But it took me a
-> while to figure out what was going on, so I wanted to explain it fully.
+On Tue, Nov 01, 2022 at 04:54:38PM -0400, Taylor Blau wrote:
 
-Well explained. For someone who has (probably) never looked at that
-code (me), the explanations made perfect sense.
+> > The tests aren't just asserting the bad behavior, they're also ensuring
+> > that it doesn't get worse. 1 warning is ideal, 2-3 is bad, but
+> > tolerable, but if we start emitting 500 of these it would be nice to
+> > know.
+> 
+> I admit that this kind of argument does not sway me.
+> 
+> Is it likely that we would suddenly start spewing 500 such warnings? If
+> we did, are there no other tests that would catch it? And even if *that*
+> were the case, would nobody happen to notice it in the meantime either
+> during development or when we queue an affected topic onto 'next' for
+> wider testing?
+> 
+> I guess the answer is that it's possible that we'd miss such a
+> regression in all of those above places, but to me it seems extremely
+> unlikely that we'd let such a regression through without noticing.
 
-(Oh, and I didn't even have to report any s///.)
+Like you, I don't find much value in asserting "2 or 3, but not 500".
+But it is easy enough to at least only loosen the few cases that need
+it.
+
+So here's a replacement for 2/2 that does the minimal thing. I rewrote
+the commit message to explain my view (incidentally, it also fixes the
+subject line, which mentioned the wrong test number after the rebase).
+
+As I said, I had tried to mostly leave patch 2 alone to avoid derailing
+Dscho's attempt to fix things. But somehow things got derailed anyway,
+so maybe we can just all agree on this patch and move on with our lives?
+I can't over-emphasize how little I care about this credentialsInUrl
+feature in the first place, and somehow it has consumed hours of my life
+now.
+
+-- >8 --
+Subject: t5551: be less strict about the number of credential warnings
+
+It is unclear as to _why_, but under certain circumstances the warning
+about credentials being passed as part of the URL seems to be swallowed
+by the `git remote-https` helper in the Windows jobs of Git's CI builds.
+
+This causes the tests to fail, because they assert that in a few cases
+we should print the warning 2 or even 3 times. The reason for that is
+given in 6dcbdc0d66 (remote: create fetch.credentialsInUrl config,
+2022-06-06), which is that multiple processes are involved, and each
+warns.
+
+In an ideal world, the user would just see the message once per logical
+operation; they don't care how many underlying processes are involved.
+And we may fix that eventually. But in the meantime, let's loosen the
+tests to just assert that the user sees the message _at least_ once.
+
+This won't catch a case where we accidentally start producing it 500
+times, but that's not a likely regression. A more likely thing is that
+we'd start producing it four times because the underlying code changes
+to use a new process. But that's exactly the kind of thing we'd prefer
+to be ignoring in the tests.
+
+Note that the tests for the "die" mode don't need adjusted. They die
+immediately in the first process that sees the problem, so they
+consistently show the error once. It's only the "warn" mode which must
+be loose. If we eventually fix it, then we can tighten its assertion. In
+the meantime, this works around the CI issues.
+
+Based on a patch by Johannes Schindelin.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/t5551-http-fetch-smart.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+index bbe3d5721f..4f559722f4 100755
+--- a/t/t5551-http-fetch-smart.sh
++++ b/t/t5551-http-fetch-smart.sh
+@@ -597,7 +597,7 @@ test_expect_success 'clone warns or fails when using username:password' '
+ 	git -c transfer.credentialsInUrl=warn \
+ 		clone $url_userpass attempt2 2>err &&
+ 	grep "warning: $message" err >warnings &&
+-	test_line_count = 2 warnings &&
++	test_line_count -ge 1 warnings &&
+ 
+ 	test_must_fail git -c transfer.credentialsInUrl=die \
+ 		clone $url_userpass attempt3 2>err &&
+@@ -630,7 +630,7 @@ test_expect_success 'fetch warns or fails when using username:password' '
+ 
+ 	git -c transfer.credentialsInUrl=warn fetch $url_userpass 2>err &&
+ 	grep "warning: $message" err >warnings &&
+-	test_line_count = 3 warnings &&
++	test_line_count -ge 1 warnings &&
+ 
+ 	test_must_fail git -c transfer.credentialsInUrl=die \
+ 		fetch $url_userpass 2>err &&
+-- 
+2.38.1.677.g9b1428ac2e
+
