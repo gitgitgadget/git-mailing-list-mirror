@@ -2,51 +2,51 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BE8FC4332F
-	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 07:54:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0554BC4332F
+	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 07:54:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230457AbiKBHyb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 03:54:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36158 "EHLO
+        id S230463AbiKBHye (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 03:54:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230047AbiKBHyX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 03:54:23 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53CEB2649F
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 00:54:15 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id sc25so43017396ejc.12
-        for <git@vger.kernel.org>; Wed, 02 Nov 2022 00:54:15 -0700 (PDT)
+        with ESMTP id S230196AbiKBHyY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 03:54:24 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2402326569
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 00:54:16 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id f27so43092306eje.1
+        for <git@vger.kernel.org>; Wed, 02 Nov 2022 00:54:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VFZ77tukz9FFlCxL0WJBIl0rwyzYulb6XeqaAAB6WsE=;
-        b=Xihz4K8izYj2GIXxUs9LIs7Cja3V/geeXi67SKYNGmFgVrjoEYDoOb1QZ7gYlIlYVH
-         mxeLpMFt0pB8jidyzSGf6J0naU17sHTI5k8Z+c5qkVxaoK5d9PBnSuVfA0UeUY/MO7wz
-         wchCHwcB+n/tRgGfdO5cSKYRr/WGL8jBLNsKvyZ7ZZew+U4RVF97xcaT424x8IpgZici
-         +nmoJ0jSjG9oJCd+OUAWv7FlxaOuQpwD4/4Zx/vCc/DqVYuCa9RXojoMqR6wYgGJJc+F
-         sI41/RFhJNiAVLadJ3aoypMlLTnVO1qLyYMBRZISb8yWC0gZhqwV/QYzyPFGG/Bxywhj
-         OU5A==
+        bh=Sp7bhXI9suWL/LjIHe8Mthr+OoQZNzzW8PMTQaf7ksY=;
+        b=o30dZI9Y28pUgq9MQu2VW9G410Q0I27RPu+MQJZlJ9wImS2g5zzSserH6l2o9gNcIr
+         nUcqB7qntR7pMeI9vHEidEUhnvsErieNAvPXIpAmyOldofuIwE++dpzFBgCNJLs6zZ1I
+         KP6f/qE1PiCIFXKii87/dpdCVGLS+5wzpgXXPE7fKa/0U4omcyP8GTixX9scphAtOLiU
+         XH3vc7yMdDH4QkVFFqWOUdo+UFGDr13a44/UEsq8tTnKlmvdn5Ft/tgQGu2QJYz1QsFs
+         9Jbz3+rIvyye7IQPc8oo/zp5CJ1sgx4cQQb/6rR+kEtGQGwBowfNKZObjfmfHhKBw3ME
+         f8cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VFZ77tukz9FFlCxL0WJBIl0rwyzYulb6XeqaAAB6WsE=;
-        b=RSSqakjupqCx8sJlcu8TQ8UoAabYG9lxSi6shmW9EN9rw7gOtpeQC4umX/HpTKG6d6
-         tcJlA0WK4JiMopTEjEFQC5SOmLH0IIgpAoX0WfX7ravuOnPAtuEU/eHWy61DVg38FXKt
-         FV/8hSpJz5JRRCJHllIDmjx1rkXOVx/PFWkpY5zVh8p5W7/tLlTO+d1rdmTsskiYAGfm
-         pBHU24oy0rS8co5vbnWQP8fClU9N8grZbmNm+pZxVqmEZaXTrnfBJ96g2NULVtelXD9R
-         W3TsuP+lJgnt7HVuaTejjqes2ilkFQarkB7omK4TIfmYvVkR2suyu5LYnB0KA3/NQ47U
-         8f0Q==
-X-Gm-Message-State: ACrzQf1IbfuSue8g25s1UahfuxckfUelvwQms1gFHc7UP8w0N1Dw/NF4
-        WGUYb6UWbqZTmw8GK1Oh4bctWBQZa9Sztw==
-X-Google-Smtp-Source: AMsMyM6ne9U4vhxuP+4VBy2VVI68HqIvDUSVzJXjqiQdMxNTi04Gol40NRoPtvFkJQChWteYvT/XPw==
-X-Received: by 2002:a17:906:446:b0:7ad:f0af:5c66 with SMTP id e6-20020a170906044600b007adf0af5c66mr6807664eja.441.1667375653652;
-        Wed, 02 Nov 2022 00:54:13 -0700 (PDT)
+        bh=Sp7bhXI9suWL/LjIHe8Mthr+OoQZNzzW8PMTQaf7ksY=;
+        b=pYQbl3JZWg2YSfPcgX/E6qBuH0x6o10nsVnpvgPMfYHrSCnj8QD4ilztHCQJohwfwY
+         Ood1vuCEzaemgPJdqDpuN/NV/wRexqMUKT+n9FDGo+rJhb9lilc/c8j3vu/DHTFrpO8S
+         oViVcwxyUhDaycKCkx06VEzAmNEuGODqT6VSBrqdUdrx279s0/YOnzGHlHl19Cp1Xfb1
+         xylygJZvlhlFRmcbFWaY8WGOnydZl6RxC9yt7oEclwOIoQ5OV7GA5adUNBd5feslHe2J
+         7oJSfrz3iT99D181PM+Zr0UA1s45bsOUm5OdQu8NHoXtla9/7qQPCX3SZQf1U3zDyzts
+         Awrg==
+X-Gm-Message-State: ACrzQf2YODdAKo8jm/GTqYuBvrKLZmj5SUW3DrjKWmb3sRYTx2slZkkA
+        dO9GepjN7buI0Dnm+59bI7Qg1OrJmTb68g==
+X-Google-Smtp-Source: AMsMyM6gBBNUVp6rvuxtFK1aKZjC0GE2FAYCGRUg1kW+ew0XvhKHeJ/5746jB2IXanQMFaChduhwLg==
+X-Received: by 2002:a17:907:3ea4:b0:78e:25e2:c33b with SMTP id hs36-20020a1709073ea400b0078e25e2c33bmr21406101ejc.603.1667375654433;
+        Wed, 02 Nov 2022 00:54:14 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id ku11-20020a170907788b00b0073d84a321c8sm5045466ejc.166.2022.11.02.00.54.12
+        by smtp.gmail.com with ESMTPSA id ku11-20020a170907788b00b0073d84a321c8sm5045466ejc.166.2022.11.02.00.54.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 02 Nov 2022 00:54:13 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 6/8] submodule--helper: remove --prefix from "absorbgitdirs"
-Date:   Wed,  2 Nov 2022 08:54:03 +0100
-Message-Id: <patch-6.8-91208241070-20221102T074148Z-avarab@gmail.com>
+Subject: [PATCH 7/8] submodule--helper: drop "update --prefix <pfx>" for "-C <pfx> update"
+Date:   Wed,  2 Nov 2022 08:54:04 +0100
+Message-Id: <patch-7.8-77d4d5a6c09-20221102T074148Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1280.g8136eb6fab2
 In-Reply-To: <cover-0.8-00000000000-20221102T074148Z-avarab@gmail.com>
 References: <cover-0.8-00000000000-20221102T074148Z-avarab@gmail.com>
@@ -70,48 +70,52 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Let's pass the "-C <prefix>" option instead to "absorbgitdirs" from
-its only caller.
-
-When it was added in f6f85861400 (submodule: add absorb-git-dir
-function, 2016-12-12) there were other "submodule--helper" subcommands
-that were invoked with "-C <prefix>", so we could have done this all
-along.
+Since 29a5e9e1ffe (submodule--helper update-clone: learn --init,
+2022-03-04) we've been passing "-C <prefix>" from "git-submodule.sh"
+whenever we pass "--prefix <prefix>", so the latter is redundant to
+the former. Let's drop the "--prefix" option.
 
 Suggested-by: Glen Choo <chooglen@google.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 3 ---
- git-submodule.sh            | 2 +-
+ builtin/submodule--helper.c | 4 +---
+ git-submodule.sh            | 1 -
  2 files changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 8b4af8430dc..6bbefd34374 100644
+index 6bbefd34374..2012ad31d7f 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2830,9 +2830,6 @@ static int absorb_git_dirs(int argc, const char **argv, const char *prefix)
- 	struct pathspec pathspec = { 0 };
- 	struct module_list list = MODULE_LIST_INIT;
- 	struct option embed_gitdir_options[] = {
--		OPT_STRING(0, "prefix", &prefix,
+@@ -2642,9 +2642,6 @@ static int module_update(int argc, const char **argv, const char *prefix)
+ 			 N_("traverse submodules recursively")),
+ 		OPT_BOOL('N', "no-fetch", &opt.nofetch,
+ 			 N_("don't fetch new objects from the remote site")),
+-		OPT_STRING(0, "prefix", &opt.prefix,
 -			   N_("path"),
 -			   N_("path into the working tree")),
- 		OPT_END()
- 	};
- 	const char *const git_submodule_helper_usage[] = {
+ 		OPT_SET_INT(0, "checkout", &opt.update_default,
+ 			N_("use the 'checkout' update strategy (default)"),
+ 			SM_UPDATE_CHECKOUT),
+@@ -2700,6 +2697,7 @@ static int module_update(int argc, const char **argv, const char *prefix)
+ 	}
+ 
+ 	opt.filter_options = &filter_options;
++	opt.prefix = prefix;
+ 
+ 	if (opt.update_default)
+ 		opt.update_strategy.type = opt.update_default;
 diff --git a/git-submodule.sh b/git-submodule.sh
-index 5e5d21c010f..d359f171379 100755
+index d359f171379..9a50f2e9124 100755
 --- a/git-submodule.sh
 +++ b/git-submodule.sh
-@@ -557,7 +557,7 @@ cmd_sync()
- 
- cmd_absorbgitdirs()
- {
--	git submodule--helper absorbgitdirs --prefix "$wt_prefix" "$@"
-+	git ${wt_prefix:+-C "$wt_prefix"} submodule--helper absorbgitdirs "$@"
- }
- 
- # This loop parses the command line arguments to find the
+@@ -343,7 +343,6 @@ cmd_update()
+ 		${recursive:+--recursive} \
+ 		${init:+--init} \
+ 		${nofetch:+--no-fetch} \
+-		${wt_prefix:+--prefix "$wt_prefix"} \
+ 		${rebase:+--rebase} \
+ 		${merge:+--merge} \
+ 		${checkout:+--checkout} \
 -- 
 2.38.0.1280.g8136eb6fab2
 
