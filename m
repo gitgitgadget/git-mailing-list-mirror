@@ -2,61 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 40196C433FE
-	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 22:09:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54B82C433FE
+	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 22:09:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231160AbiKBWJj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 18:09:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52950 "EHLO
+        id S231388AbiKBWJo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 18:09:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229709AbiKBWJh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 18:09:37 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEABF2BC
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 15:09:35 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id j15so231089wrq.3
-        for <git@vger.kernel.org>; Wed, 02 Nov 2022 15:09:35 -0700 (PDT)
+        with ESMTP id S229996AbiKBWJi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 18:09:38 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A14CBEC
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 15:09:36 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id cl5so192147wrb.9
+        for <git@vger.kernel.org>; Wed, 02 Nov 2022 15:09:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ekv8BwlEx82o86H7pDNJe1k3otaqpfti4VGo52hs/FQ=;
-        b=SslQl4/kOlUD4tA4M3oDLRNcc3EGDRVA1h+zKW35tit+nnl4sup/EfIYuG4+CFVJd0
-         V9Yg2jWJnqQ9voD3d4VbLT+CiKG1tpzc4huIrc5+dEvAFxxHzjnwBCd6IgbzOk4owPzi
-         IhSdPB0ZxGj5+ANt0EzXgf/61yqYa0bx45Gd4QYRJZ4fDD/+A1ZaezG/sHy3s7R9vU4J
-         pR9SyXeBCiOzPprrwYXD4mzCjCkxY+RW6M46Shf1T7w9i1KY5T13SxgzSkfC3mqwSYod
-         3ouTlsvsH+i8cQuMDS/gQeRpJRo9ktrM3KGQMC3lRH+AjqSTTiXj4iosIqFUNQFHUua7
-         +V2Q==
+        bh=ZS+vJncVOAy2CYmx4D6/h8tcRsGlPjDDfC+97kQiBFE=;
+        b=BCNzbONCL2huAn/CZ9m/BGn1qFX82VKYEdrH7PNnE4aT1SxxOHr05QDCwRX5t0jkKq
+         P0zSXTkDCOXBcHubA2VaxnPsWTTllCQ9K/94S+5+hW1DilBsVO7Cd4c3fUBVTeUeggBq
+         eTq8FHEUDa5aXMLDZLiL1G4uKtS0AcF4GNH1BH0WbQkMo7QF0G8YXruBJSoW4iWC4nEn
+         gsH5/LJr0cc9AeOCNXAfIU4HoCPJeGfwKPy1qzYGPgXtqT0WMRq8lRAOG/SaSHATOMLg
+         53s2sV9X5zXZ5PxajwRCTOyDrhWTiPdKDgFVyOLLUsSNZdpo0+VyTqzXiQj6PLutQEdu
+         0Hdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ekv8BwlEx82o86H7pDNJe1k3otaqpfti4VGo52hs/FQ=;
-        b=tQ+rWMyTzx7GbbTgrM3hPt4Is+6kB9SFciW3JlwUFqBFCYrNyPTePM8Y5T5OGOPxAq
-         so3V33MEmJa83dPPH7jccyjMx4uVSwddOBQSasJpraFzyOmFbzMwiRU4HSGaNG9vyTaG
-         MgkgPGrTu5vzBv0Y7i7emhDlXRXGP0elPz2pQHDV2fkHnZctsRt0G89r5pTHKZo8CXjn
-         AtczjIZyUGyCQTzrY/ze5rFgH7/13uGLBG0IF5d4bhLe3qStfjX9YP7//+j1Uc2I7S7d
-         DrZFrbF3NGJW3goAFqDysQzx1ofW/5UjMO8Ienyske1ZVHgcNKb4WUxrlxjr8xZxesgr
-         gmlQ==
-X-Gm-Message-State: ACrzQf0LnqcLVgJBtM2Ur+vcQWm6lkMlsiYQ0Y4c58OuiY0FE2Mpvh3z
-        u7geOl8oJykSKeWKGvpwaYGOwX8T7AY=
-X-Google-Smtp-Source: AMsMyM66FYSAsAussov0Jq3KkqNTRf3tVuRIDl89eNcrFeWhqq+hZaIcavXO/rLKbBK97xxm+hvumQ==
-X-Received: by 2002:adf:de8e:0:b0:236:ea40:47ef with SMTP id w14-20020adfde8e000000b00236ea4047efmr5726805wrl.519.1667426974234;
-        Wed, 02 Nov 2022 15:09:34 -0700 (PDT)
+        bh=ZS+vJncVOAy2CYmx4D6/h8tcRsGlPjDDfC+97kQiBFE=;
+        b=mlXBosLr6eTSnjNeRWjymSh2kSDPxlD8Ic+Cz7bDo+yCDuFfZ/AMZ57/rCwez9fLpt
+         qhgRUeVktr5DkF+iDURQxwAsDLT87zA95+IIVajDnKdcZsDrDGgSy0cAHDHJNSwDU5nq
+         hStdhfaDPYBYbfMWlAW69jrD0Hx8Vdax9CB726TmjgU1yxk92KqqzTebu4l4IcpROybz
+         sfepnU0qsvKp91HzJYXwStJRF6knQWj9zHvFRIcdS51AThBWxlsN7vKdaUO/LrhzyEy9
+         GK4EyHSzXvvatdSuoEWySuDKGz0W33AQkWIsv8l4O/69nbwbEudGRui80U2kDsgWyDoO
+         DDyA==
+X-Gm-Message-State: ACrzQf0spdoLhRB4bHUxdzfc30LD/smWfFvkqKwuiATJWrStJkLesSE4
+        Mz0QYa2DQXuzohN03hYakb8hIDiW+mc=
+X-Google-Smtp-Source: AMsMyM4SVnFTrGONJ5vK5ji2YDjqb1JJvbuJOzg6NMilzb3sV4OLdGfbh7xj9Gfk95cyDLbQhN0v4Q==
+X-Received: by 2002:a5d:6d89:0:b0:236:7d7d:1e79 with SMTP id l9-20020a5d6d89000000b002367d7d1e79mr17282283wrs.673.1667426972973;
+        Wed, 02 Nov 2022 15:09:32 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bi19-20020a05600c3d9300b003c6f3e5ba42sm3141611wmb.46.2022.11.02.15.09.33
+        by smtp.gmail.com with ESMTPSA id h8-20020a05600c314800b003a1980d55c4sm3389900wmo.47.2022.11.02.15.09.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 15:09:33 -0700 (PDT)
-Message-Id: <e45e23406a5e1609a36375acf9cb36ac6efc2dd6.1667426970.git.gitgitgadget@gmail.com>
+        Wed, 02 Nov 2022 15:09:32 -0700 (PDT)
+Message-Id: <f297c78f60a6996c2d2e5397b05efa6b94fd2ae0.1667426969.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
 References: <pull.1352.v2.git.1666372083.gitgitgadget@gmail.com>
         <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
 From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 02 Nov 2022 22:09:20 +0000
-Subject: [PATCH v3 02/11] credential: add WWW-Authenticate header to cred
- requests
+Date:   Wed, 02 Nov 2022 22:09:19 +0000
+Subject: [PATCH v3 01/11] http: read HTTP WWW-Authenticate response headers
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,98 +74,191 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-Add the value of the WWW-Authenticate response header to credential
-requests. Credential helpers that understand and support HTTP
-authentication and authorization can use this standard header (RFC 2616
-Section 14.47 [1]) to generate valid credentials.
+Read and store the HTTP WWW-Authenticate response headers made for
+a particular request.
 
-WWW-Authenticate headers can contain information pertaining to the
-authority, authentication mechanism, or extra parameters/scopes that are
-required.
+This will allow us to pass important authentication challenge
+information to credential helpers or others that would otherwise have
+been lost.
 
-The current I/O format for credential helpers only allows for unique
-names for properties/attributes, so in order to transmit multiple header
-values (with a specific order) we introduce a new convention whereby a
-C-style array syntax is used in the property name to denote multiple
-ordered values for the same property.
+According to RFC2616 Section 4.2 [1], header field names are not
+case-sensitive meaning when collecting multiple values for the same
+field name, we can just use the case of the first observed instance of
+each field name and no normalisation is required.
 
-In this case we send multiple `wwwauth[]` properties where the order
-that the repeated attributes appear in the conversation reflects the
-order that the WWW-Authenticate headers appeared in the HTTP response.
+libcurl only provides us with the ability to read all headers recieved
+for a particular request, including any intermediate redirect requests
+or proxies. The lines returned by libcurl include HTTP status lines
+delinating any intermediate requests such as "HTTP/1.1 200". We use
+these lines to reset the strvec of WWW-Authenticate header values as
+we encounter them in order to only capture the final response headers.
 
-[1] https://datatracker.ietf.org/doc/html/rfc2616#section-14.47
+The collection of all header values matching the WWW-Authenticate
+header is complicated by the fact that it is legal for header fields to
+be continued over multiple lines, but libcurl only gives us one line at
+a time.
+
+In the future [2] we may be able to leverage functions to read headers
+from libcurl itself, but as of today we must do this ourselves.
+
+[1] https://datatracker.ietf.org/doc/html/rfc2616#section-4.2
+[2] https://daniel.haxx.se/blog/2022/03/22/a-headers-api-for-libcurl/
 
 Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 ---
- Documentation/git-credential.txt | 17 ++++++++++++++++-
- credential.c                     | 12 ++++++++++++
- 2 files changed, 28 insertions(+), 1 deletion(-)
+ credential.c |  1 +
+ credential.h | 15 ++++++++++
+ http.c       | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 94 insertions(+)
 
-diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
-index f18673017f5..791a57dddfb 100644
---- a/Documentation/git-credential.txt
-+++ b/Documentation/git-credential.txt
-@@ -113,7 +113,13 @@ separated by an `=` (equals) sign, followed by a newline.
- The key may contain any bytes except `=`, newline, or NUL. The value may
- contain any bytes except newline or NUL.
- 
--In both cases, all bytes are treated as-is (i.e., there is no quoting,
-+Attributes with keys that end with C-style array brackets `[]` can have
-+multiple values. Each instance of a multi-valued attribute forms an
-+ordered list of values - the order of the repeated attributes defines
-+the order of the values. An empty multi-valued attribute (`key[]=\n`)
-+acts to clear any previous entries and reset the list.
-+
-+In all cases, all bytes are treated as-is (i.e., there is no quoting,
- and one cannot transmit a value with newline or NUL in it). The list of
- attributes is terminated by a blank line or end-of-file.
- 
-@@ -160,6 +166,15 @@ empty string.
- Components which are missing from the URL (e.g., there is no
- username in the example above) will be left unset.
- 
-+`wwwauth[]`::
-+
-+	When an HTTP response is received by Git that includes one or more
-+	'WWW-Authenticate' authentication headers, these will be passed by Git
-+	to credential helpers.
-+	Each 'WWW-Authenticate' header value is passed as a multi-valued
-+	attribute 'wwwauth[]', where the order of the attributes is the same as
-+	they appear in the HTTP response.
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
 diff --git a/credential.c b/credential.c
-index 897b4679333..8a3ad6c0ae2 100644
+index f6389a50684..897b4679333 100644
 --- a/credential.c
 +++ b/credential.c
-@@ -263,6 +263,17 @@ static void credential_write_item(FILE *fp, const char *key, const char *value,
- 	fprintf(fp, "%s=%s\n", key, value);
+@@ -22,6 +22,7 @@ void credential_clear(struct credential *c)
+ 	free(c->username);
+ 	free(c->password);
+ 	string_list_clear(&c->helpers, 0);
++	strvec_clear(&c->wwwauth_headers);
+ 
+ 	credential_init(c);
+ }
+diff --git a/credential.h b/credential.h
+index f430e77fea4..6f2e5bc610b 100644
+--- a/credential.h
++++ b/credential.h
+@@ -2,6 +2,7 @@
+ #define CREDENTIAL_H
+ 
+ #include "string-list.h"
++#include "strvec.h"
+ 
+ /**
+  * The credentials API provides an abstracted way of gathering username and
+@@ -115,6 +116,19 @@ struct credential {
+ 	 */
+ 	struct string_list helpers;
+ 
++	/**
++	 * A `strvec` of WWW-Authenticate header values. Each string
++	 * is the value of a WWW-Authenticate header in an HTTP response,
++	 * in the order they were received in the response.
++	 */
++	struct strvec wwwauth_headers;
++
++	/**
++	 * Internal use only. Used to keep track of split header fields
++	 * in order to fold multiple lines into one value.
++	 */
++	unsigned header_is_last_match:1;
++
+ 	unsigned approved:1,
+ 		 configured:1,
+ 		 quit:1,
+@@ -130,6 +144,7 @@ struct credential {
+ 
+ #define CREDENTIAL_INIT { \
+ 	.helpers = STRING_LIST_INIT_DUP, \
++	.wwwauth_headers = STRVEC_INIT, \
  }
  
-+static void credential_write_strvec(FILE *fp, const char *key,
-+				    const struct strvec *vec)
+ /* Initialize a credential structure, setting all fields to empty. */
+diff --git a/http.c b/http.c
+index 5d0502f51fd..03d43d352e7 100644
+--- a/http.c
++++ b/http.c
+@@ -183,6 +183,82 @@ size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
+ 	return nmemb;
+ }
+ 
++static size_t fwrite_wwwauth(char *ptr, size_t eltsize, size_t nmemb, void *p)
 +{
-+	int i = 0;
-+	const char *full_key = xstrfmt("%s[]", key);
-+	for (; i < vec->nr; i++) {
-+		credential_write_item(fp, full_key, vec->v[i], 0);
++	size_t size = eltsize * nmemb;
++	struct strvec *values = &http_auth.wwwauth_headers;
++	struct strbuf buf = STRBUF_INIT;
++	const char *val;
++	const char *z = NULL;
++
++	/*
++	 * Header lines may not come NULL-terminated from libcurl so we must
++	 * limit all scans to the maximum length of the header line, or leverage
++	 * strbufs for all operations.
++	 *
++	 * In addition, it is possible that header values can be split over
++	 * multiple lines as per RFC 2616 (even though this has since been
++	 * deprecated in RFC 7230). A continuation header field value is
++	 * identified as starting with a space or horizontal tab.
++	 *
++	 * The formal definition of a header field as given in RFC 2616 is:
++	 *
++	 *   message-header = field-name ":" [ field-value ]
++	 *   field-name     = token
++	 *   field-value    = *( field-content | LWS )
++	 *   field-content  = <the OCTETs making up the field-value
++	 *                    and consisting of either *TEXT or combinations
++	 *                    of token, separators, and quoted-string>
++	 */
++
++	strbuf_add(&buf, ptr, size);
++
++	/* Strip the CRLF that should be present at the end of each field */
++	strbuf_trim_trailing_newline(&buf);
++
++	/* Start of a new WWW-Authenticate header */
++	if (skip_iprefix(buf.buf, "www-authenticate:", &val)) {
++		while (isspace(*val))
++			val++;
++
++		strvec_push(values, val);
++		http_auth.header_is_last_match = 1;
++		goto exit;
 +	}
-+	free((void*)full_key);
++
++	/*
++	 * This line could be a continuation of the previously matched header
++	 * field. If this is the case then we should append this value to the
++	 * end of the previously consumed value.
++	 */
++	if (http_auth.header_is_last_match && isspace(*buf.buf)) {
++		const char **v = values->v + values->nr - 1;
++		char *append = xstrfmt("%s%.*s", *v, (int)(size - 1), ptr + 1);
++
++		free((void*)*v);
++		*v = append;
++
++		goto exit;
++	}
++
++	/* This is the start of a new header we don't care about */
++	http_auth.header_is_last_match = 0;
++
++	/*
++	 * If this is a HTTP status line and not a header field, this signals
++	 * a different HTTP response. libcurl writes all the output of all
++	 * response headers of all responses, including redirects.
++	 * We only care about the last HTTP request response's headers so clear
++	 * the existing array.
++	 */
++	if (skip_iprefix(buf.buf, "http/", &z))
++		strvec_clear(values);
++
++exit:
++	strbuf_release(&buf);
++	return size;
 +}
 +
- void credential_write(const struct credential *c, FILE *fp)
+ size_t fwrite_null(char *ptr, size_t eltsize, size_t nmemb, void *strbuf)
  {
- 	credential_write_item(fp, "protocol", c->protocol, 1);
-@@ -270,6 +281,7 @@ void credential_write(const struct credential *c, FILE *fp)
- 	credential_write_item(fp, "path", c->path, 0);
- 	credential_write_item(fp, "username", c->username, 0);
- 	credential_write_item(fp, "password", c->password, 0);
-+	credential_write_strvec(fp, "wwwauth", &c->wwwauth_headers);
- }
+ 	return nmemb;
+@@ -1829,6 +1905,8 @@ static int http_request(const char *url,
+ 					 fwrite_buffer);
+ 	}
  
- static int run_credential_helper(struct credential *c,
++	curl_easy_setopt(slot->curl, CURLOPT_HEADERFUNCTION, fwrite_wwwauth);
++
+ 	accept_language = http_get_accept_language_header();
+ 
+ 	if (accept_language)
 -- 
 gitgitgadget
 
