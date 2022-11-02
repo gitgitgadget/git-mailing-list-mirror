@@ -2,144 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2858C433FE
-	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 14:52:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD4C8C4332F
+	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 15:11:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229935AbiKBOwm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 10:52:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41652 "EHLO
+        id S230060AbiKBPLW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 11:11:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229533AbiKBOwl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 10:52:41 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C636F2A27E
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 07:52:39 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id f5so24421992ejc.5
-        for <git@vger.kernel.org>; Wed, 02 Nov 2022 07:52:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9+iHqWr4gPX69W5a0uZbHEoEef9qttRQJ3cFndEWGAU=;
-        b=ndjqpq06kWX1izZoJD2jhv/taQ7nLviqNefU5A9HG1y5cuVa829XyMe/VmcEAxxb3h
-         mkQWjRtQfvvuGuifl750VtbF1j4/6Sn7/Qyh1+HclLpL2i1a/9bAAQ3W+YExGNLJ9tke
-         4GvnHhViXh6v9NxsHHpiErtEh9EKuKK5uIpj6b6m4mYQaKjf26JizGzs/uj0O1sq9YJC
-         hSZVuc/PPXI4a1K6L3l7KAxiHznoysgBy9SVG+ri79lc4txuYa3PuOelx5SDENyP80uT
-         oSA0id2zXEdo/Goh5yDwuLNxC5k3m0vT6Cwux11zKG2kLZ+UYpzMk8emingAbh2ntHnS
-         x8JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9+iHqWr4gPX69W5a0uZbHEoEef9qttRQJ3cFndEWGAU=;
-        b=jaUDOtkZ+yNrzFQo3bKJVab1IgP+0BZQg/EEqyUpGSrMZGKd1pPJDqnJetjcdHGycs
-         yHvp23rjObSuR0D1jZlBSU4A0Q6qEIyNRwF+Lsr0EDAcAkYcuS3yN4unwcl9x/9a+ngR
-         kF7mH+oOK8f5IeQKsX3071TD9nkTuRkTAnx1A9d0cRaBFu7M4a3yUuq4dxjta39UDl5x
-         2dLZWi8LUgv69eaIAPFmz+4j+89CJcxlEz0FENCW88+2f1rE8QbMOHhhn683UFJG292f
-         HedA5ewcO6wHbFAMHM2E9i2C/XosXj9E9ee1LbCsSbwpmW401GUaxJvXUCIRhBHUphcS
-         XN8A==
-X-Gm-Message-State: ACrzQf0mbCXrWiWqnrQZtJdxBfYEOKgBxPQz7A0/rBYd7m0dm53+XCKK
-        wviKIwfjGlIoA2Er0FFfypqbA02HsxqKLg==
-X-Google-Smtp-Source: AMsMyM6mySZTigbkfvgApNJU2N3KLfsfBKylQXGkTtlNruulgoQdWGLpBDoCJBZT4mMIszJSyFyC3w==
-X-Received: by 2002:a17:907:31c1:b0:742:28a3:5d08 with SMTP id xf1-20020a17090731c100b0074228a35d08mr23984822ejb.112.1667400758304;
-        Wed, 02 Nov 2022 07:52:38 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id r17-20020a1709061bb100b007789e7b47besm5508320ejg.25.2022.11.02.07.52.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 07:52:37 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oqF6b-00BowM-11;
-        Wed, 02 Nov 2022 15:52:37 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Marc Branchaud <marcnarc@xiplink.com>
-Cc:     Mark Hills <mark@xwax.org>, git@vger.kernel.org,
-        =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>
-Subject: Re: Consist timestamps within a checkout/clone
-Date:   Wed, 02 Nov 2022 15:45:17 +0100
-References: <2210311614160.25661@stax.localdomain>
- <c060312e-0d35-8439-85dd-920b172c90be@xiplink.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <c060312e-0d35-8439-85dd-920b172c90be@xiplink.com>
-Message-ID: <221102.86leot2ytm.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229547AbiKBPLV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 11:11:21 -0400
+X-Greylist: delayed 300 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 02 Nov 2022 08:11:19 PDT
+Received: from mx5.spacex.com (mx5.spacex.com [192.31.242.32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7C4319288
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 08:11:19 -0700 (PDT)
+Received: from pps.filterd (mx5.spacex.com [127.0.0.1])
+        by mx5.spacex.com (8.17.1.5/8.17.1.5) with ESMTP id 2A2Dqfmg000683
+        for <git@vger.kernel.org>; Wed, 2 Nov 2022 08:06:18 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=spacex.com; h=from : to : subject :
+ date : message-id : content-type : content-transfer-encoding :
+ mime-version; s=dkim; bh=/aIcry7wl/lPyxt+pHkxMwdMDQkTj8IpDZKd3pS7+N0=;
+ b=KCRcOU4584+NLHnH/w3WHkzr0NF3+jA9VVJoXXXP9OiQ2KgsCd0huRpOoDDvrMbS490P
+ zdtU06owOBEyn6Xu3l7ZOsspVPJv6zbK5kPAZQfmDVydNk17TA2wIPX0/Nn7hO44y6Da
+ 9mRoeUF2YblWxXobGHWBa/eJ7CGgBuarUD5G17oHGWNQQb9Ws4rlumS9Y2D1J0+i3Yr4
+ CTYrGCoacWdKyRfaEfFs1EmycR9rewRqx/65RscwXyPbuqRCEsm1KNwHZ+oZJsmESmU7
+ JKZP04ntCeiimz6/0sbWteTlwq+O3334W6gR8px4rxZpnKBG/vF588GJnUsAAMg5mszI XA== 
+Received: from smtp.spacex.corp ([10.34.3.239])
+        by mx5.spacex.com (PPS) with ESMTPS id 3kh1kjqmf5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+        for <git@vger.kernel.org>; Wed, 02 Nov 2022 08:06:17 -0700
+Received: from ht-dc-ex-d4-n1.spacex.corp (10.34.3.239) by
+ HT-DC-EX-D4-N1.spacex.corp (10.34.3.239) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.32; Wed, 2 Nov 2022 08:06:17 -0700
+Received: from ht-dc-ex-d4-n1.spacex.corp ([fe80::64d9:15b6:163b:e2f2]) by
+ ht-dc-ex-d4-n1.spacex.corp ([fe80::4adf:37ff:fe24:4641%8]) with mapi id
+ 15.01.2375.032; Wed, 2 Nov 2022 08:06:17 -0700
+From:   Stephen Loftus-Mercer <Stephen.Loftus-Mercer@spacex.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: bug report for "git status"
+Thread-Topic: bug report for "git status"
+Thread-Index: AdjuzJyyuoXgqqsIQIeOuz0G/TOv1A==
+Date:   Wed, 2 Nov 2022 15:06:17 +0000
+Message-ID: <84cd66d955ed4188aad093cc306080d0@spacex.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.1.32.161]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain
+X-Proofpoint-GUID: 2xF7ddRDqTQMBNesik5jFCANGUYmhYMG
+X-Proofpoint-ORIG-GUID: 2xF7ddRDqTQMBNesik5jFCANGUYmhYMG
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 bulkscore=0 mlxlogscore=999 mlxscore=0 clxscore=1011
+ lowpriorityscore=0 phishscore=0 spamscore=0 priorityscore=1501
+ malwarescore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2210170000 definitions=main-2211020097
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-On Tue, Nov 01 2022, Marc Branchaud wrote:
+What did you do before the bug happened? (Steps to reproduce your issue)
+Two git commands that should be identical produce different results.=20
 
-> On 2022-10-31 15:01, Mark Hills wrote:
->> Our use case: we commit some compiled objects to the repo, where compiling
->> is either slow or requires software which is not always available.
->> Since upgrading Git 2.26.3 -> 2.32.4 (as part of Alpine Linux OS
->> upgrade)
->> we are noticing a change in build behaviour.
->> Now, after a "git clone" we find the Makefile intermittently
->> attempting
->> (and failing) some builds that are not intended.
->> Indeed, Make is acting reasonably as the source file is sometimes
->> marginally newer than the destination (both checked out by Git), example
->> below.
->
-> A fix for this was proposed in 2018 and dismissed [1].
->
-> Back then, the problem was that as Git wrote files into a directory
-> sometimes the clock would tick over at a bad time, and we'd end up
-> with some files being "newer" than others.  This would sour Make runs
-> as you describe.
->
-> Nominally this is caused by putting generated files in the repo, but
-> many times that is unavoidable (e.g. you're forking an upstream that 
-> puts automake-generated stuff in the repo).
->
-> IMHO, dismissing the problem back then was a mistake.  At the time I
-> advocated teaching Git to give all the files it touches (creates or 
-> modifies) in a directory the same mtime (e.g. the time at the start of
-> the checkout operation).
->
-> Instead the decision was to do nothing in Git, and instead let people
-> create their own post-checkout hooks to touch the files.  I (and
-> others) argued this was inadequate, to no avail.
->
-> 		M.
->
-> [1] https://public-inbox.org/git/20180413170129.15310-1-mgorny@gentoo.org/#r
+First command:
+> git worktree add -d "c:\temp\junk\blah" 209134fc8f
+> git status
 
-I think that's the wrong take-away from that thread. Maybe a patch for
-this will get rejected in the end, but in that case it wasn't because
-the git project is never going to take a patch like this.
+Second command:
+> git worktree add -d "c:\temp\junk\blah"
+> cd "c:\temp\junk\blah"
+> git checkout 209134fc8f
+> git status
 
-Maybe it won't, but:
+Full details discussed here:
+https://stackoverflow.com/questions/74237452/why-is-there-a-difference-betw=
+een-git-worktree-add-with-checkout-and-git-chec/74241950
 
- * That commit has no tests
- * It's clearly controversial behavior, so *if* we add it I think it's
-   better to make it opt-in configurable.
- * Once that's done, you'd need doc changes etc. for that.
+What did you expect to happen? (Expected behavior)
+I expected both "git status" calls to be identical results. They are not.=20
 
-Now, maybe a sufficiently polished version would also be "meh" for
-whatever reason, I just think it's premature to say that a change in
-this direction would never be accepted.
+I expected that both would output the following:
+> c:\temp\junk\blah>git status
+> HEAD detached at 209134fc8f
+> nothing to commit, working tree clean
 
-That being said, I do wonder if software in the wild is being
-monkeypatched to work around issues with make (or make-like tools)
-whether such a change isn't better advocated in e.g. GNU make itself.
 
-If it added "B" to "MAKEFLAGS" if it detected:
+What happened instead? (Actual behavior)
+The first worktree command, the one with the commit hash in the command, ga=
+ve this status instead:
+> c:\temp\junk\blah>git status
+> Not currently on any branch.
+> nothing to commit, working tree clean
 
- * I'm in a git repository
- * It's the first time I'm running here, or "nothing is built yet"
- * My dependency graph would be different with "-B"
+What's different between what you expected and what actually happened?
+I do not understand why the first command has no head. Worse, why does it h=
+ave no commit listed at all?=20
+Clearly HEAD must be on *some* commit -- my workspace is synced to some set=
+ of files!.=20
 
-Wouldn't that be what people who want this feature are after?
+Anything else you want to add:
+The Stack Overflow post gives a reasonable explanation of why this happens.=
+ I think the difference is irrelevant to most users. I would prefer that bo=
+th commands result in the same result. If that is impossible, I would ask t=
+hat at least the "git status" command be amended to ALWAYS include a commit=
+ hash since that's the primary way to figure out which files are currently =
+synched in a directory.=20
 
-It's not like it's SCM-agnostic, it already goes to significant trouble
-to cater to RCS and SCCS of all things, so I don't see why they'd
-categorically reject a patch to cater to modern VCS's.
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
 
-And, unlike Gike, GNU make wouldn't need to guess that munging
-timestamps would fix it, it can compute both versions of the dependency
-graph, so it would know...
+
+[System Info]
+git version:
+git version 2.36.1.windows.1
+cpu: x86_64
+built from commit: e2ff68a2d1426758c78d023f863bfa1e03cbc768
+sizeof-long: 4
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+uname: Windows 10.0 19044=20
+compiler info: gnuc: 11.3
+libc info: no libc information available
+$SHELL (typically, interactive shell): <unset>
+
+
+[Enabled Hooks]
