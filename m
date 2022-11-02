@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0554BC4332F
-	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 07:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA378C4332F
+	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 07:54:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230463AbiKBHye (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 03:54:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36186 "EHLO
+        id S230481AbiKBHyf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 03:54:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230196AbiKBHyY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 03:54:24 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2402326569
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 00:54:16 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id f27so43092306eje.1
-        for <git@vger.kernel.org>; Wed, 02 Nov 2022 00:54:16 -0700 (PDT)
+        with ESMTP id S230244AbiKBHyZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 03:54:25 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ADAA25C77
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 00:54:17 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id d26so43024557eje.10
+        for <git@vger.kernel.org>; Wed, 02 Nov 2022 00:54:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Sp7bhXI9suWL/LjIHe8Mthr+OoQZNzzW8PMTQaf7ksY=;
-        b=o30dZI9Y28pUgq9MQu2VW9G410Q0I27RPu+MQJZlJ9wImS2g5zzSserH6l2o9gNcIr
-         nUcqB7qntR7pMeI9vHEidEUhnvsErieNAvPXIpAmyOldofuIwE++dpzFBgCNJLs6zZ1I
-         KP6f/qE1PiCIFXKii87/dpdCVGLS+5wzpgXXPE7fKa/0U4omcyP8GTixX9scphAtOLiU
-         XH3vc7yMdDH4QkVFFqWOUdo+UFGDr13a44/UEsq8tTnKlmvdn5Ft/tgQGu2QJYz1QsFs
-         9Jbz3+rIvyye7IQPc8oo/zp5CJ1sgx4cQQb/6rR+kEtGQGwBowfNKZObjfmfHhKBw3ME
-         f8cA==
+        bh=/CFS+sDKN0h2xdgGzHNpNjhXPY5fKNn5b/msmWClGWQ=;
+        b=DXfgSa++FLGmRc4pS6p3jxeL8acf6wsga31O3QMVsSY/sxFPE8IikU6I7P5xKxjrwN
+         cqLH/naNJrgTJACKjorAicfJ9SIDv8fdwfMLlhVTcD+4XijLKryAYen0ZibP4aqGvoFw
+         FE34P0+2QvXPAizknXKm01tTNNT7pIhNgv+QgROetqF6kWie9hx1xuIU0ntpDXVkpcsO
+         j/JoWfZIVq/Xa377feKy6BTi3kUMqiKt1uB4lITXk00TzMOEYpX5Ka8Re9zyejirD1SB
+         lSQNIY7czdJwd5up5oFiJ/8dn2JTswA+u2XydsnOXLeSITiIp+LFyyd99D0Rn2zUtesh
+         s4Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Sp7bhXI9suWL/LjIHe8Mthr+OoQZNzzW8PMTQaf7ksY=;
-        b=pYQbl3JZWg2YSfPcgX/E6qBuH0x6o10nsVnpvgPMfYHrSCnj8QD4ilztHCQJohwfwY
-         Ood1vuCEzaemgPJdqDpuN/NV/wRexqMUKT+n9FDGo+rJhb9lilc/c8j3vu/DHTFrpO8S
-         oViVcwxyUhDaycKCkx06VEzAmNEuGODqT6VSBrqdUdrx279s0/YOnzGHlHl19Cp1Xfb1
-         xylygJZvlhlFRmcbFWaY8WGOnydZl6RxC9yt7oEclwOIoQ5OV7GA5adUNBd5feslHe2J
-         7oJSfrz3iT99D181PM+Zr0UA1s45bsOUm5OdQu8NHoXtla9/7qQPCX3SZQf1U3zDyzts
-         Awrg==
-X-Gm-Message-State: ACrzQf2YODdAKo8jm/GTqYuBvrKLZmj5SUW3DrjKWmb3sRYTx2slZkkA
-        dO9GepjN7buI0Dnm+59bI7Qg1OrJmTb68g==
-X-Google-Smtp-Source: AMsMyM6gBBNUVp6rvuxtFK1aKZjC0GE2FAYCGRUg1kW+ew0XvhKHeJ/5746jB2IXanQMFaChduhwLg==
-X-Received: by 2002:a17:907:3ea4:b0:78e:25e2:c33b with SMTP id hs36-20020a1709073ea400b0078e25e2c33bmr21406101ejc.603.1667375654433;
-        Wed, 02 Nov 2022 00:54:14 -0700 (PDT)
+        bh=/CFS+sDKN0h2xdgGzHNpNjhXPY5fKNn5b/msmWClGWQ=;
+        b=wXF4vlykYxMwUDEbktY6Q6dkITT6yZgPTIURbaX/Jc8pYbHrRIUvpqs1FiBIXx9ZXs
+         4p+69XAPQjvWR/+ay2WDFiscvNZhzuU47UvaheZdnXbtb/doQjpjIFPwkoqqRpv2INYa
+         JaExeGATupF0XSGm4eCAa3oNdegvTh8i567MV+L+UF93GeJ/Toj1C2XARxh6GxtViBmn
+         QJWJQIm+KLMpTLTjhdTzfuqJ0Kkd/lTS/QEXL/wmsaICO/xqkNZMvOwkLcox6TBZC2Oy
+         ZcpA0UgfZgjjYH6GnZOsKRG28C1obUet4RmqXIHEe+o9DNpSFTBgBVGNb1sSOObDldxU
+         bD4A==
+X-Gm-Message-State: ACrzQf35P9ErItrZBs0hvIJBc6KFd/pL7Jl/xrHrTh7dP0SG6DbVhcTX
+        Rn7cYSQmqUfopFnGkIbc+Z1KNkdbkkMWnQ==
+X-Google-Smtp-Source: AMsMyM5ytGkZQ3DD6nNABB22jE7N02jZLTn9rpxW2lFw655eyBrdXj//FhmvJNYmoWIiooY6AuCStA==
+X-Received: by 2002:a17:906:4783:b0:780:5be5:c81b with SMTP id cw3-20020a170906478300b007805be5c81bmr22295005ejc.76.1667375655255;
+        Wed, 02 Nov 2022 00:54:15 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id ku11-20020a170907788b00b0073d84a321c8sm5045466ejc.166.2022.11.02.00.54.13
+        by smtp.gmail.com with ESMTPSA id ku11-20020a170907788b00b0073d84a321c8sm5045466ejc.166.2022.11.02.00.54.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 00:54:13 -0700 (PDT)
+        Wed, 02 Nov 2022 00:54:14 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Emily Shaffer <emilyshaffer@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 7/8] submodule--helper: drop "update --prefix <pfx>" for "-C <pfx> update"
-Date:   Wed,  2 Nov 2022 08:54:04 +0100
-Message-Id: <patch-7.8-77d4d5a6c09-20221102T074148Z-avarab@gmail.com>
+Subject: [PATCH 8/8] submodule--helper: use OPT_SUBCOMMAND() API
+Date:   Wed,  2 Nov 2022 08:54:05 +0100
+Message-Id: <patch-8.8-105853cd358-20221102T074148Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1280.g8136eb6fab2
 In-Reply-To: <cover-0.8-00000000000-20221102T074148Z-avarab@gmail.com>
 References: <cover-0.8-00000000000-20221102T074148Z-avarab@gmail.com>
@@ -70,52 +70,128 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since 29a5e9e1ffe (submodule--helper update-clone: learn --init,
-2022-03-04) we've been passing "-C <prefix>" from "git-submodule.sh"
-whenever we pass "--prefix <prefix>", so the latter is redundant to
-the former. Let's drop the "--prefix" option.
+Have the cmd_submodule__helper() use the OPT_SUBCOMMAND() API
+introduced in fa83cc834da (parse-options: add support for parsing
+subcommands, 2022-08-19).
 
-Suggested-by: Glen Choo <chooglen@google.com>
+This is only a marginal reduction in line count, but once we start
+unifying this with a yet-to-be-added "builtin/submodule.c" it'll be
+much easier to reason about those changes, as they'll both use
+OPT_SUBCOMMAND().
+
+We don't need to worry about "argv[0]" being NULL in the die() because
+we'd have errored out in parse_options() as we're not using
+"PARSE_OPT_SUBCOMMAND_OPTIONAL".
+
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/submodule--helper.c | 4 +---
- git-submodule.sh            | 1 -
- 2 files changed, 1 insertion(+), 4 deletions(-)
+ builtin/submodule--helper.c | 78 ++++++++++++++++++-------------------
+ git.c                       |  2 +-
+ 2 files changed, 39 insertions(+), 41 deletions(-)
 
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 6bbefd34374..2012ad31d7f 100644
+index 2012ad31d7f..0bc25dcf5ae 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -2642,9 +2642,6 @@ static int module_update(int argc, const char **argv, const char *prefix)
- 			 N_("traverse submodules recursively")),
- 		OPT_BOOL('N', "no-fetch", &opt.nofetch,
- 			 N_("don't fetch new objects from the remote site")),
--		OPT_STRING(0, "prefix", &opt.prefix,
--			   N_("path"),
--			   N_("path into the working tree")),
- 		OPT_SET_INT(0, "checkout", &opt.update_default,
- 			N_("use the 'checkout' update strategy (default)"),
- 			SM_UPDATE_CHECKOUT),
-@@ -2700,6 +2697,7 @@ static int module_update(int argc, const char **argv, const char *prefix)
- 	}
+@@ -3350,47 +3350,45 @@ static int module_add(int argc, const char **argv, const char *prefix)
+ 	return ret;
+ }
  
- 	opt.filter_options = &filter_options;
-+	opt.prefix = prefix;
+-#define SUPPORT_SUPER_PREFIX (1<<0)
+-
+-struct cmd_struct {
+-	const char *cmd;
+-	int (*fn)(int, const char **, const char *);
+-	unsigned option;
+-};
+-
+-static struct cmd_struct commands[] = {
+-	{"clone", module_clone, SUPPORT_SUPER_PREFIX},
+-	{"add", module_add, 0},
+-	{"update", module_update, SUPPORT_SUPER_PREFIX},
+-	{"foreach", module_foreach, SUPPORT_SUPER_PREFIX},
+-	{"init", module_init, 0},
+-	{"status", module_status, SUPPORT_SUPER_PREFIX},
+-	{"sync", module_sync, SUPPORT_SUPER_PREFIX},
+-	{"deinit", module_deinit, 0},
+-	{"summary", module_summary, 0},
+-	{"push-check", push_check, 0},
+-	{"absorbgitdirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
+-	{"set-url", module_set_url, 0},
+-	{"set-branch", module_set_branch, 0},
+-	{"create-branch", module_create_branch, 0},
+-};
+-
+ int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+ {
+-	int i;
+-	if (argc < 2 || !strcmp(argv[1], "-h"))
+-		usage("git submodule--helper <command>");
+-
+-	for (i = 0; i < ARRAY_SIZE(commands); i++) {
+-		if (!strcmp(argv[1], commands[i].cmd)) {
+-			if (get_super_prefix() &&
+-			    !(commands[i].option & SUPPORT_SUPER_PREFIX))
+-				die(_("%s doesn't support --super-prefix"),
+-				    commands[i].cmd);
+-			return commands[i].fn(argc - 1, argv + 1, prefix);
+-		}
+-	}
++	const char *cmd = argv[0];
++	const char *subcmd;
++	parse_opt_subcommand_fn *fn = NULL;
++	const char *const usage[] = {
++		N_("git submodule--helper <command>"),
++		NULL
++	};
++	struct option options[] = {
++		OPT_SUBCOMMAND("clone", &fn, module_clone),
++		OPT_SUBCOMMAND("add", &fn, module_add),
++		OPT_SUBCOMMAND("update", &fn, module_update),
++		OPT_SUBCOMMAND("foreach", &fn, module_foreach),
++		OPT_SUBCOMMAND("init", &fn, module_init),
++		OPT_SUBCOMMAND("status", &fn, module_status),
++		OPT_SUBCOMMAND("sync", &fn, module_sync),
++		OPT_SUBCOMMAND("deinit", &fn, module_deinit),
++		OPT_SUBCOMMAND("summary", &fn, module_summary),
++		OPT_SUBCOMMAND("push-check", &fn, push_check),
++		OPT_SUBCOMMAND("absorbgitdirs", &fn, absorb_git_dirs),
++		OPT_SUBCOMMAND("set-url", &fn, module_set_url),
++		OPT_SUBCOMMAND("set-branch", &fn, module_set_branch),
++		OPT_SUBCOMMAND("create-branch", &fn, module_create_branch),
++		OPT_END()
++	};
++	argc = parse_options(argc, argv, prefix, options, usage, 0);
++	subcmd = argv[0];
++
++	if (strcmp(subcmd, "clone") && strcmp(subcmd, "update") &&
++	    strcmp(subcmd, "foreach") && strcmp(subcmd, "status") &&
++	    strcmp(subcmd, "sync") && strcmp(subcmd, "absorbgitdirs") &&
++	    get_super_prefix())
++		/*
++		 * xstrfmt() rather than "%s %s" to keep the translated
++		 * string identical to git.c's.
++		 */
++		die(_("%s doesn't support --super-prefix"),
++		    xstrfmt("'%s %s'", cmd, subcmd));
  
- 	if (opt.update_default)
- 		opt.update_strategy.type = opt.update_default;
-diff --git a/git-submodule.sh b/git-submodule.sh
-index d359f171379..9a50f2e9124 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -343,7 +343,6 @@ cmd_update()
- 		${recursive:+--recursive} \
- 		${init:+--init} \
- 		${nofetch:+--no-fetch} \
--		${wt_prefix:+--prefix "$wt_prefix"} \
- 		${rebase:+--rebase} \
- 		${merge:+--merge} \
- 		${checkout:+--checkout} \
+-	die(_("'%s' is not a valid submodule--helper "
+-	      "subcommand"), argv[1]);
++	return fn(argc, argv, prefix);
+ }
+diff --git a/git.c b/git.c
+index ee7758dcb0e..fb69e605912 100644
+--- a/git.c
++++ b/git.c
+@@ -610,7 +610,7 @@ static struct cmd_struct commands[] = {
+ 	{ "stash", cmd_stash, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "stripspace", cmd_stripspace },
+-	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP | SUPPORT_SUPER_PREFIX | NO_PARSEOPT },
++	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP | SUPPORT_SUPER_PREFIX },
+ 	{ "switch", cmd_switch, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
+ 	{ "tag", cmd_tag, RUN_SETUP | DELAY_PAGER_CONFIG },
 -- 
 2.38.0.1280.g8136eb6fab2
 
