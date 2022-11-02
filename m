@@ -2,109 +2,64 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C687C433FE
-	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 08:19:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EC59C433FE
+	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 08:24:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230143AbiKBITe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 04:19:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54752 "EHLO
+        id S230300AbiKBIYj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 04:24:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229598AbiKBITa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 04:19:30 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D543317589
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 01:19:29 -0700 (PDT)
-Received: (qmail 9415 invoked by uid 109); 2 Nov 2022 08:19:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 02 Nov 2022 08:19:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3340 invoked by uid 111); 2 Nov 2022 08:19:30 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 02 Nov 2022 04:19:30 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 2 Nov 2022 04:19:28 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [RFC PATCH] fetch: stop emitting duplicate
- transfer.credentialsInUrl=warn warnings
-Message-ID: <Y2IoEN6NHqj2Qisa@coredump.intra.peff.net>
-References: <pull.1399.git.1667245638.gitgitgadget@gmail.com>
- <RFC-patch-1.1-0266485bc6c-20221031T204149Z-avarab@gmail.com>
- <Y2CFRJLFRXvGwFBC@coredump.intra.peff.net>
- <Y2Doe0ZGb3Zmmmen@coredump.intra.peff.net>
- <221101.86o7tq4vsn.gmgdl@evledraar.gmail.com>
- <Y2GI0R6pJmdZNgHn@nand.local>
- <221101.8635b24959.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229950AbiKBIYg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 04:24:36 -0400
+Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDD9422501
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 01:24:31 -0700 (PDT)
+Received: by mail-io1-f48.google.com with SMTP id l127so14416123iof.12
+        for <git@vger.kernel.org>; Wed, 02 Nov 2022 01:24:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3Yhch1ACVsEVOLr0R2mtR2AjQ4GpydRaGEPzjhRZGZ8=;
+        b=IDHks3Z0K7qEHHVrc7kq06G6ca8fK37JsNbmUHz6IcjIV/UqtguDCYyB1CGjWsNpKu
+         ouroTg45CbkjK8Sr8oHJ1VD4lGeHRNsA2tOILotDNeg4kj/LsUYqZl8FNwO1mdLYVoEz
+         feFUXPQjXUw1qy4cbZP+9Vad0xqjBlq8+J3g9ekG2Ief5YXiEP+XGiY4rvYkFRWw+Uj6
+         wFI4IheezW6ZEmwOUo2VNiPLydtrh3m4CPwR9o3fZq2CjG/LMcMWg5tt0zqo75n9oNgv
+         JM5I61E3iUg6mNe11v4QkkSXhlpb7+BAClsP3fNlXK65E9auAQWrTv4znEAc8dX2+WVQ
+         g5SQ==
+X-Gm-Message-State: ACrzQf0zR5sDvlCd8u6VGj6RuFKM7CFaRfPPqLyueKWHwie1zzsECno6
+        zRqokiyk4mHMV6+J8ab6ZD+UQxnh86r5HFfApuzVq9Go
+X-Google-Smtp-Source: AMsMyM4FAlUiA9IWygFXToJZ1YXSPiMzD26HPe4bwmaHBMHAzJyuD4kMbmaIXKo6WdePAlSlKdgII1C+n+hXIA4lcTA=
+X-Received: by 2002:a05:6638:134f:b0:372:8558:1e34 with SMTP id
+ u15-20020a056638134f00b0037285581e34mr14186802jad.285.1667377471109; Wed, 02
+ Nov 2022 01:24:31 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <221101.8635b24959.gmgdl@evledraar.gmail.com>
+References: <CABYbkvP=fMmaFUD3bQbeQ-XKiMSP6g-u0p7Vq1Qt_K5=D5WJ+A@mail.gmail.com>
+ <Y2EPgICMsmzKvCC8@coredump.intra.peff.net> <38d50c30-c6a3-5989-6e01-47c5467d9d6b@gmail.com>
+ <Y2IeqOT5Ao1Qa0Zl@coredump.intra.peff.net>
+In-Reply-To: <Y2IeqOT5Ao1Qa0Zl@coredump.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 2 Nov 2022 04:24:20 -0400
+Message-ID: <CAPig+cRkHyjoBNEbuUB9+MXnGMRD3W_ynpX4Gco16Y5dVJN=eg@mail.gmail.com>
+Subject: Re: Git Bug Report: out of memory using git tag
+To:     Jeff King <peff@peff.net>
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Martin Englund <martin@englund.nu>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 01, 2022 at 10:57:46PM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Wed, Nov 2, 2022 at 3:44 AM Jeff King <peff@peff.net> wrote:
+> After sleeping on it, I think I fully understand what's going on. There
+> are actually _two_ bugs, but they are closely related. ;)
+>
+> Here are patches which fix them both. I may be setting a new record for
+> the ratio of commit message lines to changed code. But it took me a
+> while to figure out what was going on, so I wanted to explain it fully.
 
-> >> Sure, we can do it with an environment variable, in the end that's all
-> >> git_config_push_parameter() is doing too. It's just setting things in
-> >> "GIT_CONFIG_PARAMETERS".
-> >>
-> >> And yes, we can set this in the low-level function instead of with
-> >> git_config_push_parameter() in builtin/*.c as I did. I was aiming for
-> >> something demonstrably narrow, at the cost of some verbosity.
-> >>
-> >> But I don't get how other things being equal you think sticking this in
-> >> "GIT_CHECKED_CREDENTIALS_IN_URL" instead of "GIT_CONFIG_PARAMETERS"
-> >> helps.
-> >
-> > I vaguely prefer calling this GIT_CHECKED_CREDENTIALS_IN_URL instead of
-> > stuffing it in the configuration.[...]
-> 
-> To be clear, I'm asking if there's cases where we think one method or
-> the other produces different results, which I understood Jeff hinting
-> at.
+Well explained. For someone who has (probably) never looked at that
+code (me), the explanations made perfect sense.
 
-What I was hinting before was not that I knew of a particular bug in
-your patch, but that I think the technique of munging
-GIT_CONFIG_PARAMETERS is fragile in error-prone in the general case,
-because the sub-programs can't differentiate between the config the user
-asked for, and what was set by the suppression mechanism.
-
-For this variable, there's no need to differentiate between "the user
-asked us to be quiet" and "the calling program asked us to be quiet",
-but I could imagine cases where there are subtle distinctions. Imagine
-if there was a setting for "warn and rewrite the URL". We'd need to
-change that to "don't warn, but just rewrite the URL", which otherwise
-is a mode that doesn't need to exist.
-
-Keeping it in a separate variable keeps the concerns orthogonal. The
-code still gets to see what the user actually wants (via the config),
-but has extra information from the calling process about how noisy/quiet
-to be.
-
-But you mentioned submodules in your other mail. And you're right that
-the patch I showed doesn't handle that (it would need to add the new
-variable to local_repo_env). It seems like yours should work because
-CONFIG_DATA_ENVIRONMENT as part of local_repo_env. But I don't think it
-actually does; in prepare_other_repo_env(), we retain the variables for
-config in the environment, so that:
-
-  git -c foo.bar=whatever fetch
-
-will override variables in both the superproject and in submodules.
-
-I didn't try it, but I suspect with your patch that a superproject with
-"warn" and a submodule with "die" (both in their on-disk config files)
-would misbehave. The superproject process will warn and say "yes, I've
-checked everything" by munging the in-environment config to "allow".
-Then the submodule process will see that config, and will override the
-on-disk setting (in the usual last-one-wins config way). I.e., the
-problem is that it cannot tell the difference between "the user asked to
-override this" and the suppression mechanism.
-
--Peff
+(Oh, and I didn't even have to report any s///.)
