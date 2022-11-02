@@ -2,116 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33041C433FE
-	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 09:26:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 840F2C4332F
+	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 09:31:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230384AbiKBJ0A (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 05:26:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36410 "EHLO
+        id S230295AbiKBJba (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 05:31:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231267AbiKBJZo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 05:25:44 -0400
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F6DC1F629
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 02:23:42 -0700 (PDT)
-Received: by mail-ed1-x531.google.com with SMTP id v17so1810122edc.8
-        for <git@vger.kernel.org>; Wed, 02 Nov 2022 02:23:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=4rmDvbg8C2FwMAXeutZi6B0N9j1ND7LnZT1IB/EdQhM=;
-        b=GB/QDpNF/o3QvyvFQM++l3XFutqLRJX1uZLorsKcNp87FUgk9I44ihQ9deZQO3DHU5
-         /NJ0yNi2otCO7J65vmJ0MyI8MTqyaRDGQ9zR9exONEcLIByBHJVyk+rWy3VHlgVn+gTQ
-         wcpm0uvC0MPaDz/xlZz8/tikgEM4XXCu1Y/58AQH1S3wmr/yvHFQ/8OeU3XNoPHtw0tP
-         pIbUr6DbraNbJWJS232xcG4R6GO9q9s5hL2gGq0lc5IpIw5P8RGBMJzRsG82/maaUgG/
-         pf+f8BD7LX8lBrUu9zW4B3iqb6XyEkcXpgEkItVGNCjGBJAgPU5eFNPFCexhl0DWIk99
-         AE4g==
+        with ESMTP id S229945AbiKBJbP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 05:31:15 -0400
+Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6362910E2
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 02:31:14 -0700 (PDT)
+Received: by mail-io1-f47.google.com with SMTP id h206so11063225iof.10
+        for <git@vger.kernel.org>; Wed, 02 Nov 2022 02:31:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4rmDvbg8C2FwMAXeutZi6B0N9j1ND7LnZT1IB/EdQhM=;
-        b=RkLFJWJhOAPzMlbfpx9GLxqeiJ9eiAe2+p1mttejh66IilmhmrF1RygmHLKEu7QGul
-         9D6vyJ5JFGkCEJrjz2dhH22/Mgt9+y5zxlNmNBk7b0JVl0BnKy5qnwXnNm19VkQ/YVA7
-         rp3VuMQTnZ5cQ300HOtipbQqTPgb+PYUcdwY98MiVdZRUbJXKrZ67EFByeua6LFm+dVF
-         4TpsjvrU+JpCx8Pdrgnae14LLYmMBNiOnnR8pwt6+ZGL4YDsnulq7hvaOoYk2B102bXd
-         FzYjCCGbFZCYmGoTc3wkVBA1JtBpUPBIv0+A/SneCwuMyEFnEHzFE48Jnpyt9E4Bh7Fs
-         il6g==
-X-Gm-Message-State: ACrzQf2MgHBwM+o0QhG7zL6aSO1hqZzaSVOB0q5S0MKGEBZzv2XQNCTD
-        N7ATTs7qLOi/k9R8fwrVzmlFd3o+4+Sx9g==
-X-Google-Smtp-Source: AMsMyM41wHdy+68gzL4iE+oC+vm02vL3PJeJO90ncEY7HdqacKma8P+g+P2P26/YqhMnQAZIUZqmvg==
-X-Received: by 2002:aa7:c491:0:b0:461:7f0c:c573 with SMTP id m17-20020aa7c491000000b004617f0cc573mr23449430edq.8.1667381020396;
-        Wed, 02 Nov 2022 02:23:40 -0700 (PDT)
-Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
-        by smtp.gmail.com with ESMTPSA id k8-20020a17090632c800b0073d81b0882asm5125050ejk.7.2022.11.02.02.23.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 02:23:39 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oq9yF-00BhgI-0i;
-        Wed, 02 Nov 2022 10:23:39 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, derrickstolee@github.com,
-        me@ttaylorr.com, tenglong.tl@alibaba-inc.com,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/1] pack-bitmap.c: avoid exposing absolute paths
-Date:   Wed, 02 Nov 2022 10:20:31 +0100
-References: <20220826070912.70274-1-dyroneteng@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <20220826070912.70274-1-dyroneteng@gmail.com>
-Message-ID: <221102.86tu3h3e1w.gmgdl@evledraar.gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2AaMBXX7R5Y9YOLOlOjHNRjkdy6D7oQvpJCtr1j31cs=;
+        b=mDl3BOHuGTZO0T3ZOtBj/eKgMUfU2IGeG2fWeG7umqNndmhaNJ3AyyfKulquUlDolA
+         3dlbOjofkvSYicaWS6hnJwReh+GKjI6PbI8aNxmuIjyCAjw//D0ZvhO5pVVKx7+E4bu9
+         Sz2tQjHv96X26aQm6iZbPxI4OK+BJD0FBxkvxk9utMVaZB9zwH8vc+RoM0+W6ui81LtI
+         NcqUpbUTAbWPyC+Z5C6w6q3Lk27lz5LwGPAnnO31JXoZj37izrtneNh215tL813abg5N
+         zTHmpHTQIT+lHOLaxRaWN/fltluwMsdg2RAKbgXO/JOgaJlqwq40hplKeM+QBqnJpLC5
+         /IHw==
+X-Gm-Message-State: ACrzQf02TzJwtpNqf7W+5mwUux6AcSKTngB5QD9rZAkqIBruu/eYZMsR
+        DA038myB+dSvDDrZx6kVeIqA07V2oX6S5HeARKE=
+X-Google-Smtp-Source: AMsMyM4pmVGflB6zIh3aZgNkYEloe73t5RjPllSGv08XyZC1OSm5d5wHV2xP1IYKXMRNMIGUcnlWRAk3Rt3mwRhR5sg=
+X-Received: by 2002:a05:6638:134f:b0:372:8558:1e34 with SMTP id
+ u15-20020a056638134f00b0037285581e34mr14362723jad.285.1667381473614; Wed, 02
+ Nov 2022 02:31:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1399.git.1667245638.gitgitgadget@gmail.com>
+ <RFC-patch-1.1-0266485bc6c-20221031T204149Z-avarab@gmail.com>
+ <Y2CFRJLFRXvGwFBC@coredump.intra.peff.net> <221101.86a65b5q9q.gmgdl@evledraar.gmail.com>
+ <Y2GHjnuyuwGpY3II@nand.local> <Y2ItZWx+kBmTreGQ@coredump.intra.peff.net>
+ <CAPig+cSj78Mh8v6mN3BtyHJ+NxOvT2H_NW6SPFSAce0op2DfjA@mail.gmail.com> <Y2I1FsYyIRCCwh30@coredump.intra.peff.net>
+In-Reply-To: <Y2I1FsYyIRCCwh30@coredump.intra.peff.net>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 2 Nov 2022 05:31:02 -0400
+Message-ID: <CAPig+cTZfckXjX5=nD=cufhus_m9G8LgPqA2dtzKW0AT2bqLgw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] t5551: be less strict about the number of
+ credential warnings
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Fri, Aug 26 2022, Teng Long wrote:
-
-> This patch tries to avoid the problem of leaking sensitive information that
-> could output the absolute path of the repository when try to open multiple
-> bitmaps. For example, in "alternates" scenario, where the repository
-> "alternate_repo" serves as alternate object stores for repository
-> "want_to_borrow" , and each of both has it's own bitmap file, then we run
-> `git rev-list --use-bitmap-index HEAD`, the output might be:
+On Wed, Nov 2, 2022 at 5:15 AM Jeff King <peff@peff.net> wrote:
+> On Wed, Nov 02, 2022 at 04:49:37AM -0400, Eric Sunshine wrote:
+> > > Note that the tests for the "die" mode don't need adjusted. They die
+> >
+> > s/adjusted/adjustment --or -- s/need/& to be/
 >
->   $ cd want_to_borrow.git
->   $ git rev-list --test-bitmap HEAD
->   warning: ignoring extra bitmap file: /Users/tenglong.tl/Downloads/alternate_repo.git/.git/objects/pack/pack-bff67e2a7a154e6933afe61b3681726cf9bd8e8b.pack
->   Bitmap v1 test (1 entries loaded)
->   Found bitmap for 30f146d41a7a86930fae3f4a5e1f1c1f2bfacbba. 64 bits / 11030517 checksum
->   Verifying bitmap entries: 100% (3/3), done.
->   OK!
+> https://english.stackexchange.com/questions/5407/central-pennsylvanian-english-speakers-what-are-the-limitations-on-the-needs-w
 >
-> After apply this patch:
->
->   $ git rev-list --test-bitmap HEAD
->   warning: ignoring extra bitmap files
->   Bitmap v1 test (1 entries loaded)
->   Found bitmap for 30f146d41a7a86930fae3f4a5e1f1c1f2bfacbba. 64 bits / 11030517 checksum
->   Verifying bitmap entries: 100% (3/3), done.
->   OK!
+> Don't stomp on my linguistic heritage. :)
 
-I see that downthread of here there's discussion about keeping the
-warning, adding tracing, etc. etc.
-
-Maybe it's been brought up (I was skimming, sorry), but for the problem
-you have isn't a narrow and acceptable solution to you to keep the
-warning, but just don't print the absolute path?
-
-I.e.:
-
-	warning: ignoring extra bitmap file: /Users/tenglong.tl/Downloads/alternate_repo.git/.git/objects/pack/pack-bff67e2a7a154e6933afe61b3681726cf9bd8e8b.pack
-
-To:
-
-	warning: ignoring extra bitmap file: ../alternate_repo.git/.git/objects/pack/pack-bff67e2a7a154e6933afe61b3681726cf9bd8e8b.pack
-
-Or would the relative path to the alternate also be sensitive?
-
-We might also want to just remove this etc., but that's a different
-question than "should we print these absolute paths?".
+Sorry. My head needs hanged in shame. I forgot that I can't grammar.
+(I can't math either.)
