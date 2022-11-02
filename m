@@ -2,70 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 840F2C4332F
-	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 09:31:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D554C433FE
+	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 10:30:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230295AbiKBJba (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 05:31:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43132 "EHLO
+        id S230216AbiKBKac (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 06:30:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229945AbiKBJbP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 05:31:15 -0400
-Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6362910E2
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 02:31:14 -0700 (PDT)
-Received: by mail-io1-f47.google.com with SMTP id h206so11063225iof.10
-        for <git@vger.kernel.org>; Wed, 02 Nov 2022 02:31:14 -0700 (PDT)
+        with ESMTP id S229875AbiKBKa2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 06:30:28 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5240362ED
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 03:30:25 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id p16so4806060wmc.3
+        for <git@vger.kernel.org>; Wed, 02 Nov 2022 03:30:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qyblppFnyYzYHCFfhSPVqoON5gGsjC4eXgBGOvcv8X8=;
+        b=Fk6kcI/JcpNLi1GM+h7MAGsjKPaRwlSTeI34eWWKGvobIGqXZEiCf1NtjTWxEP49Do
+         r/0PQgYPgGv85H0VYWDUR0niEgX/eeapDxvAJEZqSWUj62U61FbEYjPiUkoT0jYEBEeZ
+         /JUAHYKoKnSdLlSbWNWjEBzBqQkHn5sC/5OAVTVditEafQGttgX1i5FsA+tp8WPfrxwU
+         plUuTyzW5I0ROGNhfhf+6MmXE37k+cY+Z0GgTlONaDMb5dwru9puG8PdhLgVDwK+IrtX
+         JkXPFjRHmTlvy8EBxphkDX9l4bcT1UCyQNa8NLC/HVPJnOY+veCo/XZRvW1zKl+yGQhc
+         14MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2AaMBXX7R5Y9YOLOlOjHNRjkdy6D7oQvpJCtr1j31cs=;
-        b=mDl3BOHuGTZO0T3ZOtBj/eKgMUfU2IGeG2fWeG7umqNndmhaNJ3AyyfKulquUlDolA
-         3dlbOjofkvSYicaWS6hnJwReh+GKjI6PbI8aNxmuIjyCAjw//D0ZvhO5pVVKx7+E4bu9
-         Sz2tQjHv96X26aQm6iZbPxI4OK+BJD0FBxkvxk9utMVaZB9zwH8vc+RoM0+W6ui81LtI
-         NcqUpbUTAbWPyC+Z5C6w6q3Lk27lz5LwGPAnnO31JXoZj37izrtneNh215tL813abg5N
-         zTHmpHTQIT+lHOLaxRaWN/fltluwMsdg2RAKbgXO/JOgaJlqwq40hplKeM+QBqnJpLC5
-         /IHw==
-X-Gm-Message-State: ACrzQf02TzJwtpNqf7W+5mwUux6AcSKTngB5QD9rZAkqIBruu/eYZMsR
-        DA038myB+dSvDDrZx6kVeIqA07V2oX6S5HeARKE=
-X-Google-Smtp-Source: AMsMyM4pmVGflB6zIh3aZgNkYEloe73t5RjPllSGv08XyZC1OSm5d5wHV2xP1IYKXMRNMIGUcnlWRAk3Rt3mwRhR5sg=
-X-Received: by 2002:a05:6638:134f:b0:372:8558:1e34 with SMTP id
- u15-20020a056638134f00b0037285581e34mr14362723jad.285.1667381473614; Wed, 02
- Nov 2022 02:31:13 -0700 (PDT)
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qyblppFnyYzYHCFfhSPVqoON5gGsjC4eXgBGOvcv8X8=;
+        b=1Ms+/NJCWfTvvIDMlwwJLuH7NGaxH4GVJRmqdLj+n+Pb7Lj8udro4/kBe2IpsSqNsz
+         OmRdhZXAKgf2WWtMlZ2m8Tlm06rhZVqy6Kgm97da+nqzapOa2nIGuiJyAVAecepqg3r+
+         8fxjqdJb/nFeMy7rM7rJWaikDPQD4dLfp5S6XY51kcScuPWpgxkmk+J9NLXN/fxssFzs
+         kwrALcZpopjNYAo95D5EyLmyEuIOSKmL9ysaVRxJ8b5J+6myUfJ+pq8JYwXw3zU63q/w
+         uuYvY9sLC9xfvI9qlJbO6BCDDGHc0uYLfEMEuqCp6iMCIJ7866raajoq+iZB73tVyTbd
+         Ee4w==
+X-Gm-Message-State: ACrzQf30wBheCND2yD2pXmhpxozYyVrw7UR0oyQaQBYKrmjJPknSGh53
+        WFjUFr5E1nFoO+Yvjy1O/pfTln+visI=
+X-Google-Smtp-Source: AMsMyM5ffIL1ZkDzCK2Fu8HKVlQSLBiWcW9hGGckMcYHihynHOC89oy5UZzD96692rv+B8/uVID5XQ==
+X-Received: by 2002:a7b:cd99:0:b0:3cf:7556:a52c with SMTP id y25-20020a7bcd99000000b003cf7556a52cmr8657329wmj.53.1667385023527;
+        Wed, 02 Nov 2022 03:30:23 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a1-20020a05600c348100b003cf55844453sm1634185wmq.22.2022.11.02.03.30.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Nov 2022 03:30:22 -0700 (PDT)
+Message-Id: <pull.1396.v2.git.1667385022103.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1396.git.1666845947898.gitgitgadget@gmail.com>
+References: <pull.1396.git.1666845947898.gitgitgadget@gmail.com>
+From:   "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 02 Nov 2022 10:30:21 +0000
+Subject: [PATCH v2] Mention that password could be a personal access token.
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1399.git.1667245638.gitgitgadget@gmail.com>
- <RFC-patch-1.1-0266485bc6c-20221031T204149Z-avarab@gmail.com>
- <Y2CFRJLFRXvGwFBC@coredump.intra.peff.net> <221101.86a65b5q9q.gmgdl@evledraar.gmail.com>
- <Y2GHjnuyuwGpY3II@nand.local> <Y2ItZWx+kBmTreGQ@coredump.intra.peff.net>
- <CAPig+cSj78Mh8v6mN3BtyHJ+NxOvT2H_NW6SPFSAce0op2DfjA@mail.gmail.com> <Y2I1FsYyIRCCwh30@coredump.intra.peff.net>
-In-Reply-To: <Y2I1FsYyIRCCwh30@coredump.intra.peff.net>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 2 Nov 2022 05:31:02 -0400
-Message-ID: <CAPig+cTZfckXjX5=nD=cufhus_m9G8LgPqA2dtzKW0AT2bqLgw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] t5551: be less strict about the number of
- credential warnings
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, M Hickford <mirth.hickford@gmail.com>,
+        M Hickford <mirth.hickford@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 2, 2022 at 5:15 AM Jeff King <peff@peff.net> wrote:
-> On Wed, Nov 02, 2022 at 04:49:37AM -0400, Eric Sunshine wrote:
-> > > Note that the tests for the "die" mode don't need adjusted. They die
-> >
-> > s/adjusted/adjustment --or -- s/need/& to be/
->
-> https://english.stackexchange.com/questions/5407/central-pennsylvanian-english-speakers-what-are-the-limitations-on-the-needs-w
->
-> Don't stomp on my linguistic heritage. :)
+From: M Hickford <mirth.hickford@gmail.com>
 
-Sorry. My head needs hanged in shame. I forgot that I can't grammar.
-(I can't math either.)
+These days, the 'password' for a software forge might be personal access
+token or OAuth access token. These are popular, so worth clarifying that
+Git treats them just the same.
+
+Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+---
+    Mention that password could be a personal access token.
+    
+    These days, the 'password' for a software forge might be personal access
+    token or OAuth access token.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1396%2Fhickford%2Fmore-about-credentials-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1396/hickford/more-about-credentials-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1396
+
+Range-diff vs v1:
+
+ 1:  fef359f533a < -:  ----------- Mention that password could be a personal access token.
+ -:  ----------- > 1:  0bb69988ad7 Mention that password could be a personal access token.
+
+
+ Documentation/gitcredentials.txt | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/Documentation/gitcredentials.txt b/Documentation/gitcredentials.txt
+index 80517b4eb2c..402e067a6ca 100644
+--- a/Documentation/gitcredentials.txt
++++ b/Documentation/gitcredentials.txt
+@@ -21,6 +21,9 @@ in order to access a remote repository over HTTP. This manual describes
+ the mechanisms Git uses to request these credentials, as well as some
+ features to avoid inputting these credentials repeatedly.
+ 
++Some repositories accept multiple passwords, including personal access
++tokens and OAuth access tokens. Git handles all of these the same.
++
+ REQUESTING CREDENTIALS
+ ----------------------
+ 
+
+base-commit: c03801e19cb8ab36e9c0d17ff3d5e0c3b0f24193
+-- 
+gitgitgadget
