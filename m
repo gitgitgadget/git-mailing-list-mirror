@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95AC3C4332F
-	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 22:09:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDA54C433FE
+	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 22:09:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231473AbiKBWJy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 18:09:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56834 "EHLO
+        id S231343AbiKBWJz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 18:09:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231373AbiKBWJn (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231375AbiKBWJn (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 2 Nov 2022 18:09:43 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD51362E5
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 15:09:40 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id n39-20020a05600c3ba700b003cf71011cddso2826236wms.1
-        for <git@vger.kernel.org>; Wed, 02 Nov 2022 15:09:40 -0700 (PDT)
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AC032BC
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 15:09:42 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id m29-20020a05600c3b1d00b003c6bf423c71so2192381wms.0
+        for <git@vger.kernel.org>; Wed, 02 Nov 2022 15:09:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Jqn9pD7DReymPinpady4Do3dipUkirrn14ZHEwOzecs=;
-        b=XzF8oqFmuy4b9J6zKrBIb7awXCVf0tVhc84xVf247vxFEwXM1HweH7F469iuv5xdVE
-         AhPiIniklm3qjHTuTt/I3d9FRsVFou+xo5zoggyIcB3pzrhMEB6HZOvyQ1HZRoFGnMln
-         zsqcoeKjVISFpBZ/zxLhkqht8O9jQbfqn4ztHV6iGNM44r3Voqovd+tg7DlJHowjxbHz
-         c2n8BfBTN9nuBbaIWf4RSzJ8SHJXL42YJ05SgHyjb2Qi5kEiAtJxWvvWfTdreSBZbqX/
-         y5w6ow1/RYSIUaLYsifibCZi7ojSLSo6G4HBxUsFcDXSKloXthQIVUcJRFOJK6mSNbv7
-         3FSw==
+        bh=Oppsb8WsLbEUxkPzx/oHb/EanaXnzcdNH3JS2XbniwU=;
+        b=GWO8yH+T5l6sTEOx2qOA9E7ldOtnwdzowZVX5DJRU3twdE7F3XhIuvC/lZLn7LJZ7n
+         L8whCeHnFWq8n12xWXqPBvJ7C+1JMvEJl231TavInpC+xoWIadxMaJnl/cRErZx0KUb/
+         rIg+yu0JgqI7RAo35FnqCxbkkALoYRv1Ff5WxQH8vS2TaR3C28ZSPfoNnWeIG72V/wAN
+         6ACu0I0TwNOWBJrKY/p28pUPiK7cjM+XL25T/QylTLXoRbkqoTP0hvQrsIa2+gRDykft
+         aoN7bcF1jpNqwCEJLHg8J8qD8EymDBMYUUHU+jQmuo/ZeNmlV0HtFnHIJvutKiKTU6rh
+         Upcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Jqn9pD7DReymPinpady4Do3dipUkirrn14ZHEwOzecs=;
-        b=1wkOkLuKeqiBInzulg9LEEE2b3Txrfnl1tVKODwTbCPGCjRsifSWY7pK0+vFL+2cFd
-         SemOU+mh1JNWWB6e/Qh3uk4lERDAD3/kJzh6tK5mUA1o0hjFDcJOF2d4kYlZ3s4a93Om
-         zXHyu8CofYDFPVJJGtSbGeEqdJpwBTQDMC8SZR/wr4+PIHL0MPLKGUProrW8e0Ed2ZyA
-         dVjMMBOSxIeL8QLGl/aDOLD8zYsjlgqKQyYbMXhjsxsjOM3R9COWFbfbQwdj1Y98+XCv
-         Rm2sl6AzasFwPGoQH6lQcxWbZHjt3SkinEQmwBL82tSkxdJfi8c+XfjIeaOkxmCkY+y8
-         Wv4Q==
-X-Gm-Message-State: ACrzQf1abfvsHtU3gixfhhH7RH2wBAXDxCoR1G3GQEPKHxlN+sR1O7QF
-        jkFhtQinu1OHa8UrgPvj39p7lBZ49GU=
-X-Google-Smtp-Source: AMsMyM4pZmK7ECIn1cS4VIpa+rmzFAPpuVg4Wg7RF41EPhtDzsL/8VdGQxHW9W1JgnRly+6JPj8ZSQ==
-X-Received: by 2002:a05:600c:4f05:b0:3cf:87c6:88d4 with SMTP id l5-20020a05600c4f0500b003cf87c688d4mr3381094wmq.34.1667426979069;
-        Wed, 02 Nov 2022 15:09:39 -0700 (PDT)
+        bh=Oppsb8WsLbEUxkPzx/oHb/EanaXnzcdNH3JS2XbniwU=;
+        b=28BTf8El0YO98GdspporVzrNSL6xxdIl6XTuqXVhKOrONjo7OKHVoZTyHtnPPakQJ1
+         gys5cp073JjoUJ7nDsrGSbAEaMi47WawqfmL5FfqX6IH+CXFrzdB6mcIQD7dedIYOFKH
+         6sBwC6fsngJlLTUM7OGEiccOq2yXgOCuIps1asc79t5AYfskaZMTd3p7WIX7TRUDfRLL
+         oWE+pki2IQIJ6Q4s8/bC0oukeM4Ldafn5884BkXI6ZZM8T4AXNjKSkUS9d+U1kq0+9zk
+         U13xlPLDFsNHl9ygbK8vKtFREha5K2UW4WFJBdKETD6CoFNDgJKYAOlbZHzniB7eAOCx
+         3lvg==
+X-Gm-Message-State: ACrzQf2+hAwDdgpsjkGNtYccwDvidMXnlsyPtDbEnBq6GWWyiHdr01K2
+        m4UiSR9BLFpYfnqrQReF1viKHBoDPxg=
+X-Google-Smtp-Source: AMsMyM6+5ZiNUucV8mMhLjRZaj77Mcs2v0ANWMbZXAZyY/j4yp1pqK7Y82YSh0Zb423616t99iDyDg==
+X-Received: by 2002:a05:600c:4394:b0:3cf:75a8:ecc6 with SMTP id e20-20020a05600c439400b003cf75a8ecc6mr10970638wmn.74.1667426980212;
+        Wed, 02 Nov 2022 15:09:40 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r10-20020a05600c458a00b003c65c9a36dfsm3562312wmo.48.2022.11.02.15.09.38
+        by smtp.gmail.com with ESMTPSA id d17-20020a5d6dd1000000b0023691d62cffsm13732521wrz.70.2022.11.02.15.09.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 15:09:38 -0700 (PDT)
-Message-Id: <4947e81546a51883365d0087ce616b6b77e24a63.1667426970.git.gitgitgadget@gmail.com>
+        Wed, 02 Nov 2022 15:09:39 -0700 (PDT)
+Message-Id: <93bdf1d7060301d3794f83a927fe72e09274e8ab.1667426970.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
 References: <pull.1352.v2.git.1666372083.gitgitgadget@gmail.com>
         <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
 From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 02 Nov 2022 22:09:24 +0000
-Subject: [PATCH v3 06/11] test-http-server: add stub HTTP server test helper
+Date:   Wed, 02 Nov 2022 22:09:25 +0000
+Subject: [PATCH v3 07/11] test-http-server: add HTTP error response function
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,758 +74,94 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-Introduce a mini HTTP server helper that in the future will be enhanced
-to provide a frontend for the git-http-backend, with support for
-arbitrary authentication schemes.
-
-Right now, test-http-server is a pared-down copy of the git-daemon that
-always returns a 501 Not Implemented response to all callers.
+Introduce a function to the test-http-server test helper to write more
+full and valid HTTP error responses, including all the standard response
+headers like `Server` and `Date`.
 
 Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 ---
- Makefile                            |   2 +
- contrib/buildsystems/CMakeLists.txt |  13 +
- t/helper/.gitignore                 |   1 +
- t/helper/test-http-server.c         | 685 ++++++++++++++++++++++++++++
- 4 files changed, 701 insertions(+)
- create mode 100644 t/helper/test-http-server.c
+ t/helper/test-http-server.c | 59 +++++++++++++++++++++++++++++++++----
+ 1 file changed, 53 insertions(+), 6 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index d93ad956e58..39b130f711d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1500,6 +1500,8 @@ else
- 	endif
- 	BASIC_CFLAGS += $(CURL_CFLAGS)
- 
-+	TEST_PROGRAMS_NEED_X += test-http-server
-+
- 	REMOTE_CURL_PRIMARY = git-remote-http$X
- 	REMOTE_CURL_ALIASES = git-remote-https$X git-remote-ftp$X git-remote-ftps$X
- 	REMOTE_CURL_NAMES = $(REMOTE_CURL_PRIMARY) $(REMOTE_CURL_ALIASES)
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 787738e6fa3..45251695ce0 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -989,6 +989,19 @@ set(wrapper_scripts
- set(wrapper_test_scripts
- 	test-fake-ssh test-tool)
- 
-+if(CURL_FOUND)
-+       list(APPEND wrapper_test_scripts test-http-server)
-+
-+       add_executable(test-http-server ${CMAKE_SOURCE_DIR}/t/helper/test-http-server.c)
-+       target_link_libraries(test-http-server common-main)
-+
-+       if(MSVC)
-+               set_target_properties(test-http-server
-+                                       PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/t/helper)
-+               set_target_properties(test-http-server
-+                                       PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/t/helper)
-+       endif()
-+endif()
- 
- foreach(script ${wrapper_scripts})
- 	file(STRINGS ${CMAKE_SOURCE_DIR}/wrap-for-bin.sh content NEWLINE_CONSUME)
-diff --git a/t/helper/.gitignore b/t/helper/.gitignore
-index 8c2ddcce95f..9aa9c752997 100644
---- a/t/helper/.gitignore
-+++ b/t/helper/.gitignore
-@@ -1,2 +1,3 @@
- /test-tool
- /test-fake-ssh
-+/test-http-server
 diff --git a/t/helper/test-http-server.c b/t/helper/test-http-server.c
-new file mode 100644
-index 00000000000..18f1f741305
---- /dev/null
+index 18f1f741305..53508639714 100644
+--- a/t/helper/test-http-server.c
 +++ b/t/helper/test-http-server.c
-@@ -0,0 +1,685 @@
-+#include "config.h"
-+#include "run-command.h"
-+#include "strbuf.h"
-+#include "string-list.h"
-+#include "trace2.h"
-+#include "version.h"
-+#include "dir.h"
-+#include "date.h"
-+
-+#define TR2_CAT "test-http-server"
-+
-+static const char *pid_file;
-+static int verbose;
-+static int reuseaddr;
-+
-+static const char test_http_auth_usage[] =
-+"http-server [--verbose]\n"
-+"           [--timeout=<n>] [--init-timeout=<n>] [--max-connections=<n>]\n"
-+"           [--reuseaddr] [--pid-file=<file>]\n"
-+"           [--listen=<host_or_ipaddr>]* [--port=<n>]\n"
-+;
-+
-+/* Timeout, and initial timeout */
-+static unsigned int timeout;
-+static unsigned int init_timeout;
-+
-+static void logreport(const char *label, const char *err, va_list params)
+@@ -97,9 +97,59 @@ enum worker_result {
+ 	WR_STOP_THE_MUSIC = (WR_IO_ERROR | WR_HANGUP),
+ };
+ 
++static enum worker_result send_http_error(
++	int fd,
++	int http_code, const char *http_code_name,
++	int retry_after_seconds, struct string_list *response_headers,
++	enum worker_result wr_in)
 +{
-+	struct strbuf msg = STRBUF_INIT;
++	struct strbuf response_header = STRBUF_INIT;
++	struct strbuf response_content = STRBUF_INIT;
++	struct string_list_item *h;
++	enum worker_result wr;
 +
-+	strbuf_addf(&msg, "[%"PRIuMAX"] %s: ", (uintmax_t)getpid(), label);
-+	strbuf_vaddf(&msg, err, params);
-+	strbuf_addch(&msg, '\n');
++	strbuf_addf(&response_content, "Error: %d %s\r\n",
++		    http_code, http_code_name);
++	if (retry_after_seconds > 0)
++		strbuf_addf(&response_content, "Retry-After: %d\r\n",
++			    retry_after_seconds);
 +
-+	fwrite(msg.buf, sizeof(char), msg.len, stderr);
-+	fflush(stderr);
++	strbuf_addf  (&response_header, "HTTP/1.1 %d %s\r\n", http_code, http_code_name);
++	strbuf_addstr(&response_header, "Cache-Control: private\r\n");
++	strbuf_addstr(&response_header,	"Content-Type: text/plain\r\n");
++	strbuf_addf  (&response_header,	"Content-Length: %d\r\n", (int)response_content.len);
++	if (retry_after_seconds > 0)
++		strbuf_addf(&response_header, "Retry-After: %d\r\n", retry_after_seconds);
++	strbuf_addf(  &response_header,	"Server: test-http-server/%s\r\n", git_version_string);
++	strbuf_addf(  &response_header, "Date: %s\r\n", show_date(time(NULL), 0, DATE_MODE(RFC2822)));
++	if (response_headers)
++		for_each_string_list_item(h, response_headers)
++			strbuf_addf(&response_header, "%s\r\n", h->string);
++	strbuf_addstr(&response_header, "\r\n");
 +
-+	strbuf_release(&msg);
-+}
-+
-+__attribute__((format (printf, 1, 2)))
-+static void logerror(const char *err, ...)
-+{
-+	va_list params;
-+	va_start(params, err);
-+	logreport("error", err, params);
-+	va_end(params);
-+}
-+
-+__attribute__((format (printf, 1, 2)))
-+static void loginfo(const char *err, ...)
-+{
-+	va_list params;
-+	if (!verbose)
-+		return;
-+	va_start(params, err);
-+	logreport("info", err, params);
-+	va_end(params);
-+}
-+
-+static void set_keep_alive(int sockfd)
-+{
-+	int ka = 1;
-+
-+	if (setsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &ka, sizeof(ka)) < 0) {
-+		if (errno != ENOTSOCK)
-+			logerror("unable to set SO_KEEPALIVE on socket: %s",
-+				strerror(errno));
-+	}
-+}
-+
-+/*
-+ * The code in this section is used by "worker" instances to service
-+ * a single connection from a client.  The worker talks to the client
-+ * on 0 and 1.
-+ */
-+
-+enum worker_result {
-+	/*
-+	 * Operation successful.
-+	 * Caller *might* keep the socket open and allow keep-alive.
-+	 */
-+	WR_OK       = 0,
-+
-+	/*
-+	 * Various errors while processing the request and/or the response.
-+	 * Close the socket and clean up.
-+	 * Exit child-process with non-zero status.
-+	 */
-+	WR_IO_ERROR = 1<<0,
-+
-+	/*
-+	 * Close the socket and clean up.  Does not imply an error.
-+	 */
-+	WR_HANGUP   = 1<<1,
-+
-+	WR_STOP_THE_MUSIC = (WR_IO_ERROR | WR_HANGUP),
-+};
-+
-+static enum worker_result worker(void)
-+{
-+	const char *response = "HTTP/1.1 501 Not Implemented\r\n";
-+	char *client_addr = getenv("REMOTE_ADDR");
-+	char *client_port = getenv("REMOTE_PORT");
-+	enum worker_result wr = WR_OK;
-+
-+	if (client_addr)
-+		loginfo("Connection from %s:%s", client_addr, client_port);
-+
-+	set_keep_alive(0);
-+
-+	while (1) {
-+		if (write_in_full(1, response, strlen(response)) < 0) {
-+			logerror("unable to write response");
-+			wr = WR_IO_ERROR;
-+		}
-+
-+		if (wr & WR_STOP_THE_MUSIC)
-+			break;
++	if (write_in_full(fd, response_header.buf, response_header.len) < 0) {
++		logerror("unable to write response header");
++		wr = WR_IO_ERROR;
++		goto done;
 +	}
 +
-+	close(0);
-+	close(1);
-+
-+	return !!(wr & WR_IO_ERROR);
-+}
-+
-+/*
-+ * This section contains the listener and child-process management
-+ * code used by the primary instance to accept incoming connections
-+ * and dispatch them to async child process "worker" instances.
-+ */
-+
-+static int addrcmp(const struct sockaddr_storage *s1,
-+		   const struct sockaddr_storage *s2)
-+{
-+	const struct sockaddr *sa1 = (const struct sockaddr*) s1;
-+	const struct sockaddr *sa2 = (const struct sockaddr*) s2;
-+
-+	if (sa1->sa_family != sa2->sa_family)
-+		return sa1->sa_family - sa2->sa_family;
-+	if (sa1->sa_family == AF_INET)
-+		return memcmp(&((struct sockaddr_in *)s1)->sin_addr,
-+		    &((struct sockaddr_in *)s2)->sin_addr,
-+		    sizeof(struct in_addr));
-+#ifndef NO_IPV6
-+	if (sa1->sa_family == AF_INET6)
-+		return memcmp(&((struct sockaddr_in6 *)s1)->sin6_addr,
-+		    &((struct sockaddr_in6 *)s2)->sin6_addr,
-+		    sizeof(struct in6_addr));
-+#endif
-+	return 0;
-+}
-+
-+static int max_connections = 32;
-+
-+static unsigned int live_children;
-+
-+static struct child {
-+	struct child *next;
-+	struct child_process cld;
-+	struct sockaddr_storage address;
-+} *firstborn;
-+
-+static void add_child(struct child_process *cld, struct sockaddr *addr, socklen_t addrlen)
-+{
-+	struct child *newborn, **cradle;
-+
-+	newborn = xcalloc(1, sizeof(*newborn));
-+	live_children++;
-+	memcpy(&newborn->cld, cld, sizeof(*cld));
-+	memcpy(&newborn->address, addr, addrlen);
-+	for (cradle = &firstborn; *cradle; cradle = &(*cradle)->next)
-+		if (!addrcmp(&(*cradle)->address, &newborn->address))
-+			break;
-+	newborn->next = *cradle;
-+	*cradle = newborn;
-+}
-+
-+/*
-+ * This gets called if the number of connections grows
-+ * past "max_connections".
-+ *
-+ * We kill the newest connection from a duplicate IP.
-+ */
-+static void kill_some_child(void)
-+{
-+	const struct child *blanket, *next;
-+
-+	if (!(blanket = firstborn))
-+		return;
-+
-+	for (; (next = blanket->next); blanket = next)
-+		if (!addrcmp(&blanket->address, &next->address)) {
-+			kill(blanket->cld.pid, SIGTERM);
-+			break;
-+		}
-+}
-+
-+static void check_dead_children(void)
-+{
-+	int status;
-+	pid_t pid;
-+
-+	struct child **cradle, *blanket;
-+	for (cradle = &firstborn; (blanket = *cradle);)
-+		if ((pid = waitpid(blanket->cld.pid, &status, WNOHANG)) > 1) {
-+			const char *dead = "";
-+			if (status)
-+				dead = " (with error)";
-+			loginfo("[%"PRIuMAX"] Disconnected%s", (uintmax_t)pid, dead);
-+
-+			/* remove the child */
-+			*cradle = blanket->next;
-+			live_children--;
-+			child_process_clear(&blanket->cld);
-+			free(blanket);
-+		} else
-+			cradle = &blanket->next;
-+}
-+
-+static struct strvec cld_argv = STRVEC_INIT;
-+static void handle(int incoming, struct sockaddr *addr, socklen_t addrlen)
-+{
-+	struct child_process cld = CHILD_PROCESS_INIT;
-+
-+	if (max_connections && live_children >= max_connections) {
-+		kill_some_child();
-+		sleep(1);  /* give it some time to die */
-+		check_dead_children();
-+		if (live_children >= max_connections) {
-+			close(incoming);
-+			logerror("Too many children, dropping connection");
-+			return;
-+		}
++	if (write_in_full(fd, response_content.buf, response_content.len) < 0) {
++		logerror("unable to write response content body");
++		wr = WR_IO_ERROR;
++		goto done;
 +	}
 +
-+	if (addr->sa_family == AF_INET) {
-+		char buf[128] = "";
-+		struct sockaddr_in *sin_addr = (void *) addr;
-+		inet_ntop(addr->sa_family, &sin_addr->sin_addr, buf, sizeof(buf));
-+		strvec_pushf(&cld.env, "REMOTE_ADDR=%s", buf);
-+		strvec_pushf(&cld.env, "REMOTE_PORT=%d",
-+				 ntohs(sin_addr->sin_port));
-+#ifndef NO_IPV6
-+	} else if (addr->sa_family == AF_INET6) {
-+		char buf[128] = "";
-+		struct sockaddr_in6 *sin6_addr = (void *) addr;
-+		inet_ntop(AF_INET6, &sin6_addr->sin6_addr, buf, sizeof(buf));
-+		strvec_pushf(&cld.env, "REMOTE_ADDR=[%s]", buf);
-+		strvec_pushf(&cld.env, "REMOTE_PORT=%d",
-+				 ntohs(sin6_addr->sin6_port));
-+#endif
-+	}
++	wr = wr_in;
 +
-+	strvec_pushv(&cld.args, cld_argv.v);
-+	cld.in = incoming;
-+	cld.out = dup(incoming);
++done:
++	strbuf_release(&response_header);
++	strbuf_release(&response_content);
 +
-+	if (cld.out < 0)
-+		logerror("could not dup() `incoming`");
-+	else if (start_command(&cld))
-+		logerror("unable to fork");
-+	else
-+		add_child(&cld, addr, addrlen);
++	return wr;
 +}
 +
-+static void child_handler(int signo)
-+{
-+	/*
-+	 * Otherwise empty handler because systemcalls will get interrupted
-+	 * upon signal receipt
-+	 * SysV needs the handler to be rearmed
-+	 */
-+	signal(SIGCHLD, child_handler);
-+}
-+
-+static int set_reuse_addr(int sockfd)
-+{
-+	int on = 1;
-+
-+	if (!reuseaddr)
-+		return 0;
-+	return setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR,
-+			  &on, sizeof(on));
-+}
-+
-+struct socketlist {
-+	int *list;
-+	size_t nr;
-+	size_t alloc;
-+};
-+
-+static const char *ip2str(int family, struct sockaddr *sin, socklen_t len)
-+{
-+#ifdef NO_IPV6
-+	static char ip[INET_ADDRSTRLEN];
-+#else
-+	static char ip[INET6_ADDRSTRLEN];
-+#endif
-+
-+	switch (family) {
-+#ifndef NO_IPV6
-+	case AF_INET6:
-+		inet_ntop(family, &((struct sockaddr_in6*)sin)->sin6_addr, ip, len);
-+		break;
-+#endif
-+	case AF_INET:
-+		inet_ntop(family, &((struct sockaddr_in*)sin)->sin_addr, ip, len);
-+		break;
-+	default:
-+		xsnprintf(ip, sizeof(ip), "<unknown>");
-+	}
-+	return ip;
-+}
-+
-+#ifndef NO_IPV6
-+
-+static int setup_named_sock(char *listen_addr, int listen_port, struct socketlist *socklist)
-+{
-+	int socknum = 0;
-+	char pbuf[NI_MAXSERV];
-+	struct addrinfo hints, *ai0, *ai;
-+	int gai;
-+	long flags;
-+
-+	xsnprintf(pbuf, sizeof(pbuf), "%d", listen_port);
-+	memset(&hints, 0, sizeof(hints));
-+	hints.ai_family = AF_UNSPEC;
-+	hints.ai_socktype = SOCK_STREAM;
-+	hints.ai_protocol = IPPROTO_TCP;
-+	hints.ai_flags = AI_PASSIVE;
-+
-+	gai = getaddrinfo(listen_addr, pbuf, &hints, &ai0);
-+	if (gai) {
-+		logerror("getaddrinfo() for %s failed: %s", listen_addr, gai_strerror(gai));
-+		return 0;
-+	}
-+
-+	for (ai = ai0; ai; ai = ai->ai_next) {
-+		int sockfd;
-+
-+		sockfd = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
-+		if (sockfd < 0)
-+			continue;
-+		if (sockfd >= FD_SETSIZE) {
-+			logerror("Socket descriptor too large");
-+			close(sockfd);
-+			continue;
-+		}
-+
-+#ifdef IPV6_V6ONLY
-+		if (ai->ai_family == AF_INET6) {
-+			int on = 1;
-+			setsockopt(sockfd, IPPROTO_IPV6, IPV6_V6ONLY,
-+				   &on, sizeof(on));
-+			/* Note: error is not fatal */
-+		}
-+#endif
-+
-+		if (set_reuse_addr(sockfd)) {
-+			logerror("Could not set SO_REUSEADDR: %s", strerror(errno));
-+			close(sockfd);
-+			continue;
-+		}
-+
-+		set_keep_alive(sockfd);
-+
-+		if (bind(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
-+			logerror("Could not bind to %s: %s",
-+				 ip2str(ai->ai_family, ai->ai_addr, ai->ai_addrlen),
-+				 strerror(errno));
-+			close(sockfd);
-+			continue;	/* not fatal */
-+		}
-+		if (listen(sockfd, 5) < 0) {
-+			logerror("Could not listen to %s: %s",
-+				 ip2str(ai->ai_family, ai->ai_addr, ai->ai_addrlen),
-+				 strerror(errno));
-+			close(sockfd);
-+			continue;	/* not fatal */
-+		}
-+
-+		flags = fcntl(sockfd, F_GETFD, 0);
-+		if (flags >= 0)
-+			fcntl(sockfd, F_SETFD, flags | FD_CLOEXEC);
-+
-+		ALLOC_GROW(socklist->list, socklist->nr + 1, socklist->alloc);
-+		socklist->list[socklist->nr++] = sockfd;
-+		socknum++;
-+	}
-+
-+	freeaddrinfo(ai0);
-+
-+	return socknum;
-+}
-+
-+#else /* NO_IPV6 */
-+
-+static int setup_named_sock(char *listen_addr, int listen_port, struct socketlist *socklist)
-+{
-+	struct sockaddr_in sin;
-+	int sockfd;
-+	long flags;
-+
-+	memset(&sin, 0, sizeof sin);
-+	sin.sin_family = AF_INET;
-+	sin.sin_port = htons(listen_port);
-+
-+	if (listen_addr) {
-+		/* Well, host better be an IP address here. */
-+		if (inet_pton(AF_INET, listen_addr, &sin.sin_addr.s_addr) <= 0)
-+			return 0;
-+	} else {
-+		sin.sin_addr.s_addr = htonl(INADDR_ANY);
-+	}
-+
-+	sockfd = socket(AF_INET, SOCK_STREAM, 0);
-+	if (sockfd < 0)
-+		return 0;
-+
-+	if (set_reuse_addr(sockfd)) {
-+		logerror("Could not set SO_REUSEADDR: %s", strerror(errno));
-+		close(sockfd);
-+		return 0;
-+	}
-+
-+	set_keep_alive(sockfd);
-+
-+	if (bind(sockfd, (struct sockaddr *)&sin, sizeof sin) < 0) {
-+		logerror("Could not bind to %s: %s",
-+			 ip2str(AF_INET, (struct sockaddr *)&sin, sizeof(sin)),
-+			 strerror(errno));
-+		close(sockfd);
-+		return 0;
-+	}
-+
-+	if (listen(sockfd, 5) < 0) {
-+		logerror("Could not listen to %s: %s",
-+			 ip2str(AF_INET, (struct sockaddr *)&sin, sizeof(sin)),
-+			 strerror(errno));
-+		close(sockfd);
-+		return 0;
-+	}
-+
-+	flags = fcntl(sockfd, F_GETFD, 0);
-+	if (flags >= 0)
-+		fcntl(sockfd, F_SETFD, flags | FD_CLOEXEC);
-+
-+	ALLOC_GROW(socklist->list, socklist->nr + 1, socklist->alloc);
-+	socklist->list[socklist->nr++] = sockfd;
-+	return 1;
-+}
-+
-+#endif
-+
-+static void socksetup(struct string_list *listen_addr, int listen_port, struct socketlist *socklist)
-+{
-+	if (!listen_addr->nr)
-+		setup_named_sock("127.0.0.1", listen_port, socklist);
-+	else {
-+		int i, socknum;
-+		for (i = 0; i < listen_addr->nr; i++) {
-+			socknum = setup_named_sock(listen_addr->items[i].string,
-+						   listen_port, socklist);
-+
-+			if (socknum == 0)
-+				logerror("unable to allocate any listen sockets for host %s on port %u",
-+					 listen_addr->items[i].string, listen_port);
-+		}
-+	}
-+}
-+
-+static int service_loop(struct socketlist *socklist)
-+{
-+	struct pollfd *pfd;
-+	int i;
-+
-+	CALLOC_ARRAY(pfd, socklist->nr);
-+
-+	for (i = 0; i < socklist->nr; i++) {
-+		pfd[i].fd = socklist->list[i];
-+		pfd[i].events = POLLIN;
-+	}
-+
-+	signal(SIGCHLD, child_handler);
-+
-+	for (;;) {
-+		int i;
-+		int nr_ready;
-+		int timeout = (pid_file ? 100 : -1);
-+
-+		check_dead_children();
-+
-+		nr_ready = poll(pfd, socklist->nr, timeout);
-+		if (nr_ready < 0) {
-+			if (errno != EINTR) {
-+				logerror("Poll failed, resuming: %s",
-+				      strerror(errno));
-+				sleep(1);
-+			}
-+			continue;
-+		}
-+		else if (nr_ready == 0) {
-+			/*
-+			 * If we have a pid_file, then we watch it.
-+			 * If someone deletes it, we shutdown the service.
-+			 * The shell scripts in the test suite will use this.
-+			 */
-+			if (!pid_file || file_exists(pid_file))
-+				continue;
-+			goto shutdown;
-+		}
-+
-+		for (i = 0; i < socklist->nr; i++) {
-+			if (pfd[i].revents & POLLIN) {
-+				union {
-+					struct sockaddr sa;
-+					struct sockaddr_in sai;
-+#ifndef NO_IPV6
-+					struct sockaddr_in6 sai6;
-+#endif
-+				} ss;
-+				socklen_t sslen = sizeof(ss);
-+				int incoming = accept(pfd[i].fd, &ss.sa, &sslen);
-+				if (incoming < 0) {
-+					switch (errno) {
-+					case EAGAIN:
-+					case EINTR:
-+					case ECONNABORTED:
-+						continue;
-+					default:
-+						die_errno("accept returned");
-+					}
-+				}
-+				handle(incoming, &ss.sa, sslen);
-+			}
-+		}
-+	}
-+
-+shutdown:
-+	loginfo("Starting graceful shutdown (pid-file gone)");
-+	for (i = 0; i < socklist->nr; i++)
-+		close(socklist->list[i]);
-+
-+	return 0;
-+}
-+
-+static int serve(struct string_list *listen_addr, int listen_port)
-+{
-+	struct socketlist socklist = { NULL, 0, 0 };
-+
-+	socksetup(listen_addr, listen_port, &socklist);
-+	if (socklist.nr == 0)
-+		die("unable to allocate any listen sockets on port %u",
-+		    listen_port);
-+
-+	loginfo("Ready to rumble");
-+
-+	/*
-+	 * Wait to create the pid-file until we've setup the sockets
-+	 * and are open for business.
-+	 */
-+	if (pid_file)
-+		write_file(pid_file, "%"PRIuMAX, (uintmax_t) getpid());
-+
-+	return service_loop(&socklist);
-+}
-+
-+/*
-+ * This section is executed by both the primary instance and all
-+ * worker instances.  So, yes, each child-process re-parses the
-+ * command line argument and re-discovers how it should behave.
-+ */
-+
-+int cmd_main(int argc, const char **argv)
-+{
-+	int listen_port = 0;
-+	struct string_list listen_addr = STRING_LIST_INIT_NODUP;
-+	int worker_mode = 0;
-+	int i;
-+
-+	trace2_cmd_name("test-http-server");
-+	setup_git_directory_gently(NULL);
-+
-+	for (i = 1; i < argc; i++) {
-+		const char *arg = argv[i];
-+		const char *v;
-+
-+		if (skip_prefix(arg, "--listen=", &v)) {
-+			string_list_append(&listen_addr, xstrdup_tolower(v));
-+			continue;
-+		}
-+		if (skip_prefix(arg, "--port=", &v)) {
-+			char *end;
-+			unsigned long n;
-+			n = strtoul(v, &end, 0);
-+			if (*v && !*end) {
-+				listen_port = n;
-+				continue;
-+			}
-+		}
-+		if (!strcmp(arg, "--worker")) {
-+			worker_mode = 1;
-+			trace2_cmd_mode("worker");
-+			continue;
-+		}
-+		if (!strcmp(arg, "--verbose")) {
-+			verbose = 1;
-+			continue;
-+		}
-+		if (skip_prefix(arg, "--timeout=", &v)) {
-+			timeout = atoi(v);
-+			continue;
-+		}
-+		if (skip_prefix(arg, "--init-timeout=", &v)) {
-+			init_timeout = atoi(v);
-+			continue;
-+		}
-+		if (skip_prefix(arg, "--max-connections=", &v)) {
-+			max_connections = atoi(v);
-+			if (max_connections < 0)
-+				max_connections = 0; /* unlimited */
-+			continue;
-+		}
-+		if (!strcmp(arg, "--reuseaddr")) {
-+			reuseaddr = 1;
-+			continue;
-+		}
-+		if (skip_prefix(arg, "--pid-file=", &v)) {
-+			pid_file = v;
-+			continue;
-+		}
-+
-+		fprintf(stderr, "error: unknown argument '%s'\n", arg);
-+		usage(test_http_auth_usage);
-+	}
-+
-+	/* avoid splitting a message in the middle */
-+	setvbuf(stderr, NULL, _IOFBF, 4096);
-+
-+	if (listen_port == 0)
-+		listen_port = DEFAULT_GIT_PORT;
-+
-+	/*
-+	 * If no --listen=<addr> args are given, the setup_named_sock()
-+	 * code will use receive a NULL address and set INADDR_ANY.
-+	 * This exposes both internal and external interfaces on the
-+	 * port.
-+	 *
-+	 * Disallow that and default to the internal-use-only loopback
-+	 * address.
-+	 */
-+	if (!listen_addr.nr)
-+		string_list_append(&listen_addr, "127.0.0.1");
-+
-+	/*
-+	 * worker_mode is set in our own child process instances
-+	 * (that are bound to a connected socket from a client).
-+	 */
-+	if (worker_mode)
-+		return worker();
-+
-+	/*
-+	 * `cld_argv` is a bit of a clever hack. The top-level instance
-+	 * of test-http-server does the normal bind/listen/accept stuff.
-+	 * For each incoming socket, the top-level process spawns
-+	 * a child instance of test-http-server *WITH* the additional
-+	 * `--worker` argument. This causes the child to set `worker_mode`
-+	 * and immediately call `worker()` using the connected socket (and
-+	 * without the usual need for fork() or threads).
-+	 *
-+	 * The magic here is made possible because `cld_argv` is static
-+	 * and handle() (called by service_loop()) knows about it.
-+	 */
-+	strvec_push(&cld_argv, argv[0]);
-+	strvec_push(&cld_argv, "--worker");
-+	for (i = 1; i < argc; ++i)
-+		strvec_push(&cld_argv, argv[i]);
-+
-+	/*
-+	 * Setup primary instance to listen for connections.
-+	 */
-+	return serve(&listen_addr, listen_port);
-+}
+ static enum worker_result worker(void)
+ {
+-	const char *response = "HTTP/1.1 501 Not Implemented\r\n";
+ 	char *client_addr = getenv("REMOTE_ADDR");
+ 	char *client_port = getenv("REMOTE_PORT");
+ 	enum worker_result wr = WR_OK;
+@@ -110,11 +160,8 @@ static enum worker_result worker(void)
+ 	set_keep_alive(0);
+ 
+ 	while (1) {
+-		if (write_in_full(1, response, strlen(response)) < 0) {
+-			logerror("unable to write response");
+-			wr = WR_IO_ERROR;
+-		}
+-
++		wr = send_http_error(1, 501, "Not Implemented", -1, NULL,
++			WR_OK | WR_HANGUP);
+ 		if (wr & WR_STOP_THE_MUSIC)
+ 			break;
+ 	}
 -- 
 gitgitgadget
 
