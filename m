@@ -2,90 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FD4AC4332F
-	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 16:53:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4755EC433FE
+	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 17:21:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231150AbiKBQxD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 12:53:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55388 "EHLO
+        id S231236AbiKBRVh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 13:21:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229551AbiKBQxB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 12:53:01 -0400
-X-Greylist: delayed 181 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 02 Nov 2022 09:52:59 PDT
-Received: from avasout-peh-002.plus.net (avasout-peh-002.plus.net [212.159.14.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B86F2FE
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 09:52:59 -0700 (PDT)
-Received: from [10.0.2.15] ([147.147.167.40])
-        by smtp with ESMTPA
-        id qGvzo4IvNoRCFqGw0oErdj; Wed, 02 Nov 2022 16:49:48 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1667407788; bh=4W5u95g2vD5KTdi+Qfb53w97OasOD8xMKQXGS8OhyW4=;
-        h=Date:Subject:To:References:From:In-Reply-To;
-        b=a6sCbTuphFaoux/omzXKBBi8g4ICy/QEcwPq7AtaCoHzvMzs5wipSITc+xRdZoOP9
-         Xn0lIigI9T1ssHejOI+gpcNCEhnSOXgDKDvR+Cl6ur/KvmGcsfE/zXkthpgj/ZZHQE
-         Vz33pLLfaUFj9siMXq7nikdDCibaNpuNtI+Pyowc659WEqmoEY7csqNBZHJzCMQGsu
-         pbVYdo3Wg1MfTn4GE1GErYz5Y2EcMiKxPXZ3XZIcSu0bmRC9gb+Xg1Wt6aj/NOb/AG
-         KEbRpmguRqoOb/i+iyK5jkEI9MO7Q1rGwKyZAO3CK1iTDx2YH+/HwMO1H90dv2+eR2
-         2EMLp0UcqAq0w==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=K8IxogaI c=1 sm=1 tr=0 ts=63629fac
- a=nyqnwr6A7Kzjd6EpZhiMcA==:117 a=nyqnwr6A7Kzjd6EpZhiMcA==:17
- a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=Oh2cFVv5AAAA:8 a=C8lbFo3dAAAA:20
- a=kulwNnLLeRbAQUJt3toA:9 a=QEXdDO2ut3YA:10 a=AjGcO6oz07-iQ99wixmX:22
- a=7KeoIwV6GZqOttXkcoxL:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <eee42f09-32ca-a254-d362-27be1045c558@ramsayjones.plus.com>
-Date:   Wed, 2 Nov 2022 16:49:47 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-Subject: Re: What's cooking in git.git (Oct 2022, #09; Mon, 31)
-To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+        with ESMTP id S231158AbiKBRVg (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 13:21:36 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 412DA248D2
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 10:21:35 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id z18so22534814edb.9
+        for <git@vger.kernel.org>; Wed, 02 Nov 2022 10:21:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=DxsvRJQP3/ZhiUCbQxdUQ5bFDEoz9NJMg1uFcwhirO4=;
+        b=T2gmoQTrHaEgkjqwJYVh7pDOCikD4EZ65dHcX34sn/F4Kbi2g8AqBlRRvGnE3iSv++
+         EydFIrJP5Qvt35LWwM5khw9OxaPZ/4MaE9DHMzKoVZwifzeAk4G3e6wveLUERWbONUNb
+         I2KM0VI+Us1MBwHt8C9p6P/JLXNCuHZHw5mn7MUfAPSj1+5wkd036Bv8M83qfHoKrJT6
+         Anu9dQ9/g51n/iOIWoh8BgysjVRNLQP5up5cYSjwBEag261KjsFfypZUQJuWmkDhCGFt
+         pykXJb5Wz82KEeAEUQKon93ovp7EtiP9JF+RKwMTXIXr+Rsc2gbJ+FjY21W2eRhxIY67
+         ekNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DxsvRJQP3/ZhiUCbQxdUQ5bFDEoz9NJMg1uFcwhirO4=;
+        b=e1N/T3jBj6zYJ3ztKLhVNoY7D4VjNSgA5/70QMdtQXVqtdvvDzflUxddP9pa86Mbg5
+         FQRUcP3gn4cs8vcaU3XXNXMu62ABldWk4ict+iOukGiBjJ7kkdMjz2uzEWNn9mguIled
+         qkd/9J/e2+UBVlYVNtFUWLeO8WYXFaXbFKPWIsNxAkAjBVgqb1MSpnsx23kxy9W0fWB9
+         wwhHpXpB2kDYDm1zDrWbY/BgqXDavX6W/SG/bM9aNAGBBOCeEE6FZ60GnRjMGdqo8OMa
+         zY2RK19AN8TrxlebJCnSVrOpjgpLCKT6nhKeSVmV3RGrDsO3E03WXPpkH7YjvKLHMci2
+         fVng==
+X-Gm-Message-State: ACrzQf15JMQXgXJ89o0a7ye/Vk2EVmV4Xv/MyleEZg5eBb0MJPvioEA4
+        c5Fm14aHzQqNXDTDzhKYOTnp7MqfCwv2SA==
+X-Google-Smtp-Source: AMsMyM7SxWjISCKhzaL8ofPucSaSWWNKsir/i0s+MBf+fNxcrGv7F2l7l6yAK9W/uzX06YwBc3YCPw==
+X-Received: by 2002:a05:6402:428d:b0:460:b26c:82a5 with SMTP id g13-20020a056402428d00b00460b26c82a5mr26554460edc.66.1667409693636;
+        Wed, 02 Nov 2022 10:21:33 -0700 (PDT)
+Received: from gmgdl (dhcp-077-248-183-071.chello.nl. [77.248.183.71])
+        by smtp.gmail.com with ESMTPSA id ce24-20020a170906b25800b007a7f9b6318asm5670421ejb.50.2022.11.02.10.21.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Nov 2022 10:21:33 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oqHQi-00BttF-1c;
+        Wed, 02 Nov 2022 18:21:32 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org
+Subject: Re: ab/misc-hook-submodule-run-command (was: What's cooking in
+ git.git (Oct 2022, #09; Mon, 31))
+Date:   Wed, 02 Nov 2022 18:13:51 +0100
 References: <Y19dnb2M+yObnftj@nand.local>
-Content-Language: en-GB
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <Y19dnb2M+yObnftj@nand.local>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfHVyUmslsp+LIAoxz9f63gWREJeDtf4NzgGM+asGH+xI98elEISyXX96Opgrl5uUgpAFHwHjXVKp6qIDhsB5OJZKcLsZHVQi26pvIB4R74JBQM+fX7zX
- QkbQFTnNMKI5nSpXa/7GlW4Sih/5mXVmbR7Ku5++9PvoV4Qq/AOHwGa/tB+KgcVM87vciJDtU6kDaj/3AzDzhThKzTT+dINnoS4=
+ <221101.86iljz5z7l.gmgdl@evledraar.gmail.com>
+ <Y2BlK5uhCy77Ot4Z@nand.local>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <Y2BlK5uhCy77Ot4Z@nand.local>
+Message-ID: <221102.86h6zh2rxf.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+On Mon, Oct 31 2022, Taylor Blau wrote:
 
-On 31/10/2022 05:31, Taylor Blau wrote:
-> What's cooking in git.git (Oct 2022, #09; Mon, 31)
-> --------------------------------------------------
-[snip]
-> 
-> The following mirrors are currently out-of-date while the usual
-> maintainer is offline.
-> 
-> 	git://git.kernel.org/pub/scm/git/git.git/
-> 	git://repo.or.cz/alt-git.git/
-> 	https://kernel.googlesource.com/pub/scm/git/git/
-> 	https://gitlab.com/git-vcs/git/
-> 
+> On Tue, Nov 01, 2022 at 12:46:57AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>>
+>> On Mon, Oct 31 2022, Taylor Blau wrote:
+>>
+>> > * ab/misc-hook-submodule-run-command (2022-10-31) 3 commits
+>> >  - run-command tests: test stdout of run_command_parallel()
+>> >  - submodule tests: reset "trace.out" between "grep" invocations
+>> >  - hook tests: fix redirection logic error in 96e7225b310
+>> >
+>> >  Various test updates.
+>> >
+>> >  Waiting for review.
+>> >  source: <cover-0.3-00000000000-20221029T025520Z-avarab@gmail.com>
+>>
+>> I think per
+>> https://lore.kernel.org/git/221031.86tu3k6u2d.gmgdl@evledraar.gmail.com/
+>> &
+>> https://lore.kernel.org/git/221031.86pme86tcg.gmgdl@evledraar.gmail.com/
+>> that this is ready to advance.
+>
+> Yeah, I agree. I was mistaken that GIT_TRACE truncated its output when
+> redirected to a file, but it appends. So, the series looks fine to me.
+>
+> I would still like to hear from Emily, but otherwise I don't have a
+> problem starting to merge this down.
 
-Ah, I wondered why it had gone quiet ... :)
+(Just looking at what I can & can't unblock)
 
-On Linux (same on 32-bit Linux and cygwin):
+In case that's a "let's hear from the author" (understandable) then this
+is entirely my work, even if it's her in the "author" header.
 
-    $ git config remote.origin.url
-    git://git.kernel.org/pub/scm/git/git.git
-    $ 
+Her last version of tha commit was[1], but this entire test is from
+my[2] re-roll of that topic[3].
 
-[yes, an old curmudgeon!]
-
-Well, I guess I should just enjoy the silence until
-Junio returns. :D
-
-ATB,
-Ramsay Jones
-
-
-
-
+1. https://lore.kernel.org/git/20210527000856.695702-8-emilyshaffer@google.=
+com/
+2. https://lore.kernel.org/git/patch-03.31-1ad4e69f7da-20210528T110515Z-ava=
+rab@gmail.com/
+3. https://lore.kernel.org/git/cover-00.31-00000000000-20210528T110515Z-ava=
+rab@gmail.com/
