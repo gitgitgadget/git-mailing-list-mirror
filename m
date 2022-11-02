@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D31F1C43217
-	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 22:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41BDCC433FE
+	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 22:10:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231441AbiKBWKE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 18:10:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56846 "EHLO
+        id S231546AbiKBWKI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 18:10:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231401AbiKBWJr (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231403AbiKBWJr (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 2 Nov 2022 18:09:47 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC75162E5
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 15:09:45 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id t1so26840wmi.4
-        for <git@vger.kernel.org>; Wed, 02 Nov 2022 15:09:45 -0700 (PDT)
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC50763DC
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 15:09:46 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id c3-20020a1c3503000000b003bd21e3dd7aso2172549wma.1
+        for <git@vger.kernel.org>; Wed, 02 Nov 2022 15:09:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=G+u+0cAjz1+TrMNJ0vQOg929e3nZQu9IrtC17YCqzI0=;
-        b=LvuY6CJOkC+PH3kztFVXDVR3jyaRLhEP11xMl1LxSneWIxoRVpwIsMeo5BC0hHx5bp
-         wSiFWPbA9RKK5Km/rSi4tkUU9cm5ilxPvUc61IMaYHY3pw609qzjVn+H9OZ2xtr6NlS/
-         APu2YX+Ucs2hZjOv3nld87dsaNKM6WLew5Xli4XptcgyPdoTn2bOfNiyLGQjmfxT9q8t
-         BYo36xdZJmf0w25usw38ib98IKh5h/wj91sk4El74Jful58lE2N77x7o7iGsS2EHphpM
-         YWMPgeyK0hIMlyvGN+uUdc2Q6NJL0PSdoeZux1UxGpQj9bVxhJ0AZw8ceLHtqdGNJsOC
-         wEMA==
+        bh=X79s6e7eaS3Rbf+G2seFln3AiezYjtW9yx3brlO1UYI=;
+        b=I5vQEKqqaNGTG5NuGzkWxH7tsyJkZOGHuiKg6j0jsz4c/PUqaCOsNZJLldI0Bv2Q/J
+         gG3siKqz51+it/Tr0cMELfzBKARALHn9vsF+SsSonTLveYl2juRg3GwU0MVq5t4tl1gm
+         tZ/8ILI2SLC3eDTxtIREc9k5RJ0K0//x4h7ak2heZ0tmaDW16/IqnnbU48BRdV+24xuE
+         XUpjOVcDRH9AHwxZ9ktDH3MSTUzKerRJ7NLXfg6mTJnzTJpG7tZ7ik3WjDTKrluCNsZP
+         3ZjAl2jy5qIlpmhPXl7qbEWiuXODl/6Qp3hOUr/eJM2ElJUGEOJw+yfMlH5jYqa/+YoZ
+         CLjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=G+u+0cAjz1+TrMNJ0vQOg929e3nZQu9IrtC17YCqzI0=;
-        b=cxTVsaU1VZtKWZ8GSIxRyEfFvvyMjClZcn3aZwpL+hsdLNwji7ZixtVgz3Q4z2egu7
-         ZOwag7nUqClz8qdG1wsp+s3bfMVdYOkhqBGIPLF934rD6uyCBO8baJG6KYkc0u6Gyl0p
-         paoPLCjpgFx0I0N/ICX/MzARpFJjcYZRv8C5yqd8aqtsqW9LIoFJx88mGod9lC4Vod24
-         eIKxLNEaBvU/1ZhZD6ErnJ/vGdHCrVQqWqP0qignQt2YY/7dfpKUiLWaOOHWU/nnO683
-         gqR3TTPdix04hmhhnAXqgglUwrH0E5U+swHUIofRJYd1sP9gP2EVBqj++UfD3bAH5KQB
-         C5fA==
-X-Gm-Message-State: ACrzQf12jvZHZx6QM6ZxHjX9r+HoczohCFNTKdtGse5/gOFiMbIHc3LH
-        fJanYJ98f0jHRumoNQGZdJe1WV9ZgV0=
-X-Google-Smtp-Source: AMsMyM4fD//nScuA2zfBOymArF1egI/STwZeNVgVligFN9Cv2Rlx/1X3l6J4KY4B59e+0pQobSIQ0Q==
-X-Received: by 2002:a05:600c:1c04:b0:3cf:5fd2:1f74 with SMTP id j4-20020a05600c1c0400b003cf5fd21f74mr19788245wms.45.1667426983846;
-        Wed, 02 Nov 2022 15:09:43 -0700 (PDT)
+        bh=X79s6e7eaS3Rbf+G2seFln3AiezYjtW9yx3brlO1UYI=;
+        b=JmVyjs1aWni/X6dd9kGRBs0fsgnvDN2kPeWRSiCXv/z0Yrb9X35OrMGaDS1rrEP3Br
+         LjfPWGe3ypvNASuB/oEfsAkO/f9jozncYmMdGG8OTSZmxbhFgSKE0GG5tNCR+e1JVD04
+         4mLzb0X8te5ZROTSOiOyAr9H3mb0jxfaWVVIZy/iYVlioafutYaS90v9iQYckh71Bf1Q
+         vO74nSGSw3EJprezZqpApyrc6PZgvhJLWk5MojpRyskvELZ6XpbW4fkKRYI/kJnXqe8I
+         VyLH0ipORrEO3MJCktWd6bP3tkSygM6Ndd9E/FKMjpKXOQvmLHyyM7ub0b2nP9v7QMek
+         QLzw==
+X-Gm-Message-State: ACrzQf3JPn6CLbpM40YLGRsi6IJuxzPbyZ7Kk93akc8qFVs0G5J9UZK3
+        qVuLev2Mi6w7aiAItGr7vjtXzNYHwQo=
+X-Google-Smtp-Source: AMsMyM6MWXWLG0FN/kF1PWLlTd4Xwt42YgVRhGYZSPeF5cppO3h5OFm+sJtT5Res2GSfplpNfu0GBw==
+X-Received: by 2002:a7b:c8d8:0:b0:3cf:691a:c4b3 with SMTP id f24-20020a7bc8d8000000b003cf691ac4b3mr15713593wml.120.1667426984973;
+        Wed, 02 Nov 2022 15:09:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l15-20020a5d480f000000b002366eb01e07sm13734936wrq.114.2022.11.02.15.09.43
+        by smtp.gmail.com with ESMTPSA id t16-20020adff610000000b0023538fb27c1sm13816024wrp.85.2022.11.02.15.09.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 15:09:43 -0700 (PDT)
-Message-Id: <192f09b9de4d1b93348a4d0cd3b35fd0ea9ba60d.1667426970.git.gitgitgadget@gmail.com>
+        Wed, 02 Nov 2022 15:09:44 -0700 (PDT)
+Message-Id: <b64d2f2c473c0b55f79930d0394b1fa8d81af7f3.1667426970.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
 References: <pull.1352.v2.git.1666372083.gitgitgadget@gmail.com>
         <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
 From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 02 Nov 2022 22:09:28 +0000
-Subject: [PATCH v3 10/11] test-http-server: add simple authentication
+Date:   Wed, 02 Nov 2022 22:09:29 +0000
+Subject: [PATCH v3 11/11] t5556: add HTTP authentication tests
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,240 +74,217 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-Add simple authentication to the test-http-server test helper.
-Authentication schemes and sets of valid tokens can be specified via
-command-line arguments. Incoming requests are compared against the set
-of valid schemes and tokens and only approved if a matching token is
-found, or if no auth was provided and anonymous auth is enabled.
+Add a series of tests to exercise the HTTP authentication header parsing
+and the interop with credential helpers. Credential helpers can respond
+to requests that contain WWW-Authenticate information with the ability
+to select the response Authenticate header scheme.
 
 Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 ---
- t/helper/test-http-server.c | 188 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 187 insertions(+), 1 deletion(-)
+ t/helper/test-credential-helper-replay.sh |  14 ++
+ t/t5556-http-auth.sh                      | 157 +++++++++++++++++++++-
+ 2 files changed, 170 insertions(+), 1 deletion(-)
+ create mode 100755 t/helper/test-credential-helper-replay.sh
 
-diff --git a/t/helper/test-http-server.c b/t/helper/test-http-server.c
-index 9f1d6b58067..9a458743d13 100644
---- a/t/helper/test-http-server.c
-+++ b/t/helper/test-http-server.c
-@@ -18,6 +18,8 @@ static const char test_http_auth_usage[] =
- "           [--timeout=<n>] [--init-timeout=<n>] [--max-connections=<n>]\n"
- "           [--reuseaddr] [--pid-file=<file>]\n"
- "           [--listen=<host_or_ipaddr>]* [--port=<n>]\n"
-+"           [--anonymous-allowed]\n"
-+"           [--auth=<scheme>[:<params>] [--auth-token=<scheme>:<token>]]*\n"
- ;
+diff --git a/t/helper/test-credential-helper-replay.sh b/t/helper/test-credential-helper-replay.sh
+new file mode 100755
+index 00000000000..03e5e63dad6
+--- /dev/null
++++ b/t/helper/test-credential-helper-replay.sh
+@@ -0,0 +1,14 @@
++cmd=$1
++teefile=$cmd-actual.cred
++catfile=$cmd-response.cred
++rm -f $teefile
++while read line;
++do
++	if test -z "$line"; then
++		break;
++	fi
++	echo "$line" >> $teefile
++done
++if test "$cmd" = "get"; then
++	cat $catfile
++fi
+diff --git a/t/t5556-http-auth.sh b/t/t5556-http-auth.sh
+index 78da151f122..43f1791a0fe 100755
+--- a/t/t5556-http-auth.sh
++++ b/t/t5556-http-auth.sh
+@@ -26,6 +26,8 @@ PID_FILE="$(pwd)"/pid-file.pid
+ SERVER_LOG="$(pwd)"/OUT.server.log
  
- /* Timeout, and initial timeout */
-@@ -358,10 +360,136 @@ static enum worker_result do__git(struct req *req, const char *user)
- 	return !!res;
+ PATH="$GIT_BUILD_DIR/t/helper/:$PATH" && export PATH
++CREDENTIAL_HELPER="$GIT_BUILD_DIR/t/helper/test-credential-helper-replay.sh" \
++	&& export CREDENTIAL_HELPER
+ 
+ test_expect_success 'setup repos' '
+ 	test_create_repo "$REPO_DIR" &&
+@@ -91,7 +93,8 @@ start_http_server () {
+ 
+ per_test_cleanup () {
+ 	stop_http_server &&
+-	rm -f OUT.*
++	rm -f OUT.* &&
++	rm -f *.cred
  }
  
-+enum auth_result {
-+	/* No auth module matches the request. */
-+	AUTH_UNKNOWN = 0,
-+
-+	/* Auth module denied the request. */
-+	AUTH_DENY = 1,
-+
-+	/* Auth module successfully validated the request. */
-+	AUTH_ALLOW = 2,
-+};
-+
-+struct auth_module {
-+	char *scheme;
-+	char *challenge_params;
-+	struct string_list *tokens;
-+};
-+
-+static int allow_anonymous;
-+static struct auth_module **auth_modules = NULL;
-+static size_t auth_modules_nr = 0;
-+static size_t auth_modules_alloc = 0;
-+
-+static struct auth_module *get_auth_module(const char *scheme)
-+{
-+	int i;
-+	struct auth_module *mod;
-+	for (i = 0; i < auth_modules_nr; i++) {
-+		mod = auth_modules[i];
-+		if (!strcasecmp(mod->scheme, scheme))
-+			return mod;
-+	}
-+
-+	return NULL;
-+}
-+
-+static void add_auth_module(struct auth_module *mod)
-+{
-+	ALLOC_GROW(auth_modules, auth_modules_nr + 1, auth_modules_alloc);
-+	auth_modules[auth_modules_nr++] = mod;
-+}
-+
-+static int is_authed(struct req *req, const char **user, enum worker_result *wr)
-+{
-+	enum auth_result result = AUTH_UNKNOWN;
-+	struct string_list hdrs = STRING_LIST_INIT_NODUP;
-+	struct auth_module *mod;
-+
-+	struct string_list_item *hdr;
-+	struct string_list_item *token;
-+	const char *v;
-+	struct strbuf **split = NULL;
-+	int i;
-+	char *challenge;
-+
-+	/*
-+	 * Check all auth modules and try to validate the request.
-+	 * The first module that matches a valid token approves the request.
-+	 * If no module is found, or if there is no valid token, then 401 error.
-+	 * Otherwise, only permit the request if anonymous auth is enabled.
-+	 */
-+	for_each_string_list_item(hdr, &req->header_list) {
-+		if (skip_iprefix(hdr->string, "Authorization: ", &v)) {
-+			split = strbuf_split_str(v, ' ', 2);
-+			if (!split[0] || !split[1]) continue;
-+
-+			/* trim trailing space ' ' */
-+			strbuf_setlen(split[0], split[0]->len - 1);
-+
-+			mod = get_auth_module(split[0]->buf);
-+			if (mod) {
-+				result = AUTH_DENY;
-+
-+				for_each_string_list_item(token, mod->tokens) {
-+					if (!strcmp(split[1]->buf, token->string)) {
-+						result = AUTH_ALLOW;
-+						break;
-+					}
-+				}
-+
-+				goto done;
-+			}
-+		}
-+	}
-+
-+done:
-+	switch (result) {
-+	case AUTH_ALLOW:
-+		trace2_printf("%s: auth '%s' ALLOW", TR2_CAT, mod->scheme);
-+		*user = "VALID_TEST_USER";
-+		*wr = WR_OK;
-+		break;
-+
-+	case AUTH_DENY:
-+		trace2_printf("%s: auth '%s' DENY", TR2_CAT, mod->scheme);
-+		/* fall-through */
-+
-+	case AUTH_UNKNOWN:
-+		if (result != AUTH_DENY && allow_anonymous)
-+			break;
-+		for (i = 0; i < auth_modules_nr; i++) {
-+			mod = auth_modules[i];
-+			if (mod->challenge_params)
-+				challenge = xstrfmt("WWW-Authenticate: %s %s",
-+						    mod->scheme,
-+						    mod->challenge_params);
-+			else
-+				challenge = xstrfmt("WWW-Authenticate: %s",
-+						    mod->scheme);
-+			string_list_append(&hdrs, challenge);
-+		}
-+		*wr = send_http_error(1, 401, "Unauthorized", -1, &hdrs, *wr);
-+	}
-+
-+	strbuf_list_free(split);
-+	string_list_clear(&hdrs, 0);
-+
-+	return result == AUTH_ALLOW ||
-+	      (result == AUTH_UNKNOWN && allow_anonymous);
-+}
-+
- static enum worker_result dispatch(struct req *req)
- {
-+	enum worker_result wr = WR_OK;
-+	const char *user = NULL;
-+
-+	if (!is_authed(req, &user, &wr))
-+		return wr;
-+
- 	if (is_git_request(req))
--		return do__git(req, NULL);
-+		return do__git(req, user);
+ test_expect_success 'http auth anonymous no challenge' '
+@@ -102,4 +105,156 @@ test_expect_success 'http auth anonymous no challenge' '
+ 	git ls-remote $ORIGIN_URL
+ '
  
- 	return send_http_error(1, 501, "Not Implemented", -1, NULL,
- 			       WR_OK | WR_HANGUP);
-@@ -854,6 +982,7 @@ int cmd_main(int argc, const char **argv)
- 	struct string_list listen_addr = STRING_LIST_INIT_NODUP;
- 	int worker_mode = 0;
- 	int i;
-+	struct auth_module *mod = NULL;
- 
- 	trace2_cmd_name("test-http-server");
- 	setup_git_directory_gently(NULL);
-@@ -906,6 +1035,63 @@ int cmd_main(int argc, const char **argv)
- 			pid_file = v;
- 			continue;
- 		}
-+		if (skip_prefix(arg, "--allow-anonymous", &v)) {
-+			allow_anonymous = 1;
-+			continue;
-+		}
-+		if (skip_prefix(arg, "--auth=", &v)) {
-+			struct strbuf **p = strbuf_split_str(v, ':', 2);
++test_expect_success 'http auth www-auth headers to credential helper bearer valid' '
++	test_when_finished "per_test_cleanup" &&
++	start_http_server \
++		--auth=bearer:authority=\"id.example.com\"\ q=1\ p=0 \
++		--auth=basic:realm=\"example.com\" \
++		--auth-token=bearer:secret-token &&
 +
-+			if (!p[0]) {
-+				error("invalid argument '%s'", v);
-+				usage(test_http_auth_usage);
-+			}
++	cat >get-expected.cred <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	wwwauth[]=bearer authority="id.example.com" q=1 p=0
++	wwwauth[]=basic realm="example.com"
++	EOF
 +
-+			/* trim trailing ':' */
-+			if (p[1])
-+				strbuf_setlen(p[0], p[0]->len - 1);
++	cat >store-expected.cred <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=secret-token
++	authtype=bearer
++	EOF
 +
-+			if (get_auth_module(p[0]->buf)) {
-+				error("duplicate auth scheme '%s'\n", p[0]->buf);
-+				usage(test_http_auth_usage);
-+			}
++	cat >get-response.cred <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=secret-token
++	authtype=bearer
++	EOF
 +
-+			mod = xmalloc(sizeof(struct auth_module));
-+			mod->scheme = xstrdup(p[0]->buf);
-+			mod->challenge_params = p[1] ? xstrdup(p[1]->buf) : NULL;
-+			CALLOC_ARRAY(mod->tokens, 1);
-+			string_list_init_dup(mod->tokens);
++	git -c credential.helper="$CREDENTIAL_HELPER" ls-remote $ORIGIN_URL &&
 +
-+			add_auth_module(mod);
++	test_cmp get-expected.cred get-actual.cred &&
++	test_cmp store-expected.cred store-actual.cred
++'
 +
-+			strbuf_list_free(p);
-+			continue;
-+		}
-+		if (skip_prefix(arg, "--auth-token=", &v)) {
-+			struct strbuf **p = strbuf_split_str(v, ':', 2);
-+			if (!p[0]) {
-+				error("invalid argument '%s'", v);
-+				usage(test_http_auth_usage);
-+			}
++test_expect_success 'http auth www-auth headers to credential helper basic valid' '
++	test_when_finished "per_test_cleanup" &&
++	# base64("alice:secret-passwd")
++	USERPASS64=YWxpY2U6c2VjcmV0LXBhc3N3ZA== &&
++	export USERPASS64 &&
 +
-+			if (!p[1]) {
-+				error("missing token value '%s'\n", v);
-+				usage(test_http_auth_usage);
-+			}
++	start_http_server \
++		--auth=bearer:authority=\"id.example.com\"\ q=1\ p=0 \
++		--auth=basic:realm=\"example.com\" \
++		--auth-token=basic:$USERPASS64 &&
 +
-+			/* trim trailing ':' */
-+			strbuf_setlen(p[0], p[0]->len - 1);
++	cat >get-expected.cred <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	wwwauth[]=bearer authority="id.example.com" q=1 p=0
++	wwwauth[]=basic realm="example.com"
++	EOF
 +
-+			mod = get_auth_module(p[0]->buf);
-+			if (!mod) {
-+				error("auth scheme not defined '%s'\n", p[0]->buf);
-+				usage(test_http_auth_usage);
-+			}
++	cat >store-expected.cred <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=secret-passwd
++	authtype=basic
++	EOF
 +
-+			string_list_append(mod->tokens, p[1]->buf);
-+			strbuf_list_free(p);
-+			continue;
-+		}
- 
- 		fprintf(stderr, "error: unknown argument '%s'\n", arg);
- 		usage(test_http_auth_usage);
++	cat >get-response.cred <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=secret-passwd
++	authtype=basic
++	EOF
++
++	git -c credential.helper="$CREDENTIAL_HELPER" ls-remote $ORIGIN_URL &&
++
++	test_cmp get-expected.cred get-actual.cred &&
++	test_cmp store-expected.cred store-actual.cred
++'
++
++test_expect_success 'http auth www-auth headers to credential helper custom scheme' '
++	test_when_finished "per_test_cleanup" &&
++	start_http_server \
++		--auth=foobar:alg=test\ widget=1 \
++		--auth=bearer:authority=\"id.example.com\"\ q=1\ p=0 \
++		--auth=basic:realm=\"example.com\" \
++		--auth-token=foobar:SECRET-FOOBAR-VALUE &&
++
++	cat >get-expected.cred <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	wwwauth[]=foobar alg=test widget=1
++	wwwauth[]=bearer authority="id.example.com" q=1 p=0
++	wwwauth[]=basic realm="example.com"
++	EOF
++
++	cat >store-expected.cred <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=SECRET-FOOBAR-VALUE
++	authtype=foobar
++	EOF
++
++	cat >get-response.cred <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=SECRET-FOOBAR-VALUE
++	authtype=foobar
++	EOF
++
++	git -c credential.helper="$CREDENTIAL_HELPER" ls-remote $ORIGIN_URL &&
++
++	test_cmp get-expected.cred get-actual.cred &&
++	test_cmp store-expected.cred store-actual.cred
++'
++
++test_expect_success 'http auth www-auth headers to credential helper invalid' '
++	test_when_finished "per_test_cleanup" &&
++	start_http_server \
++		--auth=bearer:authority=\"id.example.com\"\ q=1\ p=0 \
++		--auth=basic:realm=\"example.com\" \
++		--auth-token=bearer:secret-token &&
++
++	cat >get-expected.cred <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	wwwauth[]=bearer authority="id.example.com" q=1 p=0
++	wwwauth[]=basic realm="example.com"
++	EOF
++
++	cat >erase-expected.cred <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=invalid-token
++	authtype=bearer
++	wwwauth[]=bearer authority="id.example.com" q=1 p=0
++	wwwauth[]=basic realm="example.com"
++	EOF
++
++	cat >get-response.cred <<-EOF &&
++	protocol=http
++	host=$HOST_PORT
++	username=alice
++	password=invalid-token
++	authtype=bearer
++	EOF
++
++	test_must_fail git -c credential.helper="$CREDENTIAL_HELPER" ls-remote $ORIGIN_URL &&
++
++	test_cmp get-expected.cred get-actual.cred &&
++	test_cmp erase-expected.cred erase-actual.cred
++'
++
+ test_done
 -- 
 gitgitgadget
-
