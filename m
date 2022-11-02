@@ -2,196 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA378C4332F
-	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 07:54:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8389AC433FE
+	for <git@archiver.kernel.org>; Wed,  2 Nov 2022 07:55:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230481AbiKBHyf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 03:54:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36190 "EHLO
+        id S230232AbiKBHz0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 03:55:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230244AbiKBHyZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 03:54:25 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ADAA25C77
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 00:54:17 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id d26so43024557eje.10
-        for <git@vger.kernel.org>; Wed, 02 Nov 2022 00:54:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/CFS+sDKN0h2xdgGzHNpNjhXPY5fKNn5b/msmWClGWQ=;
-        b=DXfgSa++FLGmRc4pS6p3jxeL8acf6wsga31O3QMVsSY/sxFPE8IikU6I7P5xKxjrwN
-         cqLH/naNJrgTJACKjorAicfJ9SIDv8fdwfMLlhVTcD+4XijLKryAYen0ZibP4aqGvoFw
-         FE34P0+2QvXPAizknXKm01tTNNT7pIhNgv+QgROetqF6kWie9hx1xuIU0ntpDXVkpcsO
-         j/JoWfZIVq/Xa377feKy6BTi3kUMqiKt1uB4lITXk00TzMOEYpX5Ka8Re9zyejirD1SB
-         lSQNIY7czdJwd5up5oFiJ/8dn2JTswA+u2XydsnOXLeSITiIp+LFyyd99D0Rn2zUtesh
-         s4Ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/CFS+sDKN0h2xdgGzHNpNjhXPY5fKNn5b/msmWClGWQ=;
-        b=wXF4vlykYxMwUDEbktY6Q6dkITT6yZgPTIURbaX/Jc8pYbHrRIUvpqs1FiBIXx9ZXs
-         4p+69XAPQjvWR/+ay2WDFiscvNZhzuU47UvaheZdnXbtb/doQjpjIFPwkoqqRpv2INYa
-         JaExeGATupF0XSGm4eCAa3oNdegvTh8i567MV+L+UF93GeJ/Toj1C2XARxh6GxtViBmn
-         QJWJQIm+KLMpTLTjhdTzfuqJ0Kkd/lTS/QEXL/wmsaICO/xqkNZMvOwkLcox6TBZC2Oy
-         ZcpA0UgfZgjjYH6GnZOsKRG28C1obUet4RmqXIHEe+o9DNpSFTBgBVGNb1sSOObDldxU
-         bD4A==
-X-Gm-Message-State: ACrzQf35P9ErItrZBs0hvIJBc6KFd/pL7Jl/xrHrTh7dP0SG6DbVhcTX
-        Rn7cYSQmqUfopFnGkIbc+Z1KNkdbkkMWnQ==
-X-Google-Smtp-Source: AMsMyM5ytGkZQ3DD6nNABB22jE7N02jZLTn9rpxW2lFw655eyBrdXj//FhmvJNYmoWIiooY6AuCStA==
-X-Received: by 2002:a17:906:4783:b0:780:5be5:c81b with SMTP id cw3-20020a170906478300b007805be5c81bmr22295005ejc.76.1667375655255;
-        Wed, 02 Nov 2022 00:54:15 -0700 (PDT)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id ku11-20020a170907788b00b0073d84a321c8sm5045466ejc.166.2022.11.02.00.54.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 00:54:14 -0700 (PDT)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Glen Choo <chooglen@google.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 8/8] submodule--helper: use OPT_SUBCOMMAND() API
-Date:   Wed,  2 Nov 2022 08:54:05 +0100
-Message-Id: <patch-8.8-105853cd358-20221102T074148Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.38.0.1280.g8136eb6fab2
-In-Reply-To: <cover-0.8-00000000000-20221102T074148Z-avarab@gmail.com>
-References: <cover-0.8-00000000000-20221102T074148Z-avarab@gmail.com>
+        with ESMTP id S231145AbiKBHzD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 03:55:03 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B07027B21
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 00:54:51 -0700 (PDT)
+Received: (qmail 9052 invoked by uid 109); 2 Nov 2022 07:54:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 02 Nov 2022 07:54:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3101 invoked by uid 111); 2 Nov 2022 07:54:52 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 02 Nov 2022 03:54:52 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Wed, 2 Nov 2022 03:54:49 -0400
+From:   Jeff King <peff@peff.net>
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
+        gitster@pobox.com, me@ttaylorr.com, tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH 0/1] pack-bitmap.c: avoid exposing absolute paths
+Message-ID: <Y2IiSU1L+bJPUioV@coredump.intra.peff.net>
+References: <Y1rt+uOKwlP5PIrT@coredump.intra.peff.net>
+ <20221102053748.7366-1-tenglong.tl@alibaba-inc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221102053748.7366-1-tenglong.tl@alibaba-inc.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Have the cmd_submodule__helper() use the OPT_SUBCOMMAND() API
-introduced in fa83cc834da (parse-options: add support for parsing
-subcommands, 2022-08-19).
+On Wed, Nov 02, 2022 at 01:37:48PM +0800, Teng Long wrote:
 
-This is only a marginal reduction in line count, but once we start
-unifying this with a yet-to-be-added "builtin/submodule.c" it'll be
-much easier to reason about those changes, as they'll both use
-OPT_SUBCOMMAND().
+> Jeff King <peff@peff.net> writes：
+> 
+> > Now this might not be as bad as it seems:
+> >
+> >   - in the long run, we might open those idx files anyway, if we have to
+> >     access those packs. So it's really just overriding the lazy-open
+> >     behavior.
+> 
+> Sorry, can you explain it a bit more. When we might open idxes anyway? Do you
+> mean if the pack idx files will be opened sooner or later if a repo serves
+> git-upload-pack many times in the long run. So, the system-wide table or the
+> mmap space will not be wasted so much in practice.
 
-We don't need to worry about "argv[0]" being NULL in the die() because
-we'd have errored out in parse_options() as we're not using
-"PARSE_OPT_SUBCOMMAND_OPTIONAL".
+I mean that later in the process, if we need to find an object we may
+open the .idx file to look for it. So by opening them all up front, we
+_might_ just be doing work that would get done later.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/submodule--helper.c | 78 ++++++++++++++++++-------------------
- git.c                       |  2 +-
- 2 files changed, 39 insertions(+), 41 deletions(-)
+But it's not guaranteed. Imagine you have 10,000 small packs, and one
+big bitmapped pack. If you can serve the request from just the big pack,
+then you'd never need to open those other .idx files at all. However,
+the current code will open them anyway.
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 2012ad31d7f..0bc25dcf5ae 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -3350,47 +3350,45 @@ static int module_add(int argc, const char **argv, const char *prefix)
- 	return ret;
- }
+I care less about mmap space, and more that it's work (syscalls, and
+examining the contents of the idx) to open each one. It's probably not
+even measurable unless you have a ton of packs, though.
+
+> > So it may not be worth worrying about. It does seem like it would be
+> > easy to reorder open_pack_bitmap_1() to look for a bitmap file first and
+> > only open the idx if it finds something.
+> 
+> I think it may be worthy if we have lots of packs and the bitmap is refer to
+> an older one, but I didn't make the test. At least, the scenario is common, I
+> agree with that, so maybe we could shuffle the sort order in "open_pack_bitmap()".
+
+I don't mean the order in which we look at packs. I mean the order of
+operations in open_pack_bitmap_1(), something like:
+
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index 440407f1be..1df2f6c8b6 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -411,9 +411,6 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
+ 	struct stat st;
+ 	char *bitmap_name;
  
--#define SUPPORT_SUPER_PREFIX (1<<0)
+-	if (open_pack_index(packfile))
+-		return -1;
 -
--struct cmd_struct {
--	const char *cmd;
--	int (*fn)(int, const char **, const char *);
--	unsigned option;
--};
--
--static struct cmd_struct commands[] = {
--	{"clone", module_clone, SUPPORT_SUPER_PREFIX},
--	{"add", module_add, 0},
--	{"update", module_update, SUPPORT_SUPER_PREFIX},
--	{"foreach", module_foreach, SUPPORT_SUPER_PREFIX},
--	{"init", module_init, 0},
--	{"status", module_status, SUPPORT_SUPER_PREFIX},
--	{"sync", module_sync, SUPPORT_SUPER_PREFIX},
--	{"deinit", module_deinit, 0},
--	{"summary", module_summary, 0},
--	{"push-check", push_check, 0},
--	{"absorbgitdirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
--	{"set-url", module_set_url, 0},
--	{"set-branch", module_set_branch, 0},
--	{"create-branch", module_create_branch, 0},
--};
--
- int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
- {
--	int i;
--	if (argc < 2 || !strcmp(argv[1], "-h"))
--		usage("git submodule--helper <command>");
--
--	for (i = 0; i < ARRAY_SIZE(commands); i++) {
--		if (!strcmp(argv[1], commands[i].cmd)) {
--			if (get_super_prefix() &&
--			    !(commands[i].option & SUPPORT_SUPER_PREFIX))
--				die(_("%s doesn't support --super-prefix"),
--				    commands[i].cmd);
--			return commands[i].fn(argc - 1, argv + 1, prefix);
--		}
--	}
-+	const char *cmd = argv[0];
-+	const char *subcmd;
-+	parse_opt_subcommand_fn *fn = NULL;
-+	const char *const usage[] = {
-+		N_("git submodule--helper <command>"),
-+		NULL
-+	};
-+	struct option options[] = {
-+		OPT_SUBCOMMAND("clone", &fn, module_clone),
-+		OPT_SUBCOMMAND("add", &fn, module_add),
-+		OPT_SUBCOMMAND("update", &fn, module_update),
-+		OPT_SUBCOMMAND("foreach", &fn, module_foreach),
-+		OPT_SUBCOMMAND("init", &fn, module_init),
-+		OPT_SUBCOMMAND("status", &fn, module_status),
-+		OPT_SUBCOMMAND("sync", &fn, module_sync),
-+		OPT_SUBCOMMAND("deinit", &fn, module_deinit),
-+		OPT_SUBCOMMAND("summary", &fn, module_summary),
-+		OPT_SUBCOMMAND("push-check", &fn, push_check),
-+		OPT_SUBCOMMAND("absorbgitdirs", &fn, absorb_git_dirs),
-+		OPT_SUBCOMMAND("set-url", &fn, module_set_url),
-+		OPT_SUBCOMMAND("set-branch", &fn, module_set_branch),
-+		OPT_SUBCOMMAND("create-branch", &fn, module_create_branch),
-+		OPT_END()
-+	};
-+	argc = parse_options(argc, argv, prefix, options, usage, 0);
-+	subcmd = argv[0];
+ 	bitmap_name = pack_bitmap_filename(packfile);
+ 	fd = git_open(bitmap_name);
+ 
+@@ -438,6 +435,10 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
+ 		return -1;
+ 	}
+ 
++	/* now we know we have a plausible bitmap; make sure the idx is OK, too */
++	if (open_pack_index(packfile))
++		return -1;
 +
-+	if (strcmp(subcmd, "clone") && strcmp(subcmd, "update") &&
-+	    strcmp(subcmd, "foreach") && strcmp(subcmd, "status") &&
-+	    strcmp(subcmd, "sync") && strcmp(subcmd, "absorbgitdirs") &&
-+	    get_super_prefix())
-+		/*
-+		 * xstrfmt() rather than "%s %s" to keep the translated
-+		 * string identical to git.c's.
-+		 */
-+		die(_("%s doesn't support --super-prefix"),
-+		    xstrfmt("'%s %s'", cmd, subcmd));
- 
--	die(_("'%s' is not a valid submodule--helper "
--	      "subcommand"), argv[1]);
-+	return fn(argc, argv, prefix);
- }
-diff --git a/git.c b/git.c
-index ee7758dcb0e..fb69e605912 100644
---- a/git.c
-+++ b/git.c
-@@ -610,7 +610,7 @@ static struct cmd_struct commands[] = {
- 	{ "stash", cmd_stash, RUN_SETUP | NEED_WORK_TREE },
- 	{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
- 	{ "stripspace", cmd_stripspace },
--	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP | SUPPORT_SUPER_PREFIX | NO_PARSEOPT },
-+	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP | SUPPORT_SUPER_PREFIX },
- 	{ "switch", cmd_switch, RUN_SETUP | NEED_WORK_TREE },
- 	{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
- 	{ "tag", cmd_tag, RUN_SETUP | DELAY_PAGER_CONFIG },
--- 
-2.38.0.1280.g8136eb6fab2
+ 	if (!is_pack_valid(packfile)) {
+ 		close(fd);
+ 		return -1;
 
+But we can further observe that the first thing is_pack_valid() will do
+is open the idx file. :) So we can really just drop this line entirely,
+I'd think.
+
+BTW, another oddity I noticed in this function. We check:
+
+   if (bitmap_git->pack || bitmap_git->midx) {
+	   /* ignore extra bitmap file; we can only handle one */
+	   ...
+   }
+
+but it's impossible for bitmap_git->midx to be set here. If we opened
+the midx bitmap, we'll skip calling open_pack_bitmap() entirely.
+
+-Peff
