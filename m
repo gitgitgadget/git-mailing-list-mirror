@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3289C4332F
-	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 16:43:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 173BAC4332F
+	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 16:43:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232496AbiKCQnQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Nov 2022 12:43:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40222 "EHLO
+        id S232509AbiKCQnS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Nov 2022 12:43:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232201AbiKCQkn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2022 12:40:43 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E228821B5
-        for <git@vger.kernel.org>; Thu,  3 Nov 2022 09:38:21 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id a67so3866203edf.12
-        for <git@vger.kernel.org>; Thu, 03 Nov 2022 09:38:21 -0700 (PDT)
+        with ESMTP id S232157AbiKCQkk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2022 12:40:40 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E5A21CFFC
+        for <git@vger.kernel.org>; Thu,  3 Nov 2022 09:38:18 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id f5so6818164ejc.5
+        for <git@vger.kernel.org>; Thu, 03 Nov 2022 09:38:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rAVLOwCBtzJOqIfrff4zvty1t/pH+V3DoeHIWhXCOQY=;
-        b=IT6WyEO1TzjMaN8em6Gh/AwVjHpHLOj+BtT16B530IcKxveR5VVVxdeAMYSbp+v1sY
-         7N/JDR7YC5lx4xQsj3uenaRTp84Gcu7jHUcihDsmc3jiWhoJTEVynHn82n581VPeMKMX
-         +7a8qLQJ+AG1uKeBHshHm9vcAan6zNoDiRbM0g61P9tC3jPOEhJyg6rz9aIYO32iarOa
-         CuCmao/HCwF6cgZOaObFN+6vM53l4jiU/T3Qc6xOL24h77XKmYMTweg91ngtGbE2Rkbu
-         W9DbMze4xB+SPByE1Sd6+IsMFL+1V7o5nKd6jO+GCyqnFEFPHxv4c8iJg74PVllOZe7+
-         1bKA==
+        bh=XiFs/z4Z7wyI5gt4mCxTJ6XDUNqyjEmZLGsHGSWN1ac=;
+        b=RkV1Ob/mGuW+3pg5NYd0lb9aQkFi4e15jLZmKvCNK+/jsSzA6db7ik12tm8hHUSy3A
+         /g8nZki+8D7zTPr6XwKzvcdRscWtEh6Jxj1wCZsjEpVyNdVsN7GiW5LWUt3VJ3IO/TnH
+         gYEyz0xEuLudwbHhK7CizZQj6H9YkQy7ObTKuCjo0xMJo4mODOlazsj+o7gjChFWuL6x
+         /J93GBy8vMAuhRzM3NptKjvlhxuwUfnqHv8sgrMvC//o0e48htdQFM6ss5Oc3n4k2n0m
+         Y9JyTlFOS/5BSF32vIioS2RD4CYJsv6usGkHWk+6P69Ys9E43rh1zuRWxwCo51bAym3F
+         tvBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rAVLOwCBtzJOqIfrff4zvty1t/pH+V3DoeHIWhXCOQY=;
-        b=zNafl/DpDzBZeSGJB1U+xv4sTL3J/ci1brSlDWWyxK4JwUmsNcTsgwSRpGT7R3FPd+
-         vebVUBmmiqlC6rjXN1I+mGOqmhElAEaeef8uPLyjL706ldw3Bxn+2+lWOqokh32dzty8
-         S6v2WyiOUvoaHad2JodEKPUpGaS4BCdM/a5ae15fp1SpXXQ/P2M1JU+9fgGLH6ze3PXn
-         5MlqVGL899iEQ3q2YMfZFQRnl0Xuyc53XZAXPGVcl9GQcBFEn4u0BYR0nCpeO3RrwnqW
-         ovFoA+qSLzdFLwrLusn6u6Hyan8r/14ERnbxBUAfBl3e7voL/IToyxQMin+0SvhiWArE
-         9e5Q==
-X-Gm-Message-State: ACrzQf21L3y1e4+D4bJp4bJC2xfUaSKPzChj5RNDaRM7A7bsJaKlBaPs
-        /fxSHpOKoQWkAPBOdqoBQ2MTNF/u546mPA==
-X-Google-Smtp-Source: AMsMyM6Cq4PWwVUFcfF4ZEl4aEneuZ3mZlsCvRDkZ86px3Qjn61xOSLNa799kkV/yezpSHH+YgDxlQ==
-X-Received: by 2002:a05:6402:5244:b0:461:d97e:5271 with SMTP id t4-20020a056402524400b00461d97e5271mr31910568edd.227.1667493500186;
-        Thu, 03 Nov 2022 09:38:20 -0700 (PDT)
+        bh=XiFs/z4Z7wyI5gt4mCxTJ6XDUNqyjEmZLGsHGSWN1ac=;
+        b=5Klvty6xJv7YrrrvW5lIeHswMGHOeA9rRe8DKXJZn71NGFjScXznCaYHIqqOc5/S9I
+         Yf7iHlLdTmghvjzP9gqRIyoMykNaaD4qX1TWWM5QumwdrffjLh72LkEyLiLx9ivd0z7u
+         NiXxohyjn7SmnIL2mucVOzvFJjYPbOqC4P88wHeAY5+9dOOY1SQKbobRRZYjjWw1fUaa
+         1l28MpuUd07AUf75MspGnQfcs9jjjmIKptiQ97EsOhc/oG7ZUDtocqmSV1ic7eqAq/WB
+         ftrkFJqYswcQgwXIwn1F3RHMw+A7+zfuhsFhnT3ZS3hUBTex7qXzE986UY8QFiRe7WVQ
+         RRjQ==
+X-Gm-Message-State: ACrzQf2II9x6+Ot4AqN5B83QRPeGm4zVnMN5GDGNcp5yHVS5QoE4oAHk
+        pnJHRNffxPVxC+dmzO+jtJ2JvsGAQuMiQg==
+X-Google-Smtp-Source: AMsMyM4Z7CQNIucKL9XsuiXaGcZ3Zj3YQNO9AYh+s0Mof1ySfDOSOeiLGIhqpRxeLUdQqO1yVBKHZA==
+X-Received: by 2002:a17:906:5dae:b0:78e:3109:36d1 with SMTP id n14-20020a1709065dae00b0078e310936d1mr30291890ejv.470.1667493496583;
+        Thu, 03 Nov 2022 09:38:16 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id hw20-20020a170907a0d400b0078d38cda2b1sm666188ejc.202.2022.11.03.09.38.19
+        by smtp.gmail.com with ESMTPSA id hw20-20020a170907a0d400b0078d38cda2b1sm666188ejc.202.2022.11.03.09.38.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Nov 2022 09:38:19 -0700 (PDT)
+        Thu, 03 Nov 2022 09:38:15 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <ericsunshine@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 14/14] CI: add a "linux-cmake-test" to run cmake & ctest on linux
-Date:   Thu,  3 Nov 2022 17:38:04 +0100
-Message-Id: <patch-v4-14.14-277028678c8-20221103T160255Z-avarab@gmail.com>
+Subject: [PATCH v4 10/14] cmake: support GIT_TEST_OPTS, abstract away WIN32 defaults
+Date:   Thu,  3 Nov 2022 17:38:00 +0100
+Message-Id: <patch-v4-10.14-3ea4a61698e-20221103T160255Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1451.g86b35f4140a
 In-Reply-To: <cover-v4-00.14-00000000000-20221103T160255Z-avarab@gmail.com>
 References: <cover-v3-00.12-00000000000-20221101T225022Z-avarab@gmail.com> <cover-v4-00.14-00000000000-20221103T160255Z-avarab@gmail.com>
@@ -72,82 +72,131 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since [1] the "cmake" build method should work properly on Linux, but
-as seen in preceding commits there were various bugs in it, which are
-hopefully now all fixed.
+The rationale for adding "--no-bin-wrappers" and "--no-chain-lint" in
+2ea1d8b5563 (cmake: make it easier to diagnose regressions in CTest
+runs, 2022-10-18) was those options slowed down the tests considerably
+on Windows.
 
-To ensure that it doesn't break again let's add a "linux-cmake-ctest"
-target to build and test "cmake" on Linux, in addition to that we'll
-also run the tests with "ctest" instead of "make" or "prove", so we
-can assert that testing with that method works..
+But since f31b6244950 (Merge branch 'yw/cmake-updates', 2022-06-07)
+and with the preceding commits cmake and ctest are not
+Windows-specific anymore.
 
-This also stress tests running "cmake" (and "ctest") out of a build
-directory that isn't the top-level. The "vs-build" job uses "cmake"
-since [2], but clobbers the top-level "Makefile" and builds in the
-top-level directory.
+So let's set those same options by default on Windows, but do so with
+the set(... CACHE <type> <docstring>) facility. As noted in cmake's
+documentation[1] this integrates nicely with e.g. cmake-gui.
 
-That was the reason for why we didn't spot that various tests still
-required missing "mergetools/*" etc, which was fixed by using
-"$GIT_SOURCE_DIR" in a preceding commit.
+On *nix we don't set any custom options. The change in 2ea1d8b5563
+didn't discuss why Windows should have divergent defaults with "cmake"
+and "make", but such reasons presumably don't apply on *nix. I for one
+am happy with the same defaults as the tests have when running via the
+Makefile.
 
-Since the "ci/lib.sh" already creates and exports a
-GIT_TEST_OPTS="..." we'll pick that up in our CI, see the preceding
-commit. Because we pass the "--verbose-log -x
---github-workflow-markup" in the GitHub CI as a result the interaction
-with "handle_failed_tests" here works correctly. I.e. on failure we'll
-have saved "t/test-results/*.{exit,out,markup}" files relevant to the
-failing test(s).
+With the "message()" addition we'll emit this when running cmake:
 
-1. f31b6244950 (Merge branch 'yw/cmake-updates', 2022-06-07)
-2. 4c2c38e800f (ci: modification of main.yml to use cmake for vs-build
-   job, 2020-06-26)
+	Generating hook-list.h
+	-- Using user-selected test options: -vixd
+	-- Configuring done
+	-- Generating done
+	-- Build files have been written to: /home/avar/g/git/contrib/buildsystems/out
+
+Unfortunately cmake doesn't support a non-hacky way to pass variables
+to ctest without re-running cmake itself, so when re-running tests via
+cmake and wanting to change the test defaults we'll need:
+
+	GIT_TEST_OPTS=-i cmake -S contrib/buildsystems -B contrib/buildsystems/out &&
+	ctest --jobs=$(nproc) --test-dir contrib/buildsystems/out -R t0071 --verbose
+
+The "separate_arguments()" here will do the right thing for arguments
+that don't contain whitespace, so e.g. the path to --root="" can't
+have a space in it. There's supposedly a way to work around that with
+separate_arguments(), but it requires features newer than our required
+cmake version, so let's live with that edge case for now.
+
+1. https://cmake.org/cmake/help/latest/command/set.html#set-cache-entry
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- .github/workflows/main.yml |  3 +++
- ci/run-build-and-tests.sh  | 13 +++++++++++--
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ contrib/buildsystems/CMakeLists.txt | 50 +++++++++++++++++++++++++++--
+ 1 file changed, 48 insertions(+), 2 deletions(-)
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index bd6f75b8e0f..68c2e134646 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -238,6 +238,9 @@ jobs:
-             os: ubuntu
-             cc_package: gcc-8
-             pool: ubuntu-latest
-+          - jobname: linux-cmake-ctest
-+            cc: gcc
-+            pool: ubuntu-latest
-           - jobname: osx-clang
-             cc: clang
-             pool: macos-latest
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 8ebff425967..a3ae5ff3972 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -45,10 +45,19 @@ pedantic)
- 	;;
- esac
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index b9759be4f72..4a832404da6 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -32,7 +32,7 @@ To use this in Visual Studio:
  
--group Build make
-+mc=
-+if test "$jobname" = "linux-cmake-ctest"
-+then
-+	cb=contrib/buildsystems
-+	group CMake cmake -S "$cb" -B "$cb/out"
-+	mc="-C $cb/out"
-+fi
+ Open the worktree as a folder. Visual Studio 2019 and later will detect
+ the CMake configuration automatically and set everything up for you,
+-ready to build. You can then run the tests in `t/` via a regular Git Bash.
++ready to build. See "== Running the tests ==" below for running the tests.
+ 
+ Note: Visual Studio also has the option of opening `CMakeLists.txt`
+ directly; Using this option, Visual Studio will not find the source code,
+@@ -76,6 +76,37 @@ empty(default) :
+ 
+ NOTE: -DCMAKE_BUILD_TYPE is optional. For multi-config generators like Visual Studio
+ this option is ignored
 +
-+group Build make $mc
++== Running the tests ==
 +
- if test -n "$run_tests"
- then
--	group "Run tests" make test ||
-+	group "Run tests" make $mc test ||
- 	handle_failed_tests
- fi
- check_unignored_build_artifacts
++Once we've built in "contrib/buildsystems/out" the tests can be run at
++the top-level (note: not the generated "contrib/buildsystems/out/t/"
++drectory). If no top-level build is found (as created with the
++Makefile) the t/test-lib.sh will discover the git in
++"contrib/buildsystems/out" on e.g.:
++
++	(cd t && ./t0001-init.sh)
++	setup: had no ../git, but found & used cmake built git in ../contrib/buildsystems/out/git
++	[...]
++
++The tests can also be run with ctest, e.g. after building with "cmake"
++and "make" or "msbuild" run, from the top-level e.g.:
++
++	# "--test-dir" is new in cmake v3.20, so "(cd
++	# contrib/buildsystems/out && ctest ...)" on older versions.
++	ctest --test-dir contrib/buildsystems/out --jobs="$(nproc)"--output-on-failure
++
++Options can be passed by setting GIT_TEST_OPTIONS before invoking
++cmake. E.g. on a Linux system with systemd the tests can be sped up by
++using a ramdisk for the scratch files:
++
++	GIT_TEST_OPTS="--root=/dev/shm/$(id -u)/ctest" cmake -S contrib/buildsystems -B contrib/buildsystems/out
++	[...]
++	-- Using user-selected test options: --root=/dev/shm/<uid>/ctest
++
++Then running the tests with "ctest" (here with --jobs="$(nproc)"):
++
++	ctest --jobs=$(nproc) --test-dir contrib/buildsystems/out
+ ]]
+ cmake_minimum_required(VERSION 3.14)
+ 
+@@ -1119,10 +1150,25 @@ endif()
+ 
+ file(GLOB test_scipts "${CMAKE_SOURCE_DIR}/t/t[0-9]*.sh")
+ 
++if(DEFINED ENV{GIT_TEST_OPTS})
++	set(GIT_TEST_OPTS "$ENV{GIT_TEST_OPTS}"
++		CACHE STRING "test options, see t/README")
++	message(STATUS "Using user-selected test options: ${GIT_TEST_OPTS}")
++elseif(WIN32)
++	set(GIT_TEST_OPTS "--no-bin-wrappers --no-chain-lint -vx"
++		CACHE STRING "test options, see t/README")
++	message(STATUS "Using Windowns-specific default test options: ${GIT_TEST_OPTS}")
++else()
++	set(GIT_TEST_OPTS ""
++		CACHE STRING "test options, see t/README")
++	message(STATUS "No custom test options selected, set e.g. GIT_TEST_OPTS=\"-vixd\"")
++endif()
++separate_arguments(GIT_TEST_OPTS)
++
+ #test
+ foreach(tsh ${test_scipts})
+ 	add_test(NAME ${tsh}
+-		COMMAND ${SH_EXE} ${tsh} --no-bin-wrappers --no-chain-lint -vx
++		COMMAND ${SH_EXE} ${tsh} ${GIT_TEST_OPTS}
+ 		WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/t)
+ 	set_property(TEST ${tsh} APPEND PROPERTY ENVIRONMENT
+ 		GIT_TEST_BUILD_DIR=${CMAKE_BINARY_DIR})
 -- 
 2.38.0.1451.g86b35f4140a
 
