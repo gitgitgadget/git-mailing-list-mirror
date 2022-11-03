@@ -2,92 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AA4BC433FE
-	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 09:35:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB878C43217
+	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 09:35:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229871AbiKCJfE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Nov 2022 05:35:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50978 "EHLO
+        id S229994AbiKCJfm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Nov 2022 05:35:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229771AbiKCJfC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2022 05:35:02 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AE582AD3
-        for <git@vger.kernel.org>; Thu,  3 Nov 2022 02:35:01 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id o30so704106wms.2
-        for <git@vger.kernel.org>; Thu, 03 Nov 2022 02:35:01 -0700 (PDT)
+        with ESMTP id S229771AbiKCJfl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2022 05:35:41 -0400
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59A7C2AD4
+        for <git@vger.kernel.org>; Thu,  3 Nov 2022 02:35:40 -0700 (PDT)
+Received: by mail-pg1-x533.google.com with SMTP id 78so1154311pgb.13
+        for <git@vger.kernel.org>; Thu, 03 Nov 2022 02:35:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=fWu+iJysiIV1W9gT29rIRX8Wfcsi8Fnc0ZCdNy+a+Z4=;
-        b=iR7iqZ2iGQh6cpjQ/qWblRJMEmoCA+ybFqacHcchqfXey0eQsrNgpisftENuO5t8uY
-         EjAN1wAlGxkhT7Y34jcVo5OpZeHFhL1xGJETaw3DC/sy4tjTCZsLG2w/afxjrSTWIIOW
-         Xf8YltGfyCgcEbpJeSaQn5AC76Nf+fkXzTC++uemuuDcZqkbIZtjVRpDhlDqIUpp1/tP
-         yB7NRadCWOAw1RQu3V3tesBTyTxM5NyfErjVMk138FCZuGLD2Xvqz4HJ6w8ER6tk05b2
-         vaAx578URdb5zwunPCgGq7rO338LKWD09hGH5eWY5j18SPq2LOrYxd/WRqA5qo/FZPPk
-         YtAg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Rc0o4mTeM950thkGCwG3QRD4dABImXRVrpT0j5yiLpM=;
+        b=VRMhS+cKDCy4cQeJycTgah3ACwY+MTaBLZZheky2DtNpTq2ZoDOke38kI4FEmN+cfp
+         WZdTUJ0tuNS7vYTdlUCdKX4SPHRV0ycbGTTe4hT8LCuIEgkTcuwhFVpyQatvfjePgX2Z
+         DFV3Ds+Z7BbH9i/Y73QSJHlKpi+tLbMLA78o/lt7Jr08Ly1MNkh1caJRUHjfdpeHSUwv
+         5rxGyNUTd2EC5WIIYOXJ2DZkrHcv8QxkyJIjmcd2Ewb067V9umcMWGDmmRYAZ7TrxxzO
+         MsaQdEwunS0CNOTWo7RIfjeDgX8lyw0XW6RNmQ2Zvz9MHQdlMRSIi62/NgpuaXdo/JXd
+         /yoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fWu+iJysiIV1W9gT29rIRX8Wfcsi8Fnc0ZCdNy+a+Z4=;
-        b=Y1JSV2KQswvdeIXn3hhoLLOz538h6QIgiBD+XmS1KVRqjoU+HdWFBWfqixv/HUmJse
-         qqXXDejG6IMegwtAZl3OaaTuIC9nvxES1/l/SrlvwPnGVUNHfrRlrFrknsMuKniH925x
-         fwbIqDZc6gNqhDbYdy1B2OI1y2ln0+uHokvcehUH9C5Cq+cEbTxf71wFuluJBfVEqBtG
-         KPzEpB8EBQvEsmGOVSKl7QpZdqHQjtq9yFqQ5mvmnoE/V6qW/t7k9ziyAWKyu1h5duBx
-         7TjZk8CT22bTNUxZcu8y78hMcTFDIRrz7uJKrN4cxbpPse6urDtRNHmdK/koELX6QJqt
-         uQXQ==
-X-Gm-Message-State: ACrzQf1zXbPPhFY0duVQoQTnQjXg21aaG+oicl8sHTg1OHDiZrLytcyV
-        4rmKVRqmMVSj1/FpLD80jO8=
-X-Google-Smtp-Source: AMsMyM4U78+LrO1NtlGnmpfLw+R+aGLzC0NhRPBolp2UGYGH3HxQc6ZCjumLvpBkfIvioxfjJGX4pQ==
-X-Received: by 2002:a05:600c:4383:b0:3cf:6ab5:5c38 with SMTP id e3-20020a05600c438300b003cf6ab55c38mr16177267wmn.194.1667468100033;
-        Thu, 03 Nov 2022 02:35:00 -0700 (PDT)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id by13-20020a056000098d00b002383edcde09sm366308wrb.59.2022.11.03.02.34.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Nov 2022 02:34:59 -0700 (PDT)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <eca36d20-8469-0e37-3af6-8a7a976df1a2@dunelm.org.uk>
-Date:   Thu, 3 Nov 2022 09:34:58 +0000
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Rc0o4mTeM950thkGCwG3QRD4dABImXRVrpT0j5yiLpM=;
+        b=Rsv2REA65TKO5LGrviIaEuZ9cMZomUqzOuX0m+6mlvvUPzgtHohH2rGmArgw9MkGyI
+         sE+CHjM2IB99zR6MyZldbqDmR2HLdkETQiGldUjyKIGp86OAvaF3GJEwttsNYWurKAxN
+         5GKdh3GPyUT3wre1ELBaNox7nSXEmQYG/nu1G4/ArUeRE+Nibe40En+Sj9MOKCf9gubX
+         6fpyOE4/yKyQek1OMyIfE3AXpPgAXCbgr2mbgSnYYeVdk9ZMjfOAXZSU4fBi5llLdq0W
+         wWBb07Osy4tiW67e26aq4W1R65p7uJq7HuFc3+K5LXCYf1Hyy15R0yUcmqKHbVjrgqvS
+         PPLA==
+X-Gm-Message-State: ACrzQf2bpPRWOr6RkPSi0zN8+YA9Jbdx6td7LrHCooVr7Qo+uRfmBQnF
+        545I87FilwzH3ptP2TF6/SPJxsKeAdtX4Gtg
+X-Google-Smtp-Source: AMsMyM6Mva+99ID5N3S2kzDjFt8F4XwVk52lxSl4cgibj5HgXtHGCgzFyCfcvpW4YRUaI24/kl4Bmg==
+X-Received: by 2002:a05:6a00:1ad2:b0:56d:ec92:9825 with SMTP id f18-20020a056a001ad200b0056dec929825mr9849903pfv.25.1667468139779;
+        Thu, 03 Nov 2022 02:35:39 -0700 (PDT)
+Received: from localhost.localdomain ([47.246.101.50])
+        by smtp.gmail.com with ESMTPSA id t18-20020a170902d15200b00186f608c543sm72668plt.304.2022.11.03.02.35.36
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 03 Nov 2022 02:35:38 -0700 (PDT)
+From:   Teng Long <dyroneteng@gmail.com>
+X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
+To:     me@ttaylorr.com
+Cc:     avarab@gmail.com, derrickstolee@github.com, dyroneteng@gmail.com,
+        git@vger.kernel.org, gitster@pobox.com, moweng.xx@antgroup.com,
+        peff@peff.net, tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v2 1/1] pack-bitmap.c: avoid exposing absolute paths
+Date:   Thu,  3 Nov 2022 17:35:32 +0800
+Message-Id: <20221103093532.40511-1-tenglong.tl@alibaba-inc.com>
+X-Mailer: git-send-email 2.38.1.383.g374bfe65850
+In-Reply-To: <Y2MWeE2f/P1iXPCY@nand.local>
+References: <Y2MWeE2f/P1iXPCY@nand.local>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 00/11] cmake: document, fix on *nix, add CI
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Victoria Dye <vdye@github.com>,
-        Eric Sunshine <ericsunshine@gmail.com>
-References: <cover-0.9-00000000000-20221021T091013Z-avarab@gmail.com>
- <cover-v2-00.11-00000000000-20221027T032622Z-avarab@gmail.com>
-In-Reply-To: <cover-v2-00.11-00000000000-20221027T032622Z-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 27/10/2022 04:26, Ævar Arnfjörð Bjarmason wrote:
->    cmake: chmod +x the bin-wrappers/* & SCRIPT_{SH,PERL} & git-p4
-> 
-> I tried to use the suggested "write_script" function, but couldn't get
-> past cmake quoting issues. So the commit message is updated, but the
-> change is the same.
+Taylor Blau <me@ttaylorr.com> writes:
 
-That's a shame - what was the issue? My suggestion was cut and pasted 
-from 
-https://github.com/phillipwood/git/commit/0bb195b00c3a5ff27ec66a5966d0a9d91a187738 
-I don't remember having any problems when I wrote it.
+> OK... here we're getting rid of the user-visible warning, which makes
+> sense and is the point of this patch.
 
-Best Wishes
+Yes, my point is to avoid exposing some sensitive informations to end- users.
 
-Phillip
+> But we replace it with a trace2_data_string() that only includes the
+> basename? I'd think that the point of moving this warning into
+> trace2-land is that we could emit the full path without worrying about
+> who sees it, since trace2 data is typically not plumbed through to
+> end-users.
+
+I'm not sure if trace2 data will be given to end-users, at least as I understand
+it as you, it's not. If so, your opinion is very reasonable.
+
+So... maybe we could add a new configuration like "core.hideSensitive", and
+there are some supported values , "loose", "normal " and "strict":
+
+    loose: plumbing full information in trace2, even warning.
+    normal: plumbing full information in trace2, but not warning.
+    strict: plumbing part of information in trace2, but not warning
+
+But it looks like heavy, maybe not worthy... So, currently I will remove
+basename and print the pack with path if there are no new inputs here.
+
+Thanks.
+
+> If we get later bitmap-related information in the trace2 stream, we know
+> that we opened a bitmap. And at the moment we read a bitmap, there is
+> only one such bitmap in the repository.
+>
+> I suppose that this is race-proof in the sense that if the bitmaps
+> change after reading, we can still usefully debug the trace2 stream
+> after the fact.
+>
+> So even though my first reaction was that this was unnecessary, on
+> balance I do find it useful.
+
+Yes... I think it's useful as least for me to do some bitmap tests and
+I think print a bit more related information in trace2 data might be OK.
+
+> > -test_expect_success 'complains about multiple pack bitmaps' '
+> > +test_expect_success 'complains about multiple pack bitmaps when debugging by trace2' '
+> >  	rm -fr repo &&
+> >  	git init repo &&
+> >  	test_when_finished "rm -fr repo" &&
+> > @@ -420,8 +420,13 @@ test_expect_success 'complains about multiple pack bitmaps' '
+> >  		test_line_count = 2 packs &&
+> >  		test_line_count = 2 bitmaps &&
+> >
+> > -		git rev-list --use-bitmap-index HEAD 2>err &&
+> > -		grep "ignoring extra bitmap file" err
+> > +		ls -tr .git/objects/pack | grep -e "^pack-.*\.pack$" > sorted-packs &&
+> > +		ignored_pack="$(cat sorted-packs | awk 'NR==1{print}')" &&
+> > +		open_pack="$(cat sorted-packs | awk 'NR==2{print}')" &&
+>
+> Hmmph. This test only passes if 'ls -tr' gives us the packs in order
+> that they are read by readdir(), which doesn't seem all that portable to
+> me. At the very least, it is tightly coupled to the implementation of
+> open_pack_bitmap() and friends.
+
+Yes, because the _order_ matters here I think originally. May you explain a
+little more about _portable_ problem please?
+
+> Do we necessarily care about which .bitmap is read and which isn't? The
+> existing test doesn't look too closely, which I think is fine (though as
+> the author of that test, I might be biased ;-)).
+>
+> I would be equally happy to write:
+>
+> > +		GIT_TRACE2_PERF=$(pwd)/trace2.txt git rev-list --use-bitmap-index HEAD &&
+> > +		grep "opened bitmap" trace2.txt &&
+> > +		grep "ignoring extra bitmap" trace2.txt
+
+Orz. Actually, I wrote it on the same way, but I think it maybe not so
+sufficient for my patch. So...
+
+But I think you are right afterI look other test cases, will fix.
+
+Thanks.
