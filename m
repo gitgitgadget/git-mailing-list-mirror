@@ -2,94 +2,76 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 355A0C433FE
-	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 01:31:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C87EAC433FE
+	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 03:15:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230012AbiKCBbT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 21:31:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40098 "EHLO
+        id S230466AbiKCDPK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 23:15:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229485AbiKCBbR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 21:31:17 -0400
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7576313D02
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 18:31:17 -0700 (PDT)
-Received: by mail-io1-xd2d.google.com with SMTP id d123so248721iof.7
-        for <git@vger.kernel.org>; Wed, 02 Nov 2022 18:31:17 -0700 (PDT)
+        with ESMTP id S229826AbiKCDPH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 23:15:07 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C5BBFDC
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 20:15:06 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id d3so708486ljl.1
+        for <git@vger.kernel.org>; Wed, 02 Nov 2022 20:15:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qERhpbtL5thBTtVu/ou3DlGIZ18YFEJ6dCe/Cta65JM=;
-        b=POQWS1yT4mUR7TOzg3kPnwhC/MZKJtH+F9S/nu5ZIRPz4aKricS04xQzuvehVexlfQ
-         0edMAT7I7PF60yaat2trDaS3unWKsmecs7cMw9v5Jo/Sb1sogtgiBOGvje2d8S5VRX8d
-         gX1kRspseWRhtGUGpuKHja/aCXV/KPygqgkW0xbnKJ2me2QD/BOcbHslx3pn7Ec7b7wT
-         NBh/tWz/dmC5rS89kd5GAgkW2HfsbfMSkBoD7wz9T+RT209Z/VHBAe+UfjL2ctHPoGNs
-         j3J1Da8ka5X1Ba3IwJi0t5twHlUoC9aB0vR4EmyUpCwLfnl71jQlCZECJMID/NxWHeO5
-         fiFQ==
+        d=google.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=+ZxH6QeZLdXRhyq+0Rrhf5wLmnXasf6CusD1wxYYPMA=;
+        b=JnpExVHc7er5MPrSGzAlMNqKmuv4ve5ceaQKeTEGCW+RZIiN/QFgsDTKYZn/F5VKhw
+         7YB9izbNNZmlfwhBaaO5weH2a+YvtTEgxMtIt5vYJfr4mJaTdFx5XoC5vsciMZ8bl2R/
+         QSbdnYjsObxVrOjX3B8xl1MrENYv05p19t6oy6p1GD8YSAzE9LOJhwR7m4PPeeHF0BAj
+         3dKaU+faegWIVoQjalH6TROzBIo7hK9hl8+y+hKD9UzaCSkY4R4wkPnkyxqluMTuOi8S
+         qqjJDfuTXevCGXKzzg0iDiEg5djgLneb4ogF6/n0cw+1vISK0+FY41vPZW9xd5SpFyt9
+         ZUxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qERhpbtL5thBTtVu/ou3DlGIZ18YFEJ6dCe/Cta65JM=;
-        b=Zf3tfELlCVC7gw+7AjNcbQOGp3FoXEY0aYelAFvN0CtSBMl4Seq+SqP5p4BTJedcBJ
-         bwV0G30y8xBlH7oH7Hfr11/lA6APo1rBqcQtaCVC2fFz2lkStd8YQO8p0RcfFG+v6MRW
-         90o9gKr/6vIlQxsDjXevqw4SP0JmDUHcHbh9tQpm5xHakqkaRxBthlJKPbsYBzUBjxHf
-         oY8Xr9HXxSKlrKO4Tq7Pk5FBpRy7ZqTSHn62EThHs6bx+PzTXSmNvy7TaZev1RjCSRcE
-         ZOldIxGAWrwpwJxuv+FoArFdehdtmMu7O2CzO/qrDzP7ueDvx+pPam15cdoFUVIXZ0GD
-         aD+A==
-X-Gm-Message-State: ACrzQf2qUW6djyPYBAYxTGGXUPB5s5JOtkY9alsoBHSzLpaSpKbfzXgP
-        R8yv+ICTbBNQYB0pkRiHosot5hqQ8z9E9Tkn
-X-Google-Smtp-Source: AMsMyM67OxgAEtZE+ObrX/4/OIDZLo/IZBoTWVfXsj0c1q6FXIsLOHJVuYOuVNcqMW80GUzO/p1xRw==
-X-Received: by 2002:a02:cc88:0:b0:375:3f45:33ae with SMTP id s8-20020a02cc88000000b003753f4533aemr16863118jap.171.1667439076826;
-        Wed, 02 Nov 2022 18:31:16 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id f19-20020a02a113000000b003754033c6aesm5260041jag.155.2022.11.02.18.31.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 18:31:16 -0700 (PDT)
-Date:   Wed, 2 Nov 2022 21:31:15 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 2/2] t5551: be less strict about the number of
- credential warnings
-Message-ID: <Y2MZ46aE/P7jpabG@nand.local>
-References: <pull.1399.git.1667245638.gitgitgadget@gmail.com>
- <RFC-patch-1.1-0266485bc6c-20221031T204149Z-avarab@gmail.com>
- <Y2CFRJLFRXvGwFBC@coredump.intra.peff.net>
- <221101.86a65b5q9q.gmgdl@evledraar.gmail.com>
- <Y2GHjnuyuwGpY3II@nand.local>
- <Y2ItZWx+kBmTreGQ@coredump.intra.peff.net>
- <Y2I15UY/a7OAZUtm@coredump.intra.peff.net>
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+ZxH6QeZLdXRhyq+0Rrhf5wLmnXasf6CusD1wxYYPMA=;
+        b=RZXe5Xi0pxYs1mzO/2ou/1IOymoGVQSRltTSxJC1QGzKYO9eRoVjKto+SryWzq1GwO
+         U+HmX/jwnusjvlVn1cOvssae+erxuDODqjpha2NIwk4N87BgQQWoBelX3Yo5zQxGV+uw
+         dWiu9vLUfHNaMpmbAx3wRtnLhQH8aaOvrIFu2pdkU6ZgdWoEPMbSe2xgF8W7o4Rydjol
+         +qUp8Se+3qKxU5NH+OfSvf3ueCa69tKYhudbfpMUPRHcGplTGPcTlXnolmFBxCJM/xvj
+         j4tZcnJqrxdOvM5mggWeMCKAdQdV+3mqe9z0ClBW3aY98WDSQB7tN+LWbpcgNRXAViTC
+         wPMw==
+X-Gm-Message-State: ACrzQf3tMfc1B2B+YL5p/VcTwhfR7qktTltuasrFZ9BUqwbSzyT49UuY
+        soivLrW9W8+HM+Pu5PS1fhI1Y9L9EUlgmJ7/mpEBLniuuAyhFg==
+X-Google-Smtp-Source: AMsMyM7FMCLDb3UuOJquzAISoU+WWd72f8CTUUaj6nJNvO8RODCX73k1HDA0N7Q6EcwyRI29byizCzOwBTFRGlYtxZ8=
+X-Received: by 2002:a2e:544c:0:b0:277:5872:85b0 with SMTP id
+ y12-20020a2e544c000000b00277587285b0mr7247063ljd.162.1667445303853; Wed, 02
+ Nov 2022 20:15:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y2I15UY/a7OAZUtm@coredump.intra.peff.net>
+From:   Evan Benn <evanbenn@google.com>
+Date:   Thu, 3 Nov 2022 14:14:37 +1100
+Message-ID: <CAKz_xw2X+eapmASqG7V=RXehh7=LN24m+MJPn-wx80oZAZHBnQ@mail.gmail.com>
+Subject: bug: git format prints no final newline
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 02, 2022 at 05:18:29AM -0400, Jeff King wrote:
-> On Wed, Nov 02, 2022 at 04:42:13AM -0400, Jeff King wrote:
->
-> > As I said, I had tried to mostly leave patch 2 alone to avoid derailing
-> > Dscho's attempt to fix things. But somehow things got derailed anyway,
-> > so maybe we can just all agree on this patch and move on with our lives?
->
-> By the way, I think you (or somebody?) mentioned elsewhere in the thread
-> that it's possible the first patch fixes things by itself. I would also
-> be content to just apply the first one and see if CI improves.
->
-> Of course, when I just pushed all this out to CI, it flaked
-> independently on both osx (looks like racy p4 stuff) and fedora (network
-> dropout failed to set up the container). Sigh.
+This command omits the final newline:
 
-Dreams are free, eh?
+git log --format=format:"%H"
 
-Thanks,
-Taylor
+check with: `| tail | cat -A`
+
+This command doesn't, but there is an extra newline between each line of course:
+
+git log --format=format:"%H%n"
+
+This seems to be intentional in the code, a newline is printed before
+each line except the first:
+
+https://github.com/git/git/blob/master/log-tree.c#L664
+
+It seems more correct to print a newline after every line, but the
+code is very hairy so I am keen to get any feedback before attempting
+that.
+
+Thanks
