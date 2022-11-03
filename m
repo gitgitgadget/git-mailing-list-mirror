@@ -2,84 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C125AC433FE
-	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 15:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9FFEC433FE
+	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 15:26:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231419AbiKCPAx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Nov 2022 11:00:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43188 "EHLO
+        id S232172AbiKCP03 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Nov 2022 11:26:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231538AbiKCPAt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2022 11:00:49 -0400
-X-Greylist: delayed 599 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 03 Nov 2022 08:00:44 PDT
-Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [188.68.63.166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 261F95F70
-        for <git@vger.kernel.org>; Thu,  3 Nov 2022 08:00:43 -0700 (PDT)
-Received: from mors-relay-8202.netcup.net (localhost [127.0.0.1])
-        by mors-relay-8202.netcup.net (Postfix) with ESMTPS id 4N361L00WBz3tLx
-        for <git@vger.kernel.org>; Thu,  3 Nov 2022 15:42:46 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=rd10.de; s=key2;
-        t=1667486566; bh=1/4elYNo/09AUdP62fO1a4sg0lMmYAEFx4Qzo6KOdBQ=;
-        h=Date:To:From:Subject:From;
-        b=EIDgEiQYe/6HSwbjQnaEHo2plWVYNQFJ26Zt/PV3PJInCSM8T2X8ZXpEYMFfps79Y
-         fDPrk8kQ1fBLIutBPhyLC1fh5QpHKLM9VxSAF7oJzExhbhlphkf7pPz3fP3IVQD5S3
-         iooRJDn4MQIn2M6lG4284gaeaNzBxYAZXs9fg5DHe6Yi6y8Y1N2jUQK8I0FIiBb1WY
-         4ncbyOMVAkgJLfaf24uxXcOcs5J/hbaSLD8mdj9X0RQaUAySs2c262DV785YIv2U47
-         Z+ScMoeoHko1Di4kz3k4E6pWy5/aYj3PaiWXABmX/6m8aLooRBR1bRo4qB4T7nPH2p
-         VjeYHj2wOWU5w==
-Received: from policy02-mors.netcup.net (unknown [46.38.225.35])
-        by mors-relay-8202.netcup.net (Postfix) with ESMTPS id 4N361K6WQwz3tLv
-        for <git@vger.kernel.org>; Thu,  3 Nov 2022 15:42:45 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at policy02-mors.netcup.net
-Received: from mx2eb1.netcup.net (unknown [10.243.12.53])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by policy02-mors.netcup.net (Postfix) with ESMTPS id 4N361K3LdMz8sbs
-        for <git@vger.kernel.org>; Thu,  3 Nov 2022 15:42:45 +0100 (CET)
-Received: from [IPV6:2003:cf:cf0d:9b00:22b1:5275:edda:907f] (p200300cfcf0d9b0022b15275edda907f.dip0.t-ipconnect.de [IPv6:2003:cf:cf0d:9b00:22b1:5275:edda:907f])
-        by mx2eb1.netcup.net (Postfix) with ESMTPSA id CEC8B1400F7
-        for <git@vger.kernel.org>; Thu,  3 Nov 2022 15:42:44 +0100 (CET)
-Authentication-Results: mx2eb1;
-        spf=pass (sender IP is 2003:cf:cf0d:9b00:22b1:5275:edda:907f) smtp.mailfrom=rdiez-temp3@rd10.de smtp.helo=[IPV6:2003:cf:cf0d:9b00:22b1:5275:edda:907f]
-Received-SPF: pass (mx2eb1: connection is authenticated)
-Message-ID: <b200ecb4-3e01-9bf1-f27b-0beb05c11cb0@rd10.de>
-Date:   Thu, 3 Nov 2022 15:42:44 +0100
+        with ESMTP id S231404AbiKCP0Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2022 11:26:25 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E53CD5A
+        for <git@vger.kernel.org>; Thu,  3 Nov 2022 08:26:24 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id v3so1957855pgh.4
+        for <git@vger.kernel.org>; Thu, 03 Nov 2022 08:26:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=bIJK/vcGJ/CZBDOshZYjiWMnQAa38xIGct3dFGLxDFw=;
+        b=DRx3LZHsiEfar6kGU6LFY+t34N48s4ZY0Ux1yxXNJC4GU8WlJz9EhQM5rsAV1C3hZD
+         8y8HU304wiFPZ8ydGb38Njy/HKCOn5g38JdDtmBVsLWfklc6dR8+MHQhjrPMJ6CnHm6K
+         Dmg5S5DBHEtTHM6xu9MZne0VTWSieORaw0WbdzJROHhDRaPTjaoQmkplkocNBtaRtZ+l
+         q8ODwxwg/7eYi0maMnljzzIVK5s2qY+GpjH2gj1gbDgenTdWgJier0aeNFRWPei3zmu2
+         n/wgyfkU9Sk6NFDKAaq16C0XRsykcalRTrSmsKbdRMW/f/6O90ruuiE9jUNJfwru0Z18
+         UR9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bIJK/vcGJ/CZBDOshZYjiWMnQAa38xIGct3dFGLxDFw=;
+        b=MKoqSPQYEIhBbAly0Sbnkw3/cbbC8C05yGv0bB3ClLaxCdczRWfzwLUT3tG6BYr0JZ
+         nd3Ybfm3P7pIjFHktMWG7UWyQb4crbg5I+TXoLw7FJbSt8jUJF4VqDQ+kNmiGmC1sNSl
+         tdhw4CUZe/sfOJNa10aONj/SfKOcgfh070wBYeLUAFrhm2vFUwW46ciLtE+4/ykQ3MRX
+         RLhwgIueULHSphlP/ICwttp1vN0OI6Yh/mJeGePpwniWfcB105ERGjWaTcEr8SwYc191
+         B38uP/gVIRh84QGmb8MgFMpn3L/1oUZAuNsD8BWUHwcvdL6iI0KNCScJRQWsuhkdddJR
+         5SQw==
+X-Gm-Message-State: ACrzQf0akqfAZWY9Qn2de9AO2psOaQBqE4gE1HN6xywYi/vUa5Nz0LYF
+        ua3jMnT/7XIleitub6Z21WsTdMTOJUjIgRJRyO0=
+X-Google-Smtp-Source: AMsMyM7KWBHXJZQ39MAeZArDhKgRJzuqeJmypZU42EKoh7VC2hvEtKA50caeh7+2Kxl/AoWB3RZC7omvyTfsBHYcPaU=
+X-Received: by 2002:a65:53c6:0:b0:46f:cbcb:7402 with SMTP id
+ z6-20020a6553c6000000b0046fcbcb7402mr17447937pgr.366.1667489183484; Thu, 03
+ Nov 2022 08:26:23 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.2
-To:     git@vger.kernel.org
-Content-Language: en-GB
-From:   "R. Diez" <rdiez-temp3@rd10.de>
-Subject: git instaweb but not in daemon mode
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-PPP-Message-ID: <166748656503.20096.8506099660059245487@mx2eb1.netcup.net>
-X-PPP-Vhost: rd10.de
-X-Rspamd-Queue-Id: CEC8B1400F7
-X-Spamd-Result: default: False [-5.55 / 15.00];
-        BAYES_HAM(-5.45)[99.88%];
-        MIME_GOOD(-0.10)[text/plain];
-        FROM_EQ_ENVFROM(0.00)[];
-        MIME_TRACE(0.00)[0:+];
-        ASN(0.00)[asn:3320, ipnet:2003::/19, country:DE];
-        RCVD_COUNT_ZERO(0.00)[0];
-        RCPT_COUNT_ONE(0.00)[1];
-        TO_DN_NONE(0.00)[];
-        MID_RHS_MATCH_FROM(0.00)[];
-        FROM_HAS_DN(0.00)[];
-        TO_MATCH_ENVRCPT_ALL(0.00)[];
-        ARC_NA(0.00)[]
-X-Rspamd-Server: rspamd-worker-8404
-X-NC-CID: PsPee2j9ZjGzXLPBUgAUjqQk3jjBcL/AuU/QDOAy
+References: <CAFzd1+5F4zqQ1CNeY2xaaf0r__JmE4ECiBt5h5OdiJHbaE78VA@mail.gmail.com>
+ <16a8a331-f012-7dae-de1e-f03da95ecb6e@dunelm.org.uk>
+In-Reply-To: <16a8a331-f012-7dae-de1e-f03da95ecb6e@dunelm.org.uk>
+From:   "herr.kaste" <herr.kaste@gmail.com>
+Date:   Thu, 3 Nov 2022 16:25:57 +0100
+Message-ID: <CAFzd1+58MCXC9XZ+R7QFUdtw99KV2mHUHGgQUYvoa0USuYSLog@mail.gmail.com>
+Subject: Re: rebase -i --update-refs can lead to deletion of branches
+To:     phillip.wood@dunelm.org.uk
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all:
+I have the following reproduction
 
-It is very easy to launch "git instaweb" for temporary browsing and forget to shutdown the HTTP server.
+```
+git init &&
+git commit --allow-empty -m "Init" &&
+git commit --allow-empty -m "A" &&
+git checkout -b feature &&
+git commit --allow-empty -m "B" &&
+git commit --allow-empty -m "C" &&
+GIT_SEQUENCE_EDITOR="sed -i -e '/^update-ref/d'" git rebase
+--update-refs master^ --interactive
+```
 
-It would be nice to have some option so that "git instaweb" does not fork, but waits for the server to exit. You could then kill it with Ctrl+C on your console. This way, it is harder to forget that the server is running in the background, and it is more convenient to stop it.
+After that
 
-Regards,
-   rdiez
+```
+$ git branch -l
+* feature
+```
+
+and `master` is gone.  Is that reproduction/test-case sane, even? I
+*think* that's what I originally described.
+
+Regards
+Caspar Duregger
+
+
+Am Do., 3. Nov. 2022 um 10:32 Uhr schrieb Phillip Wood
+<phillip.wood123@gmail.com>:
+>
+> Hi Caspar
+>
+> On 20/10/2022 18:01, herr.kaste wrote:
+> > Hi,
+> >
+> > I have the following:
+> >
+> > While doing a
+> >
+> > `$ git rebase --interactive  --update-refs X`
+> >
+> > I *removed* the "update-ref" lines from the todo list.  The rebase runs
+> > as expected and prints e.g.
+> >
+> > ```
+> > Successfully rebased and updated refs/heads/test.
+> > Updated the following refs with --update-refs:
+> > refs/heads/master
+> > refs/heads/permissive-interactive-rebase
+> > refs/heads/variable-annotations-meta-block
+> > ```
+> >
+> > After that all refs have been removed/deleted.
+> >
+> > ```
+> > $ git branch  --list
+> > * test
+> > ```
+> >
+> > Now, I should just have not used `--update-refs` in the first place but anyway
+> > I decide late that I rather don't want to update "master" etc. and it should
+> > probably not delete the local refs.
+> >
+> > Actually, I so love the new feature that I switched it *on* by default, and just
+> > wanted to overwrite the behavior in the todo editor.
+>
+> Sorry for the slow reply, I'm afraid I still haven't found time to look
+> at this. As far as I can remember deleting the "update-ref" lines should
+> leave the ref unchanged. I've cc'd the author to see if they have any
+> insight into what is going on
+>
+> Best Wishes
+>
+> Phillip
+>
+>
+> > Regards
+> > Caspar Duregger
