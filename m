@@ -2,127 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 155CCC4332F
-	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 16:03:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A381C43217
+	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 16:42:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231672AbiKCQDm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Nov 2022 12:03:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59718 "EHLO
+        id S231728AbiKCQmg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Nov 2022 12:42:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231716AbiKCQCe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2022 12:02:34 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26A8D1D311
-        for <git@vger.kernel.org>; Thu,  3 Nov 2022 09:00:40 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id f5so6508502ejc.5
-        for <git@vger.kernel.org>; Thu, 03 Nov 2022 09:00:40 -0700 (PDT)
+        with ESMTP id S232088AbiKCQkj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2022 12:40:39 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51B82DC0
+        for <git@vger.kernel.org>; Thu,  3 Nov 2022 09:38:10 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id q9so6949336ejd.0
+        for <git@vger.kernel.org>; Thu, 03 Nov 2022 09:38:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=sBYY+wSq/xyUEJWMV6M2+EucmrU9v9VEGjOyVTPF5a8=;
-        b=WrFLv/vjiikpKBGNb6iBTSlcFHV0TtO6mz3QFqlItdALtPe0dJz2dNfkrSKViDjii6
-         PUP32Ctti6zVj/+5Vc880kxnPsisbdm5ykQIyrGxIJWjNFEHrIw2LWL/vJH9b4YsrkSD
-         43ZUgQtlk+2DZs4E8R4WcYJfdnYpjjeQqbY1Na8t5nirEzAiOMCOR+y6tPS8EWryx/q4
-         O8ZKwgaGbDiaTDWWYbVjGKJGMc09L3tkECbnzayKNqs8pDEHTmz7t95TGcTM0M7kxGAW
-         ZVP3IgDq3dL1YTzWD4DxmvbV3amjaIhvoGeFQ3CS83OWe/nt5v593/yrhUNkIY214OqT
-         EkZQ==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NF64uTo1eqtsOZs7T+Fet+viy/MkLGc/Inw/RZRunTo=;
+        b=Mb36/NsBQkDmHjquuBow4XB3kf15a2MYnw2rYx5QajYfLjHnZ5RT9QEgF210pTRGrr
+         4Y2Wa/ufIMWFTkse1uvZbPVp9NX+to9JVpsoqRFtBSIuTCpHr79dWk3d8QVF9FG95wGr
+         9tOjpTbUYmWpo4lEAgR52wsNdIGn4fAcLoJLF/BEW6jNulH8DDnvXGNPxcXYR6eRUbNV
+         2yIpgBZQgTMWr6SKQuT5u93bR34k8sq/Uu1iKeseBJLVB04XBKm4tT9F4f1IDYIn3yz3
+         anSuRtBbRCEaeoWYvTj3yVyrQxnAVzvntlpPJMuUNeoUObEO1rnupty7rT8azpH5WW6m
+         E8ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sBYY+wSq/xyUEJWMV6M2+EucmrU9v9VEGjOyVTPF5a8=;
-        b=K5TX8pByqAgzDeKIS1RB09guCVRRtq5kswFmXC5YLjg9MSNMUr0TQBUruTa5w1F9bT
-         w+Scyb40TwWgBNemYdU4NwnIkAj1Qkjmw5+Ljrcl2rofgp02Qfrm/pWfHux5HnY5Ar9V
-         afp50O9pXaLu2DAcclvb3Nz97xuqjY7WE6dPv0pnYjrSJOgS4cG5LPli7cBJiZ5hOyCY
-         Sf4vfw92IJ6P3Zhq1EOa6yu98I7woyReEpfhs18ZlO1WmBpZpAngmhE5CnCobz1ErZVp
-         ocg2PHOkOmTmo8urSLC00nGmspf9IHo5MmZ+aP57ZDkr8cAJ2ZiB6SacNzFO5g4+aso3
-         vUyg==
-X-Gm-Message-State: ACrzQf1H8w+97NEm+qPK0indePWgf2N3xxCgQVTAeftui7xaTVDgBBqy
-        CCum/sgOa4dQA902vBPpx3xGnmhrMFg=
-X-Google-Smtp-Source: AMsMyM6/+GqoF13IDnaoDKx5JRdjRUMX/z06nJzLF8UBgQwHlhoG2HmqMRYEZSpYxkzsL7/1Hc1HaQ==
-X-Received: by 2002:a17:907:3207:b0:741:3a59:738d with SMTP id xg7-20020a170907320700b007413a59738dmr29444502ejb.110.1667491238679;
-        Thu, 03 Nov 2022 09:00:38 -0700 (PDT)
-Received: from gmgdl (j84064.upc-j.chello.nl. [24.132.84.64])
-        by smtp.gmail.com with ESMTPSA id b18-20020a1709063cb200b0078d4e39d87esm619662ejh.225.2022.11.03.09.00.38
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NF64uTo1eqtsOZs7T+Fet+viy/MkLGc/Inw/RZRunTo=;
+        b=dnpWYZFn6a0cng5iPUazDCfJGxBNXCMFUMSy1QS215jm0MlFmv5LZMSnSf0K2GnbDB
+         Ur2aAmjSipnGvpEvUBicrB6iO6zUi1cPg4pPJP/5y2myXiLCUSFVhuIuOP/j9H9aGhZQ
+         6+E9VfRRu+G6qvWvM9LxdPLO4nPMFOwjl1/XrhjXsQSolqH26uq/kieQLHQRdEI02Yiz
+         y/vi41skHQQmxxei/DduUGTRmdFmlbmxcDcwoS8a/IEjyy5+ztAIQR0X3wewfeAo3fes
+         IgNZj9wOl4k1XU1PmsP1ldYdA1bEsKn+AGZTBJMwkSv7fLxh9h1pVvIF5NcDqENqG3lX
+         JjMg==
+X-Gm-Message-State: ACrzQf2bfeD3T7unwoG0aMMiqgyiF/L0AjB2MHg9e1THHjGOFC8p6hD7
+        84YUdJjWWRGqriwI0bfvpAuzD4hto3lKKg==
+X-Google-Smtp-Source: AMsMyM7CUT9TS+/vTTuaZduZmlg6rU3tk8fKA/NEc2Y5Zd5GEn00OUnEw81hCkkHm0fF0ng83PPH9A==
+X-Received: by 2002:a17:906:dac8:b0:741:545b:796a with SMTP id xi8-20020a170906dac800b00741545b796amr29722584ejb.240.1667493488607;
+        Thu, 03 Nov 2022 09:38:08 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id hw20-20020a170907a0d400b0078d38cda2b1sm666188ejc.202.2022.11.03.09.38.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Nov 2022 09:00:38 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oqcdx-00Cjtk-1s;
-        Thu, 03 Nov 2022 17:00:37 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Thu, 03 Nov 2022 09:38:08 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood123@gmail.com>,
         Victoria Dye <vdye@github.com>,
-        Eric Sunshine <ericsunshine@gmail.com>
-Subject: Re: [PATCH v3 02/12] cmake: update instructions for portable
- CMakeLists.txt
-Date:   Thu, 03 Nov 2022 17:00:15 +0100
-References: <cover-v2-00.11-00000000000-20221027T032622Z-avarab@gmail.com>
- <cover-v3-00.12-00000000000-20221101T225022Z-avarab@gmail.com>
- <patch-v3-02.12-7a21f4aa24c-20221101T225022Z-avarab@gmail.com>
- <059cf6aa-d288-6584-4d48-90f831de5344@dunelm.org.uk>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <059cf6aa-d288-6584-4d48-90f831de5344@dunelm.org.uk>
-Message-ID: <221103.865yfw110a.gmgdl@evledraar.gmail.com>
+        Eric Sunshine <ericsunshine@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v4 02/14] cmake: use "-S" and "-B" to specify source and build directories
+Date:   Thu,  3 Nov 2022 17:37:52 +0100
+Message-Id: <patch-v4-02.14-dd934b0597d-20221103T160255Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.38.0.1451.g86b35f4140a
+In-Reply-To: <cover-v4-00.14-00000000000-20221103T160255Z-avarab@gmail.com>
+References: <cover-v3-00.12-00000000000-20221101T225022Z-avarab@gmail.com> <cover-v4-00.14-00000000000-20221103T160255Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Rather than the multi-line "mkdir/cd/cmake" recipe provide an
+equivalent one-liner using the "-S" and "-B" options, and then suggest building with "make -C <build-dir>".
 
-On Thu, Nov 03 2022, Phillip Wood wrote:
+The rest of these instructions discuss e.g. running tests from our
+top-level "t/" directory, so it's more helpful to avoid changing the
+user's current directory.
 
-> On 01/11/2022 22:51, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> The instructions for running CMake went back & forth between *nix,
->> Windows and Visual Studio instructions Let's create headings and split
->> the existing instructions up into those new sections.
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>   contrib/buildsystems/CMakeLists.txt | 66 +++++++++++++++++++++--------
->>   1 file changed, 48 insertions(+), 18 deletions(-)
->> diff --git a/contrib/buildsystems/CMakeLists.txt
->> b/contrib/buildsystems/CMakeLists.txt
->> index 494da807c53..7bc123da315 100644
->> --- a/contrib/buildsystems/CMakeLists.txt
->> +++ b/contrib/buildsystems/CMakeLists.txt
->> @@ -4,7 +4,48 @@
->>     #[[
->>   -Instructions how to use this in Visual Studio:
->> +=3D=3D Overview =3D=3D
->> +
->> +The top-level Makefile is Git's primary build environment, and a lot
->> +of things are missing (and probably always will be) from this CMake
->> +alternative.
->> +
->> +The primary use-case for maintaining this CMake build recipe is to
->> +have nicer IDE integration on Windows. To get Visual Studio-specific
->> +instructions see "=3D=3D Visual Studio & Windows =3D=3D" below.
->
-> If that is the primary use-case (which I agree it is) then it perhaps
-> we should but the instructions for that use at the top of the
-> document.
+The "-S" and "-B" options were added in cmake v3.13.0, which is older
+than the version we have a hard dependency on[1].
 
-Yes, I've tried to re-arrange it like that in the incoming v4.
+As an aside The "-p" flag to "mkdir" in the pre-image wasn't needed,
+as "contrib/buildsystems" is tracked
 
->> +
->> +=3D=3D Creating a build recipe =3D=3D
->> +
->> +To create the build recipe run:
->> +
->> +    cmake -S contrib/buildsystems -B contrib/buildsystems/out -DCMAKE_B=
-UILD_TYPE=3DRelease
->> +
->> +For alternative "-DCMAKE_BUILD_TYPE=3D<type>" flags see instructions
->> +under the "=3D=3D -DCMAKE_BUILD_TYPE=3D<type> =3D=3D" heading below.
->
-> Rather than forcing the reader to jump back and forth, perhaps we
+1. 061c2240b1b (Introduce CMake support for configuring Git, 2020-06-12)
 
-*nod*, changing...
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ contrib/buildsystems/CMakeLists.txt | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 0a75898ca9f..463f55e5516 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -16,9 +16,7 @@ though, therefore the `File>Open>Folder...` option is preferred.
+ 
+ Instructions to run CMake manually:
+ 
+-    mkdir -p contrib/buildsystems/out
+-    cd contrib/buildsystems/out
+-    cmake ../ -DCMAKE_BUILD_TYPE=Release
++    cmake -S contrib/buildsystems -B contrib/buildsystems/out -DCMAKE_BUILD_TYPE=Release
+ 
+ This will build the git binaries in contrib/buildsystems/out
+ directory (our top-level .gitignore file knows to ignore contents of
+@@ -36,8 +34,8 @@ NOTE: -DCMAKE_BUILD_TYPE is optional. For multi-config generators like Visual St
+ this option is ignored
+ 
+ This process generates a Makefile(Linux/*BSD/MacOS) , Visual Studio solution(Windows) by default.
+-Run `make` to build Git on Linux/*BSD/MacOS.
+-Open git.sln on Windows and build Git.
++Run `make -C contrib/buildsystems/out` to build Git on Linux/*BSD/MacOS.
++Open contrib/buildsystems/git.sln on Windows and build Git.
+ 
+ NOTE: By default CMake uses Makefile as the build tool on Linux and Visual Studio in Windows,
+ to use another tool say `ninja` add this to the command line when configuring.
+-- 
+2.38.0.1451.g86b35f4140a
+
