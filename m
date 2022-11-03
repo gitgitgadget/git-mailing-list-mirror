@@ -2,107 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6D66BC43217
-	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 14:29:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9F6DC4332F
+	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 14:37:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231582AbiKCO30 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Nov 2022 10:29:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50998 "EHLO
+        id S231513AbiKCOhe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Nov 2022 10:37:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231636AbiKCO3K (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2022 10:29:10 -0400
-Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42969E7E
-        for <git@vger.kernel.org>; Thu,  3 Nov 2022 07:29:08 -0700 (PDT)
-Received: by mail-il1-x12e.google.com with SMTP id o13so1120314ilc.7
-        for <git@vger.kernel.org>; Thu, 03 Nov 2022 07:29:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=CcnhIcidfjfwitD25omO5xoM2NjXFCORYjeL9vm7JdQ=;
-        b=pBR2x0rTZ/UWCd+O8ejqpbcTQXE2bk4wj3Uu7m5duZ4uWRy+EPaoAgG1wXZdafutZo
-         QbcQCR25w6OmiWtA2iT3AdVOVRT3DbvhvJytWHRSKKj9O4eLi9Py10SVAEdy/AoQp9LW
-         YmEAwPLV15oh1cymVW7xsVZK8AsuzfIcVUlWjjA2trdtt3HsLMNkxn4GkQdDCmaZrq81
-         uUjU0661TOWujP4CVL58OiO2sRcTXcbVQiEOvVebN5XA70G6P3U5p2R9Vq6mn2LNgbfC
-         VQN5aeYd2Q1SL3OjwAQElh6VeeP3Mq6wJFg9wCXcbjnDfieEZVtAs0KwXb5873UAQckZ
-         hiAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CcnhIcidfjfwitD25omO5xoM2NjXFCORYjeL9vm7JdQ=;
-        b=3q6qE9Il9U5QzgxhG8UBYzob9rnpb+lmDsdqH6dxJm3AoR0TPZ7EZhco7zm49K4mHJ
-         r3p15dYMPwU+4lqDaevZU0DKB84CTNkvmO3csbUxnw3tL8Ifm48tVbnWGeZ8y6RTTPSX
-         pG1Ry1lI11Tv/1hxoH3Rh1PmTxJ8+aIqWt16NWrZ2Eg2mhW/h02oGMKTTVkGm0aC1RJa
-         t3dIAh32plqx6XA9fLw3BvcJESrqsL9lqCU9BrQfysfGk5Oj9PuVlC4VHO+Ubp0n6H2H
-         wS7Cg7DZC/JlkOf+OW0nA/pLiYaPMK2XX6DUMotLr1aohxWpo3QBV4V+IY5tNtwEBOMs
-         M19Q==
-X-Gm-Message-State: ACrzQf3h9acaynNb+M97D/9/RMGvehhXZgMgTUcVUtV2gxYpXLmzAQ+B
-        YlRzzwPWQmK/jj4rftzvVME0q57JWH+ZSvV4mTA=
-X-Google-Smtp-Source: AMsMyM6Wf/tBUrPZ1/uz4l1qYdYpfABkt+KvkpBxRrzOVosUv49MHYnu0T5KfvILXv4YfwjL667bwwZUdbGhSX9SvLc=
-X-Received: by 2002:a92:d685:0:b0:2ff:9abf:de49 with SMTP id
- p5-20020a92d685000000b002ff9abfde49mr9619444iln.42.1667485747507; Thu, 03 Nov
- 2022 07:29:07 -0700 (PDT)
+        with ESMTP id S229667AbiKCOhc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2022 10:37:32 -0400
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E82410F4
+        for <git@vger.kernel.org>; Thu,  3 Nov 2022 07:37:31 -0700 (PDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.west.internal (Postfix) with ESMTP id 8ACA23200993;
+        Thu,  3 Nov 2022 10:37:30 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Thu, 03 Nov 2022 10:37:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm3; t=1667486250; x=1667572650; bh=CkTM7CaVF4
+        pZMULZ+8Y5SGywqkvm9FnLXnuWTxEYJ7I=; b=Nw19Tzcpyr/hHutgFPYwsSAFdw
+        yH8thwHqFGbaB6zllvU/J/3wjrbdu760lu5jJ3J42aVi9Cayd+6YDvXwwE4T1MG5
+        UJAGGfPBaUSAcCf4q33Z9AXELK5iCP0WRuNE+D6Pgf8+mAUD8XFEO/lL7I66rpOT
+        gF0qgkIQ0ldXy9W/NcWx3vWeW9siNGWTh410f6ee5o0UYYGjcY9Q7XKyuhyhx/4L
+        cXlyg82Mfuxc8EChNGhLlr0TO87ze4ZlXa8ALN4gaD+M6LoWxGKCXSO7L7sWIIMU
+        paxpfA+jOM3Tnn6NEVgSBr+oOfcOZwlQDEhYeT0367+qR+lCxyLRcjYsW8CA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm3; t=1667486250; x=1667572650; bh=CkTM7CaVF4pZMULZ+8Y5SGywqkvm
+        9FnLXnuWTxEYJ7I=; b=V7CA6lhJDg5kfS0U8U8RFQC4ibQ1mt2AcUPd5jr06uAb
+        PKEFpNM7ZiI7KHHCdmeRp7PfoErxNS4KkSO62hopK+10YK8uWQ+Jy71lklxC7GSR
+        J5TLiPu84VKrrZZpSuTJ2zm6zULDiyZBNC1XkKn89JezM4naT2NtxRcowfMmIFtS
+        WH9d2XHDsZUrG/CgD+yZHTcvQpzpYnCxw6fZHSCPnNHoCJeQDooZh3MeVSxp34ln
+        ASUzsm/jR+k5uZVhBNWmm5OEzzQKgX8ltQpeW9jdeyhvKkGuB3463FpxbZGvAdZT
+        ySe4aJrv1IMiWtJ0eRhDkia//n9rWmLMmzpGHNir6w==
+X-ME-Sender: <xms:KdJjY_5Gl1jG4duHiEnDifEag1pk5ndumhIyHxmTkd87LDNxpR8i-A>
+    <xme:KdJjY06KT6BHe-FmnYTwBiXSF7BVuUiSr84D1rEN9p8T1aV3tPem6Ie2S0zgybMYC
+    bg1GPgDyo1Id8x9Lw>
+X-ME-Received: <xmr:KdJjY2dPaNPEGrKfq0wmfjTiAQf6xpWXD7Qf_TyKe3sbDsV1FfN2VyCI8kFwCb7ajStdRgaOC60S8e2P9Mm7Zw4kqZgWdAyWTerbYW4gLZ4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrudelgdeiudcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeigeekle
+    duvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:KtJjYwLFl4RjnxndApuKdMOJQ3YFrdEJjKububjAp_oZI3p6EhlZvg>
+    <xmx:KtJjYzJyumXIhf2OXrT5r4pSM0pdNWE5EF8321tVwhHdsAXjMvdTtQ>
+    <xmx:KtJjY5wn-vVti1u16BKfxeFlDRjXGRYKYfBVUj3NR5aB6tB2h650rg>
+    <xmx:KtJjY71kDZfODlCwlC0lxaPZ1OnutVtVGtPl4lU230GMN0GBan1VgA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 3 Nov 2022 10:37:29 -0400 (EDT)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 5450e6d0 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 3 Nov 2022 14:37:07 +0000 (UTC)
+Date:   Thu, 3 Nov 2022 15:37:25 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
+Subject: [PATCH v2 0/3] receive-pack: only use visible refs for connectivity
+ check
+Message-ID: <cover.1667485737.git.ps@pks.im>
+References: <cover.1666967670.git.ps@pks.im>
 MIME-Version: 1.0
-References: <pull.1384.git.1665839050813.gitgitgadget@gmail.com>
- <pull.1384.v2.git.1667002005494.gitgitgadget@gmail.com> <8abc5272-4e01-e793-5155-ea116e9ad4fd@jeffhostetler.com>
- <Y2MEXyhh2cJ14ba9@nand.local>
-In-Reply-To: <Y2MEXyhh2cJ14ba9@nand.local>
-From:   Rudy Rigot <rudy.rigot@gmail.com>
-Date:   Thu, 3 Nov 2022 09:28:56 -0500
-Message-ID: <CANaDLWK6-KkfKP0mipuWccfQFacDWsLHFNjS7ogL_xWvvmrCfQ@mail.gmail.com>
-Subject: Re: [PATCH v2] status: long status advice adapted to recent capabilities
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Jeff Hostetler <git@jeffhostetler.com>,
-        Rudy Rigot via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="9X3vfGUdbzuf2zVh"
+Content-Disposition: inline
+In-Reply-To: <cover.1666967670.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> looking up an unknown configuration variable with 'man
-> git-config' is easy enough.
 
-I'm not strongly opinionated, but I believe the initial idea behind
-redirecting them to the doc was because Git now comes with more
-configuration abilities to improve performance of git status, that may
-be more or less relevant depending on use cases, so there
-isn't really a single git-config key for them to look up any more. Their
-ideal solution could be core.untrackedCache=true, core.fsmonitor=true,
-advice.statusUoption=false, status.showUntrackedFiles=false, or even
-some combinations of those can be relevant.
+--9X3vfGUdbzuf2zVh
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-From there, the goal I believe we were going for with this new doc
-section is to let users know what configs exist for their git status
-slowness pains and why, so they can then go look those configs up for
-more details, which I agree would indeed be easy from there.
+Hi,
 
-Again, I'm not strongly opinionated, and I hope I accurately represented
-the inital thinking on this idea.
+this is the second version of my patch series that tries to improve
+performance of the connectivity check by only considering preexisting
+refs as uninteresting that could actually have been advertised to the
+client.
 
-One slightly stronger opinion I have, is that if the advice message
-was just
+This version uses the same idea as v1, but it's basically rewritten
+based on Taylor's idea of adding a `git rev-list --visible-refs=3D`
+switch. This fixes two major concerns:
 
-> It took %.2f seconds to enumerate untracked files.
+    1. The performance regression in repositories is now gone when there
+       are no hidden refs. Previously, there was a 10% regression in one
+       specific benchmark that was caused by reading advertised tips
+       via stdin in git-rev-list(1).
 
-and nothing else, I can definitely see a strong UX downside of not
-giving a hint of next steps for users. Basically, "you have a problem,
-and we're not helping you resolve it". Were you thinking more of
-something like this?
+    2. It fixes Jeffs concerns around a TOCTOU-style race with very slow
+       clients. It could in theory happen that a push takes multiple
+       days. With the previous idea of reusing advertised refs for the
+       connectivity check, the end result would be that we perform the
+       check with a set of refs that has been generated when the push
+       started.
 
-> It took %.2f seconds to enumerate untracked files.
-> Please look up the core.untrackedCache, core.fsmonitor
-> advice.statusUoption, and status.showUntrackedFiles configs
-> for potential solutions.
+The series is structured as following:
 
-I'd say that's probably somewhat cryptic and a bit verbose (which is
-what we were trying to avoid by telling them to go see the doc), but
-we wouldn't be leaving the user stranded, so I can see how that would
-work out ok.
+    - Patch 1 does some preliminary cleanups to de-globalize the set of
+      parsed hidden refs so that we can use the existing functions
+      easily for the new `--visible-refs=3D` option.
 
-I'm very interested in what you think.
+    - Patch 2 adds the new `--visible-refs=3D` option to git-rev-list(1).
 
-Thanks,
+    - Patch 3 converts git-receive-pack(1) to use `--visible-refs=3D`
+      instead of `--all`.
+
+Overall the performance improvement isn't quite as strong as before:
+we're only 4.5x faster compared to 6.5x in our repo. But I guess that's
+still a good-enough improvement, doubly so that there are no downsides
+for repos anymore that ain't got any hidden refs.
+
+Patrick
+
+Patrick Steinhardt (3):
+  refs: get rid of global list of hidden refs
+  revision: add new parameter to specify all visible refs
+  receive-pack: only use visible refs for connectivity check
+
+ Documentation/rev-list-options.txt |  15 +++--
+ builtin/receive-pack.c             |  10 ++-
+ builtin/rev-list.c                 |   1 +
+ builtin/rev-parse.c                |   1 +
+ connected.c                        |   5 +-
+ connected.h                        |   6 ++
+ ls-refs.c                          |  13 ++--
+ refs.c                             |  14 ++--
+ refs.h                             |   5 +-
+ revision.c                         |  34 +++++++++-
+ t/t6021-rev-list-visible-refs.sh   | 102 +++++++++++++++++++++++++++++
+ upload-pack.c                      |  30 +++++----
+ 12 files changed, 196 insertions(+), 40 deletions(-)
+ create mode 100755 t/t6021-rev-list-visible-refs.sh
+
+--=20
+2.38.1
+
+
+--9X3vfGUdbzuf2zVh
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmNj0iQACgkQVbJhu7ck
+PpS4DA/+J4h8QVuYP2Qg3eUYOTMniwDCWLAYpCRw1q1pyzsjgQ9PdhDu+VwOLG5r
+NHDmHAd7rZMpLHVIEa5rVV3QDZmIoiH9O1qdqU/qqVYeLuUbmUawKq0+NJuUQNY2
+qk/xBS+HhFexsTlpTc15yLwtxctcPV+JcbCMIYt3jtZeJsTdXgBfrQ0osbJcsrri
+vmbRnGYaJn+j5ONsDD0XxQQKAxskC0NGI2/+XN0o0LJlDVJMIlJVFoKn2fcLeB5G
+lvL8kn8xweaAqDtQexTJq2ZlpCfLpTiW19EsXR+fGc+6CrILHB8wj2N8HhbQB2Xo
+0WzYkLMv1Rxuf4kaoumNohaeHc0K0ZEvwUFlBu657rzAocUjGs4rKro8+E1o5Gqj
+KiexYOMxxkRAUECeRvq154TD/3HzkBI6jnoziGNbP9lx2egzgEiAp3RcIOExTCpW
+UgUvI/yvGiAHIfITiE98N6yrMSMJNJ4oBTd+X+gbSwtdELgpB5JxGqELIUSK8yrM
+e7bHFUQ7q6eKjZZ/rXJpoVV3NLiquWhnZw7frkoDdoQ2pQJJGC1bFLpl69BUioIV
+VwQMfvxUsTe0rYVohgeUXUPyZ/hZHRfehS2c2p6dynVKruJeEEzBEqauD0KVY+FV
+lsa/Ord2V1DJ7xmlaYlUY7oIGMTuxwoGI53kYWMu83pDt5MTfjY=
+=Uq22
+-----END PGP SIGNATURE-----
+
+--9X3vfGUdbzuf2zVh--
