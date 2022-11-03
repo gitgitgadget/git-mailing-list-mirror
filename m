@@ -2,116 +2,152 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B820BC433FE
-	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 22:53:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75F05C4332F
+	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 23:05:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230494AbiKCWx1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Nov 2022 18:53:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36844 "EHLO
+        id S231361AbiKCXFN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Nov 2022 19:05:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229587AbiKCWxZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2022 18:53:25 -0400
-Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 933551164
-        for <git@vger.kernel.org>; Thu,  3 Nov 2022 15:53:23 -0700 (PDT)
-Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-352e29ff8c2so31109467b3.21
-        for <git@vger.kernel.org>; Thu, 03 Nov 2022 15:53:23 -0700 (PDT)
+        with ESMTP id S231315AbiKCXFF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2022 19:05:05 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA2BB1F601
+        for <git@vger.kernel.org>; Thu,  3 Nov 2022 16:05:04 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id fn7-20020a05600c688700b003b4fb113b86so2196770wmb.0
+        for <git@vger.kernel.org>; Thu, 03 Nov 2022 16:05:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=b4hdTqQL2e6HYhJzuHFEW5SIqGCq/CJo3bRvmnkDmfQ=;
-        b=N6r1dDcsKhTHUXS91rsOL0YCCd8sjQYI3EVuzF8fFlgNT4gjV3bmmZ8doumQ9ivfNE
-         2DOgdeGdXL41fbWBYSWgYE/kme4B+V9qRHuQnrrn4LGGOTNzAbYfG0ssuL3i3KMIzygN
-         H/P+tp4B6FSE0RDwfxGt1dJR3YkqejOrk+M9VqEw9ldqSSd0DSAnFLhkLDhI2mE9Ktor
-         9DHQj7lhs0b9jEcpOMVND0uvGFTVxaOv8BTOHPnrWC+EnLTa76Robn3wHpdLY32lpegI
-         vh5XPLkP31k0YbTSl7TQXUDDuKVNOg6KXf3UJcxAZeFWCnUQlq3Q1aIjXViDbG6/HAvX
-         llvA==
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=i65fCnOmQPFRDhf01XDHyInLnFpziJrntzGVUJlcjBo=;
+        b=b3DbTOSyq5ykhi8Wxg1DJhi22ERKIj6WXYL0T8FU6tmsLjaGEXas80bu0nJK217X0x
+         mEgrNRCpsMyVcDZb1lOmkchfXCe54jqxlVZif5N7lsEr1J+N94ImGZn3K4bu/jGjisDI
+         wbszkubXldPaau9vqzc+JWX2s33nww3ZDlA9Y4VxXbfCfwuH2d5gbAAGxo8/e9oTjNRS
+         PNzqeWDBo2KwePavuGaiC6C5nt2mdAS3NwJxGkM5rDF7udVvmPKIbX62j0JPYD6mSfDh
+         NadYHxTynvZoqVLTiT/iy9FWFKnHixul8tnocEldSmnMPBXPdqfTEgexorbGWEfzLGki
+         2JUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=b4hdTqQL2e6HYhJzuHFEW5SIqGCq/CJo3bRvmnkDmfQ=;
-        b=zKF4KG1FV/z+yioskwt2W+yzXKyNK/bKZvuaUQQzLxIrjDyvyZM4f1DuoUF1vlkBQ6
-         0wQT7Ts19x+WJx1h1bQ/r2j1V/vofrO2S+Y0isnUSpAFEvKqRNrI6tnTQvQpJhunkq9i
-         PMDbbdEmOGi/DLav9BXWFseuoZZfxxOvlVmhnlMV8tN8UqkdkXrKidrwPj0zc4wEB5LB
-         i5OtJFgHWElEc252M9e270P3B9N/UqsHknhDFkPFA9r5FxfYQtUrMANYo4zAILZ2kXqY
-         rjJfsfeZftZr3lrYA0cmxjUbLpG4lQ8P2Javr2wpkSusPcmjkT/rNLYKAB4kyu59jN/5
-         Aexg==
-X-Gm-Message-State: ACrzQf2U+rf40y/mcPBzGAuP2to76cYBTYR3lLra+MFrFN3i3+6dWZq7
-        i3WxEfKpcQUqrOONNg6yzPR0trS78TxF6w==
-X-Google-Smtp-Source: AMsMyM4N8uOOvFL3hI4wBxWi5isQ3s2D4bOfbc/OFmFQ+DE8xqXj+CybQJUIRTd/FqiAn8X3dUCI62HWPX5kdw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a81:54c3:0:b0:360:f63:7503 with SMTP id
- i186-20020a8154c3000000b003600f637503mr201537ywb.420.1667516002529; Thu, 03
- Nov 2022 15:53:22 -0700 (PDT)
-Date:   Thu, 03 Nov 2022 15:53:20 -0700
-In-Reply-To: <patch-5.8-2b8afd73b9b-20221102T074148Z-avarab@gmail.com>
-Mime-Version: 1.0
-References: <cover-0.8-00000000000-20221102T074148Z-avarab@gmail.com> <patch-5.8-2b8afd73b9b-20221102T074148Z-avarab@gmail.com>
-Message-ID: <kl6la657odjz.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH 5/8] submodule API & "absorbgitdirs": remove
- "----recursive" option
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=i65fCnOmQPFRDhf01XDHyInLnFpziJrntzGVUJlcjBo=;
+        b=6qnj6pp4DgHmnkQ9r4SaTMnYg0T6rN2yL5mRqIZY4dAO9Ur8fGI3ajJp35bJzvOEwA
+         Y9H+JLBD40fz9diVFlXxjOGzyZEIhWXQt3wD/HmXe78q7gxGOSYd3FPZoedm7kQ84oaN
+         wBqnXo7bKbq1gy+y3RaUSsPSVO4W8YM1pDfm4DxTUkRtHsadTam8j/lBhaC4I7hkSb9a
+         UpFzPoKjQ/YrNOVkNp1rqrNzhex/QFpjc35W5wv9/RRYd5QSPmQd3umAEgVewrilNWuZ
+         alk5mod5YEPFbOZLA+mSH8qASdQXuViM8Q30hDPcT6womnsEYuQ+0yZhaJ2BO/2zAq7I
+         JOKg==
+X-Gm-Message-State: ACrzQf1J0Xhu+zKW0mc2SBICNl3MOYPS4NMxy7j3hhIlUJw0I0RPiW3z
+        Watyb6D43d7AA38kuV8M+x2snPiKEo4=
+X-Google-Smtp-Source: AMsMyM4pzhOW6Uk8falLLeP42dE1e/nHSVIXy3zhnksTqqmGGlXdCYwo1Q/hkMQfu3XbMXqztIs5Yg==
+X-Received: by 2002:a05:600c:1d91:b0:3cf:7b89:669f with SMTP id p17-20020a05600c1d9100b003cf7b89669fmr12660357wms.155.1667516703237;
+        Thu, 03 Nov 2022 16:05:03 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q7-20020a056000136700b002356c051b9csm1864518wrz.66.2022.11.03.16.05.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Nov 2022 16:05:02 -0700 (PDT)
+Message-Id: <pull.1368.v4.git.git.1667516701.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1368.v3.git.git.1667177791591.gitgitgadget@gmail.com>
+References: <pull.1368.v3.git.git.1667177791591.gitgitgadget@gmail.com>
+From:   "Anh Le via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 03 Nov 2022 23:04:59 +0000
+Subject: [PATCH v4 0/2] index: add trace2 region for clear skip worktree
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Timothy Jones <timothy@canva.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Taylor Blau <me@ttaylorr.com>, Anh Le <anh@canva.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+In large repository using sparse checkout, checking whether a file marked
+with skip worktree is present on disk and its skip worktree bit should be
+cleared can take a considerable amount of time. Add a trace2 region to
+surface this information.
 
-> Remove the "----recursive" option to "git submodule--helper
-> absorbgitdirs" (yes, with 4 dashes, not 2).
+Anh Le (2):
+  index: add trace2 region for clear skip worktree
+  index: raise a bug if the index is materialised more than once
 
-o.O
+ sparse-index.c | 30 ++++++++++++++++++++++++------
+ 1 file changed, 24 insertions(+), 6 deletions(-)
 
-At least this makes it pretty easy to grep for usage, and it makes sense
-that we've never used it (otherwise this would've been caught).
 
-> diff --git a/submodule.c b/submodule.c
-> index fe1e3f03905..8fa2ad457b2 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -2332,8 +2331,7 @@ static void absorb_git_dir_into_superproject_recurs=
-e(const char *path)
->   * having its git directory within the working tree to the git dir neste=
-d
->   * in its superprojects git dir under modules/.
->   */
-> -void absorb_git_dir_into_superproject(const char *path,
-> -				      unsigned flags)
-> +void absorb_git_dir_into_superproject(const char *path)
->  {
->  	int err_code;
->  	const char *sub_git_dir;
-> @@ -2382,12 +2380,7 @@ void absorb_git_dir_into_superproject(const char *=
-path,
->  	}
->  	strbuf_release(&gitdir);
-> =20
-> -	if (flags & ABSORB_GITDIR_RECURSE_SUBMODULES) {
-> -		if (flags & ~ABSORB_GITDIR_RECURSE_SUBMODULES)
-> -			BUG("we don't know how to pass the flags down?");
-> -
-> -		absorb_git_dir_into_superproject_recurse(path);
-> -	}
-> +	absorb_git_dir_into_superproject_recurse(path);
->  }
+base-commit: 1fc3c0ad407008c2f71dd9ae1241d8b75f8ef886
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1368%2FHaizzz%2Fmaster-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1368/Haizzz/master-v4
+Pull-Request: https://github.com/git/git/pull/1368
 
-Maybe I'm misreading, but I don't follow this change.
+Range-diff vs v3:
 
-Before, we recursed into the submodule only if the
-ABSORB_GITDIR_RECURSE_SUBMODULES flag is set (which we now know is
-never), but now we unconditionally recurse into the submodule.
+ 1:  d0d9f258b08 ! 1:  33e9b2afd91 index: add trace2 region for clear skip worktree
+     @@ Metadata
+       ## Commit message ##
+          index: add trace2 region for clear skip worktree
+      
+     -    In a large repository using sparse checkout, checking whether a file marked
+     -    with skip worktree is present on disk and its skip worktree bit should be
+     -    cleared can take a considerable amount of time. Add a trace2 region to
+     -    surface this information, keeping a count of how many paths have been
+     -    checked and separately keep counts for after a full index is materialised.
+     +    When using sparse checkout, clear_skip_worktree_from_present_files() must
+     +    enumerate index entries to find ones with the SKIP_WORKTREE bit to
+     +    determine whether those index entries exist on disk (in which case their
+     +    SKIP_WORKTREE bit should be removed).
+     +
+     +    In a large repository, this may take considerable time depending on the
+     +    size of the index.
+     +
+     +    Add a trace2 region to surface this information, keeping a count of how
+     +    many paths have been checked. Separately, keep counts after a full index is
+     +    materialized.
+      
+          Signed-off-by: Anh Le <anh@canva.com>
+      
+     @@ sparse-index.c: void clear_skip_worktree_from_present_files(struct index_state *
+       		return;
+       
+      +	trace2_region_enter("index", "clear_skip_worktree_from_present_files",
+     -+											istate->repo);
+     ++			    istate->repo);
+       restart:
+       	for (i = 0; i < istate->cache_nr; i++) {
+       		struct cache_entry *ce = istate->cache[i];
+     @@ sparse-index.c: void clear_skip_worktree_from_present_files(struct index_state *
+      +			path_count[restarted]++;
+      +			if (path_found(ce->name, &last_dirname, &dir_len, &dir_found)) {
+      +				if (S_ISSPARSEDIR(ce->ce_mode)) {
+     -+					if (restarted)
+     -+						BUG("ensure-full-index did not fully flatten?");
+      +					ensure_full_index(istate);
+      +					restarted = 1;
+      +					goto restart;
+     @@ sparse-index.c: void clear_skip_worktree_from_present_files(struct index_state *
+      +
+      +	if (path_count[0])
+      +		trace2_data_intmax("index", istate->repo,
+     -+											 "sparse_path_count", path_count[0]);
+     ++				   "sparse_path_count", path_count[0]);
+      +	if (restarted)
+      +		trace2_data_intmax("index", istate->repo,
+     -+											 "sparse_path_count_full", path_count[1]);
+     ++				   "sparse_path_count_full", path_count[1]);
+      +	trace2_region_leave("index", "clear_skip_worktree_from_present_files",
+     -+										  istate->repo);
+     ++			    istate->repo);
+       }
+       
+       /*
+ -:  ----------- > 2:  91ad7973307 index: raise a bug if the index is materialised more than once
 
-Wouldn't it be more accurate to get rid of this recursing behavior
-altogether? i.e. drop the previous patch and delete that code when we
-delete this conditional.
+-- 
+gitgitgadget
