@@ -2,234 +2,178 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50E5CC4332F
-	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 01:13:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88992C433FE
+	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 01:16:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229850AbiKCBNb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 21:13:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33410 "EHLO
+        id S230220AbiKCBQq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 21:16:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229493AbiKCBNa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 21:13:30 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3317D2198
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 18:13:29 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id d25so480331lfb.7
-        for <git@vger.kernel.org>; Wed, 02 Nov 2022 18:13:29 -0700 (PDT)
+        with ESMTP id S229457AbiKCBQn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 21:16:43 -0400
+Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F407625F6
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 18:16:42 -0700 (PDT)
+Received: by mail-il1-x132.google.com with SMTP id x16so350664ilm.5
+        for <git@vger.kernel.org>; Wed, 02 Nov 2022 18:16:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=9R09kLcw//PYpBEshsVT1eYMX/Pn7AKLhMIz4DPxttc=;
-        b=mJ2mlAbHDxYaIHL5DbBFxHccpvowPLqarYZwwWWCKUR9NXckqT8J7yPPeDiDDW7KCE
-         0SISLDka5dqwBO978sIpZ+ciY+VAgi6GmDX7QEZLgQI9BL/QQUEfomIBENPVQxFxAaaN
-         oFthrsRDwUfP0ZL0F2EKAxcehV1/YZgU5gYsDWrY5inR4Huh0Vg3POjfs0TtnoHrNMkQ
-         iefEN5hQ/fSrQSn9n8Senyxd3+KHrGkX++DP72uSzfXISwDFalVqhRQhvSD1lhzPzMeY
-         ZBJ9//VK8bUDNoyzj5qB6iNxdI4BI8h+5oFNp6Jk/tOjFg3a624fkcTC12PZ6AJDidTt
-         BIKA==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Tpqon2Sl585nB7bDTBZXNJ8LS8pYYWcWQ1Mi5uthNCA=;
+        b=u3PKHBbV/3gtVJCIsW2xGZ87WqpO/W6kShyWhK/ZiHctegqcB1PzkBoIU8PHBiMCtG
+         VNUjcBAbhpLz1ZUHJAOh7YM+9i+t32U2bs0hjfa/OgJ0uGZ49BGC8rJYnGXerPXeLodu
+         Xm/RK5IuklyX7hKrejRl9BWyh00JSsqIArmWYC9H5C+WIOjHtKH00ZNgxRJC9ASFKZcB
+         2DbQ5EDeHUXubr2ME0EvKl6BuLNOoWz/+5xGbwoLj9b731WjDskXBGuOx5SaXdt8ApkJ
+         vMeDTs6na4StuDBXIuuNfPG4VgN9Hxr2WlESOo3Hg6fAP0n0Dbq1kTTKZMVrzaTjn5SV
+         g3CA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9R09kLcw//PYpBEshsVT1eYMX/Pn7AKLhMIz4DPxttc=;
-        b=CYFYsGguWti56DyB3qFN7F5n0huCi4zuEC/bRj3MKtDjfTlcjv8XOYRRKJoDYjGMla
-         mzSRXWM3v0xWXH5AHsJkuRKHBavROH/ZD4teUWkq4B5plQkwN2FKMQ1M5pHaWMv9Tmaz
-         4KcizYAkYB/08FBx11mwu/j7y6357UfjzVNFJmsotrLoSO73syVtRRXRMkBY2TSGQ1KC
-         DuZTM7e414UhrmxyAdv+RUQzcbdzVOLPerVtHWsoMLHr7rLipgY2LNmbbMa8zsmajbTY
-         qk4eNan08oWObLxRxlti6Aynz7WSS7/QH1rXUtFNkvA22rw5uIywmgx19TrIJWWULAK2
-         +B4w==
-X-Gm-Message-State: ACrzQf2sW7fLR8dwD0xMXGn1WnA4gGb3mkzRNKKIxhfcAwlt8szukP1F
-        IGRVrrNc5kT/QldB97ibJlOaY+0Z3vHLCXfICPA=
-X-Google-Smtp-Source: AMsMyM6uDlsrH5v9/P/V8Db+rwlFmVoxALjGwa4sbAGHvcqAWnGR+bhflijhCrbsIee5Gp3Ch5EH83cSSf22/uws3S4=
-X-Received: by 2002:a05:6512:3e0f:b0:4ae:5dc5:82d4 with SMTP id
- i15-20020a0565123e0f00b004ae5dc582d4mr10045304lfv.65.1667438007297; Wed, 02
- Nov 2022 18:13:27 -0700 (PDT)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Tpqon2Sl585nB7bDTBZXNJ8LS8pYYWcWQ1Mi5uthNCA=;
+        b=PqHRyAmxe4gI32+PXtd/hQyF2I4hPQJOFOzDqJDWfi2PqBMJ+IX+BgpQOn2DE9X5Wb
+         DDseBORPhRJYLSqGGyYlOhH/sp+h5tWwHAMbEdbsfy872keYsZw7ByiAS8KVeKWi2B9Z
+         ItWZKln39BbE62y3r/KMK57D0CUiRfgyuMTKP/NS3V8mm9xL405NuV3GQ9/aTJ/6pUse
+         /NDA4Ghm8pDbf6jFYD1zLY9N5vsZwKT2iDAU9k51FIf5ZxrhfIwmW4nhSm+z+F8GmEkK
+         dP/VGyeG93AAnaEzsKTS0gMz9jvy/HJjlDZCFPooCpQLTQS9/sut9cG4moOqHs4TEhpL
+         6ldA==
+X-Gm-Message-State: ACrzQf2BHGF02NsGp6FnOFiKT4hJrWCzLIEcCJYPNe9+U8fhYtZKJIj7
+        iFJF3jFzOz9NvZdcALrVW2RmAA==
+X-Google-Smtp-Source: AMsMyM4AiAYmE9jW8XQZuCiC2Ezp/HHz77KxTUW7802hbz//hYwPQD4bao9t+mMzud0oiSb+9/6+6g==
+X-Received: by 2002:a05:6e02:787:b0:300:c853:a24e with SMTP id q7-20020a056e02078700b00300c853a24emr5882379ils.59.1667438202314;
+        Wed, 02 Nov 2022 18:16:42 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id r5-20020a02b105000000b00372e2c4232asm5445499jah.121.2022.11.02.18.16.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Nov 2022 18:16:41 -0700 (PDT)
+Date:   Wed, 2 Nov 2022 21:16:40 -0400
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
+        gitster@pobox.com, me@ttaylorr.com, tenglong.tl@alibaba-inc.com,
+        peff@peff.net, XingXin <moweng.xx@antgroup.com>
+Subject: Re: [PATCH v2 1/1] pack-bitmap.c: avoid exposing absolute paths
+Message-ID: <Y2MWeE2f/P1iXPCY@nand.local>
+References: <cover.1667393419.git.dyroneteng@gmail.com>
+ <87a494e5ac0cc992689944ab13600d097c51e54a.1667393419.git.dyroneteng@gmail.com>
 MIME-Version: 1.0
-References: <pull.1397.v3.git.1667014975042.gitgitgadget@gmail.com>
- <pull.1397.v4.git.1667292904.gitgitgadget@gmail.com> <db47fbc663eb0f3a1fc9a063dfb1051bc64601af.1667292904.git.gitgitgadget@gmail.com>
-In-Reply-To: <db47fbc663eb0f3a1fc9a063dfb1051bc64601af.1667292904.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 2 Nov 2022 18:13:00 -0700
-Message-ID: <CABPp-BG4in6hPnniHoE+au0XyVXwgs9pNUJdpLDTmP=dxvKjqw@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] merge-tree.c: support --merge-base in conjunction
- with --stdin
-To:     Kyle Zhao via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Kyle Zhao <kylezhao@tencent.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87a494e5ac0cc992689944ab13600d097c51e54a.1667393419.git.dyroneteng@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 1, 2022 at 1:55 AM Kyle Zhao via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
+On Wed, Nov 02, 2022 at 08:56:05PM +0800, Teng Long wrote:
+> From: Teng Long <dyroneteng@gmail.com>
 >
-> From: Kyle Zhao <kylezhao@tencent.com>
+> In "open_midx_bitmap_1()" and "open_pack_bitmap_1()", when we find that
+> there are multiple bitmaps, we will only open the first one and then
+> leave warnings about the remaining pack information, the information
+> will contain the absolute path of the repository, for example in a
+> alternates usage scenario. So let's hide this kind of potentially
+> sensitive information in this commit.
 >
-> The previous change add "--merge-base" option in order to allow users to
-
-s/add/added/ ?
-
-> specify merge-base for the merge. But it doesn't compatible well with
-> --stdin, because multiple batched merges can only have the same specified
-> base.
-
-"it doesn't compatible well" doesn't parse for me.
-
-> This patch allows users to pass --merge-base option into the input line,
-> such as:
-
-Quoting from Documentation/SubmittingPatches:
-
-"""
-Describe your changes in imperative mood, e.g. "make xyzzy do frotz"
-instead of "[This patch] makes xyzzy do frotz" or "[I] changed xyzzy
-to do frotz", as if you are giving orders to the codebase to change
-its behavior.
-"""
-
->
->     printf "--merge-base=<b3> <b1> <b2>" | git merge-tree --stdin
->
-> This does a merge of b1 and b2, and uses b3 as the merge-base.
-
-Perhaps something like:
-
-"""
-The previous commit added a `--merge-base` option in order to allow
-using a specified merge-base for the merge.  Extend the input accepted
-by `--stdin` to also allow a specified merge-base with each merge
-requested.  For example:
-
-    printf "--merge-base=<b3> <b1> <b2>" | git merge-tree --stdin
-
-does a merge of b1 and b2, and uses b3 as the merge-base.
-"""
-
-However, I'm a bit curious about using `--merge-base=` on the input
-line as opposed to just using a simpler marker; something like
-
-    printf "<b3> -- <b1> <b2>" | git merge-tree --stdin
-
-(which follows a precedent set by git-merge-recursive).  Your version
-is a bit more self-documenting, but what if we want to allow users to
-specify multiple merge bases in the future (for use in passing to
-merge_incore_recursive())?  Is it annoying to need to prefix each one?
-
-> Signed-off-by: Kyle Zhao <kylezhao@tencent.com>
+> Found-by: XingXin <moweng.xx@antgroup.com>
+> Signed-off-by: Teng Long <dyroneteng@gmail.com>
 > ---
->  Documentation/git-merge-tree.txt |  3 ++-
->  builtin/merge-tree.c             | 22 ++++++++++++++++++++--
->  t/t4301-merge-tree-write-tree.sh | 21 +++++++++++++++++++++
->  3 files changed, 43 insertions(+), 3 deletions(-)
+>  pack-bitmap.c           | 12 ++++++++----
+>  t/t5310-pack-bitmaps.sh | 11 ++++++++---
+>  2 files changed, 16 insertions(+), 7 deletions(-)
 >
-> diff --git a/Documentation/git-merge-tree.txt b/Documentation/git-merge-tree.txt
-> index d9dacb2ce54..be6a11bbaec 100644
-> --- a/Documentation/git-merge-tree.txt
-> +++ b/Documentation/git-merge-tree.txt
-> @@ -66,7 +66,8 @@ OPTIONS
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index 36134222d7a..a8c76056637 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -331,8 +331,9 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
+>  	if (bitmap_git->pack || bitmap_git->midx) {
+>  		struct strbuf buf = STRBUF_INIT;
+>  		get_midx_filename(&buf, midx->object_dir);
+> -		/* ignore extra bitmap file; we can only handle one */
+> -		warning("ignoring extra bitmap file: %s", buf.buf);
+
+OK... here we're getting rid of the user-visible warning, which makes
+sense and is the point of this patch.
+
+> +		/* ignore extra midx bitmap files; we can only handle one */
+> +		trace2_data_string("bitmap", the_repository,
+> +				   "ignoring extra midx bitmap file", basename(buf.buf));
+
+But we replace it with a trace2_data_string() that only includes the
+basename? I'd think that the point of moving this warning into
+trace2-land is that we could emit the full path without worrying about
+who sees it, since trace2 data is typically not plumbed through to
+end-users.
+
+IOW, I would have expected to see a patch something along the lines of:
+
+> -		/* ignore extra bitmap file; we can only handle one */
+> -		warning("ignoring extra bitmap file: %s", buf.buf);
+> +		/* ignore extra midx bitmap files; we can only handle one */
+> +		trace2_data_string("bitmap", the_repository,
+> +				   "ignoring extra midx bitmap file", buf.buf);
+
+> @@ -402,8 +403,9 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
+>  	}
 >
->  --merge-base=<commit>::
->         Instead of finding the merge-bases for <branch1> and <branch2>,
-> -       specify a merge-base for the merge.
-> +       specify a merge-base for the merge. When --stdin is passed, this
-> +       option should be passed into the input line.
+>  	if (bitmap_git->pack || bitmap_git->midx) {
+> -		/* ignore extra bitmap file; we can only handle one */
+> -		warning("ignoring extra bitmap file: %s", packfile->pack_name);
+> +		/* ignore extra bitmap files; we can only handle one */
+> +		trace2_data_string("bitmap", the_repository,
+> +				   "ignoring extra bitmap file", basename(packfile->pack_name));
 
-I'm not sure "passed into the input line" will be clear to readers.
-Perhaps we want to have --stdin documented (looks like I forgot to do
-that in my series; oops), mentioning the input format.
+Same note here.
 
->  [[OUTPUT]]
->  OUTPUT
-> diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-> index f402b807c0f..7a8049e7b0c 100644
-> --- a/builtin/merge-tree.c
-> +++ b/builtin/merge-tree.c
-> @@ -551,16 +551,34 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+> +	trace2_data_string("bitmap", the_repository, "opened bitmap file",
+> +			   basename(packfile->pack_name));
+
+If we get later bitmap-related information in the trace2 stream, we know
+that we opened a bitmap. And at the moment we read a bitmap, there is
+only one such bitmap in the repository.
+
+I suppose that this is race-proof in the sense that if the bitmaps
+change after reading, we can still usefully debug the trace2 stream
+after the fact.
+
+So even though my first reaction was that this was unnecessary, on
+balance I do find it useful.
+
+> -test_expect_success 'complains about multiple pack bitmaps' '
+> +test_expect_success 'complains about multiple pack bitmaps when debugging by trace2' '
+>  	rm -fr repo &&
+>  	git init repo &&
+>  	test_when_finished "rm -fr repo" &&
+> @@ -420,8 +420,13 @@ test_expect_success 'complains about multiple pack bitmaps' '
+>  		test_line_count = 2 packs &&
+>  		test_line_count = 2 bitmaps &&
 >
->                 if (o.mode == MODE_TRIVIAL)
->                         die(_("--trivial-merge is incompatible with all other options"));
-> +               if (merge_base)
-> +                       die(_("--merge-base should be passed into the input line"));
+> -		git rev-list --use-bitmap-index HEAD 2>err &&
+> -		grep "ignoring extra bitmap file" err
+> +		ls -tr .git/objects/pack | grep -e "^pack-.*\.pack$" > sorted-packs &&
+> +		ignored_pack="$(cat sorted-packs | awk 'NR==1{print}')" &&
+> +		open_pack="$(cat sorted-packs | awk 'NR==2{print}')" &&
 
-If we change the input as noted above, the wording here may need to change too.
+Hmmph. This test only passes if 'ls -tr' gives us the packs in order
+that they are read by readdir(), which doesn't seem all that portable to
+me. At the very least, it is tightly coupled to the implementation of
+open_pack_bitmap() and friends.
 
->                 line_termination = '\0';
->                 while (strbuf_getline_lf(&buf, stdin) != EOF) {
->                         struct strbuf **split;
->                         int result;
-> +                       const char *input_merge_base = NULL;
-> +                       const char *arg;
->
->                         split = strbuf_split(&buf, ' ');
-> -                       if (!split[0] || !split[1] || split[2])
-> +                       if (!split[0] || !split[1])
->                                 die(_("malformed input line: '%s'."), buf.buf);
->                         strbuf_rtrim(split[0]);
-> -                       result = real_merge(&o, merge_base, split[0]->buf, split[1]->buf, prefix);
-> +
-> +                       /* parse --merge-base=<commit> option */
-> +                       arg = split[0]->buf;
-> +                       if (skip_prefix(arg, "--merge-base=", &arg))
-> +                               input_merge_base = arg;
-> +
-> +                       if (input_merge_base && split[2] && !split[3]) {
-> +                               strbuf_rtrim(split[1]);
-> +                               result = real_merge(&o, input_merge_base, split[1]->buf, split[2]->buf, prefix);
-> +                       } else if (!input_merge_base && !split[2]) {
-> +                               result = real_merge(&o, NULL, split[0]->buf, split[1]->buf, prefix);
-> +                       } else {
-> +                               die(_("malformed input line: '%s'."), buf.buf);
-> +                       }
-> +
->                         if (result < 0)
->                                 die(_("merging cannot continue; got unclean result of %d"), result);
->                         strbuf_list_free(split);
-> diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
-> index 5b0073d3dcd..aec2c00b91f 100755
-> --- a/t/t4301-merge-tree-write-tree.sh
-> +++ b/t/t4301-merge-tree-write-tree.sh
-> @@ -860,6 +860,13 @@ test_expect_success '--stdin with both a successful and a conflicted merge' '
->         test_cmp expect actual
->  '
->
-> +
-> +test_expect_success '--merge-base is incompatible with --stdin' '
-> +       test_must_fail git merge-tree --merge-base=side1 --stdin 2>expect &&
-> +
-> +       grep "^fatal: --merge-base should be passed into the input line" expect
-> +'
+> +		GIT_TRACE2_PERF=1 git rev-list --use-bitmap-index HEAD 2>err &&
+> +		grep "opened bitmap file:$opened_pack" err &&
+> +		grep "ignoring extra bitmap file:$ignored_pack" err
 
-Yeah, most merge-tree options are for controlling the output, and as
-such they are not incompatible with --stdin.  This option is, so it
-makes sense you need a special check for it.  Looks good.
+Do we necessarily care about which .bitmap is read and which isn't? The
+existing test doesn't look too closely, which I think is fine (though as
+the author of that test, I might be biased ;-)).
 
-> +
->  # specify merge-base as parent of branch2
->  # git merge-tree --write-tree --merge-base=c2 c1 c3
->  #   Commit c1: add file1
-> @@ -890,4 +897,18 @@ test_expect_success 'specify merge-base as parent of branch2' '
->         )
->  '
->
-> +test_expect_success '--stdin with both a normal merge and a merge-base specified merge' '
-> +       cd base-b2-p &&
-> +       printf "c1 c3\n--merge-base=c2 c1 c3" | git merge-tree --stdin >actual &&
-> +
-> +       printf "1\0" >expect &&
-> +       git merge-tree --write-tree -z c1 c3 >>expect &&
-> +       printf "\0" >>expect &&
-> +
-> +       printf "1\0" >>expect &&
-> +       git merge-tree --write-tree -z --merge-base=c2 c1 c3 >>expect &&
-> +       printf "\0" >>expect &&
-> +       test_cmp expect actual
-> +'
+I would be equally happy to write:
 
-This last test seems odd.  You are merely testing that the output of
-"git merge-tree --stdin" matches the output of repeated calls to "git
-merge-tree", not that the merges involved produce correct results?
-Maybe that's fine since earlier tests verify that individual
-merge-tree calls are doing the right thing, I was just a bit
-surprised.  Maybe a comment in the code that this was your intent
-would be helpful?
+> +		GIT_TRACE2_PERF=$(pwd)/trace2.txt git rev-list --use-bitmap-index HEAD &&
+> +		grep "opened bitmap" trace2.txt &&
+> +		grep "ignoring extra bitmap" trace2.txt
+
+Thanks,
+Taylor
