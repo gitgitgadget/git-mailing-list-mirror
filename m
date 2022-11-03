@@ -2,117 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04B06C4332F
-	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 00:24:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20FFBC433FE
+	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 00:26:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230408AbiKCAYO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 20:24:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47930 "EHLO
+        id S229485AbiKCA02 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 20:26:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230271AbiKCAYM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 20:24:12 -0400
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A542160D2
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 17:24:11 -0700 (PDT)
-Received: by mail-il1-x131.google.com with SMTP id r2so296404ilg.8
-        for <git@vger.kernel.org>; Wed, 02 Nov 2022 17:24:11 -0700 (PDT)
+        with ESMTP id S229954AbiKCA01 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 20:26:27 -0400
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2484DB1C7
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 17:26:27 -0700 (PDT)
+Received: by mail-io1-xd29.google.com with SMTP id h206so155878iof.10
+        for <git@vger.kernel.org>; Wed, 02 Nov 2022 17:26:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=xiaIv3RGM9rQrMGVKBrp0XvgrU38RckSR3C/52RPYXM=;
-        b=3BDNgcUTfegh57iqtqneD6pmjiZmWj3uA8sAhnoy/NO8eEAYzPMxJ99DNPfVX9wcUL
-         6SWFbTrEfitOVOnFVIovcMBXHpQGnAk6EZSZc6yBnWSqjrmeNyMK3qP6whBu7vO53sQj
-         LxncfFOdgafGBa9MbrksbUV1KwlixURUQ3mnCzpBd0ohOyT+A9APZGgXnl0DfcRm6n0f
-         HQ5gV6ydLpaSbN+LR3BFCWewVfTf4S/pa4Fd1WCmkggX8ZfftE737cs9ClMLIT6pNI9B
-         NiMdwpp+PTsR7s/tYJtoUyQ2/3lzWwrs6a8+2wmP08hbgfXSm5xuBQeM7fEVwkx9XHtz
-         3DAg==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7NxK0fhn1RaWDLamRX+Vl8jBdRVUzO3OLrOyva+NDkA=;
+        b=I+p36iXGTuZgUNPMTl0BfmlmCWGLTLiAm9vNHaG1OH23wZ3eREy4R8zZcgBpHbTERB
+         Q/2n7z6b3GWfkweLN+h+LQdDcw311G8Ym3mi+RELjpjiueGcGD3NoN5xgzVkjm99Mikj
+         2bdtAkMOaWQBaIVX+g2oJd5y1XivevBb3y8pvSVD9unQHIegJKpi5eWBHg0aT02cn8Ja
+         jcOOwZ28mZWu88ONuFJYwbaZrPU8MOQ68Y96tFvDCzGKzxX/s5sE2LnOUZGr/laN0PHv
+         gnoYoGZIV3Pv86LOf8fmrv5E1LsdocZOP3ElkB5c+87xI/CMW1kJIgyAmq58DRSUVguA
+         KbTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xiaIv3RGM9rQrMGVKBrp0XvgrU38RckSR3C/52RPYXM=;
-        b=40JC2/pi5VmutZ9ebErO8o+gly9qHUj9EV0VDnSAC0tGosJ+4V6Nr1Uv1fCEx5diJY
-         3M1U4krnVNpLikhlGp+GIVcjq72JhlJsrutZevE+YI5I6FMVzpt0gWOZEM0tkMNh5CMr
-         Tbi/EXuhzku5Ovluowwixje5JC9s8K6hi0FVI0Ss1iH/W03dyHTzOgC0tMeDMSW9xrPq
-         7l0lhFNf7KheBVS3rgVfLED80HfsK8Wp55JMPYqYbl9VY/h9jNaLRKUjScX+u/pRvR3p
-         YAho+Wr9uVKdsQvYCoITR1gY3/Z4aoYECWMrq6JZPiA+VQYQryN9QfuFiKhYD2sCYoBe
-         PRsA==
-X-Gm-Message-State: ACrzQf2liQns3spr4R/qpNq32//CtaONaaofbXabaNQrTIH7ri9wHaJs
-        pm+t2I+04ffMDv7HYs9gVDe+Fw==
-X-Google-Smtp-Source: AMsMyM7lQV6IF8EW5OOYuRKQobXnONSl5uNjP6KVk3PkjAQj3m4iKOQAGv03z9FiC9KryMq7nVOi9g==
-X-Received: by 2002:a05:6e02:12e8:b0:300:f67:9047 with SMTP id l8-20020a056e0212e800b003000f679047mr16434313iln.14.1667435050966;
-        Wed, 02 Nov 2022 17:24:10 -0700 (PDT)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7NxK0fhn1RaWDLamRX+Vl8jBdRVUzO3OLrOyva+NDkA=;
+        b=5DLT5II7M7TiES4gREGixhIln7Ue8IwBLgF7pSPDwIsTouEqle6VP0TdbLZhDbHKJW
+         Ongd7ID02iBzmhjVm67Dht4G2SnkfE72I2cPbNWbvSk+lL44TbtyUmE9AhFJkKN0LfCP
+         P7j8Q4ClvnG7TV+UB/evSLGgl1VuR+YUgLtKLHKSijPAoylpiA1uF8XgE90N9ca+6h2o
+         UxevpRUYo1AgU1NGS8eQkT3t80gozVUjlXfwJwTtqfZYWi7uo+svNuiuYaZqxJ64i6rJ
+         WYxcUOyBGnH1JIJTmdjPT5MGVNSC4SVLh7H1qVlu4pSOZXuAkclQ1dKnQdIsXx427Z3L
+         W2XQ==
+X-Gm-Message-State: ACrzQf3Bb7dMT90ZuAdZ7e3wk5qYxej6zDq1u/XoK6b0DYO8EtKGsa+X
+        +dX3Pow3XeVBCfB8p3i1SEzPzg==
+X-Google-Smtp-Source: AMsMyM6ElI/8qcYHWNyhS8hsyYlfEK5pCOXti18GTv+kWq2TQqFpEwGbXfx8yLIx7VCzjXFX4BIO9w==
+X-Received: by 2002:a02:ad11:0:b0:375:767f:e53f with SMTP id s17-20020a02ad11000000b00375767fe53fmr6438818jan.318.1667435185349;
+        Wed, 02 Nov 2022 17:26:25 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id i7-20020a02c607000000b003734c4d01d2sm1867662jan.61.2022.11.02.17.24.10
+        by smtp.gmail.com with ESMTPSA id a24-20020a027a18000000b0036348f096acsm5388961jac.6.2022.11.02.17.26.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 17:24:10 -0700 (PDT)
-Date:   Wed, 2 Nov 2022 20:24:09 -0400
+        Wed, 02 Nov 2022 17:26:24 -0700 (PDT)
+Date:   Wed, 2 Nov 2022 20:26:23 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        man dog <dogman888888@gmail.com>
-Subject: Re: [PATCH 3/3] diff.c: use diff_free_queue()
-Message-ID: <Y2MKKTz4nK0L8uW5@nand.local>
-References: <Y2BElOFGJ8JinYxC@nand.local>
- <20221102220142.574890-1-szeder.dev@gmail.com>
- <20221102220142.574890-4-szeder.dev@gmail.com>
+To:     "L. E. Segovia" <amy@amyspark.me>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Subject: Re: [BUG] git format-patch incorrectly follows the mailmap when used
+ with --cover-letter
+Message-ID: <Y2MKr2Yga/o1sjun@nand.local>
+References: <cb90779b-edb0-1911-c8bd-a6c56203a201@amyspark.me>
+ <Y2MGyM3O7ljEZ4Hm@nand.local>
+ <527f8050-7955-50b1-304c-617703cf99e6@amyspark.me>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221102220142.574890-4-szeder.dev@gmail.com>
+In-Reply-To: <527f8050-7955-50b1-304c-617703cf99e6@amyspark.me>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 02, 2022 at 11:01:42PM +0100, SZEDER Gábor wrote:
-> Use diff_free_queue() instead of open-coding it.  This shortens the
-> code and make it less repetitive.
+On Wed, Nov 02, 2022 at 09:21:12PM -0300, L. E. Segovia wrote:
+> Hey,
 >
-> Note that the second hunk in diff_flush() is interesting, because the
-> 'free_queue' label separates the loop freeing the queue's filepairs
-> from free()-ing the queue's internal array.  This is somewhat
-> suspicious, but it was not an issue before: there is only one place
-> from where we jump to this label with a goto, and that is protected by
-> an 'if (!q->nr && ...)' condition, i.e. we only skipped the loop
-> freeing the filepairs when there were no filepairs in the queue to
-> begin with.
->
-> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
-> ---
->  diff.c | 10 ++--------
->  1 file changed, 2 insertions(+), 8 deletions(-)
->
-> diff --git a/diff.c b/diff.c
-> index ef94175163..03e6ffb5e4 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -6337,13 +6337,9 @@ static int diff_get_patch_id(struct diff_options *options, struct object_id *oid
->  int diff_flush_patch_id(struct diff_options *options, struct object_id *oid, int diff_header_only)
->  {
->  	struct diff_queue_struct *q = &diff_queued_diff;
-> -	int i;
->  	int result = diff_get_patch_id(options, oid, diff_header_only);
->
-> -	for (i = 0; i < q->nr; i++)
-> -		diff_free_filepair(q->queue[i]);
-> -
-> -	free(q->queue);
-> +	diff_free_queue(q);
->  	DIFF_QUEUE_CLEAR(q);
+> The shortlog in the cover letter follows the active mailmap (incorrectly).
 
-So, this all looks fine to me. But I did a quick grep around for
-DIFF_QUEUE_CLEAR(), and this macro is used in quite a few places.
-Mostly, as far as I can tell, to "empty" out the diff-queue by setting
-its 'queue' pointer to NULL, and its 'nr' back to 0.
+You say "incorrectly", but this is subjective, no?
 
-Should we be freeing the memory held by the queue there more
-aggressively? I.e., should we make sure that there is a
-diff_free_queue() call above each expansion of the DIFF_QUEUE_CLEAR()
-macro?
+I imagine that most (?) users of format-patch do want to respect the
+mailmap when generating a shortlog. In fact, the 'git shortlog' builtin
+doesn't even have a `--[no-]mailmap` option, either.
+
+> The letter itself (From: header), as well as the patches, are attributed
+> correctly.
+
+OK.
 
 Thanks,
 Taylor
