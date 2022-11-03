@@ -2,79 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BC1BEC433FE
-	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 00:21:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36400C433FE
+	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 00:21:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230494AbiKCAVQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 2 Nov 2022 20:21:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46352 "EHLO
+        id S231174AbiKCAVZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 2 Nov 2022 20:21:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231174AbiKCAVN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Nov 2022 20:21:13 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83AC6AE5B
-        for <git@vger.kernel.org>; Wed,  2 Nov 2022 17:21:09 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id 63so156133iov.8
-        for <git@vger.kernel.org>; Wed, 02 Nov 2022 17:21:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=786P54xbiLPivRnh9qISHYrek0aT7gP6OBfnjYhWBZ4=;
-        b=d6JMkv2nSN+YCZMu27qitTK12R2s5O5OT89rEQHNM7+jXki4KhCqtgZbvIgH6GBUXT
-         DxnLj19PRFeyhFnwi19xSedg4LbYSVpnOMxV6qwmHEcha/RZgSEaFewDcEBFksDVwHHZ
-         QbzJxfuKSM3/3iU9qblSuzLy8NpBXb09TUSuTeBs83H1+wk6LldN1nwKDACMebWNz39H
-         yVSIDtRpHstxm++0W1FeoKn6nCytcWMUk8yyqUyC/acBd6pAQAYlk4AIOTa+5fQVA8DJ
-         carkMnWF2t3Mg4NNaZlMxbyODYPS8KOc2dVJSbZfWVxHsuJdDtrXlyDnnKnmJ3MYPW9l
-         sesg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=786P54xbiLPivRnh9qISHYrek0aT7gP6OBfnjYhWBZ4=;
-        b=HooEJZKeVfbKmFgVcmv/hkBbgfThYhyV0FJTZkio/gX4h3G/+1JWtzHDAI7Q+PxZdy
-         BXexXNYBIelKCfn13kpzlkhf2jXqr6j3yiKsyfcq44NEmkYXiZyXtG/G+JtLUX8iGsJi
-         3oHiK7jsGpXv5FULSPhM6Qu75wbCO2BXRrUi5lGi+VgR9BKM3F1yF4KgcB62o2zMXht/
-         t2Vz4lmaLgnA0FNWHOwRREp908Mtda4QGe9qJe0LwBScDGarKo5LOlFVnBdrCVyF4GJS
-         1lFs6X+OA2JPVHaWSSn8AUEGdBCfKXiuFpzy1/ofHlDPodLvnqwKYWyNs/kr8Dw7rlpE
-         Uo8A==
-X-Gm-Message-State: ACrzQf2d+m5Se1B7VGc3RPCjGHjRme8qk9RsT9LA/VNyrtUEtPbu1AZo
-        MoOy5wkzBe3ymIRGFHFDEwAGjw==
-X-Google-Smtp-Source: AMsMyM4Vuj3jwN/hLcUAmXZKyCUC9uxh5EjZNBP7AGQwhdetPEUb+CzLuUkEfc4xM3EexF3VzPU8pQ==
-X-Received: by 2002:a05:6638:2508:b0:374:fad7:e2bc with SMTP id v8-20020a056638250800b00374fad7e2bcmr17208008jat.54.1667434868903;
-        Wed, 02 Nov 2022 17:21:08 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id j22-20020a05663822d600b00363e61908bfsm5406155jat.10.2022.11.02.17.21.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Nov 2022 17:21:08 -0700 (PDT)
-Date:   Wed, 2 Nov 2022 20:21:07 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        man dog <dogman888888@gmail.com>
-Subject: Re: [PATCH 2/3] line-log: free the diff queues' arrays when
- processing merge commits
-Message-ID: <Y2MJc6wIQIlK44a1@nand.local>
-References: <Y2BElOFGJ8JinYxC@nand.local>
- <20221102220142.574890-1-szeder.dev@gmail.com>
- <20221102220142.574890-3-szeder.dev@gmail.com>
+        with ESMTP id S230495AbiKCAVX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Nov 2022 20:21:23 -0400
+Received: from relay10.mail.gandi.net (relay10.mail.gandi.net [IPv6:2001:4b98:dc4:8::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48E51AE4F
+        for <git@vger.kernel.org>; Wed,  2 Nov 2022 17:21:22 -0700 (PDT)
+Received: (Authenticated sender: amy@amyspark.me)
+        by mail.gandi.net (Postfix) with ESMTPSA id 778FB240005;
+        Thu,  3 Nov 2022 00:21:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amyspark.me; s=gm1;
+        t=1667434880;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=IIC8WNloW/FhEqs0ZQUvDYTrt2Xxzsm7J3RRElzOi0k=;
+        b=mQzyPVJZE3mrWSl6nivEbO8K3Mg+pBsdQUVCfn17lNT6MZ6Y9DtctyKw/LMqM1ciZXOpca
+        hKdZI68BeSD+XK70nsI5ZCJw4GMDe40fkBAcl+v17XreegmQmklGlQRHMLTSsRwnvOfZvX
+        nfGT5AiU77V0b3j3S7UjFFkroT28WQh/6IeH1N/XQcx3D4ySOBzjRbqKm8d6c+L+YS9Pkm
+        5IseG5QGYY0EDJ0GU+vnygm1oGrBYTVvU69t7ZDVehltRtgCavHGVVtKV7HBGPzhOKRwok
+        otG1wl0MpEhxDhBL+XCUvJ11zosQfdQ8fV/gGEvY6XJKB89JCKCJtOgBN6KM3g==
+Message-ID: <527f8050-7955-50b1-304c-617703cf99e6@amyspark.me>
+Date:   Wed, 2 Nov 2022 21:21:12 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:107.0)
+ Gecko/20100101 Thunderbird/107.0
+Subject: Re: [BUG] git format-patch incorrectly follows the mailmap when used
+ with --cover-letter
+Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org
+References: <cb90779b-edb0-1911-c8bd-a6c56203a201@amyspark.me>
+ <Y2MGyM3O7ljEZ4Hm@nand.local>
+From:   "L. E. Segovia" <amy@amyspark.me>
+In-Reply-To: <Y2MGyM3O7ljEZ4Hm@nand.local>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221102220142.574890-3-szeder.dev@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 02, 2022 at 11:01:41PM +0100, SZEDER Gábor wrote:
-> ---
->  line-log.c | 6 ++----
->  1 file changed, 2 insertions(+), 4 deletions(-)
+Hey,
 
-Looking good.
+The shortlog in the cover letter follows the active mailmap (incorrectly).
+The letter itself (From: header), as well as the patches, are attributed
+correctly.
 
-Thanks,
-Taylor
+Best,
+
+amyspark
+
+On 02/11/2022 21:09, Taylor Blau wrote:
+> On Wed, Nov 02, 2022 at 08:54:32PM -0300, L. E. Segovia wrote:
+>> What did you expect to happen? (Expected behavior)
+>>
+>> The cover letter should have tallied my commits and associate them with
+>> the current repository's user.name value.
+>>
+>> What happened instead? (Actual behavior)
+>>
+>> The cover letter follows my active mailmap and applies it when tallying
+>> the commits. There is no way to tell it not to.
+> 
+> Are you referring to the shortlog in the cover letter, the patches
+> themselves, or both?
+> 
+> As you note, there is no '--[no-]mailmap' option in format-patch, though
+> implementing one should be relatively straightforward.
+> 
+> Thanks,
+> Taylor
+
+-- 
+amyspark 🌸 https://www.amyspark.me
