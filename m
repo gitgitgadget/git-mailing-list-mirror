@@ -2,119 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68A65C433FE
-	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 01:54:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C42ECC4332F
+	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 02:10:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229553AbiKDByD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Nov 2022 21:54:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45886 "EHLO
+        id S229511AbiKDCKV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Nov 2022 22:10:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229492AbiKDByB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2022 21:54:01 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25AD822BD4
-        for <git@vger.kernel.org>; Thu,  3 Nov 2022 18:54:00 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id f27so9882388eje.1
-        for <git@vger.kernel.org>; Thu, 03 Nov 2022 18:54:00 -0700 (PDT)
+        with ESMTP id S231464AbiKDCJt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2022 22:09:49 -0400
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9311C284
+        for <git@vger.kernel.org>; Thu,  3 Nov 2022 19:09:42 -0700 (PDT)
+Received: by mail-io1-xd31.google.com with SMTP id r81so2859455iod.2
+        for <git@vger.kernel.org>; Thu, 03 Nov 2022 19:09:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=G+PB1Xa/PF7A22bYVo/1D2DbcdAC0KTM+moPPn5ima8=;
-        b=YA7ROgXnW3ZmVhFx4TG3wnieg2EQJx1gtc/hzLo8W71QyB++BWa8Y6Y6l7ZUqQBsxf
-         dQZlA2Bh+1FgpVfTa/xqwl9wTinOtfEAoxBW/RfJOimHQMrvYNNjh2YSRukbXPQZb3Mx
-         j79JVHIeNdb5oGIyN758EnC7DSt0zRFOnrglqrJXATlWnmwWqoLrHfocWt4zGEZ30i4c
-         RqcqYnOepDVXWDthKWcrrevLdzmbEZv3pUy4p6r5DlKivR4qToU2v3/zqIdAGq7Z6flQ
-         vOprjRre2oUlfVLYLHJDgCVJ5+4okPlleoosGgDyGdZXqqBt4UtA3MPpHtUZhRZJObQb
-         cGJw==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=wWgba8h6uJ2zZ/4j/Sk8Bc28bwVBOftZ9z+VOVkeqjY=;
+        b=OVtW+QN9a9OxMWMRXizX31nAsAeJYOHAKNwc+hLLqUhBzFaza8zSyc2a7O6rrrwlU/
+         g/Ac55A218o2pH101LHnHTAn4aawZFe3dGJysBwvAgX+QOIXdhNQesIM90fQkGARsxVz
+         vO91yGOLXDYjFsD/H23YvSN9H5DeuEAxzBRdPItWnAU2jIcCp28gqvafsZKh0mSIdtlI
+         MdaDphVPm9TU7sBdsX/PvsAhKAc+AKE6IRMrWv3uGTannWcn4q4pBrfkMn2XE5I3wPD8
+         CIrbeXm3FR16FpLJq3vT0g4FW9xhbRHrowV0UqVrn67hnPl1ziYpn8xa7clrn8suqK+y
+         s3GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=G+PB1Xa/PF7A22bYVo/1D2DbcdAC0KTM+moPPn5ima8=;
-        b=gAjmlY50wXbK7V+k4lAwj+i342FzLxQ93dj0Cx4dDKU0UAjfsP7Rrgaycexut6cr5c
-         NqgZz76b5A1V7R1yz848l6IxgsS3GHSH0EDdlBaGNBgqyIZ0QfXdQb0KS/MFow2sTSHK
-         v9wXZMYNQlq4HTMYXTa18VkZJ9o/dwGlcR5BPsVVag92SlrlTjcnCDSSCuDVPmP8QiPL
-         z2LzGsualpKLRys+A1Pcofb1FkYYcEWS7ev8OG5Z036xqyKkQDuE5JDVlgQZe/j2J/h/
-         6D6SjfjI9DDFevC1OOOPVDNrl1/46DoeBNOU9COytilkAdTOPQUEDjrZY/V+ewmP6T93
-         KfYA==
-X-Gm-Message-State: ACrzQf0KA3+ddNQq1ruThklC210wdtQUblsUDzYTF64kwog3py1Vhbss
-        V525PWWVaIOMEDqWOImKvumbAGyXrnblfA==
-X-Google-Smtp-Source: AMsMyM55qJuItzQyU0NY+WUrSe06Jkt6GGwkv9xX88UEzhZ3vjOp0y5FBhhB+K0sqA5XieLFP1kG8A==
-X-Received: by 2002:a17:907:31c7:b0:740:e3e5:c025 with SMTP id xf7-20020a17090731c700b00740e3e5c025mr32578202ejb.341.1667526838610;
-        Thu, 03 Nov 2022 18:53:58 -0700 (PDT)
-Received: from gmgdl (j84064.upc-j.chello.nl. [24.132.84.64])
-        by smtp.gmail.com with ESMTPSA id qq18-20020a17090720d200b007add62dafb7sm1165937ejb.5.2022.11.03.18.53.58
+        bh=wWgba8h6uJ2zZ/4j/Sk8Bc28bwVBOftZ9z+VOVkeqjY=;
+        b=hee0KIerE2dRSqtGbYpawvUwuRLyziebVguvHUrbRbldJKl/ohD2gY9BTVOjgktXch
+         BV2ebopfyVN9nZsWv4yhQV073oqujXTk95DFym9GX/qYWGqzMF4doPBp4AluUWyqwjpS
+         uEamEjeJ2FrAaE3ENtpfSpuvC708zb+UrGLFdSYWlLgLVjvuXfBHV13qup1Ivm6W2mbh
+         cFb0lZSrbW5cWJuRC8WJODONKwP00wAKkzsa1fVI+Q3yEARhKxD1I89svOI/vdBQz/Sd
+         nPnzSYHc0rgMiAP+vOejBiMdoblYr60z1M4BDhJEcv3fobOpGy5Cwg8azzp8+CF9Ni70
+         1iwg==
+X-Gm-Message-State: ACrzQf2wM7FKHd7Fr5hOn30336VthuusVmd4FP05ADOnT3Dqgi4zk2Y5
+        B3WzNuvnz0pmj/+exHyWY7VgFWKIx3NouTTC
+X-Google-Smtp-Source: AMsMyM64oO+UZOOXIK6ABHywA96DZsoxmSTEfeoSpCNJoVYAnK9TCXWmH4h7HEhpeDD7CmaEm2J3PA==
+X-Received: by 2002:a02:662a:0:b0:36e:6349:17c0 with SMTP id k42-20020a02662a000000b0036e634917c0mr20480060jac.183.1667527780626;
+        Thu, 03 Nov 2022 19:09:40 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id u126-20020a022384000000b00363b8ef4bc5sm753741jau.71.2022.11.03.19.09.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Nov 2022 18:53:58 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oqlu9-00D2N9-1a;
-        Fri, 04 Nov 2022 02:53:57 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        Thu, 03 Nov 2022 19:09:39 -0700 (PDT)
+Date:   Thu, 3 Nov 2022 22:09:38 -0400
+From:   Taylor Blau <me@ttaylorr.com>
 To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 Subject: Re: [PATCH] ci: avoid unnecessary builds
-Date:   Fri, 04 Nov 2022 02:46:23 +0100
+Message-ID: <Y2R0YrQzKaUZzaPB@nand.local>
 References: <pull.1404.git.1667482458622.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <pull.1404.git.1667482458622.gitgitgadget@gmail.com>
-Message-ID: <221104.86bkpnzdqi.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1404.git.1667482458622.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Nov 03, 2022 at 01:34:18PM +0000, Johannes Schindelin via GitGitGadget wrote:
+>  .github/workflows/check-whitespace.yml | 5 +++++
+>  .github/workflows/l10n.yml             | 5 +++++
+>  .github/workflows/main.yml             | 5 +++++
+>  3 files changed, 15 insertions(+)
 
-On Thu, Nov 03 2022, Johannes Schindelin via GitGitGadget wrote:
+Very nice. For my own workflow, I'll often do something like:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Whenever a branch is pushed to a repository which has GitHub Actions
-> enabled, a bunch of new workflow runs are started.
->
-> We sometimes see contributors push multiple branch updates in rapid
-> succession, which in conjunction with the impressive time swallowed by
-> even just a single CI build frequently leads to many queued-up runs.
->
-> This is particularly problematic in the case of Pull Requests where a
-> single contributor can easily (inadvertently) prevent timely builds for
-> other contributors.
+  - work on a topic
+  - decide that the topic is ready for submission, so push it to GitHub
+  - while running `git rebase master -x 'make -j40 DEVELOPER=1 test'`, I
+    notice that an earlier patch is broken, so fix it
+  - push the (updated) topic out
 
-The "timely" being an issue in git/git and/or gitgitgadget where CI time
-is a shared resource, but not in a <someuser>/git running CI just for
-<someuser>?
+...and before preparing the rest of the series for submission, I'll
+cancel any in-progress runs, the results of which I no longer care
+about.
 
-> To help with this situation, let's use the `concurrency` feature of
-> GitHub workflows, essentially canceling GitHub workflow runs that are
-> obsoleted by more recent runs:
-> https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#concurrency
+It sounds like this does exactly that automatically, making older runs
+obsolete by newer ones.
 
-In my own fork I very much use this concurrency not-cancel-in-progress
-intentionally.
-
-I.e. I'll run local tests, but also occasionally push to CI
-(particularly when I know I have bad local coverage).
-
-But that's very much an async process, sometimes I'll look at the
-(hopefully finished by then) CI in the morning.
-
-E.g. now I have a re-pushed branch where the last tip it was at is still
-running CI, but it's waiting just the ASAN job.
-
-Having that breadcrumb trail of "green" CI is very helpful, i.e. push
-every hour or so with something WIP, and be able to eventually see when
-things went wrong, if they went wrong.
-
-We have CI config for other such stuff, but I think it's probably hard
-to use in this case, as this involves cancelling the *other* job, not
-cancelling ourselves. So by the time we're past the config stage is when
-we might want to cancel.
-
-But doesn't this support the "if" syntax to narrow this down to the
-relevant repos where this would help, while leaving those forks where it
-isn't an issue to enact their own policy?
-
+Thanks,
+Taylor
