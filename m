@@ -2,186 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6F7DC43217
-	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 13:17:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FC6DC433FE
+	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 13:26:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231955AbiKDNQ7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Nov 2022 09:16:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49954 "EHLO
+        id S229823AbiKDN0L (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Nov 2022 09:26:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232021AbiKDNQz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Nov 2022 09:16:55 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14CB412AF1
-        for <git@vger.kernel.org>; Fri,  4 Nov 2022 06:16:53 -0700 (PDT)
-Received: (qmail 18958 invoked by uid 109); 4 Nov 2022 13:16:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 04 Nov 2022 13:16:53 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29993 invoked by uid 111); 4 Nov 2022 13:16:53 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 04 Nov 2022 09:16:52 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 4 Nov 2022 09:16:52 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [RFC PATCH] fetch: stop emitting duplicate
- transfer.credentialsInUrl=warn warnings
-Message-ID: <Y2UQxGqE9wXYVrTs@coredump.intra.peff.net>
-References: <pull.1399.git.1667245638.gitgitgadget@gmail.com>
- <RFC-patch-1.1-0266485bc6c-20221031T204149Z-avarab@gmail.com>
- <Y2CFRJLFRXvGwFBC@coredump.intra.peff.net>
- <Y2Doe0ZGb3Zmmmen@coredump.intra.peff.net>
- <221101.86o7tq4vsn.gmgdl@evledraar.gmail.com>
- <Y2GI0R6pJmdZNgHn@nand.local>
- <221101.8635b24959.gmgdl@evledraar.gmail.com>
- <Y2IoEN6NHqj2Qisa@coredump.intra.peff.net>
- <221104.8635azysw7.gmgdl@evledraar.gmail.com>
+        with ESMTP id S231708AbiKDNZk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Nov 2022 09:25:40 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BC392F024
+        for <git@vger.kernel.org>; Fri,  4 Nov 2022 06:24:54 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id kt23so13217648ejc.7
+        for <git@vger.kernel.org>; Fri, 04 Nov 2022 06:24:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yQ4DAsrgGzfJtjqGFEy9kTYbLyQji1nWsv6KBs5cbWc=;
+        b=IAAV42RIDh1yuuhsOjSVlOGEe0Gzb1RDuUfRjxHUpn9aAQCMtzLF8zAF8lAnw5w1x6
+         wm/BYUY3/3JZ3FekgyWfKQcMi8vmk0pgGwE9jLvMRJ9XXXpU1aVb6W+ZPO0CW+YLMzlw
+         CAdw+YBmSyTOxAgb30MBqzrlyET1gTssWP6q+v0gcySXGPQ1Ja44XBk2iQNl6DMSRySV
+         YIJyJaUCPtCQ3qXtH8UXurPGyJTl55seGE3HpgbQARUZ4H9dqEEuZKHODL+q4ihnWv56
+         drg2DLyuQkrnPkA8nAbcXAA/DWkQCLkGLH1HFz6LTDw4nkvDlsR9q20LxSRPWmtq5pUR
+         FoBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yQ4DAsrgGzfJtjqGFEy9kTYbLyQji1nWsv6KBs5cbWc=;
+        b=BOuHjPucf4gco8P6T8ICAMB+zy5vonI5Wrwxmm1U0kYo2q4VJkofs3KSaZgL0X5Yj4
+         v7iUjU+qeclZl+IKsp5Hx+GOxBCTYlFi+Zpgcx4rzjspx4Bi5iPHAVaQJe3y/gay+Msz
+         iAJAqZ6u/sR9W4rADaifrzhDm+as4lug/UOUyt4i1UL6wGEr2lZTw9r8+WdR/daXQjYL
+         uNmD1aJk/eQP6OaH+tbjKafyIyE2h/kpdtxEz7+8ws31Mhn6Cmh1kjPxjfj/E02KGO9P
+         5cKLzbHVzvXHzvrTzOKVndiLkgYpYNqOKwB7UjLcOmWURNUxolGdSDvjaZnfG4oEFLPH
+         uH2A==
+X-Gm-Message-State: ACrzQf1sv+LnVrvlD0dv244DSJZ0siCSI14D+SZfnru5a/BUj9qp+BlY
+        lL93d2+fbI93oxbZ3ktIaog96Kur9Q/vig==
+X-Google-Smtp-Source: AMsMyM7XQ3fPT/AASLl+d6VGbmkkIx3bJN90gl5vaVl6MNxxuRAq23Djf8sXig0djK2N6NK8C0Yo8A==
+X-Received: by 2002:a17:907:1ca2:b0:7ad:e51b:3c7a with SMTP id nb34-20020a1709071ca200b007ade51b3c7amr22957761ejc.665.1667568292866;
+        Fri, 04 Nov 2022 06:24:52 -0700 (PDT)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id 6-20020a170906318600b007ae38d837c5sm652979ejy.174.2022.11.04.06.24.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Nov 2022 06:24:52 -0700 (PDT)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?Luk=C3=A1=C5=A1=20Doktor?= <ldoktor@redhat.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 00/13] bisect: v2.30.0 "run" regressions + make it built-in
+Date:   Fri,  4 Nov 2022 14:22:37 +0100
+Message-Id: <cover-00.13-00000000000-20221104T132117Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.38.0.1452.g710f45c7951
+In-Reply-To: <1cb1c033-0525-7e62-8c09-81019bf26060@redhat.com>
+References: <1cb1c033-0525-7e62-8c09-81019bf26060@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <221104.8635azysw7.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 04, 2022 at 10:01:00AM +0100, Ævar Arnfjörð Bjarmason wrote:
+This fixes the regression Lukáš Doktor reported in [1], and also gets
+us the full way to a builtin/bisect.c and "git rm git-bisect.sh".
 
-> > But you mentioned submodules in your other mail. And you're right that
-> > the patch I showed doesn't handle that (it would need to add the new
-> > variable to local_repo_env). It seems like yours should work because
-> > CONFIG_DATA_ENVIRONMENT as part of local_repo_env. But I don't think it
-> > actually does; in prepare_other_repo_env(), we retain the variables for
-> > config in the environment, so that:
-> >
-> >   git -c foo.bar=whatever fetch
-> >
-> > will override variables in both the superproject and in submodules.
-> 
-> Replying to your main point below, just an aside on this:
-> 
-> To be clear I'm not saying it would handle it sensibly now, but just
-> that if we're using env vars to communicate to sub-processes then using
-> CONFIG_DATA_ENVIRONMENT seems better to me.
-> 
-> Because even if we're getting it wrong now, then surely that's something
-> we're probably getting wrong in more than one place.
-> 
-> So e.g. if we set an env var "for ourselves", i.e. "pull->fetch" then we
-> could detect that condition in run_command(), and if we then spot that
-> we're carrying an env variable we set earlier up the chain reset it
-> before we spawn a submodule.
-> 
-> Whereas if it's all custom env variables here & there we'll need to add
-> all that special-casing in.
+Only 1-4/13 here are needed to fix the "git bisect run <cmd> [...]
+--log" regression Lukáš reported, but as Jeff points out we'd still
+conflate "--bisect-*" with the user arguments. That's fixed in 11/13
+here.
 
-The idea is that local_repo_env carries that information, and everybody
-uses it. So yes, it would have to know about the custom env variables,
-but then any place which enters another repo learns about it "for free".
-But using CONFIG_DATA_ENVIRONMENT for this doesn't work, because we
-don't actually clear it when moving between repositories.
+The 1-4/13 here also fixes other but probably more minor "git bisect
+run" regressions in v2.30.0, we changed the output in a few ways
+without intending it. 4/13 gets us mostly back to v2.29.0 behavior,
+5/13 keeps the best of it and the current output.
 
-And in the example I showed, I used a config variable that was specific
-to this particular problem. But if there were a lot of these, it really
-could be:
+I think for the v2.30.0 regressions we're better off with just
+something like 1-4/13 here for now, and possibly 5/13 too.
 
-  GIT_CHECKED_AND_WARNED='remotes some-other-subsytem etc'
+But getting to the point of fixing the root cause of "--bisect-*"
+being conflated is going to take quite a bit of churn. In the
+side-thread Đoàn's diffstat is on the order of 1/2 of the size of this
+series, and this gives us built-in "bisect".
 
-so that all of them were shoved into one variable, and parsed. But we
-can do the simplest dumb thing for now, because none of this is a public
-interface we need to support across versions. We could move from one to
-the other later.
+The 6-13 here is something I had already for a couple of days, I was
+seeing if I could distill Johannes's [2] down to something much
+smaller, to just make a beeline towards a built-in bisect.
 
-> But, and maybe I'm still not getting it, but the "use a different env
-> var" isn't actually the important part, i.e. these would behave the
-> same after the initial "warn":
-> 
-> 	-c transfer.credentialsInUrlWarnedAlready=true
-> 
-> And:
-> 
-> 	GIT_CHECKED_AND_WARNED_ALREADY=1
-> 
-> But not what I was suggesting:
-> 
-> 	# conflated with a later "die"
-> 	-c transfer.credentialsInUrl=allow
+Johannes's refactors the "term" passing in [3], and Đoàn ends up
+needing to do much the same in [4].
 
-Right. The important thing is not that it's in a different env variable
-in particular, but that it _isn't_ using the same config variable that
-the user would set.
+Here in 9/13 I instead just extend the OPT_SUBCOMMAND() API so it's
+able to accept function callbacks with custom signatures, which
+eliminates the need for most of that refactoring. 11/13 then makes use
+of it.
 
-But once you are not using that same config variable, the question is:
-do you want it put in with the config data or not? And I think we have
-seen that putting it with the config data is not going to work. We don't
-clear those environment variables when moving between repositories.
+1. https://lore.kernel.org/git/1cb1c033-0525-7e62-8c09-81019bf26060@redhat.com/
+2. https://lore.kernel.org/git/pull.1132.v6.git.1661885419.gitgitgadget@gmail.com/
+3. https://lore.kernel.org/git/92b3b116ef8f879192d9deb94d68b73e29d5dcd6.1661885419.git.gitgitgadget@gmail.com/
+4. https://lore.kernel.org/git/081f3f7f9501012404fb9e59ab6d94f632180b53.1667561761.git.congdanhqx@gmail.com/
 
-Now obviously if the env-clearing code knew which config variables were
-to be cleared and which not, it could do so. But why introduce that
-complexity, when you can just stick all the stuff that should be cleared
-into a new variable (and again, that can be _one_ variable for all of
-this stuff).
+Johannes Schindelin (3):
+  bisect--helper: remove dead --bisect-{next-check,autostart} code
+  bisect--helper: make `state` optional
+  Turn `git bisect` into a full built-in
 
-> But all suggested variants of this (mine and yours) are going to get
-> e.g. the case where the submodule also wants "warn". I.e. it's not
-> enough that we're saying "warned already".
-> 
-> That gets us past conflating an existing "warn" with a "die", but now we
-> can't tell a submodule "warn" from a superproject "warn".
-> 
-> For that we'd basically need to do:
-> 
-> 	-c transfer.$(<make path to .git, or other "unique repo id>).credentialsInUrl=allow
-> 
-> Or another similar mechanism, of course the most sane one to be to not
-> be playing this game at all, but to just ferry this state e.g. with
-> "--do-not-warn-about-this-repo" to our own children, which we'd not add
-> to the command-lines when we know we're spawning a hook, or doing the
-> submodule "pull/fetch".
-> 
-> Does that all seem right?
+Ævar Arnfjörð Bjarmason (10):
+  bisect tests: test for v2.30.0 "bisect run" regressions
+  bisect: refactor bisect_run() to match CodingGuidelines
+  bisect: fix output regressions in v2.30.0
+  bisect run: fix "--log" eating regression in v2.30.0
+  bisect run: keep some of the post-v2.30.0 output
+  bisect test: test exit codes on bad usage
+  bisect--helper: emit usage for "git bisect"
+  bisect--helper: have all functions take state, argc, argv, prefix
+  parse-options API: don't restrict OPT_SUBCOMMAND() to one *_fn  type
+  bisect--helper: convert to OPT_SUBCOMMAND_CB()
 
-That seems much more complicated. Again, why bother stuffing this extra
-context information into a config variable, just to work around the fact
-that config isn't cleared between repositories, when there is already a
-simple mechanism for clearing state when switching repositories?
+ Makefile                               |   3 +-
+ builtin.h                              |   2 +-
+ builtin/{bisect--helper.c => bisect.c} | 250 +++++++++++++------------
+ git-bisect.sh                          |  84 ---------
+ git.c                                  |   2 +-
+ parse-options.c                        |   9 +-
+ parse-options.h                        |  31 ++-
+ t/t6030-bisect-porcelain.sh            | 109 +++++++++++
+ 8 files changed, 277 insertions(+), 213 deletions(-)
+ rename builtin/{bisect--helper.c => bisect.c} (86%)
+ delete mode 100755 git-bisect.sh
 
-All that said, the implementation of this whole warning seems really
-weird to me. If we want to warn about using such a URL, then we should
-do it at the point of use. From the original commit message, the only
-reason it was put where it is was to avoid sigpipe when the remote
-helper dies. The solution there seems to be "have the helper die in a
-less abrupt way".
+-- 
+2.38.0.1452.g710f45c7951
 
-And TBH, I'm skeptical of the whole feature. I don't see the point in
-even warning somebody about:
-
-  git fetch https://username:password@example.com
-
-Maybe it's bad practice (though with password stand-ins like
-restricted-access tokens, it isn't always), but at the point the user
-has invoked git, there's nothing else bad that happens by doing what
-they asked for.
-
-What _is_ potentially bad is using that URL for cloning, because we then
-write the credential in plaintext to the config file. And a better
-solution there is probably to issue a warning, clone anyway, and then
-omit the password from what we write into config. A follow-on fetch
-would fail, but that is not any worse than the "die" mode of this
-current config option.
-
-There were even patches we discussed a few years ago:
-
-  https://lore.kernel.org/git/20190517222031.GA17966@sigill.intra.peff.net/
-
-I think the only really contentious part was the third one, which tried
-to do so automagic with credential helpers. If we skipped that, then the
-mode given by patches 1+2 seems strictly better than anything this
-transfer.credentialsInUrl option provides.
-
--Peff
