@@ -2,169 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 75370C4332F
-	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 11:25:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A58D8C4332F
+	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 11:37:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231643AbiKDLZy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Nov 2022 07:25:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49316 "EHLO
+        id S230194AbiKDLh0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Nov 2022 07:37:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55434 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231605AbiKDLZx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Nov 2022 07:25:53 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 035DD286C0
-        for <git@vger.kernel.org>; Fri,  4 Nov 2022 04:25:52 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id k2so12491520ejr.2
-        for <git@vger.kernel.org>; Fri, 04 Nov 2022 04:25:51 -0700 (PDT)
+        with ESMTP id S229481AbiKDLhY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Nov 2022 07:37:24 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 427B925EBF
+        for <git@vger.kernel.org>; Fri,  4 Nov 2022 04:37:23 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id l14so6688830wrw.2
+        for <git@vger.kernel.org>; Fri, 04 Nov 2022 04:37:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7HZTxOf6eHsTjbfVbBig0VTOEo8AdR1PcrB82q1epE8=;
-        b=LxDwVtK+Mpj7J7+Pn7XI17sa2wxl25m4fwP08JeQ5DulLFZTN48znGiUrEPnOyv2oy
-         WZJ5Vba+ulAz2lINx9So4orMhpnq4rzOFhKaMXJO4bRs2SDTQQM8Ii8SqbtjpNDS76Tp
-         /+xb5umTDwDy/BTUecutqmaXmIKCdhW+E6H1jAqQcl/rl2aHOtTp/Ryzf58NrDJAh0h7
-         fq+Z4AkZLNjG4o1/Q7aNkY7xnOTX+hMZ/m8x3cK5Dfw/09FSKIYu45JtEFuMEVlAlwwF
-         7sOeCnmGS9fcjWWpi+BHbVpKsuV/SCXRzQfeFlm9sBCcg4OgIZVcR3drYMqqqJDD/jAG
-         yG2Q==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=FuucHG4g6AWjsGAHVSwtsJSfM5XiwfYOpASL83DlzNw=;
+        b=gBPthFxq4pHgh8Is7IW8lxROhccGqiZYqM7HQrWKVybNhQ6ybAZw9cT6ATaV9IbEDs
+         cLqKm8Bdmu7gI9suGKy+u6t8DuRVO/64Svx9EQdiRhWDhTlTCp5g+rGuWIfm4HxmO0kW
+         cqhL6CFL63Vumv3/hPWXfxjfnHo4NELVlduOqRrtARK+xl5VArFboo6uLLsM5kL7VLRL
+         AVkZihNJLpUehcP9YSlpEv5WavlJTf08X4NlhuHWpGfM0zAKTlEFr8gRrcK2GAuM6tvb
+         GMEVBUy+SMVem5oychsF1l5SpRZVOA8AB1wseEAhWa0QnZXPnof+xAoppb6ce+W040Jz
+         WzfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7HZTxOf6eHsTjbfVbBig0VTOEo8AdR1PcrB82q1epE8=;
-        b=LYuf1lcPZikXeWWD4pMUc33h+083EjsOYj9IGFUh044pxoZ1UrguCusCdSe6E7RHe9
-         t3rg0cI7rzlahJ0kERRfKR5nUXiYkObVBdCAnPd3GX5qeSTpYU47+0CK0+zA/8CuLK8M
-         6hzK32eOHjZ0PIEe0tc+drrKrtkDrYDLxYV37ulxorbZ0jQXd9ogy2ThqSqwxQu1i0VN
-         2bW4+YWnqhaB5aiLyTPe0zGAOkDkRGbYL18juOSaf5YmIzDrWV13wZLDyxIuWB9szvr9
-         jNqLi/QcDhrqTjStfsdcCY6bTWbj2TXRi5/SzNvnCze2VbuGnHi5We86DsMrOv04IS+2
-         P+bQ==
-X-Gm-Message-State: ACrzQf2tWjxXwvedlHAoxwsMZHhOMZq7EglZuLRm70Li3pYz7x/nnyIj
-        fJ4b0fUhHc//8QNBq/s1YSBXgJwt4/9sypjLLHk=
-X-Google-Smtp-Source: AMsMyM4QJmtqNZXB/iBR59d6AwVI7tY2Wlv98Dje65VWwGe9vZ0xSk9GbhY0IleLKag6qr/sw3hlrOPBxfTNi0f1GBE=
-X-Received: by 2002:a17:907:e93:b0:7ad:923a:5908 with SMTP id
- ho19-20020a1709070e9300b007ad923a5908mr34574577ejc.396.1667561150312; Fri, 04
- Nov 2022 04:25:50 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=FuucHG4g6AWjsGAHVSwtsJSfM5XiwfYOpASL83DlzNw=;
+        b=ncwxy1i/sa1pOXAyQNdY2WV7tVRndrJaPpzR8PeV/t9aoouSgdFnIOzSnHPe6DMktL
+         CwGMrZKpXfJTu4cEeRucnBXlROd6SujjYip9bYXPWdVroM4DxIdeWbNfR0GhwKgypK6B
+         HnY+ZulVqyj/Ranq4kBqeCDsGVddVjvmzGY5cUtoqLgy3VYMwkZvsB1cZnprfHzCBA1L
+         YSIewNVgp2J3wyOlhPsSA1pwSDCYL2RN6wmTQW3qidHEau5ITFXMzlmaV1DVAK1mvJyT
+         gzXZO7kiQnHJrd+hqoW3HW8YGBnZlkm8ssDzm7smjuqayInrZeNoV8cVeMGoaBFZAn2Y
+         uzvg==
+X-Gm-Message-State: ACrzQf0JK6c8DiHaZa9Y3f4YPndl/sUT/AiI29QOQOwiKUHbbOW1qGu0
+        +O/M0NXyOpMCcDdMt4KHghU=
+X-Google-Smtp-Source: AMsMyM4lDOjkGehfho8RSS89s3Y/fCW42ueQvW5YAeUQh4qANUUSy5pRDh3vcN4yHdbm9NZfYkilig==
+X-Received: by 2002:adf:e4cb:0:b0:236:dce2:3604 with SMTP id v11-20020adfe4cb000000b00236dce23604mr14437875wrm.525.1667561841674;
+        Fri, 04 Nov 2022 04:37:21 -0700 (PDT)
+Received: from gmgdl (j99119.upc-j.chello.nl. [24.132.99.119])
+        by smtp.gmail.com with ESMTPSA id n35-20020a05600c502300b003c6b874a0dfsm3352629wmr.14.2022.11.04.04.37.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Nov 2022 04:37:20 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oqv0i-000Ah1-0Q;
+        Fri, 04 Nov 2022 12:37:20 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?THVrw6HFoQ==?= Doktor <ldoktor@redhat.com>,
+        Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+Subject: Re: "git bisect run" strips "--log" from the list of arguments
+Date:   Fri, 04 Nov 2022 12:36:12 +0100
+References: <1cb1c033-0525-7e62-8c09-81019bf26060@redhat.com>
+ <Y2TfUFkLUa2tHdS7@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <Y2TfUFkLUa2tHdS7@coredump.intra.peff.net>
+Message-ID: <221104.86zgd7x85r.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.1401.git.1667471194097.gitgitgadget@gmail.com> <221103.86eduk1bcw.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221103.86eduk1bcw.gmgdl@evledraar.gmail.com>
-From:   James McCandlish <jdm12989@gmail.com>
-Date:   Fri, 4 Nov 2022 07:25:37 -0400
-Message-ID: <CALwerKjpvH6V6httS9J5ws8=-n-ra7Lma4X4LHSSBLhVejp6bA@mail.gmail.com>
-Subject: Re: [PATCH] documentation: update git-submodule documentation
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     James via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry about the confusion. Just so I'm 100% clear: the
-`submodule.<name>.update` referencing a gitconfig and not gitmodules?
 
+On Fri, Nov 04 2022, Jeff King wrote:
 
-On Thu, Nov 3, 2022 at 8:17 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
+> On Fri, Nov 04, 2022 at 07:31:26AM +0100, Luk=C3=A1=C5=A1 Doktor wrote:
 >
+>> Steps to Reproduce:
+>>=20
+>> 1. git bisect start BAD GOOD
+>> 2. git bisect run ./myscript arg1 --log arg2 --log -- arg3 --log arg4
+>>=20
+>> Results with 2.34.1:
+>>=20
+>>     running  './myscript' 'arg1' 'arg2' '--' 'arg3' '--log' 'arg4'
+>>=20
+>> Results with 2.33.0:
+>>=20
+>>     running ./myscript arg1 --log arg2 --log -- arg3 --log arg4
 >
-> On Thu, Nov 03 2022, James via GitGitGadget wrote:
+> Thanks for an easy reproduction recipe. I used this as an easy-to-see
+> test case, which works in any repo:
 >
-> > From: James <jdm12989@gmail.com>
-> >
-> > Removes reference to custom code execution which is called out by
-> > gitmodules as not allowed.
-> >
-> > Signed-off-by: James <jdm12989@gmail.com>
-> > ---
-> >     Update git-submodule.txt
-> >
-> >     Remove info about custom commands being allowed in the submodule up=
-date
-> >     command to align with the gitmodules docs which states "For securit=
-y
-> >     reasons, the !command form is not accepted here."
-> >
-> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1401%=
-2FEnochPrime%2Fsubmodule-docs-v1
-> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1401/Eno=
-chPrime/submodule-docs-v1
-> > Pull-Request: https://github.com/gitgitgadget/git/pull/1401
-> >
-> >  Documentation/git-submodule.txt | 6 ------
-> >  1 file changed, 6 deletions(-)
-> >
-> > diff --git a/Documentation/git-submodule.txt b/Documentation/git-submod=
-ule.txt
-> > index 4d3ab6b9f92..b40ac72f753 100644
-> > --- a/Documentation/git-submodule.txt
-> > +++ b/Documentation/git-submodule.txt
-> > @@ -163,12 +163,6 @@ checked out in the submodule.
-> >  The following 'update' procedures are only available via the
-> >  `submodule.<name>.update` configuration variable:
-> >
-> > -     custom command;; arbitrary shell command that takes a single
-> > -         argument (the sha1 of the commit recorded in the
-> > -         superproject) is executed. When `submodule.<name>.update`
-> > -         is set to '!command', the remainder after the exclamation mar=
-k
-> > -         is the custom command.
-> > -
-> >       none;; the submodule is not updated.
-> >
-> >  If the submodule is not yet initialized, and you just want to use the
+>   git bisect start HEAD HEAD~2 >/dev/null 2>&1
+>   git bisect bisect run echo --log 2>&1 | grep running
 >
-> Hrm?
+>> Is this expected? In https://bugzilla.redhat.com/show_bug.cgi?id=3D21398=
+83 Todd suggested it might be related to
+>>=20
+>>     d1bbbe45df (bisect--helper: reimplement `bisect_run` shell function =
+in C, 2021-09-13)=20
+>>=20
+>> but I haven't tried it myself.
 >
->         diff --git a/builtin/submodule--helper.c b/builtin/submodule--hel=
-per.c
->         index a7683d35299..80e897d5f29 100644
->         --- a/builtin/submodule--helper.c
->         +++ b/builtin/submodule--helper.c
->         @@ -2247,6 +2247,7 @@ static int run_update_command(const struct =
-update_data *ud, int subforce)
->                 case SM_UPDATE_COMMAND:
->                         cp.use_shell =3D 1;
->                         strvec_push(&cp.args, ud->update_strategy.command=
-);
->         +               BUG("unused??");
->                         break;
->                 default:
->                         BUG("unexpected update strategy type: %d",
+> Yes, it bisects to that commit. +cc Christian, who mentored this gsoc
+> project.
 >
-> Will show you that this is used, i.e. this failure in
-> t7406-submodule-update.sh:
+> I think the problem is that we are now feeding the arguments to
+> parse_options() in git bisect--helper, and it doesn't realize that it
+> needs to stop after seeing that we are in "run" mode.  And because
+> "--log" is an option to git-bisect--helper (it is the opposite of
+> "--no-log"), it is consumed there.
 >
->         [...]
->         + cd super
->         + git config submodule.submodule.update !git checkout
->         + cd super/submodule
->         + git reset --hard HEAD^
->         HEAD is now at 0c90624 upstream
->         + cd super
->         + cd submodule
->         + compare_head
->         + git rev-list --max-count=3D1 main
->         + sha_main=3D0c90624ab7f1aaa301d3bb79f60dcfed1ec4897f
->         + git rev-list --max-count=3D1 HEAD
->         + sha_head=3D0c90624ab7f1aaa301d3bb79f60dcfed1ec4897f
->         + test 0c90624ab7f1aaa301d3bb79f60dcfed1ec4897f =3D 0c90624ab7f1a=
-aa301d3bb79f60dcfed1ec4897f
->         + git submodule update submodule
->         BUG: builtin/submodule--helper.c:2250: unused??
->         Aborted
+> As you noticed, the "--" stops parsing, so the one between "arg3" and
+> "arg4" is preserved.
 >
-> I think what you may be confused by is that this isn't allowed in the
-> in-tree .gitmodules file, and indeed you can see another BUG() in
-> determine_submodule_update_strategy() for a panic if we'd ever get as
-> far as reading "command" from there.
->
-> But that's not what this part of the docs dicsusses, as the paragraph
-> shown above the removed lines in the context notes.
+> It feels like the invocation of bisect--helper ought to be passing "--"
+> itself to indicate the end of options, like:
 
+Normally you'd be righ, but there's a much easier way to do it in this
+case: cherry-pick
+https://lore.kernel.org/git/05262b6a7d1b20a0d2f2ca2090be284ffb8c679c.166188=
+5419.git.gitgitgadget@gmail.com/
 
+I.e. we're eating "--log" in particular, but could just stop
+understanding that option.
 
---=20
-James McCandlish
+I'll submit alternate fixes for this soon, I've been poking at various
+"bisect" behavior changes, and the commit that rewrote "run" introduced
+a few other regressions....
