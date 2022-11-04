@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F315C4332F
-	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 13:26:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 402B0C4332F
+	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 13:26:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231657AbiKDN0g (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Nov 2022 09:26:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53714 "EHLO
+        id S231693AbiKDN0j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Nov 2022 09:26:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231772AbiKDNZt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Nov 2022 09:25:49 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34AA82F65D
-        for <git@vger.kernel.org>; Fri,  4 Nov 2022 06:25:01 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id d26so13190271eje.10
-        for <git@vger.kernel.org>; Fri, 04 Nov 2022 06:25:01 -0700 (PDT)
+        with ESMTP id S231890AbiKDNZx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Nov 2022 09:25:53 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A7A52FFD2
+        for <git@vger.kernel.org>; Fri,  4 Nov 2022 06:25:03 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id x2so7610576edd.2
+        for <git@vger.kernel.org>; Fri, 04 Nov 2022 06:25:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OkZFJLlIobhwxBHNPNoAYqsmk5sNPFxCsyBx9XMhH7E=;
-        b=HasEB9nitQFlpOe8BJjh8qNdJ0JcMgffWuzJ91+FzBI3gTyRStz5n+YZ05IjXAOqNP
-         gIPzKA6IQryqdeDKXJxaHjBhdzdUTBkAijLkZfrNLRnE5aqrQPm+NxctjqUfrjyE552W
-         4YWEXAVvfP/KyBeoGEVm7dmhf1XNAsxQuA3ZJiLh28LN6gnU6GjkzxQpT6LZgGIhTuVp
-         z+xd9ftWQpuQSkiUw/Olo4iTRfE2WzjYkPIo1f+zH0Nba1Y5DpJpvHoa14+AsKoD5xKx
-         5aZWWbz/WbDFy0Me0cfHpYMlrBFLzYYPgvsBM9OUINi5ejpslM755TN5azWtxEGSW1fM
-         gYZQ==
+        bh=qKusFQLb1DWa/HlXidk0/KiTUv3NQWC6oGAaBfVspaI=;
+        b=ODdwbIt7BrTbmrNmG5RMvUvc8oJxH6o7ufRIYH7FKTrQ9LsR73vUYI3O01UMzLO2pW
+         2iumeVqelh8LNp5GSHAJQGxuqW8fxS2LPZNHnf299XgdhOl+krxvdQpvbCz6+aUHsGA7
+         XVpqo+K+Osd112d1L1jkk9mz0b7JUAn7a99vizEOamPXp3GfKRCN+kgmxbV3OC/QR/ry
+         m983ejmCJ5KmfrgRZuv/i2vDCayiuHZ+lNz7nVtf6bzS+w0iPjCsSkoDzsgSNEqjdnkR
+         NXI2tDIymWurnTwarM0rt/ogtD4aJao43fYvT8s+Lf9r+PgLQ8hIxu5Cf+A1zN9ZTmkP
+         jCtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OkZFJLlIobhwxBHNPNoAYqsmk5sNPFxCsyBx9XMhH7E=;
-        b=B6q4OtSbpab+t7n06SkqGaAziFDyb3Mon0BDjHOAukG/FGKzY1EamvgeCiFw6uQwyK
-         bEz5rIIbX0Dr2pEktTI1dtVMyTF4wau8aemC9y59Ib0Qo7M8XIN68VVUZWX5GxM8AsBG
-         hXrTNfQ7+AIteOLcwqfl5Rxcdf+hnJm8eRJUcc0vzmguoFxW7rvAEegwiY7dWt2Z0d9F
-         aRCZKDMR3dt4Lz/uCjKY1/U/oBtaiL84LG+JrxaKXvdp3rN7+j/fW2uJ0ik+gAubMci4
-         msFwfLLe3XQUSV+N8Bbrl/qwlwspltMocZXtmgFlDN8tntPYG4Du+tszusRlsAhPncZI
-         l9Ig==
-X-Gm-Message-State: ACrzQf0LSZUDUGYxy6ijFg3bp0q+qXspaQjk1c+JOmei20CXeBzoGTMt
-        dFpV+ALWn19w4aCvSJp3yZuCZT0P9jEVog==
-X-Google-Smtp-Source: AMsMyM5c/P6vhLmdXQfo41ettM31/JfdSQZyf4/HFLrrotb5c2LOWoJFX2SRrHMzuVX12IjKib94cA==
-X-Received: by 2002:a17:906:d10d:b0:7ad:b7c2:a2f7 with SMTP id b13-20020a170906d10d00b007adb7c2a2f7mr321350ejz.227.1667568299442;
-        Fri, 04 Nov 2022 06:24:59 -0700 (PDT)
+        bh=qKusFQLb1DWa/HlXidk0/KiTUv3NQWC6oGAaBfVspaI=;
+        b=mlFR+yFyGtBTA02mSqVEPWpYf7F1W4dQpysjJqA4KlOvQk56NOj1rkuVlxcusDw1o/
+         5y7CN8dTROfrzDT4tm28dfmB3IDMXhVmtr4A+6IdHge0jwqVxW14ysplXnF5RiWStIov
+         e4rpsDqQMhNcdDc3nHbo1vvY2J2SCUaW+1meSnE4NMx5vWsotlwDP7Y5xCbvjgGqW04H
+         NgpCfasRg17yiWQ2nDP3PPD3gN09mzGZIKT/UnU2dfY5pLNl3lHkQX1Lp21nB8xbB+PW
+         i98oZdGwtBWarbNWvQPQQG7TC1KGxVG3pfH4Yb/1CgF9qGhQNQZCu8W6sKft/JLDvaAb
+         IcPw==
+X-Gm-Message-State: ACrzQf2vYPM5ewEZ6Z3bRdjRTbhx4eGGdqvtAuFbjebazmqHdCyL7Iyz
+        FrTqF4rQJXjmxMYIs2NRROqczyAaCKGXWQ==
+X-Google-Smtp-Source: AMsMyM5XwuB/UDdwpP4Q03MRm8lgV3lIQZEMFPfxSiN5vQtOP437OQELVnR7yYFPxDNblb6XOsTkpw==
+X-Received: by 2002:a05:6402:187:b0:464:163b:36b8 with SMTP id r7-20020a056402018700b00464163b36b8mr12298279edv.213.1667568301279;
+        Fri, 04 Nov 2022 06:25:01 -0700 (PDT)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 6-20020a170906318600b007ae38d837c5sm652979ejy.174.2022.11.04.06.24.58
+        by smtp.gmail.com with ESMTPSA id 6-20020a170906318600b007ae38d837c5sm652979ejy.174.2022.11.04.06.25.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Nov 2022 06:24:58 -0700 (PDT)
+        Fri, 04 Nov 2022 06:25:00 -0700 (PDT)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -61,9 +61,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 07/13] bisect--helper: emit usage for "git bisect"
-Date:   Fri,  4 Nov 2022 14:22:44 +0100
-Message-Id: <patch-07.13-8a78b37dd56-20221104T132117Z-avarab@gmail.com>
+Subject: [PATCH 09/13] parse-options API: don't restrict OPT_SUBCOMMAND() to one *_fn  type
+Date:   Fri,  4 Nov 2022 14:22:46 +0100
+Message-Id: <patch-09.13-2cb3807aa17-20221104T132117Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1452.g710f45c7951
 In-Reply-To: <cover-00.13-00000000000-20221104T132117Z-avarab@gmail.com>
 References: <1cb1c033-0525-7e62-8c09-81019bf26060@redhat.com> <cover-00.13-00000000000-20221104T132117Z-avarab@gmail.com>
@@ -74,100 +74,118 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In subsequent commits we'll be removing "git-bisect.sh" in favor of
-promoting "bisect--helper" to a "bisect" built-in.
+When the OPT_SUBCOMMAND() API was implemented in [1] it did so by
+adding a new "subcommand_fn" member to "struct option", rather than
+allowing the user of the API to pick the type of the function.
 
-In doing that we'll first need to have it support "git bisect--helper
-<cmd>" rather than "git bisect--helper --<cmd>", and then finally have
-its "-h" output claim to be "bisect" rather than "bisect--helper".
+An advantage of mandating that "parse_opt_subcommand_fn" must be used
+is that we'll get type checking for the function we're passing in, a
+disadvantage is that we can't convert e.g. "builtin/bisect--helper.c"
+easily to it, as its callbacks need their own argument.
 
-Instead of suffering that churn let's start claiming to be "git
-bisect" now. In just a few commits this will be true, and in the
-meantime emitting the "wrong" usage information from the helper is a
-small price to pay to avoid the churn.
+Let's generalize this interface, while leaving in place a small hack
+to give the existing API users their type safety. We assign to
+"typecheck_subcommand_fn", but don't subsequently use it for
+anything. Instead we use the "defval" and "value" members.
 
-Let's also declare "BUILTIN_*" macros, when we eventually migrate the
-sub-commands themselves to parse_options() we'll be able to re-use the
-strings. See 0afd556b2e1 (worktree: define subcommand -h in terms of
-command -h, 2022-10-13) for a recent example.
+A subsequent commit will add a OPT_SUBCOMMAND() variant where the
+"callback" isn't our default "parse_options_pick_subcommand" (and that
+caller won't be able to use the type checking).
+
+1. fa83cc834da (parse-options: add support for parsing subcommands,
+   2022-08-19)
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/bisect--helper.c | 51 ++++++++++++++++++++++++++++------------
- 1 file changed, 36 insertions(+), 15 deletions(-)
+ parse-options.c |  9 ++++++---
+ parse-options.h | 25 +++++++++++++++++++++----
+ 2 files changed, 27 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 5c0572d0672..b10ecee64cc 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -20,18 +20,40 @@ static GIT_PATH_FUNC(git_path_bisect_names, "BISECT_NAMES")
- static GIT_PATH_FUNC(git_path_bisect_first_parent, "BISECT_FIRST_PARENT")
- static GIT_PATH_FUNC(git_path_bisect_run, "BISECT_RUN")
+diff --git a/parse-options.c b/parse-options.c
+index a1ec932f0f9..1d9e46c9dc7 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -427,7 +427,8 @@ static enum parse_opt_result parse_subcommand(const char *arg,
+ 	for (; options->type != OPTION_END; options++)
+ 		if (options->type == OPTION_SUBCOMMAND &&
+ 		    !strcmp(options->long_name, arg)) {
+-			*(parse_opt_subcommand_fn **)options->value = options->subcommand_fn;
++			if (options->callback(options, arg, 0))
++				BUG("OPT_SUBCOMMAND callback returning non-zero");
+ 			return PARSE_OPT_SUBCOMMAND;
+ 		}
  
--static const char * const git_bisect_helper_usage[] = {
--	N_("git bisect--helper --bisect-reset [<commit>]"),
--	"git bisect--helper --bisect-terms [--term-good | --term-old | --term-bad | --term-new]",
--	N_("git bisect--helper --bisect-start [--term-{new,bad}=<term> --term-{old,good}=<term>]"
--					    " [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<paths>...]"),
--	"git bisect--helper --bisect-next",
--	N_("git bisect--helper --bisect-state (bad|new) [<rev>]"),
--	N_("git bisect--helper --bisect-state (good|old) [<rev>...]"),
--	N_("git bisect--helper --bisect-replay <filename>"),
--	N_("git bisect--helper --bisect-skip [(<rev>|<range>)...]"),
--	"git bisect--helper --bisect-visualize",
--	N_("git bisect--helper --bisect-run <cmd>..."),
-+#define BUILTIN_GIT_BISECT_START_USAGE \
-+	N_("git bisect start [--term-{new,bad}=<term> --term-{old,good}=<term>]" \
-+	   "    [--no-checkout] [--first-parent] [<bad> [<good>...]] [--]" \
-+	   "    [<pathspec>...]")
-+#define BUILTIN_GIT_BISECT_STATE_USAGE \
-+	N_("git bisect (good|bad) [<rev>...]")
-+#define BUILTIN_GIT_BISECT_TERMS_USAGE \
-+	"git bisect terms [--term-good | --term-bad]"
-+#define BUILTIN_GIT_BISECT_SKIP_USAGE \
-+	N_("git bisect skip [(<rev>|<range>)...]")
-+#define BUILTIN_GIT_BISECT_NEXT_USAGE \
-+	"git bisect next"
-+#define BUILTIN_GIT_BISECT_RESET_USAGE \
-+	N_("git bisect reset [<commit>]")
-+#define BUILTIN_GIT_BISECT_VISUALIZE_USAGE \
-+	"git bisect visualize"
-+#define BUILTIN_GIT_BISECT_REPLAY_USAGE \
-+	N_("git bisect replay <logfile>")
-+#define BUILTIN_GIT_BISECT_LOG_USAGE \
-+	"git bisect log"
-+#define BUILTIN_GIT_BISECT_RUN_USAGE \
-+	N_("git bisect run <cmd>...")
+@@ -506,8 +507,10 @@ static void parse_options_check(const struct option *opts)
+ 			       "That case is not supported yet.");
+ 			break;
+ 		case OPTION_SUBCOMMAND:
+-			if (!opts->value || !opts->subcommand_fn)
+-				optbug(opts, "OPTION_SUBCOMMAND needs a value and a subcommand function");
++			if (!opts->value || !opts->callback)
++				optbug(opts, "OPTION_SUBCOMMAND needs a value and a callback function");
++			if (opts->ll_callback)
++				optbug(opts, "OPTION_SUBCOMMAND uses callback, not ll_callback");
+ 			if (!subcommand_value)
+ 				subcommand_value = opts->value;
+ 			else if (subcommand_value != opts->value)
+diff --git a/parse-options.h b/parse-options.h
+index b6ef86e0d15..61e3016c3fc 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -128,19 +128,24 @@ typedef int parse_opt_subcommand_fn(int argc, const char **argv,
+  *			 the option takes optional argument.
+  *
+  * `callback`::
+- *   pointer to the callback to use for OPTION_CALLBACK
++ *   pointer to the callback to use for OPTION_CALLBACK and OPTION_SUBCOMMAND.
+  *
+  * `defval`::
+  *   default value to fill (*->value) with for PARSE_OPT_OPTARG.
+  *   OPTION_{BIT,SET_INT} store the {mask,integer} to put in the value when met.
++ *   OPTION_SUBCOMMAND stores the pointer the function selected for
++ *   the subcommand.
++ *
+  *   CALLBACKS can use it like they want.
+  *
+  * `ll_callback`::
+  *   pointer to the callback to use for OPTION_LOWLEVEL_CALLBACK
+  *
+  * `subcommand_fn`::
+- *   pointer to a function to use for OPTION_SUBCOMMAND.
+- *   It will be put in value when the subcommand is given on the command line.
++ *   pointer to the callback used with OPT_SUBCOMMAND() and
++ *   OPT_SUBCOMMAND_F(). Internally we store the same value in
++ *   `defval`. This is only here to give the OPT_SUBCOMMAND{,_F}()
++ *   common case type safety.
+  */
+ struct option {
+ 	enum parse_opt_type type;
+@@ -217,12 +222,24 @@ struct option {
+ #define OPT_ALIAS(s, l, source_long_name) \
+ 	{ OPTION_ALIAS, (s), (l), (source_long_name) }
+ 
++static inline int parse_options_pick_subcommand_cb(const struct option *option,
++						   const char *arg UNUSED,
++						   int unset UNUSED)
++{
++	parse_opt_subcommand_fn *fn = (parse_opt_subcommand_fn *)option->defval;
++	*(parse_opt_subcommand_fn **)option->value = fn;
++	return 0;
++}
 +
-+static const char * const git_bisect_usage[] = {
-+	BUILTIN_GIT_BISECT_START_USAGE,
-+	BUILTIN_GIT_BISECT_STATE_USAGE,
-+	BUILTIN_GIT_BISECT_TERMS_USAGE,
-+	BUILTIN_GIT_BISECT_SKIP_USAGE,
-+	BUILTIN_GIT_BISECT_NEXT_USAGE,
-+	BUILTIN_GIT_BISECT_RESET_USAGE,
-+	BUILTIN_GIT_BISECT_VISUALIZE_USAGE,
-+	BUILTIN_GIT_BISECT_REPLAY_USAGE,
-+	BUILTIN_GIT_BISECT_LOG_USAGE,
-+	BUILTIN_GIT_BISECT_RUN_USAGE,
- 	NULL
- };
+ #define OPT_SUBCOMMAND_F(l, v, fn, f) { \
+ 	.type = OPTION_SUBCOMMAND, \
+ 	.long_name = (l), \
+ 	.value = (v), \
+ 	.flags = (f), \
+-	.subcommand_fn = (fn) }
++	.defval = (intptr_t)(fn), \
++	.subcommand_fn = (fn), \
++	.callback = parse_options_pick_subcommand_cb, \
++}
+ #define OPT_SUBCOMMAND(l, v, fn)    OPT_SUBCOMMAND_F((l), (v), (fn), 0)
  
-@@ -1322,12 +1344,11 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 	};
- 	struct bisect_terms terms = { .term_good = NULL, .term_bad = NULL };
- 
--	argc = parse_options(argc, argv, prefix, options,
--			     git_bisect_helper_usage,
-+	argc = parse_options(argc, argv, prefix, options, git_bisect_usage,
- 			     PARSE_OPT_KEEP_DASHDASH | PARSE_OPT_KEEP_UNKNOWN_OPT);
- 
- 	if (!cmdmode)
--		usage_with_options(git_bisect_helper_usage, options);
-+		usage_with_options(git_bisect_usage, options);
- 
- 	switch (cmdmode) {
- 	case BISECT_RESET:
+ /*
 -- 
 2.38.0.1452.g710f45c7951
 
