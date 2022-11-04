@@ -2,235 +2,225 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15001C4332F
-	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 09:45:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D17CAC4332F
+	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 09:51:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229995AbiKDJp5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Nov 2022 05:45:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58098 "EHLO
+        id S231146AbiKDJvT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Nov 2022 05:51:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbiKDJp4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Nov 2022 05:45:56 -0400
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B569E0C
-        for <git@vger.kernel.org>; Fri,  4 Nov 2022 02:45:54 -0700 (PDT)
-Received: (qmail 18439 invoked by uid 109); 4 Nov 2022 09:45:53 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 04 Nov 2022 09:45:53 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 27775 invoked by uid 111); 4 Nov 2022 09:45:55 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 04 Nov 2022 05:45:55 -0400
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 4 Nov 2022 05:45:52 -0400
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?THVrw6HFoQ==?= Doktor <ldoktor@redhat.com>
-Cc:     Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
-Subject: Re: "git bisect run" strips "--log" from the list of arguments
-Message-ID: <Y2TfUFkLUa2tHdS7@coredump.intra.peff.net>
-References: <1cb1c033-0525-7e62-8c09-81019bf26060@redhat.com>
+        with ESMTP id S229995AbiKDJvR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Nov 2022 05:51:17 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E250140C3
+        for <git@vger.kernel.org>; Fri,  4 Nov 2022 02:51:16 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id bj12so11783318ejb.13
+        for <git@vger.kernel.org>; Fri, 04 Nov 2022 02:51:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=HW1WtkUx+SfHloE9WcGDEJC9JaplIdNwFBdHsum6KbE=;
+        b=GaR3UfxRAZC2raz2Ln8Wxh2DGkQpGAtevIx/eMsALAFzcIjkLOqsmViCR+XZIowAxA
+         FGLXAulDrYQJoWuGm41hddtGjNnfP7BRcAFhF5AQWDbG3XsE4f4eRGLVQI89/E/bqVJB
+         aU9zXUmAK9QjXiJSUcqhVZ4+7JlPsP0ZWpL9OsQbqHuRKcxCTX8ASK5hSEiL/mdGKbt9
+         0LHsmFem3Rg70V3fYNIy83dgiD1d66n/N2c6tAqgqYZFeRcwsBNpjyF/XE94x3RfQ638
+         f3zbXKQzd0k/46NC4zgvsDvsUXDP8uPyLgyhty7C/lJv01grlBOt7A/VZhfI55TOLu/V
+         mOXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HW1WtkUx+SfHloE9WcGDEJC9JaplIdNwFBdHsum6KbE=;
+        b=fRbSDplP6ur6sFRBVfJwumFnyLmpS/Y/l+0YiiC11W81AnSYy1df9ejLodH0ECEN1h
+         XDxVwdmjPATtL871+4Haw3cDmrFEKfNp9itYXvmEAZdYvTDsa3n9mkdCvJQlm2Mb0QIg
+         CyL5CmWsF+UFvRJtmt8TSYtvKeGItXu4wvf3WtchoNyPx1HHY5sh2XdNgz7TioQriVQ0
+         Q6LAL2eOFwwtJpf8j7aaT+cqJXOsjb3i7YbPXgAxxwsip0Pz4IbxE2WEnqsYBzsHJKjB
+         uChchFesn+i44iDbRtLBWQzjxVybf9GyJv82eJItfl2wldKizo6pcZU3WsaOT0fVFfN7
+         IN3w==
+X-Gm-Message-State: ACrzQf3cQdbWQVRsE9/b8P98bJ1vXY39I99lPqcoB3h2Pp6BZU5bgeKv
+        7lXn0Oj5FYyQNvG6bHTfWPFPROzS8hBFSg==
+X-Google-Smtp-Source: AMsMyM65sajQdsiUQcK/AlAhhwvgywZt6vAHkNydgImGxDkgTKeUr3ea4q+vd1lj0CUKwL56J3HkjQ==
+X-Received: by 2002:a17:906:99c2:b0:7a8:c167:1d93 with SMTP id s2-20020a17090699c200b007a8c1671d93mr32079954ejn.490.1667555474794;
+        Fri, 04 Nov 2022 02:51:14 -0700 (PDT)
+Received: from gmgdl (j30044.upc-j.chello.nl. [24.132.30.44])
+        by smtp.gmail.com with ESMTPSA id r5-20020a056402018500b00461bb7e7ef1sm1711048edv.30.2022.11.04.02.51.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Nov 2022 02:51:14 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oqsw8-00DEqC-0c;
+        Fri, 04 Nov 2022 10:24:28 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [RFC PATCH] fetch: stop emitting duplicate
+ transfer.credentialsInUrl=warn warnings
+Date:   Fri, 04 Nov 2022 10:01:00 +0100
+References: <pull.1399.git.1667245638.gitgitgadget@gmail.com>
+ <RFC-patch-1.1-0266485bc6c-20221031T204149Z-avarab@gmail.com>
+ <Y2CFRJLFRXvGwFBC@coredump.intra.peff.net>
+ <Y2Doe0ZGb3Zmmmen@coredump.intra.peff.net>
+ <221101.86o7tq4vsn.gmgdl@evledraar.gmail.com>
+ <Y2GI0R6pJmdZNgHn@nand.local>
+ <221101.8635b24959.gmgdl@evledraar.gmail.com>
+ <Y2IoEN6NHqj2Qisa@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <Y2IoEN6NHqj2Qisa@coredump.intra.peff.net>
+Message-ID: <221104.8635azysw7.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <1cb1c033-0525-7e62-8c09-81019bf26060@redhat.com>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 04, 2022 at 07:31:26AM +0100, Lukáš Doktor wrote:
 
-> Steps to Reproduce:
-> 
-> 1. git bisect start BAD GOOD
-> 2. git bisect run ./myscript arg1 --log arg2 --log -- arg3 --log arg4
-> 
-> Results with 2.34.1:
-> 
->     running  './myscript' 'arg1' 'arg2' '--' 'arg3' '--log' 'arg4'
-> 
-> Results with 2.33.0:
-> 
->     running ./myscript arg1 --log arg2 --log -- arg3 --log arg4
+On Wed, Nov 02 2022, Jeff King wrote:
 
-Thanks for an easy reproduction recipe. I used this as an easy-to-see
-test case, which works in any repo:
+> On Tue, Nov 01, 2022 at 10:57:46PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>
+>> >> Sure, we can do it with an environment variable, in the end that's all
+>> >> git_config_push_parameter() is doing too. It's just setting things in
+>> >> "GIT_CONFIG_PARAMETERS".
+>> >>
+>> >> And yes, we can set this in the low-level function instead of with
+>> >> git_config_push_parameter() in builtin/*.c as I did. I was aiming for
+>> >> something demonstrably narrow, at the cost of some verbosity.
+>> >>
+>> >> But I don't get how other things being equal you think sticking this =
+in
+>> >> "GIT_CHECKED_CREDENTIALS_IN_URL" instead of "GIT_CONFIG_PARAMETERS"
+>> >> helps.
+>> >
+>> > I vaguely prefer calling this GIT_CHECKED_CREDENTIALS_IN_URL instead of
+>> > stuffing it in the configuration.[...]
+>>=20
+>> To be clear, I'm asking if there's cases where we think one method or
+>> the other produces different results, which I understood Jeff hinting
+>> at.
+>
+> What I was hinting before was not that I knew of a particular bug in
+> your patch, but that I think the technique of munging
+> GIT_CONFIG_PARAMETERS is fragile in error-prone in the general case,
+> because the sub-programs can't differentiate between the config the user
+> asked for, and what was set by the suppression mechanism.
+>
+> For this variable, there's no need to differentiate between "the user
+> asked us to be quiet" and "the calling program asked us to be quiet",
+> but I could imagine cases where there are subtle distinctions. Imagine
+> if there was a setting for "warn and rewrite the URL". We'd need to
+> change that to "don't warn, but just rewrite the URL", which otherwise
+> is a mode that doesn't need to exist.
+>
+> Keeping it in a separate variable keeps the concerns orthogonal. The
+> code still gets to see what the user actually wants (via the config),
+> but has extra information from the calling process about how noisy/quiet
+> to be.
 
-  git bisect start HEAD HEAD~2 >/dev/null 2>&1
-  git bisect bisect run echo --log 2>&1 | grep running
+... (replied below) ...
 
-> Is this expected? In https://bugzilla.redhat.com/show_bug.cgi?id=2139883 Todd suggested it might be related to
-> 
->     d1bbbe45df (bisect--helper: reimplement `bisect_run` shell function in C, 2021-09-13) 
-> 
-> but I haven't tried it myself.
+> But you mentioned submodules in your other mail. And you're right that
+> the patch I showed doesn't handle that (it would need to add the new
+> variable to local_repo_env). It seems like yours should work because
+> CONFIG_DATA_ENVIRONMENT as part of local_repo_env. But I don't think it
+> actually does; in prepare_other_repo_env(), we retain the variables for
+> config in the environment, so that:
+>
+>   git -c foo.bar=3Dwhatever fetch
+>
+> will override variables in both the superproject and in submodules.
 
-Yes, it bisects to that commit. +cc Christian, who mentored this gsoc
-project.
+Replying to your main point below, just an aside on this:
 
-I think the problem is that we are now feeding the arguments to
-parse_options() in git bisect--helper, and it doesn't realize that it
-needs to stop after seeing that we are in "run" mode.  And because
-"--log" is an option to git-bisect--helper (it is the opposite of
-"--no-log"), it is consumed there.
+To be clear I'm not saying it would handle it sensibly now, but just
+that if we're using env vars to communicate to sub-processes then using
+CONFIG_DATA_ENVIRONMENT seems better to me.
 
-As you noticed, the "--" stops parsing, so the one between "arg3" and
-"arg4" is preserved.
+Because even if we're getting it wrong now, then surely that's something
+we're probably getting wrong in more than one place.
 
-It feels like the invocation of bisect--helper ought to be passing "--"
-itself to indicate the end of options, like:
+So e.g. if we set an env var "for ourselves", i.e. "pull->fetch" then we
+could detect that condition in run_command(), and if we then spot that
+we're carrying an env variable we set earlier up the chain reset it
+before we spawn a submodule.
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 405cf76f2a..bd69e8d389 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -75,7 +75,7 @@ case "$#" in
- 	log)
- 		git bisect--helper --bisect-log || exit ;;
- 	run)
--		git bisect--helper --bisect-run "$@" || exit;;
-+		git bisect--helper --bisect-run -- "$@" || exit;;
- 	terms)
- 		git bisect--helper --bisect-terms "$@" || exit;;
- 	*)
+Whereas if it's all custom env variables here & there we'll need to add
+all that special-casing in.
 
-but there are two oddities:
+> I didn't try it, but I suspect with your patch that a superproject with
+> "warn" and a submodule with "die" (both in their on-disk config files)
+> would misbehave. The superproject process will warn and say "yes, I've
+> checked everything" by munging the in-environment config to "allow".
+> Then the submodule process will see that config, and will override the
+> on-disk setting (in the usual last-one-wins config way). I.e., the
+> problem is that it cannot tell the difference between "the user asked to
+> override this" and the suppression mechanism.
 
-  1. We use PARSE_OPT_KEEP_DASHDASH, so it ends up in the final command.
-     We might be able to drop that; it goes back to 06f5608c14
-     (bisect--helper: `bisect_start` shell function partially in C,
-     2019-01-02), but I'm not sure which other modes might be relying on
-     it.
+Yes, definitely, and now I see what you're saying. I.e. imagine a chain
+like this (not actual process chains, but let's go with the example);
 
-  2. We are forwarding "$@" from the user. I'm not sure if they would
-     ever use "--" themselves to signal end of options. We might be OK
-     because "bisect run" does not take any other options (as far as I
-     know), so nobody would ever need to do that. I.e., I don't think
-     anybody would do:
+	user config =3D warn
+	run: pull
+	our config =3D allow
+		# OK: doesn't "warn" now
+		run: fetch
+			# Not warning, but ....
+			run: pre-fetch hook
+				# BAD: ...oh oh, now a hook is fetching some
+                                # entirely unrelated repo
+				run: git pull
+			# OK: Doesn't warn either
+			run: remote-curl (now not warning, otherwise would)
+                        # BAD: our "warned already" has infected a
+                        # submodule, and we downgrade "die" to "allow"
+			user config =3D die
+			run: git fetch <submodule>
+				...
 
-       git bisect run -- mycommand
+But, and maybe I'm still not getting it, but the "use a different env
+var" isn't actually the important part, i.e. these would behave the
+same after the initial "warn":
 
-     because it will treat the "--" literally as a command name.
+	-c transfer.credentialsInUrlWarnedAlready=3Dtrue
 
-So we could possibly just add it in the script as above, and then
-unconditionally eat it in the C program. I.e., add this hunk:
+And:
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 28ef7ec2a4..2d6c77df2e 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -1377,6 +1377,11 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		res = bisect_visualize(&terms, argv, argc);
- 		break;
- 	case BISECT_RUN:
-+		/* consume "--" added by git-bisect.sh, but left by parse-options */
-+		if (argc) {
-+			argc--;
-+			argv++;
-+		}
- 		if (!argc)
- 			return error(_("bisect run failed: no command provided."));
- 		get_terms(&terms);
+	GIT_CHECKED_AND_WARNED_ALREADY=3D1
 
-It feels a bit hacky, but I think it would work, and there's no
-possibility of disrupting the other modes.
+But not what I was suggesting:
 
-The other option is probably an elaborate parse-options callback, like
-the diff below. But it's pretty horrible, too.
+	# conflated with a later "die"
+	-c transfer.credentialsInUrl=3Dallow
 
-diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index 28ef7ec2a4..16f71fd59c 100644
---- a/builtin/bisect--helper.c
-+++ b/builtin/bisect--helper.c
-@@ -1277,22 +1277,49 @@ static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
- 	return res;
- }
- 
-+enum bisect_cmdmode {
-+	BISECT_RESET = 1,
-+	BISECT_NEXT_CHECK,
-+	BISECT_TERMS,
-+	BISECT_START,
-+	BISECT_AUTOSTART,
-+	BISECT_NEXT,
-+	BISECT_STATE,
-+	BISECT_LOG,
-+	BISECT_REPLAY,
-+	BISECT_SKIP,
-+	BISECT_VISUALIZE,
-+	BISECT_RUN,
-+};
-+
-+static int run_argc;
-+static const char **run_argv;
-+
-+static int parse_opt_bisect_run(struct parse_opt_ctx_t *ctx,
-+				const struct option *opt,
-+				const char *arg, int unset)
-+{
-+	enum bisect_cmdmode *cmdmode = opt->value;
-+
-+	BUG_ON_OPT_ARG(arg);
-+	BUG_ON_OPT_NEG(unset);
-+
-+	*cmdmode = BISECT_RUN;
-+	/*
-+	 * Yuck, parse-options has no way to say "done, and stop parsing";
-+	 * it will keep going if we still have any argc left. So we have to
-+	 * stash the rest of the options ourselves.
-+	 */
-+	run_argc = ctx->argc - 1;
-+	run_argv = ctx->argv + 1;
-+	ctx->argc = 1;
-+
-+	return 0;
-+}
-+
- int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- {
--	enum {
--		BISECT_RESET = 1,
--		BISECT_NEXT_CHECK,
--		BISECT_TERMS,
--		BISECT_START,
--		BISECT_AUTOSTART,
--		BISECT_NEXT,
--		BISECT_STATE,
--		BISECT_LOG,
--		BISECT_REPLAY,
--		BISECT_SKIP,
--		BISECT_VISUALIZE,
--		BISECT_RUN,
--	} cmdmode = 0;
-+	enum bisect_cmdmode cmdmode = 0;
- 	int res = 0, nolog = 0;
- 	struct option options[] = {
- 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
-@@ -1315,8 +1342,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 			 N_("skip some commits for checkout"), BISECT_SKIP),
- 		OPT_CMDMODE(0, "bisect-visualize", &cmdmode,
- 			 N_("visualize the bisection"), BISECT_VISUALIZE),
--		OPT_CMDMODE(0, "bisect-run", &cmdmode,
--			 N_("use <cmd>... to automatically bisect"), BISECT_RUN),
-+		{OPTION_LOWLEVEL_CALLBACK, 0, "bisect-run", &cmdmode, NULL,
-+			 N_("use <cmd>... to automatically bisect"),
-+			 PARSE_OPT_NOARG|PARSE_OPT_NONEG,
-+			 NULL, 0, parse_opt_bisect_run},
- 		OPT_BOOL(0, "no-log", &nolog,
- 			 N_("no log for BISECT_WRITE")),
- 		OPT_END()
-@@ -1377,10 +1406,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
- 		res = bisect_visualize(&terms, argv, argc);
- 		break;
- 	case BISECT_RUN:
--		if (!argc)
-+		if (!run_argc)
- 			return error(_("bisect run failed: no command provided."));
- 		get_terms(&terms);
--		res = bisect_run(&terms, argv, argc);
-+		res = bisect_run(&terms, run_argv, run_argc);
- 		break;
- 	default:
- 		BUG("unknown subcommand %d", cmdmode);
+But that only goes for e.g. a "pull" where we "warn" followed by
+submodule whose config is "die".
 
--Peff
+But all suggested variants of this (mine and yours) are going to get
+e.g. the case where the submodule also wants "warn". I.e. it's not
+enough that we're saying "warned already".
+
+That gets us past conflating an existing "warn" with a "die", but now we
+can't tell a submodule "warn" from a superproject "warn".
+
+For that we'd basically need to do:
+
+	-c transfer.$(<make path to .git, or other "unique repo id>).credentialsIn=
+Url=3Dallow
+
+Or another similar mechanism, of course the most sane one to be to not
+be playing this game at all, but to just ferry this state e.g. with
+"--do-not-warn-about-this-repo" to our own children, which we'd not add
+to the command-lines when we know we're spawning a hook, or doing the
+submodule "pull/fetch".
+
+Does that all seem right?
+
+
+
