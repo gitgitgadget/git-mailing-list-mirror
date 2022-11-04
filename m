@@ -2,168 +2,174 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 406E1C433FE
-	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 13:51:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A62EDC4332F
+	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 14:03:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231388AbiKDNvM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Nov 2022 09:51:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44796 "EHLO
+        id S230315AbiKDODc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Nov 2022 10:03:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51166 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231584AbiKDNvK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Nov 2022 09:51:10 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E43E21E2C
-        for <git@vger.kernel.org>; Fri,  4 Nov 2022 06:51:09 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id c3-20020a1c3503000000b003bd21e3dd7aso5476178wma.1
-        for <git@vger.kernel.org>; Fri, 04 Nov 2022 06:51:09 -0700 (PDT)
+        with ESMTP id S229600AbiKDODb (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Nov 2022 10:03:31 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1393564DA
+        for <git@vger.kernel.org>; Fri,  4 Nov 2022 07:03:29 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id r18so4431672pgr.12
+        for <git@vger.kernel.org>; Fri, 04 Nov 2022 07:03:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=7+cJUNhx9Oxk91M9atUeYAn4L9DZBSOOwzOdjWPbqz4=;
-        b=cjWr+CWqMgNB4S4ukd+QBuw6LUay1fIIiVFR0O/cHxm3195magYZDBAH0G34tm/2Nm
-         vYZ8QbJ4cBTNz0f+JUkeFRx6ilLFyeRZzu43n/ZVia2G3NMsoDIYkChlgfnFJirqThgl
-         zjjFu6Q5OKBZL30c07Jn5VkAawcL+3O7MTpdLXBbdi/NlNAnHWpqMzNBnaajC41VF4H0
-         Tw8dfStFipTziDVj4Dl1/F90JXlN/AYUZ6lef89ZT3InTDFyuPVvwEnIT2CIfleKSjUy
-         5cBf5i0i2dfas0DjYdZ6GDRAt431usDUZx9H/mYpCzrAHHbrpYgyvE8r1/9fiyOt2s3C
-         ETcw==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=rTnPzwHZD4Hp4RqW0/1JJNAkB+PAcda8XNV6lCbKixU=;
+        b=gO+yty0FUQsMD6OmkJIsq0+iwzdzdo1CQ8Q60BQCwHoNwA77P8qXtCyqeQrnNWBS1w
+         VEthxUXCQpQ34JFSMJ8KJEHt3mJPtKQS43ikMqEP2oD1ieSj+JPKZ9bUVEhVFkd6a+6X
+         /XroLwq5cYa868sIG2UPc5jTociSXDZMFA/xzfAlUvLntAeEsBPuzH3NdhdhMxqimRql
+         mHgQKDbUK6+uuQVQBqXyev67ZElX8Cp97VqnsoRf5d/pj+PmxoWsd6f68YVUGG/ivs1c
+         LAGmTj28RdAO3sn5lbA61xNSCxEMivyyoVR7KfzswQikj9rIcB0T0kyIlpNXEehFcYXJ
+         XaXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7+cJUNhx9Oxk91M9atUeYAn4L9DZBSOOwzOdjWPbqz4=;
-        b=H48l7A95zpg03m3uQ0VPKHyzrOIWHLMRMloGjQh4UUXtdTOBD7gb7ou7TOF5Uddt0e
-         VZdgcUEL3yc3frjbOha+xfWrkoXbEAAuWXmueusp1sATYQ7K/KYtU7oFYNir76a4Wpf1
-         vrWnqc7+6bPRaZWKtssailBEYCEYi/KRb50u9M5G5My7EaE6KBS3YlbE0O08fn7aW3Jo
-         FCWiRTPgwi56obGp7UCwrpGTooXfSgTL8t5SSSLxotiYsB3Bjc+blD1ieDgVY2dm1FTV
-         DoxdO8F4Jt8gpITnQbT61d6ZH8+7kblVa256u/TxyDB4lRTMxhO5wY0lrwuAulF1vFX0
-         c9Iw==
-X-Gm-Message-State: ACrzQf1BTjmexfuWbvK02NRue0UWVqgzQye1km1BN3mrjl62W6aSMP3c
-        SBEgO/wyGwXemHPkxAtYpec=
-X-Google-Smtp-Source: AMsMyM63TtFHEa72UPq2rQ1LERAcJwwFOvFmWStUCEs40XLvNcF0VkPcxj7kBhhA88PJ3DLRI3SHkw==
-X-Received: by 2002:a05:600c:539b:b0:3cf:51ce:cd7a with SMTP id hg27-20020a05600c539b00b003cf51cecd7amr29411791wmb.11.1667569867615;
-        Fri, 04 Nov 2022 06:51:07 -0700 (PDT)
-Received: from gmgdl (j99119.upc-j.chello.nl. [24.132.99.119])
-        by smtp.gmail.com with ESMTPSA id g3-20020a7bc4c3000000b003cf6c2f9513sm2940910wmk.2.2022.11.04.06.51.07
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rTnPzwHZD4Hp4RqW0/1JJNAkB+PAcda8XNV6lCbKixU=;
+        b=WwTrjesgMZkpqf7Z7ihjlvz8FtICEr2aPkaHJIZkVRK8YlU5G3/laJFJJN86/vycWt
+         ptavqB6j5JXgBXmy7bJmBS9IvcXhTyPQtd+ocr0Z7Z6J1RDmsHL2NAgq2ws8y34CgNbz
+         p+U/43zkJS59d2Ls0h0pm9eQMZoaG7KI1r4MgUNxMn+3EHy0RRxI5FZ+lgUrygAxQWvE
+         oDV+9J16oFC3ecXJBzfefqY+Ispm3gdNPdPcHc66PIKsqLC3hZy4bLbEwoXp4pLRFBYo
+         YGjZ9LH0sD+Fd+7eTDz5lu8RXYn4qlA/Co6eH7KgcXBUZqrH9ys8TqP2ROT8frQ45V70
+         Ejmw==
+X-Gm-Message-State: ACrzQf3Sypi6UR8Synmx1jketGYwizXsnvwQnzCjXqbAbRw9UpoY8Fto
+        Um9rV7OLT2H1ulmt++ELnB0=
+X-Google-Smtp-Source: AMsMyM4pjOUIpQxoP3867f98YKfRqAsFI8mQERTRHXJGMnwL7EyBM6NTM8LMHewmyTd1Sqyq8lIx8A==
+X-Received: by 2002:a63:6b09:0:b0:453:b1f8:bb3b with SMTP id g9-20020a636b09000000b00453b1f8bb3bmr31688206pgc.36.1667570608342;
+        Fri, 04 Nov 2022 07:03:28 -0700 (PDT)
+Received: from localhost ([2001:ee0:500b:6370:da47:cda5:dbd5:6e77])
+        by smtp.gmail.com with ESMTPSA id d8-20020a170902654800b00172f6726d8esm2593553pln.277.2022.11.04.07.03.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Nov 2022 06:51:07 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oqx6A-000F0j-1u;
-        Fri, 04 Nov 2022 14:51:06 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        Fri, 04 Nov 2022 07:03:27 -0700 (PDT)
+Date:   Fri, 4 Nov 2022 21:03:24 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
         <congdanhqx@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org,
         =?utf-8?B?THVrw6HFoQ==?= Doktor <ldoktor@redhat.com>,
         Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 3/3] bisect--helper: parse subcommand with OPT_SUBCOMMAND
-Date:   Fri, 04 Nov 2022 14:46:18 +0100
+Subject: Re: [PATCH 2/3] bisect--helper: move all subcommands into their own
+ functions
+Message-ID: <Y2UbrCzTIvIbPbgX@danh.dev>
 References: <1cb1c033-0525-7e62-8c09-81019bf26060@redhat.com>
  <cover.1667561761.git.congdanhqx@gmail.com>
- <76c585d22bf415e719762fcf5decf4b71efa5bfb.1667561761.git.congdanhqx@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <76c585d22bf415e719762fcf5decf4b71efa5bfb.1667561761.git.congdanhqx@gmail.com>
-Message-ID: <221104.86mt96ygj9.gmgdl@evledraar.gmail.com>
+ <081f3f7f9501012404fb9e59ab6d94f632180b53.1667561761.git.congdanhqx@gmail.com>
+ <221104.86r0yiygtd.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <221104.86r0yiygtd.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 2022-11-04 14:32:34+0100, Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+> 
+> On Fri, Nov 04 2022, Đoàn Trần Công Danh wrote:
+> 
+> > In a later change, we will use OPT_SUBCOMMAND to parse sub-commands to
+> > avoid consuming non-option opts.
+> >
+> > Since OPT_SUBCOMMAND needs a function pointer to operate,
+> > let's move it now.
+> 
+> As shown in
+> https://lore.kernel.org/git/patch-11.13-d261c32ddd7-20221104T132117Z-avarab@gmail.com/
+> this can be much nicer in terms of avoiding these wrappers if we jsut
+> teach parse-options.c to take our custom signature'd callback, but...
+> 
+> > +static int cmd_bisect__reset(int argc, const char **argv, const char *prefix UNUSED)
+> > +static int cmd_bisect__terms(int argc, const char **argv, const char *prefix UNUSED)
+> > +static int cmd_bisect__start(int argc, const char **argv, const char *prefix UNUSED)
+> ....
+> 
+> >  	switch (cmdmode) {
+> >  	case BISECT_RESET:
+> > -		if (argc > 1)
+> > -			return error(_("--bisect-reset requires either no argument or a commit"));
+> > -		res = bisect_reset(argc ? argv[0] : NULL);
+> > +		res = cmd_bisect__reset(argc, argv, prefix);
+> >  		break;
+> >  	case BISECT_TERMS:
+> > -		if (argc > 1)
+> > -			return error(_("--bisect-terms requires 0 or 1 argument"));
+> > -		res = bisect_terms(&terms, argc == 1 ? argv[0] : NULL);
+> > +		res = cmd_bisect__terms(argc, argv, prefix);
+> >  		break;
+> >  	case BISECT_START:
+> > -		set_terms(&terms, "bad", "good");
+> > -		res = bisect_start(&terms, argv, argc);
+> > +		res = cmd_bisect__start(argc, argv, prefix);
+> 
+> If we're not going to do that this isn't too bad actually. s noted in my
+> CL
+> (https://lore.kernel.org/git/cover-00.13-00000000000-20221104T132117Z-avarab@gmail.com/)
+> I started seeing if I could cut Johannes's built-in-bisect series down
+> to size so we could have it merged sooner than later.
+> 
+> It ended up refactoring every single user of "terms" to take the
+> file-global instead of the variable on the stack, but this shows that
+> that's not something we need, even without a new parse-options.c API.
 
-On Fri, Nov 04 2022, =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh wrote:
+Yes, I saw your patches, but I think adding a whole new
+parse-options.c API is a lot (taking a side the type-safety the new
+API introduced). If I were doing the new parse-options API without the
+type safety, I probably make an API like:
 
-> As of it is, we're parsing subcommand with OPT_CMDMODE, which will
-> continue to parse more options even if the command has been found.
->
-> When we're running "git bisect run" with a command that expecting
-> a "--log" or "--no-log" arguments, or one of those "--bisect-..."
-> arguments, bisect--helper may mistakenly think those options are
-> bisect--helper's option.
->
-> We may fix those problems by passing "--" when calling from
-> git-bisect.sh, and skip that "--" in bisect--helper. However, it may
-> interfere with user's "--".
->
-> Let's parse subcommand with OPT_SUBCOMMAND since that API was born for
-> this specific use-case.
+	int (*subcommand_fn)(int argc, const char **argv, const char *prefix, void *ctx)
 
-If we go for this approch over my series, let's pretty please...
+We would still have a non-safe 4th argument, but we won't need a new
+typedef and picking_fn in every source file.
 
-> +		OPT_SUBCOMMAND("bisect-reset", &fn, cmd_bisect__reset),
-> +		OPT_SUBCOMMAND("bisect-terms", &fn, cmd_bisect__terms),
+> B.t.w. you can cut down more on the verbosity by doing:
+> 
+> 	struct bisect_terms terms = { 0 };
+> Which is the same as "{ .term_good = NULL, .term_bad = NULL }". I left
+> it in place in my version because I'm explicitly trying to avoid
+> touching anything we don't need to for a bisect built-in, but if we're
+> refactoring this anyway...
 
-Not call this "bisect-reset" etc, but just "reset", the whole point of
-the greater problem here is...
-
-> -		git bisect--helper --bisect-start "$@" ;;
-> +		git bisect--helper bisect-start "$@" ;;
-
-...to be able to eventually remove this shimmy layer completely,
-which...
-
->  	bad|good|new|old|"$TERM_BAD"|"$TERM_GOOD")
-> -		git bisect--helper --bisect-state "$cmd" "$@" ;;
-> +		git bisect--helper bisect-state "$cmd" "$@" ;;
-
-...as you can see in my
-https://lore.kernel.org/git/patch-12.13-13745e3f18f-20221104T132118Z-avarab=
-@gmail.com/
-we still need to handle this special snowflake, but...
+Sure. I'll see which direction is favourable by other people.
+Yes, the free_terms is the one that increase the size of this patch,
 
 
->  	skip)
-> -		git bisect--helper --bisect-skip "$@" || exit;;
-> +		git bisect--helper bisect-skip "$@" || exit;;
->  	next)
->  		# Not sure we want "next" at the UI level anymore.
-> -		git bisect--helper --bisect-next "$@" || exit ;;
-> +		git bisect--helper bisect-next "$@" || exit ;;
->  	visualize|view)
-> -		git bisect--helper --bisect-visualize "$@" || exit;;
-> +		git bisect--helper bisect-visualize "$@" || exit;;
->  	reset)
-> -		git bisect--helper --bisect-reset "$@" ;;
-> +		git bisect--helper bisect-reset "$@" ;;
->  	replay)
-> -		git bisect--helper --bisect-replay "$@" || exit;;
-> +		git bisect--helper bisect-replay "$@" || exit;;
+> I also think this could be further reduced in size a lot if we go for
+> your approach, i.e. make a helper function that these call, like:
+> 
+> 	if (have_err)
+> 		return error(_(error_msg));
+>         if (set_terms)
+> 		set_terms(&terms, "bad", "good");
+> 	if (get_terms)
+> 		get_terms(&terms);
+> 	res = !strcmp(iam, "terms") ? bisect_terms(&terms, argc == 1 ? argv[0] : NULL) :
+>         	!strcmp(iam, "start") ? bisect_start(&terms, argv, argc) :
 
-...instead of doing all of this, get rid of most of this case statement, an=
-d just do:
+However, if we're doing this, aren't we getting back to step 1:
+strcmp to a list of subcommand instead of using OPT_SUBCOMMAND?
 
-	bad|good|...)
-		[...]
-	*)
-		git bisect--helper "$cmd" "$@"=20
-                ;;
+>                 [...];
+> 	free_terms(&terms);
+> 	return res;
+> 
+> Then e.g. the body of "terms" is just:
+> 
+> 	return that_helper(argc, argv, prefix, "terms", /* iam */
+>         		  argc > 1, /* have err */ N_("--bisect-terms requires 0 or 1 argument"), /* err msg */
+>                           0, 0, /* get terms and set terms */);
+> 
+> Etc., I think that might be worth it, as almost all of the contents of
+> these functions is just copy/pasted...
 
->  	log)
-> -		git bisect--helper --bisect-log || exit ;;
-> +		git bisect--helper bisect-log || exit ;;
-
-But note that there are subtle behavior differences in some,
-e.g. because we do the "|| exit" we'll eat the exit code, and this one
-also doesn't get parameters, so it should be left out of such a list
-(see tests in my topic for a regression check for that, we're currently
-flying blind in that area).
-
-> +# We want to make sure --log is not eaten
-> +test_expect_success '"git bisect run" simple case' '
-> +	git bisect start &&
-> +	git bisect good $HASH1 &&
-> +	git bisect bad $HASH4 &&
-> +	git bisect run printf "%s\n" --log >my_bisect_log.txt &&
-> +	grep -e --log my_bisect_log.txt &&
-> +	git bisect reset
-> +'
-
-Check out my 1/13 to see all the cases you missed:
-https://lore.kernel.org/git/patch-01.13-beb1ea22a27-20221104T132117Z-avarab=
-@gmail.com/
-:)
+-- 
+Danh
