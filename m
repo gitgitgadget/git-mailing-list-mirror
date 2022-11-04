@@ -2,206 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1472EC4332F
-	for <git@archiver.kernel.org>; Thu,  3 Nov 2022 23:31:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFA7AC4332F
+	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 00:31:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229655AbiKCXbM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Nov 2022 19:31:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53566 "EHLO
+        id S230510AbiKDAbz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Nov 2022 20:31:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229507AbiKCXbL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2022 19:31:11 -0400
-Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E87A1F2F0
-        for <git@vger.kernel.org>; Thu,  3 Nov 2022 16:31:09 -0700 (PDT)
-Received: by mail-yb1-xb49.google.com with SMTP id 204-20020a2510d5000000b006be7970889cso3444391ybq.21
-        for <git@vger.kernel.org>; Thu, 03 Nov 2022 16:31:09 -0700 (PDT)
+        with ESMTP id S230139AbiKDAbw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2022 20:31:52 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AB9E22532
+        for <git@vger.kernel.org>; Thu,  3 Nov 2022 17:31:52 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id e7-20020a17090a77c700b00216928a3917so1952378pjs.4
+        for <git@vger.kernel.org>; Thu, 03 Nov 2022 17:31:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8OiIQ77Qhf1hhtmXewdRVEruCnDxQgTgDoFQoO8Yem8=;
-        b=KmH8+8qMJ5RnxKSIH/VujLkoidLU+p9kR0h0hOAa10Uy/qNdII4YqH/zew0YTlyKpg
-         taK8HF0l16GEU6Q2G31Z+aUb8LVYv61UR3TXsbKhRRZfW/wUNg18d9Vb9VX0ml77wLR1
-         GysYb7lp7OrpKkHNTRL5KHFtj5JHC7w9zK12IBI5YQimy95/7ywr3esOgkh2UpdimCsL
-         0Ydu+sjdYDOyOnXy2RCLxN3lge7WEOZn9FW0FxnCmKQBh7Q9YOXgAbXM3Om0W1ePG3oW
-         CGY9pw7H6yfs5lDioDhGTsHCz7mgyOb2SrMtprJoUni1n4AdKYHIQwX5655kgvmPOaOt
-         GEfQ==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=A8Uu9PactP36Z1xCA62AzetFv9Fq/ygYaD0qPiJ4O4A=;
+        b=Ez6FD0iSbn+Rz90DevUHPDMddxx/tTCtFE881LbAGZJsLN+QIduP1dFYymz6K+yuPB
+         /Jh7eQaQuIhb3yEkqFIhof9WyzSucko29u062stWEonBQYqp+jdSRXzonMKCbwD5lL5J
+         8pFiRI8wHsGkF4aTxfPFNArbMIHYgsL9PjTmpsAuZ6FkFXZaYEUYtNOjHDHpzFHdfgTw
+         iDeQ/vijnQxSfhyVXmWHlatYgr/WZKv6piBR15wGsFjNZtE1EPvjPnTgTF7R42V6e2D0
+         26U3pkGraUpJm2Zvc5HloiSYOAOLGr+U7ZmX9iwiMbBV0nDOE6wPYsREEfBvW6SPOxl9
+         8yZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=8OiIQ77Qhf1hhtmXewdRVEruCnDxQgTgDoFQoO8Yem8=;
-        b=fCeyzYw/l9e4Ws6lVzqOLfSiFpVN5ydHNjD6XyK6HT1jys2qV1RiEgLMfOvJIiKNOz
-         TxPKso/VVFojvZ/iq4rCA/43vwPIP5ngqcSpRCuvHKuAj9Mj2YX88F55KCNMEXmG1Nan
-         +nC+GB08Dtq45t+ujtzrRsMW+FsoXmQ2EPs6+iX9Pje3pC2uCePxT6+sHnBOCPD30KHl
-         RQISDGV8ZT3zw5Um3gDA0ntQzNIYJ11ybrhyQaKndW0m5QmTbTXruiZDoWh4MHmblUZx
-         ArlzjIy/4r+XYAC4qlVeKTAiSRPWnRyFJxlCGDkTWmgGLTGV/xFP+7eJoZT04VN25nOF
-         +SqQ==
-X-Gm-Message-State: ACrzQf333NEnmWY3OdvUuU3AoBE2qLwaXE6u/mfYK2t+ZR40kvz/0PxN
-        VNcxZtC4gfKH9yd7N4x1aXHu1dzCJ+zAVg==
-X-Google-Smtp-Source: AMsMyM7xJW0labePnOm8pZc1P8ACeVhx0sMUPWAXaIjUBg/XeVsowgzzD9MhieJFZdCL3rWewnznLEhXntC8/A==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6902:919:b0:6ca:e3de:f401 with SMTP
- id bu25-20020a056902091900b006cae3def401mr205023ybb.236.1667518268608; Thu,
- 03 Nov 2022 16:31:08 -0700 (PDT)
-Date:   Thu, 03 Nov 2022 16:31:07 -0700
-In-Reply-To: <patch-8.8-105853cd358-20221102T074148Z-avarab@gmail.com>
-Mime-Version: 1.0
-References: <cover-0.8-00000000000-20221102T074148Z-avarab@gmail.com> <patch-8.8-105853cd358-20221102T074148Z-avarab@gmail.com>
-Message-ID: <kl6l7d0bobt0.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH 8/8] submodule--helper: use OPT_SUBCOMMAND() API
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=A8Uu9PactP36Z1xCA62AzetFv9Fq/ygYaD0qPiJ4O4A=;
+        b=q87O2+vqCxY8Tvh4lgICF5UlTRx8zWu6IhhwNORZWt8tGXtuaCTDsapqz95AdHClv5
+         27F9lCf3/rt5rWoF9Lmeybr6nsifODugnedGCGXvWkYXRfiRu60HaXKPN2WisaGH5HZb
+         tNNQ6+CIh+Uv8//qqFNv314dsOWhRuJL5nIddauzVnHFkq4tSjzhIPsod15FFKwV3lJf
+         5LzaEVXNqf504XxW935cVbqLAQsuumwyhZiahKRygVBlnyTlhG3iMrMhP6Odh+lGWeHF
+         n8DNcI1WSp/Sovj254mRrK2HWhEARrMxSLHOTpi2eWDFaPcO8y2n45w8hTiXwClslJKm
+         sipg==
+X-Gm-Message-State: ACrzQf2i23DXj+XH6O7hXFLEKfHAYd6HDXLooOQr74rhW0L8l0ixbWii
+        XcgeK9V/WDczvIpwgnodhP08xXIc32E3
+X-Google-Smtp-Source: AMsMyM6y3LBMz1gEqkJRgqLrsKTLo0shgQ2ixQ2dFh284FE6hCshZBFpXQw7ArQ3xww5xr+AEUKKuQ==
+X-Received: by 2002:a17:903:26ce:b0:186:9029:fa22 with SMTP id jg14-20020a17090326ce00b001869029fa22mr31612352plb.140.1667521911595;
+        Thu, 03 Nov 2022 17:31:51 -0700 (PDT)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id r12-20020aa7988c000000b0056c681af185sm1350340pfl.87.2022.11.03.17.31.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Nov 2022 17:31:50 -0700 (PDT)
+Message-ID: <123628cc-1410-aaa0-0151-2dff35bd1855@github.com>
+Date:   Thu, 3 Nov 2022 17:31:49 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.1
+Subject: Re: rebase -i --update-refs can lead to deletion of branches
+To:     "herr.kaste" <herr.kaste@gmail.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Phillip Wood <phillip.wood123@gmail.com>, erik@cervined.in
+References: <CAFzd1+5F4zqQ1CNeY2xaaf0r__JmE4ECiBt5h5OdiJHbaE78VA@mail.gmail.com>
+Content-Language: en-US
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <CAFzd1+5F4zqQ1CNeY2xaaf0r__JmE4ECiBt5h5OdiJHbaE78VA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+herr.kaste wrote:
+> Now, I should just have not used `--update-refs` in the first place but anyway
+> I decide late that I rather don't want to update "master" etc. and it should
+> probably not delete the local refs.
+> 
 
-> Have the cmd_submodule__helper() use the OPT_SUBCOMMAND() API
-> introduced in fa83cc834da (parse-options: add support for parsing
-> subcommands, 2022-08-19).
->
-> This is only a marginal reduction in line count, but once we start
-> unifying this with a yet-to-be-added "builtin/submodule.c" it'll be
-> much easier to reason about those changes, as they'll both use
-> OPT_SUBCOMMAND().
+Agreed, this doesn't seem like desired behavior - the opposite of "update
+the ref" isn't "delete the ref". ;)
 
-Even if nothing else, this is a nice standardization change :)
+The reason it's happening is because, when '--update-refs' is used, the
+rebase starts by constructing a list of 'update_ref_record's for each of the
+refs that *could* be updated. Each item in that list contains the
+corresponding ref's "before" commit OID (i.e., what it currently points to)
+and initializes the "after" OID to null. When an 'update-ref' line is
+encountered in the 'rebase-todo', the "after" OID is updated with the
+newly-rebased value. However, if an 'update-ref' line is removed from the
+'rebase-todo', the "after" value is never updated. Then, when the rebase
+finishes and the ref state data is applied, all of the entries with null
+"after" OIDs are deleted.
 
-> We don't need to worry about "argv[0]" being NULL in the die() because
-> we'd have errored out in parse_options() as we're not using
-> "PARSE_OPT_SUBCOMMAND_OPTIONAL".
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  builtin/submodule--helper.c | 78 ++++++++++++++++++-------------------
->  git.c                       |  2 +-
->  2 files changed, 39 insertions(+), 41 deletions(-)
->
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index 2012ad31d7f..0bc25dcf5ae 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -3350,47 +3350,45 @@ static int module_add(int argc, const char **argv=
-, const char *prefix)
->  	return ret;
->  }
-> =20
-> -#define SUPPORT_SUPER_PREFIX (1<<0)
-> -
-> -struct cmd_struct {
-> -	const char *cmd;
-> -	int (*fn)(int, const char **, const char *);
-> -	unsigned option;
-> -};
-> -
-> -static struct cmd_struct commands[] =3D {
-> -	{"clone", module_clone, SUPPORT_SUPER_PREFIX},
-> -	{"add", module_add, 0},
-> -	{"update", module_update, SUPPORT_SUPER_PREFIX},
-> -	{"foreach", module_foreach, SUPPORT_SUPER_PREFIX},
-> -	{"init", module_init, 0},
-> -	{"status", module_status, SUPPORT_SUPER_PREFIX},
-> -	{"sync", module_sync, SUPPORT_SUPER_PREFIX},
-> -	{"deinit", module_deinit, 0},
-> -	{"summary", module_summary, 0},
-> -	{"push-check", push_check, 0},
-> -	{"absorbgitdirs", absorb_git_dirs, SUPPORT_SUPER_PREFIX},
-> -	{"set-url", module_set_url, 0},
-> -	{"set-branch", module_set_branch, 0},
-> -	{"create-branch", module_create_branch, 0},
-> -};
-> -
->  int cmd_submodule__helper(int argc, const char **argv, const char *prefi=
-x)
->  {
-> -	int i;
-> -	if (argc < 2 || !strcmp(argv[1], "-h"))
-> -		usage("git submodule--helper <command>");
-> -
-> -	for (i =3D 0; i < ARRAY_SIZE(commands); i++) {
-> -		if (!strcmp(argv[1], commands[i].cmd)) {
-> -			if (get_super_prefix() &&
-> -			    !(commands[i].option & SUPPORT_SUPER_PREFIX))
-> -				die(_("%s doesn't support --super-prefix"),
-> -				    commands[i].cmd);
-> -			return commands[i].fn(argc - 1, argv + 1, prefix);
-> -		}
-> -	}
-> +	const char *cmd =3D argv[0];
-> +	const char *subcmd;
-> +	parse_opt_subcommand_fn *fn =3D NULL;
-> +	const char *const usage[] =3D {
-> +		N_("git submodule--helper <command>"),
-> +		NULL
-> +	};
-> +	struct option options[] =3D {
-> +		OPT_SUBCOMMAND("clone", &fn, module_clone),
-> +		OPT_SUBCOMMAND("add", &fn, module_add),
-> +		OPT_SUBCOMMAND("update", &fn, module_update),
-> +		OPT_SUBCOMMAND("foreach", &fn, module_foreach),
-> +		OPT_SUBCOMMAND("init", &fn, module_init),
-> +		OPT_SUBCOMMAND("status", &fn, module_status),
-> +		OPT_SUBCOMMAND("sync", &fn, module_sync),
-> +		OPT_SUBCOMMAND("deinit", &fn, module_deinit),
-> +		OPT_SUBCOMMAND("summary", &fn, module_summary),
-> +		OPT_SUBCOMMAND("push-check", &fn, push_check),
-> +		OPT_SUBCOMMAND("absorbgitdirs", &fn, absorb_git_dirs),
-> +		OPT_SUBCOMMAND("set-url", &fn, module_set_url),
-> +		OPT_SUBCOMMAND("set-branch", &fn, module_set_branch),
-> +		OPT_SUBCOMMAND("create-branch", &fn, module_create_branch),
-> +		OPT_END()
-> +	};
-> +	argc =3D parse_options(argc, argv, prefix, options, usage, 0);
-> +	subcmd =3D argv[0];
-> +
-> +	if (strcmp(subcmd, "clone") && strcmp(subcmd, "update") &&
-> +	    strcmp(subcmd, "foreach") && strcmp(subcmd, "status") &&
-> +	    strcmp(subcmd, "sync") && strcmp(subcmd, "absorbgitdirs") &&
-> +	    get_super_prefix())
-> +		/*
-> +		 * xstrfmt() rather than "%s %s" to keep the translated
-> +		 * string identical to git.c's.
-> +		 */
-> +		die(_("%s doesn't support --super-prefix"),
-> +		    xstrfmt("'%s %s'", cmd, subcmd));
+The three options for a fix I can think of are:
 
-FYI I'm preparing a series to get rid of the SUPPORT_SUPER_PREFIX checks
-in both the top level and in submodule--helper (i.e. revisiting my
-complaints from [1]), but I haven't sent it out yet because I haven't
-found the right way to motivate that change. Feel free to chime in on
-that series when it comes out.
+  1. initialize the "after" OID to the value of "before".
+  2. don't update refs with a null "after" OID.
+  3. initialize the "after" OID to the value of "before", don't update the
+     ref if "before" == "after".
 
-[1] https://lore.kernel.org/git/20220630221147.45689-5-chooglen@google.com/
+I think #3 is the best option, since it avoids the unnecessary updates of #1
+and leaves a cleaner path to a 'delete-ref' option (like the one proposed
+elsewhere in the thread [1]) than #2. I'll send a patch shortly. 
 
-> -	die(_("'%s' is not a valid submodule--helper "
-> -	      "subcommand"), argv[1]);
-> +	return fn(argc, argv, prefix);
->  }
-> diff --git a/git.c b/git.c
-> index ee7758dcb0e..fb69e605912 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -610,7 +610,7 @@ static struct cmd_struct commands[] =3D {
->  	{ "stash", cmd_stash, RUN_SETUP | NEED_WORK_TREE },
->  	{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
->  	{ "stripspace", cmd_stripspace },
-> -	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP | SUPPORT_SUPER=
-_PREFIX | NO_PARSEOPT },
-> +	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP | SUPPORT_SUPER=
-_PREFIX },
->  	{ "switch", cmd_switch, RUN_SETUP | NEED_WORK_TREE },
->  	{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
->  	{ "tag", cmd_tag, RUN_SETUP | DELAY_PAGER_CONFIG },
-> --=20
-> 2.38.0.1280.g8136eb6fab2
+[1] https://lore.kernel.org/git/CA+JQ7M-GbBTHZZ9xOLR=FitWFpUnkfuep9kSfNPxuSbJbKteGw@mail.gmail.com/
+
+Thanks for reporting!
+- Victoria
+
