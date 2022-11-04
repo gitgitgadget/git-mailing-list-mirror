@@ -2,100 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26316C4332F
-	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 03:20:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F3ACC4332F
+	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 03:25:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231504AbiKDDUD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Nov 2022 23:20:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52514 "EHLO
+        id S231531AbiKDDZX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Nov 2022 23:25:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231555AbiKDDS4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2022 23:18:56 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC6D62657B
-        for <git@vger.kernel.org>; Thu,  3 Nov 2022 20:17:26 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id v28so3379670pfi.12
-        for <git@vger.kernel.org>; Thu, 03 Nov 2022 20:17:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6CKcdjSCNUr1MW5hI0msHVx5Uz3vD5IgqJLTtgpEb4o=;
-        b=d7A9U8p312gwu1YxtcsjuYvoqwp9pu+PlhokMkH7svt/cgNSoQxNnA15RdeQIw4n3y
-         Nw5dFyS7mhcBdETrehCjeUA2HMO6xQvOH9MRmJTN1b3r5DsnoYnR00XBPWZC2Bm3dQGQ
-         QchOY0WBryFjfWL0sSPzlo1ej/VKfSaUuLj6c7sLbixlUb2visVSkF8UNnBJcXjM/4vi
-         CP+v16Z8udz+zsBvn2gasZKEMYaeVcfoz+kRCBTlLas2De+7ox90sxXnxXd7jhn2SQjk
-         BKYV9EPGJyyOjNOC7tEoDbRJi+RyBipI2ixaxbED9zZpGdqaCsCFaMJLpPZZw9/snyhn
-         HD6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6CKcdjSCNUr1MW5hI0msHVx5Uz3vD5IgqJLTtgpEb4o=;
-        b=myCNLcQ0Az21GJdAh2uU9UXVTSr5JtIufO1gE6R4Q9vobCt3li7Lzpv18OtpLh6tGW
-         iSgbrgbli8HUNsqDJZvcxXwn3mlVENZ1b6FHTo2gkzlEyrpCHOyv2nysmlNS3Ftjhp9B
-         8sKsGlhDlY/XkakhoGP9J38s8rojXktdu+CaL89MsF/vBcIFs3mTwlLBer1vOhd+ZVF1
-         99B5EVgLJyXiHMntTOFr9aUlSm6oEV477u13yl6oNsUZphIvmRv00qvjcaRIgVe3ldTo
-         XGsiI7beLppiQZsNrMWnCbBLkHiW+H9HJCUSXO8a9MfLTXRn/KxuBrAxZ2ga6r/izW9j
-         pP1w==
-X-Gm-Message-State: ACrzQf382JEGi1vCw6LE1ZRgOZapyAhdxOpNpTaWNytgee74Rh89avPz
-        CajSQCRzIppHmU+unajp5Y0=
-X-Google-Smtp-Source: AMsMyM5UvCLlpZzPFXhnU9STfgunLiMk7aKP9dMid2fs+nrkj3hAtPASTSpPw2FBNqbtEXfKPGhviA==
-X-Received: by 2002:aa7:9f0c:0:b0:56b:c0a0:6ab with SMTP id g12-20020aa79f0c000000b0056bc0a006abmr33371162pfr.7.1667531846452;
-        Thu, 03 Nov 2022 20:17:26 -0700 (PDT)
-Received: from localhost.localdomain ([47.246.101.58])
-        by smtp.gmail.com with ESMTPSA id u6-20020a170902e5c600b00172973d3cd9sm1442908plf.55.2022.11.03.20.17.23
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 03 Nov 2022 20:17:26 -0700 (PDT)
-From:   Teng Long <dyroneteng@gmail.com>
-X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
-To:     dyroneteng@gmail.com
-Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
-        gitster@pobox.com, me@ttaylorr.com, peff@peff.net,
-        tenglong.tl@alibaba-inc.com
-Subject: [PATCH v3 2/2] pack-bitmap.c: remove unnecessary "open_pack_index()" calls
-Date:   Fri,  4 Nov 2022 11:17:10 +0800
-Message-Id: <7ac9b859f31b2b3efb4a04896892ccd094a98734.1667470481.git.dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.38.1.383.g35840fde1dd
-In-Reply-To: <cover.1667470481.git.dyroneteng@gmail.com>
-References: <cover.1667470481.git.dyroneteng@gmail.com>
+        with ESMTP id S231169AbiKDDYl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2022 23:24:41 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70EEA25EAD
+        for <git@vger.kernel.org>; Thu,  3 Nov 2022 20:21:00 -0700 (PDT)
+Received: (qmail 17100 invoked by uid 109); 4 Nov 2022 03:20:59 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 04 Nov 2022 03:20:59 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25286 invoked by uid 111); 4 Nov 2022 03:21:00 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 03 Nov 2022 23:21:00 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 3 Nov 2022 23:20:58 -0400
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] ci: avoid unnecessary builds
+Message-ID: <Y2SFGmQnx7CXtTEI@coredump.intra.peff.net>
+References: <pull.1404.git.1667482458622.gitgitgadget@gmail.com>
+ <221104.86bkpnzdqi.gmgdl@evledraar.gmail.com>
+ <Y2R3vJf1A2KOZwA7@nand.local>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Y2R3vJf1A2KOZwA7@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Teng Long <dyroneteng@gmail.com>
+On Thu, Nov 03, 2022 at 10:23:56PM -0400, Taylor Blau wrote:
 
-Everytime when calling "open_pack_bitmap_1()", we will firstly call
-"open_pack_index(packfile)" to check the index, then further check
-again in "is_pack_valid()" before mmap the bitmap file. So, let's
-remove the first check here.
+> But I think you make a compelling point (which doesn't match my own
+> workflow, but I can see the utility of nonetheless).
+> 
+> I was thinking that we could rely on something similar to the ci-config
+> ref stuff from back in e76eec35540 (ci: allow per-branch config for
+> GitHub Actions, 2020-05-07), but it looks like it'll be a little
+> trickier than that, maybe impossible.
+> 
+> We need to know about the state of the ci-config branch before we set
+> the concurrency bits. So I think you *could* do something like:
 
-The relate discussion:
-https://public-inbox.org/git/Y2IiSU1L+bJPUioV@coredump.intra.peff.net/#t
+As an aside, I wish there was a way to interpret per-repo environment
+variables in the actual action config. The current ci-config stuff
+works, but it's pretty horrible because (if I understand correctly) it
+spins up a VM just to evaluate a glob and say "nope, no CI needed on
+this branch". So:
 
-Signed-off-by: Teng Long <dyroneteng@gmail.com>
----
- pack-bitmap.c | 3 ---
- 1 file changed, 3 deletions(-)
+  1. It's wasteful of resources, compared to a system where the Actions
+     parser can evaluate a variable.
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index 9443b7adca..503c95f0b8 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -412,9 +412,6 @@ static int open_pack_bitmap_1(struct bitmap_index *bitmap_git, struct packed_git
- 	struct stat st;
- 	char *bitmap_name;
- 
--	if (open_pack_index(packfile))
--		return -1;
--
- 	bitmap_name = pack_bitmap_filename(packfile);
- 	fd = git_open(bitmap_name);
- 
--- 
-2.38.1.383.g35840fde1dd
+  2. It makes the Actions results page for a repo ugly, because skipped
+     branches clutter the output with "yes, I passed CI" even though all
+     they passed was a trivial job to say "don't bother running more
+     CI".
 
+  3. The problem you mention: it happens too late to affect the overall
+     Actions flow, and instead individual jobs have to take it into
+     account.
+
+When I wrote the original ci-config stuff I looked for an alternative.
+You _can_ set per-repo variables in the form of secrets, but I couldn't
+find a way to evaluate them at the top-level of the yaml file. But maybe
+that has improved in the meantime. I had looked against as recently as a
+month or two ago and didn't find anything, but I'm far from an expert on
+Actions.
+
+-Peff
