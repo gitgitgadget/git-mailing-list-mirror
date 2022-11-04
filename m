@@ -2,158 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB9C8C433FE
-	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 02:24:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F262DC433FE
+	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 03:06:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231390AbiKDCYD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Nov 2022 22:24:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36676 "EHLO
+        id S230083AbiKDDGF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Nov 2022 23:06:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230435AbiKDCYA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2022 22:24:00 -0400
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAC211135
-        for <git@vger.kernel.org>; Thu,  3 Nov 2022 19:23:58 -0700 (PDT)
-Received: by mail-io1-xd2d.google.com with SMTP id n191so2839297iod.13
-        for <git@vger.kernel.org>; Thu, 03 Nov 2022 19:23:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=vG5YRkWFE6vpbXNIkSqF88pFsFALnlsqqoZq7AWqcqs=;
-        b=zxT1w9yVvneuG+BuZDCAypGqqwY6+AFjmdANttj+o0PIGaScAi5+xXbufkHE0wIYUm
-         HAKjUS67kjxss9h50xD/vkAsgEKwY+nBqzZIYfCHOkfp+8up8VFh+1EfAWnfQpGZkcT9
-         v2n2mlx5nECQ+IszcUlNchjwtsYplsYmo9WOPN23UgHjSnxzFQMZ+Dut2xR2m5qAczWK
-         wDNK4SaAh/xfwsw8kXR8DZ2UYrS5iUrlVHQaH4qWAfNJ2KtB43CUEmNPIdwAf5dpn6CN
-         Gz+qFpM3fpo7HRldIXzTayvnEMuK9J7acvMPdOuWd6Iqot3LVOa5e+/fxHle73knVmxT
-         70WQ==
+        with ESMTP id S229611AbiKDDGD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2022 23:06:03 -0400
+Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C99B96259
+        for <git@vger.kernel.org>; Thu,  3 Nov 2022 20:05:59 -0700 (PDT)
+Received: by mail-il1-f182.google.com with SMTP id r2so2030277ilg.8
+        for <git@vger.kernel.org>; Thu, 03 Nov 2022 20:05:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vG5YRkWFE6vpbXNIkSqF88pFsFALnlsqqoZq7AWqcqs=;
-        b=IpwFSxlYexotSm+ORKwKKJ/s+KerDqrDq2fz16mieJfVc5faSB6vUOrGDlWjSSKG2z
-         xH+t+AM5j0fsvgwiPKc7Zp4+8a728dT6dLm/42Lp4tSiqrf0RtLV8GZbWWvILZqRGbZ8
-         T6GUYBNyjxDoWquZsrGZCGCNNDVZqoz7e5yTxchce1BtLn7C+HFopPWHSccopQve52dL
-         KA2HYpY4UnTu+Ih4oN70Q0/zP+avpi+sRtvGQeeSA7VbVMh+ZXhE8Auh2gR4GfWQhWx4
-         cOK8TNyjASB0jQsQhaZth6pZlx8ixb/ECVlozrVZwYhUGhBsJB1W5Pk7YaDoUNxIaLoY
-         rnnA==
-X-Gm-Message-State: ACrzQf2BFK9EaPtfS6ak4vGy/rxNrPB79Spo4l3C7S/xZjDNioQ64CJ2
-        1XdKNZvdjsLXjnl02sPKPifbjg==
-X-Google-Smtp-Source: AMsMyM5f3AZaz5T/zgP52I4da+6BGBWAIv7seWfGl+I3584BWBG/Eq0ebhOvOR3bhiasJ8JriHIwDg==
-X-Received: by 2002:a5d:9411:0:b0:6a7:f7ec:6dd8 with SMTP id v17-20020a5d9411000000b006a7f7ec6dd8mr20312107ion.44.1667528638105;
-        Thu, 03 Nov 2022 19:23:58 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id y19-20020a056638229300b00363da904602sm797104jas.13.2022.11.03.19.23.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Nov 2022 19:23:57 -0700 (PDT)
-Date:   Thu, 3 Nov 2022 22:23:56 -0400
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] ci: avoid unnecessary builds
-Message-ID: <Y2R3vJf1A2KOZwA7@nand.local>
-References: <pull.1404.git.1667482458622.gitgitgadget@gmail.com>
- <221104.86bkpnzdqi.gmgdl@evledraar.gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zQSJvSHP6V0miAsTH5atqChv0rwrVM8jfnaq63MbNQ0=;
+        b=OZcnnhdfyhwj2IcxingbcTe1tVY9MulhOkalo9TQXIZ6by+xetpiPIt2oeKaui2y/o
+         PAQnjKN4+tTH/THIZZAH0ewviY8e6K9HuFDLoLMcwtIt9ObiAYZRkH78MK3AENlajMP0
+         D8GPutJ6HMquvMM4sXmQjLm3zTXxUoF52O7KGQT0qoBjzYSkYg+hqQDUjk/TzfXJNJvX
+         qyHjZCeSRp5R9nML4hHZelegiAcwNowfXcGcL/dDOB272q3dyZWvTGIM00BMaMUJANUF
+         raFRNZQdnzvqIjObJNeAplfCgbgUTKiQCmrGI1/3Ewe5PLLwTqceZc1LMwZTa35pebFo
+         Fp+g==
+X-Gm-Message-State: ACrzQf3TwC06D6ae0tve9u6rMvzI3+zGp008fc7B+Ts7beHo1Tq+EFvQ
+        2JxcsATJknEBK0wgo/bE6hgzA2+p8A1h8VrZo/nb62BfMVk=
+X-Google-Smtp-Source: AMsMyM7jsUBxyWOyasxO0sPzOH2PBehSlOYWofUedpnngmmITUFiXw+dtDGLFaZxrTodwcFoaHpaTPpZzOU4iTRC1MA=
+X-Received: by 2002:a92:290b:0:b0:300:c7c3:665d with SMTP id
+ l11-20020a92290b000000b00300c7c3665dmr9223258ilg.249.1667531159026; Thu, 03
+ Nov 2022 20:05:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <221104.86bkpnzdqi.gmgdl@evledraar.gmail.com>
+References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20221104010242.11555-2-jacobabel@nullpo.dev>
+In-Reply-To: <20221104010242.11555-2-jacobabel@nullpo.dev>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 3 Nov 2022 23:05:47 -0400
+Message-ID: <CAPig+cQA2b6-WVvSjb5iopFO3hmB1RveEBNCuwAXBVa8sV-6Og@mail.gmail.com>
+Subject: Re: [PATCH 1/4] worktree add: Include -B in usage docs
+To:     Jacob Abel <jacobabel@nullpo.dev>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 04, 2022 at 02:46:23AM +0100, Ævar Arnfjörð Bjarmason wrote:
-> > This is particularly problematic in the case of Pull Requests where a
-> > single contributor can easily (inadvertently) prevent timely builds for
-> > other contributors.
->
-> The "timely" being an issue in git/git and/or gitgitgadget where CI time
-> is a shared resource, but not in a <someuser>/git running CI just for
-> <someuser>?
+On Thu, Nov 3, 2022 at 9:05 PM Jacob Abel <jacobabel@nullpo.dev> wrote:
+> While -B behavior is already documented, it was not included in the
+> usage docs for either the man page or the help text. This change fixes
+> that and brings the usage docs in line with how the flags are documented
+> in other commands such as git checkout.
 
-Yup, agreed.
+Thanks. Some historical context...
 
-> > To help with this situation, let's use the `concurrency` feature of
-> > GitHub workflows, essentially canceling GitHub workflow runs that are
-> > obsoleted by more recent runs:
-> > https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#concurrency
->
-> In my own fork I very much use this concurrency not-cancel-in-progress
-> intentionally.
+Omission of -B from the synopsis was intentional[1] for the sake of brevity.
 
-Interesting. I noted basically the opposite in my earlier reply[1] to
-Johannes, where the behavior I want is that newer pushes of the same
-topic supersede older ones that are currently in progress.
+There was a previous "complaint"[2] about the omission of -B in the
+synopsis. A response[3] to that message suggested that a patch
+addressing the shortcoming would probably be welcome, though it
+appears that the author of [2] never submitted such a patch.
+Summarizing [3]:
 
-But I think you make a compelling point (which doesn't match my own
-workflow, but I can see the utility of nonetheless).
+    Whether or not the omission was actually a good decision is
+    questionable. [...] Of course, that decision does not assist
+    newcomers, so adding "-B" to the synopsis would help the page
+    better stand on its own.
 
-I was thinking that we could rely on something similar to the ci-config
-ref stuff from back in e76eec35540 (ci: allow per-branch config for
-GitHub Actions, 2020-05-07), but it looks like it'll be a little
-trickier than that, maybe impossible.
+Which suggests that this patch is probably a good idea.
 
-We need to know about the state of the ci-config branch before we set
-the concurrency bits. So I think you *could* do something like:
+The patch itself looks fine (though the noise-change in the position
+of the "\" line-splice seems unwarranted).
 
---- >8 ---
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 4fdf4d3552..f1ca364f96 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -2,11 +2,6 @@ name: CI
+[1]: https://lore.kernel.org/git/1435969052-540-17-git-send-email-sunshine@sunshineco.com/
+[2]: https://lore.kernel.org/git/alpine.LFD.2.21.1711140324580.12112@localhost.localdomain/
+[3]: https://lore.kernel.org/git/CAPig+cRc7Yqeys=oPEgPnyR4qT7qKYLbH1ifnp+6F6N+mSzNVA@mail.gmail.com/
 
- on: [push, pull_request]
+> Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
+> ---
+> diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+> @@ -10,7 +10,7 @@ SYNOPSIS
+>  'git worktree add' [-f] [--detach] [--checkout] [--lock [--reason <string>]]
+> -                  [-b <new-branch>] <path> [<commit-ish>]
+> +                  [[-b | -B] <new-branch>] <path> [<commit-ish>]
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> @@ -15,9 +15,9 @@
+> -#define BUILTIN_WORKTREE_ADD_USAGE \
+> +#define BUILTIN_WORKTREE_ADD_USAGE                                                        \
 
--# Avoid unnecessary builds
--concurrency:
--  group: ${{ github.workflow }}-${{ github.ref }}
--  cancel-in-progress: true
--
- env:
-   DEVELOPER: 1
+This is just a noise-change which (IMHO) makes it harder to spot the
+line-splice. (Presumably this whitespace change was made by an
+automated formatting tool or by a "too smart" editor?)
 
-@@ -39,7 +34,14 @@ jobs:
-           then
-             enabled=no
-           fi
-+          skip_concurrent=yes
-+          if test -x config-repo/ci/config/skip-concurrent &&
-+             ! config-repo/ci/config/skip-concurrent '${{ github.ref }}'
-+          then
-+            skip_concurrent=no
-+          fi
-           echo "::set-output name=enabled::$enabled"
-+          echo "::set-output name=skip_concurrent::$skip_concurrent"
-       - name: skip if the commit or tree was already tested
-         id: skip-if-redundant
-         uses: actions/github-script@v3
-@@ -86,6 +88,9 @@ jobs:
-     name: win build
-     needs: ci-config
-     if: needs.ci-config.outputs.enabled == 'yes'
-+    concurrency:
-+      group: ${{ github.workflow }}-${{ github.ref }}
-+      cancel-in-progress: needs.ci-config.outputs.skip_concurrent = 'yes'
-     runs-on: windows-latest
-     steps:
-     - uses: actions/checkout@v2
---- 8< ---
-
-...and similar "concurrency" blocks in each of the other jobs to define
-the settings at the job level instead of at the workflow level.
-
-So, it's doable, but a little gross. At the very least, it would satisfy
-Ævar's workflow requirements, too, since he could write a script that
-exits with non-zero status to avoid the new behavior.
-
-Thanks,
-Taylor
-
-[1]: https://lore.kernel.org/git/Y2R0YrQzKaUZzaPB@nand.local/
+>         N_("git worktree add [-f] [--detach] [--checkout] [--lock [--reason <string>]]\n" \
+> -          "                 [-b <new-branch>] <path> [<commit-ish>]")
+> +          "                 [[-b | -B] <new-branch>] <path> [<commit-ish>]")
