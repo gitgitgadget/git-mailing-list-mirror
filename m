@@ -2,110 +2,132 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0280CC43217
-	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 11:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B048C433FE
+	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 12:37:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231741AbiKDLrz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Nov 2022 07:47:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60172 "EHLO
+        id S231546AbiKDMhv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Nov 2022 08:37:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231728AbiKDLrt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Nov 2022 07:47:49 -0400
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 343D32CE18
-        for <git@vger.kernel.org>; Fri,  4 Nov 2022 04:47:49 -0700 (PDT)
-Received: by mail-qk1-x732.google.com with SMTP id x21so2886835qkj.0
-        for <git@vger.kernel.org>; Fri, 04 Nov 2022 04:47:49 -0700 (PDT)
+        with ESMTP id S230051AbiKDMhu (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Nov 2022 08:37:50 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A06A12D772
+        for <git@vger.kernel.org>; Fri,  4 Nov 2022 05:37:26 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id l39-20020a05600c1d2700b003cf93c8156dso1569623wms.4
+        for <git@vger.kernel.org>; Fri, 04 Nov 2022 05:37:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4wmanCtdCfdBXULL+ulQKPKewkYYusIimhJ+Oc6D2is=;
-        b=h0uNK5YISp0N4lh8VmZO8cTT1snA2ns2J92q+9S82wkCTba7NqYTvivQFcvEpd2qoR
-         5w8nobBfQw6yYHERJlwJSup1ESCO+rfrBWz+yvw86ZlExg7Zr2REK7k1D6QAHK1sbNRg
-         AAEZMevOnSfMY75u7JkSUY78VFYDH1ZJA01z+d78PUj9oe6iSMnwXbh2Gyk9u9cjbkZV
-         P/XSXxxHQW2gEpfH7pFkyFSScZ3qnHwr3JpdMr3Ovxne+sNSV0BMEB2VOhUxDFDrFuSu
-         uuePEx+CM5I3oBEEM3IQYQbpSGv7axgm+bFRFufMj1qBK+a7Jcl9OEY+xd9t/ak9rnVj
-         NbMQ==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=oIEwAr4Ju7xxeL+VlGEgNQ5NTANpks33FJaIQOkfwg4=;
+        b=qVyHAJuhR2PbDGMGLEhcJYp6SHn7dm/+Su0q0iqsWni0gwTx5m/6FebwwvhXusVpFv
+         mCOW9b4V4V0cGhTUvD784q8sA9yLgOOp4FWFC/NUJYBkmybVyQAr1mwk7+eN427dLx5E
+         NPEgiG1e/nbnG82/rki5WS77LH+CIjbejH49vbJZkrMG8GpkJgSIuFAC7yfkQUPGyE4d
+         9GMfNkSZuePB7ug+PQpqMfc70e9Wb8NzMyf4aSFM1QuVwenbbIQ5ZuQdwLAXSLXnB6eV
+         NGITy9NYXALZv7NQvtrGcgvkpkJ8txp5JtjU7xDkHBuZQRQJFdf9j7Sw1iRAkyHEupt6
+         VZxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:to
-         :content-language:user-agent:mime-version:date:message-id
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4wmanCtdCfdBXULL+ulQKPKewkYYusIimhJ+Oc6D2is=;
-        b=trrcH8ipQdiPc7OceP+X5V0rwSkkWxYUVYvWqTECafCA3mPZ/uh5ro3bJ7oPM+vTCc
-         /XDSDFcjf7dYtlrA7bv8RabvIlMUOIw7/VgnkzgzXd9kC5iGPPc0CaZytnnHd9hWrJai
-         z5m7Hs/S79mqMVvE9Q04Hvu176MPJyTuuDxvaolI29uRLyCJWdPs7MEMi+T4gOlo+7fc
-         I9L0GA7y1PbHFTNSnKoqCAey7kfySTFTO2+/fUEXVSyH+BA/BLsi5ohNzCttuHyL+2Fz
-         1WJwLRLVZnqzvDCNGcryZKkVwHzggpSoMi62NDVQxLpSWDV+OfNScCq/eCIdgX++HTbZ
-         95ig==
-X-Gm-Message-State: ACrzQf2rlkAKylaohD9JYXG0W4mhGR5Vj901jILQcwgH+/uYpki8mx1M
-        hGMiq5FIMQCGtJAp1IEcUtPO96KIbMc=
-X-Google-Smtp-Source: AMsMyM7Vk4c6bKfRaqpoxP5CAhZvf7hmYVIzeKfNJ5wGroPQe102KpU2HV9MTontmFsuLycyQYDHsw==
-X-Received: by 2002:a05:620a:2109:b0:6fa:75bb:c766 with SMTP id l9-20020a05620a210900b006fa75bbc766mr5463170qkl.369.1667562468106;
-        Fri, 04 Nov 2022 04:47:48 -0700 (PDT)
-Received: from ?IPV6:2605:2a00:9005:dead:a5ad:28f9:f53:90b4? ([2605:2a00:9005:dead:a5ad:28f9:f53:90b4])
-        by smtp.gmail.com with ESMTPSA id j21-20020a05620a289500b006b949afa980sm2382993qkp.56.2022.11.04.04.47.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Nov 2022 04:47:47 -0700 (PDT)
-Message-ID: <bc3aa4b1-4716-cf9c-5dff-22b25793f66c@gmail.com>
-Date:   Fri, 4 Nov 2022 07:47:46 -0400
+        bh=oIEwAr4Ju7xxeL+VlGEgNQ5NTANpks33FJaIQOkfwg4=;
+        b=YOFS5dM+riIwxxTHMrVJKlRLhOlEBcP0dujdWIdIQVwH/R6jBmKcs2zDL2gM2dS8zv
+         SfaYx9cvfikmcinj+jhZQJbtfeHkNgO3ydWiYaSJ6/1ni9hRZr8uBLALwLPe7AghIPxI
+         Ppp6K+2VFVBCOU+aXfSBG8CuJizo0S/d9xVdkiYJYDpeLgqwsIJ8O8EmZPgQEgEglrZm
+         FbwyL+s88TT0pNX3dBlkjxyZ4HQ4gDoii9AfPvGViI7dVwulhWydgOf6S/gXUprwZVAC
+         KRoiZs+52NZojWOe4DW8QSVhX5CtqTE6EFX4/kg3rCr6LSITCCzLbJVYdH1z8AXTIGsr
+         WZeQ==
+X-Gm-Message-State: ACrzQf35YumtHShXskyagAJmQ2PSRYQMrNeVb8PylC+SZRPpH3ETGvgQ
+        Z46yEANVIuKQLsvVI0LGIkE=
+X-Google-Smtp-Source: AMsMyM6kX542k1TzE6+8MC8k3k4abwWAyhhrFaPX/oU+COaF4sLd3M+ID60t7j/IbZmLbpDaiEEsZQ==
+X-Received: by 2002:a1c:2185:0:b0:3cf:8e86:1043 with SMTP id h127-20020a1c2185000000b003cf8e861043mr5187924wmh.157.1667565445053;
+        Fri, 04 Nov 2022 05:37:25 -0700 (PDT)
+Received: from localhost (84-236-78-97.pool.digikabel.hu. [84.236.78.97])
+        by smtp.gmail.com with ESMTPSA id j5-20020a5d4485000000b002365730eae8sm3309405wrq.55.2022.11.04.05.37.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 04 Nov 2022 05:37:24 -0700 (PDT)
+Date:   Fri, 4 Nov 2022 13:37:22 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?THVrw6HFoQ==?= Doktor <ldoktor@redhat.com>,
+        Christian Couder <chriscool@tuxfamily.org>, git@vger.kernel.org
+Subject: Re: "git bisect run" strips "--log" from the list of arguments
+Message-ID: <20221104123722.GA6942@szeder.dev>
+References: <1cb1c033-0525-7e62-8c09-81019bf26060@redhat.com>
+ <Y2TfUFkLUa2tHdS7@coredump.intra.peff.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.0
-Content-Language: en-US
-To:     "J. Paul Reed" <preed@sigkill.com>, git@vger.kernel.org
-References: <Y2A1bdiw6kGC65f/@sigkill.com>
-From:   Thomas Guyot <tguyot@gmail.com>
-Subject: Re: Odd git-config behavior
-In-Reply-To: <Y2A1bdiw6kGC65f/@sigkill.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Y2TfUFkLUa2tHdS7@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Paul,
+On Fri, Nov 04, 2022 at 05:45:52AM -0400, Jeff King wrote:
+> On Fri, Nov 04, 2022 at 07:31:26AM +0100, Lukáš Doktor wrote:
+> 
+> > Steps to Reproduce:
+> > 
+> > 1. git bisect start BAD GOOD
+> > 2. git bisect run ./myscript arg1 --log arg2 --log -- arg3 --log arg4
+> > 
+> > Results with 2.34.1:
+> > 
+> >     running  './myscript' 'arg1' 'arg2' '--' 'arg3' '--log' 'arg4'
+> > 
+> > Results with 2.33.0:
+> > 
+> >     running ./myscript arg1 --log arg2 --log -- arg3 --log arg4
+> 
+> Thanks for an easy reproduction recipe. I used this as an easy-to-see
+> test case, which works in any repo:
+> 
+>   git bisect start HEAD HEAD~2 >/dev/null 2>&1
+>   git bisect bisect run echo --log 2>&1 | grep running
+> 
+> > Is this expected? In https://bugzilla.redhat.com/show_bug.cgi?id=2139883 Todd suggested it might be related to
+> > 
+> >     d1bbbe45df (bisect--helper: reimplement `bisect_run` shell function in C, 2021-09-13) 
+> > 
+> > but I haven't tried it myself.
+> 
+> Yes, it bisects to that commit. +cc Christian, who mentored this gsoc
+> project.
 
-On 2022-10-31 16:51, J. Paul Reed wrote:
-> So... my maintenance automation runs as root, and the repo directories are
-> uid/gid'd someone else (though, the config file inside the [bare] repo
-> happens to be owned by root)... so I suppose what I'm observing is expected
-> behavior?
+It might bisect to that commit, but I don't think that commit is the
+real culprit here.
 
-You definitively shouldn't run these checks as root. Git is a highly 
-flexible/extensible product and god knows (and likely a few others in 
-this ML too) what could happen while you run git commands as root on an 
-"untrusted" user repository.
+'git-bisect.sh' used to have a 'bisect_write' function (not
+subcommand!), whose third positional parameter was a "nolog" flag.
+This flag was only used when 'bisect_start' invoked it to write the
+starting good and bad revisions.  Then 0f30233a11 (bisect--helper:
+`bisect_write` shell function in C, 2019-01-02) ported it to C as a
+command mode of 'bisect--helper', and:
 
-What prevents you from getting the owned uid or the repos and forking a 
-process as that user to run the check?
+  - Added the '--no-log' option, but since 'bisect--helper' has
+    command modes not subcommands, all other command modes see and
+    handle that option as well.
+  - Converted all callsites of 'bisect_write' to invocations of 'git
+    bisect--helper --bisect-write', but while doing so that one
+    callsite in 'bisect_start' was misconverted, and instead of
+    passing the '--no-log' option, it still passed 'nolog' as
+    parameter.  Consequently, 'git bisect start' wrote a couple of
+    extra lines to '.git/BISECT_LOG'.
 
-> I guess this leaves me with two questions:
->
->      1. Why does "git config" refuse to run due to this security check, but
->         other git commands ("git fsck," at least) run?
+This bogus state didn't last long, however, because in the same patch
+series 06f5608c14 (bisect--helper: `bisect_start` shell function
+partially in C, 2019-01-02) the C reimplementation of bisect_start()
+started calling the bisect_write() C function, this time with the
+right 'nolog' function parameter.  From then on there was no need for
+the '--no-log' option in 'bisect--helper'.  Eventually all bisect
+subcommands were ported to C as 'bisect--helper' command modes, each
+calling the bisect_write() C function instead, but when the
+'--bisect-write' command mode was removed in 68efed8c8a
+(bisect--helper: retire `--bisect-write` subcommand, 2021-02-03) it
+forgot to remove that '--no-log' option.
 
-Arguably a read-only config operation could likely be allowed, unless 
-there is a possibility for some untrusted commands to be executed as 
-part of this. I'm going to guess this was an easy entry point to cover 
-dangerous commands, but having a finer-grained check would require 
-making sure there's no dangerous code paths that could be exposed. The 
-change was to address CVE-2022-24765 - commit 8959555cee7 - so there was 
-likely time constraints to consider as well.
 
->      2. I think it might be useful to warn the user that the behavior they're
->         expecting isn't happening due to this security check, instead of just
->         outputting objectively wrong information (i.e. that no config options
->         exist when they actually do exist); I'd be curious what others think.
-
-What was the return code for the git config command? If it was zero when 
-it didn't parse/output the config option you asked for that is 
-definitively a bug. If you failed to check the return code of git-config 
-then you should fix your script/tool instead.
-
-Regards,
-
---
-Thomas
