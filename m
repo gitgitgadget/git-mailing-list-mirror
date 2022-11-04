@@ -2,83 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDD07C433FE
-	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 21:44:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 857E1C43219
+	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 21:49:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230048AbiKDVom (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Nov 2022 17:44:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48208 "EHLO
+        id S230126AbiKDVtI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Nov 2022 17:49:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229598AbiKDVok (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Nov 2022 17:44:40 -0400
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCC6BD9E
-        for <git@vger.kernel.org>; Fri,  4 Nov 2022 14:44:39 -0700 (PDT)
-Received: by mail-io1-xd2f.google.com with SMTP id p141so4836075iod.6
-        for <git@vger.kernel.org>; Fri, 04 Nov 2022 14:44:39 -0700 (PDT)
+        with ESMTP id S230073AbiKDVtG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Nov 2022 17:49:06 -0400
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F179843AD3
+        for <git@vger.kernel.org>; Fri,  4 Nov 2022 14:49:05 -0700 (PDT)
+Received: by mail-io1-xd2c.google.com with SMTP id p141so4842958iod.6
+        for <git@vger.kernel.org>; Fri, 04 Nov 2022 14:49:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=fLz7Si5Ywssy01rrCkV2U4O7B0aSydo3XCcvfKs9Y/8=;
-        b=ZiUjcczr2//icpgq54YZR1XPEuCj0hUXYr7oioahcQ+wjij6roMCo9k3yzzQWZHDyF
-         sDQFweLMC06kvoGY0g6nOkTdZY+2/JhE55QUwbBEl/yP4nsh2gwRZBJdJRy5c3A2ChWO
-         b0/RyFBsBFzpDfQyGrOtb0YuNhnyof8SB+7i60VFGqy1rTz4q7N4RgMuoIYSy8mRrfip
-         jtjRfnrFqj2fDWC35PuOC2jPSsWP9gVn0jXrBG++mxqXGNn4NgNduRPmAeGd70zWqW1s
-         ZRFsdas86dYWZ13E3Vl3CKHSpO72XrcHVZLz7Jd4wlMqDYEIg8VIW1J7h5hU83N/L0ba
-         h3bA==
+        bh=Fl4ewedRLzHNOI+i4Uqi2Pjkwq4jHNEsra1nuEEbX9w=;
+        b=mSQRZNHOvWo2OMtre7esmddbswzbbYqd2xp7vlo24kDszEOUOXM1GVFWdu+lewKpFT
+         /yNDHzrn7vijzwU0rpTcaCnHa/Fm4eQ4tJfZGdnOWwSGsS7G1afRTdnVAvkYvBas9uie
+         sgrBMdMyvkM0uwd7ODr01Y/Dq23Zf44v1wkok561jhDjX4NxJ/0R8CuTbBadjwbu2qiT
+         Z9KRj+bvYiZ4PQRnX038fIeB8GdbpqYy8yVYfi2Raw5RJUrROFYgKIijV72ws70iOHiD
+         TcyQ9B6mHud49hkck/28P/VclhQBpuQVTxCltxgsTvTIwab04DhI5ZpC+g+Q9W1c4EFQ
+         Kh6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fLz7Si5Ywssy01rrCkV2U4O7B0aSydo3XCcvfKs9Y/8=;
-        b=aCdu4tDQDCBNzuXpSeil8LKEx8PSU/+y+J3n1AEQtcV6Q3FCiuvEuj4yf9jU7UnjXT
-         Y9cd8BcpDUp9twiHbiFKAY0p3bmLk6RDnQ8TcbCDeCCqux1F0G+d0HJO/QgUOMhIMcd5
-         I48uxTyoDAp9XJvqo8lvSzDR5KiYPKIyyRg3tNbxDmX1lNR0ehQhogsxIDFhSY0adexM
-         m0415DmD5HLtF7uBmJsEpis0lWhAPWOnjOVSaSoPgmd51Osacm7vbxXIgLu5YmwDrIwO
-         1Ktol4NeDQGa61vvLa8P1TxVY3sSM5qZ4OkO1hRcNth2DlmjXKsZRZ6dOJy4/MNF+Oyz
-         PHkw==
-X-Gm-Message-State: ACrzQf202wyPHQn9u1bWasQ/bq5TNJo7FQ6ER9XmKM+busVowZgsc7cR
-        RXad6iNT1nZQfsYiCO4z+xqZTw==
-X-Google-Smtp-Source: AMsMyM4oICn9jA/5scQQmoNRaai0K0Jq9KsXd9C9uUAi0YTkNpfbeZw5inr0va4cdvJJvzvXphZ/6g==
-X-Received: by 2002:a02:9085:0:b0:375:8557:5a8b with SMTP id x5-20020a029085000000b0037585575a8bmr8771381jaf.262.1667598279260;
-        Fri, 04 Nov 2022 14:44:39 -0700 (PDT)
+        bh=Fl4ewedRLzHNOI+i4Uqi2Pjkwq4jHNEsra1nuEEbX9w=;
+        b=GKGurXwrL/3JRa30OTFM1lxxZ+ThsfjEJYq1bmXzcqARtTvSr05j1/fIcmCqCeivQ1
+         6UKVnuRZNWyTjYwBchpV/hJ2YyWjgyw6VFSCVgdkRvUVs7+YMvEGx9FrSOG5QR/hcOo7
+         twqnk2wtMqBCZKrj3YABAm5JrW4Zv8drfcZjy84eW3xtPYKccP8QtHMjKZrF2GrLHBV1
+         ta4LRxNURcrdn3BMr9Wu0ke4v+8s+x3fUXDpVAsXYUhqCMIU0ysrsQSm6EABmcI+9KfE
+         fDsQgNOFnwEof3dJtdr7PYS1a2KXoJL6mbsBiQWFEmNJwLC5bdN25N54P2UqdGlNyEj9
+         MOSQ==
+X-Gm-Message-State: ACrzQf0ekCKp3MmvxfH2v17Vy8rU/EyQTDE3OVIQ3XWYj6akRTlS6y4Q
+        d4zXRzQbuZn7wrrMkKlTI9ZnjgybDODrr9Tb
+X-Google-Smtp-Source: AMsMyM6EPi2AxC88H00816n0Md3nG2mllw/L8kk/HiynJxhTWrZTXRZyWxiTemlor/nPUOcgTKZ9ow==
+X-Received: by 2002:a02:6385:0:b0:36e:ba59:5ded with SMTP id j127-20020a026385000000b0036eba595dedmr22878551jac.247.1667598545345;
+        Fri, 04 Nov 2022 14:49:05 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id z18-20020a92cd12000000b00300b9b7d594sm226309iln.20.2022.11.04.14.44.38
+        by smtp.gmail.com with ESMTPSA id s13-20020a0566022bcd00b006bbea9f45cesm71998iov.38.2022.11.04.14.49.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Nov 2022 14:44:38 -0700 (PDT)
-Date:   Fri, 4 Nov 2022 17:44:38 -0400
+        Fri, 04 Nov 2022 14:49:04 -0700 (PDT)
+Date:   Fri, 4 Nov 2022 17:49:03 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 10/17] sequencer.c: fix "opts->strategy" leak in
- read_strategy_opts()
-Message-ID: <Y2WHxveDDH5YLpZq@nand.local>
-References: <cover-00.17-00000000000-20221103T164632Z-avarab@gmail.com>
- <patch-10.17-9c70bfa334e-20221103T164632Z-avarab@gmail.com>
- <b9f08244-36bc-b74f-ac1a-b665423bc2e7@dunelm.org.uk>
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        y@nand.local
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 0/2] rebase: stop setting GIT_REFLOG_ACTION
+Message-ID: <Y2WIz5qvjQMfXPgP@nand.local>
+References: <pull.1405.git.1667575142.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <b9f08244-36bc-b74f-ac1a-b665423bc2e7@dunelm.org.uk>
+In-Reply-To: <pull.1405.git.1667575142.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 04, 2022 at 02:50:02PM +0000, Phillip Wood wrote:
-> > Along with the preceding commit this change various
-> > rebase-related tests pass.
->
-> Really? at a glance the previous patch looks unrelated and there are no
-> tests marked as passing in this one.
+On Fri, Nov 04, 2022 at 03:19:00PM +0000, Phillip Wood via GitGitGadget wrote:
+> This is a follow up to pw/rebase-reflog-fixes that moves away from using
+> GIT_REFLOG_ACTION internally. This conflicts with patches 12 & 14 in [1]. As
+> this series replaces the code being changed in those patches I think the
+> best solution would be to just drop them.
 
-Yeah, I wondered the same thing. What are we missing here?
+Thanks, I appreciate the updated round.
+
+The conflict you noted in [1] is a perfect example of why I dislike
+queuing sweeping leak cleanups like in that series. Those two patches
+need to get dropped in order to queue this series. OK, except what
+happens if a different part of [1] marks a test as leak-free when that
+is no longer the case because of something in this series?
+
+I haven't queued this topic yet, so perhaps all of this is moot with
+respect to these particular two series. But in general, such a problem
+is not hard to imagine.
+
+It is greatly appreciated to err on the side of smaller, more targeted
+series instead of sweeping changes when they can be avoided.
 
 Thanks,
 Taylor
