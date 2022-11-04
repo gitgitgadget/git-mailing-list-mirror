@@ -2,148 +2,226 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35B2BC433FE
-	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 01:26:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B27A3C433FE
+	for <git@archiver.kernel.org>; Fri,  4 Nov 2022 01:29:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229742AbiKDB0M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 3 Nov 2022 21:26:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34358 "EHLO
+        id S230377AbiKDB3x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 3 Nov 2022 21:29:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229461AbiKDB0K (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Nov 2022 21:26:10 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03E861C430
-        for <git@vger.kernel.org>; Thu,  3 Nov 2022 18:26:09 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id k8so5154772wrh.1
-        for <git@vger.kernel.org>; Thu, 03 Nov 2022 18:26:08 -0700 (PDT)
+        with ESMTP id S229771AbiKDB3w (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Nov 2022 21:29:52 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3FC4E9
+        for <git@vger.kernel.org>; Thu,  3 Nov 2022 18:29:50 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id z18so5600174edb.9
+        for <git@vger.kernel.org>; Thu, 03 Nov 2022 18:29:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wqlHpSNXzCVhdIn2pTu0nW86I1AeBXcoBVeJ0eiyRIA=;
-        b=Z/rsilEnNMnX6HZR45W1pflc295WADg2jjt0M0eK+UfpJHO5lLkUC55ZBOXVaKoACB
-         cEJTeu07pfQdrvh6W0XoNvyUyeVMsaYKfQEcGKCCBoHaOjAg6Q+ZDaVvbiwLDrN9y0yP
-         BncY6oGFs/JXaFFw/9Yfq/4znGP3pqP/OOclSGxQiSS4Ady8ykFGTULjnIE24v/fQ9QH
-         GZgxBnQmsOvAhFJeKZXo/DywjDWfTk3tioS/EjTbdhyjb9oHw2fzUpkBcdfwtosaM0o1
-         P3AeieIZ6FrETHryvg7YVUjwjNfB7zsE3yPFIIYdlrDs2XGDT3I9DmEoc6xAYnYKFHJ6
-         8Njw==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=x3Xb29AeAgz0hIolMZCbH7aCiKFlxgHcUBkfcLRF1Rc=;
+        b=ckeF+E1VJYTHYHwm3N22D5D52Xn5soAZu/znbRAHA6EKmE1VkO69Vb/nOPl2gOXppf
+         EM0KIwsPVndoO65ERG1G3oZszlhdClAjzUOosfqSWGoi2Zdb9dbfwBl+UEuDIA765Vom
+         ftaAhhm30Eb78hcdX7zF+2g3lakAjmbAY16d7DAnjHhmIYXiyynQWa3TvvyLx5eE2DO4
+         HF+mb+gT+KsOroFUE2VaE9dLREnslnH/X1U0rN6l3EF4dE6fq5TTF9db6eKzx00gFd8R
+         aNVILk/CZ2zzQqOBJgU4SEXDsd2UoYbDTpLxR+QkstxD333SnVbXUTxzERegr/HN/7tG
+         DzoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wqlHpSNXzCVhdIn2pTu0nW86I1AeBXcoBVeJ0eiyRIA=;
-        b=5vzldmia8JwSjV4EB9aheGn93AuV33kc7RBl+LGrCwjE83fl67nC4O/12CieNMVoVy
-         wKMq4JAsYY6E4XB2TZUT/LdpLPcoEtl22NWtVpuR4JUPHGpcuYRrwtc/C+HYr2MzBB3C
-         kfNyzaUf9v2u2BsMQWGDTIRHynV+EHzkJi+UEE6W/ZkJBgeBBD0kTGd7QMRpTvazn9sw
-         0D+xLiqaSURJaP9Of0veznHfktz0CzuMic7DkolD3Rf8Z93CQohcFASNt8SPecDfRVWY
-         qeL5aaAL392C6ClpgESg15LmqDkWad+TfSOEKmTot/MxhUK1Cik05MYZF2zhCmlkn5uO
-         PRwg==
-X-Gm-Message-State: ACrzQf2/fOWCJIjdRk0jhy6bSzgaGGN+sWPk4R2kQz53ys768fKe2CZm
-        s0yLH2XeKHihIDTbc/PhNT5h4m2Adro=
-X-Google-Smtp-Source: AMsMyM6gmFHemreFFVtp2TuRl+AaVRRtj/XBU6ZnEkyDozzfzg1U4+TDugYpyIbvG/cAYYUWNXQOmg==
-X-Received: by 2002:adf:dd4d:0:b0:236:6e72:be17 with SMTP id u13-20020adfdd4d000000b002366e72be17mr19717348wrm.460.1667525167446;
-        Thu, 03 Nov 2022 18:26:07 -0700 (PDT)
-Received: from [192.168.2.52] (203.85-84-12.dynamic.clientes.euskaltel.es. [85.84.12.203])
-        by smtp.gmail.com with ESMTPSA id m6-20020a1c2606000000b003c6edc05159sm1409405wmm.1.2022.11.03.18.26.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Nov 2022 18:26:06 -0700 (PDT)
-Subject: Re: [PATCH v2] branch: gracefully handle '-d' on orphan HEAD
-To:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Martin von Zweigbergk <martinvonz@google.com>,
-        Derrick Stolee <derrickstolee@github.com>
-References: <Y2F9lkCWf/2rjT2E@nand.local>
- <c68f4b140f2495a35c5f30bec4e2e56c246160f4.1667334672.git.me@ttaylorr.com>
- <Y2H/1S3G+KeeEN/l@coredump.intra.peff.net>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <f21bf37f-4efe-326c-0090-d13ed54696b9@gmail.com>
-Date:   Fri, 4 Nov 2022 02:26:00 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=x3Xb29AeAgz0hIolMZCbH7aCiKFlxgHcUBkfcLRF1Rc=;
+        b=o4jzUlaOUfKzmfaciFe3JDY57ibQ+PBxlgdWu6bn8gBcy//ysbvL+mY2TbmuJ/kdjC
+         51gc+jPqCeyZuhEFNOKTwZ896/bTm7PzGhLuUzPuQRhjXrQAl7S9Z9aLFTbRoqnVycoA
+         0aqjRfuPB8S2gPH2CRcmZNUoIRIf+gzw+k/c8gBK4yIS/eZSrxqZh28+/lRIKl3Bm5dK
+         GnFPl4CnbUHEbaAxOfJN+cG28SyE0yv3MF/C9FfAdk02FkHBeF1HIPM0KX4y8MDgv0pN
+         lBawYYNCfkVQrKn7Echfh9a0v8reWC3wKn4nB3sLdZOv4QxdVIdqwjGlyCS1fICf79ZY
+         pobA==
+X-Gm-Message-State: ACrzQf2tOHRyBLQ2b9dBtga3afKTkeIYndTNHXQ7ukFuhmc6PWQGJ/Ma
+        lraCgYhLRt3zPouvHRzny2jlD/CKq1E0JA==
+X-Google-Smtp-Source: AMsMyM6PkDSL65To/gPJ5BVXTbSstQ9PrYD9806PI5CQqIslHZdb8X7Kn0OUs5Ae6MYOMumrGgEHBw==
+X-Received: by 2002:a05:6402:348b:b0:45c:b22b:c4a9 with SMTP id v11-20020a056402348b00b0045cb22bc4a9mr34123422edc.65.1667525389024;
+        Thu, 03 Nov 2022 18:29:49 -0700 (PDT)
+Received: from gmgdl (j84064.upc-j.chello.nl. [24.132.84.64])
+        by smtp.gmail.com with ESMTPSA id ku10-20020a170907788a00b00782e3cf7277sm177510ejc.120.2022.11.03.18.29.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Nov 2022 18:29:48 -0700 (PDT)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oqlWl-00D1U5-33;
+        Fri, 04 Nov 2022 02:29:47 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Subject: Re: [PATCH 8/8] submodule--helper: use OPT_SUBCOMMAND() API
+Date:   Fri, 04 Nov 2022 02:22:54 +0100
+References: <cover-0.8-00000000000-20221102T074148Z-avarab@gmail.com>
+ <patch-8.8-105853cd358-20221102T074148Z-avarab@gmail.com>
+ <kl6l7d0bobt0.fsf@chooglen-macbookpro.roam.corp.google.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <kl6l7d0bobt0.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-ID: <221104.86wn8bzeus.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <Y2H/1S3G+KeeEN/l@coredump.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2/11/22 6:27, Jeff King wrote:
 
-> We can fix both by removing the die() in delete_branches() completely,
-> leaving head_rev NULL in this case. It's tempting to stop there, as it
-> appears at first glance that the rest of the code does the right thing
-> with a NULL. But sadly, it's not quite true.
-> 
-> We end up feeding the NULL to repo_is_descendant_of(). In the
-> traditional code path there, we call repo_in_merge_bases_many(). It
-> feeds the NULL to repo_parse_commit(), which is smart enough to return
-> an error, and we immediately return "no, it's not a descendant".
-> 
-> But there's an alternate code path: if we have a commit graph with
-> generation numbers, we end up in can_all_from_reach(), which does
-> eventually try to set a flag on the NULL commit and segfaults.
-> 
-> So instead, we'll teach the local branch_merged() helper to treat a NULL
-> as "not merged". This would be a little more elegant in in_merge_bases()
-> itself, but that function is called in a lot of places, and it's not
-> clear that quietly returning "not merged" is the right thing everywhere
-> (I'd expect in many cases, feeding a NULL is a sign of a bug).
-> 
-> There are four tests here:
-> ...
-I've reviewed the change and looks fine to me.  Fixes the issue with the
-deletion and avoids the segfault you discovered.
+On Thu, Nov 03 2022, Glen Choo wrote:
 
-But the last paragraph in your message, before describing the tests, makes me
-scratch my head.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> [...]
+>> +	struct option options[] =3D {
+>> +		OPT_SUBCOMMAND("clone", &fn, module_clone),
+>> +		OPT_SUBCOMMAND("add", &fn, module_add),
+>> +		OPT_SUBCOMMAND("update", &fn, module_update),
+>> +		OPT_SUBCOMMAND("foreach", &fn, module_foreach),
+>> +		OPT_SUBCOMMAND("init", &fn, module_init),
+>> +		OPT_SUBCOMMAND("status", &fn, module_status),
+>> +		OPT_SUBCOMMAND("sync", &fn, module_sync),
+>> +		OPT_SUBCOMMAND("deinit", &fn, module_deinit),
+>> +		OPT_SUBCOMMAND("summary", &fn, module_summary),
+>> +		OPT_SUBCOMMAND("push-check", &fn, push_check),
+>> +		OPT_SUBCOMMAND("absorbgitdirs", &fn, absorb_git_dirs),
+>> +		OPT_SUBCOMMAND("set-url", &fn, module_set_url),
+>> +		OPT_SUBCOMMAND("set-branch", &fn, module_set_branch),
+>> +		OPT_SUBCOMMAND("create-branch", &fn, module_create_branch),
+>> +		OPT_END()
+>> +	};
+>> +	argc =3D parse_options(argc, argv, prefix, options, usage, 0);
+>> +	subcmd =3D argv[0];
+>> +
+>> +	if (strcmp(subcmd, "clone") && strcmp(subcmd, "update") &&
+>> +	    strcmp(subcmd, "foreach") && strcmp(subcmd, "status") &&
+>> +	    strcmp(subcmd, "sync") && strcmp(subcmd, "absorbgitdirs") &&
+>> +	    get_super_prefix())
+>> +		/*
+>> +		 * xstrfmt() rather than "%s %s" to keep the translated
+>> +		 * string identical to git.c's.
+>> +		 */
+>> +		die(_("%s doesn't support --super-prefix"),
+>> +		    xstrfmt("'%s %s'", cmd, subcmd));
+>
+> FYI I'm preparing a series to get rid of the SUPPORT_SUPER_PREFIX checks
+> in both the top level and in submodule--helper (i.e. revisiting my
+> complaints from [1]), but I haven't sent it out yet because I haven't
+> found the right way to motivate that change. Feel free to chime in on
+> that series when it comes out.
+>
+> [1] https://lore.kernel.org/git/20220630221147.45689-5-chooglen@google.co=
+m/
 
-Certainly there are a few dozen places where we have direct calls to
-in_merge_bases.  I haven't found any (beyond the modified in this patch) where
-a NULL commit can be used in the call.  All I have reviewed have a
-check_for_null protection before calling, mainly to show an error message.  And
-this makes me think about, what almost happened here, leaving that uncovered
-left us open to a change where the error condition (NULL commit) doesn't matter
-(just the not_merged), and/or does not have a proper test with generation
-numbers.
+Maybe you have different plans, but keep at the WIP re-roll of what I
+have after this, I've also removed all of that.
 
-The segfault possibility was introduced in 6cc017431 (commit-reach: use
-can_all_from_reach, 2018-07-20).  Before that, NULL was tolerated by
-is_descendant_of (and indirectly by in_merge_bases) and returned, still today
-(as you described in your message) as 1.  So IMHO we can safely put a check for
-NULL there and return 1, as a fix (or protection) for this segfault.  Something
-like:
+Basically, ending up with:
+=09
+	--- a/builtin.h
+	+++ b/builtin.h
+	@@ -224,7 +224,14 @@ int cmd_sparse_checkout(int argc, const char **argv, =
+const char *prefix);
+	 int cmd_status(int argc, const char **argv, const char *prefix);
+	 int cmd_stash(int argc, const char **argv, const char *prefix);
+	 int cmd_stripspace(int argc, const char **argv, const char *prefix);
+	+int cmd_submodule(int argc, const char **argv, const char *prefix);
+	 int cmd_submodule__helper(int argc, const char **argv, const char *prefix=
+);
+	+int cmd_submodule__helper_clone(int argc, const char **argv, const char *=
+prefix);
+	+int cmd_submodule_absorbgitdirs(int argc, const char **argv, const char *=
+prefix);
+	+int cmd_submodule_foreach(int argc, const char **argv, const char *prefix=
+);
+	+int cmd_submodule_status(int argc, const char **argv, const char *prefix);
+	+int cmd_submodule_sync(int argc, const char **argv, const char *prefix);
+	+int cmd_submodule_update(int argc, const char **argv, const char *prefix);
+	 int cmd_switch(int argc, const char **argv, const char *prefix);
+	 int cmd_symbolic_ref(int argc, const char **argv, const char *prefix);
+	 int cmd_tag(int argc, const char **argv, const char *prefix);
 
-diff --git a/commit-reach.c b/commit-reach.c
-index c226ee3da4..246eaf093d 100644
---- a/commit-reach.c
-+++ b/commit-reach.c
-@@ -445,7 +445,7 @@ int repo_is_descendant_of(struct repository *r,
-                          struct commit *commit,
-                          struct commit_list *with_commit)
- {
--       if (!with_commit)
-+       if (!with_commit || !commit)
-                return 1;
- 
-        if (generation_numbers_enabled(the_repository)) {
+And changes like:
+=09
+	@@ -366,7 +365,7 @@ static void runcommand_in_submodule_cb(const struct ca=
+che_entry *list_item,
+=09=20
+	                strvec_pushl(&cpr.args, "--super-prefix", NULL);
+	                strvec_pushf(&cpr.args, "%s/", displaypath);
+	-               strvec_pushl(&cpr.args, "submodule--helper", "foreach", "-=
+-recursive",
+	+               strvec_pushl(&cpr.args, "submodule--helper-foreach", "--re=
+cursive",
+	                             NULL);
+=09=20
+	                if (info->quiet)
 
-and leave the checks for NULL in branch.c, as optimizations.
+I.e. when we call "foreach" we dispatch to cmd_submodule_foreach(), but
+when "foreach" needs to recurse it doesn't invoke a "git submodule
+foreach", instead it invokes "git submodule--helper-foreach".
 
-I've cc Derrick, maybe he can give us an opinion on this.
+The reason for doing that is that we can't promote the helper to a
+built-in without also leaking implementation detail that we support the
+now internal-only --super-prefix in the command itself.
 
+So this code becomes:
+=09
+	@@ -3352,43 +3304,17 @@ static int module_add(int argc, const char **argv,=
+ const char *prefix)
+=09=20
+	 int cmd_submodule__helper(int argc, const char **argv, const char *prefix)
+	 {
+	-       const char *cmd =3D argv[0];
+	-       const char *subcmd;
+	        parse_opt_subcommand_fn *fn =3D NULL;
+	        const char *const usage[] =3D {
+	                N_("git submodule--helper <command>"),
+	                NULL
+	        };
+	        struct option options[] =3D {
+	-               OPT_SUBCOMMAND("clone", &fn, module_clone),
+	-               OPT_SUBCOMMAND("add", &fn, module_add),
+	-               OPT_SUBCOMMAND("update", &fn, module_update),
+	-               OPT_SUBCOMMAND("foreach", &fn, module_foreach),
+	-               OPT_SUBCOMMAND("init", &fn, module_init),
+	-               OPT_SUBCOMMAND("status", &fn, module_status),
+	-               OPT_SUBCOMMAND("sync", &fn, module_sync),
+	-               OPT_SUBCOMMAND("deinit", &fn, module_deinit),
+	-               OPT_SUBCOMMAND("summary", &fn, module_summary),
+	-               OPT_SUBCOMMAND("push-check", &fn, push_check),
+	-               OPT_SUBCOMMAND("absorbgitdirs", &fn, absorb_git_dirs),
+	-               OPT_SUBCOMMAND("set-url", &fn, module_set_url),
+	-               OPT_SUBCOMMAND("set-branch", &fn, module_set_branch),
+	-               OPT_SUBCOMMAND("create-branch", &fn, module_create_branch),
+	+               OPT_SUBCOMMAND("push-check", &fn, cmd_submodule_push_check=
+),
+	+               OPT_SUBCOMMAND("create-branch", &fn, cmd_submodule_create_=
+branch),
+	                OPT_END()
+	        };
+	        argc =3D parse_options(argc, argv, prefix, options, usage, 0);
+	-       subcmd =3D argv[0];
+	-
+	-       if (strcmp(subcmd, "clone") && strcmp(subcmd, "update") &&
+	-           strcmp(subcmd, "foreach") && strcmp(subcmd, "status") &&
+	-           strcmp(subcmd, "sync") && strcmp(subcmd, "absorbgitdirs") &&
+	-           get_super_prefix())
+	-               /*
+	-                * xstrfmt() rather than "%s %s" to keep the translated
+	-                * string identical to git.c's.
+	-                */
+	-               die(_("%s doesn't support --super-prefix"),
+	-                   xstrfmt("'%s %s'", cmd, subcmd));
+=09=20
+	        return fn(argc, argv, prefix);
+	 }
 
-This patch also /fixes/ the error message when:
+I.e. for all the "super-prefix" ones we dispatch directly (and maybe I
+should just do that too for those two stragglers).
 
-	$ git init -b initial
-	$ git branch -d initial
-	fatal: Couldn't look up commit object for HEAD
-
-Now we get the much clear:
-
-	error: Cannot delete branch 'initial' checked out at ...
-
-A nice patch.
-Thank you.
+It's ugly, but it's only ugly on the inside, but if you can think of a
+better way to do it...
