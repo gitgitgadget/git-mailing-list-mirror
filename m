@@ -2,198 +2,192 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C45CFC433FE
-	for <git@archiver.kernel.org>; Sat,  5 Nov 2022 12:43:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D99C8C4332F
+	for <git@archiver.kernel.org>; Sat,  5 Nov 2022 12:46:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229542AbiKEMnE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Nov 2022 08:43:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43012 "EHLO
+        id S229499AbiKEMqL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Nov 2022 08:46:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbiKEMnD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Nov 2022 08:43:03 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAFB218369
-        for <git@vger.kernel.org>; Sat,  5 Nov 2022 05:43:02 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id l11so11168886edb.4
-        for <git@vger.kernel.org>; Sat, 05 Nov 2022 05:43:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=jPnaoQKANS8x0+G4XzPWjdq12fvqIVYooPqfr6+mQgc=;
-        b=ZUevbR/OBJ+9pnRVRN+A7egYc4vdFmFZnBqQOG3xYqMy/+Ovb/A0yWlLptgH1WoaDh
-         +sy3MVAbC0fmxpvYYfAZ9cC/4gOUZFDDfOYBWBtGtLHEqpnK28xipZRwu/OLVt2bzSGh
-         TnFdkynhwo3GkDAQPqzgZl8W89dNo/daM4CV137XqKHwGAQH6+LCpTT6avkOaoSBuRH1
-         SH5+BIzC10A3jZUTCaXA581DzqRH3cmg4lTioTUxQ9mSo1jwNmGn+M1CaZidJzieMAub
-         7ip41gaS2NKIkYTvav/pfKCaZ3GUkhQCyC0eIwuEI8zOrq0IcwTkzy2V4nvh6t2bQGsV
-         Re1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jPnaoQKANS8x0+G4XzPWjdq12fvqIVYooPqfr6+mQgc=;
-        b=PZG+SWGHUvwInlkORmBjT0f+ytCl+U+3NOf/kTjnI3Zwh+CdXYkyIvo8mtC9KxmW5g
-         4GPzNlFfGUbRogEnAJZgNDCQOFBcs5oYfbTFDmcWSL/UV+daoEzUa6pkqKPd/PxWzTLl
-         azPLF6qThxJp92AnV/gU9/FNdEUAdMpsEYtwjF5jxJjcJuciK9mxQmhyrJH7+zQp/x6W
-         z+h2u7dcwqhsE5y0E6rN3jSWjw1KH4wekb/3Xu4iu1/XtRO7jbeM8BkMs0xt5ixTLcGj
-         seb8LNzD2ufnEZiY1Ghe7/MqUh+ws9tO3il1ygpkvTdsEIPIzU5TfRKQX0UWatN1PXzr
-         p39w==
-X-Gm-Message-State: ACrzQf3rnnvB0KgCUshwAT3OO96eMUPAiVlHGX9iwvBtiulpUomlNCoH
-        08JPUQWsDTom7tNgL/y88Ag=
-X-Google-Smtp-Source: AMsMyM7V/ZMrUbrr3yAOkJgnM9x+VKUbXDYKGtJ7Vc/N4SklQonj/AqXfaD7UqpobOQ7Cd/m56qoLg==
-X-Received: by 2002:aa7:ccd2:0:b0:462:73bd:3acb with SMTP id y18-20020aa7ccd2000000b0046273bd3acbmr40544470edt.378.1667652180944;
-        Sat, 05 Nov 2022 05:43:00 -0700 (PDT)
-Received: from gmgdl (31-151-3-230.dynamic.upc.nl. [31.151.3.230])
-        by smtp.gmail.com with ESMTPSA id f5-20020a17090631c500b007a03313a78esm883394ejf.20.2022.11.05.05.43.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Nov 2022 05:43:00 -0700 (PDT)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1orIVn-000MTt-37;
-        Sat, 05 Nov 2022 13:42:59 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     phillip.wood@dunelm.org.uk
+        with ESMTP id S229493AbiKEMqJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Nov 2022 08:46:09 -0400
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E6C923BFC
+        for <git@vger.kernel.org>; Sat,  5 Nov 2022 05:46:08 -0700 (PDT)
+Received: (qmail 24610 invoked by uid 109); 5 Nov 2022 12:46:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 05 Nov 2022 12:46:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 7227 invoked by uid 111); 5 Nov 2022 12:46:06 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 05 Nov 2022 08:46:06 -0400
+Authentication-Results: peff.net; auth=none
+Date:   Sat, 5 Nov 2022 08:46:05 -0400
+From:   Jeff King <peff@peff.net>
+To:     Patrick Steinhardt <ps@pks.im>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 13/17] rebase: don't leak on "--abort"
-Date:   Sat, 05 Nov 2022 13:01:42 +0100
-References: <cover-00.17-00000000000-20221103T164632Z-avarab@gmail.com>
- <patch-13.17-fda9914b558-20221103T164632Z-avarab@gmail.com>
- <f9df4dfc-6024-deb0-5277-bab96c81a875@dunelm.org.uk>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <f9df4dfc-6024-deb0-5277-bab96c81a875@dunelm.org.uk>
-Message-ID: <221105.86eduhy3l8.gmgdl@evledraar.gmail.com>
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v2 2/3] revision: add new parameter to specify all
+ visible refs
+Message-ID: <Y2ZbDXYb1jGqSfTj@coredump.intra.peff.net>
+References: <cover.1666967670.git.ps@pks.im>
+ <cover.1667485737.git.ps@pks.im>
+ <3ccd8fc0e35407e5c9ff896165f122b10598e0e2.1667485737.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <3ccd8fc0e35407e5c9ff896165f122b10598e0e2.1667485737.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Nov 03, 2022 at 03:37:32PM +0100, Patrick Steinhardt wrote:
 
-On Fri, Nov 04 2022, Phillip Wood wrote:
+> Users can optionally hide refs from remote users in git-upload-pack(1),
+> git-receive-pack(1) and others via the `transfer.hideRefs`, but there is
+> not an easy way to obtain the list of all visible or hidden refs right
+> now. We'll require just that though for a performance improvement in our
+> connectivity check.
+> 
+> Add a new pseudo-ref `--visible-refs=` that pretends as if all refs have
+> been added to the command line that are not hidden. The pseudo-ref
+> requiers either one of "transfer", "uploadpack" or "receive" as argument
+> to pay attention to `transfer.hideRefs`, `uploadpack.hideRefs` or
+> `receive.hideRefs`, respectively.
 
-> On 03/11/2022 17:06, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> Fix a leak in the recent 6159e7add49 (rebase --abort: improve reflog
->> message, 2022-10-12). Before that commit we'd strbuf_release() the
->> reflog message we were formatting, but when that code was refactored
->> to use "ropts.head_msg" the strbuf_release() was omitted.
->> Ideally the three users of "ropts" in cmd_rebase() should use
->> different "ropts" variables, in practice they're completely separate,
->> as this and the other user in the "switch" statement will "goto
->> cleanup", which won't touch "ropts".
->> The third caller after the "switch" is then unreachable if we take
->> these two branches, so all of them are getting a "{ 0 }" init'd
->> "ropts".
->> So it's OK that we're leaving a stale pointer in "ropts.head_msg",
->> cleaning it up was our responsibility, and it won't be used again.
->> [...]
->> --- a/builtin/rebase.c
->> +++ b/builtin/rebase.c
->> @@ -1320,6 +1320,7 @@ int cmd_rebase(int argc, const char **argv, const =
-char *prefix)
->>   		if (reset_head(the_repository, &ropts) < 0)
->>   			die(_("could not move back to %s"),
->>   			    oid_to_hex(&options.orig_head->object.oid));
->> +		strbuf_release(&head_msg);
->>   		remove_branch_state(the_repository, 0);
->>   		ret =3D finish_rebase(&options);
->>   		goto cleanup;
->
-> This looks fine. One could argue that the leak is not a "real" leak as
-> we're about to exit but the omission of strbuf_release() was=20
-> unintentional and fix is nice and simple.
+Thanks for re-working this. I think it's a sensible path forward for the
+problem you're facing.
 
-What I've been targeting in this and past leak fix topics is roughly
-what valgrind calls[1] "definitely lost" and "indirectly lost", and
-which -fsanitize=3Dleak calls "that thing I die on whan I run into it" :)
+There were two parts of the implementation that surprised me a bit.
+These might just be nits, but because this is a new user-facing plumbing
+option that will be hard to change later, we should make sure it fits in
+with the adjacent features.
 
-So, you and I know we're "about to exit" as we're in cmd_rebase() and
-about to return to common-main.c etc, but it's harder to convince a
-compiler of that.
+The two things I saw were:
 
-Maybe I'm just touchy, sorry. It just feels like every time I submit a
-leak fix topic there's some rehash of the "why do this at all?" or "why
-this one?"  discussion.
+  1. The mutual-exclusion selection between "transfer", "uploadpack",
+     and "receive" is not how those options work in their respective
+     programs. The "transfer.hideRefs" variable is respected for either
+     program. So whichever program you are running, it will always look
+     at both "transfer" and itself ("uploadpack" or "receive"). Another
+     way to think of it is that the "section" argument to
+     parse_hide_refs_config() is not a config section so much as a
+     profile. And the profiles are:
 
-To summarize (maybe too much for just this reply, but I hope to link
-back to this in the future):
+       - uploadpack: respect transfer.hideRefs and uploadpack.hideRefs
+       - receive: respect transfer.hideRefs and receive.hideRefs
 
- * Historically we've said "that's just a built-in, let the OS take care
-   of it!"
+     So it does not make sense to ask for "transfer" as a section; each
+     of the modes is already looking at transfer.hideRefs.
 
- * I agree with that in principle. It's pretty pointless to free()
-   things in cmd_*() in the abstract. We're "about to exit", even if
-   valgrind etc. call it "definitely lost"[1].
+     In theory if this option was "look just at $section.hideRefs", it
+     could be more flexible to separate out the two. But that makes it
+     more of a pain to use (for normal use, you have to specify both
+     "transfer" and "receive"). And that is not what your patch
+     implements anyway; because it relies on parse_hide_refs_config(),
+     it is always adding in "transfer" under the hood (which is why your
+     final patch is correct to just say "--visible-refs=receive" without
+     specifying "transfer" as well).
 
- * But, it would be nice to have git's APIs not leak, so we could call
-   them in loops, replace some of our own sub-process invocations
-   etc[2].
+  2. Your "--visible-refs" implies "--all", because it's really "all
+     refs minus the hidden ones". That's convenient for the intended
+     caller, but not as flexible as it could be. If it were instead
+     treated the way "--exclude" is, as a modifier for the next
+     iteration option, then you do a few extra things:
 
- * If we had 100% test coverage for those libraries we could just test
-   that, and get those leak-free, and ignore the built-ins.
+       a. Combine multiple exclusions in a single iteration:
 
- * We don't have that, and probably never will. E.g. "git log" and
-   friends are *the* things that stress revision.[ch]. So to assert that
-   the API is leak-free we really need to assert that its users
-   are. Ditto for pretty much any other API we carry.
+            git rev-list --exclude-hidden=receive \
+	                 --exclude-hidden=upload \
+			 --all
 
- * Still, we could just say "if something's alloc'd in cmd_*() don't
-   care about it". Both LSAN and valgrind support "suppressions" to
-   ignore certain functions, patterns etc.
+          That excludes both types in a single iteration. Whereas if you
+	  did:
 
- * But that doesn't really work either, as e.g. "struct rev_info" would
-   seem to come from such a cmd_*() as far as ownership goes...
+	    git rev-list --visible-refs=receive \
+	                 --visible-refs=upload
 
- * ..."but you could have an even more clever suppressions mechanism,
-   and only ignore those things that are malloc'd by cmd_*(). But not
-   e.g. a malloc in revision.c in a struct member in a struct that's on
-   the stack in a cmd_*()", one might say.
+	  that will do _two_ iterations, and end up with the union of
+	  the sets. Equivalent to:
 
-   Yeah, you could do that, e.g. in this case we'll call strbuf_addf()
-   which makes a beeline to malloc(). Sufficiently clever
-   post-processing of leak stacktraces could probably make the
-   distinction.
+	    git rev-list --exclude-hidden=receive --all \
+	                 --exclude-hidden=upload  --all
 
-   But then you run into the problem of e.g. how the the log family and
-   others use "mailmap". I.e. in that case (and many others) the cmd_*()
-   will malloc(), but "hand it off" to the API, whose job we know it is
-   to free() it.
+       b. Do exclusions on smaller sets than --all:
 
-   But we only know because of knowledge about the API, an automated
-   system would care, still, it's not unworkable. We could go through
-   those, list the exceptions etc. etc.
+            git rev-list --exclude-hidden=receive \
+	                 --branches
 
-That's a lot of context, but I think brings us up-to-date on this
-one-line change.
+	  which would show just the branches that we'd advertise.
 
-So, could we do things differently here? Definitely. And if the codebase
-was in a state where e.g. builtin/*.c had ~1500 UNLEAK() already I'd
-probably try to extend that, rather than fighting that uphill battle.
+     Now I don't have a particular use case for either of those things.
+     But they're plausible things to want in the long run, and they fit
+     in nicely with the existing ref-selection scheme of rev-list. They
+     do make your call from check_connected() slightly longer, but it is
+     pretty negligible. It's "--exclude-hidden=receive --all" instead of
+     "--visible-refs=hidden".
 
-But that's not the case, we have around ~30 of them, fewer after this
-topic. By far the majority of builtin/* is caring about directly
-recahable leaks already.
+So looking at the patch itself, if you wanted to take my suggestions:
 
-E.g. just above this context in another "case" arm we're doing the exact
-"variable on stack, use it, then release()", just with a "struct
-string_list".
+> +--visible-refs=[transfer|receive|uploadpack]::
+> +	Pretend as if all the refs that have not been hidden via either one of
+> +	`transfer.hideRefs`, `receive.hideRefs` or `uploadpack.hideRefs` are
+> +	listed on the command line.
 
-So I think this is the right direction to go in, both in this patch & in
-general.
+This would drop "transfer" as a mode, and explain that the argument is
+"hide the refs that receive-pack would use", etc.
 
-1. https://valgrind.org/docs/manual/mc-manual.html#mc-manual.leaks
-2. Even the assumption that cmd_*() is a one-off is shaky, e.g. for
-   cases where we shell out to "git commit" we're close now to being
-   able to just call cmd_commit(), but let's leave that aside for now).
+Likewise, the name would switch and pick up explanation similar to
+--exclude below about how it affects the next --all, etc.
 
-   So, we're pretty close to cmd_*() being a funny API that happens to
-   take strvec arguments, which is going to be the shortest path to
-   eliminating sub-process invocation in many cases. I.e. as opposed to
-   refactoring the cmd_*() into a "real" library, that takes a struct
-   with options, doesn't call parse_options() etc.
+> @@ -1542,11 +1545,13 @@ static int handle_one_ref(const char *path, const struct object_id *oid,
+>  			  int flag UNUSED,
+>  			  void *cb_data)
+>  {
+> +	const char *stripped_path = strip_namespace(path);
+>  	struct all_refs_cb *cb = cb_data;
+>  	struct object *object;
+>  
+> -	if (ref_excluded(cb->all_revs->ref_excludes, path))
+> -	    return 0;
+> +	if (ref_excluded(cb->all_revs->ref_excludes, path) ||
+> +	    ref_is_hidden(stripped_path, path, &cb->hidden_refs))
+> +		return 0;
+
+This would stay the same. We'd still exclude hidden refs during the
+iteration.
+
+> @@ -2759,6 +2772,21 @@ static int handle_revision_pseudo_opt(struct rev_info *revs,
+>  		parse_list_objects_filter(&revs->filter, arg);
+>  	} else if (!strcmp(arg, ("--no-filter"))) {
+>  		list_objects_filter_set_no_filter(&revs->filter);
+> +	} else if (skip_prefix(arg, "--visible-refs=", &arg)) {
+> +		struct all_refs_cb cb;
+> +
+> +		if (strcmp(arg, "transfer") && strcmp(arg, "receive") &&
+> +		    strcmp(arg, "uploadpack"))
+> +			die(_("unsupported section for --visible-refs: %s"), arg);
+> +
+> +		init_all_refs_cb(&cb, revs, *flags);
+> +		cb.hidden_refs_section = arg;
+> +		git_config(hide_refs_config, &cb);
+> +
+> +		refs_for_each_ref(refs, handle_one_ref, &cb);
+> +
+> +		string_list_clear(&cb.hidden_refs, 1);
+> +		clear_ref_exclusion(&revs->ref_excludes);
+
+And here we'd do the same git_config() call, but drop the
+refs_for_each_ref() call. We'd clear the hidden_refs field in all the
+places that call clear_ref_exclusion() now.
+
+In fact, you could argue that all of this should just be folded into
+clear_ref_exclusion() and ref_excluded(), since from the perspective of
+the iterating code, they are all part of the same feature. I don't mind
+leaving it separate from the perspective of rev-list, though I think
+if you did so, it would all Just Work for "rev-parse", too (I doubt
+anybody cares in practice, but it's probably better to keep it
+consistent).
+
+-Peff
