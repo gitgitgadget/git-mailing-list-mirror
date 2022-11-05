@@ -2,65 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45AD1C43217
-	for <git@archiver.kernel.org>; Sat,  5 Nov 2022 17:08:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0A98C433FE
+	for <git@archiver.kernel.org>; Sat,  5 Nov 2022 17:08:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230019AbiKERII (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Nov 2022 13:08:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56110 "EHLO
+        id S230077AbiKERIS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Nov 2022 13:08:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229976AbiKERIF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Nov 2022 13:08:05 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89159DFAB
-        for <git@vger.kernel.org>; Sat,  5 Nov 2022 10:08:04 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id b29so7055209pfp.13
-        for <git@vger.kernel.org>; Sat, 05 Nov 2022 10:08:04 -0700 (PDT)
+        with ESMTP id S229995AbiKERII (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Nov 2022 13:08:08 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BABEE08B
+        for <git@vger.kernel.org>; Sat,  5 Nov 2022 10:08:07 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id p12so2064342plq.4
+        for <git@vger.kernel.org>; Sat, 05 Nov 2022 10:08:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=bWKfCu3eizclDoAKKYbSK6+t0cQM0hGqk2Q2WU2E+ZE=;
-        b=WDX5JjLal5smXXZBCvt3eynugIc4c6w7YUrWzzdOTxxeMDhMHpsDNKFSN+KeWDPmtJ
-         vRyQSV6vgVL+QRDd6TypbcoN8DF8W0ChkqoRQ26GYe1WplJqABc8R5PrkXPAHwBnukY2
-         l4UUPz88fcEZ6w0uHbqaZdTFbyWTmdDQBFSxn2SwI0A6eAaDs6/ySgrX/yo9ODMleOy5
-         aMd9rbujNJXYUv2hATa4JN5SknGRhDqlAhBwK88Efrm7kFeg5VorTpVWYXpsxJpkUaj5
-         z7aGpyro37fOeUNjyjsMAMVwsJ/S/alX+dzTM+QFkuNBlW1S3CwxArV/L/XaV1Fi0LjO
-         w1yg==
+        bh=zqtsFEImrv+PGMPFGChSgSAJ+j/5GMEgmedC7QxWQV0=;
+        b=hrTtrEnHZR5nMYRqCUjrQOO9J0h3RdjeS9PT7+TzyoNrScZh+2NbqtjV8xtTc3Nn1a
+         HHvXsWx/Wk04MTHPN71ggil9s788aPicBnv39bqg1XJbCxPJMn7FLyPvQBa+0KVlP0Sd
+         W954HTHKdK1y7urFUqWjjgtvlDxSmrzaaQqWvy/z99dyLfEnz/uPlIYL7xeSHc50RQUs
+         mspneCAuNIIJJiVg/zr6k/JrzqyspNABpfJM3Q0mq6msCgc9DLq/x9CF3bJdaSttYZpA
+         AmcTGa471PcC38s2pQzhsNPz2A9UR6TsGLw9smrkYvJ3Jqp4OndJOm/XpLi7kJmrwjye
+         dsYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=bWKfCu3eizclDoAKKYbSK6+t0cQM0hGqk2Q2WU2E+ZE=;
-        b=AgGqwnieJ+HpVRcErJBCkXy5T7S3UzmPdQaUjkWcvUCy//LZbUAzcA+ElRpM3aKejO
-         wMRMEXohMICWAqN/01iUhBHzpw86/Fu0gyzq7gKGBUUaozxADhLycxNX8V5tqGZeCSzx
-         Bf6sThmjCTty4Accz3hTHecvbOum/RVjiwAkiccPHLvG6TO8Yx5yDDtArhDzx+tBkbi3
-         YkemYcgMT3MD6XLw6xujur9bwhSoQuR2zpS62A72ZzGdlwOjmfQM2+z9CxgtPu3Md+HL
-         BnQvzvcqQLzN0EH6y3kezLG3/QqvlgVs2FSzohsfI/R1CpHYOzVVe8MLNJLvMv7VyYGf
-         hOMg==
-X-Gm-Message-State: ACrzQf2bcYAUcjWeBLA8WP4c9bmtxPBrl0u5+lViGhfEOgvX3JqYZKss
-        SLuVEql5FW7MHHWTBQkRKEcaL5rEZFo=
-X-Google-Smtp-Source: AMsMyM5s3a6Vsn3oVIGnhbg8xkBV2/ZCsEaOqE9fzyenmUCdRwjHViJsOx9zzPbaekbOaxDT0GWZyA==
-X-Received: by 2002:a05:6a00:852:b0:56d:e2bc:1978 with SMTP id q18-20020a056a00085200b0056de2bc1978mr22695766pfk.47.1667668083657;
-        Sat, 05 Nov 2022 10:08:03 -0700 (PDT)
+        bh=zqtsFEImrv+PGMPFGChSgSAJ+j/5GMEgmedC7QxWQV0=;
+        b=eYCSz1zA14l/65ti9ygo1+Dmtbi2TlxWXBp80mvIv4McOsnAUP95nVwi5KnlimPsyc
+         BR1c7Pqu2w7ARjQaZtbG2HaEl0m8cWb+F3+HIpAq7UyLoGOVCjNpk5qfRn7XScA8nr8Y
+         lVWrMd5HfkgHgCt6bzZKs69xCiUXj2OaRVbw7NGNJ3OzzjTg2BC+ir3r8k8afeIkb9i9
+         beVQ5wIf9RHvLck3wewPUhvkGhyQMypcazQR4qr+wfjRt+Ectw/tIDgVLVu47QTrVe41
+         ppTorOL7zxTnD7IW79XM/jmnmJz0E1fppb2FGHmP/saGcVXDI4RLUeungtkW7L8/0/JU
+         hUDg==
+X-Gm-Message-State: ACrzQf2pGi7c706CXJV3LMz1F4K1QJZocKt0Vtkml6zBDWtaROUIKEy5
+        2fHFqQamJIYQK0ObUjCIsVU9wrh4COo=
+X-Google-Smtp-Source: AMsMyM5TMyiuwk17cbt97HRp05xS70LI/QN/hJLfh32mxb5jUYwu05RjJo4iChvlgufFeiGSkJBV4Q==
+X-Received: by 2002:a17:90b:50e:b0:213:d7cb:83e3 with SMTP id r14-20020a17090b050e00b00213d7cb83e3mr35156407pjz.232.1667668086236;
+        Sat, 05 Nov 2022 10:08:06 -0700 (PDT)
 Received: from localhost.localdomain ([2001:ee0:500b:6370:da47:cda5:dbd5:6e77])
-        by smtp.gmail.com with ESMTPSA id c16-20020a056a00009000b0056299fd2ba2sm1513192pfj.162.2022.11.05.10.08.01
+        by smtp.gmail.com with ESMTPSA id c16-20020a056a00009000b0056299fd2ba2sm1513192pfj.162.2022.11.05.10.08.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Nov 2022 10:08:03 -0700 (PDT)
+        Sat, 05 Nov 2022 10:08:05 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Taylor Blau <me@ttaylorr.com>,
         Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 03/13] bisect--helper: pass arg[cv] down to do_bisect_run
-Date:   Sun,  6 Nov 2022 00:07:34 +0700
-Message-Id: <8a815e231100b8bfcf2b03355cf11a36b2962a38.1667667460.git.congdanhqx@gmail.com>
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+Subject: [PATCH 04/13] bisect: fix output regressions in v2.30.0
+Date:   Sun,  6 Nov 2022 00:07:35 +0700
+Message-Id: <31cd78f53878b09ae74e40994070fbc8c25102f7.1667667460.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.38.1.157.gedabe22e0a
 In-Reply-To: <cover.1667667460.git.congdanhqx@gmail.com>
 References: <cover.1667667058.git.congdanhqx@gmail.com> <cover.1667667460.git.congdanhqx@gmail.com>
@@ -71,69 +71,113 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit d1bbbe45df8 (bisect--helper: reimplement `bisect_run` shell
-function in C, 2021-09-13) has changed the logging of bisect-run by
-adding one more space before argv[0], and single-quoting all arguments.
+From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-In a later change, we would like to restore the old behaviours,
-which would need information regarding argc and argv.
+When d1bbbe45df8 (bisect--helper: reimplement `bisect_run` shell
+function in C, 2021-09-13) reimplemented parts of "git bisect run" in
+C it changed the output we emitted so that:
 
-Let's pass them down, now.
+ - The "running ..." line was now quoted
+ - We lost the \n after our output
+ - We started saying "bisect found ..." instead of "bisect run success"
 
+Arguably some of this is better now, but as d1bbbe45df8 did not
+advocate for changing the output, let's revert this for now. It'll be
+easy to change it back if that's what we'd prefer.
+
+This does not change the one remaining use of "command.buf" to emit
+the quoted argument, as that's new in d1bbbe45df8.
+
+Some of these cases were not tested for in the tests added in the
+preceding commit, I didn't have time to fleshen those out, but a look
+at f1de981e8b6 will show that the other output being adjusted here is
+now equivalent to what it was before d1bbbe45df8.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
 ---
- builtin/bisect--helper.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ builtin/bisect--helper.c    | 13 ++++++++-----
+ t/t6030-bisect-porcelain.sh |  8 ++++----
+ 2 files changed, 12 insertions(+), 9 deletions(-)
 
 diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
-index ee1197c8b2..35e5dc4bbf 100644
+index 35e5dc4bbf..7416283d07 100644
 --- a/builtin/bisect--helper.c
 +++ b/builtin/bisect--helper.c
-@@ -1141,7 +1141,7 @@ static int get_first_good(const char *refname UNUSED,
+@@ -1141,11 +1141,14 @@ static int get_first_good(const char *refname UNUSED,
  	return 1;
  }
  
--static int do_bisect_run(const char *command)
-+static int do_bisect_run(const char *command, int argc UNUSED, const char **argv UNUSED)
+-static int do_bisect_run(const char *command, int argc UNUSED, const char **argv UNUSED)
++static int do_bisect_run(const char *command, int argc, const char **argv)
  {
  	struct child_process cmd = CHILD_PROCESS_INIT;
++	struct strbuf buf = STRBUF_INIT;
  
-@@ -1151,7 +1151,7 @@ static int do_bisect_run(const char *command)
+-	printf(_("running %s\n"), command);
++	strbuf_join_argv(&buf, argc, argv, ' ');
++	printf(_("running %s\n"), buf.buf);
++	strbuf_release(&buf);
+ 	cmd.use_shell = 1;
+ 	strvec_push(&cmd.args, command);
  	return run_command(&cmd);
+@@ -1260,13 +1263,13 @@ static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
+ 		if (res == BISECT_ONLY_SKIPPED_LEFT)
+ 			error(_("bisect run cannot continue any more"));
+ 		else if (res == BISECT_INTERNAL_SUCCESS_MERGE_BASE) {
+-			printf(_("bisect run success"));
++			puts(_("bisect run success"));
+ 			res = BISECT_OK;
+ 		} else if (res == BISECT_INTERNAL_SUCCESS_1ST_BAD_FOUND) {
+-			printf(_("bisect found first bad commit"));
++			puts(_("bisect run success"));
+ 			res = BISECT_OK;
+ 		} else if (res) {
+-			error(_("bisect run failed: 'git bisect--helper --bisect-state"
++			error(_("bisect run failed: 'bisect-state"
+ 				" %s' exited with error code %d"), new_state, res);
+ 		} else {
+ 			continue;
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 6901bbd202..914ea564b9 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -285,7 +285,7 @@ test_bisect_run_args () {
+ 	test_cmp expect.args actual.args
  }
  
--static int verify_good(const struct bisect_terms *terms, const char *command)
-+static int verify_good(const struct bisect_terms *terms, const char *command, int argc, const char **argv)
- {
- 	int rc;
- 	enum bisect_error res;
-@@ -1171,7 +1171,7 @@ static int verify_good(const struct bisect_terms *terms, const char *command)
- 	if (res != BISECT_OK)
- 		return -1;
+-test_expect_failure 'git bisect run: args, stdout and stderr with no arguments' '
++test_expect_success 'git bisect run: args, stdout and stderr with no arguments' '
+ 	test_bisect_run_args <<-\EOF_ARGS 6<<-EOF_OUT 7<<-\EOF_ERR
+ 	EOF_ARGS
+ 	running ./run.sh
+@@ -295,7 +295,7 @@ test_expect_failure 'git bisect run: args, stdout and stderr with no arguments'
+ 	EOF_ERR
+ '
  
--	rc = do_bisect_run(command);
-+	rc = do_bisect_run(command, argc, argv);
+-test_expect_failure 'git bisect run: args, stdout and stderr: "--" argument' '
++test_expect_success 'git bisect run: args, stdout and stderr: "--" argument' '
+ 	test_bisect_run_args -- <<-\EOF_ARGS 6<<-EOF_OUT 7<<-\EOF_ERR
+ 	<-->
+ 	EOF_ARGS
+@@ -306,7 +306,7 @@ test_expect_failure 'git bisect run: args, stdout and stderr: "--" argument' '
+ 	EOF_ERR
+ '
  
- 	res = bisect_checkout(&current_rev, no_checkout);
- 	if (res != BISECT_OK)
-@@ -1198,7 +1198,7 @@ static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
+-test_expect_failure 'git bisect run: args, stdout and stderr: "--log foo --no-log bar" arguments' '
++test_expect_success 'git bisect run: args, stdout and stderr: "--log foo --no-log bar" arguments' '
+ 	test_bisect_run_args --log foo --no-log bar <<-\EOF_ARGS 6<<-EOF_OUT 7<<-\EOF_ERR
+ 	<--log>
+ 	<foo>
+@@ -320,7 +320,7 @@ test_expect_failure 'git bisect run: args, stdout and stderr: "--log foo --no-lo
+ 	EOF_ERR
+ '
  
- 	sq_quote_argv(&command, argv);
- 	while (1) {
--		res = do_bisect_run(command.buf);
-+		res = do_bisect_run(command.buf, argc, argv);
- 
- 		/*
- 		 * Exit code 126 and 127 can either come from the shell
-@@ -1208,7 +1208,7 @@ static int bisect_run(struct bisect_terms *terms, const char **argv, int argc)
- 		 * missing or non-executable script.
- 		 */
- 		if (is_first_run && (res == 126 || res == 127)) {
--			int rc = verify_good(terms, command.buf);
-+			int rc = verify_good(terms, command.buf, argc, argv);
- 			is_first_run = 0;
- 			if (rc < 0) {
- 				error(_("unable to verify '%s' on good"
+-test_expect_failure 'git bisect run: args, stdout and stderr: "--bisect-start" argument' '
++test_expect_success 'git bisect run: args, stdout and stderr: "--bisect-start" argument' '
+ 	test_bisect_run_args --bisect-start <<-\EOF_ARGS 6<<-EOF_OUT 7<<-\EOF_ERR
+ 	<--bisect-start>
+ 	EOF_ARGS
 -- 
 2.38.1.157.gedabe22e0a
 
