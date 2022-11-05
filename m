@@ -2,205 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28CDFC4332F
-	for <git@archiver.kernel.org>; Sat,  5 Nov 2022 18:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0471BC4167B
+	for <git@archiver.kernel.org>; Sat,  5 Nov 2022 21:32:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229783AbiKESqC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Nov 2022 14:46:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49922 "EHLO
+        id S229888AbiKEVcm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Nov 2022 17:32:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229776AbiKESp6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Nov 2022 14:45:58 -0400
-Received: from out0.migadu.com (out0.migadu.com [IPv6:2001:41d0:2:267::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E71114D37
-        for <git@vger.kernel.org>; Sat,  5 Nov 2022 11:45:55 -0700 (PDT)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rjp.ie; s=key1;
-        t=1667673953;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=vlOHok/g4+2qOVolG4b7FI4MFNnmpe5EryUoGbgEe7E=;
-        b=RGTbRQMEbIereMtxR1uKY25hZkzmwuUbQDBBu7gt/0w2R2d+vYh7061GnBj9PLuIor26Wc
-        A+fjqKpuYkq45GQg8gC/AuKhftzzFsF8fOwCQsazIjiviUFjn/IOuJdErKcbCsPuZDStlm
-        IY+cza42IGQbcxhEYCKe7ajkDDCAzQ8=
-From:   Ronan Pigott <ronan@rjp.ie>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
-        Clement Moyroud <clement.moyroud@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
-        Thomas Ackermann <th.acker@arcor.de>
-Subject: [PATCH 2/2] maintenance: add option to register in a specific config
-Date:   Sat,  5 Nov 2022 11:45:32 -0700
-Message-Id: <20221105184532.457043-3-ronan@rjp.ie>
-In-Reply-To: <20221105184532.457043-1-ronan@rjp.ie>
-References: <20221105184532.457043-1-ronan@rjp.ie>
+        with ESMTP id S229533AbiKEVck (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Nov 2022 17:32:40 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA29C9FF5
+        for <git@vger.kernel.org>; Sat,  5 Nov 2022 14:32:39 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id i5-20020a1c3b05000000b003cf47dcd316so7404397wma.4
+        for <git@vger.kernel.org>; Sat, 05 Nov 2022 14:32:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1+u22dlpV5DhRiAFWyGMCD2qIx0R/ntapXGH25tjD3A=;
+        b=Ddk9yiY9hEWh1sWqvcBXyHEGFJ5AtCJ43X7CZncpVBUlHnPQoSauM+hR8ZX4IVrkhe
+         WzAGb1CQfysFDYOwv1jtG1P4zfXSCGdIe5VLY16C2Q6wc6McdtEteRPXPJAIo5FRke2W
+         qJ/p0gJyTOppRmOlcXQCTLPX8/ZuHI9XU7ORbjMsRoZoMoelxiW/aE74/142EDr7PUhM
+         y7im+KUvr62rcfZzRHrRwctL6Kb+pmRqFWojnoAFCaM8HHmdM891qES5WTn7EZ0+WbSW
+         JCwSiD+ylhQWsw48M8+RGsjaMj65xOEMyudJq93xJ0BEEhBRZaHapK6KOgp1wsTq4kb5
+         k5Hg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1+u22dlpV5DhRiAFWyGMCD2qIx0R/ntapXGH25tjD3A=;
+        b=iIv3VugWYM/UKp15eZtgemIaCqUg6jHezBD/RXTItQLtTRAsFvPoqQHSeT3cgyX/2S
+         TAKoaZHF2agaV2hDx0YnXtuy0cvfsTHW9Wvpr0SC18+5hhe/czQK3n/ZJHVZyF2f5VjG
+         vWebxeQibiKBwJngYIv3vgLII2PQKKUVcmr69VBSoDc9AsNUBGR2rKXlQ5nuCLYWu7oz
+         N9kxZ6q4g+ca+pWhU7eggTZaFjIowc7HmRHOZfAkVGQcB1sbaLpAYU+TgfgpLq2UHwu8
+         8gXErpmOu/VU89sAlm2g9dMG9dTYvq+13HMKUJBn66FKl19bTDxiylLO8bQDgKWIjxtF
+         9rpQ==
+X-Gm-Message-State: ACrzQf1uhzhbTDhGU6XKj7DuVAUcYqKaEqYSfB9lVfCrqZIv9M4w5pjT
+        TpxHvRCLE+2Mwf8tlpGN2Sc=
+X-Google-Smtp-Source: AMsMyM59oGERgeXv+jWKAKg/RL+798nv7gMO12GmzbwuTJ5ori3/+1wEyVjgT0E0/W5PGUvSBqXD6Q==
+X-Received: by 2002:a1c:7312:0:b0:3cf:6957:1639 with SMTP id d18-20020a1c7312000000b003cf69571639mr26035131wmb.108.1667683958183;
+        Sat, 05 Nov 2022 14:32:38 -0700 (PDT)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id a17-20020adfed11000000b00236863c02f5sm2995919wro.96.2022.11.05.14.32.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 05 Nov 2022 14:32:37 -0700 (PDT)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <43ec357b-bbd2-6b17-58f4-676a8c5e1749@dunelm.org.uk>
+Date:   Sat, 5 Nov 2022 21:32:36 +0000
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 09/13] parse-options API: don't restrict OPT_SUBCOMMAND()
+ to one *_fn type
+Content-Language: en-US
+To:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?THVrw6HFoSBEb2t0b3I=?= <ldoktor@redhat.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <1cb1c033-0525-7e62-8c09-81019bf26060@redhat.com>
+ <cover-00.13-00000000000-20221104T132117Z-avarab@gmail.com>
+ <patch-09.13-2cb3807aa17-20221104T132117Z-avarab@gmail.com>
+ <df855ba1-52b1-1007-68e8-2e28e85b6822@web.de> <Y2ZKHPkEXViv9wcp@danh.dev>
+In-Reply-To: <Y2ZKHPkEXViv9wcp@danh.dev>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-maintenance register currently records the maintenance repo exclusively
-within the user's global configuration, but other configuration files
-may be relevant when running maintenance if they are included from the
-global config. This option allows the user to choose where maintenance
-repos are recorded.
+Hi Đoàn
 
-Signed-off-by: Ronan Pigott <ronan@rjp.ie>
----
+On 05/11/2022 11:34, Đoàn Trần Công Danh wrote:
+>   
+> On 2022-11-05 09:32:44+0100, René Scharfe <l.s.r@web.de> wrote:
+>> Why is this trickery needed?  Above you write that callbacks in
+>> builtin/bisect--helper.c can't use subcommand_fn because they need
+>> their own argument.  Can we extend subcommand_fn or use a global
+>> variable to pass that extra thing instead?  The latter may be ugly, but
+>> at least it's valid C..
+> 
+> Not the author, but I fully agree with you, I think instead of adding new API
+> for some arbitrary subcommand_fn, I would change the subcommand_fn to
+> type:
+> 
+> 	int (*)(int argc, const char **argv, const char *prefix, void *context)
+> 
+> The last argument would be an object pointer, which will be casted to
+> the correct type inside the callback.
+> 
+> Let me cherry-picking this series on top of mine to see how things
+> would progress.
 
-I track my global config in a bare gitrepo, and include host-specific
-configuration from an auxiliary path. Since on each host I may work on
-different repos, at different paths, and have different preferences for
-prefetch or gc frequency, I record maintenance repos in this
-host-specific config. This option will facilitate this use case.
+Unfortunately the current implementation of OPT_SUBCOMMAND relies on 
+returning a function pointer though a void* variable which while widely 
+supported is undefined behavior. I wonder if an API like
 
- Documentation/git-maintenance.txt | 14 +++++++-------
- builtin/gc.c                      | 28 +++++++++++++++++-----------
- t/t7900-maintenance.sh            | 15 +++++++++++++++
- 3 files changed, 39 insertions(+), 18 deletions(-)
+typedef int (*subcommand_fn)(int, char**, char*);
+typedef int (*subcommand_ctk_fn)(int, char**, char*, void*);
+struct subcommand; /* opaque */
 
-diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
-index bb888690e4..eb3ae9fbd5 100644
---- a/Documentation/git-maintenance.txt
-+++ b/Documentation/git-maintenance.txt
-@@ -50,13 +50,13 @@ stop::
- 	the background maintenance is restarted later.
- 
- register::
--	Initialize Git config values so any scheduled maintenance will
--	start running on this repository. This adds the repository to the
--	`maintenance.repo` config variable in the current user's global
--	config and enables some recommended configuration values for
--	`maintenance.<task>.schedule`. The tasks that are enabled are safe
--	for running in the background without disrupting foreground
--	processes.
-+	Initialize Git config values so any scheduled maintenance will start
-+	running on this repository. This adds the repository to the
-+	`maintenance.repo` config variable in the current user's global config,
-+	or the config specified by --config option, and enables some
-+	recommended configuration values for `maintenance.<task>.schedule`. The
-+	tasks that are enabled are safe for running in the background without
-+	disrupting foreground processes.
- +
- The `register` subcommand will also set the `maintenance.strategy` config
- value to `incremental`, if this value is not previously set. The
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 24ea85c7af..5da6905033 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1454,13 +1454,15 @@ static char *get_maintpath(void)
- }
- 
- static char const * const builtin_maintenance_register_usage[] = {
--	"git maintenance register",
-+	"git maintenance register [--config <file>]",
- 	NULL
- };
- 
- static int maintenance_register(int argc, const char **argv, const char *prefix)
- {
-+	const char *config_file = NULL;
- 	struct option options[] = {
-+		OPT_STRING('c', "config", &config_file, N_("file"), N_("use given config file")),
- 		OPT_END(),
- 	};
- 	int found = 0;
-@@ -1502,7 +1504,7 @@ static int maintenance_register(int argc, const char **argv, const char *prefix)
- 		if (!user_config)
- 			die(_("$HOME not set"));
- 		rc = git_config_set_multivar_in_file_gently(
--			user_config, "maintenance.repo", maintpath,
-+			config_file ?: user_config, "maintenance.repo", maintpath,
- 			CONFIG_REGEX_NONE, 0);
- 		free(user_config);
- 		free(xdg_config);
-@@ -1517,14 +1519,16 @@ static int maintenance_register(int argc, const char **argv, const char *prefix)
- }
- 
- static char const * const builtin_maintenance_unregister_usage[] = {
--	"git maintenance unregister [--force]",
-+	"git maintenance unregister [--config <file>] [--force]",
- 	NULL
- };
- 
- static int maintenance_unregister(int argc, const char **argv, const char *prefix)
- {
- 	int force = 0;
-+	const char *config_file = NULL;
- 	struct option options[] = {
-+		OPT_STRING('c', "config", &config_file, N_("file"), N_("use given config file")),
- 		OPT__FORCE(&force,
- 			   N_("return success even if repository was not registered"),
- 			   PARSE_OPT_NOCOMPLETE),
-@@ -1542,24 +1546,26 @@ static int maintenance_unregister(int argc, const char **argv, const char *prefi
- 		usage_with_options(builtin_maintenance_unregister_usage,
- 				   options);
- 
--	list = git_config_get_value_multi(key);
--	if (list) {
--		for_each_string_list_item(item, list) {
--			if (!strcmp(maintpath, item->string)) {
--				found = 1;
--				break;
-+	if (!config_file) {
-+		list = git_config_get_value_multi(key);
-+		if (list) {
-+			for_each_string_list_item(item, list) {
-+				if (!strcmp(maintpath, item->string)) {
-+					found = 1;
-+					break;
-+				}
- 			}
- 		}
- 	}
- 
--	if (found) {
-+	if (found || config_file) {
- 		int rc;
- 		char *user_config, *xdg_config;
- 		git_global_config(&user_config, &xdg_config);
- 		if (!user_config)
- 			die(_("$HOME not set"));
- 		rc = git_config_set_multivar_in_file_gently(
--			user_config, key, NULL, maintpath,
-+			config_file ?: user_config, key, NULL, maintpath,
- 			CONFIG_FLAGS_MULTI_REPLACE | CONFIG_FLAGS_FIXED_VALUE);
- 		free(user_config);
- 		free(xdg_config);
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 96bdd42045..c2c2dbbb5f 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -500,6 +500,21 @@ test_expect_success 'register and unregister' '
- 	git config --global --get-all maintenance.repo >actual &&
- 	test_cmp before actual &&
- 
-+	git config --file ./other --add maintenance.repo /existing1 &&
-+	git config --file ./other --add maintenance.repo /existing2 &&
-+	git config --file ./other --get-all maintenance.repo >before &&
-+
-+	git maintenance register --config ./other &&
-+	test_cmp_config false maintenance.auto &&
-+	git config --file ./other --get-all maintenance.repo >between &&
-+	cp before expect &&
-+	pwd >>expect &&
-+	test_cmp expect between &&
-+
-+	git maintenance unregister --config ./other &&
-+	git config --file ./other --get-all maintenance.repo >actual &&
-+	test_cmp before actual &&
-+
- 	test_must_fail git maintenance unregister 2>err &&
- 	grep "is not registered" err &&
- 	git maintenance unregister --force
--- 
-2.38.1
+OPT_SUBCOMMAND(name, value, func);
+OPT_SUMCOMMAND_CTX(name, value, func, ctx);
 
+int call_subcommand(struct subcommand* subcommand, int argc, char** 
+argv, char* prefix);
+
+
+which would be used as
+
+int sub1_fn(int argc, char** argv, char* prefix, void* ctx)
+{
+	struct cmd_ctx cmd_ctx = ctx
+	...
+}
+
+int sub2_fn(int argc, char** argv, char* prefix)
+{
+	...
+}
+
+int cmd_foo(int argc, char** argv, char* prefix)
+{
+	struct cmd_ctx ctx = ...
+	struct subcommand cmd = { 0 };
+	...
+	struct option opts[] = {
+		OPT_SUBCOMMAND_CTX("sub1", &cmd, sub_fn, &ctx);
+		OPT_SUBCOMMAND("sub2", &cmd, sub2_fn);
+	};
+	argc = parse_options(argc, argv, prefix, &opts, usage, flags);
+	return call_subcommand(&cmd, argc, argv, prefix);
+}
+
+
+would be an improvement. One can avoid having to mark the ctx parameter 
+as UNUSED() if a subcommand does not need any context by using 
+OPT_SUBCOMMAND() rather than OPT_SUBCOMMAND_CTX().
+
+
+The implementation of call_subcommand() would look something like
+
+struct subcommand {
+         void* ctx;
+         int has_ctx;
+         union {
+                 subcommand_fn fn;
+                 subcommand_ctx_fn ctx_fn;
+         };
+};
+
+int call_subcommand(struct subcommand* subcommand, int argc, char 
+**argv, char* prefix)
+{
+         if (subcommand->has_ctx)
+                 return subcommand->ctx_fn(argc, argv, prefix, 
+subcommand->ctx);
+         else
+                 return subcommand->fn(argc, argv, prefix);
+}
+
+
+Best Wishes
+
+Phillip
