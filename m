@@ -2,89 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B91DC433FE
-	for <git@archiver.kernel.org>; Sat,  5 Nov 2022 00:26:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20F94C433FE
+	for <git@archiver.kernel.org>; Sat,  5 Nov 2022 00:27:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229511AbiKEA0L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 4 Nov 2022 20:26:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47636 "EHLO
+        id S229536AbiKEA1T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 4 Nov 2022 20:27:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbiKEA0K (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Nov 2022 20:26:10 -0400
-Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBE28326EE
-        for <git@vger.kernel.org>; Fri,  4 Nov 2022 17:26:09 -0700 (PDT)
-Received: by mail-il1-x133.google.com with SMTP id o13so3383452ilq.6
-        for <git@vger.kernel.org>; Fri, 04 Nov 2022 17:26:09 -0700 (PDT)
+        with ESMTP id S229445AbiKEA1R (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Nov 2022 20:27:17 -0400
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B890C3E0BA
+        for <git@vger.kernel.org>; Fri,  4 Nov 2022 17:27:15 -0700 (PDT)
+Received: by mail-io1-xd31.google.com with SMTP id y6so5058567iof.9
+        for <git@vger.kernel.org>; Fri, 04 Nov 2022 17:27:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wfr/wOO0Uh4Isw8uWWGIJucGGWT1Ri0XcUfhMSl5BaE=;
-        b=TXLhPoWzt9QRsEpcZSN7w6T2GSFSC8biIuqVmMOj3oFeU+crmX5bgRvHvCiCbMQsVe
-         6i2z+aIY7FpyozhgZLxXucmgCpUeHf8yEtwCt80DOUmQ54rizkWWwjzJvaDqGXNVgLWf
-         unIndsH3PlsSExprE0mYcGH9EBYV+3wnWcfAidApnQNLOfQkHj1TQ08QhCUqvTL+ZRUi
-         Gz8CHjHITrt6L2Q9mF1gQGHwG1sfNRDHpV4GxfRkQEYBbLVu/BqcIZVNB+NFk7S2xWvT
-         dKf0cARTMBUBGSKTLwTKuz4b7LJgItPQoPmdb6PkNlfnEkeILCXcfGEjUD98funIdaWi
-         z2BQ==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=WtsH4QKXg8jdWceGHqnGL1fah/jdx6mJk19UOpGl1Ps=;
+        b=oapvGwCB+oXPOwgZM0QNQYxlGcwPC6xzBSlPTwMJc4oWXqFNSGpETnMXIhiwKYxfTT
+         ctXcmaBQXojIT+fXJ6Sn0f/RXOKIzI7T++o+yU4yuKTi+bLm+nD3mgiHYfJDsMS/9U+5
+         wEHGMfybYr0ChiSR/GmrkGR9MUukChHqJdbQbXmDoAkex2njIBiOoVnpkc41WjCqn/e1
+         34d9fNRtXh/o1rb90KtL9i+9YGjLldIyngveOU861Ry3ARCbzcwxWHx9QqDDZRrMHEXv
+         Xg5K45VkhIif2/WvKG7uBK2DIA2mTO+HCCT6VjKcbaoqboI5DLV8/c+9dPvVV99qjnlk
+         uiCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Wfr/wOO0Uh4Isw8uWWGIJucGGWT1Ri0XcUfhMSl5BaE=;
-        b=UwoOhoOvYf2R7jYKVJ2ivVy0imWuvFewnfG3b2jrr4m37z/IY24cw6Nj7pI/RROEfa
-         hzoPXiMgiktmXy4Pqh9XtySTGylIf+ejeiMF/KbktkD2tiL56+yz/ziUSv1+mkCnJov9
-         jX+/YiLiw1dJq/EkeF6kleQm4Q987RGuf1SUzpemMYvvw6E2c/SPz4jYtBgYPnMJL+7n
-         dpd9SCTDupL1CKLloXSziDniW30qSCzpC3McXxo9U0Sg3jCOcHj6+TuPaM481YOjS6B/
-         30JyiA/Iss+XEhFISsbc9UpBabU/AiEG0O9VykLNMEUY0u79RCtlmBaZgJ/Hf82mIDnm
-         7lnA==
-X-Gm-Message-State: ACrzQf39KOLDWUKZB+AaL1+AOsShH4DZHENOW6ZC4vLnoXq3Jit8pNnV
-        NKlLhNVFGA5Hrmy7ICoviZiYRuIqQ8zH3hpf
-X-Google-Smtp-Source: AMsMyM6IcDSj8EjgMDLUdlFvX9gmR7PIzeIcBsxfPWDLKt5NA3l5qashdmCu/cl6BI9kDcSuglebTg==
-X-Received: by 2002:a05:6e02:812:b0:300:d199:65ef with SMTP id u18-20020a056e02081200b00300d19965efmr8688704ilm.136.1667607969140;
-        Fri, 04 Nov 2022 17:26:09 -0700 (PDT)
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WtsH4QKXg8jdWceGHqnGL1fah/jdx6mJk19UOpGl1Ps=;
+        b=lK/lcRwWTsKs7joNR/LN0U4MDFSwstVRKPYlZodZEdPAD3be/agv0VsBZKnxqvTQ3M
+         Y7rNTGTzoPB0IkzgI7EGe9TwFSW5ZgEYksNrXEjedgG1xaDANoInDNfv01d+vp2p8N+c
+         BKplH1Ftaf+lLTVgqPHfVIYffHxefDCWH4EUXUNzh5QBRnbuApsrKaSksdVRbh9hFGBq
+         1UfYnuNAj5oJBPG677PkByFBdPXbOwCVgicxQGJdXeRPF4kekN/IKTa6v8YQrQRJwdfM
+         zmZc0gVkgwgH4fpm0/6GUToqEHefpCc0827xYANwx3WdWuKUyaBisDURLWkCxByIAxoZ
+         Grtw==
+X-Gm-Message-State: ACrzQf3vfsXqBgzrjEF7WW/0AGT66yzv4Mj7ppTR5id7c11dKzYEXrzz
+        BdpRdtbZ3nXjpiKN4ssvHl3b8A==
+X-Google-Smtp-Source: AMsMyM4gjnnCjV8t14ymh4tVFrW6Tk0crYEAIJ+E38d4Mrvq9emVeRrdPkeahPUQzyl5xuauwDnvgg==
+X-Received: by 2002:a05:6602:168c:b0:6d0:7335:ec25 with SMTP id s12-20020a056602168c00b006d07335ec25mr18738115iow.66.1667608035162;
+        Fri, 04 Nov 2022 17:27:15 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id a3-20020a92c703000000b002e85e8b8d1dsm342356ilp.5.2022.11.04.17.26.08
+        by smtp.gmail.com with ESMTPSA id e30-20020a056602045e00b006a102cb4900sm201367iov.39.2022.11.04.17.27.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Nov 2022 17:26:08 -0700 (PDT)
-Date:   Fri, 4 Nov 2022 20:26:07 -0400
+        Fri, 04 Nov 2022 17:27:14 -0700 (PDT)
+Date:   Fri, 4 Nov 2022 20:27:13 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2022, #01; Thu, 3)
-Message-ID: <Y2Wtn0wKhbQrScGU@nand.local>
-References: <Y2RldUHTwNzmez73@nand.local>
- <e1c10d50-779d-2a22-b0c6-83bc0769ea37@iee.email>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Victoria Dye <vdye@github.com>,
+        Eric Sunshine <ericsunshine@gmail.com>
+Subject: Re: [PATCH v4 00/14] cmake: document, fix on *nix, add CI
+Message-ID: <Y2Wt4SK1PX+kfL/G@nand.local>
+References: <cover-v3-00.12-00000000000-20221101T225022Z-avarab@gmail.com>
+ <cover-v4-00.14-00000000000-20221103T160255Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <e1c10d50-779d-2a22-b0c6-83bc0769ea37@iee.email>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover-v4-00.14-00000000000-20221103T160255Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 05, 2022 at 12:21:23AM +0000, Philip Oakley wrote:
-> On 04/11/2022 01:05, Taylor Blau wrote:
-> > --------------------------------------------------
-> > [Cooking]
-> > * po/pretty-hard-trunc (2022-11-02) 1 commit
-> >  - pretty-formats: add hard truncation, without ellipsis, options
-> >
-> >  Add a new pretty format which truncates without ellipsis.
-> >
-> >  Missing test coverage.
-> Is that out of date? V3 did include tests in t4205 and t6006.
+On Thu, Nov 03, 2022 at 05:37:50PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> This topic gets our tests from passing ~80% with ctest on *nix to
+> passing 100%.
 >
-> >  source: <20221102120853.2013-1-philipoakley@iee.email>
-> This source is the V3.
+> See passing CI job for "cmake + ctest" on Ubuntu at:
+> https://github.com/avar/git/actions/runs/3387253536/jobs/5627772317
+>
+> See
+> http://lore.kernel.org/git/cover-v3-00.12-00000000000-20221101T225022Z-avarab@gmail.com
+> for v3.
 
-Yes, thanks for catching. Indeed, the version that I have at:
-
-    git@github.com:ttaylorr/git.git
-
-on po/pretty-hard-trunc has the new tests. I think we are still waiting
-for review on that topic, though...
+Thanks, will queue.
 
 Thanks,
 Taylor
