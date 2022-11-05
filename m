@@ -2,68 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 36161C433FE
-	for <git@archiver.kernel.org>; Sat,  5 Nov 2022 17:07:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86716C433FE
+	for <git@archiver.kernel.org>; Sat,  5 Nov 2022 17:08:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229947AbiKERH6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Nov 2022 13:07:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56036 "EHLO
+        id S229975AbiKERIF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Nov 2022 13:08:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229689AbiKERH5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Nov 2022 13:07:57 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A76CFDFAB
-        for <git@vger.kernel.org>; Sat,  5 Nov 2022 10:07:56 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id y13so7078964pfp.7
-        for <git@vger.kernel.org>; Sat, 05 Nov 2022 10:07:56 -0700 (PDT)
+        with ESMTP id S229689AbiKERIA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Nov 2022 13:08:00 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50820DFCC
+        for <git@vger.kernel.org>; Sat,  5 Nov 2022 10:07:59 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id c15-20020a17090a1d0f00b0021365864446so6979533pjd.4
+        for <git@vger.kernel.org>; Sat, 05 Nov 2022 10:07:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ehbg6oqzNmT3LAIRFU5Gy4AeOYbsldgOFjA1sTYy92o=;
-        b=METK5fMno+m4/GKcljXFfvSCjvSplbcgXsboBC4uwYENvTxzQVAznlSw4oV9JLG0Ry
-         VJnbSKip+hzWNmQLU1BBKN1MkNYrt2Paijqa07Ewaqz/Td5uHZWbsGnVc6Qrvmyeo7eA
-         rZqWbe3vRilJBybGfcAntj8FSVQGeJoipkTaF/uDVBnMLtJobL1j/FNZcf0yocxmOj2b
-         5XSullhKjX2Rdf3OC+b1/LXFmK0akLEfoo/Dbe8l4CvML9a47c91O4Bxovom+Mwr8SEr
-         /SrekIB4KnkJr8mBpOb/IgpyPrIkN6kQHFn7G54ZoryXDjj3He6WsWwHjtI2VSFRJB1T
-         14xw==
+        bh=IFtyYRE/QfCJSzHWQ5G/2Hcs0YCzicj8Mpg0peBNurk=;
+        b=M0fVL96fR586kojBwNsFRxSh/zFXsqvWG2Psxe8saWm0D9ZYK8sydiSStlWARez7Bh
+         NEXYqeVTUxXw0eLavViNp0UtdoU6jiiGdN3vFhJx61eUQHWK1qtSS/0BxL15KjWLrqWE
+         epn7mkfKYhNvrmSQpcw3pSC7Oei5MaIHe3dPd35GakpV1hvfLgSZs94RfgGcpGdb1EFE
+         4M4U2WAm2K/mLZrU87IJZ1LUkwCHvnnPL0ftNYdhbHId1+ytl7KFO7XrwK1oTt6lh2Sa
+         BzNs5Zf4Q2B2P4bpCxGGjJ/eVKk0quTIVwwC87oYY0S9hwaE1tsSeQsGKVIYlOVdIFUm
+         trCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Ehbg6oqzNmT3LAIRFU5Gy4AeOYbsldgOFjA1sTYy92o=;
-        b=dBYJLwVCEj7nC/gQJhRnAP0BjD/RBVU4mW2MkDwMKgJG8Gp5V7MYVBrcsvXEkrfk1V
-         noYQV+g1srwaoJ+GmIPvG7DMTtUrZZUKCPPLU2cG56Ztxdmhp+rad4daXXNuPfhTd63m
-         rufYM6lWqiX1wFfViPA0ARBzKGcXbpT+fDXZKBZ1fnIH222NSfSJ2716UUAcIIy0Ml3q
-         GIGaos6iEGCPxqVljrjOyznHTy7ENFEEQrOs5+Gq5u2ZlxzLXbgCht9iJO4XspTW1Zy5
-         p8kAyH5p1uKbssE+RSmkQnKkOdRvakzcs0VyXY36bOOLhXCyb2dXqJJBdjNfcldqvigE
-         jyRg==
-X-Gm-Message-State: ACrzQf0HFwzH7ju+BsJWywewe+rjM7pA2JuiT8koKb80p0rVRxIJPfOr
-        EXXso6f1WwSzaGbBEJ6xbq6gS9eTjCU=
-X-Google-Smtp-Source: AMsMyM7bcLx8wPuYDCY/A1uy1N8JJ9rsvW/fBJtQXX6OUeEg1WOrimsh7r0HF8OvkJscJ8vLY49o1Q==
-X-Received: by 2002:a63:d848:0:b0:46f:81cb:6d6c with SMTP id k8-20020a63d848000000b0046f81cb6d6cmr34564548pgj.453.1667668075885;
-        Sat, 05 Nov 2022 10:07:55 -0700 (PDT)
+        bh=IFtyYRE/QfCJSzHWQ5G/2Hcs0YCzicj8Mpg0peBNurk=;
+        b=ClA1u448DTXoltZZidI8hmWpp++4u1ldVPVgkF7yvl7FQQ6ZQDFhH7T2PZoVgi/8hK
+         xtTSBp48rOZxjmebjQXJsFBXDdjGRET6MdD0DiDZFg1Wdmhiyl7xd/x2dZTvVSFADxnL
+         cIpdSnxZFIuMZp8kLAHx7X224YEUAGgs+0S7z+1qOcfQnR8jefHr/aBwUL0HB6CgKub/
+         LsNYf/tzXabu0skjTf8FWlOPHDvkRKWM4TdqS8MsFKgCyIeGZ23t0U4dX4bT/cMauFgp
+         C5h9KC4b1j+B3NI/4ef3yXvWwsMI6p3jJgBsqEWcJ5hI6Jl/l/ool7Jt/eX0tprLITLK
+         wWfw==
+X-Gm-Message-State: ACrzQf28maxJUD+XERZ+pKFRe+SFzcExJiX1RW7XG7/SyiJy8DrpUVob
+        PKSUoIfLVSm5jCf/WH0hnAGJNlDX9XQ=
+X-Google-Smtp-Source: AMsMyM40psWJ3q9AIBDxuJUSjdFlFFVdYGbnhbRoU5x08Ec32If3zK+h1vUY6Omo8wlgyE+pF0jd2w==
+X-Received: by 2002:a17:90a:8a8c:b0:213:c06c:7003 with SMTP id x12-20020a17090a8a8c00b00213c06c7003mr39108862pjn.147.1667668078466;
+        Sat, 05 Nov 2022 10:07:58 -0700 (PDT)
 Received: from localhost.localdomain ([2001:ee0:500b:6370:da47:cda5:dbd5:6e77])
-        by smtp.gmail.com with ESMTPSA id c16-20020a056a00009000b0056299fd2ba2sm1513192pfj.162.2022.11.05.10.07.53
+        by smtp.gmail.com with ESMTPSA id c16-20020a056a00009000b0056299fd2ba2sm1513192pfj.162.2022.11.05.10.07.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Nov 2022 10:07:55 -0700 (PDT)
+        Sat, 05 Nov 2022 10:07:58 -0700 (PDT)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Taylor Blau <me@ttaylorr.com>,
         Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 00/13] Turn git-bisect to be builtin
-Date:   Sun,  6 Nov 2022 00:07:31 +0700
-Message-Id: <cover.1667667460.git.congdanhqx@gmail.com>
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+Subject: [PATCH 01/13] bisect tests: test for v2.30.0 "bisect run" regressions
+Date:   Sun,  6 Nov 2022 00:07:32 +0700
+Message-Id: <5571bc36b84210e16ab8731fea8bf0ed8d62cca3.1667667460.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.38.1.157.gedabe22e0a
-In-Reply-To: <cover.1667667058.git.congdanhqx@gmail.com>
-References: <cover.1667667058.git.congdanhqx@gmail.com>
+In-Reply-To: <cover.1667667460.git.congdanhqx@gmail.com>
+References: <cover.1667667058.git.congdanhqx@gmail.com> <cover.1667667460.git.congdanhqx@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,45 +71,120 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series finish the git-bisect porting from shell script into a C builtin.
+From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-This series can't be applied cleaned on master, it needs to be applied on top
-of the series posted at:
-https://lore.kernel.org/git/cover.1667667058.git.congdanhqx@gmail.com/
-AND the series rs/no-more-run-command-v, which has been integrated to next.
+Add three failing tests which succeed on v2.29.0, but due to the topic
+merged at [1] (specifically [2]) have been failing since then. We'll
+address those regressions in subsequent commits.
 
-There're two commits which were made by me, one of them is the reversal of the
-other, which I don't really like it but it's there to restore old behaviour
-until we justify the change of behaviours.
+There was also a "regression" where:
 
-Johannes Schindelin (2):
-  bisect--helper: make `state` optional
-  Turn `git bisect` into a full built-in
+	git bisect run ./missing-script.sh
 
-Ævar Arnfjörð Bjarmason (6):
-  bisect tests: test for v2.30.0 "bisect run" regressions
-  bisect: refactor bisect_run() to match CodingGuidelines
-  bisect: fix output regressions in v2.30.0
-  bisect run: keep some of the post-v2.30.0 output
-  bisect test: test exit codes on bad usage
-  bisect--helper: emit usage for "git bisect"
+Would count a non-existing script as "good", as the shell would exit
+with 127. That edge case is a bit too insane to preserve, so let's not
+add it to these regression tests.
 
-Đoàn Trần Công Danh (5):
-  bisect--helper: pass arg[cv] down to do_bisect_run
-  bisect--helper: remove unused arguments from do_bisect_run
-  bisect--helper: pretend we're real bisect when report error
-  bisect--helper: remove subcommand state
-  bisect--helper: log: allow arbitrary number of arguments
+1. 0a4cb1f1f2f (Merge branch 'mr/bisect-in-c-4', 2021-09-23)
+2. d1bbbe45df8 (bisect--helper: reimplement `bisect_run` shell
+   function in C, 2021-09-13)
 
- Makefile                               |   3 +-
- builtin.h                              |   2 +-
- builtin/{bisect--helper.c => bisect.c} | 124 +++++++++++++++----------
- git-bisect.sh                          |   4 -
- git.c                                  |   2 +-
- t/t6030-bisect-porcelain.sh            | 109 ++++++++++++++++++++++
- 6 files changed, 186 insertions(+), 58 deletions(-)
- rename builtin/{bisect--helper.c => bisect.c} (92%)
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+---
+ t/t6030-bisect-porcelain.sh | 79 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 79 insertions(+)
 
+diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
+index 6dbbe62eb2..6901bbd202 100755
+--- a/t/t6030-bisect-porcelain.sh
++++ b/t/t6030-bisect-porcelain.sh
+@@ -252,6 +252,85 @@ test_expect_success 'bisect skip: with commit both bad and skipped' '
+ 	grep $HASH4 my_bisect_log.txt
+ '
+ 
++test_bisect_run_args () {
++	test_when_finished "rm -f run.sh actual" &&
++	>actual &&
++	cat >expect.args &&
++	cat <&6 >expect.out &&
++	cat <&7 >expect.err &&
++	write_script run.sh <<-\EOF &&
++	while test $# != 0
++	do
++		echo "<$1>" &&
++		shift
++	done >actual.args
++	EOF
++
++	test_when_finished "git bisect reset" &&
++	git bisect start &&
++	git bisect good $HASH1 &&
++	git bisect bad $HASH4 &&
++	git bisect run ./run.sh $@ >actual.out.raw 2>actual.err &&
++	# Prune just the log output
++	sed -n \
++		-e '/^Author:/d' \
++		-e '/^Date:/d' \
++		-e '/^$/d' \
++		-e '/^commit /d' \
++		-e '/^ /d' \
++		-e 'p' \
++		<actual.out.raw >actual.out &&
++	test_cmp expect.out actual.out &&
++	test_cmp expect.err actual.err &&
++	test_cmp expect.args actual.args
++}
++
++test_expect_failure 'git bisect run: args, stdout and stderr with no arguments' '
++	test_bisect_run_args <<-\EOF_ARGS 6<<-EOF_OUT 7<<-\EOF_ERR
++	EOF_ARGS
++	running ./run.sh
++	$HASH4 is the first bad commit
++	bisect run success
++	EOF_OUT
++	EOF_ERR
++'
++
++test_expect_failure 'git bisect run: args, stdout and stderr: "--" argument' '
++	test_bisect_run_args -- <<-\EOF_ARGS 6<<-EOF_OUT 7<<-\EOF_ERR
++	<-->
++	EOF_ARGS
++	running ./run.sh --
++	$HASH4 is the first bad commit
++	bisect run success
++	EOF_OUT
++	EOF_ERR
++'
++
++test_expect_failure 'git bisect run: args, stdout and stderr: "--log foo --no-log bar" arguments' '
++	test_bisect_run_args --log foo --no-log bar <<-\EOF_ARGS 6<<-EOF_OUT 7<<-\EOF_ERR
++	<--log>
++	<foo>
++	<--no-log>
++	<bar>
++	EOF_ARGS
++	running ./run.sh --log foo --no-log bar
++	$HASH4 is the first bad commit
++	bisect run success
++	EOF_OUT
++	EOF_ERR
++'
++
++test_expect_failure 'git bisect run: args, stdout and stderr: "--bisect-start" argument' '
++	test_bisect_run_args --bisect-start <<-\EOF_ARGS 6<<-EOF_OUT 7<<-\EOF_ERR
++	<--bisect-start>
++	EOF_ARGS
++	running ./run.sh --bisect-start
++	$HASH4 is the first bad commit
++	bisect run success
++	EOF_OUT
++	EOF_ERR
++'
++
+ # We want to automatically find the commit that
+ # added "Another" into hello.
+ test_expect_success '"git bisect run" simple case' '
 -- 
 2.38.1.157.gedabe22e0a
 
