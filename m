@@ -2,82 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1271CC4332F
-	for <git@archiver.kernel.org>; Sat,  5 Nov 2022 23:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A4E8C4332F
+	for <git@archiver.kernel.org>; Sun,  6 Nov 2022 00:30:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229849AbiKEXSm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Nov 2022 19:18:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57474 "EHLO
+        id S229511AbiKFA2n (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 5 Nov 2022 20:28:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229533AbiKEXSl (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Nov 2022 19:18:41 -0400
-Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A369BFCD3
-        for <git@vger.kernel.org>; Sat,  5 Nov 2022 16:18:37 -0700 (PDT)
-Received: by mail-il1-x12c.google.com with SMTP id m15so4287204ilq.2
-        for <git@vger.kernel.org>; Sat, 05 Nov 2022 16:18:37 -0700 (PDT)
+        with ESMTP id S229499AbiKFA2l (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Nov 2022 20:28:41 -0400
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB2E8EE3A
+        for <git@vger.kernel.org>; Sat,  5 Nov 2022 17:28:39 -0700 (PDT)
+Received: by mail-io1-xd2c.google.com with SMTP id h206so6406637iof.10
+        for <git@vger.kernel.org>; Sat, 05 Nov 2022 17:28:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=SKAFQ4pa4EoueDHvz3jcYHFO8nqZ9G0k/pk6gN33n0U=;
-        b=HLrmX3d0OiioYjbHIAzEHIyLroRxMyB7vD+J3BaNiFuHhC9ijUiz657Vbrbph7Kc/D
-         Vbn8QILNBribpXKiDi+TtK5Um961tp9xXMDaRpCb34U8WQ7t7OEAWYRiBfJSCTnFI4CU
-         pMrJZKA3IyBeKZFLSmrkrf2GTYG9oyrv5ZX541eIHAoe3k0IlfGapDwpy4FRNAOEaQqp
-         lAaSRIuuqHE8UEMKagBrcfB3EqBKu4F0p7F+nE4MllRKvTNxsgNonpRThdxOZ+EQhVeF
-         pK5q02hdRHX5U8i6ft5Hpcdc8f/ohAjQjUVl0ilBpC6ibZAFOUBVFZStRZIyDlPxNCE7
-         sevA==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=dWFDRJ2gs3LCtPnLvttaqYdtD2BAWXNYBHUxpFVPv+s=;
+        b=IZBkq4G/l0vC5c9myh+jRkNdfrxLCLeN2PQ7kY8EIt3Fy5S7zIG1mDZsMpUuf1o1v5
+         /hnf9Z/eKNnXW88dHDVXeYGN3w0SiqmR0VR9apaTm4zdt0vfp2VqbPj2knv4BtY+3ffa
+         wqUAHjmOHjPeIP/THdte+3NkdeynRCQnTVVwB0Iw3KbHDlyBeMQ45BxBkUtwlRJUBgIQ
+         dJ2XjHqffO7DgV8kU0WNUkd9MsYAl2PFuw8xKXVXzvhfZeve6qfneGiCAsULjW4u8ZyQ
+         6ioXvmZb4371f1UgotLlIYX4COK6EyV6kEpafGsvOX6gphiaX8SvhOut7D2CGsc5bxE9
+         MOeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SKAFQ4pa4EoueDHvz3jcYHFO8nqZ9G0k/pk6gN33n0U=;
-        b=tWuj6/d84+WRaR0N+MuIhzMcje7mUEnkF6LVAbCK9mJTPjClB9OFlkd82FnJoCUDmt
-         f24QQ0M2F7w9fE0xNjYY/ppLEsKw91S2HQTeLZegURxcAuuAF1W5+bi3yfH9mO6+QaJK
-         6PbEQD/rfYLIXzDxYbSsHgWxxrSR3elkQ8VjHocFUbupLiE/kw37GLVXnn8x9xHsOY9v
-         HyKhAlpepHOTFSQsSRp5fLDQbwjU1COihLZn8D0B2gU29za9YLw/X4jDJ3pRcMssn6qM
-         9quEPbCZr9zMjcLD+4qe+TvBbV2HXNXh+I8ksNol3T9/doT3hj23b7MXLZqcQd92BH34
-         PaWw==
-X-Gm-Message-State: ACrzQf36T1almFcJj3B5lJy+Dxovt6wbnpWqx7fz/+38sf7PKgYf4hP9
-        pQleUEk52CpXn4Palz/QgoeJ8g==
-X-Google-Smtp-Source: AMsMyM7cXvLt4Rj2HVhhO93k5Cu+YajtyKFZjq6F7EFg/ZzIvfclR9u8kNI0ri35wqGE9tkqS/8+tA==
-X-Received: by 2002:a92:c7ce:0:b0:300:5bd1:265d with SMTP id g14-20020a92c7ce000000b003005bd1265dmr16143871ilk.261.1667690317009;
-        Sat, 05 Nov 2022 16:18:37 -0700 (PDT)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dWFDRJ2gs3LCtPnLvttaqYdtD2BAWXNYBHUxpFVPv+s=;
+        b=jHY12rtmpCVxTyThB0RT97F5t0NcEv9bZQMywiVaScy8m4P+QbBrMjhAAh0RDrrqvv
+         9IX/KhAifvS66Ol3reoDxc1BAXPk4GvPDw1qE3Rj3LRnLIk5JnCJx3pszz1yCK60IqjN
+         8Y61UU59LntG1fPFKgJ3WGKRjde/ViwzEZZopQRXgLaKRrJA88AV3u/GpmvRwKeII4Vb
+         9JJGynGoiXp5pI33syhRCmNb3zzXg1nqI7V/yuPJet1l42n+wx6m2nciYfkao64eC5sf
+         LrWm+0sXWDdm9YhaRZS6F+Z4hhOR9MGl/mAhL7Tr6sy/LhNJtqc93LRIaiaCxZix0gsR
+         uX/g==
+X-Gm-Message-State: ACrzQf1Sy1HvvM5WQ+3KKE4wkpIJw0NcxV1BfKxi0Wwyjf6tJeIt9mPP
+        Ncfy9kCVWMKWVpLvGml5qba5iA==
+X-Google-Smtp-Source: AMsMyM7vrLhzNil6smJggHK+kcBwOL3XU4zC7EZuk+6V5LDr2b5llSb4F2vCGbjBWSiFfs2DSv59Sg==
+X-Received: by 2002:a05:6638:bd0:b0:374:fbed:c3e9 with SMTP id g16-20020a0566380bd000b00374fbedc3e9mr25969136jad.38.1667694519166;
+        Sat, 05 Nov 2022 17:28:39 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id v21-20020a02cbb5000000b00363e4730a41sm1067548jap.175.2022.11.05.16.18.35
+        by smtp.gmail.com with ESMTPSA id p16-20020a056e02105000b002f966e3900bsm1297535ilj.80.2022.11.05.17.28.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Nov 2022 16:18:36 -0700 (PDT)
-Date:   Sat, 5 Nov 2022 19:18:34 -0400
+        Sat, 05 Nov 2022 17:28:38 -0700 (PDT)
+Date:   Sat, 5 Nov 2022 20:28:36 -0400
 From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?THVrw6HFoQ==?= Doktor <ldoktor@redhat.com>,
-        Jeff King <peff@peff.net>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2 0/3] Convert git-bisect--helper to OPT_SUBCOMMAND
-Message-ID: <Y2bvStmh9LBfgDVE@nand.local>
-References: <cover.1667561761.git.congdanhqx@gmail.com>
- <cover.1667667058.git.congdanhqx@gmail.com>
+To:     Ronan Pigott <ronan@rjp.ie>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Clement Moyroud <clement.moyroud@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Thomas Ackermann <th.acker@arcor.de>
+Subject: Re: [PATCH 2/2] maintenance: add option to register in a specific
+ config
+Message-ID: <Y2b/tCUc3nGI+8M7@nand.local>
+References: <20221105184532.457043-1-ronan@rjp.ie>
+ <20221105184532.457043-3-ronan@rjp.ie>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1667667058.git.congdanhqx@gmail.com>
+In-Reply-To: <20221105184532.457043-3-ronan@rjp.ie>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 06, 2022 at 12:03:33AM +0700, Đoàn Trần Công Danh wrote:
->  builtin/bisect--helper.c    | 229 ++++++++++++++++++++----------------
->  git-bisect.sh               |  23 +---
->  t/t6030-bisect-porcelain.sh |  10 ++
->  3 files changed, 142 insertions(+), 120 deletions(-)
+On Sat, Nov 05, 2022 at 11:45:32AM -0700, Ronan Pigott wrote:
+> @@ -1502,7 +1504,7 @@ static int maintenance_register(int argc, const char **argv, const char *prefix)
+>  		if (!user_config)
+>  			die(_("$HOME not set"));
+>  		rc = git_config_set_multivar_in_file_gently(
+> -			user_config, "maintenance.repo", maintpath,
+> +			config_file ?: user_config, "maintenance.repo", maintpath,
+>  			CONFIG_REGEX_NONE, 0);
+>  		free(user_config);
+>  		free(xdg_config);
 
-Thanks, this version looks good to me. Will queue.
+The "?:" construct is a GNU extension which we do not use.
 
 Thanks,
 Taylor
