@@ -2,942 +2,1498 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EEC3C43219
-	for <git@archiver.kernel.org>; Sun,  6 Nov 2022 02:17:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1E15C4332F
+	for <git@archiver.kernel.org>; Sun,  6 Nov 2022 06:04:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229528AbiKFCLT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 5 Nov 2022 22:11:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59366 "EHLO
+        id S229608AbiKFGEh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 6 Nov 2022 01:04:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229517AbiKFCLR (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Nov 2022 22:11:17 -0400
-Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C02E65ED
-        for <git@vger.kernel.org>; Sat,  5 Nov 2022 19:11:15 -0700 (PDT)
-Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-37063f855e5so75808797b3.3
-        for <git@vger.kernel.org>; Sat, 05 Nov 2022 19:11:15 -0700 (PDT)
+        with ESMTP id S229463AbiKFGEg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Nov 2022 01:04:36 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59410BC21
+        for <git@vger.kernel.org>; Sat,  5 Nov 2022 23:04:32 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id z14so12049738wrn.7
+        for <git@vger.kernel.org>; Sat, 05 Nov 2022 23:04:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jOLi8oYmdeE/2LqjFLbd3ZPlhb3Ws3uEqSkmz7RXPRo=;
-        b=dYrGy8n7PQKhQfdyBKG+aGJNNUMzWBP8+eWq//CgjYA290OTpBJpcNzQfLIIjNiB96
-         AybrPYvNvUaTjxsKnVLEsVLNH+4KSSBVAl4YBDmLKJctzH8z0vi6leMAwq0sE8u8EVBI
-         EMDX5khsTmwolpvQLIeQUpsmLzHKlBUY6X2s9+ZwmvyGm5BAwdJvuOj0kpjR6cNcD4sq
-         U33CcZDAE41FeGg4n1u4MP2kbF64vwtTPjj0IzP0aFLY1Rn1O36BsMM+40wil0lxbYnc
-         nFZx/lYJzag5GWERyDeOOZRdfHtYP3cUO1PiU/Hz64+uUrElCS/Mobb13IUj43OhoQ2A
-         GgKA==
+        bh=kecPACnX5CxcSdDfK/5U9haxCsxRm2/g4I9V4FaH0zE=;
+        b=XV/1ISdi3Zyq+uA+QAhFv0mh4F3Y3nGyPvzfNKDFrcaPnk24EVO3yc92qHAg3qngMe
+         s9esqHJRI42ZHwWeo94DmwUBZOdy8ppymMdTuH2UNMCFdOPlnwmw28ZszJTMClpKRqi8
+         JiDdcwNMslid87MvO1K2sy07dbJ27VoXeLWbfL0nKHD250NF5xepPfOatwGN48TSboEQ
+         ZVY1bJdg57Z0yN1bjy/OdkaV8ZYpS3OOpREgh90tHjGFApQAy3Ek3d4979EWcxCsTi6E
+         x/KnYWFM2eVwAyzdjMYDqkLNz3/ivdEBTUa68gWwENr183W0it1jC5bDE7XFxWZ37zjP
+         HYxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=jOLi8oYmdeE/2LqjFLbd3ZPlhb3Ws3uEqSkmz7RXPRo=;
-        b=4RR57pxDWAbsASkG8r+AYjHzPJ0DovmxcQ7xCjkSuGYzk3mfcuwGxk6UZW4gTrMVds
-         qQe4QiKfdZoECppkLKLTqiAB+P816gUBUQhPM3xiywoBZPjxRkXmZmmh0P3+vfEUU88F
-         Ezz8TCZ0uYI8tK3vECaVgO7KBNfMxnUMz/g4u3jnHFjM7eR/GmGGdAWnausJZA/yXTP6
-         ZogeSJi32rDnLP/vMVzwr4F3AtOJxe7Xng0GYIYCGsm+aEcGeaW70mFoeytHeqkjDJbv
-         y1j1fskF8tWBgvVKoS3YXgf/4JQnoipej/VjiOLQ7TH/LzYW/FClqNz3tYBqkeyWo/Tg
-         mFmA==
-X-Gm-Message-State: ACrzQf1YrcOTkSPlc+AVHzmd+MjH60QGutkVynRn3TKioLNl8PWISEWW
-        Ms2lwjfhbK4i4Af8aF5U+Vxsg0IHLnYkqn/QkHg=
-X-Google-Smtp-Source: AMsMyM6jD1RkPUBg8Y1mMd22aNcrS6qCKCjLvPaUN/WBmKfsLkv0uI907RjLnazUxqBBWxX9CubLOiOJa/tyxIVEmiE=
-X-Received: by 2002:a81:8c9:0:b0:36d:3e4f:330e with SMTP id
- 192-20020a8108c9000000b0036d3e4f330emr40158854ywi.49.1667700674530; Sat, 05
- Nov 2022 19:11:14 -0700 (PDT)
+        bh=kecPACnX5CxcSdDfK/5U9haxCsxRm2/g4I9V4FaH0zE=;
+        b=NBFkGPGUVLzqCkgoVknwYDEWfUE5yteQVvJ5eBhpzGMkZyrpwfHqurakATbNGtSNRR
+         V9ThRK8Lzele8st0AA7zBQ0zSeRf4HOn2YMD2pqR9F+BVtwnCk3yyiTdJWXRB50SKuxW
+         vjVv13kg05bHdwidr81cTHFiRDjPtgE43GqwjIefrEHU7V41SJVLhrH3GiVB7wxZM09c
+         lNSQV9F/19g/xHD8w9lW/aQ488/8Mc1XV6eWDqAmueQoFM2RNs3CldBtj4hB/dpsup7J
+         VA1881ktBDPyacx96Gu3W9fbPewU35OSjzROp0tBqIaB6wPywcgmOnStr6+uHd20CJ2L
+         U+jA==
+X-Gm-Message-State: ACrzQf0Q+4iiwtj4+Ixm6eDhUHRIQsOLFrHvkG0ZnLmPpn1K9Yt06dvF
+        asPjlLTpp5CFC0QbDRKB/eRUM6f/I+E=
+X-Google-Smtp-Source: AMsMyM5WgeZ3jR+qxoPimTZBow2O2ZjWUvXzQmUFlYp98lLVldN3MBkQIuZMWc0eYEXOFFQ94BE3hQ==
+X-Received: by 2002:adf:c7d1:0:b0:236:7cde:a9b5 with SMTP id y17-20020adfc7d1000000b002367cdea9b5mr26556842wrg.381.1667714668750;
+        Sat, 05 Nov 2022 23:04:28 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p4-20020a05600c1d8400b003b497138093sm4396241wms.47.2022.11.05.23.04.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 05 Nov 2022 23:04:28 -0700 (PDT)
+Message-Id: <pull.1367.v4.git.1667714666810.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1367.v3.git.1665269538608.gitgitgadget@gmail.com>
+References: <pull.1367.v3.git.1665269538608.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 06 Nov 2022 06:04:26 +0000
+Subject: [PATCH v4] sparse-checkout.txt: new document with sparse-checkout
+ directions
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1398.git.1667189512579.gitgitgadget@gmail.com> <CABPp-BGUXKk-LSJtHP2jSDSVYNpQgzOeferx6xJ36ntDgrBNCw@mail.gmail.com>
-In-Reply-To: <CABPp-BGUXKk-LSJtHP2jSDSVYNpQgzOeferx6xJ36ntDgrBNCw@mail.gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sun, 6 Nov 2022 10:11:02 +0800
-Message-ID: <CAOLTT8TceM-NpV2_hUCZj2Dx=W30f_9SHW8CcRH-pw32BRd-oA@mail.gmail.com>
-Subject: Re: [PATCH] [RFC] diff: introduce scope option
-To:     Elijah Newren <newren@gmail.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+To:     git@vger.kernel.org
+Cc:     Victoria Dye <vdye@github.com>,
         Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        ZheNing Hu <adlternative@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Glen Choo <chooglen@google.com>,
+        Martin von Zweigbergk <martinvonz@google.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-   inHi,
+From: Elijah Newren <newren@gmail.com>
 
-Elijah Newren <newren@gmail.com> =E4=BA=8E2022=E5=B9=B411=E6=9C=881=E6=97=
-=A5=E5=91=A8=E4=BA=8C 13:18=E5=86=99=E9=81=93=EF=BC=9A
->
-> Hi,
->
-> On Sun, Oct 30, 2022 at 9:11 PM ZheNing Hu via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> >
-> > From: ZheNing Hu <adlternative@gmail.com>
-> >
-> > When we use sparse-checkout, we often want the set of files
-> > that some commands operate on to be restricted to the
-> > sparse-checkout specification.
->
-> It seems a bit premature to send this, when the guideline document[*]
-> detailing how these options should work is still in the "Needs Review"
-> state.  I know, it's been waiting for a while, but it's a _long_
-> document.
->
-> [*] https://lore.kernel.org/git/pull.1367.v3.git.1665269538608.gitgitgadg=
-et@gmail.com/
->
+Once upon a time, Matheus wrote some patches to make
+   git grep [--cached | <REVISION>] ...
+restrict its output to the sparsity specification when working in a
+sparse checkout[1].  That effort got derailed by two things:
 
-Fine, I just want to start trying to experiment with this feature in
-git-diff earlier,
-and I can wait for the sparse-checkout.txt documentation to finish
-first if needed :)
+  (1) The --sparse-index work just beginning which we wanted to avoid
+      creating conflicts for
+  (2) Never deciding on flag and config names and planned high level
+      behavior for all commands.
 
-> > So introduce the `--scope` option to git diff, which have two
-> > value: "sparse" and "all". "sparse" mean that diff is performed
-> > restrict to paths which matching sparse-checkout specification,
-> > "all" mean that diff is performed regardless of whether the path
-> > meets the sparse-checkout specification.
->
-> The wording probably needs some care to reflect the fact that it only
-> affects cases where either --cached or revisions are passed.  In
-> particular, your wording for "all" suggests behavior very different
-> from today, whereas "all" is probably best thought of as today's
-> current behavior.  For example, a plain `git diff` without --cached or
-> revisions, should be unaffected by either of these flags.
->
+More recently, Shaoxuan implemented a more limited form of Matheus'
+patches that only affected --cached, using a different flag name,
+but also changing the default behavior in line with what Matheus did.
+This again highlighted the fact that we never decided on command line
+flag names, config option names, and the big picture path forward.
 
-Yes, after re-reading your sparse-checkout.txt patch, I realized that I
-misinterpreted "--scope=3Dsparse" as sparse patterns instead of sparse
-specification, and misinterpreted "-scope=3Dall" as diff on all files.
+The --sparse-index work has been mostly complete (or at least released
+into production even if some small edges remain) for quite some time
+now.  We have also had several discussions on flag and config names,
+though we never came to solid conclusions.  Stolee once upon a time
+suggested putting all these into some document in
+Documentation/technical[3], which Victoria recently also requested[4].
+I'm behind the times, but here's a patch attempting to finally do that.
 
-> > `--no-scope` is the default
-> > option for now.
->
-> What does --no-scope even mean?  You didn't explain it, and I don't
-> see how it could make sense.  We explicitly avoided a `--no-` prefix
-> by allowing the --scope option to take a value.  I don't think there
-> should be a --no-scope option.
->
+[1] https://lore.kernel.org/git/5f3f7ac77039d41d1692ceae4b0c5df3bb45b74a.1612901326.git.matheus.bernardino@usp.br/
+    (See his second link in that email in particular)
+[2] https://lore.kernel.org/git/20220908001854.206789-2-shaoxuan.yuan02@gmail.com/
+[3] https://lore.kernel.org/git/CABPp-BHwNoVnooqDFPAsZxBT9aR5Dwk5D9sDRCvYSb8akxAJgA@mail.gmail.com/
+    (Scroll to the very end for the final few paragraphs)
+[4] https://lore.kernel.org/git/cafcedba-96a2-cb85-d593-ef47c8c8397c@github.com/
 
-I think the =E2=80=9C--no-scope=E2=80=9D here does nothing, as if it were u=
-naffected by scope
-(just like correctly "--scope=3Dall", right?)
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    sparse-checkout.txt: new document with sparse-checkout directions
+    
+    v2 and v3 didn't get any reviews (I know, I know, this document is
+    really long), but it's been nearly a month and this patch is still
+    marked as "Needs Review", so I'm hoping sending a v4 will encourage
+    feedback. I think it's good enough to accept and start iterating, but
+    want to be sure others agree.
+    
+    As before, I think we're starting to converge on actual proposals;
+    there's some areas we've agreed on, others we've compromised on, and
+    some we've just figured out what the others were saying. The discussion
+    has been very illuminating; thanks to everyone who has chimed in. I've
+    tried to take my best stab at cleaning up and culling things that don't
+    need to remain as open questions, but if I've mis-represented anyone or
+    missed something, don't hesitate to speak up. Everything is still open
+    for debate, even if not marked as a currently open question.
+    
+    Changes since v3:
+    
+     * A few minor wording cleanups here and there, and one paragraph moved
+       to keep similar things together.
+    
+    Changes since v2:
+    
+     * Compromised with Stollee on log -- Behavior A only affects
+       patch-related operations, not revision walking
+     * Incorporated Junio's suggestions about untracked file handling
+     * Added new usecases, one brought up by Martin, one by Stolee
+     * Added new sections:
+       * Usecases of primary concern
+       * Oversimplified mental models ("Cliff Notes" for this document!)
+     * Recategorization of a few commands based on discussion
+     * Greater details on how index operations work under Behavior A, to
+       avoid weird edge cases
+     * Extended explanation of the sparse specification, particularly when
+       index differs from HEAD
+     * Switched proposed flag names to --scope={sparse,all} to avoid binary
+       flags that are hard to extend
+     * Switched proposed config option name (still need good values and
+       descriptions for it, though)
+     * Removed questions we seemed to have agreement on. Modified/extended
+       some existing questions.
+     * Added Stolee's sparse-backfill ideas to the plans
+     * Additional Known bugs
+     * Various wording improvements
+     * Possibly other things I've missed.
+    
+    Changes since v1:
+    
+     * Added new sections:
+       * "Terminology"
+       * "Behavior classes"
+       * "Sparse specification vs. sparsity patterns"
+     * Tried to shuffle commands from unknown into appropriate sections
+       based on feedback, but I got some conflicting feedback, so...who
+       knows if thing are in the right place
+     * More consistency in using "sparse specification" over other terms
+     * Extra comments about how add/rm/mv operate on moving files across the
+       tracked/untracked boundary
+     * --restrict-but-warn should have been "restrict or error", but
+       reworded even more heavily as part of "Behavior classes" section
+     * Added extra questions based on feedback (--no-expand, update-index
+       stuff, apply --index)
+     * More details on apply/am bugs
+     * Documented read-tree issue
+     * A few cases of fixing line wrapping at <=80 chars
+     * Added more alternate name suggestions for options instead of
+       --[no-]restrict
 
-> > Add `diff.scope=3D{sparse, all}` config, which can also have the same
-> > capabilities as `--scope`, and it will be covered by `--scope` option.
->
-> This is not what we want.  The high level usecases should not need to
-> be configured per-command.  There should be a config option which
-> reflects the high level use cases (e.g. sparse.scope) and then all
-> relevant commands (diff, log, grep, etc.) can key off it.
->
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1367%2Fnewren%2Fsparse-checkout-directions-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1367/newren/sparse-checkout-directions-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1367
 
-Ok, using a global config should indeed be more useful.
+Range-diff vs v3:
 
-> > Signed-off-by: ZheNing Hu <adlternative@gmail.com>
-> > ---
-> >     [RFC] diff: introduce scope option
-> >
-> >     In [1], we discovered that users working on different sparse-checko=
-ut
-> >     specification may download unnecessary blobs from each other's
-> >     specification in collaboration. In [2] Junio suggested that maybe w=
-e can
-> >     restrict some git command's filespec in sparse-checkout specificati=
-on to
-> >     elegantly solve this problem above. In [3]: Newren and Derrick Stol=
-ee
-> >     prefer to name the option --scope=3D{sparse, all}.
-> >
-> >     So this patch is attempt to do this thing on git diff:
-> >
-> >     v1:
-> >
-> >      1. add --restrict option to git diff, which restrict diff filespec=
- in
-> >         sparse-checkout specification. [4] v2.
-> >      2. rename --restrict to --scope=3D{sparse, all}, support --no-scop=
-e.
-> >      3. add config: diff.scope=3D{sparse,all}.
-> >
-> >     Unresolved work:
-> >
-> >      1. how to properly pass this --scope=3D{sparse, all} to other comm=
-ands
-> >         like git log, git format-patch, etc.
->
-> log & grep should accept a similar flag.  format-patch should not, and
-> should ignore any config in this area.
->
-> >      2. how to set the default value of scope for different diff comman=
-ds.
->
-> I don't understand this.
->
+ 1:  5923e75195c ! 1:  e09c7aa2396 sparse-checkout.txt: new document with sparse-checkout directions
+     @@ Documentation/technical/sparse-checkout.txt (new)
+      +	with a SKIP_WORKTREE bit.  Note that if a tracked file has the
+      +	SKIP_WORKTREE bit set but the file is later written by the user to
+      +	the working tree anyway, the SKIP_WORKTREE bit will be cleared at
+     -+	the beginning of any Git operation.
+     ++	the beginning of any subsequent Git operation.
+      +
+      +	Most sparse checkout users are unaware of this implementation
+      +	detail, and the term should generally be avoided in user-facing
+     @@ Documentation/technical/sparse-checkout.txt (new)
+      +
+      +sparse index: A special mode for sparse-checkout that also makes the
+      +	index sparse by recording a directory entry in lieu of all the
+     -+	files underneath that directory.  Controlled by the
+     -+	--[no-]sparse-index option to init|set|reapply.  See also
+     -+	"sparse directory".
+     ++	files underneath that directory (thus making that a "skipped
+     ++	directory" which unfortunately has also been called a "sparse
+     ++	directory"), and does this for potentially multiple
+     ++	directories.  Controlled by the --[no-]sparse-index option to
+     ++	init|set|reapply.
+      +
+      +sparsity patterns: patterns from $GIT_DIR/info/sparse-checkout used to
+      +	define the set of files of interest.  A warning: It is easy to
+     @@ Documentation/technical/sparse-checkout.txt (new)
+      +
+      +  A) Users are _only_ interested in the sparse portion of the repo
+      +
+     ++  A*) Users are _only_ interested in the sparse portion of the repo
+     ++      that they have downloaded so far
+     ++
+      +  B) Users want a sparse working tree, but are working in a larger whole
+      +
+      +  C) sparse-checkout is a behind-the-scenes implementation detail allowing
+     @@ Documentation/technical/sparse-checkout.txt (new)
+      +     lazily populated, and sparse-checkout helps with the lazy population
+      +     piece.
+      +
+     -+  A*) Users are _only_ interested in the sparse portion of the repo that
+     -+      they have downloaded so far (a variant on the first usecase)
+     -+
+     -+
+      +It may be worth explaining each of these in a bit more detail:
+      +
+      +
+     @@ Documentation/technical/sparse-checkout.txt (new)
+      +These folks might know there are other things in the repository, but
+      +don't care.  They are uninterested in other parts of the repository, and
+      +only want to know about changes within their area of interest.  Showing
+     -+them other results from history (e.g. from diff/log/grep/etc.) is a
+     ++them other files from history (e.g. from diff/log/grep/etc.)  is a
+      +usability annoyance, potentially a huge one since other changes in
+      +history may dwarf the changes they are interested in.
+      +
+     @@ Documentation/technical/sparse-checkout.txt (new)
+      +after a merge or pull) can lead to worries about local repository size
+      +growing unnecessarily[10].
+      +
+     -+  (Behavior B) Users want a sparse working tree, but are working in a larger whole
+     ++  (Behavior A*) Users are _only_ interested in the sparse portion of the repo
+     ++      that they have downloaded so far (a variant on the first usecase)
+     ++
+     ++This variant is driven by folks who using partial clones together with
+     ++sparse checkouts and do disconnected development (so far sounding like a
+     ++subset of behavior A users) and doing so on very large repositories.  The
+     ++reason for yet another variant is that downloading even just the blobs
+     ++through history within their sparse specification may be too much, so they
+     ++only download some.  They would still like operations to succeed without
+     ++network connectivity, though, so things like `git log -S${SEARCH_TERM} -p`
+     ++or `git grep ${SEARCH_TERM} OLDREV ` would need to be prepared to provide
+     ++partial results that depend on what happens to have been downloaded.
+     ++
+     ++This variant could be viewed as Behavior A with the sparse specification
+     ++for history querying operations modified from "sparsity patterns" to
+     ++"sparsity patterns limited to the blobs we have already downloaded".
+     ++
+     ++  (Behavior B) Users want a sparse working tree, but are working in a
+     ++      larger whole
+      +
+      +Stolee described this usecase this way[11]:
+      +
+     @@ Documentation/technical/sparse-checkout.txt (new)
+      +will perceive the checkout as dense, and commands should thus behave as if
+      +all files are present.
+      +
+     -+  (Behavior A*) Users are _only_ interested in the sparse portion of the repo
+     -+      that they have downloaded so far (a variant on the first usecase)
+     -+
+     -+This variant is driven by folks who using partial clones together with
+     -+sparse checkouts and do disconnected development (so far sounding like a
+     -+subset of behavior A users) and doing so on very large repositories.  The
+     -+reason for yet another variant is that downloading even just the blobs
+     -+through history within their sparse specification may be too much, so they
+     -+only download some.  They would still like operations to succeed without
+     -+network connectivity, though, so things like `git log -S${SEARCH_TERM} -p`
+     -+or `git grep ${SEARCH_TERM} OLDREV ` would need to be prepared to provide
+     -+partial results.
+     -+
+     -+This variant could be viewed as Behavior A with the sparse specification
+     -+for history querying operations modified from "sparsity patterns" to
+     -+"sparsity patterns limited to the blobs we have already downloaded".
+     -+
+      +
+      +=== Usecases of primary concern ===
+      +
+     -+Most of the rest of this document will focus on the first two usecases:
+     -+Behavior A and Behavior B.  Some notes about the other two cases and why we
+     -+are not focusing on them:
+     ++Most of the rest of this document will focus on Behavior A and Behavior
+     ++B.  Some notes about the other two cases and why we are not focusing on
+     ++them:
+      +
+      +  (Behavior A*)
+      +
+     @@ Documentation/technical/sparse-checkout.txt (new)
+      +      * fast-import
+      +      * commit-tree
+      +
+     -+  * commands that write any modified file to the working tree (conflicted or not,
+     -+    and whether those paths match sparsity patterns or not):
+     ++  * commands that write any modified file to the working tree (conflicted
+     ++    or not, and whether those paths match sparsity patterns or not):
+      +
+      +      * stash
+      +      * apply (without `--index` or `--cached`)
+     @@ Documentation/technical/sparse-checkout.txt (new)
+      +    avoid the user trying to `git add` them, forcing `git add` to display
+      +    an error).
+      +
+     -+    It's not clear to me exactly how (or if `clean` would change, but it's
+     -+    the other command that also affects untracked files.
+     ++    It's not clear to me exactly how (or even if) `clean` would change,
+     ++    but it's the other command that also affects untracked files.
+      +
+      +    `update-index` may be slightly special.  Its --[no-]skip-worktree flag
+      +    may need to ignore the sparse specification by its nature.  Also, its
+     @@ Documentation/technical/sparse-checkout.txt (new)
+      +      * diff-tree
+      +      * ls-tree
+      +
+     -+    Note: for log and whatchanged, only patch related parts are affected by
+     -+    scoping the command to the sparse-checkout; the revision walking is
+     -+    unaffected.  (The fact that revision walking is unaffected is why
+     -+    rev-list, shortlog, show-branch, and bisect are not in this list.)
+     ++    Note: for log and whatchanged, revision walking logic is unaffected
+     ++    but displaying of patches is affected by scoping the command to the
+     ++    sparse-checkout.  (The fact that revision walking is unaffected is
+     ++    why rev-list, shortlog, show-branch, and bisect are not in this
+     ++    list.)
+      +
+      +    ls-files may be slightly special in that e.g. `git ls-files -t` is
+      +    often used to see what is sparse and what is not.  Perhaps -t should
+     @@ Documentation/technical/sparse-checkout.txt (new)
+      +    * status
+      +    * clean (?)
+      +
+     -+    Our original implementation for these commands was "no restrict", but
+     -+    it had some severe usability issues:
+     ++    Our original implementation for the first three of these commands was
+     ++    "no restrict", but it had some severe usability issues:
+      +      * `git add <somefile>` if honored and outside the sparse
+      +	specification, can result in the file randomly disappearing later
+      +	when some subsequent command is run (since various commands
+     @@ Documentation/technical/sparse-checkout.txt (new)
+      +    * diff (with --cached or REVISION arguments)
+      +    * grep (with --cached or REVISION arguments)
+      +    * show (when given commit arguments)
+     -+    * bisect
+      +    * blame (only matters when one or more -C flags passed)
+      +      * and annotate
+      +    * log
+     @@ Documentation/technical/sparse-checkout.txt (new)
+      +tree, we still want to consider the file part of the sparse specification
+      +if we are specifically performing a query related to the index (e.g. git
+      +diff --cached [REVISION], git diff-index [REVISION], git restore --staged
+     -+--source=REVISION -- PATHS, etc.)
+     ++--source=REVISION -- PATHS, etc.)  Note that a transiently expanded sparse
+     ++specification for the index usually only matters under behavior A, since
+     ++under behavior B index operations are lumped with history and tend to
+     ++operate full-tree.
+      +
+      +
+      +=== Implementation Questions ===
+     @@ Documentation/technical/sparse-checkout.txt (new)
+      +     overview
+      +
+      +   * Add --scope=sparse (and --scope=all) flag to each of the history querying
+     -+     commands.  IMPORATNT: make sure diff machinery changes don't mess with
+     ++     commands.  IMPORTANT: make sure diff machinery changes don't mess with
+      +     format-patch, fast-export, etc.
+      +
+      +=== Known bugs ===
 
-Oh, I was just curious if the config defaults for scope needed to be config=
-ured
-separately for the different diff commands  git diff-files, git diff-index,
-git diff-no-index, git diff-tree, since sparse-checkout.txt mentions
-the different
-behavior of scope for them. Now I think this just needs to be handled in co=
-mmand
-code logic and no additional command level configuration is needed.
 
-> >     [1]:
-> >     https://lore.kernel.org/git/CAOLTT8SHo66kGbvWr=3D+LQ9UVd1NHgqGGEYK2=
-qq6=3D=3DQgRCgLZqQ@mail.gmail.com/
-> >     [2]: https://lore.kernel.org/git/xmqqzgeqw0sy.fsf@gitster.g/ [3]:
-> >     https://lore.kernel.org/git/07a25d48-e364-0d9b-6ffa-41a5984eb5db@gi=
-thub.com/
-> >     [4]:
-> >     https://lore.kernel.org/git/pull.1368.git.1664036052741.gitgitgadge=
-t@gmail.com/
-> >
-> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1398%=
-2Fadlternative%2Fzh%2Fdiff-scope-v1
-> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1398/adl=
-ternative/zh/diff-scope-v1
-> > Pull-Request: https://github.com/gitgitgadget/git/pull/1398
-> >
-> >  Documentation/config/diff.txt         |  12 +
-> >  Documentation/diff-options.txt        |  18 +
-> >  builtin/diff.c                        |   4 +
-> >  diff-lib.c                            |  36 +-
-> >  diff-no-index.c                       |   4 +
-> >  diff.c                                |  39 +++
-> >  diff.h                                |  11 +
-> >  t/t4070-diff-sparse-checkout-scope.sh | 469 ++++++++++++++++++++++++++
-> >  tree-diff.c                           |   5 +
-> >  9 files changed, 597 insertions(+), 1 deletion(-)
-> >  create mode 100644 t/t4070-diff-sparse-checkout-scope.sh
-> >
-> > diff --git a/Documentation/config/diff.txt b/Documentation/config/diff.=
-txt
-> > index 35a7bf86d77..52707e1b2d6 100644
-> > --- a/Documentation/config/diff.txt
-> > +++ b/Documentation/config/diff.txt
-> > @@ -201,6 +201,18 @@ diff.algorithm::
-> >  --
-> >  +
-> >
-> > +diff.scope::
-> > +       Choose diff scope. The variants are as follows:
-> > ++
-> > +--
-> > +`sparse`;;
-> > +       Restrict diff paths to those matching sparse-checkout specifica=
-tion.
-> > +`all`;;
-> > +       Without restriction, diff is performed regardless of whether th=
-e path
-> > +       meets the sparse-checkout specification.
->
-> As noted above, this is the wrong level to specify things.  The
-> description for "all" is misleading as well and suggests something
-> other than "behavior B" from the direction document.
->
+ Documentation/technical/sparse-checkout.txt | 1103 +++++++++++++++++++
+ 1 file changed, 1103 insertions(+)
+ create mode 100644 Documentation/technical/sparse-checkout.txt
 
-So do we need to make "--scope=3Dall" correspond to the "behavior B",
-The correct description of it should be: "worktree-sparse-history-dense"...
+diff --git a/Documentation/technical/sparse-checkout.txt b/Documentation/technical/sparse-checkout.txt
+new file mode 100644
+index 00000000000..fa0d01cbda4
+--- /dev/null
++++ b/Documentation/technical/sparse-checkout.txt
+@@ -0,0 +1,1103 @@
++Table of contents:
++
++  * Terminology
++  * Purpose of sparse-checkouts
++  * Usecases of primary concern
++  * Oversimplified mental models ("Cliff Notes" for this document!)
++  * Desired behavior
++  * Behavior classes
++  * Subcommand-dependent defaults
++  * Sparse specification vs. sparsity patterns
++  * Implementation Questions
++  * Implementation Goals/Plans
++  * Known bugs
++  * Reference Emails
++
++
++=== Terminology ===
++
++cone mode: one of two modes for specifying the desired subset of files
++	in a sparse-checkout.  In cone-mode, the user specifies
++	directories (getting both everything under that directory as
++	well as everything in leading directories), while in non-cone
++	mode, the user specifies gitignore-style patterns.  Controlled
++	by the --[no-]cone option to sparse-checkout init|set.
++
++SKIP_WORKTREE: When tracked files do not match the sparse specification and
++	are removed from the working tree, the file in the index is marked
++	with a SKIP_WORKTREE bit.  Note that if a tracked file has the
++	SKIP_WORKTREE bit set but the file is later written by the user to
++	the working tree anyway, the SKIP_WORKTREE bit will be cleared at
++	the beginning of any subsequent Git operation.
++
++	Most sparse checkout users are unaware of this implementation
++	detail, and the term should generally be avoided in user-facing
++	descriptions and command flags.  Unfortunately, prior to the
++	`sparse-checkout` subcommand this low-level detail was exposed,
++	and as of time of writing, is still exposed in various places.
++
++sparse-checkout: a subcommand in git used to reduce the files present in
++	the working tree to a subset of all tracked files.  Also, the
++	name of the file in the $GIT_DIR/info directory used to track
++	the sparsity patterns corresponding to the user's desired
++	subset.
++
++sparse cone: see cone mode
++
++sparse directory: An entry in the index corresponding to a directory, which
++	appears in the index instead of all the files under that directory
++	that would normally appear.  See also sparse-index.  Something that
++	can cause confusion is that the "sparse directory" does NOT match
++	the sparse specification, i.e. the directory is NOT present in the
++	working tree.  May be renamed in the future (e.g. to "skipped
++	directory").
++
++sparse index: A special mode for sparse-checkout that also makes the
++	index sparse by recording a directory entry in lieu of all the
++	files underneath that directory (thus making that a "skipped
++	directory" which unfortunately has also been called a "sparse
++	directory"), and does this for potentially multiple
++	directories.  Controlled by the --[no-]sparse-index option to
++	init|set|reapply.
++
++sparsity patterns: patterns from $GIT_DIR/info/sparse-checkout used to
++	define the set of files of interest.  A warning: It is easy to
++	over-use this term (or the shortened "patterns" term), for two
++	reasons: (1) users in cone mode specify directories rather than
++	patterns (their directories are transformed into patterns, but
++	users may think you are talking about non-cone mode if you use the
++	word "patterns"), and (b) the sparse specification might
++	transiently differ in the working tree or index from the sparsity
++	patterns (see "Sparse specification vs. sparsity patterns").
++
++sparse specification: The set of paths in the user's area of focus.  This
++	is typically just the tracked files that match the sparsity
++	patterns, but the sparse specification can temporarily differ and
++	include additional files.  (See also "Sparse specification
++	vs. sparsity patterns")
++
++	* When working with history, the sparse specification is exactly
++	  the set of files matching the sparsity patterns.
++	* When interacting with the working tree, the sparse specification
++	  is the set of tracked files with a clear SKIP_WORKTREE bit or
++	  tracked files present in the working copy.
++	* When modifying or showing results from the index, the sparse
++	  specification is the set of files with a clear SKIP_WORKTREE bit
++	  or that differ in the index from HEAD.
++	* If working with the index and the working copy, the sparse
++	  specification is the union of the paths from above.
++
++vivifying: When a command restores a tracked file to the working tree (and
++	hopefully also clears the SKIP_WORKTREE bit in the index for that
++	file), this is referred to as "vivifying" the file.
++
++
++=== Purpose of sparse-checkouts ===
++
++sparse-checkouts exist to allow users to work with a subset of their
++files.
++
++You can think of sparse-checkouts as subdividing "tracked" files into two
++categories -- a sparse subset, and all the rest.  Implementationally, we
++mark "all the rest" in the index with a SKIP_WORKTREE bit and leave them
++out of the working tree.  The SKIP_WORKTREE files are still tracked, just
++not present in the working tree.
++
++In the past, sparse-checkouts were defined by "SKIP_WORKTREE means the file
++is missing from the working tree but pretend the file contents match HEAD".
++That was not only bogus (it actually meant the file missing from the
++working tree matched the index rather than HEAD), but it was also a
++low-level detail which only provided decent behavior for a few commands.
++There were a surprising number of ways in which that guiding principle gave
++command results that violated user expectations, and as such was a bad
++mental model.  However, it persisted for many years and may still be found
++in some corners of the code base.
++
++Anyway, the idea of "working with a subset of files" is simple enough, but
++there are multiple different high-level usecases which affect how some Git
++subcommands should behave.  Further, even if we only considered one of
++those usecases, sparse-checkouts can modify different subcommands in over a
++half dozen different ways.  Let's start by considering the high level
++usecases:
++
++  A) Users are _only_ interested in the sparse portion of the repo
++
++  A*) Users are _only_ interested in the sparse portion of the repo
++      that they have downloaded so far
++
++  B) Users want a sparse working tree, but are working in a larger whole
++
++  C) sparse-checkout is a behind-the-scenes implementation detail allowing
++     Git to work with a specially crafted in-house virtual file system;
++     users are actually working with a "full" working tree that is
++     lazily populated, and sparse-checkout helps with the lazy population
++     piece.
++
++It may be worth explaining each of these in a bit more detail:
++
++
++  (Behavior A) Users are _only_ interested in the sparse portion of the repo
++
++These folks might know there are other things in the repository, but
++don't care.  They are uninterested in other parts of the repository, and
++only want to know about changes within their area of interest.  Showing
++them other files from history (e.g. from diff/log/grep/etc.)  is a
++usability annoyance, potentially a huge one since other changes in
++history may dwarf the changes they are interested in.
++
++Some of these users also arrive at this usecase from wanting to use partial
++clones together with sparse checkouts (in a way where they have downloaded
++blobs within the sparse specification) and do disconnected development.
++Not only do these users generally not care about other parts of the
++repository, but consider it a blocker for Git commands to try to operate on
++those.  If commands attempt to access paths in history outside the sparsity
++specification, then the partial clone will attempt to download additional
++blobs on demand, fail, and then fail the user's command.  (This may be
++unavoidable in some cases, e.g. when `git merge` has non-trivial changes to
++reconcile outside the sparse specification, but we should limit how often
++users are forced to connect to the network.)
++
++Also, even for users using partial clones that do not mind being
++always connected to the network, the need to download blobs as
++side-effects of various other commands (such as the printed diffstat
++after a merge or pull) can lead to worries about local repository size
++growing unnecessarily[10].
++
++  (Behavior A*) Users are _only_ interested in the sparse portion of the repo
++      that they have downloaded so far (a variant on the first usecase)
++
++This variant is driven by folks who using partial clones together with
++sparse checkouts and do disconnected development (so far sounding like a
++subset of behavior A users) and doing so on very large repositories.  The
++reason for yet another variant is that downloading even just the blobs
++through history within their sparse specification may be too much, so they
++only download some.  They would still like operations to succeed without
++network connectivity, though, so things like `git log -S${SEARCH_TERM} -p`
++or `git grep ${SEARCH_TERM} OLDREV ` would need to be prepared to provide
++partial results that depend on what happens to have been downloaded.
++
++This variant could be viewed as Behavior A with the sparse specification
++for history querying operations modified from "sparsity patterns" to
++"sparsity patterns limited to the blobs we have already downloaded".
++
++  (Behavior B) Users want a sparse working tree, but are working in a
++      larger whole
++
++Stolee described this usecase this way[11]:
++
++"I'm also focused on users that know that they are a part of a larger
++whole. They know they are operating on a large repository but focus on
++what they need to contribute their part. I expect multiple "roles" to
++use very different, almost disjoint parts of the codebase. Some other
++"architect" users operate across the entire tree or hop between different
++sections of the codebase as necessary. In this situation, I'm wary of
++scoping too many features to the sparse-checkout definition, especially
++"git log," as it can be too confusing to have their view of the codebase
++depend on your "point of view."
++
++People might also end up wanting behavior B due to complex inter-project
++dependencies.  The initial attempts to use sparse-checkouts usually involve
++the directories you are directly interested in plus what those directories
++depend upon within your repository.  But there's a monkey wrench here: if
++you have integration tests, they invert the hierarchy: to run integration
++tests, you need not only what you are interested in and its in-tree
++dependencies, you also need everything that depends upon what you are
++interested in or that depends upon one of your dependencies...AND you need
++all the in-tree dependencies of that expanded group.  That can easily
++change your sparse-checkout into a nearly dense one.
++
++Naturally, that tends to kill the benefits of sparse-checkouts.  There are
++a couple solutions to this conundrum: either avoid grabbing in-repo
++dependencies (maybe have built versions of your in-repo dependencies pulled
++from a CI cache somewhere), or say that users shouldn't run integration
++tests directly and instead do it on the CI server when they submit a code
++review.  Or do both.  Regardless of whether you stub out your in-repo
++dependencies or stub out the things that depend upon you, there is
++certainly a reason to want to query and be aware of those other stubbed-out
++parts of the repository, particularly when the dependencies are complex or
++change relatively frequently.  Thus, for such uses, sparse-checkouts can be
++used to limit what you directly build and modify, but these users do not
++necessarily want their sparse checkout paths to limit their queries of
++versions in history.
++
++Some people may also be interested in behavior B over behavior A simply as
++a performance workaround: if they are using non-cone mode, then they have
++to deal with its inherent quadratic performance problems.  In that mode,
++every operation that checks whether paths match the sparsity specification
++can be expensive.  As such, these users may only be willing to pay for
++those expensive checks when interacting with the working copy, and may
++prefer getting "unrelated" results from their history queries over having
++slow commands.
++
++  (Behavior C) sparse-checkout is an implementational detail supporting a
++	       special VFS.
++
++This usecase goes slightly against the traditional definition of
++sparse-checkout in that it actually tries to present a full or dense
++checkout to the user.  However, this usecase utilizes the same underlying
++technical underpinnings in a new way which does provide some performance
++advantages to users.  The basic idea is that a company can have an in-house
++Git-aware Virtual File System which pretends all files are present in the
++working tree, by intercepting all file system accesses and using those to
++fetch and write accessed files on demand via partial clones.  The VFS uses
++sparse-checkout to prevent Git from writing or paying attention to many
++files, and manually updates the sparse checkout patterns itself based on
++user access and modification of files in the working tree.  See commit
++ecc7c8841d ("repo_read_index: add config to expect files outside sparse
++patterns", 2022-02-25) and the link at [17] for a more detailed description
++of such a VFS.
++
++The biggest difference here is that users are completely unaware that the
++sparse-checkout machinery is even in use.  The sparse patterns are not
++specified by the user but rather are under the complete control of the VFS
++(and the patterns are updated frequently and dynamically by it).  The user
++will perceive the checkout as dense, and commands should thus behave as if
++all files are present.
++
++
++=== Usecases of primary concern ===
++
++Most of the rest of this document will focus on Behavior A and Behavior
++B.  Some notes about the other two cases and why we are not focusing on
++them:
++
++  (Behavior A*)
++
++Supporting this usecase is estimated to be difficult and a lot of work.
++There are no plans to implement it currently, but it may be a potential
++future alternative.  Knowing about the existence of additional alternatives
++may affect our choice of command line flags (e.g. if we need tri-state or
++quad-state flags rather than just binary flags), so it was still important
++to at least note.
++
++Further, I believe the descriptions below for Behavior A are probably still
++valid for this usecase, with the only exception being that it redefines the
++sparse specification to restrict it to already-downloaded blobs.  The hard
++part is in making commands capable of respecting that modified definition.
++
++  (Behavior C)
++
++This usecase violates some of the early sparse-checkout documented
++assumptions (since files marked as SKIP_WORKTREE will be displayed to users
++as present in the working tree).  That violation may mean various
++sparse-checkout related behaviors are not well suited to this usecase and
++we may need tweaks -- to both documentation and code -- to handle it.
++However, this usecase is also perhaps the simplest model to support in that
++everything behaves like a dense checkout with a few exceptions (e.g. branch
++checkouts and switches write fewer things, knowing the VFS will lazily
++write the rest on an as-needed basis).
++
++Since there is no publically available VFS-related code for folks to try,
++the number of folks who can test such a usecase is limited.
++
++The primary reason to note the Behavior C usecase is that as we fix things
++to better support Behaviors A and B, there may be additional places where
++we need to make tweaks allowing folks in this usecase to get the original
++non-sparse treatment.  For an example, see ecc7c8841d ("repo_read_index:
++add config to expect files outside sparse patterns", 2022-02-25).  The
++secondary reason to note Behavior C, is so that folks taking advantage of
++Behavior C do not assume they are part of the Behavior B camp and propose
++patches that break things for the real Behavior B folks.
++
++
++=== Oversimplified mental models ===
++
++An oversimplification of the differences in the above behaviors is:
++
++  Behavior A: Restrict worktree and history operations to sparse specification
++  Behavior B: Restrict worktree operations to sparse specification; have any
++	      history operations work across all files
++  Behavior C: Do not restrict either worktree or history operations to the
++	      sparse specification...with the exception of branch checkouts or
++	      switches which avoid writing files that will match the index so
++	      they can later lazily be populated instead.
++
++
++=== Desired behavior ===
++
++As noted previously, despite the simple idea of just working with a subset
++of files, there are a range of different behavioral changes that need to be
++made to different subcommands to work well with such a feature.  See
++[1,2,3,4,5,6,7,8,9,10] for various examples.  In particular, at [2], we saw
++that mere composition of other commands that individually worked correctly
++in a sparse-checkout context did not imply that the higher level command
++would work correctly; it sometimes requires further tweaks.  So,
++understanding these differences can be beneficial.
++
++* Commands behaving the same regardless of high-level use-case
++
++  * commands that only look at files within the sparsity specification
++
++      * diff (without --cached or REVISION arguments)
++      * grep (without --cached or REVISION arguments)
++      * diff-files
++
++  * commands that restore files to the working tree that match sparsity
++    patterns, and remove unmodified files that don't match those
++    patterns:
++
++      * switch
++      * checkout (the switch-like half)
++      * read-tree
++      * reset --hard
++
++  * commands that write conflicted files to the working tree, but otherwise
++    will omit writing files to the working tree that do not match the
++    sparsity patterns:
++
++      * merge
++      * rebase
++      * cherry-pick
++      * revert
++
++      * `am` and `apply --cached` should probably be in this section but
++	are buggy (see the "Known bugs" section below)
++
++    The behavior for these commands somewhat depends upon the merge
++    strategy being used:
++      * `ort` behaves as described above
++      * `recursive` tries to not vivify files unnecessarily, but does sometimes
++	vivify files without conflicts.
++      * `octopus` and `resolve` will always vivify any file changed in the merge
++	relative to the first parent, which is rather suboptimal.
++
++    It is also important to note that these commands WILL update the index
++    outside the sparse specification relative to when the operation began,
++    BUT these commands often make a commit just before or after such that
++    by the end of the operation there is no change to the index outside the
++    sparse specification.  Of course, if the operation hits conflicts or
++    does not make a commit, then these operations clearly can modify the
++    index outside the sparse specification.
++
++    Finally, it is important to note that at least the first four of these
++    commands also try to remove differences between the sparse
++    specification and the sparsity patterns (much like the commands in the
++    previous section).
++
++  * commands that always ignore sparsity since commits must be full-tree
++
++      * archive
++      * bundle
++      * commit
++      * format-patch
++      * fast-export
++      * fast-import
++      * commit-tree
++
++  * commands that write any modified file to the working tree (conflicted
++    or not, and whether those paths match sparsity patterns or not):
++
++      * stash
++      * apply (without `--index` or `--cached`)
++
++* Commands that may slightly differ for behavior A vs. behavior B:
++
++  Commands in this category behave mostly the same between the two
++  behaviors, but may differ in verbosity and types of warning and error
++  messages.
++
++  * commands that make modifications to which files are tracked:
++      * add
++      * rm
++      * mv
++      * update-index
++
++    The fact that files can move between the 'tracked' and 'untracked'
++    categories means some commands will have to treat untracked files
++    differently.  But if we have to treat untracked files differently,
++    then additional commands may also need changes:
++
++      * status
++      * clean
++
++    In particular, `status` may need to report any untracked files outside
++    the sparsity specification as an erroneous condition (especially to
++    avoid the user trying to `git add` them, forcing `git add` to display
++    an error).
++
++    It's not clear to me exactly how (or even if) `clean` would change,
++    but it's the other command that also affects untracked files.
++
++    `update-index` may be slightly special.  Its --[no-]skip-worktree flag
++    may need to ignore the sparse specification by its nature.  Also, its
++    current --[no-]ignore-skip-worktree-entries default is totally bogus.
++
++  * commands for manually tweaking paths in both the index and the working tree
++      * `restore`
++      * the restore-like half of `checkout`
++
++    These commands should be similar to add/rm/mv in that they should
++    only operate on the sparse specification by default, and require a
++    special flag to operate on all files.
++
++    Also, note that these commands currently have a number of issues (see
++    the "Known bugs" section below)
++
++* Commands that significantly differ for behavior A vs. behavior B:
++
++  * commands that query history
++      * diff (with --cached or REVISION arguments)
++      * grep (with --cached or REVISION arguments)
++      * show (when given commit arguments)
++      * blame (only matters when one or more -C flags are passed)
++	* and annotate
++      * log
++      * whatchanged
++      * ls-files
++      * diff-index
++      * diff-tree
++      * ls-tree
++
++    Note: for log and whatchanged, revision walking logic is unaffected
++    but displaying of patches is affected by scoping the command to the
++    sparse-checkout.  (The fact that revision walking is unaffected is
++    why rev-list, shortlog, show-branch, and bisect are not in this
++    list.)
++
++    ls-files may be slightly special in that e.g. `git ls-files -t` is
++    often used to see what is sparse and what is not.  Perhaps -t should
++    always work on the full tree?
++
++* Commands I don't know how to classify
++
++  * range-diff
++
++    Is this like `log` or `format-patch`?
++
++  * cherry
++
++    See range-diff
++
++* Commands unaffected by sparse-checkouts
++
++  * shortlog
++  * show-branch
++  * rev-list
++  * bisect
++
++  * branch
++  * describe
++  * fetch
++  * gc
++  * init
++  * maintenance
++  * notes
++  * pull (merge & rebase have the necessary changes)
++  * push
++  * submodule
++  * tag
++
++  * config
++  * filter-branch (works in separate checkout without sparse-checkout setup)
++  * pack-refs
++  * prune
++  * remote
++  * repack
++  * replace
++
++  * bugreport
++  * count-objects
++  * fsck
++  * gitweb
++  * help
++  * instaweb
++  * merge-tree (doesn't touch worktree or index, and merges always compute full-tree)
++  * rerere
++  * verify-commit
++  * verify-tag
++
++  * commit-graph
++  * hash-object
++  * index-pack
++  * mktag
++  * mktree
++  * multi-pack-index
++  * pack-objects
++  * prune-packed
++  * symbolic-ref
++  * unpack-objects
++  * update-ref
++  * write-tree (operates on index, possibly optimized to use sparse dir entries)
++
++  * for-each-ref
++  * get-tar-commit-id
++  * ls-remote
++  * merge-base (merges are computed full tree, so merge base should be too)
++  * name-rev
++  * pack-redundant
++  * rev-parse
++  * show-index
++  * show-ref
++  * unpack-file
++  * var
++  * verify-pack
++
++  * <Everything under 'Interacting with Others' in 'git help --all'>
++  * <Everything under 'Low-level...Syncing' in 'git help --all'>
++  * <Everything under 'Low-level...Internal Helpers' in 'git help --all'>
++  * <Everything under 'External commands' in 'git help --all'>
++
++* Commands that might be affected, but who cares?
++
++  * merge-file
++  * merge-index
++  * gitk?
++
++
++=== Behavior classes ===
++
++From the above there are a few classes of behavior:
++
++  * "restrict"
++
++    Commands in this class only read or write files in the working tree
++    within the sparse specification.
++
++    When moving to a new commit (e.g. switch, reset --hard), these commands
++    may update index files outside the sparse specification as of the start
++    of the operation, but by the end of the operation those index files
++    will match HEAD again and thus those files will again be outside the
++    sparse specification.
++
++    When paths are explicitly specified, these paths are intersected with
++    the sparse specification and will only operate on such paths.
++    (e.g. `git restore [--staged] -- '*.png'`, `git reset -p -- '*.md'`)
++
++    Some of these commands may also attempt, at the end of their operation,
++    to cull transient differences between the sparse specification and the
++    sparsity patterns (see "Sparse specification vs. sparsity patterns" for
++    details, but this basically means either removing unmodified files not
++    matching the sparsity patterns and marking those files as
++    SKIP_WORKTREE, or vivifying files that match the sparsity patterns and
++    marking those files as !SKIP_WORKTREE).
++
++  * "restrict modulo conflicts"
++
++    Commands in this class generally behave like the "restrict" class,
++    except that:
++      (1) they will ignore the sparse specification and write files with
++	  conflicts to the working tree (thus temporarily expanding the
++	  sparse specification to include such files.)
++      (2) they are grouped with commands which move to a new commit, since
++	  they often create a commit and then move to it, even though we
++	  know there are many exceptions to moving to the new commit.  (For
++	  example, the user may rebase a commit that becomes empty, or have
++	  a cherry-pick which conflicts, or a user could run `merge
++	  --no-commit`, and we also view `apply --index` kind of like `am
++	  --no-commit`.)  As such, these commands can make changes to index
++	  files outside the sparse specification, though they'll mark such
++	  files with SKIP_WORKTREE.
++
++  * "restrict also specially applied to untracked files"
++
++    Commands in this class generally behave like the "restrict" class,
++    except that they have to handle untracked files differently too, often
++    because these commands are dealing with files changing state between
++    'tracked' and 'untracked'.  Often, this may mean printing an error
++    message if the command had nothing to do, but the arguments may have
++    referred to files whose tracked-ness state could have changed were it
++    not for the sparsity patterns excluding them.
++
++  * "no restrict"
++
++    Commands in this class ignore the sparse specification entirely.
++
++  * "restrict or no restrict dependent upon behavior A vs. behavior B"
++
++    Commands in this class behave like "no restrict" for folks in the
++    behavior B camp, and like "restrict" for folks in the behavior A camp.
++    However, when behaving like "restrict" a warning of some sort might be
++    provided that history queries have been limited by the sparse-checkout
++    specification.
++
++
++=== Subcommand-dependent defaults ===
++
++Note that we have different defaults depending on the command for the
++desired behavior :
++
++  * Commands defaulting to "restrict":
++    * diff-files
++    * diff (without --cached or REVISION arguments)
++    * grep (without --cached or REVISION arguments)
++    * switch
++    * checkout (the switch-like half)
++    * reset (<commit>)
++
++    * restore
++    * checkout (the restore-like half)
++    * checkout-index
++    * reset (with pathspec)
++
++    This behavior makes sense; these interact with the working tree.
++
++  * Commands defaulting to "restrict modulo conflicts":
++    * merge
++    * rebase
++    * cherry-pick
++    * revert
++
++    * am
++    * apply --index (which is kind of like an `am --no-commit`)
++
++    * read-tree (especially with -m or -u; is kind of like a --no-commit merge)
++    * reset (<tree-ish>, due to similarity to read-tree)
++
++    These also interact with the working tree, but require slightly
++    different behavior either so that (a) conflicts can be resolved or (b)
++    because they are kind of like a merge-without-commit operation.
++
++    (See also the "Known bugs" section below regarding `am` and `apply`)
++
++  * Commands defaulting to "no restrict":
++    * archive
++    * bundle
++    * commit
++    * format-patch
++    * fast-export
++    * fast-import
++    * commit-tree
++
++    * stash
++    * apply (without `--index`)
++
++    These have completely different defaults and perhaps deserve the most
++    detailed explanation:
++
++    In the case of commands in the first group (format-patch,
++    fast-export, bundle, archive, etc.), these are commands for
++    communicating history, which will be broken if they restrict to a
++    subset of the repository.  As such, they operate on full paths and
++    have no `--restrict` option for overriding.  Some of these commands may
++    take paths for manually restricting what is exported, but it needs to
++    be very explicit.
++
++    In the case of stash, it needs to vivify files to avoid losing the
++    user's changes.
++
++    In the case of apply without `--index`, that command needs to update
++    the working tree without the index (or the index without the working
++    tree if `--cached` is passed), and if we restrict those updates to the
++    sparse specification then we'll lose changes from the user.
++
++  * Commands defaulting to "restrict also specially applied to untracked files":
++    * add
++    * rm
++    * mv
++    * update-index
++    * status
++    * clean (?)
++
++    Our original implementation for the first three of these commands was
++    "no restrict", but it had some severe usability issues:
++      * `git add <somefile>` if honored and outside the sparse
++	specification, can result in the file randomly disappearing later
++	when some subsequent command is run (since various commands
++	automatically clean up unmodified files outside the sparse
++	specification).
++      * `git rm '*.jpg'` could very negatively surprise users if it deletes
++	files outside the range of the user's interest.
++      * `git mv` has similar surprises when moving into or out of the cone,
++	so best to restrict by default
++
++    So, we switched `add` and `rm` to default to "restrict", which made
++    usability problems much less severe and less frequent, but we still got
++    complaints because commands like:
++	git add <file-outside-sparse-specification>
++	git rm <file-outside-sparse-specification>
++    would silently do nothing.  We should instead print an error in those
++    cases to get usability right.
++
++    update-index needs to be updated to match, and status and maybe clean
++    also need to be updated to specially handle untracked paths.
++
++    There may be a difference in here between behavior A and behavior B in
++    terms of verboseness of errors or additional warnings.
++
++  * Commands falling under "restrict or no restrict dependent upon behavior
++    A vs. behavior B"
++
++    * diff (with --cached or REVISION arguments)
++    * grep (with --cached or REVISION arguments)
++    * show (when given commit arguments)
++    * blame (only matters when one or more -C flags passed)
++      * and annotate
++    * log
++      * and variants: shortlog, gitk, show-branch, whatchanged, rev-list
++    * ls-files
++    * diff-index
++    * diff-tree
++    * ls-tree
++
++    For now, we default to behavior B for these, which want a default of
++    "no restrict".
++
++    Note that two of these commands -- diff and grep -- also appeared in a
++    different list with a default of "restrict", but only when limited to
++    searching the working tree.  The working tree vs. history distinction
++    is fundamental in how behavior B operates, so this is expected.  Note,
++    though, that for diff and grep with --cached, when doing "restrict"
++    behavior, the difference between sparse specification and sparsity
++    patterns is important to handle.
++
++    "restrict" may make more sense as the long term default for these[12].
++    Also, supporting "restrict" for these commands might be a fair amount
++    of work to implement, meaning it might be implemented over multiple
++    releases.  If that behavior were the default in the commands that
++    supported it, that would force behavior B users to need to learn to
++    slowly add additional flags to their commands, depending on git
++    version, to get the behavior they want.  That gradual switchover would
++    be painful, so we should avoid it at least until it's fully
++    implemented.
++
++
++=== Sparse specification vs. sparsity patterns ===
++
++In a well-behaved situation, the sparse specification is given directly
++by the $GIT_DIR/info/sparse-checkout file.  However, it can transiently
++diverge for a few reasons:
++
++    * needing to resolve conflicts (merging will vivify conflicted files)
++    * running Git commands that implicitly vivify files (e.g. "git stash apply")
++    * running Git commands that explicitly vivify files (e.g. "git checkout
++      --ignore-skip-worktree-bits FILENAME")
++    * other commands that write to these files (perhaps a user copies it
++      from elsewhere)
++
++For the last item, note that we do automatically clear the SKIP_WORKTREE
++bit for files that are present in the working tree.  This has been true
++since 82386b4496 ("Merge branch 'en/present-despite-skipped'",
++2022-03-09)
++
++However, such a situation is transient because:
++
++   * Such transient differences can and will be automatically removed as
++     a side-effect of commands which call unpack_trees() (checkout,
++     merge, reset, etc.).
++   * Users can also request such transient differences be corrected via
++     running `git sparse-checkout reapply`.  Various places recommend
++     running that command.
++   * Additional commands are also welcome to implicitly fix these
++     differences; we may add more in the future.
++
++While we avoid dropping unstaged changes or files which have conflicts,
++we otherwise aggressively try to fix these transient differences.  If
++users want these differences to persist, they should run the `set` or
++`add` subcommands of `git sparse-checkout` to reflect their intended
++sparse specification.
++
++However, when we need to do a query on history restricted to the
++"relevant subset of files" such a transiently expanded sparse
++specification is ignored.  There are a couple reasons for this:
++
++   * The behavior wanted when doing something like
++	 git grep expression REVISION
++     is roughly what the users would expect from
++	 git checkout REVISION && git grep expression
++     (modulo a "REVISION:" prefix), which has a couple ramifications:
++
++   * REVISION may have paths not in the current index, so there is no
++     path we can consult for a SKIP_WORKTREE setting for those paths.
++
++   * Since `checkout` is one of those commands that tries to remove
++     transient differences in the sparse specification, it makes sense
++     to use the corrected sparse specification
++     (i.e. $GIT_DIR/info/sparse-checkout) rather than attempting to
++     consult SKIP_WORKTREE anyway.
++
++So, a transiently expanded (or restricted) sparse specification applies to
++the working tree, but not to history queries where we always use the
++sparsity patterns.  (See [16] for an early discussion of this.)
++
++Similar to a transiently expanded sparse specification of the working tree
++based on additional files being present in the working tree, we also need
++to consider additional files being modified in the index.  In particular,
++if the user has staged changes to files (relative to HEAD) that do not
++match the sparsity patterns, and the file is not present in the working
++tree, we still want to consider the file part of the sparse specification
++if we are specifically performing a query related to the index (e.g. git
++diff --cached [REVISION], git diff-index [REVISION], git restore --staged
++--source=REVISION -- PATHS, etc.)  Note that a transiently expanded sparse
++specification for the index usually only matters under behavior A, since
++under behavior B index operations are lumped with history and tend to
++operate full-tree.
++
++
++=== Implementation Questions ===
++
++  * Do the options --scope={sparse,all} sound good to others?  Are there better
++    options?
++    * Names in use, or appearing in patches, or previously suggested:
++      * --sparse/--dense
++      * --ignore-skip-worktree-bits
++      * --ignore-skip-worktree-entries
++      * --ignore-sparsity
++      * --[no-]restrict-to-sparse-paths
++      * --full-tree/--sparse-tree
++      * --[no-]restrict
++      * --scope={sparse,all}
++      * --focus/--unfocus
++      * --limit/--unlimited
++    * Rationale making me lean slightly towards --scope={sparse,all}:
++      * We want a name that works for many commands, so we need a name that
++	does not conflict
++      * We know that we have more than two possible usecases, so it is best
++	to avoid a flag that appears to be binary.
++      * --scope={sparse,all} isn't overly long and seems relatively
++	explanatory
++      * `--sparse`, as used in add/rm/mv, is totally backwards for
++	grep/log/etc.  Changing the meaning of `--sparse` for these
++	commands would fix the backwardness, but possibly break existing
++	scripts.  Using a new name pairing would allow us to treat
++	`--sparse` in these commands as a deprecated alias.
++      * There is a different `--sparse`/`--dense` pair for commands using
++	revision machinery, so using that naming might cause confusion
++      * There is also a `--sparse` in both pack-objects and show-branch, which
++	don't conflict but do suggest that `--sparse` is overloaded
++      * The name --ignore-skip-worktree-bits is a double negative, is
++	quite a mouthful, refers to an implementation detail that many
++	users may not be familiar with, and we'd need a negation for it
++	which would probably be even more ridiculously long.  (But we
++	can make --ignore-skip-worktree-bits a deprecated alias for
++	--no-restrict.)
++
++  * If a config option is added (sparse.scope?) what should the values and
++    description be?  "sparse" (behavior A), "worktree-sparse-history-dense"
++    (behavior B), "dense" (behavior C)?  There's a risk of confusion,
++    because even for Behaviors A and B we want some commands to be
++    full-tree and others to operate sparsely, so the wording may need to be
++    more tied to the usecases and somehow explain that.  Also, right now,
++    the primary difference we are focusing is just the history-querying
++    commands (log/diff/grep).  Previous config suggestion here: [13]
++
++  * Is `--no-expand` a good alias for ls-files's `--sparse` option?
++    (`--sparse` does not map to either `--scope=sparse` or `--scope=all`,
++    because in non-cone mode it does nothing and in cone-mode it shows the
++    sparse directory entries which are technically outside the sparse
++    specification)
++
++  * Under Behavior A:
++    * Does ls-files' `--no-expand` override the default `--scope=all`, or
++      does it need an extra flag?
++    * Does ls-files' `-t` option imply `--scope=all`?
++    * Does update-index's `--[no-]skip-worktree` option imply `--scope=all`?
++
++  * sparse-checkout: once behavior A is fully implemented, should we take
++    an interim measure to ease people into switching the default?  Namely,
++    if folks are not already in a sparse checkout, then require
++    `sparse-checkout init/set` to take a
++    `--set-scope=(sparse|worktree-sparse-history-dense|dense)` flag (which
++    would set sparse.scope according to the setting given), and throw an
++    error if the flag is not provided?  That error would be a great place
++    to warn folks that the default may change in the future, and get them
++    used to specifying what they want so that the eventual default switch
++    is seamless for them.
++
++
++=== Implementation Goals/Plans ===
++
++ * Get buy-in on this document in general.
++
++ * Figure out answers to the 'Implementation Questions' sections (above)
++
++ * Fix bugs in the 'Known bugs' section (below)
++
++ * Provide some kind of method for backfilling the blobs within the sparse
++   specification in a partial clone
++
++ [Below here is kind of spitballing since the first two haven't been resolved]
++
++ * update-index: flip the default to --no-ignore-skip-worktree-entries,
++   nuke this stupid "Oh, there's a bug?  Let me add a flag to let users
++   request that they not trigger this bug." flag
++
++ * Flags & Config
++   * Make `--sparse` in add/rm/mv a deprecated alias for `--scope=all`
++   * Make `--ignore-skip-worktree-bits` in checkout-index/checkout/restore
++     a deprecated aliases for `--scope=all`
++   * Create config option (sparse.scope?), tie it to the "Cliff notes"
++     overview
++
++   * Add --scope=sparse (and --scope=all) flag to each of the history querying
++     commands.  IMPORTANT: make sure diff machinery changes don't mess with
++     format-patch, fast-export, etc.
++
++=== Known bugs ===
++
++This list used to be a lot longer (see e.g. [1,2,3,4,5,6,7,8,9]), but we've
++been working on it.
++
++0. Behavior A is not well supported in Git.  (Behavior B didn't used to
++   be either, but was the easier of the two to implement.)
++
++1. am and apply:
++
++   apply, without `--index` or `--cached`, relies on files being present
++   in the working copy, and also writes to them unconditionally.  As
++   such, it should first check for the files' presence, and if found to
++   be SKIP_WORKTREE, then clear the bit and vivify the paths, then do
++   its work.  Currently, it just throws an error.
++
++   apply, with either `--cached` or `--index`, will not preserve the
++   SKIP_WORKTREE bit.  This is fine if the file has conflicts, but
++   otherwise SKIP_WORKTREE bits should be preserved for --cached and
++   probably also for --index.
++
++   am, if there are no conflicts, will vivify files and fail to preserve
++   the SKIP_WORKTREE bit.  If there are conflicts and `-3` is not
++   specified, it will vivify files and then complain the patch doesn't
++   apply.  If there are conflicts and `-3` is specified, it will vivify
++   files and then complain that those vivified files would be
++   overwritten by merge.
++
++2. reset --hard:
++
++   reset --hard provides confusing error message (works correctly, but
++   misleads the user into believing it didn't):
++
++    $ touch addme
++    $ git add addme
++    $ git ls-files -t
++    H addme
++    H tracked
++    S tracked-but-maybe-skipped
++    $ git reset --hard                           # usually works great
++    error: Path 'addme' not uptodate; will not remove from working tree.
++    HEAD is now at bdbbb6f third
++    $ git ls-files -t
++    H tracked
++    S tracked-but-maybe-skipped
++    $ ls -1
++    tracked
++
++    `git reset --hard` DID remove addme from the index and the working tree, contrary
++    to the error message, but in line with how reset --hard should behave.
++
++3. read-tree
++
++   `read-tree` doesn't apply the 'SKIP_WORKTREE' bit to *any* of the
++   entries it reads into the index, resulting in all your files suddenly
++   appearing to be "deleted".
++
++4. Checkout, restore:
++
++   These command do not handle path & revision arguments appropriately:
++
++    $ ls
++    tracked
++    $ git ls-files -t
++    H tracked
++    S tracked-but-maybe-skipped
++    $ git status --porcelain
++    $ git checkout -- '*skipped'
++    error: pathspec '*skipped' did not match any file(s) known to git
++    $ git ls-files -- '*skipped'
++    tracked-but-maybe-skipped
++    $ git checkout HEAD -- '*skipped'
++    error: pathspec '*skipped' did not match any file(s) known to git
++    $ git ls-tree HEAD | grep skipped
++    100644 blob 276f5a64354b791b13840f02047738c77ad0584f	tracked-but-maybe-skipped
++    $ git status --porcelain
++    $ git checkout HEAD~1 -- '*skipped'
++    $ git ls-files -t
++    H tracked
++    H tracked-but-maybe-skipped
++    $ git status --porcelain
++    M  tracked-but-maybe-skipped
++    $ git checkout HEAD -- '*skipped'
++    $ git status --porcelain
++    $
++
++    Note that checkout without a revision (or restore --staged) fails to
++    find a file to restore from the index, even though ls-files shows
++    such a file certainly exists.
++
++    Similar issues occur with HEAD (--source=HEAD in restore's case),
++    but suddenly works when HEAD~1 is specified.  And then after that it
++    will work with HEAD specified, even though it didn't before.
++
++    Directories are also an issue:
++
++    $ git sparse-checkout set nomatches
++    $ git status
++    On branch main
++    You are in a sparse checkout with 0% of tracked files present.
++
++    nothing to commit, working tree clean
++    $ git checkout .
++    error: pathspec '.' did not match any file(s) known to git
++    $ git checkout HEAD~1 .
++    Updated 1 path from 58916d9
++    $ git ls-files -t
++    S tracked
++    H tracked-but-maybe-skipped
++
++5. checkout and restore --staged, continued:
++
++   These commands do not correctly scope operations to the sparse
++   specification, and make it worse by not setting important SKIP_WORKTREE
++   bits:
++
++   $ git restore --source OLDREV --staged outside-sparse-cone/
++   $ git status --porcelain
++   MD outside-sparse-cone/file1
++   MD outside-sparse-cone/file2
++   MD outside-sparse-cone/file3
++
++   We can add a --scope=all mode to `git restore` to let it operate outside
++   the sparse specification, but then it will be important to set the
++   SKIP_WORKTREE bits appropriately.
++
++6. Performance issues; see:
++    https://lore.kernel.org/git/CABPp-BEkJQoKZsQGCYioyga_uoDQ6iBeW+FKr8JhyuuTMK1RDw@mail.gmail.com/
++
++
++=== Reference Emails ===
++
++Emails that detail various bugs we've had in sparse-checkout:
++
++[1] (Original descriptions of behavior A & behavior B)
++    https://lore.kernel.org/git/CABPp-BGJ_Nvi5TmgriD9Bh6eNXE2EDq2f8e8QKXAeYG3BxZafA@mail.gmail.com/
++[2] (Fix stash applications in sparse checkouts; bugs from behavioral differences)
++    https://lore.kernel.org/git/ccfedc7140dbf63ba26a15f93bd3885180b26517.1606861519.git.gitgitgadget@gmail.com/
++[3] (Present-despite-skipped entries)
++    https://lore.kernel.org/git/11d46a399d26c913787b704d2b7169cafc28d639.1642175983.git.gitgitgadget@gmail.com/
++[4] (Clone --no-checkout interaction)
++    https://lore.kernel.org/git/pull.801.v2.git.git.1591324899170.gitgitgadget@gmail.com/ (clone --no-checkout)
++[5] (The need for update_sparsity() and avoiding `read-tree -mu HEAD`)
++    https://lore.kernel.org/git/3a1f084641eb47515b5a41ed4409a36128913309.1585270142.git.gitgitgadget@gmail.com/
++[6] (SKIP_WORKTREE is advisory, not mandatory)
++    https://lore.kernel.org/git/844306c3e86ef67591cc086decb2b760e7d710a3.1585270142.git.gitgitgadget@gmail.com/
++[7] (`worktree add` should copy sparsity settings from current worktree)
++    https://lore.kernel.org/git/c51cb3714e7b1d2f8c9370fe87eca9984ff4859f.1644269584.git.gitgitgadget@gmail.com/
++[8] (Avoid negative surprises in add, rm, and mv)
++    https://lore.kernel.org/git/cover.1617914011.git.matheus.bernardino@usp.br/
++    https://lore.kernel.org/git/pull.1018.v4.git.1632497954.gitgitgadget@gmail.com/
++[9] (Move from out-of-cone to in-cone)
++    https://lore.kernel.org/git/20220630023737.473690-6-shaoxuan.yuan02@gmail.com/
++    https://lore.kernel.org/git/20220630023737.473690-4-shaoxuan.yuan02@gmail.com/
++[10] (Unnecessarily downloading objects outside sparse specification)
++     https://lore.kernel.org/git/CAOLTT8QfwOi9yx_qZZgyGa8iL8kHWutEED7ok_jxwTcYT_hf9Q@mail.gmail.com/
++
++[11] (Stolee's comments on high-level usecases)
++     https://lore.kernel.org/git/1a1e33f6-3514-9afc-0a28-5a6b85bd8014@gmail.com/
++
++[12] Others commenting on eventually switching default to behavior A:
++  * https://lore.kernel.org/git/xmqqh719pcoo.fsf@gitster.g/
++  * https://lore.kernel.org/git/xmqqzgeqw0sy.fsf@gitster.g/
++  * https://lore.kernel.org/git/a86af661-cf58-a4e5-0214-a67d3a794d7e@github.com/
++
++[13] Previous config name suggestion and description
++  * https://lore.kernel.org/git/CABPp-BE6zW0nJSStcVU=_DoDBnPgLqOR8pkTXK3dW11=T01OhA@mail.gmail.com/
++
++[14] Tangential issue: switch to cone mode as default sparse specification mechanism:
++  https://lore.kernel.org/git/a1b68fd6126eb341ef3637bb93fedad4309b36d0.1650594746.git.gitgitgadget@gmail.com/
++
++[15] Lengthy email on grep behavior, covering what should be searched:
++  * https://lore.kernel.org/git/CABPp-BGVO3QdbfE84uF_3QDF0-y2iHHh6G5FAFzNRfeRitkuHw@mail.gmail.com/
++
++[16] Email explaining sparsity patterns vs. SKIP_WORKTREE and history operations,
++     search for the parenthetical comment starting "We do not check".
++    https://lore.kernel.org/git/CABPp-BFsCPPNOZ92JQRJeGyNd0e-TCW-LcLyr0i_+VSQJP+GCg@mail.gmail.com/
++
++[17] https://lore.kernel.org/git/20220207190320.2960362-1-jonathantanmy@google.com/
 
-> >  diff.wsErrorHighlight::
-> >         Highlight whitespace errors in the `context`, `old` or `new`
-> >         lines of the diff.  Multiple values are separated by comma,
-> > diff --git a/Documentation/diff-options.txt b/Documentation/diff-option=
-s.txt
-> > index 3674ac48e92..04bf83e8be1 100644
-> > --- a/Documentation/diff-options.txt
-> > +++ b/Documentation/diff-options.txt
-> > @@ -195,6 +195,24 @@ For instance, if you configured the `diff.algorith=
-m` variable to a
-> >  non-default value and want to use the default one, then you
-> >  have to use `--diff-algorithm=3Ddefault` option.
-> >
-> > +ifndef::git-format-patch[]
-> > +ifndef::git-log[]
-> > +
-> > +--scope=3D{sparse|all}::
-> > +       Choose diff scope. The variants are as follows:
-> > ++
-> > +--
-> > +`--sparse`;;
-> > +       Restrict diff paths to those matching sparse-checkout specifica=
-tion.
-> > +`--all`;;
-> > +       Without restriction, diff is performed regardless of whether th=
-e path
-> > +       meets the sparse-checkout specification.
-> > +--
-> > ++
-> > +
-> > +endif::git-log[]
-> > +endif::git-format-patch[]
->
-> What about diff-files, diff-index, diff-tree, and show?
->
-
-diff-options.txt included in their documents, and git-format-patch.txt,
-git-log.txt, but should not in git-format-patch.txt. I don't know if it
-should be included in git-diff-files.txt, because git diff-files compare
-the files in the working tree and the index (so it's the same as
-"simple" git-diff, which should not be affected by scope?)
-
-> > +
-> >  --stat[=3D<width>[,<name-width>[,<count>]]]::
-> >         Generate a diffstat. By default, as much space as necessary
-> >         will be used for the filename part, and the rest for the graph
-> > diff --git a/builtin/diff.c b/builtin/diff.c
-> > index 854d2c5a5c4..6b450f7184c 100644
-> > --- a/builtin/diff.c
-> > +++ b/builtin/diff.c
-> > @@ -54,6 +54,10 @@ static void stuff_change(struct diff_options *opt,
-> >             oideq(old_oid, new_oid) && (old_mode =3D=3D new_mode))
-> >                 return;
-> >
-> > +       if (opt->scope =3D=3D DIFF_SCOPE_SPARSE &&
-> > +           !diff_paths_in_sparse_checkout(old_path, new_path))
-> > +               return;
->
-> This can't be right.
->    git diff c231e0f26fe9b2ea9ec46aa68ff95ba984ce592e
-> 72d42bd856228c15f702fa3c353432f4f1defe03
-> (to directly diff two known blobs) will go through this function, with
-> old_path =3D=3D c231e0f26fe9b2ea9ec46aa68ff95ba984ce592e and new_path =3D=
-=3D
-> 72d42bd856228c15f702fa3c353432f4f1defe03.  But those aren't real
-> paths, and sparse-checkout should not restrict what is shown in those
-> cases.
->
-
-Yeah, it's buggy that I forget to check two blobs without paths.
-
-> > +
-> >         if (opt->flags.reverse_diff) {
-> >                 SWAP(old_mode, new_mode);
-> >                 SWAP(old_oid, new_oid);
-> > diff --git a/diff-lib.c b/diff-lib.c
-> > index 2edea41a234..a3381f2e0ff 100644
-> > --- a/diff-lib.c
-> > +++ b/diff-lib.c
-> > @@ -88,6 +88,22 @@ static int match_stat_with_submodule(struct diff_opt=
-ions *diffopt,
-> >         return changed;
-> >  }
-> >
-> > +int diff_path_in_sparse_checkout(const char *path) {
-> > +       if (core_sparse_checkout_cone)
-> > +               return path_in_cone_mode_sparse_checkout(path, the_repo=
-sitory->index);
-> > +       else
-> > +               return path_in_sparse_checkout(path, the_repository->in=
-dex);
-> > +}
->
-> This says we are including the path if it matches the sparsity
-> patterns.  Thus, we have to be careful when we use this function,
-> because the relevant paths are ones that match the sparsity
-> specification.  The sparsity specification will always match the
-> sparsity patterns when diffing two commits, but when either the index
-> or the working tree is part of the diff, the sparsity specification
-> *might* be temporarily expanded.
->
-
-Yes, I may have to look at more code to better understand how and when the
-"sparsity specification" is extended. Any recommendations for places to rea=
-d?
-
-> > +int diff_paths_in_sparse_checkout(const char *one, const char*two) {
-> > +       if (one =3D=3D two || !strcmp(one, two))
-> > +               return diff_path_in_sparse_checkout(one);
-> > +       else
-> > +               return diff_path_in_sparse_checkout(one) &&
-> > +                      diff_path_in_sparse_checkout(two);
->
-> Why && rather than || ?
->
-
-Agree, we do need to use || here, because the one diff side in the sparse
-specification, we should diff the two files.
-
-> > +}
-> > +
-> > +
-> >  int run_diff_files(struct rev_info *revs, unsigned int option)
-> >  {
-> >         int entries, i;
-> > @@ -113,6 +129,9 @@ int run_diff_files(struct rev_info *revs, unsigned =
-int option)
-> >
-> >                 if (diff_can_quit_early(&revs->diffopt))
-> >                         break;
-> > +               if (revs->diffopt.scope =3D=3D DIFF_SCOPE_SPARSE &&
-> > +                   !diff_path_in_sparse_checkout(ce->name))
-> > +                       continue;
->
-> Here you've cut off the possibility of showing diffs for anything
-> outside the sparsity patterns, which is a mistake.  We need to handle
-> a temporarily expanded sparse specification too.
->
-
-Agree.
-
-> >                 if (!ce_path_match(istate, ce, &revs->prune_data, NULL)=
-)
-> >                         continue;
-> > @@ -202,7 +221,8 @@ int run_diff_files(struct rev_info *revs, unsigned =
-int option)
-> >                                 continue;
-> >                 }
-> >
-> > -               if (ce_uptodate(ce) || ce_skip_worktree(ce))
-> > +               if (ce_uptodate(ce) ||
-> > +                   (revs->diffopt.scope !=3D DIFF_SCOPE_ALL && ce_skip=
-_worktree(ce)))
-> >                         continue;
->
-> Here you make --scope=3Dall show files even if they are skip-worktree,
-> making them appear to have been deleted.  I called out your
-> description earlier as potentially misleading, because it could imply
-> this behavior.  It looks like you were consistent with the description
-> and implementation, it just doesn't match what we want.
->
-
-Agree too. So we should not do anything in run_diff_files.
-
-> >                 /*
-> > @@ -439,6 +459,20 @@ static void do_oneway_diff(struct unpack_trees_opt=
-ions *o,
->
-> do_oneway_diff is for cases where we are diffing against the index...
->
-> >                         return; /* nothing to diff.. */
-> >         }
-> >
-> > +       if (revs->diffopt.scope =3D=3D DIFF_SCOPE_SPARSE) {
-> > +               if (idx && tree) {
-> > +                       if (!diff_paths_in_sparse_checkout(idx->name, t=
-ree->name))
-> > +                               return;
-> > +               } else if (idx) {
-> > +                       if (!diff_path_in_sparse_checkout(idx->name))
-> > +                               return;
-> > +               } else if (tree) {
-> > +                       if (!diff_path_in_sparse_checkout(tree->name))
-> > +                               return;
-> > +               } else
-> > +                       return;
-> > +       }
->
-> ...and you again mistakenly only compare to the sparsity patterns
-> instead of the sparse specification.
->
-
-So here we should use ce_skip_worktree(idx) to check if this index entry ma=
-tches
-sparse specification.
-
-> > +
-> >         /* if the entry is not checked out, don't examine work tree */
-> >         cached =3D o->index_only ||
-> >                 (idx && ((idx->ce_flags & CE_VALID) || ce_skip_worktree=
-(idx)));
->
->
->
-> > diff --git a/diff-no-index.c b/diff-no-index.c
-> > index 18edbdf4b59..ea94a104ea4 100644
-> > --- a/diff-no-index.c
-> > +++ b/diff-no-index.c
-> > @@ -281,6 +281,10 @@ int diff_no_index(struct rev_info *revs,
-> >
-> >         fixup_paths(paths, &replacement);
-> >
-> > +       if (revs->diffopt.scope =3D=3D DIFF_SCOPE_SPARSE &&
-> > +           !diff_paths_in_sparse_checkout(paths[0], paths[1]))
-> > +               goto out;
->
-> --no-index means we're diffing two files that are not tracked, or at
-> least treating them as not tracked.  sparse-checkout should not affect
-> such files.
->
-
-Yeah, we should care about untracked files sparse-checkout only when
-we are using git add/rm/update-index...
-
-> > +
-> >         revs->diffopt.skip_stat_unmatch =3D 1;
-> >         if (!revs->diffopt.output_format)
-> >                 revs->diffopt.output_format =3D DIFF_FORMAT_PATCH;
-> > diff --git a/diff.c b/diff.c
-> > index 285d6e2d575..9de4044ae05 100644
-> > --- a/diff.c
-> > +++ b/diff.c
-> > @@ -48,6 +48,7 @@ static int diff_interhunk_context_default;
-> >  static const char *diff_word_regex_cfg;
-> >  static const char *external_diff_cmd_cfg;
-> >  static const char *diff_order_file_cfg;
-> > +static const char *external_diff_scope_cfg;
-> >  int diff_auto_refresh_index =3D 1;
-> >  static int diff_mnemonic_prefix;
-> >  static int diff_no_prefix;
-> > @@ -57,6 +58,7 @@ static int diff_dirstat_permille_default =3D 30;
-> >  static struct diff_options default_diff_options;
-> >  static long diff_algorithm;
-> >  static unsigned ws_error_highlight_default =3D WSEH_NEW;
-> > +static enum diff_scope external_diff_scope;
->
-> Why is this called "external"?
->
-
-Learn from external_diff_cmd_cfg, I should remove it.
-
-> >  static char diff_colors[][COLOR_MAXLEN] =3D {
-> >         GIT_COLOR_RESET,
-> > @@ -423,6 +425,16 @@ int git_diff_ui_config(const char *var, const char=
- *value, void *cb)
-> >                 return 0;
-> >         }
-> >
-> > +       if (!strcmp(var, "diff.scope")) {
-> > +               git_config_string(&external_diff_scope_cfg, var, value)=
-;
-> > +               if (!strcmp(value, "all"))
-> > +                       external_diff_scope =3D DIFF_SCOPE_ALL;
-> > +               else if (!strcmp(value, "sparse"))
-> > +                       external_diff_scope =3D DIFF_SCOPE_SPARSE;
-> > +               else
-> > +                       return -1;
-> > +       }
-> > +
-> >         if (git_color_config(var, value, cb) < 0)
-> >                 return -1;
-> >
-> > @@ -4663,6 +4675,7 @@ void repo_diff_setup(struct repository *r, struct=
- diff_options *options)
-> >
-> >         options->color_moved =3D diff_color_moved_default;
-> >         options->color_moved_ws_handling =3D diff_color_moved_ws_defaul=
-t;
-> > +       options->scope =3D external_diff_scope;
-> >
-> >         prep_parse_options(options);
-> >  }
-> > @@ -4914,6 +4927,29 @@ static int parse_dirstat_opt(struct diff_options=
- *options, const char *params)
-> >         return 1;
-> >  }
-> >
-> > +static int diff_opt_diff_scope(const struct option *option,
-> > +                               const char *optarg, int unset)
-> > +{
-> > +       struct diff_options *opt =3D option->value;
-> > +
-> > +       if (unset) {
-> > +               opt->scope =3D DIFF_SCOPE_NONE;
->
-> I think we should instead have a
->     BUG_ON_OPT_NEG(unset)
-> or, even better, a
->     BUG_ON_OPT_NEG_NOARG(unset, optarg)
-> at the beginning of this function...
->
-> > +       } else if (optarg) {
->
-> ...which would also allow you to drop this if and dedent the rest of
-> the function.
->
-
-Agree.
-
-> > +               if (!strcmp(optarg, "all")) {
-> > +                       if (core_apply_sparse_checkout) {
-> > +                               opt->scope =3D DIFF_SCOPE_ALL;
-> > +                       }
-> > +               } else if (!strcmp(optarg, "sparse")) {
-> > +                       if (core_apply_sparse_checkout) {
-> > +                               opt->scope =3D DIFF_SCOPE_SPARSE;
-> > +                       }
->
-> If core_apply_sparse_checkout is false, should we perhaps throw an
-> error instead of just silently ignoring the option the user passed?
->
-
-Agree.
-
-> > +               } else
-> > +                       return error(_("invalid --scope value: %s"), op=
-targ);
-> > +       }
->
-> As written with no follow-on else clause here, wouldn't this silently
-> accept "--scope" without an "=3D<something>" argument without an error
-> and without properly initializing opt->scope?
->
-
-Because opt will be initializing with default_diff_options in repo_diff_set=
-up(),
-and opt->scope should respect config value first. So I don't think there's =
-a
-mistake here.
-
-> > +
-> > +       return 0;
-> > +}
-> > +
-> >  static int diff_opt_diff_filter(const struct option *option,
-> >                                 const char *optarg, int unset)
-> >  {
-> > @@ -5683,6 +5719,9 @@ static void prep_parse_options(struct diff_option=
-s *options)
-> >                 OPT_CALLBACK_F(0, "diff-filter", options, N_("[(A|C|D|M=
-|R|T|U|X|B)...[*]]"),
-> >                                N_("select files by diff type"),
-> >                                PARSE_OPT_NONEG, diff_opt_diff_filter),
-> > +               OPT_CALLBACK_F(0, "scope", options, N_("[sparse|all]"),
-> > +                              N_("choose diff scope"),
->
-> maybe "choose diff scope in sparse checkouts"?
->
-
-OK.
-
-> > +                              PARSE_OPT_OPTARG, diff_opt_diff_scope),
-> >                 { OPTION_CALLBACK, 0, "output", options, N_("<file>"),
-> >                   N_("output to a specific file"),
-> >                   PARSE_OPT_NONEG, NULL, 0, diff_opt_output },
-> > diff --git a/diff.h b/diff.h
-> > index 8ae18e5ab1e..90f7512034c 100644
-> > --- a/diff.h
-> > +++ b/diff.h
-> > @@ -230,6 +230,12 @@ enum diff_submodule_format {
-> >         DIFF_SUBMODULE_INLINE_DIFF
-> >  };
-> >
-> > +enum diff_scope {
-> > +       DIFF_SCOPE_NONE =3D 0,
-> > +       DIFF_SCOPE_ALL,
-> > +       DIFF_SCOPE_SPARSE,
-> > +};
-> > +
-> >  /**
-> >   * the set of options the calling program wants to affect the operatio=
-n of
-> >   * diffcore library with.
-> > @@ -285,6 +291,9 @@ struct diff_options {
-> >         /* diff-filter bits */
-> >         unsigned int filter, filter_not;
-> >
-> > +       /* diff sparse-checkout scope */
-> > +       enum diff_scope scope;
-> > +
-> >         int use_color;
-> >
-> >         /* Number of context lines to generate in patch output. */
-> > @@ -696,4 +705,6 @@ void print_stat_summary(FILE *fp, int files,
-> >                         int insertions, int deletions);
-> >  void setup_diff_pager(struct diff_options *);
-> >
-> > +int diff_path_in_sparse_checkout(const char *path);
-> > +int diff_paths_in_sparse_checkout(const char *one, const char *two);
-> >  #endif /* DIFF_H */
-> > diff --git a/t/t4070-diff-sparse-checkout-scope.sh b/t/t4070-diff-spars=
-e-checkout-scope.sh
-> > new file mode 100644
->
-> This needs to be fixed.
->
-> > index 00000000000..dca75a3308b
-> > --- /dev/null
-> > +++ b/t/t4070-diff-sparse-checkout-scope.sh
-> > @@ -0,0 +1,469 @@
-> > +#!/bin/sh
-> > +
-> > +test_description=3D'diff sparse-checkout scope'
-> > +
-> > +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
-> > +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-> > +
-> > +. ./test-lib.sh
-> > +
-> > +
-> > +test_expect_success 'setup' '
-> > +       git init temp &&
-> > +       (
-> > +               cd temp &&
-> > +               mkdir sub1 &&
-> > +               mkdir sub2 &&
-> > +               echo sub1/file1 >sub1/file1 &&
-> > +               echo sub2/file2 >sub2/file2 &&
-> > +               echo file1 >file1 &&
-> > +               echo file2 >file2 &&
-> > +               git add --all &&
-> > +               git commit -m init &&
-> > +               echo sub1/file1 >>sub1/file1 &&
-> > +               echo sub1/file2 >>sub1/file2 &&
-> > +               echo sub2/file1 >>sub2/file1 &&
-> > +               echo sub2/file2 >>sub2/file2 &&
-> > +               echo file1 >>file1 &&
-> > +               echo file2 >>file2 &&
-> > +               git add --all &&
-> > +               git commit -m change1 &&
-> > +               echo sub1/file1 >>sub1/file1 &&
-> > +               echo sub1/file2 >>sub1/file2 &&
-> > +               echo sub2/file1 >>sub2/file1 &&
-> > +               echo sub2/file2 >>sub2/file2 &&
-> > +               echo file1 >>file1 &&
-> > +               echo file2 >>file2 &&
-> > +               git add --all &&
-> > +               git commit -m change2
-> > +       )
-> > +'
-> > +
-> > +reset_repo () {
-> > +       rm -rf repo &&
-> > +       git clone --no-checkout temp repo
->
-> Why --no-checkout rather than say --sparse?
->
-
-This is because I accidentally associated it with a
-partial clone. I often use "git clone -filter=3Dblob:none -no-checkout"
-to do a partial clone, then "git sparse- checkout set <pattern>"
-to set sparse-checkout patterns, and "git checkout" to download
-the missing blobs and checkout to a branch. But in this
-test file, we only need sparse-checkout, so it's true that I should
-not do such strange no-checkout thing.
-
-> > +}
-> > +
-> > +reset_with_sparse_checkout() {
-> > +       reset_repo &&
-> > +       git -C repo sparse-checkout set $1 sub1 &&
-> > +       git -C repo checkout
->
-> Fixing the above would let us get rid of this really weird extra
-> checkout command too.
->
-> > +}
-> > +
-> > +change_worktree_and_index() {
-> > +       (
-> > +               cd repo &&
-> > +               mkdir sub2 sub3 &&
-> > +               echo sub1/file3 >sub1/file3 &&
-> > +               echo sub2/file3 >sub2/file3 &&
-> > +               echo sub3/file3 >sub3/file3 &&
-> > +               echo file3 >file3 &&
-> > +               git add --all --sparse &&
-> > +               echo sub1/file3 >>sub1/file3 &&
-> > +               echo sub2/file3 >>sub2/file3 &&
-> > +               echo sub3/file3 >>sub3/file3 &&
-> > +               echo file3 >>file3
-> > +       )
-> > +}
->
-> It would be nice to modify different paths in the working tree and
-> index, to see if we can handle cases where the sparse specification
-> does not match the sparsity patterns better.  (So, modify files inside
-> and outside the sparsity patterns, stage those changes, and then do a
-> `git sparse-checkout reapply` to make the files outside the sparsity
-> patterns disappear from the working tree...then modify different files
-> in the working tree both inside and outside the sparsity patterns.
-> And also remove some file that matches the sparsity patterns and
-> manually mark it as SKIP_WORKTREE.)  That'd give us much better
-> coverage.
->
-
-Nice addition. So I should use git update-index --skip-worktree to set
-skip_worktree bit for index entries.
-
-> > +
-> > +diff_scope() {
-> > +       title=3D$1
-> > +       need_change_worktree_and_index=3D$2
-> > +       sparse_checkout_option=3D$3
-> > +       scope_option=3D$4
-> > +       expect=3D$5
-> > +       shift 5
-> > +       args=3D("$@")
-> > +
-> > +       test_expect_success "$title $sparse_checkout_option $scope_opti=
-on" "
-> > +               reset_with_sparse_checkout $sparse_checkout_option &&
-> > +               if test \"$need_change_worktree_and_index\" =3D \"true\=
-" ; then
-> > +                       change_worktree_and_index
-> > +               fi &&
-> > +               git -C repo diff $scope_option ${args[*]} >actual &&
-> > +               if test -z \"$expect\" ; then
-> > +                       >expect
-> > +               else
-> > +                       cat > expect <<-EOF
-> > +$expect
-> > +                       EOF
-> > +               fi &&
-> > +               test_cmp expect actual
-> > +       "
-> > +}
-> > +
-> > +args=3D("--name-only" "HEAD" "HEAD~")
-> > +diff_scope builtin_diff_tree false "--no-cone" "--scope=3Dsparse" \
-> > +"sub1/file1
-> > +sub1/file2" "${args[@]}"
-> > +
-> > +diff_scope builtin_diff_tree false "--no-cone" "--scope=3Dall" \
-> > +"file1
-> > +file2
-> > +sub1/file1
-> > +sub1/file2
-> > +sub2/file1
-> > +sub2/file2" "${args[@]}"
-> > +
-> > +diff_scope builtin_diff_tree false "--no-cone" "--no-scope" \
-> > +"file1
-> > +file2
-> > +sub1/file1
-> > +sub1/file2
-> > +sub2/file1
-> > +sub2/file2" "${args[@]}"
-> > +
-> > +diff_scope builtin_diff_tree false "--cone" "--scope=3Dsparse" \
-> > +"file1
-> > +file2
-> > +sub1/file1
-> > +sub1/file2" "${args[@]}"
-> > +
-> > +diff_scope builtin_diff_tree false "--cone" "--scope=3Dall" \
-> > +"file1
-> > +file2
-> > +sub1/file1
-> > +sub1/file2
-> > +sub2/file1
-> > +sub2/file2" "${args[@]}"
-> > +
-> > +diff_scope builtin_diff_tree false "--cone" "--no-scope" \
-> > +"file1
-> > +file2
-> > +sub1/file1
-> > +sub1/file2
-> > +sub2/file1
-> > +sub2/file2" "${args[@]}"
-> > +
-> > +args=3D("--name-only" "HEAD~")
-> > +diff_scope builtin_diff_index true "--no-cone" "--scope=3Dsparse" \
-> > +"sub1/file1
-> > +sub1/file2
-> > +sub1/file3" "${args[@]}"
->
-> Here's a good example where the testcase is doing the wrong thing.
-> The expected answer here would also include file3, sub2/file3, and
-> sub3/file3.
->
-
-Yeah. Files that are not part of the sparse-checkout patterns are temporari=
-ly
-extended into the sparse specification.
-
-> > +
-> > +diff_scope builtin_diff_index true "--no-cone" "--scope=3Dall" \
-> > +"file1
-> > +file2
-> > +file3
-> > +sub1/file1
-> > +sub1/file2
-> > +sub1/file3
-> > +sub2/file1
-> > +sub2/file2
-> > +sub2/file3
-> > +sub3/file3" "${args[@]}"
-> > +
-> > +diff_scope builtin_diff_index true "--no-cone" "--no-scope" \
-> > +"file1
-> > +file2
-> > +file3
-> > +sub1/file1
-> > +sub1/file2
-> > +sub1/file3
-> > +sub2/file1
-> > +sub2/file2
-> > +sub2/file3
-> > +sub3/file3" "${args[@]}"
-> > +
-> > +diff_scope builtin_diff_index true "--cone" "--scope=3Dsparse" \
-> > +"file1
-> > +file2
-> > +file3
-> > +sub1/file1
-> > +sub1/file2
-> > +sub1/file3" "${args[@]}"
->
-> This is also wrong; it's missing sub2/file3 and sub3/file3.
->
-> > +
-> > +diff_scope builtin_diff_index true "--cone" "--scope=3Dall" \
-> > +"file1
-> > +file2
-> > +file3
-> > +sub1/file1
-> > +sub1/file2
-> > +sub1/file3
-> > +sub2/file1
-> > +sub2/file2
-> > +sub2/file3
-> > +sub3/file3" "${args[@]}"
-> > +
-> > +diff_scope builtin_diff_index true "--cone" "--no-scope" \
-> > +"file1
-> > +file2
-> > +file3
-> > +sub1/file1
-> > +sub1/file2
-> > +sub1/file3
-> > +sub2/file1
-> > +sub2/file2
-> > +sub2/file3
-> > +sub3/file3" "${args[@]}"
-> > +
-> > +args=3D("--name-only" "file3" "sub1/" "sub2/")
-> > +
-> > +diff_scope builtin_diff_files true "--no-cone" "--scope=3Dsparse" \
-> > +"sub1/file3" "${args[@]}"
->
-> This should also include file3, sub2/file3, and sub3/file3.
-> `--scope=3D` should not affect diff output at all if neither --cached
-> nor revision arguments are supplied.
->
-
-Agree.
-
-> > +
-> > +diff_scope builtin_diff_files true "--no-cone" "--scope=3Dall" \
-> > +"file3
-> > +sub1/file3
-> > +sub2/file1
-> > +sub2/file2
-> > +sub2/file3" "${args[@]}"
->
-> This is wrong due to including too much; it should not include
-> sub2/file1 or sub2/file2 (it is only including those because it is
-> showing them as deleted, when they are not deleted but are
-> SKIP_WORKTREE).
->
-
-Agree.
-
-> I think I'm going to stop reviewing here.  I'm probably just going to
-> keep repeating the same issues I identified earlier if I continue.
-
-Thank you very much for your review, you have pointed out very many
-problems with this patch :)
-
---
-ZheNing Hu
+base-commit: 1b3d6e17fe83eb6f79ffbac2f2c61bbf1eaef5f8
+-- 
+gitgitgadget
