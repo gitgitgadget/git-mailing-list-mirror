@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D98B8C433FE
-	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 18:38:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A303C4332F
+	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 18:38:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233245AbiKGSiC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 13:38:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50146 "EHLO
+        id S232623AbiKGSiF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 13:38:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233247AbiKGShI (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233135AbiKGShI (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 7 Nov 2022 13:37:08 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99D0026577
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 10:36:35 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id cl5so17545225wrb.9
-        for <git@vger.kernel.org>; Mon, 07 Nov 2022 10:36:35 -0800 (PST)
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FB7129354
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 10:36:37 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id t1so7424262wmi.4
+        for <git@vger.kernel.org>; Mon, 07 Nov 2022 10:36:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gM/FSCskvx0L2g6LFTw/tGiLchecE6CJVhufvrnkFkI=;
-        b=ozlZ3LjgdXnyeeW6x8LQ3HZjfNV+IdFkYBoJ9gqO3jNyX5qRK6ZVc6HvjxHDjktPt1
-         vHFfgjKTK1VdOa7YtjlltBx4pwSKJ7PqYnpMwkWPZs/0zdHzZni5Q9dRc0RdLorkySB8
-         mvdZN379xjg7iiLukZBgnVEtlMGjmzH/0VCJ17nU6lTRacEVnPH4C9V4vFkeNpG05aNe
-         nREQ7M075fNuyZaabhP47VvDe8yoVbmYPRkUDYT65b1iZOmUhfzLNwqN/X/ssQkjdugd
-         eY3Mb6EQ4uoPtcfmjSC2tyGU20xq6m2GL8B6gzhpu6qGwg/C/1Hll5EsJIlYLWLuZzGv
-         zUDw==
+        bh=q1msgsAfJBAvhgId5qf6c2a1kBCGuldXrr95UAzR688=;
+        b=ajh9SZcPyYvdLPMRDiF8t6heFPqEbwyL9HqJhRNsVRiC9LymIRWyzC7tysRn7GJu7z
+         AkQQvqLGD5ixsTYjKTmrPWIg8IXn+dSQ6u4tHK0n558svFj2+NNDGFr+XQqvMTuAku9i
+         QDr35BkHI9o47ThuVMBhW1rAUkQp5Uwl4mVsNftiiU+8GrRE8rp7IeHwTcHSzHDPf7pq
+         g3JszMynMUGjkSR+/KuuVgFwlCEn/Z1S1XoeQ9PWZ7QMAirmImMqk+7tu3cZ+DorEBhh
+         rCPjadkDufDwzxT1D9bkoaHKbHzcG4OVX2PHRGfCdAPDqNvAx9Mtwb1Es0ZPBAvcvbFR
+         2Xbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gM/FSCskvx0L2g6LFTw/tGiLchecE6CJVhufvrnkFkI=;
-        b=Pxku481XJU5EWEIgVBKpKnqDyFoqGZhrxjqfnu7U/arCfjHW229s1k4KX1yvs+MQ23
-         H9KKSfOSDyjh/YlJcjQjwLtTtXBJsN6XRwvtyDpud8/kzzFMwJZnTATdgVXd6xFsGEcI
-         3SHtGBdqYpAN/jKKYRhUM8Mqj/F5Abqzczw0mtDfdPxKD2ceGyD028oubyrDP5EYoZjT
-         ztHcnuA12ZCSZayegaJzJ4FMS0aTd3CHnEGm7nSjyjb2GL0aJZ8HyWrgwtLFwLLkcdzI
-         PSdl4BwOfw+0pIYpn6u7nU88pyVZ4i1Q0X5wTvT24V4BVF0WVr3HF2ZE3lsfFUMuJ4uM
-         MFew==
-X-Gm-Message-State: ACrzQf1eGVxxz3e/LWqvg83pt2y9jHia1HQMdrejc4QvAThGwiCZbBfM
-        6x4NkG1l312zHjCoR+sAFWRA0H2xIEU=
-X-Google-Smtp-Source: AMsMyM7Z5KyUhkvpOVHOk5z/gbo5///cpNbMyRYMaj08zh2LVYscN1djZMfdXtCU4LgAbHgzmwbejQ==
-X-Received: by 2002:adf:ebcf:0:b0:22c:9eb4:d6f6 with SMTP id v15-20020adfebcf000000b0022c9eb4d6f6mr32864743wrn.251.1667846193999;
-        Mon, 07 Nov 2022 10:36:33 -0800 (PST)
+        bh=q1msgsAfJBAvhgId5qf6c2a1kBCGuldXrr95UAzR688=;
+        b=LZ5qIaIb2NhhXdoUD5ekf4msT0NbkDI8MO5afiIKFmTlG6ftHbfqq8EWuu7+hFJbD1
+         ITC4MaR03Ng1rqRoi1TjEG/aX2ZI4MqKSR1gcdynzpEIR3EIqrwltVapyRtTO++K2e5n
+         ktrhTA1dsVyjE+dk+rNK2ovWrxmUladCuaPXG6dNY4Y2Bjj487P3P5C2uZQD0LzlPTom
+         Z9Q5ia3omoqQ+zKennLZkBNziYWQOI+PScGL7rNt254UKoCEBHlLGkJL2gQi+/bv/yP/
+         PgKTxOp/KefSXhoKrEBn23iak0RIIkE3Nyt+ctczqa+HoxtCts5DiL8lcybYKQzLdAsd
+         c9rQ==
+X-Gm-Message-State: ANoB5pmU1CqHl68HX4QT7TzHTQX7n5rF3ols8dpEooR8S4q+5H1ebMdw
+        H0QRicQPKhqWtXdkgPW/bp/wbEl2joA=
+X-Google-Smtp-Source: AA0mqf7W+FoMc5mQ6/JWjyd+y9+AIhn1nlYAovFONMEPLdxgeJ1oIJRnjsdyacEd/k7FnWI+8X2I9A==
+X-Received: by 2002:a05:600c:4a11:b0:3cf:b128:39ad with SMTP id c17-20020a05600c4a1100b003cfb12839admr2701315wmp.127.1667846195248;
+        Mon, 07 Nov 2022 10:36:35 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l21-20020a05600c4f1500b003b4fdbb6319sm13248796wmq.21.2022.11.07.10.36.33
+        by smtp.gmail.com with ESMTPSA id l27-20020a05600c1d1b00b003b95ed78275sm9506418wms.20.2022.11.07.10.36.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 10:36:33 -0800 (PST)
-Message-Id: <9d261a55403f8c9d207cfb363689ba9964a57c57.1667846165.git.gitgitgadget@gmail.com>
+        Mon, 07 Nov 2022 10:36:34 -0800 (PST)
+Message-Id: <a4a69d8ee91d23465f945488ad42fa38818c2651.1667846165.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
 References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 07 Nov 2022 18:36:02 +0000
-Subject: [PATCH 28/30] ci: run GIT_TEST_PACKED_REFS_VERSION=2 in some builds
+Date:   Mon, 07 Nov 2022 18:36:03 +0000
+Subject: [PATCH 29/30] p1401: create performance test for ref operations
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,31 +68,67 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The linux-TEST-vars CI build helps us check that certain opt-in features
-are still exercised in at least one environment. The new
-GIT_TEST_PACKED_REFS_VERSION environment variable now passes the test
-suite when set to "2", so add this to that list of variables.
-
-This provides nearly the same coverage of the v2 format as we had in the
-v1 format.
+TBD
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- ci/run-build-and-tests.sh | 1 +
- 1 file changed, 1 insertion(+)
+ t/perf/p1401-ref-operations.sh | 47 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
+ create mode 100755 t/perf/p1401-ref-operations.sh
 
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 8ebff425967..e93574ca262 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -30,6 +30,7 @@ linux-TEST-vars)
- 	export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=master
- 	export GIT_TEST_WRITE_REV_INDEX=1
- 	export GIT_TEST_CHECKOUT_WORKERS=2
-+	export GIT_TEST_PACKED_REFS_VERSION=2
- 	;;
- linux-clang)
- 	export GIT_TEST_DEFAULT_HASH=sha1
+diff --git a/t/perf/p1401-ref-operations.sh b/t/perf/p1401-ref-operations.sh
+new file mode 100755
+index 00000000000..1c372ba0ee8
+--- /dev/null
++++ b/t/perf/p1401-ref-operations.sh
+@@ -0,0 +1,47 @@
++#!/bin/sh
++
++test_description="Tests performance of ref operations"
++
++. ./perf-lib.sh
++
++test_perf_large_repo
++
++test_perf 'git pack-refs (v1)' '
++	git commit --allow-empty -m "change one ref" &&
++	git pack-refs --all
++'
++
++test_perf 'git for-each-ref (v1)' '
++	git for-each-ref --format="%(refname)" >/dev/null
++'
++
++test_perf 'git for-each-ref prefix (v1)' '
++	git for-each-ref --format="%(refname)" refs/tags/ >/dev/null
++'
++
++test_expect_success 'configure packed-refs v2' '
++	git config core.repositoryFormatVersion 1 &&
++	git config --add extensions.refFormat files &&
++	git config --add extensions.refFormat packed &&
++	git config --add extensions.refFormat packed-v2 &&
++	git config refs.packedRefsVersion 2 &&
++	git commit --allow-empty -m "change one ref" &&
++	git pack-refs --all &&
++	test_copy_bytes 16 .git/packed-refs | xxd >actual &&
++	grep PREF actual
++'
++
++test_perf 'git pack-refs (v2)' '
++	git commit --allow-empty -m "change one ref" &&
++	git pack-refs --all
++'
++
++test_perf 'git for-each-ref (v2)' '
++	git for-each-ref --format="%(refname)" >/dev/null
++'
++
++test_perf 'git for-each-ref prefix (v2)' '
++	git for-each-ref --format="%(refname)" refs/tags/ >/dev/null
++'
++
++test_done
 -- 
 gitgitgadget
 
