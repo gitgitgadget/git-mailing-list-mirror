@@ -2,77 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34007C4332F
-	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 19:17:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 009F2C4332F
+	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 19:19:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231754AbiKGTRX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 14:17:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52358 "EHLO
+        id S232280AbiKGTTK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 14:19:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231450AbiKGTRV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2022 14:17:21 -0500
-Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBC152A408
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 11:17:20 -0800 (PST)
-Received: by mail-il1-x135.google.com with SMTP id z9so6355224ilu.10
-        for <git@vger.kernel.org>; Mon, 07 Nov 2022 11:17:20 -0800 (PST)
+        with ESMTP id S232124AbiKGTTG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2022 14:19:06 -0500
+Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 021A22A25C
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 11:19:05 -0800 (PST)
+Received: by mail-qv1-xf34.google.com with SMTP id x15so8810867qvp.1
+        for <git@vger.kernel.org>; Mon, 07 Nov 2022 11:19:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=YQ9njpwW4e1PzluSbffACORSkSq0wUV1UIIhP+brnKg=;
-        b=nt/epdMvgjKFZXWij/1V3dJ33Ib7rl9R9LeUgZpJC6tPGotIZDK/8rpmbNosBgsy9c
-         4aM6YpRrnkr1Sr3QcxH5ZpjaNqZPH2ysZKJPa5P8h8XNyiQcLCLWClPNPp20JH98T8hW
-         cHuz3AaqGR7VvLMYp9aWku4bJ90fjj6ht+IjIwCWlQZOad9xBSqL7TLB3jn1Bda/QL/L
-         KkVxOCfM1G5L8YpcLuJ6wa997lEwk7b3i3CIceQEFxEaa05mjA6gX7ZuoC0HffLkmOjG
-         bmY9ZQN1QpUdUpezHyNHKB4tNqCHF9MDU2u3BdpFUQVdT+TsvppB18NN9NvwkIpVXfcI
-         x57g==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=s3LSZ7wj2u5AHd73o3rhVEkiOJ4+sr60voeWV9DTQns=;
+        b=Nowzi1QPQjfzg1wvJzEqotij550lJfgGQ3TwKy2U5NQiFN9p/Z/J6Jb8SpQspa6tN+
+         KgEGzUja0w0H6Cz/7IDN47MsjoCvKSUf0TGsLXrsjNKPi5xWINNLsR8ep5mKq2ZHSatk
+         /GergivbWOvU1sTxHCKcWXTPsPMhTqUf9CjSljWWj2x5EoJc907BfvjQujmEP1y5lzf6
+         cyiP54QowYHvFEV2b54LD+SdmBCgx6L2ZFpE/DLqcjoxbCbjqD5/E7m1reBbI8wgE+0O
+         1qMqnhMGI0Tvg6QwXRBjZYjPEcCZd5FM+aOUthEJ0sYEfQlVDENw66XnuRYZ8jvdIol5
+         2f3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=YQ9njpwW4e1PzluSbffACORSkSq0wUV1UIIhP+brnKg=;
-        b=dAoUoYW+8FFHTYhaS/N+BcHiWP7Dz+v+tJwOVVmHzD6cuT1z2pNbS19Le24I9IOLg1
-         vZAcHbyRlrnM1fYYjsAO7r0Hc933y+nPa8xeJ4eXoo3s2suRmQZbCyc1S6TY2p4aK0t+
-         e7m6In+Xrlu2NgCOXaLv/c9gJtfjpYIhxzCbxEaLDbFrbLQPpl+Vis6lukhkVENu5UW8
-         DmZQ+eXMNhfw5IP+UPnaLWAsY2j3JIUy+EWzfdENVZuDliQ+pvyHcv9lB+y8EiZNCgtT
-         T5bEyR2NhiIH1KS2ikDWf6si8vVumNGUXTVlUc8YX9i82jZE+T8Pk+kC4cz6eQo7tgG2
-         5puw==
-X-Gm-Message-State: ACrzQf1uEJ8ZBeHTxqi7NHIl1FZwNzLQ8tgpVUx+4WiNJvEuOJzuQxhW
-        QxlDQ/KDDlJH5966IBASF7SbtQ==
-X-Google-Smtp-Source: AMsMyM44PWvuRuijPRAwWltd+8+KYgbJU9kZmoZKEWj42VrxjqkGrK6YAzbSiswYrAHhCkai65pDZw==
-X-Received: by 2002:a92:6b0e:0:b0:2ff:df3e:995b with SMTP id g14-20020a926b0e000000b002ffdf3e995bmr28871100ilc.193.1667848640296;
-        Mon, 07 Nov 2022 11:17:20 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id m10-20020a056e021c2a00b002fd00a8f8fcsm3129050ilh.47.2022.11.07.11.17.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 11:17:19 -0800 (PST)
-Date:   Mon, 7 Nov 2022 14:17:19 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Victoria Dye <vdye@github.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-        "herr.kaste" <herr.kaste@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2] rebase --update-refs: avoid unintended ref deletion
-Message-ID: <Y2lZv7cgbn4Dx8Jb@nand.local>
-References: <20221104165735.68899-1-vdye@github.com>
- <20221107174752.91186-1-vdye@github.com>
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=s3LSZ7wj2u5AHd73o3rhVEkiOJ4+sr60voeWV9DTQns=;
+        b=gODTgvxtSAc+6ULnQ2j8xOssUPZlAw0XpXABXViaxLYW4thsd4PdDVz0yEdAGDS0yP
+         T2zei6PL+mX0NH3NNe/Shvj0Nkj20/WAlwsNUmd//F7pj0WLotCIeqB91CkBcybT8JqT
+         BJTBPRuwXy2Jgx3qlg8YI+8fP9Kl0nzdAsw3vhr1lbAMIwnVLvUobF7ulAV5KQxPoqza
+         mT5hZRCkIKTPukJxQ4AyFjGeGkpPfDy7Ks/2DpYHiL2OCfmfP5lHLc6J8/Wg57wVHJhg
+         vLKojCEpcWoIOfMfzoTWn2AmDU4BhcBec8GXN1Qt06qolVpoyfbU8aijzH+le87m3W/c
+         D+9w==
+X-Gm-Message-State: ACrzQf1++YwxbRRpBCwQ+evnKgbv1AL6djzb6noxEdF2jwZ3J4XybWyf
+        94wKEANMa+41FLqgs0fV9gW2
+X-Google-Smtp-Source: AMsMyM4vQhZdt2A8XQQ4TeDS42ojjUoKAR8RVsITTah5vgbE7Qf6AtpJ5EcUSZJ5Pw6UwlaKoomxuw==
+X-Received: by 2002:a05:6214:21a8:b0:4bb:e31f:12c8 with SMTP id t8-20020a05621421a800b004bbe31f12c8mr41889444qvc.65.1667848744985;
+        Mon, 07 Nov 2022 11:19:04 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:d948:f30c:63de:b667? ([2600:1700:e72:80a0:d948:f30c:63de:b667])
+        by smtp.gmail.com with ESMTPSA id bp32-20020a05620a45a000b006faa88ba2b5sm7363401qkb.7.2022.11.07.11.19.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Nov 2022 11:19:04 -0800 (PST)
+Message-ID: <19724e50-cb49-8c74-6807-93ac70a8adba@github.com>
+Date:   Mon, 7 Nov 2022 14:19:03 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20221107174752.91186-1-vdye@github.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.1
+Subject: Re: [PATCH v3 06/11] test-http-server: add stub HTTP server test
+ helper
+To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Lessley Dennington <lessleydennington@gmail.com>,
+        Matthew John Cheetham <mjcheetham@outlook.com>,
+        M Hickford <mirth.hickford@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Matthew John Cheetham <mjcheetham@github.com>
+References: <pull.1352.v2.git.1666372083.gitgitgadget@gmail.com>
+ <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
+ <4947e81546a51883365d0087ce616b6b77e24a63.1667426970.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <4947e81546a51883365d0087ce616b6b77e24a63.1667426970.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 07, 2022 at 09:47:52AM -0800, Victoria Dye wrote:
->  sequencer.c                   |   9 ++-
->  t/t3404-rebase-interactive.sh | 107 ++++++++++++++++++++++++++++++++++
->  2 files changed, 113 insertions(+), 3 deletions(-)
+On 11/2/22 6:09 PM, Matthew John Cheetham via GitGitGadget wrote:
+> From: Matthew John Cheetham <mjcheetham@outlook.com>
+> 
+> Introduce a mini HTTP server helper that in the future will be enhanced
+> to provide a frontend for the git-http-backend, with support for
+> arbitrary authentication schemes.
+> 
+> Right now, test-http-server is a pared-down copy of the git-daemon that
+> always returns a 501 Not Implemented response to all callers.
 
-Looks great, thanks. Will queue.
+Thanks for splitting this out. I ran a diff between daemon.c and
+this version of t/helper/test-http-server.c. Most of the diff was
+functionality removed from daemon.c, and the small bits that were
+new to this file are either comments detailing how the helper
+works or custom bits related to the test environment (like the
+pid file). It was much easier to validate that these changes made
+sense.
+
+Looking good.
 
 Thanks,
-Taylor
+-Stolee
