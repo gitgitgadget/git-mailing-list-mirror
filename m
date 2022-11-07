@@ -2,158 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D5C0C4332F
-	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 16:37:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F389C433FE
+	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 16:58:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232500AbiKGQhO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 11:37:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34848 "EHLO
+        id S232384AbiKGQ61 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 11:58:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232345AbiKGQhM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2022 11:37:12 -0500
+        with ESMTP id S231635AbiKGQ6Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2022 11:58:24 -0500
 Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66C496466
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 08:37:11 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id 13so31726692ejn.3
-        for <git@vger.kernel.org>; Mon, 07 Nov 2022 08:37:11 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9961306
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 08:58:22 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id k2so31869062ejr.2
+        for <git@vger.kernel.org>; Mon, 07 Nov 2022 08:58:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BFEmdo5QMCjXNd6OIKU3rO/aRSsK5tIvbqroCK/+siA=;
-        b=GgBisr44lgPEoji5+NkBIED1NNbdPU62149/fil2aDtXNjdtzuC20xIilQxosBvhMD
-         qJPue9VJyNcBPxTym09TyOYHHa9bTnH2OmxPluPzMiq7JS25A6RhS7eHu0couUgz2oXI
-         6i+cS9j/ZB+eRmDQ4WcdrsGfxNbfGBTItyIZcgnsNVx5jiHLbb0QDTgZL2xMmb8+LDmQ
-         LQDETENoq4V9KpGQl9behkssuS6qgZI8fzo7RfdAxmjqOXgSRCrBot8HQy4cGqtON9CY
-         sQFEtVR6ZLlctt19OURmwbYe1N2SYXo4HDDftP08HE9PCdqBLrPf0vwAycSftpgFG0aI
-         7ttw==
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=a8OfrsMZzjaVsy7pT9Sb3d5b+wuqkli/RfPjeuZA8/M=;
+        b=cXPVhIupkOvg65A3x6QaFdiqirROjRKCu14iR9yy+6DowzTkAvj68m5LkMSIpAjksQ
+         KhspAWb1sC+CixpQrR+eZQnSKuUhNSD6xEt2lKjwT+5QELYkOssti6tvxnQren8t58Sr
+         hA2o9fXuOKGioQ9jamwo/JFka9eSd99k1l+Rtx54GcXnUdZV7RRKu1xjy1opsup0Ce9A
+         SwHCZk7s+nwZxOpAXFlYxsY5nExRaSmmrHP/yATZFNyWOUrzC90NE2DG7jdNX8ZoiQAD
+         N2khQO5OhN1tAYb3LgoQ/rrc2VgfeVD5IwxNdlYUkmp4pF/HOafwCv4XHa4cvnyo0Zdk
+         xeMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BFEmdo5QMCjXNd6OIKU3rO/aRSsK5tIvbqroCK/+siA=;
-        b=4kI1wHnHnOGDJ9RSLvhFRpVp21y3CCGYbvcK5o3GI/2HKk8OFcdFVLcFV11pW1mp+V
-         WulL8kZhW8I66C2LQUawPINy0JQQVT4Xu65qeBQoT5qRb/5m46K3hKq/ckQyr9LTmdCz
-         51oVwO/y62IKsO/BKDzHzDskn1mtR3TOb9xwhszyVMNjFyuRPznaI3Dtpv9E46+nHfuk
-         gGbPE5MVzv3Uhm3xybmfEHTMobvoHFx7B87M4sKjhgm0GbLyf1St/i0ucQMOmBI9i0k0
-         VFH0jSPUgYHNloEbE0448GQQrij4c9i1zQBREtBI1mz2Ang6JT3lLm0Q/0CAi/R0nZ/X
-         chPA==
-X-Gm-Message-State: ACrzQf0HMXz5JOAt1Lm5tqEnqgPRfiLo80svNYMkodvBAXTIKR02TtLm
-        r/dUEydZN5jgAwHs70wPtfs=
-X-Google-Smtp-Source: AMsMyM6o3Vn4XMEynTFKooIzpt//cSru6E73UJoXMYE8t3JX0pN7jLHa9SceLqqbpCa/1mTwGF02gw==
-X-Received: by 2002:a17:907:97d5:b0:7ae:2c4d:9e72 with SMTP id js21-20020a17090797d500b007ae2c4d9e72mr18551419ejc.503.1667839029643;
-        Mon, 07 Nov 2022 08:37:09 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id r1-20020a17090609c100b0078df3b4464fsm3654309eje.19.2022.11.07.08.37.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 08:37:09 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1os57U-000Bhd-1m;
-        Mon, 07 Nov 2022 17:37:08 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 1/2] sequencer: stop exporting GIT_REFLOG_ACTION
-Date:   Mon, 07 Nov 2022 17:12:08 +0100
-References: <pull.1405.git.1667575142.gitgitgadget@gmail.com>
- <e9c3f5ac5c6b7a01ee9e43730889d8066a270271.1667575142.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <e9c3f5ac5c6b7a01ee9e43730889d8066a270271.1667575142.git.gitgitgadget@gmail.com>
-Message-ID: <221107.86iljqvhzf.gmgdl@evledraar.gmail.com>
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=a8OfrsMZzjaVsy7pT9Sb3d5b+wuqkli/RfPjeuZA8/M=;
+        b=lGoAiLWWGCkPGwkbhNMjndGoAf3SiQgpq0KJDE/rxmnDm76eglZDrFRiaQN4P3wmwr
+         XDa5yFNl25D6m1dbe1y/gWIwihmegj7tuZ6/hr4KL5lFdeIjonjxMBYxo/+GYGNzlWn9
+         jOsgt38aGMjIqQXJvXehHuB+WOfMvdOuQvqWqBn52QOvNPLkaX0ryUBuP+6qaCVvTMCu
+         nf1zkj8txjzzWHVRkNm/Jh7y7hzjRQjxGtqLUgeKhJTBeZKfwAcXESIF5TRnQmYASX2F
+         KiYoTdQfSyrcGwaL8PTGiDcXbTrpZqZWK55+J64gvz+jdF6XKT2CTaAKGel68UbhzE+f
+         dmmQ==
+X-Gm-Message-State: ACrzQf2vBIipQhMEEO/RgPLIQ1jTPybqpbxmeGXjx2FKaKLIPCcIsiyS
+        2F1F+HwB1nindyVosNT6VSOw223FeuIDHhqNYPEwInUr3+CuzA==
+X-Google-Smtp-Source: AMsMyM4OlRq8eF7dNgKWWbwTm0nQRpf7NNvw5ZSvwtrOkEsQOec0vaS9vFVacPQHAf+fahr9wmzYshUBzh+NOpKeSLk=
+X-Received: by 2002:a17:907:75f2:b0:7ad:e51e:837f with SMTP id
+ jz18-20020a17090775f200b007ade51e837fmr37318940ejc.0.1667840300676; Mon, 07
+ Nov 2022 08:58:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+From:   andrey a <gvozdila@gmail.com>
+Date:   Mon, 7 Nov 2022 19:58:03 +0300
+Message-ID: <CAOvKmB_qjAm66fAuDBmgGQG7J=+=VW6Fayxfp1zPs5qJfdd=-Q@mail.gmail.com>
+Subject: bug while cloning http repo
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-On Fri, Nov 04 2022, Phillip Wood via GitGitGadget wrote:
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
-
-> +static const char *sequencer_reflog_action(struct replay_opts *opts)
-> +{
-> +	if (!opts->reflog_action) {
-> +		opts->reflog_action = getenv(GIT_REFLOG_ACTION);
-> +		opts->reflog_action =
-> +			xstrdup(opts->reflog_action ? opts->reflog_action
-> +						    : action_name(opts));
-> +	}
-> +
-> +	return opts->reflog_action;
-> +}
-
-We always return an xstrdup'd here, so this should be a "char *" return
-value, not a "const char *"., but
-
->  __attribute__((format (printf, 3, 4)))
->  static const char *reflog_message(struct replay_opts *opts,
->  	const char *sub_action, const char *fmt, ...)
->  {
->  	va_list ap;
->  	static struct strbuf buf = STRBUF_INIT;
-> -	char *reflog_action = getenv(GIT_REFLOG_ACTION);
->  
->  	va_start(ap, fmt);
->  	strbuf_reset(&buf);
-
-Here we just reset the strbuf...
-
-> -	strbuf_addstr(&buf, reflog_action ? reflog_action : action_name(opts));
-> +	strbuf_addstr(&buf, sequencer_reflog_action(opts));
-
-Here we leak the freshly xstrdup'd value, mostly untested, but shouldn't
-this instead be:
-	
-	diff --git a/sequencer.c b/sequencer.c
-	index e23f6f0b718..58a97e04c67 100644
-	--- a/sequencer.c
-	+++ b/sequencer.c
-	@@ -3695,10 +3695,11 @@ static const char *reflog_message(struct replay_opts *opts,
-	 {
-	 	va_list ap;
-	 	static struct strbuf buf = STRBUF_INIT;
-	+	char *msg = sequencer_reflog_action(opts);
-	 
-	 	va_start(ap, fmt);
-	 	strbuf_reset(&buf);
-	-	strbuf_addstr(&buf, sequencer_reflog_action(opts));
-	+	strbuf_attach(&buf, msg, strlen(msg), strlen(msg) + 1);
-	 	if (sub_action)
-	 		strbuf_addf(&buf, " (%s)", sub_action);
-	 	if (fmt) {
-
-Of course that requires dropping the "const", per the above...
+git clone http://git.altlinux.org/gears/r/rust.git
 
 
->  	if (sub_action)
->  		strbuf_addf(&buf, " (%s)", sub_action);
->  	if (fmt) {
-> @@ -4497,7 +4511,7 @@ static int checkout_onto(struct repository *r, struct replay_opts *opts,
->  				RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
->  		.head_msg = reflog_message(opts, "start", "checkout %s",
->  					   onto_name),
-> -		.default_reflog_action = "rebase"
-> +		.default_reflog_action = sequencer_reflog_action(opts)
+What did you expect to happen? (Expected behavior)
 
-Here we'd before hand a fixed string to reset_head(), but now it's
-xstrdup()'d, but the corresponding free() on that side is missing.
+Normal cloned repo appears.
 
-But aren't we always just returing "rebase" here still?
+What happened instead? (Actual behavior)
 
-> [...]
-> @@ -5116,7 +5121,7 @@ static int single_pick(struct repository *r,
->  			TODO_PICK : TODO_REVERT;
->  	item.commit = cmit;
->  
-> -	setenv(GIT_REFLOG_ACTION, action_name(opts), 0);
-> +	opts->reflog_message = sequencer_reflog_action(opts);
->  	return do_pick_commit(r, &item, opts, 0, &check_todo);
+git clone http://git.altlinux.org/gears/r/rust.git
+Cloning into 'rust'...
+error: Unable to get pack file
+http://git.altlinux.org/gears/r/rust.git/objects/pack/pack-42e36950f8cd6e0d242719691491d16dd2e270e6.pack
+transfer closed with 7043414950 bytes remaining to read
+error: Unable to find 7f4c666c73ca05cecab9089c91d8c6dfff5a7cb7 under
+http://git.altlinux.org/gears/r/rust.git
+Cannot obtain needed object 7f4c666c73ca05cecab9089c91d8c6dfff5a7cb7
+error: fetch failed.
 
-Here you're adding a new memory leak, which you can see if you run
-e.g. the 1st test of ./t1013-read-tree-submodule.sh before & after this
-change.
+Note that hash of broken object is always same.
+What's different between what you expected and what actually happened?
+
+Looks like versions before 2.33.4 works fine. And after 2.33.5 (and
+2.34.1 2.35.1) reproduce bug.
+
+Anything else you want to add:
+
+Reproducible on Ubuntu 22(2.34.1), Altlinux p10(2.33.5), Gentoo(2.35.1)
+Bug reproducible with latest git version 2.38.1.385.g3b08839926/
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.34.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.15.0-52-generic #58-Ubuntu SMP Thu Oct 13 08:03:55 UTC
+2022 x86_64
+compiler info: gnuc: 11.2
+libc info: glibc: 2.35
+$SHELL (typically, interactive shell): /bin/bash
+
+$ GIT_TRACE2=2 git clone http://git.altlinux.org/gears/r/rust.git
+17:28:03.618164 common-main.c:48                  version 2.34.1
+17:28:03.618728 common-main.c:49                  start git clone
+http://git.altlinux.org/gears/r/rust.git
+17:28:03.618840 compat/linux/procinfo.c:170       cmd_ancestry bash <-
+konsole <- gnome-shell <- systemd <- systemd
+17:28:03.619295 git.c:456                         cmd_name clone (clone)
+17:28:03.620976 repository.c:132                  worktree /home/krom/soft/rust
+Cloning into 'rust'...
+17:28:03.629163 run-command.c:740                 child_start[0] git
+remote-http origin http://git.altlinux.org/gears/r/rust.git
+17:28:03.641629 common-main.c:48                  version 2.34.1
+17:28:03.642043 common-main.c:49                  start
+/usr/lib/git-core/git remote-http origin
+http://git.altlinux.org/gears/r/rust.git
+17:28:03.642169 compat/linux/procinfo.c:170       cmd_ancestry git <-
+bash <- konsole <- gnome-shell <- systemd <- systemd
+17:28:03.642678 git.c:736                         cmd_name
+_run_dashed_ (clone/_run_dashed_)
+17:28:03.643132 run-command.c:740                 child_start[0]
+git-remote-http origin http://git.altlinux.org/gears/r/rust.git
+17:28:03.649348 common-main.c:48                  version 2.34.1
+17:28:03.649841 common-main.c:49                  start
+/usr/lib/git-core/git-remote-http origin
+http://git.altlinux.org/gears/r/rust.git
+17:28:03.649975 compat/linux/procinfo.c:170       cmd_ancestry git <-
+git <- bash <- konsole <- gnome-shell <- systemd <- systemd
+17:28:03.650025 repository.c:132                  worktree /home/krom/soft
+17:28:03.650044 remote-curl.c:1493                cmd_name remote-curl
+(clone/_run_dashed_/remote-curl)
+remote: 09912a27cf9a7028344e23986c14fd03341600af        refs/heads/c7
+remote: 09912a27cf9a7028344e23986c14fd03341600af        refs/heads/c7.1
+
+...
+
+remote: d8a6a190551618fae1b205c3210fad9f5955877e        refs/tags/1.58.0-alt1^{}
+remote: a3658ef7fb155cfa1f877abf6e59fb95acebc5f9        refs/tags/1.58.1
+remote: b2f00be3d04a8f1eeb605957ceaa7e9325f892fe        refs/tags/1.58.1^{}
+remote: 12bd79da893d981a2588d6b414da48cc2950fd3b        refs/tags/1.58.1-alt1
+remote: e0905262166aff9e8a6c245294dba39f4cc0
+17:32:29.224262 usage.c:65                        error unable to
+access 'http://git.altlinux.org/gears/r/rust.git/': Recv failure:
+Connection reset by peer
+fatal: unable to access 'http://git.altlinux.org/gears/r/rust.git/':
+Recv failure: Connection reset by peer
+17:32:29.224313 usage.c:69                        exit
+elapsed:265.575951 code:128
+17:32:29.224331 trace2/tr2_tgt_normal.c:123       atexit
+elapsed:265.575982 code:128
+17:32:29.225644 run-command.c:996                 child_exit[0]
+pid:190489 code:128 elapsed:265.582499
+17:32:29.225698 git.c:758                         exit
+elapsed:265.591604 code:128
+17:32:29.225733 trace2/tr2_tgt_normal.c:123       atexit
+elapsed:265.591639 code:128
+17:32:29.226442 transport-helper.c:581            exit
+elapsed:265.971163 code:128
+17:32:29.228597 trace2/tr2_tgt_normal.c:123       atexit
+elapsed:265.973323 code:128
+
+
+[Enabled Hooks]
+not run from a git repository - no hooks to show
+
+Hope this report can help. Feel free to ask additional questions or
+contact me directly.
+Andrey Yakunin
