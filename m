@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 034DAC433FE
-	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 18:36:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DCFAFC4332F
+	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 18:36:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231408AbiKGSgi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 13:36:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49960 "EHLO
+        id S233188AbiKGSgl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 13:36:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233098AbiKGSg1 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233137AbiKGSg1 (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 7 Nov 2022 13:36:27 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51FE926483
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 10:36:16 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id j15so17559212wrq.3
-        for <git@vger.kernel.org>; Mon, 07 Nov 2022 10:36:16 -0800 (PST)
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F6CB2648A
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 10:36:17 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id k8so17610547wrh.1
+        for <git@vger.kernel.org>; Mon, 07 Nov 2022 10:36:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SjsBoUSCCBGR2rdNs7h7mrHxY35extMQtstKoNdGBAM=;
-        b=MUF3Ox7IUGsFlhV2voeZhY8jThGs7Wf3zN0jbgCU0sRrgcKm73DLV7gGY88mNoWjy4
-         dLmDHEiRVKXSXbU65/JuoIc9dsnJWk7VrdFj71aDa8WPUidwfOuJ8ITQI4I5t8KlSXcq
-         7V5u5NVH0yqsLsATSeyGR/HoLca7khqancX2kp5X9vdbh1PRdmUgBEYMX4p8UtaKwcm1
-         HHs1uF1dY6Fbi2/oFnC87SwIFF7en1zC46Vgg1tM19urA3YF5CipuhF81cD+GLuzqKyj
-         GDzR90uGEXFFd4aJv59j9G/+u0LeGzPp0UeeAPrSX5RYkuEeTxkvMyqjgy4fcbogSFc5
-         CQfA==
+        bh=tl+O9eIsm0qB/+MG2tKxqwEaGg64A+ZDbNtireyw8vg=;
+        b=XiZB0rgt5a7QgptSpfOP0SpGSZFWnU/Arpv6Vl5ch31VCraY0+cJig1FaDq3bsmr1+
+         Qsy7UULaztfbqNZUYuo4pH1nILaG+EkMwmKBxNJGIiEl+7W4awPpLjGUMgbtAJ9kd5Vk
+         WbWLIUmz0w/J1hcuXvT6Ri3ZGb9U1TRQucCpLhGanTDSHg05HopMOGWdnb70FWjvmHvr
+         lKJL2/jr0+xVJYr5ZHirAMskxJWLdCroLvNM15SrnlKOs6lPPmr7aRtOWl3CrO5/RxYn
+         bAHqS/xCk1E5jx2gDWq8n6useJU/Du6gFsDAaiNQRd/mt4Q5Tik5rkMuWpw75KRGyQVM
+         Jmkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=SjsBoUSCCBGR2rdNs7h7mrHxY35extMQtstKoNdGBAM=;
-        b=bGS1Z39E82KZ4dqaHTEUSwtK4N5ITJy8wlJax595jHpB3urZGSbN3aktG0xGmZ3O/H
-         TQjsqw0AuwdZrMdWiWAKh8DeddG0Gn0tLi6crFNYAuijk17BUsYvdA6ThcH+UI0p49Pq
-         bZHM9fWBPZ1HxYAVS9KehCNsaLUGab+8W69cTaYCPb/EeWF5iRR4OzJkvIDbQXcZZRYB
-         Fprv7u3SJxoNW0nBftP65L3nfple3rDft7ZcLU9u+nt55lIXRkGuTFDr0LJ0fYVrdWEY
-         xPMKoDxaICeHdIkOlzu6JqFvQs12kmn7P5a2Xg94+eYQY+gBmfgh61jXGbO83X6kXyS6
-         ODQA==
-X-Gm-Message-State: ACrzQf3NxN7iIdBMUBVImZDWzDbOQ+n8CX8lK3yQxHlY78QZkAEv31mm
-        CPpHKFEwZqWZ2A/D+RiFH58wdG1Jq6U=
-X-Google-Smtp-Source: AMsMyM7uM6pxz5JOrvp15bFDj2lGrIrad+mQ7WK/uRVC6wxw5E4IXZge3N5HgBcQ4q3WE/pzLJj2EA==
-X-Received: by 2002:a05:6000:1ce:b0:236:ef02:bb56 with SMTP id t14-20020a05600001ce00b00236ef02bb56mr19910340wrx.238.1667846174601;
-        Mon, 07 Nov 2022 10:36:14 -0800 (PST)
+        bh=tl+O9eIsm0qB/+MG2tKxqwEaGg64A+ZDbNtireyw8vg=;
+        b=bWN8Fu7S94vQPeQwmZggrNlS6G6hz52FCWbcXfD3MV5h+vMd/LOccdwnrfryPOLEmE
+         6AIwwodTa5fL0gkbQvJFm+gXXd02699091cuN0M4zwA4j6bPOKbEdx7etXsUNO1NjC0w
+         mOC/Di6Rp7Ntn1fLkAUH223bIUNv5/uiKsUu+xAfVHrmG1Th9IfC/1xLNww53yHZ0gEE
+         D7zXTidT0WY667Cs2bf/PDjZzf5TRt6AOR0mpdpJ+VPUE/VCNZZ0G8jTw/L6vU+3ik+0
+         bxV0IPOOY/J5KNml95v+nDGbqe3eneNL5JP93vJ0th5tyHCMvXm3Ac41PqIU8QZOmyj6
+         E2Og==
+X-Gm-Message-State: ACrzQf3ur5b+H7sxxRVf3/w8xA+Juo6IMhPNqXJkWxQAL+NKag/Cd7zc
+        QvBWivo4o3FGFKRPrGXmqhYyqq/gSVc=
+X-Google-Smtp-Source: AMsMyM663zRxM0+DneQz0qjXGkLwx2mQUzMkSIIRmpkmy54uLVXjJJtsPiz6gQwZIuSD/OmKjDh5qQ==
+X-Received: by 2002:a05:6000:808:b0:236:9822:718d with SMTP id bt8-20020a056000080800b002369822718dmr32891715wrb.254.1667846175612;
+        Mon, 07 Nov 2022 10:36:15 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o15-20020a056000010f00b0023691d62cffsm8081439wrx.70.2022.11.07.10.36.13
+        by smtp.gmail.com with ESMTPSA id e5-20020adfef05000000b00225307f43fbsm8122945wro.44.2022.11.07.10.36.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 10:36:14 -0800 (PST)
-Message-Id: <a7bf8cbec45859e79ac71dea06be391f75a0a524.1667846164.git.gitgitgadget@gmail.com>
+        Mon, 07 Nov 2022 10:36:15 -0800 (PST)
+Message-Id: <ff176b52306345fbb2ad96193b890839d7959015.1667846164.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
 References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 07 Nov 2022 18:35:42 +0000
-Subject: [PATCH 08/30] chunk-format: document trailing table of contents
+Date:   Mon, 07 Nov 2022 18:35:43 +0000
+Subject: [PATCH 09/30] chunk-format: store chunk offset during write
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,50 +68,47 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-It will be helpful to allow a trailing table of contents when writing
-some file types with the chunk-format API. The main reason is that it
-allows dynamically computing the chunk sizes while writing the file.
-This can use fewer resources than precomputing all chunk sizes in
-advance.
+As a preparatory step to allowing trailing table of contents, store the
+offsets of each chunk as we write them. This replaces an existing use of
+a local variable, but the stored value will be used in the next change.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/gitformat-chunk.txt | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ chunk-format.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/gitformat-chunk.txt b/Documentation/gitformat-chunk.txt
-index c01f5567c4f..ee3718c4306 100644
---- a/Documentation/gitformat-chunk.txt
-+++ b/Documentation/gitformat-chunk.txt
-@@ -52,8 +52,27 @@ The final entry in the table of contents must be four zero bytes. This
- confirms that the table of contents is ending and provides the offset for
- the end of the chunk-based data.
+diff --git a/chunk-format.c b/chunk-format.c
+index 0275b74a895..f1b2c8a8b36 100644
+--- a/chunk-format.c
++++ b/chunk-format.c
+@@ -13,6 +13,7 @@ struct chunk_info {
+ 	chunk_write_fn write_fn;
  
-+The default chunk format assumes the table of contents appears at the
-+beginning of the file (after the header information) and the chunks are
-+ordered by increasing offset. Alternatively, the chunk format allows a
-+table of contents that is placed at the end of the file (before the
-+trailing hash) and the offsets are in descending order. In this trailing
-+table of contents case, the data in order looks instead like the following
-+table:
-+
-+  | Chunk ID (4 bytes) | Chunk Offset (8 bytes) |
-+  |--------------------|------------------------|
-+  | 0x0000             | OFFSET[C+1]            |
-+  | ID[C]              | OFFSET[C]              |
-+  | ...                | ...                    |
-+  | ID[0]              | OFFSET[0]              |
-+
-+The concrete file format that uses the chunk format will mention that it
-+uses a trailing table of contents if it uses it. By default, the table of
-+contents is in ascending order before all chunk data.
-+
- Note: The chunk-based format expects that the file contains _at least_ a
--trailing hash after `OFFSET[C+1]`.
-+trailing hash after either `OFFSET[C+1]` or the trailing table of contents.
+ 	const void *start;
++	off_t offset;
+ };
  
- Functions for working with chunk-based file formats are declared in
- `chunk-format.h`. Using these methods provide extra checks that assist
+ struct chunkfile {
+@@ -78,16 +79,16 @@ int write_chunkfile(struct chunkfile *cf, void *data)
+ 	hashwrite_be64(cf->f, cur_offset);
+ 
+ 	for (i = 0; i < cf->chunks_nr; i++) {
+-		off_t start_offset = hashfile_total(cf->f);
++		cf->chunks[i].offset = hashfile_total(cf->f);
+ 		result = cf->chunks[i].write_fn(cf->f, data);
+ 
+ 		if (result)
+ 			goto cleanup;
+ 
+-		if (hashfile_total(cf->f) - start_offset != cf->chunks[i].size)
++		if (hashfile_total(cf->f) - cf->chunks[i].offset != cf->chunks[i].size)
+ 			BUG("expected to write %"PRId64" bytes to chunk %"PRIx32", but wrote %"PRId64" instead",
+ 			    cf->chunks[i].size, cf->chunks[i].id,
+-			    hashfile_total(cf->f) - start_offset);
++			    hashfile_total(cf->f) - cf->chunks[i].offset);
+ 	}
+ 
+ cleanup:
 -- 
 gitgitgadget
 
