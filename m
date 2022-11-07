@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3462CC43217
-	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 18:37:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36D24C4332F
+	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 18:37:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233169AbiKGShP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 13:37:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50076 "EHLO
+        id S233170AbiKGShT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 13:37:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233142AbiKGSga (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2022 13:36:30 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6890D24F3F
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 10:36:23 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id j5-20020a05600c410500b003cfa9c0ea76so2299466wmi.3
-        for <git@vger.kernel.org>; Mon, 07 Nov 2022 10:36:23 -0800 (PST)
+        with ESMTP id S233200AbiKGSgo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2022 13:36:44 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CB872792F
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 10:36:25 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id bs21so17580516wrb.4
+        for <git@vger.kernel.org>; Mon, 07 Nov 2022 10:36:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Xf2uJpX9giLjZADQIFnMMNnHnj/OzmZFTvDuR/mGwNg=;
-        b=THHQ4G/SAjiN975lcWjUbIMVFjaBrdQu3XzvzdN8xFo1PMHRh9RXUkJSBtOAkHrPI3
-         zfLtLM+ox45tsASR/slf/8Jb0UxxptjvX/a5b89kwGFywbBSBxivtzz3U3YF7q2i9MKl
-         vHF1Biu2PxiU/6GIPTlLLnrY+is3uR8iaEUQTkSc753J4OiC4P9YZBjq+IcPZ0fTKDWM
-         Go9cWvr5NxV8Y4Bc/0r/1gxvrCszdNUhL5WugeOoGjnn66gTtWCzEXAXwuHJkcMENuyp
-         k3pgBPi8OlzgHbdYY6lWHXPyzEvOABnDvij9rgwZhlju8e1/mSeK4l+IrAjtnLpGcwgD
-         0zUw==
+        bh=zlu7Xg4pc6JmgPYy6uvF/YsQqtsrVJL4KfVD4FBTPDQ=;
+        b=EBP4MuCCUL5SL4UTVKOr5xFd0SXhNna3l6guvBbQu2SK91htvXieERk+cVfoNaRBLC
+         gHJ1MDhoRGuR/fxsfb918oT5wKor4jTISqIcy7O/M3Q0KCO4oLMhX/b+6rvxXagA9uAP
+         8itoGhCysb8kFMRWjQygRZZNBcxekABxn/t1VYxZDNWApR8RdL1pNKW3P8lP3BgCbAkV
+         O9a3K7l1V26/vT9nAJc4lv73AoP3Vx4kiY/rwYTqUM4f7S6CU7mWRnk0w8VWy9WekhPn
+         wea2eeKIJk07ZLIznLpaqif7nBjOhzz55PfZVcNnxAMKK7m+6qVbfaUSb0QacOhN3Lgl
+         iytg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Xf2uJpX9giLjZADQIFnMMNnHnj/OzmZFTvDuR/mGwNg=;
-        b=Nu5wbObV+pJ0u1LZOgc3JQku/PMfo/44WH7R4PTgoy+N4FN/rDjMlbU/aICZ59+9lg
-         9aC2RxASBnvu9Fz3qJBbjH84yeflB2ZZexiUWZ0ouhZLk6lMm4PGOpXXYz6NGW+bj++y
-         7y969GT4rjohKEznu1tQ47J4nFuPwtkYUfc9boT+kd26PY0ws7PuALXzp5rfjLTC6X7Q
-         xsr8kaSOZXybjQW3YoeDYeYXLzh6HB/snnWncXOiGJoZnmevsv2/Vxfo50Yfm8kAkONN
-         Ek8fZLWsZfu8TIOThn3Nd7K4WklcpC3mA+RPYbACs/wGwX8p3cHi9iIpprh1pl/OUWY8
-         5MNA==
-X-Gm-Message-State: ACrzQf3yCs7Paf6zEDGAuhCh7YwiMU1GnusRmaOMD3P/hhcUSzAzrRqy
-        EKhX7WPdW6s+t/bpkT/KdhIC9BK/CKw=
-X-Google-Smtp-Source: AMsMyM4eIWq2FZMmv57FA8hNKHY6QyowzdnCsbrX3hcz7KJ5EIVVIHtYyKh5eVPwJ9cI4hxyIuhZCg==
-X-Received: by 2002:a05:600c:358f:b0:3c6:da94:66f9 with SMTP id p15-20020a05600c358f00b003c6da9466f9mr33447744wmq.142.1667846181582;
-        Mon, 07 Nov 2022 10:36:21 -0800 (PST)
+        bh=zlu7Xg4pc6JmgPYy6uvF/YsQqtsrVJL4KfVD4FBTPDQ=;
+        b=wysVrnjTEQvvu8eFn9Pm4Ofqh0ky2j7xPGG2ZuxjmHnKn6wxVijPU3Pb+55BjCFXUJ
+         IZLEZ70Z2Ib/33ti/VMkiYNVnu8hmv/m72RlXHgu/fXB9IHG1qBFLrwf1DrX8d0JjcuE
+         C+IYHf5iWHd5b7KmhF5qZZe9IzgNpWI4XshM3MS8GD1f422XHFoDI3k/5dtxC5TpfiCM
+         yyoSTR0BTymRUpM/qLA90OypTqJuWlESWn2m3A5iqlPTmCUsLS9V7PJQPvQb44COQ3Hr
+         7CQV8ADDcRq67HdylT7WHI0yyWL3xYW2M5HSbB+HOfNSFiZ5WiPEZcGUWMrvezQj+pAc
+         yr1g==
+X-Gm-Message-State: ACrzQf2112sbUKpJgTMCPYv3zzKK62siskliFUslzD4fpwwF2AQcdBnP
+        DbBB/h+VPmCt2qLcTIRY+PyRQehSolU=
+X-Google-Smtp-Source: AMsMyM7pojQaR3ohIF9GbQS2yND8Kjg4VvEXHlrErZ4iWGgvECCntPOkPtQqTYqp0AhKWUoH9UAvVA==
+X-Received: by 2002:a5d:650c:0:b0:236:49d9:8e83 with SMTP id x12-20020a5d650c000000b0023649d98e83mr32522853wru.714.1667846183687;
+        Mon, 07 Nov 2022 10:36:23 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5-20020a05600c26c500b003b50428cf66sm8556509wmv.33.2022.11.07.10.36.20
+        by smtp.gmail.com with ESMTPSA id i2-20020a05600c354200b003c71358a42dsm16405634wmq.18.2022.11.07.10.36.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 10:36:21 -0800 (PST)
-Message-Id: <a3819f665977194a8f44061d4a52f86d44cf6e0a.1667846165.git.gitgitgadget@gmail.com>
+        Mon, 07 Nov 2022 10:36:23 -0800 (PST)
+Message-Id: <eb6152f1d39310b2e0527bbe199e25b941744753.1667846165.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
 References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 07 Nov 2022 18:35:49 +0000
-Subject: [PATCH 15/30] packed-backend: create abstraction for writing refs
+Date:   Mon, 07 Nov 2022 18:35:51 +0000
+Subject: [PATCH 17/30] packed-backend: create shell of v2 writes
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,143 +68,194 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The packed-refs file is a plaintext file format that starts with a
-header line, then each ref is given as one or two lines (two if there is
-a peeled value). These lines are written as part of a sequence of
-updates which are merged with the existing ref iterator in
-merge_iterator_and_updates(). That method is currently tied directly to
-write_packed_entry_v1().
-
-When creating a new version of the packed-file format, it would be
-valuable to use this merging logic in an identical way. Create a new
-function pointer type, write_ref_fn, and use that type in
-merge_iterator_and_updates().
-
-Notably, the function pointer type no longer depends on a FILE pointer,
-but instead takes an arbitrary "void *write_data" parameter. This
-flexibility will be critical in the future, since the planned v2 format
-will use the chunk-format API and need a more complicated structure than
-the output FILE.
-
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- refs/packed-backend.c   | 26 +++++++++++++++-----------
- refs/packed-backend.h   | 16 ++++++++++++++--
- refs/packed-format-v1.c |  7 +++++--
- 3 files changed, 34 insertions(+), 15 deletions(-)
+ Makefile                |  1 +
+ refs/packed-backend.c   | 75 +++++++++++++++++++++++++++++++++++------
+ refs/packed-backend.h   |  7 ++++
+ refs/packed-format-v2.c | 38 +++++++++++++++++++++
+ 4 files changed, 110 insertions(+), 11 deletions(-)
+ create mode 100644 refs/packed-format-v2.c
 
+diff --git a/Makefile b/Makefile
+index 3dc887941d4..16cd245e0ad 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1058,6 +1058,7 @@ LIB_OBJS += refs/files-backend.o
+ LIB_OBJS += refs/iterator.o
+ LIB_OBJS += refs/packed-backend.o
+ LIB_OBJS += refs/packed-format-v1.o
++LIB_OBJS += refs/packed-format-v2.o
+ LIB_OBJS += refs/ref-cache.o
+ LIB_OBJS += refspec.o
+ LIB_OBJS += remote.o
 diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 0dff78f02c8..7ed9475812c 100644
+index 655aab939be..09f7b74584f 100644
 --- a/refs/packed-backend.c
 +++ b/refs/packed-backend.c
-@@ -535,10 +535,11 @@ static void add_write_error(struct packed_ref_store *refs, struct strbuf *err)
- 		    get_tempfile_path(refs->tempfile), strerror(errno));
+@@ -692,6 +692,45 @@ error:
+ 	return ok;
  }
  
--static int merge_iterator_and_updates(struct packed_ref_store *refs,
--				      struct string_list *updates,
--				      struct strbuf *err,
--				      FILE *out)
-+int merge_iterator_and_updates(struct packed_ref_store *refs,
-+			       struct string_list *updates,
-+			       struct strbuf *err,
-+			       write_ref_fn write_fn,
-+			       void *write_data)
++static int write_with_updates_v1(struct packed_ref_store *refs,
++				 struct string_list *updates,
++				 struct strbuf *err)
++{
++	FILE *out;
++
++	out = fdopen_tempfile(refs->tempfile, "w");
++	if (!out) {
++		strbuf_addf(err, "unable to fdopen packed-refs tempfile: %s",
++			    strerror(errno));
++		goto error;
++	}
++
++	if (write_packed_file_header_v1(out) < 0) {
++		add_write_error(refs, err);
++		goto error;
++	}
++
++	return merge_iterator_and_updates(refs, updates, err,
++					  write_packed_entry_v1, out);
++
++error:
++	return -1;
++}
++
++static int write_with_updates_v2(struct packed_ref_store *refs,
++				 struct string_list *updates,
++				 struct strbuf *err)
++{
++	struct write_packed_refs_v2_context *ctx = create_v2_context(refs, updates, err);
++	int ok = -1;
++
++	if ((ok = write_packed_refs_v2(ctx)) < 0)
++		add_write_error(refs, err);
++
++	free_v2_context(ctx);
++	return ok;
++}
++
+ /*
+  * Write the packed refs from the current snapshot to the packed-refs
+  * tempfile, incorporating any changes from `updates`. `updates` must
+@@ -707,9 +746,9 @@ static int write_with_updates(struct packed_ref_store *refs,
+ 			      struct strbuf *err)
  {
- 	struct ref_iterator *iter = NULL;
- 	int ok, i;
-@@ -634,9 +635,10 @@ static int merge_iterator_and_updates(struct packed_ref_store *refs,
- 			struct object_id peeled;
- 			int peel_error = ref_iterator_peel(iter, &peeled);
+ 	int ok;
+-	FILE *out;
+ 	struct strbuf sb = STRBUF_INIT;
+ 	char *packed_refs_path;
++	int version;
  
--			if (write_packed_entry_v1(out, iter->refname,
--						  iter->oid,
--						  peel_error ? NULL : &peeled)) {
-+			if (write_fn(iter->refname,
-+				     iter->oid,
-+				     peel_error ? NULL : &peeled,
-+				     write_data)) {
- 				add_write_error(refs, err);
- 				goto error;
- 			}
-@@ -657,9 +659,10 @@ static int merge_iterator_and_updates(struct packed_ref_store *refs,
- 			int peel_error = peel_object(&update->new_oid,
- 						     &peeled);
+ 	if (!is_lock_file_locked(&refs->lock))
+ 		BUG("write_with_updates() called while unlocked");
+@@ -731,21 +770,35 @@ static int write_with_updates(struct packed_ref_store *refs,
+ 	}
+ 	strbuf_release(&sb);
  
--			if (write_packed_entry_v1(out, update->refname,
--						  &update->new_oid,
--						  peel_error ? NULL : &peeled)) {
-+			if (write_fn(update->refname,
-+				     &update->new_oid,
-+				     peel_error ? NULL : &peeled,
-+				     write_data)) {
- 				add_write_error(refs, err);
- 				goto error;
- 			}
-@@ -725,7 +728,8 @@ static int write_with_updates(struct packed_ref_store *refs,
+-	out = fdopen_tempfile(refs->tempfile, "w");
+-	if (!out) {
+-		strbuf_addf(err, "unable to fdopen packed-refs tempfile: %s",
+-			    strerror(errno));
+-		goto error;
++	if (git_config_get_int("refs.packedrefsversion", &version)) {
++		/*
++		 * Set the default depending on the current extension
++		 * list. Default to version 1 if available, but allow a
++		 * default of 2 if only "packed-v2" exists.
++		 */
++		if (refs->store_flags & REF_STORE_FORMAT_PACKED)
++			version = 1;
++		else if (refs->store_flags & REF_STORE_FORMAT_PACKED_V2)
++			version = 2;
++		else
++			BUG("writing a packed-refs file without an extension");
+ 	}
+ 
+-	if (write_packed_file_header_v1(out) < 0) {
+-		add_write_error(refs, err);
++	switch (version) {
++	case 1:
++		ok = write_with_updates_v1(refs, updates, err);
++		break;
++
++	case 2:
++		ok = write_with_updates_v2(refs, updates, err);
++		break;
++
++	default:
++		strbuf_addf(err, "unknown packed-refs version: %d",
++			    version);
  		goto error;
  	}
  
--	ok = merge_iterator_and_updates(refs, updates, err, out);
-+	ok = merge_iterator_and_updates(refs, updates, err,
-+					write_packed_entry_v1, out);
- 
+-	ok = merge_iterator_and_updates(refs, updates, err,
+-					write_packed_entry_v1, out);
+-
  	if (ok != ITER_DONE) {
  		strbuf_addstr(err, "unable to write packed-refs file: "
+ 			      "error iterating over old contents");
 diff --git a/refs/packed-backend.h b/refs/packed-backend.h
-index 143ed6d4f6c..b6908bb002c 100644
+index b6908bb002c..e76f26bfc46 100644
 --- a/refs/packed-backend.h
 +++ b/refs/packed-backend.h
-@@ -192,6 +192,17 @@ struct packed_ref_iterator {
- 	unsigned int flags;
- };
+@@ -243,4 +243,11 @@ int write_packed_entry_v1(const char *refname,
+ 			  const struct object_id *peeled,
+ 			  void *write_data);
  
-+typedef int (*write_ref_fn)(const char *refname,
-+			    const struct object_id *oid,
-+			    const struct object_id *peeled,
-+			    void *write_data);
++struct write_packed_refs_v2_context;
++struct write_packed_refs_v2_context *create_v2_context(struct packed_ref_store *refs,
++						       struct string_list *updates,
++						       struct strbuf *err);
++int write_packed_refs_v2(struct write_packed_refs_v2_context *ctx);
++void free_v2_context(struct write_packed_refs_v2_context *ctx);
 +
-+int merge_iterator_and_updates(struct packed_ref_store *refs,
-+			       struct string_list *updates,
-+			       struct strbuf *err,
-+			       write_ref_fn write_fn,
-+			       void *write_data);
-+
- /**
-  * Parse the buffer at the given snapshot to verify that it is a
-  * packed-refs file in version 1 format. Update the snapshot->peeled
-@@ -227,8 +238,9 @@ void verify_buffer_safe_v1(struct snapshot *snapshot);
- void sort_snapshot_v1(struct snapshot *snapshot);
- int write_packed_file_header_v1(FILE *out);
- int next_record_v1(struct packed_ref_iterator *iter);
--int write_packed_entry_v1(FILE *fh, const char *refname,
-+int write_packed_entry_v1(const char *refname,
- 			  const struct object_id *oid,
--			  const struct object_id *peeled);
-+			  const struct object_id *peeled,
-+			  void *write_data);
- 
  #endif /* REFS_PACKED_BACKEND_H */
-diff --git a/refs/packed-format-v1.c b/refs/packed-format-v1.c
-index ef9e6618c89..2d071567c02 100644
---- a/refs/packed-format-v1.c
-+++ b/refs/packed-format-v1.c
-@@ -441,10 +441,13 @@ int write_packed_file_header_v1(FILE *out)
-  * error, return a nonzero value and leave errno set at the value left
-  * by the failing call to `fprintf()`.
-  */
--int write_packed_entry_v1(FILE *fh, const char *refname,
-+int write_packed_entry_v1(const char *refname,
- 			  const struct object_id *oid,
--			  const struct object_id *peeled)
-+			  const struct object_id *peeled,
-+			  void *write_data)
- {
-+	FILE *fh = write_data;
+diff --git a/refs/packed-format-v2.c b/refs/packed-format-v2.c
+new file mode 100644
+index 00000000000..ecf3cc93694
+--- /dev/null
++++ b/refs/packed-format-v2.c
+@@ -0,0 +1,38 @@
++#include "../cache.h"
++#include "../config.h"
++#include "../refs.h"
++#include "refs-internal.h"
++#include "packed-backend.h"
++#include "../iterator.h"
++#include "../lockfile.h"
++#include "../chdir-notify.h"
 +
- 	if (fprintf(fh, "%s %s\n", oid_to_hex(oid), refname) < 0 ||
- 	    (peeled && fprintf(fh, "^%s\n", oid_to_hex(peeled)) < 0))
- 		return -1;
++struct write_packed_refs_v2_context {
++	struct packed_ref_store *refs;
++	struct string_list *updates;
++	struct strbuf *err;
++};
++
++struct write_packed_refs_v2_context *create_v2_context(struct packed_ref_store *refs,
++						       struct string_list *updates,
++						       struct strbuf *err)
++{
++	struct write_packed_refs_v2_context *ctx;
++	CALLOC_ARRAY(ctx, 1);
++
++	ctx->refs = refs;
++	ctx->updates = updates;
++	ctx->err = err;
++
++	return ctx;
++}
++
++int write_packed_refs_v2(struct write_packed_refs_v2_context *ctx)
++{
++	return 0;
++}
++
++void free_v2_context(struct write_packed_refs_v2_context *ctx)
++{
++	free(ctx);
++}
 -- 
 gitgitgadget
 
