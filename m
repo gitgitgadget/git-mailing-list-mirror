@@ -2,95 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 982B2C433FE
-	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 20:49:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC477C4332F
+	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 20:50:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232982AbiKGUtz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 15:49:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40364 "EHLO
+        id S233066AbiKGUut (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 15:50:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233024AbiKGUtc (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2022 15:49:32 -0500
-Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BF7327DCD
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 12:49:30 -0800 (PST)
-Received: by mail-qk1-x72f.google.com with SMTP id x21so7985228qkj.0
-        for <git@vger.kernel.org>; Mon, 07 Nov 2022 12:49:30 -0800 (PST)
+        with ESMTP id S233056AbiKGUuq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2022 15:50:46 -0500
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE3E327CC5
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 12:50:45 -0800 (PST)
+Received: by mail-qv1-xf2b.google.com with SMTP id c8so8948189qvn.10
+        for <git@vger.kernel.org>; Mon, 07 Nov 2022 12:50:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=cOh2c7aazofnCu/bEFOfS+ApO5t10F5iF4iGtHUpWBo=;
-        b=CjBaoV642tLSN5fkRloQmrY3e9dScyDtXUel88oPpnKlv8bRnGAViINHZB8A/AB3GQ
-         Q+8EaO2U5rUeiXIG7jfGGxJ4xjxfKcaQrx848ax3jQBSExObc9MZ06QONl+fjDLl+QZb
-         ENhIVj2H7QY5JeJeFJwzeTGIWPiOK66OQSb4qrv+GW/r1Pf/6iWzsA9dORUsA1gYp3rN
-         TSaY8Jra/fkXRpaXYQ0OepLoIq1dkhpTkMAjp+R0hd/j7TOKbuwojPNUYPw1+IXXbMlh
-         X9TcZcLzW6AQtWsC0KiU1o0TXvGhpe1hMmey4b3zr4WcTx9z47KpKrTxs4oxxubPbhIZ
-         r7Ag==
+        bh=d292BFttCGGlJb+3WMEsswVyNh2OkDxnlwAoBZ7vfRM=;
+        b=ZPd3ML8cP/20n6aGHtD6LHNmH3G6zPFsJOFrCftTJT7lwn/V+Rq4GYIFqKxbTp4ud/
+         wTvQb+sgFXTNWdNqdh9ek4KxTUX0MlEkKUJKqveW4Omjx3dljoATwIkFRpS6/9462fX5
+         kYe8lXQioPq+/tFbREAQVPCFyHyCw7GwtgUS1vUvRClvYsqQenOvwGIefSbE8RYJZNz4
+         W/VkqIPBzf6Y0eJEZa0JGjySReMqND23rNYQNJBVnFHWrRa/evhstq/Ggfopg0CTORDX
+         O0juQzPCqYWvj+rKW/fbIiw+eeBOHWSdkWB1LQoKRPjy6CjDFh6qTqutIotFCTljKS46
+         oeIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cOh2c7aazofnCu/bEFOfS+ApO5t10F5iF4iGtHUpWBo=;
-        b=5waCVlUp84xp0hc6qPJKFY7AZGBv68gJyjgy1z+9ur6p96795ewLHSYTqVZrrejkjn
-         xn1+8IeMPhoau1EZDI7YlAcy2hJS5xRWvqy/m6PY4UuxmQmDk0zb1XB+jDfLnYHlKlk6
-         p39VoNKsFoj90rsJqCC30uk+KfjsOGpDkwUS8gWnaZ/fcJKB8CH3CiGJm1OUY0B7Jpgv
-         KKQVf32k3/lMELN2sKUsVW58Mnkhz+MouABS8jZaZWm+0BAKx2ZqdoH+HX/yXAGp7Q7/
-         6tt8PSGsawv3YtlYjcRvWpr9cUmYFP+dhXDstkr81SemCbWZ+4Mvs8MQOctGBS5JFznh
-         igVA==
-X-Gm-Message-State: ACrzQf0BCmaIIXBZ++ADste1ysiZWEdIhn9ddJR/lQz/MuKYcxoHElSS
-        r8E6FVYIKTnh2SQ71Y+eRzZ2
-X-Google-Smtp-Source: AMsMyM4h8V5E8OCRmPLrfMImGsKK+7EZ7dA2oMIGpWqqLWdyuDgkEw/y1rRReP/czE8FZ+1GSKP6ww==
-X-Received: by 2002:a05:620a:25c8:b0:6ae:2408:6e9a with SMTP id y8-20020a05620a25c800b006ae24086e9amr37472688qko.222.1667854169545;
-        Mon, 07 Nov 2022 12:49:29 -0800 (PST)
+        bh=d292BFttCGGlJb+3WMEsswVyNh2OkDxnlwAoBZ7vfRM=;
+        b=ag1vk0pRIHpeduXB03jQLSsxBZPWzuBoIWou0ycjqLUoaKG2Xo9w9x6SREkLgzQsOP
+         pYaEsSDm1wdJJj6fV+ySGnL11LtTXW+FNx73LZ5BN/NC+EyeQfNafDWueZCPJWv3LPwS
+         IoloSMENa2Yfzg9yARvY8cGvRe+SGXT0n2YP6bWmDVlSgnxb+hh/zh2UQflUKH7PMZJl
+         jML1ightCQEpxPhJ6maF+En4fl6Cro33FVcxQ3UljOEXbF4X2eeBcyw8B+ohvWD4fx8p
+         DHzWAlxK/JKSWe9JpAivz1qW5+/GPrcsXukjO0Lz90mWyergGNwtkMrRLswrr+KmHHk6
+         0/RA==
+X-Gm-Message-State: ACrzQf3o3dCATEYbAcS/dD8JbiTEPJrLMxRUz7UrSm9/L+/J13sZEr8y
+        H5nuXnecRqJTxq8sTK4CiJPs
+X-Google-Smtp-Source: AMsMyM5DmqxA6zknvRlCMbQbv/gmGmIuNjq1tK82jm21uddOn4aB/VybVAaP81kLwGt9FHrd826jdQ==
+X-Received: by 2002:a05:6214:260b:b0:4bf:e864:bdd1 with SMTP id gu11-20020a056214260b00b004bfe864bdd1mr21145869qvb.5.1667854244536;
+        Mon, 07 Nov 2022 12:50:44 -0800 (PST)
 Received: from ?IPV6:2600:1700:e72:80a0:d948:f30c:63de:b667? ([2600:1700:e72:80a0:d948:f30c:63de:b667])
-        by smtp.gmail.com with ESMTPSA id a84-20020ae9e857000000b006f8665f483fsm7517970qkg.85.2022.11.07.12.49.28
+        by smtp.gmail.com with ESMTPSA id s26-20020a05622a1a9a00b0039a610a04b1sm6860072qtc.37.2022.11.07.12.50.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Nov 2022 12:49:29 -0800 (PST)
-Message-ID: <22a74e0f-f389-7b9c-f2cc-b3581c246c75@github.com>
-Date:   Mon, 7 Nov 2022 15:49:28 -0500
+        Mon, 07 Nov 2022 12:50:44 -0800 (PST)
+Message-ID: <b0483b03-518a-ee97-c561-cc941521451e@github.com>
+Date:   Mon, 7 Nov 2022 15:50:43 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.4.1
-Subject: Re: [PATCH 2/2] maintenance: add option to register in a specific
- config
+Subject: Re: [PATCH v4 0/2] index: add trace2 region for clear skip worktree
 Content-Language: en-US
-To:     Ronan Pigott <ronan@rjp.ie>, git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Eric Sunshine <sunshine@sunshineco.com>,
-        Clement Moyroud <clement.moyroud@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?Q?Martin_=c3=85gren?= <martin.agren@gmail.com>,
-        Thomas Ackermann <th.acker@arcor.de>
-References: <20221105184532.457043-1-ronan@rjp.ie>
- <20221105184532.457043-3-ronan@rjp.ie>
+To:     Taylor Blau <me@ttaylorr.com>,
+        Anh Le via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Timothy Jones <timothy@canva.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Jeff Hostetler <git@jeffhostetler.com>, Anh Le <anh@canva.com>
+References: <pull.1368.v3.git.git.1667177791591.gitgitgadget@gmail.com>
+ <pull.1368.v4.git.git.1667516701.gitgitgadget@gmail.com>
+ <Y2WuZfur3iorHxdt@nand.local>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <20221105184532.457043-3-ronan@rjp.ie>
+In-Reply-To: <Y2WuZfur3iorHxdt@nand.local>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/5/22 2:45 PM, Ronan Pigott wrote:
-> maintenance register currently records the maintenance repo exclusively
-> within the user's global configuration, but other configuration files
-> may be relevant when running maintenance if they are included from the
-> global config. This option allows the user to choose where maintenance
-> repos are recorded.
+On 11/4/22 8:29 PM, Taylor Blau wrote:
+> On Thu, Nov 03, 2022 at 11:04:59PM +0000, Anh Le via GitGitGadget wrote:
+>> In large repository using sparse checkout, checking whether a file marked
+>> with skip worktree is present on disk and its skip worktree bit should be
+>> cleared can take a considerable amount of time. Add a trace2 region to
+>> surface this information.
+>>
+>> Anh Le (2):
+>>   index: add trace2 region for clear skip worktree
+>>   index: raise a bug if the index is materialised more than once
+>>
+>>  sparse-index.c | 30 ++++++++++++++++++++++++------
+>>  1 file changed, 24 insertions(+), 6 deletions(-)
+> 
+> This version is looking good. Thanks, will queue.
 
-Taylor already provided most of the feedback that I would have given.
-
->  static char const * const builtin_maintenance_register_usage[] = {
-> -	"git maintenance register",
-> +	"git maintenance register [--config <file>]",
-
-The only recommendation I have remaining is to rename this option to
-`--config-file=<file>` since it is unclear from just "--config" if it
-is a config _file_ or a config _key_.
+I also took a full re-read of this version and agree
+that it is ready to merge.
 
 Thanks,
 -Stolee
