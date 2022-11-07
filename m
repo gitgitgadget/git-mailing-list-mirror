@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E59B2C433FE
-	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 18:36:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29780C4332F
+	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 18:36:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232804AbiKGSgc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 13:36:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49950 "EHLO
+        id S233150AbiKGSge (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 13:36:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233120AbiKGSg1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2022 13:36:27 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C61C2611A
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 10:36:15 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id v1so17529021wrt.11
-        for <git@vger.kernel.org>; Mon, 07 Nov 2022 10:36:15 -0800 (PST)
+        with ESMTP id S233106AbiKGSgN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2022 13:36:13 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 599352497A
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 10:36:12 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id p13-20020a05600c468d00b003cf8859ed1bso7718379wmo.1
+        for <git@vger.kernel.org>; Mon, 07 Nov 2022 10:36:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GHeEwR8h3+faHBEfGtCs65hIdEp9VCiZJMy/rStdD14=;
-        b=N9ZRe4QgKgOheVfPjKjTXjwCL2WOOT3gu39maUKPaxxH4SBx8v0lHzACWCq1ker+Pu
-         lEvYv58QPBkLW0d/HTX+VONxzWjeQ3ZMkBfkxmg36G6jAcoMufNeMUWqVwxtynFbSvKc
-         tTsoPJ3MX8fHu1jKWjK//5ZY7TyYEJbCNL4X/4WvOandW7ZJ8xclRTTMRO0/rPMP+b+U
-         4jUZgKjIDno0R1uLSWZmCbLi2u+nOIiUdTttdnea8Ab8aDpmss3X5pJzA9LsLDjs59JK
-         s8U88zUByVhDghdys7UdzZwLWTTGu0KxIwSmXHvfmR6bwC3k2essvoWzkeZGax9GVJT7
-         HnDA==
+        bh=fAsIG3Q7Y722cAUQFUTkCz2gvIX8KTEf/tthursnj+s=;
+        b=RT9/5AQ38nsw+Lak4Q9RmFoIXiPoT7X0NcYbiURzQzih+EBJh7yJtEo9kskN93Fx8B
+         0lUGVsSjg5JKzDVtzlsu8bK2gCaccz91QzQIV526vc2y/pU9//bNemYeJF8ls3lWHFQx
+         uvXN3Vr2rGJzozFk4k4uLQ/H5c5z3mW7eRRj+FD4XL3JFgHYOKLKBStv4nRIKNCApjJ8
+         AmZ825BNUTcJGUVulNjbEKQgZNnWLLa3uj8r7NuE2j8VldlKmMAI5TtOgzJ7UHR4gmYQ
+         U1jjxiB1DiKEc+FgS0lq3HHRYHVqQqShjHavLHxBfGG8wb3VZsFmoXyXOgincTY/UoD3
+         sALQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GHeEwR8h3+faHBEfGtCs65hIdEp9VCiZJMy/rStdD14=;
-        b=3W4oRGKBYBm3FunzJuKcmIUEzmay6ewrG6JQCtRwELrdJK/TvQiXHf8T6/4qvrIZ+K
-         p+9DAuI1T20OhdwdiLSEFiSmBzg2zZ3xEn7cAfFd3i9fxdxtNtrOuGRjkwKyz7ezkI7U
-         HJrzajvZjVVhjuCpKZ7K9Yw2h1Qzdm6TbSFKMKVE3ZPleG0pTinbXyePoINhkaWwWnC4
-         X0WyoouyVdCramWcFgkkfoLMnJdiUFi8ZOqcaaXiGvuudexa3n5/nsKvlATioFLLmeix
-         BlYnvorbiC2yqr/+5RBguTz6yV2l+nMhH3L/Ie3ntQ5EwNLwfPDxzX671pT2WsDe2y9d
-         Echw==
-X-Gm-Message-State: ACrzQf1YHCFC+pG6yMH+EHKqxmpTPGMwiMxWEVqLid55/bIkFWKMTWzZ
-        zjYY0Rw7SHpU4jsrZ0dNylhuF44sQ4c=
-X-Google-Smtp-Source: AMsMyM7w61+pC1ohf8C3ShDnkysMeLe4Zw9n8MMp5W4urFgG/c930bEP7K6Dq7eaYwRW3WeD8YqsCg==
-X-Received: by 2002:a5d:564c:0:b0:236:6089:cc50 with SMTP id j12-20020a5d564c000000b002366089cc50mr31490126wrw.520.1667846173691;
-        Mon, 07 Nov 2022 10:36:13 -0800 (PST)
+        bh=fAsIG3Q7Y722cAUQFUTkCz2gvIX8KTEf/tthursnj+s=;
+        b=q4k75MMWtVCpqk7N3JCluMNQUy05HQu9YfCwF2NTFn4kIr2+No5KmCasB2MKmoubnm
+         lt00o4XnMNKNeUTMF6WPAEPqe71y8IdBKx5r8b/nLj1/PPz5y07dnGohAJhfkmrprdyV
+         204gvy76b3WOXKTYR47GudGjqpmLFSmOcl1ADlV1bvQv19oLOE0gyDmmOzBaZhkf9Rus
+         1KUvfDXOdiXhmLPbTBDzDG/YRWuCFP4jrDilggVq3jNAJrdf7MeA2TOb077VK/Cn0PM2
+         rYc6mi1m+OzGqFmF11Kd9noWoX3sotF7kLmpPyOY1/Pd65TmZ4Mpj/16tupnun5Dq52D
+         IGUA==
+X-Gm-Message-State: ANoB5pk8BVQLFZ9V4HE1vdTLDM2/BGfSEBJqC5bT8NiR+ndevKIxXXcF
+        MA1VXp9Yhdz0DIw4ZwvUCsc8tKK+8UQ=
+X-Google-Smtp-Source: AA0mqf5P2kX9eI92TdewIrFk9CfmmNq1QxwsJcgks0wklZL1R4cmZiKVmyTTgmBXsgjhnk/stNx+qg==
+X-Received: by 2002:a1c:4384:0:b0:3cf:b287:916b with SMTP id q126-20020a1c4384000000b003cfb287916bmr2521667wma.181.1667846170715;
+        Mon, 07 Nov 2022 10:36:10 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m1-20020a7bca41000000b003c6c3fb3cf6sm8915492wml.18.2022.11.07.10.36.12
+        by smtp.gmail.com with ESMTPSA id n4-20020a5d6604000000b002366fb99cdasm7846723wru.50.2022.11.07.10.36.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 10:36:13 -0800 (PST)
-Message-Id: <4fcbfed2c7c78c804c7eeeed5b7080b9fd812bb7.1667846164.git.gitgitgadget@gmail.com>
+        Mon, 07 Nov 2022 10:36:10 -0800 (PST)
+Message-Id: <0cf654925f8d16a439871499a02125d75140ee36.1667846164.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
 References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 07 Nov 2022 18:35:41 +0000
-Subject: [PATCH 07/30] chunk-format: number of chunks is optional
+Date:   Mon, 07 Nov 2022 18:35:38 +0000
+Subject: [PATCH 04/30] config: fix multi-level bulleted list
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,35 +68,46 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-Even though the commit-graph and multi-pack-index file formats specify a
-number of chunks in their header information, this is optional. The
-table of contents terminates with a null chunk ID, which can be used
-instead. The extra value is helpful for some checks, but is ultimately
-not necessary for the format.
+The documentation for 'extensions.worktreeConfig' includes a bulletted
+list describing certain config values that need to be moved into the
+worktree config instead of the repository config file. However, since we
+are already in a bulletted list, the documentation tools do not know
+when that inner list is complete. Paragraphs intended to not be part of
+that inner list are rendered as part of the last bullet.
 
-This will be important in some future formats.
+Modify the format to match a similar doubly-nested list from the
+'column.ui' config documentation. Reword the descriptions slightly to
+make the config keys appear as their own heading in the inner list.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/gitformat-chunk.txt | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ Documentation/config/extensions.txt | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/gitformat-chunk.txt b/Documentation/gitformat-chunk.txt
-index 57202ede273..c01f5567c4f 100644
---- a/Documentation/gitformat-chunk.txt
-+++ b/Documentation/gitformat-chunk.txt
-@@ -24,8 +24,9 @@ how they use the chunks to describe structured data.
- 
- A chunk-based file format begins with some header information custom to
- that format. That header should include enough information to identify
--the file type, format version, and number of chunks in the file. From this
--information, that file can determine the start of the chunk-based region.
-+the file type, format version, and (optionally) the number of chunks in
-+the file. From this information, that file can determine the start of the
-+chunk-based region.
- 
- The chunk-based region starts with a table of contents describing where
- each chunk starts and ends. This consists of (C+1) rows of 12 bytes each,
+diff --git a/Documentation/config/extensions.txt b/Documentation/config/extensions.txt
+index ce8185adf53..18ed1c58126 100644
+--- a/Documentation/config/extensions.txt
++++ b/Documentation/config/extensions.txt
+@@ -62,10 +62,15 @@ When enabling `extensions.worktreeConfig`, you must be careful to move
+ certain values from the common config file to the main working tree's
+ `config.worktree` file, if present:
+ +
+-* `core.worktree` must be moved from `$GIT_COMMON_DIR/config` to
+-  `$GIT_COMMON_DIR/config.worktree`.
+-* If `core.bare` is true, then it must be moved from `$GIT_COMMON_DIR/config`
+-  to `$GIT_COMMON_DIR/config.worktree`.
++--
++`core.worktree`;;
++	This config value must be moved from `$GIT_COMMON_DIR/config` to
++	`$GIT_COMMON_DIR/config.worktree`.
++
++`core.bare`;;
++	If true, then this value must be moved from
++	`$GIT_COMMON_DIR/config` to `$GIT_COMMON_DIR/config.worktree`.
++--
+ +
+ It may also be beneficial to adjust the locations of `core.sparseCheckout`
+ and `core.sparseCheckoutCone` depending on your desire for customizable
 -- 
 gitgitgadget
 
