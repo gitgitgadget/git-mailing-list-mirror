@@ -2,115 +2,243 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 08B84C433FE
-	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 17:24:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 705FBC4332F
+	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 17:48:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232278AbiKGRX7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 12:23:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38262 "EHLO
+        id S232949AbiKGRsf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 12:48:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231682AbiKGRX6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2022 12:23:58 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15C3F20F75
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 09:23:57 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id 13so32091291ejn.3
-        for <git@vger.kernel.org>; Mon, 07 Nov 2022 09:23:57 -0800 (PST)
+        with ESMTP id S232971AbiKGRsO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2022 12:48:14 -0500
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5542C17A97
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 09:48:13 -0800 (PST)
+Received: by mail-pf1-x42e.google.com with SMTP id m6so11357997pfb.0
+        for <git@vger.kernel.org>; Mon, 07 Nov 2022 09:48:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=pJ58VrRcelKgSgbo9J96ACUc+hwyuwAiNrrzdk7ROac=;
-        b=RvTv0msdoKyVGlnRHOEF3lNsVBhfQgiFapQkChJCaPmjZJbPWqIJlUjHfwXt2ZO0M0
-         dBxIGrOQx7nRMKMKndOXjKf4NMDyllggkGcW52Hy/M4p1Bdhkndl36Yo7egUa2dcN4Q/
-         SuT19NLgpGBIfqtdbJ2v9RDCacR8mFcnuudHf538iMdUfEkn5EmGfQSGMlhHe5sB9cBe
-         x6D0BqsIhC+p2dvgOuUAn0fGe1S6BG7Puo8gCAQUJfLEMlPNKOY0rhgwnNtbF1B2mxQA
-         tlRF02LmMq34WaR8Yn6vhQDwwMjfqPfyd8Nmc6tqdbA02pW9OBc3c5HQJ6ai4+kel9+G
-         Azlg==
+        d=github.com; s=google;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UWvURItKNW6uA4AGu51CdgTB4kAqIhGAFfws4LymkXc=;
+        b=FJv2E+67xEEoCaKM4anIoMdTo9yCHfZwbm3lvNwbB5e3wtYfY8CNOU5aFIY8ytPrYt
+         WsU1i+ILgW7MnLO6LyaFnDnX057TLkVlpLjDdtyPjCwmGsgCV1OMWe6Iqfk2/XD1jU92
+         6YOczJHOwhk4Fmv7rpTp9sg1NzLQNV6UAf8pmmPTftsA/CTLvoPykt8xP8NC7DflWUjW
+         0JPfhOC19LplIncXHc7Pe1rTQOMKyu6wtl5Zbp5c0MqG4HK5KKI2eBumr1ghc88op+V8
+         6f6tHHWUujB4PM1gVxPobyz7MMdBWJLi3fpVBWNxEzBZQ3Tgu6jY9OIm1UmSK52fVnxz
+         mKrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pJ58VrRcelKgSgbo9J96ACUc+hwyuwAiNrrzdk7ROac=;
-        b=0M+qP2BBGYVAyO9/iz4ABOsuI7pH03P73td3JCXySwZFHtkK0OkO71NdGJ6Fu2SGA7
-         i6Jd7mEnPGmhEbvSs3+t3WUZG5cGCXAYqyRymHBbR5jwwbtct3lclEq24FFCPLCeLLry
-         F1TGyP/zg7VV42mQfpjUvWmaw/MqOrbPHRvEMrFz4QIZa5IzrxvX7dCxIs6WUSwTDZjw
-         63ra8vu+5Vgc8roI+ET7Axt9KnQMnJHPmDZcyaiGPlQk4Ylbx52hUJ3eaj40+tr+kr9T
-         aF43pzKnQ5J+vE9U5eIVMRYZRtA677xy0NHrYQ8ZvvI46cbOOcc3EaKiG9Sb2lPqnIFl
-         +l3w==
-X-Gm-Message-State: ACrzQf2il2C0xmg9SlT5vod7D8mPOCIma+/iHK9lb82yaxFeJbhzgKbB
-        Bha8i3Nzlzyz9f71E3D2D08=
-X-Google-Smtp-Source: AMsMyM4PgVWahvspmQ3WoUGUugXfqBSa/iGXePWSr+kBtazh5tHAp66joXYcqtYap2PnQfjBMHbAjw==
-X-Received: by 2002:a17:907:60c8:b0:78d:bc56:8f04 with SMTP id hv8-20020a17090760c800b0078dbc568f04mr48132994ejc.560.1667841835475;
-        Mon, 07 Nov 2022 09:23:55 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id ee2-20020a056402290200b004614fd33789sm4506400edb.18.2022.11.07.09.23.55
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=UWvURItKNW6uA4AGu51CdgTB4kAqIhGAFfws4LymkXc=;
+        b=kdXBLr4/z3G5JrEREVP/riljOBF9W7/W2R26AGaB9jkyzEHucfpPVgG4fNbzMT2i+x
+         e9qqRYJYRnqhM9WqTLXsLwJaJ+MYVnI+6oJNSrpUC7XL/t0hF0TuW/esj63J4IQm22OH
+         ASSic667Hf71aXkAwSJFyVanECLZfwVT+roIgUCPVCmx1VejXjvqobYTBQBwReYMb5Qo
+         EdbFn/mGTPzwhCD74OCnlBioNk75e6VnA46A+t+1FghuSC9rCbf3CDgIfBlClFG8/1sI
+         wzqerWxHQ2AjGHEhTB6xplff9lp9KpASYHc32Mxfz4QZiPNtPrZLnR0Va9LakhicBIwJ
+         Xsrw==
+X-Gm-Message-State: ACrzQf3zF35Bs9Mj+6/0G6yb73oh2J6trVpC+Acji5kBgpSdJ9JAlskb
+        zCz03TYH+cRy0YHV73rsBLH0he4IiMgmyxzGNTx9svV8ENXC23LCfT5v30XNiHAIoOq88bDsQBS
+        pIMoWGNCQSewIcadM3gt9UWHuoAkuuQHqeTeQ+45J3nqTf5arnz3Zg41uiw==
+X-Google-Smtp-Source: AMsMyM4opZnZXrp/8e68cukqdpWJfFMsBRwla6NvDdBJL6ZHSXo3nGe05Rwy/mvoMiMwyqUkMTdinw==
+X-Received: by 2002:a65:5a0b:0:b0:46b:158e:ad7c with SMTP id y11-20020a655a0b000000b0046b158ead7cmr44601475pgs.272.1667843292408;
+        Mon, 07 Nov 2022 09:48:12 -0800 (PST)
+Received: from localhost.localdomain (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id f1-20020a170902ce8100b0016cf3f124e1sm5271873plg.234.2022.11.07.09.48.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 09:23:55 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1os5qk-000DK5-1h;
-        Mon, 07 Nov 2022 18:23:54 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Teng Long <dyroneteng@gmail.com>, git@vger.kernel.org,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v2 1/3] notes.c: introduce "--blank-line" option
-Date:   Mon, 07 Nov 2022 18:22:34 +0100
-References: <cover.1667828335.git.dyroneteng@gmail.com>
- <2381947abdd6b965c02e114af297fc908ed3132b.1667828335.git.dyroneteng@gmail.com>
- <221107.864jvax1hz.gmgdl@evledraar.gmail.com>
- <CAPig+cS+8ER=K9byUZs9+MxZ1x9zVxnGKrKm8CGs1zJvvCoSEQ@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <CAPig+cS+8ER=K9byUZs9+MxZ1x9zVxnGKrKm8CGs1zJvvCoSEQ@mail.gmail.com>
-Message-ID: <221107.86a652vfth.gmgdl@evledraar.gmail.com>
+        Mon, 07 Nov 2022 09:48:11 -0800 (PST)
+From:   Victoria Dye <vdye@github.com>
+To:     git@vger.kernel.org
+Cc:     Victoria Dye <vdye@github.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        "herr.kaste" <herr.kaste@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v2] rebase --update-refs: avoid unintended ref deletion
+Date:   Mon,  7 Nov 2022 09:47:52 -0800
+Message-Id: <20221107174752.91186-1-vdye@github.com>
+X-Mailer: git-send-email 2.38.0
+In-Reply-To: <20221104165735.68899-1-vdye@github.com>
+References: <20221104165735.68899-1-vdye@github.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+In b3b1a21d1a5 (sequencer: rewrite update-refs as user edits todo list,
+2022-07-19), the 'todo_list_filter_update_refs()' step was added to handle
+the removal of 'update-ref' lines from a 'rebase-todo'. Specifically, it
+removes potential ref updates from the "update refs state" if a ref does not
+have a corresponding 'update-ref' line.
 
-On Mon, Nov 07 2022, Eric Sunshine wrote:
+However, because 'write_update_refs_state()' will not update the state if
+the 'refs_to_oids' list was empty, removing *all* 'update-ref' lines will
+result in the state remaining unchanged from how it was initialized (with
+all refs' "after" OID being null). Then, when the ref update is applied, all
+refs will be updated to null and consequently deleted.
 
-> On Mon, Nov 7, 2022 at 9:56 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <av=
-arab@gmail.com> wrote:
->> On Mon, Nov 07 2022, Teng Long wrote:
->> > When appending to a given object which has note and if the appended
->> > note is not empty too, we will insert a blank line at first. The
->> > blank line serves as a split line, but sometimes we just want to
->> > omit it then append on the heels of the target note. So, we add
->> > a new "OPT_BOOL()" option to determain whether a new blank line
->> > is insert at first.
->> >
->> > Signed-off-by: Teng Long <dyroneteng@gmail.com>
->> > ---
->> > diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
->> > @@ -159,6 +161,11 @@ OPTIONS
->> > +--blank-line::
->> > +--no-blank-line::
->> > +     Controls if a blank line to split paragraphs is inserted
->> > +     when appending (the default is true).
->>
->> Just make this:
->>
->>         --no-blank-line:
->>                 Suppress the insertion of a blank line before the
->>                 inserted notes.
->>
->> Or something, i.e. when adding a "true by default" let's add a "no-..." =
-variant directly.
->
-> This is the exact opposite of Junio's advice[1], isn't it?
->
-> [1]: https://lore.kernel.org/git/xmqqsfjsi7eq.fsf@gitster.g/
+To fix this, delete the 'update-refs' state file when 'refs_to_oids' is
+empty. Additionally, add a tests covering "all update-ref lines removed"
+cases.
 
-I read that as him mainly talking about what we name the variable (which
-I agree with, but didn't comment on here). I'm talking about what
-interface is exposed to the user.
+Reported-by: herr.kaste <herr.kaste@gmail.com>
+Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Helped-by: Derrick Stolee <derrickstolee@github.com>
+Signed-off-by: Victoria Dye <vdye@github.com>
+---
+Changes since v1:
+- Modified approach to handling empty 'refs_to_oids' from "optional force write
+  empty file" to "always unlink"
+- Added/updated tests
 
-I.e. both concerns can be satisfied, but whether my suggestion is
-sensible UX is another matter...
+ sequencer.c                   |   9 ++-
+ t/t3404-rebase-interactive.sh | 107 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 113 insertions(+), 3 deletions(-)
+
+diff --git a/sequencer.c b/sequencer.c
+index e658df7e8ff..798a9702961 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -4130,11 +4130,14 @@ static int write_update_refs_state(struct string_list *refs_to_oids)
+ 	struct string_list_item *item;
+ 	char *path;
+
+-	if (!refs_to_oids->nr)
+-		return 0;
+-
+ 	path = rebase_path_update_refs(the_repository->gitdir);
+
++	if (!refs_to_oids->nr) {
++		if (unlink(path) && errno != ENOENT)
++			result = error_errno(_("could not unlink: %s"), path);
++		goto cleanup;
++	}
++
+ 	if (safe_create_leading_directories(path)) {
+ 		result = error(_("unable to create leading directories of %s"),
+ 			       path);
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 4f5abb5ad25..462cefd25df 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -1964,6 +1964,113 @@ test_expect_success 'respect user edits to update-ref steps' '
+ 	test_cmp_rev HEAD refs/heads/no-conflict-branch
+ '
+
++test_expect_success '--update-refs: all update-ref lines removed' '
++	git checkout -b test-refs-not-removed no-conflict-branch &&
++	git branch -f base HEAD~4 &&
++	git branch -f first HEAD~3 &&
++	git branch -f second HEAD~3 &&
++	git branch -f third HEAD~1 &&
++	git branch -f tip &&
++
++	test_commit test-refs-not-removed &&
++	git commit --amend --fixup first &&
++
++	git rev-parse first second third tip no-conflict-branch >expect-oids &&
++
++	(
++		set_cat_todo_editor &&
++		test_must_fail git rebase -i --update-refs base >todo.raw &&
++		sed -e "/^update-ref/d" <todo.raw >todo
++	) &&
++	(
++		set_replace_editor todo &&
++		git rebase -i --update-refs base
++	) &&
++
++	# Ensure refs are not deleted and their OIDs have not changed
++	git rev-parse first second third tip no-conflict-branch >actual-oids &&
++	test_cmp expect-oids actual-oids
++'
++
++test_expect_success '--update-refs: all update-ref lines removed, then some re-added' '
++	git checkout -b test-refs-not-removed2 no-conflict-branch &&
++	git branch -f base HEAD~4 &&
++	git branch -f first HEAD~3 &&
++	git branch -f second HEAD~3 &&
++	git branch -f third HEAD~1 &&
++	git branch -f tip &&
++
++	test_commit test-refs-not-removed2 &&
++	git commit --amend --fixup first &&
++
++	git rev-parse first second third >expect-oids &&
++
++	(
++		set_cat_todo_editor &&
++		test_must_fail git rebase -i \
++			--autosquash --update-refs \
++			base >todo.raw &&
++		sed -e "/^update-ref/d" <todo.raw >todo
++	) &&
++
++	# Add a break to the end of the todo so we can edit later
++	echo "break" >>todo &&
++
++	(
++		set_replace_editor todo &&
++		git rebase -i --autosquash --update-refs base &&
++		echo "update-ref refs/heads/tip" >todo &&
++		git rebase --edit-todo &&
++		git rebase --continue
++	) &&
++
++	# Ensure first/second/third are unchanged, but tip is updated
++	git rev-parse first second third >actual-oids &&
++	test_cmp expect-oids actual-oids &&
++	test_cmp_rev HEAD tip
++'
++
++test_expect_success '--update-refs: --edit-todo with no update-ref lines' '
++	git checkout -b test-refs-not-removed3 no-conflict-branch &&
++	git branch -f base HEAD~4 &&
++	git branch -f first HEAD~3 &&
++	git branch -f second HEAD~3 &&
++	git branch -f third HEAD~1 &&
++	git branch -f tip &&
++
++	test_commit test-refs-not-removed3 &&
++	git commit --amend --fixup first &&
++
++	git rev-parse first second third tip no-conflict-branch >expect-oids &&
++
++	(
++		set_cat_todo_editor &&
++		test_must_fail git rebase -i \
++			--autosquash --update-refs \
++			base >todo.raw &&
++		sed -e "/^update-ref/d" <todo.raw >todo
++	) &&
++
++	# Add a break to the beginning of the todo so we can resume with no
++	# update-ref lines
++	echo "break" >todo.new &&
++	cat todo >>todo.new &&
++
++	(
++		set_replace_editor todo.new &&
++		git rebase -i --autosquash --update-refs base &&
++
++		# Make no changes when editing so update-refs is still empty
++		cat todo >todo.new &&
++		git rebase --edit-todo &&
++		git rebase --continue
++	) &&
++
++	# Ensure refs are not deleted and their OIDs have not changed
++	git rev-parse first second third tip no-conflict-branch >actual-oids &&
++	test_cmp expect-oids actual-oids
++'
++
+ test_expect_success '--update-refs: check failed ref update' '
+ 	git checkout -B update-refs-error no-conflict-branch &&
+ 	git branch -f base HEAD~4 &&
+--
+2.38.0
+
