@@ -2,79 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 696F6C4332F
-	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 12:17:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7DA3C43217
+	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 12:17:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232034AbiKGMRe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 07:17:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44936 "EHLO
+        id S232027AbiKGMRc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 07:17:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44926 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231990AbiKGMRW (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231976AbiKGMRW (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 7 Nov 2022 07:17:22 -0500
 Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C5FB55A8
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 04:17:21 -0800 (PST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.west.internal (Postfix) with ESMTP id E15453200997;
-        Mon,  7 Nov 2022 07:16:46 -0500 (EST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CD3618C
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 04:17:20 -0800 (PST)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailout.west.internal (Postfix) with ESMTP id 16E1C320099C;
+        Mon,  7 Nov 2022 07:16:28 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Mon, 07 Nov 2022 07:16:47 -0500
+  by compute5.internal (MEProxy); Mon, 07 Nov 2022 07:16:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:date:date:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; t=1667823406; x=1667909806; bh=a0myhg9ixf
-        v3MMs55HXIdrPjUze9f5kr/SI8SroqRbI=; b=EwywDwUO7y3tL/P+lXg/4QRgdd
-        hiLDEgXHwcFaSunAfmyupg7nwIWlWKhXrHVGGWsK0IbztkpPaeTYeQ6+zW1WpWja
-        l/fOTbGl9jCjtLsGfjFZTk9pRDvi+yCkBkU+5to4Cp+VPgePwd1o+wAXAkA9U0NA
-        N7jbezfdKxyg+8XQiuYAAhWWMs6msG+DdUgbamKId89OVabrhsvv/uRJ3BdXOJ1o
-        ed1xuqkJos/ahWnLh8lYPg3HwhRcvKsNBvrZuUu2Cgvsq7XbIE3FHMxNR+unK2Sd
-        sGz+RPRRfFcoYQzqMKxzmNLp2LSnOIc5j2NqsFR/cQjcmcnri6D1c6fgpk6g==
+        :subject:to:to; s=fm1; t=1667823387; x=1667909787; bh=1yZOoyBaIa
+        b0/ozJhwc7BP+Ss8ZgJx3xNrWcoLY5fmI=; b=GBv9TolJJz5PMT6ISoMwwLKMiL
+        UBKKLMfZr1ZgDfNY6GkbMrpYEbv32AhaMi8iMSeZnDRShVClAgAOvd9hN2fSDPiV
+        rYuob24PDMTi14+qgTBmw6ZR5Kd3G2kuDCQ+4qJqbO+Q3SOjzxtEdILCyxBG3eTK
+        09WncbfJDtl/E6X18i4WkHxd48ZGbNAgHRWVW00PIljsQk35RQecrGomHP3vAkUx
+        +kDf82IPzpktYrma0caBf0scFDsgHwMTT1mc7A7rXCF99lIz3awaxqADwaHsGAsL
+        QM/EhOFmS6ML2NKQrK3srafdTj9wWnthJNKnRM9eOPJMg6jZ35KqK9xMiiTA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
         :feedback-id:from:from:in-reply-to:in-reply-to:message-id
         :mime-version:references:reply-to:sender:subject:subject:to:to
         :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm1; t=1667823406; x=1667909806; bh=a0myhg9ixfv3MMs55HXIdrPjUze9
-        f5kr/SI8SroqRbI=; b=CyAqm0znPhbzKd64bZyVAUvrcNzYPMTyNba6/AzYB3l5
-        XEp5q97MIiVhmNTnbleI1MKrkzKNTF+ghyvsomcKJchAkUgUiLVSAAcUBeekZZB5
-        TDIAojRdMJgLM9E/FPWY1YQ6snv62KJWvY8TJ2sS47UisBF1Po9jwrgm66DmuBXx
-        HIRk2oP+HYVF1PYoVoyR7YfQliLAbd4Jr0OJCSilRlnPNUu6/9xV97wmir20aWOU
-        JSYScBLit7Dfd5d6Hhu5WYBOhtZQH6REeoSvYk54EcM5FX5SCaHO8BJJjJEGUbo/
-        mVelgFKYlEB1L1ym8HYBMqXo1xG1Z5QRAdpGFs14GA==
-X-ME-Sender: <xms:LvdoYyia9E7Bz6On0cyLCD5mcrlqkwO0IJNNXsk352KK8SCNduf0Qw>
-    <xme:LvdoYzCve3X7JVOxbD490CohgqUnIXbObCkDjz1fr5hTSaaxDLDgu-08WAjLusKqE
-    59K4TX5F3Z-lwRkAw>
-X-ME-Received: <xmr:LvdoY6EPrzwT-RcMi_x2H1wReW7q2jilFn-nJx_XJY9roak_BCAv3X6d1v3YKblLyBGlRJzkvcceMQwduIzldSM-IVepjRFF3algj5Gczkck>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrvdekgdefjecutefuodetggdotefrodftvf
+        fm1; t=1667823387; x=1667909787; bh=1yZOoyBaIab0/ozJhwc7BP+Ss8Zg
+        Jx3xNrWcoLY5fmI=; b=cjWwRPY4Bxo8QaTiBbwXhCrBqsHa1i3gGIIg5FbSMbUr
+        sM3Zd9BbNSgAXkKiHIrIPuBn0upx3r+dWKRvcc3nc4WXln1TpqIMFUrCMGmA96ka
+        ntdiK+rH0cSQxwJW3FAW1rckLDE8evaSUjobozm0QlDc+woWYC+N2fh1wqBU/dwi
+        z6j4d7zRHLSm8FPK+MSQ5gGp72jXBWsZvtqsVG/C1A1hg3au4qvftxmYhYQPfOZt
+        72zJPLeX4QqPFDPXWvjaiRnpJTPsBlZvFhYYI+zV9YtZI4OvRzbFftMBI3adiecb
+        KPsR5lUANiCfipBp1Wh7ROHsDpsDrAW9PSvKKK+Qkw==
+X-ME-Sender: <xms:G_doY23Zo1xXbc2J6LcbgVD9WGXjhzpe0s4ZalaXpL2ht9v1xUMMRQ>
+    <xme:G_doY5GdjeWdIRHVhZ2RoukgA0nYgaoQhAdbQwLZbn6u6UtiE-Z-RrEL1EldxTThP
+    RpJKlVLIzsXo7Qs6w>
+X-ME-Received: <xmr:G_doY-606O-oevquaO1_LStTwbNYRrpe_bKIUpzSPfMwGHF_hMAug0i2tVWfcu3s_t8EeP21WkDWSWG6V_Qp4z8M2LOHXo08iakPamZ7Q1GQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrvdekgdefiecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
-    ertddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepteeuvefhhfdufedvgeeiueeileegtdfhge
-    eftdeuveejjedtgfejhedujeeutddunecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeigeekle
+    duvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:LvdoY7S542nxTndOKMQ_S3sxFQ69hZmOCSzx-iLbDgPzqQe_kcwCqA>
-    <xmx:LvdoY_yNATWwY55tjKqn89EWgMjjY3y-cmtEXMwsjsSYA5PUii6IYQ>
-    <xmx:LvdoY554cOQBRDuN2VPebbA4H8UrpJ_UXqZ7U0UxFP7e9OhmBT2aLA>
-    <xmx:LvdoY_8T6MO5BsHrexoRXOEKjRpLnqqg22npSFSkvgdEZZoXHT2HuA>
+X-ME-Proxy: <xmx:G_doY31J7qzsaW1TR1diG2jquzkQ2XbeB9xNyRuw5UmJ2r1Flkg8pg>
+    <xmx:G_doY5Fc-xguLTV81fFHg1-SLuVxiBwYPPllDRtIqhrGZL1wcUnzvw>
+    <xmx:G_doYw9Mwwz8dwoWJ7B45Jtccu0ChuATAay3J7GexK5_XzJTjaEnJQ>
+    <xmx:G_doY5CEPSaocYJv-QRvS1vERtiWZX6LEaDR8wIS4W8ENDkMJtWivA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Nov 2022 07:16:45 -0500 (EST)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 96414fd8 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Mon, 7 Nov 2022 12:16:42 +0000 (UTC)
-Date:   Mon, 7 Nov 2022 13:16:43 +0100
+ 7 Nov 2022 07:16:26 -0500 (EST)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 2ea46772 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Mon, 7 Nov 2022 12:16:22 +0000 (UTC)
+Date:   Mon, 7 Nov 2022 13:16:23 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v3 6/6] receive-pack: only use visible refs for connectivity
- check
-Message-ID: <9d154495593606532ecec62f29c9c34dc2da8917.1667823042.git.ps@pks.im>
+Subject: [PATCH v3 1/6] refs: get rid of global list of hidden refs
+Message-ID: <3741f0a389ec28e683722547b2e898db08763424.1667823042.git.ps@pks.im>
 References: <cover.1666967670.git.ps@pks.im>
  <cover.1667823042.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="/wttfbfWcvLybNTB"
+        protocol="application/pgp-signature"; boundary="ZLtUmH6Fd8NlcAcW"
 Content-Disposition: inline
 In-Reply-To: <cover.1667823042.git.ps@pks.im>
 Precedence: bulk
@@ -82,147 +81,396 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---/wttfbfWcvLybNTB
-Content-Type: text/plain; charset=utf-8
+--ZLtUmH6Fd8NlcAcW
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-When serving a push, git-receive-pack(1) needs to verify that the
-packfile sent by the client contains all objects that are required by
-the updated references. This connectivity check works by marking all
-preexisting references as uninteresting and using the new reference tips
-as starting point for a graph walk.
+We're about to add a new argument to git-rev-list(1) that allows it to
+add all references that are visible when taking `transfer.hideRefs` et
+al into account. This will require us to potentially parse multiple sets
+of hidden refs, which is not easily possible right now as there is only
+a single, global instance of the list of parsed hidden refs.
 
-Marking all preexisting references as uninteresting can be a problem
-when it comes to performance. Git forges tend to do internal bookkeeping
-to keep alive sets of objects for internal use or make them easy to find
-via certain references. These references are typically hidden away from
-the user so that they are neither advertised nor writeable. At GitLab,
-we have one particular repository that contains a total of 7 million
-references, of which 6.8 million are indeed internal references. With
-the current connectivity check we are forced to load all these
-references in order to mark them as uninteresting, and this alone takes
-around 15 seconds to compute.
-
-We can optimize this by only taking into account the set of visible refs
-when marking objects as uninteresting. This means that we may now walk
-more objects until we hit any object that is marked as uninteresting.
-But it is rather unlikely that clients send objects that make large
-parts of objects reachable that have previously only ever been hidden,
-whereas the common case is to push incremental changes that build on top
-of the visible object graph.
-
-This provides a huge boost to performance in the mentioned repository,
-where the vast majority of its refs hidden. Pushing a new commit into
-this repo with `transfer.hideRefs` set up to hide 6.8 million of 7 refs
-as it is configured in Gitaly leads to a 4.5-fold speedup:
-
-    Benchmark 1: main
-      Time (mean =C2=B1 =CF=83):     30.977 s =C2=B1  0.157 s    [User: 30.=
-226 s, System: 1.083 s]
-      Range (min =E2=80=A6 max):   30.796 s =E2=80=A6 31.071 s    3 runs
-
-    Benchmark 2: pks-connectivity-check-hide-refs
-      Time (mean =C2=B1 =CF=83):      6.799 s =C2=B1  0.063 s    [User: 6.8=
-03 s, System: 0.354 s]
-      Range (min =E2=80=A6 max):    6.729 s =E2=80=A6  6.850 s    3 runs
-
-    Summary
-      'pks-connectivity-check-hide-refs' ran
-        4.56 =C2=B1 0.05 times faster than 'main'
-
-As we mostly go through the same codepaths even in the case where there
-are no hidden refs at all compared to the code before there is no change
-in performance when no refs are hidden:
-
-    Benchmark 1: main
-      Time (mean =C2=B1 =CF=83):     48.188 s =C2=B1  0.432 s    [User: 49.=
-326 s, System: 5.009 s]
-      Range (min =E2=80=A6 max):   47.706 s =E2=80=A6 48.539 s    3 runs
-
-    Benchmark 2: pks-connectivity-check-hide-refs
-      Time (mean =C2=B1 =CF=83):     48.027 s =C2=B1  0.500 s    [User: 48.=
-934 s, System: 5.025 s]
-      Range (min =E2=80=A6 max):   47.504 s =E2=80=A6 48.500 s    3 runs
-
-    Summary
-      'pks-connectivity-check-hide-refs' ran
-        1.00 =C2=B1 0.01 times faster than 'main'
+Refactor `parse_hide_refs_config()` and `ref_is_hidden()` so that both
+take the list of hidden references as input and adjust callers to keep a
+local list, instead. This allows us to easily use multiple hidden-ref
+lists. Furthermore, it allows us to properly free this list before we
+exit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/receive-pack.c | 2 ++
- connected.c            | 3 +++
- connected.h            | 7 +++++++
- 3 files changed, 12 insertions(+)
+ builtin/receive-pack.c |  8 +++++---
+ ls-refs.c              | 13 +++++++++----
+ refs.c                 | 14 ++++----------
+ refs.h                 |  5 +++--
+ upload-pack.c          | 30 ++++++++++++++++++------------
+ 5 files changed, 39 insertions(+), 31 deletions(-)
 
 diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 1f3efc58fb..77ab40f123 100644
+index 44bcea3a5b..1f3efc58fb 100644
 --- a/builtin/receive-pack.c
 +++ b/builtin/receive-pack.c
-@@ -1929,6 +1929,8 @@ static void execute_commands(struct command *commands,
- 	opt.err_fd =3D err_fd;
- 	opt.progress =3D err_fd && !quiet;
- 	opt.env =3D tmp_objdir_env(tmp_objdir);
-+	opt.exclude_hidden_refs_section =3D "receive";
-+
- 	if (check_connected(iterate_receive_command_list, &data, &opt))
- 		set_connectivity_errors(commands, si);
+@@ -80,6 +80,7 @@ static struct object_id push_cert_oid;
+ static struct signature_check sigcheck;
+ static const char *push_cert_nonce;
+ static const char *cert_nonce_seed;
++static struct string_list hidden_refs =3D STRING_LIST_INIT_DUP;
 =20
-diff --git a/connected.c b/connected.c
-index 74a20cb32e..4f6388eed7 100644
---- a/connected.c
-+++ b/connected.c
-@@ -100,6 +100,9 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
- 		strvec_push(&rev_list.args, "--exclude-promisor-objects");
- 	if (!opt->is_deepening_fetch) {
- 		strvec_push(&rev_list.args, "--not");
-+		if (opt->exclude_hidden_refs_section)
-+			strvec_pushf(&rev_list.args, "--exclude-hidden=3D%s",
-+				     opt->exclude_hidden_refs_section);
- 		strvec_push(&rev_list.args, "--all");
- 	}
- 	strvec_push(&rev_list.args, "--quiet");
-diff --git a/connected.h b/connected.h
-index 6e59c92aa3..16b2c84f2e 100644
---- a/connected.h
-+++ b/connected.h
-@@ -46,6 +46,13 @@ struct check_connected_options {
- 	 * during a fetch.
- 	 */
- 	unsigned is_deepening_fetch : 1;
-+
-+	/*
-+	 * If not NULL, use `--exclude-hidden=3D$section` to exclude all refs
-+	 * hidden via the `$section.hideRefs` config from the set of
-+	 * already-reachable refs.
-+	 */
-+	const char *exclude_hidden_refs_section;
+ static const char *NONCE_UNSOLICITED =3D "UNSOLICITED";
+ static const char *NONCE_BAD =3D "BAD";
+@@ -130,7 +131,7 @@ static enum deny_action parse_deny_action(const char *v=
+ar, const char *value)
+=20
+ static int receive_pack_config(const char *var, const char *value, void *c=
+b)
+ {
+-	int status =3D parse_hide_refs_config(var, value, "receive");
++	int status =3D parse_hide_refs_config(var, value, "receive", &hidden_refs=
+);
+=20
+ 	if (status)
+ 		return status;
+@@ -296,7 +297,7 @@ static int show_ref_cb(const char *path_full, const str=
+uct object_id *oid,
+ 	struct oidset *seen =3D data;
+ 	const char *path =3D strip_namespace(path_full);
+=20
+-	if (ref_is_hidden(path, path_full))
++	if (ref_is_hidden(path, path_full, &hidden_refs))
+ 		return 0;
+=20
+ 	/*
+@@ -1794,7 +1795,7 @@ static void reject_updates_to_hidden(struct command *=
+commands)
+ 		strbuf_setlen(&refname_full, prefix_len);
+ 		strbuf_addstr(&refname_full, cmd->ref_name);
+=20
+-		if (!ref_is_hidden(cmd->ref_name, refname_full.buf))
++		if (!ref_is_hidden(cmd->ref_name, refname_full.buf, &hidden_refs))
+ 			continue;
+ 		if (is_null_oid(&cmd->new_oid))
+ 			cmd->error_string =3D "deny deleting a hidden ref";
+@@ -2591,6 +2592,7 @@ int cmd_receive_pack(int argc, const char **argv, con=
+st char *prefix)
+ 		packet_flush(1);
+ 	oid_array_clear(&shallow);
+ 	oid_array_clear(&ref);
++	string_list_clear(&hidden_refs, 1);
+ 	free((void *)push_cert_nonce);
+ 	return 0;
+ }
+diff --git a/ls-refs.c b/ls-refs.c
+index fa0d01b47c..ae89f850e9 100644
+--- a/ls-refs.c
++++ b/ls-refs.c
+@@ -6,6 +6,7 @@
+ #include "ls-refs.h"
+ #include "pkt-line.h"
+ #include "config.h"
++#include "string-list.h"
+=20
+ static int config_read;
+ static int advertise_unborn;
+@@ -73,6 +74,7 @@ struct ls_refs_data {
+ 	unsigned symrefs;
+ 	struct strvec prefixes;
+ 	struct strbuf buf;
++	struct string_list hidden_refs;
+ 	unsigned unborn : 1;
  };
 =20
- #define CHECK_CONNECTED_INIT { 0 }
+@@ -84,7 +86,7 @@ static int send_ref(const char *refname, const struct obj=
+ect_id *oid,
+=20
+ 	strbuf_reset(&data->buf);
+=20
+-	if (ref_is_hidden(refname_nons, refname))
++	if (ref_is_hidden(refname_nons, refname, &data->hidden_refs))
+ 		return 0;
+=20
+ 	if (!ref_match(&data->prefixes, refname_nons))
+@@ -137,14 +139,15 @@ static void send_possibly_unborn_head(struct ls_refs_=
+data *data)
+ }
+=20
+ static int ls_refs_config(const char *var, const char *value,
+-			  void *data UNUSED)
++			  void *cb_data)
+ {
++	struct ls_refs_data *data =3D cb_data;
+ 	/*
+ 	 * We only serve fetches over v2 for now, so respect only "uploadpack"
+ 	 * config. This may need to eventually be expanded to "receive", but we
+ 	 * don't yet know how that information will be passed to ls-refs.
+ 	 */
+-	return parse_hide_refs_config(var, value, "uploadpack");
++	return parse_hide_refs_config(var, value, "uploadpack", &data->hidden_ref=
+s);
+ }
+=20
+ int ls_refs(struct repository *r, struct packet_reader *request)
+@@ -154,9 +157,10 @@ int ls_refs(struct repository *r, struct packet_reader=
+ *request)
+ 	memset(&data, 0, sizeof(data));
+ 	strvec_init(&data.prefixes);
+ 	strbuf_init(&data.buf, 0);
++	string_list_init_dup(&data.hidden_refs);
+=20
+ 	ensure_config_read();
+-	git_config(ls_refs_config, NULL);
++	git_config(ls_refs_config, &data);
+=20
+ 	while (packet_reader_read(request) =3D=3D PACKET_READ_NORMAL) {
+ 		const char *arg =3D request->line;
+@@ -195,6 +199,7 @@ int ls_refs(struct repository *r, struct packet_reader =
+*request)
+ 	packet_fflush(stdout);
+ 	strvec_clear(&data.prefixes);
+ 	strbuf_release(&data.buf);
++	string_list_clear(&data.hidden_refs, 1);
+ 	return 0;
+ }
+=20
+diff --git a/refs.c b/refs.c
+index 1491ae937e..f1711e2e9f 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1414,9 +1414,8 @@ char *shorten_unambiguous_ref(const char *refname, in=
+t strict)
+ 					    refname, strict);
+ }
+=20
+-static struct string_list *hide_refs;
+-
+-int parse_hide_refs_config(const char *var, const char *value, const char =
+*section)
++int parse_hide_refs_config(const char *var, const char *value, const char =
+*section,
++			   struct string_list *hide_refs)
+ {
+ 	const char *key;
+ 	if (!strcmp("transfer.hiderefs", var) ||
+@@ -1431,21 +1430,16 @@ int parse_hide_refs_config(const char *var, const c=
+har *value, const char *secti
+ 		len =3D strlen(ref);
+ 		while (len && ref[len - 1] =3D=3D '/')
+ 			ref[--len] =3D '\0';
+-		if (!hide_refs) {
+-			CALLOC_ARRAY(hide_refs, 1);
+-			hide_refs->strdup_strings =3D 1;
+-		}
+ 		string_list_append(hide_refs, ref);
+ 	}
+ 	return 0;
+ }
+=20
+-int ref_is_hidden(const char *refname, const char *refname_full)
++int ref_is_hidden(const char *refname, const char *refname_full,
++		  const struct string_list *hide_refs)
+ {
+ 	int i;
+=20
+-	if (!hide_refs)
+-		return 0;
+ 	for (i =3D hide_refs->nr - 1; i >=3D 0; i--) {
+ 		const char *match =3D hide_refs->items[i].string;
+ 		const char *subject;
+diff --git a/refs.h b/refs.h
+index 8958717a17..3266fd8f57 100644
+--- a/refs.h
++++ b/refs.h
+@@ -808,7 +808,8 @@ int update_ref(const char *msg, const char *refname,
+ 	       const struct object_id *new_oid, const struct object_id *old_oid,
+ 	       unsigned int flags, enum action_on_err onerr);
+=20
+-int parse_hide_refs_config(const char *var, const char *value, const char =
+*);
++int parse_hide_refs_config(const char *var, const char *value, const char =
+*,
++			   struct string_list *);
+=20
+ /*
+  * Check whether a ref is hidden. If no namespace is set, both the first a=
+nd
+@@ -818,7 +819,7 @@ int parse_hide_refs_config(const char *var, const char =
+*value, const char *);
+  * the ref is outside that namespace, the first parameter is NULL. The sec=
+ond
+  * parameter always points to the full ref name.
+  */
+-int ref_is_hidden(const char *, const char *);
++int ref_is_hidden(const char *, const char *, const struct string_list *);
+=20
+ /* Is this a per-worktree ref living in the refs/ namespace? */
+ int is_per_worktree_ref(const char *refname);
+diff --git a/upload-pack.c b/upload-pack.c
+index 0b8311bd68..9db17f8787 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -62,6 +62,7 @@ struct upload_pack_data {
+ 	struct object_array have_obj;
+ 	struct oid_array haves;					/* v2 only */
+ 	struct string_list wanted_refs;				/* v2 only */
++	struct string_list hidden_refs;
+=20
+ 	struct object_array shallows;
+ 	struct string_list deepen_not;
+@@ -118,6 +119,7 @@ static void upload_pack_data_init(struct upload_pack_da=
+ta *data)
+ {
+ 	struct string_list symref =3D STRING_LIST_INIT_DUP;
+ 	struct string_list wanted_refs =3D STRING_LIST_INIT_DUP;
++	struct string_list hidden_refs =3D STRING_LIST_INIT_DUP;
+ 	struct object_array want_obj =3D OBJECT_ARRAY_INIT;
+ 	struct object_array have_obj =3D OBJECT_ARRAY_INIT;
+ 	struct oid_array haves =3D OID_ARRAY_INIT;
+@@ -130,6 +132,7 @@ static void upload_pack_data_init(struct upload_pack_da=
+ta *data)
+ 	memset(data, 0, sizeof(*data));
+ 	data->symref =3D symref;
+ 	data->wanted_refs =3D wanted_refs;
++	data->hidden_refs =3D hidden_refs;
+ 	data->want_obj =3D want_obj;
+ 	data->have_obj =3D have_obj;
+ 	data->haves =3D haves;
+@@ -151,6 +154,7 @@ static void upload_pack_data_clear(struct upload_pack_d=
+ata *data)
+ {
+ 	string_list_clear(&data->symref, 1);
+ 	string_list_clear(&data->wanted_refs, 1);
++	string_list_clear(&data->hidden_refs, 1);
+ 	object_array_clear(&data->want_obj);
+ 	object_array_clear(&data->have_obj);
+ 	oid_array_clear(&data->haves);
+@@ -842,8 +846,8 @@ static void deepen(struct upload_pack_data *data, int d=
+epth)
+ 		 * Checking for reachable shallows requires that our refs be
+ 		 * marked with OUR_REF.
+ 		 */
+-		head_ref_namespaced(check_ref, NULL);
+-		for_each_namespaced_ref(check_ref, NULL);
++		head_ref_namespaced(check_ref, data);
++		for_each_namespaced_ref(check_ref, data);
+=20
+ 		get_reachable_list(data, &reachable_shallows);
+ 		result =3D get_shallow_commits(&reachable_shallows,
+@@ -1158,11 +1162,11 @@ static void receive_needs(struct upload_pack_data *=
+data,
+=20
+ /* return non-zero if the ref is hidden, otherwise 0 */
+ static int mark_our_ref(const char *refname, const char *refname_full,
+-			const struct object_id *oid)
++			const struct object_id *oid, const struct string_list *hidden_refs)
+ {
+ 	struct object *o =3D lookup_unknown_object(the_repository, oid);
+=20
+-	if (ref_is_hidden(refname, refname_full)) {
++	if (ref_is_hidden(refname, refname_full, hidden_refs)) {
+ 		o->flags |=3D HIDDEN_REF;
+ 		return 1;
+ 	}
+@@ -1171,11 +1175,12 @@ static int mark_our_ref(const char *refname, const =
+char *refname_full,
+ }
+=20
+ static int check_ref(const char *refname_full, const struct object_id *oid,
+-		     int flag UNUSED, void *cb_data UNUSED)
++		     int flag UNUSED, void *cb_data)
+ {
+ 	const char *refname =3D strip_namespace(refname_full);
++	struct upload_pack_data *data =3D cb_data;
+=20
+-	mark_our_ref(refname, refname_full, oid);
++	mark_our_ref(refname, refname_full, oid, &data->hidden_refs);
+ 	return 0;
+ }
+=20
+@@ -1204,7 +1209,7 @@ static int send_ref(const char *refname, const struct=
+ object_id *oid,
+ 	struct object_id peeled;
+ 	struct upload_pack_data *data =3D cb_data;
+=20
+-	if (mark_our_ref(refname_nons, refname, oid))
++	if (mark_our_ref(refname_nons, refname, oid, &data->hidden_refs))
+ 		return 0;
+=20
+ 	if (capabilities) {
+@@ -1327,7 +1332,7 @@ static int upload_pack_config(const char *var, const =
+char *value, void *cb_data)
+ 	if (parse_object_filter_config(var, value, data) < 0)
+ 		return -1;
+=20
+-	return parse_hide_refs_config(var, value, "uploadpack");
++	return parse_hide_refs_config(var, value, "uploadpack", &data->hidden_ref=
+s);
+ }
+=20
+ static int upload_pack_protected_config(const char *var, const char *value=
+, void *cb_data)
+@@ -1375,8 +1380,8 @@ void upload_pack(const int advertise_refs, const int =
+stateless_rpc,
+ 		advertise_shallow_grafts(1);
+ 		packet_flush(1);
+ 	} else {
+-		head_ref_namespaced(check_ref, NULL);
+-		for_each_namespaced_ref(check_ref, NULL);
++		head_ref_namespaced(check_ref, &data);
++		for_each_namespaced_ref(check_ref, &data);
+ 	}
+=20
+ 	if (!advertise_refs) {
+@@ -1441,6 +1446,7 @@ static int parse_want(struct packet_writer *writer, c=
+onst char *line,
+=20
+ static int parse_want_ref(struct packet_writer *writer, const char *line,
+ 			  struct string_list *wanted_refs,
++			  struct string_list *hidden_refs,
+ 			  struct object_array *want_obj)
+ {
+ 	const char *refname_nons;
+@@ -1451,7 +1457,7 @@ static int parse_want_ref(struct packet_writer *write=
+r, const char *line,
+ 		struct strbuf refname =3D STRBUF_INIT;
+=20
+ 		strbuf_addf(&refname, "%s%s", get_git_namespace(), refname_nons);
+-		if (ref_is_hidden(refname_nons, refname.buf) ||
++		if (ref_is_hidden(refname_nons, refname.buf, hidden_refs) ||
+ 		    read_ref(refname.buf, &oid)) {
+ 			packet_writer_error(writer, "unknown ref %s", refname_nons);
+ 			die("unknown ref %s", refname_nons);
+@@ -1508,7 +1514,7 @@ static void process_args(struct packet_reader *reques=
+t,
+ 			continue;
+ 		if (data->allow_ref_in_want &&
+ 		    parse_want_ref(&data->writer, arg, &data->wanted_refs,
+-				   &data->want_obj))
++				   &data->hidden_refs, &data->want_obj))
+ 			continue;
+ 		/* process have line */
+ 		if (parse_have(arg, &data->haves))
 --=20
 2.38.1
 
 
---/wttfbfWcvLybNTB
+--ZLtUmH6Fd8NlcAcW
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmNo9yoACgkQVbJhu7ck
-PpSjJhAAkYIdB7YVyoY610ZjCZBMwBqJYq8K5lOlYPp8yCOq650QFEp8K941xtc2
-VAmLIgcOGilOHy7wo5KbGAbS/M+mHfefjthwCjwEqrQXTfmyDfukLdyMofdB341l
-UEyMNDlFM3u0IfEkFOyQTNfwMFQlh5zomjfL1NibUQsTolnaBXfkS+lzsLH8TL5g
-YD71trUXi5q0FZ8Ef8WpraSoqxTF/htBEZZr0CObOH41qi4gqsVoz5VVPEDNPfq1
-Gzo7/8WYR/XyBENbcLem3RGDyTUiXo5+Il0nzTLOuGm//DTP3sqb92BFHUPQqdD8
-STLwjZ6N0RbDgvrivz4pXYowE9DUVmIyDgL64fDSBvTceZoaincQTnx9MrN67NGK
-1dVltxWo7PuWN13r471QtxX1hPoFacbqVyAv5PF7PHWPEy6Vewlt9hEI2+nfXaaS
-T1ooHDwl874e3QDofMbdEYfDVhRLz5ofUda2bjTrr/NlimgZT86mNLSUVYLzEPul
-wfdFdLdFUfCkXyMn9wytLcuPgDs/B/D/OsBk6SZ2XbOO0b5ojxOgYk+5QchRP0N1
-7pGNYRuzWvt+cBvcTPyZPdhW39O0AxyiIyUIiQkfJu3oCWmPo72IcaprT20PC+5W
-iZIwp+iNDEU5W2kdd8dX3xpVbPSYT8Q/8eQJh8vJXcF/Rflb4es=
-=mj0l
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmNo9xYACgkQVbJhu7ck
+PpS65BAApX8lghSZUh38JdjDiCs8fg4pfwzjCJRGyUezqH1/YqMMIDBFYiGgLYZd
+w0yWrS3SNbz9DP/WqxckMQs19PJr3vpkRBuxxkUxlD3aXwUMvNHR3dy2tGm0XWbi
+zKhULvh45DX1NvfDuatdvduyYm923UntxuScwZNwfCQ5Xtuim+8mv9goyk1plt85
+uJk3VfMgzCjIJieunfvOcGKhNhm4rSEArR+cEN6icgxGQUqCbF+Plt2Y4I/GnmvP
+fa95nMyaL3R8Kq5kyU9oa3e1HN/U3NX10mGJ6ywOtyVNCAUTKKRT/4UPP0u1wfct
+k4plAd4JEIfBG9E/5c/KaazpmvLGCJHsA/vbNK+Ne7nf1RLNxF4lbDj+icbcWf6H
+gdN46oaT9DB9ZtfinZhg+5emFREYfnDp06/+Yw1pZ9FN0YpfhA1zeUuQ5xiX4TWX
+DpLvbFxBP0bqWXKwkuDn0QwNJiDIIV/Ogfw5FajR2/c+EtYDlU7wSQ3PTz/zixkv
+f62ntKBzlV3kGlBI776wkN3KrrahiB+QaoEeFDLS/qkYy/OBbKQHbEksp03XZn2n
+s1fipN1W4Jng1Gaf3MdrVIX3JsF7mcgC1Tv7DAfNm9JiH19WDDW9Gn+W+dfyP4Fw
+paDcjpgNO2wfz7LkxNBWVrJ61t54v8rPFLGgeG7Lh2WDaNTpQso=
+=pkOa
 -----END PGP SIGNATURE-----
 
---/wttfbfWcvLybNTB--
+--ZLtUmH6Fd8NlcAcW--
