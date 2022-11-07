@@ -2,197 +2,211 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4F24C4332F
-	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 18:25:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A6CBC4332F
+	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 18:36:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233030AbiKGSZn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 13:25:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42000 "EHLO
+        id S233093AbiKGSgL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 13:36:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233017AbiKGSZF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2022 13:25:05 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4E97DD5
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 10:25:04 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id g12so17477050wrs.10
-        for <git@vger.kernel.org>; Mon, 07 Nov 2022 10:25:04 -0800 (PST)
+        with ESMTP id S232992AbiKGSgK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2022 13:36:10 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63BBA240A3
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 10:36:09 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id y16so17507795wrt.12
+        for <git@vger.kernel.org>; Mon, 07 Nov 2022 10:36:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DRV7S09oxHyjlWW9LTu6BBRTV9vgbYB5M+gy59NejnU=;
-        b=liKMvGed6dfLOz+aMHQQyJlqeit5V91wPNkRdn9Yp+NBnO0PqEtrkpTQexmKMURBve
-         HA59MfJJHTt11hQoqZPa0aEKnUYRy5jPxRVVb7tzqIyID+VPgCNSKRNDuDMMgZYtAfPm
-         9AQDr8HGvwrB82ZEXAniqQqOzR/uf1BmM+IcmmO4DJ5MGYSRCr5H8sG/dxGpkZmeJXA2
-         B8h+ciZ+RzZdzI/K3snjAggzVm/bVV6vNZsVEaFOrvnbfgJZw/uCTMtSLGfXgHZ/QtMT
-         Yn5IIGjGlF7aCUJGQ/Z30Q2T82ZeIAQM5hT9KfPCO0Di2n3PKrDTu0zQ3DhwOstfrvPy
-         yB4w==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hwC5rdCBH8oAZ28SC1bjINPERkNTBY5/ApyQoQryQpE=;
+        b=SQeyBlH+F3IEKx0DdJhEp0kc6GA7huuXSGyIt9SNC78aCM+Wy+a+qsbCy+WvhGJdPu
+         tvtHlpcKVVSDF0WWxwcqxLsyDmcGQ6VVBm7IOfydwBji5dGPUqzv+jN0t1EahuPmxgK5
+         7is0ttJnGz1Fnvr3X3WScPtr3fYituL1XNpmUH6GzL8atFE+KJTTC7GmKZBJZ+NZf4/d
+         leqXe26YHBopA9DWwd+aXmK8s9jU8tWQfR4tWgT2qO4KJ7986qXoIssCNPrR93e8viGJ
+         XvHOKRoNCYsa+O1x8Z+jH/fT7Th03Li0HonmAnfL5O/44Hqlk6HjrUoraZTGM4bqU97h
+         +K+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DRV7S09oxHyjlWW9LTu6BBRTV9vgbYB5M+gy59NejnU=;
-        b=QVtrky8qVJ4/hXRCGmrtoinmV09SDqJbvh9RzDy4lyYaP2MOskePSybRJ6Sr1pFHZM
-         474/Lh3rxa4Ea0Bm65+MYZ/H4mepDJvg7bwiChRmOFi4Zqr2c3hmFdG8fF+RuQRRfT/B
-         BkXMPvOsx9zQi+PXh1tnwjWDp7bOb9F4wXAopIK2bxt1tKsfuvGWrJU1uWvBDiuLaXHE
-         aY1XKocRFob1klmkhhhWPRgq/lmO2e4OWhwyFl1sHzgDMF1fZxpmQ7Gl/7Tvi64XHCQK
-         j39jaCYfM8MFVrcG/BD/HDj9VTomasjzmU/bcfA6mrO/WeJBRfJ9Qk/ASSZYX4FUx0DH
-         QmxQ==
-X-Gm-Message-State: ACrzQf0752PD2EGSxzPdkuYU8diP4q3vu5ZL0WTlbx/swAvouYr6Lu8p
-        l6KnAHdosLF6GiwIHs7p9y3lvqyFEsk=
-X-Google-Smtp-Source: AMsMyM4g3FiNr4sLgMVCn3j+PgH6QM1c+g5/QhmK3zG7arPqmzXekmTSLXn2YnBfiVCym8DTSqFzFw==
-X-Received: by 2002:adf:f883:0:b0:236:a6a3:d6ac with SMTP id u3-20020adff883000000b00236a6a3d6acmr33409154wrp.538.1667845502838;
-        Mon, 07 Nov 2022 10:25:02 -0800 (PST)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hwC5rdCBH8oAZ28SC1bjINPERkNTBY5/ApyQoQryQpE=;
+        b=c7anbCaAeTOPEkCm6xExFYr0cz5obHQEgNrjSwLxY2nU9hgl7fv9bRjTVCBSqgaa5K
+         CKnT9eo5kqg0aDXZU4KrjNV5TkpmENou5fXafZkHCi7vG9wINOJkrVa/yEg0fc0VIkWh
+         iE4Ktnf/dM3Cf1hytbQZoItzh0/juC7ol3FtKCN5gXvZ6DZpBA+s9wvaCld1gI2eGeyV
+         Gkj4pSBv+bYfY9NqE93yMfxa8aE9txAGxpHgyGwIAOxxl/cBRfJHnqVwQbGZCLIjBfEi
+         sqfohqcijNrdbgFf//3nhlHF3omzI6EhgwT+JCJlMpI187hu+HC5jSxdSMZewry/6ltO
+         8ZeQ==
+X-Gm-Message-State: ACrzQf3en++lWUNx7gMXrRE9gqa2JC7s7eQM2/pWArkeAxbMj/QEeIsg
+        hbpqkK8tsbXbfhV/uXaSfrUnlalXnrw=
+X-Google-Smtp-Source: AMsMyM7xZUl0ylNMZ41dn/zopx24e4xnTYld6JcNmdql4E2RjwPDG+F4GzPcDrtHwQSfjeTlTu8Bvw==
+X-Received: by 2002:a5d:52ca:0:b0:236:e9ac:3c3f with SMTP id r10-20020a5d52ca000000b00236e9ac3c3fmr22325891wrv.53.1667846167626;
+        Mon, 07 Nov 2022 10:36:07 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id az2-20020adfe182000000b00226dba960b4sm8309505wrb.3.2022.11.07.10.25.02
+        by smtp.gmail.com with ESMTPSA id l7-20020a7bc447000000b003cf7928e731sm8795380wmi.9.2022.11.07.10.36.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 10:25:02 -0800 (PST)
-Message-Id: <pull.1407.git.1667845501422.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 07 Nov 2022 18:25:01 +0000
-Subject: [PATCH] scalar reconfigure -a: remove stale `scalar.repo` entries
+        Mon, 07 Nov 2022 10:36:06 -0800 (PST)
+Message-Id: <71c76d4ccbe577f82e820fb08fe93e5177177804.1667846164.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
+References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 07 Nov 2022 18:35:35 +0000
+Subject: [PATCH 01/30] hashfile: allow skipping the hash function
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     jrnieder@gmail.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Derrick Stolee <derrickstolee@github.com>
 
-Every once in a while, a Git for Windows installation fails because the
-attempt to reconfigure a Scalar enlistment failed because it was deleted
-manually without removing the corresponding entries in the global Git
-config.
+The hashfile API is useful for generating files that include a trailing
+hash of the file's contents up to that point. Using such a hash is
+helpful for verifying the file for corruption-at-rest, such as a faulty
+drive causing flipped bits.
 
-In f5f0842d0b5 (scalar: let 'unregister' handle a deleted enlistment
-directory gracefully, 2021-12-03), we already taught `scalar delete` to
-handle the case of a manually deleted enlistment gracefully. This patch
-adds the same graceful handling to `scalar reconfigure --all`.
+Since the commit-graph and multi-pack-index files both use this trailing
+hash, the chunk-format API uses a 'struct hashfile' to handle the I/O to
+the file. This was very convenient to allow using the hashfile methods
+during these operations.
 
-This patch is best viewed with `--color-moved`.
+However, hashing the file contents during write comes at a performance
+penalty. It's slower to hash the bytes on their way to the disk than
+without that step. If we wish to use the chunk-format API to upgrade
+other file types, then this hashing is a performance penalty that might
+not be worth the benefit of a trailing hash.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+For example, if we create a chunk-format version of the packed-refs
+file, then the file format could shrink by using raw object IDs instead
+of hexadecimal representations in ASCII. That reduction in size is not
+enough to counteract the performance penalty of hashing the file
+contents. In cases such as deleting a reference that appears in the
+packed-refs file, that write-time performance is critical. This is in
+contrast to the commit-graph and multi-pack-index files which are mainly
+updated in non-critical paths such as background maintenance.
+
+One way to allow future chunked formats to not suffer this penalty would
+be to create an abstraction layer around the 'struct hashfile' using a
+vtable of function pointers. This would allow placing a different
+representation in place of the hashfile. This option would be cumbersome
+for a few reasons. First, the hashfile's buffered writes are already
+highly optimized and would need to be duplicated in another code path.
+The second is that the chunk-format API calls the chunk_write_fn
+pointers using a hashfile. If we change that to an abstraction layer,
+then those that _do_ use the hashfile API would need to change all of
+their instances of hashwrite(), hashwrite_be32(), and others to use the
+new abstraction layer.
+
+Instead, this change opts for a simpler change. Introduce a new
+'skip_hash' option to 'struct hashfile'. When set, the update_fn and
+final_fn members of the_hash_algo are skipped. When finalizing the
+hashfile, the trailing hash is replaced with the null hash.
+
+This use of a trailing null hash would be desireable in either case,
+since we do not want to special case a file format to have a different
+length depending on whether it was hashed or not. When the final bytes
+of a file are all zero, we can infer that it was written without
+hashing, and thus that verification is not available as a check for file
+consistency. This also means that we could easily toggle hashing for any
+file format we desire. For the commit-graph and multi-pack-index file,
+it may be possible to allow the null hash without incrementing the file
+format version, since it technically fits the structure of the file
+format. The only issue is that older versions would trigger a failure
+during 'git fsck'. For these file formats, we may want to delay such a
+change until it is justified.
+
+However, the index file is written in critical paths. It is also
+frequently updated, so corruption at rest is less likely to be an issue
+than in those other file formats. This could be a good candidate to
+create an option that skips the hashing operation.
+
+A version of this patch has existed in the microsoft/git fork since
+2017 [1] (the linked commit was rebased in 2018, but the original dates
+back to January 2017). Here, the change to make the index use this fast
+path is delayed until a later change.
+
+[1] https://github.com/microsoft/git/commit/21fed2d91410f45d85279467f21d717a2db45201
+
+Co-authored-by: Kevin Willford <kewillf@microsoft.com>
+Signed-off-by: Kevin Willford <kewillf@microsoft.com>
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
-    scalar reconfigure -a: remove stale scalar.repo entries
-    
-    This has been on my TODO list for, like, forever.
+ csum-file.c | 14 +++++++++++---
+ csum-file.h |  7 +++++++
+ 2 files changed, 18 insertions(+), 3 deletions(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1407%2Fdscho%2Fscalar-reconfigure-a-and-stale-config-entries-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1407/dscho/scalar-reconfigure-a-and-stale-config-entries-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1407
-
- scalar.c          | 54 +++++++++++++++++++++++++++++------------------
- t/t9210-scalar.sh | 11 ++++++++++
- 2 files changed, 45 insertions(+), 20 deletions(-)
-
-diff --git a/scalar.c b/scalar.c
-index 6de9c0ee523..7f4bdb6c153 100644
---- a/scalar.c
-+++ b/scalar.c
-@@ -599,6 +599,24 @@ static int get_scalar_repos(const char *key, const char *value, void *data)
- 	return 0;
- }
+diff --git a/csum-file.c b/csum-file.c
+index 59ef3398ca2..3243473c3d7 100644
+--- a/csum-file.c
++++ b/csum-file.c
+@@ -45,7 +45,8 @@ void hashflush(struct hashfile *f)
+ 	unsigned offset = f->offset;
  
-+static int remove_deleted_enlistment(struct strbuf *path)
-+{
-+	int res = 0;
-+	strbuf_realpath_forgiving(path, path->buf, 1);
-+
-+	if (run_git("config", "--global",
-+		    "--unset", "--fixed-value",
-+		    "scalar.repo", path->buf, NULL) < 0)
-+		res = -1;
-+
-+	if (run_git("config", "--global",
-+		    "--unset", "--fixed-value",
-+		    "maintenance.repo", path->buf, NULL) < 0)
-+		res = -1;
-+
-+	return res;
-+}
-+
- static int cmd_reconfigure(int argc, const char **argv)
- {
- 	int all = 0;
-@@ -638,8 +656,22 @@ static int cmd_reconfigure(int argc, const char **argv)
- 		strbuf_reset(&gitdir);
+ 	if (offset) {
+-		the_hash_algo->update_fn(&f->ctx, f->buffer, offset);
++		if (!f->skip_hash)
++			the_hash_algo->update_fn(&f->ctx, f->buffer, offset);
+ 		flush(f, f->buffer, offset);
+ 		f->offset = 0;
+ 	}
+@@ -64,7 +65,12 @@ int finalize_hashfile(struct hashfile *f, unsigned char *result,
+ 	int fd;
  
- 		if (chdir(dir) < 0) {
--			warning_errno(_("could not switch to '%s'"), dir);
--			res = -1;
-+			struct strbuf buf = STRBUF_INIT;
+ 	hashflush(f);
+-	the_hash_algo->final_fn(f->buffer, &f->ctx);
 +
-+			if (errno != ENOENT) {
-+				warning_errno(_("could not switch to '%s'"), dir);
-+				res = -1;
-+				continue;
-+			}
++	if (f->skip_hash)
++		memset(f->buffer, 0, the_hash_algo->rawsz);
++	else
++		the_hash_algo->final_fn(f->buffer, &f->ctx);
 +
-+			strbuf_addstr(&buf, dir);
-+			if (remove_deleted_enlistment(&buf))
-+				res = error(_("could not remove stale "
-+					      "scalar.repo '%s'"), dir);
-+			else
-+				warning(_("removing stale scalar.repo '%s'"),
-+					dir);
-+			strbuf_release(&buf);
- 		} else if (discover_git_directory(&commondir, &gitdir) < 0) {
- 			warning_errno(_("git repository gone in '%s'"), dir);
- 			res = -1;
-@@ -725,24 +757,6 @@ static int cmd_run(int argc, const char **argv)
- 	return 0;
- }
+ 	if (result)
+ 		hashcpy(result, f->buffer);
+ 	if (flags & CSUM_HASH_IN_STREAM)
+@@ -108,7 +114,8 @@ void hashwrite(struct hashfile *f, const void *buf, unsigned int count)
+ 			 * the hashfile's buffer. In this block,
+ 			 * f->offset is necessarily zero.
+ 			 */
+-			the_hash_algo->update_fn(&f->ctx, buf, nr);
++			if (!f->skip_hash)
++				the_hash_algo->update_fn(&f->ctx, buf, nr);
+ 			flush(f, buf, nr);
+ 		} else {
+ 			/*
+@@ -153,6 +160,7 @@ static struct hashfile *hashfd_internal(int fd, const char *name,
+ 	f->tp = tp;
+ 	f->name = name;
+ 	f->do_crc = 0;
++	f->skip_hash = 0;
+ 	the_hash_algo->init_fn(&f->ctx);
  
--static int remove_deleted_enlistment(struct strbuf *path)
--{
--	int res = 0;
--	strbuf_realpath_forgiving(path, path->buf, 1);
--
--	if (run_git("config", "--global",
--		    "--unset", "--fixed-value",
--		    "scalar.repo", path->buf, NULL) < 0)
--		res = -1;
--
--	if (run_git("config", "--global",
--		    "--unset", "--fixed-value",
--		    "maintenance.repo", path->buf, NULL) < 0)
--		res = -1;
--
--	return res;
--}
--
- static int cmd_unregister(int argc, const char **argv)
- {
- 	struct option options[] = {
-diff --git a/t/t9210-scalar.sh b/t/t9210-scalar.sh
-index be51a8bb7a4..c7f8a379108 100755
---- a/t/t9210-scalar.sh
-+++ b/t/t9210-scalar.sh
-@@ -166,6 +166,17 @@ test_expect_success 'scalar reconfigure' '
- 	test true = "$(git -C one/src config core.preloadIndex)"
- '
- 
-+test_expect_success '`reconfigure -a` removes stale config entries' '
-+	git init stale/src &&
-+	scalar register stale &&
-+	scalar list >scalar.repos &&
-+	grep stale scalar.repos &&
-+	rm -rf stale &&
-+	scalar reconfigure -a &&
-+	scalar list >scalar.repos &&
-+	! grep stale scalar.repos
-+'
+ 	f->buffer_len = buffer_len;
+diff --git a/csum-file.h b/csum-file.h
+index 0d29f528fbc..29468067f81 100644
+--- a/csum-file.h
++++ b/csum-file.h
+@@ -20,6 +20,13 @@ struct hashfile {
+ 	size_t buffer_len;
+ 	unsigned char *buffer;
+ 	unsigned char *check_buffer;
 +
- test_expect_success 'scalar delete without enlistment shows a usage' '
- 	test_expect_code 129 scalar delete
- '
-
-base-commit: c03801e19cb8ab36e9c0d17ff3d5e0c3b0f24193
++	/**
++	 * If set to 1, skip_hash indicates that we should
++	 * not actually compute the hash for this hashfile and
++	 * instead only use it as a buffered write.
++	 */
++	unsigned int skip_hash;
+ };
+ 
+ /* Checkpoint */
 -- 
 gitgitgadget
+
