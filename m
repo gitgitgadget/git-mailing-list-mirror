@@ -2,127 +2,230 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90339C4332F
-	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 13:42:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C2C6C4332F
+	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 13:57:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231508AbiKGNmy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 08:42:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39564 "EHLO
+        id S231643AbiKGN5Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 08:57:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231124AbiKGNmx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2022 08:42:53 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 507B71C927
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 05:42:52 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id a67so17583693edf.12
-        for <git@vger.kernel.org>; Mon, 07 Nov 2022 05:42:52 -0800 (PST)
+        with ESMTP id S229638AbiKGN5N (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2022 08:57:13 -0500
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBC2B1CFEA
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 05:57:12 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id l6so10683881pjj.0
+        for <git@vger.kernel.org>; Mon, 07 Nov 2022 05:57:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=fUt/ICq97XeawalotcnBaxEtnv3HW+Q/biO93SwnzVE=;
-        b=iSfytdtZBgEN3vbxts7zpur+Hd6R5qHOxoaI/GCmDsOskBB1fFsKndaewXncPMQtdT
-         fvGWjrfW7D+U3BcmDUPfdeTX1A0GhgjXWX6Te+pAW3JqlSxQKtNVJTa4k8S22ry0StTE
-         9ru5/OLg6WQuxLf0VMEcABOJ487E8pctBYMHdY2zpmbnmzvHsA7ZWljYyhIHqDr0hgN2
-         s2jnindy3623V58XdXo4o3RaNCWUi9oxAzdBveApnoBqtKP6MFRny5/6IOZ02X2HiZVg
-         rAfSbDnDVOEmu2imwRpjh/bdKdT4JK1G1KAuJPXAwPe7ZGuPr03UcQ+I/aQASer6Aqqc
-         m1pQ==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GhKbhBfa7S/y/YUZ4mg3bWVqjxat2Z+IWetQPSQYrg0=;
+        b=UjTlJjop8bRt2OD5GhBg3JNMn2a9KscOG1Ea0oRBZDAnwsuBw/TR7gLIUFXABcC+s8
+         R5iSHELW3D1gD7RyDWO9men16EulnDapNJff7K6d7Q4BrYDzmSccI8lHIom5CbTTS8bf
+         /OkdDlxwWCv21JsjQ6UkeSFbY9kWUE7uJbLhcLFf6QucJUebaepKH3bN04lZfwoVvEaZ
+         3XpeCIq+vSFUbRP3iO8Bd2uRQnLsPUe7enMtJCxJ97bb2uaCmY9bGqDTEm5LhVh0IJ1j
+         PxHiuZ+m3AvnYyoVtLHMCvrgMLtxUG1J4c1v1TfLmNPfXdCUfC9BYffKmK6gcNJBNKKw
+         kqPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fUt/ICq97XeawalotcnBaxEtnv3HW+Q/biO93SwnzVE=;
-        b=mMbRElMGt+czXgCetJS73cA12X05ItUtpmmkIvE8JzjY6xE5ge3dYHBzI4uhhkBgG4
-         xHI0bFBKu6B05CcQNYQCQjaNm78tUtm7pbiP78wxrdH/yA4LVXUy36hLqQZQaXUse7mw
-         zTGVc6L2G6zFE7R5/7Ko1CBLlGxWOnd4zdej0CJLmtOwCNJwYu1+P765FYUxgTdPAq4k
-         RZ/DzL2ll6oRNFBkpLLTxXQ5dVfnDQ0+p/XqWUmLyYJA+/lc+hoj4pHYQnLopuXgRfd5
-         3LdUc8DYnsDIzw6348+7k+K8DkeCvbklN25zJf8u4T15IBfzcsKhBvXg1Zm/K1xCMa82
-         GBfw==
-X-Gm-Message-State: ACrzQf2P6QUi6IrQzqDUAKj9/4MsRWVQqDtS+vudFcOUPh9HPqrwB9GB
-        +YPtXYDi0RhGcQqPDYzT5H4=
-X-Google-Smtp-Source: AMsMyM6/i1VdO6oMfcqRoq8Qc7t1YHeR3O1mAIxbsl4pmnX/uRiHnwWm0sByVNLzqQn3ZumeXbXhlA==
-X-Received: by 2002:a05:6402:11cc:b0:462:76cd:1215 with SMTP id j12-20020a05640211cc00b0046276cd1215mr50078894edw.318.1667828570704;
-        Mon, 07 Nov 2022 05:42:50 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id et19-20020a170907295300b0077205dd15basm3461402ejc.66.2022.11.07.05.42.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 05:42:50 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1os2On-0005L0-1j;
-        Mon, 07 Nov 2022 14:42:49 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 4/6] revision: add new parameter to exclude hidden refs
-Date:   Mon, 07 Nov 2022 14:34:45 +0100
-References: <cover.1666967670.git.ps@pks.im>
- <cover.1667823042.git.ps@pks.im>
- <de7c1aa210c2df9bdbbb6c19f44f72c37f56c5da.1667823042.git.ps@pks.im>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <de7c1aa210c2df9bdbbb6c19f44f72c37f56c5da.1667823042.git.ps@pks.im>
-Message-ID: <221107.86pmdyx4me.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GhKbhBfa7S/y/YUZ4mg3bWVqjxat2Z+IWetQPSQYrg0=;
+        b=rAWtZt+bepn7TXTA4povZXgmtT4BTG4wsJUJW3L0ooW29KEN7VTmBVQeVcc9ZKfFWI
+         4iwonB9zL6PGYIelMKEnIkJHG9dk38PB8hJfmaGFBVDyQMRqo/w/8/QFhVnyYiTH5w/c
+         DG7o48zM8WlR3K+qe/GvytoRQH16DUkJpGNdW16AaSk/d1dwLTcCmjImDG8YQKSbpQ5V
+         ZpT+MRbFkGNL8WIYzRyGaXvXOAVjJOhRUNIw3+8DenKZ9Fa7bkBs6DU6Fq+rdey3ZeOm
+         pCxrLmzSo75YDv4d97WnGRVbKWf4DeBF7Sp5JMLAmq7CQ7CzyUERyKHVRzDeB5oTyFp4
+         8pRw==
+X-Gm-Message-State: ACrzQf1++FXg+RYLGI+JPqampH9BQrI8kx9ESoclYhZO7iIB/ULmZAQ/
+        sZ9hmI/um8dO8E7UnJ1QU88=
+X-Google-Smtp-Source: AMsMyM44Uw6TRYu9XH7VynTuruHpCtOWWihyKYlyraikNR7r3VtCX7MlMuw/qof0JSZu8orrtxFt2A==
+X-Received: by 2002:a17:902:e846:b0:187:2127:cbb with SMTP id t6-20020a170902e84600b0018721270cbbmr42362944plg.125.1667829432245;
+        Mon, 07 Nov 2022 05:57:12 -0800 (PST)
+Received: from localhost.localdomain ([47.246.101.56])
+        by smtp.gmail.com with ESMTPSA id w27-20020aa79a1b000000b00562ef28aac6sm4511383pfj.185.2022.11.07.05.57.10
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 07 Nov 2022 05:57:11 -0800 (PST)
+From:   Teng Long <dyroneteng@gmail.com>
+X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
+To:     dyroneteng@gmail.com
+Cc:     avarab@gmail.com, git@vger.kernel.org, tenglong.tl@alibaba-inc.com
+Subject: [PATCH v2 0/3] notes.c: introduce "--blank-line" option
+Date:   Mon,  7 Nov 2022 21:57:02 +0800
+Message-Id: <cover.1667828335.git.dyroneteng@gmail.com>
+X-Mailer: git-send-email 2.38.1.383.ge7205ac0a40.dirty
+In-Reply-To: <20221013055654.39628-1-tenglong.tl@alibaba-inc.com>
+References: <20221013055654.39628-1-tenglong.tl@alibaba-inc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Teng Long <dyroneteng@gmail.com>
 
-On Mon, Nov 07 2022, Patrick Steinhardt wrote:
+Diff from RFC Patch v1:
 
-> +--exclude-hidden=[transfer|receive|uploadpack]::
-> +	Do not include refs that have been hidden via either one of
-> +	`transfer.hideRefs`, `receive.hideRefs` or `uploadpack.hideRefs` that
+* optimize the commit-msg and docs of introducing new "--blank-line" option.
 
-Maybe worth adding "(see linkgit:git-config[1]) after listing the config
-variables.
+* drop unreachable code in "append_edit()". Ævar found that some code has been
+unreachable in patch v1. I think it's because, after the commit "notes.c: fixed
+tip when target and append note are both empty", for example in this patch, the
+situation of "removing an existing note" should be impossible unless a BUG when
+trying to do append. The tests are passed, but I'm not sure I fully understand
+the original design.
 
->  int ref_excluded(const struct ref_exclusions *exclusions, const char *path)
->  {
-> +	const char *stripped_path = strip_namespace(path);
->  	struct string_list_item *item;
-> +
+Thanks to Junio C Hamano, Ævar Arnfjörð Bjarmason and Phillip Wood for
+the help in v1.
 
-nit: stray whitespace in otherwise "clean" commit, but the post-image looks nicer, so...
+Teng Long (3):
+  notes.c: introduce "--blank-line" option
+  notes.c: fixed tip when target and append note are both empty
+  notes.c: drop unreachable code in "append_edit()"
 
->  void init_ref_exclusions(struct ref_exclusions *exclusions)
->  {
->  	string_list_init_dup(&exclusions->excluded_refs);
-> +	string_list_init_dup(&exclusions->hidden_refs);
->  }
+ Documentation/git-notes.txt | 11 +++++++++--
+ builtin/notes.c             | 27 +++++++++++++++++++--------
+ t/t3301-notes.sh            | 15 ++++++++++++++-
+ 3 files changed, 42 insertions(+), 11 deletions(-)
 
-Per my comment on 3/6 we wouldn't need this when using the macro as a
-source of truth.
+Range-diff against v1:
+1:  d69bd0a011 ! 1:  2381947abd notes.c: introduce "--no-blankline" option
+    @@ Metadata
+     Author: Teng Long <dyroneteng@gmail.com>
+     
+      ## Commit message ##
+    -    notes.c: introduce "--no-blankline" option
+    +    notes.c: introduce "--blank-line" option
+     
+         When appending to a given object which has note and if the appended
+         note is not empty too, we will insert a blank line at first. The
+         blank line serves as a split line, but sometimes we just want to
+    -    omit it then append on the heels of the target note.
+    +    omit it then append on the heels of the target note. So, we add
+    +    a new "OPT_BOOL()" option to determain whether a new blank line
+    +    is insert at first.
+     
+         Signed-off-by: Teng Long <dyroneteng@gmail.com>
+     
+    @@ Documentation/git-notes.txt: SYNOPSIS
+      'git notes' add [-f] [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
+      'git notes' copy [-f] ( --stdin | <from-object> [<to-object>] )
+     -'git notes' append [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
+    -+'git notes' append [--allow-empty] [--no-blankline] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
+    ++'git notes' append [--allow-empty] [--blank-line] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
+      'git notes' edit [--allow-empty] [<object>]
+      'git notes' show [<object>]
+      'git notes' merge [-v | -q] [-s <strategy> ] <notes-ref>
+    @@ Documentation/git-notes.txt: OPTIONS
+      	Allow an empty note object to be stored. The default behavior is
+      	to automatically remove empty notes.
+      
+    ++--blank-line::
+     +--no-blank-line::
+    -+	When appending note, do not insert a blank line between
+    -+	the note of given object and the note to be appended.
+    ++	Controls if a blank line to split paragraphs is inserted
+    ++	when appending (the default is true).
+     +
+      --ref <ref>::
+      	Manipulate the notes tree in <ref>.  This overrides
+    @@ builtin/notes.c: static int copy(int argc, const char **argv, const char *prefix
+      static int append_edit(int argc, const char **argv, const char *prefix)
+      {
+      	int allow_empty = 0;
+    -+	int no_blankline = 0;
+    ++	int blankline = 1;
+      	const char *object_ref;
+      	struct notes_tree *t;
+      	struct object_id object, new_note;
+    @@ builtin/notes.c: static int append_edit(int argc, const char **argv, const char
+      			parse_reuse_arg),
+      		OPT_BOOL(0, "allow-empty", &allow_empty,
+      			N_("allow storing empty note")),
+    -+		OPT_BOOL(0, "no-blankline", &no_blankline,
+    -+			N_("do not initially add a blank line")),
+    ++		OPT_BOOL(0, "blank-line", &blankline,
+    ++			N_("insert paragraph break before appending to an existing note")),
+      		OPT_END()
+      	};
+      	int edit = !strcmp(argv[0], "edit");
+    @@ builtin/notes.c: static int append_edit(int argc, const char **argv, const char
+      
+      		strbuf_grow(&d.buf, size + 1);
+     -		if (d.buf.len && prev_buf && size)
+    -+		if (!no_blankline && d.buf.len && prev_buf && size)
+    ++		if (blankline && d.buf.len && prev_buf && size)
+      			strbuf_insertstr(&d.buf, 0, "\n");
+      		if (prev_buf && size)
+      			strbuf_insert(&d.buf, 0, prev_buf, size);
+    @@ t/t3301-notes.sh: test_expect_success 'listing non-existing notes fails' '
+      '
+      
+     +test_expect_success 'append to existing note without a beginning blank line' '
+    -+	cat >expect <<-EOF &&
+    ++	cat >expect <<-\EOF &&
+     +		Initial set of notes
+     +		Appended notes
+     +	EOF
+     +	git notes add -m "Initial set of notes" &&
+    -+	git notes append --no-blankline -m "Appended notes" &&
+    ++	git notes append --no-blank-line -m "Appended notes" &&
+     +	git notes show >actual &&
+     +	test_cmp expect actual
+     +'
+2:  c581cb24b6 ! 2:  5dbe014a09 notes.c: fixed tip when target and append note are both empty
+    @@ builtin/notes.c: static int append_edit(int argc, const char **argv, const char
+     -	char *logmsg;
+     +	char *logmsg = NULL;
+      	const char * const *usage;
+    - 	struct note_data d = { 0, 0, NULL, STRBUF_INIT };
+    -+	struct note_data cp = { 0, 0, NULL, STRBUF_INIT };
+    +-	struct note_data d = { 0, 0, NULL, STRBUF_INIT };
+    ++	struct note_data d = {
+    ++		.given = 0,
+    ++		.use_editor = 0,
+    ++		.edit_path = NULL,
+    ++		.buf = STRBUF_INIT
+    ++	};
+    ++
+      	struct option options[] = {
+      		OPT_CALLBACK_F('m', "message", &d, N_("message"),
+      			N_("note contents as a string"), PARSE_OPT_NONEG,
+     @@ builtin/notes.c: static int append_edit(int argc, const char **argv, const char *prefix)
+    - 
+    - 	prepare_note_data(&object, &d, edit && note ? note : NULL);
+    - 
+    -+	strbuf_addbuf(&cp.buf, &d.buf);
+    -+
+    - 	if (note && !edit) {
+    - 		/* Append buf to previous note contents */
+    - 		unsigned long size;
+    -@@ builtin/notes.c: static int append_edit(int argc, const char **argv, const char *prefix)
+      		if (add_note(t, &object, &new_note, combine_notes_overwrite))
+      			BUG("combine_notes_overwrite failed");
+      		logmsg = xstrfmt("Notes added by 'git notes %s'", argv[0]);
+     +		commit_notes(the_repository, t, logmsg);
+    -+	} else if (!cp.buf.len) {
+    ++	} else if (!d.buf.len && !note) {
+     +		fprintf(stderr,
+     +			_("Both original and appended notes are empty in %s, do nothing\n"),
+     +			oid_to_hex(&object));
+    @@ builtin/notes.c: static int append_edit(int argc, const char **argv, const char
+      
+      	free(logmsg);
+      	free_note_data(&d);
+    -+	free_note_data(&cp);
+    - 	free_notes(t);
+    - 	return 0;
+    - }
+     
+      ## t/t3301-notes.sh ##
+     @@ t/t3301-notes.sh: test_expect_success 'git notes append == add when there is no existing note' '
+-:  ---------- > 3:  2475ea0c04 notes.c: drop unreachable code in "append_edit()"
+-- 
+2.38.1.383.ge7205ac0a40.dirty
 
->  void clear_ref_exclusions(struct ref_exclusions *exclusions)
->  {
->  	string_list_clear(&exclusions->excluded_refs, 0);
-> +	string_list_clear(&exclusions->hidden_refs, 1);
->  }
-
-Hrm, I'l read on, but I don't see any use of "util" here at a glance,
-should the "1" here be "0", or maybe I've just missed how it's used...
-
-> +	if (strcmp(section, "transfer") && strcmp(section, "receive") &&
-> +	    strcmp(section, "uploadpack"))
-> +		die(_("unsupported section for hidden refs: %s"), section);
-> +
-> +	if (exclusions->hidden_refs.nr)
-> +		die(_("--exclude-hidden= passed more than once"));
-
-We usually just ignore the first of --foo=bar --foo=baz and take "baz"
-in our CLI use. Is it better to die here than just clear the previous
-one & continue?
-
-
-> -#define REF_EXCLUSIONS_INIT { .excluded_refs = STRING_LIST_INIT_DUP }
-> +#define REF_EXCLUSIONS_INIT { .excluded_refs = STRING_LIST_INIT_DUP, .hidden_refs = STRING_LIST_INIT_DUP }
-
-...the getting overly long line I mentioned in 3/6...
-
-> +TEST_PASSES_SANITIZE_LEAK=true
-
-Thanks for adding this! :)
