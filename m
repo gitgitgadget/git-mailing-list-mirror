@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DCFAFC4332F
-	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 18:36:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C55AEC43217
+	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 18:36:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233188AbiKGSgl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 13:36:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49972 "EHLO
+        id S233190AbiKGSgm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 13:36:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233137AbiKGSg1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2022 13:36:27 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F6CB2648A
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 10:36:17 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id k8so17610547wrh.1
+        with ESMTP id S233153AbiKGSg2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2022 13:36:28 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D6D526AC7
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 10:36:18 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id j15so17559396wrq.3
         for <git@vger.kernel.org>; Mon, 07 Nov 2022 10:36:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=tl+O9eIsm0qB/+MG2tKxqwEaGg64A+ZDbNtireyw8vg=;
-        b=XiZB0rgt5a7QgptSpfOP0SpGSZFWnU/Arpv6Vl5ch31VCraY0+cJig1FaDq3bsmr1+
-         Qsy7UULaztfbqNZUYuo4pH1nILaG+EkMwmKBxNJGIiEl+7W4awPpLjGUMgbtAJ9kd5Vk
-         WbWLIUmz0w/J1hcuXvT6Ri3ZGb9U1TRQucCpLhGanTDSHg05HopMOGWdnb70FWjvmHvr
-         lKJL2/jr0+xVJYr5ZHirAMskxJWLdCroLvNM15SrnlKOs6lPPmr7aRtOWl3CrO5/RxYn
-         bAHqS/xCk1E5jx2gDWq8n6useJU/Du6gFsDAaiNQRd/mt4Q5Tik5rkMuWpw75KRGyQVM
-         Jmkw==
+        bh=44dn24qGOMEhexAJEfQkrMkQ/mBOQVNND14B5OE1N8E=;
+        b=enPep+bMSVW4yMDWJZMcm23omZS61uDWj3SppLm5tEK8oj85qdXjIaavoPufDsa+nj
+         ZQxafsI2GOHJKqk4lr3WImz2tQhaySF3LQ7HnpJ+gyf3QZYDnIbNiqatbkLz1B+PyCvp
+         qY6KheApHaeqqWfPnuZJCqC5Ay8NH9iU5QHyKYipl8R7hKjGZ9YisifYADOqCLGBm0U7
+         rmH5OlMmxBlXqvcDDemxR55PFo4PMZRjLANQ6HOr81pusVlKobVvxtWDYLbmVWe9iXXC
+         0qoPd5mg++x/CzrG+01HvTp6G+bTXPam4NV0dvTUeAd6JQqxEYmhLCrEoCz69F6MW3PF
+         m1Cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=tl+O9eIsm0qB/+MG2tKxqwEaGg64A+ZDbNtireyw8vg=;
-        b=bWN8Fu7S94vQPeQwmZggrNlS6G6hz52FCWbcXfD3MV5h+vMd/LOccdwnrfryPOLEmE
-         6AIwwodTa5fL0gkbQvJFm+gXXd02699091cuN0M4zwA4j6bPOKbEdx7etXsUNO1NjC0w
-         mOC/Di6Rp7Ntn1fLkAUH223bIUNv5/uiKsUu+xAfVHrmG1Th9IfC/1xLNww53yHZ0gEE
-         D7zXTidT0WY667Cs2bf/PDjZzf5TRt6AOR0mpdpJ+VPUE/VCNZZ0G8jTw/L6vU+3ik+0
-         bxV0IPOOY/J5KNml95v+nDGbqe3eneNL5JP93vJ0th5tyHCMvXm3Ac41PqIU8QZOmyj6
-         E2Og==
-X-Gm-Message-State: ACrzQf3ur5b+H7sxxRVf3/w8xA+Juo6IMhPNqXJkWxQAL+NKag/Cd7zc
-        QvBWivo4o3FGFKRPrGXmqhYyqq/gSVc=
-X-Google-Smtp-Source: AMsMyM663zRxM0+DneQz0qjXGkLwx2mQUzMkSIIRmpkmy54uLVXjJJtsPiz6gQwZIuSD/OmKjDh5qQ==
-X-Received: by 2002:a05:6000:808:b0:236:9822:718d with SMTP id bt8-20020a056000080800b002369822718dmr32891715wrb.254.1667846175612;
-        Mon, 07 Nov 2022 10:36:15 -0800 (PST)
+        bh=44dn24qGOMEhexAJEfQkrMkQ/mBOQVNND14B5OE1N8E=;
+        b=bnwcWzI8GRSNzusqRmhPbTM3O731UFc2JAx04FZ2InAicSqr8jScPgF7EebmoHItdG
+         56OeoYYUytLB63cvCNH7eQ7WwAdsCtG6ZZrKMu0Ilv5e+YTbakr2TZ09kCi+x2Tto8KY
+         JMFZ7e4+2FZ5KPBSiYQdJqpw1516Sow4wlr8F87D97Mnm6NFezPA0Sa4ZTk375k24AzY
+         6zmuJi4nIMNoIkVXX9UnaFDCl8Y3Z4r1HgaJgHku8fOsL48RaBu99CCeygskQG1n1ZVg
+         rtgEkII2jYjcFPgJkv50gX6YthzevvWNUT0ljWywG1I36TQFBdEwXbLW+xdBx0CR/a+K
+         xteA==
+X-Gm-Message-State: ACrzQf3tkJ61kJf0K+kBmqW7ZMO/ZRk0HJcPUTo5V6f2+UpWuC0ij5Oe
+        OPC7nwLtewAwva8GjqfSJuZYhWE2Bhs=
+X-Google-Smtp-Source: AMsMyM78mynlrTK1PCvZN90lHu8vV5nZf/+uFrC+4JffEG1mtylPROFhtohVrvHl8nJxiBTIqCeqVQ==
+X-Received: by 2002:a5d:548d:0:b0:236:debd:f285 with SMTP id h13-20020a5d548d000000b00236debdf285mr24058614wrv.640.1667846177427;
+        Mon, 07 Nov 2022 10:36:17 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e5-20020adfef05000000b00225307f43fbsm8122945wro.44.2022.11.07.10.36.14
+        by smtp.gmail.com with ESMTPSA id o15-20020a056000010f00b0023691d62cffsm8081531wrx.70.2022.11.07.10.36.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 10:36:15 -0800 (PST)
-Message-Id: <ff176b52306345fbb2ad96193b890839d7959015.1667846164.git.gitgitgadget@gmail.com>
+        Mon, 07 Nov 2022 10:36:16 -0800 (PST)
+Message-Id: <ebc719f92dd99bb6f5ae92104e87a05e520664d2.1667846164.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
 References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 07 Nov 2022 18:35:43 +0000
-Subject: [PATCH 09/30] chunk-format: store chunk offset during write
+Date:   Mon, 07 Nov 2022 18:35:45 +0000
+Subject: [PATCH 11/30] chunk-format: parse trailing table of contents
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,47 +68,111 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-As a preparatory step to allowing trailing table of contents, store the
-offsets of each chunk as we write them. This replaces an existing use of
-a local variable, but the stored value will be used in the next change.
+The new read_trailing_table_of_contents() mimics
+read_table_of_contents() except that it reads the table of contents in
+reverse from the end of the given hashfile. The file is given as a
+memory-mapped section of memory and a size. Automatically calculate the
+start of the trailing hash and read the table of contents in revers from
+that position.
+
+The errors come along from those in read_table_of_contents(). The one
+exception is that the chunk_offset cannot be checked as going into the
+table of contents since we do not have that length automatically. That
+may have some surprising results for some narrow forms of corruption.
+However, we do still limit the size to the size of the file plus the
+part of the table of contents read so far. At minimum, the given sizes
+can be used to limit parsing within the file itself.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- chunk-format.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ chunk-format.c | 53 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ chunk-format.h |  9 +++++++++
+ 2 files changed, 62 insertions(+)
 
 diff --git a/chunk-format.c b/chunk-format.c
-index 0275b74a895..f1b2c8a8b36 100644
+index 3f5cc9b5ddf..e836a121c5c 100644
 --- a/chunk-format.c
 +++ b/chunk-format.c
-@@ -13,6 +13,7 @@ struct chunk_info {
- 	chunk_write_fn write_fn;
+@@ -173,6 +173,59 @@ int read_table_of_contents(struct chunkfile *cf,
+ 	return 0;
+ }
  
- 	const void *start;
-+	off_t offset;
- };
++int read_trailing_table_of_contents(struct chunkfile *cf,
++				    const unsigned char *mfile,
++				    size_t mfile_size)
++{
++	int i;
++	uint32_t chunk_id;
++	const unsigned char *table_of_contents = mfile + mfile_size - the_hash_algo->rawsz;
++
++	while (1) {
++		uint64_t chunk_offset;
++
++		table_of_contents -= CHUNK_TOC_ENTRY_SIZE;
++
++		chunk_id = get_be32(table_of_contents);
++		chunk_offset = get_be64(table_of_contents + 4);
++
++		/* Calculate the previous chunk size, if it exists. */
++		if (cf->chunks_nr) {
++			off_t previous_offset = cf->chunks[cf->chunks_nr - 1].offset;
++
++			if (chunk_offset < previous_offset ||
++			    chunk_offset > table_of_contents - mfile) {
++				error(_("improper chunk offset(s) %"PRIx64" and %"PRIx64""),
++				previous_offset, chunk_offset);
++				return -1;
++			}
++
++			cf->chunks[cf->chunks_nr - 1].size = chunk_offset - previous_offset;
++		}
++
++		/* Stop at the null chunk. We only need it for the last size. */
++		if (!chunk_id)
++			break;
++
++		for (i = 0; i < cf->chunks_nr; i++) {
++			if (cf->chunks[i].id == chunk_id) {
++				error(_("duplicate chunk ID %"PRIx32" found"),
++					chunk_id);
++				return -1;
++			}
++		}
++
++		ALLOC_GROW(cf->chunks, cf->chunks_nr + 1, cf->chunks_alloc);
++
++		cf->chunks[cf->chunks_nr].id = chunk_id;
++		cf->chunks[cf->chunks_nr].start = mfile + chunk_offset;
++		cf->chunks[cf->chunks_nr].offset = chunk_offset;
++		cf->chunks_nr++;
++	}
++
++	return 0;
++}
++
+ static int pair_chunk_fn(const unsigned char *chunk_start,
+ 			 size_t chunk_size,
+ 			 void *data)
+diff --git a/chunk-format.h b/chunk-format.h
+index 39e8967e950..acb8dfbce80 100644
+--- a/chunk-format.h
++++ b/chunk-format.h
+@@ -46,6 +46,15 @@ int read_table_of_contents(struct chunkfile *cf,
+ 			   uint64_t toc_offset,
+ 			   int toc_length);
  
- struct chunkfile {
-@@ -78,16 +79,16 @@ int write_chunkfile(struct chunkfile *cf, void *data)
- 	hashwrite_be64(cf->f, cur_offset);
++/**
++ * Read the given chunkfile, but read the table of contents from the
++ * end of the given mfile. The file is expected to be a hashfile with
++ * the_hash_file->rawsz bytes at the end storing the hash.
++ */
++int read_trailing_table_of_contents(struct chunkfile *cf,
++				    const unsigned char *mfile,
++				    size_t mfile_size);
++
+ #define CHUNK_NOT_FOUND (-2)
  
- 	for (i = 0; i < cf->chunks_nr; i++) {
--		off_t start_offset = hashfile_total(cf->f);
-+		cf->chunks[i].offset = hashfile_total(cf->f);
- 		result = cf->chunks[i].write_fn(cf->f, data);
- 
- 		if (result)
- 			goto cleanup;
- 
--		if (hashfile_total(cf->f) - start_offset != cf->chunks[i].size)
-+		if (hashfile_total(cf->f) - cf->chunks[i].offset != cf->chunks[i].size)
- 			BUG("expected to write %"PRId64" bytes to chunk %"PRIx32", but wrote %"PRId64" instead",
- 			    cf->chunks[i].size, cf->chunks[i].id,
--			    hashfile_total(cf->f) - start_offset);
-+			    hashfile_total(cf->f) - cf->chunks[i].offset);
- 	}
- 
- cleanup:
+ /*
 -- 
 gitgitgadget
 
