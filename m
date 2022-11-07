@@ -2,121 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B2F1C4332F
-	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 21:24:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DAAB0C4332F
+	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 21:26:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233341AbiKGVYB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 16:24:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46660 "EHLO
+        id S232069AbiKGVZ7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 16:25:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232952AbiKGVXa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2022 16:23:30 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2361E63F3
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 13:23:29 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id v17so19644233edc.8
-        for <git@vger.kernel.org>; Mon, 07 Nov 2022 13:23:28 -0800 (PST)
+        with ESMTP id S233349AbiKGVZc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2022 16:25:32 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDEE8D2DE
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 13:25:31 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id b2so33627916eja.6
+        for <git@vger.kernel.org>; Mon, 07 Nov 2022 13:25:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=S4A5U71pUqFrLPNtPdNvyjbt9IUVm6mWuZej8FN1CNA=;
-        b=YCxNYUbs84TIQMP6S82WiehkIumNiCKJ4Ido1W6MIZwhKLIPz9OXJxM/Onkh/i+Y0k
-         HRhwGJAyvIeWKY9HTwVlDPf2/oQTYzjB4fuha9VYaAvGkQN8P2nWas2NaB/hf/OUAsmw
-         FyA0lAqp6DbcI5VpFD58LO2RmSCz4XOapCfZDbsGQ6KWFbC4MjywnVNbcSUAtRT4SzcD
-         FFz2jNqmav/BPiONYN2tqeyxOU3y6x6iIex3hjZeqZ8UXI+anheroOCazWXGx11qxXLI
-         zZTRYV+cZmBeLjtajn/twapY50vcpaFSMiLNYGNfpit5gCRnB4v00Kbz9aYp/S+T7jjL
-         V8eA==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xO6Fi+9nbEQCMdXhyV0gy5IdaZgig6pvl23olctzS3I=;
+        b=CPWCx3RfTR3k4qolNEnlLXvBTu2LnPIW2FpjUGzGy7ROfdSB4rqu1RARiMRoG8nsB6
+         IXKl3RB0prPO33trX25kS3kK6oLnqbqsEvn+7fg/lj1+o1EXXndCkr+HtoNyTd5meyxh
+         afKU0tElUuGQmQIigCzCg8FfAa3I1jKBgYnmP9j4pqB6iuJhnw2ZJwnXvL+2wKnvJPQO
+         JzL7mgjHj8iUTiEufXa8bScqcIYhoffiQ+bHI9TZNyCRdj+iyOKujqWclr4Q9ZcmfcFK
+         6aE8FC+f8EPfV8MrDYg69dflwqWbzHs+57ziU0iA1Jx3Ho6UhLFxtqJzcBPYG0Hdlpor
+         iUzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=S4A5U71pUqFrLPNtPdNvyjbt9IUVm6mWuZej8FN1CNA=;
-        b=IjRDoXzZte+wNIpBBFUYilkC38oI7IATACEU0Sy8WSEzXiIKoDOlYXN6UgCYo0ljRg
-         65ru670Ha3eFr0TIR7u22hTqY+Tg/ZlipCH7yQC934W4Dg01h5APwhvnCRocDSSs1qfK
-         Cg3jrO4cQ3RY8upC0vEEd1jfXP5N3NhUIFhek5el+kWlN+bijL7w9sM7IudyPwZXui4O
-         lDY9NDLlNRZjvp9aGZgVa2vBzoL2XRXK/WwuAtjQcByCnr67abDjW9q0QMMl9vNZMdnI
-         nilxiBONddXcowIlEDZDU3GMVFeQhXq3HMo92VdnGQ2D44e308YF0DaxJ4ci9S/Nb84a
-         EwPw==
-X-Gm-Message-State: ACrzQf2Gv2f+sdNatDsSQAlHv0bPQTf6hDVO2WqnmBuoX2wdmcmZm5X1
-        aaBcjzxnMBBDxgd5VvYV6x8jVs/zT6+3bQ==
-X-Google-Smtp-Source: AMsMyM7PdlmG9Ayj03uFFgzjrR32kQWtJEDyBWSyYCCxcipAbcsDInVsBIQQa3pqdmNaM+yJL5odtw==
-X-Received: by 2002:a05:6402:c07:b0:461:87ab:78aa with SMTP id co7-20020a0564020c0700b0046187ab78aamr53115063edb.258.1667856207176;
-        Mon, 07 Nov 2022 13:23:27 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id gg3-20020a170906e28300b0077d6f628e14sm3834418ejb.83.2022.11.07.13.23.25
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xO6Fi+9nbEQCMdXhyV0gy5IdaZgig6pvl23olctzS3I=;
+        b=YZQ+UytM7tokbs3CtDhaRPLS/Io4TXuNUbHCcmzuYJHVIxDRRoKqNC4BP4NBv5FVJ3
+         M2qdwYU30ZyVDnRbfGXLOizfq1YC8iV1ViEL3phGS4OndpOAGic0ajYMi0XolD85gVfL
+         ZUEXgS++0YCbSkGT2Xibq8nEjvgLN0tLYQ984cUZkTT1fo8rNeeLKbdCQ2jHqARvIwYR
+         lqbMTlp0tbM3VDjWaikWhmi2zdvzIjo0a8ed9/HwyfvMPTrLKK8ru/+VQM5cThaeRj7k
+         Mcvlq3IPapwy9WOODm4OgEgRT9WCnqr6aPFqIbFZnJUA4OgU1l+cZwWW8nd1bDklZD0U
+         wz/w==
+X-Gm-Message-State: ACrzQf1jCiSFXu72siENfoSiMkd4WNQt1f6PDKFmrxB/fI7fPszENqg1
+        DC5UmVdjila5214Obe8Ub7R6zD2RMVIIcA==
+X-Google-Smtp-Source: AMsMyM6g7DiUuycy23kER/J8fuQGwvF5uH6Wcra98VMFm06ksokPtkKA4heq5K0q/38CaXRGTz3Elw==
+X-Received: by 2002:a17:906:58c9:b0:7a7:dcba:a987 with SMTP id e9-20020a17090658c900b007a7dcbaa987mr49420176ejs.88.1667856330464;
+        Mon, 07 Nov 2022 13:25:30 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id hg11-20020a1709072ccb00b007a8de84ce36sm3810161ejc.206.2022.11.07.13.25.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 13:23:26 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Mike Hommey <mh@glandium.org>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Glen Choo <chooglen@google.com>,
-        Eric DeCosta <edecosta@mathworks.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v5 10/10] Makefile: discuss SHAttered in *_SHA{1,256} discussion
-Date:   Mon,  7 Nov 2022 22:23:12 +0100
-Message-Id: <patch-v5-10.10-55d3751faea-20221107T211736Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.38.0.1464.gea6794aacbc
-In-Reply-To: <cover-v5-00.10-00000000000-20221107T211736Z-avarab@gmail.com>
-References: <cover-v4-0.9-00000000000-20221026T145255Z-avarab@gmail.com> <cover-v5-00.10-00000000000-20221107T211736Z-avarab@gmail.com>
+        Mon, 07 Nov 2022 13:25:29 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1os9cX-000Lkp-0g;
+        Mon, 07 Nov 2022 22:25:29 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     git@vger.kernel.org
+Subject: ab/sha-makefile-doc (was: What's cooking in git.git (Nov 2022, #01;
+ Thu, 3))
+Date:   Mon, 07 Nov 2022 22:24:04 +0100
+References: <Y2RldUHTwNzmez73@nand.local>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <Y2RldUHTwNzmez73@nand.local>
+Message-ID: <221107.86wn86tq2e.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Let's mention the SHAttered attack and more generally why we use the
-sha1collisiondetection backend by default, and note that for SHA-256
-the user should feel free to pick any of the supported backends as far
-as hashing security is concerned.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Makefile | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+On Thu, Nov 03 2022, Taylor Blau wrote:
 
-diff --git a/Makefile b/Makefile
-index 7d0fa7adb61..91596bac4c0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -481,6 +481,17 @@ include shared.mak
- #
- # === SHA-1 backend ===
- #
-+# ==== Security ====
-+#
-+# Due to the SHAttered (https://shattered.io) attack vector on SHA-1
-+# it's strongly recommended to use the sha1collisiondetection
-+# counter-cryptanalysis library for SHA-1 hashing.
-+#
-+# If you know that you can trust the repository contents, or where
-+# potential SHA-1 attacks are otherwise mitigated the other backends
-+# listed in "SHA-1 implementations" are faster than
-+# sha1collisiondetection.
-+#
- # ==== Default SHA-1 backend ====
- #
- # If no *_SHA1 backend is picked, the first supported one listed in
-@@ -525,6 +536,11 @@ include shared.mak
- #
- # === SHA-256 backend ===
- #
-+# ==== Security ====
-+#
-+# Unlike SHA-1 the SHA-256 algorithm does not suffer from any known
-+# vulnerabilities, so any implementation will do.
-+#
- # ==== SHA-256 implementations ====
- #
- # Define OPENSSL_SHA256 to use the SHA-256 routines in OpenSSL.
--- 
-2.38.0.1464.gea6794aacbc
+> * ab/sha-makefile-doc (2022-10-26) 9 commits
+>  - Makefile: discuss SHAttered in *_SHA{1,256} discussion
+>  - Makefile: document default SHA-1 backend on OSX
+>  - Makefile: document SHA-1 and SHA-256 default and selection order
+>  - Makefile: document default SHA-256 backend
+>  - Makefile: rephrase the discussion of *_SHA1 knobs
+>  - Makefile: create and use sections for "define" flag listing
+>  - Makefile: correct DC_SHA1 documentation
+>  - INSTALL: remove discussion of SHA-1 backends
+>  - Makefile: always (re)set DC_SHA1 on fallback
+>
+>  Makefile comments updates and reordering to clarify knobs used to
+>  choose SHA implementations.
+>
+>  Will merge to 'next'?
+>  source: <cover-v4-0.9-00000000000-20221026T145255Z-avarab@gmail.com>
 
+There was one outstanding issue from Junio noted in the v4, I just sent
+a v5 in that should address that & more:
+https://lore.kernel.org/git/cover-v5-00.10-00000000000-20221107T211736Z-avarab@gmail.com/
+
+So hopefully with that it's ready for 'next'. I have a trivial patch
+queued after it to flip the default on OSX to use
+sha1collisiondetection.
