@@ -2,243 +2,197 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 705FBC4332F
-	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 17:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4F24C4332F
+	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 18:25:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232949AbiKGRsf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 12:48:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54764 "EHLO
+        id S233030AbiKGSZn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 13:25:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232971AbiKGRsO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2022 12:48:14 -0500
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5542C17A97
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 09:48:13 -0800 (PST)
-Received: by mail-pf1-x42e.google.com with SMTP id m6so11357997pfb.0
-        for <git@vger.kernel.org>; Mon, 07 Nov 2022 09:48:13 -0800 (PST)
+        with ESMTP id S233017AbiKGSZF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2022 13:25:05 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4E97DD5
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 10:25:04 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id g12so17477050wrs.10
+        for <git@vger.kernel.org>; Mon, 07 Nov 2022 10:25:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UWvURItKNW6uA4AGu51CdgTB4kAqIhGAFfws4LymkXc=;
-        b=FJv2E+67xEEoCaKM4anIoMdTo9yCHfZwbm3lvNwbB5e3wtYfY8CNOU5aFIY8ytPrYt
-         WsU1i+ILgW7MnLO6LyaFnDnX057TLkVlpLjDdtyPjCwmGsgCV1OMWe6Iqfk2/XD1jU92
-         6YOczJHOwhk4Fmv7rpTp9sg1NzLQNV6UAf8pmmPTftsA/CTLvoPykt8xP8NC7DflWUjW
-         0JPfhOC19LplIncXHc7Pe1rTQOMKyu6wtl5Zbp5c0MqG4HK5KKI2eBumr1ghc88op+V8
-         6f6tHHWUujB4PM1gVxPobyz7MMdBWJLi3fpVBWNxEzBZQ3Tgu6jY9OIm1UmSK52fVnxz
-         mKrQ==
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=DRV7S09oxHyjlWW9LTu6BBRTV9vgbYB5M+gy59NejnU=;
+        b=liKMvGed6dfLOz+aMHQQyJlqeit5V91wPNkRdn9Yp+NBnO0PqEtrkpTQexmKMURBve
+         HA59MfJJHTt11hQoqZPa0aEKnUYRy5jPxRVVb7tzqIyID+VPgCNSKRNDuDMMgZYtAfPm
+         9AQDr8HGvwrB82ZEXAniqQqOzR/uf1BmM+IcmmO4DJ5MGYSRCr5H8sG/dxGpkZmeJXA2
+         B8h+ciZ+RzZdzI/K3snjAggzVm/bVV6vNZsVEaFOrvnbfgJZw/uCTMtSLGfXgHZ/QtMT
+         Yn5IIGjGlF7aCUJGQ/Z30Q2T82ZeIAQM5hT9KfPCO0Di2n3PKrDTu0zQ3DhwOstfrvPy
+         yB4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UWvURItKNW6uA4AGu51CdgTB4kAqIhGAFfws4LymkXc=;
-        b=kdXBLr4/z3G5JrEREVP/riljOBF9W7/W2R26AGaB9jkyzEHucfpPVgG4fNbzMT2i+x
-         e9qqRYJYRnqhM9WqTLXsLwJaJ+MYVnI+6oJNSrpUC7XL/t0hF0TuW/esj63J4IQm22OH
-         ASSic667Hf71aXkAwSJFyVanECLZfwVT+roIgUCPVCmx1VejXjvqobYTBQBwReYMb5Qo
-         EdbFn/mGTPzwhCD74OCnlBioNk75e6VnA46A+t+1FghuSC9rCbf3CDgIfBlClFG8/1sI
-         wzqerWxHQ2AjGHEhTB6xplff9lp9KpASYHc32Mxfz4QZiPNtPrZLnR0Va9LakhicBIwJ
-         Xsrw==
-X-Gm-Message-State: ACrzQf3zF35Bs9Mj+6/0G6yb73oh2J6trVpC+Acji5kBgpSdJ9JAlskb
-        zCz03TYH+cRy0YHV73rsBLH0he4IiMgmyxzGNTx9svV8ENXC23LCfT5v30XNiHAIoOq88bDsQBS
-        pIMoWGNCQSewIcadM3gt9UWHuoAkuuQHqeTeQ+45J3nqTf5arnz3Zg41uiw==
-X-Google-Smtp-Source: AMsMyM4opZnZXrp/8e68cukqdpWJfFMsBRwla6NvDdBJL6ZHSXo3nGe05Rwy/mvoMiMwyqUkMTdinw==
-X-Received: by 2002:a65:5a0b:0:b0:46b:158e:ad7c with SMTP id y11-20020a655a0b000000b0046b158ead7cmr44601475pgs.272.1667843292408;
-        Mon, 07 Nov 2022 09:48:12 -0800 (PST)
-Received: from localhost.localdomain (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id f1-20020a170902ce8100b0016cf3f124e1sm5271873plg.234.2022.11.07.09.48.11
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DRV7S09oxHyjlWW9LTu6BBRTV9vgbYB5M+gy59NejnU=;
+        b=QVtrky8qVJ4/hXRCGmrtoinmV09SDqJbvh9RzDy4lyYaP2MOskePSybRJ6Sr1pFHZM
+         474/Lh3rxa4Ea0Bm65+MYZ/H4mepDJvg7bwiChRmOFi4Zqr2c3hmFdG8fF+RuQRRfT/B
+         BkXMPvOsx9zQi+PXh1tnwjWDp7bOb9F4wXAopIK2bxt1tKsfuvGWrJU1uWvBDiuLaXHE
+         aY1XKocRFob1klmkhhhWPRgq/lmO2e4OWhwyFl1sHzgDMF1fZxpmQ7Gl/7Tvi64XHCQK
+         j39jaCYfM8MFVrcG/BD/HDj9VTomasjzmU/bcfA6mrO/WeJBRfJ9Qk/ASSZYX4FUx0DH
+         QmxQ==
+X-Gm-Message-State: ACrzQf0752PD2EGSxzPdkuYU8diP4q3vu5ZL0WTlbx/swAvouYr6Lu8p
+        l6KnAHdosLF6GiwIHs7p9y3lvqyFEsk=
+X-Google-Smtp-Source: AMsMyM4g3FiNr4sLgMVCn3j+PgH6QM1c+g5/QhmK3zG7arPqmzXekmTSLXn2YnBfiVCym8DTSqFzFw==
+X-Received: by 2002:adf:f883:0:b0:236:a6a3:d6ac with SMTP id u3-20020adff883000000b00236a6a3d6acmr33409154wrp.538.1667845502838;
+        Mon, 07 Nov 2022 10:25:02 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id az2-20020adfe182000000b00226dba960b4sm8309505wrb.3.2022.11.07.10.25.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 09:48:11 -0800 (PST)
-From:   Victoria Dye <vdye@github.com>
-To:     git@vger.kernel.org
-Cc:     Victoria Dye <vdye@github.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        "herr.kaste" <herr.kaste@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v2] rebase --update-refs: avoid unintended ref deletion
-Date:   Mon,  7 Nov 2022 09:47:52 -0800
-Message-Id: <20221107174752.91186-1-vdye@github.com>
-X-Mailer: git-send-email 2.38.0
-In-Reply-To: <20221104165735.68899-1-vdye@github.com>
-References: <20221104165735.68899-1-vdye@github.com>
-MIME-Version: 1.0
+        Mon, 07 Nov 2022 10:25:02 -0800 (PST)
+Message-Id: <pull.1407.git.1667845501422.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 07 Nov 2022 18:25:01 +0000
+Subject: [PATCH] scalar reconfigure -a: remove stale `scalar.repo` entries
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In b3b1a21d1a5 (sequencer: rewrite update-refs as user edits todo list,
-2022-07-19), the 'todo_list_filter_update_refs()' step was added to handle
-the removal of 'update-ref' lines from a 'rebase-todo'. Specifically, it
-removes potential ref updates from the "update refs state" if a ref does not
-have a corresponding 'update-ref' line.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-However, because 'write_update_refs_state()' will not update the state if
-the 'refs_to_oids' list was empty, removing *all* 'update-ref' lines will
-result in the state remaining unchanged from how it was initialized (with
-all refs' "after" OID being null). Then, when the ref update is applied, all
-refs will be updated to null and consequently deleted.
+Every once in a while, a Git for Windows installation fails because the
+attempt to reconfigure a Scalar enlistment failed because it was deleted
+manually without removing the corresponding entries in the global Git
+config.
 
-To fix this, delete the 'update-refs' state file when 'refs_to_oids' is
-empty. Additionally, add a tests covering "all update-ref lines removed"
-cases.
+In f5f0842d0b5 (scalar: let 'unregister' handle a deleted enlistment
+directory gracefully, 2021-12-03), we already taught `scalar delete` to
+handle the case of a manually deleted enlistment gracefully. This patch
+adds the same graceful handling to `scalar reconfigure --all`.
 
-Reported-by: herr.kaste <herr.kaste@gmail.com>
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Helped-by: Derrick Stolee <derrickstolee@github.com>
-Signed-off-by: Victoria Dye <vdye@github.com>
+This patch is best viewed with `--color-moved`.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
-Changes since v1:
-- Modified approach to handling empty 'refs_to_oids' from "optional force write
-  empty file" to "always unlink"
-- Added/updated tests
+    scalar reconfigure -a: remove stale scalar.repo entries
+    
+    This has been on my TODO list for, like, forever.
 
- sequencer.c                   |   9 ++-
- t/t3404-rebase-interactive.sh | 107 ++++++++++++++++++++++++++++++++++
- 2 files changed, 113 insertions(+), 3 deletions(-)
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1407%2Fdscho%2Fscalar-reconfigure-a-and-stale-config-entries-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1407/dscho/scalar-reconfigure-a-and-stale-config-entries-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1407
 
-diff --git a/sequencer.c b/sequencer.c
-index e658df7e8ff..798a9702961 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4130,11 +4130,14 @@ static int write_update_refs_state(struct string_list *refs_to_oids)
- 	struct string_list_item *item;
- 	char *path;
+ scalar.c          | 54 +++++++++++++++++++++++++++++------------------
+ t/t9210-scalar.sh | 11 ++++++++++
+ 2 files changed, 45 insertions(+), 20 deletions(-)
 
--	if (!refs_to_oids->nr)
--		return 0;
--
- 	path = rebase_path_update_refs(the_repository->gitdir);
-
-+	if (!refs_to_oids->nr) {
-+		if (unlink(path) && errno != ENOENT)
-+			result = error_errno(_("could not unlink: %s"), path);
-+		goto cleanup;
-+	}
+diff --git a/scalar.c b/scalar.c
+index 6de9c0ee523..7f4bdb6c153 100644
+--- a/scalar.c
++++ b/scalar.c
+@@ -599,6 +599,24 @@ static int get_scalar_repos(const char *key, const char *value, void *data)
+ 	return 0;
+ }
+ 
++static int remove_deleted_enlistment(struct strbuf *path)
++{
++	int res = 0;
++	strbuf_realpath_forgiving(path, path->buf, 1);
 +
- 	if (safe_create_leading_directories(path)) {
- 		result = error(_("unable to create leading directories of %s"),
- 			       path);
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index 4f5abb5ad25..462cefd25df 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -1964,6 +1964,113 @@ test_expect_success 'respect user edits to update-ref steps' '
- 	test_cmp_rev HEAD refs/heads/no-conflict-branch
++	if (run_git("config", "--global",
++		    "--unset", "--fixed-value",
++		    "scalar.repo", path->buf, NULL) < 0)
++		res = -1;
++
++	if (run_git("config", "--global",
++		    "--unset", "--fixed-value",
++		    "maintenance.repo", path->buf, NULL) < 0)
++		res = -1;
++
++	return res;
++}
++
+ static int cmd_reconfigure(int argc, const char **argv)
+ {
+ 	int all = 0;
+@@ -638,8 +656,22 @@ static int cmd_reconfigure(int argc, const char **argv)
+ 		strbuf_reset(&gitdir);
+ 
+ 		if (chdir(dir) < 0) {
+-			warning_errno(_("could not switch to '%s'"), dir);
+-			res = -1;
++			struct strbuf buf = STRBUF_INIT;
++
++			if (errno != ENOENT) {
++				warning_errno(_("could not switch to '%s'"), dir);
++				res = -1;
++				continue;
++			}
++
++			strbuf_addstr(&buf, dir);
++			if (remove_deleted_enlistment(&buf))
++				res = error(_("could not remove stale "
++					      "scalar.repo '%s'"), dir);
++			else
++				warning(_("removing stale scalar.repo '%s'"),
++					dir);
++			strbuf_release(&buf);
+ 		} else if (discover_git_directory(&commondir, &gitdir) < 0) {
+ 			warning_errno(_("git repository gone in '%s'"), dir);
+ 			res = -1;
+@@ -725,24 +757,6 @@ static int cmd_run(int argc, const char **argv)
+ 	return 0;
+ }
+ 
+-static int remove_deleted_enlistment(struct strbuf *path)
+-{
+-	int res = 0;
+-	strbuf_realpath_forgiving(path, path->buf, 1);
+-
+-	if (run_git("config", "--global",
+-		    "--unset", "--fixed-value",
+-		    "scalar.repo", path->buf, NULL) < 0)
+-		res = -1;
+-
+-	if (run_git("config", "--global",
+-		    "--unset", "--fixed-value",
+-		    "maintenance.repo", path->buf, NULL) < 0)
+-		res = -1;
+-
+-	return res;
+-}
+-
+ static int cmd_unregister(int argc, const char **argv)
+ {
+ 	struct option options[] = {
+diff --git a/t/t9210-scalar.sh b/t/t9210-scalar.sh
+index be51a8bb7a4..c7f8a379108 100755
+--- a/t/t9210-scalar.sh
++++ b/t/t9210-scalar.sh
+@@ -166,6 +166,17 @@ test_expect_success 'scalar reconfigure' '
+ 	test true = "$(git -C one/src config core.preloadIndex)"
+ '
+ 
++test_expect_success '`reconfigure -a` removes stale config entries' '
++	git init stale/src &&
++	scalar register stale &&
++	scalar list >scalar.repos &&
++	grep stale scalar.repos &&
++	rm -rf stale &&
++	scalar reconfigure -a &&
++	scalar list >scalar.repos &&
++	! grep stale scalar.repos
++'
++
+ test_expect_success 'scalar delete without enlistment shows a usage' '
+ 	test_expect_code 129 scalar delete
  '
 
-+test_expect_success '--update-refs: all update-ref lines removed' '
-+	git checkout -b test-refs-not-removed no-conflict-branch &&
-+	git branch -f base HEAD~4 &&
-+	git branch -f first HEAD~3 &&
-+	git branch -f second HEAD~3 &&
-+	git branch -f third HEAD~1 &&
-+	git branch -f tip &&
-+
-+	test_commit test-refs-not-removed &&
-+	git commit --amend --fixup first &&
-+
-+	git rev-parse first second third tip no-conflict-branch >expect-oids &&
-+
-+	(
-+		set_cat_todo_editor &&
-+		test_must_fail git rebase -i --update-refs base >todo.raw &&
-+		sed -e "/^update-ref/d" <todo.raw >todo
-+	) &&
-+	(
-+		set_replace_editor todo &&
-+		git rebase -i --update-refs base
-+	) &&
-+
-+	# Ensure refs are not deleted and their OIDs have not changed
-+	git rev-parse first second third tip no-conflict-branch >actual-oids &&
-+	test_cmp expect-oids actual-oids
-+'
-+
-+test_expect_success '--update-refs: all update-ref lines removed, then some re-added' '
-+	git checkout -b test-refs-not-removed2 no-conflict-branch &&
-+	git branch -f base HEAD~4 &&
-+	git branch -f first HEAD~3 &&
-+	git branch -f second HEAD~3 &&
-+	git branch -f third HEAD~1 &&
-+	git branch -f tip &&
-+
-+	test_commit test-refs-not-removed2 &&
-+	git commit --amend --fixup first &&
-+
-+	git rev-parse first second third >expect-oids &&
-+
-+	(
-+		set_cat_todo_editor &&
-+		test_must_fail git rebase -i \
-+			--autosquash --update-refs \
-+			base >todo.raw &&
-+		sed -e "/^update-ref/d" <todo.raw >todo
-+	) &&
-+
-+	# Add a break to the end of the todo so we can edit later
-+	echo "break" >>todo &&
-+
-+	(
-+		set_replace_editor todo &&
-+		git rebase -i --autosquash --update-refs base &&
-+		echo "update-ref refs/heads/tip" >todo &&
-+		git rebase --edit-todo &&
-+		git rebase --continue
-+	) &&
-+
-+	# Ensure first/second/third are unchanged, but tip is updated
-+	git rev-parse first second third >actual-oids &&
-+	test_cmp expect-oids actual-oids &&
-+	test_cmp_rev HEAD tip
-+'
-+
-+test_expect_success '--update-refs: --edit-todo with no update-ref lines' '
-+	git checkout -b test-refs-not-removed3 no-conflict-branch &&
-+	git branch -f base HEAD~4 &&
-+	git branch -f first HEAD~3 &&
-+	git branch -f second HEAD~3 &&
-+	git branch -f third HEAD~1 &&
-+	git branch -f tip &&
-+
-+	test_commit test-refs-not-removed3 &&
-+	git commit --amend --fixup first &&
-+
-+	git rev-parse first second third tip no-conflict-branch >expect-oids &&
-+
-+	(
-+		set_cat_todo_editor &&
-+		test_must_fail git rebase -i \
-+			--autosquash --update-refs \
-+			base >todo.raw &&
-+		sed -e "/^update-ref/d" <todo.raw >todo
-+	) &&
-+
-+	# Add a break to the beginning of the todo so we can resume with no
-+	# update-ref lines
-+	echo "break" >todo.new &&
-+	cat todo >>todo.new &&
-+
-+	(
-+		set_replace_editor todo.new &&
-+		git rebase -i --autosquash --update-refs base &&
-+
-+		# Make no changes when editing so update-refs is still empty
-+		cat todo >todo.new &&
-+		git rebase --edit-todo &&
-+		git rebase --continue
-+	) &&
-+
-+	# Ensure refs are not deleted and their OIDs have not changed
-+	git rev-parse first second third tip no-conflict-branch >actual-oids &&
-+	test_cmp expect-oids actual-oids
-+'
-+
- test_expect_success '--update-refs: check failed ref update' '
- 	git checkout -B update-refs-error no-conflict-branch &&
- 	git branch -f base HEAD~4 &&
---
-2.38.0
-
+base-commit: c03801e19cb8ab36e9c0d17ff3d5e0c3b0f24193
+-- 
+gitgitgadget
