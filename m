@@ -2,73 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3812C4332F
-	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 22:58:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40344C433FE
+	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 23:04:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232831AbiKGW6K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 17:58:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36160 "EHLO
+        id S232906AbiKGXEv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 18:04:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232785AbiKGW5s (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2022 17:57:48 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88D132CCAC
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 14:56:24 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id q9so34242216ejd.0
-        for <git@vger.kernel.org>; Mon, 07 Nov 2022 14:56:24 -0800 (PST)
+        with ESMTP id S232893AbiKGXEm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2022 18:04:42 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 428E42C66D
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 15:04:36 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id a13so20009846edj.0
+        for <git@vger.kernel.org>; Mon, 07 Nov 2022 15:04:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=yol0wnU/m/LKjPAiNLLgPp8x+1WSr/lhaFiW7i5EDQQ=;
-        b=GaC/cb873lsZAhj/n7JCWXZdWZUQjMyaTmcpw0dg7am3iKnU8ky9crSswKISgifM+K
-         kLL7NTQ5aaSbM9QkGK7rstMVJDLtrHhIgjmrYuCOot/dtAj/iwcjuAzSW4Z4PBM90lFh
-         qKXqYLFfgsG3zYFwR2jCyI+Z6VTcWBsrsFb6oeVm98MRSdoOtNjaNbokht/JyGyQdW7z
-         45EO7Iy8hL26n0BAkpNDp8BEtlRyQ428Ed8l3IKPLvW9yqPXyPMp3aScnOhHIaIlyZJQ
-         JaPiK3e6zG9skvbYM1skB8RasMem9dZfVzO9xydFUZH94RH9pdEUTSTXaXq1bviEoHE5
-         f2qw==
+        bh=P5pc/7q5yTkqVVJGN/SeCnp9t99zV8Yntt/vQy65TFI=;
+        b=QMN0Cs+41QMZdXapdg1M4uJVdp19o9t77nBV3MXeraBVDtzPPLqumKMGIUJTpH3m70
+         vPuSipUjy59wVl3ljQRjffLnw78ktl532rCxtahyqlxDMoHAK+xMZHGKGNdjfkGYIqZx
+         QBTyiOxavq1mnr5+VGKq/rZUetbXtAIcRRBP3oWSJPVYJwm0VBgJZjnT6/sDqHwpnsDN
+         tv0PkxMKEcnc9V14qFhDsENxZJ5GehKE29XdqM3aRd9LBR7rGUJHOd2yKod7+HFM5AzI
+         sTad72VIYi3kdYGnmCu+a2BKlln8fYBRSQqQJ5+BqyNDhw0T7zbWZ+VtY1qoS/H95BQv
+         XWLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=yol0wnU/m/LKjPAiNLLgPp8x+1WSr/lhaFiW7i5EDQQ=;
-        b=5DeYloCZwsemTEqJWkFc/qrv4KudvHyECSgZ52IGJcO1UPgEXe6tj4mwpQqVr18Vnc
-         NRft4sn/wBmTzdmAQcVGcBdYplQbLXR+41c+7Q0ImQ2dl6QlTE+6mdIJqx9TSC3sT0cy
-         5IP0vtAzQ0js6VHxJpoEJI7HKppJwuyhoTotaoK/09jZHg4HTssDieXZjbJxNNBrIROz
-         odeq8N0N1dt9wTKhIH4wRCnyJvEHatKVyP2HktLjJDHudk099GfnSWjXFPPlrmtOp/zg
-         0pfH1WC/3bc6cCLSFaQAPadQGKMn5eWo5eJHB3q3UfsQPeiCmTbXtvnxsdpO9ckrzau/
-         CdIQ==
-X-Gm-Message-State: ACrzQf3dqJJpSz0mggWGCn4hDraK2fRk+AgpbQtX59kOxHBSwxxbT9Sa
-        VlzWAQEgHthLTfrmBHzM4SM=
-X-Google-Smtp-Source: AMsMyM7JrTWBCkzLCQpIhyVmT9g0LuCwSea0IEnySHVN0Y4ssGkfwSIrK6IhF0wE4RhZ7P4NGkLkSg==
-X-Received: by 2002:a17:907:a4c:b0:77b:ba98:d3e with SMTP id be12-20020a1709070a4c00b0077bba980d3emr50964348ejc.13.1667861782485;
-        Mon, 07 Nov 2022 14:56:22 -0800 (PST)
+        bh=P5pc/7q5yTkqVVJGN/SeCnp9t99zV8Yntt/vQy65TFI=;
+        b=Kel+2wBi6V9Y4ty2Va1RjT1elQwk4fqnVqCqPpyDgqaD/FI0t8KXuUbATDEHUx9skw
+         n6ceKfRPXzD5vpPp/rXXfIox6cfVfltuzco0/RRtL1yZr+PdY8vJekJH/IT9bF3Zega3
+         79KuIcqthfdtnlc9F/u8ecIJdRAjrtec7ocEHtn5phJ+OBUR9pVXXA1Q/p0GcPoqRJxZ
+         JOUjks0r7uXHthYzdGFLrW0OLdVZPnO0Nvuf21UoXFUSLCMni1Qzl0XYdNUABU6DEsJ1
+         A7BFD9x+6EEj78NuaP5OAD6U3fp+0eMRgaVPbQUXHUQPn6Qr1z+7t6xC+A55mRdpjWn3
+         b1jg==
+X-Gm-Message-State: ACrzQf1aBP+Q9+OnDQFsUXM7F4Uhs3nRXy/rzDx/fIJUmc9rUM/1WDxt
+        0mdBhAx8HsSXmxf7SZv2po5d0r0Wn/j3YA==
+X-Google-Smtp-Source: AMsMyM5Ge/+cPSc3CpWyBri8BpKkPR/ygMqpIXRfp7SgQTl1fdRmSOasrwX/LIsMiSDOWOc4SV6wXw==
+X-Received: by 2002:a05:6402:1e89:b0:461:a8b5:402a with SMTP id f9-20020a0564021e8900b00461a8b5402amr54000955edf.336.1667862274784;
+        Mon, 07 Nov 2022 15:04:34 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id b9-20020a17090630c900b0073de0506745sm3887906ejb.197.2022.11.07.14.56.21
+        by smtp.gmail.com with ESMTPSA id sb21-20020a1709076d9500b007815ca7ae57sm3981930ejc.212.2022.11.07.15.04.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 14:56:21 -0800 (PST)
+        Mon, 07 Nov 2022 15:04:34 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1osB2S-000Nb1-36;
-        Mon, 07 Nov 2022 23:56:20 +0100
+        id 1osBAP-000Nru-1d;
+        Tue, 08 Nov 2022 00:04:33 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Teng Long <dyroneteng@gmail.com>, git@vger.kernel.org,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v2 1/3] notes.c: introduce "--blank-line" option
-Date:   Mon, 07 Nov 2022 23:36:58 +0100
-References: <cover.1667828335.git.dyroneteng@gmail.com>
- <2381947abdd6b965c02e114af297fc908ed3132b.1667828335.git.dyroneteng@gmail.com>
- <221107.864jvax1hz.gmgdl@evledraar.gmail.com>
- <CAPig+cS+8ER=K9byUZs9+MxZ1x9zVxnGKrKm8CGs1zJvvCoSEQ@mail.gmail.com>
- <221107.86a652vfth.gmgdl@evledraar.gmail.com>
- <Y2l8xhB+PGS+jBmQ@nand.local>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] ci: avoid unnecessary builds
+Date:   Mon, 07 Nov 2022 23:56:30 +0100
+References: <pull.1404.git.1667482458622.gitgitgadget@gmail.com>
+        <f975f57e-71e2-3227-8039-14dff82f04db@github.com>
+        <Y2liOzOFLyz4uzd0@nand.local>
+        <85b30a45-e00e-44b5-ae4a-b09542a9fb19@github.com>
+        <221107.865yfqv58k.gmgdl@evledraar.gmail.com>
+        <114d4a72-1a75-71f3-8af6-6e82cd4fd54b@github.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <Y2l8xhB+PGS+jBmQ@nand.local>
-Message-ID: <221107.867d06tluz.gmgdl@evledraar.gmail.com>
+In-reply-to: <114d4a72-1a75-71f3-8af6-6e82cd4fd54b@github.com>
+Message-ID: <221108.8635autlha.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -77,106 +78,89 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Nov 07 2022, Taylor Blau wrote:
+On Mon, Nov 07 2022, Derrick Stolee wrote:
 
-> On Mon, Nov 07, 2022 at 06:22:34PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->>
->> On Mon, Nov 07 2022, Eric Sunshine wrote:
->>
->> > On Mon, Nov 7, 2022 at 9:56 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
-<avarab@gmail.com> wrote:
->> >> On Mon, Nov 07 2022, Teng Long wrote:
->> >> > When appending to a given object which has note and if the appended
->> >> > note is not empty too, we will insert a blank line at first. The
->> >> > blank line serves as a split line, but sometimes we just want to
->> >> > omit it then append on the heels of the target note. So, we add
->> >> > a new "OPT_BOOL()" option to determain whether a new blank line
->> >> > is insert at first.
->> >> >
->> >> > Signed-off-by: Teng Long <dyroneteng@gmail.com>
->> >> > ---
->> >> > diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.=
-txt
->> >> > @@ -159,6 +161,11 @@ OPTIONS
->> >> > +--blank-line::
->> >> > +--no-blank-line::
->> >> > +     Controls if a blank line to split paragraphs is inserted
->> >> > +     when appending (the default is true).
->> >>
->> >> Just make this:
->> >>
->> >>         --no-blank-line:
->> >>                 Suppress the insertion of a blank line before the
->> >>                 inserted notes.
->> >>
->> >> Or something, i.e. when adding a "true by default" let's add a "no-..=
-." variant directly.
->> >
->> > This is the exact opposite of Junio's advice[1], isn't it?
->> >
->> > [1]: https://lore.kernel.org/git/xmqqsfjsi7eq.fsf@gitster.g/
->>
->> I read that as him mainly talking about what we name the variable (which
->> I agree with, but didn't comment on here). I'm talking about what
->> interface is exposed to the user.
+> On 11/7/22 4:03 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>=20
+>> On Mon, Nov 07 2022, Derrick Stolee wrote:
+>>=20
+>>> On 11/7/22 2:53 PM, Taylor Blau wrote:
 >
-> Having --blank-line as an option is convenient for scripting, so I'd err
-> on the side of the original interpretation of Junio's suggestion.
+>>>> I wonder how we should treat =C3=86var's concerns in this thread. I su=
+spect
+>>>> that the vast majority of workflows wouldn't be affected, but I don't
+>>>> want to completely break =C3=86var's workflow, either ;-).
+>>>>
+>>>> Some kind of configuration mechanism like I proposed might be nice.
+>>>> Thoughts?
+>>>
+>>> Taking a look at that sub-thread, I have two thoughts:
+>>>
+>>> 1. I don't think supporting a "multiple pushes of WIP work"
+>>>    scenario is a good use of "free" resources. If you want to
+>>>    test multiple versions of something, then use multiple
+>>>    branches (and I think Johannes's patch allows concurrent
+>>>    builds for distinct branch names).
+>>=20
+>> The setting Taylor proposed in
+>> https://lore.kernel.org/git/Y2R3vJf1A2KOZwA7@nand.local/ is off by
+>> default, i.e. it would behave the same way as what Johannes is
+>> proposing, just give you (well, me) an opt-out from the default, without
+>> patching main.yml on every branch.
+>>=20
+>> So it seems like a win-win, why force others to change their workflow?
+>> Sure, I could push multiple branches, but you could also manually cancel
+>> your outstanding jobs before re-pushing...
+>>=20
+>> I agree that cancelling the outstanding job is a better default, and if
+>> we had to pick one or the other I'd say "sure", but if we can have
+>> both...
+>
+>>> Either of these points may have an incorrect assumption, so
+>>> I'm prepared to be wrong.
+>>=20
+>> I *think* you're wrong about #2, but I'm not sure either.
+>
+> At the very least, the configurable option requires fetching the
+> repo and checking out at least one file. I don't know how much it
+> actually saves one way or another.
 
-I see from re-reading my reply that I was conflating two things. What I
-*meant* to suggest is this:
+It's already fetching the ci-config repo, so we're talking about the
+marginal cost of running the bit of shellscript to check if
+config-repo/ci/config/skip-concurrent is executable, and if not keeping
+the default config.
 
-When an option is not the default, and we provide a way to turn it off
-we usually document that as:
+>> I don't think you can be wrong about #1, "others should change their
+>> workflow to fit a new worldview" is more of a value-judgment :)
+>
+> True, but I think that the workflow you are trying to keep valid
+> is also indistinguishable to the typical flow of force-pushing
+> during incremental rewrites, so preserving your workflow will
+> continue to add costs to that behavior.
 
-	--no-foo:
-		Don't do foo.
+I don't think it will, per the above. I mean, pedantically yes: But the
+cost of that "test -x and variable setting" is so trivial that it's not
+worth worrying about.
 
-See e.g. "git commit --no-edit", and "git clone --no-checkout".
+> My value judgement is that experts can adapt their workflows as
+> situations change for the better of the group.
 
-But this is orthagonal to what you call the option in the source, and
-whether your variable is "inverted". I.e. in both those cases we have a
-"--edit" and "--checkout", but when we prepare the options for
-parse_options() we do (or the equivalent of):
+Sure, I agree with that in zero-sum scenarios, or where it's a hassle to
+provide two things, and we need to pick one etc. I just don't see that
+being the case here.
 
-	int no_checkout =3D 0;
-	OPT_BOOL('n', "no-checkout", &option_no_checkout,
+> If the cost of doing the config option version is minimal over
+> the global concurrency issue, then I say we should go that route.
+> I just expect it to take up more resources than the strategy
+> proposed in the initial patch.
 
-And:
+Based on what? That you read it as us cloning the ci-config repo just
+for this new proposed config, and missed that we're doing it already, or
+...?
 
-	int edit =3D 1;
-	OPT_BOOL('e', "edit", &edit_flag, N_("force edit of commit")),
+> I wonder how we could determine this. Should we run a few CI
+> jobs with some force-pushes in either approach (config turned
+> off) so we know that cost?
 
-So, I'm (now) saying I don't care which form we use in the sources, but
-that' it's useful to document things as e.g.:
-
-	--no-checkout::
-        	No checkout of HEAD is performed after the clone is complete.
-
-Instead of e.g.:
-
-	--no-checkout:
-	--checkout:
- 		Do we do a checkout when we clone (doing a checkout is
- 		the default).
-
-Because the former convention shows the user at a glance which of the
-two is the default.
-
-> We can clearly support '--[no-]blank-line' and allow latter arguments to
-> override previous ones.
-
-We'll support both either way, i.e. parse_options() detects that the
-name starts with "no-", so the negation of a "no-checkout" isn't
-"--no-no-checkout", but a "--checkout".
-
-> The documentation is fine as-is.
-
-I think the above form would make it a bit better, but just my 0.02:
-
-	--no-blank-line::
-		Don't add an extra "\n" between the body of the commit
-		and the note.
-
-Or something...
+The incremental cost of that "test -x", or...? I'm not sure what you
+mean here.
