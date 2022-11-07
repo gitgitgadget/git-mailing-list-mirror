@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D991C43217
-	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 18:37:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57F1AC4321E
+	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 18:37:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233241AbiKGShm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 13:37:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50864 "EHLO
+        id S233180AbiKGShn (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 13:37:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233221AbiKGShE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2022 13:37:04 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C28C2612F
+        with ESMTP id S232565AbiKGShF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2022 13:37:05 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4878527FF2
         for <git@vger.kernel.org>; Mon,  7 Nov 2022 10:36:28 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id o4so17577409wrq.6
+Received: by mail-wr1-x431.google.com with SMTP id j15so17560044wrq.3
         for <git@vger.kernel.org>; Mon, 07 Nov 2022 10:36:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EpMd01WBMeG+LCpD0GW+bvFGhemRwxfM+YE1DxabB84=;
-        b=ZLyCtnL1wMIJHd0CHLyajBvTqpXv2CExtDvXLHyoioibGuin7nW5YBNl5wk5PlhpeY
-         U7kZbHkwbVhKA3bMCB47jwaXDmtyA7QJ2sPuQiiIJAUs22c2hMhWzthIIEea1taoeO/h
-         +LL9NSTOGiDdl2UQcKKi22eV7C+BxB74dVEd+ymESHKkOqd9RJas6aLqo6T0sutlr7W0
-         F6wdgrsmyZiVDKhb3vERPtIy9weHYcaNd9tEz0Zhsir4r641LNtMHaG0FsHJG+d0KK9w
-         GiJWv31evAvJKLKSFIGiWYuUEzKp2ov1OYPcxuYO05jEMC1jw6qEZpfcVbS0je3PSZjd
-         sTIQ==
+        bh=EaTWpV8iOTrU68jhsZKnAzcJGc1CKmBQdwvli0ieM6s=;
+        b=J7OSXosLeQBeQmEaMmXwns/qKyCZnzH2eem3MlEekvd5QKNNcgst34xv0PJWdt4FOR
+         cJAw04CUirx5AeWado0Bo+XJNJwxo5TkTv5q0YuOB+URW5/QKUBGPidEjkPmxDn+sUOv
+         uQs9gDpcWFcw5U+2D/Y5ziGZtpcYcDMUWCOeIqEURZoD8/9S4QJ/pZtu8ljaDCvskXH8
+         SuJj8k4IyV9tSikmeedOlc6SeyeOj0P46cPik944RSCKVvAhrScMHoHyvTSNcX3VklDW
+         t//IKagqW5Uzx3gmu64B3dbNmjSCRMaJZHzfUB1YU80FeHW5AgkbMuDEF/P57UeGW/1D
+         YfLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EpMd01WBMeG+LCpD0GW+bvFGhemRwxfM+YE1DxabB84=;
-        b=fJ4U6NxVK6EvXMn+5evM+nyh2gT9I6HSBV7p4A/3UWiSRg3r4HJz2YFEf45VVG7b18
-         sH7y9ooSFz0GA6+Ij3roWHraKCC/mpCCuVEvEgVYbE6207xCJlDUSaVmPCcQGJnZaDPp
-         x91BEIQx/UqIv3GuEB9GFHs/6BrD5af3Qc5nxEBASttw7qr6BSNJnYqqgr11jgf8sNX+
-         dBSp1QWyzhB+mwj7FcGJO8zuiwbNm9wUc9zHT488t0l4/Vc/7XipCdSqgdE/8bVXaADf
-         g0m18A50Pu3zjvUcYVxVaIeAAe9jPCqVU6vjngThSYGcsS9FlaKaAjKsT739/QTbmuVR
-         SHNQ==
-X-Gm-Message-State: ACrzQf0N7spNOYujz0Wt+A52eJ2vswwHxTsTj7kcYUzMn67X686L578Y
-        Fiyj6W18rVYXYC+V+awnzdJSih6t0k8=
-X-Google-Smtp-Source: AMsMyM60ORh/6OlzmT3uPfgB5uvPn8kMOnqOVaDImbJAieP7UE0WYN8F0ut4duDLGpz5TkvAkJgS2w==
-X-Received: by 2002:a5d:42c4:0:b0:236:637c:6c71 with SMTP id t4-20020a5d42c4000000b00236637c6c71mr32861665wrr.499.1667846186432;
-        Mon, 07 Nov 2022 10:36:26 -0800 (PST)
+        bh=EaTWpV8iOTrU68jhsZKnAzcJGc1CKmBQdwvli0ieM6s=;
+        b=ZZJ300EQqTNSbubpMCDQPJBI16IQnctMqvuDywrMFWwVQ6JxHAEHKZI0Q6aB66MfYV
+         x5WztPiqM/4TE6itQ25uuLDJScsgNDJojfdVqvasc4zJ25w1g+UjeNq5yHq97MRKTL7m
+         yIFpUbKVVTwjGgthp0zhqhV7znlAOSlSAc5Sx0eSxiq9HaiB7McaJVws0CkdXkrjWgGK
+         pdizd5Szl4VVgCo7u4Qkb2/8ipXF54zNQzMDnGy4xoc47ODpGP8c/GwvAs3WP8/XqPwT
+         Hvra4x2NfmBHwZkEq8G58Xn0hrQCimNDskgd+UVFLPC8x51IvtCGYUGauzp06dJpX20S
+         b4YQ==
+X-Gm-Message-State: ACrzQf27xU0C0JyQQ26Fe1MqOOE/Oyz1kvMfhKPNZVEnqtoCxSgHc+pb
+        DxTirks7rbOye9ufykDvEGkTYKCyChk=
+X-Google-Smtp-Source: AMsMyM7NSibu9CiZrIKcKCC12X/hhOfzonGxR75Ee4YgYjTgKSwbhzRbLD5ZeBBSEaPGQuSh2jLMDg==
+X-Received: by 2002:a5d:5257:0:b0:236:8a38:4e08 with SMTP id k23-20020a5d5257000000b002368a384e08mr32236941wrc.118.1667846187614;
+        Mon, 07 Nov 2022 10:36:27 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j22-20020a05600c1c1600b003a6125562e1sm9478018wms.46.2022.11.07.10.36.25
+        by smtp.gmail.com with ESMTPSA id v3-20020a1cac03000000b003c6f3e5ba42sm12274605wme.46.2022.11.07.10.36.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 10:36:25 -0800 (PST)
-Message-Id: <9b3bd93e51e5ed4358c76263e96c4b4e218987b7.1667846165.git.gitgitgadget@gmail.com>
+        Mon, 07 Nov 2022 10:36:26 -0800 (PST)
+Message-Id: <36f9aa02ebfb967799036c4a0a648ab332c2612b.1667846165.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
 References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 07 Nov 2022 18:35:54 +0000
-Subject: [PATCH 20/30] packed-refs: read optional prefix chunks
+Date:   Mon, 07 Nov 2022 18:35:55 +0000
+Subject: [PATCH 21/30] packed-refs: write prefix chunks
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,269 +68,150 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
+Tests already cover that we will start reading these prefixes.
+
+TODO: discuss time and space savings over typical approach.
+
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- refs/packed-backend.c   |   2 +
- refs/packed-backend.h   |   9 +++
- refs/packed-format-v2.c | 159 ++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 170 insertions(+)
+ refs/packed-format-v2.c | 103 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 103 insertions(+)
 
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 549cce1f84a..ae904de9014 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -475,6 +475,8 @@ static struct ref_iterator *packed_ref_iterator_begin(
- 	iter->version = snapshot->version;
- 	iter->row = v2_row;
- 
-+	init_iterator_prefix_info(prefix, iter);
-+
- 	iter->pos = start;
- 	iter->eof = snapshot->eof;
- 	strbuf_init(&iter->refname_buf, 0);
-diff --git a/refs/packed-backend.h b/refs/packed-backend.h
-index 3a8649857f1..1936bb5c76c 100644
---- a/refs/packed-backend.h
-+++ b/refs/packed-backend.h
-@@ -103,9 +103,12 @@ struct snapshot {
- 	 * packed-refs v2 values *
- 	 *************************/
- 	size_t nr;
-+	size_t prefixes_nr;
- 	size_t buflen;
- 	const unsigned char *offset_chunk;
- 	const char *refs_chunk;
-+	const unsigned char *prefix_offsets_chunk;
-+	const char *prefix_chunk;
- 
- 	/*
- 	 * Count of references to this instance, including the pointer
-@@ -212,6 +215,9 @@ struct packed_ref_iterator {
- 	 ***********************************/
- 	size_t nr;
- 	size_t row;
-+	size_t prefix_row_end;
-+	size_t prefix_i;
-+	const char *cur_prefix;
- };
- 
- typedef int (*write_ref_fn)(const char *refname,
-@@ -308,4 +314,7 @@ struct write_packed_refs_v2_context *create_v2_context(struct packed_ref_store *
- int write_packed_refs_v2(struct write_packed_refs_v2_context *ctx);
- void free_v2_context(struct write_packed_refs_v2_context *ctx);
- 
-+void init_iterator_prefix_info(const char *prefix,
-+			       struct packed_ref_iterator *iter);
-+
- #endif /* REFS_PACKED_BACKEND_H */
 diff --git a/refs/packed-format-v2.c b/refs/packed-format-v2.c
-index d75df9545ec..0ab277f7ad4 100644
+index 0ab277f7ad4..2cd45a5987a 100644
 --- a/refs/packed-format-v2.c
 +++ b/refs/packed-format-v2.c
-@@ -14,6 +14,79 @@
- #define PACKED_REFS_SIGNATURE          0x50524546 /* "PREF" */
- #define CHREFS_CHUNKID_OFFSETS         0x524F4646 /* "ROFF" */
- #define CHREFS_CHUNKID_REFS            0x52454653 /* "REFS" */
-+#define CHREFS_CHUNKID_PREFIX_DATA     0x50465844 /* "PFXD" */
-+#define CHREFS_CHUNKID_PREFIX_OFFSETS  0x5046584F /* "PFXO" */
+@@ -398,6 +398,18 @@ struct write_packed_refs_v2_context {
+ 	uint64_t *offsets;
+ 	size_t nr;
+ 	size_t offsets_alloc;
 +
-+static const char *get_nth_prefix(struct snapshot *snapshot,
-+				  size_t n, size_t *len)
-+{
-+	uint64_t offset, next_offset;
++	int write_prefixes;
++	const char *cur_prefix;
++	size_t cur_prefix_len;
 +
-+	if (n >= snapshot->prefixes_nr)
-+		BUG("asking for prefix %"PRIu64" outside of bounds (%"PRIu64")",
-+		    (uint64_t)n, (uint64_t)snapshot->prefixes_nr);
-+
-+	if (n)
-+		offset = get_be32(snapshot->prefix_offsets_chunk +
-+				  2 * sizeof(uint32_t) * (n - 1));
-+	else
-+		offset = 0;
-+
-+	if (len) {
-+		next_offset = get_be32(snapshot->prefix_offsets_chunk +
-+				       2 * sizeof(uint32_t) * n);
-+
-+		/* Prefix includes null terminator. */
-+		*len = next_offset - offset - 1;
-+	}
-+
-+	return snapshot->prefix_chunk + offset;
-+}
-+
-+/*
-+ * Find the place in `snapshot->buf` where the start of the record for
-+ * `refname` starts. If `mustexist` is true and the reference doesn't
-+ * exist, then return NULL. If `mustexist` is false and the reference
-+ * doesn't exist, then return the point where that reference would be
-+ * inserted, or `snapshot->eof` (which might be NULL) if it would be
-+ * inserted at the end of the file. In the latter mode, `refname`
-+ * doesn't have to be a proper reference name; for example, one could
-+ * search for "refs/replace/" to find the start of any replace
-+ * references.
-+ *
-+ * The record is sought using a binary search, so `snapshot->buf` must
-+ * be sorted.
-+ */
-+static const char *find_prefix_location(struct snapshot *snapshot,
-+					const char *refname, size_t *pos)
-+{
-+	size_t lo = 0, hi = snapshot->prefixes_nr;
-+
-+	while (lo != hi) {
-+		const char *rec;
-+		int cmp;
-+		size_t len;
-+		size_t mid = lo + (hi - lo) / 2;
-+
-+		rec = get_nth_prefix(snapshot, mid, &len);
-+		cmp = strncmp(rec, refname, len);
-+		if (cmp < 0) {
-+			lo = mid + 1;
-+		} else if (cmp > 0) {
-+			hi = mid;
++	char **prefixes;
++	uint32_t *prefix_offsets;
++	uint32_t *prefix_rows;
++	size_t prefix_nr;
++	size_t prefixes_alloc;
++	size_t prefix_offsets_alloc;
++	size_t prefix_rows_alloc;
+ };
+ 
+ struct write_packed_refs_v2_context *create_v2_context(struct packed_ref_store *refs,
+@@ -434,6 +446,56 @@ static int write_packed_entry_v2(const char *refname,
+ 
+ 	ALLOC_GROW(ctx->offsets, i + 1, ctx->offsets_alloc);
+ 
++	if (ctx->write_prefixes) {
++		if (ctx->cur_prefix && starts_with(refname, ctx->cur_prefix)) {
++			/* skip ahead! */
++			refname += ctx->cur_prefix_len;
++			reflen -= ctx->cur_prefix_len;
 +		} else {
-+			/* we have a prefix match! */
-+			*pos = mid;
-+			return rec;
++			size_t len;
++			const char *slash, *slashslash = NULL;
++			if (ctx->prefix_nr) {
++				/* close out the old prefix. */
++				ctx->prefix_rows[ctx->prefix_nr - 1] = ctx->nr;
++			}
++
++			/* Find the new prefix. */
++			slash = strchr(refname, '/');
++			if (slash)
++				slashslash = strchr(slash + 1, '/');
++			/* If there are two slashes, use that. */
++			slash = slashslash ? slashslash : slash;
++			/*
++			 * If there is at least one slash, use that,
++			 * and include the slash in the string.
++			 * Otherwise, use the end of the ref.
++			 */
++			slash = slash ? slash + 1 : refname + strlen(refname);
++
++			len = slash - refname;
++			ALLOC_GROW(ctx->prefixes, ctx->prefix_nr + 1, ctx->prefixes_alloc);
++			ALLOC_GROW(ctx->prefix_offsets, ctx->prefix_nr + 1, ctx->prefix_offsets_alloc);
++			ALLOC_GROW(ctx->prefix_rows, ctx->prefix_nr + 1, ctx->prefix_rows_alloc);
++
++			if (ctx->prefix_nr)
++				ctx->prefix_offsets[ctx->prefix_nr] = ctx->prefix_offsets[ctx->prefix_nr - 1] + len + 1;
++			else
++				ctx->prefix_offsets[ctx->prefix_nr] = len + 1;
++
++			ctx->prefixes[ctx->prefix_nr] = xstrndup(refname, len);
++			ctx->cur_prefix = ctx->prefixes[ctx->prefix_nr];
++			ctx->prefix_nr++;
++
++			refname += len;
++			reflen -= len;
++			ctx->cur_prefix_len = len;
 +		}
++
++		/* Update the last row continually. */
++		ctx->prefix_rows[ctx->prefix_nr - 1] = i + 1;
 +	}
 +
-+	*pos = lo;
-+	if (lo < snapshot->prefixes_nr)
-+		return get_nth_prefix(snapshot, lo, NULL);
-+	else
-+		return NULL;
-+}
- 
- int detect_packed_format_v2_header(struct packed_ref_store *refs,
- 				   struct snapshot *snapshot)
-@@ -63,6 +136,46 @@ const char *find_reference_location_v2(struct snapshot *snapshot,
- {
- 	size_t lo = 0, hi = snapshot->nr;
- 
-+	if (snapshot->prefix_chunk) {
-+		size_t prefix_row;
-+		const char *prefix;
-+		int found = 1;
 +
-+		prefix = find_prefix_location(snapshot, refname, &prefix_row);
-+
-+		if (!prefix || !starts_with(refname, prefix)) {
-+			if (mustexist)
-+				return NULL;
-+			found = 0;
-+		}
-+
-+		/* The second 4-byte column of the prefix offsets */
-+		if (prefix_row) {
-+			/* if prefix_row == 0, then lo = 0, which is already true. */
-+			lo = get_be32(snapshot->prefix_offsets_chunk +
-+				2 * sizeof(uint32_t) * (prefix_row - 1) + sizeof(uint32_t));
-+		}
-+
-+		if (!found) {
-+			const char *ret;
-+			/* Terminate early with this lo position as the insertion point. */
-+			if (pos)
-+				*pos = lo;
-+
-+			if (lo >= snapshot->nr)
-+				return NULL;
-+
-+			ret = get_nth_ref(snapshot, lo);
-+			return ret;
-+		}
-+
-+		hi = get_be32(snapshot->prefix_offsets_chunk +
-+			      2 * sizeof(uint32_t) * prefix_row + sizeof(uint32_t));
-+
-+		if (prefix)
-+			refname += strlen(prefix);
-+	}
-+
- 	while (lo != hi) {
- 		const char *rec;
- 		int cmp;
-@@ -132,6 +245,16 @@ static int packed_refs_read_offsets(const unsigned char *chunk_start,
+ 	/* Write entire ref, including null terminator. */
+ 	hashwrite(ctx->f, refname, reflen);
+ 	hashwrite(ctx->f, oid->hash, the_hash_algo->rawsz);
+@@ -483,13 +545,54 @@ static int write_refs_chunk_offsets(struct hashfile *f,
  	return 0;
  }
  
-+static int packed_refs_read_prefix_offsets(const unsigned char *chunk_start,
-+					    size_t chunk_size, void *data)
++static int write_refs_chunk_prefix_data(struct hashfile *f,
++					void *data)
 +{
-+	struct snapshot *snapshot = data;
++	struct write_packed_refs_v2_context *ctx = data;
++	size_t i;
 +
-+	snapshot->prefix_offsets_chunk = chunk_start;
-+	snapshot->prefixes_nr = chunk_size / sizeof(uint64_t);
++	trace2_region_enter("refs", "prefix-data", the_repository);
++	for (i = 0; i < ctx->prefix_nr; i++) {
++		size_t len = strlen(ctx->prefixes[i]) + 1;
++		hashwrite(f, ctx->prefixes[i], len);
++
++		/* TODO: assert the prefix lengths match the stored offsets? */
++	}
++
++	trace2_region_leave("refs", "prefix-data", the_repository);
 +	return 0;
 +}
 +
- void fill_snapshot_v2(struct snapshot *snapshot)
- {
- 	uint32_t file_signature, file_version, hash_version;
-@@ -163,6 +286,9 @@ void fill_snapshot_v2(struct snapshot *snapshot)
- 	read_chunk(cf, CHREFS_CHUNKID_OFFSETS, packed_refs_read_offsets, snapshot);
- 	pair_chunk(cf, CHREFS_CHUNKID_REFS, (const unsigned char**)&snapshot->refs_chunk);
- 
-+	read_chunk(cf, CHREFS_CHUNKID_PREFIX_OFFSETS, packed_refs_read_prefix_offsets, snapshot);
-+	pair_chunk(cf, CHREFS_CHUNKID_PREFIX_DATA, (const unsigned char**)&snapshot->prefix_chunk);
-+
- 	/* TODO: add error checks for invalid chunk combinations. */
- 
- cleanup:
-@@ -187,6 +313,8 @@ int next_record_v2(struct packed_ref_iterator *iter)
- 
- 	iter->base.flags = REF_ISPACKED;
- 
-+	if (iter->cur_prefix)
-+		strbuf_addstr(&iter->refname_buf, iter->cur_prefix);
- 	strbuf_addstr(&iter->refname_buf, pos);
- 	iter->base.refname = iter->refname_buf.buf;
- 	pos += strlen(pos) + 1;
-@@ -221,9 +349,40 @@ int next_record_v2(struct packed_ref_iterator *iter)
- 
- 	iter->row++;
- 
-+	if (iter->row == iter->prefix_row_end && iter->snapshot->prefix_chunk) {
-+		size_t prefix_pos = get_be32(iter->snapshot->prefix_offsets_chunk +
-+					     2 * sizeof(uint32_t) * iter->prefix_i);
-+		iter->cur_prefix = iter->snapshot->prefix_chunk + prefix_pos;
-+		iter->prefix_i++;
-+		iter->prefix_row_end = get_be32(iter->snapshot->prefix_offsets_chunk +
-+						2 * sizeof(uint32_t) * iter->prefix_i + sizeof(uint32_t));
-+	}
-+
- 	return ITER_OK;
- }
- 
-+void init_iterator_prefix_info(const char *prefix,
-+			       struct packed_ref_iterator *iter)
++static int write_refs_chunk_prefix_offsets(struct hashfile *f,
++				    void *data)
 +{
-+	struct snapshot *snapshot = iter->snapshot;
++	struct write_packed_refs_v2_context *ctx = data;
++	size_t i;
 +
-+	if (snapshot->version != 2 || !snapshot->prefix_chunk) {
-+		iter->prefix_row_end = snapshot->nr;
-+		return;
++	trace2_region_enter("refs", "prefix-offsets", the_repository);
++	for (i = 0; i < ctx->prefix_nr; i++) {
++		hashwrite_be32(f, ctx->prefix_offsets[i]);
++		hashwrite_be32(f, ctx->prefix_rows[i]);
 +	}
 +
-+	if (prefix)
-+		iter->cur_prefix = find_prefix_location(snapshot, prefix, &iter->prefix_i);
-+	else {
-+		iter->cur_prefix = snapshot->prefix_chunk;
-+		iter->prefix_i = 0;
-+	}
-+
-+	iter->prefix_row_end = get_be32(snapshot->prefix_offsets_chunk +
-+					2 * sizeof(uint32_t) * iter->prefix_i +
-+					sizeof(uint32_t));
++	trace2_region_leave("refs", "prefix-offsets", the_repository);
++	return 0;
 +}
 +
- struct write_packed_refs_v2_context {
- 	struct packed_ref_store *refs;
- 	struct string_list *updates;
+ int write_packed_refs_v2(struct write_packed_refs_v2_context *ctx)
+ {
+ 	unsigned char file_hash[GIT_MAX_RAWSZ];
+ 
++	ctx->write_prefixes = git_env_bool("GIT_TEST_WRITE_PACKED_REFS_PREFIXES", 1);
++
+ 	add_chunk(ctx->cf, CHREFS_CHUNKID_REFS, 0, write_refs_chunk_refs);
+ 	add_chunk(ctx->cf, CHREFS_CHUNKID_OFFSETS, 0, write_refs_chunk_offsets);
+ 
++	if (ctx->write_prefixes) {
++		add_chunk(ctx->cf, CHREFS_CHUNKID_PREFIX_DATA, 0, write_refs_chunk_prefix_data);
++		add_chunk(ctx->cf, CHREFS_CHUNKID_PREFIX_OFFSETS, 0, write_refs_chunk_prefix_offsets);
++	}
++
+ 	hashwrite_be32(ctx->f, PACKED_REFS_SIGNATURE);
+ 	hashwrite_be32(ctx->f, 2);
+ 	hashwrite_be32(ctx->f, the_hash_algo->format_id);
 -- 
 gitgitgadget
 
