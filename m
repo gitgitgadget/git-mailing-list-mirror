@@ -2,111 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 699E8C43219
-	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 09:30:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75B60C4332F
+	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 09:46:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231639AbiKGJaK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 04:30:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55680 "EHLO
+        id S231517AbiKGJqV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 04:46:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231702AbiKGJaF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2022 04:30:05 -0500
-Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2324E1658A
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 01:30:04 -0800 (PST)
-Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-36ad4cf9132so98491187b3.6
-        for <git@vger.kernel.org>; Mon, 07 Nov 2022 01:30:04 -0800 (PST)
+        with ESMTP id S231682AbiKGJqT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2022 04:46:19 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 417E41403E
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 01:46:18 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id j5-20020a05600c410500b003cfa9c0ea76so1368696wmi.3
+        for <git@vger.kernel.org>; Mon, 07 Nov 2022 01:46:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=DU9MUqnMm26W9+byBokX/hpR/d43Ajafth08oYSJkY4=;
-        b=H/+lprosScNCLcJBpEQzC0+uB38dR/yYC+bGa3FijirKMpg8EDq19zdxtFhXpWal9P
-         FZOwWzng06INo+45DyyJsNr0ZalsvCs4CRvFUkk7GZRcLKnAK5P549qUD0FcYSkXDzR4
-         IsH+YdhTwHp8B3ojbiw/MiQ0oDhOc2lIPomzghZvfMIKwgqMj2USLlyetOP77i3QlrhO
-         eNklxtQIdhJr3Iwq7Y6nNOy9wazhneC1Dwkg5ezZOr9bMku0L0sL6Te/1gawaJ03xNtu
-         uVXx6B4UOrnYp9qktsbDkIiSQpP3hQCSfsRSI9sHwbaG0CFCy83dUblsoy74YJNSo2mI
-         gYBg==
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=SfKaTg0Hp2gvalWcA+ovKJZ9RwAaE0m2Rt+MrOxXO8A=;
+        b=OPPZowxymRAPHDqhwCBXmEYi6JQCKW9XoJCevm3GQQNNqtMEGtROJEHruOa6XwiMDa
+         64fY8CJjimSs5fLCF/WLyw0sKJjyLDG9xYVMdK/5/2lJ+5+NjMGKCN/PZZxOMK87r0Id
+         egHTHzo6y0yM5XpZ1sLem4xilcfkgZgbolv+MLJZplMUJVBNmEWTRzKcizGDSW/IKaQx
+         hLc3sDftMvZfG9I3stCfb8GXqBpfOoqQbXJ0ZkQRi0ZDYZwt2pjQkZ7ru04BazpTAWU8
+         m5cFJrTUGjeJYYq3OvVNXsiy/lqp3T+WwohOmf1m6ngC72zqk51YHOMCIjl9gSYsqMmZ
+         51PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DU9MUqnMm26W9+byBokX/hpR/d43Ajafth08oYSJkY4=;
-        b=wCRL0tOQfIhV+257PhxpuU7JAMfYZmbOYD26YkE5kykMQ7n6VNkcYG9JWLPcKaAME9
-         vE1vWgEyLwX5ZdWfco0OUHu9GSDlozbCKi/qW3jH2qhjNv6SEZx3ZZW5F80C2qa8qYR0
-         wNZLU3GaQ+5o0648F8vT6Sfm1fN0UY5rum0DnZdYHh58Rp1iFdtHd3kVxEUof42JBbfJ
-         Hi0G3/ce0WUBOGjjW8CNBuoekCeYEKqBGBqaekKAJcdgXgMz6rI9phA7s4WC7VZz6dLy
-         0d1V96B0d1lyAR8bP8CV6Xcca6OjaAL7cLA4FSWvMD5APwphKlXr94oZniZjOWA1TxYR
-         HMZw==
-X-Gm-Message-State: ACrzQf0+AkSUqvNBnxKEUe3ZClvjU5Ou3ENzCE9zPMLCdkUZ1NzBMP9I
-        Mp0NmnaOnyu8HtJpQngU+16hb3QdHSxnPTi/xJo=
-X-Google-Smtp-Source: AMsMyM70el2RvO/kJxQFTaUDFtIhZ6mavK9D3icDW1wIT1hVdF6iEfPghdCOveZSf8BaStpeKo1JT+g2WfufBqWIul4=
-X-Received: by 2002:a0d:f683:0:b0:361:5904:d3d5 with SMTP id
- g125-20020a0df683000000b003615904d3d5mr46706265ywf.157.1667813403286; Mon, 07
- Nov 2022 01:30:03 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SfKaTg0Hp2gvalWcA+ovKJZ9RwAaE0m2Rt+MrOxXO8A=;
+        b=q4mx2XcE12S1uLJL1uDwRTcEjH79DBpljJbBQ9cdHLh2IisKjSQRAz0dpuXptp9PIJ
+         uulsMZZ81/mEpbbdnuIHlH6r2OgaKyyyx4+Sm9Y66beNin1y/KFNuoiL8lqz+ZeUyYEy
+         rKFS1OK9BJJWONwd5S0zxARuluB6t0nqHJpWL/aHaiiPuhUH0gk5WdzS8XVOwktp7rc2
+         BlLie+eVNM/0paitBWwT2dOXMBQpqXZqWNRSA3HOur5luBYVwrVPbjoEaI7vsCNznm8g
+         /YHj6sznZDuhbPyBvTNwRHAh1FTBmXwfbAKT/4czheifT6pSpnNlvxlNUsjm2fDX36SQ
+         E9/A==
+X-Gm-Message-State: ANoB5plUpdhlFt622SKLDqh7xXNJoO9xBRApHZ8+hIYjrrDZuhNXx8k3
+        IaL/lGYzH22mRhZQxfm0uug=
+X-Google-Smtp-Source: AA0mqf6WC36FtgL3uA8BbDiJClI5kCJbf23f6PcAtLwtLxAcmcE1xk4pFfM+D6F9Pbb5rP6Iwpwpjg==
+X-Received: by 2002:a05:600c:91d:b0:3cf:a8a5:639c with SMTP id m29-20020a05600c091d00b003cfa8a5639cmr4022958wmp.119.1667814376738;
+        Mon, 07 Nov 2022 01:46:16 -0800 (PST)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id h7-20020a05600c314700b003a1980d55c4sm11512026wmo.47.2022.11.07.01.46.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 07 Nov 2022 01:46:16 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <ce3c6afa-2f82-d7f6-8919-e3e8912a7555@dunelm.org.uk>
+Date:   Mon, 7 Nov 2022 09:46:15 +0000
 MIME-Version: 1.0
-References: <20221012135114.294680-1-christian.couder@gmail.com>
- <20221025122856.20204-1-christian.couder@gmail.com> <Y1wzgOTiKdBcBba0@nand.local>
-In-Reply-To: <Y1wzgOTiKdBcBba0@nand.local>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 7 Nov 2022 10:29:51 +0100
-Message-ID: <CAP8UFD2jjQxMsN7VzticiFkrOSLVK6f-f4R1fZU1wnEBpuHapQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] Implement filtering repacks
-To:     Taylor Blau <me@ttaylorr.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 00/17] leak fixes: use existing constructors & other
+ trivia
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        John Cai <johncai86@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Elijah Newren <newren@gmail.com>
+References: <cover-00.17-00000000000-20221103T164632Z-avarab@gmail.com>
+ <8eec228d-d392-523d-2415-149b946f642e@dunelm.org.uk>
+ <221105.865yfty38w.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221105.865yfty38w.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 28, 2022 at 9:54 PM Taylor Blau <me@ttaylorr.com> wrote:
->
-> On Tue, Oct 25, 2022 at 02:28:54PM +0200, Christian Couder wrote:
-> > So there are only 2 patches now in this v2 series:
-> >
-> >   - Patch 1/2 is a preparatory patch.
-> >
-> >   - Patch 2/2 introduces the `--filter=<filter-spec>` option.
->
-> One thing that I wasn't clear on in this or the previous round(s) was
-> how we handle setting remote.<name>.promisor and partialclonefilter.
+On 05/11/2022 12:46, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Fri, Nov 04 2022, Phillip Wood wrote:
+> 
+>> On 03/11/2022 17:05, Ævar Arnfjörð Bjarmason wrote:
+>>> With the very minor exceptions of:
+>>> * 03-04/17 (which need trivial oilerplate)
+>>> * 05/17 (need to add trivial control flow to a free_*() function)
+>>> * 12/17 (narrowing scope of allocation)
+>>
+>> I've only looked at the rebase related patches. I'd really appreciate
+>> it if you could drop patches 12 & 14 as they conflict with [1] that
+>> fixes these issues by removing the setenv() calls.
+> 
+> Sure, sounds good to me.
 
-Yeah, I agree that it's an interesting question that I overlooked.
+Thanks
 
-> If there is a single remote, then it's obvious that we should set
-> promisor to "true" and partialCloneFilter to whatever value of
-> `--filter` the user provided when repacking / GCing.
+> I see Taylor queued it up like that, and the combination of the two
+> passes with the "true" and "check" mode leak checking modes.
 
-I would be Ok to setting remote.<name>.promisor to true in this case,
-but I am not sure we really need to do it.
+That's great
 
-Maybe the user is mostly interested in reducing the size of the repo
-for now and plans to set up a promisor remote afterwards.
+Best Wishes
 
-Another perhaps better way to handle this would be to just die() if no
-remote.<name>.promisor is set to true. This way we can make sure that
-users will not forget to set up at least one promisor remote. This
-could also give users the opportunity to think about whether their
-configured remotes contain all the objects they are going to remove.
+Phillip
 
-About remote.<name>.partialclonefilter I don't think we need to do
-anything. Maybe the user would be Ok with having different filters
-when fetching and when cleaning up.
 
-> But what happens if there are multiple remotes? Which get the new
-> configuration settings modified?
-
-I agree that if we want this feature to modify settings, then there is
-no good and simple solution in this case.
-
-> I wonder what breakage happens if we fail to do that (and why such
-> breakage isn't yet noticed by CI).
-
-If we want to avoid breakages as much as possible, then die()ing when
-no remote.<name>.promisor is set to true seems to be the best
-solution, instead of trying to modify settings.
+> For context: I saw that you planned to fix those in some follow-up
+> topic, but had this mostly ready before the new leak in the recent topic
+> showed up, and that leak had big knock-on effects in what test files I
+> could mark as passing.
+> 
+> So I figured I'd include some more more narrow fixes, but I'm even
+> happier to see the root cause addressed.
