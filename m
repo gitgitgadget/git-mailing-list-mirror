@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6039C433FE
-	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 18:36:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0B848C433FE
+	for <git@archiver.kernel.org>; Mon,  7 Nov 2022 18:37:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233159AbiKGSgo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 13:36:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49998 "EHLO
+        id S233234AbiKGShG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 13:37:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233156AbiKGSg2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2022 13:36:28 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13C1126ACF
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 10:36:18 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id w14so17541899wru.8
-        for <git@vger.kernel.org>; Mon, 07 Nov 2022 10:36:18 -0800 (PST)
+        with ESMTP id S232799AbiKGSg3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2022 13:36:29 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C692326AF8
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 10:36:20 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id 187-20020a1c02c4000000b003cf9c3f3b80so2721605wmc.0
+        for <git@vger.kernel.org>; Mon, 07 Nov 2022 10:36:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WNL/PKLtqA4tM5xYWUkVzcVTLyy+kCZ5yTETBBQwE5c=;
-        b=chspGvjswddO407jSiwI+Y2/8DsAkHtgq9rQ/UWHbslDAE5wM/HlTXkniM1krOTHZP
-         xSpXPRKCSJE5ZCkcARRZ+GAfzM/8RQE/cPBowbL5QOhGPDMfol8o58AAIaBmGxo3zSY6
-         otMBjGgGLD0PkzbkL4wL/FK/v9BVzSMocmodfZs47EsyxWxJ1TSoMUK3IH50LPMbmyFX
-         O9LQRxxd9B9YDL/huTvK4T6HDf8gJgDN8eLFBKRwZTZXqdNsim/LBV6D68LUsPcw9IVv
-         RnjIpy4lBDyxYDugZSJXmrUiG4iG7TvmLfBEO2AMI6eL44IzpqVksT9nDElgvaATkqEj
-         6fGA==
+        bh=BlC5bNjUxauJsYY1g9pQ/U+SebV6B9lRzVTbrUZDHzs=;
+        b=IanYpiwCxJxeNHYnL6ebHK9YUseXcnAurV4gzxIBGzl2QrQKhAKtRtG41Jio4fMOiV
+         VGilBEOOrLRUGs3gJGGAB9UurhyPLEL5ixdSyuJsvxxVpop64nUw53LqErQ1DbTBaYSj
+         goyYVw992EKXGTwR85eJcyKhaQ02Y6LAhs7KaN/CTFFh9GTvT8Wt2NH9K4ufbSsN2fUc
+         mzNz+b6tKDy65LwI4loFTS+EcAcCb5ITBsaqqvwILGfykuGTrkVTDO71saRNP1fZhhcD
+         iB3Lm57sQs0Yae8/XOsMBXUF3okve2XpJEJ/YFWU7wQT7cBHV4qP4UB+MzrZw3TjY3VP
+         lC0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WNL/PKLtqA4tM5xYWUkVzcVTLyy+kCZ5yTETBBQwE5c=;
-        b=BrxLMuuUirb3xAf+CVFQ4HVPgvt7fAQPJv18e3gAwcjCvgp8dPzSY+aVQ5gLx9zX3B
-         Z9p8q5CZzpkbKaI9UJZwj6opW0Ln/AU7mR/8czHS9a9Q6m+0gO1UerFgCKgqJ+OiuPGq
-         6Av6mgAOn3BLz1VA6KvhuJQUlUylDVnvHpFTcPUoXLU01qcBMKHP4SBywYbEXlmKYlgl
-         vrgYSqFa0IQsnMfnNnmEAs5x3P7/xhL9Fzb67y2ddGQGiDXj8XajRDM9L/j28cJBWDEd
-         gsGqbY1dnV1X+YHrdR7NE9m3m1BaV3lJlyjuew2A3PMAOm6OYxCakqqxlu+8isiPNiAg
-         /ptA==
-X-Gm-Message-State: ACrzQf07UL858evbBlxSquvZk6kLjYDlb7bBuEPVZHiKBubPQmc0co+2
-        B2SUzfguTw8pMDWQjlUWIEWlMrNqQE0=
-X-Google-Smtp-Source: AMsMyM5M3nBpY/ZweaPIz5kyylQ4FD1xXokE9xcywosElzUCEDEtC52fQ0r5g132TWL7ezfbSZUdnA==
-X-Received: by 2002:adf:cc92:0:b0:236:77f0:ef5f with SMTP id p18-20020adfcc92000000b0023677f0ef5fmr33181589wrj.198.1667846176435;
-        Mon, 07 Nov 2022 10:36:16 -0800 (PST)
+        bh=BlC5bNjUxauJsYY1g9pQ/U+SebV6B9lRzVTbrUZDHzs=;
+        b=DwOdmOfIMVhB+73eruh8uzkVlNITsW5sXpJuwf848BQszgIpbH0ZRfBMbtCey8LZbn
+         5fYk5e2cisku2FKl2WEDcniOYWlKBozGcq74YzSYSFpwXHNBhupsI0u/NRZob4WHoaZr
+         aRejWffcojHJKXnA2b8bv6sZL8OsMybKbIrybYUWlhrRZDtgBPLiK0uMOR9FLkSrFhYI
+         7OdYnLl6ARaYw6znd/gQ5mojYLh1HmOzRcn6JnlmKInzw355B705QmHn3qa9XH0/Q89S
+         QyjwTuOlJvf5YI8Fk0Ym0IzEK4AatAxobQ6rB8IPd+0mOPqwhG8vpLC0lKp7WVOQxOcd
+         UtSA==
+X-Gm-Message-State: ACrzQf0f7yYBPXIlPRU4yBGz1rcRnNEQZWriGUVBXxpkDJASXKB3HCdJ
+        uDX4cnXYZDZSSUg+zUBaTmdFKgQaEow=
+X-Google-Smtp-Source: AMsMyM6T6322swOAm+KD9FtpwDg596PZFAuYjmNQ2OtDUoDKFSj+6mlyb4X+g2mS2sFSOmmgOn8oyQ==
+X-Received: by 2002:a05:600c:4586:b0:3c6:fbb0:bf2d with SMTP id r6-20020a05600c458600b003c6fbb0bf2dmr33746676wmo.13.1667846179110;
+        Mon, 07 Nov 2022 10:36:19 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c2-20020a5d4f02000000b002366553eca7sm7889447wru.83.2022.11.07.10.36.15
+        by smtp.gmail.com with ESMTPSA id n37-20020a05600c3ba500b003cfa3a12660sm13782344wms.1.2022.11.07.10.36.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 10:36:16 -0800 (PST)
-Message-Id: <78e585cf4df2bb82a2569cee226a6b97d0ea7629.1667846164.git.gitgitgadget@gmail.com>
+        Mon, 07 Nov 2022 10:36:18 -0800 (PST)
+Message-Id: <f141d8561ab850df36da0a4efb80315e34e7261a.1667846165.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
 References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 07 Nov 2022 18:35:44 +0000
-Subject: [PATCH 10/30] chunk-format: allow trailing table of contents
+Date:   Mon, 07 Nov 2022 18:35:47 +0000
+Subject: [PATCH 13/30] packed-backend: extract add_write_error()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,159 +68,90 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The existing chunk formats use the table of contents at the beginning of
-the file. This is intended as a way to speed up the initial loading of
-the file, but comes at a cost during writes. Each example needs to fully
-compute how big each chunk will be in advance, which usually requires
-storing the full file contents in memory.
+The write_with_updates() method uses a write_error label to jump to code
+that adds an error message before exiting with an error. This appears
+both when the packed-refs file header is written, but also when a ref
+line is written to the packed-refs file.
 
-Future file formats may want to use the chunk format API in cases where
-the writing stage is critical to performance, so we may want to stream
-updates from an existing file and then only write the table of contents
-at the end.
-
-Add a new 'flags' parameter to write_chunkfile() that allows this
-behavior. When this is specified, the defensive programming that checks
-that the chunks are written with the precomputed sizes is disabled.
-Then, the table of contents is written in reverse order at the end of
-the hashfile, so a parser can read the chunk list starting from the end
-of the file (minus the hash).
-
-The parsing of these table of contents will come in a later change.
+A future change will abstract the loop that writes the refs out of
+write_with_updates(), making the goto an inconvenient pattern. For now,
+remove the distinction between "goto write_error" and "goto error" by
+adding the message in-line using the new static method
+add_write_error(). This is functionally equivalent, but will make the
+next step easier.
 
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- chunk-format.c | 53 +++++++++++++++++++++++++++++++++++---------------
- chunk-format.h |  9 ++++++++-
- commit-graph.c |  2 +-
- midx.c         |  2 +-
- 4 files changed, 47 insertions(+), 19 deletions(-)
+ refs/packed-backend.c | 28 ++++++++++++++++++----------
+ 1 file changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/chunk-format.c b/chunk-format.c
-index f1b2c8a8b36..3f5cc9b5ddf 100644
---- a/chunk-format.c
-+++ b/chunk-format.c
-@@ -57,26 +57,31 @@ void add_chunk(struct chunkfile *cf,
- 	cf->chunks_nr++;
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index afaf6f53233..ef8060f2e08 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -529,6 +529,12 @@ static int packed_init_db(struct ref_store *ref_store UNUSED,
+ 	return 0;
  }
  
--int write_chunkfile(struct chunkfile *cf, void *data)
-+int write_chunkfile(struct chunkfile *cf,
-+		    enum chunkfile_flags flags,
-+		    void *data)
- {
- 	int i, result = 0;
--	uint64_t cur_offset = hashfile_total(cf->f);
- 
- 	trace2_region_enter("chunkfile", "write", the_repository);
- 
--	/* Add the table of contents to the current offset */
--	cur_offset += (cf->chunks_nr + 1) * CHUNK_TOC_ENTRY_SIZE;
-+	if (!(flags & CHUNKFILE_TRAILING_TOC)) {
-+		uint64_t cur_offset = hashfile_total(cf->f);
- 
--	for (i = 0; i < cf->chunks_nr; i++) {
--		hashwrite_be32(cf->f, cf->chunks[i].id);
--		hashwrite_be64(cf->f, cur_offset);
-+		/* Add the table of contents to the current offset */
-+		cur_offset += (cf->chunks_nr + 1) * CHUNK_TOC_ENTRY_SIZE;
- 
--		cur_offset += cf->chunks[i].size;
--	}
-+		for (i = 0; i < cf->chunks_nr; i++) {
-+			hashwrite_be32(cf->f, cf->chunks[i].id);
-+			hashwrite_be64(cf->f, cur_offset);
- 
--	/* Trailing entry marks the end of the chunks */
--	hashwrite_be32(cf->f, 0);
--	hashwrite_be64(cf->f, cur_offset);
-+			cur_offset += cf->chunks[i].size;
-+		}
++static void add_write_error(struct packed_ref_store *refs, struct strbuf *err)
++{
++	strbuf_addf(err, "error writing to %s: %s",
++		    get_tempfile_path(refs->tempfile), strerror(errno));
++}
 +
-+		/* Trailing entry marks the end of the chunks */
-+		hashwrite_be32(cf->f, 0);
-+		hashwrite_be64(cf->f, cur_offset);
+ /*
+  * Write the packed refs from the current snapshot to the packed-refs
+  * tempfile, incorporating any changes from `updates`. `updates` must
+@@ -577,8 +583,10 @@ static int write_with_updates(struct packed_ref_store *refs,
+ 		goto error;
+ 	}
+ 
+-	if (write_packed_file_header_v1(out) < 0)
+-		goto write_error;
++	if (write_packed_file_header_v1(out) < 0) {
++		add_write_error(refs, err);
++		goto error;
 +	}
  
- 	for (i = 0; i < cf->chunks_nr; i++) {
- 		cf->chunks[i].offset = hashfile_total(cf->f);
-@@ -85,10 +90,26 @@ int write_chunkfile(struct chunkfile *cf, void *data)
- 		if (result)
- 			goto cleanup;
+ 	/*
+ 	 * We iterate in parallel through the current list of refs and
+@@ -673,8 +681,10 @@ static int write_with_updates(struct packed_ref_store *refs,
  
--		if (hashfile_total(cf->f) - cf->chunks[i].offset != cf->chunks[i].size)
--			BUG("expected to write %"PRId64" bytes to chunk %"PRIx32", but wrote %"PRId64" instead",
--			    cf->chunks[i].size, cf->chunks[i].id,
--			    hashfile_total(cf->f) - cf->chunks[i].offset);
-+		if (!(flags & CHUNKFILE_TRAILING_TOC)) {
-+			if (hashfile_total(cf->f) - cf->chunks[i].offset != cf->chunks[i].size)
-+				BUG("expected to write %"PRId64" bytes to chunk %"PRIx32", but wrote %"PRId64" instead",
-+				    cf->chunks[i].size, cf->chunks[i].id,
-+				    hashfile_total(cf->f) - cf->chunks[i].offset);
-+		}
-+
-+		cf->chunks[i].size = hashfile_total(cf->f) - cf->chunks[i].offset;
-+	}
-+
-+	if (flags & CHUNKFILE_TRAILING_TOC) {
-+		size_t last_chunk_tail = hashfile_total(cf->f);
-+		/* First entry marks the end of the chunks */
-+		hashwrite_be32(cf->f, 0);
-+		hashwrite_be64(cf->f, last_chunk_tail);
-+
-+		for (i = cf->chunks_nr - 1; i >= 0; i--) {
-+			hashwrite_be32(cf->f, cf->chunks[i].id);
-+			hashwrite_be64(cf->f, cf->chunks[i].offset);
-+		}
- 	}
+ 			if (write_packed_entry_v1(out, iter->refname,
+ 						  iter->oid,
+-						  peel_error ? NULL : &peeled))
+-				goto write_error;
++						  peel_error ? NULL : &peeled)) {
++				add_write_error(refs, err);
++				goto error;
++			}
  
- cleanup:
-diff --git a/chunk-format.h b/chunk-format.h
-index 7885aa08487..39e8967e950 100644
---- a/chunk-format.h
-+++ b/chunk-format.h
-@@ -31,7 +31,14 @@ void add_chunk(struct chunkfile *cf,
- 	       uint32_t id,
- 	       size_t size,
- 	       chunk_write_fn fn);
--int write_chunkfile(struct chunkfile *cf, void *data);
-+
-+enum chunkfile_flags {
-+	CHUNKFILE_TRAILING_TOC = (1 << 0),
-+};
-+
-+int write_chunkfile(struct chunkfile *cf,
-+		    enum chunkfile_flags flags,
-+		    void *data);
+ 			if ((ok = ref_iterator_advance(iter)) != ITER_OK)
+ 				iter = NULL;
+@@ -694,8 +704,10 @@ static int write_with_updates(struct packed_ref_store *refs,
  
- int read_table_of_contents(struct chunkfile *cf,
- 			   const unsigned char *mfile,
-diff --git a/commit-graph.c b/commit-graph.c
-index a7d87559328..c927b81250d 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1932,7 +1932,7 @@ static int write_commit_graph_file(struct write_commit_graph_context *ctx)
- 			get_num_chunks(cf) * ctx->commits.nr);
- 	}
+ 			if (write_packed_entry_v1(out, update->refname,
+ 						  &update->new_oid,
+-						  peel_error ? NULL : &peeled))
+-				goto write_error;
++						  peel_error ? NULL : &peeled)) {
++				add_write_error(refs, err);
++				goto error;
++			}
  
--	write_chunkfile(cf, ctx);
-+	write_chunkfile(cf, 0, ctx);
+ 			i++;
+ 		}
+@@ -719,10 +731,6 @@ static int write_with_updates(struct packed_ref_store *refs,
  
- 	stop_progress(&ctx->progress);
- 	strbuf_release(&progress_title);
-diff --git a/midx.c b/midx.c
-index 7cfad04a240..03d947a5d33 100644
---- a/midx.c
-+++ b/midx.c
-@@ -1510,7 +1510,7 @@ static int write_midx_internal(const char *object_dir,
- 	}
+ 	return 0;
  
- 	write_midx_header(f, get_num_chunks(cf), ctx.nr - dropped_packs);
--	write_chunkfile(cf, &ctx);
-+	write_chunkfile(cf, 0, &ctx);
- 
- 	finalize_hashfile(f, midx_hash, FSYNC_COMPONENT_PACK_METADATA,
- 			  CSUM_FSYNC | CSUM_HASH_IN_STREAM);
+-write_error:
+-	strbuf_addf(err, "error writing to %s: %s",
+-		    get_tempfile_path(refs->tempfile), strerror(errno));
+-
+ error:
+ 	if (iter)
+ 		ref_iterator_abort(iter);
 -- 
 gitgitgadget
 
