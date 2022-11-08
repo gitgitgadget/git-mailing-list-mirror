@@ -2,180 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5460BC4332F
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 13:26:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C0ADC4332F
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 13:32:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234047AbiKHN0c (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 08:26:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60638 "EHLO
+        id S233992AbiKHNcO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 08:32:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233775AbiKHN0a (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2022 08:26:30 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5E3E1834A
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 05:26:29 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id 13so38651176ejn.3
-        for <git@vger.kernel.org>; Tue, 08 Nov 2022 05:26:29 -0800 (PST)
+        with ESMTP id S233941AbiKHNcM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2022 08:32:12 -0500
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65E524FF94
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 05:32:11 -0800 (PST)
+Received: by mail-qt1-x835.google.com with SMTP id l15so8620408qtv.4
+        for <git@vger.kernel.org>; Tue, 08 Nov 2022 05:32:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=7p0B20EmDvqkP+jr4OJqvINC6P76UjghP67YFTwg/8w=;
-        b=RBHOUjKv85CT+yODM6/Geixse9gBivwJpvOcNFH0gT0qkpQE6yYlLsNN3jTPjX47nA
-         IjB3aMTDV44yZ+gL+vJHxdvzrUCXIQYlRzinbQhQhpoGZ9qLXUmT0Amz7qtWHUvfvnpk
-         lKk2s3MPYfizlEAHoP+Cu/VdUIGz2BXDzwegEc5EtfudsLECKHMus1RM183cCWOc3uWH
-         6iyuNeCizMZOFS73v02Dzs+RY0R47Efu6wf3pF+aidK6bbPpaEX3N+7qH7OZFc0rnryj
-         +o+8cfFd+Gva4UvHG03QfPurHaQ6Ev1Unc/Tyx8+IMeJUJEa8Lp9AQ1rzrdbjVUIQohS
-         YnyQ==
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FAt1ra/nI/En09z75t5WTP3JJGFMTQOW7/UKPw3PgNY=;
+        b=T7jJGcZmd4QwO3RDznNNIanDy2ynnyRX6mVTg3txCVV/9sH2VJiQ1ilzOggBGkRvc7
+         p0AOHwl93JBtTuAmTiE8rS+8qXdWoIacpNHSW4CP4J+eO6rvmf4i3LczI2jnRYUnbQ8c
+         QsqbimVeBwtTDYH7JtlQF5ejJzDDPz0zbnyb7duK8IB9OKdU+A9EMxldQthPo7CGe6pR
+         fKh16iHOdajbQT9u3m8oXDCgvKWY5ID/R9zRVz30EIjd+VBC1s0EJNqsPUwgEHX5JuW1
+         4F0uiRe2aENBUajyiOZfToZWxyCsPHbbLsPvUxe24EJ6CkcLKO/zusl8PrZiCMIFxN32
+         g0Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7p0B20EmDvqkP+jr4OJqvINC6P76UjghP67YFTwg/8w=;
-        b=VF7rd0IgsCyin7OYNQuFbU/ufpgslXrlTadUDqSr7PvBvEG8rjOY4RBK237HeH/e7f
-         +KTjgcC+pSppjshnZJfhTLQEJygEHDKLSGIf5GCYMa7+NfGM8T4kkKc7H+g5Gm2dz8Lh
-         j0c4FKcnqsQwufdDxzgSU1aWMcqlByuahRbD7SuuqhHTNynokwUZlIaHYjsh1nwxOzuX
-         1IS6jPQw/hov29yeHxITalWnKc2TzYoke9w1YLkBoxmCNicWHlN3Xw44jMyt9HWQdB6r
-         OYbb4tQXcttSqNLCcnrxXPyzS92748MZtkfjZpWqvARBn3ygEZTcRh1MLeam9ls6HmQi
-         VnPQ==
-X-Gm-Message-State: ACrzQf3L9fOqOa0c1lkV+49fqxU8tKyFrI+Zk+BK6WACcXMCkTozCY1u
-        q/u6N9jnKtsdic3AIdAJdUo=
-X-Google-Smtp-Source: AMsMyM5zm/4cUiogA/JjGp65VCSCk/LmlMwz5P79Fw6sGMyCtrgbTwl01rbUQmr6OmN4Vd//8VHbsw==
-X-Received: by 2002:a17:906:da85:b0:741:40a7:d08d with SMTP id xh5-20020a170906da8500b0074140a7d08dmr55740108ejb.263.1667913988102;
-        Tue, 08 Nov 2022 05:26:28 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id r1-20020a17090609c100b0078df3b4464fsm4690820eje.19.2022.11.08.05.26.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Nov 2022 05:26:27 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1osOcU-000Y3w-26;
-        Tue, 08 Nov 2022 14:26:26 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     git@vger.kernel.org, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v2 1/3] notes.c: introduce "--blank-line" option
-Date:   Tue, 08 Nov 2022 14:22:41 +0100
-References: <221107.864jvax1hz.gmgdl@evledraar.gmail.com>
- <20221108130606.82005-1-tenglong.tl@alibaba-inc.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <20221108130606.82005-1-tenglong.tl@alibaba-inc.com>
-Message-ID: <221108.86pmdxshkt.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FAt1ra/nI/En09z75t5WTP3JJGFMTQOW7/UKPw3PgNY=;
+        b=td1fa/o21gpZ6Bj1i4VPSRmLIbMOycM1kz3ZwnUNdCt86pNBX02Z7oTPngkRAVzZYU
+         pgbpwlQIZy4SPCIv+sTnEuOFconN5EZb6fLxLfV1SMtzoVmLZofD3xq70UCREXhvKwRz
+         ZTBYx6SYOdIvuGv1lVCeASqgpCUFDJ3v7wH0fdV1vbXAmo7zAfat3I0OoLzewFA06DKv
+         2YR9T9SsEnsqa30B3EKyLa4eUwy4l2sUc43a6qZhpyBQiGSFtgMdFogKIE9I/7h7Dypo
+         TmaJj29lcdWRoW76I0t+gBl1nxnroGqfkpKAb8rkPkUs/Md0f3S9phmnp7lr5RLsWsBv
+         QbFA==
+X-Gm-Message-State: ACrzQf213W+8kTEdwk8bil18lTKz9kdEY7gl3xNLo3z9DPE6ZW4ywfRT
+        2sEYd2hD2TD2pQWILbMCV6M=
+X-Google-Smtp-Source: AMsMyM6l6VKTZ7YNRxuQ34KVnSlgDIvJjtxQAaKReL0mgdaTYSYdYqmQS0nkMSOYnn2hyH521gHjaw==
+X-Received: by 2002:ac8:6b46:0:b0:3a5:57f1:5159 with SMTP id x6-20020ac86b46000000b003a557f15159mr20514317qts.421.1667914330369;
+        Tue, 08 Nov 2022 05:32:10 -0800 (PST)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id n16-20020a05620a295000b006f9ddaaf01esm9485047qkp.102.2022.11.08.05.32.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Nov 2022 05:32:09 -0800 (PST)
+Subject: Re: [PATCH v3 1/8] clone: teach --detach option
+To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Glen Choo <chooglen@google.com>
+References: <pull.1321.v2.git.git.1666297238.gitgitgadget@gmail.com>
+ <pull.1321.v3.git.git.1666988096.gitgitgadget@gmail.com>
+ <432bc7cb3a42cf39d0033701c2cc677c9109b3dd.1666988096.git.gitgitgadget@gmail.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <6b17b06e-8217-ce56-0733-5501d81fe433@gmail.com>
+Date:   Tue, 8 Nov 2022 08:32:07 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
+In-Reply-To: <432bc7cb3a42cf39d0033701c2cc677c9109b3dd.1666988096.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Glen,
 
-On Tue, Nov 08 2022, Teng Long wrote:
+Le 2022-10-28 à 16:14, Glen Choo via GitGitGadget a écrit :
+> From: Glen Choo <chooglen@google.com>
+> 
+> Teach "git clone" the "--detach" option, which leaves the cloned repo in
+> detached HEAD (like "git checkout --detach"). In addition, if the clone
+> is not bare, do not create the local branch pointed to by the remote's
+> HEAD symref (bare clones always copy all remote branches directly to
+> local branches, so the branch is still created in the bare case).
+> 
+> This is especially useful in the "submodule.propagateBranches" workflow,
+> where local submodule branches are named after the superproject's
+> branches, so it makes no sense to create a local branch named after the
+> submodule's remote's branch.
+> 
+> Signed-off-by: Glen Choo <chooglen@google.com>
+> ---
+>  Documentation/git-clone.txt |  8 +++++++-
+>  builtin/clone.c             | 12 +++++++++---
+>  t/t5601-clone.sh            | 22 ++++++++++++++++++++++
+>  3 files changed, 38 insertions(+), 4 deletions(-)
+> 
+> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+> index d6434d262d6..6a4e5d31b46 100644
+> --- a/Documentation/git-clone.txt
+> +++ b/Documentation/git-clone.txt
+> @@ -16,7 +16,7 @@ SYNOPSIS
+>  	  [--depth <depth>] [--[no-]single-branch] [--no-tags]
+>  	  [--recurse-submodules[=<pathspec>]] [--[no-]shallow-submodules]
+>  	  [--[no-]remote-submodules] [--jobs <n>] [--sparse] [--[no-]reject-shallow]
+> -	  [--filter=<filter> [--also-filter-submodules]] [--] <repository>
+> +	  [--filter=<filter> [--also-filter-submodules] [--detach]] [--] <repository>
+>  	  [<directory>]
+>  
+>  DESCRIPTION
+> @@ -210,6 +210,12 @@ objects from the source repository into a pack in the cloned repository.
+>  	`--branch` can also take tags and detaches the HEAD at that commit
+>  	in the resulting repository.
+>  
+> +--detach::
+> +	If the cloned repository's HEAD points to a branch, point the newly
+> +	created HEAD to the branch's commit instead of the branch itself.
+> +	Additionally, in a non-bare repository, the corresponding local branch
+> +	will not be created.
+> +
 
-> "=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason" <avarab@gmail.com> writes:
->
->> >  	int allow_empty =3D 0;
->> > +	int blankline =3D 1;
->>
->> So keep this...
->>
->> >  	const char *object_ref;
->> >G  	struct notes_tree *t;
->> >  	struct object_id object, new_note;
->> > @@ -584,6 +585,8 @@ static int append_edit(int argc, const char **argv=
-, const char *prefix)
->> >  			parse_reuse_arg),
->> >  		OPT_BOOL(0, "allow-empty", &allow_empty,
->> >  			N_("allow storing empty note")),
->> > +		OPT_BOOL(0, "blank-line", &blankline,
->>
->> ...and just make this "no-blank-line", and parse_options() will do the
->> right thing. I.e. PARSE_OPT_NONEG is implied.
->
-> Sorry for another question. By the explanation of "api-parse-options.txt"=
- :
->
-> `OPT_BOOL(short, long, &int_var, description)`::
-> 	Introduce a boolean option. `int_var` is set to one with
-> 	`--option` and set to zero with `--no-option`
->
-> I think it means the same as "parse_options() will do right thing" as you=
- said
-> to me , but...after the modification the effect is opposite:
->
-> diff --git a/builtin/notes.c b/builtin/notes.c
-> index a6273781fb8..73427ea8dff 100644
-> --- a/builtin/notes.c
-> +++ b/builtin/notes.c
-> @@ -562,6 +562,7 @@ static int copy(int argc, const char **argv, const ch=
-ar *prefix)
->  static int append_edit(int argc, const char **argv, const char *prefix)
->  {
->         int allow_empty =3D 0;
-> +       int blankline =3D 1;
->         const char *object_ref;
->         struct notes_tree *t;
->         struct object_id object, new_note;
-> @@ -584,6 +585,8 @@ static int append_edit(int argc, const char **argv, c=
-onst char *prefix)
->                         parse_reuse_arg),
->                 OPT_BOOL(0, "allow-empty", &allow_empty,
->                         N_("allow storing empty note")),
-> +               OPT_BOOL(0, "no-blank-line", &blankline,
-> +                       N_("insert paragraph break before appending to an=
- existing note")),
->                 OPT_END()
->         };
->         int edit =3D !strcmp(argv[0], "edit");
-> @@ -618,7 +621,7 @@ static int append_edit(int argc, const char **argv, c=
-onst char *prefix)
->                 enum object_type type;
->                 char *prev_buf =3D read_object_file(note, &type, &size);
->
-> -               if (d.buf.len && prev_buf && size)
-> +               if (blankline && d.buf.len && prev_buf && size)
->                         strbuf_insertstr(&d.buf, 0, "\n");
->                 if (prev_buf && size)
->                         strbuf_insert(&d.buf, 0, prev_buf, size);
->
-> ----
-> So, I am a bit confused and I guess maybe somewhere I misunderstood or di=
-dn't
-> notice some details.
->
-> Thanks.
 
-Sorry, I meant that in both cases it will expose the same options to the
-user: --blank-line and --no-blank-line. I.e. if you create options
-named:
-
-	"x" "x-y"
-
-Their negations are: --no-x and --no-x-y. But if their names are:
-
-	"x" "no-x"
-
-The negations are:
-
-	--no-x and --x
-
-But as your example shows that's unrelated to whether the *variable in
-the code* is negated.
-
-So however you structure the code, which would be:
-
-	int blankline =3D 1:
-        [...]
-	OPT_BOOL(0, "blankline", &blankline, [...]);
-
-Or:
-
-	int no_blankline =3D 0:
-        [...]
-	OPT_BOOL(0, "no-blankline", &no_blankline, [...]);
-
-The documentation could in both cases say:
-
-	--no-blankline:
-		describe the non-default[...]
+"point the newly created HEAD to the branch's tip commit"
+would be slightly clearer, I think.
