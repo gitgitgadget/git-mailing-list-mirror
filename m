@@ -2,114 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BF0AC433FE
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 14:49:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40215C433FE
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 14:49:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233697AbiKHOtb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 09:49:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53998 "EHLO
+        id S233846AbiKHOtp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 09:49:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233410AbiKHOt2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2022 09:49:28 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB08FB04
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 06:49:27 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id t25-20020a1c7719000000b003cfa34ea516so1010417wmi.1
-        for <git@vger.kernel.org>; Tue, 08 Nov 2022 06:49:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=lpLh0BhXneSeF+LEL71PQzfvlU4/UyX5anJeCZ2c1I8=;
-        b=VuvHUhUlnXYPhOkgqYRVutgIym/83RV/ZBymcSCTY9HRHwO804NwGfFI0ebRGYKpbf
-         MYK308h3KO7PjSMURyVJckUuCekw37gO0uJgN6JuQq/L5RXRMZodFRm3XQz0z2t6WxUA
-         +Xr+2+Jb4JcyrRfgGmGt4HNWNvc3vKNYH+5WcH6Cg2+ykmlKNuexJi8GkzHJ1othJfX3
-         IVKH97BCHQU0k5W3GScgQO2MuRRIo4zcN2XrclCHvP3+UTZipOIzKhhQANljavdg/0z7
-         5s9d/PCyVgMDjmdyDnTdQFiaHQhtJPtguo22IuvUkg76FRgxaa1OTz0fa9tvug0o+0sV
-         CBUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lpLh0BhXneSeF+LEL71PQzfvlU4/UyX5anJeCZ2c1I8=;
-        b=APqNiO1A5+BYIYcgMo3mN7XIk40XXipw4IDDMJ7iLKw3xicbI3VsOsfw66cw+5plWZ
-         sMblvLbz8hZ4gq383OhaTlK9SSPyuDm2T0uPwwi5Fz0MqI6vLQpNrFWe4n0S53mI15YZ
-         2n78mf/yHL38L3kA6OES3oGejUzZ8H005qUVvOMzzjGkFXXV1D95gv4gCVH0Vmd+dG6s
-         8YiuMF6QwVsT9ZJBk4VN0S71OIdkivZ8qKtne8wPBUbwRjnoR17R4z5Q7HzriEPnO+uu
-         50ELlUi7yDkx7tktHaVWho1shOXZt3utG4WceR8PUGCvJKFxsKe6+ZIERYemXMFMDajE
-         MiqA==
-X-Gm-Message-State: ACrzQf2KrhjugjlrTjCZh96FNpOexgkKfKETNs5ymSJvz+QLcheu9ZMp
-        Pez+XzCnZoKNwyE7TSS5QbbQQtdrpj0=
-X-Google-Smtp-Source: AMsMyM7ERFwMGJZBU7xbC2rbzFi6MpY7uW9sbY/98+SfGsZT75JDLJCIqyweNql678bp5JTRWlHfKw==
-X-Received: by 2002:a05:600c:414b:b0:3cf:94a5:6564 with SMTP id h11-20020a05600c414b00b003cf94a56564mr16810245wmm.65.1667918966294;
-        Tue, 08 Nov 2022 06:49:26 -0800 (PST)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id l16-20020adfe590000000b002365cd93d05sm10383867wrm.102.2022.11.08.06.49.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Nov 2022 06:49:25 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <64b91b29-bbcd-e946-1f20-c0a5be63d9b7@dunelm.org.uk>
-Date:   Tue, 8 Nov 2022 14:49:27 +0000
+        with ESMTP id S233203AbiKHOtn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2022 09:49:43 -0500
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ECF3E25
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 06:49:42 -0800 (PST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id 947915C00CD;
+        Tue,  8 Nov 2022 09:49:41 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Tue, 08 Nov 2022 09:49:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm1; t=1667918981; x=1668005381; bh=gF6p7Vb8Ka
+        c9N3JfM0EiM7CkSySATtsQ4UhfIzp0zO8=; b=ZornNM6DdFaMAeKfOyNKCTfYgk
+        nfQ+ioeQbpRdmxHcv9C0psBFPeuA3Yd2jE5hfMwTIPCwYzLml/skPXCHcvUfyvIe
+        vf+uoopymECaN4Q3nnjlo0Z1CKXrH/tzq8gvCTkY6jn+Jn2ln9uMZWnHFnaeP7cf
+        HtYFAY58ltdPPg8C78R+uAI3lwexXYHo56NbDZgR0ccL6wqD58WaXddMMpFeKdYu
+        52ZAv3SqERS7w0FfkI2vuYdxQF4jXOgJ8JmS7TDK38jR329KIhKjc/IB42XYkHCv
+        3YXi6BQmM0crHo8zrO9fuUw8GDmwABplpYIuaXMlOgn3hlzwL02pqqUdDXIw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm1; t=1667918981; x=1668005381; bh=gF6p7Vb8Kac9N3JfM0EiM7CkSySA
+        TtsQ4UhfIzp0zO8=; b=Jq+G1yyzRkVXY1vTphVyk7/CQ3BmIhnhf2xQ+xOKgaoI
+        VttUM1eA87DZ45cuZXD6xcBsNcpeq1mvCUkEYuJJMWa2KIImU4mX4Mox3rNPNdN4
+        oOZgWqXdrRubp3h0QtoIQehlQNnMpiJwd61W87+mfrZFoRbskczLrQgq2Hby7bPO
+        w/nJf9LtwDytXSTN+wcPRTgcFz0qVawRcC20JXr4EiBWx3z+iMiPTHIUX4CCjBmL
+        WUiwve5TGG7yGgPLSBlHGUZJRDfLYZ/wXaauAEgTj2q6Rxp1H/gATHF5RwdBL19D
+        ib4eapS63SD3K+tRHoIrMBbF1pPnJLjjOFJG1rOdAg==
+X-ME-Sender: <xms:hWxqYxS8mzCaJzN3Kp3j3lUBI87pyuiNb-H9CrIxyrwipXzr0oNsgg>
+    <xme:hWxqY6wor5-ukBKzCjMoN0MEgqYCCxXWOfJaRLExKMn0x38xbcnpIkQOvL-YxJR84
+    BNz3lryGWrEhcaqRg>
+X-ME-Received: <xmr:hWxqY20xD_pRtgt5tygtyV1Qw-AIGXkO-PBmbc9RhnaqCY88ofbxC3-XlBdgbdvjhy1bTVNJx0jW8qxdXtQ9JSEmH54n6nj6NLxEjDgxF4e6>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrfedtgdejtdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
+    ertddtudenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepfedvleefueetgeeitdekheelffekkefgff
+    duhfduvdefffdtheekiefhkeejkeehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:hWxqY5BlP3rGWOJIBXoIy9GedyrKYsJtHLpqC4eVrdEtP1CtMIiobA>
+    <xmx:hWxqY6hiQb9BBlOyu8GZlzGnmJATAb3JsBPGWLrKQOeGaEWVwxaolA>
+    <xmx:hWxqY9qNQFEBtPeFXm9T75mc1Fo-KzgCazx5GJq_XMt2pwXmw3yTlg>
+    <xmx:hWxqY7sUl13XJtnKVXLBuPJ3-GOqM5LRPMdj0rK0unUJ0Jc3NVtksA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Nov 2022 09:49:40 -0500 (EST)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 434b7ab3 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 8 Nov 2022 14:49:30 +0000 (UTC)
+Date:   Tue, 8 Nov 2022 15:49:34 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v4 1/6] refs: get rid of global list of hidden refs
+Message-ID: <Y2psfpS3rxg46SHV@ncase>
+References: <cover.1666967670.git.ps@pks.im>
+ <cover.1667901510.git.ps@pks.im>
+ <34afe30d60e4dbc7e50a590541440c20c27507a6.1667901510.git.ps@pks.im>
+ <221108.86leolsgze.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: ab/cmake-nix-and-ci (was: What's cooking in git.git (Nov 2022,
- #01; Thu, 3))
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-References: <Y2RldUHTwNzmez73@nand.local>
- <221108.86cz9xsf1w.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221108.86cz9xsf1w.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="3z760mY0duYyUZrL"
+Content-Disposition: inline
+In-Reply-To: <221108.86leolsgze.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 08/11/2022 14:14, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Thu, Nov 03 2022, Taylor Blau wrote:
-> 
->> * ab/cmake-nix-and-ci (2022-11-02) 12 commits
->>   - CI: add a "linux-cmake-test" to run cmake & ctest on linux
->>   - cmake: copy over git-p4.py for t983[56] perforce test
->>   - cmake: support GIT_TEST_OPTS, abstract away WIN32 defaults
->>   - Makefile + cmake: use environment, not GIT-BUILD-DIR
->>   - test-lib.sh: support a "GIT_TEST_BUILD_DIR"
->>   - cmake: set "USE_LIBPCRE2" in "GIT-BUILD-OPTIONS" for test-lib.sh
->>   - cmake & test-lib.sh: add a $GIT_SOURCE_DIR variable
->>   - cmake: chmod +x the bin-wrappers/* & SCRIPT_{SH,PERL} & git-p4
->>   - cmake: don't copy chainlint.pl to build directory
->>   - cmake: update instructions for portable CMakeLists.txt
->>   - cmake: don't "mkdir -p" and "cd" in build instructions
->>   - cmake: increase test timeout on Windows only
->>
->>   Fix assorted issues with CTest on *nix machines.
->>
->>   Waiting for review.
->>   source: <cover-v3-00.12-00000000000-20221101T225022Z-avarab@gmail.com>
-> 
-> I think the v4[1] you've since picked up should be ready, and I think
-> addressed the outstanding comments, except as noted in "let's pursue
-> that separately" in [2].
 
-I think we need to wait for someone with windows experience to look at 
-this as that is the primary use of the cmake build. Without that I think 
-  patches 4(?), 5 and 7 are still could go forward as a separate series 
-but the rest of the patches including the documentation and test changes 
-need to have buy-in from their primary audience.
+--3z760mY0duYyUZrL
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Best Wishes
+On Tue, Nov 08, 2022 at 02:36:04PM +0100, =C6var Arnfj=F6r=F0 Bjarmason wro=
+te:
+>=20
+> On Tue, Nov 08 2022, Patrick Steinhardt wrote:
+>=20
+> > @@ -2591,6 +2592,7 @@ int cmd_receive_pack(int argc, const char **argv,=
+ const char *prefix)
+> >  		packet_flush(1);
+> >  	oid_array_clear(&shallow);
+> >  	oid_array_clear(&ref);
+> > +	string_list_clear(&hidden_refs, 1);
+>=20
+> In the v4 re-roll you got rid of the "1" for some other string_lists,
+> but is this one still needed, i.e. does it use "util"? At a glance it
+> doesn't seem so. There's another "hidden_refs" (maybe just semi-related)
+> in 4/6 that doesn't use it when clearing.
 
-Phillip
+Oh, right, I missed this one. Will wait a bit though for other feedback
+to come in before sending a v5 only with this one-line change.
 
+Patrick
 
-> 1. https://lore.kernel.org/git/cover-v4-00.14-00000000000-20221103T160255Z-avarab@gmail.com/
-> 2. https://lore.kernel.org/git/221103.86a6581129.gmgdl@evledraar.gmail.com/
+--3z760mY0duYyUZrL
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmNqbH0ACgkQVbJhu7ck
+PpRwIhAArgRArPJecNozrcgIgJNrhjB8FtOsL5STPsGIYIC84ZBY9BPDFFzjFbRU
+7g8ELgI1CK8+cabAM2/Incs9sy2qzI3rEXlxl+ksLzhDXzjQ+53Xl5N/uMylxROY
+pmHG5blQ68cgU4ToJqqhk8lqj5dDqThhhP66+iRiAbvC33u41/2jy4ImvZ4ZLyLR
+k7YFof4AmDDm0UvYaoy91pEF2oHgwN9d1vAC36gPQX7EvyfU0WT5ulTSAaLuGuGJ
+SrYr0Z0aocDBK42xZBibjhF+OJJZlGt3mxCDfDoShXqHUY2fVrzA2V+KsMpSbygb
+WqcRrC7dGPCtZFT5HqYrew/iynpuRrALohwJPyeX9TNB5ODY8cygeQKq+W0aO55S
++WNFO6qQwfpl8uyl/MbVplBml5SmACY5yV5veorpMQrLcx7Jro0gxJOJBWbRVUGT
+fNYovG7NXdoWK48ZhXqKOBIkE8lwkVLEuVnkcGR9Ffse+4OjonEUFoDB6NgzPRts
+Pazj/Gh4jCJZ//SdA3dnQR1vfyc5TsfsJOEtFMA7ZQ1F97DU1/Qdn4DaEvKYtGTx
+xoqZei9ac4gAr3OtGIqoeuiIYssGB2exv8tbd4aWYBFH8t2LqgMW4qxdGR/+R/4R
++GvhD5nUWssegu10hDweY5wucnyqFiqHmltAPwGiDTD2kL49Gjw=
+=poaq
+-----END PGP SIGNATURE-----
+
+--3z760mY0duYyUZrL--
