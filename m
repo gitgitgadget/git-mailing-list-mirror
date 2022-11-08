@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8BFB4C43217
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 18:18:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 862D4C4332F
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 18:18:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234735AbiKHSSZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 13:18:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36774 "EHLO
+        id S234739AbiKHSS0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 13:18:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234430AbiKHSSN (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234470AbiKHSSN (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 8 Nov 2022 13:18:13 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC4B315A20
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 10:18:01 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id f27so40819154eje.1
-        for <git@vger.kernel.org>; Tue, 08 Nov 2022 10:18:01 -0800 (PST)
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C675F22BC9
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 10:18:02 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id f27so40819331eje.1
+        for <git@vger.kernel.org>; Tue, 08 Nov 2022 10:18:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nOSDui1dFs3pk0J5gnQBB7uYPDw0kUKKb6xtvgKRXM8=;
-        b=Po9wL4GjIBAhUs4tVpOEA/pNcQomXoHVU+HXl+cPHZlV3Y5+riEDRJnQdgcI1Jtiow
-         Vqidbx8rMRPLcBeLERQ5b3lR21dGlVi2ibnY+Y0tLvgTkqBWm1ie5pq9N++sBDwNOxMA
-         LYQSvQfh3gS+/TqpzHLUKMSpVE6UhEwFpwaorzNb1hP7cD+/xrfwPkuAzVW4u3IfWKJW
-         O4aQrrRc4Zd3xX2hRRjlzTwCTNVeaEXON7NjiE6mKGzEuhH8aT7pQd3YU+g0ddoGnh6Q
-         BLegQ6PbxJO2Lg3eOoAyLNbZ9EjjFqjGzl8MWi+rPw6PabPbXCHdmPIsvXSFe/omOO0S
-         fjtg==
+        bh=8+vwNtSbMRMLYTfgYAoNqjxm9O/jfqzRIsWrlqVi4Ws=;
+        b=IQNcD1vjdlfUz1SqLctwzcK969UE0lPqArA/jzRvgn7uNb+yDSiKgj7OCZBie3Kddw
+         cP6dRKEBFdaJ5iveYFvjFTPysW7As6n/vwo8hBkRvI8hs/BGwT8tMQ51I9EFZBa75fEI
+         9SLmXbiqYSb+85So1qVGXbvvYs0Uu10qcPqjn6AZjyVpVILz5nr62XbgxHwWkarf4kSm
+         /hCIAUIBFMi5O33GRC3Uf5ArNNLJ1r4HqPdPlKpN1zM2avCZxy7UdS8Q76ZNe/4luUTX
+         mg1wJoVQ2xop8wuN4iNNLyYpUAoyiHXT0ab2scg7WLCHDM44cmqR8EdPe7nlY0/M1YrP
+         AKGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nOSDui1dFs3pk0J5gnQBB7uYPDw0kUKKb6xtvgKRXM8=;
-        b=mpHZyZDnJFEnz1yb3hzxfgK2IZOWQCe7+6C9v7BOCAmuFON4za+MqP3SW84/Vuxp0u
-         TyGo2uH+aya2AJvpWKQjPuta+mdHfOKa9KLyiurj803PT1vMqeYKc7c4ACLnY+93qPCc
-         7Tc/OLXdGoNoUmt410f0P60FagZodruQMepn55Qux637R+vffhuwaxM+0ekyHq8yTqkp
-         zQa3P2GrCwzMF0EUZYcF4Y1+xaF+5IZv5VcQbSBQvmH3oyQAfozwMq6lAGlHSz546fVk
-         FUGzOOymFTNlm5sroIYKv+Rz2QOJtVbH528E77Bs+3NKDoVLTf9M0FV1/jX6bfUk8fbr
-         u60w==
-X-Gm-Message-State: ACrzQf0hFSEDdCpuoh96b/qzbQ6GSRZlys6IKFpLrLvp5V0gpCmAohBE
-        tewIIYadXwq/zLWNd5rLixbGKVHeFdZIFw==
-X-Google-Smtp-Source: AMsMyM4FtfmY9aMyjjmmdLyENgi295d8Aadkhzn7FNiry7lvlttsuZzMoSBdB+V/ibnhw7IpwcgFDA==
-X-Received: by 2002:a17:906:cc48:b0:7a8:4a3b:11f7 with SMTP id mm8-20020a170906cc4800b007a84a3b11f7mr55309388ejb.388.1667931479326;
-        Tue, 08 Nov 2022 10:17:59 -0800 (PST)
+        bh=8+vwNtSbMRMLYTfgYAoNqjxm9O/jfqzRIsWrlqVi4Ws=;
+        b=4KQ+nzb0jtasMKbJh9X6x1ov8BhG+Z4V+oAbCVdaTPV0yeZ3K4rM3vNZKJA5laRR99
+         HpCpfQ07+6osYxpntuYKzcINF7rcbvRGzaIxRx5WWaNc6+zyhhGIjcUWZa3jiYeie4ri
+         gFTTci/YtPzOig6XaWvMzhCV8JLMSn/BNu0w/jCe/2SDxCYcKk4KHCFeKDJ9MMXvd34o
+         yfV2bW9coHDf6lFZKgq+5JuvOseCW+9hwB1kEo6y24Cay8+njlk1+a8INP9f7kOuwrF5
+         MNNwCUTqv8KI6cAPOVpNepME6KMQdPnoazpaI3FEimcCT/po7tOI25rFysjpS8Oo7z3h
+         +FjQ==
+X-Gm-Message-State: ACrzQf3p87c1m5roGOXSsV2LC5gLamkQeZ1dWicJPVtC7RHxppUra3P7
+        itsU3DNPrd7Uo/2QdR7L5MSDrNBPRTCRew==
+X-Google-Smtp-Source: AMsMyM49WaIqDTOE73FXUG6Nf0I8zxPsLQh4FNsJ1iZ/R4zgwFLdubOsanLR2HRFivNS1kJQZ5LjTw==
+X-Received: by 2002:a17:906:5a5b:b0:7a6:cbc7:4ca1 with SMTP id my27-20020a1709065a5b00b007a6cbc74ca1mr54449119ejc.544.1667931480985;
+        Tue, 08 Nov 2022 10:18:00 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id t18-20020a1709063e5200b007a62215eb4esm4994131eji.16.2022.11.08.10.17.58
+        by smtp.gmail.com with ESMTPSA id t18-20020a1709063e5200b007a62215eb4esm4994131eji.16.2022.11.08.10.18.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Nov 2022 10:17:58 -0800 (PST)
+        Tue, 08 Nov 2022 10:18:00 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Elijah Newren <newren@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 07/15] unpack-file: fix ancient leak in create_temp_file()
-Date:   Tue,  8 Nov 2022 19:17:43 +0100
-Message-Id: <patch-v2-07.15-a2cc6f10d0d-20221108T172650Z-avarab@gmail.com>
+Subject: [PATCH v2 09/15] ls-files: fix a --with-tree memory leak
+Date:   Tue,  8 Nov 2022 19:17:45 +0100
+Message-Id: <patch-v2-09.15-46809d9be80-20221108T172650Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1467.g709fbdff1a9
 In-Reply-To: <cover-v2-00.15-00000000000-20221108T172650Z-avarab@gmail.com>
 References: <cover-00.17-00000000000-20221103T164632Z-avarab@gmail.com> <cover-v2-00.15-00000000000-20221108T172650Z-avarab@gmail.com>
@@ -72,96 +72,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a leak that's been with us since 3407bb4940c (Add "unpack-file"
-helper that unpacks a sha1 blob into a tmpfile., 2005-04-18). See
-00c8fd493af (cat-file: use streaming API to print blobs, 2012-03-07)
-for prior art which shows the same API pattern, i.e. free()-ing the
-result of read_object_file() after it's used.
+Fix a memory leak in overlay_tree_on_index(), we need to
+clear_pathspec() at some point, which might as well be after the last
+time we use it in the function.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/unpack-file.c        | 1 +
- t/t6060-merge-index.sh       | 2 ++
- t/t6401-merge-criss-cross.sh | 2 ++
- t/t6406-merge-attr.sh        | 1 +
- t/t6407-merge-binary.sh      | 1 +
- t/t7605-merge-resolve.sh     | 1 +
- 6 files changed, 8 insertions(+)
+ builtin/ls-files.c            | 1 +
+ t/t3060-ls-files-with-tree.sh | 2 ++
+ t/t9148-git-svn-propset.sh    | 1 -
+ 3 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/unpack-file.c b/builtin/unpack-file.c
-index 9e8119dd354..88de32b7d7e 100644
---- a/builtin/unpack-file.c
-+++ b/builtin/unpack-file.c
-@@ -19,6 +19,7 @@ static char *create_temp_file(struct object_id *oid)
- 	if (write_in_full(fd, buf, size) < 0)
- 		die_errno("unable to write temp-file");
- 	close(fd);
-+	free(buf);
- 	return path;
- }
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 4cf8a236483..a03b559ecaa 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -613,6 +613,7 @@ void overlay_tree_on_index(struct index_state *istate,
+ 	if (!fn)
+ 		fn = read_one_entry_quick;
+ 	err = read_tree(the_repository, tree, &pathspec, fn, istate);
++	clear_pathspec(&pathspec);
+ 	if (err)
+ 		die("unable to read tree entries %s", tree_name);
  
-diff --git a/t/t6060-merge-index.sh b/t/t6060-merge-index.sh
-index ed449abe552..1a8b64cce18 100755
---- a/t/t6060-merge-index.sh
-+++ b/t/t6060-merge-index.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='basic git merge-index / git-merge-one-file tests'
+diff --git a/t/t3060-ls-files-with-tree.sh b/t/t3060-ls-files-with-tree.sh
+index 52f76f7b57f..c4a72ae4462 100755
+--- a/t/t3060-ls-files-with-tree.sh
++++ b/t/t3060-ls-files-with-tree.sh
+@@ -8,6 +8,8 @@ test_description='git ls-files test (--with-tree).
+ This test runs git ls-files --with-tree and in particular in
+ a scenario known to trigger a crash with some versions of git.
+ '
 +
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup diverging branches' '
-diff --git a/t/t6401-merge-criss-cross.sh b/t/t6401-merge-criss-cross.sh
-index 9d5e992878f..1962310408b 100755
---- a/t/t6401-merge-criss-cross.sh
-+++ b/t/t6401-merge-criss-cross.sh
-@@ -8,6 +8,8 @@
- 
- 
- test_description='Test criss-cross merge'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'prepare repository' '
-diff --git a/t/t6406-merge-attr.sh b/t/t6406-merge-attr.sh
-index 8650a88c40a..5e4e4dd6d9e 100755
---- a/t/t6406-merge-attr.sh
-+++ b/t/t6406-merge-attr.sh
-@@ -8,6 +8,7 @@ test_description='per path merge controlled by merge attribute'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t6407-merge-binary.sh b/t/t6407-merge-binary.sh
-index e8a28717cec..0753fc95f45 100755
---- a/t/t6407-merge-binary.sh
-+++ b/t/t6407-merge-binary.sh
-@@ -5,6 +5,7 @@ test_description='ask merge-recursive to merge binary files'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
-diff --git a/t/t7605-merge-resolve.sh b/t/t7605-merge-resolve.sh
-index 5d56c385464..62d935d31c2 100755
---- a/t/t7605-merge-resolve.sh
-+++ b/t/t7605-merge-resolve.sh
-@@ -4,6 +4,7 @@ test_description='git merge
- 
- Testing the resolve strategy.'
- 
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
  test_expect_success 'setup' '
+diff --git a/t/t9148-git-svn-propset.sh b/t/t9148-git-svn-propset.sh
+index 6cc76a07b39..aebb28995e5 100755
+--- a/t/t9148-git-svn-propset.sh
++++ b/t/t9148-git-svn-propset.sh
+@@ -5,7 +5,6 @@
+ 
+ test_description='git svn propset tests'
+ 
+-TEST_FAILS_SANITIZE_LEAK=true
+ . ./lib-git-svn.sh
+ 
+ test_expect_success 'setup propset via import' '
 -- 
 2.38.0.1467.g709fbdff1a9
 
