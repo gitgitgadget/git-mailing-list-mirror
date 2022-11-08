@@ -2,63 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8695C4332F
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 14:03:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A408C433FE
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 14:10:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234964AbiKHODH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 09:03:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37608 "EHLO
+        id S235184AbiKHOKw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 09:10:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234966AbiKHODF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2022 09:03:05 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6489F68689
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 06:03:04 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id y14so38843566ejd.9
-        for <git@vger.kernel.org>; Tue, 08 Nov 2022 06:03:04 -0800 (PST)
+        with ESMTP id S235203AbiKHOKv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2022 09:10:51 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 108DC62D1
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 06:10:50 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id v27so22668309eda.1
+        for <git@vger.kernel.org>; Tue, 08 Nov 2022 06:10:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=fXoOXZvcuu3Va/PwxQH3BksTnvrduIvBJbFKJ2zZZqA=;
-        b=NxcT0LyN9K4CqqplXznR/EIPedBW5VMDe4czdoX/S3qWEa6uSok+kPkXqt5oRzkINI
-         gawL/PQB7inibSTZ90P90pxjJpCszyTWJVJhwQlfgDxNrwFvonP/8smEGUv87Q1DjIpH
-         /+yDZuaaA1M7X5Tspb94k1jFAyENMcE41HBI0l7gErqv1/NsDhHcDy0rjiJ+4HgRw5Dn
-         2Oa0xNRcNh6SOpTdCIo7I3Cybm+69x9KjrLZohbwT17PZM71rbJSftvRUAuubPm09onb
-         vK286NAsfZ7Pz6nQ0Z977l8/v/Fl06vgY8N93qHI/Hq0g0hbRP3unTeeoCSwiaBHuKgM
-         K/xQ==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ha5u80qVYg0W3dzuTMSyyLOFWynzGpBI32HpUFUappk=;
+        b=lyTDe5uaqZJK+aGX5HoRLVvJ6nQMCaBOEKDJXY1tLXBySQ7zVAajXySE+nreuZOujX
+         KSvD7azBvvslHca/4DDClDBPXc+FE3734teAV+Pmh2TtEyyxBv/Mrnou1DAVAWX3zAWz
+         Bld8HjTxAXzSttFSsEFxViL/Kx2mhFRkRgkz6x+zDDHFjCCAoZS06+GQ0+4Ti+HZxZ9r
+         R4lAXGv931XK7GmwiIZ2V612iDq4hVvE5RA7AI+ahKfss6dyR4qSjSLnIetQ77e7jm1D
+         +K/QIb2UWz9PPZe6+HLEUujMsFNdSQaMArsbPczr0Ui8kUOu1TjvA0W5GmNrIy93CQLH
+         2SFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fXoOXZvcuu3Va/PwxQH3BksTnvrduIvBJbFKJ2zZZqA=;
-        b=l7uKvvc0A8VqGciXjWvXtM5Gf0EtzfjbWABseUl1r9aDqwryvXdYixkH8hLf1jRL+C
-         C8F4TLnmkZPgK19rVEOcxR+Z+BlT9n8D1HdSrHFedgpoE6dbUPJKp6xS7zTbDWc78wll
-         lxdl3qj5i6/vtrDtqer/YKHUTpPZ6suGNoGnInKXGyNXFgaiu5z2gwiRounEEcm10jG0
-         WqWGj4Ryxq1IGmGkoL1O39wB8JlVDyCYTsjC7+yApI8678VHXf2yM1wPCDqsWAEqvnN6
-         iw+6FGic9fjcr0gxSXbEgZ+x0gXo7MXnhqiEfds5CzUNPB7tzux9IhIRc4eptieF7Cpy
-         b20w==
-X-Gm-Message-State: ACrzQf12MFiRMmgK98WY/PyGFJkHoQoab/5yyM3Nui6AtiKPQJQ+joiv
-        UcxR0u1ulhsSfbVdME65oibpHCdMcw71ag==
-X-Google-Smtp-Source: AMsMyM7TdmyyvIf3bjQAVtXsm+kOe+KmdyWSUQQ8q4lrKisWau0zalQfHXHI9JHRj1oWFUfVNbYQCQ==
-X-Received: by 2002:a17:907:7626:b0:7aa:987f:4e8f with SMTP id jy6-20020a170907762600b007aa987f4e8fmr53686952ejc.204.1667916182390;
-        Tue, 08 Nov 2022 06:03:02 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ha5u80qVYg0W3dzuTMSyyLOFWynzGpBI32HpUFUappk=;
+        b=lCr3lmAjIG/ln4CDUIF3defDYjNH6aajXMMJDvhWe0GmlMFAKGw1SbykRqL3pG2rfn
+         tYp6MMPREqhcgJn68MW+4jqiPxlk+Or6TgwuEA516fHerlJ8RjCqMuRg5SkQL6lCJ751
+         WA3A9l+A0YlJU1rn76RfjwZnUoXPjzitIrWuUGVhgBgX0wSlPgcfOOgXHO2GjeZGlL80
+         tmQyvsFjHiELwE4zVsFBN8KlPJDydJPUOAIgzH8lI94vFIgXJCuLBxB+SOGB/lLeZ7hM
+         j+Zerd3doB8hq3RAsgPniDHakYoHHrtsflgqTlb9L8Hp5vFUtLaYhl9woKNjz28qa+yl
+         QgVw==
+X-Gm-Message-State: ACrzQf3a5q/B7dYOys3+6s1Z8rNcwbQhc6ku6Y7xJ6Wtn37V2FutP7hQ
+        tweEshlG/WzlvSCrOS3FzSEEmKO3do1khA==
+X-Google-Smtp-Source: AMsMyM6zi1oLi3ieaXBErXrnXOZ5W/CH09L+4QTa/pyJ/Qd5D2KxhDEaNyFccJ1kKEhH6+OpDAjnqA==
+X-Received: by 2002:aa7:ca50:0:b0:461:9845:d9d2 with SMTP id j16-20020aa7ca50000000b004619845d9d2mr55354130edt.163.1667916648049;
+        Tue, 08 Nov 2022 06:10:48 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c14-20020aa7df0e000000b00461e4498666sm5576935edy.11.2022.11.08.06.03.01
+        by smtp.gmail.com with ESMTPSA id a16-20020a170906369000b0078d9c2c8250sm4683666ejc.84.2022.11.08.06.10.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Nov 2022 06:03:01 -0800 (PST)
+        Tue, 08 Nov 2022 06:10:47 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>,
-        Patrick Steinhardt <ps@pks.im>,
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Glen Choo <chooglen@google.com>,
+        Emily Shaffer <emilyshaffer@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH] revisions API: extend the nascent REV_INFO_INIT macro
-Date:   Tue,  8 Nov 2022 15:02:57 +0100
-Message-Id: <patch-1.1-c3afcd69ddb-20221108T140134Z-avarab@gmail.com>
+Subject: [PATCH v2 0/9] submodule: tests, cleanup to prepare for built-in
+Date:   Tue,  8 Nov 2022 15:10:31 +0100
+Message-Id: <cover-v2-0.9-00000000000-20221108T140501Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1464.gea6794aacbc
+In-Reply-To: <cover-0.8-00000000000-20221102T074148Z-avarab@gmail.com>
+References: <cover-0.8-00000000000-20221102T074148Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,121 +70,175 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Have the REV_INFO_INIT macro added in [1] declare more members of
-"struct rev_info" that we can initialize statically, and have
-repo_init_revisions() do so with the memcpy(..., &blank) idiom
-introduced in [2].
+As noted in the v1[1] this is a prep series for getting us to a
+built-in submodule.c, with a "git rm git-submodule.sh". As noted in
+the v1 discussion (e.g. Taylor's [2]) this was mostly ready, but just
+needed some final finishing touches.
 
-As the comment for the "REV_INFO_INIT" macro notes this still isn't
-sufficient to initialize a "struct rev_info" for use yet. But we are
-getting closer to that eventual goal.
+Changes since v1:
 
-Even though we can't fully initialize a "struct rev_info" with
-REV_INFO_INIT it's useful for readability to clearly separate those
-things that we can statically initialize, and those that we can't.
+* Noted the history of when "submodule--helper config" was last used,
+  per Glen's comment.
+* Re-titled the tests htat no longer use the now-removed
+  "submodule--helper config", per Glen's comment.
+* I removed _() from a string in what's left of "submodule--helper
+  config", which is now a test helper. We should not be translating
+  test helper strings.
+* Fixed a buggy for-loop in the t7422-submodule-output.sh test I'm
+  adding.
+* Fixed a trivial typo in a comment in that test & in another nearby
+  comment.
 
-This change could replace the:
+Passing CI run & branch for this available at[3].
 
-	list_objects_filter_init(&revs->filter);
+1. https://lore.kernel.org/git/cover-0.8-00000000000-20221102T074148Z-avarab@gmail.com/
+2. https://lore.kernel.org/git/Y2Vi95r+RqHPwbw8@nand.local/
+3. https://github.com/avar/git/tree/avar/submodule-builtin-final-prep-2
 
-In the repo_init_revisions() with this line, at the end of the
-REV_INFO_INIT deceleration in revisions.h:
+Ævar Arnfjörð Bjarmason (9):
+  submodule--helper: move "config" to a test-tool
+  submodule tests: add tests for top-level flag output
+  submodule--helper: fix  a memory leak in "status"
+  submodule tests: test for a "foreach" blind-spot
+  submodule.c: refactor recursive block out of absorb function
+  submodule API & "absorbgitdirs": remove "----recursive" option
+  submodule--helper: remove --prefix from "absorbgitdirs"
+  submodule--helper: drop "update --prefix <pfx>" for "-C <pfx> update"
+  submodule--helper: use OPT_SUBCOMMAND() API
 
-	.filter = LIST_OBJECTS_FILTER_INIT, \
+ builtin/rm.c                           |   3 +-
+ builtin/submodule--helper.c            | 146 +++++++--------------
+ git-submodule.sh                       |   3 +-
+ git.c                                  |   2 +-
+ submodule.c                            |  41 +++---
+ submodule.h                            |   4 +-
+ t/helper/test-submodule.c              |  84 ++++++++++++
+ t/t7400-submodule-basic.sh             |  10 ++
+ t/t7407-submodule-foreach.sh           |   5 +
+ t/t7411-submodule-config.sh            |  36 +++---
+ t/t7418-submodule-sparse-gitmodules.sh |   4 +-
+ t/t7422-submodule-output.sh            | 170 +++++++++++++++++++++++++
+ 12 files changed, 358 insertions(+), 150 deletions(-)
+ create mode 100755 t/t7422-submodule-output.sh
 
-But doing so would produce a minor conflict with an outstanding
-topic[3]. Let's skip that for now. I have follow-ups to initialize
-more of this statically, e.g. changes to get rid of grep_init(). We
-can initialize more members with the macro in a future series.
-
-1. f196c1e908d (revisions API users: use release_revisions() needing
-   REV_INFO_INIT, 2022-04-13)
-2. 5726a6b4012 (*.c *_init(): define in terms of corresponding *_INIT
-   macro, 2021-07-01)
-3. https://lore.kernel.org/git/265b292ed5c2de19b7118dfe046d3d9d932e2e89.1667901510.git.ps@pks.im/
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
-
-A small follow-up to what I mentioned in[1]. As noted above there's a
-very small part of Patrick's series that *could* use this[2] (getting
-rid of the trivial "init_ref_exclusions"), but let's not hold that up
-for this minor cleanup, and have these proceed concurrently without
-conflicts.
-
-1. https://lore.kernel.org/git/221107.86tu3ax5b6.gmgdl@evledraar.gmail.com/
-2. https://lore.kernel.org/git/265b292ed5c2de19b7118dfe046d3d9d932e2e89.1667901510.git.ps@pks.im/
-
- revision.c | 19 ++-----------------
- revision.h | 18 +++++++++++++++++-
- 2 files changed, 19 insertions(+), 18 deletions(-)
-
-diff --git a/revision.c b/revision.c
-index 0760e78936e..c6b39965834 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1865,30 +1865,15 @@ void repo_init_revisions(struct repository *r,
- 			 struct rev_info *revs,
- 			 const char *prefix)
- {
--	memset(revs, 0, sizeof(*revs));
-+	struct rev_info blank = REV_INFO_INIT;
-+	memcpy(revs, &blank, sizeof(*revs));
- 
- 	revs->repo = r;
--	revs->abbrev = DEFAULT_ABBREV;
--	revs->simplify_history = 1;
- 	revs->pruning.repo = r;
--	revs->pruning.flags.recursive = 1;
--	revs->pruning.flags.quick = 1;
- 	revs->pruning.add_remove = file_add_remove;
- 	revs->pruning.change = file_change;
- 	revs->pruning.change_fn_data = revs;
--	revs->sort_order = REV_SORT_IN_GRAPH_ORDER;
--	revs->dense = 1;
- 	revs->prefix = prefix;
--	revs->max_age = -1;
--	revs->max_age_as_filter = -1;
--	revs->min_age = -1;
--	revs->skip_count = -1;
--	revs->max_count = -1;
--	revs->max_parents = -1;
--	revs->expand_tabs_in_log = -1;
--
--	revs->commit_format = CMIT_FMT_DEFAULT;
--	revs->expand_tabs_in_log_default = 8;
- 
- 	grep_init(&revs->grep_filter, revs->repo);
- 	revs->grep_filter.status_only = 1;
-diff --git a/revision.h b/revision.h
-index afe1b77985f..8493a3f3b93 100644
---- a/revision.h
-+++ b/revision.h
-@@ -357,7 +357,23 @@ struct rev_info {
-  * called before release_revisions() the "struct rev_info" can be left
-  * uninitialized.
-  */
--#define REV_INFO_INIT { 0 }
-+#define REV_INFO_INIT { \
-+	.abbrev = DEFAULT_ABBREV, \
-+	.simplify_history = 1, \
-+	.pruning.flags.recursive = 1, \
-+	.pruning.flags.quick = 1, \
-+	.sort_order = REV_SORT_IN_GRAPH_ORDER, \
-+	.dense = 1, \
-+	.max_age = -1, \
-+	.max_age_as_filter = -1, \
-+	.min_age = -1, \
-+	.skip_count = -1, \
-+	.max_count = -1, \
-+	.max_parents = -1, \
-+	.expand_tabs_in_log = -1, \
-+	.commit_format = CMIT_FMT_DEFAULT, \
-+	.expand_tabs_in_log_default = 8, \
-+}
- 
- /**
-  * Initialize a rev_info structure with default values. The third parameter may
+Range-diff against v1:
+ 1:  b2649f96715 !  1:  ca8f8b4bf63 submodule--helper: move "config" to a test-tool
+    @@ Commit message
+         'ab/submodule-helper-prep', 2022-09-13) the "config" sub-command was
+         only used by our own tests.
+     
+    +    It was last used by "git submodule" itself in code that went away with
+    +    a6226fd772b (submodule--helper: convert the bulk of cmd_add() to C,
+    +    2021-08-10).
+    +
+         Let's move it over, and while doing so make it easier to reason about
+         by splitting up the various uses for it into separate sub-commands, so
+         that we don't need to count arguments to see what it does.
+     
+    +    This also has the advantage that we stop wasting future translator
+    +    time on this command, currently the usage information for this
+    +    internal-only tool has been translated into several languages. The use
+    +    of the "_" function has also been removed from the "please make
+    +    sure..." message.
+    +
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## builtin/submodule--helper.c ##
+    @@ t/helper/test-submodule.c: static int cmd__submodule_resolve_relative_url(int ar
+     +	/* Equivalent to ACTION_SET in builtin/config.c */
+     +	if (argc == 3) {
+     +		if (!is_writing_gitmodules_ok())
+    -+			die(_("please make sure that the .gitmodules file is in the working tree"));
+    ++			die("please make sure that the .gitmodules file is in the working tree");
+     +
+     +		return config_set_in_gitmodules_file_gently(argv[1], argv[2]);
+     +	}
+    @@ t/helper/test-submodule.c: static int cmd__submodule_resolve_relative_url(int ar
+     +
+     +	if (argc == 2) {
+     +		if (!is_writing_gitmodules_ok())
+    -+			die(_("please make sure that the .gitmodules file is in the working tree"));
+    ++			die("please make sure that the .gitmodules file is in the working tree");
+     +		return config_set_in_gitmodules_file_gently(argv[1], NULL);
+     +	}
+     +	usage_with_options(usage, options);
+    @@ t/helper/test-submodule.c: static int cmd__submodule_resolve_relative_url(int ar
+     
+      ## t/t7411-submodule-config.sh ##
+     @@ t/t7411-submodule-config.sh: test_expect_success 'error in history in fetchrecursesubmodule lets continue' '
+    - test_expect_success 'reading submodules config from the working tree with "submodule--helper config"' '
+    + 	)
+    + '
+    + 
+    +-test_expect_success 'reading submodules config from the working tree with "submodule--helper config"' '
+    ++test_expect_success 'reading submodules config from the working tree' '
+      	(cd super &&
+      		echo "../submodule" >expect &&
+     -		git submodule--helper config submodule.submodule.url >actual &&
+    @@ t/t7411-submodule-config.sh: test_expect_success 'error in history in fetchrecur
+      	)
+      '
+      
+    - test_expect_success 'unsetting submodules config from the working tree with "submodule--helper config --unset"' '
+    +-test_expect_success 'unsetting submodules config from the working tree with "submodule--helper config --unset"' '
+    ++test_expect_success 'unsetting submodules config from the working tree' '
+      	(cd super &&
+     -		git submodule--helper config --unset submodule.submodule.url &&
+     -		git submodule--helper config submodule.submodule.url >actual &&
+    @@ t/t7411-submodule-config.sh: test_expect_success 'error in history in fetchrecur
+      		test_must_be_empty actual
+      	)
+      '
+    -@@ t/t7411-submodule-config.sh: test_expect_success 'unsetting submodules config from the working tree with "sub
+    - test_expect_success 'writing submodules config with "submodule--helper config"' '
+    + 
+    + 
+    +-test_expect_success 'writing submodules config with "submodule--helper config"' '
+    ++test_expect_success 'writing submodules config' '
+      	(cd super &&
+      		echo "new_url" >expect &&
+     -		git submodule--helper config submodule.submodule.url "new_url" &&
+    @@ t/t7411-submodule-config.sh: test_expect_success 'unsetting submodules config fr
+      		test_cmp expect actual
+      	)
+      '
+    -@@ t/t7411-submodule-config.sh: test_expect_success 'overwriting unstaged submodules config with "submodule--hel
+    + 
+    +-test_expect_success 'overwriting unstaged submodules config with "submodule--helper config"' '
+    ++test_expect_success 'overwriting unstaged submodules config' '
+      	test_when_finished "git -C super checkout .gitmodules" &&
+      	(cd super &&
+      		echo "newer_url" >expect &&
+ 2:  cda36b5b6e0 !  2:  5508c27f653 submodule tests: add tests for top-level flag output
+    @@ t/t7422-submodule-output.sh (new)
+     +	git -C X pull &&
+     +	GIT_ALLOW_PROTOCOL=file git -C X submodule update --init &&
+     +
+    -+	# dirty p
+    ++	# dirty
+     +	for d in S.D X/S.D
+     +	do
+    -+		echo dirty >S.D/A.t || return 1
+    ++		echo dirty >"$d"/A.t || return 1
+     +	done &&
+     +
+     +	# commit (for --cached)
+    @@ t/t7422-submodule-output.sh (new)
+     +
+     +	for ref in A B C
+     +	do
+    -+		# Not different with SHA-1 and SHA-256, just (ab)usign
+    ++		# Not different with SHA-1 and SHA-256, just (ab)using
+     +		# test_oid_cache as a variable bag to avoid using
+     +		# $(git rev-parse ...).
+     +		oid=$(git rev-parse $ref) &&
+ -:  ----------- >  3:  a3529d7f9e0 submodule--helper: fix  a memory leak in "status"
+ 3:  0ed1fc7fdf8 =  4:  c14cc0e14b8 submodule tests: test for a "foreach" blind-spot
+ 4:  f7adfbc13ae =  5:  459ea25125b submodule.c: refactor recursive block out of absorb function
+ 5:  2b8afd73b9b =  6:  322a02c30fc submodule API & "absorbgitdirs": remove "----recursive" option
+ 6:  91208241070 =  7:  d1f4ac20a4f submodule--helper: remove --prefix from "absorbgitdirs"
+ 7:  77d4d5a6c09 =  8:  ac9ff05ef68 submodule--helper: drop "update --prefix <pfx>" for "-C <pfx> update"
+ 8:  105853cd358 =  9:  cccd92a829c submodule--helper: use OPT_SUBCOMMAND() API
 -- 
 2.38.0.1464.gea6794aacbc
 
