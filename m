@@ -2,88 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FBB3C4332F
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 11:12:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93F68C4332F
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 12:00:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233937AbiKHLMq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 06:12:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55456 "EHLO
+        id S233888AbiKHMAa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 07:00:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233826AbiKHLMo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2022 06:12:44 -0500
-Received: from mail-oa1-x2f.google.com (mail-oa1-x2f.google.com [IPv6:2001:4860:4864:20::2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4B071007
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 03:12:41 -0800 (PST)
-Received: by mail-oa1-x2f.google.com with SMTP id 586e51a60fabf-13be3ef361dso15816804fac.12
-        for <git@vger.kernel.org>; Tue, 08 Nov 2022 03:12:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=2BK/iODU75zqyuJHtfH9jnTF8ce6eWX56mj+Su87uJo=;
-        b=GrLQ6dxHb4my+tBqq4XgCB1nDPg+g5CN58rdhk0DlMItsJeczKMRSwG7ib4n4NeNtg
-         ztGzSIddBhPk58lOQWERrhCzeu3DbLquCxC0ByJQiO9VycDVrxdFVRF34Pt+l2lFQ6X/
-         ueArFfu0k44jZxQ6UhmUr3M/ER13TZ8E28cmzpfPrK3wPFZIzgG0F6xSBzJ5lPdgw/xG
-         j3vjaxnb1QGy9a3DE/AWy/ERrLFbacNc5IeZBeXN3IP9DpG9PGss0uBL7WT9/jyM4jsk
-         dUH6TCv2ia/iZ8e75tRcsn8xnQig3APn3hcPnBTi0JPex1rhixsRKGVjBydsxybPp1N5
-         lyiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2BK/iODU75zqyuJHtfH9jnTF8ce6eWX56mj+Su87uJo=;
-        b=CXM0yp5gQ1+X5HaGn8TzQyA6oKTZXQ6cUc+EwZ06e+OvmmjjF1avE9CgF0bd2ybrsa
-         ujx/IRKFA5beun1n6qv+qj3gMo/TX2VW2vr2hV6Jm/9Fas24oBGz5tq6L+6CFu71os+T
-         vGEwKsAxXH8dTuqrH+LHqcpsrjkN+pDpq8s9EUA7xWLBwGkO/KhaFVyY9MGMEMxCVOkA
-         onQ5cWHJDQsHC60Lh6dkWxvDDAFBHMy+65l0zc3MBI+FlUqIECC/iWg27IA2ux0A7JAz
-         0pks6gpmlMdUUIwTxBMwVi/joblWpIbH77lR9cG6hQYjewVgFa2fvDvby3R8rsJuXNRs
-         A/uw==
-X-Gm-Message-State: ACrzQf0M9pjNin1CXgRlo5kaxjL8n3P4ORFMaoZnlyncI2731Cu4Bnq5
-        2NMzPa/v1EkbgC4LmlEGVKdSel8NpNcVFvlhL42r5sItd+I=
-X-Google-Smtp-Source: AMsMyM5NpOKis4sPZJwE6tETOD970xg2VVzupoX9vW2OsF1Vxtugt/KMK6BRGcTs7cTBxbfRZ5qUF4XYJ2NcmrP4ne4=
-X-Received: by 2002:a05:6870:8091:b0:13c:50b8:23de with SMTP id
- q17-20020a056870809100b0013c50b823demr37946607oab.183.1667905960189; Tue, 08
- Nov 2022 03:12:40 -0800 (PST)
+        with ESMTP id S233613AbiKHMA2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2022 07:00:28 -0500
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [IPv6:2001:67c:2178:6::1d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C7301E701
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 04:00:27 -0800 (PST)
+Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
+        by smtp-out2.suse.de (Postfix) with ESMTP id 280F81F38C;
+        Tue,  8 Nov 2022 12:00:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1667908826; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=gM0VVQzcvGxYzObYaeXL8ATUh2CiE+6sfYw+Ew9xE3g=;
+        b=1LdlCtImoqGU/19fhVn19ZGALhuvLQx8Jc3CCuZql7fc4tVeA/DOTmOBaxS1tbQGNDh/mK
+        ZJwOqiPSUhwXYzK7DQ7xre96gPIFi2li/HDYsSn9c0b4H2JpZLOM2SmF88VPV8v62/pcXu
+        3A1QDyWWRbduIDB7lj6NQZLz4KWS/T4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1667908826;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=gM0VVQzcvGxYzObYaeXL8ATUh2CiE+6sfYw+Ew9xE3g=;
+        b=j7OC9UflAINAmaCpxCvCTZkz/FoSsngqE/1wYypsGQGIwFqMtjVr5JgAGnGXSDEzymUIr6
+        mumOF92WsgVq7fBQ==
+Received: from kitsune.suse.cz (kitsune.suse.cz [10.100.12.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by relay2.suse.de (Postfix) with ESMTPS id EEF1F2C141;
+        Tue,  8 Nov 2022 12:00:25 +0000 (UTC)
+Date:   Tue, 8 Nov 2022 13:00:24 +0100
+From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To:     M Hickford <mirth.hickford@gmail.com>
+Cc:     git@vger.kernel.org, "peff@peff.net" <peff@peff.net>
+Subject: Re: The enduring popularity of git-credential-store
+Message-ID: <20221108120024.GN28810@kitsune.suse.cz>
+References: <CAGJzqskRYN49SeS8kSEN5-vbB_Jt1QvAV9QhS6zNuKh0u8wxPQ@mail.gmail.com>
 MIME-Version: 1.0
-From:   M Hickford <mirth.hickford@gmail.com>
-Date:   Tue, 8 Nov 2022 11:12:03 +0000
-Message-ID: <CAGJzqs=+fCQzkDX53H8Mz-DjXicVVgRmmzPjkatSiOpYO7wGGA@mail.gmail.com>
-Subject: git-credential-oauth
-To:     git@vger.kernel.org
-Cc:     peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGJzqskRYN49SeS8kSEN5-vbB_Jt1QvAV9QhS6zNuKh0u8wxPQ@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all. I'm excited to share git-credential-oauth, a Git credential
-helper that securely authenticates to GitHub, GitLab, BitBucket and
-other forges using OAuth.
-https://github.com/hickford/git-credential-oauth
+Hello,
 
-The target user currently uses personal access tokens with
-git-credential-store or git-credential-cache. I suspect most readers
-of this list use SSH keys to authenticate, but you're welcome to try
-it out with HTTPS remotes.
+On Tue, Nov 08, 2022 at 10:50:33AM +0000, M Hickford wrote:
+> Among StackOverflow users [1], git-credential-store appears several
+> times more popular than any other credential helper. Does this make
+> anyone else uneasy? The docs warn that git-credential-store "stores
+> your passwords unencrypted on disk" [2]. Are users sacrificing
+> security for convenience?
+> 
+> Firstly, how grave is storing credentials in plaintext? Software
+> development guidelines such as CWE discourage storing credentials in
+> plaintext [3]. Password managers in desktop environments, mobile
+> operating systems and web browsers typically encrypt passwords on disk
+> and guard them behind a master password.
+> 
+> Secondly, the docs recommend git-credential-cache [2] which ships with
+> Git and is equally easy to configure. So why isn't it more popular? My
+> hypothesis: while caching works great for passwords typed from memory,
+> the combination of caching with personal access tokens has poor
+> usability. The unmemorised token is lost when the cache expires, so
+> the user has to generate a new token every session. I suspect GitHub's
+> 2021 decision to stop accepting passwords [4] may have inadvertently
+> pushed users from 'cache' to 'store'.
+> 
+> Thirdly, why doesn't everyone use SSH keys? Unlike HTTP remotes,
+> upfront set-up is necessary to clone a public repo. For users
+> unfamiliar with SSH, this set-up may be intimidating. Introducing
+> users new to Git to SSH at the same time is a significant cognitive
+> load.
 
-> The first time you push, the helper will open a browser window to authenticate. Subsequent pushes within the cache timeout require no interaction.
+I think that basically there is very small user base that could make use
+of the provided authentication options in a more secure manner.
 
-This read-only credential-generating helper is designed to be used in
-conjunction with existing storage helpers. It's neat how the
-credential system supports multiple helpers. With the config below,
-Git checks the cache for a stored credential before generating a fresh
-credential.
+The novice users use the simplest option. Using any king of passsword
+manager with git is difficult to set up and platform-specific.
 
-> [credential]
->   helper =
->   helper = cache --timeout 7200 # two hours
->   helper = oauth
+The advanced users need automation which in the end means storing the
+access credentials in plaitext in one way or another.
 
-Comments and suggestions welcome.
+If github provides access tokens that can be assigned per-application,
+managed, and individually revoked this is probably as good as it gets.
+How well the users make use of this feature depends on their security
+awareness and requirements.
 
-ps. Git Credential Manager already has this feature so why another
-helper? git-credential-oauth is a simpler app that just does OAuth.
-It's developed in Go so should be easy to package for Linux distros.
-The install size is smaller.  For a full comparison, see
-https://github.com/hickford/git-credential-oauth#comparison-with-git-credential-manager
-.
+Thanks
+
+Michal
