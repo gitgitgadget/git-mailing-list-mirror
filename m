@@ -2,112 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09C94C433FE
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 03:45:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6CCEC4332F
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 05:25:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232959AbiKHDps (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 22:45:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59122 "EHLO
+        id S230325AbiKHFZ0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 00:25:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232907AbiKHDpr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2022 22:45:47 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 411E023178
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 19:45:46 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id gw22so12602690pjb.3
-        for <git@vger.kernel.org>; Mon, 07 Nov 2022 19:45:46 -0800 (PST)
+        with ESMTP id S229521AbiKHFZX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2022 00:25:23 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9268318E3E
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 21:25:22 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id k8so19221072wrh.1
+        for <git@vger.kernel.org>; Mon, 07 Nov 2022 21:25:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0vBPiP/Wi1ZUyyw9ezT10BaZxDtN5iId+gdmm/nX0R8=;
-        b=FhT5nput4i7KPXPK3c6UF4/XUR9BUNSeulIbY9i8TCLRDsQwjAzLwEMd1yzLNReXg3
-         cZUVRIezYBeZ35dv669nmak3HoF/O1HvFnkqES5pzacLYscvjve+4xjHzk7ebb1cuEr8
-         pjYaILkqa4RcoUVVL2VbwQYgYH4FhboQivaciNcORMZuzwPertbSDLj9ZpaxsLQ0Mn2/
-         YJCqtdQK4HlNBCJ7VzWmMolz8V41y7ved+dS+mg4b/a0x9rtCeZJnYUopZ7W2RVVqX8J
-         4zMJlfZ1Rb64A+402XQC+tZMiWZaoKY7Z9YygkfUx2MPwOKn00HAz7zfR2RYtrfoFUwd
-         BcRg==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=j+YnAkThO9HzhTn+HqRMWrcaH4Dn/OMl80XZMsz4NCA=;
+        b=jW8GyFevz5iTb6HHxYGG+um2iORzBeUXQPtP2+YtwAXp51//IV4RMe3STg4K7rAlPd
+         eiKY2Bd+p2wCptsxZq1rjL8dy3T8FMmmEPnymKBPPTPWoAjdfETHY5NcxrHHAvPWWl1P
+         eybpB5EZrLIIbAQZnHBekf1J5EiFPateimuAPPhlOVm5WltKvH0k/Ul5xvZJqwiE82qd
+         TwjAYATv+ZJAbSu/4r2/JFhq6kr6h4YRbWCuIyjtd2ZIhE6YMgw5CO17nlTonw+gZx2Y
+         UADOs/bCJdrEJWytPm0KCLCMirhoBAxp/2Slva50XfKlRzk05niIVNf+2CYJfp0KJEVY
+         AHwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0vBPiP/Wi1ZUyyw9ezT10BaZxDtN5iId+gdmm/nX0R8=;
-        b=T1K0XBE6AXO/DmO6xJU80msjJOiNDPlfQEhst4Ll4FpP+W1oGkS5sDehJqlX3z65QK
-         o742uAJO22TmHgzrzLJy0XP0rvp+lgdmDVindpt1D4nUL7dGov/Ix0V6S/DLMafOWLHy
-         XjxBJNPPK3rXAJdUOipeOz80jDux3rfi/GrxCd1oCTrdUbGsqF6GW75ZRqyhvhvW+Ano
-         RqWbxTza6uPESQ5X8XTj3oOqQPs7h/ScbgM8gg6vHTVFDZBCkYsJq7+Y3OlAIVgYgfe6
-         +ROIfVzzbiMBwXgn7ygTi5W6T6f1luojI8UzRhO7grXqjz63yOAbGWdnfRn+DUJ4VK+c
-         c2Dg==
-X-Gm-Message-State: ACrzQf3Nvczvyff5E8wn0HDcM39iIJ7ticQ4BhMYlLx14OUOBhgQ634A
-        GQhzBstshZibgcgsQdDSxIm3ol8Jn73E/9dy
-X-Google-Smtp-Source: AMsMyM5zvN2c7TS0+GIwI43Z7XY7gC01wPwNS2KXC0QzcOT+oQLp2QNwaPTTa7AacZwK30gsLU9cNA==
-X-Received: by 2002:a17:902:b697:b0:187:1acf:249c with SMTP id c23-20020a170902b69700b001871acf249cmr45937710pls.14.1667879145623;
-        Mon, 07 Nov 2022 19:45:45 -0800 (PST)
-Received: from localhost.localdomain ([47.246.101.50])
-        by smtp.gmail.com with ESMTPSA id e17-20020a17090301d100b00177f25f8ab3sm5809044plh.89.2022.11.07.19.45.42
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 07 Nov 2022 19:45:44 -0800 (PST)
-From:   Teng Long <dyroneteng@gmail.com>
-X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
-To:     avarab@gmail.com
-Cc:     dyroneteng@gmail.com, git@vger.kernel.org,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v2 1/3] notes.c: introduce "--blank-line" option
-Date:   Tue,  8 Nov 2022 11:45:38 +0800
-Message-Id: <20221108034538.11849-1-tenglong.tl@alibaba-inc.com>
-X-Mailer: git-send-email 2.38.1.384.g2475ea0c04d
-In-Reply-To: <221107.864jvax1hz.gmgdl@evledraar.gmail.com>
-References: <221107.864jvax1hz.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=j+YnAkThO9HzhTn+HqRMWrcaH4Dn/OMl80XZMsz4NCA=;
+        b=Bj52hm93ohf+oeLxj6PiTncivvhZ5u3131IDVNr32KqqVR1Z/mE2o12OSaZZe3bdBH
+         ZbWmWdc+xrRafrc+1BPBZ0GZUkHxXSK9+niUNmjhH5YtesDM00YabwxBWlRwP+YWiAeD
+         GdfbxavhmjisheEZksmRKcS3jLOb0geNvKQ/xXodtIIL0rRySukYoqmLBpUaph3AEGGn
+         HmOoR5vj+MN+GzuuEpRbE/m2+gmHbw64HN5lFIWUPLdsWA3GpMI1fCMscNJfeFCYXXAh
+         BCJVgsWDWfjXIHmzN91zT3JTim4rBpVJ/EPgCwCmUgxFGDldAXNnlDnwQrzmsl8TFE8e
+         JgWQ==
+X-Gm-Message-State: ACrzQf06jo68YRi6HinUuJ5bNMg29zqm9rQ1smOxHPg0CQNtUaoVFBRt
+        +5MCSRySkQ74qx7ESXamfRTKKrsXSOc=
+X-Google-Smtp-Source: AMsMyM548PGAldsmHkKJVQAoksPW434n6CnIUv9Cu/aPojxExe9WOq5K63q1xPWVeeJT5cfHH5Bnrw==
+X-Received: by 2002:a5d:6ac7:0:b0:236:b281:150 with SMTP id u7-20020a5d6ac7000000b00236b2810150mr33440888wrw.29.1667885120964;
+        Mon, 07 Nov 2022 21:25:20 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id c3-20020a056000104300b0022584c82c80sm9035982wrx.19.2022.11.07.21.25.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Nov 2022 21:25:20 -0800 (PST)
+Message-Id: <pull.1406.git.1667885119570.gitgitgadget@gmail.com>
+From:   "srz_zumix via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 08 Nov 2022 05:25:19 +0000
+Subject: [PATCH] fsmonitor--daemon: on macOS support symlink
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     srz_zumix <zumix.cpp@gmail.com>, srz_zumix <zumix.cpp@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Ævar Arnfjörð Bjarmason" <avarab@gmail.com> writes:
+From: srz_zumix <zumix.cpp@gmail.com>
 
-> Just make this:
->
-> 	--no-blank-line:
-> 		Suppress the insertion of a blank line before the
-> 		inserted notes.
->
-> Or something, i.e. when adding a "true by default" let's add a "no-..." variant
-> directly.
->
-> ...
+Resolves a problem where symbolic links were not showing up in diff when
+created or modified.
 
-Yes, that's what I propose to do originally, but I can accept either NEG or POS
-way. So, I will hang this up for a while and try to hear more inputs.
+kFSEventStreamEventFlagItemIsSymlink is also treated as a file update.
+This is because kFSEventStreamEventFlagItemIsFile is not included in
+FSEvents when creating or deleting symbolic links. For example:
 
-> > -		if (d.buf.len && prev_buf && size)
-> > +		if (blankline && d.buf.len && prev_buf && size)
-> >  			strbuf_insertstr(&d.buf, 0, "\n");
->
-> Maybe this needs to be elaborated in the docs? I.e. it sounds as if
-> we'll insert a \n unconditionally, which this shows isn't the case.
+$ ln -snf t test
+  fsevent: '/path/to/dir/test', flags=0x40100 ItemCreated|ItemIsSymlink|
+$ ln -snf ci test
+  fsevent: '/path/to/dir/test', flags=0x40200 ItemIsSymlink|ItemRemoved|
+  fsevent: '/path/to/dir/test', flags=0x40100 ItemCreated|ItemIsSymlink|
 
-The current doc add the content about this circumstance corresponing to this
-"if", which describes as:
+Signed-off-by: srz_zumix <zumix.cpp@gmail.com>
+---
+    fsmonitor--daemon: on macOS support symlink
+    
+    Resolves a problem where symbolic links were not showing up in diff when
+    created or modified. (on macOS with git config core.fsmonitor=true)
 
->  append::
->  	Append to the notes of an existing object (defaults to HEAD).
-> -	Creates a new notes object if needed.
-> +	Creates a new notes object if needed. If the note of the given
-> +	object and the note to be appended are not empty, a blank line
-> +	will be inserted between them.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1406%2Fsrz-zumix%2Ffeature%2Fdarwin_symlink-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1406/srz-zumix/feature/darwin_symlink-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1406
 
-... so you mean we should add more detailed information here?
+ compat/fsmonitor/fsm-listen-darwin.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> This should be a test_when_finished "", for the previous test, otherwise
-> this one will presumably fail if you use the "wrong" --run="" arguments
-> to skip the last test.
+diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
+index daeee4e465c..cc9af1e3cb3 100644
+--- a/compat/fsmonitor/fsm-listen-darwin.c
++++ b/compat/fsmonitor/fsm-listen-darwin.c
+@@ -336,7 +336,7 @@ static void fsevent_callback(ConstFSEventStreamRef streamRef,
+ 			 * know how much to invalidate/refresh.
+ 			 */
+ 
+-			if (event_flags[k] & kFSEventStreamEventFlagItemIsFile) {
++			if (event_flags[k] & (kFSEventStreamEventFlagItemIsFile | kFSEventStreamEventFlagItemIsSymlink)) {
+ 				const char *rel = path_k +
+ 					state->path_worktree_watch.len + 1;
+ 
 
-Yes, I agree, will fix (although if we replace it by "test_when_finished,
-because of the dependency of the previous repo status, execute
-`sh t3301-notes.sh --run=60` also failed).
-
-Thanks.
+base-commit: 3b08839926fcc7cc48cf4c759737c1a71af430c1
+-- 
+gitgitgadget
