@@ -2,127 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12F99C4332F
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 15:30:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7BD1AC4332F
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 15:41:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234253AbiKHPaJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 10:30:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52862 "EHLO
+        id S234392AbiKHPlp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 10:41:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233878AbiKHPaH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2022 10:30:07 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32271DE87
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 07:30:06 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id k2so39606917ejr.2
-        for <git@vger.kernel.org>; Tue, 08 Nov 2022 07:30:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=9o5lI/ahh+XkjwRV4R1P/D/vJu3c3huHJ4iUIUhpE7Q=;
-        b=cwygJ5WWZblG5M6hGEtReH96lEoUQsKuZWj/vxwwPF2b9vwqz/3c4M7u2epXD1OhyO
-         igeOxjsRwX9CuVRRINOhQjZ7EIFigihVUbuhAdqqzWdlRnYSHxtCDvcJcXZgsQd7/fKJ
-         ILdjFnSWR6BYL8eRLIyrIBZFugEK6baUrBQhY2sIyn6sH4PKWWG/wmgFsQNwwsoQnEAM
-         Me4FiAbur3tUgGuThN6xEZWH4RCHJidq6xJ0nZhxiGGuT9rHmYUuhAL03J3z0u6Kexsm
-         We/VGcJ8ufdeIu0i5cBR2b1RL5vh1hkNi92dFCJywHRcn3ZniVzA7XKLzDjJNDpZU2vc
-         z39g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9o5lI/ahh+XkjwRV4R1P/D/vJu3c3huHJ4iUIUhpE7Q=;
-        b=6N/vJBwLDfsl5w0CUWhyNAeed7LKwdgu2gobicjoc0TVJPYnJRQvTliqZ3bNaMmMs1
-         VgV26g4rapQS2LTm84dZA9AkMRfW91uAE/iJkPWB5VQDY30lWs02y9XVqWtZaItJjgag
-         iP99yJfbFjae6LLxltE53TVOYACqT/PblKUbA/UKmy/svRcuB+FwX/5HR5CZlsnAC5la
-         HubZE0pOFqWqWDl7hQdoAR0PgADfsM24yRMiJ11ZJ2ojCW2xuYhdWhITDgvJu6rHZFyc
-         sz94ElwHxsicqGvYRGQ5TFxQt7VRhXB1uuH682VC70Q7edSNNKVqZbQvuNUUa8/O6CGN
-         wDGA==
-X-Gm-Message-State: ACrzQf10YjD9xSanEKWDGKYSnfa+RuO61KJGHFP6ySsbF4DFwJzAyKOm
-        gziKl28qRndqRkDUw2L1p7A=
-X-Google-Smtp-Source: AMsMyM6/d3wPgymwNjQmGkB3akilkDd0/LTrX3vbo3KGbQksoLFvRZUIy0XYg59uciZWOUPIIb+wCQ==
-X-Received: by 2002:a17:907:a42c:b0:7aa:97e5:fac6 with SMTP id sg44-20020a170907a42c00b007aa97e5fac6mr52611644ejc.378.1667921404528;
-        Tue, 08 Nov 2022 07:30:04 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id v6-20020a50a446000000b00463597d2c25sm5802788edb.74.2022.11.08.07.30.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Nov 2022 07:30:04 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1osQY7-000c0t-1S;
-        Tue, 08 Nov 2022 16:30:03 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 10/17] sequencer.c: fix "opts->strategy" leak in
- read_strategy_opts()
-Date:   Tue, 08 Nov 2022 16:26:37 +0100
-References: <cover-00.17-00000000000-20221103T164632Z-avarab@gmail.com>
- <patch-10.17-9c70bfa334e-20221103T164632Z-avarab@gmail.com>
- <b9f08244-36bc-b74f-ac1a-b665423bc2e7@dunelm.org.uk>
- <66835bfb-2815-4321-9d06-52f85a0c72f9@dunelm.org.uk>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <66835bfb-2815-4321-9d06-52f85a0c72f9@dunelm.org.uk>
-Message-ID: <221108.86zgd1qxac.gmgdl@evledraar.gmail.com>
+        with ESMTP id S234302AbiKHPlh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2022 10:41:37 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDCDA5C74B
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 07:41:35 -0800 (PST)
+Received: (qmail 7918 invoked by uid 109); 8 Nov 2022 15:41:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 08 Nov 2022 15:41:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5338 invoked by uid 111); 8 Nov 2022 15:41:35 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 08 Nov 2022 10:41:35 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 8 Nov 2022 10:41:34 -0500
+From:   Jeff King <peff@peff.net>
+To:     M Hickford <mirth.hickford@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: The enduring popularity of git-credential-store
+Message-ID: <Y2p4rhiOphuOM0VQ@coredump.intra.peff.net>
+References: <CAGJzqskRYN49SeS8kSEN5-vbB_Jt1QvAV9QhS6zNuKh0u8wxPQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <CAGJzqskRYN49SeS8kSEN5-vbB_Jt1QvAV9QhS6zNuKh0u8wxPQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Nov 08, 2022 at 10:50:33AM +0000, M Hickford wrote:
 
-On Tue, Nov 08 2022, Phillip Wood wrote:
+> Among StackOverflow users [1], git-credential-store appears several
+> times more popular than any other credential helper. Does this make
+> anyone else uneasy? The docs warn that git-credential-store "stores
+> your passwords unencrypted on disk" [2]. Are users sacrificing
+> security for convenience?
+> 
+> Firstly, how grave is storing credentials in plaintext? Software
+> development guidelines such as CWE discourage storing credentials in
+> plaintext [3]. Password managers in desktop environments, mobile
+> operating systems and web browsers typically encrypt passwords on disk
+> and guard them behind a master password.
 
-> On 04/11/2022 14:50, Phillip Wood wrote:
->> On 03/11/2022 17:06, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>> When "read_strategy_opts()" is called we may have populated the
->>> "opts->strategy" before, so we'll need to free() it to avoid leaking
->>> memory.=20
->> Where is the previous value coming from? I guess it may be the
->> config but otherwise I'm confused.
->
-> Having looked a bit more at this I think this is the wrong fix. The
-> reason we're overwriting the existing value is that we're reading some=20
-> of the state files twice. I think the only way to get to this point is
-> to go through a code path that calls rebase.c:read_basic_state() which=20
-> already populates these options via a later call to
-> rebase.c:get_replay_opts(). I think the correct fixes looks something=20
-> like the diff below.
->
-> I have also looked at the cherry-pick/revert case and I think that
-> we're leaking opts->strategy (and probably some others) when running
->
-> 	git cherry-pick --continue
->
-> after
->
-> 	git -c pull.twohead=3Drecursive cherry-pick -s ort <some commits>
+So obviously credential-store is the least-common-denominator of
+storage, and it should (and does) come with a big warning. However, I
+wonder if it actually is a reasonable solution for a lot of people:
 
-Related: My just-sent [1].
+  - "passwords" these days are often not keys-to-the-kingdom, but
+    special-use tokens that allow limited access.
 
-For this one though, I have a v2 re-roll prepared, in which I explained
-why the leak is happening (I'll send this soon to the list, but for
-now): https://github.com/avar/git/commit/243ab74120b
+  - the threat model for many people assumes that their local system is
+    trusted. Git needs the credential in plaintext at _some_ point. If
+    your local user account is compromised, people can read your
+    passwords. But they can also trojan Git, etc.
 
-> I'm not sure what your strategy has been with the fixes in this series
-> but we're never going to have 100% coverage of all the option=20
-> combinations for rebase & cherry-pick so I think it is helpful to
-> treat these LSAN reports as a starting point for looking into why the
-> leak is occurring and also look for similar leaks.
+    I do think one is much worse than the other. Stealing a password
+    once is easier than installing a malicious Git that records the
+    password. And a stolen password can be used many times, as opposed
+    to a malicious Git that misbehaves when run by the local user.
 
-For this series I'm aiming to solve some common leaks, and increase our
-test coverage.
+So yeah, obviously using a system password store is better if you can.
+But it's sometimes difficult to set up, especially when automation is
+involved. And I think it buys people less than they might think.
+Especially for git's credential helpers, which are meant to be
+scriptable, you can just _ask_ them to retrieve the password from the
+system store. So they are really only protecting the credentials at
+rest. And other approaches, like full-disk encryption, may be enough for
+some people.
 
-Per [1] the destruction in this area is quite messy, and we should do it
-better. But that's a much larger fix. I think in the meantime adding
-this free() is the bets way to make incremental progress here, and (an
-the commit linked above notes) it's consistent with existing patterns.
+You asked "does it make anyone else uneasy?". A little, I guess, because
+like you I'm sure there are people who are using it only because they
+don't know better, and are not heeding the warnings. But it may also be
+that some people are using it as a part of a reasoned tradeoff.
 
-1. https://lore.kernel.org/git/221108.864jv9sc9r.gmgdl@evledraar.gmail.com/
+So if you're asking "should we stop shipping credential-store", I'm not
+_completely_ opposed, but I do wonder if its popularity means it is
+better-than-nothing for some folks. If you're asking how we can nudge
+people to better systems, that seems like a pure win. But I also don't
+know how to do it. ;)
+
+> Secondly, the docs recommend git-credential-cache [2] which ships with
+> Git and is equally easy to configure. So why isn't it more popular? My
+> hypothesis: while caching works great for passwords typed from memory,
+> the combination of caching with personal access tokens has poor
+> usability. The unmemorised token is lost when the cache expires, so
+> the user has to generate a new token every session. I suspect GitHub's
+> 2021 decision to stop accepting passwords [4] may have inadvertently
+> pushed users from 'cache' to 'store'.
+
+Another big problem with credential-cache is that it requires Unix
+sockets, so it doesn't run on Windows.
+
+> Thirdly, why doesn't everyone use SSH keys? Unlike HTTP remotes,
+> upfront set-up is necessary to clone a public repo. For users
+> unfamiliar with SSH, this set-up may be intimidating. Introducing
+> users new to Git to SSH at the same time is a significant cognitive
+> load.
+
+Yes, I think it's just that it's too hard to set up. In the early days
+of GitHub, people getting confused and flustered by setting up SSH keys
+was one of the biggest barriers to adoption (which is the whole reason I
+improved the https auth flow, including adding credential helpers).
+
+I do wonder what that's like these days, though. When people could
+switch to just using their password from the website, I'm sure it was
+much easier than learning about ssh keys. But these days you have to
+learn about PATs, etc. I don't know if people do that by hand, or rely
+on tools to help (like GitHub Desktop, or probably gh-cli).
+
+> Any ideas how to improve the security of the average Git user?
+
+All of which is to say that I have no clue what the user experience is
+like these days, or what drives people in their decision about which
+tools to use. ;)
+
+I do stand by credential-store as not being _completely_ without value,
+but I also recognize that its existence may cause people to make bad
+decisions. If you have a plan, I'm all-ears.
+
+-Peff
