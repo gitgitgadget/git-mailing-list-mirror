@@ -2,185 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE147C4332F
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 09:16:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68408C433FE
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 09:22:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233731AbiKHJQs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 04:16:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37812 "EHLO
+        id S233781AbiKHJW0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 04:22:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233732AbiKHJQp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2022 04:16:45 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F6162FFE8
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 01:16:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1667898977; bh=TIeqHHEVQlVP0zV/ZvrAUWj1N8JqFufqdvoq2xx8kKA=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=JoCeeul5JnBXdxi9qqOvpd8gO1uI1SD4VbSdRix8J+UatELcDIidBvBkHEoxHl+vC
-         v4l8jBOP55X7x/B0l6RcFnszVgc2SMCzTZZsud51A22yVNrvd8iuiUY240N+xmcP56
-         nbqOAHYvEM08l92bbKaSUeh1IRRazpabUikMC/YmHVUn5Fpf1DS4gh/1cPZtQCOGkq
-         ZtR+IS4Ka4vjKCH6exRvuwvjh8BqC06h+3FJYzkFh5jc4iIUt/DrygRmEsqVR+9bJS
-         HSiEQfpIPlYTpGfcm25GYVGfr3Sx5N63AYSQ3iyYZoNQV4K9hKD7jGPi1VcOaARwaj
-         rDkaSNLkUCYpg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.27.219.74] ([213.196.213.188]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MMXUN-1obce609bj-00JdK5; Tue, 08
- Nov 2022 10:16:17 +0100
-Date:   Tue, 8 Nov 2022 10:16:15 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Jeff King <peff@peff.net>
-cc:     Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] ci: avoid unnecessary builds
-In-Reply-To: <Y2SFGmQnx7CXtTEI@coredump.intra.peff.net>
-Message-ID: <oo9ssp5n-6ors-n309-2r2n-3q43rq7pn89q@tzk.qr>
-References: <pull.1404.git.1667482458622.gitgitgadget@gmail.com> <221104.86bkpnzdqi.gmgdl@evledraar.gmail.com> <Y2R3vJf1A2KOZwA7@nand.local> <Y2SFGmQnx7CXtTEI@coredump.intra.peff.net>
+        with ESMTP id S233643AbiKHJWW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2022 04:22:22 -0500
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E57C23E099
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 01:22:17 -0800 (PST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailout.nyi.internal (Postfix) with ESMTP id 5342E5C0072;
+        Tue,  8 Nov 2022 04:22:17 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Tue, 08 Nov 2022 04:22:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm1; t=1667899337; x=1667985737; bh=+jMrEt2ozV
+        kybrm/TiXfG+7q5P9uOKmUacqUHk/oL0M=; b=qkK+9sAt3efiqHTQIMB43TA1NR
+        1CjwCs5WGyMM6kGOlrgeWn1AR2zMub1eZCHPIn+x7UAJUf4EFhhqg1anOj4LZhU7
+        WKsYUloWn64qPTOv87cwgRQDaxfSFbVwqJpT1xNmxB1X2evWJU2/mbZLh7yjR59C
+        +gSudHEC+qnZFijxQ3Dth19yZZR6kn9B+evOGRD2jXlrrdl33p2iLloIdTlAwfcL
+        cRPWx21WR1PK16r4dYCnu7fNXoVfJvrl7+W+ILvnmIOEQnh8WmMhORX7qkip1wOv
+        EcaUtIsceMZezVN1vkJTZtM2UjMBZFw2nuIV6VHi5tr7xFtJ0gXb32O8gOdg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm1; t=1667899337; x=1667985737; bh=+jMrEt2ozVkybrm/TiXfG+7q5P9u
+        OKmUacqUHk/oL0M=; b=uGpVHkEi5Qjn7t1U+lE/hU+8fTZVxWbgK+g36O4QPvuS
+        nzZzOjvA11jb5DbQxobnzR1eRX6+zsPmm4l840xzy+nknM5HXFuxoGkhq0+AR+p2
+        /sfGZRAyikqcSdLkQLnVlocRS/rF/OqEFTarQo9BU9EwmW0F3NKPZWEiSiyGqK+f
+        1Wwc7RFvJrKQlipRAFE0I1Mhlhb30/JPcQtbRpN6+oDPl6MNxPM3i/aeCHQDAm1v
+        JILO3t8KlWXlIbyOgYcoSv3NfXxo484K1m21PQwb/mngMQ2h0cb3fzOk6UnmHaGW
+        9IdonbSPPY+RgZXLfEEJXtZ6qOdZ+YxqAQdXSzE9LA==
+X-ME-Sender: <xms:yR9qY_KPdpZuAfi_MvAhC5k6CEZnyFV_xrJ39HQhUEK2wlv-eQyZZQ>
+    <xme:yR9qYzLS3GxPGTu0JjCd7dgaQIpJSnsu_x8U6Rc27_bw6PEq-eB9RFDDXPNn4liGm
+    JpjrR7Bm0Fgu0cnzg>
+X-ME-Received: <xmr:yR9qY3vDVtj2zYMlHU_43hBNRN1zMW_vjSnK5XJFtDWH6ER0cxQghuTyBqViHgJLgP3PZOzJDVLo4qxFsWfmQxv5_hPhFc6VZ6lBTZb-Jf_B>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrfedtgddtfecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
+    ertddtudenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepfedvleefueetgeeitdekheelffekkefgff
+    duhfduvdefffdtheekiefhkeejkeehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:yR9qY4Yp2TTRwTUGMB71h-AugSe95tsw4ZMiOtBew-SRHHJrlvzriw>
+    <xmx:yR9qY2bWkFMhxmSt-spJzZ-XSgRJpPoWnx95LqJpHQa0czRreWdlkQ>
+    <xmx:yR9qY8CJOVCalviJ1V1VGKuuaFXrm0QsyqXS0xgI370bK8v_lL9CoA>
+    <xmx:yR9qY2FnYSKLWzOIWRa4CTQs1tlL4T6ytAbEIvuufiGgsLwoxMYVjg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Nov 2022 04:22:16 -0500 (EST)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 491b6487 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 8 Nov 2022 09:22:08 +0000 (UTC)
+Date:   Tue, 8 Nov 2022 10:22:12 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 4/6] revision: add new parameter to exclude hidden refs
+Message-ID: <Y2ofxE5qY3gnZLpe@ncase>
+References: <cover.1666967670.git.ps@pks.im>
+ <cover.1667823042.git.ps@pks.im>
+ <de7c1aa210c2df9bdbbb6c19f44f72c37f56c5da.1667823042.git.ps@pks.im>
+ <221107.86pmdyx4me.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1072297263-1667898977=:208"
-X-Provags-ID: V03:K1:1y3UOUJEz8t1p930mMi4wVqtjimezyI73GuMslN+uaoofIp0Oig
- 9goeE8UmqhwHPWXsrrByPPhltQTs4Lr51ocDRh403w4kpbHKbFBMfvJxLNwoYxfurzBCJv4
- qPSUixyISsFjQepKzwHXlgGORJl+Oeh+V5fAV8xPFK7rGzjGDkkfbZQ9Go4otsqZXyKnTcH
- zdsfVgXAm0hbHbk+dbNkA==
-UI-OutboundReport: notjunk:1;M01:P0:/z2pWTQ42Qs=;nEkegFzgnMrVFO2ZwCu+NylvbHY
- rNP4/KLrk160ElAxFJM0PmLOGEUsflaixLJXSufGrJts7Xz/hE3b6tgWcqThA6Sjs+BLBBGKq
- 2mH4XC8ELW6KU7xLKjdqyA1DbYSJRKLK2vNHFB3VIiy8HbrnZR5wyvulSza4saLs7623sedNW
- HbMljDNdC8pCxXCuHGYNyJn/rLwh7qqmkTe3a0EszZW/eG2XcQvNhH10Lja7omdp6aXIuQ/X6
- y9tyHHwZkrqkudJGBncD+LnakNyAT528r20yr6XPP7aTQcfbqcou/G3WJ+irEZMDrMXBSpqv3
- uot5/f3ev2JdRVB9JW/suPc/cg/nWOGucaD52mibsjKv0gme06Cf7UThf5PhGu0bbdtdTKmWp
- iZJknMDWj1iO/TtVGR+qdoHiMzuilfhNHMcHT5ipj1T2BT95FjWc7A6VbXC0MK+i1iMUasueG
- bnmB3ea4X2H7JXGpXBaCpsKJTwIchuJ2KGJAfW86zxCWhrB1HZEy4qqvGIxAqKr3F8SADPkKE
- gRPL3zVlgcPMaC8wVMoEkeQjTJ+sRKrcdnzURTqCpyiXQW198IeKroDQlB6xjizE8N7ur9Rq4
- bWe1WBOIaSr5niT+KY1FiAEIxkkERzdjsluHgwdxkuWL+NyCd8OiIq6hjFF0kmuVb48vuPm3n
- opIA04C5AZGEWOAnlnjRGHXwxCFTeV1npi52VBPgXzHVBgkuywkn9BQ7GezEPaO56tR59/VjQ
- s/bG9PkqsiO7uY2V4+zcKawtEXe1EJcFqLdjPt1YoITA5l0JImPTj9BMqc5L3ulhDkSpd2G2m
- Gw8Q3yvtzYN0ixLT/5X/hQuZoSnrCxjGHynoc2LWn7AItAdyGRz2q8DQkqfGg118LOCbKlQTX
- fYyljDpV084Qf7V5CQ/aU+txHK+2A2jbVljIlbgHU0wGKdRgbAQIJ0/v+FsMRqbhnZtW9P2Uw
- mtQvI0ePQRnqPe/Ek80ZrByMxB4=
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="pvdgSM+YcAADpNjr"
+Content-Disposition: inline
+In-Reply-To: <221107.86pmdyx4me.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1072297263-1667898977=:208
-Content-Type: text/plain; charset=UTF-8
+--pvdgSM+YcAADpNjr
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi Peff,
+On Mon, Nov 07, 2022 at 02:34:45PM +0100, =C6var Arnfj=F6r=F0 Bjarmason wro=
+te:
+> On Mon, Nov 07 2022, Patrick Steinhardt wrote:
+[snip]
+> > +	if (strcmp(section, "transfer") && strcmp(section, "receive") &&
+> > +	    strcmp(section, "uploadpack"))
+> > +		die(_("unsupported section for hidden refs: %s"), section);
+> > +
+> > +	if (exclusions->hidden_refs.nr)
+> > +		die(_("--exclude-hidden=3D passed more than once"));
+>=20
+> We usually just ignore the first of --foo=3Dbar --foo=3Dbaz and take "baz"
+> in our CLI use. Is it better to die here than just clear the previous
+> one & continue?
 
-On Thu, 3 Nov 2022, Jeff King wrote:
+It's something I was torn on. I ultimately chose to die though because
+of the difference between `--exclude` and `--exclude-hidden`: the former
+one will happily add additional patterns, all of which will ultimately
+be ignored. So as a user you might rightfully expect that the latter
+will work the same: if both `--exclude-hidden=3Duploadpack` and
+`--exclude-hidden=3Dreceive` are specified, you might want to have both be
+ignored.
 
-> On Thu, Nov 03, 2022 at 10:23:56PM -0400, Taylor Blau wrote:
->
-> > But I think you make a compelling point (which doesn't match my own
-> > workflow, but I can see the utility of nonetheless).
-> >
-> > I was thinking that we could rely on something similar to the ci-confi=
-g
-> > ref stuff from back in e76eec35540 (ci: allow per-branch config for
-> > GitHub Actions, 2020-05-07), but it looks like it'll be a little
-> > trickier than that, maybe impossible.
-> >
-> > We need to know about the state of the ci-config branch before we set
-> > the concurrency bits. So I think you *could* do something like:
->
-> As an aside, I wish there was a way to interpret per-repo environment
-> variables in the actual action config.
+To me it wasn't quite clear how to support multiple instances of
+`transfer.hideRefs` though as there is also the concept of un-hiding
+already-hidden refs. So I wanted to avoid going into this discussion to
+make the patch series a little bit smaller.
 
-There kind of is. "Kind of" because it is not _really_ a per-repo variable
-(those do not exist on GitHub), but there are topics you can set. These
-are relatively free-form labels you can attach to _your_ fork, and these
-labels show up below the "About" section and the link to the home page (if
-any) on the right side of your respository. AFAICT these topics are not
-inherited automatically when forking a repository, which is precisely what
-we want. See
-https://docs.github.com/en/repositories/managing-your-repositorys-settings=
--and-features/customizing-your-repository/classifying-your-repository-with=
--topics
-for more details on that.
+By dying instead of silently overriding the previous argument we retain
+the ability to iterate on this at a later point though to implement
+above behaviour, if the usecase ever arises.
 
-A GitHub workflow can be made conditional on the presence of such a topic.
-I use this, for example, for an opt-in build of the InnoSetup installer:
-https://github.com/jrsoftware/issrc/blob/is-6_2_1/.github/workflows/build.=
-yml#L11-L12
-The build is opt-in because it requires a non-free build environment,
-configured via two repository secrets containing a URL pointing to a
-`.zip` file and a password to extract said `.zip`. As you say, I cannot
-make the build opt-in based on the presence of secrets, but I can use the
-presence a repository topic as the knob to enable the workflow.
+Patrick
 
-> The current ci-config stuff works, but it's pretty horrible because (if
-> I understand correctly) it spins up a VM just to evaluate a glob and say
-> "nope, no CI needed on this branch". So:
->
->   1. It's wasteful of resources, compared to a system where the Actions
->      parser can evaluate a variable.
+--pvdgSM+YcAADpNjr
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Indeed. It might look like the job only takes a few seconds (at least that
-was the argument that got the `ci-config` patch accepted), but that misses
-the queue time, which turns this more into several dozens of seconds, and
-the recorded total duration is much longer than that. In
-https://github.com/gitgitgadget/git/actions/runs/3412982102 for example,
-the `ci-config` job only took 6 seconds, according to the page, but the
-total duration of the build was 6 minutes and 56 seconds.
+-----BEGIN PGP SIGNATURE-----
 
->   2. It makes the Actions results page for a repo ugly, because skipped
->      branches clutter the output with "yes, I passed CI" even though all
->      they passed was a trivial job to say "don't bother running more
->      CI".
->
->   3. The problem you mention: it happens too late to affect the overall
->      Actions flow, and instead individual jobs have to take it into
->      account.
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmNqH8MACgkQVbJhu7ck
+PpQByQ//Y4SrI3PHp+06oWRRGmlL4QJYZ5gdbqGdL6z9ezteHPrPjFqFliHPcEE7
+Dnq9I6iKRLLQnyeHTFWkEsRqX1T3kPdZE7DuClbBfi+JErHepfvVV4cU4qbDu3gv
+Z6i8xBQ0csJ3bdqZiSmgoRKVxGpPxKUzEaFuTN/r3d5OqqTIfk31hRadeVg+ZKYG
+mma3IK/o7ovUWxhApvlFCHz9uTXX6mQGQue+0RegfoN7CpY4Qwm4zg4+LnXCQle7
+YjcKWkCcD+DTK3zwJiEeK3CQnoMVNu3ewEc50UKIxLMIXYJVw8QRuhArwKlNEo34
+J6fd/wHkLT9yGfJxWt9Ab9v/BfgwFZTwhwtOqiWTJH66JpExu9zfQrQHgekSfNZs
+QWtz+MCUdXGyctasRE+cPX9op7axh++/XAyB8YK0kR7kTwjjrHhCvYxUZf48Cl0c
+tb5BHfXvjZL/6h17GxmnDIrfYeW4Hhz+5LQBrDjLrC46WNWwCqpXHLMLfsuaFdsP
+LAtxMy5iVpAC1zPKFDE6LBxqizKH+3QmAs+Iwn5bQodpNeeEupvW8GbFiBiOLBpe
+kxVkf5nRRCWzSVh83YCnQxqEZic/WvuiierwD1BOvTF9upkbT0S1fq9SW7VTHVSP
+yn9+EYSVl1QC9TyXAjeP/xPkTFoRgcn9Qh6PkwBYwYL6EQHxyOk=
+=64sH
+-----END PGP SIGNATURE-----
 
-And
-
-    4. The way `ci-config` is configured is sufficiently "magic" that it
-       only benefits very, very few users, at the price of adding to
-       everybody's build time. To see what I mean, look at
-       https://github.com/gitgitgadget/git/actions/runs/3416084640/jobs/56=
-85867765#step:1:1
-       and at
-       https://github.com/gitgitgadget/git/actions/runs/3416084640/jobs/56=
-85879914#step:1:1
-       turning on the timestamps (i.e. click on the sprocket wheel on the
-       upper right side of the log and select "Show timestamps"). You will
-       see that the `ci-config` job started at 3:22:05 UTC and the next
-       job, `win-build`, started only at 4:16:03 UTC.
-
-    5. There is official support for the desired behavior that comes
-       without any magic branch with special content that users somehow
-       need to learn about: If you push a branch with commit messages that
-       contain `[skip ci]`, the build will be skipped, and no time is
-       wasted on running any job. For full details, see
-       https://github.blog/changelog/2021-02-08-github-actions-skip-pull-r=
-equest-and-push-workflows-with-skip-ci/
-
-Having said that, the `ci-config` job is used for something I find much
-more useful than that magic `ci-config` branch handling: to skip builds
-when there are already successful builds of the same commit or at least
-tree. Sadly, that logic fails sometimes because of an unresilient REST API
-call: in case of network errors, we fall back to not skipping the build
-_even if_ there has been a previously-successful build of that tree.
-
-If it was up to me, I'd simply rip out the `ci-config` branch (`ci/config`
-file) handling and tell users to mark up branches that need to be skipped
-with `[skip ci]`. That has a further advantage of being actually portable
-across a wider range of CI systems (for example, CircleCI supports it,
-too: https://circleci.com/docs/skip-build/).
-
-But then, it would not save us a whole lot because the `ci-config` job
-_still_ does something useful (i.e. checking for previously successful
-builds of the same tree), so that time is still spent. But how knows,
-maybe there will be out-of-the-box support for that at some stage. =F0=9F=
-=A4=B7
-
-Ciao,
-Dscho
-
---8323328-1072297263-1667898977=:208--
+--pvdgSM+YcAADpNjr--
