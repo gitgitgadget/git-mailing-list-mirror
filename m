@@ -2,49 +2,49 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50E02C433FE
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 10:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 860C2C433FE
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 10:04:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233729AbiKHKDp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 05:03:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38994 "EHLO
+        id S233839AbiKHKES (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 05:04:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233905AbiKHKDl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2022 05:03:41 -0500
+        with ESMTP id S233907AbiKHKDn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2022 05:03:43 -0500
 Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E8F7114
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 02:03:40 -0800 (PST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailout.nyi.internal (Postfix) with ESMTP id 945705C004E;
-        Tue,  8 Nov 2022 05:03:39 -0500 (EST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85879114
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 02:03:42 -0800 (PST)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.nyi.internal (Postfix) with ESMTP id EB8385C0135;
+        Tue,  8 Nov 2022 05:03:41 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Tue, 08 Nov 2022 05:03:39 -0500
+  by compute1.internal (MEProxy); Tue, 08 Nov 2022 05:03:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:date:date:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; t=1667901819; x=1667988219; bh=PbxfgvsXrL
-        X6U+Zox50Qw57ZAGMbA/lWlCPHUqzDTPQ=; b=mfyg0Wcok/IxJk+YGWZw+T6yKG
-        8JiDJ3YlJC1EVTsx2A9aG4YMZYa9GC8oJLwdk6dlCnbKIYMQB+UUeMvhR3R5B7Ef
-        Gkf+Pvfax58BVlgj9Jg6lh80uCb7KjpxqmnuUjKTDu4mxVrNf4LkK2mFaZ7gwT5h
-        +vhvAGcyrPkimGRJcgFa7wjAmEcUxnIibSQUegG9y71qN4JnEKTbCLkVIjydoq6c
-        hJJ+jwgoq/sqRnoj6k+V0lBZ8GYe2xpP2Ij56B2Rin5Wsy+N0vAVnX2jgsa6a2h0
-        1Oevd9znl1bl34TZP9An9VtTxh4wqWLl9r9i+HavuhLJ4n/TTrjKSurkAjcQ==
+        :subject:to:to; s=fm1; t=1667901821; x=1667988221; bh=10amdenMwb
+        Jgt2Il8mg7b7Tr2TgwW6mhrDZrbO6RIf4=; b=SxbQ1Va2jsH3fk6RrQM1aGn1dZ
+        MS+6/+NxfHvDQbunl0vJsseSxU00QOE8kH6zZP4FQw9/CNVhx3qiaZRweAcQ/Q7m
+        8GjmGcJVFFl39d9qS24f8LDyR2LjQDbWigMu0p1K/lfwh5Z225TTPHNZFypQZ2Ra
+        yGDWl9RFYxSPnh1Gfv9q742A5KOZNd/GVHCC2pQk2+5btrd2/BHb9K+BK2Cmuoen
+        rlO+CnxJSkVJJqUIyFzWTwl+5VS2WBVjqlBCqWOfOoAA5E4lQYfCEe+U6igHQAzo
+        jcCJ8KOZSrC+lj99sGN4B9O7YwMk+9EyoKR5BAQ54sd66ZJzYfgydKjQ6ZEg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
         :feedback-id:from:from:in-reply-to:in-reply-to:message-id
         :mime-version:references:reply-to:sender:subject:subject:to:to
         :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm1; t=1667901819; x=1667988219; bh=PbxfgvsXrLX6U+Zox50Qw57ZAGMb
-        A/lWlCPHUqzDTPQ=; b=nqErLZxa8Fj4OpXQhzr2JTlOBjPPU8/HXLT+gWiiweey
-        rcFCjU/0zxQijtOPvuGEXB7U6d/IEX9R31Ny8Y3w0UC8ldg7ou8DYoMfFSLN6KRS
-        4Qg4a/6LSlx9/H4QZ3v4b43ZolgAEiHLT4v5OQP5iwLfNx7WcCR9N/TjIWkyBepz
-        rMrqbxl8Hz4iKt4Hr+F6W9KHDKSIReIjv/8UhuUS2YQmiQ55WTqF4xAYN12lMWqO
-        Th33yIhUeO6092ZNlA6FOg+KpkTRr9ZWy1nVQWiQS3hMhUbJpQi8W9paYz27EhMy
-        BSwQ35asWphhh8Z+ueM+0VsQG+a3Q2yJ98LaYKVEaA==
-X-ME-Sender: <xms:eylqY3EyXpufjusOzKhEv6Dse-KTJa5wiG-3cPwpvmrI5nHLahkyGA>
-    <xme:eylqY0Ucj44QCzCE8Gzhdrq-K-1tRQG8jCTTeNfZYbnJEJlAIKW47JoL_7L_yjj3w
-    l1C4dvkHWdC3W2g_w>
-X-ME-Received: <xmr:eylqY5JfUSPF7qZ6gOYHxveLo_T4mIWl5V2TGcmkrPXZR2xXAyOShtBhGmakM7XyKu1JWlaywlX7c8wJD0pfSuOC2mIocKxAaiHo4hL0fUdT>
+        fm1; t=1667901821; x=1667988221; bh=10amdenMwbJgt2Il8mg7b7Tr2Tgw
+        W6mhrDZrbO6RIf4=; b=cg1lLE8G38HAnXjgCukUmWNfAYBUOy5+s/hv23hpqBlA
+        QR4Rin48DeoWrhcehuZNwADxGC8gnK7qZI7ecld2i0EGun/ecMnFQ7fAFxVH/TyF
+        WRVFYEA7Tbfem0G8D/IRCXLyK97Z61MrcV8icc/mcpa9BYnBinleJ6DCPMlDDPSw
+        YK0QCMFl/9W0BonPuTTTPlSWXZiIIkx/vEQgwWY6ir9EX15ErmHvFQH7KSzyCpWU
+        n6k1fWb4a4AEpOVXRw1aLMNZNaJNCFs/ANk2UAvCl737Cha55QZ0h+CR7glLD1yS
+        CWbK3QPqcxiRpV/6Y5ePOJTkOiMfB+p2fMLWGvJUgQ==
+X-ME-Sender: <xms:fSlqY2oLk6PoregvuoiCmoCzx3qgI3zfRRnzO4xs3TcHqnHZXINfyA>
+    <xme:fSlqY0o0i3uh488Blvckbe-KGHsTPCoYlB-dXVXn1uUOTtb1UzSm3C0m7ISnIFvUW
+    VA47axGD9EKFJYrYg>
+X-ME-Received: <xmr:fSlqY7MX2AIL_XptSqfYd1yNwcKqbWMopKqRH68EtVd4pSKHg2Cl2zReEPQOgd3NDU7GA4viVpTbscNrqdq2iBCIh208ik3LINnkuN8FOpPC>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrfedtgdduudcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
@@ -52,621 +52,426 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrfedtgdduudcutefuodetggdote
     khhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeigeekle
     duvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:eylqY1FJ_iB8y90ULDI0l_O3l37H4YWWasJ5WvNg4uZ8mjEuKrOGMQ>
-    <xmx:eylqY9XBE5OB4zvuop0-VwHRJAZQ357g2TvPma0MVhjN--QJY6KUkA>
-    <xmx:eylqYwOC0UZ016PHBx6zaK5wynPCT479w-eZVJu72Oy_mXWilKnB2Q>
-    <xmx:eylqYwQF2c3R2KPQVwbFGJ-kzTwdd0iuTKsLgl4W9or4uG8f5jDWCw>
+X-ME-Proxy: <xmx:fSlqY15VNLMXXh9B_3L0PPScSqjOM88_Gg3LaAaMlnuAsCuN1GlfBA>
+    <xmx:fSlqY16R5sTfbypOYOaaYbHXq5IKz9sgv0t6ZSFNGwRrQLNsS0yp_g>
+    <xmx:fSlqY1j1VASPp3mdsyhWfGF-wxhgfYmQFufqaT0O_SyMTd_L9iwPvg>
+    <xmx:fSlqY_mttVY9QMmAHzTK8WdyM0P3kYofUxKSNIlWN9HpIAHju9tELA>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Nov 2022 05:03:38 -0500 (EST)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id a5558bcb (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 8 Nov 2022 10:03:31 +0000 (UTC)
-Date:   Tue, 8 Nov 2022 11:03:35 +0100
+ 8 Nov 2022 05:03:40 -0500 (EST)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 578cd701 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Tue, 8 Nov 2022 10:03:36 +0000 (UTC)
+Date:   Tue, 8 Nov 2022 11:03:39 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v4 0/6] receive-pack: only use visible refs for connectivity
- check
-Message-ID: <cover.1667901510.git.ps@pks.im>
+Subject: [PATCH v4 1/6] refs: get rid of global list of hidden refs
+Message-ID: <34afe30d60e4dbc7e50a590541440c20c27507a6.1667901510.git.ps@pks.im>
 References: <cover.1666967670.git.ps@pks.im>
+ <cover.1667901510.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="B6GWznbpszh7ppf2"
+        protocol="application/pgp-signature"; boundary="U7mHYpJEB091z5tk"
 Content-Disposition: inline
-In-Reply-To: <cover.1666967670.git.ps@pks.im>
+In-Reply-To: <cover.1667901510.git.ps@pks.im>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---B6GWznbpszh7ppf2
+--U7mHYpJEB091z5tk
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+We're about to add a new argument to git-rev-list(1) that allows it to
+add all references that are visible when taking `transfer.hideRefs` et
+al into account. This will require us to potentially parse multiple sets
+of hidden refs, which is not easily possible right now as there is only
+a single, global instance of the list of parsed hidden refs.
 
-this is the fourth version of my patch series that tries to improve
-performance of the connectivity check by only considering preexisting
-refs as uninteresting that could actually have been advertised to the
-client.
+Refactor `parse_hide_refs_config()` and `ref_is_hidden()` so that both
+take the list of hidden references as input and adjust callers to keep a
+local list, instead. This allows us to easily use multiple hidden-ref
+lists. Furthermore, it allows us to properly free this list before we
+exit.
 
-This time around there are only incremental changes compared to v3, the
-overall implementation stays the same. Changes:
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+ builtin/receive-pack.c |  8 +++++---
+ ls-refs.c              | 13 +++++++++----
+ refs.c                 | 16 +++++-----------
+ refs.h                 |  5 +++--
+ upload-pack.c          | 30 ++++++++++++++++++------------
+ 5 files changed, 40 insertions(+), 32 deletions(-)
 
-    - Fixed a pre-existing memory leak in how hidden refs are parsed so
-      that tests now pass with TEST_PASSES_SANITIZE_LEAK=3Dtrue.
-
-    - Improved initialization of `struct ref_exclusions` to reuse the
-      `REF_EXCLUSIONS_INIT` macro so we don't have to repeat the logic.
-
-    - Dropped the `--exclude-hidden=3Dtransfer` option. Only `receive` and
-      `uploadpack` are supported now.
-
-Patrick
-
-Patrick Steinhardt (6):
-  refs: get rid of global list of hidden refs
-  revision: move together exclusion-related functions
-  revision: introduce struct to handle exclusions
-  revision: add new parameter to exclude hidden refs
-  rev-parse: add `--exclude-hidden=3D` option
-  receive-pack: only use visible refs for connectivity check
-
- Documentation/git-rev-parse.txt    |   7 ++
- Documentation/rev-list-options.txt |   7 ++
- builtin/receive-pack.c             |  10 ++-
- builtin/rev-list.c                 |   1 +
- builtin/rev-parse.c                |  12 ++-
- connected.c                        |   3 +
- connected.h                        |   7 ++
- ls-refs.c                          |  13 ++-
- refs.c                             |  16 ++--
- refs.h                             |   5 +-
- revision.c                         | 117 +++++++++++++++---------
- revision.h                         |  36 ++++++--
- t/t6018-rev-list-glob.sh           |  11 +++
- t/t6021-rev-list-exclude-hidden.sh | 137 +++++++++++++++++++++++++++++
- upload-pack.c                      |  30 ++++---
- 15 files changed, 329 insertions(+), 83 deletions(-)
- create mode 100755 t/t6021-rev-list-exclude-hidden.sh
-
-Range-diff against v3:
-1:  3741f0a389 ! 1:  34afe30d60 refs: get rid of global list of hidden refs
-    @@ refs.c: int parse_hide_refs_config(const char *var, const char *valu=
-e, const cha
-     -			CALLOC_ARRAY(hide_refs, 1);
-     -			hide_refs->strdup_strings =3D 1;
-     -		}
-    - 		string_list_append(hide_refs, ref);
-    +-		string_list_append(hide_refs, ref);
-    ++		string_list_append_nodup(hide_refs, ref);
-      	}
-      	return 0;
-      }
-2:  a6dcc99ca9 =3D 2:  b4f21d0a80 revision: move together exclusion-related=
- functions
-3:  2a6a67df1d ! 3:  265b292ed5 revision: introduce struct to handle exclus=
-ions
-    @@ Commit message
-         of exclusion.
-    =20
-         Introduce a new `struct ref_exclusions` that encapsulates all the =
-logic
-    -    related to excluding refs.
-    +    related to excluding refs and move the `struct string_list` that h=
-olds
-    +    all wildmatch patterns of excluded refs into it. Rename functions =
-that
-    +    operate on this struct to match its name.
-    =20
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-    =20
-    @@ revision.c: static void add_rev_cmdline_list(struct rev_info *revs,
-     -		free(*ref_excludes_p);
-     -	}
-     -	*ref_excludes_p =3D NULL;
-    -+	string_list_init_dup(&exclusions->excluded_refs);
-    ++	struct ref_exclusions blank =3D REF_EXCLUSIONS_INIT;
-    ++	memcpy(exclusions, &blank, sizeof(*exclusions));
-      }
-     =20
-     -void add_ref_exclusion(struct string_list **ref_excludes_p, const cha=
-r *exclude)
-    @@ revision.h: struct rev_cmdline_info {
-     +	 */
-     +	struct string_list excluded_refs;
-     +};
-    ++
-    ++/**
-    ++ * Initialize a `struct ref_exclusions` with a macro.
-    ++ */
-    ++#define REF_EXCLUSIONS_INIT { \
-    ++	.excluded_refs =3D STRING_LIST_INIT_DUP, \
-    ++}
-     +
-      struct oidset;
-      struct topo_walk_info;
-    @@ revision.h: void mark_trees_uninteresting_sparse(struct repository *=
-r, struct oi
-     -int ref_excluded(struct string_list *, const char *path);
-     -void clear_ref_exclusion(struct string_list **);
-     -void add_ref_exclusion(struct string_list **, const char *exclude);
-    -+#define REF_EXCLUSIONS_INIT { .excluded_refs =3D STRING_LIST_INIT_DUP=
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 44bcea3a5b..1f3efc58fb 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -80,6 +80,7 @@ static struct object_id push_cert_oid;
+ static struct signature_check sigcheck;
+ static const char *push_cert_nonce;
+ static const char *cert_nonce_seed;
++static struct string_list hidden_refs =3D STRING_LIST_INIT_DUP;
+=20
+ static const char *NONCE_UNSOLICITED =3D "UNSOLICITED";
+ static const char *NONCE_BAD =3D "BAD";
+@@ -130,7 +131,7 @@ static enum deny_action parse_deny_action(const char *v=
+ar, const char *value)
+=20
+ static int receive_pack_config(const char *var, const char *value, void *c=
+b)
+ {
+-	int status =3D parse_hide_refs_config(var, value, "receive");
++	int status =3D parse_hide_refs_config(var, value, "receive", &hidden_refs=
+);
+=20
+ 	if (status)
+ 		return status;
+@@ -296,7 +297,7 @@ static int show_ref_cb(const char *path_full, const str=
+uct object_id *oid,
+ 	struct oidset *seen =3D data;
+ 	const char *path =3D strip_namespace(path_full);
+=20
+-	if (ref_is_hidden(path, path_full))
++	if (ref_is_hidden(path, path_full, &hidden_refs))
+ 		return 0;
+=20
+ 	/*
+@@ -1794,7 +1795,7 @@ static void reject_updates_to_hidden(struct command *=
+commands)
+ 		strbuf_setlen(&refname_full, prefix_len);
+ 		strbuf_addstr(&refname_full, cmd->ref_name);
+=20
+-		if (!ref_is_hidden(cmd->ref_name, refname_full.buf))
++		if (!ref_is_hidden(cmd->ref_name, refname_full.buf, &hidden_refs))
+ 			continue;
+ 		if (is_null_oid(&cmd->new_oid))
+ 			cmd->error_string =3D "deny deleting a hidden ref";
+@@ -2591,6 +2592,7 @@ int cmd_receive_pack(int argc, const char **argv, con=
+st char *prefix)
+ 		packet_flush(1);
+ 	oid_array_clear(&shallow);
+ 	oid_array_clear(&ref);
++	string_list_clear(&hidden_refs, 1);
+ 	free((void *)push_cert_nonce);
+ 	return 0;
  }
-    -+
-     +int ref_excluded(const struct ref_exclusions *exclusions, const char =
-*path);
-     +void init_ref_exclusions(struct ref_exclusions *);
-     +void clear_ref_exclusions(struct ref_exclusions *);
-4:  de7c1aa210 ! 4:  c7fa6698db revision: add new parameter to exclude hidd=
-en refs
-    @@ Documentation/rev-list-options.txt: respectively, and they must begi=
-n with `refs
-      or `--all`. If a trailing '/{asterisk}' is intended, it must be given
-      explicitly.
-     =20
-    -+--exclude-hidden=3D[transfer|receive|uploadpack]::
-    ++--exclude-hidden=3D[receive|uploadpack]::
-     +	Do not include refs that have been hidden via either one of
-    -+	`transfer.hideRefs`, `receive.hideRefs` or `uploadpack.hideRefs` that
-    -+	the next `--all`, `--branches`, `--tags`, `--remotes` or `--glob` wo=
-uld
-    -+	otherwise consider.  This option is cleared when seeing one of these
-    -+	pseudo-refs.
-    ++	`receive.hideRefs` or `uploadpack.hideRefs` (see linkgit:git-config[=
-1])
-    ++	that the next `--all`, `--branches`, `--tags`, `--remotes` or `--glo=
-b`
-    ++	would otherwise consider. This option is cleared when seeing one of
-    ++	these pseudo-refs.
-     +
-      --reflog::
-      	Pretend as if all objects mentioned by reflogs are listed on the
-    @@ builtin/rev-list.c: static const char rev_list_usage[] =3D
-      "    --tags\n"
-      "    --remotes\n"
-      "    --stdin\n"
-    -+"    --exclude-hidden=3D[transfer|receive|uploadpack]\n"
-    ++"    --exclude-hidden=3D[receive|uploadpack]\n"
-      "    --quiet\n"
-      "  ordering output:\n"
-      "    --topo-order\n"
-    @@ revision.c: static void add_rev_cmdline_list(struct rev_info *revs,
-      	return 0;
-      }
-     =20
-    - void init_ref_exclusions(struct ref_exclusions *exclusions)
-    - {
-    - 	string_list_init_dup(&exclusions->excluded_refs);
-    -+	string_list_init_dup(&exclusions->hidden_refs);
-    - }
-    -=20
-    +@@ revision.c: void init_ref_exclusions(struct ref_exclusions *exclusi=
-ons)
-      void clear_ref_exclusions(struct ref_exclusions *exclusions)
-      {
-      	string_list_clear(&exclusions->excluded_refs, 0);
-    -+	string_list_clear(&exclusions->hidden_refs, 1);
-    ++	string_list_clear(&exclusions->hidden_refs, 0);
-      }
-     =20
-      void add_ref_exclusion(struct ref_exclusions *exclusions, const char =
-*exclude)
-    @@ revision.c: void add_ref_exclusion(struct ref_exclusions *exclusions=
-, const char
-     +{
-     +	struct exclude_hidden_refs_cb cb;
-     +
-    -+	if (strcmp(section, "transfer") && strcmp(section, "receive") &&
-    -+	    strcmp(section, "uploadpack"))
-    ++	if (strcmp(section, "receive") && strcmp(section, "uploadpack"))
-     +		die(_("unsupported section for hidden refs: %s"), section);
-     +
-     +	if (exclusions->hidden_refs.nr)
-    @@ revision.h: struct ref_exclusions {
-     +	struct string_list hidden_refs;
-      };
-     =20
-    + /**
-    +@@ revision.h: struct ref_exclusions {
-    +  */
-    + #define REF_EXCLUSIONS_INIT { \
-    + 	.excluded_refs =3D STRING_LIST_INIT_DUP, \
-    ++	.hidden_refs =3D STRING_LIST_INIT_DUP, \
-    + }
-    +=20
-      struct oidset;
-     @@ revision.h: void show_object_with_name(FILE *, struct object *, con=
-st char *);
-      /**
-       * Helpers to check if a reference should be excluded.
-       */
-    --#define REF_EXCLUSIONS_INIT { .excluded_refs =3D STRING_LIST_INIT_DUP=
+diff --git a/ls-refs.c b/ls-refs.c
+index fa0d01b47c..ae89f850e9 100644
+--- a/ls-refs.c
++++ b/ls-refs.c
+@@ -6,6 +6,7 @@
+ #include "ls-refs.h"
+ #include "pkt-line.h"
+ #include "config.h"
++#include "string-list.h"
+=20
+ static int config_read;
+ static int advertise_unborn;
+@@ -73,6 +74,7 @@ struct ls_refs_data {
+ 	unsigned symrefs;
+ 	struct strvec prefixes;
+ 	struct strbuf buf;
++	struct string_list hidden_refs;
+ 	unsigned unborn : 1;
+ };
+=20
+@@ -84,7 +86,7 @@ static int send_ref(const char *refname, const struct obj=
+ect_id *oid,
+=20
+ 	strbuf_reset(&data->buf);
+=20
+-	if (ref_is_hidden(refname_nons, refname))
++	if (ref_is_hidden(refname_nons, refname, &data->hidden_refs))
+ 		return 0;
+=20
+ 	if (!ref_match(&data->prefixes, refname_nons))
+@@ -137,14 +139,15 @@ static void send_possibly_unborn_head(struct ls_refs_=
+data *data)
  }
-    -+#define REF_EXCLUSIONS_INIT { .excluded_refs =3D STRING_LIST_INIT_DUP=
-, .hidden_refs =3D STRING_LIST_INIT_DUP }
-    -=20
-    ++
-      int ref_excluded(const struct ref_exclusions *exclusions, const char =
-*path);
-      void init_ref_exclusions(struct ref_exclusions *);
-      void clear_ref_exclusions(struct ref_exclusions *);
-    @@ t/t6021-rev-list-exclude-hidden.sh (new)
-     +
-     +test_description=3D'git rev-list --exclude-hidden test'
-     +
-    -+TEST_PASSES_SANITIZE_LEAK=3Dtrue
-     +. ./test-lib.sh
-     +
-     +test_expect_success 'setup' '
-    @@ t/t6021-rev-list-exclude-hidden.sh (new)
-     +	test_cmp expected err
-     +'
-     +
-    -+test_expect_success 'passed multiple times' '
-    -+	echo "fatal: --exclude-hidden=3D passed more than once" >expected &&
-    -+	test_must_fail git -c transfer.hideRefs=3Drefs/hidden/ rev-list --ex=
-clude-hidden=3Dtransfer --exclude-hidden=3Dtransfer 2>err &&
-    -+	test_cmp expected err
-    -+'
-    -+
-    -+test_expect_success '--exclude-hidden without hiddenRefs' '
-    -+	git rev-list --exclude-hidden=3Dtransfer --all >out &&
-    -+	cat >expected <<-EOF &&
-    -+	$NAMESPACE
-    -+	$HIDDEN
-    -+	$TAG
-    -+	$COMMIT
-    -+	EOF
-    -+	test_cmp expected out
-    -+'
-    -+
-    -+test_expect_success 'hidden via transfer.hideRefs' '
-    -+	git -c transfer.hideRefs=3Drefs/hidden/ rev-list --exclude-hidden=3D=
-transfer --all >out &&
-    -+	cat >expected <<-EOF &&
-    -+	$NAMESPACE
-    -+	$TAG
-    -+	$COMMIT
-    -+	EOF
-    -+	test_cmp expected out
-    -+'
-    -+
-    -+test_expect_success '--all --exclude-hidden=3Dtransfer --not --all wi=
-thout hidden refs' '
-    -+	git rev-list --all --exclude-hidden=3Dtransfer --not --all >out &&
-    -+	test_must_be_empty out
-    -+'
-    -+
-    -+test_expect_success '--all --exclude-hidden=3Dtransfer --not --all wi=
-th hidden ref' '
-    -+	git -c transfer.hideRefs=3Drefs/hidden/ rev-list --all --exclude-hid=
-den=3Dtransfer --not --all >out &&
-    -+	cat >expected <<-EOF &&
-    -+	$HIDDEN
-    -+	EOF
-    -+	test_cmp expected out
-    -+'
-    -+
-    -+test_expect_success '--exclude-hidden with --exclude' '
-    -+	git -c transfer.hideRefs=3Drefs/hidden/ rev-list --exclude=3Drefs/ta=
-gs/* --exclude-hidden=3Dtransfer --all >out &&
-    -+	cat >expected <<-EOF &&
-    -+	$NAMESPACE
-    -+	$COMMIT
-    -+	EOF
-    -+	test_cmp expected out
-    -+'
-    -+
-    -+test_expect_success '--exclude-hidden is reset' '
-    -+	git -c transfer.hideRefs=3Drefs/ rev-list --exclude-hidden=3Dtransfe=
-r --all --all >out &&
-    -+	cat >expected <<-EOF &&
-    -+	$NAMESPACE
-    -+	$HIDDEN
-    -+	$TAG
-    -+	$COMMIT
-    -+	EOF
-    -+	test_cmp expected out
-    -+'
-    -+
-    -+test_expect_success '--exclude-hidden operates on stripped refs by de=
-fault' '
-    -+	GIT_NAMESPACE=3Dnamespace git -c transfer.hideRefs=3Drefs/namespaced=
-/ rev-list --exclude-hidden=3Dtransfer --all >out &&
-    -+	cat >expected <<-EOF &&
-    -+	$HIDDEN
-    -+	$TAG
-    -+	$COMMIT
-    -+	EOF
-    -+	test_cmp expected out
-    -+'
-    -+
-    -+test_expect_success '--exclude-hidden does not hide namespace by defa=
-ult' '
-    -+	GIT_NAMESPACE=3Dnamespace git -c transfer.hideRefs=3Drefs/namespaces=
-/namespace/ rev-list --exclude-hidden=3Dtransfer --all >out &&
-    -+	cat >expected <<-EOF &&
-    -+	$NAMESPACE
-    -+	$HIDDEN
-    -+	$TAG
-    -+	$COMMIT
-    -+	EOF
-    -+	test_cmp expected out
-    -+'
-    -+
-    -+test_expect_success '--exclude-hidden=3D may operate on unstripped re=
-fs' '
-    -+	GIT_NAMESPACE=3Dnamespace git -c transfer.hideRefs=3D^refs/namespace=
-s/namespace/ rev-list --exclude-hidden=3Dtransfer --all >out &&
-    -+	cat >expected <<-EOF &&
-    -+	$HIDDEN
-    -+	$TAG
-    -+	$COMMIT
-    -+	EOF
-    -+	test_cmp expected out
-    -+'
-    -+
-     +for section in receive uploadpack
-     +do
-    -+	test_expect_success "hidden via $section.hideRefs" '
-    -+		git -c $section.hideRefs=3Drefs/hidden/ rev-list --exclude-hidden=
-=3D$section --all >out &&
-    -+		cat >expected <<-EOF &&
-    -+		$NAMESPACE
-    -+		$TAG
-    -+		$COMMIT
-    -+		EOF
-    -+		test_cmp expected out
-    ++	test_expect_success "$section: passed multiple times" '
-    ++		echo "fatal: --exclude-hidden=3D passed more than once" >expected &&
-    ++		test_must_fail git -c transfer.hideRefs=3Drefs/hidden/ rev-list --e=
-xclude-hidden=3D$section --exclude-hidden=3D$section 2>err &&
-    ++		test_cmp expected err
-     +	'
-     +
-    -+	test_expect_success "--exclude-hidden=3D$section respects transfer.h=
-ideRefs" '
-    -+		git -c transfer.hideRefs=3Drefs/hidden/ rev-list --exclude-hidden=
-=3D$section --all >out &&
-    -+		cat >expected <<-EOF &&
-    -+		$NAMESPACE
-    -+		$TAG
-    -+		$COMMIT
-    -+		EOF
-    -+		test_cmp expected out
-    -+	'
-    -+
-    -+	test_expect_success "--exclude-hidden=3Dtransfer ignores $section.hi=
-deRefs" '
-    -+		git -c $section.hideRefs=3Drefs/hidden/ rev-list --exclude-hidden=
-=3Dtransfer --all >out &&
-    ++	test_expect_success "$section: without hiddenRefs" '
-    ++		git rev-list --exclude-hidden=3D$section --all >out &&
-     +		cat >expected <<-EOF &&
-     +		$NAMESPACE
-     +		$HIDDEN
-    @@ t/t6021-rev-list-exclude-hidden.sh (new)
-     +		test_cmp expected out
-     +	'
-     +
-    -+	test_expect_success "--exclude-hidden=3D$section respects both trans=
-fer.hideRefs and $section.hideRefs" '
-    ++	test_expect_success "$section: hidden via transfer.hideRefs" '
-    ++		git -c transfer.hideRefs=3Drefs/hidden/ rev-list --exclude-hidden=
-=3D$section --all >out &&
-    ++		cat >expected <<-EOF &&
-    ++		$NAMESPACE
-    ++		$TAG
-    ++		$COMMIT
-    ++		EOF
-    ++		test_cmp expected out
-    ++	'
-    ++
-    ++	test_expect_success "$section: hidden via $section.hideRefs" '
-    ++		git -c $section.hideRefs=3Drefs/hidden/ rev-list --exclude-hidden=
-=3D$section --all >out &&
-    ++		cat >expected <<-EOF &&
-    ++		$NAMESPACE
-    ++		$TAG
-    ++		$COMMIT
-    ++		EOF
-    ++		test_cmp expected out
-    ++	'
-    ++
-    ++	test_expect_success "$section: respects both transfer.hideRefs and $=
-section.hideRefs" '
-     +		git -c transfer.hideRefs=3Drefs/tags/ -c $section.hideRefs=3Drefs/h=
-idden/ rev-list --exclude-hidden=3D$section --all >out &&
-     +		cat >expected <<-EOF &&
-     +		$NAMESPACE
-    @@ t/t6021-rev-list-exclude-hidden.sh (new)
-     +		EOF
-     +		test_cmp expected out
-     +	'
-    ++
-    ++	test_expect_success "$section: negation without hidden refs marks ev=
-erything as uninteresting" '
-    ++		git rev-list --all --exclude-hidden=3D$section --not --all >out &&
-    ++		test_must_be_empty out
-    ++	'
-    ++
-    ++	test_expect_success "$section: negation with hidden refs marks them =
-as interesting" '
-    ++		git -c transfer.hideRefs=3Drefs/hidden/ rev-list --all --exclude-hi=
-dden=3D$section --not --all >out &&
-    ++		cat >expected <<-EOF &&
-    ++		$HIDDEN
-    ++		EOF
-    ++		test_cmp expected out
-    ++	'
-    ++
-    ++	test_expect_success "$section: hidden refs and excludes work togethe=
-r" '
-    ++		git -c transfer.hideRefs=3Drefs/hidden/ rev-list --exclude=3Drefs/t=
-ags/* --exclude-hidden=3D$section --all >out &&
-    ++		cat >expected <<-EOF &&
-    ++		$NAMESPACE
-    ++		$COMMIT
-    ++		EOF
-    ++		test_cmp expected out
-    ++	'
-    ++
-    ++	test_expect_success "$section: excluded hidden refs get reset" '
-    ++		git -c transfer.hideRefs=3Drefs/ rev-list --exclude-hidden=3D$secti=
-on --all --all >out &&
-    ++		cat >expected <<-EOF &&
-    ++		$NAMESPACE
-    ++		$HIDDEN
-    ++		$TAG
-    ++		$COMMIT
-    ++		EOF
-    ++		test_cmp expected out
-    ++	'
-    ++
-    ++	test_expect_success "$section: operates on stripped refs by default"=
- '
-    ++		GIT_NAMESPACE=3Dnamespace git -c transfer.hideRefs=3Drefs/namespace=
-d/ rev-list --exclude-hidden=3D$section --all >out &&
-    ++		cat >expected <<-EOF &&
-    ++		$HIDDEN
-    ++		$TAG
-    ++		$COMMIT
-    ++		EOF
-    ++		test_cmp expected out
-    ++	'
-    ++
-    ++	test_expect_success "$section: does not hide namespace by default" '
-    ++		GIT_NAMESPACE=3Dnamespace git -c transfer.hideRefs=3Drefs/namespace=
-s/namespace/ rev-list --exclude-hidden=3D$section --all >out &&
-    ++		cat >expected <<-EOF &&
-    ++		$NAMESPACE
-    ++		$HIDDEN
-    ++		$TAG
-    ++		$COMMIT
-    ++		EOF
-    ++		test_cmp expected out
-    ++	'
-    ++
-    ++	test_expect_success "$section: can operate on unstripped refs" '
-    ++		GIT_NAMESPACE=3Dnamespace git -c transfer.hideRefs=3D^refs/namespac=
-es/namespace/ rev-list --exclude-hidden=3D$section --all >out &&
-    ++		cat >expected <<-EOF &&
-    ++		$HIDDEN
-    ++		$TAG
-    ++		$COMMIT
-    ++		EOF
-    ++		test_cmp expected out
-    ++	'
-     +done
-     +
-     +test_done
-5:  68a5e56304 ! 5:  79c5c64a80 revparse: add `--exclude-hidden=3D` option
-    @@ Metadata
-     Author: Patrick Steinhardt <ps@pks.im>
-    =20
-      ## Commit message ##
-    -    revparse: add `--exclude-hidden=3D` option
-    +    rev-parse: add `--exclude-hidden=3D` option
-    =20
-         Add a new `--exclude-hidden=3D` option that is similar to the one =
-we just
-    -    added to git-rev-list(1). Given a seciton name `transfer`, `upload=
-pack`
-    -    or `receive` as argument, it causes us to exclude all references t=
-hat
-    -    would be hidden by the respective `$seciton.hideRefs` configuratio=
-n.
-    +    added to git-rev-list(1). Given a seciton name `uploadpack` or `re=
-ceive`
-    +    as argument, it causes us to exclude all references that would be =
-hidden
-    +    by the respective `$section.hideRefs` configuration.
-    =20
-         Signed-off-by: Patrick Steinhardt <ps@pks.im>
-    =20
-    @@ Documentation/git-rev-parse.txt: respectively, and they must begin w=
-ith `refs/`
-      or `--all`. If a trailing '/{asterisk}' is intended, it must be given
-      explicitly.
-     =20
-    -+--exclude-hidden=3D[transfer|receive|uploadpack]::
-    ++--exclude-hidden=3D[receive|uploadpack]::
-     +	Do not include refs that have been hidden via either one of
-    -+	`transfer.hideRefs`, `receive.hideRefs` or `uploadpack.hideRefs` that
-    -+	the next `--all`, `--branches`, `--tags`, `--remotes` or `--glob` wo=
-uld
-    -+	otherwise consider.  This option is cleared when seeing one of these
-    -+	pseudo-refs.
-    ++	`receive.hideRefs` or `uploadpack.hideRefs` (see linkgit:git-config[=
-1])
-    ++	that the next `--all`, `--branches`, `--tags`, `--remotes` or `--glo=
-b`
-    ++	would otherwise consider. This option is cleared when seeing one of
-    ++	these pseudo-refs.
-     +
-      --disambiguate=3D<prefix>::
-      	Show every object whose name begins with the given prefix.
-    @@ t/t6018-rev-list-glob.sh: test_expect_success 'rev-parse --exclude=
-=3Dref with --re
-      	compare rev-parse "--exclude=3Dupstream/x --remotes=3Dupstream/*" "u=
-pstream/one upstream/two"
-      '
-     =20
-    -+test_expect_success 'rev-parse --exclude-hidden=3D with --all' '
-    -+	compare "-c transfer.hideRefs=3Drefs/remotes/ rev-parse" "--exclude-=
-hidden=3Dtransfer --all" "--branches --tags"
-    -+'
-    ++for section in receive uploadpack
-    ++do
-    ++	test_expect_success "rev-parse --exclude-hidden=3D$section with --al=
-l" '
-    ++		compare "-c transfer.hideRefs=3Drefs/remotes/ rev-parse" "--exclude=
--hidden=3D$section --all" "--branches --tags"
-    ++	'
-     +
-    -+test_expect_success 'rev-parse --exclude-hidden=3D with --all' '
-    -+	compare "-c transfer.hideRefs=3Drefs/heads/subspace/ rev-parse" "--e=
-xclude-hidden=3Dtransfer --all" "--exclude=3Drefs/heads/subspace/* --all"
-    -+'
-    ++	test_expect_success "rev-parse --exclude-hidden=3D$section with --al=
-l" '
-    ++		compare "-c transfer.hideRefs=3Drefs/heads/subspace/ rev-parse" "--=
-exclude-hidden=3D$section --all" "--exclude=3Drefs/heads/subspace/* --all"
-    ++	'
-    ++done
-     +
-      test_expect_success 'rev-list --exclude=3Dglob with --branches=3Dglob=
-' '
-      	compare rev-list "--exclude=3Dsubspace-* --branches=3Dsub*" "subspac=
-e/one subspace/two"
-6:  9d15449559 =3D 6:  39b4741734 receive-pack: only use visible refs for c=
-onnectivity check
+=20
+ static int ls_refs_config(const char *var, const char *value,
+-			  void *data UNUSED)
++			  void *cb_data)
+ {
++	struct ls_refs_data *data =3D cb_data;
+ 	/*
+ 	 * We only serve fetches over v2 for now, so respect only "uploadpack"
+ 	 * config. This may need to eventually be expanded to "receive", but we
+ 	 * don't yet know how that information will be passed to ls-refs.
+ 	 */
+-	return parse_hide_refs_config(var, value, "uploadpack");
++	return parse_hide_refs_config(var, value, "uploadpack", &data->hidden_ref=
+s);
+ }
+=20
+ int ls_refs(struct repository *r, struct packet_reader *request)
+@@ -154,9 +157,10 @@ int ls_refs(struct repository *r, struct packet_reader=
+ *request)
+ 	memset(&data, 0, sizeof(data));
+ 	strvec_init(&data.prefixes);
+ 	strbuf_init(&data.buf, 0);
++	string_list_init_dup(&data.hidden_refs);
+=20
+ 	ensure_config_read();
+-	git_config(ls_refs_config, NULL);
++	git_config(ls_refs_config, &data);
+=20
+ 	while (packet_reader_read(request) =3D=3D PACKET_READ_NORMAL) {
+ 		const char *arg =3D request->line;
+@@ -195,6 +199,7 @@ int ls_refs(struct repository *r, struct packet_reader =
+*request)
+ 	packet_fflush(stdout);
+ 	strvec_clear(&data.prefixes);
+ 	strbuf_release(&data.buf);
++	string_list_clear(&data.hidden_refs, 1);
+ 	return 0;
+ }
+=20
+diff --git a/refs.c b/refs.c
+index 1491ae937e..2c7e88b190 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1414,9 +1414,8 @@ char *shorten_unambiguous_ref(const char *refname, in=
+t strict)
+ 					    refname, strict);
+ }
+=20
+-static struct string_list *hide_refs;
+-
+-int parse_hide_refs_config(const char *var, const char *value, const char =
+*section)
++int parse_hide_refs_config(const char *var, const char *value, const char =
+*section,
++			   struct string_list *hide_refs)
+ {
+ 	const char *key;
+ 	if (!strcmp("transfer.hiderefs", var) ||
+@@ -1431,21 +1430,16 @@ int parse_hide_refs_config(const char *var, const c=
+har *value, const char *secti
+ 		len =3D strlen(ref);
+ 		while (len && ref[len - 1] =3D=3D '/')
+ 			ref[--len] =3D '\0';
+-		if (!hide_refs) {
+-			CALLOC_ARRAY(hide_refs, 1);
+-			hide_refs->strdup_strings =3D 1;
+-		}
+-		string_list_append(hide_refs, ref);
++		string_list_append_nodup(hide_refs, ref);
+ 	}
+ 	return 0;
+ }
+=20
+-int ref_is_hidden(const char *refname, const char *refname_full)
++int ref_is_hidden(const char *refname, const char *refname_full,
++		  const struct string_list *hide_refs)
+ {
+ 	int i;
+=20
+-	if (!hide_refs)
+-		return 0;
+ 	for (i =3D hide_refs->nr - 1; i >=3D 0; i--) {
+ 		const char *match =3D hide_refs->items[i].string;
+ 		const char *subject;
+diff --git a/refs.h b/refs.h
+index 8958717a17..3266fd8f57 100644
+--- a/refs.h
++++ b/refs.h
+@@ -808,7 +808,8 @@ int update_ref(const char *msg, const char *refname,
+ 	       const struct object_id *new_oid, const struct object_id *old_oid,
+ 	       unsigned int flags, enum action_on_err onerr);
+=20
+-int parse_hide_refs_config(const char *var, const char *value, const char =
+*);
++int parse_hide_refs_config(const char *var, const char *value, const char =
+*,
++			   struct string_list *);
+=20
+ /*
+  * Check whether a ref is hidden. If no namespace is set, both the first a=
+nd
+@@ -818,7 +819,7 @@ int parse_hide_refs_config(const char *var, const char =
+*value, const char *);
+  * the ref is outside that namespace, the first parameter is NULL. The sec=
+ond
+  * parameter always points to the full ref name.
+  */
+-int ref_is_hidden(const char *, const char *);
++int ref_is_hidden(const char *, const char *, const struct string_list *);
+=20
+ /* Is this a per-worktree ref living in the refs/ namespace? */
+ int is_per_worktree_ref(const char *refname);
+diff --git a/upload-pack.c b/upload-pack.c
+index 0b8311bd68..9db17f8787 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -62,6 +62,7 @@ struct upload_pack_data {
+ 	struct object_array have_obj;
+ 	struct oid_array haves;					/* v2 only */
+ 	struct string_list wanted_refs;				/* v2 only */
++	struct string_list hidden_refs;
+=20
+ 	struct object_array shallows;
+ 	struct string_list deepen_not;
+@@ -118,6 +119,7 @@ static void upload_pack_data_init(struct upload_pack_da=
+ta *data)
+ {
+ 	struct string_list symref =3D STRING_LIST_INIT_DUP;
+ 	struct string_list wanted_refs =3D STRING_LIST_INIT_DUP;
++	struct string_list hidden_refs =3D STRING_LIST_INIT_DUP;
+ 	struct object_array want_obj =3D OBJECT_ARRAY_INIT;
+ 	struct object_array have_obj =3D OBJECT_ARRAY_INIT;
+ 	struct oid_array haves =3D OID_ARRAY_INIT;
+@@ -130,6 +132,7 @@ static void upload_pack_data_init(struct upload_pack_da=
+ta *data)
+ 	memset(data, 0, sizeof(*data));
+ 	data->symref =3D symref;
+ 	data->wanted_refs =3D wanted_refs;
++	data->hidden_refs =3D hidden_refs;
+ 	data->want_obj =3D want_obj;
+ 	data->have_obj =3D have_obj;
+ 	data->haves =3D haves;
+@@ -151,6 +154,7 @@ static void upload_pack_data_clear(struct upload_pack_d=
+ata *data)
+ {
+ 	string_list_clear(&data->symref, 1);
+ 	string_list_clear(&data->wanted_refs, 1);
++	string_list_clear(&data->hidden_refs, 1);
+ 	object_array_clear(&data->want_obj);
+ 	object_array_clear(&data->have_obj);
+ 	oid_array_clear(&data->haves);
+@@ -842,8 +846,8 @@ static void deepen(struct upload_pack_data *data, int d=
+epth)
+ 		 * Checking for reachable shallows requires that our refs be
+ 		 * marked with OUR_REF.
+ 		 */
+-		head_ref_namespaced(check_ref, NULL);
+-		for_each_namespaced_ref(check_ref, NULL);
++		head_ref_namespaced(check_ref, data);
++		for_each_namespaced_ref(check_ref, data);
+=20
+ 		get_reachable_list(data, &reachable_shallows);
+ 		result =3D get_shallow_commits(&reachable_shallows,
+@@ -1158,11 +1162,11 @@ static void receive_needs(struct upload_pack_data *=
+data,
+=20
+ /* return non-zero if the ref is hidden, otherwise 0 */
+ static int mark_our_ref(const char *refname, const char *refname_full,
+-			const struct object_id *oid)
++			const struct object_id *oid, const struct string_list *hidden_refs)
+ {
+ 	struct object *o =3D lookup_unknown_object(the_repository, oid);
+=20
+-	if (ref_is_hidden(refname, refname_full)) {
++	if (ref_is_hidden(refname, refname_full, hidden_refs)) {
+ 		o->flags |=3D HIDDEN_REF;
+ 		return 1;
+ 	}
+@@ -1171,11 +1175,12 @@ static int mark_our_ref(const char *refname, const =
+char *refname_full,
+ }
+=20
+ static int check_ref(const char *refname_full, const struct object_id *oid,
+-		     int flag UNUSED, void *cb_data UNUSED)
++		     int flag UNUSED, void *cb_data)
+ {
+ 	const char *refname =3D strip_namespace(refname_full);
++	struct upload_pack_data *data =3D cb_data;
+=20
+-	mark_our_ref(refname, refname_full, oid);
++	mark_our_ref(refname, refname_full, oid, &data->hidden_refs);
+ 	return 0;
+ }
+=20
+@@ -1204,7 +1209,7 @@ static int send_ref(const char *refname, const struct=
+ object_id *oid,
+ 	struct object_id peeled;
+ 	struct upload_pack_data *data =3D cb_data;
+=20
+-	if (mark_our_ref(refname_nons, refname, oid))
++	if (mark_our_ref(refname_nons, refname, oid, &data->hidden_refs))
+ 		return 0;
+=20
+ 	if (capabilities) {
+@@ -1327,7 +1332,7 @@ static int upload_pack_config(const char *var, const =
+char *value, void *cb_data)
+ 	if (parse_object_filter_config(var, value, data) < 0)
+ 		return -1;
+=20
+-	return parse_hide_refs_config(var, value, "uploadpack");
++	return parse_hide_refs_config(var, value, "uploadpack", &data->hidden_ref=
+s);
+ }
+=20
+ static int upload_pack_protected_config(const char *var, const char *value=
+, void *cb_data)
+@@ -1375,8 +1380,8 @@ void upload_pack(const int advertise_refs, const int =
+stateless_rpc,
+ 		advertise_shallow_grafts(1);
+ 		packet_flush(1);
+ 	} else {
+-		head_ref_namespaced(check_ref, NULL);
+-		for_each_namespaced_ref(check_ref, NULL);
++		head_ref_namespaced(check_ref, &data);
++		for_each_namespaced_ref(check_ref, &data);
+ 	}
+=20
+ 	if (!advertise_refs) {
+@@ -1441,6 +1446,7 @@ static int parse_want(struct packet_writer *writer, c=
+onst char *line,
+=20
+ static int parse_want_ref(struct packet_writer *writer, const char *line,
+ 			  struct string_list *wanted_refs,
++			  struct string_list *hidden_refs,
+ 			  struct object_array *want_obj)
+ {
+ 	const char *refname_nons;
+@@ -1451,7 +1457,7 @@ static int parse_want_ref(struct packet_writer *write=
+r, const char *line,
+ 		struct strbuf refname =3D STRBUF_INIT;
+=20
+ 		strbuf_addf(&refname, "%s%s", get_git_namespace(), refname_nons);
+-		if (ref_is_hidden(refname_nons, refname.buf) ||
++		if (ref_is_hidden(refname_nons, refname.buf, hidden_refs) ||
+ 		    read_ref(refname.buf, &oid)) {
+ 			packet_writer_error(writer, "unknown ref %s", refname_nons);
+ 			die("unknown ref %s", refname_nons);
+@@ -1508,7 +1514,7 @@ static void process_args(struct packet_reader *reques=
+t,
+ 			continue;
+ 		if (data->allow_ref_in_want &&
+ 		    parse_want_ref(&data->writer, arg, &data->wanted_refs,
+-				   &data->want_obj))
++				   &data->hidden_refs, &data->want_obj))
+ 			continue;
+ 		/* process have line */
+ 		if (parse_have(arg, &data->haves))
 --=20
 2.38.1
 
 
---B6GWznbpszh7ppf2
+--U7mHYpJEB091z5tk
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmNqKXYACgkQVbJhu7ck
-PpQXGRAArlYr2tZm/kEc4hC506sn28rTJl6V2DgTHxnV8C29G9joSmhX9SrgiOnu
-tvujfYQNENflWl0sVPkSIJvldglEWmFTby1XqEjy7UuUC0OzK7K08/NVeGpAxwLd
-lCyIh27IVGT4nGn+7EBxm3xARlo8MX2K2HJTLsQ+ojHVswERIxtPO1H+zQBpcWNC
-AmoM2bcdmBUigSo2GBxrA89p85ybyvRQMc2tOJiU1rNm0yncVZv84PoJ+A3mycsu
-PqGnQFFNTFB/skah9Swso66kDlD1+8w3R65bt+vlrjvk91TNw4zc1BmN7xVzpFuU
-9FV+m6xtbSxJkldRuhtzqBTDwB+XXwP3Y2pnrgXfMm5qMZrABQxo2Ymrl9paaPC0
-J+s9d21b+7JIPfzMEixCIfoVl2aFYMf/hoLwgTzfNK+Fc0on/TZyZFF2j3xnXwTF
-7IA4QCpMF1pF3oC0BWo4jRuSKuhNPzZK9ZkAESeuN5LmwibzcK5P3Zc9m260+uR8
-W5MV79s0uEC28x19FMaJtfrKOdx/NYJocB+26rcxU6d8f6d+Xfak10g2W70LoaQ6
-y+48GGbTz/mtQOJq+GQ5yE3CUkoPGs2mPAYJmciJdmw1Gysh34uYmTNMxwENKwx1
-CxJtysJdEZzj4j0pwB69MM/HHD3/1cGFZ3B0e3vT9+icKZdlOLE=
-=xV+5
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmNqKXoACgkQVbJhu7ck
+PpQzohAAgoTYdyzbuTawW8+1s04A7G6Ak+L1HDqTKmo/H4K6pAcqQhpViLNG3mBD
+OnaepqhA+KsnYAgo7Z6Su0T0Rv2IU0iAiuQPO/gLBDIyNP4Fm3EROvZHAVhVz9A2
+jHgP1IeX1YOJ9alAnjr1THdwkZdfH8pXhSpCev8YnOC6yRkJSlV/MzuwKACg1zUN
+DEzO2gbruzelVZzRKGYFX8kd19nXuD+BfANFoyKdDhv9KMFl4m0Uv8TEoZnF5yJ+
+yqjRFWakvELWmKqQSQdmkJj5XQ/zGEWcuQMXHIbkil6OZdXfZTwBYVj38yCHjVM/
+WXZgXJVtBagClRayh1IyLCE8sgnH8QKqpKnnzA2JMo4y6ScrfE81XyWLaDuRKgxh
+DnbnE8kR4qz54eRWBT9q4g+axOYSrHhro43GulzgBO4NlunEaVlUIJWvY18Q8Oiy
+4ADl0u20R6Hj4wI/Qa9mpk3hIr8m3wq6qDtDQ9rZCwZPt00qagjvL4Qg6CVW4p1O
+snxrS90avnuOe6KZT5thuTkIytBW4pyKj65oXjel9ntvP4r1KjGOyt6bBc9ckbh9
+0B+LFA1ClxMeHgVxtAJsgCZrCd+CmSxOe3h7AIRZ2rqS8B/93A/NBnsdNNOFNKaG
+dWa6uDyiRipKJ+RSR2HJjpUkt+S6YO9x35L0OjDkObO8aLnHlE0=
+=d/nF
 -----END PGP SIGNATURE-----
 
---B6GWznbpszh7ppf2--
+--U7mHYpJEB091z5tk--
