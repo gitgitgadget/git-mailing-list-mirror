@@ -2,87 +2,167 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BCE4C433FE
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 14:24:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75F21C4332F
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 14:25:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234048AbiKHOYb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 09:24:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58990 "EHLO
+        id S233098AbiKHOZZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 09:25:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234212AbiKHOYI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2022 09:24:08 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DDCD5C74C
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 06:23:09 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id v27so22726640eda.1
-        for <git@vger.kernel.org>; Tue, 08 Nov 2022 06:23:09 -0800 (PST)
+        with ESMTP id S233998AbiKHOZE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2022 09:25:04 -0500
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5CD06389
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 06:23:37 -0800 (PST)
+Received: by mail-qk1-x735.google.com with SMTP id k2so9136828qkk.7
+        for <git@vger.kernel.org>; Tue, 08 Nov 2022 06:23:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=o4BoqUm+lL6JHgePg047V+3/+DuJbzxzbl3M4HafnK4=;
-        b=EEbzQ7WFDjcGQhkK/fTnyWhlyUguK7aFShy5c54EVF8FMQYmKKZ/0l6NaJyZYwf3Z5
-         HDyRGbYRSjvuEtxdk3dttSyKcgGYVoPAkuTjs7tqvAQV6Ls5p9J86W61aDCWzXYrh2aG
-         yO+TF+KQpuT8d7DnNjXzQ91bzOcSQmvjW6DMS9a1KE0+Mvk+SsQJE0eku3JyvQcsNvf6
-         cGZWjyCoy63ocxsxdqXVPTzBbVMMZiBNqsvHgYIG6XvVWEqZZvYcvqDk9/U6OgjIVGri
-         49MLY+vKwzhA3ym36K/lYAPjlCj467bLUXfPWewsGq3b92ZZ2ov/6YkIhtWBK9aYEV06
-         w+Uw==
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tzBVnGuAfjVoUdDPReJcHyOb2XEEXHB5HJYsG3wh4NI=;
+        b=oPwTfyg44vsQ6ZXlcr6NTqwLMeR+9fCDSruZeGEhQgyxGYzCcs9t891158nD+5vePG
+         yUUvI/ybJwUPRwQrtyoXX6mr1RJ9ABEiYSA1vPpd7k87rMHOmfklbgNdKgRISo6PoWNy
+         3u8X5TRArLCyCTmWmWWvl7ayEncCl8Zt8oS8eb34j7hKTaoB3JLf+fXV34Z/dxmantek
+         yk2GttKBFNna9SB+AMBaf1Cu21oxV1An2MCfrB/Ay4PZ25s/zdhL0ZuBIRnWS+z6wUin
+         1Sqiot2wGhk3ABypYSnSnpwvPTypPNchom5azlMsdD6TdfamThxylrLWtWEkN83PI9nE
+         mU+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=o4BoqUm+lL6JHgePg047V+3/+DuJbzxzbl3M4HafnK4=;
-        b=2rmyFz1dL7YQ/EnzoexS3FNNkEDD7mtSgsvZOzU2+adqnTtwpJKy3vs/ZNtMh/d/iS
-         LKLSRLmOCHDeGFDD7bfdnI4WJiSb8K7cn+9DmIM3vfa5TPXVl7TtLCnqH0WgvQean9wh
-         kDvkg2CN8xCjaDlaU97oJInnAHUMF1I/UzvMFbDii9y47pIhjEIMkeH853mpmkox8zdI
-         bIowpswqYo7IgHO9xXKqmeuYlnM1nCylmPvrbSShWXJEmqxSbed+lBO22TQCfA1VLxqP
-         estnChtwPuVLLoKhcHWkfJZ/MWD43sRhdQ/PNIdG/vwPKlOCa5QNFQPKAcbXir7FG+FF
-         qahA==
-X-Gm-Message-State: ACrzQf1f3l6citlzcSjTn/vbBcP1kxYc1Xrm+J3IDr9uUx1iTqhPislm
-        X4ykN7/MFB4zXIASMLLY4+krOPosBCKTdA==
-X-Google-Smtp-Source: AMsMyM73rc6N2ZI0ZN7bI8jG3YE2Eqwf7XdDoV84UNQJTud7xoJe0bE2Iuv8pqJhIGXAe+SQLEhKlQ==
-X-Received: by 2002:a50:c21a:0:b0:463:c2ac:95f6 with SMTP id n26-20020a50c21a000000b00463c2ac95f6mr38257747edf.398.1667917388013;
-        Tue, 08 Nov 2022 06:23:08 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id qq18-20020a17090720d200b007ad98918743sm4739712ejb.1.2022.11.08.06.23.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Nov 2022 06:23:07 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1osPVK-000Zv0-3B;
-        Tue, 08 Nov 2022 15:23:06 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org
-Subject: ab/misc-hook-submodule-run-command (was: What's cooking in git.git
- (Nov 2022, #01; Thu, 3))
-Date:   Tue, 08 Nov 2022 15:22:12 +0100
-References: <Y2RldUHTwNzmez73@nand.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <Y2RldUHTwNzmez73@nand.local>
-Message-ID: <221108.868rklseyd.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tzBVnGuAfjVoUdDPReJcHyOb2XEEXHB5HJYsG3wh4NI=;
+        b=tfLKf/+yYT+udq2N7SURM7CXxJ13JTKS8PH13qCDwUNUmweoeeizWCtmfDeBz3l6r7
+         8llU/AP7atAvZzTuIFF/WyBnQWAQ/HBdUFX8zVgKNujRs1uqWTp3uawHlHsLpZ7LkZFC
+         5sYVA7cgXE263kjAMVj1y88oBLVYEwZu8oiL8JzZoRlbEHPERHaCMruhYdaH+5n8KoPv
+         DwaSMir2upWm2cDf/8Zz9Ts2ufmq/fdleZXVMpgw2SXNqXzzJmM0fUvdITX3xuqPl3+M
+         beBfa5jNl/TIPf19y7o6TQz4OVSFWSrpE9CGpZVS27QcbVMdEk4STtcZ03jn0SwQLW7J
+         ValQ==
+X-Gm-Message-State: ACrzQf3P2aFEhvhQtiHcfP8BB0ucFh9qMm844xC9YT2V/o+hqT1kuIwS
+        jmxCyOaJyCNQCaxizGmNIxE=
+X-Google-Smtp-Source: AMsMyM56onv1qpvwFeyxzbSqjY23MMCb4LsvRV+OwCDN7Z9ntKfxhT4Em8WEloE9qMoC6pAIMjtRbQ==
+X-Received: by 2002:a37:a44:0:b0:6fa:11f4:392 with SMTP id 65-20020a370a44000000b006fa11f40392mr38925197qkk.381.1667917416955;
+        Tue, 08 Nov 2022 06:23:36 -0800 (PST)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id bi37-20020a05620a31a500b006f956766f76sm9392649qkb.1.2022.11.08.06.23.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Nov 2022 06:23:36 -0800 (PST)
+Subject: Re: [PATCH v3 0/8] clone, submodule update: check out submodule
+ branches
+To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Glen Choo <chooglen@google.com>
+References: <pull.1321.v2.git.git.1666297238.gitgitgadget@gmail.com>
+ <pull.1321.v3.git.git.1666988096.gitgitgadget@gmail.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <b9e7e6b7-43f8-3b80-79ba-3ffc53bec7f8@gmail.com>
+Date:   Tue, 8 Nov 2022 09:23:35 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <pull.1321.v3.git.git.1666988096.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Glen,
 
-On Thu, Nov 03 2022, Taylor Blau wrote:
+Le 2022-10-28 à 16:14, Glen Choo via GitGitGadget a écrit :
+> This version has relatively few changes, and should address all of
+> Jonathan's comments (thanks!).
+> 
 
-> * ab/misc-hook-submodule-run-command (2022-10-31) 3 commits
->   (merged to 'next' on 2022-11-03 at 0f01b25561)
->  + run-command tests: test stdout of run_command_parallel()
->  + submodule tests: reset "trace.out" between "grep" invocations
->  + hook tests: fix redirection logic error in 96e7225b310
->
->  Various test updates.
->
->  Waiting for review.
->  source: <cover-0.3-00000000000-20221029T025520Z-avarab@gmail.com>
+I was not able to take a look before now, but I think the suggestions by Jonathan
+on v2 make a lot of sense, especially adding more tests in the last patch.
+Thanks for these additional tests.
 
-Per [1] that's a stale comment, and you'd decided on a "let's merge this
-down".
+I have a few comments/questions on the overall design, which I'll write up 
+at the end of this reply since they are more general.
+> = Description
+> 
+> This series teaches "git clone --recurse-submodules" and "git submodule
+> update" to understand "submodule.propagateBranches" (see Further Reading for
+> context), i.e. if the superproject has a branch checked out and a submodule
+> is cloned, the submodule will have the same branch checked out.
+> 
+> To do this, "git submodule update" checks if "submodule.propagateBranches"
+> is true. If so, and if the superproject has the branch 'topic' checked out,
+> then:
+> 
+>  * Submodules are cloned without their upstream branches
+>  * The 'topic' branch is created in the submodule
+>  * The submodule is updated via "git checkout topic" instead of checking out
+>    the gitlink's OID.
+> 
 
-1. https://lore.kernel.org/git/Y2Kn5MVQojz33cta@nand.local/
+Currently, the description of submodule.propagateBranches is:
+
+    [EXPERIMENTAL] A boolean that enables branching support when 
+    using --recurse-submodules or submodule.recurse=true. Enabling this 
+    will allow certain commands to accept --recurse-submodules and certain 
+    commands that already accept --recurse-submodules will now consider branches. 
+    Defaults to false.
+
+I think with this series that description must be tweaked, because "git submodule update"
+does not qualify as a command that "now accepts --recurse-submodules", neither does
+it "already accept --recurse-submodules" but now changes behaviour to consider branches.
+
+It does change behaviour to "now consider branches", but never had anything to do with
+"--recurse-submodules".
+
+--8<--
+
+> 
+> = Future work
+> 
+>  * Patch 5, which refactors resolve_gitlink_ref(), notes that a better
+>    interface would be to return the refname instead of using an "out"
+>    parameter, but we use an "out" parameter so that any new callers trying
+>    to use the old function signature will get stopped by the compiler. The
+>    refactor can be finished at a later time.
+> 
+>  * Patch 5 uses the name "target" when we are talking about what a symref
+>    points to, instead of "referent" like the other functions. "target" is
+>    the better choice, since "referent" could also apply to non-symbolic
+>    refs, but that cleanup is quite big.
+> 
+>  * Patch 8 notes that for already cloned submodules, the branch may not
+>    point to the same OID as the superproject gitlink, and it may not even
+>    exist. This will be addressed in a more comprehensive manner when we add
+>    support for checking out branches with "git checkout
+>    --recurse-submodules".
+
+
+A few points I thought about while reading this version:
+
+1. There is always a possibility that the branch name in the superproject already exists
+in the submodule remote, but is a completely different topic (think of a branch named "refactor"
+for example). With this series (and propagateBranches=true), this would mean that 
+the initial submodule clone would create a local branch "refactor" that points to the gitlink
+in the superproject, and a remote-tracking branch "origin/refactor" that points to the unrelated
+submodule topic branch from the submodule remote. This could be confusing... but I don't
+really know what Git could do about it !
+
+In patch 3/8 'git branch' is used to create the submodule branch from an oid, and so 
+it does not track any branch, and is not affected by 'branch.autoSetupMerge' as far as I 
+could test. But maybe this should be explicitely mentioned somewhere? 
+
+2. The new "git submodule update" behaviour seems to only make sense with "--checkout", 
+which is the default "git submodue update" mode. But what if one uses "git submodule
+update --merge", or "--rebase", or has submodule.<name>.update set to a custom command
+or "none" ? Is the idea that these modes are incompatible with submodule branching ?
+I can understand that this gets really complex and might change when 'git merge' and 
+'git rebase' themselves are taught to update submodule worktrees (and probably also submodule
+branches from what you refer to as future work), but in any case I think we should at 
+least test the new code when these options are used (if only to error out outright as
+incompatible)...
+
+Thanks and cheers,
+
+Philippe.
