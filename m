@@ -2,76 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8F9BC43217
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 21:35:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C07BC433FE
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 21:43:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229961AbiKHVfr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 16:35:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55570 "EHLO
+        id S229767AbiKHVnu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 16:43:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229974AbiKHVfq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2022 16:35:46 -0500
-Received: from mail-il1-x12f.google.com (mail-il1-x12f.google.com [IPv6:2607:f8b0:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17602264A2
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 13:35:45 -0800 (PST)
-Received: by mail-il1-x12f.google.com with SMTP id e19so8155746ili.4
-        for <git@vger.kernel.org>; Tue, 08 Nov 2022 13:35:45 -0800 (PST)
+        with ESMTP id S229611AbiKHVnt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2022 16:43:49 -0500
+Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F624DEAA
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 13:43:48 -0800 (PST)
+Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-37010fefe48so146901547b3.19
+        for <git@vger.kernel.org>; Tue, 08 Nov 2022 13:43:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=cdwE7lqIi3kn6+O/BeQ6ImmXGDAM8QR1JRzbexfj7P4=;
-        b=zwl2eEcmvNvwwiEyXRhuzRLvtyvACu1CHtdOobWJ6WYlwnwL9JwK/gwa9J334mUh6U
-         m3nCOnA0C9gOi/0aJDn68M2BNVxThYP7m5f35m4aU948yeGz7Dw0dZRisa/aDK/SHIyO
-         MgGb+rdRCsSLS/OT4XhMp4yq0+YPsqYJgf6WEGfLWMzMnLF8y6hlXVDKGj5Sl8VcxASo
-         vRr8O4aRIQEZ4ldDDg0aHRmzEgYdgaTlx2oFVnq6JoJ0GSq07qw76pP0y1vFSYe6KTH3
-         a6G+LLZcJtCXzKU+A47DLlnqbmEh4K+z2DYM6FlisAtxTW6PU6OsO8+0pMI5oVLxzydm
-         37Fg==
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Ph02t4qiYFUA5lcka6J33/L2hIUqQEbe0oyletFQ1To=;
+        b=fxGMF3x55v5yjc/JmhSxi08gQ0CCoNv4JN227tjc7Vd7+MexnQd7lFlEmmnfM3i8KT
+         frsIm59mMRVN5RcDfZWYcDmGf3J9w+Qqmz29jSymY/il8O3ZyjsZBkhpOUrYkgp/06iE
+         4h8xkRQwBAPowVaQTU7Pnl991B35rwVPoz5eCot2gr2TgfQssYIK/cUaf4IvuC8emGXO
+         dpuE4Ql9fRCTWxHSyfK8qtPrRc0EbMNG0iqzR1NpsGQQ+SV+po0VBFL+4pEj/TcYRZZ7
+         Ttz8bc1KxXqMonlygk/fXn4Fl5hq+dJWljJmB2UbHhZXQN/M8fo7NKSC/De+BWpOPjL+
+         wO4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cdwE7lqIi3kn6+O/BeQ6ImmXGDAM8QR1JRzbexfj7P4=;
-        b=rT7L8mrNO5oAx+vh5bOsJBzg4JV2wshDK8bLGSNz12pFnVt/p0GRYbGAz8Jih2REqw
-         Ka8QkeP2r0LkUNoBinGVx6yHsqq5MVWEkIv1n4cIAYaIKLv0qEt4Xtd8ZBcEA1K/UV6a
-         dGUu6ymtpoD//DNWEkfvwfaeQPD9et0CzTTh7ZEp7p9SgH/YhnTmNmst41J51c0K6XXm
-         fP34OggW2iPoVmjbSwGYYGCON1XtX1dyc8YYOTd0+FAAXy/si4WK0iiBtCemzuserSuq
-         p27MwF5vkI0jG19mN8YBXvBGXqoUHAVY/+KDS4bez9w1hC6X/cKi59vF7uk/eGzPicDn
-         iOlg==
-X-Gm-Message-State: ACrzQf1tXBqIGmnf/tcWOeidG47omNcZnVQEN13StMh8bFQCZ3hyWMYN
-        w3N0L+jHERS0CCzj/z8sqDBNxg==
-X-Google-Smtp-Source: AMsMyM4aL5Pc0h+6WSjgcryGN/0Zd/yMF+NkAzKzcLkaIsGRSfA24rAUl9qSD0hJ79ejbUNWeTEtHQ==
-X-Received: by 2002:a92:cb03:0:b0:300:c605:5270 with SMTP id s3-20020a92cb03000000b00300c6055270mr1015930ilo.199.1667943344476;
-        Tue, 08 Nov 2022 13:35:44 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id v14-20020a056e020f8e00b002fa9a1fc421sm4197720ilo.45.2022.11.08.13.35.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Nov 2022 13:35:44 -0800 (PST)
-Date:   Tue, 8 Nov 2022 16:35:43 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     srz_zumix via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, srz_zumix <zumix.cpp@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH] fsmonitor--daemon: on macOS support symlink
-Message-ID: <Y2rLr5zJTnqownCT@nand.local>
-References: <pull.1406.git.1667885119570.gitgitgadget@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1406.git.1667885119570.gitgitgadget@gmail.com>
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ph02t4qiYFUA5lcka6J33/L2hIUqQEbe0oyletFQ1To=;
+        b=OjCY+LV+tnfvOyK1r4stlQqDLUMyOTwPyGKzcHLFip8VyCA1JNg0SuKWrb4ye/FlJB
+         wpbyI7ZlUVTk7l/aUue8RrP/Lhko9xsL0xbchpjnX01Wym+yDG9dZ6SwFJSUrG+Z4sCe
+         7wuN/Gi4M6zn+A1py1szej1w5sZi4ZWx7938KGK+vEWiJfAuLUizPFGb9JNUK9gcIT9R
+         OuW6YJouXfuGMJNzUShAlu1v93PdBeVwdHeuKW8ESn/JhHLvHz2EMW1K0rqbs10tYD7x
+         o1uRHl49lVDn23ZSjRL1VzdOaiHkHfTM693EaUGWHkAUjxgzoxngsWoqcyzLUOnvTIPg
+         fE2A==
+X-Gm-Message-State: ACrzQf0WgmQAVCPvYWen6Rqsr+l5AHEUaQbVGHJllUqCiRefhz6UpiBH
+        pX6GFoLV0gW5x3dHIuhEnFwnKe6O7jG7JDOtcm5D
+X-Google-Smtp-Source: AMsMyM7g6Lb4NN1+BMyOt0037rLLid+svA3iiHr1COLQPMaEIJumjmxMZpiNN/EnIiojM9A9GRglGIPuus3NA1kz83uP
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a81:50d:0:b0:36a:6711:f7dc with SMTP
+ id 13-20020a81050d000000b0036a6711f7dcmr54320749ywf.276.1667943827720; Tue,
+ 08 Nov 2022 13:43:47 -0800 (PST)
+Date:   Tue,  8 Nov 2022 13:43:43 -0800
+In-Reply-To: <Y2mjTGvBUYpIicFl@nand.local>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.38.1.431.g37b22c650d-goog
+Message-ID: <20221108214344.272053-1-jonathantanmy@google.com>
+Subject: Re: [PATCH] submodule: explicitly specify on-demand upon push
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 08, 2022 at 05:25:19AM +0000, srz_zumix via GitGitGadget wrote:
-> From: srz_zumix <zumix.cpp@gmail.com>
->
-> Resolves a problem where symbolic links were not showing up in diff when
-> created or modified.
+Taylor Blau <me@ttaylorr.com> writes:
+> On Mon, Nov 07, 2022 at 04:25:52PM -0800, Jonathan Tan wrote:
+> > This now means that any push.recurseSubmodules configuration in any
+> > submodule is no longer respected: only the configuration (or CLI
+> > argument to override it) of the superproject is used. Update the
+> > documentation accordingly.
+> 
+> Hmm. Is that a desired outcome or an unfortunate side-effect of the
+> implementation below?
 
-Looks reasonable to me. Adding Jeff Hostetler (cc'd) as a possible
-reviewer.
+What started this effort was investigating whether push.recurseSubmodules
+could be set to "only", since that is something that would be useful at
+$DAYJOB. It turns out that push.recurseSubmodules is not documented to
+take "only", but it is supported, with the caveat that if a repository has
+push.recurseSubmodules=only, you cannot recursively push in its superproject
+because there is a check that submodules have been pushed, and with this
+setting, that submodule is not pushed (since only nested submodules are
+pushed).
 
-Thanks,
-Taylor
+In addition, there is the usage of the word "recursively" when describing
+"--recurse-submodules=only"...
+
+  If only is used all submodules will be recursively pushed while the
+  superproject is left unpushed.
+
+...even though this is not true with the default configuration. (Having said
+that, there is no "recursively" with --recurse-submodules=on-demand, so maybe
+it is the non-recursive meaning that is intended.)
+
+So all this led me to think that it's best if only the top-level configuration
+is used, but I'm open to other ideas.
+
+> Not having thought about this a lot, the behavior I might expect is
+> something along the lines of recursively pushing throughout the
+> submodule tree, stopping the recursion as soon as we get to a nested
+> submodule which says "don't push any of my children".
+> 
+> On the other hand, I could sympathize with a compelling argument that
+> the superproject alone should be in charge of determining what gets
+> pushed.
+> 
+> Though TBH, it seems like the former is more convincing. If I depend on
+> an external repository through a submodule, and that repository itself
+> has submodules, it would be nice to configure (once) that I don't want
+> to even try and push any of that repository's children.
+
+I just tried this and the behavior is reasonable except possibly for when
+push.recurseSubmodules=only is configured in a top-level submodule. Let's see
+if other people have something to say. For me, this would also be fine since we
+can just make sure that we don't configure "only" in top-level submodules that
+have their own nested submodules.
