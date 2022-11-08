@@ -2,59 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E00CAC433FE
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 19:08:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2142C4332F
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 19:08:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229730AbiKHTIr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 14:08:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35740 "EHLO
+        id S229739AbiKHTIu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 14:08:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229635AbiKHTIi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2022 14:08:38 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB52A10B7D
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 11:08:35 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id bk15so22472920wrb.13
-        for <git@vger.kernel.org>; Tue, 08 Nov 2022 11:08:35 -0800 (PST)
+        with ESMTP id S229708AbiKHTIk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2022 14:08:40 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EFF81C901
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 11:08:36 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id t4so9425324wmj.5
+        for <git@vger.kernel.org>; Tue, 08 Nov 2022 11:08:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZEdMNo5xrErM+92B5lltAImx4U1/dLm7u8dY9DJZdmg=;
-        b=CpnA9cZZ/1KW3kyjwyiIP5Cqguvx4zAgR9kHinCY7o5sUowLJiG49/lvheK58LDeK/
-         L+I00gOQ5z/oyW3VNodDXG7o6ntksLPl0UTDEWELk08UhP680KYwWnm9Z78GLlkEDsgz
-         nNI4UXP5uDYya5l/zbuDbK0WALgGzIwpdDQeMIs2Lslyb/gm3C2XsGMMBVoTNbWvA9R1
-         QWAcg9vm9SVuk+sYXVwzBzuuMaTg6fWuAY96Z9oUgSZS/td6ncdd50S/yIrWf6EqFalH
-         GXkMER2dT/9WF4QZmy44Z0gZhITO4kiMn6xEX8kZwn1IctRCsFlx9FeHBf7E+8OqDO4Z
-         Yqtg==
+        bh=fDwaAuzqEsk18F/aZO+LaxvnVxNLnfZutGydxL35OC0=;
+        b=fLJz/b1pa6uN4ZsJzykzbZ7qEobH0apU+a7XhlBe6Dsl+8frAcVjAU+fAzI2gcFvNt
+         47nQ97weKFTCo6y5hnA8O5M4NkjxHe1wAuws8QLErTZ1dOuLI+wqki2WtifIK2qdTCVA
+         VQkNVl0xuVIOJz/o56RZDrrKG4VzXq2mytMK1kog8ZLX4+bHSaGR0pzHol3WgDR8ycAy
+         aBllrrFuBNA0H7xhtWc7DY884EAHk1m15tpW2TPFYaR57pNZZrP7BPsvJ5Rt7ahGJl1N
+         f2WGjRVgdhP+xMxXG0QPQS1KawmqMTVPF2UVdTzs0iwpz3y4BIVq/21HGMX0rjRJHrsj
+         UsIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ZEdMNo5xrErM+92B5lltAImx4U1/dLm7u8dY9DJZdmg=;
-        b=5SfkrgsH7DIahUaOGXpU1KhMT9snm7MYbzGAZQDcK5h4QMyUfmkEfCYofuF0nlE0RP
-         7wZgCHCp4fvTiP/D14Um5hQqun8zcq6cNyJlliq5sH4MSbnzwrXDh3fjBgjKkiVFFr/U
-         rUeLbcIhcLSGt1OXYIZ5tIlQKAO/M3ZHHuXhTkVhXXjwZXBO2ZKyYKOA5b9xazMb5/h9
-         TN2lOIwKrLO/LsfRaD2xOisXXf/x/+GF5LA7C3lxWuZ49GTY2AVBZ5x+HIMcu0rTaeEM
-         n2Ba7H+9mIIYBWIquS3C0fFXTVG6EGCA7TC/K9xdAUL7LHkwEJPE/1H4zBpKRT2BkrEw
-         la/w==
-X-Gm-Message-State: ACrzQf1yNhK9K1iADGuVggcSIikzG/N/+g9WnoBF0sHDjW1auVk8eMZz
-        cJEbRzHbUIR+TLYHjEMpGOf8S/xa6Uk=
-X-Google-Smtp-Source: AMsMyM5UGEQ3Okkt3nagpY/VB7vACGJ3t7CV8o7YEmgRnjQklORXJ1QHgeSSdfh22Dk0I0QOqvr51A==
-X-Received: by 2002:a05:6000:1241:b0:236:8a38:6744 with SMTP id j1-20020a056000124100b002368a386744mr38078565wrx.270.1667934513946;
-        Tue, 08 Nov 2022 11:08:33 -0800 (PST)
+        bh=fDwaAuzqEsk18F/aZO+LaxvnVxNLnfZutGydxL35OC0=;
+        b=a6J5nxkLhOYHlSZMI43UveOtZyfiqeG1KekT9PD1be2NQvBQvgY3gPabCVv59Xc5/Y
+         70b8ow/vSHbdj/cQqOotmnrW+wAj876P2j7fzKAbe1YDsZNZW1g+8vfByBDM2eaXqR64
+         YvSfWtkkp8dBovuxBtrTOMBybd6ZClR1M2a4hjVxRs4gJwTHOGts+XHUV9sJgTJCEhSz
+         i7cqmGc7BIs6RVi6HTq2knsTbfL8Nxfkyzvk/cbhfaES95UgDlRp8zOwueUyjTW0XmX3
+         QlKNs/sKUoHetwS7AIbsYnATQWdmyb4jV6Jf7f2n0eG2BzboRoRQ2JpvDLqTKXtyBvb+
+         uUGA==
+X-Gm-Message-State: ACrzQf20WbCqttmiSCNQon4pERlOAPn7amIghaQ3BrR3eZCbneXZJyfF
+        5sBLv6i9i3vagzhv7abl5Elz0r1+IHY=
+X-Google-Smtp-Source: AMsMyM5iwojw0qEJLDKAmlXipCiDZp14FLcdntYc6w0shhQf+xxSDNQ/bV+R9oTd3NmnQ7Mc1WIxow==
+X-Received: by 2002:a7b:c7c1:0:b0:3c7:103:f964 with SMTP id z1-20020a7bc7c1000000b003c70103f964mr38667344wmk.121.1667934514745;
+        Tue, 08 Nov 2022 11:08:34 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k8-20020a05600c168800b003cf47fdead5sm11851856wmn.30.2022.11.08.11.08.33
+        by smtp.gmail.com with ESMTPSA id b6-20020a5d6346000000b0022e66749437sm10802139wrw.93.2022.11.08.11.08.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Nov 2022 11:08:33 -0800 (PST)
-Message-Id: <fa56128c37280ccc87f8f8f6fd586db221b13ea4.1667934510.git.gitgitgadget@gmail.com>
+        Tue, 08 Nov 2022 11:08:34 -0800 (PST)
+Message-Id: <739c6df1dbcf1963fb426a3c25dc22fa46f7c3e0.1667934510.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1375.git.git.1667934510.gitgitgadget@gmail.com>
 References: <pull.1375.git.git.1667934510.gitgitgadget@gmail.com>
 From:   "Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 08 Nov 2022 19:08:29 +0000
-Subject: [PATCH 3/4] chainlint: latch start/end position of each token
+Date:   Tue, 08 Nov 2022 19:08:30 +0000
+Subject: [PATCH 4/4] chainlint: annotate original test definition rather than
+ token stream
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,332 +79,538 @@ lacks comments, indentations, here-doc bodies, and so forth, this
 tokenized representation can be difficult for the test author to digest
 and relate back to the original test definition.
 
-To address this shortcoming, an upcoming change will make it print out
-an annotated copy of the original test definition rather than the
-tokenized representation. In order to do so, it will need to know the
-start and end positions of each token in the original test definition.
-As preparation, upgrade TestParser::scan_token() to latch the start and
-end position of the token being scanned, and return that information
-along with the token itself. A subsequent change will take advantage of
-this positional information.
+However, now that each parsed token carries positional information, the
+location of a detected problem can be pinpointed precisely in the
+original test definition. Therefore, take advantage of this information
+to annotate the test definition itself rather than annotating the parsed
+token stream, thus making it easier for a test author to relate a
+problem back to the source.
 
-In terms of implementation, TestParser::scan_token() is retrofitted to
-return a tuple consisting of the token's lexeme and its start and end
-positions, rather than returning just the lexeme. However, an
-alternative would be to define a class which represents a token:
+Maintaining the positional meta-information associated with each
+detected problem requires a slight change in how the problems are
+managed internally. In particular, shell syntax such as:
 
-    package Token;
+    msg="total: $(cd data; wc -w *.txt) words"
 
-    sub new {
-        my ($class, $lexeme, $start, $end) = @_;
-        bless [$lexeme, $start, $end] => $class;
-    }
+requires the lexical analyzer to recursively invoke the parser in order
+to detect problems within the $(...) expression inside the double-quoted
+string. In this case, the recursive parse context will detect the broken
+&&-chain between the `cd` and `wc` commands, returning the token stream:
 
-    sub as_string {
-        my $self = shift @_;
-        return $self->[0];
-    }
+    cd data ; ?!AMP?! wc -w *.txt
 
-    sub compare {
-        my ($x, $y) = @_;
-        if (UNIVERSAL::isa($y, 'Token')) {
-            return $x->[0] cmp $y->[0];
-        }
-        return $x->[0] cmp $y;
-    }
+However, the parent parse context will see everything inside the
+double-quotes as a single string token:
 
-    use overload (
-        '""' => 'as_string',
-        'cmp' => 'compare'
-    );
+    "total: $(cd data ; ?!AMP?! wc -w *.txt) words"
 
-The major benefit of the class-based approach is that it is entirely
-non-invasive; it requires no additional changes to the rest of the
-script since a Token converts automatically to a string, which is what
-scan_token() historically returned.
+losing whatever positional information was attached to the ";" token
+where the problem was detected.
 
-The big downside to the Token approach, however, is that it is _slow_;
-on this developer's (old) machine, it increases user-time by an
-unacceptable seven seconds when scanning all test scripts in the
-project. Hence, the simple tuple approach is employed instead since it
-adds only a fraction of a second user-time.
+One way to preserve the positional information of a detected problem in
+a recursive parse context within a string would be to attach the
+positional information to the annotation textually; for instance:
+
+    "total: $(cd data ; ?!AMP:21:22?! wc -w *.txt) words"
+
+and then extract the positional information when annotating the original
+test definition.
+
+However, a cleaner and much simpler approach is to maintain the list of
+detected problems separately rather than embedding the problems as
+annotations directly in the parsed token stream. Not only does this
+ensure that positional information within recursive parse contexts is
+not lost, but it keeps the token stream free from non-token pollution,
+which may simplify implementation of validations added in the future
+since they won't have to handle non-token "?!FOO!?" items specially.
+
+Finally, the chainlint self-test "expect" files need a few mechanical
+adjustments now that the original test definitions are emitted rather
+than the parsed token stream. In particular, the following items missing
+from the historic parsed-token output are now preserved verbatim:
+
+    * indentation (and whitespace, in general)
+
+    * comments
+
+    * here-doc bodies
+
+    * here-doc tag quoting (i.e. "\EOF")
+
+    * line-splices (i.e. "\" at the end of a line)
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/chainlint.pl | 80 +++++++++++++++++++++++++++-----------------------
- 1 file changed, 43 insertions(+), 37 deletions(-)
+ t/chainlint.pl                                | 31 ++++++++++++++-----
+ t/chainlint/block-comment.expect              |  2 ++
+ t/chainlint/case-comment.expect               |  3 ++
+ t/chainlint/close-subshell.expect             |  3 +-
+ t/chainlint/comment.expect                    |  4 +++
+ t/chainlint/double-here-doc.expect            | 14 +++++++--
+ t/chainlint/empty-here-doc.expect             |  3 +-
+ t/chainlint/for-loop.expect                   |  4 ++-
+ t/chainlint/here-doc-close-subshell.expect    |  4 ++-
+ t/chainlint/here-doc-indent-operator.expect   | 10 ++++--
+ .../here-doc-multi-line-command-subst.expect  |  5 ++-
+ t/chainlint/here-doc-multi-line-string.expect |  4 ++-
+ t/chainlint/here-doc.expect                   | 24 ++++++++++++--
+ t/chainlint/if-then-else.expect               |  4 ++-
+ t/chainlint/incomplete-line.expect            | 10 ++++--
+ t/chainlint/inline-comment.expect             |  4 +--
+ t/chainlint/loop-detect-status.expect         |  2 +-
+ t/chainlint/nested-here-doc.expect            | 27 ++++++++++++++--
+ t/chainlint/nested-subshell-comment.expect    |  2 ++
+ t/chainlint/subshell-here-doc.expect          | 28 ++++++++++++++---
+ t/chainlint/t7900-subtree.expect              |  4 +++
+ t/chainlint/while-loop.expect                 |  4 ++-
+ 22 files changed, 163 insertions(+), 33 deletions(-)
 
 diff --git a/t/chainlint.pl b/t/chainlint.pl
-index 1f66c03c593..59aa79babc2 100755
+index 59aa79babc2..7972c5bbe6f 100755
 --- a/t/chainlint.pl
 +++ b/t/chainlint.pl
-@@ -75,7 +75,9 @@ sub scan_heredoc_tag {
- 	my $self = shift @_;
- 	${$self->{buff}} =~ /\G(-?)/gc;
- 	my $indented = $1;
--	my $tag = $self->scan_token();
-+	my $token = $self->scan_token();
-+	return "<<$indented" unless $token;
-+	my $tag = $token->[0];
- 	$tag =~ s/['"\\]//g;
- 	push(@{$self->{heretags}}, $indented ? "\t$tag" : "$tag");
- 	return "<<$indented$tag";
-@@ -149,7 +151,7 @@ sub scan_dollar {
- 	my $self = shift @_;
- 	my $b = $self->{buff};
- 	return $self->scan_balanced('(', ')') if $$b =~ /\G\((?=\()/gc; # $((...))
--	return '(' . join(' ', $self->scan_subst()) . ')' if $$b =~ /\G\(/gc; # $(...)
-+	return '(' . join(' ', map {$_->[0]} $self->scan_subst()) . ')' if $$b =~ /\G\(/gc; # $(...)
- 	return $self->scan_balanced('{', '}') if $$b =~ /\G\{/gc; # ${...}
- 	return $1 if $$b =~ /\G(\w+)/gc; # $var
- 	return $1 if $$b =~ /\G([@*#?$!0-9-])/gc; # $*, $1, $$, etc.
-@@ -170,9 +172,11 @@ sub scan_token {
- 	my $self = shift @_;
- 	my $b = $self->{buff};
- 	my $token = '';
-+	my $start;
- RESTART:
- 	$$b =~ /\G[ \t]+/gc; # skip whitespace (but not newline)
--	return "\n" if $$b =~ /\G#[^\n]*(?:\n|\z)/gc; # comment
-+	$start = pos($$b) || 0;
-+	return ["\n", $start, pos($$b)] if $$b =~ /\G#[^\n]*(?:\n|\z)/gc; # comment
- 	while (1) {
- 		# slurp up non-special characters
- 		$token .= $1 if $$b =~ /\G([^\\;&|<>(){}'"\$\s]+)/gc;
-@@ -197,7 +201,7 @@ RESTART:
- 		}
- 		die("internal error scanning character '$c'\n");
- 	}
--	return length($token) ? $token : undef;
-+	return length($token) ? [$token, $start, pos($$b)] : undef;
- }
+@@ -459,6 +459,13 @@ package TestParser;
  
- # ShellParser parses POSIX shell scripts (with minor extensions for Bash). It
-@@ -239,14 +243,14 @@ sub stop_at {
- 	my ($self, $token) = @_;
- 	return 1 unless defined($token);
- 	my $stop = ${$self->{stop}}[-1] if @{$self->{stop}};
--	return defined($stop) && $token =~ $stop;
-+	return defined($stop) && $token->[0] =~ $stop;
- }
+ use base 'ShellParser';
  
- sub expect {
- 	my ($self, $expect) = @_;
- 	my $token = $self->next_token();
--	return $token if defined($token) && $token eq $expect;
--	push(@{$self->{output}}, "?!ERR?! expected '$expect' but found '" . (defined($token) ? $token : "<end-of-input>") . "'\n");
-+	return $token if defined($token) && $token->[0] eq $expect;
-+	push(@{$self->{output}}, "?!ERR?! expected '$expect' but found '" . (defined($token) ? $token->[0] : "<end-of-input>") . "'\n");
- 	$self->untoken($token) if defined($token);
- 	return ();
- }
-@@ -255,7 +259,7 @@ sub optional_newlines {
- 	my $self = shift @_;
- 	my @tokens;
- 	while (my $token = $self->peek()) {
--		last unless $token eq "\n";
-+		last unless $token->[0] eq "\n";
- 		push(@tokens, $self->next_token());
- 	}
- 	return @tokens;
-@@ -278,7 +282,7 @@ sub parse_case_pattern {
- 	my @tokens;
- 	while (defined(my $token = $self->next_token())) {
- 		push(@tokens, $token);
--		last if $token eq ')';
-+		last if $token->[0] eq ')';
- 	}
- 	return @tokens;
- }
-@@ -293,13 +297,13 @@ sub parse_case {
- 	     $self->optional_newlines());
- 	while (1) {
- 		my $token = $self->peek();
--		last unless defined($token) && $token ne 'esac';
-+		last unless defined($token) && $token->[0] ne 'esac';
- 		push(@tokens,
- 		     $self->parse_case_pattern(),
- 		     $self->optional_newlines(),
- 		     $self->parse(qr/^(?:;;|esac)$/)); # item body
- 		$token = $self->peek();
--		last unless defined($token) && $token ne 'esac';
-+		last unless defined($token) && $token->[0] ne 'esac';
- 		push(@tokens,
- 		     $self->expect(';;'),
- 		     $self->optional_newlines());
-@@ -315,7 +319,7 @@ sub parse_for {
- 	     $self->next_token(), # variable
- 	     $self->optional_newlines());
- 	my $token = $self->peek();
--	if (defined($token) && $token eq 'in') {
-+	if (defined($token) && $token->[0] eq 'in') {
- 		push(@tokens,
- 		     $self->expect('in'),
- 		     $self->optional_newlines());
-@@ -339,11 +343,11 @@ sub parse_if {
- 		     $self->optional_newlines(),
- 		     $self->parse(qr/^(?:elif|else|fi)$/)); # if/elif body
- 		my $token = $self->peek();
--		last unless defined($token) && $token eq 'elif';
-+		last unless defined($token) && $token->[0] eq 'elif';
- 		push(@tokens, $self->expect('elif'));
- 	}
- 	my $token = $self->peek();
--	if (defined($token) && $token eq 'else') {
-+	if (defined($token) && $token->[0] eq 'else') {
- 		push(@tokens,
- 		     $self->expect('else'),
- 		     $self->optional_newlines(),
-@@ -380,7 +384,7 @@ sub parse_bash_array_assignment {
- 	my @tokens = $self->expect('(');
- 	while (defined(my $token = $self->next_token())) {
- 		push(@tokens, $token);
--		last if $token eq ')';
-+		last if $token->[0] eq ')';
- 	}
- 	return @tokens;
- }
-@@ -398,29 +402,31 @@ sub parse_cmd {
- 	my $self = shift @_;
- 	my $cmd = $self->next_token();
- 	return () unless defined($cmd);
--	return $cmd if $cmd eq "\n";
-+	return $cmd if $cmd->[0] eq "\n";
- 
- 	my $token;
- 	my @tokens = $cmd;
--	if ($cmd eq '!') {
-+	if ($cmd->[0] eq '!') {
- 		push(@tokens, $self->parse_cmd());
- 		return @tokens;
--	} elsif (my $f = $compound{$cmd}) {
-+	} elsif (my $f = $compound{$cmd->[0]}) {
- 		push(@tokens, $self->$f());
--	} elsif (defined($token = $self->peek()) && $token eq '(') {
--		if ($cmd !~ /\w=$/) {
-+	} elsif (defined($token = $self->peek()) && $token->[0] eq '(') {
-+		if ($cmd->[0] !~ /\w=$/) {
- 			push(@tokens, $self->parse_func());
- 			return @tokens;
- 		}
--		$tokens[-1] .= join(' ', $self->parse_bash_array_assignment());
-+		my @array = $self->parse_bash_array_assignment();
-+		$tokens[-1]->[0] .= join(' ', map {$_->[0]} @array);
-+		$tokens[-1]->[2] = $array[$#array][2] if @array;
- 	}
- 
- 	while (defined(my $token = $self->next_token())) {
- 		$self->untoken($token), last if $self->stop_at($token);
- 		push(@tokens, $token);
--		last if $token =~ /^(?:[;&\n|]|&&|\|\|)$/;
-+		last if $token->[0] =~ /^(?:[;&\n|]|&&|\|\|)$/;
- 	}
--	push(@tokens, $self->next_token()) if $tokens[-1] ne "\n" && defined($token = $self->peek()) && $token eq "\n";
-+	push(@tokens, $self->next_token()) if $tokens[-1]->[0] ne "\n" && defined($token = $self->peek()) && $token->[0] eq "\n";
- 	return @tokens;
- }
- 
-@@ -457,7 +463,7 @@ sub find_non_nl {
++sub new {
++	my $class = shift @_;
++	my $self = $class->SUPER::new(@_);
++	$self->{problems} = [];
++	return $self;
++}
++
+ sub find_non_nl {
  	my $tokens = shift @_;
  	my $n = shift @_;
- 	$n = $#$tokens if !defined($n);
--	$n-- while $n >= 0 && $$tokens[$n] eq "\n";
-+	$n-- while $n >= 0 && $$tokens[$n]->[0] eq "\n";
- 	return $n;
- }
- 
-@@ -467,7 +473,7 @@ sub ends_with {
- 	for my $needle (reverse(@$needles)) {
- 		return undef if $n < 0;
- 		$n = find_non_nl($tokens, $n), next if $needle eq "\n";
--		return undef if $$tokens[$n] !~ $needle;
-+		return undef if $$tokens[$n]->[0] !~ $needle;
- 		$n--;
- 	}
- 	return 1;
-@@ -486,13 +492,13 @@ sub parse_loop_body {
- 	my $self = shift @_;
- 	my @tokens = $self->SUPER::parse_loop_body(@_);
- 	# did loop signal failure via "|| return" or "|| exit"?
--	return @tokens if !@tokens || grep(/^(?:return|exit|\$\?)$/, @tokens);
-+	return @tokens if !@tokens || grep {$_->[0] =~ /^(?:return|exit|\$\?)$/} @tokens;
- 	# did loop upstream of a pipe signal failure via "|| echo 'impossible
- 	# text'" as the final command in the loop body?
+@@ -498,7 +505,7 @@ sub parse_loop_body {
  	return @tokens if ends_with(\@tokens, [qr/^\|\|$/, "\n", qr/^echo$/, qr/^.+$/]);
  	# flag missing "return/exit" handling explicit failure in loop body
  	my $n = find_non_nl(\@tokens);
--	splice(@tokens, $n + 1, 0, '?!LOOP?!');
-+	splice(@tokens, $n + 1, 0, ['?!LOOP?!', $tokens[$n]->[1], $tokens[$n]->[2]]);
+-	splice(@tokens, $n + 1, 0, ['?!LOOP?!', $tokens[$n]->[1], $tokens[$n]->[2]]);
++	push(@{$self->{problems}}, ['LOOP', $tokens[$n]]);
  	return @tokens;
  }
  
-@@ -510,7 +516,7 @@ sub accumulate {
+@@ -511,6 +518,7 @@ my @safe_endings = (
+ 
+ sub accumulate {
+ 	my ($self, $tokens, $cmd) = @_;
++	my $problems = $self->{problems};
+ 
+ 	# no previous command to check for missing "&&"
  	goto DONE unless @$tokens;
- 
- 	# new command is empty line; can't yet check if previous is missing "&&"
--	goto DONE if @$cmd == 1 && $$cmd[0] eq "\n";
-+	goto DONE if @$cmd == 1 && $$cmd[0]->[0] eq "\n";
- 
- 	# did previous command end with "&&", "|", "|| return" or similar?
- 	goto DONE if match_ending($tokens, \@safe_endings);
-@@ -518,20 +524,20 @@ sub accumulate {
- 	# if this command handles "$?" specially, then okay for previous
- 	# command to be missing "&&"
- 	for my $token (@$cmd) {
--		goto DONE if $token =~ /\$\?/;
-+		goto DONE if $token->[0] =~ /\$\?/;
- 	}
- 
- 	# if this command is "false", "return 1", or "exit 1" (which signal
+@@ -531,13 +539,13 @@ sub accumulate {
  	# failure explicitly), then okay for all preceding commands to be
  	# missing "&&"
--	if ($$cmd[0] =~ /^(?:false|return|exit)$/) {
--		@$tokens = grep(!/^\?!AMP\?!$/, @$tokens);
-+	if ($$cmd[0]->[0] =~ /^(?:false|return|exit)$/) {
-+		@$tokens = grep {$_->[0] !~ /^\?!AMP\?!$/} @$tokens;
+ 	if ($$cmd[0]->[0] =~ /^(?:false|return|exit)$/) {
+-		@$tokens = grep {$_->[0] !~ /^\?!AMP\?!$/} @$tokens;
++		@$problems = grep {$_->[0] ne 'AMP'} @$problems;
  		goto DONE;
  	}
  
  	# flag missing "&&" at end of previous command
  	my $n = find_non_nl($tokens);
--	splice(@$tokens, $n + 1, 0, '?!AMP?!') unless $n < 0;
-+	splice(@$tokens, $n + 1, 0, ['?!AMP?!', $$tokens[$n]->[1], $$tokens[$n]->[2]]) unless $n < 0;
+-	splice(@$tokens, $n + 1, 0, ['?!AMP?!', $$tokens[$n]->[1], $$tokens[$n]->[2]]) unless $n < 0;
++	push(@$problems, ['AMP', $tokens->[$n]]) unless $n < 0;
  
  DONE:
  	$self->SUPER::accumulate($tokens, $cmd);
-@@ -557,7 +563,7 @@ sub new {
- # composition of multiple strings and non-string character runs; for instance,
- # `"test body"` unwraps to `test body`; `word"a b"42'c d'` to `worda b42c d`
- sub unwrap {
--	my $token = @_ ? shift @_ : $_;
-+	my $token = (@_ ? shift @_ : $_)->[0];
- 	# simple case: 'sqstring' or "dqstring"
- 	return $token if $token =~ s/^'([^']*)'$/$1/;
- 	return $token if $token =~ s/^"([^"]*)"$/$1/;
-@@ -588,9 +594,9 @@ sub check_test {
+@@ -594,12 +602,21 @@ sub check_test {
  	$self->{ntests}++;
  	my $parser = TestParser->new(\$body);
  	my @tokens = $parser->parse();
--	return unless $emit_all || grep(/\?![^?]+\?!/, @tokens);
-+	return unless $emit_all || grep {$_->[0] =~ /\?![^?]+\?!/} @tokens;
+-	return unless $emit_all || grep {$_->[0] =~ /\?![^?]+\?!/} @tokens;
++	my $problems = $parser->{problems};
++	return unless $emit_all || @$problems;
  	my $c = main::fd_colors(1);
--	my $checked = join(' ', @tokens);
-+	my $checked = join(' ', map {$_->[0]} @tokens);
+-	my $checked = join(' ', map {$_->[0]} @tokens);
++	my $start = 0;
++	my $checked = '';
++	for (sort {$a->[1]->[2] <=> $b->[1]->[2]} @$problems) {
++		my ($label, $token) = @$_;
++		my $pos = $token->[2];
++		$checked .= substr($body, $start, $pos - $start) . " ?!$label?! ";
++		$start = $pos;
++	}
++	$checked .= substr($body, $start);
  	$checked =~ s/^\n//;
- 	$checked =~ s/^ //mg;
- 	$checked =~ s/ $//mg;
-@@ -602,9 +608,9 @@ sub check_test {
- sub parse_cmd {
- 	my $self = shift @_;
- 	my @tokens = $self->SUPER::parse_cmd();
--	return @tokens unless @tokens && $tokens[0] =~ /^test_expect_(?:success|failure)$/;
-+	return @tokens unless @tokens && $tokens[0]->[0] =~ /^test_expect_(?:success|failure)$/;
- 	my $n = $#tokens;
--	$n-- while $n >= 0 && $tokens[$n] =~ /^(?:[;&\n|]|&&|\|\|)$/;
-+	$n-- while $n >= 0 && $tokens[$n]->[0] =~ /^(?:[;&\n|]|&&|\|\|)$/;
- 	$self->check_test($tokens[1], $tokens[2]) if $n == 2; # title body
- 	$self->check_test($tokens[2], $tokens[3]) if $n > 2;  # prereq title body
- 	return @tokens;
+-	$checked =~ s/^ //mg;
+-	$checked =~ s/ $//mg;
++	$checked =~ s/(\s) \?!/$1?!/mg;
++	$checked =~ s/\?! (\s)/?!$1/mg;
+ 	$checked =~ s/(\?![^?]+\?!)/$c->{rev}$c->{red}$1$c->{reset}/mg;
+ 	$checked .= "\n" unless $checked =~ /\n$/;
+ 	push(@{$self->{output}}, "$c->{blue}# chainlint: $title$c->{reset}\n$checked");
+diff --git a/t/chainlint/block-comment.expect b/t/chainlint/block-comment.expect
+index d10b2eeaf27..df2beea8887 100644
+--- a/t/chainlint/block-comment.expect
++++ b/t/chainlint/block-comment.expect
+@@ -1,6 +1,8 @@
+ (
+ 	{
++		# show a
+ 		echo a &&
++		# show b
+ 		echo b
+ 	}
+ )
+diff --git a/t/chainlint/case-comment.expect b/t/chainlint/case-comment.expect
+index 1e4b054bda0..641c157b98c 100644
+--- a/t/chainlint/case-comment.expect
++++ b/t/chainlint/case-comment.expect
+@@ -1,7 +1,10 @@
+ (
+ 	case "$x" in
++	# found foo
+ 	x) foo ;;
++	# found other
+ 	*)
++		# treat it as bar
+ 		bar
+ 		;;
+ 	esac
+diff --git a/t/chainlint/close-subshell.expect b/t/chainlint/close-subshell.expect
+index 0f87db9ae68..2192a2870a1 100644
+--- a/t/chainlint/close-subshell.expect
++++ b/t/chainlint/close-subshell.expect
+@@ -15,7 +15,8 @@
+ ) | wuzzle &&
+ (
+ 	bop
+-) | fazz 	fozz &&
++) | fazz \
++	fozz &&
+ (
+ 	bup
+ ) |
+diff --git a/t/chainlint/comment.expect b/t/chainlint/comment.expect
+index f76fde1ffba..a68f1f9d7c2 100644
+--- a/t/chainlint/comment.expect
++++ b/t/chainlint/comment.expect
+@@ -1,4 +1,8 @@
+ (
++	# comment 1
+ 	nothing &&
++	# comment 2
+ 	something
++	# comment 3
++	# comment 4
+ )
+diff --git a/t/chainlint/double-here-doc.expect b/t/chainlint/double-here-doc.expect
+index 75477bb1add..cd584a43573 100644
+--- a/t/chainlint/double-here-doc.expect
++++ b/t/chainlint/double-here-doc.expect
+@@ -1,2 +1,12 @@
+-run_sub_test_lib_test_err run-inv-range-start "--run invalid range start" --run="a-5" <<-EOF &&
+-check_sub_test_lib_test_err run-inv-range-start <<-EOF_OUT 3 <<-EOF_ERR
++run_sub_test_lib_test_err run-inv-range-start \
++	"--run invalid range start" \
++	--run="a-5" <<-\EOF &&
++test_expect_success "passing test #1" "true"
++test_done
++EOF
++check_sub_test_lib_test_err run-inv-range-start \
++	<<-\EOF_OUT 3<<-EOF_ERR
++> FATAL: Unexpected exit with code 1
++EOF_OUT
++> error: --run: invalid non-numeric in range start: ${SQ}a-5${SQ}
++EOF_ERR
+diff --git a/t/chainlint/empty-here-doc.expect b/t/chainlint/empty-here-doc.expect
+index f42f2d41ba8..e8733c97c64 100644
+--- a/t/chainlint/empty-here-doc.expect
++++ b/t/chainlint/empty-here-doc.expect
+@@ -1,3 +1,4 @@
+ git ls-tree $tree path > current &&
+-cat > expected <<EOF &&
++cat > expected <<\EOF &&
++EOF
+ test_output
+diff --git a/t/chainlint/for-loop.expect b/t/chainlint/for-loop.expect
+index a5810c9bddd..d65c82129a6 100644
+--- a/t/chainlint/for-loop.expect
++++ b/t/chainlint/for-loop.expect
+@@ -2,7 +2,9 @@
+ 	for i in a b c
+ 	do
+ 		echo $i ?!AMP?!
+-		cat <<-EOF ?!LOOP?!
++		cat <<-\EOF ?!LOOP?!
++		bar
++		EOF
+ 	done ?!AMP?!
+ 	for i in a b c; do
+ 		echo $i &&
+diff --git a/t/chainlint/here-doc-close-subshell.expect b/t/chainlint/here-doc-close-subshell.expect
+index 2af9ced71cc..7d9c2b56070 100644
+--- a/t/chainlint/here-doc-close-subshell.expect
++++ b/t/chainlint/here-doc-close-subshell.expect
+@@ -1,2 +1,4 @@
+ (
+-	cat <<-INPUT)
++	cat <<-\INPUT)
++	fizz
++	INPUT
+diff --git a/t/chainlint/here-doc-indent-operator.expect b/t/chainlint/here-doc-indent-operator.expect
+index fb6cf7285d0..f92a7ce9992 100644
+--- a/t/chainlint/here-doc-indent-operator.expect
++++ b/t/chainlint/here-doc-indent-operator.expect
+@@ -1,5 +1,11 @@
+-cat > expect <<-EOF &&
++cat >expect <<- EOF &&
++header: 43475048 1 $(test_oid oid_version) $NUM_CHUNKS 0
++num_commits: $1
++chunks: oid_fanout oid_lookup commit_metadata generation_data bloom_indexes bloom_data
++EOF
+ 
+-cat > expect <<-EOF ?!AMP?!
++cat >expect << -EOF ?!AMP?!
++this is not indented
++-EOF
+ 
+ cleanup
+diff --git a/t/chainlint/here-doc-multi-line-command-subst.expect b/t/chainlint/here-doc-multi-line-command-subst.expect
+index f8b3aa73c4f..b7364c82c89 100644
+--- a/t/chainlint/here-doc-multi-line-command-subst.expect
++++ b/t/chainlint/here-doc-multi-line-command-subst.expect
+@@ -1,5 +1,8 @@
+ (
+-	x=$(bobble <<-END &&
++	x=$(bobble <<-\END &&
++		fossil
++		vegetable
++		END
+ 		wiffle) ?!AMP?!
+ 	echo $x
+ )
+diff --git a/t/chainlint/here-doc-multi-line-string.expect b/t/chainlint/here-doc-multi-line-string.expect
+index be64b26869a..6c13bdcbfb5 100644
+--- a/t/chainlint/here-doc-multi-line-string.expect
++++ b/t/chainlint/here-doc-multi-line-string.expect
+@@ -1,5 +1,7 @@
+ (
+-	cat <<-TXT && echo "multi-line
++	cat <<-\TXT && echo "multi-line
+ 	string" ?!AMP?!
++	fizzle
++	TXT
+ 	bap
+ )
+diff --git a/t/chainlint/here-doc.expect b/t/chainlint/here-doc.expect
+index 110059ba584..1df3f782821 100644
+--- a/t/chainlint/here-doc.expect
++++ b/t/chainlint/here-doc.expect
+@@ -1,7 +1,25 @@
+-boodle wobba        gorgo snoot        wafta snurb <<EOF &&
++boodle wobba \
++	gorgo snoot \
++	wafta snurb <<EOF &&
++quoth the raven,
++nevermore...
++EOF
+ 
+ cat <<-Arbitrary_Tag_42 >foo &&
++snoz
++boz
++woz
++Arbitrary_Tag_42
+ 
+-cat <<zump >boo &&
++cat <<"zump" >boo &&
++snoz
++boz
++woz
++zump
+ 
+-horticulture <<EOF
++horticulture <<\EOF
++gomez
++morticia
++wednesday
++pugsly
++EOF
+diff --git a/t/chainlint/if-then-else.expect b/t/chainlint/if-then-else.expect
+index 44d86c35976..cbaaf857d47 100644
+--- a/t/chainlint/if-then-else.expect
++++ b/t/chainlint/if-then-else.expect
+@@ -8,7 +8,9 @@
+ 		echo foo
+ 	else
+ 		echo foo &&
+-		cat <<-EOF
++		cat <<-\EOF
++		bar
++		EOF
+ 	fi ?!AMP?!
+ 	echo poodle
+ ) &&
+diff --git a/t/chainlint/incomplete-line.expect b/t/chainlint/incomplete-line.expect
+index ffac8f90185..134d3a14f5c 100644
+--- a/t/chainlint/incomplete-line.expect
++++ b/t/chainlint/incomplete-line.expect
+@@ -1,4 +1,10 @@
+-line 1 line 2 line 3 line 4 &&
++line 1 \
++line 2 \
++line 3 \
++line 4 &&
+ (
+-	line 5 	line 6 	line 7 	line 8
++	line 5 \
++	line 6 \
++	line 7 \
++	line 8
+ )
+diff --git a/t/chainlint/inline-comment.expect b/t/chainlint/inline-comment.expect
+index dd0dace077f..6bad2185300 100644
+--- a/t/chainlint/inline-comment.expect
++++ b/t/chainlint/inline-comment.expect
+@@ -1,6 +1,6 @@
+ (
+-	foobar &&
+-	barfoo ?!AMP?!
++	foobar && # comment 1
++	barfoo ?!AMP?! # wrong position for &&
+ 	flibble "not a # comment"
+ ) &&
+ 
+diff --git a/t/chainlint/loop-detect-status.expect b/t/chainlint/loop-detect-status.expect
+index 0ad23bb35e4..24da9e86d59 100644
+--- a/t/chainlint/loop-detect-status.expect
++++ b/t/chainlint/loop-detect-status.expect
+@@ -2,7 +2,7 @@
+ do
+ 	printf "Generating blob $i/$blobcount\r" >& 2 &&
+ 	printf "blob\nmark :$i\ndata $blobsize\n" &&
+-
++	#test-tool genrandom $i $blobsize &&
+ 	printf "%-${blobsize}s" $i &&
+ 	echo "M 100644 :$i $i" >> commit &&
+ 	i=$(($i+1)) ||
+diff --git a/t/chainlint/nested-here-doc.expect b/t/chainlint/nested-here-doc.expect
+index e3bef63f754..29b3832a986 100644
+--- a/t/chainlint/nested-here-doc.expect
++++ b/t/chainlint/nested-here-doc.expect
+@@ -1,7 +1,30 @@
+ cat <<ARBITRARY >foop &&
++naddle
++fub <<EOF
++	nozzle
++	noodle
++EOF
++formp
++ARBITRARY
+ 
+ (
+-	cat <<-INPUT_END &&
+-	cat <<-EOT ?!AMP?!
++	cat <<-\INPUT_END &&
++	fish are mice
++	but geese go slow
++	data <<EOF
++		perl is lerp
++		and nothing else
++	EOF
++	toink
++	INPUT_END
++
++	cat <<-\EOT ?!AMP?!
++	text goes here
++	data <<EOF
++		data goes here
++	EOF
++	more test here
++	EOT
++
+ 	foobar
+ )
+diff --git a/t/chainlint/nested-subshell-comment.expect b/t/chainlint/nested-subshell-comment.expect
+index be4b27a305b..9138cf386d3 100644
+--- a/t/chainlint/nested-subshell-comment.expect
++++ b/t/chainlint/nested-subshell-comment.expect
+@@ -2,6 +2,8 @@
+ 	foo &&
+ 	(
+ 		bar &&
++		# bottles wobble while fiddles gobble
++		# minor numbers of cows (or do they?)
+ 		baz &&
+ 		snaff
+ 	) ?!AMP?!
+diff --git a/t/chainlint/subshell-here-doc.expect b/t/chainlint/subshell-here-doc.expect
+index 029d129299a..52789278d13 100644
+--- a/t/chainlint/subshell-here-doc.expect
++++ b/t/chainlint/subshell-here-doc.expect
+@@ -1,10 +1,30 @@
+ (
+-	echo wobba 	       gorgo snoot 	       wafta snurb <<-EOF &&
++	echo wobba \
++		gorgo snoot \
++		wafta snurb <<-EOF &&
++	quoth the raven,
++	nevermore...
++	EOF
++
+ 	cat <<EOF >bip ?!AMP?!
+-	echo <<-EOF >bop
++	fish fly high
++EOF
++
++	echo <<-\EOF >bop
++	gomez
++	morticia
++	wednesday
++	pugsly
++	EOF
+ ) &&
+ (
+-	cat <<-ARBITRARY >bup &&
+-	cat <<-ARBITRARY3 >bup3 &&
++	cat <<-\ARBITRARY >bup &&
++	glink
++	FIZZ
++	ARBITRARY
++	cat <<-"ARBITRARY3" >bup3 &&
++	glink
++	FIZZ
++	ARBITRARY3
+ 	meep
+ )
+diff --git a/t/chainlint/t7900-subtree.expect b/t/chainlint/t7900-subtree.expect
+index 69167da2f27..71b3b3bc20e 100644
+--- a/t/chainlint/t7900-subtree.expect
++++ b/t/chainlint/t7900-subtree.expect
+@@ -4,12 +4,16 @@ sub2
+ sub3
+ sub4" &&
+ 	chks_sub=$(cat <<TXT | sed "s,^,sub dir/,"
++$chks
++TXT
+ ) &&
+ 	chkms="main-sub1
+ main-sub2
+ main-sub3
+ main-sub4" &&
+ 	chkms_sub=$(cat <<TXT | sed "s,^,sub dir/,"
++$chkms
++TXT
+ ) &&
+ 	subfiles=$(git ls-files) &&
+ 	check_equal "$subfiles" "$chkms
+diff --git a/t/chainlint/while-loop.expect b/t/chainlint/while-loop.expect
+index f272aa21fee..1f5eaea0fd5 100644
+--- a/t/chainlint/while-loop.expect
++++ b/t/chainlint/while-loop.expect
+@@ -2,7 +2,9 @@
+ 	while true
+ 	do
+ 		echo foo ?!AMP?!
+-		cat <<-EOF ?!LOOP?!
++		cat <<-\EOF ?!LOOP?!
++		bar
++		EOF
+ 	done ?!AMP?!
+ 	while true; do
+ 		echo foo &&
 -- 
 gitgitgadget
-
