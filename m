@@ -2,150 +2,172 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 548DDC433FE
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 09:49:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 898A4C4332F
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 09:52:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233699AbiKHJtY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 04:49:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59634 "EHLO
+        id S233529AbiKHJwB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 04:52:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233817AbiKHJtF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2022 04:49:05 -0500
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC02140446
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 01:48:58 -0800 (PST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 3590D5C01B4;
-        Tue,  8 Nov 2022 04:48:58 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Tue, 08 Nov 2022 04:48:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; t=1667900938; x=1667987338; bh=E7B5y9pqg7
-        Q4PiP8oqx2zxK4du48HZFtt4diuk5eYB0=; b=CPtsWyBnb44/DTg4IaumUUJ3T2
-        +MzNzzhfoJkx+2s3f9NjfWvtKIJq/YVVtJ+qv0wxkrnkVzWjbuc2rAdhI/i0ezu6
-        QmUXckRSzHNKqUbzUDl61rUJ4rTEGHd34JBTMxYJ9KHvrmr866AaZMMk05gACxRS
-        FBZ0H/PVzLIjjZJLdoPkBdQNCAk8W7/SO9F1gZLr48YHC0+1AD8V9T/t4dMX2grE
-        ZqVVOVRbjV+lZqpixV7F+3Zm9ZN6mGye7/GGr6Cj6Pd5cDUC+xu2zaIxYFFPdjcS
-        jNIWUdxE9a09xymtjP3eDLlxOfqUfypFDlRfSB9tze/JJjeumP43DscWWePA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm1; t=1667900938; x=1667987338; bh=E7B5y9pqg7Q4PiP8oqx2zxK4du48
-        HZFtt4diuk5eYB0=; b=qTCIg3q6Gsa1NwhhTPlAJBJEATtFm3sSteTWq5xQCk2g
-        9IUL76zw4syXjsVhSR883d2ZvU3SlFjgpM8FrpJxt3wcv6Q5lVR9nm5WGjF2xmNq
-        mt5tF9fB9zNY8wElMhT/tQugqWDFXXVbra4FNgADRxrM66IOl6R24kG3lDKSDjul
-        vWVP8bE0AM5S7BWjGqXoMI7UbxtpspsGF5Nn8z1mnssB/5JOr7xv3ngviLQSeg6K
-        vS7Nk++E6l+AbCRmt3ChH/dyrMMkgKHhCpWHcnE9NpE2Xcr+T5NmSmqneCH6Qivg
-        wPGnNiBYKJ/r0RDfUFF3IevQ4MQkXtF13g8rI8qzKw==
-X-ME-Sender: <xms:CiZqYw-30cOLN2ZHvmN-q2BikUJzOn8IuFcJWbKRyAFKujQKRF36sA>
-    <xme:CiZqY4uHjNbyTxfMsMemTE7nzjOHHQDw72RaIpvgAawnivSPLZthAvM_DFk8DXOXg
-    KfAYk5TvaB_HdqK7g>
-X-ME-Received: <xmr:CiZqY2DwIBHEkB8VpfafGskGE95jARmK6qkf0QDY00ab4DXNSQDT-tyeEEWjMNQ-irg65H_2_mXWMnAwF9l6gCWZHEP2HBDCRMqVnS4-hg7X>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrfedtgddtlecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
-    ertddtudenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepfedvleefueetgeeitdekheelffekkefgff
-    duhfduvdefffdtheekiefhkeejkeehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:CiZqYwcFYADbgh_wSnheOoxKEBRCQKIZOuHRwnED-rTfxp_MdEFzyw>
-    <xmx:CiZqY1MyHl6ZJnCHsngJNtKMAjbpPYzcacJxw76aiDd-0YmIMOjlCA>
-    <xmx:CiZqY6mbfBMeLOeiTNGPj-iCEP9_rjESTYM8lMNDd4195mGDyxNiQA>
-    <xmx:CiZqY2pt00OCdqMgYZSdqe2-c5cuq1t7L2atKa31g3GGmmOkiUswvA>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Nov 2022 04:48:57 -0500 (EST)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 1555d240 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 8 Nov 2022 09:48:50 +0000 (UTC)
-Date:   Tue, 8 Nov 2022 10:48:53 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 4/6] revision: add new parameter to exclude hidden refs
-Message-ID: <Y2omBeBQl14IxqOA@ncase>
-References: <cover.1666967670.git.ps@pks.im>
- <cover.1667823042.git.ps@pks.im>
- <de7c1aa210c2df9bdbbb6c19f44f72c37f56c5da.1667823042.git.ps@pks.im>
- <221107.86pmdyx4me.gmgdl@evledraar.gmail.com>
- <221107.86eduevgk3.gmgdl@evledraar.gmail.com>
+        with ESMTP id S233333AbiKHJvz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2022 04:51:55 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 917C4F67
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 01:51:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1667901107; bh=+0LxepMEjhbTfnYXpLhXA1lEcnSxqFGat20Euj3Vuyg=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=LzHOTLfdrRmeGJhB/1w4Dzg4XbX3R02M2YcO6vbgtRSBEPcpFPQ+QbdTlAqbZNTDA
+         KND0xnOLqlBNILkehDQgNdvKHShQoCP7q2lTn8PLZUp7vT4BhqL2YZgnU/v0v4JYQ6
+         xHElTMl/uioGboPeXODNa+Ql/DnhbeGZN2t83Kqxea0iQsXhZ/GgPuW8fQGG13WKQY
+         UlmVzej41MC3JWKO6qHWE5+HiHh0JwLhF3jEk8AkjMEn013oo/sELEGItCk+KyUkWG
+         X/c1fICpDcj5A1Gc0FVVdN7qBakyUn5ijQkmVqqdHEODH/iuHEAd3R7ywJZa/sohNa
+         5vUX0pkZYM7pA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.27.219.74] ([213.196.213.188]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MvbFs-1pAgrs40KE-00shmJ; Tue, 08
+ Nov 2022 10:51:47 +0100
+Date:   Tue, 8 Nov 2022 10:51:45 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] ci: avoid unnecessary builds
+In-Reply-To: <xmqqk046cmmv.fsf@gitster.g>
+Message-ID: <2p770o19-s3o3-o6r9-18r5-25n91r1r2210@tzk.qr>
+References: <pull.1404.git.1667482458622.gitgitgadget@gmail.com>        <f975f57e-71e2-3227-8039-14dff82f04db@github.com> <xmqqk046cmmv.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="oZhatCdPLvYO3m4R"
-Content-Disposition: inline
-In-Reply-To: <221107.86eduevgk3.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:WeCjzujN0vQB4zO06hMbQK5cW1RY9K92qw30+zRFXta5eEeuHs9
+ AJCOWJP+BrUsWMZ4fqrmL5pV7jRjXOMimBLXTHXvliVyz6Xzp99QBBXbkZlU3K26qpm/wAE
+ gUDAHAC1cTI90PjbXBXZTZWi/gDTb74wDnLGOd00KL4lXlDm8ZxQFPmjXl+/sJCtJyoEYIl
+ 3OSl/E+gM473nGj5P0kkA==
+UI-OutboundReport: notjunk:1;M01:P0:mEV+YqdDgDs=;ATungkUl5W5aYlfYU4o3aoQttVS
+ djUt9iEoCXWJlpLOWES2TslYGCltxsVGw5iIDwinNjUc0O1f16pINIi35oTvRCUtfF57E2ePI
+ Ec8Lr6/7Kym40n3TnMy9GmmQByrWdK8y+y+7r3bi5tc3ScFu9NYDUmpMgX+ORpJvC5OUMro8f
+ DML9vFsJot7ujPLKQpp/6cfzsiecGBVadrRpcwOa6gWeSF4IOhSTK5D/iL9LcQqlFwHNBoB0F
+ 8PT6M+iS7ZbKtuk7LPMWlrlVn321t4wDnI8J9auDAuHKxA1SrNhHMkWHiEPgMFxWwl4FlngFq
+ 3WS2rpRfI3o4993TyBD3mynEE4HFDxqdd+aQcmkm34SxCnICW9mgOtJDcStaSSPKza1oiPbd1
+ 5k9hwRMETBuRRoaUmGKriFD8dkJtiShFYLWucLsSP8zhr6rMWVQ7sclH4MFrUlm0+8oRFwY/8
+ tBSzAQzIqL2VI/adjzAu/M1Q+jKLEvQTBurgEAEAH7uQEuO79rcp2mtIL67/e4vbzE9A1yQ/o
+ Cw6hP4mVObFIK6/76z4/4zSNhq2346WshHJVlsu3VWdxodf4wxfYVuhIiIFebZ76+RGKRLmfQ
+ qyk92n2GrpyeNinBMLcwiOTsLEGoesYOTUE7NAteUd6lf/ivc0jQ+cgtYGYCcFtt8cG/PSXsp
+ yzyHr3TWYl3QKV+Z8GGXQO5qnyDmsM6RqpYp5bWghMIjNntyzqLhRzJW7ZMF+lJ3W7cT04SLN
+ +r/KHRHOZunjfqBW3F8jGzbvwu69mCrQdYiPOFOVHcfSTbebth0KQuWM2Ibya/vXbbUoeFOa3
+ FQGUwug5CFaEFS8KrFHdqUgPOBQBEizwQmSzQ/r0xB5hhlx6hM7T0oNhWZoRkA0/gmL2FEgvw
+ gDS/Cy4P5GlBXhz02kXyG/0GHSFdiN50rVvx+/le+pVlS3Ogcs1y8epJfS4wNzz9cNgjCb+jl
+ 8l4SPg==
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio,
 
---oZhatCdPLvYO3m4R
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, 7 Nov 2022, Junio C Hamano wrote:
 
-On Mon, Nov 07, 2022 at 06:07:01PM +0100, =C6var Arnfj=F6r=F0 Bjarmason wro=
-te:
->=20
-> On Mon, Nov 07 2022, =C6var Arnfj=F6r=F0 Bjarmason wrote:
->=20
-> > On Mon, Nov 07 2022, Patrick Steinhardt wrote:
->=20
-> >> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+> Derrick Stolee <derrickstolee@github.com> writes:
+>
+> > On 11/3/22 9:34 AM, Johannes Schindelin via GitGitGadget wrote:
+> >> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >>
+> >> Whenever a branch is pushed to a repository which has GitHub Actions
+> >> enabled, a bunch of new workflow runs are started.
+> >>
+> >> We sometimes see contributors push multiple branch updates in rapid
+> >> succession, which in conjunction with the impressive time swallowed b=
+y
+> >> even just a single CI build frequently leads to many queued-up runs.
+> >>
+> >> This is particularly problematic in the case of Pull Requests where a
+> >> single contributor can easily (inadvertently) prevent timely builds f=
+or
+> >> other contributors.
 > >
-> > Thanks for adding this! :)
->=20
-> Hrm, I spoke too soon :) This series adds new leaks, so it'll fail with
-> the linux-leaks job. I have the following local monkeypatch on top,
-> which obviously doesn't address the root cause. The t6018 leak is new
-> due to the new tests you added.
+> > As someone who is both the cause and the victim of this, I
+> > thank you for finding a way to reduce wasted CPU time. This
+> > patch looks good to me, though I'll need to trust the docs
+> > and your testing to be sure it will work. We will definitely
+> > see it in place as it merges into 'next' and 'main'.
+>
+> When I see breakages of 'seen' only at the CI, perhaps because it
+> manifests only on macOS, I manually "bisected" by pushing various
+> combinations of topics merged on top of 'master' and pushing the
+> result out as 'seen' only to the GitHub repository, and not having
+> to wait one to finish before pushing out another was a really nice
+> feature.  Of course, I could wait before pushing another out, but
+> after seeing the last one close to successful completion in a few
+> minutes and being able to push out the next one was a great
+> timesaver, not only for the "few minutes", but for the countless
+> minutes because I will have to concentrate on more than just a "few
+> minutes" on another task if I have to switch to another task in
+> order to wait for just a "few minutes" before pushing the trial
+> merge out.
 
-Right, I didn't know it was as easy to run tests with leak checking as
-just executing `make test SANITIZE=3Dleak`. Anyway, I did that now and the
-issue is in fact in how the hidden refs are parsed because we already
-`xstrdup()` the config value as we need to modify it anyway.
+I often find myself with similar problems where I have to test a couple of
+revisions in order to pinpoint regressions that do not reproduce locally.
 
-The following patch fixes the issue:
+One of my power tools to figure these things out is
+https://github.com/mxschmitt/action-tmate, allowing me to SSH into the
+build agent where the failure happens (note: do use with prudence lest you=
+r
+account gets flagged for potential mining).
 
-diff --git a/refs.c b/refs.c
-index f1711e2e9f..2c7e88b190 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1430,7 +1430,7 @@ int parse_hide_refs_config(const char *var, const cha=
-r *value, const char *secti
- 		len =3D strlen(ref);
- 		while (len && ref[len - 1] =3D=3D '/')
- 			ref[--len] =3D '\0';
--		string_list_append(hide_refs, ref);
-+		string_list_append_nodup(hide_refs, ref);
- 	}
- 	return 0;
- }
+I find that much more surgical a tool than having multiple builds run
+concurrently, not the least reason being that keeping track of which
+builds correspond to which step of the bisection can be very, very
+confusing.
 
-Patrick
+Also, one of my core values is to use up only the resources that I need
+to. And using up a lot of build minutes is contrary to that value.
 
---oZhatCdPLvYO3m4R
-Content-Type: application/pgp-signature; name="signature.asc"
+So what I end up doing in similar situations is:
 
------BEGIN PGP SIGNATURE-----
+- first of all, switch to a temporary branch
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmNqJgQACgkQVbJhu7ck
-PpS3nQ/+MfQ+ludFoMNuVQ8iPlKVyH2LoHhxv1JVUB9hQeeSoWalkNWi7Po/mJg4
-vCDs9IydTEfDhCDbEPGO27DVff8xXR1vIoESLNBl+XrfLKbJCHNkG6uK3oAjFpwH
-yeQ23dOmCVC70CtTSxUI7ap7N5RRPIyEf6okVPNJKlQn/SqW7rlmbDYrBSEVi1HG
-EvmhiXN7mzBcnVJuRYheIw0oAIViHsIzDZjgpaoRzW552zHzrs2YHtu3jW6jpcX7
-VvwR3Ne23KAw9x8U1ZxKtOoY9TfiDhMQdOJm+SKqm7htOd6ITGd0bs0zdJ3LHcso
-ti2il+XOF8nYsmIp///CBaZYtr2x1whKBHJI9LnpWj1Nzryn4VVq4ZM4TyMjBcIz
-W+4Yx7ISUrG/p4yKBojgQ4084R7HoDp/fjdZU3FtZRrhjmhRudVIB9PzRLnNDLy5
-sS3eDkif9f2j9n9XZj6esh9PUFJfVIqZNqeGFvV5989P2nAhT98nknjw21isAHXB
-bOzNLkrX7r+esnIf/oCKbxA3zIzjdEM5x552PrJxThJglWABR5NQRq3iam1DGMc6
-W6M+n628UjTA3TdNv7YZAi3T2OKCrMRL2I1n6KGNddaVEP+oREi3t+ZkCWOE+nk4
-gfbHvzz8OB7Soq/vp/EwI/BKsZ2gxSmwzXDVQlibq3wXAGH6sdc=
-=H372
------END PGP SIGNATURE-----
+- then, add a TO-DROP commit that rips out _all_ of the unnecessary
+  builds. Typically the first to go are check-whitespace and git-l10n, and
+  then I liberally delete jobs (including the `ci-config` job that's
+  totally useless in this use case) and restrict the test suite to running
+  just the failing script by editing the `T =3D [...]` line in `t/Makefile=
+`,
+  often even adding a `--run=3D[... only the minimal amount of test
+  cases...]` (after figuring out which ones are needed which is
+  unfortunately quite hard due to the abundance of side effects our test
+  suite relies on) to the `GIT_TEST_OPTS` in `ci/`.
 
---oZhatCdPLvYO3m4R--
+- then, if I need to test multiple revisions, I _create_ new branches for
+  each bisection point (typically encoding information in the branch name
+  that will help me with book-keeping), cherry-picking the just-created
+  TO-DROP commit before pushing.
+
+Since I want to minimize my footprint when it comes to using resources, I
+typically am very judicious about what revisions I test, and how many I
+run concurrently.
+
+It is a bit sad that doing this is currently very much involved and that
+it is so much easier to just go ahead and run the entire test suite on
+every available platform even if the test failures one wishes to diagnose
+happen on but one platform in but one test script. I.e. in the current
+shape, our code base encourages wasting of resources.
+
+That is a situation I would like to see improved. If I was not committed
+to other work streams, I would work on it because I find it that
+important.
+
+> So, that is the only concern I have with this change, but in
+> general, not running jobs whose results are clearly not needed is a
+> good idea.  It just is "clearly" is hard to determine automatically.
+
+Right. It is also very subjective what "clearly" should mean in this
+context. For example, I find it clearly undesirable just how long our test
+suite takes (and not for any good reason, really) and how inflexible it is
+when it comes to things like Test Impact Analysis (i.e. running only tests
+covering the code modified in a given PR, which would speed up everything
+_tremendously_). At the same time I am fully aware that I find myself
+pretty alone in this assessment, otherwise other contributors would
+clearly be more interested in fixing these issues than they are.
+
+Ciao,
+Dscho
