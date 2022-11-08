@@ -2,75 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C5673C4332F
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 02:54:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E807C433FE
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 03:00:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232650AbiKHCyz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 21:54:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35692 "EHLO
+        id S233062AbiKHDAK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 22:00:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230362AbiKHCyx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2022 21:54:53 -0500
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 876BE1B9C6
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 18:54:51 -0800 (PST)
-Received: by mail-io1-xd2f.google.com with SMTP id s10so8647226ioa.5
-        for <git@vger.kernel.org>; Mon, 07 Nov 2022 18:54:51 -0800 (PST)
+        with ESMTP id S232854AbiKHDAH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2022 22:00:07 -0500
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B97C8B7EB
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 19:00:04 -0800 (PST)
+Received: by mail-io1-xd2a.google.com with SMTP id n191so10487295iod.13
+        for <git@vger.kernel.org>; Mon, 07 Nov 2022 19:00:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zJPU3K7TE7A49Fo64Kpa5i/LW3Lw8RzTfvD9Q4b4wOY=;
-        b=S7MzdHyI3PM4PnERo90yuXAfJSEyW6KTtxXSIiUTm6u7BJzafMz+70MD+C7RwXRHDf
-         ii/iNxEkgWuTdFXrh+VEAwG5bdeLU0uylYuBkpXRvaqxgp4pMnHOe/GKaN2jgoKuhRWm
-         e50vPB1XQyUmmgcWdNajjJmhj5kIt15qEp2LkH9DMntxeu1uGRWrmnJcfceRf8Yf6Qwj
-         ujVq2Ef6k6SWd3ZgMoMeJAAq9AVaA+OAUJg4c4KWxPBSU3V3Y5CUhAsdhDThepjEvGWq
-         YjJxj4uprZAfpT2p861c1O4cIZtG4um9NG1Z1rcRyLQbOjXLA2iUED6cr8Kt92/0I3iQ
-         Qetw==
+        bh=aTw6bpWE+Gt0orScUxngVgWQ4eE5JQAJKEjI+1ms/cU=;
+        b=0+P7sM50j/3ionsS1q8QYrIknm9k3jEliYQABiUVOpy7hOKqJZBwJbeY4HI4yKkdiH
+         92dM37+VAvgeXHkjpIUP4aDI9YUBEb37lDObLTTM3BsKfVDFI72u1eiXsi5cJIDoX2X0
+         e9bb7HwNBzsvx6DAMxfljIPGFVAMGQyKeYby3RldwPntsG1T1NgVwJlMp0xHgHC1BKFM
+         1caARR1o8hP8qCWKC6f5y01TttrYhLEsw0d1cYf8Zh1YW3zcTu5u14G9iu343mGQ9Sxg
+         ebAYbZNUE+JJ5UekB6TRuspXmsURPXC2CNdn2aV4TVqXb/euDCUblj8Glvt9IvCt+kv/
+         XSJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zJPU3K7TE7A49Fo64Kpa5i/LW3Lw8RzTfvD9Q4b4wOY=;
-        b=ZP+Xn9Q19h1/tTiaFh+BGjfM9j6PKS6+7GCfWQThaOrydFjZPQUIwirtDxwOu32xvi
-         YcFk7IYM2mWmz6XcDG9Oyfl8uSoPZ5YScjzeByq5ZXNmhxB3kiTLSr1FdH0zeaUBc8yw
-         zkA/b/DuD22WjSu47YA4ecA4I+hohZEahVKIJoGagaV8D7kXJ4BWEp6BCRygDhXiv+Xv
-         wzFuUVF3xdingUfRbkvtPlzm7UAHbnTlJ4sj+gardnnEFYaszmOoqFxW3KpC3xMj6zv3
-         Sab3iecGoSoa5gj5xxq9vwx6tR5WZZ8cwl6G7H+U2OooJlv1z4aDUFdSBG5pqBtPgcQ2
-         oLQA==
-X-Gm-Message-State: ACrzQf3adMq8jE2RCbCQJ77Boc3vNj0aVCV374cDGviDpQOobddKFNtX
-        PN1Hu8MNe88Munto3nTGIGpLHmVFktEOWA==
-X-Google-Smtp-Source: AMsMyM70k62SyxZjn9v+mPx8DRcMghi24fKVVT0gO+L9SKz7qiL325tqmnjCqPSggEggCB3tEw3AyQ==
-X-Received: by 2002:a02:ab86:0:b0:374:2da8:ed19 with SMTP id t6-20020a02ab86000000b003742da8ed19mr30039479jan.213.1667876090866;
-        Mon, 07 Nov 2022 18:54:50 -0800 (PST)
+        bh=aTw6bpWE+Gt0orScUxngVgWQ4eE5JQAJKEjI+1ms/cU=;
+        b=SS1bhPlvGFAh5n1xAT4JGBZxn26xp8ok1gE2vyy//uk/s1UEzjx9EHU0v1CY3VLolA
+         80nQ2sWsIb0e0MSmS2q1C7dg3xWk7c2luUhKY3J2YPRz6+0TCuVnGVcxSQTzIzuQgD12
+         I5imrHkeXtVOFTuhryvHbh/fXuq19HFmDVcQW7/vUcnAO5W4YBaBRD2FHNp9FjMfhH++
+         4nAkEhce7kATv9REUaZSm70OiFVE5shw6JeVkTDEO9TBRK4rgykLUOTCVKiP6uUdL9Yy
+         jdE4+VRfL8lwZMQEq9+me9XI4yTjo2LhN/KuFhhvS0LH8G2gie754Q5/7oDqKDst3L7T
+         H3Yw==
+X-Gm-Message-State: ACrzQf0iAjIg4/H+IwP3/Wm6xdhq2nMsMqgQ3H9QMp9EyDMW8PqsD0OS
+        gVu3RJKN0M/bIyJnbyxshO1Afg==
+X-Google-Smtp-Source: AMsMyM46LqgkB8TkxH4LrHYS4kZ+lh144cwaZkhJBr+94jVGBxtiUCExEHhVx1lyEnM9cZlyv4gOhQ==
+X-Received: by 2002:a05:6638:3802:b0:351:d8a5:6d58 with SMTP id i2-20020a056638380200b00351d8a56d58mr33167793jav.206.1667876404067;
+        Mon, 07 Nov 2022 19:00:04 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id z23-20020a056638215700b003636b73cf29sm3370969jaj.8.2022.11.07.18.54.50
+        by smtp.gmail.com with ESMTPSA id v14-20020a056e020f8e00b002fa9a1fc421sm3410518ilo.45.2022.11.07.19.00.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 18:54:50 -0800 (PST)
-Date:   Mon, 7 Nov 2022 21:54:49 -0500
+        Mon, 07 Nov 2022 19:00:03 -0800 (PST)
+Date:   Mon, 7 Nov 2022 22:00:02 -0500
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Vincent Bernat <vincent@bernat.ch>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] ls-files: fix --ignored and --killed flags in synopsis
-Message-ID: <Y2nE+Q1NH6wvqk5W@nand.local>
-References: <20221106073445.47789-1-vincent@bernat.ch>
- <20221106073727.48405-1-vincent@bernat.ch>
+To:     Alison Winters via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Alison Winters <alisonatwork@outlook.com>,
+        Jacob Keller <jacob.keller@gmail.com>,
+        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
+        Lessley Dennington <lessleydennington@gmail.com>
+Subject: Re: [PATCH 0/2] add case insensitivity option to bash completion
+Message-ID: <Y2nGMquKVz4vDNDS@nand.local>
+References: <pull.1374.git.git.1667669315.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20221106073727.48405-1-vincent@bernat.ch>
+In-Reply-To: <pull.1374.git.git.1667669315.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 06, 2022 at 08:37:27AM +0100, Vincent Bernat wrote:
-> Signed-off-by: Vincent Bernat <vincent@bernat.ch>
-> ---
->  Documentation/git-ls-files.txt | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+Hi Alison,
 
-Thanks, will queue.
+On Sat, Nov 05, 2022 at 05:28:33PM +0000, Alison Winters via GitGitGadget wrote:
+> Alison Winters (2):
+>   completion: add optional ignore-case when matching refs
+>   completion: add case-insensitive match of pseudorefs
+>
+>  contrib/completion/git-completion.bash | 51 ++++++++++++++++++++++++--
+>  t/t9902-completion.sh                  | 32 ++++++++++++++++
+>  2 files changed, 80 insertions(+), 3 deletions(-)
+
+It looks reasonable to me, but I'm far from an expert on the completion
+code ;-).
+
+CC'ing some folks who are going to be more familiar with it than me.
 
 Thanks,
 Taylor
