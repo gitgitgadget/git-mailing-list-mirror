@@ -2,344 +2,185 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A036C4332F
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 09:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE147C4332F
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 09:16:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233530AbiKHJLx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 04:11:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34424 "EHLO
+        id S233731AbiKHJQs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 04:16:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233479AbiKHJLs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2022 04:11:48 -0500
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFA861C115
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 01:11:47 -0800 (PST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id BEB8D5C0120;
-        Tue,  8 Nov 2022 04:11:44 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Tue, 08 Nov 2022 04:11:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; t=1667898704; x=1667985104; bh=FSpmqY4Tv8
-        3EsadgPosbyAtQUlZYBO13sYWuvXKoYuk=; b=H7V+b7c6gSZUucSPTkNog3U/HE
-        js54XoCeRIQbXs5gU63+S+F1OqKLJkxIMZDuABdVqB9YpN0fD+imKw4HaeFEG8h5
-        ZaVP9UcB54CiecPY4Uwvp9aWpAs/WZuSBTqsYQVDq1qcVdtSlPMyWGaLeQBKzbY2
-        dDfu+7EA2ufs5q4iOlKEK3iEPa72yOcrODuEvq+9dRV5faWIvhbOA4Eays8hSyHX
-        /IQrda4+1kQq6pT+cyLbvv8Q2Z+XZTx2EwT6AFtj51yMAQgSyX3zTtjedluZ/4tc
-        kL0dleOTSJJVDdCqUH9rHRMGDOLzsacsLafgpw8X6CaWum59uviovK/TQ+gg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm1; t=1667898704; x=1667985104; bh=FSpmqY4Tv83EsadgPosbyAtQUlZY
-        BO13sYWuvXKoYuk=; b=gWCjhVVN3/ZX5JK9E3mwxDNBkSD/6HQKZhaWxQe3UfZK
-        qEcKetLm6mbUkpj413krq1l5ksI9S7Xdg1PpPu+G8Wsyglvh7M2UWwxyuEYAZ5i9
-        YIbl1GshB21VXEblWr12/vaeov2ndfUGa2yYOKHM/BQ04habYPrgi/JtNcPBzkrO
-        NdcTWrFZT6izfZaE5DKZuhYqvlG1+T2lAwfSjmin/tHnrhrJB9D3g6GZkgybK5EB
-        vzeMevU7wKdWTt0jC1+hibDisU/fYNrRe7SZHbhrl323SbhXkXTmcCipDeYEjLou
-        LVqbwj/9UFj7FEjf8uZiUguGrMXTNuh0WskyTEZUyA==
-X-ME-Sender: <xms:UB1qY65ZA0lNSbeDEuBEEYMJf0FdhKDD_fUewCND789IFrJxwQ_2Gw>
-    <xme:UB1qYz6fXfFzpV1Wm-MOQue4VtFYijHQpDwg737tZclN-J0V1yu1WkNVewrvm2yyU
-    4RCfCyvIVDOX4hslA>
-X-ME-Received: <xmr:UB1qY5fZdmqdjUFwrsY6rsJv2mxJosY8PFia7ZeW6uof1ghggU9-Rg8agPEGMRMCgsMHy8p9UWXZYo-d9YRB6Fu8AjX6F0i2uPkZFaExMS74>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrfedtgddtudcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
-    ertddtudenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
-    khhsrdhimheqnecuggftrfgrthhtvghrnhepfedvleefueetgeeitdekheelffekkefgff
-    duhfduvdefffdtheekiefhkeejkeehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:UB1qY3K7L-qQM99jdezwab8SxPpnTGGePsV-78jTIBt2iR_KwWfHZQ>
-    <xmx:UB1qY-L_Fn4xD6L33zyGy1yGPU8fO_ZcgSt7mjtD2WY0dwm_JiyXYA>
-    <xmx:UB1qY4yb7rrWGYWvtBMyE8d0ujeAVgEP_TLRpbwlI8Mc3t_Wan-ghA>
-    <xmx:UB1qY61mQqCX5-cl5m3E__9hK5vzIEMytDKlBlHEEv7EcvUUrS6mdg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Nov 2022 04:11:43 -0500 (EST)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id b91d5842 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 8 Nov 2022 09:11:36 +0000 (UTC)
-Date:   Tue, 8 Nov 2022 10:11:39 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 3/6] revision: introduce struct to handle exclusions
-Message-ID: <Y2odS7H8lmom/8C3@ncase>
-References: <cover.1666967670.git.ps@pks.im>
- <cover.1667823042.git.ps@pks.im>
- <2a6a67df1d470bf790025d55095c237ddc6a6bd6.1667823042.git.ps@pks.im>
- <221107.86tu3ax5b6.gmgdl@evledraar.gmail.com>
+        with ESMTP id S233732AbiKHJQp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2022 04:16:45 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F6162FFE8
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 01:16:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1667898977; bh=TIeqHHEVQlVP0zV/ZvrAUWj1N8JqFufqdvoq2xx8kKA=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=JoCeeul5JnBXdxi9qqOvpd8gO1uI1SD4VbSdRix8J+UatELcDIidBvBkHEoxHl+vC
+         v4l8jBOP55X7x/B0l6RcFnszVgc2SMCzTZZsud51A22yVNrvd8iuiUY240N+xmcP56
+         nbqOAHYvEM08l92bbKaSUeh1IRRazpabUikMC/YmHVUn5Fpf1DS4gh/1cPZtQCOGkq
+         ZtR+IS4Ka4vjKCH6exRvuwvjh8BqC06h+3FJYzkFh5jc4iIUt/DrygRmEsqVR+9bJS
+         HSiEQfpIPlYTpGfcm25GYVGfr3Sx5N63AYSQ3iyYZoNQV4K9hKD7jGPi1VcOaARwaj
+         rDkaSNLkUCYpg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.27.219.74] ([213.196.213.188]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MMXUN-1obce609bj-00JdK5; Tue, 08
+ Nov 2022 10:16:17 +0100
+Date:   Tue, 8 Nov 2022 10:16:15 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Jeff King <peff@peff.net>
+cc:     Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] ci: avoid unnecessary builds
+In-Reply-To: <Y2SFGmQnx7CXtTEI@coredump.intra.peff.net>
+Message-ID: <oo9ssp5n-6ors-n309-2r2n-3q43rq7pn89q@tzk.qr>
+References: <pull.1404.git.1667482458622.gitgitgadget@gmail.com> <221104.86bkpnzdqi.gmgdl@evledraar.gmail.com> <Y2R3vJf1A2KOZwA7@nand.local> <Y2SFGmQnx7CXtTEI@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="hx4Oe88uQnSWmXgU"
-Content-Disposition: inline
-In-Reply-To: <221107.86tu3ax5b6.gmgdl@evledraar.gmail.com>
+Content-Type: multipart/mixed; boundary="8323328-1072297263-1667898977=:208"
+X-Provags-ID: V03:K1:1y3UOUJEz8t1p930mMi4wVqtjimezyI73GuMslN+uaoofIp0Oig
+ 9goeE8UmqhwHPWXsrrByPPhltQTs4Lr51ocDRh403w4kpbHKbFBMfvJxLNwoYxfurzBCJv4
+ qPSUixyISsFjQepKzwHXlgGORJl+Oeh+V5fAV8xPFK7rGzjGDkkfbZQ9Go4otsqZXyKnTcH
+ zdsfVgXAm0hbHbk+dbNkA==
+UI-OutboundReport: notjunk:1;M01:P0:/z2pWTQ42Qs=;nEkegFzgnMrVFO2ZwCu+NylvbHY
+ rNP4/KLrk160ElAxFJM0PmLOGEUsflaixLJXSufGrJts7Xz/hE3b6tgWcqThA6Sjs+BLBBGKq
+ 2mH4XC8ELW6KU7xLKjdqyA1DbYSJRKLK2vNHFB3VIiy8HbrnZR5wyvulSza4saLs7623sedNW
+ HbMljDNdC8pCxXCuHGYNyJn/rLwh7qqmkTe3a0EszZW/eG2XcQvNhH10Lja7omdp6aXIuQ/X6
+ y9tyHHwZkrqkudJGBncD+LnakNyAT528r20yr6XPP7aTQcfbqcou/G3WJ+irEZMDrMXBSpqv3
+ uot5/f3ev2JdRVB9JW/suPc/cg/nWOGucaD52mibsjKv0gme06Cf7UThf5PhGu0bbdtdTKmWp
+ iZJknMDWj1iO/TtVGR+qdoHiMzuilfhNHMcHT5ipj1T2BT95FjWc7A6VbXC0MK+i1iMUasueG
+ bnmB3ea4X2H7JXGpXBaCpsKJTwIchuJ2KGJAfW86zxCWhrB1HZEy4qqvGIxAqKr3F8SADPkKE
+ gRPL3zVlgcPMaC8wVMoEkeQjTJ+sRKrcdnzURTqCpyiXQW198IeKroDQlB6xjizE8N7ur9Rq4
+ bWe1WBOIaSr5niT+KY1FiAEIxkkERzdjsluHgwdxkuWL+NyCd8OiIq6hjFF0kmuVb48vuPm3n
+ opIA04C5AZGEWOAnlnjRGHXwxCFTeV1npi52VBPgXzHVBgkuywkn9BQ7GezEPaO56tR59/VjQ
+ s/bG9PkqsiO7uY2V4+zcKawtEXe1EJcFqLdjPt1YoITA5l0JImPTj9BMqc5L3ulhDkSpd2G2m
+ Gw8Q3yvtzYN0ixLT/5X/hQuZoSnrCxjGHynoc2LWn7AItAdyGRz2q8DQkqfGg118LOCbKlQTX
+ fYyljDpV084Qf7V5CQ/aU+txHK+2A2jbVljIlbgHU0wGKdRgbAQIJ0/v+FsMRqbhnZtW9P2Uw
+ mtQvI0ePQRnqPe/Ek80ZrByMxB4=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
---hx4Oe88uQnSWmXgU
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+--8323328-1072297263-1667898977=:208
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 07, 2022 at 01:51:51PM +0100, =C6var Arnfj=F6r=F0 Bjarmason wro=
-te:
->=20
-> On Mon, Nov 07 2022, Patrick Steinhardt wrote:
-[snip]
-> > +	string_list_init_dup(&exclusions->excluded_refs);
->=20
-> Okey, so this is partly my fault for not following up on f196c1e908d
-> (revisions API users: use release_revisions() needing REV_INFO_INIT,
-> 2022-04-13) :); But here:
->=20
-> If we keep this *_init() function don't duplicate what you're adding to
-> the macro, just init this in terms of the macro. See the two-line
-> examples in:
->=20
-> 	git grep -W memcpy.*blank
+Hi Peff,
 
-Makes sense.
+On Thu, 3 Nov 2022, Jeff King wrote:
 
-> But here (and this is the part that's mostly me) as we don't malloc this
-> anymore you're only needing to keep this init function for
-> repo_init_revisions().
->=20
-> So, probably too big a digression for a "while at it", but FWIW this on
-> top of your topic would do:
-> =09
-> 	 revision.c | 10 ++--------
-> 	 revision.h | 10 +++++++---
-> 	 2 files changed, 9 insertions(+), 11 deletions(-)
-> =09
-> 	diff --git a/revision.c b/revision.c
-> 	index 45652f9b0bb..cf352d1fa43 100644
-> 	--- a/revision.c
-> 	+++ b/revision.c
-> 	@@ -1534,12 +1534,6 @@ int ref_excluded(const struct ref_exclusions *exc=
-lusions, const char *path)
-> 	 	return 0;
-> 	 }
-> 	=20
-> 	-void init_ref_exclusions(struct ref_exclusions *exclusions)
-> 	-{
-> 	-	string_list_init_dup(&exclusions->excluded_refs);
-> 	-	string_list_init_dup(&exclusions->hidden_refs);
-> 	-}
-> 	-
-> 	 void clear_ref_exclusions(struct ref_exclusions *exclusions)
-> 	 {
-> 	 	string_list_clear(&exclusions->excluded_refs, 0);
-> 	@@ -1897,7 +1891,8 @@ void repo_init_revisions(struct repository *r,
-> 	 			 struct rev_info *revs,
-> 	 			 const char *prefix)
-> 	 {
-> 	-	memset(revs, 0, sizeof(*revs));
-> 	+	struct rev_info blank =3D REV_INFO_INIT;
-> 	+	memcpy(revs, &blank, sizeof(*revs));
-> 	=20
-> 	 	revs->repo =3D r;
-> 	 	revs->abbrev =3D DEFAULT_ABBREV;
-> 	@@ -1933,7 +1928,6 @@ void repo_init_revisions(struct repository *r,
-> 	=20
-> 	 	init_display_notes(&revs->notes_opt);
-> 	 	list_objects_filter_init(&revs->filter);
-> 	-	init_ref_exclusions(&revs->ref_excludes);
-> 	 }
-> 	=20
-> 	 static void add_pending_commit_list(struct rev_info *revs,
-> 	diff --git a/revision.h b/revision.h
-> 	index fef5e063d16..75b8ecc307b 100644
-> 	--- a/revision.h
-> 	+++ b/revision.h
-> 	@@ -94,6 +94,10 @@ struct ref_exclusions {
-> 	 	 */
-> 	 	struct string_list hidden_refs;
-> 	 };
-> 	+#define REF_EXCLUSIONS_INIT { \
-> 	+	.excluded_refs =3D STRING_LIST_INIT_DUP, \
-> 	+	.hidden_refs =3D STRING_LIST_INIT_DUP, \
-> 	+}
-> 	=20
-> 	 struct oidset;
-> 	 struct topo_walk_info;
-> 	@@ -371,7 +375,9 @@ struct rev_info {
-> 	  * called before release_revisions() the "struct rev_info" can be left
-> 	  * uninitialized.
-> 	  */
-> 	-#define REV_INFO_INIT { 0 }
-> 	+#define REV_INFO_INIT { \
-> 	+	.ref_excludes =3D REF_EXCLUSIONS_INIT, \
-> 	+}
-> 	=20
-> 	 /**
-> 	  * Initialize a rev_info structure with default values. The third param=
-eter may
-> 	@@ -455,10 +461,8 @@ void show_object_with_name(FILE *, struct object *,=
- const char *);
-> 	 /**
-> 	  * Helpers to check if a reference should be excluded.
-> 	  */
-> 	-#define REF_EXCLUSIONS_INIT { .excluded_refs =3D STRING_LIST_INIT_DUP, =
-=2Ehidden_refs =3D STRING_LIST_INIT_DUP }
-> 	=20
-> 	 int ref_excluded(const struct ref_exclusions *exclusions, const char *p=
-ath);
-> 	-void init_ref_exclusions(struct ref_exclusions *);
-> 	 void clear_ref_exclusions(struct ref_exclusions *);
-> 	 void add_ref_exclusion(struct ref_exclusions *, const char *exclude);
-> 	 void exclude_hidden_refs(struct ref_exclusions *, const char *section);
->=20
-> But I'll submit that cleanup seperately, but for now let's not duplicate
-> your REF_EXCLUSIONS_INIT macro here in init_ref_exclusions(), just have
-> the function do what the macro is doing, now that we don't need the
-> malloc.
+> On Thu, Nov 03, 2022 at 10:23:56PM -0400, Taylor Blau wrote:
+>
+> > But I think you make a compelling point (which doesn't match my own
+> > workflow, but I can see the utility of nonetheless).
+> >
+> > I was thinking that we could rely on something similar to the ci-confi=
+g
+> > ref stuff from back in e76eec35540 (ci: allow per-branch config for
+> > GitHub Actions, 2020-05-07), but it looks like it'll be a little
+> > trickier than that, maybe impossible.
+> >
+> > We need to know about the state of the ci-config branch before we set
+> > the concurrency bits. So I think you *could* do something like:
+>
+> As an aside, I wish there was a way to interpret per-repo environment
+> variables in the actual action config.
 
-Great, thanks.
+There kind of is. "Kind of" because it is not _really_ a per-repo variable
+(those do not exist on GitHub), but there are topics you can set. These
+are relatively free-form labels you can attach to _your_ fork, and these
+labels show up below the "About" section and the link to the home page (if
+any) on the right side of your respository. AFAICT these topics are not
+inherited automatically when forking a repository, which is precisely what
+we want. See
+https://docs.github.com/en/repositories/managing-your-repositorys-settings=
+-and-features/customizing-your-repository/classifying-your-repository-with=
+-topics
+for more details on that.
 
-[snip]
-> >  static void add_pending_commit_list(struct rev_info *revs,
-> > @@ -2689,10 +2684,10 @@ static int handle_revision_pseudo_opt(struct re=
-v_info *revs,
-> >  			init_all_refs_cb(&cb, revs, *flags);
-> >  			other_head_refs(handle_one_ref, &cb);
-> >  		}
-> > -		clear_ref_exclusion(&revs->ref_excludes);
-> > +		clear_ref_exclusions(&revs->ref_excludes);
-> >  	} else if (!strcmp(arg, "--branches")) {
-> >  		handle_refs(refs, revs, *flags, refs_for_each_branch_ref);
-> > -		clear_ref_exclusion(&revs->ref_excludes);
-> > +		clear_ref_exclusions(&revs->ref_excludes);
-> >  	} else if (!strcmp(arg, "--bisect")) {
-> >  		read_bisect_terms(&term_bad, &term_good);
-> >  		handle_refs(refs, revs, *flags, for_each_bad_bisect_ref);
-> > @@ -2701,15 +2696,15 @@ static int handle_revision_pseudo_opt(struct re=
-v_info *revs,
-> >  		revs->bisect =3D 1;
-> >  	} else if (!strcmp(arg, "--tags")) {
-> >  		handle_refs(refs, revs, *flags, refs_for_each_tag_ref);
-> > -		clear_ref_exclusion(&revs->ref_excludes);
-> > +		clear_ref_exclusions(&revs->ref_excludes);
-> >  	} else if (!strcmp(arg, "--remotes")) {
-> >  		handle_refs(refs, revs, *flags, refs_for_each_remote_ref);
-> > -		clear_ref_exclusion(&revs->ref_excludes);
-> > +		clear_ref_exclusions(&revs->ref_excludes);
-> >  	} else if ((argcount =3D parse_long_opt("glob", argv, &optarg))) {
-> >  		struct all_refs_cb cb;
-> >  		init_all_refs_cb(&cb, revs, *flags);
-> >  		for_each_glob_ref(handle_one_ref, optarg, &cb);
-> > -		clear_ref_exclusion(&revs->ref_excludes);
-> > +		clear_ref_exclusions(&revs->ref_excludes);
-> >  		return argcount;
-> >  	} else if ((argcount =3D parse_long_opt("exclude", argv, &optarg))) {
-> >  		add_ref_exclusion(&revs->ref_excludes, optarg);
-> > @@ -2718,17 +2713,17 @@ static int handle_revision_pseudo_opt(struct re=
-v_info *revs,
-> >  		struct all_refs_cb cb;
-> >  		init_all_refs_cb(&cb, revs, *flags);
-> >  		for_each_glob_ref_in(handle_one_ref, optarg, "refs/heads/", &cb);
-> > -		clear_ref_exclusion(&revs->ref_excludes);
-> > +		clear_ref_exclusions(&revs->ref_excludes);
-> >  	} else if (skip_prefix(arg, "--tags=3D", &optarg)) {
-> >  		struct all_refs_cb cb;
-> >  		init_all_refs_cb(&cb, revs, *flags);
-> >  		for_each_glob_ref_in(handle_one_ref, optarg, "refs/tags/", &cb);
-> > -		clear_ref_exclusion(&revs->ref_excludes);
-> > +		clear_ref_exclusions(&revs->ref_excludes);
-> >  	} else if (skip_prefix(arg, "--remotes=3D", &optarg)) {
-> >  		struct all_refs_cb cb;
-> >  		init_all_refs_cb(&cb, revs, *flags);
-> >  		for_each_glob_ref_in(handle_one_ref, optarg, "refs/remotes/", &cb);
-> > -		clear_ref_exclusion(&revs->ref_excludes);
-> > +		clear_ref_exclusions(&revs->ref_excludes);
->=20
-> The churn I mentioned with the renaming, so maybe worth doing that as a
-> "prep" commit?
+A GitHub workflow can be made conditional on the presence of such a topic.
+I use this, for example, for an opt-in build of the InnoSetup installer:
+https://github.com/jrsoftware/issrc/blob/is-6_2_1/.github/workflows/build.=
+yml#L11-L12
+The build is opt-in because it requires a non-free build environment,
+configured via two repository secrets containing a URL pointing to a
+`.zip` file and a password to extract said `.zip`. As you say, I cannot
+make the build opt-in based on the presence of secrets, but I can use the
+presence a repository topic as the knob to enable the workflow.
 
-Hm. I don't think it's too bad, and it's weird to rename things already
-without any clear justification why that's visible from the diff. Like,
-there is no `struct ref_exclusions` yet, why rename it?
+> The current ci-config stuff works, but it's pretty horrible because (if
+> I understand correctly) it spins up a VM just to evaluate a glob and say
+> "nope, no CI needed on this branch". So:
+>
+>   1. It's wasteful of resources, compared to a system where the Actions
+>      parser can evaluate a variable.
 
-I'll retain this in a single commit if you don't mind, but amend the
-commit message to explicitly mention the rename.
+Indeed. It might look like the job only takes a few seconds (at least that
+was the argument that got the `ci-config` patch accepted), but that misses
+the queue time, which turns this more into several dozens of seconds, and
+the recorded total duration is much longer than that. In
+https://github.com/gitgitgadget/git/actions/runs/3412982102 for example,
+the `ci-config` job only took 6 seconds, according to the page, but the
+total duration of the build was 6 minutes and 56 seconds.
 
-> > +struct ref_exclusions {
-> > +	/*
-> > +	 * Excluded refs is a list of wildmatch patterns. If any of the
-> > +	 * patterns matches, the reference will be excluded.
-> > +	 */
-> > +	struct string_list excluded_refs;
-> > +};
->=20
-> Per the above POC diff though, please move...
->=20
-> >  struct oidset;
-> >  struct topo_walk_info;
-> > =20
-> > @@ -103,7 +111,7 @@ struct rev_info {
-> >  	struct list_objects_filter_options filter;
-> > =20
-> >  	/* excluding from --branches, --refs, etc. expansion */
-> > -	struct string_list *ref_excludes;
-> > +	struct ref_exclusions ref_excludes;
-> > =20
-> >  	/* Basic information */
-> >  	const char *prefix;
-> > @@ -439,12 +447,14 @@ void mark_trees_uninteresting_sparse(struct repos=
-itory *r, struct oidset *trees)
-> >  void show_object_with_name(FILE *, struct object *, const char *);
-> > =20
-> >  /**
-> > - * Helpers to check if a "struct string_list" item matches with
-> > - * wildmatch().
-> > + * Helpers to check if a reference should be excluded.
-> >   */
-> > -int ref_excluded(struct string_list *, const char *path);
-> > -void clear_ref_exclusion(struct string_list **);
-> > -void add_ref_exclusion(struct string_list **, const char *exclude);
-> > +#define REF_EXCLUSIONS_INIT { .excluded_refs =3D STRING_LIST_INIT_DUP }
->=20
-> ...this macro to right after declaring the struct, which is what we
-> usually do, and will help in adding it to "REV_INFO_INIT" sooner than
-> later.
+>   2. It makes the Actions results page for a repo ugly, because skipped
+>      branches clutter the output with "yes, I passed CI" even though all
+>      they passed was a trivial job to say "don't bother running more
+>      CI".
+>
+>   3. The problem you mention: it happens too late to affect the overall
+>      Actions flow, and instead individual jobs have to take it into
+>      account.
 
-Fair, will change.
+And
 
-> Also, at the end of your series this end up being overly long, so per
-> the diff-above (which is tot he end of the series), let's start by
-> line-wrapping it:
->=20
-> 	#define ..._INIT { \
->         	.member =3D ..._INIT, \
-> 	}
+    4. The way `ci-config` is configured is sufficiently "magic" that it
+       only benefits very, very few users, at the price of adding to
+       everybody's build time. To see what I mean, look at
+       https://github.com/gitgitgadget/git/actions/runs/3416084640/jobs/56=
+85867765#step:1:1
+       and at
+       https://github.com/gitgitgadget/git/actions/runs/3416084640/jobs/56=
+85879914#step:1:1
+       turning on the timestamps (i.e. click on the sprocket wheel on the
+       upper right side of the log and select "Show timestamps"). You will
+       see that the `ci-config` job started at 3:22:05 UTC and the next
+       job, `win-build`, started only at 4:16:03 UTC.
 
-Makes sense.
+    5. There is official support for the desired behavior that comes
+       without any magic branch with special content that users somehow
+       need to learn about: If you push a branch with commit messages that
+       contain `[skip ci]`, the build will be skipped, and no time is
+       wasted on running any job. For full details, see
+       https://github.blog/changelog/2021-02-08-github-actions-skip-pull-r=
+equest-and-push-workflows-with-skip-ci/
 
-Patrick
+Having said that, the `ci-config` job is used for something I find much
+more useful than that magic `ci-config` branch handling: to skip builds
+when there are already successful builds of the same commit or at least
+tree. Sadly, that logic fails sometimes because of an unresilient REST API
+call: in case of network errors, we fall back to not skipping the build
+_even if_ there has been a previously-successful build of that tree.
 
---hx4Oe88uQnSWmXgU
-Content-Type: application/pgp-signature; name="signature.asc"
+If it was up to me, I'd simply rip out the `ci-config` branch (`ci/config`
+file) handling and tell users to mark up branches that need to be skipped
+with `[skip ci]`. That has a further advantage of being actually portable
+across a wider range of CI systems (for example, CircleCI supports it,
+too: https://circleci.com/docs/skip-build/).
 
------BEGIN PGP SIGNATURE-----
+But then, it would not save us a whole lot because the `ci-config` job
+_still_ does something useful (i.e. checking for previously successful
+builds of the same tree), so that time is still spent. But how knows,
+maybe there will be out-of-the-box support for that at some stage. =F0=9F=
+=A4=B7
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmNqHUoACgkQVbJhu7ck
-PpTHJhAAmyH+VuoVEarRXGFDRdEpYgW3dkeeGLjNk0v3NvHlDwdOvGQxX94fulwl
-P+Twk24rk89FmcW44/lIE+4Ma0XNxmu+4GplCcUMiB0sBswkLQKRWH9OLVDPqbYX
-nv4trRt27I/GOkJjePwdviwjqzCKGNEX0uvgzHG7oWgVxFnzwsgIfRGJmCU3M96Y
-PdESv3LgU3imUp25xo8f/NXkf6bteRsv/7EYQj1D2yPojP+GogcZ+f6H3/NLskJO
-fynQrRTJ9/D55OZS4ikaciILylit0j/iGnpIsoPqBeQghGfFtSVIVkU1lTV+uMRF
-Pcq58HU80+YPi3UYUWmSZwNO8FmkYJJN9X/yDpw+n40KdhuupA4A0mY3lXt55C6V
-rRRPxWw5mHC/lN6FaK2s62GzGh18ZYbuH7pPDfAezeIYUypHM8ce57YdLv6JW4PQ
-sEqjRRMAACtqIQzyxapHvJEnCiJMqyE27h4xNN8ixIH+YrV3QOoqxSC7Sxbmdgkq
-hHzSERwsVb6sWJRG1/bq3SV/d7r27nUiFIsrdIoPU9VelVQbL74vVN3loB6vili7
-5wdQgxyZEzpxrM9ewBWUIxTevmrpsl0meDKROatrEEbKqk6TAwqJHk6siKaY1Z5v
-mQQPVIR7Z2e9OhGLeBD/y1vxS6YF+2cdGGl0jpOPx4isIGw0Ptc=
-=yiri
------END PGP SIGNATURE-----
+Ciao,
+Dscho
 
---hx4Oe88uQnSWmXgU--
+--8323328-1072297263-1667898977=:208--
