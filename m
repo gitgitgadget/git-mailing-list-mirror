@@ -2,131 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0BF1C4332F
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 01:26:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 797CCC433FE
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 01:27:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232611AbiKHB0U (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 7 Nov 2022 20:26:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49638 "EHLO
+        id S232538AbiKHB1f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 7 Nov 2022 20:27:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231796AbiKHB0T (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Nov 2022 20:26:19 -0500
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE69C20BDD
-        for <git@vger.kernel.org>; Mon,  7 Nov 2022 17:26:18 -0800 (PST)
-Received: by mail-pl1-x629.google.com with SMTP id 4so12865950pli.0
-        for <git@vger.kernel.org>; Mon, 07 Nov 2022 17:26:18 -0800 (PST)
+        with ESMTP id S231796AbiKHB1d (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Nov 2022 20:27:33 -0500
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA36726AFB
+        for <git@vger.kernel.org>; Mon,  7 Nov 2022 17:27:32 -0800 (PST)
+Received: by mail-pg1-x52c.google.com with SMTP id 64so12095851pgc.5
+        for <git@vger.kernel.org>; Mon, 07 Nov 2022 17:27:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=XonapqJpM7yvaCyJe75gMK4hbgTaJjSwWgUYH1Q3RBM=;
-        b=IFAZpIO/lwKubsjEFTL8BX1jRNVwrCYCmh7VU28q+J6mndywS7Ohi9AisIUNJ6b3CZ
-         84pMS3wy4sqhJNnGfWKaZwYGaDlR8sYI1asjrc4OSbHqQ4sC7DJcLg1z9eBl+hewbaOw
-         pZCvq+sEsOoTK6h0IS2WodjRNP9h3THtkYazkEOrgBPM6tdnU4HUb0gA/apj1l9ZPUHf
-         bQ076D/ILMNWnkadKXD4dzalMQDssjWfOkvkoVI4pNBMjgtn4SFs7id6rWB65lxpmkIk
-         NYWJ8x2qM3RSvqCcVJEc/M4yc3hHWv5dCJ1Yqu6iUgn5geRZPnDJZHT5ZaN3+lAaVSRu
-         /NEA==
+        bh=eWJkw1UX2Zm+sgK4OIc/Ap4OX/+W7WQXlLUB6BMcGWs=;
+        b=XUqGzjNjSNQx9vZeSezvJANiMexAvsoJsyVcuANLyL7ihhjj0RGq3usMytwsmqvhHG
+         3uQyXcQrRCs1ynvcOx0qJXhPPC0Ing1uDWBbgqRykbn+8Wa5qU2NEZFNnO+0vUOOD16n
+         x42xSc+evcTxOsYb/BeBtRzzDND1/ZziTbVB+Ky+wNgvZk3YRGC7paAGnCVDuvcZo6qK
+         sBJWyrkPHxDxdEJwfn6/1euNsEIFSLnYkqFSd56Fn3eA8Sqrms3tCWx+bMLfuf+ZGhCN
+         GQO0uS6QicWW6GPFyyiowBzx2K6BvpiX+K9hY7cltZ9kfFnWcf9oTweu96pmNDYQQH86
+         dOuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XonapqJpM7yvaCyJe75gMK4hbgTaJjSwWgUYH1Q3RBM=;
-        b=nD5fMK0SMofNVteJYgH7nJuBoUWJiOf7cG0GpL6xg7W3SdmJ9iWTLams9+yVrGgcxg
-         LgnupYASb29VLLvXfcyBk0mt3jkokyNCrvux82LxNucWA7MchTk/V9EYX8KCQowhYLa2
-         2YFBL95kqkwdSmGwkhahRtS6Q1mxVxUufsxORfMu/Dq3zK4+YbKqVmZmMWHrMuPr3KLP
-         O+lD0lHUXxpRe0EX7tEn+uRLlsg/jeSmpyA1rnN6EfmgHSYgCLYSFb9un0BA6ytQtxp7
-         9i7QnbKx9Vxaah6ieCnYDP9y5DRUPv0hoO1TjsEv61F6wSVJyehdeuVo8xJSOaao6olE
-         2pkA==
-X-Gm-Message-State: ACrzQf2S5ndDlYuB61meg5ceNZ/yJPRN6jLqKMDJ/SY1Il6uO0fT0g0t
-        e3hBHXgTDshjj904JBMeuNU=
-X-Google-Smtp-Source: AMsMyM4Lle1ulY6EYmIx1TsW6QnxLHjvnuBdKtPJztAZCBlAt+hg4Y2BJr9BctZNLOIVsdM8+ARBvA==
-X-Received: by 2002:a17:902:e80a:b0:187:1f2d:b1a8 with SMTP id u10-20020a170902e80a00b001871f2db1a8mr45754873plg.124.1667870778407;
-        Mon, 07 Nov 2022 17:26:18 -0800 (PST)
+        bh=eWJkw1UX2Zm+sgK4OIc/Ap4OX/+W7WQXlLUB6BMcGWs=;
+        b=5nqNyHXOcMavylia4wTcGyNpJyB0DTvY8TS2D6pLFrgrVMOquxeBJ8r1gu2DQ2EX3m
+         +tXgvBKh2znA9nqJLFhQ2HdBOOMdI9Zt/gO51c3rCdxCcs1kJXq9Khm5eYOUnHgzkGKT
+         /AMME6AD5KUOWMySPV6NXljIANNQkMPkN0PBQ/NXjk7gqTSW7v6fUY7KTsIakciqWMip
+         Ug92TNyAe+d2d9eGNumbLPD9M6zsKddkYl8VSU85yOm/uvvngSEnvAKIqp1I5bEdD3my
+         7WewtiCrlaJTjYzqD4Szxla6I+1wYyjz39gkpsg0ajRTzScK6pwNAmZIjntlv15oWRX9
+         lL6Q==
+X-Gm-Message-State: ACrzQf0S01op2ViNzlYNDeMxH2K8McUHmHJhIIWOTadQ02oDo6G+Bae2
+        qyMmpYysp775NcL6AUZudhMBE8nVpF8=
+X-Google-Smtp-Source: AMsMyM4ZpkVmN6lZBrR6ep74rQnKA7159FrgMy74EH1OEcdaf7IxBqRJy7yEW6fnNTlc0mRCkr9Oug==
+X-Received: by 2002:a63:e511:0:b0:46f:98cf:13d3 with SMTP id r17-20020a63e511000000b0046f98cf13d3mr41802728pgh.363.1667870852555;
+        Mon, 07 Nov 2022 17:27:32 -0800 (PST)
 Received: from localhost ([2001:ee0:500b:6370:da47:cda5:dbd5:6e77])
-        by smtp.gmail.com with ESMTPSA id me6-20020a17090b17c600b00213a9e1ec44sm6789724pjb.52.2022.11.07.17.26.17
+        by smtp.gmail.com with ESMTPSA id b143-20020a621b95000000b0056bfebfa6e4sm5112023pfb.190.2022.11.07.17.27.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Nov 2022 17:26:17 -0800 (PST)
-Date:   Tue, 8 Nov 2022 08:26:15 +0700
+        Mon, 07 Nov 2022 17:27:32 -0800 (PST)
+Date:   Tue, 8 Nov 2022 08:27:29 +0700
 From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
         <congdanhqx@gmail.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
         Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 05/13] bisect run: keep some of the post-v2.30.0 output
-Message-ID: <Y2mwN3bpaiN/7vJh@danh.dev>
+Subject: Re: [PATCH 11/13] bisect--helper: remove subcommand state
+Message-ID: <Y2mwgeXQh21e4wFf@danh.dev>
 References: <cover.1667667058.git.congdanhqx@gmail.com>
  <cover.1667667460.git.congdanhqx@gmail.com>
- <5ba3bafdd48b47320624d0db06f379bc0a4b8d4e.1667667460.git.congdanhqx@gmail.com>
- <221107.86k046tp8p.gmgdl@evledraar.gmail.com>
+ <8037667da0f3d9f91c8f2aa477e2e95fb7f0c24b.1667667460.git.congdanhqx@gmail.com>
+ <221107.86fseutp3v.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <221107.86k046tp8p.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221107.86fseutp3v.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-11-07 22:40:33+0100, Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+On 2022-11-07 22:45:50+0100, Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
 > 
 > On Sun, Nov 06 2022, Đoàn Trần Công Danh wrote:
 > 
-> > From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> > In previous change, we've made 'state' optional, and replaced all of its
+> > usage.
 > >
-> > Preceding commits fixed output and behavior regressions in
-> > d1bbbe45df8 (bisect--helper: reimplement `bisect_run` shell function
-> > in C, 2021-09-13), which did not claim to be changing the output of
-> > "git bisect run".
-> >
-> > But some of the output it emitted was subjectively better, so once
-> > we've asserted that we're back on v2.29.0 behavior, let's change some
-> > of it back:
-> >
-> > - We now quote the arguments again, but omit the first " " when
-> >   printing the "running" line.
-> > - Ditto for other cases where we emitted the argument
-> > - We say "found first bad commit" again, not just "run success"
+> > Let's remove it, now.
 > 
-> So, something you refactored here was that there's now a
-> do_bisect_run(), and:
-> 
-> > -static int do_bisect_run(const char *command, int argc, const char **argv)
-> > +static int do_bisect_run(const char *command, int argc UNUSED, const char **argv UNUSED)
-> >  {
-> >  	struct child_process cmd = CHILD_PROCESS_INIT;
-> > -	struct strbuf buf = STRBUF_INIT;
-> > +	const char *trimed = command;
-> >  
-> > -	strbuf_join_argv(&buf, argc, argv, ' ');
-> > -	printf(_("running %s\n"), buf.buf);
-> > -	strbuf_release(&buf);
-> > +	while (*trimed && isspace(*trimed))
-> > +		trimed++;
-> > +	printf(_("running %s\n"), trimed);
-> >  	cmd.use_shell = 1;
-> >  	strvec_push(&cmd.args, command);
-> >  	return run_command(&cmd);
-> 
-> Instead of trimming with strbuf_ltrim() we're now using this loop, but
-> in any case, this has had the effect that you're only fixing one of many
-> of the output changes. We're still adding this leading whitespace to the
-> other messages we emit.
+> Let's remove it then? I.e. let's squash this into 10/13. No reason not
+> to...
 
-Sorry, I can't follow, we're fixing in do_bisect_run, which meant we
-fixed all of the output changes for leading whitespace, no?
-
-'do_bisect_run' will be called from normal 'git bisect run' iteration
-and also after receiving code 126/127 for the very first run.
-
-Which is the other cases you're talking about?
-
-> 
-> As note din the preceding commit you've carried here in 03/13 I didn't
-> have time to come up with tests for those.
+I was following the existing (I think) practice of removing
+a subcommand in a separated commit. Sure, I can meld it into 10/13
 
 -- 
 Danh
