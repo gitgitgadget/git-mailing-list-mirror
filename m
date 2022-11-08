@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9E344C4332F
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 22:44:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1065C433FE
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 22:44:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229695AbiKHWoo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 17:44:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38544 "EHLO
+        id S229747AbiKHWoq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 17:44:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229709AbiKHWob (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2022 17:44:31 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E383D209A8
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 14:44:29 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id y16so23140032wrt.12
-        for <git@vger.kernel.org>; Tue, 08 Nov 2022 14:44:29 -0800 (PST)
+        with ESMTP id S229734AbiKHWoc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2022 17:44:32 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 634BA21241
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 14:44:31 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id p16so9705377wmc.3
+        for <git@vger.kernel.org>; Tue, 08 Nov 2022 14:44:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=y/zicVtu+r7gO5FwNJ/+MUMzuPbt221qJMX9gz8tkU0=;
-        b=NkdBXINqsm6+EGtYp69ZZyFC1t7EMn4VW+zD+4vb/Tr1Lryd69txVYlivG0nimWNJV
-         yVr5f2JvdQV9ec9U/LilLy/ugrXnK/pz6wCEJnWquku9B76gmvAK7YE7GscHeztyK1xY
-         7LVVgyXkmS/+cPNYqbJv3AWSgns6lGT8+4CqvDwkTXcsZwxMTOAghJjMxgMVbeOFsBF7
-         /nqghC4pd1YPL5Qp9eiZ3d82PsHtHKvLW5FvuY7EBthSJiKrGfNJiPQsU0Ycm6A8cq8e
-         JDnZxXABpESHaU9DXP4u067Ojc3YK+RckUxMPGunfZFBLhl0ZM82ZWvAYJEsUVGxvFd3
-         q33Q==
+        bh=O/qBtdZ69IG5ihaw98dYPOr1oYuv5CWv1pqA2wxwrrQ=;
+        b=oXK/93sI3u1gfnCspoklK2nymcSt/iW1Vy9ClpoNzFyY+WRkxHbNuEck7Vniq0WvLS
+         q8Yc2d2upcDjiCE+SM7OsLgdpiZqIY0rC5nACobU2jcp3k91iA3YkeePhfyqZUb8e1jO
+         NoSdyLxy1vWdlRlKFgFSBaUOFTypuKweo5/gbGKFFzwR6eValC29LbiKrmOYVDF/agYC
+         hcBohb92cBGDWTxzkpDF26lB6ENoeXpzqraBB5fnas0RBw1Zl/QWuqUWZvBFigvKVJyW
+         JT5Iw6+BGp3K98JUB0R3a8juAm7Q/B6h1dLhACFXXE6B+g1Yo3MRf793NAiPtskIMKtB
+         ix3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=y/zicVtu+r7gO5FwNJ/+MUMzuPbt221qJMX9gz8tkU0=;
-        b=agvHefkGr1q7CqPmMZaOKtmX+nC7ZTi/HnAD/L5MnmTQR/bCATGANouqve8E6LwYOY
-         u2FD1ueRdYwth/vwk2tz1Q/jBR71URdpRlykO3qz4Bo6RGPRE2IxQvGMhcoBoKGXWZae
-         d8j8dNzIUoK7J/m9mmgQS6WXSu0Aou4vjElMg/a6swJfje3wOAqzuqHaRi2mN3D1invr
-         U9d0RDoawcYyAp5Er8rlPV3re2b3LO2ErvuUpVr3oIh+hXR8QPmZusjicjw2zkgiIcCe
-         o+dGsaFkPIAH0mnSjcPwAkzvoLQ2OUVFp48F1FGMEpxNTWYWBvsOplknA7rMTTF+6tCQ
-         w65Q==
-X-Gm-Message-State: ACrzQf1zjRgmquWtnZq0plZGNbHHndHGViLUmM4I2L/rp0KbtNxfZR3a
-        C0Cd0gFVqRYrbGdaJIZu4jE8tlwTc/M=
-X-Google-Smtp-Source: AMsMyM7zv1EjaVsr5+S4l7IWCJYV4cZahk1CwyfWJvZvv7eznoXWeKYxb6qoYe4qBKPDqgN4u6Qeew==
-X-Received: by 2002:adf:dd4d:0:b0:236:6e72:be17 with SMTP id u13-20020adfdd4d000000b002366e72be17mr35268804wrm.460.1667947468261;
-        Tue, 08 Nov 2022 14:44:28 -0800 (PST)
+        bh=O/qBtdZ69IG5ihaw98dYPOr1oYuv5CWv1pqA2wxwrrQ=;
+        b=NR2LkmX1QjHpF59fOjkwW5my8unfWLVngoiLfYUiKLzle1IC8oGGsxSCSjj9rhsh7L
+         dyZlKgDan7cuT5an9oHYtj0wrtKLRBC5PyStE3KyFSy6jcNp/XVuQ25EXSw9ohZndNqQ
+         R3GZuMKBZveAO1IX31anNOwSxOcg7auLe6mtqQna5LmDzSjDvWbTwnz8OT1sNHGOy4CM
+         CvzQiOOGjw8DSIzpaHrug1z7q7GG+E1XWeDAmOfEkDzCW5ZX2SJ8yEjfPV5BRrvdkAWq
+         VQivMqTJveBEhxgs3gxBAYp7Glejliqc/NSLSefMtOh1SNIUUjXOFyB2Bctup+fAguZE
+         biCQ==
+X-Gm-Message-State: ACrzQf2ghjZO9WZxUyrnh2JHi5Lgyx6oyeaBtcOjedkdHTFMQ6rSalJ1
+        a6HWW32Wz8iAD1aD+tlYFjQStySpMLs=
+X-Google-Smtp-Source: AMsMyM7KB3iq4IedjXDlTRHYYkWaLmL8P7ZxJQ3q9QHz2lKvi/4Ehi5VdgwCB9nebn5zdSS61poCzA==
+X-Received: by 2002:a05:600c:2e07:b0:3cf:92cc:4aa8 with SMTP id o7-20020a05600c2e0700b003cf92cc4aa8mr20136233wmf.68.1667947470769;
+        Tue, 08 Nov 2022 14:44:30 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t1-20020a1c7701000000b003b3307fb98fsm12137459wmi.24.2022.11.08.14.44.27
+        by smtp.gmail.com with ESMTPSA id n17-20020a05600c4f9100b003c701c12a17sm16922358wmq.12.2022.11.08.14.44.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Nov 2022 14:44:27 -0800 (PST)
-Message-Id: <d0a20cafd394165855620d76d9f5ab7c003338e6.1667947465.git.gitgitgadget@gmail.com>
+        Tue, 08 Nov 2022 14:44:30 -0800 (PST)
+Message-Id: <dd4edd7cad8d06b3464608cc3ce79bb0368a5e2e.1667947465.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1411.git.1667947465.gitgitgadget@gmail.com>
 References: <pull.1411.git.1667947465.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 08 Nov 2022 22:44:22 +0000
-Subject: [PATCH 2/5] unpack-trees: add 'skip_cache_tree_update' option
+Date:   Tue, 08 Nov 2022 22:44:25 +0000
+Subject: [PATCH 5/5] rebase: use 'skip_cache_tree_update' option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,52 +69,47 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Add (disabled by default) option to skip the 'cache_tree_update()' at the
-end of 'unpack_trees()'. In many cases, this cache tree update is redundant
-because the caller of 'unpack_trees()' immediately follows it with
-'prime_cache_tree()', rebuilding the entire cache tree from scratch. While
-these operations aren't the most expensive part of operations like 'git
-reset', the duplicate calls still create a minor unnecessary slowdown.
+Enable the 'skip_cache_tree_update' option in both 'do_reset()'
+('sequencer.c') and 'reset_head()' ('reset.c'). Both of these callers invoke
+'prime_cache_tree()' after 'unpack_trees()', so we can remove an unnecessary
+cache tree rebuild by skipping 'cache_tree_update()'.
 
-Introduce an option for callers to skip the 'cache_tree_update()' in
-'unpack_trees()' if it is redundant (that is, if 'prime_cache_tree()' is
-called afterwards). At the moment, no 'unpack_trees()' callers use the new
-option; they will be updated in subsequent patches.
+When testing with 'p3400-rebase.sh' and 'p3404-rebase-interactive.sh', the
+performance change of this update was negligible, likely due to the
+operation being dominated by more expensive operations (like checking out
+trees). However, since the change doesn't harm performance, it's worth
+keeping this 'unpack_trees()' usage consistent with others that subsequently
+invoke 'prime_cache_tree()'.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- unpack-trees.c | 3 ++-
- unpack-trees.h | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ reset.c     | 1 +
+ sequencer.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index bae812156c4..8a762aa0772 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -2043,7 +2043,8 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
- 		if (!ret) {
- 			if (git_env_bool("GIT_TEST_CHECK_CACHE_TREE", 0))
- 				cache_tree_verify(the_repository, &o->result);
--			if (!cache_tree_fully_valid(o->result.cache_tree))
-+			if (!o->skip_cache_tree_update &&
-+			    !cache_tree_fully_valid(o->result.cache_tree))
- 				cache_tree_update(&o->result,
- 						  WRITE_TREE_SILENT |
- 						  WRITE_TREE_REPAIR);
-diff --git a/unpack-trees.h b/unpack-trees.h
-index efb9edfbb27..6ab0d74c84d 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -71,7 +71,8 @@ struct unpack_trees_options {
- 		     quiet,
- 		     exiting_early,
- 		     show_all_errors,
--		     dry_run;
-+		     dry_run,
-+		     skip_cache_tree_update;
- 	enum unpack_trees_reset_type reset;
- 	const char *prefix;
- 	int cache_bottom;
+diff --git a/reset.c b/reset.c
+index e3383a93343..5ded23611f3 100644
+--- a/reset.c
++++ b/reset.c
+@@ -128,6 +128,7 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
+ 	unpack_tree_opts.update = 1;
+ 	unpack_tree_opts.merge = 1;
+ 	unpack_tree_opts.preserve_ignored = 0; /* FIXME: !overwrite_ignore */
++	unpack_tree_opts.skip_cache_tree_update = 1;
+ 	init_checkout_metadata(&unpack_tree_opts.meta, switch_to_branch, oid, NULL);
+ 	if (reset_hard)
+ 		unpack_tree_opts.reset = UNPACK_RESET_PROTECT_UNTRACKED;
+diff --git a/sequencer.c b/sequencer.c
+index e658df7e8ff..3f7a73ce4e1 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -3750,6 +3750,7 @@ static int do_reset(struct repository *r,
+ 	unpack_tree_opts.merge = 1;
+ 	unpack_tree_opts.update = 1;
+ 	unpack_tree_opts.preserve_ignored = 0; /* FIXME: !overwrite_ignore */
++	unpack_tree_opts.skip_cache_tree_update = 1;
+ 	init_checkout_metadata(&unpack_tree_opts.meta, name, &oid, NULL);
+ 
+ 	if (repo_read_index_unmerged(r)) {
 -- 
 gitgitgadget
-
