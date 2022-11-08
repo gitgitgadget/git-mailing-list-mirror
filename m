@@ -2,141 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B41EC433FE
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 08:17:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1ACBC433FE
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 08:18:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233664AbiKHIRC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 03:17:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36748 "EHLO
+        id S233743AbiKHISd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 03:18:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233741AbiKHIQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2022 03:16:58 -0500
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1F7E25C76
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 00:16:56 -0800 (PST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-        by mailout.nyi.internal (Postfix) with ESMTP id 0F9845C0036;
-        Tue,  8 Nov 2022 03:16:56 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Tue, 08 Nov 2022 03:16:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; t=1667895416; x=1667981816; bh=zIxnzQGHN/
-        /BfMFSfrSTUMX4tru9+rkGfw9iVpjuEOw=; b=JPeq+4+nvFMTCjrYjs5qZH2xhY
-        Zks1OM289riuunrvU9+bC2nhRGhlhAIIjTAe2I0lwbEQm4QjMOg/sqAyNrlEDPCv
-        cVImqySh46wIH57k8AXrYH9q1yRlj4c4eJj7mWvh092dOLmHGsJ9pFV+ANuwXXa2
-        UKwoXIXxk2gmIq7BKxpfuK3pwC1tm82HF+DBiuQXs4z7Jcs9Nh7uKKt811bYDVkL
-        99D/BgojhOhGnq4CPCTDP438SHw3Exq8AJOEtjqKLrUGj6E9KK086pnpg9XgQy9L
-        N5wUpntC3gs884vGyPgR0qkh1ccgFFmqfAt2RXkmJW9xR2/hLldYUtHIvx8A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm1; t=1667895416; x=1667981816; bh=zIxnzQGHN//BfMFSfrSTUMX4tru9
-        +rkGfw9iVpjuEOw=; b=ndKRBvZgHMNwyHhfZxlEd2n38IEUQqRqvrIQ3WbKwKy4
-        zlZE7KnwUf0tRhVgusDL5NsfiVCtHgiyhxjh0mbp5yMWdkx8JZlIBR8WGyv517om
-        3ncZ612VUgt9ZsAimfOhryMNZqHdeZHZR1kabgAbCCP+j+Q/eHfFjZIy+ftnWa+p
-        sibNB8jgZ/CWOROCdObvviGfZ3oNntP1rKtoGrnl2Bc0YEn0pYs9/ia6GsANjL3v
-        VYLMOFZ0mfWSHawqCBT48FedmEf6peAVMVoYSJ+HTVawClyO2p/3WstOeMN6x7mv
-        TlGGckssX1i89H5Nm07AmYIW7vaw5r2P3mY9L6PXJQ==
-X-ME-Sender: <xms:dxBqYweTBhGoZjfynRFFzeuzkuIG6wChOH1OgCqgKkXnWtWX8EdGkQ>
-    <xme:dxBqYyMATwyjXy-PEYY9BHSWvpqUcAfoLKebtVYAl604d1eaUHjklCNJ94lODJgzx
-    UBz-qce157WGK5Jfg>
-X-ME-Received: <xmr:dxBqYxjZZqkYIq0mJaCK2inejsjpnF1AqHw3XBhMkzYfxI4bDN63MuzlBD6371ch_aQUoovhkAvrqTYIRJFhp1opH9XUyUfSK34Jef-0mN-->
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrvdelgdduvddtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:dxBqY19r2b4nbrfC1tujp8R1v9cktiAGg_Jc-39RUOnPfxCfcoVTBQ>
-    <xmx:dxBqY8vV4TLM_0qyXzWzWam4yzFGJIAa6pNTnFfBFQYCuvWS95PiJg>
-    <xmx:dxBqY8EFRzJmNbQdgkbF4GzMkoBFRouQmtTzuHYfDrlEuEMIowoxsg>
-    <xmx:eBBqY4ICSDEO4udaQGb_AFqehjdvqfCpbnEjE8MaQu_iHZHhiyWXkQ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Nov 2022 03:16:54 -0500 (EST)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 6ec07237 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Tue, 8 Nov 2022 08:16:43 +0000 (UTC)
-Date:   Tue, 8 Nov 2022 09:16:47 +0100
-From:   Patrick Steinhardt <ps@pks.im>
+        with ESMTP id S233741AbiKHIS3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2022 03:18:29 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7AF22DCA
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 00:18:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1667895502; bh=SAwxCt/vxyCPSKLCLqvGXBSOvUfMJfYwvmehyzXM+GA=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=nhnZAsZMtxK6Hk3KTWUBwnCcXDC5g3KP1HalaNUAAMO/ZFk7KqNru5bBl46arRKjd
+         H0v4FRcdt4500MRJ74/dUrn0gTI8gXgCg871niVOku/SIsYrLtmG/zxZXESlCrrn9W
+         +qT8K+J8S9x/6Pyr9FsejXphHRTSiLv19qzvCj3ar0DfZed57bWdlUNdJUGfUhEDc1
+         yDyKq0tRMIv/6InXVz7Utdd8tE0mbKa6S4qfatqZ6dPC4CyE41G3wIAjNYWmPL12LP
+         4WuHBEEJ0vIA84+3J/dDY+zC0GDs5RhwFsGOyVSu7Uc+kkGmsApR7XfjPNQ0YEQScM
+         +tj4V9Y9b7rmw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.27.219.74] ([213.196.213.188]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N95e9-1p6ZaL24f9-0168u0; Tue, 08
+ Nov 2022 09:18:22 +0100
+Date:   Tue, 8 Nov 2022 09:18:21 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 4/6] revision: add new parameter to exclude hidden refs
-Message-ID: <Y2oQb12WwEh0bpxW@ncase>
-References: <cover.1666967670.git.ps@pks.im>
- <cover.1667823042.git.ps@pks.im>
- <de7c1aa210c2df9bdbbb6c19f44f72c37f56c5da.1667823042.git.ps@pks.im>
- <Y2mpefFJspp4QnAz@nand.local>
+cc:     Derrick Stolee <derrickstolee@github.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] ci: avoid unnecessary builds
+In-Reply-To: <Y2mKY+rE6X/Lu4pb@nand.local>
+Message-ID: <75ono097-16nr-nno4-rqoq-rrn79spps249@tzk.qr>
+References: <pull.1404.git.1667482458622.gitgitgadget@gmail.com> <f975f57e-71e2-3227-8039-14dff82f04db@github.com> <Y2liOzOFLyz4uzd0@nand.local> <85b30a45-e00e-44b5-ae4a-b09542a9fb19@github.com> <221107.865yfqv58k.gmgdl@evledraar.gmail.com>
+ <114d4a72-1a75-71f3-8af6-6e82cd4fd54b@github.com> <Y2mKY+rE6X/Lu4pb@nand.local>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="PIcvsXzVTOgGPIJ/"
-Content-Disposition: inline
-In-Reply-To: <Y2mpefFJspp4QnAz@nand.local>
+Content-Type: multipart/mixed; boundary="8323328-933969287-1667895502=:208"
+X-Provags-ID: V03:K1:CUtnTVvqu/jS7SrRPmf3uHkfcfdcJ9xBuKhZu6/fzXTp0RcU7fI
+ jUjcHivKrWS7ZVnSgwzi7P0YlgOTUVOXCj1LGIXcoj12Wht/OiJy0eM3un6BGUAzfLr2YGK
+ NqhSftTAYMULVtCWeGZeTdv4HLrECnBBrTydOUTvOLsXEe6T9Mx7p2/QQJZnPrF700QPYXS
+ /jd2JE5CNhnvqfRB9s2zQ==
+UI-OutboundReport: notjunk:1;M01:P0:RZ5+n+PxGrQ=;4eSfY7PO/8FK2kHjv6rejncbPdO
+ BvzuuUgTRE+/XJTP1Pa297XzrfuVULPivF4cyEdXhxDnVII4N1HOa8TEpsG29s+6YPWygujwJ
+ yrpCMN6QjvIzEiWE3mgQxaiwkvHS7zYqmLqCY0wym+cLXrIyjxvBLruWfo1Img6EMAqk13FGt
+ pzyx6zFkCMB6DEN8/v15tqq0UL87SL8Ae/uFJ7nN1xqqQtKd7OCtDfOyRF3FGlf+D6svFvtii
+ 59vkNd8gHnlSinySf3ziUqRXLQ7bnH1D7MKDO3PIsr2iyL/6GdmcBMX8dBsEZCdpha04jll6g
+ biQWXtO8t4UFhfR+CEGfvPIB69XKD3Oe4Pdh2VfI/7PsfVf/0l8hjpFQrpY3k9Z+A70TC3wUH
+ L0pUmEppzn2frPf4NSj/D63YkdjiQiQBwIwQtdPMMf8zSzMF2Exbbj+yNyfT5z6jpehUE1R+f
+ B0GMP8mXiwXIdsxNuBjywJPDdcS/vUaCAp59S6MViivsT8bbw1jaxycxPWFyXyVB9sJ699fJz
+ d/Qbx/QV3W7MZO9v6sfIzOKp9JS/KhlsLARdb4RK8xrtaTrBV/2ECa9hN0mtzauv3GN1qxmvP
+ tPz0RjTRy3+NfueUSOdi+lfUb7xPz5QZ1FZH5MsBLrwO6QpP8TPJPqFUzpOkTHG6uWHWIkkdT
+ axY0QIxut2aUTEO5dSzX/HkqnCG4I51TIfz4g8kU5SkzNHpv4eyZI3i3Th+Jkyiw+DOzvtaVH
+ TwMr3B2ngmo4onDSHmmAtQ0T3XphJH1ILT108BfUEoGf1Bo68wx522ZAhEHpKUWbWyoOkhAQs
+ 7HLI4SRD0JAf7UZFPsppEcje+KhDxbYV1GI3zwBlgJOqcW+S4Y82kvqCw2JQpEbDA5lsqI/Nw
+ GZyBq5bZ18WzlxL0bMcJqM8/hQnwI8PDedhxRoTOZkFZ8Fefs4lnNO81LFpZMGLGcHRCeuiw6
+ 3sYb5GfWETjQH9VMdZoToyswq7k=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
---PIcvsXzVTOgGPIJ/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--8323328-933969287-1667895502=:208
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 07, 2022 at 07:57:29PM -0500, Taylor Blau wrote:
-> On Mon, Nov 07, 2022 at 01:16:35PM +0100, Patrick Steinhardt wrote:
-> > @@ -195,6 +195,13 @@ respectively, and they must begin with `refs/` whe=
-n applied to `--glob`
-> >  or `--all`. If a trailing '/{asterisk}' is intended, it must be given
-> >  explicitly.
-> >
-> > +--exclude-hidden=3D[transfer|receive|uploadpack]::
-> > +	Do not include refs that have been hidden via either one of
-> > +	`transfer.hideRefs`, `receive.hideRefs` or `uploadpack.hideRefs` that
-> > +	the next `--all`, `--branches`, `--tags`, `--remotes` or `--glob` wou=
-ld
-> > +	otherwise consider.  This option is cleared when seeing one of these
-> > +	pseudo-refs.
-> > +
->=20
-> Hmm. I thought that part of the motivation behind this round was to drop
-> the 'transfer' group, since it's implied by '--exclude-hidden=3Dreceive
-> --exclude-hidden-uploadpack', no?
->=20
-> Thanks,
-> Taylor
+Hi Taylor,
 
-I didn't quite see the point in not providing the `transfer` group so
-that users can ask for only the set of refs that are hidden by both
-`uploadpack` and `receive`. But given that you're the second person
-asking for it to be dropped now and given that I don't really have a
-plausible usecase for this I'll drop it in the next version.
+On Mon, 7 Nov 2022, Taylor Blau wrote:
 
-Patrick
+> I'm more concerned with the expense of running a job which counts
+> double-digit minutes against your available Actions runtime.
 
---PIcvsXzVTOgGPIJ/
-Content-Type: application/pgp-signature; name="signature.asc"
+Me, too. The fact that we used up 50.000 build minutes before we were able
+to finalize v2.38.1 is quite concerning.
 
------BEGIN PGP SIGNATURE-----
+> I played around with the following, but I can't quite get Actions to
+> like it. The error message I get (ref[1]) is something like:
+>
+>     The workflow is not valid. .github/workflows/main.yml (Line: 96, Col=
+:
+>     27): Unexpected value 'needs.ci-config.outputs.skip_concurrent =3D=
+=3D 'yes''
+>     .github/workflows/main.yml (Line: 123, Col: 27): Unexpected value
+>     'needs.ci-config.outputs.skip_concurrent =3D=3D 'yes''
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmNqEG4ACgkQVbJhu7ck
-PpRdsg//SuFNuYmj8T6IwhyPw/LnqH6GiAmMW3DmVmSi2tSDRMyCiAe5Di6ZwTop
-vLHO4pmEN7UYqlYeerN1wSl3V5TvC/zIp/kgxncCudQGlQXPb6teWMiArLxUE4ZV
-ctuPxVVofd8lcL+JbYePPL6PeOc+jc21sBajWngo9raP+LHoHWtzp5HkOnoqbTzf
-rpv7vVBHWp6vcZHoGuxeGTfXytK/zRtbuorj7dm1gN+2Z+hdp6W9q9kGGHSgQgyJ
-ipgeZxfB1CyDZQsY+jNIA1x7OEYEj7BpfQok9iqyoQklYdtsVaIfxB7bPflONotV
-Fmo4YyD8bsGCazZyUQrw4uX3GKUg4VfMO99Qkz/x1amva5u/3FKd61aTARZVC5vH
-n5++DRSvgzzbFSjrjPz5Cw74MAXuKI4iRRXYc1SQiJVqeLsaGOPMM6rHfICb7Qcp
-41GupqxOiEPR6qQRlrJEeCF2uMGwQun8VRf3Bwe0UG2YOiWnDab0qg+Liyu2rmbU
-RU8uY50e/pDrzCpoRIBINDEZGPXmTeIKz2qN97NUaBc6yjuvKJ+J0Ro/zsRsVX7Y
-PRH/F5yL/SzZXS0r/97WF/67+eViweymajibi0euGyOo2owjwHBkqBrHuvyEtL4W
-H4bcwVBr7+R1oeLRQXgJ/D3lzxgpwXI1bZ+7FaQZMPglcNAmhfI=
-=z9rK
------END PGP SIGNATURE-----
+The reason is that what you are trying to do simply cannot work.
 
---PIcvsXzVTOgGPIJ/--
+The `concurrency` setting is evaluated _before_ running the build. Yet you
+want to make it contingent on the output of a job that only runs _as part_
+of the build. Catch-22.
+
+Reading through the thread, my assessment is that the original patch is
+still the best we can do.
+
+I also want to point out that the strategy described by =C3=86var to push =
+every
+hour and see a "breadcrumb trail" of green builds is quite wasteful. Just
+because somebody else pays for it does not mean that it is free of cost.
+It very much looks like wasting resources unnecessarily to me, and I do
+not condone this, and I believe that the Git project should neither
+encourage nor support this.
+
+If you _must_ have concurrent builds of your branch (i.e. if you want to
+use that many resources despite the planet literally burning already from
+wasteful use of resources), you can always start your branch with a patch
+that comments out the `cancel-in-progress` line, without forcing the
+complexity of a more generic support for this behavior into Git's code
+base.
+
+Ciao,
+Dscho
+
+--8323328-933969287-1667895502=:208--
