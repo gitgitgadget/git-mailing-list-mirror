@@ -2,128 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CD0A5C4332F
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 10:13:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ED6F2C433FE
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 10:51:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233798AbiKHKNe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 05:13:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44116 "EHLO
+        id S233735AbiKHKvW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 05:51:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233784AbiKHKNd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2022 05:13:33 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CE0F62EC
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 02:13:32 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id j15so20169003wrq.3
-        for <git@vger.kernel.org>; Tue, 08 Nov 2022 02:13:32 -0800 (PST)
+        with ESMTP id S233697AbiKHKvM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2022 05:51:12 -0500
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95047120BD
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 02:51:10 -0800 (PST)
+Received: by mail-oi1-x22d.google.com with SMTP id r76so15058756oie.13
+        for <git@vger.kernel.org>; Tue, 08 Nov 2022 02:51:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=M3Ao1UJnlYWMdcNZLT54KHSEIjsAu7+lJ82ENGoeHYo=;
-        b=MIaWk2v/lY1mBFavT4PWR3fXoalNlWll+B6JYe8QN27M4dF9XBUZBn96pNHGLe5J1G
-         Isyb2rZBxesoQtgDlLSajeYVgqalvM4kmOLd+2PfF7GQ3FBRZCaRphsY+Lu7BkTyxszt
-         xm8wss+UqLIhJrc4TmYluPTOmK+m1jhKw/f0De8HXTF0rQhnXHQ9tTTEfibn0ZK94cQX
-         BboLGdfo85cyCAoyTUdTygBADrsESgpsDkk0NQQUInu9mu2LT/p0JXDeX8kEjcmGhQNt
-         kifpYKNaaphFHyhn3rkMpZrBDHU39w2gSOeYRHDh8xf4u0zAI9n0glmMfByCcl/oiUrw
-         1cHQ==
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=3A36DlCeXplb/KgX1gMDKXD1AONVpRlLAWhUm3wuJqI=;
+        b=CjeeXtoDXdEhCwDlwUkLdSLXbTTVBzQSNVEGBdR1AesyExBus2e5QwnIFRuxr51brq
+         Khk0afGvC+BuZJGTQCBfRQ/soaXLwtCwEjmeRdPkhQtExwAnEFY34MgTbrnrZxsB2Qka
+         nbpy7iO7JyspdP86vjVDlIuHoJD21/5sobkt5dOOQQWBEMPd+8u0xLNvgV4cLQWRlyB5
+         vBMXaOoH4ydCtxe6Z87mRLAW142DUwefio+UnXas3BVLX+oK7bUufVLNyJ/h+tzLZgio
+         zjLy+ZaA1j8baxmOW79cy4FR9RGGoauwtwLBHI7uuJzutYi9BSBIVrWYo6xqhmqMlPuP
+         YS8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=M3Ao1UJnlYWMdcNZLT54KHSEIjsAu7+lJ82ENGoeHYo=;
-        b=GYZek815GmUSpC/i2O7p8aIeUUgjtITVjDdcfOi+yRMJSOJAHocIfBBNVgNI84VJ/X
-         41UPxhEssdDr02ul55ovK2JxQ6s8t20Woqll6DgHCSTB0AC1BQapcntUCEdKOuhXVoj9
-         g/OC8P+0QveY7n0yxc0DQ1KhUEt0o6p3VadGvMZx7vfHi4Y6pb4ih3f3ZNcOwF5g8XIn
-         uwlV5RaGQnruOX7keK4l57vjj4ktwE1YhOu7/atpBuoZuiXsKmiLejXjFZ9yRM7hd0WL
-         idzDD/buDpT0l3nGejimEnjrjh9t5u+Eso8ZSzl0adDlgyUyJT1uws9t4MAleT7pQiNQ
-         EpTg==
-X-Gm-Message-State: ACrzQf3Sp6ixSSs07fs5UQ00eaz+EwF9AOTyYqx2tryaOpDKhN74q62V
-        5T44OYXRWOx2dk8e0jCgqTRWHKAUlrY=
-X-Google-Smtp-Source: AMsMyM6J2LxoFufi4WpT7rnhqH3fE5m+xy9y3Sp2pfg4q6y3EbQ7a8mosOZU5Z3EvmCQfk3zo41G9A==
-X-Received: by 2002:adf:ec8b:0:b0:236:6f30:924f with SMTP id z11-20020adfec8b000000b002366f30924fmr35009785wrn.230.1667902410617;
-        Tue, 08 Nov 2022 02:13:30 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q2-20020a7bce82000000b003cf7292c553sm10665223wmj.13.2022.11.08.02.13.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Nov 2022 02:13:29 -0800 (PST)
-Message-Id: <pull.1387.git.1667902408921.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 08 Nov 2022 10:13:28 +0000
-Subject: [PATCH] ci: use a newer `github-script` version
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=3A36DlCeXplb/KgX1gMDKXD1AONVpRlLAWhUm3wuJqI=;
+        b=jtOjkU5wnw4KLAj130zw1SOYXuiK2u+PO5l/uWSL2eQLUvhzTaWlwNs5oYtfAezSIz
+         FB25xsr32HMycxVuR/48T+WuvX01pff2ZX19Y4C3p+3zTy7P4afAhRFyEkQmYXYXeHnj
+         mhj3yF0Gcfx10JFPgo3Ieh1/Af7/TSLgxfTedYaddpO3fzpl5fD8Zvz4YxH1Lenqcrf4
+         zftreWE25m+bUj0eRW6/9QPyTEqI4jGXBtuU+y4UcBEYb4iydojkAoorSzyKCgP8kzga
+         xHxvfdISjz7PEO9+oD597gaLgVvxhsN1x8erV3VYs44o1UF7TncKuwKVAJSN9agIFRsn
+         WHGg==
+X-Gm-Message-State: ACrzQf3IFJ/erUHeziUw22vA/QRIf9L/1lHwt2Ugfup0KO/iXsNHfdb/
+        XXtt0+BeDCTUR5P49e5J/fJRcx39Lj0mgbyD2b0Dp4XDVx4=
+X-Google-Smtp-Source: AMsMyM5dDvreNBmoZjiL7/zSS+j2zdO6wQiWmxkDcm+raBFF5kKzj3u4LFWBgJJbBgQ2lY82fI8AaUjLwIhxrp4Rmco=
+X-Received: by 2002:a05:6808:11c1:b0:353:f1a5:207a with SMTP id
+ p1-20020a05680811c100b00353f1a5207amr37564437oiv.183.1667904669643; Tue, 08
+ Nov 2022 02:51:09 -0800 (PST)
 MIME-Version: 1.0
+From:   M Hickford <mirth.hickford@gmail.com>
+Date:   Tue, 8 Nov 2022 10:50:33 +0000
+Message-ID: <CAGJzqskRYN49SeS8kSEN5-vbB_Jt1QvAV9QhS6zNuKh0u8wxPQ@mail.gmail.com>
+Subject: The enduring popularity of git-credential-store
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     "peff@peff.net" <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Among StackOverflow users [1], git-credential-store appears several
+times more popular than any other credential helper. Does this make
+anyone else uneasy? The docs warn that git-credential-store "stores
+your passwords unencrypted on disk" [2]. Are users sacrificing
+security for convenience?
 
-The old version we currently use runs in node.js v12.x, which is being
-deprecated in GitHub Actions. The new version uses node.js v16.x.
+Firstly, how grave is storing credentials in plaintext? Software
+development guidelines such as CWE discourage storing credentials in
+plaintext [3]. Password managers in desktop environments, mobile
+operating systems and web browsers typically encrypt passwords on disk
+and guard them behind a master password.
 
-Incidentally, this also avoids the warning about the deprecated
-`::set-output::` workflow command because the newer version of the
-`github-script` Action uses the recommended new way to specify outputs.
+Secondly, the docs recommend git-credential-cache [2] which ships with
+Git and is equally easy to configure. So why isn't it more popular? My
+hypothesis: while caching works great for passwords typed from memory,
+the combination of caching with personal access tokens has poor
+usability. The unmemorised token is lost when the cache expires, so
+the user has to generate a new token every session. I suspect GitHub's
+2021 decision to stop accepting passwords [4] may have inadvertently
+pushed users from 'cache' to 'store'.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    ci: use a newer github-script version
-    
-    I had a look at the CI run of seen a couple of weeks ago and saw not
-    only quite a number of failures but also quite a number of warnings.
-    
-    This patch addresses a few of them, including the ones about using the
-    deprecated ::set-output:: workflow command
-    [https://github.com/gitgitgadget/git/actions/runs/3412982102/jobs/5679166059#step:4:46].
-    
-    Similar warnings will be addressed by
-    od/ci-use-checkout-v3-when-applicable.
+Thirdly, why doesn't everyone use SSH keys? Unlike HTTP remotes,
+upfront set-up is necessary to clone a public repo. For users
+unfamiliar with SSH, this set-up may be intimidating. Introducing
+users new to Git to SSH at the same time is a significant cognitive
+load.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1387%2Fdscho%2Fupgrade-github-script-version-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1387/dscho/upgrade-github-script-version-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1387
+Any ideas how to improve the security of the average Git user?
 
- .github/workflows/main.yml | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 831f4df56c5..cdfb777a699 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -37,14 +37,14 @@ jobs:
-           echo "::set-output name=enabled::$enabled"
-       - name: skip if the commit or tree was already tested
-         id: skip-if-redundant
--        uses: actions/github-script@v3
-+        uses: actions/github-script@v6
-         if: steps.check-ref.outputs.enabled == 'yes'
-         with:
-           github-token: ${{secrets.GITHUB_TOKEN}}
-           script: |
-             try {
-               // Figure out workflow ID, commit and tree
--              const { data: run } = await github.actions.getWorkflowRun({
-+              const { data: run } = await github.rest.actions.getWorkflowRun({
-                 owner: context.repo.owner,
-                 repo: context.repo.repo,
-                 run_id: context.runId,
-@@ -54,7 +54,7 @@ jobs:
-               const tree_id = run.head_commit.tree_id;
- 
-               // See whether there is a successful run for that commit or tree
--              const { data: runs } = await github.actions.listWorkflowRuns({
-+              const { data: runs } = await github.rest.actions.listWorkflowRuns({
-                 owner: context.repo.owner,
-                 repo: context.repo.repo,
-                 per_page: 500,
-
-base-commit: 4732897cf0a255a23dca9e97b65cea40cd06c5a8
--- 
-gitgitgadget
+[1] https://stackoverflow.com/questions/35942754/how-can-i-save-username-and-password-in-git
+ probably as good a survey of non-expert users as we can get
+[2] https://git-scm.com/docs/git-credential-store
+[3] https://cwe.mitre.org/data/definitions/256.html
+[4] https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/
+[5] https://lore.kernel.org/git/20111210103444.GL16529@sigill.intra.peff.net/t/#u
+discussion at introduction of store helper
