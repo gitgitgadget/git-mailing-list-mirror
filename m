@@ -2,54 +2,54 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 77C99C4332F
-	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 20:08:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE451C4332F
+	for <git@archiver.kernel.org>; Tue,  8 Nov 2022 20:09:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229836AbiKHUIj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 15:08:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33384 "EHLO
+        id S229632AbiKHUJj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 15:09:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229649AbiKHUIh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2022 15:08:37 -0500
+        with ESMTP id S229546AbiKHUJh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2022 15:09:37 -0500
 Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C2591C10F
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 12:08:35 -0800 (PST)
-Received: by mail-io1-xd33.google.com with SMTP id e189so12376544iof.1
-        for <git@vger.kernel.org>; Tue, 08 Nov 2022 12:08:35 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3221B627D2
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 12:09:37 -0800 (PST)
+Received: by mail-io1-xd33.google.com with SMTP id z3so12373870iof.3
+        for <git@vger.kernel.org>; Tue, 08 Nov 2022 12:09:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=TqP61UXnZSWKBIO4nPkA+m1aG9HLb54k3BN5hLiXIn8=;
-        b=wzT0CthucP2af+500l+Dt65r0e0WRAoa5R6VlRBtc9g2iT6y0O3nlCi4meiT1eIqbF
-         Li3zPKk87thecvs5pgDQZ73Gjs40rPIfTFQqlix12qy/A5oSAK5Q2t6cQGt2ex7tX40h
-         aBahssuR2u3955N+XEQAkApGRsU5+WYyrclT+onqRVBsOFG3cN3KCFrM5K/hkaH/hG00
-         1BGK7W2UDGZqyJAVf/NA1q1nM0p6ckw85ZAcYmknJjSIjIzo3cbt99djPfOUu8oE/ADI
-         Ri/zeWtamBkvZiJFASIu9FeyrCwQbd04gOJteZyK/txR8ctt82zkFV+Neau4St8a5yg5
-         g8DA==
+        bh=hbRhCZmb+wP1DTqw1GV18jAyNfvMyOCo9QOBzS1KsPM=;
+        b=dCPP6NrrT5EDf5lJSEZgSciEuCxNu/T0QEQ7c8lKWHSwjJUSlhhZPm/m/3BoLMLA4S
+         yn4YGKzCU4MQEjShXRzEBX6OW2MWc29iPb/UAmny2CUlHLFqU3ubOz5sS2lkP0IqJKQK
+         S1PyZS9dGltmrTKNCwydCqUi6wnvF5W7ExosJz11YJcoxXLE+blkw3jM5F5CEZW3ZEMp
+         pLFsYYcYmTw85EvMacQgu0cZ5OYl75S5KlOmL2/AguPCOfxgSCWK7liiGJHzq7TMQn/g
+         r5Y8yQJwApa/VdXaU1NuHMFxVFKOwyrbtiwCqRiGSCr+wJn8GkfGWYiPGAke525hMouz
+         xHXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TqP61UXnZSWKBIO4nPkA+m1aG9HLb54k3BN5hLiXIn8=;
-        b=VKpRZm6MvojA6UZOxJcJuIT8m2IAqVfNYP7hWAHOq4RUUG0ulgvo97iAoxSwCYmXmn
-         2Q0PKKZKH5UBCZ9EFMd+psjoAX3L5tUKXDNUealm/6eBECldX3kguBktZGINGK/D2Juh
-         egAHHtrqxC5+YzZbyHJkQuquYHP0KYVkYhEKemCmH6VBob01bVw9EWFKWiXlQcAk8ZZW
-         VVZium3WIs1H+8lg46phrfIalmU+6NYZ339tbNutpp+e0aKb+g3hUN65VcVMzORMXFF8
-         rQWeNxBbmKAqdcsJGcLUdMiop6QvaUtXLJdSCNADPQF4GvjDa41r6PJ98vrzczRGwFyC
-         Xizw==
-X-Gm-Message-State: ACrzQf0tCa+GwMjaIKsLE4LYWySWP6cQ9a/0kU6CPDEgajkTftyTBPx4
-        Xccz8B3/m1aWj8BETX3zcH89tQ==
-X-Google-Smtp-Source: AMsMyM60maw3V01Hhg5MnQssg5HmzeE+g1kQFsyQYcbQ6qcDwACS3L1nMAfP3RcQ5hT0sS+uxQjRmQ==
-X-Received: by 2002:a02:a518:0:b0:375:59f0:a0f3 with SMTP id e24-20020a02a518000000b0037559f0a0f3mr28471609jam.24.1667938114903;
-        Tue, 08 Nov 2022 12:08:34 -0800 (PST)
+        bh=hbRhCZmb+wP1DTqw1GV18jAyNfvMyOCo9QOBzS1KsPM=;
+        b=ru1FI98P7y1yuaAJi66ciwSnJF2JmzwTyBJzr/TqC10rSYSDdP29Zpk5j70PIBRRuS
+         +pGoN7k9jOSX1moDDCozuxuhnKBOlqGLlc/+VD7SV54d562sDPiPsm8rXiV0Sa9/R724
+         ZWmsJon63dx9EWfInecPnQ19FujCiDGopxmmJ1OCUmD8C4yJiMQao49ncR+7i4ushh0k
+         hfHK0emhxxYymviOrvDEeL88Yf2+/AvDsK7OSReWi48F4/p+SN4Lvgv+w2VPKJL79hMD
+         L/Yy8mjscJ+/dixv9m/QgrM09BbdR0/Gub+OpZEtq28f9NCu99c754gYUXFBJvF906eD
+         q+eg==
+X-Gm-Message-State: ACrzQf2fwTAkg6vTFeSNH43GHCsEIY9gjsrfxJoskZCgzNcLuiy3RvLW
+        d5mdV6UhynSRRLsiGhBDlVlc7g==
+X-Google-Smtp-Source: AMsMyM6TWF43n0L2fapBALcqPvW27SLYtPICRTyPIT6TOXgtTDvGHjsF1mKeHjaZpvk8FWaJHysQhA==
+X-Received: by 2002:a02:9715:0:b0:375:13ba:927 with SMTP id x21-20020a029715000000b0037513ba0927mr32898912jai.127.1667938176588;
+        Tue, 08 Nov 2022 12:09:36 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id b7-20020a92c847000000b002eb75fb01dbsm4119352ilq.28.2022.11.08.12.08.33
+        by smtp.gmail.com with ESMTPSA id ca9-20020a0566381c0900b003711ce0dc15sm4079668jab.68.2022.11.08.12.09.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Nov 2022 12:08:34 -0800 (PST)
-Date:   Tue, 8 Nov 2022 15:08:33 -0500
+        Tue, 08 Nov 2022 12:09:36 -0800 (PST)
+Date:   Tue, 8 Nov 2022 15:09:35 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
@@ -57,7 +57,7 @@ Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
         Derrick Stolee <derrickstolee@github.com>,
         Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH 1/1] ci: avoid unnecessary builds
-Message-ID: <Y2q3QZDxuywzCexn@nand.local>
+Message-ID: <Y2q3f5noQSXmK0o8@nand.local>
 References: <cover.1667931937.git.me@ttaylorr.com>
  <ff172f1de982f6f79b598e4ac6d5b2964ca4a098.1667931937.git.me@ttaylorr.com>
  <221108.86r0ydqmts.gmgdl@evledraar.gmail.com>
@@ -71,29 +71,28 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Tue, Nov 08, 2022 at 07:52:07PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> I don't know if there's a workaround for that, I'd think it would be the
-> logical equivalent of e.g.:
+> I.e. the "cancel-in-progress" seems to work perfectly. I pushed a branch
+> with this, it started CI, then I made a trivial update, re-pushed, and
+> the initial branch's CI run was stopped, one job at a time (not all at
+> the same time, but almost).
+
+Thanks to Johannes for all of that ;-).
+
+> Now, obviously it's a bit more of a verbose solution v.s. Johannes's
+> original in [1], but on the other hand our main.yml is full of that sort
+> of copy/pasting already.
 >
-> 	group: sparse-${{ matrix.nr }}-${{ github.ref }}-${{ needs.ci-config.outputs.skip_concurrent ? github.run_id : "" }}
+> Aside from the change under discussion I don't find that to be a big
+> deal. It's a general "problem", and we could always generate the file
+> with a script if we really cared, but I think for the forseeable future
+> the copy/pasting is fine.
 
-Hmm. Did you mean the opposite of the last part of that expression? IOW,
-shouldn't it be:
+To be fair, I think that the solution I came up with is pretty gross.
+But after spending a few hours with the Actions docs, I think that it's
+the least-gross solution that meets the needs of our respective
+workflows.
 
-  ${{ needs.ci-config.outputs.skip_concurrent ? "" : github.run_id }}
-
-That is: if we're cancelling builds when others are in progress, the
-group ID shouldn't contain information about the specific run ID. But if
-we *aren't* cancelling builds, then the group needs to have the run ID
-in it, that way we're effectively disabling the new behavior altogether.
-
-> But the docs say "The expression can only use the github context."[3],
-> and I don't know if such a thing would fit inside the syntax...
-
-That's at the workflow level. When you specify a 'concurrency' block
-inside of an individual job, you can use any context object excepts the
-secrets one [2].
+So I'm OK with it.
 
 Thanks,
 Taylor
-
-[2]: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idconcurrency
