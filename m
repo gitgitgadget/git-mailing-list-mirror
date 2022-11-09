@@ -2,79 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35839C433FE
-	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 13:11:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F3E2C433FE
+	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 13:18:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229716AbiKINLw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Nov 2022 08:11:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47794 "EHLO
+        id S229790AbiKINSO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Nov 2022 08:18:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229509AbiKINLu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2022 08:11:50 -0500
+        with ESMTP id S229571AbiKINSM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2022 08:18:12 -0500
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E252C1D316
-        for <git@vger.kernel.org>; Wed,  9 Nov 2022 05:11:47 -0800 (PST)
-Received: (qmail 12335 invoked by uid 109); 9 Nov 2022 13:11:46 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F30389FEF
+        for <git@vger.kernel.org>; Wed,  9 Nov 2022 05:18:11 -0800 (PST)
+Received: (qmail 12352 invoked by uid 109); 9 Nov 2022 13:18:11 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 09 Nov 2022 13:11:46 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 09 Nov 2022 13:18:11 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14554 invoked by uid 111); 9 Nov 2022 13:11:46 -0000
+Received: (qmail 14590 invoked by uid 111); 9 Nov 2022 13:18:11 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 09 Nov 2022 08:11:46 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 09 Nov 2022 08:18:11 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 9 Nov 2022 08:11:45 -0500
+Date:   Wed, 9 Nov 2022 08:18:10 -0500
 From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 0/4] chainlint: improve annotated output
-Message-ID: <Y2unEeio8cgmBWCX@coredump.intra.peff.net>
-References: <pull.1375.git.git.1667934510.gitgitgadget@gmail.com>
- <Y2q78ofF8fsAX8XU@nand.local>
+To:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, M Hickford <mirth.hickford@gmail.com>
+Subject: Re: [PATCH] Documentation: increase example cache timeout to 1 hour
+Message-ID: <Y2uoko+ho9c5sfKf@coredump.intra.peff.net>
+References: <pull.1412.git.1667989181611.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Y2q78ofF8fsAX8XU@nand.local>
+In-Reply-To: <pull.1412.git.1667989181611.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 08, 2022 at 03:28:34PM -0500, Taylor Blau wrote:
+On Wed, Nov 09, 2022 at 10:19:41AM +0000, M Hickford via GitGitGadget wrote:
 
-> On Tue, Nov 08, 2022 at 07:08:26PM +0000, Eric Sunshine via GitGitGadget wrote:
-> > This patch series further improves the output by instead making chainlint.pl
-> > annotate the original test definition rather than the parsed token stream,
-> > thus preserving indentation (and whitespace, in general), here-doc bodies,
-> > etc., which should make it easier for a test author to relate each problem
-> > back to the source.
+> From: M Hickford <mirth.hickford@gmail.com>
 > 
-> Very nicely done. The changes all seemed reasonable to me (and, in fact,
-> the approach is pretty straightforward -- the diffstat is misleading
-> since many of changes are to chainlint's expected output).
-> 
-> So I'm happy with it, but let's hear from some other folks who are more
-> familiar with this area before we start merging it down.
+> Previously, the example *decreased* the cache timeout compared to the
+> default, nudging users to make cache less usable.
 
-I don't claim to be _that_ familiar with the code itself, but all of the
-patches look reasonable to me. And most importantly, I dug out the state
-of my tree from early September (via the reflog) before I fixed all of
-the chainlint problems on my local topics. The improvement in the output
-with this series is night and day.
+I don't mind at all changing this as your patch does. The existing
+example was mostly just to illustrate the syntax. But...
 
-I was a little surprised that using a class in patch 3 would cause such
-a slowdown. But it's not that hard to believe that the workload is so
-heavy on string comparison and manipulation that the overloaded string
-and comparison functions introduce significant overhead. It has been a
-long time since I've optimized any perl, but I remember the rule of
-thumb being to minimize the number of lines of perl (because all of the
-builtin stuff is blazingly fast C, and all of the perl is byte-code).
+> Instead, nudge users to make cache more usable. Currently many users
+> choose store over cache for usability. See
+> https://lore.kernel.org/git/Y2p4rhiOphuOM0VQ@coredump.intra.peff.net/
 
-At any rate, the result you came up with doesn't look too bad. The only
-risk is that you forgot to s/$token/$token->[0]/ somewhere, and I
-suspect we'd have found that in running the tests.
+I don't see how my email argues for this. The only thing I mentioned
+about credential-cache there is that it's not available on all
+platforms.
 
-So it all seems like a step forward to me.
+But if you want my opinion on its usability, the main problem is not
+that the cache timeout. It's that entering the credential at all is a
+pain, either because it's a semi-automated environment that needs to
+operate without user input, or because the credential itself is awkward
+for the user to enter (like a long token). And that's what pushes people
+to "store" over "cache".
+
+> diff --git a/Documentation/git-credential-cache.txt b/Documentation/git-credential-cache.txt
+> index 0216c18ef80..432e159d952 100644
+> --- a/Documentation/git-credential-cache.txt
+> +++ b/Documentation/git-credential-cache.txt
+> @@ -69,10 +69,10 @@ $ git push http://example.com/repo.git
+>  ------------------------------------
+>  
+>  You can provide options via the credential.helper configuration
+> -variable (this example drops the cache time to 5 minutes):
+> +variable (this example increases the cache time to 1 hour):
+>  
+>  -------------------------------------------------------
+> -$ git config credential.helper 'cache --timeout=300'
+> +$ git config credential.helper 'cache --timeout=3600'
+>  -------------------------------------------------------
+
+The patch itself is obviously correct.
 
 -Peff
