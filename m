@@ -2,227 +2,454 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9FA3C4332F
-	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 18:23:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38222C4332F
+	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 18:30:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230285AbiKISXM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Nov 2022 13:23:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48430 "EHLO
+        id S230410AbiKISa1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Nov 2022 13:30:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52976 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229550AbiKISXK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2022 13:23:10 -0500
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2051.outbound.protection.outlook.com [40.107.237.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 669F328724
-        for <git@vger.kernel.org>; Wed,  9 Nov 2022 10:23:09 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=bMt/H/hoGDfg62VQFlLwMgsm1D3m3RqiWKRZXT37iXizfbDd+lpl0yHfyrkVFUU+6EBt5cdg7LpnnTvVdwARHArmbO98elv7cQxcYuG9DYyAFf9sBxESJxNdbkwM9Y3nW9cC2rLky8O2S1zLYa6s/F3vCfNPTJUM8qKxd6nPpFzONxrnoWfh3HUjtsMcfGRb9y449UWgDKYGNB4O7nNi0GMyvtxadVINGsSLvI2wINw9WD0y3AI1cgX0MFZpogBmekpDLT2dqHVobv4fG+pyQXvur6LVjPYrX6lpeCsGABwrMsP3ew2zvP4RmZ0Ln/rkXkeNLp5jGVuSeHv1Wv1Gfg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OAP7p9ata+E2sozEaVhzjNxhEiTyUC3GEpomW1h9sKs=;
- b=NK7PrF2/X2S3ZKUrW/phfk1FPC4y6OWtxnFG2YphSU2wlu+57uCNYuqbHX6b+rUfiM/QC+tmgmOPTL7iQ6wYLbG28QeGMT0IZYVst+ZwGJYmoZB57i2NAqGbla7lQ5CcjOEQXJVmU4NlGe/Oof8NqJBGxRGe6WUFcagRX14IL8221DBhI7C/kaRNLSj21S1YiqUHL40p3ZT1LjPyuZFLaGK7ltsX8NzsRV03ng6ZQ7fdSHEWM8pPkshDjtAHu5y6m8SFOc+ZSnCWCBe+HPOw8bVoyhNthBg4hnONTP2gFtGpB5N1Uuh9KU84aLa5f3ow6ifJk4dzMJ2dZehD5ks+sQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OAP7p9ata+E2sozEaVhzjNxhEiTyUC3GEpomW1h9sKs=;
- b=1Z/FB0XoxuWt+hf3Yscyb57Z9F0OKHreOdxXNB5UgH+Bm1QQkEy/kP63w96ZSrD7vND4fGv5zyv4MYsqD01i7EKnosl2q7Cf7kS471RLJ8DG2UqENAhXyXjJImrR6EBUDyZ7R6pcAgPdhS4+tdqf0QLE1UW4BYq1RKckEe4SccQ=
-Received: from DM6PR12MB4356.namprd12.prod.outlook.com (2603:10b6:5:2aa::8) by
- MN0PR12MB6077.namprd12.prod.outlook.com (2603:10b6:208:3cb::9) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5813.12; Wed, 9 Nov 2022 18:23:06 +0000
-Received: from DM6PR12MB4356.namprd12.prod.outlook.com
- ([fe80::aaf9:9bc:a3a7:45d0]) by DM6PR12MB4356.namprd12.prod.outlook.com
- ([fe80::aaf9:9bc:a3a7:45d0%5]) with mapi id 15.20.5791.027; Wed, 9 Nov 2022
- 18:23:06 +0000
-From:   "Strawbridge, Michael" <Michael.Strawbridge@amd.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     "Strawbridge, Michael" <Michael.Strawbridge@amd.com>,
-        "Tuikov, Luben" <Luben.Tuikov@amd.com>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH] Change git-send-email's sendemail-validate hook to use header
- information
-Thread-Topic: [PATCH] Change git-send-email's sendemail-validate hook to use
- header information
-Thread-Index: AQHY9GhQdqchLAcPUkuZUVJFlMi5kw==
-Date:   Wed, 9 Nov 2022 18:23:06 +0000
-Message-ID: <20221109182254.71967-1-michael.strawbridge@amd.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-mailer: git-send-email 2.34.1
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DM6PR12MB4356:EE_|MN0PR12MB6077:EE_
-x-ms-office365-filtering-correlation-id: 989ca755-9dbe-4e97-7894-08dac27f72b3
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: AyUvwto+lkInTHtbNrcMA/+KPFWexBRErPGQ73fexa1s7ejSkkJrcV26obdVM3sBLDQCflAhC9UwSbH5QzeacRKnLpCdBN+EfqlT61vZEYOo/bThwQUGTS1vBfMEWdoTM0tRP55h+Z2ETAdQQAZDF8Ea+/9RfwNLmbdh49bVGSnuE3CwUHHA/kMddq4DyoiQhQDazCgZzkO/GZdY1j24sjpXq2oW1hhkPA8kKVuFzTrX4t/cffF/tpa4NUf3W9XzEulpg7vVri0e6RB9ludnuHGShVsze2XSim2SG4sLym5J4heJA/dj4JIQgVpidGWQYq2YeVyR0uTaOHJualP6yWH5EmqmKc8NDOwk8xtcnyRMQYMtSkOXwr9o4lcL3N1lEhy+HlMj8Hyx66T0vcoFmdevlcjlhFIAe/L3s0U7QcK6bihrYMM4KVbj2lfB0+joF3Qihu2YSFzVy7Y73tmpME2vPQGwDoTNjRjz94MSnO0hJwq+m35sJImqtTKfmZ1GeFkA89aU6U0xiJ2+8rmK1TosbryjVzbXT1HzpOO0QYdcXyHTzHQ9xQSDdmT/lEvBFXoF1JCLNC8HsvaLsKf4E26LVAiS44gS8sLygYbhr2fSiDDU3fEbY1BKGc4PLwySjlfXopUrJvqoTdBIybVH6KY6wJihelXCPL9SVtkzfdVhgNHS/zjQ1eCIyYwYdm8SdAnFDUynlEiIbHFIkCk/N7mvodd14zVAhRFfNG2JzH69elJuAg/eSnC8NC1QfRHiwjT1LMyFVg2BROxc+TaC2w==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4356.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(366004)(376002)(346002)(136003)(39860400002)(396003)(451199015)(478600001)(38100700002)(6486002)(2906002)(38070700005)(71200400001)(15650500001)(2616005)(83380400001)(186003)(1076003)(122000001)(26005)(6512007)(36756003)(64756008)(6506007)(316002)(66476007)(66556008)(66446008)(4326008)(8676002)(91956017)(76116006)(66946007)(86362001)(8936002)(5660300002)(6916009)(54906003)(41300700001);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?2nhGEwZS3Hy/rGbyWUiyESaO+AYKIHiM3TKDH0d1V6onyXrc++W2K9ngRA?=
- =?iso-8859-1?Q?PBtokKvogrOnj8pGNHg2U3C3URk0kJe8nEcZrY5U+JeoaTaiqY1aMMJCoL?=
- =?iso-8859-1?Q?OQQeZ9abih3eGJSuy4wq+mL4RCPqqUP7xMXTUa7HFgoPghEp1uJkNU5xDt?=
- =?iso-8859-1?Q?XNI0Angd4MIav4qn4kw9Q2fi9Kjjwhp0KJdtJ/9WKuqFcyKX0H2kdUUenY?=
- =?iso-8859-1?Q?7kZh0Mj+Kqt733W3VmHVtvU+lpUu9DVddcsxWbHkxk/GrTRZ+MepuzYS4O?=
- =?iso-8859-1?Q?HNWqFeke7z5n9aVpsXmcE/RymR5LGgAqp9mZTXaUDktBLXItTAvtSyJppp?=
- =?iso-8859-1?Q?Z8qAKpUlTg14hfuvy6Bh7smbWcelxaSGztKKXWJzedSc2KFYlaAMIbTWuw?=
- =?iso-8859-1?Q?Y2AYuh/1zKCu5QK05FynWXXPY/xqqlZSy1RJBTDMSimMvr6vgAEi9UiEMD?=
- =?iso-8859-1?Q?oJU8t+rDMGnvo2/SJns7ia8bi/PFlh3VmYE6uxvurVxGj1bumYBdOQr0lj?=
- =?iso-8859-1?Q?zuWZd1RjBbg+0W4Bq36UZ/ZXN28MrlesRpAFKhs/XrgfIaD/UKp2ygvVpX?=
- =?iso-8859-1?Q?p9IrwM68Y82WKhgeQM38vUScsT/rq5zMwuYJp1DUrW2gLoLY9QYHMyWany?=
- =?iso-8859-1?Q?BOaLcbUemoOGFG3gQUE7udC8ezfsAJw8iMo6reUkfIRXNJof8s0kn82hSg?=
- =?iso-8859-1?Q?dIi+7zexst4JTqs7RqIEczdb75H6sLLIcvGIlm5g2N43xkxIcbWr3fvy7D?=
- =?iso-8859-1?Q?X44W3OYfPd2TSRB85903Mv8ApGbSZYyqUhBw35k38O7UWrcQrn8CucKxkb?=
- =?iso-8859-1?Q?3/Z50rBAplmtmgFYeuzMLz8ML7HUU7yyVMTyZ6gkUbnpPUPnCQTc1nI8+q?=
- =?iso-8859-1?Q?4e/vYPuUJzs7hStsN6BSifwFpDCKT1OlpF5hDkDqEyf8jS16y9lWqhk5b1?=
- =?iso-8859-1?Q?bAY1Aaa5CnkAYmlPg5KH0eBgeKvjTnTI4Camt4ViUanKSW27HARBqv7ZzL?=
- =?iso-8859-1?Q?pttgvLtLoGcNheh2CwhkaLHPdkWBBKVy6ASy4NxdKcekmfOpxhKeZ8WfMg?=
- =?iso-8859-1?Q?Z7VcdrSFNLMpPuBoNGo2huUd0/w/VDa2weoxra1ESMBWTBkRl8UKAAIC+d?=
- =?iso-8859-1?Q?0tskhet1i8Vha9hRVlrdOelAuTX4APtyV+PWCi0LXVLx0kVIf673DMY48d?=
- =?iso-8859-1?Q?3iVnVcxdytTGodnkOO+fW6/J4ADYjPr2VoD++cIJJeDBjxkHlItZvAayB7?=
- =?iso-8859-1?Q?mGeb5JHCW72mitQXJ/hngkvmelnRI3RBBw2B7FtFyOMcMjDCFHOk4/sRtd?=
- =?iso-8859-1?Q?X6fVA1UKPY79X8uinwbBmhdYsOVog81CUgRgbV8mGL3aqq4HnvHTuXRSJF?=
- =?iso-8859-1?Q?5lcqEYTxqPnQD9LqMVTW+EVEJRPMT2wMA0Mo44vrmxgwidFODpDhfPspmv?=
- =?iso-8859-1?Q?iRRejSD9WDaRHmLfV7r2CgR2vRiqGHbuWoehA9FT4QdwWsymxhYSbTaFsR?=
- =?iso-8859-1?Q?84A8+RYPaX2QgLfw6gUPqVR9JBK+OkhyROoic5t537kjKBI7/dbUDW5fGp?=
- =?iso-8859-1?Q?Ag5io2ceJBj+KiGmRrunj1uiaEGsll84KkFxhIgtVPm5lzpWRjzzFb2PkY?=
- =?iso-8859-1?Q?Snx2HB6vRSQmGhR+cxLFXMM0OuQN0MJzgv?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S230137AbiKISa0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2022 13:30:26 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62B1B388E
+        for <git@vger.kernel.org>; Wed,  9 Nov 2022 10:30:24 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id y16so27036943wrt.12
+        for <git@vger.kernel.org>; Wed, 09 Nov 2022 10:30:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=zuB2w0WYV03SMHIh05QVY0LogjFyEasV3T96Pbo8PdE=;
+        b=OO0u5XQzBzVPdpuI/MJcRgeJhUDVaQoRkKz/L+CyuEFhdudkBggKSIHqoh63mtynRR
+         wn1u6m1dFfptQrfmvFj2lEd05gF58NkUGPfZNir2P5WXor6EphcURZYEWAXbvQW4tw63
+         ZGtBxksDQgKeHLB13svrAmwXbZiQ7WhGsvoos+vlnrZj2yj44oyAH4P+COtixooM8unV
+         5jEiLiQ/YnJwhuu3TyqEPISWA8rkJo2QQqsHjqmxs00nj6odBwpdHvoFUYiX2ghHJjhT
+         Mzci6APkYvU35iQcH6jU41qF3ucq6pcs3v8tOUQ/M0iQ4XOUfkLSAGvXHg/A1lrFEfA7
+         QkaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zuB2w0WYV03SMHIh05QVY0LogjFyEasV3T96Pbo8PdE=;
+        b=mJq/Os1pWH4JmFu3abUzzYhSIkzDQq2CcZU2lkol2Goq47ThFgeQOswXWWP6CB/Bhu
+         lHsB5jIkiecdmizwK2/CnPAxqoAAD/p2xv3kbW2YlUxS9pUdl1xGeI4OArQ1aA8Ir6jo
+         AdWDMUzR2L0V+biyH0u0JspyZE4Ib71XtvHRvr+5xZ1E19lhG2KKaix/x+KvOZPTTkhB
+         tmZpgOatToQewmlU+MjCEawHEIT5czrXiv9NXy3oFI6hQv6h5vXvZGT+ZupgB5GMhEXT
+         RwhmgyAqPX1f5TJs1yIrXhHeG3DHKK3oRQMhvtIS02FUyPtRPxGlwY4T143x4MH6hf/+
+         t7TQ==
+X-Gm-Message-State: ACrzQf2UvjksBOpsIb+eWRlB0kwgNqbboO0/ibyUpoX3/Jfg+u7xonmW
+        NZpNBgOs0i2PODlpvoE9SkdWUP2kirU=
+X-Google-Smtp-Source: AMsMyM4VCTwB0SV146l9YKtIbq2G+RRet+J4DrQEjneu2eXI81IM0cZkjPQMCAfTgKezNFmOjo3TQQ==
+X-Received: by 2002:a5d:5410:0:b0:236:5e78:b1af with SMTP id g16-20020a5d5410000000b002365e78b1afmr880096wrv.266.1668018622471;
+        Wed, 09 Nov 2022 10:30:22 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id v16-20020a05600c4d9000b003a6a3595edasm2275347wmp.27.2022.11.09.10.30.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Nov 2022 10:30:21 -0800 (PST)
+Message-Id: <pull.1308.git.git.1668018620148.gitgitgadget@gmail.com>
+From:   "Max Coplan via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 09 Nov 2022 18:30:17 +0000
+Subject: [PATCH] po: use `switch` over `checkout` in error message
 MIME-Version: 1.0
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4356.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 989ca755-9dbe-4e97-7894-08dac27f72b3
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Nov 2022 18:23:06.7189
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ZrYTMW2li2wB56Rx/+JG22IukMenqEQJCosUYCOcDY5Iql2aIInFq/3fdHvwtn2oZqaehvWfu+nHddH1tHw2GQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6077
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Max Coplan <mchcopl@gmail.com>,
+        =?UTF-8?q?Max=20=F0=9F=91=A8=F0=9F=8F=BD=E2=80=8D=F0=9F=92=BB=20Copl?=
+         =?UTF-8?q?an?= <mchcopl@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since commit-msg and pre-commit git hooks already expose commit
-contents, switch sendemail-validate to use the header information
-of the email that git-send-email intends to send.
+From: =?UTF-8?q?Max=20=F0=9F=91=A8=F0=9F=8F=BD=E2=80=8D=F0=9F=92=BB=20Copl?=
+ =?UTF-8?q?an?= <mchcopl@gmail.com>
 
-Cc: Luben Tuikov <luben.tuikov@amd.com>
-Cc: brian m. carlson <sandals@crustytoothpaste.net>
+Small change.  Since `switch` is suggested for changing branches over
+`checkout`, this commit updates an error message to use `switch` as the
+default
+
+Signed-off-by: Max 👨🏽‍💻 Coplan <mchcopl@gmail.com>
 ---
- git-send-email.perl | 57 +++++++++++++++++++++++++++++----------------
- 1 file changed, 37 insertions(+), 20 deletions(-)
+    po: use switch over checkout in error message
+    
+    Small change. Since switch is suggested for changing branches over
+    checkout, this commit updates an error message to use switch as the
+    default
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 5861e99a6e..3ea6fda48e 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -787,14 +787,6 @@ sub is_format_patch_arg {
-=20
- @files =3D handle_backup_files(@files);
-=20
--if ($validate) {
--	foreach my $f (@files) {
--		unless (-p $f) {
--			validate_patch($f, $target_xfer_encoding);
--		}
--	}
--}
--
- if (@files) {
- 	unless ($quiet) {
- 		print $_,"\n" for (@files);
-@@ -1495,16 +1487,7 @@ sub file_name_is_absolute {
- 	return File::Spec::Functions::file_name_is_absolute($path);
- }
-=20
--# Prepares the email, then asks the user what to do.
--#
--# If the user chooses to send the email, it's sent and 1 is returned.
--# If the user chooses not to send the email, 0 is returned.
--# If the user decides they want to make further edits, -1 is returned and =
-the
--# caller is expected to call send_message again after the edits are perfor=
-med.
--#
--# If an error occurs sending the email, this just dies.
--
--sub send_message {
-+sub gen_header {
- 	my @recipients =3D unique_email_list(@to);
- 	@cc =3D (grep { my $cc =3D extract_valid_address_or_die($_);
- 		      not grep { $cc eq $_ || $_ =3D~ /<\Q${cc}\E>$/ } @recipients
-@@ -1546,6 +1529,22 @@ sub send_message {
- 	if (@xh) {
- 		$header .=3D join("\n", @xh) . "\n";
- 	}
-+	return $header;
-+}
-+
-+# Prepares the email, then asks the user what to do.
-+#
-+# If the user chooses to send the email, it's sent and 1 is returned.
-+# If the user chooses not to send the email, 0 is returned.
-+# If the user decides they want to make further edits, -1 is returned and =
-the
-+# caller is expected to call send_message again after the edits are perfor=
-med.
-+#
-+# If an error occurs sending the email, this just dies.
-+
-+sub send_message {
-+	my @recipients =3D unique_email_list(@to);
-+
-+        my $header =3D gen_header();
-=20
- 	my @sendmail_parameters =3D ('-i', @recipients);
- 	my $raw_from =3D $sender;
-@@ -1955,6 +1954,15 @@ sub process_file {
- 		}
- 	}
-=20
-+
-+	if ($validate) {
-+		foreach my $f (@files) {
-+			unless (-p $f) {
-+				validate_patch($f, $target_xfer_encoding);
-+			}
-+		}
-+	}
-+
- 	my $message_was_sent =3D send_message();
- 	if ($message_was_sent =3D=3D -1) {
- 		do_edit($t);
-@@ -2088,11 +2096,20 @@ sub validate_patch {
- 			chdir($repo->wc_path() or $repo->repo_path())
- 				or die("chdir: $!");
- 			local $ENV{"GIT_DIR"} =3D $repo->repo_path();
-+
-+			my $header =3D gen_header();
-+
-+			require File::Temp;
-+			my ($header_filehandle, $header_filename) =3D File::Temp::tempfile(
-+                            ".gitsendemail.header.XXXXXX", DIR =3D> $repo-=
->repo_path());
-+			print $header_filehandle $header;
-+
- 			my @cmd =3D ("git", "hook", "run", "--ignore-missing",
- 				    $hook_name, "--");
--			my @cmd_msg =3D (@cmd, "<patch>");
--			my @cmd_run =3D (@cmd, $target);
-+			my @cmd_msg =3D (@cmd, "<header>");
-+			my @cmd_run =3D (@cmd, $header_filename);
- 			$hook_error =3D system_or_msg(\@cmd_run, undef, "@cmd_msg");
-+			unlink($header_filehandle);
- 			chdir($cwd_save) or die("chdir: $!");
- 		}
- 		if ($hook_error) {
---=20
-2.34.1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1308%2Fvegerot%2Fupdate-error-message-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1308/vegerot/update-error-message-v1
+Pull-Request: https://github.com/git/git/pull/1308
+
+ builtin/checkout.c | 2 +-
+ po/bg.po           | 4 ++--
+ po/ca.po           | 4 ++--
+ po/de.po           | 4 ++--
+ po/el.po           | 4 ++--
+ po/es.po           | 4 ++--
+ po/fr.po           | 4 ++--
+ po/id.po           | 4 ++--
+ po/it.po           | 4 ++--
+ po/pl.po           | 4 ++--
+ po/pt_PT.po        | 2 +-
+ po/ru.po           | 2 +-
+ po/sv.po           | 4 ++--
+ po/tr.po           | 4 ++--
+ po/vi.po           | 4 ++--
+ po/zh_CN.po        | 4 ++--
+ po/zh_TW.po        | 4 ++--
+ 17 files changed, 31 insertions(+), 31 deletions(-)
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 29c74f898bf..51f9f928113 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -1222,7 +1222,7 @@ static const char *parse_remote_branch(const char *arg,
+ 		    advise(_("If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ 			     "you can do so by fully qualifying the name with the --track option:\n"
+ 			     "\n"
+-			     "    git checkout --track origin/<name>\n"
++			     "    git switch --track origin/<name>\n"
+ 			     "\n"
+ 			     "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ 			     "one remote, e.g. the 'origin' remote, consider setting\n"
+diff --git a/po/bg.po b/po/bg.po
+index 934784fe523..8ebb06c15d6 100644
+--- a/po/bg.po
++++ b/po/bg.po
+@@ -3883,7 +3883,7 @@ msgid ""
+ "If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ "you can do so by fully qualifying the name with the --track option:\n"
+ "\n"
+-"    git checkout --track origin/<name>\n"
++"    git switch --track origin/<name>\n"
+ "\n"
+ "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ "one remote, e.g. the 'origin' remote, consider setting\n"
+@@ -3892,7 +3892,7 @@ msgstr ""
+ "Ако искате да изтеглите клона от конкретно хранилище, напр. „origin“,\n"
+ "изрично го укажете към опцията „--track“:\n"
+ "\n"
+-"    git checkout --track origin/ИМЕ_НА_КЛОН\n"
++"    git switch --track origin/ИМЕ_НА_КЛОН\n"
+ "\n"
+ "Ако искате винаги да се предпочита конкретно хранилище при нееднозначно\n"
+ "ИМЕ_НА_КЛОН, напр. „origin“, задайте следната настройка в конфигурационния\n"
+diff --git a/po/ca.po b/po/ca.po
+index 80c430df454..a39fa23c2e7 100644
+--- a/po/ca.po
++++ b/po/ca.po
+@@ -3679,7 +3679,7 @@ msgid ""
+ "If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ "you can do so by fully qualifying the name with the --track option:\n"
+ "\n"
+-"    git checkout --track origin/<name>\n"
++"    git switch --track origin/<name>\n"
+ "\n"
+ "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ "one remote, e.g. the 'origin' remote, consider setting\n"
+@@ -3688,7 +3688,7 @@ msgstr ""
+ "Si voleu agafar una branca de seguiment remota, p. ex. «origin», podeu\n"
+ "fer-ho especificant el nom complet amb l'opció --track:\n"
+ "\n"
+-"    git checkout --track origin/<nom>\n"
++"    git switch --track origin/<nom>\n"
+ "\n"
+ "Si voleu que en agafar un branca amb un <nom> ambigu s'usi una branca\n"
+ "remota, p. ex. «origin» al remot, considereu configurar l'opció\n"
+diff --git a/po/de.po b/po/de.po
+index 76d6d3bea7c..5fa798e86f4 100644
+--- a/po/de.po
++++ b/po/de.po
+@@ -3676,7 +3676,7 @@ msgid ""
+ "If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ "you can do so by fully qualifying the name with the --track option:\n"
+ "\n"
+-"    git checkout --track origin/<name>\n"
++"    git switch --track origin/<name>\n"
+ "\n"
+ "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ "one remote, e.g. the 'origin' remote, consider setting\n"
+@@ -3687,7 +3687,7 @@ msgstr ""
+ "können Sie das tun, indem Sie den vollständig qualifizierten Namen mit der\n"
+ "--track Option angeben:\n"
+ "\n"
+-"    git checkout --track origin/<Name>\n"
++"    git switch --track origin/<Name>\n"
+ "\n"
+ "Falls Sie beim Auschecken mit mehrdeutigen <Namen> immer ein Remote-"
+ "Repository\n"
+diff --git a/po/el.po b/po/el.po
+index 703f46d0c7c..7fbfdb4b35c 100644
+--- a/po/el.po
++++ b/po/el.po
+@@ -9448,7 +9448,7 @@ msgid ""
+ "If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ "you can do so by fully qualifying the name with the --track option:\n"
+ "\n"
+-"    git checkout --track origin/<name>\n"
++"    git switch --track origin/<name>\n"
+ "\n"
+ "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ "one remote, e.g. the 'origin' remote, consider setting\n"
+@@ -9464,7 +9464,7 @@ msgstr ""
+ "'origin',\n"
+ "μπορείτε να το κάνετε ορίζοντας ολογράφως το όνομα με την επιλογή --track:\n"
+ "\n"
+-"    git checkout --track origin/<όνομα>\n"
++"    git switch --track origin/<όνομα>\n"
+ "\n"
+ "Αν θα θέλατε οι εξαγωγές από ένα αμφίσημο <όνομα> να προτιμούν πάντα\n"
+ "έναν απομακρυσμένο εξυπηρετητή, π.χ. το απομακρυσμένο 'origin', σκεφτείτε να "
+diff --git a/po/es.po b/po/es.po
+index b2190476799..1156a6be09e 100644
+--- a/po/es.po
++++ b/po/es.po
+@@ -3612,7 +3612,7 @@ msgid ""
+ "If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ "you can do so by fully qualifying the name with the --track option:\n"
+ "\n"
+-"    git checkout --track origin/<name>\n"
++"    git switch --track origin/<name>\n"
+ "\n"
+ "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ "one remote, e.g. the 'origin' remote, consider setting\n"
+@@ -3621,7 +3621,7 @@ msgstr ""
+ "Si querías hacer un check out a una rama rastreada remota, como 'origin',\n"
+ "puedes hacerlo proporcionando el nombre completo con la opción --track:\n"
+ "\n"
+-"    git checkout --track origin/<nombre>\n"
++"    git switch --track origin/<nombre>\n"
+ "\n"
+ "Si quisieras que siempre los checkouts de nombres ambiguos prefieran\n"
+ "un remoto particular, como 'origin', considera configurar\n"
+diff --git a/po/fr.po b/po/fr.po
+index f601f406363..44f8e175676 100644
+--- a/po/fr.po
++++ b/po/fr.po
+@@ -3712,7 +3712,7 @@ msgid ""
+ "If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ "you can do so by fully qualifying the name with the --track option:\n"
+ "\n"
+-"    git checkout --track origin/<name>\n"
++"    git switch --track origin/<name>\n"
+ "\n"
+ "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ "one remote, e.g. the 'origin' remote, consider setting\n"
+@@ -3721,7 +3721,7 @@ msgstr ""
+ "Si vous souhaitiez extraire une branche de suivi distant sur 'origin',\n"
+ "par exemple, qualifiez-la complètement avec l'option --track :\n"
+ "\n"
+-"    git checkout --track origin/<nom>\n"
++"    git switch --track origin/<nom>\n"
+ "\n"
+ "Si vous souhaitez privilégier un distant particulier lorsque <nom> est\n"
+ "ambigu, vous pouvez positionner checkout.defaultRemote=origin dans\n"
+diff --git a/po/id.po b/po/id.po
+index 794bf8f1c56..c65c06386e8 100644
+--- a/po/id.po
++++ b/po/id.po
+@@ -4422,7 +4422,7 @@ msgid ""
+ "If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ "you can do so by fully qualifying the name with the --track option:\n"
+ "\n"
+-"    git checkout --track origin/<name>\n"
++"    git switch --track origin/<name>\n"
+ "\n"
+ "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ "one remote, e.g. the 'origin' remote, consider setting\n"
+@@ -4431,7 +4431,7 @@ msgstr ""
+ "Jika maksud Anda check out cabang pelacak remote, seperti 'origin',\n"
+ "Anda bisa lakukan dengan kualifikasi penuh nama dengan opsi --track:\n"
+ "\n"
+-"    git checkout --track origin/<nama>\n"
++"    git switch --track origin/<nama>\n"
+ "\n"
+ "Jika Anda ingin checkout <nama> ambigu selalu memilih satu remote,\n"
+ "seperti remote 'origin', pertimbangkan untuk menyetel\n"
+diff --git a/po/it.po b/po/it.po
+index c31560834d8..abf65d8d91f 100644
+--- a/po/it.po
++++ b/po/it.po
+@@ -12097,7 +12097,7 @@ msgid ""
+ "If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ "you can do so by fully qualifying the name with the --track option:\n"
+ "\n"
+-"    git checkout --track origin/<name>\n"
++"    git switch --track origin/<name>\n"
+ "\n"
+ "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ "one remote, e.g. the 'origin' remote, consider setting\n"
+@@ -12107,7 +12107,7 @@ msgstr ""
+ "puoi farlo usando la versione completamente qualificata del nome\n"
+ "con l'opzione --track:\n"
+ "\n"
+-"    git checkout --track origin/<nome>\n"
++"    git switch --track origin/<nome>\n"
+ "\n"
+ "Se preferisci che i checkout di un <nome> ambiguo siano sempre risolti\n"
+ "rispetto a un particolare remoto, ad es. 'origin', potresti voler\n"
+diff --git a/po/pl.po b/po/pl.po
+index 0ec127e14cc..96814cac6ab 100644
+--- a/po/pl.po
++++ b/po/pl.po
+@@ -12668,7 +12668,7 @@ msgid ""
+ "If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ "you can do so by fully qualifying the name with the --track option:\n"
+ "\n"
+-"    git checkout --track origin/<name>\n"
++"    git switch --track origin/<name>\n"
+ "\n"
+ "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ "one remote, e.g. the 'origin' remote, consider setting\n"
+@@ -12677,7 +12677,7 @@ msgstr ""
+ "Jeśli chodziło o wybranie gałęzi śledzącej, np. na „origin”,\n"
+ "możesz to zrobić podając pełną nazwę z opcją --track:\n"
+ "\n"
+-"    git checkout --track origin/<nazwa>\n"
++"    git switch --track origin/<nazwa>\n"
+ "\n"
+ "Jeśli chcesz, żeby wybrania wszystkich niejednoznacznych\n"
+ "<nazw> preferowały jedno zdalne repozytorium, rozważ ustawienie\n"
+diff --git a/po/pt_PT.po b/po/pt_PT.po
+index 32142531bbd..271199ce50e 100644
+--- a/po/pt_PT.po
++++ b/po/pt_PT.po
+@@ -12919,7 +12919,7 @@ msgid ""
+ "If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ "you can do so by fully qualifying the name with the --track option:\n"
+ "\n"
+-"    git checkout --track origin/<name>\n"
++"    git switch --track origin/<name>\n"
+ "\n"
+ "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ "one remote, e.g. the 'origin' remote, consider setting\n"
+diff --git a/po/ru.po b/po/ru.po
+index 803208c4d52..56c6a1d2420 100644
+--- a/po/ru.po
++++ b/po/ru.po
+@@ -3570,7 +3570,7 @@ msgid ""
+ "If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ "you can do so by fully qualifying the name with the --track option:\n"
+ "\n"
+-"    git checkout --track origin/<name>\n"
++"    git switch --track origin/<name>\n"
+ "\n"
+ "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ "one remote, e.g. the 'origin' remote, consider setting\n"
+diff --git a/po/sv.po b/po/sv.po
+index 56db2f1bb19..554987110e5 100644
+--- a/po/sv.po
++++ b/po/sv.po
+@@ -3572,7 +3572,7 @@ msgid ""
+ "If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ "you can do so by fully qualifying the name with the --track option:\n"
+ "\n"
+-"    git checkout --track origin/<name>\n"
++"    git switch --track origin/<name>\n"
+ "\n"
+ "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ "one remote, e.g. the 'origin' remote, consider setting\n"
+@@ -3581,7 +3581,7 @@ msgstr ""
+ "Om du menade checka ut en spårad fjärrgren på t.ex \"origin\", kan du\n"
+ "göra det genom att ange hela namnet med flaggan --track:\n"
+ "\n"
+-"    git checkout --track origin/<namn>\n"
++"    git switch --track origin/<namn>\n"
+ "\n"
+ "Om du alltid vill att utcheckningar med tvetydiga <namn> ska\n"
+ "föredra en fjärr, t.ex fjärren \"origin\" kan du ställa in\n"
+diff --git a/po/tr.po b/po/tr.po
+index 1e1d0318fd9..3c84df99891 100644
+--- a/po/tr.po
++++ b/po/tr.po
+@@ -3645,7 +3645,7 @@ msgid ""
+ "If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ "you can do so by fully qualifying the name with the --track option:\n"
+ "\n"
+-"    git checkout --track origin/<name>\n"
++"    git switch --track origin/<name>\n"
+ "\n"
+ "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ "one remote, e.g. the 'origin' remote, consider setting\n"
+@@ -3654,7 +3654,7 @@ msgstr ""
+ "Eğer bir uzak izleme dalını çıkış yapmak istediyseniz örn. 'origin',\n"
+ "bunu adı --track seçeneği ile tam olarak nitelendirip yapabilirsiniz.\n"
+ "\n"
+-"\tgit checkout --track origin/<ad>\n"
++"\tgit switch --track origin/<ad>\n"
+ "\n"
+ "Eğer her zaman belirsiz <ad> çıkışlarının bir uzak konumu tercih etmesini\n"
+ "isterseniz, örn. 'origin', yapılandırmanızda checkout.defaultRemote=origin\n"
+diff --git a/po/vi.po b/po/vi.po
+index d673745ac5b..9d74557b08e 100644
+--- a/po/vi.po
++++ b/po/vi.po
+@@ -3589,7 +3589,7 @@ msgid ""
+ "If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ "you can do so by fully qualifying the name with the --track option:\n"
+ "\n"
+-"    git checkout --track origin/<name>\n"
++"    git switch --track origin/<name>\n"
+ "\n"
+ "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ "one remote, e.g. the 'origin' remote, consider setting\n"
+@@ -3598,7 +3598,7 @@ msgstr ""
+ "Nếu ý bạn là lấy ra nhánh máy chủ được theo dõi, ví dụ “origin”,\n"
+ "bạn có thể làm như vậy bằng cách chỉ định đầy đủ tên với tùy chọn --track:\n"
+ "\n"
+-"    git checkout --track origin/<tên>\n"
++"    git switch --track origin/<tên>\n"
+ "\n"
+ "Nếu bạn muốn luôn lấy ra từ một <tên> một máy chủ ưa thích\n"
+ "chưa rõ ràng, ví dụ máy chủ “origin”, cân nhắc cài đặt\n"
+diff --git a/po/zh_CN.po b/po/zh_CN.po
+index 7de9c72d564..353cf308742 100644
+--- a/po/zh_CN.po
++++ b/po/zh_CN.po
+@@ -4500,7 +4500,7 @@ msgid ""
+ "If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ "you can do so by fully qualifying the name with the --track option:\n"
+ "\n"
+-"    git checkout --track origin/<name>\n"
++"    git switch --track origin/<name>\n"
+ "\n"
+ "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ "one remote, e.g. the 'origin' remote, consider setting\n"
+@@ -4509,7 +4509,7 @@ msgstr ""
+ "如果您想要检出一个远程跟踪分支，例如在 'origin' 上的，您可以使用分支\n"
+ "全名和 --track 选项：\n"
+ "\n"
+-"    git checkout --track origin/<名称>\n"
++"    git switch --track origin/<名称>\n"
+ "\n"
+ "如果您总是喜欢使用模糊的简短分支名 <名称>，而不喜欢如 'origin' 的远程\n"
+ "名称，可以在配置中设置 checkout.defaultRemote=origin。"
+diff --git a/po/zh_TW.po b/po/zh_TW.po
+index 2f7d01c3031..1cbc7da479d 100644
+--- a/po/zh_TW.po
++++ b/po/zh_TW.po
+@@ -4362,7 +4362,7 @@ msgid ""
+ "If you meant to check out a remote tracking branch on, e.g. 'origin',\n"
+ "you can do so by fully qualifying the name with the --track option:\n"
+ "\n"
+-"    git checkout --track origin/<name>\n"
++"    git switch --track origin/<name>\n"
+ "\n"
+ "If you'd like to always have checkouts of an ambiguous <name> prefer\n"
+ "one remote, e.g. the 'origin' remote, consider setting\n"
+@@ -4371,7 +4371,7 @@ msgstr ""
+ "如果您想要簽出一個遠端追蹤分支，例如 'origin'，您可以\n"
+ "使用 --track 選項寫出全名：\n"
+ "\n"
+-"    git checkout --track origin/<name>\n"
++"    git switch --track origin/<name>\n"
+ "\n"
+ "如果您總是喜歡使用模糊的簡短分支名 <name>，而不喜歡如 'origin' 的遠端\n"
+ "版本庫名，可以在設定中設定 checkout.defaultRemote=origin。"
+
+base-commit: 9bf691b78cf906751e65d65ba0c6ffdcd9a5a12c
+-- 
+gitgitgadget
