@@ -2,216 +2,241 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6BEDC433FE
-	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 23:41:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 38589C433FE
+	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 23:52:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231980AbiKIXlN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Nov 2022 18:41:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43904 "EHLO
+        id S231939AbiKIXwK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Nov 2022 18:52:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232003AbiKIXlF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2022 18:41:05 -0500
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2C2C19016
-        for <git@vger.kernel.org>; Wed,  9 Nov 2022 15:40:51 -0800 (PST)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-36fde8f2cdcso494917b3.23
-        for <git@vger.kernel.org>; Wed, 09 Nov 2022 15:40:51 -0800 (PST)
+        with ESMTP id S232020AbiKIXwI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2022 18:52:08 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18D7A642B
+        for <git@vger.kernel.org>; Wed,  9 Nov 2022 15:52:07 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id s12so610274edd.5
+        for <git@vger.kernel.org>; Wed, 09 Nov 2022 15:52:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rmlz5tg0zy2sATbFFLlqyGcE0uV2JD/jygCl03wkGXE=;
-        b=iSXFog81glmH8n6hp3oOiLWK4KtS4utBYb7v53mpnxGaLxFWzI++Jm3dtzGTJUwQ9H
-         La1KojZkUr/J0sV4rRgXPNC4LLY6vFjNR0rF411ZBAAzK/YVthzZZgwwh1AZGTDpjFoX
-         wjZwmS+CvNbnM8SEF/uKMRnCk2So4sskLszdvCQqBwBb5d24/wUxXkPJguDgasFKvVz8
-         JVRZVb6orJESHvijPLFcMd+TZBCTQ8V+H1Ev7oil5EOnvu7dIY7CzwKmOhzbTC6XQyaq
-         L8/jvMX7D0Tlzj5TAkSnQKsN/FuHaPMHR0Y2IX06gxgUKzQirX2UZfhmeptPsnExqNEJ
-         Sh7A==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=flza0uiKwIAulemoLmUUlD24I3b/ywUBDVhHcYYxJRs=;
+        b=a2euq17yR23sq/nC1zlz5Q9Dxz4Fg9qbino88BlB5EGFuc6HG9wOkU9PYbJJ1Le/07
+         nXYawlCsufzetr36wa+2+F3MKfEXW7QWIF1JwqeGEX1K+pZYUE2S6iupY89PhWj2oaU2
+         j1iFTeMplvwXHcfZ5gkzoM4cJEk27vCCAk4242R8R51ApZOnpevefpYo7MGsRnvm0KaG
+         uUbiYZ2yauPDFYS8YDEogs6B+O6iIlcGs2doaTYIL8c44XYEFjDFZ9GGSO5KuaU4nfen
+         P4J8J1p7ax125H94JYFCT/qqn1mk0oTNuJEBNu3NkLVe9rON0f4WQdmqM8GsMs18CXCN
+         7jIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rmlz5tg0zy2sATbFFLlqyGcE0uV2JD/jygCl03wkGXE=;
-        b=wChqszRjg2CyIH3GwL/A+HM5dhsplhcbsfRt44+7SbDtAwyseHyqX+WP28Ks5IFhnj
-         I8oa7cPTg8ma9AVWPm0BtWGG7L0nx7V6KAYwz1l6hgrsJit21dr6UdL0p6zIIWIZV/Bb
-         ioU41S7h3HDQiU7Te2UMB0W+SLVRVj4ae2ve3O/bnXC/7loHFEh1rrZZs8+AcLTYXEgW
-         mfnPSTZuZpp9V63Y6ELkYHiXi3DsaI5V9z/Xk0P80hkKzQ7+2G1mG7DrcVbP9IkEetSW
-         TxPivZbgLd9PEiQaONiyMZBgKPv972+52Z10ToapxFC3XBhVmtvVvfm025znp0RkXs7C
-         l6YQ==
-X-Gm-Message-State: ACrzQf3oyzi4LpSlu+Lq/3XKbiB1oTd5Cpr13CLC1QGwSfsYbFMxoypi
-        cauYjRELrbECjn0wRGrcDatIs4gHM1FlNA==
-X-Google-Smtp-Source: AMsMyM4rtx+aXVC14TUeAYCcZECNcGgkBgCOMIBvewXdf9IXnMUzB3HQJIAMoUsD1zLT8JAV1b6D4zGMvzDiNQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6902:4ec:b0:6cb:86b1:a5cc with SMTP
- id w12-20020a05690204ec00b006cb86b1a5ccmr61559409ybs.551.1668037250709; Wed,
- 09 Nov 2022 15:40:50 -0800 (PST)
-Date:   Wed, 09 Nov 2022 15:40:49 -0800
-In-Reply-To: <2f38427aa8db188060d153d8ece9503e1b604e91.1667426970.git.gitgitgadget@gmail.com>
-Mime-Version: 1.0
-References: <pull.1352.v2.git.1666372083.gitgitgadget@gmail.com>
- <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com> <2f38427aa8db188060d153d8ece9503e1b604e91.1667426970.git.gitgitgadget@gmail.com>
-Message-ID: <kl6lzgcz3ddq.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v3 05/11] http: set specific auth scheme depending on credential
-From:   Glen Choo <chooglen@google.com>
-To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        Matthew John Cheetham <mjcheetham@outlook.com>,
-        M Hickford <mirth.hickford@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Matthew John Cheetham <mjcheetham@github.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=flza0uiKwIAulemoLmUUlD24I3b/ywUBDVhHcYYxJRs=;
+        b=wcbCgymqjff8U9uKZrlfo6J2MQWYSC0vFQNxu9Cln7528uoe4T1FCpn1lXf8vu+Qa4
+         AJrBsLpuSAmGptFaf0QYGF6wrom8f6HDAa6NJJyP5z3+EETLfMt0Ayu1SUf6cFPYGQ8X
+         +56fRlZeqGmO1Sb9dM+PGnZ9UA2TKIV9Xl3cADA/5931uOSdfX9KXkXyneAYKegBAWnd
+         pdwyAMRTesfVjQHlkN5tNkOFLhxf0+ChE6TxguDz1sjUuIBPJlDvOehizaAII6nYGylP
+         0KUUqBdh/VR5Msd2DchDe0nol4pbn6hlyKaqz4TEGEVX5LAfLKp6ApgU6PH4029+Awr1
+         ugvw==
+X-Gm-Message-State: ACrzQf28Z5c+8WD07xmZlSUriPQS+LvXo0mOU/GrxUNUOeYqIwmK/GpL
+        DjP9g5aM7o6vd4EgZmsc+R8=
+X-Google-Smtp-Source: AMsMyM6kYTuiWXilJ+uh9R5/0eTpDctcYXgrph6GbSWbzsbKvWYaowywIjQ4GyXkzPisu9usAlCdoA==
+X-Received: by 2002:a05:6402:3645:b0:45f:e918:9f35 with SMTP id em5-20020a056402364500b0045fe9189f35mr59548518edb.118.1668037925432;
+        Wed, 09 Nov 2022 15:52:05 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id en6-20020a056402528600b0044e937ddcabsm7651059edb.77.2022.11.09.15.52.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Nov 2022 15:52:05 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1osurU-001CI5-1c;
+        Thu, 10 Nov 2022 00:52:04 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Adam Dinwoodie <git@dinwoodie.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        GIT Mailing-list <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Makefile: fix cygwin build failure
+Date:   Thu, 10 Nov 2022 00:18:01 +0100
+References: <0dec6e1e-207c-be13-ae95-294d9b1e8831@ramsayjones.plus.com>
+ <Y2wwfQWrs+KYpWNv@nand.local>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <Y2wwfQWrs+KYpWNv@nand.local>
+Message-ID: <221110.868rkjpty3.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
 
-> From: Matthew John Cheetham <mjcheetham@outlook.com>
+On Wed, Nov 09 2022, Taylor Blau wrote:
+
+> Hi Ramsay,
 >
-> Introduce a new credential field `authtype` that can be used by
-> credential helpers to indicate the type of the credential or
-> authentication mechanism to use for a request.
+> On Wed, Nov 09, 2022 at 10:46:05PM +0000, Ramsay Jones wrote:
+>> Commit 1c97a5043f (Makefile: define "TEST_{PROGRAM,OBJS}" variables
+>> earlier, 2022-10-31) breaks the cygwin build, like so:
 >
-> Modify http.c to now specify the correct authentication scheme or
-> credential type when authenticating the curl handle. If the new
-> `authtype` field in the credential structure is `NULL` or "Basic" then
-> use the existing username/password options. If the field is "Bearer"
-> then use the OAuth bearer token curl option. Otherwise, the `authtype`
-> field is the authentication scheme and the `password` field is the
-> raw, unencoded value.
+> It seems reasonable to me, and I'd like to pick it up rather quickly (on
+> top of =C3=86var's branch), especially if this is going to break things
+> downstream in Git for Windows.
 >
-> Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
-> ---
->  Documentation/git-credential.txt | 12 ++++++++++++
->  credential.c                     |  5 +++++
->  credential.h                     |  1 +
->  git-curl-compat.h                | 10 ++++++++++
->  http.c                           | 24 +++++++++++++++++++++---
->  5 files changed, 49 insertions(+), 3 deletions(-)
->
-> diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
-> index 791a57dddfb..9069bfb2d50 100644
-> --- a/Documentation/git-credential.txt
-> +++ b/Documentation/git-credential.txt
-> @@ -175,6 +175,18 @@ username in the example above) will be left unset.
->  	attribute 'wwwauth[]', where the order of the attributes is the same as
->  	they appear in the HTTP response.
->  
-> +`authtype`::
-> +
-> +	Indicates the type of authentication scheme that should be used by Git.
-> +	Credential helpers may reply to a request from Git with this attribute,
-> +	such that subsequent authenticated requests include the correct
-> +	`Authorization` header.
-> +	If this attribute is not present, the default value is "Basic".
-> +	Known values include "Basic", "Digest", and "Bearer".
-> +	If an unknown value is provided, this is taken as the authentication
-> +	scheme for the `Authorization` header, and the `password` field is
-> +	used as the raw unencoded authorization parameters of the same header.
-> +
+> =C3=86var: this sort of change is a little tricky to review without more =
+diff
+> context ;-). Do you have any objections to me slotting this on top of
+> your branch?
 
-[...]
+Yes, I've reviewed this, sorry about missing this edge case. This fix &
+analysis looks solid to me (it's still just in "seen", right?)
 
-> @@ -525,8 +526,25 @@ static void init_curl_http_auth(struct active_request_slot *slot)
->  
->  	credential_fill(&http_auth);
->  
-> -	curl_easy_setopt(slot->curl, CURLOPT_USERNAME, http_auth.username);
-> -	curl_easy_setopt(slot->curl, CURLOPT_PASSWORD, http_auth.password);
-> +	if (!http_auth.authtype || !strcasecmp(http_auth.authtype, "basic")
-> +				|| !strcasecmp(http_auth.authtype, "digest")) {
-> +		curl_easy_setopt(slot->curl, CURLOPT_USERNAME,
-> +			http_auth.username);
-> +		curl_easy_setopt(slot->curl, CURLOPT_PASSWORD,
-> +			http_auth.password);
-> +#ifdef GIT_CURL_HAVE_CURLAUTH_BEARER
-> +	} else if (!strcasecmp(http_auth.authtype, "bearer")) {
-> +		curl_easy_setopt(slot->curl, CURLOPT_HTTPAUTH, CURLAUTH_BEARER);
-> +		curl_easy_setopt(slot->curl, CURLOPT_XOAUTH2_BEARER,
-> +			http_auth.password);
-> +#endif
-> +	} else {
-> +		struct strbuf auth = STRBUF_INIT;
-> +		strbuf_addf(&auth, "Authorization: %s %s",
-> +			http_auth.authtype, http_auth.password);
-> +		slot->headers = curl_slist_append(slot->headers, auth.buf);
-> +		strbuf_release(&auth);
-> +	}
+FWIW I think a more thorough fix for it would be to future-proof this
+sort of IMMEDIATE expansion by defining such core variables earlier:
 
-As expected, a "Bearer" authtype doesn't require passing a username to
-curl, but as you noted in the cover letter, credential helpers were
-designed with username-password authentication in mind, which raises the
-question of what a credential helper should do with "Bearer"
-credentials.
+-- >8 --
+Subject: [PATCH] Makefile & make "uname" and "$X" available earlier
 
-e.g. it is not clear to me where the "username" comes from in the tests, e.g.
+In [1] I broke the build on Cygwin, because by moving "all::
+$(TEST_PROGRAMS)" earlier in the file (around line 800) it was
+declared before around line ~1300, where we include
+"config.mak.uname", and that's where we'll set "X =3D .exe" on Cygwin
+and Windows.
 
-  +test_expect_success 'http auth www-auth headers to credential helper basic valid' '
-  +	test_when_finished "per_test_cleanup" &&
-  +	# base64("alice:secret-passwd")
-  +	USERPASS64=YWxpY2U6c2VjcmV0LXBhc3N3ZA== &&
-  +	export USERPASS64 &&
-  +
-  +	start_http_server \
-  +		--auth=bearer:authority=\"id.example.com\"\ q=1\ p=0 \
-  +		--auth=basic:realm=\"example.com\" \
-  +		--auth-token=basic:$USERPASS64 &&
-  +
-  +	cat >get-expected.cred <<-EOF &&
-  +	protocol=http
-  +	host=$HOST_PORT
-  +	wwwauth[]=bearer authority="id.example.com" q=1 p=0
-  +	wwwauth[]=basic realm="example.com"
-  +	EOF
-  +
-  +	cat >store-expected.cred <<-EOF &&
-  +	protocol=http
-  +	host=$HOST_PORT
-  +	username=alice
-  +	password=secret-passwd
-  +	authtype=basic
-  +	EOF
-  +
-  +	cat >get-response.cred <<-EOF &&
-  +	protocol=http
-  +	host=$HOST_PORT
-  +	username=alice
-  +	password=secret-passwd
-  +	authtype=basic
-  +	EOF
-  +
-  +	git -c credential.helper="$CREDENTIAL_HELPER" ls-remote $ORIGIN_URL &&
-  +
-  +	test_cmp get-expected.cred get-actual.cred &&
-  +	test_cmp store-expected.cred store-actual.cred
-  +'
+Moving the "all" line down[2] is a more narrow fix for this, but this
+attempts to make this sort of thing safer in the future. We'll now
+load a "config.mak.uname-early" (really within the first 100 lines of
+code, but there's a giant comment at the top).
 
-I'm not sure how we plan to handle this. Some approaches I can see are:
+This ensures that in the future any Makefile rules that have
+"IMMEDIATE" expansion (e.g. the RHS of a "rule" will work as expected
+if they use $(X), not just if they use the "DEFERRED" expansion (which
+e.g. "=3D" assignment uses). See [3] in the GNU make documentation for
+details.
 
-- We require that credential helpers set a reasonable value for
-  "username". Presumably most credential helpers generating bearer
-  tokens have some idea of user identity, so this might be reasonable,
-  though it is wasteful, since we never use it in a meaningul way, e.g.
-  I don't think Git asks the credential helper for "username=alice" and
-  the credential helper decides to return the 'alice' credential instead
-  of the 'bob' credential (but I could be mistaken).
+1. 1c97a5043f8 (Makefile: define "TEST_{PROGRAM,OBJS}" variables
+   earlier, 2022-10-31)
+2. https://lore.kernel.org/git/0dec6e1e-207c-be13-ae95-294d9b1e8831@ramsayj=
+ones.plus.com/
+3. https://www.gnu.org/software/make/manual/html_node/Reading-Makefiles.html
 
-- We require that credential helpers set _some_ value for "username",
-  even if it is bogus. If so, we should communicate this explicitly.
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+---
+ Makefile               |  9 ++++++---
+ config.mak.uname       |  7 -------
+ config.mak.uname-early | 33 +++++++++++++++++++++++++++++++++
+ 3 files changed, 39 insertions(+), 10 deletions(-)
+ create mode 100644 config.mak.uname-early
 
-- It is okay for "username" to be missing. This seems like the most
-  elegant approach for credential helpers. I'm not sure if we're there
-  yet with this series, e.g. http.c::handle_curl_result() reads:
+diff --git a/Makefile b/Makefile
+index 4927379184c..e31678e0547 100644
+--- a/Makefile
++++ b/Makefile
+@@ -621,6 +621,12 @@ TEST_OBJS =3D
+ TEST_PROGRAMS_NEED_X =3D
+ THIRD_PARTY_SOURCES =3D
+=20
++# Binary suffix, set to .exe for Windows builds
++X =3D
++# Make $(uname_*) variables available, and possibly change $X to
++# ".exe" (on Windows)
++include config.mak.uname-early
++
+ # Having this variable in your environment would break pipelines because
+ # you cause "cd" to echo its destination to stdout.  It can also take
+ # scripts to unexpected places.  If you like CDPATH, define it for your
+@@ -714,9 +720,6 @@ PROGRAM_OBJS +=3D shell.o
+ .PHONY: program-objs
+ program-objs: $(PROGRAM_OBJS)
+=20
+-# Binary suffix, set to .exe for Windows builds
+-X =3D
+-
+ PROGRAMS +=3D $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
+=20
+ TEST_BUILTINS_OBJS +=3D test-advise.o
+diff --git a/config.mak.uname b/config.mak.uname
+index d63629fe807..616fa9052e2 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -16,10 +16,6 @@ ifneq ($(findstring MINGW,$(uname_S)),)
+ endif
+=20
+ ifdef MSVC
+-	# avoid the MingW and Cygwin configuration sections
+-	uname_S :=3D Windows
+-	uname_O :=3D Windows
+-
+ 	# Generate and include makefile variables that point to the
+ 	# currently installed set of MSVC command line tools.
+ compat/vcbuild/MSVC-DEFS-GEN: compat/vcbuild/find_vs_env.bat
+@@ -238,7 +234,6 @@ ifeq ($(uname_O),Cygwin)
+ 	NEEDS_LIBICONV =3D YesPlease
+ 	NO_FAST_WORKING_DIRECTORY =3D UnfortunatelyYes
+ 	NO_ST_BLOCKS_IN_STRUCT_STAT =3D YesPlease
+-	X =3D .exe
+ 	UNRELIABLE_FSTAT =3D UnfortunatelyYes
+ 	OBJECT_CREATION_USES_RENAMES =3D UnfortunatelyNeedsTo
+ 	MMAP_PREVENTS_DELETE =3D UnfortunatelyYes
+@@ -523,7 +518,6 @@ ifndef DEBUG
+ else
+ 	BASIC_CFLAGS +=3D -MDd -DDEBUG -D_DEBUG
+ endif
+-	X =3D .exe
+=20
+ compat/msvc.o: compat/msvc.c compat/mingw.c GIT-CFLAGS
+ endif
+@@ -676,7 +670,6 @@ ifeq ($(uname_S),MINGW)
+ 	PTHREAD_LIBS =3D
+ 	RC =3D windres -O coff
+ 	NATIVE_CRLF =3D YesPlease
+-	X =3D .exe
+ ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
+ 	htmldir =3D doc/git/html/
+ 	prefix =3D
+diff --git a/config.mak.uname-early b/config.mak.uname-early
+new file mode 100644
+index 00000000000..000d490a506
+--- /dev/null
++++ b/config.mak.uname-early
+@@ -0,0 +1,33 @@
++# This is mainly used by config.mak.uname-early, but we load it much
++# earlier to get access to $(X).
++
++uname_S :=3D $(shell sh -c 'uname -s 2>/dev/null || echo not')
++uname_M :=3D $(shell sh -c 'uname -m 2>/dev/null || echo not')
++uname_O :=3D $(shell sh -c 'uname -o 2>/dev/null || echo not')
++uname_R :=3D $(shell sh -c 'uname -r 2>/dev/null || echo not')
++uname_P :=3D $(shell sh -c 'uname -p 2>/dev/null || echo not')
++uname_V :=3D $(shell sh -c 'uname -v 2>/dev/null || echo not')
++
++ifneq ($(findstring MINGW,$(uname_S)),)
++	uname_S :=3D MINGW
++endif
++
++ifdef MSVC
++	# avoid the MingW and Cygwin configuration sections in
++	# config.mak.uname
++	uname_S :=3D Windows
++	uname_O :=3D Windows
++endif
++
++
++ifeq ($(uname_S),MINGW)
++	X =3D .exe
++else
++ifeq ($(uname_S),Windows)
++	X =3D .exe
++else
++ifeq ($(uname_O),Cygwin)
++	X =3D .exe
++endif
++endif
++endif
+--=20
+2.38.0.1467.g709fbdff1a9
 
-    else if (results->http_code == 401) {
-      if (http_auth.username && http_auth.password) {
-        credential_reject(&http_auth);
-        return HTTP_NOAUTH;
-
-  which seems to assume both a username _and_ password. If the username
-  is missing, we presumably don't send "erase", which might be a problem
-  for revoked access tokens (though presumably not an issue for OIDC id
-  tokens).
