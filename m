@@ -2,101 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B190C4332F
-	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 07:06:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 609C2C4332F
+	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 09:07:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229826AbiKIHGb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Nov 2022 02:06:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58478 "EHLO
+        id S230289AbiKIJHV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Nov 2022 04:07:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229528AbiKIHG3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2022 02:06:29 -0500
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 534A91EAD5
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 23:06:27 -0800 (PST)
-Received: by mail-pf1-x42d.google.com with SMTP id y13so15888236pfp.7
-        for <git@vger.kernel.org>; Tue, 08 Nov 2022 23:06:27 -0800 (PST)
+        with ESMTP id S230381AbiKIJHF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2022 04:07:05 -0500
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1379620BC0
+        for <git@vger.kernel.org>; Wed,  9 Nov 2022 01:07:04 -0800 (PST)
+Received: by mail-pf1-x42c.google.com with SMTP id z26so16144289pff.1
+        for <git@vger.kernel.org>; Wed, 09 Nov 2022 01:07:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zVQ0aAafEcS3BTGXeTrsuUf4jP7vEch2QOLtqFhlmmE=;
-        b=Lu9XygPz5iREG1ILL9RWTl+vRDRHUQypXga65CAzo/Uq5npSfDqg5SD6owSF5rEjgt
-         6a9u4CABQxUORi0mPx68uof0VobQxrbJkS1SOk4/smiX23BEHq7FebQTfaKMxV3aVP7b
-         346AN54gZVPIe+LvcI3C25hFC+ZIPl4GKKEzSsOyyqce3JlSMQxT4GAON/94NwgykE8Z
-         s1N64XmGO1epYMHUD3o5BeRcAMv+yISOiH9at6/UDMiUX31iDNA4JbcFqeHTX7HFwvFg
-         V9XFgaHsbzfi7dq6MMrJot2DX7QcHhHE80maSugTNip+EX139mm6FpxyrJkFoI0ym6fx
-         aYag==
+        bh=WKNwNi21DURxI3Uz4TYiHQl3NjrlU+MWw4hIi8iqVMQ=;
+        b=Cq1964zVH79eaDvc79uT54LsXOEqxyfdvIe1z/wLrHw3VqN5PZ/xe86al6Jv++NdMU
+         0p71KbU5ko5dZqrEup4hnJ7Y1tBOqTzJt1MnGtJihT13zBJTcjRg9tlE4y9CkDxD028u
+         kDJ6hH6Zb5emO+8iveO8ZdAbtfqpjb1GeWitiRgVCp829dTiTnaT8rk3/utSRQHz4xdC
+         ri0pmAL9zgN6thZ2dFFuzoz+BGcvquvBuJ+Mk2JPAsbPMsR7Q/zvp3pgkQ2uBhRGIdXX
+         yVUiMEubZo1lpCx2VvSOK7GCuQ5FEDRpcXlhraBW/ViQuyxD/OcKSXwMpEortC5iTSJX
+         +tFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zVQ0aAafEcS3BTGXeTrsuUf4jP7vEch2QOLtqFhlmmE=;
-        b=d+72gyF9vqhhabf5BigdrjwJBUjysdZwtrbc3fZG4qkxIpRHcZIZjzNBLsig8eyaR5
-         RD/7IKrGT6BDDbwllM7x32QTU/0vZKD+9hVkxumZ1pTqVokGi+6LArztw5dYnjUaEWYz
-         6RlFCc5SAm/0wV8S9IBbxswMhIX1ms3NLdaG54CBiMDrO8gVcV4aX7qkhqHI+gHJA4oG
-         k0e7mygeepchsl1Lw9y5b/I5KAj9YXB5wpwwlox9S9csVDIEL8cfuHuGrdn6CN3PP8hq
-         EglVp9+5AcaCtDZWujgOted3HyvavrDvMdOcDwZYcxQUia1JP3h7F3p/ffHcRShVswc2
-         An2w==
-X-Gm-Message-State: ACrzQf0N9y+98402vGu6waj4l/Ky/z1bNkV6pbk+rT+mjlufNTFHkJ1j
-        H/1Jg0cNtmHUsaF/9yFrWSo=
-X-Google-Smtp-Source: AMsMyM7dVncxaxLofQya20bJTbYp3yrYmLoASxF+SFJedX0jpat+kjyRZruyxY0U+i7/JBJKzSUhlg==
-X-Received: by 2002:a05:6a00:2446:b0:52b:e9a8:cb14 with SMTP id d6-20020a056a00244600b0052be9a8cb14mr59568787pfj.32.1667977586787;
-        Tue, 08 Nov 2022 23:06:26 -0800 (PST)
+        bh=WKNwNi21DURxI3Uz4TYiHQl3NjrlU+MWw4hIi8iqVMQ=;
+        b=8IYzOaCnotDARVXPKVBLqp0N/Ek1/ofn8kR4hmtOHfTjGpn06jOQrhXQaneU29q4FO
+         q1u8jKEaGk81aioggYKgZ6GdoD5NFQeY0Ru2VRCuEmDlkcytnnEeTfZK7x4yTQdePSBd
+         GemxZuYd3o8eVDwxvrI0MOJeYqRfklxt+eqIM2JAvqTnQBO9MgoJ94COH855KAJ8Zn2y
+         IOYb6zpZAJ411bSR0KPlS+9KCFohCgituA5qyrxSYMo0a+1W1B9logf+Ie+JnixqyvtY
+         OHU38hLpXbd/6NFAtVPGAdLCNDNirsJ2ehWik4knemszdF8IfLD9oE2ppXzkbM6aLBun
+         ECDw==
+X-Gm-Message-State: ACrzQf2Pmgm9t4d5UQXa3gBaI++TfgbQtWzmJKZsLqMu7ihDPbV2vq1S
+        BUq8PQA0DdR4vXTPyVJ/HoA=
+X-Google-Smtp-Source: AMsMyM7I2fzmzFZJp2cVBoDRpfv0+9wwFTF6miMWEHeEQwsYG/UG8r+MOvcCZbRtEMMTwYCtdyHY+g==
+X-Received: by 2002:a05:6a00:340f:b0:56d:b039:202 with SMTP id cn15-20020a056a00340f00b0056db0390202mr46567345pfb.2.1667984823471;
+        Wed, 09 Nov 2022 01:07:03 -0800 (PST)
 Received: from localhost.localdomain ([47.246.101.63])
-        by smtp.gmail.com with ESMTPSA id j7-20020a170902758700b0017f7e0f4a4esm8226047pll.35.2022.11.08.23.06.04
+        by smtp.gmail.com with ESMTPSA id mg7-20020a17090b370700b00212d4cbcbfdsm727509pjb.22.2022.11.09.01.07.01
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Nov 2022 23:06:12 -0800 (PST)
+        Wed, 09 Nov 2022 01:07:03 -0800 (PST)
 From:   Teng Long <dyroneteng@gmail.com>
 X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
-To:     avarab@gmail.com
-Cc:     dyroneteng@gmail.com, git@vger.kernel.org,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v2 0/3] notes.c: introduce "--blank-line" option
-Date:   Wed,  9 Nov 2022 15:06:01 +0800
-Message-Id: <20221109070601.94086-1-tenglong.tl@alibaba-inc.com>
-X-Mailer: git-send-email 2.38.1.386.g72e528ee3df.dirty
-In-Reply-To: <221107.86zgd2vma6.gmgdl@evledraar.gmail.com>
-References: <221107.86zgd2vma6.gmgdl@evledraar.gmail.com>
+To:     dyroneteng@gmail.com
+Cc:     avarab@gmail.com, git@vger.kernel.org, tenglong.tl@alibaba-inc.com
+Subject: [PATCH v3 0/5] notes.c: introduce "--no-blank-line" option 
+Date:   Wed,  9 Nov 2022 17:06:51 +0800
+Message-Id: <cover.1667980450.git.dyroneteng@gmail.com>
+X-Mailer: git-send-email 2.38.1.386.g196e80358e8
+In-Reply-To: <cover.1667828335.git.dyroneteng@gmail.com>
+References: <cover.1667828335.git.dyroneteng@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Ævar Arnfjörð Bjarmason" <avarab@gmail.com> writes:
+From: Teng Long <dyroneteng@gmail.com>
 
-> > From: Teng Long <dyroneteng@gmail.com>
-> > [...]
-> > * drop unreachable code in "append_edit()". Ævar found that some code has been
-> > unreachable in patch v1. I think it's because, after the commit "notes.c: fixed
-> > tip when target and append note are both empty", for example in this patch, the
-> > situation of "removing an existing note" should be impossible unless a BUG when
-> > trying to do append. The tests are passed, but I'm not sure I fully understand
-> > the original design.
->
-> I suggested squashing that BUG() in 3/3 into 2/3, but reading this again
-> I think it should come first.
->
-> I.e. this seems to me like the code in cd067d3bf4e (Builtin-ify
-> git-notes, 2010-02-13) might have just been blindly carried forward to
-> both "create" and "edit" in 52694cdabbf (builtin/notes: split
-> create_note() to clarify add vs. remove logic, 2014-11-12).
->
-> But it would be good to have confirmation, e.g. if you check out
-> 52694cdabbf and remove that "Removing note" branch from add() does it
-> fail tests at the time, but not in the case of append_edit()?
+Diff since v2:
 
-Thanks for mention that. I look back to 52694cdabbf and remove "Removing note"
-will make the test fail, because the notes operation "append" is different with
-"add", the latter supports to overwrite the existing note then let the
-"removing" happen (e.g. execute `git notes add -f -F /dev/null` on an existing
-note), but the former will not because it only does "appends" but not doing
-"overwrites".
-
-So, I think may just remove the "Removing note" code in append_edit() is OK.
+* [5/5] make "--no-blank-line" in doc.
+* [1/5] [2/5][3/5]do some cleanups and split to serval independent commit.
+* [3/5] futher explain in commit-msg why we can drop it in "append" but not "add".
+* [4/5] [4/5] use "test_when_finished" to cleanup notes in tests.
 
 Thanks.
+
+Teng Long (5):
+  notes.c: cleanup 'strbuf_grow' call in 'append_edit'
+  notes.c: cleanup for "designated init" and "char ptr init"
+  notes.c: drop unreachable code in 'append_edit()'
+  notes.c: provide tips when target and append note are both empty
+  notes.c: introduce "--no-blank-line" option
+
+ Documentation/git-notes.txt | 10 ++++++++--
+ builtin/notes.c             | 20 ++++++++++----------
+ t/t3301-notes.sh            | 18 ++++++++++++++++--
+ 3 files changed, 34 insertions(+), 14 deletions(-)
+
+Range-diff against v2:
+-:  ---------- > 1:  8ae58934a1 notes.c: cleanup 'strbuf_grow' call in 'append_edit'
+-:  ---------- > 2:  a53576ea88 notes.c: cleanup for "designated init" and "char ptr init"
+-:  ---------- > 3:  62a952ba3e notes.c: drop unreachable code in 'append_edit()'
+-:  ---------- > 4:  0d8ce0b14b notes.c: provide tips when target and append note are both empty
+1:  2381947abd ! 5:  196e80358e notes.c: introduce "--blank-line" option
+    @@ Metadata
+     Author: Teng Long <dyroneteng@gmail.com>
+     
+      ## Commit message ##
+    -    notes.c: introduce "--blank-line" option
+    +    notes.c: introduce "--no-blank-line" option
+     
+         When appending to a given object which has note and if the appended
+         note is not empty too, we will insert a blank line at first. The
+    @@ Documentation/git-notes.txt: SYNOPSIS
+      'git notes' add [-f] [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
+      'git notes' copy [-f] ( --stdin | <from-object> [<to-object>] )
+     -'git notes' append [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
+    -+'git notes' append [--allow-empty] [--blank-line] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
+    ++'git notes' append [--allow-empty] [--no-blank-line] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
+      'git notes' edit [--allow-empty] [<object>]
+      'git notes' show [<object>]
+      'git notes' merge [-v | -q] [-s <strategy> ] <notes-ref>
+    @@ Documentation/git-notes.txt: OPTIONS
+      	Allow an empty note object to be stored. The default behavior is
+      	to automatically remove empty notes.
+      
+    -+--blank-line::
+     +--no-blank-line::
+    -+	Controls if a blank line to split paragraphs is inserted
+    -+	when appending (the default is true).
+    ++	Do not insert a blank line before the inserted notes (insert
+    ++	a blank line is the default).
+     +
+      --ref <ref>::
+      	Manipulate the notes tree in <ref>.  This overrides
+    @@ builtin/notes.c: static int append_edit(int argc, const char **argv, const char
+      	};
+      	int edit = !strcmp(argv[0], "edit");
+     @@ builtin/notes.c: static int append_edit(int argc, const char **argv, const char *prefix)
+    + 		enum object_type type;
+      		char *prev_buf = read_object_file(note, &type, &size);
+      
+    - 		strbuf_grow(&d.buf, size + 1);
+     -		if (d.buf.len && prev_buf && size)
+     +		if (blankline && d.buf.len && prev_buf && size)
+      			strbuf_insertstr(&d.buf, 0, "\n");
+    @@ t/t3301-notes.sh: test_expect_success 'listing non-existing notes fails' '
+      '
+      
+     +test_expect_success 'append to existing note without a beginning blank line' '
+    ++	test_when_finished git notes remove HEAD &&
+     +	cat >expect <<-\EOF &&
+     +		Initial set of notes
+     +		Appended notes
+    @@ t/t3301-notes.sh: test_expect_success 'listing non-existing notes fails' '
+      
+      		More notes appended with git notes append
+      	EOF
+    -+	git notes remove HEAD &&
+    ++
+      	git notes add -m "Initial set of notes" &&
+      	git notes append -m "More notes appended with git notes append" &&
+      	git notes show >actual &&
+2:  5dbe014a09 < -:  ---------- notes.c: fixed tip when target and append note are both empty
+3:  2475ea0c04 < -:  ---------- notes.c: drop unreachable code in "append_edit()"
+-- 
+2.38.1.386.g196e80358e8
+
