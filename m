@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0E502C43217
-	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 09:07:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AD16C433FE
+	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 09:07:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230364AbiKIJHt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Nov 2022 04:07:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43884 "EHLO
+        id S230052AbiKIJHx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Nov 2022 04:07:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230403AbiKIJHL (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230404AbiKIJHL (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 9 Nov 2022 04:07:11 -0500
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B94C7209BC
-        for <git@vger.kernel.org>; Wed,  9 Nov 2022 01:07:10 -0800 (PST)
-Received: by mail-pj1-x102b.google.com with SMTP id r61-20020a17090a43c300b00212f4e9cccdso1223331pjg.5
-        for <git@vger.kernel.org>; Wed, 09 Nov 2022 01:07:10 -0800 (PST)
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DECB1F9E5
+        for <git@vger.kernel.org>; Wed,  9 Nov 2022 01:07:09 -0800 (PST)
+Received: by mail-pl1-x62d.google.com with SMTP id y4so16532272plb.2
+        for <git@vger.kernel.org>; Wed, 09 Nov 2022 01:07:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=q8Iy1yxP/4xnnTUtgOq+E/Gt0gSKCDRpX0Fn0wF9npI=;
-        b=Nzv8AB9Nr9QbWjyd6RmyOQSg4m7x3YCWOs3UF5iyk0oIPWMZY76Y0BEgvivCjAYQTa
-         B5xL6mlXf0QO6cT7Qc2XbSF3Kn+tE8t2Prpkd723zm+zwtB/qcD3x+AByKerVCgkU8Sy
-         zlrxV3CMCJDyS2bynCMGVcXq/zB1rU098MGMqCUcorwksdf1euvnutVK8mdyEd0ybY5O
-         7Ihj0jyjwV5OaXEvLgw4nkKHTdhc65cslGaZ2/on8MTjJ33oIGzTBZyPLEeyljsq6s9W
-         imWTQtdifOh33UPFe3B0LV9+JsBfCsXlRKqotNtbddZaKi69eNCJ5o3dfqU1zy2wuoO4
-         yHTg==
+        bh=V+y0xl2LRAkhu0hgz/ipF4yfkTjx6weXuh8Cbfg37rk=;
+        b=QTAIYYc+837vgfxU1FY9/wHVp/XLthlikgOp/Jq4qi5GbwB+bF9iJ7MBDH0GOZR2E2
+         sNlRUCiJ+HK0ZRS5nlpv81lVJTHjAI51XZ8RLtsBJWdpUkC5ZM5EJtUKWohqpmBUVpvi
+         A7jvL1/VYslslN0HXdKqWUQX+YBa8/zRPDLUyM5AqLbm2OjGOrVj93chW/WNaa/ukO+J
+         Frh0bI/zqB6+PBSetvDI7ovSqrlvb1IXvuKbJ6BVZGueYadbTqgUeNOtk/ZCxStCU4Cu
+         4xsNW5PLHsBPjRvXdcEk9ehrC7mDna8TncfPVTAQHgyQugil/1PaQs1M/4mCVnZfd73l
+         O5lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=q8Iy1yxP/4xnnTUtgOq+E/Gt0gSKCDRpX0Fn0wF9npI=;
-        b=TiwW9Fj1o6wwhT3VM904fpaVLjciX4Rk8Pm+phRlys9207oqvhJepyAhqa1iBXfxLT
-         q8mCLcfRBOrONNaUMbOZe8fsKsQ82imav3ihIbplZoIOT6VHOqdxA4GbIq17m8/fjxR5
-         8SeZ97vTV44gZVOehwnJ035Zz2xYgqegYUSmZDL2fDZDcTlfRrwZ0VAeCZfp+qfBaugn
-         6c9PoYy2rNn62Z8jOSgDiMJcbQEvZg/6O4T7YRoNzK0vohYzeuet4bBnvlUo4vGWu47B
-         89a4vp9Gmrgv6xzR084GcQkZ6KX2aOIrsJzoF043ICtJhDUHVHl5X2yIz+L7yI7K+MWF
-         AfeQ==
-X-Gm-Message-State: ACrzQf0dNbmoRcG1rHv0v8MfzDIRGgPBwMlD3kH71r8uPvb4P+tvmT5v
-        Et+Mz9hZYIGuFYNKjVlPCHbU3UOpnONU1yXd
-X-Google-Smtp-Source: AMsMyM6sXosSRq+/g0h6f5SnKio+TQuUKRTQJ1aMJLlfabYw2fVhNG/Uz4m9k8ch0Poflwe79LcTiQ==
-X-Received: by 2002:a17:902:b788:b0:186:a810:4072 with SMTP id e8-20020a170902b78800b00186a8104072mr60295734pls.86.1667984830222;
-        Wed, 09 Nov 2022 01:07:10 -0800 (PST)
+        bh=V+y0xl2LRAkhu0hgz/ipF4yfkTjx6weXuh8Cbfg37rk=;
+        b=u0c8PIL0p7RUy1FRUy9NRQNj8OGHyfJIGLSRylqbGP6jBWOIpj7vviKPb49KH16U40
+         c7eUHgjpnKpnClvi+9VI/xlEVisF79BVgAmnRjUGzTnFwi8sp5J4j3lOom1wprYUvp0V
+         r78qfFr/tzdnWuv6zdFuEjBgzKiOtSnpiU/Y2aBl2P3r7vZv0KwqwA2WZwPG3JsUHsqo
+         7hBBpxiud0rQA6Eo8ZluNNg44BwHs/KsTp9iLi3Ep/ZXGBKH6+byMS1OfLBw1v6eKP1M
+         nLYtK4xc6IH3iG05l+gn03czS0UtEMX7Sd8iKsuUmmtqNjf62B/FtkMzOQwvFLXIQ8Yo
+         c2mw==
+X-Gm-Message-State: ACrzQf39m1SJcJx6/uguOxnYv6VII2ZbAq8AB0jMOXpuahTDb/1BkVpZ
+        aeecMqU47yJ99hVTU6+Z/bbpZZBkEZna1/t1
+X-Google-Smtp-Source: AMsMyM7fdpP8MfGxyM3qu/fc+8Hv0ActFszkkx7zfXk4+4zMexKv1+tI+lTK83AjNxupaX/59+hybg==
+X-Received: by 2002:a17:90a:3c8a:b0:213:8043:4b7f with SMTP id g10-20020a17090a3c8a00b0021380434b7fmr69367907pjc.99.1667984828590;
+        Wed, 09 Nov 2022 01:07:08 -0800 (PST)
 Received: from localhost.localdomain ([47.246.101.63])
-        by smtp.gmail.com with ESMTPSA id mg7-20020a17090b370700b00212d4cbcbfdsm727509pjb.22.2022.11.09.01.07.08
+        by smtp.gmail.com with ESMTPSA id mg7-20020a17090b370700b00212d4cbcbfdsm727509pjb.22.2022.11.09.01.07.07
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 Nov 2022 01:07:10 -0800 (PST)
+        Wed, 09 Nov 2022 01:07:08 -0800 (PST)
 From:   Teng Long <dyroneteng@gmail.com>
 X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
 To:     dyroneteng@gmail.com
 Cc:     avarab@gmail.com, git@vger.kernel.org, tenglong.tl@alibaba-inc.com
-Subject: [PATCH v3 4/5] notes.c: provide tips when target and append note are both empty
-Date:   Wed,  9 Nov 2022 17:06:55 +0800
-Message-Id: <0d8ce0b14b0c956c33c99e9160a4752ef7bd7df4.1667980450.git.dyroneteng@gmail.com>
+Subject: [PATCH v3 3/5] notes.c: drop unreachable code in 'append_edit()'
+Date:   Wed,  9 Nov 2022 17:06:54 +0800
+Message-Id: <62a952ba3e7ad8599495119723b0fcd7044c819e.1667980450.git.dyroneteng@gmail.com>
 X-Mailer: git-send-email 2.38.1.386.g196e80358e8
 In-Reply-To: <cover.1667980450.git.dyroneteng@gmail.com>
 References: <cover.1667980450.git.dyroneteng@gmail.com>
@@ -67,56 +67,40 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Teng Long <dyroneteng@gmail.com>
 
-When "git notes append <object>" is executed, if there is no note in
-the given object and the appended note is empty too, we could print
-the exact tips to end-user.
+Situation of note "removing" shouldn't happen in 'append_edit()',
+unless it's a bug. So, let's drop the unreachable "else" code
+in "append_edit()".
+
+The notes operation "append" is different with "add", the latter
+supports to overwrite the existing note then let the "removing"
+happen (e.g. execute `git notes add -f -F /dev/null` on an existing
+note), but the former will not because it only does "appends" but
+not doing "overwrites".
 
 Signed-off-by: Teng Long <dyroneteng@gmail.com>
 ---
- builtin/notes.c  | 5 ++++-
- t/t3301-notes.sh | 5 +++--
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ builtin/notes.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
 diff --git a/builtin/notes.c b/builtin/notes.c
-index 8c3a1cd913..a6273781fb 100644
+index 485439c901..8c3a1cd913 100644
 --- a/builtin/notes.c
 +++ b/builtin/notes.c
-@@ -631,7 +631,10 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+@@ -630,13 +630,8 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 		if (add_note(t, &object, &new_note, combine_notes_overwrite))
  			BUG("combine_notes_overwrite failed");
  		logmsg = xstrfmt("Notes added by 'git notes %s'", argv[0]);
- 		commit_notes(the_repository, t, logmsg);
--	}
-+	} else if (!d.buf.len && !note)
-+		fprintf(stderr,
-+			_("Both original and appended notes are empty in %s, do nothing\n"),
-+			oid_to_hex(&object));
+-	} else {
+-		fprintf(stderr, _("Removing note for object %s\n"),
+-			oid_to_hex(&object));
+-		remove_note(t, object.hash);
+-		logmsg = xstrfmt("Notes removed by 'git notes %s'", argv[0]);
++		commit_notes(the_repository, t, logmsg);
+ 	}
+-	commit_notes(the_repository, t, logmsg);
  
  	free(logmsg);
  	free_note_data(&d);
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index 3288aaec7d..e7807e052a 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -552,6 +552,7 @@ test_expect_success 'appending empty string does not change existing note' '
- '
- 
- test_expect_success 'git notes append == add when there is no existing note' '
-+	test_when_finished git notes remove HEAD &&
- 	git notes remove HEAD &&
- 	test_must_fail git notes list HEAD &&
- 	git notes append -m "Initial set of notes${LF}${LF}More notes appended with git notes append" &&
-@@ -560,9 +561,9 @@ test_expect_success 'git notes append == add when there is no existing note' '
- '
- 
- test_expect_success 'appending empty string to non-existing note does not create note' '
--	git notes remove HEAD &&
- 	test_must_fail git notes list HEAD &&
--	git notes append -m "" &&
-+	git notes append -m "" >output 2>&1 &&
-+	grep "Both original and appended notes are empty" output &&
- 	test_must_fail git notes list HEAD
- '
- 
 -- 
 2.38.1.386.g196e80358e8
 
