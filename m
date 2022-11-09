@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2F37C4332F
-	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 07:06:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B190C4332F
+	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 07:06:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229820AbiKIHGO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Nov 2022 02:06:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58272 "EHLO
+        id S229826AbiKIHGb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Nov 2022 02:06:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229528AbiKIHGN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2022 02:06:13 -0500
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99EE01EADE
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 23:06:12 -0800 (PST)
-Received: by mail-pf1-x42a.google.com with SMTP id i3so15876841pfc.11
-        for <git@vger.kernel.org>; Tue, 08 Nov 2022 23:06:12 -0800 (PST)
+        with ESMTP id S229528AbiKIHG3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2022 02:06:29 -0500
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 534A91EAD5
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 23:06:27 -0800 (PST)
+Received: by mail-pf1-x42d.google.com with SMTP id y13so15888236pfp.7
+        for <git@vger.kernel.org>; Tue, 08 Nov 2022 23:06:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
         bh=zVQ0aAafEcS3BTGXeTrsuUf4jP7vEch2QOLtqFhlmmE=;
-        b=ldVrjsXo+0MdnKgTMWtAWUvraxyCaBjt//8KekfYsthuwh3VWTkuEjdWjihZSMDlwn
-         3FdNM6ChgnwfLCo2ex40aQyjfRNDM2Jah+cNX8H3ZJxfI3o5A0ZaZZQ7wrPZFOiGmrr2
-         Lyzqa2tEO2m9N67QNzP//gv2ZBPt4RhUllCMZ2s/136Z377ooi2L6UbKMLz1pvVUIJDx
-         XdvWgLEJi8CGS3LIk8lBdrFbLYEh0E7X6ixFMu9YrA7KO7L5q2wOjnGF8Fycyb7aNLT7
-         LEu7V2aYF1Qc3ftgV8JnuO1cdFOtnSnJNndZzHy/LKYv2SDcNCijZ7jj4o2APQALz76i
-         Qr6A==
+        b=Lu9XygPz5iREG1ILL9RWTl+vRDRHUQypXga65CAzo/Uq5npSfDqg5SD6owSF5rEjgt
+         6a9u4CABQxUORi0mPx68uof0VobQxrbJkS1SOk4/smiX23BEHq7FebQTfaKMxV3aVP7b
+         346AN54gZVPIe+LvcI3C25hFC+ZIPl4GKKEzSsOyyqce3JlSMQxT4GAON/94NwgykE8Z
+         s1N64XmGO1epYMHUD3o5BeRcAMv+yISOiH9at6/UDMiUX31iDNA4JbcFqeHTX7HFwvFg
+         V9XFgaHsbzfi7dq6MMrJot2DX7QcHhHE80maSugTNip+EX139mm6FpxyrJkFoI0ym6fx
+         aYag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
         bh=zVQ0aAafEcS3BTGXeTrsuUf4jP7vEch2QOLtqFhlmmE=;
-        b=KfbXDLvAPHuJ8AQ1lOc//8cw+rYZd2VE6FhH0HHaHndPbeGxE7X0bn1pHtlKPnsh9k
-         XBH2+t27q5LaA7hfMv3WlKRzLjqmEKXB1+HZ8rDKZv7k2DZGNF48fUWGGf171HS+cgF2
-         BW3uqVdNp238xFnAuuD70SHTyJ2UIw5I7dBbsVTiaoCfklRlVJZmXoR0+utIkE7U+vzX
-         2Eri9Dq4E6XVHqCRZ/jWl5GmUdhk3I7WJ+VdwZdfVtZsTlyvEpzeUgBy/i+eu/dOfac+
-         zakZwf1DbrDF50wMoJ/ovEHCOyFHryjtPEI3JYnuQnqAF+weSL2es6HMSqnFP/72VYva
-         PLoQ==
-X-Gm-Message-State: ANoB5pkn5ZqS67SYzov83hKM90BnKjG/uoH2jsUNbCmg5sv7Mh37UpIb
-        8U7ejqTqSlK5yf6OefVrL8af5tG+VFuWUfZE
-X-Google-Smtp-Source: AA0mqf4AZh16S33UIfNFMR6ZsooozAYNA99vADJzZxjaXKclhttiLpuWwke4tlzfza3HSvw71T/B2w==
-X-Received: by 2002:a63:cd0c:0:b0:470:5d16:8941 with SMTP id i12-20020a63cd0c000000b004705d168941mr17224852pgg.610.1667977572129;
-        Tue, 08 Nov 2022 23:06:12 -0800 (PST)
+        b=d+72gyF9vqhhabf5BigdrjwJBUjysdZwtrbc3fZG4qkxIpRHcZIZjzNBLsig8eyaR5
+         RD/7IKrGT6BDDbwllM7x32QTU/0vZKD+9hVkxumZ1pTqVokGi+6LArztw5dYnjUaEWYz
+         6RlFCc5SAm/0wV8S9IBbxswMhIX1ms3NLdaG54CBiMDrO8gVcV4aX7qkhqHI+gHJA4oG
+         k0e7mygeepchsl1Lw9y5b/I5KAj9YXB5wpwwlox9S9csVDIEL8cfuHuGrdn6CN3PP8hq
+         EglVp9+5AcaCtDZWujgOted3HyvavrDvMdOcDwZYcxQUia1JP3h7F3p/ffHcRShVswc2
+         An2w==
+X-Gm-Message-State: ACrzQf0N9y+98402vGu6waj4l/Ky/z1bNkV6pbk+rT+mjlufNTFHkJ1j
+        H/1Jg0cNtmHUsaF/9yFrWSo=
+X-Google-Smtp-Source: AMsMyM7dVncxaxLofQya20bJTbYp3yrYmLoASxF+SFJedX0jpat+kjyRZruyxY0U+i7/JBJKzSUhlg==
+X-Received: by 2002:a05:6a00:2446:b0:52b:e9a8:cb14 with SMTP id d6-20020a056a00244600b0052be9a8cb14mr59568787pfj.32.1667977586787;
+        Tue, 08 Nov 2022 23:06:26 -0800 (PST)
 Received: from localhost.localdomain ([47.246.101.63])
-        by smtp.gmail.com with ESMTPSA id w69-20020a627b48000000b00545f5046372sm7450078pfc.208.2022.11.08.23.05.31
+        by smtp.gmail.com with ESMTPSA id j7-20020a170902758700b0017f7e0f4a4esm8226047pll.35.2022.11.08.23.06.04
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Nov 2022 23:05:45 -0800 (PST)
+        Tue, 08 Nov 2022 23:06:12 -0800 (PST)
 From:   Teng Long <dyroneteng@gmail.com>
 X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
 To:     avarab@gmail.com
 Cc:     dyroneteng@gmail.com, git@vger.kernel.org,
         tenglong.tl@alibaba-inc.com
 Subject: Re: [PATCH v2 0/3] notes.c: introduce "--blank-line" option
-Date:   Wed,  9 Nov 2022 15:05:26 +0800
-Message-Id: <20221109070526.94055-1-tenglong.tl@alibaba-inc.com>
+Date:   Wed,  9 Nov 2022 15:06:01 +0800
+Message-Id: <20221109070601.94086-1-tenglong.tl@alibaba-inc.com>
 X-Mailer: git-send-email 2.38.1.386.g72e528ee3df.dirty
 In-Reply-To: <221107.86zgd2vma6.gmgdl@evledraar.gmail.com>
 References: <221107.86zgd2vma6.gmgdl@evledraar.gmail.com>
