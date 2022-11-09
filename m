@@ -2,180 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94410C4332F
-	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 03:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 93AD6C433FE
+	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 06:35:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230048AbiKIDYG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 22:24:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44498 "EHLO
+        id S229649AbiKIGfW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Nov 2022 01:35:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229546AbiKIDYF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2022 22:24:05 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30CD026D6
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 19:24:04 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id m22so6215754eji.10
-        for <git@vger.kernel.org>; Tue, 08 Nov 2022 19:24:04 -0800 (PST)
+        with ESMTP id S229647AbiKIGfV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2022 01:35:21 -0500
+Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 292531A20C
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 22:35:21 -0800 (PST)
+Received: by mail-pl1-x62c.google.com with SMTP id c2so16204894plz.11
+        for <git@vger.kernel.org>; Tue, 08 Nov 2022 22:35:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=4oOTUViScuV26OjcDeVP1JUDsvwA7X9GItCohjPmEB0=;
-        b=hwEEerLXJn+buwclD6nxqykA9NKHZuf9JCzOGYmyjVYma454NGDcfW4Mpl20Uq73Ki
-         1Y1IOb+c7RSfMbb2SNVNpX40TEsltrdjBqmE7jM/YMUKxaUmEEyb0dmr9BphVImeIkDj
-         EVoDEKLGeDPIpUvkSFXybqdbPuCg8x36oz4tqfvalQM5Ae0TWopiFtM5DWVGYAixJ0ae
-         bXUbTwcdbovVJh5Pd8K31OrzU84VfPvYbi/HfXVmALMpRffrV49Z30S5Zvc796r7WFsu
-         jUVc5beeeLnvZltCRoncNWYLGdbXk8zzjtuzuzIOe3GvuY85fS0pn5msSKtZ8stVavgt
-         43Pg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lnwdUf73xvXnnO3rxVjMkA5Z/DhCQS7tEtykUp9pXeA=;
+        b=qb5gE4ijiAL2zuG53eDz8YWyZsg2mvXD9JFDMOPDnKTER56UfNDHDt7+RAt+5zOuvh
+         6ZWGqWZz0zxSnpXwqInqnU45HvPmMNy1u0DTJI0ylnihuV2MQn4l2mc/zsC+zfE++Wns
+         bpyWopVq6KfnSgq7V/sviCW53vy1Lp1xjLQVkJOqiWg/Dl3nnaQLb9ZlaKd1c3LXWB2g
+         TQpV5pbSMUE1mjIlX2DsS8/AIzlzPTLLdk9nP28t25WMzCvLZIHHu1bdHb++lVMfJQ5k
+         R0hdk20EGgw+kwYKq5B0z2lfVOLLfT5UZCw20uI8bm8f3oTAOXEIsrd6Yc91EcVqDbGa
+         5JYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4oOTUViScuV26OjcDeVP1JUDsvwA7X9GItCohjPmEB0=;
-        b=7mpb/PCDql8UKDj/+g4AmCyUPa6nR5TfAZ6abNeMZFkn7G07DHe20ziauUXHQez+GW
-         f9Z8HluaksJx2Z6Znmr+1B679p9V1I64TKHxlsTWUHJFPDpufiPOXbBZaPOUO3DIIoEb
-         4udN3zTzbBNB0REr0tV0JBLz6KDYXXCZ+dsiBTHiT3sSKIJVLz4H3HFKD8yhKGtLrAx0
-         dKw6lNBRe2aZ8QQratahXjFElbQ++Zu2dF408vsFtzvmjooYU+vpbw5dtfKL/NTWDUYW
-         PLlowPrEXrsiWm4+rCfO+92vae3eWUJhtxv3dukw9bBAuxsx3K7douyWI4ggXVr4mcmg
-         iv3w==
-X-Gm-Message-State: ACrzQf2UAQBN0SrOS46Gl0ZB6VzhfdoYhBM5AuS3j/OOHTJ6SAK3cQ1I
-        4dVjikRieGY4O+b0kWsw5HJ0mcloaUbAKQ==
-X-Google-Smtp-Source: AMsMyM4q8m4Yw3AIDPuQeezhaN25wpmRhGI7p2pZvONncpo8OouRnAyESE4hs5usxDuy1E3hqFK3fQ==
-X-Received: by 2002:a17:906:9253:b0:7ae:5a6:22f8 with SMTP id c19-20020a170906925300b007ae05a622f8mr35008561ejx.108.1667964242631;
-        Tue, 08 Nov 2022 19:24:02 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id 13-20020a170906318d00b00734bfab4d59sm5453412ejy.170.2022.11.08.19.24.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Nov 2022 19:24:02 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1osbh3-000pGK-2P;
-        Wed, 09 Nov 2022 04:24:01 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 3/4] read-tree: teach --submodule-prefix
-Date:   Wed, 09 Nov 2022 04:13:05 +0100
-References: <20221109004708.97668-1-chooglen@google.com>
- <20221109004708.97668-4-chooglen@google.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <20221109004708.97668-4-chooglen@google.com>
-Message-ID: <221109.86y1skq08e.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lnwdUf73xvXnnO3rxVjMkA5Z/DhCQS7tEtykUp9pXeA=;
+        b=y8e2FHERh9uPz/UkRifYvhqbvwiAFMWWG7Gog1BQ95/YKeLSlaGDMDDAxZV/vogNlQ
+         LrQDVyAZpLGI8aC3939zSaUA2ZxyqepU1DbfRLP6RX3WTJKKUMMhBqQcaDtuIegf/Ayp
+         2rYyNqdWbJSF1gmo9eHT5PxP2ii2d9C8Hz0UzbYFB8/v7FYqHGDvM5YXJFioRGm/H8Ca
+         BCDIuipJwfTVcDmjY1rFjLC996MaWFWvm7IfEPgGCVnpmd5JohodzmAo56FE8+ZvDro7
+         vQN+aoKWW0Lads0nnVVYaa8HfZpgRawCo3K0f1fRGQFgI9eB/THI1k/A6DI5ymbkXMDr
+         +Sww==
+X-Gm-Message-State: ACrzQf2knwXIXyKdNMrKBmQwLR9rqoZpZCFNEk7pVBfP6FCHBi3hxxpr
+        kTj6F+juBzuIhpyuF3GXgJ0=
+X-Google-Smtp-Source: AMsMyM7gr0NzTI1lmj/4qK9ZS9zjvqj7OhgFK66m/UEHlRMAlLqVMIMXlo8ZfQPNHke39LnH9w1OWA==
+X-Received: by 2002:a17:903:2c2:b0:182:df88:e6d3 with SMTP id s2-20020a17090302c200b00182df88e6d3mr59091478plk.81.1667975720556;
+        Tue, 08 Nov 2022 22:35:20 -0800 (PST)
+Received: from localhost.localdomain ([47.246.101.63])
+        by smtp.gmail.com with ESMTPSA id u7-20020a170902e5c700b00174d9bbeda4sm8135318plf.197.2022.11.08.22.35.18
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 08 Nov 2022 22:35:19 -0800 (PST)
+From:   Teng Long <dyroneteng@gmail.com>
+X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
+To:     avarab@gmail.com
+Cc:     dyroneteng@gmail.com, git@vger.kernel.org,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v2 1/3] notes.c: introduce "--blank-line" option
+Date:   Wed,  9 Nov 2022 14:35:14 +0800
+Message-Id: <20221109063514.93202-1-tenglong.tl@alibaba-inc.com>
+X-Mailer: git-send-email 2.38.1.386.g72e528ee3df.dirty
+In-Reply-To: <221108.86pmdxshkt.gmgdl@evledraar.gmail.com>
+References: <221108.86pmdxshkt.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Ævar Arnfjörð Bjarmason" <avarab@gmail.com> writes:
 
-On Tue, Nov 08 2022, Glen Choo wrote:
+> Sorry, I meant that in both cases it will expose the same options to the
+> user: --blank-line and --no-blank-line. I.e. if you create options
+> named:
+>
+> 	"x" "x-y"
+>
+> Their negations are: --no-x and --no-x-y. But if their names are:
+>
+> 	"x" "no-x"
+>
+> The negations are:
+>
+> 	--no-x and --x
+>
+> But as your example shows that's unrelated to whether the *variable in
+> the code* is negated.
+>
+> So however you structure the code, which would be:
+>
+> 	int blankline = 1:
+>         [...]
+> 	OPT_BOOL(0, "blankline", &blankline, [...]);
+>
+> Or:
+>
+> 	int no_blankline = 0:
+>         [...]
+> 	OPT_BOOL(0, "no-blankline", &no_blankline, [...]);
+>
+> The documentation could in both cases say:
+>
+> 	--no-blankline:
+> 		describe the non-default[...]
 
-Other things aside:
-
-> This also fixes an existing bug where "git --super-prefix=<path>
-> read-tree" (typically invoked by "git restore") in a partial clone with
-> submodules could fail because we fetch promisor objects with "git
-> fetch", but "git fetch" doesn't support "--super-prefix".
-> [...]
-> diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-> index 037941b95d..9bec57a047 100755
-> --- a/t/t5616-partial-clone.sh
-> +++ b/t/t5616-partial-clone.sh
-> @@ -644,6 +644,49 @@ test_expect_success 'repack does not loosen promisor objects' '
->  	grep "loosen_unused_packed_objects/loosened:0" trace
->  '
->  
-> +test_expect_success 'setup src repo with submodules' '
-> +	test_config_global protocol.file.allow always &&
-> +
-> +	git init src-sub &&
-> +	git -C src-sub config uploadpack.allowfilter 1 &&
-> +	git -C src-sub config uploadpack.allowanysha1inwant 1 &&
-> +
-> +	# This blob must be missing in the subsequent commit.
-> +	echo foo >src-sub/file &&
-> +	git -C src-sub add file &&
-> +	git -C src-sub commit -m "submodule one" &&
-> +	SUB_ONE=$(git -C src-sub rev-parse HEAD) &&
-> +
-> +	echo bar >src-sub/file &&
-> +	git -C src-sub add file &&
-> +	git -C src-sub commit -m "submodule two" &&
-> +	SUB_TWO=$(git -C src-sub rev-parse HEAD) &&
-> +
-> +	git init src-super &&
-> +	git -C src-super config uploadpack.allowfilter 1 &&
-> +	git -C src-super config uploadpack.allowanysha1inwant 1 &&
-> +	git -C src-super submodule add ../src-sub src-sub &&
-> +
-> +	git -C src-super/src-sub checkout $SUB_ONE &&
-> +	git -C src-super add src-sub &&
-> +	git -C src-super commit -m "superproject one" &&
-> +
-> +	git -C src-super/src-sub checkout $SUB_TWO &&
-> +	git -C src-super add src-sub &&
-> +	git -C src-super commit -m "superproject two"
-> +'
-> +
-> +test_expect_success 'lazy-fetch in submodule succeeds' '
-> +	test_when_finished "rm -rf src-super src-sub client" &&
-> +
-> +	test_config_global protocol.file.allow always &&
-> +	git clone --filter=blob:none --also-filter-submodules \
-> +		--recurse-submodules "file://$(pwd)/src-super" client &&
-> +
-> +	# Trigger lazy-fetch from the superproject
-> +	git -C client restore --recurse-submodules --source=HEAD^ :/
-> +'
-> +
-
-If I take this test addition on top of "master", and don't apply any of
-the C changes on this topic it'll fail in "fetch", and then in
-"index-pack"/"unpack-objects" etc., as "fetch" invokes those, due to us
-using the --super-prefix.
-
-But just this test addition and this code change would also "fix it":
-	
-	diff --git a/builtin/fetch.c b/builtin/fetch.c
-	index 7378cafeec9..c5709a9e37b 100644
-	--- a/builtin/fetch.c
-	+++ b/builtin/fetch.c
-	@@ -2114,6 +2114,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
-	 	int result = 0;
-	 	int prune_tags_ok = 1;
-	 
-	+	unsetenv(GIT_SUPER_PREFIX_ENVIRONMENT);
-	+
-	 	packet_trace_identity("fetch");
-	 
-	 	/* Record the command line for the reflog */
-	diff --git a/git.c b/git.c
-	index 10202a7f126..b5e63a0a57b 100644
-	--- a/git.c
-	+++ b/git.c
-	@@ -531,7 +531,7 @@ static struct cmd_struct commands[] = {
-	 	{ "env--helper", cmd_env__helper },
-	 	{ "fast-export", cmd_fast_export, RUN_SETUP },
-	 	{ "fast-import", cmd_fast_import, RUN_SETUP | NO_PARSEOPT },
-	-	{ "fetch", cmd_fetch, RUN_SETUP },
-	+	{ "fetch", cmd_fetch, RUN_SETUP | SUPPORT_SUPER_PREFIX /* not really* */ },
-	 	{ "fetch-pack", cmd_fetch_pack, RUN_SETUP | NO_PARSEOPT },
-	 	{ "fmt-merge-msg", cmd_fmt_merge_msg, RUN_SETUP },
-	 	{ "for-each-ref", cmd_for_each_ref, RUN_SETUP },
-
-Doesn't that do an end-run around the goals of this topic, but just in a
-much simpler way?
-
-I.e. I'm all for not propagating the --super-prefix any more than we
-need to, but part of that is because once we start passing it, we set it
-in the environment, and then we'll *keep* passing it. So we've had some
-commands "accept" it, when really they don't care, they're just being
-invoked by other commands that needed it originally.
-
-But maybe we can just unsetenv() the prefix before invoking any built-in
-that doesn't have SUPPORT_SUPER_PREFIX, or not set it in the environment
-in the first place, but rather carry it forward more explicitly only
-with the "--super-prefix" flag to "git" (adn then only to those specific
-commands?
-
+Thank you for the detailed explanation, now it's clear for me.
