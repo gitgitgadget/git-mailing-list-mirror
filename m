@@ -2,101 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15D7BC433FE
-	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 23:17:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1EC65C43217
+	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 23:17:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231587AbiKIXRW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Nov 2022 18:17:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35252 "EHLO
+        id S231671AbiKIXRY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Nov 2022 18:17:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231790AbiKIXQs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2022 18:16:48 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 779402FFC9
-        for <git@vger.kernel.org>; Wed,  9 Nov 2022 15:16:46 -0800 (PST)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 904925A1FB;
-        Wed,  9 Nov 2022 23:16:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1668035805;
-        bh=X+ugfngvVk1c33Z5sZRorOlfie4GBf+yRQEaw02/Y7k=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=tNK2s5qIyw8KAzWalHsmUKPY/knOHFJWyB1kG1lcqPZoV3SOsdildtoog5wXo0D16
-         +BTY1mGsu6gITRcJfTo8rNnAyRMN6gav6/yytRNAYKPGtgKoerXy3UeloBuXBJ/kYU
-         LUHERzC6MH+8vtbY5QHMqW1Jc9jq5oA0Ln+ykqRweH9UVWrf8AsQktwqzdBz12w3q0
-         3FvM7J6Q5IgKQ/QDwgkunGFiJRRH3pyID/8ZZwJbmGFTwZUET0CvR1i4Ae0PcH93C5
-         AOpOizsQSwNxogtflp4lKOr4VwdlT4Cvl1MstJumQksev4CqMESPnEAxr1Wl1vT5k7
-         Zv7i5SV1weEB7iWPNxIPYiGxv1ZdfGqXpq3KcpUBjmJi16dIs7Y4hVNpojjTQw1p83
-         e3uxIMMjTMSrB8dgRpKW6QyLYiy77IFljYNnQmlPbY8wHfsMh7sroswbCVpFGBFiTB
-         QNSgdWfuy2laPNVglZ5UPPm1Wk5F+tomKXLP90CvdZ8B6A6+bTQ
-Date:   Wed, 9 Nov 2022 23:16:43 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     "Strawbridge, Michael" <Michael.Strawbridge@amd.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "Tuikov, Luben" <Luben.Tuikov@amd.com>
-Subject: Re: [PATCH] Change git-send-email's sendemail-validate hook to use
- header information
-Message-ID: <Y2w023Vi3Wt4J7se@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "Strawbridge, Michael" <Michael.Strawbridge@amd.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "Tuikov, Luben" <Luben.Tuikov@amd.com>
-References: <20221109182254.71967-1-michael.strawbridge@amd.com>
+        with ESMTP id S232068AbiKIXRD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2022 18:17:03 -0500
+Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5981355A8
+        for <git@vger.kernel.org>; Wed,  9 Nov 2022 15:17:03 -0800 (PST)
+Received: by mail-il1-x134.google.com with SMTP id l6so234574ilq.3
+        for <git@vger.kernel.org>; Wed, 09 Nov 2022 15:17:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=xSj856Zg0FWOaReNJ53skxRzhCRD7/U8F3uhuTFg5KM=;
+        b=6e4HVRvWymYOTH/9gqcVU+IIwKeZm+AzeFgJbkjtNxhFWzyoilsNkGOEyhpWVvs/Sx
+         7GuNVvOJXLQvPaY7kVJc/8ZXigL4Qgq8tBHK+85nqd6Yc2Hw0SDlBXBotocLRlAXyRrP
+         o9ryYcXgyLkg5C72NZcOy0pkubQgIN/OwKhphI6JQromKwZg2mzZEniAjVo3WcHjXavJ
+         CV8M7NCZ2eL+wpEYbdgrTtqH6gBprE2+vaD6KQ3fMejq3CPfVbH2qNZRr0GkIWlzuulI
+         prO7SxV4whTh0PVM4bTZWDJqfgBmPcI5MrwFnnBk/Ax9ZMH3bvka/MHZSeuYDWL8vnkG
+         mORA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xSj856Zg0FWOaReNJ53skxRzhCRD7/U8F3uhuTFg5KM=;
+        b=kTOXk1H4WVmq8hASqKQMKxVQWXQQ18UFsazusE8RIjLXsJ2aaBT7PR/fU0tpEUjEx/
+         bOPiWtz3PJ5o8ShZ7kHuHMyPnobBuZe67EtpdUCkKXZ1lQHOcm84Ugic0N735BI4BKdw
+         Z+Cei2bRWZy6vUDDGn/SwmlcalTqRWKGaSFELq/uZcj0ZxfTykoTtMa3x0eh/yu3ceJk
+         PslnlcRJoK06IxEyOmrU/baaSoI3sXD1Al/hnLo7tsDqKizeveaDw5It4PwbeaLvUtHr
+         NLdI1fiJJ2flyxC6R/zB4L0L5PGYrS8ZTJJz9IFtMFnKgfuddIrnHqNunexdIgyKfrub
+         enMw==
+X-Gm-Message-State: ACrzQf20DMR478AU3r9bv9P3MLWRIjmsqg1+JxlsTWgoZAipH3zTYFjN
+        jPT4Ur+yOQvxLV1XXYLTikYzBA==
+X-Google-Smtp-Source: AMsMyM5SfO7cVE24ey9J3I6QYaL4s4M0iJh0nOCvptW+Nre59XPTRFWDhSUm6PN6zNslfgmFg2d7cA==
+X-Received: by 2002:a05:6e02:ec3:b0:300:9d51:311a with SMTP id i3-20020a056e020ec300b003009d51311amr32146055ilk.52.1668035822749;
+        Wed, 09 Nov 2022 15:17:02 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id v2-20020a056602058200b00688faad4741sm5974240iox.24.2022.11.09.15.17.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Nov 2022 15:17:02 -0800 (PST)
+Date:   Wed, 9 Nov 2022 18:17:01 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2 0/2] rebase: stop setting GIT_REFLOG_ACTION
+Message-ID: <Y2w07ci8Lg0GQXSQ@nand.local>
+References: <pull.1405.git.1667575142.gitgitgadget@gmail.com>
+ <pull.1405.v2.git.1668003718.gitgitgadget@gmail.com>
+ <221109.86leokp0vm.gmgdl@evledraar.gmail.com>
+ <28100f66-bd3d-d564-cb40-44b65ef415bc@dunelm.org.uk>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="NFaKOQ6mMtrILcmP"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20221109182254.71967-1-michael.strawbridge@amd.com>
-User-Agent: Mutt/2.2.7 (2022-08-07)
+In-Reply-To: <28100f66-bd3d-d564-cb40-44b65ef415bc@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Nov 09, 2022 at 04:30:47PM +0000, Phillip Wood wrote:
+> > But for now this is a good step forward, and fixes the leak that's
+> > "unique" t this codepath.
+> >
+> > And of course, just makes managing the "reflog" variable nicer in
+> > general, as we're no longer talking to ourselves within the same process
+> > with setenv()/getenv().
+>
+> Yes, that was the main aim really
 
---NFaKOQ6mMtrILcmP
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks, both. Let's start merging this one down.
 
-On 2022-11-09 at 18:23:06, Strawbridge, Michael wrote:
-> Since commit-msg and pre-commit git hooks already expose commit
-> contents, switch sendemail-validate to use the header information
-> of the email that git-send-email intends to send.
-
-I have a couple of thoughts here, and maybe you can explain them a bit
-better in the commit message for v2.  First, I'm not sure why this is
-valuable.  What do we gain from this that we don't have now?  Why is the
-current state inadequate?
-
-Also, how does this handle encoded headers?  I'd like to see some tests
-before and after here, especially some including non-ASCII user.name
-values so that we can test that we do the right thing here.  If there's
-some beneficial improvement here that results in a behaviour change,
-then of course we'd want to test that as well.
-
-Finally, since we move the validation code farther down instead of first
-thing, is there any place that this would result in a different
-behaviour?  For example, --dry-run mode?  Is there any way we could send
-data that isn't validated but should be?
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---NFaKOQ6mMtrILcmP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY2w02wAKCRB8DEliiIei
-gaeaAQDcgOMtiOlKJhu2nphyzEcj0jZgXvsVAgmUK1Gct/SDdAD8Cb2QSM9vj1Cu
-3lmvJTDapOhW9Zr4yqcqtFEI5MamRQg=
-=ckzh
------END PGP SIGNATURE-----
-
---NFaKOQ6mMtrILcmP--
+Thanks,
+Taylor
