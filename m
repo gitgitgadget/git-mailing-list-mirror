@@ -2,109 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A4B4C433FE
-	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 15:23:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F5D4C433FE
+	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 15:45:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232000AbiKIPXL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Nov 2022 10:23:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54662 "EHLO
+        id S230421AbiKIPpO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Nov 2022 10:45:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231869AbiKIPXK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2022 10:23:10 -0500
-Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3BE21AD82
-        for <git@vger.kernel.org>; Wed,  9 Nov 2022 07:23:09 -0800 (PST)
-Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-1322d768ba7so19978251fac.5
-        for <git@vger.kernel.org>; Wed, 09 Nov 2022 07:23:09 -0800 (PST)
+        with ESMTP id S229774AbiKIPpM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2022 10:45:12 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C98BD2F8
+        for <git@vger.kernel.org>; Wed,  9 Nov 2022 07:45:11 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id f5so47787106ejc.5
+        for <git@vger.kernel.org>; Wed, 09 Nov 2022 07:45:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=i+/xF0iOOR72XHLxvc6XO3PhDUtyiJ+Z68qrotG/bUw=;
-        b=T2wsaW6dcRqfUYPIFnoPcvWrK8zrSzhOJF87JJK2Yp1KxcUxK26qebZoS+722ilLKi
-         weFnEecqijtGiEN2lKs82WjqfVFmR1aPL3GXwPmmQAf4jus4mOPwTRKgwg43weeMl0nT
-         uHp5KXKJi30S7z4xu+w8wOabX3nlWbdVLvD/HUQP3yv0iSLLNpkAj1pUiGUlBlJ+xWBA
-         y9LyzA2+yr2TCMQiPTO6S2xv101/UF7TEsdmoyuc92WYCVudNDgT8rEHfiaozYa4IiIt
-         TRhcfb9JTuAqKpB1KwEqP+xBUnYgXXoIMXOvO4lrNaTBA6LxFIOyKU2k/PRs8cVNQyXi
-         oUqQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=VqtB+H2qbLuHgumTWDRXUlnGTcMh7nuvZ0ralRVNab0=;
+        b=ikv0UzGNKjkYt4bPejJK/efqiJbLldlp7xs9sjChNOfjX0wBw+nark0aWHPB/H3QvX
+         wZJKrmwwDa4M8ep+S8zBteEjBLxrLLuARW5K0ydMCAVYz8neyDukbGZqQR1FZOG5vSjy
+         75oTMW/5MBmIdDWiq3RlHE44IpngQI37mWhls72p3idiEqQsK/SXaYfdlJlz1JlCpWJk
+         DEz9Rc2zh5M5hrtYCW0oStT85wusaJ3iea4864SBHl0pY2JIWewLls0/fzF6qq9MFFFC
+         0Ec9H9GPsVBOA7h91ZmvrpI1jiRatE83eNEWMjO3kvbf4WThq6we0cIP5zPaUXESyrn2
+         PlAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=i+/xF0iOOR72XHLxvc6XO3PhDUtyiJ+Z68qrotG/bUw=;
-        b=kf7phrVeAf1yY+/NIhG5JKBY/eNbXa0mLtKH/fNFa+4AbtSJabEfXDewhOiGA8gd7x
-         zPUWjJynvZ/fIl7jL3GQf76lXmh/CQ3H2mRY7KgShxxD5bntSEOtBx0za+Ws4mAGXsyc
-         vK50mMWPwX5RT19npMwzPJsZdiRn+gr4OT00Cm8+oRWZSrRMRuBnVHTpoqVnWZoQMXQP
-         xL7q9a4bVoZeQiIhPCZhTYIfZSFL70j2Fi5qrhhtirxdhwNzVVMFTZZr2rsl+2yoWf7x
-         4OMCbBCtU7YPZ7nkdCJi3Brxi3egeYb5lu44qp/j4iqS9CMwGyHPh3cPoB7kxhHkWRCv
-         WUWA==
-X-Gm-Message-State: ACrzQf3ZRG0IdYPV/kmfUFVfXHi06FFcG3Hk1TL+2CcdIWcPU4ADrv72
-        pZm+CfePwjIF+/vMEzCmnEYULU1eYfPx
-X-Google-Smtp-Source: AMsMyM62zFBMu3k7WDpmnsSmI8/mhAuBppp5l6acVKszf+LOEyPFwiZyt7aJH/uMyDhWQJ2/mI9cXA==
-X-Received: by 2002:a05:6870:60a0:b0:13c:b7de:ebe8 with SMTP id t32-20020a05687060a000b0013cb7deebe8mr33594817oae.60.1668007388971;
-        Wed, 09 Nov 2022 07:23:08 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:9489:2f30:3101:b539? ([2600:1700:e72:80a0:9489:2f30:3101:b539])
-        by smtp.gmail.com with ESMTPSA id i25-20020a9d6519000000b0066cc88749f8sm4053694otl.68.2022.11.09.07.23.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Nov 2022 07:23:08 -0800 (PST)
-Message-ID: <6c1e50e3-cddb-4cc3-f83c-6ec2e2a06a9f@github.com>
-Date:   Wed, 9 Nov 2022 10:23:05 -0500
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VqtB+H2qbLuHgumTWDRXUlnGTcMh7nuvZ0ralRVNab0=;
+        b=o0mK1bE++NeYmAbqTo6y7mfkFGUmOovRsJAoNHl9+jrSSdEvYrpaf7kfjRHgY2rsi+
+         E2vIoW5MULiBMk3zVEJqnddUxe9ZXCUMP/Y9s4Tndbv6mdIyYBNpXHJFodRaMSxIpXpr
+         5tzXXSXV0XHmOs7+rFT6jSqHZeZ2nJAnSgTWjtA3zBVH9G25awdi5xWHDrBlf+QuIQes
+         moyucccLjYNwYgSM0Kn3nrjcezr5iigzqZTr1uQqo3eGAQU1enryyw2S+Ff7mxKegquB
+         behoRYolFx1SsiP0oBeYBlqplDBeaqgtuLj6um123wa4zJKTQpu8X2Kz3gPfXNofoQmK
+         nVtA==
+X-Gm-Message-State: ANoB5pkecQYUmIPxUb5uQgKDniQEMgS2I+R2ZfEkcDCKbB6/FkslCvOQ
+        TeJjjdvSYknEP7v4mIRhvL8=
+X-Google-Smtp-Source: AA0mqf6ZpYw+cu7cUEecVRBRe9AowLknxltSS6LpT/0y/iH8kkuZw2Cq40NG1PjaOadWKlNcGxmedQ==
+X-Received: by 2002:a17:907:7ea3:b0:7ae:5033:d991 with SMTP id qb35-20020a1709077ea300b007ae5033d991mr19029687ejc.217.1668008709629;
+        Wed, 09 Nov 2022 07:45:09 -0800 (PST)
+Received: from gmgdl ([109.38.150.4])
+        by smtp.gmail.com with ESMTPSA id kw3-20020a170907770300b0079e552fd860sm6070409ejc.152.2022.11.09.07.45.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Nov 2022 07:45:09 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1osnGF-000zZy-2p;
+        Wed, 09 Nov 2022 16:45:07 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v5 10/13] Makefile: copy contrib/coccinelle/*.cocci to
+ build/
+Date:   Wed, 09 Nov 2022 16:42:33 +0100
+References: <cover-v4-00.12-00000000000-20221026T141005Z-avarab@gmail.com>
+ <cover-v5-00.13-00000000000-20221101T222616Z-avarab@gmail.com>
+ <patch-v5-10.13-56ca8f5720a-20221101T222616Z-avarab@gmail.com>
+ <20221109150556.GE1731@szeder.dev>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <20221109150556.GE1731@szeder.dev>
+Message-ID: <221109.86tu38p1x8.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 0/5] Skip 'cache_tree_update()' when 'prime_cache_tree()'
- is called immediate after
-Content-Language: en-US
-To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     gitster@pobox.com, phillip.wood123@gmail.com,
-        jonathantanmy@google.com, Victoria Dye <vdye@github.com>
-References: <pull.1411.git.1667947465.gitgitgadget@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <pull.1411.git.1667947465.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/8/2022 5:44 PM, Victoria Dye via GitGitGadget wrote:
-> Following up on a discussion [1] around cache tree refreshes in 'git reset',
-> this series updates callers of 'unpack_trees()' to skip its internal
-> invocation of 'cache_tree_update()' when 'prime_cache_tree()' is called
-> immediately after 'unpack_trees()'. 'cache_tree_update()' can be an
-> expensive operation, and it is redundant when 'prime_cache_tree()' clears
-> and rebuilds the cache tree from scratch immediately after.
-> 
-> The first patch adds a test directly comparing the execution time of
-> 'prime_cache_tree()' with that of 'cache_tree_update()'. The results show
-> that on a fully-valid cache tree, they perform the same, but on a
-> fully-invalid cache tree, 'prime_cache_tree()' is multiple times faster
-> (although both are so fast that the total execution time of 100 invocations
-> is needed to compare the results in the default perf repo).
 
-One thing I found interesting is how you needed 200 iterations to show
-a meaningful change in this test script, but in the case of 'git reset'
-we can see sizeable improvements even with a single iteration.
+On Wed, Nov 09 2022, SZEDER G=C3=A1bor wrote:
 
-Is there something about this test that is artificially speeding up
-these iterations? Perhaps the index has up-to-date filesystem information
-that allows these methods to avoid filesystem interactions that are
-necessary in the 'git reset' case?
- 
-> The second patch introduces the 'skip_cache_tree_update' option for
-> 'unpack_trees()', but does not use it yet.
-> 
-> The remaining three patches update callers that make the aforementioned
-> redundant cache tree updates. The performance impact on these callers ranges
-> from "negligible" (in 'rebase') to "substantial" (in 'read-tree') - more
-> details can be found in the commit messages of the patch associated with the
-> affected code path.
+> On Tue, Nov 01, 2022 at 11:35:52PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>> Change the "coccinelle" rule so that we first copy the *.cocci source
+>> in e.g. "contrib/coccinelle/strbuf.cocci" to
+>> ".build/contrib/coccinelle/strbuf.cocci" before operating on it.
+>
+> After this patch the output of 'make coccicheck' looks like this:
+>
+>     CP contrib/coccinelle/hashmap.cocci .build/contrib/coccinelle/hashmap=
+.cocci
+>     MKDIR -p .build/.build/contrib/coccinelle/hashmap.cocci.patch
+>     SPATCH .build/.build/contrib/coccinelle/hashmap.cocci.patch/upload-pa=
+ck.c
+>     SPATCH .build/.build/contrib/coccinelle/hashmap.cocci.patch/merge-ort=
+-wrappers.c
+>     SPATCH .build/.build/contrib/coccinelle/hashmap.cocci.patch/unpack-tr=
+ees.c
+>     SPATCH .build/.build/contrib/coccinelle/hashmap.cocci.patch/gpg-inter=
+face.c
+>     SPATCH .build/.build/contrib/coccinelle/hashmap.cocci.patch/linear-as=
+signment.c
+>
+> Notice how there is not one but two leading '.build' path components.
+> Surely one would be enough :)
 
-I found these patches well motivated and the code change to be so
-unobtrusive that the benefits are well worth the new options.
+Oops, well spotted, I'll submit a patch on top soon to fix that...
 
-Thanks,
--Stolee
+> This also breaks 'make cocciclean':
+>
+>   $ make cocciclean
+>   rm -f GIT-SPATCH-DEFINES
+>   rm -f -r .build/contrib/coccinelle
+>   rm -f contrib/coccinelle/*.cocci.patch
+>   $ find .build/
+>   .build/
+>   .build/contrib
+>   .build/.build
+>   .build/.build/contrib
+>   .build/.build/contrib/coccinelle
+>   .build/.build/contrib/coccinelle/hashmap.cocci.patch
+>   .build/.build/contrib/coccinelle/hashmap.cocci.patch/upload-pack.c
+>   .build/.build/contrib/coccinelle/hashmap.cocci.patch/merge-ort-wrappers=
+.c
+>   .build/.build/contrib/coccinelle/hashmap.cocci.patch/unpack-trees.c
+>   .build/.build/contrib/coccinelle/hashmap.cocci.patch/gpg-interface.c
+>   .build/.build/contrib/coccinelle/hashmap.cocci.patch/linear-assignment.c
+
+...and that, i.e. the nested .build is clearly unintended...
+
+Aside: Now that "coccicheck" is a well-behaved (well, mostly, sans the
+above) target that knows its deps etc. I wonder if it makes sense to
+have it clean this at all, and just leave it for "make clean". I.e. it
+should clean the worktree litter, but we could just leave the
+".build/contrib/coccinelle".
+
+Anyway, that's just a thought, and something to leave for some later
+"what should we clean in .build" topic, if any. I'll make sure it rm
+-rf's the right .build/ dir, and that we put stuff in it...
