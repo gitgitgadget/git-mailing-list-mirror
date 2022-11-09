@@ -2,222 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D033BC43219
-	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 19:07:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC510C4332F
+	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 19:34:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230390AbiKITH3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Nov 2022 14:07:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49972 "EHLO
+        id S231305AbiKITep (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Nov 2022 14:34:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230373AbiKITH1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2022 14:07:27 -0500
-Received: from out0.migadu.com (out0.migadu.com [IPv6:2001:41d0:2:267::])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F38A61F615
-        for <git@vger.kernel.org>; Wed,  9 Nov 2022 11:07:25 -0800 (PST)
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rjp.ie; s=key1;
-        t=1668020844;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=SkW1pcJnv3O6KUSdtnK87a5Sy/0z+Ek+SiZtWy6ucZY=;
-        b=d10KwHUifa8gPI7a6f1Gu1/XLJnBYbWckvF/sMyXD5YOUUldwktqTqzu6UbCOzn02Dp18s
-        2ivQmhM78pkJVteDWqWYmyicOy8iJBkQW14RfsUy7kSuafUXmSaVFWC2B0czwbx1wnhm66
-        6XKSyRGUaoDSn1mD668i/IpDgN3B+Ck=
-From:   Ronan Pigott <ronan@rjp.ie>
+        with ESMTP id S229556AbiKITen (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2022 14:34:43 -0500
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F5B6225
+        for <git@vger.kernel.org>; Wed,  9 Nov 2022 11:34:42 -0800 (PST)
+Received: by mail-ed1-x536.google.com with SMTP id a5so28572969edb.11
+        for <git@vger.kernel.org>; Wed, 09 Nov 2022 11:34:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FEvPe1zmyAgP0Gq7OQzQstRdlMO01XAgk0HUCY5kPME=;
+        b=ImMr0An50vHleEg5BGOmUpo1Qc8l55l2P8EkLNegnHnlozvLNIII2FvKG1thJdJUED
+         D/glFiSNv0wrdhga3dUZLBG39ia9EPh8wpE72Wq3qSsM02HBJDZ3jXoCuoIjyBLSP/Hp
+         CZlObbaGkHS8+s9Rcx773uutxmxzjNSJeSLu/aXLip4oeeYyAt9PUCkJnWSUJiPHyZQF
+         SELpfKRb7YMYCQ7NXYToPpICN90PqJwZR7ltgd+PWU5g/8/ndcONDjtbldmgKntbU3tx
+         nmSv1zMgYcS4XHDAN9eqCaLKHVO7mU/oh4Z5TF+dwC9i+LTVMX9/BEuJxttQJWt1HQ8t
+         FNDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FEvPe1zmyAgP0Gq7OQzQstRdlMO01XAgk0HUCY5kPME=;
+        b=GeSH6hIrUq/4Lnk/IgwtCTszYseQ+OE+GQKbQSZWT9xyYVNiQu38LO6BGLHxIY9hWv
+         /cIvTVYkeqHREK7LGPfJDE74p0vSiAMD0nO4oqQjP1+yNgn0umfMRrEEhNFHc7Feij8a
+         AAtAZsasRV95uSv2NqDpowIXS+MpRz9ZkEVH/DRTIx7xtW94TQdSPnkB9VbB1KkFACQO
+         iHSclZNx67PBzumkEveBkeY+uUjkcUFu4WkFlUTufhOUtv2Feo2nvLP5T7u7pc4nSYFS
+         /LW2j/OSfBZ3RROYLWypcbAWuLVwz7EdBR9AG+8EQdNrsaStOrDg9yYZ9QbFoQ7gZejJ
+         guxA==
+X-Gm-Message-State: ACrzQf0/vr/ZfXSAsyoB0PoaBuSZ+itcig22ZLPu8p0elfWDI6aZ9f60
+        D0m9uejvKzQUudExF80oasYRlRXbCMHo9Q==
+X-Google-Smtp-Source: AMsMyM5BbK2iK0tBqlxorfs1pXIZHGBt53lEYBM6dKkwg2Zng//C5dmo6VeSg9pjJl0rLhPnURdW9A==
+X-Received: by 2002:a05:6402:2285:b0:462:cabf:5a0a with SMTP id cw5-20020a056402228500b00462cabf5a0amr59693398edb.279.1668022480244;
+        Wed, 09 Nov 2022 11:34:40 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id q21-20020a056402041500b004589da5e5cesm7387566edv.41.2022.11.09.11.34.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Nov 2022 11:34:39 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     me@ttaylor.com, derrickstolee@github.com
-Subject: [PATCH v3 2/2] maintenance: add option to register in a specific config
-Date:   Wed,  9 Nov 2022 12:07:08 -0700
-Message-Id: <20221109190708.22725-3-ronan@rjp.ie>
-In-Reply-To: <20221109190708.22725-1-ronan@rjp.ie>
-References: <20221109190708.22725-1-ronan@rjp.ie>
+Cc:     Glen Choo <chooglen@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [RFC PATCH 0/8] Get rid of "git --super-prefix"
+Date:   Wed,  9 Nov 2022 20:34:28 +0100
+Message-Id: <RFC-cover-0.8-00000000000-20221109T192315Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.38.0.1467.g709fbdff1a9
+In-Reply-To: <20221109004708.97668-1-chooglen@google.com>
+References: <20221109004708.97668-1-chooglen@google.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-maintenance register currently records the maintenance repo exclusively
-within the user's global configuration, but other configuration files
-may be relevant when running maintenance if they are included from the
-global config. This option allows the user to choose where maintenance
-repos are recorded.
+An RFC alternative to Glen's [1], and what I *thought* he might be be
+going for in the earlier discussion[2].
 
-Signed-off-by: Ronan Pigott <ronan@rjp.ie>
----
- Documentation/git-maintenance.txt | 14 +++++-----
- builtin/gc.c                      | 45 ++++++++++++++++++++++---------
- t/t7900-maintenance.sh            | 21 ++++++++++++++-
- 3 files changed, 59 insertions(+), 21 deletions(-)
+The difference is that in Glen's there's no "git --super-prefix", but
+rather each set of commands still using it ("submodule--helper",
+"read-tree" etc.) geit their own command-level option.
 
-diff --git a/Documentation/git-maintenance.txt b/Documentation/git-maintenance.txt
-index bb888690e4..805e5a2e3a 100644
---- a/Documentation/git-maintenance.txt
-+++ b/Documentation/git-maintenance.txt
-@@ -50,13 +50,13 @@ stop::
- 	the background maintenance is restarted later.
- 
- register::
--	Initialize Git config values so any scheduled maintenance will
--	start running on this repository. This adds the repository to the
--	`maintenance.repo` config variable in the current user's global
--	config and enables some recommended configuration values for
--	`maintenance.<task>.schedule`. The tasks that are enabled are safe
--	for running in the background without disrupting foreground
--	processes.
-+	Initialize Git config values so any scheduled maintenance will start
-+	running on this repository. This adds the repository to the
-+	`maintenance.repo` config variable in the current user's global config,
-+	or the config specified by --config-file option, and enables some
-+	recommended configuration values for `maintenance.<task>.schedule`. The
-+	tasks that are enabled are safe for running in the background without
-+	disrupting foreground processes.
- +
- The `register` subcommand will also set the `maintenance.strategy` config
- value to `incremental`, if this value is not previously set. The
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 24ea85c7af..56b107e7f0 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1454,13 +1454,15 @@ static char *get_maintpath(void)
- }
- 
- static char const * const builtin_maintenance_register_usage[] = {
--	"git maintenance register",
-+	"git maintenance register [--config-file <path>]",
- 	NULL
- };
- 
- static int maintenance_register(int argc, const char **argv, const char *prefix)
- {
-+	char *config_file = NULL;
- 	struct option options[] = {
-+		OPT_STRING(0, "config-file", &config_file, N_("file"), N_("use given config file")),
- 		OPT_END(),
- 	};
- 	int found = 0;
-@@ -1497,12 +1499,16 @@ static int maintenance_register(int argc, const char **argv, const char *prefix)
- 
- 	if (!found) {
- 		int rc;
--		char *user_config, *xdg_config;
--		git_global_config(&user_config, &xdg_config);
--		if (!user_config)
--			die(_("$HOME not set"));
-+		char *user_config = NULL, *xdg_config = NULL;
-+
-+		if (!config_file) {
-+			git_global_config(&user_config, &xdg_config);
-+			config_file = user_config;
-+			if (!user_config)
-+				die(_("$HOME not set"));
-+		}
- 		rc = git_config_set_multivar_in_file_gently(
--			user_config, "maintenance.repo", maintpath,
-+			config_file, "maintenance.repo", maintpath,
- 			CONFIG_REGEX_NONE, 0);
- 		free(user_config);
- 		free(xdg_config);
-@@ -1517,14 +1523,16 @@ static int maintenance_register(int argc, const char **argv, const char *prefix)
- }
- 
- static char const * const builtin_maintenance_unregister_usage[] = {
--	"git maintenance unregister [--force]",
-+	"git maintenance unregister [--config-file <path>] [--force]",
- 	NULL
- };
- 
- static int maintenance_unregister(int argc, const char **argv, const char *prefix)
- {
- 	int force = 0;
-+	char *config_file = NULL;
- 	struct option options[] = {
-+		OPT_STRING(0, "config-file", &config_file, N_("file"), N_("use given config file")),
- 		OPT__FORCE(&force,
- 			   N_("return success even if repository was not registered"),
- 			   PARSE_OPT_NOCOMPLETE),
-@@ -1542,7 +1550,14 @@ static int maintenance_unregister(int argc, const char **argv, const char *prefi
- 		usage_with_options(builtin_maintenance_unregister_usage,
- 				   options);
- 
--	list = git_config_get_value_multi(key);
-+	struct config_set cs;
-+	if (config_file) {
-+		git_configset_init(&cs);
-+		git_configset_add_file(&cs, config_file);
-+		list = git_configset_get_value_multi(&cs, key);
-+	} else {
-+		list = git_config_get_value_multi(key);
-+	}
- 	if (list) {
- 		for_each_string_list_item(item, list) {
- 			if (!strcmp(maintpath, item->string)) {
-@@ -1554,12 +1569,15 @@ static int maintenance_unregister(int argc, const char **argv, const char *prefi
- 
- 	if (found) {
- 		int rc;
--		char *user_config, *xdg_config;
--		git_global_config(&user_config, &xdg_config);
--		if (!user_config)
--			die(_("$HOME not set"));
-+		char *user_config = NULL, *xdg_config = NULL;
-+		if (!config_file) {
-+			git_global_config(&user_config, &xdg_config);
-+			config_file = user_config;
-+			if (!user_config)
-+				die(_("$HOME not set"));
-+		}
- 		rc = git_config_set_multivar_in_file_gently(
--			user_config, key, NULL, maintpath,
-+			config_file, key, NULL, maintpath,
- 			CONFIG_FLAGS_MULTI_REPLACE | CONFIG_FLAGS_FIXED_VALUE);
- 		free(user_config);
- 		free(xdg_config);
-@@ -1572,6 +1590,7 @@ static int maintenance_unregister(int argc, const char **argv, const char *prefi
- 		die(_("repository '%s' is not registered"), maintpath);
- 	}
- 
-+	git_configset_clear(&cs);
- 	free(maintpath);
- 	return 0;
- }
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 96bdd42045..823331e44a 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -500,9 +500,28 @@ test_expect_success 'register and unregister' '
- 	git config --global --get-all maintenance.repo >actual &&
- 	test_cmp before actual &&
- 
-+	git config --file ./other --add maintenance.repo /existing1 &&
-+	git config --file ./other --add maintenance.repo /existing2 &&
-+	git config --file ./other --get-all maintenance.repo >before &&
-+
-+	git maintenance register --config-file ./other &&
-+	test_cmp_config false maintenance.auto &&
-+	git config --file ./other --get-all maintenance.repo >between &&
-+	cp before expect &&
-+	pwd >>expect &&
-+	test_cmp expect between &&
-+
-+	git maintenance unregister --config-file ./other &&
-+	git config --file ./other --get-all maintenance.repo >actual &&
-+	test_cmp before actual &&
-+
- 	test_must_fail git maintenance unregister 2>err &&
- 	grep "is not registered" err &&
--	git maintenance unregister --force
-+	git maintenance unregister --force &&
-+
-+	test_must_fail git maintenance unregister --config-file ./other 2>err &&
-+	grep "is not registered" err &&
-+	git maintenance unregister --config-file ./other --force
- '
- 
- test_expect_success !MINGW 'register and unregister with regex metacharacters' '
+But it still works substantially the same, in that we're juggling a
+global variable that we set, and read out later somewhere down the
+stack.
+
+Whereas here there's no renaming of the option, but:
+
+ * For "submodule--helper" only the sub-commands that need it take the
+   option, it's not an option to "submodule--helper" itself.
+
+ * There's no passing of the "super_prefix" as a global, instead we
+   pass it all the way along until we recurse to ourselves. For
+   "submodule--helper" this is quite straightforward.
+
+ * Then in 8/8 we're left with just "read-tree" needing the remaining
+   "--super-prefix", and we likewise don't pass it as a global, but
+   instead add it to the "struct unpack_trees_options", which will
+   pass it all the way down into unpack-trees.c and entry.c, until
+   we're going to recursively invoke another "read-tree".
+
+This is on top of my "ab/submodule-helper-prep-only" which is now in
+"next", and can make use of (but doesn't need) the better test
+coverage for "absorbgitdirs" that I submitted in [3].
+
+A non-RFC version of this should really steal Glen's tests, in
+particular the "partial clone" one from [4]. That test passes with
+this series.
+
+1. https://lore.kernel.org/git/20221109004708.97668-1-chooglen@google.com/
+2. https://lore.kernel.org/git/kl6l8rkqy7no.fsf@chooglen-macbookpro.roam.corp.google.com/
+3. https://lore.kernel.org/git/patch-1.1-34b54fdd9bb-20221109T020347Z-avarab@gmail.com/
+4. https://lore.kernel.org/git/20221109004708.97668-4-chooglen@google.com/.
+
+Ævar Arnfjörð Bjarmason (8):
+  submodule--helper: don't use global --super-prefix in "absorbgitdirs"
+  submodule--helper: "deinit" has never used "--super-prefix"
+  submodule--helper: convert "foreach" to its own "--super-prefix"
+  submodule--helper: convert "sync" to its own "--super-prefix"
+  submodule--helper: convert "status" to its own "--super-prefix"
+  submodule--helper: convert "{update,clone}" to their own
+    "--super-prefix"
+  submodule tests: test "git branch -t" output and stderr
+  read-tree: add "--super-prefix" option, eliminate global
+
+ Documentation/git.txt       |  8 +--
+ builtin.h                   |  4 --
+ builtin/checkout.c          |  2 +-
+ builtin/read-tree.c         |  1 +
+ builtin/submodule--helper.c | 95 ++++++++++++++++++++---------------
+ cache.h                     |  2 -
+ entry.c                     | 12 ++---
+ entry.h                     |  6 ++-
+ environment.c               | 13 -----
+ git.c                       | 37 ++------------
+ parse-options.h             |  4 ++
+ submodule.c                 | 47 ++++++++----------
+ submodule.h                 | 12 +++--
+ t/lib-submodule-update.sh   | 98 +++++++++++++++++++++----------------
+ t/t1001-read-tree-m-2way.sh |  2 +-
+ unpack-trees.c              | 23 +++++----
+ unpack-trees.h              |  1 +
+ 17 files changed, 177 insertions(+), 190 deletions(-)
+
 -- 
-2.38.1
+2.38.0.1467.g709fbdff1a9
 
