@@ -2,70 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2617C433FE
-	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 15:59:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A0390C4332F
+	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 16:07:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230461AbiKIP7K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Nov 2022 10:59:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47886 "EHLO
+        id S231429AbiKIQHt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Nov 2022 11:07:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230449AbiKIP7I (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2022 10:59:08 -0500
+        with ESMTP id S231313AbiKIQHp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2022 11:07:45 -0500
 Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 988A3101DA
-        for <git@vger.kernel.org>; Wed,  9 Nov 2022 07:59:07 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id ud5so47901653ejc.4
-        for <git@vger.kernel.org>; Wed, 09 Nov 2022 07:59:07 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AF37220CD
+        for <git@vger.kernel.org>; Wed,  9 Nov 2022 08:07:44 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id ft34so11613695ejc.12
+        for <git@vger.kernel.org>; Wed, 09 Nov 2022 08:07:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=5CDWFD5nWLZHMjoSf+ivItzmIK1A85qwC2HmPmaMp+U=;
-        b=O0VYPZMbkOwtOZ2rA7k47rSILNWM3TXYRT7nhKT4tr+qZM3y1ETEltBraM3NLQ5pEU
-         dCEfmHYhQ2I0dQgkVeeoyC4YkQOQtAOK+vwOX2i3xUXy/wy0yxx1NUhNtkuYpd+G//1T
-         aRM/FRMxpK08nJHwjFERXuZwiAm7Qsq4HiRc+8lR4T1e8OVuqpux//eO0rfJaYSep7Hk
-         /JhthHdxxeRg18/DhnIiEmTHgHp2/nW6CqkrL2QyTuXTYV40YnGSQ6CBPYurfG6XVXOt
-         hjcWpLMmp6ldH50GBxJhOZlfYwXJaXqHKcLjNBq69/oYhXYQ+bXDzrL0Uk7S9ahw2560
-         wcAw==
+        bh=acp4bUwA081C3paR/vCTPXEvMbtmDce9mEpSHyLmc5A=;
+        b=k2BW7OmXRtXOBYVhFHDQqMXoTzvMoceEN/9RVMQ+0q20RKZSgso9aqr92cP82Xt7He
+         Sg3zun125uGEA2+cDMNxm+LrZWUGjEDDdIdaZA+QnhhI/3ogSlF873+NZdb6eaSsxdYk
+         HRf/fzJb8euUfj15OWufKKGVWBsBDj7HYlNF25tiDyyIWC2X1umqIJIzHQAI/q9q3Y9P
+         u403BmiQv0fif5gNBGnl7wdb+xuGoayFxcTBHLS8LQXDpav4btcBRQ555iWCL9Fo1EAd
+         cq6ovI1VxmDk1ARO+0lxbCKOjFH3VQe1OefHEquXHWCZV8udywewQIZ95VMxAbbZgsZe
+         NFMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5CDWFD5nWLZHMjoSf+ivItzmIK1A85qwC2HmPmaMp+U=;
-        b=RVpDkh254ric99jljfDOEREy/6TkdqJ18RmQAOIpe1yTnGRpKwYdiPZtsCAopa1h46
-         RHTLq97/b5JL8CgNEZzmuHGmxEhjrdeg++gLAxSvu9IdI4i6PhD7SD0WvBP8nhmElE4w
-         upAdnFiji7s2k+yOF/XhxyM9+D1KoC145jHPeenWmhClTddigPr9Fnb0clqFt8e/txge
-         88uxuvhqeCxQgZ7d1mUGYDXf/SowSgk6OnBT3uUA3c26uGpSZzsYbsBW8BGe1reMkudh
-         Bo+YGekgIblnqu9yClnzCzFYxoP1o44XrHawmVirhJ1HJs+4Pe8kxeM9NYIlFlqbSp7q
-         OrLQ==
-X-Gm-Message-State: ACrzQf3Ouxon6qANo8bLgyIRIyjsmmVc7sqRTWt49aqny036z9Pfu8Mk
-        8WFFfhZzmyPQ5aO/0fGt7V4=
-X-Google-Smtp-Source: AMsMyM6jb5Z0vwfsCkesdojneJplAIppo4nu/w8VweZvWcR/0DyTiaooxyXbjV7ktruPCsZQ+DXTug==
-X-Received: by 2002:a17:906:fc18:b0:78b:5182:7ffa with SMTP id ov24-20020a170906fc1800b0078b51827ffamr1230933ejb.244.1668009546154;
-        Wed, 09 Nov 2022 07:59:06 -0800 (PST)
+        bh=acp4bUwA081C3paR/vCTPXEvMbtmDce9mEpSHyLmc5A=;
+        b=mfPmtYANq+v1KJS/070zCS4ufvYjdPDA56vD0AV2iUpo7UTUOJ7OWSzaSXkgkZLbjo
+         SNVCfcypsOcc1gOmpcrlcmZhgBIXI3hGQnz0Wd025p/Fk1ClvEipRR4yERt72EH9IaEI
+         xmBEuk1zw4vN9IG2ZB27zcICWPVHmkEunP5m0kzQOZGQr/4ejVWDXjk7RUf14F2geqah
+         tOeBApSK4vT/AqLzbb/zc7gthFRxe4BbFceyTYNfXB4WP7+eGQOBzyQaUYVLAd3Z2XmF
+         C6OV62ZC/K6or43DDlLqXae8WUcY+UqXYr9F03zna3mu8SYOprNqjUIV7kTnoJzBWz9G
+         wklw==
+X-Gm-Message-State: ACrzQf19/m+BAKVmZp1UYc2nBTwLu6/AkwtqMtgGo5oRPf8gD6UN8k+R
+        M1TohmpchBsihyrhnx2gM/w=
+X-Google-Smtp-Source: AMsMyM4GE/rwixj4waFeefP4k8l5Voy5R/FxvmBUb0flttSBSBvTxq9hTTPjChE8j9duJuczwJ9ndg==
+X-Received: by 2002:a17:906:9c87:b0:7ae:1e53:8dd4 with SMTP id fj7-20020a1709069c8700b007ae1e538dd4mr1099937ejc.42.1668010062569;
+        Wed, 09 Nov 2022 08:07:42 -0800 (PST)
 Received: from gmgdl ([109.38.150.4])
-        by smtp.gmail.com with ESMTPSA id cz10-20020a0564021caa00b0045726e8a22bsm7065801edb.46.2022.11.09.07.59.05
+        by smtp.gmail.com with ESMTPSA id kv15-20020a17090778cf00b007adf125cde4sm6172602ejc.13.2022.11.09.08.07.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Nov 2022 07:59:05 -0800 (PST)
+        Wed, 09 Nov 2022 08:07:41 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1osnTk-00100A-0c;
-        Wed, 09 Nov 2022 16:59:04 +0100
+        id 1osnc5-0010JT-0n;
+        Wed, 09 Nov 2022 17:07:41 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Jeff King <peff@peff.net>,
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 1/3] git_parse_unsigned: reject negative values
-Date:   Wed, 09 Nov 2022 16:57:23 +0100
-References: <pull.1389.git.1666359915.gitgitgadget@gmail.com>
- <pull.1389.v2.git.1668003388.gitgitgadget@gmail.com>
- <d1ac79909b9e777cae40a6a301e5cfd988c5f9d7.1668003388.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v2 0/2] rebase: stop setting GIT_REFLOG_ACTION
+Date:   Wed, 09 Nov 2022 17:05:24 +0100
+References: <pull.1405.git.1667575142.gitgitgadget@gmail.com>
+ <pull.1405.v2.git.1668003718.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <d1ac79909b9e777cae40a6a301e5cfd988c5f9d7.1668003388.git.gitgitgadget@gmail.com>
-Message-ID: <221109.86pmdwp19z.gmgdl@evledraar.gmail.com>
+In-reply-to: <pull.1405.v2.git.1668003718.gitgitgadget@gmail.com>
+Message-ID: <221109.86leokp0vm.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -76,72 +76,68 @@ X-Mailing-List: git@vger.kernel.org
 
 On Wed, Nov 09 2022, Phillip Wood via GitGitGadget wrote:
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> This is a follow up to pw/rebase-reflog-fixes that moves away from using
+> GIT_REFLOG_ACTION internally.
 >
-> git_parse_unsigned() relies on strtoumax() which unfortunately parses
-> negative values as large positive integers. Fix this by rejecting any
-> string that contains '-' as we do in strtoul_ui(). I've chosen to treat
-> negative numbers as invalid input and set errno to EINVAL rather than
-> ERANGE one the basis that they are never acceptable if we're looking for
-> a unsigned integer. This is also consistent with the existing behavior
-> of rejecting "1=E2=80=932" with EINVAL.
+> Thanks to Taylor & =C3=86var for their comments on V1. I've updated the c=
+ommit
+> message of patch 1 as suggested by Taylor, the code is unchanged.
 >
-> As we do not have unit tests for this function it is tested indirectly
-> by checking that negative values of reject for core.bigFileThreshold are
-> rejected. As this function is also used by OPT_MAGNITUDE() a test is
-> added to check that rejects negative values too.
+> Phillip Wood (2):
+>   sequencer: stop exporting GIT_REFLOG_ACTION
+>   rebase: stop exporting GIT_REFLOG_ACTION
 >
-> Helped-by: Jeff King <peff@peff.net>
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->  config.c                 | 5 +++++
->  t/t0040-parse-options.sh | 5 +++++
->  t/t1050-large.sh         | 6 ++++++
->  3 files changed, 16 insertions(+)
+>  builtin/rebase.c | 27 +++++++++++++++------------
+>  sequencer.c      | 45 +++++++++++++++++++++++++--------------------
+>  sequencer.h      |  6 ++++++
+>  3 files changed, 46 insertions(+), 32 deletions(-)
 >
-> diff --git a/config.c b/config.c
-> index cbb5a3bab74..d5069d4f01d 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1193,6 +1193,11 @@ static int git_parse_unsigned(const char *value, u=
-intmax_t *ret, uintmax_t max)
->  		uintmax_t val;
->  		uintmax_t factor;
->=20=20
-> +		/* negative values would be accepted by strtoumax */
-> +		if (strchr(value, '-')) {
-> +			errno =3D EINVAL;
-> +			return 0;
-> +		}
->  		errno =3D 0;
->  		val =3D strtoumax(value, &end, 0);
->  		if (errno =3D=3D ERANGE)
+>
+> base-commit: 3b08839926fcc7cc48cf4c759737c1a71af430c1
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1405%2F=
+phillipwood%2Fmore-rebase-reflog-fixes-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1405/phill=
+ipwood/more-rebase-reflog-fixes-v2
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1405
+>
+> Range-diff vs v1:
+>
+>  1:  e9c3f5ac5c6 ! 1:  655b4e89f59 sequencer: stop exporting GIT_REFLOG_A=
+CTION
+>      @@ Commit message
+>           pass the reflog action around in a variable and use it to set
+>           GIT_REFLOG_ACTION in the child environment when running "git co=
+mmit".
+>=20=20=20=20=20=20=20
+>      +    Within the sequencer GIT_REFLOG_ACTION is no longer set and is =
+only read
+>      +    by sequencer_reflog_action(). It is still set by rebase before =
+calling
+>      +    the sequencer, that will be addressed in the next commit. cherr=
+y-pick
+>      +    and revert are unaffected as they do not set GIT_REFLOG_ACTION =
+before
+>      +    calling the sequencer.
+>      +
+>           Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>=20=20=20=20=20=20=20
+>        ## sequencer.c ##
+>  2:  d3747bcc8d1 =3D 2:  31df037eafe rebase: stop exporting GIT_REFLOG_AC=
+TION
 
-There's nothing wrong with this, but since the topic here is "some
-issues I noticed" here's another one: We don't actually care if you set
-"errno =3D EINVAL" here in particular, just as long as it's not "ERANGE",
-anything else will do.
+Thanks, FWIW I'm happy to give this my "Reviewed-by", per [1] I've
+looked this over carefully.
 
-So, not worth a re-roll in itself, but maybe a prep patch (or follow-up)
-to do this would be nice? to make sure this errno handling is
-"reachable"?
+The tl;dr of that is that this fixes a leak, and adds another one, but
+the root cause of the added one is that you're using an existing
+destructor that we sometimes don't call, which we can just address as a
+follow-up generic issue (I've got patches to fix it).
 
-diff --git a/config.c b/config.c
-index ff4ea29784b..33d05fde0ea 100644
---- a/config.c
-+++ b/config.c
-@@ -1260,9 +1260,12 @@ NORETURN
- static void die_bad_number(const char *name, const char *value)
- {
- 	const char *error_type =3D (errno =3D=3D ERANGE) ?
--		N_("out of range") : N_("invalid unit");
-+		N_("out of range") : errno =3D=3D EINVAL ? N_("invalid unit") : NULL;
- 	const char *bad_numeric =3D N_("bad numeric config value '%s' for '%s': %=
-s");
-=20
-+	if (!error_type)
-+		BUG("unhandled errno %d: %s", errno, strerror(errno));
-+
- 	if (!value)
- 		value =3D "";
-=20
+But for now this is a good step forward, and fixes the leak that's
+"unique" t this codepath.
+
+And of course, just makes managing the "reflog" variable nicer in
+general, as we're no longer talking to ourselves within the same process
+with setenv()/getenv().
+
+1. https://lore.kernel.org/git/221108.864jv9sc9r.gmgdl@evledraar.gmail.com/
