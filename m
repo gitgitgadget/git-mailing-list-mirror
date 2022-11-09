@@ -2,180 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD4F2C433FE
-	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 09:08:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B46A8C4332F
+	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 10:19:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230172AbiKIJH4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Nov 2022 04:07:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43900 "EHLO
+        id S230341AbiKIKTu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Nov 2022 05:19:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230414AbiKIJHN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2022 04:07:13 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C7FC1E706
-        for <git@vger.kernel.org>; Wed,  9 Nov 2022 01:07:12 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id h14so16131738pjv.4
-        for <git@vger.kernel.org>; Wed, 09 Nov 2022 01:07:12 -0800 (PST)
+        with ESMTP id S230316AbiKIKTt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2022 05:19:49 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99F4223BD6
+        for <git@vger.kernel.org>; Wed,  9 Nov 2022 02:19:44 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id i5-20020a1c3b05000000b003cfa97c05cdso922068wma.4
+        for <git@vger.kernel.org>; Wed, 09 Nov 2022 02:19:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3dH5LPFS7uKfiS4vxdYupE+cysYQu64IbX+nmm9uXmI=;
-        b=If9FQi4tleyVe9UmmVFzjtObW2uaveTAR1u4HM8K3aXQfks9rOIlyhxJbG4u4TPUkb
-         SfL+qbKqRqTvbecNaRtF39lG+Bk+N2yTPKVGRRXDYz+NuojmdcMGDxKimFIh/LElHLvf
-         lqYEdPRsJR2KqXUW+KfjQWqna0u/zbcT9650BzA2coYyHXG2vQ6qJLsP3B6UUBMAIvu7
-         RahrUudgc4sPj81zKlMVFZOta0kNCIY1NKX3Ssjodr2sbi8PLNPfuhocUfZtbN64p7sr
-         VqtleuewUf9ext4BsmebzH/1ZVZ76vOo4sU97LPUbZgpGYNzvKXLDTVI7LLiFxhKqhyz
-         W1uA==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=VOvrhK5wtHrZKUt7JkRrjQqg0Wyzc/LR1VMplx9/MnU=;
+        b=LwthZPhI6XMAsl2fr5sczWYdmA+zAfBeVks+GtgK1oy9jg5a6wCGxfzW9EHv+6MihF
+         z5iiwM8Hr9quM1JFTfCNV/rWd7KkQST0YoZMF5buEm0QS0BZV9vgRJV+h/UAGViCEhXg
+         51MECYeOVSxd9YGxuPJbG0ouSb/ATZXd3ne1DEJnVOo3knyt3vsLI/x5jceXT8CNMyQb
+         WmdLuK552axiNT/F/gJyvH361++TXzNpKT5kWaOQXYxKmxawdxZYPI/wPX2LdKkVK/RE
+         iS2wkxdYBs3jEqmqjVo0k2ptO72V9BDBjWRR5W+IqiNatJ0M0RxtQpZK9zAniR+39mtn
+         8+Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3dH5LPFS7uKfiS4vxdYupE+cysYQu64IbX+nmm9uXmI=;
-        b=mzB+AnudgWpYaqufkiws65uYGSbQ4M7qeJ9j7MxAYcVJ2PwaNzWAT9Z1Iu95wLcz0D
-         CZcIdtipt7phFpeQKXZT/pQ+gcYNu9XEc4gKEZcVdRQ8gn7zR4Me5xWu0b+7wohRnyDp
-         1BrTtNpLm8XYvuTuAwupVk11W1h1aoM7mhSihQTxsq43Q70ROBLWcwef95SR08FiNEZl
-         g6TeSEGfu2FXThSpJ3sevtCGmdb+XAHCjQ4GDc88JDlHhw/qPq/HDO7GVFpa8O6h/AYh
-         mmgm5TVDnXtP1CKkSRF4RE0Y/gzSpXM6uG/6JxNCCzKJimI6iR1lZly1jxnhMmhTcJXb
-         +1Rg==
-X-Gm-Message-State: ACrzQf0j4yKrxT3q/2o7vw5PLjxCHpU/+ljBFkdUO13k05Hcm3SQ66xO
-        mOIiTPlp7IKx+ywVgaYfvVpxM+kxAjm4CChq
-X-Google-Smtp-Source: AMsMyM42/u1idk1CaKYu3BH53gpY7yZX0TpvvG9po3IMBG4QY+WStyvjYmeYAZ6cOlsHwwojPdxijQ==
-X-Received: by 2002:a17:903:18d:b0:186:9862:d15f with SMTP id z13-20020a170903018d00b001869862d15fmr59384446plg.6.1667984832098;
-        Wed, 09 Nov 2022 01:07:12 -0800 (PST)
-Received: from localhost.localdomain ([47.246.101.63])
-        by smtp.gmail.com with ESMTPSA id mg7-20020a17090b370700b00212d4cbcbfdsm727509pjb.22.2022.11.09.01.07.10
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 Nov 2022 01:07:11 -0800 (PST)
-From:   Teng Long <dyroneteng@gmail.com>
-X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
-To:     dyroneteng@gmail.com
-Cc:     avarab@gmail.com, git@vger.kernel.org, tenglong.tl@alibaba-inc.com
-Subject: [PATCH v3 5/5] notes.c: introduce "--no-blank-line" option
-Date:   Wed,  9 Nov 2022 17:06:56 +0800
-Message-Id: <196e80358e80c8904cd21e6d8fca2223af93f842.1667980450.git.dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.38.1.386.g196e80358e8
-In-Reply-To: <cover.1667980450.git.dyroneteng@gmail.com>
-References: <cover.1667980450.git.dyroneteng@gmail.com>
-MIME-Version: 1.0
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VOvrhK5wtHrZKUt7JkRrjQqg0Wyzc/LR1VMplx9/MnU=;
+        b=qGcExYI9hyDc/OP4q3pi2E6P1cnbRNjsVQgah7uInRs7kIOfyM77arkHgmePtebzqS
+         /ekVUqNRMG4koq354Aw7YhL3360AvuZ7wySQq7yfWV0cscaexbzSItcMq2hyJO9/jkxE
+         /xO3oD/aZarVn7C6VBiAv8fl0bWHuLZeflOay2VJdSNsiQyX/ezkLVy1Xh1t5T4CgJis
+         DSwj9yZxTpPll0KpI15rutF4bQw2v8791d5x+g9GdIIEI55VAjw3Z0KpMW7o4Anhuui8
+         t9TlZySYM9D4GK1X/r7UFMo91U1Ut+Ut3mSODBk+F6g3gHYWrqqmE18ThoyS+5LpZ42X
+         IabA==
+X-Gm-Message-State: ACrzQf3fhewjH9zW9njEE85pqd2PFTi67ei9Ze5f3H9BETtGu/VNDP7W
+        6v+elUH1gtnIAmR0BAXXq7gWPSmbK0s=
+X-Google-Smtp-Source: AMsMyM5kzPp5VoAVdibFNp/lOVegajJOcNKFaai6GtUREIezTREfOZJCgvAk9VyiZyqdHod+kjalWQ==
+X-Received: by 2002:a05:600c:818:b0:3cf:7385:7609 with SMTP id k24-20020a05600c081800b003cf73857609mr33984114wmp.186.1667989182908;
+        Wed, 09 Nov 2022 02:19:42 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q12-20020a05600c46cc00b003b4ac05a8a4sm1447340wmo.27.2022.11.09.02.19.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Nov 2022 02:19:42 -0800 (PST)
+Message-Id: <pull.1412.git.1667989181611.gitgitgadget@gmail.com>
+From:   "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 09 Nov 2022 10:19:41 +0000
+Subject: [PATCH] Documentation: increase example cache timeout to 1 hour
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, M Hickford <mirth.hickford@gmail.com>,
+        M Hickford <mirth.hickford@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Teng Long <dyroneteng@gmail.com>
+From: M Hickford <mirth.hickford@gmail.com>
 
-When appending to a given object which has note and if the appended
-note is not empty too, we will insert a blank line at first. The
-blank line serves as a split line, but sometimes we just want to
-omit it then append on the heels of the target note. So, we add
-a new "OPT_BOOL()" option to determain whether a new blank line
-is insert at first.
+Previously, the example *decreased* the cache timeout compared to the
+default, nudging users to make cache less usable.
 
-Signed-off-by: Teng Long <dyroneteng@gmail.com>
+Instead, nudge users to make cache more usable. Currently many users
+choose store over cache for usability. See
+https://lore.kernel.org/git/Y2p4rhiOphuOM0VQ@coredump.intra.peff.net/
+
+The default timeout remains 15 minutes. A stronger nudge would
+be to increase that.
+
+Signed-off-by: M Hickford <mirth.hickford@gmail.com>
 ---
- Documentation/git-notes.txt | 10 ++++++++--
- builtin/notes.c             |  5 ++++-
- t/t3301-notes.sh            | 13 +++++++++++++
- 3 files changed, 25 insertions(+), 3 deletions(-)
+    Documentation: Increase example cache timeout to 1 hour
+    
+    Previously, the example decreased the cache timeout compared to the
+    default, nudging users to make cache less usable.
+    
+    Instead, nudge users to make cache more usable. Currently many users
+    choose store over cache for usability. See
+    https://lore.kernel.org/git/Y2p4rhiOphuOM0VQ@coredump.intra.peff.net/
+    
+    The default timeout remains 15 minutes. A stronger nudge would be to
+    increase that.
+    
+    Signed-off-by: M Hickford mirth.hickford@gmail.com
 
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index efbc10f0f5..50b198c2b2 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -11,7 +11,7 @@ SYNOPSIS
- 'git notes' [list [<object>]]
- 'git notes' add [-f] [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
- 'git notes' copy [-f] ( --stdin | <from-object> [<to-object>] )
--'git notes' append [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-+'git notes' append [--allow-empty] [--no-blank-line] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
- 'git notes' edit [--allow-empty] [<object>]
- 'git notes' show [<object>]
- 'git notes' merge [-v | -q] [-s <strategy> ] <notes-ref>
-@@ -86,7 +86,9 @@ the command can read the input given to the `post-rewrite` hook.)
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1412%2Fhickford%2Fnudge-cache-longer-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1412/hickford/nudge-cache-longer-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1412
+
+ Documentation/git-credential-cache.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-credential-cache.txt b/Documentation/git-credential-cache.txt
+index 0216c18ef80..432e159d952 100644
+--- a/Documentation/git-credential-cache.txt
++++ b/Documentation/git-credential-cache.txt
+@@ -69,10 +69,10 @@ $ git push http://example.com/repo.git
+ ------------------------------------
  
- append::
- 	Append to the notes of an existing object (defaults to HEAD).
--	Creates a new notes object if needed.
-+	Creates a new notes object if needed. If the note of the given
-+	object and the note to be appended are not empty, a blank line
-+	will be inserted between them.
+ You can provide options via the credential.helper configuration
+-variable (this example drops the cache time to 5 minutes):
++variable (this example increases the cache time to 1 hour):
  
- edit::
- 	Edit the notes for a given object (defaults to HEAD).
-@@ -159,6 +161,10 @@ OPTIONS
- 	Allow an empty note object to be stored. The default behavior is
- 	to automatically remove empty notes.
+ -------------------------------------------------------
+-$ git config credential.helper 'cache --timeout=300'
++$ git config credential.helper 'cache --timeout=3600'
+ -------------------------------------------------------
  
-+--no-blank-line::
-+	Do not insert a blank line before the inserted notes (insert
-+	a blank line is the default).
-+
- --ref <ref>::
- 	Manipulate the notes tree in <ref>.  This overrides
- 	`GIT_NOTES_REF` and the "core.notesRef" configuration.  The ref
-diff --git a/builtin/notes.c b/builtin/notes.c
-index a6273781fb..f38e6e8b04 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -562,6 +562,7 @@ static int copy(int argc, const char **argv, const char *prefix)
- static int append_edit(int argc, const char **argv, const char *prefix)
- {
- 	int allow_empty = 0;
-+	int blankline = 1;
- 	const char *object_ref;
- 	struct notes_tree *t;
- 	struct object_id object, new_note;
-@@ -584,6 +585,8 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 			parse_reuse_arg),
- 		OPT_BOOL(0, "allow-empty", &allow_empty,
- 			N_("allow storing empty note")),
-+		OPT_BOOL(0, "blank-line", &blankline,
-+			N_("insert paragraph break before appending to an existing note")),
- 		OPT_END()
- 	};
- 	int edit = !strcmp(argv[0], "edit");
-@@ -618,7 +621,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 		enum object_type type;
- 		char *prev_buf = read_object_file(note, &type, &size);
- 
--		if (d.buf.len && prev_buf && size)
-+		if (blankline && d.buf.len && prev_buf && size)
- 			strbuf_insertstr(&d.buf, 0, "\n");
- 		if (prev_buf && size)
- 			strbuf_insert(&d.buf, 0, prev_buf, size);
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index e7807e052a..dedad93a2f 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -521,12 +521,25 @@ test_expect_success 'listing non-existing notes fails' '
- 	test_must_be_empty actual
- '
- 
-+test_expect_success 'append to existing note without a beginning blank line' '
-+	test_when_finished git notes remove HEAD &&
-+	cat >expect <<-\EOF &&
-+		Initial set of notes
-+		Appended notes
-+	EOF
-+	git notes add -m "Initial set of notes" &&
-+	git notes append --no-blank-line -m "Appended notes" &&
-+	git notes show >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'append to existing note with "git notes append"' '
- 	cat >expect <<-EOF &&
- 		Initial set of notes
- 
- 		More notes appended with git notes append
- 	EOF
-+
- 	git notes add -m "Initial set of notes" &&
- 	git notes append -m "More notes appended with git notes append" &&
- 	git notes show >actual &&
+ GIT
+
+base-commit: 319605f8f00e402f3ea758a02c63534ff800a711
 -- 
-2.38.1.386.g196e80358e8
-
+gitgitgadget
