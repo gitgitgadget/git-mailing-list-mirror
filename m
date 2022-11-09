@@ -2,57 +2,57 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A75ECC4332F
-	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 00:47:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F684C4332F
+	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 00:47:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229832AbiKIArh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 8 Nov 2022 19:47:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41520 "EHLO
+        id S229905AbiKIArj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 8 Nov 2022 19:47:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229806AbiKIArb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Nov 2022 19:47:31 -0500
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 009586315C
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 16:47:29 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id p66-20020a257445000000b006ca0ba7608fso15350545ybc.7
-        for <git@vger.kernel.org>; Tue, 08 Nov 2022 16:47:29 -0800 (PST)
+        with ESMTP id S229866AbiKIArf (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Nov 2022 19:47:35 -0500
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C5506317A
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 16:47:31 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id k15-20020a170902c40f00b001887cd71fe6so5833258plk.5
+        for <git@vger.kernel.org>; Tue, 08 Nov 2022 16:47:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9TMBggvmsXLMnHqWqZzz73r2bD7xlZ6JG2FqfiLNAKo=;
-        b=i5oFoQod0AccVnCxzx3oiHLCgoLQl2uPMK9zZRIg8cjqCOQawaDNEZFLoU6bRcY0rg
-         hq+pvr3qONexRL/LH4WqHpZtEHjAGvfNjr//1waLh6OSgmbKPxb5EZp+YTa8jeLPwd40
-         d01euwpb/68x7xa3nx+cg0QDYkECy2Mu6YniHkiRRfbAlcx0MOD5dJK2OHtjQoczBC3X
-         PZryUfJSI77fi3W+MJPZcU2f2KI1IWtMGBAE7nM6JnHgkmmxkhCSGohqC3TrZ0mza9O7
-         Sj+OGZvwxUc+sTLDn/8p5PRemALLyENy4Cb8oDiY6G7ey0rIA3hetaZLrhTSNEbz6Fuc
-         d4QA==
+        bh=oeR4dEm7EC+Hi2MuKEGYUDm0GjsVRwESUlqokgrh6QA=;
+        b=qwXGrUS8mdigMPxVhquX6BBREHgMbWT3NNlWNVIeVMRwotJVWhLaF/VV7t1HMP1o5N
+         i4p8LPSwDDd8jqQvT+4J6Q/3oizVon4dux0gMSafq5EqboDkE0x/aj6UPHOrxBQd0G1r
+         wNPDgbzjfz/Um9aP8pW/EKSd1PlVdJtNTfm4SzM2I1KZCHa1zoJWhghIjtsmAu2lulaS
+         WbMk/h9zeAm0sCusMVZsEwprPba0riV1f8IkW+f0XYPbWdEcxZC2fJ4qGKZOT2fxU+yx
+         0EW7SRvgFlO9/TVRxwor9ZExcbqsN/W+V1aX5ZYLKwIrtLavLhIGK1N/wgmEMnukfypX
+         eCyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9TMBggvmsXLMnHqWqZzz73r2bD7xlZ6JG2FqfiLNAKo=;
-        b=oZ4VpZOnQyQdN7ecVnnhIbfC3bVHkC2vwm8HsZuGTyOG1Uec72xp634ygEESl0Nbni
-         XzfnOBJ2od2974XZKlnQxtDlIuEtFXBvNjLT2XdCdHRxSTe04j4GZSEuit+V7a5v1iMm
-         l0r4reVkbrrBR5s5unU9KsaHXycQRiG8GzfQnSFYqZZM1dow10g0lDsbYjfIFc94PD+6
-         eC8wG+B0qpl5LhWWBJ/J0DOfaBJkBcPh1er37gzRpHosUdk5vh11vStfG4xl3skNbJkc
-         HewXVTC1AymLIZEZT/lBOeh3kkXKFKbs8Qm2CSrUAoc6LOPc8Eby8vHuii6Slxk/GXjt
-         4OCA==
-X-Gm-Message-State: ACrzQf3HjXMWWSZLyT3ojFU8U0rE/UZuICitQzgqwL9psWdSyCOGsq4s
-        U5RmZmdSSfiwoWvqumQyHCBx19HuPj07r5mPb9kXwf1nN2ZFe8vad4pCO8TI4iAoe13XagNXP3X
-        zbNxGtWEiy0tfJMUvosVCc7qMc6WBkQ1UmkQL3lkXqGCg3574VvJ4a9Ccet9JrBQ=
-X-Google-Smtp-Source: AMsMyM7pxhlqUtwi8bVr09bRWWLUWG2DYJifxKF0iYt5yQ7IFuQ5FysAC3ZzSf/Y1qKwyn0s0Us2O3HaBLZIPg==
+        bh=oeR4dEm7EC+Hi2MuKEGYUDm0GjsVRwESUlqokgrh6QA=;
+        b=A1cl6keyT8W4HmZYbU1UVUzmDt2ZrxbBGWb+dQAdVHbCKinb8gxhj5K6ZpjyQCHFLw
+         XaMpnrwOBiglA9B2AuK0htn3dtX9r2+25Yq4cmY60ieTVG4Pfxse4dfS286verkcQm/Z
+         q+0R3uvjUfyh9Z8zSh3qut1ox6tjLUOTCTYPKTSW1PMWw3b4f9TE9wAHzz6Xdh6UxT2u
+         BxWhFsArQ3OpTlI1y5IVFTtapVkrCr7l+BpNRpqwBKMT90EOZ7JIsRs1rR+tp77RBbml
+         o0uKSeQFCLHICvIXggV0eXfdQe4u7eHHH+6SCTsZIcIGYabIufP+Zyb3bgOnC9BUB1E7
+         Eezg==
+X-Gm-Message-State: ACrzQf3VSl027NUVA6fnv006s8sGeMuuBaXjraSj1KjnLxqQKq2rQ7B5
+        sDZMBK5gtljfWjEfO0I2RUS8DyIe1Fm5vkwBiLnurYkHJ+Z1jqBDimlyucWGj/rPYpLYumV6M4g
+        unEEHtiPAIkXs1YwdqXFPG3IGjc+USlHSZ13ZK4Aan70MBMGij63KWDzNZO71Mww=
+X-Google-Smtp-Source: AMsMyM79nCjnmf39QYDlAON3hqg42IMBXlJZXSocB5VVrcgAWUmgD2LECcL3WUJqDfCatF4ykBXNEK5xUtcLeQ==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6902:110e:b0:66d:e6dc:5f31 with SMTP
- id o14-20020a056902110e00b0066de6dc5f31mr56683703ybu.628.1667954849087; Tue,
- 08 Nov 2022 16:47:29 -0800 (PST)
-Date:   Tue,  8 Nov 2022 16:47:06 -0800
+ (user=chooglen job=sendgmr) by 2002:a62:be14:0:b0:56d:9eed:61eb with SMTP id
+ l20-20020a62be14000000b0056d9eed61ebmr1097146pff.4.1667954850698; Tue, 08 Nov
+ 2022 16:47:30 -0800 (PST)
+Date:   Tue,  8 Nov 2022 16:47:07 -0800
 In-Reply-To: <20221109004708.97668-1-chooglen@google.com>
 Mime-Version: 1.0
 References: <20221109004708.97668-1-chooglen@google.com>
 X-Mailer: git-send-email 2.38.1.431.g37b22c650d-goog
-Message-ID: <20221109004708.97668-3-chooglen@google.com>
-Subject: [RFC PATCH 2/4] fetch: refactor --submodule-prefix
+Message-ID: <20221109004708.97668-4-chooglen@google.com>
+Subject: [RFC PATCH 3/4] read-tree: teach --submodule-prefix
 From:   Glen Choo <chooglen@google.com>
 To:     git@vger.kernel.org
 Cc:     Glen Choo <chooglen@google.com>,
@@ -63,269 +63,257 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since "git fetch" learned to recurse into submodules [1], it has passed
-"--submodule-prefix=<path from root of superproject tree to submodule>"
-to print full paths to the submodules being fetched. This is the same
-value as "--super-prefix"'s when calling "git read-tree
---recurse-submodules", as well as "git (grep|ls-files)
---recurse-submodules" before they were implemented in-process [2] [3],
-(when they used repository.submodule_prefix to replace "--super-prefix).
+Following the precedent of previous commit, teach "git read-tree" the
+"--submodule-prefix" flag, replacing its use of the global
+"--super-prefix" flag.
 
-Let's standardize the way we pass such prefixes. Having a per-command
-"--submodule-prefix" is preferable to a top-level "--super-prefix",
-since it gives us fine-grained control over which commands support it
-and which don't, and we can preserve the effort-saving properties of the
-top-level flag by sharing an implementation under the hood.
-
-Refactor "git fetch" so that "--submodule-prefix" is stored in
-repository.submodule_prefix, and create functions in submodule.h for
-parsing and reading its value. Also, mark it with PARSE_OPT_HIDDEN and
-drop it from our documentation. We will follow this pattern for "git
-read-tree" in the next commit.
-
-Since we've previously documented that repository.submodule_prefix is
-only set for submodules, introduce repository.is_submodule for
-distinguishing between the_repository and a submodule (although, this
-turns out to be unused, since no caller uses repository.submodule_prefix
-for that purpose).
-
-[1] 7dce19d374 (fetch/pull: Add the --recurse-submodules option, 2010-11-12)
-[2] 188dce131f (ls-files: use repository object, 2017-06-22)
-[3] f9ee2fcdfa (grep: recurse in-process using 'struct repository', 2017-08-02)
+This also fixes an existing bug where "git --super-prefix=<path>
+read-tree" (typically invoked by "git restore") in a partial clone with
+submodules could fail because we fetch promisor objects with "git
+fetch", but "git fetch" doesn't support "--super-prefix".
 
 Signed-off-by: Glen Choo <chooglen@google.com>
 ---
- Documentation/fetch-options.txt |  5 -----
- builtin/fetch.c                 |  7 +++----
- repository.c                    |  1 +
- repository.h                    |  9 +++++++--
- submodule.c                     | 35 +++++++++++++++++++++------------
- submodule.h                     | 12 +++++++++--
- 6 files changed, 43 insertions(+), 26 deletions(-)
+ builtin/read-tree.c         |  4 ++++
+ submodule.c                 | 22 +++++++------------
+ t/t1001-read-tree-m-2way.sh |  4 ++--
+ t/t5616-partial-clone.sh    | 43 +++++++++++++++++++++++++++++++++++++
+ unpack-trees.c              | 32 +++++++++++++--------------
+ 5 files changed, 73 insertions(+), 32 deletions(-)
 
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index 622bd84768..20cbd2c291 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -241,11 +241,6 @@ endif::git-pull[]
- 	linkgit:git-config[1].
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index f4cbe460b9..7aedab6951 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -148,6 +148,10 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
+ 		OPT_CALLBACK_F(0, "recurse-submodules", NULL,
+ 			    "checkout", "control recursive updating of submodules",
+ 			    PARSE_OPT_OPTARG, option_parse_recurse_submodules_worktree_updater),
++		OPT_CALLBACK_F(0, "submodule-prefix", NULL, "path",
++			       "internal, path from root of top-level superproject tree to this repo",
++			       PARSE_OPT_HIDDEN, option_parse_submodule_prefix),
++
+ 		OPT__QUIET(&opts.quiet, N_("suppress feedback messages")),
+ 		OPT_END()
+ 	};
+diff --git a/submodule.c b/submodule.c
+index d84345a0b4..d3d6abc816 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -2073,14 +2073,6 @@ void submodule_unset_core_worktree(const struct submodule *sub)
+ 	strbuf_release(&config_path);
+ }
  
- ifndef::git-pull[]
----submodule-prefix=<path>::
--	Prepend <path> to paths printed in informative messages
--	such as "Fetching submodule foo".  This option is used
--	internally when recursing over submodules.
+-static const char *get_super_prefix_or_empty(void)
+-{
+-	const char *s = get_super_prefix();
+-	if (!s)
+-		s = "";
+-	return s;
+-}
 -
- --recurse-submodules-default=[yes|on-demand]::
- 	This option is used internally to temporarily provide a
- 	non-negative default value for the --recurse-submodules
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index b06e454cbd..78a46389ff 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -74,7 +74,6 @@ static struct string_list deepen_not = STRING_LIST_INIT_NODUP;
- static struct strbuf default_rla = STRBUF_INIT;
- static struct transport *gtransport;
- static struct transport *gsecondary;
--static const char *submodule_prefix = "";
- static int recurse_submodules = RECURSE_SUBMODULES_DEFAULT;
- static int recurse_submodules_cli = RECURSE_SUBMODULES_DEFAULT;
- static int recurse_submodules_default = RECURSE_SUBMODULES_ON_DEMAND;
-@@ -195,8 +194,9 @@ static struct option builtin_fetch_options[] = {
- 	OPT_SET_INT_F(0, "refetch", &refetch,
- 		      N_("re-fetch without negotiating common commits"),
- 		      1, PARSE_OPT_NONEG),
--	{ OPTION_STRING, 0, "submodule-prefix", &submodule_prefix, N_("dir"),
--		   N_("prepend this to submodule path output"), PARSE_OPT_HIDDEN },
-+	OPT_CALLBACK_F(0, "submodule-prefix", NULL, "path",
-+			"path from top-level superproject root to current repo root",
-+			PARSE_OPT_HIDDEN, option_parse_submodule_prefix),
- 	OPT_CALLBACK_F(0, "recurse-submodules-default",
- 		   &recurse_submodules_default, N_("on-demand"),
- 		   N_("default for recursive fetching of submodules "
-@@ -2297,7 +2297,6 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 		add_options_to_argv(&options);
- 		result = fetch_submodules(the_repository,
- 					  &options,
--					  submodule_prefix,
- 					  recurse_submodules,
- 					  recurse_submodules_default,
- 					  verbosity < 0,
-diff --git a/repository.c b/repository.c
-index 5d166b692c..1d454a0ac4 100644
---- a/repository.c
-+++ b/repository.c
-@@ -229,6 +229,7 @@ int repo_submodule_init(struct repository *subrepo,
+ static int submodule_has_dirty_index(const struct submodule *sub)
+ {
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+@@ -2108,10 +2100,11 @@ static void submodule_reset_index(const char *path)
+ 	cp.no_stdin = 1;
+ 	cp.dir = path;
+ 
+-	strvec_pushf(&cp.args, "--super-prefix=%s%s/",
+-		     get_super_prefix_or_empty(), path);
+ 	/* TODO: determine if this might overwright untracked files */
+-	strvec_pushl(&cp.args, "read-tree", "-u", "--reset", NULL);
++	strvec_push(&cp.args, "read-tree");
++	strvec_pushf(&cp.args, "--submodule-prefix=%s%s/",
++		     get_submodule_prefix(), path);
++	strvec_pushl(&cp.args, "-u", "--reset", NULL);
+ 
+ 	strvec_push(&cp.args, empty_tree_oid_hex());
+ 
+@@ -2191,9 +2184,10 @@ int submodule_move_head(const char *path,
+ 	cp.no_stdin = 1;
+ 	cp.dir = path;
+ 
+-	strvec_pushf(&cp.args, "--super-prefix=%s%s/",
+-		     get_super_prefix_or_empty(), path);
+-	strvec_pushl(&cp.args, "read-tree", "--recurse-submodules", NULL);
++	strvec_push(&cp.args, "read-tree");
++	strvec_pushf(&cp.args, "--submodule-prefix=%s%s/",
++		     get_submodule_prefix(), path);
++	strvec_push(&cp.args, "--recurse-submodules");
+ 
+ 	if (flags & SUBMODULE_MOVE_HEAD_DRY_RUN)
+ 		strvec_push(&cp.args, "-n");
+diff --git a/t/t1001-read-tree-m-2way.sh b/t/t1001-read-tree-m-2way.sh
+index 516a6112fd..9cfba1a2af 100755
+--- a/t/t1001-read-tree-m-2way.sh
++++ b/t/t1001-read-tree-m-2way.sh
+@@ -366,11 +366,11 @@ test_expect_success 'a/b (untracked) vs a, plus c/d case test.' '
+ 	test -f a/b
+ '
+ 
+-test_expect_success 'read-tree supports the super-prefix' '
++test_expect_success 'read-tree supports --submodule-prefix' '
+ 	cat <<-EOF >expect &&
+ 		error: Updating '\''fictional/a'\'' would lose untracked files in it
+ 	EOF
+-	test_must_fail git --super-prefix fictional/ read-tree -u -m "$treeH" "$treeM" 2>actual &&
++	test_must_fail git read-tree --submodule-prefix fictional/ -u -m "$treeH" "$treeM" 2>actual &&
+ 	test_cmp expect actual
+ '
+ 
+diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
+index 037941b95d..9bec57a047 100755
+--- a/t/t5616-partial-clone.sh
++++ b/t/t5616-partial-clone.sh
+@@ -644,6 +644,49 @@ test_expect_success 'repack does not loosen promisor objects' '
+ 	grep "loosen_unused_packed_objects/loosened:0" trace
+ '
+ 
++test_expect_success 'setup src repo with submodules' '
++	test_config_global protocol.file.allow always &&
++
++	git init src-sub &&
++	git -C src-sub config uploadpack.allowfilter 1 &&
++	git -C src-sub config uploadpack.allowanysha1inwant 1 &&
++
++	# This blob must be missing in the subsequent commit.
++	echo foo >src-sub/file &&
++	git -C src-sub add file &&
++	git -C src-sub commit -m "submodule one" &&
++	SUB_ONE=$(git -C src-sub rev-parse HEAD) &&
++
++	echo bar >src-sub/file &&
++	git -C src-sub add file &&
++	git -C src-sub commit -m "submodule two" &&
++	SUB_TWO=$(git -C src-sub rev-parse HEAD) &&
++
++	git init src-super &&
++	git -C src-super config uploadpack.allowfilter 1 &&
++	git -C src-super config uploadpack.allowanysha1inwant 1 &&
++	git -C src-super submodule add ../src-sub src-sub &&
++
++	git -C src-super/src-sub checkout $SUB_ONE &&
++	git -C src-super add src-sub &&
++	git -C src-super commit -m "superproject one" &&
++
++	git -C src-super/src-sub checkout $SUB_TWO &&
++	git -C src-super add src-sub &&
++	git -C src-super commit -m "superproject two"
++'
++
++test_expect_success 'lazy-fetch in submodule succeeds' '
++	test_when_finished "rm -rf src-super src-sub client" &&
++
++	test_config_global protocol.file.allow always &&
++	git clone --filter=blob:none --also-filter-submodules \
++		--recurse-submodules "file://$(pwd)/src-super" client &&
++
++	# Trigger lazy-fetch from the superproject
++	git -C client restore --recurse-submodules --source=HEAD^ :/
++'
++
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+ start_httpd
+ 
+diff --git a/unpack-trees.c b/unpack-trees.c
+index bae812156c..930a2a46f1 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -71,7 +71,7 @@ static const char *unpack_plumbing_errors[NB_UNPACK_TREES_WARNING_TYPES] = {
+ 	  ? ((o)->msgs[(type)])      \
+ 	  : (unpack_plumbing_errors[(type)]) )
+ 
+-static const char *super_prefixed(const char *path)
++static const char *submodule_prefixed(const char *path)
+ {
+ 	/*
+ 	 * It is necessary and sufficient to have two static buffers
+@@ -79,28 +79,28 @@ static const char *super_prefixed(const char *path)
+ 	 * error() using the unpack_*_errors[] templates we see above.
+ 	 */
+ 	static struct strbuf buf[2] = {STRBUF_INIT, STRBUF_INIT};
+-	static int super_prefix_len = -1;
++	static int submodule_prefix_len = -1;
+ 	static unsigned idx = ARRAY_SIZE(buf) - 1;
+ 
+-	if (super_prefix_len < 0) {
+-		const char *super_prefix = get_super_prefix();
+-		if (!super_prefix) {
+-			super_prefix_len = 0;
++	if (submodule_prefix_len < 0) {
++		const char *submodule_prefix = get_submodule_prefix();
++		if (!submodule_prefix) {
++			submodule_prefix_len = 0;
+ 		} else {
+ 			int i;
+ 			for (i = 0; i < ARRAY_SIZE(buf); i++)
+-				strbuf_addstr(&buf[i], super_prefix);
+-			super_prefix_len = buf[0].len;
++				strbuf_addstr(&buf[i], submodule_prefix);
++			submodule_prefix_len = buf[0].len;
  		}
  	}
  
-+	subrepo->is_submodule = 1;
- 	subrepo->submodule_prefix = xstrfmt("%s%s/",
- 					    superproject->submodule_prefix ?
- 					    superproject->submodule_prefix :
-diff --git a/repository.h b/repository.h
-index 24316ac944..1bc4afc2b6 100644
---- a/repository.h
-+++ b/repository.h
-@@ -119,10 +119,15 @@ struct repository {
- 	 */
- 	char *worktree;
+-	if (!super_prefix_len)
++	if (!submodule_prefix_len)
+ 		return path;
  
-+	/*
-+	 * Whether this struct represents a submodule of this process's main
-+	 * repository.
-+	 */
-+	int is_submodule;
-+
+ 	if (++idx >= ARRAY_SIZE(buf))
+ 		idx = 0;
+ 
+-	strbuf_setlen(&buf[idx], super_prefix_len);
++	strbuf_setlen(&buf[idx], submodule_prefix_len);
+ 	strbuf_addstr(&buf[idx], path);
+ 
+ 	return buf[idx].buf;
+@@ -236,7 +236,7 @@ static int add_rejected_path(struct unpack_trees_options *o,
+ 		return -1;
+ 
+ 	if (!o->show_all_errors)
+-		return error(ERRORMSG(o, e), super_prefixed(path));
++		return error(ERRORMSG(o, e), submodule_prefixed(path));
+ 
  	/*
- 	 * Path from the root of the top-level superproject down to this
--	 * repository.  This is only non-NULL if the repository is initialized
--	 * as a submodule of another repository.
-+	 * repository.
- 	 */
- 	char *submodule_prefix;
+ 	 * Otherwise, insert in a list for future display by
+@@ -263,7 +263,7 @@ static void display_error_msgs(struct unpack_trees_options *o)
+ 			error_displayed = 1;
+ 			for (i = 0; i < rejects->nr; i++)
+ 				strbuf_addf(&path, "\t%s\n", rejects->items[i].string);
+-			error(ERRORMSG(o, e), super_prefixed(path.buf));
++			error(ERRORMSG(o, e), submodule_prefixed(path.buf));
+ 			strbuf_release(&path);
+ 		}
+ 		string_list_clear(rejects, 0);
+@@ -290,7 +290,7 @@ static void display_warning_msgs(struct unpack_trees_options *o)
+ 			warning_displayed = 1;
+ 			for (i = 0; i < rejects->nr; i++)
+ 				strbuf_addf(&path, "\t%s\n", rejects->items[i].string);
+-			warning(ERRORMSG(o, e), super_prefixed(path.buf));
++			warning(ERRORMSG(o, e), submodule_prefixed(path.buf));
+ 			strbuf_release(&path);
+ 		}
+ 		string_list_clear(rejects, 0);
+@@ -2958,8 +2958,8 @@ int bind_merge(const struct cache_entry * const *src,
+ 	if (a && old)
+ 		return o->quiet ? -1 :
+ 			error(ERRORMSG(o, ERROR_BIND_OVERLAP),
+-			      super_prefixed(a->name),
+-			      super_prefixed(old->name));
++			      submodule_prefixed(a->name),
++			      submodule_prefixed(old->name));
+ 	if (!a)
+ 		return keep_entry(old, o);
+ 	else
+@@ -3020,7 +3020,7 @@ int stash_worktree_untracked_merge(const struct cache_entry * const *src,
  
-diff --git a/submodule.c b/submodule.c
-index a6db8c4bbe..d84345a0b4 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -257,6 +257,21 @@ const char *get_toplevel_cwd_prefix(void)
- 	return toplevel_cwd_prefix;
+ 	if (worktree && untracked)
+ 		return error(_("worktree and untracked commit have duplicate entries: %s"),
+-			     super_prefixed(worktree->name));
++			     submodule_prefixed(worktree->name));
+ 
+ 	return merged_entry(worktree ? worktree : untracked, NULL, o);
  }
- 
-+int option_parse_submodule_prefix(const struct option *opt,
-+				  const char *arg, int unset)
-+{
-+	if (arg)
-+		the_repository->submodule_prefix = xstrdup(arg);
-+	return 0;
-+}
-+
-+const char *get_submodule_prefix(void)
-+{
-+	if (!the_repository->submodule_prefix)
-+		return "";
-+	return the_repository->submodule_prefix;
-+}
-+
- /*
-  * Determine if a submodule has been initialized at a given 'path'
-  */
-@@ -1392,7 +1407,6 @@ struct submodule_parallel_fetch {
- 	int changed_count;
- 	struct strvec args;
- 	struct repository *r;
--	const char *prefix;
- 	int command_line_option;
- 	int default_option;
- 	int quiet;
-@@ -1583,7 +1597,7 @@ get_fetch_task_from_index(struct submodule_parallel_fetch *spf,
- 		if (task->repo) {
- 			if (!spf->quiet)
- 				strbuf_addf(err, _("Fetching submodule %s%s\n"),
--					    spf->prefix, ce->name);
-+					    get_submodule_prefix(), ce->name);
- 
- 			spf->index_count++;
- 			return task;
-@@ -1645,7 +1659,7 @@ get_fetch_task_from_changed(struct submodule_parallel_fetch *spf,
- 		if (!spf->quiet)
- 			strbuf_addf(err,
- 				    _("Fetching submodule %s%s at commit %s\n"),
--				    spf->prefix, task->sub->path,
-+				    get_submodule_prefix(), task->sub->path,
- 				    find_unique_abbrev(cs_data->super_oid,
- 						       DEFAULT_ABBREV));
- 
-@@ -1692,8 +1706,6 @@ static int get_next_submodule(struct child_process *cp, struct strbuf *err,
- 		task = get_fetch_task_from_changed(spf, err);
- 
- 	if (task) {
--		struct strbuf submodule_prefix = STRBUF_INIT;
--
- 		child_process_init(cp);
- 		cp->dir = task->repo->gitdir;
- 		prepare_submodule_repo_env_in_gitdir(&cp->env);
-@@ -1705,13 +1717,11 @@ static int get_next_submodule(struct child_process *cp, struct strbuf *err,
- 		strvec_push(&cp->args, task->default_argv);
- 		strvec_push(&cp->args, "--submodule-prefix");
- 
--		strbuf_addf(&submodule_prefix, "%s%s/",
--						spf->prefix,
--						task->sub->path);
--		strvec_push(&cp->args, submodule_prefix.buf);
-+		strvec_pushf(&cp->args, "%s%s/",
-+					get_submodule_prefix(),
-+					task->sub->path);
- 		*task_cb = task;
- 
--		strbuf_release(&submodule_prefix);
- 		string_list_insert(&spf->seen_submodule_names, task->sub->name);
- 		return 1;
- 	}
-@@ -1723,7 +1733,7 @@ static int get_next_submodule(struct child_process *cp, struct strbuf *err,
- 		spf->oid_fetch_tasks_nr--;
- 
- 		strbuf_addf(&submodule_prefix, "%s%s/",
--			    spf->prefix, task->sub->path);
-+			    get_submodule_prefix(), task->sub->path);
- 
- 		child_process_init(cp);
- 		prepare_submodule_repo_env_in_gitdir(&cp->env);
-@@ -1829,7 +1839,7 @@ static int fetch_finish(int retvalue, struct strbuf *err,
- 
- int fetch_submodules(struct repository *r,
- 		     const struct strvec *options,
--		     const char *prefix, int command_line_option,
-+		     int command_line_option,
- 		     int default_option,
- 		     int quiet, int max_parallel_jobs)
- {
-@@ -1851,7 +1861,6 @@ int fetch_submodules(struct repository *r,
- 	spf.command_line_option = command_line_option;
- 	spf.default_option = default_option;
- 	spf.quiet = quiet;
--	spf.prefix = prefix;
- 
- 	if (!r->worktree)
- 		goto out;
-diff --git a/submodule.h b/submodule.h
-index 436dbb2e11..f2701c4869 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -55,7 +55,7 @@ struct option;
- int option_parse_recurse_submodules_worktree_updater(const struct option *opt,
- 						     const char *arg, int unset);
- int option_parse_toplevel_cwd_prefix(const struct option *opt,
--				   const char *arg, int unset);
-+				     const char *arg, int unset);
- /*
-  * Return the relative path of the top-level process's cwd to the root of the
-  * working tree. When printing paths to submodules in the working tree, this
-@@ -63,6 +63,15 @@ int option_parse_toplevel_cwd_prefix(const struct option *opt,
-  * top-level process's cwd instead of this process's cwd.
-  */
- const char *get_toplevel_cwd_prefix(void);
-+int option_parse_submodule_prefix(const struct option *opt,
-+				      const char *arg, int unset);
-+/*
-+ * Return the path from the root of the top-level superproject to root of this
-+ * repository. When printing paths to submodules in a tree, this value should be
-+ * prepended to the path so that they originate from the top-level
-+ * superproject's tree instead of this repository's tree.
-+ */
-+const char *get_submodule_prefix(void);
- 
- int is_tree_submodule_active(struct repository *repo,
- 			     const struct object_id *treeish_name,
-@@ -100,7 +109,6 @@ const struct submodule *submodule_from_ce(const struct cache_entry *ce);
- void check_for_new_submodule_commits(struct object_id *oid);
- int fetch_submodules(struct repository *r,
- 		     const struct strvec *options,
--		     const char *prefix,
- 		     int command_line_option,
- 		     int default_option,
- 		     int quiet, int max_parallel_jobs);
 -- 
 2.38.1.431.g37b22c650d-goog
 
