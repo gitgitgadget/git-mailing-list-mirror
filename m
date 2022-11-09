@@ -2,105 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 93AD6C433FE
-	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 06:35:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23D87C4332F
+	for <git@archiver.kernel.org>; Wed,  9 Nov 2022 07:02:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229649AbiKIGfW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Nov 2022 01:35:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43000 "EHLO
+        id S229698AbiKIHCa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Nov 2022 02:02:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229647AbiKIGfV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2022 01:35:21 -0500
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 292531A20C
-        for <git@vger.kernel.org>; Tue,  8 Nov 2022 22:35:21 -0800 (PST)
-Received: by mail-pl1-x62c.google.com with SMTP id c2so16204894plz.11
-        for <git@vger.kernel.org>; Tue, 08 Nov 2022 22:35:21 -0800 (PST)
+        with ESMTP id S229527AbiKIHC2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2022 02:02:28 -0500
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0644363B1
+        for <git@vger.kernel.org>; Tue,  8 Nov 2022 23:02:28 -0800 (PST)
+Received: by mail-qk1-x732.google.com with SMTP id 8so10475506qka.1
+        for <git@vger.kernel.org>; Tue, 08 Nov 2022 23:02:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lnwdUf73xvXnnO3rxVjMkA5Z/DhCQS7tEtykUp9pXeA=;
-        b=qb5gE4ijiAL2zuG53eDz8YWyZsg2mvXD9JFDMOPDnKTER56UfNDHDt7+RAt+5zOuvh
-         6ZWGqWZz0zxSnpXwqInqnU45HvPmMNy1u0DTJI0ylnihuV2MQn4l2mc/zsC+zfE++Wns
-         bpyWopVq6KfnSgq7V/sviCW53vy1Lp1xjLQVkJOqiWg/Dl3nnaQLb9ZlaKd1c3LXWB2g
-         TQpV5pbSMUE1mjIlX2DsS8/AIzlzPTLLdk9nP28t25WMzCvLZIHHu1bdHb++lVMfJQ5k
-         R0hdk20EGgw+kwYKq5B0z2lfVOLLfT5UZCw20uI8bm8f3oTAOXEIsrd6Yc91EcVqDbGa
-         5JYA==
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jAS3icPBks4cI368KYt1LWT6MjYl6K9JfpSH7rCLzeE=;
+        b=ObSbrHRwDuXGq7f8uJuBXLGfTRgCR4z+RboYVYF7VsoxFcSd9zSHRDjspF2m/GX/i+
+         8jgceDt4Q9ruciuNq97nMI1DjYdcRRTaldJjZ6gUQQD2mO2A7Y9ijBSz9iSUkGF3wWun
+         wXGgZ/Fr5KUjgvmRm9KgijB+nvtIcg6S7FCfrUzIMKJbnXdVV7fow6tsAJaqpUls1f7N
+         G3u+qYPJ1pL3WAjgR6yXNXCni2agpWraUR5KJdDpAqL7/lfvDIzz7MzliV2Jx3t+gdfa
+         dL9Y0uHnn+YFHvaJKTXNFwoEsWmVO3pMYu6xhtObtRfr9nHNNTqUwwHHpOdVSLx06gdU
+         UzXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lnwdUf73xvXnnO3rxVjMkA5Z/DhCQS7tEtykUp9pXeA=;
-        b=y8e2FHERh9uPz/UkRifYvhqbvwiAFMWWG7Gog1BQ95/YKeLSlaGDMDDAxZV/vogNlQ
-         LrQDVyAZpLGI8aC3939zSaUA2ZxyqepU1DbfRLP6RX3WTJKKUMMhBqQcaDtuIegf/Ayp
-         2rYyNqdWbJSF1gmo9eHT5PxP2ii2d9C8Hz0UzbYFB8/v7FYqHGDvM5YXJFioRGm/H8Ca
-         BCDIuipJwfTVcDmjY1rFjLC996MaWFWvm7IfEPgGCVnpmd5JohodzmAo56FE8+ZvDro7
-         vQN+aoKWW0Lads0nnVVYaa8HfZpgRawCo3K0f1fRGQFgI9eB/THI1k/A6DI5ymbkXMDr
-         +Sww==
-X-Gm-Message-State: ACrzQf2knwXIXyKdNMrKBmQwLR9rqoZpZCFNEk7pVBfP6FCHBi3hxxpr
-        kTj6F+juBzuIhpyuF3GXgJ0=
-X-Google-Smtp-Source: AMsMyM7gr0NzTI1lmj/4qK9ZS9zjvqj7OhgFK66m/UEHlRMAlLqVMIMXlo8ZfQPNHke39LnH9w1OWA==
-X-Received: by 2002:a17:903:2c2:b0:182:df88:e6d3 with SMTP id s2-20020a17090302c200b00182df88e6d3mr59091478plk.81.1667975720556;
-        Tue, 08 Nov 2022 22:35:20 -0800 (PST)
-Received: from localhost.localdomain ([47.246.101.63])
-        by smtp.gmail.com with ESMTPSA id u7-20020a170902e5c700b00174d9bbeda4sm8135318plf.197.2022.11.08.22.35.18
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Nov 2022 22:35:19 -0800 (PST)
-From:   Teng Long <dyroneteng@gmail.com>
-X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
-To:     avarab@gmail.com
-Cc:     dyroneteng@gmail.com, git@vger.kernel.org,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v2 1/3] notes.c: introduce "--blank-line" option
-Date:   Wed,  9 Nov 2022 14:35:14 +0800
-Message-Id: <20221109063514.93202-1-tenglong.tl@alibaba-inc.com>
-X-Mailer: git-send-email 2.38.1.386.g72e528ee3df.dirty
-In-Reply-To: <221108.86pmdxshkt.gmgdl@evledraar.gmail.com>
-References: <221108.86pmdxshkt.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jAS3icPBks4cI368KYt1LWT6MjYl6K9JfpSH7rCLzeE=;
+        b=MszapzAUcsDb4WgF7kYoX220Z0WAXosFlHfA1pGvU246Wbq2U6T1Adr0AEOClFp3Y3
+         qjkNLbMEWp3qnpG68DjMTC1EO8/MiTzvPitkmh4lQRJa7LYdzJt2KkaNk112zFCotsyI
+         ROav749sJLUV/8jNV32hKRyTVcATAwF7c/LXWIZpFdyiN0k25pTOF+DoXKXID475dMXd
+         VzatYaC2P7+DDZfFFly0nzzkT1zM/Q3GiWr8ftB2mewcXphr9A6ZuP91BKZqf0gnofPj
+         qtHTn2VcxazR7VhHfqHFzfGJ+jrem/6HgXoWtygzxasv6b+JOBlERMokUZnAezQ9axM1
+         5zkQ==
+X-Gm-Message-State: ACrzQf2NE83mxZvmgohhXbDBsisbTSRjyn9DmqV8zf3L8CQu1HXraQ71
+        r/OnFfsjKXeOuQbqbiWL7uCTSZcCOytVkQ==
+X-Google-Smtp-Source: AMsMyM7C93SWswFt4hgoe+byWniHu0tcmUap5tygZePWWvDRDypLJI6uN1YigmsjNDh1WDF18Vwi+Q==
+X-Received: by 2002:a37:2cc6:0:b0:6fa:3916:4213 with SMTP id s189-20020a372cc6000000b006fa39164213mr34443610qkh.449.1667977346899;
+        Tue, 08 Nov 2022 23:02:26 -0800 (PST)
+Received: from ?IPV6:2605:2a00:9005:dead:a5ad:28f9:f53:90b4? ([2605:2a00:9005:dead:a5ad:28f9:f53:90b4])
+        by smtp.gmail.com with ESMTPSA id z9-20020a05622a028900b0039bde72b14asm9480487qtw.92.2022.11.08.23.02.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Nov 2022 23:02:26 -0800 (PST)
+Message-ID: <536bcbc6-df12-e3b8-f995-35adfd311a84@gmail.com>
+Date:   Wed, 9 Nov 2022 02:02:25 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.0
+Content-Language: en-US
+To:     "J. Paul Reed" <preed@sigkill.com>
+Cc:     git@vger.kernel.org
+References: <Y2A1bdiw6kGC65f/@sigkill.com>
+ <bc3aa4b1-4716-cf9c-5dff-22b25793f66c@gmail.com>
+ <Y2rhfTYDEGQ7EhaS@sigkill.com>
+From:   Thomas Guyot <tguyot@gmail.com>
+Subject: Re: Odd git-config behavior
+In-Reply-To: <Y2rhfTYDEGQ7EhaS@sigkill.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Ævar Arnfjörð Bjarmason" <avarab@gmail.com> writes:
+On 2022-11-08 18:08, J. Paul Reed wrote:
+> This does beg the question: does running "git fsck" on an untrusted
+> repository as another user present a [security] problem?
+>
+> If so, should it?
 
-> Sorry, I meant that in both cases it will expose the same options to the
-> user: --blank-line and --no-blank-line. I.e. if you create options
-> named:
->
-> 	"x" "x-y"
->
-> Their negations are: --no-x and --no-x-y. But if their names are:
->
-> 	"x" "no-x"
->
-> The negations are:
->
-> 	--no-x and --x
->
-> But as your example shows that's unrelated to whether the *variable in
-> the code* is negated.
->
-> So however you structure the code, which would be:
->
-> 	int blankline = 1:
->         [...]
-> 	OPT_BOOL(0, "blankline", &blankline, [...]);
->
-> Or:
->
-> 	int no_blankline = 0:
->         [...]
-> 	OPT_BOOL(0, "no-blankline", &no_blankline, [...]);
->
-> The documentation could in both cases say:
->
-> 	--no-blankline:
-> 		describe the non-default[...]
+Probably not, but I can't say for sure. Even some seemingly safe 
+commands can be dangerous in this context; for example "git gc --auto" 
+invokes a hook which could execute arbitrary code if run on an untrusted 
+repo.
 
-Thank you for the detailed explanation, now it's clear for me.
+I haven't read the CVE but did notice the change - the primary issue if 
+I'm not mistaken is when git behaves differently when there is a .git 
+dir that could have been placed by a malicious user. I believe a safe 
+approach has been taken where we have to explicitly whitelist repos or 
+paths where the repos are trusted
+>> What was the return code for the git config command? If it was zero when
+>> it didn't parse/output the config option you asked for that is
+>> definitively a bug. If you failed to check the return code of git-config
+>> then you should fix your script/tool instead.
+> underworld # ~preed/src/git/git --version
+> git version 2.30.2.4.g8959555cee
+> underworld # GIT_PAGER=cat ~preed/src/git/git-config -l
+> underworld # echo $?
+> 0
+
+We should test with the latest version... If git ignores the config it 
+should warn (like other commands do) and not return 0.
+
+Since git normally uses the global config when not a repo, it appears it 
+keeps looking for the global config after it decides the local one is no 
+good. What you see with this command is your global config not your 
+repo's config.
+
+Regards,
+
+--
+Thomas
