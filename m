@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1812C4332F
-	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 16:36:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CDD0EC4332F
+	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 16:36:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231809AbiKJQgd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Nov 2022 11:36:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34634 "EHLO
+        id S231869AbiKJQgj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Nov 2022 11:36:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231336AbiKJQgc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Nov 2022 11:36:32 -0500
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 107AF1AF11
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 08:36:31 -0800 (PST)
-Received: by mail-pf1-x42b.google.com with SMTP id z26so2699902pff.1
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 08:36:31 -0800 (PST)
+        with ESMTP id S231336AbiKJQgf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Nov 2022 11:36:35 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45CEB1AF11
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 08:36:34 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id k5so1945727pjo.5
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 08:36:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Yv1calcASwxGHffXf0/vh9YJFWt41fBlF2GOsUAqmTQ=;
-        b=N7lmEzkh0H6USWUQ4raA7cuGcuP4qGdKtK0TBs4/5gmldGAwCYZF9qGPyH6qDcu8TU
-         a5oR40xGTIwRT4GeGf/7C0OR6/ZHA28TESXHnaLozjJERG9gipHV75GpxUJbqmmxLgQe
-         P+d7tmgBwEG0+jEbXQQh9GgWWXrcLKvfZG+2NrotRCI9f4zzHuqzr3oSAYq9RVsoBnrF
-         iaLz762wU0llwhBiKZExcbJO5z/jhWVSprO6g9MzECvHEOYKm6QOfCnNKdEQmdEud+6v
-         VnurjxUKGBPS76h756OVNVBrCBXJ2FoT89fRmyMmq1+3pCd8k2omWTptReYReJni5kvo
-         4XKA==
+        bh=s6/M+xBbwX8AymapkCXKPkiluUoOMHcEae5Zp2niHWQ=;
+        b=kDzTyGQ3ubC50gAgD0K6puUB3Qf/UjzLVf46vbhfz+1k3RUFeitm/nWml6jz4uDXRI
+         wvA4wyI9JKN9BYipbYgkG+yZLbkvh/1TC/ACR9mIGQiWJc4FgOmdBUYNY+b1/Jz7Hk4G
+         XE5Yn2tPsizqCbfCpJt6aX2G7Zyny4CA+RT4qBJO+/j9MMi9tIwplOtLEcqvoOoCBXk9
+         QdCpTlyvY4+2Mz/KUgO5mrc1CAGU4lJKNnNxHZ1I5nzMUrVCgMZerjpTcjIgbSTi6qQK
+         CIBSZif1byWq27Tfu837N6ihEDDdSXZ2BnZeGvTPaGm2+jpDBMOxPRmksvY3gaQytLCP
+         GS3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Yv1calcASwxGHffXf0/vh9YJFWt41fBlF2GOsUAqmTQ=;
-        b=ezi7+t1TQ4DXtJUW6Jrt5VUXVWivEPa4K7vX6+ojo02YDDoehlh1nBSSYHI2zdk5U3
-         ClbD4nInG8KmCK8jPlLxhJfB84Bv7ab5Nfz0J5lMoQVzdGu3ZuPAvc3GVIHq6ENaV1rH
-         C2E8yqXbExYrKvOOnSI9jsepjNlA6p1QMZBG8xVd0fWI+sVwCtrvWBd8r/s1ZEftzdDD
-         8YbezKc4JqhKwUfn1jwTqHpS2RBJtpmTDQNNwBZa1kpLtGl4S1JM3/wyGhCxWSOl+hI0
-         D0f1uqwpMcEcscg9Yj7rvec4qcNvwatjiiKNYxax8AD3VyH3LQbhkcK3RU32hBPtuGnW
-         2h8w==
-X-Gm-Message-State: ACrzQf3vVZJsbDAzZOANcovVZUcopyLbtBFH1WvHIqBNSeN9kXrCoe6y
-        t8cMzyUp9lQQFlylBN9sJk3xJuj42fM=
-X-Google-Smtp-Source: AMsMyM6dvqiaQnru1u2CdM304EAFzavuGB4E5jDtHBj8apcrUybdSdugMiIDCFJ9UR8GDWI+aneWVw==
-X-Received: by 2002:a05:6a00:2409:b0:54e:a3ad:d32d with SMTP id z9-20020a056a00240900b0054ea3add32dmr64850865pfh.70.1668098190151;
-        Thu, 10 Nov 2022 08:36:30 -0800 (PST)
+        bh=s6/M+xBbwX8AymapkCXKPkiluUoOMHcEae5Zp2niHWQ=;
+        b=ufS9w9T6mbaBGcLkVHmD4OI1OFec0ci46atHP91cme8OxHm4gSPvO7riLexR66vTXt
+         iwjIHjrwWNdWy5YtBtPsw4WrQ0NY4sFNXmzNPvqcPmIBKXFp0St9HBZoDHc7YXJvn/VQ
+         823XkPmfrSPvUuwvZoNzs+Fcck+/1SJth5HIGJeqYd+o0QoovvoBsWUMGAW3b8oESiCy
+         /3ZWHb2aBNYWSgEriHC4dXUFsDIH0HVErntpFVCtLVHHtXG7BJ0XZ14ZqEBST97++ixb
+         n3o7EXjS2R02ZU+YycqhsK4pEk0LLiIQf6wyykOLFMA6oLweEgmb4b1Px+n5NQMPiGSI
+         8ijw==
+X-Gm-Message-State: ACrzQf3CDjT2k01j0vhJXt2jloK+/5jjnPBh9D+ySMZlZJ3FP3tLqz5h
+        EYaKh1fnpHt8DSCmsktu38bmESbRKV0=
+X-Google-Smtp-Source: AMsMyM47TaUUUbXcqhPbF9yOaYSNYe2HNQzFpj1rmDT4+lOu48FruYmy3B/L5ndfVmwcOXf1Vu8Egg==
+X-Received: by 2002:a17:902:9b8e:b0:187:30ec:67dd with SMTP id y14-20020a1709029b8e00b0018730ec67ddmr50695347plp.79.1668098193385;
+        Thu, 10 Nov 2022 08:36:33 -0800 (PST)
 Received: from localhost.localdomain ([2001:ee0:500b:6370:da47:cda5:dbd5:6e77])
-        by smtp.gmail.com with ESMTPSA id b29-20020a631b5d000000b0047022e07035sm9371372pgm.47.2022.11.10.08.36.27
+        by smtp.gmail.com with ESMTPSA id b29-20020a631b5d000000b0047022e07035sm9371372pgm.47.2022.11.10.08.36.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Nov 2022 08:36:29 -0800 (PST)
+        Thu, 10 Nov 2022 08:36:32 -0800 (PST)
 From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
         <congdanhqx@gmail.com>
 To:     git@vger.kernel.org
@@ -60,12 +60,12 @@ Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?=
         Taylor Blau <me@ttaylorr.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 0/3] Convert git-bisect--helper to OPT_SUBCOMMAND
-Date:   Thu, 10 Nov 2022 23:36:19 +0700
-Message-Id: <cover.1668097286.git.congdanhqx@gmail.com>
+Subject: [PATCH v3 1/3] bisect--helper: remove unused options
+Date:   Thu, 10 Nov 2022 23:36:20 +0700
+Message-Id: <6b80fd93980ec5171fe0637cbd1a8173a5337da4.1668097286.git.congdanhqx@gmail.com>
 X-Mailer: git-send-email 2.38.1.157.gedabe22e0a
-In-Reply-To: <cover.1667561761.git.congdanhqx@gmail.com>
-References: <cover.1667561761.git.congdanhqx@gmail.com>
+In-Reply-To: <cover.1668097286.git.congdanhqx@gmail.com>
+References: <cover.1667561761.git.congdanhqx@gmail.com> <cover.1668097286.git.congdanhqx@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,108 +73,80 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Despite this series has been merged into next.
-I'm sending this because Taylor said he wanted a (combined) reroll?
-<Y2riRSL+NprJt278@nand.local>
+'git-bisect.sh' used to have a 'bisect_next_check' to check if we have
+both good/bad, old/new terms set or not.  In commit 129a6cf344
+(bisect--helper: `bisect_next_check` shell function in C, 2019-01-02),
+a subcommand for bisect--helper was introduced to port the check to C.
+Since d1bbbe45df (bisect--helper: reimplement `bisect_run` shell
+function in C, 2021-09-13), all users of 'bisect_next_check' was
+re-implemented in C, this subcommand was no longer used but we forgot
+to remove '--bisect-next-check'.
 
-Change from v2 is only about cosmetic things, (structure zero-initialization)
+'git-bisect.sh' also used to have a 'bisect_write' function, whose
+third positional parameter was a "nolog" flag.  This flag was only used
+when 'bisect_start' invoked 'bisect_write' to write the starting good
+and bad revisions.  Then 0f30233a11 (bisect--helper: `bisect_write`
+shell function in C, 2019-01-02) ported it to C as a command mode of
+'bisect--helper', which (incorrectly) added the '--no-log' option,
+and convert the only place ('bisect_start') that call 'bisect_write'
+with 'nolog' to 'git bisect--helper --bisect-write' with 'nolog'
+instead of '--no-log', since 'bisect--helper' has command modes not
+subcommands, all other command modes see and handle that option as well.
+This bogus state didn't last long, however, because in the same patch
+series 06f5608c14 (bisect--helper: `bisect_start` shell function
+partially in C, 2019-01-02) the C reimplementation of bisect_start()
+started calling the bisect_write() C function, this time with the
+right 'nolog' function parameter. From then on there was no need for
+the '--no-log' option in 'bisect--helper'. Eventually all bisect
+subcommands were ported to C as 'bisect--helper' command modes, each
+calling the bisect_write() C function instead, but when the
+'--bisect-write' command mode was removed in 68efed8c8a
+(bisect--helper: retire `--bisect-write` subcommand, 2021-02-03) it
+forgot to remove that '--no-log' option.
+'--no-log' option had never been used and it's unused now.
 
-This series aims to fix the problem that bisect--helper incorrectly consumes
-"--log" when running:
+Let's remove --bisect-next-check and --no-log from option parsing.
 
-	git bisect run cmd --log
+Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+---
+ builtin/bisect--helper.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-This also clears a way for turning git-bisect into a built-in in a later day.
-
-The series that convert git-bisect to builtin will be posted later as a reply
-to this series
-
-Đoàn Trần Công Danh (3):
-  bisect--helper: remove unused options
-  bisect--helper: move all subcommands into their own functions
-  bisect--helper: parse subcommand with OPT_SUBCOMMAND
-
- builtin/bisect--helper.c    | 229 ++++++++++++++++++++----------------
- git-bisect.sh               |  23 +---
- t/t6030-bisect-porcelain.sh |  10 ++
- 3 files changed, 142 insertions(+), 120 deletions(-)
-
-Range-diff against v2:
--:  ---------- > 1:  6b80fd9398 bisect--helper: remove unused options
-1:  9d8a3cdd7a ! 2:  248ed392ea bisect--helper: move all subcommands into their own functions
-    @@ builtin/bisect--helper.c: static int bisect_run(struct bisect_terms *terms, cons
-     +static int cmd_bisect__terms(int argc, const char **argv, const char *prefix UNUSED)
-     +{
-     +	int res;
-    -+	struct bisect_terms terms = { .term_good = NULL, .term_bad = NULL };
-    ++	struct bisect_terms terms = { 0 };
-     +
-     +	if (argc > 1)
-     +		return error(_("--bisect-terms requires 0 or 1 argument"));
-    @@ builtin/bisect--helper.c: static int bisect_run(struct bisect_terms *terms, cons
-     +static int cmd_bisect__start(int argc, const char **argv, const char *prefix UNUSED)
-     +{
-     +	int res;
-    -+	struct bisect_terms terms = { .term_good = NULL, .term_bad = NULL };
-    ++	struct bisect_terms terms = { 0 };
-     +
-     +	set_terms(&terms, "bad", "good");
-     +	res = bisect_start(&terms, argv, argc);
-    @@ builtin/bisect--helper.c: static int bisect_run(struct bisect_terms *terms, cons
-     +static int cmd_bisect__next(int argc, const char **argv UNUSED, const char *prefix)
-     +{
-     +	int res;
-    -+	struct bisect_terms terms = { .term_good = NULL, .term_bad = NULL };
-    ++	struct bisect_terms terms = { 0 };
-     +
-     +	if (argc)
-     +		return error(_("--bisect-next requires 0 arguments"));
-    @@ builtin/bisect--helper.c: static int bisect_run(struct bisect_terms *terms, cons
-     +static int cmd_bisect__state(int argc, const char **argv, const char *prefix UNUSED)
-     +{
-     +	int res;
-    -+	struct bisect_terms terms = { .term_good = NULL, .term_bad = NULL };
-    ++	struct bisect_terms terms = { 0 };
-     +
-     +	set_terms(&terms, "bad", "good");
-     +	get_terms(&terms);
-    @@ builtin/bisect--helper.c: static int bisect_run(struct bisect_terms *terms, cons
-     +static int cmd_bisect__replay(int argc, const char **argv, const char *prefix UNUSED)
-     +{
-     +	int res;
-    -+	struct bisect_terms terms = { .term_good = NULL, .term_bad = NULL };
-    ++	struct bisect_terms terms = { 0 };
-     +
-     +	if (argc != 1)
-     +		return error(_("no logfile given"));
-    @@ builtin/bisect--helper.c: static int bisect_run(struct bisect_terms *terms, cons
-     +static int cmd_bisect__skip(int argc, const char **argv, const char *prefix UNUSED)
-     +{
-     +	int res;
-    -+	struct bisect_terms terms = { .term_good = NULL, .term_bad = NULL };
-    ++	struct bisect_terms terms = { 0 };
-     +
-     +	set_terms(&terms, "bad", "good");
-     +	get_terms(&terms);
-    @@ builtin/bisect--helper.c: static int bisect_run(struct bisect_terms *terms, cons
-     +static int cmd_bisect__visualize(int argc, const char **argv, const char *prefix UNUSED)
-     +{
-     +	int res;
-    -+	struct bisect_terms terms = { .term_good = NULL, .term_bad = NULL };
-    ++	struct bisect_terms terms = { 0 };
-     +
-     +	get_terms(&terms);
-     +	res = bisect_visualize(&terms, argv, argc);
-    @@ builtin/bisect--helper.c: static int bisect_run(struct bisect_terms *terms, cons
-     +static int cmd_bisect__run(int argc, const char **argv, const char *prefix UNUSED)
-     +{
-     +	int res;
-    -+	struct bisect_terms terms = { .term_good = NULL, .term_bad = NULL };
-    ++	struct bisect_terms terms = { 0 };
-     +
-     +	if (!argc)
-     +		return error(_("bisect run failed: no command provided."));
-2:  a62ac72e24 = 3:  b67691f600 bisect--helper: parse subcommand with OPT_SUBCOMMAND
+diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
+index 1d2ce8a0e1..5ec2e67f59 100644
+--- a/builtin/bisect--helper.c
++++ b/builtin/bisect--helper.c
+@@ -1283,7 +1283,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ {
+ 	enum {
+ 		BISECT_RESET = 1,
+-		BISECT_NEXT_CHECK,
+ 		BISECT_TERMS,
+ 		BISECT_START,
+ 		BISECT_AUTOSTART,
+@@ -1295,12 +1294,10 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 		BISECT_VISUALIZE,
+ 		BISECT_RUN,
+ 	} cmdmode = 0;
+-	int res = 0, nolog = 0;
++	int res = 0;
+ 	struct option options[] = {
+ 		OPT_CMDMODE(0, "bisect-reset", &cmdmode,
+ 			 N_("reset the bisection state"), BISECT_RESET),
+-		OPT_CMDMODE(0, "bisect-next-check", &cmdmode,
+-			 N_("check whether bad or good terms exist"), BISECT_NEXT_CHECK),
+ 		OPT_CMDMODE(0, "bisect-terms", &cmdmode,
+ 			 N_("print out the bisect terms"), BISECT_TERMS),
+ 		OPT_CMDMODE(0, "bisect-start", &cmdmode,
+@@ -1319,8 +1316,6 @@ int cmd_bisect__helper(int argc, const char **argv, const char *prefix)
+ 			 N_("visualize the bisection"), BISECT_VISUALIZE),
+ 		OPT_CMDMODE(0, "bisect-run", &cmdmode,
+ 			 N_("use <cmd>... to automatically bisect"), BISECT_RUN),
+-		OPT_BOOL(0, "no-log", &nolog,
+-			 N_("no log for BISECT_WRITE")),
+ 		OPT_END()
+ 	};
+ 	struct bisect_terms terms = { .term_good = NULL, .term_bad = NULL };
 -- 
 2.38.1.157.gedabe22e0a
 
