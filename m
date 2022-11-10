@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D765C433FE
-	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 19:08:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 363B6C4332F
+	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 19:08:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231811AbiKJTIK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Nov 2022 14:08:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47806 "EHLO
+        id S231817AbiKJTIL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Nov 2022 14:08:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231504AbiKJTHf (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231502AbiKJTHf (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 10 Nov 2022 14:07:35 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA5C959FCD
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 11:06:15 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id g12so3614106wrs.10
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 11:06:15 -0800 (PST)
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1798E59FC6
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 11:06:14 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id l14so3643175wrw.2
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 11:06:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=O/qBtdZ69IG5ihaw98dYPOr1oYuv5CWv1pqA2wxwrrQ=;
-        b=RI0UmMPTMJ03ZBTKcTpR80Vavb+CbEasyQZkYDTqIHT4MS35AKvfeblTq6Z3BrHlB0
-         Jok/YNctqu1rKHYhCBwq+8PWKZlEKfVD8mEwAlcUFIOJXiB5Uge/exFDHIfk0p8RHjQ0
-         xEOwC5xy6TgYUWNHpO50rkfTdgzoLAwZ3xBI6uQm1/iUg7NWGch5MAPEnNmE+JCnx2a0
-         9pMm875uR1EwkiXP4SC0Z1xeILaJSt4kHsgI/Fj1tnp+gmmn4TZj1sdGv318X+Au/OOB
-         zlpvk/IOaofMTbRDz/tPA2YnRKCPMM62co36v1jourcnvcAgOnOU3CCP3O7n9GaNozQR
-         OYfw==
+        bh=Y9D6pDzcfKa+C9JuV33FlqQspXTfBgY5IZLMOQAlznk=;
+        b=aWyYZdD5ZyzbHQcMVtHGR9CO2bfznnwb3GuR+1yCQMi2ahRa4KtON3IH0VmackLWsK
+         6K3FjXDsrzAdAlOi3MiezQuzQSlYuTC/5Gdaec8sJq1l0l1s5oiB0EbehELXnyWd+Hn/
+         OIMq2gHD9LZINCwZ/otTa6UNEF9RhrQqkzsDSxRZG+iqphR5UltHarc4r4yPFsD/ZvQP
+         2PHlKrUg3QvtKy2M1EF1yUFeGfFZGlTPldaMRnfZzivTWsRUKFHSTlzFhgxINIbXJ/UA
+         IIg11U9sP7BM9dhB1OI6DR1sPMewDFNV+i1+D8L9hKxQ1DcEvtNcZ2v/vFNL/5h6dDAb
+         8ZnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=O/qBtdZ69IG5ihaw98dYPOr1oYuv5CWv1pqA2wxwrrQ=;
-        b=55DoGQCAFF+K64gjSP2haUsLXApKrsqPTVRcIv3Usmb2JVUJVy3tlrE1ngvYMkjSN4
-         Q522r68MII4kqnFNqybiOJWXDDiXvFJlpmmAlSxlZbWM7n9TmSZyZF/ApevONJWPvnEM
-         /MIXD5+1ahiE0sQ8lCf0rkVzT6AITzVTuuFQx0dQUTA66pFHpcDe3gz5F9b8zDVoZx6x
-         Zzk2SYsukRlZ0Ey5tJ7IFZUiz0T43weHvP5S5EI/3m1ejL+e86hhUmVN40Cq7A5dJNdL
-         RxgQ9D1VkD4Apzc+aF3Vc+Rm43+6/LOegDvRrC76Xm1IqfiXaSWGCZDbajjEA2k3w8tU
-         UWTg==
-X-Gm-Message-State: ACrzQf0JsRgL39VupLk/LVH9vAhrZSWAYiMFIrC31AAbGHGPm20q9t0d
-        TkkTzojMUcYZOZGH+XaXvHLHmss5Ja8=
-X-Google-Smtp-Source: AMsMyM6szy3mK8I3aGgewFSpzvPpdcfa8sES3GKr2I99rzQ/3APrSkmQpaz8YzzPzdJbO3wQfbsfDg==
-X-Received: by 2002:a5d:6743:0:b0:236:6301:918 with SMTP id l3-20020a5d6743000000b0023663010918mr42626468wrw.247.1668107174356;
-        Thu, 10 Nov 2022 11:06:14 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k7-20020a05600c1c8700b003c6b7f5567csm9557073wms.0.2022.11.10.11.06.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=Y9D6pDzcfKa+C9JuV33FlqQspXTfBgY5IZLMOQAlznk=;
+        b=WgdA4D83pjBh3cEPskY5WS6wywMCZ/yFnHJQO44948IwUHBzoIO0q5TuHzs4T53miG
+         udXIwr/24dCEgoZgahg8jFbLQOSuzPfPgNTpkG28bnVyyu5bjyM1Ygz5v995brINVTS/
+         Ru7/cWrnfijPXx584ssmN8QDDRlKFVawBQIsZi5NjcJBZggJTzJ4RUEdS1q3UJICDMrX
+         UaLe4kZMuKopLy4QatBdwMMCQpQRWMqpdp+nv05wR2oxN2aCLV7RPUydAf5hFUmK0wKu
+         Ar5ULvI45ltdFBCXk3CWsSi9tOpUFIL9+w4/72fWkrCGI7zdKQa3LvrRkGsHRciKna/S
+         b7cA==
+X-Gm-Message-State: ACrzQf2P2vkgPWDJpDo77itDQqR90FZZMrM2+Cx4HGOIioPsf8XUBKtL
+        GnEt6mKDA3A6jxDs8lzXsf4Q6fthfn8=
+X-Google-Smtp-Source: AMsMyM55c9ErbhPb3sIX1YWWfRMkc4hiQ6N2senGHZioV03JGZpl5kCLSlfP+L9HAQZNFmDlqmJ3DA==
+X-Received: by 2002:adf:fa8d:0:b0:236:bb9c:45e4 with SMTP id h13-20020adffa8d000000b00236bb9c45e4mr40171080wrr.216.1668107173172;
         Thu, 10 Nov 2022 11:06:13 -0800 (PST)
-Message-Id: <100c01e936cb331ab5b3c231dcd3050ea06e1868.1668107165.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r2-20020adfdc82000000b0022ae401e9e0sm16912516wrj.78.2022.11.10.11.06.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Nov 2022 11:06:12 -0800 (PST)
+Message-Id: <ea5c82ce992192681bc1ea230d1d57d0a1011ed6.1668107165.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1411.v3.git.1668107165.gitgitgadget@gmail.com>
 References: <pull.1411.v2.git.1668045438.gitgitgadget@gmail.com>
         <pull.1411.v3.git.1668107165.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 10 Nov 2022 19:06:05 +0000
-Subject: [PATCH v3 5/5] rebase: use 'skip_cache_tree_update' option
+Date:   Thu, 10 Nov 2022 19:06:04 +0000
+Subject: [PATCH v3 4/5] read-tree: use 'skip_cache_tree_update' option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,47 +71,81 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Victoria Dye <vdye@github.com>
 
-Enable the 'skip_cache_tree_update' option in both 'do_reset()'
-('sequencer.c') and 'reset_head()' ('reset.c'). Both of these callers invoke
-'prime_cache_tree()' after 'unpack_trees()', so we can remove an unnecessary
-cache tree rebuild by skipping 'cache_tree_update()'.
+When running 'read-tree' with a single tree and no prefix,
+'prime_cache_tree()' is called after the tree is unpacked. In that
+situation, skip a redundant call to 'cache_tree_update()' in
+'unpack_trees()' by enabling the 'skip_cache_tree_update' unpack option.
 
-When testing with 'p3400-rebase.sh' and 'p3404-rebase-interactive.sh', the
-performance change of this update was negligible, likely due to the
-operation being dominated by more expensive operations (like checking out
-trees). However, since the change doesn't harm performance, it's worth
-keeping this 'unpack_trees()' usage consistent with others that subsequently
-invoke 'prime_cache_tree()'.
+Removing the redundant cache tree update provides a substantial performance
+improvement to 'git read-tree <tree-ish>', as shown by a test added to
+'p0006-read-tree-checkout.sh':
+
+Test                          before            after
+----------------------------------------------------------------------
+read-tree br_ballast_plus_1   3.94(1.80+1.57)   3.00(1.14+1.28) -23.9%
+
+Note that the 'read-tree' in 't1022-read-tree-partial-clone.sh' is updated
+to read two trees, rather than one. The test was first introduced in
+d3da223f221 (cache-tree: prefetch in partial clone read-tree, 2021-07-23) to
+exercise the 'cache_tree_update()' code path, as used in 'git merge'. Since
+this patch drops the call to 'cache_tree_update()' in single-tree 'git
+read-tree', change the test to use the two-tree variant so that
+'cache_tree_update()' is called as intended.
 
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- reset.c     | 1 +
- sequencer.c | 1 +
- 2 files changed, 2 insertions(+)
+ builtin/read-tree.c                | 4 ++++
+ t/perf/p0006-read-tree-checkout.sh | 8 ++++++++
+ t/t1022-read-tree-partial-clone.sh | 2 +-
+ 3 files changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/reset.c b/reset.c
-index e3383a93343..5ded23611f3 100644
---- a/reset.c
-+++ b/reset.c
-@@ -128,6 +128,7 @@ int reset_head(struct repository *r, const struct reset_head_opts *opts)
- 	unpack_tree_opts.update = 1;
- 	unpack_tree_opts.merge = 1;
- 	unpack_tree_opts.preserve_ignored = 0; /* FIXME: !overwrite_ignore */
-+	unpack_tree_opts.skip_cache_tree_update = 1;
- 	init_checkout_metadata(&unpack_tree_opts.meta, switch_to_branch, oid, NULL);
- 	if (reset_hard)
- 		unpack_tree_opts.reset = UNPACK_RESET_PROTECT_UNTRACKED;
-diff --git a/sequencer.c b/sequencer.c
-index e658df7e8ff..3f7a73ce4e1 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -3750,6 +3750,7 @@ static int do_reset(struct repository *r,
- 	unpack_tree_opts.merge = 1;
- 	unpack_tree_opts.update = 1;
- 	unpack_tree_opts.preserve_ignored = 0; /* FIXME: !overwrite_ignore */
-+	unpack_tree_opts.skip_cache_tree_update = 1;
- 	init_checkout_metadata(&unpack_tree_opts.meta, name, &oid, NULL);
+diff --git a/builtin/read-tree.c b/builtin/read-tree.c
+index f4cbe460b97..45c6652444b 100644
+--- a/builtin/read-tree.c
++++ b/builtin/read-tree.c
+@@ -249,6 +249,10 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
+ 	if (opts.debug_unpack)
+ 		opts.fn = debug_merge;
  
- 	if (repo_read_index_unmerged(r)) {
++	/* If we're going to prime_cache_tree later, skip cache tree update */
++	if (nr_trees == 1 && !opts.prefix)
++		opts.skip_cache_tree_update = 1;
++
+ 	cache_tree_free(&active_cache_tree);
+ 	for (i = 0; i < nr_trees; i++) {
+ 		struct tree *tree = trees[i];
+diff --git a/t/perf/p0006-read-tree-checkout.sh b/t/perf/p0006-read-tree-checkout.sh
+index c481c012d2f..325566e18eb 100755
+--- a/t/perf/p0006-read-tree-checkout.sh
++++ b/t/perf/p0006-read-tree-checkout.sh
+@@ -49,6 +49,14 @@ test_perf "read-tree br_base br_ballast ($nr_files)" '
+ 	git read-tree -n -m br_base br_ballast
+ '
+ 
++test_perf "read-tree br_ballast_plus_1 ($nr_files)" '
++	# Run read-tree 100 times for clearer performance results & comparisons
++	for i in  $(test_seq 100)
++	do
++		git read-tree -n -m br_ballast_plus_1 || return 1
++	done
++'
++
+ test_perf "switch between br_base br_ballast ($nr_files)" '
+ 	git checkout -q br_base &&
+ 	git checkout -q br_ballast
+diff --git a/t/t1022-read-tree-partial-clone.sh b/t/t1022-read-tree-partial-clone.sh
+index a9953b6a71c..da539716359 100755
+--- a/t/t1022-read-tree-partial-clone.sh
++++ b/t/t1022-read-tree-partial-clone.sh
+@@ -19,7 +19,7 @@ test_expect_success 'read-tree in partial clone prefetches in one batch' '
+ 	git -C server config uploadpack.allowfilter 1 &&
+ 	git -C server config uploadpack.allowanysha1inwant 1 &&
+ 	git clone --bare --filter=blob:none "file://$(pwd)/server" client &&
+-	GIT_TRACE_PACKET="$(pwd)/trace" git -C client read-tree $TREE &&
++	GIT_TRACE_PACKET="$(pwd)/trace" git -C client read-tree $TREE $TREE &&
+ 
+ 	# "done" marks the end of negotiation (once per fetch). Expect that
+ 	# only one fetch occurs.
 -- 
 gitgitgadget
+
