@@ -2,252 +2,131 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 863B4C433FE
-	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 22:14:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B987EC433FE
+	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 22:21:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229961AbiKJWOW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Nov 2022 17:14:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37022 "EHLO
+        id S231358AbiKJWVa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Nov 2022 17:21:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229520AbiKJWOV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Nov 2022 17:14:21 -0500
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EDC64B9BD
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 14:14:19 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id 204-20020a250fd5000000b006ccc0e91098so2955779ybp.13
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 14:14:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=eDwQclC6QzivszyW14nMGVVAR3LeK+E62aRjHQx4edE=;
-        b=mHgPDbPQV+HJNyjztVlKeztOMQrxl3KZIppvvitpSN969tCmv/0zrutsOZEGfP+eWp
-         Quoa6zgfcHvMxjfs7hm9yKsvKj1DgzCvWT1PQphH/3POQa+nUjZbyhdRA6eI4fZK1xP3
-         GmrDs+WfdxtLP26UM04HDerfVedaAiiZRrpHXZPz98Ev9VeKeLud9BH8zIS0rDhGgZWb
-         +RHlkgqHrSX8HDJzvTN4k2Eh7NN86/JNqTW5Tedip4NtQEe0xFGN04NwX5SwXos8qrZX
-         +i3B5b9J5uSdXoJvteqaM6j8yU9FWN+GrqBu8jIp86L1ArcL4cufsbdC38ntTGc7PxPO
-         I1PQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eDwQclC6QzivszyW14nMGVVAR3LeK+E62aRjHQx4edE=;
-        b=7h8a7q2X3EapdqMadQLHlbis7slyozdIDjv16f4PO1kbvAytR0PrbiQJi5e9Q51Ojv
-         qAYv3ZuNCnVYp5C8YDElfXguJ5VewvGwIt42HTbdFbnjqEoGtfaBZehLLwCfYu7z8lDX
-         aTJhayOhcPuQlJI2/4pHUYEyIoWSM3RN+EZ6VYCJsn2ESFxqXS/PVa8WcKeG4d1aBVG7
-         dFlXWsOcI/oDgPTxo5RNSFEyzD09VHysDjafwDv4OWlOtDArlnPrzFZsG5bRtn1dHoSO
-         AKj16gET5MU4XtFLFzYavcCIPmmJOrxHZgB1fopQDscYE92Fl7+gNUFi05IPlZV3Bxhf
-         WqFw==
-X-Gm-Message-State: ACrzQf2hA4P9KdSSmvdeXBlI9hAILLaYDjV42DGqB19TmjY/GI910E+T
-        yrqpO9wJ1q3Yhg/5ygYRcPNjBxE1U8tQpA==
-X-Google-Smtp-Source: AMsMyM7l8833VMUazzUfhLTaFAnYzQT3Db4I1nuQlywyE2RlSbUuFsF5bEStoiyuPvkfICsAMhOQVyapYl2xRg==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6902:1352:b0:6bb:3f4b:9666 with SMTP
- id g18-20020a056902135200b006bb3f4b9666mr60929447ybu.101.1668118458758; Thu,
- 10 Nov 2022 14:14:18 -0800 (PST)
-Date:   Thu, 10 Nov 2022 14:14:11 -0800
-In-Reply-To: <Y21zz1HYXzyyfwqy@google.com>
-Mime-Version: 1.0
-References: <pull.1377.git.git.1667955151994.gitgitgadget@gmail.com> <Y21zz1HYXzyyfwqy@google.com>
-Message-ID: <kl6lmt8y31ak.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH] http: redact curl h2h3 headers in info
-From:   Glen Choo <chooglen@google.com>
-To:     Emily Shaffer <nasamuffin@google.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S229520AbiKJWV3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Nov 2022 17:21:29 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96E3F18B26
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 14:21:28 -0800 (PST)
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:5e4a:89fa:93b9:2058])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id C59385A1AC;
+        Thu, 10 Nov 2022 22:21:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1668118887;
+        bh=YeHwkUO5STHYhh1d1YOruO+nunk1lEuboMC6rdJSwLk=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=oicTqpOf9bBu1Dh+SZHweJSP72bUuV6W166R70i5g1ktUD5VOmvZFNQN4yu9S/0FG
+         9Gm54E8JY9czSqvXnw5Ak6ldO5w05rc8PuQE12dfjHu71QrTgGlBYauEOVIibv8TJS
+         FjuBAA8JokKSLSSB5pfsgFF63X4cOLm+/Ge5lDAToocgfE9ndC87LC585XxX3AK9jL
+         zM8cheQ7+JmBdgyCPO4gnrCKxHK3VKNi6Vpf5H42DB5AXz2HO4jm052CbJgg/IBbKY
+         /X6lu0P7BLBNmJd88v1BH8xM2eVdDvTJFbdzVAdY20AuQl48Lg7S/3FW5f/ONSgjCi
+         X+pOIqF3F+nuU40mOErEGUxg1YJonkRdK9S92z/6iGpukSsOhAfR3m/CDtXuo2Ttzo
+         xIbHzHJJOqjsPkgvBvd72rCWd9uXoNN7hkKkBr4N8IuAc1Eb+i8Ze2XubxcgtqrRFm
+         aFkjEux7SxTb47WhnOsM+sXkvRmOJ0VbNCkj4HNehSG+2Cy/Owd
+Date:   Thu, 10 Nov 2022 22:21:24 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 1/3] chainlint: sidestep impoverished macOS "terminfo"
+Message-ID: <Y215ZKz2iZWJCYo3@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+References: <pull.1413.git.1668013114.gitgitgadget@gmail.com>
+ <b85b28e5a6beea97c149f0b9de6ba8d0a4a7c1f9.1668013114.git.gitgitgadget@gmail.com>
+ <Y2xkpJj4jLqfsggL@tapette.crustytoothpaste.net>
+ <CAPig+cTL4x45E2a0RbpO2ntPo08K8hQ2wxcXm=QesqtYqxpvaw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="RwwU80vfU2mryJU+"
+Content-Disposition: inline
+In-Reply-To: <CAPig+cTL4x45E2a0RbpO2ntPo08K8hQ2wxcXm=QesqtYqxpvaw@mail.gmail.com>
+User-Agent: Mutt/2.2.7 (2022-08-07)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Emily Shaffer <nasamuffin@google.com> writes:
 
-> On Wed, Nov 09, 2022 at 12:52:31AM +0000, Glen Choo via GitGitGadget wrote:
->> 
->> With GIT_TRACE_CURL=1 or GIT_CURL_VERBOSE=1, sensitive headers like
->> "Authorization" and "Cookie" get redacted. However, since [1], curl's
->> h2h3 module also prints headers in its "info", which don't get redacted.
->> For example,
->> 
->>   echo 'github.com	TRUE	/	FALSE	1698960413304	o	foo=bar' >cookiefile &&
->>   GIT_TRACE_CURL=1 GIT_TRACE_CURL_NO_DATA=1 git \
->>     -c 'http.cookiefile=cookiefile' \
->>     -c 'http.version=' \
->>     ls-remote https://github.com/git/git refs/heads/main 2>output &&
->>   grep 'cookie' output
->> 
->> produces output like:
->> 
->>   23:04:16.920495 http.c:678              == Info: h2h3 [cookie: o=foo=bar]
->>   23:04:16.920562 http.c:637              => Send header: cookie: o=<redacted>
->> 
->> Teach http.c to check for h2h3 headers in info and redact them using the
->> existing header redaction logic.
->> 
->> [1] https://github.com/curl/curl/commit/f8c3724aa90472c0e617ddbbc420aa199971eb77
->> 
->> Signed-off-by: Glen Choo <chooglen@google.com>
->> ---
->>     http: redact curl h2h3 headers in info
->>     
->>     I initially sent this to the security list, but the general impression
->>     is that this isn't sensitive enough for an embargoed fix, so this is
->>     better discussed in the open instead.
->>     
->>     Since this comes from curl's HTTP2.0/3.0 module, this can be mitigated
->>     by setting http.version to 1.X, e.g. "git -c http.version=HTTP/1.1".
->>     
->>     According to [1], the susceptible curl versions appear to be 7.86.0,
->>     7.85.0, 7.84.0, 7.83.1, 7.83.0, 7.82.0, but I'm not sure which platforms
->>     are vulnerable.
->>     
->>     This patch fixes the issue on my machine running curl 7.85.0, so I think
->>     it is okay to merge as-is. That said, I would strongly prefer to add
->>     tests, but I haven't figured out how. In particular:
->>     
->>      * Do we have a way of using HTTP/2.0 in our tests? A cursory glance at
->>        our httpd config suggests that we only use HTTP/1.1.
->>      * How could we set up end-to-end tests to ensure that we're testing
->>        this against affected versions of curl? To avoid regressions, I'd
->>        also prefer to test against future versions of curl too.
->>     
->>     [1]
->>     https://github.com/curl/curl/commit/f8c3724aa90472c0e617ddbbc420aa199971eb77
->> 
->> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1377%2Fchooglen%2Fhttp%2Fredact-h2h3-v1
->> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1377/chooglen/http/redact-h2h3-v1
->> Pull-Request: https://github.com/git/git/pull/1377
->> 
->>  http.c | 40 ++++++++++++++++++++++++++++++++++++++--
->>  1 file changed, 38 insertions(+), 2 deletions(-)
->> 
->> diff --git a/http.c b/http.c
->> index 5d0502f51fd..cbcc7c3f5b6 100644
->> --- a/http.c
->> +++ b/http.c
->> @@ -560,8 +560,10 @@ static void set_curl_keepalive(CURL *c)
->>  }
->>  #endif
->>  
->> -static void redact_sensitive_header(struct strbuf *header)
->> +/* Return 0 if redactions been made, 1 otherwise. */
->
-> Does it make sense to reverse the retval here?
->
-> `if (!redact_sensitive_header())` sounds like "if not redacted, ..." -
-> but here it means the opposite, right?
+--RwwU80vfU2mryJU+
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I struggled with this for a bit since I wasn't sure what the convention
-is here. Enumerating some off the top of my head, we have:
+On 2022-11-10 at 03:37:16, Eric Sunshine wrote:
+> Hmm, on my machine "nsterm" also lacks the "dim" capability. I see
+> that Neovim docs recommend "nsterm" with Terminal.app, so perhaps that
+> ought to be handled specially here, as well. Do you think any
+> variations other than base "nsterm" are worth special-casing?
 
-- For 'booleans', we "0" for false and "1" for true (e.g.
-  starts_with()).
-- For functions that may fail with error, we have "0" for success and
-  nonzero to signal the failure type (e.g. strbuf_getdelim()).
-- For functions that don't fail we have "0" for "nothing was done" and
-  "1" for something was done (e.g. skip_prefix()).
+I'd say we should do nsterm, nsterm-256color, and nsterm-direct.
 
-(Tangent: from a readability perspective, this is pretty poor. I need to
-know beforehand whether or not the function may fail with error before I
-know what the return value means?)
+> I don't mind tightening which terminal types are handled specially.
+> "xterm-direct" doesn't exist on my old macOS. Is it present on newer
+> macOS? If so, does it require special-casing (i.e. does it lack
+> "dim")? If we don't special-case "xterm-direct", it will fall back to
+> using `tput` interrogation, which should be fine as long as the
+> "xterm-direct" terminfo entry is accurate.
 
-This probably falls into the last category, so for consistency, I think
-this should return "1" for "redactions have happened" (as you
-suggested).
+It's present in newer ncurses, so I expect it will make its way to macOS
+eventually.  I don't know whether Apple's version of it will contain
+the `dim` capability, but on Debian all three xterm variants do.
 
->> +static int redact_sensitive_header(struct strbuf *header)
->>  {
->> +	int ret = 1;
->>  	const char *sensitive_header;
->>  
->>  	if (trace_curl_redact &&
->> @@ -575,6 +577,7 @@ static void redact_sensitive_header(struct strbuf *header)
->>  		/* Everything else is opaque and possibly sensitive */
->>  		strbuf_setlen(header,  sensitive_header - header->buf);
->>  		strbuf_addstr(header, " <redacted>");
->> +		ret = 0;
->>  	} else if (trace_curl_redact &&
->>  		   skip_iprefix(header->buf, "Cookie:", &sensitive_header)) {
->>  		struct strbuf redacted_header = STRBUF_INIT;
->> @@ -612,6 +615,27 @@ static void redact_sensitive_header(struct strbuf *header)
->>  
->>  		strbuf_setlen(header, sensitive_header - header->buf);
->>  		strbuf_addbuf(header, &redacted_header);
->> +		ret = 0;
->> +	}
->> +	return ret;
->> +}
->> +
->> +/* Redact headers in info */
->> +static void redact_sensitive_info_header(struct strbuf *header)
->> +{
->> +	const char *sensitive_header;
->> +
->> +	if (trace_curl_redact &&
->> +	    skip_iprefix(header->buf, "h2h3 [", &sensitive_header)) {
->> +		struct strbuf inner = STRBUF_INIT;
->> +
->> +		/* Drop the trailing "]" */
->> +		strbuf_add(&inner, sensitive_header, strlen(sensitive_header) - 1);
->> +		if (!redact_sensitive_header(&inner)) {
->> +			strbuf_setlen(header, strlen("h2h3 ["));
->> +			strbuf_addbuf(header, &inner);
->> +			strbuf_addch(header, ']');
->
-> I'd really like some more comments in this function - even just one
-> describing the string we're trying to redact, or showing a sample line.
-> Navigating string parsing is always a bit difficult.
+It sounds like Apple is specifically limiting their capabilities for
+some reason when upstream ncurses doesn't.  I can't say why that is, but
+perhaps it's for compatibility.  Debian had to do that for one release
+with screen* when Screen added support for some new feature but tmux had
+not.
 
-Ah yes, I should include a description of the string.
+> I notice that the iTerm2 FAQ also recommends "xterm-new" on macOS, and
+> that one lacks "dim", as well on my machine. So, it seems that it
+> should be special-cased too.
+>=20
+> Taking all the above into account, perhaps this regex?
+>=20
+>     /xterm|xterm-.*color|xterm-new|nsterm/
 
->> +		}
->>  	}
->>  }
->>  
->> @@ -668,6 +692,18 @@ static void curl_dump_data(const char *text, unsigned char *ptr, size_t size)
->>  	strbuf_release(&out);
->>  }
->>  
->> +static void curl_print_info(char *data, size_t size)
->
-> Nit: Every other helper in this file calls it _dump_, so should this
-> also say _dump_ instead of _print_?
+Maybe this, then?
 
-Sure, I have no opinion here, so I'll do that.
+/(xterm|nsterm)(-(256color|direct))?|xterm-new/
 
->> +{
->> +	struct strbuf buf = STRBUF_INIT;
->> +
->> +	strbuf_add(&buf, data, size);
->> +
->> +	redact_sensitive_info_header(&buf);
->> +	trace_printf_key(&trace_curl, "== Info: %s", buf.buf);
->> +
->> +	strbuf_release(&buf);
->> +}
->> +
->>  static int curl_trace(CURL *handle, curl_infotype type, char *data, size_t size, void *userp)
->>  {
->>  	const char *text;
->> @@ -675,7 +711,7 @@ static int curl_trace(CURL *handle, curl_infotype type, char *data, size_t size,
->>  
->>  	switch (type) {
->>  	case CURLINFO_TEXT:
->> -		trace_printf_key(&trace_curl, "== Info: %s", data);
->> +		curl_print_info(data, size);
->>  		break;
->>  	case CURLINFO_HEADER_OUT:
->>  		text = "=> Send header";
->> 
->> base-commit: c03801e19cb8ab36e9c0d17ff3d5e0c3b0f24193
->
-> Otherwise functionally it seems fine to me. case CURLINFO_TEXT is the
-> one case that's not already using a curl_dump_* helper, so we're adding
-> one, and to that helper we're adding a call out to
-> redact_sensitive_header().
->
-> Thanks.
->  - Emily
->
->> -- 
->> gitgitgadget
+That matches the three special variants of each one here plus xterm-new.
+
+> Of course, the other option is to follow Git's own lead by not
+> worrying about TERM and `tput` and just assume everyone understands
+> ANSI color codes. I'm too old-school to feel entirely comfortable with
+> that approach, but I would entertain it if others feel it is safe
+> enough.
+
+Sure.  I would also prefer to avoid that.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--RwwU80vfU2mryJU+
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY215YwAKCRB8DEliiIei
+ga9fAP4trtgStuhljTUD8EU7Y1djZDR1zz24HVahZsapv35xGwD/UV3DdiJXlJ/D
+mCFfTy7812st8AUIxpBPk+PxwcvovAw=
+=mQVe
+-----END PGP SIGNATURE-----
+
+--RwwU80vfU2mryJU+--
