@@ -2,87 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C3334C4332F
-	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 02:17:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40D04C433FE
+	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 02:20:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232382AbiKJCRa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Nov 2022 21:17:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38584 "EHLO
+        id S232484AbiKJCUc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Nov 2022 21:20:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232364AbiKJCR2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2022 21:17:28 -0500
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 278EB1CFE1
-        for <git@vger.kernel.org>; Wed,  9 Nov 2022 18:17:27 -0800 (PST)
-Received: by mail-io1-xd2c.google.com with SMTP id p184so277270iof.11
-        for <git@vger.kernel.org>; Wed, 09 Nov 2022 18:17:27 -0800 (PST)
+        with ESMTP id S230120AbiKJCUb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2022 21:20:31 -0500
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EC361FCE2
+        for <git@vger.kernel.org>; Wed,  9 Nov 2022 18:20:30 -0800 (PST)
+Received: by mail-il1-x133.google.com with SMTP id d3so401973ils.1
+        for <git@vger.kernel.org>; Wed, 09 Nov 2022 18:20:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=OGLVq0PhQEIxBo5M4gWfk8TNcdj3Iiy+ZTvGUE0zj6I=;
-        b=IeCtBjUJNS467GXT5jVE28sHLjQPZCi72FvM7yzFpNPCjH+9JEL7qd9U49vDxx2dnv
-         wdhtjKpwn8otWA506R0xuXGoAipHYNKwG/USl6XGUlwSxxTYJFwijQvQSxxL7o9BN/X0
-         cR+s9ZajCxTMYoU509vTvS2oSH27b+ToOOFgjzTBalIopAGgjYJRvVSnWKpOu8RwyXQc
-         t4AZK5fyJV8pwEL/2o/DwBl+IbTYdK04Z01uGosRovYbmz1eYj6jUme54NbcBxUAePFS
-         aLNlOcHSfnPEOvBE+BNTMnvLelknr7RRAVGsrIfG3Sv/hwciDyGZuKMouvsAlxVX9vOE
-         UsEQ==
+        bh=Xn/CDGK6FGCur2WNhSElIhvaKNuSzSzWvcT9i5KMcXo=;
+        b=eM2DSAnDVNS88H+B8adeuDnsJ7xvIqIM/yADfccIM2OyBz2/PnkWYX/X1JrRMBYkia
+         ENXW8WfkLkx2MkgajsKGzUKOx4MQOaUhteQeMUuCTPVihVqH5l+oVNYes7cyv9ifzR3o
+         bVRmVf0cdjFSEuD+7efgPd+d/iNZwSBQ9kyB/bsXKwihJXuNB4eqN6SRpwUdhhKPn3Om
+         0NqOruEBUHei4KJiU5cUloZ872sGLrrVaXyCoe7AKIB9wM9aVv9xTrAso7nrQcKBfmmI
+         Iu/595DP20p+9jTjlQwl8Fc22WkX0NKJuuY5XKnDWvT5J/MYd+8YnCJBixCNP5a9XXC3
+         gjyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-transfer-encoding:content-disposition
          :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OGLVq0PhQEIxBo5M4gWfk8TNcdj3Iiy+ZTvGUE0zj6I=;
-        b=YMzEQOLy3GeJbHJ8ntt0zfNOHJdXMJJCqZT4lK2W1C1koX3jnD/4pg7VYaL1SO8q8P
-         KncbwLDU246THpSzEXlXcMUzbObczZqCngEDkAX8iuutrrOsYpyjCvd+3rLFJO8ZiHlv
-         mX6YyOg0lu66RrMSiQBZmifGFTwnrbEK0/uIM9pc/QmLY7dGBIkVEo4exeKRL/Kvu5eH
-         FO/50f2FS/UeT7bj3d1SmmlzG4UOs6zwJ9ua8wwsGZ1u/qT3dHS5CkdN9D5D1RUIkBxA
-         /I4JxqFWcmeEjqBN8H83SiNNsCVD3SGMn+pskri+tO4V0eKp7uIkffmHRe6c07bTBavx
-         FvGA==
-X-Gm-Message-State: ACrzQf3LAg0soOZX9h4zPitS7YT3gR+Qvi1W6/Nx0BLvFvh4OvL+glZ2
-        RXJhBX+oWWYpDLgF/vvloCkGBg==
-X-Google-Smtp-Source: AMsMyM7DhuiIERgkYacucv9k2cOx6QGwRDOe80mSVCYqzqoyqTUFyrRqVL7FuTiTiuIj5ZHiW8wkCg==
-X-Received: by 2002:a02:a394:0:b0:375:41a7:531 with SMTP id y20-20020a02a394000000b0037541a70531mr34659192jak.224.1668046646522;
-        Wed, 09 Nov 2022 18:17:26 -0800 (PST)
+        bh=Xn/CDGK6FGCur2WNhSElIhvaKNuSzSzWvcT9i5KMcXo=;
+        b=pfySma4GEmYEkxyor2+CUxs60Com8icyQ2mx7w2cRU4hyPgpA9VDFt3Sevus6ypevg
+         gwzFN0jCzFt129JmnCpwGCCInknPBcgz9bWp91R8oB7snj1w2Px/41aNFROP1iBRW18O
+         2/3rhGdz1gfUNT9AyzX0/zKrxYFty2UQ7RKDC/OORoGaOrn/jcHtN94tShZ77bw9GYgA
+         Ehy0HGuv88k9Ujn+TVpb2EPEFS1NIB10M3FnOPSdfGGYHShbMoul4pdjZ3mFuQs/OV6m
+         PD1USaNhxT1MabWHNO1vrN3s4mZvdIKxB4aeNTFgbwY79uhizlOc8Jc52njiLtuH41ja
+         APxQ==
+X-Gm-Message-State: ACrzQf3qJFjYucz38vuoL2uI6+FRgxm8g8cwJ8hOz9k2YIUju3+NoUGa
+        mozZUdUttgsxq4sPAnN09+S2vg==
+X-Google-Smtp-Source: AMsMyM5wTei6UehujB+5C9PmddHQc0FaFhhAnrIY0XbWVO8mm7bjTxl6pHnjHVmAJhbF0jIoczhJDg==
+X-Received: by 2002:a05:6e02:e0d:b0:300:f436:d467 with SMTP id a13-20020a056e020e0d00b00300f436d467mr13978898ilk.46.1668046829858;
+        Wed, 09 Nov 2022 18:20:29 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id n22-20020a02a196000000b0035a40af60fcsm5320420jah.86.2022.11.09.18.17.25
+        by smtp.gmail.com with ESMTPSA id o25-20020a6b5a19000000b006ca9e36fec8sm5831710iob.54.2022.11.09.18.20.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Nov 2022 18:17:26 -0800 (PST)
-Date:   Wed, 9 Nov 2022 21:17:25 -0500
+        Wed, 09 Nov 2022 18:20:29 -0800 (PST)
+Date:   Wed, 9 Nov 2022 21:20:28 -0500
 From:   Taylor Blau <me@ttaylorr.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Adam Dinwoodie <git@dinwoodie.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        GIT Mailing-list <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t7610: fix flaky timeout issue, don't clone from
- example.com
-Message-ID: <Y2xfNcCfkij6k4Uk@nand.local>
-References: <patch-1.1-83eca7b5a7c-20221105T115420Z-avarab@gmail.com>
- <Y2wuEDGMRg99Ifef@nand.local>
- <221110.864jv7ptbq.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH] Makefile: fix cygwin build failure
+Message-ID: <Y2xf7HbAdqXOmgR3@nand.local>
+References: <0dec6e1e-207c-be13-ae95-294d9b1e8831@ramsayjones.plus.com>
+ <Y2wwfQWrs+KYpWNv@nand.local>
+ <221110.868rkjpty3.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <221110.864jv7ptbq.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221110.868rkjpty3.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 10, 2022 at 12:55:30AM +0100, Ævar Arnfjörð Bjarmason wrote:
-> But we generally just fail some or all of 3..9 pretty fast, and don't
-> start taking 20 minutes to run the test, when it took 10s before (or
-> whatever).
+On Thu, Nov 10, 2022 at 12:18:01AM +0100, Ævar Arnfjörð Bjarmason wrote:
+>
+> On Wed, Nov 09 2022, Taylor Blau wrote:
+>
+> > Hi Ramsay,
+> >
+> > On Wed, Nov 09, 2022 at 10:46:05PM +0000, Ramsay Jones wrote:
+> >> Commit 1c97a5043f (Makefile: define "TEST_{PROGRAM,OBJS}" variables
+> >> earlier, 2022-10-31) breaks the cygwin build, like so:
+> >
+> > It seems reasonable to me, and I'd like to pick it up rather quickly (on
+> > top of Ævar's branch), especially if this is going to break things
+> > downstream in Git for Windows.
+> >
+> > Ævar: this sort of change is a little tricky to review without more diff
+> > context ;-). Do you have any objections to me slotting this on top of
+> > your branch?
+>
+> Yes, I've reviewed this, sorry about missing this edge case. This fix &
+> analysis looks solid to me (it's still just in "seen", right?)
 
-OK. I still think that in principle this is indistinguishable from not
-running a setup test to completion.
-
-*But*: I'm willing to treat them differently since instead of
-manifesting in an immediate failure later on in the suite, we hang for a
-substantial period of time.
-
-So I'm content to merge this down, but I don't think it's worth
-searching out for more of these in the future.
+Yes, 'ab/remove--super-prefix' is only in seen for now. So that we don't
+break the Cygwin build in the middle of history, could you send a reroll
+of that topic that incorporates this patch squashed into the right
+location so that each step builds independently?
 
 Thanks,
 Taylor
