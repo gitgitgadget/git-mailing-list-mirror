@@ -2,148 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E245C433FE
-	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 14:44:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB5F9C433FE
+	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 15:10:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231180AbiKJOol (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Nov 2022 09:44:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36816 "EHLO
+        id S231382AbiKJPKt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Nov 2022 10:10:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230494AbiKJOoj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Nov 2022 09:44:39 -0500
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE17E32062
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 06:44:38 -0800 (PST)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-13b6c1c89bdso2324558fac.13
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 06:44:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=F2804lybQHFIbL3HF1j+36+eFqSO5qVOggv73qpp/1c=;
-        b=Xt8FAfHOe2OVEG9CvQsUMiPgvLiXAroSHCRiBV+uwnmzVbCXs2YpTSFPxU6lQmlApp
-         VC4R2d6utLaTFXBqkzFpGe3zqMiEneegSGMTNM3J9P/TMPfnyVvNqh+MoqG9L26nf0lR
-         rhYnMsoaie5m6Y2CzihXOAfPiLWdMICJk6tJiKQ/oBxdwBxJYbS1vn5cn0+Y2Vmk8UGs
-         QsHfbwmrZSwDwmYSff+3VikfnRNyoMG4zMcAD3CycMSPW0I46IBXlwTEjvDuqB3XRNW4
-         J8iwvgT4gCqOlggWIdzHDsaakyM/xC+ktQhpfy9SO+x+dY/vO0So1VF0SOcuWFxG2E79
-         Vltg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=F2804lybQHFIbL3HF1j+36+eFqSO5qVOggv73qpp/1c=;
-        b=5gmMESS9u1Sy9nWV5Jret+CGqz0ymJQlSz3mseUZELNmlxK4dSYfYwvNdMGxOLNipb
-         nr9BuR7QCRAorzgFjo0p0qPP1p7nTJCWpreLRpOcU22ZR0UN4OLbRV8JYFlR+HTfWaEe
-         T0o5KgtLoc0xXl+DtEHNrufOWEUmkJEiZpB7LfYnZ6B2HOLLd3N5Xy6pPFEqVBHnRtYT
-         C634naGOT3M2ZZnSPKqmy1+Y5SBDCvLuHfl+XZaKgdFczRSbu6jHueA8oeyYFXKXNn4Z
-         uzCfFFeBaY9gZXIZoCJ36q+tVNZ/JB7QeADyi5RZmkoXMPNcd0N2ToqH+87qrO5Dl44O
-         EGPw==
-X-Gm-Message-State: ACrzQf3mHS1glxGeDjwpcDtQwWmPTRHJ9vsYPT/LemxwdMO+V4ae3ZZ4
-        ewv7laFipik1VU2kJluyqz5O
-X-Google-Smtp-Source: AMsMyM4tjhwYSOwatNppDBAkaCIrT49nsw8iM4HpeQb49YFC2du478kSmn38+oRHP1hoPYpdu2mnvA==
-X-Received: by 2002:a05:6870:f6a4:b0:13d:1aee:a72f with SMTP id el36-20020a056870f6a400b0013d1aeea72fmr32035137oab.58.1668091478232;
-        Thu, 10 Nov 2022 06:44:38 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:8dc6:f062:5d1c:cdbf? ([2600:1700:e72:80a0:8dc6:f062:5d1c:cdbf])
-        by smtp.gmail.com with ESMTPSA id e66-20020aca3745000000b0035a5ed5d935sm5742001oia.16.2022.11.10.06.44.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Nov 2022 06:44:37 -0800 (PST)
-Message-ID: <acc2a6d9-16aa-2576-d9cb-ca75fd94a2fa@github.com>
-Date:   Thu, 10 Nov 2022 09:44:36 -0500
+        with ESMTP id S229541AbiKJPKh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Nov 2022 10:10:37 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B87E5303D2
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 07:10:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1668093024; bh=hLVDqCYaxyB1CWxG1dR9IIW05u5TsMQhO4+CSldcyz4=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=V6K1Gzb4g+9kubSwzRIC4ETEcPoz1UQlBmE3PVaf9rM79qCobWdN5V50mFLIpeBpa
+         8lTLrDBbyxJD8TsV5VqtSmzfPu1iqWfzSXpacPn+VPBO2rOr/eD9CjQyvTJTSbkwXJ
+         GhlJFRux8wH9Ehi0ZbcFPjXjDOw6jWnEo4y89WlU35zg0/1m/eBcRTn6BpUKY/HLL/
+         H7U15nsRpxu6fuv9A6dHjpQxXGmibReuj3X9wYDSU6e6jArXt4iP7Np3Im2QxIOWF0
+         8cjgMic2iF2BlqbBcRjP2NNyi+iMgt0GY6bKcNgsOfPGCCsbcKY+vM8B1GBcU85k5P
+         BAq17Uejy0VZQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.27.167.171] ([213.196.213.188]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MvsEx-1pA7ui3dcF-00sv2e; Thu, 10
+ Nov 2022 16:10:23 +0100
+Date:   Thu, 10 Nov 2022 16:10:22 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Jeff King <peff@peff.net>
+cc:     Michael McClimon <michael@mcclimon.org>,
+        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
+        Glen Choo <chooglen@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/1] Git.pm: add semicolon after catch statement
+In-Reply-To: <Y02SHlW1rNQdfCHI@coredump.intra.peff.net>
+Message-ID: <28orrrr1-444q-6595-po76-3nr67r1pp4p0@tzk.qr>
+References: <20221016212236.12453-1-michael@mcclimon.org> <20221016212236.12453-2-michael@mcclimon.org> <Y0yRStZ6gM+H8/Bf@coredump.intra.peff.net> <Y0y7UdLf3qd7RgVQ@newk> <Y02SHlW1rNQdfCHI@coredump.intra.peff.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 0/5] Skip 'cache_tree_update()' when 'prime_cache_tree()'
- is called immediate after
-Content-Language: en-US
-To:     Victoria Dye <vdye@github.com>,
-        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     gitster@pobox.com, phillip.wood123@gmail.com,
-        jonathantanmy@google.com
-References: <pull.1411.git.1667947465.gitgitgadget@gmail.com>
- <6c1e50e3-cddb-4cc3-f83c-6ec2e2a06a9f@github.com>
- <99c1e5e0-d5cd-cf0e-25ba-31bc96a089c6@github.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <99c1e5e0-d5cd-cf0e-25ba-31bc96a089c6@github.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:FRBpJFYh/b4w4G7PUCwM6nO4IagAZuKM3CjntQNc4X917hEoKkq
+ z17qPnWJP02JmB/amnFrK6PX2gs10ofCuWjaVgWJKE8a7YYPtjbpD6iTc72xsXdZxtnrHGt
+ PO6SSIfF/rviOSN4dSnV9BTm2VgsCq04gDzYD9b8A5DUtwKh/5CyyoofEn5qX8X31k/GFJj
+ SpIQUFXV7fmw9xHMu2cvQ==
+UI-OutboundReport: notjunk:1;M01:P0:YKCqxMuIcXg=;Bj7fFYViDKK8yc7dNH1v2tPoTU3
+ QjPQMCtCs+U2H76/a8V1QEzECQ2+bIPB5FfkpHp94sVc49tI9DekdFZDmXYxOezceL565yGla
+ rDYjkMnWQStcuzpJpfbfn/oFrVjDxglibMPUiBXtYumC1P8pqlIh7DMdHLMameFur0eL8kSC1
+ iLdICN4QK4ibFxTApkEN04heu172IzcPXAw9v1hfsaybSfyo1ReEbbX+GsXtAhNx0HtmwgJ0U
+ uoUkt2F0VAp+MtrA3nprUmc03BLoJvIMznqe8IT3X52n2SpRcZvbNpyY4+i8DEiSmFREqPR7/
+ 1r9zv2cn2T7EggGpNX3i//UXixa8FxD23ZpzFK9doUUTKOwC8o1CZKJJsM3ASog8j5MTt3T8W
+ mnGZuBN29gYVdOOMJDeEjxez9yP3sk0JlxaFK8B+euIkqhl7RSqZiyS26NWM6wAXEkFp+eg9d
+ TPP+QmkX+xtuiW0+J/53c4MEjBsIgjvTYQrMkL1uXHiQXfRb1PgJGXJCHNZtNfyEWZn99+x2Y
+ CWjXSc+KWY+RM2RmQ1j95wP5PFlkWn/Lr2avGV2JCA9p5AAQLBkAaugBFsnOFq6lKQuQKbfsa
+ 7lhSpczmi34kbIHuhHw/fIUP1xdCq3O9QYdn+FdBZCEwHmbi/nhiBQj9PPpZviRh7E77bMUkq
+ Llv/uxGgQ7Uo0CvEg1iqia9sR6F/4QDd5IgkS68vvBMQJD0rVUD3i2gIgpu2KGRAbO73F6EJ8
+ jHzRlpDjrOaio4ggpdY0QVEJHq4pfeOYAm7o5QhrAcls9Mx+0Df2xgYUM6KBSDkAfLuaV609r
+ 0zrbvE76Ti1XjGkpmMOAdJK8fxwUrAoDEYAxwEwiJW7Owm0oYZIaO2a4CFC1uW0+reKSUJVg8
+ JEj4jJnHLgIdqCzgJthSzMjO4dvZ869B1f1PAcC08AKejCZFD9QGtUxXTlnNkij2Gx/p6sL0U
+ s5biimTsY5A+4hZY3nO4mxpFzq8=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/9/2022 5:18 PM, Victoria Dye wrote:
-> Derrick Stolee wrote:
->> On 11/8/2022 5:44 PM, Victoria Dye via GitGitGadget wrote:
->>> Following up on a discussion [1] around cache tree refreshes in 'git reset',
->>> this series updates callers of 'unpack_trees()' to skip its internal
->>> invocation of 'cache_tree_update()' when 'prime_cache_tree()' is called
->>> immediately after 'unpack_trees()'. 'cache_tree_update()' can be an
->>> expensive operation, and it is redundant when 'prime_cache_tree()' clears
->>> and rebuilds the cache tree from scratch immediately after.
->>>
->>> The first patch adds a test directly comparing the execution time of
->>> 'prime_cache_tree()' with that of 'cache_tree_update()'. The results show
->>> that on a fully-valid cache tree, they perform the same, but on a
->>> fully-invalid cache tree, 'prime_cache_tree()' is multiple times faster
->>> (although both are so fast that the total execution time of 100 invocations
->>> is needed to compare the results in the default perf repo).
->>
->> One thing I found interesting is how you needed 200 iterations to show
->> a meaningful change in this test script, but in the case of 'git reset'
->> we can see sizeable improvements even with a single iteration.
-> 
-> All of the new performance tests run with multiple iterations: 20 for reset
-> (10 iterations of two resets each), 100 for read-tree, 200 for the
-> comparison of 'cache_tree_update()' & 'prime_cache_tree()'. Those counts
-> were picked mostly by trial-and-error, to strike a balance of "the test
-> doesn't take too long to run" and "the change in execution time is clearly
-> visible in the results."
+Hi Peff,
 
-Thanks for pointing out my misunderstanding. I missed the repeat counts
-because 2-3 seconds "seemed right" based on performance tests of large
-monorepos, but clearly that's not right when using the Git repository for
-performance tests.
->> Is there something about this test that is artificially speeding up
->> these iterations? Perhaps the index has up-to-date filesystem information
->> that allows these methods to avoid filesystem interactions that are
->> necessary in the 'git reset' case?
-> 
-> I would expect the "cache_tree_update, invalid" test's execution time, when
-> scaled to the iterations of 'read-tree' and 'reset', to match the change in
-> timing of those commands, but the command tests are reporting *much* larger
-> improvements (e.g., I'd expect a 0.27s improvement in 'git read-tree', but
-> the results are *consistently* >=0.9s).
-> 
-> Per trace2 logs, a single invocation of 'read-tree' matching the one added
-> in 'p0006' spent 0.010108s in 'cache_tree_update()'. Over 100 iterations,
-> the total time would be ~1.01s, which lines up with the 'p0006' test
-> results. However, the trace2 results for "test-tool cache-tree --count 3
-> --fresh --update" show the first iteration taking 0.013060s (looks good),
-> then the next taking 0.003755s, then 0.004026s (_much_ faster than
-> expected).
-> 
-> To be honest, I can't figure out what's going on there. It might be some
-> kind of runtime/memory optimization with repeatedly rebuilding the same
-> cache tree (doesn't seem to be compiler optimization, since the speedup
-> still happens with '-O0'). The only sure-fire way to avoid it seems to be
-> moving the iteration outside of 'test-cache-tree.c' and into 'p0090'.
-> Unfortunately, the command initialization overhead *really* slows things
-> down, but I can add a "control" test (with no cache tree refresh) to
-> quantify how long that initialization takes.
+On Mon, 17 Oct 2022, Jeff King wrote:
 
-Getting unit-level performance tests is always tricky. Sometimes the best
-way to do it is to collect a sample using GIT_TRACE2_PERF and then manually
-collect the region times. It could be a fun project to integrate region
-measurements into the performance test suite instead of only end-to-end
-timings.
- 
-> While looking into this, I found a few other things I'd like to add to/fix
-> in that test (add a "partially-invalidated" cache tree case, use the
-> original cache tree OID in 'prime_cache_tree()' rather than the OID at
-> HEAD), so I'll re-roll with those + the updated iteration logic.
+> [... talking about safe.directory ...]
+>
+> But curiously this still does not pass after your patch, because we seem
+> to actually open the repository! I think this is because the C code
+> allows an explicit GIT_DIR to override the safe-directory checks.
 
-Taking a look now. Thanks!
+Yes, I remember that this was something we discussed at some length during
+the embargo: what to do with the explicitly-specified `GIT_DIR` when
+verifying the ownership, and my recollection is that we asserted that
+setting `GIT_DIR` qualifies for "they know what they're doing" (in
+particular when it is done in a script, not interactively).
 
--Stolee
+Ciao,
+Dscho
