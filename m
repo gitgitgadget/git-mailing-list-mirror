@@ -2,159 +2,337 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FA1DC433FE
-	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 00:46:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88B04C433FE
+	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 01:58:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232170AbiKJAqT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Nov 2022 19:46:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42656 "EHLO
+        id S232266AbiKJB6J (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Nov 2022 20:58:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232158AbiKJAqD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2022 19:46:03 -0500
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C59D9165A6
-        for <git@vger.kernel.org>; Wed,  9 Nov 2022 16:45:30 -0800 (PST)
-Received: by mail-pl1-x64a.google.com with SMTP id s15-20020a170902ea0f00b00187050232fcso233506plg.3
-        for <git@vger.kernel.org>; Wed, 09 Nov 2022 16:45:30 -0800 (PST)
+        with ESMTP id S229806AbiKJB5u (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2022 20:57:50 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 920102D74A
+        for <git@vger.kernel.org>; Wed,  9 Nov 2022 17:57:21 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id v1so292487wrt.11
+        for <git@vger.kernel.org>; Wed, 09 Nov 2022 17:57:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KmV5zy5hxtpVtmipdFh4FjcJke/5A+lN/FP3D3JRf4k=;
-        b=KPLjGWl/7j6e+EUkasq/sO7rFIJvtQVZMA0EllgOMGgB/aHuM38wdSuHyj6aLRO1w7
-         ionpqwOLJm6OLFvqyW5Ic8WtzHuggU+38hAKC0+1ZFnrPzdui9++zjaUj2cevCvK0QCs
-         Lm13D4/crhRE0m0IThhIDFVSsCjbGkv4yg041UV6yEd4MZ8AhwgQrwsqurobFYie0iBU
-         0+9BupoU7Bw4cc0OYJXCyqgBqV5p/cYaKaacY3b0sHEAj6jcJack1FlO62fXiGZTjKMM
-         4ouaqy5zUhPzR9LsdEJtPR+nhSVKEIKnXhaVoyosq/ChmZ7czRqQqoBKEKgglNntVwgP
-         gVng==
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vWwBOWtFcdAxATwikM1Gnx7Jra3kh9xR39YL+wtn8AQ=;
+        b=MjYEMc9VvH18sAX23NxxUNULoP+HZZ8ygvltgolTBFBHU8GC3nnnoNe5tRh4tdQW63
+         Xi4yhkv56f0J+lT1Ew5LTNHIkWpxQlatnG8FfSZ6x886vLD92qWjF7QuQ0Fr/chYm51B
+         n+gEQt4gaU5gKJqmURYh3vZecudjAcv53ocbBoNQmAq9QnjgKyRCO1d3ukpddwpJGWHd
+         G6cnOUdUcZU0x1ziDeoYk24q7LmAivFPAf8g+vzLqn3epTibYZBDmxXnA1LusdgqFlmp
+         5Dyjsdy+Lp0mEfHBs3b9EooHwqvuDE3z0lrlzUGn/x7RsGzka4fc+Y0D6wyiPSirwIxj
+         d6Pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=KmV5zy5hxtpVtmipdFh4FjcJke/5A+lN/FP3D3JRf4k=;
-        b=7sIy+EahbbX/LgHT41Qrmwvdc2dB9zZ6X+vp0KQlDdhv3qW6CjOPG9O6J5/N/ErhD3
-         6RHr+MITK28++HhsUWwH9bu0Fw3D1hnf1pE8jZnI8tCj5rNzjt4verHtu43+XQMR6l96
-         ZS3lUeLEpM0GHYuQyUw8n3XAb4kfFIOMmAxvBLjL4jwq8xLSJQnM/S3zR+rWjpHjICO2
-         wVNjCWvD7WqbkleJFQeO+XvKDO0g5vphNFKflMJkJrjIQdSHWpiFYoAnCZD4ACZNKJHK
-         t6qxTkJLyJ7UYeT+VIiEiRI2ZJeJpya9CDcvrshGp8pV+oJQVbCKbOcNm6Ouy44FlYtv
-         lDVw==
-X-Gm-Message-State: ANoB5plMstZtzcKfYzbYhNgiTG0uL7JSWiSyG1ypE+qol/fw3D0dbLjQ
-        Czf8tgE1yrGKbAUW7YxX7qUpsRqXjYo3Gw==
-X-Google-Smtp-Source: AA0mqf5vcpNXW2FZ/5odq/h1WHl3/BFkYZF6GikhC/Tyac4G8ZScrNYIeeYxlSGZvPHz5jxdTc1CUIb8FQeu/g==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:744b:b0:188:8e6b:978a with SMTP
- id e11-20020a170902744b00b001888e6b978amr8112635plt.11.1668041130313; Wed, 09
- Nov 2022 16:45:30 -0800 (PST)
-Date:   Wed, 09 Nov 2022 16:45:22 -0800
-In-Reply-To: <RFC-cover-0.8-00000000000-20221109T192315Z-avarab@gmail.com>
-Mime-Version: 1.0
-References: <20221109004708.97668-1-chooglen@google.com> <RFC-cover-0.8-00000000000-20221109T192315Z-avarab@gmail.com>
-Message-ID: <kl6ltu373ae5.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [RFC PATCH 0/8] Get rid of "git --super-prefix"
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vWwBOWtFcdAxATwikM1Gnx7Jra3kh9xR39YL+wtn8AQ=;
+        b=5vU6UyqhO/zd+1BjawzQ9ZC3YNjU1PUn+WLrnVTWBM90eeCA1MD7k/NICW+Ija4o8m
+         KO8sBYYcBlkVh9wxpT6Pv4BoRXfK1ab9Utz1Re49qP1k+Gv2dk64dQzrOZ857zpLQSXA
+         42Em40SyRe4gl8/L5C9In84rqOvCfu/R0bqlFYNw5QXF6PL29zdgjs82lVrRkkYHISHq
+         VoVpQwp4aPiMW0cnEDeyuzYR/Y37wjtvcvzihHQ7ovtLmmre/pxwFSNQefdLzb47Nxcg
+         /Nr63JCONe07g7YIhNj+bif1wjl7nRvBmfvR/AOSCF261Fe8W4rLug1Ex6TuCYTqKX9/
+         o+FA==
+X-Gm-Message-State: ACrzQf19HFRisU2xVIQUySpARpfTHDP5uOksiElfJDGWr5Uw+FCDcbcz
+        fsbHZ+dt7lqIidzTe5un/O2OgU8SoUE=
+X-Google-Smtp-Source: AMsMyM6uWK3m8YYAZm7kPJqYq8hAFmZZWtpc1D4yE+rhgzxdXEQBVA0K3igdqpz0FJG4b6rF3OUYRg==
+X-Received: by 2002:a05:6000:18a4:b0:238:3f91:554f with SMTP id b4-20020a05600018a400b002383f91554fmr23149835wri.682.1668045439824;
+        Wed, 09 Nov 2022 17:57:19 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id h2-20020a5d4302000000b0022ae0965a8asm14257566wrq.24.2022.11.09.17.57.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Nov 2022 17:57:19 -0800 (PST)
+Message-Id: <pull.1411.v2.git.1668045438.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1411.git.1667947465.gitgitgadget@gmail.com>
+References: <pull.1411.git.1667947465.gitgitgadget@gmail.com>
+From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 10 Nov 2022 01:57:12 +0000
+Subject: [PATCH v2 0/5] Skip 'cache_tree_update()' when 'prime_cache_tree()' is called immediate
+ after
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, phillip.wood123@gmail.com,
+        derrickstolee@github.com, jonathantanmy@google.com,
+        Taylor Blau <me@ttaylorr.com>, Victoria Dye <vdye@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for the series! I haven't fully figured out where I stand on
-this, but I can share some initial thoughts and comparisons to my RFC.
+Following up on a discussion [1] around cache tree refreshes in 'git reset',
+this series updates callers of 'unpack_trees()' to skip its internal
+invocation of 'cache_tree_update()' when 'prime_cache_tree()' is called
+immediately after 'unpack_trees()'. 'cache_tree_update()' can be an
+expensive operation, and it is redundant when 'prime_cache_tree()' clears
+and rebuilds the cache tree from scratch immediately after.
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+The first patch adds a test directly comparing the execution time of
+'prime_cache_tree()' with that of 'cache_tree_update()'. The results show
+that on a fully-valid cache tree, they perform the same, but on a partially-
+or fully-invalid cache tree (the more likely case in commands with the
+aforementioned redundancy), 'prime_cache_tree()' is faster.
 
-> An RFC alternative to Glen's [1], and what I *thought* he might be be
-> going for in the earlier discussion[2].
->
-> The difference is that in Glen's there's no "git --super-prefix", but
-> rather each set of commands still using it ("submodule--helper",
-> "read-tree" etc.) geit their own command-level option.
+The second patch introduces the 'skip_cache_tree_update' option for
+'unpack_trees()', but does not use it yet.
 
-Yes, and a secondary intent was to give exact definitions and a shared
-implementation to the command-level options instead of having each new
-command figure out what to do every time a similar use case pops up.
+The remaining three patches update callers that make the aforementioned
+redundant cache tree updates. The performance impact on these callers ranges
+from "negligible" (in 'rebase') to "substantial" (in 'read-tree') - more
+details can be found in the commit messages of the patch associated with the
+affected code path.
 
->
-> But it still works substantially the same, in that we're juggling a
-> global variable that we set, and read out later somewhere down the
-> stack.
 
-Yes, intentionally so. I was under the assumption that the various
-prefixes would still be used, and that adding them to commands will be a
-necessary evil, so it was better to have them share a single
-implementation.
+Changes since V1
+================
 
-> Whereas here there's no renaming of the option, but:
->
->  * For "submodule--helper" only the sub-commands that need it take the
->    option, it's not an option to "submodule--helper" itself.
+ * Rewrote 'p0090' to more accurately and reliably test 'prime_cache_tree()'
+   vs. 'cache_tree_update()'.
+   * Moved iterative cache tree update out of C and into the shell tests (to
+     avoid potential runtime optimizations)
+   * Added a "control" test to document how much of the execution time is
+     startup overhead
+   * Added tests demonstrating performance in partially-invalid cache trees.
+ * Fixed the use of 'prime_cache_tree()' in 'test-tool cache-tree', changing
+   it from using the tree at HEAD to the current cache tree.
 
-In writing [1], I ended up convincing myself that it isn't just that all
-of "submodule--helper" _does_ support "--super-prefix", but that all of
-it _should_ support "--super-prefix". I'll have to take another look.
+Thanks!
 
-At the very least, the subcommands that are just entrypoints for
-git-submodule.sh should support it, since they all need to print
-submodule paths in a semi-consistent way. I still think it would be nice
-for these to take a top level flag.
+ * Victoria
 
-There are other subcommands that are implementation details of other
-commands that need to run in a submodule because of assumptions
-the_repository, e.g. create-branch, push-check. Maybe these don't need
-"--super-prefix", I'll take another look.
+[1] https://lore.kernel.org/git/xmqqlf30edvf.fsf@gitster.g/ [2]
+https://lore.kernel.org/git/f4881b7455b9d33c8a53a91eda7fbdfc5d11382c.1627066238.git.jonathantanmy@google.com/
 
-I'm not sure if there are others.
+Victoria Dye (5):
+  cache-tree: add perf test comparing update and prime
+  unpack-trees: add 'skip_cache_tree_update' option
+  reset: use 'skip_cache_tree_update' option
+  read-tree: use 'skip_cache_tree_update' option
+  rebase: use 'skip_cache_tree_update' option
 
-(As an aside, when you remove git-submodule.sh, I wonder if we should
-split up submodule--helper along this dual-use line? e.g. the ones that
-are entrypoints could be moved to "builtin/submodule.c", and the
-implementation details can stay in "builtin/submodule--helper.c". Or
-maybe you're already one step ahead of me here :))
+ Makefile                           |  1 +
+ builtin/read-tree.c                |  4 ++
+ builtin/reset.c                    |  2 +
+ reset.c                            |  1 +
+ sequencer.c                        |  1 +
+ t/helper/test-cache-tree.c         | 64 ++++++++++++++++++++++++++++++
+ t/helper/test-tool.c               |  1 +
+ t/helper/test-tool.h               |  1 +
+ t/perf/p0006-read-tree-checkout.sh |  8 ++++
+ t/perf/p0090-cache-tree.sh         | 36 +++++++++++++++++
+ t/perf/p7102-reset.sh              | 21 ++++++++++
+ t/t1022-read-tree-partial-clone.sh |  2 +-
+ unpack-trees.c                     |  3 +-
+ unpack-trees.h                     |  3 +-
+ 14 files changed, 145 insertions(+), 3 deletions(-)
+ create mode 100644 t/helper/test-cache-tree.c
+ create mode 100755 t/perf/p0090-cache-tree.sh
+ create mode 100755 t/perf/p7102-reset.sh
 
-As you noted (somewhere) in the series, only commands called recursively
-need "--super-prefix", because otherwise "submodule--helper" is called
-from the root of the superproject and the 'prefix' is already
-well-known. I didn't make this argument because it was hard to word, so
-I'm glad you mentioned it.
 
-[1] https://lore.kernel.org/git/20221109004708.97668-2-chooglen@google.com/
+base-commit: 3b08839926fcc7cc48cf4c759737c1a71af430c1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1411%2Fvdye%2Ffeature%2Fcache-tree-optimization-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1411/vdye/feature/cache-tree-optimization-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1411
 
->  * There's no passing of the "super_prefix" as a global, instead we
->    pass it all the way along until we recurse to ourselves. For
->    "submodule--helper" this is quite straightforward.
->
->  * Then in 8/8 we're left with just "read-tree" needing the remaining
->    "--super-prefix", and we likewise don't pass it as a global, but
->    instead add it to the "struct unpack_trees_options", which will
->    pass it all the way down into unpack-trees.c and entry.c, until
->    we're going to recursively invoke another "read-tree".
+Range-diff vs v1:
 
-I worry a little about two "necessary evils":
+ 1:  45c198c629d ! 1:  833519d87c8 cache-tree: add perf test comparing update and prime
+     @@ Commit message
+          rebuilding an invalid cache tree, ultimately to remove one when both are
+          (reundantly) called in immediate succession.
+      
+     -    Both methods are incredibly fast, so the new tests in 'p0090-cache-tree.sh'
+     -    must call the tested method many times in succession to get non-negligible
+     -    timing results. Results show a substantial difference in execution time
+     -    between the two, with 'prime_cache_tree()' appearing to be the overall
+     -    faster method:
+     +    Both methods are fast, so the new tests in 'p0090-cache-tree.sh' must call
+     +    each tested function multiple times to ensure the reported times (to 0.01s
+     +    resolution) convey the differences between them.
+      
+     -    Test                                 this tree
+     -    ----------------------------------------------------
+     -    0090.1: prime_cache_tree, clean      0.07(0.05+0.01)
+     -    0090.2: cache_tree_update, clean     0.11(0.05+0.06)
+     -    0090.3: prime_cache_tree, invalid    0.06(0.05+0.01)
+     -    0090.4: cache_tree_update, invalid   0.50(0.41+0.07)
+     +    The tests compare the timing of a 'test-tool cache-tree' run as a no-op (to
+     +    capture a baseline for the overhead associated with running the tool),
+     +    'cache_tree_update()', and 'prime_cache_tree()' on four scenarios:
+     +
+     +    - A completely valid cache tree
+     +    - A cache tree with 2 invalid paths
+     +    - A cache tree with 50 invalid paths
+     +    - A completely empty cache tree
+     +
+     +    Example results:
+     +
+     +    Test                                        this tree
+     +    -----------------------------------------------------------
+     +    0090.2: no-op, clean                        1.27(0.48+0.52)
+     +    0090.3: prime_cache_tree, clean             2.02(0.83+0.85)
+     +    0090.4: cache_tree_update, clean            1.30(0.49+0.54)
+     +    0090.5: no-op, invalidate 2                 1.29(0.48+0.54)
+     +    0090.6: prime_cache_tree, invalidate 2      1.98(0.81+0.83)
+     +    0090.7: cache_tree_update, invalidate 2     2.12(0.94+0.86)
+     +    0090.8: no-op, invalidate 50                1.32(0.50+0.55)
+     +    0090.9: prime_cache_tree, invalidate 50     2.10(0.86+0.89)
+     +    0090.10: cache_tree_update, invalidate 50   2.35(1.14+0.90)
+     +    0090.11: no-op, empty                       1.33(0.50+0.54)
+     +    0090.12: prime_cache_tree, empty            2.04(0.84+0.87)
+     +    0090.13: cache_tree_update, empty           2.51(1.27+0.92)
+     +
+     +    These timings show that, while 'cache_tree_update()' is faster when the
+     +    cache tree is completely valid, it is equal to or slower than
+     +    'prime_cache_tree()' when there are any invalid paths. Since the redundant
+     +    calls are mostly in scenarios where the cache tree will be at least
+     +    partially invalid (e.g., 'git reset --hard'), 'prime_cache_tree()' will
+     +    likely perform better than 'cache_tree_update()' in typical cases.
+      
+          Signed-off-by: Victoria Dye <vdye@github.com>
+      
+     @@ t/helper/test-cache-tree.c (new)
+      +#include "parse-options.h"
+      +
+      +static char const * const test_cache_tree_usage[] = {
+     -+	N_("test-tool cache-tree <options> (prime|repair)"),
+     ++	N_("test-tool cache-tree <options> (control|prime|update)"),
+      +	NULL
+      +};
+      +
+     @@ t/helper/test-cache-tree.c (new)
+      +{
+      +	struct object_id oid;
+      +	struct tree *tree;
+     -+	int fresh = 0;
+     -+	int count = 1;
+     ++	int empty = 0;
+     ++	int invalidate_qty = 0;
+      +	int i;
+      +
+      +	struct option options[] = {
+     -+		OPT_BOOL(0, "fresh", &fresh,
+     -+			 N_("clear the cache tree before each repetition")),
+     -+		OPT_INTEGER_F(0, "count", &count, N_("number of times to repeat the operation"),
+     ++		OPT_BOOL(0, "empty", &empty,
+     ++			 N_("clear the cache tree before each iteration")),
+     ++		OPT_INTEGER_F(0, "invalidate", &invalidate_qty,
+     ++			      N_("number of entries in the cache tree to invalidate (default 0)"),
+      +			      PARSE_OPT_NONEG),
+      +		OPT_END()
+      +	};
+     @@ t/helper/test-cache-tree.c (new)
+      +	if (read_cache() < 0)
+      +		die("unable to read index file");
+      +
+     -+	get_oid("HEAD", &oid);
+     ++	oidcpy(&oid, &the_index.cache_tree->oid);
+      +	tree = parse_tree_indirect(&oid);
+     -+	for (i = 0; i < count; i++) {
+     -+		if (fresh)
+     -+			cache_tree_free(&the_index.cache_tree);
+     -+
+     -+		if (!argc)
+     -+			die("Must specify subcommand");
+     -+		else if (!strcmp(argv[0], "prime"))
+     -+			prime_cache_tree(the_repository, &the_index, tree);
+     -+		else if (!strcmp(argv[0], "update"))
+     -+			cache_tree_update(&the_index, WRITE_TREE_SILENT | WRITE_TREE_REPAIR);
+     -+		else
+     -+			die("Unknown command %s", argv[0]);
+     ++	if (!tree)
+     ++		die(_("not a tree object: %s"), oid_to_hex(&oid));
+     ++
+     ++	if (empty) {
+     ++		/* clear the cache tree & allocate a new one */
+     ++		cache_tree_free(&the_index.cache_tree);
+     ++		the_index.cache_tree = cache_tree();
+     ++	} else if (invalidate_qty) {
+     ++		/* invalidate the specified number of unique paths */
+     ++		float f_interval = (float)the_index.cache_nr / invalidate_qty;
+     ++		int interval = f_interval < 1.0 ? 1 : (int)f_interval;
+     ++		for (i = 0; i < invalidate_qty && i * interval < the_index.cache_nr; i++)
+     ++			cache_tree_invalidate_path(&the_index, the_index.cache[i * interval]->name);
+      +	}
+      +
+     ++	if (!argc)
+     ++		die("Must specify subcommand");
+     ++	else if (!strcmp(argv[0], "prime"))
+     ++		prime_cache_tree(the_repository, &the_index, tree);
+     ++	else if (!strcmp(argv[0], "update"))
+     ++		cache_tree_update(&the_index, WRITE_TREE_SILENT | WRITE_TREE_REPAIR);
+     ++	/* use "control" subcommand to specify no-op */
+     ++	else if (!!strcmp(argv[0], "control"))
+     ++		die("Unknown command %s", argv[0]);
+     ++
+      +	return 0;
+      +}
+      
+     @@ t/perf/p0090-cache-tree.sh (new)
+      @@
+      +#!/bin/sh
+      +
+     -+test_description="Tests performance of cache tree operations"
+     ++test_description="Tests performance of cache tree update operations"
+      +
+      +. ./perf-lib.sh
+      +
+      +test_perf_large_repo
+      +test_checkout_worktree
+      +
+     -+count=200
+     -+test_perf "prime_cache_tree, clean" "
+     -+	test-tool cache-tree --count $count prime
+     -+"
+     ++count=100
+     ++
+     ++test_expect_success 'setup cache tree' '
+     ++	git write-tree
+     ++'
+      +
+     -+test_perf "cache_tree_update, clean" "
+     -+	test-tool cache-tree --count $count update
+     -+"
+     ++test_cache_tree () {
+     ++	test_perf "$1, $3" "
+     ++		for i in \$(test_seq $count)
+     ++		do
+     ++			test-tool cache-tree $4 $2
+     ++		done
+     ++	"
+     ++}
+      +
+     -+test_perf "prime_cache_tree, invalid" "
+     -+	test-tool cache-tree --count $count --fresh prime
+     -+"
+     ++test_cache_tree_update_functions () {
+     ++	test_cache_tree 'no-op' 'control' "$1" "$2"
+     ++	test_cache_tree 'prime_cache_tree' 'prime' "$1" "$2"
+     ++	test_cache_tree 'cache_tree_update' 'update' "$1" "$2"
+     ++}
+      +
+     -+test_perf "cache_tree_update, invalid" "
+     -+	test-tool cache-tree --count $count --fresh update
+     -+"
+     ++test_cache_tree_update_functions "clean" ""
+     ++test_cache_tree_update_functions "invalidate 2" "--invalidate 2"
+     ++test_cache_tree_update_functions "invalidate 50" "--invalidate 50"
+     ++test_cache_tree_update_functions "empty" "--empty"
+      +
+      +test_done
+ 2:  d0a20cafd39 = 2:  b015a4f531c unpack-trees: add 'skip_cache_tree_update' option
+ 3:  908fe764670 = 3:  4f6039971b8 reset: use 'skip_cache_tree_update' option
+ 4:  319f1d71b2e = 4:  5a646bc47c9 read-tree: use 'skip_cache_tree_update' option
+ 5:  dd4edd7cad8 = 5:  fffe2fc17ed rebase: use 'skip_cache_tree_update' option
 
-- (As stated earlier) we may have to add "--super-prefix" or similar to
-  more commands
-- We may need to read "--super-prefix" from many parts of the code,
-  since many parts might print paths.
-
-Having globals makes both of these cases easier, and is quite a bit
-closer to the original implementation of "--super-prefix" (so your
-characterization of only getting to a halfway point is accurate). This
-was mostly to stave off opposition that it would tedious to add new
-per-command "--super-prefix"-es, but if nobody else cares, maybe it's ok
-to get of the globals.
-
-If we do want to pass a context object around, we probably have to be
-more principled about it (e.g. in 8/8 I notice that checkout_stage()
-doesn't receive the context object and we resort to passing NULL
-instead), but we'd want that anyway if we want Git to move towards being
-more library-like.
-
-It's quite likely that if any new "--super-prefix"-es are added, they
-would be added by a Googler (even the original ones were ;)), so I can
-probably go through the roadmap and figure out how costly these extra
-"--super-prefix"-es might be.
+-- 
+gitgitgadget
