@@ -2,102 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B44B8C433FE
-	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 17:02:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B651BC433FE
+	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 17:26:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232783AbiKJRCH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Nov 2022 12:02:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32922 "EHLO
+        id S231217AbiKJR0f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Nov 2022 12:26:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232820AbiKJRCC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Nov 2022 12:02:02 -0500
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA1241209C
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 09:02:01 -0800 (PST)
-Received: by mail-io1-xd2b.google.com with SMTP id y6so1695017iof.9
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 09:02:01 -0800 (PST)
+        with ESMTP id S230142AbiKJR0d (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Nov 2022 12:26:33 -0500
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEFCA167FD
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 09:26:32 -0800 (PST)
+Received: by mail-qt1-x835.google.com with SMTP id h24so1303832qta.9
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 09:26:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=4eMIjP1+4KFt8gPon2KUoOR1H/gfIh6H+cj6JFwLs+8=;
-        b=H40tVQHO4HeiQtmpf2A+NngP5xADNUFfqxKMzRXhEWuta6QxeQ2B+fITLPkEIowyP9
-         RgrADAAOWjnrPx4Cl030ZT53JIAwIGahElkq88IK+ci3jUaju4sbM6ZV9UjoV1F/B1ys
-         VsMSPvdaY8wc4c13fuc2TDcF6s/wxFc8BnxJrUmXxQuB4ZHjV/861A8bTijPioadUiy9
-         pTfLj5o/V0nLUth0VrBrTLLQxeg7gJ2D1rgVTuwgu+MLxvRyLLpR+t2fEa0SDjxQkrt8
-         nxwoK7i5kYcZbY7NVfXFSWX937dpnGnyQwbf0bdoZPSNkvSt+3Mq86+x/cvAmu6p1dVX
-         eTwA==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qrD5iwhJGEppOoBdRdJYPnr9s5/xYj4YLWtrDBnz+BQ=;
+        b=bJEEg553yoz3ua+TP7QPCU5TTMzUwvpm4GCXbCrr3SuhZ0QvgYMK8uIL7CsAPiBNn1
+         6mYpOjuPs+KVUrxUqaxFI/IVu2R1Q04n2ZhiSS6o4pUaJnYIbyzNK0ca64UnpnjRB0Fp
+         XoUB/AEu8MquD7kb+1hLvUyRONmbtmH0WcuBrD5Y2fu+KLoy1bFeSqplZWe5QmtdDnD/
+         MIJxee+qj67xSIvCFqbvk+no8ivWxMpE5oAw4ZchvYuhk97QgUEqKKGBKHBQuWLwnxFv
+         blDaJnLn3SHazVD3Jky2EKDaEMmWTA4Ya0FcmE9pdqrWKr1mehs9yOr8rgQq8lF6RD6b
+         mm5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4eMIjP1+4KFt8gPon2KUoOR1H/gfIh6H+cj6JFwLs+8=;
-        b=0DUMx4n46BkENCjf5qu6x/Zbhbyd9629y78qAK1GO4LiZKKlk28GQBrZdJ+AsRweHc
-         2jO70UYKkfcXzsWCl4z5Ax5dnSICmnuOS/x24U+5f9310OFB+FpiNpzQWjEZQyRTg2IR
-         iAVYNoJDBhdBG7KJml3DBcsiMl3FC7x75fG+hUEjPX+Xu0Gz5Ua0ZJw8Oo3o7dPhCx49
-         cxX4gg52HDibzRhhps8xBYLimaN01tZHKw0PuvqSadLiEeKndBT2Fq00mB1/tuwMgebs
-         dxFGEG5RzkTmGTQycRc6ORhNVayQAusoSs+cfB6+pqDXJyw7OnfGdacIJdICzU+hD32C
-         a8Ag==
-X-Gm-Message-State: ACrzQf2KNkJfYhXqcvFeihi8IJpmL5jZr79ujLmwmjHGz/0R1MTVOdEL
-        /3PMrz+HaiNMpd1OoXoEElACI3fkztSJAVmz5hY=
-X-Google-Smtp-Source: AMsMyM7Lpwh4rTWg6DNh+kBLbY2Em/VvU9OrRu+Z6KKAJ+WNduA3W7J3mw08w0PnZZ0aq/64dsPulKz8XAebli4XHnw=
-X-Received: by 2002:a05:6638:19:b0:375:2b75:93d with SMTP id
- z25-20020a056638001900b003752b75093dmr3115027jao.235.1668099720896; Thu, 10
- Nov 2022 09:02:00 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qrD5iwhJGEppOoBdRdJYPnr9s5/xYj4YLWtrDBnz+BQ=;
+        b=Z+wX2HKGa4LmE+tfxplnbnqYw0YJdxYVxkbdIqsXUEw3+1XsVPmIosadNXnKXtZnmn
+         IdZ5Dye0gsRuxK+6M+NxJf9Htw12u1AnB24MtiHIRTLioBFjdsL9cbwkFGjqjhSJaAuz
+         HTxSfWkimc1WIo84dS3t9FcIluGMbTU1x/EGyPNZKFTwvUxLZgtv22vU5Dcn8cfsg1I1
+         4NCQN4UX+d4GmWJ1SPoFN5t1567bMTYgbxySr53WnUi1zx1oK/Pc7NsPfkV/dMaxEygF
+         p+/NnE1TAg+y+nnLJMXVwwtz1Uz6q96o/W/qF2QM563TFtVPguvpSIJFk5UDDziMasPx
+         f8RA==
+X-Gm-Message-State: ACrzQf3ITjF87jg24KY87O19qLrkMaJvTV40rpDgK7rCITUkbV6+rpOO
+        Af275vClTAWrBdQAnzVhMlsh
+X-Google-Smtp-Source: AMsMyM7RJuGdu9OTyEpR8eGTaAixWSdMrgRwT5MoGDDT5lfO65HWfJI4rqVUFlEgIe3uw6gh+I36UA==
+X-Received: by 2002:ac8:4a16:0:b0:3a5:1f7a:61f3 with SMTP id x22-20020ac84a16000000b003a51f7a61f3mr1510261qtq.65.1668101191825;
+        Thu, 10 Nov 2022 09:26:31 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:8dc6:f062:5d1c:cdbf? ([2600:1700:e72:80a0:8dc6:f062:5d1c:cdbf])
+        by smtp.gmail.com with ESMTPSA id w13-20020a05620a444d00b006cbc00db595sm13360825qkp.23.2022.11.10.09.26.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Nov 2022 09:26:31 -0800 (PST)
+Message-ID: <52f94376-bd05-9470-3804-4fcbc5751d18@github.com>
+Date:   Thu, 10 Nov 2022 12:26:31 -0500
 MIME-Version: 1.0
-References: <pull.1384.v3.git.1667424467505.gitgitgadget@gmail.com>
- <pull.1384.v4.git.1668055574050.gitgitgadget@gmail.com> <CAPig+cTGG-y6myEYOVeF8W9QBdCjhqeghsepi-2R9V-v7=YwZA@mail.gmail.com>
-In-Reply-To: <CAPig+cTGG-y6myEYOVeF8W9QBdCjhqeghsepi-2R9V-v7=YwZA@mail.gmail.com>
-From:   Rudy Rigot <rudy.rigot@gmail.com>
-Date:   Thu, 10 Nov 2022 11:01:49 -0600
-Message-ID: <CANaDLWK9ZhtqdpJJCNvOJ24x0jtUzZjZE5WKdzBPnePA4eGqTg@mail.gmail.com>
-Subject: Re: [PATCH v4] status: long status advice adapted to recent capabilities
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Rudy Rigot via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v2 0/5] Skip 'cache_tree_update()' when
+ 'prime_cache_tree()' is called immediate after
+Content-Language: en-US
+To:     Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     gitster@pobox.com, phillip.wood123@gmail.com,
+        jonathantanmy@google.com, Taylor Blau <me@ttaylorr.com>,
+        Victoria Dye <vdye@github.com>
+References: <pull.1411.git.1667947465.gitgitgadget@gmail.com>
+ <pull.1411.v2.git.1668045438.gitgitgadget@gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <pull.1411.v2.git.1668045438.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> the <<- operator allows you to indent the here-doc body
-> (with TABs, not spaces), so you can align the body with the rest of
-> the code
+On 11/9/2022 8:57 PM, Victoria Dye via GitGitGadget wrote:
+> Changes since V1
+> ================
+> 
+>  * Rewrote 'p0090' to more accurately and reliably test 'prime_cache_tree()'
+>    vs. 'cache_tree_update()'.
+>    * Moved iterative cache tree update out of C and into the shell tests (to
+>      avoid potential runtime optimizations)
+>    * Added a "control" test to document how much of the execution time is
+>      startup overhead
+>    * Added tests demonstrating performance in partially-invalid cache trees.
+>  * Fixed the use of 'prime_cache_tree()' in 'test-tool cache-tree', changing
+>    it from using the tree at HEAD to the current cache tree.
 
-Unfortunately, that's how I had done it first, but since some of those
-lines are blank, the test code had lines just made of "<tab><tab>" and
-nothing else, which made the check-whitespace check fail. I considered
-replacing empty line with something on the fly with sed (like just an
-"x" character for instance), but this felt hacky and brittle (in the
-unlikely case where an actual "x" would find itself genuinely lost in
-the middle of that output, the test would mistakenly pass). I went
-with the solution I'm presenting here because the readability
-downsides of missing that indentation felt less bad. Definitely
-willing to be convinced though.
+I did a re-read of this series and it looks good to me.
 
-I have no issues with anything else from your review, and I'm planning
-to integrate it all. More specifically:
-
-> I presume the reason you're escaping the "trash" directory is because
-> you don't want these untracked "actual" and "expected" files to
-> pollute the `git status` output you're testing?
-
-You are presuming right! The test was being flappy in CI runs before I
-changed this, which I found used as a solution in other
-git-status-related tests currently in the codebase. I'm not familiar
-with the trash directory approach, but I'll figure it out.
-
-> Does this need to be inline? Is this a hot piece of code, or is this
-> merely a premature optimization?
-
-I'll admit my limits, I'm not familiar enough to know. If you feel the
-inline is unnecessary here, I'm glad to trust you on it, I'll remove
-it.
-
-Thanks a lot for your in-depth review, I am planning to integrate all
-the other feedback, and bring another iteration forward, possibly
-today.
+Thanks for doing this investigation!
+-Stolee
