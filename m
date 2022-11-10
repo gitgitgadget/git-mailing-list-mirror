@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 381F1C433FE
-	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 19:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F494C433FE
+	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 19:07:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231777AbiKJTHn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Nov 2022 14:07:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47544 "EHLO
+        id S231433AbiKJTHp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Nov 2022 14:07:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231817AbiKJTHW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Nov 2022 14:07:22 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AB3C5802B
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 11:06:09 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id ja4-20020a05600c556400b003cf6e77f89cso4695629wmb.0
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 11:06:09 -0800 (PST)
+        with ESMTP id S231194AbiKJTH2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Nov 2022 14:07:28 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8E1C45A3B
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 11:06:10 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id a14so3632936wru.5
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 11:06:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=15eMQwvJF++5aDVXFKdE3MDZ0e8KNUhbdAtxF4VrPZw=;
-        b=p27zqv7dqZgbOZVamntDnmq3qty+KhCZjax/PClblQQigEIuiwp0BnvLyPpnvgXxDz
-         GS15USXy9Y3Y4qakIkFGhIwKNj4RL5oQRF57YyCcjm194CcZElFuL3uxK1bEaadFI/+M
-         bN6qQcMqXAxCtIBQ7G8NeEbqi1chkb31/G7zgT9hfm18/Fj6lJLqXgarz/JPha600KFP
-         zjsiJotiscXSn5Dgsi5uW/cx8evfzsVF8rnkp76Me670x2DA6Lss3POT2D+nREh1o1XT
-         N9ZmNsXoLgKQJatwUUTvdceOCLSkmdnDwyqoBQ3KvqkBl9TOsfXxoBH3SN0m9KVC6cHk
-         F42w==
+        bh=uUClqX3IKAxBrK0tMJNFZwTqsCoVkCvWIzx7q84PLgM=;
+        b=YwH3SQViyrTHOkAIE0Vh37epZmgcui5Dri1h3gXMrzkMV+9tcB7qsAQH6giqFWqAiO
+         jp4Ctk+p/QBz/B2hZJTh6voAJe3XNwcZ2kkgfqvo068H4wmbzsHI53DGVQtLEV4IOgBW
+         K64WVK8jiOESlDLVAAIsTito5EYxEOVOUFZ/OohS3eujnmRKJi3Ah7MHPBt2wN/I5GAj
+         r0yzZTsOVy6wkxa2BquRDFT6XIiq5Ipj1VhOPp5M3OSEyLpb6dR1YHVK2bre2r3yoMfM
+         JKZEHmsrFLsF2EsRluNo1XqU7zmRz7vqDyFADigmouLD2LgZn2ydiDUrgg0oPOuzzua/
+         sUNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=15eMQwvJF++5aDVXFKdE3MDZ0e8KNUhbdAtxF4VrPZw=;
-        b=qVJCV6X8ZN/NiDQeIAHn7p9TRrR8d2DZbYCRnjVUr2pHHz6dQ0ObwBSRL7Pue2qaZB
-         fwhK3hPdooYuWbTU3bzXbB9j6Ut8QaPeBoLGZ0TxGT+Ak9dkYsI9u1Ao5Rff/DgVN63/
-         AfZWMfVYpcsMo+WtFFcEMUUmQ3buf6/VfuapSf13gVUME7A+meuAcIUm6Pd6hSzZBtyQ
-         l2NdKHDpHgqMASacJUQfBmS8zgPSCU4HTa7+iHds3PiKiAihAAvtOgVL2ObQ8EtRFq2I
-         +FcFrocPoCJIYYyLKA1beeR6rKm1tq6WkPRJmumhebFdYiLulRJC1dY3t+2/LC4EqLc9
-         IVkQ==
-X-Gm-Message-State: ACrzQf37eDTobOu/h39Fu3m2JUHu0mmKKufub8b3Cz6cnZeDPQdEk4dp
-        UP26wKo2jhFRod1lNErJtD2okq49UGM=
-X-Google-Smtp-Source: AMsMyM5q/wwKNnmt8pK0oqekwO8zSAaXPE+CWjPG0ZgmUtAA1lFCTMbm4pXimi0hrFlasBxclMMjNQ==
-X-Received: by 2002:a05:600c:1:b0:3c6:c456:f07a with SMTP id g1-20020a05600c000100b003c6c456f07amr45626450wmc.158.1668107167932;
-        Thu, 10 Nov 2022 11:06:07 -0800 (PST)
+        bh=uUClqX3IKAxBrK0tMJNFZwTqsCoVkCvWIzx7q84PLgM=;
+        b=yUtWTtCrpg7tSRF92lQdOSLcXXDIQcLM8IcWD1Do/w32oF0KS/LGN0nfjS/jcHE+9H
+         cgGwEVLO/2vUPgtoqoCJ6qNzFBThtBkyH7VmQwkmxHDiHi9qbtyO1+7CXmiKq6h9go1F
+         fIKijEy3SBPEtK6Hta6t5t8jbSkOwT7GB70wFd30cUJl5Cuq1RrtnzmMGwcJi0HuUwVl
+         yqtM3th2i8jkhAdNTKGIbIy5Pq5lRQad9h9bU423eACWXGVxI7XEKWp+GJ537xb43iwF
+         XNqFyupQUogEjGKAVsFggzDcc+BppK5lHImicfKKY4rldDPLnu5Ni8KIZQMO4sfHZEQZ
+         paAw==
+X-Gm-Message-State: ACrzQf2MoWodb/H3YfFEVNcIggOlEeqCXWy1O6JfjxLBirjwb9Kx+dSH
+        lULE3PHXTi/f6LfHbj1batC441gdpXg=
+X-Google-Smtp-Source: AMsMyM6gxNzBiOJqvWBxZJXhxdjxgIXX7+lvZ+Re0XF5V6QaWLM0NE3t5yC5hk+cMlQLSpqWzMfNbg==
+X-Received: by 2002:a5d:60d1:0:b0:237:46c8:1f6d with SMTP id x17-20020a5d60d1000000b0023746c81f6dmr26938553wrt.232.1668107169086;
+        Thu, 10 Nov 2022 11:06:09 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v21-20020a05600c215500b003c6c3fb3cf6sm390915wml.18.2022.11.10.11.06.06
+        by smtp.gmail.com with ESMTPSA id c2-20020a05600c0a4200b003b4a68645e9sm6870899wmq.34.2022.11.10.11.06.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Nov 2022 11:06:07 -0800 (PST)
-Message-Id: <pull.1411.v3.git.1668107165.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1411.v2.git.1668045438.gitgitgadget@gmail.com>
+        Thu, 10 Nov 2022 11:06:08 -0800 (PST)
+Message-Id: <2b48a6841561c70221343e58251746a052957377.1668107165.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1411.v3.git.1668107165.gitgitgadget@gmail.com>
 References: <pull.1411.v2.git.1668045438.gitgitgadget@gmail.com>
+        <pull.1411.v3.git.1668107165.gitgitgadget@gmail.com>
 From:   "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 10 Nov 2022 19:06:00 +0000
-Subject: [PATCH v3 0/5] Skip 'cache_tree_update()' when 'prime_cache_tree()' is called immediate
- after
+Date:   Thu, 10 Nov 2022 19:06:01 +0000
+Subject: [PATCH v3 1/5] cache-tree: add perf test comparing update and prime
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -64,147 +64,216 @@ To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, phillip.wood123@gmail.com,
         derrickstolee@github.com, jonathantanmy@google.com,
         szeder.dev@gmail.com, Taylor Blau <me@ttaylorr.com>,
-        Victoria Dye <vdye@github.com>
+        Victoria Dye <vdye@github.com>, Victoria Dye <vdye@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Following up on a discussion [1] around cache tree refreshes in 'git reset',
-this series updates callers of 'unpack_trees()' to skip its internal
-invocation of 'cache_tree_update()' when 'prime_cache_tree()' is called
-immediately after 'unpack_trees()'. 'cache_tree_update()' can be an
-expensive operation, and it is redundant when 'prime_cache_tree()' clears
-and rebuilds the cache tree from scratch immediately after.
+From: Victoria Dye <vdye@github.com>
 
-The first patch adds a test directly comparing the execution time of
-'prime_cache_tree()' with that of 'cache_tree_update()'. The results show
-that on a fully-valid cache tree, they perform the same, but on a partially-
-or fully-invalid cache tree (the more likely case in commands with the
-aforementioned redundancy), 'prime_cache_tree()' is faster.
+Add a performance test comparing the execution times of 'prime_cache_tree()'
+and 'cache_tree_update(_, WRITE_TREE_SILENT | WRITE_TREE_REPAIR)'. The goal
+of comparing these two is to identify which is the faster method for
+rebuilding an invalid cache tree, ultimately to remove one when both are
+(reundantly) called in immediate succession.
 
-The second patch introduces the 'skip_cache_tree_update' option for
-'unpack_trees()', but does not use it yet.
+Both methods are fast, so the new tests in 'p0090-cache-tree.sh' must call
+each tested function multiple times to ensure the reported times (to 0.01s
+resolution) convey the differences between them.
 
-The remaining three patches update callers that make the aforementioned
-redundant cache tree updates. The performance impact on these callers ranges
-from "negligible" (in 'rebase') to "substantial" (in 'read-tree') - more
-details can be found in the commit messages of the patch associated with the
-affected code path.
+The tests compare the timing of a 'test-tool cache-tree' run as a no-op (to
+capture a baseline for the overhead associated with running the tool),
+'cache_tree_update()', and 'prime_cache_tree()' on four scenarios:
 
+- A completely valid cache tree
+- A cache tree with 2 invalid paths
+- A cache tree with 50 invalid paths
+- A completely empty cache tree
 
-Changes since V2
-================
+Example results:
 
- * Cleaned up option handling & provided more informative error messages in
-   'test-tool cache-tree'. The changes don't affect any behavior in the
-   added tests & 'test-tool cache-tree' won't be used outside of
-   development, but the improvements here will help future readers avoid
-   propagating error-prone implementations.
-   * Note that the suggestion to change the "unknown subcommand" error to a
-     'usage()' error was not taken, as it would be somewhat cumbersome to
-     use a formatted string with it. This is in line with other custom
-     subcommand parsing in Git, such as in 'fsmonitor--daemon.c'.
+Test                                        this tree
+-----------------------------------------------------------
+0090.2: no-op, clean                        1.27(0.48+0.52)
+0090.3: prime_cache_tree, clean             2.02(0.83+0.85)
+0090.4: cache_tree_update, clean            1.30(0.49+0.54)
+0090.5: no-op, invalidate 2                 1.29(0.48+0.54)
+0090.6: prime_cache_tree, invalidate 2      1.98(0.81+0.83)
+0090.7: cache_tree_update, invalidate 2     2.12(0.94+0.86)
+0090.8: no-op, invalidate 50                1.32(0.50+0.55)
+0090.9: prime_cache_tree, invalidate 50     2.10(0.86+0.89)
+0090.10: cache_tree_update, invalidate 50   2.35(1.14+0.90)
+0090.11: no-op, empty                       1.33(0.50+0.54)
+0090.12: prime_cache_tree, empty            2.04(0.84+0.87)
+0090.13: cache_tree_update, empty           2.51(1.27+0.92)
 
+These timings show that, while 'cache_tree_update()' is faster when the
+cache tree is completely valid, it is equal to or slower than
+'prime_cache_tree()' when there are any invalid paths. Since the redundant
+calls are mostly in scenarios where the cache tree will be at least
+partially invalid (e.g., 'git reset --hard'), 'prime_cache_tree()' will
+likely perform better than 'cache_tree_update()' in typical cases.
 
-Changes since V1
-================
-
- * Rewrote 'p0090' to more accurately and reliably test 'prime_cache_tree()'
-   vs. 'cache_tree_update()'.
-   * Moved iterative cache tree update out of C and into the shell tests (to
-     avoid potential runtime optimizations)
-   * Added a "control" test to document how much of the execution time is
-     startup overhead
-   * Added tests demonstrating performance in partially-invalid cache trees.
- * Fixed the use of 'prime_cache_tree()' in 'test-tool cache-tree', changing
-   it from using the tree at HEAD to the current cache tree.
-
-Thanks!
-
- * Victoria
-
-[1] https://lore.kernel.org/git/xmqqlf30edvf.fsf@gitster.g/ [2]
-https://lore.kernel.org/git/f4881b7455b9d33c8a53a91eda7fbdfc5d11382c.1627066238.git.jonathantanmy@google.com/
-
-Victoria Dye (5):
-  cache-tree: add perf test comparing update and prime
-  unpack-trees: add 'skip_cache_tree_update' option
-  reset: use 'skip_cache_tree_update' option
-  read-tree: use 'skip_cache_tree_update' option
-  rebase: use 'skip_cache_tree_update' option
-
- Makefile                           |  1 +
- builtin/read-tree.c                |  4 ++
- builtin/reset.c                    |  2 +
- reset.c                            |  1 +
- sequencer.c                        |  1 +
- t/helper/test-cache-tree.c         | 64 ++++++++++++++++++++++++++++++
- t/helper/test-tool.c               |  1 +
- t/helper/test-tool.h               |  1 +
- t/perf/p0006-read-tree-checkout.sh |  8 ++++
- t/perf/p0090-cache-tree.sh         | 36 +++++++++++++++++
- t/perf/p7102-reset.sh              | 21 ++++++++++
- t/t1022-read-tree-partial-clone.sh |  2 +-
- unpack-trees.c                     |  3 +-
- unpack-trees.h                     |  3 +-
- 14 files changed, 145 insertions(+), 3 deletions(-)
+Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
+Signed-off-by: Victoria Dye <vdye@github.com>
+---
+ Makefile                   |  1 +
+ t/helper/test-cache-tree.c | 64 ++++++++++++++++++++++++++++++++++++++
+ t/helper/test-tool.c       |  1 +
+ t/helper/test-tool.h       |  1 +
+ t/perf/p0090-cache-tree.sh | 36 +++++++++++++++++++++
+ 5 files changed, 103 insertions(+)
  create mode 100644 t/helper/test-cache-tree.c
  create mode 100755 t/perf/p0090-cache-tree.sh
- create mode 100755 t/perf/p7102-reset.sh
 
-
-base-commit: 3b08839926fcc7cc48cf4c759737c1a71af430c1
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1411%2Fvdye%2Ffeature%2Fcache-tree-optimization-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1411/vdye/feature/cache-tree-optimization-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1411
-
-Range-diff vs v2:
-
- 1:  833519d87c8 ! 1:  2b48a684156 cache-tree: add perf test comparing update and prime
-     @@ Commit message
-          partially invalid (e.g., 'git reset --hard'), 'prime_cache_tree()' will
-          likely perform better than 'cache_tree_update()' in typical cases.
-      
-     +    Helped-by: SZEDER Gábor <szeder.dev@gmail.com>
-          Signed-off-by: Victoria Dye <vdye@github.com>
-      
-       ## Makefile ##
-     @@ t/helper/test-cache-tree.c (new)
-      +
-      +	setup_git_directory();
-      +
-     -+	parse_options(argc, argv, NULL, options, test_cache_tree_usage, 0);
-     ++	argc = parse_options(argc, argv, NULL, options, test_cache_tree_usage, 0);
-      +
-      +	if (read_cache() < 0)
-     -+		die("unable to read index file");
-     ++		die(_("unable to read index file"));
-      +
-      +	oidcpy(&oid, &the_index.cache_tree->oid);
-      +	tree = parse_tree_indirect(&oid);
-     @@ t/helper/test-cache-tree.c (new)
-      +			cache_tree_invalidate_path(&the_index, the_index.cache[i * interval]->name);
-      +	}
-      +
-     -+	if (!argc)
-     -+		die("Must specify subcommand");
-     ++	if (argc != 1)
-     ++		usage_with_options(test_cache_tree_usage, options);
-      +	else if (!strcmp(argv[0], "prime"))
-      +		prime_cache_tree(the_repository, &the_index, tree);
-      +	else if (!strcmp(argv[0], "update"))
-      +		cache_tree_update(&the_index, WRITE_TREE_SILENT | WRITE_TREE_REPAIR);
-      +	/* use "control" subcommand to specify no-op */
-      +	else if (!!strcmp(argv[0], "control"))
-     -+		die("Unknown command %s", argv[0]);
-     ++		die(_("Unhandled subcommand '%s'"), argv[0]);
-      +
-      +	return 0;
-      +}
- 2:  b015a4f531c = 2:  0e03614f0fd unpack-trees: add 'skip_cache_tree_update' option
- 3:  4f6039971b8 = 3:  386f18ca36a reset: use 'skip_cache_tree_update' option
- 4:  5a646bc47c9 = 4:  ea5c82ce992 read-tree: use 'skip_cache_tree_update' option
- 5:  fffe2fc17ed = 5:  100c01e936c rebase: use 'skip_cache_tree_update' option
-
+diff --git a/Makefile b/Makefile
+index 4927379184c..3639c7c2a94 100644
+--- a/Makefile
++++ b/Makefile
+@@ -723,6 +723,7 @@ TEST_BUILTINS_OBJS += test-advise.o
+ TEST_BUILTINS_OBJS += test-bitmap.o
+ TEST_BUILTINS_OBJS += test-bloom.o
+ TEST_BUILTINS_OBJS += test-bundle-uri.o
++TEST_BUILTINS_OBJS += test-cache-tree.o
+ TEST_BUILTINS_OBJS += test-chmtime.o
+ TEST_BUILTINS_OBJS += test-config.o
+ TEST_BUILTINS_OBJS += test-crontab.o
+diff --git a/t/helper/test-cache-tree.c b/t/helper/test-cache-tree.c
+new file mode 100644
+index 00000000000..93051b25f56
+--- /dev/null
++++ b/t/helper/test-cache-tree.c
+@@ -0,0 +1,64 @@
++#include "test-tool.h"
++#include "cache.h"
++#include "tree.h"
++#include "cache-tree.h"
++#include "parse-options.h"
++
++static char const * const test_cache_tree_usage[] = {
++	N_("test-tool cache-tree <options> (control|prime|update)"),
++	NULL
++};
++
++int cmd__cache_tree(int argc, const char **argv)
++{
++	struct object_id oid;
++	struct tree *tree;
++	int empty = 0;
++	int invalidate_qty = 0;
++	int i;
++
++	struct option options[] = {
++		OPT_BOOL(0, "empty", &empty,
++			 N_("clear the cache tree before each iteration")),
++		OPT_INTEGER_F(0, "invalidate", &invalidate_qty,
++			      N_("number of entries in the cache tree to invalidate (default 0)"),
++			      PARSE_OPT_NONEG),
++		OPT_END()
++	};
++
++	setup_git_directory();
++
++	argc = parse_options(argc, argv, NULL, options, test_cache_tree_usage, 0);
++
++	if (read_cache() < 0)
++		die(_("unable to read index file"));
++
++	oidcpy(&oid, &the_index.cache_tree->oid);
++	tree = parse_tree_indirect(&oid);
++	if (!tree)
++		die(_("not a tree object: %s"), oid_to_hex(&oid));
++
++	if (empty) {
++		/* clear the cache tree & allocate a new one */
++		cache_tree_free(&the_index.cache_tree);
++		the_index.cache_tree = cache_tree();
++	} else if (invalidate_qty) {
++		/* invalidate the specified number of unique paths */
++		float f_interval = (float)the_index.cache_nr / invalidate_qty;
++		int interval = f_interval < 1.0 ? 1 : (int)f_interval;
++		for (i = 0; i < invalidate_qty && i * interval < the_index.cache_nr; i++)
++			cache_tree_invalidate_path(&the_index, the_index.cache[i * interval]->name);
++	}
++
++	if (argc != 1)
++		usage_with_options(test_cache_tree_usage, options);
++	else if (!strcmp(argv[0], "prime"))
++		prime_cache_tree(the_repository, &the_index, tree);
++	else if (!strcmp(argv[0], "update"))
++		cache_tree_update(&the_index, WRITE_TREE_SILENT | WRITE_TREE_REPAIR);
++	/* use "control" subcommand to specify no-op */
++	else if (!!strcmp(argv[0], "control"))
++		die(_("Unhandled subcommand '%s'"), argv[0]);
++
++	return 0;
++}
+diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
+index 01cda9358df..547a3be1c8b 100644
+--- a/t/helper/test-tool.c
++++ b/t/helper/test-tool.c
+@@ -14,6 +14,7 @@ static struct test_cmd cmds[] = {
+ 	{ "bitmap", cmd__bitmap },
+ 	{ "bloom", cmd__bloom },
+ 	{ "bundle-uri", cmd__bundle_uri },
++	{ "cache-tree", cmd__cache_tree },
+ 	{ "chmtime", cmd__chmtime },
+ 	{ "config", cmd__config },
+ 	{ "crontab", cmd__crontab },
+diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
+index ca2948066fd..e44e1d896d3 100644
+--- a/t/helper/test-tool.h
++++ b/t/helper/test-tool.h
+@@ -8,6 +8,7 @@ int cmd__advise_if_enabled(int argc, const char **argv);
+ int cmd__bitmap(int argc, const char **argv);
+ int cmd__bloom(int argc, const char **argv);
+ int cmd__bundle_uri(int argc, const char **argv);
++int cmd__cache_tree(int argc, const char **argv);
+ int cmd__chmtime(int argc, const char **argv);
+ int cmd__config(int argc, const char **argv);
+ int cmd__crontab(int argc, const char **argv);
+diff --git a/t/perf/p0090-cache-tree.sh b/t/perf/p0090-cache-tree.sh
+new file mode 100755
+index 00000000000..a8eabca2c4d
+--- /dev/null
++++ b/t/perf/p0090-cache-tree.sh
+@@ -0,0 +1,36 @@
++#!/bin/sh
++
++test_description="Tests performance of cache tree update operations"
++
++. ./perf-lib.sh
++
++test_perf_large_repo
++test_checkout_worktree
++
++count=100
++
++test_expect_success 'setup cache tree' '
++	git write-tree
++'
++
++test_cache_tree () {
++	test_perf "$1, $3" "
++		for i in \$(test_seq $count)
++		do
++			test-tool cache-tree $4 $2
++		done
++	"
++}
++
++test_cache_tree_update_functions () {
++	test_cache_tree 'no-op' 'control' "$1" "$2"
++	test_cache_tree 'prime_cache_tree' 'prime' "$1" "$2"
++	test_cache_tree 'cache_tree_update' 'update' "$1" "$2"
++}
++
++test_cache_tree_update_functions "clean" ""
++test_cache_tree_update_functions "invalidate 2" "--invalidate 2"
++test_cache_tree_update_functions "invalidate 50" "--invalidate 50"
++test_cache_tree_update_functions "empty" "--empty"
++
++test_done
 -- 
 gitgitgadget
+
