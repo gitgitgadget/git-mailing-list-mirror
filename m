@@ -2,96 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6115FC433FE
-	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 02:14:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C3334C4332F
+	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 02:17:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232416AbiKJCOK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Nov 2022 21:14:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37278 "EHLO
+        id S232382AbiKJCRa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Nov 2022 21:17:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232364AbiKJCOG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2022 21:14:06 -0500
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 552041B1F2
-        for <git@vger.kernel.org>; Wed,  9 Nov 2022 18:14:06 -0800 (PST)
-Received: by mail-io1-xd34.google.com with SMTP id s10so291821ioa.5
-        for <git@vger.kernel.org>; Wed, 09 Nov 2022 18:14:06 -0800 (PST)
+        with ESMTP id S232364AbiKJCR2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2022 21:17:28 -0500
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 278EB1CFE1
+        for <git@vger.kernel.org>; Wed,  9 Nov 2022 18:17:27 -0800 (PST)
+Received: by mail-io1-xd2c.google.com with SMTP id p184so277270iof.11
+        for <git@vger.kernel.org>; Wed, 09 Nov 2022 18:17:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=u2vq0+oaSjZ0eZxTqcTJZ9NkJJAZmVGIWJQ/uHKVJjE=;
-        b=Ji4mw5wqpYhn6f1oe0lW0Tz1+/dm4lXJzsikQ55VC0aXGPGNwaVo8kVA+yriqxwvLy
-         Q+VBQkupND0SrGpiUIyyybuUY1qKiwlHt6sOHw3+qHX/G0uzmojOTr9WQkjsJDhdpU8l
-         HA6Bg2u+arjlb61gPK/JgmTe2V0rPwC6kg/lTHvbfw8Ugh1jTEZ5lAET606sotzNLhtR
-         fFG/UeJy/4iHXHZZhTVpohMkvMcAGrj4plJN3q54D3Ge3y2CIq/cXtM0Key30GmH/flB
-         4AqJiaUU0pjfCB9K86zi4ESmq5pn6Yse2Y6FFweJjiTnxLZz8QFwMBNMKTpiuDJkVfq2
-         1hqw==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=OGLVq0PhQEIxBo5M4gWfk8TNcdj3Iiy+ZTvGUE0zj6I=;
+        b=IeCtBjUJNS467GXT5jVE28sHLjQPZCi72FvM7yzFpNPCjH+9JEL7qd9U49vDxx2dnv
+         wdhtjKpwn8otWA506R0xuXGoAipHYNKwG/USl6XGUlwSxxTYJFwijQvQSxxL7o9BN/X0
+         cR+s9ZajCxTMYoU509vTvS2oSH27b+ToOOFgjzTBalIopAGgjYJRvVSnWKpOu8RwyXQc
+         t4AZK5fyJV8pwEL/2o/DwBl+IbTYdK04Z01uGosRovYbmz1eYj6jUme54NbcBxUAePFS
+         aLNlOcHSfnPEOvBE+BNTMnvLelknr7RRAVGsrIfG3Sv/hwciDyGZuKMouvsAlxVX9vOE
+         UsEQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=u2vq0+oaSjZ0eZxTqcTJZ9NkJJAZmVGIWJQ/uHKVJjE=;
-        b=IsMDLCtdxYG8Yp4UwFKwSTye85Q+0hxsY9OvMq56eXh3e/XOnhLt200oVzJJ7cFXpz
-         Ig7QxVJqzu3qIU1FtqRslbO1eMBVxF8XqiLugIKp5dwriYu7JAFEQR8V9wSbVCKEf+HG
-         TApUFMA1Pe4VXrpKtwfRJRXqUkwN44zsGhz6I34v1Y2snt/6ySs2lXdG0jWXXRtsy/XT
-         qowSpd9v+HkiaqhL2IyfQ5KkjM2SQbMHMpesRia5tvoX8Uh/6A//YqgfOQjG699ntYLh
-         61RgOX5DRM5zkjawfyMhz5w7t1c812+mnayYj9H5A3fRYoQdpirm0lz1SvPGEesX/tXP
-         D3sg==
-X-Gm-Message-State: ACrzQf3KUxTZI7LKWH5oeEotAnAiuDMi3ig7BmtLuS4RS2HPrZcAW12p
-        b/8NUmsa/PCUeFCQy+/mERXRbg==
-X-Google-Smtp-Source: AMsMyM4Hw7jOR/u3qTBzg84BCXlb7Tppk0kTfU8nLux7pcalvVhUcl7BMJf1XmQ4jJOK6Wda63kGcQ==
-X-Received: by 2002:a05:6638:15c5:b0:375:978b:53b with SMTP id i5-20020a05663815c500b00375978b053bmr2230473jat.218.1668046445591;
-        Wed, 09 Nov 2022 18:14:05 -0800 (PST)
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OGLVq0PhQEIxBo5M4gWfk8TNcdj3Iiy+ZTvGUE0zj6I=;
+        b=YMzEQOLy3GeJbHJ8ntt0zfNOHJdXMJJCqZT4lK2W1C1koX3jnD/4pg7VYaL1SO8q8P
+         KncbwLDU246THpSzEXlXcMUzbObczZqCngEDkAX8iuutrrOsYpyjCvd+3rLFJO8ZiHlv
+         mX6YyOg0lu66RrMSiQBZmifGFTwnrbEK0/uIM9pc/QmLY7dGBIkVEo4exeKRL/Kvu5eH
+         FO/50f2FS/UeT7bj3d1SmmlzG4UOs6zwJ9ua8wwsGZ1u/qT3dHS5CkdN9D5D1RUIkBxA
+         /I4JxqFWcmeEjqBN8H83SiNNsCVD3SGMn+pskri+tO4V0eKp7uIkffmHRe6c07bTBavx
+         FvGA==
+X-Gm-Message-State: ACrzQf3LAg0soOZX9h4zPitS7YT3gR+Qvi1W6/Nx0BLvFvh4OvL+glZ2
+        RXJhBX+oWWYpDLgF/vvloCkGBg==
+X-Google-Smtp-Source: AMsMyM7DhuiIERgkYacucv9k2cOx6QGwRDOe80mSVCYqzqoyqTUFyrRqVL7FuTiTiuIj5ZHiW8wkCg==
+X-Received: by 2002:a02:a394:0:b0:375:41a7:531 with SMTP id y20-20020a02a394000000b0037541a70531mr34659192jak.224.1668046646522;
+        Wed, 09 Nov 2022 18:17:26 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id r4-20020a02aa04000000b0036368623574sm5285165jam.169.2022.11.09.18.14.05
+        by smtp.gmail.com with ESMTPSA id n22-20020a02a196000000b0035a40af60fcsm5320420jah.86.2022.11.09.18.17.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Nov 2022 18:14:05 -0800 (PST)
-Date:   Wed, 9 Nov 2022 21:14:04 -0500
+        Wed, 09 Nov 2022 18:17:26 -0800 (PST)
+Date:   Wed, 9 Nov 2022 21:17:25 -0500
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Glen Choo <chooglen@google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [RFC PATCH 0/4] git: remove --super-prefix
-Message-ID: <Y2xebII98xXBZqPq@nand.local>
-References: <20221109004708.97668-1-chooglen@google.com>
- <Y2wYnpASncR2E0Ja@nand.local>
- <kl6lwn833cp0.fsf@chooglen-macbookpro.roam.corp.google.com>
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t7610: fix flaky timeout issue, don't clone from
+ example.com
+Message-ID: <Y2xfNcCfkij6k4Uk@nand.local>
+References: <patch-1.1-83eca7b5a7c-20221105T115420Z-avarab@gmail.com>
+ <Y2wuEDGMRg99Ifef@nand.local>
+ <221110.864jv7ptbq.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <kl6lwn833cp0.fsf@chooglen-macbookpro.roam.corp.google.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <221110.864jv7ptbq.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 09, 2022 at 03:55:39PM -0800, Glen Choo wrote:
-> > It looks like this series is broken, at least in my application of it.
-> > On the first patch, running t7401, for example, I get:
-> >
-> >     BUG: builtin/submodule--helper.c:121: cannot have prefix 'sub/' and toplevel_cwd_prefix ''
-> >     Aborted
-> >
-> > after running the first test (-x shows that it happens after running
-> > 'git submodule summary', unsurprisingly).
-> >
-> > I pushed out the result of what I have to the 'gc/remove--super-prefix'
-> > branch of git@github.com:ttaylorr/git.git. As you'll see, the base is
-> > 'master' (as of 319605f8f0 (The eleventh batch, 2022-11-08)) with a
-> > --no-ff merge of 'ab/submodule-helper-prep-only'.
-> >
-> > Let me know if I'm holding it wrong.
->
-> No, the problem seems to be entirely on my end. (I could've sworn I sent
-> this to CI..)
->
-> Given that we have another competing RFC, it doesn't seem like a great
-> use of time to reroll this just to unbreak "seen", but let me know if
-> I'm missing somthing.
+On Thu, Nov 10, 2022 at 12:55:30AM +0100, Ævar Arnfjörð Bjarmason wrote:
+> But we generally just fail some or all of 3..9 pretty fast, and don't
+> start taking 20 minutes to run the test, when it took 10s before (or
+> whatever).
 
-No problem. Let's drop this one for now, unless you have strong
-objections.
+OK. I still think that in principle this is indistinguishable from not
+running a setup test to completion.
+
+*But*: I'm willing to treat them differently since instead of
+manifesting in an immediate failure later on in the suite, we hang for a
+substantial period of time.
+
+So I'm content to merge this down, but I don't think it's worth
+searching out for more of these in the future.
 
 Thanks,
 Taylor
