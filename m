@@ -2,81 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 32CB2C43217
-	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 20:36:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CA19C433FE
+	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 20:54:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231420AbiKJUgj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Nov 2022 15:36:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43344 "EHLO
+        id S231207AbiKJUyQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Nov 2022 15:54:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229862AbiKJUg1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Nov 2022 15:36:27 -0500
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CEE754B23
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 12:36:26 -0800 (PST)
-Received: by mail-ot1-x32e.google.com with SMTP id w26-20020a056830061a00b0066c320f5b49so1779742oti.5
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 12:36:26 -0800 (PST)
+        with ESMTP id S232062AbiKJUyH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Nov 2022 15:54:07 -0500
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44200252B0
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 12:54:06 -0800 (PST)
+Received: by mail-pl1-x62b.google.com with SMTP id k7so2550833pll.6
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 12:54:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dinwoodie.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=KfS65aY/ELmmlX6ZE+8uEGFK3U4gtAXrrjsvjo4tLDY=;
-        b=T6KW8N+/96vcr0QwsymTpNUfKmCdOLI553K2FLslpCHTCvEMZcTQBRRM2wKPbysR5d
-         C1mlJngruKHlQ9nzkygbwp0SOuA7aL8fIdaLVk16rSvMNePb/8Y2oGo5opcjXIUxN+Y2
-         fWeY9CrTnERHywK6mHsMERNvVPzCwR78nw/Ns=
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/+TbxgGqsGYcjm5vWXorqdYrkIfYocQCFr9MXaVS4Is=;
+        b=Ba4cVbWJSbzNUhUuxyzYZkfQnCKDmG2AKVU+BFIfuBcZDSx8mwJX9IM2Q+CBqvigH7
+         p6n+4RLKuamWyNDw41YNxIUXGKU0kf9aldoDsz/RgwK5w9O3MjHKbBnh2gK6LDDuJjJV
+         DDCMM3+j+cdyHQXGepD8kWcq4iQ60zw34KGPaztcu0nmukBws98sRJSM4jvGQqve+/UX
+         UtZQ57lNvIhcSs6JnMz0chkBOXXiUGcr6lEZkZ0rs1+5TMUpQE5MlvTIHeiVMGxWW98C
+         kRydYivoTpjHSoEK8JGK5sq6dnjhZX9pen5WS0m2RarV8kCLQUkHYlciG9Ao8cVe08Zw
+         JTNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KfS65aY/ELmmlX6ZE+8uEGFK3U4gtAXrrjsvjo4tLDY=;
-        b=R1UoMXsHf1zhOCuM03TiEdS9fV/aOSVGzczXeRKDnrgNBbzzALSSyPEnn3llCYKUVp
-         RMCWkzMITuwxcUNanZkKRsW8rYX57PU9MnNMw5kGvT5FhhLdCeJwGm/nlaNKIwZV4P1t
-         RLV5/Y2igvdNsTBrWA61OQTIdMjXWBnNlm3b+e/SYX34gUG3MWFAoigtEJL6UsaZIYj7
-         k2yEhB4NjMQmwin8XKJj32O3WlWYSfHnXVfxGV63dNkNikrHPNTL9XkCeNDO+J/u3rtK
-         REj9nC20U/YAJaAJsTyDzeuB+3+i7ayYLjDZlq5+Js0S06efNHqTXEdat2d/Fs1hzOKA
-         z8tA==
-X-Gm-Message-State: ACrzQf1z2Rd6oNjcwqWRJtNpe4yIklEmahymluIL/rlYXlDW+2Fs66OB
-        ziibm8SqDrhdxs1gQOOdWmPUnYwB7L2HyjeuLxUQxDhEplg=
-X-Google-Smtp-Source: AMsMyM7mH6Og2oxDbhQ7lubBMjEEPFGJzWl9PtXdjiWiX5mTP9gIod7YHSujpnfpwwwWoa6hW0oeR5pQZXhT6FJiHzk=
-X-Received: by 2002:a05:6830:18d2:b0:66c:8d62:5a1e with SMTP id
- v18-20020a05683018d200b0066c8d625a1emr1896610ote.112.1668112585523; Thu, 10
- Nov 2022 12:36:25 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/+TbxgGqsGYcjm5vWXorqdYrkIfYocQCFr9MXaVS4Is=;
+        b=ol7Lq+2m+wiSsxC0/WPK5VWtLbyEzvB73YZ1nyexiPVjhV4yM8u2fuFhjVW+3qxvc+
+         86PUXD7fUi09+wS90N/WWgsMnwGONMa2HCFwI2oeynE+NlknZCmTZm9M+h3VbFg4oA+0
+         QBLdYh12u70Z3LFE/oRj7o4uUvuCqzG2DP0xvyOjh/i201SGYzpq3ipjJ/aOL3oDg5dW
+         KnRDowK9+Xm//WlJ2zgPKO7XoB/cnEjZjqi9dA64G1l6v9vZWZupoC5pXq1EjbGRJuZL
+         tuSPFxmPIYYOzrPp71k7OnPd4JsGAD0o5e3vBTlIcAcV3Ftozf78opGRBMBHTkf5YJFO
+         59PA==
+X-Gm-Message-State: ACrzQf1gfx/Oq89MdbA9ybgyAd5psBxWDhkc8NUr+mzBrTKzgdYIgXZf
+        p+y+8nb3rdYY3Qql2fBSMhTX
+X-Google-Smtp-Source: AMsMyM7cZx56HKilT3W+VqxfJiT1qNvNd/5wZ+6r6sYMTF7zk4UEtNAywdUmblmRQdtqsdKIIzIIUA==
+X-Received: by 2002:a17:902:da92:b0:186:827f:88f3 with SMTP id j18-20020a170902da9200b00186827f88f3mr2034682plx.75.1668113645614;
+        Thu, 10 Nov 2022 12:54:05 -0800 (PST)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id e6-20020a17090a818600b00212daa6f41dsm236616pjn.28.2022.11.10.12.54.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 10 Nov 2022 12:54:05 -0800 (PST)
+Message-ID: <9c3b71d2-6481-e702-329c-33ee988dd7ce@github.com>
+Date:   Thu, 10 Nov 2022 12:54:03 -0800
 MIME-Version: 1.0
-References: <0dec6e1e-207c-be13-ae95-294d9b1e8831@ramsayjones.plus.com>
-In-Reply-To: <0dec6e1e-207c-be13-ae95-294d9b1e8831@ramsayjones.plus.com>
-From:   Adam Dinwoodie <adam@dinwoodie.org>
-Date:   Thu, 10 Nov 2022 20:35:56 +0000
-Message-ID: <CA+kUOan=Dj4T7J57yJSg2Qh4+SQuCV0MOLKxQrZC6s1=ciOdNw@mail.gmail.com>
-Subject: Re: [PATCH] Makefile: fix cygwin build failure
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     GIT Mailing-list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH v3 0/5] Skip 'cache_tree_update()' when
+ 'prime_cache_tree()' is called immediate after
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, phillip.wood123@gmail.com,
+        derrickstolee@github.com, jonathantanmy@google.com,
+        Taylor Blau <me@ttaylorr.com>
+References: <pull.1411.v2.git.1668045438.gitgitgadget@gmail.com>
+ <pull.1411.v3.git.1668107165.gitgitgadget@gmail.com>
+ <20221110195029.GD1159673@szeder.dev>
+Content-Language: en-US
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <20221110195029.GD1159673@szeder.dev>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 9 Nov 2022 at 22:46, Ramsay Jones wrote:
-> <snip>
-> [1] After a cygwin update, '/usr/bin/msgfmt.exe' refused to run, saying
-> that it could not locate the 'cygunistring-5.dll' file. Using cygcheck,
-> I found that this dll is provided by the 'libunistring5 1.1-1' package.
-> After installing this package, everything works just fine.
->
-> I don't know how package dependencies are specified/updated, but it
-> would seem the 'gettext-devel' package has a direct or indirect
-> dependency on the 'libunistring5' package. Looking at my setup.log file
-> I would guess one-or-more of the following packages needs an update to
-> note this dependency: 'gettext-devel 0.21.1-1', 'gettext 0.21.1-1',
-> 'libgettextpo0 0.21.1-1', 'libintl-devel 0.21.1-1', 'libintl8 0.21.1-1',
-> or 'libasprintf0 0.21.1-1'.
->
-> Unfortunately, I am not subscribed to the cygwin mailinglist :(
+SZEDER Gábor wrote:
+> On Thu, Nov 10, 2022 at 07:06:00PM +0000, Victoria Dye via GitGitGadget wrote:
+>> Changes since V2
+>> ================
+>>
+>>  * Cleaned up option handling & provided more informative error messages in
+>>    'test-tool cache-tree'. The changes don't affect any behavior in the
+>>    added tests & 'test-tool cache-tree' won't be used outside of
+>>    development, but the improvements here will help future readers avoid
+>>    propagating error-prone implementations.
+>>    * Note that the suggestion to change the "unknown subcommand" error to a
+>>      'usage()' error was not taken, as it would be somewhat cumbersome to
+>>      use a formatted string with it.
+> 
+> I'm not sure I understand what's cumbersome.  It's as simple as:
+> 
+>    if (...) {
+>        error(_("unknown subcommand: `%s'"), argv[0]);
+>        usage_with_options(test_cache_tree_usage, options);
+>    }
 
-It looks like this was broken by an update to some of these packages a
-couple of weeks ago[0]; I've reproduced the problem and reported it to
-the mailing list[1], so the package maintainer should be able to
-update the dependency information :)
+To be honest, the cumbersome approach I was thinking of was 'sprintf()'-ing
+the subcommand into the string and calling 'usage()' with that - your
+suggestion is certainly much simpler. However, as a matter of personal
+preference, I still think the 'die()' is sufficient in the context of this
+test helper (especially given that other test helpers do the same).
 
-[0]: https://cygwin.com/pipermail/cygwin-announce/2022-October/010764.html
-[1]: https://cygwin.com/pipermail/cygwin/2022-November/252445.html
+> 
+>>      This is in line with other custom
+>>      subcommand parsing in Git, such as in 'fsmonitor--daemon.c'.
+> 
+> The option parsing in 'fsmonitor--daemon.c' is broken, please don't
+> consider it as an example to follow.
+
+While I understand your desire to helpfully guide users, I don't see
+anything to suggest that particular example is "broken." The error conveys
+the cause of the problem to a user, who could then run without arguments (or
+with -h) to see what the valid subcommands are. And, in the case of this
+test helper, I'm not particularly concerned with perfecting the (already
+subjective) user experience, given that it's an internal-only tool.
+
+If there are examples of proper usage patterns that future commands should
+follow, I'd recommend updating 'CodingGuidelines' and/or
+'MyFirstContribution' to mention them. Codifying recommendations like that
+can help avoid churn in reviews and, long-term, push Git to align on a
+uniform style.
+
