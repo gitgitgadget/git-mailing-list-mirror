@@ -2,284 +2,321 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1DFFC4332F
-	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 22:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73052C4332F
+	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 23:32:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231564AbiKJW5l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Nov 2022 17:57:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51946 "EHLO
+        id S230303AbiKJXcr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Nov 2022 18:32:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229559AbiKJW5j (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Nov 2022 17:57:39 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0457451C3F
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 14:57:38 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id l39-20020a05600c1d2700b003cf93c8156dso2108972wms.4
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 14:57:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Zw2uyLiXbNUK+MV+XdFAmhMQRN5K3rhaJ5xcvF1uElM=;
-        b=kvtrt8JirtaIK4LPierTqCylAgOxs+4eNfY075xquQg4z6qGqpJXvr1kmsfD0tct81
-         mNr9+rSjLIwbphV8bQeUUMIhYPCjyYryhRHhefrr0SDuLwI0nYFk9CaS0TyvhjeuNFa7
-         ipHZIDPDM8dQ7bPiimATHQubddOvTN/Mhbw6BCaSmBrUF8jEnSPrQ3o4MY1asUAx4Vib
-         eRPQNU7ZqVGJAiHOE4X6Rj2/4giHACNdrW5Tpsil+2/PF07Kepmo6kYZY9BVPyKDQ2RP
-         ob3bs4QCLc2p6KVtvnJEBXURzc/xjNZqtrldVBV3mxghjk2z17rBGFSF+igXRGU86gnG
-         Yy3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Zw2uyLiXbNUK+MV+XdFAmhMQRN5K3rhaJ5xcvF1uElM=;
-        b=yZbLFf6WH9NqxqGP4n4OnRavJmXz4v0jjnUcetnOlJ2ve7H42baAIXYtT6SKEgDiWP
-         mztvVzpIeDdkfP2X+tAaZJob7PlqUlcswOznrYHcNr2VltFy+OYF6Ze72RA4vuET7+YE
-         KqqRtWfAlIQSf3j9mgD0WBEqHj89PkXK9AQ9BV9JNq2PUUnDn3S+AmKDyitrx0qzsX/e
-         8yZ3WvIWphmSZyfAXR7RMsc963+TxK/MIuGLxHJR+e1sVFVJ3ULX9AdNXNyAgeXMB/oZ
-         d9ORiSCy8q4ls6RGaO9Kpg0HnYseP4befLoWqe9p2owXuK54MKDI4BU8E2/27q1o6fO/
-         2PfQ==
-X-Gm-Message-State: ACrzQf1JLSMzAUzx2xMLA5deCocJFmrvijoZEYDD4v+QNebHBEPNH5d8
-        8rxtk0RelaDrV7nEYSZnXmkHBKNpkuI=
-X-Google-Smtp-Source: AMsMyM7iAM3qa6TxFdBYHpqvqauxaGplagOljrWlnCkkBgUR/LnKCIKOU34zqYlTqGgjvY6U10XMsA==
-X-Received: by 2002:a05:600c:3316:b0:3cf:a3b1:e457 with SMTP id q22-20020a05600c331600b003cfa3b1e457mr19462723wmp.160.1668121056148;
-        Thu, 10 Nov 2022 14:57:36 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i18-20020a5d5592000000b002365921c9aesm337158wrv.77.2022.11.10.14.57.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Nov 2022 14:57:35 -0800 (PST)
-Message-Id: <pull.1377.v2.git.git.1668121055059.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1377.git.git.1667955151994.gitgitgadget@gmail.com>
-References: <pull.1377.git.git.1667955151994.gitgitgadget@gmail.com>
-From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 10 Nov 2022 22:57:34 +0000
-Subject: [PATCH v2] http: redact curl h2h3 headers in info
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+        with ESMTP id S229586AbiKJXcq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Nov 2022 18:32:46 -0500
+Received: from mail-4018.proton.ch (mail-4018.proton.ch [185.70.40.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8353E4AF21
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 15:32:43 -0800 (PST)
+Date:   Thu, 10 Nov 2022 23:32:35 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
+        s=protonmail3; t=1668123159; x=1668382359;
+        bh=ZZTC5J6Ew6ujF9lzS/zWPjdkU0NGa+KGpiYFKzcqyJQ=;
+        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+         Message-ID:BIMI-Selector;
+        b=qO82Gh6O4LsBTVWPnb1PeyX8yVhFz4X7ZhXx5aQVHlWa/QX5TpDPAew4Fq0raDjLZ
+         5YSHAd3Z594ZHS9RZWaKqDWc1KxGSNbm/fjisrDGmYRmk4jcw79QsLhZZE+hdAN5Bx
+         2gAf/KuywmlO0b+g1JR2Ca/acl/F64XKXVjObT4j8YHPy5ozj7+VcPw0K5SQMnmzH/
+         VC8Kxam1R6dEJGe246LaySWBRQW5Te8Wui3hn6KQp4Abo4/8xjNdz5fZKAs0HWtwqO
+         Vgr3Y+4DD73x0FRaLfYYyG/igY0zmxqlVdTfz+b12sR0pJj953NAUtIOzjoaeTFGEx
+         0DmwARU1x+snA==
 To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
-        Emily Shaffer <nasamuffin@google.com>,
-        Glen Choo <chooglen@google.com>,
-        Glen Choo <chooglen@google.com>
+From:   Jacob Abel <jacobabel@nullpo.dev>
+Cc:     Jacob Abel <jacobabel@nullpo.dev>,
+        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH v3 0/2] worktree: Support `--orphan` when creating new worktrees
+Message-ID: <20221110233137.10414-1-jacobabel@nullpo.dev>
+In-Reply-To: <20221104213401.17393-1-jacobabel@nullpo.dev>
+References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20221104213401.17393-1-jacobabel@nullpo.dev>
+Feedback-ID: 21506737:user:proton
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Glen Choo <chooglen@google.com>
+While working with the worktree based git workflow, I realised that setting
+up a new git repository required switching between the traditional and
+worktree based workflows. Searching online I found a SO answer [1] which
+seemed to support this and which indicated that adding support for this sho=
+uld
+not be technically difficult.
 
-With GIT_TRACE_CURL=1 or GIT_CURL_VERBOSE=1, sensitive headers like
-"Authorization" and "Cookie" get redacted. However, since [1], curl's
-h2h3 module also prints headers in its "info", which don't get redacted.
-For example,
+This patchset has two parts:
 
-  echo 'github.com	TRUE	/	FALSE	1698960413304	o	foo=bar' >cookiefile &&
-  GIT_TRACE_CURL=1 GIT_TRACE_CURL_NO_DATA=1 git \
-    -c 'http.cookiefile=cookiefile' \
-    -c 'http.version=' \
-    ls-remote https://github.com/git/git refs/heads/main 2>output &&
-  grep 'cookie' output
+  * adding `-B` to the usage docs (noticed during dev and it seemed too sma=
+ll
+    to justify a separate submission)
+  * adding orphan branch functionality (as is present in `git-switch`)
+    to `git-worktree-add`
 
-produces output like:
+Changes from v2:
 
-  23:04:16.920495 http.c:678              == Info: h2h3 [cookie: o=foo=bar]
-  23:04:16.920562 http.c:637              => Send header: cookie: o=<redacted>
+  * Changed orphan creation behavior to match `git switch --orphan` instead=
+ of
+    `git checkout --orphan` [2][3]. As a result `--orphan` no longer accept=
+s a
+    `<commit-ish>` and creates the orphan branch with a clean working direc=
+tory.
+  * Removed the `opts.implicit` flag as it is no longer needed and
+    `opts.orphan_branch` can be used instead.
+  * No longer set `opts.force` when creating an orphan branch (as checkout =
+can
+    no longer fail in a way that `--force` would prevent).
+  * Updated tests to no longer provide a `<commit-ish>`.
+  * Removed no longer relevant test.
+  * Added additional cleanup to tests.
 
-Teach http.c to check for h2h3 headers in info and redact them using the
-existing header redaction logic.
+1. https://stackoverflow.com/a/68717229/15064705/
+2. https://lore.kernel.org/git/CAPig+cSVzewXpk+eDSC-W-+Q8X_7ikZXXeSQbmpHBcd=
+LCU5svw@mail.gmail.com/
+3. https://lore.kernel.org/git/20221110212132.3se4imsksjo3gsso@phi/
 
-[1] https://github.com/curl/curl/commit/f8c3724aa90472c0e617ddbbc420aa199971eb77
+Jacob Abel (2):
+  worktree add: Include -B in usage docs
+  worktree add: add --orphan flag
 
-Signed-off-by: Glen Choo <chooglen@google.com>
----
-    http: redact curl h2h3 headers in info
-    
-    Thanks for the feedback, all :) For this patch, it sounds like it would
-    be too onerous to do the kinds of testing I initially envisioned, so I
-    think v2 is ready as-is.
-    
-    Changes in v2:
-    
-     * Describe the redacted string in comments.
-     * Return 1 for "redactions have happened".
-     * Fix a leak of the "inner" strbuf.
-     * Rename function, fix typo.
+ Documentation/git-worktree.txt | 14 +++++++-
+ builtin/worktree.c             | 64 ++++++++++++++++++++++++++++++----
+ t/t2400-worktree-add.sh        | 45 ++++++++++++++++++++++++
+ 3 files changed, 115 insertions(+), 8 deletions(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1377%2Fchooglen%2Fhttp%2Fredact-h2h3-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1377/chooglen/http/redact-h2h3-v2
-Pull-Request: https://github.com/git/git/pull/1377
+Range-diff against v2:
+1:  f35d78cfb4 =3D 1:  f35d78cfb4 worktree add: Include -B in usage docs
+2:  653be67e8a ! 2:  c040c87c6d worktree add: add --orphan flag
+    @@ Commit message
+         worktree add: add --orphan flag
 
-Range-diff vs v1:
+         Adds support for creating an orphan branch when adding a new workt=
+ree.
+    -    This functionality is equivalent to git checkout's --orphan flag.
+    +    This functionality is equivalent to git switch's --orphan flag.
 
- 1:  e9232396736 ! 1:  a8c35ff4ddf http: redact curl h2h3 headers in info
-     @@ http.c: static void set_curl_keepalive(CURL *c)
-       #endif
-       
-      -static void redact_sensitive_header(struct strbuf *header)
-     -+/* Return 0 if redactions been made, 1 otherwise. */
-     ++/* Return 1 if redactions have been made, 0 otherwise. */
-      +static int redact_sensitive_header(struct strbuf *header)
-       {
-     -+	int ret = 1;
-     ++	int ret = 0;
-       	const char *sensitive_header;
-       
-       	if (trace_curl_redact &&
-     @@ http.c: static void redact_sensitive_header(struct strbuf *header)
-       		/* Everything else is opaque and possibly sensitive */
-       		strbuf_setlen(header,  sensitive_header - header->buf);
-       		strbuf_addstr(header, " <redacted>");
-     -+		ret = 0;
-     ++		ret = 1;
-       	} else if (trace_curl_redact &&
-       		   skip_iprefix(header->buf, "Cookie:", &sensitive_header)) {
-       		struct strbuf redacted_header = STRBUF_INIT;
-     @@ http.c: static void redact_sensitive_header(struct strbuf *header)
-       
-       		strbuf_setlen(header, sensitive_header - header->buf);
-       		strbuf_addbuf(header, &redacted_header);
-     -+		ret = 0;
-     ++		ret = 1;
-      +	}
-      +	return ret;
-      +}
-     @@ http.c: static void redact_sensitive_header(struct strbuf *header)
-      +{
-      +	const char *sensitive_header;
-      +
-     ++	/*
-     ++	 * curl's h2h3 prints headers in info, e.g.:
-     ++	 *   h2h3 [<header-name>: <header-val>]
-     ++	 */
-      +	if (trace_curl_redact &&
-      +	    skip_iprefix(header->buf, "h2h3 [", &sensitive_header)) {
-      +		struct strbuf inner = STRBUF_INIT;
-      +
-      +		/* Drop the trailing "]" */
-      +		strbuf_add(&inner, sensitive_header, strlen(sensitive_header) - 1);
-     -+		if (!redact_sensitive_header(&inner)) {
-     ++		if (redact_sensitive_header(&inner)) {
-      +			strbuf_setlen(header, strlen("h2h3 ["));
-      +			strbuf_addbuf(header, &inner);
-      +			strbuf_addch(header, ']');
-      +		}
+         The original reason this feature was implemented was to allow a us=
+er
+         to initialise a new repository using solely the worktree oriented
+    @@ Documentation/git-worktree.txt: exist, a new branch based on `HEAD` =
+is automatic
+      command will refuse to create the worktree (unless `--force` is used)=
+.
      ++
-     ++		strbuf_release(&inner);
-       	}
-       }
-       
-     @@ http.c: static void curl_dump_data(const char *text, unsigned char *ptr, size_t
-       	strbuf_release(&out);
-       }
-       
-     -+static void curl_print_info(char *data, size_t size)
-     ++static void curl_dump_info(char *data, size_t size)
-      +{
-      +	struct strbuf buf = STRBUF_INIT;
-      +
-     @@ http.c: static int curl_trace(CURL *handle, curl_infotype type, char *data, size
-       	switch (type) {
-       	case CURLINFO_TEXT:
-      -		trace_printf_key(&trace_curl, "== Info: %s", data);
-     -+		curl_print_info(data, size);
-     ++		curl_dump_info(data, size);
-       		break;
-       	case CURLINFO_HEADER_OUT:
-       		text = "=> Send header";
+     +------------
+    -+$ git worktree add --orphan <branch> <path> [<commit-ish>]
+    ++$ git worktree add --orphan <branch> <path>
+     +------------
+     ++
+    -+Create a worktree containing an orphan branch named `<branch>` based
+    -+on `<commit-ish>`. If `<commit-ish>` is not specified, the new orphan=
+ branch
+    -+will be created based on `HEAD`.
+    -++
+    -+Note that unlike with `-b` or `-B`, this operation will succeed even =
+if
+    -+`<commit-ish>` is a branch that is currently checked out somewhere el=
+se.
+    ++Create a worktree containing an orphan branch named `<branch>` with a
+    ++clean working directory.  See `--orphan` in linkgit:git-switch[1] for
+    ++more details.
+
+      list::
+
+    @@ Documentation/git-worktree.txt: This can also be set up as the defau=
+lt behaviour
+
+     +--orphan <new-branch>::
+     +=09With `add`, create a new orphan branch named `<new-branch>` in the=
+ new
+    -+=09worktree based on `<commit-ish>`. If `<commit-ish>` is omitted, it
+    -+=09defaults to `HEAD`.
+    ++=09worktree. See `--orphan` in linkgit:git-switch[1] for details.
+     +
+      --porcelain::
+      =09With `list`, output in an easy-to-parse format for scripts.
+    @@ builtin/worktree.c: struct add_opts {
+      =09int detach;
+      =09int quiet;
+      =09int checkout;
+    -+=09int implicit;
+     +=09const char *orphan_branch;
+      =09const char *keep_locked;
+      };
+    @@ builtin/worktree.c: static int add_worktree(const char *path, const =
+char *refnam
+      =09}
+      =09commit =3D lookup_commit_reference_by_name(refname);
+     -=09if (!commit)
+    -+=09if (!commit && !opts->implicit)
+    ++=09if (!commit && !opts->orphan_branch)
+      =09=09die(_("invalid reference: %s"), refname);
+
+      =09name =3D worktree_basename(path, &len);
+    @@ builtin/worktree.c: static int add_worktree(const char *path, const =
+char *refnam
+      =09if (ret)
+      =09=09goto done;
+
+    --=09if (opts->checkout &&
+    --=09    (ret =3D checkout_worktree(opts, &child_env)))
+    --=09=09goto done;
+    -+=09if (opts->checkout) {
+    -+=09=09ret =3D checkout_worktree(opts, &child_env);
+    -+=09=09if (opts->orphan_branch && !ret)
+    -+=09=09=09ret =3D make_worktree_orphan(opts, &child_env);
+    -+=09=09if (ret)
+    -+=09=09=09goto done;
+    -+=09}
+    -
+    - =09is_junk =3D 0;
+    - =09FREE_AND_NULL(junk_work_tree);
+    ++=09if (opts->orphan_branch &&
+    ++=09    (ret =3D make_worktree_orphan(opts, &child_env)))
+    ++=09=09goto done;
+    ++
+    + =09if (opts->checkout &&
+    + =09    (ret =3D checkout_worktree(opts, &child_env)))
+    + =09=09goto done;
+     @@ builtin/worktree.c: static int add_worktree(const char *path, const=
+ char *refname,
+      =09 * Hook failure does not warrant worktree deletion, so run hook af=
+ter
+      =09 * is_junk is cleared, but do return appropriate code when hook fa=
+ils.
+    @@ builtin/worktree.c: static int add(int ac, const char **av, const ch=
+ar *prefix)
+      =09=09OPT_BOOL(0, "checkout", &opts.checkout, N_("populate the new wo=
+rking tree")),
+      =09=09OPT_BOOL(0, "lock", &keep_locked, N_("keep the new working tree=
+ locked")),
+     @@ builtin/worktree.c: static int add(int ac, const char **av, const c=
+har *prefix)
+    - =09memset(&opts, 0, sizeof(opts));
+    - =09opts.checkout =3D 1;
+      =09ac =3D parse_options(ac, av, prefix, options, git_worktree_add_usa=
+ge, 0);
+    --=09if (!!opts.detach + !!new_branch + !!new_branch_force > 1)
+    --=09=09die(_("options '%s', '%s', and '%s' cannot be used together"), =
+"-b", "-B", "--detach");
+    -+=09opts.implicit =3D ac < 2;
+    -+
+    + =09if (!!opts.detach + !!new_branch + !!new_branch_force > 1)
+    + =09=09die(_("options '%s', '%s', and '%s' cannot be used together"), =
+"-b", "-B", "--detach");
+     +=09if (!!opts.detach + !!new_branch + !!new_branch_force + !!opts.orp=
+han_branch > 1)
+     +=09=09die(_("options '%s', '%s', '%s', and '%s' cannot be used togeth=
+er"),
+     +=09=09    "-b", "-B", "--orphan", "--detach");
+    @@ builtin/worktree.c: static int add(int ac, const char **av, const ch=
+ar *prefix)
+      =09=09die(_("the option '%s' requires '%s'"), "--reason", "--lock");
+      =09if (lock_reason)
+     @@ builtin/worktree.c: static int add(int ac, const char **av, const c=
+har *prefix)
+    - =09=09usage_with_options(git_worktree_add_usage, options);
+    -
+    - =09path =3D prefix_filename(prefix, av[0]);
+    --=09branch =3D ac < 2 ? "HEAD" : av[1];
+    -+=09branch =3D opts.implicit ? "HEAD" : av[1];
+    -
+      =09if (!strcmp(branch, "-"))
+      =09=09branch =3D "@{-1}";
+
+    @@ builtin/worktree.c: static int add(int ac, const char **av, const ch=
+ar *prefix)
+     +=09 * are staged, opts.orphan_branch should be treated as both a bool=
+ean
+     +=09 * indicating that `--orphan` was selected and as the name of the =
+new
+     +=09 * orphan branch from this point on.
+    -+=09 *
+    -+=09 * When creating a new orphan, force checkout regardless of whethe=
+r
+    -+=09 * the existing branch is already checked out.
+     +=09 */
+     +=09if (opts.orphan_branch) {
+     +=09=09new_branch =3D opts.orphan_branch;
+    -+=09=09opts.force =3D 1;
+     +=09}
+     +
+     +=09if (ac < 2 && !new_branch && !opts.detach && !opts.orphan_branch) =
+{
+    @@ t/t2400-worktree-add.sh: test_expect_success '"add" -B/--detach mutu=
+ally exclusi
+      '
+
+     +test_expect_success '"add" --orphan/-b mutually exclusive' '
+    -+=09test_must_fail git worktree add --orphan poodle -b poodle bamboo m=
+ain
+    ++=09test_must_fail git worktree add --orphan poodle -b poodle bamboo
+     +'
+     +
+     +test_expect_success '"add" --orphan/-B mutually exclusive' '
+    -+=09test_must_fail git worktree add --orphan poodle -B poodle bamboo m=
+ain
+    ++=09test_must_fail git worktree add --orphan poodle -B poodle bamboo
+     +'
+     +
+     +test_expect_success '"add" --orphan/--detach mutually exclusive' '
+    -+=09test_must_fail git worktree add --orphan poodle --detach bamboo ma=
+in
+    ++=09test_must_fail git worktree add --orphan poodle --detach bamboo
+     +'
+     +
+     +test_expect_success '"add" --orphan/--no-checkout mutually exclusive'=
+ '
+    -+=09test_must_fail git worktree add --orphan poodle --no-checkout bamb=
+oo main
+    ++=09test_must_fail git worktree add --orphan poodle --no-checkout bamb=
+oo
+     +'
+     +
+     +test_expect_success '"add" -B/--detach mutually exclusive' '
+    @@ t/t2400-worktree-add.sh: test_expect_success 'add --quiet' '
+
+     +test_expect_success '"add --orphan"' '
+     +=09test_when_finished "git worktree remove -f -f orphandir" &&
+    -+=09git worktree add --orphan neworphan orphandir main &&
+    ++=09git worktree add --orphan neworphan orphandir &&
+     +=09echo refs/heads/neworphan >expected &&
+     +=09git -C orphandir symbolic-ref HEAD >actual &&
+    -+=09test_cmp expected actual &&
+    -+=09git -C orphandir diff main
+    ++=09test_cmp expected actual
+     +'
+     +
+     +test_expect_success '"add --orphan" fails if the branch already exist=
+s' '
+    ++=09test_when_finished "git branch -D existingbranch" &&
+     +=09test_when_finished "git worktree remove -f -f orphandir" &&
+     +=09git worktree add -b existingbranch orphandir main &&
+    -+=09test_must_fail git worktree add --orphan existingbranch orphandir2=
+ main &&
+    ++=09test_must_fail git worktree add --orphan existingbranch orphandir2=
+ &&
+     +=09test ! -d orphandir2
+     +'
+     +
+    -+test_expect_success '"add --orphan" fails if the commit-ish doesnt ex=
+ist' '
+    -+=09test_must_fail git worktree add --orphan badcommitish orphandir ee=
+e2222 &&
+    -+=09test ! -d orphandir
+    -+'
+    -+
+     +test_expect_success '"add --orphan" with empty repository' '
+     +=09test_when_finished "rm -rf empty_repo" &&
+     +=09echo refs/heads/newbranch >expected &&
+--
+2.37.4
 
 
- http.c | 46 ++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 44 insertions(+), 2 deletions(-)
-
-diff --git a/http.c b/http.c
-index 5d0502f51fd..8135fac283e 100644
---- a/http.c
-+++ b/http.c
-@@ -560,8 +560,10 @@ static void set_curl_keepalive(CURL *c)
- }
- #endif
- 
--static void redact_sensitive_header(struct strbuf *header)
-+/* Return 1 if redactions have been made, 0 otherwise. */
-+static int redact_sensitive_header(struct strbuf *header)
- {
-+	int ret = 0;
- 	const char *sensitive_header;
- 
- 	if (trace_curl_redact &&
-@@ -575,6 +577,7 @@ static void redact_sensitive_header(struct strbuf *header)
- 		/* Everything else is opaque and possibly sensitive */
- 		strbuf_setlen(header,  sensitive_header - header->buf);
- 		strbuf_addstr(header, " <redacted>");
-+		ret = 1;
- 	} else if (trace_curl_redact &&
- 		   skip_iprefix(header->buf, "Cookie:", &sensitive_header)) {
- 		struct strbuf redacted_header = STRBUF_INIT;
-@@ -612,6 +615,33 @@ static void redact_sensitive_header(struct strbuf *header)
- 
- 		strbuf_setlen(header, sensitive_header - header->buf);
- 		strbuf_addbuf(header, &redacted_header);
-+		ret = 1;
-+	}
-+	return ret;
-+}
-+
-+/* Redact headers in info */
-+static void redact_sensitive_info_header(struct strbuf *header)
-+{
-+	const char *sensitive_header;
-+
-+	/*
-+	 * curl's h2h3 prints headers in info, e.g.:
-+	 *   h2h3 [<header-name>: <header-val>]
-+	 */
-+	if (trace_curl_redact &&
-+	    skip_iprefix(header->buf, "h2h3 [", &sensitive_header)) {
-+		struct strbuf inner = STRBUF_INIT;
-+
-+		/* Drop the trailing "]" */
-+		strbuf_add(&inner, sensitive_header, strlen(sensitive_header) - 1);
-+		if (redact_sensitive_header(&inner)) {
-+			strbuf_setlen(header, strlen("h2h3 ["));
-+			strbuf_addbuf(header, &inner);
-+			strbuf_addch(header, ']');
-+		}
-+
-+		strbuf_release(&inner);
- 	}
- }
- 
-@@ -668,6 +698,18 @@ static void curl_dump_data(const char *text, unsigned char *ptr, size_t size)
- 	strbuf_release(&out);
- }
- 
-+static void curl_dump_info(char *data, size_t size)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+
-+	strbuf_add(&buf, data, size);
-+
-+	redact_sensitive_info_header(&buf);
-+	trace_printf_key(&trace_curl, "== Info: %s", buf.buf);
-+
-+	strbuf_release(&buf);
-+}
-+
- static int curl_trace(CURL *handle, curl_infotype type, char *data, size_t size, void *userp)
- {
- 	const char *text;
-@@ -675,7 +717,7 @@ static int curl_trace(CURL *handle, curl_infotype type, char *data, size_t size,
- 
- 	switch (type) {
- 	case CURLINFO_TEXT:
--		trace_printf_key(&trace_curl, "== Info: %s", data);
-+		curl_dump_info(data, size);
- 		break;
- 	case CURLINFO_HEADER_OUT:
- 		text = "=> Send header";
-
-base-commit: c03801e19cb8ab36e9c0d17ff3d5e0c3b0f24193
--- 
-gitgitgadget
