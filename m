@@ -2,129 +2,159 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A600FC4332F
-	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 00:05:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FA1DC433FE
+	for <git@archiver.kernel.org>; Thu, 10 Nov 2022 00:46:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232084AbiKJAFe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 9 Nov 2022 19:05:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55522 "EHLO
+        id S232170AbiKJAqT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 9 Nov 2022 19:46:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229811AbiKJAFc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Nov 2022 19:05:32 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 605FE12D27
-        for <git@vger.kernel.org>; Wed,  9 Nov 2022 16:05:31 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id y14so998054ejd.9
-        for <git@vger.kernel.org>; Wed, 09 Nov 2022 16:05:31 -0800 (PST)
+        with ESMTP id S232158AbiKJAqD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Nov 2022 19:46:03 -0500
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C59D9165A6
+        for <git@vger.kernel.org>; Wed,  9 Nov 2022 16:45:30 -0800 (PST)
+Received: by mail-pl1-x64a.google.com with SMTP id s15-20020a170902ea0f00b00187050232fcso233506plg.3
+        for <git@vger.kernel.org>; Wed, 09 Nov 2022 16:45:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=TOC7bDA+m3gA4MHLahmApRJATpeeZjfycfYS2Hwqlto=;
-        b=OlV0EgK/54BrU/OYQBj5fgGezsLITPVbZDtbBl2yUGnaBpLG0Xxm330DkTrDx6StyV
-         UZHg5GYCao6dkiIu9fs2IcYXBc/DBMmCmVO+g5T30KiMq4mU8Pc19wTJO+DkTh/OZplb
-         bHA25JGW4AadnuKrnWHCzEcwqOqyaXCyAaP+scMHhMEFDLdBQnlWAbyWgXg8ab7jOK9/
-         FKRvGbHsYcrg4Iu4H7gxAxyqfqFql5Prgz+2kXBMX9fjmNRiTWyUt7q2329FNW9HvhoI
-         xJO80zVaFrt2CIU1Xq+h2huAP6Ja16NPkZp8draigegZaH1VjRGhULw3yI7mV33D7jtq
-         S/OA==
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KmV5zy5hxtpVtmipdFh4FjcJke/5A+lN/FP3D3JRf4k=;
+        b=KPLjGWl/7j6e+EUkasq/sO7rFIJvtQVZMA0EllgOMGgB/aHuM38wdSuHyj6aLRO1w7
+         ionpqwOLJm6OLFvqyW5Ic8WtzHuggU+38hAKC0+1ZFnrPzdui9++zjaUj2cevCvK0QCs
+         Lm13D4/crhRE0m0IThhIDFVSsCjbGkv4yg041UV6yEd4MZ8AhwgQrwsqurobFYie0iBU
+         0+9BupoU7Bw4cc0OYJXCyqgBqV5p/cYaKaacY3b0sHEAj6jcJack1FlO62fXiGZTjKMM
+         4ouaqy5zUhPzR9LsdEJtPR+nhSVKEIKnXhaVoyosq/ChmZ7czRqQqoBKEKgglNntVwgP
+         gVng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TOC7bDA+m3gA4MHLahmApRJATpeeZjfycfYS2Hwqlto=;
-        b=RhLZBc0DBpETFBP15/eJIPESrZsM1CukModNkmXS1AnxRIrj0597VxKGE0kgGy1tdu
-         yLrkWVEqEf8uc1nougynYQewBCwQjLrYB16I9bSYJyn4iQw88CPjIBi/uUphHIpOLkve
-         Etdjg/H1qAz95/r/YI+S5T06Kte3hCMkiLaz192CKPzB6A2rr/HyL88YqfHDwylqwnBv
-         qUkb9xiWV1EClchO69+Ce0mXrFxeEZJZWDPhOEJJWOv2hTSYe+cjdcmnWFzPRIWMlDe9
-         7kEpsdxtY6+U5E05KTVIqU0HEnGWPYsEtzKs4SOn1/9zeCZs/8VOtQdaA/n+6o9qDmFs
-         Hmgw==
-X-Gm-Message-State: ACrzQf3ENSEmHa1Lytk/hpsAWMJdvOZF8ZUEJZxbg3ivVgXtUtNj6fP3
-        /AFU6WhyPmyuVJ2mxhW2hzTwBfgj8fXuHQ==
-X-Google-Smtp-Source: AMsMyM6/V9owNT9dQTKb4Gj8MJE00RNGXpzNCmN9/JLRNZf8aE23x+koMMpx3SKfZovYS6HQipB8Og==
-X-Received: by 2002:a17:907:168e:b0:7a1:6786:f16 with SMTP id hc14-20020a170907168e00b007a167860f16mr58757123ejc.590.1668038729826;
-        Wed, 09 Nov 2022 16:05:29 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id s18-20020aa7c552000000b00461c1804cdasm7657334edr.3.2022.11.09.16.05.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Nov 2022 16:05:29 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1osv4T-001CmV-07;
-        Thu, 10 Nov 2022 01:05:29 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t7610: fix flaky timeout issue, don't clone from
- example.com
-Date:   Thu, 10 Nov 2022 00:55:30 +0100
-References: <patch-1.1-83eca7b5a7c-20221105T115420Z-avarab@gmail.com>
- <Y2wuEDGMRg99Ifef@nand.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <Y2wuEDGMRg99Ifef@nand.local>
-Message-ID: <221110.864jv7ptbq.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=KmV5zy5hxtpVtmipdFh4FjcJke/5A+lN/FP3D3JRf4k=;
+        b=7sIy+EahbbX/LgHT41Qrmwvdc2dB9zZ6X+vp0KQlDdhv3qW6CjOPG9O6J5/N/ErhD3
+         6RHr+MITK28++HhsUWwH9bu0Fw3D1hnf1pE8jZnI8tCj5rNzjt4verHtu43+XQMR6l96
+         ZS3lUeLEpM0GHYuQyUw8n3XAb4kfFIOMmAxvBLjL4jwq8xLSJQnM/S3zR+rWjpHjICO2
+         wVNjCWvD7WqbkleJFQeO+XvKDO0g5vphNFKflMJkJrjIQdSHWpiFYoAnCZD4ACZNKJHK
+         t6qxTkJLyJ7UYeT+VIiEiRI2ZJeJpya9CDcvrshGp8pV+oJQVbCKbOcNm6Ouy44FlYtv
+         lDVw==
+X-Gm-Message-State: ANoB5plMstZtzcKfYzbYhNgiTG0uL7JSWiSyG1ypE+qol/fw3D0dbLjQ
+        Czf8tgE1yrGKbAUW7YxX7qUpsRqXjYo3Gw==
+X-Google-Smtp-Source: AA0mqf5vcpNXW2FZ/5odq/h1WHl3/BFkYZF6GikhC/Tyac4G8ZScrNYIeeYxlSGZvPHz5jxdTc1CUIb8FQeu/g==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:902:744b:b0:188:8e6b:978a with SMTP
+ id e11-20020a170902744b00b001888e6b978amr8112635plt.11.1668041130313; Wed, 09
+ Nov 2022 16:45:30 -0800 (PST)
+Date:   Wed, 09 Nov 2022 16:45:22 -0800
+In-Reply-To: <RFC-cover-0.8-00000000000-20221109T192315Z-avarab@gmail.com>
+Mime-Version: 1.0
+References: <20221109004708.97668-1-chooglen@google.com> <RFC-cover-0.8-00000000000-20221109T192315Z-avarab@gmail.com>
+Message-ID: <kl6ltu373ae5.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [RFC PATCH 0/8] Get rid of "git --super-prefix"
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thanks for the series! I haven't fully figured out where I stand on
+this, but I can share some initial thoughts and comparisons to my RFC.
 
-On Wed, Nov 09 2022, Taylor Blau wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> On Sat, Nov 05, 2022 at 12:54:21PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> The behavior of "-N" here might be surprising to some, since it's
->> explained as "[if you use -N we] don=E2=80=99t fetch new objects from the
->> remote site". But (perhaps counter-intuitively) it's only talking
->> about if it needs to do so via "git fetch". In this case we'll end up
->> spawning a "git clone", as we have no submodule set up.
+> An RFC alternative to Glen's [1], and what I *thought* he might be be
+> going for in the earlier discussion[2].
 >
-> Makes sense, though I'm not sure I agree this is worth patching as I
-> currently understand it.
+> The difference is that in Glen's there's no "git --super-prefix", but
+> rather each set of commands still using it ("submodule--helper",
+> "read-tree" etc.) geit their own command-level option.
+
+Yes, and a secondary intent was to give exact definitions and a shared
+implementation to the command-level options instead of having each new
+command figure out what to do every time a similar use case pops up.
+
 >
-> If I run t7610 today with '--run=3D2-' (IOW, skipping the setup test), I
-> am definitely going to get failures. And I don't think we should have
-> every subsequent test depend on having run anything containing "setup"
-> before it. That is, it is not surprising that we will see some test
-> failures when carving up and running portions of the test instead of the
-> whole file.
+> But it still works substantially the same, in that we're juggling a
+> global variable that we set, and read out later somewhere down the
+> stack.
+
+Yes, intentionally so. I was under the assumption that the various
+prefixes would still be used, and that adding them to commands will be a
+necessary evil, so it was better to have them share a single
+implementation.
+
+> Whereas here there's no renaming of the option, but:
 >
-> I don't think this is substantively any different than that. Whether we
-> don't complete the "setup" test because we had some leak (and ran the
-> test suite with the appropriate LSan options), or because we neglected
-> to run it at all, I don't think there is a significant difference.
+>  * For "submodule--helper" only the sub-commands that need it take the
+>    option, it's not an option to "submodule--helper" itself.
+
+In writing [1], I ended up convincing myself that it isn't just that all
+of "submodule--helper" _does_ support "--super-prefix", but that all of
+it _should_ support "--super-prefix". I'll have to take another look.
+
+At the very least, the subcommands that are just entrypoints for
+git-submodule.sh should support it, since they all need to print
+submodule paths in a semi-consistent way. I still think it would be nice
+for these to take a top level flag.
+
+There are other subcommands that are implementation details of other
+commands that need to run in a submodule because of assumptions
+the_repository, e.g. create-branch, push-check. Maybe these don't need
+"--super-prefix", I'll take another look.
+
+I'm not sure if there are others.
+
+(As an aside, when you remove git-submodule.sh, I wonder if we should
+split up submodule--helper along this dual-use line? e.g. the ones that
+are entrypoints could be moved to "builtin/submodule.c", and the
+implementation details can stay in "builtin/submodule--helper.c". Or
+maybe you're already one step ahead of me here :))
+
+As you noted (somewhere) in the series, only commands called recursively
+need "--super-prefix", because otherwise "submodule--helper" is called
+from the root of the superproject and the 'prefix' is already
+well-known. I didn't make this argument because it was hard to word, so
+I'm glad you mentioned it.
+
+[1] https://lore.kernel.org/git/20221109004708.97668-2-chooglen@google.com/
+
+>  * There's no passing of the "super_prefix" as a global, instead we
+>    pass it all the way along until we recurse to ourselves. For
+>    "submodule--helper" this is quite straightforward.
 >
-> Either way, the end-state of the test repository isn't guaranteed to
-> match the intent of the "setup" test.
->
-> If this is the only such problem in-tree, sure, I think it's fine to
-> patch. But I would wager that there are *many* more than just this one
-> lurking, and patching all of them would be less straightforward than
-> this one.
->
-> So... I don't know. I'm certainly leaning negative on this patch, but if
-> you have some compelling reason that I'm missing, I'm all-ears.
+>  * Then in 8/8 we're left with just "read-tree" needing the remaining
+>    "--super-prefix", and we likewise don't pass it as a global, but
+>    instead add it to the "struct unpack_trees_options", which will
+>    pass it all the way down into unpack-trees.c and entry.c, until
+>    we're going to recursively invoke another "read-tree".
 
-I agree with that in general, but the expected failure case for all
-those other things that are broken with the missing setup is just that
-we'll predictably error out immediately.
+I worry a little about two "necessary evils":
 
-Whereas in this case we'll end up hanging on a connect() to some box
-that IANA's maintaining for the example.com landing page, and after we
-reach the connect() timeout we move onto the next failing test, which
-will do that again. The test takes a long time to finally report an
-overall failure.
+- (As stated earlier) we may have to add "--super-prefix" or similar to
+  more commands
+- We may need to read "--super-prefix" from many parts of the code,
+  since many parts might print paths.
 
-I think that's worth fixing in general, aside from the leak
-detection. I.e. yes in general we aren't good about running tests 3..9
-successfully if the 2nd test fails.
+Having globals makes both of these cases easier, and is quite a bit
+closer to the original implementation of "--super-prefix" (so your
+characterization of only getting to a halfway point is accurate). This
+was mostly to stave off opposition that it would tedious to add new
+per-command "--super-prefix"-es, but if nobody else cares, maybe it's ok
+to get of the globals.
 
-But we generally just fail some or all of 3..9 pretty fast, and don't
-start taking 20 minutes to run the test, when it took 10s before (or
-whatever).
+If we do want to pass a context object around, we probably have to be
+more principled about it (e.g. in 8/8 I notice that checkout_stage()
+doesn't receive the context object and we resort to passing NULL
+instead), but we'd want that anyway if we want Git to move towards being
+more library-like.
 
-
-
+It's quite likely that if any new "--super-prefix"-es are added, they
+would be added by a Googler (even the original ones were ;)), so I can
+probably go through the roadmap and figure out how costly these extra
+"--super-prefix"-es might be.
