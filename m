@@ -2,298 +2,151 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDC8AC4332F
-	for <git@archiver.kernel.org>; Fri, 11 Nov 2022 01:59:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 730D4C4332F
+	for <git@archiver.kernel.org>; Fri, 11 Nov 2022 02:13:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231221AbiKKB7p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Nov 2022 20:59:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35370 "EHLO
+        id S231802AbiKKCNv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Nov 2022 21:13:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229958AbiKKB7n (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Nov 2022 20:59:43 -0500
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9566130F4D
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 17:59:42 -0800 (PST)
-Received: by mail-pf1-x432.google.com with SMTP id v28so3648344pfi.12
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 17:59:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Wtf6Poj38Tte8XwO6PRQHqFzhrRp6Cb8ZyJm+C/jo9U=;
-        b=FT/wrsFKuiZh2yrBMQtuG26MxsdieuAWB+/FXgcVVdrmDQ6yHVcx9kWG03nUdPXlCO
-         /QTIGlnsEhroJsZxqztjv0Lbdyj38XTgMV49sZved+VTnusdhpqrPdLCkQAo2eH4hmVO
-         wrA0MDec9SSnYvAWX+2oSns+/QyEfWnJ5vHYGx5t6SjIbU/YcojRyKwALb+/kHDj6GSx
-         U9BSQGBN5wzMxb5amQ1zjV5L21PORDeKSxnfMUlrNT/FchfHu9AO77cd0esdML78iAhq
-         wjs2F+m9ipWwGfxFEsPDb8PPvQ2EAIl/jp0LoxtF9g7mOOHXqJY6WVC3c8gxuPuxldNa
-         HWRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wtf6Poj38Tte8XwO6PRQHqFzhrRp6Cb8ZyJm+C/jo9U=;
-        b=KEz639KMlLxD1fOAlPve1net6NRDt9PXu8pmxsltqYs2KcPVaSxdnJ+9NBWRm5IvY0
-         Y5/TGC0TANQm3056BG4P1Os4kIcegxF4iiovaYJNUttB79X7YiCpkFlgXpMD2fEHj4SJ
-         9xueNnZIflfUqNN8wZWe4mNCKRzt4CMDtEYVGAXWoAwsmiqNZ/xiDzE7OsfkP71oyE23
-         he5hicqOeIEF820VqQQlQWyzuWNYSRmejlBn8/TVv43E7AJ03uA9rpGDMMIorc9fn9ms
-         IkJpsDiDQPQOAwy3HNxc72f7smBb0CQC3nkp5tgzy1BLHo6RP6PgLM8J7LBNC8TFDxHg
-         ozZw==
-X-Gm-Message-State: ACrzQf1OR7SENrOv//OzEj3M2TwL2dRxGbiC1fUOlN9e231pAXK6MEb5
-        f8CtRi4ebcCU83fB4YbAtwk+
-X-Google-Smtp-Source: AMsMyM5iVJW9rKeuV9ohZnP3IgKJ5XBTh1CgdifxF99LbAynSkQMHKipPFkXqESohk5u0kCj56kWIQ==
-X-Received: by 2002:a63:4b10:0:b0:459:5fef:a491 with SMTP id y16-20020a634b10000000b004595fefa491mr4278085pga.150.1668131981974;
-        Thu, 10 Nov 2022 17:59:41 -0800 (PST)
-Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id a2-20020aa78e82000000b0056bee23a80bsm322210pfr.137.2022.11.10.17.59.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Nov 2022 17:59:41 -0800 (PST)
-Message-ID: <508ba524-09d2-81f1-c5f8-815ab766791a@github.com>
-Date:   Thu, 10 Nov 2022 17:59:37 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH 1/9] protocol v2: add server-side "bundle-uri" skeleton
+        with ESMTP id S229463AbiKKCNu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Nov 2022 21:13:50 -0500
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2058.outbound.protection.outlook.com [40.107.92.58])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 383176177
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 18:13:49 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=JrI4zUaU9IjUQaR/W3sMayxxd5MkILyDznnzmARfxTWRK0NTZ/1QdN0Z+j8FnlAB4fLcn4/RyJWwz6hKfkmarElAK6vR+2ycoFeOJqKm4vM8oEBvwMIf7dHOSMD0UfOTeED07uE+cUYKfRPDrXpdbY2WsRNBmSt8vYqAozMqmcz3I1budeDVH5845BE0yhfKu5E1z6fhtogvRVQ63FI3m8jHA3/NRpaMJdYMzWtOxesArLcNlyLSXCWW7FF4VY/FgxO4QZ0r6fK5LRqxopbhyLOxvCBxQ/nubkiVWmJQk0qzURUB7ZnwG4oq70KfvJ5zUvC9sejd1STxZlPrQ0/TdA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=61yGLvFQhIh0vzhjRyfo2TMpqg68Ut/qfDLHS3RKYsg=;
+ b=lK+18zGrH42vXq7wHMvIY/XNoa3pUyDw3Aa+iHwyjIKSxdfZwi/xBkQNRlukUhydPrx/6zBRxsKPIAQOUb2Ee6qfKSsX6fw8X3B0vnd0I6gYv4Y38kc5Wsgdf76AcabQMk7XChmwUexMUI8Z5zPq0CI4gMG5mKuUse03NfkU2R0EwdovUivefWX8CN3UEh61Ix9Yv501ZTws160sk206XiaGcbgcKr4DyEGs420jYlbABGwuyIjpaFlOcdX6pLfa0JZCjiTKnP2ep+jkDudD6Em2tZiHJ6RkOYOj2Fbat3y36zzvuk1ucujfKqmQTYfsUveAZg+iejsQfJyhm4JidQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=61yGLvFQhIh0vzhjRyfo2TMpqg68Ut/qfDLHS3RKYsg=;
+ b=2qp8U4bDXYC3W3skabqWkNm0DSAhZWhazUsfIw7Z1FJbdDrr8vJSKPbRFGmXB2QpnAeZrT8/NqD4BjDsIcX+yJujQrzG6aDT4QKrgtYB8kpK9mBnaVvHGzV6fXyHbx3Rpd8ywfMD27aWHCISG8RQFb3Jc1JeV2Es321cuc6Z3X4=
+Received: from DM6PR12MB4356.namprd12.prod.outlook.com (2603:10b6:5:2aa::8) by
+ DM6PR12MB4107.namprd12.prod.outlook.com (2603:10b6:5:218::7) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5813.13; Fri, 11 Nov 2022 02:13:47 +0000
+Received: from DM6PR12MB4356.namprd12.prod.outlook.com
+ ([fe80::70fe:fd7e:da10:fd66]) by DM6PR12MB4356.namprd12.prod.outlook.com
+ ([fe80::70fe:fd7e:da10:fd66%6]) with mapi id 15.20.5813.013; Fri, 11 Nov 2022
+ 02:13:47 +0000
+From:   "Strawbridge, Michael" <Michael.Strawbridge@amd.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     "Strawbridge, Michael" <Michael.Strawbridge@amd.com>
+Subject: [PATCH 0/2] Expose header information to git-send-email's
+ sendemail-validate hook
+Thread-Topic: [PATCH 0/2] Expose header information to git-send-email's
+ sendemail-validate hook
+Thread-Index: AQHY9XM7oHOOJy3RS0iIdvBb0CIGIg==
+Date:   Fri, 11 Nov 2022 02:13:47 +0000
+Message-ID: <20221111021306.449176-1-michael.strawbridge@amd.com>
+Accept-Language: en-GB, en-US
 Content-Language: en-US
-To:     =?UTF-8?Q?=c3=86var_Arnfj=c3=b6r=c3=b0_Bjarmason_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
-        avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
-        chooglen@google.com, jonathantanmy@google.com,
-        dyroneteng@gmail.com, Derrick Stolee <derrickstolee@github.com>
-References: <pull.1400.git.1667264854.gitgitgadget@gmail.com>
- <a02eee983185815d94ba1124b43eae43280aa963.1667264854.git.gitgitgadget@gmail.com>
-From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <a02eee983185815d94ba1124b43eae43280aa963.1667264854.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-mailer: git-send-email 2.34.1
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DM6PR12MB4356:EE_|DM6PR12MB4107:EE_
+x-ms-office365-filtering-correlation-id: 5a466398-7a1c-4612-73a7-08dac38a5dd2
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: zvfzWVnOOsCjl9cSDM9RTWnlQIG7iSyUujgxImZ4SQFYGAzgCAJjlHLzOFzyevdGkbKdrYDaOh9hYmR3xQynqg3GQU5YhMt+E9GfiZcebihf+OfhsJGXvw04XnJPKOT+6rglrU5U6eqGmqrtuVMcmBd3zTXraq+v5q76ui8+Uv+oREb1SVxsmALe3kLHStTO2l9bCInLj8hJIyhRUOX2rd+ttDtI0slgc/9YIa66o/QvqxZEClExXCNAU3Htu/+PF/sNlbqqC5O/ILlyAmhmCW1bFdApzH6EZfEO38glhU2WHTxz4/7v2qqbkOoklVdT4HNsCvCh59E5cqs4Ni6xyCaqmfcrgvLk2W2J0ojhkAIMpNhczSt2EQva1H39KsUPc/6h6Tx40V5LbKb+HK4MBlnYhryCSm733W3QpUgz131cl+43gNqF1ZX+XWz05iUbX3uvHDEOySPwNFD1pEJB2w6qjpu35jCdYiQWtJ6zIUY86F2Q0Rf/55dGvA52P5qhnVziKK1YtLU8inC3esngL+N0ySX3pwxV2t3x8R7DSZCgHdYHWJmbWeAiOlxM6678sAja58tmLYymJ/DHiID4pd5enEtubs0xgShpJt1mFKe5SFBxk5gEFkq2wqwdJBsZc75e8DnYVDGrSfXxCBjIkdMKSHoqvG6XOk/yvktgDDrJ7H84gkmLjV2MsDcFvFPzj8F0Sk+E/xRmOvH5NJU6uiT3iMbqw39+8KaipxQpVYUfTyW/DChZI2ygKEJt8U4hJqjm3OaFvLE0RKNa8NQcAw==
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB4356.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(366004)(39860400002)(376002)(136003)(346002)(396003)(451199015)(38100700002)(122000001)(15650500001)(86362001)(38070700005)(4326008)(6506007)(2906002)(26005)(66556008)(6512007)(66446008)(66476007)(2616005)(64756008)(76116006)(91956017)(66946007)(6486002)(71200400001)(8676002)(316002)(83380400001)(8936002)(5660300002)(1076003)(66574015)(6916009)(41300700001)(36756003)(478600001)(186003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?SDhueW5TSWU5TExkMm9GRm1od3ZOeXNGTFU1QThWYmxaSFhLMm91eXRLQlk5?=
+ =?utf-8?B?T1NscHNFdTllYmhFZXd2b2Q4ZStaYkN3aGsrSWl5bE0yOGxIVm5lNC9NZ0Er?=
+ =?utf-8?B?ZUNJK2JCR0NjNVExVkZHL29NTkVIbkJwbkRVa0h5NjlmcGUrb0YrU2VsU0VX?=
+ =?utf-8?B?RnVMS0xxWVp1dWVUOEthNVhaSHAyV1J2ZCtOa0xCWHpvRlNod045ZDZlWUdy?=
+ =?utf-8?B?UG0zRnZWL2tsOEdvUEZYaW1nVE1JY1dGdkRBV3hDVklVc0xJQ3QvTnUrUHZR?=
+ =?utf-8?B?dFc1RGUvbXkxYnZsOXZnTlZldzQwMWVzZ1BVWWtRaXJVTWxjZEZqNE05SVZO?=
+ =?utf-8?B?UmdyczB5L3FiYXV6S0xsT0RoeGl0c0VKYTZ1WGVNY0dvQkxGeTZ3M1Z6OXBo?=
+ =?utf-8?B?TXorRWY5Nm1mVmd2TGdFbDRpZldNbEhEcFVTeDdkRTlLbzJyekZCL2xTKytK?=
+ =?utf-8?B?bll1bm45akpzQmhueS9RQndud1FkbXNPaXcwVWZVMkUwckFYY3FPamZONnc4?=
+ =?utf-8?B?dzlOL0YzWkhFeUhCeENEYU5RYUd4bEk4RHh2VFY0SlRRWFVnU3NETjRZSVh2?=
+ =?utf-8?B?Y0ZkbVpZa2tIL25RbjV6Ukdjbk9oR2RaWHhaekdkMFk4bmszbzlUOG9BR1NF?=
+ =?utf-8?B?TFVYSDM1SzFnNVk2WFUwYktHaHk4STVoQWhDUGIyeDFhUUtWcXk2QVpBNVg0?=
+ =?utf-8?B?RzJYZUpmdWY3Z0IwdHQwS1Z3Nk5MUGVud0ltcG9kcCtEYk9JY2tuSnl4ZEdk?=
+ =?utf-8?B?QTNTREZsVUFpOEs2a0Y4VEd5SVRNcEdjSXl5dno1S0hxeGN2eHdWNDVxaTFh?=
+ =?utf-8?B?aEpEemIySVhSTm1ua2FzVkpKWkFCRmlEZStuQUhEeW1pOTg1cFV2dzg2VlBH?=
+ =?utf-8?B?OS9pUHRaOEhRZWNrYncxeTlMNjYvdGVMVXBBL09Sc3IwUTlmM0k2UkE2NEp1?=
+ =?utf-8?B?c3hPMFN3SW5SSjRBVnFSVnUwRTlmaklYTTd6YVdpVDJncXBTcElOUlB0UGlQ?=
+ =?utf-8?B?bFVwT0Z4SVkrZTFFbmJkWFpVZHlYYmhDMzNlV1VJeE04YUdNeEpKRHR0bkxM?=
+ =?utf-8?B?bTNablZrdUM1YTN2a0FnTys2cTV3TkxpLzFQeGtRazZPdmhuV0JyRzdmREw0?=
+ =?utf-8?B?ZUEvU2NKdGxRZU5sNitVYWdrbGViQ0N1dW5GU0hRQ1Q3aWlDU2wwdXNOU2Q5?=
+ =?utf-8?B?UGNkeTlGalIrcldKb3NnNmtMWFZzZXFEZlM1bHNXK2hpOVp3TGJWbXQ1VXN2?=
+ =?utf-8?B?Qm0vUFdXV3lDQitnTnpsaVk0ck9KcVV2VzV1VHVqTjcrWjczdFJoUm9tMGNs?=
+ =?utf-8?B?aG5XOWU4TThzRVJMalVXeUhsNDNVaDlZQk5rVTZ4Um9GTUo5amJFRU51SUVQ?=
+ =?utf-8?B?M0NZVGlnZjEvclpPcWxWZ3h1NmVFVVg4a1hvRzVOY3JuSEkxRE9ocElBS0pY?=
+ =?utf-8?B?ektRUHc0cDZJQ2VaOTB2Qk9veWRHKy9tZExZQk9TRGJMa0plUTJYc2grZlpk?=
+ =?utf-8?B?ZlhsM3J4c3FpTW1MdGhINnNUVzFkb0N6UGszVCsvOU9Sd1NvSzVSRVJHQVpW?=
+ =?utf-8?B?NUY4K3BqQW9LRlVHQlZLVmk4N0s2aTQwMWlXY3RkSHhpVVdCTEZubys3TGEr?=
+ =?utf-8?B?cHNlMndrMnYveEhMRThOWG02dDB6QmlKbWZBR0Z4Z3ovWEs5OWFwQmxlQ2RY?=
+ =?utf-8?B?NDNRekx0ZVkrejlnTXBNRkF6RnBYa1J1Zk1WdjdwRE8wbWVSYmpXbFk4dHNK?=
+ =?utf-8?B?R0JPcFA1TXJ4UGFmT3FlcEhmMGg1eDRaM0tPSEpYZlVBQXRSK2d0OHFLZnZH?=
+ =?utf-8?B?NWljYmdaZUhJUFJQZS94T2JMNG9VRnlCanV4L09UYlJMS3FMZzZtVzltR21D?=
+ =?utf-8?B?SVhoMmRTWEdQMTBRK0pVaE1kUldWNkR2LzNId096VTdZeUdSVGJhYWFNZnlo?=
+ =?utf-8?B?UFcycWZvUkRXa2lqV0FNcVorcmJSY1lxVWZoR1ExKy96elRONTF2ZHdQOWQy?=
+ =?utf-8?B?WGRoUXpTY2JaOWlUM1YzNE1xMEVqbXdFSWIvWW5XZzl2VnIxQWl2c1M3RUNv?=
+ =?utf-8?B?MDZra1U1VkNvV01RVEJ3aWc1VW96YjNJSCt6ckFzOXZCKy9RTUVQUWxTT0g2?=
+ =?utf-8?Q?fop3wB6DDNfeD6B85sk/Douj8?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <C78294A9E5B53E46BBC3C635D7D641E0@namprd12.prod.outlook.com>
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB4356.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5a466398-7a1c-4612-73a7-08dac38a5dd2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Nov 2022 02:13:47.3166
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 5tji/2JGqWxjdJRJ3iRXP7XZ+nooM8M1dPSIf7HfXKhmIh8hRkoXIwJgp8aTU81EKD9kaZcNyFiIXdYO12Vnfw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4107
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason via GitGitGadget wrote:
-> +
-> +PROTOCOL for bundle-uri
-> +^^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +A `bundle-uri` request takes no arguments, and as noted above does not
-> +currently advertise a capability value. Both may be added in the
-> +future.
-> +
-> +When the client issues a `command=bundle-uri` the response is a list of
-
-nit: comma after `command=bundle-uri`
-
-I misread this a couple times dropping the "the", so it read like the
-`command=bundle-uri` was the *response*, not the request. I think the comma
-would help avoid that?
-
-> +key-value pairs provided as packet lines with value `<key>=<value>`. The
-> +meaning of these key-value pairs are provided by the config keys in the
-> +`bundle.*` namespace (see linkgit:git-config[1]).
-
-What does this ("the meaning of these key-value pairs are provided by the
-config keys...") mean? Are the response keys in the `bundle.*` namespace? Or
-do the client-side `bundle.*` keys provide some kind of translation of what
-the keys mean?
-
-> +
-> +Clients are still expected to fully parse the line according to the
-> +above format, lines that do not conform to the format SHOULD be
-> +discarded. The user MAY be warned in such a case.
-
-Why "still" - is there some reason they *wouldn't* parse the response line? 
-
-Is "the above format" referring to `<key>=<value>` in general, or restricted
-to/guaranteed that the `<key>`'s defined by the `bundle.*` namespace? I'm
-guessing "still expected to fully parse" == "MUST parse" (using
-MUST/SHOULD/MAY nomeclature), it would help to call that out explicitly to
-be consistent with the rest of this doc.
-
-> +
-> +bundle-uri CLIENT AND SERVER EXPECTATIONS
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +URI CONTENTS::
-> +The advertised URIs MUST be in one of two possible formats.
-> ++
-> +The first possible format is a bundle file that `git bundle verify`
-
-I don't think "format" is the right word to describe this (I'd reserve
-"format" for the literal format of the URI string). Maybe something like
-this?
-
-	The advertised URIs MUST contain one of two types of content.
-
-	The advertised URI may contain a bundle file that `git bundle
-	verify` would accept...
-
-	...
-	
-	Alternatively, the advertised URI may provide a plaintext file...
-
-> +would accept. I.e. they MUST contain one or more reference tips for
-> +use by the client, MUST indicate prerequisites (in any) with standard
-> +"-" prefixes, and MUST indicate their "object-format", if
-> +applicable. Create "*.bundle" files with `git bundle create`.
-
-The last sentence doesn't add anything that you don't know from the `git
-bundle verify` note in the first doesn't already tell you, and feels like a
-bit of a non-sequitur as a result. Although, it tangentially raises a
-question: do bundle files *have to* have the '.bundle' suffix to pass `git
-bundle verify`? If not, are they expected to when coming from these URIs?
-
-> ++
-> +The second possible format is a plaintext file that `git config --list`
-> +would accept (with the `--file` option). The key-value pairs in this list
-> +are in the `bundle.*` namespace (see linkgit:git-config[1]).
-> +
-> +bundle-uri CLIENT ERROR RECOVERY::
-> +A client MUST above all gracefully degrade on errors, whether that
-> +error is because of bad missing/data in the bundle URI(s), because
-> +that client is too dumb to e.g. understand and fully parse out bundle
-> +headers and their prerequisite relationships, or something else.
-> ++
-> +Server operators should feel confident in turning on "bundle-uri" and
-> +not worry if e.g. their CDN goes down that clones or fetches will run
-> +into hard failures. Even if the server bundle bundle(s) are
-> +incomplete, or bad in some way the client should still end up with a
-> +functioning repository, just as if it had chosen not to use this
-> +protocol extension.
-> ++
-> +All subsequent discussion on client and server interaction MUST keep
-> +this in mind.
-> +
-> +bundle-uri SERVER TO CLIENT::
-> +The ordering of the returned bundle uris is not significant. Clients
-> +MUST parse their headers to discover their contained OIDS and
-> +prerequisites. A client MUST consider the content of the bundle(s)
-> +themselves and their header as the ultimate source of truth.
-> ++
-> +A server MAY even return bundle(s) that don't have any direct
-> +relationship to the repository being cloned (either through accident,
-> +or intentional "clever" configuration), and expect a client to sort
-> +out what data they'd like from the bundle(s), if any.
-> +
-> +bundle-uri CLIENT TO SERVER::
-> +The client SHOULD provide reference tips found in the bundle header(s)
-> +as 'have' lines in any subsequent `fetch` request. A client MAY also
-> +ignore the bundle(s) entirely if doing so is deemed worse for some
-> +reason, e.g. if the bundles can't be downloaded, it doesn't like the
-> +tips it finds etc.
-> +
-> +WHEN ADVERTISED BUNDLE(S) REQUIRE NO FURTHER NEGOTIATION::
-> +If after issuing `bundle-uri` and `ls-refs`, and getting the header(s)
-> +of the bundle(s) the client finds that the ref tips it wants can be
-> +retrieved entirety from advertised bundle(s), it MAY disconnect. The
-
-s/entirety/entirely
-
-And to clarify, by "it MAY disconnect", you mean it may disconnect from the
-main repository server? Or the bundle server? 
-
-> +results of such a 'clone' or 'fetch' should be indistinguishable from
-> +the state attained without using bundle-uri.
-> +
-> +EARLY CLIENT DISCONNECTIONS AND ERROR RECOVERY::
-> +A client MAY perform an early disconnect while still downloading the
-> +bundle(s) (having streamed and parsed their headers). In such a case
-> +the client MUST gracefully recover from any errors related to
-> +finishing the download and validation of the bundle(s).
-> ++
-> +I.e. a client might need to re-connect and issue a 'fetch' command,
-> +and possibly fall back to not making use of 'bundle-uri' at all.
-> ++
-> +This "MAY" behavior is specified as such (and not a "SHOULD") on the
-> +assumption that a server advertising bundle uris is more likely than
-> +not to be serving up a relatively large repository, and to be pointing
-> +to URIs that have a good chance of being in working order. A client
-> +MAY e.g. look at the payload size of the bundles as a heuristic to see
-> +if an early disconnect is worth it, should falling back on a full
-> +"fetch" dialog be necessary.
-> +
-> +WHEN ADVERTISED BUNDLE(S) REQUIRE FURTHER NEGOTIATION::
-> +A client SHOULD commence a negotiation of a PACK from the server via
-> +the "fetch" command using the OID tips found in advertised bundles,
-> +even if's still in the process of downloading those bundle(s).
-> ++
-> +This allows for aggressive early disconnects from any interactive
-> +server dialog. The client blindly trusts that the advertised OID tips
-> +are relevant, and issues them as 'have' lines, it then requests any
-> +tips it would like (usually from the "ls-refs" advertisement) via
-> +'want' lines. The server will then compute a (hopefully small) PACK
-> +with the expected difference between the tips from the bundle(s) and
-> +the data requested.
-> ++
-> +The only connection the client then needs to keep active is to the
-> +concurrently downloading static bundle(s), when those and the
-> +incremental PACK are retrieved they should be inflated and
-> +validated. Any errors at this point should be gracefully recovered
-> +from, see above.
-> +
-> +bundle-uri PROTOCOL FEATURES
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +As noted above the `<key>=<value>` definitions are documented by the
-> +`bundle.*` config namespace.
-
-Same comment as earlier - this is a confusing way to phrase this. If you
-mean "the keys are part of the `bundle.*` namespace documented in
-linkgit:git-config[1]", I think you can just say that directly. If not, it
-would help to clarify the relationship between the `bundle.*` namespace and
-these keys.
-
-> +
-> +In particular, the `bundle.version` key specifies an integer value. The
-> +only accepted value at the moment is `1`, but if the client sees an
-> +unexpected value here then the client MUST ignore the bundle list.
-> +
-> +As long as `bundle.version` is understood, all other unknown keys MAY be
-> +ignored by the client. The server will guarantee compatibility with older
-> +clients, though newer clients may be better able to use the extra keys to
-> +minimize downloads.
-> +
-> +Any backwards-incompatible addition of pre-URI key-value will be
-> +guarded by a new `bundle.version` value or values in 'bundle-uri'
-> +capability advertisement itself, and/or by new future `bundle-uri`
-> +request arguments.
-> +
-> +Some example key-value pairs that are not currently implemented but could
-> +be implemented in the future include:
-> +
-> + * Add a "hash=<val>" or "size=<bytes>" advertise the expected hash or
-> +   size of the bundle file.
-> +
-> + * Advertise that one or more bundle files are the same (to e.g. have
-> +   clients round-robin or otherwise choose one of N possible files).
-> +
-> + * A "oid=<OID>" shortcut and "prerequisite=<OID>" shortcut. For
-> +   expressing the common case of a bundle with one tip and no
-> +   prerequisites, or one tip and one prerequisite.
-> ++
-> +This would allow for optimizing the common case of servers who'd like
-> +to provide one "big bundle" containing only their "main" branch,
-> +and/or incremental updates thereof.
-> ++
-> +A client receiving such a a response MAY assume that they can skip
-> +retrieving the header from a bundle at the indicated URI, and thus
-> +save themselves and the server(s) the request(s) needed to inspect the
-> +headers of that bundle or bundles.
-
-Overall, this document is quite thorough, especially with respect to edge
-cases/error handling. I found it a bit confusing at times (at least
-partially due to my unfamiliarity with protocol v2), including some
-potentially ambiguous phrasing or scenarios (especially those in the
-disconnection & error recovery sections) that are difficult to clearly
-describe in generic terms.
-
-I think some sections (especially "PROTOCOL for bundle-uri" and "bundle-uri
-CLIENT AND SERVER EXPECTATIONS") would benefit from examples of what "good"
-and "bad" request/response values & behaviors look like; they would help
-illustrate some of those more complex situations. The rest of the patch (the
-implementation & tests) looked good to me. 
-
-Thanks for your continued work on this, I'm really excited to see the next
-steps of bundle servers in this series!
-
+U3VyZS4gIFRoYW5rIHlvdSBmb3IgdGhlIHF1aWNrIGZlZWRiYWNrLiAgTGV0IG1lIHNlZSBpZiBJ
+IGNhbiBleHBsYWluIHRoZSBpZGVhLg0KDQpTb21ldGltZXMgaXQgY2FuIGJlIGhlbHBmdWwgdG8g
+cmVhY3QgdG8gc3BlY2lhbCBrZXl3b3JkcyBpbiBhIGdpdCBzZW5kLWVtYWlsIHN1YmplY3QgbGlu
+ZSBvciBzcGVjaWZpYyBlbWFpbCBhZGRyZXNzLiAgTGlrZSBwZXJoYXBzIG9uZSB3YW50cyB0byBk
+byBzb21lIGtpbmQgb2Ygc29ydGluZyBvZiBwYXRjaGVzIGJ5IG1haWxpbmcgbGlzdCBvciAidG8i
+IGVtYWlsIGFkZHJlc3MuICBZb3UgY291bGQgdXNlIHRoZSBzZW5kZW1haWwtdmFsaWRhdGUgaG9v
+ayBhcyBhIHdheSB0byBjb3B5IHRoZSBwYXRjaCB0byBhIHNwZWNpZmljIGxvY2F0aW9uIGxvY2Fs
+bHkgYmFzZWQgb24gd2hvIHlvdSBhcmUgZW1haWxpbmcuICBJJ20gc3VyZSB0aGVyZSBjb3VsZCBi
+ZSBvdGhlciB1c2VzIGZvciB0aGUgc210cCBoZWFkZXIgaW5mb3JtYXRpb24gYXMgd2VsbC4gIFBy
+ZXN1bWFibHkgdGhlIGhlYWRlciBpbmZvcm1hdGlvbiBpcyBwcmludGVkIHRvIHN0ZG91dCBiZWZv
+cmUgc2VuZGluZyBhbiBlbWFpbCwgZm9yIG90aGVyIHJlYXNvbnMgdG9vICh0aGlzIGhhcHBlbnMg
+YWxyZWFkeSkuICBNeSBwYXRjaCBtYWtlcyBpdCBwb3NzaWJsZSB0byBub3cgYXV0b21hdGUgYW55
+IGNoZWNrcyBvbmUgbWlnaHQgYmUgZG9pbmcgbWFudWFsbHkgd2l0aCB0aGVzZSBoZWFkZXJzLg0K
+DQpXaXRoIHNvbWUgdGVzdGluZyBJIGNhbiBjb25maXJtIHRoYXQgZW5jb2RlZCBoZWFkZXJzIChs
+aWtlIGEgdXRmOCBzdHJpbmcpIGdldCBwYXNzZWQgaW4gZW5jb2RlZCBmb3JtLiAgVGhlIHJhbmRv
+bSBleGFtcGxlIEkgdHJpZWQgd2FzIHdpdGggdGhlIHN1YmplY3QgIlJoeWRkaGV3Y2ggeSByYWPF
+tW4iIGFuZCBpdCBpcyBzaG93bnMgYXMgIlN1YmplY3Q6IFtQQVRDSF0gPT9VVEYtOD9xP1JoeWRk
+aGV3Y2g9MjB5PTIwcmFjPUM1PUI1bj89Ii4gIEhvd2V2ZXIsIHRoZSBvcmlnaW5hbCBwcmludCBv
+ZiB0aGUgc210cCBoZWFkZXJzIGRvZXNuJ3QgaGFuZGxlIGVuY29kZWQgdGV4dCBlaXRoZXIsIHNv
+IGl0IGlzIG5vIHdvcnNlIHRoYW4gY3VycmVudC4NCg0KTGFzdGx5LCB3aXRoIHRoZSB2YWxpZGF0
+ZSBjb2RlIG1vdmluZyBsYXRlciB0aGVyZSBhcmUgc29tZSBjaGFuZ2VzIGluIG91dHB1dC4gIEFm
+dGVyIG15IGNoYW5nZSwgdGhlIHVzZXIgd2lsbCBnZXQgYXNrZWQgYWJvdXQ6IGNvbXBvc2VkIGVt
+YWlsIChjb21wb3NlIGFyZ3VtZW50IGNvZGUpLCA4IGJpdCBlbmNvZGluZywgd2hvIHRvIHNlbmQg
+dG8sIGFuZCB3aGljaCBtZXNzYWdlLUlEIHRvIHJlcGx5IHRvIGJlZm9yZSB2YWxpZGF0aW9uLiAg
+U2luY2UgdGhlc2UgY2hhbmdlIHRoZSBoZWFkZXIgaW5mb3JtYXRpb24sIHZhbGlkYXRpb24gbmVl
+ZHMgdG8gaGFwcGVuIGFmdGVyLg0KDQpNaWNoYWVsDQpQUy0gSSBmaXhlZCB0aGUgU2lnbmVkLW9m
+Zi1ieSBhcyB3ZWxsLg0KDQoNCk1pY2hhZWwgU3RyYXdicmlkZ2UgKDIpOg0KICBFeHBvc2UgaGVh
+ZGVyIGluZm9ybWF0aW9uIHRvIGdpdC1zZW5kLWVtYWlsJ3Mgc2VuZGVtYWlsLXZhbGlkYXRlIGhv
+b2sNCiAgVXBkYXRlIHNlbmRlbWFpbC12YWxpZGF0ZSBob29rIGRvY3MgdG8gYWRkIGhlYWRlciBm
+aWxlIHBhcmFtZXRlcg0KDQogRG9jdW1lbnRhdGlvbi9naXRob29rcy50eHQgfCAgOCArKystLS0N
+CiBnaXQtc2VuZC1lbWFpbC5wZXJsICAgICAgICB8IDU3ICsrKysrKysrKysrKysrKysrKysrKysr
+KystLS0tLS0tLS0tLS0tDQogMiBmaWxlcyBjaGFuZ2VkLCA0MSBpbnNlcnRpb25zKCspLCAyNCBk
+ZWxldGlvbnMoLSkNCg0KLS0gDQoyLjM0LjENCg==
