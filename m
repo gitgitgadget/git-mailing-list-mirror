@@ -2,82 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FFD7C43217
-	for <git@archiver.kernel.org>; Fri, 11 Nov 2022 21:52:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45CCFC4332F
+	for <git@archiver.kernel.org>; Fri, 11 Nov 2022 21:57:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233927AbiKKVwA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Nov 2022 16:52:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58096 "EHLO
+        id S231625AbiKKV5E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Nov 2022 16:57:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233727AbiKKVvs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2022 16:51:48 -0500
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F56B7377E
-        for <git@vger.kernel.org>; Fri, 11 Nov 2022 13:51:47 -0800 (PST)
-Received: by mail-io1-xd36.google.com with SMTP id b2so4473446iof.12
-        for <git@vger.kernel.org>; Fri, 11 Nov 2022 13:51:47 -0800 (PST)
+        with ESMTP id S230103AbiKKV5C (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2022 16:57:02 -0500
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89B0A4877F
+        for <git@vger.kernel.org>; Fri, 11 Nov 2022 13:57:01 -0800 (PST)
+Received: by mail-io1-xd31.google.com with SMTP id h206so4492917iof.10
+        for <git@vger.kernel.org>; Fri, 11 Nov 2022 13:57:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=DNfFoj/uTDPdBqJtPKgvN1YcYFkA0euE+fmp2hkWzH8=;
-        b=WH63qDnr3IvYZveeNpgzXyMOx2OqMkpp81FTLYO+sF+48ty7aVOHE0zxWp2K7g+gwZ
-         7Rs4x+L9Sv4Or93jrXNzXnvFC6p6PlJKwPAYUqnYnSfEto4W0DPODv2vZC0wxGhjkuWI
-         Y12St8WmriLun2PWzzTFi0qX9omjY6exigQbgRzWI13SWYIiMZ2MCPdHIO2D9jmYildn
-         TiyVmgAJ1rKGZRJThEnO9BxL73wpBSbjDXlTU1cCD2iFbC4tYRsvTrsCK57tk41QGZBm
-         AQQe2MiuXAY1t61TSc4RNu3NrCLnk/bsUlVmdH5B0JRTRgIMSPk4d3wvdxv1VwKS7/DP
-         ovLQ==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0iCM81TUMbf4MTRrAgzZQvLA35DjK3PmJFw8r+Uco+Y=;
+        b=SxoEFn7WPIO3tW0bkINyVJdf4C4EYUC3E+IH3oBFp0ogIvTniD3WrvHmKXKlstOp+O
+         M4qCufhK4tz/IwpyhtCSKm6pDPnnUYvS+b6SfuurgI/HRFYLMoP/6ZobA0xWy7N7vjID
+         9Zkq3elNToJAyScdhU2wyhM07za8f3C9DIK7DeDs3AI6V6KFpGJgZM7/SjQgW6fPU8hs
+         wqpxu7ows9PL5erbGxA58ld9HwZ6PVu6l7aQmsleILsaubbcQHOpWo7+GORSyvRxz3LU
+         6CkuSAbiqVhZZ+HGhwP8bSQfJGiOB+NZ+h0mFSqJZERxQPhqrzCw1/uuqJKbvCAE58Eb
+         8ovg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DNfFoj/uTDPdBqJtPKgvN1YcYFkA0euE+fmp2hkWzH8=;
-        b=u1IaakaAMZntZ4+awQrG/qc1+r1h+GL7uM84Xg3y0pJ5/H8/Q6YTjR+8daQdP2O+rL
-         5/28eJ5mob5PYF52K70LUUWcgwFAuhkvZMi5Jkhoua0Qy9zf1hB2KSYEg4aXt/Io48Iv
-         d8Gxq47T7Jpy01e4rtnhPmI0S1Im3x74u3Qta/V+OYuFQCR5z5dWlBolYS+JIgDcVnBO
-         ses69Qtch5IYYyodHHUYMK3+Ch3Aiq7lqi+NEdjYsP9XQOv/0zzEqP2c3wScU5aMuKd+
-         hMhF/8zDWjF+Z/CiPwa0WxRQR5VVFVbb+2/d8R4ryGNsEzyFZ1k4Sp3+6OgtV4wZUsSV
-         8E6Q==
-X-Gm-Message-State: ANoB5pktWKhNnVPbMIEanENNe/LEblPkSYeKiQyzWssbUETuTjR3Xwle
-        s3CvArtadigXyFhxulKbi5OLi7jEmEL1/w==
-X-Google-Smtp-Source: AA0mqf5FBDSKz/6+kgVJZXEDj7Za9eldpawsYY6YLDTJKxK6vlWu0fXCoDzYBwF9fQ3BjtPdNmPbqg==
-X-Received: by 2002:a6b:ec0c:0:b0:6d3:e744:3429 with SMTP id c12-20020a6bec0c000000b006d3e7443429mr1821958ioh.193.1668203507054;
-        Fri, 11 Nov 2022 13:51:47 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0iCM81TUMbf4MTRrAgzZQvLA35DjK3PmJFw8r+Uco+Y=;
+        b=B84Ytv0mOwXszmH+MQiq4dAgSxrGIDXgCajp35upJcCIVL2xazbehoERUd6wCP91ir
+         rMHTnvZFDPRaPibMo0rAdwdcsBkoInm3OWgtDe2THzlR0nI0cpHpfwOOZ/QD8ZKdbjSb
+         AleCNu/dDJ2Dm7BTS5KyRxK8NIt6242BzkTYcRWLBemFY/95rpbPoixWe04KN1jtQPwl
+         BGuis3jTCtJceH8PNCl1slFF+tKBlZAX4g0FkfqCGnkTnGc+7+4GxxWdPw1G7YyEqOYU
+         V8oAZ/0pTlMPyD3p1yGbf7JTyxYWYZ4qTFNLh22f/IDNssEdhzjJ7mhKEL4869A1NMx9
+         FI9g==
+X-Gm-Message-State: ANoB5pmwhZFWLMGVOAZL38voYf12ph4VUMk7HYvraL6K9Psqxo5ezS8Y
+        DI4fbY8Mta6Xh30XfPQobMmN8w==
+X-Google-Smtp-Source: AA0mqf7H6nzK0rEiuAYWdiKxIKudg4Cpew7/EVDGcCKHsuQcjvSPZ5mszoePf3FEnweMadWA3RVRMA==
+X-Received: by 2002:a05:6602:2012:b0:6d2:76f4:e041 with SMTP id y18-20020a056602201200b006d276f4e041mr1915237iod.11.1668203820953;
+        Fri, 11 Nov 2022 13:57:00 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id d7-20020a92d5c7000000b00300c5a4f014sm1256950ilq.39.2022.11.11.13.51.46
+        by smtp.gmail.com with ESMTPSA id c18-20020a023f52000000b00375687c7861sm1177371jaf.108.2022.11.11.13.57.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Nov 2022 13:51:46 -0800 (PST)
-Date:   Fri, 11 Nov 2022 16:51:45 -0500
+        Fri, 11 Nov 2022 13:57:00 -0800 (PST)
+Date:   Fri, 11 Nov 2022 16:56:59 -0500
 From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Glen Choo <chooglen@google.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH 0/8] Get rid of "git --super-prefix"
-Message-ID: <Y27D8QUl3I2d4xNe@nand.local>
-References: <20221109004708.97668-1-chooglen@google.com>
- <RFC-cover-0.8-00000000000-20221109T192315Z-avarab@gmail.com>
- <kl6ltu373ae5.fsf@chooglen-macbookpro.roam.corp.google.com>
- <221110.86zgcznjah.gmgdl@evledraar.gmail.com>
- <kl6l5yfm2taf.fsf@chooglen-macbookpro.roam.corp.google.com>
- <kl6lv8nl1h19.fsf@chooglen-macbookpro.roam.corp.google.com>
- <221111.86fsepmbhe.gmgdl@evledraar.gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2 1/3] chainlint: sidestep impoverished macOS "terminfo"
+Message-ID: <Y27FK61h4awaNYJf@nand.local>
+References: <pull.1413.git.1668013114.gitgitgadget@gmail.com>
+ <pull.1413.v2.git.1668152094.gitgitgadget@gmail.com>
+ <de482cf9cf1c791418e4279523123580f330245b.1668152094.git.gitgitgadget@gmail.com>
+ <221111.865yflo7p7.gmgdl@evledraar.gmail.com>
+ <CAPig+cRwDeGyniiVGqmdMePgmR6GiYQOvNP+GUeT__zpuWV1Fg@mail.gmail.com>
+ <CAPig+cRCSg=iVLUmLG=W47ofojU56CcFsobNZK5z5h9LdzXs0Q@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <221111.86fsepmbhe.gmgdl@evledraar.gmail.com>
+In-Reply-To: <CAPig+cRCSg=iVLUmLG=W47ofojU56CcFsobNZK5z5h9LdzXs0Q@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 11, 2022 at 10:17:44PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> If you can do that and address any other nits/issues you find that would
-> be great. I don't think I'd get to it before next week otherwise, but
-> it's earlier in the -0800 TZ :)
+On Fri, Nov 11, 2022 at 12:15:12PM -0500, Eric Sunshine wrote:
+> So, I think the fixed-up colorizing as implemented by v2 of this patch
+> series is good enough for now. It can always be revisited later if
+> something warrants it.
 
-Thanks, both.
-
+Yeah, agree. Let's not let perfect be the enemy of the good ;-).
 
 Thanks,
 Taylor
