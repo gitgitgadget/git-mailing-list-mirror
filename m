@@ -2,122 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DA69C4332F
-	for <git@archiver.kernel.org>; Fri, 11 Nov 2022 19:45:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9220CC433FE
+	for <git@archiver.kernel.org>; Fri, 11 Nov 2022 21:10:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233776AbiKKTpA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Nov 2022 14:45:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41908 "EHLO
+        id S234145AbiKKVKd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Nov 2022 16:10:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231911AbiKKTo6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2022 14:44:58 -0500
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE9476465
-        for <git@vger.kernel.org>; Fri, 11 Nov 2022 11:44:57 -0800 (PST)
-Received: by mail-lj1-x22e.google.com with SMTP id k19so5609073lji.2
-        for <git@vger.kernel.org>; Fri, 11 Nov 2022 11:44:57 -0800 (PST)
+        with ESMTP id S233551AbiKKVKc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2022 16:10:32 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F62B83B9D
+        for <git@vger.kernel.org>; Fri, 11 Nov 2022 13:10:31 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id z18so9222310edb.9
+        for <git@vger.kernel.org>; Fri, 11 Nov 2022 13:10:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=digp64BITl5fXCnVwPi6FpMjmwqPGQ3/NK7+Z+skOZY=;
-        b=TVsax2F6UOVylrBZ6EpzINpIj7/H8vrwLKH909Y3B35Lpww9q5gbfKUmSVOXdUYmnl
-         HUsK8lF3mReavb18+6krOwyvewoIUb+WND5dopDDKo/tN022epXNHuc4U4vs2EoAg9VU
-         65CUx1WtypYdlKozypxSAI+GcCS5ALeb5c4XqBfPo/WXU8e+JNd97qRO2dqXteDVypSs
-         D21QSG+d2miMq/a/qTmEqsI5J8C+T7a80Y9Eka0U/0XVkysImx64nRRNZOqZ4QNqotCl
-         jtOEY+YlaSM2iIUtXwjWM8ud685vpDfV0Jlr8Sr/4K3p+wkNopEzjRlmLf1RfhOyD8Dk
-         jfDA==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=vfSTPPZ2YEkO/VwQ4loTh/CBX8Yos9gLmtW3uKkEyDk=;
+        b=oZKnr49ycvqHRHDkPvtJYMH14ccRZJTp0IvWQeLQav+BYvB7T74eo9rIeLgPIqxPcN
+         CJkyRQPdWT0I5qRe9PkaVen8rttiP6Md0h08V5QTyaDcARUpY4gGht3bACJoEuqbyvrh
+         52OUW+bNljE3nEXKPmxMJcwkT2zlumOLQJvJdS4dgehcFIh6KNVONhNrEGxLy7CCEooC
+         392t80AHwgVIau85eV50WQMH9n532EZeyCwJukHFeZliNVsryd4oqXxayDnn7waDNXI9
+         j0+NqcgNb3666dme4RNFh1gF0FrHoeEMc/iXOK4OJ+TXHh0zVLAtUFN6hwM8EjuOsh5M
+         uTgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=digp64BITl5fXCnVwPi6FpMjmwqPGQ3/NK7+Z+skOZY=;
-        b=u8PxfWLLj4kve/aorjDJj6GXEi3XP+1NLl0Td/Z0zVd8ngOucwpgH8CxsqvLO/+HaU
-         ZmA57RVdeiQQfOAlFqn2ERAa5XSH7mxtUbpBy9OPjb4CoWpPECZr8DsvO0SN9cmwu575
-         oZh683lr/voksQeo42LHeCAlpZDwfE2Puxqm3rT2A74OWFY/orsAzbTaR5F/5mhEr9o4
-         23dU1h5Q+p2EYWIkqpcqSPNNrM4+QKYOxQqkgwerAVSJR40NDa01ZPeIHleNSE4VIP3t
-         89205xo+HAJXJ2NddsesHdA9XIh6TFkftvrKNZlAXq3+tow/myqf1QEJEk+qpYK23MM7
-         2O9g==
-X-Gm-Message-State: ANoB5plgDlYETG3PT16Y0Q7CD/jd+EQoyh3DDRgSKCW6KLb0SvJ91J1M
-        uWxEomOGjytLbnSruuGv4ETWbdVIT2n5vZZurMFb/xEE
-X-Google-Smtp-Source: AA0mqf7LlHeUdSsBSKS/8y93FZNf85O5GHdUuIWyVj0v1bjWm1OeRjRdT9ymSf7GOKlBUY9LbgHUHg9ofzGzK5Ov+G8=
-X-Received: by 2002:a05:651c:117:b0:277:423a:fcc4 with SMTP id
- a23-20020a05651c011700b00277423afcc4mr1218764ljb.325.1668195895816; Fri, 11
- Nov 2022 11:44:55 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vfSTPPZ2YEkO/VwQ4loTh/CBX8Yos9gLmtW3uKkEyDk=;
+        b=mVRA2oxfgLClRDVhDq1CVtRAHsxkHiC74qOStsslXL3Vk9cU6UeU2mMg0DpoorUprq
+         ju2AVrh13ZhFf06aW+MxbaIcmZ3t6dmYGbti37frcUsFzDHMz14ND/iR0PA0idsWLt+5
+         MOlB362+oIOTzhbSX4FEz18PJQ7kofickkPUEKCsoe3NY0gyzLa82N7a4BIRIeaG4NKH
+         WCRZIJLGlizItToSSMw1Dfc7X1pfIcR8nRhPSpv6g3LRxufcYLETm08bBR1voHPShTEc
+         USlXmWLYYYCSnG2D3pzf6g+rbM3/F6vm3cSHHSdEb0rnFB4AF7+xYENE8fnBs3vYJ352
+         3IWQ==
+X-Gm-Message-State: ANoB5pnuH671uGyeRNN5mbU3ph41z+8JIRxbpx/+MgS/tBatoOF9NdCn
+        6N2HyFxj6MrgZZLv9MM7Tjw=
+X-Google-Smtp-Source: AA0mqf5YwYJvA2PGa6+gh+WG510xgYVVpBrupo9/0NBJAzWW/MRARCK7nBZcCBHqaetHao8/up+czQ==
+X-Received: by 2002:aa7:cb0d:0:b0:463:ba10:9e2d with SMTP id s13-20020aa7cb0d000000b00463ba109e2dmr3108850edt.43.1668201029455;
+        Fri, 11 Nov 2022 13:10:29 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id hd16-20020a170907969000b007ab1b4cab9bsm1232126ejc.224.2022.11.11.13.10.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Nov 2022 13:10:29 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1otbIC-00273J-1A;
+        Fri, 11 Nov 2022 22:10:28 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 11/11] Turn `git bisect` into a full built-in
+Date:   Fri, 11 Nov 2022 22:09:59 +0100
+References: <cover.1668097286.git.congdanhqx@gmail.com>
+ <cover.1668097962.git.congdanhqx@gmail.com>
+ <dadca7adbe3e7984f60fd6de6c8d63edb6a1ad8f.1668097966.git.congdanhqx@gmail.com>
+ <221111.86edu9oa9d.gmgdl@evledraar.gmail.com>
+ <Y25sVYUAVvsfRiPK@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <Y25sVYUAVvsfRiPK@coredump.intra.peff.net>
+Message-ID: <221111.86o7tdmc3f.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.1397.v5.git.1667446182.gitgitgadget@gmail.com>
- <pull.1397.v6.git.1667472621.gitgitgadget@gmail.com> <40d56544e6e319605d02bab743a6e957ff0a5926.1667472621.git.gitgitgadget@gmail.com>
-In-Reply-To: <40d56544e6e319605d02bab743a6e957ff0a5926.1667472621.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 11 Nov 2022 11:44:43 -0800
-Message-ID: <CABPp-BFgjT7b5EyVU7P4YpGvGZk9xfV+nDJG2UBtGc2c3VqeFw@mail.gmail.com>
-Subject: Re: [PATCH v6 2/2] merge-tree.c: allow specifying the merge-base when
- --stdin is passed
-To:     Kyle Zhao via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Kyle Zhao <kylezhao@tencent.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sorry for the delay; my Git time has sadly been quite limited.  :-(
 
-On Thu, Nov 3, 2022 at 3:50 AM Kyle Zhao via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> +# Since the earlier tests have verified that individual merge-tree calls
-> +# are doing the right thing, this test case is only used to test whether
-> +# the input format is available.
+On Fri, Nov 11 2022, Jeff King wrote:
 
-"the input format is available"?  I'm not sure exactly what that
-means, but it seems almost certainly to not be the only thing it is
-testing.  Perhaps you meant something like:
+> On Fri, Nov 11, 2022 at 02:53:19PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>
+>> Do we have a test for at least the exit code of "git bisect -h"? I think
+>> not, because before this it would have been (from skimming
+>> git-sh-setup.sh) 1, but 129 after.
+>>=20
+>> The new exit code is better, but let's test that. For some exitsing test=
+s:
+>>=20
+>> 	git grep 'test_expect_code 129 .*-h'
+>
+> It should be covered by t0012 automatically once it becomes a builtin
+> (and checking out the tip of dd/git-bisect-builtin, that seems to be the
+> case).
 
-# Since the earlier tests have verified that individual merge-tree calls
-# are doing the right thing, this test case is only used to verify that
-# we can also trigger merges via --stdin, and that when we do we get
-# the same answer as running a bunch of separate merges.
-
-> +
-> +test_expect_success 'check the input format when --stdin is passed' '
-> +       test_when_finished "rm -rf repo" &&
-> +       git init repo &&
-> +       test_commit -C repo c1 &&
-> +       test_commit -C repo c2 &&
-> +       test_commit -C repo c3 &&
-> +       printf "c1 c3\nc2 -- c1 c3\nc2 c3" | git -C repo merge-tree --stdin >actual &&
-> +
-> +       printf "1\0" >expect &&
-> +       git -C repo merge-tree --write-tree -z c1 c3 >>expect &&
-> +       printf "\0" >>expect &&
-> +
-> +       printf "1\0" >>expect &&
-> +       git -C repo merge-tree --write-tree -z --merge-base=c2 c1 c3 >>expect &&
-> +       printf "\0" >>expect &&
-> +
-> +       printf "1\0" >>expect &&
-> +       git -C repo merge-tree --write-tree -z c2 c3 >>expect &&
-> +       printf "\0" >>expect &&
-> +
-> +       test_cmp expect actual
-> +'
-> +
->  test_done
-
-My above nit on your comment is my only remaining issue with your
-implementation.  Looks good.
-
-As an aside, I am still a little disappointed that the sole reason for
-this series is limited to a usecase where this solution is at best an
-interim hack[1][2]...but since I have had very limited time to work on
-Git stuff including providing a proper solution for that usecase (in
-the form of git-replay), and since it makes sense to include this
-capability from a completeness perspective.
-
-Anyway, thanks for patiently fixing everything up.  I think this
-series should be ready to merge down once the comment is fixed up.
-
-[1] https://lore.kernel.org/git/CABPp-BGBFyoY7m+KCA9MTifKmpZ0ccLgsYHahMCgPxuTpuUGPg@mail.gmail.com/
-[2] https://lore.kernel.org/git/CABPp-BGXM=iRAgjNbZ0o3FSjj583GpkuFB6emUYwWjdFWb9-jQ@mail.gmail.com/
+Yes, you're right. I forgot about those. So, there's nothing to do here
+then...
