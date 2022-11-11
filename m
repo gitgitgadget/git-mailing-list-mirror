@@ -2,59 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7937C433FE
-	for <git@archiver.kernel.org>; Fri, 11 Nov 2022 15:20:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C255CC433FE
+	for <git@archiver.kernel.org>; Fri, 11 Nov 2022 15:38:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234187AbiKKPU7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Nov 2022 10:20:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42538 "EHLO
+        id S233804AbiKKPiB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Nov 2022 10:38:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234238AbiKKPUV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2022 10:20:21 -0500
+        with ESMTP id S233654AbiKKPh7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2022 10:37:59 -0500
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A0287BE50
-        for <git@vger.kernel.org>; Fri, 11 Nov 2022 07:20:10 -0800 (PST)
-Received: (qmail 384 invoked by uid 109); 11 Nov 2022 15:20:10 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEC6063BA2
+        for <git@vger.kernel.org>; Fri, 11 Nov 2022 07:37:58 -0800 (PST)
+Received: (qmail 412 invoked by uid 109); 11 Nov 2022 15:37:57 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 11 Nov 2022 15:20:10 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 11 Nov 2022 15:37:57 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5965 invoked by uid 111); 11 Nov 2022 15:20:10 -0000
+Received: (qmail 6112 invoked by uid 111); 11 Nov 2022 15:37:57 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 11 Nov 2022 10:20:10 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 11 Nov 2022 10:37:57 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Fri, 11 Nov 2022 10:20:09 -0500
+Date:   Fri, 11 Nov 2022 10:37:57 -0500
 From:   Jeff King <peff@peff.net>
-To:     Glen Choo <chooglen@google.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH] t: run t5551 tests with both HTTP and HTTP/2
-Message-ID: <Y25oKeLGxh2S2eyU@coredump.intra.peff.net>
-References: <pull.1377.git.git.1667955151994.gitgitgadget@gmail.com>
- <Y2xnUyEoCFmbPtUI@nand.local>
- <kl6lpmdu3dl5.fsf@chooglen-macbookpro.roam.corp.google.com>
- <Y21yPIDmwB53e+aj@coredump.intra.peff.net>
- <kl6lk0422zgd.fsf@chooglen-macbookpro.roam.corp.google.com>
- <Y22ze1m6ayQCv9B5@coredump.intra.peff.net>
- <Y25hDr7aHvKnxso3@coredump.intra.peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 11/11] Turn `git bisect` into a full built-in
+Message-ID: <Y25sVYUAVvsfRiPK@coredump.intra.peff.net>
+References: <cover.1668097286.git.congdanhqx@gmail.com>
+ <cover.1668097962.git.congdanhqx@gmail.com>
+ <dadca7adbe3e7984f60fd6de6c8d63edb6a1ad8f.1668097966.git.congdanhqx@gmail.com>
+ <221111.86edu9oa9d.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Y25hDr7aHvKnxso3@coredump.intra.peff.net>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <221111.86edu9oa9d.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 11, 2022 at 09:49:50AM -0500, Jeff King wrote:
+On Fri, Nov 11, 2022 at 02:53:19PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
->   - As discussed in b66c77a64e, the http2 module isn't compatible with
->     the "prefork" mpm, so we need to pick something else. I chose
->     "event" here, which works on my Debian system, but it's possible
->     there are platforms which would prefer something else. We can adjust
->     that later if somebody finds such a platform.
+> Do we have a test for at least the exit code of "git bisect -h"? I think
+> not, because before this it would have been (from skimming
+> git-sh-setup.sh) 1, but 129 after.
+> 
+> The new exit code is better, but let's test that. For some exitsing tests:
+> 
+> 	git grep 'test_expect_code 129 .*-h'
 
-By the way, I confirmed that t5559 runs in CI (I checked linux-gcc, but
-all of the ubuntu-based builds should run it, as they all install
-apache).
+It should be covered by t0012 automatically once it becomes a builtin
+(and checking out the tip of dd/git-bisect-builtin, that seems to be the
+case).
 
 -Peff
