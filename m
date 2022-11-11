@@ -2,227 +2,192 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2231AC4332F
-	for <git@archiver.kernel.org>; Fri, 11 Nov 2022 06:50:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9E40C433FE
+	for <git@archiver.kernel.org>; Fri, 11 Nov 2022 07:35:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233152AbiKKGuf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Nov 2022 01:50:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39756 "EHLO
+        id S232943AbiKKHfA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Nov 2022 02:35:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232182AbiKKGu0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2022 01:50:26 -0500
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE1F8729A7
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 22:50:23 -0800 (PST)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 130313200938;
-        Fri, 11 Nov 2022 01:50:23 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Fri, 11 Nov 2022 01:50:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-        :content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; t=1668149422; x=1668235822; bh=JlPedTWuIA
-        YaW+eX9ZtJH414ZCoT6LhOujm+XZlR+CQ=; b=PLdI/oYJolp5AgUCYYaTeGduJ8
-        HfkAK+wLI2CBGO0XUhK1BJRCCOTNeLRWVwNS53KEtCpdXD7wlmu+D9+sT6vc4hHR
-        aKRQzRNYUxp+imIvTr0+FTxHVxUO43ct7FQprUZiKci7+VEWrYxfktSMRwRAKbo8
-        LDHFWYSQgvfZH9vOy5rdjtnKXWI5obdo87vYVACf4/JJh8eMmUkrKPZPs4yNmcoq
-        i9hasLbclv7+49bQhhE5ePYsOgyEznKf4BBh9uDUeA12Zl7bQJh7EgkEAvndWrmI
-        jxCaT0E6Ln4auZ+DdFOztcNca02sIfYPvUBPeWEuSBNBBvvNQZM/eGU/KHmg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm1; t=1668149422; x=1668235822; bh=JlPedTWuIAYaW+eX9ZtJH414ZCoT
-        6LhOujm+XZlR+CQ=; b=KPaxP17h0FKQfTrEpwWrDq99c+dKbXWgBz+AObz3svg/
-        AcXxrUoyECaFaraoQKoLWCpADgjl8sv/aPrtR7q7UPgb1W08L6X4whaVxB57iS20
-        k399TFRJrrta1d8RNy1cEBSR5/mwADIvDCg5zpm+8lhp5y6Byqx+pWwsNHg3U7sq
-        50fI4WNbOexd3rweXjoBaKYHxZWxw0XGmgVyIqze+pkYJ8xp6sBsj0H+T3xRXKFW
-        mIejlMH9ls3UZfHWV67LwSUM3P1/6656u/xr5RuNJM6ZQU3jD0fwrmQOZXb7SYT+
-        Z1f/RbMBSaXUbwqaKnMARgPtqikvOJTf+V//CMmCrw==
-X-ME-Sender: <xms:rvBtY6mKx_lqnf5f9SbKhtWcKHBqHPY6tVf1slmXex0m0guQRNDN6w>
-    <xme:rvBtYx38S0onV7Y6ynyCud1ZcdhJODSfeG7zSoUieXdzD9JUJIgZDIddGWawfdtR2
-    _VNUww5frCbHBhC4w>
-X-ME-Received: <xmr:rvBtY4q--G5VXuYMt5fvsio_V-8rWCaYoAA-13ODvaEaQh3FxdjufgFMyIKQkz7sHdLt00h4OBCtIwc1rG4WBHyRUnxH4SkY4r-z9HfLrs5ynA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrfeehgddutddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeetueevhffhudefvdegieeuieelgedthf
-    egfedtueevjeejtdfgjeehudejuedtudenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:rvBtY-mINFN8z2gyFidu0qDv6GipxuEOFtY9dCRP-mL8XhRvdtimsQ>
-    <xmx:rvBtY41lbyHgpWh6lM-m__44W8OcejcjwXh4-SVHOUn6qRKwmOgJEw>
-    <xmx:rvBtY1uHjbZGu3hlkGoCSKg_bXsbGvBlHIsKkm-nfWP0R_o0k1KCVQ>
-    <xmx:rvBtY1xdH2r6G_mOWxNsHGznJjPoEzewGNCxRKBj3Jog4CblKmajyw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Nov 2022 01:50:21 -0500 (EST)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 3935c296 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Fri, 11 Nov 2022 06:50:18 +0000 (UTC)
-Date:   Fri, 11 Nov 2022 07:50:18 +0100
-From:   Patrick Steinhardt <ps@pks.im>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v5 7/7] receive-pack: only use visible refs for connectivity
- check
-Message-ID: <f5f18f3939276e4dd63c66d5fb2a72231f9a7a06.1668149149.git.ps@pks.im>
-References: <cover.1666967670.git.ps@pks.im>
- <cover.1668149149.git.ps@pks.im>
+        with ESMTP id S232773AbiKKHe7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2022 02:34:59 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C84BB79D12
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 23:34:57 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id o30so2480540wms.2
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 23:34:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gHyRH4K012Z0ZW/0oLSoZCDd+HfMh8kJHr10cBlTBO0=;
+        b=c2F4DCeCa6im1D87+H14z8H3I4wX7gy3yLuK07cTukYdDA31/UHanTxVDeyHbKbaYW
+         EGfbA21nol80BytG+dycExB1ARGyA+qWgdu90P+QKQCINHxciY78MRubiN9FhCC//TVc
+         xLLnoC7CukN5lQUXklSSOXA2vHFEenFXrNJyqogfAh6miXQLe2VgGaL1AOgrseBBxfCQ
+         rqf9APjJYUNXy9xLwqh+esxvjVgk18zPxMbw/sAZD5CDADhSXPDGJ7zw5IHWWodCvWqZ
+         9mwW17M4wvukc62Gly4hW2b3CjYq22Xn0qtaeZ28frZBnPh+8o1obUZYPt6dLKIgyRwo
+         79/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gHyRH4K012Z0ZW/0oLSoZCDd+HfMh8kJHr10cBlTBO0=;
+        b=UpXWibpry31AG3GUm0GuG6p9Y71KsSY2C212qPX89IuBwUnhVOEpufbSXqweUmnZQa
+         eVczqDTEXBgZa/QYH/9Ad4849bHtj4HWaIreIn+ACsiWgOZy+tshGXhSWLLC9i46k60K
+         Cbe40CtqdyMLLjOU7/qrKaJ5xh+9SMQgl3TJn5D2hrX0oIlsAgRi2DrjiJ4q/LGAd1fh
+         4TfPwy94folgmqzLjfn9WHUsQdHi7DT3SUQR+YQVtUAb9Q0BHcECYB177HrrhPzW3wig
+         88GIzE+MXAso4pk0muouwNY6sO5D8CFtkA31QYY10aCKgZqPCFvCB3NyKOFzHylJUAKl
+         TTKw==
+X-Gm-Message-State: ANoB5pk/rerO8zwK+YL+NfJB7nMtTk1hpmeuF8QO1cGBG+vGqWd3D2Yc
+        nXGar+CnAHP2JO6t2Bu+0DbhL0ezomk=
+X-Google-Smtp-Source: AA0mqf5qFd/RfsrwW2pvxNa/tMUC9TKBNFR8qn0huXO+TxwxsXTQdoF2612V9gelP8jmc5XTDbckdw==
+X-Received: by 2002:a05:600c:21cc:b0:3cf:8b32:a52 with SMTP id x12-20020a05600c21cc00b003cf8b320a52mr360416wmj.72.1668152096026;
+        Thu, 10 Nov 2022 23:34:56 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k33-20020a05600c1ca100b003cf6c2f9513sm2286969wms.2.2022.11.10.23.34.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Nov 2022 23:34:55 -0800 (PST)
+Message-Id: <pull.1413.v2.git.1668152094.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1413.git.1668013114.gitgitgadget@gmail.com>
+References: <pull.1413.git.1668013114.gitgitgadget@gmail.com>
+From:   "Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 11 Nov 2022 07:34:51 +0000
+Subject: [PATCH v2 0/3] chainlint: emit line numbers alongside test definitions
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="41Ox5Ne90cYIYFao"
-Content-Disposition: inline
-In-Reply-To: <cover.1668149149.git.ps@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is a re-roll of "es/chainlint-lineno"[1] which makes chainlint.pl
+output line numbers alongside annotated test definitions in which problems
+have been discovered.
 
---41Ox5Ne90cYIYFao
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Changes since v1:
 
-When serving a push, git-receive-pack(1) needs to verify that the
-packfile sent by the client contains all objects that are required by
-the updated references. This connectivity check works by marking all
-preexisting references as uninteresting and using the new reference tips
-as starting point for a graph walk.
+Limit sidestepping of impoverished Apple "terminfo" entries to specific
+terminal types known to be problematic and in common use on macOS, rather
+than sledge-hammer matching all "xterm" since some old "xterm" variants may
+legitimately not support ANSI capabilities (suggested by brian[2]).
 
-Marking all preexisting references as uninteresting can be a problem
-when it comes to performance. Git forges tend to do internal bookkeeping
-to keep alive sets of objects for internal use or make them easy to find
-via certain references. These references are typically hidden away from
-the user so that they are neither advertised nor writeable. At GitLab,
-we have one particular repository that contains a total of 7 million
-references, of which 6.8 million are indeed internal references. With
-the current connectivity check we are forced to load all these
-references in order to mark them as uninteresting, and this alone takes
-around 15 seconds to compute.
+Fix incorrect line number computation when swallowing here-doc bodies. v1
+incorrectly incremented the line number by two regardless of the here-doc
+body's actual size. I very much would like to add tests to catch this sort
+of problem, however, the current chainlint self-test framework validates
+chainlint behavior in relation only to test bodies, whereas this problem
+manifested when a here-doc was present at the script level outside of any
+test. It may be possible to expand the self-test framework in the future to
+allow such testing, but that may be some time off, and needn't hold up this
+series.
 
-We can optimize this by only taking into account the set of visible refs
-when marking objects as uninteresting. This means that we may now walk
-more objects until we hit any object that is marked as uninteresting.
-But it is rather unlikely that clients send objects that make large
-parts of objects reachable that have previously only ever been hidden,
-whereas the common case is to push incremental changes that build on top
-of the visible object graph.
+FOOTNOTES
 
-This provides a huge boost to performance in the mentioned repository,
-where the vast majority of its refs hidden. Pushing a new commit into
-this repo with `transfer.hideRefs` set up to hide 6.8 million of 7 refs
-as it is configured in Gitaly leads to a 4.5-fold speedup:
+[1]
+https://lore.kernel.org/git/pull.1413.git.1668013114.gitgitgadget@gmail.com/
+[2]
+https://lore.kernel.org/git/Y2xkpJj4jLqfsggL@tapette.crustytoothpaste.net/
 
-    Benchmark 1: main
-      Time (mean =C2=B1 =CF=83):     30.977 s =C2=B1  0.157 s    [User: 30.=
-226 s, System: 1.083 s]
-      Range (min =E2=80=A6 max):   30.796 s =E2=80=A6 31.071 s    3 runs
+Eric Sunshine (3):
+  chainlint: sidestep impoverished macOS "terminfo"
+  chainlint: latch line numbers at which each token starts and ends
+  chainlint: prefix annotated test definition with line numbers
 
-    Benchmark 2: pks-connectivity-check-hide-refs
-      Time (mean =C2=B1 =CF=83):      6.799 s =C2=B1  0.063 s    [User: 6.8=
-03 s, System: 0.354 s]
-      Range (min =E2=80=A6 max):    6.729 s =E2=80=A6  6.850 s    3 runs
-
-    Summary
-      'pks-connectivity-check-hide-refs' ran
-        4.56 =C2=B1 0.05 times faster than 'main'
-
-As we mostly go through the same codepaths even in the case where there
-are no hidden refs at all compared to the code before there is no change
-in performance when no refs are hidden:
-
-    Benchmark 1: main
-      Time (mean =C2=B1 =CF=83):     48.188 s =C2=B1  0.432 s    [User: 49.=
-326 s, System: 5.009 s]
-      Range (min =E2=80=A6 max):   47.706 s =E2=80=A6 48.539 s    3 runs
-
-    Benchmark 2: pks-connectivity-check-hide-refs
-      Time (mean =C2=B1 =CF=83):     48.027 s =C2=B1  0.500 s    [User: 48.=
-934 s, System: 5.025 s]
-      Range (min =E2=80=A6 max):   47.504 s =E2=80=A6 48.500 s    3 runs
-
-    Summary
-      'pks-connectivity-check-hide-refs' ran
-        1.00 =C2=B1 0.01 times faster than 'main'
-
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/receive-pack.c | 2 ++
- connected.c            | 3 +++
- connected.h            | 7 +++++++
- 3 files changed, 12 insertions(+)
-
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 1e24b31a0a..a90af30363 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1929,6 +1929,8 @@ static void execute_commands(struct command *commands,
- 	opt.err_fd =3D err_fd;
- 	opt.progress =3D err_fd && !quiet;
- 	opt.env =3D tmp_objdir_env(tmp_objdir);
-+	opt.exclude_hidden_refs_section =3D "receive";
-+
- 	if (check_connected(iterate_receive_command_list, &data, &opt))
- 		set_connectivity_errors(commands, si);
-=20
-diff --git a/connected.c b/connected.c
-index 74a20cb32e..4f6388eed7 100644
---- a/connected.c
-+++ b/connected.c
-@@ -100,6 +100,9 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
- 		strvec_push(&rev_list.args, "--exclude-promisor-objects");
- 	if (!opt->is_deepening_fetch) {
- 		strvec_push(&rev_list.args, "--not");
-+		if (opt->exclude_hidden_refs_section)
-+			strvec_pushf(&rev_list.args, "--exclude-hidden=3D%s",
-+				     opt->exclude_hidden_refs_section);
- 		strvec_push(&rev_list.args, "--all");
- 	}
- 	strvec_push(&rev_list.args, "--quiet");
-diff --git a/connected.h b/connected.h
-index 6e59c92aa3..16b2c84f2e 100644
---- a/connected.h
-+++ b/connected.h
-@@ -46,6 +46,13 @@ struct check_connected_options {
- 	 * during a fetch.
- 	 */
- 	unsigned is_deepening_fetch : 1;
-+
-+	/*
-+	 * If not NULL, use `--exclude-hidden=3D$section` to exclude all refs
-+	 * hidden via the `$section.hideRefs` config from the set of
-+	 * already-reachable refs.
-+	 */
-+	const char *exclude_hidden_refs_section;
- };
-=20
- #define CHECK_CONNECTED_INIT { 0 }
---=20
-2.38.1
+ t/Makefile     |  2 +-
+ t/chainlint.pl | 70 ++++++++++++++++++++++++++++++++++----------------
+ 2 files changed, 49 insertions(+), 23 deletions(-)
 
 
---41Ox5Ne90cYIYFao
-Content-Type: application/pgp-signature; name="signature.asc"
+base-commit: 73c768dae9ea4838736693965b25ba34e941ac88
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1413%2Fsunshineco%2Fchainlintline-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1413/sunshineco/chainlintline-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1413
 
------BEGIN PGP SIGNATURE-----
+Range-diff vs v1:
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmNt8KoACgkQVbJhu7ck
-PpTbcQ/9ERmZc3gEQFOhJk8THDrNHvgmAG7/4ptt6Bav21HFZc8GdSwSB08m326E
-HJEp0MA64NuyTZVTQcTdVKIZWIVlXFkg/ZpsEkSmB2+++KDeq85RsSUtVMtuf/Ej
-uQTUn/g2TvZ8YmibaoBjtENsdn6gaYmjd7hCvBOuBAjZ0Y7Rn9L5jmVGJHLeTNoJ
-mQUTz08Vn00N6X1QnbAbJt+YNDK23TT9x/Jfz9hfgh3PNFfjviuZzbk+u2OIGLlR
-xClINjFi5TOlu5KGVhL98cRlMV5MVb/V+z1kBR6CWJ0kKUvsE+9iIXagc2Vmn48K
-iPM3HZZHRF7CjNSPIyaFm2HkWhPYUUzjfk2mUC0rA+dsqUP5bn173DseyhklBvlJ
-96p73GSybZHUp6OVDLlnUZ8NMi+/NWUkJ1b4J3ujDbaU0icHiI/DEHMl3ZZF10EI
-Vqz8gjxsl1Augr1a4CdWDDW+HWKVcLwC7vIWzAPIUWDKzV3uqXWLfp+mzjEw3KvJ
-eBIf7zd/fp12MgRiFdn/950e/EgPFADrCPbrdrR2JicuEWuuhzQ6kzotM6ryMze9
-sydaQPkqfXDhXOpMJxE0gt9W77e8XFm+WISrnzNkt/U8n6eB+YU9T2M8a3k4aZDF
-qYzBeuZpQplhqfH2dETwRQiGiJrWmtXeRKmErYg04hBSZfXBevU=
-=/lfS
------END PGP SIGNATURE-----
+ 1:  b85b28e5a6b ! 1:  de482cf9cf1 chainlint: sidestep impoverished macOS "terminfo"
+     @@ Commit message
+          chainlint: sidestep impoverished macOS "terminfo"
+      
+          Although the macOS Terminal.app is "xterm"-compatible, its corresponding
+     -    "terminfo" entry neglects to mention capabilities which Terminal.app
+     +    "terminfo" entries -- such as "xterm", "xterm-256color", and
+     +    "xterm-new"[1] -- neglect to mention capabilities which Terminal.app
+          actually supports (such as "dim text"). This oversight on Apple's part
+          ends up penalizing users of "good citizen" console programs which
+          consult "terminfo" to tailor their output based upon reported terminal
+          capabilities (as opposed to programs which assume that the terminal
+     -    supports ANSI codes).
+     +    supports ANSI codes). The same problem is present in other Apple
+     +    "terminfo" entries, such as "nsterm"[2], with which macOS Terminal.app
+     +    may be configured.
+      
+          Sidestep this Apple problem by imbuing get_colors() with specific
+     -    knowledge of "xterm" capabilities rather than trusting "terminfo" to
+     -    report them correctly. Although hard-coding such knowledge is ugly,
+     -    "xterm" support is nearly ubiquitous these days, and Git itself sets
+     -    precedence by assuming support for ANSI color codes. For non-"xterm",
+     -    fall back to querying "terminfo" via `tput` as usual.
+     +    knowledge of capabilities common to "xterm" and "nsterm", rather than
+     +    trusting "terminfo" to report them correctly. Although hard-coding such
+     +    knowledge is ugly, "xterm" support is nearly ubiquitous these days, and
+     +    Git itself sets precedence by assuming support for ANSI color codes. For
+     +    other terminal types, fall back to querying "terminfo" via `tput` as
+     +    usual.
+     +
+     +    FOOTNOTES
+     +
+     +    [1] iTerm2 FAQ suggests "xterm-new": https://iterm2.com/faq.html
+     +
+     +    [2] Neovim documentation recommends terminal type "nsterm" with
+     +        Terminal.app: https://neovim.io/doc/user/term.html#terminfo
+      
+          Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+      
+     @@ t/chainlint.pl: my @NOCOLORS = (bold => '', rev => '', reset => '', blue => '',
+      -		   green => `tput setaf 2`,
+      -		   red   => `tput setaf 1`);
+      -	chomp(%COLORS);
+     -+	if ($ENV{TERM} =~ /\bxterm\b/) {
+     ++	if ($ENV{TERM} =~ /xterm|xterm-\d+color|xterm-new|xterm-direct|nsterm|nsterm-\d+color|nsterm-direct/) {
+      +		%COLORS = (bold  => "\e[1m",
+      +			   rev   => "\e[7m",
+      +			   reset => "\e[0m",
+ 2:  c8a316426be ! 2:  84ddc6707fb chainlint: latch line numbers at which each token starts and ends
+     @@ t/chainlint.pl: sub scan_balanced {
+       }
+       
+      @@ t/chainlint.pl: sub swallow_heredocs {
+     + 	my $b = $self->{buff};
+     + 	my $tags = $self->{heretags};
+       	while (my $tag = shift @$tags) {
+     ++		my $start = pos($$b);
+       		my $indent = $tag =~ s/^\t// ? '\\s*' : '';
+       		$$b =~ /(?:\G|\n)$indent\Q$tag\E(?:\n|\z)/gc;
+     -+		my $body = $&;
+     ++		my $body = substr($$b, $start, pos($$b) - $start);
+      +		$self->{lineno} += () = $body =~ /\n/sg;
+       	}
+       }
+ 3:  380b146abd1 ! 3:  3cb4ff4d330 chainlint: prefix annotated test definition with line numbers
+     @@ t/chainlint.pl: if (eval {require Time::HiRes; Time::HiRes->import(); 1;}) {
+       sub get_colors {
+       	return \%COLORS if %COLORS;
+      @@ t/chainlint.pl: sub get_colors {
+     - 	if ($ENV{TERM} =~ /\bxterm\b/) {
+     + 	if ($ENV{TERM} =~ /xterm|xterm-\d+color|xterm-new|xterm-direct|nsterm|nsterm-\d+color|nsterm-direct/) {
+       		%COLORS = (bold  => "\e[1m",
+       			   rev   => "\e[7m",
+      +			   dim   => "\e[2m",
 
---41Ox5Ne90cYIYFao--
+-- 
+gitgitgadget
