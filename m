@@ -2,78 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 70B31C43217
-	for <git@archiver.kernel.org>; Fri, 11 Nov 2022 06:50:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2231AC4332F
+	for <git@archiver.kernel.org>; Fri, 11 Nov 2022 06:50:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233109AbiKKGue (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Nov 2022 01:50:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39752 "EHLO
+        id S233152AbiKKGuf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Nov 2022 01:50:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233162AbiKKGuZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2022 01:50:25 -0500
+        with ESMTP id S232182AbiKKGu0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2022 01:50:26 -0500
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D4CC7830F
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 22:50:19 -0800 (PST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id 738493200937;
-        Fri, 11 Nov 2022 01:50:18 -0500 (EST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE1F8729A7
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 22:50:23 -0800 (PST)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailout.west.internal (Postfix) with ESMTP id 130313200938;
+        Fri, 11 Nov 2022 01:50:23 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Fri, 11 Nov 2022 01:50:18 -0500
+  by compute1.internal (MEProxy); Fri, 11 Nov 2022 01:50:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:date:date:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; t=1668149418; x=1668235818; bh=PvB38zTEMO
-        H/6CBIhegdDch3qeD4WkVZF1MV4VZh0Q8=; b=Vz3kHiWcFgDA1YJT2QRQt2tdEE
-        yTK2knUAUFEyKnrUKkWkPGkXRyoUeVMyuPR6otytwOWW0+Vj3xbu0ZVy8gzmq1ub
-        rA9UpfA0z2HMirTvVGa9MfM4WAkmwRdpWyGlO01pvd1Pk1a2x9u3LhX7yj/dqUhF
-        s0PeUzKPTFzmnJ0vypnYc+nVySCcp0a9i1SWMrIKuXILdT5+hnAxQp+1tEvzb3rX
-        O9uAsWTSjeQjCUc8Erz8lpm8qgDdobtDOASEEpx2dFRbHuOKBPaUsbhS/Y7P8/Hn
-        +TKPewX1A/WJpbd34MCG2V3DjNY3vre1NSsCZYH48GDpk8yWGBxpkJvRqkFA==
+        :subject:to:to; s=fm1; t=1668149422; x=1668235822; bh=JlPedTWuIA
+        YaW+eX9ZtJH414ZCoT6LhOujm+XZlR+CQ=; b=PLdI/oYJolp5AgUCYYaTeGduJ8
+        HfkAK+wLI2CBGO0XUhK1BJRCCOTNeLRWVwNS53KEtCpdXD7wlmu+D9+sT6vc4hHR
+        aKRQzRNYUxp+imIvTr0+FTxHVxUO43ct7FQprUZiKci7+VEWrYxfktSMRwRAKbo8
+        LDHFWYSQgvfZH9vOy5rdjtnKXWI5obdo87vYVACf4/JJh8eMmUkrKPZPs4yNmcoq
+        i9hasLbclv7+49bQhhE5ePYsOgyEznKf4BBh9uDUeA12Zl7bQJh7EgkEAvndWrmI
+        jxCaT0E6Ln4auZ+DdFOztcNca02sIfYPvUBPeWEuSBNBBvvNQZM/eGU/KHmg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
         :feedback-id:from:from:in-reply-to:in-reply-to:message-id
         :mime-version:references:reply-to:sender:subject:subject:to:to
         :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm1; t=1668149418; x=1668235818; bh=PvB38zTEMOH/6CBIhegdDch3qeD4
-        WkVZF1MV4VZh0Q8=; b=o+rgEL1ztIlPw/OeqLo8Rhg/9HmxxeThxoo1HdIKK9yl
-        lVIl0sjRA7hrKQbVuerJ/zN/j3IhqpJ2ddDztjbqY4yugRDfTA63Gy4CewPxvNec
-        cTpPIzLG0epifO7bkhd2GA6l8gS8b3eJzzRGX4bTXGUAzmNonTdPQTrkh0axToIB
-        Qr6m71TMruCc/6x8k7HA5HGKE7q0o4neyGwUVmQSxyLc8GK2gJvKFaVHxyCJaTrL
-        GsGmS99NXGG2NK/bACQFQeJRaAbmp0uw3MjH5Tfp5EcyA66GfZNrV+/mFecKpXWA
-        pc7nvqAAxw4H83aLAYd1QFheLrM2AywwKv5g7AkDxA==
-X-ME-Sender: <xms:qfBtY7QK-xMfdlqlkc19AJduGa8xghatnuethNme0m7Tw0pklBPLgw>
-    <xme:qfBtY8xiZ0v1OBvQ_jbmA5B-WzlZWjw5isDZNwCpm5jJhxixapIbU3yEFxBPYK5F6
-    Z5VAJw53yk8XLTUfg>
-X-ME-Received: <xmr:qfBtYw2xOPFds6PEgbvNB3tnRUHvW_P0AetdtihmqjHJ_HuJpuBh6HqFYGd9tV42QXmR778YUC2NAOUGfRQ48wHtm0trGyMforOFC8sje7eBUw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrfeehgddutdefucetufdoteggodetrfdotf
+        fm1; t=1668149422; x=1668235822; bh=JlPedTWuIAYaW+eX9ZtJH414ZCoT
+        6LhOujm+XZlR+CQ=; b=KPaxP17h0FKQfTrEpwWrDq99c+dKbXWgBz+AObz3svg/
+        AcXxrUoyECaFaraoQKoLWCpADgjl8sv/aPrtR7q7UPgb1W08L6X4whaVxB57iS20
+        k399TFRJrrta1d8RNy1cEBSR5/mwADIvDCg5zpm+8lhp5y6Byqx+pWwsNHg3U7sq
+        50fI4WNbOexd3rweXjoBaKYHxZWxw0XGmgVyIqze+pkYJ8xp6sBsj0H+T3xRXKFW
+        mIejlMH9ls3UZfHWV67LwSUM3P1/6656u/xr5RuNJM6ZQU3jD0fwrmQOZXb7SYT+
+        Z1f/RbMBSaXUbwqaKnMARgPtqikvOJTf+V//CMmCrw==
+X-ME-Sender: <xms:rvBtY6mKx_lqnf5f9SbKhtWcKHBqHPY6tVf1slmXex0m0guQRNDN6w>
+    <xme:rvBtYx38S0onV7Y6ynyCud1ZcdhJODSfeG7zSoUieXdzD9JUJIgZDIddGWawfdtR2
+    _VNUww5frCbHBhC4w>
+X-ME-Received: <xmr:rvBtY4q--G5VXuYMt5fvsio_V-8rWCaYoAA-13ODvaEaQh3FxdjufgFMyIKQkz7sHdLt00h4OBCtIwc1rG4WBHyRUnxH4SkY4r-z9HfLrs5ynA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrfeehgddutddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvvefukfhfgggtuggjsehgtd
-    erredttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
-    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeeukedtvedtffevleejtefgheehieegke
-    eluddvfeefgeehgfeltddtheejleffteenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    erredttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshes
+    phhkshdrihhmqeenucggtffrrghtthgvrhhnpeetueevhffhudefvdegieeuieelgedthf
+    egfedtueevjeejtdfgjeehudejuedtudenucevlhhushhtvghrufhiiigvpedtnecurfgr
     rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhm
-X-ME-Proxy: <xmx:qfBtY7B8FGfnNb9f-Obi2PQ3V4WMXTswCueeZ4tpSJC6rnpXYhlXoA>
-    <xmx:qfBtY0j7QhpCEUlx9CLetpe3FohuWya4FGsISGCh4CdTTawj1EMlIw>
-    <xmx:qfBtY_pJjvMXpi0hTu9ShrUcyygxhngXbWx-1s-fvd89rVDKfcxGHg>
-    <xmx:qvBtY9s0FKILCLY8hnOqR_S40PUWBdLwoW6R3PJeDT6RkXnRodGlEw>
+X-ME-Proxy: <xmx:rvBtY-mINFN8z2gyFidu0qDv6GipxuEOFtY9dCRP-mL8XhRvdtimsQ>
+    <xmx:rvBtY41lbyHgpWh6lM-m__44W8OcejcjwXh4-SVHOUn6qRKwmOgJEw>
+    <xmx:rvBtY1uHjbZGu3hlkGoCSKg_bXsbGvBlHIsKkm-nfWP0R_o0k1KCVQ>
+    <xmx:rvBtY1xdH2r6G_mOWxNsHGznJjPoEzewGNCxRKBj3Jog4CblKmajyw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Nov 2022 01:50:16 -0500 (EST)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 3f2958ed (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Fri, 11 Nov 2022 06:50:14 +0000 (UTC)
-Date:   Fri, 11 Nov 2022 07:50:14 +0100
+ 11 Nov 2022 01:50:21 -0500 (EST)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 3935c296 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Fri, 11 Nov 2022 06:50:18 +0000 (UTC)
+Date:   Fri, 11 Nov 2022 07:50:18 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v5 6/7] rev-parse: add `--exclude-hidden=` option
-Message-ID: <2eeb25eef0cdf6c5f9f01058326d8b0a9992c461.1668149149.git.ps@pks.im>
+Subject: [PATCH v5 7/7] receive-pack: only use visible refs for connectivity
+ check
+Message-ID: <f5f18f3939276e4dd63c66d5fb2a72231f9a7a06.1668149149.git.ps@pks.im>
 References: <cover.1666967670.git.ps@pks.im>
  <cover.1668149149.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="wxfLr16n+bsd6/Ub"
+        protocol="application/pgp-signature"; boundary="41Ox5Ne90cYIYFao"
 Content-Disposition: inline
 In-Reply-To: <cover.1668149149.git.ps@pks.im>
 Precedence: bulk
@@ -81,179 +82,147 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---wxfLr16n+bsd6/Ub
-Content-Type: text/plain; charset=us-ascii
+--41Ox5Ne90cYIYFao
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Add a new `--exclude-hidden=3D` option that is similar to the one we just
-added to git-rev-list(1). Given a seciton name `uploadpack` or `receive`
-as argument, it causes us to exclude all references that would be hidden
-by the respective `$section.hideRefs` configuration.
+When serving a push, git-receive-pack(1) needs to verify that the
+packfile sent by the client contains all objects that are required by
+the updated references. This connectivity check works by marking all
+preexisting references as uninteresting and using the new reference tips
+as starting point for a graph walk.
+
+Marking all preexisting references as uninteresting can be a problem
+when it comes to performance. Git forges tend to do internal bookkeeping
+to keep alive sets of objects for internal use or make them easy to find
+via certain references. These references are typically hidden away from
+the user so that they are neither advertised nor writeable. At GitLab,
+we have one particular repository that contains a total of 7 million
+references, of which 6.8 million are indeed internal references. With
+the current connectivity check we are forced to load all these
+references in order to mark them as uninteresting, and this alone takes
+around 15 seconds to compute.
+
+We can optimize this by only taking into account the set of visible refs
+when marking objects as uninteresting. This means that we may now walk
+more objects until we hit any object that is marked as uninteresting.
+But it is rather unlikely that clients send objects that make large
+parts of objects reachable that have previously only ever been hidden,
+whereas the common case is to push incremental changes that build on top
+of the visible object graph.
+
+This provides a huge boost to performance in the mentioned repository,
+where the vast majority of its refs hidden. Pushing a new commit into
+this repo with `transfer.hideRefs` set up to hide 6.8 million of 7 refs
+as it is configured in Gitaly leads to a 4.5-fold speedup:
+
+    Benchmark 1: main
+      Time (mean =C2=B1 =CF=83):     30.977 s =C2=B1  0.157 s    [User: 30.=
+226 s, System: 1.083 s]
+      Range (min =E2=80=A6 max):   30.796 s =E2=80=A6 31.071 s    3 runs
+
+    Benchmark 2: pks-connectivity-check-hide-refs
+      Time (mean =C2=B1 =CF=83):      6.799 s =C2=B1  0.063 s    [User: 6.8=
+03 s, System: 0.354 s]
+      Range (min =E2=80=A6 max):    6.729 s =E2=80=A6  6.850 s    3 runs
+
+    Summary
+      'pks-connectivity-check-hide-refs' ran
+        4.56 =C2=B1 0.05 times faster than 'main'
+
+As we mostly go through the same codepaths even in the case where there
+are no hidden refs at all compared to the code before there is no change
+in performance when no refs are hidden:
+
+    Benchmark 1: main
+      Time (mean =C2=B1 =CF=83):     48.188 s =C2=B1  0.432 s    [User: 49.=
+326 s, System: 5.009 s]
+      Range (min =E2=80=A6 max):   47.706 s =E2=80=A6 48.539 s    3 runs
+
+    Benchmark 2: pks-connectivity-check-hide-refs
+      Time (mean =C2=B1 =CF=83):     48.027 s =C2=B1  0.500 s    [User: 48.=
+934 s, System: 5.025 s]
+      Range (min =E2=80=A6 max):   47.504 s =E2=80=A6 48.500 s    3 runs
+
+    Summary
+      'pks-connectivity-check-hide-refs' ran
+        1.00 =C2=B1 0.01 times faster than 'main'
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/git-rev-parse.txt |  7 ++++++
- builtin/rev-parse.c             | 10 +++++++++
- t/t6018-rev-list-glob.sh        | 40 +++++++++++++++++++++++++++++++++
- 3 files changed, 57 insertions(+)
+ builtin/receive-pack.c | 2 ++
+ connected.c            | 3 +++
+ connected.h            | 7 +++++++
+ 3 files changed, 12 insertions(+)
 
-diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.=
-txt
-index 6b8ca085aa..bcd8069287 100644
---- a/Documentation/git-rev-parse.txt
-+++ b/Documentation/git-rev-parse.txt
-@@ -197,6 +197,13 @@ respectively, and they must begin with `refs/` when ap=
-plied to `--glob`
- or `--all`. If a trailing '/{asterisk}' is intended, it must be given
- explicitly.
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 1e24b31a0a..a90af30363 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1929,6 +1929,8 @@ static void execute_commands(struct command *commands,
+ 	opt.err_fd =3D err_fd;
+ 	opt.progress =3D err_fd && !quiet;
+ 	opt.env =3D tmp_objdir_env(tmp_objdir);
++	opt.exclude_hidden_refs_section =3D "receive";
++
+ 	if (check_connected(iterate_receive_command_list, &data, &opt))
+ 		set_connectivity_errors(commands, si);
 =20
-+--exclude-hidden=3D[receive|uploadpack]::
-+	Do not include refs that would be hidden by `git-receive-pack` or
-+	`git-upload-pack` by consulting the appropriate `receive.hideRefs` or
-+	`uploadpack.hideRefs` configuration along with `transfer.hideRefs` (see
-+	linkgit:git-config[1]). This option affects the next pseudo-ref option
-+	`--all` or `--glob` and is cleared after processing them.
+diff --git a/connected.c b/connected.c
+index 74a20cb32e..4f6388eed7 100644
+--- a/connected.c
++++ b/connected.c
+@@ -100,6 +100,9 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+ 		strvec_push(&rev_list.args, "--exclude-promisor-objects");
+ 	if (!opt->is_deepening_fetch) {
+ 		strvec_push(&rev_list.args, "--not");
++		if (opt->exclude_hidden_refs_section)
++			strvec_pushf(&rev_list.args, "--exclude-hidden=3D%s",
++				     opt->exclude_hidden_refs_section);
+ 		strvec_push(&rev_list.args, "--all");
+ 	}
+ 	strvec_push(&rev_list.args, "--quiet");
+diff --git a/connected.h b/connected.h
+index 6e59c92aa3..16b2c84f2e 100644
+--- a/connected.h
++++ b/connected.h
+@@ -46,6 +46,13 @@ struct check_connected_options {
+ 	 * during a fetch.
+ 	 */
+ 	unsigned is_deepening_fetch : 1;
 +
- --disambiguate=3D<prefix>::
- 	Show every object whose name begins with the given prefix.
- 	The <prefix> must be at least 4 hexadecimal digits long to
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 7fa5b6991b..b5666a03bd 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -876,10 +876,14 @@ int cmd_rev_parse(int argc, const char **argv, const =
-char *prefix)
- 				continue;
- 			}
- 			if (opt_with_value(arg, "--branches", &arg)) {
-+				if (ref_excludes.hidden_refs_configured)
-+					return error(_("--exclude-hidden cannot be used together with --branc=
-hes"));
- 				handle_ref_opt(arg, "refs/heads/");
- 				continue;
- 			}
- 			if (opt_with_value(arg, "--tags", &arg)) {
-+				if (ref_excludes.hidden_refs_configured)
-+					return error(_("--exclude-hidden cannot be used together with --tags"=
-));
- 				handle_ref_opt(arg, "refs/tags/");
- 				continue;
- 			}
-@@ -888,6 +892,8 @@ int cmd_rev_parse(int argc, const char **argv, const ch=
-ar *prefix)
- 				continue;
- 			}
- 			if (opt_with_value(arg, "--remotes", &arg)) {
-+				if (ref_excludes.hidden_refs_configured)
-+					return error(_("--exclude-hidden cannot be used together with --remot=
-es"));
- 				handle_ref_opt(arg, "refs/remotes/");
- 				continue;
- 			}
-@@ -895,6 +901,10 @@ int cmd_rev_parse(int argc, const char **argv, const c=
-har *prefix)
- 				add_ref_exclusion(&ref_excludes, arg);
- 				continue;
- 			}
-+			if (skip_prefix(arg, "--exclude-hidden=3D", &arg)) {
-+				exclude_hidden_refs(&ref_excludes, arg);
-+				continue;
-+			}
- 			if (!strcmp(arg, "--show-toplevel")) {
- 				const char *work_tree =3D get_git_work_tree();
- 				if (work_tree)
-diff --git a/t/t6018-rev-list-glob.sh b/t/t6018-rev-list-glob.sh
-index e1abc5c2b3..aabf590dda 100755
---- a/t/t6018-rev-list-glob.sh
-+++ b/t/t6018-rev-list-glob.sh
-@@ -187,6 +187,46 @@ test_expect_success 'rev-parse --exclude=3Dref with --=
-remotes=3Dglob' '
- 	compare rev-parse "--exclude=3Dupstream/x --remotes=3Dupstream/*" "upstre=
-am/one upstream/two"
- '
++	/*
++	 * If not NULL, use `--exclude-hidden=3D$section` to exclude all refs
++	 * hidden via the `$section.hideRefs` config from the set of
++	 * already-reachable refs.
++	 */
++	const char *exclude_hidden_refs_section;
+ };
 =20
-+for section in receive uploadpack
-+do
-+	test_expect_success "rev-parse --exclude-hidden=3D$section with --all" '
-+		compare "-c transfer.hideRefs=3Drefs/remotes/ rev-parse" "--branches --t=
-ags" "--exclude-hidden=3D$section --all"
-+	'
-+
-+	test_expect_success "rev-parse --exclude-hidden=3D$section with --all" '
-+		compare "-c transfer.hideRefs=3Drefs/heads/subspace/ rev-parse" "--exclu=
-de=3Drefs/heads/subspace/* --all" "--exclude-hidden=3D$section --all"
-+	'
-+
-+	test_expect_success "rev-parse --exclude-hidden=3D$section with --glob" '
-+		compare "-c transfer.hideRefs=3Drefs/heads/subspace/ rev-parse" "--exclu=
-de=3Drefs/heads/subspace/* --glob=3Drefs/heads/*" "--exclude-hidden=3D$sect=
-ion --glob=3Drefs/heads/*"
-+	'
-+
-+	test_expect_success "rev-parse --exclude-hidden=3D$section can be passed =
-once per pseudo-ref" '
-+		compare "-c transfer.hideRefs=3Drefs/remotes/ rev-parse" "--branches --t=
-ags --branches --tags" "--exclude-hidden=3D$section --all --exclude-hidden=
-=3D$section --all"
-+	'
-+
-+	test_expect_success "rev-parse --exclude-hidden=3D$section can only be pa=
-ssed once per pseudo-ref" '
-+		echo "fatal: --exclude-hidden=3D passed more than once" >expected &&
-+		test_must_fail git rev-parse --exclude-hidden=3D$section --exclude-hidde=
-n=3D$section 2>err &&
-+		test_cmp expected err
-+	'
-+
-+	for pseudoopt in branches tags remotes
-+	do
-+		test_expect_success "rev-parse --exclude-hidden=3D$section fails with --=
-$pseudoopt" '
-+			echo "error: --exclude-hidden cannot be used together with --$pseudoopt=
-" >expected &&
-+			test_must_fail git rev-parse --exclude-hidden=3D$section --$pseudoopt 2=
->err &&
-+			test_cmp expected err
-+		'
-+
-+		test_expect_success "rev-parse --exclude-hidden=3D$section fails with --=
-$pseudoopt=3Dpattern" '
-+			echo "error: --exclude-hidden cannot be used together with --$pseudoopt=
-" >expected &&
-+			test_must_fail git rev-parse --exclude-hidden=3D$section --$pseudoopt=
-=3Dpattern 2>err &&
-+			test_cmp expected err
-+		'
-+	done
-+done
-+
- test_expect_success 'rev-list --exclude=3Dglob with --branches=3Dglob' '
- 	compare rev-list "--exclude=3Dsubspace-* --branches=3Dsub*" "subspace/one=
- subspace/two"
- '
+ #define CHECK_CONNECTED_INIT { 0 }
 --=20
 2.38.1
 
 
---wxfLr16n+bsd6/Ub
+--41Ox5Ne90cYIYFao
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmNt8KYACgkQVbJhu7ck
-PpSQLhAAriEa16ErpNYqIwbvWUwgj8AV1QlpOU3aHopXgAyyGMTHLA8D0/fa2sCT
-ozw84QMjoGTFbweA3Y3pDXEjm5ieB0P4PU7l8fQphcJvxVuKYUGIja4DHQt3XCFB
-c7D1w+V1LIOlGrTskzw2K061kY2i5szycpbj8tj9ySEWH7q1963dLlYwfc89YaFF
-bPiCAEqYmalUr3AKng8Rx0hexRdhNvJwWrskwBJfz8yUki1a39vZiQNvYm6H+avX
-wNaYPFO04UimD3ilfsTcf0eYr96W7Kwm4JcnmCXfe84lf7ZKawFL6sGPjTsRgj10
-6tMgX013xKbT8qh3i2pPkDvFIc3eAml1kdV8Eyy6iRcRGpXM9uGsOgOiEq3R6/vd
-fJmDm6LKK/VNd4dRFVOhR9tF/2JrrjBVobjCYPmhUWzF9OSDNjJdojEmV1rAuA6p
-27wwUcjChRvvGQF8oDjXNw/Zgn7DCGw2YzVNFnXvBN9vJ3IqB1SzX6fPO4ipf5BD
-01+Xh7QG0iRGn+zo02l79XhYQHIBUEvMp2g75h6jMpK8vV+BE84lvr7fhU/XX5eT
-wg+eoyMlvAjpOSanABJCJ+AxnKJuUoCqr1RigPXXprcXszt+dq/kRTrYrI3/0FPa
-Y7Dp0rHadRoFlexWAfMa65gYNyrJQ0/BAeBWMJTewkqbZYpnzVI=
-=UYCz
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmNt8KoACgkQVbJhu7ck
+PpTbcQ/9ERmZc3gEQFOhJk8THDrNHvgmAG7/4ptt6Bav21HFZc8GdSwSB08m326E
+HJEp0MA64NuyTZVTQcTdVKIZWIVlXFkg/ZpsEkSmB2+++KDeq85RsSUtVMtuf/Ej
+uQTUn/g2TvZ8YmibaoBjtENsdn6gaYmjd7hCvBOuBAjZ0Y7Rn9L5jmVGJHLeTNoJ
+mQUTz08Vn00N6X1QnbAbJt+YNDK23TT9x/Jfz9hfgh3PNFfjviuZzbk+u2OIGLlR
+xClINjFi5TOlu5KGVhL98cRlMV5MVb/V+z1kBR6CWJ0kKUvsE+9iIXagc2Vmn48K
+iPM3HZZHRF7CjNSPIyaFm2HkWhPYUUzjfk2mUC0rA+dsqUP5bn173DseyhklBvlJ
+96p73GSybZHUp6OVDLlnUZ8NMi+/NWUkJ1b4J3ujDbaU0icHiI/DEHMl3ZZF10EI
+Vqz8gjxsl1Augr1a4CdWDDW+HWKVcLwC7vIWzAPIUWDKzV3uqXWLfp+mzjEw3KvJ
+eBIf7zd/fp12MgRiFdn/950e/EgPFADrCPbrdrR2JicuEWuuhzQ6kzotM6ryMze9
+sydaQPkqfXDhXOpMJxE0gt9W77e8XFm+WISrnzNkt/U8n6eB+YU9T2M8a3k4aZDF
+qYzBeuZpQplhqfH2dETwRQiGiJrWmtXeRKmErYg04hBSZfXBevU=
+=/lfS
 -----END PGP SIGNATURE-----
 
---wxfLr16n+bsd6/Ub--
+--41Ox5Ne90cYIYFao--
