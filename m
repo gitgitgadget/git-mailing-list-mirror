@@ -2,92 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 37AC1C433FE
-	for <git@archiver.kernel.org>; Fri, 11 Nov 2022 02:31:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCD56C43219
+	for <git@archiver.kernel.org>; Fri, 11 Nov 2022 02:37:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232229AbiKKCbp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 10 Nov 2022 21:31:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45580 "EHLO
+        id S232602AbiKKChC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 10 Nov 2022 21:37:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231873AbiKKCbk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Nov 2022 21:31:40 -0500
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9894963CCB
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 18:31:39 -0800 (PST)
-Received: by mail-io1-xd2d.google.com with SMTP id e189so2768013iof.1
-        for <git@vger.kernel.org>; Thu, 10 Nov 2022 18:31:39 -0800 (PST)
+        with ESMTP id S232885AbiKKCgj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Nov 2022 21:36:39 -0500
+Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C861A67133
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 18:35:14 -0800 (PST)
+Received: by mail-io1-xd34.google.com with SMTP id 63so2746243iov.8
+        for <git@vger.kernel.org>; Thu, 10 Nov 2022 18:35:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QDv9F+tU4dJMYToZk22xIzf7h+2ub+mc30ps9169ZAc=;
-        b=D1+Yb7K/fYOLTH5vqnVvDJCjL8juefghBos9CrLTkvHcIW/wJKshMpdI6Rc+S4u+9p
-         9UHReMUTHMi5+oUzUaI245Pg9zdISDRQugEgutjXaRSenLjCL31iDt7ZTVCaHBhDK8VI
-         h8UvNntOq721fvDizcHT1aRH8ONPSIw2A6ULY7ZvQtkcEE/F/HLwcORx88uNZIWQQRaa
-         7H4Jq+qRmJf6b3Pree10g1FjqbUVxIa4RW5cuorv/4uzKGa2CxQt3JySiXHBYz0pWCte
-         N+N8b7tprhUwfPcla/grC14TNQnOE1qE9qYure5QzLtU7Gv3C+sOOCijZkEQDytdUyQE
-         L0mg==
+        bh=jfjXX8Gq59a8oftGemabHWH4XDRmjGKXIjSc2tPN1fk=;
+        b=Ng+j9KLyulIJaA05YW7jjsYStyhLyBxml17B+p2K8wh76Y8ZaXL7AoRy7k1Ap2PYI4
+         k2EzJpKGX7N/horYxL5KkAhV8IFwbbmCQs8gSkGdAjaKA2L32/5QdtNWQ5jBJfV8asFI
+         CIRIXD4lAzGSM4ABZBzOfWx7PSi8iDeEXff1J6ZXhFx9fv/zlpKmA78nGaJmO2+Fo/IU
+         xuhuZLtbS6GB2kS1765VoIzlcA//7Qop6lnX5TkXXYDCFwi8JVFF/JlpZyT80WSlU8gz
+         EfdkWoD6BpW17C8DcD4VVXXesUHO7h7qReNG01L/r4S/k73+aVJ8B/SIcDSdHtHnpEhk
+         2NIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=QDv9F+tU4dJMYToZk22xIzf7h+2ub+mc30ps9169ZAc=;
-        b=OgHxt3xMZKnDyhNeuCHr/8VrKHx9LECR9ML1wkMqP9vCySFmUf5MYpBS9O3viyqSrF
-         xiqe5Mfy4ropJBm/8Vk9Yo7ze8Obkezpq0K40Gl8FeRfCt1HtnPohPiz3SfxSX+RuM1P
-         GjuHJVerKvNJ6NjUi2I2MMM2RLfYFyCpfWAvSqn9oNI4GJYziAzj2NKXuF766bcXOCwl
-         5uiwue4i3PIWr+iZt3i5xQhHbRzc8BvECDWobGETYsgXeaHRSDb9lCLprCK9Ga2swRsi
-         G3fDHlLgD84X23CjbhjpXebwgPB74nu4FBLfOGbspXC8AFmKbKbfSapb5fC/hbcP6GM/
-         fb5Q==
-X-Gm-Message-State: ANoB5pkcEdeELSu84UiqRfXqBJkvrgQSFSDkVtr0YCEd/TMxtSHGwIku
-        LUChU7JecD1nAcTJrCnbp3rvJ/bsQScC+g==
-X-Google-Smtp-Source: AA0mqf5UyN8YzKNi48AXZ4WLKmISTIMS+Gu3XqetvhhUgLvSr+bohvLZeIWP/JUJfc0LM0Ho0J/Xmg==
-X-Received: by 2002:a6b:b343:0:b0:6d5:2f6e:834 with SMTP id c64-20020a6bb343000000b006d52f6e0834mr88920iof.181.1668133898940;
-        Thu, 10 Nov 2022 18:31:38 -0800 (PST)
+        bh=jfjXX8Gq59a8oftGemabHWH4XDRmjGKXIjSc2tPN1fk=;
+        b=cvjvzKdnAaIgUo2dxUJG/3pndPWEGvt/DdVZLPf1AVN+RqNZEaR9NmiYTD6Ijl8R0S
+         eqkeI+5++WcUhcJ53lZ3WbvEsi94tCH84RxCqvZJhz28y8NShFWKIqYoNSQgVfc/174B
+         BtpCkhLqL2asvAP3vidAtTHhSd4bB3HRTBqf9yowHaykFR8YZti4yz/gi198KsVOYn/q
+         LKT/vc78iJ1I+WFNCT/tkpAmuhwDItkI7cpBj5EVsSWSADcT98dHydNRT7rt5tGQOYTU
+         lei6a6ymQaKCEs2pHfBQDTdyMfe9tWKkbKREOB2y3D5fLnsh68xs3MLwmiYrjaKgZK4d
+         NwyQ==
+X-Gm-Message-State: ANoB5pmpL/pku766/YqabQTvb/WReKdaeo/XsMwojk1UK5WwnvASmOzk
+        1E++VzdkNQOJmf53TATAhgjoCgaZG4rRdg==
+X-Google-Smtp-Source: AA0mqf66ohvD/MzRfGnsm/7qAfLzYDDbb+NGE1QJCKaso3Pfl30nm9KaGFM2AamfgSoRHGlbeMjiSg==
+X-Received: by 2002:a05:6638:41a:b0:375:bdba:52b with SMTP id q26-20020a056638041a00b00375bdba052bmr4036121jap.271.1668134113340;
+        Thu, 10 Nov 2022 18:35:13 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id x1-20020a056638026100b00374a9dbd061sm394967jaq.73.2022.11.10.18.31.38
+        by smtp.gmail.com with ESMTPSA id cx12-20020a056638490c00b003733e2ce4e8sm403531jab.59.2022.11.10.18.35.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Nov 2022 18:31:38 -0800 (PST)
-Date:   Thu, 10 Nov 2022 21:31:37 -0500
+        Thu, 10 Nov 2022 18:35:12 -0800 (PST)
+Date:   Thu, 10 Nov 2022 21:35:11 -0500
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Glen Choo <chooglen@google.com>, Taylor Blau <me@ttaylorr.com>,
+To:     Glen Choo <chooglen@google.com>
+Cc:     Emily Shaffer <nasamuffin@google.com>,
         Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Subject: Re: [PATCH] http: redact curl h2h3 headers in info
-Message-ID: <Y220CXetWek/eZEu@nand.local>
+Message-ID: <Y22038eJwS6sQN/y@nand.local>
 References: <pull.1377.git.git.1667955151994.gitgitgadget@gmail.com>
- <Y2xnUyEoCFmbPtUI@nand.local>
- <kl6lpmdu3dl5.fsf@chooglen-macbookpro.roam.corp.google.com>
- <Y21yPIDmwB53e+aj@coredump.intra.peff.net>
- <kl6lk0422zgd.fsf@chooglen-macbookpro.roam.corp.google.com>
- <Y22ze1m6ayQCv9B5@coredump.intra.peff.net>
+ <Y21zz1HYXzyyfwqy@google.com>
+ <kl6lmt8y31ak.fsf@chooglen-macbookpro.roam.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Y22ze1m6ayQCv9B5@coredump.intra.peff.net>
+In-Reply-To: <kl6lmt8y31ak.fsf@chooglen-macbookpro.roam.corp.google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 10, 2022 at 09:29:15PM -0500, Jeff King wrote:
-> > - Write our own HTTP/2 server for redaction tests. I assume this won't
-> >   be trivial, but maybe not prohibitive, e.g. [1] implements its own
-> >   http server for credential helper tests.
+On Thu, Nov 10, 2022 at 02:14:11PM -0800, Glen Choo wrote:
+> >> @@ -560,8 +560,10 @@ static void set_curl_keepalive(CURL *c)
+> >>  }
+> >>  #endif
+> >>
+> >> -static void redact_sensitive_header(struct strbuf *header)
+> >> +/* Return 0 if redactions been made, 1 otherwise. */
+> >
+> > Does it make sense to reverse the retval here?
+> >
+> > `if (!redact_sensitive_header())` sounds like "if not redacted, ..." -
+> > but here it means the opposite, right?
 >
-> These seems like a lot more work than just setting up HTTP/2 support for
-> Apache. I checked the recipe from b66c77a64e, and it still works. It
-> does indeed find the bug (my curl is 7.86.0) and confirms your fix.
->
-> I think a simple path forward could be something like:
->
-> [...]
+> I struggled with this for a bit since I wasn't sure what the convention
+> is here. Enumerating some off the top of my head, we have:
 
-Thanks. Your plan looks very sane and seems like it hopefully wouldn't
-be too much effort.
+For what it's worth, the "return zero if redactions were made" is what I
+would have expected. I think of it as returning zero if we didn't
+encounter an error (and returning a negative, non-zero value if we did).
 
-I'll leave it to you and Glen to figure out how to divvy up the patches,
-but I'm sure you can figure it out ;-). Thanks in advance.
+> - For functions that don't fail we have "0" for "nothing was done" and
+>   "1" for something was done (e.g. skip_prefix()).
+>
+> (Tangent: from a readability perspective, this is pretty poor. I need to
+> know beforehand whether or not the function may fail with error before I
+> know what the return value means?)
+>
+> This probably falls into the last category, so for consistency, I think
+> this should return "1" for "redactions have happened" (as you
+> suggested).
+
+...But I don't really care that much ;-). As long as you choose
+consistently, and document your choice where it is unclear, it is fine.
+
+> >> +/* Redact headers in info */
+> >> +static void redact_sensitive_info_header(struct strbuf *header)
+> >> +{
+> >> +	const char *sensitive_header;
+> >> +
+> >> +	if (trace_curl_redact &&
+> >> +	    skip_iprefix(header->buf, "h2h3 [", &sensitive_header)) {
+> >> +		struct strbuf inner = STRBUF_INIT;
+> >> +
+> >> +		/* Drop the trailing "]" */
+> >> +		strbuf_add(&inner, sensitive_header, strlen(sensitive_header) - 1);
+> >> +		if (!redact_sensitive_header(&inner)) {
+> >> +			strbuf_setlen(header, strlen("h2h3 ["));
+> >> +			strbuf_addbuf(header, &inner);
+> >> +			strbuf_addch(header, ']');
+> >
+> > I'd really like some more comments in this function - even just one
+> > describing the string we're trying to redact, or showing a sample line.
+> > Navigating string parsing is always a bit difficult.
+>
+> Ah yes, I should include a description of the string.
+
+Eh. To be honest, I probably wouldn't have documented it any more than
+you did. At most, I would add an example "before" and "after" string
+that shows what we're trying to generate.
+
+I agree that string manipulation can end up with some fairly convoluted
+code. But I think what is written here is straightforward, and that
+any attempt to comment it more than suggested would end up just
+repeating what the code does in English.
 
 Thanks,
 Taylor
