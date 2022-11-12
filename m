@@ -2,121 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64C1CC433FE
-	for <git@archiver.kernel.org>; Sat, 12 Nov 2022 01:44:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EA52C433FE
+	for <git@archiver.kernel.org>; Sat, 12 Nov 2022 02:22:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233750AbiKLBog (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Nov 2022 20:44:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35074 "EHLO
+        id S234466AbiKLCWE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Nov 2022 21:22:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230114AbiKLBoe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2022 20:44:34 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80B1145A04
-        for <git@vger.kernel.org>; Fri, 11 Nov 2022 17:44:33 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id g12so8449477wrs.10
-        for <git@vger.kernel.org>; Fri, 11 Nov 2022 17:44:33 -0800 (PST)
+        with ESMTP id S232004AbiKLCWD (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2022 21:22:03 -0500
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F4D0391E4
+        for <git@vger.kernel.org>; Fri, 11 Nov 2022 18:22:02 -0800 (PST)
+Received: by mail-ot1-x332.google.com with SMTP id 94-20020a9d0067000000b0066c8d13a33dso3746466ota.12
+        for <git@vger.kernel.org>; Fri, 11 Nov 2022 18:22:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=pji+j8taOlZlLFJXnBj7jaVfMOFM8Kg+zIbYjLbwQ7I=;
-        b=A+VxEAgaVAu1mhfnEV4aSXqfWDHBP4d2Q2P1EnYy5jTx5g9OIJ43pjZn//4iPEzP6t
-         qqMAFXAWyzbTgHs7knNmChmucDGCT8OS2SRV7atoXGkebSnRgF80DCLV7SXbPDoq6+Mv
-         7jIRKAKF02/5p3qx5IhYTs+B4xycRdzHB3sRq5sUl1madAP6DIxn8beeOoVMQuqpnvFU
-         /QBHkfDPFmLlXaMPpO3U55trH5+yyUfDUQUQ7SEm+jTMhut211Uw+Ip2BZtKyZ8fpFOd
-         55WkUvThYXU1k/4DeBxn/MuGDiUeCCLWkDVElnAokC+PnK8vI1D7z/nQ6irIWagx/Ns/
-         pnAw==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZVP4XGip15z0mZgaXvBAIFBFHOX8gTaXXzT7KX30CbM=;
+        b=RGFyg3PF3fZbN0H3R6g3tC5o2YAg3bbw9F6hT4Wl/WUpAD+le9+bL5u8sXdgffSHBI
+         v+1yZqDj8okjENURpNHMs1R7OujjJzSMbPzWcC/ZdpltMs8hVj3jjGdVX8qGNcaO7nWN
+         siL+XyHcI+0GvW8ume2FCki3T4fX9a9oPvnYEoS6pG/VhFeI+Liy+UYHHpJXtFZDECk2
+         tcWsai0do/P05T3JWVh0JGhSaMTptWd44BYBVOYTCneiK/oSTQyoZlNlV++VKWZyOu4v
+         XVuFqZb2Ehdm33WNkjfjgzOn7NarmaeKObBhWfyazi5WKZ4nEjgt4qIQAVneggf6bJM4
+         mRvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=pji+j8taOlZlLFJXnBj7jaVfMOFM8Kg+zIbYjLbwQ7I=;
-        b=XB9n5XJYF4lhZkSbaGqQHIR06xrkmjQMWeGxBcdLBPY09OXArgKFCdk2jRYtbjoe7f
-         Msgio3kaBaapAGPEmxdw2ZLbixTfqF7MhysJGWFA03gewoFZG+iOKH5uaBg/w51tpacY
-         orOKAPctvl+M5rSrepZ8q7L7SuBOAljWRz70YnnOKRREkDfpw81XFA81R/sqCnk5pmcG
-         4wNGRbOqfye6O/zutyrxalv+PM0BGEVPeO3n8Eoz3hQmPg4ZZauGLzKB+4haBS9vPTbv
-         VWLLSh+5JuWmrRsiVT7eLl+IqWSKThwnHeS5PFAIx94gUyzpl6uC6P4ozACr3iubY4MF
-         HN9Q==
-X-Gm-Message-State: ANoB5pnp7DV3DmLdvPJ9oo1Vq7lV+tHYJUhY0yS8tQMlUnfBJWVPfosh
-        lRG2e+f96i2c9ecdq8nP/h1pCUlub6I=
-X-Google-Smtp-Source: AA0mqf7vElZOpeTKdMqFTclSG7+zZeYSIjeprkHpaseZ9uW6qGTecc/uXgIIF0E+sBcUZzTS3tBxMQ==
-X-Received: by 2002:adf:fac7:0:b0:236:7988:b282 with SMTP id a7-20020adffac7000000b002367988b282mr2584238wrs.341.1668217471758;
-        Fri, 11 Nov 2022 17:44:31 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w9-20020adfee49000000b00228cd9f6349sm3099285wro.106.2022.11.11.17.44.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Nov 2022 17:44:31 -0800 (PST)
-Message-Id: <pull.1379.git.git.1668217470500.gitgitgadget@gmail.com>
-From:   "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 12 Nov 2022 01:44:30 +0000
-Subject: [PATCH] Docs: describe how a credential-generating helper works
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=ZVP4XGip15z0mZgaXvBAIFBFHOX8gTaXXzT7KX30CbM=;
+        b=iNRmuutllAxx35zQkxGEEdEqhW/LtIlH2zMGXqYJBTKuuL9pw0xbWNe20CWQaZk6bW
+         hR+jNQB2K5e1LXTWIHmjBh7F3B6anZQzTE/fltoT0B0noSU/cEwbT6Q+CbKUaAdsdlzx
+         TUJkSAHdeI7W4ftcIt9qjfA7fQDKxMXSEcntC8oiF+vHAKBmrILjYH/g0vjVCaGiA+Hy
+         AyeH70EgcsmnauZBz7HmJnmODQ8iosdn95R3hhcuXqdRBQ665fF3CI9x83ee5HUYlwre
+         bW78/Bz1Qca10ocm3Xz5HtPSiyltfa+42HWnxHlud8phoULCrgQdOTEyx03cL/8Ciqfe
+         IlOg==
+X-Gm-Message-State: ANoB5pnOdqTXdC0TgcJd1wWdI843vEHMDBw4qI+P4jddKokP794sH2tR
+        l+H8CWo4oH39WhYNOE9X/s8AR3J291mlTj/Na3g=
+X-Google-Smtp-Source: AA0mqf7N44fV1rJbymeL0iwHXp/soxoXR/9nyhxkVWakOuueGsgF1DxSnhaI/mY3QR6UPS73qZ5ml99NKAKjEonkvHg=
+X-Received: by 2002:a05:6830:161a:b0:66c:37a2:d876 with SMTP id
+ g26-20020a056830161a00b0066c37a2d876mr2634800otr.249.1668219721437; Fri, 11
+ Nov 2022 18:22:01 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     M Hickford <mirth.hickford@gmail.com>,
-        M Hickford <mirth.hickford@gmail.com>
+References: <pull.1393.git.1666598268697.gitgitgadget@gmail.com> <Y1cm2a3qy9aowwNh@coredump.intra.peff.net>
+In-Reply-To: <Y1cm2a3qy9aowwNh@coredump.intra.peff.net>
+From:   M Hickford <mirth.hickford@gmail.com>
+Date:   Sat, 12 Nov 2022 02:21:24 +0000
+Message-ID: <CAGJzqsmH0DpEZDVZYU=6XpBO_vPfbirrK7KaWm2RmKG3aAk0oA@mail.gmail.com>
+Subject: Re: [PATCH] docs: clarify that credential discards unrecognised attributes
+To:     Jeff King <peff@peff.net>
+Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, M Hickford <mirth.hickford@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: M Hickford <mirth.hickford@gmail.com>
+On Tue, 25 Oct 2022 at 00:59, Jeff King <peff@peff.net> wrote:
+>
+> On Mon, Oct 24, 2022 at 07:57:48AM +0000, M Hickford via GitGitGadget wrote:
+>
+> > It was previously unclear how unrecognised attributes are handled.
+>
+> Yeah, this was always part of the intended behavior, but I agree we did
+> not say it very explicitly (aside from an in-code comment!). Both the
+> intent and content of your patch look good to me.
 
-Previously the docs only described storage helpers.
+Thanks. What happens next? I should look for this change in the seen
+branch? https://git-scm.com/docs/MyFirstContribution#after-approval
 
-A concrete example: Git Credential Manager can generate credentials
-for GitHub and GitLab via OAuth.
-https://github.com/GitCredentialManager/git-credential-manager
+> We did discuss patches a long time ago that would let Git carry
+> arbitrary keys between helpers, even if Git itself didn't understand it.
+> One of the intended uses was to let helpers talk to each other about
+> TTLs. So if you had say:
+>
+>   [credential]
+>   helper = generate-some-token
+>   helper = cache
+>
+> where the first helper generates a token, and the second caches it, the
+> first one could shove a "ttl" or "expiration" key into the protocol,
+> which the cache could then learn to respect.
 
-Signed-off-by: M Hickford <mirth.hickford@gmail.com>
----
-    Docs: describe how a credential-generating helper works
-    
-    Previously the docs only described storage helpers.
-    
-    A concrete example: Git Credential Manager can generate credentials for
-    GitHub and GitLab via OAuth.
-    https://github.com/GitCredentialManager/git-credential-manager
-    
-    Signed-off-by: M Hickford mirth.hickford@gmail.com
+Composing helpers like this is how I encourage users to configure
+git-credential-oauth [1][2]. Note that the storage helper should come
+*before* the generator, so that `credential fill` finds a stored
+credential before it generates a fresh credential.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1379%2Fhickford%2Fcredential-generator-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1379/hickford/credential-generator-v1
-Pull-Request: https://github.com/git/git/pull/1379
+> the first one could shove a "ttl" or "expiration" key into the protocol,
+> which the cache could then learn to respect.
+>
+> But we never merged such a thing, and in practice I think people would
+> just implement both parts as a single helper for simplicity.
 
- Documentation/gitcredentials.txt | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+Composing helpers has the advantage that the user can choose their
+preferred storage. Generated credentials aren't necessarily short
+lived. GitHub OAuth tokens, for example, are good for at least one
+year [3].
 
-diff --git a/Documentation/gitcredentials.txt b/Documentation/gitcredentials.txt
-index 80517b4eb2c..72888402e73 100644
---- a/Documentation/gitcredentials.txt
-+++ b/Documentation/gitcredentials.txt
-@@ -61,7 +61,9 @@ for a password. It is generally configured by adding this to your config:
- 
- Credential helpers, on the other hand, are external programs from which Git can
- request both usernames and passwords; they typically interface with secure
--storage provided by the OS or other programs.
-+storage provided by the OS or other programs. Alternatively, a
-+credential-generating helper might generate credentials for certain servers via
-+some API.
- 
- To use a helper, you must first select one to use. Git currently
- includes the following helpers:
-@@ -286,8 +288,8 @@ For a `store` or `erase` operation, the helper's output is ignored.
- If a helper fails to perform the requested operation or needs to notify
- the user of a potential issue, it may write to stderr.
- 
--If it does not support the requested operation (e.g., a read-only store),
--it should silently ignore the request.
-+If it does not support the requested operation (e.g., a read-only store
-+or generator), it should silently ignore the request.
- 
- If a helper receives any other operation, it should silently ignore the
- request. This leaves room for future operations to be added (older
-
-base-commit: 319605f8f00e402f3ea758a02c63534ff800a711
--- 
-gitgitgadget
+[1] https://lore.kernel.org/git/CAGJzqs=+fCQzkDX53H8Mz-DjXicVVgRmmzPjkatSiOpYO7wGGA@mail.gmail.com/
+[2] https://github.com/hickford/git-credential-oauth
+[3] https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/token-expiration-and-revocation#token-expired-due-to-lack-of-use
