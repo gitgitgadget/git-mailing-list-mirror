@@ -2,37 +2,37 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55F93C4332F
-	for <git@archiver.kernel.org>; Sat, 12 Nov 2022 10:44:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CADB3C4332F
+	for <git@archiver.kernel.org>; Sat, 12 Nov 2022 10:44:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234854AbiKLKoK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Nov 2022 05:44:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53482 "EHLO
+        id S231489AbiKLKo5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Nov 2022 05:44:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230447AbiKLKoI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Nov 2022 05:44:08 -0500
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E076715704
-        for <git@vger.kernel.org>; Sat, 12 Nov 2022 02:44:07 -0800 (PST)
+        with ESMTP id S231558AbiKLKo4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Nov 2022 05:44:56 -0500
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70F6A16593
+        for <git@vger.kernel.org>; Sat, 12 Nov 2022 02:44:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1668249841; bh=sLrMbdMbyE6TeYtx2P7MCpJsx891+F0QAC69/P35mKc=;
+        t=1668249890; bh=vgtPAVm3hcY2+aWMpG5fgjk652kn/2m6tRnBrZn7eEs=;
         h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=mQS5Jit+gBsVIOI3quSGAWHyqL1B/5i6i0eoByA+6QZagnNPoFmx+PW0JPK8WN5tG
-         RQF0pg6Wd06qYpBw5SsNctzfumO0UuRkmqHI1DXYSR7991VbHpIcb1Lh8Dm3akH9OB
-         UTeT6i/I40/aSWM/zyPEQYoMnYdbAImMazWk/35WyWhbVms/8bir9C1aut+h5pAQgR
-         Bd8EwEr+lqfPEI1egw1PwIyFw5hUdfkGOALOXQ+vNOl8Kx8LwhgODUGcacbKS5XikX
-         WR0ivhkW9R/L1ZYCUwjF8uEdI/8QY0LEpBxWXB9fOgt3ee+nREhy9ashIaI1tjnfAY
-         oqLu5svR/H2xw==
+        b=EqHVKWgB6FLi+7/ukIgBzl6JMf7aJmuIgCOwLCzzZwzMkwoXcNZrbQsQK6t9PhYom
+         YuDWraV/BlG9TBy0HjkfUzDO1/L8ki4YemKrtn/pOWcX9RwFSwgMSwUXvDslxhhdNV
+         xQvH771026dsuFQxW0moaVKrPPKvNKonApOoo/eMY+IfYA2YvdV3BEq8d6wtNqUMLv
+         Io0kK1SS/qmBIADnL3rANxN4lnDHhRTCc1AFV8ymgqz/aSzlOQimtofuOdROHdrWY7
+         u881/fXinsyiOrr2l9Rt+f2bYhjjGM6WC3JiCnvsT4MJo2ElNmYtVXv8vMt+jfGH9Q
+         CMe4gayXBPiog==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.27.139]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MwA1O-1pANPB0SYO-00rzOd; Sat, 12
- Nov 2022 11:44:01 +0100
-Message-ID: <53bffbf4-8308-0dd7-bca5-7c85b8334e05@web.de>
-Date:   Sat, 12 Nov 2022 11:44:00 +0100
+Received: from [192.168.178.29] ([79.203.27.139]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MW9rM-1oUvl22meQ-00Y3hr; Sat, 12
+ Nov 2022 11:44:50 +0100
+Message-ID: <59abb8d2-e8e6-7423-ead8-49382293aaa6@web.de>
+Date:   Sat, 12 Nov 2022 11:44:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.4.2
-Subject: [PATCH 1/3] pack-objects: fix handling of multiple --filter options
+Subject: [PATCH 2/3] pack-object: simplify --filter handling
 Content-Language: en-US
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git List <git@vger.kernel.org>
@@ -44,86 +44,123 @@ References: <c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.de>
 In-Reply-To: <c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:n8dK94eNxxmwtzrZpWXpWYQmWR6rMNrPdqsL/RrIdjUpsB+Q7NH
- AatixomiWNNqq3+uyGZ7pVRwpS7Um1RTnz/PGk5Pg3es0t8ScS3TfZi5rdvF9oG6Ms6T0XI
- JepxfkhzQ7O8tTV2KlYq8yQ7PwpEVZ1EIsIExjyKPa7UDr+dUaVAtnfFW/ArhQkRC2BCC6q
- RJfa+LhSdjEsnb7+OQGDQ==
-UI-OutboundReport: notjunk:1;M01:P0:gODc8CB4KdM=;ueHqc8VD3AuL71tIMsTmEdCmlPR
- qVJFmC+CMG/bWaf3D+2pvJAxC23dxDqCnlUjsOYfoydUPwzAkoU6p3LLj5x/Mx4jEUn/5W7vZ
- fjzMFClCBom+R3XzPCPl+7tUjtZgWumMue6dAuFNmQjyCmCYM/NJsjifoXoFN3I3YIX7tBJO5
- zKohRnN8iVepwtGYgaxiK4av3XGfj3M1fvaeXzA6EAz4jPg7BPgGakxdakltmmYLurOyzKy2O
- JP51mJ6NSun+25Yg0Ves5GuimBDQzsxK/iiAl9tnFllwuDAqdE1BosetQvIJTdrbJNElW2YtA
- q10P+ukkZBmfxC42cDTdHO5QN0pWUDsu409fNPs4UoylWFIgY4bsgw2xJImPpQa8sYiUFgvXP
- pr6G6c5JlaPoOoTmhxKWp+MEVpDYrEFkI5mREAdeXxaTpzE5vtTWXUITU4OsSo2UfLgKAkuX4
- LvgSPzCLQ+Ti5tzc5z+oPYQ7xBwETXK3bASJY9BUtGA3FEDivE5rJ31obROTcTymnK0ep4m7/
- qfgW/4ep3+go7ylyhX/S/1AqzNVwALob+6o5vsc23Frtu4fn1AeAA3nHwhCUNkzrw73KnGojL
- wiFMBRrzMg63O9WRLx03kk94G2DHDMCMqMjV6wya1Rgn0fYrCX+diIl9cIl2HUOiZcadvAfYr
- gb1mi721+Miqls54Ds7xgVfPo2lgn0xaxIS3bUxpLX3JBS1YqRPFyjo8Tm6+gK6n5xSeNp78a
- C4fcKdNF2OfO4s7h5MyaMUa5b1WEkv3vgoVLhRPtcmn/PsLdO57dDokntcpXl9RpqJz/1QPCo
- aNdPMWNZJzx3HmM9bc91CGQBTWtraxLE4EdQ33xDklCeVz7MgJJiQunuiFEW/cv/aFz4Nhn6K
- bRfHoh1viPZGTpu4Pf59sKq24O8gG7pQDDo969fav5dYtrC/JbeBZDK8aar2n7ozRJmfNEuaI
- dp6Ytg==
+X-Provags-ID: V03:K1:7ruvVsjFpM9YSwV1HCoygNaeKz72cORvQkhLoCTYInqgsGx4sY4
+ YoUfBrjuJ0uf0imbE8/uh2IhyDfvw7GkUgAoZCh4ew+bYN27RMCx4jShK1wn4L6lgCzFOxx
+ Hbxch/KDxtAFaTWxnnNrTISnVJ8+RjZSHLO1WlzJ5qOUyn09k4+AA7WQWqHN5gS9H3/ZlmA
+ sfzYGUBZXLGYUw+bI0wsw==
+UI-OutboundReport: notjunk:1;M01:P0:lzm4q+gvjZI=;RF84KHgzBKAiMNaKnYlwidEwCAn
+ qKX1S9E5NIQXJPzR/9rolgdqriacVagaYpe1FGpG92mr2zaFQFXYmAdGeP9SbeV10FSjBCSJZ
+ mxqZOplDeHzFPgC8+0fA0/PB0ExrjJ0wkDo10Lzd4NyPfVL8cjccOYkzKoqJw20VqxYW0+qeC
+ tL7fJjZod8GCYGkmjvetiiYm3eUzrWHBiWHigYzwCfLtNVYnLDCDdkXmiguRDVCVxi3NTMVNi
+ PxtVXdXnzYnQ5cdlOMhjgOBo7rw+dVVFwYmX/nbaNnsDXp2eOu4TVu4sVhOwn/bSrR9mY/5Ty
+ WEcmxy6BmExpAyIGZZg/Qde94KfU97JDRwJb4JfG4uarxNpJqX9AmX68L0zk95Sx8LqmqsxOM
+ 8xaZ3fhHfgLF1AP9KU1YbrmLnrPbueXh8F5o78AFNVPzIYo3tImrCYgbdCPJlcgyC5k7v6l0z
+ vjK0G1w/iZi63uk+ZFESSQbtAx0Yw5y5+byU6Rc2vaV/LE3y6rDqAhg3jiRPh0C0jXS1Kr5C4
+ v4ouSXy/6EtNgi7o9B8vE0x/GruhNmXhRhkGxU8U8aDZUWEiyk1c+lxhzdG278sFhwRDHvlfg
+ Ico3ZUR4UiX7xAn362ZQwMsQ1X8xsrFH/j/zAptsmwKb4l9tR0jmFa4QWTYtOlzSi6r6FCExF
+ N82rOEOyH3U8A247j7R/2uMo2VDoLpQ1wO8z5hWPuOFPmhF4Ezlx6L+92JBv85yEvJPYF1+gA
+ lPSOUcDg0fLvuBDBWyAGN63gH4Mx1bnEc5wiZQn/uCulta7/716Xbg5VQLG0b/b5z7SzSDZ7o
+ fkeyJeVDUuf+At7ddEw3pnL71iC+AUcW3lYTFjjSeyxwPijUugxTmzGQxoDBg5xOdvXe+ys4H
+ rCa7QAF5fFGrfmwH/PfROXFMNieBOjnKy+PuX2weAjDhi0hJDqJjINAzLQUGQ138KayQvh0fJ
+ nVvt0MoZygTV7WsFH7p8JxSEaFo=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since 5cb28270a1 (pack-objects: lazily set up "struct rev_info", don't
-leak, 2022-03-28) --filter options given to git pack-objects overrule
-earlier ones, letting only the leftmost win and leaking the memory
-allocated for earlier ones.  Fix that by only initializing the rev_info
-struct once.
+pack-objects uses OPT_PARSE_LIST_OBJECTS_FILTER_INIT() to initialize the
+a rev_info struct lazily before populating its filter member using the
+=2D-filter option values.  It tracks whether the initialization is needed
+using the .have_revs member of the callback data.
+
+There is a better way: Use a stand-alone list_objects_filter_options
+struct and build a rev_info struct with its .filter member after option
+parsing.  This allows using the simpler OPT_PARSE_LIST_OBJECTS_FILTER()
+and getting rid of the extra callback mechanism.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- builtin/pack-objects.c                 |  3 ++-
- t/t5317-pack-objects-filter-objects.sh | 19 +++++++++++++++++++
- 2 files changed, 21 insertions(+), 1 deletion(-)
+ builtin/pack-objects.c | 28 ++++++----------------------
+ 1 file changed, 6 insertions(+), 22 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 573d0b20b7..c702c09dd4 100644
+index c702c09dd4..30023bcebb 100644
 =2D-- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -4158,7 +4158,8 @@ static struct list_objects_filter_options *po_filter=
-_revs_init(void *value)
+@@ -4149,22 +4149,6 @@ static int option_parse_cruft_expiration(const stru=
+ct option *opt,
+ 	return 0;
+ }
+
+-struct po_filter_data {
+-	unsigned have_revs:1;
+-	struct rev_info revs;
+-};
+-
+-static struct list_objects_filter_options *po_filter_revs_init(void *valu=
+e)
+-{
+-	struct po_filter_data *data =3D value;
+-
+-	if (!data->have_revs)
+-		repo_init_revisions(the_repository, &data->revs, NULL);
+-	data->have_revs =3D 1;
+-
+-	return &data->revs.filter;
+-}
+-
+ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
  {
- 	struct po_filter_data *data =3D value;
+ 	int use_internal_rev_list =3D 0;
+@@ -4175,7 +4159,8 @@ int cmd_pack_objects(int argc, const char **argv, co=
+nst char *prefix)
+ 	int rev_list_index =3D 0;
+ 	int stdin_packs =3D 0;
+ 	struct string_list keep_pack_list =3D STRING_LIST_INIT_NODUP;
+-	struct po_filter_data pfd =3D { .have_revs =3D 0 };
++	struct list_objects_filter_options filter_options =3D
++		LIST_OBJECTS_FILTER_INIT;
 
--	repo_init_revisions(the_repository, &data->revs, NULL);
-+	if (!data->have_revs)
-+		repo_init_revisions(the_repository, &data->revs, NULL);
- 	data->have_revs =3D 1;
+ 	struct option pack_objects_options[] =3D {
+ 		OPT_SET_INT('q', "quiet", &progress,
+@@ -4266,7 +4251,7 @@ int cmd_pack_objects(int argc, const char **argv, co=
+nst char *prefix)
+ 			      &write_bitmap_index,
+ 			      N_("write a bitmap index if possible"),
+ 			      WRITE_BITMAP_QUIET, PARSE_OPT_HIDDEN),
+-		OPT_PARSE_LIST_OBJECTS_FILTER_INIT(&pfd, po_filter_revs_init),
++		OPT_PARSE_LIST_OBJECTS_FILTER(&filter_options),
+ 		OPT_CALLBACK_F(0, "missing", NULL, N_("action"),
+ 		  N_("handling for missing objects"), PARSE_OPT_NONEG,
+ 		  option_parse_missing_action),
+@@ -4386,7 +4371,7 @@ int cmd_pack_objects(int argc, const char **argv, co=
+nst char *prefix)
+ 	if (!rev_list_all || !rev_list_reflog || !rev_list_index)
+ 		unpack_unreachable_expiration =3D 0;
 
- 	return &data->revs.filter;
-diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-objects=
--filter-objects.sh
-index bb633c9b09..bd8983bb56 100755
-=2D-- a/t/t5317-pack-objects-filter-objects.sh
-+++ b/t/t5317-pack-objects-filter-objects.sh
-@@ -178,6 +178,25 @@ test_expect_success 'verify blob:limit=3D1001' '
- 	test_cmp expected observed
- '
+-	if (pfd.have_revs && pfd.revs.filter.choice) {
++	if (filter_options.choice) {
+ 		if (!pack_to_stdout)
+ 			die(_("cannot use --filter without --stdout"));
+ 		if (stdin_packs)
+@@ -4473,16 +4458,15 @@ int cmd_pack_objects(int argc, const char **argv, =
+const char *prefix)
+ 		read_cruft_objects();
+ 	} else if (!use_internal_rev_list) {
+ 		read_object_list_from_stdin();
+-	} else if (pfd.have_revs) {
+-		get_object_list(&pfd.revs, rp.nr, rp.v);
+-		release_revisions(&pfd.revs);
+ 	} else {
+ 		struct rev_info revs;
 
-+test_expect_success 'verify blob:limit=3D1001+object:type=3Dblob' '
-+	git -C r2 ls-files -s large.1000 |
-+	test_parse_ls_files_stage_oids |
-+	sort >expected &&
-+
-+	git -C r2 pack-objects --revs --stdout --filter=3Dblob:limit=3D1001 \
-+		--filter=3Dobject:type=3Dblob >filter.pack <<-EOF &&
-+	HEAD
-+	EOF
-+	git -C r2 index-pack ../filter.pack &&
-+
-+	git -C r2 verify-pack -v ../filter.pack >verify_result &&
-+	grep blob verify_result |
-+	parse_verify_pack_blob_oid |
-+	sort >observed &&
-+
-+	test_cmp expected observed
-+'
-+
- test_expect_success 'verify blob:limit=3D10001' '
- 	git -C r2 ls-files -s large.1000 large.10000 |
- 	test_parse_ls_files_stage_oids |
+ 		repo_init_revisions(the_repository, &revs, NULL);
++		list_objects_filter_copy(&revs.filter, &filter_options);
+ 		get_object_list(&revs, rp.nr, rp.v);
+ 		release_revisions(&revs);
+ 	}
++	list_objects_filter_release(&filter_options);
+ 	cleanup_preferred_base();
+ 	if (include_tag && nr_result)
+ 		for_each_tag_ref(add_ref_tag, NULL);
 =2D-
 2.38.1
