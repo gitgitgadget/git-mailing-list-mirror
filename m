@@ -2,75 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 90FA4C4332F
-	for <git@archiver.kernel.org>; Sat, 12 Nov 2022 11:10:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD95EC4332F
+	for <git@archiver.kernel.org>; Sat, 12 Nov 2022 11:44:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231534AbiKLLK5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 12 Nov 2022 06:10:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59650 "EHLO
+        id S234948AbiKLLo6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 12 Nov 2022 06:44:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231240AbiKLLKz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 12 Nov 2022 06:10:55 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4AB82677
-        for <git@vger.kernel.org>; Sat, 12 Nov 2022 03:10:54 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id b11so6501597pjp.2
-        for <git@vger.kernel.org>; Sat, 12 Nov 2022 03:10:54 -0800 (PST)
+        with ESMTP id S234943AbiKLLo5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 12 Nov 2022 06:44:57 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3086A1B5
+        for <git@vger.kernel.org>; Sat, 12 Nov 2022 03:44:56 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id ud5so17971389ejc.4
+        for <git@vger.kernel.org>; Sat, 12 Nov 2022 03:44:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=C5/0Ocbj5+Z9cJC5DtVDB+oDAJgwa1WD4A7gJOP+yc4=;
-        b=hQ2Z2N0D+MBIMrAQvyFDXZea5tfjBHzgV+zQyZMv8tMgFB+67uRp5oiKEGIyJD3Fc/
-         6NwGBmtRPYQkdhKOYzfX9xFBddWNHkCtfBS4yzL7CRSxPlZn67YofSAKRsJfrlMCOklm
-         5SZPY6uJdNJzVaJ+YT9l3zPAnHb8/61MhZ2dPEteYUbOpe/x4KsFDAuU7/hPrPyYM7tZ
-         s/KQqF624F+CwLDJ4nNHXWvnwieZu5xWXsIe6DTGY8/K1/AZ+sCnHZ+fo5Bm6Tv5pk9u
-         O0Il54Y7uQgPAGypMKDG99AzL/bGCiei1bLrQAQq8BWRStbb/ZqO9Vh8TFXkzy4cGb+b
-         XoNg==
+        bh=aqYuG3CIoMRNjGPaynvWxxBfeY3Ogvkdf0porraHxBQ=;
+        b=N0B99VYZD5DxfxH8ZB9wy1CnK5w+iTCigiJt2s2UAZajBxL9PiMJZi6cby1goxZdQ4
+         dvpWQ5TuOlvLAYfuSx5LvENzRIbhVG2k4AP0BvBgN4ivmNAVPGxafhJDEZDWi1hZHx7w
+         c5THaUNs48FDJugHxb80gf96VZTXS7f6CQFn4kgAs1wluD5xi0hlgAVWyWbcMnLSxdxh
+         y9e02cxIXVoAHwizHp3oRQyj2CyXDmYCoNduWpuEK/eqfs2y3zy8lP8djy/IRJkr92yo
+         FvGD2iBVEaO2eHPNZVmdyZeoJSJ6ko2NGuNDCsR6VfyeiFxEglc8szd1hfmpah8tnKbC
+         nqqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=C5/0Ocbj5+Z9cJC5DtVDB+oDAJgwa1WD4A7gJOP+yc4=;
-        b=zUlQP9TWYTBEGGeo3S9uWbTFzeEmQ8QmRZPR61nCVBhBWRkEulG3QPlg+0FH03X+u+
-         T+0xwvyTpaBeSJm/Qu/YGyj8EU1LV4wZ8G3iCvD1XCL5/PRcbfUrRI+/gZBRd98xWoqc
-         ZMoIuvVtgnxdd34+YqH0+gN2cHiQpVmgIoQWIEMzODEDag3W0kQDtHZv+kDkEPo3aGGF
-         30YOvysnxF5fz6Gruut18Kwp/xFaleKy6Lvmz/btHCytua0hue6XU1pvuGVHnfyGJkEz
-         uKwex4faYwirIzgcjQX8rxAFqFCL/gCKyMXjNWIi8v7zN/1t16Q3RzZQAIKdUeaqRyd+
-         vFhA==
-X-Gm-Message-State: ANoB5plEqtbbrrfSSETEHVPqJzr6At51wzVLbSz+03BPYUjPv4AJnMHn
-        bgYrdy0ehGqfiWXf4hv0Yd+/vkaf6fuyMQnlHVcbjQiNqVs=
-X-Google-Smtp-Source: AA0mqf6EDPQIsr/vRi4shENG5w6wkKgQTdXuEJE1ZuH8T7AZ917K9jjbJ406R+s5QSyZpm1F3CUQJmn3rSz5J+OTTcY=
-X-Received: by 2002:a17:902:e848:b0:186:f1b6:c3dd with SMTP id
- t8-20020a170902e84800b00186f1b6c3ddmr5900589plg.20.1668251454088; Sat, 12 Nov
- 2022 03:10:54 -0800 (PST)
+        bh=aqYuG3CIoMRNjGPaynvWxxBfeY3Ogvkdf0porraHxBQ=;
+        b=Bp0yzWZkRe2rrhXwnmT8gR6SjoQJ/fyE/rSe+OqvZzMhN1RMgApLG0wHJGS+iH3WnQ
+         03kTVYcQlj5swhVToIpBfXcC9VxDNP83+7ytw67spHF0Jx4A7YbnJxNPZp5lRTT25hY+
+         cKbkPx0vGQKd/owxCDPgA3F/0+pa3uPPD5yhEgAh6fdWyp+tfx0Lur2aVBjSV6KKn8/r
+         oqdVhu5cdSGI7VwGlg+KK3b4LmniGg8QtRllv6qSFHhIaCEwug8MfrQBDlf797+vcjED
+         U/PEKfZTvnhBnfFmNsR5mAZDJwG/CRDhvSbQjCEdYF99xRhNyUQj18Tjg1JJBxScZNfd
+         EpUg==
+X-Gm-Message-State: ANoB5pmAKMUzC3/olm9SaqpKTo3TrFTgGpiKwEKn2ItZ4yzTcL9irFkv
+        5LzdlXYVeT1iPczCen0CWrg=
+X-Google-Smtp-Source: AA0mqf4qwIVRkjtebU+x3nMyPuDwD7aHq9kfgFeD1HFe2slau+vEfqY4cVsou3TVH1O5hz+5NAcL6A==
+X-Received: by 2002:a17:907:1398:b0:78b:a8d:e76a with SMTP id vs24-20020a170907139800b0078b0a8de76amr4937381ejb.725.1668253495146;
+        Sat, 12 Nov 2022 03:44:55 -0800 (PST)
+Received: from gmgdl ([109.38.148.58])
+        by smtp.gmail.com with ESMTPSA id rh16-20020a17090720f000b0073d7bef38e3sm1452181ejb.45.2022.11.12.03.44.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 12 Nov 2022 03:44:54 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1otowP-0029z9-0Q;
+        Sat, 12 Nov 2022 12:44:53 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 1/3] pack-objects: fix handling of multiple --filter
+ options
+Date:   Sat, 12 Nov 2022 12:41:13 +0100
+References: <c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.de>
+ <53bffbf4-8308-0dd7-bca5-7c85b8334e05@web.de>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <53bffbf4-8308-0dd7-bca5-7c85b8334e05@web.de>
+Message-ID: <221112.86bkpcmm6i.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-From:   "Moss, Adam David" <admoss1980@gmail.com>
-Date:   Sat, 12 Nov 2022 11:10:38 +0000
-Message-ID: <CAMTDv-8kxu-vwtCgz-VGBhYEbUX8edXzyaQK4szg2bmMJLjF4g@mail.gmail.com>
-Subject: Annotated Tag Hooks?
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
 
-Is there any way to use, or are there any plans to introduce, an
-equivalent of the `prepare-commit-msg`, `commit-msg`, and
-`post-commit` hooks but for `git tag` events?
+On Sat, Nov 12 2022, Ren=C3=A9 Scharfe wrote:
 
-I would like to make use of `git interpet-trailers` to automate the
-inclusion of some additional information into the tag annotation in
-the same way we do with commit messages, but am struggling to come up
-with a nice solution at the moment.
+> Since 5cb28270a1 (pack-objects: lazily set up "struct rev_info", don't
+> leak, 2022-03-28) --filter options given to git pack-objects overrule
+> earlier ones, letting only the leftmost win and leaking the memory
+> allocated for earlier ones.  Fix that by only initializing the rev_info
+> struct once.
 
-If there is a better approach I could use I'd welcome suggestions?
-Alternatively I'd be willing to help implement such a capability if
-anyone would be willing to mentor me through it?
+If I do e.g. this with SANITIZE=3Dleak:
 
-Thanks,
+	echo e83c5163316f89bfbde7d9ab23ca2e25604af290 | ./git pack-objects --revs =
+--filter=3Dblob:limit=3D1001 --filter=3Dobject:type=3Dblob --stdout  >/dev/=
+null
 
+I see one leak that wasn't there, but two that are gone now. I haven't
+looked into it, but I think the commit message should discuss what leaks
+are fixed, which remain/are new etc.
 
-Adam M.
+> @@ -4158,7 +4158,8 @@ static struct list_objects_filter_options *po_filte=
+r_revs_init(void *value)
+>  {
+>  	struct po_filter_data *data =3D value;
+>
+> -	repo_init_revisions(the_repository, &data->revs, NULL);
+> +	if (!data->have_revs)
+> +		repo_init_revisions(the_repository, &data->revs, NULL);
+>  	data->have_revs =3D 1;
+>
+>  	return &data->revs.filter;
+
+FWIW as this goes away in your 2/3 I think just squashing the two with a
+leak fix would be nice, if...
+
+> diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-object=
+s-filter-objects.sh
+> index bb633c9b09..bd8983bb56 100755
+> --- a/t/t5317-pack-objects-filter-objects.sh
+> +++ b/t/t5317-pack-objects-filter-objects.sh
+> @@ -178,6 +178,25 @@ test_expect_success 'verify blob:limit=3D1001' '
+>  	test_cmp expected observed
+>  '
+>
+> +test_expect_success 'verify blob:limit=3D1001+object:type=3Dblob' '
+> +	git -C r2 ls-files -s large.1000 |
+
+Aside: Should do "git >tmp && test_parse... <tmp", we lose the exit code
+of "ls-files" here.
+
+> +	test_parse_ls_files_stage_oids |
+> +	sort >expected &&
+> +
+> +	git -C r2 pack-objects --revs --stdout --filter=3Dblob:limit=3D1001 \
+> +		--filter=3Dobject:type=3Dblob >filter.pack <<-EOF &&
+> +	HEAD
+> +	EOF
+> +	git -C r2 index-pack ../filter.pack &&
+> +
+> +	git -C r2 verify-pack -v ../filter.pack >verify_result &&
+> +	grep blob verify_result |
+> +	parse_verify_pack_blob_oid |
+
+Whereas this one's not a problem, no "git".
+
+> +	sort >observed &&
+> +
+> +	test_cmp expected observed
+
+Aside: It would be nice if we had a "test_cmp_sort", but some other day...
+
+> +'
+> +
+>  test_expect_success 'verify blob:limit=3D10001' '
+>  	git -C r2 ls-files -s large.1000 large.10000 |
+>  	test_parse_ls_files_stage_oids |
+
+...we can test it, but this test is in a file that's not part of "linux-lea=
+ks".
+
+If that one leak I mentioned above can be fixed (or maybe it's not new?)
+this could be tested if we put it in a file of its own with
+TEST_PASSES_SANITIZE_LEAK=3Dtrue.
