@@ -2,105 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 89758C4332F
-	for <git@archiver.kernel.org>; Sat, 12 Nov 2022 02:31:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 522B4C4332F
+	for <git@archiver.kernel.org>; Sat, 12 Nov 2022 04:26:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233477AbiKLCbB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Nov 2022 21:31:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46048 "EHLO
+        id S233445AbiKLEYO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Nov 2022 23:24:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233096AbiKLCbA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2022 21:31:00 -0500
-Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09843391D9
-        for <git@vger.kernel.org>; Fri, 11 Nov 2022 18:30:59 -0800 (PST)
-Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-12c8312131fso7250906fac.4
-        for <git@vger.kernel.org>; Fri, 11 Nov 2022 18:30:59 -0800 (PST)
+        with ESMTP id S230344AbiKLEYM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2022 23:24:12 -0500
+Received: from mail-vk1-xa29.google.com (mail-vk1-xa29.google.com [IPv6:2607:f8b0:4864:20::a29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83C5F4875B
+        for <git@vger.kernel.org>; Fri, 11 Nov 2022 20:24:10 -0800 (PST)
+Received: by mail-vk1-xa29.google.com with SMTP id s204so2639431vkb.3
+        for <git@vger.kernel.org>; Fri, 11 Nov 2022 20:24:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sQ+Srxvhgt9Hm7rFdzA9FdX3uH5wcFNdCr97HmBvvyM=;
-        b=FseltkBmhNFhorc/lokDsv/M+aVUC+0HGBgAnMNGkaqIXRjZYZBwSFH++CD1fj7V3X
-         Dhm5W8vqYaiQKTrT2CO7UabJUNtd2g238qSFM1Ih4/prWjhshBMdAsH14Fz3APmEy7aJ
-         WWi5lEBt0OTVoRnrrvWai0kwU82/AjhvLaMFmpop0UXG6DT4crxiX4OGD1AHkKcR6ii5
-         sw7RMeotiyloaCeLLMDDxeDAxdm55mIm9122VKbPanxzC7JddCCrF+QHTrM7s+w1faFL
-         mDJMvUP4zzEaLdJXidd4VwpnfG/ccPGbYU2Q1BXuctxJJWOtyzMY4KaHDYXkppmKIAAF
-         d5Kg==
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=6Ny5yPjU7xJ4U9S+kA/IwZXBLmSprkbTAL1ngfr+MDw=;
+        b=eNvg0oj/kB20Pi+D/yMRkDQOn7PE+qiWIq7wtwqTOfdxB08oD74TNy6EY9wpZpC9vz
+         udmn8n+QAbv4GuTRu2Kpq4PLN6E5srxaUx3KdTOmXd40fyJ0eB/8LhDkr4aJjGZjTmmG
+         34IkDZYDNdsfK3oHFtd1izx6teNtxGf2agDUa5IUkJZ2sX0bSDxA+eRkBWc/P2cjHIKc
+         ELVR+f4KTr8wo+IwlmFdjWgpFImmmZKhIvSIG7FgBmvGZOg1qzfKQrfO+amyOnZ+C6Hn
+         CeV5/+QBoe2hzx+fxWWjWXCRYB1rFO5N22nw49ikcAyzVCzA9rbpA75ecz6vCXYgj+FE
+         NnFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sQ+Srxvhgt9Hm7rFdzA9FdX3uH5wcFNdCr97HmBvvyM=;
-        b=SPTrKtTBjK7h44O5uu3eHz9lLCN8tpDoW8w+IefW3bLA7EQ5luDErYHztlJiJOSbOn
-         V+hmNx8ztbtr/xXNh3qZvqDo+z5ILQrX9pkLhofApGVyxnYIKet87lRUkNvGCcVmg3oy
-         mpMAAKZTzqt+69xTBDjVZOeHb2VB/uL+CkbZDFUxvgavX1wsvYP9AvLVwshRDlHQ/85T
-         4f/CNZd0Y44NrWWfW/Zlx3PoUi8Cja30DYU5HXguErL+64OgGT938pLdZsC8WFUdO8rl
-         +de3JIFeolKlon/zuuaNyVFinntuZoFBKUpK4nS2sSrz+/2NmQSy61U/rwv6wuiv5HE1
-         /QcA==
-X-Gm-Message-State: ANoB5plRlVQ+2dPrtVVaPHXyQ/dDCFAcJzbbkS3pDjY1mCU+ulfJGkD2
-        t3fNlwzFOTJbE1G49Rw9Ummi3lmHvrq9gCSNYh4=
-X-Google-Smtp-Source: AA0mqf4rRnGUVonzU6Q2+WEb5Jb7CV1nugNw7Rh+W8iug/dtNSs64F0enVCsRFo8ahWymhx0gGBXDj76/i/F+CclzFo=
-X-Received: by 2002:a05:6870:b429:b0:13b:a500:6382 with SMTP id
- x41-20020a056870b42900b0013ba5006382mr2568387oap.22.1668220258109; Fri, 11
- Nov 2022 18:30:58 -0800 (PST)
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6Ny5yPjU7xJ4U9S+kA/IwZXBLmSprkbTAL1ngfr+MDw=;
+        b=LAlBNPSjBMdcp9WaO/tUBbyh7OiR6xuR3dcdDtcCV6Kh/hUHfhjI0y/ZastNZWwwSd
+         FzP2GBInixJ8kCZ3H3cz5//S0Ow+5sYmWDShWD5soRWkXN43+bYwnoqoT0yAQA6AjZ90
+         1Wh9Ckyf3MfEec8A++VTH7F2rg1cj4W9D4Z5UfUOt5Ld/gC934UL5+YifAWCqZNTZYcD
+         sxJMfiUtOfnkcyrodacovQaJBdnSAE7YlxPwmRPZVAH/RbDR32WUNwY6ujEBnwXMBdAY
+         XMousGo02hKjbZvuGDfOTdch/CNjuq4cQ65vzQ92/4o/I9NtyoUoD2DSfGcHwxkK2nTr
+         1gRg==
+X-Gm-Message-State: ANoB5pmWOUf533snKRm80mmYtcLCEVAsGx8U2MJI62e8msTdhIkUVyzu
+        sPOiELANx/Su0JRtXpEFQqmcYCJKslL+MyYXkMeH73wRVOlbqR5B
+X-Google-Smtp-Source: AA0mqf6e8cV+qxJVcXeVjeSOF81OGfvNWJhmiZCTBQfpX1nF+cK4oIwctPQrF7eiiSnB9JjZcqwXlSu33RUr3dVTQsg=
+X-Received: by 2002:a05:6122:1883:b0:376:5afd:d30c with SMTP id
+ bi3-20020a056122188300b003765afdd30cmr2555585vkb.13.1668227049335; Fri, 11
+ Nov 2022 20:24:09 -0800 (PST)
 MIME-Version: 1.0
-References: <CAGJzqskRYN49SeS8kSEN5-vbB_Jt1QvAV9QhS6zNuKh0u8wxPQ@mail.gmail.com>
- <Y2rdw7RD8mGTF40w@tapette.crustytoothpaste.net>
-In-Reply-To: <Y2rdw7RD8mGTF40w@tapette.crustytoothpaste.net>
-From:   M Hickford <mirth.hickford@gmail.com>
-Date:   Sat, 12 Nov 2022 02:30:22 +0000
-Message-ID: <CAGJzqskHSn973AaXLV3btAZistH0jH87JJbG1CabbDnLJBkRzA@mail.gmail.com>
-Subject: Re: The enduring popularity of git-credential-store
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org,
-        "peff@peff.net" <peff@peff.net>
+From:   Adam Lee <adam8157@gmail.com>
+Date:   Sat, 12 Nov 2022 12:23:58 +0800
+Message-ID: <CABAGCCq-bFYX+9kU-GGWBstjMjOcO1nSQdi6Udugtkd2McO3Tg@mail.gmail.com>
+Subject: [Bug report] git log shows a wrong history
+To:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, 8 Nov 2022 at 22:52, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2022-11-08 at 10:50:33, M Hickford wrote:
-> > Among StackOverflow users [1], git-credential-store appears several
-> > times more popular than any other credential helper. Does this make
-> > anyone else uneasy? The docs warn that git-credential-store "stores
-> > your passwords unencrypted on disk" [2]. Are users sacrificing
-> > security for convenience?
->
-> I definitely think there are better approaches.  However, none of the
-> credential managers for the three major platforms work without a
-> desktop environment, so if someone's logging in over SSH, then there's
-> no more secure option that's going to work for them.  Taylor did
-> mention GCM, but I believe it has the same problem, and even if it
-> didn't, it's written in C#, which isn't portable to many Unices and
-> isn't viable on servers anyway due to dependencies.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-On my headless Raspberry Pi, I use OAuth access tokens (generated by
-GCM) stored in cache with a long timeout. The usability is pretty good
--- once per day I do the OAuth device flow [1] entering a code from
-the Raspberry Pi into a device with a web browser [2].
+```
+git clone https://github.com/greenplum-db/gpdb-postgres-merge.git
+git_log_reproducer
 
-GCM was indeed awkward to install on Linux arm64. I wrote
-git-credential-oauth [3][4] in Go to be easier for Linux distros to
-package.
+cd git_log_reproducer/
 
-[1] https://www.rfc-editor.org/rfc/rfc8628.html
+git co -b iteration_REL_12_12 origin/iteration_REL_12_12
 
-> The OAuth 2.0 device authorization grant is designed for Internet-
-> connected devices that either lack a browser to perform a user-agent-
-> based authorization or are input constrained to the extent that
-> requiring the user to input text in order to authenticate during the
-> authorization flow is impractical.  It enables OAuth clients on such
-> devices (like smart TVs, media consoles, digital picture frames, and
-> printers) to obtain user authorization to access protected resources
-> by using a user agent on a separate device.
+git log
+```
 
-[2] https://github.com/login/device
-[3] https://github.com/hickford/git-credential-oauth
-[4] recent thread on git-credential-oauth
-https://lore.kernel.org/git/CAGJzqs=+fCQzkDX53H8Mz-DjXicVVgRmmzPjkatSiOpYO7wGGA@mail.gmail.com/T/#u
-[5] device flow support for git-credential-oauth
-https://github.com/hickford/git-credential-oauth/pull/9
+What did you expect to happen? (Expected behavior)
+
+A part of the history is:
+```
+...
+commit 9ac9a7fd4138988d744e0b5767883c06c20ffa6f
+commit fe0a9ddbdd7eee572f7321f9680280044fd5f258
+...
+```
+
+What happened instead? (Actual behavior)
+
+That part of the history is:
+```
+...
+commit 9ac9a7fd4138988d744e0b5767883c06c20ffa6f
+commit f9c655d647427b45ae0d7bd9baf3551a013b8ea1
+commit fe0a9ddbdd7eee572f7321f9680280044fd5f258
+...
+```
+
+What's different between what you expected and what actually happened?
+
+commit f9c655d647427b45ae0d7bd9baf3551a013b8ea1 is at the wrong place.
+
+`git log --graph` is fine.
+
+Anything else you want to add:
+
+[System Info]
+git version:
+git version 2.34.1
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.15.0-52-generic #58-Ubuntu SMP Thu Oct 13 08:03:55 UTC
+2022 x86_64
+compiler info: gnuc: 11.2
+libc info: glibc: 2.35
+$SHELL (typically, interactive shell): /bin/bash
+
+[Enabled Hooks]
+
+-- 
+Adam
