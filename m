@@ -2,140 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A9AEDC43217
-	for <git@archiver.kernel.org>; Sat, 12 Nov 2022 01:12:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 64C1CC433FE
+	for <git@archiver.kernel.org>; Sat, 12 Nov 2022 01:44:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234027AbiKLBLK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 11 Nov 2022 20:11:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57498 "EHLO
+        id S233750AbiKLBog (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 11 Nov 2022 20:44:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233477AbiKLBLI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Nov 2022 20:11:08 -0500
-Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 170AC391F3
-        for <git@vger.kernel.org>; Fri, 11 Nov 2022 17:11:07 -0800 (PST)
-Received: by mail-pf1-x449.google.com with SMTP id k11-20020aa792cb000000b00558674e8e7fso3446323pfa.6
-        for <git@vger.kernel.org>; Fri, 11 Nov 2022 17:11:07 -0800 (PST)
+        with ESMTP id S230114AbiKLBoe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Nov 2022 20:44:34 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80B1145A04
+        for <git@vger.kernel.org>; Fri, 11 Nov 2022 17:44:33 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id g12so8449477wrs.10
+        for <git@vger.kernel.org>; Fri, 11 Nov 2022 17:44:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dwRprehlIoWj6PjxBS+Ru2uLF6jxG8uKgHnJc8h1+LE=;
-        b=A+4iI/yv9f0fPUOXf23H0Sw27zGRC8YR/UeU5QqY0B091BFWivth/j/M6JcELZlOEd
-         6lTNhd+Tp8PNo1qPFtYfjzPdtNjCyo2G/Tan52675JflzB/XmlBwF+Yp0rbTwRfFXl62
-         DvcSTrGrp1NPqxn8cVFHXezS3UBFPNsdoRjvSUona6iKTyAxM7+VGdDXsMKTkHoi1Jj2
-         86Hx5dWPAkR2h3hnXO3irNuitqeMFBIBWA1njbK9mTAFfFCztkFvKkF8rxR+r27cJ6sQ
-         bidJt3AQ1sEml6/PimfAvoiiE4mQ+Uwg/7g7Cy1B6Ef0s1qMIEKGWuQVyA5Yzut9kBUp
-         X8Dg==
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=pji+j8taOlZlLFJXnBj7jaVfMOFM8Kg+zIbYjLbwQ7I=;
+        b=A+VxEAgaVAu1mhfnEV4aSXqfWDHBP4d2Q2P1EnYy5jTx5g9OIJ43pjZn//4iPEzP6t
+         qqMAFXAWyzbTgHs7knNmChmucDGCT8OS2SRV7atoXGkebSnRgF80DCLV7SXbPDoq6+Mv
+         7jIRKAKF02/5p3qx5IhYTs+B4xycRdzHB3sRq5sUl1madAP6DIxn8beeOoVMQuqpnvFU
+         /QBHkfDPFmLlXaMPpO3U55trH5+yyUfDUQUQ7SEm+jTMhut211Uw+Ip2BZtKyZ8fpFOd
+         55WkUvThYXU1k/4DeBxn/MuGDiUeCCLWkDVElnAokC+PnK8vI1D7z/nQ6irIWagx/Ns/
+         pnAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=dwRprehlIoWj6PjxBS+Ru2uLF6jxG8uKgHnJc8h1+LE=;
-        b=BBRXhGLXBX4ohLksxMBIpbLAfBHdfRQrAWc/s2BOeqkS/Ks8IYNr2kML3DPsE4umQb
-         qqTjYNrMIhHbJCxEbIq3VSYFg/bgaUaIv3qFTsLUbQxkXSpzCMFea6hF+1nQPpt+Ij9o
-         AzAiqbGj1URylz+czri7aLoGJ58jGONU3Vstr6hcVGngL6+aF0RZG2AXI2dbdb8qxNYp
-         UaiakiSoVHKtNwq69mYj00DwwCHnwKgEIesTdvYsM1Rk5XRUqxIgHI3WIk+nE0OBO+6M
-         ZYNX60eq3WuiPr+FHUeW0V1zDnZqYXBGDvoMhlEWRjupyaR0A152Xplz11chB18mAAca
-         VX1A==
-X-Gm-Message-State: ANoB5pkDiR9N6T3zi4yhSWRb8GCUmbT1X/u7uLxjND6JCcBJeK2yfrxr
-        BL3xjv1gHlvIKdGI2QMH9p3H36F2EbNtMA==
-X-Google-Smtp-Source: AA0mqf52bKCphjubDYeBYh5fTn+S7WF83Mz/jqzVWN/10uVJTVKFpbGUHITIULla9DsR8XVVgRUFrqho+9cLpA==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:aa7:9156:0:b0:56c:a60d:54d7 with SMTP id
- 22-20020aa79156000000b0056ca60d54d7mr5054090pfi.18.1668215466481; Fri, 11 Nov
- 2022 17:11:06 -0800 (PST)
-Date:   Fri, 11 Nov 2022 17:10:58 -0800
-In-Reply-To: <221111.86fsepmbhe.gmgdl@evledraar.gmail.com>
-Mime-Version: 1.0
-References: <20221109004708.97668-1-chooglen@google.com> <RFC-cover-0.8-00000000000-20221109T192315Z-avarab@gmail.com>
- <kl6ltu373ae5.fsf@chooglen-macbookpro.roam.corp.google.com>
- <221110.86zgcznjah.gmgdl@evledraar.gmail.com> <kl6l5yfm2taf.fsf@chooglen-macbookpro.roam.corp.google.com>
- <kl6lv8nl1h19.fsf@chooglen-macbookpro.roam.corp.google.com> <221111.86fsepmbhe.gmgdl@evledraar.gmail.com>
-Message-ID: <kl6lsfip0yfx.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [RFC PATCH 0/8] Get rid of "git --super-prefix"
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pji+j8taOlZlLFJXnBj7jaVfMOFM8Kg+zIbYjLbwQ7I=;
+        b=XB9n5XJYF4lhZkSbaGqQHIR06xrkmjQMWeGxBcdLBPY09OXArgKFCdk2jRYtbjoe7f
+         Msgio3kaBaapAGPEmxdw2ZLbixTfqF7MhysJGWFA03gewoFZG+iOKH5uaBg/w51tpacY
+         orOKAPctvl+M5rSrepZ8q7L7SuBOAljWRz70YnnOKRREkDfpw81XFA81R/sqCnk5pmcG
+         4wNGRbOqfye6O/zutyrxalv+PM0BGEVPeO3n8Eoz3hQmPg4ZZauGLzKB+4haBS9vPTbv
+         VWLLSh+5JuWmrRsiVT7eLl+IqWSKThwnHeS5PFAIx94gUyzpl6uC6P4ozACr3iubY4MF
+         HN9Q==
+X-Gm-Message-State: ANoB5pnp7DV3DmLdvPJ9oo1Vq7lV+tHYJUhY0yS8tQMlUnfBJWVPfosh
+        lRG2e+f96i2c9ecdq8nP/h1pCUlub6I=
+X-Google-Smtp-Source: AA0mqf7vElZOpeTKdMqFTclSG7+zZeYSIjeprkHpaseZ9uW6qGTecc/uXgIIF0E+sBcUZzTS3tBxMQ==
+X-Received: by 2002:adf:fac7:0:b0:236:7988:b282 with SMTP id a7-20020adffac7000000b002367988b282mr2584238wrs.341.1668217471758;
+        Fri, 11 Nov 2022 17:44:31 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id w9-20020adfee49000000b00228cd9f6349sm3099285wro.106.2022.11.11.17.44.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Nov 2022 17:44:31 -0800 (PST)
+Message-Id: <pull.1379.git.git.1668217470500.gitgitgadget@gmail.com>
+From:   "M Hickford via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 12 Nov 2022 01:44:30 +0000
+Subject: [PATCH] Docs: describe how a credential-generating helper works
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     M Hickford <mirth.hickford@gmail.com>,
+        M Hickford <mirth.hickford@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+From: M Hickford <mirth.hickford@gmail.com>
 
-> On Fri, Nov 11 2022, Glen Choo wrote:
->
->> Glen Choo <chooglen@google.com> writes:
->>
->>> Rereading this series and thinking about this some more, let's go with
->>> your approach, primarily because it avoids global state.
->>>
->>> From this series, it seems that it's not that hard to make this change
->>> and support whatever use cases we currently have.
->>>
->>> This does make it more tedious to add more "--super-prefix" in the
->>> future, but that's a good push for us to do more things in-process
->>> and/or be more principled about passing context objects through the cal=
-l
->>> stack instead of relying on globals.
->>>
->>> Let me know what I can add to this effort besides reviewing :)
->>
->> Specifically, if you have other things on your plate, I'd be happy to
->> pick up where where this RFC has left off.
->
-> I was going to get around to re-rolling this in the next few days, but
-> I'd also be happy to have you beat me to it.
+Previously the docs only described storage helpers.
 
-Ah, well, I didn't mean that I was planning to work on this over the
-weekend, but I can certainly get to it on Monday. I meant something
-closer to "If you didn't want to think about git-submodule.sh for the
-next week or so, I can pick this up".
+A concrete example: Git Credential Manager can generate credentials
+for GitHub and GitLab via OAuth.
+https://github.com/GitCredentialManager/git-credential-manager
 
-Alternatively, I think it also makes sense if you want to reroll only
-the submodule--helper bits (1-7/8) to unblock your git-submodule.sh
-work, and I can prepare the rest of the "nuke --super-prefix" stuff on
-top of that. That should save you a context switch, and since I sent out
-[1], nuking --super-prefix shouldn't be urgent.
+Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+---
+    Docs: describe how a credential-generating helper works
+    
+    Previously the docs only described storage helpers.
+    
+    A concrete example: Git Credential Manager can generate credentials for
+    GitHub and GitLab via OAuth.
+    https://github.com/GitCredentialManager/git-credential-manager
+    
+    Signed-off-by: M Hickford mirth.hickford@gmail.com
 
-If you don't really care any which way, I'll just re-roll this :)
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1379%2Fhickford%2Fcredential-generator-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1379/hickford/credential-generator-v1
+Pull-Request: https://github.com/git/git/pull/1379
 
-[1] https://lore.kernel.org/git/pull.1378.git.git.1668210935360.gitgitgadge=
-t@gmail.com
+ Documentation/gitcredentials.txt | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
->
-> My plan was basically:
->
->  * Steal the test from your series, put them at the beginning, and for
->    those that fail make them "test_expect_failure", then
->    "test_expect_success" later when they pass.
->
->  * Pretty much my RFC as-is. If you're re-rolling it I'll leave to you
->    whether it makes sense to do it with the "read-tree" included (I
->    think probably yes, but "just the submodule--helper" is smaller).
->
->    Rewording the commit message referring to "the other approach"
->    (i.e. your series) probably makes sense in light of later discussion
->    (probably just dropping it).
->
->  * Right now I can't remember if that one test failed until the
->    "read-tree" patch, or if the "submodule--helper" was sufficient, so
->    maybe we need the "read-tree" one to flip the
->    "test_expect_failure"...
->
->  * The 8/8 has a wart where I just removed "SUPPORT_SUPER_PREFIX" from
->    git.c, but didn't adjust the rest of the bitfields, i.e. it should be
->    1<<0..6, not 1<<0..3,5..9 at the end (having removed "1<<4". You got
->    that right in your version...
+diff --git a/Documentation/gitcredentials.txt b/Documentation/gitcredentials.txt
+index 80517b4eb2c..72888402e73 100644
+--- a/Documentation/gitcredentials.txt
++++ b/Documentation/gitcredentials.txt
+@@ -61,7 +61,9 @@ for a password. It is generally configured by adding this to your config:
+ 
+ Credential helpers, on the other hand, are external programs from which Git can
+ request both usernames and passwords; they typically interface with secure
+-storage provided by the OS or other programs.
++storage provided by the OS or other programs. Alternatively, a
++credential-generating helper might generate credentials for certain servers via
++some API.
+ 
+ To use a helper, you must first select one to use. Git currently
+ includes the following helpers:
+@@ -286,8 +288,8 @@ For a `store` or `erase` operation, the helper's output is ignored.
+ If a helper fails to perform the requested operation or needs to notify
+ the user of a potential issue, it may write to stderr.
+ 
+-If it does not support the requested operation (e.g., a read-only store),
+-it should silently ignore the request.
++If it does not support the requested operation (e.g., a read-only store
++or generator), it should silently ignore the request.
+ 
+ If a helper receives any other operation, it should silently ignore the
+ request. This leaves room for future operations to be added (older
 
-Yeah, this plan makes sense. One thing I'd add is that I'd also use
-OPT__SUPER_PREFIX to handle "git fetch --submodule-prefix".
-
->
-> If you can do that and address any other nits/issues you find that would
-> be great. I don't think I'd get to it before next week otherwise, but
-> it's earlier in the -0800 TZ :)
+base-commit: 319605f8f00e402f3ea758a02c63534ff800a711
+-- 
+gitgitgadget
