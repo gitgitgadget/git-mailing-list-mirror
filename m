@@ -2,192 +2,227 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72377C4332F
-	for <git@archiver.kernel.org>; Sun, 13 Nov 2022 17:31:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8560C4332F
+	for <git@archiver.kernel.org>; Sun, 13 Nov 2022 21:27:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234264AbiKMRbg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Nov 2022 12:31:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45868 "EHLO
+        id S234152AbiKMV1Q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Nov 2022 16:27:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233909AbiKMRb0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Nov 2022 12:31:26 -0500
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C2001117A
-        for <git@vger.kernel.org>; Sun, 13 Nov 2022 09:31:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1668360667; bh=yYVoYaEyln30YaXQ/zDu5/pr36w0PH1ubMENiR7Jrzc=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=RRQUwjOz2IWtGoDOsFXavp6mr6KvW2Jvn5imy0IoN0tuA6u8zx7j/YIQPsS/44uMy
-         rZFoNc2lm6vwmiUZbA+5wdN8e9wqMfqYoHAQqOg1phBdUl9s6enYzea9LLUSdHMyVF
-         4C6X0L3Q8N0i3lnijnXd/8VfUUM1NRUsdqsa7IHf71eDFAa/fX+S7b2fiOX9P6uMtG
-         A2s1vptb4GmQp36ilxpX2B7fn4uRjAa8LoxiJGv9bQQUNqzMtTTYwC8ES+4R7Yrl2m
-         I1bHhBKnPbrDVXvZyvv4VX2WRGcBR7CzbDgxzkXD2aqWJr/YSr972TaTEJz7XDFiGg
-         M03m+qXPQ5fnQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.154.159]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mq184-1pGwOX1mzq-00nFaU; Sun, 13
- Nov 2022 18:31:07 +0100
-Message-ID: <12542034-b5cc-bad0-5a60-2672bde35b78@web.de>
-Date:   Sun, 13 Nov 2022 18:31:06 +0100
+        with ESMTP id S233795AbiKMV1J (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Nov 2022 16:27:09 -0500
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 931F9B7C2
+        for <git@vger.kernel.org>; Sun, 13 Nov 2022 13:26:58 -0800 (PST)
+Received: by mail-pl1-x635.google.com with SMTP id g24so8450935plq.3
+        for <git@vger.kernel.org>; Sun, 13 Nov 2022 13:26:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/v2lpeU83pG5fRM8/0seH+O9QHRrskZvCRLrX935RfE=;
+        b=IccAdCSv/nNXw5QOgjV6XCnRIX1Zdbl9rjJVn381xpxJhD1+fYWODE3EDcaIim2XXz
+         04JazD4q6gV/qTyI5hszUmU37ZioW/EcqHcjFvAtDxTEyb9TOYRNvFxNDKoiVVL2V/Qj
+         MjrYczBmX/7CR4VoBu8cEWgjx1xPuiB1+5rmM0tJNAa9PHLHBTTop1N/PauVdTKbun+l
+         wAT1VAWbHTCAm/34w3YErbuzyfqjqvjLAaNYtp1W2HnK0uKggFX03n1X2GpcfLBXYvCM
+         4NnN0NmYSmYPXUn7POTdfqfah764Oan+i1/YUSfDfhOqYC402FEiNCBDUDtHovId81Pb
+         zV0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/v2lpeU83pG5fRM8/0seH+O9QHRrskZvCRLrX935RfE=;
+        b=UgjDl0M9cR3NRJi7QwJPC3ZeokUOARfWJPW3WyIfqQFb1v7eqLOY5FMQmFCJArfvPt
+         j345RwGPYRr9efM+vnkcPeqzCfK7BJuyCSwzQez2M01WzmlRAv7/tso8E0q1EBIViF8B
+         KjS4yilG4ajjObLU5RAIMZuTmMLPs5rpToWJ9mtJIseOIRPwWqDsNqAp+wAP6W1t2Ngg
+         Gvs0xdiD7Pc93jE8FT/4iAzPOuZVpFA2VLAC/0+DIXwA59yNAvY7p/LnNb/YV+xekaET
+         qe9sIO4BwO8Nr96o0svhoflWneBx/W1vlmRZpapvPBw2cjFN5oCYRFexxmecczqbI5vn
+         8yRQ==
+X-Gm-Message-State: ANoB5pkrhHYh/sWBAVUsFvavf98ICIQoSdXAzbKodkWqdDVAdrRolKqN
+        9LdVnN//I24th7MJTosPzXy75w1vy8+BeQ==
+X-Google-Smtp-Source: AA0mqf6oogmCi7KWrGe6C8j0ZnxVETE6qzYfHMi1b0320n/OD6k4DuSk5UmUTOV8qYXEoScYnehBKQ==
+X-Received: by 2002:a17:902:7448:b0:186:7006:9a5f with SMTP id e8-20020a170902744800b0018670069a5fmr11395237plt.117.1668374817698;
+        Sun, 13 Nov 2022 13:26:57 -0800 (PST)
+Received: from ?IPV6:2409:4043:4c81:51c0:8e7b:5efe:71ba:3c2f? ([2409:4043:4c81:51c0:8e7b:5efe:71ba:3c2f])
+        by smtp.gmail.com with ESMTPSA id b12-20020a170903228c00b00186b0ac12c5sm5625861plh.172.2022.11.13.13.26.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 13 Nov 2022 13:26:57 -0800 (PST)
+Message-ID: <a446840e-7a6d-984b-ac15-f6359a18595a@gmail.com>
+Date:   Mon, 14 Nov 2022 02:56:52 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH 09/13] parse-options API: don't restrict OPT_SUBCOMMAND()
- to one *_fn type
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH] doc/cat-file: allow --use-mailmap for --batch options
 Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?B?THVrw6HFoSBEb2t0b3I=?= <ldoktor@redhat.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <1cb1c033-0525-7e62-8c09-81019bf26060@redhat.com>
- <cover-00.13-00000000000-20221104T132117Z-avarab@gmail.com>
- <patch-09.13-2cb3807aa17-20221104T132117Z-avarab@gmail.com>
- <df855ba1-52b1-1007-68e8-2e28e85b6822@web.de>
- <221105.861qqhxz0o.gmgdl@evledraar.gmail.com>
- <25776063-a672-fc65-bed3-1bc8536ab8b3@web.de>
- <221105.86o7tlvxh0.gmgdl@evledraar.gmail.com>
- <46ee3f92-943f-10d5-7ec5-c68f1ced87ce@web.de>
- <221106.86k048w2f4.gmgdl@evledraar.gmail.com>
- <36337a3f-6443-f272-09f0-7ddb3c20d7a4@web.de>
- <Y2/LF/qiZI99YuxM@coredump.intra.peff.net>
- <221112.8635aom6p5.gmgdl@evledraar.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <221112.8635aom6p5.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:2pK1lvQr9i1t330VuruBRzo89Hll3xooG8NkR+BvVrIPU5VTOG8
- X9kzWVGLWuTo4HqRX1Krbg6dXdR1t+AdxTK8594YAHXlr8xLlmcb/l0xOZ9Ay5/fQn/d5mv
- hho/Dbl0WKn6kyD5yFqigf/AZUYZ/7IoNuaQ9+czfKVxmetQOzUTMYrII/cEQk7LOYmKldL
- qcgPXlOuNbygg2A6ip0ew==
-UI-OutboundReport: notjunk:1;M01:P0:mfaUZAPIwoE=;6m7JcqFoibBaw7hlGLIhndqNZAx
- 1NJzMPObTPi+Pgn/hCle2iS6Qq5Q+6Y+6sXxatsrvuaP5PmO7MJCvoR/JDxk6+oS1qwwH4kFh
- CikRd2NuJ+lE8huIIm/0YGhhqCqYzZazZdDIC9PwERijLaQVj7LPld3RTljzlIvTsUTh2VeLF
- Jys9bLLt6nCzWewUW/wn47k8ae/fvCYRjOJloSkAwpf2/lrC8Dle7v7evvoc8p24DIfjAIYkK
- /rItLO6TNQB+kDMwROVA2AIJZcKNDEHBXcrsWBZJge3sd5+sesHOFI4WUrWfJv8XSvoxVF8Qy
- p7pJMd7CgibRsTzaF0jCuDPfn+qBkXwiaFDo6qnC4FB+kLmaNyq3IvqRcRmDbz9lltVsf19LP
- 1AKiQ4U+A6S3Zi2zDD2SxhlGXCj3+XgNjgMXEO3wsrB+qqxcHHn6eL1F3hkdSmYDe/0zTGF5C
- JGOvLGG+KBZzFDc+FRZUdsjFDjdLziyKIf4opvj82lpWZyXT+gikDJGbHunyYClEto95Oq9Zg
- rp2RCwB3CMaW0Jd5ptO9OnwP/j9AoMLFWvuQfohoZbRDh22NA/7h49mfkgLXHFAFajeicR5kF
- rdO5JYQuGankcaTKcGTsTyc5LkplUpdOZANzh2F5wEWyyhmUeWPORur/4yj6PTTWwBaVhEkPu
- WqSbjgJHhtp2wWfnZqBS4XU+DUlJL96hYhL1k4fqzIjXhw1pymn78hlOLEBe/qOUuCW9KavOo
- 6IdufwKreE1gUVkfroA957qy7f1Mg3WdbufqZmIzxIjWevJNqX+xa0oZ9rOYRN5uQzLKEeMuQ
- /4Qp14c1Z9dAf0wG48d5GZSSO6DzR5oFoJzyuEHyMyPnQo7hJ6kvX+6YXzUuH+CDw4gbtxmpw
- mRvdQuJRrjCKWF+pjkhZKCn1UkZYfhqVEBa62sa69PdtxEYIx1vxvyxuxtfjB7zRQv628ocnP
- vZ7eRPofuWpDqxUPr4+fbHmE008=
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, johncai86@gmail.com
+References: <20220923193543.58635-1-siddharthasthana31@gmail.com>
+ <20221029092513.73982-1-siddharthasthana31@gmail.com>
+ <CAP8UFD2vLnE8Suf259RWQk2fcq+gDFTi+cDr9mrbidY49n3Lzw@mail.gmail.com>
+From:   Siddharth Asthana <siddharthasthana31@gmail.com>
+In-Reply-To: <CAP8UFD2vLnE8Suf259RWQk2fcq+gDFTi+cDr9mrbidY49n3Lzw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 12.11.22 um 17:55 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->
-> On Sat, Nov 12 2022, Jeff King wrote:
->
->> On Sat, Nov 12, 2022 at 11:42:09AM +0100, Ren=C3=A9 Scharfe wrote:
+
+
+On 31/10/22 16:24, Christian Couder wrote:
+> On Sat, Oct 29, 2022 at 11:25 AM Siddharth Asthana
+> <siddharthasthana31@gmail.com> wrote:
 >>
->>>> E.g. we have plenty of code that assumes ASCII, instead of catering t=
-o
->>>> EBCDIC, and assuming NULL is (void *)0, not (void *)123456 or whateve=
-r.
->>>
->>> NULL is defined as "0" or "(void *)0" by C99 6.3.2.3 Pointers paragrap=
-h
->>> 3 and 7.17 Common definitions <stddef.h> paragraph 3.
+>> The command git cat-file can now use the mailmap mechanism to replace
+>> idents with their canonical versions for commit and tag objects. There
+>> are several options like `--batch`, `--batch-check` and
+>> `--batch-command` that can be combined with `--use-mailmap`. But, the
+>> documentation for `--batch`, `--batch-check` and `--batch-command`
+>> doesn't say so. This patch fixes that documentation.
 >>
->> I think he is alluding to the fact that while the standard requires tha=
-t
->> a "0" constant refers to a NULL pointer, the representation does not
->> have to be all-bits-zero. So:
+>> Mentored-by: Christian Couder <christian.couder@gmail.com>
+>> Mentored-by: John Cai <johncai86@gmail.com>
+>> Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+>> ---
 >>
->>   char *foo =3D 0;
+>> This patch was previously sent as the first patch of a 3 patch series for
+>> adding the mailmap support in git cat-file options:
+>> https://lore.kernel.org/git/20220916205946.178925-2-siddharthasthana31@gmail.com/
+> 
+> I think Taylor is probably right that there should be a version number
+> at the start of the subject line if the patch has already been sent
+> many times with the same subject and mostly the same content to the
+> list.
+> 
+>> Changes in v2:
+>> - Fixed the names in trailers in the commit message
+>> - Updated the documentation to clearly state that the `--batch-check`,
+>>    `--batch-command` and `--batch` options can only be used with
+>>    `--textconv`, `--filters` or `--use-mailmap`.
+>> - Fixed formatting
 >>
->> is fine, but:
+>> Changes in v3:
+>> - Fixed formatting
 >>
->>   char *foo;
->>   memset(foo, 0, sizeof(&foo));
->
-> Yes, to elaborate: the "null pointer constant" referred to in 6.3.2.3
-> deliberately leaves room for the representation being unequal to the
-> "all zero bits". And as you point out the former example is portable,
-> but not the latter.
->
->> is not. And we absolutely do the latter in our code base anyway, becaus=
-e
->> it's convenient and unlikely to be a problem on practical platforms. An=
-d
->> I think it has always been our attitude in this community to let
->> engineering practicality trump strict adherence to the standard. But
->> "practicality" there should be measuring the tradeoff of how useful
->> something is versus how likely it is to bite us.
+>> Changes in v4:
+>> - Fixed some grammatical errors
+> 
+> The version number should logically be "v4" according to the above.
+> 
+>>   Documentation/git-cat-file.txt | 45 ++++++++++++++++++++++++----------
+>>   1 file changed, 32 insertions(+), 13 deletions(-)
+>>
+>> diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+>> index ec30b5c574..db2bba9b65 100644
+>> --- a/Documentation/git-cat-file.txt
+>> +++ b/Documentation/git-cat-file.txt
+>> @@ -89,26 +89,45 @@ OPTIONS
+>>   --batch::
+>>   --batch=<format>::
+>>          Print object information and contents for each object provided
+>> -       on stdin.  May not be combined with any other options or arguments
+>> -       except `--textconv` or `--filters`, in which case the input lines
+>> -       also need to specify the path, separated by whitespace.  See the
+>> -       section `BATCH OUTPUT` below for details.
+>> +       on stdin. May not be combined with any other options or arguments
+>> +       except --textconv, --filters, or --use-mailmap.
+>> +       +
+>> +       * When used with `--textconv` or `--filters`, the input lines
+>> +         must specify the path, separated by whitespace. See the section
+>> +         `BATCH OUTPUT` below for details.
+>> +       +
+>> +       * When used with `--use-mailmap`, the info command shows the size
+>> +         of the object as if the identities recorded in it were replaced
+>> +         by the mailmap mechanism.
+> 
+> Sorry to realize this only at this point but actually I think the
+> `info` command is only available when the `--batch-command` option is
+> used, not when the `--batch` option is used.
+> 
+> As the `--batch` option prints both object information (which includes
+> the size) and contents (which includes the idents), I think something
+> like the following should be used here:
+> 
+>         * When used with `--use-mailmap`, for commit and tag objects, the
+>            contents part of the output shows the identities replaced using the
+>            mailmap mechanism, while the information part of the output shows
+>            the size of the object as if it actually recorded the replacement
+>            identities.
+> 
+>>   --batch-check::
+>>   --batch-check=<format>::
+>> -       Print object information for each object provided on stdin.  May
+>> -       not be combined with any other options or arguments except
+>> -       `--textconv` or `--filters`, in which case the input lines also
+>> -       need to specify the path, separated by whitespace.  See the
+>> -       section `BATCH OUTPUT` below for details.
+>> +       Print object information for each object provided on stdin. May not be
+>> +       combined with any other options or arguments except --textconv, --filters
+>> +       or --use-mailmap.
+>> +       +
+>> +       * When used with `--textconv` or `--filters`, the input lines must
+>> +        specify the path, separated by whitespace. See the section
+>> +        `BATCH OUTPUT` below for details.
+>> +       +
+>> +       * When used with `--use-mailmap`, the info command shows the size
+>> +         of the object as if the identities recorded in it were replaced
+>> +         by the mailmap mechanism.
+> 
+> Same remark about the `info` command as above.
+> 
+> As the `--batch-check` option prints only object information (which
+> includes the size), I think something like the following should be
+> used here:
+> 
+>         * When used with `--use-mailmap`, for commit and tag objects, the
+>            printed object information shows the size of the object as if the
+>            identities recorded in it were replaced by the mailmap mechanism.
+> 
+>>   --batch-command::
+>>   --batch-command=<format>::
+>>          Enter a command mode that reads commands and arguments from stdin. May
+>> -       only be combined with `--buffer`, `--textconv` or `--filters`. In the
+>> -       case of `--textconv` or `--filters`, the input lines also need to specify
+>> -       the path, separated by whitespace. See the section `BATCH OUTPUT` below
+>> -       for details.
+>> +       only be combined with `--buffer`, `--textconv`, `--use-mailmap` or
+>> +       `--filters`.
+>> +       +
+>> +       * When used with `--textconv` or `--filters`, the input lines must
+>> +         specify the path, separated by whitespace. See the section
+>> +         `BATCH OUTPUT` below for details.
+>> +       +
+>> +       * When used with `--use-mailmap`, the info command shows the size
+>> +         of the object as if the identities recorded in it were replaced
+>> +         by the mailmap mechanism.
+> 
+> s/info command/`info` command/
+> 
+> And I think it could be interesting to add:
+> 
+>    - that it happens only for commits and tags, and
+>    - that when the `contents` command is used the idents are replaced.
+> 
+> So maybe something like:
+> 
+>         * When used with `--use-mailmap`, for commit and tag objects, the
+>           `contents` command shows the identities replaced using the
+>            mailmap mechanism, while the `info` command shows the size
+>            of the object as if it actually recorded the replacement
+>            identities.
+> 
+> Also this will become true only after your other patch series will be
+> merged. Which means that you should say somewhere that either
+> 
+>    - this patch should be merged only after the other patch series is merged, or
+>    - it's a bug that the `info` command doesn't show the size of the
+> updated object and this is going to be fixed soon by the other patch
+> series anyway.
+> 
+> Thanks for working on finishing this!
+> Christian.
 
-For me the usefulness so far is negative: The code is more complicated
-than necessary.  Adding a context pointer to the callback function
-signature here and keeping the extra code outside the callback function
-in builtin/pack-objects.c is simpler.
-
-> All I've been trying to get across in this sub-thread is that there's an
-> interesting empirical question here: Are we in fact targeting an
-> architecture where J.5.7 isn't implemented, or likely to have one sneak
-> up on us?
-
-How would you measure this?  Undefined behavior can manifest itself
-differently e.g. based on compiler version and options, or in this
-case pointer value and perhaps even function calling convention.  And
-of course in the form of the famous nasal demons..
-
-> I don't think so, and timing-wise deciding to be paranoid about this
-> particular thing would leave that question unanswered, when all we have
-> to do is wait a bit (some of the slower platforms tend to be a few
-> releases behind).
->
-> The argument for the change[1] (further articulated upthread) hasn't
-> answered the "do we target such an arch?", but seems to just fall back
-> to general standards paranoia.
-
-I mentioned CHERI (Arm Morello) as a candidate, but can't tell you for
-sure.
-
-> Which isn't an invalid argument in itself. But doesn't really address
-> why we'd be worried about *this* particular thing, but not e.g. those
-> sort of memsets, assuming ASCII ordering for 'A'..'z' etc.
-
-You can keep worrying about them if you like.  Replacing memset calls
-with _INIT macros has been going on for while already.  Using isalpha()
-instead of character range comparisons etc. is probably a good idea
-anyway.
-
->> In the case under discussion, my gut feeling agrees with you, though.
->> I'm skeptical that equivalence of object and function pointers is all
->> that useful in practice. And your mention of CHERI seems like a
->> plausible way it could bite us.
->
-> I think the post-image of [1] looks nicer when reviewed stand-alone, so
-> I'm not against the change per-se, I actually like it.
->
-> And I don't have a use-case for using that feature further, in a way
-> that isn't easy to do differently.
->
-> But e.g. now we're having a parallel discussion about using some 3rd
-> party bitmap library. We might e.g. want to incorporate some 3rd party
-> JIT or whatever in the future. If we run into this question again it
-> would be nice to have it answered already.
-
-Why would a bitmap library require function pointer casts?
-
-A JIT library probably comes with a list of supported systems and
-requires a fallback for anyone else.  I'd expect the system-specific
-parts to be encapsulated in that library.
-
-> And if we didn't have this J.5.7 reliance in that code already I don't
-> think it would be worth the effort to introduce one as a test
-> balloon. I'm only saying this in the context that we already have one.
->
-> 1. https://lore.kernel.org/git/c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.=
-de/
-
-If it's not worth adding then it's probably not worth keeping.
-
-Ren=C3=A9
+Thanks a ton for the review Christian :) Will make the suggested changes 
+and send the v4 patch series.
