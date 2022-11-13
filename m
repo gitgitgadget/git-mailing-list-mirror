@@ -2,64 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3FC54C433FE
-	for <git@archiver.kernel.org>; Sun, 13 Nov 2022 21:28:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45124C4332F
+	for <git@archiver.kernel.org>; Sun, 13 Nov 2022 21:28:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235192AbiKMV2q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Nov 2022 16:28:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45188 "EHLO
+        id S235416AbiKMV2z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Nov 2022 16:28:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233795AbiKMV2o (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Nov 2022 16:28:44 -0500
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE769D2F6
-        for <git@vger.kernel.org>; Sun, 13 Nov 2022 13:28:43 -0800 (PST)
-Received: by mail-pf1-x42f.google.com with SMTP id z26so9386983pff.1
-        for <git@vger.kernel.org>; Sun, 13 Nov 2022 13:28:43 -0800 (PST)
+        with ESMTP id S235399AbiKMV2x (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Nov 2022 16:28:53 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28D7913D7E
+        for <git@vger.kernel.org>; Sun, 13 Nov 2022 13:28:53 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id k5so8738603pjo.5
+        for <git@vger.kernel.org>; Sun, 13 Nov 2022 13:28:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=n56CqfXJWABYylceOpl3fl7ngOCrz93TmIPu2JhQx1s=;
-        b=RhFqb8UD6TykWwp0wTGX5gbZzRowaJzUM/UhE4ZyAUzBqMwF66s4pfMRlRzTKFQNQN
-         JcnGmG73Ym5s4N3nmJQHopgXLPgRF5OmBytiaGQbfgCXFwfxtih02YiulvUHBHLYXxHz
-         xDVt1YDN40O+WC11tbiA5JkJLNxvm7B73hlw75kykIjBpPdQRMI6p34WAMgOGp3jSgaT
-         72zCCHpETZI6NiWBOLCDkDYKHpCVKafz/9Kr6nNiP4HiFoXCkuFLzjisCcZ4eFxFnUEu
-         Cgb9cZBzKP8ys+mhu2np4KQ5d4wKshL0o+U03M4DPCuGFiiOlVdb6MB7zck5DwPjemam
-         BKDQ==
+        bh=JNlTujIhSePUkZ7fXPGpdf5z9rmXsh6KK6wwHYrfSqQ=;
+        b=dSPUQy/yw4UbgyVrJ2DSunSozMbBZutxkXFIYiCUtu5jS/JWuQ/zreBi7veF5ZtQEO
+         JNmvKXvGykLhKGIyJc8B8LijNLIbj5lQpHMgZIclTCXVhUXy1IxtarrNmKwadfFZpylO
+         fgSTK6W4cM/jrzxiWhUNcjisrIWWYZLwktray5ICZgcX9uZyJGTFVFMmY4QhhqarrJjJ
+         qD40JWvMnW0XERWaTrdSJsuc8AgWv/0/tUpGMVXHlhfSWQoF9mmmn8MdJxa/V5OWxGUl
+         sECcW/hUlvO3OPWgT2xwBLFcmEL6jPmATDHoQQTsKG+ay1NKMrxQ0LI8gjIYwBpmibrw
+         5c7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=n56CqfXJWABYylceOpl3fl7ngOCrz93TmIPu2JhQx1s=;
-        b=4Vt9x3KTisgA2swhrmiLKM/roSR7XPGCHE57hPcqrt6ZH3mqdDuVn24LbbEakQXXPd
-         GHhhQwqnvUJvgVHn9Fh1KfdslKH+SiE6BmnldXVlhRu0R5kqqDu3hpRQ54qkH5N0+jji
-         kg47ntqYKpvgIXf0nN9rxjiVen0HqTonEXHrbKorreLQ/Elc+uZyC+4c7cAmFSr2lFkH
-         698Z8rkCc+Mt0WdTu4HO1o3l+kAbjopgt4kr6lu268M8f0UD+wpzL9nLpdubgGxZm+V6
-         d6C02AhVRzS2uiDyV9cBKb2leMjIIfHwLNdLvrHKDcAaRa5G4FE5DqA4ITRlzr2aoCaT
-         6maw==
-X-Gm-Message-State: ANoB5pk2QAjJmR11Ct5B9WL3ZjYPXAK6eRH43JypkxxaZDsdyPb6nE3w
-        lTot6ng6dZ/sMQDzn0pOQZhzxL9CNEywYnv1
-X-Google-Smtp-Source: AA0mqf7bkBxo2n1U0PuvSUDzh8Ekrl+amVZN4oksBA9/Dm/Jw5epDgCT/sVocRDYzvcPJPWQvDV8hg==
-X-Received: by 2002:a62:a50a:0:b0:56b:b112:4a16 with SMTP id v10-20020a62a50a000000b0056bb1124a16mr11501435pfm.66.1668374922664;
-        Sun, 13 Nov 2022 13:28:42 -0800 (PST)
+        bh=JNlTujIhSePUkZ7fXPGpdf5z9rmXsh6KK6wwHYrfSqQ=;
+        b=xSxj1lEKj3qQ/ng+1h5/Pa64vRFBhblwu/OnwmaUN6FkW0ix9a2kCNeatTVBeM6ml4
+         vVseK/tr5lMqYn4vo0K3GuDBVV6oT21gSif8R59W1T0aXV+66Sgu3XKO2ZbUyxRNMipD
+         PBO8m/TKkOmCFnAGO4JAjDNNmFEJGbG/kHeNO5GEjg9Q23ZkFQNrAxsWKLL3iJxCoI05
+         MVGvya8lgeCmbttJzFqDhcsTrt+z3XC4QuVcvW1cecSFK/2pChko7HRWrj9GlWuEtAVk
+         B/EmVjHQsDw+S3o5Le8hUWlQNYjOvpPo7va+JJjrxjM6LFQ8zWUYGYpjdne3ItOtJJHf
+         aA+Q==
+X-Gm-Message-State: ANoB5plRw6YuGNtxurCAJEXtWqfCTx52Y3aMOOcobuU8eETUVNBvI20d
+        PDIX2Sr19XwnyCYNTolGcqmWXOI/CxZ+uac1
+X-Google-Smtp-Source: AA0mqf7oIWpLV2Xi+jTy9e1xiSVJB/efu6KI1L9LrHW6siySjn8l7uSEE7VIuabmS4KkNzVR7Nc4qA==
+X-Received: by 2002:a17:90a:8cf:b0:213:8cf1:4d9d with SMTP id 15-20020a17090a08cf00b002138cf14d9dmr11287061pjn.5.1668374932070;
+        Sun, 13 Nov 2022 13:28:52 -0800 (PST)
 Received: from HB2.. ([2409:4043:4c81:51c0:8e7b:5efe:71ba:3c2f])
-        by smtp.gmail.com with ESMTPSA id 79-20020a621552000000b0056c704abca7sm5116337pfv.220.2022.11.13.13.28.38
+        by smtp.gmail.com with ESMTPSA id 79-20020a621552000000b0056c704abca7sm5116337pfv.220.2022.11.13.13.28.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 13 Nov 2022 13:28:42 -0800 (PST)
+        Sun, 13 Nov 2022 13:28:51 -0800 (PST)
 From:   Siddharth Asthana <siddharthasthana31@gmail.com>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, gitster@pobox.com, johncai86@gmail.com,
         Johannes.Schindelin@gmx.de, avarab@gmail.com, me@ttaylorr.com,
         Siddharth Asthana <siddharthasthana31@gmail.com>
-Subject: [PATCH v4 0/3] Add mailmap mechanism in cat-file options
-Date:   Mon, 14 Nov 2022 02:58:27 +0530
-Message-Id: <20221113212830.92609-1-siddharthasthana31@gmail.com>
+Subject: [PATCH v4 1/3] cat-file: add mailmap support to -s option
+Date:   Mon, 14 Nov 2022 02:58:28 +0530
+Message-Id: <20221113212830.92609-2-siddharthasthana31@gmail.com>
 X-Mailer: git-send-email 2.38.1.423.g41b4650b24
-In-Reply-To: <20220916205946.178925-1-siddharthasthana31@gmail.com>
+In-Reply-To: <20221113212830.92609-1-siddharthasthana31@gmail.com>
 References: <20220916205946.178925-1-siddharthasthana31@gmail.com>
+ <20221113212830.92609-1-siddharthasthana31@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,108 +68,89 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks a lot Junio, Taylor and Christian for the review :) I have made
-the suggested changes.
+Even though the cat-file command with `-s` option does not complain when
+`--use-mailmap` option is given, the latter option is ignored. Compute
+the size of the object after replacing the idents and report it instead.
 
-= Description
+In order to make `-s` option honour the mailmap mechanism we have to
+read the contents of the commit/tag object. Make use of the call to
+`oid_object_info_extended()` to get the contents of the object and store
+in `buf`. `buf` is later freed in the function.
 
-At present, `git-cat-file` command with `--batch-check` and `-s` options
-does not complain when `--use-mailmap` option is given. The latter
-option is just ignored. Instead, for commit/tag objects, the command
-should compute the size of the object after replacing the idents and
-report it. So, this patch series makes `-s` and `--batch-check` options
-of `git-cat-file` honor mailmap when used with `--use-mailmap` option.
+Mentored-by: Christian Couder <christian.couder@gmail.com>
+Mentored-by: John Cai <johncai86@gmail.com>
+Helped-by: Taylor Blau <me@ttaylorr.com>
+Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+---
+ builtin/cat-file.c | 13 +++++++++++++
+ t/t4203-mailmap.sh | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 42 insertions(+)
 
-In this patch series we didn't want to change that '%(objectsize)'
-always shows the size of the original object even when `--use-mailmap`
-is set because first we have the long term plan to unify how the formats
-for `git cat-file` and other commands works. And second existing formats
-like the "pretty formats" used bt `git log` have different options for
-fields respecting mailmap or not respecting it (%an is for author name
-while %aN for author name respecting mailmap).
-
-I would like to thank my mentors, Christian Couder and John Cai, for all
-of their help!
-Looking forward to the reviews!
-
-= Patch Organization
-
-- The first patch makes `-s` option to return updated size of the
-  <commit/tag> object, when combined with `--use-mailmap` option, after
-  replacing the idents using the mailmap mechanism.
-- The second patch makes `--batch-check` option to return updated size of
-  the <commit/tag> object, when combined with `--use-mailmap` option,
-  after replacing the idents using the mailmap mechanism.
-- The third patch improves the documentation of `-s`, `--batch`,
-  `--batch-check` and `--batch-command` options by adding they can be
-  combined with `--use-mailmap` options.
-
-= Changes in v4
-
-- Improve the documentation patch to clearly state that the `-s`,
-  `--batch-check`, `--batch-command` and `--batch` options can be only
-  be used with `--textconv`, `--filters` or `--use-mailmap`.
-
-Siddharth Asthana (3):
-  cat-file: add mailmap support to -s option
-  cat-file: add mailmap support to --batch-check option
-  doc/cat-file: allow --use-mailmap for --batch options
-
- Documentation/git-cat-file.txt | 53 ++++++++++++++++++++++--------
- builtin/cat-file.c             | 27 ++++++++++++++++
- t/t4203-mailmap.sh             | 59 ++++++++++++++++++++++++++++++++++
- 3 files changed, 125 insertions(+), 14 deletions(-)
-
-Range-diff against v3:
-1:  38bb89d350 ! 1:  4ae3af37d2 cat-file: add mailmap support to -s option
-    @@ Commit message
-     
-         Mentored-by: Christian Couder <christian.couder@gmail.com>
-         Mentored-by: John Cai <johncai86@gmail.com>
-    +    Helped-by: Taylor Blau <me@ttaylorr.com>
-    +    Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-         Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
-     
-    - ## Documentation/git-cat-file.txt ##
-    -@@ Documentation/git-cat-file.txt: OPTIONS
-    - 
-    - -s::
-    - 	Instead of the content, show the object size identified by
-    --	`<object>`.
-    -+	`<object>`. If used with `--use-mailmap` option, will show the
-    -+	size of updated object after replacing idents using the mailmap
-    -+	mechanism.
-    - 
-    - -e::
-    - 	Exit with zero status if `<object>` exists and is a valid
-    -
-      ## builtin/cat-file.c ##
-     @@ builtin/cat-file.c: static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
-      
-2:  4d49cfde73 ! 2:  a692646228 cat-file: add mailmap support to --batch-check option
-    @@ Commit message
-     
-         Mentored-by: Christian Couder <christian.couder@gmail.com>
-         Mentored-by: John Cai <johncai86@gmail.com>
-    +    Helped-by: Taylor Blau <me@ttaylorr.com>
-    +    Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-         Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
-     
-    - ## Documentation/git-cat-file.txt ##
-    -@@ Documentation/git-cat-file.txt: OPTIONS
-    - 	except `--textconv` or `--filters`, in which case the input lines
-    - 	also need to specify the path, separated by whitespace.  See the
-    - 	section `BATCH OUTPUT` below for details.
-    -+	If used with `--use-mailmap` option, will show the size of
-    -+	updated object after replacing idents using the mailmap mechanism.
-    - 
-    - --batch-check::
-    - --batch-check=<format>::
-    -
-      ## builtin/cat-file.c ##
-     @@ builtin/cat-file.c: static void batch_object_write(const char *obj_name,
-      	if (!data->skip_object_info) {
--:  ---------- > 3:  41b4650b24 doc/cat-file: allow --use-mailmap for --batch options
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index fa7bd89169..8a6e2343ec 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -132,8 +132,21 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 
+ 	case 's':
+ 		oi.sizep = &size;
++
++		if (use_mailmap) {
++			oi.typep = &type;
++			oi.contentp = (void**)&buf;
++		}
++
+ 		if (oid_object_info_extended(the_repository, &oid, &oi, flags) < 0)
+ 			die("git cat-file: could not get object info");
++
++		if (use_mailmap && (type == OBJ_COMMIT || type == OBJ_TAG)) {
++			size_t s = size;
++			buf = replace_idents_using_mailmap(buf, &s);
++			size = cast_size_t_to_ulong(s);
++		}
++
+ 		printf("%"PRIuMAX"\n", (uintmax_t)size);
+ 		ret = 0;
+ 		goto cleanup;
+diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+index cd1cab3e54..b500b31c92 100755
+--- a/t/t4203-mailmap.sh
++++ b/t/t4203-mailmap.sh
+@@ -1022,4 +1022,33 @@ test_expect_success '--mailmap enables mailmap in cat-file for annotated tag obj
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'git cat-file -s returns correct size with --use-mailmap' '
++	test_when_finished "rm .mailmap" &&
++	cat >.mailmap <<-\EOF &&
++	C O Mitter <committer@example.com> Orig <orig@example.com>
++	EOF
++	cat >expect <<-\EOF &&
++	209
++	220
++	EOF
++	git cat-file -s HEAD >actual &&
++	git cat-file --use-mailmap -s HEAD >>actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git cat-file -s returns correct size with --use-mailmap for tag objects' '
++	test_when_finished "rm .mailmap" &&
++	cat >.mailmap <<-\EOF &&
++	Orig <orig@example.com> C O Mitter <committer@example.com>
++	EOF
++	git tag -a -m "annotated tag" v3 &&
++	cat >expect <<-\EOF &&
++	141
++	130
++	EOF
++	git cat-file -s v3 >actual &&
++	git cat-file --use-mailmap -s v3 >>actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
 2.38.1.420.g319605f8f0
 
