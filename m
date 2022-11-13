@@ -2,99 +2,174 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 466ADC433FE
-	for <git@archiver.kernel.org>; Sun, 13 Nov 2022 17:31:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B0B7AC4332F
+	for <git@archiver.kernel.org>; Sun, 13 Nov 2022 17:31:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234149AbiKMRbW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 13 Nov 2022 12:31:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45846 "EHLO
+        id S234105AbiKMRbY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 13 Nov 2022 12:31:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231252AbiKMRbU (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233909AbiKMRbU (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 13 Nov 2022 12:31:20 -0500
 Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C9B11117B
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D19F1117E
         for <git@vger.kernel.org>; Sun, 13 Nov 2022 09:31:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1668360664; bh=lE/EyO3Reswt+YVzILg9SPRRS5COSA9+3l7FMQTJb18=;
+        t=1668360672; bh=Aa/e+Nkr0L9lSsv6BcQHF/XE7AWOC+E69CvfBjmvE38=;
         h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=qklhG4bYcNOc1Wp6FznEjoO3UiC2VXAxXNyHP/UrqAC1HgCoDcUpXeQqdONNAZtUg
-         rcfOJVgfhfU3t6bCwgndeQHsMMWQ8O2mS8J61s32u2cg5BrMhNzFJhQx2Ub3/vboqp
-         b65zqDDNmWYeNkghFxfR/+WBZl+ZN3Ycsl0PA6h+LsoyimDzYaEDbv4ShHPN8/wxw6
-         AjGNZTq+yMSMEns0a60WnyqY6721qcW4QxnT9MiKgSu9aN2S1En/h4XogxRhl7ONKz
-         gg5//uYPYb7WPS71vx7zbCArsZzQ+Ka16xp06A9lf/U9vXxWxryDvdnkbHM/psYDzg
-         RmxtD9p9NkJug==
+        b=RJ/RNGQ0JJgUcqqotU7CnTUdYFYQHd2ES6nsj/e1skRL/XS8pTaM5CdkkarJhjBHi
+         /eTszmttfx+twpwq3Plp4x3mqaVgewsRnGC2LQvKtzLV7qySfcchNbZTvJQ7zMoOlo
+         P0stlJUOAiXhPKVowL80uAPTOV6rXr/oWvm0Hj0pnso7Nkubvr6KFMbVHVCGmI3Qwb
+         oMjr5mm2qLetdnlck0cL+MAa/WcX9d8ETu7SoJmK1l+UfJa5iWTkFyihEDUeXSsDeE
+         5Nywb+5fXrj93Bz+9rzWATiV5X6p8QDAUXzeAs9xV9hDW/K8dNm/0nOLDnC35k31rk
+         9gQA9JhdrZRhA==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.154.159]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MUUAM-1oTuFU1W3k-00Qen2; Sun, 13
- Nov 2022 18:31:04 +0100
-Message-ID: <0222bc92-bbea-6947-3523-cb10edece9bb@web.de>
-Date:   Sun, 13 Nov 2022 18:31:03 +0100
+Received: from [192.168.178.29] ([91.47.154.159]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mav6f-1pW4YF2x2p-00bz4d; Sun, 13
+ Nov 2022 18:31:12 +0100
+Message-ID: <be477f52-33e0-b2e8-9bcc-9264f1b50460@web.de>
+Date:   Sun, 13 Nov 2022 18:31:12 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH 2/3] pack-object: simplify --filter handling
-Content-Language: en-US
-To:     Jeff King <peff@peff.net>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
-        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+Subject: Re: [PATCH 1/3] pack-objects: fix handling of multiple --filter
+ options
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>,
         Christian Couder <chriscool@tuxfamily.org>
 References: <c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.de>
- <59abb8d2-e8e6-7423-ead8-49382293aaa6@web.de>
- <Y2/Rwvb2uiE40rW0@coredump.intra.peff.net>
+ <53bffbf4-8308-0dd7-bca5-7c85b8334e05@web.de>
+ <221112.86bkpcmm6i.gmgdl@evledraar.gmail.com>
+Content-Language: en-US
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <Y2/Rwvb2uiE40rW0@coredump.intra.peff.net>
+In-Reply-To: <221112.86bkpcmm6i.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:5ZlJHjTvFmmGmFDkHpePiy3BpeUnFQboCLP7CVOrOOb/4NSNk6X
- O/2Lmfg7DNKzUS1yCSgBeWDu+fQKel9ASY6MiJJXF7uoQ+URYJlnQdHSphoeHKlXNDypRqK
- ws2ljuowW3TI/z5TmuLb3Ognm/ukd03pORuzIFFuPkBFd4RbMhbEWjDX5HIOGRzFaZjqs7J
- 8IiBiuSrj+SYZml8bV9Tg==
-UI-OutboundReport: notjunk:1;M01:P0:6atfOG2y+fo=;VHxit40DUYH0caN0TxIfWZi86gE
- b9qjzw3Z+/YBypL68I5t6/+QsAVENw0BPIt5tZOEXTLLblzrzISFjrMG/azFuiDNLRkbhHox8
- Gl2GklrVaQsN9G8CxertjWpGzTMw6zGnQCQO3mPxuctEgnO02JmItAYGTvWzeVX5VGFzGuXOh
- MYqkeq91CLTQnbmMi7cRrLFZcAf2v4rXdipFgzOYT6y3skMZqcgFl1ztLWqOt6XEspzM/ok55
- dQRBM/fjJx6/yoF501AqtITSNsZqePgAiOh0ClQENKTw11IMtU8tEyI7NZw54ErRTcY5c1pcb
- R5TbeGzIZRJ9CnT0ycYczjvKVLYmPILVVcE4FZknOtqU/id1WMqW+qSWrOQHmQTzQNtUZtTzZ
- DKp1pKZFtCg5CBBarm1+/uufmEEwIqRGGeyrQdzYXMsJ7106V2bvJdGM0SjVj4S7Yqe4bHi42
- IvdW4tJ/vqdFPrLR/yjzWWGGyzPcW55CLJwuPNC0tSZg/a8+ZormA6DZwrwCplnvwpQmNL8Bk
- xh3Xo2joOnHX3q9YKG96rJDZodRdwBQZ92BURqedycc2wYj+POlCH2nyLE8QevfP0WU6RdC19
- KSUJwHk3IXYoSKkIG8zIl+YdtGE3YaOXJ0ssjkpWpmzPTPJBLu8Yj09G04OoeZvQsfDu0GNPH
- Vp8ASZKEh8CGQIiXOPZ15Y968ISLXdFM4DjYgSCSNFeUaM5pRENcNegcMk5M+PoIZENCG9CVs
- 1aYkDqtsEVVL8RensTlsz1DyX9eRXdDwySJB1tu5NcoL9NvjYIVDzp8KPGNGl+SBVODpdIkxh
- wopZseQ1pm0AieBs6vBI+h5oymSYr6g4AmGQxzB95eDUA/HiP7wQ7CJwNUSDg9OWQ1snYMJKa
- lJKoQruTXzeDJn5b8uaR3tBpFAqbkRtiuerNcOcacyQSYOI3z0Z7gppOc+B58p7BWHXtiil81
- eXr/gg==
+X-Provags-ID: V03:K1:5yry5K8XB2b6vl3870LFJVIjb1vU56e613OFag+tJvC17fpi/JQ
+ 5JKl6cXR69E3Y1/JwbpFB82sKeDL+pAaNM0QU8puIiTydOsVw7hVislK8Mb9CX7m8Znt07j
+ pvWkR6GfeQdGhwRSPNufoLyknh5ma48v9nzuELdlpU2YH15VqbC9BIa8xvQGQk4gl+Ohl7X
+ m+iDzwlqG4Cf/ZyZLDj9A==
+UI-OutboundReport: notjunk:1;M01:P0:U3j43CyXkQc=;S7CPbMhbHT6r4K67spgrjMksdjg
+ GMJSslVRY2Y3sLjhsWlkgkM0s9XSyjQa6dNJdEmiahykwdURhWCW0UztDcWVuTc/jXHFuIJJ/
+ jxx13xMrKI+HJSlLiFJbMJx2FeJGssv7oy/0m7Eg34jd2lDJ6HF7rxaVuEYFMFUkc5uuqA3+I
+ PJ6qYLgAjUYv9cZkn7UZ0EaMMgTqpS1Kee5iQSddYdgDjqkSM78JuXOt++V7ZYEL3DNO9jpwp
+ MRServ/EsVDxpLA4iQoy24gYT2vf9yPc+FJ/vWpXTklcqT69dEmiAdNPG7jAnwtDp/7q1iTkG
+ MBXvab3ALBUzL+xcdc2rVFy+3A9/WqKl2gUJ/6Jjgmq3tFUh5cwXP9ZXJdSV1gyW//lHjCaQT
+ UFcQTl7hVcYUo0/LUc4uS8Ogg+R6zA+kKBRyjO2T8S/udyZr2WyiWIVGa5V3URbojIDcpZme0
+ MeIhtMqlPO6UA9ruhqjD3Ta1VcGIz1JsjlW1eRLZGZamrN0W+9WveL3WtNgSTSVTDXha+pfHF
+ rUL7B5zTuRHReuB5/T62gdmiyq78VjToNUoaJCSjclY9AZwMJtM1+L1qJt5GDUVix+VVVcIOS
+ XpOo6NV3sMDZynmTm1+ACBe7cyv8xzU1YvbehYmxv6AFwFWnb7uDUV+rqD2J6yDAIERzbM1Pj
+ iOVtsUGToBPRsOzgNQpfWp8SKy2cNUnQqJW9zPQ/fFc6t3a1pr2p6av777T6lyv24EVCWAa4X
+ H7w61RIB0p5em7i3GpHhTFY7/ROfjerhFh50AT52s4sucs40ey5h5GbSK1t88a1fvXapztelS
+ GlAmLiTzTV2EouIFCrHeXke8wnUje98N0QqQvq75eO44GHxtnwweIC9r47VARENJtzGKzV07l
+ osZ/iwDj7Z/7fQJfd2MUZN0jW351D07/A9MEW8I9IHZuqbn8+4LRHf4f/4CQfbH1nVlNkhG/f
+ eAsOQtBT18PWtQAEitvOOKWtSOY=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 12.11.22 um 18:02 schrieb Jeff King:
-> On Sat, Nov 12, 2022 at 11:44:50AM +0100, Ren=C3=A9 Scharfe wrote:
+Am 12.11.22 um 12:41 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
 >
->> pack-objects uses OPT_PARSE_LIST_OBJECTS_FILTER_INIT() to initialize th=
-e
->> a rev_info struct lazily before populating its filter member using the
->> --filter option values.  It tracks whether the initialization is needed
->> using the .have_revs member of the callback data.
->>
->> There is a better way: Use a stand-alone list_objects_filter_options
->> struct and build a rev_info struct with its .filter member after option
->> parsing.  This allows using the simpler OPT_PARSE_LIST_OBJECTS_FILTER()
->> and getting rid of the extra callback mechanism.
+> On Sat, Nov 12 2022, Ren=C3=A9 Scharfe wrote:
 >
-> That seems like a reasonable fix (and I think we do it elsewhere). But I
-> wonder if it wouldn't be simpler to just unconditionally initialize the
-> rev_info in cmd_pack_objects(), and then unconditionally release it.
-> True, we _might_ not use it if we are receiving objects directly over
-> stdin, but I don't think initializing it is particularly costly.
+>> Since 5cb28270a1 (pack-objects: lazily set up "struct rev_info", don't
+>> leak, 2022-03-28) --filter options given to git pack-objects overrule
+>> earlier ones, letting only the leftmost win and leaking the memory
+>> allocated for earlier ones.  Fix that by only initializing the rev_info
+>> struct once.
 >
-> And then we don't have to worry about whether it's valid (it always is),
-> or about copying between two representations of the filter (there's only
-> one).
+> If I do e.g. this with SANITIZE=3Dleak:
+>
+> 	echo e83c5163316f89bfbde7d9ab23ca2e25604af290 | ./git pack-objects --re=
+vs --filter=3Dblob:limit=3D1001 --filter=3Dobject:type=3Dblob --stdout  >/=
+dev/null
+>
+> I see one leak that wasn't there, but two that are gone now. I haven't
+> looked into it, but I think the commit message should discuss what leaks
+> are fixed, which remain/are new etc.
 
-Indeed that's even simpler and what we had before 5cb28270a1
-(pack-objects: lazily set up "struct rev_info", don't leak, 2022-03-28).
+The leak is insubstantial; I mentioned it just because of the irony.  It
+is caused by initializing an already initialized struct rev_info without
+releasing it in between, as mentioned in the commit message.
+
+.filter_data allocated by filter_combine__init() is not released by
+filter_combine__init() in list-objects-filter.c.  Plugging that leak
+allows your example command to run with SANITIZE=3Dleak.  That is a matter
+for a separate patch, though.
+
+>
+>> @@ -4158,7 +4158,8 @@ static struct list_objects_filter_options *po_fil=
+ter_revs_init(void *value)
+>>  {
+>>  	struct po_filter_data *data =3D value;
+>>
+>> -	repo_init_revisions(the_repository, &data->revs, NULL);
+>> +	if (!data->have_revs)
+>> +		repo_init_revisions(the_repository, &data->revs, NULL);
+>>  	data->have_revs =3D 1;
+>>
+>>  	return &data->revs.filter;
+>
+> FWIW as this goes away in your 2/3 I think just squashing the two with a
+> leak fix would be nice, if...
+>
+>> diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-obje=
+cts-filter-objects.sh
+>> index bb633c9b09..bd8983bb56 100755
+>> --- a/t/t5317-pack-objects-filter-objects.sh
+>> +++ b/t/t5317-pack-objects-filter-objects.sh
+>> @@ -178,6 +178,25 @@ test_expect_success 'verify blob:limit=3D1001' '
+>>  	test_cmp expected observed
+>>  '
+>>
+>> +test_expect_success 'verify blob:limit=3D1001+object:type=3Dblob' '
+>> +	git -C r2 ls-files -s large.1000 |
+>
+> Aside: Should do "git >tmp && test_parse... <tmp", we lose the exit code
+> of "ls-files" here.
+
+OK.  Copied that line from the surrounding tests.  They used temporary
+files before fb2d0db502 (test-lib-functions: add parsing helpers for
+ls-files and ls-tree, 2022-04-04).
+
+>
+>> +	test_parse_ls_files_stage_oids |
+>> +	sort >expected &&
+>> +
+>> +	git -C r2 pack-objects --revs --stdout --filter=3Dblob:limit=3D1001 \
+>> +		--filter=3Dobject:type=3Dblob >filter.pack <<-EOF &&
+>> +	HEAD
+>> +	EOF
+>> +	git -C r2 index-pack ../filter.pack &&
+>> +
+>> +	git -C r2 verify-pack -v ../filter.pack >verify_result &&
+>> +	grep blob verify_result |
+>> +	parse_verify_pack_blob_oid |
+>
+> Whereas this one's not a problem, no "git".
+>
+>> +	sort >observed &&
+>> +
+>> +	test_cmp expected observed
+>
+> Aside: It would be nice if we had a "test_cmp_sort", but some other day.=
+..
+>
+>> +'
+>> +
+>>  test_expect_success 'verify blob:limit=3D10001' '
+>>  	git -C r2 ls-files -s large.1000 large.10000 |
+>>  	test_parse_ls_files_stage_oids |
+>
+> ...we can test it, but this test is in a file that's not part of "linux-=
+leaks".
+>
+> If that one leak I mentioned above can be fixed (or maybe it's not new?)
+> this could be tested if we put it in a file of its own with
+> TEST_PASSES_SANITIZE_LEAK=3Dtrue.
+
+Plugging the leak in your example command is not enough to make t5317
+leak free.
 
 Ren=C3=A9
