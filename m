@@ -2,656 +2,491 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15513C4332F
-	for <git@archiver.kernel.org>; Mon, 14 Nov 2022 10:10:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9C88C4332F
+	for <git@archiver.kernel.org>; Mon, 14 Nov 2022 11:43:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236179AbiKNKKW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Nov 2022 05:10:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40754 "EHLO
+        id S236412AbiKNLnN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Nov 2022 06:43:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236444AbiKNKJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Nov 2022 05:09:29 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 636311DA6B
-        for <git@vger.kernel.org>; Mon, 14 Nov 2022 02:09:06 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id l11so16528786edb.4
-        for <git@vger.kernel.org>; Mon, 14 Nov 2022 02:09:06 -0800 (PST)
+        with ESMTP id S236367AbiKNLnL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Nov 2022 06:43:11 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6437420347
+        for <git@vger.kernel.org>; Mon, 14 Nov 2022 03:43:09 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id bj12so27508181ejb.13
+        for <git@vger.kernel.org>; Mon, 14 Nov 2022 03:43:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Q07FXRJ6ZdCL7eVVaNjzk3f1+uTO6CL0GcepQ/vxN8Y=;
-        b=gkpLGguUL6pQj03oXy4Kk7JAm0p9MCpgfH9qvGnrHAYzR3MpHuPHCgbwz4X9Gxj/MP
-         OZRqE4gaaT8JGDNIjc/yA8KoyyphSM04Cxp2rjNX7SDsEhTUjuA5VFY4Db9tk5b607Wf
-         YJp4WhMZwhTDlDjsu+PSdyHOsrhUoui6UYGYifqibSFfyygze+FV30QEpC4nPDSnn18Q
-         tbFrWylfHxiziOGOiiWy+kT9kiGCWoNknvA0GMEIaiwAumxe0qg9XekdTpjB/CL8CnGC
-         1NBvO4oNne+2Kz7GJd29L3IBjE7jptmL0lf/71n6cHDYq5bRRTajJk3eZn5xGPmLo6NH
-         OVBw==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=iUj94Y9jZeG7MHO5jeAQDSuGnVYh7rkMas0a5IXAnzg=;
+        b=IAZMtBIACf7vCF4h02WkypBWa4SEfiQ0Aj6CHo2TO7KR+a/iuyDdPH/xPNgJhDkCEZ
+         Qkw0bk7SgUBiO2RjXpl4OcpnnSejpjogR23DDZmbzi4V+rZf94AmRVmuG2gqtZy9HzAo
+         GQu6TeMzjPvGatn1ofvBKFR7/6pP6Z5KQk6HV/g49WRKX8YsUv2O4kIgsucdYPC/nhtm
+         OS+bnBTnLliNzHG8Lnq3j0dpSiTyMuG88rxmto6aUipxAq0/MuxxJ/vqLV/5StIeOiPP
+         q+8+JZ3/0d9vnJs8fCQdb6/fLmqq4o6K9M9Xz5piTvXj2Btk4Q05up1E3URxWjwe8fPT
+         xL2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Q07FXRJ6ZdCL7eVVaNjzk3f1+uTO6CL0GcepQ/vxN8Y=;
-        b=HKRkmgUqcW5n5mds6g573EX2+FAlJqoW8ve7Syca4IsSHWRAfkzK/1hEub5GCW6ywk
-         YYX8t94/plULHqvLGK1I6snimYhsuS5CbeFWHeEd1MrTHLIcu3Cdb6/SKpeALxHs8k4/
-         SlH8xX2QEIrukftLWAEoOKxUJar3wwJZVwYAiVoYng7tgy7eMXB5m6SuXH6aVA5DvgHZ
-         A5hQsMTSYkrog376TKSGurIfpooucWPwW/26pYEkDsSyW24EXCtUYi8jJi515H2YbjF9
-         xGhmxhYh6AcRiCZ+UibVDaxB4dOtcpNh9mO0z+Vw1prjeEE1G4knzAY6DHUv79ca9sFT
-         f9HA==
-X-Gm-Message-State: ANoB5plMrNhGgW/G+EWCObi5Qfk6nlAoUPE+F5JnmEfuAxriJQlKSQ8X
-        A08zyxkaAATAJKFXhsNC1mBm6mZ/hWulyw==
-X-Google-Smtp-Source: AA0mqf4f+VvTQewKeTNpRpMoGucPmO26SrxhwEB8gtEw9jseDAeopJm/knaMXurd6xoMkkNTxzjVOw==
-X-Received: by 2002:aa7:d88b:0:b0:462:2426:49d1 with SMTP id u11-20020aa7d88b000000b00462242649d1mr10757466edq.195.1668420543917;
-        Mon, 14 Nov 2022 02:09:03 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id ml21-20020a170906cc1500b007828150a2f1sm4012062ejb.36.2022.11.14.02.09.02
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iUj94Y9jZeG7MHO5jeAQDSuGnVYh7rkMas0a5IXAnzg=;
+        b=qsGthtKbOHy8tVbcsol+2ct6MiACXi4ardfuHVCVh3VILDcgkLmXqUN1qs7ualSNUC
+         xQM4X/eQBGlegZirEwVj0OCwQB5Q7NIwO+LebYT3SkpgEfpyrrGSGMTqrurPopaplJuF
+         bhQFauwbrYPqevMRAkbmXTZbFstttLobxctU945wAltQ4ehAtKPIU1DfR404GWQV4OCV
+         tb9fbWDIcIIhMdTc48xYlaaJW6mJxbYvxo3KdWkHqCd5l8vtRA5TFc77BzuxZ0VUxpLe
+         IKBhepjyx5Y5Dpvl2aFx2cQdGd4U5Dm72zi87lHEkmgTbfLN8068t9jJmHM1ESu5Oh2L
+         dVTw==
+X-Gm-Message-State: ANoB5pktTIhLv2Sk1szndvojmQuNRU797cxdOD0FXtTWsx9Mcd2FNJ5G
+        VgAqIcqI9gc3jrCqpQz3mpmXEfb3hH/bDA==
+X-Google-Smtp-Source: AA0mqf4Gwl0k9aDyp3JaOYz5/4VIOsDNovdEnXvdbp/vP9T96sFGUpqdgKEmCH0LhituOu/QnkGq1g==
+X-Received: by 2002:a17:906:3e03:b0:78d:8bcf:bb47 with SMTP id k3-20020a1709063e0300b0078d8bcfbb47mr10100367eji.525.1668426187536;
+        Mon, 14 Nov 2022 03:43:07 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id k3-20020a17090632c300b0073c10031dc9sm4063562ejk.80.2022.11.14.03.43.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Nov 2022 02:09:03 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Glen Choo <chooglen@google.com>, Taylor Blau <me@ttaylorr.com>,
-        Robert Coup <robert@coup.net.nz>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 09/10] read-tree: add "--super-prefix" option, eliminate global
-Date:   Mon, 14 Nov 2022 11:08:49 +0100
-Message-Id: <patch-v2-09.10-9fdeab60773-20221114T100803Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.38.0.1471.ge4d8947e7aa
-In-Reply-To: <cover-v2-00.10-00000000000-20221114T100803Z-avarab@gmail.com>
-References: <RFC-cover-0.8-00000000000-20221109T192315Z-avarab@gmail.com> <cover-v2-00.10-00000000000-20221114T100803Z-avarab@gmail.com>
+        Mon, 14 Nov 2022 03:43:07 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1ouXrm-003A1P-1o;
+        Mon, 14 Nov 2022 12:43:06 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/8] Get rid of "git --super-prefix"
+Date:   Mon, 14 Nov 2022 11:09:18 +0100
+References: <20221109004708.97668-1-chooglen@google.com>
+ <RFC-cover-0.8-00000000000-20221109T192315Z-avarab@gmail.com>
+ <kl6ltu373ae5.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <221110.86zgcznjah.gmgdl@evledraar.gmail.com>
+ <kl6l5yfm2taf.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <kl6lv8nl1h19.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <221111.86fsepmbhe.gmgdl@evledraar.gmail.com>
+ <kl6lsfip0yfx.fsf@chooglen-macbookpro.roam.corp.google.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <kl6lsfip0yfx.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-ID: <221114.86y1sdlq2d.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "--super-prefix" option to "git" was initially added in [1] for
-use with "ls-files"[2], and shortly thereafter "submodule--helper"[3]
-and "grep"[4]. It wasn't until [5] that "read-tree" made use of it.
 
-At the time [5] made sense, but since then we've made "ls-files"
-recurse in-process in [6], "grep" in [7], and finally
-"submodule--helper" in the preceding commits.
+On Fri, Nov 11 2022, Glen Choo wrote:
 
-Let's also remove it from "read-tree", which allows us to remove the
-option to "git" itself.
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> On Fri, Nov 11 2022, Glen Choo wrote:
+>>
+>>> Glen Choo <chooglen@google.com> writes:
+>>>
+>>>> Rereading this series and thinking about this some more, let's go with
+>>>> your approach, primarily because it avoids global state.
+>>>>
+>>>> From this series, it seems that it's not that hard to make this change
+>>>> and support whatever use cases we currently have.
+>>>>
+>>>> This does make it more tedious to add more "--super-prefix" in the
+>>>> future, but that's a good push for us to do more things in-process
+>>>> and/or be more principled about passing context objects through the ca=
+ll
+>>>> stack instead of relying on globals.
+>>>>
+>>>> Let me know what I can add to this effort besides reviewing :)
+>>>
+>>> Specifically, if you have other things on your plate, I'd be happy to
+>>> pick up where where this RFC has left off.
+>>
+>> I was going to get around to re-rolling this in the next few days, but
+>> I'd also be happy to have you beat me to it.
+>
+> Ah, well, I didn't mean that I was planning to work on this over the
+> weekend, but I can certainly get to it on Monday. I meant something
+> closer to "If you didn't want to think about git-submodule.sh for the
+> next week or so, I can pick this up".
+>
+> Alternatively, I think it also makes sense if you want to reroll only
+> the submodule--helper bits (1-7/8) to unblock your git-submodule.sh
+> work, and I can prepare the rest of the "nuke --super-prefix" stuff on
+> top of that. That should save you a context switch, and since I sent out
+> [1], nuking --super-prefix shouldn't be urgent.
+>
+> If you don't really care any which way, I'll just re-roll this :)
+>
+> [1] https://lore.kernel.org/git/pull.1378.git.git.1668210935360.gitgitgad=
+get@gmail.com
 
-We can do this because the only remaining user of it is the submodule
-API, which will now invoke "read-tree" with its new "--super-prefix"
-option. It will only do so when the "submodule_move_head()" function
-is called.
+I just re-rolled it at
+https://lore.kernel.org/git/cover-v2-00.10-00000000000-20221114T100803Z-ava=
+rab@gmail.com/;
+Mainly because I think just going for the "read-tree" fix directly instead =
+of:
 
-That "submodule_move_head()" function was then only invoked by
-"read-tree" itself, but now rather than setting an environment
-variable to pass "--super-prefix" between cmd_read_tree() we:
+ 1. Adding --super-prefix to "fetch" first, and reviewing any new
+    side-effects that may have (i.e. your PR above).
+ 2. Concurrently, just the "submodule--helper" part of this RFC
+ 3. Finally, the "read-tree" part, and getting rid of "git
+    --super-prefix", which would need to depend on both #1 and #2 above.
 
-- Set a new "super_prefix" in "struct unpack_trees_options". The
-  "super_prefixed()" function in "unpack-trees.c" added in [5] will now
-  use this, rather than get_super_prefix() looking up the environment
-  variable we set earlier in the same process.
+Will involve too much avoidable juggling, when getting rid of the global
+directly isn't too hard to reason about, in which case we can skip #1
+entirely.
 
-- Add the same field to the "struct checkout", which is only needed to
-  ferry the "super_prefix" in the "struct unpack_trees_options" all the
-  way down to the "entry.c" callers of "submodule_move_head()".
+Let me know what you think...
 
-  Those calls which used the super prefix all originated in
-  "cmd_read_tree()". The only other caller is the "unlink_entry()"
-  caller in "builtin/checkout.c", which now passes a "NULL".
+> Yeah, this plan makes sense. One thing I'd add is that I'd also use
+> OPT__SUPER_PREFIX to handle "git fetch --submodule-prefix".
 
-1. 74866d75793 (git: make super-prefix option, 2016-10-07)
-2. e77aa336f11 (ls-files: optionally recurse into submodules, 2016-10-07)
-3. 89c86265576 (submodule helper: support super prefix, 2016-12-08)
-4. 0281e487fd9 (grep: optionally recurse into submodules, 2016-12-16)
-5. 3d415425c7b (unpack-trees: support super-prefix option, 2017-01-17)
-6. 188dce131fa (ls-files: use repository object, 2017-06-22)
-7. f9ee2fcdfa0 (grep: recurse in-process using 'struct repository', 2017-08-02)
+As noted in the CL above I included this because I see you're keen to
+include it, but I'm personally a bit "meh" on it. I.e. it's just
+renaming an existing unrelated option, although being able to use
+OPT__SUPER_PREFIX() makes it slightly nicer.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+As post-cleanups go I think removing the "submodule_prefix" from the
+"struct repository" would make more sense, and maybe it's worth peeling
+off the 10/10 to include in such a post-cleanup series? I.e. the below
+on top of all of this works, and reduces allocations and cargo-culting
+around the submodule API.
+
+-- >8 --
+Subject: [PATCH] repo & submodule API: stop carrying "repo->submodule_prefi=
+x"
+
+As this change shows the "submodule_prefix" field to "struct
+repository" added in 96dc883b3cd (repository: enable initialization of
+submodules, 2017-06-22) was only used by "ls-files" and "grep". Let's
+have those two carry forward the "super_prefix" instead.
+
+Having every user of "struct repository" needing to worry about this
+created a mismatch in the API where e.g. "grep" would re-compute a
+"name_base_len" which we knew before. Now we use a "struct strbuf" in
+the "struct grep_opt" there instead, so we'll know the length
+already. This simplifies "grep_cache()" and "grep_tree()".
+
+We're also deleting cargo-culted code that the previous API foisted
+upon us. In 605f0ec1350 (submodule: use submodule repos for object
+lookup, 2018-12-14) the "Mark it as a submodule" code was added to
+"open_submodule()", but the resulting xstrdup()'d "submodule_prefix"
+was never used by anything.
+
+Still, removing this field might not be a good move, as the
+"super_prefix" might be a common enough case in the future, e.g. when
+eventually migrating the "submodule--helper" users[1] to run
+in-process.
+
+As the "grep" example demonstrates I don't think that's the
+case. There instead of xstrdup()-ing all the way down we're now
+carrying a single "super_prefix" in the form of a "struct strbuf". As
+we recurse we then append to it, and strbuf_setlen() it back when we
+we recurse out of that submodule. This is similar to how e.g. the
+"read_tree_at()" API works.
+
+Doing it that way means that we have just one allocation, which in the
+common case we might realloc() if we don't have enough room in the
+"struct strbuf".
+
+1. https://lore.kernel.org/git/cover-v2-00.10-00000000000-20221114T100803Z-=
+avarab@gmail.com/
+2. https://github.com/avar/git/tree/avar/grep-post-drop-prefix-cleanup
+
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 ---
- Documentation/git.txt       |  8 +-------
- builtin.h                   |  4 ----
- builtin/checkout.c          |  2 +-
- builtin/read-tree.c         |  1 +
- cache.h                     |  2 --
- entry.c                     | 12 ++++++------
- entry.h                     |  6 +++++-
- environment.c               | 13 -------------
- git.c                       | 37 +++++--------------------------------
- submodule.c                 | 27 +++++++++------------------
- submodule.h                 |  5 ++---
- t/t1001-read-tree-m-2way.sh |  2 +-
- t/t5616-partial-clone.sh    |  2 +-
- unpack-trees.c              | 23 +++++++++++++----------
- unpack-trees.h              |  1 +
- 15 files changed, 46 insertions(+), 99 deletions(-)
+ builtin/grep.c     | 18 ++++++++----------
+ builtin/ls-files.c | 40 +++++++++++++++++++++++++---------------
+ grep.c             |  6 +++---
+ grep.h             |  2 ++
+ repository.c       |  7 -------
+ repository.h       |  7 -------
+ submodule.c        |  3 ---
+ 7 files changed, 38 insertions(+), 45 deletions(-)
 
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 1d33e083ab8..f9a7a4554cd 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -13,8 +13,7 @@ SYNOPSIS
-     [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
-     [-p|--paginate|-P|--no-pager] [--no-replace-objects] [--bare]
-     [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
--    [--super-prefix=<path>] [--config-env=<name>=<envvar>]
--    <command> [<args>]
-+    [--config-env=<name>=<envvar>] <command> [<args>]
- 
- DESCRIPTION
- -----------
-@@ -169,11 +168,6 @@ If you just want to run git as if it was started in `<path>` then use
- 	details.  Equivalent to setting the `GIT_NAMESPACE` environment
- 	variable.
- 
----super-prefix=<path>::
--	Currently for internal use only.  Set a prefix which gives a path from
--	above a repository down to its root.  One use is to give submodules
--	context about the superproject that invoked it.
--
- --bare::
- 	Treat the repository as a bare repository.  If GIT_DIR
- 	environment is not set, it is set to the current working
-diff --git a/builtin.h b/builtin.h
-index 8901a34d6bf..8264b7e5241 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -51,10 +51,6 @@
-  *	on bare repositories.
-  *	This only makes sense when `RUN_SETUP` is also set.
-  *
-- * `SUPPORT_SUPER_PREFIX`:
-- *
-- *	The built-in supports `--super-prefix`.
-- *
-  * `DELAY_PAGER_CONFIG`:
-  *
-  *	If RUN_SETUP or RUN_SETUP_GENTLY is set, git.c normally handles
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 2a132392fbe..dc008fb45e8 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -231,7 +231,7 @@ static int checkout_stage(int stage, const struct cache_entry *ce, int pos,
- 		pos++;
- 	}
- 	if (!overlay_mode) {
--		unlink_entry(ce);
-+		unlink_entry(ce, NULL);
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 5fa927d4e22..69826daba26 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -437,6 +437,7 @@ static int grep_submodule(struct grep_opt *opt,
+ 	struct repository *superproject =3D opt->repo;
+ 	struct grep_opt subopt;
+ 	int hit =3D 0;
++	size_t oldlen =3D opt->super_prefix.len;
+=20
+ 	if (!is_submodule_active(superproject, path))
  		return 0;
+@@ -497,6 +498,7 @@ static int grep_submodule(struct grep_opt *opt,
+ 	add_submodule_odb_by_path(subrepo->objects->odb->path);
+ 	obj_read_unlock();
+=20
++	strbuf_addf(&opt->super_prefix, "%s/", path);
+ 	memcpy(&subopt, opt, sizeof(subopt));
+ 	subopt.repo =3D subrepo;
+=20
+@@ -527,6 +529,7 @@ static int grep_submodule(struct grep_opt *opt,
+ 	} else {
+ 		hit =3D grep_cache(&subopt, pathspec, cached);
  	}
- 	if (stage == 2)
-diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index f4cbe460b97..4b6f22e58c1 100644
---- a/builtin/read-tree.c
-+++ b/builtin/read-tree.c
-@@ -114,6 +114,7 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
- 	int prefix_set = 0;
- 	struct lock_file lock_file = LOCK_INIT;
- 	const struct option read_tree_options[] = {
-+		OPT__SUPER_PREFIX(&opts.super_prefix),
- 		OPT_CALLBACK_F(0, "index-output", NULL, N_("file"),
- 		  N_("write resulting index to <file>"),
- 		  PARSE_OPT_NONEG, index_output_cb),
-diff --git a/cache.h b/cache.h
-index 26ed03bd6de..a4a0377b800 100644
---- a/cache.h
-+++ b/cache.h
-@@ -504,7 +504,6 @@ static inline enum object_type object_type(unsigned int mode)
- #define GIT_NAMESPACE_ENVIRONMENT "GIT_NAMESPACE"
- #define GIT_WORK_TREE_ENVIRONMENT "GIT_WORK_TREE"
- #define GIT_PREFIX_ENVIRONMENT "GIT_PREFIX"
--#define GIT_SUPER_PREFIX_ENVIRONMENT "GIT_INTERNAL_SUPER_PREFIX"
- #define DEFAULT_GIT_DIR_ENVIRONMENT ".git"
- #define DB_ENVIRONMENT "GIT_OBJECT_DIRECTORY"
- #define INDEX_ENVIRONMENT "GIT_INDEX_FILE"
-@@ -590,7 +589,6 @@ int get_common_dir_noenv(struct strbuf *sb, const char *gitdir);
- int get_common_dir(struct strbuf *sb, const char *gitdir);
- const char *get_git_namespace(void);
- const char *strip_namespace(const char *namespaced_ref);
--const char *get_super_prefix(void);
- const char *get_git_work_tree(void);
- 
- /*
-diff --git a/entry.c b/entry.c
-index 616e4f073c1..971ab268714 100644
---- a/entry.c
-+++ b/entry.c
-@@ -383,7 +383,7 @@ static int write_entry(struct cache_entry *ce, char *path, struct conv_attrs *ca
- 			return error("cannot create submodule directory %s", path);
- 		sub = submodule_from_ce(ce);
- 		if (sub)
--			return submodule_move_head(ce->name,
-+			return submodule_move_head(ce->name, state->super_prefix,
- 				NULL, oid_to_hex(&ce->oid),
- 				state->force ? SUBMODULE_MOVE_HEAD_FORCE : 0);
- 		break;
-@@ -476,7 +476,7 @@ int checkout_entry_ca(struct cache_entry *ce, struct conv_attrs *ca,
- 			 * no pathname to return.
- 			 */
- 			BUG("Can't remove entry to a path");
--		unlink_entry(ce);
-+		unlink_entry(ce, state->super_prefix);
- 		return 0;
- 	}
- 
-@@ -510,10 +510,10 @@ int checkout_entry_ca(struct cache_entry *ce, struct conv_attrs *ca,
- 				if (!(st.st_mode & S_IFDIR))
- 					unlink_or_warn(ce->name);
- 
--				return submodule_move_head(ce->name,
-+				return submodule_move_head(ce->name, state->super_prefix,
- 					NULL, oid_to_hex(&ce->oid), 0);
- 			} else
--				return submodule_move_head(ce->name,
-+				return submodule_move_head(ce->name, state->super_prefix,
- 					"HEAD", oid_to_hex(&ce->oid),
- 					state->force ? SUBMODULE_MOVE_HEAD_FORCE : 0);
- 		}
-@@ -560,12 +560,12 @@ int checkout_entry_ca(struct cache_entry *ce, struct conv_attrs *ca,
- 	return write_entry(ce, path.buf, ca, state, 0, nr_checkouts);
++	strbuf_setlen(&opt->super_prefix, oldlen);
+=20
+ 	return hit;
  }
- 
--void unlink_entry(const struct cache_entry *ce)
-+void unlink_entry(const struct cache_entry *ce, const char *super_prefix)
+@@ -538,11 +541,8 @@ static int grep_cache(struct grep_opt *opt,
+ 	int hit =3D 0;
+ 	int nr;
+ 	struct strbuf name =3D STRBUF_INIT;
+-	int name_base_len =3D 0;
+-	if (repo->submodule_prefix) {
+-		name_base_len =3D strlen(repo->submodule_prefix);
+-		strbuf_addstr(&name, repo->submodule_prefix);
+-	}
++	size_t name_base_len =3D opt->super_prefix.len;
++	strbuf_addbuf(&name, &opt->super_prefix);
+=20
+ 	if (repo_read_index(repo) < 0)
+ 		die(_("index file corrupt"));
+@@ -618,11 +618,9 @@ static int grep_tree(struct grep_opt *opt, const struc=
+t pathspec *pathspec,
+ 	struct name_entry entry;
+ 	int old_baselen =3D base->len;
+ 	struct strbuf name =3D STRBUF_INIT;
+-	int name_base_len =3D 0;
+-	if (repo->submodule_prefix) {
+-		strbuf_addstr(&name, repo->submodule_prefix);
+-		name_base_len =3D name.len;
+-	}
++	size_t name_base_len =3D opt->super_prefix.len;
++
++	strbuf_addbuf(&name, &opt->super_prefix);
+=20
+ 	while (tree_entry(tree, &entry)) {
+ 		int te_len =3D tree_entry_len(&entry);
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index 4cf8a236483..c76a6be2fbe 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -216,10 +216,12 @@ static void show_killed_files(struct index_state *ist=
+ate,
+ 	}
+ }
+=20
+-static void show_files(struct repository *repo, struct dir_struct *dir);
++static void show_files(struct repository *repo, struct dir_struct *dir,
++		       const char *super_prefix);
+=20
+ static void show_submodule(struct repository *superproject,
+-			   struct dir_struct *dir, const char *path)
++			   struct dir_struct *dir, const char *path,
++			   const char *super_prefix)
  {
- 	const struct submodule *sub = submodule_from_ce(ce);
- 	if (sub) {
- 		/* state.force is set at the caller. */
--		submodule_move_head(ce->name, "HEAD", NULL,
-+		submodule_move_head(ce->name, super_prefix, "HEAD", NULL,
- 				    SUBMODULE_MOVE_HEAD_FORCE);
- 	}
- 	if (check_leading_path(ce->name, ce_namelen(ce), 1) >= 0)
-diff --git a/entry.h b/entry.h
-index 9be4659881e..2d4fbb88c8f 100644
---- a/entry.h
-+++ b/entry.h
-@@ -8,6 +8,7 @@ struct checkout {
- 	struct index_state *istate;
- 	const char *base_dir;
- 	int base_dir_len;
-+	const char *super_prefix;
- 	struct delayed_checkout *delayed_checkout;
- 	struct checkout_metadata meta;
- 	unsigned force:1,
-@@ -48,8 +49,11 @@ int finish_delayed_checkout(struct checkout *state, int show_progress);
- /*
-  * Unlink the last component and schedule the leading directories for
-  * removal, such that empty directories get removed.
-+ *
-+ * The "super_prefix" is either NULL, or the "--super-prefix" passed
-+ * down from "read-tree" et al.
-  */
--void unlink_entry(const struct cache_entry *ce);
-+void unlink_entry(const struct cache_entry *ce, const char *super_prefix);
- 
- void *read_blob_entry(const struct cache_entry *ce, size_t *size);
- int fstat_checkout_output(int fd, const struct checkout *state, struct stat *st);
-diff --git a/environment.c b/environment.c
-index 18d042b467d..1ee3686fd8a 100644
---- a/environment.c
-+++ b/environment.c
-@@ -102,8 +102,6 @@ char *git_work_tree_cfg;
- 
- static char *git_namespace;
- 
--static char *super_prefix;
--
- /*
-  * Repository-local GIT_* environment variables; see cache.h for details.
-  */
-@@ -121,7 +119,6 @@ const char * const local_repo_env[] = {
- 	NO_REPLACE_OBJECTS_ENVIRONMENT,
- 	GIT_REPLACE_REF_BASE_ENVIRONMENT,
- 	GIT_PREFIX_ENVIRONMENT,
--	GIT_SUPER_PREFIX_ENVIRONMENT,
- 	GIT_SHALLOW_FILE_ENVIRONMENT,
- 	GIT_COMMON_DIR_ENVIRONMENT,
- 	NULL
-@@ -234,16 +231,6 @@ const char *strip_namespace(const char *namespaced_ref)
- 	return NULL;
+ 	struct repository subrepo;
+=20
+@@ -229,7 +231,7 @@ static void show_submodule(struct repository *superproj=
+ect,
+ 	if (repo_read_index(&subrepo) < 0)
+ 		die("index file corrupt");
+=20
+-	show_files(&subrepo, dir);
++	show_files(&subrepo, dir, super_prefix);
+=20
+ 	repo_clear(&subrepo);
  }
- 
--const char *get_super_prefix(void)
--{
--	static int initialized;
--	if (!initialized) {
--		super_prefix = xstrdup_or_null(getenv(GIT_SUPER_PREFIX_ENVIRONMENT));
--		initialized = 1;
--	}
--	return super_prefix;
--}
+@@ -303,14 +305,19 @@ static void show_ce_fmt(struct repository *repo, cons=
+t struct cache_entry *ce,
+=20
+ static void show_ce(struct repository *repo, struct dir_struct *dir,
+ 		    const struct cache_entry *ce, const char *fullname,
+-		    const char *tag)
++		    const char *tag, const char *super_prefix)
+ {
+ 	if (max_prefix_len > strlen(fullname))
+ 		die("git ls-files: internal error - cache entry not superset of prefix");
+=20
+ 	if (recurse_submodules && S_ISGITLINK(ce->ce_mode) &&
+ 	    is_submodule_active(repo, ce->name)) {
+-		show_submodule(repo, dir, ce->name);
++		struct strbuf sp =3D STRBUF_INIT;
++
++		strbuf_addf(&sp, "%s%s/", super_prefix ? super_prefix : "",
++			    ce->name);
++		show_submodule(repo, dir, ce->name, sp.buf);
++		strbuf_release(&sp);
+ 	} else if (match_pathspec(repo->index, &pathspec, fullname, strlen(fullna=
+me),
+ 				  max_prefix_len, ps_matched,
+ 				  S_ISDIR(ce->ce_mode) ||
+@@ -374,16 +381,17 @@ static int ce_excluded(struct dir_struct *dir, struct=
+ index_state *istate,
+ 	return is_excluded(dir, istate, fullname, &dtype);
+ }
+=20
+-static void construct_fullname(struct strbuf *out, const struct repository=
+ *repo,
+-			       const struct cache_entry *ce)
++static void construct_fullname(struct strbuf *out, const struct cache_entr=
+y *ce,
++			       const char *super_prefix)
+ {
+ 	strbuf_reset(out);
+-	if (repo->submodule_prefix)
+-		strbuf_addstr(out, repo->submodule_prefix);
++	if (super_prefix)
++		strbuf_addstr(out, super_prefix);
+ 	strbuf_addstr(out, ce->name);
+ }
+=20
+-static void show_files(struct repository *repo, struct dir_struct *dir)
++static void show_files(struct repository *repo, struct dir_struct *dir,
++		       const char *super_prefix)
+ {
+ 	int i;
+ 	struct strbuf fullname =3D STRBUF_INIT;
+@@ -410,7 +418,7 @@ static void show_files(struct repository *repo, struct =
+dir_struct *dir)
+ 		struct stat st;
+ 		int stat_err;
+=20
+-		construct_fullname(&fullname, repo, ce);
++		construct_fullname(&fullname, ce, super_prefix);
+=20
+ 		if ((dir->flags & DIR_SHOW_IGNORED) &&
+ 			!ce_excluded(dir, repo->index, fullname.buf, ce))
+@@ -422,7 +430,7 @@ static void show_files(struct repository *repo, struct =
+dir_struct *dir)
+ 			show_ce(repo, dir, ce, fullname.buf,
+ 				ce_stage(ce) ? tag_unmerged :
+ 				(ce_skip_worktree(ce) ? tag_skip_worktree :
+-				 tag_cached));
++				 tag_cached), super_prefix);
+ 			if (skipping_duplicates)
+ 				goto skip_to_next_name;
+ 		}
+@@ -435,13 +443,15 @@ static void show_files(struct repository *repo, struc=
+t dir_struct *dir)
+ 		if (stat_err && (errno !=3D ENOENT && errno !=3D ENOTDIR))
+ 			error_errno("cannot lstat '%s'", fullname.buf);
+ 		if (stat_err && show_deleted) {
+-			show_ce(repo, dir, ce, fullname.buf, tag_removed);
++			show_ce(repo, dir, ce, fullname.buf, tag_removed,
++				super_prefix);
+ 			if (skipping_duplicates)
+ 				goto skip_to_next_name;
+ 		}
+ 		if (show_modified &&
+ 		    (stat_err || ie_modified(repo->index, ce, &st, 0))) {
+-			show_ce(repo, dir, ce, fullname.buf, tag_modified);
++			show_ce(repo, dir, ce, fullname.buf, tag_modified,
++				super_prefix);
+ 			if (skipping_duplicates)
+ 				goto skip_to_next_name;
+ 		}
+@@ -874,7 +884,7 @@ int cmd_ls_files(int argc, const char **argv, const cha=
+r *cmd_prefix)
+ 		overlay_tree_on_index(the_repository->index, with_tree, max_prefix);
+ 	}
+=20
+-	show_files(the_repository, &dir);
++	show_files(the_repository, &dir, NULL);
+=20
+ 	if (show_resolve_undo)
+ 		show_ru_info(the_repository->index);
+diff --git a/grep.c b/grep.c
+index 06eed694936..10d52219229 100644
+--- a/grep.c
++++ b/grep.c
+@@ -791,9 +791,9 @@ void free_grep_patterns(struct grep_opt *opt)
+ 		free(p);
+ 	}
+=20
+-	if (!opt->pattern_expression)
+-		return;
+-	free_pattern_expr(opt->pattern_expression);
++	if (opt->pattern_expression)
++		free_pattern_expr(opt->pattern_expression);
++	strbuf_release(&opt->super_prefix);
+ }
+=20
+ static const char *end_of_line(const char *cp, unsigned long *left)
+diff --git a/grep.h b/grep.h
+index 6075f997e68..d353bfa21ce 100644
+--- a/grep.h
++++ b/grep.h
+@@ -133,6 +133,7 @@ struct grep_opt {
+ 	 * t7814-grep-recurse-submodules.sh for more information.
+ 	 */
+ 	struct repository *repo;
++	struct strbuf super_prefix;
+=20
+ 	int linenum;
+ 	int columnnum;
+@@ -178,6 +179,7 @@ struct grep_opt {
+ };
+=20
+ #define GREP_OPT_INIT { \
++	.super_prefix =3D STRBUF_INIT, \
+ 	.relative =3D 1, \
+ 	.pathname =3D 1, \
+ 	.max_depth =3D -1, \
+diff --git a/repository.c b/repository.c
+index 5d166b692c8..2f8581c517d 100644
+--- a/repository.c
++++ b/repository.c
+@@ -228,12 +228,6 @@ int repo_submodule_init(struct repository *subrepo,
+ 			goto out;
+ 		}
+ 	}
 -
- static int git_work_tree_initialized;
- 
- /*
-diff --git a/git.c b/git.c
-index 2bca22cfd9a..00baaf23590 100644
---- a/git.c
-+++ b/git.c
-@@ -14,9 +14,8 @@
-  * RUN_SETUP for reading from the configuration file.
-  */
- #define NEED_WORK_TREE		(1<<3)
--#define SUPPORT_SUPER_PREFIX	(1<<4)
--#define DELAY_PAGER_CONFIG	(1<<5)
--#define NO_PARSEOPT		(1<<6) /* parse-options is not used */
-+#define DELAY_PAGER_CONFIG	(1<<4)
-+#define NO_PARSEOPT		(1<<5) /* parse-options is not used */
- 
- struct cmd_struct {
- 	const char *cmd;
-@@ -29,8 +28,7 @@ const char git_usage_string[] =
- 	   "           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n"
- 	   "           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n"
- 	   "           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n"
--	   "           [--super-prefix=<path>] [--config-env=<name>=<envvar>]\n"
--	   "           <command> [<args>]");
-+	   "           [--config-env=<name>=<envvar>] <command> [<args>]");
- 
- const char git_more_info_string[] =
- 	N_("'git help -a' and 'git help -g' list available subcommands and some\n"
-@@ -226,20 +224,6 @@ static int handle_options(const char ***argv, int *argc, int *envchanged)
- 			setenv(GIT_WORK_TREE_ENVIRONMENT, cmd, 1);
- 			if (envchanged)
- 				*envchanged = 1;
--		} else if (!strcmp(cmd, "--super-prefix")) {
--			if (*argc < 2) {
--				fprintf(stderr, _("no prefix given for --super-prefix\n" ));
--				usage(git_usage_string);
--			}
--			setenv(GIT_SUPER_PREFIX_ENVIRONMENT, (*argv)[1], 1);
--			if (envchanged)
--				*envchanged = 1;
--			(*argv)++;
--			(*argc)--;
--		} else if (skip_prefix(cmd, "--super-prefix=", &cmd)) {
--			setenv(GIT_SUPER_PREFIX_ENVIRONMENT, cmd, 1);
--			if (envchanged)
--				*envchanged = 1;
- 		} else if (!strcmp(cmd, "--bare")) {
- 			char *cwd = xgetcwd();
- 			is_bare_repository_cfg = 1;
-@@ -449,11 +433,6 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
- 		trace_repo_setup(prefix);
- 	commit_pager_choice();
- 
--	if (!help && get_super_prefix()) {
--		if (!(p->option & SUPPORT_SUPER_PREFIX))
--			die(_("%s doesn't support --super-prefix"), p->cmd);
--	}
+-	subrepo->submodule_prefix =3D xstrfmt("%s%s/",
+-					    superproject->submodule_prefix ?
+-					    superproject->submodule_prefix :
+-					    "", path);
 -
- 	if (!help && p->option & NEED_WORK_TREE)
- 		setup_work_tree();
- 
-@@ -504,7 +483,7 @@ static struct cmd_struct commands[] = {
- 	{ "check-ref-format", cmd_check_ref_format, NO_PARSEOPT  },
- 	{ "checkout", cmd_checkout, RUN_SETUP | NEED_WORK_TREE },
- 	{ "checkout--worker", cmd_checkout__worker,
--		RUN_SETUP | NEED_WORK_TREE | SUPPORT_SUPER_PREFIX },
-+		RUN_SETUP | NEED_WORK_TREE },
- 	{ "checkout-index", cmd_checkout_index,
- 		RUN_SETUP | NEED_WORK_TREE},
- 	{ "cherry", cmd_cherry, RUN_SETUP },
-@@ -583,7 +562,7 @@ static struct cmd_struct commands[] = {
- 	{ "pull", cmd_pull, RUN_SETUP | NEED_WORK_TREE },
- 	{ "push", cmd_push, RUN_SETUP },
- 	{ "range-diff", cmd_range_diff, RUN_SETUP | USE_PAGER },
--	{ "read-tree", cmd_read_tree, RUN_SETUP | SUPPORT_SUPER_PREFIX},
-+	{ "read-tree", cmd_read_tree, RUN_SETUP },
- 	{ "rebase", cmd_rebase, RUN_SETUP | NEED_WORK_TREE },
- 	{ "receive-pack", cmd_receive_pack },
- 	{ "reflog", cmd_reflog, RUN_SETUP },
-@@ -727,9 +706,6 @@ static void execv_dashed_external(const char **argv)
- 	struct child_process cmd = CHILD_PROCESS_INIT;
- 	int status;
- 
--	if (get_super_prefix())
--		die(_("%s doesn't support --super-prefix"), argv[0]);
+ out:
+ 	strbuf_release(&gitdir);
+ 	strbuf_release(&worktree);
+@@ -261,7 +255,6 @@ void repo_clear(struct repository *repo)
+ 	FREE_AND_NULL(repo->graft_file);
+ 	FREE_AND_NULL(repo->index_file);
+ 	FREE_AND_NULL(repo->worktree);
+-	FREE_AND_NULL(repo->submodule_prefix);
+=20
+ 	raw_object_store_clear(repo->objects);
+ 	FREE_AND_NULL(repo->objects);
+diff --git a/repository.h b/repository.h
+index 6c461c5b9de..a08da26133c 100644
+--- a/repository.h
++++ b/repository.h
+@@ -120,13 +120,6 @@ struct repository {
+ 	 */
+ 	char *worktree;
+=20
+-	/*
+-	 * Path from the root of the top-level superproject down to this
+-	 * repository.  This is only non-NULL if the repository is initialized
+-	 * as a submodule of another repository.
+-	 */
+-	char *submodule_prefix;
 -
- 	if (use_pager == -1 && !is_builtin(argv[0]))
- 		use_pager = check_pager_config(argv[0]);
- 	commit_pager_choice();
-@@ -799,9 +775,6 @@ static int run_argv(int *argcp, const char ***argv)
- 			 */
- 			trace2_cmd_name("_run_git_alias_");
- 
--			if (get_super_prefix())
--				die("%s doesn't support --super-prefix", **argv);
--
- 			commit_pager_choice();
- 
- 			strvec_push(&cmd.args, "git");
+ 	struct repo_settings settings;
+=20
+ 	/* Subsystems */
 diff --git a/submodule.c b/submodule.c
-index d9fd0af81b6..5ac4e1b0568 100644
+index 1e4eee3492b..1c5ef904a03 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -2048,14 +2048,6 @@ void submodule_unset_core_worktree(const struct submodule *sub)
- 	strbuf_release(&config_path);
- }
- 
--static const char *get_super_prefix_or_empty(void)
--{
--	const char *s = get_super_prefix();
--	if (!s)
--		s = "";
--	return s;
--}
--
- static int submodule_has_dirty_index(const struct submodule *sub)
- {
- 	struct child_process cp = CHILD_PROCESS_INIT;
-@@ -2074,7 +2066,7 @@ static int submodule_has_dirty_index(const struct submodule *sub)
- 	return finish_command(&cp);
- }
- 
--static void submodule_reset_index(const char *path)
-+static void submodule_reset_index(const char *path, const char *super_prefix)
- {
- 	struct child_process cp = CHILD_PROCESS_INIT;
- 	prepare_submodule_repo_env(&cp.env);
-@@ -2083,10 +2075,10 @@ static void submodule_reset_index(const char *path)
- 	cp.no_stdin = 1;
- 	cp.dir = path;
- 
--	strvec_pushf(&cp.args, "--super-prefix=%s%s/",
--		     get_super_prefix_or_empty(), path);
- 	/* TODO: determine if this might overwright untracked files */
- 	strvec_pushl(&cp.args, "read-tree", "-u", "--reset", NULL);
-+	strvec_pushf(&cp.args, "--super-prefix=%s%s/",
-+		     (super_prefix ? super_prefix : ""), path);
- 
- 	strvec_push(&cp.args, empty_tree_oid_hex());
- 
-@@ -2099,10 +2091,9 @@ static void submodule_reset_index(const char *path)
-  * For edge cases (a submodule coming into existence or removing a submodule)
-  * pass NULL for old or new respectively.
-  */
--int submodule_move_head(const char *path,
--			 const char *old_head,
--			 const char *new_head,
--			 unsigned flags)
-+int submodule_move_head(const char *path, const char *super_prefix,
-+			const char *old_head, const char *new_head,
-+			unsigned flags)
- {
- 	int ret = 0;
- 	struct child_process cp = CHILD_PROCESS_INIT;
-@@ -2148,7 +2139,7 @@ int submodule_move_head(const char *path,
- 			strbuf_release(&gitdir);
- 
- 			/* make sure the index is clean as well */
--			submodule_reset_index(path);
-+			submodule_reset_index(path, NULL);
- 		}
- 
- 		if (old_head && (flags & SUBMODULE_MOVE_HEAD_FORCE)) {
-@@ -2166,9 +2157,9 @@ int submodule_move_head(const char *path,
- 	cp.no_stdin = 1;
- 	cp.dir = path;
- 
--	strvec_pushf(&cp.args, "--super-prefix=%s%s/",
--		     get_super_prefix_or_empty(), path);
- 	strvec_pushl(&cp.args, "read-tree", "--recurse-submodules", NULL);
-+	strvec_pushf(&cp.args, "--super-prefix=%s%s/",
-+		     (super_prefix ? super_prefix : ""), path);
- 
- 	if (flags & SUBMODULE_MOVE_HEAD_DRY_RUN)
- 		strvec_push(&cp.args, "-n");
-diff --git a/submodule.h b/submodule.h
-index e5ee13fb06a..36a7f7c5b32 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -150,9 +150,8 @@ int validate_submodule_git_dir(char *git_dir, const char *submodule_name);
- 
- #define SUBMODULE_MOVE_HEAD_DRY_RUN (1<<0)
- #define SUBMODULE_MOVE_HEAD_FORCE   (1<<1)
--int submodule_move_head(const char *path,
--			const char *old,
--			const char *new_head,
-+int submodule_move_head(const char *path, const char *super_prefix,
-+			const char *old_head, const char *new_head,
- 			unsigned flags);
- 
- void submodule_unset_core_worktree(const struct submodule *sub);
-diff --git a/t/t1001-read-tree-m-2way.sh b/t/t1001-read-tree-m-2way.sh
-index 516a6112fdc..3fb1b0c162d 100755
---- a/t/t1001-read-tree-m-2way.sh
-+++ b/t/t1001-read-tree-m-2way.sh
-@@ -370,7 +370,7 @@ test_expect_success 'read-tree supports the super-prefix' '
- 	cat <<-EOF >expect &&
- 		error: Updating '\''fictional/a'\'' would lose untracked files in it
- 	EOF
--	test_must_fail git --super-prefix fictional/ read-tree -u -m "$treeH" "$treeM" 2>actual &&
-+	test_must_fail git read-tree --super-prefix fictional/ -u -m "$treeH" "$treeM" 2>actual &&
- 	test_cmp expect actual
- '
- 
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index e56466580cf..18375bff535 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -644,7 +644,7 @@ test_expect_success 'repack does not loosen promisor objects' '
- 	grep "loosen_unused_packed_objects/loosened:0" trace
- '
- 
--test_expect_failure 'lazy-fetch in submodule succeeds' '
-+test_expect_success 'lazy-fetch in submodule succeeds' '
- 	# setup
- 	test_config_global protocol.file.allow always &&
- 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index bae812156c4..61c02285454 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -71,7 +71,7 @@ static const char *unpack_plumbing_errors[NB_UNPACK_TREES_WARNING_TYPES] = {
- 	  ? ((o)->msgs[(type)])      \
- 	  : (unpack_plumbing_errors[(type)]) )
- 
--static const char *super_prefixed(const char *path)
-+static const char *super_prefixed(const char *path, const char *super_prefix)
- {
- 	/*
- 	 * It is necessary and sufficient to have two static buffers
-@@ -83,7 +83,6 @@ static const char *super_prefixed(const char *path)
- 	static unsigned idx = ARRAY_SIZE(buf) - 1;
- 
- 	if (super_prefix_len < 0) {
--		const char *super_prefix = get_super_prefix();
- 		if (!super_prefix) {
- 			super_prefix_len = 0;
- 		} else {
-@@ -236,7 +235,8 @@ static int add_rejected_path(struct unpack_trees_options *o,
- 		return -1;
- 
- 	if (!o->show_all_errors)
--		return error(ERRORMSG(o, e), super_prefixed(path));
-+		return error(ERRORMSG(o, e), super_prefixed(path,
-+							    o->super_prefix));
- 
- 	/*
- 	 * Otherwise, insert in a list for future display by
-@@ -263,7 +263,8 @@ static void display_error_msgs(struct unpack_trees_options *o)
- 			error_displayed = 1;
- 			for (i = 0; i < rejects->nr; i++)
- 				strbuf_addf(&path, "\t%s\n", rejects->items[i].string);
--			error(ERRORMSG(o, e), super_prefixed(path.buf));
-+			error(ERRORMSG(o, e), super_prefixed(path.buf,
-+							     o->super_prefix));
- 			strbuf_release(&path);
- 		}
- 		string_list_clear(rejects, 0);
-@@ -290,7 +291,8 @@ static void display_warning_msgs(struct unpack_trees_options *o)
- 			warning_displayed = 1;
- 			for (i = 0; i < rejects->nr; i++)
- 				strbuf_addf(&path, "\t%s\n", rejects->items[i].string);
--			warning(ERRORMSG(o, e), super_prefixed(path.buf));
-+			warning(ERRORMSG(o, e), super_prefixed(path.buf,
-+							       o->super_prefix));
- 			strbuf_release(&path);
- 		}
- 		string_list_clear(rejects, 0);
-@@ -312,7 +314,7 @@ static int check_submodule_move_head(const struct cache_entry *ce,
- 	if (o->reset)
- 		flags |= SUBMODULE_MOVE_HEAD_FORCE;
- 
--	if (submodule_move_head(ce->name, old_id, new_id, flags))
-+	if (submodule_move_head(ce->name, NULL, old_id, new_id, flags))
- 		return add_rejected_path(o, ERROR_WOULD_LOSE_SUBMODULE, ce->name);
- 	return 0;
- }
-@@ -415,6 +417,7 @@ static int check_updates(struct unpack_trees_options *o,
- 	int i, pc_workers, pc_threshold;
- 
- 	trace_performance_enter();
-+	state.super_prefix = o->super_prefix;
- 	state.force = 1;
- 	state.quiet = 1;
- 	state.refresh_cache = 1;
-@@ -445,7 +448,7 @@ static int check_updates(struct unpack_trees_options *o,
- 
- 		if (ce->ce_flags & CE_WT_REMOVE) {
- 			display_progress(progress, ++cnt);
--			unlink_entry(ce);
-+			unlink_entry(ce, o->super_prefix);
- 		}
+@@ -528,9 +528,6 @@ static struct repository *open_submodule(const char *pa=
+th)
+ 		return NULL;
  	}
- 
-@@ -2958,8 +2961,8 @@ int bind_merge(const struct cache_entry * const *src,
- 	if (a && old)
- 		return o->quiet ? -1 :
- 			error(ERRORMSG(o, ERROR_BIND_OVERLAP),
--			      super_prefixed(a->name),
--			      super_prefixed(old->name));
-+			      super_prefixed(a->name, o->super_prefix),
-+			      super_prefixed(old->name, o->super_prefix));
- 	if (!a)
- 		return keep_entry(old, o);
- 	else
-@@ -3020,7 +3023,7 @@ int stash_worktree_untracked_merge(const struct cache_entry * const *src,
- 
- 	if (worktree && untracked)
- 		return error(_("worktree and untracked commit have duplicate entries: %s"),
--			     super_prefixed(worktree->name));
-+			     super_prefixed(worktree->name, o->super_prefix));
- 
- 	return merged_entry(worktree ? worktree : untracked, NULL, o);
+=20
+-	/* Mark it as a submodule */
+-	out->submodule_prefix =3D xstrdup(path);
+-
+ 	strbuf_release(&sb);
+ 	return out;
  }
-diff --git a/unpack-trees.h b/unpack-trees.h
-index efb9edfbb27..9b81e284073 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -74,6 +74,7 @@ struct unpack_trees_options {
- 		     dry_run;
- 	enum unpack_trees_reset_type reset;
- 	const char *prefix;
-+	const char *super_prefix;
- 	int cache_bottom;
- 	struct pathspec *pathspec;
- 	merge_fn_t fn;
--- 
+--=20
 2.38.0.1471.ge4d8947e7aa
 
