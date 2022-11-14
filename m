@@ -2,80 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17324C4332F
-	for <git@archiver.kernel.org>; Mon, 14 Nov 2022 21:59:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5603C4332F
+	for <git@archiver.kernel.org>; Mon, 14 Nov 2022 22:04:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237514AbiKNV7x (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Nov 2022 16:59:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44746 "EHLO
+        id S235835AbiKNWEF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Nov 2022 17:04:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237333AbiKNV7v (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Nov 2022 16:59:51 -0500
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B271A19C37
-        for <git@vger.kernel.org>; Mon, 14 Nov 2022 13:59:50 -0800 (PST)
-Received: by mail-il1-x131.google.com with SMTP id bp12so6463742ilb.9
-        for <git@vger.kernel.org>; Mon, 14 Nov 2022 13:59:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=zHy4TAybA+5VzvaZGTCbhaNkrm4GD4xyT4XCSA9iL6M=;
-        b=QTNoR7kClqMPeQGLf4bkXDuvuSi7du2ThI5jZ7CcUU5iwK1twrUnSWlc2SsvuzSfSk
-         W19nZfDa/GyzPGB6whAhRbf/7u5SkotEvjoI93o3YEmjnvh1/mnCc+3gU3EucqLbfzai
-         cJpeAhal9dMxHz1kcrHfSQZzBAxdyqaH7VijpoI/AYi5tufYsmHS8yajiQf+htQ4L6+Y
-         NaiEl+mixX8r00hTRLh7r1ElMLj4myNyJcn/jQFwMMgMElPDYSSKWJuvxhenl5BGRg18
-         +ZsqbH+170cEyEjUlUOp3AUbKT1oGOxNTTMpvS1UMTXIc8bcwEXBUqIx3I4K2+omImjq
-         Rt1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zHy4TAybA+5VzvaZGTCbhaNkrm4GD4xyT4XCSA9iL6M=;
-        b=r7eF9NbCfN5P0eQoFr2cTBL4BJj4AUf/UTTH2SS2kWRkhcar3pkn2I3unPoBaD9aPM
-         HLwsAEbh4Ey3HE1ZD2S9QqhN64ejZ/EhWu5cwFAksEIj+yAYBJriJUmLNt1orC5gGCX8
-         XQOgVff3EV0t9ZLE+qcbQTsY902ffi035quwpr93mUQAkhhVlCMsKI6dEw6HWayxPXBo
-         imdE4vlUGKqtB8EP8XukHpE1o+4tXyXTF7JzCwJeowAl2oFB9QhswFg8L/OV7//9iKUk
-         X1SuVXc16GvC5FQGM+fX9pmyt/QUNTUPY9Kk7XurEKPhRBFYXxoj/uM0iMqGDc83iU/Z
-         smqg==
-X-Gm-Message-State: ANoB5pllb3zclV0wFTZFFbkbxDT/9WWwPYilR4N5CSLRmEwEYI6nPufO
-        wLp8rVnUy+smu6G0bW2FOBV/fQ==
-X-Google-Smtp-Source: AA0mqf7f7E32aEtkFr5MfG6UEl1oLGQqKh7W5Koo4sTxEjNsdPgj42wh1LhBkk9Dfm7ddK8nIVRz1g==
-X-Received: by 2002:a92:d6c5:0:b0:302:58d0:2510 with SMTP id z5-20020a92d6c5000000b0030258d02510mr3376349ilp.27.1668463189752;
-        Mon, 14 Nov 2022 13:59:49 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id w3-20020a022a03000000b00363bd76184esm2302093jaw.162.2022.11.14.13.59.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Nov 2022 13:59:49 -0800 (PST)
-Date:   Mon, 14 Nov 2022 16:59:48 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>,
-        Taylor Blau <me@ttaylorr.com>, Robert Coup <robert@coup.net.nz>
-Subject: Re: [PATCH v2 00/10] Get rid of "git --super-prefix"
-Message-ID: <Y3K6VM4Ciwv7ytcw@nand.local>
-References: <RFC-cover-0.8-00000000000-20221109T192315Z-avarab@gmail.com>
- <cover-v2-00.10-00000000000-20221114T100803Z-avarab@gmail.com>
+        with ESMTP id S237443AbiKNWD7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Nov 2022 17:03:59 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 997A8A193
+        for <git@vger.kernel.org>; Mon, 14 Nov 2022 14:03:58 -0800 (PST)
+Received: (qmail 15230 invoked by uid 109); 14 Nov 2022 22:03:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 14 Nov 2022 22:03:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14385 invoked by uid 111); 14 Nov 2022 22:03:58 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 14 Nov 2022 17:03:58 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 14 Nov 2022 17:03:56 -0500
+From:   Jeff King <peff@peff.net>
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
+        gitster@pobox.com, me@ttaylorr.com, tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v3 1/2] pack-bitmap.c: remove unnecessary
+ "open_pack_index()" calls
+Message-ID: <Y3K7TEpB8EzczjTb@coredump.intra.peff.net>
+References: <cover.1668063122.git.dyroneteng@gmail.com>
+ <aaeb021538cdfeb83dc6004fe7b3ac35a23aef49.1668063122.git.dyroneteng@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover-v2-00.10-00000000000-20221114T100803Z-avarab@gmail.com>
+In-Reply-To: <aaeb021538cdfeb83dc6004fe7b3ac35a23aef49.1668063122.git.dyroneteng@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 14, 2022 at 11:08:40AM +0100, Ævar Arnfjörð Bjarmason wrote:
-> = Relation to other submissions
->
-> This is a non-RFC version of my earlier RFC to get rid of
-> "--super-prefix"[1], which itself was an alternate proposal to Glen's
-> [2]. Per [3] he's agreed to go with this approach.
+On Thu, Nov 10, 2022 at 03:10:11PM +0800, Teng Long wrote:
 
-Thanks for working it out together, and for a clear summary of how this
-series interacts with and depends on others in-flight.
+> It's likely that we'll end up relying on objects in that pack later
+> in the process (in which case we're doing the work of opening the
+> pack index optimistically), but not guaranteed.
+> 
+> For instance, consider a repository with a large number of small
+> packs, and one large pack with a bitmap. If we see that bitmap pack
+> last in our loop which calls open_pack_bitmap_1(), the current code
+> will have opened *all* pack index files in the repository. If the
+> request can be served out of the bitmapped pack alone, then the time
+> spent opening these idx files was wasted.S
 
-Thanks,
-Taylor
+By the way, I wondered if it was possible to measure a slowdown in this
+case. It is, but you have to try pretty hard. Something like this:
+
+  # one bitmapped pack
+  git repack -adb
+
+  # and then a bunch of other packs
+  git rev-list HEAD |
+  head -10000 |
+  while read commit; do
+    echo $commit | git pack-objects .git/objects/pack/pack
+  done
+
+  # make the bitmapped one newest, since otherwise our non-bitmap lookup
+  # of the initial traversal commit causes us to open all the other
+  # packs first!
+  bitmap=$(echo .git/objects/pack/pack-*.bitmap)
+  touch ${bitmap%.bitmap}.*
+
+  hyperfine -L v old,new './git.{v} rev-list --count --use-bitmap-index HEAD'
+
+where "new" and "old" are builds with and without this patch. I get:
+
+  Benchmark 1: ./git.old rev-list --count --use-bitmap-index HEAD
+    Time (mean ± σ):     117.9 ms ±   1.8 ms    [User: 26.9 ms, System: 90.0 ms]
+    Range (min … max):   113.4 ms … 120.3 ms    25 runs
+  
+  Benchmark 2: ./git.new rev-list --count --use-bitmap-index HEAD
+    Time (mean ± σ):      71.8 ms ±   2.6 ms    [User: 21.2 ms, System: 50.5 ms]
+    Range (min … max):    67.0 ms …  75.1 ms    41 runs
+  
+  Summary
+    './git.new rev-list --count --use-bitmap-index HEAD' ran
+      1.64 ± 0.06 times faster than './git.old rev-list --count --use-bitmap-index HEAD'
+
+which implies to me two things:
+
+  - this probably isn't helping anybody much in the real world, as
+    evidenced by the contortions I had to go through to set up the
+    situation (and which would be made much better by repacking, which
+    would also speed up non-bitmap operations).
+
+  - it's worth doing anyway. Even if it only shaves off microseconds,
+    the existing call is just pointless.
+
+-Peff
