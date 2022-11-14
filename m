@@ -2,374 +2,166 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 52DE4C433FE
-	for <git@archiver.kernel.org>; Mon, 14 Nov 2022 09:09:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DBA2BC4332F
+	for <git@archiver.kernel.org>; Mon, 14 Nov 2022 09:51:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236670AbiKNJJR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Nov 2022 04:09:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54934 "EHLO
+        id S236489AbiKNJvN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Nov 2022 04:51:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236886AbiKNJI7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Nov 2022 04:08:59 -0500
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B533F63D2
-        for <git@vger.kernel.org>; Mon, 14 Nov 2022 01:08:33 -0800 (PST)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-370547b8ca0so100461417b3.0
-        for <git@vger.kernel.org>; Mon, 14 Nov 2022 01:08:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1Ixk+k5JaOmRwZii34D0SY6K4LtgW2YW1Ehvlhtdvaw=;
-        b=ekvMgGWvvWsfloWA6Xi0YhEiXrAsRjR/v+YTH7u66mNkmAtSAgp/P57D8RrJj6hoJW
-         OkGo+1w1cLyvhN38sON6WYrgYPN4PqiSbxleEah6fCruDCiGitMnLbOu/hdafnu/b+AH
-         20PPf4qbXjmW6gEKmTO/iyBZCJbXdzV1zy14+esnriXqF+cmMHaDOvO+lldSueaJzJ4Z
-         9It8jpyl+G4kzNTn6sIdV+YhOBLnUIa1iAeHXEBfQD8GibFeFmQxX6iRNtecN0LdowXb
-         GLgQxsfGNKuB5CNCBbEx2yuvggKnYzEqYWMiDaGnoF5v3cyGrzW47rpL+Fr2Rs0T6yr3
-         aD3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1Ixk+k5JaOmRwZii34D0SY6K4LtgW2YW1Ehvlhtdvaw=;
-        b=hZKS9+9ZcyVfo/Wf+HGzgs9ir3MnU3fpFfFWv/9PwulHfAb/sy8I4pCLyf/O18hPWH
-         4x3+OIyqhlcUdbBPl205DVWxPW5h6/PpevidRiWfPv3Tw0w5D23ZbOr9HP47zG8nIi4d
-         CxYA4bgdb1Ifi++qnmXS/PiMvzltGujidezNoZE1+5K5h68OVwW03yRLjfYXSRikOzVM
-         uQ2uqx9xgrrjYqiHbdTu59ljCGi722rih0UxSwUDanGQaAiGg7kRL8DfTsZgq69gf6Ov
-         qgaL32QUnLaIv+i8zRbqjaSzIkqKgIEwZahSEoW7IDAk+fACqhPQ466eR2GReSGsTbh8
-         cjwg==
-X-Gm-Message-State: ANoB5pmeA8MSNhtw5xr35W7pikVPgMuTcJC9r3jiIGau6pUnV3QR+l/P
-        5a43FyD/0ICZyNlVVQ/jBaX5fzV7oez31MSO11s=
-X-Google-Smtp-Source: AA0mqf6uNBXarrCm1POXdC4Ipkuqus0Nr7KbPHDlpBo6xGVpAsMzVMiHGznMUvOII7vdBJHfPosHK3WzPjgmfsFyh6E=
-X-Received: by 2002:a81:4a09:0:b0:35f:dedf:fe5 with SMTP id
- x9-20020a814a09000000b0035fdedf0fe5mr12183967ywa.408.1668416912825; Mon, 14
- Nov 2022 01:08:32 -0800 (PST)
+        with ESMTP id S236425AbiKNJun (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Nov 2022 04:50:43 -0500
+X-Greylist: delayed 567 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 14 Nov 2022 01:50:42 PST
+Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 942C41EC52
+        for <git@vger.kernel.org>; Mon, 14 Nov 2022 01:50:42 -0800 (PST)
+Received: from localhost (dcvr.yhbt.net [127.0.0.1])
+        by dcvr.yhbt.net (Postfix) with ESMTP id F15331F910
+        for <git@vger.kernel.org>; Mon, 14 Nov 2022 09:41:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
+        s=selector1; t=1668418875;
+        bh=eRZIhUP4LHeWFs8uHM4OfhJyND74FOd7Lqq8hwy8UFk=;
+        h=From:To:Subject:Date:From;
+        b=dgu3MTSr9XL665htNMn6NZocjWnyyTDo7zPN4jKEfCpxl1SEWFJTqKYsjvzQuI6AJ
+         k7us+d9uLniuWU3NHVH+dLc1MyBuY3aApAIOjXKcVmhx1F13IpQjBrjnNG5E+eT7Hc
+         3Yc7C3VS74OtmpLdK7Md/SKW8AM4QjIMTQuDm2+4=
+From:   Eric Wong <e@80x24.org>
+To:     git@vger.kernel.org
+Subject: [PATCH] format-patch: add --mboxrd alias for --pretty=mboxrd
+Date:   Mon, 14 Nov 2022 09:41:14 +0000
+Message-Id: <20221114094114.18986-1-e@80x24.org>
 MIME-Version: 1.0
-References: <pull.1398.git.1667189512579.gitgitgadget@gmail.com>
- <CABPp-BGUXKk-LSJtHP2jSDSVYNpQgzOeferx6xJ36ntDgrBNCw@mail.gmail.com>
- <CAOLTT8TceM-NpV2_hUCZj2Dx=W30f_9SHW8CcRH-pw32BRd-oA@mail.gmail.com> <CABPp-BErUhzm5=c6Tn4nPFKx-Kx0tYwf-J=G+nOFJ2bu-r+Dhg@mail.gmail.com>
-In-Reply-To: <CABPp-BErUhzm5=c6Tn4nPFKx-Kx0tYwf-J=G+nOFJ2bu-r+Dhg@mail.gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Mon, 14 Nov 2022 17:08:21 +0800
-Message-ID: <CAOLTT8R1K7L5p3+FkUAKMOA5+KcQU3YM8Pq2Oe4u24zi+t9Nrg@mail.gmail.com>
-Subject: Re: [PATCH] [RFC] diff: introduce scope option
-To:     Elijah Newren <newren@gmail.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Emily Shaffer <emilyshaffer@google.com>,
-        Matheus Tavares Bernardino <matheus.bernardino@usp.br>,
-        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> =E4=BA=8E2022=E5=B9=B411=E6=9C=886=E6=97=
-=A5=E5=91=A8=E6=97=A5 14:58=E5=86=99=E9=81=93=EF=BC=9A
->
-> Hi,
->
-> On Sat, Nov 5, 2022 at 7:11 PM ZheNing Hu <adlternative@gmail.com> wrote:
-> > Elijah Newren <newren@gmail.com> =E4=BA=8E2022=E5=B9=B411=E6=9C=881=E6=
-=97=A5=E5=91=A8=E4=BA=8C 13:18=E5=86=99=E9=81=93=EF=BC=9A
-> > > On Sun, Oct 30, 2022 at 9:11 PM ZheNing Hu via GitGitGadget
-> > > <gitgitgadget@gmail.com> wrote:
-> > > >
-> > > > From: ZheNing Hu <adlternative@gmail.com>
-> > > >
-> > > > When we use sparse-checkout, we often want the set of files
-> > > > that some commands operate on to be restricted to the
-> > > > sparse-checkout specification.
-> > >
-> > > It seems a bit premature to send this, when the guideline document[*]
-> > > detailing how these options should work is still in the "Needs Review=
-"
-> > > state.  I know, it's been waiting for a while, but it's a _long_
-> > > document.
-> > >
-> > > [*] https://lore.kernel.org/git/pull.1367.v3.git.1665269538608.gitgit=
-gadget@gmail.com/
-> > >
-> >
-> > Fine, I just want to start trying to experiment with this feature in
-> > git-diff earlier,
-> > and I can wait for the sparse-checkout.txt documentation to finish
-> > first if needed :)
->
-> Note that you may be able to help reduce the wait by reviewing the
-> document.  (You commented on v1 -- thanks! -- but no one has commented
-> on any of the newer versions, despite being out for over a month and
-> still being marked as "Needs Review" in the "What's cooking" reports.)
->
+mboxrd is a superior output format when used with --stdout and
+needs more exposure.  Including pretty-formats.txt would be
+excessive, since documenting --pretty= for `git format-patch'
+would likely be confusing to users.
 
-I've skimmed v3 in general, but haven't looked at v4 yet, I'll take a close=
-r
-look at it.
+Instead of documenting --pretty, add an --mboxrd alias to save
+keystrokes and improve documentation.
 
-> > > > `--no-scope` is the default
-> > > > option for now.
-> > >
-> > > What does --no-scope even mean?  You didn't explain it, and I don't
-> > > see how it could make sense.  We explicitly avoided a `--no-` prefix
-> > > by allowing the --scope option to take a value.  I don't think there
-> > > should be a --no-scope option.
-> >
-> > I think the =E2=80=9C--no-scope=E2=80=9D here does nothing, as if it we=
-re unaffected by scope
-> > (just like correctly "--scope=3Dall", right?)
->
-> Reading your patch, I was unable to determine where you made
-> --no-scope behave differently than how you implemented --scope=3Dall.
-> Maybe there was a difference and I missed it.
->
-> Anyway, I don't think there should be a --no-scope option.
->
+Signed-off-by: Eric Wong <e@80x24.org>
+---
+ Also, --mboxrd without --stdout makes no sense to me,
+ so I'm considering warning on it...
 
-Fine, I'll get rid of it.
+ Side note: some of the OPT_* switches might be misplaced
+ under the "Messaging" OPT_GROUP...
 
-> > > > diff --git a/Documentation/diff-options.txt b/Documentation/diff-op=
-tions.txt
-> > > > index 3674ac48e92..04bf83e8be1 100644
-> > > > --- a/Documentation/diff-options.txt
-> > > > +++ b/Documentation/diff-options.txt
-> > > > @@ -195,6 +195,24 @@ For instance, if you configured the `diff.algo=
-rithm` variable to a
-> > > >  non-default value and want to use the default one, then you
-> > > >  have to use `--diff-algorithm=3Ddefault` option.
-> > > >
-> > > > +ifndef::git-format-patch[]
-> > > > +ifndef::git-log[]
-> > > > +
-> > > > +--scope=3D{sparse|all}::
-> > > > +       Choose diff scope. The variants are as follows:
-> > > > ++
-> > > > +--
-> > > > +`--sparse`;;
-> > > > +       Restrict diff paths to those matching sparse-checkout speci=
-fication.
-> > > > +`--all`;;
-> > > > +       Without restriction, diff is performed regardless of whethe=
-r the path
-> > > > +       meets the sparse-checkout specification.
-> > > > +--
-> > > > ++
-> > > > +
-> > > > +endif::git-log[]
-> > > > +endif::git-format-patch[]
-> > >
-> > > What about diff-files, diff-index, diff-tree, and show?
-> > >
-> >
-> > diff-options.txt included in their documents, and git-format-patch.txt,
-> > git-log.txt, but should not in git-format-patch.txt. I don't know if it
-> > should be included in git-diff-files.txt, because git diff-files compar=
-e
-> > the files in the working tree and the index (so it's the same as
-> > "simple" git-diff, which should not be affected by scope?)
->
-> Oh, good point.  Yeah, git-diff-files.txt should not get this option
-> as it won't have any affect.  git-diff-index and git-diff-tree and
-> git-show and git-log should get it, though.
->
-> > > > +int diff_path_in_sparse_checkout(const char *path) {
-> > > > +       if (core_sparse_checkout_cone)
-> > > > +               return path_in_cone_mode_sparse_checkout(path, the_=
-repository->index);
-> > > > +       else
-> > > > +               return path_in_sparse_checkout(path, the_repository=
-->index);
-> > > > +}
-> > >
-> > > This says we are including the path if it matches the sparsity
-> > > patterns.  Thus, we have to be careful when we use this function,
-> > > because the relevant paths are ones that match the sparsity
-> > > specification.  The sparsity specification will always match the
-> > > sparsity patterns when diffing two commits, but when either the index
-> > > or the working tree is part of the diff, the sparsity specification
-> > > *might* be temporarily expanded.
-> >
-> > Yes, I may have to look at more code to better understand how and when =
-the
-> > "sparsity specification" is extended. Any recommendations for places to=
- read?
->
-> Yes, please review the newer version of my sparse-checkout.txt
-> directions file; it covers this in more detail.
->
+ Documentation/git-format-patch.txt     | 6 +++++-
+ builtin/log.c                          | 7 +++++++
+ contrib/completion/git-completion.bash | 2 +-
+ t/t4014-format-patch.sh                | 6 ++++--
+ t/t4150-am.sh                          | 2 +-
+ 5 files changed, 18 insertions(+), 5 deletions(-)
 
-Ok, thanks.
-
-> > > > @@ -439,6 +459,20 @@ static void do_oneway_diff(struct unpack_trees=
-_options *o,
-> > >
-> > > do_oneway_diff is for cases where we are diffing against the index...
-> > >
-> > > >                         return; /* nothing to diff.. */
-> > > >         }
-> > > >
-> > > > +       if (revs->diffopt.scope =3D=3D DIFF_SCOPE_SPARSE) {
-> > > > +               if (idx && tree) {
-> > > > +                       if (!diff_paths_in_sparse_checkout(idx->nam=
-e, tree->name))
-> > > > +                               return;
-> > > > +               } else if (idx) {
-> > > > +                       if (!diff_path_in_sparse_checkout(idx->name=
-))
-> > > > +                               return;
-> > > > +               } else if (tree) {
-> > > > +                       if (!diff_path_in_sparse_checkout(tree->nam=
-e))
-> > > > +                               return;
-> > > > +               } else
-> > > > +                       return;
-> > > > +       }
-> > >
-> > > ...and you again mistakenly only compare to the sparsity patterns
-> > > instead of the sparse specification.
-> > >
-> >
-> > So here we should use ce_skip_worktree(idx) to check if this index entr=
-y matches
-> > sparse specification.
->
-> ce_skip_worktree(idx) only checks for expansions to the sparse
-> specification in the working tree.  If dealing with index files, the
-> sparse specification is also expanded to handle all files in the index
-> that differ from HEAD.
->
-
-I will read more code to understand this detail.
-
-> > > > +               } else
-> > > > +                       return error(_("invalid --scope value: %s")=
-, optarg);
-> > > > +       }
-> > >
-> > > As written with no follow-on else clause here, wouldn't this silently
-> > > accept "--scope" without an "=3D<something>" argument without an erro=
-r
-> > > and without properly initializing opt->scope?
-> > >
-> >
-> > Because opt will be initializing with default_diff_options in repo_diff=
-_setup(),
-> > and opt->scope should respect config value first. So I don't think ther=
-e's a
-> > mistake here.
->
-> Okay, it's good that you've got the variables initialized somehow, but
-> that's only half the point here.  The main point is that the user can
-> specify something that makes no sense and if they do, we should throw
-> an error informing them of their mistake.  --scope should not be
-> passed without an argument (either "all" or "sparse", currently), but
-> this code allowed it.
->
-
-Ah, it makes sense, I will fix it.
-
-> > > > diff --git a/t/t4070-diff-sparse-checkout-scope.sh b/t/t4070-diff-s=
-parse-checkout-scope.sh
-> > > > new file mode 100644
-> > >
-> > > This needs to be fixed.
->
-> Since you didn't comment on this but usually do comment on thing, I'll
-> just re-ping it to make sure you don't miss the comment about the
-> incorrect file mode here.
->
-
-Yes, I've noticed the file permissions issue here, but there may be some ot=
-her
-issues with this test file: it fails when running CI tests, presumably
-because of
-some shell syntax incompatibility.
-
-> > > > +reset_repo () {
-> > > > +       rm -rf repo &&
-> > > > +       git clone --no-checkout temp repo
-> > >
-> > > Why --no-checkout rather than say --sparse?
-> > >
-> >
-> > This is because I accidentally associated it with a
-> > partial clone. I often use "git clone -filter=3Dblob:none -no-checkout"
-> > to do a partial clone, then "git sparse- checkout set <pattern>"
-> > to set sparse-checkout patterns, and "git checkout" to download
-> > the missing blobs and checkout to a branch. But in this
-> > test file, we only need sparse-checkout, so it's true that I should
-> > not do such strange no-checkout thing.
->
-> Yeah, no need to involve partial clones here.  (As an aside, though, I
-> think even with a partial clone that --sparse makes more sense than
-> --no-checkout.)
->
-
-Using --sparse may indeed be better than -no-checkout, as there is no
-need to perform an additional checkout after using clone --no-checkout
-and sparse-checkout. But it uses sparse-checkout cone mode by default.
-
-A little curious, why can't we specify --no-cone mode when doing git clone
-and why can't we specify sparse-checkout patterns here? If such a feature
-is available, git clone and git sparse-checkout will be combined in one ste=
-p.
-
-> > > > +change_worktree_and_index() {
-> > > > +       (
-> > > > +               cd repo &&
-> > > > +               mkdir sub2 sub3 &&
-> > > > +               echo sub1/file3 >sub1/file3 &&
-> > > > +               echo sub2/file3 >sub2/file3 &&
-> > > > +               echo sub3/file3 >sub3/file3 &&
-> > > > +               echo file3 >file3 &&
-> > > > +               git add --all --sparse &&
-> > > > +               echo sub1/file3 >>sub1/file3 &&
-> > > > +               echo sub2/file3 >>sub2/file3 &&
-> > > > +               echo sub3/file3 >>sub3/file3 &&
-> > > > +               echo file3 >>file3
-> > > > +       )
-> > > > +}
-> > >
-> > > It would be nice to modify different paths in the working tree and
-> > > index, to see if we can handle cases where the sparse specification
-> > > does not match the sparsity patterns better.  (So, modify files insid=
-e
-> > > and outside the sparsity patterns, stage those changes, and then do a
-> > > `git sparse-checkout reapply` to make the files outside the sparsity
-> > > patterns disappear from the working tree...then modify different file=
-s
-> > > in the working tree both inside and outside the sparsity patterns.
-> > > And also remove some file that matches the sparsity patterns and
-> > > manually mark it as SKIP_WORKTREE.)  That'd give us much better
-> > > coverage.
-> > >
-> >
-> > Nice addition. So I should use git update-index --skip-worktree to set
-> > skip_worktree bit for index entries.
->
-> Well, I'd say use normal "sparse-checkout" commands to set most of
-> them.  However, adding one or two extra SKIP_WORKTREE paths via
-> running `git update-index --skip-worktree $PATH` (and removing the
-> corresponding local file) would make the testcases more interesting.
->
-
-Get it.
-
-> > > I think I'm going to stop reviewing here.  I'm probably just going to
-> > > keep repeating the same issues I identified earlier if I continue.
-> >
-> > Thank you very much for your review, you have pointed out very many
-> > problems with this patch :)
->
-> I'm glad it was helpful.  :)
-
-Thanks.
-
-ZheNing Hu
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index dfcc7da4c211..b080d3c61e31 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -9,7 +9,7 @@ git-format-patch - Prepare patches for e-mail submission
+ SYNOPSIS
+ --------
+ [verse]
+-'git format-patch' [-k] [(-o|--output-directory) <dir> | --stdout]
++'git format-patch' [-k] [(-o|--output-directory) <dir> | --stdout] [--mboxrd]
+ 		   [--no-thread | --thread[=<style>]]
+ 		   [(--attach|--inline)[=<boundary>] | --no-attach]
+ 		   [-s | --signoff]
+@@ -145,6 +145,10 @@ include::diff-options.txt[]
+ 	Print all commits to the standard output in mbox format,
+ 	instead of creating a file for each one.
+ 
++--mboxrd::
++	Use the robust "mboxrd" format with `--stdout` to escape
++	"^>+From " lines.
++
+ --attach[=<boundary>]::
+ 	Create multipart/mixed attachment, the first part of
+ 	which is the commit message and the patch itself in the
+diff --git a/builtin/log.c b/builtin/log.c
+index 5eafcf26b49b..13f5deb7a5c0 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1872,6 +1872,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 	struct strbuf rdiff2 = STRBUF_INIT;
+ 	struct strbuf rdiff_title = STRBUF_INIT;
+ 	int creation_factor = -1;
++	int mboxrd = 0;
+ 
+ 	const struct option builtin_format_patch_options[] = {
+ 		OPT_CALLBACK_F('n', "numbered", &numbered, NULL,
+@@ -1883,6 +1884,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOL('s', "signoff", &do_signoff, N_("add a Signed-off-by trailer")),
+ 		OPT_BOOL(0, "stdout", &use_stdout,
+ 			    N_("print patches to standard out")),
++		OPT_BOOL(0, "mboxrd", &mboxrd,
++			    N_("use the robust mboxrd format with --stdout")),
+ 		OPT_BOOL(0, "cover-letter", &cover_letter,
+ 			    N_("generate a cover letter")),
+ 		OPT_BOOL(0, "numbered-files", &just_numbers,
+@@ -2106,6 +2109,10 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+ 				  rev.diffopt.close_file, "--output",
+ 				  !!output_directory, "--output-directory");
+ 
++	/* should we warn on --mboxrd w/o --stdout? */
++	if (mboxrd)
++		rev.commit_format = CMIT_FMT_MBOXRD;
++
+ 	if (use_stdout) {
+ 		setup_pager();
+ 	} else if (!rev.diffopt.close_file) {
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index ba5c395d2d80..f6e2fbdcfa68 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1815,7 +1815,7 @@ _git_fetch ()
+ 
+ __git_format_patch_extra_options="
+ 	--full-index --not --all --no-prefix --src-prefix=
+-	--dst-prefix= --notes
++	--dst-prefix= --notes --mboxrd
+ "
+ 
+ _git_format_patch ()
+diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
+index de1da4673da9..69ed8b1ffaa1 100755
+--- a/t/t4014-format-patch.sh
++++ b/t/t4014-format-patch.sh
+@@ -2281,7 +2281,7 @@ test_expect_success 'format-patch --attach cover-letter only is non-multipart' '
+ 	test_line_count = 1 output
+ '
+ 
+-test_expect_success 'format-patch --pretty=mboxrd' '
++test_expect_success 'format-patch --mboxrd' '
+ 	sp=" " &&
+ 	cat >msg <<-INPUT_END &&
+ 	mboxrd should escape the body
+@@ -2316,7 +2316,9 @@ test_expect_success 'format-patch --pretty=mboxrd' '
+ 	INPUT_END
+ 
+ 	C=$(git commit-tree HEAD^^{tree} -p HEAD <msg) &&
+-	git format-patch --pretty=mboxrd --stdout -1 $C~1..$C >patch &&
++	git format-patch --mboxrd --stdout -1 $C~1..$C >patch &&
++	git format-patch --pretty=mboxrd --stdout -1 $C~1..$C >compat &&
++	test_cmp patch compat &&
+ 	git grep -h --no-index -A11 \
+ 		"^>From could trip up a loose mbox parser" patch >actual &&
+ 	test_cmp expect actual
+diff --git a/t/t4150-am.sh b/t/t4150-am.sh
+index cdad4b688078..9a128c16a6ee 100755
+--- a/t/t4150-am.sh
++++ b/t/t4150-am.sh
+@@ -1033,7 +1033,7 @@ test_expect_success 'am --patch-format=mboxrd handles mboxrd' '
+ 	>From extra escape for reversibility
+ 	INPUT_END
+ 	git commit -F msg &&
+-	git format-patch --pretty=mboxrd --stdout -1 >mboxrd1 &&
++	git format-patch --mboxrd --stdout -1 >mboxrd1 &&
+ 	grep "^>From could trip up a loose mbox parser" mboxrd1 &&
+ 	git checkout -f first &&
+ 	git am --patch-format=mboxrd mboxrd1 &&
