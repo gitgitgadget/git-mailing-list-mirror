@@ -2,166 +2,208 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DBA2BC4332F
-	for <git@archiver.kernel.org>; Mon, 14 Nov 2022 09:51:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5A6BC433FE
+	for <git@archiver.kernel.org>; Mon, 14 Nov 2022 09:54:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236489AbiKNJvN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Nov 2022 04:51:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53432 "EHLO
+        id S236430AbiKNJyK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Nov 2022 04:54:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56798 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236425AbiKNJun (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Nov 2022 04:50:43 -0500
-X-Greylist: delayed 567 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 14 Nov 2022 01:50:42 PST
-Received: from dcvr.yhbt.net (dcvr.yhbt.net [173.255.242.215])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 942C41EC52
-        for <git@vger.kernel.org>; Mon, 14 Nov 2022 01:50:42 -0800 (PST)
-Received: from localhost (dcvr.yhbt.net [127.0.0.1])
-        by dcvr.yhbt.net (Postfix) with ESMTP id F15331F910
-        for <git@vger.kernel.org>; Mon, 14 Nov 2022 09:41:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=80x24.org;
-        s=selector1; t=1668418875;
-        bh=eRZIhUP4LHeWFs8uHM4OfhJyND74FOd7Lqq8hwy8UFk=;
-        h=From:To:Subject:Date:From;
-        b=dgu3MTSr9XL665htNMn6NZocjWnyyTDo7zPN4jKEfCpxl1SEWFJTqKYsjvzQuI6AJ
-         k7us+d9uLniuWU3NHVH+dLc1MyBuY3aApAIOjXKcVmhx1F13IpQjBrjnNG5E+eT7Hc
-         3Yc7C3VS74OtmpLdK7Md/SKW8AM4QjIMTQuDm2+4=
-From:   Eric Wong <e@80x24.org>
-To:     git@vger.kernel.org
-Subject: [PATCH] format-patch: add --mboxrd alias for --pretty=mboxrd
-Date:   Mon, 14 Nov 2022 09:41:14 +0000
-Message-Id: <20221114094114.18986-1-e@80x24.org>
+        with ESMTP id S235789AbiKNJx7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Nov 2022 04:53:59 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D8D06376
+        for <git@vger.kernel.org>; Mon, 14 Nov 2022 01:53:53 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id l39-20020a05600c1d2700b003cf93c8156dso7464416wms.4
+        for <git@vger.kernel.org>; Mon, 14 Nov 2022 01:53:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/UDiXWV46+LkWqRoUMj8QYtoaRcrq6ojQUUj/Z+HaRE=;
+        b=fiqtLJqHxTb1QgyyLBpYEVDxPzZXspg8+T/zwMIRDB2A0TJvlBWeXqQXr+fxLI26+n
+         5Crw0wPRUE/J5jFLoPfoOSVEMgWUfyNLoRrR84mIaoyndH0tvDjOPkQT8/bVT35tGUor
+         RdeBZyWpmTTXJFtAx5EO9AkqLxhR4jebu0EIfqb5glpS6wDUpA8FdLbQ/6fbozvjHRCS
+         IeQ8oqzYE1R5KwFArCt4UU7P04VGxAb8nyRDzuIsfbfAd7h7gbwHqSh+UQmdvEPj9fzJ
+         yt2io9qxAGy5nec7nUUQHOvmP7eSQ9LeTs3trXOQulf3pozycHLUeDXST9ANrJdxNcIY
+         4UUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/UDiXWV46+LkWqRoUMj8QYtoaRcrq6ojQUUj/Z+HaRE=;
+        b=8ID7e2KDIBZfuYtG2nvPbbNcgMc51ygPCx5V3CPy7DZSwdzOdLakLvc/weAqKk+mJU
+         g3l0bf70dPOfs60HomQG7FoKzyDXzlrKSe7Rlg4o3IU/rdH2QJ1EOqLnKHINvNdtLSsj
+         4GrbmrEjjzIH07sLGe2XNRbvidZYcncSiTrbfrTqMkCLjjnZWtslBdPk43MibYVaoyE+
+         votw+gjiUxmOYj63j/vwxjRRjxSBNAP2zHaohAUBPA7Mmh1umGpsbfM1yXztcLuWZdjf
+         v2fX8uAi0cLaNMjPUWz5EimSbeLVlCx8B6Ur3E9sXK/y/C28mWMvvqdoJlfoaUHy2YiU
+         xZxA==
+X-Gm-Message-State: ANoB5pmIC+Kix7ABvMRhCSWlSuIfdPQqZx6DIBTBwv10/6p1y5f/VSLV
+        iQq77NUNSROxVDqyc6e5Uoo=
+X-Google-Smtp-Source: AA0mqf4EVt3/Teyi7UFcE/T2GkMsYlLhXQy/Q7zbObT8TtjBTRMGS4udeCJloAYQaKLH2yDKLrM2eQ==
+X-Received: by 2002:a1c:2581:0:b0:3cf:d18d:3bfe with SMTP id l123-20020a1c2581000000b003cfd18d3bfemr7136263wml.203.1668419632333;
+        Mon, 14 Nov 2022 01:53:52 -0800 (PST)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id r7-20020adfce87000000b00236488f62d6sm9207671wrn.79.2022.11.14.01.53.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Nov 2022 01:53:51 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <8ec8f3f5-0827-25a3-464d-638378b65ddb@dunelm.org.uk>
+Date:   Mon, 14 Nov 2022 09:53:43 +0000
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 2/2] tests(mingw): avoid very slow `mingw_test_cmp`
+Content-Language: en-US
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1309.v2.git.1662469859.gitgitgadget@gmail.com>
+ <pull.1309.v3.git.1668290855.gitgitgadget@gmail.com>
+ <a7f4265ceb26c6dd9d347ef4cbef2aac7d60bf13.1668290855.git.gitgitgadget@gmail.com>
+In-Reply-To: <a7f4265ceb26c6dd9d347ef4cbef2aac7d60bf13.1668290855.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-mboxrd is a superior output format when used with --stdout and
-needs more exposure.  Including pretty-formats.txt would be
-excessive, since documenting --pretty= for `git format-patch'
-would likely be confusing to users.
+Hi Dscho
 
-Instead of documenting --pretty, add an --mboxrd alias to save
-keystrokes and improve documentation.
+On 12/11/2022 22:07, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> It is more performant to run `git diff --no-index` than running the
+> `mingw_test_cmp` code with MSYS2's Bash, i.e. the Bash that Git for
+> Windows uses. And a lot more readable.
 
-Signed-off-by: Eric Wong <e@80x24.org>
----
- Also, --mboxrd without --stdout makes no sense to me,
- so I'm considering warning on it...
+This makes me wonder about the implications for our diff tests. We have 
+~200 calls to `test_cmp` in t*-diff-*.sh. I had a look at 
+t4053-diff-no-index.sh and non of the tests that use `test_cmp` look 
+critical for functionality that is used by `test_cmp` and there are 
+tests for the exit code. I suspect that if `diff --no-index` breaks 
+we'll end up with confusing test failures rather than misleading passes.
 
- Side note: some of the OPT_* switches might be misplaced
- under the "Messaging" OPT_GROUP...
+A side effect of this change is that on windows `test_cmp` will now 
+except directories as well as files but I don't think that matters.
 
- Documentation/git-format-patch.txt     | 6 +++++-
- builtin/log.c                          | 7 +++++++
- contrib/completion/git-completion.bash | 2 +-
- t/t4014-format-patch.sh                | 6 ++++--
- t/t4150-am.sh                          | 2 +-
- 5 files changed, 18 insertions(+), 5 deletions(-)
+> Note: Earlier attempts at fixing this involved a test helper that avoids
+> the overhead of the diff machinery, in favor of implementing a behavior
+> that is more in line with what `mingw_test_cmp` does now, but that
+> attempt saw a lot of backlash and distractions during review and was
+> therefore abandoned.
 
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index dfcc7da4c211..b080d3c61e31 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -9,7 +9,7 @@ git-format-patch - Prepare patches for e-mail submission
- SYNOPSIS
- --------
- [verse]
--'git format-patch' [-k] [(-o|--output-directory) <dir> | --stdout]
-+'git format-patch' [-k] [(-o|--output-directory) <dir> | --stdout] [--mboxrd]
- 		   [--no-thread | --thread[=<style>]]
- 		   [(--attach|--inline)[=<boundary>] | --no-attach]
- 		   [-s | --signoff]
-@@ -145,6 +145,10 @@ include::diff-options.txt[]
- 	Print all commits to the standard output in mbox format,
- 	instead of creating a file for each one.
- 
-+--mboxrd::
-+	Use the robust "mboxrd" format with `--stdout` to escape
-+	"^>+From " lines.
-+
- --attach[=<boundary>]::
- 	Create multipart/mixed attachment, the first part of
- 	which is the commit message and the patch itself in the
-diff --git a/builtin/log.c b/builtin/log.c
-index 5eafcf26b49b..13f5deb7a5c0 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1872,6 +1872,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	struct strbuf rdiff2 = STRBUF_INIT;
- 	struct strbuf rdiff_title = STRBUF_INIT;
- 	int creation_factor = -1;
-+	int mboxrd = 0;
- 
- 	const struct option builtin_format_patch_options[] = {
- 		OPT_CALLBACK_F('n', "numbered", &numbered, NULL,
-@@ -1883,6 +1884,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 		OPT_BOOL('s', "signoff", &do_signoff, N_("add a Signed-off-by trailer")),
- 		OPT_BOOL(0, "stdout", &use_stdout,
- 			    N_("print patches to standard out")),
-+		OPT_BOOL(0, "mboxrd", &mboxrd,
-+			    N_("use the robust mboxrd format with --stdout")),
- 		OPT_BOOL(0, "cover-letter", &cover_letter,
- 			    N_("generate a cover letter")),
- 		OPT_BOOL(0, "numbered-files", &just_numbers,
-@@ -2106,6 +2109,10 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 				  rev.diffopt.close_file, "--output",
- 				  !!output_directory, "--output-directory");
- 
-+	/* should we warn on --mboxrd w/o --stdout? */
-+	if (mboxrd)
-+		rev.commit_format = CMIT_FMT_MBOXRD;
-+
- 	if (use_stdout) {
- 		setup_pager();
- 	} else if (!rev.diffopt.close_file) {
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index ba5c395d2d80..f6e2fbdcfa68 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1815,7 +1815,7 @@ _git_fetch ()
- 
- __git_format_patch_extra_options="
- 	--full-index --not --all --no-prefix --src-prefix=
--	--dst-prefix= --notes
-+	--dst-prefix= --notes --mboxrd
- "
- 
- _git_format_patch ()
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index de1da4673da9..69ed8b1ffaa1 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -2281,7 +2281,7 @@ test_expect_success 'format-patch --attach cover-letter only is non-multipart' '
- 	test_line_count = 1 output
- '
- 
--test_expect_success 'format-patch --pretty=mboxrd' '
-+test_expect_success 'format-patch --mboxrd' '
- 	sp=" " &&
- 	cat >msg <<-INPUT_END &&
- 	mboxrd should escape the body
-@@ -2316,7 +2316,9 @@ test_expect_success 'format-patch --pretty=mboxrd' '
- 	INPUT_END
- 
- 	C=$(git commit-tree HEAD^^{tree} -p HEAD <msg) &&
--	git format-patch --pretty=mboxrd --stdout -1 $C~1..$C >patch &&
-+	git format-patch --mboxrd --stdout -1 $C~1..$C >patch &&
-+	git format-patch --pretty=mboxrd --stdout -1 $C~1..$C >compat &&
-+	test_cmp patch compat &&
- 	git grep -h --no-index -A11 \
- 		"^>From could trip up a loose mbox parser" patch >actual &&
- 	test_cmp expect actual
-diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-index cdad4b688078..9a128c16a6ee 100755
---- a/t/t4150-am.sh
-+++ b/t/t4150-am.sh
-@@ -1033,7 +1033,7 @@ test_expect_success 'am --patch-format=mboxrd handles mboxrd' '
- 	>From extra escape for reversibility
- 	INPUT_END
- 	git commit -F msg &&
--	git format-patch --pretty=mboxrd --stdout -1 >mboxrd1 &&
-+	git format-patch --mboxrd --stdout -1 >mboxrd1 &&
- 	grep "^>From could trip up a loose mbox parser" mboxrd1 &&
- 	git checkout -f first &&
- 	git am --patch-format=mboxrd mboxrd1 &&
+Hopefully most of the files we feed into `test_cmp` are small enough 
+that the absolute difference in run-time is not too big. There is an 
+optimization for -U0 that trims the common tail from the files before 
+calling xdl_diff() but that does not help here because we need to use 
+--ignore-cr-at-eol (otherwise `git diff --no-index -U0 || git diff 
+--no-index` might speed up the common case of matching files).
+
+Best Wishes
+
+Phillip
+
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>   t/test-lib-functions.sh | 66 -----------------------------------------
+>   t/test-lib.sh           |  2 +-
+>   2 files changed, 1 insertion(+), 67 deletions(-)
+> 
+> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> index 8c44856eaec..452fe9bc8aa 100644
+> --- a/t/test-lib-functions.sh
+> +++ b/t/test-lib-functions.sh
+> @@ -1541,72 +1541,6 @@ test_skip_or_die () {
+>   	error "$2"
+>   }
+>   
+> -# The following mingw_* functions obey POSIX shell syntax, but are actually
+> -# bash scripts, and are meant to be used only with bash on Windows.
+> -
+> -# A test_cmp function that treats LF and CRLF equal and avoids to fork
+> -# diff when possible.
+> -mingw_test_cmp () {
+> -	# Read text into shell variables and compare them. If the results
+> -	# are different, use regular diff to report the difference.
+> -	local test_cmp_a= test_cmp_b=
+> -
+> -	# When text came from stdin (one argument is '-') we must feed it
+> -	# to diff.
+> -	local stdin_for_diff=
+> -
+> -	# Since it is difficult to detect the difference between an
+> -	# empty input file and a failure to read the files, we go straight
+> -	# to diff if one of the inputs is empty.
+> -	if test -s "$1" && test -s "$2"
+> -	then
+> -		# regular case: both files non-empty
+> -		mingw_read_file_strip_cr_ test_cmp_a <"$1"
+> -		mingw_read_file_strip_cr_ test_cmp_b <"$2"
+> -	elif test -s "$1" && test "$2" = -
+> -	then
+> -		# read 2nd file from stdin
+> -		mingw_read_file_strip_cr_ test_cmp_a <"$1"
+> -		mingw_read_file_strip_cr_ test_cmp_b
+> -		stdin_for_diff='<<<"$test_cmp_b"'
+> -	elif test "$1" = - && test -s "$2"
+> -	then
+> -		# read 1st file from stdin
+> -		mingw_read_file_strip_cr_ test_cmp_a
+> -		mingw_read_file_strip_cr_ test_cmp_b <"$2"
+> -		stdin_for_diff='<<<"$test_cmp_a"'
+> -	fi
+> -	test -n "$test_cmp_a" &&
+> -	test -n "$test_cmp_b" &&
+> -	test "$test_cmp_a" = "$test_cmp_b" ||
+> -	eval "diff -u \"\$@\" $stdin_for_diff"
+> -}
+> -
+> -# $1 is the name of the shell variable to fill in
+> -mingw_read_file_strip_cr_ () {
+> -	# Read line-wise using LF as the line separator
+> -	# and use IFS to strip CR.
+> -	local line
+> -	while :
+> -	do
+> -		if IFS=$'\r' read -r -d $'\n' line
+> -		then
+> -			# good
+> -			line=$line$'\n'
+> -		else
+> -			# we get here at EOF, but also if the last line
+> -			# was not terminated by LF; in the latter case,
+> -			# some text was read
+> -			if test -z "$line"
+> -			then
+> -				# EOF, really
+> -				break
+> -			fi
+> -		fi
+> -		eval "$1=\$$1\$line"
+> -	done
+> -}
+> -
+>   # Like "env FOO=BAR some-program", but run inside a subshell, which means
+>   # it also works for shell functions (though those functions cannot impact
+>   # the environment outside of the test_env invocation).
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 7726d1da88a..f8c6205e08f 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -1546,7 +1546,7 @@ case $uname_s in
+>   	test_set_prereq SED_STRIPS_CR
+>   	test_set_prereq GREP_STRIPS_CR
+>   	test_set_prereq WINDOWS
+> -	GIT_TEST_CMP=mingw_test_cmp
+> +	GIT_TEST_CMP="GIT_DIR=/dev/null git diff --no-index --ignore-cr-at-eol --"
+>   	;;
+>   *CYGWIN*)
+>   	test_set_prereq POSIXPERM
