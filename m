@@ -2,379 +2,440 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9587C4332F
-	for <git@archiver.kernel.org>; Mon, 14 Nov 2022 23:20:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73037C4332F
+	for <git@archiver.kernel.org>; Mon, 14 Nov 2022 23:33:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237443AbiKNXUq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Nov 2022 18:20:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37566 "EHLO
+        id S235937AbiKNXdP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Nov 2022 18:33:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42064 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235813AbiKNXUp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Nov 2022 18:20:45 -0500
-Received: from mail-pg1-x549.google.com (mail-pg1-x549.google.com [IPv6:2607:f8b0:4864:20::549])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E57A6B483
-        for <git@vger.kernel.org>; Mon, 14 Nov 2022 15:20:40 -0800 (PST)
-Received: by mail-pg1-x549.google.com with SMTP id v18-20020a637a12000000b0046ed84b94efso6443643pgc.6
-        for <git@vger.kernel.org>; Mon, 14 Nov 2022 15:20:40 -0800 (PST)
+        with ESMTP id S230520AbiKNXdO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Nov 2022 18:33:14 -0500
+Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA62F65A8
+        for <git@vger.kernel.org>; Mon, 14 Nov 2022 15:33:12 -0800 (PST)
+Received: by mail-pl1-x649.google.com with SMTP id o7-20020a170902d4c700b001868cdac9adso10056393plg.13
+        for <git@vger.kernel.org>; Mon, 14 Nov 2022 15:33:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=content-transfer-encoding:cc:to:from:subject:message-id:references
          :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=QCT3Shm1UIuKFoy/LYZhYmfasnmizOqWO8TOYP4eExo=;
-        b=jpPckUZM2D716Lgtojd/8ASME946pbItZr+jdu49lhhkPw1ePb7VYc/ZEoyxU6g6Wk
-         imrfxLWJMaFObNyMTNQrTauO03evQeqMmYjwy4WHiPg2SQoHJDALTnEmkpbH2cnzf+sc
-         5bUp90KXfAHok+tWAALoXhvr1di70+0P9hN+/CeGHnisgvtAhfWuvGdKI06a59K9QYcb
-         Y+6Nh3PZ1xOSXUzR7UwWJiX6vpZ99aMx4gmytITVg5YLMBkPkNU0jpsi/YL0yNdZr7Hi
-         1ryWpuPndgFPTxFaQoiZiWc1oN5jsNrBp6ww/oYwWElG+jZzlmruj/UPAib+u65tQS7F
-         3+Rg==
+        bh=NTBzXYJgBJw1RfAaGo4YmauYxZ/Og3yxE1L82xHhchU=;
+        b=Am0L4+IYMyiJsvYSVpaNlFd6j1exn0VIVnDLyxi2DeHyvz2LSiaNWByFa1KQawIxxk
+         TuumDPbSHSxNbm8FuxEbOJjmN1VveIltQshoLdB4mp+Wu0vyW29gPfIGyxXrfh3DHWu3
+         7zm0wRLv7JAr9pJwfMirUR9zOC970Httdnss4D2XD0Lhdw9SUaRHJ+xNb//6ksnjpD/h
+         +0SEHHbE3czLbs6z/8Zv0dhvz86oUROyvhNsGJL+AQz1AibgrNOlebJQhdWNnmzi2ZKr
+         np4jAPWxImdH34PVSekPvCbgHiUf5rryscIuSPUFfTc46c+C1v8j5V35wM63N9f2HV3z
+         UrKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:from:subject:message-id:references
          :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=QCT3Shm1UIuKFoy/LYZhYmfasnmizOqWO8TOYP4eExo=;
-        b=PyEQKKwdVLonQao7Rrvdz1UardmJokS0jVQn1+7JSHTkg77VtnfZTFQjUw/xOWG51z
-         zW4fCL6SE73LedZqokpye/49ngerrNGDWq3uDBfzYYQ2HokKWYQT9JDV3AGbojylDNEr
-         v+DSLxjgaFDwK3Dla5SlSVBPFncJnwWnrAXEV9hxUn3ZSnArJlSfyCv87uNHqpc5sjq0
-         Oqof8azOBxxO6B2bRl5e0qJ5ybiRz5q6/SCkrEoqiQUMCsPl3/gTDwS5CwqEe7MNufos
-         SQjWlbE667AeOnFfA4o+KSGtvfRjFeiIDmNnpVFi7YIHKtID4zsykIOLPyiA9J4uEDbh
-         0zEQ==
-X-Gm-Message-State: ANoB5pn8h5bbtARMzkgNYl3MIhxGgJZpIHvYqdvwvHZ7OV3NotCGQE12
-        jYvTyGWfwgwDJlyW3SU7d3WGlzD4y26mDQ==
-X-Google-Smtp-Source: AA0mqf7N6cn2usiA14zDCdVwhJegl2N88HTwndZ22BGuW6mpGA7+rVnNVRTlbkmEXKRz14WTL2jmRWTh4T8gkA==
+        bh=NTBzXYJgBJw1RfAaGo4YmauYxZ/Og3yxE1L82xHhchU=;
+        b=cNje1L7+qB2uRT/Hdt686Wyp6ekvrcgbR9FPNWoHhxveCuB+YH/ez80oI25PpmQvsi
+         XAiMsVmRLkXFgUhRmR2OljuSt4JhD+fzTNT2FkuEnVIalSgxNjZvshoqQOLAaxQVNaxj
+         1EAshWJlj3LY3+guHASeoj9EP70xyxbCBEITHGSwpZ9V+PSOR5VRIEnG7E3kys0qjULO
+         iEC/tmIF1MbvXyDfk2vMr2qYijoYIRCLB1dP7y9rX4uOFr5f5pJTf3nnwiR0lGQwXcmW
+         Rt/pg+TrcKotENRXuLVLkhgBcyVTPZ8z5yFvh2DABzeTPdgmzNptsWFM5FNQEU1fpOHN
+         5ETA==
+X-Gm-Message-State: ANoB5pmsMK5xcMbH+WNqZoPy50NvtnpaShms812yzJ/bf8Sj2uufzERx
+        1N6T0Urtcn1SksMVRBjIfLyHphTu8rvdNw==
+X-Google-Smtp-Source: AA0mqf42CLnAHOoKUDcB/YTZmLmbSSwq5yB5Vu3OrAppOJQewHoLP0Xb2EJH/eixVu0itXon3QHhSKGX6iWK5Q==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a62:8745:0:b0:562:e790:dfe0 with SMTP id
- i66-20020a628745000000b00562e790dfe0mr15667830pfe.16.1668468040462; Mon, 14
- Nov 2022 15:20:40 -0800 (PST)
-Date:   Mon, 14 Nov 2022 15:20:39 -0800
-In-Reply-To: <cover-v2-00.10-00000000000-20221114T100803Z-avarab@gmail.com>
+ (user=chooglen job=sendgmr) by 2002:aa7:82da:0:b0:554:4162:1ec1 with SMTP id
+ f26-20020aa782da000000b0055441621ec1mr15920522pfn.64.1668468792301; Mon, 14
+ Nov 2022 15:33:12 -0800 (PST)
+Date:   Mon, 14 Nov 2022 15:33:10 -0800
+In-Reply-To: <221114.86y1sdlq2d.gmgdl@evledraar.gmail.com>
 Mime-Version: 1.0
-References: <RFC-cover-0.8-00000000000-20221109T192315Z-avarab@gmail.com> <cover-v2-00.10-00000000000-20221114T100803Z-avarab@gmail.com>
-Message-ID: <kl6lpmdpnmwo.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v2 00/10] Get rid of "git --super-prefix"
+References: <20221109004708.97668-1-chooglen@google.com> <RFC-cover-0.8-00000000000-20221109T192315Z-avarab@gmail.com>
+ <kl6ltu373ae5.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <221110.86zgcznjah.gmgdl@evledraar.gmail.com> <kl6l5yfm2taf.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <kl6lv8nl1h19.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <221111.86fsepmbhe.gmgdl@evledraar.gmail.com> <kl6lsfip0yfx.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <221114.86y1sdlq2d.gmgdl@evledraar.gmail.com>
+Message-ID: <kl6lmt8tnmbt.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [RFC PATCH 0/8] Get rid of "git --super-prefix"
 From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>, Robert Coup <robert@coup.net.nz>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for taking this forward as a non-RFC (and sorry for the
-coordinating confusion last week). I'm really happy to see this go
-forward.
-
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> =3D Summary
+> As noted in the CL above I included this because I see you're keen to
+> include it, but I'm personally a bit "meh" on it. I.e. it's just
+> renaming an existing unrelated option, although being able to use
+> OPT__SUPER_PREFIX() makes it slightly nicer.
 >
-> What's "--super-prefix"? The "git" command takes an "internal use
-> only" "--super-prefix" option, which is used to inform processes
-> invoked in submodules what the path prefix to the invoking
-> superproject is.
->
-> This is so so that e.g. "git submodule absorbgitdirs" can report
-> "sub-1/sub-2", instead of "sub-2" when being invoked in the "sub-1"
-> submodule.
->
-> For this the "--super-prefix" facility has been doing a
-> setenv("GIT_INTERNAL_SUPER_PREFIX", "sub-1/") as soon as it got the
-> "--supre-prefix=3Dsub-1/". We'd then pass that along via the environment
-> when invoking the sub-process.
->
-> As this series shows we don't need such a hands-off global facility to
-> do this, we can instead just pass the relevant context directly in
-> each command. E.g. "git submodule absorbgitdirs" can pass the path to
-> the "git submodule absorbgitdirs" sub-process it's about to invoke.
->
+> As post-cleanups go I think removing the "submodule_prefix" from the
+> "struct repository" would make more sense, and maybe it's worth peeling
+> off the 10/10 to include in such a post-cleanup series? I.e. the below
+> on top of all of this works, and reduces allocations and cargo-culting
+> around the submodule API.
 
-To play devil's advocate, we don't need it now, but one could argue that
-we'll need it in the future, and having some global facility for this
-would continue to be helpful. In [1], I mentioned that it is "helpful"
-in this way, but that this "helpfulness" is a trap, because we want to
-be moving more things in-process anyway (and we're making pretty good
-strides in that direction), and adding more global state makes it harder
-to reason about who should own the variables when we libify the
-internals (do we move the state into per-process struct?
-the_repository? something else?)
+As a first impression I'm not particularly keen on this, since it makes
+perfect sense to me to have a repo->submodule_prefix, especially when
+recursing into N-level deep submodules...
 
-In addition, you also mentioned earlier in the [1] thread that this
-global state also makes it possible accidentally affect commands we
-didn't mean to, and having less global state makes behavior easier to
-reason about.
+>
+> -- >8 --
+> Subject: [PATCH] repo & submodule API: stop carrying "repo->submodule_pre=
+fix"
+>
+> As this change shows the "submodule_prefix" field to "struct
+> repository" added in 96dc883b3cd (repository: enable initialization of
+> submodules, 2017-06-22) was only used by "ls-files" and "grep". Let's
+> have those two carry forward the "super_prefix" instead.
+>
+> Having every user of "struct repository" needing to worry about this
+> created a mismatch in the API where e.g. "grep" would re-compute a
+> "name_base_len" which we knew before. Now we use a "struct strbuf" in
+> the "struct grep_opt" there instead, so we'll know the length
+> already. This simplifies "grep_cache()" and "grep_tree()".
+>
+> We're also deleting cargo-culted code that the previous API foisted
+> upon us. In 605f0ec1350 (submodule: use submodule repos for object
+> lookup, 2018-12-14) the "Mark it as a submodule" code was added to
+> "open_submodule()", but the resulting xstrdup()'d "submodule_prefix"
+> was never used by anything.
 
-So I think the argument I find most convincing isn't just "We don't need
-it now.", but also "Global state is the wrong way to do this, so let's
-stop.".
+(As an aside, I think open_submodule() should have been replaced by
+repo_submodule_init().)
 
-[1] https://lore.kernel.org/git/kl6l5yfm2taf.fsf@chooglen-macbookpro.roam.c=
-orp.google.com
+In which case, yes it isn't used by anything in that code path, but
+being meticulous about maintaining .super_prefix means that other
+callers could use it if they wanted to, which might be crucial once we
+start plumb "struct repository" deeper and deeper and...
 
-> It's also proposing to replace Glen's one-patch[6], which is working
-> around the problem shown in the test added in 1/10 here. Per
-> downthread of [7] I think Glen was aiming for getting a more narrow
-> fix in case we split off 9/10 here into some later fix.
 >
-> As we're fixing an edge case in something that's always been broken
-> (and thus wouldn't backport) I think it's better to just fix the
-> problem directly, rather than introducing new "--super-prefix" use,
-> just to take it away later.
+> Still, removing this field might not be a good move, as the
+> "super_prefix" might be a common enough case in the future, e.g. when
+> eventually migrating the "submodule--helper" users[1] to run
+> in-process.
+>
+> As the "grep" example demonstrates I don't think that's the
+> case. There instead of xstrdup()-ing all the way down we're now
+> carrying a single "super_prefix" in the form of a "struct strbuf". As
+> we recurse we then append to it, and strbuf_setlen() it back when we
+> we recurse out of that submodule. This is similar to how e.g. the
+> "read_tree_at()" API works.
 
-(I'll share my thoughts on this on another email).
+This technique might no longer be so appealing. We _could_ pass both
+"struct repository" and "super_prefix", but that seems odd given that
+the super prefix is tied to the repository.
 
-> =3D Changes since the RFC
->
-> * Added Glen's "git fetch" test as a 1/10, with an updated commit message
-> * Updated 2/10's commit message for the non-RFC, and adjusted and
->   incorporated a variant of Glen's fsmonitor test change.
-> * 9/10: Correctly re-arrange bitfield define's when removing one, make
->   the test added in 1/10 pass.
->
-> * 10/10: New commit to make "git fetch" use our own "--super-prefix"
->   instead of its "--submodule-prefix", which makes it consistent with
->   the other command-level "--super-prefix" introduced here.
->
->   Personally I'm rather "meh" on this. It's not actually needed by the
->   main body of the series, but Glen seems to prefer it in[9], and
->   doing it is easy enough.
->
->   That change is a pure refactoring clean-up for consistency. The only
->   reason it's 10/10 and not 1/10 is because it uses the
->   "OPT__SUPER_PREFIX()" introduced in 2/10.
+But that's just a first impression anyway. I don't mind taking another
+look if this gets a standalone review.
 
-Thanks for this, I really appreciate it :)
-
-> =3D CI & fetch URL
 >
-> Passing at: https://github.com/avar/git/tree/avar/nuke-global-super-prefi=
-x-use-local-2
+> Doing it that way means that we have just one allocation, which in the
+> common case we might realloc() if we don't have enough room in the
+> "struct strbuf".
 >
-> 1. https://lore.kernel.org/git/RFC-cover-0.8-00000000000-20221109T192315Z=
--avarab@gmail.com/
-> 2. https://lore.kernel.org/git/20221109004708.97668-1-chooglen@google.com=
-/
-> 3. https://lore.kernel.org/git/kl6l5yfm2taf.fsf@chooglen-macbookpro.roam.=
-corp.google.com/
-> 4. c0c4f4d1c33 (Merge branch 'ab/submodule-helper-prep-only' into next, 2=
-022-11-08)
-> 5. https://lore.kernel.org/git/patch-1.1-34b54fdd9bb-20221109T020347Z-ava=
-rab@gmail.com/
-> 6. https://lore.kernel.org/git/pull.1378.git.git.1668210935360.gitgitgadg=
-et@gmail.com/
-> 7. https://lore.kernel.org/git/221111.86fsepmbhe.gmgdl@evledraar.gmail.co=
-m/
-> 8. https://lore.kernel.org/git/20221109004708.97668-3-chooglen@google.com=
-/
-> 9. https://lore.kernel.org/git/kl6lsfip0yfx.fsf@chooglen-macbookpro.roam.=
-corp.google.com/
+> 1. https://lore.kernel.org/git/cover-v2-00.10-00000000000-20221114T100803=
+Z-avarab@gmail.com/
+> 2. https://github.com/avar/git/tree/avar/grep-post-drop-prefix-cleanup
 >
-> Glen Choo (1):
->   read-tree + fetch tests: test failing "--super-prefix" interaction
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  builtin/grep.c     | 18 ++++++++----------
+>  builtin/ls-files.c | 40 +++++++++++++++++++++++++---------------
+>  grep.c             |  6 +++---
+>  grep.h             |  2 ++
+>  repository.c       |  7 -------
+>  repository.h       |  7 -------
+>  submodule.c        |  3 ---
+>  7 files changed, 38 insertions(+), 45 deletions(-)
 >
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (9):
->   submodule--helper: don't use global --super-prefix in "absorbgitdirs"
->   submodule--helper: "deinit" has never used "--super-prefix"
->   submodule--helper: convert "foreach" to its own "--super-prefix"
->   submodule--helper: convert "sync" to its own "--super-prefix"
->   submodule--helper: convert "status" to its own "--super-prefix"
->   submodule--helper: convert "{update,clone}" to their own
->     "--super-prefix"
->   submodule tests: test "git branch -t" output and stderr
->   read-tree: add "--super-prefix" option, eliminate global
->   fetch: rename "--submodule-prefix" to "--super-prefix"
->
->  Documentation/fetch-options.txt |  5 --
->  Documentation/git.txt           |  8 +--
->  builtin.h                       |  4 --
->  builtin/checkout.c              |  2 +-
->  builtin/fetch.c                 |  7 +--
->  builtin/read-tree.c             |  1 +
->  builtin/submodule--helper.c     | 95 ++++++++++++++++++--------------
->  cache.h                         |  2 -
->  entry.c                         | 12 ++--
->  entry.h                         |  6 +-
->  environment.c                   | 13 -----
->  git.c                           | 41 +++-----------
->  parse-options.h                 |  4 ++
->  submodule.c                     | 70 +++++++++++------------
->  submodule.h                     | 12 ++--
->  t/lib-submodule-update.sh       | 98 ++++++++++++++++++---------------
->  t/t1001-read-tree-m-2way.sh     |  2 +-
->  t/t5616-partial-clone.sh        | 43 +++++++++++++++
->  t/t7527-builtin-fsmonitor.sh    | 33 +++--------
->  unpack-trees.c                  | 23 ++++----
->  unpack-trees.h                  |  1 +
->  21 files changed, 244 insertions(+), 238 deletions(-)
->
-> Range-diff against v1:
->  -:  ----------- >  1:  1114a4ff666 read-tree + fetch tests: test failing=
- "--super-prefix" interaction
->  1:  ad0356b596f !  2:  5a35f7b75b3 submodule--helper: don't use global -=
--super-prefix in "absorbgitdirs"
->     @@ Commit message
->          declare "fsmonitor--daemon" as accepting it too, even though it
->          doesn't care about it.
->     =20
->     -    There's a parallel proposal to remove "--super-prefix" as an opt=
-ion to
->     -    "git" in [3], and some of the approach might be the easiest rout=
-e in
->     -    some cases.
->     -
->          But in the case of "absorbgitdirs" it only needed "--super-prefi=
-x" to
->          invoke itself recursively, and we'd never have another "in-betwe=
-en"
->          process in the chain. So we didn't need the bigger hammer of "gi=
-t
->     @@ Commit message
->          stone makes such an eventual change easier, as we'll need to dea=
-l with
->          less global state at that point.
->     =20
->     +    The "fsmonitor--daemon" test adjusted here was added in [3]. The
->     +    comment added in that commit has been out-of-date from the begin=
-ning,
->     +    and the "have_t2_error_event()" was being overly specific in tes=
-ting
->     +    for a bug that we *don't* have. Let's instead test for the stdou=
-t and
->     +    stderr that we *do have*.
->     +
->          1. 74866d75793 (git: make super-prefix option, 2016-10-07)
->          2. 53fcfbc84f6 (fsmonitor--daemon: allow --super-prefix argument=
-,
->             2022-05-26)
->     -    3. https://lore.kernel.org/git/20221109004708.97668-1-chooglen@g=
-oogle.com/
->     +    3. 53fcfbc84f6 (fsmonitor--daemon: allow --super-prefix argument=
-,
->     +       2022-05-26)
->     =20
->     +    Signed-off-by: Glen Choo <chooglen@google.com>
->          Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gm=
-ail.com>
->     =20
->       ## builtin/submodule--helper.c ##
->     @@ submodule.h: void submodule_unset_core_worktree(const struct submo=
-dule *sub);
->      =20
->       /*
->        * Return the absolute path of the working tree of the superproject=
-, which this
->     +
->     + ## t/t7527-builtin-fsmonitor.sh ##
->     +@@ t/t7527-builtin-fsmonitor.sh: test_expect_success 'submodule alwa=
-ys visited' '
->     + # the submodule, and someone does a `git submodule absorbgitdirs`
->     + # in the super, Git will recursively invoke `git submodule--helper`
->     + # to do the work and this may try to read the index.  This will
->     +-# try to start the daemon in the submodule *and* pass (either
->     +-# directly or via inheritance) the `--super-prefix` arg to the
->     +-# `git fsmonitor--daemon start` command inside the submodule.
->     +-# This causes a warning because fsmonitor--daemon does take that
->     +-# global arg (see the table in git.c)
->     +-#
->     +-# This causes a warning when trying to start the daemon that is
->     +-# somewhat confusing.  It does not seem to hurt anything because
->     +-# the fsmonitor code maps the query failure into a trivial response
->     +-# and does the work anyway.
->     +-#
->     +-# It would be nice to silence the warning, however.
->     +-
->     +-have_t2_error_event () {
->     +-	log=3D$1
->     +-	msg=3D"fsmonitor--daemon doesnQt support --super-prefix" &&
->     +-
->     +-	tr '\047' Q <$1 | grep -e "$msg"
->     +-}
->     ++# try to start the daemon in the submodule.
->     +=20
->     + test_expect_success "stray submodule super-prefix warning" '
->     + 	test_when_finished "rm -rf super; \
->     +-			    rm -rf sub;   \
->     +-			    rm super-sub.trace" &&
->     ++			    rm -rf sub" &&
->     +=20
->     + 	create_super super &&
->     + 	create_sub sub &&
->     +@@ t/t7527-builtin-fsmonitor.sh: test_expect_success "stray submodul=
-e super-prefix warning" '
->     +=20
->     + 	test_path_is_dir super/dir_1/dir_2/sub/.git &&
->     +=20
->     +-	GIT_TRACE2_EVENT=3D"$PWD/super-sub.trace" \
->     +-		git -C super submodule absorbgitdirs &&
->     +-
->     +-	! have_t2_error_event super-sub.trace
->     ++	cat >expect <<-\EOF &&
->     ++	Migrating git directory of '\''dir_1/dir_2/sub'\'' from '\''dir_1/=
-dir_2/sub/.git'\'' to '\''.git/modules/dir_1/dir_2/sub'\''
->     ++	EOF
->     ++	git -C super submodule absorbgitdirs >out 2>actual &&
->     ++	test_cmp expect actual &&
->     ++	test_must_be_empty out
->     + '
->     +=20
->     + # On a case-insensitive file system, confirm that the daemon
->  2:  87a780eb9bf =3D  3:  a7a1f9487dc submodule--helper: "deinit" has nev=
-er used "--super-prefix"
->  3:  4858e2ad0ed =3D  4:  935d8070834 submodule--helper: convert "foreach=
-" to its own "--super-prefix"
->  4:  5ffe4407e46 =3D  5:  933c752513d submodule--helper: convert "sync" t=
-o its own "--super-prefix"
->  5:  a46540b63c2 =3D  6:  67273f729e0 submodule--helper: convert "status"=
- to its own "--super-prefix"
->  6:  78ebf0e2abf =3D  7:  eaa73f5b1e4 submodule--helper: convert "{update=
-,clone}" to their own "--super-prefix"
->  7:  00a9e789be7 =3D  8:  172b5865811 submodule tests: test "git branch -=
-t" output and stderr
->  8:  3ba894a6698 !  9:  9fdeab60773 read-tree: add "--super-prefix" optio=
-n, eliminate global
->     @@ git.c
->        */
->       #define NEED_WORK_TREE		(1<<3)
->      -#define SUPPORT_SUPER_PREFIX	(1<<4)
->     - #define DELAY_PAGER_CONFIG	(1<<5)
->     - #define NO_PARSEOPT		(1<<6) /* parse-options is not used */
->     +-#define DELAY_PAGER_CONFIG	(1<<5)
->     +-#define NO_PARSEOPT		(1<<6) /* parse-options is not used */
->     ++#define DELAY_PAGER_CONFIG	(1<<4)
->     ++#define NO_PARSEOPT		(1<<5) /* parse-options is not used */
->      =20
->     + struct cmd_struct {
->     + 	const char *cmd;
->      @@ git.c: const char git_usage_string[] =3D
->       	   "           [--exec-path[=3D<path>]] [--html-path] [--man-path]=
- [--info-path]\n"
->       	   "           [-p | --paginate | -P | --no-pager] [--no-replace-o=
-bjects] [--bare]\n"
->     @@ t/t1001-read-tree-m-2way.sh: test_expect_success 'read-tree suppor=
-ts the super-p
->       '
->      =20
->     =20
->     + ## t/t5616-partial-clone.sh ##
->     +@@ t/t5616-partial-clone.sh: test_expect_success 'repack does not lo=
-osen promisor objects' '
->     + 	grep "loosen_unused_packed_objects/loosened:0" trace
->     + '
->     +=20
->     +-test_expect_failure 'lazy-fetch in submodule succeeds' '
->     ++test_expect_success 'lazy-fetch in submodule succeeds' '
->     + 	# setup
->     + 	test_config_global protocol.file.allow always &&
->     +=20
->     +
->       ## unpack-trees.c ##
->      @@ unpack-trees.c: static const char *unpack_plumbing_errors[NB_UNPA=
-CK_TREES_WARNING_TYPES] =3D {
->       	  ? ((o)->msgs[(type)])      \
->  -:  ----------- > 10:  100ba36dfb7 fetch: rename "--submodule-prefix" to=
- "--super-prefix"
+> diff --git a/builtin/grep.c b/builtin/grep.c
+> index 5fa927d4e22..69826daba26 100644
+> --- a/builtin/grep.c
+> +++ b/builtin/grep.c
+> @@ -437,6 +437,7 @@ static int grep_submodule(struct grep_opt *opt,
+>  	struct repository *superproject =3D opt->repo;
+>  	struct grep_opt subopt;
+>  	int hit =3D 0;
+> +	size_t oldlen =3D opt->super_prefix.len;
+> =20
+>  	if (!is_submodule_active(superproject, path))
+>  		return 0;
+> @@ -497,6 +498,7 @@ static int grep_submodule(struct grep_opt *opt,
+>  	add_submodule_odb_by_path(subrepo->objects->odb->path);
+>  	obj_read_unlock();
+> =20
+> +	strbuf_addf(&opt->super_prefix, "%s/", path);
+>  	memcpy(&subopt, opt, sizeof(subopt));
+>  	subopt.repo =3D subrepo;
+> =20
+> @@ -527,6 +529,7 @@ static int grep_submodule(struct grep_opt *opt,
+>  	} else {
+>  		hit =3D grep_cache(&subopt, pathspec, cached);
+>  	}
+> +	strbuf_setlen(&opt->super_prefix, oldlen);
+> =20
+>  	return hit;
+>  }
+> @@ -538,11 +541,8 @@ static int grep_cache(struct grep_opt *opt,
+>  	int hit =3D 0;
+>  	int nr;
+>  	struct strbuf name =3D STRBUF_INIT;
+> -	int name_base_len =3D 0;
+> -	if (repo->submodule_prefix) {
+> -		name_base_len =3D strlen(repo->submodule_prefix);
+> -		strbuf_addstr(&name, repo->submodule_prefix);
+> -	}
+> +	size_t name_base_len =3D opt->super_prefix.len;
+> +	strbuf_addbuf(&name, &opt->super_prefix);
+> =20
+>  	if (repo_read_index(repo) < 0)
+>  		die(_("index file corrupt"));
+> @@ -618,11 +618,9 @@ static int grep_tree(struct grep_opt *opt, const str=
+uct pathspec *pathspec,
+>  	struct name_entry entry;
+>  	int old_baselen =3D base->len;
+>  	struct strbuf name =3D STRBUF_INIT;
+> -	int name_base_len =3D 0;
+> -	if (repo->submodule_prefix) {
+> -		strbuf_addstr(&name, repo->submodule_prefix);
+> -		name_base_len =3D name.len;
+> -	}
+> +	size_t name_base_len =3D opt->super_prefix.len;
+> +
+> +	strbuf_addbuf(&name, &opt->super_prefix);
+> =20
+>  	while (tree_entry(tree, &entry)) {
+>  		int te_len =3D tree_entry_len(&entry);
+> diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+> index 4cf8a236483..c76a6be2fbe 100644
+> --- a/builtin/ls-files.c
+> +++ b/builtin/ls-files.c
+> @@ -216,10 +216,12 @@ static void show_killed_files(struct index_state *i=
+state,
+>  	}
+>  }
+> =20
+> -static void show_files(struct repository *repo, struct dir_struct *dir);
+> +static void show_files(struct repository *repo, struct dir_struct *dir,
+> +		       const char *super_prefix);
+> =20
+>  static void show_submodule(struct repository *superproject,
+> -			   struct dir_struct *dir, const char *path)
+> +			   struct dir_struct *dir, const char *path,
+> +			   const char *super_prefix)
+>  {
+>  	struct repository subrepo;
+> =20
+> @@ -229,7 +231,7 @@ static void show_submodule(struct repository *superpr=
+oject,
+>  	if (repo_read_index(&subrepo) < 0)
+>  		die("index file corrupt");
+> =20
+> -	show_files(&subrepo, dir);
+> +	show_files(&subrepo, dir, super_prefix);
+> =20
+>  	repo_clear(&subrepo);
+>  }
+> @@ -303,14 +305,19 @@ static void show_ce_fmt(struct repository *repo, co=
+nst struct cache_entry *ce,
+> =20
+>  static void show_ce(struct repository *repo, struct dir_struct *dir,
+>  		    const struct cache_entry *ce, const char *fullname,
+> -		    const char *tag)
+> +		    const char *tag, const char *super_prefix)
+>  {
+>  	if (max_prefix_len > strlen(fullname))
+>  		die("git ls-files: internal error - cache entry not superset of prefix=
+");
+> =20
+>  	if (recurse_submodules && S_ISGITLINK(ce->ce_mode) &&
+>  	    is_submodule_active(repo, ce->name)) {
+> -		show_submodule(repo, dir, ce->name);
+> +		struct strbuf sp =3D STRBUF_INIT;
+> +
+> +		strbuf_addf(&sp, "%s%s/", super_prefix ? super_prefix : "",
+> +			    ce->name);
+> +		show_submodule(repo, dir, ce->name, sp.buf);
+> +		strbuf_release(&sp);
+>  	} else if (match_pathspec(repo->index, &pathspec, fullname, strlen(full=
+name),
+>  				  max_prefix_len, ps_matched,
+>  				  S_ISDIR(ce->ce_mode) ||
+> @@ -374,16 +381,17 @@ static int ce_excluded(struct dir_struct *dir, stru=
+ct index_state *istate,
+>  	return is_excluded(dir, istate, fullname, &dtype);
+>  }
+> =20
+> -static void construct_fullname(struct strbuf *out, const struct reposito=
+ry *repo,
+> -			       const struct cache_entry *ce)
+> +static void construct_fullname(struct strbuf *out, const struct cache_en=
+try *ce,
+> +			       const char *super_prefix)
+>  {
+>  	strbuf_reset(out);
+> -	if (repo->submodule_prefix)
+> -		strbuf_addstr(out, repo->submodule_prefix);
+> +	if (super_prefix)
+> +		strbuf_addstr(out, super_prefix);
+>  	strbuf_addstr(out, ce->name);
+>  }
+> =20
+> -static void show_files(struct repository *repo, struct dir_struct *dir)
+> +static void show_files(struct repository *repo, struct dir_struct *dir,
+> +		       const char *super_prefix)
+>  {
+>  	int i;
+>  	struct strbuf fullname =3D STRBUF_INIT;
+> @@ -410,7 +418,7 @@ static void show_files(struct repository *repo, struc=
+t dir_struct *dir)
+>  		struct stat st;
+>  		int stat_err;
+> =20
+> -		construct_fullname(&fullname, repo, ce);
+> +		construct_fullname(&fullname, ce, super_prefix);
+> =20
+>  		if ((dir->flags & DIR_SHOW_IGNORED) &&
+>  			!ce_excluded(dir, repo->index, fullname.buf, ce))
+> @@ -422,7 +430,7 @@ static void show_files(struct repository *repo, struc=
+t dir_struct *dir)
+>  			show_ce(repo, dir, ce, fullname.buf,
+>  				ce_stage(ce) ? tag_unmerged :
+>  				(ce_skip_worktree(ce) ? tag_skip_worktree :
+> -				 tag_cached));
+> +				 tag_cached), super_prefix);
+>  			if (skipping_duplicates)
+>  				goto skip_to_next_name;
+>  		}
+> @@ -435,13 +443,15 @@ static void show_files(struct repository *repo, str=
+uct dir_struct *dir)
+>  		if (stat_err && (errno !=3D ENOENT && errno !=3D ENOTDIR))
+>  			error_errno("cannot lstat '%s'", fullname.buf);
+>  		if (stat_err && show_deleted) {
+> -			show_ce(repo, dir, ce, fullname.buf, tag_removed);
+> +			show_ce(repo, dir, ce, fullname.buf, tag_removed,
+> +				super_prefix);
+>  			if (skipping_duplicates)
+>  				goto skip_to_next_name;
+>  		}
+>  		if (show_modified &&
+>  		    (stat_err || ie_modified(repo->index, ce, &st, 0))) {
+> -			show_ce(repo, dir, ce, fullname.buf, tag_modified);
+> +			show_ce(repo, dir, ce, fullname.buf, tag_modified,
+> +				super_prefix);
+>  			if (skipping_duplicates)
+>  				goto skip_to_next_name;
+>  		}
+> @@ -874,7 +884,7 @@ int cmd_ls_files(int argc, const char **argv, const c=
+har *cmd_prefix)
+>  		overlay_tree_on_index(the_repository->index, with_tree, max_prefix);
+>  	}
+> =20
+> -	show_files(the_repository, &dir);
+> +	show_files(the_repository, &dir, NULL);
+> =20
+>  	if (show_resolve_undo)
+>  		show_ru_info(the_repository->index);
+> diff --git a/grep.c b/grep.c
+> index 06eed694936..10d52219229 100644
+> --- a/grep.c
+> +++ b/grep.c
+> @@ -791,9 +791,9 @@ void free_grep_patterns(struct grep_opt *opt)
+>  		free(p);
+>  	}
+> =20
+> -	if (!opt->pattern_expression)
+> -		return;
+> -	free_pattern_expr(opt->pattern_expression);
+> +	if (opt->pattern_expression)
+> +		free_pattern_expr(opt->pattern_expression);
+> +	strbuf_release(&opt->super_prefix);
+>  }
+> =20
+>  static const char *end_of_line(const char *cp, unsigned long *left)
+> diff --git a/grep.h b/grep.h
+> index 6075f997e68..d353bfa21ce 100644
+> --- a/grep.h
+> +++ b/grep.h
+> @@ -133,6 +133,7 @@ struct grep_opt {
+>  	 * t7814-grep-recurse-submodules.sh for more information.
+>  	 */
+>  	struct repository *repo;
+> +	struct strbuf super_prefix;
+> =20
+>  	int linenum;
+>  	int columnnum;
+> @@ -178,6 +179,7 @@ struct grep_opt {
+>  };
+> =20
+>  #define GREP_OPT_INIT { \
+> +	.super_prefix =3D STRBUF_INIT, \
+>  	.relative =3D 1, \
+>  	.pathname =3D 1, \
+>  	.max_depth =3D -1, \
+> diff --git a/repository.c b/repository.c
+> index 5d166b692c8..2f8581c517d 100644
+> --- a/repository.c
+> +++ b/repository.c
+> @@ -228,12 +228,6 @@ int repo_submodule_init(struct repository *subrepo,
+>  			goto out;
+>  		}
+>  	}
+> -
+> -	subrepo->submodule_prefix =3D xstrfmt("%s%s/",
+> -					    superproject->submodule_prefix ?
+> -					    superproject->submodule_prefix :
+> -					    "", path);
+> -
+>  out:
+>  	strbuf_release(&gitdir);
+>  	strbuf_release(&worktree);
+> @@ -261,7 +255,6 @@ void repo_clear(struct repository *repo)
+>  	FREE_AND_NULL(repo->graft_file);
+>  	FREE_AND_NULL(repo->index_file);
+>  	FREE_AND_NULL(repo->worktree);
+> -	FREE_AND_NULL(repo->submodule_prefix);
+> =20
+>  	raw_object_store_clear(repo->objects);
+>  	FREE_AND_NULL(repo->objects);
+> diff --git a/repository.h b/repository.h
+> index 6c461c5b9de..a08da26133c 100644
+> --- a/repository.h
+> +++ b/repository.h
+> @@ -120,13 +120,6 @@ struct repository {
+>  	 */
+>  	char *worktree;
+> =20
+> -	/*
+> -	 * Path from the root of the top-level superproject down to this
+> -	 * repository.  This is only non-NULL if the repository is initialized
+> -	 * as a submodule of another repository.
+> -	 */
+> -	char *submodule_prefix;
+> -
+>  	struct repo_settings settings;
+> =20
+>  	/* Subsystems */
+> diff --git a/submodule.c b/submodule.c
+> index 1e4eee3492b..1c5ef904a03 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -528,9 +528,6 @@ static struct repository *open_submodule(const char *=
+path)
+>  		return NULL;
+>  	}
+> =20
+> -	/* Mark it as a submodule */
+> -	out->submodule_prefix =3D xstrdup(path);
+> -
+>  	strbuf_release(&sb);
+>  	return out;
+>  }
 > --=20
 > 2.38.0.1471.ge4d8947e7aa
