@@ -2,170 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B91BAC433FE
-	for <git@archiver.kernel.org>; Mon, 14 Nov 2022 12:29:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 550DCC433FE
+	for <git@archiver.kernel.org>; Mon, 14 Nov 2022 13:34:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237157AbiKNM3p (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Nov 2022 07:29:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54914 "EHLO
+        id S236735AbiKNNe1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Nov 2022 08:34:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235865AbiKNM3o (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Nov 2022 07:29:44 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 532C565E5
-        for <git@vger.kernel.org>; Mon, 14 Nov 2022 04:29:43 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id bj12so27808382ejb.13
-        for <git@vger.kernel.org>; Mon, 14 Nov 2022 04:29:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=N5CfucFhKhnABsVZ2CSX5PBHr+LTaKNPEvTQJxH7fFE=;
-        b=LvrhXScF+D2GqmF+UfpmbtnMzmsb/sT5Uf7s2VgGId8+Z6IeA2drGE/BemJElNUlSu
-         SCGGGUqz0Y13hZI62Jt76lnRGCgrS0T4lbvGfUGuF3wyN0EPSNiLi65LpD9IlzWMyty2
-         w+mwm5mDWfsfK/jgshuTZyF97mUT4vsU8XEtgqp4yAz7pP1ka9PFSRa3zvURskGxDEiz
-         CFt8odw0Om24w/MPxWeqKdROeQVL9+9FZbJ2+DWgj2YgECPfZYQ63LoWXE/btDcRcvGm
-         bBThBfhBoSgU1MLL5X8+YjKvvtVIuqP077+hnEDQgcXNsu9EMH5HbRZAGTQOtIdadhsq
-         kATw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=N5CfucFhKhnABsVZ2CSX5PBHr+LTaKNPEvTQJxH7fFE=;
-        b=jLDTdh7B7A+uDl06sShtKvuE8YQCn5G7uHFGxFXnqwxLzrmk1dqTdPvj3qxf/+MsJr
-         BUhyTqNWKLLnWOE1q8yo12FHU6lr3ssgHUyvpwTNbTGI1eUUqZ5LrexbhNUwczCf+Wej
-         FAABQptEKAgmivyJysEKpm+FbwLUjxqtJL4/2541fRqpxV1cm0OYD02ieK2ln5LiIs/5
-         axA5Yd1UU3Uv46kNfqmYv7P+JfoZUqUOUqk9ttQfQ+RHbFrQp4ycIxBKyh8cqM3UEmDS
-         WHOnlV/h5ibLRsj737Wv+Sm5nC3n7pn4LJWjKGTEoSVFEKY1AMIs2PtIBhRFllIhp/t4
-         hMAA==
-X-Gm-Message-State: ANoB5plK95cUdWKydC6zKIyxwvMAb/P7z55LXZA8hGDyDLcRrVdW1OOy
-        H8j0Z6w1ikv7FW1CBxLuEsg=
-X-Google-Smtp-Source: AA0mqf5rzpgZIw7dQtLZqMyJbcPc+8Bh/UXS17IvB6wWSMD4JgTO278vjQHNsKF+2P9RzqWVYYpiHQ==
-X-Received: by 2002:a17:906:f208:b0:7ae:2277:9fec with SMTP id gt8-20020a170906f20800b007ae22779fecmr9861608ejb.623.1668428981643;
-        Mon, 14 Nov 2022 04:29:41 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id qo14-20020a170907874e00b007adf2e4c6f7sm4121488ejc.195.2022.11.14.04.29.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Nov 2022 04:29:41 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1ouYaq-003BRg-2A;
-        Mon, 14 Nov 2022 13:29:40 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>
+        with ESMTP id S236806AbiKNNeR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Nov 2022 08:34:17 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0592A1DA5A
+        for <git@vger.kernel.org>; Mon, 14 Nov 2022 05:34:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1668432851; bh=3O0ZraSprFdOYnHo1YA1WAk+vjEFUWF1IxJJ0wKrCSk=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=F02cLd4QX+d86SjnPpmwUEG3yoIKJkT1cRyX9RiKV9UMnhkqH9c5TzKS6JSpVp32x
+         SaDAgjVdxza6Ds7OrI15uqt0xK4O/UwL4hwfyojkPVhI+paNQUYue1Gy6FQwp66g5+
+         tkHf+Blymodh2djFRyVYgzt0jur67UTv5nGQeKLKm5R+6D4P1Y1Fkgo06l4qXwCZsj
+         QhkM8rSleZqSg3zIMjoJcje8dA7rcKdTagRjx7P1CY6zx6XrVuurNkwt8Rlcsy1Zjd
+         9kYF0C6C6AqTXTverf+2k32RC4eDQCs66Hjfw30w2fh9x8lFLzxoTK1qb7wXW5C5ko
+         Lpvf4aOvyAzKA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.27.84] ([213.196.213.188]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MkHMP-1pNcpm0VoH-00ki53; Mon, 14
+ Nov 2022 14:34:11 +0100
+Date:   Mon, 14 Nov 2022 14:34:09 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Taylor Blau <me@ttaylorr.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
 Subject: Re: [PATCH v3 2/2] tests(mingw): avoid very slow `mingw_test_cmp`
-Date:   Mon, 14 Nov 2022 12:55:16 +0100
-References: <pull.1309.v2.git.1662469859.gitgitgadget@gmail.com>
- <pull.1309.v3.git.1668290855.gitgitgadget@gmail.com>
- <a7f4265ceb26c6dd9d347ef4cbef2aac7d60bf13.1668290855.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <a7f4265ceb26c6dd9d347ef4cbef2aac7d60bf13.1668290855.git.gitgitgadget@gmail.com>
-Message-ID: <221114.86tu31lnwr.gmgdl@evledraar.gmail.com>
+In-Reply-To: <Y3B36HjDJhIY5jNz@nand.local>
+Message-ID: <1s951161-s35o-59sr-7988-q90qr6n28n6n@tzk.qr>
+References: <pull.1309.v2.git.1662469859.gitgitgadget@gmail.com> <pull.1309.v3.git.1668290855.gitgitgadget@gmail.com> <a7f4265ceb26c6dd9d347ef4cbef2aac7d60bf13.1668290855.git.gitgitgadget@gmail.com> <Y3B36HjDJhIY5jNz@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:KpMDyB6ijllg4ylfNURrst5EPPk+CKCBwW/Jgblej4t1FcNZrkp
+ zxiUuT2I6R4Qhl+pOo/I2v5AvPlbK2c+a6496PkYGEK03FHh9uttO+acGORr7MmSV3HlSr8
+ tMV8RmFnwpOLkrcSXSh8AbvNvXcQ8dd96M6yo+jyYoRhPua33uwyn8PwBE379xESupyM3+W
+ iKmrwXhxjM73YBuxHoEaA==
+UI-OutboundReport: notjunk:1;M01:P0:7HsGFxg7Ps4=;MT7Z2AUFnwXK5rAAdx7SadjvGO8
+ N6PbQTZngxI05aG1IxJKVg9hNgRXMtjv1WanBKbrs6G+Iw/xDTEcWGu2NaHjDqW0yqyiHLqiM
+ uLOrs13fk7Rq2HQ//JK+scPI/DEoT3bcdY5C0Z6zB9pb9/aZMHoVUHUPkqYQDQRSLk7Xjf/M/
+ M9Muo/dnw9bWlgugfHwAzFctW6KGL9DtZopxoBYQ6ztYI6sJ5xYHOew9i63xaeWNfesBPnKev
+ GOpFRGmL3B2b1GpMomW1ACEy7r34gYrmb2ulgD6DFwxp8YXl7oCrT+3i8IFv1o3/czT6BxrO8
+ rJI7nPDRghQwYxbEvowIF4rk1binB60sY7Ijj+j8z4wFtIsiJ+LPXihAyj9u7g57BYKRiX8S4
+ sZTyQ33cBrdukN4YW3hRu9tVKmd/UY1rcBK/O+9tLWNgXWrRpqlMW2DyVRZ8BM0N1/moK3a/Q
+ 9GTkWLLkkjX8ho5BVma1v1JI8rCgL+1kdDYfV1KmqL49L+TMPrhRkCI/l9sWRpinQVQGckzpI
+ Fg+yxJIf1lV4sp7WOlBo8hQ/KhVQXUV2Kb0mac/aktiSfHy/JukmR8seZohjLKSCR7lpgGa6i
+ tMDdhXkLrj+Z9EIDLecBKNJ772Hcjj9g7+E0RDaLEo+ZvNYTvQhQCe5fYD2PNWRW0fuGC2ZO9
+ jK4dOcxd2sKw/9SMUIizraaRtxik9KZAEgSXs+gnoYca58m9vfU3lK2U+QBheE/jxPw8+eWx+
+ W850wnPr4YOgm6vPgB4ZJivFwszCufLDh7JQDctAbVZEL17OARXfF+mNc9yGFn57Y15bPYoao
+ OY7OUhtCZ2RCyAUolfoj22O3ZAQh+kOPEuaEk0+XBAR6TMcoRMEaA6Z88PYsmcQGJfoV6ijai
+ +GhzBGup83Qops1zerYi+xLtPVXlSNf4Mn1wTS48LQnVKEIVO/nw74F6xnm7VFGiGsMU9DXhW
+ TitdSglMEe0qokdmh7uAhTEtQUE=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Taylor,
 
-On Sat, Nov 12 2022, Johannes Schindelin via GitGitGadget wrote:
+On Sat, 12 Nov 2022, Taylor Blau wrote:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> On Sat, Nov 12, 2022 at 10:07:34PM +0000, Johannes Schindelin via GitGit=
+Gadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > It is more performant to run `git diff --no-index` than running the
+> > `mingw_test_cmp` code with MSYS2's Bash, i.e. the Bash that Git for
+> > Windows uses. And a lot more readable.
 >
-> It is more performant to run `git diff --no-index` than running the
-> `mingw_test_cmp` code with MSYS2's Bash, i.e. the Bash that Git for
-> Windows uses. And a lot more readable.
+> This makes sense, and motivates the changes below.
 >
-> Note: Earlier attempts at fixing this involved a test helper that avoids
-> the overhead of the diff machinery, in favor of implementing a behavior
-> that is more in line with what `mingw_test_cmp` does now, but that
-> attempt saw a lot of backlash and distractions during review and was
-> therefore abandoned.
+> > Note: Earlier attempts at fixing this involved a test helper that avoi=
+ds
+> > the overhead of the diff machinery, in favor of implementing a behavio=
+r
+> > that is more in line with what `mingw_test_cmp` does now, but that
+> > attempt saw a lot of backlash and distractions during review and was
+> > therefore abandoned.
+>
+> But I do not think that this paragraph adds as much as we'd like to the
+> historical record.
 
-I don't know if you counted this under "backlash and distractions", or
-if you just didn't see it, but I think part of the comments I left on
-the v2[1][2] are still applicable.
+It explains why we replace a relatively simple logic with a relatively
+complex one.
 
-Namely that before this we've been assuming that GIT_TEST_CMP is a
-not-ours binary. I.e. "diff", "cmp" etc. If it is a "that's ours" this
-change should be changing e.g. '! test_cmp' to 'test_cmp !', as the
-former would now hide segfaults.
+> What about the original approach did you have trouble pushing forward?
+> Perhaps framing that as an alternative approach, along with why it
+> didn't ultimately get merged would be a more useful recollection of
+> previous attempts here.
+>
+> One thing that the commit message doesn't allude to (that is covered in
+> the earlier discussion) is why it is important to pass
+> `--ignore-cr-at-eol`. I think that is worth mentioning here.
 
-Which isn't a theoretical issue b.t.w., e.g. the recent d00113ec347
-(t/Makefile: apply chainlint.pl to existing self-tests, 2022-09-01)
-will invoke "git diff --no-index", which has some interesting results
-(that I've run into) when testing a tree where "git diff" happens to
-segfault.
+I elaborated on both in the new commit message.
 
-From grepping our tests that doesn't seem to be too hard, certainly a
-lot easier than a new "not-quite-diff" test helper.
-
-Additionally: We don't *need* this for an initial implementation, but
-having e.g. one of the Ubuntu CI targets run with "git diff --no-index"
-would be a nice cherry on top, as:
-
- * It would show that the "--ignore-cr-at-eol" is only needed for MinGW,
-   and is also the reason for why "GIT_TEST_CMP" is still
-   unconditionally clobbered there, unlike other platforms. See
-   4d715ac05cf (Windows: a test_cmp that is agnostic to random LF <>
-   CRLF conversions, 2013-10-26).
-
- * We do pass this elsewhere, except for the one trivial case which you
-   aren't running into on MINGW because it doesn't have SYMLINKS, but
-   presumably would if the test were adjusted to use "SYMLINKS_WINDOWS".
-
- * If we're trusting "git diff --no-index" to run the tests, we could
-   also get rid of "GIT_TEST_CMP_USE_COPIED_CONTEXT", whose only reason
-   for existing is to support a system "diff" that doesn't understand
-   "-u" (squashable diff below)
-
-1. https://lore.kernel.org/git/220907.86v8pzl6jz.gmgdl@evledraar.gmail.com/
-2. https://lore.kernel.org/git/220907.86r10nl63s.gmgdl@evledraar.gmail.com/
-
-diff --git a/Makefile b/Makefile
-index 4927379184c..dea6069b5fe 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1950,10 +1950,6 @@ ifdef OVERRIDE_STRDUP
- 	COMPAT_OBJS += compat/strdup.o
- endif
- 
--ifdef GIT_TEST_CMP_USE_COPIED_CONTEXT
--	export GIT_TEST_CMP_USE_COPIED_CONTEXT
--endif
--
- ifndef NO_MSGFMT_EXTENDED_OPTIONS
- 	MSGFMT += --check
- endif
-@@ -3008,9 +3004,6 @@ endif
- ifdef GIT_TEST_CMP
- 	@echo GIT_TEST_CMP=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_CMP)))'\' >>$@+
- endif
--ifdef GIT_TEST_CMP_USE_COPIED_CONTEXT
--	@echo GIT_TEST_CMP_USE_COPIED_CONTEXT=YesPlease >>$@+
--endif
- ifdef GIT_TEST_UTF8_LOCALE
- 	@echo GIT_TEST_UTF8_LOCALE=\''$(subst ','\'',$(subst ','\'',$(GIT_TEST_UTF8_LOCALE)))'\' >>$@+
- endif
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 4fab1c1984c..cd6e9f797b6 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1503,12 +1503,7 @@ export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR GIT_CONFIG_NOSYSTEM GIT_ATTR_NOSYSTEM
- 
- if test -z "$GIT_TEST_CMP"
- then
--	if test -n "$GIT_TEST_CMP_USE_COPIED_CONTEXT"
--	then
--		GIT_TEST_CMP="$DIFF -c"
--	else
--		GIT_TEST_CMP="$DIFF -u"
--	fi
-+	GIT_TEST_CMP="$DIFF -u"
- fi
- 
- GITPERLLIB="$GIT_BUILD_DIR"/perl/build/lib
+Ciao,
+Dscho
