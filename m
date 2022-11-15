@@ -2,73 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E6BCC4332F
-	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 16:43:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00A1EC433FE
+	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 17:07:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238769AbiKOQnC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Nov 2022 11:43:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55180 "EHLO
+        id S230241AbiKORHN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Nov 2022 12:07:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238766AbiKOQmp (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2022 11:42:45 -0500
-Received: from mail-il1-x130.google.com (mail-il1-x130.google.com [IPv6:2607:f8b0:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86D4B2FC02
-        for <git@vger.kernel.org>; Tue, 15 Nov 2022 08:42:38 -0800 (PST)
-Received: by mail-il1-x130.google.com with SMTP id bp12so7671771ilb.9
-        for <git@vger.kernel.org>; Tue, 15 Nov 2022 08:42:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=cZJodwdpa0sokEmPhn2uNIe2FQSaCvdRtvfU98Oxsw8=;
-        b=J0muhh9n3AaUTxM7FEAgaG2ymmXDInnB8SbbVx3303SVxB1wJlgcDYZvuVf3PK13Gp
-         7p/iMdjgfwoBvsxlmuVlr6Gk8KrajZ7JFw9w5dIgVygF7a2zE4sBMlOpkW77kwy4lBna
-         oI9/znW9pxmyMXVtgWpUXP/Hp0gYWSqtQqH5VdMP8RZKhIBOIyo/hrgSz1i71QEMfbNy
-         FWSjPBMcZCZ6xDCMv//jFQKUT2iYMUG1VC6ZYUnSrZ9zLg0utpO9ng0YV1VzsVw8H39M
-         mH6O62pxYBQ52l15YbajjKBnYQAMCz8Z7/hb5D/Xp2Ez22WOpknZ+DW06TuyYZA1yQ5m
-         GgSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cZJodwdpa0sokEmPhn2uNIe2FQSaCvdRtvfU98Oxsw8=;
-        b=L6aDjNfnqLZhtmy/TnyXwvqW7Em8TyZOtlndtPYVPwzWG7/vw579AZ8KNuGxcgRKjy
-         lWNKVlPxMiGU6Dn3IW8sVSc666WaB4AhP1iooiGEa7wjkSZQjjJUkx1osZDqm5DNbrSG
-         wU/gxlxhvehxSFKKKma7EmNlBjNiOeVNH1bBgmhrCUmYC+h3WGTX8MH6ApiXzvg7Sydg
-         Uv2DLix8CwdJtd/9JKbKwr8bvbUH/gOs7QpL2DAqed9z5oRzECfvUABlwC+KghX7pk7J
-         SDGRtcJz5xvHH4dZZ1XT/JX7e7pj7A3HomAB7jjKwS1/LnX4rVCDnaMhsRnarGiI8F4u
-         xffw==
-X-Gm-Message-State: ANoB5plWCUT04csj4H+lTUHhri41fE22Sp3XZ7VuO3zYZ85OgL1HyaUQ
-        gVn/Ifj906WEdJ1Mw+dBKp2FOhDtnTUTGHAjtxc=
-X-Google-Smtp-Source: AA0mqf6+SkM+flsg9x50azaEbKwYIQSAHTJcfQTGrLNLQhkU+/xnVBTuHGcmx6xJJf1KYj9ZspO1oEyT2jAmJ5mlQ5I=
-X-Received: by 2002:a92:dc4f:0:b0:302:5733:664e with SMTP id
- x15-20020a92dc4f000000b003025733664emr5095165ilq.42.1668530557621; Tue, 15
- Nov 2022 08:42:37 -0800 (PST)
+        with ESMTP id S229809AbiKORHJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2022 12:07:09 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CB2A233
+        for <git@vger.kernel.org>; Tue, 15 Nov 2022 09:07:08 -0800 (PST)
+Received: (qmail 18558 invoked by uid 109); 15 Nov 2022 17:07:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 15 Nov 2022 17:07:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23458 invoked by uid 111); 15 Nov 2022 17:07:07 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 15 Nov 2022 12:07:07 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 15 Nov 2022 12:07:06 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] bisect; remove unused "git-bisect.sh" and ".gitignore"
+ entry
+Message-ID: <Y3PHOpIqMC9ZT4pg@coredump.intra.peff.net>
+References: <patch-1.1-7be23b6faa0-20221115T093130Z-avarab@gmail.com>
 MIME-Version: 1.0
-References: <pull.1384.v4.git.1668055574050.gitgitgadget@gmail.com>
- <pull.1384.v5.git.1668110679098.gitgitgadget@gmail.com> <454089ac-3d0d-9820-26a4-e5650c2604d2@jeffhostetler.com>
-In-Reply-To: <454089ac-3d0d-9820-26a4-e5650c2604d2@jeffhostetler.com>
-From:   Rudy Rigot <rudy.rigot@gmail.com>
-Date:   Tue, 15 Nov 2022 10:42:26 -0600
-Message-ID: <CANaDLWJVQV_RRTmjv2C1+WRJFmZN+LPNCDdawBs_-pLHcYamKQ@mail.gmail.com>
-Subject: Re: [PATCH v5] status: long status advice adapted to recent capabilities
-To:     Jeff Hostetler <git@jeffhostetler.com>
-Cc:     Rudy Rigot via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-1.1-7be23b6faa0-20221115T093130Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> I think V5 has addressed all of the concerns.
+On Tue, Nov 15, 2022 at 10:32:42AM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-I confirm I don't think there was any concern expressed so far that I
-didn't find a way to address in some way.
+> Since fc304fb52f9 (Merge branch 'dd/git-bisect-builtin' into next,
+> 2022-11-14) we've used builtin/bisect.c instead of git-bisect.sh to
+> implement the "bisect" command. Let's remove the unused leftover
+> script, and the ".gitignore" entry for the "git-bisect--helper", which
+> also hasn't been built since fc304fb52f9.
 
-> Thanks for your persistence!
+A small nit, but it's probably not a good idea to refer to merge commits
+from 'next'. They may be meaningful now, but they aren't part of the
+long-term history, and will get gc'd eventually when Junio rewinds next
+after a release. Which will leave this reference useless for people
+looking at "git log" a year from now.
 
-My absolute pleasure!
+A better reference is probably 73fce29427 (Turn `git bisect` into a full
+built-in, 2022-11-10), which will remain stable as it gets merged
+eventually into master.
+
+>  .gitignore    |  1 -
+>  git-bisect.sh | 63 ---------------------------------------------------
+
+The patch itself looks like an obviously correct thing to do.
+
+-Peff
