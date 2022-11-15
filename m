@@ -2,142 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BB4CC433FE
-	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 21:30:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 516FCC433FE
+	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 21:40:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238597AbiKOVaL convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 15 Nov 2022 16:30:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54458 "EHLO
+        id S230087AbiKOVkU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Nov 2022 16:40:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232010AbiKOVaJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2022 16:30:09 -0500
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com [209.85.166.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADF9AC1C
-        for <git@vger.kernel.org>; Tue, 15 Nov 2022 13:30:08 -0800 (PST)
-Received: by mail-io1-f48.google.com with SMTP id z3so11746713iof.3
-        for <git@vger.kernel.org>; Tue, 15 Nov 2022 13:30:08 -0800 (PST)
+        with ESMTP id S229537AbiKOVkS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2022 16:40:18 -0500
+Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54DF2FE0
+        for <git@vger.kernel.org>; Tue, 15 Nov 2022 13:40:16 -0800 (PST)
+Received: by mail-io1-xd2b.google.com with SMTP id r81so11796915iod.2
+        for <git@vger.kernel.org>; Tue, 15 Nov 2022 13:40:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=tfuN71KgTcj6ceuDIOm3CbjIn67NfH+qQJ+oWPTJBc4=;
+        b=3a8bXFH1eZp/xPxCLXb2VEUjcHzPRoC+dg97DkEyrvTT80IQpBf02eS/7B6TCOIoe/
+         HjKxsHr2cuJX3y3oXEEbhUiKiJ2GQf1VWhXS2iQyhl2NGzeca+q4gHtT1AM1Wur75F+k
+         02chyEdHVhcG4wfsRro2+639C27u8r+rHv6axjbQnr+NnYGzZ2uWuauJ2AbY55zEG8oM
+         BRGxv1mlF24QsSgjODRAQ2zFbcB+CU88TCRYIIgv7yFHpOUPl1wzC6mzLcABS8o9iPOO
+         WelDaEqVty9v9fTCBh0OR/DZE2Oqsc46ARhQKEwJvxPg/iB6tHpfnk2zIYDN4dmKOgw4
+         VUNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+nofT7j1yyXglBW1JAelNjT5QQrNp1iK+bWkbVMaWxg=;
-        b=3MEMxarSQp5q8XToYNe1xcZVEgYsaoVQWBIqQLiLUjsd0rh++ibEXWTluNRuDUtemm
-         tn721ZcM38netbH/NdyJSpuuCwiOzLd1/CFWqYR2oorj23JsBQuuGGLhw+AcFwvAgzC/
-         S+RAgp2vH/AFOUSMmQRoLwhgT8KXCukLuhoTF0OArQszbHf6ZzwnLdabI4875hP3Zh2b
-         O2ev7p1oAsQ7WHh1RVfl3lyB11FzngL717WA2HiNdgJ7AQ7OtRSDQB8SgJIb3sX/ExpI
-         JIdLokFBXEgz2AJ3EZsE1vujZfjPys2BkanYi1eC5QAB2+llY9q6X41lE1jXfiOMQpOx
-         4VdQ==
-X-Gm-Message-State: ANoB5pkAPkNQpok1NqDAfs6rsk98as3BrQzDvEZHd7oKUyTbey1kwJL2
-        PZnzOZm/mA+SJhTVn+8T+KfyfF0qu4HCJ+sYbyo=
-X-Google-Smtp-Source: AA0mqf5Teg4nhLlE2L8zKK0SWuefxaLLkoN1H93aMCx9kn9N7RHfDDPjvwAP9c5yoMeRITIchoBvGeGk7HjitRon/tY=
-X-Received: by 2002:a05:6638:3781:b0:373:2fc2:96d7 with SMTP id
- w1-20020a056638378100b003732fc296d7mr8613953jal.177.1668547807934; Tue, 15
- Nov 2022 13:30:07 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tfuN71KgTcj6ceuDIOm3CbjIn67NfH+qQJ+oWPTJBc4=;
+        b=ic/GSK6+w9jDapqGdFizJJhDX67muJK3ONwckli0e20aOY269geVukGuh2Sb1FJ9pd
+         thGqyQXEk1rqA9hCn6VzpnQg1ULO6+aTVOg2QJzrNkEPN57C+2sutEyMAQJ9hbmHn2C+
+         jJ/vObXKxFE5d7UMHUjISA/HcxNlyHZBnI89Z/Jigt9pSFiRtN2ZBy4awYyj+jewOl0b
+         gr5x75qfTJL/gwyAhew/brrPCaMDJExSyT/2KnvsF6qDYcbji0v24FemV2zm4JKLhNZc
+         8saHtvB4ddQLOzZv+bVNiW8BXQM6xSqELB3Ot463H73bVlmNm+g949gUZwfbd0UybHXP
+         Wqmw==
+X-Gm-Message-State: ANoB5pmmwO3EPu2v3GY4rnrqGeUoHvaZC0MYsPhXcn+8bvrlKxCNkp57
+        JxLMG7Os7dgYNnEdeMgXLSrvQA==
+X-Google-Smtp-Source: AA0mqf5h09U1UmLbhcwvDhuAVauvUCtAxnQaQJvmMN4HdV+ItX9ze1HttKSFQCDSHBneCNAClfxZ3w==
+X-Received: by 2002:a05:6602:482:b0:6c4:ad4d:b23a with SMTP id y2-20020a056602048200b006c4ad4db23amr8197339iov.2.1668548415515;
+        Tue, 15 Nov 2022 13:40:15 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id o15-20020a056602124f00b006bba42f7822sm5680238iou.52.2022.11.15.13.40.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Nov 2022 13:40:14 -0800 (PST)
+Date:   Tue, 15 Nov 2022 16:40:13 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Siddharth Asthana <siddharthasthana31@gmail.com>
+Cc:     git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
+        johncai86@gmail.com, Johannes.Schindelin@gmx.de, avarab@gmail.com
+Subject: Re: [PATCH v4 2/3] cat-file: add mailmap support to --batch-check
+ option
+Message-ID: <Y3QHPYiZl7PbyFhP@nand.local>
+References: <20220916205946.178925-1-siddharthasthana31@gmail.com>
+ <20221113212830.92609-1-siddharthasthana31@gmail.com>
+ <20221113212830.92609-3-siddharthasthana31@gmail.com>
 MIME-Version: 1.0
-References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20221104213401.17393-1-jacobabel@nullpo.dev>
- <20221110233137.10414-1-jacobabel@nullpo.dev> <20221110233137.10414-3-jacobabel@nullpo.dev>
- <221115.86iljfkjjo.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221115.86iljfkjjo.gmgdl@evledraar.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 15 Nov 2022 16:29:56 -0500
-Message-ID: <CAPig+cRuJVN2Hc-oNF10sx=ZzArb8skXUQ8m5Qek2e-o4c9VEg@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] worktree add: add --orphan flag
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jacob Abel <jacobabel@nullpo.dev>, git@vger.kernel.org,
-        Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20221113212830.92609-3-siddharthasthana31@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 15, 2022 at 4:13 PM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> On Thu, Nov 10 2022, Jacob Abel wrote:
-> > Adds support for creating an orphan branch when adding a new worktree.
-> > This functionality is equivalent to git switch's --orphan flag.
-> >
-> > The original reason this feature was implemented was to allow a user
-> > to initialise a new repository using solely the worktree oriented
-> > workflow. Example usage included below.
-> >
-> > $ GIT_DIR=".git" git init --bare
-> > $ git worktree add --orphan master master/
-> >
-> > Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
-> > ---
-> > +Create a worktree containing an orphan branch named `<branch>` with a
-> > +clean working directory.  See `--orphan` in linkgit:git-switch[1] for
-> > +more details.
+On Mon, Nov 14, 2022 at 02:58:29AM +0530, Siddharth Asthana wrote:
+> @@ -1051,4 +1051,34 @@ test_expect_success 'git cat-file -s returns correct size with --use-mailmap for
+>  	test_cmp expect actual
+>  '
 >
-> Seeing as "git switch" is still marked "EXPERIMENTAL", it may be prudent
-> in general to avoid linking to it in lieu of "git checkout".
->
-> In this case in particular though the "more details" are almost
-> completely absent from the "git-switch" docs, and they don't (which is
-> their won flaw) link to the more detailed "git-checkout" docs.
->
-> But for this patch, it seems much better to link to the "checkout" docs,
-> no?
+> +test_expect_success 'git cat-file --batch-check returns correct size with --use-mailmap' '
+> +	test_when_finished "rm .mailmap" &&
+> +	cat >.mailmap <<-\EOF &&
+> +	C O Mitter <committer@example.com> Orig <orig@example.com>
+> +	EOF
+> +	cat >expect <<-\EOF &&
+> +	92d99959b011b1cd69fe7be5315d6732fe302575 commit 209
+> +	92d99959b011b1cd69fe7be5315d6732fe302575 commit 220
+> +	EOF
+> +	echo "HEAD" >in &&
+> +	git cat-file --batch-check <in >actual &&
+> +	git cat-file --use-mailmap --batch-check <in >>actual &&
+> +	test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'git cat-file --batch-command returns correct size with --use-mailmap' '
+> +	test_when_finished "rm .mailmap" &&
+> +	cat >.mailmap <<-\EOF &&
+> +	C O Mitter <committer@example.com> Orig <orig@example.com>
+> +	EOF
+> +	cat >expect <<-\EOF &&
+> +	92d99959b011b1cd69fe7be5315d6732fe302575 commit 209
+> +	92d99959b011b1cd69fe7be5315d6732fe302575 commit 220
+> +	EOF
+> +	echo "info HEAD" >in &&
+> +	git cat-file --batch-command <in >actual &&
+> +	git cat-file --use-mailmap --batch-command <in >>actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
 
-Sorry, no. The important point here is that the --orphan option being
-added to `git worktree add` closely follows the behavior of `git
-switch --orphan`, which is quite different from the behavior of `git
-checkout --orphan`.
+These two tests (and the -s ones above it) are not going to work when
+run under SHA-256 mode, i.e., with 'GIT_TEST_DEFAULT_HASH=sha256' in the
+environment:
 
-The `git switch --orphan` documentation doesn't seem particularly
-lacking; it correctly describes the (very) simplified behavior of that
-command over `git checkout --orphan`. I might agree that there isn't
-much reason to link to git-switch for "more details", though, since
-there isn't really anything else that needs to be said.
+  not ok 66 - git cat-file -s returns correct size with --use-mailmap
+  not ok 67 - git cat-file -s returns correct size with --use-mailmap for tag objects
+  not ok 68 - git cat-file --batch-check returns correct size with --use-mailmap
+  not ok 69 - git cat-file --batch-command returns correct size with --use-mailmap
 
-If we did want to say something else here, we might copy one sentence
-from the `git checkout --orphan` documentation:
-
-    The first commit made on this new branch will have no parents and
-    it will be the root of a new history totally disconnected from all
-    the other branches and commits.
-
-The same sentence could be added to `git switch --orphan`
-documentation, but that's outside the scope of this patch series (thus
-can be done later by someone).
-
-> > +test_expect_success '"add" --orphan/-b mutually exclusive' '
-> > +     test_must_fail git worktree add --orphan poodle -b poodle bamboo
-> > +'
-> > +
-> > +test_expect_success '"add" --orphan/-B mutually exclusive' '
-> > +     test_must_fail git worktree add --orphan poodle -B poodle bamboo
-> > +'
-> > +
-> > +test_expect_success '"add" --orphan/--detach mutually exclusive' '
-> > +     test_must_fail git worktree add --orphan poodle --detach bamboo
-> > +'
-> > +
-> > +test_expect_success '"add" --orphan/--no-checkout mutually exclusive' '
-> > +     test_must_fail git worktree add --orphan poodle --no-checkout bamboo
-> > +'
-> > +
-> > +test_expect_success '"add" -B/--detach mutually exclusive' '
-> > +     test_must_fail git worktree add -B poodle --detach bamboo main
-> > +'
-> > +
->
-> This would be much better as a for-loop:
->
-> for opt in -b -B ...
-> do
->         test_expect_success "...$opt" '<test here, uses $opt>'
-> done
->
-> Note the ""-quotes for the description, and '' for the test, that's not
-> a mistake, we eval() the latter.
-
-Such a loop would need to be more complex than this, wouldn't it, to
-account for all the combinations? I'd normally agree about the loop,
-but given that it requires extra complexity, I don't really mind
-seeing the individual tests spelled out manually in this case; they're
-dead simple to understand as written. I don't feel strongly either
-way, but I also don't want to ask for extra work from the patch author
-for a subjective change.
+Thanks,
+Taylor
