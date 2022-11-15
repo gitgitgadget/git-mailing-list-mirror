@@ -2,1186 +2,1041 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B1E7C433FE
-	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 04:04:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 36744C4332F
+	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 04:50:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237826AbiKOEEK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Nov 2022 23:04:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45390 "EHLO
+        id S231584AbiKOEu1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Nov 2022 23:50:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236873AbiKOED5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Nov 2022 23:03:57 -0500
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A8E71BEBA
-        for <git@vger.kernel.org>; Mon, 14 Nov 2022 20:03:51 -0800 (PST)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-3704852322fso125920277b3.8
-        for <git@vger.kernel.org>; Mon, 14 Nov 2022 20:03:51 -0800 (PST)
+        with ESMTP id S231497AbiKOEuU (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Nov 2022 23:50:20 -0500
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 674BB15A3F
+        for <git@vger.kernel.org>; Mon, 14 Nov 2022 20:50:16 -0800 (PST)
+Received: by mail-io1-xd2d.google.com with SMTP id r81so9880147iod.2
+        for <git@vger.kernel.org>; Mon, 14 Nov 2022 20:50:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dc5ewpiu6enFotasx+Ptj3RGK7+Xz5JsN61BvZS2IT8=;
-        b=FDQXeJA89Yd0CjHKn7NkJPPbpOnPhtYU0CJskcYT36pRykPV3plj626zCN+d7LVBck
-         6dG+pfRM9KvA9Ft4i8Rak139+I4WDH+tnONJokk/ytzz1aLaV5Bk9YZ21N8Vafz2pjUz
-         zklaXTMF7esOKNGsARq2UUYamFj/ia9ihDbd1R5+A+sezQ/UG0M/GLQSBYkR7dKrI3Bp
-         mehrBxuHXrGg6+Cvv0GkQQ4r0zODrefNfFmzEuob/IWwz77MCWAPc+cDzYWNzu4BKkh0
-         V7a/0X5DhzQW+vxulL0neP1ikHJbj08fW3yezKvnMxzGvJjXBWuUStpOvPHkG7+jaYeU
-         QxiQ==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=W2v6qytelxywMDrTGltn5Bh2PvkJEma5iUDyYBQJ3lk=;
+        b=Z13SCARx0vMpjlWbOj0BE1Em44WmBg7H3bzev/MzcArgfO8C8VTTSNARC+jsUoKnmR
+         OIOFTP/inMnlRTjNHTHMEtQ2EQEkPxk2XGae66mG3mQXyXfweQVooFSwKFANp0Fmb+O/
+         6rp01P93sGeO4sALJWxy6Ug4/rpi7GS3ysjPi4VhHNtfQUjtVG86fpDPs6W638BZB7D6
+         n93wvfQBggZeWZcUOg+ICJM3PEof+5fhjKoY2xzCoi0/dXkF57jfOCHIKJSIyiD0Lmzs
+         Q/GSWND7aLuCqnv4eSZO4SCuj/Sg3u88dXh/9AxlsStU5Ohx+wsVtFJdVEurqr8Ra1Aw
+         BFrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dc5ewpiu6enFotasx+Ptj3RGK7+Xz5JsN61BvZS2IT8=;
-        b=ZfJSMSETP0KnKFWm6SYNu5qeHMBowEVhruA8Qmp/c5vhGU80IzjMZSP25+qBqNmHIg
-         hUD5uDdtEsrRJ+Z/y0uEO5baUGOsALjVKr37elMXiIzN7VV4ulUCCjTevReovUxiUrq+
-         2canB5sZCCxPhBN9BO99ufQySLiAw99EA0iRDpLLvs+6eMzkJXgTL021OQSDDB3WlD9M
-         P+bynP2t6892f9Rzl23Ql5j0/1OG6zKSOJ+mcQpuz1FMLF7ZZaUcJ2083eLvr0HMZ8Cu
-         t0gN2CQ1b2NfktxCjO8B0+l8SYCKNq4N55XXdgXxX6KjnV2CRCvbxY62fBvsspa/U4Bo
-         n4ng==
-X-Gm-Message-State: ANoB5pnjug6pZGHSewJJ3yiV2my2R1Mfsz+Y+KW8E6GpLPNBUb+QMZfg
-        5Mr3AvUQNrfT/MAFmkPwTafb7h3BZ5bQuiChAwYpyJcaoOegrBs5Tsc=
-X-Google-Smtp-Source: AA0mqf4jwl/7SBaKRZ7VdjpxvsuM27vIVibUuxo8idZlz2+SdHnlDD3gYpJnLGxtqfaAfECd/UGRX/gP5S72OQgGfyg=
-X-Received: by 2002:a81:1756:0:b0:36b:a38a:95bc with SMTP id
- 83-20020a811756000000b0036ba38a95bcmr15479618ywx.351.1668485029838; Mon, 14
- Nov 2022 20:03:49 -0800 (PST)
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=W2v6qytelxywMDrTGltn5Bh2PvkJEma5iUDyYBQJ3lk=;
+        b=Iuny+9UXEowpXt8yQ/cBJK/K4i9XsyMk3fgwbHZPlsu0jjBZG1MtZdsl78Szc883Hf
+         y9SXXiQeiUNl+Iab0ZdwP9JACQhEIKdeqqBvVQ7/kJf3yC9OEEc3174sZRR+YtzdDOI9
+         2Cph8HBmlyO1jvcgAsPX8pnxYQDcWgR9vjVYXlvLpYnob5apItIiXg3QB6GcJ/ORyAXG
+         /mDG8WZTD2ssyi3ozlCu4NlTkrV2ZP5IYeS8L/wWGWsg+vmNm2iCjqrMe0SNRFnkcfHk
+         UaRtda386cEV/ApyRfDUVIxin2L6lg+iMxfkLHE4C/7RDn/mti1Da04N/bzzFA+AuXyi
+         qqMA==
+X-Gm-Message-State: ANoB5pmWJlk3DV6nlrkdPp53lBAACCxbB2Na93iqv2an5OxACFumJuKY
+        W9Vj/cOGQnGL7Gmtw1UYA/AuCoDcgELNHA==
+X-Google-Smtp-Source: AA0mqf5r2myZ8Gfn50IdfRE1MkOW6vsOksneYkIb9hc01ITlnV3vSOCVyJdKPTa4+jKnaQaZiOtutA==
+X-Received: by 2002:a5e:cb0b:0:b0:6d9:a2bf:54ae with SMTP id p11-20020a5ecb0b000000b006d9a2bf54aemr7026963iom.23.1668487814647;
+        Mon, 14 Nov 2022 20:50:14 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id y6-20020a029506000000b0037586addbe9sm4263966jah.88.2022.11.14.20.50.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 14 Nov 2022 20:50:13 -0800 (PST)
+Date:   Mon, 14 Nov 2022 23:50:11 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     git@vger.kernel.org
+Subject: What's cooking in git.git (Nov 2022, #03; Mon, 14)
+Message-ID: <Y3Mag8qG2D3qjlmg@nand.local>
 MIME-Version: 1.0
-References: <pull.1367.v3.git.1665269538608.gitgitgadget@gmail.com> <pull.1367.v4.git.1667714666810.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1367.v4.git.1667714666810.gitgitgadget@gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Tue, 15 Nov 2022 12:03:37 +0800
-Message-ID: <CAOLTT8TzpfoH7pz7gxgFvNWOaUZUcg1q_Tap+2anwHfAUgDV8Q@mail.gmail.com>
-Subject: Re: [PATCH v4] sparse-checkout.txt: new document with sparse-checkout directions
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Victoria Dye <vdye@github.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Elijah Newren <newren@gmail.com>,
-        Glen Choo <chooglen@google.com>,
-        Martin von Zweigbergk <martinvonz@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+X-master-at: eea7033409a0ed713c78437fc76486983d211e25
+X-next-at: 34eb0ea05a4e3296eee641767d1ed2edda20609d
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a future
+release).  Commits prefixed with '-' are only in 'seen', and aren't
+considered "accepted" at all.  A topic without enough support may be
+discarded after a long period of no activity.
 
-Elijah Newren via GitGitGadget <gitgitgadget@gmail.com> =E4=BA=8E2022=E5=B9=
-=B411=E6=9C=886=E6=97=A5=E5=91=A8=E6=97=A5 14:04=E5=86=99=E9=81=93=EF=BC=9A
->
-> From: Elijah Newren <newren@gmail.com>
->
-> Once upon a time, Matheus wrote some patches to make
->    git grep [--cached | <REVISION>] ...
-> restrict its output to the sparsity specification when working in a
-> sparse checkout[1].  That effort got derailed by two things:
->
->   (1) The --sparse-index work just beginning which we wanted to avoid
->       creating conflicts for
->   (2) Never deciding on flag and config names and planned high level
->       behavior for all commands.
->
-> More recently, Shaoxuan implemented a more limited form of Matheus'
-> patches that only affected --cached, using a different flag name,
-> but also changing the default behavior in line with what Matheus did.
-> This again highlighted the fact that we never decided on command line
-> flag names, config option names, and the big picture path forward.
->
-> The --sparse-index work has been mostly complete (or at least released
-> into production even if some small edges remain) for quite some time
-> now.  We have also had several discussions on flag and config names,
-> though we never came to solid conclusions.  Stolee once upon a time
-> suggested putting all these into some document in
-> Documentation/technical[3], which Victoria recently also requested[4].
-> I'm behind the times, but here's a patch attempting to finally do that.
->
-> [1] https://lore.kernel.org/git/5f3f7ac77039d41d1692ceae4b0c5df3bb45b74a.=
-1612901326.git.matheus.bernardino@usp.br/
->     (See his second link in that email in particular)
-> [2] https://lore.kernel.org/git/20220908001854.206789-2-shaoxuan.yuan02@g=
-mail.com/
-> [3] https://lore.kernel.org/git/CABPp-BHwNoVnooqDFPAsZxBT9aR5Dwk5D9sDRCvY=
-Sb8akxAJgA@mail.gmail.com/
->     (Scroll to the very end for the final few paragraphs)
-> [4] https://lore.kernel.org/git/cafcedba-96a2-cb85-d593-ef47c8c8397c@gith=
-ub.com/
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->     sparse-checkout.txt: new document with sparse-checkout directions
->
->     v2 and v3 didn't get any reviews (I know, I know, this document is
->     really long), but it's been nearly a month and this patch is still
->     marked as "Needs Review", so I'm hoping sending a v4 will encourage
->     feedback. I think it's good enough to accept and start iterating, but
->     want to be sure others agree.
->
->     As before, I think we're starting to converge on actual proposals;
->     there's some areas we've agreed on, others we've compromised on, and
->     some we've just figured out what the others were saying. The discussi=
-on
->     has been very illuminating; thanks to everyone who has chimed in. I'v=
-e
->     tried to take my best stab at cleaning up and culling things that don=
-'t
->     need to remain as open questions, but if I've mis-represented anyone =
-or
->     missed something, don't hesitate to speak up. Everything is still ope=
-n
->     for debate, even if not marked as a currently open question.
->
->     Changes since v3:
->
->      * A few minor wording cleanups here and there, and one paragraph mov=
-ed
->        to keep similar things together.
->
->     Changes since v2:
->
->      * Compromised with Stollee on log -- Behavior A only affects
->        patch-related operations, not revision walking
->      * Incorporated Junio's suggestions about untracked file handling
->      * Added new usecases, one brought up by Martin, one by Stolee
->      * Added new sections:
->        * Usecases of primary concern
->        * Oversimplified mental models ("Cliff Notes" for this document!)
->      * Recategorization of a few commands based on discussion
->      * Greater details on how index operations work under Behavior A, to
->        avoid weird edge cases
->      * Extended explanation of the sparse specification, particularly whe=
-n
->        index differs from HEAD
->      * Switched proposed flag names to --scope=3D{sparse,all} to avoid bi=
-nary
->        flags that are hard to extend
->      * Switched proposed config option name (still need good values and
->        descriptions for it, though)
->      * Removed questions we seemed to have agreement on. Modified/extende=
-d
->        some existing questions.
->      * Added Stolee's sparse-backfill ideas to the plans
->      * Additional Known bugs
->      * Various wording improvements
->      * Possibly other things I've missed.
->
->     Changes since v1:
->
->      * Added new sections:
->        * "Terminology"
->        * "Behavior classes"
->        * "Sparse specification vs. sparsity patterns"
->      * Tried to shuffle commands from unknown into appropriate sections
->        based on feedback, but I got some conflicting feedback, so...who
->        knows if thing are in the right place
->      * More consistency in using "sparse specification" over other terms
->      * Extra comments about how add/rm/mv operate on moving files across =
-the
->        tracked/untracked boundary
->      * --restrict-but-warn should have been "restrict or error", but
->        reworded even more heavily as part of "Behavior classes" section
->      * Added extra questions based on feedback (--no-expand, update-index
->        stuff, apply --index)
->      * More details on apply/am bugs
->      * Documented read-tree issue
->      * A few cases of fixing line wrapping at <=3D80 chars
->      * Added more alternate name suggestions for options instead of
->        --[no-]restrict
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1367%2F=
-newren%2Fsparse-checkout-directions-v4
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1367/newre=
-n/sparse-checkout-directions-v4
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1367
->
->  Documentation/technical/sparse-checkout.txt | 1103 +++++++++++++++++++
->  1 file changed, 1103 insertions(+)
->  create mode 100644 Documentation/technical/sparse-checkout.txt
->
-> diff --git a/Documentation/technical/sparse-checkout.txt b/Documentation/=
-technical/sparse-checkout.txt
-> new file mode 100644
-> +=3D=3D=3D Terminology =3D=3D=3D
-> +
-> +sparse directory: An entry in the index corresponding to a directory, wh=
-ich
-> +       appears in the index instead of all the files under that director=
-y
-> +       that would normally appear.  See also sparse-index.  Something th=
-at
-> +       can cause confusion is that the "sparse directory" does NOT match
-> +       the sparse specification, i.e. the directory is NOT present in th=
-e
-> +       working tree.  May be renamed in the future (e.g. to "skipped
-> +       directory").
-> +
-> +sparse index: A special mode for sparse-checkout that also makes the
-> +       index sparse by recording a directory entry in lieu of all the
-> +       files underneath that directory (thus making that a "skipped
-> +       directory" which unfortunately has also been called a "sparse
-> +       directory"), and does this for potentially multiple
-> +       directories.  Controlled by the --[no-]sparse-index option to
-> +       init|set|reapply.
-> +
-> +sparsity patterns: patterns from $GIT_DIR/info/sparse-checkout used to
-> +       define the set of files of interest.  A warning: It is easy to
-> +       over-use this term (or the shortened "patterns" term), for two
-> +       reasons: (1) users in cone mode specify directories rather than
-> +       patterns (their directories are transformed into patterns, but
-> +       users may think you are talking about non-cone mode if you use th=
-e
-> +       word "patterns"), and (b) the sparse specification might
+There are still a large-ish number of topics in 'seen' that are
+waiting for review. Otherwise, the remaining topics are graduating at
+a reasonable pace, and the queue for 'next' has returned to a normal
+level.
 
-nit: s/(b)/(2)/g
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
-> +       transiently differ in the working tree or index from the sparsity
-> +       patterns (see "Sparse specification vs. sparsity patterns").
-> +
-> +sparse specification: The set of paths in the user's area of focus.  Thi=
-s
-> +       is typically just the tracked files that match the sparsity
-> +       patterns, but the sparse specification can temporarily differ and
-> +       include additional files.  (See also "Sparse specification
-> +       vs. sparsity patterns")
-> +
-> +       * When working with history, the sparse specification is exactly
-> +         the set of files matching the sparsity patterns.
-> +       * When interacting with the working tree, the sparse specificatio=
-n
-> +         is the set of tracked files with a clear SKIP_WORKTREE bit or
-> +         tracked files present in the working copy.
+With maint, master, next, seen, todo:
 
-I'm guessing what you mean here is:
-Some files are stored with a flag bit of !SKIP_WORKTREE in its index entry.
-But files are "vivifying" (restore to worktree) or new files added to
-index (tracked files),
-they also belong to the sparse specification.
+	https://github.com/git/git/
 
-I think we can add some examples to describe these terms.
+The following mirrors are currently out-of-date while the usual
+maintainer is offline.
 
-#!/bin/sh
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://gitlab.com/git-vcs/git/
 
-set -x
+With all the integration branches and topics broken out:
 
-rm -rf mono-repo
-git init mono-repo -b main
-(
-  cd mono-repo &&
-  mkdir p1 p2 &&
-  echo a >p1/a &&
-  echo b >p1/b &&
-  echo a >p2/a &&
-  echo b >p2/b &&
-  git add . &&
-  git commit -m ok &&
-  git sparse-checkout set p1 &&
-  git ls-files -t &&
-  echo a >>p1/a &&
-  echo b >>p1/b &&
-  mkdir p2 p3 &&
-  echo next >>p2/a &&
-  echo next >>p3/c &&
-  git add p3/c &&
-  # p2/a and p3/c vivify
-  git ls-files -t &&
-  # compare wortree/commit
-  git --no-pager diff HEAD --name-only
-)
+	https://github.com/ttaylorr/git/
 
-> +       * When modifying or showing results from the index, the sparse
-> +         specification is the set of files with a clear SKIP_WORKTREE bi=
-t
-> +         or that differ in the index from HEAD.
+Even though the preformatted documentation in HTML and man format
+are not sources, they are typically published in these repositories
+for convenience (replace "htmldocs" with "manpages" for the manual
+  pages):
 
-#!/bin/sh
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
 
-set -x
+...but these and the release tarballs below are similarly out-of-date:
 
-rm -rf mono-repo
-git init mono-repo -b main
-(
-  cd mono-repo &&
-  mkdir p1 p2 &&
-  echo a >p1/a &&
-  echo b >p1/b &&
-  echo a >p2/a &&
-  echo b >p2/b &&
-  git add . &&
-  git commit -m ok &&
-  git sparse-checkout set p1 &&
-  git update-index --chmod=3D+x p2/a &&
-  # compare commit/index
-  git --no-pager diff --cached --name-only
-)
+	https://www.kernel.org/pub/software/scm/git/
 
-> +       * If working with the index and the working copy, the sparse
-> +         specification is the union of the paths from above.
-> +
-> +vivifying: When a command restores a tracked file to the working tree (a=
-nd
-> +       hopefully also clears the SKIP_WORKTREE bit in the index for that
-> +       file), this is referred to as "vivifying" the file.
-> +
-> +
-> +=3D=3D=3D Purpose of sparse-checkouts =3D=3D=3D
-> +
-> +sparse-checkouts exist to allow users to work with a subset of their
-> +files.
-> +
-> +You can think of sparse-checkouts as subdividing "tracked" files into tw=
-o
-> +categories -- a sparse subset, and all the rest.  Implementationally, we
-> +mark "all the rest" in the index with a SKIP_WORKTREE bit and leave them
-> +out of the working tree.  The SKIP_WORKTREE files are still tracked, jus=
-t
-> +not present in the working tree.
-> +
-> +In the past, sparse-checkouts were defined by "SKIP_WORKTREE means the f=
-ile
-> +is missing from the working tree but pretend the file contents match HEA=
-D".
-> +That was not only bogus (it actually meant the file missing from the
-> +working tree matched the index rather than HEAD), but it was also a
-> +low-level detail which only provided decent behavior for a few commands.
-> +There were a surprising number of ways in which that guiding principle g=
-ave
-> +command results that violated user expectations, and as such was a bad
-> +mental model.  However, it persisted for many years and may still be fou=
-nd
-> +in some corners of the code base.
-> +
-> +Anyway, the idea of "working with a subset of files" is simple enough, b=
-ut
-> +there are multiple different high-level usecases which affect how some G=
-it
-> +subcommands should behave.  Further, even if we only considered one of
-> +those usecases, sparse-checkouts can modify different subcommands in ove=
-r a
-> +half dozen different ways.  Let's start by considering the high level
-> +usecases:
-> +
-> +  A) Users are _only_ interested in the sparse portion of the repo
-> +
-> +  A*) Users are _only_ interested in the sparse portion of the repo
-> +      that they have downloaded so far
-> +
-> +  B) Users want a sparse working tree, but are working in a larger whole
-> +
-> +  C) sparse-checkout is a behind-the-scenes implementation detail allowi=
-ng
-> +     Git to work with a specially crafted in-house virtual file system;
-> +     users are actually working with a "full" working tree that is
-> +     lazily populated, and sparse-checkout helps with the lazy populatio=
-n
-> +     piece.
-> +
-> +It may be worth explaining each of these in a bit more detail:
-> +
-> +
-> +  (Behavior A) Users are _only_ interested in the sparse portion of the =
-repo
-> +
-> +These folks might know there are other things in the repository, but
-> +don't care.  They are uninterested in other parts of the repository, and
-> +only want to know about changes within their area of interest.  Showing
-> +them other files from history (e.g. from diff/log/grep/etc.)  is a
-> +usability annoyance, potentially a huge one since other changes in
-> +history may dwarf the changes they are interested in.
-> +
-> +Some of these users also arrive at this usecase from wanting to use part=
-ial
-> +clones together with sparse checkouts (in a way where they have download=
-ed
-> +blobs within the sparse specification) and do disconnected development.
-> +Not only do these users generally not care about other parts of the
-> +repository, but consider it a blocker for Git commands to try to operate=
- on
-> +those.  If commands attempt to access paths in history outside the spars=
-ity
-> +specification, then the partial clone will attempt to download additiona=
-l
-> +blobs on demand, fail, and then fail the user's command.  (This may be
-> +unavoidable in some cases, e.g. when `git merge` has non-trivial changes=
- to
-> +reconcile outside the sparse specification, but we should limit how ofte=
-n
-> +users are forced to connect to the network.)
-> +
-> +Also, even for users using partial clones that do not mind being
-> +always connected to the network, the need to download blobs as
-> +side-effects of various other commands (such as the printed diffstat
-> +after a merge or pull) can lead to worries about local repository size
-> +growing unnecessarily[10].
-> +
-> +  (Behavior A*) Users are _only_ interested in the sparse portion of the=
- repo
-> +      that they have downloaded so far (a variant on the first usecase)
-> +
-> +This variant is driven by folks who using partial clones together with
-> +sparse checkouts and do disconnected development (so far sounding like a
-> +subset of behavior A users) and doing so on very large repositories.  Th=
-e
-> +reason for yet another variant is that downloading even just the blobs
-> +through history within their sparse specification may be too much, so th=
-ey
-> +only download some.  They would still like operations to succeed without
-> +network connectivity, though, so things like `git log -S${SEARCH_TERM} -=
-p`
-> +or `git grep ${SEARCH_TERM} OLDREV ` would need to be prepared to provid=
-e
-> +partial results that depend on what happens to have been downloaded.
-> +
-> +This variant could be viewed as Behavior A with the sparse specification
-> +for history querying operations modified from "sparsity patterns" to
-> +"sparsity patterns limited to the blobs we have already downloaded".
-> +
+--------------------------------------------------
+[Graduated to 'master']
 
- I think A's users might need a little more refinement.
+* ab/rev-info-init (2022-11-08) 1 commit
+  (merged to 'next' on 2022-11-08 at 909ad9ed3a)
+ + revisions API: extend the nascent REV_INFO_INIT macro
 
-A: Some users are _only_ interested in the sparse portion of the repo,
-but they don't want to download all the blobs, they can accept to download
-other data later using partial-clone, which can reduce the local storage si=
-ze.
-(Current default behavior)
-
-A** : Some users are _only_ interested in the sparse portion of the repo,
-but they want to download all the blobs in it to avoid some unnecessary
-network connections afterwards.
-
-> +=3D=3D=3D Usecases of primary concern =3D=3D=3D
-> +
-> +Most of the rest of this document will focus on Behavior A and Behavior
-> +B.  Some notes about the other two cases and why we are not focusing on
-> +them:
-> +
-> +  (Behavior A*)
-> +
-> +Supporting this usecase is estimated to be difficult and a lot of work.
-> +There are no plans to implement it currently, but it may be a potential
-> +future alternative.  Knowing about the existence of additional alternati=
-ves
-> +may affect our choice of command line flags (e.g. if we need tri-state o=
-r
-> +quad-state flags rather than just binary flags), so it was still importa=
-nt
-> +to at least note.
-> +
-> +Further, I believe the descriptions below for Behavior A are probably st=
-ill
-> +valid for this usecase, with the only exception being that it redefines =
-the
-> +sparse specification to restrict it to already-downloaded blobs.  The ha=
-rd
-> +part is in making commands capable of respecting that modified definitio=
-n.
-> +
-> +  (Behavior C)
-> +
-> +This usecase violates some of the early sparse-checkout documented
-> +assumptions (since files marked as SKIP_WORKTREE will be displayed to us=
-ers
-> +as present in the working tree).  That violation may mean various
-> +sparse-checkout related behaviors are not well suited to this usecase an=
-d
-> +we may need tweaks -- to both documentation and code -- to handle it.
-> +However, this usecase is also perhaps the simplest model to support in t=
-hat
-> +everything behaves like a dense checkout with a few exceptions (e.g. bra=
-nch
-> +checkouts and switches write fewer things, knowing the VFS will lazily
-> +write the rest on an as-needed basis).
-> +
-> +Since there is no publically available VFS-related code for folks to try=
-,
-> +the number of folks who can test such a usecase is limited.
-> +
-> +The primary reason to note the Behavior C usecase is that as we fix thin=
-gs
-> +to better support Behaviors A and B, there may be additional places wher=
-e
-> +we need to make tweaks allowing folks in this usecase to get the origina=
-l
-> +non-sparse treatment.  For an example, see ecc7c8841d ("repo_read_index:
-> +add config to expect files outside sparse patterns", 2022-02-25).  The
-> +secondary reason to note Behavior C, is so that folks taking advantage o=
-f
-> +Behavior C do not assume they are part of the Behavior B camp and propos=
-e
-> +patches that break things for the real Behavior B folks.
-> +
-> +
-> +=3D=3D=3D Oversimplified mental models =3D=3D=3D
-> +
-> +An oversimplification of the differences in the above behaviors is:
-> +
-> +  Behavior A: Restrict worktree and history operations to sparse specifi=
-cation
-> +  Behavior B: Restrict worktree operations to sparse specification; have=
- any
-> +             history operations work across all files
-> +  Behavior C: Do not restrict either worktree or history operations to t=
-he
-> +             sparse specification...with the exception of branch checkou=
-ts or
-> +             switches which avoid writing files that will match the inde=
-x so
-> +             they can later lazily be populated instead.
-> +
-> +
-> +=3D=3D=3D Desired behavior =3D=3D=3D
-> +
-> +As noted previously, despite the simple idea of just working with a subs=
-et
-> +of files, there are a range of different behavioral changes that need to=
- be
-> +made to different subcommands to work well with such a feature.  See
-> +[1,2,3,4,5,6,7,8,9,10] for various examples.  In particular, at [2], we =
-saw
-> +that mere composition of other commands that individually worked correct=
-ly
-> +in a sparse-checkout context did not imply that the higher level command
-> +would work correctly; it sometimes requires further tweaks.  So,
-> +understanding these differences can be beneficial.
-> +
-> +* Commands behaving the same regardless of high-level use-case
-> +
-> +  * commands that only look at files within the sparsity specification
-> +
-> +      * diff (without --cached or REVISION arguments)
-> +      * grep (without --cached or REVISION arguments)
-> +      * diff-files
-> +
-> +  * commands that restore files to the working tree that match sparsity
-> +    patterns, and remove unmodified files that don't match those
-> +    patterns:
-> +
-> +      * switch
-> +      * checkout (the switch-like half)
-> +      * read-tree
-> +      * reset --hard
-> +
-> +  * commands that write conflicted files to the working tree, but otherw=
-ise
-> +    will omit writing files to the working tree that do not match the
-> +    sparsity patterns:
-> +
-> +      * merge
-> +      * rebase
-> +      * cherry-pick
-> +      * revert
-> +
-> +      * `am` and `apply --cached` should probably be in this section but
-> +       are buggy (see the "Known bugs" section below)
-> +
-> +    The behavior for these commands somewhat depends upon the merge
-> +    strategy being used:
-> +      * `ort` behaves as described above
-> +      * `recursive` tries to not vivify files unnecessarily, but does so=
-metimes
-> +       vivify files without conflicts.
-> +      * `octopus` and `resolve` will always vivify any file changed in t=
-he merge
-> +       relative to the first parent, which is rather suboptimal.
-> +
-> +    It is also important to note that these commands WILL update the ind=
-ex
-> +    outside the sparse specification relative to when the operation bega=
-n,
-> +    BUT these commands often make a commit just before or after such tha=
-t
-> +    by the end of the operation there is no change to the index outside =
-the
-> +    sparse specification.  Of course, if the operation hits conflicts or
-> +    does not make a commit, then these operations clearly can modify the
-> +    index outside the sparse specification.
-> +
-> +    Finally, it is important to note that at least the first four of the=
-se
-> +    commands also try to remove differences between the sparse
-> +    specification and the sparsity patterns (much like the commands in t=
-he
-> +    previous section).
-> +
-> +  * commands that always ignore sparsity since commits must be full-tree
-> +
-> +      * archive
-> +      * bundle
-> +      * commit
-> +      * format-patch
-> +      * fast-export
-> +      * fast-import
-> +      * commit-tree
-> +
-> +  * commands that write any modified file to the working tree (conflicte=
-d
-> +    or not, and whether those paths match sparsity patterns or not):
-> +
-> +      * stash
-> +      * apply (without `--index` or `--cached`)
-> +
-> +* Commands that may slightly differ for behavior A vs. behavior B:
-> +
-> +  Commands in this category behave mostly the same between the two
-> +  behaviors, but may differ in verbosity and types of warning and error
-> +  messages.
-> +
-> +  * commands that make modifications to which files are tracked:
-> +      * add
-> +      * rm
-> +      * mv
-> +      * update-index
-> +
-> +    The fact that files can move between the 'tracked' and 'untracked'
-> +    categories means some commands will have to treat untracked files
-> +    differently.  But if we have to treat untracked files differently,
-> +    then additional commands may also need changes:
-> +
-> +      * status
-> +      * clean
-> +
-
-I'm a bit worried about git status, because it's used in many shells
-(e.g. zsh) i
-in the git prompt function. Its default behavior is restricted, otherwise u=
-sers
-may get blocked when they use zsh to cd to that directory. I don't know how
-to reproduce this problem (since the scenario is built on checkout to a loc=
-al
-unborn branch).
-
-> +    In particular, `status` may need to report any untracked files outsi=
-de
-> +    the sparsity specification as an erroneous condition (especially to
-> +    avoid the user trying to `git add` them, forcing `git add` to displa=
-y
-> +    an error).
-> +
-> +    It's not clear to me exactly how (or even if) `clean` would change,
-> +    but it's the other command that also affects untracked files.
-> +
-> +    `update-index` may be slightly special.  Its --[no-]skip-worktree fl=
-ag
-> +    may need to ignore the sparse specification by its nature.  Also, it=
-s
-> +    current --[no-]ignore-skip-worktree-entries default is totally bogus=
-.
-> +
-> +  * commands for manually tweaking paths in both the index and the worki=
-ng tree
-> +      * `restore`
-> +      * the restore-like half of `checkout`
-> +
-> +    These commands should be similar to add/rm/mv in that they should
-> +    only operate on the sparse specification by default, and require a
-> +    special flag to operate on all files.
-> +
-> +    Also, note that these commands currently have a number of issues (se=
-e
-> +    the "Known bugs" section below)
-> +
-> +* Commands that significantly differ for behavior A vs. behavior B:
-> +
-> +  * commands that query history
-> +      * diff (with --cached or REVISION arguments)
-> +      * grep (with --cached or REVISION arguments)
-> +      * show (when given commit arguments)
-> +      * blame (only matters when one or more -C flags are passed)
-> +       * and annotate
-> +      * log
-> +      * whatchanged
-> +      * ls-files
-> +      * diff-index
-> +      * diff-tree
-> +      * ls-tree
-> +
-> +    Note: for log and whatchanged, revision walking logic is unaffected
-> +    but displaying of patches is affected by scoping the command to the
-> +    sparse-checkout.  (The fact that revision walking is unaffected is
-> +    why rev-list, shortlog, show-branch, and bisect are not in this
-> +    list.)
-> +
-> +    ls-files may be slightly special in that e.g. `git ls-files -t` is
-> +    often used to see what is sparse and what is not.  Perhaps -t should
-> +    always work on the full tree?
-> +
-
-Recently git ls-files added a --format option, perhaps this can be modified=
- to
-show if a file is SKIP_WORKTREE in the future.
-
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 4cf8a23648..0aeff8e514 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -280,6 +280,9 @@ static size_t expand_show_index(struct strbuf *sb,
-const char *start,
-                              data->pathname));
-        else if (skip_prefix(start, "(path)", &p))
-                write_name_to_buf(sb, data->pathname);
-+       else if (skip_prefix(start, "(skiptree)", &p))
-+               strbuf_addstr(sb, ce_skip_worktree(data->ce) ?
-+                             "true" : "false");
-        else
-                die(_("bad ls-files format: %%%.*s"), (int)len, start);
+ Progress on being able to initialize a rev_info struct with a macro.
+ source: <patch-1.1-c3afcd69ddb-20221108T140134Z-avarab@gmail.com>
 
 
-> +=3D=3D=3D Behavior classes =3D=3D=3D
-> +
-> +From the above there are a few classes of behavior:
-> +
-> +  * "restrict"
-> +
-> +    Commands in this class only read or write files in the working tree
-> +    within the sparse specification.
-> +
-> +    When moving to a new commit (e.g. switch, reset --hard), these comma=
-nds
-> +    may update index files outside the sparse specification as of the st=
-art
-> +    of the operation, but by the end of the operation those index files
-> +    will match HEAD again and thus those files will again be outside the
-> +    sparse specification.
-> +
-> +    When paths are explicitly specified, these paths are intersected wit=
-h
-> +    the sparse specification and will only operate on such paths.
-> +    (e.g. `git restore [--staged] -- '*.png'`, `git reset -p -- '*.md'`)
-> +
-> +    Some of these commands may also attempt, at the end of their operati=
-on,
-> +    to cull transient differences between the sparse specification and t=
-he
-> +    sparsity patterns (see "Sparse specification vs. sparsity patterns" =
-for
-> +    details, but this basically means either removing unmodified files n=
-ot
-> +    matching the sparsity patterns and marking those files as
-> +    SKIP_WORKTREE, or vivifying files that match the sparsity patterns a=
-nd
-> +    marking those files as !SKIP_WORKTREE).
-> +
-> +  * "restrict modulo conflicts"
-> +
-> +    Commands in this class generally behave like the "restrict" class,
-> +    except that:
-> +      (1) they will ignore the sparse specification and write files with
-> +         conflicts to the working tree (thus temporarily expanding the
-> +         sparse specification to include such files.)
-> +      (2) they are grouped with commands which move to a new commit, sin=
-ce
-> +         they often create a commit and then move to it, even though we
-> +         know there are many exceptions to moving to the new commit.  (F=
-or
-> +         example, the user may rebase a commit that becomes empty, or ha=
-ve
-> +         a cherry-pick which conflicts, or a user could run `merge
-> +         --no-commit`, and we also view `apply --index` kind of like `am
-> +         --no-commit`.)  As such, these commands can make changes to ind=
-ex
-> +         files outside the sparse specification, though they'll mark suc=
-h
-> +         files with SKIP_WORKTREE.
-> +
-> +  * "restrict also specially applied to untracked files"
-> +
-> +    Commands in this class generally behave like the "restrict" class,
-> +    except that they have to handle untracked files differently too, oft=
-en
-> +    because these commands are dealing with files changing state between
-> +    'tracked' and 'untracked'.  Often, this may mean printing an error
-> +    message if the command had nothing to do, but the arguments may have
-> +    referred to files whose tracked-ness state could have changed were i=
-t
-> +    not for the sparsity patterns excluding them.
-> +
-> +  * "no restrict"
-> +
-> +    Commands in this class ignore the sparse specification entirely.
-> +
-> +  * "restrict or no restrict dependent upon behavior A vs. behavior B"
-> +
-> +    Commands in this class behave like "no restrict" for folks in the
-> +    behavior B camp, and like "restrict" for folks in the behavior A cam=
-p.
-> +    However, when behaving like "restrict" a warning of some sort might =
-be
-> +    provided that history queries have been limited by the sparse-checko=
-ut
-> +    specification.
-> +
-> +
-> +=3D=3D=3D Subcommand-dependent defaults =3D=3D=3D
-> +
-> +Note that we have different defaults depending on the command for the
-> +desired behavior :
-> +
-> +  * Commands defaulting to "restrict":
-> +    * diff-files
-> +    * diff (without --cached or REVISION arguments)
-> +    * grep (without --cached or REVISION arguments)
-> +    * switch
-> +    * checkout (the switch-like half)
-> +    * reset (<commit>)
-> +
-> +    * restore
-> +    * checkout (the restore-like half)
-> +    * checkout-index
-> +    * reset (with pathspec)
-> +
-> +    This behavior makes sense; these interact with the working tree.
-> +
-> +  * Commands defaulting to "restrict modulo conflicts":
-> +    * merge
-> +    * rebase
-> +    * cherry-pick
-> +    * revert
-> +
-> +    * am
-> +    * apply --index (which is kind of like an `am --no-commit`)
-> +
-> +    * read-tree (especially with -m or -u; is kind of like a --no-commit=
- merge)
-> +    * reset (<tree-ish>, due to similarity to read-tree)
-> +
-> +    These also interact with the working tree, but require slightly
-> +    different behavior either so that (a) conflicts can be resolved or (=
-b)
-> +    because they are kind of like a merge-without-commit operation.
-> +
-> +    (See also the "Known bugs" section below regarding `am` and `apply`)
-> +
-> +  * Commands defaulting to "no restrict":
-> +    * archive
-> +    * bundle
-> +    * commit
-> +    * format-patch
-> +    * fast-export
-> +    * fast-import
-> +    * commit-tree
-> +
-> +    * stash
-> +    * apply (without `--index`)
-> +
-> +    These have completely different defaults and perhaps deserve the mos=
-t
-> +    detailed explanation:
-> +
-> +    In the case of commands in the first group (format-patch,
-> +    fast-export, bundle, archive, etc.), these are commands for
-> +    communicating history, which will be broken if they restrict to a
-> +    subset of the repository.  As such, they operate on full paths and
-> +    have no `--restrict` option for overriding.  Some of these commands =
-may
-> +    take paths for manually restricting what is exported, but it needs t=
-o
-> +    be very explicit.
-> +
-> +    In the case of stash, it needs to vivify files to avoid losing the
-> +    user's changes.
-> +
-> +    In the case of apply without `--index`, that command needs to update
-> +    the working tree without the index (or the index without the working
-> +    tree if `--cached` is passed), and if we restrict those updates to t=
-he
-> +    sparse specification then we'll lose changes from the user.
-> +
-> +  * Commands defaulting to "restrict also specially applied to untracked=
- files":
-> +    * add
-> +    * rm
-> +    * mv
-> +    * update-index
-> +    * status
-> +    * clean (?)
-> +
-> +    Our original implementation for the first three of these commands wa=
-s
-> +    "no restrict", but it had some severe usability issues:
-> +      * `git add <somefile>` if honored and outside the sparse
-> +       specification, can result in the file randomly disappearing later
-> +       when some subsequent command is run (since various commands
-> +       automatically clean up unmodified files outside the sparse
-> +       specification).
-> +      * `git rm '*.jpg'` could very negatively surprise users if it dele=
-tes
-> +       files outside the range of the user's interest.
-> +      * `git mv` has similar surprises when moving into or out of the co=
-ne,
-> +       so best to restrict by default
-> +
-> +    So, we switched `add` and `rm` to default to "restrict", which made
-> +    usability problems much less severe and less frequent, but we still =
-got
-> +    complaints because commands like:
-> +       git add <file-outside-sparse-specification>
-> +       git rm <file-outside-sparse-specification>
-> +    would silently do nothing.  We should instead print an error in thos=
-e
-> +    cases to get usability right.
-> +
-> +    update-index needs to be updated to match, and status and maybe clea=
-n
-> +    also need to be updated to specially handle untracked paths.
-> +
-> +    There may be a difference in here between behavior A and behavior B =
-in
-> +    terms of verboseness of errors or additional warnings.
-> +
-> +  * Commands falling under "restrict or no restrict dependent upon behav=
-ior
-> +    A vs. behavior B"
-> +
-> +    * diff (with --cached or REVISION arguments)
-> +    * grep (with --cached or REVISION arguments)
-> +    * show (when given commit arguments)
-> +    * blame (only matters when one or more -C flags passed)
-> +      * and annotate
-> +    * log
-> +      * and variants: shortlog, gitk, show-branch, whatchanged, rev-list
-> +    * ls-files
-> +    * diff-index
-> +    * diff-tree
-> +    * ls-tree
-> +
-> +    For now, we default to behavior B for these, which want a default of
-> +    "no restrict".
-> +
-> +    Note that two of these commands -- diff and grep -- also appeared in=
- a
-> +    different list with a default of "restrict", but only when limited t=
-o
-> +    searching the working tree.  The working tree vs. history distinctio=
-n
-> +    is fundamental in how behavior B operates, so this is expected.  Not=
-e,
-> +    though, that for diff and grep with --cached, when doing "restrict"
-> +    behavior, the difference between sparse specification and sparsity
-> +    patterns is important to handle.
-> +
-> +    "restrict" may make more sense as the long term default for these[12=
-].
-> +    Also, supporting "restrict" for these commands might be a fair amoun=
-t
-> +    of work to implement, meaning it might be implemented over multiple
-> +    releases.  If that behavior were the default in the commands that
-> +    supported it, that would force behavior B users to need to learn to
-> +    slowly add additional flags to their commands, depending on git
-> +    version, to get the behavior they want.  That gradual switchover wou=
-ld
-> +    be painful, so we should avoid it at least until it's fully
-> +    implemented.
-> +
-> +
-> +=3D=3D=3D Sparse specification vs. sparsity patterns =3D=3D=3D
-> +
-> +In a well-behaved situation, the sparse specification is given directly
-> +by the $GIT_DIR/info/sparse-checkout file.  However, it can transiently
-> +diverge for a few reasons:
-> +
-> +    * needing to resolve conflicts (merging will vivify conflicted files=
-)
-> +    * running Git commands that implicitly vivify files (e.g. "git stash=
- apply")
-> +    * running Git commands that explicitly vivify files (e.g. "git check=
-out
-> +      --ignore-skip-worktree-bits FILENAME")
-> +    * other commands that write to these files (perhaps a user copies it
-> +      from elsewhere)
-> +
-> +For the last item, note that we do automatically clear the SKIP_WORKTREE
-> +bit for files that are present in the working tree.  This has been true
-> +since 82386b4496 ("Merge branch 'en/present-despite-skipped'",
-> +2022-03-09)
-> +
-> +However, such a situation is transient because:
-> +
-> +   * Such transient differences can and will be automatically removed as
-> +     a side-effect of commands which call unpack_trees() (checkout,
-> +     merge, reset, etc.).
-> +   * Users can also request such transient differences be corrected via
-> +     running `git sparse-checkout reapply`.  Various places recommend
-> +     running that command.
-> +   * Additional commands are also welcome to implicitly fix these
-> +     differences; we may add more in the future.
-> +
-> +While we avoid dropping unstaged changes or files which have conflicts,
-> +we otherwise aggressively try to fix these transient differences.  If
-> +users want these differences to persist, they should run the `set` or
-> +`add` subcommands of `git sparse-checkout` to reflect their intended
-> +sparse specification.
-> +
-> +However, when we need to do a query on history restricted to the
-> +"relevant subset of files" such a transiently expanded sparse
-> +specification is ignored.  There are a couple reasons for this:
-> +
-> +   * The behavior wanted when doing something like
-> +        git grep expression REVISION
-> +     is roughly what the users would expect from
-> +        git checkout REVISION && git grep expression
-> +     (modulo a "REVISION:" prefix), which has a couple ramifications:
-> +
-> +   * REVISION may have paths not in the current index, so there is no
-> +     path we can consult for a SKIP_WORKTREE setting for those paths.
-> +
-> +   * Since `checkout` is one of those commands that tries to remove
-> +     transient differences in the sparse specification, it makes sense
-> +     to use the corrected sparse specification
-> +     (i.e. $GIT_DIR/info/sparse-checkout) rather than attempting to
-> +     consult SKIP_WORKTREE anyway.
-> +
-> +So, a transiently expanded (or restricted) sparse specification applies =
-to
-> +the working tree, but not to history queries where we always use the
-> +sparsity patterns.  (See [16] for an early discussion of this.)
-> +
-> +Similar to a transiently expanded sparse specification of the working tr=
-ee
-> +based on additional files being present in the working tree, we also nee=
-d
-> +to consider additional files being modified in the index.  In particular=
-,
-> +if the user has staged changes to files (relative to HEAD) that do not
-> +match the sparsity patterns, and the file is not present in the working
-> +tree, we still want to consider the file part of the sparse specificatio=
-n
-> +if we are specifically performing a query related to the index (e.g. git
-> +diff --cached [REVISION], git diff-index [REVISION], git restore --stage=
-d
-> +--source=3DREVISION -- PATHS, etc.)  Note that a transiently expanded sp=
-arse
-> +specification for the index usually only matters under behavior A, since
-> +under behavior B index operations are lumped with history and tend to
-> +operate full-tree.
-> +
-> +
-> +=3D=3D=3D Implementation Questions =3D=3D=3D
-> +
-> +  * Do the options --scope=3D{sparse,all} sound good to others?  Are the=
-re better
-> +    options?
-> +    * Names in use, or appearing in patches, or previously suggested:
-> +      * --sparse/--dense
-> +      * --ignore-skip-worktree-bits
-> +      * --ignore-skip-worktree-entries
-> +      * --ignore-sparsity
-> +      * --[no-]restrict-to-sparse-paths
-> +      * --full-tree/--sparse-tree
-> +      * --[no-]restrict
-> +      * --scope=3D{sparse,all}
-> +      * --focus/--unfocus
-> +      * --limit/--unlimited
-> +    * Rationale making me lean slightly towards --scope=3D{sparse,all}:
-> +      * We want a name that works for many commands, so we need a name t=
-hat
-> +       does not conflict
-> +      * We know that we have more than two possible usecases, so it is b=
-est
-> +       to avoid a flag that appears to be binary.
-> +      * --scope=3D{sparse,all} isn't overly long and seems relatively
-> +       explanatory
-> +      * `--sparse`, as used in add/rm/mv, is totally backwards for
-> +       grep/log/etc.  Changing the meaning of `--sparse` for these
-> +       commands would fix the backwardness, but possibly break existing
-> +       scripts.  Using a new name pairing would allow us to treat
-> +       `--sparse` in these commands as a deprecated alias.
-> +      * There is a different `--sparse`/`--dense` pair for commands usin=
-g
-> +       revision machinery, so using that naming might cause confusion
-> +      * There is also a `--sparse` in both pack-objects and show-branch,=
- which
-> +       don't conflict but do suggest that `--sparse` is overloaded
-> +      * The name --ignore-skip-worktree-bits is a double negative, is
-> +       quite a mouthful, refers to an implementation detail that many
-> +       users may not be familiar with, and we'd need a negation for it
-> +       which would probably be even more ridiculously long.  (But we
-> +       can make --ignore-skip-worktree-bits a deprecated alias for
-> +       --no-restrict.)
-> +
-> +  * If a config option is added (sparse.scope?) what should the values a=
-nd
-> +    description be?  "sparse" (behavior A), "worktree-sparse-history-den=
-se"
-> +    (behavior B), "dense" (behavior C)?  There's a risk of confusion,
-> +    because even for Behaviors A and B we want some commands to be
-> +    full-tree and others to operate sparsely, so the wording may need to=
- be
-> +    more tied to the usecases and somehow explain that.  Also, right now=
-,
-> +    the primary difference we are focusing is just the history-querying
-> +    commands (log/diff/grep).  Previous config suggestion here: [13]
-> +
+* al/trace2-clearing-skip-worktree (2022-11-04) 2 commits
+  (merged to 'next' on 2022-11-08 at 567aeb8d83)
+ + index: raise a bug if the index is materialised more than once
+ + index: add trace2 region for clear skip worktree
 
-Maybe sparse.scope=3D{sparse, all}?
+ Add trace2 counters to the region to clear skip worktree bits in a
+ sparse checkout.
+ source: <pull.1368.v4.git.git.1667516701.gitgitgadget@gmail.com>
 
-> +  * Is `--no-expand` a good alias for ls-files's `--sparse` option?
-> +    (`--sparse` does not map to either `--scope=3Dsparse` or `--scope=3D=
-all`,
-> +    because in non-cone mode it does nothing and in cone-mode it shows t=
-he
-> +    sparse directory entries which are technically outside the sparse
-> +    specification)
-> +
-> +  * Under Behavior A:
-> +    * Does ls-files' `--no-expand` override the default `--scope=3Dall`,=
- or
-> +      does it need an extra flag?
-> +    * Does ls-files' `-t` option imply `--scope=3Dall`?
-> +    * Does update-index's `--[no-]skip-worktree` option imply `--scope=
-=3Dall`?
-> +
-> +  * sparse-checkout: once behavior A is fully implemented, should we tak=
-e
-> +    an interim measure to ease people into switching the default?  Namel=
-y,
-> +    if folks are not already in a sparse checkout, then require
-> +    `sparse-checkout init/set` to take a
-> +    `--set-scope=3D(sparse|worktree-sparse-history-dense|dense)` flag (w=
-hich
-> +    would set sparse.scope according to the setting given), and throw an
-> +    error if the flag is not provided?  That error would be a great plac=
-e
-> +    to warn folks that the default may change in the future, and get the=
-m
-> +    used to specifying what they want so that the eventual default switc=
-h
-> +    is seamless for them.
-> +
-> +
-> +=3D=3D=3D Implementation Goals/Plans =3D=3D=3D
-> +
-> + * Get buy-in on this document in general.
-> +
-> + * Figure out answers to the 'Implementation Questions' sections (above)
-> +
-> + * Fix bugs in the 'Known bugs' section (below)
-> +
-> + * Provide some kind of method for backfilling the blobs within the spar=
-se
-> +   specification in a partial clone
-> +
-> + [Below here is kind of spitballing since the first two haven't been res=
-olved]
-> +
-> + * update-index: flip the default to --no-ignore-skip-worktree-entries,
-> +   nuke this stupid "Oh, there's a bug?  Let me add a flag to let users
-> +   request that they not trigger this bug." flag
-> +
-> + * Flags & Config
-> +   * Make `--sparse` in add/rm/mv a deprecated alias for `--scope=3Dall`
-> +   * Make `--ignore-skip-worktree-bits` in checkout-index/checkout/resto=
-re
-> +     a deprecated aliases for `--scope=3Dall`
-> +   * Create config option (sparse.scope?), tie it to the "Cliff notes"
-> +     overview
-> +
-> +   * Add --scope=3Dsparse (and --scope=3Dall) flag to each of the histor=
-y querying
-> +     commands.  IMPORTANT: make sure diff machinery changes don't mess w=
-ith
-> +     format-patch, fast-export, etc.
-> +
 
-Thanks,
-ZheNing Hu
+* do/modernize-t7001 (2022-11-04) 1 commit
+  (merged to 'next' on 2022-11-08 at dfc9c80e73)
+ + t7001-mv.sh: modernizing test script using functions
+
+ Modernize test script to avoid "test -f" and friends.
+ source: <pull.1372.v3.git.git.1667574352244.gitgitgadget@gmail.com>
+
+
+* js/ci-set-output (2022-11-08) 1 commit
+  (merged to 'next' on 2022-11-08 at 553062428c)
+ + ci: use a newer `github-script` version
+
+ Update the actions/github-script dependency in CI to avoid a
+ deprecation warning.
+ source: <pull.1387.git.1667902408921.gitgitgadget@gmail.com>
+
+
+* mh/password-can-be-pat (2022-11-08) 1 commit
+  (merged to 'next' on 2022-11-08 at 3135ade2a6)
+ + Documentation/gitcredentials.txt: mention password alternatives
+
+ Documentation update to git-credential(1).
+ source: <pull.1396.v3.git.1667912487608.gitgitgadget@gmail.com>
+
+--------------------------------------------------
+[New Topics]
+
+* ab/remove--super-prefix (2022-11-14) 12 commits
+ - fetch: rename "--submodule-prefix" to "--super-prefix"
+ - read-tree: add "--super-prefix" option, eliminate global
+ - submodule tests: test "git branch -t" output and stderr
+ - submodule--helper: convert "{update,clone}" to their own "--super-prefix"
+ - submodule--helper: convert "status" to its own "--super-prefix"
+ - submodule--helper: convert "sync" to its own "--super-prefix"
+ - submodule--helper: convert "foreach" to its own "--super-prefix"
+ - submodule--helper: "deinit" has never used "--super-prefix"
+ - submodule--helper: don't use global --super-prefix in "absorbgitdirs"
+ - read-tree + fetch tests: test failing "--super-prefix" interaction
+ - Merge branch 'ab/submodule-no-abspath' into ab/remove--super-prefix
+ - Merge branch 'ab/submodule-helper-prep-only' into ab/remove--super-prefix
+ (this branch uses ab/submodule-helper-prep-only and ab/submodule-no-abspath.)
+
+ Remove the top-level `--super-prefix` option.
+
+ Expecting a reroll?
+ source: <cover-v2-00.10-00000000000-20221114T100803Z-avarab@gmail.com>
+
+
+* ab/submodule-no-abspath (2022-11-09) 1 commit
+ - submodule--helper absorbgitdirs: no abspaths in "Migrating git..."
+ (this branch is used by ab/remove--super-prefix.)
+
+ Remove an absolute path in the "Migrating git directory" message.
+
+ Will merge to 'next'.
+ source: <patch-1.1-34b54fdd9bb-20221109T020347Z-avarab@gmail.com>
+
+
+* ab/t7610-timeout (2022-11-09) 1 commit
+  (merged to 'next' on 2022-11-14 at 82a4abdb1d)
+ + t7610: fix flaky timeout issue, don't clone from example.com
+
+ Fix a source of flakiness in CI when compiling with SANITIZE=leak.
+
+ Will cook in 'next'.
+ source: <patch-1.1-83eca7b5a7c-20221105T115420Z-avarab@gmail.com>
+
+
+* es/chainlint-lineno (2022-11-11) 4 commits
+ - chainlint: prefix annotated test definition with line numbers
+ - chainlint: latch line numbers at which each token starts and ends
+ - chainlint: sidestep impoverished macOS "terminfo"
+ - Merge branch 'es/chainlint-output' into es/chainlint-lineno
+ (this branch uses es/chainlint-output.)
+
+ Teach chainlint.pl to annotate the original test definition instead
+ of the token stream.
+
+ Will merge to 'next'.
+ source: <pull.1413.v2.git.1668152094.gitgitgadget@gmail.com>
+
+
+* ew/format-patch-mboxrd (2022-11-14) 1 commit
+ - format-patch: add --mboxrd alias for --pretty=mboxrd
+
+ Teach `format-patch` a convenient alias for `--pretty=mboxrd`.
+
+ Waiting for discussion to settle.
+ source: <20221114094114.18986-1-e@80x24.org>
+
+
+* gc/redact-h2h3-headers (2022-11-14) 2 commits
+  (merged to 'next' on 2022-11-14 at 34157d24e9)
+ + http: redact curl h2h3 headers in info
+ + t: run t5551 tests with both HTTP and HTTP/2
+
+ Redact headers from cURL's h2h3 module in GIT_CURL_VERBOSE and
+ others.
+
+ Will merge to 'master'.
+ source: <pull.1377.v3.git.git.1668206106.gitgitgadget@gmail.com>
+
+
+* jk/branch-delete-detached (2022-11-10) 1 commit
+  (merged to 'next' on 2022-11-14 at b185797ec0)
+ + branch: gracefully handle '-d' on orphan HEAD
+
+ Fix a bug where `git branch -d` did not work on an orphaned HEAD.
+ source: <Y2H/1S3G+KeeEN/l@coredump.intra.peff.net>
+
+
+* js/drop-mingw-test-cmp (2022-11-14) 2 commits
+ - tests(mingw): avoid very slow `mingw_test_cmp`
+ - t0021: use Windows-friendly `pwd`
+
+ Use `git diff --no-index` as a test_cmp on Windows.
+
+ Expecting a reroll.
+ source: <pull.1309.v4.git.1668434812.gitgitgadget@gmail.com>
+
+
+* mc/switch-advice (2022-11-09) 1 commit
+ - po: use `switch` over `checkout` in error message
+
+ Use 'switch' instead of 'checkout' in an error message.
+
+ Waiting for review response.
+ source: <pull.1308.git.git.1668018620148.gitgitgadget@gmail.com>
+
+
+* mh/credential-unrecognized-attrs (2022-11-12) 1 commit
+  (merged to 'next' on 2022-11-14 at 8170443d0a)
+ + docs: clarify that credential discards unrecognised attributes
+
+ Docfix.
+
+ Will merge to 'master'.
+ source: <pull.1393.git.1666598268697.gitgitgadget@gmail.com>
+
+
+* mh/gitcredentials-generate (2022-11-14) 1 commit
+ - Docs: describe how a credential-generating helper works
+
+ Doc update.
+
+ Waiting for review.
+ source: <pull.1379.git.git.1668217470500.gitgitgadget@gmail.com>
+
+
+* mh/increase-credential-cache-timeout (2022-11-09) 1 commit
+  (merged to 'next' on 2022-11-14 at afe54db0f1)
+ + Documentation: increase example cache timeout to 1 hour
+
+ Update the credential-cache documentation to provide a more realistic
+ example.
+
+ Will merge to 'master'.
+ source: <pull.1412.v2.git.1668010273573.gitgitgadget@gmail.com>
+
+
+* ms/sendemail-validate-headers (2022-11-11) 1 commit
+ - Expose header information to git-send-email's sendemail-validate hook
+
+ Expecting a reroll.
+ source: <20221111194223.644845-2-michael.strawbridge@amd.com>
+
+
+* pw/strict-label-lookups (2022-11-10) 2 commits
+  (merged to 'next' on 2022-11-14 at 7db4398d23)
+ + sequencer: tighten label lookups
+ + sequencer: unify label lookup
+
+ Correct an error where `git rebase` would mistakenly use a branch or
+ tag named "refs/rewritten/xyz" when missing a rebase label.
+
+ Will cook in 'next'.
+ source: <pull.1414.git.1668098622.gitgitgadget@gmail.com>
+
+
+* rs/multi-filter-args (2022-11-12) 3 commits
+ - list-objects-filter: remove OPT_PARSE_LIST_OBJECTS_FILTER_INIT()
+ - pack-object: simplify --filter handling
+ - pack-objects: fix handling of multiple --filter options
+
+ Fix a bug where `pack-objects` would not respect multiple `--filter`
+ arguments when invoked directly.
+
+ Expecting a reroll?
+ source: <c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.de>
+
+
+* vd/skip-cache-tree-update (2022-11-10) 5 commits
+  (merged to 'next' on 2022-11-14 at 06b2da01ff)
+ + rebase: use 'skip_cache_tree_update' option
+ + read-tree: use 'skip_cache_tree_update' option
+ + reset: use 'skip_cache_tree_update' option
+ + unpack-trees: add 'skip_cache_tree_update' option
+ + cache-tree: add perf test comparing update and prime
+
+ Avoid calling 'cache_tree_update()' when doing so would be redundant.
+
+ Will merge to 'master'.
+ source: <pull.1411.v3.git.1668107165.gitgitgadget@gmail.com>
+
+--------------------------------------------------
+[Stalled]
+
+* cw/submodule-status-in-parallel (2022-11-08) 6 commits
+ - diff-lib: parallelize run_diff_files for submodules
+ - diff-lib: refactor match_stat_with_submodule
+ - submodule: move status parsing into function
+ - submodule: strbuf variable rename
+ - run-command: add duplicate_output_fn to run_processes_parallel_opts
+ - Merge branch 'ab/run-hook-api-cleanup' into cw/submodule-status-in-parallel
+
+ Allow the internal "diff-files" engine to run "how has this
+ submodule changed?" in parallel to speed up "git status".
+
+ Waiting for review.
+ source: <20221020232532.1128326-1-calvinwan@google.com>
+
+
+* js/bisect-in-c (2022-08-30) 17 commits
+ . bisect: no longer try to clean up left-over `.git/head-name` files
+ . bisect: remove Cogito-related code
+ . Turn `git bisect` into a full built-in
+ . bisect: move even the command-line parsing to `bisect--helper`
+ . bisect--helper: make `state` optional
+ . bisect--helper: calling `bisect_state()` without an argument is a bug
+ . bisect: avoid double-quoting when printing the failed command
+ . bisect run: fix the error message
+ . bisect: verify that a bogus option won't try to start a bisection
+ . bisect--helper: migrate to OPT_SUBCOMMAND()
+ . bisect--helper: make the order consistently `argc, argv`
+ . bisect--helper: make `terms` an explicit singleton
+ . bisect--helper: simplify exit code computation
+ . bisect--helper: really retire `--bisect-autostart`
+ . bisect--helper: really retire --bisect-next-check
+ . bisect--helper: retire the --no-log option
+ . Merge branch 'sg/parse-options-subcommand' into js/bisect-in-c
+
+ Final bits of "git bisect.sh" have been rewritten in C.
+
+ Needs review.
+ cf. <xmqqv8pr8903.fsf@gitster.g>
+ source: <pull.1132.v6.git.1661885419.gitgitgadget@gmail.com>
+
+
+* od/ci-use-checkout-v3-when-applicable (2022-10-10) 2 commits
+ . ci(main): linux32 uses actions/checkout@v2
+ . ci(main): upgrade actions/checkout to v3
+
+ Attempt to update GitHub CI to use actions/checkout@v3
+
+ Expecting a reroll.
+ Seems to break the CI completely.
+ source: <pull.1354.git.git.1665388136.gitgitgadget@gmail.com>
+
+
+* ed/fsmonitor-inotify (2022-10-14) 7 commits
+ . fsmonitor: update doc for Linux
+ . fsmonitor: test updates
+ . fsmonitor: enable fsmonitor for Linux
+ . fsmonitor: implement filesystem change listener for Linux
+ . fsmonitor: determine if filesystem is local or remote
+ . fsmonitor: prepare to share code between Mac OS and Linux
+ . Merge branch 'ed/fsmonitor-on-networked-macos' into ed/fsmonitor-inotify
+
+ Bundled fsmonitor for Linux using inotify API.
+
+ Needs review.
+ Occasional breakages of t7527.16?
+ source: <pull.1352.v2.git.git.1665783944.gitgitgadget@gmail.com>
+
+
+* ag/merge-strategies-in-c (2022-08-10) 14 commits
+ . sequencer: use the "octopus" strategy without forking
+ . sequencer: use the "resolve" strategy without forking
+ . merge: use the "octopus" strategy without forking
+ . merge: use the "resolve" strategy without forking
+ . merge-octopus: rewrite in C
+ . merge-recursive: move better_branch_name() to merge.c
+ . merge-resolve: rewrite in C
+ . merge-one-file: rewrite in C
+ . update-index: move add_cacheinfo() to read-cache.c
+ . merge-index: add a new way to invoke `git-merge-one-file'
+ . merge-index: drop the index
+ . merge-index: libify merge_one_path() and merge_all()
+ . t6060: add tests for removed files
+ . t6060: modify multiple files to expose a possible issue with merge-index
+
+ An attempt to rewrite remaining merge strategies from shell to C.
+
+ Needs more work.
+ At the minimum, we should lose 11/14 and possibly 08/14.
+ cf. <xmqq7d36vfur.fsf@gitster.g>
+ source: <20220809185429.20098-1-alban.gruin@gmail.com>
+
+
+* es/doc-creation-factor-fix (2022-07-28) 2 commits
+ . range-diff: clarify --creation-factor=<factor>
+ . format-patch: clarify --creation-factor=<factor>
+
+ Expecting a reroll by somebody more familiar with the logic
+ cf. <xmqqo7wfix7p.fsf@gitster.g>
+ source: <7229p500-p2r4-on87-6802-8o90s36rr3s4@tzk.qr>
+
+
+* cw/remote-object-info (2022-08-13) 7 commits
+ . SQUASH???
+ . cat-file: add remote-object-info to batch-command
+ . transport: add client support for object-info
+ . serve: advertise object-info feature
+ . protocol-caps: initialization bug fix
+ . fetch-pack: move fetch initialization
+ . fetch-pack: refactor packet writing
+
+ A client component to talk with the object-info endpoint.
+
+ Expecting a reroll.
+ Under SANITIZE=address, t1006-cat-file.sh finds a breakage.
+ cf. <20220728230210.2952731-1-calvinwan@google.com>
+ cf. <CAFySSZDvgwbbHCHfyuaqX3tKsr-GjJ9iihygg6rNNe46Ys7_EA@mail.gmail.com>
+ source: <20220728230210.2952731-1-calvinwan@google.com>
+
+--------------------------------------------------
+[Cooking]
+
+* ab/various-leak-fixes (2022-11-08) 18 commits
+ - built-ins: use free() not UNLEAK() if trivial, rm dead code
+ - revert: fix parse_options_concat() leak
+ - cherry-pick: free "struct replay_opts" members
+ - rebase: don't leak on "--abort"
+ - connected.c: free the "struct packed_git"
+ - sequencer.c: fix "opts->strategy" leak in read_strategy_opts()
+ - ls-files: fix a --with-tree memory leak
+ - revision API: call graph_clear() in release_revisions()
+ - unpack-file: fix ancient leak in create_temp_file()
+ - built-ins & libs & helpers: add/move destructors, fix leaks
+ - dir.c: free "ident" and "exclude_per_dir" in "struct untracked_cache"
+ - read-cache.c: clear and free "sparse_checkout_patterns"
+ - commit: discard partial cache before (re-)reading it
+ - {reset,merge}: call discard_index() before returning
+ - tests: mark tests as passing with SANITIZE=leak
+ - Merge branch 'pw/rebase-no-reflog-action' into ab/various-leak-fixes
+ - rebase: stop exporting GIT_REFLOG_ACTION
+ - sequencer: stop exporting GIT_REFLOG_ACTION
+
+ Various leak fixes.
+
+ Will merge to 'next'.
+ source: <cover-v2-00.15-00000000000-20221108T172650Z-avarab@gmail.com>
+
+
+* aw/complete-case-insensitive (2022-11-07) 2 commits
+ - completion: add case-insensitive match of pseudorefs
+ - completion: add optional ignore-case when matching refs
+
+ Introduce a case insensitive mode to the Bash completion helpers.
+
+ Waiting for review.
+ source: <pull.1374.git.git.1667669315.gitgitgadget@gmail.com>
+
+
+* dd/bisect-helper-subcommand (2022-11-11) 3 commits
+  (merged to 'next' on 2022-11-14 at 066f19c4fe)
+ + bisect--helper: parse subcommand with OPT_SUBCOMMAND
+ + bisect--helper: move all subcommands into their own functions
+ + bisect--helper: remove unused options
+ (this branch is used by dd/git-bisect-builtin.)
+
+ Fix a regression in the bisect-helper which mistakenly treats
+ arguments to the command given to 'git bisect run' as arguments to
+ the helper.
+
+ Will cook in 'next'.
+ source: <cover.1668097286.git.congdanhqx@gmail.com>
+
+
+* dd/git-bisect-builtin (2022-11-11) 12 commits
+  (merged to 'next' on 2022-11-14 at fc304fb52f)
+ + Turn `git bisect` into a full built-in
+ + bisect--helper: log: allow arbitrary number of arguments
+ + bisect--helper: handle states directly
+ + bisect--helper: emit usage for "git bisect"
+ + bisect test: test exit codes on bad usage
+ + bisect--helper: identify as bisect when report error
+ + bisect-run: verify_good: account for non-negative exit status
+ + bisect run: keep some of the post-v2.30.0 output
+ + bisect: fix output regressions in v2.30.0
+ + bisect: refactor bisect_run() to match CodingGuidelines
+ + bisect tests: test for v2.30.0 "bisect run" regressions
+ + Merge branch 'dd/bisect-helper-subcommand' into dd/git-bisect-builtin
+ (this branch uses dd/bisect-helper-subcommand.)
+
+ `git bisect` becomes a builtin.
+
+ Will cook in 'next'.
+ source: <cover.1668097962.git.congdanhqx@gmail.com>
+
+
+* ds/packed-refs-v2 (2022-11-07) 30 commits
+ - refs: skip hashing when writing packed-refs v2
+ - p1401: create performance test for ref operations
+ - ci: run GIT_TEST_PACKED_REFS_VERSION=2 in some builds
+ - t*: skip packed-refs v2 over http tests
+ - t3210: require packed-refs v1 for some tests
+ - t5502: add PACKED_REFS_V1 prerequisite
+ - t5312: allow packed-refs v2 format
+ - t1409: test with packed-refs v2
+ - packed-backend: create GIT_TEST_PACKED_REFS_VERSION
+ - packed-refs: write prefix chunks
+ - packed-refs: read optional prefix chunks
+ - packed-refs: read file format v2
+ - packed-refs: write file format version 2
+ - packed-backend: create shell of v2 writes
+ - config: add config values for packed-refs v2
+ - packed-backend: create abstraction for writing refs
+ - packed-backend: extract iterator/updates merge
+ - packed-backend: extract add_write_error()
+ - refs: extract packfile format to new file
+ - chunk-format: parse trailing table of contents
+ - chunk-format: allow trailing table of contents
+ - chunk-format: store chunk offset during write
+ - chunk-format: document trailing table of contents
+ - chunk-format: number of chunks is optional
+ - refs: allow loose files without packed-refs
+ - repository: wire ref extensions to ref backends
+ - config: fix multi-level bulleted list
+ - extensions: add refFormat extension
+ - read-cache: add index.computeHash config option
+ - hashfile: allow skipping the hash function
+
+ Waiting for review.
+ source: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
+
+
+* es/chainlint-output (2022-11-08) 4 commits
+  (merged to 'next' on 2022-11-14 at 9cd7d30183)
+ + chainlint: annotate original test definition rather than token stream
+ + chainlint: latch start/end position of each token
+ + chainlint: tighten accuracy when consuming input stream
+ + chainlint: add explanatory comments
+ (this branch is used by es/chainlint-lineno.)
+
+ Teach chainlint.pl to annotate the original test definition instead
+ of the token stream.
+
+ Will cook in 'next'.
+ source: <pull.1375.git.git.1667934510.gitgitgadget@gmail.com>
+
+
+* ja/worktree-orphan (2022-11-10) 2 commits
+ - worktree add: add --orphan flag
+ - worktree add: Include -B in usage docs
+
+ 'git worktree add' learned how to create a worktree based on an
+ orphaned branch with `--orphan`.
+
+ Waiting for review discussion to settle, but leaning negative.
+ source: <20221110233137.10414-1-jacobabel@nullpo.dev>
+
+
+* js/remove-stale-scalar-repos (2022-11-11) 2 commits
+  (merged to 'next' on 2022-11-14 at e1c86051c4)
+ + tests(scalar): tighten the stale `scalar.repo` test some
+  (merged to 'next' on 2022-11-08 at 6d598a3b80)
+ + scalar reconfigure -a: remove stale `scalar.repo` entries
+
+ 'scalar reconfigure -a' is taught to automatically remove
+ scalar.repo entires which no longer exist.
+
+ Will cook in 'next'.
+ source: <pull.1415.git.1668065327120.gitgitgadget@gmail.com>
+
+
+* jt/submodule-on-demand (2022-11-14) 1 commit
+ - Doc: document push.recurseSubmodules=only
+
+ Push all submodules recursively with
+ '--recurse-submodules=on-demand'.
+
+ Expecting a reroll?
+ source: <20221114213713.2341945-1-jonathantanmy@google.com>
+
+
+* pw/rebase-no-reflog-action (2022-11-09) 2 commits
+  (merged to 'next' on 2022-11-14 at 790dadc8d3)
+ + rebase: stop exporting GIT_REFLOG_ACTION
+ + sequencer: stop exporting GIT_REFLOG_ACTION
+
+ Avoid setting GIT_REFLOG_ACTION to improve readability of the
+ sequencer internals.
+
+ Expecting a (final?) reroll.
+ source: <31df037eafede799c2ef27df66c6da309b719b1b.1668003719.git.gitgitgadget@gmail.com>
+
+
+* rp/maintenance-qol (2022-11-14) 2 commits
+  (merged to 'next' on 2022-11-14 at 17db40bf26)
+ + maintenance: add option to register in a specific config
+ + for-each-repo: interpolate repo path arguments
+
+ 'git maintenance register' is taught to write configuration to an
+ arbitrary path, and 'git for-each-repo' is taught to expand tilde
+ characters in paths.
+
+ Will cook in 'next'.
+ source: <20221109190708.22725-1-ronan@rjp.ie>
+
+
+* sa/cat-file-mailmap--batch-check (2022-11-14) 3 commits
+ - doc/cat-file: allow --use-mailmap for --batch options
+ - cat-file: add mailmap support to --batch-check option
+ - cat-file: add mailmap support to -s option
+
+ 'cat-file' gains mailmap support for its '--batch-check' and '-s'
+ options.
+
+ Will merge to 'next'.
+ source: <20221113212830.92609-1-siddharthasthana31@gmail.com>
+
+
+* sz/macos-fsmonitor-symlinks (2022-11-08) 1 commit
+ - fsmonitor--daemon: on macOS support symlink
+
+ Fix an issue where core.fsmonitor on macOS would not notice created
+ or modified symbolic links.
+
+ Waiting for review.
+ source: <pull.1406.git.1667885119570.gitgitgadget@gmail.com>
+
+
+* tb/ci-concurrency (2022-11-08) 1 commit
+ - ci: avoid unnecessary builds
+
+ Avoid unnecessary builds in CI, with settings configured in
+ ci-config.
+
+ Waiting for review.
+ source: <ff172f1de982f6f79b598e4ac6d5b2964ca4a098.1667931937.git.me@ttaylorr.com>
+
+
+* tl/notes--blankline (2022-11-09) 5 commits
+ - notes.c: introduce "--no-blank-line" option
+ - notes.c: provide tips when target and append note are both empty
+ - notes.c: drop unreachable code in 'append_edit()'
+ - notes.c: cleanup for "designated init" and "char ptr init"
+ - notes.c: cleanup 'strbuf_grow' call in 'append_edit'
+
+ 'git notes append' was taught '--[no-]blank-line' to conditionally
+ add a LF between a new and existing note.
+
+ Expecting a reroll.
+ source: <cover.1667980450.git.dyroneteng@gmail.com>
+
+
+* vd/update-refs-delete (2022-11-07) 1 commit
+  (merged to 'next' on 2022-11-08 at 2866156953)
+ + rebase --update-refs: avoid unintended ref deletion
+
+ Will merge to 'master'.
+ source: <20221107174752.91186-1-vdye@github.com>
+
+
+* ab/submodule-helper-prep-only (2022-11-08) 9 commits
+  (merged to 'next' on 2022-11-08 at c0c4f4d1c3)
+ + submodule--helper: use OPT_SUBCOMMAND() API
+ + submodule--helper: drop "update --prefix <pfx>" for "-C <pfx> update"
+ + submodule--helper: remove --prefix from "absorbgitdirs"
+ + submodule API & "absorbgitdirs": remove "----recursive" option
+ + submodule.c: refactor recursive block out of absorb function
+ + submodule tests: test for a "foreach" blind-spot
+ + submodule--helper: fix a memory leak in "status"
+ + submodule tests: add tests for top-level flag output
+ + submodule--helper: move "config" to a test-tool
+ (this branch is used by ab/remove--super-prefix.)
+
+ Preparation to remove git-submodule.sh and replace it with a builtin.
+
+ Will cook in 'next'.
+ source: <cover-v2-0.9-00000000000-20221108T140501Z-avarab@gmail.com>
+
+
+* ds/bundle-uri-4 (2022-10-31) 9 commits
+ - clone: unbundle the advertised bundles
+ - bundle-uri: download bundles from an advertised list
+ - bundle-uri: allow relative URLs in bundle lists
+ - strbuf: reintroduce strbuf_parent_directory()
+ - bundle-uri client: add boolean transfer.bundleURI setting
+ - bundle-uri: serve bundle.* keys from config
+ - bundle-uri client: add helper for testing server
+ - bundle-uri client: add minimal NOOP client
+ - protocol v2: add server-side "bundle-uri" skeleton
+
+ Bundle URIs part 4.
+
+ Waiting for review.
+ source: <pull.1400.git.1667264854.gitgitgadget@gmail.com>
+
+
+* sg/plug-line-log-leaks (2022-11-02) 3 commits
+ - diff.c: use diff_free_queue()
+ - line-log: free the diff queues' arrays when processing merge commits
+ - line-log: free diff queue when processing non-merge commits
+
+ A handful of leaks in the line-log machinery have been plugged.
+
+ Expecting a reroll.
+ source: <20221102220142.574890-1-szeder.dev@gmail.com>
+
+
+* tb/howto-maintain-git-fixes (2022-10-31) 2 commits
+ - Documentation: build redo-seen.sh from jch..seen
+ - Documentation: build redo-jch.sh from master..jch
+
+ A pair of bugfixes to the Documentation/howto/maintain-git.txt guide.
+
+ Will merge to 'next'.
+ source: <cover.1667260044.git.me@ttaylorr.com>
+
+
+* tl/pack-bitmap-absolute-paths (2022-11-14) 2 commits
+  (merged to 'next' on 2022-11-14 at 34eb0ea05a)
+ + pack-bitmap.c: avoid exposing absolute paths
+ + pack-bitmap.c: remove unnecessary "open_pack_index()" calls
+
+ The pack-bitmap machinery is taught to log the paths of redundant
+ bitmap(s) to trace2 instead of stderr.
+
+ Will merge to 'master'.
+ source: <cover.1668063122.git.dyroneteng@gmail.com>
+
+
+* ab/cmake-nix-and-ci (2022-11-04) 14 commits
+  (merged to 'next' on 2022-11-08 at 6ef4e93b36)
+ + CI: add a "linux-cmake-test" to run cmake & ctest on linux
+ + cmake: copy over git-p4.py for t983[56] perforce test
+ + cmake: only look for "sh" in "C:/Program Files" on Windows
+ + cmake: increase test timeout on Windows only
+ + cmake: support GIT_TEST_OPTS, abstract away WIN32 defaults
+ + Makefile + cmake: use environment, not GIT-BUILD-DIR
+ + test-lib.sh: support a "GIT_TEST_BUILD_DIR"
+ + cmake: set "USE_LIBPCRE2" in "GIT-BUILD-OPTIONS" for test-lib.sh
+ + cmake & test-lib.sh: add a $GIT_SOURCE_DIR variable
+ + cmake: chmod +x the bin-wrappers/* & SCRIPT_{SH,PERL} & git-p4
+ + cmake: don't copy chainlint.pl to build directory
+ + cmake: update instructions for portable CMakeLists.txt
+ + cmake: use "-S" and "-B" to specify source and build directories
+ + cmake: don't invoke msgfmt with --statistics
+
+ Fix assorted issues with CTest on *nix machines.
+
+ Will cook in 'next'.
+ source: <cover-v4-00.14-00000000000-20221103T160255Z-avarab@gmail.com>
+
+
+* ab/make-bin-wrappers (2022-10-31) 4 commits
+ - Makefile: simplify $(test_bindir_programs) rule by splitting it up
+ - Makefile: rename "test_bindir_programs" variable, pre-declare
+ - Makefile: define "TEST_{PROGRAM,OBJS}" variables earlier
+ - Makefile: factor sed-powered '#!/bin/sh' munging into a variable
+
+ Resolve issues with the bin-wrappers/% rules where "make
+ bin-wrappers/git" would generate the script but not "git" itself.
+
+ Waiting for review discussion to settle, but leaning negative.
+ source: <cover-v3-0.4-00000000000-20221031T222249Z-avarab@gmail.com>
+
+
+* ab/misc-hook-submodule-run-command (2022-10-31) 3 commits
+  (merged to 'next' on 2022-11-03 at 0f01b25561)
+ + run-command tests: test stdout of run_command_parallel()
+ + submodule tests: reset "trace.out" between "grep" invocations
+ + hook tests: fix redirection logic error in 96e7225b310
+
+ Various test updates.
+
+ Will merge to 'master'?
+ source: <cover-0.3-00000000000-20221029T025520Z-avarab@gmail.com>
+
+
+* kz/merge-tree-merge-base (2022-11-12) 2 commits
+  (merged to 'next' on 2022-11-14 at 76d48ae21f)
+ + merge-tree.c: allow specifying the merge-base when --stdin is passed
+ + merge-tree.c: add --merge-base=<commit> option
+
+ "merge-tree" learns a new `--merge-base` option.
+
+ Will cook in 'next'.
+ source: <pull.1397.v7.git.1668210314.gitgitgadget@gmail.com>
+
+
+* po/pretty-hard-trunc (2022-11-13) 1 commit
+ - pretty-formats: add hard truncation, without ellipsis, options
+
+ Add a new pretty format which truncates without ellipsis.
+
+ Waiting for review.
+ source: <20221112143616.1429-1-philipoakley@iee.email>
+
+
+* rr/long-status-advice (2022-11-10) 1 commit
+ - status: long status advice adapted to recent capabilities
+
+ The advice message emitted by a slow "status" run is amended to
+ mention fsmonitor.
+
+ Waiting for reviewer feedback on the updated round.
+ source: <pull.1384.v5.git.1668110679098.gitgitgadget@gmail.com>
+
+
+* ab/config-multi-and-nonbool (2022-11-02) 9 commits
+ . for-each-repo: with bad config, don't conflate <path> and <cmd>
+ . config API: add "string" version of *_value_multi(), fix segfaults
+ . config API users: test for *_get_value_multi() segfaults
+ . for-each-repo: error on bad --config
+ . config API: have *_multi() return an "int" and take a "dest"
+ . versioncmp.c: refactor config reading next commit
+ . config tests: add "NULL" tests for *_get_value_multi()
+ . config tests: cover blind spots in git_die_config() tests
+ . for-each-repo tests: test bad --config keys
+
+ A mixed bag of config API updates.
+
+ Waiting for review.
+ cf. <221026.86pmeebcj9.gmgdl@evledraar.gmail.com>
+ source: <cover-v2-0.9-00000000000-20221101T225822Z-avarab@gmail.com>
+
+
+* ab/sha-makefile-doc (2022-11-07) 10 commits
+  (merged to 'next' on 2022-11-08 at 6d3068d7cd)
+ + Makefile: discuss SHAttered in *_SHA{1,256} discussion
+ + Makefile: document default SHA-1 backend on OSX
+ + Makefile & test-tool: replace "DC_SHA1" variable with a "define"
+ + Makefile: document SHA-1 and SHA-256 default and selection order
+ + Makefile: document default SHA-256 backend
+ + Makefile: rephrase the discussion of *_SHA1 knobs
+ + Makefile: create and use sections for "define" flag listing
+ + Makefile: correct DC_SHA1 documentation
+ + INSTALL: remove discussion of SHA-1 backends
+ + Makefile: always (re)set DC_SHA1 on fallback
+
+ Makefile comments updates and reordering to clarify knobs used to
+ choose SHA implementations.
+
+ Will merge to 'master'?
+ source: <cover-v5-00.10-00000000000-20221107T211736Z-avarab@gmail.com>
+
+
+* ps/receive-use-only-advertised (2022-11-11) 7 commits
+ - receive-pack: only use visible refs for connectivity check
+ - rev-parse: add `--exclude-hidden=` option
+ - revision: add new parameter to exclude hidden refs
+ - revision: introduce struct to handle exclusions
+ - revision: move together exclusion-related functions
+ - refs: get rid of global list of hidden refs
+ - refs: fix memory leak when parsing hideRefs config
+
+ "git receive-pack" used to use all the local refs as the boundary
+ for checking connectivity of the data "git push" sent, but now it
+ uses only the refs that it advertised to the pusher.  In a
+ repository with the .hideRefs configuration, this reduces the
+ resource needed to perform the check, and also forces the pusher to
+ prove they have all objects that are necessary to complete the
+ history on top of only the history available to them.
+
+ Expecting a (final?) reroll.
+ cf. <221028.86bkpw805n.gmgdl@evledraar.gmail.com>
+ cf. <xmqqr0yrizqm.fsf@gitster.g>
+ source: <cover.1668149149.git.ps@pks.im>
+
+
+* gc/submodule-clone-update-with-branches (2022-10-30) 8 commits
+ - clone, submodule update: create and check out branches
+ - submodule--helper: remove update_data.suboid
+ - submodule update: refactor update targets
+ - submodule: return target of submodule symref
+ - t5617: drop references to remote-tracking branches
+ - submodule--helper clone: create named branch
+ - repo-settings: add submodule_propagate_branches
+ - clone: teach --detach option
+
+ "git clone --recurse-submodules" and "git submodule update" learns
+ to honor the "propagete branches" option.
+
+ Waiting for review on the updated round.
+ source: <pull.1321.v3.git.git.1666988096.gitgitgadget@gmail.com>
+
+
+* pw/config-int-parse-fixes (2022-11-09) 3 commits
+ - git_parse_signed(): avoid integer overflow
+ - config: require at least one digit when parsing numbers
+ - git_parse_unsigned: reject negative values
+
+ Assorted fixes of parsing end-user input as integers.
+
+ Will merge to 'next'?
+ cf. <Y1L+Qv+cs1bjqjK9@coredump.intra.peff.net>
+ source: <pull.1389.v2.git.1668003388.gitgitgadget@gmail.com>
+
+
+* tb/repack-expire-to (2022-10-24) 4 commits
+  (merged to 'next' on 2022-11-08 at 496ce3c62d)
+ + builtin/repack.c: implement `--expire-to` for storing pruned objects
+ + builtin/repack.c: write cruft packs to arbitrary locations
+ + builtin/repack.c: pass "cruft_expiration" to `write_cruft_pack`
+ + builtin/repack.c: pass "out" to `prepare_pack_objects`
+
+ "git repack" learns to send cruft objects out of the way into
+ packfiles outside the repository.
+
+ Will merge to 'master'.
+ source: <cover.1666636974.git.me@ttaylorr.com>
+
+
+* cc/filtered-repack (2022-10-25) 2 commits
+ - repack: add --filter=<filter-spec> option
+ - pack-objects: allow --filter without --stdout
+
+ "git repack" learns to discard objects that ought to be retrievable
+ again from the promissor remote.
+
+ Needs review.
+ source: <20221025122856.20204-1-christian.couder@gmail.com>
+
+
+* mc/credential-helper-auth-headers (2022-11-02) 11 commits
+ - t5556: add HTTP authentication tests
+ - test-http-server: add simple authentication
+ - test-http-server: pass Git requests to http-backend
+ - test-http-server: add HTTP request parsing
+ - test-http-server: add HTTP error response function
+ - test-http-server: add stub HTTP server test helper
+ - http: set specific auth scheme depending on credential
+ - http: move proactive auth to first slot creation
+ - http: store all request headers on active_request_slot
+ - credential: add WWW-Authenticate header to cred requests
+ - http: read HTTP WWW-Authenticate response headers
+
+ Extending credential helper protocol.
+
+ Needs review.
+ source: <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
+
+
+* hl/archive-recursive (2022-10-19) 10 commits
+ . fixup! archive: add tests for git archive --recurse-submodules
+ . archive: add tests for git archive --recurse-submodules
+ . archive: add --recurse-submodules to git-archive command
+ . archive: remove global repository from archive_args
+ . archive: pass repo objects to write_archive handlers
+ . tree: add repository parameter to read_tree_fn_t
+ . tree: handle submodule case for read_tree_at properly
+ . tree: increase test coverage for tree.c
+ . tree: update cases to use repo_ tree methods
+ . tree: do not use the_repository for tree traversal methods.
+
+ "git archive" has been taught "--recurse-submodules" option to
+ create a tarball that includes contents from submodules.
+
+ Expecting a reroll.
+ Seems to break win+VS test(8).
+ cf. https://github.com/git/git/actions/runs/3293333066 whose only
+ difference from https://github.com/git/git/actions/runs/3293553109
+ is the inclusion of this topic.
+ source: <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com>
+
+
+* en/sparse-checkout-design (2022-11-07) 1 commit
+  (merged to 'next' on 2022-11-08 at 42e164b490)
+ + sparse-checkout.txt: new document with sparse-checkout directions
+
+ Design doc.
+
+ Needs review.
+ source: <pull.1367.v4.git.1667714666810.gitgitgadget@gmail.com>
+
+
+* pw/test-todo (2022-10-06) 3 commits
+ . test_todo: allow [verbose] test as the command
+ . test_todo: allow [!] grep as the command
+ . tests: add test_todo() to mark known breakages
+
+ RFC for test framework improvement.
+
+ Needs review.
+ source: <pull.1374.git.1665068476.gitgitgadget@gmail.com>
+
+
+* ab/coccicheck-incremental (2022-11-11) 14 commits
+  (merged to 'next' on 2022-11-14 at 8a70133571)
+ + Makefile: don't create a ".build/.build/" for cocci, fix output
+  (merged to 'next' on 2022-11-08 at 0f3c55d4c2)
+ + spatchcache: add a ccache-alike for "spatch"
+ + cocci: run against a generated ALL.cocci
+ + cocci rules: remove <id>'s from rules that don't need them
+ + Makefile: copy contrib/coccinelle/*.cocci to build/
+ + cocci: optimistically use COMPUTE_HEADER_DEPENDENCIES
+ + cocci: make "coccicheck" rule incremental
+ + cocci: split off "--all-includes" from SPATCH_FLAGS
+ + cocci: split off include-less "tests" from SPATCH_FLAGS
+ + Makefile: split off SPATCH_BATCH_SIZE comment from "cocci" heading
+ + Makefile: have "coccicheck" re-run if flags change
+ + Makefile: add ability to TAB-complete cocci *.patch rules
+ + cocci rules: remove unused "F" metavariable from pending rule
+ + Makefile + shared.mak: rename and indent $(QUIET_SPATCH_T)
+
+ "make coccicheck" is time consuming. It has been made to run more
+ incrementally.
+
+ Will cook in 'next'.
+ source: <221109.86tu38p1x8.gmgdl@evledraar.gmail.com>
+ source: <cover-v5-00.13-00000000000-20221101T222616Z-avarab@gmail.com>
