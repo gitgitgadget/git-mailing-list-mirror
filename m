@@ -2,164 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 757B0C433FE
-	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 01:44:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE00EC4332F
+	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 02:48:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232128AbiKOBoX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 14 Nov 2022 20:44:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42700 "EHLO
+        id S232528AbiKOCsF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 14 Nov 2022 21:48:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229733AbiKOBoV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Nov 2022 20:44:21 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 677F42DCD
-        for <git@vger.kernel.org>; Mon, 14 Nov 2022 17:44:20 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id 13so32761777ejn.3
-        for <git@vger.kernel.org>; Mon, 14 Nov 2022 17:44:20 -0800 (PST)
+        with ESMTP id S232519AbiKOCsD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Nov 2022 21:48:03 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 461D315807
+        for <git@vger.kernel.org>; Mon, 14 Nov 2022 18:48:02 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id be13so22415201lfb.4
+        for <git@vger.kernel.org>; Mon, 14 Nov 2022 18:48:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=lG3LoXN7HkxWQaxle28La+azBeoS/dG6nvKWZh4Ok64=;
-        b=feCh/ar9GNJQrYo9vmfgDjM79jpupwROEv+4aULVu/BKkd7Z1awpoTw1kKxUTIYBVO
-         5okWZdtNf6GY/jV/UVsV25gtp4dZ1kTIJ340m5PTskgQQlZDdxZ6lvMDtOtTZkYRM61t
-         BGwpphdPutWu9rBPYC1gZcDkfYcUpghp6ET6sgsZs0oTtt2T6E+22xuneqO+qMwIvGKH
-         o9G+bY/ZfQmDtARdSih6PJ4J4/uzjKQb7Ts56lzotvgG8a6BsDU/DhfePjXy4kB8dt2+
-         J5+frBsMS+Sg+7HEpbdsdVc/STTE9Dw469+nGyPbgoV4KVbSs7HlWAK5ITc30Iix8Dlh
-         Q4cg==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=JF5FQMMnFykDZcRR6M5X4TJWipBdOmkfrxFbaM0uSrs=;
+        b=QRjfPqHYtUnaKUVnAYYH3LnyvFtsnLT7ZZqKylYd/WMwrJw1KvJnbIkoq2o9/SszNB
+         DNk+8m5nLuNphnVtIdtxMVpcqizr6UTSyAHIaZrP0uB8GYhQ5TX45tDzapnv2ReT0Unr
+         0BfTyirduslRpgqc2h5tp2fpUl0sEdDKt/OQ5rNBaLurfQ+JfMxBeYD/+mjNIdY0Iks2
+         BB3X8Sgw796IkV15HVfMxZFUrGTLu2fPVAPQVeszVw32CYi1dxXbCDbqtuNNR/Dw+nmZ
+         mQt6223bGchj5dGMvyAE6tpqHlafmntvN6FE7jRua1rBuuh72t2ZAIg8oOS+pb5s9+jJ
+         f2Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lG3LoXN7HkxWQaxle28La+azBeoS/dG6nvKWZh4Ok64=;
-        b=s1VQEPmwszqjhW4MfcC7dTfy+9xg95zk5WcX+3Iwd0n1a1mLxgktUd0xWyZc2tYd5+
-         qeoC9rUQuc10eXo18QsetVJMgpqNLVPTXvzvy53xOJwb9LlXKBWO2LodGai89rynxZOY
-         hCH9Ch2Z+AUIf7FF4iWUAzdJVj+1V+Ce0LQzGeI1qtSEgloWgGIb8kwpAWhuxT7oJKTJ
-         Os6xSIVe6B+PIM25u2YJXSU3o7hWHP9AiGd21oFuweokmrEs06jmqpUHT337QgrZjK9m
-         CbpGqsoxI1z+hM3HxxPAxzjNpJ0P0+MWY1NhhjOfdoRwoz9t4trVI+YlJkn7WuzJdDX3
-         y9dA==
-X-Gm-Message-State: ANoB5plDJo5ZtU/Kd0rbUvRyuD/DjzyS+/J4Z1gzWYyrxEZSfOdlJ95D
-        h+YoZV+o60OpM+zN1LOuEcKsE0ymIYZhNg==
-X-Google-Smtp-Source: AA0mqf7TgWEJV3LhJf8A4YBp80GVcdnEqs6Ek5zz+QJTalQSI+NyKMIb1Zaa45hSzpu+nU8ukp5i5g==
-X-Received: by 2002:a17:906:29d6:b0:7ad:b284:1357 with SMTP id y22-20020a17090629d600b007adb2841357mr12516246eje.149.1668476658799;
-        Mon, 14 Nov 2022 17:44:18 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id we10-20020a170907234a00b00782fbb7f5f7sm4849747ejb.113.2022.11.14.17.44.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Nov 2022 17:44:18 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oukzp-003LqS-0N;
-        Tue, 15 Nov 2022 02:44:17 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 0/8] Get rid of "git --super-prefix"
-Date:   Tue, 15 Nov 2022 02:37:45 +0100
-References: <20221109004708.97668-1-chooglen@google.com>
-        <RFC-cover-0.8-00000000000-20221109T192315Z-avarab@gmail.com>
-        <kl6ltu373ae5.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <221110.86zgcznjah.gmgdl@evledraar.gmail.com>
-        <kl6l5yfm2taf.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <kl6lv8nl1h19.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <221111.86fsepmbhe.gmgdl@evledraar.gmail.com>
-        <kl6lsfip0yfx.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <221114.86y1sdlq2d.gmgdl@evledraar.gmail.com>
-        <kl6lmt8tnmbt.fsf@chooglen-macbookpro.roam.corp.google.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <kl6lmt8tnmbt.fsf@chooglen-macbookpro.roam.corp.google.com>
-Message-ID: <221115.864jv1kn4e.gmgdl@evledraar.gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JF5FQMMnFykDZcRR6M5X4TJWipBdOmkfrxFbaM0uSrs=;
+        b=4yQ1fv4t/oe0IRGgv2PHwi6QJo0+4eeWLOPLc+yJBINtHOvfj1B+Cace6w465LPbWX
+         vB9bC2HdLTsulKpo17EXjHosLTZq0C+LGHCnrB+uCclvKxuexSJ25aFR72szbKwk3ngq
+         QxAug+Z8aW72dDYX1yld+PNBSdhwh8SVbWDVe854fTntGq2eVSuuLVg5qnEPARsbWp+J
+         ISMUFElX2LVdNXgNdvBkJ2YjigY7ChndGW78YGznjygLFbIkJsREiRUmSBgJV42oXuWk
+         3NKzWqxPjSUYEVsWzh8DoYxbZap3BWxn0B4M5ZB7WJEvcvZ8Uuy32nkOlnebENa1nJIR
+         qZ7Q==
+X-Gm-Message-State: ANoB5pnY6PnpKz1s5s55HLr4iHL49VqJ90eFnHI8Qh5s9Mik/Leivdzu
+        +3XCcg6CgmZdG4vxruef60ZXdPncS+y+4YLZTiY43JW3
+X-Google-Smtp-Source: AA0mqf7enXz7OZyJADqD9kbZZA2kraupuWoDX91oeUu8GXFmHrXASvn36vIEUrqcjTlAGQAQmcPEtW4g5oTx3MrQU/c=
+X-Received: by 2002:a05:6512:6d5:b0:4a9:6659:40d5 with SMTP id
+ u21-20020a05651206d500b004a9665940d5mr5599916lff.516.1668480480406; Mon, 14
+ Nov 2022 18:48:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
+ <CABPp-BEZK2KJHY+=Ta3VUzNjJKY=evPiAtp5UQFTVLMD0qreVQ@mail.gmail.com> <0e156172-0670-2832-78cb-c7dfe2599192@github.com>
+In-Reply-To: <0e156172-0670-2832-78cb-c7dfe2599192@github.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 14 Nov 2022 18:47:00 -0800
+Message-ID: <CABPp-BFNvUQx7exLgqDvzhgn1s=xSFKbJWdr8qfxLTXEFDQQig@mail.gmail.com>
+Subject: Re: [PATCH 00/30] [RFC] extensions.refFormat and packed-refs v2 file format
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, jrnieder@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Nov 14 2022, Glen Choo wrote:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Sun, Nov 13, 2022 at 4:07 PM Derrick Stolee <derrickstolee@github.com> wrote:
 >
->> As noted in the CL above I included this because I see you're keen to
->> include it, but I'm personally a bit "meh" on it. I.e. it's just
->> renaming an existing unrelated option, although being able to use
->> OPT__SUPER_PREFIX() makes it slightly nicer.
->>
->> As post-cleanups go I think removing the "submodule_prefix" from the
->> "struct repository" would make more sense, and maybe it's worth peeling
->> off the 10/10 to include in such a post-cleanup series? I.e. the below
->> on top of all of this works, and reduces allocations and cargo-culting
->> around the submodule API.
+> On 11/11/22 6:28 PM, Elijah Newren wrote:
+> > On Mon, Nov 7, 2022 at 11:01 AM Derrick Stolee via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
+> >>
+> >> Introduction
+> >> ============
+> >>
+> >> I became interested in our packed-ref format based on the asymmetry between
+> >> ref updates and ref deletions: if we delete a packed ref, then the
+> >> packed-refs file needs to be rewritten. Compared to writing a loose ref,
+> >> this is an O(N) cost instead of O(1).
+> >>
+> >> In this way, I set out with some goals:
+> >>
+> >>  * (Primary) Make packed ref deletions be nearly as fast as loose ref
+> >>    updates.
+> >
+> > Performance is always nice.  :-)
+> >
+> >>  * (Secondary) Allow using a packed ref format for all refs, dropping loose
+> >>    refs and creating a clear way to snapshot all refs at a given point in
+> >>    time.
+> >
+> > Is this secondary goal the actual goal you have, or just the
+> > implementation by which you get the real underlying goal?
 >
-> As a first impression I'm not particularly keen on this, since it makes
-> perfect sense to me to have a repo->submodule_prefix, especially when
-> recursing into N-level deep submodules...
+> To me, the primary goal takes precedence. It turns out that the best
+> way to solve for that goal happens to also make it possible to store
+> all refs in a packed form, because we can update the packed form
+> much faster than our current setup. There are alternatives that I
+> considered (and prototyped) that were more specific to the deletions
+> case, but they were not actually as fast as the stacked method. Those
+> alternatives also would never help reach the secondary goal, but I
+> probably would have considered them anyway if they were faster, if
+> only for their simplicity.
 
-This is mainly a quick experiment I drafted up, with that context...
+That's orthogonal to my question, though.  For your primary goal, you
+stated it in a form where it was obvious what benefit it would provide
+to end users.  Your secondary goal, as stated, didn't list any benefit
+to end users that I could see (update: reading the rest of your
+response it appears I just didn't understand it), so I was trying to
+guess at why your secondary goal might be a goal, i.e. what the real
+secondary goal was.
 
->> -- >8 --
->> Subject: [PATCH] repo & submodule API: stop carrying "repo->submodule_pr=
-efix"
->>
->> As this change shows the "submodule_prefix" field to "struct
->> repository" added in 96dc883b3cd (repository: enable initialization of
->> submodules, 2017-06-22) was only used by "ls-files" and "grep". Let's
->> have those two carry forward the "super_prefix" instead.
->>
->> Having every user of "struct repository" needing to worry about this
->> created a mismatch in the API where e.g. "grep" would re-compute a
->> "name_base_len" which we knew before. Now we use a "struct strbuf" in
->> the "struct grep_opt" there instead, so we'll know the length
->> already. This simplifies "grep_cache()" and "grep_tree()".
->>
->> We're also deleting cargo-culted code that the previous API foisted
->> upon us. In 605f0ec1350 (submodule: use submodule repos for object
->> lookup, 2018-12-14) the "Mark it as a submodule" code was added to
->> "open_submodule()", but the resulting xstrdup()'d "submodule_prefix"
->> was never used by anything.
+> > To me, it appears that such a capability would solve both (a) D/F
+> > conflict problems (i.e. the ability to simultaneously have a
+> > refs/heads/feature and refs/heads/feature/shiny ref), and (b) case
+> > sensitivity issues in refnames (i.e. inability of some users to work
+> > with both a refs/heads/feature and a refs/heads/FeAtUrE, due to
+> > constraints of their filesystem and the loose storage mechanism).  Are
+> > either of those the goal you are trying to achieve (I think both would
+> > be really nice, more so than the performance goal you have), or is
+> > there another?
 >
-> (As an aside, I think open_submodule() should have been replaced by
-> repo_submodule_init().)
->
-> In which case, yes it isn't used by anything in that code path, but
-> being meticulous about maintaining .super_prefix means that other
-> callers could use it if they wanted to, which might be crucial once we
-> start plumb "struct repository" deeper and deeper and...
+> For a Git host provider, these D/F conflict and case-sensitivity
+> situations probably would need to stay as restrictions on the
+> server side for quite some time because we don't want users on
+> older Git clients to be unable to fetch a repository just because
+> we updated our ref storage to allow for such possibilities.
 
-...I just don't see the point of maintaining an API with this sort of
-reach for just two callers, when it's a bad fit for what those two
-callers need.
+Okay, but even if not used on the server side, this capability could
+still be used on the client side and provide a big benefit to end
+users.
 
->>
->> Still, removing this field might not be a good move, as the
->> "super_prefix" might be a common enough case in the future, e.g. when
->> eventually migrating the "submodule--helper" users[1] to run
->> in-process.
->>
->> As the "grep" example demonstrates I don't think that's the
->> case. There instead of xstrdup()-ing all the way down we're now
->> carrying a single "super_prefix" in the form of a "struct strbuf". As
->> we recurse we then append to it, and strbuf_setlen() it back when we
->> we recurse out of that submodule. This is similar to how e.g. the
->> "read_tree_at()" API works.
->
-> This technique might no longer be so appealing. We _could_ pass both
-> "struct repository" and "super_prefix", but that seems odd given that
-> the super prefix is tied to the repository.
+But I think there's a minor issue with what you stated; as far as I
+can tell, there is no case-sensitivity restriction on the server side
+for GitHub currently, and users do currently have problems cloning and
+using repositories with branches that differ in case only.  See e.g.
+https://github.com/newren/git-filter-repo/issues/48 and the multiple
+duplicates which reference that issue.  We've also had issues at
+$DAYJOB, though for GHE we added some hooks to deny creating branches
+that differ only in case from another branch to avoid the problem.
 
-FWIW I don't even think a "super_prefix" being tied to a repository is a
-useful abstraction level in general.
+Also, D/F restrictions on the server do not stop users from having D/F
+problems when fetching.  If users forget to use `--prune`, then when a
+refs/heads/foo has already been fetched is deleted and replaced by a
+refs/heads/foo/bar, then the user gets errors.  This issue actually
+caused a bit of a fire-drill for us just recently.
 
-E.g. I've got some local hacky patches to make "git ls-tree" able to
-recurse down submodules, and for that code you usually just want to
-print the prefix to the current *dir*, and having to print the prefix to
-the current module, then the current dir-within-module, then the file
-just makes things needlessly complex.
+So both kinds of problems already exist, for users with any git client
+version (although the former only for users with unfortunate file
+systems).  And both problems cause pain.  Both issues are caused by
+loose refs, so limiting git storage to packed refs would fix both
+issues.
 
-> But that's just a first impression anyway. I don't mind taking another
-> look if this gets a standalone review.
+> The biggest benefit on the server side is actually for consistency
+> checks. Using a stacked packed-refs (especially with a tip file
+> that describes all of the layers) allows an atomic way to take a
+> snapshot of the refs and run a checksum operation on their values.
+> With loose refs, concurrent updates can modify the checksum during
+> its computation. This is a super niche reason for this, but it's
+> nice that the performance-only focus also ends up with a design
+> that satisfies this goal.
 
-*nod*
+Ah...so this is the reason for your secondary goal?  Re-reading it
+looks like you did state this, I just missed it without the longer
+explanation.
+
+Anyway, it might be worth calling out in your cover letter that there
+are (at least) three benefits to this secondary goal of yours -- the
+one you list here, plus the two I list above.
