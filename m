@@ -2,163 +2,257 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 642E2C4332F
-	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 09:54:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 77CDEC4332F
+	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 14:00:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229911AbiKOJy4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Nov 2022 04:54:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45064 "EHLO
+        id S237662AbiKOOAl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Nov 2022 09:00:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229969AbiKOJyO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2022 04:54:14 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F70722B0B
-        for <git@vger.kernel.org>; Tue, 15 Nov 2022 01:54:10 -0800 (PST)
+        with ESMTP id S229828AbiKOOAi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2022 09:00:38 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3949524F24
+        for <git@vger.kernel.org>; Tue, 15 Nov 2022 06:00:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1668506047; bh=mR4d2GOAxv90GSEi6Cy6UN+QxLDR2cGUc/GJOQ5+mpM=;
+        t=1668520824; bh=WR+sjlIPdVkZ10Mvd3MW4DRp6ylTTw1NUEh47+HF+CU=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=PzhJM3wkrrc3CqgTmG5mD2PcxTWhRRAzVtk16Pb8OY00gyTeogZIjxcVCpgjA3olJ
-         P+ozjqinQP16u6P6HNRx5Awv1ivZAVHRvgGcUvhcDCFwSQxH+vNK1E4EtKfrIf1MOy
-         HvVqy1QT3LPeubGe+HhbnA6m8QMoRyeqZZ1YRpic5Ex6qI9urt1lv0eLUSnQ7wbXRx
-         RaVPLFpShEm2LLy2xRfxxu/v/H7kupGvt/R6RDYm0YZtqo2Og1x2XbeMg7sUerlloL
-         sr1xkWT3pjrktWSLrvsGofFX4JSkbBLRCUufX0e5TjpoEkDij4Pj+mlL4OM1FGFyiE
-         o6OisWLAtb8Vg==
+        b=AYFrwTOBQwRDPK4j/6dHBn11Y5ygu90Zeny5TE3yn60SkoRtsxyd39m/IEsrNd+Rq
+         hH1QxXcUVIx9CuEemsRWLLhxJx848av9TQBRveD3BXO/TIhwquDsmWSBqGJHyfWO3I
+         p/3H3a8XSyWK0lsCreOP8vWQJNm6S5d2Le9aLSWDxrlIgDM6d3XmAWsfi7kE+5J5Am
+         DV6+yUYbw/0g2naoUhr/U88pF2DznPo5Y6XltdprOyijcZPZuVmQoB14RwKsB4t/77
+         KhG8M5fxgRIw8uWPUV+WVwRUnAiSYsaywOJg2/bipsxDoLsBz9PkNHrLOgvdH2S3KK
+         +q5DqXEDA7A+Q==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.20.115.3] ([213.196.213.188]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MnaoZ-1pMD2B482f-00jatT; Tue, 15
- Nov 2022 10:54:07 +0100
-Date:   Tue, 15 Nov 2022 10:54:05 +0100 (CET)
+Received: from [172.20.115.3] ([213.196.213.188]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N33ET-1p6j8M404L-013KVc; Tue, 15
+ Nov 2022 15:00:24 +0100
+Date:   Tue, 15 Nov 2022 15:00:22 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Ronan Pigott <ronan@rjp.ie>
-Subject: Re: [PATCH] builtin/gc.c: fix -Wdeclaration-after-statement
-In-Reply-To: <3p6n2r7s-q136-n7q9-8o27-740q4qr5os84@tzk.qr>
-Message-ID: <r31o6p7q-po67-osr1-3qq8-93s4p3o23nq2@tzk.qr>
-References: <patch-1.1-54d405f15f1-20221115T080212Z-avarab@gmail.com> <3p6n2r7s-q136-n7q9-8o27-740q4qr5os84@tzk.qr>
+To:     "Strawbridge, Michael" <Michael.Strawbridge@amd.com>
+cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Tuikov, Luben" <Luben.Tuikov@amd.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v3 1/1] Expose header information to git-send-email's
+ sendemail-validate hook
+In-Reply-To: <20221111194223.644845-2-michael.strawbridge@amd.com>
+Message-ID: <36s0r4s9-n21r-pop9-o7rn-q0qrq487p831@tzk.qr>
+References: <20221111194223.644845-1-michael.strawbridge@amd.com> <20221111194223.644845-2-michael.strawbridge@amd.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-727370782-1668506047=:183"
-X-Provags-ID: V03:K1:UAs5BL3/ZI4rHyxNJ56GoXopixgD0sU51cbgAnGKV/eP3cW6WAX
- pOWsYcSqi+ThengHYjtZUMmfRiZaEL1nX4IUwxYj/nimpRgv3//eAFRFGwT1vxmrga0qQs8
- gcNAd3fPYqzW2dgXm+qBgkpms9vLBK0Xdjmwtg6z7bNtsI3WBqz/atrR3OQfMNsWamSFWBn
- WV7Ug3mKCrryrlnrRXK8g==
-UI-OutboundReport: notjunk:1;M01:P0:2bqbzxFYBw4=;Nnun9NdZMIkU6a8tqLvPqhJNsMY
- RxxCszXwv7V8tbFkLlnsPCKtPrt3TOCWy/DZJKcQrrgVRMPxu7CG/4CPwGYIyTt7oNU+c8J3x
- 4hDbkrCp0PqVcsDRT5LBiUKsog59AXL9o69sPu5MBmVaW1U6zdgFUqpPIlmyjKH/FWeodMXdl
- ORF4/akZDqsabBRDCEAikfIyYzvjaIMipXeO1cpgYOJpQcke6QCQD83xyiV5dA+V5IQoP09zi
- kOO9uLtX8SKtCIGm6tKus7Nl7p6n9Ho0XsYKtyR2KdrWHj2PLUZibssxOMWtrIVCKcZFUCwS+
- DfVth1XDJSicGEbvhG0lNQa1mwhATPCKGBGoYo9QTP1TtsMtEwCDSUzdaADRAmRkmq4uG/hhj
- Qu9atdBXZdRx57RRnAX5kB1RII2RccQ8DheBfIWDTHlBqbieUiHiSxwpeosoQDImXyPDVOiFU
- UuBOWl0zXNqNP7oz9ftgsoBvSx+FFqAsz7r8w+CXIVg9/ldmqhWn1JGcS4QnNpsgMeEf4rCDG
- DZ/B9XyHEJc9P98VdFo34mLnr6VolnyNxlNrxh3VVQxJ+ascf4XFeVXT088qUXcFPdZtUHmI8
- 4vVMJf3cHlWOvFmhy9Mz7jBmvZT9NXw+Pusx0TgISrLrrjNDBylQvabtdaJENKQNL6WHDJUel
- TIhs4FnedkfjcUTxcGi7u5xHxdPLZcC+tJzmbItV1XjuRiveRq/h+L0J6ALdpuXadDRmcQDY1
- SknJlKYHIktUJvGrOMVn49VSkdTkljXkckejWa4iN0cU/5plob8FjRL6n8d08DSeEnP9r7K8F
- wu4mf+TR1s254iTUO1B4RoGIKDzFKtI7yy1xR2Gqr9/RTQCOhQcbWXEtu7ZdTQ9KrhV5gu4/0
- F/KRlW6cdCaoFkuo0DVY08jUu2O+xWfRlwj0AHDs23X6PDPqdct8fqmgPlJb6uXOIOKgBkWor
- 9AMKy5xWa3k+jY1OOqZwQP3STIc=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:T5PEDF4WYejknxuPWIDTAoa8TQu1D+HT8dUbOsQ3HEjaB85wdgw
+ HX5GI2ZBj7srBG8SiZK6GvBB/8CRCdjYAu9WDjA3FbkhGD/Qs42fQsvycd0sRjKBD1L+fW8
+ C5mSwGARSsyV0EAUh6oVsu4KaUJwEs5TQFFs1Eo0CuE1KWgbmfsoaqZZ2O0YQ1WV4u7jsxS
+ GUmQ4Rfwd5MjNZopsDymw==
+UI-OutboundReport: notjunk:1;M01:P0:/+GWSaJP/ZM=;IOTGT/Fc4lwX2s15YZb7+4CqTDY
+ jg3rst42JqflSCxZNMAq6DEnA+QXVQzgxp1noTff1DQUtmtlOw9xv9nprW/EtKHuhGg5pggpW
+ /Maypz75tyRU2lUsrq+c97GL8mHcZeLz0tKyx0CsY1C9+6M1V3rY+INeZVmP/R/vy8uPCZ1tX
+ j5owVyEG8VvWOM+awlRbqXWa08Fco8d/LtySol/uohavKeCMYJMSV4wPMsPeUFgSCozwkfAJG
+ ecoE681dgjEywAHKL/DmP2eCSnwyphCskLXKyj6L8SOFZTFU7UrP6bigCil3GtVO9Sk/vfktD
+ GYNUCv03hweq2DjFGeJ2efalzJ4JCGQthh3qwLSmmlRYuGVujpbH5Q3o7e9WVaP5tugLVi+i1
+ kstsEtV/D52Z/BOEFt2zJ6z+SDiz6vT51GsWThXTb+/Q46BVfNjU+g3tyJyG4+BMwiPRBZO4i
+ Qq5M+rnzjskODJokGMXBwWfokBE0a+X82Zp2Ec635Hs8vM5rkvCnyPMTXEbwcZjjj2fpO2/zl
+ qoSLsvYOi9W5hfgvKBiC5fsWFFTagwncw8SOjh4KWgrIsHNi8z1g0aY+AFzLq/1ziJRRzqAeC
+ Wi1oIS2NWRqQYWsXogy8WzkHs9CsYQfoC9VY72wGkeJ5oML8Qhb2RS3QCWtW3CaMWtXdiToMo
+ rx8mOyLVJhPOTBoNz5BZMp+tfsmnHfRw2Cj0KL6AlxLqxiSj8JcDc2oT5AUkhJssxIzKo0d7W
+ Lhsvl8eotDryWita9ca1HIBYPlUI92vQ8VyglE4Q6jm1JHrWKxCLLD6ecdcfHAeXGmlWRZZ+2
+ JMTHU29TXr/vgFPsC28HLgjOdslRZ9/SSiombnP4mFoD93S4+bA09zhkUyjRCqfnkzxLx/E5C
+ q2vSEGz1Cey0Spx9ANjEHCkM32YstCWWYFxdF3ctHJVsrgEllGNKLzXJA7kjhEQLNiH57vHp8
+ Rykd9al0ifGdifN5DDw31KRFuzk=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Michael,
 
---8323328-727370782-1668506047=:183
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Fri, 11 Nov 2022, Strawbridge, Michael wrote:
 
-Hi =C3=86var,
-
-On Tue, 15 Nov 2022, Johannes Schindelin wrote:
-
-> On Tue, 15 Nov 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> To allow further flexibility in the git hook, the smtp header
+> information of the email that git-send-email intends to send, is now
+> passed as a 2nd argument to the sendemail-validate hook.  Docs are
+> also updated.
 >
-> > In 1f80129d61b (maintenance: add option to register in a specific
-> > config, 2022-11-09) code was added which triggers a
-> > "-Wdeclaration-after-statement" warning, which is on by default with
-> > DEVELOPER=3D1.
-> >
-> > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.co=
-m>
-> > ---
-> >
-> > This landed in the latest "next" push-out, causing e.g this CI
-> > failure:
-> > https://github.com/git/git/actions/runs/3467538041/jobs/5792504315
+> As an example, this can be useful for acting upon keywords in the
+> subject or specific email addresses.
+
+This patch seems to break t9001:
+
+	Error: failed: t9001.9 Verify commandline
+	failure: t9001.9 Verify commandline
+	test_cmp expected commandline1
+
+	+ test_cmp expected commandline1
+	+ test 2 -ne 2
+	+ eval diff -u "$@"
+	+ diff -u expected commandline1
+	--- expected	2022-11-12 01:49:23.477741140
+	+0000
+	+++ commandline1	2022-11-12 01:49:21.921718804
+	+0000
+	@@ -1,4 +1 @@
+	!nobody@example.com!
+	-!author@example.com!
+	-!one@example.com!
+	-!two@example.com!
+	error: last command exited with $?=3D1
+	not ok 9 - Verify commandline
+	#
+	#		test_cmp expected
+	#		commandline1
+	#
+
+See
+https://github.com/gitgitgadget/git/actions/runs/3448445848/jobs/575552950=
+4#step:4:1791
+for details.
+
+If you need help with debugging this, I would like to point you to the
+information I wrote up for the Git for Windows project (but it applies
+here, too):
+https://github.com/git-for-windows/git/wiki/Running-Git's-regression-tests=
+#running-individual-tests
+
+Ciao,
+Johannes
+
 >
-> I looked at the same thing all morning, and found that
-> https://lore.kernel.org/git/20221111231910.26769-1-ronan@rjp.ie/
-> _probably_ was designed to fix the same issue (and I think you agree tha=
-t
-> that patch should be used instead of yours because it is more complete i=
-n
-> fixing left-over issues).
+> Cc: Luben Tuikov <luben.tuikov@amd.com>
+> Cc: brian m. carlson <sandals@crustytoothpaste.net>
+> Signed-off-by: Michael Strawbridge <michael.strawbridge@amd.com>
+> ---
+>  Documentation/githooks.txt |  8 +++---
+>  git-send-email.perl        | 57 +++++++++++++++++++++++++-------------
+>  2 files changed, 41 insertions(+), 24 deletions(-)
 >
-> However, try as I might, I did not find out yet why it does not apply
-> cleanly over here (I got side-tracked into range-diff'ing patches
-> downloaded from the archive, which is quite the challenge and not even f=
-un
-> because `range-diff` requires commits, not emails, so I side-tracked
-> myself into teaching `range-diff` to accept mbox arguments).
+> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+> index a16e62bc8c..346e536cbe 100644
+> --- a/Documentation/githooks.txt
+> +++ b/Documentation/githooks.txt
+> @@ -583,10 +583,10 @@ processed by rebase.
+>  sendemail-validate
+>  ~~~~~~~~~~~~~~~~~~
 >
-> Maybe you can adjust that patch so it applies cleanly?
-
-Seems that the v2 of "maintenance: improve error reporting for
-unregister" [*1*] was _partially_ folded into v3 of "maintenance: add
-option to register in a specific config": At least the config change that
-talks about `--config-file` inste of `--config` _is_ part of v3, and one
-reason that the former patch does not apply cleanly on top of the latter
-patch. Which is a bit funny because the former patch was sent out two days
-_after_ the latter patch.
-
-And it looks as if there is one more thing that needs to be forward-ported
-from that no-longer-applying patch: the initialization of the configset,
-otherwise we're potentially trying to clear an uninitialized data
-structure.
-
-This is the patch I am currently testing (on top of Git for Windows'
-`shears/seen` branch:
-https://github.com/git-for-windows/git/commit/cd7b86d19f):
-
-=2D- snip --
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 635f12499d68..a3f63880dfba 100644
-=2D-- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1569,6 +1569,7 @@ static int maintenance_unregister(int argc, const ch=
-ar **argv, const char *prefi
- 	int found =3D 0;
- 	struct string_list_item *item;
- 	const struct string_list *list;
-+	struct config_set cs;
-
- 	argc =3D parse_options(argc, argv, prefix, options,
- 			     builtin_maintenance_unregister_usage, 0);
-@@ -1576,9 +1577,8 @@ static int maintenance_unregister(int argc, const ch=
-ar **argv, const char *prefi
- 		usage_with_options(builtin_maintenance_unregister_usage,
- 				   options);
-
--	struct config_set cs;
-+	git_configset_init(&cs);
- 	if (config_file) {
--		git_configset_init(&cs);
- 		git_configset_add_file(&cs, config_file);
- 		list =3D git_configset_get_value_multi(&cs, key);
- 	} else {
-=2D- snap --
-
-=C3=86var, can you please have a thorough look and see whether there is
-anything else we were missing before advancing this to `next`?
-
-Thanks,
-Dscho
-
-Footnote *1*: https://lore.kernel.org/git/20221111231910.26769-1-ronan@rjp=
-.ie/
-Footnote *2*: https://lore.kernel.org/git/20221109190708.22725-3-ronan@rjp=
-.ie/
-
---8323328-727370782-1668506047=:183--
+> -This hook is invoked by linkgit:git-send-email[1].  It takes a single p=
+arameter,
+> -the name of the file that holds the e-mail to be sent.  Exiting with a
+> -non-zero status causes `git send-email` to abort before sending any
+> -e-mails.
+> +This hook is invoked by linkgit:git-send-email[1].  It takes two parame=
+ters,
+> +the name of a file that holds the patch and the name of a file that hol=
+ds the
+> +SMTP headers.  Exiting with a non-zero status causes `git send-email` t=
+o abort
+> +before sending any e-mails.
+>
+>  fsmonitor-watchman
+>  ~~~~~~~~~~~~~~~~~~
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 5861e99a6e..3ce5b1aad3 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -787,14 +787,6 @@ sub is_format_patch_arg {
+>
+>  @files =3D handle_backup_files(@files);
+>
+> -if ($validate) {
+> -	foreach my $f (@files) {
+> -		unless (-p $f) {
+> -			validate_patch($f, $target_xfer_encoding);
+> -		}
+> -	}
+> -}
+> -
+>  if (@files) {
+>  	unless ($quiet) {
+>  		print $_,"\n" for (@files);
+> @@ -1495,16 +1487,7 @@ sub file_name_is_absolute {
+>  	return File::Spec::Functions::file_name_is_absolute($path);
+>  }
+>
+> -# Prepares the email, then asks the user what to do.
+> -#
+> -# If the user chooses to send the email, it's sent and 1 is returned.
+> -# If the user chooses not to send the email, 0 is returned.
+> -# If the user decides they want to make further edits, -1 is returned a=
+nd the
+> -# caller is expected to call send_message again after the edits are per=
+formed.
+> -#
+> -# If an error occurs sending the email, this just dies.
+> -
+> -sub send_message {
+> +sub gen_header {
+>  	my @recipients =3D unique_email_list(@to);
+>  	@cc =3D (grep { my $cc =3D extract_valid_address_or_die($_);
+>  		      not grep { $cc eq $_ || $_ =3D~ /<\Q${cc}\E>$/ } @recipients
+> @@ -1546,6 +1529,22 @@ sub send_message {
+>  	if (@xh) {
+>  		$header .=3D join("\n", @xh) . "\n";
+>  	}
+> +	return $header;
+> +}
+> +
+> +# Prepares the email, then asks the user what to do.
+> +#
+> +# If the user chooses to send the email, it's sent and 1 is returned.
+> +# If the user chooses not to send the email, 0 is returned.
+> +# If the user decides they want to make further edits, -1 is returned a=
+nd the
+> +# caller is expected to call send_message again after the edits are per=
+formed.
+> +#
+> +# If an error occurs sending the email, this just dies.
+> +
+> +sub send_message {
+> +	my @recipients =3D unique_email_list(@to);
+> +
+> +        my $header =3D gen_header();
+>
+>  	my @sendmail_parameters =3D ('-i', @recipients);
+>  	my $raw_from =3D $sender;
+> @@ -1955,6 +1954,15 @@ sub process_file {
+>  		}
+>  	}
+>
+> +
+> +	if ($validate) {
+> +		foreach my $f (@files) {
+> +			unless (-p $f) {
+> +				validate_patch($f, $target_xfer_encoding);
+> +			}
+> +		}
+> +	}
+> +
+>  	my $message_was_sent =3D send_message();
+>  	if ($message_was_sent =3D=3D -1) {
+>  		do_edit($t);
+> @@ -2088,11 +2096,20 @@ sub validate_patch {
+>  			chdir($repo->wc_path() or $repo->repo_path())
+>  				or die("chdir: $!");
+>  			local $ENV{"GIT_DIR"} =3D $repo->repo_path();
+> +
+> +			my $header =3D gen_header();
+> +
+> +			require File::Temp;
+> +			my ($header_filehandle, $header_filename) =3D File::Temp::tempfile(
+> +                            ".gitsendemail.header.XXXXXX", DIR =3D> $re=
+po->repo_path());
+> +			print $header_filehandle $header;
+> +
+>  			my @cmd =3D ("git", "hook", "run", "--ignore-missing",
+>  				    $hook_name, "--");
+> -			my @cmd_msg =3D (@cmd, "<patch>");
+> -			my @cmd_run =3D (@cmd, $target);
+> +			my @cmd_msg =3D (@cmd, "<patch>", "<header>");
+> +			my @cmd_run =3D (@cmd, $target, $header_filename);
+>  			$hook_error =3D system_or_msg(\@cmd_run, undef, "@cmd_msg");
+> +			unlink($header_filehandle);
+>  			chdir($cwd_save) or die("chdir: $!");
+>  		}
+>  		if ($hook_error) {
+> --
+> 2.34.1
+>
+>
