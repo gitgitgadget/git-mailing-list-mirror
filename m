@@ -2,169 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F830C4332F
-	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 09:32:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCE14C4332F
+	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 09:37:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232681AbiKOJcu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Nov 2022 04:32:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56920 "EHLO
+        id S237247AbiKOJhv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Nov 2022 04:37:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60120 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229582AbiKOJcs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2022 04:32:48 -0500
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30325101E0
-        for <git@vger.kernel.org>; Tue, 15 Nov 2022 01:32:47 -0800 (PST)
-Received: by mail-ed1-x532.google.com with SMTP id f7so21027577edc.6
-        for <git@vger.kernel.org>; Tue, 15 Nov 2022 01:32:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=bKzOtjxlNncShVb1+Tb7AE7on7XT4flMFZ5ruiE8iWM=;
-        b=YyrgwnJDpUujDnh4OwXGGNaljxRSxQK1KRSd9+g6n1GoSAehRFG3TzYfo8L2Maebab
-         6NVPuEaYc/28UXqmKEgYRtrllNmFAWNMxoejCoxC1YzcMp20xFShUT48/y2AOvLgfc3h
-         SUbQTo3orHoS5f+ppNPA3lx92KPe3HQdpSqtxnZuXkFN91iXuAmMoyHHLjkX5EQ/9QzQ
-         rLEYW7LcIU6zFpHEpq234ZTij/vUQg2E8oE/TBkxOQFEhA8Lij1TjuojL1w8Z97RdXOj
-         hdzYLVPTN8Xom07wRXo+Exgj4BYW4Siz+bUEzLQdCjrTYvXFbWuSxvWxqv4qVQ5B9eTc
-         qC7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bKzOtjxlNncShVb1+Tb7AE7on7XT4flMFZ5ruiE8iWM=;
-        b=NoXyHcHTDHba09LLR5KvywWqhe+brWJeJY/yQSMR0Twehsk7i3i9OgrPhCMyhFydlo
-         uTNBoarFU/FGX5WmrePdmUqOfMAnKwA3XGbZaY1TwGb5hGXvwC+jTJSyOJ/skeM6ggIe
-         nZHFuQ+LseiQpfH/+PurwYmJgoJLpcuECnWaMsxH7Vssh6zjkxqf0HWRRAeHPsxcA/My
-         Nts8OptDVcinbA0ZFdQYvD+JbrUIlTAEw52DTqNmimKf7hAp1Bh6h9Cch67zJrukBiLv
-         LpLxCtCjuOH56z2SSISbzUuf7GedAu9UUlY15DP/8BHcJ/5KTWeXDBVjlR+Tk9xlBoLX
-         pCHg==
-X-Gm-Message-State: ANoB5pkDwfET5gt2Qii47K0+w/0X8FJA2JTOVXV7cEdTTh5KTe1Ac/cm
-        3TzaMru0Z96GxqjM1cWJksZAHOI9fc+OoQ==
-X-Google-Smtp-Source: AA0mqf616RzKV/NZapfFnab3k1zZICezjgBmC2FeAGDztqJ2IjnP9SNbopCwMM3fHoLaF7LnFyauWg==
-X-Received: by 2002:a05:6402:1cb9:b0:461:f5ce:a478 with SMTP id cz25-20020a0564021cb900b00461f5cea478mr14384757edb.304.1668504765248;
-        Tue, 15 Nov 2022 01:32:45 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 22-20020a170906301600b0073c8d4c9f38sm5358172ejz.177.2022.11.15.01.32.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Nov 2022 01:32:44 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        with ESMTP id S237825AbiKOJhp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2022 04:37:45 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01D3922B13
+        for <git@vger.kernel.org>; Tue, 15 Nov 2022 01:37:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1668505051; bh=/5J0+p4kVAHJfS85MFvaS2vkIRurl1CLG4WWu8e6Nn4=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=M0MZN/VL1ey2k6fT3eDQMwYN53yXNms77Qrqoetz7ALAXY9eKttndjEeaDEIOTLk4
+         Y3Maz0om4EabKzkp40rPTWoh3afu12iDFlOZrwRWYXjSuJVvsOPHeSlhNwDcv5U3Mz
+         v5+qO4N8Hm/uIwqzNMiVIJ45iekbldoGvnTFWgQyPV/7I3L+8o1RZ2jzdl1PvpCNWt
+         j4i5LBDE8bFFRpCogiPuMO3gwJYhZONKlOsZWeeLfDfjI2C1a7zQo9OVuFbSYgXdY0
+         2xN5GjadZZTqb/+tC8pf89sTfX4jGqEm7pSg9tsYhoFXlwquxHIpKm2bSFQdYkkstK
+         eYWCpw2PiUhAA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.20.115.3] ([213.196.213.188]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N9Mta-1p0SNS45fI-015Iv8; Tue, 15
+ Nov 2022 10:37:31 +0100
+Date:   Tue, 15 Nov 2022 10:37:29 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] bisect; remove unused "git-bisect.sh" and ".gitignore" entry
-Date:   Tue, 15 Nov 2022 10:32:42 +0100
-Message-Id: <patch-1.1-7be23b6faa0-20221115T093130Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.38.0.1473.g172bcc0511c
+cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Ronan Pigott <ronan@rjp.ie>
+Subject: Re: [PATCH] builtin/gc.c: fix -Wdeclaration-after-statement
+In-Reply-To: <patch-1.1-54d405f15f1-20221115T080212Z-avarab@gmail.com>
+Message-ID: <3p6n2r7s-q136-n7q9-8o27-740q4qr5os84@tzk.qr>
+References: <patch-1.1-54d405f15f1-20221115T080212Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-1599185146-1668505051=:183"
+X-Provags-ID: V03:K1:BBAb4l39xHqQ8sS3VY+DLjcR/IQ9sEgEXRkXFipGwrN+JufFN2U
+ XOOE+bLZPKc+UZJVsPV7OQsNL6iGTRtjJ4zt9Tt8Jejt/5zDPeIpJ2oZRKvvNndCPGmn2pq
+ 6HJ/nkPUaQEH+cv8NznCmlWnxRZiEPdeZ6REBd0zueCfHM4f3BesASFHizMniY7wrbuflGY
+ MHWalJwwTyUEqKMT93DYg==
+UI-OutboundReport: notjunk:1;M01:P0:DWTf/t8FIEs=;v/TjD0N/cvqGR5cF3tkO3XNBiAU
+ KOtt0XHK1+3e3DYs4kEJuaMnyb+7cMXKuCXAfH8uWidDadZWN42RdDFPwyoXsirO/fXVg0jXX
+ O/KS3ohTsrSLw1CyW9nX0+ohHaK87HgZodJ3KO+PijmaaKP9tIo76pw/QuzOR/46zmN0RZdHT
+ P24dLUICGwhxA+I++ZcC4fWVGu4pU03ZeWBnwqMdn200ZK5gr84dXkdJ2/hjmJLRudLwQLXAu
+ Sz6IhUGXMhuGQVbaFoKu8jy2WF26QX50XYUKzfc3pwAF1k24sQ6JB9Tdk6rqEuqLJMjbag2vR
+ C+bTUSZFO/+BYk8xBMwX8EK1BP9QfHyZ1A8dCYD4Lw59YRfe0z7SwuzYTauwyKZYFlbK+gj6f
+ rqYV4q0zdoSozD6m5CTgwN6ixZXzvBNkNUPsLUA//NY3h+AOFYi5/P+mw34AOQNUQOrYJSmLN
+ y3wSEoVxKFxhICZp+6QkMGDfAkyXU9IP65ICi5kH/QWoNU0+wRVXgnbqsJbSrVBRZTehA8lzY
+ v3x3xLWHBFiorqd0eJSNOK+On410+BjKZyUd6+YPgiLidGa4zzc0vCU76d4EWdmC0AThk1L+V
+ 9LRm1KeG1B+r9OcSXyF2cyjKv3PvEXO//yODowHdCmrReIJTlF77H4N58pjNsRzqEDH7NdiG5
+ xOW4bbl+kFE5bKi8sKPr1t0sgBL5K07i20WtsYYfWP1bWwmZ28nsBsryEuKO95sUbrUA3hzv0
+ WKhUleaX7pqcGfrzKXjMy+PsNN0Wxk5dxB3wZPiednf7YiWVy8IK7RQg8E52fDz9yUUd0DrFK
+ ac52m6pHf/2SvpS5m/TZ5Ii4daTiaKlejGgiDDD5OqvobeEjQDAHaZSvrdtLNEOdwGM1wx9TS
+ cIOxCqNTLzTGfCeupDLo/4CqR6MLQBfoaOzCS14uz95d1BDTyYWFRGH1rzC80IBjNs6HZ6qdQ
+ oHSQyQ==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since fc304fb52f9 (Merge branch 'dd/git-bisect-builtin' into next,
-2022-11-14) we've used builtin/bisect.c instead of git-bisect.sh to
-implement the "bisect" command. Let's remove the unused leftover
-script, and the ".gitignore" entry for the "git-bisect--helper", which
-also hasn't been built since fc304fb52f9.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
-This goes on top of "dd/git-bisect-builtin", which just landed in
-"next".
+--8323328-1599185146-1668505051=:183
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
- .gitignore    |  1 -
- git-bisect.sh | 63 ---------------------------------------------------
- 2 files changed, 64 deletions(-)
- delete mode 100755 git-bisect.sh
+Hi =C3=86var,
 
-diff --git a/.gitignore b/.gitignore
-index cb0231fb401..fe234cfa19a 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -20,7 +20,6 @@
- /git-archimport
- /git-archive
- /git-bisect
--/git-bisect--helper
- /git-blame
- /git-branch
- /git-bugreport
-diff --git a/git-bisect.sh b/git-bisect.sh
-deleted file mode 100755
-index f95b8103a9e..00000000000
---- a/git-bisect.sh
-+++ /dev/null
-@@ -1,63 +0,0 @@
--#!/bin/sh
--
--USAGE='[help|start|bad|good|new|old|terms|skip|next|reset|visualize|view|replay|log|run]'
--LONG_USAGE='git bisect help
--	print this long help message.
--git bisect start [--term-{new,bad}=<term> --term-{old,good}=<term>]
--		 [--no-checkout] [--first-parent] [<bad> [<good>...]] [--] [<pathspec>...]
--	reset bisect state and start bisection.
--git bisect (bad|new) [<rev>]
--	mark <rev> a known-bad revision/
--		a revision after change in a given property.
--git bisect (good|old) [<rev>...]
--	mark <rev>... known-good revisions/
--		revisions before change in a given property.
--git bisect terms [--term-good | --term-bad]
--	show the terms used for old and new commits (default: bad, good)
--git bisect skip [(<rev>|<range>)...]
--	mark <rev>... untestable revisions.
--git bisect next
--	find next bisection to test and check it out.
--git bisect reset [<commit>]
--	finish bisection search and go back to commit.
--git bisect (visualize|view)
--	show bisect status in gitk.
--git bisect replay <logfile>
--	replay bisection log.
--git bisect log
--	show bisect log.
--git bisect run <cmd>...
--	use <cmd>... to automatically bisect.
--
--Please use "git help bisect" to get the full man page.'
--
--OPTIONS_SPEC=
--. git-sh-setup
--
--TERM_BAD=bad
--TERM_GOOD=good
--
--get_terms () {
--	if test -s "$GIT_DIR/BISECT_TERMS"
--	then
--		{
--		read TERM_BAD
--		read TERM_GOOD
--		} <"$GIT_DIR/BISECT_TERMS"
--	fi
--}
--
--case "$#" in
--0)
--	usage ;;
--*)
--	cmd="$1"
--	get_terms
--	shift
--	case "$cmd" in
--	help)
--		git bisect -h ;;
--	*)
--		git bisect--helper "$cmd" "$@" ;;
--	esac
--esac
--- 
-2.38.0.1473.g172bcc0511c
+On Tue, 15 Nov 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
+> In 1f80129d61b (maintenance: add option to register in a specific
+> config, 2022-11-09) code was added which triggers a
+> "-Wdeclaration-after-statement" warning, which is on by default with
+> DEVELOPER=3D1.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>
+> This landed in the latest "next" push-out, causing e.g this CI
+> failure:
+> https://github.com/git/git/actions/runs/3467538041/jobs/5792504315
+
+I looked at the same thing all morning, and found that
+https://lore.kernel.org/git/20221111231910.26769-1-ronan@rjp.ie/
+_probably_ was designed to fix the same issue (and I think you agree that
+that patch should be used instead of yours because it is more complete in
+fixing left-over issues).
+
+However, try as I might, I did not find out yet why it does not apply
+cleanly over here (I got side-tracked into range-diff'ing patches
+downloaded from the archive, which is quite the challenge and not even fun
+because `range-diff` requires commits, not emails, so I side-tracked
+myself into teaching `range-diff` to accept mbox arguments).
+
+Maybe you can adjust that patch so it applies cleanly?
+
+Ciao,
+Dscho
+
+>
+>  builtin/gc.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index 56b107e7f0b..22a990db0be 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -1543,6 +1543,7 @@ static int maintenance_unregister(int argc, const =
+char **argv, const char *prefi
+>  	int found =3D 0;
+>  	struct string_list_item *item;
+>  	const struct string_list *list;
+> +	struct config_set cs;
+>
+>  	argc =3D parse_options(argc, argv, prefix, options,
+>  			     builtin_maintenance_unregister_usage, 0);
+> @@ -1550,7 +1551,6 @@ static int maintenance_unregister(int argc, const =
+char **argv, const char *prefi
+>  		usage_with_options(builtin_maintenance_unregister_usage,
+>  				   options);
+>
+> -	struct config_set cs;
+>  	if (config_file) {
+>  		git_configset_init(&cs);
+>  		git_configset_add_file(&cs, config_file);
+> --
+> 2.38.0.1473.g172bcc0511c
+>
+>
+>
+
+--8323328-1599185146-1668505051=:183--
