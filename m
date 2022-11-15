@@ -2,68 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 987E6C4332F
-	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 18:09:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6177CC433FE
+	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 18:15:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230127AbiKOSJK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Nov 2022 13:09:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58224 "EHLO
+        id S229672AbiKOSPb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Nov 2022 13:15:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231162AbiKOSJH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2022 13:09:07 -0500
-Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8ED4E0C
-        for <git@vger.kernel.org>; Tue, 15 Nov 2022 10:09:06 -0800 (PST)
-Received: by mail-io1-xd30.google.com with SMTP id 63so11276455iov.8
-        for <git@vger.kernel.org>; Tue, 15 Nov 2022 10:09:06 -0800 (PST)
+        with ESMTP id S229495AbiKOSP2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2022 13:15:28 -0500
+Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E62542FC09
+        for <git@vger.kernel.org>; Tue, 15 Nov 2022 10:15:27 -0800 (PST)
+Received: by mail-yb1-xb4a.google.com with SMTP id 204-20020a2510d5000000b006be7970889cso14046735ybq.21
+        for <git@vger.kernel.org>; Tue, 15 Nov 2022 10:15:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=grdhw9AAEOsSthJqY9pHe+jQ9hrWCHVmzAZ8jUde2vQ=;
-        b=MwLhP+7kNT/2LAN5a8ugRk3FPgFjJbx6nfHisbA0vlpp/P/T+e/ReCSVRuDVB1o3GI
-         b/TzMJvsE1vk58kDMIfHxwNtzcaWrl5gfYrCfyvVTwqo4yfjWDZiDMq6eKMCZI6MxvcS
-         I3UaFPmQ89o4U9MM5po8Ouw9wIgt72vId5w2P01R2xRTkPyqmmV3HastdXcZ/4mWgO89
-         8+gRXxoVPcL66RrQcch4wY34VhHrUtl8rcf9xBOMakVj747syNK9fvLUu9nrl0ERjbKM
-         2YHeirSm1i1PTOcWuw1goClT3P+1sClhi/cdmp7IRLG0/VStvLDm6LAIeFiL4G7JXWeu
-         bYjw==
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=IeWAuQTvmU1A1yZHDJFqUDbWV4cfF5zG6OAxRVMneTk=;
+        b=TWvtkJ+V/RZI9L7BrNG/lMdbyCv79DmidWtIyh50vAlLn+xtai9elKtnBd3JUMylBq
+         3e87TPViypkey8iTtvbFCPTryiJ1vQb12HEAr/N1m8K6BctdebYS03SdSHuDaE67yAwR
+         3EBeVX6FXRbF70Hbop8wquiO7rHQYgQKZFIssIdNek6mIdiV82RuXTJgiKHpoJ4E22/f
+         gLWr1HUbYaR1JB/mhOH3sI/3FwBtbrEM3qNKBkzo9VW6N7k0mR3XA+Vwe8qhnSVsNIEK
+         DJ7LnOVGQj/OeGIjCbwaGLmbdyjwvdfSqfP7IXW4s3owNlyc4UXt8d2r745SQsDhC+eg
+         kSEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=grdhw9AAEOsSthJqY9pHe+jQ9hrWCHVmzAZ8jUde2vQ=;
-        b=x/3rg4cXDYxm5nI5qp7M8oedinoTlBT2sGstVJ2VrKxftE395ZHrJKLh60SCAaGsuB
-         JSs07n/3K+d5eO58BolOPX5tZdvUQMlRjnBK2vTErkOD30CQgk/zBvUNmcEZBl1Jvxk+
-         B8ALC8vEvi1+IdMZZcUZ4duokMepe1HAmEDTW6d2ScV5xgAcN5IiGXEhIqUrsK6tohdS
-         zjUPa0+3Dp0aIjMtNhqjvrctn3KKdc1Sd1P0MtL6572y8y4hwk/XU/ANVOMLt/rALGy5
-         S8HL54NLVzjK97tN50EjooT24GapMfP53SO2KsNZRCA93sS1SG2bxZ093/kcrD4pymjp
-         gf1A==
-X-Gm-Message-State: ANoB5pl1TTr8R6lXomQ/R9KSYT6SkQ9XeZGkK87BsZURdhgt9Uj9mIYU
-        RefYEwcNPeyde0BCWjnOFRmZAOVVxuwQRTmTbYk=
-X-Google-Smtp-Source: AA0mqf42k6JsPhqmDP0X352X4Dgb77Shn0Fwe2hpyIE0+MqktqbuAGk1cuCSUSBik8YwQH7BUj3BwfYQnAfrlCupCfs=
-X-Received: by 2002:a02:7150:0:b0:363:7cf1:3e2c with SMTP id
- n16-20020a027150000000b003637cf13e2cmr8407841jaf.182.1668535746087; Tue, 15
- Nov 2022 10:09:06 -0800 (PST)
-MIME-Version: 1.0
-References: <pull.1384.v4.git.1668055574050.gitgitgadget@gmail.com>
- <pull.1384.v5.git.1668110679098.gitgitgadget@gmail.com> <CAPig+cTO3NPg_Kx3dZhFMEtbMe9hRvaumZYxMnSJRyXqUA=p0g@mail.gmail.com>
- <CANaDLW+Ec0kY4AW5dGvnCaHgcvFOZQZO5EAi595KbVKj7KDg3g@mail.gmail.com> <CAPig+cT2+nitwD64FzG=6FvO7eUn3q-cq_CmmYeOXxOMyzvUnw@mail.gmail.com>
-In-Reply-To: <CAPig+cT2+nitwD64FzG=6FvO7eUn3q-cq_CmmYeOXxOMyzvUnw@mail.gmail.com>
-From:   Rudy Rigot <rudy.rigot@gmail.com>
-Date:   Tue, 15 Nov 2022 12:08:54 -0600
-Message-ID: <CANaDLWLT45GWgMLwj6Ec3nZf-A+Wx5YAkx7pFbmG-AAFf-oxaA@mail.gmail.com>
-Subject: Re: [PATCH v5] status: long status advice adapted to recent capabilities
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Rudy Rigot via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
+        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IeWAuQTvmU1A1yZHDJFqUDbWV4cfF5zG6OAxRVMneTk=;
+        b=hBcrrs+AQ2sdha8EmY9eZ9SG5G2UXcg3k9pa3xEkhTRMnpw7HH+R7rGYT5ykrN42E/
+         cxjDCY4ahL4csHSVX+2Gq7urSp8uIkQamBeEXgo2cPQDrOq6uSb8X47WtlcfJO/eGqNX
+         1XMGKsIvFTkhTCxHbFW+c9lRL7nv0YWlEwnqY42eQ8CfNwFDpOt1lWDiUhQsKubuCyv/
+         VKKz2VhxOZ3Szw9Ovp0pqGDDgthC9p0yGPkrmdbKZgE/mOoDQZC2qmHoHysEh8lN5G4f
+         2TT9WnKlrdf8tdNB1ShVxWICC7wFCsfaSkDyPl7bljrMwiH50gct3B398lswsGQngJ+N
+         AxsA==
+X-Gm-Message-State: ANoB5pnpup7XH7P/ELqAgfEYKgtZ3kfyKLpRLt1upMYg9BN0yQDuGbMR
+        Lsa7VWM/pigRlwThdR2PMvoODLz+YncEkf78nhLa
+X-Google-Smtp-Source: AA0mqf7lCcEYxgujG71BIdvY5ZW/0LR+IrKO+SbP8LF6ScNoGKA5P3IfRs9HPWDyIdBb51AHQn0As6LEg/5WQ+FwNH39
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a25:900c:0:b0:6c4:8a9:e4d2 with SMTP
+ id s12-20020a25900c000000b006c408a9e4d2mr18341987ybl.164.1668536127222; Tue,
+ 15 Nov 2022 10:15:27 -0800 (PST)
+Date:   Tue, 15 Nov 2022 10:15:24 -0800
+In-Reply-To: <7cdd6c4184da2d3109498589167f10ecf972edc9.1666988096.git.gitgitgadget@gmail.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.38.1.493.g58b659f92b-goog
+Message-ID: <20221115181524.164472-1-jonathantanmy@google.com>
+Subject: Re: [PATCH v3 8/8] clone, submodule update: create and check out branches
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Glen Choo <chooglen@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-That makes a ton of sense, I agree with your thinking. Thanks for
-that, I'll do exactly that.
+"Glen Choo via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> +# Test the behavior of an already-cloned submodule.
+> +# NEEDSWORK When updating with branches, we always use the branch instead of the
+> +# gitlink's OID. This results in some imperfect behavior:
+> +#
+> +# - If the gitlink's OID disagrees with the branch OID, updating with branches
+> +#   may result in a dirty worktree
+> +# - If the branch does not exist, the update fails.
+> +#
+> +# We will reevaluate when "git checkout --recurse-submodules" supports branches
+> +# For now, just test for this imperfect behavior.
+
+I think the rationale for this behavior is as follows:
+
+We want a world in which submodules have branches and Git commands use them
+wherever possible. There are a few options for "git submodule update" when the
+superproject has a branch checked out:
+
+1. Checkout the branch, ignoring OID (as in this patch).
+2. Checkout the branch, erroring out if the OID is wrong.
+3. 1 + creating the branch if it does not exist.
+4. 2 + creating the branch if it does not exist.
+5. Always forcibly create the branch at the gitlink's OID and then checking
+   it out.
+
+At this point in the discussion, for a low-level command like "git submodule
+update", doing as little as possible makes sense to me, which is 1.
+
+But since we do not automatically create the branch if it does not exist, this
+means that we have to do it when we clone the submodule. Our options are:
+
+A. Create only the branch that is checked out in the superproject (as in this
+   patch).
+B. Create all branches that are present in the superproject.
+C. Go back on our previous decision, switching to 3.
+
+My instinct is that we want to maintain, as much as possible, the invariant
+that for each branch in the superproject, if the branch tip has a gitlink
+pointing to a submodule, that submodule has a branch of the same name. And I
+think that this invariant can only be maintained by "git submodule update" if
+we use B or C.
+
+> +test_expect_success 'branches - other branch checked out, correct branch exists, OIDs disagree' '
+> +	test_when_finished "rm -fr branch-super-cloned" &&
+> +	cp -r branch-super-clean branch-super-cloned &&
+> +
+> +	git -C branch-super-cloned branch --recurse-submodules new-branch &&
+> +	git -C branch-super-cloned checkout new-branch &&
+> +	git -C branch-super-cloned/sub1 checkout new-branch &&
+> +	test_commit -C branch-super-cloned/sub1 new-commit &&
+> +	git -C branch-super-cloned/sub1 checkout main &&
+> +	git -C branch-super-cloned submodule update &&
+> +
+> +	HEAD_BRANCH1=$(git -C branch-super-cloned/sub1 symbolic-ref HEAD) &&
+> +	test $HEAD_BRANCH1 = "refs/heads/new-branch" &&
+> +	test_clean_submodule ! branch-super-cloned sub1
+> +'
+> +
+> +test_expect_success 'branches - other branch checked out, correct branch does not exist' '
+> +	test_when_finished "rm -fr branch-super-cloned" &&
+> +	cp -r branch-super-clean branch-super-cloned &&
+> +
+> +	git -C branch-super-cloned branch new-branch &&
+> +	git -C branch-super-cloned checkout new-branch &&
+> +	test_must_fail git -C branch-super-cloned submodule update
+
+Can we also check what error message is being printed?
+ 
