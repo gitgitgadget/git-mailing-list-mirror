@@ -2,209 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC803C433FE
-	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 16:04:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 547B5C4332F
+	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 16:06:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230386AbiKOQEx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Nov 2022 11:04:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57796 "EHLO
+        id S230210AbiKOQGs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Nov 2022 11:06:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230193AbiKOQEv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2022 11:04:51 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AE481B1
-        for <git@vger.kernel.org>; Tue, 15 Nov 2022 08:04:50 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id n20so16604730ejh.0
-        for <git@vger.kernel.org>; Tue, 15 Nov 2022 08:04:50 -0800 (PST)
+        with ESMTP id S229650AbiKOQGq (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2022 11:06:46 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7FA52609
+        for <git@vger.kernel.org>; Tue, 15 Nov 2022 08:06:45 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id m22so37138555eji.10
+        for <git@vger.kernel.org>; Tue, 15 Nov 2022 08:06:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2jmTfyfNos0fShwEAfTpIeaH5euD8ZAXxiiF/3EC1w0=;
-        b=Hfc4sBtD5tdDtYOr6UnDF2j/DEq2mgIcutgn4Q27Ig39uuSS4Y2NN7n7j9m/d+OMzS
-         yRLPOjiKTyp8gBv3ZUOA5fer2MzGCIXpt+RAMFG7iAE0zq9FQKrygzTzukHQ63xnoLtC
-         XhfShnBJntVhLr/LnrJ3BqKPVgykIawVAa3njs2vBS8hqCyYM/ZMJiV20RilnsBh35bD
-         38tH/9in2ZfmfjTiHYpLXKuiJVBvKNgL4CzpjvzHA64YoRW0MqIgIiPwY7Wc4XgAWDDF
-         xc6R90EyefAGCxFXiH1YqMLHnbeLWl/nfSk0xMHxKaT8wwnrLIA+kZGkknzn1kB/saM0
-         vB/A==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Rq76/tBaQZs9oNWOHcy/AIHBHedgneYuMOQ4QbpXP98=;
+        b=mhl/qbleE7XdbO8qEVdckzaBqBbvonKhPiJpTssXAa+geZqybF/vSTrgS2xhyJEaxc
+         BKiNNtxvY9pA3szjPY5Y4X69/NIpSzPsCRoQxd/s8WA97iuqb9k9PlFzNCWZXISrYeU9
+         SF9jEhCDXHoRA3NUwFNcgf1q73S8dL8GhwtsShaz4kR97QKLLWVuczMYzc3qBFVfCvln
+         r7fbnIkiO45JY2vFN+YE0NYd0qwqpw8M0Rzi8RYxdnNVn8q+eo3PEOv5dJLX3vfhRXjb
+         jadU3zm2kC/LRooqIc+ukCsZuWzDIY8LFimo1I5uYGUHnwOFEKfO+RATTQHfpO8S6BLR
+         N8eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2jmTfyfNos0fShwEAfTpIeaH5euD8ZAXxiiF/3EC1w0=;
-        b=zUS3ugm3J1lX7U27HvCaiEyz+yfjvIcTWUibruZOmIclBHg6pwKRxjgoOKI0cVyggK
-         XWGgJIjmMLEVLJF+e+W32kmdIKCmyr8bF5BUJDQ/yumIToluyBato8T/pT/OHzKPOMCJ
-         Nh4VgolVis97EHnadHP/6cnnMUzS1q10Tk57465QgjIGYU79Z7LFWlh0Gv8FPtCu58BE
-         bLtPjWW19wS7Z7ZkNxgd3wMrzMaEPmuLznIoun1oOc/HAaFoC4EUfej+ztoEUM2QtcyG
-         3SxdLc1pc3Si+qllE9EO6pCXJyZrC4+J2nyIihwFQl7oktDUXZKDilf8F03UiN0BugDB
-         w30A==
-X-Gm-Message-State: ANoB5pmYjqgdSi2Vi8st83PUI72Brvy+EgMw15ZG+p6Kc17wT8XHDwvE
-        hLAdlxeSyWpGeurw9epEAXUbvxshgYF3AA==
-X-Google-Smtp-Source: AA0mqf4UJNblvVt8e3vMYRPP/jIXJjv8wg11cT4wDJ/Ry298N9vkgvri8zFKv1kL0HOgzxJRBGDPFA==
-X-Received: by 2002:a17:906:a194:b0:78d:3e6b:d402 with SMTP id s20-20020a170906a19400b0078d3e6bd402mr14088654ejy.563.1668528288215;
-        Tue, 15 Nov 2022 08:04:48 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k3-20020a17090632c300b0073c10031dc9sm5654525ejk.80.2022.11.15.08.04.47
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Rq76/tBaQZs9oNWOHcy/AIHBHedgneYuMOQ4QbpXP98=;
+        b=obXEFACoN1HqkG6O37kZxNDtNRZbOOVXlmWITqvc7K5nDSmt1DfD/kCHh5j+bgzbws
+         ZAp9tevzlb2s38uKP4Ml4OVwEfmoeEzaD65f+txpm3sHz+0E8Kb3PDT77b7hBjWkwUVN
+         bzdHr9wpHT1U+ahNt2xdkx+Cjdk0ZQfsbbfJNupOPsp8N27pZTdmH1T5hGWIdv+6dtmU
+         5q3gAUCE0D8sHuui23UEUWYjY+nyk+LdFDMCBuImMh/IYJ6BqTAGkcbxNVSIftd9xGac
+         zvuBtJp41WzwFSm0kdJO0OHl4E3DEstZQNYlfzw6u0QLf5ZJdzXJRU76I+lNHbvcm8kj
+         d9og==
+X-Gm-Message-State: ANoB5pn+WFC8v7EotejrT9VK826CuhZVMZMLfc7u96u90W7olsD73s0d
+        D4oB4Bv9PAGJUnkh8CLaN4lz08jOa4tmuA==
+X-Google-Smtp-Source: AA0mqf5Gy0WlMfc/hVHUGZ59J4dRzLVOEzeAjNpcQlNzZ4t48pznlmYJO5pwKQ2Sj5otVklpRNLc4w==
+X-Received: by 2002:a17:907:990f:b0:7ad:79c0:5479 with SMTP id ka15-20020a170907990f00b007ad79c05479mr14352924ejc.392.1668528404193;
+        Tue, 15 Nov 2022 08:06:44 -0800 (PST)
+Received: from gmgdl ([109.38.136.37])
+        by smtp.gmail.com with ESMTPSA id lb4-20020a170907784400b007ae243c3f05sm5650773ejc.189.2022.11.15.08.06.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Nov 2022 08:04:47 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>, Ronan Pigott <ronan@rjp.ie>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2] maintenance --unregister: fix uninit'd data use & -Wdeclaration-after-statement
-Date:   Tue, 15 Nov 2022 17:04:27 +0100
-Message-Id: <patch-v2-1.1-f37e99c9d59-20221115T160240Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.38.0.1473.g172bcc0511c
-In-Reply-To: <patch-1.1-54d405f15f1-20221115T080212Z-avarab@gmail.com>
+        Tue, 15 Nov 2022 08:06:43 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1ouySP-003eJ3-2r;
+        Tue, 15 Nov 2022 17:06:41 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Ronan Pigott <ronan@rjp.ie>
+Subject: Re: [PATCH] builtin/gc.c: fix -Wdeclaration-after-statement
+Date:   Tue, 15 Nov 2022 17:05:32 +0100
 References: <patch-1.1-54d405f15f1-20221115T080212Z-avarab@gmail.com>
+ <3p6n2r7s-q136-n7q9-8o27-740q4qr5os84@tzk.qr>
+ <r31o6p7q-po67-osr1-3qq8-93s4p3o23nq2@tzk.qr>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <r31o6p7q-po67-osr1-3qq8-93s4p3o23nq2@tzk.qr>
+Message-ID: <221115.86v8ngjj72.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since (maintenance: add option to register in a specific config,
-2022-11-09) we've been unable to build with "DEVELOPER=1" without
-"DEVOPTS=no-error", as the added code triggers a
-"-Wdeclaration-after-statement" warning.
 
-And worse than that, the data handed to git_configset_clear() is
-uninitialized, as can be spotted with e.g.:
+On Tue, Nov 15 2022, Johannes Schindelin wrote:
 
-	./t7900-maintenance.sh -vixd --run=23 --valgrind
-	[...]
-	+ git maintenance unregister --force
-	Conditional jump or move depends on uninitialised value(s)
-	   at 0x6B5F1E: git_configset_clear (config.c:2367)
-	   by 0x4BA64E: maintenance_unregister (gc.c:1619)
-	   by 0x4BD278: cmd_maintenance (gc.c:2650)
-	   by 0x409905: run_builtin (git.c:466)
-	   by 0x40A21C: handle_builtin (git.c:721)
-	   by 0x40A58E: run_argv (git.c:788)
-	   by 0x40AF68: cmd_main (git.c:926)
-	   by 0x5D39FE: main (common-main.c:57)
-	 Uninitialised value was created by a stack allocation
-	   at 0x4BA22C: maintenance_unregister (gc.c:1557)
+> Hi =C3=86var,
+>
+> On Tue, 15 Nov 2022, Johannes Schindelin wrote:
+>
+>> On Tue, 15 Nov 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>
+>> > In 1f80129d61b (maintenance: add option to register in a specific
+>> > config, 2022-11-09) code was added which triggers a
+>> > "-Wdeclaration-after-statement" warning, which is on by default with
+>> > DEVELOPER=3D1.
+>> >
+>> > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.co=
+m>
+>> > ---
+>> >
+>> > This landed in the latest "next" push-out, causing e.g this CI
+>> > failure:
+>> > https://github.com/git/git/actions/runs/3467538041/jobs/5792504315
+>>
+>> I looked at the same thing all morning, and found that
+>> https://lore.kernel.org/git/20221111231910.26769-1-ronan@rjp.ie/
+>> _probably_ was designed to fix the same issue (and I think you agree that
+>> that patch should be used instead of yours because it is more complete in
+>> fixing left-over issues).
+>>
+>> However, try as I might, I did not find out yet why it does not apply
+>> cleanly over here (I got side-tracked into range-diff'ing patches
+>> downloaded from the archive, which is quite the challenge and not even f=
+un
+>> because `range-diff` requires commits, not emails, so I side-tracked
+>> myself into teaching `range-diff` to accept mbox arguments).
+>>
+>> Maybe you can adjust that patch so it applies cleanly?
+>
+> Seems that the v2 of "maintenance: improve error reporting for
+> unregister" [*1*] was _partially_ folded into v3 of "maintenance: add
+> option to register in a specific config": At least the config change that
+> talks about `--config-file` inste of `--config` _is_ part of v3, and one
+> reason that the former patch does not apply cleanly on top of the latter
+> patch. Which is a bit funny because the former patch was sent out two days
+> _after_ the latter patch.
+>
+> And it looks as if there is one more thing that needs to be forward-ported
+> from that no-longer-applying patch: the initialization of the configset,
+> otherwise we're potentially trying to clear an uninitialized data
+> structure.
+>
+> This is the patch I am currently testing (on top of Git for Windows'
+> `shears/seen` branch:
+> https://github.com/git-for-windows/git/commit/cd7b86d19f):
+>
+> -- snip --
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index 635f12499d68..a3f63880dfba 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -1569,6 +1569,7 @@ static int maintenance_unregister(int argc, const c=
+har **argv, const char *prefi
+>  	int found =3D 0;
+>  	struct string_list_item *item;
+>  	const struct string_list *list;
+> +	struct config_set cs;
+>
+>  	argc =3D parse_options(argc, argv, prefix, options,
+>  			     builtin_maintenance_unregister_usage, 0);
+> @@ -1576,9 +1577,8 @@ static int maintenance_unregister(int argc, const c=
+har **argv, const char *prefi
+>  		usage_with_options(builtin_maintenance_unregister_usage,
+>  				   options);
+>
+> -	struct config_set cs;
+> +	git_configset_init(&cs);
+>  	if (config_file) {
+> -		git_configset_init(&cs);
+>  		git_configset_add_file(&cs, config_file);
+>  		list =3D git_configset_get_value_multi(&cs, key);
+>  	} else {
+> -- snap --
+>
+> =C3=86var, can you please have a thorough look and see whether there is
+> anything else we were missing before advancing this to `next`?
 
-Let's fix both of these issues, and also move the scope of the
-variable to the "if" statement it's used in, to make it obvious where
-it's used.
+Thanks, I submitted a v2 just now that addresses the unit'd issue as
+well, and as we're fixing that we can just reduce the scope of the
+variable, which makes it lifetime more obvious:
 
-Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
-Range-diff against v1:
-1:  54d405f15f1 ! 1:  f37e99c9d59 builtin/gc.c: fix -Wdeclaration-after-statement
-    @@ Metadata
-     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## Commit message ##
-    -    builtin/gc.c: fix -Wdeclaration-after-statement
-    +    maintenance --unregister: fix uninit'd data use & -Wdeclaration-after-statement
-     
-    -    In 1f80129d61b (maintenance: add option to register in a specific
-    -    config, 2022-11-09) code was added which triggers a
-    -    "-Wdeclaration-after-statement" warning, which is on by default with
-    -    DEVELOPER=1.
-    +    Since (maintenance: add option to register in a specific config,
-    +    2022-11-09) we've been unable to build with "DEVELOPER=1" without
-    +    "DEVOPTS=no-error", as the added code triggers a
-    +    "-Wdeclaration-after-statement" warning.
-     
-    +    And worse than that, the data handed to git_configset_clear() is
-    +    uninitialized, as can be spotted with e.g.:
-    +
-    +            ./t7900-maintenance.sh -vixd --run=23 --valgrind
-    +            [...]
-    +            + git maintenance unregister --force
-    +            Conditional jump or move depends on uninitialised value(s)
-    +               at 0x6B5F1E: git_configset_clear (config.c:2367)
-    +               by 0x4BA64E: maintenance_unregister (gc.c:1619)
-    +               by 0x4BD278: cmd_maintenance (gc.c:2650)
-    +               by 0x409905: run_builtin (git.c:466)
-    +               by 0x40A21C: handle_builtin (git.c:721)
-    +               by 0x40A58E: run_argv (git.c:788)
-    +               by 0x40AF68: cmd_main (git.c:926)
-    +               by 0x5D39FE: main (common-main.c:57)
-    +             Uninitialised value was created by a stack allocation
-    +               at 0x4BA22C: maintenance_unregister (gc.c:1557)
-    +
-    +    Let's fix both of these issues, and also move the scope of the
-    +    variable to the "if" statement it's used in, to make it obvious where
-    +    it's used.
-    +
-    +    Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-      ## builtin/gc.c ##
-    -@@ builtin/gc.c: static int maintenance_unregister(int argc, const char **argv, const char *prefi
-    - 	int found = 0;
-    - 	struct string_list_item *item;
-    - 	const struct string_list *list;
-    -+	struct config_set cs;
-    - 
-    - 	argc = parse_options(argc, argv, prefix, options,
-    - 			     builtin_maintenance_unregister_usage, 0);
-     @@ builtin/gc.c: static int maintenance_unregister(int argc, const char **argv, const char *prefi
-      		usage_with_options(builtin_maintenance_unregister_usage,
-      				   options);
-      
-     -	struct config_set cs;
-      	if (config_file) {
-    ++		struct config_set cs;
-    ++
-      		git_configset_init(&cs);
-      		git_configset_add_file(&cs, config_file);
-    + 		list = git_configset_get_value_multi(&cs, key);
-    ++		git_configset_clear(&cs);
-    + 	} else {
-    + 		list = git_config_get_value_multi(key);
-    + 	}
-    +@@ builtin/gc.c: static int maintenance_unregister(int argc, const char **argv, const char *prefi
-    + 		die(_("repository '%s' is not registered"), maintpath);
-    + 	}
-    + 
-    +-	git_configset_clear(&cs);
-    + 	free(maintpath);
-    + 	return 0;
-    + }
-
- builtin/gc.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 56b107e7f0b..d87cf84041f 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -1550,11 +1550,13 @@ static int maintenance_unregister(int argc, const char **argv, const char *prefi
- 		usage_with_options(builtin_maintenance_unregister_usage,
- 				   options);
- 
--	struct config_set cs;
- 	if (config_file) {
-+		struct config_set cs;
-+
- 		git_configset_init(&cs);
- 		git_configset_add_file(&cs, config_file);
- 		list = git_configset_get_value_multi(&cs, key);
-+		git_configset_clear(&cs);
- 	} else {
- 		list = git_config_get_value_multi(key);
- 	}
-@@ -1590,7 +1592,6 @@ static int maintenance_unregister(int argc, const char **argv, const char *prefi
- 		die(_("repository '%s' is not registered"), maintpath);
- 	}
- 
--	git_configset_clear(&cs);
- 	free(maintpath);
- 	return 0;
- }
--- 
-2.38.0.1473.g172bcc0511c
-
+https://lore.kernel.org/git/patch-v2-1.1-f37e99c9d59-20221115T160240Z-avara=
+b@gmail.com/
