@@ -2,110 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0808FC4332F
-	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 17:34:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8BE8C433FE
+	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 17:35:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229843AbiKORee (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Nov 2022 12:34:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36604 "EHLO
+        id S230397AbiKORff (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 15 Nov 2022 12:35:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37106 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230372AbiKORec (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2022 12:34:32 -0500
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CE9B1C13D
-        for <git@vger.kernel.org>; Tue, 15 Nov 2022 09:34:29 -0800 (PST)
-Received: by mail-io1-xd2b.google.com with SMTP id p141so11204385iod.6
-        for <git@vger.kernel.org>; Tue, 15 Nov 2022 09:34:29 -0800 (PST)
+        with ESMTP id S230348AbiKORfb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2022 12:35:31 -0500
+Received: from mail-il1-x12d.google.com (mail-il1-x12d.google.com [IPv6:2607:f8b0:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2C5D2F39B
+        for <git@vger.kernel.org>; Tue, 15 Nov 2022 09:35:30 -0800 (PST)
+Received: by mail-il1-x12d.google.com with SMTP id g7so6109861ile.0
+        for <git@vger.kernel.org>; Tue, 15 Nov 2022 09:35:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=plpDdO/WbqZo7aDYcmsdu8vGff7Y65sdkwAT+2YJk3Y=;
-        b=KhypHeipYnCotH4NPr/szLa4y5Y+rsA4Mwco1GDt8lpESJqHAMMBJGTzc+xegWxjNk
-         asleQ15cFcfWtmG8SlzFShSgD4BvmHRLUbgxmnz2zKM50yN7TJnpJRorhxKfIF++ond/
-         Ib0PJc25kHbYd/BxV+7iBoD1KWACKrhmfJmobsWXevO8ljPh4UJzBRygametzOFXqcwP
-         VoIih8g1HlJeTI6Ip+h9i6epDQC2FwYtmI3l3xgaongNEEO6yZwlLZ/b/VA5T8aJUnzI
-         Y1VJQnEe5+6TSVwDygjVhaNlG+sKtd28iXmeVk07TXt6BNKnyWpBw6pj8E7TUJVkVoGp
-         CXQQ==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=c1l5geHms3a9qZBmbVuRbjYcq4rSe0Z8fI1xWoiHE3k=;
+        b=4v9q681NmjxavutSSnQqYgEefE863Pp0nwyDAY4oK3uoIn033aFMBMKR1IFgDl1wwd
+         GdRsT9oGp1TTatKpXG+qVrQVnsbwlQiZx2gU1+lc6Xh2kzsb0o0Pd5IHFc+/PcoxlcYC
+         bzIoKEM9sHVBhpHgCFw75kcIApW4kRI/BdkEGAVmZ4fwxU7SPunn6xhik1zSwSevW5cQ
+         GV0XkMTt//ME0ewlneCc2wncRJS/cVpOCqe/dkm9e8hW7ALhlsgOkbv2/7cpSXd2gU9J
+         jhEQ9CZCSPxP0kRhECykwP5jSo9Ag9UQFvx/+NbbMEwNwoqw5SUn+9YgxcJrZtQGOZMF
+         z0HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=plpDdO/WbqZo7aDYcmsdu8vGff7Y65sdkwAT+2YJk3Y=;
-        b=tJFGhHsBU+aAUbmiGEWlt8UVAgG8CDHdfh1l2fxtnIWObI28GgOAUG3Ob+bkIhwpfC
-         1o/NXB3sbCKNGN9Xl8fEgSCQJxNfVhC2Um428f9jJnfmTpnf++NMhAS/F8pZidKzEld6
-         PqzlsL0o2L4oZ8PzqPDKF49as71EUWqxuKG9zpaQuAKY0CNaxDQHRcUiUUQIWtYgYixZ
-         vf2P9u7ZGCL12WcvkMeJjmVS6RwqVZcF0PKtqO5kwKCfJF2+e88CO0k+KQx5s851SyVb
-         z0CyVXNQeRbm7ZRaO5SyPU+ovlGGUnYUbEJ3K/KBP95rp+HVUs4q+599HeITVagS38Im
-         Z+JA==
-X-Gm-Message-State: ANoB5pk0zC/UldF994n9cMYjdhtI1cNiUJvfUlDVrivK8jmvi+3cI8S5
-        loJC8zS5tph2FwvNHgW+IXJFJA==
-X-Google-Smtp-Source: AA0mqf5v0GShstCnQSThZuh7F2cWvv1bLtmf3xN50XjZu0mixYM2EYClhhKc6+hd2XVB6Ls8gxd0GQ==
-X-Received: by 2002:a5d:9e45:0:b0:6d1:f042:c307 with SMTP id i5-20020a5d9e45000000b006d1f042c307mr8449165ioi.165.1668533668554;
-        Tue, 15 Nov 2022 09:34:28 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=c1l5geHms3a9qZBmbVuRbjYcq4rSe0Z8fI1xWoiHE3k=;
+        b=2rpnTXDQq5Cme8yJhJTfsY0e5EijjnltlrRJFOIfBAC+cjPgXVAWdVLzfzKtDxWGYi
+         PhOHzvpmDDElGYOFlIXV2C0Ifm8gsMaLU/jGGFAXcSCUvWs7IhecsuD4GciMfYOpNW4G
+         Dhy6Y5uS2aJHYE4gtqGWTFKVmYPkxrA+D3lum2stPQEDesd8+/nBqb757q/l4Np7CPXB
+         gA8JmS8qy040f8fX/2vqbWaZtI2V6w6+u6ti6sGOuvTfdn5rdFyn8BOD4TxJ/ESZYubh
+         pqycaNG41VeGoc83su4gTOAd1nyGxsu08uKHuGs2o30+yFN1RNu2ks08UIV48mIU9WeU
+         MqBg==
+X-Gm-Message-State: ANoB5pmPpg9uujITtFiTPTIgA9ioKxMcLR0LHxEk19ciJlJ+IOvDdeOc
+        KgbihSmx8t2yp9oA/Vl627ap9A==
+X-Google-Smtp-Source: AA0mqf4N7pYqu19xQmLoSorlQcHERjUPhMUAw8WO16dZDwF9jA7X1z49ADYPIPgHohP2aPRpBNii5g==
+X-Received: by 2002:a92:cb08:0:b0:302:4ba1:188b with SMTP id s8-20020a92cb08000000b003024ba1188bmr6641307ilo.62.1668533730040;
+        Tue, 15 Nov 2022 09:35:30 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id p2-20020a056638216200b003755c84f596sm4807259jak.9.2022.11.15.09.34.27
+        by smtp.gmail.com with ESMTPSA id h10-20020a02c72a000000b00372d05cab42sm4919649jao.23.2022.11.15.09.35.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Nov 2022 09:34:27 -0800 (PST)
-Date:   Tue, 15 Nov 2022 12:34:26 -0500
+        Tue, 15 Nov 2022 09:35:29 -0800 (PST)
+Date:   Tue, 15 Nov 2022 12:35:28 -0500
 From:   Taylor Blau <me@ttaylorr.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Ronan Pigott <ronan@rjp.ie>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     ronan@rjp.ie
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Johannes.Schindelin@gmx.de
 Subject: Re: [PATCH v2] maintenance --unregister: fix uninit'd data use &
  -Wdeclaration-after-statement
-Message-ID: <Y3PNolwofKgbkLh5@nand.local>
-References: <patch-1.1-54d405f15f1-20221115T080212Z-avarab@gmail.com>
- <patch-v2-1.1-f37e99c9d59-20221115T160240Z-avarab@gmail.com>
+Message-ID: <Y3PN4K1ULrvGCEEE@nand.local>
+References: <patch-v2-1.1-f37e99c9d59-20221115T160240Z-avarab@gmail.com>
+ <patch-1.1-54d405f15f1-20221115T080212Z-avarab@gmail.com>
+ <1ab6aa0e8178c88689f26b8df9ec75cb@rjp.ie>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-v2-1.1-f37e99c9d59-20221115T160240Z-avarab@gmail.com>
+In-Reply-To: <1ab6aa0e8178c88689f26b8df9ec75cb@rjp.ie>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 15, 2022 at 05:04:27PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> Since (maintenance: add option to register in a specific config,
-> 2022-11-09) we've been unable to build with "DEVELOPER=1" without
-> "DEVOPTS=no-error", as the added code triggers a
-> "-Wdeclaration-after-statement" warning.
+On Tue, Nov 15, 2022 at 04:32:03PM +0000, ronan@rjp.ie wrote:
+> I had done that in [1], but these issues were caught in review so I
+> submitted a v2 of that correction in [2] which declares the configsset
+> earlier and unconditionally initializes it is cleared. Are these
+> further issues discovered after [2] was applied, or was there some
+> issue rebasing the patches?
 >
-> And worse than that, the data handed to git_configset_clear() is
-> uninitialized, as can be spotted with e.g.:
->
-> 	./t7900-maintenance.sh -vixd --run=23 --valgrind
-> 	[...]
-> 	+ git maintenance unregister --force
-> 	Conditional jump or move depends on uninitialised value(s)
-> 	   at 0x6B5F1E: git_configset_clear (config.c:2367)
-> 	   by 0x4BA64E: maintenance_unregister (gc.c:1619)
-> 	   by 0x4BD278: cmd_maintenance (gc.c:2650)
-> 	   by 0x409905: run_builtin (git.c:466)
-> 	   by 0x40A21C: handle_builtin (git.c:721)
-> 	   by 0x40A58E: run_argv (git.c:788)
-> 	   by 0x40AF68: cmd_main (git.c:926)
-> 	   by 0x5D39FE: main (common-main.c:57)
-> 	 Uninitialised value was created by a stack allocation
-> 	   at 0x4BA22C: maintenance_unregister (gc.c:1557)
->
-> Let's fix both of these issues, and also move the scope of the
-> variable to the "if" statement it's used in, to make it obvious where
-> it's used.
->
-> Helped-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> [1] https://lore.kernel.org/git/20221110225310.7488-1-ronan@rjp.ie/
+> [2] https://lore.kernel.org/git/20221111231910.26769-1-ronan@rjp.ie/
 
-Thanks, both. I could have sworn I picked up the right version of this
-topic when queuing, but apparently not.
-
-I pushed this out to 'next' and rebuilt jch and seen based on the new
-version. The result now should be OK. Thanks again for noticing and
-working together.
+It was human error on my part. Please let me know if the result in
+'next' now is OK to you.
 
 Thanks,
 Taylor
