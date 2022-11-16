@@ -2,169 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07C64C4332F
-	for <git@archiver.kernel.org>; Wed, 16 Nov 2022 18:20:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BD70C4332F
+	for <git@archiver.kernel.org>; Wed, 16 Nov 2022 18:36:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233906AbiKPSU2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Nov 2022 13:20:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58782 "EHLO
+        id S239188AbiKPSgl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Nov 2022 13:36:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233813AbiKPSU0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2022 13:20:26 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2D73CDD
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 10:20:22 -0800 (PST)
-Received: (qmail 21730 invoked by uid 109); 16 Nov 2022 18:20:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 16 Nov 2022 18:20:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 2706 invoked by uid 111); 16 Nov 2022 18:20:22 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 16 Nov 2022 13:20:22 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Wed, 16 Nov 2022 13:20:21 -0500
-From:   Jeff King <peff@peff.net>
-To:     Kousik Sanagavarapu <five231003@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-Subject: Re: [RFC][PATCH] object.c: use has_object() instead of
- repo_has_object_file()
-Message-ID: <Y3Up5Vi75Up8LaGQ@coredump.intra.peff.net>
-References: <20221116163956.1039137-1-five231003@gmail.com>
+        with ESMTP id S239015AbiKPSgk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Nov 2022 13:36:40 -0500
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41F825986F
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 10:36:40 -0800 (PST)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-369426664f9so175893507b3.12
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 10:36:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=CvsGIi73PhigwMSJtp5SLgf46kylmt4dBx6q1q+cQN8=;
+        b=kQecxsjh7tcOzrnbm+U4Y3aqVmt98P6C9O2Tw7VGEGcxVUG23ZZslpFKasP9MvOAxK
+         YQbjx1hWD9oJWbuq4NSQs6yZ3gUY7+ahiF/OW+fMmlcu3P55p+43nuLljq1xh4kYBaXS
+         3TBUHDcEZqFKYAGP+p9hwvJB2B7fuzsKNKCvNqmV2qpBh7h//q83ECaT4oHUxIKgrcLN
+         R4LMkqD0cKlWHxfRU5K9rWhcdg3y/vdAizwz8NPUicBTaxuloXUrfzvSjDeCQNxrAqb1
+         SokmgmVbwaoXMgR6JoNljaqsUy97w5nk5RPdaDoWHuGK5WHDUSVKmjX8vrODOss443v+
+         z4OQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CvsGIi73PhigwMSJtp5SLgf46kylmt4dBx6q1q+cQN8=;
+        b=OJmfrtGGVH4he4wmUZt0CETV+y+Ib00XLkEbGybP+lEGWbXJZXAhvpGKKHYU+Yhf/S
+         AGusfQs9kx/Ed8IvebKqq2sk6OP7jZc7yLd+nmy3KZ8cGosmGHKpVWd2vP1Q3WnoHzOo
+         Gs7GhnMq9Yi34QreUDXkDrFgbnkCOhaY1VUpGeBDw8uuoqh1GB/2QTzmThir0dXWX2OQ
+         8r+BNqrj0DH1rdBBfSGvx6q7Q40Ig6CpFPsTRDAL4EjPMzSzUcEWH7WRwNiSogqyuyZH
+         Ebz1k+2pIJE04oHAdVv8riSaz0Y/34QPa+t21bkMkB0hbLJr8MjL6iZkUK7WyYKIuqJp
+         C29Q==
+X-Gm-Message-State: ANoB5plRSq144A25OJC7rJ+qQFk5u8B2v6ViGiR1v8oRTOb5KB8y7uuo
+        fb7Ol65475fJxKyIhfHJm5ws58o9NdcE4priKngB2HVwGak=
+X-Google-Smtp-Source: AA0mqf75om3GkoDj7nSff1+0NOc7mIXWr5CQG2MC/+hCqZ7VLXy8twWrSEMi+gG+NWq0XSjcfj6GaSINmrLigTV3dDE=
+X-Received: by 2002:a81:1a56:0:b0:369:edd9:6c8b with SMTP id
+ a83-20020a811a56000000b00369edd96c8bmr23634602ywa.452.1668623799151; Wed, 16
+ Nov 2022 10:36:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20221116163956.1039137-1-five231003@gmail.com>
+From:   David Hary <davidhary@gmail.com>
+Date:   Wed, 16 Nov 2022 10:36:27 -0800
+Message-ID: <CANNdkQZByT6dAiAJ=yrQshBi9suDUV2Xum2TtAGyJDKxb3f5QQ@mail.gmail.com>
+Subject: Issue: Git for Windows: : Incorrect registry entries for the Git Bash
+ and Git Gui
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 16, 2022 at 10:09:56PM +0530, Kousik Sanagavarapu wrote:
+:Observation: Incorrect registry entries for the Git Bash and Git Gui
 
-> It is mentioned in object-store.h that the function
-> repo_has_object_file() is deprecated. One possible alternative for this
-> function is has_object() (or atleast that is how I understood it).
-> 
-> The file object-store.h also mentions that repo_has_object_file() and
-> its fellow functions and macros can be removed once the migrations take
-> place. This patch therefore is an attempt to reduce the usage of these
-> functions and macros.
-> 
-> I request for comments as I'm not really sure about the "flags" argument
-> of the has_object() function and its usage in this patch.
+Likely Cause: the registry entries do not update when updating Git
 
-So you've stumbled into quite a tricky spot. :)
+How to reproduce:
+1. install git as a personal level user; git goes to c:\apps
+2. Change user level to admin;
+3. Update git; git files move to c:\program files;
+4. Try git bash or git gui from the File Explorer context menu; both fail.
 
-Yes, without specifying new flags, this patch has a change of behavior
-which I think is not what we want. From 1d8d9cb620 (sha1-file: introduce
-no-lazy-fetch has_object(), 2020-08-05):
+How was this discovered:
+Having had some issues with android emulation for visual studio, I
+changed my user account from personal to admin.  When updating, Git
+got installed under =E2=80=98c:\Program Files=E2=80=98 instead of c:\apps. =
+Yet, the
+command lines for Git Bash and Git Gui as recorded in the registry
+were still pointing to the c:\apps folder causing the explorer context
+menu shortcut to fail.
 
-  There have been a few bugs wherein Git fetches missing objects
-  whenever the existence of an object is checked, even though it does
-  not need to perform such a fetch. To resolve these bugs, we could look
-  at all the places that has_object_file() (or a similar function) is
-  used. As a first step, introduce a new function has_object() that
-  checks for the existence of an object, with a default behavior of not
-  fetching if the object is missing and the repository is a partial
-  clone. As we verify each has_object_file() (or similar) usage, we can
-  replace it with has_object(), and we will know that we are done when
-  we can delete has_object_file() (and the other similar functions).
-  
-  Also, the new function has_object() has more appropriate defaults:
-  besides not fetching, it also does not recheck packed storage.
+Workaround: edit the register changing =E2=80=98c:\apps=E2=80=99 to =E2=80=
+=98c:\program files=E2=80=99
 
-So the new function will:
+David
 
-  - not recheck packed objects unless we pass HAS_OBJECT_RECHECK_PACKED;
-    this is done in the default paths because a simultaneous git-gc may
-    be repacking objects (and we would rather double-check than racily
-    miss it). So it's appropriate behavior if the caller is
-    speculatively asking "hey, we _might_ have this object", but not if
-    we expect to have it.
-
-  - not lazily fetch objects in a partial-clone repository. This again
-    depends on the caller being in a situation where they are OK saying
-    "no we don't have it" for an object we _could_ get if it was worth
-    spending effort
-
-The call you're touching here is in parse_object_with_flags(), which is
-using the check as part of the "is it a blob that we should stream?"
-check. If this call returns "no we don't have it", when we could get it
-(either due to racy repack or by fetching), then we'll hit the non-blob
-path that calls repo_read_object_file(). Where we would do a fresh
-lookup, including re-checking packs and/or lazily fetching!
-
-So the new behavior seems strictly worse to me. We don't avoid those
-behaviors, _and_ we fail to follow the streaming-blob code path (which
-means we may accidentally read a huge blob into memory. I think we'd
-want to leave it as-is, or if we really want to eventually drop to a
-single interface, we need has_object() to learn a new flag to enable the
-lazy-fetch (and then use it along with RECHECK_PACKED).
-
-Now all of that said, I am skeptical that these calls to
-repo_has_object_file() are even doing anything useful at all. Looking at
-the existing code (dropping the "+" lines from your patch):
-
-> -	if ((obj && obj->type == OBJ_BLOB && repo_has_object_file(r, oid)) ||
-> -	    (!obj && repo_has_object_file(r, oid) &&
->  	     oid_object_info(r, oid, NULL) == OBJ_BLOB)) {
->  		if (!skip_hash && stream_object_signature(r, repl) < 0) {
->  			error(_("hash mismatch %s"), oid_to_hex(oid));
-
-we are checking that it exits if either:
-
-  - another object (e.g., a tree) referred to it as a blob during this
-    process, and we created an in-memory "struct object" with that type
-
-  - nobody has referred to it, and we want to check its type via
-    oid_object_info()
-
-In the second case, this seems totally pointless. We can just ask
-oid_object_info() what it's type is, and it will say "no, we don't have
-it" if appropriate. It will do the usual recheck-pack and lazy-fetch,
-but so is repo_has_object_file(), so the short-circuit "&&" is not
-helping. _If_ we were to switch to has_object() it would start to do
-something, but I think that's a bad idea for the reasons given above.
-
-In the first case, I'd likewise argue it's not doing anything useful. It
-is confirming that we have the object, but so would the call to
-stream_object_signature() immediately below (assuming skip_hash is not
-set). If skip_hash is set, then we could either:
-
-  1. Just assume we have it. The point of the caller passing skip_hash
-     is that we don't care about checking the integrity for this use
-     case, and "missing" is not really any different than "there's a
-     file on disk but it might contain garbage bytes".
-
-  2. Check repo_has_object_file() in this code path only when skip_hash
-     is set. That retains the same "do we even have it" check for
-     skip_hash that is performed now.
-
-I.e., I'd suggest this patch to remove both calls entirely:
-
-diff --git a/object.c b/object.c
-index 248530ba7b..a370545405 100644
---- a/object.c
-+++ b/object.c
-@@ -285,9 +285,8 @@ struct object *parse_object_with_flags(struct repository *r,
- 			return &commit->object;
- 	}
- 
--	if ((obj && obj->type == OBJ_BLOB && repo_has_object_file(r, oid)) ||
--	    (!obj && repo_has_object_file(r, oid) &&
--	     oid_object_info(r, oid, NULL) == OBJ_BLOB)) {
-+	if ((obj && obj->type == OBJ_BLOB) ||
-+	    (!obj && oid_object_info(r, oid, NULL) == OBJ_BLOB)) {
- 		if (!skip_hash && stream_object_signature(r, repl) < 0) {
- 			error(_("hash mismatch %s"), oid_to_hex(oid));
- 			return NULL;
-
-But there may be some subtlety I'm missing. I'm cc-ing Jonathan Tan, who
-added has_object(), and who added the top call to repo_has_object_file()
-via df11e19648 (rev-list: support termination at promisor objects,
-2017-12-08). The second call is from 090ea12671 (parse_object: avoid
-putting whole blob in core, 2012-03-07), but he's no longer active on
-the project. Looking at the commit, I think it was just a case of "let's
-be extra careful". But as far as I can tell, it's not helping anything,
-and both calls are introducing extra work doing object lookups.
-
--Peff
+David Hary, PhD
+President
+Integrated Scientific Resources, Inc.
++1(310)453-6809
