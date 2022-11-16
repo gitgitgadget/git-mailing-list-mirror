@@ -2,146 +2,196 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D00AC433FE
-	for <git@archiver.kernel.org>; Tue, 15 Nov 2022 23:40:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86932C433FE
+	for <git@archiver.kernel.org>; Wed, 16 Nov 2022 00:19:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229731AbiKOXkm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 15 Nov 2022 18:40:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42456 "EHLO
+        id S229520AbiKPATz convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Tue, 15 Nov 2022 19:19:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229655AbiKOXkl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Nov 2022 18:40:41 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70D4CF09
-        for <git@vger.kernel.org>; Tue, 15 Nov 2022 15:40:39 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id gv23so7406863ejb.3
-        for <git@vger.kernel.org>; Tue, 15 Nov 2022 15:40:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7+7b8jKDqG10YR+sSr23/wkLb9ApoENPL7pyRkFAROw=;
-        b=j5aMa+a0+80Mm3SeYzOG2zi5jC31+i+XS3dumivGm3yDmO49Bl+yNZN8oyuTT1HniA
-         4fyBxwHMBDa77NgRCEqQ0b/2NZ6W8W68JfbZC0rwv7f7E+/ImYtWlMn5MPWdPnHgZshm
-         n3FcS9z1NSLJf+Ns8BSTokMDu9ZHft8cDLWUJr+2/7oSSziA0luZiAict0SKVK+RF6vL
-         0TgyBRBTOMy41c+CUx4fzo8bd1knyrpLNIq60x3BKKdfO5zB8S3l5kYmjC1fWWgUY09q
-         tjj7Iw9kkW8uaabfPWTNbm8Iy5cqXWR6p9E96v9JVfKZNaQMmf6CXa/RLn2GVTUbjH1K
-         llQw==
+        with ESMTP id S229478AbiKPATx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Nov 2022 19:19:53 -0500
+Received: from mail-io1-f42.google.com (mail-io1-f42.google.com [209.85.166.42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6156027FD8
+        for <git@vger.kernel.org>; Tue, 15 Nov 2022 16:19:52 -0800 (PST)
+Received: by mail-io1-f42.google.com with SMTP id b2so12036012iof.12
+        for <git@vger.kernel.org>; Tue, 15 Nov 2022 16:19:52 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7+7b8jKDqG10YR+sSr23/wkLb9ApoENPL7pyRkFAROw=;
-        b=QAutmiKYadj8DE0IY5xaxxSraV6GcDLprKzMo5IvDusrIRqu5LPWEAvNhtR4Qmgu1h
-         9kmRLqxjOiLlUZ3mO4iONOlvBf7QDUZ1T3r2sUXZs676FwP89ImR20dt4fXrgOnjLpIL
-         ETuqtg0ct14EBN4HCUdO5y2cUWygluqHiN4bSGSXRWvHn5V+3IGRvyzMioKLsF6Cwryq
-         qDK8xJn0E3UdKXbVJbkIVejR/xrj4Qtwi3CcQW47Eo4ccoQ7MspwAhglN5gsKlxfxR9P
-         qYNmwjXzksmY2FT0Ugl7NlalNnmdcdU517DXn4JpiiE0NZdldbaLeF4sfKwx0eijkV04
-         8NrQ==
-X-Gm-Message-State: ANoB5pmHS/BEdWHaN/wX5ofGeMDPt7uVuC2xmu6nk/gW7lUwBhbkjKd8
-        dgVDxYNxbspJziTLT1Rvfp1IMFkFAZIxLw==
-X-Google-Smtp-Source: AA0mqf6ZTmOwgP2URpBvsOaN1MzjwuZ4hkrx+gtkgMuPMLDKackT2pv94dzIwyQEx39FlTqAyNSEsw==
-X-Received: by 2002:a17:906:5054:b0:79b:413b:d64 with SMTP id e20-20020a170906505400b0079b413b0d64mr15322973ejk.538.1668555636112;
-        Tue, 15 Nov 2022 15:40:36 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 21-20020a170906309500b007add62dafbasm6083163ejv.157.2022.11.15.15.40.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Nov 2022 15:40:35 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] t7610: use "file:///dev/null", not "/dev/null", fixes MinGW
-Date:   Wed, 16 Nov 2022 00:40:14 +0100
-Message-Id: <patch-1.1-21a9cb49299-20221115T233516Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.38.0.1473.g172bcc0511c
-In-Reply-To: <Y3PrjMLcEGfoHifZ@nand.local>
-References: <Y3PrjMLcEGfoHifZ@nand.local>
+        bh=YFJUWk4YVFSwSqF0QYr5EQcYgjANT81C1+jsB6w8x1k=;
+        b=i2jEEsejWz2B59P9TBdQCAUYzI+PHkh8mFT7DMYGyVSOtYia4AoTsW1HKRKSuQF2Ij
+         9KsILizHhGrGbvQmEe2tfAU25kWillQa0BUALueVWhlqTYXbXGk4NrcRuZrrHuEc6rri
+         f2w1vfJrMvxJFL9GDjRHfSpAag/QS3baa2WzE6Qd0o/YrQM62x1odggk9at0PnQ7lRvY
+         4wfJrEL2s6TBB0Hi/ItXmrdqZc9bmZ6ClvbUunZciv4Ezk36XvWp1R3NyuBHJCnWP3IV
+         bnnbiEz8WpBtoxAMtAAGnvc89mL3U4k7Ix/TDvb6BQGXduj1vh3k0COxipdsPcZmaO02
+         9Lbw==
+X-Gm-Message-State: ANoB5pmqCs9KOV4VNG9eJHvXnRpB4T2EC3FcGu5m95Xuyk2zjbJE7+OW
+        +bOPqST570/f8cDWG6KEy+C+W/LP7FhJnVyKOm0n3vcpTmc=
+X-Google-Smtp-Source: AA0mqf6dcc7uXCZ05wPcjLQ8L869uz4EQ0yG3ChUgIU5NVY0ahImmyOc0/o65kja+CC5BKoEOwX1WHpriMk5CQDFUKQ=
+X-Received: by 2002:a5e:8b05:0:b0:6cb:4c03:6d6e with SMTP id
+ g5-20020a5e8b05000000b006cb4c036d6emr1286333iok.168.1668557991511; Tue, 15
+ Nov 2022 16:19:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20221104213401.17393-1-jacobabel@nullpo.dev>
+ <20221110233137.10414-1-jacobabel@nullpo.dev> <20221110233137.10414-3-jacobabel@nullpo.dev>
+ <221115.86iljfkjjo.gmgdl@evledraar.gmail.com> <CAPig+cRuJVN2Hc-oNF10sx=ZzArb8skXUQ8m5Qek2e-o4c9VEg@mail.gmail.com>
+ <221116.86a64rkdcj.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221116.86a64rkdcj.gmgdl@evledraar.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Tue, 15 Nov 2022 19:19:40 -0500
+Message-ID: <CAPig+cQiyd9yGE_XpPZmzLQnNDMypnrEgkV7nqRZZn3j6E0APQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] worktree add: add --orphan flag
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Jacob Abel <jacobabel@nullpo.dev>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On MinGW the "/dev/null" is translated to "nul" on command-lines, even
-though as in this case it'll never end up referring to an actual file.
-
-So on Windows the fix for the previous "example.com" timeout issue in
-8354cf752ec (t7610: fix flaky timeout issue, don't clone from
-example.com, 2022-11-05) would yield:
-
-  fatal: repo URL: 'nul' must be absolute or begin with ./|../
-
-Let's evade this yet again by prefixing this with "file://", which
-makes this pass in the Windows CI.
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
-
-On Tue, Nov 15 2022, Taylor Blau wrote:
-
-> On Wed, Nov 09, 2022 at 09:17:25PM -0500, Taylor Blau wrote:
->> On Thu, Nov 10, 2022 at 12:55:30AM +0100, Ævar Arnfjörð Bjarmason wrote:
->> > But we generally just fail some or all of 3..9 pretty fast, and don't
->> > start taking 20 minutes to run the test, when it took 10s before (or
->> > whatever).
->>
->> OK. I still think that in principle this is indistinguishable from not
->> running a setup test to completion.
->>
->> *But*: I'm willing to treat them differently since instead of
->> manifesting in an immediate failure later on in the suite, we hang for a
->> substantial period of time.
->>
->> So I'm content to merge this down, but I don't think it's worth
->> searching out for more of these in the future.
+On Tue, Nov 15, 2022 at 6:27 PM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> On Tue, Nov 15 2022, Eric Sunshine wrote:
+> > On Tue, Nov 15, 2022 at 4:13 PM Ævar Arnfjörð Bjarmason
+> > <avarab@gmail.com> wrote:
+> >> But for this patch, it seems much better to link to the "checkout" docs,
+> >> no?
+> >
+> > Sorry, no. The important point here is that the --orphan option being
+> > added to `git worktree add` closely follows the behavior of `git
+> > switch --orphan`, which is quite different from the behavior of `git
+> > checkout --orphan`.
+> >
+> > The `git switch --orphan` documentation doesn't seem particularly
+> > lacking; it correctly describes the (very) simplified behavior of that
+> > command over `git checkout --orphan`. I might agree that there isn't
+> > much reason to link to git-switch for "more details", though, since
+> > there isn't really anything else that needs to be said.
 >
-> Having merged this down to 'next', it looks like there is some CI
-> fallout on the Windows tests, see:
+> Aside from what it says now: 1/2 of what I'm saying is that linking to
+> it while it says it's "EXPERIMENTAL" might be either jumping the gun.
 >
->   https://github.com/ttaylorr/git/actions/runs/3473324797/jobs/5805324776
+> Or maybe we should just declare it non-"EXPERIMENTAL", but in any case
+> this unrelated topic might want to avoid that altogether and just link
+> to the "checkout" version.
+
+Even better would be for the documentation added by this patch to be
+self-contained and not bother linking anywhere to further explain
+--orphan. That would satisfy your concern, I think, as well as my
+concern that `git checkout --orphan` documentation is inappropriate
+for `git worktree add --orphan`.
+
+> > If we did want to say something else here, we might copy one sentence
+> > from the `git checkout --orphan` documentation:
+> >
+> >     The first commit made on this new branch will have no parents and
+> >     it will be the root of a new history totally disconnected from all
+> >     the other branches and commits.
+> >
+> > The same sentence could be added to `git switch --orphan`
+> > documentation, but that's outside the scope of this patch series (thus
+> > can be done later by someone).
 >
-> I am not sure how I might have caught this earlier not having a Windows
-> machine myself. Regardless, let's make sure that it is fixed up before
-> this graduates.
+> I think I was partially confused by skimming the SYNOPSIS and thinking
+> this supported <start-point> like checkout, which as I found in
+> https://lore.kernel.org/git/221115.86edu3kfqz.gmgdl@evledraar.gmail.com/
+> just seems to be a missing assertion where we want to die() if that's
+> provided in this mode.
 
-Sorry again :( I think my CI was quite queued up at the time, and I
-figured surely *this* won't have any porability issues, but forgot
-about MinGW's sneaky /dev/null string-replacement behavior.
+I haven't read v3 yet, so I wasn't aware that the SYNOPSIS hadn't been
+updated to match the reworked --orphan behavior implemented by v3, but
+I can certainly understand how that would have led you astray. You're
+quite correct that the SYNOPSIS should not be saying that <commit-ish>
+is allowed with --orphan.
 
-Windows CI passes with this:
-https://github.com/avar/git/actions/runs/3473817195
+> What I also found a bit confusing (but maybe it's just me) is that the
+> "with a clean working directory" seemed at first to be drawing a
+> distinction between this behavior and that of "git switch", but from
+> poking at it some more it seems to be expressing "this is like git
+> switch's --orphan" with that.
 
- t/t7610-mergetool.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+"clean working directory" may indeed be ambiguous and confusing. It's
+not necessarily clear if it means "no changes to tracked files" or "no
+files in directory". We should use more precise terminology.
 
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index b1ba0d9a088..7b957022f1a 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -33,7 +33,7 @@ test_expect_success 'setup' '
- 		git add foo &&
- 		git commit -m "Add foo"
- 	) &&
--	git submodule add /dev/null submod &&
-+	git submodule add file:///dev/null submod &&
- 	git add file1 "spaced name" file1[1-4] subdir/file3 .gitmodules submod &&
- 	git commit -m "add initial versions" &&
- 
-@@ -614,7 +614,7 @@ test_expect_success 'submodule in subdirectory' '
- 		)
- 	) &&
- 	test_when_finished "rm -rf subdir/subdir_module" &&
--	git submodule add /dev/null subdir/subdir_module &&
-+	git submodule add file:///dev/null subdir/subdir_module &&
- 	git add subdir/subdir_module &&
- 	git commit -m "add submodule in subdirectory" &&
- 
--- 
-2.38.0.1473.g172bcc0511c
+> I think instead of "clean working tree" it would be better to talk about
+> "tracked files", as "git switch --orphan" does, which AFAICT is what it
+> means. But then again the reason "switch" does that is because you have
+> *existing* tracked files, which inherently doesn't apply for "worktree".
+>
+> Hrm.
+>
+> So, I guess it depends on your mental model of this operation, but at
+> least I think it's more intuitive to explain it in terms of "git
+> checkout --orphan", not "git switch --orphan". I.e.:
+>
+>         Create a worktree containing an orphan branch named
+>         `<branch>`. This works like linkgit:git-checkout[1]'s `--orphan'
+>         option, except '<start-point>` isn't supported, and the "clear
+>         the index" doesn't apply (as "worktree add" will always have a
+>         new index)".
+>
+> Whereas defining this in terms of git-switch's "All tracked files are
+> removed" might just be more confusing. What files? Since it's "worktree
+> add" there weren't any in the first place.
 
+I would find it clearer not to talk about or reference `git checkout
+--orphan` at all. And, as mentioned above, it shouldn't need to
+reference `git switch --orphan` either. How about something like this
+for the description of the `add` subcommand?
+
+    Create a worktree containing no files and with an empty index, and
+    associated with a new orphan branch named `<branch>`. The first
+    commit made on this new branch will have no parents and will be
+    the root of a new history disconnected from any other branches.
+
+And then to document the --orphan command:
+
+    With `add`, make the new worktree and index empty, and associate
+    the worktree with a new orphan branch named `<new-branch>`.
+
+> >> This would be much better as a for-loop:
+> >
+> > Such a loop would need to be more complex than this, wouldn't it, to
+> > account for all the combinations? I'd normally agree about the loop,
+> > but given that it requires extra complexity, I don't really mind
+> > seeing the individual tests spelled out manually in this case; they're
+> > dead simple to understand as written. I don't feel strongly either
+> > way, but I also don't want to ask for extra work from the patch author
+> > for a subjective change.
+>
+> Yeah, it's probably not worth it. This is partially cleaning up existing
+> tests, but maybe:
+>
+>         -test_expect_success '"add" -b/-B mutually exclusive' '
+>         -       test_must_fail git worktree add -b poodle -B poodle bamboo main
+>         -'
+>         -
+>         +test_wt_add_excl() {
+>         +       local opts="$@" &&
+>         +       test_expect_success "'worktree add' with '$opts' has mutually exclusive options" '
+>         +               test_must_fail git worktree add $opts
+>         +       '
+>         +}
+>         +test_wt_add_excl -b poodle -B poodle bamboo main
+>         +test_wt_add_excl -b poodle --orphan poodle bamboo
+
+I'm rather "meh" here. Yes it's one line per test rather than rather
+than two or three, but it isn't saving much typing, and it isn't
+really making it easier for a reader to see what's going on. So,
+considering that it's so subjective and I'd like to avoid asking the
+patch author for subjective changes, I'm fine with the way it's done
+already in the patch.
+
+> I re-arranged that a bit, but probably not worth a loop. I *did* spot in
+> doing that that if I sort the options I end up with a duplicate test,
+> i.e. we test "-B poodle --detach bamboo main" twice.
+>
+> That seems to be added by mistake in 2/2, i.e. it's the existing test
+> you can see in the diff context, just added at the end.
+
+Dropping the duplicate sounds like a good idea.
