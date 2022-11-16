@@ -2,59 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 72419C4332F
-	for <git@archiver.kernel.org>; Wed, 16 Nov 2022 19:51:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3140C4332F
+	for <git@archiver.kernel.org>; Wed, 16 Nov 2022 19:51:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234100AbiKPTvv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Nov 2022 14:51:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55098 "EHLO
+        id S234142AbiKPTvy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Nov 2022 14:51:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232527AbiKPTvs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2022 14:51:48 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B40043AF8
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 11:51:46 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id ja4-20020a05600c556400b003cf6e77f89cso3603322wmb.0
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 11:51:46 -0800 (PST)
+        with ESMTP id S232377AbiKPTvt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Nov 2022 14:51:49 -0500
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44DCA45A02
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 11:51:47 -0800 (PST)
+Received: by mail-wr1-x436.google.com with SMTP id k8so31736538wrh.1
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 11:51:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xOEH/HDMK44PCzgn1kJOv1Qf5bp7pZL4JUYP8gVPZo8=;
-        b=mi201wNX2ldXEY9E58qjwoa3RBREvwwrcU3brkqxCdMRi2sRz/5iTC4WD+Ww1LS9Or
-         WEefawpRM/g0HvYri9277OXnto1E8Y704ltd6ByInvmu+19NrJxJ3Y7di5/yMsoS24Fv
-         px6baZPHSfnN7QuzfCGLLK7SHnprMtk8RRpzP4SBz9xk/JbygT4hqjUoTUDW/NoFcpGI
-         5nVSDzx4lxcm+SH7VBwtmJwtJKmId31FuCzSvolJb+I+W0gqQYgr6Uz3yizflor2a3NT
-         uu4YYZwK4sFlK2eRskbJIAJTl1DRtuNb+rmQj+XqpXc9PjKwiKyM1KMyhAa0qcX0ouoJ
-         Apcg==
+        bh=/vixHV679y33VgTXhSIXK+evywACQByl7SjY6sOsa8o=;
+        b=Az/PSKOzQ/JVDew5anLFnIc11RYog9aXAcFnseFURYp71RQ3RyUkzMJ8B9Fy5ucH7D
+         YbJdwJ44M7CthMu21OQffMD3sYqtgdWlB4dS/TLM/WnmUYE8bhAvSW1vZdRoRHZSI/Ko
+         LZ1uW6zuD+6oGIDFkLFeBZb9kBk/FE7BEPVGl41gLA0Q0243e3ZCabKKLQSnRCweXuCH
+         m6ImJZ5BJkPlgQxWfV2V/J61SyOxnXw2PQevtGMpleMvyGHuNVp8u+fB9FwU9ZlIt4nP
+         nleR0tbru4Q5o8zNlIVUPqACwqtZh+laVkvkyWqAyuZAp5yc96rk7dZFVhiv4Tputnfo
+         /qFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xOEH/HDMK44PCzgn1kJOv1Qf5bp7pZL4JUYP8gVPZo8=;
-        b=OtSw/jd/4Rw3J3Cd0n1inuRn9dTOkWj5yLGfI4GXwtO4II7SFnx5nPZSHcpl4lK1K2
-         dM4tOFaxhMg3rt8G7azZH+qbUcuoJ2SFfoJFYDxKz1YG65by/bkAesIvYK5cT/Bj/RtG
-         80KlbdHUGmlz5pkkAKL6PAZiKAgQHmZzh2kuRhwHHmTD4bOn0Rmv86WZ4bjUOCT686Xn
-         ftf+V2XRjUXOa3n0e9upbc55W/h2Wzunaxw9Lr0KVnRgf/t7mqNUMbWqNpn1Y2BSAZeP
-         oRGYsLtdXDg8UqHeMkxhdCUwB7uFiQUJKoS5jNZTg4dzQ0PCl7+oaDb/G/o+DN2k5dUr
-         NCMg==
-X-Gm-Message-State: ANoB5pmTEF7oGez/NJvdAIQdiN9Za9/mS5ZNnDvCluBmc1M1KBdhB7Ao
-        43G5L1jO/FE1A6YgWyHKehF+F6Zy81s=
-X-Google-Smtp-Source: AA0mqf7xSQRUuAi32F2lqlUBeHGcmKdwc82Y+kKtLdqFBU/C6vSqz+c2rG9eKUm92yrO02pLFgS/Bw==
-X-Received: by 2002:a05:600c:5010:b0:3cf:b067:416c with SMTP id n16-20020a05600c501000b003cfb067416cmr3243947wmr.134.1668628304552;
-        Wed, 16 Nov 2022 11:51:44 -0800 (PST)
+        bh=/vixHV679y33VgTXhSIXK+evywACQByl7SjY6sOsa8o=;
+        b=hmg78CQwDuS8HqK8eB2q1rahTSUOTaroiq65OdalUiVMXHA4JELD0Fk8s5QZHZ5Ohq
+         4iek6pduy6J/TbuNoP8HNZ9VuuTvv2zykO7yR7xmqszoWx1nWAwdUOYW3tyEHyiSr3hF
+         Fczhly8UgPH2BI6sXT5b7oFYOTB01lm+Ux6a3pxp1IXQ0YybW6QJz/E0NU7mnRqjIn8S
+         F9KXyC267bTYURyYd3F+nF7OpJp2l1VzsNIQ5/qqhTrfAeCt4NIS3L/xwQS1oTYiBvtR
+         Nd7w+BFEgo/+9kCnMZucyB6fKAF3NQ4QHuyc0HTw3V7wsYu8qYaBqcoj6Nokn26guSHs
+         9lnA==
+X-Gm-Message-State: ANoB5plFqb3U4CEY7kS8tPyutvKhBEpbFNtIcgqreFwKsx1czx7HosnO
+        AOx1gRltBUzRa12yP76/iWE3bBJpryI=
+X-Google-Smtp-Source: AA0mqf7YXcaAtJNuRn7jHcjTNQ6A+nlux7ndQ5XWmRxYmgMBkA2htte+TRp+BN2XCgNTkxdl53SQUw==
+X-Received: by 2002:a05:6000:61a:b0:241:6e0a:bfe6 with SMTP id bn26-20020a056000061a00b002416e0abfe6mr14736218wrb.34.1668628305457;
+        Wed, 16 Nov 2022 11:51:45 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w9-20020adfee49000000b00228cd9f6349sm15953336wro.106.2022.11.16.11.51.43
+        by smtp.gmail.com with ESMTPSA id f19-20020a05600c4e9300b003cfd4a50d5asm3383296wmq.34.2022.11.16.11.51.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 11:51:44 -0800 (PST)
-Message-Id: <pull.1400.v2.git.1668628302.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1400.git.1667264854.gitgitgadget@gmail.com>
+        Wed, 16 Nov 2022 11:51:45 -0800 (PST)
+Message-Id: <beae335b85586ff88f89c551af62f91a04086781.1668628303.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1400.v2.git.1668628302.gitgitgadget@gmail.com>
 References: <pull.1400.git.1667264854.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 16 Nov 2022 19:51:33 +0000
-Subject: [PATCH v2 0/9] Bundle URIs IV: advertise over protocol v2
+        <pull.1400.v2.git.1668628302.gitgitgadget@gmail.com>
+From:   "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Wed, 16 Nov 2022 19:51:34 +0000
+Subject: [PATCH v2 1/9] protocol v2: add server-side "bundle-uri" skeleton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,302 +65,434 @@ To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
         avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
         chooglen@google.com, jonathantanmy@google.com,
-        dyroneteng@gmail.com, Derrick Stolee <derrickstolee@github.com>
+        dyroneteng@gmail.com, Derrick Stolee <derrickstolee@github.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is based on the recent master batch that included ds/bundle-uri-....
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
+ <avarab@gmail.com>
 
-Now that git clone --bundle-uri can download a bundle list from a plaintex
-file in config format, we can use the same set of key-value pairs to
-advertise a bundle list over protocol v2. At the end of this series:
+Add a skeleton server-side implementation of a new "bundle-uri" command
+to protocol v2. This will allow conforming clients to optionally seed
+their initial clones or incremental fetches from URLs containing
+"*.bundle" files created with "git bundle create".
 
- 1. A server can advertise bundles when uploadPack.advertiseBundleURIs is
-    enabled. The bundle list comes from the server's local config,
-    specifically the bundle.* namespace.
- 2. A client can notice a server's bundle-uri advertisement and request the
-    bundle list if transfer.bundleURI is enabled. The bundles are downloaded
-    as if the list was advertised from the --bundle-uri option.
+This change only performs the basic boilerplate of advertising a new
+protocol v2 capability. The new 'bundle-uri' capability allows a client
+to request a list of bundles. Right now, the server only returns a flush
+packet, which corresponds to an empty advertisement. The bundle.* config
+namespace describes which key-value pairs will be communicated across
+this interface in future updates.
 
-Many patches in this series were adapted from Ævar's v2 RFC [1]. He is
-retained as author and I added myself as co-author only if the modifications
-were significant.
+The critical bit right now is that the new boolean
+uploadPack.adverstiseBundleURIs config value signals whether or not this
+capability should be advertised at all.
 
-[1]
-https://lore.kernel.org/git/RFC-patch-v2-01.13-2fc87ce092b-20220311T155841Z-avarab@gmail.com/
+An earlier version of this patch [1] used a different transfer format
+than the "key=value" pairs in the current implementation. The change was
+made to unify the protocol v2 command with the bundle lists provided by
+independent bundle servers. Further, the standard allows for the server
+to advertise a URI that contains a bundle list. This allows users
+automatically discovering bundle providers that are loosely associated
+with the origin server, but without the origin server knowing exactly
+which bundles are currently available.
 
- * Patches 1-5 are mostly taken from [1], again with mostly minor updates.
-   The one major difference is the packet line format being a single
-   key=value format instead of a sequence of pairs. This also means that
-   Patch 4 is entirely new since it feeds these pairs directly from the
-   server's config.
+[1] https://lore.kernel.org/git/RFC-patch-v2-01.13-2fc87ce092b-20220311T155841Z-avarab@gmail.com/
 
- * Patches 6-9 finish off the ability for the client to notice the
-   capability, request the values, and download bundles before continuing
-   with the rest of the download.
+The very-deep headings needed to be modified to stop at level 4 due to
+documentation build issues. These were not recognized in earlier builds
+since the file was previously in the Documentation/technical/ directory
+and was built in a different way. With its current location, the
+heavily-nested details were causing build issues and they are now
+replaced with a bulletted list of details.
 
-One thing that is not handled here but could be handled in a future change
-is to disconnect from the origin Git server while downloading the bundle
-URIs, then reconnecting afterwards. This does not make any difference for
-HTTPS, but SSH may benefit from the reduced connection time. The git clone
---bundle-uri option did not suffer from this because the bundles are
-downloaded before the server connection begins.
+Co-authored-by: Derrick Stolee <derrickstolee@github.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+ Documentation/gitprotocol-v2.txt | 201 +++++++++++++++++++++++++++++++
+ bundle-uri.c                     |  36 ++++++
+ bundle-uri.h                     |   7 ++
+ serve.c                          |   6 +
+ t/t5701-git-serve.sh             |  40 +++++-
+ 5 files changed, 289 insertions(+), 1 deletion(-)
 
-After this series, there is one more before the original scope of the plan
-is complete: using creation tokens as a heuristic. See [2] for the RFC
-version of those patches.
-
-[2] https://github.com/derrickstolee/git/pull/22
-
-
-Updates in v2
-=============
-
- * Commit messages now refer to protocol v2 "commands" not "verbs".
- * Several edits were made to gitprotocol-v2.txt thanks to Victoria's
-   thorough review.
- * strbuf_parent_directory() is renamed strbuf_strip_file_from_path() to
-   make it more clear how it behaves when ending with a slash.
-
-Thanks,
-
- * Stolee
-
-Derrick Stolee (5):
-  bundle-uri: serve bundle.* keys from config
-  strbuf: introduce strbuf_strip_file_from_path()
-  bundle-uri: allow relative URLs in bundle lists
-  bundle-uri: download bundles from an advertised list
-  clone: unbundle the advertised bundles
-
-Ævar Arnfjörð Bjarmason (4):
-  protocol v2: add server-side "bundle-uri" skeleton
-  bundle-uri client: add minimal NOOP client
-  bundle-uri client: add helper for testing server
-  bundle-uri client: add boolean transfer.bundleURI setting
-
- Documentation/config/transfer.txt      |   6 +
- Documentation/gitprotocol-v2.txt       | 201 ++++++++++++++++++++++
- builtin/clone.c                        |  23 +++
- bundle-uri.c                           |  91 +++++++++-
- bundle-uri.h                           |  27 +++
- connect.c                              |  47 +++++
- remote.h                               |   5 +
- serve.c                                |   6 +
- strbuf.c                               |   9 +
- strbuf.h                               |  12 ++
- t/helper/test-bundle-uri.c             |  48 ++++++
- t/lib-t5730-protocol-v2-bundle-uri.sh  | 229 +++++++++++++++++++++++++
- t/t5601-clone.sh                       |  59 +++++++
- t/t5701-git-serve.sh                   |  40 ++++-
- t/t5730-protocol-v2-bundle-uri-file.sh |  36 ++++
- t/t5731-protocol-v2-bundle-uri-git.sh  |  17 ++
- t/t5732-protocol-v2-bundle-uri-http.sh |  17 ++
- t/t5750-bundle-uri-parse.sh            |  54 ++++++
- transport-helper.c                     |  13 ++
- transport-internal.h                   |   7 +
- transport.c                            |  87 ++++++++++
- transport.h                            |  23 +++
- 22 files changed, 1055 insertions(+), 2 deletions(-)
- create mode 100644 t/lib-t5730-protocol-v2-bundle-uri.sh
- create mode 100755 t/t5730-protocol-v2-bundle-uri-file.sh
- create mode 100755 t/t5731-protocol-v2-bundle-uri-git.sh
- create mode 100755 t/t5732-protocol-v2-bundle-uri-http.sh
-
-
-base-commit: c03801e19cb8ab36e9c0d17ff3d5e0c3b0f24193
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1400%2Fderrickstolee%2Fbundle-redo%2Fadvertise-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1400/derrickstolee/bundle-redo/advertise-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1400
-
-Range-diff vs v1:
-
-  1:  a02eee98318 !  1:  beae335b855 protocol v2: add server-side "bundle-uri" skeleton
-     @@ Commit message
-      
-          An earlier version of this patch [1] used a different transfer format
-          than the "key=value" pairs in the current implementation. The change was
-     -    made to unify the protocol v2 verb with the bundle lists provided by
-     +    made to unify the protocol v2 command with the bundle lists provided by
-          independent bundle servers. Further, the standard allows for the server
-          to advertise a URI that contains a bundle list. This allows users
-          automatically discovering bundle providers that are loosely associated
-     @@ Documentation/gitprotocol-v2.txt: and associated requested information, each sep
-      +currently advertise a capability value. Both may be added in the
-      +future.
-      +
-     -+When the client issues a `command=bundle-uri` the response is a list of
-     -+key-value pairs provided as packet lines with value `<key>=<value>`. The
-     -+meaning of these key-value pairs are provided by the config keys in the
-     -+`bundle.*` namespace (see linkgit:git-config[1]).
-     ++When the client issues a `command=bundle-uri` request, the response is a
-     ++list of key-value pairs provided as packet lines with value
-     ++`<key>=<value>`. Each `<key>` should be interpreted as a config key from
-     ++the `bundle.*` namespace to construct a list of bundles. These keys are
-     ++grouped by a `bundle.<id>.` subsection, where each key corresponding to a
-     ++given `<id>` contributes attributes to the bundle defined by that `<id>`.
-     ++See linkgit:git-config[1] for the specific details of these keys and how
-     ++the Git client will interpret their values.
-      +
-     -+Clients are still expected to fully parse the line according to the
-     -+above format, lines that do not conform to the format SHOULD be
-     -+discarded. The user MAY be warned in such a case.
-     ++Clients MUST parse the line according to the above format, lines that do
-     ++not conform to the format SHOULD be discarded. The user MAY be warned in
-     ++such a case.
-      +
-      +bundle-uri CLIENT AND SERVER EXPECTATIONS
-      +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-      +
-      +URI CONTENTS::
-     -+The advertised URIs MUST be in one of two possible formats.
-     ++The content at the advertised URIs MUST be one of two types.
-      ++
-     -+The first possible format is a bundle file that `git bundle verify`
-     ++The advertised URI may contain a bundle file that `git bundle verify`
-      +would accept. I.e. they MUST contain one or more reference tips for
-      +use by the client, MUST indicate prerequisites (in any) with standard
-      +"-" prefixes, and MUST indicate their "object-format", if
-     -+applicable. Create "*.bundle" files with `git bundle create`.
-     ++applicable.
-      ++
-     -+The second possible format is a plaintext file that `git config --list`
-     -+would accept (with the `--file` option). The key-value pairs in this list
-     -+are in the `bundle.*` namespace (see linkgit:git-config[1]).
-     ++The advertised URI may alternatively contain a plaintext file that `git
-     ++config --list` would accept (with the `--file` option). The key-value
-     ++pairs in this list are in the `bundle.*` namespace (see
-     ++linkgit:git-config[1]).
-      +
-      +bundle-uri CLIENT ERROR RECOVERY::
-      +A client MUST above all gracefully degrade on errors, whether that
-     @@ Documentation/gitprotocol-v2.txt: and associated requested information, each sep
-      +WHEN ADVERTISED BUNDLE(S) REQUIRE NO FURTHER NEGOTIATION::
-      +If after issuing `bundle-uri` and `ls-refs`, and getting the header(s)
-      +of the bundle(s) the client finds that the ref tips it wants can be
-     -+retrieved entirety from advertised bundle(s), it MAY disconnect. The
-     -+results of such a 'clone' or 'fetch' should be indistinguishable from
-     -+the state attained without using bundle-uri.
-     ++retrieved entirely from advertised bundle(s), the client MAY disconnect
-     ++from the Git server. The results of such a 'clone' or 'fetch' should be
-     ++indistinguishable from the state attained without using bundle-uri.
-      +
-      +EARLY CLIENT DISCONNECTIONS AND ERROR RECOVERY::
-      +A client MAY perform an early disconnect while still downloading the
-     @@ Documentation/gitprotocol-v2.txt: and associated requested information, each sep
-      +bundle-uri PROTOCOL FEATURES
-      +^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-      +
-     -+As noted above the `<key>=<value>` definitions are documented by the
-     -+`bundle.*` config namespace.
-     ++The client constructs a bundle list from the `<key>=<value>` pairs
-     ++provided by the server. These pairs are part of the `bundle.*` namespace
-     ++as documented in linkgit:git-config[1]. In this section, we discuss some
-     ++of these keys and describe the actions the client will do in response to
-     ++this information.
-      +
-      +In particular, the `bundle.version` key specifies an integer value. The
-      +only accepted value at the moment is `1`, but if the client sees an
-  2:  64dd9bf41de =  2:  0d85aef965d bundle-uri client: add minimal NOOP client
-  3:  ae0003bb39b =  3:  c3269a24b57 bundle-uri client: add helper for testing server
-  4:  431cd585184 =  4:  cd906f6d981 bundle-uri: serve bundle.* keys from config
-  5:  c877f7c033d =  5:  93397468931 bundle-uri client: add boolean transfer.bundleURI setting
-  6:  2200a70d279 !  6:  7d86852c015 strbuf: reintroduce strbuf_parent_directory()
-     @@ Metadata
-      Author: Derrick Stolee <derrickstolee@github.com>
-      
-       ## Commit message ##
-     -    strbuf: reintroduce strbuf_parent_directory()
-     +    strbuf: introduce strbuf_strip_file_from_path()
-      
-          The strbuf_parent_directory() method was added as a static method in
-          contrib/scalar by d0feac4e8c0 (scalar: 'register' sets recommended
-     @@ Commit message
-          65f6a9eb0b9 (scalar: constrain enlistment search, 2022-08-18), but now
-          there is a need for a similar method in the bundle URI feature.
-      
-     -    Re-add the method, this time in strbuf.c. The method requirements are
-     -    slightly modified to allow a trailing slash, in which case nothing is
-     -    done. The return value is the number of byte removed.
-     +    Re-add the method, this time in strbuf.c, but with a new name:
-     +    strbuf_strip_file_from_path(). The method requirements are slightly
-     +    modified to allow a trailing slash, in which case nothing is done, which
-     +    makes the name change valuable. The return value is the number of bytes
-     +    removed.
-      
-          Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-      
-     @@ strbuf.c: int strbuf_edit_interactively(struct strbuf *buffer, const char *path,
-       	return res;
-       }
-      +
-     -+size_t strbuf_parent_directory(struct strbuf *buf)
-     ++size_t strbuf_strip_file_from_path(struct strbuf *buf)
-      +{
-      +	size_t len = buf->len;
-      +	size_t offset = offset_1st_component(buf->buf);
-      +	char *path_sep = find_last_dir_sep(buf->buf + offset);
-     -+	strbuf_setlen(buf, path_sep ? path_sep - buf->buf : offset);
-     ++	strbuf_setlen(buf, path_sep ? path_sep - buf->buf + 1 : offset);
-      +	return len - buf->len;
-      +}
-      
-     @@ strbuf.h: int launch_sequence_editor(const char *path, struct strbuf *buffer,
-       			      const char *const *env);
-       
-      +/*
-     -+ * Remove the deepest subdirectory in the provided path string. If path
-     ++ * Remove the filename from the provided path string. If the path
-      + * contains a trailing separator, then the path is considered a directory
-     -+ * and nothing is modified.
-     ++ * and nothing is modified. Returns the number of characters removed from
-     ++ * the path.
-     ++ *
-     ++ * Examples:
-     ++ * - "/path/to/file" -> "/path/to/" (returns: 4)
-     ++ * - "/path/to/dir/" -> "/path/to/dir/" (returns: 0)
-      + */
-     -+size_t strbuf_parent_directory(struct strbuf *buf);
-     ++size_t strbuf_strip_file_from_path(struct strbuf *buf);
-      +
-       void strbuf_add_lines(struct strbuf *sb,
-       		      const char *prefix,
-  7:  3550f6fb91b !  7:  186e112d821 bundle-uri: allow relative URLs in bundle lists
-     @@ bundle-uri.c: int bundle_uri_parse_config_format(const char *uri,
-      +		 * remove the filename portion of the path. This is
-      +		 * important for relative URIs.
-      +		 */
-     -+		strbuf_parent_directory(&baseURI);
-     ++		strbuf_strip_file_from_path(&baseURI);
-      +		list->baseURI = strbuf_detach(&baseURI, NULL);
-      +	}
-       	result = git_config_from_file_with_options(config_to_bundle_list,
-  8:  e002affe4bf !  8:  f254da46a2c bundle-uri: download bundles from an advertised list
-     @@ Commit message
-      
-          The logic in fetch_bundle_uri() is useful for the --bundle-uri option of
-          'git clone', but is not helpful when the clone operation discovers a
-     -    list of URIs from the bundle-uri protocol v2 verb. To actually download
-     -    and unbundle the advertised bundles, we need a different mechanism.
-     +    list of URIs from the bundle-uri protocol v2 command. To actually
-     +    download and unbundle the advertised bundles, we need a different
-     +    mechanism.
-      
-          Create the new fetch_bundle_list() method which is very similar to
-          fetch_bundle_uri() except that it relies on download_bundle_list()
-  9:  1c034bba744 !  9:  b62b4b17481 clone: unbundle the advertised bundles
-     @@ Commit message
-          clone: unbundle the advertised bundles
-      
-          A previous change introduced the transport methods to acquire a bundle
-     -    list from the 'bundle-uri' protocol v2 verb, when advertised _and_ when
-     -    the client has chosen to enable the feature.
-     +    list from the 'bundle-uri' protocol v2 command, when advertised _and_
-     +    when the client has chosen to enable the feature.
-      
-          Teach Git to download and unbundle the data advertised by those bundles
-          during 'git clone'.
-
+diff --git a/Documentation/gitprotocol-v2.txt b/Documentation/gitprotocol-v2.txt
+index 59bf41cefb9..10bd2d40cec 100644
+--- a/Documentation/gitprotocol-v2.txt
++++ b/Documentation/gitprotocol-v2.txt
+@@ -578,6 +578,207 @@ and associated requested information, each separated by a single space.
+ 
+ 	obj-info = obj-id SP obj-size
+ 
++bundle-uri
++~~~~~~~~~~
++
++If the 'bundle-uri' capability is advertised, the server supports the
++`bundle-uri' command.
++
++The capability is currently advertised with no value (i.e. not
++"bundle-uri=somevalue"), a value may be added in the future for
++supporting command-wide extensions. Clients MUST ignore any unknown
++capability values and proceed with the 'bundle-uri` dialog they
++support.
++
++The 'bundle-uri' command is intended to be issued before `fetch` to
++get URIs to bundle files (see linkgit:git-bundle[1]) to "seed" and
++inform the subsequent `fetch` command.
++
++The client CAN issue `bundle-uri` before or after any other valid
++command. To be useful to clients it's expected that it'll be issued
++after an `ls-refs` and before `fetch`, but CAN be issued at any time
++in the dialog.
++
++DISCUSSION of bundle-uri
++^^^^^^^^^^^^^^^^^^^^^^^^
++
++The intent of the feature is optimize for server resource consumption
++in the common case by changing the common case of fetching a very
++large PACK during linkgit:git-clone[1] into a smaller incremental
++fetch.
++
++It also allows servers to achieve better caching in combination with
++an `uploadpack.packObjectsHook` (see linkgit:git-config[1]).
++
++By having new clones or fetches be a more predictable and common
++negotiation against the tips of recently produces *.bundle file(s).
++Servers might even pre-generate the results of such negotiations for
++the `uploadpack.packObjectsHook` as new pushes come in.
++
++One way that servers could take advantage of these bundles is that the
++server would anticipate that fresh clones will download a known bundle,
++followed by catching up to the current state of the repository using ref
++tips found in that bundle (or bundles).
++
++PROTOCOL for bundle-uri
++^^^^^^^^^^^^^^^^^^^^^^^
++
++A `bundle-uri` request takes no arguments, and as noted above does not
++currently advertise a capability value. Both may be added in the
++future.
++
++When the client issues a `command=bundle-uri` request, the response is a
++list of key-value pairs provided as packet lines with value
++`<key>=<value>`. Each `<key>` should be interpreted as a config key from
++the `bundle.*` namespace to construct a list of bundles. These keys are
++grouped by a `bundle.<id>.` subsection, where each key corresponding to a
++given `<id>` contributes attributes to the bundle defined by that `<id>`.
++See linkgit:git-config[1] for the specific details of these keys and how
++the Git client will interpret their values.
++
++Clients MUST parse the line according to the above format, lines that do
++not conform to the format SHOULD be discarded. The user MAY be warned in
++such a case.
++
++bundle-uri CLIENT AND SERVER EXPECTATIONS
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++URI CONTENTS::
++The content at the advertised URIs MUST be one of two types.
+++
++The advertised URI may contain a bundle file that `git bundle verify`
++would accept. I.e. they MUST contain one or more reference tips for
++use by the client, MUST indicate prerequisites (in any) with standard
++"-" prefixes, and MUST indicate their "object-format", if
++applicable.
+++
++The advertised URI may alternatively contain a plaintext file that `git
++config --list` would accept (with the `--file` option). The key-value
++pairs in this list are in the `bundle.*` namespace (see
++linkgit:git-config[1]).
++
++bundle-uri CLIENT ERROR RECOVERY::
++A client MUST above all gracefully degrade on errors, whether that
++error is because of bad missing/data in the bundle URI(s), because
++that client is too dumb to e.g. understand and fully parse out bundle
++headers and their prerequisite relationships, or something else.
+++
++Server operators should feel confident in turning on "bundle-uri" and
++not worry if e.g. their CDN goes down that clones or fetches will run
++into hard failures. Even if the server bundle bundle(s) are
++incomplete, or bad in some way the client should still end up with a
++functioning repository, just as if it had chosen not to use this
++protocol extension.
+++
++All subsequent discussion on client and server interaction MUST keep
++this in mind.
++
++bundle-uri SERVER TO CLIENT::
++The ordering of the returned bundle uris is not significant. Clients
++MUST parse their headers to discover their contained OIDS and
++prerequisites. A client MUST consider the content of the bundle(s)
++themselves and their header as the ultimate source of truth.
+++
++A server MAY even return bundle(s) that don't have any direct
++relationship to the repository being cloned (either through accident,
++or intentional "clever" configuration), and expect a client to sort
++out what data they'd like from the bundle(s), if any.
++
++bundle-uri CLIENT TO SERVER::
++The client SHOULD provide reference tips found in the bundle header(s)
++as 'have' lines in any subsequent `fetch` request. A client MAY also
++ignore the bundle(s) entirely if doing so is deemed worse for some
++reason, e.g. if the bundles can't be downloaded, it doesn't like the
++tips it finds etc.
++
++WHEN ADVERTISED BUNDLE(S) REQUIRE NO FURTHER NEGOTIATION::
++If after issuing `bundle-uri` and `ls-refs`, and getting the header(s)
++of the bundle(s) the client finds that the ref tips it wants can be
++retrieved entirely from advertised bundle(s), the client MAY disconnect
++from the Git server. The results of such a 'clone' or 'fetch' should be
++indistinguishable from the state attained without using bundle-uri.
++
++EARLY CLIENT DISCONNECTIONS AND ERROR RECOVERY::
++A client MAY perform an early disconnect while still downloading the
++bundle(s) (having streamed and parsed their headers). In such a case
++the client MUST gracefully recover from any errors related to
++finishing the download and validation of the bundle(s).
+++
++I.e. a client might need to re-connect and issue a 'fetch' command,
++and possibly fall back to not making use of 'bundle-uri' at all.
+++
++This "MAY" behavior is specified as such (and not a "SHOULD") on the
++assumption that a server advertising bundle uris is more likely than
++not to be serving up a relatively large repository, and to be pointing
++to URIs that have a good chance of being in working order. A client
++MAY e.g. look at the payload size of the bundles as a heuristic to see
++if an early disconnect is worth it, should falling back on a full
++"fetch" dialog be necessary.
++
++WHEN ADVERTISED BUNDLE(S) REQUIRE FURTHER NEGOTIATION::
++A client SHOULD commence a negotiation of a PACK from the server via
++the "fetch" command using the OID tips found in advertised bundles,
++even if's still in the process of downloading those bundle(s).
+++
++This allows for aggressive early disconnects from any interactive
++server dialog. The client blindly trusts that the advertised OID tips
++are relevant, and issues them as 'have' lines, it then requests any
++tips it would like (usually from the "ls-refs" advertisement) via
++'want' lines. The server will then compute a (hopefully small) PACK
++with the expected difference between the tips from the bundle(s) and
++the data requested.
+++
++The only connection the client then needs to keep active is to the
++concurrently downloading static bundle(s), when those and the
++incremental PACK are retrieved they should be inflated and
++validated. Any errors at this point should be gracefully recovered
++from, see above.
++
++bundle-uri PROTOCOL FEATURES
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++The client constructs a bundle list from the `<key>=<value>` pairs
++provided by the server. These pairs are part of the `bundle.*` namespace
++as documented in linkgit:git-config[1]. In this section, we discuss some
++of these keys and describe the actions the client will do in response to
++this information.
++
++In particular, the `bundle.version` key specifies an integer value. The
++only accepted value at the moment is `1`, but if the client sees an
++unexpected value here then the client MUST ignore the bundle list.
++
++As long as `bundle.version` is understood, all other unknown keys MAY be
++ignored by the client. The server will guarantee compatibility with older
++clients, though newer clients may be better able to use the extra keys to
++minimize downloads.
++
++Any backwards-incompatible addition of pre-URI key-value will be
++guarded by a new `bundle.version` value or values in 'bundle-uri'
++capability advertisement itself, and/or by new future `bundle-uri`
++request arguments.
++
++Some example key-value pairs that are not currently implemented but could
++be implemented in the future include:
++
++ * Add a "hash=<val>" or "size=<bytes>" advertise the expected hash or
++   size of the bundle file.
++
++ * Advertise that one or more bundle files are the same (to e.g. have
++   clients round-robin or otherwise choose one of N possible files).
++
++ * A "oid=<OID>" shortcut and "prerequisite=<OID>" shortcut. For
++   expressing the common case of a bundle with one tip and no
++   prerequisites, or one tip and one prerequisite.
+++
++This would allow for optimizing the common case of servers who'd like
++to provide one "big bundle" containing only their "main" branch,
++and/or incremental updates thereof.
+++
++A client receiving such a a response MAY assume that they can skip
++retrieving the header from a bundle at the indicated URI, and thus
++save themselves and the server(s) the request(s) needed to inspect the
++headers of that bundle or bundles.
++
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 79a914f961b..32022595964 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -563,6 +563,42 @@ cleanup:
+ 	return result;
+ }
+ 
++/**
++ * API for serve.c.
++ */
++
++int bundle_uri_advertise(struct repository *r, struct strbuf *value)
++{
++	static int advertise_bundle_uri = -1;
++
++	if (advertise_bundle_uri != -1)
++		goto cached;
++
++	advertise_bundle_uri = 0;
++	git_config_get_maybe_bool("uploadpack.advertisebundleuris", &advertise_bundle_uri);
++
++cached:
++	return advertise_bundle_uri;
++}
++
++int bundle_uri_command(struct repository *r,
++		       struct packet_reader *request)
++{
++	struct packet_writer writer;
++	packet_writer_init(&writer, 1);
++
++	while (packet_reader_read(request) == PACKET_READ_NORMAL)
++		die(_("bundle-uri: unexpected argument: '%s'"), request->line);
++	if (request->status != PACKET_READ_FLUSH)
++		die(_("bundle-uri: expected flush after arguments"));
++
++	/* TODO: Implement the communication */
++
++	packet_writer_flush(&writer);
++
++	return 0;
++}
++
+ /**
+  * General API for {transport,connect}.c etc.
+  */
+diff --git a/bundle-uri.h b/bundle-uri.h
+index 4dbc269823c..357111ecce8 100644
+--- a/bundle-uri.h
++++ b/bundle-uri.h
+@@ -4,6 +4,7 @@
+ #include "hashmap.h"
+ #include "strbuf.h"
+ 
++struct packet_reader;
+ struct repository;
+ struct string_list;
+ 
+@@ -92,6 +93,12 @@ int bundle_uri_parse_config_format(const char *uri,
+  */
+ int fetch_bundle_uri(struct repository *r, const char *uri);
+ 
++/**
++ * API for serve.c.
++ */
++int bundle_uri_advertise(struct repository *r, struct strbuf *value);
++int bundle_uri_command(struct repository *r, struct packet_reader *request);
++
+ /**
+  * General API for {transport,connect}.c etc.
+  */
+diff --git a/serve.c b/serve.c
+index 733347f602a..cbf4a143cfe 100644
+--- a/serve.c
++++ b/serve.c
+@@ -7,6 +7,7 @@
+ #include "protocol-caps.h"
+ #include "serve.h"
+ #include "upload-pack.h"
++#include "bundle-uri.h"
+ 
+ static int advertise_sid = -1;
+ static int client_hash_algo = GIT_HASH_SHA1;
+@@ -135,6 +136,11 @@ static struct protocol_capability capabilities[] = {
+ 		.advertise = always_advertise,
+ 		.command = cap_object_info,
+ 	},
++	{
++		.name = "bundle-uri",
++		.advertise = bundle_uri_advertise,
++		.command = bundle_uri_command,
++	},
+ };
+ 
+ void protocol_v2_advertise_capabilities(void)
+diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
+index 1896f671cb3..f21e5e9d33d 100755
+--- a/t/t5701-git-serve.sh
++++ b/t/t5701-git-serve.sh
+@@ -13,7 +13,7 @@ test_expect_success 'test capability advertisement' '
+ 	wrong_algo sha1:sha256
+ 	wrong_algo sha256:sha1
+ 	EOF
+-	cat >expect <<-EOF &&
++	cat >expect.base <<-EOF &&
+ 	version 2
+ 	agent=git/$(git version | cut -d" " -f3)
+ 	ls-refs=unborn
+@@ -21,8 +21,11 @@ test_expect_success 'test capability advertisement' '
+ 	server-option
+ 	object-format=$(test_oid algo)
+ 	object-info
++	EOF
++	cat >expect.trailer <<-EOF &&
+ 	0000
+ 	EOF
++	cat expect.base expect.trailer >expect &&
+ 
+ 	GIT_TEST_SIDEBAND_ALL=0 test-tool serve-v2 \
+ 		--advertise-capabilities >out &&
+@@ -342,4 +345,39 @@ test_expect_success 'basics of object-info' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'test capability advertisement with uploadpack.advertiseBundleURIs' '
++	test_config uploadpack.advertiseBundleURIs true &&
++
++	cat >expect.extra <<-EOF &&
++	bundle-uri
++	EOF
++	cat expect.base \
++	    expect.extra \
++	    expect.trailer >expect &&
++
++	GIT_TEST_SIDEBAND_ALL=0 test-tool serve-v2 \
++		--advertise-capabilities >out &&
++	test-tool pkt-line unpack <out >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'basics of bundle-uri: dies if not enabled' '
++	test-tool pkt-line pack >in <<-EOF &&
++	command=bundle-uri
++	0000
++	EOF
++
++	cat >err.expect <<-\EOF &&
++	fatal: invalid command '"'"'bundle-uri'"'"'
++	EOF
++
++	cat >expect <<-\EOF &&
++	ERR serve: invalid command '"'"'bundle-uri'"'"'
++	EOF
++
++	test_must_fail test-tool serve-v2 --stateless-rpc <in >out 2>err.actual &&
++	test_cmp err.expect err.actual &&
++	test_must_be_empty out
++'
++
+ test_done
 -- 
 gitgitgadget
+
