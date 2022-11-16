@@ -2,130 +2,135 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B83FC4332F
-	for <git@archiver.kernel.org>; Wed, 16 Nov 2022 14:33:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62CCEC4332F
+	for <git@archiver.kernel.org>; Wed, 16 Nov 2022 14:37:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232115AbiKPOd4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Nov 2022 09:33:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56084 "EHLO
+        id S231952AbiKPOhI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Nov 2022 09:37:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232324AbiKPOdh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2022 09:33:37 -0500
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DA4363D2
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 06:33:36 -0800 (PST)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-367cd2807f2so169231587b3.1
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 06:33:36 -0800 (PST)
+        with ESMTP id S233440AbiKPOhG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Nov 2022 09:37:06 -0500
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B32E1AF36
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 06:37:05 -0800 (PST)
+Received: by mail-qk1-x731.google.com with SMTP id p18so11720773qkg.2
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 06:37:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wAU1Quo7/n5IW+2/3sjZQC3Ina49Fc4U75nVNUcyh/k=;
-        b=dRVlPHg47guui18Ry/dOGAXEyL4MAa4DI4P3vaqn4HazkLTjLXFukGsyvc/nfWSUTY
-         LP2nVLam6BCeGqmIIBnEOewzlwFV8tVg+0l07pzVKrpTfHJ5YVaY0aeKlhBMPyv994CJ
-         nCDf+OD29LgO8KCkqGEllq0orfHFpdHoKQ/32sPB3EnskY4NdnsZyoLMevPB1hYmFl6k
-         Vgb+zKchy71V/yd+Y7aVaxTSocss6zsy3Et+kQmLtcP4YKmpvJky1FHq207OfDJk5SyZ
-         jKMBLBVRSrnkLtzD7qR75/3YzI/p+oYnkozN1p4nedi7axEWgk5dBSddN/iKBCFX1KHd
-         QKNQ==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HX6vCucEm5NnWDG+jY0GAFoqJxt9YVKngDMmg1WUOLw=;
+        b=LIxa4Q09i+AQJ166n7UX6RMZsnk7UkNyPpEVSCTPARBnrg0vFhLeI/IKstyzNomttw
+         eSzhw+hhEByftFCzbmvv/XyiCK78uxgZxvItW0e1OMJqwZtakxQOYARh7WfVU+qwru5V
+         VhhMDmTGiC++4KU3pm/xdQrN1RkLaE5Ju7CnU21Q9mmha87H9X/1uGOeo0RhazGd3kFr
+         Ihc+0PyH7Cf/rrvYZXLmprAxsJOguHZEzNkPdMjK+KBQ30zlv+3JVB6Qfy3LlxRTdC1/
+         P73a0jLQWp0KRxvnG5JTbUCOFecTeLmxZa+WlF6ANfWOW17qADWLmCB33ZFwe58FJ5mR
+         HyGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wAU1Quo7/n5IW+2/3sjZQC3Ina49Fc4U75nVNUcyh/k=;
-        b=TwGSWGlFz9GLhlk/YQDDChmf3hIZnhZJXf0qFEWbYQ8fi8Zg+iJJkGLaBISrKCwYdV
-         Nhy5H57TSPBL6pc9IminLWF9sRTxPRNl4iWWaeC8IItZZgqz+70d4qV1WsILeczsT7c7
-         QCvk//KqDBjMHS5Oq7oQB4p1GTV/BoO7STG2c276Ob3ulTD26VEdnnZWxbAxdjCH8XFA
-         JU9jUyy9/3zhmTyD1f0xGRXXAl6hFWG1bg0cZ4MALVmPInK+fXjuypGjMV2asJjG/glS
-         DV38KoesyqkUx43+pWGzlF33vCV55evt3+bag9+viD2gmy8mkHNgm2A43m6nx04/PXKJ
-         SpJg==
-X-Gm-Message-State: ANoB5pmnwC7D0NB3p8sZ9u5M6FCxq8Y2yrBPAENmDkcFwhCfvj0TnX/o
-        pCxZoFr7G3r8lGDdWk9VMXkHR9rKIxAsppkwUDo=
-X-Google-Smtp-Source: AA0mqf6t+2TsKxN1HyfGncVguP90Ckxa76OzyeVZRdfBgiaUBgPEU86POSERN5nEovXk3U9AiOBM3Tyr89XH2vOm1Qw=
-X-Received: by 2002:a81:198d:0:b0:373:4e1a:2b78 with SMTP id
- 135-20020a81198d000000b003734e1a2b78mr21785512ywz.49.1668609215763; Wed, 16
- Nov 2022 06:33:35 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HX6vCucEm5NnWDG+jY0GAFoqJxt9YVKngDMmg1WUOLw=;
+        b=X6xmnm0OX8IjRj5RcS5mdUAt/UFT8748u5PYqLviYsF+PDoPwIwNQi/ThHelhLe168
+         4qS2vgoaEE9BZLBIRaUTkouBDq7XeAf+VZG3i+fepLVCqP3btCV6YTMxROpysMLXza6/
+         LS2wd3q0rSDfAs6WjoGtdKKfYFFGHKM7Oxif4YMHoAHZLVS0k9wEvZUHLfFKdef+K6yy
+         Fj2cA2pI1/7IeoFU93gxHGhhBy5k7xk9LmLfv42iCxSR8QqYAIYIahjXfN252CZ923Ai
+         77YIbkF3nQcydbLA/C5pamUsnQw9z5Se1GC6jU5syWGhyJl0lsCzNoAQ1dhVscFiKlc1
+         hxMQ==
+X-Gm-Message-State: ANoB5pm4CqbvaB+GtUVLluSdPUnPlsb1xneJH5ju/6u5DQA3yZinYGXh
+        P6dJEJ/InnChh5o3omMt9vntJArh6AXM
+X-Google-Smtp-Source: AA0mqf7DWN9l7IwDrGs2M8NzoKJBk89KGYxOEk9ljpOfJaHDpNBo6xPigO5fybvLhOq4DU6z+rGlzg==
+X-Received: by 2002:a05:620a:997:b0:6fa:aa59:ef9d with SMTP id x23-20020a05620a099700b006faaa59ef9dmr20096471qkx.108.1668609424623;
+        Wed, 16 Nov 2022 06:37:04 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:f553:9f0c:85c5:38e1? ([2600:1700:e72:80a0:f553:9f0c:85c5:38e1])
+        by smtp.gmail.com with ESMTPSA id t8-20020a37ea08000000b006b9c9b7db8bsm10166850qkj.82.2022.11.16.06.37.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Nov 2022 06:37:04 -0800 (PST)
+Message-ID: <d14744cf-5ac3-e1c2-0239-4c33b701d5bf@github.com>
+Date:   Wed, 16 Nov 2022 09:37:03 -0500
 MIME-Version: 1.0
-References: <pull.1367.v3.git.1665269538608.gitgitgadget@gmail.com>
- <pull.1367.v4.git.1667714666810.gitgitgadget@gmail.com> <CAOLTT8TzpfoH7pz7gxgFvNWOaUZUcg1q_Tap+2anwHfAUgDV8Q@mail.gmail.com>
- <CABPp-BHaKH4sOPx2tx7CU+Uymvtu=mU1ZweGBDdWvhb-FgGA_Q@mail.gmail.com>
- <CAOLTT8QOr-zTHBPLx5jibzQ6Co8a3VApgLEGRu0b+ht-VJh0nw@mail.gmail.com> <CAOLTT8QPPJ-pPvr9r3nJQgBg_7xCp5Ys=dd9nhi6fhgW6gYLow@mail.gmail.com>
-In-Reply-To: <CAOLTT8QPPJ-pPvr9r3nJQgBg_7xCp5Ys=dd9nhi6fhgW6gYLow@mail.gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Wed, 16 Nov 2022 22:33:23 +0800
-Message-ID: <CAOLTT8S8e_0LaEFLD4B4F=u9cKPtdPvp7tWJoEf3Z4Z9Bw6SUw@mail.gmail.com>
-Subject: Re: [PATCH v4] sparse-checkout.txt: new document with sparse-checkout directions
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Victoria Dye <vdye@github.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Glen Choo <chooglen@google.com>,
-        Martin von Zweigbergk <martinvonz@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH 03/30] extensions: add refFormat extension
+Content-Language: en-US
+To:     Elijah Newren <newren@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com
+References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
+ <4013f992d15aab69346bf6f8eafe38511b923595.1667846164.git.gitgitgadget@gmail.com>
+ <CABPp-BGqkSmExRN=bV2014sM5n0msiSOXBG-q-REc8Of4CM4wg@mail.gmail.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <CABPp-BGqkSmExRN=bV2014sM5n0msiSOXBG-q-REc8Of4CM4wg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ZheNing Hu <adlternative@gmail.com> =E4=BA=8E2022=E5=B9=B411=E6=9C=8816=E6=
-=97=A5=E5=91=A8=E4=B8=89 18:10=E5=86=99=E9=81=93=EF=BC=9A
->
-> ZheNing Hu <adlternative@gmail.com> =E4=BA=8E2022=E5=B9=B411=E6=9C=8816=
-=E6=97=A5=E5=91=A8=E4=B8=89 18:04=E5=86=99=E9=81=93=EF=BC=9A
-> >
-> > Elijah Newren <newren@gmail.com> =E4=BA=8E2022=E5=B9=B411=E6=9C=8816=E6=
-=97=A5=E5=91=A8=E4=B8=89 13:49=E5=86=99=E9=81=93=EF=BC=9A
-> > >
-> > > Perhaps it's worth noting why I think the sparse specification should
-> > > be extended when dealing with the index:
-> > >
-> > >   * "mergy" commands (merge, rebase, cherry-pick, am, revert) can
-> > > modify the index outside the sparsity patterns, without creating a
-> > > commit.
-> > >   * `git commit` (or `rebase --continue`, or whatever) will create a
-> > > commit from whatever staged versions of files there are
-> > >   =3D> `git status` should show what is about to be committed
-> > >   =3D> `git diff --cached --name-only` ought to be usable to show wha=
-t
-> > > is to be committed
-> > >   =3D> `git grep --cached ...` ought to be usable to search through w=
-hat
-> > > is about to be committed
-> > >
-> > > See also https://lore.kernel.org/git/CABPp-BESkb=3D04vVnqTvZyeCa+7cym=
-X7rosUW3rhtA02khMJKHA@mail.gmail.com/
-> > > (starting with the paragraph with "leery" in it), and the thread
-> > > starting there.  If the sparse specification is not expanded, users
-> > > will get some nasty surprises, and the only other alternative I can
-> > > think of to avoid such surprises would be making several commands
-> > > always run full tree.  Running full-tree with a non-default option to
-> > > run sparse forces behavior A folks into a "pick your poison"
-> > > situation, which is not nice.  Extending the sparse specification to
-> > > include files whose index entries do not match HEAD for index-related
-> > > operations provides the nice middle ground that avoids such usability
-> > > problems while also allowing users to avoid operating on a full tree.
-> > >
-> >
-> > I can understand the reason why we need to extend sparse specification:
-> > index often needs to handle files that are not in the sparse pattern.
-> >
->
-> I might have one more question: when we use "git diff -cached HEAD~",
-> what is the best way to check if an index entry is the same as HEAD here?
-> Do we need to run "git diff --cached HEAD <file>" again?
+On 11/11/22 6:39 PM, Elijah Newren wrote:
+> On Mon, Nov 7, 2022 at 10:48 AM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> [...]
+>> One obvious improvement could be a new file format version for the
+>> packed-refs file. Its current plaintext-based format is inefficient due
+>> to storing object IDs as hexadecimal representations instead of in
+>> their raw format. This extra cost will get worse with SHA-256.
+> 
+>> In addition, binary searches need to guess a position and scan to find
+>> newlines for a refname entry. A structured binary format could allow for
+>> more compact representation and faster access.
+> 
+> This doesn't parse very well at all.  The scanning is due to refname
+> entries being of variable length, and changing hexadecimal
+> representation of object IDs to binary values isn't going to help
+> that.
+> 
+> I _think_, after re-scanning your RFC cover letter that you had other
+> ideas to allow a binary search in order to read a single ref's value,
+> and that the juxtaposing of these sentences together leads to an
+> unfortunate assumption that one change is related to the both goals,
+> but something extra here to clarify would help.
 
-I found that git commit will execute index_differs_from() to determine
-whether the index has changed, It defaults to comparing HEAD.
-But if we use git commit --amend, index_differs_from() will compare
-to HEAD~.
+The v2 format has a structured list of offsets that can be used to
+navigate directly to the ith ref in the file. Thus, we can use a
+more precise form of binary search. Since we have these values, we
+do not need to scan for newlines or spaces for the end of the ref
+strings. This allows us to use the raw OIDs since we are not using
+special characters as string boundaries.
 
-the docs say:
+I will work to clarify when I submit this for review.
 
-       * When modifying or showing results from the index, the sparse
-         specification is the set of files with a clear SKIP_WORKTREE bit
-         or that differ in the index from HEAD.
+>> diff --git a/Documentation/config/extensions.txt b/Documentation/config/extensions.txt
+>> index bccaec7a963..ce8185adf53 100644
+>> --- a/Documentation/config/extensions.txt
+>> +++ b/Documentation/config/extensions.txt
+>> @@ -7,6 +7,47 @@ Note that this setting should only be set by linkgit:git-init[1] or
+>>  linkgit:git-clone[1].  Trying to change it after initialization will not
+>>  work and will produce hard-to-diagnose issues.
+>>
+>> +extensions.refFormat::
+>> +       Specify the reference storage mechanisms used by the repoitory as a
+>> +       multi-valued list. The acceptable values are `files` and `packed`.
+> 
+>> +       If not specified, the list of `files` and `packed` is assumed.
+> 
+> This sentence doesn't parse for me.
+> 
+>> +       It
+>> +       is an error to specify this key unless `core.repositoryFormatVersion`
+>> +       is 1.
+> 
+> ...is at least 1?  Or are we trying to be incompatible with potential
+> future core.repositoryFormatVersion values?
 
-I wonder if there is some description error here? Not always "from HEAD"?
+Specifying exactly 1 is consistent across our extensions documentation.
+The intention of the extensions system is that we should never need a
+value 2 here. If we do, then we should consider all extensions to be
+redesigned from scratch. Perhaps we'd have different defaults, or older
+options not possible anymore.
+
+Thanks,
+-Stolee
