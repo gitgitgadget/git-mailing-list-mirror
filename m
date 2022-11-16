@@ -2,215 +2,130 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 12FBDC433FE
-	for <git@archiver.kernel.org>; Wed, 16 Nov 2022 14:09:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B83FC4332F
+	for <git@archiver.kernel.org>; Wed, 16 Nov 2022 14:33:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233597AbiKPOJ0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Nov 2022 09:09:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42680 "EHLO
+        id S232115AbiKPOd4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Nov 2022 09:33:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231467AbiKPOIx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2022 09:08:53 -0500
-Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com [IPv6:2607:f8b0:4864:20::72a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EC2E25C71
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 06:08:05 -0800 (PST)
-Received: by mail-qk1-x72a.google.com with SMTP id s20so11646828qkg.5
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 06:08:05 -0800 (PST)
+        with ESMTP id S232324AbiKPOdh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Nov 2022 09:33:37 -0500
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DA4363D2
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 06:33:36 -0800 (PST)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-367cd2807f2so169231587b3.1
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 06:33:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ys0+MejAgjdBVOuJliCZYQX3tPB72BLf/hqHn1sygwk=;
-        b=isi0/NUwXuuGAE+YAeQRTaEcFN3z+FRNwFTWVptQsfCOyr2GYD0dOx4GgbZdsdQWfz
-         285lxkCQkdt3L8IW+S8FcdrDDTRqs7Ebw7Ze2qxbJVDkqMvBloYjh9xWa932TPErdfbu
-         gXJpEBcMFoxrca9EmVi/S/cZ5RxbAYyi3U3z129ChkeDRUQiuHuWND4WWl/OLRnGdwO8
-         Fg2EPTpTcDDOK5qUdv1nYn7DRtk1dwVd82fgTFKTymtYPER0P8dRg1dgPX0kS5mNq+ys
-         SnEmXWXtCz+wL9dI343Xnd6jqWOuKsex6Rgyn+5Wh9L7OWCEwApfKXeI3MV4qIKKVLhe
-         ZVFQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wAU1Quo7/n5IW+2/3sjZQC3Ina49Fc4U75nVNUcyh/k=;
+        b=dRVlPHg47guui18Ry/dOGAXEyL4MAa4DI4P3vaqn4HazkLTjLXFukGsyvc/nfWSUTY
+         LP2nVLam6BCeGqmIIBnEOewzlwFV8tVg+0l07pzVKrpTfHJ5YVaY0aeKlhBMPyv994CJ
+         nCDf+OD29LgO8KCkqGEllq0orfHFpdHoKQ/32sPB3EnskY4NdnsZyoLMevPB1hYmFl6k
+         Vgb+zKchy71V/yd+Y7aVaxTSocss6zsy3Et+kQmLtcP4YKmpvJky1FHq207OfDJk5SyZ
+         jKMBLBVRSrnkLtzD7qR75/3YzI/p+oYnkozN1p4nedi7axEWgk5dBSddN/iKBCFX1KHd
+         QKNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ys0+MejAgjdBVOuJliCZYQX3tPB72BLf/hqHn1sygwk=;
-        b=wYugdElvxeS7r1XZ1et4Ly5r9G8cxb8aBzWmTt7wML2urgzclWbsvJi3sfWtlMrHJ2
-         +CQAjxUCNQDlo5ToJio1Uv8CclMUhzz9Cu1OnQzI635voKRtOVQOpsC+Y5h8YY6sFGX4
-         gq9iLQGmMCZAws+x2z12kSuv9LU6M43WRh4O1ibAiOkE8tmVbpoTC2/6IKhCMr/NGfnr
-         Q+5fzokyAqt/1riC0jplxPE34Fz4KwOHzF+pfSMwBg52LBCHva4h+seVL3Aef5TUViWf
-         DvagkUGGDGyRw8q9Sn9chknuvKdnhaXUKg3aBmN3bu4OGzGkSu0gmu0V795xrWfpobcQ
-         L+mg==
-X-Gm-Message-State: ANoB5pk2yLNdxxGPAVnYOjMCx7sKi4pJ95LDzVQ0GajZk7/dpAH5CZcJ
-        xnmpwzBctuq2Xgkkg1PSMNgd
-X-Google-Smtp-Source: AA0mqf79ZT03wl9I2t+tOKfGanAIE1JZa+zrjcxn/4rHdPGaxmUWFOVsSEOHk4XPbwY1ieu08iOkMQ==
-X-Received: by 2002:a05:620a:c43:b0:6fa:6423:65b6 with SMTP id u3-20020a05620a0c4300b006fa642365b6mr12326216qki.324.1668607684029;
-        Wed, 16 Nov 2022 06:08:04 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:f553:9f0c:85c5:38e1? ([2600:1700:e72:80a0:f553:9f0c:85c5:38e1])
-        by smtp.gmail.com with ESMTPSA id bk8-20020a05620a1a0800b006f9f3c0c63csm10113596qkb.32.2022.11.16.06.08.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 06:08:03 -0800 (PST)
-Message-ID: <ca11478b-7b44-3018-04d8-0b84c4f43b56@github.com>
-Date:   Wed, 16 Nov 2022 09:08:02 -0500
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wAU1Quo7/n5IW+2/3sjZQC3Ina49Fc4U75nVNUcyh/k=;
+        b=TwGSWGlFz9GLhlk/YQDDChmf3hIZnhZJXf0qFEWbYQ8fi8Zg+iJJkGLaBISrKCwYdV
+         Nhy5H57TSPBL6pc9IminLWF9sRTxPRNl4iWWaeC8IItZZgqz+70d4qV1WsILeczsT7c7
+         QCvk//KqDBjMHS5Oq7oQB4p1GTV/BoO7STG2c276Ob3ulTD26VEdnnZWxbAxdjCH8XFA
+         JU9jUyy9/3zhmTyD1f0xGRXXAl6hFWG1bg0cZ4MALVmPInK+fXjuypGjMV2asJjG/glS
+         DV38KoesyqkUx43+pWGzlF33vCV55evt3+bag9+viD2gmy8mkHNgm2A43m6nx04/PXKJ
+         SpJg==
+X-Gm-Message-State: ANoB5pmnwC7D0NB3p8sZ9u5M6FCxq8Y2yrBPAENmDkcFwhCfvj0TnX/o
+        pCxZoFr7G3r8lGDdWk9VMXkHR9rKIxAsppkwUDo=
+X-Google-Smtp-Source: AA0mqf6t+2TsKxN1HyfGncVguP90Ckxa76OzyeVZRdfBgiaUBgPEU86POSERN5nEovXk3U9AiOBM3Tyr89XH2vOm1Qw=
+X-Received: by 2002:a81:198d:0:b0:373:4e1a:2b78 with SMTP id
+ 135-20020a81198d000000b003734e1a2b78mr21785512ywz.49.1668609215763; Wed, 16
+ Nov 2022 06:33:35 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH 1/9] protocol v2: add server-side "bundle-uri" skeleton
-To:     Victoria Dye <vdye@github.com>,
-        =?UTF-8?Q?=c3=86var_Arnfj=c3=b6r=c3=b0_Bjarmason_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
-        avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
-        chooglen@google.com, jonathantanmy@google.com, dyroneteng@gmail.com
-References: <pull.1400.git.1667264854.gitgitgadget@gmail.com>
- <a02eee983185815d94ba1124b43eae43280aa963.1667264854.git.gitgitgadget@gmail.com>
- <508ba524-09d2-81f1-c5f8-815ab766791a@github.com>
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <508ba524-09d2-81f1-c5f8-815ab766791a@github.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.1367.v3.git.1665269538608.gitgitgadget@gmail.com>
+ <pull.1367.v4.git.1667714666810.gitgitgadget@gmail.com> <CAOLTT8TzpfoH7pz7gxgFvNWOaUZUcg1q_Tap+2anwHfAUgDV8Q@mail.gmail.com>
+ <CABPp-BHaKH4sOPx2tx7CU+Uymvtu=mU1ZweGBDdWvhb-FgGA_Q@mail.gmail.com>
+ <CAOLTT8QOr-zTHBPLx5jibzQ6Co8a3VApgLEGRu0b+ht-VJh0nw@mail.gmail.com> <CAOLTT8QPPJ-pPvr9r3nJQgBg_7xCp5Ys=dd9nhi6fhgW6gYLow@mail.gmail.com>
+In-Reply-To: <CAOLTT8QPPJ-pPvr9r3nJQgBg_7xCp5Ys=dd9nhi6fhgW6gYLow@mail.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Wed, 16 Nov 2022 22:33:23 +0800
+Message-ID: <CAOLTT8S8e_0LaEFLD4B4F=u9cKPtdPvp7tWJoEf3Z4Z9Bw6SUw@mail.gmail.com>
+Subject: Re: [PATCH v4] sparse-checkout.txt: new document with sparse-checkout directions
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Victoria Dye <vdye@github.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
+        Matheus Tavares <matheus.bernardino@usp.br>,
+        Glen Choo <chooglen@google.com>,
+        Martin von Zweigbergk <martinvonz@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/10/22 8:59 PM, Victoria Dye wrote:
-> Ævar Arnfjörð Bjarmason via GitGitGadget wrote:
->> +
->> +PROTOCOL for bundle-uri
->> +^^^^^^^^^^^^^^^^^^^^^^^
->> +
->> +A `bundle-uri` request takes no arguments, and as noted above does not
->> +currently advertise a capability value. Both may be added in the
->> +future.
->> +
->> +When the client issues a `command=bundle-uri` the response is a list of
-> 
-> nit: comma after `command=bundle-uri`
-> 
-> I misread this a couple times dropping the "the", so it read like the
-> `command=bundle-uri` was the *response*, not the request. I think the comma
-> would help avoid that?
+ZheNing Hu <adlternative@gmail.com> =E4=BA=8E2022=E5=B9=B411=E6=9C=8816=E6=
+=97=A5=E5=91=A8=E4=B8=89 18:10=E5=86=99=E9=81=93=EF=BC=9A
+>
+> ZheNing Hu <adlternative@gmail.com> =E4=BA=8E2022=E5=B9=B411=E6=9C=8816=
+=E6=97=A5=E5=91=A8=E4=B8=89 18:04=E5=86=99=E9=81=93=EF=BC=9A
+> >
+> > Elijah Newren <newren@gmail.com> =E4=BA=8E2022=E5=B9=B411=E6=9C=8816=E6=
+=97=A5=E5=91=A8=E4=B8=89 13:49=E5=86=99=E9=81=93=EF=BC=9A
+> > >
+> > > Perhaps it's worth noting why I think the sparse specification should
+> > > be extended when dealing with the index:
+> > >
+> > >   * "mergy" commands (merge, rebase, cherry-pick, am, revert) can
+> > > modify the index outside the sparsity patterns, without creating a
+> > > commit.
+> > >   * `git commit` (or `rebase --continue`, or whatever) will create a
+> > > commit from whatever staged versions of files there are
+> > >   =3D> `git status` should show what is about to be committed
+> > >   =3D> `git diff --cached --name-only` ought to be usable to show wha=
+t
+> > > is to be committed
+> > >   =3D> `git grep --cached ...` ought to be usable to search through w=
+hat
+> > > is about to be committed
+> > >
+> > > See also https://lore.kernel.org/git/CABPp-BESkb=3D04vVnqTvZyeCa+7cym=
+X7rosUW3rhtA02khMJKHA@mail.gmail.com/
+> > > (starting with the paragraph with "leery" in it), and the thread
+> > > starting there.  If the sparse specification is not expanded, users
+> > > will get some nasty surprises, and the only other alternative I can
+> > > think of to avoid such surprises would be making several commands
+> > > always run full tree.  Running full-tree with a non-default option to
+> > > run sparse forces behavior A folks into a "pick your poison"
+> > > situation, which is not nice.  Extending the sparse specification to
+> > > include files whose index entries do not match HEAD for index-related
+> > > operations provides the nice middle ground that avoids such usability
+> > > problems while also allowing users to avoid operating on a full tree.
+> > >
+> >
+> > I can understand the reason why we need to extend sparse specification:
+> > index often needs to handle files that are not in the sparse pattern.
+> >
+>
+> I might have one more question: when we use "git diff -cached HEAD~",
+> what is the best way to check if an index entry is the same as HEAD here?
+> Do we need to run "git diff --cached HEAD <file>" again?
 
-I think this should be
+I found that git commit will execute index_differs_from() to determine
+whether the index has changed, It defaults to comparing HEAD.
+But if we use git commit --amend, index_differs_from() will compare
+to HEAD~.
 
-  When the client issues a `command=bundle-uri` request, the response is...
+the docs say:
 
->> +key-value pairs provided as packet lines with value `<key>=<value>`. The
->> +meaning of these key-value pairs are provided by the config keys in the
->> +`bundle.*` namespace (see linkgit:git-config[1]).
-> 
-> What does this ("the meaning of these key-value pairs are provided by the
-> config keys...") mean? Are the response keys in the `bundle.*` namespace? Or
-> do the client-side `bundle.*` keys provide some kind of translation of what
-> the keys mean?
+       * When modifying or showing results from the index, the sparse
+         specification is the set of files with a clear SKIP_WORKTREE bit
+         or that differ in the index from HEAD.
 
-I can elaborate more here, but the intention is that the protocol defines
-only how these key-value pairs are delivered, and how the client assigns
-meaning to those values and acts upon them is defined elsewhere.
-
->> +
->> +Clients are still expected to fully parse the line according to the
->> +above format, lines that do not conform to the format SHOULD be
->> +discarded. The user MAY be warned in such a case.
-> 
-> Why "still" - is there some reason they *wouldn't* parse the response line? 
-
-"still" is not needed here.
-
-> Is "the above format" referring to `<key>=<value>` in general, or restricted
-> to/guaranteed that the `<key>`'s defined by the `bundle.*` namespace? I'm
-> guessing "still expected to fully parse" == "MUST parse" (using
-> MUST/SHOULD/MAY nomeclature), it would help to call that out explicitly to
-> be consistent with the rest of this doc.
-
-Using MUST simplifies things a lot.
-
->> +
->> +bundle-uri CLIENT AND SERVER EXPECTATIONS
->> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->> +
->> +URI CONTENTS::
->> +The advertised URIs MUST be in one of two possible formats.
->> ++
->> +The first possible format is a bundle file that `git bundle verify`
-> 
-> I don't think "format" is the right word to describe this (I'd reserve
-> "format" for the literal format of the URI string). Maybe something like
-> this?
-> 
-> 	The advertised URIs MUST contain one of two types of content.
-
-How about...
-
-"The content at the advertised URIs MUST be one of two types" ?
-
-> 	The advertised URI may contain a bundle file that `git bundle
-> 	verify` would accept...
-> 
-> 	...
-> 	
-> 	Alternatively, the advertised URI may provide a plaintext file...
-> 
->> +would accept. I.e. they MUST contain one or more reference tips for
->> +use by the client, MUST indicate prerequisites (in any) with standard
->> +"-" prefixes, and MUST indicate their "object-format", if
->> +applicable. Create "*.bundle" files with `git bundle create`.
-> 
-> The last sentence doesn't add anything that you don't know from the `git
-> bundle verify` note in the first doesn't already tell you, and feels like a
-> bit of a non-sequitur as a result. Although, it tangentially raises a
-> question: do bundle files *have to* have the '.bundle' suffix to pass `git
-> bundle verify`? If not, are they expected to when coming from these URIs?
- 
-The files do not need that extension. This sentence can be removed.
-
->> +WHEN ADVERTISED BUNDLE(S) REQUIRE NO FURTHER NEGOTIATION::
->> +If after issuing `bundle-uri` and `ls-refs`, and getting the header(s)
->> +of the bundle(s) the client finds that the ref tips it wants can be
->> +retrieved entirety from advertised bundle(s), it MAY disconnect. The
-> 
-> s/entirety/entirely
-
-Thanks.
-
-> And to clarify, by "it MAY disconnect", you mean it may disconnect from the
-> main repository server? Or the bundle server? 
-
-The main repository server, since the bundle server is not speaking
-the Git protocol, but there is definitely room to clarify here.
-
->> +bundle-uri PROTOCOL FEATURES
->> +^^^^^^^^^^^^^^^^^^^^^^^^^^^^
->> +
->> +As noted above the `<key>=<value>` definitions are documented by the
->> +`bundle.*` config namespace.
-> 
-> Same comment as earlier - this is a confusing way to phrase this. If you
-> mean "the keys are part of the `bundle.*` namespace documented in
-> linkgit:git-config[1]", I think you can just say that directly. If not, it
-> would help to clarify the relationship between the `bundle.*` namespace and
-> these keys.
-
-Will do.
-
-> Overall, this document is quite thorough, especially with respect to edge
-> cases/error handling. I found it a bit confusing at times (at least
-> partially due to my unfamiliarity with protocol v2), including some
-> potentially ambiguous phrasing or scenarios (especially those in the
-> disconnection & error recovery sections) that are difficult to clearly
-> describe in generic terms.
-> 
-> I think some sections (especially "PROTOCOL for bundle-uri" and "bundle-uri
-> CLIENT AND SERVER EXPECTATIONS") would benefit from examples of what "good"
-> and "bad" request/response values & behaviors look like; they would help
-> illustrate some of those more complex situations. The rest of the patch (the
-> implementation & tests) looked good to me. 
-
-This is an interesting idea, although the examples of "good" and "bad" are
-probably best left as the test cases. Looking through the rest of this
-document, this section is already much more verbose than the others, so I
-hesitate to add these examples at this point. Perhaps there is room to
-improve the whole document with such examples as a follow-up.
-
-Thanks,
--Stolee
+I wonder if there is some description error here? Not always "from HEAD"?
