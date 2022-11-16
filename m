@@ -2,93 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4B83C4332F
-	for <git@archiver.kernel.org>; Wed, 16 Nov 2022 21:14:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8695C4332F
+	for <git@archiver.kernel.org>; Wed, 16 Nov 2022 21:21:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233701AbiKPVO1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Nov 2022 16:14:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59204 "EHLO
+        id S233632AbiKPVVJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Nov 2022 16:21:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233114AbiKPVOZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2022 16:14:25 -0500
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0E0A43847
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 13:14:24 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id f126-20020a255184000000b006cb2aebd124so17193670ybb.11
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 13:14:24 -0800 (PST)
+        with ESMTP id S231734AbiKPVVH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Nov 2022 16:21:07 -0500
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com [IPv6:2607:f8b0:4864:20::b49])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E52DB60691
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 13:21:05 -0800 (PST)
+Received: by mail-yb1-xb49.google.com with SMTP id e8-20020a5b0cc8000000b006bca0fa3ab6so17127660ybr.0
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 13:21:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=7Q+0/J6CnC+R5HimxEgJzW2uh5w5jytHvoHjuBkkkaQ=;
-        b=eaO/ZcLspX+qFdT8aNM6luqon55JM/72/qteOMR80auZYIT4LTjgcOWtph46lwr9rD
-         c4wHPrXEn0BtxTutq4T1mNy+jvPC7cFPQeBveRTdr3OU3L6Rwi1jOKSKu21gKqc3/s10
-         6LhBTsAzD7Id+8pS3MRwNrbwRCuOfgO7HRjDknHCUnfHMl2bUGjE8ykq++XprTcRjF05
-         lrWaFpHCdXmFubAY0S1FSrwuHtCW5JRcvf0YEvhGKopExpNXgTFM7nZeJ/wnUwm7NF6v
-         6Ip96OxKyeIVh4Q43iYZL360LXrbf1oxQWg2U4w567Glcq6kMI9uNvIVjlFxRqPTWeYB
-         cMoQ==
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=wObkFZD1lQu2SDB6Z++iF+qFOuKyY1EC2OP0guc8E4w=;
+        b=Qf3+/1HSfQshRPnwRX8RuuIhXNT8Rpk9b818gHWyYhCaBPA8a5vBUHWSV0Z1ADJjHe
+         oY87GMfS0FAyHjHRCOxyC3lKZJoaVvk3IjWinrDud2LL2jF6tee9tjt/xhrocKWAy3c+
+         9aPZvQYyFU1yl42UNcbmZUhfA1z2SMqn1kuvG9XHlmTJeoEtHBkuXB9LGwSsIdpx3ytk
+         B3IZXtItj/sKABxmJXo/O5inLtaMfwlYX0pSwGls3eptASy/+YyRoHM1iZrhGoMLTVRL
+         uBH78mKmNPBDfmFlhhCZRJ6TE41Z7wgtnQDcN9c6KEacre3O3vOnwQ3en9XvdYq2QZuy
+         5b3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7Q+0/J6CnC+R5HimxEgJzW2uh5w5jytHvoHjuBkkkaQ=;
-        b=2G3Nj1YvRLUzSIXC8bjZ5cUq6uWOoR52AeKS0RVWdnzqGv6vQhtMHS8xeeJusR7NCR
-         id8/0HSpYw6NnWpdBfH2167WQyhk6jZC8G6OtpoaXm+RSuSpgV7TBWTKtarpijqZOjPm
-         M3PWCDPEmcnZbuPUo58eWrtWnix+gVBm2FUlvwSWyzzZzD7eFftq8JWQ/ORgjadSs0yl
-         BhN8pFIjydEPCAGImMtiPReYtAHlrq0/0BNh/iL947Z9rBijOPfcq9jOC+Dy/oIicoMp
-         AODZxozBvHp1DkooWmmGdkAhwBJjB+KJPPcR9J02lISEGnqyvFhKm4DsmHXZf0Ab1G4g
-         I33A==
-X-Gm-Message-State: ANoB5pk3xyEZ1FCSPnPld+VGOKIarxG7uGjV3sMI/6hicntr9FdDf8B4
-        QvqDochdkKnnkBbCTSVsNZSCSIHj2slle8caIiaO
-X-Google-Smtp-Source: AA0mqf7yggq56QNq2DcIxSk04vUnRXNoFXbnkYfJ8Fu0SraVQK9VUTLzRw/vRXWqf1e3qgHVz/fhL1IPoJMXwy4bZAxM
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a81:2508:0:b0:36d:1171:6f60 with
- SMTP id l8-20020a812508000000b0036d11716f60mr23500007ywl.361.1668633263956;
- Wed, 16 Nov 2022 13:14:23 -0800 (PST)
-Date:   Wed, 16 Nov 2022 13:14:18 -0800
-In-Reply-To: <Y3Up5Vi75Up8LaGQ@coredump.intra.peff.net>
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wObkFZD1lQu2SDB6Z++iF+qFOuKyY1EC2OP0guc8E4w=;
+        b=eBj9o7sCF9gbA4X2Qo3MzBToPLlcsva72lZyaE7+SC1IUsd4I8V1Ca1fSVkISxmpe4
+         OTjunLqaYUbuBg9EoQP3YsZLmxme9zg1wdQK61C+017n547DUQLwpCU+fsA7KvtwE8DW
+         08fktQjWrqW4UlH8LmEhAxcyMz3P1MFwSht09/hjJzYRnderBkVnX05NolnEgws9T9Ol
+         Tbu0aVZsc3y8DvdG8QCXnHRyOJxZ4hmJpZ5qrISiWFvs1bNcRfDd5SJRUuWrt00c9kiY
+         Z6YJx5Ed9Sx04/+0wRvoi+U+zD9ckixwLwPOPv9/3Byr6p3UOSubTm26EilUSJ1lWfPF
+         b3qQ==
+X-Gm-Message-State: ANoB5pkDM+r+rP741uDSUK33zwB/OTEOEg5aedu68NPrvkiBvRitlGe3
+        VIsfyyl5NZSQdyiQZZ2/eliLixQ6rTnB/Q==
+X-Google-Smtp-Source: AA0mqf7slJ5EIvkJ3Onyu4q0VQ67+LCmvKvjz5YixbO2in7c+w/ZLfyfePbNHtcM+t3q2XCSziXqP2HvwoSuKg==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a05:690c:712:b0:38e:3478:2e32 with SMTP
+ id bs18-20020a05690c071200b0038e34782e32mr0ywb.422.1668633664776; Wed, 16 Nov
+ 2022 13:21:04 -0800 (PST)
+Date:   Wed, 16 Nov 2022 13:21:03 -0800
+In-Reply-To: <20221115184702.169258-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-X-Mailer: git-send-email 2.38.1.584.g0f3c55d4c2-goog
-Message-ID: <20221116211419.439356-1-jonathantanmy@google.com>
-Subject: Re: [RFC][PATCH] object.c: use has_object() instead of repo_has_object_file()
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org
+References: <20221115184702.169258-1-jonathantanmy@google.com>
+Message-ID: <kl6lpmdmvbnk.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v2] Doc: document push.recurseSubmodules=only
+From:   Glen Choo <chooglen@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        me@ttaylorr.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-> I.e., I'd suggest this patch to remove both calls entirely:
-> 
-> diff --git a/object.c b/object.c
-> index 248530ba7b..a370545405 100644
-> --- a/object.c
-> +++ b/object.c
-> @@ -285,9 +285,8 @@ struct object *parse_object_with_flags(struct repository *r,
->  			return &commit->object;
->  	}
->  
-> -	if ((obj && obj->type == OBJ_BLOB && repo_has_object_file(r, oid)) ||
-> -	    (!obj && repo_has_object_file(r, oid) &&
-> -	     oid_object_info(r, oid, NULL) == OBJ_BLOB)) {
-> +	if ((obj && obj->type == OBJ_BLOB) ||
-> +	    (!obj && oid_object_info(r, oid, NULL) == OBJ_BLOB)) {
->  		if (!skip_hash && stream_object_signature(r, repl) < 0) {
->  			error(_("hash mismatch %s"), oid_to_hex(oid));
->  			return NULL;
-> 
-> But there may be some subtlety I'm missing. I'm cc-ing Jonathan Tan, who
-> added has_object(), and who added the top call to repo_has_object_file()
-> via df11e19648 (rev-list: support termination at promisor objects,
-> 2017-12-08).
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Thanks for CC-ing me on this. Looking at that commit and the code at that time,
-I'm not sure why I added that call either. My best guess is that I was worried
-that the streaming interface wouldn't support missing objects, but both then
-and now, a call to istream_source() is made before any streaming occurs (which
-does perform the lazy fetch).
+>> When we pass this magic, undocumented value, "git push" will warn about
+>> about "only" and override it with "on-demand". We always pass it when we
+>> recurse into submodules, and we assume that no user will pass it, thus
+>> we get the warning iff we are recursing into submodules.
+>> 
+>> In that case, it sounds like "--recurse-submodules=only-is-on-demand" is
+>> a synonym for "this is a submodule that is being recursed into". In that
+>> case, wouldn't it be more self-documenting to have a hidden CLI flag
+>> that expresses exactly that ? e.g. we could add a PARSE_OPT_HIDDEN flag
+>> called "--is-recursing" and check that boolean value. This seems clearer
+>> to me at least.
+>
+> Hmm...--recurse-submodules=only-is-on-demand is hidden too, right?
 
-So yes, I also think that you can remove these calls.
+I suppose so, but as a matter of personal taste, when encountering a
+hidden CLI option, I'd prefer to see the option's documentation when I
+grep:
+
+  OPT_HIDDEN_BOOL(0, "is-recursing", &is_recursing, "internal only,
+    override recurseSubmodules = only")
+
+than:
+
+  if (!strcmp(arg, "only-is-on-demand")) {
+    /* etc */
+  }
+
+>                                                                    One
+> advantage of doing this instead of a separate arg is that neither the
+> caller nor "git push" needs to think about what happens if both --recurse-
+> submodules=something and --is-recursing are both specified.
+
+That's true, and I suppose it prevents the temptation to reuse
+--is-recursing for things it wasn't meant for. But in that case,
+couldn't we say the same thing if we renamed "--is-recursing" to
+"--recurse-only-is-on-demand"?
+
+At any rate, do treat this as just a suggestion. I won't block this if
+both you and Taylor find this clear enough :)
