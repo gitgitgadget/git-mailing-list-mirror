@@ -2,87 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45B44C43217
-	for <git@archiver.kernel.org>; Wed, 16 Nov 2022 14:54:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 16348C4332F
+	for <git@archiver.kernel.org>; Wed, 16 Nov 2022 15:12:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233889AbiKPOyB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Nov 2022 09:54:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42678 "EHLO
+        id S233625AbiKPPMb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Nov 2022 10:12:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233785AbiKPOxZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2022 09:53:25 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31C972D754
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 06:52:50 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id q1-20020a17090a750100b002139ec1e999so2613248pjk.1
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 06:52:50 -0800 (PST)
+        with ESMTP id S233202AbiKPPM0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Nov 2022 10:12:26 -0500
+Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD27E450BA
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 07:12:25 -0800 (PST)
+Received: by mail-qv1-xf2b.google.com with SMTP id mi9so12059466qvb.8
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 07:12:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ANP6hlwQTnShiisIb/TK41UFUL2Flv2dhQziuoh5aiI=;
-        b=pDmdzSsm2BHslNn0oHKaIfbpgIMAj4XXy9OA919lGB+pYmaHURJ2k8zg+VWplaeb/R
-         NnIqElBdVmEQT5AbfsbwAxFJSLp/TG0XTJWl/Ujnh13S2SXP84Mr+AZaaZutWnddbJLV
-         lG1P+jJJMGldbZ9p1weyF/Baw2zT6QKLlHp0f14o0G2GjcI43ogu3HCcCm+HaQ57AlMq
-         7PyXvEGlGPLFWsqSLepx9yiwuai6lTxY5aU7TgQgKc5jEOH6V6NmUijdPfeNyGzrH/Ky
-         dvuQhTNMES1LY7KmKwS+hTO+94ZEx7BHQOXtuYBj6m/S7kegg6awd20tUyfQETKbQcEa
-         y8/A==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=P4FCJ0uYjhkoD1UY1Uxok6Jg56vNWrt5jxBnoMH8QIM=;
+        b=EUr6paGO+gcHrRb/kkRcZVa/1jGhrf0xrlzBb1KsCYC6srHAyOJqCWYUt3JL60X11R
+         ZzUBfuq1mq0LI7pfrLs3r/IOwXzdCW05qkwOj3Q0pXW/TtOeXTPaYla1CIMWEQBfTF6E
+         XbCB9rgDx90HRnG2+pqGkfh6izGcxUNlerqODtP5NS5/lMP0CbFvW0yAPlmjVfuzjiZ3
+         dh8RcKax2CZtR8ALceajWxCYMOFfty4wF+/Io73QYOiG3XrWrR2nnSxn/u2/52hewDie
+         pw5dhef2yhSZa3kSfqeD6QWOXhjTDWR9sxrmt2+kjv1uDqVw/VFgU26niZNiGEHIPIXw
+         ZOJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ANP6hlwQTnShiisIb/TK41UFUL2Flv2dhQziuoh5aiI=;
-        b=gcMPRRbPfYe0dYrMIPyxzniRlcGnmMTPwHqeNfa8blaMeKT+3lFx/FLrXpzRH3qT2o
-         j5N9uyGDiiDnLDO857eGIC/CTQAGiCvqPXBcay0nc7EWLGjcHr1G3z2ot+LshwXca8K+
-         d/C24fBaNmjPBXSjuzupJkFWr/7iXlY1O4cxqERr09bnwgozSuaQwO7yEPQ1f1PEVR4n
-         Vw+3pvRAMvhujBjyowrsz3sJeK6KTPgxjJz4YozMx2c+EBu3dDtCHy6JHdZvTDFQO/Pu
-         Y7HgKoZ93qMW0B0C6g6KQxqa3iAHgDCjSOoHAdYU33/ApPrjEqkRB1HS0+sfu5ta8bMk
-         Qj8g==
-X-Gm-Message-State: ANoB5pkku57RspCshf9mEwaNDTroOSfwytfn7obhmah+SKpRya20y7oE
-        rUwG7y5RBDKt7JUW+ia6sVg=
-X-Google-Smtp-Source: AA0mqf7wCzxeTPfp1axW+nc7ECpDU2mSSOhiz6Xo55kkJgbBlavGdBVrZF8c+vCmGrr02TAnTK5VuA==
-X-Received: by 2002:a17:90a:f684:b0:20a:df72:e61f with SMTP id cl4-20020a17090af68400b0020adf72e61fmr4162678pjb.87.1668610369636;
-        Wed, 16 Nov 2022 06:52:49 -0800 (PST)
-Received: from localhost ([2001:ee0:4f8b:a070:2a99:1bbd:b117:5037])
-        by smtp.gmail.com with ESMTPSA id p4-20020a622904000000b0056d73ef41fdsm10926675pfp.75.2022.11.16.06.52.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 06:52:48 -0800 (PST)
-Date:   Wed, 16 Nov 2022 21:52:45 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] bisect; remove unused "git-bisect.sh" and ".gitignore"
- entry
-Message-ID: <Y3T5PQmrIHrV9m46@danh.dev>
-References: <patch-1.1-7be23b6faa0-20221115T093130Z-avarab@gmail.com>
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=P4FCJ0uYjhkoD1UY1Uxok6Jg56vNWrt5jxBnoMH8QIM=;
+        b=pdOaRjFa2qzsmeiR7GC3BxsmRgBjOxKFz7eIvtf3WkW8MGvFsviCVc7AIqrtIysgrK
+         GQWjReQLbHoaHn9/4/d0ybWHucoknYQtypfL82Zy/o32RPoaYipEAtzv6iE3sZD/NHM/
+         DWO0y1BMgYY1P6cGPp79TKaqX8peZ3EHCABx5VWTSWOezWMPXGf5X+DJAw7mEa3OR1Cn
+         rFnc1m+Ab4fxOsiylnoIwgA1szq7RLOMzoWJHeeuFmVXrGq6qSHCJpIWNB1n6aTD6PnC
+         mm9ji6h7bhTmE0ecyU7kUmwvSkGLce+/m+ovgbxG/PySqGJ3VjqkuMEW4inWO+ApUMTi
+         drsg==
+X-Gm-Message-State: ANoB5pmbKcXLHwlpAo3Ow1qNpDGLP0IhJ0CeiwyQfeoMF+uVWGUt0CFN
+        Q2EscjdpgqkKSw4dP4yCJOkw2wElKGw=
+X-Google-Smtp-Source: AA0mqf46ERlCf2QEjgTuZQ5/kKNjcsxqYy4uS44jk3C2TFQwVoIEALC8hzvANp0Avc4Nry+ofxSIew==
+X-Received: by 2002:a0c:fb0f:0:b0:4bb:5ac4:126d with SMTP id c15-20020a0cfb0f000000b004bb5ac4126dmr21285633qvp.108.1668611544416;
+        Wed, 16 Nov 2022 07:12:24 -0800 (PST)
+Received: from [192.168.1.3] (64.67.147.80.res-cmts.hol.ptd.net. [64.67.147.80])
+        by smtp.gmail.com with ESMTPSA id u16-20020a05620a0c5000b006cf8fc6e922sm10255045qki.119.2022.11.16.07.12.23
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 16 Nov 2022 07:12:23 -0800 (PST)
+From:   John Cai <johncai86@gmail.com>
+To:     git <git@vger.kernel.org>
+Subject: Re: Large repos mini virtual meetup
+Date:   Wed, 16 Nov 2022 10:12:22 -0500
+X-Mailer: MailMate (1.14r5852)
+Message-ID: <6312F969-9F30-4E0A-B06E-8C34D24BAF48@gmail.com>
+In-Reply-To: <4D2B0F7C-3ABD-44B0-BDFC-D5960BE261DD@gmail.com>
+References: <4D2B0F7C-3ABD-44B0-BDFC-D5960BE261DD@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <patch-1.1-7be23b6faa0-20221115T093130Z-avarab@gmail.com>
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-11-15 10:32:42+0100, Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> Since fc304fb52f9 (Merge branch 'dd/git-bisect-builtin' into next,
-> 2022-11-14) we've used builtin/bisect.c instead of git-bisect.sh to
-> implement the "bisect" command. Let's remove the unused leftover
-> script, and the ".gitignore" entry for the "git-bisect--helper", which
-> also hasn't been built since fc304fb52f9.
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
-> This goes on top of "dd/git-bisect-builtin", which just landed in
-> "next".
+Hi Everyone,
 
-Ack,
-Sorry, I forgot to remove it :(
-Other than the reference for commit, looking good.
+A friendly reminder that this will be happening tomorrow! Details are bel=
+ow
 
--- 
-Danh
+On 31 Oct 2022, at 11:18, John Cai wrote:
+
+> Hi everyone,
+>
+> From our contributor's summit back in September, one theme that emerged=
+ was the work around scaling Git for large repositories. In an effort to =
+gain shared consciousness around the problem space, surface opportunities=
+ for cross collaboration, and deduplicating current efforts, I am organiz=
+ing a mini virtual meetup where we can share about common problems we're =
+trying to solve in scaling Git for large repositories.
+>
+> Anyone is welcome to join! Here are the details:
+>
+> Google Meet Link: https://meet.google.com/zid-azpu-apa?hs=3D122&authuse=
+r=3D0
+> Google Doc for notes: https://docs.google.com/document/d/18Mh6WokkSb3t7=
+xeLsTdAUrSd8xfxZ4Myc-X25sG8b1Y/edit?usp=3Dmeetingnotes
+> Time: Thursday 2022/11/17 11am-12pm PST / 2-3PM EST / 8-9pm CET
+>
+> Thank you!
+> John
+
+Thanks!
+John
