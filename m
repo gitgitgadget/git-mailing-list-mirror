@@ -2,134 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2A38C43217
-	for <git@archiver.kernel.org>; Wed, 16 Nov 2022 19:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 033BFC433FE
+	for <git@archiver.kernel.org>; Wed, 16 Nov 2022 19:52:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234173AbiKPTwK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Nov 2022 14:52:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55144 "EHLO
+        id S234278AbiKPTwO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Nov 2022 14:52:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229446AbiKPTvv (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234118AbiKPTvv (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 16 Nov 2022 14:51:51 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39CDD4732B
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 11:51:51 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id o30so12685744wms.2
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 11:51:51 -0800 (PST)
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B54445A02
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 11:51:50 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id c3-20020a1c3503000000b003bd21e3dd7aso2511272wma.1
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 11:51:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yED6eliENaJBDbhgcKLiK4M2LH9Jm+dGgAJNGYKvQeY=;
-        b=TP3i8LHiBJMcZTVPGp0PPhMEjnl4tkW9u1xrr6pOde+7LQeJReaJpb+pEkDt8G935s
-         5V+azr5I5HJ9u+kbImQZLXXRwVdilCgS4J0N24h201G0F68Gc/+g4SUKyH5NIsh+K4Pr
-         tK3W2uEsVEa4v8ZJXGmz/3p+c6V+srYtbXQEszMzrqX+WRQ1FxH/SPWvVkND6g0oAJ04
-         IZsI7qW2PTd5iEl8BUwCONp40rpxizZa8RV9yF5JVMb2sZ76xJBhqdNIg5GMwZUkO/BK
-         eBCTtTnOynWP6KnURad0AJpsS7wm6ke1ORabspMCxe9YfHux4eOK0Ry2Zm0zNxnMgWUT
-         Q71A==
+        bh=tLooz02+SsovFOZcXwMGlFj9MxU6sRX+bGtaH84Oqg8=;
+        b=NWu4c95hTtpch0AVcBh0BxDnu9geOIHT8h9XzymMBHDxjoOtNWiWmFW3lL8rhA/IkH
+         +TuJTy2CVEGg4y7mCS3ai181t9L7/XwDZEsk60Eitxy82GMjhzJX5K0KI4TgQhpfz5hI
+         OMkvzOrkrtwk6lAtlNez98lvph3JhdpoS8qWamt2YyGYUdGlbkUYwkMm1W+c6/vVdP3q
+         frabDJfcLyR/nqKPI7ONumGeaSEPvCMBp/lzi4wvYDoHaUKY2eWOBDF+Xt1CqxDwvTRk
+         int0po+RgB3FJc9R+lAjlfsVCTriG3iT8vIVmky8XWOCnzEiBYd2KQvaBJp87X+QuYcc
+         /IHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yED6eliENaJBDbhgcKLiK4M2LH9Jm+dGgAJNGYKvQeY=;
-        b=nf7whTPLkdhMQ5ITv8uZ9rD42Xga/PoTli7aXu68iEHpdBQy6ridQwa/KxCZNuXxrb
-         ELv0t/lfg4Rw88oxNGW2zTNTwUnfUlbIInoXJIzm4trPsLnxvlQ6l9D/J8C0gfQuU4yh
-         NU/sTDxlWm55NuLrlEdlP56fIySs7EzXFBadK1X2ITMcaGYo9H6wJASl65PHqhvP2/JO
-         /4FRzrKAOtInOJ94KMUcfNQHuJc8DanoSlDJf1VBXWjDpPyhUVSCZj+nW6z+ZxBl+aBS
-         XIIjIqRBoD8Q2tvvLqWHKzFzOVkj9YYtu35nQZBULWDiGC2e7/BuaWSIJxlwTJlEOO+P
-         pzLQ==
-X-Gm-Message-State: ANoB5pk1SZB4l2Moxx2i1tPhZfg1FCgpXwUjujgZWvg3TJThsqCDrIvv
-        iLQlU+lDi5+3lDZSHeljMKbCgzVmkm4=
-X-Google-Smtp-Source: AA0mqf7sQJMftLpUwJpkWjIreCwOACgkYTEBDI5g+nfZw6A2MNnA5aTakfya9z6TLf8XzsKHwJvwcw==
-X-Received: by 2002:a05:600c:4a2a:b0:3b4:c00d:2329 with SMTP id c42-20020a05600c4a2a00b003b4c00d2329mr3114241wmp.124.1668628309487;
-        Wed, 16 Nov 2022 11:51:49 -0800 (PST)
+        bh=tLooz02+SsovFOZcXwMGlFj9MxU6sRX+bGtaH84Oqg8=;
+        b=6HdwyFDZgEiCNkcRvcdeZF0JPFRFJ8F6+DM6GcgeV9XHWMuf5fIl8NCGiaV1cux8Yd
+         QzJ7M3VoXnRvaBAyPyTSErjL+lB+VfGj7QKQ1PTBFYjNR9eouMdc+a0yXuASPAoFf5vf
+         YeOsdlHaW30THTvzxpUwPGPtuhAbN6Bl53Rm4ow/+MLzdjQdEPW3CzgZHThmkke9mM/R
+         aJP97uJjmhcYvgSqOobh0Ihd63LVFZhzzmfOyCaHdGDG1lVTpl+AsZ3F3bqjv7Hn0qW0
+         z0xuLBN1FaPDoVrH2rA1UTr4iBuBX4D0VdGET+ekcPtZfTkdLweg/up/eGfXYNlPY0zy
+         ODNQ==
+X-Gm-Message-State: ANoB5pmAy8rZuOoHiVq3gnKNlozllu3JKgG+yISSvbdmqC4eZY9rei5I
+        2ttbJiITd/q+d+8K/eT2KNede/SlAgg=
+X-Google-Smtp-Source: AA0mqf4PdQi7luWSTnUXxyW0olQrrvvSsISe6LaiYSPtPD/WWDheLcmp/bbfSuydRgEjpxojfRebwA==
+X-Received: by 2002:a1c:7504:0:b0:3cf:6b10:ca8d with SMTP id o4-20020a1c7504000000b003cf6b10ca8dmr3316695wmc.44.1668628308834;
+        Wed, 16 Nov 2022 11:51:48 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g10-20020a05600c4eca00b003c6b874a0dfsm4316682wmq.14.2022.11.16.11.51.49
+        by smtp.gmail.com with ESMTPSA id 7-20020a1c1907000000b003cfbe1da539sm3130191wmz.36.2022.11.16.11.51.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Nov 2022 11:51:49 -0800 (PST)
-Message-Id: <7d86852c01513ee131bf993302416f4c881a0bc6.1668628303.git.gitgitgadget@gmail.com>
+        Wed, 16 Nov 2022 11:51:48 -0800 (PST)
+Message-Id: <933974689312bbb130236c81550ee3467f295a43.1668628303.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1400.v2.git.1668628302.gitgitgadget@gmail.com>
 References: <pull.1400.git.1667264854.gitgitgadget@gmail.com>
         <pull.1400.v2.git.1668628302.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 16 Nov 2022 19:51:39 +0000
-Subject: [PATCH v2 6/9] strbuf: introduce strbuf_strip_file_from_path()
-Fcc:    Sent
+From:   "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Wed, 16 Nov 2022 19:51:38 +0000
+Subject: [PATCH v2 5/9] bundle-uri client: add boolean transfer.bundleURI
+ setting
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
         avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
         chooglen@google.com, jonathantanmy@google.com,
         dyroneteng@gmail.com, Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
+ <avarab@gmail.com>
 
-The strbuf_parent_directory() method was added as a static method in
-contrib/scalar by d0feac4e8c0 (scalar: 'register' sets recommended
-config and starts maintenance, 2021-12-03) and then removed in
-65f6a9eb0b9 (scalar: constrain enlistment search, 2022-08-18), but now
-there is a need for a similar method in the bundle URI feature.
+The yet-to-be introduced client support for bundle-uri will always
+fall back on a full clone, but we'd still like to be able to ignore a
+server's bundle-uri advertisement entirely.
 
-Re-add the method, this time in strbuf.c, but with a new name:
-strbuf_strip_file_from_path(). The method requirements are slightly
-modified to allow a trailing slash, in which case nothing is done, which
-makes the name change valuable. The return value is the number of bytes
-removed.
+The new transfer.bundleURI config option defaults to 'false', but a user
+can set it to 'true' to enable checking for bundle URIs from the origin
+Git server using protocol v2.
 
+To enable this setting by default in the correct tests, add a
+GIT_TEST_BUNDLE_URI environment variable.
+
+Co-authored-by: Derrick Stolee <derrickstolee@github.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- strbuf.c |  9 +++++++++
- strbuf.h | 12 ++++++++++++
- 2 files changed, 21 insertions(+)
+ Documentation/config/transfer.txt     |  6 ++++++
+ t/lib-t5730-protocol-v2-bundle-uri.sh |  3 +++
+ transport.c                           | 10 +++++++---
+ 3 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/strbuf.c b/strbuf.c
-index 0890b1405c5..8d1e2e8bb61 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -1200,3 +1200,12 @@ int strbuf_edit_interactively(struct strbuf *buffer, const char *path,
- 	free(path2);
- 	return res;
- }
+diff --git a/Documentation/config/transfer.txt b/Documentation/config/transfer.txt
+index 264812cca4d..c3ac767d1e4 100644
+--- a/Documentation/config/transfer.txt
++++ b/Documentation/config/transfer.txt
+@@ -115,3 +115,9 @@ transfer.unpackLimit::
+ transfer.advertiseSID::
+ 	Boolean. When true, client and server processes will advertise their
+ 	unique session IDs to their remote counterpart. Defaults to false.
 +
-+size_t strbuf_strip_file_from_path(struct strbuf *buf)
-+{
-+	size_t len = buf->len;
-+	size_t offset = offset_1st_component(buf->buf);
-+	char *path_sep = find_last_dir_sep(buf->buf + offset);
-+	strbuf_setlen(buf, path_sep ? path_sep - buf->buf + 1 : offset);
-+	return len - buf->len;
-+}
-diff --git a/strbuf.h b/strbuf.h
-index 76965a17d44..4822b713786 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -664,6 +664,18 @@ int launch_sequence_editor(const char *path, struct strbuf *buffer,
- int strbuf_edit_interactively(struct strbuf *buffer, const char *path,
- 			      const char *const *env);
++transfer.bundleURI::
++	When `true`, local `git clone` commands will request bundle
++	information from the remote server (if advertised) and download
++	bundles before continuing the clone through the Git protocol.
++	Defaults to `false`.
+diff --git a/t/lib-t5730-protocol-v2-bundle-uri.sh b/t/lib-t5730-protocol-v2-bundle-uri.sh
+index 000fcc5e20b..872bc39ad1b 100644
+--- a/t/lib-t5730-protocol-v2-bundle-uri.sh
++++ b/t/lib-t5730-protocol-v2-bundle-uri.sh
+@@ -1,5 +1,8 @@
+ # Included from t573*-protocol-v2-bundle-uri-*.sh
  
-+/*
-+ * Remove the filename from the provided path string. If the path
-+ * contains a trailing separator, then the path is considered a directory
-+ * and nothing is modified. Returns the number of characters removed from
-+ * the path.
-+ *
-+ * Examples:
-+ * - "/path/to/file" -> "/path/to/" (returns: 4)
-+ * - "/path/to/dir/" -> "/path/to/dir/" (returns: 0)
-+ */
-+size_t strbuf_strip_file_from_path(struct strbuf *buf);
++GIT_TEST_BUNDLE_URI=1
++export GIT_TEST_BUNDLE_URI
 +
- void strbuf_add_lines(struct strbuf *sb,
- 		      const char *prefix,
- 		      const char *buf,
+ T5730_PARENT=
+ T5730_URI=
+ T5730_BUNDLE_URI=
+diff --git a/transport.c b/transport.c
+index 86460f5be28..b33180226ae 100644
+--- a/transport.c
++++ b/transport.c
+@@ -1538,6 +1538,7 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs)
+ 
+ int transport_get_remote_bundle_uri(struct transport *transport, int quiet)
+ {
++	int value = 0;
+ 	const struct transport_vtable *vtable = transport->vtable;
+ 
+ 	/* Check config only once. */
+@@ -1545,10 +1546,13 @@ int transport_get_remote_bundle_uri(struct transport *transport, int quiet)
+ 		return 0;
+ 
+ 	/*
+-	 * This is intentionally below the transport.injectBundleURI,
+-	 * we want to be able to inject into protocol v0, or into the
+-	 * dialog of a server who doesn't support this.
++	 * Don't use bundle-uri at all, if configured not to. Only proceed
++	 * if GIT_TEST_BUNDLE_URI=1 or transfer.bundleURI=true.
+ 	 */
++	if (!git_env_bool("GIT_TEST_BUNDLE_URI", 0) &&
++	    (git_config_get_bool("transfer.bundleuri", &value) || !value))
++		return 0;
++
+ 	if (!vtable->get_bundle_uri) {
+ 		if (quiet)
+ 			return -1;
 -- 
 gitgitgadget
 
