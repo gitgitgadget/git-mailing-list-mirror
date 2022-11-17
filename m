@@ -2,223 +2,171 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 977B9C4332F
-	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 17:18:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BBD4C43217
+	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 17:29:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240335AbiKQRSj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Nov 2022 12:18:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44754 "EHLO
+        id S235093AbiKQR3F (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Nov 2022 12:29:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235038AbiKQRSU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2022 12:18:20 -0500
-Received: from EUR02-DB5-obe.outbound.protection.outlook.com (mail-db5eur02olkn2077.outbound.protection.outlook.com [40.92.50.77])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9226786CB
-        for <git@vger.kernel.org>; Thu, 17 Nov 2022 09:18:04 -0800 (PST)
+        with ESMTP id S234641AbiKQR3C (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2022 12:29:02 -0500
+Received: from EUR05-AM6-obe.outbound.protection.outlook.com (mail-am6eur05olkn2092.outbound.protection.outlook.com [40.92.91.92])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85E1E2CCBB
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 09:29:01 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=G3FVI/pVa3oXS/qgbgPu/HYSYoXNcVEpt9SKQ7na5CrOsJ1Rn5bIXGwA4OyU5eZhgnxtjy73jVg+L0PzqzFeiUqUJ4IuwKLx8uWNaCr2Mzv/oLBhMYlxSgcdZI6wrtxKrI1FiY75cFMygm3fMFjRwPxLRh/wHGrJlbCh+hzKL23EqBvkf6I08bPO5G91OjMDPe+7uC7vG8JSWWengzQBgeNXb2aRewpbQWr0YzRNUxsNwgmBC1j2gN41UOvnkfJnYb5pvaZtzU7nA2KPciP82FUTldGk7A0Dxk1TG+1FBgr7FhGb1iGGFCiFfJ1Bhnwrl2uIDk2w64mlv69DRWK/nA==
+ b=SkpRs86VxwLljCs7x7PtHMTnXkkiuNe4bdt9foY1aG601txNpb2/yvo9szWuAMdE+NXWXOdqv1hX59+iJvEgyjMSixF2gdtWDnxBKva8jwQTdtnITjO9wIk5X4Hcx30AjhMsmpeBuuv1EDB8FSTKKQqytl1xJFifR/fxlGO/toJeAn2wz5mWun9Hfw7y+LB8Gh+oA6PkSeL5YSbuDF5K2bFbA2+Iidv4mnVTTVzpsQngXbDDjjgPfNZYLx4UOSM+oN7ggLhWuYd8BqJUTm5sAsZIcXNl6c5l4348zXkVew3+aap+eLE7yQGfoVY5QGDp85NezOEINTa7P6nkmnSzpw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/V+GmgGWz7J1t5UpE3ijSGMC58vAiIEj4Gj9wEDMTOQ=;
- b=bHDNFHkHdJ7zQZoIKbI0WJtuu6sD/koqrQMQ7669X543cld7Vxjf/u0mulUMTMzZNHCEe3kWxA9mNHDkV5SbI5MnI44YjO1kSJMq9/LyZGtIs6+UcWhLgy1ZZczdFLMEzvRzYlYXeUpnTeMXhJdEYwBmA1pLPP0AxaxLIXKDGJFTw8/yBcWoScwYiMD6ObcdUmNgx8BUk9Hk2bfSDbwQouyM4T4nKYpkhKTfHjFR6n8uh0EU1ZaNtwKXbz25SX5Mo2W01s+zriy3CdFgnh1aAFHHYQLEQnDfkMMOvSbH1vEZYqd5f3RZVEiK9a1uBpirK3YcyR3VvSmJZJ/qGp46Ag==
+ bh=vmE0RDIfzOOBFxHnFmli6NBUiWt6KHTvbJzpL+8Y5R8=;
+ b=V8Bi+P4VJQ3aZZnwnYNuqflosRmYuRnM2CvDdscFzao9xuSZXBIiUiA75PK/iNzmb9u2/ySTuAopedhSDI2K91OoAtyzd4NSHg5Iqqvwe3eg3Z8lOxV8SXkdJRHqpdXCbj4k0WWA9osX4jV+NkRyLi5ypWYMuFpJ0HZIZmjhbZQyNlG3IrFb5rnRmHofO442mAeNf9fTZnlAt18Ymnh5hQP6DKNUAwtQoGDztBjiEbsJxicAgWCpM6xYsRWcgNcBT9aAdStXxC9pyJMBAchS51lr4zWJXa1/c7313tYXIX9wWPiDnJdSfzgh+CWOLZiktDDPzj0DYUCGyPbfbvr67g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/V+GmgGWz7J1t5UpE3ijSGMC58vAiIEj4Gj9wEDMTOQ=;
- b=cw/TheI0A+E6GHcl4hikpCf2yH8GiXQFM0JZP1mAqtppmM2lq7hILSg1c0asUqnrpwsIU45bIQMkFJNw2feVGcZZikwKXDVMpvY/pdLpdGr4A7Qp2wgW7Bi7V+uXYhI2zMYrQYdV6NhYDJfY2azCh+XA6pnXx2ycq9uQj2YYb9bIucheVm+ebJ7PQkmsiFJp6wMpqROq6s+/7MWDVXvNdTJV8yEsbzOVytXu4ukcTPJzgtj6KOZFAxkjDFvnab9uYVV4NlbMEKLRYGZ3V8VJboLndW8Dby9N6nW+Kx5MqiC0nmr/WO6D6qYAH22QtXKuMP3KDeigQqYxqJIPRGoOAA==
+ bh=vmE0RDIfzOOBFxHnFmli6NBUiWt6KHTvbJzpL+8Y5R8=;
+ b=eHuDu9GrNZlTgqHUdh2ype0z7eTaFICnLgYiFE9ZMOmgfqF9PdeUjzDWx6VMPJazFVQKYUJt/ja2dDtOH047penc3XUY2KF/U5/2UraA5eEveao6NBLKfbiGfKcmkG6KhRYlPGkd4Ztcx4jux+/cxfTz4SGtPKXegAY7ZJ5BE0AvViMhIVlgq/r6NqxFzfVusghqa18+RUVQZ1mdNYzJHQpbyW8vBYaGx6f2YFfFj+Ow1t4B7PSpELrD+7MZ+OzEs+sYMjGpHkVwnqjFypIVMdux/VUh8yjfedhoYP7W+R9s1gN/bE6gT63u+eY3c9qUVfmN2d3TsuP5cKNwgZAYNA==
 Received: from AS2PR03MB9815.eurprd03.prod.outlook.com (2603:10a6:20b:609::16)
- by AS8PR03MB7461.eurprd03.prod.outlook.com (2603:10a6:20b:2eb::23) with
+ by GV2PR03MB8726.eurprd03.prod.outlook.com (2603:10a6:150:74::7) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5813.16; Thu, 17 Nov
- 2022 17:18:02 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5813.17; Thu, 17 Nov
+ 2022 17:28:59 +0000
 Received: from AS2PR03MB9815.eurprd03.prod.outlook.com
  ([fe80::e829:a187:754:6a85]) by AS2PR03MB9815.eurprd03.prod.outlook.com
  ([fe80::e829:a187:754:6a85%3]) with mapi id 15.20.5813.018; Thu, 17 Nov 2022
- 17:18:02 +0000
-Message-ID: <AS2PR03MB98158D49DC655F6DC6D10ECDC0069@AS2PR03MB9815.eurprd03.prod.outlook.com>
-Date:   Thu, 17 Nov 2022 09:17:53 -0800
+ 17:28:59 +0000
+Message-ID: <AS2PR03MB9815DCB5C310C4AC7B82D3A6C0069@AS2PR03MB9815.eurprd03.prod.outlook.com>
+Date:   Thu, 17 Nov 2022 09:28:53 -0800
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.5.0
-Subject: Re: The enduring popularity of git-credential-store
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org,
-        "peff@peff.net" <peff@peff.net>
-References: <CAGJzqskRYN49SeS8kSEN5-vbB_Jt1QvAV9QhS6zNuKh0u8wxPQ@mail.gmail.com>
- <Y2rdw7RD8mGTF40w@tapette.crustytoothpaste.net>
+Subject: Re: [PATCH] Docs: describe how a credential-generating helper works
+To:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     M Hickford <mirth.hickford@gmail.com>
+References: <pull.1379.git.git.1668217470500.gitgitgadget@gmail.com>
 From:   Matthew John Cheetham <mjcheetham@outlook.com>
-In-Reply-To: <Y2rdw7RD8mGTF40w@tapette.crustytoothpaste.net>
+In-Reply-To: <pull.1379.git.git.1668217470500.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-TMN:  [Qh2L2yJ2Fv6Ihm0GW5VJ3TYZwUhb/srhkrqsm2i/BQY/48gtncFRVQbHdAjyxyIU]
-X-ClientProxiedBy: BYAPR06CA0003.namprd06.prod.outlook.com
- (2603:10b6:a03:d4::16) To AS2PR03MB9815.eurprd03.prod.outlook.com
+X-TMN:  [j3rS2JeyeIrqnihz1fdgfQgm/TamJtf/RRytL3en7a8t2lV0XNhE9/dcvmvwegVS]
+X-ClientProxiedBy: BY5PR13CA0013.namprd13.prod.outlook.com
+ (2603:10b6:a03:180::26) To AS2PR03MB9815.eurprd03.prod.outlook.com
  (2603:10a6:20b:609::16)
-X-Microsoft-Original-Message-ID: <775ef7c9-4e4d-be69-5240-22ef70abfb21@outlook.com>
+X-Microsoft-Original-Message-ID: <1d69e66d-81fe-3b30-665f-0f07c0043f57@outlook.com>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AS2PR03MB9815:EE_|AS8PR03MB7461:EE_
-X-MS-Office365-Filtering-Correlation-Id: d66ef34f-adf9-49c3-8577-08dac8bfad15
+X-MS-TrafficTypeDiagnostic: AS2PR03MB9815:EE_|GV2PR03MB8726:EE_
+X-MS-Office365-Filtering-Correlation-Id: 54d6ac43-486b-478b-371f-08dac8c13628
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: qkp+RhmyaoGoi3K2zOIUPuiB+KnW68dEZZfCO5XeMjVF9UgW+oDELt16ZDC5YbfKJs5M7Tw2SRGrj5F1m5ZahCTt9/iEamsnBd22QlRKS3fjDXulHqgFdHcQwrjCeT3Butgll7A1RxFrx1pBfITIGUIfyGn6gySM0Hw8amA1uVmsGF8hcBc+lyEOsz4uLXDJZnLIOBjlOi70uoZCCHONpqvS+KDO8idbQeO7YFrlVru9OFc93vecJeQ0pSayu9JkoI9dmkojqRhgKbnRmYOEmBjFQKf+vNBBY0EeB/VC20agE0NQKPv40uydor3e/ZIoLsM/8j14POYw7wUdYKb8VJQxI4bHbcDCCw4jPYnKlnmmXIvAOOTB8i8t7kqjifZ51vbrqZPZzx6DFxGxVjprgra5GIHqtvgyecm37Hz+G2O72Kl0AD5ljRZszyckz9dwtNoIk4UvBPe+duXbC7xL9UAHaNDtp+qjAodzux4CIDfkJiZfXlXbuz92so4Q5R3gPdFWWeVrLa1goT6VcDT/GKNornJaa2FSbJie4uvYU8YmORRCF5P3diBtbJmqd8dDgxscRNQpXu6QiDCxcTwk/pdPH0KwCukg0VnWLaP1Tjsiw7Sq0fLdoFPK5bHmM3pjv3YInCrsrdYMPb3Y8PNdmUE/kIzZGhkiIMEdOj+EUOceaptDD6yzxliyuqefrgoj
+X-Microsoft-Antispam-Message-Info: sMRBO1j+u5hoXuisDg4nTkV/ILQTUjI1IR5OicUe6Doj6lVE3mGNdW5MIAqV96MRQynZxE6Yqyf2HTNsK/BhLEziKgj78YU+mpoCR/rqEDEnTNnH1taP+0X/IhYrt2IWx+lTVPcMSWew+4gX2Qa1AMaokn3MwIiVfTh1zEQ1jGwMiDhqDMt16UiGDN1Pwzd39c56halK7hHnfINGA/K+tXBcrKiEjhBqnq5VnqX2XdDlNaQcOx5oH5250Rlzky1kvHdegbtLC+v/7g+iPZzAx4U6S81aebMeCJtBCX7Fp2IM5UxRuRR815ONRECPjRFXGgnm/VFIsyP7xq2axx7aQcNIR1gd1P07aaglQJ709eH9Cjno4Id6T2+H77CWUf7oqP5mWTtP8evWMJPTLzxsfcqc0HGqZX20VjQEeNwEpxI7to+YMGI+zznYwgQgTKNzX7BI+0cceINFpJ1DuqWSzjYxneSzLHuvSLbmQ201zCajMBCoaRLl8D0jqKTkwqJmjeJDv+GpZyRbNoNapadH+2jfNdWvmZ1INdGYHvTKr+7io9tZdOH+j6+Mvbs0Q1xEyQz9g9Q2d0I0CGMc5BQqM+FVJDUEiDMUSJ2FE6fNnO+hdLrisDJvLxK4hQAqyKIWEuRxFJ/l+q9sxQuiwa+AkRE27njwU54Z1jUDPTBE6HVMtNzMOvSZR75lECcW7ZEm
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bHNOT2oxTDdxUVd3bXRDMlpkeUlZZVhNdHMzOVhaMm9yK2lSSmZOSXZHOER2?=
- =?utf-8?B?T1JuR2Y5WVp4NDlpZm1aVlBCTkpzVkJKNzA3OVplMVBOWTJOVHlGTDFKOXVG?=
- =?utf-8?B?R2Z5am9ZMDFoeHJYcXBLdG5rYWdWZGtRWEJNMWdGSUdXRGRneFp4ZGVwemNz?=
- =?utf-8?B?d2Z0dzM4dkxtaWlsMmpGK1NkRUVQTkVPOVA4K0pCUTBRczVBd2lwbW1kVnIz?=
- =?utf-8?B?eWtqeUNoMVhzNjNTcEZhYjlxUGF3cXFTRFA1aDdHRTFxSGRiOVhrZW1xeGRH?=
- =?utf-8?B?R2ZVT0lXU2g4UUd6N3puSTFMM0lMVlUrR215V3U2TUhTYkFGOWE5dGlUMEJ0?=
- =?utf-8?B?MnFzWkdOMHBxUkc5VmNIbk96ZDJ1SDRKc2tvWk8wV1IwMm9TVUJBeHpHakFn?=
- =?utf-8?B?dktQcjdYMG5kQ0t4aHRmOFptTDU3bmltUUw3NHlnT2U2VGtGQ2lrVFBqT3Js?=
- =?utf-8?B?ZUlrQ09DTUdnVVdkaVZtOUFpeU9WUmUvS3lkV3hLdG5EbURSU3lTRXV4d1cw?=
- =?utf-8?B?SHFJL0JueXNRYUh5REJ2VDZObTZwTUp5NUlMNE85Qk4rbVh3MDF2M3gzVEpJ?=
- =?utf-8?B?Q0VYQWNsNnpPK1ExTUhtS0NReFR3NmlTOE5vMEQ4Q3QrK09EYjVwVXErQzhh?=
- =?utf-8?B?SG03QzkxRlhYRy91bG5abkFILzB6RHJVMXd2RkR6eHFYSGRIUlpnRXUzVTEx?=
- =?utf-8?B?QnoveElKUEVHYS9TWVRiQU5NY01qeE92eGo1ajZEREV6WWh0S1dOQWRiV2Ir?=
- =?utf-8?B?RjBGK0YyRjd4bGpmcEpWU0ZOSytYQi9FaHJtZzJKMHkrOWE5WFBVOFNYcDZz?=
- =?utf-8?B?bDZOZjdxd0I0bjFXTWo0MnpWZHRlWGZuVWZPeTRLUEhQVFg4dUgvclhYVlVn?=
- =?utf-8?B?RzBqbXo4Qkk0a0wwVUh3blFkTVdMdnkveDdlYU5WMldUNUsyRmFSZEZVSHgv?=
- =?utf-8?B?K1hWZ0d5dkJvRVdhaGJyaEY3WWs5K25XTWhvdk5XalR0cDAxWTNqc0ZYNGk2?=
- =?utf-8?B?ZlZvcU05QzY3SUZWNGhxdVcxbkJmdHBMcUN6ajdBRW0weU1CTEdmY3BEVVJr?=
- =?utf-8?B?U0hlVGN4QUcrSWhaT3I0QTJwbDdmS3pFUTZKdDk1bndFWjRPWThncU5sWUhI?=
- =?utf-8?B?dTY0bEpsSUpqVTdLR0ppM21yd0p5eFk4ZzFsYXl3c3NUMUplK0thdmVQRlA2?=
- =?utf-8?B?ZTV5dGZoaHVyZllaR3ZNTHRRaURVU3liWGtmanQ0RHFISyszak5KT3lTMlRB?=
- =?utf-8?B?dFNPTDBLUzVhcENKSEQvdG1OSnpsZEZ4eVN1bTJaQW9DT2FUc0V4UjI2ZDdX?=
- =?utf-8?B?WHVsMU8rcjhHa1hoTmJHRnJEbmZ6MFdtVlNrMVY1cXBDOE1hVmRUWjc3eVZx?=
- =?utf-8?B?TXhSRnlLNUhwMnpCZ20wSnlBMXpDdUVrSlROc1F4SlNPMENyOUF4Q0wvOE5y?=
- =?utf-8?B?YVhVSVFBb0tmQzd0UTRFaXgxbmduZnBuZDFaL2JQWWVEQ2k2M2U3TEZNdHRY?=
- =?utf-8?B?QnYrZGVRUXArUksyYmlIOTEwczQwd1IxVWZJczRHNjNienpBODF2aFlqY3Nm?=
- =?utf-8?B?eFZlb3RZZS9ZdDNSUzFHcUpSVXRqeUc2ZGR2b28vbGhnL3RwZng5SkE5VXVH?=
- =?utf-8?B?QzFCeUtlRVErSUlWcVVZZTR1WWhCaWRpUWJUZmNLVkRFdnFHR05STEFvVzV4?=
- =?utf-8?B?ZHo0OGxSNFVuLzBJL2hGQ2o1UVZKQzM3NnVsblIvbTdaNkVwTll6ZG1XT01x?=
- =?utf-8?B?YXJRMUdPd3B5VTAvUjMxRHVMZnFSZ2w3RTYwMm50RVlFZGhDc2tuQUlKZHE1?=
- =?utf-8?B?RXJIaHdXQlBxSUwzS2s2UT09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Nm54WU5HVkdUanByWk0xTTR4WWZtTU1JMXRuSDBsZGtVK0pMWGIwYi9wMTdC?=
+ =?utf-8?B?U1haTjh0cG5sWUlhenRaN2RHT0NWNmQ5RFgwcHQvRXRDOXk5SGgyUXgzYzFp?=
+ =?utf-8?B?UzVISFdXank5N3dub1pQdXdVdFhtSmdGYlZyQ0FrZ2E3NlBEM29lajV1dXYw?=
+ =?utf-8?B?Sk54b3RobGk4dXN6OHpLMUpjKzNnSzRwVW92WG1Wek15NWZtTkF1OVZxQytz?=
+ =?utf-8?B?WnV1eXI3cXE2b09EZVRrQnhvZjVjeHlhNkFQVVc0WWxERTVUTFBSYXZBRlN3?=
+ =?utf-8?B?UEJsVy9qeWxPSE42d0NiYmpJeFhyVnZVTUh1dEZQcktJMEhyUGdXNlRzNDVH?=
+ =?utf-8?B?VWxHY0xpK1RiY0YrSGlUc29WN1RyckVBako4K0IyMUxncjdwOXJ2WG9Qcjly?=
+ =?utf-8?B?ZDhGUnM0RjBBeTZwL1lRSi9UNGRLVnV3UmZmRm5UODczYUFqem5lTUlSV0gz?=
+ =?utf-8?B?bkhQU1I5eHM1L2pGeitxRGRNdU5KV0ptMkFKVUpJS0lZUnc2QnQ0bzByaXE5?=
+ =?utf-8?B?WUJvcmJieTdpWjFjU3lPYUM3NjJwQU9TYklhRUxVdU83c05NbjRhWk5jSEk3?=
+ =?utf-8?B?djRpNUEra3VySnNyalNlQ0tDaEY2THdQOUY1U2h3LzRjNGp2dzBSNm03Vjlu?=
+ =?utf-8?B?azNaMnFRVzVmbnIyMy9wcnRMZEM0bXFpM3hud29CMlhZUnJIS2treUMzZGgw?=
+ =?utf-8?B?Qm9xSWw2SlpTYnRHSWw1VUFoRVFtOGJyVjZydFZDN0RpcnhvYzlPd1lWd0NK?=
+ =?utf-8?B?YWRuTm80eXd2a0ZpdEFuTkJGc1RUdFFTanpqemNHc0lGY0YyUVB0VXg5azZY?=
+ =?utf-8?B?Y1hvQm1ObmNNRWpQamZXd0FCdDV6b0swM2hFakpmWEdmV3VIbUo0UjFhMk1h?=
+ =?utf-8?B?UitLWnIzc3UzeXV4NU9Xb2k3VzBzR1pqYXlrUUZveDZCVzBMMFk2SHdyZjBC?=
+ =?utf-8?B?ejZ3RWRIdjNvb09rbkRCUTYxUzN3MmpxWGwxQW5jczdtN3dKcEQ1S2pEZjdu?=
+ =?utf-8?B?bmQ1ZkVXQzJ3ZHdmb2ovSEd0ZEU4THlEN25Ja3dWejl1MTFVKzZoTHJTdlZ3?=
+ =?utf-8?B?dVdCZ01LR2FKMzZuNXBrZ25IOHJTNHd3UlpEeVBPdElsQWVOYllUUnBxRlY2?=
+ =?utf-8?B?dTNZOWxwN3BpRm4wN2RhUGg5Si9rSGdtaEVwM2JOR1Y5UVlXNG5mRnJibDkz?=
+ =?utf-8?B?Rjc3NFBIUmVGMG1LeWt4cEFJbUxyS2FCWE9sRTZHeDQvaHhrMlF2SDd6ZHJW?=
+ =?utf-8?B?WHI3RzROcFVQR3Q3V0RtSHNzdnhEaVVDNEJIVnlSb0kxVW16QmJiOFVhbVA4?=
+ =?utf-8?B?QnhPYnYwMjM2ckxBYllqdForUWVlNG5ia2trbUdUZUR2TExEK25BYWhyenF0?=
+ =?utf-8?B?TVh6b1pHVzQrRVZEWHBaalNTYTRhM0pXcEdGLzFWOS9pa3J1UWI5b3BWR0VY?=
+ =?utf-8?B?dUtidktCbFloeUhHdWx5VjI5b1d0QVhYUjFoZFg0V05mMEkzc0ZmYUhGRE1Z?=
+ =?utf-8?B?dm9nSkQzZlh4RmlKdkNCK1BzcFE5RFAyRkdUVDR2b0lScExFR0hidzFncEtr?=
+ =?utf-8?B?TlErZitJVk42Q29GczNBeEZvbVlpNHdOQU5qeXlMeks5MHpkQ2tUR3VXcUJQ?=
+ =?utf-8?B?YXNYdk5kejUveERtdWk2bGthTVluc0J1cno5ZEo5cmJnY2lNRER6OExYRUFB?=
+ =?utf-8?B?aExVajZ6R0w5WklBcXRFeGlEZmZIVWkxZXZMcnhkL0VvTTRicFYvb2s0eG51?=
+ =?utf-8?B?OUtTVlNZODR1RUtRN1FCWlR1MFlNUVF1ZzdrMDh1K0VlamdKWHcyNkc5N0Ru?=
+ =?utf-8?B?TnZ2c1V5TXMvaXZiWUhUZz09?=
 X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d66ef34f-adf9-49c3-8577-08dac8bfad15
+X-MS-Exchange-CrossTenant-Network-Message-Id: 54d6ac43-486b-478b-371f-08dac8c13628
 X-MS-Exchange-CrossTenant-AuthSource: AS2PR03MB9815.eurprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2022 17:18:02.7815
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2022 17:28:59.4206
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR03MB7461
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR03MB8726
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-11-08 14:52, brian m. carlson wrote:
+On 2022-11-11 17:44, M Hickford via GitGitGadget wrote:
 
-> On 2022-11-08 at 10:50:33, M Hickford wrote:
->> Among StackOverflow users [1], git-credential-store appears several
->> times more popular than any other credential helper. Does this make
->> anyone else uneasy? The docs warn that git-credential-store "stores
->> your passwords unencrypted on disk" [2]. Are users sacrificing
->> security for convenience?
+> From: M Hickford <mirth.hickford@gmail.com>
 > 
-> I definitely think there are better approaches.  However, none of the
-> credential managers for the three major platforms work without a
-> desktop environment, so if someone's logging in over SSH, then there's
-> no more secure option that's going to work for them.  Taylor did
-> mention GCM, but I believe it has the same problem, and even if it
-> didn't, it's written in C#, which isn't portable to many Unices and
-> isn't viable on servers anyway due to dependencies.
-
-Not trying to "sell" GCM on the list, but some small corrections re GCM:
-GCM today is built on .NET 6 (previously named ".NET Core".. yeah, their
-naming sucks :-)) which runs on various Linux distros and FreeBSD (and
-Mac and Windows). Althought admitidely not some of the more obscure Unices
-like AIX or Solaris..
-
-https://learn.microsoft.com/en-gb/dotnet/core/install/linux
-
-GCM also supports storing credentials securely without a desktop
-environment when appropriately configured. On Linux we support at-rest
-encryption via GPG, compatible with the `pass` tool (alongside libsecret stores
-where we have some plans to try and get working w/o a desktop environment).
-
-https://github.com/GitCredentialManager/git-credential-manager/blob/main/docs/credstores.md#gpgpass-compatible-files
-https://www.passwordstore.org/
-
-The problem that others have aluded to with GCM and wider Linux availablity
-is more a question of supportability of providing pre-built binaries from
-our side, not .NET's. GCM is built to link the .NET CLR (the runtime) and is
-bundled, so the required deps. are minimal; mainly: glibc, openssl, zlib.
-
-> Even on Linux desktops, Debian and Ubuntu don't ship the libsecret
-> credential helper, so users have to build it themselves.
+> Previously the docs only described storage helpers.
 > 
-> I have written a tool that lets you access credential helpers on your
-> local machine over an SSH session for trusted machines[0], but it's very
-> preliminary.
+> A concrete example: Git Credential Manager can generate credentials
+> for GitHub and GitLab via OAuth.
+> https://github.com/GitCredentialManager/git-credential-manager
 > 
-> In the ideal world, we'd ship an encrypted store that people could use,
-> but then we have to deal with export regulations and sanctions and
-> nobody wants to do that.  We'd also have to deal with multiple
-> cryptographic libraries for portability and license reasons and nobody
-> wants to do that, either.
+> Signed-off-by: M Hickford <mirth.hickford@gmail.com>
+> ---
+>     Docs: describe how a credential-generating helper works
+>     
+>     Previously the docs only described storage helpers.
+>     
+>     A concrete example: Git Credential Manager can generate credentials for
+>     GitHub and GitLab via OAuth.
+>     https://github.com/GitCredentialManager/git-credential-manager
+>     
+>     Signed-off-by: M Hickford mirth.hickford@gmail.com
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1379%2Fhickford%2Fcredential-generator-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1379/hickford/credential-generator-v1
+> Pull-Request: https://github.com/git/git/pull/1379
+> 
+>  Documentation/gitcredentials.txt | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/gitcredentials.txt b/Documentation/gitcredentials.txt
+> index 80517b4eb2c..72888402e73 100644
+> --- a/Documentation/gitcredentials.txt
+> +++ b/Documentation/gitcredentials.txt
+> @@ -61,7 +61,9 @@ for a password. It is generally configured by adding this to your config:
+>  
+>  Credential helpers, on the other hand, are external programs from which Git can
+>  request both usernames and passwords; they typically interface with secure
+> -storage provided by the OS or other programs.
+> +storage provided by the OS or other programs. Alternatively, a
+> +credential-generating helper might generate credentials for certain servers via
+> +some API.
+>  
+>  To use a helper, you must first select one to use. Git currently
+>  includes the following helpers:
+> @@ -286,8 +288,8 @@ For a `store` or `erase` operation, the helper's output is ignored.
+>  If a helper fails to perform the requested operation or needs to notify
+>  the user of a potential issue, it may write to stderr.
+>  
+> -If it does not support the requested operation (e.g., a read-only store),
+> -it should silently ignore the request.
+> +If it does not support the requested operation (e.g., a read-only store
+> +or generator), it should silently ignore the request.
+>  
+>  If a helper receives any other operation, it should silently ignore the
+>  request. This leaves room for future operations to be added (older
+> 
+> base-commit: 319605f8f00e402f3ea758a02c63534ff800a711
 
-One option rather than shipping (or including in contrib/) any of these
-credential helpers, could we not reference several other popular helpers
-in the docs, and let users make their own choice (but at least some are
-then possibly more discoverable)?
-
->> Firstly, how grave is storing credentials in plaintext? Software
->> development guidelines such as CWE discourage storing credentials in
->> plaintext [3]. Password managers in desktop environments, mobile
->> operating systems and web browsers typically encrypt passwords on disk
->> and guard them behind a master password.
-> 
-> I think there's space for credential managers that operate with major
-> password managers.  Unfortunately, op (the 1Password CLI) isn't open
-> source, although LastPass has an open-source CLI.  If Firefox and/or
-> Chromium can offer command-line functionality to access the password
-> manager, those could be supported.  Such a tool would probably live
-> outside of Git's codebase because I think interacting with some of those
-> tools requires parsing JSON, which we won't want to do in C.
-> 
->> Secondly, the docs recommend git-credential-cache [2] which ships with
->> Git and is equally easy to configure. So why isn't it more popular? My
->> hypothesis: while caching works great for passwords typed from memory,
->> the combination of caching with personal access tokens has poor
->> usability. The unmemorised token is lost when the cache expires, so
->> the user has to generate a new token every session. I suspect GitHub's
->> 2021 decision to stop accepting passwords [4] may have inadvertently
->> pushed users from 'cache' to 'store'.
-> 
-> That may be the case, but I'd much rather people use tokens instead of
-> passwords because they're much more limited and can easily be revoked
-> (or can even just expire).  We know that people are very bad about
-> reusing passwords all over the place, so in the event people do
-> compromise their credentials, they're substantially more limited.
-> 
->> Thirdly, why doesn't everyone use SSH keys? Unlike HTTP remotes,
->> upfront set-up is necessary to clone a public repo. For users
->> unfamiliar with SSH, this set-up may be intimidating. Introducing
->> users new to Git to SSH at the same time is a significant cognitive
->> load.
-> 
-> SSH keys are also more difficult to make work with multiple accounts,
-> and judging from my experience on StackOverflow, that's not an uncommon
-> situation to be in.  I have diligently added entries in the FAQ to cover
-> this, but in general people don't read it unless specifically directed
-> there.
-> 
-> I do think SSH keys in general work well for forwarding to other
-> machines, but in a decent number of corporate environments there are
-> intercepting proxies so everything has to be HTTP.
-> 
-> [0] https://github.com/bk2204/lawn
-
-There are also enterprises that out-right block the use of SSH (either
-techically or as a policy) as they require strict continuous evaluation
-of various security policies, on each token use or refresh/re-generation.
-
-Other scenarios I've seen include *per-request/one-time-use* tokens that
-are cryptographically bound to the device using hardware security modules.
-Not something that SSH is suited for sadly.
+This looks like a good, clarifying addition to the docs!
 
 Thanks,
 Matthew
