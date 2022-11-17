@@ -2,168 +2,137 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 04C47C4332F
-	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 01:45:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68D02C43217
+	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 04:29:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234238AbiKQBpA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Nov 2022 20:45:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43536 "EHLO
+        id S239194AbiKQE3B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Nov 2022 23:29:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238592AbiKQBo4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2022 20:44:56 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D6256B213
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 17:44:53 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id v124-20020a1cac82000000b003cf7a4ea2caso3400917wme.5
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 17:44:53 -0800 (PST)
+        with ESMTP id S233900AbiKQE2z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Nov 2022 23:28:55 -0500
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAB6220F49
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 20:28:53 -0800 (PST)
+Received: by mail-lf1-x135.google.com with SMTP id b3so938148lfv.2
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 20:28:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:references:cc:to:from:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SI/mjTy43VUwJvOzKs6jwOwPZ5BpinhNv4T/DyFFXds=;
-        b=n2iDq1d4dHioUiVSaaYHACG/eUmak941rd0BWdT9beV/wgH58cIS2A6Dbe9kZl52Qp
-         GSZFDMq90Bq8jDhcOKbpix7GXb/k68Is9qyo/8wntkMTMowsoDSrbRQy46/tG2MDoEvp
-         X7OLrgegLychO+d895U/o5iNNcV5PWl5rFHeZXkoekx9UZCUK9vJ7WYfYbNuz+UBpNLA
-         nQxh5JDwSfLUc7dX5z3pVtmlXNwZvrYIriHAzbMCnyi4eAut8m+BOwakGqhEuTHkw3ZG
-         qgiVUvu0+4QavtOUMYkhC515/KGFPwdz2K6g4xJYnhnOWwSNB3Zh14AU1PG7Om6ghxq9
-         dFQg==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=1C6nzya0DHFeA439R2k1K/EAcHfg+nd0WrHolCgBxzY=;
+        b=ZZEUPrDauIz+2XE1D9TNavqFIChWcPCURMStSbfv640ybkq76JwIU9O7mGFTr27jjd
+         NBW5K0xOvZZsgzIAUSg5rqeq9tFp2+//nPrsRZ1d2M1/MIz/ruUjIjshCCa1NGn/Vw7W
+         /jrMe9z08/OeUXXRwy+Im4KK85DOk4rKILZb9s624UfuWY5wJ1EqueAWig/okyTgtbSQ
+         eFrwaIUZcgdVndXeAsD2NjwWL6s7L0PGLaIeB22m0oveLvvM38DVysj/VtlRaQWT8Z8+
+         L/tWkmTNfSve6bRQuNVS1UAhgWH4QqQMbXjvX0Xt7gzvqauZLdGWUnDBnPusoYgVsBrD
+         3AEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:references:cc:to:from:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SI/mjTy43VUwJvOzKs6jwOwPZ5BpinhNv4T/DyFFXds=;
-        b=VUv8iouivFTSinGkjitCCbmGkdeD4EoZwhEI7U9pB47rDOUj+QijCCwvwyTMoYG/eO
-         n+W33B0TuqeFwQsYHH1n8A5vLiZfC8VtMBI1l3aCMBIxp4gByO1NSdNZSR3IZGBBY1yS
-         QX5wBGd1pzuj0VGxi7fmzj9uzeu3JKGIiM2D3+XRF+OIxYILWUa6RDCNmwuVDaOAv7SF
-         43+mX1A2OhVIncrZSiGdsx/cFV6wViEHEqipVifrnj8HkT5x2MSEC0PEOfwRvY4U+k8e
-         ZcsPgUo/f0V/fIhG2+BdOPX4Alsz51YUT4bI/9GtOmvwJKCEJh9rzjtyD8M8+bbqwQuU
-         5Hmw==
-X-Gm-Message-State: ANoB5pmokfA7D67Q7ls4pQ0J/tBrUc+j/AFrWrrRivh7neiYWesNxe6L
-        4hvE9oHTwCj0k9kppArl37L6ofDZgX0=
-X-Google-Smtp-Source: AA0mqf7c6v+i26B21U47/l/KHiKVtE/2yGuOmemOext477+vX7iYVDmPe76aLUf27hfpu0W4D6KXyg==
-X-Received: by 2002:a05:600c:688d:b0:3c3:77c2:cfff with SMTP id fn13-20020a05600c688d00b003c377c2cfffmr3638490wmb.171.1668649491719;
-        Wed, 16 Nov 2022 17:44:51 -0800 (PST)
-Received: from [192.168.2.52] (104.red-88-14-50.dynamicip.rima-tde.net. [88.14.50.104])
-        by smtp.gmail.com with ESMTPSA id m28-20020a05600c3b1c00b003cf37c5ddc0sm4106968wms.22.2022.11.16.17.44.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 17:44:51 -0800 (PST)
-Subject: [PATCH 2/2] branch: clear target branch configuration before copying
- or renaming
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-To:     Git List <git@vger.kernel.org>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-References: <f0b2d46c-2e9c-2630-2870-8ed550dd1606@gmail.com>
-Message-ID: <762c1e8f-fd0c-3b4b-94a0-709d8c9431e4@gmail.com>
-Date:   Thu, 17 Nov 2022 02:44:50 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1C6nzya0DHFeA439R2k1K/EAcHfg+nd0WrHolCgBxzY=;
+        b=ZUMje3LpDGXmoXZ6kR0YYrfQiUP7ahHio+w57hb6T3ob328jrEjwnUUeStrgNJWciY
+         HUdm02B5trCH/jASxfVthn01s3CSesfM+9N3hUI1kiUIGHD07YRwOyBgp2R95KTzqL4S
+         9fDvj70/pZTkSktoeugc/p4WlJCF/yBxvrjJHsyWNKETNyDD++4G7CAO+2gltb4E7L+m
+         i2Ff/7bZM6mNpIoF91dy93EMd1Wse/MTFMpMGacfOEagYSVMYbW124b7rNt8RFYuMbPI
+         aezVvPmuJK8yXW6lot8AaxXUbt+SciKcwZsBXSgR7bulOWCloKUYF3JdVYtXqefSgul6
+         dfyA==
+X-Gm-Message-State: ANoB5pny3wGOVgnW1HUaY1NCt3VYzJUmcbtKinRE0B/PzsYcfOAvxqR7
+        rXN94THGUn36mzEj0Kjg4bKy47TaggJk5AxaDok=
+X-Google-Smtp-Source: AA0mqf6SQjE0l0aAkLObS6xk6t4czWDneXcWvonl0zUWifIStne5I7FxqI5u3URgVX9g+3acDGNQKDPlhyJXo658xpU=
+X-Received: by 2002:a19:4314:0:b0:4a9:6659:40d5 with SMTP id
+ q20-20020a194314000000b004a9665940d5mr359689lfa.516.1668659331856; Wed, 16
+ Nov 2022 20:28:51 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <f0b2d46c-2e9c-2630-2870-8ed550dd1606@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
+ <CABPp-BEZK2KJHY+=Ta3VUzNjJKY=evPiAtp5UQFTVLMD0qreVQ@mail.gmail.com>
+ <0e156172-0670-2832-78cb-c7dfe2599192@github.com> <CABPp-BFNvUQx7exLgqDvzhgn1s=xSFKbJWdr8qfxLTXEFDQQig@mail.gmail.com>
+ <01063560-8f57-4e40-5707-f8d8ecfe6cca@github.com>
+In-Reply-To: <01063560-8f57-4e40-5707-f8d8ecfe6cca@github.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 16 Nov 2022 20:28:00 -0800
+Message-ID: <CABPp-BFsvZeC34=VKN9ir+KM0tx4rt0eiGuyKzrD=OAi9sABNw@mail.gmail.com>
+Subject: Re: [PATCH 00/30] [RFC] extensions.refFormat and packed-refs v2 file format
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, jrnieder@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-There are two problems with -m (rename) and -c (copy) branch operations.
+On Wed, Nov 16, 2022 at 6:45 AM Derrick Stolee <derrickstolee@github.com> wrote:
+>
+> On 11/14/22 9:47 PM, Elijah Newren wrote:
+> > On Sun, Nov 13, 2022 at 4:07 PM Derrick Stolee <derrickstolee@github.com> wrote:
+> >>
+> >> On 11/11/22 6:28 PM, Elijah Newren wrote:
+> >>> On Mon, Nov 7, 2022 at 11:01 AM Derrick Stolee via GitGitGadget
+> >>> <gitgitgadget@gmail.com> wrote:
+[...]
+> >>>>  * (Secondary) Allow using a packed ref format for all refs, dropping loose
+> >>>>    refs and creating a clear way to snapshot all refs at a given point in
+> >>>>    time.
+[...]
+>
+> The reason is in the goal "creating a clear way to snapshot all refs
+> at a given point in time". This is a server-side benefit with no
+> visible benefit to users, immediately.
 
- 1. If we force-rename or force-copy a branch to overwrite another
- branch that already has configuration, the resultant branch ends up
- with the source configuration (if any) mixed with the configuration for
- the overwritten branch.
+Yes, sorry, I just missed it.  I didn't understand it and wrongly
+assumed it was continuing to talk about the implementation details
+rather than the benefit details.  My bad.
 
-	$ git branch upstream
-	$ git branch -t foo upstream  # foo has tracking configuration
-	$ git branch bar              # bar has not
-	$ git branch -M bar foo       # force-rename bar to foo
-	$ git config branch.foo.merge # must return clear
-	refs/heads/upstream
+Thanks for patiently correcting me.
 
- 2. If we repeatedly force-copy a branch to the same name, the branch
- configuration is repeatedly copied each time.
+> The D/F conflicts and case-sensitive parts that could fall from that
+> are not included in my goals. Part of that is because we would need a
+> new reflog format to complete that part. Let's take things one step
+> at a time and handle reflogs after we have ref update performance
+> handled.
 
-	$ git branch upstream
-	$ git branch -t foo upstream  # foo has tracking configuration
-	$ git branch -c foo bar       # bar is a copy of foo
-	$ git branch -C foo bar       # again
-	$ git branch -C foo bar       # ..
-	$ git config --get-all branch.bar.merge # must return one value
-	refs/heads/upstream
-	refs/heads/upstream
-	refs/heads/upstream
+Ah, right, I can see how reflog would affect both of those problems
+now that you highlight it, but it hadn't occurred to me before.
 
-Whenever we copy or move (forced or not) we must make sure that there is
-no residual configuration that will be, probably erroneously, inherited
-by the new branch.  To avoid confusions, clear any branch configuration
-before setting the configuration from the copied or moved branch.
+> >> The biggest benefit on the server side is actually for consistency
+> >> checks. Using a stacked packed-refs (especially with a tip file
+> >> that describes all of the layers) allows an atomic way to take a
+> >> snapshot of the refs and run a checksum operation on their values.
+> >> With loose refs, concurrent updates can modify the checksum during
+> >> its computation. This is a super niche reason for this, but it's
+> >> nice that the performance-only focus also ends up with a design
+> >> that satisfies this goal.
+> >
+> > Ah...so this is the reason for your secondary goal?  Re-reading it
+> > looks like you did state this, I just missed it without the longer
+> > explanation.
+> >
+> > Anyway, it might be worth calling out in your cover letter that there
+> > are (at least) three benefits to this secondary goal of yours -- the
+> > one you list here, plus the two I list above.
+>
+> I suppose I assumed that the D/F and case conflicts were a "known"
+> benefit and a huge motivation of the reftable work.
 
-Signed-off-by: Rubén Justo <rjusto@gmail.com>
----
- builtin/branch.c  | 17 +++++++++++------
- t/t3200-branch.sh | 19 +++++++++++++++++++
- 2 files changed, 30 insertions(+), 6 deletions(-)
+Yes, and I thought you had just found a simpler solution to those
+problems that might not provide all the benefits of reftable (e.g.
+performance with huge numbers of refs) but did solve those particular
+problems.  I've only looked at reftable from the surface from a
+distance, and I was unaware previously that reflog also affected these
+two problems (though it seems obvious in hindsight).  And I do
+remember you calling out that you weren't changing the reflog format
+in your cover letter, but I didn't understand the ramifications of
+that statement at the time.
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index a35e174aae..14664f0278 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -583,12 +583,17 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
- 
- 	strbuf_release(&logmsg);
- 
--	strbuf_addf(&oldsection, "branch.%s", interpreted_oldname);
--	strbuf_addf(&newsection, "branch.%s", interpreted_newname);
--	if (!copy && git_config_rename_section(oldsection.buf, newsection.buf) < 0)
--		die(_("Branch is renamed, but update of config-file failed"));
--	if (copy && strcmp(interpreted_oldname, interpreted_newname) && git_config_copy_section(oldsection.buf, newsection.buf) < 0)
--		die(_("Branch is copied, but update of config-file failed"));
-+	if (strcmp(interpreted_oldname, interpreted_newname)) {
-+		strbuf_addf(&oldsection, "branch.%s", interpreted_oldname);
-+		strbuf_addf(&newsection, "branch.%s", interpreted_newname);
-+
-+		delete_branch_config(interpreted_newname);
-+
-+		if (!copy && git_config_rename_section(oldsection.buf, newsection.buf) < 0)
-+			die(_("Branch is renamed, but update of config-file failed"));
-+		if (copy && git_config_copy_section(oldsection.buf, newsection.buf) < 0)
-+			die(_("Branch is copied, but update of config-file failed"));
-+	}
- 	strbuf_release(&oldref);
- 	strbuf_release(&newref);
- 	strbuf_release(&oldsection);
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 7f605f865b..c3b3d11c28 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -218,6 +218,25 @@ test_expect_success 'git branch -M should leave orphaned HEAD alone' '
- 	)
- '
- 
-+test_expect_success 'git branch -M inherites clean tracking setup' '
-+	test_when_finished git branch -D moved &&
-+	git branch -t main-tracked main &&
-+	git branch non-tracked &&
-+	git branch -M main-tracked moved &&
-+	git branch --unset-upstream moved &&
-+	git branch -M non-tracked moved &&
-+	test_must_fail git branch --unset-upstream moved
-+'
-+
-+test_expect_success 'git branch -C inherites clean tracking setup' '
-+	test_when_finished git branch -D copiable copied &&
-+	git branch -t copiable main &&
-+	git branch -C copiable copied &&
-+	git branch --unset-upstream copied &&
-+	git branch -C copied copiable &&
-+	test_must_fail git branch --unset-upstream copiable
-+'
-+
- test_expect_success 'resulting reflog can be shown by log -g' '
- 	oid=$(git rev-parse HEAD) &&
- 	cat >expect <<-EOF &&
--- 
-2.36.1
+> Instead of trying
+> to solve all of the ref problems at once, I wanted to focus on the
+> subset that I knew could be solved with a simpler solution, leaving
+> the full solution to later steps. It would help to be explicit about
+> how this direction helps solve this problem while also being clear
+> about how it does not solve it completely.
+
+It certainly would have helped me.  :-)
+
+Thanks for explaining all these details.
