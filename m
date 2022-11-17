@@ -2,171 +2,198 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BBD4C43217
-	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 17:29:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C879C4332F
+	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 17:31:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235093AbiKQR3F (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Nov 2022 12:29:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52124 "EHLO
+        id S234963AbiKQRbe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Nov 2022 12:31:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234641AbiKQR3C (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2022 12:29:02 -0500
-Received: from EUR05-AM6-obe.outbound.protection.outlook.com (mail-am6eur05olkn2092.outbound.protection.outlook.com [40.92.91.92])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85E1E2CCBB
-        for <git@vger.kernel.org>; Thu, 17 Nov 2022 09:29:01 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=SkpRs86VxwLljCs7x7PtHMTnXkkiuNe4bdt9foY1aG601txNpb2/yvo9szWuAMdE+NXWXOdqv1hX59+iJvEgyjMSixF2gdtWDnxBKva8jwQTdtnITjO9wIk5X4Hcx30AjhMsmpeBuuv1EDB8FSTKKQqytl1xJFifR/fxlGO/toJeAn2wz5mWun9Hfw7y+LB8Gh+oA6PkSeL5YSbuDF5K2bFbA2+Iidv4mnVTTVzpsQngXbDDjjgPfNZYLx4UOSM+oN7ggLhWuYd8BqJUTm5sAsZIcXNl6c5l4348zXkVew3+aap+eLE7yQGfoVY5QGDp85NezOEINTa7P6nkmnSzpw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vmE0RDIfzOOBFxHnFmli6NBUiWt6KHTvbJzpL+8Y5R8=;
- b=V8Bi+P4VJQ3aZZnwnYNuqflosRmYuRnM2CvDdscFzao9xuSZXBIiUiA75PK/iNzmb9u2/ySTuAopedhSDI2K91OoAtyzd4NSHg5Iqqvwe3eg3Z8lOxV8SXkdJRHqpdXCbj4k0WWA9osX4jV+NkRyLi5ypWYMuFpJ0HZIZmjhbZQyNlG3IrFb5rnRmHofO442mAeNf9fTZnlAt18Ymnh5hQP6DKNUAwtQoGDztBjiEbsJxicAgWCpM6xYsRWcgNcBT9aAdStXxC9pyJMBAchS51lr4zWJXa1/c7313tYXIX9wWPiDnJdSfzgh+CWOLZiktDDPzj0DYUCGyPbfbvr67g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vmE0RDIfzOOBFxHnFmli6NBUiWt6KHTvbJzpL+8Y5R8=;
- b=eHuDu9GrNZlTgqHUdh2ype0z7eTaFICnLgYiFE9ZMOmgfqF9PdeUjzDWx6VMPJazFVQKYUJt/ja2dDtOH047penc3XUY2KF/U5/2UraA5eEveao6NBLKfbiGfKcmkG6KhRYlPGkd4Ztcx4jux+/cxfTz4SGtPKXegAY7ZJ5BE0AvViMhIVlgq/r6NqxFzfVusghqa18+RUVQZ1mdNYzJHQpbyW8vBYaGx6f2YFfFj+Ow1t4B7PSpELrD+7MZ+OzEs+sYMjGpHkVwnqjFypIVMdux/VUh8yjfedhoYP7W+R9s1gN/bE6gT63u+eY3c9qUVfmN2d3TsuP5cKNwgZAYNA==
-Received: from AS2PR03MB9815.eurprd03.prod.outlook.com (2603:10a6:20b:609::16)
- by GV2PR03MB8726.eurprd03.prod.outlook.com (2603:10a6:150:74::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5813.17; Thu, 17 Nov
- 2022 17:28:59 +0000
-Received: from AS2PR03MB9815.eurprd03.prod.outlook.com
- ([fe80::e829:a187:754:6a85]) by AS2PR03MB9815.eurprd03.prod.outlook.com
- ([fe80::e829:a187:754:6a85%3]) with mapi id 15.20.5813.018; Thu, 17 Nov 2022
- 17:28:59 +0000
-Message-ID: <AS2PR03MB9815DCB5C310C4AC7B82D3A6C0069@AS2PR03MB9815.eurprd03.prod.outlook.com>
-Date:   Thu, 17 Nov 2022 09:28:53 -0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.5.0
-Subject: Re: [PATCH] Docs: describe how a credential-generating helper works
-To:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     M Hickford <mirth.hickford@gmail.com>
-References: <pull.1379.git.git.1668217470500.gitgitgadget@gmail.com>
-From:   Matthew John Cheetham <mjcheetham@outlook.com>
-In-Reply-To: <pull.1379.git.git.1668217470500.gitgitgadget@gmail.com>
+        with ESMTP id S240003AbiKQRbX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2022 12:31:23 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D53879E08
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 09:31:18 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id j15so4446360wrq.3
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 09:31:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=c6wHJjTdyBrK56g2gAk5mYVw0IeWsLIgR0Hl32tr2B4=;
+        b=k78X05Kflv1yvx6rFxIdkvfyl6fxVyl0XStWOUacHvv07nExTtfSxOT4tcu/2H/VtW
+         my955JOFA7eDRO97Zlq4yRAPCs/tBfgb0VOvbFxe2GxXSsUtz3f/W2BSbVWQUtQzuouk
+         P0IVmqz4ixM/LExw7tYjJsYXdfGc7puKEsoIsVyOshJfVhKK686DkajZH5mUEjsIajut
+         jxuBa0GA33mDGdpTsZqlp04Yex33+Y/fXMd3kzVG02TU0Gqye1rrQzmMo7eKAIpk9qpP
+         0oXm+sVbcd1FRMDYLLryj/L2wOdSk902RzFJ19G55EhTxsraCtRDEyUwx0m/73OOmlYJ
+         IkvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=c6wHJjTdyBrK56g2gAk5mYVw0IeWsLIgR0Hl32tr2B4=;
+        b=y0S35M72LLx/u+xgO3k5wLZF9X57DF6WgJx1w1clg/8q0NDYovJIK8UvUZy+n5ZHCx
+         XqC/em21Ua2TWxW1jAqEF/5TxvQjPRrJ5xxxNqhPzCBTYo8hTmNnjuu0wUuK/s6rNHgl
+         ZsajuhVzEQHfjD+Rf3TlKzkDZ3GugH6ccNQr9n2IOT3I+of8Z3R6g9FbNpR+y6vuXqsp
+         7pgeNgMQLQual1M7xqHWLfVvTeQP3k0XVQwFaI00HO+5aMrLZD4xOUBk2wZZTZGQZpzh
+         uAHN1RgYz6YkGjRwv4Y6DKVgW20VxUJZyuTAZf59BtjpcuoDRhunQA5x7+e8aOUxvcUd
+         qx2Q==
+X-Gm-Message-State: ANoB5pkxBJJxZZUiTw9nTCiz4Qc/kDoQu2UJb7QFgH3nSrDz25dAjnaq
+        3AB7pVUjHn/L/hsnfiDdo1bNVc/JSmA=
+X-Google-Smtp-Source: AA0mqf4jU21fmhLoEPwb5hn2zwHPc9diQsOLrDDzD+25nMY+KHgg4tTOfIie7ZXqPtCeHWXPpL68tg==
+X-Received: by 2002:a5d:5968:0:b0:236:7005:7e4f with SMTP id e40-20020a5d5968000000b0023670057e4fmr2251158wri.337.1668706276398;
+        Thu, 17 Nov 2022 09:31:16 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z14-20020a7bc7ce000000b003a6125562e1sm1778999wmk.46.2022.11.17.09.31.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Nov 2022 09:31:15 -0800 (PST)
+Message-Id: <pull.1382.git.git.1668706274099.gitgitgadget@gmail.com>
+From:   "Glen Choo via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 17 Nov 2022 17:31:13 +0000
+Subject: [PATCH] object-file: use real paths when adding alternates
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TMN:  [j3rS2JeyeIrqnihz1fdgfQgm/TamJtf/RRytL3en7a8t2lV0XNhE9/dcvmvwegVS]
-X-ClientProxiedBy: BY5PR13CA0013.namprd13.prod.outlook.com
- (2603:10b6:a03:180::26) To AS2PR03MB9815.eurprd03.prod.outlook.com
- (2603:10a6:20b:609::16)
-X-Microsoft-Original-Message-ID: <1d69e66d-81fe-3b30-665f-0f07c0043f57@outlook.com>
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AS2PR03MB9815:EE_|GV2PR03MB8726:EE_
-X-MS-Office365-Filtering-Correlation-Id: 54d6ac43-486b-478b-371f-08dac8c13628
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: sMRBO1j+u5hoXuisDg4nTkV/ILQTUjI1IR5OicUe6Doj6lVE3mGNdW5MIAqV96MRQynZxE6Yqyf2HTNsK/BhLEziKgj78YU+mpoCR/rqEDEnTNnH1taP+0X/IhYrt2IWx+lTVPcMSWew+4gX2Qa1AMaokn3MwIiVfTh1zEQ1jGwMiDhqDMt16UiGDN1Pwzd39c56halK7hHnfINGA/K+tXBcrKiEjhBqnq5VnqX2XdDlNaQcOx5oH5250Rlzky1kvHdegbtLC+v/7g+iPZzAx4U6S81aebMeCJtBCX7Fp2IM5UxRuRR815ONRECPjRFXGgnm/VFIsyP7xq2axx7aQcNIR1gd1P07aaglQJ709eH9Cjno4Id6T2+H77CWUf7oqP5mWTtP8evWMJPTLzxsfcqc0HGqZX20VjQEeNwEpxI7to+YMGI+zznYwgQgTKNzX7BI+0cceINFpJ1DuqWSzjYxneSzLHuvSLbmQ201zCajMBCoaRLl8D0jqKTkwqJmjeJDv+GpZyRbNoNapadH+2jfNdWvmZ1INdGYHvTKr+7io9tZdOH+j6+Mvbs0Q1xEyQz9g9Q2d0I0CGMc5BQqM+FVJDUEiDMUSJ2FE6fNnO+hdLrisDJvLxK4hQAqyKIWEuRxFJ/l+q9sxQuiwa+AkRE27njwU54Z1jUDPTBE6HVMtNzMOvSZR75lECcW7ZEm
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Nm54WU5HVkdUanByWk0xTTR4WWZtTU1JMXRuSDBsZGtVK0pMWGIwYi9wMTdC?=
- =?utf-8?B?U1haTjh0cG5sWUlhenRaN2RHT0NWNmQ5RFgwcHQvRXRDOXk5SGgyUXgzYzFp?=
- =?utf-8?B?UzVISFdXank5N3dub1pQdXdVdFhtSmdGYlZyQ0FrZ2E3NlBEM29lajV1dXYw?=
- =?utf-8?B?Sk54b3RobGk4dXN6OHpLMUpjKzNnSzRwVW92WG1Wek15NWZtTkF1OVZxQytz?=
- =?utf-8?B?WnV1eXI3cXE2b09EZVRrQnhvZjVjeHlhNkFQVVc0WWxERTVUTFBSYXZBRlN3?=
- =?utf-8?B?UEJsVy9qeWxPSE42d0NiYmpJeFhyVnZVTUh1dEZQcktJMEhyUGdXNlRzNDVH?=
- =?utf-8?B?VWxHY0xpK1RiY0YrSGlUc29WN1RyckVBako4K0IyMUxncjdwOXJ2WG9Qcjly?=
- =?utf-8?B?ZDhGUnM0RjBBeTZwL1lRSi9UNGRLVnV3UmZmRm5UODczYUFqem5lTUlSV0gz?=
- =?utf-8?B?bkhQU1I5eHM1L2pGeitxRGRNdU5KV0ptMkFKVUpJS0lZUnc2QnQ0bzByaXE5?=
- =?utf-8?B?WUJvcmJieTdpWjFjU3lPYUM3NjJwQU9TYklhRUxVdU83c05NbjRhWk5jSEk3?=
- =?utf-8?B?djRpNUEra3VySnNyalNlQ0tDaEY2THdQOUY1U2h3LzRjNGp2dzBSNm03Vjlu?=
- =?utf-8?B?azNaMnFRVzVmbnIyMy9wcnRMZEM0bXFpM3hud29CMlhZUnJIS2treUMzZGgw?=
- =?utf-8?B?Qm9xSWw2SlpTYnRHSWw1VUFoRVFtOGJyVjZydFZDN0RpcnhvYzlPd1lWd0NK?=
- =?utf-8?B?YWRuTm80eXd2a0ZpdEFuTkJGc1RUdFFTanpqemNHc0lGY0YyUVB0VXg5azZY?=
- =?utf-8?B?Y1hvQm1ObmNNRWpQamZXd0FCdDV6b0swM2hFakpmWEdmV3VIbUo0UjFhMk1h?=
- =?utf-8?B?UitLWnIzc3UzeXV4NU9Xb2k3VzBzR1pqYXlrUUZveDZCVzBMMFk2SHdyZjBC?=
- =?utf-8?B?ejZ3RWRIdjNvb09rbkRCUTYxUzN3MmpxWGwxQW5jczdtN3dKcEQ1S2pEZjdu?=
- =?utf-8?B?bmQ1ZkVXQzJ3ZHdmb2ovSEd0ZEU4THlEN25Ja3dWejl1MTFVKzZoTHJTdlZ3?=
- =?utf-8?B?dVdCZ01LR2FKMzZuNXBrZ25IOHJTNHd3UlpEeVBPdElsQWVOYllUUnBxRlY2?=
- =?utf-8?B?dTNZOWxwN3BpRm4wN2RhUGg5Si9rSGdtaEVwM2JOR1Y5UVlXNG5mRnJibDkz?=
- =?utf-8?B?Rjc3NFBIUmVGMG1LeWt4cEFJbUxyS2FCWE9sRTZHeDQvaHhrMlF2SDd6ZHJW?=
- =?utf-8?B?WHI3RzROcFVQR3Q3V0RtSHNzdnhEaVVDNEJIVnlSb0kxVW16QmJiOFVhbVA4?=
- =?utf-8?B?QnhPYnYwMjM2ckxBYllqdForUWVlNG5ia2trbUdUZUR2TExEK25BYWhyenF0?=
- =?utf-8?B?TVh6b1pHVzQrRVZEWHBaalNTYTRhM0pXcEdGLzFWOS9pa3J1UWI5b3BWR0VY?=
- =?utf-8?B?dUtidktCbFloeUhHdWx5VjI5b1d0QVhYUjFoZFg0V05mMEkzc0ZmYUhGRE1Z?=
- =?utf-8?B?dm9nSkQzZlh4RmlKdkNCK1BzcFE5RFAyRkdUVDR2b0lScExFR0hidzFncEtr?=
- =?utf-8?B?TlErZitJVk42Q29GczNBeEZvbVlpNHdOQU5qeXlMeks5MHpkQ2tUR3VXcUJQ?=
- =?utf-8?B?YXNYdk5kejUveERtdWk2bGthTVluc0J1cno5ZEo5cmJnY2lNRER6OExYRUFB?=
- =?utf-8?B?aExVajZ6R0w5WklBcXRFeGlEZmZIVWkxZXZMcnhkL0VvTTRicFYvb2s0eG51?=
- =?utf-8?B?OUtTVlNZODR1RUtRN1FCWlR1MFlNUVF1ZzdrMDh1K0VlamdKWHcyNkc5N0Ru?=
- =?utf-8?B?TnZ2c1V5TXMvaXZiWUhUZz09?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 54d6ac43-486b-478b-371f-08dac8c13628
-X-MS-Exchange-CrossTenant-AuthSource: AS2PR03MB9815.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Nov 2022 17:28:59.4206
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV2PR03MB8726
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        Glen Choo <chooglen@google.com>,
+        Glen Choo <chooglen@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-11-11 17:44, M Hickford via GitGitGadget wrote:
+From: Glen Choo <chooglen@google.com>
 
-> From: M Hickford <mirth.hickford@gmail.com>
-> 
-> Previously the docs only described storage helpers.
-> 
-> A concrete example: Git Credential Manager can generate credentials
-> for GitHub and GitLab via OAuth.
-> https://github.com/GitCredentialManager/git-credential-manager
-> 
-> Signed-off-by: M Hickford <mirth.hickford@gmail.com>
-> ---
->     Docs: describe how a credential-generating helper works
->     
->     Previously the docs only described storage helpers.
->     
->     A concrete example: Git Credential Manager can generate credentials for
->     GitHub and GitLab via OAuth.
->     https://github.com/GitCredentialManager/git-credential-manager
->     
->     Signed-off-by: M Hickford mirth.hickford@gmail.com
-> 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1379%2Fhickford%2Fcredential-generator-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1379/hickford/credential-generator-v1
-> Pull-Request: https://github.com/git/git/pull/1379
-> 
->  Documentation/gitcredentials.txt | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/gitcredentials.txt b/Documentation/gitcredentials.txt
-> index 80517b4eb2c..72888402e73 100644
-> --- a/Documentation/gitcredentials.txt
-> +++ b/Documentation/gitcredentials.txt
-> @@ -61,7 +61,9 @@ for a password. It is generally configured by adding this to your config:
->  
->  Credential helpers, on the other hand, are external programs from which Git can
->  request both usernames and passwords; they typically interface with secure
-> -storage provided by the OS or other programs.
-> +storage provided by the OS or other programs. Alternatively, a
-> +credential-generating helper might generate credentials for certain servers via
-> +some API.
->  
->  To use a helper, you must first select one to use. Git currently
->  includes the following helpers:
-> @@ -286,8 +288,8 @@ For a `store` or `erase` operation, the helper's output is ignored.
->  If a helper fails to perform the requested operation or needs to notify
->  the user of a potential issue, it may write to stderr.
->  
-> -If it does not support the requested operation (e.g., a read-only store),
-> -it should silently ignore the request.
-> +If it does not support the requested operation (e.g., a read-only store
-> +or generator), it should silently ignore the request.
->  
->  If a helper receives any other operation, it should silently ignore the
->  request. This leaves room for future operations to be added (older
-> 
-> base-commit: 319605f8f00e402f3ea758a02c63534ff800a711
+When adding an alternate ODB, we check if the alternate has the same
+path as the object dir, and if so, we do nothing. However, that
+comparison does not resolve symlinks. This makes it possible to add the
+object dir as an alternate, which may result in bad behavior. For
+example, it can trick "git repack -a -l -d" (possibly run by "git gc")
+into thinking that all packs come from an alternate and delete all
+objects.
 
-This looks like a good, clarifying addition to the docs!
+	rm -rf test &&
+	git clone https://github.com/git/git test &&
+	(
+	cd test &&
+	ln -s objects .git/alt-objects &&
+	# -c repack.updateserverinfo=false silences a warning about not
+	# being able to update "info/refs", it isn't needed to show the
+	# bad behavior
+	GIT_ALTERNATE_OBJECT_DIRECTORIES=".git/alt-objects" git \
+		-c repack.updateserverinfo=false repack -a -l -d  &&
+	# It's broken!
+	git status
+	# Because there are no more objects!
+	ls .git/objects/pack
+	)
 
-Thanks,
-Matthew
+Fix this by resolving symlinks before comparing the alternate and object
+dir.
+
+Signed-off-by: Glen Choo <chooglen@google.com>
+---
+    object-file: use real paths when adding alternates
+    
+    Here's a bug that got uncovered because of some oddities in how "repo"
+    [1] manages its object directories. With some tracing, I'm quite certain
+    that the mechanism is that the packs are treated as non-local, but I
+    don't understand "git repack" extremely well, so e.g. the test I added
+    seems pretty crude.
+    
+    [1] https://gerrit.googlesource.com/git-repo
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1382%2Fchooglen%2Fobject-file%2Fcheck-alternate-real-path-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1382/chooglen/object-file/check-alternate-real-path-v1
+Pull-Request: https://github.com/git/git/pull/1382
+
+ object-file.c     | 17 ++++++++++++-----
+ t/t7700-repack.sh | 18 ++++++++++++++++++
+ 2 files changed, 30 insertions(+), 5 deletions(-)
+
+diff --git a/object-file.c b/object-file.c
+index 957790098fa..f901dd272d1 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -455,14 +455,16 @@ static int alt_odb_usable(struct raw_object_store *o,
+ 			  struct strbuf *path,
+ 			  const char *normalized_objdir, khiter_t *pos)
+ {
++	int ret = 0;
+ 	int r;
++	struct strbuf real_path = STRBUF_INIT;
+ 
+ 	/* Detect cases where alternate disappeared */
+ 	if (!is_directory(path->buf)) {
+ 		error(_("object directory %s does not exist; "
+ 			"check .git/objects/info/alternates"),
+ 		      path->buf);
+-		return 0;
++		goto cleanup;
+ 	}
+ 
+ 	/*
+@@ -478,11 +480,16 @@ static int alt_odb_usable(struct raw_object_store *o,
+ 		assert(r == 1); /* never used */
+ 		kh_value(o->odb_by_path, p) = o->odb;
+ 	}
+-	if (fspatheq(path->buf, normalized_objdir))
+-		return 0;
++
++	strbuf_realpath(&real_path, path->buf, 1);
++	if (fspatheq(real_path.buf, normalized_objdir))
++		goto cleanup;
+ 	*pos = kh_put_odb_path_map(o->odb_by_path, path->buf, &r);
+ 	/* r: 0 = exists, 1 = never used, 2 = deleted */
+-	return r == 0 ? 0 : 1;
++	ret = r == 0 ? 0 : 1;
++ cleanup:
++	strbuf_release(&real_path);
++	return ret;
+ }
+ 
+ /*
+@@ -596,7 +603,7 @@ static void link_alt_odb_entries(struct repository *r, const char *alt,
+ 		return;
+ 	}
+ 
+-	strbuf_add_absolute_path(&objdirbuf, r->objects->odb->path);
++	strbuf_realpath(&objdirbuf, r->objects->odb->path, 1);
+ 	if (strbuf_normalize_path(&objdirbuf) < 0)
+ 		die(_("unable to normalize object directory: %s"),
+ 		    objdirbuf.buf);
+diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+index 5be483bf887..ce1954d0977 100755
+--- a/t/t7700-repack.sh
++++ b/t/t7700-repack.sh
+@@ -90,6 +90,24 @@ test_expect_success 'loose objects in alternate ODB are not repacked' '
+ 	test_has_duplicate_object false
+ '
+ 
++test_expect_success '--local keeps packs when alternate is objectdir ' '
++	git init alt_symlink &&
++	(
++		cd alt_symlink &&
++		git init &&
++		echo content >file4 &&
++		git add file4 &&
++		git commit -m commit_file4 &&
++		git repack -a &&
++		ls .git/objects/pack/*.pack >../expect &&
++		ln -s objects .git/alt_objects &&
++		echo "$(pwd)/.git/alt_objects" >.git/objects/info/alternates &&
++		git repack -a -d -l &&
++		ls .git/objects/pack/*.pack >../actual
++	) &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'packed obs in alt ODB are repacked even when local repo is packless' '
+ 	mkdir alt_objects/pack &&
+ 	mv .git/objects/pack/* alt_objects/pack &&
+
+base-commit: 319605f8f00e402f3ea758a02c63534ff800a711
+-- 
+gitgitgadget
