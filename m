@@ -2,78 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97E23C433FE
-	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 05:47:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 63D87C433FE
+	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 05:47:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234272AbiKQFrl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Nov 2022 00:47:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44446 "EHLO
+        id S239293AbiKQFrr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Nov 2022 00:47:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239224AbiKQFrE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2022 00:47:04 -0500
+        with ESMTP id S239112AbiKQFrc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2022 00:47:32 -0500
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC82A6EB46
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 21:46:56 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4465766CAA
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 21:47:00 -0800 (PST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.west.internal (Postfix) with ESMTP id 1F8B13201B62;
-        Thu, 17 Nov 2022 00:46:56 -0500 (EST)
+        by mailout.west.internal (Postfix) with ESMTP id A980F3201B64;
+        Thu, 17 Nov 2022 00:46:59 -0500 (EST)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Thu, 17 Nov 2022 00:46:56 -0500
+  by compute3.internal (MEProxy); Thu, 17 Nov 2022 00:47:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
         :content-type:date:date:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm1; t=1668664015; x=1668750415; bh=6ghDXpSjYn
-        poA8T500zX+Op1h2IMSaJywU2suszV+OU=; b=QUWVx1NNGa2tYZknpstWUX7JB2
-        umhYiGSZ+3+txK4awdIGX+xiUFTbuNvBM7zrAD5kKSz6gqXwI6kJ2p7z3ZfsdO/h
-        Bx44xeo9VKoLJXZ+V1SSeC8xByO/QFqOnh5ggvlocdsHgcQ4D4awiATs8dfUv17U
-        H8xIsn+/VCu3rjulpGhc7UWT4vKomeWlpL5ZiU0anPgkCCHpLbe3WGSYgC8kFa78
-        DeXadmQaOYVEbah+ajGFW5r5gkEoeAR+EYwKGXogYOVtdLqA7ijosvi58QblUWkS
-        2MQIc2O8hsCYffwzrBv5wb6Y3tQSvQQDhZpTy0wpr+/T+VADOJ1Vu2GeSZ0A==
+        :subject:to:to; s=fm1; t=1668664019; x=1668750419; bh=balop0vbgh
+        TdhRMvhZbnixgP37p4OA2HhHDTZwWOSzE=; b=U/xK2K6dJTGkOhWtGObxIEo9ey
+        QGc6Hifs9giKgrMksc+vrkTZGxTQjiaCiNNxX6fKiopRJuF58Ea/Q6ZiMB3Y2oqz
+        vNZVOlH+eEyhgbG4362YDO4/Xg1VChq8vZEe6YExM6fITJapn0TINm9LgK08/8ZM
+        eIth5YMg+N4CjP2f8zcghuq8ylLJjeWVIGxY2NV2Tr191LtBo++ZK4buy4dHhBYi
+        IgGs8Wt9KQ4b5nVHLXR0G7Mtr9V1oCXLaLuycB+DPTqGY6voZmZjZOHl86v88o0v
+        yjnjweVpFvyBxzdgrkLqGemtGEYJrdG525qs9BCmByMGF8P0W7qTwEldR3Tw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
         :feedback-id:from:from:in-reply-to:in-reply-to:message-id
         :mime-version:references:reply-to:sender:subject:subject:to:to
         :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm1; t=1668664015; x=1668750415; bh=6ghDXpSjYnpoA8T500zX+Op1h2IM
-        SaJywU2suszV+OU=; b=Kg2bLxLeGYKtpksgWX47FfJfkx5pFDcgFKUYXGruSwlI
-        FBLw2fh7N1vu+Nw7ecFJtPt+tJNYVpjEejogDP6f78+tz8FmrQpRJZ6/wGC5kMTg
-        PbpF03x5ngzDMTGWtak4QNzM+XqALkuIdslupB2X9FljYXb/pAG8l9qi3G9gKhZ8
-        RH1uevcvezmbZq9/XQ9vqy4Z01jitIRE4vulZEp1bOH+h1XCkoiAGvuJut+fJV45
-        Yqyi9kYqrAXB+oBXc7/Z8ZLYdz6vEjMZhLS0aEUNlpYVTMEJ4A+ZDfO54bnbF280
-        nP8/6jB6rk0M7HbDDcPg60lJRBqmCi/mmmtY5KCv3A==
-X-ME-Sender: <xms:z8p1Y1-taohU8yHiHgWsVqMrCNk1_TnN4BncBDrxhmLfvcllsZu9tw>
-    <xme:z8p1Y5tHuWrxVQhdhasMRW9LIsYUnU_Ucy3v27PJJ7vEUYY1eNZZzm9crVf0DYnYN
-    kPTuPW_XZxOc9gxjQ>
-X-ME-Received: <xmr:z8p1YzAXfUvi6KyKYIIEog4eFY9e5g2COtVXp2O2xLE-s9qmgF6GqnPLX9Qw36LFo2T57imYiHbQNUY3PX5CRpkAQ16U_7dGwkUv5qRkKPThf1Y>
+        fm1; t=1668664019; x=1668750419; bh=balop0vbghTdhRMvhZbnixgP37p4
+        OA2HhHDTZwWOSzE=; b=sYduqftH2DCLM39Zdk44ZVoTxUR1Q+9ATu4Z7ErEyzbT
+        R6/3gVi92G5OM7SB3zY5WjKnZE4SZaKCC4W6JQfCiqqltEEtMa/IwPQReAv/WJIo
+        IVCWGt7jxH7aSRhTWNHklccRJYEJGBc7Uf4WctGZJKPnic3Sb1io7lQvCJxtkJe2
+        fIlNX4iCQ0IgDa7s+ozHBuB6kOp908zJ9MC/vvtjXD5UyeicFVtyngTglTIq9q1w
+        fgXo/IGJv/uPv/4/Iqny+/DvC7l8s4cYwq33UxDcQNWY644+OH0VNr4ByAxufqQy
+        tpwHQtNtYxleSyvJNhs73t5YIOydj1yegwC9rR3+MQ==
+X-ME-Sender: <xms:08p1Y_VwX7fygG5DuuQANHMFmGJ1n2VI4PF-WIz8tn_Gah3GKQ2B8w>
+    <xme:08p1Y3lS8bINCppcLMaHh0HKVfZRTD-8KZ2HuEADKa0stP7wc97SqWYe4z1l0jzA0
+    7MX6FxPvpSyR-Qk9Q>
+X-ME-Received: <xmr:08p1Y7Yrxe1VyxSaIPRe_AVTE1F1Vxn3l2ABv3OFq1RQUBa-0oFWz5uzFt-rw3xc0gKlobTMgDq14ahho7YKXWzK7gmUC5Q15y_yR0Dzj2FKCJ8>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrgeejgdeklecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
     uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
     ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
     khhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeigeekle
-    duvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgepfeenucfrrghr
+    duvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgepgeenucfrrghr
     rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-X-ME-Proxy: <xmx:z8p1Y5drO8wR2oPxJgvFuIkEyGYoLrFOZ2heuAtwnMBgWWEwYPZ9vg>
-    <xmx:z8p1Y6M9brVEJPm3ojlVAPCAp_uBO6dYBKIJqa-C5Tj7_mOs90bdwA>
-    <xmx:z8p1Y7lMe_j1J_HxIc6jira24IN5ZXaIIjsYJfkZr-XxYa0cgGVzOw>
-    <xmx:z8p1Y3ow8X_yE8RMW5OAkeVDp2r5lbLZClYtaNfRzo_0L8c-R2ejqQ>
+X-ME-Proxy: <xmx:08p1Y6WM5MbUlSl4Jw3n6No2aSw9c1bpvIZFj6c-MdfmSDa5vpjwDQ>
+    <xmx:08p1Y5nkCwCOP7uCbEGLKILF0SxGw-s09J0Z-AaCJ3nV07TnI-nLaw>
+    <xmx:08p1Y3dnZKCeBfOscTc9OCE0R9MsoUM-hAXIIFUvpo5zZ8b4gIe0ag>
+    <xmx:08p1Y_ikD8wNVU-ewa3u1AJYocp_9caOxCldk8T8kO_tCulbrEK6mw>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Nov 2022 00:46:54 -0500 (EST)
-Received: by pks.im (OpenSMTPD) with ESMTPSA id 966918a5 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-        Thu, 17 Nov 2022 05:46:39 +0000 (UTC)
-Date:   Thu, 17 Nov 2022 06:46:51 +0100
+ 17 Nov 2022 00:46:57 -0500 (EST)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 76a5a5de (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 17 Nov 2022 05:46:43 +0000 (UTC)
+Date:   Thu, 17 Nov 2022 06:46:56 +0100
 From:   Patrick Steinhardt <ps@pks.im>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
         Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v6 4/7] revision: introduce struct to handle exclusions
-Message-ID: <805de80e6461e5f918e4359970eb400b7437fb68.1668663796.git.ps@pks.im>
+Subject: [PATCH v6 5/7] revision: add new parameter to exclude hidden refs
+Message-ID: <d86a3342f61e2f44c976f379aea4a3463fb6fd98.1668663796.git.ps@pks.im>
 References: <cover.1666967670.git.ps@pks.im>
  <cover.1668663795.git.ps@pks.im>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="EKVZS1cP0fVaEMCP"
+        protocol="application/pgp-signature"; boundary="JYJt8rvo33GkNFRB"
 Content-Disposition: inline
 In-Reply-To: <cover.1668663795.git.ps@pks.im>
 Precedence: bulk
@@ -81,276 +81,473 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---EKVZS1cP0fVaEMCP
+--JYJt8rvo33GkNFRB
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-The functions that handle exclusion of refs work on a single string
-list. We're about to add a second mechanism for excluding refs though,
-and it makes sense to reuse much of the same architecture for both kinds
-of exclusion.
+Users can optionally hide refs from remote users in git-upload-pack(1),
+git-receive-pack(1) and others via the `transfer.hideRefs`, but there is
+not an easy way to obtain the list of all visible or hidden refs right
+now. We'll require just that though for a performance improvement in our
+connectivity check.
 
-Introduce a new `struct ref_exclusions` that encapsulates all the logic
-related to excluding refs and move the `struct string_list` that holds
-all wildmatch patterns of excluded refs into it. Rename functions that
-operate on this struct to match its name.
+Add a new option `--exclude-hidden=3D` that excludes any hidden refs from
+the next pseudo-ref like `--all` or `--branches`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/rev-parse.c |  8 ++++----
- revision.c          | 48 +++++++++++++++++++++------------------------
- revision.h          | 27 +++++++++++++++++++------
- 3 files changed, 47 insertions(+), 36 deletions(-)
+ Documentation/rev-list-options.txt |   7 ++
+ builtin/rev-list.c                 |   1 +
+ revision.c                         |  55 +++++++++-
+ revision.h                         |  16 +++
+ t/t6021-rev-list-exclude-hidden.sh | 163 +++++++++++++++++++++++++++++
+ 5 files changed, 241 insertions(+), 1 deletion(-)
+ create mode 100755 t/t6021-rev-list-exclude-hidden.sh
 
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 8f61050bde..7fa5b6991b 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -39,7 +39,7 @@ static int abbrev_ref_strict;
- static int output_sq;
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-op=
+tions.txt
+index 1837509566..ff68e48406 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -195,6 +195,13 @@ respectively, and they must begin with `refs/` when ap=
+plied to `--glob`
+ or `--all`. If a trailing '/{asterisk}' is intended, it must be given
+ explicitly.
 =20
- static int stuck_long;
--static struct string_list *ref_excludes;
-+static struct ref_exclusions ref_excludes =3D REF_EXCLUSIONS_INIT;
-=20
- /*
-  * Some arguments are relevant "revision" arguments,
-@@ -198,7 +198,7 @@ static int show_default(void)
- static int show_reference(const char *refname, const struct object_id *oid,
- 			  int flag UNUSED, void *cb_data UNUSED)
- {
--	if (ref_excluded(ref_excludes, refname))
-+	if (ref_excluded(&ref_excludes, refname))
- 		return 0;
- 	show_rev(NORMAL, oid, refname);
- 	return 0;
-@@ -585,7 +585,7 @@ static void handle_ref_opt(const char *pattern, const c=
-har *prefix)
- 		for_each_glob_ref_in(show_reference, pattern, prefix, NULL);
- 	else
- 		for_each_ref_in(prefix, show_reference, NULL);
--	clear_ref_exclusion(&ref_excludes);
-+	clear_ref_exclusions(&ref_excludes);
- }
-=20
- enum format_type {
-@@ -863,7 +863,7 @@ int cmd_rev_parse(int argc, const char **argv, const ch=
-ar *prefix)
- 			}
- 			if (!strcmp(arg, "--all")) {
- 				for_each_ref(show_reference, NULL);
--				clear_ref_exclusion(&ref_excludes);
-+				clear_ref_exclusions(&ref_excludes);
- 				continue;
- 			}
- 			if (skip_prefix(arg, "--disambiguate=3D", &arg)) {
++--exclude-hidden=3D[receive|uploadpack]::
++	Do not include refs that would be hidden by `git-receive-pack` or
++	`git-upload-pack` by consulting the appropriate `receive.hideRefs` or
++	`uploadpack.hideRefs` configuration along with `transfer.hideRefs` (see
++	linkgit:git-config[1]). This option affects the next pseudo-ref option
++	`--all` or `--glob` and is cleared after processing them.
++
+ --reflog::
+ 	Pretend as if all objects mentioned by reflogs are listed on the
+ 	command line as `<commit>`.
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 3acd93f71e..d42db0b0cc 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -38,6 +38,7 @@ static const char rev_list_usage[] =3D
+ "    --tags\n"
+ "    --remotes\n"
+ "    --stdin\n"
++"    --exclude-hidden=3D[receive|uploadpack]\n"
+ "    --quiet\n"
+ "  ordering output:\n"
+ "    --topo-order\n"
 diff --git a/revision.c b/revision.c
-index be755670e2..fe3ec98f46 100644
+index fe3ec98f46..bc32fb819a 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -1517,35 +1517,30 @@ static void add_rev_cmdline_list(struct rev_info *r=
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "config.h"
+ #include "object-store.h"
+ #include "tag.h"
+ #include "blob.h"
+@@ -1519,11 +1520,17 @@ static void add_rev_cmdline_list(struct rev_info *r=
 evs,
- 	}
- }
 =20
--int ref_excluded(struct string_list *ref_excludes, const char *path)
-+int ref_excluded(const struct ref_exclusions *exclusions, const char *path)
+ int ref_excluded(const struct ref_exclusions *exclusions, const char *path)
  {
++	const char *stripped_path =3D strip_namespace(path);
  	struct string_list_item *item;
--
--	if (!ref_excludes)
--		return 0;
--	for_each_string_list_item(item, ref_excludes) {
-+	for_each_string_list_item(item, &exclusions->excluded_refs) {
++
+ 	for_each_string_list_item(item, &exclusions->excluded_refs) {
  		if (!wildmatch(item->string, path, 0))
  			return 1;
  	}
++
++	if (ref_is_hidden(stripped_path, path, &exclusions->hidden_refs))
++		return 1;
++
  	return 0;
  }
 =20
--void clear_ref_exclusion(struct string_list **ref_excludes_p)
-+void init_ref_exclusions(struct ref_exclusions *exclusions)
+@@ -1536,6 +1543,8 @@ void init_ref_exclusions(struct ref_exclusions *exclu=
+sions)
+ void clear_ref_exclusions(struct ref_exclusions *exclusions)
  {
--	if (*ref_excludes_p) {
--		string_list_clear(*ref_excludes_p, 0);
--		free(*ref_excludes_p);
--	}
--	*ref_excludes_p =3D NULL;
-+	struct ref_exclusions blank =3D REF_EXCLUSIONS_INIT;
-+	memcpy(exclusions, &blank, sizeof(*exclusions));
+ 	string_list_clear(&exclusions->excluded_refs, 0);
++	string_list_clear(&exclusions->hidden_refs, 0);
++	exclusions->hidden_refs_configured =3D 0;
  }
 =20
--void add_ref_exclusion(struct string_list **ref_excludes_p, const char *ex=
-clude)
-+void clear_ref_exclusions(struct ref_exclusions *exclusions)
- {
--	if (!*ref_excludes_p) {
--		CALLOC_ARRAY(*ref_excludes_p, 1);
--		(*ref_excludes_p)->strdup_strings =3D 1;
--	}
--	string_list_append(*ref_excludes_p, exclude);
-+	string_list_clear(&exclusions->excluded_refs, 0);
-+}
-+
-+void add_ref_exclusion(struct ref_exclusions *exclusions, const char *excl=
+ void add_ref_exclusion(struct ref_exclusions *exclusions, const char *excl=
 ude)
-+{
-+	string_list_append(&exclusions->excluded_refs, exclude);
+@@ -1543,6 +1552,35 @@ void add_ref_exclusion(struct ref_exclusions *exclus=
+ions, const char *exclude)
+ 	string_list_append(&exclusions->excluded_refs, exclude);
  }
 =20
- struct all_refs_cb {
-@@ -1563,7 +1558,7 @@ static int handle_one_ref(const char *path, const str=
-uct object_id *oid,
- 	struct all_refs_cb *cb =3D cb_data;
- 	struct object *object;
-=20
--	if (ref_excluded(cb->all_revs->ref_excludes, path))
-+	if (ref_excluded(&cb->all_revs->ref_excludes, path))
- 	    return 0;
-=20
- 	object =3D get_reference(cb->all_revs, path, oid, cb->all_flags);
-@@ -1901,6 +1896,7 @@ void repo_init_revisions(struct repository *r,
-=20
- 	init_display_notes(&revs->notes_opt);
- 	list_objects_filter_init(&revs->filter);
-+	init_ref_exclusions(&revs->ref_excludes);
- }
-=20
- static void add_pending_commit_list(struct rev_info *revs,
-@@ -2689,10 +2685,10 @@ static int handle_revision_pseudo_opt(struct rev_in=
-fo *revs,
- 			init_all_refs_cb(&cb, revs, *flags);
- 			other_head_refs(handle_one_ref, &cb);
- 		}
--		clear_ref_exclusion(&revs->ref_excludes);
-+		clear_ref_exclusions(&revs->ref_excludes);
- 	} else if (!strcmp(arg, "--branches")) {
- 		handle_refs(refs, revs, *flags, refs_for_each_branch_ref);
--		clear_ref_exclusion(&revs->ref_excludes);
-+		clear_ref_exclusions(&revs->ref_excludes);
- 	} else if (!strcmp(arg, "--bisect")) {
- 		read_bisect_terms(&term_bad, &term_good);
- 		handle_refs(refs, revs, *flags, for_each_bad_bisect_ref);
-@@ -2701,15 +2697,15 @@ static int handle_revision_pseudo_opt(struct rev_in=
-fo *revs,
- 		revs->bisect =3D 1;
- 	} else if (!strcmp(arg, "--tags")) {
- 		handle_refs(refs, revs, *flags, refs_for_each_tag_ref);
--		clear_ref_exclusion(&revs->ref_excludes);
-+		clear_ref_exclusions(&revs->ref_excludes);
- 	} else if (!strcmp(arg, "--remotes")) {
- 		handle_refs(refs, revs, *flags, refs_for_each_remote_ref);
--		clear_ref_exclusion(&revs->ref_excludes);
-+		clear_ref_exclusions(&revs->ref_excludes);
- 	} else if ((argcount =3D parse_long_opt("glob", argv, &optarg))) {
- 		struct all_refs_cb cb;
- 		init_all_refs_cb(&cb, revs, *flags);
- 		for_each_glob_ref(handle_one_ref, optarg, &cb);
--		clear_ref_exclusion(&revs->ref_excludes);
-+		clear_ref_exclusions(&revs->ref_excludes);
- 		return argcount;
- 	} else if ((argcount =3D parse_long_opt("exclude", argv, &optarg))) {
- 		add_ref_exclusion(&revs->ref_excludes, optarg);
-@@ -2718,17 +2714,17 @@ static int handle_revision_pseudo_opt(struct rev_in=
-fo *revs,
- 		struct all_refs_cb cb;
- 		init_all_refs_cb(&cb, revs, *flags);
- 		for_each_glob_ref_in(handle_one_ref, optarg, "refs/heads/", &cb);
--		clear_ref_exclusion(&revs->ref_excludes);
-+		clear_ref_exclusions(&revs->ref_excludes);
- 	} else if (skip_prefix(arg, "--tags=3D", &optarg)) {
- 		struct all_refs_cb cb;
- 		init_all_refs_cb(&cb, revs, *flags);
- 		for_each_glob_ref_in(handle_one_ref, optarg, "refs/tags/", &cb);
--		clear_ref_exclusion(&revs->ref_excludes);
-+		clear_ref_exclusions(&revs->ref_excludes);
- 	} else if (skip_prefix(arg, "--remotes=3D", &optarg)) {
- 		struct all_refs_cb cb;
- 		init_all_refs_cb(&cb, revs, *flags);
- 		for_each_glob_ref_in(handle_one_ref, optarg, "refs/remotes/", &cb);
--		clear_ref_exclusion(&revs->ref_excludes);
-+		clear_ref_exclusions(&revs->ref_excludes);
- 	} else if (!strcmp(arg, "--reflog")) {
- 		add_reflogs_to_pending(revs, *flags);
- 	} else if (!strcmp(arg, "--indexed-objects")) {
-diff --git a/revision.h b/revision.h
-index afe1b77985..5c8ab16047 100644
---- a/revision.h
-+++ b/revision.h
-@@ -81,6 +81,21 @@ struct rev_cmdline_info {
- 	} *rev;
- };
-=20
-+struct ref_exclusions {
-+	/*
-+	 * Excluded refs is a list of wildmatch patterns. If any of the
-+	 * patterns matches, the reference will be excluded.
-+	 */
-+	struct string_list excluded_refs;
++struct exclude_hidden_refs_cb {
++	struct ref_exclusions *exclusions;
++	const char *section;
 +};
 +
-+/**
-+ * Initialize a `struct ref_exclusions` with a macro.
-+ */
-+#define REF_EXCLUSIONS_INIT { \
-+	.excluded_refs =3D STRING_LIST_INIT_DUP, \
++static int hide_refs_config(const char *var, const char *value, void *cb_d=
+ata)
++{
++	struct exclude_hidden_refs_cb *cb =3D cb_data;
++	cb->exclusions->hidden_refs_configured =3D 1;
++	return parse_hide_refs_config(var, value, cb->section,
++				      &cb->exclusions->hidden_refs);
 +}
 +
- struct oidset;
- struct topo_walk_info;
-=20
-@@ -103,7 +118,7 @@ struct rev_info {
- 	struct list_objects_filter_options filter;
-=20
- 	/* excluding from --branches, --refs, etc. expansion */
--	struct string_list *ref_excludes;
-+	struct ref_exclusions ref_excludes;
-=20
- 	/* Basic information */
- 	const char *prefix;
-@@ -439,12 +454,12 @@ void mark_trees_uninteresting_sparse(struct repositor=
-y *r, struct oidset *trees)
- void show_object_with_name(FILE *, struct object *, const char *);
++void exclude_hidden_refs(struct ref_exclusions *exclusions, const char *se=
+ction)
++{
++	struct exclude_hidden_refs_cb cb;
++
++	if (strcmp(section, "receive") && strcmp(section, "uploadpack"))
++		die(_("unsupported section for hidden refs: %s"), section);
++
++	if (exclusions->hidden_refs_configured)
++		die(_("--exclude-hidden=3D passed more than once"));
++
++	cb.exclusions =3D exclusions;
++	cb.section =3D section;
++
++	git_config(hide_refs_config, &cb);
++}
++
+ struct all_refs_cb {
+ 	int all_flags;
+ 	int warned_bad_reflog;
+@@ -2221,7 +2259,7 @@ static int handle_revision_opt(struct rev_info *revs,=
+ int argc, const char **arg
+ 	    !strcmp(arg, "--bisect") || starts_with(arg, "--glob=3D") ||
+ 	    !strcmp(arg, "--indexed-objects") ||
+ 	    !strcmp(arg, "--alternate-refs") ||
+-	    starts_with(arg, "--exclude=3D") ||
++	    starts_with(arg, "--exclude=3D") || starts_with(arg, "--exclude-hidde=
+n=3D") ||
+ 	    starts_with(arg, "--branches=3D") || starts_with(arg, "--tags=3D") ||
+ 	    starts_with(arg, "--remotes=3D") || starts_with(arg, "--no-walk=3D"))
+ 	{
+@@ -2687,6 +2725,8 @@ static int handle_revision_pseudo_opt(struct rev_info=
+ *revs,
+ 		}
+ 		clear_ref_exclusions(&revs->ref_excludes);
+ 	} else if (!strcmp(arg, "--branches")) {
++		if (revs->ref_excludes.hidden_refs_configured)
++			return error(_("--exclude-hidden cannot be used together with --branche=
+s"));
+ 		handle_refs(refs, revs, *flags, refs_for_each_branch_ref);
+ 		clear_ref_exclusions(&revs->ref_excludes);
+ 	} else if (!strcmp(arg, "--bisect")) {
+@@ -2696,9 +2736,13 @@ static int handle_revision_pseudo_opt(struct rev_inf=
+o *revs,
+ 			    for_each_good_bisect_ref);
+ 		revs->bisect =3D 1;
+ 	} else if (!strcmp(arg, "--tags")) {
++		if (revs->ref_excludes.hidden_refs_configured)
++			return error(_("--exclude-hidden cannot be used together with --tags"));
+ 		handle_refs(refs, revs, *flags, refs_for_each_tag_ref);
+ 		clear_ref_exclusions(&revs->ref_excludes);
+ 	} else if (!strcmp(arg, "--remotes")) {
++		if (revs->ref_excludes.hidden_refs_configured)
++			return error(_("--exclude-hidden cannot be used together with --remotes=
+"));
+ 		handle_refs(refs, revs, *flags, refs_for_each_remote_ref);
+ 		clear_ref_exclusions(&revs->ref_excludes);
+ 	} else if ((argcount =3D parse_long_opt("glob", argv, &optarg))) {
+@@ -2710,18 +2754,27 @@ static int handle_revision_pseudo_opt(struct rev_in=
+fo *revs,
+ 	} else if ((argcount =3D parse_long_opt("exclude", argv, &optarg))) {
+ 		add_ref_exclusion(&revs->ref_excludes, optarg);
+ 		return argcount;
++	} else if ((argcount =3D parse_long_opt("exclude-hidden", argv, &optarg))=
+) {
++		exclude_hidden_refs(&revs->ref_excludes, optarg);
++		return argcount;
+ 	} else if (skip_prefix(arg, "--branches=3D", &optarg)) {
+ 		struct all_refs_cb cb;
++		if (revs->ref_excludes.hidden_refs_configured)
++			return error(_("--exclude-hidden cannot be used together with --branche=
+s"));
+ 		init_all_refs_cb(&cb, revs, *flags);
+ 		for_each_glob_ref_in(handle_one_ref, optarg, "refs/heads/", &cb);
+ 		clear_ref_exclusions(&revs->ref_excludes);
+ 	} else if (skip_prefix(arg, "--tags=3D", &optarg)) {
+ 		struct all_refs_cb cb;
++		if (revs->ref_excludes.hidden_refs_configured)
++			return error(_("--exclude-hidden cannot be used together with --tags"));
+ 		init_all_refs_cb(&cb, revs, *flags);
+ 		for_each_glob_ref_in(handle_one_ref, optarg, "refs/tags/", &cb);
+ 		clear_ref_exclusions(&revs->ref_excludes);
+ 	} else if (skip_prefix(arg, "--remotes=3D", &optarg)) {
+ 		struct all_refs_cb cb;
++		if (revs->ref_excludes.hidden_refs_configured)
++			return error(_("--exclude-hidden cannot be used together with --remotes=
+"));
+ 		init_all_refs_cb(&cb, revs, *flags);
+ 		for_each_glob_ref_in(handle_one_ref, optarg, "refs/remotes/", &cb);
+ 		clear_ref_exclusions(&revs->ref_excludes);
+diff --git a/revision.h b/revision.h
+index 5c8ab16047..adb810c2f8 100644
+--- a/revision.h
++++ b/revision.h
+@@ -87,6 +87,19 @@ struct ref_exclusions {
+ 	 * patterns matches, the reference will be excluded.
+ 	 */
+ 	struct string_list excluded_refs;
++
++	/*
++	 * Hidden refs is a list of patterns that is to be hidden via
++	 * `ref_is_hidden()`.
++	 */
++	struct string_list hidden_refs;
++
++	/*
++	 * Indicates whether hidden refs have been configured. This is to
++	 * distinguish between no hidden refs existing and hidden refs not
++	 * being parsed.
++	 */
++	char hidden_refs_configured;
+ };
 =20
  /**
-- * Helpers to check if a "struct string_list" item matches with
-- * wildmatch().
-+ * Helpers to check if a reference should be excluded.
+@@ -94,6 +107,7 @@ struct ref_exclusions {
   */
--int ref_excluded(struct string_list *, const char *path);
--void clear_ref_exclusion(struct string_list **);
--void add_ref_exclusion(struct string_list **, const char *exclude);
-+int ref_excluded(const struct ref_exclusions *exclusions, const char *path=
+ #define REF_EXCLUSIONS_INIT { \
+ 	.excluded_refs =3D STRING_LIST_INIT_DUP, \
++	.hidden_refs =3D STRING_LIST_INIT_DUP, \
+ }
+=20
+ struct oidset;
+@@ -456,10 +470,12 @@ void show_object_with_name(FILE *, struct object *, c=
+onst char *);
+ /**
+  * Helpers to check if a reference should be excluded.
+  */
++
+ int ref_excluded(const struct ref_exclusions *exclusions, const char *path=
 );
-+void init_ref_exclusions(struct ref_exclusions *);
-+void clear_ref_exclusions(struct ref_exclusions *);
-+void add_ref_exclusion(struct ref_exclusions *, const char *exclude);
+ void init_ref_exclusions(struct ref_exclusions *);
+ void clear_ref_exclusions(struct ref_exclusions *);
+ void add_ref_exclusion(struct ref_exclusions *, const char *exclude);
++void exclude_hidden_refs(struct ref_exclusions *, const char *section);
 =20
  /**
   * This function can be used if you want to add commit objects as revision
+diff --git a/t/t6021-rev-list-exclude-hidden.sh b/t/t6021-rev-list-exclude-=
+hidden.sh
+new file mode 100755
+index 0000000000..32b2b09413
+--- /dev/null
++++ b/t/t6021-rev-list-exclude-hidden.sh
+@@ -0,0 +1,163 @@
++#!/bin/sh
++
++test_description=3D'git rev-list --exclude-hidden test'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	test_commit_bulk --id=3Dcommit --ref=3Drefs/heads/branch 1 &&
++	COMMIT=3D$(git rev-parse refs/heads/branch) &&
++	test_commit_bulk --id=3Dtag --ref=3Drefs/tags/lightweight 1 &&
++	TAG=3D$(git rev-parse refs/tags/lightweight) &&
++	test_commit_bulk --id=3Dhidden --ref=3Drefs/hidden/commit 1 &&
++	HIDDEN=3D$(git rev-parse refs/hidden/commit) &&
++	test_commit_bulk --id=3Dnamespace --ref=3Drefs/namespaces/namespace/refs/=
+namespaced/commit 1 &&
++	NAMESPACE=3D$(git rev-parse refs/namespaces/namespace/refs/namespaced/com=
+mit)
++'
++
++test_expect_success 'invalid section' '
++	echo "fatal: unsupported section for hidden refs: unsupported" >expected =
+&&
++	test_must_fail git rev-list --exclude-hidden=3Dunsupported 2>err &&
++	test_cmp expected err
++'
++
++for section in receive uploadpack
++do
++	test_expect_success "$section: passed multiple times" '
++		echo "fatal: --exclude-hidden=3D passed more than once" >expected &&
++		test_must_fail git rev-list --exclude-hidden=3D$section --exclude-hidden=
+=3D$section 2>err &&
++		test_cmp expected err
++	'
++
++	test_expect_success "$section: without hiddenRefs" '
++		git rev-list --exclude-hidden=3D$section --all >out &&
++		cat >expected <<-EOF &&
++		$NAMESPACE
++		$HIDDEN
++		$TAG
++		$COMMIT
++		EOF
++		test_cmp expected out
++	'
++
++	test_expect_success "$section: hidden via transfer.hideRefs" '
++		git -c transfer.hideRefs=3Drefs/hidden/ rev-list --exclude-hidden=3D$sec=
+tion --all >out &&
++		cat >expected <<-EOF &&
++		$NAMESPACE
++		$TAG
++		$COMMIT
++		EOF
++		test_cmp expected out
++	'
++
++	test_expect_success "$section: hidden via $section.hideRefs" '
++		git -c $section.hideRefs=3Drefs/hidden/ rev-list --exclude-hidden=3D$sec=
+tion --all >out &&
++		cat >expected <<-EOF &&
++		$NAMESPACE
++		$TAG
++		$COMMIT
++		EOF
++		test_cmp expected out
++	'
++
++	test_expect_success "$section: respects both transfer.hideRefs and $secti=
+on.hideRefs" '
++		git -c transfer.hideRefs=3Drefs/tags/ -c $section.hideRefs=3Drefs/hidden=
+/ rev-list --exclude-hidden=3D$section --all >out &&
++		cat >expected <<-EOF &&
++		$NAMESPACE
++		$COMMIT
++		EOF
++		test_cmp expected out
++	'
++
++	test_expect_success "$section: negation without hidden refs marks everyth=
+ing as uninteresting" '
++		git rev-list --all --exclude-hidden=3D$section --not --all >out &&
++		test_must_be_empty out
++	'
++
++	test_expect_success "$section: negation with hidden refs marks them as in=
+teresting" '
++		git -c transfer.hideRefs=3Drefs/hidden/ rev-list --all --exclude-hidden=
+=3D$section --not --all >out &&
++		cat >expected <<-EOF &&
++		$HIDDEN
++		EOF
++		test_cmp expected out
++	'
++
++	test_expect_success "$section: hidden refs and excludes work together" '
++		git -c transfer.hideRefs=3Drefs/hidden/ rev-list --exclude=3Drefs/tags/*=
+ --exclude-hidden=3D$section --all >out &&
++		cat >expected <<-EOF &&
++		$NAMESPACE
++		$COMMIT
++		EOF
++		test_cmp expected out
++	'
++
++	test_expect_success "$section: excluded hidden refs get reset" '
++		git -c transfer.hideRefs=3Drefs/ rev-list --exclude-hidden=3D$section --=
+all --all >out &&
++		cat >expected <<-EOF &&
++		$NAMESPACE
++		$HIDDEN
++		$TAG
++		$COMMIT
++		EOF
++		test_cmp expected out
++	'
++
++	test_expect_success "$section: excluded hidden refs can be used with mult=
+iple pseudo-refs" '
++		git -c transfer.hideRefs=3Drefs/ rev-list --exclude-hidden=3D$section --=
+all --exclude-hidden=3D$section --all >out &&
++		test_must_be_empty out
++	'
++
++	test_expect_success "$section: works with --glob" '
++		git -c transfer.hideRefs=3Drefs/hidden/ rev-list --exclude-hidden=3D$sec=
+tion --glob=3Drefs/h* >out &&
++		cat >expected <<-EOF &&
++		$COMMIT
++		EOF
++		test_cmp expected out
++	'
++
++	test_expect_success "$section: operates on stripped refs by default" '
++		GIT_NAMESPACE=3Dnamespace git -c transfer.hideRefs=3Drefs/namespaced/ re=
+v-list --exclude-hidden=3D$section --all >out &&
++		cat >expected <<-EOF &&
++		$HIDDEN
++		$TAG
++		$COMMIT
++		EOF
++		test_cmp expected out
++	'
++
++	test_expect_success "$section: does not hide namespace by default" '
++		GIT_NAMESPACE=3Dnamespace git -c transfer.hideRefs=3Drefs/namespaces/nam=
+espace/ rev-list --exclude-hidden=3D$section --all >out &&
++		cat >expected <<-EOF &&
++		$NAMESPACE
++		$HIDDEN
++		$TAG
++		$COMMIT
++		EOF
++		test_cmp expected out
++	'
++
++	test_expect_success "$section: can operate on unstripped refs" '
++		GIT_NAMESPACE=3Dnamespace git -c transfer.hideRefs=3D^refs/namespaces/na=
+mespace/ rev-list --exclude-hidden=3D$section --all >out &&
++		cat >expected <<-EOF &&
++		$HIDDEN
++		$TAG
++		$COMMIT
++		EOF
++		test_cmp expected out
++	'
++
++	for pseudoopt in remotes branches tags
++	do
++		test_expect_success "$section: fails with --$pseudoopt" '
++			test_must_fail git rev-list --exclude-hidden=3D$section --$pseudoopt 2>=
+err &&
++			test_i18ngrep "error: --exclude-hidden cannot be used together with --$=
+pseudoopt" err
++		'
++
++		test_expect_success "$section: fails with --$pseudoopt=3Dpattern" '
++			test_must_fail git rev-list --exclude-hidden=3D$section --$pseudoopt=3D=
+pattern 2>err &&
++			test_i18ngrep "error: --exclude-hidden cannot be used together with --$=
+pseudoopt" err
++		'
++	done
++done
++
++test_done
 --=20
 2.38.1
 
 
---EKVZS1cP0fVaEMCP
+--JYJt8rvo33GkNFRB
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmN1yssACgkQVbJhu7ck
-PpQJnw/8Cmm+AVSUUO6ACSiWA7pOrySkCWoxwM0m7hLI26UabsOvkm12yDjO76uJ
-BLsvMNsvO5FUJnHn4PfgcuH0wKKlutTFsvMqPLMxhVomDJGbgoKQ37I7gL70C16K
-jR4CGPcHwIme8Y3QZIN86QuC94R8JCqaVB4o0IxbfCk7Q/nGn7nSumQ3JF365X9t
-anOA25jDNx9TQixIPAPmxx3WcDd7ruqcv5UXKTSwHs3BIiptuwATSnAtRxJLEKCZ
-FJhV2F7PHpxC3oVH+0+Pa2yb4kjFpLYP8jEdbjKQlKTUfgNEsRxsNU5d0nZEPjcn
-QWgmc49HWVs4wGxx+H7XFfAhGNYVpCklrotrhtKAclvx/QpxsH5b542oSPQRzvLY
-IGuZ1DdtHY+5rkxed4wovGE8iytkmNs7BhBMvDA1lzYgBBzRNJdWSppTCL5Qv6fk
-x1bHbM9pkKh2RERXMy8NFRIz5zIn7wQrhIaDPsklfKrO4TT68gOtnJMm1NJ1kMXy
-0ecDHmUYaGPoUa9qLwLWamU5k/8Bf/eCP4a/b2ARA+vnZH0Zd7oc4eeNOY8x4Lpe
-qyILADGncvGgFbCMsmjrHUoAgbLdNyk3X+krcfFhU9q+oLzGGtXk4GkOQQS76Fcm
-+hqejrdpl6yBXjB6TJfCuqyiqfzfQTudh2MzE7zd7hmkrbdXCeI=
-=jbWG
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmN1ys8ACgkQVbJhu7ck
+PpTiNBAArRhawX9EuTa8kI5H/khe+FoqA5Nnidtik7Y0Xr3gP3w5kRZmDl71R+X2
++XmFznKI5EPWUcJ/K3sneRiXmPBHWK/vR1DEk5AAnosNpcp8BtCZiFKkhnKGL/Dh
+/E03Qa1F0aJ+vI7P1UWVHDAlOWUrz1VienRkZ1Ihxx7agHw7rpdITGSJz3FYRjXB
+I7j5YtDd3ujJViP9S3KnXUD5A9ycYXEd3ieusRwKMW0/YkSyLptRcEIeBgAQX0qT
+y6WiGOZHQY9XtXn5Fo3QoMKjSKXkN5OBuz4Xa85GILxlueBy6JMywK1f+TfDM8n5
+srA9FZWxPpoDMiyeIcksI/DZMRqwETcinWbI2eeGUwjrvaiOAI/X7uSHx5+cnRSC
+n2i+UIJOdBEi7x4Lho7f24AbFyoU6EJsAsopNr6rShuIcprNRuWfS67HzMP7vr3c
+ccc6coXWUU130kfPPyUgFfeDs3BJuop44aQJhwaDcc2svpQoRmv5XWutYSLHGNuC
+RPW9J2tu86b3rDJtV1pac+ADa7s1VRAygQcZiVbp/j1X9WG5+RXz93RTGZ1eSMgn
+V64Qvw+u9n3e4Av34Qi0hxo3U4CtRtRGkc6GaqLdQEISzg8bIw7mx/PjCz7P20uo
+D//QY70rH3+u4lZrQh+s3fUWqODnIAvJWhIVbHP0dDIKN9JJeNM=
+=CAzR
 -----END PGP SIGNATURE-----
 
---EKVZS1cP0fVaEMCP--
+--JYJt8rvo33GkNFRB--
