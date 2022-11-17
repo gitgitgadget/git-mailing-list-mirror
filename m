@@ -2,73 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 598A1C4332F
-	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 21:55:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B436C433FE
+	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 21:58:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240911AbiKQVzl (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Nov 2022 16:55:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34434 "EHLO
+        id S241104AbiKQV6K (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Nov 2022 16:58:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234814AbiKQVzk (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2022 16:55:40 -0500
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86F466D48A
-        for <git@vger.kernel.org>; Thu, 17 Nov 2022 13:55:39 -0800 (PST)
-Received: by mail-io1-xd2f.google.com with SMTP id p141so2486883iod.6
-        for <git@vger.kernel.org>; Thu, 17 Nov 2022 13:55:39 -0800 (PST)
+        with ESMTP id S241106AbiKQV5l (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2022 16:57:41 -0500
+Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80DA97A37D
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 13:57:09 -0800 (PST)
+Received: by mail-il1-x134.google.com with SMTP id x16so1635812ilm.5
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 13:57:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=DlV5hKectYDWHRWEHzIjV03ggwFtrqIfokcQOxEiL/Q=;
-        b=z5+PL461otWI9HFea+5neDoFhVLrx3DiOQXI1qHXnImcjaR5QdcreYBsqO4AjZKm7P
-         Gr5owwgEn9a7N3Dn1FbAG8jkm2lSKJTuuqD0Zw7DCj2ZLJfJsRHFXt563GSa1rt5n0vn
-         ttQVD6flnXGcFK3yGSm/SYYGxDeQRB2yRHqUF1nMClTcwOY9keLgVEpB44PlNegwyPxy
-         XNeIKLWfHlPhYXNScqne60JTO1mxaQvZqaSv9/ivufwx9Vnt1KKpHjg6IgXQoHvqLs34
-         1xk0c4tDuTqtB+4MGH1jZ43XijM90vNi/WWdB3caQTmEwAaac+YeREShsBMJcv+iN/EJ
-         3vOg==
+        bh=/99go28p/v1c206jgVZwjP9v35Be1INRq/BwT7j9gFM=;
+        b=YasBSVi9FEfHcr78KoCTZNCGFgSRU68IZ5GG0xqg3mnG48UnSGMuwlSh6B2yKx8lKV
+         V1Xo0qun3m8knOHytyYJtQofPZGdq1CQSPGphe1km5o25TQYNosQo3hJRE/r6731lfEq
+         XhWFYbaML5Nv08o2QyLGHxdkq9pcPJh2FHtNkEmaZJG7237/YBePFZ6u621t1+4HkMFu
+         bjlSgNCsNNO8SELC9kHHx8+K9FZ1S7AOxmWzskZ4pbfZZOwPD+GxDIJa/xks8gRfZIpn
+         Y8YHRxg9RW1q0gunLmAKDTE6HCjqLxfFTEAZ6acqyqKVgcvW169PY4Q3LRI+gQ7qE6/F
+         zVCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DlV5hKectYDWHRWEHzIjV03ggwFtrqIfokcQOxEiL/Q=;
-        b=iqNEcoh/Wgvztpb9ONRuI96Qymw7UCvs/x0XUh6C1McGp51wBGXmgKCF6nIEM5zbHe
-         ecYeQFDQwKUkD4SAJRfTkN5V6SXJCkpf2RLP18kRT4G5VBna/ysC3CNrvAi2c6ZqntDw
-         +RXMC4+63E9e8eb6hrK8ltHNzc74n+qY7OcTeiKHW8GWoEsMTfYWAu01+7pj97Rlt6gc
-         Ss6GQNLj3wwuTkbzzLlGDE2myEoLb5osd6cHWYY+4ZjS41sYO6XezHkPo+5IwgrKh0AH
-         0N3U1GgVsPLls1e/fkzuZ1+mHJqcTQRT05Hd24gsrpgJsHALYjVS0lxaMD+rZkOHrDud
-         Ecug==
-X-Gm-Message-State: ANoB5pkQck3aY7+oNwvg6vp0Bt7cNPbXUii9bm32LzcT8VYoJdu7JndT
-        0Jn8JiqGyHPvt5Gl5iPJ8H6o2A==
-X-Google-Smtp-Source: AA0mqf44WaJeHNHlwMlIiAunDnM5SiopTOI4vzB3DDYXLt46+TBbX2RU37j+r7ouwPtlrrrPGhXt0Q==
-X-Received: by 2002:a05:6638:3456:b0:376:96a:f3e9 with SMTP id q22-20020a056638345600b00376096af3e9mr2001369jav.139.1668722138941;
-        Thu, 17 Nov 2022 13:55:38 -0800 (PST)
+        bh=/99go28p/v1c206jgVZwjP9v35Be1INRq/BwT7j9gFM=;
+        b=mOY5vEFrvKhcYMRqMeoxmIAy6Py2G2mF7179YdiKhBHvIWYEX/nJZABowgrw2clMG5
+         NS1G4T6WKgnE+FnBHiDJk+ugIfdsf9q4Io2WNznM7Wz/gFAa0uElug63abFrN7zarfb4
+         uPOL2A87ako5VNF7BUTThc+Lw+eDTR+hberUeitjzR/rNq5SKSRHoacBRbQF5VBKjZCf
+         VqqEPSg2VKxKGku+rSzLoxRKoCkr89HavnmZEyJzlmHCCFqHN9dEL0vRJn0W62jyOrBn
+         ejm+4PIcTN0o/FCUmSVprLltektfkzRpZqYZnZccS/y7Bp2qsCe3B6yg08pVigooOt/Z
+         09eA==
+X-Gm-Message-State: ANoB5pmpVfM2EEewh/PJ7ka6b68ttYAwDu3LMxOOcgm6nnlsCiXvWtEM
+        rIHBYVKhlwz3coj4MjXePDo5IQ==
+X-Google-Smtp-Source: AA0mqf5CKzC++Nu03XxDsFmemAiaulfoMMQ8V22yI1A+sqGzt1RP726gKzCcLULGptaaxpbrkPFWAQ==
+X-Received: by 2002:a05:6e02:b4b:b0:2ff:dfa7:f306 with SMTP id f11-20020a056e020b4b00b002ffdfa7f306mr2118691ilu.9.1668722228857;
+        Thu, 17 Nov 2022 13:57:08 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id n25-20020a5d8259000000b006a129b10229sm729101ioo.31.2022.11.17.13.55.38
+        by smtp.gmail.com with ESMTPSA id b11-20020a05663801ab00b00349deda465asm628916jaq.39.2022.11.17.13.57.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Nov 2022 13:55:38 -0800 (PST)
-Date:   Thu, 17 Nov 2022 16:55:37 -0500
+        Thu, 17 Nov 2022 13:57:08 -0800 (PST)
+Date:   Thu, 17 Nov 2022 16:57:07 -0500
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Matthew John Cheetham <mjcheetham@outlook.com>
-Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, M Hickford <mirth.hickford@gmail.com>
-Subject: Re: [PATCH] Docs: describe how a credential-generating helper works
-Message-ID: <Y3at2UY6OzFiMlNZ@nand.local>
-References: <pull.1379.git.git.1668217470500.gitgitgadget@gmail.com>
- <AS2PR03MB9815DCB5C310C4AC7B82D3A6C0069@AS2PR03MB9815.eurprd03.prod.outlook.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Teng Long <dyroneteng@gmail.com>, avarab@gmail.com,
+        derrickstolee@github.com, git@vger.kernel.org, gitster@pobox.com,
+        me@ttaylorr.com, tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v3 0/2] pack-bitmap.c: avoid exposing absolute paths
+Message-ID: <Y3auMxCWJW6Otqhy@nand.local>
+References: <Y3K//kO3fxD7Pl3/@coredump.intra.peff.net>
+ <20221117141933.73790-1-tenglong.tl@alibaba-inc.com>
+ <Y3ZNKhr3kMZLmQnh@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <AS2PR03MB9815DCB5C310C4AC7B82D3A6C0069@AS2PR03MB9815.eurprd03.prod.outlook.com>
+In-Reply-To: <Y3ZNKhr3kMZLmQnh@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 17, 2022 at 09:28:53AM -0800, Matthew John Cheetham wrote:
-> This looks like a good, clarifying addition to the docs!
+On Thu, Nov 17, 2022 at 10:03:06AM -0500, Jeff King wrote:
+> On Thu, Nov 17, 2022 at 10:19:33PM +0800, Teng Long wrote:
+>
+> > > I doubt this buys us much in practice. After patch 2, looking for extra
+> > > bitmaps is much cheaper. It's one open() call per pack (which will
+> > > return ENOENT normally) looking for a bitmap. And while it's only 2
+> > > lines of code, it does increase coupling of assumptions between the two
+> > > functions. So maybe not worth doing. I dunno.
+> >
+> > I agree and I think it's reasonable.
+> >
+> > So If I bring it into the patch how about the commit message:
+> > [...]
+>
+> Both the commit messages you proposed look accurate to me.
 
-Thanks, both. Will queue.
+Yep, ditto. Teng -- would you mind sending them as a short series to the
+list so that I can pick them up? Otherwise, I can do it if you don't
+have time or interest.
 
 Thanks,
 Taylor
