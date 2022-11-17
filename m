@@ -2,89 +2,261 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0228DC433FE
-	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 19:29:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CD05C433FE
+	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 19:47:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235068AbiKQT3v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Nov 2022 14:29:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39918 "EHLO
+        id S240406AbiKQTrl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Nov 2022 14:47:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239518AbiKQT3r (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2022 14:29:47 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A1778A16A
-        for <git@vger.kernel.org>; Thu, 17 Nov 2022 11:29:38 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id j12so2558111plj.5
-        for <git@vger.kernel.org>; Thu, 17 Nov 2022 11:29:38 -0800 (PST)
+        with ESMTP id S235052AbiKQTrk (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2022 14:47:40 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EF0F87571
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 11:47:39 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id i10so7758543ejg.6
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 11:47:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=X61HGDH96Cc493E0oH/ISkOEsapmYHYmJIpx51N0X8c=;
-        b=Ckq7eKA3xktrfRDIMJzQWaGV7OOKxaQblthaDbbCK1Xw/iliO8PQgRooH8SZ5lsDCi
-         mzyRTLntvsc7Pb+fCCwSSZCdrLRkFBvJ1Dq0cXuMEFGQgqEAbPuVkzC1APBT6FMHlh+e
-         JyMnwAWXNuZVj+Laos95XgJh6U0UPIYL+A3urX3CnZgWcSvS01ubpIu6yPVDcGaiy0Vm
-         R1ENh4ISrLG1d0KR09UupOP04d1QHvKyvSQDjWXMl0NYngXto761BufEql6sS5ZDCvrK
-         vXX+vw+psydz3TYwswd2c0bVlUyEq7TyVjO4ZD7CSzRrYTSjXkm3WCwoJLAVtYxGAlP/
-         fFdQ==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vYO+BzmcMMI9c7NcthoUf+yxS+mPrgM3vQZMjYPKVYI=;
+        b=dp58KuS3jxmbhC17B7la1q+4ZP0AFVUILjGxELBfRH0wbUoifubzaNI7vqbZPuYcvL
+         cOTqb0H0RMa7K6Ys9UvSyfPCbhravo6UOgtgFK+ZU3Z3nlCg9CTmtIIg6J8UBW0sBSX0
+         VZU8jIJPv2Uvnn39a/Cduglt5LZ94E6vZwwBEToA8CycP6z04TdaWJSigRYqEybY65gb
+         T0TRiOcJ2T8Jt2KSbgk3LOng5UEzM2GRoVLX4MleqZvWe09h7/ELEemk04TN5MQ9AxoB
+         KHHkENTZVO2JrkUcKVAXRiWegeo/ehSwRMHTwyTeu2hzeFsxHKjAi0nhNiuxukS62JUV
+         7MKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=X61HGDH96Cc493E0oH/ISkOEsapmYHYmJIpx51N0X8c=;
-        b=LFsrwORJ3fIixDSu0zWzn5WHBYEObi3UVCAS91tzpiKBIdDPCrXrZzWU7eiqmVosXc
-         t6+BsKqFDyJHldXXvMUkoZRyUzDDSEgpr07++JwEm2l9U0+9eh6PDkshdVW+Jg44GscE
-         ZJF3TtH75S1/ovifC86TmfeTm8fY6cAbKaAX9IHMEB5m8KDcErPGLPSI38RjLwXByRuP
-         oG1FaxGy4GRBU+0NblB8NiPhhFjPeRnBm5tVJrO/WR7AS8kulchyvh+lh8h60+n0JODA
-         locsfsUK6UykP7xoyX0v0fG2oKQw++xO5W92RuITC7U3C7ySYzSlsglIn3zjLmwP2t99
-         R+Xg==
-X-Gm-Message-State: ANoB5pkfXqKBDKHwh9Ek0J5ZFD+Msr87tgiMMh/N/yKsMnlMZSNY5kH/
-        ST8j1aaJ8dKOUBRM4S3kld7PrMnvdAW1GQ==
-X-Google-Smtp-Source: AA0mqf6kDgPMzj0RSzG1fZUF2K1vgY/ndouaciI6qWR2fTkFRY6cRmJ/9796rwk+Yt3/RC/csA3FRQ==
-X-Received: by 2002:a17:90b:228e:b0:20a:88c9:47ef with SMTP id kx14-20020a17090b228e00b0020a88c947efmr10256774pjb.9.1668713377739;
-        Thu, 17 Nov 2022 11:29:37 -0800 (PST)
-Received: from ?IPV6:2601:602:a380:3e00:9c2f:9cb5:3334:5a19? ([2601:602:a380:3e00:9c2f:9cb5:3334:5a19])
-        by smtp.gmail.com with ESMTPSA id jh19-20020a170903329300b0016cf3f124e1sm1711800plb.234.2022.11.17.11.29.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Nov 2022 11:29:37 -0800 (PST)
-Message-ID: <a76a5e37-0c0a-b9e8-13cb-abaa44cf8911@gmail.com>
-Date:   Thu, 17 Nov 2022 11:29:35 -0800
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vYO+BzmcMMI9c7NcthoUf+yxS+mPrgM3vQZMjYPKVYI=;
+        b=iTedCvod/HJwjXLa2RCxL6fIQcraJLtrYcsm70IT0BPWIQ7hINIjZcRyDD5lxCKSZO
+         +lAlMg7UXN9wPY5NXBxt+CcZp4pXgQMfgXmD0kBADYvhdAqU4drKYuO5RQWH1EEzZ4k6
+         nQK04XpiU8neTirIalYuNccwscqhgBdGx2WJya58Mnc957pSKDTe0MQ+QOziM9MM5Tfk
+         80cdhSVeFyvGnNXqJOneTB0NY9Vp8iYnrmzy3UnCThGHJK4uQEoYMaRYDawFrWJyPJtQ
+         ezQm11PJapi+EkFTh4c24Qv/zolffJNOSJurX6gNR26wdhTtuitUxxScju7LL4Tb2r7Y
+         VQAA==
+X-Gm-Message-State: ANoB5plVajlel4ivTBY70dZbwI/0ctDBZzczvjhY3/lm8PwCciDLHl7V
+        8BIrA2zPGKtrPPlbEriTzuc=
+X-Google-Smtp-Source: AA0mqf4dlPton2yCbbLnGDTjzzOhcUQsD41NsgFsKFWjklkE5A+G/yl1fw2BhPSWz7+aXe9qe5RMCQ==
+X-Received: by 2002:a17:906:1e50:b0:7ae:5a4:5344 with SMTP id i16-20020a1709061e5000b007ae05a45344mr3592029ejj.27.1668714457484;
+        Thu, 17 Nov 2022 11:47:37 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id g5-20020a056402114500b00467cc919072sm907196edw.17.2022.11.17.11.47.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Nov 2022 11:47:37 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1ovkrI-004zeL-1B;
+        Thu, 17 Nov 2022 20:47:36 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH] object-file: use real paths when adding alternates
+Date:   Thu, 17 Nov 2022 20:41:44 +0100
+References: <pull.1382.git.git.1668706274099.gitgitgadget@gmail.com>
+ <Y3aBzbzub7flQyca@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <Y3aBzbzub7flQyca@coredump.intra.peff.net>
+Message-ID: <221117.86h6yxgy7b.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.13.1
-Subject: Re: The enduring popularity of git-credential-store
-Content-Language: en-US
-To:     Jeff King <peff@peff.net>,
-        Matthew John Cheetham <mjcheetham@outlook.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        M Hickford <mirth.hickford@gmail.com>, git@vger.kernel.org
-References: <CAGJzqskRYN49SeS8kSEN5-vbB_Jt1QvAV9QhS6zNuKh0u8wxPQ@mail.gmail.com>
- <Y2rdw7RD8mGTF40w@tapette.crustytoothpaste.net>
- <AS2PR03MB98158D49DC655F6DC6D10ECDC0069@AS2PR03MB9815.eurprd03.prod.outlook.com>
- <Y3aCx1SYq6jrYfuO@coredump.intra.peff.net>
-From:   Lessley Dennington <lessleydennington@gmail.com>
-In-Reply-To: <Y3aCx1SYq6jrYfuO@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/17/22 10:51 AM, Jeff King wrote:
-> I do think having the docs say "you should go use X" means that X will
-> have an advantage over other projects which may compete with it. So I
-> think we need to be careful to be inclusive of what we'll mention, and
-> to word it so that we're not endorsing any one project.
-> 
-> -Peff
 
-Completely agree with this. I've long wished for a page on git-scm.com 
-that's dedicated to (1) explaining what a credential helper is and
-(2) offering a list of suggested helpers along with scenarios for which
-each is best-suited. This could also be a good place to call out the risks
-of using helpers like git-credential-store in a factual, unbiased way.
+On Thu, Nov 17 2022, Jeff King wrote:
 
-Thanks,
-Lessley
+> On Thu, Nov 17, 2022 at 05:31:13PM +0000, Glen Choo via GitGitGadget wrote:
+> [...]
+>> @@ -596,7 +603,7 @@ static void link_alt_odb_entries(struct repository *r, const char *alt,
+>>  		return;
+>>  	}
+>>  
+>> -	strbuf_add_absolute_path(&objdirbuf, r->objects->odb->path);
+>> +	strbuf_realpath(&objdirbuf, r->objects->odb->path, 1);
+>>  	if (strbuf_normalize_path(&objdirbuf) < 0)
+>>  		die(_("unable to normalize object directory: %s"),
+>>  		    objdirbuf.buf);
+>
+> Similarly here, I think we'd want to _replace_ the normalize with a
+> realpath. There's no point in doing both. It's OK to die in this one
+> because we assume the object directory can be normalized/realpath'd.
+>
+> So I'd have expected the code portion of your patch to be more like:
+>
+> diff --git a/object-file.c b/object-file.c
+> index 957790098f..c6a195c6dd 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -508,6 +508,7 @@ static int link_alt_odb_entry(struct repository *r, const struct strbuf *entry,
+>  {
+>  	struct object_directory *ent;
+>  	struct strbuf pathbuf = STRBUF_INIT;
+> +	struct strbuf tmp = STRBUF_INIT;
+>  	khiter_t pos;
+>  
+>  	if (!is_absolute_path(entry->buf) && relative_base) {
+> @@ -516,12 +517,18 @@ static int link_alt_odb_entry(struct repository *r, const struct strbuf *entry,
+>  	}
+>  	strbuf_addbuf(&pathbuf, entry);
+>  
+> -	if (strbuf_normalize_path(&pathbuf) < 0 && relative_base) {
+> -		error(_("unable to normalize alternate object path: %s"),
+> -		      pathbuf.buf);
+> -		strbuf_release(&pathbuf);
+> -		return -1;
+> +	if (!strbuf_realpath(&tmp, pathbuf.buf, 0)) {
+> +		if (relative_base) {
+> +			error(_("unable to normalize alternate object path: %s"),
+> +			      pathbuf.buf);
+> +			strbuf_release(&pathbuf);
+> +			return -1;
+> +		}
+> +		/* allow broken paths from env per 37a95862c625 */
+> +		strbuf_addstr(&tmp, pathbuf.buf);
+>  	}
+> +	strbuf_swap(&pathbuf, &tmp);
+> +	strbuf_release(&tmp);
+>  
+>  	/*
+>  	 * The trailing slash after the directory name is given by
+> @@ -596,10 +603,7 @@ static void link_alt_odb_entries(struct repository *r, const char *alt,
+>  		return;
+>  	}
+>  
+> -	strbuf_add_absolute_path(&objdirbuf, r->objects->odb->path);
+> -	if (strbuf_normalize_path(&objdirbuf) < 0)
+> -		die(_("unable to normalize object directory: %s"),
+> -		    objdirbuf.buf);
+> +	strbuf_realpath(&objdirbuf, r->objects->odb->path, 1);
+>  
+>  	while (*alt) {
+>  		alt = parse_alt_odb_entry(alt, sep, &entry);
+>
+> The "tmp" swapping in link_alt_odb_entry is kind of unfortunate. It
+> would be nice if there were an in-place version of strbuf_realpath, even
+> if it was using two buffers under the hood (which is how the normalize
+> code does it). And then the patch really would be s/normalize/realpath/,
+> which is easier to understand.
+>
+> Possibly this should also be using the "forgiving" version. We
+> eventually error out on missing entries later on, so it's not a big deal
+> to error here. But it would let us keep the error message the same. I
+> don't know that it matters much in practice.
+
+This probably isn't worth it, but I wondered if this wouldn't be easier
+if we pulled that memory management into the caller, it's not
+performance sensitive (or maybe, how many alternatives do people have
+:)), but an advantage of this is that we avoid the free()/malloc() if we
+only get partway through, i.e. return early and keep looping.
+
+In terms of general code smell & how we manage the "return" here, as
+adding "RESULT_MUST_BE_USED" to this shows we never use the "0" or "-1"
+(or any other...) return value.
+
+That's been the case since this was added in c2f493a4ae1 (Transitively
+read alternatives, 2006-05-07), so we can probably just make this a
+"void" and ditch the returns if we're finding ourselves juggling these
+return values...
+
+ object-file.c | 44 ++++++++++++++++++++++----------------------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
+
+diff --git a/object-file.c b/object-file.c
+index c6a195c6dd2..1a94d98e0c7 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -504,47 +504,43 @@ static void read_info_alternates(struct repository *r,
+ 				 const char *relative_base,
+ 				 int depth);
+ static int link_alt_odb_entry(struct repository *r, const struct strbuf *entry,
+-	const char *relative_base, int depth, const char *normalized_objdir)
++			      const char *relative_base, int depth,
++			      const char *normalized_objdir,
++			      struct strbuf *pathbuf)
+ {
+ 	struct object_directory *ent;
+-	struct strbuf pathbuf = STRBUF_INIT;
+ 	struct strbuf tmp = STRBUF_INIT;
+ 	khiter_t pos;
+ 
+ 	if (!is_absolute_path(entry->buf) && relative_base) {
+-		strbuf_realpath(&pathbuf, relative_base, 1);
+-		strbuf_addch(&pathbuf, '/');
++		strbuf_realpath(pathbuf, relative_base, 1);
++		strbuf_addch(pathbuf, '/');
+ 	}
+-	strbuf_addbuf(&pathbuf, entry);
++	strbuf_addbuf(pathbuf, entry);
+ 
+-	if (!strbuf_realpath(&tmp, pathbuf.buf, 0)) {
+-		if (relative_base) {
+-			error(_("unable to normalize alternate object path: %s"),
+-			      pathbuf.buf);
+-			strbuf_release(&pathbuf);
+-			return -1;
+-		}
++	if (!strbuf_realpath(&tmp, pathbuf->buf, 0)) {
++		if (relative_base)
++			return error(_("unable to normalize alternate object path: %s"),
++				     pathbuf->buf);
+ 		/* allow broken paths from env per 37a95862c625 */
+-		strbuf_addstr(&tmp, pathbuf.buf);
++		strbuf_addstr(&tmp, pathbuf->buf);
+ 	}
+-	strbuf_swap(&pathbuf, &tmp);
++	strbuf_swap(pathbuf, &tmp);
+ 	strbuf_release(&tmp);
+ 
+ 	/*
+ 	 * The trailing slash after the directory name is given by
+ 	 * this function at the end. Remove duplicates.
+ 	 */
+-	while (pathbuf.len && pathbuf.buf[pathbuf.len - 1] == '/')
+-		strbuf_setlen(&pathbuf, pathbuf.len - 1);
++	while (pathbuf->len && pathbuf->buf[pathbuf->len - 1] == '/')
++		strbuf_setlen(pathbuf, pathbuf->len - 1);
+ 
+-	if (!alt_odb_usable(r->objects, &pathbuf, normalized_objdir, &pos)) {
+-		strbuf_release(&pathbuf);
++	if (!alt_odb_usable(r->objects, pathbuf, normalized_objdir, &pos))
+ 		return -1;
+-	}
+ 
+ 	CALLOC_ARRAY(ent, 1);
+-	/* pathbuf.buf is already in r->objects->odb_by_path */
+-	ent->path = strbuf_detach(&pathbuf, NULL);
++	/* pathbuf->buf is already in r->objects->odb_by_path */
++	ent->path = strbuf_detach(pathbuf, NULL);
+ 
+ 	/* add the alternate entry */
+ 	*r->objects->odb_tail = ent;
+@@ -593,6 +589,7 @@ static void link_alt_odb_entries(struct repository *r, const char *alt,
+ {
+ 	struct strbuf objdirbuf = STRBUF_INIT;
+ 	struct strbuf entry = STRBUF_INIT;
++	struct strbuf pathbuf = STRBUF_INIT;
+ 
+ 	if (!alt || !*alt)
+ 		return;
+@@ -610,8 +607,11 @@ static void link_alt_odb_entries(struct repository *r, const char *alt,
+ 		if (!entry.len)
+ 			continue;
+ 		link_alt_odb_entry(r, &entry,
+-				   relative_base, depth, objdirbuf.buf);
++				   relative_base, depth, objdirbuf.buf,
++				   &pathbuf);
++		strbuf_reset(&pathbuf);
+ 	}
++	strbuf_release(&pathbuf);
+ 	strbuf_release(&entry);
+ 	strbuf_release(&objdirbuf);
+ }
+
