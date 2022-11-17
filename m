@@ -2,137 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68D02C43217
-	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 04:29:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A631C4332F
+	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 05:45:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239194AbiKQE3B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Nov 2022 23:29:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49556 "EHLO
+        id S238884AbiKQFpp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Nov 2022 00:45:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233900AbiKQE2z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2022 23:28:55 -0500
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAB6220F49
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 20:28:53 -0800 (PST)
-Received: by mail-lf1-x135.google.com with SMTP id b3so938148lfv.2
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 20:28:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=1C6nzya0DHFeA439R2k1K/EAcHfg+nd0WrHolCgBxzY=;
-        b=ZZEUPrDauIz+2XE1D9TNavqFIChWcPCURMStSbfv640ybkq76JwIU9O7mGFTr27jjd
-         NBW5K0xOvZZsgzIAUSg5rqeq9tFp2+//nPrsRZ1d2M1/MIz/ruUjIjshCCa1NGn/Vw7W
-         /jrMe9z08/OeUXXRwy+Im4KK85DOk4rKILZb9s624UfuWY5wJ1EqueAWig/okyTgtbSQ
-         eFrwaIUZcgdVndXeAsD2NjwWL6s7L0PGLaIeB22m0oveLvvM38DVysj/VtlRaQWT8Z8+
-         L/tWkmTNfSve6bRQuNVS1UAhgWH4QqQMbXjvX0Xt7gzvqauZLdGWUnDBnPusoYgVsBrD
-         3AEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1C6nzya0DHFeA439R2k1K/EAcHfg+nd0WrHolCgBxzY=;
-        b=ZUMje3LpDGXmoXZ6kR0YYrfQiUP7ahHio+w57hb6T3ob328jrEjwnUUeStrgNJWciY
-         HUdm02B5trCH/jASxfVthn01s3CSesfM+9N3hUI1kiUIGHD07YRwOyBgp2R95KTzqL4S
-         9fDvj70/pZTkSktoeugc/p4WlJCF/yBxvrjJHsyWNKETNyDD++4G7CAO+2gltb4E7L+m
-         i2Ff/7bZM6mNpIoF91dy93EMd1Wse/MTFMpMGacfOEagYSVMYbW124b7rNt8RFYuMbPI
-         aezVvPmuJK8yXW6lot8AaxXUbt+SciKcwZsBXSgR7bulOWCloKUYF3JdVYtXqefSgul6
-         dfyA==
-X-Gm-Message-State: ANoB5pny3wGOVgnW1HUaY1NCt3VYzJUmcbtKinRE0B/PzsYcfOAvxqR7
-        rXN94THGUn36mzEj0Kjg4bKy47TaggJk5AxaDok=
-X-Google-Smtp-Source: AA0mqf6SQjE0l0aAkLObS6xk6t4czWDneXcWvonl0zUWifIStne5I7FxqI5u3URgVX9g+3acDGNQKDPlhyJXo658xpU=
-X-Received: by 2002:a19:4314:0:b0:4a9:6659:40d5 with SMTP id
- q20-20020a194314000000b004a9665940d5mr359689lfa.516.1668659331856; Wed, 16
- Nov 2022 20:28:51 -0800 (PST)
+        with ESMTP id S230037AbiKQFpn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2022 00:45:43 -0500
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67DEB26D0
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 21:45:42 -0800 (PST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailout.west.internal (Postfix) with ESMTP id 9CBF53201B19;
+        Thu, 17 Nov 2022 00:45:40 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Thu, 17 Nov 2022 00:45:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+        :content-type:date:date:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to; s=fm1; t=1668663940; x=1668750340; bh=GJy6FS+1Qh
+        6980bh/czrmy/3z7H1si+IY7izJj/VBug=; b=qQpAQwUbOfF+ugXbmKqlGGXMOX
+        uwktFwvdRWle9ZnX+V9rqdHCBIPWGTDRNUSbuNItcE2EL/ZyUnna6pIhhS6z2GA3
+        rZqa6xxNDbwDHYTVL/maxHutP5myl88kogvQPrkfBLUyOD5oMKVeSqeda04HT9qV
+        ILnwIuK+H2D7PjOwFhVhOOtjNVaX7XPnzW9a9xT4VumGchUp+yC2tpFW5WEbDF8G
+        WpZDZHhEpXdnWsWCpI3id7M4lX+23eddV9ENNJTMhanDtf7Pxn88cAad9Aq+g2RB
+        fu5IqE+hbvPs8qtEAUpDaCZWw66I+ySp39Ho0PZ3gw0zadSqn8acf0hrF8fg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
+        :mime-version:references:reply-to:sender:subject:subject:to:to
+        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+        fm1; t=1668663940; x=1668750340; bh=GJy6FS+1Qh6980bh/czrmy/3z7H1
+        si+IY7izJj/VBug=; b=UcD9IKpHZbgu+bYDDQmrF+lXOxEENmaOkvqtnAWPgM7k
+        yBzzxh4giKnpl7HzYQl0RmW/T2k0SkqwSVn9RSvtzjzuj4lARdlZ15jqJ4iJugAI
+        MgW5sdziEqtGsghY0qAUKGsPMpDiKMXe5Q1r8GGqpC+3CS5GRKDGKZt8LwutK71R
+        GpghxOhd+F9P5h8vfPHYrb4oHtBI0n8gu5/CciF+iKM6cX6yXmTRkhi4aQTAQXUK
+        Tt4ss3hAU/o7RYa8W7Cfef4HSEh9YbF6/7VHAdVSK1ZJeV9+NBTH1RLs/WA6sf4c
+        r9jmOQaIzPRYSJkTMfMLjHDquhMiqr3zntxX0sTZ/Q==
+X-ME-Sender: <xms:g8p1Y41Ygn19KnX253j6Opclafbmxm4SDcWv5hczJwVHm6VeFx5tMQ>
+    <xme:g8p1YzF-ALxwI8GfylhfcvQKV3KZAsgwQ6D5tERbYVAeqo6JTAsGzcqWGuJbnFaXT
+    q_m-_hw2eeKrJOKAA>
+X-ME-Received: <xmr:g8p1Yw4ZIkiZvRJ0tTtKNNcA0SNAuCG2msba0KuJ2PSJLlh1xt2Lnwo9lqzMX_6BIR0A8ku_8OL5HUbzeVyxJ669iFB-3d_MlkPO1qbrVuzOy3A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrgeejgdekkecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesghdtre
+    ertddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehp
+    khhsrdhimheqnecuggftrfgrthhtvghrnhepueektdevtdffveeljeetgfehheeigeekle
+    duvdeffeeghefgledttdehjeelffetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+X-ME-Proxy: <xmx:hMp1Yx2r0toIutQfAyI6eWXcQxZGR9tNLBitWX3xrgKK5rdOrwDgvQ>
+    <xmx:hMp1Y7GtbpJ7VZJZ7rKY6zYoquuh-1DgKw7a0cTsoOD-B8MPdrhJag>
+    <xmx:hMp1Y6-WP-d9c_jIg5OOz8x91e3a_Rc1-hAuDgec2M74wYkVH8YN6A>
+    <xmx:hMp1YzCDvKtQUJ1NQIaXOz9SGMWFUvI36nQeoUXmL53BHXia78H3ZQ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 17 Nov 2022 00:45:38 -0500 (EST)
+Received: by pks.im (OpenSMTPD) with ESMTPSA id 41e36cd4 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+        Thu, 17 Nov 2022 05:45:22 +0000 (UTC)
+Date:   Thu, 17 Nov 2022 06:45:34 +0100
+From:   Patrick Steinhardt <ps@pks.im>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH v5 0/7] receive-pack: only use visible refs for
+ connectivity check
+Message-ID: <Y3XKfrnmecgaHUU1@ncase>
+References: <cover.1666967670.git.ps@pks.im>
+ <cover.1668149149.git.ps@pks.im>
+ <Y27KL0Yg7nzdQ+HC@nand.local>
+ <Y3PLwW7krP0eJS6+@coredump.intra.peff.net>
+ <Y3VUkKoKd8j7IW6T@nand.local>
+ <Y3VeWvj6bTw1C3jP@coredump.intra.peff.net>
+ <Y3VlKPFCLkFj188G@nand.local>
 MIME-Version: 1.0
-References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
- <CABPp-BEZK2KJHY+=Ta3VUzNjJKY=evPiAtp5UQFTVLMD0qreVQ@mail.gmail.com>
- <0e156172-0670-2832-78cb-c7dfe2599192@github.com> <CABPp-BFNvUQx7exLgqDvzhgn1s=xSFKbJWdr8qfxLTXEFDQQig@mail.gmail.com>
- <01063560-8f57-4e40-5707-f8d8ecfe6cca@github.com>
-In-Reply-To: <01063560-8f57-4e40-5707-f8d8ecfe6cca@github.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 16 Nov 2022 20:28:00 -0800
-Message-ID: <CABPp-BFsvZeC34=VKN9ir+KM0tx4rt0eiGuyKzrD=OAi9sABNw@mail.gmail.com>
-Subject: Re: [PATCH 00/30] [RFC] extensions.refFormat and packed-refs v2 file format
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jrnieder@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="MzXW+6jmwo+BLWTO"
+Content-Disposition: inline
+In-Reply-To: <Y3VlKPFCLkFj188G@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 16, 2022 at 6:45 AM Derrick Stolee <derrickstolee@github.com> wrote:
->
-> On 11/14/22 9:47 PM, Elijah Newren wrote:
-> > On Sun, Nov 13, 2022 at 4:07 PM Derrick Stolee <derrickstolee@github.com> wrote:
-> >>
-> >> On 11/11/22 6:28 PM, Elijah Newren wrote:
-> >>> On Mon, Nov 7, 2022 at 11:01 AM Derrick Stolee via GitGitGadget
-> >>> <gitgitgadget@gmail.com> wrote:
-[...]
-> >>>>  * (Secondary) Allow using a packed ref format for all refs, dropping loose
-> >>>>    refs and creating a clear way to snapshot all refs at a given point in
-> >>>>    time.
-[...]
->
-> The reason is in the goal "creating a clear way to snapshot all refs
-> at a given point in time". This is a server-side benefit with no
-> visible benefit to users, immediately.
 
-Yes, sorry, I just missed it.  I didn't understand it and wrongly
-assumed it was continuing to talk about the implementation details
-rather than the benefit details.  My bad.
+--MzXW+6jmwo+BLWTO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for patiently correcting me.
-
-> The D/F conflicts and case-sensitive parts that could fall from that
-> are not included in my goals. Part of that is because we would need a
-> new reflog format to complete that part. Let's take things one step
-> at a time and handle reflogs after we have ref update performance
-> handled.
-
-Ah, right, I can see how reflog would affect both of those problems
-now that you highlight it, but it hadn't occurred to me before.
-
-> >> The biggest benefit on the server side is actually for consistency
-> >> checks. Using a stacked packed-refs (especially with a tip file
-> >> that describes all of the layers) allows an atomic way to take a
-> >> snapshot of the refs and run a checksum operation on their values.
-> >> With loose refs, concurrent updates can modify the checksum during
-> >> its computation. This is a super niche reason for this, but it's
-> >> nice that the performance-only focus also ends up with a design
-> >> that satisfies this goal.
+On Wed, Nov 16, 2022 at 05:33:12PM -0500, Taylor Blau wrote:
+> On Wed, Nov 16, 2022 at 05:04:10PM -0500, Jeff King wrote:
+> > > I haven't looked too deeply at what is going on here, but let's make
+> > > sure to resolve this before graduating the topic down (which I would
+> > > otherwise like to do in the next push-out, probably tomorrow or the n=
+ext
+> > > day).
 > >
-> > Ah...so this is the reason for your secondary goal?  Re-reading it
-> > looks like you did state this, I just missed it without the longer
-> > explanation.
+> > The issue is that some of the tests assume that hiding "refs/" should
+> > produce no output from "--exclude-hidden=3Dreceive --all". But it will
+> > also show HEAD, even if it points to a hidden ref (which I think is OK,
+> > and matches what receive-pack would do).
 > >
-> > Anyway, it might be worth calling out in your cover letter that there
-> > are (at least) three benefits to this secondary goal of yours -- the
-> > one you list here, plus the two I list above.
->
-> I suppose I assumed that the D/F and case conflicts were a "known"
-> benefit and a huge motivation of the reftable work.
+> > But because the setup uses "main" as one of the sample refs, HEAD may or
+> > may not be valid, depending on what it points to (without setting
+> > GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME it points to master, which is
+> > unborn).
+> >
+> > So the fix is just:
+> >
+> > [...]
+>=20
+> Makes perfect sense, and thanks for looking into it.
+>=20
+> Patrick: it sounds like there was one typo in the earlier round which
+> you may want to pick up also, assuming you reroll this.
+>=20
+> Thanks,
+> Taylor
 
-Yes, and I thought you had just found a simpler solution to those
-problems that might not provide all the benefits of reftable (e.g.
-performance with huge numbers of refs) but did solve those particular
-problems.  I've only looked at reftable from the surface from a
-distance, and I was unaware previously that reflog also affected these
-two problems (though it seems obvious in hindsight).  And I do
-remember you calling out that you weren't changing the reflog format
-in your cover letter, but I didn't understand the ramifications of
-that statement at the time.
+Thanks to both of you, I'll send out v6 in a bit.
 
-> Instead of trying
-> to solve all of the ref problems at once, I wanted to focus on the
-> subset that I knew could be solved with a simpler solution, leaving
-> the full solution to later steps. It would help to be explicit about
-> how this direction helps solve this problem while also being clear
-> about how it does not solve it completely.
+Patrick
 
-It certainly would have helped me.  :-)
+--MzXW+6jmwo+BLWTO
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Thanks for explaining all these details.
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEF9hrgiFbCdvenl/rVbJhu7ckPpQFAmN1yn0ACgkQVbJhu7ck
+PpQOKw/+P5aX3pBhcy0zWBEZ+H5UVBy6fQ+rdMutLzOGXda+HCq0y/1Dt4ZrtIzU
+xmwln85+YW2GWL+P3Ri9wHc2cVniiywNvqKnVUHgZjojwUKOfXsgTEa5nOHJseDb
+7vGUy/GEaKnkt0JVH0PxeQxYgXLRyczFktTS6azS49VtGMnh+kc08YgCO6mV/Wyo
+BtGancumAkbg2snDn7EBoCcUoGK1kEBvIN5oOztbKGu4434lZl/0flC2Vez+2j5r
+zMrTgPmv6/eXNPaWSraV9y+ymRIszwbP14S7vI2ljWhBDijfkEiMLBmDXOBkyhX1
+WbpYPczW5Ta6elesB/xZe+AOMYTc7tk3Ga4LNoZqfVqY3wbPrW5qRFrn+k87l27v
+j7XeLvYXJ1eMoEBNKDbM6AAKW1ebvif7jF9v0HPpF54qz81HqMf8DKI3SwSZ6obO
+fFv60qkKX8dg4NPaQDQnrwkkTa1oAC/Wi9XD5pfYyequLPSCc7fNZnQg92hsXlGx
+3WMc2Ehae9WsRhvQjgn+HTPSADdxwYr2MeCXT63oyBOfMhEG0H5wwuv6rrH49+Qa
+5P2JeG+fiKQv8bbtupwtE0DK90NKVAEMYQtpacKeCXYyVmgjJr5sojz8w5rRs4OZ
+HtmxtvwYIaSFwyebbTT2V2iCrCsTacuF2Cs33m3/AVUmIBxP998=
+=hUiJ
+-----END PGP SIGNATURE-----
+
+--MzXW+6jmwo+BLWTO--
