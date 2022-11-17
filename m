@@ -2,129 +2,199 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91CBBC433FE
-	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 13:27:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7583FC433FE
+	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 13:48:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240039AbiKQN11 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Nov 2022 08:27:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44138 "EHLO
+        id S234533AbiKQNs1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Nov 2022 08:48:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239985AbiKQN1W (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2022 08:27:22 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECA455F85B
-        for <git@vger.kernel.org>; Thu, 17 Nov 2022 05:27:20 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id f27so5088787eje.1
-        for <git@vger.kernel.org>; Thu, 17 Nov 2022 05:27:20 -0800 (PST)
+        with ESMTP id S232342AbiKQNs0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2022 08:48:26 -0500
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C135C69
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 05:48:24 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id f7so2597152edc.6
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 05:48:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=UokLNrlgLAv5UwecSwuHvHauBpFznMScegQIDwvrfUw=;
-        b=JCQa0sQM4LQ0uNbHeajOaxf/YENWk6B3YHrBpiLutNGSaMImQ2fJvfKxOyIsioAyFx
-         uAeFIdEqZVOHPkpWNd+f6JzvqF3sydfEt4YyCT7gWS9SxNMIxdeNc0dyv5DjoZY6HAQK
-         H7/zsS/Y0MmoMY5Ty9Z+qkvDmJilbMtrideGKrwkiHgnaWKapJiDqNAgcIFcT5h7p2nr
-         l9NvC5l1o7fsiwxUjT7xA/50w/4k2GbJW8VD6b0qC3LHA9uP34u8LM5MpRNplF2+kxgm
-         5BXoJ7XCsf3KjuHqB8phQl2p10F+ewL8np4913TUNj8yduEEh/y/zXGxSPQeTkEnTs/X
-         PDuQ==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fgBRMbcy7J17ZTVoNNpXUJAszIia2bvIj23DBCCChn4=;
+        b=YWTJ7IlTN7ntCqkU246rUXp6rXyj0jaRj/rhIpC9rvuK7VdgMjqFCiE6j31qQnaCnw
+         llxkb8GPCq096+Z8i/mgsSP+7RLs/AbGt/bCS2V1jTx3sBJ2wIgZwA7JavVI5ud8UU1/
+         uubIklgcuNXtrdKx8Ym0CwRJuFgh1ka8TbeaOrRdtShYUey8mkTNZyzbnygFJCGxS9PD
+         HQwQ+waVKjpAHip55krAZ1YDGl/yPhX8IpcmqVVVeoJGgTZP+W0gUVt6NjhXGre0AUYU
+         NIgIR7L8ohmxC9/79ZiR7aBpGf2qZfA6e0GthZuSaEjZOJ9M27zQPrmvGsvRNhukPbOA
+         RbSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UokLNrlgLAv5UwecSwuHvHauBpFznMScegQIDwvrfUw=;
-        b=ntuWsNdsHpxZLxP40qZuWED/9NUf4HvoPbEn7rFe+yc3Yo3diAMDVQm2NlexKhMWZM
-         Cgz3u8S9FhbapSJ99L5hs4kzaOYeg2so9hEhxwSTmEt/nSu2ipAa0AnyYoMhPOTTcug5
-         lzsUHu6peJhCad1QB/mwqyrrg56KK//rzQ5bLPaeTeGBWnv4dKj34JPvdDbdWDELKYKh
-         szL56DjH0Iy6m+5mnwrXfr1eEBP/98CkbMAtWB98+B3QMvdzxX+bXOs5FY/kkFrh2oAX
-         AcD0A00EKfte48lDoAuKvlc7ZaoK+eufmdpyItCY54h7x/bzbGt8UM7gvHdeQAV3URam
-         t9QQ==
-X-Gm-Message-State: ANoB5pmWEM4+F8chpkjgINPTCWD6t7lxZ0uP0mGoBWn3WK0iA3lT1jc8
-        m5Dy0WL2SDce6M1yuTmy14o=
-X-Google-Smtp-Source: AA0mqf4OMsZzwHNIolBJOa7zgFdVKTJlnJcd40YDphron9jE208t1dDvVELYeLGv68RP/dHyKYebAQ==
-X-Received: by 2002:a17:906:50f:b0:78d:ad5d:75e with SMTP id j15-20020a170906050f00b0078dad5d075emr2154753eja.172.1668691639362;
-        Thu, 17 Nov 2022 05:27:19 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id 1-20020a170906310100b0078df26efb7dsm371127ejx.107.2022.11.17.05.27.18
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fgBRMbcy7J17ZTVoNNpXUJAszIia2bvIj23DBCCChn4=;
+        b=xPA+qcf3hqGLOTlcbq6GjjFLmLAdEdGUcxBxoLfegFwR+fLbecX/q4vjtyie/8U1GX
+         rH1aDumu9w2zB2KECpp7knuu0qiNmn1ZR4LFOWSUFfcjycMHiIvhSODFLvERSi/9DjWm
+         R+MgQXzbdMSYFL3XLt6NdV3koFpyJ5XGSjK2GLeoMTy/t++HSCQV1BSzWbToiXHVAfEB
+         OyvYjULj/GkX2bUaT/iSbWajzrUZ1hsV71bFhhQaFWLTuevmeqSHEX7hWlzSe0MW4fox
+         i5bBS1cTzfh8AQI2eoXMAbUpljqov7k7tdaom4pRNADCsqvo4t/WCm+ov4WhgH8Aow9s
+         ONuA==
+X-Gm-Message-State: ANoB5plhcyNiBk/pkSpR5hJohEcN+7UPKOAsAKN9WfMzdeLRkuSNxJ9Y
+        KDYAhIDhcs6eMgSH+COHapUVnwXXHcTNzQ==
+X-Google-Smtp-Source: AA0mqf4Wns9l9Hu4Fz9pnIJ4JzFtFZTkCDFVgP+Vru8ZL8rRyyIGxT15eKKJVl2grQVh/3IKLBb7bg==
+X-Received: by 2002:a05:6402:288f:b0:460:d1f6:2917 with SMTP id eg15-20020a056402288f00b00460d1f62917mr2250984edb.207.1668692902463;
+        Thu, 17 Nov 2022 05:48:22 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id m27-20020a170906581b00b007ad9adabcd4sm379257ejq.213.2022.11.17.05.48.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Nov 2022 05:27:18 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1ovevG-004oiT-0x;
-        Thu, 17 Nov 2022 14:27:18 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     git@vger.kernel.org, tenglong.tl@alibaba-inc.com, me@ttaylorr.com
-Subject: Re: [RFC PATCH 0/6] ls-tree: introduce '--pattern' option
-Date:   Thu, 17 Nov 2022 14:22:20 +0100
-References: <20221117113023.65865-1-tenglong.tl@alibaba-inc.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <20221117113023.65865-1-tenglong.tl@alibaba-inc.com>
-Message-ID: <221117.86k03tiudl.gmgdl@evledraar.gmail.com>
+        Thu, 17 Nov 2022 05:48:21 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>, Teng Long <dyroneteng@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [RFC PATCH 1/4] ls-tree: don't use "show_tree_data" for "fast" callbacks
+Date:   Thu, 17 Nov 2022 14:48:14 +0100
+Message-Id: <RFC-patch-1.4-2d8bcfe2cab-20221117T134528Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.38.0.1473.g172bcc0511c
+In-Reply-To: <RFC-cover-0.4-00000000000-20221117T134528Z-avarab@gmail.com>
+References: <20221117113023.65865-1-tenglong.tl@alibaba-inc.com> <RFC-cover-0.4-00000000000-20221117T134528Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+As noted in [1] the code that made it in as part of
+9c4d58ff2c3 (ls-tree: split up "fast path" callbacks, 2022-03-23) was
+a "maybe a good idea, maybe not" RFC-quality patch. I hadn't looked
+very carefully at the resulting patterns.
 
-On Thu, Nov 17 2022, Teng Long wrote:
+The implementation shared the "struct show_tree_data data", which was
+introduced in e81517155e0 (ls-tree: introduce struct "show_tree_data",
+2022-03-23) both for use in 455923e0a15 (ls-tree: introduce "--format"
+option, 2022-03-23), and because the "fat" callback hadn't been split
+up as 9c4d58ff2c3 did.
 
-> From: Teng Long <dyroneteng@gmail.com>
->
-> This RFC patch introduce a new "ls-tree" option "--pattern", aim to match=
- the
-> entries by regex then filter the output which we may want to achieve. It =
-also
-> contains some commit for preparation or cleanup.
->
-> The idea may be not comprehensive and the tests for it might be insuffici=
-ent
-> too, but I'd like to listen the suggestion from the community to decide i=
-f it's
-> worth going forward with.
+Now that that's been done we can see that most of what
+show_tree_common() was doing could be done lazily by the callbacks
+themselves, who in the pre-image were often using an odd mis-match of
+their own arguments and those same arguments stuck into the "data"
+structure. Let's also have the callers initialize the "type", rather
+than grabbing it from the "data" structure afterwards.
 
-I applied this series, compiled with CFLAGS=3D-O3, and:
-=09
-	$ hyperfine './git ls-tree --pattern=3D[ab]c.*d -r HEAD' './git ls-tree -r=
- HEAD | grep [ab]c.*d' -w 10 -r 20
-	Benchmark 1: ./git ls-tree --pattern=3D[ab]c.*d -r HEAD
-	  Time (mean =C2=B1 =CF=83):      14.8 ms =C2=B1   0.1 ms    [User: 12.0 m=
-s, System: 2.8 ms]
-	  Range (min =E2=80=A6 max):    14.6 ms =E2=80=A6  15.0 ms    20 runs
-=09
-	Benchmark 2: ./git ls-tree -r HEAD | grep [ab]c.*d
-	  Time (mean =C2=B1 =CF=83):      12.5 ms =C2=B1   0.1 ms    [User: 10.0 m=
-s, System: 4.0 ms]
-	  Range (min =E2=80=A6 max):    12.4 ms =E2=80=A6  12.8 ms    20 runs
-=09
-	Summary
-	  './git ls-tree -r HEAD | grep [ab]c.*d' ran
-	    1.18 =C2=B1 0.01 times faster than './git ls-tree --pattern=3D[ab]c.*d=
- -r HEAD'
+1. https://lore.kernel.org/git/cover-0.7-00000000000-20220310T134811Z-avarab@gmail.com/
+---
+ builtin/ls-tree.c | 44 ++++++++++++++++++--------------------------
+ 1 file changed, 18 insertions(+), 26 deletions(-)
 
-So the value-proposition isn't really clear to me, and the included
-docs, commit messages & this CL don't answer the "why not just 'grep'"
-question?
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index c3ea09281af..cbb6782f9a5 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -173,19 +173,11 @@ static int show_tree_fmt(const struct object_id *oid, struct strbuf *base,
+ 	return recurse;
+ }
+ 
+-static int show_tree_common(struct show_tree_data *data, int *recurse,
+-			    const struct object_id *oid, struct strbuf *base,
+-			    const char *pathname, unsigned mode)
++static int show_tree_common(int *recurse, struct strbuf *base,
++			    const char *pathname, enum object_type type)
+ {
+-	enum object_type type = object_type(mode);
+ 	int ret = -1;
+-
+ 	*recurse = 0;
+-	data->mode = mode;
+-	data->type = type;
+-	data->oid = oid;
+-	data->pathname = pathname;
+-	data->base = base;
+ 
+ 	if (type == OBJ_BLOB) {
+ 		if (ls_options & LS_TREE_ONLY)
+@@ -217,15 +209,15 @@ static int show_tree_default(const struct object_id *oid, struct strbuf *base,
+ {
+ 	int early;
+ 	int recurse;
+-	struct show_tree_data data = { 0 };
++	enum object_type type = object_type(mode);
+ 
+-	early = show_tree_common(&data, &recurse, oid, base, pathname, mode);
++	early = show_tree_common(&recurse, base, pathname, type);
+ 	if (early >= 0)
+ 		return early;
+ 
+-	printf("%06o %s %s\t", data.mode, type_name(data.type),
+-	       find_unique_abbrev(data.oid, abbrev));
+-	show_tree_common_default_long(base, pathname, data.base->len);
++	printf("%06o %s %s\t", mode, type_name(object_type(mode)),
++	       find_unique_abbrev(oid, abbrev));
++	show_tree_common_default_long(base, pathname, base->len);
+ 	return recurse;
+ }
+ 
+@@ -235,16 +227,16 @@ static int show_tree_long(const struct object_id *oid, struct strbuf *base,
+ {
+ 	int early;
+ 	int recurse;
+-	struct show_tree_data data = { 0 };
+ 	char size_text[24];
++	enum object_type type = object_type(mode);
+ 
+-	early = show_tree_common(&data, &recurse, oid, base, pathname, mode);
++	early = show_tree_common(&recurse, base, pathname, type);
+ 	if (early >= 0)
+ 		return early;
+ 
+-	if (data.type == OBJ_BLOB) {
++	if (type == OBJ_BLOB) {
+ 		unsigned long size;
+-		if (oid_object_info(the_repository, data.oid, &size) == OBJ_BAD)
++		if (oid_object_info(the_repository, oid, &size) == OBJ_BAD)
+ 			xsnprintf(size_text, sizeof(size_text), "BAD");
+ 		else
+ 			xsnprintf(size_text, sizeof(size_text),
+@@ -253,9 +245,9 @@ static int show_tree_long(const struct object_id *oid, struct strbuf *base,
+ 		xsnprintf(size_text, sizeof(size_text), "-");
+ 	}
+ 
+-	printf("%06o %s %s %7s\t", data.mode, type_name(data.type),
+-	       find_unique_abbrev(data.oid, abbrev), size_text);
+-	show_tree_common_default_long(base, pathname, data.base->len);
++	printf("%06o %s %s %7s\t", mode, type_name(type),
++	       find_unique_abbrev(oid, abbrev), size_text);
++	show_tree_common_default_long(base, pathname, base->len);
+ 	return recurse;
+ }
+ 
+@@ -266,9 +258,9 @@ static int show_tree_name_only(const struct object_id *oid, struct strbuf *base,
+ 	int early;
+ 	int recurse;
+ 	const size_t baselen = base->len;
+-	struct show_tree_data data = { 0 };
++	enum object_type type = object_type(mode);
+ 
+-	early = show_tree_common(&data, &recurse, oid, base, pathname, mode);
++	early = show_tree_common(&recurse, base, pathname, type);
+ 	if (early >= 0)
+ 		return early;
+ 
+@@ -286,9 +278,9 @@ static int show_tree_object(const struct object_id *oid, struct strbuf *base,
+ {
+ 	int early;
+ 	int recurse;
+-	struct show_tree_data data = { 0 };
++	enum object_type type = object_type(mode);
+ 
+-	early = show_tree_common(&data, &recurse, oid, base, pathname, mode);
++	early = show_tree_common(&recurse, base, pathname, type);
+ 	if (early >= 0)
+ 		return early;
+ 
+-- 
+2.38.0.1473.g172bcc0511c
 
-That's faster even with another process for me, but likely that's
-because you're doing the regex matching really inefficiently
-(e.g. malloc-ing again for each line), which could be "fixed".
-
-But in any setup which cares about the performance you're likely piping
-to another process anyway (the thing using the data), which could do
-that filtering without thep "grep" process.
-
-So I don't see the value in doing this, but maybe I'm just missing
-something.
-
-And, in terms of the complexity for git's implementation it would be
-really good to avoid the complexity of a "--pattern", "--sort-lines"
-etc., if those use-cases can be satisfied by piping into "grep" or
-"sort" instead.
-
-Some of the pre-cleanup here looks good, but it's unrelated to the rest
-of the series. I think in any case that it would be nice to see that as
-another topic.
