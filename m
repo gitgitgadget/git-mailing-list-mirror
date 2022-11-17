@@ -2,115 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 533F2C433FE
-	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 01:24:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47080C4332F
+	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 01:33:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232996AbiKQBYz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Nov 2022 20:24:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33418 "EHLO
+        id S234507AbiKQBdl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Nov 2022 20:33:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232521AbiKQBYx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2022 20:24:53 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [172.105.110.227])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 455B02C67B
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 17:24:51 -0800 (PST)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:5e4a:89fa:93b9:2058])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 532FA5A1FB;
-        Thu, 17 Nov 2022 01:24:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1668648290;
-        bh=xddphfK9JAGhn26im2HfKBMbt9l09H5bAH5uQ0kDTEI=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=lTkSDcHdG95p7Ps6AlnZUupRTaLq2fy/Obg8bPpAg9isaEr1IdsRicPcxTeENoaN4
-         8EXA1+mn10RwVRrPYiMSYUqtDNe13hwiYA7/+bfBtpmSK3lRU9wN3XHJ6AAQBSz+er
-         KrjVf9pJubBh6d602APu5R/iZAAm33C6bqeaWepwhNVpArYzjSGTYJEJJU2loO7pAc
-         FyMzj2si5ZJMjYG/01GaANHJ+LckoiRi3oXyR0P5uC8kOGpbE7oOapgERT3d3EB1an
-         tsd6quDe285A41eD2OthYevNGA1mk8v92fGgiURhzr1ABaj9ILf8z8pjb5h8UJzj5J
-         3q8dQZeo8PUNPYuqEnRQ2lD+/m/bMiG59jfIujd9r3oXjT9qMVs/3J8yxjYgPOn/7h
-         bWZQGJLY1Hi4X0B3s+lPW/+HS2SBrH/DKNAn/TLwlPYYhr/RPORcDgVFSdOqqRgF0I
-         qWb4H4b/qfsjmveTC5juWXMCww8WcjFZUF0hzdJvuwoU94w9oGT
-Date:   Thu, 17 Nov 2022 01:24:48 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     David Hary <davidhary@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Issue: Git for Windows: : Incorrect registry entries for the Git
- Bash and Git Gui
-Message-ID: <Y3WNYNjos+2996jb@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        David Hary <davidhary@gmail.com>, git@vger.kernel.org
-References: <CANNdkQZByT6dAiAJ=yrQshBi9suDUV2Xum2TtAGyJDKxb3f5QQ@mail.gmail.com>
+        with ESMTP id S234444AbiKQBdj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Nov 2022 20:33:39 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A1D01DDF9
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 17:33:38 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id a14so583843wru.5
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 17:33:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:content-language:mime-version:user-agent
+         :date:message-id:subject:from:cc:to:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QbxhdIdxxp0+cXttnuEMXMXcc6xuqFuqcgFE2UORBu4=;
+        b=Lr7YDpX0IikgHPl1Ij3YlaAsmECYv+VaLKVfZpzi6ByeJ462yVizpr8AFS8St/4aHg
+         0Pfcl4IcqjW0MAg5iACfAuD4TK0JwoI8CY3qyH9lyFGLRcecW1vZpLirR2GVswnv54LT
+         KIcXVULTOEbkP+DY6EpNyLLy23QylztGfBS+hd2Fax0J7olI9rCvFxHA87qXamggR4AS
+         TXznNuuKNIpWu2tfiUJQxXMHiKYuUpYYPr1OQ6AzWNyM14pDgwZiUH5FDoTxgxUZwJl9
+         KWLmilEWlQ/kVDEEuvGPt82/ZqBcgNvynjM+vlg00Yq7dhCVP+rkn8kQd4q95zapiDPI
+         hLcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:content-language:mime-version:user-agent
+         :date:message-id:subject:from:cc:to:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QbxhdIdxxp0+cXttnuEMXMXcc6xuqFuqcgFE2UORBu4=;
+        b=KTodFqYgUQdM888NBhyvivrYhCr6dBswda9wCeSCnXk6LLj6vaxp5vTYJkxVsbEt1D
+         GhNI/mBg82MSwizZ2By/0Kxf0Od1m+mDnhbi6MCfNdFV9bvB597wtz/+9ScZ2itWJAXr
+         xziXIoTE2Rn+MPo31jy3TKzstLbVH3wlgVB+HRw6s1IM95uYMN9BPtRO1oF65J1elUUf
+         vkvlc28hRRDDtwyHT9lBPEmOEk97ULnY4jW7hNmZlxJDxvttq4J4KLTt6jDiFLHidHG5
+         Y2atkw9oJ7Ih3fpuHvJHT+XkoYjGqMDI8QH6Yv2pJPGp30YK4oqdwF+dPBhtfDWWAFwH
+         cPVQ==
+X-Gm-Message-State: ANoB5pm2LX5RdzpE3yq1JYQznSWHrByOqFWCDjBJ/Hs/1SKS6RsperMM
+        v5xla0PMX0KMsGbEy0PeQUQ=
+X-Google-Smtp-Source: AA0mqf6kB38+ZJJo0Ri7Bc31eb40lhNpmbfhu3nn2qPlb63xkIQcuCPZccTt/MOHkXbhyqCuYL/7yA==
+X-Received: by 2002:a5d:6244:0:b0:236:73b2:f026 with SMTP id m4-20020a5d6244000000b0023673b2f026mr90682wrv.396.1668648816775;
+        Wed, 16 Nov 2022 17:33:36 -0800 (PST)
+Received: from [192.168.2.52] (104.red-88-14-50.dynamicip.rima-tde.net. [88.14.50.104])
+        by smtp.gmail.com with ESMTPSA id o2-20020a05600c510200b003c6c4639ac6sm4104760wms.34.2022.11.16.17.33.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Nov 2022 17:33:36 -0800 (PST)
+To:     Git List <git@vger.kernel.org>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+Subject: [PATCH 0/2] branch: fix some malfunctions in -m/-c
+Message-ID: <f0b2d46c-2e9c-2630-2870-8ed550dd1606@gmail.com>
+Date:   Thu, 17 Nov 2022 02:33:35 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="MuH++N55C0WAkEgZ"
-Content-Disposition: inline
-In-Reply-To: <CANNdkQZByT6dAiAJ=yrQshBi9suDUV2Xum2TtAGyJDKxb3f5QQ@mail.gmail.com>
-User-Agent: Mutt/2.2.7 (2022-08-07)
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
---MuH++N55C0WAkEgZ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hey,
-
-On 2022-11-16 at 18:36:27, David Hary wrote:
-> :Observation: Incorrect registry entries for the Git Bash and Git Gui
->=20
-> Likely Cause: the registry entries do not update when updating Git
->=20
-> How to reproduce:
-> 1. install git as a personal level user; git goes to c:\apps
-> 2. Change user level to admin;
-> 3. Update git; git files move to c:\program files;
-> 4. Try git bash or git gui from the File Explorer context menu; both fail.
->=20
-> How was this discovered:
-> Having had some issues with android emulation for visual studio, I
-> changed my user account from personal to admin.  When updating, Git
-> got installed under =E2=80=98c:\Program Files=E2=80=98 instead of c:\apps=
-=2E Yet, the
-> command lines for Git Bash and Git Gui as recorded in the registry
-> were still pointing to the c:\apps folder causing the explorer context
-> menu shortcut to fail.
->=20
-> Workaround: edit the register changing =E2=80=98c:\apps=E2=80=99 to =E2=
-=80=98c:\program files=E2=80=99
-
-This list mostly discusses the portable upstream version of Git that
-works across systems.  Any sort of custom Windows patches or Windows
-integration, such as interaction with the registry, should be reported
-to the Git for Windows project on their issue tracker:
-
-https://github.com/git-for-windows/git
-
-You might search first to see if someone has already reported this.  In
-any event, as the folks providing this integration, they'd be the ones
-best suited to fix it.
-
-Hope this helps.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
-
---MuH++N55C0WAkEgZ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY3WNYAAKCRB8DEliiIei
-gb1wAP9IiTzFNAsRjaeLAnvhJu3BOKDXmq8V/gmN4Jfb6xWU3AD9EF5w6ESlkj7d
-VdomeXIXZJMEgYj5E94Iue1/i3+cfQI=
-=af3Q
------END PGP SIGNATURE-----
-
---MuH++N55C0WAkEgZ--
+Fix some malfunctions found in git branch, copying and renaming                                                                                               
+branches.                                                                                                                                                     
+                                                                                                                                                              
+                                                                                                                                                              
+Rubén Justo (2):                                                                                                                                              
+  branch: force-copy a branch to itself via @{-1} is a no-op                                                                                                  
+  branch: clear target branch configuration before copying or renaming                                                                                        
+                                                                                                                                                              
+ builtin/branch.c                      | 17 +++++++++++------                                                                                                 
+ t/t3200-branch.sh                     | 19 +++++++++++++++++++                                                                                               
+ t/t3204-branch-name-interpretation.sh | 10 ++++++++++                                                                                                        
+ 3 files changed, 40 insertions(+), 6 deletions(-)                                                                                                            
+                                                                                                                                                              
+--                                                                                                                                                            
+2.36.1
