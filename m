@@ -2,65 +2,70 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4048DC4332F
-	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 09:54:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC4D2C4332F
+	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 10:07:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234548AbiKQJy0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Nov 2022 04:54:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39350 "EHLO
+        id S234841AbiKQKHZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Nov 2022 05:07:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234725AbiKQJxT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2022 04:53:19 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ACD05ADC0
-        for <git@vger.kernel.org>; Thu, 17 Nov 2022 01:53:15 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id gv23so3771104ejb.3
-        for <git@vger.kernel.org>; Thu, 17 Nov 2022 01:53:15 -0800 (PST)
+        with ESMTP id S234757AbiKQKHX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2022 05:07:23 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FC94231
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 02:07:22 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id s5so1764525edc.12
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 02:07:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=fUQ0AO6nBrpkagDYNxciWTqeHrj4HJLUs5uKYCaBSB8=;
-        b=YarZRW1SPZN7mIc0p9B06DYJ2eIAkwk4M7JVdRRjeoK+GU2En4x7nxhgBsD+MtQ4kw
-         qXMKi3rYL6DiJVMgShRawXEDYYwBT5P8mtTldelWuhrlJQHT3u0tczWzQwfhnfUg2lnR
-         zk1Kg/pSCeOh1Rd1HuEzZl3qfFgAuXOJBvE2n0XR+GP9qlEmFoeILvyU1ywQH/IyVgZG
-         w3jpPh0p7E42hZ7CfF4xTvVXwnBOcSgiztEG5eXoe1VN13MLdLbt7rwBC7JqyzbKsqLc
-         uqzASjALDGRL9ZApVxmeoA2lm9GPh9AJy8vN2S1XV2UwlMrwQSwXYBCxoDWBk/ZOxSAE
-         m3Rw==
+        bh=AROA6HmEhFEaIHEL85t3kdDk3zaDegC5YsLRviBAR8A=;
+        b=fcylHpqc21pSx59NJ46F8sSpaYkuzlz04rpM0+IK12CVCiiMaASAHXyIA+csPFsCmG
+         PTheJYOYZxw1NuAR4GimWU6XY0UzCblOg/8J06detsOsErC0w/NzvJr0c720wTbCDVGt
+         HqUk3O9LI8KxQXIoLy6gXZ9szAsmFKtTf55HR9RHRA3YKHZz8jpisEO14KtQvvmz4H6g
+         lAfkMbbpz0cpuNosSgJw0FTcpWgK/I0RkNUI+4Fm2jR3D/02h48oddhhbuON7xNrARE7
+         aTQwPUJ5Js/Jrgkqpzv894pqrfFaPf6N+BwUTHMHU0ZCbZyLFREY36sIgm8I2rkCx3Gb
+         /kxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fUQ0AO6nBrpkagDYNxciWTqeHrj4HJLUs5uKYCaBSB8=;
-        b=QLFeXOffIIuiXuXcMyEeUIMUFNFnsNZPmy9KOlHj5ExHR5NbD+5s0jev2OHVLSA7Sa
-         XXymfWn6y9OEOd4E6HksT/x1wJr4OfmsqZNJXHXNQC2C1YC+0haV4vCeRLn01vNBivSw
-         HjmpsiqxUCQKGLFfEcAfKCn9yStb09m2zaGAUfpaWSC5CSzOQEVDgKVkaaSC+pkr6t6h
-         JAb++Jwc7XXtluxjxtG4XimJBRIRHxpI75f6dcIqP6l0PZUcmTQXh5yVWsrnMJx4As9p
-         ZnYyiOEJ0VITdVVKjzyTt2j8RsN7hAN4hbYGgkD6u+FTKC/gio9kgPn5AVICg4Yah+Ht
-         OgSw==
-X-Gm-Message-State: ANoB5plgMcUQROX/GLUfnfieGxgaOg+oo+PGKQBdCsFLcI8CIfrrP2z3
-        9ydmeeidoN6MA3U27jnSsUbNyIoFQdI=
-X-Google-Smtp-Source: AA0mqf7bZsiZRxe7nBLHmwHM2ULYIo7GWNQHATFhfXLeqt67F9B4qWKmme5BwHmZ9RnsrwTnFLtGdg==
-X-Received: by 2002:a17:906:f106:b0:7b2:9a6b:9ac6 with SMTP id gv6-20020a170906f10600b007b29a6b9ac6mr1468938ejb.215.1668678793783;
-        Thu, 17 Nov 2022 01:53:13 -0800 (PST)
+        bh=AROA6HmEhFEaIHEL85t3kdDk3zaDegC5YsLRviBAR8A=;
+        b=2fEQnQXAeaKIifHK1ObDq50wWQE4YquLYpCkWwSt7rNn5oqGG+hpGMhmt2TDmHd4X/
+         xueHq/ZiG30lrQ/6gKJSJQFw1mAS3uBWzWgb6zJDsTEslVUegII6r9r3hg/iSnbI1Osm
+         w5dmbN+Wf3VhRNgjk83WAIAn/aLAHoivkyzWFsRZSrIghWJtcdcHyDVZ+6r/myz8FGml
+         XKxNZKVXQfM92YzAKGFRZMXlyFDf4YAi9DgLBfkUthgi1B+Vo6pjtdp5fYHG9ATlEn3O
+         wpxN+c4FUTBYpUNdhJIF8BxgcW+cDcNVmdWA84ez1Gc1exlZJpompxJ29h67RANZuC3V
+         DXCg==
+X-Gm-Message-State: ANoB5pnrN5XUicXEULHkexd+QGxI/cyqn8UUf083UoVrNeGLxoQ6xARv
+        D24gDoANZKpfJ4IqLgD+okjF+E1ng8I=
+X-Google-Smtp-Source: AA0mqf6+2qc1yqGSmhrUhNhSrBWKebwlc5iG/EHbNqCQeb0+IGAbMihQRZTnLnk/S/R3zOaUuyFvYg==
+X-Received: by 2002:a05:6402:4504:b0:463:71ef:b9ce with SMTP id ez4-20020a056402450400b0046371efb9cemr1482080edb.75.1668679640685;
+        Thu, 17 Nov 2022 02:07:20 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id o22-20020a170906289600b007ab2d744801sm132072ejd.190.2022.11.17.01.53.13
+        by smtp.gmail.com with ESMTPSA id kk18-20020a170907767200b007aed2057eaesm150476ejc.161.2022.11.17.02.07.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Nov 2022 01:53:13 -0800 (PST)
+        Thu, 17 Nov 2022 02:07:20 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1ovba4-004hvY-2w;
-        Thu, 17 Nov 2022 10:53:12 +0100
+        id 1ovbnj-004iNK-2i;
+        Thu, 17 Nov 2022 11:07:19 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Michael J Gruber <git@grubix.eu>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] notes: avoid empty line in template
-Date:   Thu, 17 Nov 2022 10:48:48 +0100
-References: <347ee7ad6fea7cf96bb1e51772802102082b58cc.1668614158.git.git@grubix.eu>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Jacob Abel <jacobabel@nullpo.dev>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3 0/2] worktree: Support `--orphan` when creating new
+ worktrees
+Date:   Thu, 17 Nov 2022 11:00:55 +0100
+References: <20221104010242.11555-1-jacobabel@nullpo.dev>
+ <20221104213401.17393-1-jacobabel@nullpo.dev>
+ <20221110233137.10414-1-jacobabel@nullpo.dev>
+ <CAPig+cTTn764ObHJuw8epOtBdTUwocVRV=tLieCa4zf-PGCegw@mail.gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <347ee7ad6fea7cf96bb1e51772802102082b58cc.1668614158.git.git@grubix.eu>
-Message-ID: <221117.86wn7tj4af.gmgdl@evledraar.gmail.com>
+In-reply-to: <CAPig+cTTn764ObHJuw8epOtBdTUwocVRV=tLieCa4zf-PGCegw@mail.gmail.com>
+Message-ID: <221117.86sfihj3mw.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -68,60 +73,79 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Nov 16 2022, Michael J Gruber wrote:
+On Tue, Nov 15 2022, Eric Sunshine wrote:
 
-> When `git notes` prepares the template it adds an empty newline between
-> the comment header and the content:
->
+> On Thu, Nov 10, 2022 at 6:32 PM Jacob Abel <jacobabel@nullpo.dev> wrote:
+>> While working with the worktree based git workflow, I realised that setting
+>> up a new git repository required switching between the traditional and
+>> worktree based workflows. Searching online I found a SO answer [1] which
+>> seemed to support this and which indicated that adding support for this should
+>> not be technically difficult.
 >>
->> #
->> # Write/edit the notes for the following object:
->>
->> # commit 0f3c55d4c2b7864bffb2d92278eff08d0b2e083f
->> # etc
+>>   * adding orphan branch functionality (as is present in `git-switch`)
+>>     to `git-worktree-add`
 >
-> This is wrong structurally because that newline is part of the comment,
-> too, and thus should be commented. Also, it throws off some positioning
-> strategies of editors and plugins, and it differs from how we do commit
-> templates.
+> I haven't had a chance yet to read v3, but can we take a step back for
+> a moment and look at this topic from a slightly different angle?
+> Setting aside the value of adding --orphan to `git worktree add`
+> (which, I'm perfectly fine with, as mentioned earlier), I have a
+> question about whether the solution proposed by this series is the
+> best we can do.
 >
-> Change this to follow the standard set by `git commit`:
-
-I don't mind the consistency here, but what does "wrong structurally"
-mean? Doesn't the usual removing of duplicate newlines make this amount
-to the same?
-
->> #
->> # Write/edit the notes for the following object:
->> #
->> # commit 0f3c55d4c2b7864bffb2d92278eff08d0b2e083f
->>
+> As I understand it, the actual problem this series wants to solve is
+> that it's not possible to create a new worktree from an empty bare
+> repository; for instance:
 >
-> Tests pass unchanged after this code change.
-
-Because it did change something and we've got bad test coverage, or just
-because it's really a stylistic change?
-
-I don't mind it being a stylistic change, but the proposed commit
-doesn't really make that clear, and leaves one wondering about potential
-missing test coverage etc.
-
-> Signed-off-by: Michael J Gruber <git@grubix.eu>
-> ---
->  builtin/notes.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>     % git init --bare foo.git
+>     % git -C foo.git worktree add -b main bar
+>     Preparing worktree (new branch 'main')
+>     fatal: not a valid object name: 'HEAD'
+>     %
 >
-> diff --git a/builtin/notes.c b/builtin/notes.c
-> index be51f69225..80d9dfd25c 100644
-> --- a/builtin/notes.c
-> +++ b/builtin/notes.c
-> @@ -181,7 +181,7 @@ static void prepare_note_data(const struct object_id *object, struct note_data *
->  		strbuf_addch(&buf, '\n');
->  		strbuf_add_commented_lines(&buf, "\n", strlen("\n"));
->  		strbuf_add_commented_lines(&buf, _(note_template), strlen(_(note_template)));
-> -		strbuf_addch(&buf, '\n');
-> +		strbuf_add_commented_lines(&buf, "\n", strlen("\n"));
->  		write_or_die(fd, buf.buf, buf.len);
+> This series addresses that shortcoming by adding --orphan, so that the
+> following works:
+>
+>     % git init --bare foo.git
+>     % git -C foo.git worktree add --orphan main bar
+>     Preparing worktree (new branch 'main')
+>     %
+>
+> However, is this really the best and most user-friendly and most
+> discoverable solution? Is it likely that users are somehow going to
+> instinctively use --orphan when they see the "fatal: not a valid
+> object name: 'HEAD'" error message?
+>
+> Wouldn't a better solution be to somehow fix `git worktree add -b
+> <branch>` so that it just works rather than erroring out? I haven't
+> delved into the implementation to determine if this is possible, but
+> if it is, it seems a far superior "fix" for the problem shown above
+> since it requires no extra effort on the user's part, and doesn't
+> raise any discoverability red-flags (since nothing needs to be
+> "discovered" if `-b <branch>` works as expected in the first place).
+>
+> If fixing `-b <branch>` to "just work" is possible, then --orphan is
+> no longer a needed workaround but becomes "icing on the cake".
 
-Nothing new as the pre-image shows, but I wondered why not just add a
-"#\n", before I remembered core.commentChar, so this is correct.
+That's a really good point, and we *could* "fix" that.
+
+But I don't see how to do it without overloading "-b" even further, in a
+way that some users either might not mean, or at least would be
+confusing.
+
+E.g. one script "manually clones" a repo because it does "git init",
+"git remote set-url", "git fetch" etc. Another one makes worktrees from
+those fresh checkouts once set up.
+
+If we "DWYM" here that second step will carry forward the bad state
+instead of erroring early.
+
+I haven't fully thought this throuh, so maybe it's fine, just
+wondering...
+
+...an alternate way to perhaps to do this would be to detect this
+situation in add(), and emit an advise() telling the user that maybe
+they want to use "--orphan" for this?
+
+
+
+
