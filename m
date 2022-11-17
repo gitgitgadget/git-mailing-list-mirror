@@ -2,66 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83776C4332F
-	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 14:03:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 22E22C4332F
+	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 14:06:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239876AbiKQODS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Nov 2022 09:03:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40336 "EHLO
+        id S238870AbiKQOGs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Nov 2022 09:06:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240046AbiKQODK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2022 09:03:10 -0500
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D40817616B
-        for <git@vger.kernel.org>; Thu, 17 Nov 2022 06:03:08 -0800 (PST)
-Received: by mail-ed1-x52a.google.com with SMTP id x102so2738397ede.0
-        for <git@vger.kernel.org>; Thu, 17 Nov 2022 06:03:08 -0800 (PST)
+        with ESMTP id S239961AbiKQOGo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2022 09:06:44 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FBD074CEE
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 06:06:42 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id gv23so5341181ejb.3
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 06:06:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=3A6i4Vbm8BjXHB/26Bid0cO0n17L41D/wfy0iYoY+Ic=;
-        b=fFe/MDXQat/qPgzDBAH5/GxDrc6G6dRVnv2ohEMjMr7ZXVZvfck+x/Uic0Ov5e/dpu
-         TQfY6fUX99gGxzy/jb7Y2ZavVPxELOcV9Fh37z+8BV85UgQ3AhnEF9/Od71hK1ae4nps
-         maDtEO5TcPAOtRU5N+0iqUDsthfklOgiXQCZiB4IYhEIcY/EysEqcIT1GZuqVRJfhHKa
-         FQXF+ykbNljVpCKW4YSLtzzy8k6Kk0JbDpnzE9lLBCx5Qg+7932ZHWIBNsi6GrGVVLI3
-         gIEdYJs8t1J6tEyOLXk28uKq/+yKNeQ+8OsIzhYG5oIKrYoCg7rbIrgngEQYUT2VjYYj
-         lLLg==
+        bh=Tuhf/gzRiy7/Qa+Ls9XGZG0ZonJnJLPLrRIbiZRGQ/A=;
+        b=XhObFQB8jGxtUnV1BlC5+u69syB56qYsD2cVoLwkcG7RSRUGO517ZDnBSxPaRBvpih
+         D9iUgRN4/yWi1u3zMQen7eqnA9zrb+W3cVCe26fqpDP6AgJgXf9gkRwTdagMKxTPX9ID
+         9AamLz58rMPvIi8XRI3zRM3qyhAck0NxOg1OQE9gRo+7E8b59g6LD3KCzFh1voAbtAL0
+         9NL56+R/gChnGDX1DiaEeCMzrqy4IFSswDJpjIDT1TDtVp0s13u8y/qGJF5kb/mw7vR+
+         RU8OLEVn4OEc4qkpfYD9LsycIjfuostktqFw5PR9UWi8csDvGEeNPr4oCs+cvIfxTjHU
+         FDIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3A6i4Vbm8BjXHB/26Bid0cO0n17L41D/wfy0iYoY+Ic=;
-        b=AAbtJC22ASEXebDNyXBVFYFu3ez3QfTyxe1aPIxXGoCreL/lx27pNkhdBexYEXyojS
-         zj6DDZs1/Kko35KloCMFFR2Jkk+SBZug5F5ZEOXbmLRKwwlFvHeHpTJAa/9V27HqIL0+
-         XlecWg7fAbLzePV0Tbd2Mw0zqK1XKlXcSUs+F4VMb0/8lGB3+GZ6hA75R4tDUK0nEV7K
-         N1XMLF8hBLJPmg1GD8Jyj3dcs5tGKHW+Vrs4TYy0tt/9o1UrBHekK+KWiX0tMXPnFwby
-         FfG7o5KhvBmOCr3+OmjMOMPs3Tmd7o4q31s7jtzzwabMR4ZnK1TVbGd/1Epx0ijRsUUK
-         0hpg==
-X-Gm-Message-State: ANoB5pn9eqV43+mxe1AeptPEdTtCVmzKKvXCMfiXi6bsAUXF53CI5sCk
-        cf/TdYictqxpwXP7WKnSKWU=
-X-Google-Smtp-Source: AA0mqf4iQ/RAqemBzZTYpN+0xR5EQxdSHjM9jgu0V7uvAspZflz7bwvfEV7POcfrGX8RGMwdzCLz0w==
-X-Received: by 2002:a05:6402:524c:b0:461:c3c9:38e6 with SMTP id t12-20020a056402524c00b00461c3c938e6mr2282381edd.350.1668693787290;
-        Thu, 17 Nov 2022 06:03:07 -0800 (PST)
+        bh=Tuhf/gzRiy7/Qa+Ls9XGZG0ZonJnJLPLrRIbiZRGQ/A=;
+        b=6+ZkGwNNbwv88AZJ1XANhDdeOhqKz2zO30IieONAhKEFFMR8Z3sYZNKk6wcbdVuSQ2
+         ebR3EaZJyxkOmYiwD27FOwplUvDsy/oCdtZJIVtm6o1U9Lga+tfVpKnVGP6nQ/66vZUh
+         12pP0wmJCpg/L0bsJEZ7hVJcMyp/xxfwOzDvmn/H5rRDFj0QZvrug4xk39t4eRbbRiAS
+         PfxQjMrvzO2oseoJLgPtEeHOXi21SpkSeONFs7yiJneiFGwq9ojqSEMRpAK81qwJqo+m
+         JGnyuG1d579V+MixorRpeyKRIRqJMunIwiivweO2RpnV2/t9OuckK33k/blohBqshsx2
+         8ZNw==
+X-Gm-Message-State: ANoB5pkbJ5vJFTKVi3+G6ymnSCpbr6SwPK1O0uZz9a0jDoRrJUHRm9Ma
+        lDR2sWVeI4pZ2AGi9nU8T58=
+X-Google-Smtp-Source: AA0mqf6GR+WYYXWEXuZ9firHA3+CTcPLgnWL/6/F0gfZ7TOy7VKpxlEnn2Hc8O4tGknv5zBScMrmpA==
+X-Received: by 2002:a17:906:ef1:b0:78d:260d:a6e4 with SMTP id x17-20020a1709060ef100b0078d260da6e4mr2218717eji.93.1668694000600;
+        Thu, 17 Nov 2022 06:06:40 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id q20-20020a1709066ad400b007adb86a1e1csm394515ejs.186.2022.11.17.06.03.06
+        by smtp.gmail.com with ESMTPSA id kv7-20020a17090778c700b007ad9028d684sm410622ejc.104.2022.11.17.06.06.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Nov 2022 06:03:06 -0800 (PST)
+        Thu, 17 Nov 2022 06:06:40 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1ovfTu-004pvY-1e;
-        Thu, 17 Nov 2022 15:03:06 +0100
+        id 1ovfXL-004q3j-2h;
+        Thu, 17 Nov 2022 15:06:39 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Teng Long <dyroneteng@gmail.com>
 Cc:     git@vger.kernel.org, tenglong.tl@alibaba-inc.com, me@ttaylorr.com
-Subject: Re: [RFC PATCH 5/6] ls-tree: introduce 'match_pattern()' function
-Date:   Thu, 17 Nov 2022 15:02:34 +0100
+Subject: Re: [RFC PATCH 6/6] ls-tree: introduce '--pattern' option
+Date:   Thu, 17 Nov 2022 15:03:11 +0100
 References: <20221117113023.65865-1-tenglong.tl@alibaba-inc.com>
- <20221117113023.65865-6-tenglong.tl@alibaba-inc.com>
+ <20221117113023.65865-7-tenglong.tl@alibaba-inc.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <20221117113023.65865-6-tenglong.tl@alibaba-inc.com>
-Message-ID: <221117.86bkp5ispx.gmgdl@evledraar.gmail.com>
+In-reply-to: <20221117113023.65865-7-tenglong.tl@alibaba-inc.com>
+Message-ID: <221117.867cztisk0.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -71,65 +71,54 @@ X-Mailing-List: git@vger.kernel.org
 
 On Thu, Nov 17 2022, Teng Long wrote:
 
-> From: Teng Long <dyroneteng@gmail.com>
->
-> In preparation for actually implementing the '--pattern' option, we
-> add a new method called 'match_pattern' that uses regular expressions
-> to match 'ls-tree' entities.
->
-> Signed-off-by: Teng Long <dyroneteng@gmail.com>
-> ---
->  builtin/ls-tree.c | 27 +++++++++++++++++++++++++++
->  1 file changed, 27 insertions(+)
->
 > diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-> index 7661170f7ca..03dd3fbcb26 100644
+> index 03dd3fbcb26..576fc9ad16f 100644
 > --- a/builtin/ls-tree.c
 > +++ b/builtin/ls-tree.c
-> @@ -24,6 +24,7 @@ static struct pathspec pathspec;
->  static int chomp_prefix;
->  static const char *ls_tree_prefix;
->  static const char *format;
-> +static const char *pattern;
->  struct show_tree_data {
->  	unsigned mode;
->  	enum object_type type;
-> @@ -46,6 +47,32 @@ static enum ls_tree_cmdmode {
->  	MODE_OBJECT_ONLY,
->  } cmdmode;
->  
-> +__attribute__((unused))
+> @@ -13,6 +13,7 @@
+>  #include "builtin.h"
+>  #include "parse-options.h"
+>  #include "pathspec.h"
+> +#include <stdio.h>
 
-This isn't portable (we'd need a check in git-compat-util.h, and in any
-case just squashing this whole commit into 6/6 where it actually gets
-used would be better.
+Aside from anything else I've mentionded (e.g. overall goals), don't
+include "<>" headers in anything except git-compat-util.h and similar.
 
-> +static int match_pattern(const char *line)
-> +{
-> +	int ret = 0;
-> +	regex_t r;
-> +	regmatch_t m[1];
-> +	char errbuf[64];
+In this case we don't need this at all, but if we did it should be added
+there...
+
+> [...]
+>  	}
+> -	ret = regexec(&r, line, 1, m, 0);
 > +
-> +	ret = regcomp(&r, pattern, 0);
-> +	if (ret) {
-> +		regerror(ret, &r, errbuf, sizeof(errbuf));
-> +		die("failed regcomp() for pattern '%s' (%s)", pattern, errbuf);
-> +	}
-> +	ret = regexec(&r, line, 1, m, 0);
-> +	if (ret) {
-> +		if (ret == REG_NOMATCH)
-> +			goto cleanup;
-> +		regerror(ret, &r, errbuf, sizeof(errbuf));
-> +		die("failed regexec() for subject '%s' (%s)", line, errbuf);
-> +	}
-> +
-> +cleanup:
-> +	regfree(&r);
-> +	return ret;
-> +}
-> +
->  static void expand_objectsize(struct strbuf *line, const struct object_id *oid,
->  			      const enum object_type type, unsigned int padded)
+> +	ret = regexec(regex, line, 1, m, 0);
+
+Some whitespace-churn after the last commit...
+
+>  static void show_tree_common_default_long(struct show_tree_data *data)
 >  {
+>  	int base_len = data->base->len;
+> +	struct strbuf sb = STRBUF_INIT;
+> +	int sb_len = 0;
 
+It's size_t, not int, so if you need to keep track of a strbuf's length
+use the type of its "len".
+
+This would be better named "oldlen" or something...
+
+> +		printf("%s", sb.buf);
+
+puts(sb.buf) instead;
+
+> +	if (pattern && !strlen(pattern))
+
+pattern && !*pattern is more idiomatic IMO.
+
+> +test_expect_success 'combine with "--object-only"' '
+> +	cat > expect <<-EOF &&
+
+Style: No " " after ">"
+> +		6da7993
+
+Style: Let's avoid \t\t indenting for here-docs, just use the indenting
+of the "cat".
