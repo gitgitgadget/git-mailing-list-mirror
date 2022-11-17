@@ -2,62 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6C3ECC4332F
-	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 01:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 04C47C4332F
+	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 01:45:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233581AbiKQBhA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 16 Nov 2022 20:37:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39152 "EHLO
+        id S234238AbiKQBpA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 16 Nov 2022 20:45:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238534AbiKQBg4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Nov 2022 20:36:56 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D27E532DF
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 17:36:55 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id a11-20020a05600c2d4b00b003cf6f5fd9f1so551067wmg.2
-        for <git@vger.kernel.org>; Wed, 16 Nov 2022 17:36:55 -0800 (PST)
+        with ESMTP id S238592AbiKQBo4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Nov 2022 20:44:56 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D6256B213
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 17:44:53 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id v124-20020a1cac82000000b003cf7a4ea2caso3400917wme.5
+        for <git@vger.kernel.org>; Wed, 16 Nov 2022 17:44:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:cc:to:from:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=M/S8dZZt2LeC+i/fxB4RfekrCK1LbkNcbS6QEmqUNlA=;
-        b=N5rEq7YKDbigf/QMB1vTLWHbO3Qrj1hHCkEvBNdvxTVugjLvFpGqTWBlV8TchSZX8C
-         67N7/pSMJ7/n1q21/Xgf2FI2DZwUwoDKJk2uFeVMpkbUC8UqM684tYMkzyYXdTL9nPfQ
-         n4UWUCHLaEY7T/YZ1nYGMjmffrrT9cC9eiF6B+eNT9PZiskG9/RHiKxqXC3f8BnBouL2
-         sxZPTmtwr4ZCgpf12a7kDqjNWlNy7h87pJyEGynk0tsZ3HEZAXxebV0Ywq0uEvradxZk
-         ZHvVXp2qCos3krxI7EtPoh2nTxTaNnA/ZdwvPHSTykdfLkI5REf52bd1qSSFPbd6fBDj
-         RjEw==
+        bh=SI/mjTy43VUwJvOzKs6jwOwPZ5BpinhNv4T/DyFFXds=;
+        b=n2iDq1d4dHioUiVSaaYHACG/eUmak941rd0BWdT9beV/wgH58cIS2A6Dbe9kZl52Qp
+         GSZFDMq90Bq8jDhcOKbpix7GXb/k68Is9qyo/8wntkMTMowsoDSrbRQy46/tG2MDoEvp
+         X7OLrgegLychO+d895U/o5iNNcV5PWl5rFHeZXkoekx9UZCUK9vJ7WYfYbNuz+UBpNLA
+         nQxh5JDwSfLUc7dX5z3pVtmlXNwZvrYIriHAzbMCnyi4eAut8m+BOwakGqhEuTHkw3ZG
+         qgiVUvu0+4QavtOUMYkhC515/KGFPwdz2K6g4xJYnhnOWwSNB3Zh14AU1PG7Om6ghxq9
+         dFQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:cc:to:from:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=M/S8dZZt2LeC+i/fxB4RfekrCK1LbkNcbS6QEmqUNlA=;
-        b=WgvnOYhoUxoHf94pYi3AcCnhrT6B+l+b2sC/sQu0uIteVxUBBspfY+IIrVLvGnJQxh
-         Ke6+m3rFX8BqTRF409m2l+nh+Vl7u9nOXgLNIpb/o5vhP0tWLg3GqfrxStHjsl51z3xt
-         DlIMFmCuM5PUduT2u32kJKjJZxaBg6Yem+UEmGKptAYrgBKxXGvdKQAhypqFjYoTzI45
-         NtWzaADq2b/0rBXmp5Ad0nXHnjqwTnnt3FwjpIE7zj7QPC6XDnG/T7rhGXXqF6WCCxs0
-         BcDKsNRQx0aKo35WnW3mzmZ+8oKzfa6G+ppjd3ngrT/FVCVa6AMDU2Q1aPJbuOyULS9Y
-         2B2Q==
-X-Gm-Message-State: ANoB5pmVWZcVtV1fH6zfdFuFeepW3yamlqLs0LN2kYZLTKXnVcpKfh6U
-        nszF2QFv43EyKhuDmbaNzaCUjgQ1CS8=
-X-Google-Smtp-Source: AA0mqf6i4sFFNC/sBu6VczUopsnsILmnTfSydTGIRlgiV7hJ4h0vGIslm5b9JfELpGx3PosduGWmBA==
-X-Received: by 2002:a05:600c:41c7:b0:3cf:a0f4:7879 with SMTP id t7-20020a05600c41c700b003cfa0f47879mr3713038wmh.152.1668649013708;
-        Wed, 16 Nov 2022 17:36:53 -0800 (PST)
+        bh=SI/mjTy43VUwJvOzKs6jwOwPZ5BpinhNv4T/DyFFXds=;
+        b=VUv8iouivFTSinGkjitCCbmGkdeD4EoZwhEI7U9pB47rDOUj+QijCCwvwyTMoYG/eO
+         n+W33B0TuqeFwQsYHH1n8A5vLiZfC8VtMBI1l3aCMBIxp4gByO1NSdNZSR3IZGBBY1yS
+         QX5wBGd1pzuj0VGxi7fmzj9uzeu3JKGIiM2D3+XRF+OIxYILWUa6RDCNmwuVDaOAv7SF
+         43+mX1A2OhVIncrZSiGdsx/cFV6wViEHEqipVifrnj8HkT5x2MSEC0PEOfwRvY4U+k8e
+         ZcsPgUo/f0V/fIhG2+BdOPX4Alsz51YUT4bI/9GtOmvwJKCEJh9rzjtyD8M8+bbqwQuU
+         5Hmw==
+X-Gm-Message-State: ANoB5pmokfA7D67Q7ls4pQ0J/tBrUc+j/AFrWrrRivh7neiYWesNxe6L
+        4hvE9oHTwCj0k9kppArl37L6ofDZgX0=
+X-Google-Smtp-Source: AA0mqf7c6v+i26B21U47/l/KHiKVtE/2yGuOmemOext477+vX7iYVDmPe76aLUf27hfpu0W4D6KXyg==
+X-Received: by 2002:a05:600c:688d:b0:3c3:77c2:cfff with SMTP id fn13-20020a05600c688d00b003c377c2cfffmr3638490wmb.171.1668649491719;
+        Wed, 16 Nov 2022 17:44:51 -0800 (PST)
 Received: from [192.168.2.52] (104.red-88-14-50.dynamicip.rima-tde.net. [88.14.50.104])
-        by smtp.gmail.com with ESMTPSA id e5-20020a05600c13c500b003cfb7c02542sm3425863wmg.11.2022.11.16.17.36.53
+        by smtp.gmail.com with ESMTPSA id m28-20020a05600c3b1c00b003cf37c5ddc0sm4106968wms.22.2022.11.16.17.44.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 16 Nov 2022 17:36:53 -0800 (PST)
-Subject: [PATCH 1/2] branch: force-copy a branch to itself via @{-1} is a
- no-op
+        Wed, 16 Nov 2022 17:44:51 -0800 (PST)
+Subject: [PATCH 2/2] branch: clear target branch configuration before copying
+ or renaming
 From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
 To:     Git List <git@vger.kernel.org>
 Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Taylor Blau <me@ttaylorr.com>
 References: <f0b2d46c-2e9c-2630-2870-8ed550dd1606@gmail.com>
-Message-ID: <db182322-1383-4311-8baa-c4a9aeed3b4d@gmail.com>
-Date:   Thu, 17 Nov 2022 02:36:52 +0100
+Message-ID: <762c1e8f-fd0c-3b4b-94a0-709d8c9431e4@gmail.com>
+Date:   Thu, 17 Nov 2022 02:44:50 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
@@ -69,85 +69,101 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since 52d59cc645 (branch: add a --copy (-c) option to go with --move
-(-m), 2017-06-18) we can copy a branch to make a new branch with the
-'-c' (copy) option or to overwrite an existing branch using the '-C'
-(force copy) option.  A no-op possibility is considered when we are
-asked to copy a branch to itself, to follow the same no-op introduced
-for the rename (-M) operation in 3f59481e33 (branch: allow a no-op
-"branch -M <current-branch> HEAD", 2011-11-25).  To check for this, in
-52d59cc645 we compared the branch names provided by the user, source
-(HEAD if omitted) and destination, and a match is considered as this
-no-op.
+There are two problems with -m (rename) and -c (copy) branch operations.
 
-Since ae5a6c3684 (checkout: implement "@{-N}" shortcut name for N-th
-last branch, 2009-01-17) a branch can be specified using shortcuts like
-@{-1}.  This allows this usage:
+ 1. If we force-rename or force-copy a branch to overwrite another
+ branch that already has configuration, the resultant branch ends up
+ with the source configuration (if any) mixed with the configuration for
+ the overwritten branch.
 
-	$ git checkout -b test
-	$ git checkout -
-	$ git branch -C test test  # no-op
-	$ git branch -C test @{-1} # oops
-	$ git branch -C @{-1} test # oops
+	$ git branch upstream
+	$ git branch -t foo upstream  # foo has tracking configuration
+	$ git branch bar              # bar has not
+	$ git branch -M bar foo       # force-rename bar to foo
+	$ git config branch.foo.merge # must return clear
+	refs/heads/upstream
 
-As we are using the branch name provided by the user to do the
-comparison, if one of the branches is provided using a shortcut we are
-not going to have a match and a call to git_config_copy_section() will
-happen.  This will make a duplicate of the configuration for that
-branch, and with this progression the second call will produce four
-copies of the configuration, and so on.
+ 2. If we repeatedly force-copy a branch to the same name, the branch
+ configuration is repeatedly copied each time.
 
-Let's use the interpreted branch name instead for this comparison.
+	$ git branch upstream
+	$ git branch -t foo upstream  # foo has tracking configuration
+	$ git branch -c foo bar       # bar is a copy of foo
+	$ git branch -C foo bar       # again
+	$ git branch -C foo bar       # ..
+	$ git config --get-all branch.bar.merge # must return one value
+	refs/heads/upstream
+	refs/heads/upstream
+	refs/heads/upstream
 
-The rename operation is not affected.
+Whenever we copy or move (forced or not) we must make sure that there is
+no residual configuration that will be, probably erroneously, inherited
+by the new branch.  To avoid confusions, clear any branch configuration
+before setting the configuration from the copied or moved branch.
 
 Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
- builtin/branch.c                      |  6 +++---
- t/t3204-branch-name-interpretation.sh | 10 ++++++++++
- 2 files changed, 13 insertions(+), 3 deletions(-)
+ builtin/branch.c  | 17 +++++++++++------
+ t/t3200-branch.sh | 19 +++++++++++++++++++
+ 2 files changed, 30 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index 15be0c03ef..a35e174aae 100644
+index a35e174aae..14664f0278 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -584,13 +584,13 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+@@ -583,12 +583,17 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 
  	strbuf_release(&logmsg);
  
- 	strbuf_addf(&oldsection, "branch.%s", interpreted_oldname);
--	strbuf_release(&oldref);
- 	strbuf_addf(&newsection, "branch.%s", interpreted_newname);
--	strbuf_release(&newref);
- 	if (!copy && git_config_rename_section(oldsection.buf, newsection.buf) < 0)
- 		die(_("Branch is renamed, but update of config-file failed"));
--	if (copy && strcmp(oldname, newname) && git_config_copy_section(oldsection.buf, newsection.buf) < 0)
-+	if (copy && strcmp(interpreted_oldname, interpreted_newname) && git_config_copy_section(oldsection.buf, newsection.buf) < 0)
- 		die(_("Branch is copied, but update of config-file failed"));
-+	strbuf_release(&oldref);
-+	strbuf_release(&newref);
+-	strbuf_addf(&oldsection, "branch.%s", interpreted_oldname);
+-	strbuf_addf(&newsection, "branch.%s", interpreted_newname);
+-	if (!copy && git_config_rename_section(oldsection.buf, newsection.buf) < 0)
+-		die(_("Branch is renamed, but update of config-file failed"));
+-	if (copy && strcmp(interpreted_oldname, interpreted_newname) && git_config_copy_section(oldsection.buf, newsection.buf) < 0)
+-		die(_("Branch is copied, but update of config-file failed"));
++	if (strcmp(interpreted_oldname, interpreted_newname)) {
++		strbuf_addf(&oldsection, "branch.%s", interpreted_oldname);
++		strbuf_addf(&newsection, "branch.%s", interpreted_newname);
++
++		delete_branch_config(interpreted_newname);
++
++		if (!copy && git_config_rename_section(oldsection.buf, newsection.buf) < 0)
++			die(_("Branch is renamed, but update of config-file failed"));
++		if (copy && git_config_copy_section(oldsection.buf, newsection.buf) < 0)
++			die(_("Branch is copied, but update of config-file failed"));
++	}
+ 	strbuf_release(&oldref);
+ 	strbuf_release(&newref);
  	strbuf_release(&oldsection);
- 	strbuf_release(&newsection);
- }
-diff --git a/t/t3204-branch-name-interpretation.sh b/t/t3204-branch-name-interpretation.sh
-index 793bf4d269..3399344f25 100755
---- a/t/t3204-branch-name-interpretation.sh
-+++ b/t/t3204-branch-name-interpretation.sh
-@@ -57,6 +57,16 @@ test_expect_success 'create branch with pseudo-qualified name' '
- 	expect_branch refs/heads/refs/heads/qualified two
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 7f605f865b..c3b3d11c28 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -218,6 +218,25 @@ test_expect_success 'git branch -M should leave orphaned HEAD alone' '
+ 	)
  '
  
-+test_expect_success 'force-copy a branch to itself via @{-1} is no-op' '
-+	git branch -t copiable main &&
-+	git checkout copiable &&
-+	git checkout - &&
-+	git branch -C @{-1} copiable &&
-+	git config --get-all branch.copiable.merge >actual &&
-+	echo refs/heads/main >expect &&
-+	test_cmp expect actual
++test_expect_success 'git branch -M inherites clean tracking setup' '
++	test_when_finished git branch -D moved &&
++	git branch -t main-tracked main &&
++	git branch non-tracked &&
++	git branch -M main-tracked moved &&
++	git branch --unset-upstream moved &&
++	git branch -M non-tracked moved &&
++	test_must_fail git branch --unset-upstream moved
 +'
 +
- test_expect_success 'delete branch via @{-1}' '
- 	git branch previous-del &&
- 
++test_expect_success 'git branch -C inherites clean tracking setup' '
++	test_when_finished git branch -D copiable copied &&
++	git branch -t copiable main &&
++	git branch -C copiable copied &&
++	git branch --unset-upstream copied &&
++	git branch -C copied copiable &&
++	test_must_fail git branch --unset-upstream copiable
++'
++
+ test_expect_success 'resulting reflog can be shown by log -g' '
+ 	oid=$(git rev-parse HEAD) &&
+ 	cat >expect <<-EOF &&
 -- 
 2.36.1
