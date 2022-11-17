@@ -2,158 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CC70C4332F
-	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 10:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE812C433FE
+	for <git@archiver.kernel.org>; Thu, 17 Nov 2022 11:30:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234294AbiKQK0P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Nov 2022 05:26:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57542 "EHLO
+        id S239661AbiKQLak (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Nov 2022 06:30:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234673AbiKQK0K (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2022 05:26:10 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E81B6528BF
-        for <git@vger.kernel.org>; Thu, 17 Nov 2022 02:26:09 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id h186-20020a1c21c3000000b003cfe48519a6so4657583wmh.0
-        for <git@vger.kernel.org>; Thu, 17 Nov 2022 02:26:09 -0800 (PST)
+        with ESMTP id S234595AbiKQLae (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2022 06:30:34 -0500
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B043429A2
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 03:30:33 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id k22so1496729pfd.3
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 03:30:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Izxt41wHnfYX+3HuWgl8C6GGFshpLKSqi4aqsyVp6wQ=;
-        b=GVWclRrbEcaFdUmku4X9dER7DMejfBLbenRaPX/h5Z74bC/AIUY5u0Z9W9DBQx9BCK
-         JQnmkxvCGpDfb/te6hsG8ONM1lvPFV2X2he3WI6DRLU+byMut1tfb8eTo6GEEM4B0eaV
-         y4ElZmWa+fkedhmOt8sIUR4i4md4KsY2mGPZZWBg1KEukyoCxchdkcuYTJO5a9Skt1ZL
-         pBFx6MWnZwYghsc1/LTqMaANRCY11DOWRX/ARdWxntgCuJoGeo6umNB7k9VGfGm+iyrt
-         shA+GXNLJ0JniRX1SOwgw2SWeDBIb/w53ugy7tadql5aGPY6//OrbDosWwo60FjOkHc9
-         CepA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iQGiq7zrrVzZkXGL8AIBXmqNnVR5nVBegVs3We6TlN8=;
+        b=S877kzQtAlGHPxmx2v12035OM74ZJybCtHblLhoXxyQ2NjwGEIw6HbNM7NhCxS763N
+         mXoNDq1DmDDbmU91xPbwT7APV1VIjctfFD+NF9VSXX2uzaPWJ1yexcVJlEqYsK0Dl4s0
+         rYLlU3WKW4LTE/aTqiYVriy6dd5lu1r7jtuKZH7IOx42kif20hUYkGtdNZ9FXYBtl1+V
+         aiV2H8p0G8LdnV0rQ7Xv/ehwMzRd+dGJaU3FFokXOOyjYIjxxgBHcZRrwuX8MPdymctt
+         /7yHkTw8pVg09lD2QC8mgNfSqv10FUoT78qmyeBJO3ztwVxNMhiLtrISfL5Dr563I5wV
+         rrlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Izxt41wHnfYX+3HuWgl8C6GGFshpLKSqi4aqsyVp6wQ=;
-        b=WhZFIWna548QbRyC2SATfvRlhVIch5Nwpe0vS8OPNqwzr2wP5Fjx3siO3j24rGjcf6
-         9sQiYhBSkaOMEh0VeMSHllYelYhdjuRm3WTmPZ/7SqmW1oeupOt7GCH2dwUKf4WT5wD+
-         b1k3jDkHSgYOBT0XaH59fXZRgOHbLn1uuXDO/JyE631aeBfo28uOUiB6hsx9uDYw2TOA
-         jKSG/gtLAkc/u2KrH0zHdRYcZKBZcpIC/75TdwmPnWA0GeYvrhaUPUf/grinS4YRtsfN
-         U9XIXcjepgPLXnQrpQvdATbTnEJZEulev5l20r3YYbBQIXiITx4QR0+pll2LTHSFEsI4
-         GYQg==
-X-Gm-Message-State: ANoB5pnYLxoQNgVKn1hAy/c0cnb9GaoLN4D/761nCTehP7oLsX0j1bcA
-        lEVMCeG8dwxSHd+KPz2jb6t3PG61Fiw=
-X-Google-Smtp-Source: AA0mqf6H6BYbTKYSWKuFn146hEo7+VZzrrnxqEmhctCNEK7kvcbl4ainautcfGMeWBj0aX1vGhqFhA==
-X-Received: by 2002:a1c:c918:0:b0:3cf:f2aa:3dc2 with SMTP id f24-20020a1cc918000000b003cff2aa3dc2mr1167635wmb.175.1668680768349;
-        Thu, 17 Nov 2022 02:26:08 -0800 (PST)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id s18-20020adfdb12000000b00241727795c4sm697422wri.63.2022.11.17.02.26.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Nov 2022 02:26:07 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <50d8767b-cb8c-74c5-b280-43472fa074a2@dunelm.org.uk>
-Date:   Thu, 17 Nov 2022 10:26:07 +0000
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iQGiq7zrrVzZkXGL8AIBXmqNnVR5nVBegVs3We6TlN8=;
+        b=tjut1aKTWl6XZTyt4zddeWgcxTjlS9JNfSwaK3c5JuLWHj9ivPuJ7amZLDpkRkA4xE
+         DXd8/7TFFlIl7G6C5KqSGFjrLf2gcL6Ex4A4pREi3pcI4q/new91KufvLaoDyYdfRTfO
+         1v1zdVDGI6mSSOzBMvIdjSOk+ufYsgLpIajIyIESYhQMHQTaI9CZcv4Ba/q3/3KpWWJr
+         LCxL83MQAbeyb/YT0++7SPH/RqogdYb8MnIeThn+7/W4neGG4etz6LnSTHFQNcbtr03Y
+         YLHnSMmwPHCa2JZI5wLLOsbO1AUUsYOWyTTC5UR9wWgUzUANfv9iYgJAqj6JbIgx99Qp
+         Bvbg==
+X-Gm-Message-State: ANoB5pmZeaSGYKYP2zbHpTPNoszbMQwXjY9awG7aN/kdD74YpHq6HGvz
+        VJaUIjA7LNolid2ckFjau2S1PfI2UWF2AA==
+X-Google-Smtp-Source: AA0mqf7U1uIjwobK7c9Lv8pNLfvmZ/GNvUH5NIpSnS6dOKIkjVBqFJ7S8S2lt5Boq2NyVMmZhBeImQ==
+X-Received: by 2002:a63:5d45:0:b0:476:dd29:75a8 with SMTP id o5-20020a635d45000000b00476dd2975a8mr1534004pgm.547.1668684632518;
+        Thu, 17 Nov 2022 03:30:32 -0800 (PST)
+Received: from localhost.localdomain ([47.246.101.60])
+        by smtp.gmail.com with ESMTPSA id f7-20020a170902684700b00186c5e8b1d0sm1056117pln.149.2022.11.17.03.30.30
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 17 Nov 2022 03:30:32 -0800 (PST)
+From:   Teng Long <dyroneteng@gmail.com>
+X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com, tenglong.tl@alibaba-inc.com, me@ttaylorr.com,
+        Teng Long <dyroneteng@gmail.com>
+Subject: [RFC PATCH 0/6] ls-tree: introduce '--pattern' option
+Date:   Thu, 17 Nov 2022 19:30:17 +0800
+Message-Id: <20221117113023.65865-1-tenglong.tl@alibaba-inc.com>
+X-Mailer: git-send-email 2.38.1.426.g770fc8806cb.dirty
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] range-diff: support reading mbox files
-Content-Language: en-US
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Taylor Blau <me@ttaylorr.com>
-References: <pull.1420.git.1668536405563.gitgitgadget@gmail.com>
- <dfe0190c-1d2e-804a-5312-877b7b2f5822@dunelm.org.uk>
-In-Reply-To: <dfe0190c-1d2e-804a-5312-877b7b2f5822@dunelm.org.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho
+From: Teng Long <dyroneteng@gmail.com>
 
-Having slept on it I think I misunderstood what was happening in the 
-diff parsing yesterday
+This RFC patch introduce a new "ls-tree" option "--pattern", aim to match the
+entries by regex then filter the output which we may want to achieve. It also
+contains some commit for preparation or cleanup.
 
-On 16/11/2022 14:40, Phillip Wood wrote:
->> +        } else if (state == MBOX_IN_DIFF) {
->> +            switch (line[0]) {
->> +            case '\0':
->> +                continue; /* ignore empty lines after diff */
->> +            case '+':
->> +            case '-':
->> +            case ' ':
->> +                if (!old_count && !new_count)
->> +                    break;
-> 
-> This shouldn't happen in a well formed diff. Below we happily accept bad 
-> counts, is there a reason to reject them here?
+The idea may be not comprehensive and the tests for it might be insufficient
+too, but I'd like to listen the suggestion from the community to decide if it's
+worth going forward with.
 
-I think this might be picking up the "--" at the end of the patch as we 
-don't want to break here at the end of a hunk. If so then a comment 
-would be helpful.
+Thanks.
 
->> +                if (old_count && line[0] != '+')
->> +                    old_count--;
->> +                if (new_count && line[0] != '-')
->> +                    new_count--;
-> 
-> The diff is malformed if old_count == 0 and we see '-' or ' ' or 
-> new_count == 0 and we see '+' or ' '. The code is careful not to 
-> decrement the count in that case so I think it is harmless to accept 
-> diffs with bad line counts in the hunk header.
->> +                /* fallthrough */
->> +            case '\\':
->> +                strbuf_addstr(&buf, line);
->> +                strbuf_addch(&buf, '\n');
->> +                util->diffsize++;
-> 
-> I think this might be a better place to break if old_count and new_count 
-> are both zero.
+Teng Long (6):
+  ls-tree: cleanup the redundant SPACE
+  t3104: remove shift code in 'test_ls_tree_format'
+  ls-tree: optimize params of 'show_tree_common_default_long()'
+  ls-tree: improving cohension in the print code
+  ls-tree: introduce 'match_pattern()' function
+  ls-tree: introduce '--pattern' option
 
-It would be the right place to break at the end of each hunk, but I 
-don't think we want to do that.
+ Documentation/git-ls-tree.txt |   7 ++-
+ builtin/ls-tree.c             | 109 ++++++++++++++++++++++++++--------
+ t/t3104-ls-tree-format.sh     |   1 -
+ t/t3106-ls-tree-pattern.sh    |  70 ++++++++++++++++++++++
+ 4 files changed, 161 insertions(+), 26 deletions(-)
+ create mode 100755 t/t3106-ls-tree-pattern.sh
 
->> +                continue;
->> +            case '@':
->> +                if (parse_hunk_header(line, &old_count,
->> +                              &new_count, &p))
->> +                    break;
->> +
->> +                strbuf_addstr(&buf, "@@");
->> +                if (current_filename && *p)
->> +                    strbuf_addf(&buf, " %s:",
->> +                            current_filename);
->> +                strbuf_addstr(&buf, p);
->> +                strbuf_addch(&buf, '\n');
->> +                util->diffsize++;
->> +                continue;
->> +            }
-> 
-> This is effectively the `default:` clause as it is executed when we 
-> don't handle the line above. We ignore the contents of this line which 
-> makes me wonder what happens if it is the start of another diff.
+-- 
+2.38.1.426.g770fc8806cb.dirty
 
-We'll pick that up earlier with "if (starts_with(line, "diff --git"))"
-
-We only get here at the end of a patch (assuming it has the "--" line 
-from format-patch)
-
-Best Wishes
-
-Phillip
-
-> Do we 
-> have tests that alter more than one file in a single commit?
-> 
-> I think this is a useful addition, it could perhaps benefit from more 
-> tests though. Having tests for bad input, "\r\n" line endings and 
-> getting the author from a From: header as well as an in-body From: line 
-> would give a bit more reassurance about how robust the parser is.
-> 
-> Best Wishes
-> 
-> Phillip
