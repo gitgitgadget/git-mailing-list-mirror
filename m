@@ -2,207 +2,218 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1590C433FE
-	for <git@archiver.kernel.org>; Fri, 18 Nov 2022 00:55:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58400C4332F
+	for <git@archiver.kernel.org>; Fri, 18 Nov 2022 02:11:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240703AbiKRAzr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Nov 2022 19:55:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54334 "EHLO
+        id S235130AbiKRCLC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Nov 2022 21:11:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233894AbiKRAzp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2022 19:55:45 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B438E15A03
-        for <git@vger.kernel.org>; Thu, 17 Nov 2022 16:55:44 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id t25so9333186ejb.8
-        for <git@vger.kernel.org>; Thu, 17 Nov 2022 16:55:44 -0800 (PST)
+        with ESMTP id S235134AbiKRCK7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2022 21:10:59 -0500
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB3B985EC8
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 18:10:57 -0800 (PST)
+Received: by mail-pf1-x42f.google.com with SMTP id 140so3562574pfz.6
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 18:10:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=5xLrLPDchErdqWFNUwK84wUDrcBpNQQsInSWGbXvb+U=;
-        b=pWC2txcknm8XisKoi5wp28KAnDut4HNw4lWqooRjuuUiWnJLfvIPVVPK3lud8xZ5pv
-         FU7YO+FaQeeGvpshoipoRrUis6D4WLyTvicHEwe1i+RJO+WNvV0itFhQd5KhhzK3GdcB
-         bDVwd5F+9b9ocZ2BV1AMCzlaD1EKyoXwZmR+RlI8W7YIN9Jplx/bVk6WkMZhUoSIt6IS
-         Av4D1laPySBCDrdHWEsWcApoSTS/AuT1Y1LfI/QH12N2j1t+tbf0ewyIJq77B/DjI3rU
-         FwFNQmC5ZPAuY/TOHxpQQ3gZ4tFiOtXQB7ZI6WjjVz8Z9beD6fCZCuYLyy3WeP7SQXTz
-         LSNg==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CEeKjAVs+UbgjrMgupv1lXaAc0YM0JJxy5TYwwZK5tQ=;
+        b=ZmeUDP6VhvKoebpOd1mqugq6LEVUN7ihKw3F7dQDh5bfSOJrWOFQrCu3LBu2KqxDQn
+         BckS35O7I/fMfcweyUQcFGBjRkOSoaeaZsuQBrOV73u5zAbBJsexHflLJkZmCa4XGQY2
+         jE2zuncHhLkkgcbg2lb/vb4JsHC89tRD/8a8cY+/6KTWO4kaKrff1SUsQrqY4RElTgtH
+         Mn6R+3fAaSIMEpUxKiOhQVpFnaCUcGolvkUeI65MtxJCt2a4CSBMR/fMAzLrf5x2WxtW
+         I6+4FaIvFOh+QyHorTL9E3nG5iCRULil9vRrct7tmGZNiBRBsgEq8i0vfFWZL8Dyp7Ml
+         u+uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5xLrLPDchErdqWFNUwK84wUDrcBpNQQsInSWGbXvb+U=;
-        b=QcPTxLlupGQK2PO17uq8ji3ykAmGMovpxvVqKder5adyO/xHel/Cim7q8RdxCF/oCi
-         Hadx0lmHOMRssV6jnOWLr1j6oDSZpXBSeu0zX26iTiPyNRTVlFk5wlqhGQaU7nNi8EJE
-         ZrIhnWPbVQ8al4azRbIZw40nXn6+9bmObA980o1opTIvfyftCBBe4kkA42scT1XdaTNp
-         mqQNvpmsb9Z/ZGx0mncnPACcQcnS84oWLu6NkYLwHCuePaOtygqtBujNjY97X7/2wMgB
-         xC5E5CYxwbZ25Zvm1c7GInRZZ+qXLO+bIx0Er86/nH5qWqFRDq3ey5zpaySSSL8grUf/
-         pnyg==
-X-Gm-Message-State: ANoB5plvKDFCdpG1V+0Rw4gX4c0YzjACuB28oPGKDLP/B5rPcVYwmSJ5
-        Wfkv38FP3MC65lmRxLDVeKw=
-X-Google-Smtp-Source: AA0mqf5vnRyIYhek2sARJ9sM16ld05KF/eYqG9J1mfVlaHxs+o+3Yi9dKLfqKXjwKhvMO3TDLAVkdg==
-X-Received: by 2002:a17:906:547:b0:7ad:9028:4b17 with SMTP id k7-20020a170906054700b007ad90284b17mr4127908eja.366.1668732943053;
-        Thu, 17 Nov 2022 16:55:43 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id 17-20020a170906329100b007aa3822f4d2sm1037018ejw.17.2022.11.17.16.55.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Nov 2022 16:55:42 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1ovpfR-00589y-30;
-        Fri, 18 Nov 2022 01:55:41 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] parse_object(): check on-disk type of suspected blob
-Date:   Fri, 18 Nov 2022 01:36:23 +0100
-References: <Y3a3qcqNG8W3ueeb@coredump.intra.peff.net>
- <Y3a4jKzsHSooYFqj@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <Y3a4jKzsHSooYFqj@coredump.intra.peff.net>
-Message-ID: <221118.86cz9lgjxu.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CEeKjAVs+UbgjrMgupv1lXaAc0YM0JJxy5TYwwZK5tQ=;
+        b=rr2xIxd+pHN4waF3Cz+KECeSs8KJ1mpF/x8QLoEFuY7O+iu2Fjl3eWFo17qTFieXEq
+         zQB0hPvluIdmZn40jP+XQ6qq30k4PJ1VsN4gGGcg7UxzG/9YIFmQnWuhwo7PtEjnS4Is
+         +nd/NOTDIEgzAVOzOKCbjJTLpegmSl8JXtYAvFy7Tz9fQVheUE5ffdRp2Omw90KC6EnL
+         P7ofPqqXOj9aYq2DorMW/g7SBmZyHwO2pnqM3REP+jYjSi7v8u/kAgfbql7fFZZowtOY
+         ig2885gaNmBWpoaqVN+RaPW5LGPWpDIePbyHsGbpl7w40IETFf8TdbhSnyNaVm1Yrpo/
+         xsaQ==
+X-Gm-Message-State: ANoB5pnFfvxz4dIcGbC9VUmNOqPvC6PnGrCPc2RlB5ttnbtnrwQOlX35
+        M/wRg0jQXgfPY5LUO//uOEEa
+X-Google-Smtp-Source: AA0mqf5tkQR881pT11vVh6fTk4rSWOqnIUxmiFOsr4m69alRGaNtmNNu3HWgfcRxjtwoXTQInD2S6g==
+X-Received: by 2002:aa7:9f0d:0:b0:56b:e16d:b08 with SMTP id g13-20020aa79f0d000000b0056be16d0b08mr5662196pfr.70.1668737457409;
+        Thu, 17 Nov 2022 18:10:57 -0800 (PST)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id l12-20020a170903120c00b0016be834d54asm2079673plh.306.2022.11.17.18.10.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 17 Nov 2022 18:10:56 -0800 (PST)
+Message-ID: <8457ad4c-51c7-4c2d-8dbf-02a60045d288@github.com>
+Date:   Thu, 17 Nov 2022 18:10:52 -0800
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH 2/2] branch: clear target branch configuration before
+ copying or renaming
+Content-Language: en-US
+To:     =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>,
+        Git List <git@vger.kernel.org>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+References: <f0b2d46c-2e9c-2630-2870-8ed550dd1606@gmail.com>
+ <762c1e8f-fd0c-3b4b-94a0-709d8c9431e4@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <762c1e8f-fd0c-3b4b-94a0-709d8c9431e4@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Rubén Justo wrote:
+> There are two problems with -m (rename) and -c (copy) branch operations.
+> 
+>  1. If we force-rename or force-copy a branch to overwrite another
+>  branch that already has configuration, the resultant branch ends up
+>  with the source configuration (if any) mixed with the configuration for
+>  the overwritten branch.
+> 
+> 	$ git branch upstream
+> 	$ git branch -t foo upstream  # foo has tracking configuration
+> 	$ git branch bar              # bar has not
+> 	$ git branch -M bar foo       # force-rename bar to foo
+> 	$ git config branch.foo.merge # must return clear
+> 	refs/heads/upstream
 
-On Thu, Nov 17 2022, Jeff King wrote:
+What happens if 'bar' has tracking info? You mentioned that the
+configuration is "mixed" - does that mean 'foo' would have both the original
+'foo's tracking info *and* 'bar's? 
+> 
+>  2. If we repeatedly force-copy a branch to the same name, the branch
+>  configuration is repeatedly copied each time.
+> 
+> 	$ git branch upstream
+> 	$ git branch -t foo upstream  # foo has tracking configuration
+> 	$ git branch -c foo bar       # bar is a copy of foo
+> 	$ git branch -C foo bar       # again
+> 	$ git branch -C foo bar       # ..
+> 	$ git config --get-all branch.bar.merge # must return one value
+> 	refs/heads/upstream
+> 	refs/heads/upstream
+> 	refs/heads/upstream
+> 
+> Whenever we copy or move (forced or not) we must make sure that there is
+> no residual configuration that will be, probably erroneously, inherited
+> by the new branch.  To avoid confusions, clear any branch configuration
+> before setting the configuration from the copied or moved branch.
 
-> I reworked the conditional a bit so that instead of:
->
->   if ((suspected_blob && oid_object_info() == OBJ_BLOB)
->       (no_clue && oid_object_info() == OBJ_BLOB)
->
-> we have the simpler:
->
->   if ((suspected_blob || no_clue) && oid_object_info() == OBJ_BLOB)
-> [...]
-> @@ -286,8 +286,8 @@ struct object *parse_object_with_flags(struct repository *r,
->  			return &commit->object;
->  	}
+I wasn't sure whether "transfer the source's tracking information to the
+destination" was the desired behavior, but it looks like it is (per
+52d59cc6452 (branch: add a --copy (-c) option to go with --move (-m),
+2017-06-18)). Given that, I agree this is the right fix for the issue you've
+identified.
+
+> 
+> Signed-off-by: Rubén Justo <rjusto@gmail.com>
+> ---
+>  builtin/branch.c  | 17 +++++++++++------
+>  t/t3200-branch.sh | 19 +++++++++++++++++++
+>  2 files changed, 30 insertions(+), 6 deletions(-)
+> 
+> diff --git a/builtin/branch.c b/builtin/branch.c
+> index a35e174aae..14664f0278 100644
+> --- a/builtin/branch.c
+> +++ b/builtin/branch.c
+> @@ -583,12 +583,17 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
 >  
-> -	if ((obj && obj->type == OBJ_BLOB && repo_has_object_file(r, oid)) ||
-> -	    (!obj && oid_object_info(r, oid, NULL) == OBJ_BLOB)) {
-> +	if ((!obj || (obj && obj->type == OBJ_BLOB)) &&
-> +	    oid_object_info(r, oid, NULL) == OBJ_BLOB) {
->  		if (!skip_hash && stream_object_signature(r, repl) < 0) {
->  			error(_("hash mismatch %s"), oid_to_hex(oid));
->  			return NULL;
+>  	strbuf_release(&logmsg);
+>  
+> -	strbuf_addf(&oldsection, "branch.%s", interpreted_oldname);
+> -	strbuf_addf(&newsection, "branch.%s", interpreted_newname);
+> -	if (!copy && git_config_rename_section(oldsection.buf, newsection.buf) < 0)
+> -		die(_("Branch is renamed, but update of config-file failed"));
+> -	if (copy && strcmp(interpreted_oldname, interpreted_newname) && git_config_copy_section(oldsection.buf, newsection.buf) < 0)
+> -		die(_("Branch is copied, but update of config-file failed"));
+> +	if (strcmp(interpreted_oldname, interpreted_newname)) {
+> +		strbuf_addf(&oldsection, "branch.%s", interpreted_oldname);
+> +		strbuf_addf(&newsection, "branch.%s", interpreted_newname);
+> +
+> +		delete_branch_config(interpreted_newname);
+> +
+> +		if (!copy && git_config_rename_section(oldsection.buf, newsection.buf) < 0)
+> +			die(_("Branch is renamed, but update of config-file failed"));
+> +		if (copy && git_config_copy_section(oldsection.buf, newsection.buf) < 0)
+> +			die(_("Branch is copied, but update of config-file failed"));
+> +	}
 
-But why:
+Makes sense. 
 
-	if ((!x || (x && x->m)) && ...)
-
-Instead of:
-
-	if ((!x || x->m)) && ...)
-
-If "!obj" is false then "obj" must be non-NULL, so you don't need to
-check it again and can lose the "obj &&".
-
-> [...]
-> So this fixes one of the lingering expect_failure cases from 0616617c7e
-> (t: introduce tests for unexpected object types, 2019-04-09).  That test
-> works by peeling a tag that claims to point to a blob (triggering us to
-> create the struct), but really points to something else, which we later
-> discover when we call parse_object() as part of the actual traversal).
-> Prior to this commit, we'd quietly check the sha1 and mark the blob as
-> "parsed". Now we correctly complain about the mismatch.
-
-I applied this on top of "master", and adjusted your test to be this
-instead:
-
-	test_expect_success 'traverse unexpected non-blob tag (lone)' '
-		cat >expect <<-EOF &&
-		error: object $commit is a blob, not a commit
-		fatal: bad object $commit
-		EOF
-		test_must_fail git rev-list --objects $tag >out 2>actual &&
-		test_must_be_empty out &&
-		test_cmp expect actual
-	'
-
-Which passes, showing that we're still not correctly identifying it, but
-we are doing it for the purposes of erroring out, but the incorrect type
-persists.
-
-Now, this all does seem quite familiar... :) :
-https://lore.kernel.org/git/patch-10.11-a84f670ac24-20210328T021238Z-avarab@gmail.com/
-
-I.e. that's the rest of the fix for this issue. I applied this change on
-my local branch with that, and they combine nicely. the "test_must_fail"
-here works as intended, *and* we'll correctly report & store the type.
-
-> As an aside, I found the "this test is marked as success but testing the
-> wrong thing" pattern here confusing to deal with (since I had to dig in
-> history to understand what was going on and what the test was _supposed_
-> to say).
->
-> It comes from cf10c5b4cf (rev-list tests: don't hide abort() in
-> "test_expect_failure", 2022-03-07). I'm skeptical that it was worth
-> switching those tests for leak detection purposes.
-
-It's not just for leak detection purposes that it was a good idea to
-switch it away from test_expect_failure, but also that we've been
-ensuring that this didn't turn into a segfault all this time by not
-using "test_expect_failure".
-
-> But more importantly, it looks like pw/test-todo would provide us with a
-> much nicer pattern there. It seems to be stalled on review, so let's see
-> if we can get that moving again.
-
-The "TODO (should fail!)" didn't stand out? But yeah, having a "todo" or
-"test_expect_todo" or "test_expect_failure" not suck would be nice.
-
-FWIW I think
-https://lore.kernel.org/git/221006.86v8owr986.gmgdl@evledraar.gmail.com/
-outlines a good way forward for it that I think should make everyone
-happy.
-
-> diff --git a/t/t6102-rev-list-unexpected-objects.sh b/t/t6102-rev-list-unexpected-objects.sh
-> index 4a9a4436e2..9350b5fd2c 100755
-> --- a/t/t6102-rev-list-unexpected-objects.sh
-> +++ b/t/t6102-rev-list-unexpected-objects.sh
-> @@ -121,8 +121,8 @@ test_expect_success 'setup unexpected non-blob tag' '
->  	tag=$(git hash-object -w --literally -t tag broken-tag)
+>  	strbuf_release(&oldref);
+>  	strbuf_release(&newref);
+>  	strbuf_release(&oldsection);
+> diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+> index 7f605f865b..c3b3d11c28 100755
+> --- a/t/t3200-branch.sh
+> +++ b/t/t3200-branch.sh
+> @@ -218,6 +218,25 @@ test_expect_success 'git branch -M should leave orphaned HEAD alone' '
+>  	)
 >  '
 >  
-> -test_expect_success 'TODO (should fail!): traverse unexpected non-blob tag (lone)' '
-> -	git rev-list --objects $tag
-> +test_expect_success 'traverse unexpected non-blob tag (lone)' '
-> +	test_must_fail git rev-list --objects $tag
->  '
+> +test_expect_success 'git branch -M inherites clean tracking setup' '
 
-I think you'll either want the test_cmp I noted above, or to do that in
-a subsequent test_expect_failure.
+s/inherites/inherits
 
-I know that your stance is that you prefer not to "test the bad
-behavior" as it were. Personally I thought an all-caps TODO comment
-might make it less confusing, but anyway.
+> +	test_when_finished git branch -D moved &&
+> +	git branch -t main-tracked main &&
+> +	git branch non-tracked &&
+> +	git branch -M main-tracked moved &&
+> +	git branch --unset-upstream moved &&
+> +	git branch -M non-tracked moved &&
+> +	test_must_fail git branch --unset-upstream moved
 
-In this case your commit message claims you're happy with the end
-result, so I think you'd want to test what we actually emit on stderr,
-as it's quite ... unintuative.
+If I'm reading this correctly, the test doesn't actually demonstrate that
+'git branch -M' cleans up the tracking info, since 'moved' never has any
+tracking info immediately before 'git branch -M'. The test could also be
+more precise by verifying the upstream name matches. What about something
+like this?
 
-Or, which I think probably makes more sense, add that as a subsequent
-test_expect_failure or whatever. FWIW this somewhat un-idiomatic pattern
-will get around the current caveats with it:
+	test_when_finished git branch -D moved &&
+	git branch -t main-tracked main &&
+	git branch non-tracked &&
 
-	test_expect_success .... '
-		... >actual.non-blob-tag
-	'
-	test_lazy_prereq HAVE_NON_BLOB_TAG 'test -e actual.non-blob-tag'
-	test_expect_failure HAVE_NON_BLOB_TAG '...' '
-		cat >expect.non-blob-tag <<-\EOF &&
-		...
-		EOF
-		test_cmp expect.non-blob-tag actual.non-blob-tag
-	'
+	# `moved` doesn't exist, so it starts with no tracking info
+	echo main >expect &&
+	git branch -M main-tracked moved &&
+	git rev-parse --abbrev-ref moved@{upstream} >actual &&
+	test_cmp expect actual &&
 
-I.e. peel off the 'test_cmp" that should have a known-good state from
-the already-good status code.
+	# At this point, `moved` is tracking `main`
+	git branch -M non-tracked moved &&
+	test_must_fail git rev-parse --abbrev-ref moved@{upstream}
+
+> +'
+> +
+> +test_expect_success 'git branch -C inherites clean tracking setup' '
+
+s/inherites/inherits (same typo as before, just pointing it out so it's
+easier to find)
+
+> +	test_when_finished git branch -D copiable copied &&
+> +	git branch -t copiable main &&
+> +	git branch -C copiable copied &&
+> +	git branch --unset-upstream copied &&
+> +	git branch -C copied copiable &&
+> +	test_must_fail git branch --unset-upstream copiable
+
+This doesn't have the same issue as the other test (since 'copied' has no
+tracking but 'copiable' does before both 'git branch -C' calls), but it
+would still be nice to use the 'git rev-parse --abbrev-ref
+<branch>@{upstream}' for more precision here. 
+
+> +'
+> +
+>  test_expect_success 'resulting reflog can be shown by log -g' '
+>  	oid=$(git rev-parse HEAD) &&
+>  	cat >expect <<-EOF &&
+
