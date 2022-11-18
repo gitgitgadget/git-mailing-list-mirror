@@ -2,141 +2,213 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 959BAC4332F
-	for <git@archiver.kernel.org>; Fri, 18 Nov 2022 13:33:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E8B8DC433FE
+	for <git@archiver.kernel.org>; Fri, 18 Nov 2022 13:40:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242183AbiKRNdh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Nov 2022 08:33:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53238 "EHLO
+        id S235237AbiKRNkk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Nov 2022 08:40:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242063AbiKRNcf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Nov 2022 08:32:35 -0500
+        with ESMTP id S241913AbiKRNkM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Nov 2022 08:40:12 -0500
 Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E406A8E0B6
-        for <git@vger.kernel.org>; Fri, 18 Nov 2022 05:32:33 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D3651090
+        for <git@vger.kernel.org>; Fri, 18 Nov 2022 05:40:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1668778350; bh=PNe474CGk7aSClml3U3Dc/hEjSlEu6XbVKyIQKqMxgA=;
+        t=1668778805; bh=RGgfp0Zx/6fNZ3+XSK/gXWucIp0OemUlKtSBL9AlfrM=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=o6rK/nlq/MhqwkvZaOPhOj6USAuQt1YvuMinU90Za4N1yWWIDzU68Yqs2ZoV9qR79
-         cQPRIU7rleiydN+cw/llujr4Ymji3wVqeheIuX8KwDUePXL1ftD/vlsEdDk2H2QN5Z
-         9Q/8mCl+1IFQ/w1ywIy49h1GTutukfz0Z5y3uJNdSxRMwdRg6nE6SKKCKtCqDz5eXj
-         fFeAgvGNGVwd7gzYdER/AZjEb/zl2IKxaCW+TLYOM5eSKk6kmly0KlIYawMeDURxKC
-         SXNnlbK+kk5mABUt7PQTPgka7TKW8R/HwPoc44oi4UcAYMRUYnMNBqMtUYPlkrehcl
-         UkNsbAfRklszQ==
+        b=kI1xHjZsG37LJabvggIMxB4u4ft4srAshg3aW74WOjeoxXxqs9F1S7qRbXrrf3Roe
+         AB0cikAvEvgmFBjmzErs+ssc+aLeeRfr7W58r2BwkqqNcYCImByZIHx7IFmP5hlOZI
+         pjZQbtEhR7dgZL4Zoe1CNBjjVEvJMhE8f1q7xcEzWQAMgN/oRU9mnKbqlQCmQHXLeI
+         Zh+6w7N7/WJA/5g2vDtN0le24kHMrglbdgc1m/5s1WuBTQKYW6E28SSc4smNS641hb
+         Fbil45vuYx5Yg4smkDxZTJ9sHZPORs3ZpLp25IPfvDq4fBrudfg8qG537DsAhwlKEH
+         WhWKlNvp2O94w==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.29.212.27] ([89.1.212.70]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mqb1c-1pHw5u0uO0-00mcFB; Fri, 18
- Nov 2022 14:32:30 +0100
-Date:   Fri, 18 Nov 2022 14:32:28 +0100 (CET)
+Received: from [172.29.212.27] ([89.1.212.70]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N7zFj-1oza0U2bA3-0153EB; Fri, 18
+ Nov 2022 14:40:05 +0100
+Date:   Fri, 18 Nov 2022 14:40:04 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Taylor Blau <me@ttaylorr.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-Subject: Re: [PATCH v4 2/2] tests(mingw): avoid very slow `mingw_test_cmp`
-In-Reply-To: <Y3LD1CtKBoDhPdSZ@nand.local>
-Message-ID: <qp0556o2-6q18-8556-0n8s-p28831qr6qs6@tzk.qr>
-References: <pull.1309.v3.git.1668290855.gitgitgadget@gmail.com> <pull.1309.v4.git.1668434812.gitgitgadget@gmail.com> <128b1f348d8fad730cac1c36d3082fab49904b2c.1668434812.git.gitgitgadget@gmail.com> <Y3LD1CtKBoDhPdSZ@nand.local>
+To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 1/2] sequencer: unify label lookup
+In-Reply-To: <ecb81b873a8d72c57fd4812ec86d103927437cf1.1668098622.git.gitgitgadget@gmail.com>
+Message-ID: <93qo066o-8r35-9q15-rq62-9r398o50p5p6@tzk.qr>
+References: <pull.1414.git.1668098622.gitgitgadget@gmail.com> <ecb81b873a8d72c57fd4812ec86d103927437cf1.1668098622.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:QBVbvYMsx365rNWf8HyzaS+9GTJwp4nBVG+q/VOeKyxs6y+k9Ga
- gbR/NgrZrlAd5amLKwCYxtwmAAOTopK558nOqBebLBn1NuJuv90opcK8TgCPt0hpxuHasUF
- zHcP0OVUgzkhRlXPOaB20FBp74G6W1Q2Qnt/yQAhq/CXc3E2sp5NBr1KFoWeBmrduSlnSrU
- xjJr5LromolHCCiKJMI+Q==
-UI-OutboundReport: notjunk:1;M01:P0:yWU79Gp2czU=;mn2eHdaxgIjNEj0frgzbzugmZfK
- p1D/9WxGub5VEZYToB2pOW1Agp5hc7D6F1nAtj3h7ADBmayiZSWjxl7NvgGGG+h+Ol54WM1EN
- lmbPT27E8GQtSneLMKhCBx5VA/CRZU9bVpdDD+nMKhX5G28XCE61eYqr0y1AskoWOPHFoaP8E
- fkrq1Dr6STdCN7QOCHHQ70HV9gfKOfxiNzqY8w/jDtm5xsGc/0SUT6zcTNzR3MakaYpLAQWc9
- QHYl5RvIvlXTDjEEq94ZZxu4+TnsXZ4IzOhBQ7s4IwtS1rHPWdJg3Io2GOWzF0xPvpuqAUGn9
- p9EaAwLrAvI3nsum9URC+ntK+5apqzMm4jYfefRRIOB7GquHa2f9X5V4O/yZbEBaKqoVHeFOf
- /d1vdcT3H3KA4ry1I3K112KTq2PptXsFNuLCljNoVWuHK1cKYnjnIVqBWD8LwxuCT82WPHdp7
- v4bPCXPBal9Ba2OtnCiX8AHTkBh3+eSl/Q9PzZeRtt7tT9Bywuldhgf7e3CatzQrQK2u6WDTJ
- srtRAhj0+bXhu9BGYiSMStRRe2yNvJGK2Q50N4Q3hpSExYZiQz/9bl0ruM/DjYR5cRlCPEoIt
- LfP3xdq7kePhKmYcO/Gpb0KHfUD6BbNsWrIJI6mXej0+mrQGIB6BWU/r59AD74QfrrchyNhtk
- CIlNUJmu6qXCNMzPPNfVFapIO5xPEa3R/mO2TaG78lI/QcH+bqcyh9QkAFBOs1W0dMNw1eOZX
- dPOqZjzVrFn5W1TdSRwl12dzGfMOaYG1NII6vBGW7pFo4qYOPjVWNc4XTNuIIKdq9MgxEYV6d
- hQEeJK5ZyOfeQ+TAy7d2oeM/6PIhOaZj6Q/jN5zRGuBViDGbUCfAvZPh8UNdwpi9ZNxOKf8a5
- tfgeU/nJ8BktHdQQ4dMFxgfZwvARErQ1vkuXn9rbr0lGMzkD6qR9zSuG4GTtniKBEL9fnm741
- 1fwh0smqyi8NouKxni6zb/j/bgM=
+X-Provags-ID: V03:K1:ztHd0y0b0rwsClJ4wyJ+xh+tWu42cPw83h3ke9NgWIbrWkGSlRj
+ Ownz8JpbsiMg1j1Dg/Xs6mWtKAgWYe9a/lRzivxzdOUDqSfC8i8yD4pK6u67HAZ9OIsVmD7
+ 4XuO6+d2eLP2MBI29ul3Q8CtuUF8sIZTAkyp6R8lWKqrehXtPPcB3Z7iokQW/xWV8bXF26J
+ BZGq8L+mPWmCLVBnK3GiA==
+UI-OutboundReport: notjunk:1;M01:P0:0Gk2/Qo6+io=;4eeZmL/xpqaMyV/abDO6jJksIJi
+ MSkV2IzvPfuFM6iRcpeA792XyFRnHvwqNt8eKBjcdUueyMF9CymFLswr7BDwkN3l6tzsP5jzg
+ LiPfJfTZN48UDqECshDKjm0m23Az8mh6DBzwwBYpGfkhMCkBXjgbeCzVShTc5ZEXvQDxxeJDl
+ 5tvsvYhW3JEdWcsXIAZtJeew94/xTxJkeopIBY1+3MSbT8ggKfBL/aWVeQdtLqJrxTBBRjqDt
+ t2W/O8XI428Qmw8d3QWEFDiJvfyw4elEcaL5WkB5sD8wLk3AU18M6X786/pH9zeHyXDoV5V//
+ /CoIwY0r0C6O337PyWQjTrmwDl9PpavbGhG0alZ7dsJ/XHsHxlDhrEauFmKJYw9srOpxTuhTj
+ gbzkuqpwdyP5ognUR325gamHyZSTiuyyd/F2NNLTq+OmlKRarXx+w4g7lwXnvL0r4RjtUAKd0
+ l4v+FXBUEU43PMNgNpUc1NETNSTY+JpyNYH0lZ1Xg7Jl4B5U0PhJY1P3iQcBa22OC5of7FZ2M
+ EBwDzK0LJtfhe7bEupstB5k+dJhBwkUsZTFA/TPShVguc5OmVHoxi8dKM5TaTD7hz+5dJtMJx
+ 9jYJ0D1gRqGrHGJL46m+LkmPn1CSARpOzxQSUaugVBy6XtNhzmtfzzPEx/MRrSa8EsUNy7m1u
+ 0ZjDprd937GbmnRJ3QR0tW0oGNjJcX7YjcwGsijMKbSIVyw2A9bMHspDB4pBFabnVKN1vOwbC
+ JgCAVWXZKnjHcsjaGHKc6TJN4VbY0ZoJlsOq4WSXHZLOgWFeKb8utC9Nn6tZWJq8VeSKXbTCb
+ ZfMUcH3SvzuqmxgYlMFwMRAS0duYUlVQx3Z1OYLhU8/N7YdKfC/ZvoMc40l3Rs5JzlTJA+Y/C
+ P5nfcVWkrqgsP93jkpzrPcE0r4r2D2TNm4OcnnQbU4QzKvk9Yqhj81HH2MLBhnnRSMU2TEGTj
+ +a3VoQ==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Taylor,
+Hi Phillip,
 
-On Mon, 14 Nov 2022, Taylor Blau wrote:
+On Thu, 10 Nov 2022, Phillip Wood via GitGitGadget wrote:
 
-> On Mon, Nov 14, 2022 at 02:06:52PM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > It is more performant to run `git diff --no-index` than running the
-> > `mingw_test_cmp` code with MSYS2's Bash, i.e. the Bash that Git for
-> > Windows uses. And a lot more readable.
-> >
-> > The original reason why Git's test suite needs the `mingw_test_cmp`
-> > function at all (and why `cmp` is not good enough) is that Git's test
-> > suite is not actually trying to compare binary files when it calls
-> > `test_cmp`, but it compares text files. And those text files can conta=
-in
-> > CR/LF line endings depending on the circumstances.
-> >
-> > Note: The original fix in the Git for Windows project implemented a te=
-st
-> > helper that avoids the overhead of the diff machinery, in favor of
-> > implementing a behavior that is more in line with what `mingw_test_cmp=
-`
-> > does now. This was done to minimize the risk in using something as
-> > complex as the diff machinery to perform something as simple as
-> > determining whether text output is identical to the expected output or
-> > not. This approach has served Git for Windows well for years, but the
-> > attempt to upstream this saw a lot of backlash and distractions during
-> > the review, was disliked by the Git maintainer and was therefore
-> > abandoned. For full details, see the thread at
-> > https://lore.kernel.org/git/pull.1309.git.1659106382128.gitgitgadget@g=
-mail.com/t
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> In the previous round, you wrote that this paragraph:
+> The arguments to the `reset` and `merge` commands may be a label created
+> with a `label` command or an arbitrary commit name. The `merge` command
+> uses the lookup_label() function to lookup its arguments but `reset` has
+> a slightly different version of that function in do_reset(). Reduce this
+> code duplication by calling lookup_label() from do_reset() as well.
 >
->     It explains why we replace a relatively simple logic with a relative=
-ly
->     complex one.
-
-Yes. And I obviously got myself misunderstood.
-
-The simple logic I refer to is the `t/helper/test-cmp.c` that I abandoned.
-
-The complex logic is the diff machinery we now call, which is a lot more
-involved and goes through a lot more code paths.
-
-> But I'm not sure the rewritten version does what you claim, at least in
-> my own personal opinion.
+> This change improves the behavior of `reset` when the argument is a
+> tree.  Previously `reset` would accept a tree only for the rebase to
+> fail with
 >
-> It is not helpful to say the original approach "saw a lot of backlash".
-
-It is the nicest thing I can say about it.
-
-And I want people who are curious what happened to Git for Windows' custom
-code to have an explanation in the commit messages.
-
-> It is helpful, on the other hand, to say what about the original
-> approach gave reviewers pause, and why that alternative approach isn't
-> pursued here.
+>        update_ref failed for ref 'HEAD': cannot update ref 'HEAD': tryin=
+g to write non-commit object da5497437fd67ca928333aab79c4b4b55036ea66 to b=
+ranch 'HEAD'
 >
-> Maybe I'm splitting hairs here, but I really do stand by my original
-> suggestion from back in [1].
-
-We can also keep hitting a dead horse, but I don't think that will make
-anything any better.
-
-Thanks,
-Johannes
-
+> Using lookup_label() means do_reset() will now error out straight away
+> if its argument is not a commit.
 >
-> Thanks,
-> Taylor
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+
+Very nice.
+
+=46rom reading the patch, I get the impression that this also addresses
+https://github.com/gitgitgadget/git/issues/199, i.e. allowing `reset
+<tag>`.
+
+Am I right?
+Dscho
+
+P.S.: FWIW here is my ACK for both patches.
+
+>  sequencer.c              | 49 ++++++++++++++++++++--------------------
+>  t/t3430-rebase-merges.sh |  8 +++++++
+>  2 files changed, 33 insertions(+), 24 deletions(-)
 >
-> [1]: https://lore.kernel.org/git/Y3B36HjDJhIY5jNz@nand.local/
+> diff --git a/sequencer.c b/sequencer.c
+> index e658df7e8ff..21f5032df0d 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -3696,6 +3696,26 @@ static const char *reflog_message(struct replay_o=
+pts *opts,
+>  	return buf.buf;
+>  }
+>
+> +static struct commit *lookup_label(const char *label, int len,
+> +				   struct strbuf *buf)
+> +{
+> +	struct commit *commit;
+> +
+> +	strbuf_reset(buf);
+> +	strbuf_addf(buf, "refs/rewritten/%.*s", len, label);
+> +	commit =3D lookup_commit_reference_by_name(buf->buf);
+> +	if (!commit) {
+> +		/* fall back to non-rewritten ref or commit */
+> +		strbuf_splice(buf, 0, strlen("refs/rewritten/"), "", 0);
+> +		commit =3D lookup_commit_reference_by_name(buf->buf);
+> +	}
+> +
+> +	if (!commit)
+> +		error(_("could not resolve '%s'"), buf->buf);
+> +
+> +	return commit;
+> +}
+> +
+>  static int do_reset(struct repository *r,
+>  		    const char *name, int len,
+>  		    struct replay_opts *opts)
+> @@ -3727,6 +3747,7 @@ static int do_reset(struct repository *r,
+>  		oidcpy(&oid, &opts->squash_onto);
+>  	} else {
+>  		int i;
+> +		struct commit *commit;
+>
+>  		/* Determine the length of the label */
+>  		for (i =3D 0; i < len; i++)
+> @@ -3734,12 +3755,12 @@ static int do_reset(struct repository *r,
+>  				break;
+>  		len =3D i;
+>
+> -		strbuf_addf(&ref_name, "refs/rewritten/%.*s", len, name);
+> -		if (get_oid(ref_name.buf, &oid) &&
+> -		    get_oid(ref_name.buf + strlen("refs/rewritten/"), &oid)) {
+> -			ret =3D error(_("could not read '%s'"), ref_name.buf);
+> +		commit =3D lookup_label(name, len, &ref_name);
+> +		if (!commit) {
+> +			ret =3D -1;
+>  			goto cleanup;
+>  		}
+> +		oid =3D commit->object.oid;
+>  	}
+>
+>  	setup_unpack_trees_porcelain(&unpack_tree_opts, "reset");
+> @@ -3786,26 +3807,6 @@ cleanup:
+>  	return ret;
+>  }
+>
+> -static struct commit *lookup_label(const char *label, int len,
+> -				   struct strbuf *buf)
+> -{
+> -	struct commit *commit;
+> -
+> -	strbuf_reset(buf);
+> -	strbuf_addf(buf, "refs/rewritten/%.*s", len, label);
+> -	commit =3D lookup_commit_reference_by_name(buf->buf);
+> -	if (!commit) {
+> -		/* fall back to non-rewritten ref or commit */
+> -		strbuf_splice(buf, 0, strlen("refs/rewritten/"), "", 0);
+> -		commit =3D lookup_commit_reference_by_name(buf->buf);
+> -	}
+> -
+> -	if (!commit)
+> -		error(_("could not resolve '%s'"), buf->buf);
+> -
+> -	return commit;
+> -}
+> -
+>  static int do_merge(struct repository *r,
+>  		    struct commit *commit,
+>  		    const char *arg, int arg_len,
+> diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
+> index f351701fec2..fbbc4439bfe 100755
+> --- a/t/t3430-rebase-merges.sh
+> +++ b/t/t3430-rebase-merges.sh
+> @@ -138,6 +138,14 @@ test_expect_success '`reset` refuses to overwrite u=
+ntracked files' '
+>  	git rebase --abort
+>  '
+>
+> +test_expect_success '`reset` rejects trees' '
+> +	test_when_finished "test_might_fail git rebase --abort" &&
+> +	test_must_fail env GIT_SEQUENCE_EDITOR=3D"echo reset A^{tree} >" \
+> +		git rebase -i B C >out 2>err &&
+> +	grep "object .* is a tree" err &&
+> +	test_must_be_empty out
+> +'
+> +
+>  test_expect_success 'failed `merge -C` writes patch (may be rescheduled=
+, too)' '
+>  	test_when_finished "test_might_fail git rebase --abort" &&
+>  	git checkout -b conflicting-merge A &&
+> --
+> gitgitgadget
+>
 >
