@@ -2,107 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CDF03C4332F
-	for <git@archiver.kernel.org>; Fri, 18 Nov 2022 12:24:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 87C56C4332F
+	for <git@archiver.kernel.org>; Fri, 18 Nov 2022 12:53:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235332AbiKRMYe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Nov 2022 07:24:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35934 "EHLO
+        id S241428AbiKRMxu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Nov 2022 07:53:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229753AbiKRMYc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Nov 2022 07:24:32 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52CC1970A2
-        for <git@vger.kernel.org>; Fri, 18 Nov 2022 04:24:31 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id f18so12657176ejz.5
-        for <git@vger.kernel.org>; Fri, 18 Nov 2022 04:24:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=VEMWFXqounCDxt9SB0qTRpG7en7JapqnVTCDgf74Ikk=;
-        b=CgyyrkGUbjSgaOs50sWQnhQo9mm4YCVWqq09VV4XY8fXIVOJUERj/dv6tICQQ7+3cE
-         cdzsmCFyaG0G1fTywKPMHQZwZZsgEs2xADpPua/tF+MnXORR/237OUfo6/5++efALGLZ
-         VQy2srsaZBDRnizXuRzaKIxJfXKPi4/4Y9FOerlF9d2Xd87TeSl5L87OZUC9QVsG+05z
-         J9IAK6NnbT5We429gzecCwHTH+RByViSaTDaSTJt87hD53LoLgk7M31MUtFlQWocJnLx
-         N6yhdSD5kfD7GMVyvhiZPZAxb7P8dsO2aSfj9fXBXtHcSTJE/Q6CMp04b2TIJbjhjxZM
-         4UEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VEMWFXqounCDxt9SB0qTRpG7en7JapqnVTCDgf74Ikk=;
-        b=VbS4bd/mjV/ufC6kqwLjHizROmPRVWhFXvU1vMKPWHACyY+gayynbtsTXdO6+TDNU9
-         gX4Ve+PQdJ7VfYTBT2JQCQhAZNRN2rvleuPo4OD40nsfdLBN6uR7p7VYvrAOKePqkJpN
-         1NIYeyu9GZyYjQQPWVE/rvILjou59af88/0PfgMArTdjWlyxf/TnURqQEOAn+TDiPYjy
-         83tYuaj5i/Mn9QW4dXYyfq4VMucpSuh7gUULBlYfDMdJtHICD2Wim9sACpdm6Jn0iBeM
-         FImawC4NZpgcuNwC0rF/Qj8bXzkz6JLROhj0oXlqxJ0rxV7iTz6qPvJ1ifjrIOftZ1Gh
-         Rk1Q==
-X-Gm-Message-State: ANoB5pnrBbiy1/DEjAZ4hKMFEvaV+uaDK2+05cqHTlLmtiXMLIRVs/cB
-        BGIvU5pbB9nE8t0PWW+oqANmuys5ja3Ceg==
-X-Google-Smtp-Source: AA0mqf76OPsmeNLErmjynwuUVXHa2FPMTchk0laLrIpeU/XoJzpYcTNIwV7ET0GlwOAc59c6ML127A==
-X-Received: by 2002:a17:906:19d6:b0:7ac:9917:c9c6 with SMTP id h22-20020a17090619d600b007ac9917c9c6mr5836671ejd.325.1668774269769;
-        Fri, 18 Nov 2022 04:24:29 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id eq12-20020a056402298c00b00461c1804cdasm1756093edb.3.2022.11.18.04.24.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Nov 2022 04:24:29 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1ow0Q0-005San-2W;
-        Fri, 18 Nov 2022 13:24:28 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+        with ESMTP id S235088AbiKRMxq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Nov 2022 07:53:46 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1D6413D27
+        for <git@vger.kernel.org>; Fri, 18 Nov 2022 04:53:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1668776018; bh=Nx6V1Ef1OsfWkETg0taytCmDPrQhkVGmpd0BJPYhSJE=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=dVa5AnILZCTmUhJwk2FRQX3T8dxyJtP0aOUZniSBNvRraIeksHtXCJPQJwTBOGcKy
+         tKCYW8rOSNM+6hgLmQJsolh5BcXBqfLjDmcboN/iHDVs/CYngQKQE3mjuVyx8A9PUc
+         f8hRILoKAUkDW2ctwl0ztEyXyVoG8vS0SlrE3Rez9CFwRR1o2m89ShSyQ23nDrvfOa
+         mUhbH14A+UYnCXb/ZU07uclyJ92eIbkbAMB+jkVXtfU3IaFWy9mkrLVMd8N1imjt5l
+         ZQSpB48vt+L8ZlNhJA/TfJq958o8R9SPEeB2Zrn7AekwjLEDqwilE6/1UxmFGdPuvH
+         db9/LUbL40Z2w==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.29.212.27] ([89.1.212.70]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N3bSt-1p3xNx0vjP-010af0; Fri, 18
+ Nov 2022 13:53:38 +0100
+Date:   Fri, 18 Nov 2022 13:53:36 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/12] tree-wide: chip away at
- USE_THE_INDEX_COMPATIBILITY_MACROS
-Date:   Fri, 18 Nov 2022 13:21:27 +0100
-References: <cover-00.12-00000000000-20221118T112205Z-avarab@gmail.com>
- <51e91e8f-f11c-be8c-a23d-566eb3fbb387@dunelm.org.uk>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <51e91e8f-f11c-be8c-a23d-566eb3fbb387@dunelm.org.uk>
-Message-ID: <221118.86v8ncfo1v.gmgdl@evledraar.gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] range-diff: support reading mbox files
+In-Reply-To: <50d8767b-cb8c-74c5-b280-43472fa074a2@dunelm.org.uk>
+Message-ID: <nn1s836q-nro7-10rp-6r89-170p9r942062@tzk.qr>
+References: <pull.1420.git.1668536405563.gitgitgadget@gmail.com> <dfe0190c-1d2e-804a-5312-877b7b2f5822@dunelm.org.uk> <50d8767b-cb8c-74c5-b280-43472fa074a2@dunelm.org.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-3020096-1668776018=:189"
+X-Provags-ID: V03:K1:vrz1zuS0dHLo4HozlCcXCxQCfs2RHD6Id6kCoqekXa2fcQepQ+C
+ ncDhaLDDiuHA+e1PV4LLtycZejQmUwwYy74ag+8tMw1wbp0n7MQrwuvfmAYG9khq8Bg6Cbl
+ hWfHXfb7w1rDij75BHZdFSnZ5bsilG1pCbIRcT6AeSrHPEpwBclZKQNvtleFr+hc2MWWKkC
+ Hqxv495YKoqM5d+VqZGEw==
+UI-OutboundReport: notjunk:1;M01:P0:2sVTRZ+IYUM=;X52SmcVdxzFi9IQ8NwFuDL+pufn
+ mZF+9uCS1Q/8Yx6loGOFKOCmXP2J8xFz6SV886YX7j6l0QDWOj+J/QLhpsbRCn0YLjUl3jn22
+ b8Xh6ZdzEKYqZT9PKINdXaDvRtqUGfP5YHjxdRQC+Ao4tYdhdAokANcP1iJENtIliGzURrLCY
+ wjGJFoE9yngJG+qwhFp4hEGJvtE1MvAy2uL2UU2p3Ipu8yKhvqlGYyly0SmeE8pf6CN8917FY
+ 3BBFzIPoXuBOHmjVffQLIL2Y8q0DyuOk7NonesmBwqzvb/GoIVK+Anxsih1Eky+qVyvc2oMQq
+ WbwnPcpAbqYqnFuAukWyyPTfr0BM0/KibxdwT2MpoAm9fc9eW2Yy2gpg8WH+jphRO0J+vMeV2
+ Z+KV7Mlm2lLknMc3uIHDiO1+9D/Mf3p4e84wEU0YI0BByWv6P0ztlWfd97yfWTc8lfEyjeATT
+ 8iZfN0QBt9/coKTxr6iorFfphbdoPIeoKFs/6tjt+ZCqKVNw2ET8PvmHLjYX7t9RLuXicTC2f
+ /z/lWd7DGb+uTXuqXS4VZSKocMhWGblD0E6kd9e7Ir+EMyAcN/Yma0xEb68VISBfCwq75993H
+ GEZO5FTp3Jt/fCbdWl97KBSlUDlsboVWxoaiVjNwvqFprDwwzOnwyoVci94kpGDf+kW2Iz0tX
+ bm5WpgPew4iSPSgw5JW9JAkT4gQ4XjnOccom0PtWCEuwASjKzWiMW0GwNc6RHkLj6mY1FIYHd
+ 85Se6b8LvuKISPCQ1Ex2NzH7l7TM4sSJmGBzujyUxRyJUiCAIia+HttTbHDMxIE1JUMOUqEs/
+ WXi0h31gpLBmGDw3yF6rB5k0MvtfNS9PGOjpbQzCmWV/ZnroeXZRiAUaWgat3T+IODkfj7zeR
+ +Sd/q2yiFig+YvgdPJHhAd95641K5DuCQZyicVO0cf0GjmoAMHpth6baTntDIgh8f976iuqk1
+ aakNLw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Fri, Nov 18 2022, Phillip Wood wrote:
+--8323328-3020096-1668776018=:189
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-> Hi =C3=86var
->
-> On 18/11/2022 11:30, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> As 3/12 here notes we've been undergoing a sloooow migration away from
->> functions that provide "the_index" for you since 2007, with the last
->> major move away from some of them being in 2019.
->
-> The commit cited in 3/12 actually introduced most of these
-> macros. What it did was remove the dependency on `the_index` from
-> cache.c. Maybe I'm missing some context but I struggling to see the
-> benefit in removing the macros with out removing the dependency on
-> `the_index`. Doing that would require much more manual work as it
-> cannot be automated with coccinelle but it would provide a tangible
-> benefit which I don't see here.
+SGkgUGhpbGxpcCwNCg0KT24gVGh1LCAxNyBOb3YgMjAyMiwgUGhpbGxpcCBXb29kIHdyb3RlOg0K
+DQo+IE9uIDE2LzExLzIwMjIgMTQ6NDAsIFBoaWxsaXAgV29vZCB3cm90ZToNCj4gPiA+ICvCoMKg
+wqDCoMKgwqDCoCB9IGVsc2UgaWYgKHN0YXRlID09IE1CT1hfSU5fRElGRikgew0KPiA+ID4gK8Kg
+wqDCoMKgwqDCoMKgwqDCoMKgwqAgc3dpdGNoIChsaW5lWzBdKSB7DQo+ID4gPiArwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoCBjYXNlICdcMCc6DQo+ID4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIGNvbnRpbnVlOyAvKiBpZ25vcmUgZW1wdHkgbGluZXMgYWZ0ZXIgZGlmZiAqLw0KPiA+
+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY2FzZSAnKyc6DQo+ID4gPiArwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoCBjYXNlICctJzoNCj4gPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGNhc2Ug
+JyAnOg0KPiA+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBpZiAoIW9sZF9jb3Vu
+dCAmJiAhbmV3X2NvdW50KQ0KPiA+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIGJyZWFrOw0KPiA+IA0KPiA+IFRoaXMgc2hvdWxkbid0IGhhcHBlbiBpbiBhIHdlbGwg
+Zm9ybWVkIGRpZmYuIEJlbG93IHdlIGhhcHBpbHkgYWNjZXB0IGJhZA0KPiA+IGNvdW50cywgaXMg
+dGhlcmUgYSByZWFzb24gdG8gcmVqZWN0IHRoZW0gaGVyZT8NCj4gDQo+IEkgdGhpbmsgdGhpcyBt
+aWdodCBiZSBwaWNraW5nIHVwIHRoZSAiLS0iIGF0IHRoZSBlbmQgb2YgdGhlIHBhdGNoIGFzIHdl
+IGRvbid0DQo+IHdhbnQgdG8gYnJlYWsgaGVyZSBhdCB0aGUgZW5kIG9mIGEgaHVuay4gSWYgc28g
+dGhlbiBhIGNvbW1lbnQgd291bGQgYmUNCj4gaGVscGZ1bC4NCg0KQWdyZWVkLiBBbmQgeWVzLCBp
+dCBpcyBwaWNraW5nIHVwIHRoZSAiLS0gIiBsaW5lIGF0IHRoZSBlbmQgb2YgdGhlIHBhdGNoLg0K
+DQo+ID4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGlmIChvbGRfY291bnQgJiYg
+bGluZVswXSAhPSAnKycpDQo+ID4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgb2xkX2NvdW50LS07DQo+ID4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+IGlmIChuZXdfY291bnQgJiYgbGluZVswXSAhPSAnLScpDQo+ID4gPiArwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgbmV3X2NvdW50LS07DQo+ID4gDQo+ID4gVGhlIGRpZmYg
+aXMgbWFsZm9ybWVkIGlmIG9sZF9jb3VudCA9PSAwIGFuZCB3ZSBzZWUgJy0nIG9yICcgJyBvciBu
+ZXdfY291bnQNCj4gPiA9PSAwIGFuZCB3ZSBzZWUgJysnIG9yICcgJy4gVGhlIGNvZGUgaXMgY2Fy
+ZWZ1bCBub3QgdG8gZGVjcmVtZW50IHRoZSBjb3VudA0KPiA+IGluIHRoYXQgY2FzZSBzbyBJIHRo
+aW5rIGl0IGlzIGhhcm1sZXNzIHRvIGFjY2VwdCBkaWZmcyB3aXRoIGJhZCBsaW5lIGNvdW50cw0K
+PiA+IGluIHRoZSBodW5rIGhlYWRlci4NCg0KSSBtaWdodCBiZSBvdmVybHkgY2F1dGlvdXMgaGVy
+ZSwgYnV0IGFzIHlvdSBtZW50aW9uZWQgZWxzZXdoZXJlLCBpdCBpcw0KcmVhbGx5IGJhZCBpZiBh
+IGBzaXplX3RgIGlzIGRlY3JlbWVudGVkIGJlbG93IDAsIGFuZA0KYG5ld19jb3VudGAvYG9sZF9j
+b3VudGAgYXJlIG9mIHRoYXQgdHlwZS4NCg0KPiA+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoCAvKiBmYWxsdGhyb3VnaCAqLw0KPiA+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAg
+Y2FzZSAnXFwnOg0KPiA+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBzdHJidWZf
+YWRkc3RyKCZidWYsIGxpbmUpOw0KPiA+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oCBzdHJidWZfYWRkY2goJmJ1ZiwgJ1xuJyk7DQo+ID4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgIHV0aWwtPmRpZmZzaXplKys7DQo+ID4gDQo+ID4gSSB0aGluayB0aGlzIG1pZ2h0
+IGJlIGEgYmV0dGVyIHBsYWNlIHRvIGJyZWFrIGlmIG9sZF9jb3VudCBhbmQgbmV3X2NvdW50IGFy
+ZQ0KPiA+IGJvdGggemVyby4NCj4gDQo+IEl0IHdvdWxkIGJlIHRoZSByaWdodCBwbGFjZSB0byBi
+cmVhayBhdCB0aGUgZW5kIG9mIGVhY2ggaHVuaywgYnV0IEkgZG9uJ3QNCj4gdGhpbmsgd2Ugd2Fu
+dCB0byBkbyB0aGF0Lg0KDQpJdCB3b3VsZCBub3QgZXZlbiBiZSB0aGUgcmlnaHQgcGxhY2UgdG8g
+YnJlYWsgaGVyZSB0aGVuOiB0aGluayBvZiB0aGUNCmBcIE5vIG5ld2xpbmUgYXQgZW5kIG9mIGZp
+bGVgIGxpbmVzOiB0aGV5IGNvbWUgYWZ0ZXIgdGhlIHByZWNlZGluZyBsaW5lDQpkZWNyZW1lbnRl
+ZCBgb2xkX2NvdW50YC9gbmV3X2NvdW50YCwgeWV0IHdlIHN0aWxsIHdhbnQgdGhlbSB0byBiZSBw
+YXJ0IG9mDQp0aGUgZGlmZi4NCg0KPiANCj4gPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqAgY29udGludWU7DQo+ID4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBjYXNlICdAJzoN
+Cj4gPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaWYgKHBhcnNlX2h1bmtfaGVh
+ZGVyKGxpbmUsICZvbGRfY291bnQsDQo+ID4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAmbmV3X2NvdW50LCAmcCkpDQo+ID4gPiAr
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgYnJlYWs7DQo+ID4gPiArDQo+
+ID4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHN0cmJ1Zl9hZGRzdHIoJmJ1Ziwg
+IkBAIik7DQo+ID4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGlmIChjdXJyZW50
+X2ZpbGVuYW1lICYmICpwKQ0KPiA+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgIHN0cmJ1Zl9hZGRmKCZidWYsICIgJXM6IiwNCj4gPiA+ICvCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY3VycmVudF9maWxlbmFtZSk7
+DQo+ID4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHN0cmJ1Zl9hZGRzdHIoJmJ1
+ZiwgcCk7DQo+ID4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHN0cmJ1Zl9hZGRj
+aCgmYnVmLCAnXG4nKTsNCj4gPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdXRp
+bC0+ZGlmZnNpemUrKzsNCj4gPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY29u
+dGludWU7DQo+ID4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCB9DQo+ID4gDQo+ID4gVGhpcyBp
+cyBlZmZlY3RpdmVseSB0aGUgYGRlZmF1bHQ6YCBjbGF1c2UgYXMgaXQgaXMgZXhlY3V0ZWQgd2hl
+biB3ZSBkb24ndA0KPiA+IGhhbmRsZSB0aGUgbGluZSBhYm92ZS4gV2UgaWdub3JlIHRoZSBjb250
+ZW50cyBvZiB0aGlzIGxpbmUgd2hpY2ggbWFrZXMgbWUNCj4gPiB3b25kZXIgd2hhdCBoYXBwZW5z
+IGlmIGl0IGlzIHRoZSBzdGFydCBvZiBhbm90aGVyIGRpZmYuDQo+IA0KPiBXZSdsbCBwaWNrIHRo
+YXQgdXAgZWFybGllciB3aXRoICJpZiAoc3RhcnRzX3dpdGgobGluZSwgImRpZmYgLS1naXQiKSki
+DQo+IA0KPiBXZSBvbmx5IGdldCBoZXJlIGF0IHRoZSBlbmQgb2YgYSBwYXRjaCAoYXNzdW1pbmcg
+aXQgaGFzIHRoZSAiLS0iIGxpbmUgZnJvbQ0KPiBmb3JtYXQtcGF0Y2gpDQoNCldlIGFsc28gZ2V0
+IGhlcmUgaW4gY2FzZSBvZiBnYXJiYWdlIGluIHRoZSBtaWRkbGUgb2YgYSBkaWZmIDstKQ0KDQpU
+aGFuayB5b3UgZm9yIHNldHRpbmcgYSBmYW50YXN0aWMgZXhhbXBsZSBob3cgdG8gcmV2aWV3IGNv
+ZGUgaW4gYQ0KY29uc3RydWN0aXZlLCBoZWxwZnVsIG1hbm5lciENCkRzY2hvDQo=
 
-I didn't cover this myself as I figured the linked-to commits & context
-covered it: But no, there is no great benefit to doing this, it's just
-janitorial work.
-
-My proximate motivation for this is having written this to libify some
-code in a parallel series: [1].
-
-Does that in itself justify this? No, far from it. But we've had this
-supposed online migration for years, I tihnk we shouldn't rush to do
-those sorts of things needlessly (e.g. let's avoid conflicts with other
-in-flight stuff, if it can be helped), but leaving it for another 4-10
-years would also suck.
-
-1. https://lore.kernel.org/git/patch-v9-09.12-f29343197eb-20221118T110058Z-=
-avarab@gmail.com/
-
+--8323328-3020096-1668776018=:189--
