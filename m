@@ -2,102 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D159C4332F
-	for <git@archiver.kernel.org>; Fri, 18 Nov 2022 23:33:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12046C4321E
+	for <git@archiver.kernel.org>; Fri, 18 Nov 2022 23:52:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236127AbiKRXdd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Nov 2022 18:33:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51842 "EHLO
+        id S236945AbiKRXwh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Nov 2022 18:52:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236201AbiKRXcO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Nov 2022 18:32:14 -0500
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E16DB1F1
-        for <git@vger.kernel.org>; Fri, 18 Nov 2022 15:19:56 -0800 (PST)
-Received: by mail-pg1-x536.google.com with SMTP id s196so6263365pgs.3
-        for <git@vger.kernel.org>; Fri, 18 Nov 2022 15:19:56 -0800 (PST)
+        with ESMTP id S236994AbiKRXwC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Nov 2022 18:52:02 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C582C7597
+        for <git@vger.kernel.org>; Fri, 18 Nov 2022 15:27:20 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id q1-20020a17090a750100b002139ec1e999so6452756pjk.1
+        for <git@vger.kernel.org>; Fri, 18 Nov 2022 15:27:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=G+RO5ML+/s/QBbsRVfCzqjYt8RgebKOxe/YY6laoX7o=;
-        b=FN4Non+QGsDrgqqnT55JTlK1Yq8Wuoe95EnsoniBx4Gr6yanDfo1ApwU5+l6aqy+Yr
-         rg2nY6Iv/zITwae18ieuDdQSxNTknnvgEf/IPtyd9gMAiUVP2VnfmO9HewALXbxQgKR6
-         3SUxuieZU12BkWZwurK9TH6srN+UGgTDMS3avV3BiUs96oGeg4spJq3RpNtY7l3EtCSa
-         pxEiDBtl5aCrvKglBih9nfSbHVJH9FQI/rabZgFlqY8Nt1m49u3ViL8vJFstgQKTST5s
-         Td5R9d77dFU+ZSCfFTH9ik4lh5eTyR+97DXBbG7CQgLkPrgbT+MFdo1Tq6VTZqZ2wOM0
-         jcjA==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KMe/IAPw7iCAtbFGGptUUepLAud27PK2QeJBxNFjExw=;
+        b=eRDDQITQsWjh06wnvxmbqsZfK5TTSCeA/yFUpmG4St3T5/ifwwu7LogPn2MiCB7apM
+         BsuPy5eOoIB09aWxFnpF0dbnqPHlQUcaA0+sxSgaiY4TKmhk55b1U/529SHdSA8zwOLW
+         4cQs+PT27DqUEJzK2z/R13vrxVMzTEmzc/vTI53vlTq/JxAZMOemF7oNER+2i9Zejoog
+         ckTJ1SFMwUW5zMQl+UWMvAA76PEHeGhseUlpwUctg2rT21gzc077KmfxZEhBlyuNw1Fy
+         baeDOQxSRdAY96hqpqvz0c8XbCVBYPcdip8XaTkqSyhhwYUhUpMdyLs4TgeCLROvwMZS
+         CtIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=G+RO5ML+/s/QBbsRVfCzqjYt8RgebKOxe/YY6laoX7o=;
-        b=xMi06eb45mhUtV5qg2zNhl2653N0DrpSEuaqCym7tLu5Rr5cluY4A2ssKYt9L9MyMI
-         BgtGUYnVqEmDetzrnIMlmJT0Yc35TR2NWOl8CtpJlgDSIpGl+0j3UjJ7Ze3UOcD8IayL
-         uoszrXjgNMFbiYDPaPfK8G/sGWLdACivr9oautNeUN84tTbbBXL69B3280+deFLide4C
-         VCuiFWtA6gfDZOaCccjnNLrF9iho4mPat0skVMjar/ivLAgD1h0uQDFf37a8Ugo6sfRT
-         9T/kEBCUpRSIQzwlLCIheYaDxjs6Lp3s/i9XpgbYyqyvGiWS5GCuX5kvAClXW6HoNfI3
-         l8fw==
-X-Gm-Message-State: ANoB5pkcqq68K08S8l6yqTj7lQbOWR9YDEsTFJa1LYV8DOVKU65E7Ejn
-        KxUt2EE5o0iQZeGYkyix41A=
-X-Google-Smtp-Source: AA0mqf71sIL3zNsdaiWRzwA4N6UiQ8zonGNRluDOOZ/kMF14gaL6lKXmMfoSSD/i7Y4Fgpv40AIP3Q==
-X-Received: by 2002:a63:fd08:0:b0:46f:ed91:6664 with SMTP id d8-20020a63fd08000000b0046fed916664mr8446421pgh.558.1668813596238;
-        Fri, 18 Nov 2022 15:19:56 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=KMe/IAPw7iCAtbFGGptUUepLAud27PK2QeJBxNFjExw=;
+        b=JkTrGGq/w2YBYayW0QWjiREdusHeeVZdMjI8dUMr2uztXAF4YOX64xCMMrntcHaHW4
+         dl0rDSP7xVrjrg+Kv4egNPpDqJqmne6fu4k+nnnoTM0X3U09NvvlTMmZlqLBH9qe/J6c
+         gTORbL0TGRIAUMjWfTCzeS1Ch8Z7+r40D8iDvgpwV1xCPNnLYFes2v0RL5WxlMnLT41K
+         wyiTrz8OesRUDM3QHTQ5OzJwIc6LBNnLlgrNxdbgQs3C/4lsh+WFAENzgI5Ai4TEEU+x
+         WARdq7qGB/zQo77bVEfEsbaeNSWTQrtEx1AiZ+MstTkrsBiGDzdcZoVAOdF6LWilGKIO
+         Qbuw==
+X-Gm-Message-State: ANoB5pldnQa0HjFjTSdpYga8dbhWnCTtXF0xEQMblmFq5IR9mxbnx3Ir
+        6SDmK78a+9LK5CrBrPj51Tg=
+X-Google-Smtp-Source: AA0mqf6g66VzLO3E3TTW62XwSLWTa60S7HTVEOMiemwe6ekJWLngSTz71NTwIdXrorDnoUsM7GXmbQ==
+X-Received: by 2002:a17:90a:6904:b0:208:4bfa:51e1 with SMTP id r4-20020a17090a690400b002084bfa51e1mr15516802pjj.228.1668814039779;
+        Fri, 18 Nov 2022 15:27:19 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id b14-20020a170902650e00b001869079d083sm4290452plk.90.2022.11.18.15.19.55
+        by smtp.gmail.com with ESMTPSA id s5-20020a170903200500b00177c488fea5sm4287656pla.12.2022.11.18.15.27.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Nov 2022 15:19:55 -0800 (PST)
+        Fri, 18 Nov 2022 15:27:19 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 2/2] tests(mingw): avoid very slow `mingw_test_cmp`
-References: <pull.1309.v2.git.1662469859.gitgitgadget@gmail.com>
-        <pull.1309.v3.git.1668290855.gitgitgadget@gmail.com>
-        <a7f4265ceb26c6dd9d347ef4cbef2aac7d60bf13.1668290855.git.gitgitgadget@gmail.com>
-        <221114.86tu31lnwr.gmgdl@evledraar.gmail.com>
-        <pss2rp96-qr48-21p4-36on-ns04nnp0944q@tzk.qr>
-        <221114.86pmdplbs5.gmgdl@evledraar.gmail.com>
-Date:   Fri, 18 Nov 2022 15:19:55 -0800
-In-Reply-To: <221114.86pmdplbs5.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Mon, 14 Nov 2022 16:23:24 +0100")
-Message-ID: <xmqqr0xzkfz8.fsf@gitster.g>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, Patrick Steinhardt <ps@pks.im>,
+        git@vger.kernel.org
+Subject: Re: ps/receive-use-only-advertised
+References: <Y3Mag8qG2D3qjlmg@nand.local> <Y3MxmzestKm9iMTU@ncase>
+        <Y3M2Fq7pZk4lNY9G@nand.local>
+        <Y3PMLFuvR6hlIzbq@coredump.intra.peff.net>
+Date:   Fri, 18 Nov 2022 15:27:18 -0800
+In-Reply-To: <Y3PMLFuvR6hlIzbq@coredump.intra.peff.net> (Jeff King's message
+        of "Tue, 15 Nov 2022 12:28:12 -0500")
+Message-ID: <xmqqmt8nkfmx.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> IOW this bit in t/README:
+>> > >  "git receive-pack" used to use all the local refs as the boundary
+>> > >  for checking connectivity of the data "git push" sent, but now it
+>> > >  uses only the refs that it advertised to the pusher.  In a
+>> > >  repository with the .hideRefs configuration, this reduces the
+>> > >  resource needed to perform the check, and also forces the pusher to
+>> > >  prove they have all objects that are necessary to complete the
+>> > >  history on top of only the history available to them.
+>> >
+>> > We have at a later point established that this is not true: the pusher
+>> > does not have to prove they have all objects. As the `--not --all` part
+>> > in git-rev-list(1) is merely an optimization the semantics aren't
+>> > changed at all
+>> 
+>> Thanks; this is Junio's description from when he picked up the topic
+>> back in WC #08 from October. I'll need to update before graduating it
+>> down.
 >
->  - Don't use '! git cmd' when you want to make sure the git command
->    exits with failure in a controlled way by calling "die()".[...]
->
-> So, before this series a test like this on Windows, with
-> GIT_TEST_CMP=mingw_test_cmp:
->
-> 	! test_cmp foo bar
->
-> Would only succeed if "foo" and "bar" weren't identical, now it'll also
-> succeed if 'git diff --no-index' happens to segfault on those inputs.
+> Yeah, I think you can probably just remove everything from "and also
+> forces..." on.
 
-Well "! test_cmp" is wrong anyway, because it _expects_ two files
-are the same and gives more detailed diagnosis when they differ by
-giving "diff" output.
-
-If you expect them to be different, "! test_cmp" would give
-"detailed diagnosis" in the wrong case, i.e. the outcome is what we
-expect.
-
-So the caller must do "test_cmp !" whether the underlying
-implementation of test_cmp uses "diff -u" or "diff --no-index".
+Hmph, --not --all is a way to make the rev-list error out if the
+proposed new tips are not connected with existing objects to the
+"existing" refs, and I thought that removing "hidden" ones from
+"--all" means that the pusher is now forced to push objects all
+needed.  But you are right.  Excluding the hidden refs from "--all"
+while doing the "rev-list new-tip --not --all" traversal does not
+exclude pre-existing objects that are only reachable from these
+hidden refs in the object store, so it does not help ensure that the
+pusher has to prove they have these objects.
