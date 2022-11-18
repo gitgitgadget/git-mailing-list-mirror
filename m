@@ -2,69 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D5CAC4332F
-	for <git@archiver.kernel.org>; Fri, 18 Nov 2022 11:19:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 59201C4332F
+	for <git@archiver.kernel.org>; Fri, 18 Nov 2022 11:31:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241612AbiKRLTP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Nov 2022 06:19:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53776 "EHLO
+        id S230004AbiKRLbN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Nov 2022 06:31:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241677AbiKRLSz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Nov 2022 06:18:55 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 531BA27DDB
-        for <git@vger.kernel.org>; Fri, 18 Nov 2022 03:18:46 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id t25so12210139ejb.8
-        for <git@vger.kernel.org>; Fri, 18 Nov 2022 03:18:46 -0800 (PST)
+        with ESMTP id S239887AbiKRLbL (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Nov 2022 06:31:11 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A733769E6
+        for <git@vger.kernel.org>; Fri, 18 Nov 2022 03:31:10 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id n20so12476134ejh.0
+        for <git@vger.kernel.org>; Fri, 18 Nov 2022 03:31:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RyQUUDJzUS7qPfmDjUbm1Ri3+Ge1ynUxLBCOdhQgtxk=;
-        b=j6Qs2+VWBtqRlzYW+3Kj6GDouzEUG72K9OBCSIQBFbZLBO52U0mWmnTjuRwJ9ZS+Qv
-         Qmso704SFNN/hb95VxYodlV777aagbd8HWrSD2mR3zuIgjyo4SpGTZwDqZ6OhLtSnPzk
-         kByC2bQks4jX2bSqftIvPtSFbPGc1PSB+MbNEK/jaTtT2H5VD87+I/rG4NM/nNVSEQIs
-         tKmQP/fDpzBU6rF146/Wl9VbeFWbCR0yf2uWsMzZHG6VhMW8RHxE8MUQ4QEdb1Jb+RSs
-         1GU5u4kAzdSe+KkmNveBEXtEGuHtj+gGh1q641wXdDfZQxfw6g9BDtikeOK6gXOzTLnf
-         FbCA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/v1oIjW1EdWmGp7ceiw5m+M/DBgmPaZxzgSuHjF9Kes=;
+        b=ItrZ6nnVGyckaJxm1iDMIvko18sWcrzpWBVXAKWitb4n2eLf5d1Upcg+N5sffibwFl
+         WvFvfNOSWqifCvfptFolnuR0zb2ly6QbGJCEBDvl6hwArWZCdRTkEUnfbk5riV8/jNM+
+         mHf+in1OTpRgq6voT+169hQJsmMhYnr22B4QFLpszHjPUEM1cHAh6NOxqhm/trszuTn7
+         RpMdJLAymhNHqaR9ph5TLCn4oKONwC/qmYqhgFSk0QjeYa6nqbZerLZck1qE31W1mkY4
+         nb6bhbWx87g8V+eVO7XRUGlG2fNrzKiLHz2Lzlf8iFh1OBdpssutOV+P22lhgxmvJ3lG
+         Q6Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RyQUUDJzUS7qPfmDjUbm1Ri3+Ge1ynUxLBCOdhQgtxk=;
-        b=nkxEHbAM9qeDZsb+lsjl659GCwlLO/Nv+AUD416Z4wB49G81ntZFCnapCssGMisH37
-         SqeAqrE90Z4X7PNIP93E4SFjiA750pqvWIi5IMx6WxYtUxTcII9P3ue6B2lITC7EQ0uH
-         6A8pMotQeVxceUF7Cak9YlcuQ8JYm4fPSEoBkUx1tn2yDEcAk19yQpiKshfWsOgSrmoO
-         CK/cUofRvY+yJuJBoqY5hJyWNyRtlwNJ6zig1qFIa4+Tbni24rilP2kK7ZPvyvztwSX1
-         N/8JSFumGXBicdZRMgRz28Po6BfdBDCwdht5LN9PcOeztXOcFinqqYdsxWdRLDxsINMI
-         vxhg==
-X-Gm-Message-State: ANoB5png7WYD0ahzuAh9sa7EB6s07wvtfDPDhXyJmDUOFDR1E1idqeVW
-        seSr9NT5+LdLcszhVTkmOkT34m+ka2Dz4A==
-X-Google-Smtp-Source: AA0mqf6AeYKAicIj40Q+NEsmLq5TQH7ARYjnKY1v+wi3diMiwsvyfOyROJbID1ljXomfUzpjbyl8pg==
-X-Received: by 2002:a17:906:cd10:b0:7ad:c0e7:7a99 with SMTP id oz16-20020a170906cd1000b007adc0e77a99mr5333926ejb.689.1668770324326;
-        Fri, 18 Nov 2022 03:18:44 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/v1oIjW1EdWmGp7ceiw5m+M/DBgmPaZxzgSuHjF9Kes=;
+        b=ULmdUcRF+OcqEEFBftFtEXtOPg214vssoZyfO+5c0hsH3B1jgTTI/L1w2wcuGSg8O8
+         HJ7DeNlqLeaT1w56QN37kYugWRXCvrFm3h+MecWmW1yBWo/hrZp2kshAkLKWPWLokrEi
+         sjFkWT3IL8hRQWjGGo6LUOSWybIiQnmWdXADL5xdn9jEWbIAi0uSlFOLA2Q8GP+s9aNT
+         Vw7gzhpTw3Ju3tisOlcrAMR24PuWbtu03zX48o+zF0zXKukN2dxOaKGfIvic9LGvFXxJ
+         9pF1k8zOAn2JowzEAz3FAd4RC4zgt3m2r2F0f9bunf6yuxP65qAQoGrSXKr2BlMhfgJ8
+         eAaw==
+X-Gm-Message-State: ANoB5pnOuySH8hcjxxuK5MavM4uPodV78bOYlpNyV4Y0wk4WkmlXXPHA
+        OlwPIUsKjga4aQSqmTF83ejUDGVzf0Vszw==
+X-Google-Smtp-Source: AA0mqf4ZOTkpPwcrRiipwOmfu515vzKyky7J2iwTDLaEfc0KHDP5AnyH/+dbzfdCq5JAwkCcRVg23A==
+X-Received: by 2002:a17:906:be9:b0:78d:3e11:1036 with SMTP id z9-20020a1709060be900b0078d3e111036mr5794684ejg.76.1668771068179;
+        Fri, 18 Nov 2022 03:31:08 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id fy20-20020a1709069f1400b00788c622fa2csm1558955ejc.135.2022.11.18.03.18.43
+        by smtp.gmail.com with ESMTPSA id cw24-20020a056402229800b0046730154ccbsm1713302edb.42.2022.11.18.03.31.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Nov 2022 03:18:43 -0800 (PST)
+        Fri, 18 Nov 2022 03:31:07 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v9 12/12] merge-index: make the argument parsing sensible & simpler
-Date:   Fri, 18 Nov 2022 12:18:29 +0100
-Message-Id: <patch-v9-12.12-f0368560140-20221118T110058Z-avarab@gmail.com>
+Subject: [PATCH 00/12] tree-wide: chip away at USE_THE_INDEX_COMPATIBILITY_MACROS
+Date:   Fri, 18 Nov 2022 12:30:54 +0100
+Message-Id: <cover-00.12-00000000000-20221118T112205Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1511.gcdcff1f1dc2
-In-Reply-To: <cover-v9-00.12-00000000000-20221118T110058Z-avarab@gmail.com>
-References: <20220809185429.20098-1-alban.gruin@gmail.com> <cover-v9-00.12-00000000000-20221118T110058Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,127 +65,110 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In a preceding commit when we migrated to parse_options() we took
-pains to be bug-for-bug compatible with the existing command-line
-interface, if possible.
+As 3/12 here notes we've been undergoing a sloooow migration away from
+functions that provide "the_index" for you since 2007, with the last
+major move away from some of them being in 2019.
 
-I.e. we forbade forms like:
+This series has a large diffstat, but should be disproportionately
+easy to review as I wrote almost none of the code: coccinelle did :)
 
-	git merge-index -a <program>
-	git merge-index <program> <opts> -a
+I.e. after some trivial cleanup in 1-2/12 the C code changes in 3/12
+are mostly generated from a new index-compatibility.cocci migration.
 
-But allowed:
+The commits that deviate from that are:
 
-	git merge-index <program> -a
-	git merge-index <opts> <program> -a
+ * 04/12: Make a function that always returns "0" return "void"
+   instead.
 
-As the "-a" argument was considered be provided for the "<program>",
-but not a part of "<opts>".
+ * 09-10/12: Add a "USE_THE_INDEX_VARIABLE", for those leftover users
+   that only need "the_index", but not the compatility macros.
 
-We don't really need this strictness, as we don't have two "-a"
-options. It's much simpler to implement a schema where the first
-non-option argument is the <program>, and the rest are the
-"<file>...". We only allow that rest if the "-a" option isn't
-supplied.
+ * 12/12: Manual follow-up to the cocci-applied 11/12.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/merge-index.c  | 28 ++++++++--------------------
- t/t6060-merge-index.sh | 12 +++++++++---
- 2 files changed, 17 insertions(+), 23 deletions(-)
+The only exceptions to this are the changes to cache.h itself, and
+moving things around in contrib/coccinelle/* as we can fully migrate
+some things, so they move from a "pending" rule to a regular
+coccinelle rule.
 
-diff --git a/builtin/merge-index.c b/builtin/merge-index.c
-index d679272391b..d8b62e4f663 100644
---- a/builtin/merge-index.c
-+++ b/builtin/merge-index.c
-@@ -59,21 +59,14 @@ int cmd_merge_index(int argc, const char **argv, const char *prefix)
- 		N_("git merge-index [-o] [-q] <merge-program> (-a | ([--] <file>...))"),
- 		NULL
- 	};
--#define OPT__MERGE_INDEX_ALL(v) \
--	OPT_BOOL('a', NULL, (v), \
--		 N_("merge all files in the index that need merging"))
- 	struct option options[] = {
- 		OPT_BOOL('o', NULL, &one_shot,
- 			 N_("don't stop at the first failed merge")),
- 		OPT__QUIET(&quiet, N_("be quiet")),
--		OPT__MERGE_INDEX_ALL(&all), /* include "-a" to show it in "-bh" */
-+		OPT_BOOL('a', NULL, &all,
-+			 N_("merge all files in the index that need merging")),
- 		OPT_END(),
- 	};
--	struct option options_prog[] = {
--		OPT__MERGE_INDEX_ALL(&all),
--		OPT_END(),
--	};
--#undef OPT__MERGE_INDEX_ALL
- 	struct mofs_data data = { 0 };
- 
- 	/* Without this we cannot rely on waitpid() to tell
-@@ -81,20 +74,15 @@ int cmd_merge_index(int argc, const char **argv, const char *prefix)
- 	 */
- 	signal(SIGCHLD, SIG_DFL);
- 
--	if (argc < 3)
--		usage_with_options(usage, options);
--
--	/* Option parsing without <merge-program> options */
--	argc = parse_options(argc, argv, prefix, options, usage,
--			     PARSE_OPT_STOP_AT_NON_OPTION);
--	if (all)
--		usage_msg_optf(_("'%s' option can only be provided after '<merge-program>'"),
--			      usage, options, "-a");
--	/* <merge-program> and its options */
-+	argc = parse_options(argc, argv, prefix, options, usage, 0);
- 	if (!argc)
- 		usage_msg_opt(_("need a <merge-program> argument"), usage, options);
- 	data.program = argv[0];
--	argc = parse_options(argc, argv, prefix, options_prog, usage, 0);
-+	argv++;
-+	argc--;
-+	if (!argc && !all)
-+		usage_msg_opt(_("need '-a' or '<file>...'"),
-+			      usage, options);
- 	if (argc && all)
- 		usage_msg_opt(_("'-a' and '<file>...' are mutually exclusive"),
- 			      usage, options);
-diff --git a/t/t6060-merge-index.sh b/t/t6060-merge-index.sh
-index bc201a69552..4ff9ace7f73 100755
---- a/t/t6060-merge-index.sh
-+++ b/t/t6060-merge-index.sh
-@@ -22,7 +22,7 @@ test_expect_success 'usage: 2 arguments' '
- 
- test_expect_success 'usage: -a before <program>' '
- 	cat >expect <<-\EOF &&
--	fatal: '\''-a'\'' option can only be provided after '\''<merge-program>'\''
-+	fatal: '\''-a'\'' and '\''<file>...'\'' are mutually exclusive
- 	EOF
- 	test_expect_code 129 git merge-index -a b program >out 2>actual.raw &&
- 	grep "^fatal:" actual.raw >actual &&
-@@ -34,7 +34,7 @@ for opt in -q -o
- do
- 	test_expect_success "usage: $opt after -a" '
- 		cat >expect <<-EOF &&
--		fatal: '\''-a'\'' option can only be provided after '\''<merge-program>'\''
-+		fatal: need a <merge-program> argument
- 		EOF
- 		test_expect_code 129 git merge-index -a $opt >out 2>actual.raw &&
- 		grep "^fatal:" actual.raw >actual &&
-@@ -43,7 +43,13 @@ do
- 	'
- 
- 	test_expect_success "usage: $opt program" '
--		test_expect_code 0 git merge-index $opt program
-+		cat >expect <<-EOF &&
-+		fatal: need '\''-a'\'' or '\''<file>...'\''
-+		EOF
-+		test_expect_code 129 git merge-index $opt program 2>actual.raw &&
-+		grep "^fatal:" actual.raw >actual &&
-+		test_must_be_empty out &&
-+		test_cmp expect actual
- 	'
- done
- 
+At the start of this the patch to migrate all of this would have been
+~2k lines, after it's down to below ~1k.
+
+I've carefully crafted this so that it doesn't have conflicts with
+anything that's in-flight, or is likely to develop such conflicts (but
+I could always get unlucky). If there are any the resolution should be
+trivially validated by running the cocci rule on "theirs" and keeping
+that version.
+
+Branch & passing CI at:
+https://github.com/avar/git/tree/avar/narrow-down-the-index-compatibilty-macros
+
+Ævar Arnfjörð Bjarmason (12):
+  cache.h: remove unused "the_index" compat macros
+  builtin/{grep,log}.: don't define "USE_THE_INDEX_COMPATIBILITY_MACROS"
+  cocci & cache.h: remove rarely used "the_index" compat macros
+  read-cache API & users: make discard_index() return void
+  cocci: add a index-compatibility.pending.cocci
+  cocci & cache.h: apply a selection of "pending" index-compatibility
+  cocci & cache.h: apply variable section of "pending"
+    index-compatibility
+  cocci: apply "pending" index-compatibility to "t/helper/*.c"
+  {builtin/*,repository}.c: add & use "USE_THE_INDEX_VARIABLE"
+  cache.h & test-tool.h: add & use "USE_THE_INDEX_VARIABLE"
+  cocci: apply "pending" index-compatibility to some "builtin/*.c"
+  builtin/*: remove or amend "USE_THE_INDEX_COMPATIBILITY_MACROS"
+
+ add-interactive.c                             |  8 +-
+ add-patch.c                                   |  3 +-
+ builtin/add.c                                 | 21 ++---
+ builtin/am.c                                  |  4 +-
+ builtin/cat-file.c                            |  2 +-
+ builtin/check-attr.c                          |  4 +-
+ builtin/check-ignore.c                        |  4 +-
+ builtin/checkout-index.c                      | 19 ++--
+ builtin/checkout.c                            | 55 ++++++------
+ builtin/clean.c                               |  6 +-
+ builtin/clone.c                               |  4 +-
+ builtin/commit.c                              | 20 ++---
+ builtin/describe.c                            |  7 +-
+ builtin/diff-files.c                          |  3 +-
+ builtin/diff-index.c                          |  5 +-
+ builtin/diff-tree.c                           |  4 +-
+ builtin/difftool.c                            |  2 +-
+ builtin/fsck.c                                | 16 ++--
+ builtin/grep.c                                |  1 -
+ builtin/log.c                                 |  1 -
+ builtin/merge-index.c                         | 16 ++--
+ builtin/merge-ours.c                          |  3 +-
+ builtin/merge-tree.c                          |  2 +-
+ builtin/merge.c                               | 13 +--
+ builtin/mv.c                                  | 25 +++---
+ builtin/pull.c                                |  6 +-
+ builtin/read-tree.c                           |  6 +-
+ builtin/rebase.c                              |  6 +-
+ builtin/reset.c                               | 20 +++--
+ builtin/rev-parse.c                           |  4 +-
+ builtin/rm.c                                  | 18 ++--
+ builtin/stash.c                               |  8 +-
+ builtin/submodule--helper.c                   | 14 +--
+ builtin/update-index.c                        | 72 +++++++--------
+ cache.h                                       | 30 ++-----
+ contrib/coccinelle/index-compatibility.cocci  | 87 +++++++++++++++++++
+ .../index-compatibility.pending.cocci         | 78 +++++++++++++++++
+ read-cache.c                                  |  4 +-
+ repository.c                                  |  2 +-
+ sequencer.c                                   | 15 ++--
+ t/helper/test-dump-cache-tree.c               |  5 +-
+ t/helper/test-dump-split-index.c              |  1 +
+ t/helper/test-dump-untracked-cache.c          |  4 +-
+ t/helper/test-fast-rebase.c                   |  4 +-
+ t/helper/test-lazy-init-name-hash.c           | 21 ++---
+ t/helper/test-read-cache.c                    |  5 +-
+ t/helper/test-scrap-cache-tree.c              |  9 +-
+ t/helper/test-write-cache.c                   |  6 +-
+ 48 files changed, 417 insertions(+), 256 deletions(-)
+ create mode 100644 contrib/coccinelle/index-compatibility.cocci
+ create mode 100644 contrib/coccinelle/index-compatibility.pending.cocci
+
 -- 
 2.38.0.1511.gcdcff1f1dc2
 
