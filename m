@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A19E0C4332F
-	for <git@archiver.kernel.org>; Fri, 18 Nov 2022 11:47:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C2A7C433FE
+	for <git@archiver.kernel.org>; Fri, 18 Nov 2022 11:47:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235206AbiKRLrP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Nov 2022 06:47:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45282 "EHLO
+        id S241514AbiKRLrR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Nov 2022 06:47:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45310 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241645AbiKRLrE (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Nov 2022 06:47:04 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC12012AF1
-        for <git@vger.kernel.org>; Fri, 18 Nov 2022 03:47:03 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id ft34so12315762ejc.12
-        for <git@vger.kernel.org>; Fri, 18 Nov 2022 03:47:03 -0800 (PST)
+        with ESMTP id S241686AbiKRLrI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Nov 2022 06:47:08 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D56085156
+        for <git@vger.kernel.org>; Fri, 18 Nov 2022 03:47:07 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id gv23so12442435ejb.3
+        for <git@vger.kernel.org>; Fri, 18 Nov 2022 03:47:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Rku71g8QutG1SBH+pkmBoyhNFU3hbblPebv2MeqSYSs=;
-        b=SBNgXgVBUHRaoxBsFYkavtU10c4N4QbGcJNuSxPSxSjKponcq01r105DG1Fysd+du1
-         c1qbAbSmP3jHa6yqiWMJ+QYVaTQ9SEHUNL0oDuzK/Rt0/xqixTpQ1UDhZJk7mNn3X7Gh
-         hRjpsEY9d4FBMqkfgUxpMtxRzwCRC04HdSK+RKkwml/jxhXFoe0P1RJC1UoQE86TMu5D
-         CFkkv5ZLVX5MapWPMhAK1BSYHJVprCOXtEcVQFOVCeff/ErVVAsb1142+4LLiRbtWGfV
-         eDzwIznR2UVzbDK+GpxCLHM18sRbsiDOOtZUzRpIIq+XcUouWhFAqT2Y9E1gxjJ9ubir
-         ND+g==
+        bh=ST5HLlFMCCR17IA9DT6M4TPm2jEcQSxejTvgA6hgMkE=;
+        b=pZSuUv20L9KRKy6STXgZe2AyZ6CkcKm84Ub710nMcpsQODhWeGZCMETmTjQrlnEKKT
+         sjkT2v8rfb/mkaczr96+v/O3JI10ekR12+r4hJKQTEvmDN1SLnXM0/1nSyXVZFmRuMZY
+         BMAxb9E0u9d9WJWpulB6qOuwtL1rcpsTpfmpc1PSs+nIjrPE/EavZpbeaBpXUX5xnUfb
+         TVLBtwOpvY4hi3k4dT3lNMRR5vJNF1IF/4202gWRei/EpEL8Su2o6pyzT/hKbUkTB+xe
+         wdWSqwK2dWLHxjoDBFBi3MiuZAnpH99hP0gE0j0UW3uS+1TkXD7Zq4uNy6q3rpnB6fVG
+         i7Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Rku71g8QutG1SBH+pkmBoyhNFU3hbblPebv2MeqSYSs=;
-        b=xCrOi0pMrmLosKT16TQtG1MTAZprM3so+loAESGTF8f7/DQeQeXH8stSB5eZgogxlB
-         zi54sKDKGt1Y0Ct/fkCjful8SvPh248m3HjbBDWDPXKN30roRhvM808FHrBH1ct32jqy
-         AEbL9P3yy7wRetiAsbXYkgPuTCEqcAWL+bQ4EZPFdbKnJwet//2bDOKMVBZ8SZc4Es/F
-         W+iRGtWaKrqoHFrt6W0OyiiFbrfinCHgYEmdwRJsPfMUoWS/JRw0KLDBqvxvW/ZRK1GB
-         w6gVFGoC9Mp3LQY8VZ80Awi4+3nvhMwqTQ8OM40/QeYiTAUZbcAhX6wyuPBkhyn9GSBE
-         Hleg==
-X-Gm-Message-State: ANoB5pn1ZtBkR1bl9tm0K0CfU1NBMPZ/c8f+xr6K4kcNtibXW9PHvv0B
-        FIGicyFTgmaxXeNk6ocjSPz+4G1G/oAzQQ==
-X-Google-Smtp-Source: AA0mqf5dUb6xhQtCyYdYSbERx5UPg91/HcLS7k/+7abGzjJ+Lw6qcMotjLsrIut5FLfg1LdKv1dKmw==
-X-Received: by 2002:a17:907:3907:b0:7ae:37a8:9b5c with SMTP id so7-20020a170907390700b007ae37a89b5cmr5554993ejc.241.1668772021939;
-        Fri, 18 Nov 2022 03:47:01 -0800 (PST)
+        bh=ST5HLlFMCCR17IA9DT6M4TPm2jEcQSxejTvgA6hgMkE=;
+        b=WSbdSO5Qu7ACCqPTIlwJjxuf5xn04jHo/JUQHwOWg7OpJcr35AAbnKZ2uEg4Bq9elN
+         kHvChK5qSCPR1ceKzqUwjXHi4XFeEq02TZzQrt//SRZ3NE7hnY4zwPkrAjvkvGEQmdeO
+         DPUpDm7UQ1ivBntERCo0vH+YLJepM0QRmsLqWitX1QLw+7eP9nehnKbKyAq3OwXTrW5V
+         VV6qKOk1K/7dsC8BWLzrcnRRfnZt/D57XCgcPYcXnFt4SpSaaXvvS34qhR41EXUY8Goq
+         HgP9hphqywIF8hwbl9TgQfjjJEXN5byv0ZFlDlfD8QYL8YQQwaQycogjG3gQti5sOD0Z
+         QOGA==
+X-Gm-Message-State: ANoB5pmngNgL/crytDV5hJpbZ6STcZ3VGxZSU5sSSDQOVJI9SSo2RyTd
+        Lf2ZLsQjpPcx/QeoyE5d/9Dds9JgBjtRoA==
+X-Google-Smtp-Source: AA0mqf5uxIJLX8AK8heMvQFt99Nlb5qSGAIjGIUopi6e1Ed/w+enYyX0o+kJVTxaUOs0Fx64KhKpBg==
+X-Received: by 2002:a17:907:378:b0:7ad:db82:d071 with SMTP id rs24-20020a170907037800b007addb82d071mr5925594ejb.200.1668772025696;
+        Fri, 18 Nov 2022 03:47:05 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id o8-20020aa7dd48000000b004615e1bbaf4sm1705349edw.87.2022.11.18.03.47.01
+        by smtp.gmail.com with ESMTPSA id o8-20020aa7dd48000000b004615e1bbaf4sm1705349edw.87.2022.11.18.03.47.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Nov 2022 03:47:01 -0800 (PST)
+        Fri, 18 Nov 2022 03:47:04 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,12 +58,12 @@ Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
         Kousik Sanagavarapu <five231003@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 0/4] tag: don't misreport type of tagged objects in errors
-Date:   Fri, 18 Nov 2022 12:46:55 +0100
-Message-Id: <cover-0.4-00000000000-20221118T113442Z-avarab@gmail.com>
+Subject: [PATCH 4/4] tag: don't emit potentially incorrect "object is a X, not a Y"
+Date:   Fri, 18 Nov 2022 12:46:59 +0100
+Message-Id: <patch-4.4-1a9dcb9e05d-20221118T113442Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1512.g9e0c09a155f
-In-Reply-To: <Y3a3qcqNG8W3ueeb@coredump.intra.peff.net>
-References: <Y3a3qcqNG8W3ueeb@coredump.intra.peff.net>
+In-Reply-To: <cover-0.4-00000000000-20221118T113442Z-avarab@gmail.com>
+References: <Y3a3qcqNG8W3ueeb@coredump.intra.peff.net> <cover-0.4-00000000000-20221118T113442Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,79 +71,66 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This series fixes a very long-standing issue where we'll get confused
-when we parse a tag whose "type" lies about the type of the target
-object.
+As noted in the preceding commit we weren't handling cases where we
+see a reference to a bad "type" in a "tag", but then end up not fully
+parsing the object.
 
-It goes on top of Jeff King's just-submitted [1], and the two
-compliment one another. See [2] for my feedback about what was left
-over, which this fixes.
+In those cases let's only claim that we have a bad tag pointer, but
+emit "is a %s, not a %s".
 
-Currently we'll parse tags and note what the "type" claims to be. Say
-a pointer to a "blob" object that claims to be a "commit" in the
-envelope.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t6102-rev-list-unexpected-objects.sh | 6 +++---
+ tag.c                                  | 5 +++--
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-Then when we we'd try to parse that supposed "commit' for real we'd
-emit a message like:
-
-	error: object <oid> is a blob, not a commit
-
-Which is reversed, i.e. we'd remember the first "blob" we saw, and
-then get confused about seeing a "commit" when we did the actual
-parsing.
-
-This is now fixed in almost all cases by having the one caller of
-parse_tag() which actually knows the type tell it "yes, I'm sure this
-is a commit".
-
-We'll then be able to see that we have a non-parsed object as
-scaffolding, but that it's really a commit, and emit the correct:
-
-	error: object <oid> is a commit not a blob
-
-Which goes along with other errors where the tag object itself yells
-about being unhappy with the object reference.
-
-I submitted a version of these patches back in early 2021[3], this is
-significantly slimmed down since then.
-
-At the time Jeff King noted that this approach inherently can't cover
-all possible scenarios. I.e. sometimes our parsing of the envelope
-isn't followed up by the "real" parse.
-
-Even in those cases we can "get it right as 4/4 here demonstrates.
-
-But there are going to be cases left where we get it wrong, but
-they're all cases where we get it wrong now. It's probably not worth
-fixing the long tail of those issues, but now we'll emit a sensible
-error on the common case of "log" etc.
-
-1. https://lore.kernel.org/git/Y3a3qcqNG8W3ueeb@coredump.intra.peff.net/
-2. https://lore.kernel.org/git/221118.86cz9lgjxu.gmgdl@evledraar.gmail.com/
-3. https://lore.kernel.org/git/YGTGgFI19fS7Uv6I@coredump.intra.peff.net/
-
-Ævar Arnfjörð Bjarmason (4):
-  object-file.c: free the "t.tag" in check_tag()
-  object tests: add test for unexpected objects in tags
-  tag: don't misreport type of tagged objects in errors
-  tag: don't emit potentially incorrect "object is a X, not a Y"
-
- blob.c                                 |  11 +-
- blob.h                                 |   3 +
- commit.c                               |  11 +-
- commit.h                               |   2 +
- object-file.c                          |   1 +
- object.c                               |  20 +++-
- object.h                               |   2 +
- t/t3800-mktag.sh                       |   1 +
- t/t5302-pack-index.sh                  |   2 +
- t/t6102-rev-list-unexpected-objects.sh | 146 +++++++++++++++++++++++++
- tag.c                                  |  22 +++-
- tag.h                                  |   2 +
- tree.c                                 |  11 +-
- tree.h                                 |   2 +
- 14 files changed, 222 insertions(+), 14 deletions(-)
-
+diff --git a/t/t6102-rev-list-unexpected-objects.sh b/t/t6102-rev-list-unexpected-objects.sh
+index 2e36d8bcfd9..ffc1672d7dc 100755
+--- a/t/t6102-rev-list-unexpected-objects.sh
++++ b/t/t6102-rev-list-unexpected-objects.sh
+@@ -231,7 +231,7 @@ test_expect_success 'traverse unexpected non-tag tag (tree seen to blob)' '
+ '
+ 
+ 
+-test_expect_failure 'traverse unexpected objects with for-each-ref' '
++test_expect_success 'traverse unexpected objects with for-each-ref' '
+ 	cat >expect <<-EOF &&
+ 	error: bad tag pointer to $tree in $tag_tag_tree
+ 	fatal: parse_object_buffer failed on $tag_tag_tree for refs/tags/tag_tag_tree
+@@ -241,7 +241,7 @@ test_expect_failure 'traverse unexpected objects with for-each-ref' '
+ '
+ 
+ >fsck-object-isa
+-test_expect_failure 'setup: unexpected objects with fsck' '
++test_expect_success 'setup: unexpected objects with fsck' '
+ 	test_must_fail git fsck 2>err &&
+ 	sed -n -e "/^error: object .* is a .*, not a .*$/ {
+ 		s/^error: object \([0-9a-f]*\) is a \([a-z]*\), not a [a-z]*$/\\1 \\2/;
+@@ -251,7 +251,7 @@ test_expect_failure 'setup: unexpected objects with fsck' '
+ 
+ while read oid type
+ do
+-	test_expect_failure "fsck knows unexpected object $oid is $type" '
++	test_expect_success "fsck knows unexpected object $oid is $type" '
+ 		git cat-file -t $oid >expect &&
+ 		echo $type >actual &&
+ 		test_cmp expect actual
+diff --git a/tag.c b/tag.c
+index 19453c2edbf..ad92cf89209 100644
+--- a/tag.c
++++ b/tag.c
+@@ -193,8 +193,9 @@ int parse_tag_buffer(struct repository *r, struct tag *item, const void *data, u
+ 	}
+ 
+ 	if (!item->tagged || strcmp(type_name(item->tagged->type), type)) {
+-		error(_("object %s is a %s, not a %s"), oid_to_hex(&oid),
+-		      type_name(item->tagged->type), type);
++		if (item->tagged && item->tagged->parsed)
++			error(_("object %s is a %s, not a %s"), oid_to_hex(&oid),
++			      type_name(item->tagged->type), type);
+ 		return error("bad tag pointer to %s in %s",
+ 			     oid_to_hex(&oid),
+ 			     oid_to_hex(&item->object.oid));
 -- 
 2.38.0.1511.gcdcff1f1dc2
 
