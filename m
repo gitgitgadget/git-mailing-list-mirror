@@ -2,107 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 867C1C433FE
-	for <git@archiver.kernel.org>; Fri, 18 Nov 2022 13:25:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48665C4332F
+	for <git@archiver.kernel.org>; Fri, 18 Nov 2022 13:27:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241886AbiKRNZB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Nov 2022 08:25:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46682 "EHLO
+        id S241272AbiKRN1z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Nov 2022 08:27:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233929AbiKRNY7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Nov 2022 08:24:59 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00D2384319
-        for <git@vger.kernel.org>; Fri, 18 Nov 2022 05:24:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1668777893; bh=5WbVUhXu6s6n1oBy+636y0CIVPB82SG6Dh3VPpp5HZY=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=Essb3AYp6nCO09fRtg0H4p/7gpQz5kbM5N9B4hxZ2hhopTgMlSgrm/l7BR+SR8MzD
-         ka+XqWmiQRueLr73jn/3AHKK3Iul7SV+gbj9Hw+yAaUW8bY0Fo59tTHITnsQMXqk6q
-         ewuspUFPiMTPd+S+0wk4Q1vHZno+N8Fw5jA+Z1kDMHnvqgYCdBpqJp1aJbTaK2FlTE
-         XRA1fUKYJye0AodcQYEhSxboDIdhKnRFRDqyjAgV0JcxKLsHvgTAKceqfap+3gnrwW
-         9FCV/W8Ytmj8U2j9ZkU0Dio00tfjfei83kyAc5b9GZ1U/LeWcnQM9GmbYTdnLf7T8y
-         uAyC0Qctg27GA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.29.212.27] ([89.1.212.70]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mt79F-1pFU1V45ij-00tWO6; Fri, 18
- Nov 2022 14:24:53 +0100
-Date:   Fri, 18 Nov 2022 14:24:51 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     "Strawbridge, Michael" <Michael.Strawbridge@amd.com>
-cc:     Taylor Blau <me@ttaylorr.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: ms/sendemail-validate-headers, was Re: What's cooking in git.git
- (Nov 2022, #03; Mon, 14)
-In-Reply-To: <874juzglx8.fsf@amd.com>
-Message-ID: <40q20nq9-4qsq-8130-3783-8o97o06824qq@tzk.qr>
-References: <Y3Mag8qG2D3qjlmg@nand.local> <4p90qnq3-580o-9n59-34n0-rs3pp635908o@tzk.qr> <Y3Q69UlrmyCXLCsY@nand.local> <874juzglx8.fsf@amd.com>
+        with ESMTP id S241760AbiKRN1v (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Nov 2022 08:27:51 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B86685A2F
+        for <git@vger.kernel.org>; Fri, 18 Nov 2022 05:27:49 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id z18so7133123edb.9
+        for <git@vger.kernel.org>; Fri, 18 Nov 2022 05:27:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=YQ9osMGteyCbEKsy7iUKyds88ZDJpYP3bzw9K+r3NZw=;
+        b=Yo7cUzWuk6S0RlUQ30ogFN0csDFFry7OdxPH8gJYlBuw8Lg0Sla7ZAIxC1HSsn9byB
+         MVKUwMlJmVdFSFXhdFtzZfl1UBmgd80s+bn/f1umLbSGZ73dHirLOnckvOuDNJDS+xKq
+         dunIKhZ6AJrV4nHKPXFlT94thv64ng7wBXgIjY93vCHoL1i01U/A8yd2TJlWcBOqgEyl
+         rHyDd5fpmHxMjPCo93awTczDAFR2b5MMYrH5DsMjfxZvp9/CbbFZE60kABiLgDr/2N97
+         jj7n6dFocD7W/rtl1zpDqVElAwe+kWk2iD0UcU4aDFfXsTRqG/gIsr0UlLBAA0ZqBtoi
+         J9oA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YQ9osMGteyCbEKsy7iUKyds88ZDJpYP3bzw9K+r3NZw=;
+        b=1kYWUtlCHrIGCbRDaRaZP0F3cUBUodsKVvu4dSaKkTL2oPQzQD+s4dQTZCEdAULtLf
+         Q/kJ/Ga7udAwgCijvOIWqp4WxzbLD4enLz5yJ5slUxP6l0edwnEdAf7xtvE+gOyTBDWt
+         kM1iWW7DV6Q6tAzwUx9tEa6PYqZ/7e4Fk9lVRJl4Sm+GehHvlj3BSEMrAmvOy5tWy7l2
+         dYZHMRbaID906j4FkkCawru233ohc9uyIcn1JS13pGtREMELnzVTQbOeAfhAMT3n/lNE
+         mhx9ySl50c4rr8+oWxijeiQdWqJogfWZ35jhD+NgHVFewEyuh+lTi7GbjBryqMzg65Pa
+         /BZg==
+X-Gm-Message-State: ANoB5pnxvVLn4U/zyNFPR2JJH/OGyP1NbkBf6PsIGhLOof1l2I7j1wdi
+        2LxIIg+qZDabfNtHU7rn22Hefeebcys=
+X-Google-Smtp-Source: AA0mqf6eBRnorEQBVKClE6yTjh5N/dGtamiqP9/ivxwHrxIe0xVHHrQ4ctVZcE0cYS1rjPiQC1kRoA==
+X-Received: by 2002:aa7:d408:0:b0:468:677a:877 with SMTP id z8-20020aa7d408000000b00468677a0877mr6094995edq.407.1668778067133;
+        Fri, 18 Nov 2022 05:27:47 -0800 (PST)
+Received: from localhost (p200300e41f201d00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f20:1d00:f22f:74ff:fe1f:3a53])
+        by smtp.gmail.com with ESMTPSA id a18-20020a50ff12000000b00463a83ce063sm1778350edu.96.2022.11.18.05.27.46
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Nov 2022 05:27:46 -0800 (PST)
+From:   Thierry Reding <thierry.reding@gmail.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] am: Allow passing --no-verify flag
+Date:   Fri, 18 Nov 2022 14:27:43 +0100
+Message-Id: <20221118132743.3525725-1-thierry.reding@gmail.com>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1432515424-1668777893=:189"
-X-Provags-ID: V03:K1:ezgUlKh25g5RMVaJN4TVSLCwDv18bXo1C2MBFFksPWVA06frwmo
- Guu97PP0SJKD4x0GhJz4NEbRmV3l0fNoh5e5g0N+j+r48Q9DmYiWTEMhR+SUYvrynFpGwva
- G4JD/IVLyg03jb+Hq5OjyQSjhYoqDGXCjWyolVvifCpWEZnnBlcJuyVtbG1swxAB/zcglzK
- 4R/wuf+mXZN5C9B8n/oFg==
-UI-OutboundReport: notjunk:1;M01:P0:bCgeuokcXiU=;NMYQsqJKDMvzy/UAkP3oZFFN52x
- c8o1zFVFTSFwuWLa/MVuBUgfr9uJGakknelK8/ZcAJkq7tUjLXtOIDs6o7vHp24ixvnARTVM9
- e+5vGcdPrXf6xbX8MTyqO8vTPa+Alx8la/aje1oVK3iyFp8OEtYSpw7gDGJ42/Fnthhq23tjX
- WHSri+Ro3qkqBM8WaNxT044nt/+6ljfjYsMt0p18nzsQDCuaMiM5+zicIJQUKxHF74CU3rDNe
- g2/y+TWpzK8E7tnHdlu1GhYwRNmxfESeMy7qxqRJP87/a4iha3FNREw37P7yJbk2PX91aWIZo
- /v8KcE4n0/xea6z68M8nOasK9Xc8npUZxeYpM9kKs1G+qb7B6e04iQLzyhQ6Xw7nEoIGD2TSe
- dnE4atOEPY3Q8UEWeJeTkI8Sj27SO5JIHyHwDb0foyaIUcw13exBuSDD/ZcpqAnUaTj2smPvT
- xl++u8oufoAwknGChryPKKQgrMTvBKYD7ZAynGttH6TBoAM3gvaC4q6XDObiQ2Kev5kjwFyZf
- buXlPA6snFnIAyU/VVnaqhP1ujmvuPdgBUqutDGb28dJy72srcWigNqJ6VGO5KB1PMkiujJ0m
- tiMJGdfBapXBHAmoAm0+vFkUMAxRgjeXXPtyfzlPm48XCNGLUVzHm3RIITQ9xLh/cv6v4DBvt
- fybEefgFpqmLWYnuzaMW6nODgE9KVMKnVtlVOc7NaSQ2gkUUrOro/uRlcASsIUlXzR/KufcAf
- p2H9Vbbz48bhPzWV5PRkeQlHG3yA9ecfA1aFfsKZKSUR3dyT7QbbOsTw4pQzWFURJt2/OwI75
- 9yN/v+DD3OEhHLdq4oMNTeU/w5qHCgnsLaAhwiN0kzcT91O1ydDCDjThBdooYMUB575qpHGGq
- Zvw0E0MHAH2E4MaLPdMX4QTf4SkeoPRBTzHC5TgMXrCd7uT5Ume8ZZiAPiDCUwBjgCfFLxP8O
- jYAyLqZUccl3jO8QzkBYaXXNC4c=
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+From: Thierry Reding <treding@nvidia.com>
 
---8323328-1432515424-1668777893=:189
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+The git-am --no-verify flag is analogous to the same flag passed to
+git-commit. It bypasses the pre-applypatch and applypatch-msg hooks
+if they are enabled.
 
-Hi Michael,
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+---
+ Documentation/git-am.txt |  8 +++++++-
+ builtin/am.c             | 11 ++++++++---
+ 2 files changed, 15 insertions(+), 4 deletions(-)
 
-On Wed, 16 Nov 2022, Strawbridge, Michael wrote:
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index 326276e51ce5..0c1dfb3c98b4 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -9,7 +9,7 @@ git-am - Apply a series of patches from a mailbox
+ SYNOPSIS
+ --------
+ [verse]
+-'git am' [--signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8]
++'git am' [--signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8] [--no-verify]
+ 	 [--[no-]3way] [--interactive] [--committer-date-is-author-date]
+ 	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
+ 	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
+@@ -138,6 +138,12 @@ include::rerere-options.txt[]
+ --interactive::
+ 	Run interactively.
+ 
++-n::
++--no-verify::
++	By default, the pre-applypatch and applypatch-msg hooks are run.
++	When any of `--no-verify` or `-n` is given, these are bypassed.
++	See also linkgit:githooks[5].
++
+ --committer-date-is-author-date::
+ 	By default the command records the date from the e-mail
+ 	message as the commit author date, and uses the time of
+diff --git a/builtin/am.c b/builtin/am.c
+index 20aea0d2487b..26ad8a468dc4 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -117,6 +117,7 @@ struct am_state {
+ 
+ 	/* various operating modes and command line options */
+ 	int interactive;
++	int no_verify;
+ 	int threeway;
+ 	int quiet;
+ 	int signoff; /* enum signoff_type */
+@@ -472,10 +473,12 @@ static void am_destroy(const struct am_state *state)
+  */
+ static int run_applypatch_msg_hook(struct am_state *state)
+ {
+-	int ret;
++	int ret = 0;
+ 
+ 	assert(state->msg);
+-	ret = run_hooks_l("applypatch-msg", am_path(state, "final-commit"), NULL);
++
++	if (!state->no_verify)
++		ret = run_hooks_l("applypatch-msg", am_path(state, "final-commit"), NULL);
+ 
+ 	if (!ret) {
+ 		FREE_AND_NULL(state->msg);
+@@ -1640,7 +1643,7 @@ static void do_commit(const struct am_state *state)
+ 	const char *reflog_msg, *author, *committer = NULL;
+ 	struct strbuf sb = STRBUF_INIT;
+ 
+-	if (run_hooks("pre-applypatch"))
++	if (!state->no_verify && run_hooks("pre-applypatch"))
+ 		exit(1);
+ 
+ 	if (write_cache_as_tree(&tree, 0, NULL))
+@@ -2329,6 +2332,8 @@ int cmd_am(int argc, const char **argv, const char *prefix)
+ 	struct option options[] = {
+ 		OPT_BOOL('i', "interactive", &state.interactive,
+ 			N_("run interactively")),
++		OPT_BOOL('n', "no-verify", &state.no_verify,
++			N_("bypass pre-applypatch and applypatch-msg hooks")),
+ 		OPT_HIDDEN_BOOL('b', "binary", &binary,
+ 			N_("historical option -- no-op")),
+ 		OPT_BOOL('3', "3way", &state.threeway,
+-- 
+2.38.1
 
-> For ms/sendemail-validate-headers (2022-11-11) 1 commit:
->
-> My apologies.  I think not having the patches chained in the same email
-> is causing confusion.
-
-Please do not apologize for something that is not at all your fault. It is
-an unstructured mailing list, after all.
-
-> I did have some review on these emails:
->
-> v0 - https://public-inbox.org/git/20221109182254.71967-1-michael.strawbr=
-idge@amd.com/T/#u
->   + replies: Brian M Carlson, Taylor Blau
-> v1 - https://public-inbox.org/git/20221111021502.449662-1-michael.strawb=
-ridge@amd.com/T/#t
->   + replies: Luben Tuikov, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> v2 - https://public-inbox.org/git/20221111193042.641898-1-michael.strawb=
-ridge@amd.com/T/#t
-> v3 - https://public-inbox.org/git/20221111194223.644845-1-michael.strawb=
-ridge@amd.com/T/#t
->   + replies: Johannes Schindelin
->
-> I'm currently in the process of trying to run the T9001 tests.  I am
-> getting: error: test_bool_env requires bool values both for
-> $GIT_TEST_PASSING_SANITIZE_LEAK and for the default fallback.  I do
-> wonder if the change in validation location (as Brian mentioned) is
-> changing output (even though the new location is needed to have all
-> information for headers).  I'll keep looking into it.
-
-Thank you!
-Dscho
-
---8323328-1432515424-1668777893=:189--
