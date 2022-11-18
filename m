@@ -2,82 +2,207 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 20254C433FE
-	for <git@archiver.kernel.org>; Fri, 18 Nov 2022 00:00:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1590C433FE
+	for <git@archiver.kernel.org>; Fri, 18 Nov 2022 00:55:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232311AbiKRAAS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 17 Nov 2022 19:00:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54278 "EHLO
+        id S240703AbiKRAzr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 17 Nov 2022 19:55:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230447AbiKRAAP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Nov 2022 19:00:15 -0500
-Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5676E64570
-        for <git@vger.kernel.org>; Thu, 17 Nov 2022 16:00:15 -0800 (PST)
-Received: by mail-pj1-x1049.google.com with SMTP id pi2-20020a17090b1e4200b0021834843687so5195529pjb.0
-        for <git@vger.kernel.org>; Thu, 17 Nov 2022 16:00:15 -0800 (PST)
+        with ESMTP id S233894AbiKRAzp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Nov 2022 19:55:45 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B438E15A03
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 16:55:44 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id t25so9333186ejb.8
+        for <git@vger.kernel.org>; Thu, 17 Nov 2022 16:55:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QO4mH0sRxPyQGNCIKyIZgqsmfxtVKcRsCgZfPvqhBY0=;
-        b=QvZRau0tX4ECT6GV3S+jj41tjMFqKsdLmOhmcAqy8BG5f8uEvqmPRf1R7ifYE/z/c2
-         H20Ydah5uYTzDK58XINCMsJI5PbnlXMQMF+bM8qZ/Qn1bvwrFURwvzpzUMBOZs1Sjc6Z
-         Ac1FjFOoPczF0Qk9/gPenXJ5DJ82PsoWT7Hbp8AYpcJHOg3IW9NpcG36Q8zKsXe0unJL
-         krGF+aptBzTHL2yLoVdeotIkEUQClJITQ8DvmgMzxzlhg7kSnfdj77prvwxBTi2Miq0M
-         gDkhFs13KgIAIVzdUHquE1hhFt2swb/bR3jVe0ntXkSSe9WOuPjty9giJ5CySBpWWiwS
-         fSsQ==
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=5xLrLPDchErdqWFNUwK84wUDrcBpNQQsInSWGbXvb+U=;
+        b=pWC2txcknm8XisKoi5wp28KAnDut4HNw4lWqooRjuuUiWnJLfvIPVVPK3lud8xZ5pv
+         FU7YO+FaQeeGvpshoipoRrUis6D4WLyTvicHEwe1i+RJO+WNvV0itFhQd5KhhzK3GdcB
+         bDVwd5F+9b9ocZ2BV1AMCzlaD1EKyoXwZmR+RlI8W7YIN9Jplx/bVk6WkMZhUoSIt6IS
+         Av4D1laPySBCDrdHWEsWcApoSTS/AuT1Y1LfI/QH12N2j1t+tbf0ewyIJq77B/DjI3rU
+         FwFNQmC5ZPAuY/TOHxpQQ3gZ4tFiOtXQB7ZI6WjjVz8Z9beD6fCZCuYLyy3WeP7SQXTz
+         LSNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=QO4mH0sRxPyQGNCIKyIZgqsmfxtVKcRsCgZfPvqhBY0=;
-        b=Br6nw+Sj+GMR0Z6wpMKzHVwAyNPAMQdZ7BcDBmLQEq0CRIM80+BYnVLpmp3FSnJqXQ
-         lw1QhYzqWQXTijSlitP8Zp9arOjZbTdkDXnuW5ByKr4VVHdFEfG3sLHsM0Ye36tlD230
-         ODlwaBxwsUjoyZs2YIaL+Hn05GwJpmbhwOFKOu0fi8eWqQmzmq0o7LN9LSQH/TeT95QM
-         s3kz/WMUvGMnrx0w8eJ5y5HL0vKQxZSwYgeNjm/vrBjpQJIZqU/cYacooI2lvnJ0VVNE
-         IllTEtc+3CZnvpvywVFy5G2YnaNywpb1DVThILN4y+3L0iYmf3aMiAvtBTD0hY5IuGiU
-         SEGQ==
-X-Gm-Message-State: ANoB5pmfA1WAq2N4keZWNn4Z/XDbLaWH6DCsnCPiKG7+xSiyIZXyCvom
-        0k1B0HV3sK7g0zuERg+EbrsM4uL+S27B0w==
-X-Google-Smtp-Source: AA0mqf5HAiD8HPCF7e9nt9sXdLMEtJScvoO12Vd7Xmy8fGQtOvrcFV7YYc8nFRF+LSFaCdYYFAjvtoZxD3Vz0g==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:90a:fa8b:b0:213:2708:8dc3 with SMTP
- id cu11-20020a17090afa8b00b0021327088dc3mr108099pjb.2.1668729614651; Thu, 17
- Nov 2022 16:00:14 -0800 (PST)
-Date:   Thu, 17 Nov 2022 16:00:12 -0800
-In-Reply-To: <Y3auRnJqHq3pMKAe@coredump.intra.peff.net>
-Mime-Version: 1.0
-References: <pull.1382.git.git.1668706274099.gitgitgadget@gmail.com>
- <Y3aBzbzub7flQyca@coredump.intra.peff.net> <221117.86h6yxgy7b.gmgdl@evledraar.gmail.com>
- <Y3auRnJqHq3pMKAe@coredump.intra.peff.net>
-Message-ID: <kl6lsfihgmib.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH] object-file: use real paths when adding alternates
-From:   Glen Choo <chooglen@google.com>
-To:     Jeff King <peff@peff.net>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Cc:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5xLrLPDchErdqWFNUwK84wUDrcBpNQQsInSWGbXvb+U=;
+        b=QcPTxLlupGQK2PO17uq8ji3ykAmGMovpxvVqKder5adyO/xHel/Cim7q8RdxCF/oCi
+         Hadx0lmHOMRssV6jnOWLr1j6oDSZpXBSeu0zX26iTiPyNRTVlFk5wlqhGQaU7nNi8EJE
+         ZrIhnWPbVQ8al4azRbIZw40nXn6+9bmObA980o1opTIvfyftCBBe4kkA42scT1XdaTNp
+         mqQNvpmsb9Z/ZGx0mncnPACcQcnS84oWLu6NkYLwHCuePaOtygqtBujNjY97X7/2wMgB
+         xC5E5CYxwbZ25Zvm1c7GInRZZ+qXLO+bIx0Er86/nH5qWqFRDq3ey5zpaySSSL8grUf/
+         pnyg==
+X-Gm-Message-State: ANoB5plvKDFCdpG1V+0Rw4gX4c0YzjACuB28oPGKDLP/B5rPcVYwmSJ5
+        Wfkv38FP3MC65lmRxLDVeKw=
+X-Google-Smtp-Source: AA0mqf5vnRyIYhek2sARJ9sM16ld05KF/eYqG9J1mfVlaHxs+o+3Yi9dKLfqKXjwKhvMO3TDLAVkdg==
+X-Received: by 2002:a17:906:547:b0:7ad:9028:4b17 with SMTP id k7-20020a170906054700b007ad90284b17mr4127908eja.366.1668732943053;
+        Thu, 17 Nov 2022 16:55:43 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id 17-20020a170906329100b007aa3822f4d2sm1037018ejw.17.2022.11.17.16.55.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Nov 2022 16:55:42 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1ovpfR-00589y-30;
+        Fri, 18 Nov 2022 01:55:41 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Tan <jonathantanmy@google.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/2] parse_object(): check on-disk type of suspected blob
+Date:   Fri, 18 Nov 2022 01:36:23 +0100
+References: <Y3a3qcqNG8W3ueeb@coredump.intra.peff.net>
+ <Y3a4jKzsHSooYFqj@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <Y3a4jKzsHSooYFqj@coredump.intra.peff.net>
+Message-ID: <221118.86cz9lgjxu.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> On Thu, Nov 17, 2022 at 08:41:44PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+On Thu, Nov 17 2022, Jeff King wrote:
+
+> I reworked the conditional a bit so that instead of:
 >
->> This probably isn't worth it, but I wondered if this wouldn't be easier
->> if we pulled that memory management into the caller [...]
-> [......] But crossing a function boundary to me introduces way too many
-> questions in somebody reading the code (like "is pathbuf supposed to
-> have something in it?") to make it worth doing here.
+>   if ((suspected_blob && oid_object_info() == OBJ_BLOB)
+>       (no_clue && oid_object_info() == OBJ_BLOB)
+>
+> we have the simpler:
+>
+>   if ((suspected_blob || no_clue) && oid_object_info() == OBJ_BLOB)
+> [...]
+> @@ -286,8 +286,8 @@ struct object *parse_object_with_flags(struct repository *r,
+>  			return &commit->object;
+>  	}
+>  
+> -	if ((obj && obj->type == OBJ_BLOB && repo_has_object_file(r, oid)) ||
+> -	    (!obj && oid_object_info(r, oid, NULL) == OBJ_BLOB)) {
+> +	if ((!obj || (obj && obj->type == OBJ_BLOB)) &&
+> +	    oid_object_info(r, oid, NULL) == OBJ_BLOB) {
+>  		if (!skip_hash && stream_object_signature(r, repl) < 0) {
+>  			error(_("hash mismatch %s"), oid_to_hex(oid));
+>  			return NULL;
 
-Thanks, both :)
+But why:
 
-I think the loss of readability is enough for me to hold off on this
-suggestion, but I don't mind reviewing cleanup patches on top of this.
+	if ((!x || (x && x->m)) && ...)
+
+Instead of:
+
+	if ((!x || x->m)) && ...)
+
+If "!obj" is false then "obj" must be non-NULL, so you don't need to
+check it again and can lose the "obj &&".
+
+> [...]
+> So this fixes one of the lingering expect_failure cases from 0616617c7e
+> (t: introduce tests for unexpected object types, 2019-04-09).  That test
+> works by peeling a tag that claims to point to a blob (triggering us to
+> create the struct), but really points to something else, which we later
+> discover when we call parse_object() as part of the actual traversal).
+> Prior to this commit, we'd quietly check the sha1 and mark the blob as
+> "parsed". Now we correctly complain about the mismatch.
+
+I applied this on top of "master", and adjusted your test to be this
+instead:
+
+	test_expect_success 'traverse unexpected non-blob tag (lone)' '
+		cat >expect <<-EOF &&
+		error: object $commit is a blob, not a commit
+		fatal: bad object $commit
+		EOF
+		test_must_fail git rev-list --objects $tag >out 2>actual &&
+		test_must_be_empty out &&
+		test_cmp expect actual
+	'
+
+Which passes, showing that we're still not correctly identifying it, but
+we are doing it for the purposes of erroring out, but the incorrect type
+persists.
+
+Now, this all does seem quite familiar... :) :
+https://lore.kernel.org/git/patch-10.11-a84f670ac24-20210328T021238Z-avarab@gmail.com/
+
+I.e. that's the rest of the fix for this issue. I applied this change on
+my local branch with that, and they combine nicely. the "test_must_fail"
+here works as intended, *and* we'll correctly report & store the type.
+
+> As an aside, I found the "this test is marked as success but testing the
+> wrong thing" pattern here confusing to deal with (since I had to dig in
+> history to understand what was going on and what the test was _supposed_
+> to say).
+>
+> It comes from cf10c5b4cf (rev-list tests: don't hide abort() in
+> "test_expect_failure", 2022-03-07). I'm skeptical that it was worth
+> switching those tests for leak detection purposes.
+
+It's not just for leak detection purposes that it was a good idea to
+switch it away from test_expect_failure, but also that we've been
+ensuring that this didn't turn into a segfault all this time by not
+using "test_expect_failure".
+
+> But more importantly, it looks like pw/test-todo would provide us with a
+> much nicer pattern there. It seems to be stalled on review, so let's see
+> if we can get that moving again.
+
+The "TODO (should fail!)" didn't stand out? But yeah, having a "todo" or
+"test_expect_todo" or "test_expect_failure" not suck would be nice.
+
+FWIW I think
+https://lore.kernel.org/git/221006.86v8owr986.gmgdl@evledraar.gmail.com/
+outlines a good way forward for it that I think should make everyone
+happy.
+
+> diff --git a/t/t6102-rev-list-unexpected-objects.sh b/t/t6102-rev-list-unexpected-objects.sh
+> index 4a9a4436e2..9350b5fd2c 100755
+> --- a/t/t6102-rev-list-unexpected-objects.sh
+> +++ b/t/t6102-rev-list-unexpected-objects.sh
+> @@ -121,8 +121,8 @@ test_expect_success 'setup unexpected non-blob tag' '
+>  	tag=$(git hash-object -w --literally -t tag broken-tag)
+>  '
+>  
+> -test_expect_success 'TODO (should fail!): traverse unexpected non-blob tag (lone)' '
+> -	git rev-list --objects $tag
+> +test_expect_success 'traverse unexpected non-blob tag (lone)' '
+> +	test_must_fail git rev-list --objects $tag
+>  '
+
+I think you'll either want the test_cmp I noted above, or to do that in
+a subsequent test_expect_failure.
+
+I know that your stance is that you prefer not to "test the bad
+behavior" as it were. Personally I thought an all-caps TODO comment
+might make it less confusing, but anyway.
+
+In this case your commit message claims you're happy with the end
+result, so I think you'd want to test what we actually emit on stderr,
+as it's quite ... unintuative.
+
+Or, which I think probably makes more sense, add that as a subsequent
+test_expect_failure or whatever. FWIW this somewhat un-idiomatic pattern
+will get around the current caveats with it:
+
+	test_expect_success .... '
+		... >actual.non-blob-tag
+	'
+	test_lazy_prereq HAVE_NON_BLOB_TAG 'test -e actual.non-blob-tag'
+	test_expect_failure HAVE_NON_BLOB_TAG '...' '
+		cat >expect.non-blob-tag <<-\EOF &&
+		...
+		EOF
+		test_cmp expect.non-blob-tag actual.non-blob-tag
+	'
+
+I.e. peel off the 'test_cmp" that should have a known-good state from
+the already-good status code.
