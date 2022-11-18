@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6936AC433FE
-	for <git@archiver.kernel.org>; Fri, 18 Nov 2022 11:18:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4693C4332F
+	for <git@archiver.kernel.org>; Fri, 18 Nov 2022 11:18:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241663AbiKRLSz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Nov 2022 06:18:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53698 "EHLO
+        id S241271AbiKRLS5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Nov 2022 06:18:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241181AbiKRLSl (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S241287AbiKRLSl (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 18 Nov 2022 06:18:41 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8837F15A38
-        for <git@vger.kernel.org>; Fri, 18 Nov 2022 03:18:39 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id m22so12172311eji.10
-        for <git@vger.kernel.org>; Fri, 18 Nov 2022 03:18:39 -0800 (PST)
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50F6717E26
+        for <git@vger.kernel.org>; Fri, 18 Nov 2022 03:18:40 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id vv4so2936767ejc.2
+        for <git@vger.kernel.org>; Fri, 18 Nov 2022 03:18:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AA6/mZb7+6bN66lK8hMNUdrqBO7YwIM1KUWly6kRs7M=;
-        b=j0/qYKsUrlk6BcZclkTrpaBpGfXS/dZyjFbebc8uQyDMYO+swPnBEa9mpQnglhwQL5
-         sEaDnot0UFG5kAMeqAT4FUwFT0WzmRIfeLY/SE+YlGzbTuufK8u0VXPG8tKHj38Avohx
-         dor0dtNqKMf2mP99SMhAwazPtdBWEjCyk+W/b3BbaWt8mCM+1y9cR9EwDNMcRa4tag0n
-         HotS7Ag33VaBMCjKogTuPGuU7Ba0GfoeEjb/q/5mgLBzYqZ3SSvP2sGB0obfGEJ6L2Ra
-         N9DdIRNrYGZP4MUFh3wTKMxU8DD0ijw6K3ybvA4rR4DqgBR1Q81M7tNOc4uutIzc8ORM
-         3D5g==
+        bh=EAX/X9OmbrYFqBqdE9BX3H7MVNafDIY286wBwcUaP/0=;
+        b=HEewrrrY3n3yjqIQXjwTH7CdTZAm8RDa+Q3tB7kBuR+DNUeS1BYuRUToleAXmxD3PV
+         f1mgMLfqkSoQzB62cVn0eDABF2iOHHU1Mmb3mogfvqgG98/jRPZQIqVSGQ1gueNwdTrg
+         YdJlK2q0Xp7y31HzvvNbgZpkciQHePydaEXhRePgusFdyTU9SfmqkSC1cUex1NsSWcnT
+         l/gqxKp/2RI1CvoSicAklFcb/WoDYZflShHDKvyUjcpaIbMX+fjowO7gyGFxjWBErV6t
+         oqofexmijYV+Gv6QP+ZfxWKPs9nR1RH8rdRTc8+feNbcUUnhomwMIxynLio+gvCABogr
+         bqig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AA6/mZb7+6bN66lK8hMNUdrqBO7YwIM1KUWly6kRs7M=;
-        b=lmPKEC0b6FTg3dKKJPY2FVkiClwKyuHNiEuLTNaAbbCmPJnKuc9949oHUrviRjOhbX
-         63Ewuh9XO0mwvUychAfa5LM51p3+gAZjWsyTbVvH0qkTAONLsLxl4IQOPA1lvBe33nge
-         Mz++FLzB0dS8MzmLq1EkFV5BAYWwCgUziJGxdQjubn51sDjbMWiNCSSXxT2v9u6UbVHR
-         ZcPuR/kMU4aTGQs7UdUcUfLPJgDAgrWzlSiP7SsiIejtFCMzmFV8zSY5qj3+FOSm660l
-         JPyo+k3nnXa+KEoH2HhVVNsOMjw9bfy/pQ41QuGuXVl9sN6UXbuhBgrTNe8B8erUBa8B
-         lPgg==
-X-Gm-Message-State: ANoB5pkanZkX1ZT7HUeYxeV7vOJRm0xfTdlvKFUcF4qMZqOa7uskzpjF
-        uoQaDutsOZMKM1NVS7OiCagkgc2ArL1z8w==
-X-Google-Smtp-Source: AA0mqf5ktEP4m113XidwujbF9aYJlqtdCqQRJnal1gxNZuyfIJinTS5BBZz1S71OBdo1dFbgLPT+4Q==
-X-Received: by 2002:a17:906:1c52:b0:780:bd74:f960 with SMTP id l18-20020a1709061c5200b00780bd74f960mr5524260ejg.701.1668770317716;
-        Fri, 18 Nov 2022 03:18:37 -0800 (PST)
+        bh=EAX/X9OmbrYFqBqdE9BX3H7MVNafDIY286wBwcUaP/0=;
+        b=l7C7db4Kc9YOIaf/ATlZntDlnKQdiQtgLdgDRQvLwkrvRsB/D2MciXHLwTpKymCqtI
+         EVikIrdOgEQn5h3R0gWpR7axZu7yBmDJfMZaRZBnInouwr98shC89Y0MY7SEbl60Vxa4
+         866qUqNbVfyplBCJCQ520GAGbr3sQYsoGXgOg3C2zPS4DT3nNKf0iCHScQihddU3zTnC
+         hjIGc4vidKdvU8MgOJLAfe6/pdwQpK6MrM2zIcR6Kc0zZ0UT5y7sJ15LyBRRVgPdalY6
+         GaA/h0/4Xg2wKRPrhCnDw06QLKdTJ/85HKOp8cdSsTDTkEsY8i0jdxrKoGuh3UcrEKsp
+         w5aQ==
+X-Gm-Message-State: ANoB5pkOUZf5M0o14H8BqlflIchzoSr+BHN39o0ihDZixrgu7iO6FZor
+        e7tNzMfRe/MtMZPpbWNqTQ6J3lukQLJ/jQ==
+X-Google-Smtp-Source: AA0mqf6tRdhHnvvJw78vRlRtqE8y1689YNAzpTV8H3B5MZxL9mJOVzeMQCQL7ZxeI+C8Jp7lIhWXKA==
+X-Received: by 2002:a17:907:204c:b0:7ae:63b8:d688 with SMTP id pg12-20020a170907204c00b007ae63b8d688mr5658387ejb.222.1668770319530;
+        Fri, 18 Nov 2022 03:18:39 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id fy20-20020a1709069f1400b00788c622fa2csm1558955ejc.135.2022.11.18.03.18.36
+        by smtp.gmail.com with ESMTPSA id fy20-20020a1709069f1400b00788c622fa2csm1558955ejc.135.2022.11.18.03.18.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Nov 2022 03:18:37 -0800 (PST)
+        Fri, 18 Nov 2022 03:18:38 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v9 05/12] merge-index: migrate to parse_options() API
-Date:   Fri, 18 Nov 2022 12:18:22 +0100
-Message-Id: <patch-v9-05.12-845f9b0cc19-20221118T110058Z-avarab@gmail.com>
+Subject: [PATCH v9 07/12] merge-index i18n: mark die() messages for translation
+Date:   Fri, 18 Nov 2022 12:18:24 +0100
+Message-Id: <patch-v9-07.12-04c2bae9e68-20221118T110058Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1511.gcdcff1f1dc2
 In-Reply-To: <cover-v9-00.12-00000000000-20221118T110058Z-avarab@gmail.com>
 References: <20220809185429.20098-1-alban.gruin@gmail.com> <cover-v9-00.12-00000000000-20221118T110058Z-avarab@gmail.com>
@@ -72,165 +72,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Migrate the "merge-index" command to the parse_options() API, a
-preceding commit added tests for the existing behavior.
-
-In a subsequent commit we'll adjust the behavior to be more consistent
-with how most other commands work, but for now let's take pains to
-preserve it as-is. We need to e.g. call parse_options() twice now, as
-the "-a" option is currently only understood after "<merge-program>".
+Mark the die() messages for translation with _(). We don't rely on the
+specifics of these messages as plumbing, so they can be safely
+translated.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/merge-index.c  | 71 ++++++++++++++++++++++++++----------------
- git.c                  |  2 +-
- t/t6060-merge-index.sh | 10 +++---
- 3 files changed, 51 insertions(+), 32 deletions(-)
+ builtin/merge-index.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/builtin/merge-index.c b/builtin/merge-index.c
-index 1a5a64afd2a..3bd0790465e 100644
+index 0b06c69354b..ee48587a8fb 100644
 --- a/builtin/merge-index.c
 +++ b/builtin/merge-index.c
-@@ -1,5 +1,6 @@
- #define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
-+#include "parse-options.h"
- #include "run-command.h"
+@@ -16,7 +16,7 @@ static int merge_entry(int pos, const char *path)
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
  
- static const char *pgm;
-@@ -72,7 +73,26 @@ static void merge_all(void)
+ 	if (pos >= active_nr)
+-		die("'%s' is not in the cache", path);
++		die(_("'%s' is not in the cache"), path);
+ 	found = 0;
+ 	do {
+ 		const struct cache_entry *ce = active_cache[pos];
+@@ -31,7 +31,7 @@ static int merge_entry(int pos, const char *path)
+ 		arguments[stage + 4] = ownbuf[stage];
+ 	} while (++pos < active_nr);
+ 	if (!found)
+-		die("'%s' is not in the cache", path);
++		die(_("'%s' is not in the cache"), path);
  
- int cmd_merge_index(int argc, const char **argv, const char *prefix)
- {
--	int i, force_file = 0;
-+	int all = 0;
-+	const char * const usage[] = {
-+		N_("git merge-index [-o] [-q] <merge-program> (-a | ([--] <file>...))"),
-+		NULL
-+	};
-+#define OPT__MERGE_INDEX_ALL(v) \
-+	OPT_BOOL('a', NULL, (v), \
-+		 N_("merge all files in the index that need merging"))
-+	struct option options[] = {
-+		OPT_BOOL('o', NULL, &one_shot,
-+			 N_("don't stop at the first failed merge")),
-+		OPT__QUIET(&quiet, N_("be quiet")),
-+		OPT__MERGE_INDEX_ALL(&all), /* include "-a" to show it in "-bh" */
-+		OPT_END(),
-+	};
-+	struct option options_prog[] = {
-+		OPT__MERGE_INDEX_ALL(&all),
-+		OPT_END(),
-+	};
-+#undef OPT__MERGE_INDEX_ALL
+ 	strvec_pushv(&cmd.args, arguments);
+ 	if (run_command(&cmd)) {
+@@ -39,7 +39,7 @@ static int merge_entry(int pos, const char *path)
+ 			err++;
+ 		else {
+ 			if (!quiet)
+-				die("merge program failed");
++				die(_("merge program failed"));
+ 			exit(1);
+ 		}
+ 	}
+@@ -130,6 +130,6 @@ int cmd_merge_index(int argc, const char **argv, const char *prefix)
+ 			merge_one_path(argv[i]);
  
- 	/* Without this we cannot rely on waitpid() to tell
- 	 * what happened to our children.
-@@ -80,38 +100,35 @@ int cmd_merge_index(int argc, const char **argv, const char *prefix)
- 	signal(SIGCHLD, SIG_DFL);
- 
- 	if (argc < 3)
--		usage("git merge-index [-o] [-q] <merge-program> (-a | ([--] <file>...))");
-+		usage_with_options(usage, options);
-+
-+	/* Option parsing without <merge-program> options */
-+	argc = parse_options(argc, argv, prefix, options, usage,
-+			     PARSE_OPT_STOP_AT_NON_OPTION);
-+	if (all)
-+		usage_msg_optf(_("'%s' option can only be provided after '<merge-program>'"),
-+			      usage, options, "-a");
-+	/* <merge-program> and its options */
-+	if (!argc)
-+		usage_msg_opt(_("need a <merge-program> argument"), usage, options);
-+	pgm = argv[0];
-+	argc = parse_options(argc, argv, prefix, options_prog, usage, 0);
-+	if (argc && all)
-+		usage_msg_opt(_("'-a' and '<file>...' are mutually exclusive"),
-+			      usage, options);
- 
- 	read_cache();
- 
- 	/* TODO: audit for interaction with sparse-index. */
- 	ensure_full_index(&the_index);
- 
--	i = 1;
--	if (!strcmp(argv[i], "-o")) {
--		one_shot = 1;
--		i++;
--	}
--	if (!strcmp(argv[i], "-q")) {
--		quiet = 1;
--		i++;
--	}
--	pgm = argv[i++];
--	for (; i < argc; i++) {
--		const char *arg = argv[i];
--		if (!force_file && *arg == '-') {
--			if (!strcmp(arg, "--")) {
--				force_file = 1;
--				continue;
--			}
--			if (!strcmp(arg, "-a")) {
--				merge_all();
--				continue;
--			}
--			die("git merge-index: unknown option %s", arg);
--		}
--		merge_one_path(arg);
--	}
-+
-+	if (all)
-+		merge_all();
-+	else
-+		for (size_t i = 0; i < argc; i++)
-+			merge_one_path(argv[i]);
-+
  	if (err && !quiet)
- 		die("merge program failed");
+-		die("merge program failed");
++		die(_("merge program failed"));
  	return err;
-diff --git a/git.c b/git.c
-index 6662548986f..83696fd8b4a 100644
---- a/git.c
-+++ b/git.c
-@@ -560,7 +560,7 @@ static struct cmd_struct commands[] = {
- 	{ "merge", cmd_merge, RUN_SETUP | NEED_WORK_TREE },
- 	{ "merge-base", cmd_merge_base, RUN_SETUP },
- 	{ "merge-file", cmd_merge_file, RUN_SETUP_GENTLY },
--	{ "merge-index", cmd_merge_index, RUN_SETUP | NO_PARSEOPT },
-+	{ "merge-index", cmd_merge_index, RUN_SETUP },
- 	{ "merge-ours", cmd_merge_ours, RUN_SETUP | NO_PARSEOPT },
- 	{ "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
- 	{ "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
-diff --git a/t/t6060-merge-index.sh b/t/t6060-merge-index.sh
-index edc03b41ab9..6c59e7bc4e5 100755
---- a/t/t6060-merge-index.sh
-+++ b/t/t6060-merge-index.sh
-@@ -22,9 +22,10 @@ test_expect_success 'usage: 2 arguments' '
- 
- test_expect_success 'usage: -a before <program>' '
- 	cat >expect <<-\EOF &&
--	fatal: git merge-index: b not in the cache
-+	fatal: '\''-a'\'' option can only be provided after '\''<merge-program>'\''
- 	EOF
--	test_expect_code 128 git merge-index -a b program >out 2>actual &&
-+	test_expect_code 129 git merge-index -a b program >out 2>actual.raw &&
-+	grep "^fatal:" actual.raw >actual &&
- 	test_must_be_empty out &&
- 	test_cmp expect actual
- '
-@@ -33,9 +34,10 @@ for opt in -q -o
- do
- 	test_expect_success "usage: $opt after -a" '
- 		cat >expect <<-EOF &&
--		fatal: git merge-index: unknown option $opt
-+		fatal: '\''-a'\'' option can only be provided after '\''<merge-program>'\''
- 		EOF
--		test_expect_code 128 git merge-index -a $opt >out 2>actual &&
-+		test_expect_code 129 git merge-index -a $opt >out 2>actual.raw &&
-+		grep "^fatal:" actual.raw >actual &&
- 		test_must_be_empty out &&
- 		test_cmp expect actual
- 	'
+ }
 -- 
 2.38.0.1511.gcdcff1f1dc2
 
