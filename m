@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 847D0C43217
-	for <git@archiver.kernel.org>; Sat, 19 Nov 2022 13:08:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45103C4332F
+	for <git@archiver.kernel.org>; Sat, 19 Nov 2022 13:08:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233903AbiKSNIC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Nov 2022 08:08:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55772 "EHLO
+        id S233930AbiKSNIF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Nov 2022 08:08:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233670AbiKSNH4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Nov 2022 08:07:56 -0500
-Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70C2990596
-        for <git@vger.kernel.org>; Sat, 19 Nov 2022 05:07:54 -0800 (PST)
-Received: by mail-ed1-x531.google.com with SMTP id s5so10557790edc.12
-        for <git@vger.kernel.org>; Sat, 19 Nov 2022 05:07:54 -0800 (PST)
+        with ESMTP id S233631AbiKSNH5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Nov 2022 08:07:57 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25A2692B53
+        for <git@vger.kernel.org>; Sat, 19 Nov 2022 05:07:56 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id i10so19137365ejg.6
+        for <git@vger.kernel.org>; Sat, 19 Nov 2022 05:07:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7vMPKAIJbk5wrO+LupTb1Mf59IgCyh6iqeI8EX4ox8U=;
-        b=A3/qZp2KxWTBLw9C2g/4h0k78dKlHXJ16IZgqu1gt+dOsu4lfR9eUj6crlhFln/nUo
-         PMEyhy0Ti/fuwKzGVSAVchw+4kxwnymHmyW6GC3fIeeGj0WhR3cQKXGI+Ztu1zt4MaHQ
-         NIOd4oHnZASIzUr639ECkP1/ClZIe6Zuv3PJIGLjGZC7Ho0cAvurwmOIvXnxpnBG5ebf
-         93KEgvqPwvh+dYpIAXa92Xb3w2Cg6UL/+W6zD59oMbanE9Rjndf7ouYBBVXlp5K6AYgk
-         EpCyPXbToBSz9ga6vDdHf1Jr8jLN0gByGW9X70M5JA7q3Au+KEZ1e+ZtRckwXtbFS9so
-         Qodw==
+        bh=uQlaos3rneUa9QDwETVQPfjWt7Upj4N6f5RRZ0D8brE=;
+        b=ASO9evO5fN1x6JULdU4/mgbfuKN005xu0NfcmE4Z577pJV/zDx4skOzFN4pM5glY30
+         DkFnU/zG4psuWRMOMszXb90Ttq6d3XzsGGXOA5+MCdVx1Ghvp+PVi659mdjTJ3Y52FzZ
+         LTE+1D+hpE1uIPtHEDippvewbdgRS9X1K9X8HdpQpCCTyL3RAnFKn63hPpI85Y+tJKTC
+         P5F8rz8BaNfjUprQbcR0ka2uiG2eh7oSKl9dB2IQCwZOKh7K8DnNuefbQRDjrLCuHDSr
+         d3AjDHLsj8BJ+lRx2WTBQBbZp2wUKTOvqpf6EpPT9CyWcPHfXm34FQ5ablHPDwkKG4xV
+         ZQXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7vMPKAIJbk5wrO+LupTb1Mf59IgCyh6iqeI8EX4ox8U=;
-        b=rMF812y1Dfsg5kwNOnb7ysenFIw69ShPb40wa4X/aV+3OXF/ObOtR1j1jyQLyegd4n
-         1YSFH5JaAO+92Wvd6G6vNkcmaveQH78gEyAZXDO9ayhryqxUvt4YR0uxLdVwuYHzUnr3
-         I80CrXlkBpkbS1Nb5Ej9XFde7Zo0vL1jtREixgLrE8Iri/Kk1op/QIrRQtI0c5HcPsWV
-         Gasf7N+ednK19iHBQCpxdtjMVkC5W79by14EBeB6WsKl0Ht1vTtdj/2IrAVq0rPTWzij
-         /rdbTpLXAtCro9vUMD0siiNptyLRbkF/Av4LL/QUErzu949NdAUc/z9UapyNPAScs9Qr
-         jT7Q==
-X-Gm-Message-State: ANoB5pnBSQj/I2Pd5RRUYwNVElp7sKL2M3OCXjZCMpTikhtmmKeXvSAW
-        83t5ba+JYaCnz/Go/09fgahsvfQvzHSCiQ==
-X-Google-Smtp-Source: AA0mqf5XZI7uZUWfb4cSYo0ubsN7AHu1fhMXpFynB2f7i7wy0ttYZSQUFrXgxZ83Egd4HoWDkhKwnw==
-X-Received: by 2002:aa7:d7d3:0:b0:469:906:2ece with SMTP id e19-20020aa7d7d3000000b0046909062ecemr6504256eds.342.1668863272519;
-        Sat, 19 Nov 2022 05:07:52 -0800 (PST)
+        bh=uQlaos3rneUa9QDwETVQPfjWt7Upj4N6f5RRZ0D8brE=;
+        b=k4cN47R+xyXdYIMoE2Ejq9PxVeHCt+PuYUPGDeiwy/BZUbm9yjPfKex6uKYwL9KfyI
+         LzjlxBV9yCwhOEp90u1BPr5zBbBEmET4KIZaiOZZqdzTkvNTqrDJXuZN/qGItl6icWI7
+         rP12sTSKumC2JnRcTJFD+98LHofbIapMOPsfSzh4ijZ31cIvjSPRZ4HNd8qwG424ODsR
+         mPuDc8kmNvKDqC7s8PEiQIoAAzb+m5+PIRYTklcpiJx8nbGQWRubyE+WAV/UvYkZ8/u+
+         8sw9xyuofszc0VhE7dF5q3GNWFBsB66mMQR8ziO0q9ESz9O9sv0gPVZ1UWv43LN7Of6S
+         BeSA==
+X-Gm-Message-State: ANoB5plSXJtbQxWRix+XrjKnHrO0Q6Ttg5kmFV+7VYR9H8PrXWqLX/gX
+        hJEVRfygg2hFfTJe3+vNI0rnaHiFjfYrhw==
+X-Google-Smtp-Source: AA0mqf4z79xZpcXICwSo0ZDHPyA7HCF9at7Hnmq9IC9ya5CXBoAtKwttonttU3IdsmXU6jdlUTet3A==
+X-Received: by 2002:a17:906:1146:b0:78d:9f02:5458 with SMTP id i6-20020a170906114600b0078d9f025458mr9573695eja.753.1668863274297;
+        Sat, 19 Nov 2022 05:07:54 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id ch28-20020a0564021bdc00b0045d74aa401fsm2923802edb.60.2022.11.19.05.07.51
+        by smtp.gmail.com with ESMTPSA id ch28-20020a0564021bdc00b0045d74aa401fsm2923802edb.60.2022.11.19.05.07.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Nov 2022 05:07:51 -0800 (PST)
+        Sat, 19 Nov 2022 05:07:53 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 06/11] cocci & cache.h: apply a selection of "pending" index-compatibility
-Date:   Sat, 19 Nov 2022 14:07:33 +0100
-Message-Id: <patch-v2-06.11-6849233bf2b-20221119T125551Z-avarab@gmail.com>
+Subject: [PATCH v2 08/11] cocci: apply "pending" index-compatibility to "t/helper/*.c"
+Date:   Sat, 19 Nov 2022 14:07:35 +0100
+Message-Id: <patch-v2-08.11-6d57a383623-20221119T125551Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.38.0.1509.g9445af83948
 In-Reply-To: <cover-v2-00.11-00000000000-20221119T125550Z-avarab@gmail.com>
 References: <cover-00.12-00000000000-20221118T112205Z-avarab@gmail.com> <cover-v2-00.11-00000000000-20221119T125550Z-avarab@gmail.com>
@@ -69,318 +69,208 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Apply a selection of rules in "index-compatibility.pending.cocci"
-tree-wide, and in doing so migrate them to
-"index-compatibility.cocci".
-
-As in preceding commits the only manual changes here are the macro
-removals in "cache.h", and the update to the '*.cocci" rules. The rest
-of the C code changes are the result of applying those updated rules.
-
-Move rules for some rarely used cache compatibility macros from
-"index-compatibility.pending.cocci" to "index-compatibility.cocci" and
-apply them.
+Apply the "index-compatibility.pending.cocci" rule to the "t/helper/*"
+directory, a subsequent commit will extend cache.h to further narrow
+down the use of "USE_THE_INDEX_COMPATIBILITY_MACROS" in this area.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/checkout.c                            |  5 +++--
- builtin/commit.c                              |  2 +-
- builtin/merge.c                               |  2 +-
- builtin/mv.c                                  |  4 +++-
- builtin/read-tree.c                           |  2 +-
- builtin/reset.c                               |  5 +++--
- builtin/rm.c                                  |  4 ++--
- builtin/update-index.c                        | 22 +++++++++----------
- cache.h                                       |  5 -----
- contrib/coccinelle/index-compatibility.cocci  | 15 +++++++++++++
- .../index-compatibility.pending.cocci         | 15 -------------
- 11 files changed, 40 insertions(+), 41 deletions(-)
+ t/helper/test-cache-tree.c           |  2 +-
+ t/helper/test-dump-cache-tree.c      |  2 +-
+ t/helper/test-dump-untracked-cache.c |  2 +-
+ t/helper/test-fast-rebase.c          |  2 +-
+ t/helper/test-lazy-init-name-hash.c  | 20 ++++++++++----------
+ t/helper/test-read-cache.c           |  4 ++--
+ t/helper/test-scrap-cache-tree.c     |  4 ++--
+ t/helper/test-write-cache.c          |  5 +++--
+ 8 files changed, 21 insertions(+), 20 deletions(-)
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index aa610b274e3..afbd71764a3 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -160,7 +160,8 @@ static int update_some(const struct object_id *oid, struct strbuf *base,
- 		}
- 	}
+diff --git a/t/helper/test-cache-tree.c b/t/helper/test-cache-tree.c
+index 93051b25f56..5514afdfe7a 100644
+--- a/t/helper/test-cache-tree.c
++++ b/t/helper/test-cache-tree.c
+@@ -30,7 +30,7 @@ int cmd__cache_tree(int argc, const char **argv)
  
--	add_cache_entry(ce, ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
-+	add_index_entry(&the_index, ce,
-+			ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
- 	return 0;
- }
+ 	argc = parse_options(argc, argv, NULL, options, test_cache_tree_usage, 0);
  
-@@ -744,7 +745,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 	if (read_cache_preload(NULL) < 0)
- 		return error(_("index file corrupt"));
+-	if (read_cache() < 0)
++	if (repo_read_index(the_repository) < 0)
+ 		die(_("unable to read index file"));
  
--	resolve_undo_clear();
-+	resolve_undo_clear_index(&the_index);
- 	if (opts->new_orphan_branch && opts->orphan_from_empty_tree) {
- 		if (new_branch_info->commit)
- 			BUG("'switch --orphan' should never accept a commit as starting point");
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 985503d43a6..10a827b1f4a 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -305,7 +305,7 @@ static void add_remove_files(struct string_list *list)
- 			if (add_to_index(&the_index, p->string, &st, 0))
- 				die(_("updating files failed"));
- 		} else
--			remove_file_from_cache(p->string);
-+			remove_file_from_index(&the_index, p->string);
- 	}
- }
+ 	oidcpy(&oid, &the_index.cache_tree->oid);
+diff --git a/t/helper/test-dump-cache-tree.c b/t/helper/test-dump-cache-tree.c
+index 8d88111b357..4bf8bc3df6e 100644
+--- a/t/helper/test-dump-cache-tree.c
++++ b/t/helper/test-dump-cache-tree.c
+@@ -62,7 +62,7 @@ int cmd__dump_cache_tree(int ac, const char **av)
+ 	int ret;
  
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 89fdac24e40..2046992d75a 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1397,7 +1397,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		else
- 			die(_("You have not concluded your cherry-pick (CHERRY_PICK_HEAD exists)."));
- 	}
--	resolve_undo_clear();
-+	resolve_undo_clear_index(&the_index);
+ 	setup_git_directory();
+-	if (read_cache() < 0)
++	if (repo_read_index(the_repository) < 0)
+ 		die("unable to read index file");
+ 	istate = the_index;
+ 	istate.cache_tree = another;
+diff --git a/t/helper/test-dump-untracked-cache.c b/t/helper/test-dump-untracked-cache.c
+index 99010614f6d..ffe34736e53 100644
+--- a/t/helper/test-dump-untracked-cache.c
++++ b/t/helper/test-dump-untracked-cache.c
+@@ -51,7 +51,7 @@ int cmd__dump_untracked_cache(int ac, const char **av)
+ 	xsetenv("GIT_CONFIG_VALUE_0", "keep", 1);
  
- 	if (option_edit < 0)
- 		option_edit = default_edit_option();
-diff --git a/builtin/mv.c b/builtin/mv.c
-index df6157fd6b5..6f94c3b9238 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -471,7 +471,9 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
- 		pos = cache_name_pos(src, strlen(src));
- 		assert(pos >= 0);
- 		if (!(mode & SPARSE) && !lstat(src, &st))
--			sparse_and_dirty = ce_modified(active_cache[pos], &st, 0);
-+			sparse_and_dirty = ie_modified(&the_index,
-+						       active_cache[pos], &st,
-+						       0);
- 		rename_index_entry_at(&the_index, pos, dst);
+ 	setup_git_directory();
+-	if (read_cache() < 0)
++	if (repo_read_index(the_repository) < 0)
+ 		die("unable to read index file");
+ 	uc = the_index.untracked;
+ 	if (!uc) {
+diff --git a/t/helper/test-fast-rebase.c b/t/helper/test-fast-rebase.c
+index 45665ec19a5..9def2ba6889 100644
+--- a/t/helper/test-fast-rebase.c
++++ b/t/helper/test-fast-rebase.c
+@@ -123,7 +123,7 @@ int cmd__fast_rebase(int argc, const char **argv)
+ 		die(_("Cannot read HEAD"));
+ 	assert(oideq(&onto->object.oid, &head));
  
- 		if (ignore_sparse &&
-diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index fd708273101..9ced755a6db 100644
---- a/builtin/read-tree.c
-+++ b/builtin/read-tree.c
-@@ -192,7 +192,7 @@ int cmd_read_tree(int argc, const char **argv, const char *cmd_prefix)
- 			die(_("You need to resolve your current index first"));
- 		stage = opts.merge = 1;
- 	}
--	resolve_undo_clear();
-+	resolve_undo_clear_index(&the_index);
+-	hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
++	repo_hold_locked_index(the_repository, &lock, LOCK_DIE_ON_ERROR);
+ 	if (repo_read_index(the_repository) < 0)
+ 		BUG("Could not read index");
  
- 	for (i = 0; i < argc; i++) {
- 		const char *arg = argv[i];
-diff --git a/builtin/reset.c b/builtin/reset.c
-index e561180e8c4..59f777a1da4 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -145,7 +145,7 @@ static void update_index_from_diff(struct diff_queue_struct *q,
- 		struct cache_entry *ce;
- 
- 		if (!is_in_reset_tree && !intent_to_add) {
--			remove_file_from_cache(one->path);
-+			remove_file_from_index(&the_index, one->path);
- 			continue;
- 		}
- 
-@@ -172,7 +172,8 @@ static void update_index_from_diff(struct diff_queue_struct *q,
- 			ce->ce_flags |= CE_INTENT_TO_ADD;
- 			set_object_name_for_intent_to_add_entry(ce);
- 		}
--		add_cache_entry(ce, ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
-+		add_index_entry(&the_index, ce,
-+				ADD_CACHE_OK_TO_ADD | ADD_CACHE_OK_TO_REPLACE);
- 	}
- }
- 
-diff --git a/builtin/rm.c b/builtin/rm.c
-index f0d025a4e23..c717cdc97f5 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -168,7 +168,7 @@ static int check_local_mod(struct object_id *head, int index_only)
- 		 * Is the index different from the file in the work tree?
- 		 * If it's a submodule, is its work tree modified?
- 		 */
--		if (ce_match_stat(ce, &st, 0) ||
-+		if (ie_match_stat(&the_index, ce, &st, 0) ||
- 		    (S_ISGITLINK(ce->ce_mode) &&
- 		     bad_to_remove_submodule(ce->name,
- 				SUBMODULE_REMOVAL_DIE_ON_ERROR |
-@@ -386,7 +386,7 @@ int cmd_rm(int argc, const char **argv, const char *prefix)
- 		if (!quiet)
- 			printf("rm '%s'\n", path);
- 
--		if (remove_file_from_cache(path))
-+		if (remove_file_from_index(&the_index, path))
- 			die(_("git rm: unable to remove %s"), path);
- 	}
- 
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index e1b2bb78e72..533ba66df05 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -256,7 +256,7 @@ static int remove_one_path(const char *path)
- {
- 	if (!allow_remove)
- 		return error("%s: does not exist and --remove not passed", path);
--	if (remove_file_from_cache(path))
-+	if (remove_file_from_index(&the_index, path))
- 		return error("%s: cannot remove from the index", path);
- 	return 0;
- }
-@@ -281,7 +281,7 @@ static int add_one_path(const struct cache_entry *old, const char *path, int len
+diff --git a/t/helper/test-lazy-init-name-hash.c b/t/helper/test-lazy-init-name-hash.c
+index cd1b4c9736e..7e8723a1900 100644
+--- a/t/helper/test-lazy-init-name-hash.c
++++ b/t/helper/test-lazy-init-name-hash.c
+@@ -32,7 +32,7 @@ static void dump_run(void)
+ 	struct dir_entry *dir;
  	struct cache_entry *ce;
  
- 	/* Was the old index entry already up-to-date? */
--	if (old && !ce_stage(old) && !ce_match_stat(old, st, 0))
-+	if (old && !ce_stage(old) && !ie_match_stat(&the_index, old, st, 0))
- 		return 0;
+-	read_cache();
++	repo_read_index(the_repository);
+ 	if (single) {
+ 		test_lazy_init_name_hash(&the_index, 0);
+ 	} else {
+@@ -49,7 +49,7 @@ static void dump_run(void)
+ 				ent /* member name */)
+ 		printf("name %08x %s\n", ce->ent.hash, ce->name);
  
- 	ce = make_empty_cache_entry(&the_index, len);
-@@ -298,7 +298,7 @@ static int add_one_path(const struct cache_entry *old, const char *path, int len
- 	}
- 	option = allow_add ? ADD_CACHE_OK_TO_ADD : 0;
- 	option |= allow_replace ? ADD_CACHE_OK_TO_REPLACE : 0;
--	if (add_cache_entry(ce, option)) {
-+	if (add_index_entry(&the_index, ce, option)) {
- 		discard_cache_entry(ce);
- 		return error("%s: cannot add to the index - missing --add option?", path);
- 	}
-@@ -390,7 +390,7 @@ static int process_path(const char *path, struct stat *st, int stat_errno)
- 		 * On the other hand, removing it from index should work
- 		 */
- 		if (!ignore_skip_worktree_entries && allow_remove &&
--		    remove_file_from_cache(path))
-+		    remove_file_from_index(&the_index, path))
- 			return error("%s: cannot remove from the index", path);
- 		return 0;
- 	}
-@@ -429,7 +429,7 @@ static int add_cacheinfo(unsigned int mode, const struct object_id *oid,
- 		ce->ce_flags |= CE_VALID;
- 	option = allow_add ? ADD_CACHE_OK_TO_ADD : 0;
- 	option |= allow_replace ? ADD_CACHE_OK_TO_REPLACE : 0;
--	if (add_cache_entry(ce, option))
-+	if (add_index_entry(&the_index, ce, option))
- 		return error("%s: cannot add to the index - missing --add option?",
- 			     path);
- 	report("add '%s'", path);
-@@ -488,7 +488,7 @@ static void update_one(const char *path)
- 	}
- 
- 	if (force_remove) {
--		if (remove_file_from_cache(path))
-+		if (remove_file_from_index(&the_index, path))
- 			die("git update-index: unable to remove %s", path);
- 		report("remove '%s'", path);
- 		return;
-@@ -571,7 +571,7 @@ static void read_index_info(int nul_term_line)
- 
- 		if (!mode) {
- 			/* mode == 0 means there is no such path -- remove */
--			if (remove_file_from_cache(path_name))
-+			if (remove_file_from_index(&the_index, path_name))
- 				die("git update-index: unable to remove %s",
- 				    ptr);
- 		}
-@@ -686,13 +686,13 @@ static int unresolve_one(const char *path)
- 		goto free_return;
- 	}
- 
--	remove_file_from_cache(path);
--	if (add_cache_entry(ce_2, ADD_CACHE_OK_TO_ADD)) {
-+	remove_file_from_index(&the_index, path);
-+	if (add_index_entry(&the_index, ce_2, ADD_CACHE_OK_TO_ADD)) {
- 		error("%s: cannot add our version to the index.", path);
- 		ret = -1;
- 		goto free_return;
- 	}
--	if (!add_cache_entry(ce_3, ADD_CACHE_OK_TO_ADD))
-+	if (!add_index_entry(&the_index, ce_3, ADD_CACHE_OK_TO_ADD))
- 		return 0;
- 	error("%s: cannot add their version to the index.", path);
- 	ret = -1;
-@@ -850,7 +850,7 @@ static int resolve_undo_clear_callback(const struct option *opt,
- {
- 	BUG_ON_OPT_NEG(unset);
- 	BUG_ON_OPT_ARG(arg);
--	resolve_undo_clear();
-+	resolve_undo_clear_index(&the_index);
- 	return 0;
+-	discard_cache();
++	discard_index(&the_index);
  }
  
-diff --git a/cache.h b/cache.h
-index 489e9e1925b..79b8d479710 100644
---- a/cache.h
-+++ b/cache.h
-@@ -446,13 +446,8 @@ extern struct index_state the_index;
- #define read_cache_preload(pathspec) repo_read_index_preload(the_repository, (pathspec), 0)
- #define discard_cache() discard_index(&the_index)
- #define cache_name_pos(name, namelen) index_name_pos(&the_index,(name),(namelen))
--#define add_cache_entry(ce, option) add_index_entry(&the_index, (ce), (option))
--#define remove_file_from_cache(path) remove_file_from_index(&the_index, (path))
- #define refresh_cache(flags) refresh_index(&the_index, (flags), NULL, NULL, NULL)
- #define refresh_and_write_cache(refresh_flags, write_flags, gentle) repo_refresh_and_write_index(the_repository, (refresh_flags), (write_flags), (gentle), NULL, NULL, NULL)
--#define ce_match_stat(ce, st, options) ie_match_stat(&the_index, (ce), (st), (options))
--#define ce_modified(ce, st, options) ie_modified(&the_index, (ce), (st), (options))
--#define resolve_undo_clear() resolve_undo_clear_index(&the_index)
- #define hold_locked_index(lock_file, flags) repo_hold_locked_index(the_repository, (lock_file), (flags))
- #endif
+ /*
+@@ -66,7 +66,7 @@ static uint64_t time_runs(int try_threaded)
  
-diff --git a/contrib/coccinelle/index-compatibility.cocci b/contrib/coccinelle/index-compatibility.cocci
-index 04207c409e1..89c18986160 100644
---- a/contrib/coccinelle/index-compatibility.cocci
-+++ b/contrib/coccinelle/index-compatibility.cocci
-@@ -39,6 +39,21 @@
- |
- - add_file_to_cache
- + add_file_to_index
-+|
-+- add_cache_entry
-++ add_index_entry
-+|
-+- remove_file_from_cache
-++ remove_file_from_index
-+|
-+- ce_match_stat
-++ ie_match_stat
-+|
-+- ce_modified
-++ ie_modified
-+|
-+- resolve_undo_clear
-++ resolve_undo_clear_index
- )
-   (
- + &the_index,
-diff --git a/contrib/coccinelle/index-compatibility.pending.cocci b/contrib/coccinelle/index-compatibility.pending.cocci
-index 6e96de0f638..cf1ea57d700 100644
---- a/contrib/coccinelle/index-compatibility.pending.cocci
-+++ b/contrib/coccinelle/index-compatibility.pending.cocci
-@@ -38,21 +38,6 @@
- |
- - cache_name_pos
- + index_name_pos
--|
--- add_cache_entry
--+ add_index_entry
--|
--- remove_file_from_cache
--+ remove_file_from_index
--|
--- ce_match_stat
--+ ie_match_stat
--|
--- ce_modified
--+ ie_modified
--|
--- resolve_undo_clear
--+ resolve_undo_clear_index
- )
-   (
- + &the_index,
+ 	for (i = 0; i < count; i++) {
+ 		t0 = getnanotime();
+-		read_cache();
++		repo_read_index(the_repository);
+ 		t1 = getnanotime();
+ 		nr_threads_used = test_lazy_init_name_hash(&the_index, try_threaded);
+ 		t2 = getnanotime();
+@@ -89,7 +89,7 @@ static uint64_t time_runs(int try_threaded)
+ 				   the_index.cache_nr);
+ 		fflush(stdout);
+ 
+-		discard_cache();
++		discard_index(&the_index);
+ 	}
+ 
+ 	avg = sum / count;
+@@ -113,9 +113,9 @@ static void analyze_run(void)
+ 	int i;
+ 	int nr;
+ 
+-	read_cache();
++	repo_read_index(the_repository);
+ 	cache_nr_limit = the_index.cache_nr;
+-	discard_cache();
++	discard_index(&the_index);
+ 
+ 	nr = analyze;
+ 	while (1) {
+@@ -128,23 +128,23 @@ static void analyze_run(void)
+ 			nr = cache_nr_limit;
+ 
+ 		for (i = 0; i < count; i++) {
+-			read_cache();
++			repo_read_index(the_repository);
+ 			the_index.cache_nr = nr; /* cheap truncate of index */
+ 			t1s = getnanotime();
+ 			test_lazy_init_name_hash(&the_index, 0);
+ 			t2s = getnanotime();
+ 			sum_single += (t2s - t1s);
+ 			the_index.cache_nr = cache_nr_limit;
+-			discard_cache();
++			discard_index(&the_index);
+ 
+-			read_cache();
++			repo_read_index(the_repository);
+ 			the_index.cache_nr = nr; /* cheap truncate of index */
+ 			t1m = getnanotime();
+ 			nr_threads_used = test_lazy_init_name_hash(&the_index, 1);
+ 			t2m = getnanotime();
+ 			sum_multi += (t2m - t1m);
+ 			the_index.cache_nr = cache_nr_limit;
+-			discard_cache();
++			discard_index(&the_index);
+ 
+ 			if (!nr_threads_used)
+ 				printf("    [size %8d] [single %f]   non-threaded code path used\n",
+diff --git a/t/helper/test-read-cache.c b/t/helper/test-read-cache.c
+index b736ef16421..a089be9104c 100644
+--- a/t/helper/test-read-cache.c
++++ b/t/helper/test-read-cache.c
+@@ -20,7 +20,7 @@ int cmd__read_cache(int argc, const char **argv)
+ 	git_config(git_default_config, NULL);
+ 
+ 	for (i = 0; i < cnt; i++) {
+-		read_cache();
++		repo_read_index(the_repository);
+ 		if (name) {
+ 			int pos;
+ 
+@@ -33,7 +33,7 @@ int cmd__read_cache(int argc, const char **argv)
+ 			       ce_uptodate(the_index.cache[pos]) ? "" : " not");
+ 			write_file(name, "%d\n", i);
+ 		}
+-		discard_cache();
++		discard_index(&the_index);
+ 	}
+ 	return 0;
+ }
+diff --git a/t/helper/test-scrap-cache-tree.c b/t/helper/test-scrap-cache-tree.c
+index 20e2e31f9e2..9206dee1fd2 100644
+--- a/t/helper/test-scrap-cache-tree.c
++++ b/t/helper/test-scrap-cache-tree.c
+@@ -9,8 +9,8 @@ int cmd__scrap_cache_tree(int ac, const char **av)
+ 	struct lock_file index_lock = LOCK_INIT;
+ 
+ 	setup_git_directory();
+-	hold_locked_index(&index_lock, LOCK_DIE_ON_ERROR);
+-	if (read_cache() < 0)
++	repo_hold_locked_index(the_repository, &index_lock, LOCK_DIE_ON_ERROR);
++	if (repo_read_index(the_repository) < 0)
+ 		die("unable to read index file");
+ 	cache_tree_free(&the_index.cache_tree);
+ 	the_index.cache_tree = NULL;
+diff --git a/t/helper/test-write-cache.c b/t/helper/test-write-cache.c
+index 8837717d36a..66287d6d47d 100644
+--- a/t/helper/test-write-cache.c
++++ b/t/helper/test-write-cache.c
+@@ -9,9 +9,10 @@ int cmd__write_cache(int argc, const char **argv)
+ 	if (argc == 2)
+ 		cnt = strtol(argv[1], NULL, 0);
+ 	setup_git_directory();
+-	read_cache();
++	repo_read_index(the_repository);
+ 	for (i = 0; i < cnt; i++) {
+-		hold_locked_index(&index_lock, LOCK_DIE_ON_ERROR);
++		repo_hold_locked_index(the_repository, &index_lock,
++				       LOCK_DIE_ON_ERROR);
+ 		if (write_locked_index(&the_index, &index_lock, COMMIT_LOCK))
+ 			die("unable to write index file");
+ 	}
 -- 
 2.38.0.1509.g9445af83948
 
