@@ -2,75 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF8B1C4332F
-	for <git@archiver.kernel.org>; Sat, 19 Nov 2022 00:24:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A027C433FE
+	for <git@archiver.kernel.org>; Sat, 19 Nov 2022 01:38:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237847AbiKSAYF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Nov 2022 19:24:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36702 "EHLO
+        id S232291AbiKSBiB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Nov 2022 20:38:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230126AbiKSAX1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Nov 2022 19:23:27 -0500
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 570F452171
-        for <git@vger.kernel.org>; Fri, 18 Nov 2022 15:37:55 -0800 (PST)
-Received: by mail-pg1-x52e.google.com with SMTP id f9so2066830pgf.7
-        for <git@vger.kernel.org>; Fri, 18 Nov 2022 15:37:55 -0800 (PST)
+        with ESMTP id S232651AbiKSBhq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Nov 2022 20:37:46 -0500
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41C75173553
+        for <git@vger.kernel.org>; Fri, 18 Nov 2022 16:41:40 -0800 (PST)
+Received: by mail-lf1-x12d.google.com with SMTP id a29so10749160lfj.9
+        for <git@vger.kernel.org>; Fri, 18 Nov 2022 16:41:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :subject:to:from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=VmFhDVLa4mk0zpTD5Lw1z22Bg+w+NG7WtTTBAE9kKHg=;
-        b=c8UsJMmQWi8qDpLJydeaTdA1cUdpfX+ipPvdj6ILmTZHe3uDjrxJu2reUlQAHODBqk
-         He+LAwOUH7bv26jEvZX6mbc+qXMWUrCTWJ6x0GP2IbD75M7ZiPLaNa/Qbu9e5jUCKudL
-         yI9XRzEGShPrrgL5hXsymuQLd24qNQFtqgy7aDhiCRMNbQmMrbj8LdhhcjN2UplpNTha
-         59mRAntzs+D3EIkPEu4VhvHSmDc0emCdBLjerDbNahijl4fWq9xnPuK6zXsYF7vev3WJ
-         dl4gIRG2/QQvLsZsuNMnR16v2I2xUQas0fzPYq07ZELN/0VDMJ71aJRLkiWGcnVgs85Y
-         APZg==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=pA/mS/L9kd9zz4Dwtp4ScR+7JLb27S7zu562nBEvBwI=;
+        b=TMIG61rQE0/zBYNsCoxYWs17WsrDhxaS3OFcKVVW7v0gw137cXGc1UQjl0E5xqOS10
+         NWDXXiusxOowMFLDa4lsZbikiHRKBTXQapm8TjjCYKw9n1PVZf1+ceXX5vJAqdQNhyPR
+         EswqKgXYGEU9OCAdPUeMz9WGe4nAhYv41/NJ+kN+FzmV+hlE2fQbNWzBsaF/husk1PoL
+         ClkBYuLQCExexMNYNqGONuuGgLgCmu6vNcsYPUQx0IlpMKO1Ox6utktYvmNABwM1H3Jm
+         k1Jqe5SqMXEsOTgXxSfWwuH8uZ/QbkJpErmfc6dcMews/AGFjkgr2tvKJnegJ2j/GG3r
+         WwLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :subject:to:from:sender:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VmFhDVLa4mk0zpTD5Lw1z22Bg+w+NG7WtTTBAE9kKHg=;
-        b=2UMwMJ2s/gbXHFFfiV7QJac4WZl2V+/txj2N10cbQLxLH+UaVWwTRG03ToTFkdxz9q
-         MFplBHQk8TdyIsc/V+90lff6lP73qrTfjPO3tTe06+scwpNn/y2azniW6+tP5KXDsaUP
-         8wnq4bRYxTodbHxDtDMyiIUdXg5kBpHKCqUbplgN8/+dwtvd651ypUIpUtrB2bytJkLa
-         qpGg5HLjMDTjSiaLx21CZ6deePAgrmPK054j4qeWQBZPnx+pgiGgLZZcQY2Dps4lxaEO
-         VoX8mE51FoPAd4A8FdIk/Q0ZExA8vz5gm5tblrvQmtoRne9Q7wjtpaOYvsy8W83S1c+I
-         nmQw==
-X-Gm-Message-State: ANoB5pmjtYq1XeihyrMZDevEQM5zV1uJOP4/pYB7c3D8gb8WfyT9A0/P
-        yc7YwHWj/VWWxnh/35ML5gITbZiTIClnRQ==
-X-Google-Smtp-Source: AA0mqf6uN4+idFpHFn4yKOxV+sS7apEdZdXcgM2G8CG3A2/NmF9R5okrMCdu/Mn041OH39qPHb0QuA==
-X-Received: by 2002:a05:6a00:2161:b0:573:3580:4754 with SMTP id r1-20020a056a00216100b0057335804754mr4203614pff.37.1668814649943;
-        Fri, 18 Nov 2022 15:37:29 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id m1-20020a170902768100b00187197c4999sm4254606pll.167.2022.11.18.15.37.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 18 Nov 2022 15:37:29 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Subject: [Q] Where does "git commit -q -m msg" spend time?
-Date:   Fri, 18 Nov 2022 15:37:29 -0800
-Message-ID: <xmqqbkp3kf5y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pA/mS/L9kd9zz4Dwtp4ScR+7JLb27S7zu562nBEvBwI=;
+        b=p16E+0TjTo0xyAAhk/LvCLNzoxbOYP4G8jkwnhuHYbn9tN6Ufocwukez370XPvkt11
+         Zj0dnedT/M94kTICJUMleBLmKBXwsbFbrnyUNKLtMawaPSi2dteYQqBWxKSFfXd8gDu1
+         D6pBN25Wb1+A8geFJtx7tqNidrCZGof0tsfThGvV0Ao2DqNC18W19WClJSGutEAEmsNz
+         YcIz3Di0KDjQ8geU0XGUOzBrD8/ZdKrDvvRwxJ3wcs09XWI1wuW6P0XDtvSiNx/NKJm0
+         TU4nLKLD7BA8k1YiYOLSeBrM1TCFx6R6PSSvZQkeW+chwF/JsQfsSMjjr0IxRcFLaK92
+         67lA==
+X-Gm-Message-State: ANoB5plQPmRHDKssALPPGCcVaf4VKHNDiHzI5aA/gk7sKIo2DcjEHkUo
+        LgCnoQUDn5MZFRXhLpwUxq9HKqJ81QCZJnqYvaZMGwT2
+X-Google-Smtp-Source: AA0mqf4YE+EcuzUN9uQMiDmgst6mM6iAQt58YgoakzpWXM+BIMmiN/X62ZOUVsZFfW9WNype5U89J59xPL88wd/NvXU=
+X-Received: by 2002:a05:6512:280e:b0:4a2:5154:ead9 with SMTP id
+ cf14-20020a056512280e00b004a25154ead9mr3297054lfb.32.1668818498210; Fri, 18
+ Nov 2022 16:41:38 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
+ <CABPp-BEZK2KJHY+=Ta3VUzNjJKY=evPiAtp5UQFTVLMD0qreVQ@mail.gmail.com>
+ <0e156172-0670-2832-78cb-c7dfe2599192@github.com> <xmqqiljbkfg9.fsf@gitster.g>
+In-Reply-To: <xmqqiljbkfg9.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 18 Nov 2022 16:41:25 -0800
+Message-ID: <CABPp-BGqXbO9SyF_V_fPEOcZ2uQEWzr0V+KrdcHmfWOq3upniQ@mail.gmail.com>
+Subject: Re: [PATCH 00/30] [RFC] extensions.refFormat and packed-refs v2 file format
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, jrnieder@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On a slow filesystem it gets more noticeable, but I have been
-wondering (without a debugger or a profiler, as I am supposed to be
-on vacation) for the past few weeks why these two commands in the
-same repository perform very differently:
+On Fri, Nov 18, 2022 at 3:31 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Derrick Stolee <derrickstolee@github.com> writes:
+>
+> > On 11/11/22 6:28 PM, Elijah Newren wrote:
+> >> On Mon, Nov 7, 2022 at 11:01 AM Derrick Stolee via GitGitGadget
+> >> <gitgitgadget@gmail.com> wrote:
 
-    $ git write-tree
-    $ git commit -q -m msg
+> I have been and am still offline and haven't examined this proposal
+> in detail, but would it be a better longer-term approach to improve
+> reftable backend, instead of piling more effort on loose+packed
+> filesystem based backend?
 
-Especially even after running the former, running the latter, which
-I naïvely thought that it only needs to create a commit object with
-"msg" and wrapping the result of the former (which is more-or-less
-instant) into it, and do nothing else.
+Well, Stolee explicitly brought this up multiple times in his cover
+letter with various arguments about why he thinks this approach is a
+better way to move us on the path towards improved ref handling, and
+doesn't see it as excluding the reftable option but just opening us up
+to more incremental (and incrementally testable) improvements.  This
+question came up early and often in the cover letter; he even ends
+with a "Relationship to reftable" section.
+
+But he is clearly open to feedback about whether others agree or
+disagree with his thesis.
+
+(I haven't looked much at reftable, so I can't opine on that question,
+but Stolee's approach did seem eminently easier to review.  I did have
+some questions about his proposal(s) because I didn't quite understand
+them, in part due to being unfamiliar with the area.)
