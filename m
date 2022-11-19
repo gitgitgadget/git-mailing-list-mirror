@@ -2,134 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 85846C4332F
-	for <git@archiver.kernel.org>; Sat, 19 Nov 2022 17:50:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E748C433FE
+	for <git@archiver.kernel.org>; Sat, 19 Nov 2022 20:06:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232969AbiKSRuk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Nov 2022 12:50:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34856 "EHLO
+        id S233462AbiKSUGx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Nov 2022 15:06:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230398AbiKSRuj (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Nov 2022 12:50:39 -0500
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF7792D0
-        for <git@vger.kernel.org>; Sat, 19 Nov 2022 09:50:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1668880229; bh=QasVMZUvMRXXdd8PvhI+/SPeWEsxZOgjT56nE0KhAEQ=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=FX/eNim1cBmXGrR6TQPsVNKBcFfH+2W5/gYnkFPyr0rS+xPaGttxkhKPC3axphFyf
-         s5kNbYx4Sljv6/uitgt2WEcmhnU+Gg4ZVwnIyzrBijPWkMowmzZH9VSmt73yyDxDyD
-         FRLEyWy8plaOAhUNj6gaRIitq+kjnOJW72RXgyedDHE0PTu59HuCKUXVCs1oCQiqw+
-         zehPlJw6uh0TzxWZz1OzwSrCD+Rnj5XIBTLgxYxbF9vXuu0xQYKAyr/uhaa9+gkHS6
-         B6xQylFxEjBVfjtoWT3Y7pyXTxAG8iGx7EX5tI790exUyVDWTPmAJ2fHXwQTw2bl7g
-         7B8y2BI1VzNjg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.34] ([91.47.154.159]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M4sXt-1oxolG3OFT-0025QL; Sat, 19
- Nov 2022 18:50:29 +0100
-Message-ID: <f5d6c063-2fc4-4355-57e1-056eac1fb4a2@web.de>
-Date:   Sat, 19 Nov 2022 18:50:28 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH v3 2/2] tests(mingw): avoid very slow `mingw_test_cmp`
-To:     Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.1309.v2.git.1662469859.gitgitgadget@gmail.com>
- <pull.1309.v3.git.1668290855.gitgitgadget@gmail.com>
- <a7f4265ceb26c6dd9d347ef4cbef2aac7d60bf13.1668290855.git.gitgitgadget@gmail.com>
- <Y3B36HjDJhIY5jNz@nand.local> <xmqqv8nbkg77.fsf@gitster.g>
- <65ff24be-4392-f236-5500-ce0c0d4d42ca@kdbg.org>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <65ff24be-4392-f236-5500-ce0c0d4d42ca@kdbg.org>
+        with ESMTP id S229635AbiKSUGv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Nov 2022 15:06:51 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76A6D19C01
+        for <git@vger.kernel.org>; Sat, 19 Nov 2022 12:06:50 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id p16so5930856wmc.3
+        for <git@vger.kernel.org>; Sat, 19 Nov 2022 12:06:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=mG5fibYC0M5R5ywo9rwDBRcW9yB3BiJ3QO/ZEQyXI98=;
+        b=KezHJm5qw0W1h1gqkHLCJQRIxymrBJy4y0VvkO5oU6KY+up3VjdornkD254gQHxY+5
+         m74mNQaUxGfMgkLnxVBcxE3XeqFQu+lqKdQHdsrwiImgc6NvL3WDSGBj9vAkyccrpqfA
+         h0IHxqQHcrTWuHVqPOBkjOH7i83AkkWQ7UmljsJ/V8n4kmrbV4FXMADk6HrLLhfxbGAD
+         V9j4651jAnl1xULHruDIeAGxJLO+d0xIXBVwCIir32eBKH+gWrf4k7rfgf7zlxgprgQ+
+         cGEYBZNMXU86166sM4+EnFgPi8YSGOtcZakutSDbC+v6ee/k9yGDIHrLVdNzEKYlguUm
+         9HBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mG5fibYC0M5R5ywo9rwDBRcW9yB3BiJ3QO/ZEQyXI98=;
+        b=kLHbcg9vi2q4JCbdBwFaepnOFNXnOpN4T4lUcRnI7aX7kaokCdVG91GW6gkiMZ+q+2
+         RlFl2Ol+lmcZ86N3h0/Gr81CbSbdypTHkF98F69/i+6fJlaEzqFQ2qJHBWYu+gSrJ85n
+         Rk5HYYTki5CBQjJaoISoj9J34SR/5Xaplvb1KqYjIN7qKIdL+aueIogiu63JCmxP7DAu
+         5TzysQb3PNUDejm7cUQRx1COi8LtEAOA1oxax+LJ5Uy6umyGAEoGnZHYG5o0lzrDQ951
+         lsjw8l0snEjhPE7VnYeei81W05DbJGf0RG18jP5yjO7BZCRHB9FM5+8YczL5PmqGEG4q
+         QC1w==
+X-Gm-Message-State: ANoB5pkz8IWVmMI4DDRKuSi2NIDA75+mREPgal3LuE+hPxIN4mQrBCvk
+        q13i/eyDpy7wRAtzOWaq1bjqatSmY7U=
+X-Google-Smtp-Source: AA0mqf5wEoNthBV8pbX/FWM38PssRYExJJmKXjWPjgqpu2V2rsK38hPoCToNrnH9u57kccBa2XONFQ==
+X-Received: by 2002:a05:600c:3507:b0:3cf:8e62:f907 with SMTP id h7-20020a05600c350700b003cf8e62f907mr8524453wmq.7.1668888408542;
+        Sat, 19 Nov 2022 12:06:48 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id t65-20020a1c4644000000b003cfa622a18asm12818926wma.3.2022.11.19.12.06.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 19 Nov 2022 12:06:48 -0800 (PST)
+Message-Id: <pull.1422.git.1668888407433.gitgitgadget@gmail.com>
+From:   "Stefan Sundin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 19 Nov 2022 20:06:47 +0000
+Subject: [PATCH] Makefile: suppress macOS deprecation warning
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:GneYwTnQkmUZKFmbCKGJgAeJROVj8jqzLhK9oONDOtlwH1ZOVla
- ZQ6ccB/9dhHBpag9OwypAA6rQp/0gZxa/jrHpexZPuA6jXul2Y5GVg4wMpsGsJTS05iaq5G
- W+ImNtrNKWkwvKalOdl4VrQJd5A0oXnxdPlmc0bxc4oHKymjYigjSQY4b2g0OiHk+bUnKrX
- heHKogIXcLDxQtRIb1xtA==
-UI-OutboundReport: notjunk:1;M01:P0:IcGqc3azSh8=;fITUlmqBLWEGBreaNyuQeG3j7LL
- aGT2Em41F1RpHErmRri2l/yg4nwmWRnQKZhAt8c4aSwmf5xgWMW1SWnWQUVpAz576ntpoZhAJ
- C+LXlvHBrS7Y/37uS2ECTJ+vnxz4BmupngqhrwlHSEIq2wJakKar7Gp6t+K8upfmguQQx48af
- UxQj/+Vkfwk0Wf55iE5W1mksyVLxtUqHbK1Q5Pcd6WlqT3Oo6HU5NO4aYJexN/0ydYqtfGBbD
- RyQm4km8wsUdpG/YNbt+L/6WloAJyTX9Egpwdp4Kc6QJv92DjU4OJlkdPpRclMdCjdst7ZYe+
- OXz/RqTRcGv9EhjuKgmxAO1RQyqIsSZsUgkTZKJ/VkQPLxqg0pqVcxXhBnDO5XTRLcSxnUDTZ
- jPazilqASo/YNCUaUNLhgU6z7tV41xVXYFyI3YRicPuiMMUUBejT5sbQVTRE4Wrf6YToHwfHS
- T99aX1q+JZ9wM2tU7L50j+NzC9Q7y6TWdZkOPCHCRMGW+dGRA6YRwu/wA0KpEY+ZfYvvj6EBn
- 56Gng0ypEKbzAFnamA8OC1n2XAgARN81r0wtXc7GXTohUdnoww5H4OWU4gdczQYN4F3vxSpwx
- E9Gm8KUSD5iqLLrbxlRSXHx3kBofUxEHA0P/rSWnHTANDl5b+PvS6noSa0iG/d1AkSq0/FiTp
- nb1K3A8EJ4vAOKnKQjo4K+GvnAsz+WSc+74TO4iN3hw3Y42Lcqqn9w7zalOoWc45Oa1Ydt3YV
- Yy3zgXvoex7LK9V26iysbNkBDfgzw8Jpx9NIkEaipnvuJoljrHAWCkFUavHVGyQRMd5lFu6o/
- GZ2TU57hKwGBOs3fOD9BTRoFmagS2pqoQS1z6s8Gmm5KL3X5lVHX1eYOB+2oPpjvhNG6jaRbE
- yFvEJDgeFVjUu34Pdy2rQClMlHqooeoANkjkQhVM3pz6KQQTVE2rX6UySpr6vi6bWA97SW65o
- +lEm2g==
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Stefan Sundin <git@stefansundin.com>,
+        Stefan Sundin <git@stefansundin.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.11.2022 um 09:18 schrieb Johannes Sixt:
->
-> The reason that mingw_test_cmp exists is not that Git isn't ported
-> correctly, or that tests aren't ported correctly. The reason is that
-> tests assume Unix LF line endings everywhere, but there are some tools
-> that are outside our control that randomly -- to the layman's eye --
-> produce CRLF line endings even when their input has LF style.
->
-> For example, when we post-process Git output with `sed`, the result
-> suddenly has CRLF line endings instead of LF that the input had.
+From: Stefan Sundin <git@stefansundin.com>
 
-Actually I see the opposite behavior -- sed eats CRs on an up-to-date
-Git for Windows SDK:
+Compiling git on macOS 13 emits the following deprecation warning:
 
-   $ uname -s
-   MINGW64_NT-10.0-22621
+        CC compat/fsmonitor/fsm-listen-darwin.o
+    compat/fsmonitor/fsm-listen-darwin.c:495:2: warning: 'FSEventStreamScheduleWithRunLoop' is deprecated: first deprecated in macOS 13.0 - Use FSEventStreamSetDispatchQueue instead. [-Wdeprecated-declarations]
+            FSEventStreamScheduleWithRunLoop(data->stream, data->rl, kCFRunLoopDefaultMode);
+            ^
+    /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/FSEvents.framework/Headers/FSEvents.h:1138:1: note: 'FSEventStreamScheduleWithRunLoop' has been explicitly marked deprecated here
+    FSEventStreamScheduleWithRunLoop(
+    ^
+    1 warning generated.
 
-   $ printf 'a\r\n' | hexdump.exe -C
-   00000000  61 0d 0a                                          |a..|
-   00000003
+Setting a minimum macOS version will suppress this deprecation warning.
+Using a version lower than 10.13 will cause other warning messages to
+be emitted.
 
-   $ printf 'a\r\n' | sed '' | hexdump.exe -C
-   00000000  61 0a                                             |a.|
-   00000002
+Signed-off-by: Stefan Sundin <git@stefansundin.com>
+---
+    Makefile: suppress macOS deprecation warning
 
-And with the following patch on top of eea7033409 (The twelfth batch,
-2022-11-14) the test suite passes for me -- just one case of grep
-stealing CRs seems to need adjustment to make mingw_test_cmp
-unnecessary:
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1422%2Fstefansundin%2Fmacosx-version-min-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1422/stefansundin/macosx-version-min-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1422
 
- t/t3920-crlf-messages.sh | 2 +-
- t/test-lib.sh            | 1 -
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/t/t3920-crlf-messages.sh b/t/t3920-crlf-messages.sh
-index 4c661d4d54..353b1a550e 100755
-=2D-- a/t/t3920-crlf-messages.sh
-+++ b/t/t3920-crlf-messages.sh
-@@ -12,7 +12,7 @@ create_crlf_ref () {
- 	cat >.crlf-orig-$branch.txt &&
- 	cat .crlf-orig-$branch.txt | append_cr >.crlf-message-$branch.txt &&
- 	grep 'Subject' .crlf-orig-$branch.txt | tr '\n' ' ' | sed 's/[ ]*$//' | =
-tr -d '\n' >.crlf-subject-$branch.txt &&
--	grep 'Body' .crlf-message-$branch.txt >.crlf-body-$branch.txt || true &&
-+	grep 'Body' .crlf-orig-$branch.txt | append_cr >.crlf-body-$branch.txt |=
-| true &&
- 	LIB_CRLF_BRANCHES=3D"${LIB_CRLF_BRANCHES} ${branch}" &&
- 	test_tick &&
- 	hash=3D$(git commit-tree HEAD^{tree} -p HEAD -F .crlf-message-${branch}.=
-txt) &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 6db377f68b..af5ec357e5 100644
-=2D-- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1721,7 +1721,6 @@ case $uname_s in
- 	test_set_prereq SED_STRIPS_CR
- 	test_set_prereq GREP_STRIPS_CR
- 	test_set_prereq WINDOWS
--	GIT_TEST_CMP=3Dmingw_test_cmp
- 	;;
- *CYGWIN*)
- 	test_set_prereq POSIXPERM
+diff --git a/Makefile b/Makefile
+index 4927379184c..8a729efd2d1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1430,6 +1430,7 @@ ifneq (,$(SOCKLEN_T))
+ endif
+ 
+ ifeq ($(uname_S),Darwin)
++	BASIC_CFLAGS += -mmacosx-version-min=10.13
+ 	ifndef NO_FINK
+ 		ifeq ($(shell test -d /sw/lib && echo y),y)
+ 			BASIC_CFLAGS += -I/sw/include
+
+base-commit: eea7033409a0ed713c78437fc76486983d211e25
+-- 
+gitgitgadget
