@@ -2,108 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41860C433FE
-	for <git@archiver.kernel.org>; Sat, 19 Nov 2022 12:51:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7BE1C4332F
+	for <git@archiver.kernel.org>; Sat, 19 Nov 2022 13:07:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230269AbiKSMvy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Nov 2022 07:51:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45756 "EHLO
+        id S233066AbiKSNHv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Nov 2022 08:07:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229515AbiKSMvx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Nov 2022 07:51:53 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D6306CA1E
-        for <git@vger.kernel.org>; Sat, 19 Nov 2022 04:51:52 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id z20so9085189edc.13
-        for <git@vger.kernel.org>; Sat, 19 Nov 2022 04:51:52 -0800 (PST)
+        with ESMTP id S230398AbiKSNHu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Nov 2022 08:07:50 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A3348FE41
+        for <git@vger.kernel.org>; Sat, 19 Nov 2022 05:07:49 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id s12so10601599edd.5
+        for <git@vger.kernel.org>; Sat, 19 Nov 2022 05:07:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=lGzQrhNV/FFBl1hp0+1rIF0ozcisqDEAq5rFNcwn/xI=;
-        b=nzULbrNsDV5dsI+Qu3KwXVsUiA3BAyR559r1RzxYQzgGY2NTcRDGlY0UDI4HRkFXUy
-         cSCTcqX6sBlBC7qFZAFMw6OjsiP+U+w1kN0ihBxv0e2Ynm7WscIi3CMxn+BDwXSJ9ZDI
-         uDmL1zkoC1a8zB/Zj9v1VjpvBJv+UCSpi+HSlJ3pNOrIDRIJ44AVv2v+qAeAOh0qCuqz
-         OcqaAjGWDTn37xsfvnZK1lFXn7RMLmQeCoqpL9XwGJoR+Nk4Ej/yloWbw+4Ohf1zOdz9
-         QmgySh+1OQNrNWpAIvWd+jFyJwjbZ80E3A8yMIlob8+BVuwdFC5Pjk+1/xFYLn4r0pVp
-         hUHw==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kbXksdhX732h1dNfu6usEkedXSar4hKae7BowflEMX4=;
+        b=cKwGSGril4Bd9qZZLOSVMLOtQQF7bQo0XoCRC1S8bD42SKINg8B3aEsgQJxPXmMAEa
+         ArHSgEyngyW6ucS1egzHaNhqi2Q5pIZ80RtUKLpnzI4PssBF82fPmMAFjaAqZmHhcgrI
+         /lw/GEudEgCjtxks1v32oGKmN/NL9/4vGQwBKg/bfNq3XYy7b91R4oh+1nUEGROCX27O
+         bBuAs8CjEHNaP4eilWSQ7SQ+sLJgjMGn7XxewK+77bZJRW6ud3eVtwJfq4CT3CIc48oC
+         BEIgjHllKajMcY0hpnYKHeTj7TQd/ltVJxef7NAaz1091xFjrz09JNQ0rV+hbzVaomhC
+         PvJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lGzQrhNV/FFBl1hp0+1rIF0ozcisqDEAq5rFNcwn/xI=;
-        b=qPCfexIoteNGLaLdGvdsG8mzdtXuddHueLRCIlTCS6GQ5vo1V67NOraMiWQ0zLHBwz
-         ZeXSMwDwQfsVBSZs0PYGWC9MOOhEooaUvi3eaWWITincYb9UeD9BOislKAv9skyb3PWi
-         WxTgs7Cmm4vQbCJLip8xeTnT9SNrk+gPTKCsJAreBvTyDPQPuVyJoNgSXY/XozOKhvQc
-         BvfFvb5XbZCMpoFwdhkW5/TU7HZIXlbPHjk0COZCrLfgAe6s6ki4CP+MVU2cFcv1IYVR
-         HW8KU+YzmYGtgib13kp5dH4B+gx6n0Urqe1s1vbEAxV3SLTmWsseDkt5wcLP7/8QhPIT
-         YLGQ==
-X-Gm-Message-State: ANoB5pnP9S0coC/HQY2fAzl7UPhVaewkv7a6eBUTKpDtvtg3/zC0Cxee
-        08L7XHxhrzXxJgtcj1gA1LA=
-X-Google-Smtp-Source: AA0mqf50aqL4WLz1ukg0b5kNsSSk1S0GbpU4M6DIF3wq153KdGcpqdp/52UfdeBaxygtZmeMOlMF9w==
-X-Received: by 2002:a05:6402:1744:b0:459:2d37:dfbd with SMTP id v4-20020a056402174400b004592d37dfbdmr9823657edx.336.1668862311024;
-        Sat, 19 Nov 2022 04:51:51 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id lb13-20020a170907784d00b0072a881b21d8sm2835927ejc.119.2022.11.19.04.51.50
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kbXksdhX732h1dNfu6usEkedXSar4hKae7BowflEMX4=;
+        b=eAox76dAvmuQ8YZ4BXcVyL4zHEBUulXZ8bkKs5ihrog+tKkyNpvjtBtGwq7b8AoVU3
+         yvG8KLdlI6d/88h4dURr66hJ6ON49g7FnhxCapuklYq8f0NKLHmgQCxX09/N1MnBlIpo
+         DYvIZP4XcBVyJK92b4vdtCs4a2jNHiCPClF9mEmVeQHDwtQw91FyEXR2a3+iJejfnqbY
+         AFUV3Lghkz5SW1fN5Mnjl4ehNaPepu0DDumbR0tR9aDOBF34TzsPqYW7Iw2F+6M0bRfo
+         lJVER11vDg3GyHEEdyhhfAv0Kf8utuUf4n9aATuVNBcf+jq9BG5q1YKRGT7TPkPRwQmu
+         b1Ng==
+X-Gm-Message-State: ANoB5pnRz9nkq1114Ww031haD8s5pfbEJjpKzQ3WbqUrK1tgHMT0ppky
+        iPuEw775vHV+PiGjD3soxuul5i0I/F9R8w==
+X-Google-Smtp-Source: AA0mqf6AsicjqSLG4kr303C0FfkGoGvfT144uLtfjZ0sYEKfHhyuxGUE1mVbjlhG2IdIsQMsLU2g5Q==
+X-Received: by 2002:aa7:d0d4:0:b0:461:b1b9:bed0 with SMTP id u20-20020aa7d0d4000000b00461b1b9bed0mr1130483edo.122.1668863267664;
+        Sat, 19 Nov 2022 05:07:47 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id ch28-20020a0564021bdc00b0045d74aa401fsm2923802edb.60.2022.11.19.05.07.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Nov 2022 04:51:50 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1owNK2-006D6v-0Z;
-        Sat, 19 Nov 2022 13:51:50 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Alban Gruin <alban.gruin@gmail.com>,
+        Sat, 19 Nov 2022 05:07:47 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v9 00/12] merge-index: prepare to rewrite merge drivers
- in C
-Date:   Sat, 19 Nov 2022 13:46:13 +0100
-References: <20220809185429.20098-1-alban.gruin@gmail.com>
- <cover-v9-00.12-00000000000-20221118T110058Z-avarab@gmail.com>
- <Y3gVekgT7jLibjWo@nand.local>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <Y3gVekgT7jLibjWo@nand.local>
-Message-ID: <221119.86o7t3ds49.gmgdl@evledraar.gmail.com>
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 01/11] cache.h: remove unused "the_index" compat macros
+Date:   Sat, 19 Nov 2022 14:07:28 +0100
+Message-Id: <patch-v2-01.11-3ddae1f5886-20221119T125550Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.38.0.1509.g9445af83948
+In-Reply-To: <cover-v2-00.11-00000000000-20221119T125550Z-avarab@gmail.com>
+References: <cover-00.12-00000000000-20221118T112205Z-avarab@gmail.com> <cover-v2-00.11-00000000000-20221119T125550Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The "active_alloc" macro added in 228e94f9357 (Move index-related
+variables into a structure., 2007-04-01) has not been used since
+4aab5b46f44 (Make read-cache.c "the_index" free., 2007-04-01). Let's
+remove it.
 
-On Fri, Nov 18 2022, Taylor Blau wrote:
+The rest of these are likewise unused, so let's not keep them
+around. E.g. 12cd0bf9b02 (dir: stop using the index compatibility
+macros, 2017-05-05) is the last use of "cache_dir_exists".
 
-> On Fri, Nov 18, 2022 at 12:18:17PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->> This is a prep series for a re-roll of Alban Gruin's series to rewrite
->> various merge drivers from *.sh to *.c, and being able to call those
->> in-process.
->
-> Thanks for resurrecting this topic. I couldn't quite tell what this was
-> supposed to be based on from your cover letter, but digging around your
-> repo, the best I could come up with was:
->
->     $ git log --oneline --first-parent --merges master.
->     00c0dd7b8a Merge branch 'ab/various-leak-fixes' into ab/merge-index-p=
-rep
->     dc39d4bbb4 Merge branch 'pw/rebase-no-reflog-action' into ab/merge-in=
-dex-prep
->
-> when queuing, which seemed to do the trick.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ cache.h | 5 -----
+ 1 file changed, 5 deletions(-)
 
-Yes, sorry. It completely slipped my mind to mention it, but it's on top
-of pw/rebase-no-reflog-action + ab/various-leak-fixes, except...
+diff --git a/cache.h b/cache.h
+index 26ed03bd6de..29bb0ad2b41 100644
+--- a/cache.h
++++ b/cache.h
+@@ -438,7 +438,6 @@ extern struct index_state the_index;
+ 
+ #define active_cache (the_index.cache)
+ #define active_nr (the_index.cache_nr)
+-#define active_alloc (the_index.cache_alloc)
+ #define active_cache_changed (the_index.cache_changed)
+ #define active_cache_tree (the_index.cache_tree)
+ 
+@@ -452,7 +451,6 @@ extern struct index_state the_index;
+ #define cache_name_pos(name, namelen) index_name_pos(&the_index,(name),(namelen))
+ #define add_cache_entry(ce, option) add_index_entry(&the_index, (ce), (option))
+ #define rename_cache_entry_at(pos, new_name) rename_index_entry_at(&the_index, (pos), (new_name))
+-#define remove_cache_entry_at(pos) remove_index_entry_at(&the_index, (pos))
+ #define remove_file_from_cache(path) remove_file_from_index(&the_index, (path))
+ #define add_to_cache(path, st, flags) add_to_index(&the_index, (path), (st), (flags))
+ #define add_file_to_cache(path, flags) add_file_to_index(&the_index, (path), (flags))
+@@ -461,13 +459,10 @@ extern struct index_state the_index;
+ #define refresh_and_write_cache(refresh_flags, write_flags, gentle) repo_refresh_and_write_index(the_repository, (refresh_flags), (write_flags), (gentle), NULL, NULL, NULL)
+ #define ce_match_stat(ce, st, options) ie_match_stat(&the_index, (ce), (st), (options))
+ #define ce_modified(ce, st, options) ie_modified(&the_index, (ce), (st), (options))
+-#define cache_dir_exists(name, namelen) index_dir_exists(&the_index, (name), (namelen))
+ #define cache_file_exists(name, namelen, igncase) index_file_exists(&the_index, (name), (namelen), (igncase))
+ #define cache_name_is_other(name, namelen) index_name_is_other(&the_index, (name), (namelen))
+ #define resolve_undo_clear() resolve_undo_clear_index(&the_index)
+ #define unmerge_cache_entry_at(at) unmerge_index_entry_at(&the_index, at)
+-#define unmerge_cache(pathspec) unmerge_index(&the_index, pathspec)
+-#define read_blob_data_from_cache(path, sz) read_blob_data_from_index(&the_index, (path), (sz))
+ #define hold_locked_index(lock_file, flags) repo_hold_locked_index(the_repository, (lock_file), (flags))
+ #endif
+ 
+-- 
+2.38.0.1509.g9445af83948
 
-> If that wasn't what you had intended, let me know. The series does not
-> apply as-is on top of 'master' (which is at eea7033409 (The twelfth
-> batch, 2022-11-14), at the time of writing).
-
-...just applying it on ab/various-leak-fixes won't *quite* do it, it'll
-also need the more recent "master", namely the now-landed
-rs/no-more-run-command-v.
