@@ -2,153 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8ADACC4332F
-	for <git@archiver.kernel.org>; Sat, 19 Nov 2022 02:51:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B7C2C4332F
+	for <git@archiver.kernel.org>; Sat, 19 Nov 2022 02:53:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233425AbiKSCu7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 18 Nov 2022 21:50:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51662 "EHLO
+        id S229613AbiKSCxf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 18 Nov 2022 21:53:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233366AbiKSCum (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Nov 2022 21:50:42 -0500
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1897CC4C3F
-        for <git@vger.kernel.org>; Fri, 18 Nov 2022 18:37:01 -0800 (PST)
-Received: by mail-lf1-x12f.google.com with SMTP id j16so11019420lfe.12
-        for <git@vger.kernel.org>; Fri, 18 Nov 2022 18:37:01 -0800 (PST)
+        with ESMTP id S229506AbiKSCxZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Nov 2022 21:53:25 -0500
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC74313D2D
+        for <git@vger.kernel.org>; Fri, 18 Nov 2022 18:53:23 -0800 (PST)
+Received: by mail-io1-xd2c.google.com with SMTP id 11so5235789iou.0
+        for <git@vger.kernel.org>; Fri, 18 Nov 2022 18:53:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mRdHmmWnnu5UfZgws2PFWVRcYApAT2YPskDo8sry/bs=;
-        b=RyLv3i6XZC4GQhCjQ7ZSZZeZf6cREM5+VAlwDWgiYSdS3dFrP6V6iQ3dkCz1A3bfGa
-         1AMkSxqOikB+PjzDcgWUv4BZIDSiugy3ng6MVRLmcWcbHaf1aZWfQ2npjLjEV4nUGYMn
-         4yVSkV/HC8pQAxKq/c8Ww/HyKIKikbMppdCxrngBwvB1m+uMWSMtms8wB5Kl91GpbhRu
-         CLEKZMDqsew+V8QJyQcjz+x83YVRP2fTDe07mT1VMoNRewdKmljYxqPwEehniG4FpnQm
-         5f5EgJF2mjThSF799ejc74ZCEhfnTEdJTm+Q5Isj9IDylUSoBYEKahaE6SC2JkLaG20I
-         2hzA==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=KEgkFI4ZUWJKHgpjZX50ulQ9ucEG2NjjwBzEz2Pz47Y=;
+        b=hNJ8IDgM1ageSwj0MURhU677JbJLwOIRYef87/l1WwTqas+AaIw3jCg0irtdOPj/QP
+         6CT1sNpaXb9W3i7twm4mHbKUUhBhsyyYxUGAST5jtApAHQFfFi0gqAQHz0LjrBYnUPJq
+         MPK5uX28snpbCdOx/+feMFCcRuNOqB2WIxqRAc+n5qLujUZrEQ7Ep31pWcMLYJk1b9r3
+         FZSFqrVHBnxN3hmkwxgUQjFzGrfR/OyzeSz2s75gf3l3h3t1VFy6HynQl5pbY7Bnp36+
+         yiGBH+n3jM96ZLEuUv3Bw45+izuX+khNGfngq7kMtnjeGJmktRBUKOFu4WI00fbOwujP
+         Df4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mRdHmmWnnu5UfZgws2PFWVRcYApAT2YPskDo8sry/bs=;
-        b=YBI+Op6aO+HQhyO0GZkwMyt9+bX6JrJ7u8d+aJ7ejr75tocAhVDfZq4T5N/HW3aGSO
-         yLTplgktBkxF5qNg1TXjhBCOFclfYqjkL1xHmmD9vfUab7RYMNGmTwijw8OumVmalFRe
-         SYaWVMz7TCEfsDQ6Cj9NxW5tyE2U2j+2GheiQChKYKJi+P2KeGb9Wi5Wv/Y56PRIO6GC
-         Y5p7+9FBrmvlsTtsJ1Ly1+KUaHF+mIPabBdgKFIQ7WZe07PElhboszux+AGC6MIEr9qd
-         7m3Y4eQwo13eUjmGr2Xtgnfv8x+95bwJTxdw2CyR1ax1SDM7QKM1zoeZ8lzu6JKZ82t4
-         3IZw==
-X-Gm-Message-State: ANoB5pmMgoHIEs1lr0Y1eHS/rOTo1A1lCSdnUb8uFP5Nru0Me0/v6Ybt
-        8/onoc/tltIThra3kxCJGLFEyob/p8Q+w3nDeQE=
-X-Google-Smtp-Source: AA0mqf686INjFdClQ4HQGZF87EEFyljKvrheKxSqHuGZ9iQ+c8fwdmKDIG2X+a6hr8HMDpX9+v1bsI9DRjMkAcm1fsE=
-X-Received: by 2002:a19:674a:0:b0:4b1:3931:af with SMTP id e10-20020a19674a000000b004b1393100afmr3609493lfj.394.1668825419388;
- Fri, 18 Nov 2022 18:36:59 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KEgkFI4ZUWJKHgpjZX50ulQ9ucEG2NjjwBzEz2Pz47Y=;
+        b=TI3EVQpOrkaKsibZyzkyHJHxt4fWTCEqOx9p2hos8guhDHlVk4oP5S2NNAl3IAah56
+         F9juKtlpOZz5mr2Rjd31MZcEYb9b0vlEzuK0vH2MSR2qmVUFP76WBXnKJNhHm8gIKHlr
+         1U1VxLwCWh26c2ZbDRyhjI0QklvAX3TJms2yF+OhCXAtaeqtTSUfBJ7kolrkEdn7QKZ7
+         iBBYk0NkPJ+o8LqcB1sZP6QM2EDWx+0UgUQ3y2Bh7LVXnop68eFezg6sN+tAhYMM7RSM
+         7fW5Xf921G7KUmi91481tpjg0d4GwaZ++QciXD10GCK2u8cG8E8dhoQ0gTDtv64DxsnB
+         e9gQ==
+X-Gm-Message-State: ANoB5pnYklbJXs247G7gfwh++6uZt20bG1tE2TlVGimkC6u/SiEFu9BD
+        GiNkUU8EZ4BC7IuUDbgpRTyFnA==
+X-Google-Smtp-Source: AA0mqf7As8XY3hEVNiwVodwo64+dJNvefmJ6VZpIUvUgIkTVOtrpv9q2r0DXNgpMQXpX20VTRCaJ0Q==
+X-Received: by 2002:a5d:9505:0:b0:6a3:ebdc:6ef8 with SMTP id d5-20020a5d9505000000b006a3ebdc6ef8mr69333iom.189.1668826403323;
+        Fri, 18 Nov 2022 18:53:23 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id a4-20020a021604000000b003759adf748dsm1858843jaa.64.2022.11.18.18.53.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 18 Nov 2022 18:53:22 -0800 (PST)
+Date:   Fri, 18 Nov 2022 21:53:21 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 2/2] tests(mingw): avoid very slow `mingw_test_cmp`
+Message-ID: <Y3hFITt+8VUubC8v@nand.local>
+References: <pull.1309.v2.git.1662469859.gitgitgadget@gmail.com>
+ <pull.1309.v3.git.1668290855.gitgitgadget@gmail.com>
+ <a7f4265ceb26c6dd9d347ef4cbef2aac7d60bf13.1668290855.git.gitgitgadget@gmail.com>
+ <Y3B36HjDJhIY5jNz@nand.local>
+ <xmqqv8nbkg77.fsf@gitster.g>
 MIME-Version: 1.0
-References: <pull.1367.v3.git.1665269538608.gitgitgadget@gmail.com>
- <pull.1367.v4.git.1667714666810.gitgitgadget@gmail.com> <CAOLTT8TzpfoH7pz7gxgFvNWOaUZUcg1q_Tap+2anwHfAUgDV8Q@mail.gmail.com>
- <CABPp-BHaKH4sOPx2tx7CU+Uymvtu=mU1ZweGBDdWvhb-FgGA_Q@mail.gmail.com>
- <CAOLTT8QOr-zTHBPLx5jibzQ6Co8a3VApgLEGRu0b+ht-VJh0nw@mail.gmail.com>
- <CAOLTT8QPPJ-pPvr9r3nJQgBg_7xCp5Ys=dd9nhi6fhgW6gYLow@mail.gmail.com> <CAOLTT8S8e_0LaEFLD4B4F=u9cKPtdPvp7tWJoEf3Z4Z9Bw6SUw@mail.gmail.com>
-In-Reply-To: <CAOLTT8S8e_0LaEFLD4B4F=u9cKPtdPvp7tWJoEf3Z4Z9Bw6SUw@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 18 Nov 2022 18:36:00 -0800
-Message-ID: <CABPp-BEvJWAWkKsknAqYVs16GuStmgzetkHXiSgqkYLdAhfPPw@mail.gmail.com>
-Subject: Re: [PATCH v4] sparse-checkout.txt: new document with sparse-checkout directions
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Victoria Dye <vdye@github.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>,
-        Matheus Tavares <matheus.bernardino@usp.br>,
-        Glen Choo <chooglen@google.com>,
-        Martin von Zweigbergk <martinvonz@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqv8nbkg77.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 16, 2022 at 6:33 AM ZheNing Hu <adlternative@gmail.com> wrote:
+On Fri, Nov 18, 2022 at 03:15:08PM -0800, Junio C Hamano wrote:
+> Taylor Blau <me@ttaylorr.com> writes:
 >
-> ZheNing Hu <adlternative@gmail.com> =E4=BA=8E2022=E5=B9=B411=E6=9C=8816=
-=E6=97=A5=E5=91=A8=E4=B8=89 18:10=E5=86=99=E9=81=93=EF=BC=9A
-> >
-> > ZheNing Hu <adlternative@gmail.com> =E4=BA=8E2022=E5=B9=B411=E6=9C=8816=
-=E6=97=A5=E5=91=A8=E4=B8=89 18:04=E5=86=99=E9=81=93=EF=BC=9A
-> > >
-> > > Elijah Newren <newren@gmail.com> =E4=BA=8E2022=E5=B9=B411=E6=9C=8816=
-=E6=97=A5=E5=91=A8=E4=B8=89 13:49=E5=86=99=E9=81=93=EF=BC=9A
-> > > >
-> > > > Perhaps it's worth noting why I think the sparse specification shou=
-ld
-> > > > be extended when dealing with the index:
-> > > >
-> > > >   * "mergy" commands (merge, rebase, cherry-pick, am, revert) can
-> > > > modify the index outside the sparsity patterns, without creating a
-> > > > commit.
-> > > >   * `git commit` (or `rebase --continue`, or whatever) will create =
-a
-> > > > commit from whatever staged versions of files there are
-> > > >   =3D> `git status` should show what is about to be committed
-> > > >   =3D> `git diff --cached --name-only` ought to be usable to show w=
-hat
-> > > > is to be committed
-> > > >   =3D> `git grep --cached ...` ought to be usable to search through=
- what
-> > > > is about to be committed
-> > > >
-> > > > See also https://lore.kernel.org/git/CABPp-BESkb=3D04vVnqTvZyeCa+7c=
-ymX7rosUW3rhtA02khMJKHA@mail.gmail.com/
-> > > > (starting with the paragraph with "leery" in it), and the thread
-> > > > starting there.  If the sparse specification is not expanded, users
-> > > > will get some nasty surprises, and the only other alternative I can
-> > > > think of to avoid such surprises would be making several commands
-> > > > always run full tree.  Running full-tree with a non-default option =
-to
-> > > > run sparse forces behavior A folks into a "pick your poison"
-> > > > situation, which is not nice.  Extending the sparse specification t=
-o
-> > > > include files whose index entries do not match HEAD for index-relat=
-ed
-> > > > operations provides the nice middle ground that avoids such usabili=
-ty
-> > > > problems while also allowing users to avoid operating on a full tre=
-e.
-> > > >
-> > >
-> > > I can understand the reason why we need to extend sparse specificatio=
-n:
-> > > index often needs to handle files that are not in the sparse pattern.
-> > >
-> >
-> > I might have one more question: when we use "git diff -cached HEAD~",
-> > what is the best way to check if an index entry is the same as HEAD her=
-e?
-> > Do we need to run "git diff --cached HEAD <file>" again?
+> > One thing that the commit message doesn't allude to (that is covered in
+> > the earlier discussion) is why it is important to pass
+> > `--ignore-cr-at-eol`. I think that is worth mentioning here.
 >
-> I found that git commit will execute index_differs_from() to determine
-> whether the index has changed, It defaults to comparing HEAD.
-> But if we use git commit --amend, index_differs_from() will compare
-> to HEAD~.
->
-> the docs say:
->
->        * When modifying or showing results from the index, the sparse
->          specification is the set of files with a clear SKIP_WORKTREE bit
->          or that differ in the index from HEAD.
->
-> I wonder if there is some description error here? Not always "from HEAD"?
+> Isn't it because Git on the platform is expected to use CRLF in
+> certain places, unlike on other platforms where LF is used, but the
+> platform port hasn't adjusted tests to match that expectation?  And
+> vice versa, where Git is expected to produce LF terminated text
+> everywhere but the expected output is not "ported" to force LF
+> termination and instead produces CRLF terminated text on platforms
+> whose native line ending is CRLF?
 
-Perhaps this part of the document will help:
+Yes, I think that's right. My suggestion to Johannes was to (a) make
+sure that your and my understanding is correct, and (b) to memorialize
+that understanding in the commit message itself.
 
-+  * commands that always ignore sparsity since commits must be full-tree
-+
-+      * archive
-+      * bundle
-+      * commit
-+      * format-patch
-+      * fast-export
-+      * fast-import
-+      * commit-tree
+> Use of "ignore-cr-at-eol" may allow such tests that are not ported
+> correctly to prepare expected output with a "wrong" line ending and
+> still pass, and I do think it may be an expedite way to make tests
+> appear to pass.
+>
+> But I worry that it may not be a good thing for the health of the
+> Windows port in the longer term.
+
+I share your concerns, too.
+
+Thanks,
+Taylor
