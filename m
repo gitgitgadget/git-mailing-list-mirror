@@ -2,118 +2,265 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B4BDDC4332F
-	for <git@archiver.kernel.org>; Sun, 20 Nov 2022 19:46:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D0ACC43219
+	for <git@archiver.kernel.org>; Sun, 20 Nov 2022 20:30:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229755AbiKTTqO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Nov 2022 14:46:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46264 "EHLO
+        id S229604AbiKTUZB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Nov 2022 15:25:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229721AbiKTTqL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Nov 2022 14:46:11 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98AC32F01B
-        for <git@vger.kernel.org>; Sun, 20 Nov 2022 11:46:09 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id d1so4910766wrs.12
-        for <git@vger.kernel.org>; Sun, 20 Nov 2022 11:46:09 -0800 (PST)
+        with ESMTP id S229551AbiKTUZA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Nov 2022 15:25:00 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F24E028E0C
+        for <git@vger.kernel.org>; Sun, 20 Nov 2022 12:24:58 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id me22so7809984ejb.8
+        for <git@vger.kernel.org>; Sun, 20 Nov 2022 12:24:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6tvu4Rk8BvH45jV5w5NDd4P4Pc1T8C0DgMxAckJlfHU=;
-        b=gOcYKSAPFSzhlnPocQm0uOh+4cW7ffbbb9NCH5xqFD2JZWhkJ3LJQNBXODyv4+401e
-         s3BIeF0FBoIoz6vz6EQOIZih9RQjl6+HGcADCcn16ud38/UH+uI5aZliD6AIHEav7vNy
-         6a/2H1tEKwUUKBybaeU71/x9YspqCw4B8EZtcGoE6SpbQSxxS9ouvqx7Oo4+fy2CUFbe
-         6yRapE5/hbBLj3TUs4zk6qRD8bC1yT1NMI1NgsNAnFk7EG/rtKgrchtRKcNEUCRKgT+u
-         7bGr0dbviwQOobjrYMXcT0uXunYQxZULbrf+cl5wGaaT9j2c3Qu4UvqdjpZqeqF718Sg
-         ZuTQ==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=bGf8SM5kQloOwtdkJ/1iFsxq2zrx9tCso6j0QpFqFLk=;
+        b=kuG98GYfyfuugNkwwxidqAsd4BSeYcVML5T0OpyhMIlmW9/r8Jsqldq0+UPCLIUTJn
+         Q8Mu1zi16kSisXs82OymhO+dtuFYxDYDnkuqvp7wDnli386C+1GPy16cYR4IsfhZ/4ph
+         KW8hjKfNguu8Un/Y/pwkLtNFXz4oHqvsmxUVgpt2c/aGubCdrs3Qj4baSn8169EkEPeQ
+         4ElwDKcCltMkO3ZYOpMLWY+LWTh1QRPrXBm+kKx3uABgGGTDxHXR8cQ1Twrxu45eicvP
+         drxA17QZlG9GU78wQGi5rvgM+Twl1ePvTQgDZvSi+uiHzBo9rUC+800or6703VLMlLc7
+         LPbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6tvu4Rk8BvH45jV5w5NDd4P4Pc1T8C0DgMxAckJlfHU=;
-        b=xO6jLjZwAimtqi4t23u0zuQxvLqQg3j8tdKT3U4llazw7B7sz2n0fyrauYVOM6jlNQ
-         hTSyM1JYSDoE+5D0XR9sWuBU5V32T3i5Fa6ELx7nO4DQxYV3Yykoo/FzqH6d0no6Hkdg
-         sPOB0NUb2w3UM+hAWT/ydv3tgzNbqMOVmy/3FfFMnFKr1ox+89lLOzwGa4eooKE6AVfM
-         gF0A3h15jLqzjg/OlpffG4pan2RWOqgZL48bvE0P8QyXdGbYCa5S1On4pfFXBrwEDk5e
-         hjsHWZ3dZvBjqp+BqxxVF7aL3CHvTbprPx18JTUqhzOiXiOJkQETPTACu17iHqqdgMBM
-         uYsg==
-X-Gm-Message-State: ANoB5pnO4s9PdDMXRAJf98InLmUTKUbv88CQyzLxnUWEXZsc2pa1cVy4
-        qyFo+BIPrTZD0eeFW+3Q754=
-X-Google-Smtp-Source: AA0mqf7AYTkbxYkjNGSyJnicZcGCLpz0fq3fooDHyWWAuykl7V6h8XdXO4BcllnaKsUY4IBD/jmBoA==
-X-Received: by 2002:adf:d22a:0:b0:236:c5fc:5536 with SMTP id k10-20020adfd22a000000b00236c5fc5536mr9221980wrh.664.1668973567452;
-        Sun, 20 Nov 2022 11:46:07 -0800 (PST)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id bg28-20020a05600c3c9c00b003cfaae07f68sm17633398wmb.17.2022.11.20.11.46.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 20 Nov 2022 11:46:07 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <35abf6a0-982c-42d3-78c8-0298b53e6faa@dunelm.org.uk>
-Date:   Sun, 20 Nov 2022 19:46:04 +0000
+        bh=bGf8SM5kQloOwtdkJ/1iFsxq2zrx9tCso6j0QpFqFLk=;
+        b=uL/GvsvgsfIW74jnq75IXTcrREoiExyP1MsF008f3C2yeT8Xx3DYxlZ1DGRH6mDocH
+         v1I6XiR3iwbgv0rKt8oNqUur54gt8W85vfsmJFf2eF5coRF4b6ynxTRGwaTSEHduilMq
+         awfm1x7ymUzit/YqXuz0xC5YwMHYmRgNM+QsnXzbv+UQgFhQSdNhNXaN+qIZQv2MRdH3
+         NhBVLt7hMHEn+MeNewSy67p+s8QHdhcN1qfPZa8HA+uVOrzVlY8wG8eUGEIKYrbzTL/g
+         Jo/RGz2swzDs3puH8L45W1wWm2Rw6WpAbmTDpXDehdHQ25aDQiq4tEMAB1yU9Uo6oNiT
+         p1mA==
+X-Gm-Message-State: ANoB5pkbMN53P/XdMmPQHFeVqKiyo1P1FaF/jUcri3CFGMZRoNI1Qlm7
+        VYoOqlfsb0FJHhk4HeJXiKo=
+X-Google-Smtp-Source: AA0mqf5mccmxtqNEIHsyM1mdXrXmm6FTSGz4Up6IbkidB0FT1c8E7UgyLP6ZcZu+gM7hHnilyLPZbw==
+X-Received: by 2002:a17:906:455:b0:7ad:b97e:283a with SMTP id e21-20020a170906045500b007adb97e283amr12607502eja.567.1668975896949;
+        Sun, 20 Nov 2022 12:24:56 -0800 (PST)
+Received: from localhost (94-21-23-70.pool.digikabel.hu. [94.21.23.70])
+        by smtp.gmail.com with ESMTPSA id tz6-20020a170907c78600b0079fe11e97cesm4260692ejc.48.2022.11.20.12.24.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 20 Nov 2022 12:24:56 -0800 (PST)
+Date:   Sun, 20 Nov 2022 21:24:54 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Alison Winters via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Alison Winters <alisonatwork@outlook.com>
+Subject: Re: [PATCH 1/2] completion: add optional ignore-case when matching
+ refs
+Message-ID: <20221120202454.GB4039@szeder.dev>
+References: <pull.1374.git.git.1667669315.gitgitgadget@gmail.com>
+ <cef9a12b5752fc62151296e1b679fbe973556998.1667669315.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: What's cooking in git.git (Nov 2022, #04; Fri, 18)
-Content-Language: en-US
-To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-References: <Y3g95OYdwzq2OP3z@nand.local>
-In-Reply-To: <Y3g95OYdwzq2OP3z@nand.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <cef9a12b5752fc62151296e1b679fbe973556998.1667669315.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Taylor
-
-On 19/11/2022 02:22, Taylor Blau wrote:
-> * ab/various-leak-fixes (2022-11-08) 18 commits
->    (merged to 'next' on 2022-11-18 at 8828bb7161)
->   + built-ins: use free() not UNLEAK() if trivial, rm dead code
->   + revert: fix parse_options_concat() leak
->   + cherry-pick: free "struct replay_opts" members
->   + rebase: don't leak on "--abort"
->   + connected.c: free the "struct packed_git"
->   + sequencer.c: fix "opts->strategy" leak in read_strategy_opts()
->   + ls-files: fix a --with-tree memory leak
->   + revision API: call graph_clear() in release_revisions()
->   + unpack-file: fix ancient leak in create_temp_file()
->   + built-ins & libs & helpers: add/move destructors, fix leaks
->   + dir.c: free "ident" and "exclude_per_dir" in "struct untracked_cache"
->   + read-cache.c: clear and free "sparse_checkout_patterns"
->   + commit: discard partial cache before (re-)reading it
->   + {reset,merge}: call discard_index() before returning
->   + tests: mark tests as passing with SANITIZE=leak
->   + Merge branch 'pw/rebase-no-reflog-action' into ab/various-leak-fixes
->   + rebase: stop exporting GIT_REFLOG_ACTION
->   + sequencer: stop exporting GIT_REFLOG_ACTION
->   (this branch is used by ab/merge-index-prep.)
+On Sat, Nov 05, 2022 at 05:28:34PM +0000, Alison Winters via GitGitGadget wrote:
+> From: Alison Winters <alisonatwork@outlook.com>
 > 
->   Various leak fixes.
+> If GIT_COMPLETION_IGNORE_CASE=1 is set, --ignore-case will be added to
+> git for-each-ref calls so that branches and tags can be matched case
+> insensitively.
 > 
->   Will merge to 'master'.
->   source: <cover-v2-00.15-00000000000-20221108T172650Z-avarab@gmail.com>
-
-Below pw/rabse-no-reflog-action is marked for cooking in next but it 
-will be merged to master if you merge this series to master.
-
-Best Wishes
-
-Phillip
-
-> * pw/rebase-no-reflog-action (2022-11-09) 2 commits
->    (merged to 'next' on 2022-11-14 at 790dadc8d3)
->   + rebase: stop exporting GIT_REFLOG_ACTION
->   + sequencer: stop exporting GIT_REFLOG_ACTION
->   (this branch is used by ab/merge-index-prep.)
+> Signed-off-by: Alison Winters <alisonatwork@outlook.com>
+> ---
+>  contrib/completion/git-completion.bash | 41 ++++++++++++++++++++++++++
+>  t/t9902-completion.sh                  | 16 ++++++++++
+>  2 files changed, 57 insertions(+)
 > 
->   Avoid setting GIT_REFLOG_ACTION to improve readability of the
->   sequencer internals.
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index ba5c395d2d8..8ed96a5b8b6 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -58,6 +58,11 @@
+>  #
+>  #     When set to "1" suggest all options, including options which are
+>  #     typically hidden (e.g. '--allow-empty' for 'git commit').
+> +#
+> +#   GIT_COMPLETION_IGNORE_CASE
+> +#
+> +#     When set to "1", suggest refs that match case insensitively (e.g.,
+> +#     completing "FOO" on "git checkout f<TAB>").
+
+I wish the commit message and this comment would be more explicit
+about only the matching being case insensitive, but the words listed
+for completion will all have the same case as the files/refs/etc. that
+are being completed.
+
+I've already started writing a reply along the lines of "does this
+only work on case-insensitive filesystems?!" before finally realizing
+that's not how it works...
+
+>  case "$COMP_WORDBREAKS" in
+>  *:*) : great ;;
+> @@ -644,8 +649,15 @@ __git_complete_index_file ()
+>  __git_heads ()
+>  {
+>  	local pfx="${1-}" cur_="${2-}" sfx="${3-}"
+> +	local ignore_case=""
+> +
+> +	if test "${GIT_COMPLETION_IGNORE_CASE-}" = "1"
+> +	then
+> +		ignore_case="--ignore-case"
+> +	fi
+
+I find these six lines a bit too verbose for what there are doing,
+especially since the same six lines are added a couple of times.  I
+think it could be shortened to just a single line with the "use
+alternate value" parameter expansion like this:
+
+    local ignore_case=${GIT_COMPLETION_IGNORE_CASE+--ignore-case}
+
+>  	__git for-each-ref --format="${pfx//\%/%%}%(refname:strip=2)$sfx" \
+> +			$ignore_case \
+
+In fact, we could eliminate that new $ignore_case local variable
+entirely by adding that parameter expansion right here.
+
+>  			"refs/heads/$cur_*" "refs/heads/$cur_*/**"
+>  }
+>  
+> @@ -657,8 +669,15 @@ __git_heads ()
+>  __git_remote_heads ()
+>  {
+>  	local pfx="${1-}" cur_="${2-}" sfx="${3-}"
+> +	local ignore_case=""
+> +
+> +	if test "${GIT_COMPLETION_IGNORE_CASE-}" = "1"
+> +	then
+> +		ignore_case="--ignore-case"
+> +	fi
+>  
+>  	__git for-each-ref --format="${pfx//\%/%%}%(refname:strip=2)$sfx" \
+> +			$ignore_case \
+>  			"refs/remotes/$cur_*" "refs/remotes/$cur_*/**"
+>  }
+>  
+> @@ -667,8 +686,15 @@ __git_remote_heads ()
+>  __git_tags ()
+>  {
+>  	local pfx="${1-}" cur_="${2-}" sfx="${3-}"
+> +	local ignore_case=""
+> +
+> +	if test "${GIT_COMPLETION_IGNORE_CASE-}" = "1"
+> +	then
+> +		ignore_case="--ignore-case"
+> +	fi
+>  
+>  	__git for-each-ref --format="${pfx//\%/%%}%(refname:strip=2)$sfx" \
+> +			$ignore_case \
+>  			"refs/tags/$cur_*" "refs/tags/$cur_*/**"
+>  }
+>  
+> @@ -682,12 +708,19 @@ __git_dwim_remote_heads ()
+>  {
+>  	local pfx="${1-}" cur_="${2-}" sfx="${3-}"
+>  	local fer_pfx="${pfx//\%/%%}" # "escape" for-each-ref format specifiers
+> +	local ignore_case=""
+> +
+> +	if test "${GIT_COMPLETION_IGNORE_CASE-}" = "1"
+> +	then
+> +		ignore_case="--ignore-case"
+> +	fi
+>  
+>  	# employ the heuristic used by git checkout and git switch
+>  	# Try to find a remote branch that cur_es the completion word
+>  	# but only output if the branch name is unique
+>  	__git for-each-ref --format="$fer_pfx%(refname:strip=3)$sfx" \
+>  		--sort="refname:strip=3" \
+> +		$ignore_case \
+>  		"refs/remotes/*/$cur_*" "refs/remotes/*/$cur_*/**" | \
+>  	uniq -u
+>  }
+> @@ -713,6 +746,7 @@ __git_refs ()
+>  	local pfx="${3-}" cur_="${4-$cur}" sfx="${5-}"
+>  	local match="${4-}"
+>  	local fer_pfx="${pfx//\%/%%}" # "escape" for-each-ref format specifiers
+> +	local ignore_case=""
+>  
+>  	__git_find_repo_path
+>  	dir="$__git_repo_path"
+> @@ -735,6 +769,11 @@ __git_refs ()
+>  		fi
+>  	fi
+>  
+> +	if test "${GIT_COMPLETION_IGNORE_CASE-}" = "1"
+> +	then
+> +		ignore_case="--ignore-case"
+> +	fi
+> +
+>  	if [ "$list_refs_from" = path ]; then
+>  		if [[ "$cur_" == ^* ]]; then
+>  			pfx="$pfx^"
+> @@ -765,6 +804,7 @@ __git_refs ()
+>  			;;
+>  		esac
+>  		__git_dir="$dir" __git for-each-ref --format="$fer_pfx%($format)$sfx" \
+> +			$ignore_case \
+>  			"${refs[@]}"
+>  		if [ -n "$track" ]; then
+>  			__git_dwim_remote_heads "$pfx" "$match" "$sfx"
+> @@ -787,6 +827,7 @@ __git_refs ()
+>  			$match*)	echo "${pfx}HEAD$sfx" ;;
+>  			esac
+>  			__git for-each-ref --format="$fer_pfx%(refname:strip=3)$sfx" \
+> +				$ignore_case \
+>  				"refs/remotes/$remote/$match*" \
+>  				"refs/remotes/$remote/$match*/**"
+>  		else
+> diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+> index 43de868b800..f62a395d827 100755
+> --- a/t/t9902-completion.sh
+> +++ b/t/t9902-completion.sh
+> @@ -2255,6 +2255,22 @@ test_expect_success 'checkout completes ref names' '
+>  	EOF
+>  '
+>  
+> +test_expect_success 'checkout does not match ref names of a different case' '
+> +	test_completion "git checkout M" ""
+> +'
+> +
+> +test_expect_success 'checkout matches case insensitively with GIT_COMPLETION_IGNORE_CASE' '
+> +	(
+> +		. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
+
+I don't think it's necessary to source the completion script here,
+because the test script's main shell process has already sourced it,
+and its functions are visible in this test's subshell as well.
+
+(Yeah, there are a few test cases near the end that do (re-)source the
+completion script, but they do so because they must invalidate the
+cache variables used by the completion script; this case-insensitive
+match feature, however, doesn't involve any of those cache variables.)
+
+> +		GIT_COMPLETION_IGNORE_CASE=1 && export GIT_COMPLETION_IGNORE_CASE &&
+
+There is no need to export this variable, because only a handful of
+completion helper functions look at it, which are invoked in this same
+shell process (or perhaps in one of its subshells, but this variable
+will be visible there are all the same).
+
+> +		test_completion "git checkout M" <<-\EOF
+> +		main Z
+> +		mybranch Z
+> +		mytag Z
+> +		EOF
+> +	)
+> +'
+> +
+>  test_expect_success 'git -C <path> checkout uses the right repo' '
+>  	test_completion "git -C subdir -C subsubdir -C .. -C ../otherrepo checkout b" <<-\EOF
+>  	branch-in-other Z
+> -- 
+> gitgitgadget
 > 
->   Will cook in 'next'.
->   source: <31df037eafede799c2ef27df66c6da309b719b1b.1668003719.git.gitgitgadget@gmail.com>
