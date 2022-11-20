@@ -2,190 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D2DCDC4332F
-	for <git@archiver.kernel.org>; Sun, 20 Nov 2022 19:20:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B4BDDC4332F
+	for <git@archiver.kernel.org>; Sun, 20 Nov 2022 19:46:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229622AbiKTTUX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Nov 2022 14:20:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39748 "EHLO
+        id S229755AbiKTTqO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Nov 2022 14:46:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbiKTTUW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Nov 2022 14:20:22 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3FC5248D6
-        for <git@vger.kernel.org>; Sun, 20 Nov 2022 11:20:19 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id x17so3509504wrn.6
-        for <git@vger.kernel.org>; Sun, 20 Nov 2022 11:20:19 -0800 (PST)
+        with ESMTP id S229721AbiKTTqL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Nov 2022 14:46:11 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98AC32F01B
+        for <git@vger.kernel.org>; Sun, 20 Nov 2022 11:46:09 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id d1so4910766wrs.12
+        for <git@vger.kernel.org>; Sun, 20 Nov 2022 11:46:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=p0wssExpUkCnNGFteFir8gzls/UIHUwIRXW7eB7LqKY=;
-        b=piyyLXF7NO0iE/FytSZPt8QFsDGxw9VjLdGzqvjoJNSJKF82Zcb8uuaPYmQG8bmNPp
-         W5xyXefFA4e65jjB0314MEObYKqD9QuJ99bGsDNJMcvCP6qE4n1adaJ2UeOUcA8N1unY
-         b2JhAcleiajeC1+CM4+G9FXHekwuIzbOOK2d0LfY1SCk/gNxNkcl3RFQ8PDGyEGapOs4
-         OlG+3vQZPvlQkstfsxejF4QJCNsSm8Nz89diMHedn7GbnamRDUa9Xsd6w513uTwXhuGn
-         utulam6kdohaZ291uhK2X/wAPHRj4YwVMqoZfAb1VyzjiIznS8n+A1rwJ5k4aDd4fSn3
-         ARKQ==
+        h=content-transfer-encoding:in-reply-to:references:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6tvu4Rk8BvH45jV5w5NDd4P4Pc1T8C0DgMxAckJlfHU=;
+        b=gOcYKSAPFSzhlnPocQm0uOh+4cW7ffbbb9NCH5xqFD2JZWhkJ3LJQNBXODyv4+401e
+         s3BIeF0FBoIoz6vz6EQOIZih9RQjl6+HGcADCcn16ud38/UH+uI5aZliD6AIHEav7vNy
+         6a/2H1tEKwUUKBybaeU71/x9YspqCw4B8EZtcGoE6SpbQSxxS9ouvqx7Oo4+fy2CUFbe
+         6yRapE5/hbBLj3TUs4zk6qRD8bC1yT1NMI1NgsNAnFk7EG/rtKgrchtRKcNEUCRKgT+u
+         7bGr0dbviwQOobjrYMXcT0uXunYQxZULbrf+cl5wGaaT9j2c3Qu4UvqdjpZqeqF718Sg
+         ZuTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=p0wssExpUkCnNGFteFir8gzls/UIHUwIRXW7eB7LqKY=;
-        b=6HO0NGjCjNOvgLCyzmSv/x2n3EqS+TQM7WO0V58JUvSLX/DKgUkieIIDQlm9Maq3xD
-         BHG82hxUyn1cyHYinPCo0ZWQYmOjzfq2VN1jOdMlP4vDaq3+tHD+ioCvCohbUyGnTbDX
-         nJXHsVwSRt7JEZ0Xo4y54IqS1CCpHDhds30LZ0DFiThhs/iKghVi7L4xB9ZtNCgEkWgj
-         qLRvhSVCEawqRtsnLLskYe1+8N/sQ5/UOha6N5yXPBI/iGLCW631QAIMUSzctjmcavHe
-         Jpsu+FjIUVeVEhSktz3FSTqSljxBHXLCNI+koqwqE/NZMYlaq7biA6RmsMZiqs8BOsD7
-         EnFg==
-X-Gm-Message-State: ANoB5pk4lqZw9xqZ7NWl/9KtSpkVTkRMnVcBoPgMSWHWcIIEOXLBLdhE
-        pH5B2pey2sehCDmd5AC7Q105qdas0cg=
-X-Google-Smtp-Source: AA0mqf7DXPsTDiuWKWe84ReTWXIyy7hDnW7YlbrpQ3Gd8hkjWorsquHG+5HbVx6dn3x72AbFVp9joQ==
-X-Received: by 2002:adf:de08:0:b0:236:e271:ead4 with SMTP id b8-20020adfde08000000b00236e271ead4mr882598wrm.426.1668972018136;
-        Sun, 20 Nov 2022 11:20:18 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w17-20020adfcd11000000b0022e653f5abbsm9417097wrm.69.2022.11.20.11.20.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Nov 2022 11:20:17 -0800 (PST)
-Message-Id: <pull.1424.git.1668972017089.gitgitgadget@gmail.com>
-From:   "Sean Allred via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 20 Nov 2022 19:20:16 +0000
-Subject: [PATCH] var: add GIT_SEQUENCE_EDITOR variable
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=content-transfer-encoding:in-reply-to:references:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6tvu4Rk8BvH45jV5w5NDd4P4Pc1T8C0DgMxAckJlfHU=;
+        b=xO6jLjZwAimtqi4t23u0zuQxvLqQg3j8tdKT3U4llazw7B7sz2n0fyrauYVOM6jlNQ
+         hTSyM1JYSDoE+5D0XR9sWuBU5V32T3i5Fa6ELx7nO4DQxYV3Yykoo/FzqH6d0no6Hkdg
+         sPOB0NUb2w3UM+hAWT/ydv3tgzNbqMOVmy/3FfFMnFKr1ox+89lLOzwGa4eooKE6AVfM
+         gF0A3h15jLqzjg/OlpffG4pan2RWOqgZL48bvE0P8QyXdGbYCa5S1On4pfFXBrwEDk5e
+         hjsHWZ3dZvBjqp+BqxxVF7aL3CHvTbprPx18JTUqhzOiXiOJkQETPTACu17iHqqdgMBM
+         uYsg==
+X-Gm-Message-State: ANoB5pnO4s9PdDMXRAJf98InLmUTKUbv88CQyzLxnUWEXZsc2pa1cVy4
+        qyFo+BIPrTZD0eeFW+3Q754=
+X-Google-Smtp-Source: AA0mqf7AYTkbxYkjNGSyJnicZcGCLpz0fq3fooDHyWWAuykl7V6h8XdXO4BcllnaKsUY4IBD/jmBoA==
+X-Received: by 2002:adf:d22a:0:b0:236:c5fc:5536 with SMTP id k10-20020adfd22a000000b00236c5fc5536mr9221980wrh.664.1668973567452;
+        Sun, 20 Nov 2022 11:46:07 -0800 (PST)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id bg28-20020a05600c3c9c00b003cfaae07f68sm17633398wmb.17.2022.11.20.11.46.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 20 Nov 2022 11:46:07 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <35abf6a0-982c-42d3-78c8-0298b53e6faa@dunelm.org.uk>
+Date:   Sun, 20 Nov 2022 19:46:04 +0000
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Sean Allred <code@seanallred.com>,
-        Sean Allred <allred.sean@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: What's cooking in git.git (Nov 2022, #04; Fri, 18)
+Content-Language: en-US
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+References: <Y3g95OYdwzq2OP3z@nand.local>
+In-Reply-To: <Y3g95OYdwzq2OP3z@nand.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Sean Allred <allred.sean@gmail.com>
+Hi Taylor
 
-Provides the same benefits to scripts as exposing GIT_EDITOR, but
-allows distinguishing the 'sequence' editor from the 'core' editor.
+On 19/11/2022 02:22, Taylor Blau wrote:
+> * ab/various-leak-fixes (2022-11-08) 18 commits
+>    (merged to 'next' on 2022-11-18 at 8828bb7161)
+>   + built-ins: use free() not UNLEAK() if trivial, rm dead code
+>   + revert: fix parse_options_concat() leak
+>   + cherry-pick: free "struct replay_opts" members
+>   + rebase: don't leak on "--abort"
+>   + connected.c: free the "struct packed_git"
+>   + sequencer.c: fix "opts->strategy" leak in read_strategy_opts()
+>   + ls-files: fix a --with-tree memory leak
+>   + revision API: call graph_clear() in release_revisions()
+>   + unpack-file: fix ancient leak in create_temp_file()
+>   + built-ins & libs & helpers: add/move destructors, fix leaks
+>   + dir.c: free "ident" and "exclude_per_dir" in "struct untracked_cache"
+>   + read-cache.c: clear and free "sparse_checkout_patterns"
+>   + commit: discard partial cache before (re-)reading it
+>   + {reset,merge}: call discard_index() before returning
+>   + tests: mark tests as passing with SANITIZE=leak
+>   + Merge branch 'pw/rebase-no-reflog-action' into ab/various-leak-fixes
+>   + rebase: stop exporting GIT_REFLOG_ACTION
+>   + sequencer: stop exporting GIT_REFLOG_ACTION
+>   (this branch is used by ab/merge-index-prep.)
+> 
+>   Various leak fixes.
+> 
+>   Will merge to 'master'.
+>   source: <cover-v2-00.15-00000000000-20221108T172650Z-avarab@gmail.com>
 
-See also 44fcb4977cbae67f4698306ccfe982420ceebcbf.
+Below pw/rabse-no-reflog-action is marked for cooking in next but it 
+will be merged to master if you merge this series to master.
 
-Signed-off-by: Sean Allred <allred.sean@gmail.com>
----
-    var: add GIT_SEQUENCE_EDITOR variable
-    
-    In my case, I'm overriding the sequence editor in git rebase -i to do
-    some pre-processing on the todo file, but I'd still like to open up the
-    editor for further manipulation/verification of the todo steps. Just
-    using GIT_EDITOR here will clobber folks' expectations that their
-    custom-built sequence editor pops up (e.g. VSCode or Git Cola).
+Best Wishes
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1424%2Fvermiculus%2Fsa%2Fgit-var-sequence-editor-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1424/vermiculus/sa/git-var-sequence-editor-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1424
+Phillip
 
- Documentation/git-var.txt |  7 +++++++
- builtin/var.c             | 11 +++++++++++
- t/t0007-git-var.sh        | 38 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 56 insertions(+)
-
-diff --git a/Documentation/git-var.txt b/Documentation/git-var.txt
-index 6aa521fab23..764a94b2a1f 100644
---- a/Documentation/git-var.txt
-+++ b/Documentation/git-var.txt
-@@ -49,6 +49,13 @@ ifdef::git-default-editor[]
-     The build you are using chose '{git-default-editor}' as the default.
- endif::git-default-editor[]
- 
-+GIT_SEQUENCE_EDITOR::
-+    Text editor for use by Git sequencer commands. Like `GIT_EDITOR`,
-+    the value is meant to be interpreted by the shell when it is used.
-+    The order of preference is the `$GIT_SEQUENCE_EDITOR` environment
-+    variable, then `sequence.editor` configuration, and then the value
-+    of `git var GIT_EDITOR`.
-+
- GIT_PAGER::
-     Text viewer for use by Git commands (e.g., 'less').  The value
-     is meant to be interpreted by the shell.  The order of preference
-diff --git a/builtin/var.c b/builtin/var.c
-index 491db274292..9a2d31dc4aa 100644
---- a/builtin/var.c
-+++ b/builtin/var.c
-@@ -19,6 +19,16 @@ static const char *editor(int flag)
- 	return pgm;
- }
- 
-+static const char *sequence_editor(int flag)
-+{
-+	const char *pgm = git_sequence_editor();
-+
-+	if (!pgm && flag & IDENT_STRICT)
-+		die("Terminal is dumb, but EDITOR unset");
-+
-+	return pgm;
-+}
-+
- static const char *pager(int flag)
- {
- 	const char *pgm = git_pager(1);
-@@ -41,6 +51,7 @@ static struct git_var git_vars[] = {
- 	{ "GIT_COMMITTER_IDENT", git_committer_info },
- 	{ "GIT_AUTHOR_IDENT",   git_author_info },
- 	{ "GIT_EDITOR", editor },
-+	{ "GIT_SEQUENCE_EDITOR", sequence_editor },
- 	{ "GIT_PAGER", pager },
- 	{ "GIT_DEFAULT_BRANCH", default_branch },
- 	{ "", NULL },
-diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
-index e56f4b9ac59..3199285fa7b 100755
---- a/t/t0007-git-var.sh
-+++ b/t/t0007-git-var.sh
-@@ -47,6 +47,44 @@ test_expect_success 'get GIT_DEFAULT_BRANCH with configuration' '
- 	)
- '
- 
-+test_expect_success 'get GIT_SEQUENCE_EDITOR without configuration' '
-+	(
-+		sane_unset GIT_SEQUENCE_EDITOR &&
-+		git var GIT_EDITOR >expect &&
-+		git var GIT_SEQUENCE_EDITOR >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'get GIT_SEQUENCE_EDITOR with configuration' '
-+	test_config sequence.editor foo &&
-+	(
-+		sane_unset GIT_SEQUENCE_EDITOR &&
-+		echo foo >expect &&
-+		git var GIT_SEQUENCE_EDITOR >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'get GIT_SEQUENCE_EDITOR with environment variable' '
-+	(
-+		sane_unset GIT_SEQUENCE_EDITOR &&
-+		echo bar >expect &&
-+		GIT_SEQUENCE_EDITOR=bar git var GIT_SEQUENCE_EDITOR >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'get GIT_SEQUENCE_EDITOR with configuration and environment variable' '
-+	test_config sequence.editor foo &&
-+	(
-+		sane_unset GIT_SEQUENCE_EDITOR &&
-+		echo bar >expect &&
-+		GIT_SEQUENCE_EDITOR=bar git var GIT_SEQUENCE_EDITOR >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- # For git var -l, we check only a representative variable;
- # testing the whole output would make our test too brittle with
- # respect to unrelated changes in the test suite's environment.
-
-base-commit: a0789512c5a4ae7da935cd2e419f253cb3cb4ce7
--- 
-gitgitgadget
+> * pw/rebase-no-reflog-action (2022-11-09) 2 commits
+>    (merged to 'next' on 2022-11-14 at 790dadc8d3)
+>   + rebase: stop exporting GIT_REFLOG_ACTION
+>   + sequencer: stop exporting GIT_REFLOG_ACTION
+>   (this branch is used by ab/merge-index-prep.)
+> 
+>   Avoid setting GIT_REFLOG_ACTION to improve readability of the
+>   sequencer internals.
+> 
+>   Will cook in 'next'.
+>   source: <31df037eafede799c2ef27df66c6da309b719b1b.1668003719.git.gitgitgadget@gmail.com>
