@@ -2,37 +2,39 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D6247C4332F
-	for <git@archiver.kernel.org>; Sun, 20 Nov 2022 10:06:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F99CC433FE
+	for <git@archiver.kernel.org>; Sun, 20 Nov 2022 10:08:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229542AbiKTKEC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Nov 2022 05:04:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58908 "EHLO
+        id S229642AbiKTKIA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Nov 2022 05:08:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbiKTKEB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Nov 2022 05:04:01 -0500
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6F2C5B5BA
-        for <git@vger.kernel.org>; Sun, 20 Nov 2022 02:03:53 -0800 (PST)
+        with ESMTP id S229462AbiKTKH7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Nov 2022 05:07:59 -0500
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02C5D711BD
+        for <git@vger.kernel.org>; Sun, 20 Nov 2022 02:07:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1668938616; bh=EcKmQ5veCg4m3iZn01IVc1Ay2wWY7PfxpGy0MQMckEo=;
+        t=1668938864; bh=ss9oV8qrC1wV+87ts7pUNHi/Ib17sbePie+Y5nQZtYw=;
         h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=oGx8JCXhpfngqWHj4tdRsuG0iORA82ZvaC0URRv26j8jR8atSvqNwhl3o+2KK0FUX
-         PsXZyCGQeP8PxIoy99tYB5t19l+0zVkWvn4M0+lBbT9lE8iiYl8Snvq3v+XOSRcR84
-         wqowv7fqkV5S+blSnva+WqS6VUv3p0B13qsf74jIWNgrfTDUCwHvTRP1nDmNgmp0yk
-         5+audS9vNxN4/VBG3/lYyyPBBCqtmmaNe0no8tBcHQ1Sps/YdCOvFROzoNcOgpFYyP
-         ExdQQBc40Qwr3wCcQSlPReGmZizVD8bRRYk2Bqo1Ryt7uFjKkhaPXcXhFay4FQ97gy
-         iiLIYXnmE474Q==
+        b=wKp9LcUnS/BglIMVG5jwWI06Y/Xc9T/Ql9p48d9MhBt608W7lQVpiQ/ZWfjQ3Mllx
+         d+HymgdBrhvrwOrKibKQCmPCD1TMlbMkFSQufWa00UZkqqprYNuqx4vgsibKzTaGXh
+         LT/U/RR0OvJ3upoazbTkHU6mWiNOMmz3vEdwkiUx61uRxLY4zd6wY1/JGrISuRvemO
+         2/8AyjBVov/bes/S3L9BytoUp9f3uuI6RslDU6uR1MikIv1V3/uyhtR+NWoQt3dOev
+         CXyDOIXWWc4sIO/rwPE3zpuxhESEWZ23+EY/9o0enPcGxzCo6iYNUjftiDwcwVP8T3
+         mgrsqY4pICmuw==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([91.47.154.159]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MxHUC-1p7Skq0Bi4-00xbEv; Sun, 20
- Nov 2022 11:03:36 +0100
-Message-ID: <d19c6cb4-611f-afea-8a14-5e58d7509113@web.de>
-Date:   Sun, 20 Nov 2022 11:03:35 +0100
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MQ8Wa-1oabya38U4-00M3TL; Sun, 20
+ Nov 2022 11:07:44 +0100
+Message-ID: <0c6722e6-e6bc-0f7d-5f0a-1d242359e37d@web.de>
+Date:   Sun, 20 Nov 2022 11:07:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.5.0
-Subject: [PATCH v2 0/3] pack-objects: fix and simplify --filter handling
+Subject: [PATCH v2 2/3] t5317: demonstrate failure to handle multiple --filter
+ options
+Content-Language: en-US
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git List <git@vger.kernel.org>
 Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
@@ -41,71 +43,94 @@ Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Christian Couder <chriscool@tuxfamily.org>,
         Jeff King <peff@peff.net>
 References: <c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.de>
-Content-Language: en-US
-In-Reply-To: <c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.de>
+ <d19c6cb4-611f-afea-8a14-5e58d7509113@web.de>
+In-Reply-To: <d19c6cb4-611f-afea-8a14-5e58d7509113@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:iUr2044uBkWn4eiDljBG3PkCZ4W/FbmZQqwTEYUW1suGDXYnmTh
- q+3F6B17gKtj7IRNoN94WkQLyWnCilTClbzWntme0SS0KDXN3RLd5i6KHv/jdkaCHqtFfpp
- yb7L7yA8BfQjXRx+HyZW1kuvaBbxrpvxQQ/JZsuIAMYpicZSaHrJW01lqgYohXAxrESFTgM
- SObUUds1z0khqBBjdBiDQ==
-UI-OutboundReport: notjunk:1;M01:P0:JKWWVpvWe0w=;GwKKiOXVUJNMCdS1ieuxFFKt+52
- W6cw93g1TS9tH7/hU1m3Pl/u4HwD8MbNHTPv1Ihzzn0xdCBbICXh6X15NJv98T48OtEYRoqYK
- lZwwA+2JtD9FebUB4pZwCt7nk4340Du4mni1iqbAeHDPI2mkpE8fIHg6N1r8sBL3r13hgOHlm
- BCtHLJQhm9tbhrL9PEyml0Qu7RWLN544vYW5ybWzE/Ia29y5t1NUpey1AfLtbBZ9bEO37q1bY
- T3HdIxV49apHel1YPAhU4OFSYRONaBNc6m908cKe7bRLcZM7m/FyDqsuJNTfzAMSAdkcOxNpw
- xLlATT6Y0OmryueYrBMak3WIBs/myb2wsPkB0IPN3utXE/0wIrc2epKh/gW8VkSCJKxj3M0vE
- yKyFUsJ6GzLvPWS4R0ThNBGjb0n6K2kJ/cGUZTKtGx7cCRjFlGs/IjHGF4/ZmmkhcbNmm/bjt
- 0rwFVH1xoy/IZdniJzM5wqcbJmc+sn08PLxWJO+duPdVKEEE0RbIc/o4GI/xc1o5iHQE5rmzB
- CCLkyZF1uX7cPcZb5Zq31856vgT+28SuQ445/nzXUCN2NUDczgEgayP9XJNWnbnZckbJr2twV
- bI9sgjf/gwH2RSiJxWm/amtmxcPQpMO4kksqPh6WU+hFvv4dLzmZgsE1NXjQtof3jtmg1LfeJ
- 4DzXWTgMIOQa1ImWSAFRYDxPw25YUsT47wy4DUQjJPs1SkkDffErfrIxjU8ssJMS18vUFvm5K
- Q5sUIbg+lInn4BDmEu7p6w1q8yZ6XLZiFGLvlrOR2htXPOSNarZCNHJ3Wv+nHXgdKulSIPgnQ
- TZftpTGNvPMdem37s9BRtLVS3d1FFDtUIufqsZKXP5e6RqAhZwH1C3DiaPU3f9Jgt3x4m/uBi
- 1tSZnkol9Q15hz20/m/4q5c+Ifv5pVVd3Ws4MPnZg5PAxzEeRY8iB43EbwzrSypvPdfCLVXQO
- a6tyig==
+X-Provags-ID: V03:K1:nXEAGIET0akLFuPNqaa5KAJ1qMAcvnoLMhUag7DgL5xVMFhpexq
+ vPKGT1apgPlOqfWeYBzAiEUQzB3OHViK1SKvPZ2fG8fFlnxmiAbEMPAL88hpbl3cB/vxVDZ
+ vHkc3zkbDBPuqYxS8VIZ4gTlIw5obRpaAZd+k6yWgmJ1k83AhUHP80m+tinXh98chNL7n7l
+ LySi5fCRu0vhJMMJGPPWQ==
+UI-OutboundReport: notjunk:1;M01:P0:JebrDoyL0Hk=;QLt8IT5VucH4W0gT2SwDlwDqOq+
+ MhSDOkrUt3e/knI3ZloGzWzZm7FkN4kIBvssZ8/ewsu3bNk4MQo0jGsDDl6pUJbV54Lpw+If1
+ aRWnbghZo905leFeXIZW2PmBBm2cju78jIhwf9+WmPydx5kUnIQzIWJ0tSTmdqor/z91JIcm9
+ Hew/81VfIY2ZXvfRofX9A5bQNdkGLGqBgy2K9sQDBPq+gIJ5G0wSiiZWki+zIPgQQeeL9Tnj1
+ k3M3v0MDc1c9fFuMEiCgkwd+IEu3ZTcZtfOKd+YpUDqeouBEphZcjK4l/a+gPF09UR2fg7K1G
+ wXGbjluuAtdnIG/APiowH80l3b/6wNwkPTUZGyWvawarB0GhtKvVSznk/+QgeMaPEbV/IzCMQ
+ ry0CUmltRbv9IHx3Y62RtBKIhif70zHYhrqHLAgspKV+xPvON1BD2KWYd6NCM+X0j4949dBV1
+ 37uG3XXIzzqfRvs+TA3tN3a1/T1/+qpwGUD1gbz9xYljQS10eNnEbn66V+Mwkd7783IOQyblh
+ cNcYhVD5fyKIPkt7p6FGggshpZ2GAOuM86bXtWqIVfdJXq9UqQeuqKLA/EdlTHqtGvol+hHCZ
+ qTaySabgt92XmUWMVGq9xY9mA8FFWvWkYkTKJjYinHbOTc67ZQ69xu2b0bWnFAUSuNrEdEBAg
+ 4utvqvHWoErwYuuH6UFscSBP+7nlEeDYdZv/4OLZnJvSU0Sm1/v0jaO22eRmEj8GEZG59kpz/
+ a8/Dqm7h6lI73b5Evs7HPYpUGXJXmotZApjkvk4kn4EHinb8eDl698QORHmzs/tcfDDFe61Rz
+ TCJSN/pjREtvjqrZPAiy3F00ufovQYV2oLZN+YXzvNhHak7CnQgyO0UxE+M95ww3KTMUfAshs
+ mUGy5rD2kIDTBnVn6t27Sm9kXuvNENAKyXR1xTbH7DCIERAB0hbiEjXQsefSfQF9ARnSF8wwJ
+ MVWS8w==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a regression that prevents using multiple --filter options, simplify
-the option parsing code and avoid relying on undefined behavior in it.
+git pack-objects should accept multiple --filter options as documented
+in Documentation/rev-list-options.txt, but currently the last one wins.
+Show that using tests with multiple blob size limits.
 
-Patch 3 conflicts with cc/filtered-repack in seen, but not semantically.
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ t/t5317-pack-objects-filter-objects.sh | 38 ++++++++++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-Changes since v1:
-- Added patch 1 to fix an issue with existing tests.
-- Separate patch 2 for new tests.
-- Test using blob size filters, only, which is a bit simpler.
-- Test both combinations to also catch not just the current
-  last-one-wins regression, but also a possible future first-one-wins
-  issue.
-- Actually revert 5cb28270a1 (pack-objects: lazily set up
-  "struct rev_info", don't leak, 2022-03-28) instead of having a
-  minimal fix and then adding some kind of middle ground by using a
-  separate struct list_objects_filter_options.
+diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-objects=
+-filter-objects.sh
+index 82a22ecaa5..25faebaada 100755
+=2D-- a/t/t5317-pack-objects-filter-objects.sh
++++ b/t/t5317-pack-objects-filter-objects.sh
+@@ -265,6 +265,44 @@ test_expect_success 'verify normal and blob:limit pac=
+kfiles have same commits/tr
+ 	test_cmp expected observed
+ '
 
-  t5317: stop losing return codes of git ls-files
-  t5317: demonstrate failure to handle multiple --filter options
-  Revert "pack-objects: lazily set up "struct rev_info", don't leak"
-
- builtin/pack-objects.c                 | 31 ++-------
- list-objects-filter-options.c          |  4 --
- list-objects-filter-options.h          | 24 +------
- t/t5317-pack-objects-filter-objects.sh | 90 +++++++++++++++++++-------
- 4 files changed, 75 insertions(+), 74 deletions(-)
-
-Range-Diff gegen v1:
-1:  2df1185b5f < -:  ---------- pack-objects: fix handling of multiple --f=
-ilter options
-2:  b8e951fb4f < -:  ---------- pack-object: simplify --filter handling
-3:  1e4ae7d9f1 < -:  ---------- list-objects-filter: remove OPT_PARSE_LIST=
-_OBJECTS_FILTER_INIT()
--:  ---------- > 1:  43af432f5c t5317: stop losing return codes of git ls-=
-files
--:  ---------- > 2:  a77b85e71d t5317: demonstrate failure to handle multi=
-ple --filter options
--:  ---------- > 3:  63ccb81357 Revert "pack-objects: lazily set up "struc=
-t rev_info", don't leak"
++test_expect_failure 'verify small limit and big limit results in small li=
+mit' '
++	git -C r2 ls-files -s large.1000 >ls_files_result &&
++	test_parse_ls_files_stage_oids <ls_files_result |
++	sort >expected &&
++
++	git -C r2 pack-objects --revs --stdout --filter=3Dblob:limit=3D1001 \
++		--filter=3Dblob:limit=3D10001 >filter.pack <<-EOF &&
++	HEAD
++	EOF
++	git -C r2 index-pack ../filter.pack &&
++
++	git -C r2 verify-pack -v ../filter.pack >verify_result &&
++	grep blob verify_result |
++	parse_verify_pack_blob_oid |
++	sort >observed &&
++
++	test_cmp expected observed
++'
++
++test_expect_success 'verify big limit and small limit results in small li=
+mit' '
++	git -C r2 ls-files -s large.1000 >ls_files_result &&
++	test_parse_ls_files_stage_oids <ls_files_result |
++	sort >expected &&
++
++	git -C r2 pack-objects --revs --stdout --filter=3Dblob:limit=3D10001 \
++		--filter=3Dblob:limit=3D1001 >filter.pack <<-EOF &&
++	HEAD
++	EOF
++	git -C r2 index-pack ../filter.pack &&
++
++	git -C r2 verify-pack -v ../filter.pack >verify_result &&
++	grep blob verify_result |
++	parse_verify_pack_blob_oid |
++	sort >observed &&
++
++	test_cmp expected observed
++'
++
+ # Test sparse:path=3D<path> filter.
+ # !!!!
+ # NOTE: sparse:path filter support has been dropped for security reasons,
 =2D-
 2.38.1
