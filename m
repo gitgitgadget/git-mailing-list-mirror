@@ -2,210 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 17A2BC433FE
-	for <git@archiver.kernel.org>; Sun, 20 Nov 2022 09:20:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6360C433FE
+	for <git@archiver.kernel.org>; Sun, 20 Nov 2022 09:29:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229491AbiKTJUi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Nov 2022 04:20:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50902 "EHLO
+        id S229546AbiKTJ3h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Nov 2022 04:29:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbiKTJUg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Nov 2022 04:20:36 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9520591510
-        for <git@vger.kernel.org>; Sun, 20 Nov 2022 01:20:35 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id p13-20020a05600c468d00b003cf8859ed1bso7128511wmo.1
-        for <git@vger.kernel.org>; Sun, 20 Nov 2022 01:20:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eMgyAwKlPkfslPg4pgCl0xGFAcHm8Xk4nFWiWJBribU=;
-        b=dtpc0HII0MnQOK9UFkEGta1N/I3onxGnCJHXHxSckRDblnIpQIDf7oxqrnSkl5CsDV
-         buep3XAPLq8poMXadxRHsrP1WE1eBd+NmdXEa7/iVnSKOi1+uftuHjHM21NKA3AEIriK
-         dhq30tnTAjJBVnR9Jb4KXSeUkz31uzD1UZJwm5y5iv9ejmqWENF6Y99ykd2O2PGThs1f
-         /gz0Lijm6J0g807VH3jcfsfpRYJX86cHzpe5Y2P/HyqrKM5Xn71/hU2CiO8fy9Fqiqhb
-         az1R9gyKgXKw9i98BeOTABj2dIh1SHJFJp8IjUMZTBmntjU3qZKzwi/wpi+I7sEfztJf
-         V/5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eMgyAwKlPkfslPg4pgCl0xGFAcHm8Xk4nFWiWJBribU=;
-        b=YX4pqIB6ReJ77N8J0t2os0R4Lx+nHfa0K7eD8Xog7TU6muHDVBb1EPRhJpONoxV2AD
-         J73eUPupA0BSbHRLrE21qp3Jrnc6GNW6rQca1cMyphE4FgYlMMlAzR8+VPcfIPd1Cj3d
-         6mtaV/nfllLJ576ErgOK/mzF0F4/i6PgrYCCByxrWirX3UMv0mHkHkCRxJIp97uBpZbk
-         Re2gXlPOkvczJTSNrWuULSH3MQoIizxf+2QxJ+WA8kpOs1CFg/MXG/kAD8WYeVdueZ6Z
-         FzrRr5U4pDgNPrmLCR9zW2HtpQC8ioQt22Yma4A9MFTmtipC26/oYHb/SCNiV7++vvj3
-         3Vmw==
-X-Gm-Message-State: ANoB5pmQ2t5392v15Xm9FhajULOI0aFwTwDNEB6L0No1eyh03txWljIf
-        8XY2L2sMiuQNNS9Oo6j9KHA=
-X-Google-Smtp-Source: AA0mqf5Nt97BLNyLH6TY7Tw0jnMvRRKNnJ3fnu1RCV0OBqAZ92F2MpD8m2kdU3AnX+FZyRRSjP2W3w==
-X-Received: by 2002:a7b:c048:0:b0:3a8:3e58:bb9b with SMTP id u8-20020a7bc048000000b003a83e58bb9bmr2773900wmc.168.1668936033990;
-        Sun, 20 Nov 2022 01:20:33 -0800 (PST)
-Received: from [192.168.2.52] (104.red-88-14-50.dynamicip.rima-tde.net. [88.14.50.104])
-        by smtp.gmail.com with ESMTPSA id l24-20020a05600c1d1800b003cf878c4468sm16280899wms.5.2022.11.20.01.20.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 20 Nov 2022 01:20:33 -0800 (PST)
-Subject: Re: [PATCH 2/2] branch: clear target branch configuration before
- copying or renaming
-To:     Victoria Dye <vdye@github.com>, Git List <git@vger.kernel.org>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>
-References: <f0b2d46c-2e9c-2630-2870-8ed550dd1606@gmail.com>
- <762c1e8f-fd0c-3b4b-94a0-709d8c9431e4@gmail.com>
- <8457ad4c-51c7-4c2d-8dbf-02a60045d288@github.com>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <042c18df-deb6-6214-2d49-c214a872e1c1@gmail.com>
-Date:   Sun, 20 Nov 2022 10:20:31 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        with ESMTP id S229447AbiKTJ3f (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Nov 2022 04:29:35 -0500
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50442FAE6
+        for <git@vger.kernel.org>; Sun, 20 Nov 2022 01:29:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1668936566; bh=hYyqINRYQjbsANLsN78Y4wLd0ZxatKIXQPyJvy3yCuI=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=j6rl49/cyADL6wUB+tzXy9KunnPuS2NFtleZ7DFnCdAARMscV+VzVOzW/mTCtAlRB
+         ytJheWGzrDuynrWuFMkVCWHs/anm3YYOxnjqWRl6SbLTG+pliZbztyk/HmJNwU9EBE
+         AiSqIpAjC8sgNO/vUyi7DqrdMBy5q7kLoxb7uIB8GdHfK0Xt0Hdlx8knLdcAcxmFiy
+         iZ3ptsYQZZiktd8qaz3GkRd9IRMtc/fEy1m80dHkXno45shGtQFAF5Qnz/M/EoP8MQ
+         VnlQOwXg9jD1p6r5S0LykOhAGH7GCvk2e8qRwv2va7f77lnR8Mqfdke/AXQ70qVae3
+         DWt1j4rh4TJiw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([62.20.115.19]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MAtwh-1olNxn1COn-00B9Q2; Sun, 20
+ Nov 2022 10:29:26 +0100
+Date:   Sun, 20 Nov 2022 10:29:25 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     =?iso-8859-1?Q?Ren=E9?= Scharfe <l.s.r@web.de>
+Cc:     Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 2/2] tests(mingw): avoid very slow `mingw_test_cmp`
+Message-ID: <20221120092925.z5jv2e2rtfpota6t@tb-raspi4>
+References: <pull.1309.v2.git.1662469859.gitgitgadget@gmail.com>
+ <pull.1309.v3.git.1668290855.gitgitgadget@gmail.com>
+ <a7f4265ceb26c6dd9d347ef4cbef2aac7d60bf13.1668290855.git.gitgitgadget@gmail.com>
+ <Y3B36HjDJhIY5jNz@nand.local>
+ <xmqqv8nbkg77.fsf@gitster.g>
+ <65ff24be-4392-f236-5500-ce0c0d4d42ca@kdbg.org>
+ <f5d6c063-2fc4-4355-57e1-056eac1fb4a2@web.de>
 MIME-Version: 1.0
-In-Reply-To: <8457ad4c-51c7-4c2d-8dbf-02a60045d288@github.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <f5d6c063-2fc4-4355-57e1-056eac1fb4a2@web.de>
+User-Agent: NeoMutt/20170113 (1.7.2)
+X-Provags-ID: V03:K1:YSFL0QFA6OQyTcV1Si01akoi2sQ7Kr6NpWZzXMUjPZ97iJVXvho
+ 0UCNaZqrfkLySIYtV8+J/484iuOjmrnAk7XEu+Qj65mHwAfKYzUowAP3K3rT9YcZVvuDwZO
+ t7CD95M7unaZmy/JxrSbiMae1s+weQzOmOQ8uvb88RZIDyu6FIRDsZBiNOFHksal8KMv72y
+ gH7NcIHZC2R4tcZSiqLFw==
+UI-OutboundReport: notjunk:1;M01:P0:ozmD4sl8W0Y=;Ya+j2O0lNfuy71YfQ3tJmnyyTHN
+ AsT70OeE0kDExUZJdjxH10ocNb9QyyGk3Wdy0LufZmGfN4g/XqJ3tFtUaIzIt3AK2joAfx1V3
+ yaWG4PQFFoBnrq0GHi5kCFubODIZkHUO6N4S6R4G2LcdW/m8xnzR1AJK/JCY+xFhtSfIPFTiF
+ Hb4AaLz4HiK6V7jFeZBTStKjVQNVgmAtTSWtk4shtRPTCZGNiPiTJNCONi2AjDiLebpnXCeGi
+ XH/0r40lHy3WF68fNK0j6pZhNd0rtPzXpBZGRVFchzD1HLrP+xd0bsqbUjC88ykOvoFOqWQro
+ vhbphS6xpvF7DobSpQqS/txwg1lm1SFzFB87Th8tJ+YzkoMJyOREE/FMaAc0m9UefAT5HodPX
+ CdTfyOKr6t7+C5/DJT9u+3zuZLw5TihqzjiraecwY7UxM4p+ZJm1xqs69e5ukm7Ve+g2EZtKU
+ VKNWjSQ5ZeDHxZShgd92zNwExxijOpRy9x2tvP6B4sGFLBW5nGFPcNpwAqnyfqq1BIWiJKBTQ
+ UzMPNVotark0zbC7sLMf2IwK1PEbTpAzL8CsMLNK2+MY+T7qIGJJDy33hkE5tISoXtjWORZMS
+ QeNYadZtDa/YlXxRZRf8ij70Rec/4iksKVmY2TLclRMzNarRhhqwjUxJIS3a/UvWw9ZM5bvqU
+ sTrNmjNsdZzpiEGh239nahiTvuhbs7nnalnkGyLvJXgOqj4t8nuNUigL8Dme7v3k90Uee2oHF
+ 4oBKi+m0YDDXNVQIMf8ZGwCvP0r9lCjWbbBvwj+r5zSv2lZtxb0gd0MSDE7TMSWYvYGLr8mzq
+ gY3xdl8H7uzZjr+xsWSwVhfoFRCkP0Juicj62Y8Kw1YEwb22XxV7NyCR3BuupVb8wutUmRgex
+ /b0EW+ilau727zu8fXBLdx6Q1lcR1olZiSZwrislOid6bLIqQotf1plmDQHCuw5NQXCIg0Szz
+ T9i3lzC+q2VYZ5F2HgMvNhxUchc=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 17-nov-2022 18:10:52, Victoria Dye wrote:
-> Rubén Justo wrote:
-> > There are two problems with -m (rename) and -c (copy) branch operations.
-> > 
-> >  1. If we force-rename or force-copy a branch to overwrite another
-> >  branch that already has configuration, the resultant branch ends up
-> >  with the source configuration (if any) mixed with the configuration for
-> >  the overwritten branch.
-> > 
-> > 	$ git branch upstream
-> > 	$ git branch -t foo upstream  # foo has tracking configuration
-> > 	$ git branch bar              # bar has not
-> > 	$ git branch -M bar foo       # force-rename bar to foo
-> > 	$ git config branch.foo.merge # must return clear
-> > 	refs/heads/upstream
-> 
-> What happens if 'bar' has tracking info? You mentioned that the
-> configuration is "mixed" - does that mean 'foo' would have both the original
-> 'foo's tracking info *and* 'bar's? 
+On Sat, Nov 19, 2022 at 06:50:28PM +0100, Ren=E9 Scharfe wrote:
+> Am 19.11.2022 um 09:18 schrieb Johannes Sixt:
+> >
+> > The reason that mingw_test_cmp exists is not that Git isn't ported
+> > correctly, or that tests aren't ported correctly. The reason is that
+> > tests assume Unix LF line endings everywhere, but there are some tools
+> > that are outside our control that randomly -- to the layman's eye --
+> > produce CRLF line endings even when their input has LF style.
+> >
+> > For example, when we post-process Git output with `sed`, the result
+> > suddenly has CRLF line endings instead of LF that the input had.
+>
+> Actually I see the opposite behavior -- sed eats CRs on an up-to-date
+> Git for Windows SDK:
+>
+>    $ uname -s
+>    MINGW64_NT-10.0-22621
+>
+>    $ printf 'a\r\n' | hexdump.exe -C
+>    00000000  61 0d 0a                                          |a..|
+>    00000003
+>
+>    $ printf 'a\r\n' | sed '' | hexdump.exe -C
+>    00000000  61 0a                                             |a.|
+>    00000002
 
-Of course :-).  My reasoning here is considering 'no tracking' as
-tracking information, hence the 'if any'.  I think that the unexpected
-functioning this patch is trying to resolve is more obvious having an
-unexpected tracking information if we rename a branch /with 'no
-tracking'/, overwriting (-M) a branch that already has tracking
-information.
 
-> I wasn't sure whether "transfer the source's tracking information to the
-> destination" was the desired behavior, but it looks like it is (per
-> 52d59cc6452 (branch: add a --copy (-c) option to go with --move (-m),
-> 2017-06-18)). Given that, I agree this is the right fix for the issue you've
-> identified.
+There is a "-b" option for sed under MINGW;
+ -b, --binary
+                  open files in binary mode (CR+LFs are not processed spec=
+ially)
 
-Yes, a reference to that commit is a good information to have in the
-message.  But I prefer to not refer to it as I don't think that commit
-is responsible or explains this unexpected result, though I cc'ed Ævar
-;-)
+The CRLF handling for sed (and probably grep and awk) had beed changed in =
+cygwin
+https://cygwin.com/pipermail/cygwin/2017-June/233133.html
 
-The design decisions in branch.c and config.c have brought us to this
-unexpected result, which just need to be addressed. IMHO
+(And I suspect that this rippled into MINGW some day)
 
-> >  
-> > +test_expect_success 'git branch -M inherites clean tracking setup' '
-> 
-> s/inherites/inherits
 
-Oops, thanks.
+>
+> And with the following patch on top of eea7033409 (The twelfth batch,
+> 2022-11-14) the test suite passes for me -- just one case of grep
+> stealing CRs seems to need adjustment to make mingw_test_cmp
+> unnecessary:
+>
+>  t/t3920-crlf-messages.sh | 2 +-
+>  t/test-lib.sh            | 1 -
+>  2 files changed, 1 insertion(+), 2 deletions(-)
+>
+> diff --git a/t/t3920-crlf-messages.sh b/t/t3920-crlf-messages.sh
+> index 4c661d4d54..353b1a550e 100755
+> --- a/t/t3920-crlf-messages.sh
+> +++ b/t/t3920-crlf-messages.sh
+> @@ -12,7 +12,7 @@ create_crlf_ref () {
+>  	cat >.crlf-orig-$branch.txt &&
+>  	cat .crlf-orig-$branch.txt | append_cr >.crlf-message-$branch.txt &&
+>  	grep 'Subject' .crlf-orig-$branch.txt | tr '\n' ' ' | sed 's/[ ]*$//' =
+| tr -d '\n' >.crlf-subject-$branch.txt &&
+> -	grep 'Body' .crlf-message-$branch.txt >.crlf-body-$branch.txt || true =
+&&
+> +	grep 'Body' .crlf-orig-$branch.txt | append_cr >.crlf-body-$branch.txt=
+ || true &&
 
-> > +	test_when_finished git branch -D moved &&
-> > +	git branch -t main-tracked main &&
-> > +	git branch non-tracked &&
-> > +	git branch -M main-tracked moved &&
-> > +	git branch --unset-upstream moved &&
-> > +	git branch -M non-tracked moved &&
-> > +	test_must_fail git branch --unset-upstream moved
-> 
-> If I'm reading this correctly, the test doesn't actually demonstrate that
-> 'git branch -M' cleans up the tracking info, since 'moved' never has any
-> tracking info immediately before 'git branch -M'. The test could also be
-> more precise by verifying the upstream name matches. What about something
-> like this?
-> 
-> 	test_when_finished git branch -D moved &&
-> 	git branch -t main-tracked main &&
-> 	git branch non-tracked &&
-> 
-> 	# `moved` doesn't exist, so it starts with no tracking info
-> 	echo main >expect &&
-> 	git branch -M main-tracked moved &&
-> 	git rev-parse --abbrev-ref moved@{upstream} >actual &&
-> 	test_cmp expect actual &&
-> 
-> 	# At this point, `moved` is tracking `main`
-> 	git branch -M non-tracked moved &&
-> 	test_must_fail git rev-parse --abbrev-ref moved@{upstream}
 
-You are right, good eye.  Thanks.  That first '--unset-upstream'
-eliminates the possible undesired inherited tracking info.  Removing it
-is needed to make the test meaningful.  'rev-parse' is a good change,
-but as the test is not testing that '-M' works as expected but doesn't
-work in the unexpected way the message describes, I don't think we need
-it here, imho.
-
-> s/inherites/inherits (same typo as before, just pointing it out so it's
-> easier to find)
-
-Oops, thanks again.
-
-> > +	test_when_finished git branch -D copiable copied &&
-> > +	git branch -t copiable main &&
-> > +	git branch -C copiable copied &&
-> > +	git branch --unset-upstream copied &&
-> > +	git branch -C copied copiable &&
-> > +	test_must_fail git branch --unset-upstream copiable
-> 
-> This doesn't have the same issue as the other test (since 'copied' has no
-> tracking but 'copiable' does before both 'git branch -C' calls), but it
-> would still be nice to use the 'git rev-parse --abbrev-ref
-> <branch>@{upstream}' for more precision here. 
-
-I still prefer the test_must_fail for '--unset-upstream', for the same
-reasons that in the previous hunk.  I also think it improves
-t3200-branch.sh.
-
-Something like...
-
---- >8 ---
-
-Thank you!
-
- t/t3200-branch.sh | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index c3b3d11c28..ba959a82de 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -218,17 +218,16 @@ test_expect_success 'git branch -M should leave orphaned HEAD alone' '
- 	)
- '
- 
--test_expect_success 'git branch -M inherites clean tracking setup' '
-+test_expect_success 'git branch -M inherits clean tracking setup' '
- 	test_when_finished git branch -D moved &&
- 	git branch -t main-tracked main &&
- 	git branch non-tracked &&
--	git branch -M main-tracked moved &&
- 	git branch --unset-upstream moved &&
- 	git branch -M non-tracked moved &&
- 	test_must_fail git branch --unset-upstream moved
- '
- 
--test_expect_success 'git branch -C inherites clean tracking setup' '
-+test_expect_success 'git branch -C inherits clean tracking setup' '
- 	test_when_finished git branch -D copiable copied &&
- 	git branch -t copiable main &&
- 	git branch -C copiable copied &&
+Talking about grep:
+Both grep under Linux, MacOs and MINGW (git bash) seem to have the -U opti=
+on:
+  -U, --binary              do not strip CR characters at EOL (MSDOS/Windo=
+ws)
 
