@@ -2,119 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C791C4332F
-	for <git@archiver.kernel.org>; Sun, 20 Nov 2022 09:34:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6247C4332F
+	for <git@archiver.kernel.org>; Sun, 20 Nov 2022 10:06:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229518AbiKTJeK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Nov 2022 04:34:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52608 "EHLO
+        id S229542AbiKTKEC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Nov 2022 05:04:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbiKTJeI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Nov 2022 04:34:08 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CDA51EAD8
-        for <git@vger.kernel.org>; Sun, 20 Nov 2022 01:34:06 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id e11so2842415wru.8
-        for <git@vger.kernel.org>; Sun, 20 Nov 2022 01:34:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bAuDNy93jiPV/YpUoUkeW8PE+iX3QlDGyfzXs4B1Iy0=;
-        b=hh6yREdQtSHuyjOSyNeZJDEUNzUjhC+7X4tQxDA9g61YFKv66qCW0zv9VB4Xxfnat0
-         Mwz/QpC4SEwMxv7rtKuz7RX9rzbKYyI4LaJx0tW3HitLiS9Ofq1+qhVz9ANwv4Y9tTEU
-         SH/QPJQ3n+Yfgs1rOW+48nWe3cUJBt4qU2iGh/2OXyQ8ozr92uM0kuevsb4f/Snb14Gg
-         7rGEP3WDdS4l2oGvQefEhW1BFkDQMjvKp0DxovrjZxal0vFx+EbjyuOOtY3KpVBEY9f8
-         ir/Fp0Vx48nHKSeCEAttC1aptPBP+AyM/A6CX1NuTfUh464XWYErE+TNKDoFVbQbev3R
-         h6Sw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bAuDNy93jiPV/YpUoUkeW8PE+iX3QlDGyfzXs4B1Iy0=;
-        b=O6j1vu5cR1vMPjLyG2kP897meNe9edkUnD02bhFpxFm1Ono5VEyxCuDBlvrcmbnSV6
-         9A77DeRkSzWbEfrf2399N5Fub1zPCKLcBsepMR0IMaGGJWXRmuEp+F385oxzg+JC4QDY
-         zCtdJ4pUFBSJXOr0Dpa6sMv3WdqD1TBao3JGbZo+hXK7FTPG0B0S4OK7Ugd9333GSTAa
-         1O0foN22jqmAXJuSwDWJ64jMZTmo/xDDDlelE+BQHmHDRBKHxMWp0wi7I9CaGbAypddU
-         hGGP34H6N/WHnEQ9VDqXq2QfetuGhZX47mZ4XWA61CN5jDFuhk6Bb6pu+nxloSMfIheQ
-         hgeg==
-X-Gm-Message-State: ANoB5pkQwKrJUE8/k4Wk6UkV2n7H4C9e4Bggcs2tu8aSWwOCo53LIIGf
-        CCEZQp85amBsMtDCjwCPXgFj+bjJb9Y=
-X-Google-Smtp-Source: AA0mqf5d5kSc36RWORn9FqhcNo4qVjgtUJFGtvJCIe2R3I8xYCg19skNsuDkk5wuA0zZ6fZIANonMQ==
-X-Received: by 2002:a5d:438b:0:b0:236:711e:58b with SMTP id i11-20020a5d438b000000b00236711e058bmr7921717wrq.145.1668936844377;
-        Sun, 20 Nov 2022 01:34:04 -0800 (PST)
-Received: from [192.168.2.52] (104.red-88-14-50.dynamicip.rima-tde.net. [88.14.50.104])
-        by smtp.gmail.com with ESMTPSA id s23-20020a1cf217000000b003c6c5a5a651sm9904230wmc.28.2022.11.20.01.34.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 20 Nov 2022 01:34:03 -0800 (PST)
-Subject: Re: [PATCH 1/2] branch: force-copy a branch to itself via @{-1} is a
- no-op
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>
-References: <f0b2d46c-2e9c-2630-2870-8ed550dd1606@gmail.com>
- <db182322-1383-4311-8baa-c4a9aeed3b4d@gmail.com>
- <221118.868rk8hpk4.gmgdl@evledraar.gmail.com>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <b70d55e8-efb6-a69e-f568-e0d6aef48e61@gmail.com>
-Date:   Sun, 20 Nov 2022 10:34:02 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        with ESMTP id S229462AbiKTKEB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Nov 2022 05:04:01 -0500
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6F2C5B5BA
+        for <git@vger.kernel.org>; Sun, 20 Nov 2022 02:03:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1668938616; bh=EcKmQ5veCg4m3iZn01IVc1Ay2wWY7PfxpGy0MQMckEo=;
+        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
+        b=oGx8JCXhpfngqWHj4tdRsuG0iORA82ZvaC0URRv26j8jR8atSvqNwhl3o+2KK0FUX
+         PsXZyCGQeP8PxIoy99tYB5t19l+0zVkWvn4M0+lBbT9lE8iiYl8Snvq3v+XOSRcR84
+         wqowv7fqkV5S+blSnva+WqS6VUv3p0B13qsf74jIWNgrfTDUCwHvTRP1nDmNgmp0yk
+         5+audS9vNxN4/VBG3/lYyyPBBCqtmmaNe0no8tBcHQ1Sps/YdCOvFROzoNcOgpFYyP
+         ExdQQBc40Qwr3wCcQSlPReGmZizVD8bRRYk2Bqo1Ryt7uFjKkhaPXcXhFay4FQ97gy
+         iiLIYXnmE474Q==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.154.159]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MxHUC-1p7Skq0Bi4-00xbEv; Sun, 20
+ Nov 2022 11:03:36 +0100
+Message-ID: <d19c6cb4-611f-afea-8a14-5e58d7509113@web.de>
+Date:   Sun, 20 Nov 2022 11:03:35 +0100
 MIME-Version: 1.0
-In-Reply-To: <221118.868rk8hpk4.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.5.0
+Subject: [PATCH v2 0/3] pack-objects: fix and simplify --filter handling
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     Git List <git@vger.kernel.org>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff King <peff@peff.net>
+References: <c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.de>
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:iUr2044uBkWn4eiDljBG3PkCZ4W/FbmZQqwTEYUW1suGDXYnmTh
+ q+3F6B17gKtj7IRNoN94WkQLyWnCilTClbzWntme0SS0KDXN3RLd5i6KHv/jdkaCHqtFfpp
+ yb7L7yA8BfQjXRx+HyZW1kuvaBbxrpvxQQ/JZsuIAMYpicZSaHrJW01lqgYohXAxrESFTgM
+ SObUUds1z0khqBBjdBiDQ==
+UI-OutboundReport: notjunk:1;M01:P0:JKWWVpvWe0w=;GwKKiOXVUJNMCdS1ieuxFFKt+52
+ W6cw93g1TS9tH7/hU1m3Pl/u4HwD8MbNHTPv1Ihzzn0xdCBbICXh6X15NJv98T48OtEYRoqYK
+ lZwwA+2JtD9FebUB4pZwCt7nk4340Du4mni1iqbAeHDPI2mkpE8fIHg6N1r8sBL3r13hgOHlm
+ BCtHLJQhm9tbhrL9PEyml0Qu7RWLN544vYW5ybWzE/Ia29y5t1NUpey1AfLtbBZ9bEO37q1bY
+ T3HdIxV49apHel1YPAhU4OFSYRONaBNc6m908cKe7bRLcZM7m/FyDqsuJNTfzAMSAdkcOxNpw
+ xLlATT6Y0OmryueYrBMak3WIBs/myb2wsPkB0IPN3utXE/0wIrc2epKh/gW8VkSCJKxj3M0vE
+ yKyFUsJ6GzLvPWS4R0ThNBGjb0n6K2kJ/cGUZTKtGx7cCRjFlGs/IjHGF4/ZmmkhcbNmm/bjt
+ 0rwFVH1xoy/IZdniJzM5wqcbJmc+sn08PLxWJO+duPdVKEEE0RbIc/o4GI/xc1o5iHQE5rmzB
+ CCLkyZF1uX7cPcZb5Zq31856vgT+28SuQ445/nzXUCN2NUDczgEgayP9XJNWnbnZckbJr2twV
+ bI9sgjf/gwH2RSiJxWm/amtmxcPQpMO4kksqPh6WU+hFvv4dLzmZgsE1NXjQtof3jtmg1LfeJ
+ 4DzXWTgMIOQa1ImWSAFRYDxPw25YUsT47wy4DUQjJPs1SkkDffErfrIxjU8ssJMS18vUFvm5K
+ Q5sUIbg+lInn4BDmEu7p6w1q8yZ6XLZiFGLvlrOR2htXPOSNarZCNHJ3Wv+nHXgdKulSIPgnQ
+ TZftpTGNvPMdem37s9BRtLVS3d1FFDtUIufqsZKXP5e6RqAhZwH1C3DiaPU3f9Jgt3x4m/uBi
+ 1tSZnkol9Q15hz20/m/4q5c+Ifv5pVVd3Ws4MPnZg5PAxzEeRY8iB43EbwzrSypvPdfCLVXQO
+ a6tyig==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 18-nov-2022 04:58:54, Ævar Arnfjörð Bjarmason wrote:
-> > @@ -584,13 +584,13 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
-> >  	strbuf_release(&logmsg);
-> >  
-> >  	strbuf_addf(&oldsection, "branch.%s", interpreted_oldname);
-> > -	strbuf_release(&oldref);
-> >  	strbuf_addf(&newsection, "branch.%s", interpreted_newname);
-> > -	strbuf_release(&newref);
-> >  	if (!copy && git_config_rename_section(oldsection.buf, newsection.buf) < 0)
-> >  		die(_("Branch is renamed, but update of config-file failed"));
-> > -	if (copy && strcmp(oldname, newname) && git_config_copy_section(oldsection.buf, newsection.buf) < 0)
-> > +	if (copy && strcmp(interpreted_oldname, interpreted_newname) && git_config_copy_section(oldsection.buf, newsection.buf) < 0)
-> 
-> We try to stay under 79 chars, see CodingGuidelines. The pre-image was
-> already violating this, but the new one is really long. I think it would
-> be good to just wrap this after the last && while at it.
+Fix a regression that prevents using multiple --filter options, simplify
+the option parsing code and avoid relying on undefined behavior in it.
 
-Yeah, thought about that.  I preferred to not doing it mainly because my
-plan is to move out that strcmp() from there, but also wrapping that
-line induces to wrapping the previous one too, and there are many lines
-in that file above 79... I already have a series[1] to follow the
-CodingGuideLines in branch.c, currently focused in error messages but,
-maybe this change makes more sense there.  Dunno.
+Patch 3 conflicts with cc/filtered-repack in seen, but not semantically.
 
-> 
-> >  		die(_("Branch is copied, but update of config-file failed"));
-> > +	strbuf_release(&oldref);
-> > +	strbuf_release(&newref);
-> >  	strbuf_release(&oldsection);
-> >  	strbuf_release(&newsection);
-> 
-> This moving around of destructors isn't needed, and is just some
-> unrelated cleanup. Your change here only needs to be:
->
-> 	-       if (copy && strcmp(oldname, newname) && git_config_copy_section(oldsection.buf, newsection.buf) < 0)
-> 	+       if (copy && strcmp(interpreted_oldname, interpreted_newname) &&
-> 	+           git_config_copy_section(oldsection.buf, newsection.buf) < 0)
+Changes since v1:
+- Added patch 1 to fix an issue with existing tests.
+- Separate patch 2 for new tests.
+- Test using blob size filters, only, which is a bit simpler.
+- Test both combinations to also catch not just the current
+  last-one-wins regression, but also a possible future first-one-wins
+  issue.
+- Actually revert 5cb28270a1 (pack-objects: lazily set up
+  "struct rev_info", don't leak, 2022-03-28) instead of having a
+  minimal fix and then adding some kind of middle ground by using a
+  separate struct list_objects_filter_options.
 
-'interpreted_oldname' is a pointer to the 'oldref' buffer, and it is
-used in the next comparison, so the release for 'oldref' needs to be
-done later (same for interpreted_newname and newref).
+  t5317: stop losing return codes of git ls-files
+  t5317: demonstrate failure to handle multiple --filter options
+  Revert "pack-objects: lazily set up "struct rev_info", don't leak"
 
-Maybe you are thinking in another change... I also thought comparing
-'{old,new}section.buf, the section names in the configuration, but I
-preferred to use interpreted_{old,new}name.  It looks more clear what we
-are doing and in future commits that section names might not be composed
-at that point yet.
+ builtin/pack-objects.c                 | 31 ++-------
+ list-objects-filter-options.c          |  4 --
+ list-objects-filter-options.h          | 24 +------
+ t/t5317-pack-objects-filter-objects.sh | 90 +++++++++++++++++++-------
+ 4 files changed, 75 insertions(+), 74 deletions(-)
 
+Range-Diff gegen v1:
+1:  2df1185b5f < -:  ---------- pack-objects: fix handling of multiple --f=
+ilter options
+2:  b8e951fb4f < -:  ---------- pack-object: simplify --filter handling
+3:  1e4ae7d9f1 < -:  ---------- list-objects-filter: remove OPT_PARSE_LIST=
+_OBJECTS_FILTER_INIT()
+-:  ---------- > 1:  43af432f5c t5317: stop losing return codes of git ls-=
+files
+-:  ---------- > 2:  a77b85e71d t5317: demonstrate failure to handle multi=
+ple --filter options
+-:  ---------- > 3:  63ccb81357 Revert "pack-objects: lazily set up "struc=
+t rev_info", don't leak"
+=2D-
+2.38.1
