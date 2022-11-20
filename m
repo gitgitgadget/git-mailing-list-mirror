@@ -2,109 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4342C4332F
-	for <git@archiver.kernel.org>; Sun, 20 Nov 2022 01:27:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E2151C433FE
+	for <git@archiver.kernel.org>; Sun, 20 Nov 2022 01:48:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229526AbiKTB1f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 19 Nov 2022 20:27:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33512 "EHLO
+        id S229558AbiKTBsb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 19 Nov 2022 20:48:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229518AbiKTB1a (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Nov 2022 20:27:30 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 622D663B8
-        for <git@vger.kernel.org>; Sat, 19 Nov 2022 17:27:29 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id b12so1120232wrn.2
-        for <git@vger.kernel.org>; Sat, 19 Nov 2022 17:27:29 -0800 (PST)
+        with ESMTP id S229480AbiKTBs3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Nov 2022 20:48:29 -0500
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7502227B3A
+        for <git@vger.kernel.org>; Sat, 19 Nov 2022 17:48:28 -0800 (PST)
+Received: by mail-pg1-x530.google.com with SMTP id 136so8252867pga.1
+        for <git@vger.kernel.org>; Sat, 19 Nov 2022 17:48:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=c99+BAgzJtOvTukoHupNR5U+51P1HwVnPNnuTBq86g4=;
-        b=asXkFvNr3Hapm2Qo0k3XuXGPARwKmTOR8DzcZCfy0u1W/eAU7BB38duDvFXeKStFn2
-         R2xjU9fw6KuXhc7gbaP/bx/ZRm3jPy2r7qFqt9dtaolvEhI+SAYFRGqzxvkQROyRLAgf
-         299c17Fa2uJAi45JQk6AgxBcFEDEJm1VKSHBgr95knm4W2CrGxczSwwV1iBu/c8mbaQd
-         tTetWpWn/J4kfOXNcSJd+AaWYgxP4hSjJ7b1o+3tyN3XoCgNRZUHv7d7ANWyRkqlqciH
-         jQWaARFz/BDSQ4HOK+88dfYlGXkDtcC7qlKWW5Ps6px5UEqsXUoOU/oUl2qEqrLo/SvD
-         K8dw==
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=N9pu4vStq8HeIp/BBPp8YIGlCweYzOoImUPMXOpLdw0=;
+        b=m/gwtS2kmoj6fXHWMJysLfXDUE8TORJi0ZAcN9IG9+aqh3sKpNfwREzTI1iKWAUNxJ
+         YbZywwoLZ+QN/vs2/nbWPp+1MgP3zNhC85HLCLih/M2uiKcHggWaA+kPHr80SOsB5+jP
+         QZ6Lqek46ncDzlEnMPF3E8PbTizOFJ2EAxDVmhLBoXlI47TX8c2nGz0SrTrajxigOvao
+         iJBrT4XA8oSQCXVlkv9jcbTiw7o2eB92QrmdnUKMzABWjZcKt4RScbRytrHynH5quFZ2
+         mHuMh5fbfk3ZHZDg3fb8wyfc8i3EBvf32yKmT65HPpZQuZl6VDqsHlgSYs0hEZMkeXSp
+         uEaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=c99+BAgzJtOvTukoHupNR5U+51P1HwVnPNnuTBq86g4=;
-        b=MYyHtcr8t+KIfIkV7s4NskdLzaCZ1dGJ5fwNhjCP6wfVEDxwS23NpQuI6PkKyOC+Wd
-         oFHSUDDFijiGzQsxiwwiRdfIHIrjjmRx8Tv2QxwDti5yQvkWh75s6jBHw594Ar61b0+l
-         5WBTHbA0zCWtOvwfQf4EDXd/NKftBgiexOHs2+pKE6vm1G+FTZpDGjrf0RSFwFyvi5WF
-         +7Pyc7nJP3o/p4AA79OeKFK/lDXEkZdeWuSOVQSS1b4/P8rkOifxdMAurkfLljgpjFkD
-         u1GKmJlzm+PRS13/44YAOPIZWpPQI9wS8MezMhM0pghxYEOR/apbz77pCyi2t76vsDeh
-         QvOw==
-X-Gm-Message-State: ANoB5plc8y+eldsRMpgMs7CvO0cN4lfeReDaX2zoXOLvfGmLgghiaLM2
-        6DMl+/Rndee41AW45YxG7TxDRQ55HpU=
-X-Google-Smtp-Source: AA0mqf6CgKUTwAB2dbWkmXYe1/VDMNbzLpNbMPNxJL7MTBkfhklMfebSDMS8OETPafRkTVD1VVmkXQ==
-X-Received: by 2002:a5d:4845:0:b0:241:c1bd:9c75 with SMTP id n5-20020a5d4845000000b00241c1bd9c75mr4854106wrs.422.1668907647675;
-        Sat, 19 Nov 2022 17:27:27 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c3-20020adffb43000000b00225307f43fbsm7388180wrs.44.2022.11.19.17.27.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Nov 2022 17:27:27 -0800 (PST)
-Message-Id: <72c4fd5532b89e21b55913b780311ec7e9fda9df.1668907644.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1423.v2.git.1668907644.gitgitgadget@gmail.com>
-References: <pull.1423.git.1668866540.gitgitgadget@gmail.com>
-        <pull.1423.v2.git.1668907644.gitgitgadget@gmail.com>
-From:   "Yoichi Nakayama via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 20 Nov 2022 01:27:24 +0000
-Subject: [PATCH v2 2/2] git-jump: invoke emacsclient
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=N9pu4vStq8HeIp/BBPp8YIGlCweYzOoImUPMXOpLdw0=;
+        b=MvW03wn7bhRyZsfk8h+2thGb0BouiubFLSD3H3L350Ayyno0gc/scnt1W8F/7dhu3l
+         qWkJkLadg7WyNGXlouzj1FZTrFpbBVvOxUHOYkO6ZADXs9IM2zKhga97TGZF2ldah1FY
+         BiGajphjmuUcGZwWqRXpEaa6YLf075R7z4zxP2EycPPrAzQAfg9XYsRZLll+WlSxHWzO
+         rU76N0DSz3oJengRPs1lrjitUQ6/05JdF8qf93TrTctVNhdeE9dLGmksclb5yW07SYbc
+         HoTIkdTxhqxFy/0alOO0zqfcrzwdDVbTrG2U1LFClzZ2wBghBrOPsTkTvCtBIkuw7y3M
+         M5Jw==
+X-Gm-Message-State: ANoB5pmZKpJDkpYEVaM1OL7dSPcKjZz5X5VlqEZSaiN7fYCw/af+oWk3
+        LLkclyCIu56lUw0JDvMA2Wc=
+X-Google-Smtp-Source: AA0mqf4UEEuosTrSfId1jc7ZfiXYXhQ646/bKbrjhSrF0I73nPGbvIUYgRS0kzixrj68qbo6pA7N6A==
+X-Received: by 2002:a63:5920:0:b0:43f:88cc:473 with SMTP id n32-20020a635920000000b0043f88cc0473mr12743211pgb.491.1668908907947;
+        Sat, 19 Nov 2022 17:48:27 -0800 (PST)
+Received: from [192.168.43.80] (subs02-180-214-232-87.three.co.id. [180.214.232.87])
+        by smtp.gmail.com with ESMTPSA id u71-20020a62794a000000b00562019b961asm5738887pfc.188.2022.11.19.17.48.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 19 Nov 2022 17:48:27 -0800 (PST)
+Message-ID: <a3cfe081-1e68-edda-b797-e68356988046@gmail.com>
+Date:   Sun, 20 Nov 2022 08:48:25 +0700
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>,
-        Yoichi Nakayama <yoichi.nakayama@gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH] Makefile: suppress macOS deprecation warning
+Content-Language: en-US
+To:     Stefan Sundin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Stefan Sundin <git@stefansundin.com>
+References: <pull.1422.git.1668888407433.gitgitgadget@gmail.com>
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <pull.1422.git.1668888407433.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Yoichi Nakayama <yoichi.nakayama@gmail.com>
+On 11/20/22 03:06, Stefan Sundin via GitGitGadget wrote:
+> From: Stefan Sundin <git@stefansundin.com>
+> 
+> Compiling git on macOS 13 emits the following deprecation warning:
+> 
+>         CC compat/fsmonitor/fsm-listen-darwin.o
+>     compat/fsmonitor/fsm-listen-darwin.c:495:2: warning: 'FSEventStreamScheduleWithRunLoop' is deprecated: first deprecated in macOS 13.0 - Use FSEventStreamSetDispatchQueue instead. [-Wdeprecated-declarations]
+>             FSEventStreamScheduleWithRunLoop(data->stream, data->rl, kCFRunLoopDefaultMode);
+>             ^
+>     /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/CoreServices.framework/Frameworks/FSEvents.framework/Headers/FSEvents.h:1138:1: note: 'FSEventStreamScheduleWithRunLoop' has been explicitly marked deprecated here
+>     FSEventStreamScheduleWithRunLoop(
+>     ^
+>     1 warning generated.
+> 
+> Setting a minimum macOS version will suppress this deprecation warning.
+> Using a version lower than 10.13 will cause other warning messages to
+> be emitted.
+> 
 
-It works with GIT_EDITOR="emacsclient" or GIT_EDITOR="emacsclient -t"
+Why don't instead follow the suggestion on the warning message
+(FSEventStreamSetDispatchQueue) instead?
 
-Signed-off-by: Yoichi Nakayama <yoichi.nakayama@gmail.com>
----
- contrib/git-jump/git-jump | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-index a907f69304d..f267eac2233 100755
---- a/contrib/git-jump/git-jump
-+++ b/contrib/git-jump/git-jump
-@@ -26,6 +26,11 @@ open_editor() {
- 	eval "$editor -q \$1"
- }
- 
-+open_emacsclient() {
-+	editor=`git var GIT_EDITOR`
-+	eval "$editor -e \"(prog1 (switch-to-buffer-other-frame (grep \\\"git jump stdout $@\\\")) (delete-other-windows) (select-frame-set-input-focus (selected-frame)))\""
-+}
-+
- mode_diff() {
- 	git diff --no-prefix --relative "$@" |
- 	perl -ne '
-@@ -79,6 +84,12 @@ if test "$mode" = "stdout"; then
- 	exit 0
- fi
- 
-+if git var GIT_EDITOR | grep emacsclient >/dev/null; then
-+	type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
-+	open_emacsclient "$mode" "$@"
-+	exit 0
-+fi
-+
- trap 'rm -f "$tmp"' 0 1 2 3 15
- tmp=`mktemp -t git-jump.XXXXXX` || exit 1
- type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
 -- 
-gitgitgadget
+An old man doll... just what I always wanted! - Clara
+
