@@ -2,91 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BEFBC4332F
-	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 13:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA4DAC433FE
+	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 13:28:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229639AbiKUNIu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Nov 2022 08:08:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51738 "EHLO
+        id S230102AbiKUN2B (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Nov 2022 08:28:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229881AbiKUNIq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2022 08:08:46 -0500
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C1CBDF1C
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 05:08:44 -0800 (PST)
-Received: by mail-pj1-x1035.google.com with SMTP id w15-20020a17090a380f00b0021873113cb4so10803583pjb.0
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 05:08:44 -0800 (PST)
+        with ESMTP id S230225AbiKUN1k (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2022 08:27:40 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10828B1FA
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 05:27:36 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id s5so16184747edc.12
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 05:27:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UoC4XEzIEqK+R6N3JKeuNyMSVa9FCwFInZSR8lfDL78=;
-        b=BuLnZH3N0efetP11t+VhJU6broJuJS+K4bKmicsjHxSmoW525EBmWOmMAalDNPtjFE
-         pcRYJb1lVUDtR3M21b32ZCS7nwQiOuoCluchnsU5bQgBUdXflllve9fuf6CrvGRXx8Q4
-         e+BjalDp/HD7bsALpY+fXlsLng8FDqCix7y3hQVXD9N5yWsOILp+2DXhn3OcGF3rPhkd
-         aSbpqGYOGOtzslse90fTT3ioLO51yb6Vsm6UM40pIG+eU7r8MAqWvzqE6V++Mj02QDCO
-         ZjcDgYrvbIT+7A+/mHQ+IhT50YiZdeHVDEC3FD2kDdDSyNYm+vZLEljiRA2/BxR2YD2f
-         6hgQ==
+        h=mime-version:message-id:user-agent:date:subject:cc:to:from:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=3Y+rWvAoZZgwlroUSBlWb2j7F1pLRifwrXml3is+raM=;
+        b=Jrn3loDFuLwBwdFW1Z8FTdM2GhuJCzlsYPZmEydc9+tTRtgfrIjpIh0nSKF5EpUYaI
+         ME/ncs4NFVzTecuIdujAwZ0Sf9hpMQSoWurldleORfqWernSPkr3oUNcJUuTPNE71zgb
+         mlU7fPt8X0v0qdlkC7+p6Hrk89iA7hLQ4n696HezFoWLcfi3z6UPRv5ZRHuR146DqGBj
+         W7wrZwvV/MYdqGbpzMCgt5/uqmbQwavefdMXVguZNvL0uwVknnAMWuTcxMuOUBtFlWPX
+         NUTMWktESQNCdDnY+I0FhMlDe1qkTxg7lHvtE20Gj8lJIHyvHFfuKVPA3WakPij4PDta
+         Plng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=UoC4XEzIEqK+R6N3JKeuNyMSVa9FCwFInZSR8lfDL78=;
-        b=aGY7prx2wVD7uQeZ/fDUyqS/WDBsAObZPpVoDyzaFVePctymX+sFvXBESM0QgR6qqS
-         FsxACeuR7E88ACGcOTcby2b3ThaibXo48iI+imlc2bu26sSbHi7fbk6RCoV+kqjMtpeG
-         8q+GyJnuGICTfDZk4Lay5+hEdSVklQz6bL0yOf/H71BB7XHBZz2o9/9Dkr4uQkun+R5n
-         zRg+PVAA5VFpfTW6I60r8se8KS/dycrL9x5vRXqpwqM/OsttHLyluC30IQapxw2ppakc
-         vM9h28OGhDOIit1r0hm18t5eyonZUy4CuMHfP8QilbTViPiBkYI7Zz7biQhc9dTDsWj3
-         Cyfg==
-X-Gm-Message-State: ANoB5pkTwKWAdXaWW21aVxqH99anpos93bt0JAZez/3rkO2G9xhA3J3t
-        U7B4juryuRbnqwyDooCjGa8=
-X-Google-Smtp-Source: AA0mqf71uF+jhzYjkECQg+qcGHQpb/Ryyym2Kc6B8JxKb9Wgw+Bh3l0RzQzAr7ux4/oSZZQVWplWlw==
-X-Received: by 2002:a17:90a:5c85:b0:20a:92d2:226a with SMTP id r5-20020a17090a5c8500b0020a92d2226amr8871020pji.155.1669036123526;
-        Mon, 21 Nov 2022 05:08:43 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id r12-20020a635d0c000000b0043b565cb57csm2698827pgb.73.2022.11.21.05.08.43
+        h=mime-version:message-id:user-agent:date:subject:cc:to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3Y+rWvAoZZgwlroUSBlWb2j7F1pLRifwrXml3is+raM=;
+        b=QTZGEZh0M10gUBElW5DXCCCycRgExRVtZuMF/Nq95wawc//GGCjTwsvzK0B5TVo/FZ
+         mdQ9cl58oEIsoFhP+qOpOSbwx/RdgvZmzjDDEkIZokzBWvVacEbg6RP/dfNqWN6C/UBk
+         Dk/S5AK1/lnX7YTtwHRxSdNYaVT9PtClozzLGpZ6JF2Cjkptp1otAu8iOpBYPRTjAUel
+         jXXy7N7x5UbTL9LohPCVKkAFR9BZ94tsDNMZ9bWApWzOUCAuQqhPOqk/4TfU2zh38iwA
+         QOyBbupXr8y4ttsAHAODqSI8U7/pLeDUY1nVOiJWw2qycpudz92IWjHdKFtoiExUW1lK
+         PPYg==
+X-Gm-Message-State: ANoB5plnd4yHVV7zPtx5mBpLqs0J6PkIO2Hlzg8DZke8Xs7QN+rrRtWB
+        aHUj90IYzBuDLNeqbRkCqWl6/DUsIGA=
+X-Google-Smtp-Source: AA0mqf7uqi8nX2Cj3NtWLZ6JM1aSMRNNRNWyWEzO0Q4lxpoF5HbaCzs1+N9hHmroNm8oKpzrO+2Qpw==
+X-Received: by 2002:a05:6402:3203:b0:467:b8c9:a7fa with SMTP id g3-20020a056402320300b00467b8c9a7famr452406eda.25.1669037254254;
+        Mon, 21 Nov 2022 05:27:34 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id v24-20020a170906859800b00781e7d364ebsm5067875ejx.144.2022.11.21.05.27.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Nov 2022 05:08:43 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Wong <e@80x24.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] prune: quiet ENOENT on missing directories
-References: <20221119201213.2398081-1-e@80x24.org>
-        <xmqq5yf8yhe0.fsf@gitster.g> <20221121104427.M268307@dcvr>
-Date:   Mon, 21 Nov 2022 22:08:42 +0900
-In-Reply-To: <20221121104427.M268307@dcvr> (Eric Wong's message of "Mon, 21
-        Nov 2022 10:44:27 +0000")
-Message-ID: <xmqqpmdgv4it.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Mon, 21 Nov 2022 05:27:33 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1ox6ph-0008qk-0w;
+        Mon, 21 Nov 2022 14:27:33 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Git ML <git@vger.kernel.org>
+Cc:     Eric DeCosta <edecosta@mathworks.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+Subject: fsmonitor: t7527 racy on OSX?
+Date:   Mon, 21 Nov 2022 14:07:13 +0100
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+Message-ID: <221121.86y1s4bfp6.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Wong <e@80x24.org> writes:
+I have access to a Mac OS X M1 box (gcc104 at [1]) where t7527 reliably
+fails due to what seems to be a race us doing something, and assuming
+that fsmonitor picked up on it.
 
-> Good question, perhaps this could be a followup:
->
-> diff --git a/builtin/prune.c b/builtin/prune.c
-> index 2719220108..041c45ecbe 100644
-> --- a/builtin/prune.c
-> +++ b/builtin/prune.c
-> @@ -188,7 +188,6 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
->  				      prune_cruft, prune_subdir, &revs);
->  
->  	prune_packed_objects(show_only ? PRUNE_PACKED_DRY_RUN : 0);
-> -	remove_temporary_files(get_object_directory());
->  	s = mkpathdup("%s/pack", get_object_directory());
->  	remove_temporary_files(s);
->  	free(s);
+This makes the tests pass:
+	
+	diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+	index 56c0dfffea..ce2555d558 100755
+	--- a/t/t7527-builtin-fsmonitor.sh
+	+++ b/t/t7527-builtin-fsmonitor.sh
+	@@ -428,6 +428,7 @@ test_expect_success 'edit some files' '
+	 	start_daemon --tf "$PWD/.git/trace" &&
+	 
+	 	edit_files &&
+	+	sleep 1 &&
+	 
+	 	test-tool fsmonitor-client query --token 0 &&
+	 
+	@@ -443,6 +444,7 @@ test_expect_success 'create some files' '
+	 	start_daemon --tf "$PWD/.git/trace" &&
+	 
+	 	create_files &&
+	+	sleep 1 &&
+	 
+	 	test-tool fsmonitor-client query --token 0 &&
+	 
+	@@ -471,6 +473,7 @@ test_expect_success 'rename some files' '
+	 	start_daemon --tf "$PWD/.git/trace" &&
+	 
+	 	rename_files &&
+	+	sleep 1 &&
+	 
+	 	test-tool fsmonitor-client query --token 0 &&
+	 
+	@@ -978,6 +981,7 @@ test_expect_success !UNICODE_COMPOSITION_SENSITIVE 'Unicode nfc/nfd' '
+	 	mkdir test_unicode/nfd/d_${utf8_nfd} &&
+	 
+	 	git -C test_unicode fsmonitor--daemon stop &&
+	+	sleep 1 &&
+	 
+	 	if test_have_prereq UNICODE_NFC_PRESERVED
+	 	then
 
-I actually was hinting at making the remove_temporary_files()
-recurse, so that you do not need the separate invocation in pack/
-subdirectory.
+The failure is when we grep out the events we expect, which aren't
+there, but if you manually inspect them they're there. I.e. they're just
+not "in" yet.
 
-Or make 256 calls for each of the fan-out subdirectory, in which
-case the ENOENT silencing you did would really matter and shine.
+I thought this might be a lack of flushing or syncing in our own trace
+code, but adding an fsync() to trace_write() didn't do the trick.
+
+1. https://cfarm.tetaneutral.net/news/41#
