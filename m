@@ -2,120 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07837C433FE
-	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 19:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3678C433FE
+	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 19:27:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229639AbiKUTWO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Nov 2022 14:22:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50958 "EHLO
+        id S231502AbiKUT1G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Nov 2022 14:27:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231611AbiKUTWC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2022 14:22:02 -0500
+        with ESMTP id S231562AbiKUT06 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2022 14:26:58 -0500
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2360819C1D
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 11:22:00 -0800 (PST)
-Received: (qmail 12511 invoked by uid 109); 21 Nov 2022 19:22:00 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CAC68CBA4
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 11:26:57 -0800 (PST)
+Received: (qmail 12544 invoked by uid 109); 21 Nov 2022 19:26:56 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 21 Nov 2022 19:22:00 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 21 Nov 2022 19:26:56 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26641 invoked by uid 111); 21 Nov 2022 19:22:00 -0000
+Received: (qmail 26687 invoked by uid 111); 21 Nov 2022 19:26:56 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 21 Nov 2022 14:22:00 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 21 Nov 2022 14:26:56 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 21 Nov 2022 14:21:59 -0500
+Date:   Mon, 21 Nov 2022 14:26:55 -0500
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Taylor Blau <me@ttaylorr.com>,
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
         Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 2/2] parse_object(): check on-disk type of suspected blob
-Message-ID: <Y3vP16OJSP19VMMy@coredump.intra.peff.net>
-References: <Y3a3qcqNG8W3ueeb@coredump.intra.peff.net>
- <Y3a4jKzsHSooYFqj@coredump.intra.peff.net>
- <221118.86cz9lgjxu.gmgdl@evledraar.gmail.com>
+Subject: Re: [PATCH 0/2] fixing parse_object() check for type mismatch
+Message-ID: <Y3vQ/6QcTEFfpjLt@coredump.intra.peff.net>
+References: <Y3Up5Vi75Up8LaGQ@coredump.intra.peff.net>
+ <20221116211419.439356-1-jonathantanmy@google.com>
+ <Y3a3qcqNG8W3ueeb@coredump.intra.peff.net>
+ <Y3fXYKj8PdS4EKLB@nand.local>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <221118.86cz9lgjxu.gmgdl@evledraar.gmail.com>
+In-Reply-To: <Y3fXYKj8PdS4EKLB@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 18, 2022 at 01:36:23AM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Fri, Nov 18, 2022 at 02:05:04PM -0500, Taylor Blau wrote:
 
-> > -	if ((obj && obj->type == OBJ_BLOB && repo_has_object_file(r, oid)) ||
-> > -	    (!obj && oid_object_info(r, oid, NULL) == OBJ_BLOB)) {
-> > +	if ((!obj || (obj && obj->type == OBJ_BLOB)) &&
-> > +	    oid_object_info(r, oid, NULL) == OBJ_BLOB) {
-> >  		if (!skip_hash && stream_object_signature(r, repl) < 0) {
-> >  			error(_("hash mismatch %s"), oid_to_hex(oid));
-> >  			return NULL;
+> On Thu, Nov 17, 2022 at 05:37:29PM -0500, Jeff King wrote:
+> > I'm adding Taylor to the cc as the author of t6102, when we were
+> > tracking down all of these "oops, it's not really a blob" cases. This
+> > fixes one of the lingering cases from that test script.
+> >
+> >   [1/2]: parse_object(): drop extra "has" check before checking object type
+> >   [2/2]: parse_object(): check on-disk type of suspected blob
+> >
+> >  object.c                               | 5 ++---
+> >  t/t6102-rev-list-unexpected-objects.sh | 4 ++--
+> >  2 files changed, 4 insertions(+), 5 deletions(-)
 > 
-> But why:
+> A blast from the past :-).
 > 
-> 	if ((!x || (x && x->m)) && ...)
-> 
-> Instead of:
-> 
-> 	if ((!x || x->m)) && ...)
-> 
-> If "!obj" is false then "obj" must be non-NULL, so you don't need to
-> check it again and can lose the "obj &&".
+> I took a careful look at both of these patches and they looked good to
+> me, so let's start merging them down.
 
-Just that it was one more round of refactoring than I did. :)
+I saw this hit 'next', but I think Ævar's simplification suggestion is
+worth taking. So here is a patch on top to do so (the original branch is
+jk/parse-object-type-mismatch for the benefit of any newly-returned
+maintainers).
 
-I agree that it's much more readable. It looks like the original hit
-'next', so I'll send a patch on top.
+I was going to do a "helped-by", but since the only thing in the patch
+is the suggested change, I just handed over authorship. :)
 
-> I applied this on top of "master", and adjusted your test to be this
-> instead:
-> 
-> 	test_expect_success 'traverse unexpected non-blob tag (lone)' '
-> 		cat >expect <<-EOF &&
-> 		error: object $commit is a blob, not a commit
-> 		fatal: bad object $commit
-> 		EOF
-> 		test_must_fail git rev-list --objects $tag >out 2>actual &&
-> 		test_must_be_empty out &&
-> 		test_cmp expect actual
-> 	'
-> 
-> Which passes, showing that we're still not correctly identifying it, but
-> we are doing it for the purposes of erroring out, but the incorrect type
-> persists.
-> 
-> Now, this all does seem quite familiar... :) :
-> https://lore.kernel.org/git/patch-10.11-a84f670ac24-20210328T021238Z-avarab@gmail.com/
-> 
-> I.e. that's the rest of the fix for this issue. I applied this change on
-> my local branch with that, and they combine nicely. the "test_must_fail"
-> here works as intended, *and* we'll correctly report & store the type.
+I didn't forge a signoff, and I think mine is sufficient under DCO's
+part (b), but Ævar please indicate if that's OK.
 
-Right. It's hitting the exact same code path as all of the other object
-types now. You suggested adding to the test here, but I'd prefer not to
-do that. Noticing that we have a type mismatch is what is fixed, and it
-now does that just like all the other object types. Dealing with the
-message reversal is orthogonal.
+-- >8 --
+From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Subject: [PATCH] parse_object(): simplify blob conditional
 
-> > But more importantly, it looks like pw/test-todo would provide us with a
-> > much nicer pattern there. It seems to be stalled on review, so let's see
-> > if we can get that moving again.
-> 
-> The "TODO (should fail!)" didn't stand out? But yeah, having a "todo" or
-> "test_expect_todo" or "test_expect_failure" not suck would be nice.
+Commit 8db2dad7a0 (parse_object(): check on-disk type of suspected blob,
+2022-11-17) simplified the conditional for checking if we might have a
+blob. But we can simplify it further. In:
 
-I did double-take on the "TODO" just because that is not our usual
-pattern, but that was easily fixed. What I really don't like about the
-"switch failure to success" pattern is that it requires rewriting the
-test to expect the wrong thing! So when somebody later fixes the bug,
-they get a confusing failure, but must also rewrite the test back to
-what it originally should have been.
+  !obj || (obj && obj->type == OBJ_BLOB)
 
-That was not too hard here, where it was just replacing a
-test_must_fail, but that earlier hunk in cf10c5b4cf that actualy adds in
-expected output (that we know is the wrong thing to be printing!) seems
-a bit over the top to me. Anybody who encounters it has to dig into the
-history to understand what is going on.
+the short-circuit "OR" means "obj" will always be true on the right-hand
+side. The compiler almost certainly optimized that out anyway, but
+dropping it makes the conditional easier to understand for humans.
 
--Peff
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ object.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/object.c b/object.c
+index fad1a5af4a..682b852a46 100644
+--- a/object.c
++++ b/object.c
+@@ -286,7 +286,7 @@ struct object *parse_object_with_flags(struct repository *r,
+ 			return &commit->object;
+ 	}
+ 
+-	if ((!obj || (obj && obj->type == OBJ_BLOB)) &&
++	if ((!obj || obj->type == OBJ_BLOB) &&
+ 	    oid_object_info(r, oid, NULL) == OBJ_BLOB) {
+ 		if (!skip_hash && stream_object_signature(r, repl) < 0) {
+ 			error(_("hash mismatch %s"), oid_to_hex(oid));
+-- 
+2.38.1.950.g65ed8c1df8
+
