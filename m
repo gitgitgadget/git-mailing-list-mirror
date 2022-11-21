@@ -2,89 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E448C433FE
-	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 23:30:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB519C4332F
+	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 23:32:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231522AbiKUXaD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Nov 2022 18:30:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42164 "EHLO
+        id S231561AbiKUXcP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Nov 2022 18:32:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbiKUXaA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2022 18:30:00 -0500
-Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF8E2D5A3C
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 15:29:59 -0800 (PST)
-Received: by mail-pg1-x532.google.com with SMTP id q1so12528623pgl.11
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 15:29:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fw8JRZfLz26GYLVhUMrt9HTYhMYBXHoSqjS8TRhHaXw=;
-        b=LoXXuaab21iqnZ/qJOSiLxzNOFTn3arIOXLTcAW1aDTiICHmkxyLPHizD/awELbS6J
-         t1VNizaVK8VdnHp4Ui7gNwVe5nWXDejiOGEi/kLezzHcwAmwzNx9RG7KBp+aniLFqL3Y
-         rQXqMWIV99YWw8Ok1txsWEhUIBBVK3ujlHga5NWpjXd6h29LB0rznLs9Adl36JYJFuoJ
-         OoHyeg3M8C/eaMomOF7MrNepfjzOYUuNC/hqe/R4UnL+d+wz7rXog6DWHTPuZrXwRYDi
-         ui1va8tFddDGmMaWGtgTY5C1ClYMCnwti1/lSXf1Uo/gCsSO0NXtqRmJ/dm7C5EgbT9f
-         hZNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=fw8JRZfLz26GYLVhUMrt9HTYhMYBXHoSqjS8TRhHaXw=;
-        b=VTl3kUbQoAjR3tyiLlcZod+E8V0NOZfnOsZDTt4j4zFUUqfMmj9PglsKZzsNvnjzX/
-         cSsNScWKjJV3D9ZydbShLJNl59o41DcyXosK9DJIxvCNueNtYRAuSX2GrNDKDVTkyO8v
-         QlbfzB+jvxC2VWYf9SF36cq820e7GbVKhJ3Ey6QpcxM0iVaF6/3fhVo13Css0robCfHt
-         8SGcxvGeAy1GCbwEZQNfK/kKDrx4AXcyufl5K3tjf4D3a1qbbxxfNH1H74fgdnS34YPi
-         ZDAvb4w5Xj9GAQkpQfhYIhvs7NhhjnTEBDtPSwEENMOA046WxYzQJLXXtJwkddnbWRtf
-         VeDQ==
-X-Gm-Message-State: ANoB5pkzZbY1U4C4RXdzZECbAGR/xoTJCdFj/Z2AFOU6CJzlsrUxOHgn
-        YOPKrwwqaeBOdbngg5XxLFc=
-X-Google-Smtp-Source: AA0mqf6SaJnkHwzxphZjaoFrTWFor5s9g+qjOYPoWg/7VHnoZf47ZTxMeIyk3fOBPWaPzmsmNFiHQg==
-X-Received: by 2002:a05:6a00:17a3:b0:56b:b37d:9857 with SMTP id s35-20020a056a0017a300b0056bb37d9857mr2103660pfg.12.1669073399280;
-        Mon, 21 Nov 2022 15:29:59 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id b1-20020a170903228100b00186b7443082sm10389297plh.195.2022.11.21.15.29.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Nov 2022 15:29:58 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Teng Long <dyroneteng@gmail.com>, avarab@gmail.com,
-        derrickstolee@github.com, git@vger.kernel.org, me@ttaylorr.com,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v4 4/4] pack-bitmap.c: trace bitmap ignore logs when
- midx-bitmap is found
-References: <cover.1669032425.git.dyroneteng@gmail.com>
-        <2acaa3f097e0ab08a63ae1719454f5e11bb15a44.1669032426.git.dyroneteng@gmail.com>
-        <Y3vM3GZYFy+l006d@coredump.intra.peff.net>
-Date:   Tue, 22 Nov 2022 08:29:58 +0900
-In-Reply-To: <Y3vM3GZYFy+l006d@coredump.intra.peff.net> (Jeff King's message
-        of "Mon, 21 Nov 2022 14:09:16 -0500")
-Message-ID: <xmqqbkozvqbt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S230063AbiKUXcN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2022 18:32:13 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AC23D9065
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 15:32:12 -0800 (PST)
+Received: (qmail 13236 invoked by uid 109); 21 Nov 2022 23:32:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 21 Nov 2022 23:32:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29055 invoked by uid 111); 21 Nov 2022 23:32:12 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 21 Nov 2022 18:32:12 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 21 Nov 2022 18:32:11 -0500
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2] config: introduce an Operating System-specific
+ `includeIf` condition
+Message-ID: <Y3wKe7aO7I7bpmLm@coredump.intra.peff.net>
+References: <pull.1429.git.1669037992587.gitgitgadget@gmail.com>
+ <pull.1429.v2.git.1669058388327.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1429.v2.git.1669058388327.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Mon, Nov 21, 2022 at 07:19:48PM +0000, Johannes Schindelin via GitGitGadget wrote:
 
-> ...
-> It's not hurting anything functionally, but it makes the code slightly
-> more confusing to read.
+> It is relatively common for users to maintain identical `~/.gitconfig`
+> files across all of their setups, using the `includeIf` construct
+> liberally to adjust the settings to the respective setup as needed.
 
-Thanks for all these good suggestions.
+This seems like a reasonable thing to have in general, but I wonder if
+you have an example of how people use this. Mostly I am wondering:
 
-As you pointed out, the first two seems to be identical to what
-Taylor queued in 'next' already (so they do not have to be re-sent
-but it is not a huge deal if they did---it would be a huge deal if
-they were rewritten, though), and both of the two follow-on patches
-make sense with suggested (minor) updates.  I'll expect a reroll
-before queuing these two and mark the topic in 'next' to be waiting
-for them.
+  - is it sometimes a misuse, where users _think_ that the OS is
+    correlated with some feature of Git.  And they would be better off
+    with some flag like "does the current platform support fsmonitor".
 
-Thanks, both.
+  - for cases where it really  is "uname -s" the best differentiator? Or
+    would they commonly want to lump FreeBSD and Linux into the same
+    category, or to tell the difference between Debian versus Fedora?
+
+-Peff
