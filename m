@@ -2,71 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CCFCC43217
-	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 09:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C7E47C4332F
+	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 10:09:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230416AbiKUJu2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Nov 2022 04:50:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56608 "EHLO
+        id S230072AbiKUKJ1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Nov 2022 05:09:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230444AbiKUJuD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2022 04:50:03 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E98681144F
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 01:50:01 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id t4so8040797wmj.5
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 01:50:01 -0800 (PST)
+        with ESMTP id S229702AbiKUKJE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2022 05:09:04 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA7A5101B
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 02:09:00 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id o7-20020a05600c510700b003cffc0b3374so8461781wms.0
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 02:09:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jwut3OYmJfBu0YvMz5NTk8WVx1/wd3C+396MjBAItUc=;
-        b=eqbIF76YCgpebSnfKxRPOziSivbhYaDzWHPOkidxAug2xA4WryrPMNQuWac27PM09q
-         Ys7/hmdWUB52LCyn3AaDxmDCxPkseqkeCMVbj9t10Efk3+AyVMIeHyq9rFCqWCWw7Q8A
-         oIVtIKzVPFDmu7RgS+hiCeJ0ng6q59nLReCdKzqBN8Il0/qEyvWsFrsJZP+JTqFOG7Fn
-         RLhkj1Yz6F/zpum0OwAtIeJV7Eux/OhrSn7LUymcokRjh9UwDs20lBm1KEU7cPlutDlv
-         OwfbCiCDkPw6djtU1wzbkLSDC/RrgaPFOsXFoxJqgsWQMi8FbA+WrtkZJ9Cro1i8+fvF
-         9UKg==
+        bh=pQptk+SkSaLAhx5ke7Yzo4pSxBGvLYuVbxlEq4Ap75Q=;
+        b=OHkUCSIGV4Df0+sP3GZOg5i2zM9M7Jl3bdd3VvQ+RDNEJhMnFze2fLaOqk94KNRaam
+         c64zfbcPDz434Iw9C3iPpgFi18fACtZPZEYSviDTMUcbmIuO2Xy0ysq/v6qoU/ibCOHO
+         n/Y8oz0JYL+FK+y0mz9ebJcg+kXnx7v3Ofyiiq+FwX/Wb9s53n6cq995G+eVkShLMRoK
+         lUsjvdRRMHpH7REI6P1VxgFJ8zQqa/e/dDH16b9GOj0l6AlIoX5HJurGCgW1jUQaFyUF
+         fjdspIFIL9XoGKuosmb0wbXTCubVqCJTgVwsyhFnc5bLrLE3nz6nwmDqO8oRG8r7YRmZ
+         iTMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Jwut3OYmJfBu0YvMz5NTk8WVx1/wd3C+396MjBAItUc=;
-        b=fcFzNExSjg0PtUi9l33WzNJXE4yDkbaq8tq9C8/fzci2XsPtYPgDLVs8AqsV1JlmTO
-         jSn4xiZ69fDR12UEQOvyorC8R8nBC7f+Q9vROB0VUvjvfRApxx1A+BFLa+TA85nLam0N
-         Vt0CimdHCd/0bYDtZMCe1dzIIhSy4w8HNAzMRS6MXUvoCIEkg/PA/0PynS20TaYes6b/
-         AINVOi2c++pDUGb5lsuQEdlfDZOtHrgnbIZMg7OHUhDoVYKRiQsJpgaMvkNan+RZ+oGT
-         g++KBbEt0jzyD/jTIoPg/engV+vjBsVwn4zkXElMBksG3/62ajnc+t9TVycVTd9L01q8
-         pxFQ==
-X-Gm-Message-State: ANoB5pmK0UCzBB2rWkiJ0J7PxYuH5+dsLDiuTSJ8U2DMbQxkS99xWaak
-        vwnkxxgLi8kNe1wyJitZRU0=
-X-Google-Smtp-Source: AA0mqf6udjcJ5Hb65LXo2yA/8MhWFR3woUCd2XZ4FbALi6Nqr7Kn2QNFGRDLvux2GaeOtQ84acf8TQ==
-X-Received: by 2002:a05:600c:22c4:b0:3cf:71b7:7a41 with SMTP id 4-20020a05600c22c400b003cf71b77a41mr12329017wmg.31.1669024200391;
-        Mon, 21 Nov 2022 01:50:00 -0800 (PST)
+        bh=pQptk+SkSaLAhx5ke7Yzo4pSxBGvLYuVbxlEq4Ap75Q=;
+        b=HAZJ9hYwUNpMjLjy4WmwkrdPHhhsKQ/lrIJYzQAVCoqNNyiFyHEzP8vJ/pdl/IKL3D
+         isUUjMpXWiBgEYFjfI/CxFqDqpMwO6hFcDXENrCztaUGUcEI8rAdl7M9cOUzQg0QCfqP
+         tHwiU5sDxAaXBABoyFogKCHN6QM/CVn+GKB36SeqO1kSgRppekmd6eEr2PaCF174TqlX
+         o4oESLfeMWVpRTWCKpyVUk0eblh19QdYi7/Smh5KQ11PF3zhCUzTQ+cAMZ/LAR/HPqAm
+         UwXvaUfTeS+WZiq2PdYH2IU9eUCBMPCTNG1Rs9047pIr2tOLBYoDO0VTUdr+DYf29dD9
+         3IHg==
+X-Gm-Message-State: ANoB5pkRM54GFBO2tJ+IMYfu9MsjU3qMDc43kUtwycf1Dx1luFdWVG06
+        uLqd5SnhVdrPJbs/n+Dom2ZYAAejcb0=
+X-Google-Smtp-Source: AA0mqf4RtihZbq3VuuYbLitYegFMeZcCxW/qZzilCtVXB3MtvXakS04xtvQhfm3qWjoze1M+1N79Vg==
+X-Received: by 2002:a05:600c:35cf:b0:3cf:aa11:93a8 with SMTP id r15-20020a05600c35cf00b003cfaa1193a8mr15645357wmq.31.1669025338935;
+        Mon, 21 Nov 2022 02:08:58 -0800 (PST)
 Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id x11-20020a5d490b000000b0023691d62cffsm9011223wrq.70.2022.11.21.01.49.59
+        by smtp.gmail.com with ESMTPSA id w5-20020a5d6805000000b002364c77bcacsm790303wru.38.2022.11.21.02.08.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Nov 2022 01:49:59 -0800 (PST)
+        Mon, 21 Nov 2022 02:08:58 -0800 (PST)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <4220fa3f-fc3f-aff0-fb03-b5dc4b24d087@dunelm.org.uk>
-Date:   Mon, 21 Nov 2022 09:49:57 +0000
+Message-ID: <8d40f170-650f-800a-02d7-d279186d5883@dunelm.org.uk>
+Date:   Mon, 21 Nov 2022 10:08:55 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/2] sequencer: unify label lookup
+Subject: Re: [PATCH v2] range-diff: support reading mbox files
 Content-Language: en-US
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-References: <pull.1414.git.1668098622.gitgitgadget@gmail.com>
- <ecb81b873a8d72c57fd4812ec86d103927437cf1.1668098622.git.gitgitgadget@gmail.com>
- <93qo066o-8r35-9q15-rq62-9r398o50p5p6@tzk.qr>
-In-Reply-To: <93qo066o-8r35-9q15-rq62-9r398o50p5p6@tzk.qr>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1420.git.1668536405563.gitgitgadget@gmail.com>
+ <pull.1420.v2.git.1668899471058.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1420.v2.git.1668899471058.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
@@ -75,155 +77,703 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Dscho
 
-On 18/11/2022 13:40, Johannes Schindelin wrote:
-> Hi Phillip,
-> 
-> On Thu, 10 Nov 2022, Phillip Wood via GitGitGadget wrote:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> The arguments to the `reset` and `merge` commands may be a label created
->> with a `label` command or an arbitrary commit name. The `merge` command
->> uses the lookup_label() function to lookup its arguments but `reset` has
->> a slightly different version of that function in do_reset(). Reduce this
->> code duplication by calling lookup_label() from do_reset() as well.
->>
->> This change improves the behavior of `reset` when the argument is a
->> tree.  Previously `reset` would accept a tree only for the rebase to
->> fail with
->>
->>         update_ref failed for ref 'HEAD': cannot update ref 'HEAD': trying to write non-commit object da5497437fd67ca928333aab79c4b4b55036ea66 to branch 'HEAD'
->>
->> Using lookup_label() means do_reset() will now error out straight away
->> if its argument is not a commit.
->>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
-> 
-> Very nice.
-> 
->  From reading the patch, I get the impression that this also addresses
-> https://github.com/gitgitgadget/git/issues/199, i.e. allowing `reset
-> <tag>`.
-> 
-> Am I right?
-> Dscho
+On 19/11/2022 23:11, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>      
+>      Changes since v1:
+>      
+>       * We no longer leak allocated memory in the struct patch instance
+>       * Made strtost() a bit more stringent
+>       * Postel [https://en.wikipedia.org/wiki/Postel%27s_Law]ized the mbox
+>         parser substantially, together with a couple more cosmetic fixes,
+>         based on Phillip Wood's excellent review of v1.
+>       * Extended the test case to cover mboxes containing CR/LF and in-body
+>         From: lines
 
-I think so, the tag will be dereferenced by lookup_commit_reference()
+This addresses all of my comments on V1. I've left a couple of queries 
+on the range-diff for a couple of changes I didn't quite understand.
+
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1420%2Fdscho%2Frange-diff-from-mbox-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1420/dscho/range-diff-from-mbox-v2
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1420
+> 
+> Range-diff vs v1:
+> 
+>   1:  354840fc57c ! 1:  485249ddfb3 range-diff: support reading mbox files
+>       @@ range-diff.c: struct patch_util {
+>        +
+>        +	errno = 0;
+>        +	/* negative values would be accepted by strtoul */
+>       -+	if (*s == '-')
+>       ++	if (!isdigit(*s))
+>        +		return -1;
+>        +	u = strtoul(s, &p, 10);
+>        +	if (errno || p == s)
+>       @@ range-diff.c: struct patch_util {
+>        +
+>        +	if (!skip_prefix(p, "@@ -", &p) ||
+>        +	    strtost(p, NULL, &p) ||
+>       -+	    (*p != ' ' && (*p != ',' || strtost(p + 1, &o, &p))) ||
+>       ++	    /* The range is -<start>[,<count>], defaulting to count = 1 */
+>       ++	    !(*p == ' ' || (*p == ',' && !strtost(p + 1, &o, &p))) ||
+>        +	    !skip_prefix(p, " +", &p) ||
+>        +	    strtost(p, NULL, &p) ||
+>       -+	    (*p != ' ' && (*p != ',' || strtost(p + 1, &n, &p))) ||
+>       ++	    /* The range is +<start>[,<count>], defaulting to count = 1 */
+>       ++	    !(*p == ' ' || (*p == ',' && !strtost(p + 1, &n, &p))) ||
+>        +	    !skip_prefix(p, " @@", &p))
+>        +		return -1;
+>        +
+>       @@ range-diff.c: struct patch_util {
+>        +	return 0;
+>        +}
+>        +
+>       -+static inline int find_eol(const char *line, size_t size)
+>       ++/*
+>       ++ * This function finds the end of the line, replaces the newline character with
+>       ++ * a NUL, and returns the offset of the start of the next line.
+>       ++ *
+>       ++ * If no newline character was found, it returns the offset of the trailing NUL
+>       ++ * instead.
+>       ++ */
+>       ++static inline int find_next_line(const char *line, size_t size)
+>        +{
+>        +	char *eol;
+>        +
+>       @@ range-diff.c: struct patch_util {
+>        +	if (!eol)
+>        +		return size;
+>        +
+>       -+	if (eol != line && eol[-1] == '\r')
+>       -+		eol[-1] = '\0';
+>       -+	else
+>       -+		*eol = '\0';
+>       ++	*eol = '\0';
+>        +
+>        +	return eol + 1 - line;
+>        +}
+>       @@ range-diff.c: struct patch_util {
+>        +
+>        +	line = contents.buf;
+>        +	size = contents.len;
+>       -+	for (; size > 0; size -= len, line += len) {
+>       ++	for (; size; size -= len, line += len) {
+>        +		const char *p;
+>        +
+>       -+		len = find_eol(line, size);
+>       ++		len = find_next_line(line, size);
+>        +
+>       -+		if (state == MBOX_BEFORE_HEADER) {
+>       ++		if (state == MBOX_BEFORE_HEADER ||
+>       ++		    (state == MBOX_IN_DIFF && line[0] == 'F')) {
+
+If we see an 'F' when parsing a diff then it is probably a From: line 
+indicating that we've reached the start of a new patch. I think we need 
+to add the diff we've just parsed to the list of commits before 
+continuing and change state to MBOX_BEFORE_HEADER otherwise we'll hit 
+the continue just below this comment with state unchanged.
+
+>        +			if (!skip_prefix(line, "From ", &p))
+>        +				continue;
+>        +
+>       @@ range-diff.c: struct patch_util {
+>        +			author = subject = NULL;
+>        +
+>        +			state = MBOX_IN_HEADER;
+>       ++			continue;
+>        +		}
+>        +
+>        +		if (starts_with(line, "diff --git ")) {
+>       @@ range-diff.c: struct patch_util {
+>        +			strbuf_addch(&buf, '\n');
+>        +			if (!util->diff_offset)
+>        +				util->diff_offset = buf.len;
+>       -+			line[len - 1] = '\n';
+>       ++
+>        +			orig_len = len;
+>       -+			len = parse_git_diff_header(&root, &linenr, 1, line,
+>       -+						    len, size, &patch);
+>       ++			/* `find_next_line()`'s replaced the LF with a NUL */
+>       ++			line[len - 1] = '\n';
+>       ++			len = len > 1 && line[len - 2] == '\r' ?
+>       ++				error(_("cannot handle diff headers with "
+>       ++					"CR/LF line endings")) :
+>       ++				parse_git_diff_header(&root, &linenr, 1, line,
+>       ++						      len, size, &patch);
+>        +			if (len < 0) {
+>        +				error(_("could not parse git header '%.*s'"),
+>        +				      orig_len, line);
+>       ++				release_patch(&patch);
+
+Thank you for using release_patch() rather than the "free random struct 
+members" approach that was suggested.
+
+>        +				free(util);
+>        +				free(current_filename);
+>        +				string_list_clear(list, 1);
+>       @@ range-diff.c: struct patch_util {
+>        +					    (const char **)&patch.new_name);
+>        +
+>        +			strbuf_addstr(&buf, " ## ");
+>       -+			if (patch.is_new > 0)
+>       ++			if (patch.is_new)
+>        +				strbuf_addf(&buf, "%s (new)", patch.new_name);
+>       -+			else if (patch.is_delete > 0)
+>       ++			else if (patch.is_delete)
+>        +				strbuf_addf(&buf, "%s (deleted)", patch.old_name);
+>        +			else if (patch.is_rename)
+>        +				strbuf_addf(&buf, "%s => %s", patch.old_name, patch.new_name);
+>       @@ range-diff.c: struct patch_util {
+>        +				strbuf_addstr(&buf, patch.new_name);
+>        +
+>        +			free(current_filename);
+>       -+			if (patch.is_delete > 0)
+>       ++			if (patch.is_delete)
+>        +				current_filename = xstrdup(patch.old_name);
+>        +			else
+>        +				current_filename = xstrdup(patch.new_name);
+>       @@ range-diff.c: struct patch_util {
+>        +
+>        +			strbuf_addstr(&buf, " ##\n");
+>        +			util->diffsize++;
+>       ++			release_patch(&patch);
+>        +		} else if (state == MBOX_IN_HEADER) {
+>        +			if (!line[0]) {
+>        +				state = MBOX_IN_COMMIT_MESSAGE;
+>        +				/* Look for an in-body From: */
+>       -+				if (size > 5 && skip_prefix(line + 1, "From: ", &p)) {
+>       ++				if (skip_prefix(line + 1, "From: ", &p)) {
+>        +					size -= p - line;
+>        +					line += p - line;
+>       -+					len = find_eol(line, size);
+>       ++					len = find_next_line(line, size);
+>        +
+>        +					while (isspace(*p))
+>        +						p++;
+>       @@ range-diff.c: struct patch_util {
+>        +					while (len < size && line[len] == ' ') {
+>        +						line += len;
+>        +						size -= len;
+>       -+						len = find_eol(line, size);
+>       ++						len = find_next_line(line, size);
+>        +						strbuf_addstr(&long_subject, line);
+>        +					}
+>        +					subject = long_subject.buf;
+>        +				}
+>        +			}
+>        +		} else if (state == MBOX_IN_COMMIT_MESSAGE) {
+>       -+			if (!*line)
+>       ++			if (!line[0]) {
+>        +				strbuf_addch(&buf, '\n');
+>       -+			else if (strcmp(line, "---")) {
+>       ++			} else if (strcmp(line, "---")) {
+>        +				int tabs = 0;
+>        +
+>        +				/* simulate tab expansion */
+>       @@ range-diff.c: struct patch_util {
+>        +			case '+':
+>        +			case '-':
+>        +			case ' ':
+>       ++				/* A `-- ` line indicates the end of a diff */
+>        +				if (!old_count && !new_count)
+>        +					break;
+>        +				if (old_count && line[0] != '+')
+>       @@ t/t3206-range-diff.sh: test_expect_success 'ranges with pathspecs' '
+>        +test_expect_success 'compare range vs mbox' '
+>        +	git format-patch --stdout topic..mode-only-change >mbox &&
+>        +	git range-diff topic...mode-only-change >expect &&
+>       ++
+>        +	git range-diff mode-only-change..topic mbox:./mbox >actual &&
+>        +	test_cmp expect actual &&
+>       -+	git range-diff mode-only-change..topic mbox:- <mbox >actual &&
+>       -+	test_cmp expect actual
+>       ++
+
+I'm a bit confused by this sed command, I've annotated it with my 
+probably flawed understanding.
+
+>       ++	sed -e "/^From: .*/{
+>       ++		h
+
+This stores the From: header in the hold space
+
+>       ++		s/.*/From: Bugs Bunny <bugs@bun.ny>/
+
+This changes the From: header in the pattern space
+
+>       ++		:1
+>       ++		N
+>       ++		/[ -z]$/b1
+
+We loop until we find a line that does not end with a space, letter or 
+number adding the lines to the hold space
+
+>       ++		G
+
+This appends the hold space to the pattern space, then the pattern space 
+is printed. Doesn't this mean we end up with two From: headers? Is the 
+in-body From: line already present?
+
+>       ++	}" <mbox >mbox.from &&
+>       ++	git range-diff mode-only-change..topic mbox:./mbox.from >actual.from &&
+>       ++	test_cmp expect actual.from &&
+>       ++
+>       ++	append_cr <mbox >mbox.cr &&
+>       ++	test_must_fail git range-diff \
+>       ++		mode-only-change..topic mbox:./mbox.cr 2>err &&
+>       ++	grep CR/LF err &&
+
+Thanks for adding that
 
 Best Wishes
 
 Phillip
 
-> P.S.: FWIW here is my ACK for both patches.
+>       ++	git range-diff mode-only-change..topic mbox:- <mbox >actual.stdin &&
+>       ++	test_cmp expect actual.stdin
+>        +'
+>        +
+>         test_expect_success 'submodule changes are shown irrespective of diff.submodule' '
 > 
->>   sequencer.c              | 49 ++++++++++++++++++++--------------------
->>   t/t3430-rebase-merges.sh |  8 +++++++
->>   2 files changed, 33 insertions(+), 24 deletions(-)
->>
->> diff --git a/sequencer.c b/sequencer.c
->> index e658df7e8ff..21f5032df0d 100644
->> --- a/sequencer.c
->> +++ b/sequencer.c
->> @@ -3696,6 +3696,26 @@ static const char *reflog_message(struct replay_opts *opts,
->>   	return buf.buf;
->>   }
->>
->> +static struct commit *lookup_label(const char *label, int len,
->> +				   struct strbuf *buf)
->> +{
->> +	struct commit *commit;
->> +
->> +	strbuf_reset(buf);
->> +	strbuf_addf(buf, "refs/rewritten/%.*s", len, label);
->> +	commit = lookup_commit_reference_by_name(buf->buf);
->> +	if (!commit) {
->> +		/* fall back to non-rewritten ref or commit */
->> +		strbuf_splice(buf, 0, strlen("refs/rewritten/"), "", 0);
->> +		commit = lookup_commit_reference_by_name(buf->buf);
->> +	}
->> +
->> +	if (!commit)
->> +		error(_("could not resolve '%s'"), buf->buf);
->> +
->> +	return commit;
->> +}
->> +
->>   static int do_reset(struct repository *r,
->>   		    const char *name, int len,
->>   		    struct replay_opts *opts)
->> @@ -3727,6 +3747,7 @@ static int do_reset(struct repository *r,
->>   		oidcpy(&oid, &opts->squash_onto);
->>   	} else {
->>   		int i;
->> +		struct commit *commit;
->>
->>   		/* Determine the length of the label */
->>   		for (i = 0; i < len; i++)
->> @@ -3734,12 +3755,12 @@ static int do_reset(struct repository *r,
->>   				break;
->>   		len = i;
->>
->> -		strbuf_addf(&ref_name, "refs/rewritten/%.*s", len, name);
->> -		if (get_oid(ref_name.buf, &oid) &&
->> -		    get_oid(ref_name.buf + strlen("refs/rewritten/"), &oid)) {
->> -			ret = error(_("could not read '%s'"), ref_name.buf);
->> +		commit = lookup_label(name, len, &ref_name);
->> +		if (!commit) {
->> +			ret = -1;
->>   			goto cleanup;
->>   		}
->> +		oid = commit->object.oid;
->>   	}
->>
->>   	setup_unpack_trees_porcelain(&unpack_tree_opts, "reset");
->> @@ -3786,26 +3807,6 @@ cleanup:
->>   	return ret;
->>   }
->>
->> -static struct commit *lookup_label(const char *label, int len,
->> -				   struct strbuf *buf)
->> -{
->> -	struct commit *commit;
->> -
->> -	strbuf_reset(buf);
->> -	strbuf_addf(buf, "refs/rewritten/%.*s", len, label);
->> -	commit = lookup_commit_reference_by_name(buf->buf);
->> -	if (!commit) {
->> -		/* fall back to non-rewritten ref or commit */
->> -		strbuf_splice(buf, 0, strlen("refs/rewritten/"), "", 0);
->> -		commit = lookup_commit_reference_by_name(buf->buf);
->> -	}
->> -
->> -	if (!commit)
->> -		error(_("could not resolve '%s'"), buf->buf);
->> -
->> -	return commit;
->> -}
->> -
->>   static int do_merge(struct repository *r,
->>   		    struct commit *commit,
->>   		    const char *arg, int arg_len,
->> diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
->> index f351701fec2..fbbc4439bfe 100755
->> --- a/t/t3430-rebase-merges.sh
->> +++ b/t/t3430-rebase-merges.sh
->> @@ -138,6 +138,14 @@ test_expect_success '`reset` refuses to overwrite untracked files' '
->>   	git rebase --abort
->>   '
->>
->> +test_expect_success '`reset` rejects trees' '
->> +	test_when_finished "test_might_fail git rebase --abort" &&
->> +	test_must_fail env GIT_SEQUENCE_EDITOR="echo reset A^{tree} >" \
->> +		git rebase -i B C >out 2>err &&
->> +	grep "object .* is a tree" err &&
->> +	test_must_be_empty out
->> +'
->> +
->>   test_expect_success 'failed `merge -C` writes patch (may be rescheduled, too)' '
->>   	test_when_finished "test_might_fail git rebase --abort" &&
->>   	git checkout -b conflicting-merge A &&
->> --
->> gitgitgadget
->>
->>
+> 
+>   Documentation/git-range-diff.txt |   3 +-
+>   range-diff.c                     | 333 ++++++++++++++++++++++++++++++-
+>   t/t3206-range-diff.sh            |  27 +++
+>   3 files changed, 361 insertions(+), 2 deletions(-)
+> 
+> diff --git a/Documentation/git-range-diff.txt b/Documentation/git-range-diff.txt
+> index 0b393715d70..e2c4661acde 100644
+> --- a/Documentation/git-range-diff.txt
+> +++ b/Documentation/git-range-diff.txt
+> @@ -37,7 +37,8 @@ There are three ways to specify the commit ranges:
+>   
+>   - `<range1> <range2>`: Either commit range can be of the form
+>     `<base>..<rev>`, `<rev>^!` or `<rev>^-<n>`. See `SPECIFYING RANGES`
+> -  in linkgit:gitrevisions[7] for more details.
+> +  in linkgit:gitrevisions[7] for more details. Alternatively, the
+> +  patches can be provided as an mbox-formatted file via `mbox:<path>`.
+>   
+>   - `<rev1>...<rev2>`. This is equivalent to
+>     `<rev2>..<rev1> <rev1>..<rev2>`.
+> diff --git a/range-diff.c b/range-diff.c
+> index 124dd678c38..9dc1e3af3f8 100644
+> --- a/range-diff.c
+> +++ b/range-diff.c
+> @@ -12,6 +12,7 @@
+>   #include "userdiff.h"
+>   #include "apply.h"
+>   #include "revision.h"
+> +#include "dir.h"
+>   
+>   struct patch_util {
+>   	/* For the search for an exact match */
+> @@ -26,6 +27,309 @@ struct patch_util {
+>   	struct object_id oid;
+>   };
+>   
+> +static inline int strtost(char const *s, size_t *result, const char **end)
+> +{
+> +	unsigned long u;
+> +	char *p;
+> +
+> +	errno = 0;
+> +	/* negative values would be accepted by strtoul */
+> +	if (!isdigit(*s))
+> +		return -1;
+> +	u = strtoul(s, &p, 10);
+> +	if (errno || p == s)
+> +		return -1;
+> +	if (result)
+> +		*result = u;
+> +	*end = p;
+> +
+> +	return 0;
+> +}
+> +
+> +static int parse_hunk_header(const char *p,
+> +			     size_t *old_count, size_t *new_count,
+> +			     const char **end)
+> +{
+> +	size_t o = 1, n = 1;
+> +
+> +	if (!skip_prefix(p, "@@ -", &p) ||
+> +	    strtost(p, NULL, &p) ||
+> +	    /* The range is -<start>[,<count>], defaulting to count = 1 */
+> +	    !(*p == ' ' || (*p == ',' && !strtost(p + 1, &o, &p))) ||
+> +	    !skip_prefix(p, " +", &p) ||
+> +	    strtost(p, NULL, &p) ||
+> +	    /* The range is +<start>[,<count>], defaulting to count = 1 */
+> +	    !(*p == ' ' || (*p == ',' && !strtost(p + 1, &n, &p))) ||
+> +	    !skip_prefix(p, " @@", &p))
+> +		return -1;
+> +
+> +	*old_count = o;
+> +	*new_count = n;
+> +	*end = p;
+> +
+> +	return 0;
+> +}
+> +
+> +/*
+> + * This function finds the end of the line, replaces the newline character with
+> + * a NUL, and returns the offset of the start of the next line.
+> + *
+> + * If no newline character was found, it returns the offset of the trailing NUL
+> + * instead.
+> + */
+> +static inline int find_next_line(const char *line, size_t size)
+> +{
+> +	char *eol;
+> +
+> +	eol = memchr(line, '\n', size);
+> +	if (!eol)
+> +		return size;
+> +
+> +	*eol = '\0';
+> +
+> +	return eol + 1 - line;
+> +}
+> +
+> +static int read_mbox(const char *path, struct string_list *list)
+> +{
+> +	struct strbuf buf = STRBUF_INIT, contents = STRBUF_INIT;
+> +	struct strbuf long_subject = STRBUF_INIT;
+> +	struct patch_util *util = NULL;
+> +	enum {
+> +		MBOX_BEFORE_HEADER,
+> +		MBOX_IN_HEADER,
+> +		MBOX_IN_COMMIT_MESSAGE,
+> +		MBOX_AFTER_TRIPLE_DASH,
+> +		MBOX_IN_DIFF
+> +	} state = MBOX_BEFORE_HEADER;
+> +	char *line, *current_filename = NULL;
+> +	int len;
+> +	size_t size, old_count = 0, new_count = 0;
+> +	const char *author = NULL, *subject = NULL;
+> +
+> +	if (!strcmp(path, "-")) {
+> +		if (strbuf_read(&contents, STDIN_FILENO, 0) < 0)
+> +			return error_errno(_("could not read stdin"));
+> +	} else if (strbuf_read_file(&contents, path, 0) < 0)
+> +		return error_errno(_("could not read '%s'"), path);
+> +
+> +	line = contents.buf;
+> +	size = contents.len;
+> +	for (; size; size -= len, line += len) {
+> +		const char *p;
+> +
+> +		len = find_next_line(line, size);
+> +
+> +		if (state == MBOX_BEFORE_HEADER ||
+> +		    (state == MBOX_IN_DIFF && line[0] == 'F')) {
+> +			if (!skip_prefix(line, "From ", &p))
+> +				continue;
+> +
+> +			util = xcalloc(1, sizeof(*util));
+> +			if (get_oid_hex(p, &util->oid) < 0)
+> +				oidcpy(&util->oid, null_oid());
+> +			util->matching = -1;
+> +			author = subject = NULL;
+> +
+> +			state = MBOX_IN_HEADER;
+> +			continue;
+> +		}
+> +
+> +		if (starts_with(line, "diff --git ")) {
+> +			struct patch patch = { 0 };
+> +			struct strbuf root = STRBUF_INIT;
+> +			int linenr = 0;
+> +			int orig_len;
+> +
+> +			state = MBOX_IN_DIFF;
+> +			old_count = new_count = 0;
+> +			strbuf_addch(&buf, '\n');
+> +			if (!util->diff_offset)
+> +				util->diff_offset = buf.len;
+> +
+> +			orig_len = len;
+> +			/* `find_next_line()`'s replaced the LF with a NUL */
+> +			line[len - 1] = '\n';
+> +			len = len > 1 && line[len - 2] == '\r' ?
+> +				error(_("cannot handle diff headers with "
+> +					"CR/LF line endings")) :
+> +				parse_git_diff_header(&root, &linenr, 1, line,
+> +						      len, size, &patch);
+> +			if (len < 0) {
+> +				error(_("could not parse git header '%.*s'"),
+> +				      orig_len, line);
+> +				release_patch(&patch);
+> +				free(util);
+> +				free(current_filename);
+> +				string_list_clear(list, 1);
+> +				strbuf_release(&buf);
+> +				strbuf_release(&contents);
+> +				strbuf_release(&long_subject);
+> +				return -1;
+> +			}
+> +
+> +			if (patch.old_name)
+> +				skip_prefix(patch.old_name, "a/",
+> +					    (const char **)&patch.old_name);
+> +			if (patch.new_name)
+> +				skip_prefix(patch.new_name, "b/",
+> +					    (const char **)&patch.new_name);
+> +
+> +			strbuf_addstr(&buf, " ## ");
+> +			if (patch.is_new)
+> +				strbuf_addf(&buf, "%s (new)", patch.new_name);
+> +			else if (patch.is_delete)
+> +				strbuf_addf(&buf, "%s (deleted)", patch.old_name);
+> +			else if (patch.is_rename)
+> +				strbuf_addf(&buf, "%s => %s", patch.old_name, patch.new_name);
+> +			else
+> +				strbuf_addstr(&buf, patch.new_name);
+> +
+> +			free(current_filename);
+> +			if (patch.is_delete)
+> +				current_filename = xstrdup(patch.old_name);
+> +			else
+> +				current_filename = xstrdup(patch.new_name);
+> +
+> +			if (patch.new_mode && patch.old_mode &&
+> +			    patch.old_mode != patch.new_mode)
+> +				strbuf_addf(&buf, " (mode change %06o => %06o)",
+> +					    patch.old_mode, patch.new_mode);
+> +
+> +			strbuf_addstr(&buf, " ##\n");
+> +			util->diffsize++;
+> +			release_patch(&patch);
+> +		} else if (state == MBOX_IN_HEADER) {
+> +			if (!line[0]) {
+> +				state = MBOX_IN_COMMIT_MESSAGE;
+> +				/* Look for an in-body From: */
+> +				if (skip_prefix(line + 1, "From: ", &p)) {
+> +					size -= p - line;
+> +					line += p - line;
+> +					len = find_next_line(line, size);
+> +
+> +					while (isspace(*p))
+> +						p++;
+> +					author = p;
+> +				}
+> +				strbuf_addstr(&buf, " ## Metadata ##\n");
+> +				if (author)
+> +					strbuf_addf(&buf, "Author: %s\n", author);
+> +				strbuf_addstr(&buf, "\n ## Commit message ##\n");
+> +				if (subject)
+> +					strbuf_addf(&buf, "    %s\n\n", subject);
+> +			} else if (skip_prefix(line, "From: ", &p)) {
+> +				while (isspace(*p))
+> +					p++;
+> +				author = p;
+> +			} else if (skip_prefix(line, "Subject: ", &p)) {
+> +				const char *q;
+> +
+> +				while (isspace(*p))
+> +					p++;
+> +				subject = p;
+> +
+> +				if (starts_with(p, "[PATCH") &&
+> +				    (q = strchr(p, ']'))) {
+> +					q++;
+> +					while (isspace(*q))
+> +						q++;
+> +					subject = q;
+> +				}
+> +
+> +				if (len < size && line[len] == ' ') {
+> +					/* handle long subject */
+> +					strbuf_reset(&long_subject);
+> +					strbuf_addstr(&long_subject, subject);
+> +					while (len < size && line[len] == ' ') {
+> +						line += len;
+> +						size -= len;
+> +						len = find_next_line(line, size);
+> +						strbuf_addstr(&long_subject, line);
+> +					}
+> +					subject = long_subject.buf;
+> +				}
+> +			}
+> +		} else if (state == MBOX_IN_COMMIT_MESSAGE) {
+> +			if (!line[0]) {
+> +				strbuf_addch(&buf, '\n');
+> +			} else if (strcmp(line, "---")) {
+> +				int tabs = 0;
+> +
+> +				/* simulate tab expansion */
+> +				while (line[tabs] == '\t')
+> +					tabs++;
+> +				strbuf_addf(&buf, "%*s%s\n",
+> +					    4 + 8 * tabs, "", line + tabs);
+> +			} else {
+> +				/*
+> +				 * Trim the trailing newline that is added
+> +				 * by `format-patch`.
+> +				 */
+> +				strbuf_trim_trailing_newline(&buf);
+> +				state = MBOX_AFTER_TRIPLE_DASH;
+> +			}
+> +		} else if (state == MBOX_IN_DIFF) {
+> +			switch (line[0]) {
+> +			case '\0':
+> +				continue; /* ignore empty lines after diff */
+> +			case '+':
+> +			case '-':
+> +			case ' ':
+> +				/* A `-- ` line indicates the end of a diff */
+> +				if (!old_count && !new_count)
+> +					break;
+> +				if (old_count && line[0] != '+')
+> +					old_count--;
+> +				if (new_count && line[0] != '-')
+> +					new_count--;
+> +				/* fallthrough */
+> +			case '\\':
+> +				strbuf_addstr(&buf, line);
+> +				strbuf_addch(&buf, '\n');
+> +				util->diffsize++;
+> +				continue;
+> +			case '@':
+> +				if (parse_hunk_header(line, &old_count,
+> +						      &new_count, &p))
+> +					break;
+> +
+> +				strbuf_addstr(&buf, "@@");
+> +				if (current_filename && *p)
+> +					strbuf_addf(&buf, " %s:",
+> +						    current_filename);
+> +				strbuf_addstr(&buf, p);
+> +				strbuf_addch(&buf, '\n');
+> +				util->diffsize++;
+> +				continue;
+> +			}
+> +
+> +			if (util) {
+> +				string_list_append(list, buf.buf)->util = util;
+> +				strbuf_reset(&buf);
+> +			}
+> +			util = xcalloc(1, sizeof(*util));
+> +			oidcpy(&util->oid, null_oid());
+> +			util->matching = -1;
+> +			author = subject = NULL;
+> +			state = MBOX_BEFORE_HEADER;
+> +		}
+> +	}
+> +	strbuf_release(&contents);
+> +
+> +	if (util) {
+> +		if (state == MBOX_IN_DIFF)
+> +			string_list_append(list, buf.buf)->util = util;
+> +		else
+> +			free(util);
+> +	}
+> +	strbuf_release(&buf);
+> +	strbuf_release(&long_subject);
+> +	free(current_filename);
+> +
+> +	return 0;
+> +}
+> +
+>   /*
+>    * Reads the patches into a string list, with the `util` field being populated
+>    * as struct object_id (will need to be free()d).
+> @@ -41,6 +345,10 @@ static int read_patches(const char *range, struct string_list *list,
+>   	ssize_t len;
+>   	size_t size;
+>   	int ret = -1;
+> +	const char *path;
+> +
+> +	if (skip_prefix(range, "mbox:", &path))
+> +		return read_mbox(path, list);
+>   
+>   	strvec_pushl(&cp.args, "log", "--no-color", "-p", "--no-merges",
+>   		     "--reverse", "--date-order", "--decorate=no",
+> @@ -424,6 +732,19 @@ static void output_pair_header(struct diff_options *diffopt,
+>   
+>   		strbuf_addch(buf, ' ');
+>   		pp_commit_easy(CMIT_FMT_ONELINE, commit, buf);
+> +	} else {
+> +		struct patch_util *util = b_util ? b_util : a_util;
+> +		const char *needle = "\n ## Commit message ##\n";
+> +		const char *p = !util || !util->patch ?
+> +			NULL : strstr(util->patch, needle);
+> +		if (p) {
+> +			if (status == '!')
+> +				strbuf_addf(buf, "%s%s", color_reset, color);
+> +
+> +			strbuf_addch(buf, ' ');
+> +			p += strlen(needle);
+> +			strbuf_add(buf, p, strchrnul(p, '\n') - p);
+> +		}
+>   	}
+>   	strbuf_addf(buf, "%s\n", color_reset);
+>   
+> @@ -554,6 +875,9 @@ int show_range_diff(const char *range1, const char *range2,
+>   	if (range_diff_opts->left_only && range_diff_opts->right_only)
+>   		res = error(_("options '%s' and '%s' cannot be used together"), "--left-only", "--right-only");
+>   
+> +	if (!strcmp(range1, "mbox:-") && !strcmp(range2, "mbox:-"))
+> +		res = error(_("only one mbox can be read from stdin"));
+> +
+>   	if (!res && read_patches(range1, &branch1, range_diff_opts->other_arg))
+>   		res = error(_("could not parse log for '%s'"), range1);
+>   	if (!res && read_patches(range2, &branch2, range_diff_opts->other_arg))
+> @@ -575,10 +899,17 @@ int show_range_diff(const char *range1, const char *range2,
+>   int is_range_diff_range(const char *arg)
+>   {
+>   	char *copy = xstrdup(arg); /* setup_revisions() modifies it */
+> -	const char *argv[] = { "", copy, "--", NULL };
+> +	const char *argv[] = { "", copy, "--", NULL }, *path;
+>   	int i, positive = 0, negative = 0;
+>   	struct rev_info revs;
+>   
+> +	if (skip_prefix(arg, "mbox:", &path)) {
+> +		if (!strcmp(path, "-") || file_exists(path))
+> +			return 1;
+> +		error_errno(_("not an mbox: '%s'"), path);
+> +		return 0;
+> +	}
+> +
+>   	init_revisions(&revs, NULL);
+>   	if (setup_revisions(3, argv, &revs, NULL) == 1) {
+>   		for (i = 0; i < revs.pending.nr; i++)
+> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+> index 459beaf7d9c..89ef9a5ffc4 100755
+> --- a/t/t3206-range-diff.sh
+> +++ b/t/t3206-range-diff.sh
+> @@ -783,6 +783,33 @@ test_expect_success 'ranges with pathspecs' '
+>   	! grep "$topic_oid" actual
+>   '
+>   
+> +test_expect_success 'compare range vs mbox' '
+> +	git format-patch --stdout topic..mode-only-change >mbox &&
+> +	git range-diff topic...mode-only-change >expect &&
+> +
+> +	git range-diff mode-only-change..topic mbox:./mbox >actual &&
+> +	test_cmp expect actual &&
+> +
+> +	sed -e "/^From: .*/{
+> +		h
+> +		s/.*/From: Bugs Bunny <bugs@bun.ny>/
+> +		:1
+> +		N
+> +		/[ -z]$/b1
+> +		G
+> +	}" <mbox >mbox.from &&
+> +	git range-diff mode-only-change..topic mbox:./mbox.from >actual.from &&
+> +	test_cmp expect actual.from &&
+> +
+> +	append_cr <mbox >mbox.cr &&
+> +	test_must_fail git range-diff \
+> +		mode-only-change..topic mbox:./mbox.cr 2>err &&
+> +	grep CR/LF err &&
+> +
+> +	git range-diff mode-only-change..topic mbox:- <mbox >actual.stdin &&
+> +	test_cmp expect actual.stdin
+> +'
+> +
+>   test_expect_success 'submodule changes are shown irrespective of diff.submodule' '
+>   	git init sub-repo &&
+>   	test_commit -C sub-repo sub-first &&
+> 
+> base-commit: b75747829f4c277323c78b1c5973ad63ea038a2d
