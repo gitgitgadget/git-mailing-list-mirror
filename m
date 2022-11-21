@@ -2,66 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1224BC433FE
-	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 03:00:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 24F7DC433FE
+	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 03:01:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229787AbiKUDAf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Nov 2022 22:00:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53838 "EHLO
+        id S229850AbiKUDBl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Nov 2022 22:01:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229870AbiKUDA2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Nov 2022 22:00:28 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A29F2FC13
-        for <git@vger.kernel.org>; Sun, 20 Nov 2022 19:00:27 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id b12so4111155wrn.2
-        for <git@vger.kernel.org>; Sun, 20 Nov 2022 19:00:27 -0800 (PST)
+        with ESMTP id S229680AbiKUDBj (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Nov 2022 22:01:39 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1DDA31DC1
+        for <git@vger.kernel.org>; Sun, 20 Nov 2022 19:01:38 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id s5so714811wru.1
+        for <git@vger.kernel.org>; Sun, 20 Nov 2022 19:01:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jCaIGT8G+GqKz4PWOcqc32ri69czi5anqnyaDUI4HEY=;
-        b=DU2s3jwNDZH5weMZ5fkv8Z4Pdv6ZRopTQjjblqWqbiv85FshcVZVAcMGjnG4hxT8N/
-         +tTZr9r/xn47qc6B2eWuu8C9lP071rAynl5JybQ0zdNQ62ZcPYavAeNs71fv3FOmmg5Z
-         QwsXBUmyBhfcEXEAt2iiCgLJjRh1Zsv7IsCkYBCe/z9U+tMya1INrTHwfop9/WVe3UbO
-         cG/BS5+FEdEBq1+6Rf2FTG6pdRb8NE1yZwgJaEVKr6R9/eNHHfSyJgr0Al6Y8VeYueI+
-         AiI38IMywmJDdS0M8zjOKfuVLnc7YEHmhBYlF9JX4pTi9hlBSjOTd45uDJJgn3S/Dftq
-         iUbQ==
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=5KpvWGQQUnVUQXrJcV3LyEiXOLz3H/Le9DKxsc1a73o=;
+        b=JQIpIKVJoOs1CbOPx/eMMkLosWOvsAfnoHzjSNmrYk2TlhmjE3RczTha4YfvwXMAdK
+         n2wNj66/Uoh8yMe4pewQ5GB47xzd72WMSMc45rXJgcktrVWTny7kQioC+hod81CapKYm
+         XEyLeZt/bRWeuf5Kjvk7LNo3MZfBYNkQGCyVsKnOJCj2RkSQeJ8ocoa93kx2eRGJNlaU
+         lEJRuj8D5tv5IGszQSI2L0IysoHtR9rXTYVf9rxYDvQygb3OkFMhs3bkYdE+m0mgh598
+         LS/lxvZygCsUL1Hf6XsNigCswgVlANVI+vMPkPmwiVnmYaU0RivaJMdgGLCrkByn2Hlm
+         wCwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jCaIGT8G+GqKz4PWOcqc32ri69czi5anqnyaDUI4HEY=;
-        b=kutWiuICDtUyRzwPMb9+WKquhLKBRRLuS2lv3NVn3NxEUrzQS7kXnWTeg1IBDu6cnE
-         8sXku4EEBoreFVYdRpx1l3+lQQ3Ogp9tFqjy0G2ZeqKMU99VEg6/RMnyfGCP9E6qeTpa
-         HRdJgeZKD89C/sRhlBs8QBDTYVS2/cNTw4tTzwtUAUtwQ4yrUglP0RjqAWwQ+vgd8kxb
-         /okumK8IXNfLEpkt2ZQ+i9sRiAA7xISu2f674Zbzh5lTTxHhqqsTVC6njwqw/dA7j/zh
-         eP5Jx5gDPjpDSztpB4N+uRaCvoFmEk/7ill7t1+e/ySgwfGdEP9l/Gv+X8s/VCn0ovu3
-         o/iw==
-X-Gm-Message-State: ANoB5pn3dJumoc5aNbV8z/dtuGWtX3aRz4b5cPOYF0QzY4Dxl6u7wPT9
-        qfzbwRubBM9o9ztbWFLtR09lCSdYpGM=
-X-Google-Smtp-Source: AA0mqf6xumimGrhXTBSo8ujOaRUVDIkQBciQ538SNbTuPPPp+6nblvXS2EqEE/H3g4CW2pShbkQ5Zg==
-X-Received: by 2002:adf:f847:0:b0:241:d9c7:3400 with SMTP id d7-20020adff847000000b00241d9c73400mr570441wrq.620.1668999625845;
-        Sun, 20 Nov 2022 19:00:25 -0800 (PST)
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5KpvWGQQUnVUQXrJcV3LyEiXOLz3H/Le9DKxsc1a73o=;
+        b=4ZfSEwPf5R9ZOxiflxobKEtri/CXQfA1vZz2Bw+NxK9sGmnwwH2pbRKU0MT5IlxQ8E
+         rHqnDHODWnDowlXezkEmH88Jp3ke8mzUxCvWs+JiWzEROVSqCZX96IOiuNMVVcmMRjHX
+         3V9KBuKEl7gNQeZrJoBLamKi595q9pdBa5ITz0DOhAbXVtxmQ00FyohfVfOlBTynWS9y
+         1NZ0Ozb+f3Ey7cVSMc9PzA9qpbbjFc2OKnQQKZD2fAuRXDGwd81DzKLurG7yilhbx0mS
+         5JF408iED2oynAz3nz9mfJAiaHmnSYvn7iazXpVyBOp7xlxrknBph0MvBJxzhEvKQ9XF
+         9Q8A==
+X-Gm-Message-State: ANoB5pks+u+dMHLKyVGSKSd0gpL9FTrpW6/0Ojw8izYTv9MF5LYa99nz
+        pm/DOghdFGNWOlABkyYdksTs6pwUQW0=
+X-Google-Smtp-Source: AA0mqf76zQPHcrW7/HimHn75jmkxyZvZSyYGg9kbEpxqMjQseG2YTGAF2sYp3t6OC6K4yBl51As+Zg==
+X-Received: by 2002:adf:e94c:0:b0:236:6d79:b312 with SMTP id m12-20020adfe94c000000b002366d79b312mr9705672wrn.699.1668999697102;
+        Sun, 20 Nov 2022 19:01:37 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id c1-20020a5d4cc1000000b002365b759b65sm9921100wrt.86.2022.11.20.19.00.25
+        by smtp.gmail.com with ESMTPSA id c3-20020adffb43000000b00225307f43fbsm9883345wrs.44.2022.11.20.19.01.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Nov 2022 19:00:25 -0800 (PST)
-Message-Id: <97ada2a1202190776ce3989d3841dd47e2702316.1668999621.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1425.git.1668999621.gitgitgadget@gmail.com>
-References: <pull.1425.git.1668999621.gitgitgadget@gmail.com>
+        Sun, 20 Nov 2022 19:01:36 -0800 (PST)
+Message-Id: <pull.1426.git.1668999695898.gitgitgadget@gmail.com>
 From:   "Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 21 Nov 2022 03:00:21 +0000
-Subject: [PATCH 3/3] t1509: facilitate repeated script invocations
+Date:   Mon, 21 Nov 2022 03:01:35 +0000
+Subject: [PATCH] lib-httpd: extend module location auto-detection
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         Eric Sunshine <sunshine@sunshineco.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -69,39 +65,44 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Eric Sunshine <sunshine@sunshineco.com>
 
-t1509-root-work-tree.sh, which tests behavior of a Git repository
-located at the root `/` directory, refuses to run if it detects the
-presence of an existing repository at `/`. This safeguard ensures that
-it won't clobber a legitimate repository at that location. However,
-because t1509 does a poor job of cleaning up after itself, it runs afoul
-of its own safety check on subsequent runs, which makes it painful to
-run the script repeatedly since each run requires manual cleanup of
-detritus from the previous run.
-
-Address this shortcoming by making t1509 clean up after itself as its
-last action. This is safe since the script can only make it to this
-cleanup action if it did not find a legitimate repository at `/` in the
-first place, so the resources cleaned up here can only have been created
-by the script itself.
+Although it is possible to manually set LIB_HTTPD_PATH and
+LIB_HTTPD_MODULE_PATH to point at the location of `httpd` and its
+modules, doing so is cumbersome and easily forgotten. To address this,
+0d344738dc (t/lib-http.sh: Restructure finding of default httpd
+location, 2010-01-02) enhanced lib-httpd.sh to automatically detect the
+location of `httpd` and its modules in order to facilitate out-of-the-
+box testing on a wider range of platforms. Follow that lead by further
+enhancing it to automatically detect the `httpd` modules on Void Linux,
+as well.
 
 Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 ---
- t/t1509-root-work-tree.sh | 5 +++++
- 1 file changed, 5 insertions(+)
+    lib-httpd: extend module location auto-detection
+    
+    Make httpd tests work out-of-the-box on Void Linux.
 
-diff --git a/t/t1509-root-work-tree.sh b/t/t1509-root-work-tree.sh
-index d0417626280..c799f5b6aca 100755
---- a/t/t1509-root-work-tree.sh
-+++ b/t/t1509-root-work-tree.sh
-@@ -256,4 +256,9 @@ test_expect_success 'go to /foo' 'cd /foo'
- 
- test_vars 'auto gitdir, root' "/" "" ""
- 
-+test_expect_success 'cleanup root' '
-+	rm -rf /.git /refs /objects /info /hooks /branches /foo &&
-+	rm -f /HEAD /config /description /expected /ls.expected /me /result
-+'
-+
- test_done
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1426%2Fsunshineco%2Fvoid-httpd-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1426/sunshineco/void-httpd-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1426
+
+ t/lib-httpd.sh | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+index 1f6b9b08d1d..5be3ee44c25 100644
+--- a/t/lib-httpd.sh
++++ b/t/lib-httpd.sh
+@@ -65,7 +65,8 @@ done
+ for DEFAULT_HTTPD_MODULE_PATH in '/usr/libexec/apache2' \
+ 				 '/usr/lib/apache2/modules' \
+ 				 '/usr/lib64/httpd/modules' \
+-				 '/usr/lib/httpd/modules'
++				 '/usr/lib/httpd/modules' \
++				 '/usr/libexec/httpd'
+ do
+ 	if test -d "$DEFAULT_HTTPD_MODULE_PATH"
+ 	then
+
+base-commit: a0789512c5a4ae7da935cd2e419f253cb3cb4ce7
 -- 
 gitgitgadget
