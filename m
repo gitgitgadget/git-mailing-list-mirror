@@ -2,71 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE4D4C4332F
-	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 18:10:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F598C4332F
+	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 18:10:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230451AbiKUSKb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Nov 2022 13:10:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56202 "EHLO
+        id S230481AbiKUSKv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Nov 2022 13:10:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229586AbiKUSK3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2022 13:10:29 -0500
+        with ESMTP id S229586AbiKUSKu (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2022 13:10:50 -0500
 Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0B8A942F9
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 10:10:27 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54A209A24A
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 10:10:49 -0800 (PST)
 Received: from 88-110-102-84.dynamic.dsl.as9105.com ([88.110.102.84] helo=[192.168.1.57])
         by smtp.hosts.co.uk with esmtpa (Exim)
         (envelope-from <philipoakley@iee.email>)
-        id 1oxBFR-000BhI-8v;
-        Mon, 21 Nov 2022 18:10:26 +0000
-Message-ID: <055a0072-ff65-0eea-ed58-bb1c7051dc8a@iee.email>
-Date:   Mon, 21 Nov 2022 18:10:25 +0000
+        id 1oxBFn-000Bk3-C2;
+        Mon, 21 Nov 2022 18:10:48 +0000
+Message-ID: <d80d1b97-b0c0-148b-afb7-f5210366e463@iee.email>
+Date:   Mon, 21 Nov 2022 18:10:48 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.0
-Subject: Re: Looking for a review (pretty-formats, hard truncation), was
- What's cooking in git.git (Nov 2022, #04; Fri, 18))
+Subject: Re: [PATCH v4] pretty-formats: add hard truncation, without ellipsis,
+ options
 Content-Language: en-GB
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-References: <Y3g95OYdwzq2OP3z@nand.local>
- <8791cb85-cf4a-4302-5c1a-54a7e7766cfb@iee.email> <xmqqedtxywg0.fsf@gitster.g>
+Cc:     GitList <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
+References: <20221102120853.2013-1-philipoakley@iee.email>
+ <20221112143616.1429-1-philipoakley@iee.email> <xmqqfsedywli.fsf@gitster.g>
 From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <xmqqedtxywg0.fsf@gitster.g>
+In-Reply-To: <xmqqfsedywli.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Junio
 
-On 21/11/2022 00:37, Junio C Hamano wrote:
+On 21/11/2022 00:34, Junio C Hamano wrote:
 > Philip Oakley <philipoakley@iee.email> writes:
 >
->> Ping, Hopefully an easy single patch review for someone on-list.
->>
->> Potential review points:
->>
->> Is the commit message sufficient?
->> Are the tests: Sufficient, Complete, Correct ?
->> Is `qz_to_tab_space` conversion applied correctly?
-> Is the feature and the design sensible?
+>> Instead of replacing with "..", replace with the empty string,
+>> implied by passing NULL, and adjust the padding length calculation.
+> What's the point of saying "implied by passing NULL" here?  Is it an
+> excuse for passing NULL when passing "" would have sufficed and been
+> more natural, or something?  
+
+Passing the empty string was my first approach, however Taylor had
+commented "why pass the empty string, when NULL will do", hence I
+checked, and yes, we can pass NULL, so I followed that guidance on the
+re-roll.
+
+> Also, it is unclear to whom you are
+> passing the NULL.  I think that it is sufficient that you said
+> "replace with the empty string" there.
+
+I could drop the commit message comment, and keep the NULL being passed
+tostrbuf_utf8_replace to indicate the empty string, though that may
+create the same reviewer question that Taylor had.
 >
-> Are the tests checking interesting cases?  The underlying mechanism
-> uses strbuf_utf8_replace() because there are character strings whose
-> display columns do not match their byte length (otherwise you can
-> just use strlen() and chomp at byte boundary), so a test whose
-> result would be different if strbuf_utf8_replace() were replaced
-> with a more naive strbuf_splice() would be valuable and meaningful.
+>> Extend the existing tests for these pretty formats to include
+>> `Trunc` and Ltrunc` options matching the `trunc` and `ltrunc`
+>> tests.
+> A more important thing to say is that we add Trunc and Ltrunc, than
+> we test for these new features ;-)
 
-The tests do include those  utf8 cases. They are in the existing t/txxxx
-tests that specifically cover the utf8 non-English characters. I did
-check how they were constructed and what they were doing to confirm
-expectations.
+That would be to swap the paragraphs about, yes?
+>
+> You may also want to explain why there is no matching Mtrunc added.
 
-Were you thinking that an extra comment would be useful in the commit
-message to confirm the completeness of the existing tests?
+Can do, though it felt obvious that the original mtrunc ellipsis would
+be necessary for the mid-case.
+>
+> I also have another comment on the design.
+>
+> Imagine there are series of wide characters, each occupying two
+> display columns, and you give 6 display columns to truncate such a
+> string into.  "trunc" would give you "[][].." (where [] denotes one
+> such wide letter that occupies two display columns), and "Trunc"
+> would give you "[][][]".  Now if you give only 5 display columns,
+> to fill instead of 6, what should happen?
+
+My reading of the existing code for ltrunc/mtrunc/trunc was that all
+these padding conditions were already covered. It was simply a matter of
+column counting.
+>
+> I do not recall how ".."-stuffed truncation works in this case but
+> it should notice that it cannot stuff 3 wide letters and give you
+> "[][].".  The current code may be already buggy, but at least at the
+> design level, it is fairly clear what the feature _should_ do.
+>
+> As a design question, what should "Trunc" do in such a case now?  I
+> do not think we can still call it "hard truncate" if the feature
+> gives "[][]" (i.e. fill only 4 display columns, resulting in a
+> string that is not wide enough) or "[][][]" (i.e. exceed 5 columns
+> that are given), but of course chomping a letter in the middle is
+> not acceptable behaviour, so ...
+The design had already covered those cases. The author already had those
+thoughts
 
 --
+
 Philip
