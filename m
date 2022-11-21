@@ -2,66 +2,68 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A82ADC433FE
-	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 23:27:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E448C433FE
+	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 23:30:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231518AbiKUX1Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Nov 2022 18:27:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40190 "EHLO
+        id S231522AbiKUXaD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Nov 2022 18:30:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42164 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229501AbiKUX1W (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2022 18:27:22 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FCA4D33A4
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 15:27:21 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id l22-20020a17090a3f1600b00212fbbcfb78so15649329pjc.3
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 15:27:21 -0800 (PST)
+        with ESMTP id S229501AbiKUXaA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2022 18:30:00 -0500
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF8E2D5A3C
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 15:29:59 -0800 (PST)
+Received: by mail-pg1-x532.google.com with SMTP id q1so12528623pgl.11
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 15:29:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=xiODtaGUFpfyXDqoX6i3T2/s2LRi8hEB3rGk795rlJQ=;
-        b=nZ6OgSfk/516cXVAdKZ+AOOS5TMsHMMAyqBMVfh04YFnY++Dj08u5GZB9+HT1d72dT
-         SfoXN2+2fRhT0oZNX6P+cHaFX2D+wQzJ7JV7NJ10KYw9/Z6vxMxmJlNnKkcnIzrwq6md
-         ZOvE7BVksOZgAJjjroWoPxyWKNefK7rl/X+kB0H8KPUpmLhPOVh3NkdOv8a0rNzYcgAQ
-         OXQl91XaWEtOyNzd610ZWdHQzdJGjyo9nMDsWsOdHhD95l2P46+knE+JFKczuOflPANV
-         T3w+HKb40eIDOK2QadloeBDitq+DfgWvS29PbRyqZSr8wXV+Da3k5kEgCFxY84JKLEY3
-         nJxA==
+        bh=fw8JRZfLz26GYLVhUMrt9HTYhMYBXHoSqjS8TRhHaXw=;
+        b=LoXXuaab21iqnZ/qJOSiLxzNOFTn3arIOXLTcAW1aDTiICHmkxyLPHizD/awELbS6J
+         t1VNizaVK8VdnHp4Ui7gNwVe5nWXDejiOGEi/kLezzHcwAmwzNx9RG7KBp+aniLFqL3Y
+         rQXqMWIV99YWw8Ok1txsWEhUIBBVK3ujlHga5NWpjXd6h29LB0rznLs9Adl36JYJFuoJ
+         OoHyeg3M8C/eaMomOF7MrNepfjzOYUuNC/hqe/R4UnL+d+wz7rXog6DWHTPuZrXwRYDi
+         ui1va8tFddDGmMaWGtgTY5C1ClYMCnwti1/lSXf1Uo/gCsSO0NXtqRmJ/dm7C5EgbT9f
+         hZNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=xiODtaGUFpfyXDqoX6i3T2/s2LRi8hEB3rGk795rlJQ=;
-        b=Fhv1+U9Dkk3koVKdEIy8pdDQdKCvIQBbVzXpcgOsnP9Gc48iVrSuSghQdgs5PkgeLo
-         Y/GbMAAYqA7rCZLEgDeYsa39w+RwaWkWvTe/9arlIpSxq+VbvWqDkNFDhUqNeJXsLEd1
-         9O/yYC7YsNn4gGQR5dPuABBZnGVqZrdgRq0cVUKDgb2UV2EariBWaTHO74i8VHLTOf8+
-         YpqFZ7mO8gFQ3jgB9l9BYgrmojuOvsyVKRKNZYBNvP85Hgz2AKbrHtiHRY8IF+4ND9K+
-         cAO+YzMQV+GgyBZbNV4bHYjTv+KKHs4AtHcCwmu3+61Dq5jyoLt284UrhYNsSjOjiibJ
-         6vbA==
-X-Gm-Message-State: ANoB5pmdMKTvAve5ZjLPbY08E91OBa95l8COfTD1SPfztX3uu3pLGBnD
-        vyIO7uXRTZhgcgi98mmYURr7mCjnOKhk9Q==
-X-Google-Smtp-Source: AA0mqf6Xq+EClQQG6Jm7KgwtaNJwrz8tW7L3e8o1156+u4zqoA+38bmPRbzLEmBuG7Wi/zdAk45TSw==
-X-Received: by 2002:a17:90a:70c5:b0:218:985d:25a0 with SMTP id a5-20020a17090a70c500b00218985d25a0mr13624106pjm.168.1669073240610;
-        Mon, 21 Nov 2022 15:27:20 -0800 (PST)
+        bh=fw8JRZfLz26GYLVhUMrt9HTYhMYBXHoSqjS8TRhHaXw=;
+        b=VTl3kUbQoAjR3tyiLlcZod+E8V0NOZfnOsZDTt4j4zFUUqfMmj9PglsKZzsNvnjzX/
+         cSsNScWKjJV3D9ZydbShLJNl59o41DcyXosK9DJIxvCNueNtYRAuSX2GrNDKDVTkyO8v
+         QlbfzB+jvxC2VWYf9SF36cq820e7GbVKhJ3Ey6QpcxM0iVaF6/3fhVo13Css0robCfHt
+         8SGcxvGeAy1GCbwEZQNfK/kKDrx4AXcyufl5K3tjf4D3a1qbbxxfNH1H74fgdnS34YPi
+         ZDAvb4w5Xj9GAQkpQfhYIhvs7NhhjnTEBDtPSwEENMOA046WxYzQJLXXtJwkddnbWRtf
+         VeDQ==
+X-Gm-Message-State: ANoB5pkzZbY1U4C4RXdzZECbAGR/xoTJCdFj/Z2AFOU6CJzlsrUxOHgn
+        YOPKrwwqaeBOdbngg5XxLFc=
+X-Google-Smtp-Source: AA0mqf6SaJnkHwzxphZjaoFrTWFor5s9g+qjOYPoWg/7VHnoZf47ZTxMeIyk3fOBPWaPzmsmNFiHQg==
+X-Received: by 2002:a05:6a00:17a3:b0:56b:b37d:9857 with SMTP id s35-20020a056a0017a300b0056bb37d9857mr2103660pfg.12.1669073399280;
+        Mon, 21 Nov 2022 15:29:59 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id f4-20020aa79684000000b00561b3ee73f6sm9467140pfk.144.2022.11.21.15.27.19
+        by smtp.gmail.com with ESMTPSA id b1-20020a170903228100b00186b7443082sm10389297plh.195.2022.11.21.15.29.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Nov 2022 15:27:19 -0800 (PST)
+        Mon, 21 Nov 2022 15:29:58 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
-        me@ttaylorr.com, peff@peff.net, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v4 3/4] pack-bitmap.c: break out of the bitmap loop
- early if not tracing
+To:     Jeff King <peff@peff.net>
+Cc:     Teng Long <dyroneteng@gmail.com>, avarab@gmail.com,
+        derrickstolee@github.com, git@vger.kernel.org, me@ttaylorr.com,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v4 4/4] pack-bitmap.c: trace bitmap ignore logs when
+ midx-bitmap is found
 References: <cover.1669032425.git.dyroneteng@gmail.com>
-        <f6c5b45bdcfd05eba2984163edf38d9915255047.1669032426.git.dyroneteng@gmail.com>
-Date:   Tue, 22 Nov 2022 08:27:19 +0900
-In-Reply-To: <f6c5b45bdcfd05eba2984163edf38d9915255047.1669032426.git.dyroneteng@gmail.com>
-        (Teng Long's message of "Mon, 21 Nov 2022 20:16:14 +0800")
-Message-ID: <xmqqfsebvqg8.fsf@gitster.g>
+        <2acaa3f097e0ab08a63ae1719454f5e11bb15a44.1669032426.git.dyroneteng@gmail.com>
+        <Y3vM3GZYFy+l006d@coredump.intra.peff.net>
+Date:   Tue, 22 Nov 2022 08:29:58 +0900
+In-Reply-To: <Y3vM3GZYFy+l006d@coredump.intra.peff.net> (Jeff King's message
+        of "Mon, 21 Nov 2022 14:09:16 -0500")
+Message-ID: <xmqqbkozvqbt.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,52 +71,20 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teng Long <dyroneteng@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> From: Jeff King <peff@peff.net>
->
-> When we successfully open a bitmap, we will continue to try to open
-> other packs, and when trace2 is enabled, we will report any subsequent
-> bitmap ignored information in the log. So when we find that trace2 is
-> not enabled, we can actually terminate the loop early.
+> ...
+> It's not hurting anything functionally, but it makes the code slightly
+> more confusing to read.
 
-The above took me a few reads to understand what it wants to say,
-probably because the "and when trace2 is enabled" comes a bit too
-late to explain why "try to open other" is done.  After reading it a
-few times, here is what I think it wants to say:
+Thanks for all these good suggestions.
 
-    After opening a bitmap successfully, we try opening others only
-    because we want to report that other bitmap files are ignored in
-    the trace2 log.  When trace2 is not enabled, we do not have to
-    do any of that.
+As you pointed out, the first two seems to be identical to what
+Taylor queued in 'next' already (so they do not have to be re-sent
+but it is not a huge deal if they did---it would be a huge deal if
+they were rewritten, though), and both of the two follow-on patches
+make sense with suggested (minor) updates.  I'll expect a reroll
+before queuing these two and mark the topic in 'next' to be waiting
+for them.
 
-
-
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> Signed-off-by: Teng Long <dyroneteng@gmail.com>
-> ---
->  pack-bitmap.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
->
-> diff --git a/pack-bitmap.c b/pack-bitmap.c
-> index aaa2d9a104..3b6c2f804a 100644
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-> @@ -527,8 +527,15 @@ static int open_pack_bitmap(struct repository *r,
->  	assert(!bitmap_git->map);
->  
->  	for (p = get_all_packs(r); p; p = p->next) {
-> -		if (open_pack_bitmap_1(bitmap_git, p) == 0)
-> +		if (open_pack_bitmap_1(bitmap_git, p) == 0) {
->  			ret = 0;
-> +			/*
-> +			 * The only reason to keep looking is to report
-> +			 * duplicates.
-> +			 */
-> +			if (!trace2_is_enabled())
-> +				break;
-> +		}
->  	}
->  
->  	return ret;
+Thanks, both.
