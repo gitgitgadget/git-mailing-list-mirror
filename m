@@ -2,146 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D99F9C433FE
-	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 08:09:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D163C4332F
+	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 09:40:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229941AbiKUIJw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Nov 2022 03:09:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41918 "EHLO
+        id S230113AbiKUJkq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Nov 2022 04:40:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229949AbiKUIJu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2022 03:09:50 -0500
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 773F823160
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 00:09:49 -0800 (PST)
-Received: by mail-pf1-x431.google.com with SMTP id z26so10664234pff.1
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 00:09:49 -0800 (PST)
+        with ESMTP id S230261AbiKUJko (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2022 04:40:44 -0500
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FCAB905BE
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 01:40:43 -0800 (PST)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-39e61d2087dso32621057b3.5
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 01:40:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cmpWSTdzDHF8fsLiQpfbZNGpovx2LWjKhdthSRzkics=;
-        b=ay/1gJ2eLap6gx5lo1sVgPZRsNL8yWRpyRpiWZFD7Qmzb7sm66HZwNwH7Mr1HQGDF2
-         J+OqpsKxGq7/vCFZwDdu4DMKwGBGYI1pU1loTmCmuHu0hOTiXIXPfy40Fp8/oowRGO2g
-         2OQvTmmGHock2uGeI+TyFJbTMvfY6dp3UbTFeHwsga/rd/Dr/0+qAZQWGs9HQWUUjfv4
-         FMSyIet5JL62Ltd/PzWWxODHOZZ8Bg7Rl+yCI2PaoUtSJAnFHcmPefV2NNbtRlosCQME
-         ARUITV/v75KxP9jJrCZ8borOu3yVVY9iKzySNQExnxkS60V0MTWBWUH+On6Tjq+BrpFV
-         rvWA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=TwUXeNyJJY+6Jmdgbh4wVJyh/zdxT/OpBSHStYlQLH4=;
+        b=gLeOIxo7QT8E1BJfeg1NP1oGA+klEqZbqh0G4dcaVnJ0gB4PHMZ3Ou7AJZDTtA8uNv
+         zXBw1HBFG/SYSjN881BCjHI0l0a/aiJzCrtemOTOFauYozPLGbStgP567Tgtc9H6YWyj
+         qNhcWGbbeAVR3Frj+ADPG9OIc4MHyPgFcSnsGFvbbl9vCt6GznWqpe3DHGjANAo7UWv1
+         ryBBk14mpaOCo+Peqc4VNp1Pg6rUBx+fKl93Ii38AGLeHVBCe0O7yHQKQW9q0jGMxwVQ
+         +hhdQ+f9v6+nRpXo+qmtPemL7NQvova2rbMDjYdl3Nm1ie8Yn9ZqG5d7HyXhHAfYfcRp
+         WhTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=cmpWSTdzDHF8fsLiQpfbZNGpovx2LWjKhdthSRzkics=;
-        b=YYdPYaEOoRXc8xXTmPvpTCcJoqlUfKAKmXxB7dgp8OByesctn3URnWRQ3HOix/Qxfd
-         rHegyUyWI6suNWCtFzzYjA+/hASF2sx4w5rlv20YhUl0QbyIg9GS07Ua9foI+3Ty5GKj
-         Aq8Eg40kUAUtjcVS1bxhKt6p+JzWGv5mgPD8XvNsfPqmY2NNE3L9QsVLwPuPN75m5Zlt
-         GhjNeGhsg7k9ERj6u01it3P8TOpv6o+oGbMriYen7IGkUsX4qbhHViIQzq7ck0vjC7U1
-         DXnyPtTQ+q/UaaQDV8BKssCn3Sy0wygpOg6mcU3w3x9olqWxEw4JICpDcBi1ezykBOMX
-         TTGQ==
-X-Gm-Message-State: ANoB5plgt3tdofBAW/wJwUyYFzEuFk63tIN1daOLhRn3nGo5RqBJnhVl
-        86Me98PohWMRfWgxTY/iSgDiqbtocxWNXw==
-X-Google-Smtp-Source: AA0mqf43BBuddhXnF+z73YBnJMAn5PzVQz+BoKjJY0WmshvlDMQd9XLckpR0kjokOAqDYzpHopkq8g==
-X-Received: by 2002:a05:6a00:798:b0:566:9f68:c0ad with SMTP id g24-20020a056a00079800b005669f68c0admr1024521pfu.57.1669018188774;
-        Mon, 21 Nov 2022 00:09:48 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id ix9-20020a170902f80900b001782a0d3eeasm9000925plb.115.2022.11.21.00.09.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Nov 2022 00:09:48 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Sean Allred via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Sean Allred <code@seanallred.com>,
-        Sean Allred <allred.sean@gmail.com>
-Subject: Re: [PATCH] var: add GIT_SEQUENCE_EDITOR variable
-References: <pull.1424.git.1668972017089.gitgitgadget@gmail.com>
-Date:   Mon, 21 Nov 2022 17:09:47 +0900
-In-Reply-To: <pull.1424.git.1668972017089.gitgitgadget@gmail.com> (Sean Allred
-        via GitGitGadget's message of "Sun, 20 Nov 2022 19:20:16 +0000")
-Message-ID: <xmqq1qpwwwxg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TwUXeNyJJY+6Jmdgbh4wVJyh/zdxT/OpBSHStYlQLH4=;
+        b=uAACk6sEGNiExH0AaoHskyuTR5LTDUlzMQluoCTvF6Q8LqkLAnDcRy6XZ02Tvoh57U
+         1L7zAozrS/SHA7GIzgCHLNUV1ScbagvaoUtlMk2XlYX4Xm7knzp8oXl/DyYdu/EyEY62
+         DROCFdJ3ag9zyC7MYeQJMq5UI5jzaK5DIy7anYQRdxSC7jEf9O1cbtuBRBZbe3fm+j79
+         mn//JGjTqOVCLrQOPd6XmHu4aB4CwTNVHlRHXsdd9+7spvUeBLmtjGxd6fVz6n4bKPH2
+         Sf3ZJ3bnzi6vbTGgLeeazJ3q0dAvslku3slq2KVV03T1RU1maStm9ji7bWwbgJ5pA7K5
+         eSGA==
+X-Gm-Message-State: ANoB5pnSN6LSlTKRNiFPcs5oLZmsOjIE2CVayowERIfdEsmygMcCgblU
+        BjjO+gr9lOKSpjFLtgtyI1b/RfPXTn4fxkn9MyM=
+X-Google-Smtp-Source: AA0mqf442dkil8dFL1ub0G4pwj134Gucz4i6FcMbcN6MfdDi8kKZZdEaHecoOa5EGShLEAbA6LaH8MotbqoRX8q0uL4=
+X-Received: by 2002:a81:25d8:0:b0:373:4467:e0c6 with SMTP id
+ l207-20020a8125d8000000b003734467e0c6mr16304805ywl.340.1669023642535; Mon, 21
+ Nov 2022 01:40:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20220916205946.178925-1-siddharthasthana31@gmail.com>
+ <20221120074852.121346-1-siddharthasthana31@gmail.com> <20221120074852.121346-2-siddharthasthana31@gmail.com>
+ <xmqqy1s4wyvf.fsf@gitster.g>
+In-Reply-To: <xmqqy1s4wyvf.fsf@gitster.g>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 21 Nov 2022 10:40:31 +0100
+Message-ID: <CAP8UFD1CB90eoWpQmGJbfxK7uHX0-u4BuSE-v=mD1yuW+nnAxA@mail.gmail.com>
+Subject: Re: [PATCH v5 1/2] cat-file: add mailmap support to -s option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Siddharth Asthana <siddharthasthana31@gmail.com>,
+        git@vger.kernel.org, johncai86@gmail.com,
+        Johannes.Schindelin@gmx.de, avarab@gmail.com, me@ttaylorr.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Sean Allred via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Sean Allred <allred.sean@gmail.com>
+On Mon, Nov 21, 2022 at 8:27 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Provides the same benefits to scripts as exposing GIT_EDITOR, but
-> allows distinguishing the 'sequence' editor from the 'core' editor.
+> Siddharth Asthana <siddharthasthana31@gmail.com> writes:
 >
-> See also 44fcb4977cbae67f4698306ccfe982420ceebcbf.
+> > +test_expect_success 'git cat-file -s returns correct size with --use-mailmap' '
+> > +     test_when_finished "rm .mailmap" &&
+> > +     cat >.mailmap <<-\EOF &&
+> > +     C O Mitter <committer@example.com> Orig <orig@example.com>
+> > +     EOF
+> > +     git cat-file commit HEAD | wc -c >expect &&
+> > +     git cat-file --use-mailmap commit HEAD | wc -c >>expect &&
+> > +     git cat-file -s HEAD >actual &&
+> > +     git cat-file --use-mailmap -s HEAD >>actual &&
+>
+> Doesn't this break under macOS where wc output tends to be padded
+> with SP on the right?  We used to often see test breakage when a
+> carelessly written test like
+>
+>         test "$(wc -l <outout)" = 2
+>
+> which expects the output file to have exactly two files (the
+> solution in this sample case is to lose the double quotes around the
+> command substitution).
 
-Why should we ;-)?
+I guess that's the reason why `wc -c | sed -e 's/^ *//'` is used in
+the strlen() function in t1006-cat-file.sh. There are a number of
+places in the tests where wc -c or wc -l are used without piping the
+result into sed -e 's/^ *//' though. So it's not easy to understand
+why it's sometimes needed.
 
-If you explain why "git var GIT_SEQUENCE_EDITOR" is useful in a more
-direct way, you do not even have to refer to a long hexadecimal string
-which by itself does not mean anything to sane human beings.
+> Besides, having "cat-file" on the upstream side of a pipe is a bad
+> practice.
 
-    The editor program used by Git when editing the sequencer "todo"
-    file is determined by examining a few environment variables and
-    also affected by configuration variables.  Introduce "git var
-    GIT_SEQUENCE_EDITOR" that gives users an access to the final
-    result of the logic without having to know the exact detail.
+Yeah, right. So I would suggest the following:
 
-    This is very similar in spirit to 44fcb497 (Teach git var about
-    GIT_EDITOR, 2009-11-11) that introduced "git var GIT_EDITOR".
+     git cat-file commit HEAD >commit.out &&
+     wc -c <commit.out | sed -e 's/^ *//' >expect &&
+     git cat-file --use-mailmap commit HEAD >commit.out &&
+     wc -c <commit.out | sed -e 's/^ *//' >>expect &&
 
-or something like that, perhaps?
-
-> +GIT_SEQUENCE_EDITOR::
-> +    Text editor for use by Git sequencer commands. Like `GIT_EDITOR`,
-
-Do our readers know what "Git sequencer commands" are?  "rebase -i"
-of course is the primary one, but "cherry-pick" and "revert" that
-deals with multiple commits are technically "sequencer commands", as
-they also use the sequencer machinery.  But for them, the users do
-not get a chance to edit the "todo" list with their sequence editor,
-unlike "rebase -i".
-
-I am wondering if it is easier to understand, without losing
-technical correctness, to exactly name the command, without
-pretending as if the sequence editor is used in situations wider
-than where "rebase -i" is used, e.g.
-
-	The text editor program used to edit the 'todo' file while
-	running "git rebase -i".
-
-or something.
-
-> +    the value is meant to be interpreted by the shell when it is used.
-> +    The order of preference is the `$GIT_SEQUENCE_EDITOR` environment
-> +    variable, then `sequence.editor` configuration, and then the value
-> +    of `git var GIT_EDITOR`.
-
-OK.
-
-> diff --git a/builtin/var.c b/builtin/var.c
-> index 491db274292..9a2d31dc4aa 100644
-> --- a/builtin/var.c
-> +++ b/builtin/var.c
-> @@ -19,6 +19,16 @@ static const char *editor(int flag)
->  	return pgm;
->  }
->  
-> +static const char *sequence_editor(int flag)
-> +{
-> +	const char *pgm = git_sequence_editor();
-> +
-> +	if (!pgm && flag & IDENT_STRICT)
-> +		die("Terminal is dumb, but EDITOR unset");
-
-I know this was copied from editor(), but the message does not make
-much sense.  It's not like the caller of read_var() is not prepared
-to see a NULL returned, so letting it return NULL would make more
-sense.  Since the ancient past back when editor() function was
-written, launch_editor() and the logic to die with "on dumb terminal
-you must specify an EDITOR" have migrated to editor.c and there is
-no strong reason to keep the corresponding die() even in editor()
-function (I do not recommend removing it as part of this topic,
-though), and adding a new one makes even less sense.
-
+Thanks!
