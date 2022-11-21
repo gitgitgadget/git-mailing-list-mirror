@@ -2,91 +2,88 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 940C3C4332F
-	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 19:28:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA226C4332F
+	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 22:23:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231174AbiKUT2O (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Nov 2022 14:28:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55960 "EHLO
+        id S229864AbiKUWXJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Nov 2022 17:23:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230112AbiKUT2L (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2022 14:28:11 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48BC42250C
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 11:28:10 -0800 (PST)
-Received: (qmail 12563 invoked by uid 109); 21 Nov 2022 19:28:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 21 Nov 2022 19:28:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26695 invoked by uid 111); 21 Nov 2022 19:28:09 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 21 Nov 2022 14:28:09 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 21 Nov 2022 14:28:08 -0500
-From:   Jeff King <peff@peff.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Eric Wong <e@80x24.org>,
-        Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 06/18] chainlint.pl: validate test scripts in parallel
-Message-ID: <Y3vRSBptFTR+AV1f@coredump.intra.peff.net>
-References: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com>
- <62fc652eb47a4df83d88a197e376f28dbbab3b52.1661992197.git.gitgitgadget@gmail.com>
- <20220906223537.M956576@dcvr>
- <CAPig+cSx661-HEr3JcAD5MuYfgHviGQ1cSAftkgw6gj2FgTQVg@mail.gmail.com>
- <YxfXQ0IJjq/FT2Uh@coredump.intra.peff.net>
- <CAPig+cTge7kp9bH+Xd8wpqmEZuuEFE0xQdgqaFP1WAQ-F+xyHA@mail.gmail.com>
- <Y3u9ul1cu+L5d5IZ@coredump.intra.peff.net>
- <CAPig+cQfkkY2Eh=QD47QoUGuAiCEpxSsX24x_8ts2GTKVnV1aw@mail.gmail.com>
- <Y3vI99ZiNdXddX8C@coredump.intra.peff.net>
- <CAPig+cQEdidB4YHm9OiyOUe8mbTPBajjX5t-_6ZJVwRykXkqmg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cQEdidB4YHm9OiyOUe8mbTPBajjX5t-_6ZJVwRykXkqmg@mail.gmail.com>
+        with ESMTP id S229530AbiKUWXH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2022 17:23:07 -0500
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2A1111C2C
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 14:23:06 -0800 (PST)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-39562b26a76so92536937b3.15
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 14:23:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=vUjzJcUEucbUC7YTDGk5sf2yRJXewWWMd4woBm9fg4Y=;
+        b=JdljOf+lHcn9x87JXOyRJIoZYdLtUldEg3B5sH/MtJF8FdG49nQe1VnwETDiUeX+rs
+         /MlYPXnF5F6aezwS1u4pjW0HGXBPeLJoaVMwBmS0sHhySIRuIFqVUwEw/s+FhvdIq7/M
+         Ep2ARnq6jiSXEvy8ET+cWtpyaZQM7UoVc0DqGSLLcIUGWz9b1f5rJJ3CS2HZQSP8DrTm
+         uof1YD8WCiaZAFrYSTY51KGnqZodTUaKgqjT0Sk+X8z9hTaI3a1TGA7Y9VdksbbX3Jga
+         34KdieEimhrNM2Wi8mj+em0yQIL0L7tHgwqNVyYmz0mgxBiG0x6gHdRq/alUwL+q4ke0
+         ofBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vUjzJcUEucbUC7YTDGk5sf2yRJXewWWMd4woBm9fg4Y=;
+        b=Sz+yvEnrknsAe9FT/aaf0WtFsEJ9oQNPJzaWmZ4xejt/2e5zu6c7mdIrkhprTgKnMO
+         ndqNi0UW8gqael+lmCyEyxc2RJJoflGmsTJGhRsKBynns0xkVEln6oEslYn9178RNoTH
+         7hDJqBnOVsLsUjDvl3TUtaV6KeQPK1YeCrZ6CEbicr1a9/Po2Xpi/NrBWAEDGc885yyM
+         olIeMHobTxuOBK/0A/NuVuZKnFG1wtH6LS6YacRnp3STxiv0BAQC9mvwWDogmzIjuMkI
+         RZ9bq72/spwqekEd292cv4z3rkzgtBS1GwBpicwPshJcCTOvtEpo2HIO9wSCA/OtaJdq
+         PYUQ==
+X-Gm-Message-State: ANoB5pkVzj6tLmni+m/AZwGr27gwUSTfGMLwyeIhiMLc/MwS2SqwB9EX
+        qmNUo+oZId7OvK2aPQ5tBdH058XEhvGiRw==
+X-Google-Smtp-Source: AA0mqf4W75fF4dccR+EwH+hFElnxEpgBhflmj7+qJ+gXpABV0ef7Vg92WN+aYsZEsc1xan0hOvX2BEWeG2a/7A==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a05:6902:150a:b0:6e1:b314:cd21 with SMTP
+ id q10-20020a056902150a00b006e1b314cd21mr3ybu.539.1669069385479; Mon, 21 Nov
+ 2022 14:23:05 -0800 (PST)
+Date:   Mon, 21 Nov 2022 14:22:56 -0800
+In-Reply-To: <Y3g95OYdwzq2OP3z@nand.local>
+Mime-Version: 1.0
+References: <Y3g95OYdwzq2OP3z@nand.local>
+Message-ID: <kl6ltu2sdk1r.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: ab/submodule-no-abspath (was Re: What's cooking in git.git (Nov 2022,
+ #04; Fri, 18))
+From:   Glen Choo <chooglen@google.com>
+To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
+Cc:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 21, 2022 at 02:00:41PM -0500, Eric Sunshine wrote:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> On Mon, Nov 21, 2022 at 1:52 PM Jeff King <peff@peff.net> wrote:
-> > On Mon, Nov 21, 2022 at 01:47:42PM -0500, Eric Sunshine wrote:
-> > > I think Ævar's use-case for `make` parallelization was to speed up
-> > > git-bisect runs. But thinking about it now, the likelihood of "lint"
-> > > problems cropping up during a git-bisect run is effectively nil, in
-> > > which case setting GIT_TEST_CHAIN_LINT=1 should be a perfectly
-> > > appropriate way to take linting out of the equation when bisecting.
-> >
-> > Yes. It's also dumb to run a straight "make test" while bisecting in the
-> > first place, because you are going to run a zillion tests that aren't
-> > relevant to your bisection. Bisecting on "cd t && ./test-that-fails" is
-> > faster, at which point you're only running the one lint process (and if
-> > it really bothers you, you can disable chain lint as you suggest).
-> 
-> I think I misspoke. Dredging up old memories, I think Ævar's use-case
-> is that he now runs:
-> 
->     git rebase -i --exec 'make test' ...
-> 
-> in order to ensure that the entire test suite passes for _every_ patch
-> in a series. (This is due to him having missed a runtime breakage by
-> only running "make test" after the final patch in a series was
-> applied, when the breakage was only temporary -- added by one patch,
-> but resolved by some other later patch.)
+> * ab/submodule-no-abspath (2022-11-09) 1 commit
+>   (merged to 'next' on 2022-11-18 at 34d0accc7b)
+>  + submodule--helper absorbgitdirs: no abspaths in "Migrating git..."
+>  (this branch is used by ab/remove--super-prefix.)
+>
+>  Remove an absolute path in the "Migrating git directory" message.
+>
+>  Will merge to 'master'.
+>  source: <patch-1.1-34b54fdd9bb-20221109T020347Z-avarab@gmail.com>
+>
 
-Yeah, I do that sometimes, too, especially when heavy refactoring is
-involved.
+(Sorry, I should have spoken up before this got merged to 'next'.)
 
-> Even so, GIT_TEST_CHAIN_LINT=0 should be appropriate here too.
+I have some reservations about this that I mentioned in [1], namely:
 
-Agreed. But also, my original point stands. If you are running 10 CPU
-minutes of tests, then a few CPU seconds of linting is not really that
-important.
+- Does this work correctly when using a worktree?
+- If "absorbgitdirs" becomes consistent with other "git submodule"
+  subcommands and prints relative paths to submodules, then this
+  produces the wrong result.
 
--Peff
+We probably won't see any complaints about this for a while, since
+submodules + worktrees are an uncommon combination, but I expect that
+we'll have to revert this at some point.
+
+[1] https://lore.kernel.org/git/kl6lmt8qv9gc.fsf@chooglen-macbookpro.roam.corp.google.com
