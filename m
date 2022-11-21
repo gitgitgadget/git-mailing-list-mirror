@@ -2,126 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82E8DC433FE
-	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 01:00:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AFE9BC4332F
+	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 03:00:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229877AbiKUBAJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Nov 2022 20:00:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48708 "EHLO
+        id S229910AbiKUDA3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Nov 2022 22:00:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229726AbiKUBAI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Nov 2022 20:00:08 -0500
-Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB88920BF5
-        for <git@vger.kernel.org>; Sun, 20 Nov 2022 17:00:07 -0800 (PST)
-Received: by mail-il1-x133.google.com with SMTP id l6so5043033ilq.3
-        for <git@vger.kernel.org>; Sun, 20 Nov 2022 17:00:07 -0800 (PST)
+        with ESMTP id S229712AbiKUDA0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Nov 2022 22:00:26 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 819EB2F65A
+        for <git@vger.kernel.org>; Sun, 20 Nov 2022 19:00:24 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id s5so712024wru.1
+        for <git@vger.kernel.org>; Sun, 20 Nov 2022 19:00:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=/VKwwl8sHoenqHfL97ReF80YghN+CAB/9+6MLq8R6VM=;
-        b=Cx3HLhwPdtDSsOEG4oLWmuKVJI6TIHcK0sorAgrdnayS2sBcUnUZ59Vx595goyhs8Q
-         swqwOn5FVwwzpy1W6tJWxV8zGfOW8pFyh+eMfLULGZLENHJfM6+gsAPsCtsrrG0OOCGa
-         9ZLn9x/8J++Q2LxUAj1ZIeoNxzuRv/4r2aBgJwnfk9kyzUY1+a3G1Aa3Vg/tUgdnP4n1
-         2SWOXwEl5O5+OMPQ80MF6wZ5IOhAjGG7tFZoCRFEVLvZCh4+C7LtqTMUT+AXY3gBbvjD
-         C7G9fLZgyiWLJ0S6mzDDXBnZ1YtgC125S+qf2BjHyGdUe/QkNIIhp8MfRtRiQoMZsjmG
-         PPoQ==
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=qip8725Xdyy/G9SgFq3JHKJcKd8iVtuwo7qpVj5e2y8=;
+        b=oDyQpFvOVRV38N6pDMKL5ipMt/sgNB9E11cOHyswyn7Dve2LFscd4hvwNuD99HEUiI
+         18wh1+KK9K0/Ergd7xsjHb+E4Eqbb/jvCcDuQ11dP0WYUqbOzByG2053SpHAWzEoUxbX
+         eI0teNjj4bbtr2EnuqyAgJjAAUvBqaCZKPB4czKON+yUuUMAICwlRkCs8iJk1okgoAXm
+         UvEWI8I4pgtl6nGE7BkTcXff+ntqP25YDydjmgcosUtXejJK9SbdZ9X/x3jGYkR4byjS
+         5RFDjrb+aB5t6hs0ZeFOF7kcX/LQn5lJirTBUaMsDrb7rq9bUyn5uCPlNVREx6a1xjXE
+         uPXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/VKwwl8sHoenqHfL97ReF80YghN+CAB/9+6MLq8R6VM=;
-        b=ggcXLj3KuFob6dFq4YahJatopmV9f3Ri5vQNMOW4EzqogwJ3SGJ5APcUMHB1ZWzG+C
-         OgWMr4BHsptPGG6lakS3p3Xdn5Ro9zmEH7r4giF18v3ju0mumtwBEId4vbF+rnXWryOT
-         IBtMBTeHDR/oJgKKrgCD7MPuNjPrYcJagj3FYBToa42GWWHBKaQVam7wul7qShsOAG9D
-         JxGufxfzK6ENxrPMoCt0ioXLCcH7EMfO0fE51ECTnn8M0NavON8g73tLnSIj9BpVB70z
-         NZ6ly4ExvQCQEjbtTaL0j/H48Rr9yQz6E2vqoxaDn5d9crLFLTsOfbuQH0coT0Ov+OaR
-         2IRw==
-X-Gm-Message-State: ANoB5pmsRSZn2Jlh1G/PoKy9mmYANJRBR8ZjOaXpInr2R9yZcIuJHSkN
-        UDLIFYlinfaG9L7JCOfcm25afjId09tT6w==
-X-Google-Smtp-Source: AA0mqf4qNMKjglsY4b4NEXGfHohf9gv/ZQMaM70kuROIzt3Om2E7qZi348gXy7XFGxgf073CuY6kwA==
-X-Received: by 2002:a92:c80e:0:b0:300:e232:e0c3 with SMTP id v14-20020a92c80e000000b00300e232e0c3mr6708438iln.320.1668992407217;
-        Sun, 20 Nov 2022 17:00:07 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id a22-20020a027a16000000b00375664a365esm3688498jac.1.2022.11.20.17.00.06
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qip8725Xdyy/G9SgFq3JHKJcKd8iVtuwo7qpVj5e2y8=;
+        b=TOw9KwDb9Kc+ZaGxWX/SS+cV2dK42mHo3CNOTwAFV2gwgWkVmqJKswO6+C799awvHA
+         58qV/f7F5o0g33jJYitlxFzJplGmd7FccMyGLOhVWKvCe/9Cgm4dC5HIe1Si78MmRANU
+         jV/+wEoF+igBe1GZ07GzPwlafpXuV8v/r9P8UZKddHWzLq5+TfKb3dA2lYiNvNV0O4IC
+         DmsUu5fgnopUk/3i7UsIGcKDLPDy0wkEDO0BXv34lZyucRJjgYTFs+8rPQnWyZjrA/oZ
+         jbirjxnXtCx9SwYk9PFHLi/1cj/IGYdKX/1moV2tgipg2kE94Eoat1DiDlri9zVxAS/J
+         uitg==
+X-Gm-Message-State: ANoB5pmIHnmZDY5F2qXgr53V+uCABlf0K1HXl16cd5cQIClV+b8t1SLz
+        jfY+TFDhRnlLCuf+kp4oXT2fOf+qXvs=
+X-Google-Smtp-Source: AA0mqf6SWFInD0VFEmOHMzKpEmmsJ+0jAUK/8tPCYRilUg7crYaNLdGjkBz8bkjd3KupuGPfibG+RA==
+X-Received: by 2002:a5d:5411:0:b0:22f:f92d:1236 with SMTP id g17-20020a5d5411000000b0022ff92d1236mr9613889wrv.187.1668999622811;
+        Sun, 20 Nov 2022 19:00:22 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z3-20020a5d6543000000b002356c051b9csm9893433wrv.66.2022.11.20.19.00.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Nov 2022 17:00:06 -0800 (PST)
-Date:   Sun, 20 Nov 2022 20:00:05 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2022, #04; Fri, 18)
-Message-ID: <Y3rNlarjf8xcBUnA@nand.local>
-References: <Y3g95OYdwzq2OP3z@nand.local>
- <35abf6a0-982c-42d3-78c8-0298b53e6faa@dunelm.org.uk>
- <on4s271q-21s5-onsp-ss70-863nr403760p@tzk.qr>
- <xmqq8rk5yvz8.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        Sun, 20 Nov 2022 19:00:22 -0800 (PST)
+Message-Id: <pull.1425.git.1668999621.gitgitgadget@gmail.com>
+From:   "Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 21 Nov 2022 03:00:18 +0000
+Subject: [PATCH 0/3] fix t1509-root-work-tree failure
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq8rk5yvz8.fsf@gitster.g>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 21, 2022 at 09:47:23AM +0900, Junio C Hamano wrote:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> > Not only that. `ab/various-leak-fixes` still merges an older iteration:
-> >
-> > -- snip --
-> > $ git range-diff ttaylorr/ab/various-leak-fixes~15^2...ttaylorr/pw/rebase-no-reflog-action
-> > 1:  d6f756b0d66f ! 1:  d188a60d7228 sequencer: stop exporting GIT_REFLOG_ACTION
-> >     @@ Commit message
-> >          pass the reflog action around in a variable and use it to set
-> >          GIT_REFLOG_ACTION in the child environment when running "git commit".
-> >
-> >     +    Within the sequencer GIT_REFLOG_ACTION is no longer set and is only read
-> >     +    by sequencer_reflog_action(). It is still set by rebase before calling
-> >     +    the sequencer, that will be addressed in the next commit. cherry-pick
-> >     +    and revert are unaffected as they do not set GIT_REFLOG_ACTION before
-> >     +    calling the sequencer.
-> >     +
-> >          Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> >     +    Reviewed-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> >          Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> >
-> >       ## sequencer.c ##
-> > 2:  be0a662f863c ! 2:  0e34efb31d89 rebase: stop exporting GIT_REFLOG_ACTION
-> >     @@ Commit message
-> >          reflog_action.
-> >
-> >          Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> >     +    Reviewed-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> >          Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> >
-> >       ## builtin/rebase.c ##
-> > -- snap --
-> >
-> > And that superseded iteration of `pw/rebase-no-reflog-action` _did_ hit
-> > `next`.
+The t1509-root-work-tree script started failing earlier this year but went
+unnoticed because the script is rarely run since it requires setting up a
+chroot environment or a sacrificial virtual machine. This patch series fixes
+the failure and makes it a bit easier to run the script repeatedly without
+it tripping over itself.
 
-> Thanks, all.
+Eric Sunshine (3):
+  t1509: fix failing "root work tree" test due to owner-check
+  t1509: make "setup" test more robust
+  t1509: facilitate repeated script invocations
 
-Indeed, thanks for catching, Johannes -- I could have sworn that I
-rebuilt Ævar's topic when I got a new version of
-pw/rebase-no-reflog-action, but apparently not. Sorry about that.
+ t/t1509-root-work-tree.sh | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-> So in short, we should
->
->  * revert the merge of ab/various-leak-fixes to 'next'
->
->  * rebuild ab/various-leak-fixes using the updated iteration of the
->    other topic
->
->  * merge rebuilt ab/various-leak-fixes to 'next'.
 
-Yep, that will do the trick. Sorry for the extra juggling.
-
-Thanks,
-Taylor
+base-commit: a0789512c5a4ae7da935cd2e419f253cb3cb4ce7
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1425%2Fsunshineco%2Ft1509fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1425/sunshineco/t1509fix-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1425
+-- 
+gitgitgadget
