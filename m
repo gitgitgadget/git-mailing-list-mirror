@@ -2,64 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B892C4332F
-	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 11:42:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B257FC433FE
+	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 12:00:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231233AbiKULmu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Nov 2022 06:42:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38298 "EHLO
+        id S231255AbiKUMAR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Nov 2022 07:00:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231313AbiKULmL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2022 06:42:11 -0500
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BFD210040
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 03:41:57 -0800 (PST)
-Received: by mail-pg1-x530.google.com with SMTP id n17so10901693pgh.9
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 03:41:57 -0800 (PST)
+        with ESMTP id S231327AbiKUMAJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2022 07:00:09 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E9E7748C5
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 04:00:08 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id u6-20020a17090a5e4600b0021881a8d264so8739378pji.4
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 04:00:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NibhDelDFXodKp9KgQUvfvEzNWCU6C18nhXzXa6Y70o=;
-        b=SyRQZyOhoihHtPhPBPPbyt84BHoM2PChMfMSLdNpQlbFmZoyvb1osYHC0I5mdmqWkk
-         E0axjJ+kjxC7G7NegegsHWmckpsVS7oQE6MDtwFmyt9yU386jZjz5hjZWP1kNljq8p+B
-         WaNKVg+xzYTO8iOfRDd7NExaLxJPnc/ssksGStmiyFB/nnOnSgPZaw5SnfaiBUQ+ca61
-         6Q/pt0tsRyyeDvhuJqNb+qOzZE+871nfMBqIiJC2o4l6DQlOLTHl0JYwUFL7yxvl7nTI
-         1qUoNY203ghSXwwjSF54DgJ0PiR4Z2BU/0N9/PRKAv5fKPzJqq647IoKriHf2xFEUNwa
-         jXQw==
+        bh=UmwDBDiY6QNAXJf4a/Zr+AQ4b+xMVV3KgrRw2UGeEWI=;
+        b=HfF3BsZIJMwyssNp2049VWIkepjeeXDoaIG8tmQkgg7dHouZGJMUW23DSgFZDtJ1sm
+         R759xVjGzFXMHgQHRHTtx+WaQpFqBXfxTQ1mhyOI2KSYVEqpOcqX+mO/OKTOXmkM9MyV
+         ui1HpWhiRqCxiAIJVUox2tkj5sttsuTcWlxajqUHX22RO9YG5C5X5x3V2JGIuymnhVuY
+         380Mdzp4AKeKYPPYnwPNEjF+DWocQD44lXojLjUQxIHw+i0D0+UJp5jNOU+YlHA6wYMS
+         Og/WB4rQbbyQtYYKSTWDRF7TeGv74jGJlZvF02uuDjD2KO5RqgdtYOG0bsyS4opmBgPH
+         QDvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NibhDelDFXodKp9KgQUvfvEzNWCU6C18nhXzXa6Y70o=;
-        b=Xy/bcrvoMh7O2tGsnNSNR76MD/qYn+OtKlrpiCPKwmNtDcIqjtAfh/KlbJ6uyLIo/G
-         iOEDO/AY0LSAVziOKIO/hTEvu3PR5lQejrQbUpgj0BqAxJr5RfROqa/i7R6AfPVSOQgM
-         K1lccXM1dwwfXb9r6jwRGjuE9TmQY6J8S0Pf0Dw7XCJKsr0dAmcyqR5v0Ro5Sg7clyE0
-         r0XgakwH1MAQeuF3+E+6/dN77s88Umaa79F5n1kOGG4pevfN/K71qcqZfPLxKpPsCQOg
-         wHzX3CKat3KkzrWCO5X1aL9IGEIdXShce1lFBRNj9R56YK0jaJ/qAK+UFiHsN+LPRwCU
-         JBTQ==
-X-Gm-Message-State: ANoB5pl895qzlnKOnrCiECsbPiGuOday61GYFZ8MD1Tl3nWhJ0MqR/bx
-        RN7Fy1rJ0WwgZG6H5UNCWwQ=
-X-Google-Smtp-Source: AA0mqf6JGDJmSyQAtadM5nQSgWBo79Fq6qjBYxJie9i0C+BneaXM4ylFmZo6FWdQ4DlziAN4Rztj+Q==
-X-Received: by 2002:aa7:8608:0:b0:52f:db84:81cf with SMTP id p8-20020aa78608000000b0052fdb8481cfmr2446474pfn.26.1669030916917;
-        Mon, 21 Nov 2022 03:41:56 -0800 (PST)
+        bh=UmwDBDiY6QNAXJf4a/Zr+AQ4b+xMVV3KgrRw2UGeEWI=;
+        b=XhZvdNV1xeNWW7wX6FTYdVY5D/9c9FNpUrQzCULAkszUWhsymWU7P1c2pCsB9vNLiz
+         bBpBbknYFY3rO3I7bo6EXJCbkd02Z+FqQhptseBV8At+ycr4a9esIpdhk2jJpv+JZ1/e
+         0P7XHNcNiXCxyX2V6y5cbVkJdQ8bmtvJFGBFsiCv63VAUjdZWaDqfbygh1K4bz6a5yFV
+         DEsK535ES46Tedd/y903zqaNQthKk2gkN8RJgtG7a1gn/Rg/Vy2YtVmZ2AmxHJhS5LYn
+         LRG1XLLqD1e5nI/08rTEUx5lJp3jde2TwGiUA9e33OFo1+06n7hG1bubcly3k04ddvvO
+         1SPw==
+X-Gm-Message-State: ANoB5pk5qAopAlAJaWiFgR6UsGW3iMYiH5zYq5ZDvO30INzB5lrHF3GO
+        VgV1wpyVcORsU1BLAyk0/E0=
+X-Google-Smtp-Source: AA0mqf7ZSHZKzpScUGVdZ30LLYp5DkauJId66S1ZQEKGUGricLlgApwdlOBcIY5YUMd+OMpNrCGhdQ==
+X-Received: by 2002:a17:902:b20f:b0:188:d4ea:251f with SMTP id t15-20020a170902b20f00b00188d4ea251fmr11455360plr.36.1669032007834;
+        Mon, 21 Nov 2022 04:00:07 -0800 (PST)
 Received: from localhost.localdomain ([47.246.101.53])
-        by smtp.gmail.com with ESMTPSA id v4-20020a1709029a0400b001782398648dsm9569866plp.8.2022.11.21.03.41.54
+        by smtp.gmail.com with ESMTPSA id h72-20020a62834b000000b0056bd1bf4243sm8552468pfe.53.2022.11.21.04.00.05
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Nov 2022 03:41:56 -0800 (PST)
+        Mon, 21 Nov 2022 04:00:07 -0800 (PST)
 From:   Teng Long <dyroneteng@gmail.com>
 X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
-To:     me@ttaylorr.com
-Cc:     avarab@gmail.com, dyroneteng@gmail.com, git@vger.kernel.org,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [RFC PATCH 0/6] ls-tree: introduce '--pattern' option
-Date:   Mon, 21 Nov 2022 19:41:50 +0800
-Message-Id: <20221121114150.3473-1-tenglong.tl@alibaba-inc.com>
+To:     avarab@gmail.com
+Cc:     dyroneteng@gmail.com, git@vger.kernel.org, me@ttaylorr.com
+Subject: [RFC PATCH 0/4] ls-tree: pass state in struct, not globals
+Date:   Mon, 21 Nov 2022 20:00:01 +0800
+Message-Id: <20221121120001.5466-1-tenglong.tl@alibaba-inc.com>
 X-Mailer: git-send-email 2.38.1.383.g9d5a491887b
-In-Reply-To: <Y3ave2+kEwLTvtE6@nand.local>
-References: <Y3ave2+kEwLTvtE6@nand.local>
+In-Reply-To: <RFC-cover-0.4-00000000000-20221117T134528Z-avarab@gmail.com>
+References: <RFC-cover-0.4-00000000000-20221117T134528Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,60 +66,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
-
-> I think this falls into the same trap as the series on 'git show-ref
-> --count' that I worked on earlier this year [1].
->
-> At the time, it seemed useful to me (since I was working in an
-> environment where counting the number of lines from 'show-ref' was more
-> cumbersome than teaching 'show-ref' how to perform the same task
-> itself).
->
-> And I stand by that value judgement, but sharing the patches with the
-> Git mailing list under the intent to merge it in was wrong. Those
-> patches were too niche to be more generally useful, and would only serve
-> to clutter up the UI of show-ref for everybody else.
->
-> So I was glad to drop that topic. Now, I'd be curious to hear from Teng
-> whether or not there *is* something that we're missing, since if so, I
-> definitely want to know what it is.
->
-> But absent of that, I tend to agree with Ævar that I'm not compelled by
-> replacing 'ls-tree | grep <pattern>' with 'ls-tree --pattern=<pattern>',
-> especially if the latter is slower than the former.
->
-> Thanks,
-> Taylor
->
-> [1]: https://lore.kernel.org/git/cover.1654552560.git.me@ttaylorr.com/
-
-honestly, I just think it's useful to me, but omit the performance recession of
-the option. I originally thought about it looks like the "git tag -l <pattern>"
-or "git branch -l <pattern>" usage, but it seems not as a regex matching on
-them and it indeed executes faster than the pipe grep, because it seems like the
-former has the more restrictive matching conditions (because if I move the
-last aster， there is no output):
+"Ævar Arnfjörð Bjarmason" <avarab@gmail.com> write:
 
 
-✗ git branch -r --list "avar*" | wc -l
-    1498
+> These are patches I've been carrying locally since April-ish, as a
+> follow-up to the "ls-tree --format" topic.
 
-✗ hyperfine 'git branch -r --list "avar*"'
-Benchmark 1: git branch -r --list "avar*"
-  Time (mean ± σ):      69.8 ms ±   3.1 ms    [User: 25.8 ms, System: 42.7 ms]
-  Range (min … max):    66.6 ms …  81.8 ms    35 runs
+Cool.
 
-✗ hyperfine 'git branch -r --list | grep "avar"'
-Benchmark 1: git branch -r --list | grep "avar"
-  Time (mean ± σ):      76.4 ms ±   3.7 ms    [User: 32.7 ms, System: 45.2 ms]
-  Range (min … max):    72.9 ms …  85.5 ms    34 runs
+> Teng: This conflicts with your topic, but re my suggestion of
+> submitting a separate clean-up series in [2] maybe you could look this
+> over, see how they differ from yours, and see what would make sense to
+> keep/incorporate for such a clean-up series?
 
-➜  Documentation git:(tl/extra_bitmap_relative_path) ✗ git branch -r --list "avar" | wc -l
-       0
+Yes, I'd like to.
 
-So unless someone finds other benefits, such as the implementation of "git tag
--l <pattern>" to solve the performance problem, this method can bring benefits
-in the corresponding scenario. It's ok for me to continue or stop this patch.
+> E.g. 1/4 here is the opposite approach of your 3/6[3], but as 3/4
+> eventually shows we don't need that struct for anything except that
+> callback case.
+
+Ok, I will check it out later.
+
 
 Thanks.
