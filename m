@@ -2,119 +2,177 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67996C4332F
-	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 00:16:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E13DC43217
+	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 00:27:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229702AbiKUAQH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 20 Nov 2022 19:16:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53752 "EHLO
+        id S229875AbiKUA1f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 20 Nov 2022 19:27:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbiKUAQH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Nov 2022 19:16:07 -0500
-Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B589186D4
-        for <git@vger.kernel.org>; Sun, 20 Nov 2022 16:16:06 -0800 (PST)
-Received: by mail-il1-x132.google.com with SMTP id x13so1723634ilp.8
-        for <git@vger.kernel.org>; Sun, 20 Nov 2022 16:16:06 -0800 (PST)
+        with ESMTP id S229914AbiKUA1S (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Nov 2022 19:27:18 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B2FB2CE26
+        for <git@vger.kernel.org>; Sun, 20 Nov 2022 16:27:03 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id p16so7419798wmc.3
+        for <git@vger.kernel.org>; Sun, 20 Nov 2022 16:27:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=FDRFXGzjkf6KuClVzLgzW8KXZnW+lZfA5s1XSc7L03o=;
-        b=uVyzgPVE0o86cEIj0PvuDWYYA5oEZqRPvhdPM762KmyOSX4OE+Bfy9/cX+k6GyRHJe
-         fOVP3weEdaumLu3pOIKmMteDM0Jf/DWS+AlbQJpDe9jA7DcpGECYS8jXNQnGJfc+moI/
-         LuLnkMrPJ2DHS3irlXse2cLcYlSO6XNFp//bubKdYPxnnMo9Y28RE41rMxAmp6FWFmib
-         Un51No+RR6Jy+1HHChjy3PtUU9tiHoUXA4ciA1VDDnL/rI2kjWy7DrD8cJJBn+qkoyUb
-         zC8TQFn8dOm4K9gYSAidbirVp2Q2ZJnngYKSkYC5jDXScxlkzelZfeL4Y+2bfD65cdIB
-         YHaQ==
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=B99KkgV3FXi1gpR1Jt9RIZpMwW7+bkF3a2vun2ydh1U=;
+        b=DQr/i9cOHMo1WJiQkgl+WxhYZsam9upNiKhXfEXWMrEv7VXNVAnhKoPzKaZdpEZuvl
+         H9//qgYJHWOtb/PiuYs4UxWYi7Qx/yce1ZxLBEZ3Tccwmli+GaAgCj8VJRaToVFBWea+
+         FmwiyRD4Xcl6EvfQGbiEaIB40OG8Q4oCvR6ao/1w7nA7OtJUKbjvRuJKuvXTdokxnVPX
+         yq7c3PekhjIWhDTeM2XBVaee3cUPUGCWiejjm8GZ5wWuftUxKUDgoRblKSgY61LPsKmG
+         mMKuUM59Pfxi48QZOVqvA6UHU8WBRTOSPEOLqjZUCJ8IqWmfW1WFU+LVF4OYzh0vBJKn
+         pNig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FDRFXGzjkf6KuClVzLgzW8KXZnW+lZfA5s1XSc7L03o=;
-        b=MTyv6Ep17Z+cA+LozuuZJUMBIyTWsLvAHjtU/azvkgbI6Jx1nta1YWNr6QVYcAyapm
-         y5YpN+qDu79WEYz8QqfycoxTW7HsD5gpMe1RzvxQ+lsiqpAX3LPb0k6nemvR2q5bEazc
-         XsdwG0nqYhB8OXomvHe2Ba5jbMLHREOQmh06GPdKh+Z4fiUsScRUpJdC/5aLUpF5q+GH
-         ZMSnPt206Dt7EK+U4kvMJyAwJLTlPf8nEu1BbPDYWVhnlfVx5MVadKh9QdN5oMjr6MQa
-         +5UX9sOOMKLlAfrepC6AFclJv7BSKsRhUpW8xX5rCg3R3dROAPheJISjh5kPHmjGmP39
-         xgOA==
-X-Gm-Message-State: ANoB5plLO7irBZ9gEI1M9/h5K9pfCBGBXkVEBqC0CK1UC5k1Lfi6A5MM
-        EaFiTkUnL92b/g0gWrFn7X77EA==
-X-Google-Smtp-Source: AA0mqf5/NiM/8oy/Kof3xE7cCsfMAa1TQTQYexIf2+G9l8uHxL14i7pbLHkOvaNyZfac+2pzO+6iFg==
-X-Received: by 2002:a92:cc46:0:b0:302:3cda:9f12 with SMTP id t6-20020a92cc46000000b003023cda9f12mr105322ilq.57.1668989765799;
-        Sun, 20 Nov 2022 16:16:05 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id w6-20020a022a06000000b00375966aa90esm3353348jaw.161.2022.11.20.16.16.04
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=B99KkgV3FXi1gpR1Jt9RIZpMwW7+bkF3a2vun2ydh1U=;
+        b=inm//uWG/WixTaOx0fkTqYn6rdPXPmNWgpct98Id6sG72XrmsgNKY5jIKREABcsgND
+         tMCPM7IT6XVm0vltJsNbzG/p33lomNtbL1PQkKhoQ9fWN6fBGYU0dSmK5T4n7pp++U7z
+         /eD/kzVQ/TGTPDE4Qfk4r+UyznjzuEeyBGFKchQwTL5nbXSOnXz/XkB9IJk8bZXvPFrr
+         VFvq0cMDStMBOFiZO0wVrOT6GtdNIViNyWkRcb3E1aM2H0GG5L7T61UP/OL26s0RTaaP
+         DL68tF4aCvLKxaK8TuX8rZfSpNa91H1Z2WrzZn0Weiz52z19OYl3EYS7s6Bf1vOyDnc/
+         v76Q==
+X-Gm-Message-State: ANoB5pnw7hzxEUbUfYNojDUpkW8nhKHOdeu82YvBBHNGPBjMWCXZNIE7
+        KIs/N++9X717uEkikTVwfqcd249Y3+M=
+X-Google-Smtp-Source: AA0mqf6o0VvNlphjTRIAnYOcHMWzg0xAuPFqjiHwk+2r1SQsEkyCiCEUN/NAVSeB0RaIlBPogq8QZg==
+X-Received: by 2002:a05:600c:384f:b0:3cf:9377:c76f with SMTP id s15-20020a05600c384f00b003cf9377c76fmr14174798wmr.189.1668990421823;
+        Sun, 20 Nov 2022 16:27:01 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id r4-20020a05600c35c400b003c6b874a0dfsm13970179wmq.14.2022.11.20.16.27.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Nov 2022 16:16:05 -0800 (PST)
-Date:   Sun, 20 Nov 2022 19:16:03 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2022, #04; Fri, 18)
-Message-ID: <Y3rDQ3x44BUmmGHV@nand.local>
-References: <Y3g95OYdwzq2OP3z@nand.local>
- <xmqq35ad181e.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+        Sun, 20 Nov 2022 16:27:01 -0800 (PST)
+Message-Id: <a261a94877ad486073ae6e644e540b920a04c6b9.1668990419.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1374.v2.git.git.1668990419.gitgitgadget@gmail.com>
+References: <pull.1374.git.git.1667669315.gitgitgadget@gmail.com>
+        <pull.1374.v2.git.git.1668990419.gitgitgadget@gmail.com>
+From:   "Alison Winters via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 21 Nov 2022 00:26:58 +0000
+Subject: [PATCH v2 1/2] completion: add optional ignore-case when matching
+ refs
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq35ad181e.fsf@gitster.g>
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>,
+        SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Alison Winters <alisonatwork@outlook.com>,
+        Alison Winters <alisonatwork@outlook.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 21, 2022 at 09:10:53AM +0900, Junio C Hamano wrote:
-> Another question.
->
-> Quite a many topics are marked as "Will cook in 'next'".  After we
-> go into the pre-release feature freeze period, most topics in 'next'
-> are marked as such, and are expected to stay there until the final,
-> but as we are yet to tag -rc0, I am a bit puzzled.
->
-> Are there concrete exit criteria for them?  Or are they, at this
-> very close to -rc0, already judged to be a bit premature for the
-> upcoming release so I can safely keep them in 'next' until the
-> final?
+From: Alison Winters <alisonatwork@outlook.com>
 
-Anything merged on 2022-11-14 or 2022-11-15 is ready to go to 'master',
-in my opinion. I held off on integrating them into 'master' on the 18th
-since they hadn't been in 'next' for that long. Though I think all of
-those topics are pretty low risk anyway. So I would recommend merging
-down all of those into 'master' before cutting -rc0 next week.
+If GIT_COMPLETION_IGNORE_CASE is set, --ignore-case will be added to
+git for-each-ref calls so that refs can be matched case insensitively,
+even when running on case sensitive filesystems.
 
-These are the topics I'd feel comfortable merging down before the
-release candidate:
+Signed-off-by: Alison Winters <alisonatwork@outlook.com>
+---
+ contrib/completion/git-completion.bash | 12 ++++++++++++
+ t/t9902-completion.sh                  | 15 +++++++++++++++
+ 2 files changed, 27 insertions(+)
 
- + pw/rebase-no-reflog-action                                   11-09/11-14    #2
- + pw/strict-label-lookups                                      11-10/11-14    #2
- + dd/bisect-helper-subcommand                                  11-11/11-14    #3
- + js/remove-stale-scalar-repos                                 11-11/11-14    #2
- + ab/coccicheck-incremental                                    11-11/11-14   #14
- + kz/merge-tree-merge-base                                     11-12/11-14    #2
- + ab/t7610-timeout                                             11-15/11-15    #2
- + dd/git-bisect-builtin                                        11-15/11-15   #13
- + rp/maintenance-qol                                           11-15/11-15    #4
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index ba5c395d2d8..7dcf4b63562 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -58,6 +58,12 @@
+ #
+ #     When set to "1" suggest all options, including options which are
+ #     typically hidden (e.g. '--allow-empty' for 'git commit').
++#
++#   GIT_COMPLETION_IGNORE_CASE
++#
++#     When set, uses for-each-ref '--ignore-case' to find refs that match
++#     case insensitively, even on systems with case sensitive file systems
++#     (e.g., completing tag name "FOO" on "git checkout f<TAB>").
+ 
+ case "$COMP_WORDBREAKS" in
+ *:*) : great ;;
+@@ -646,6 +652,7 @@ __git_heads ()
+ 	local pfx="${1-}" cur_="${2-}" sfx="${3-}"
+ 
+ 	__git for-each-ref --format="${pfx//\%/%%}%(refname:strip=2)$sfx" \
++			${GIT_COMPLETION_IGNORE_CASE+--ignore-case} \
+ 			"refs/heads/$cur_*" "refs/heads/$cur_*/**"
+ }
+ 
+@@ -659,6 +666,7 @@ __git_remote_heads ()
+ 	local pfx="${1-}" cur_="${2-}" sfx="${3-}"
+ 
+ 	__git for-each-ref --format="${pfx//\%/%%}%(refname:strip=2)$sfx" \
++			${GIT_COMPLETION_IGNORE_CASE+--ignore-case} \
+ 			"refs/remotes/$cur_*" "refs/remotes/$cur_*/**"
+ }
+ 
+@@ -669,6 +677,7 @@ __git_tags ()
+ 	local pfx="${1-}" cur_="${2-}" sfx="${3-}"
+ 
+ 	__git for-each-ref --format="${pfx//\%/%%}%(refname:strip=2)$sfx" \
++			${GIT_COMPLETION_IGNORE_CASE+--ignore-case} \
+ 			"refs/tags/$cur_*" "refs/tags/$cur_*/**"
+ }
+ 
+@@ -688,6 +697,7 @@ __git_dwim_remote_heads ()
+ 	# but only output if the branch name is unique
+ 	__git for-each-ref --format="$fer_pfx%(refname:strip=3)$sfx" \
+ 		--sort="refname:strip=3" \
++		${GIT_COMPLETION_IGNORE_CASE+--ignore-case} \
+ 		"refs/remotes/*/$cur_*" "refs/remotes/*/$cur_*/**" | \
+ 	uniq -u
+ }
+@@ -765,6 +775,7 @@ __git_refs ()
+ 			;;
+ 		esac
+ 		__git_dir="$dir" __git for-each-ref --format="$fer_pfx%($format)$sfx" \
++			${GIT_COMPLETION_IGNORE_CASE+--ignore-case} \
+ 			"${refs[@]}"
+ 		if [ -n "$track" ]; then
+ 			__git_dwim_remote_heads "$pfx" "$match" "$sfx"
+@@ -787,6 +798,7 @@ __git_refs ()
+ 			$match*)	echo "${pfx}HEAD$sfx" ;;
+ 			esac
+ 			__git for-each-ref --format="$fer_pfx%(refname:strip=3)$sfx" \
++				${GIT_COMPLETION_IGNORE_CASE+--ignore-case} \
+ 				"refs/remotes/$remote/$match*" \
+ 				"refs/remotes/$remote/$match*/**"
+ 		else
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 43de868b800..d89d0a93a2a 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -2255,6 +2255,21 @@ test_expect_success 'checkout completes ref names' '
+ 	EOF
+ '
+ 
++test_expect_success 'checkout does not match ref names of a different case' '
++	test_completion "git checkout M" ""
++'
++
++test_expect_success 'checkout matches case insensitively with GIT_COMPLETION_IGNORE_CASE' '
++	(
++		GIT_COMPLETION_IGNORE_CASE=1 &&
++		test_completion "git checkout M" <<-\EOF
++		main Z
++		mybranch Z
++		mytag Z
++		EOF
++	)
++'
++
+ test_expect_success 'git -C <path> checkout uses the right repo' '
+ 	test_completion "git -C subdir -C subsubdir -C .. -C ../otherrepo checkout b" <<-\EOF
+ 	branch-in-other Z
+-- 
+gitgitgadget
 
-I also feel comfortable with these (below), but they are newer topics
-than above. I would like to see at least ps/receive-use-only-advertised
-in this release, since it saw the most comprehensive review of any of
-these.
-
- + mh/gitcredentials-generate                                   11-14/11-18    #1
- + jt/submodule-on-demand                                       11-14/11-18    #1
- + ps/receive-use-only-advertised                               11-17/11-18    #7
- + jk/parse-object-type-mismatch                                11-18/11-18    #2
-
-These ones I am not as sure about, though Ævar (cc'd) will probably try
-and tell you they're ready to go ;-).
-
- + ab/cmake-nix-and-ci                                          11-04/11-08   #14
- + ab/submodule-helper-prep-only                                11-08/11-08    #9
-
-Thanks,
-Taylor
