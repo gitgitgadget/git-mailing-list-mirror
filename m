@@ -2,110 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3678C433FE
-	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 19:27:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 940C3C4332F
+	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 19:28:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231502AbiKUT1G (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Nov 2022 14:27:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54656 "EHLO
+        id S231174AbiKUT2O (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Nov 2022 14:28:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231562AbiKUT06 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2022 14:26:58 -0500
+        with ESMTP id S230112AbiKUT2L (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2022 14:28:11 -0500
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CAC68CBA4
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 11:26:57 -0800 (PST)
-Received: (qmail 12544 invoked by uid 109); 21 Nov 2022 19:26:56 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48BC42250C
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 11:28:10 -0800 (PST)
+Received: (qmail 12563 invoked by uid 109); 21 Nov 2022 19:28:09 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 21 Nov 2022 19:26:56 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 21 Nov 2022 19:28:09 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26687 invoked by uid 111); 21 Nov 2022 19:26:56 -0000
+Received: (qmail 26695 invoked by uid 111); 21 Nov 2022 19:28:09 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 21 Nov 2022 14:26:56 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 21 Nov 2022 14:28:09 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 21 Nov 2022 14:26:55 -0500
+Date:   Mon, 21 Nov 2022 14:28:08 -0500
 From:   Jeff King <peff@peff.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/2] fixing parse_object() check for type mismatch
-Message-ID: <Y3vQ/6QcTEFfpjLt@coredump.intra.peff.net>
-References: <Y3Up5Vi75Up8LaGQ@coredump.intra.peff.net>
- <20221116211419.439356-1-jonathantanmy@google.com>
- <Y3a3qcqNG8W3ueeb@coredump.intra.peff.net>
- <Y3fXYKj8PdS4EKLB@nand.local>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Eric Wong <e@80x24.org>,
+        Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Fabian Stelzer <fs@gigacodes.de>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 06/18] chainlint.pl: validate test scripts in parallel
+Message-ID: <Y3vRSBptFTR+AV1f@coredump.intra.peff.net>
+References: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com>
+ <62fc652eb47a4df83d88a197e376f28dbbab3b52.1661992197.git.gitgitgadget@gmail.com>
+ <20220906223537.M956576@dcvr>
+ <CAPig+cSx661-HEr3JcAD5MuYfgHviGQ1cSAftkgw6gj2FgTQVg@mail.gmail.com>
+ <YxfXQ0IJjq/FT2Uh@coredump.intra.peff.net>
+ <CAPig+cTge7kp9bH+Xd8wpqmEZuuEFE0xQdgqaFP1WAQ-F+xyHA@mail.gmail.com>
+ <Y3u9ul1cu+L5d5IZ@coredump.intra.peff.net>
+ <CAPig+cQfkkY2Eh=QD47QoUGuAiCEpxSsX24x_8ts2GTKVnV1aw@mail.gmail.com>
+ <Y3vI99ZiNdXddX8C@coredump.intra.peff.net>
+ <CAPig+cQEdidB4YHm9OiyOUe8mbTPBajjX5t-_6ZJVwRykXkqmg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y3fXYKj8PdS4EKLB@nand.local>
+In-Reply-To: <CAPig+cQEdidB4YHm9OiyOUe8mbTPBajjX5t-_6ZJVwRykXkqmg@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 18, 2022 at 02:05:04PM -0500, Taylor Blau wrote:
+On Mon, Nov 21, 2022 at 02:00:41PM -0500, Eric Sunshine wrote:
 
-> On Thu, Nov 17, 2022 at 05:37:29PM -0500, Jeff King wrote:
-> > I'm adding Taylor to the cc as the author of t6102, when we were
-> > tracking down all of these "oops, it's not really a blob" cases. This
-> > fixes one of the lingering cases from that test script.
+> On Mon, Nov 21, 2022 at 1:52 PM Jeff King <peff@peff.net> wrote:
+> > On Mon, Nov 21, 2022 at 01:47:42PM -0500, Eric Sunshine wrote:
+> > > I think Ævar's use-case for `make` parallelization was to speed up
+> > > git-bisect runs. But thinking about it now, the likelihood of "lint"
+> > > problems cropping up during a git-bisect run is effectively nil, in
+> > > which case setting GIT_TEST_CHAIN_LINT=1 should be a perfectly
+> > > appropriate way to take linting out of the equation when bisecting.
 > >
-> >   [1/2]: parse_object(): drop extra "has" check before checking object type
-> >   [2/2]: parse_object(): check on-disk type of suspected blob
-> >
-> >  object.c                               | 5 ++---
-> >  t/t6102-rev-list-unexpected-objects.sh | 4 ++--
-> >  2 files changed, 4 insertions(+), 5 deletions(-)
+> > Yes. It's also dumb to run a straight "make test" while bisecting in the
+> > first place, because you are going to run a zillion tests that aren't
+> > relevant to your bisection. Bisecting on "cd t && ./test-that-fails" is
+> > faster, at which point you're only running the one lint process (and if
+> > it really bothers you, you can disable chain lint as you suggest).
 > 
-> A blast from the past :-).
+> I think I misspoke. Dredging up old memories, I think Ævar's use-case
+> is that he now runs:
 > 
-> I took a careful look at both of these patches and they looked good to
-> me, so let's start merging them down.
+>     git rebase -i --exec 'make test' ...
+> 
+> in order to ensure that the entire test suite passes for _every_ patch
+> in a series. (This is due to him having missed a runtime breakage by
+> only running "make test" after the final patch in a series was
+> applied, when the breakage was only temporary -- added by one patch,
+> but resolved by some other later patch.)
 
-I saw this hit 'next', but I think Ævar's simplification suggestion is
-worth taking. So here is a patch on top to do so (the original branch is
-jk/parse-object-type-mismatch for the benefit of any newly-returned
-maintainers).
+Yeah, I do that sometimes, too, especially when heavy refactoring is
+involved.
 
-I was going to do a "helped-by", but since the only thing in the patch
-is the suggested change, I just handed over authorship. :)
+> Even so, GIT_TEST_CHAIN_LINT=0 should be appropriate here too.
 
-I didn't forge a signoff, and I think mine is sufficient under DCO's
-part (b), but Ævar please indicate if that's OK.
+Agreed. But also, my original point stands. If you are running 10 CPU
+minutes of tests, then a few CPU seconds of linting is not really that
+important.
 
--- >8 --
-From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Subject: [PATCH] parse_object(): simplify blob conditional
-
-Commit 8db2dad7a0 (parse_object(): check on-disk type of suspected blob,
-2022-11-17) simplified the conditional for checking if we might have a
-blob. But we can simplify it further. In:
-
-  !obj || (obj && obj->type == OBJ_BLOB)
-
-the short-circuit "OR" means "obj" will always be true on the right-hand
-side. The compiler almost certainly optimized that out anyway, but
-dropping it makes the conditional easier to understand for humans.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- object.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/object.c b/object.c
-index fad1a5af4a..682b852a46 100644
---- a/object.c
-+++ b/object.c
-@@ -286,7 +286,7 @@ struct object *parse_object_with_flags(struct repository *r,
- 			return &commit->object;
- 	}
- 
--	if ((!obj || (obj && obj->type == OBJ_BLOB)) &&
-+	if ((!obj || obj->type == OBJ_BLOB) &&
- 	    oid_object_info(r, oid, NULL) == OBJ_BLOB) {
- 		if (!skip_hash && stream_object_signature(r, repl) < 0) {
- 			error(_("hash mismatch %s"), oid_to_hex(oid));
--- 
-2.38.1.950.g65ed8c1df8
-
+-Peff
