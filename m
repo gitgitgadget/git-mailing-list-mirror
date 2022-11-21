@@ -2,79 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C29EC433FE
-	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 19:09:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D48FFC433FE
+	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 19:13:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230451AbiKUTJU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Nov 2022 14:09:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41286 "EHLO
+        id S231191AbiKUTNX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Nov 2022 14:13:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229966AbiKUTJT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2022 14:09:19 -0500
+        with ESMTP id S231267AbiKUTNC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2022 14:13:02 -0500
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B94B7D29B6
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 11:09:17 -0800 (PST)
-Received: (qmail 12426 invoked by uid 109); 21 Nov 2022 19:09:17 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28D142649B
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 11:13:01 -0800 (PST)
+Received: (qmail 12492 invoked by uid 109); 21 Nov 2022 19:13:01 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 21 Nov 2022 19:09:17 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 21 Nov 2022 19:13:01 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 26515 invoked by uid 111); 21 Nov 2022 19:09:17 -0000
+Received: (qmail 26552 invoked by uid 111); 21 Nov 2022 19:13:01 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 21 Nov 2022 14:09:17 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 21 Nov 2022 14:13:01 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Mon, 21 Nov 2022 14:09:16 -0500
+Date:   Mon, 21 Nov 2022 14:13:00 -0500
 From:   Jeff King <peff@peff.net>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
-        gitster@pobox.com, me@ttaylorr.com, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v4 4/4] pack-bitmap.c: trace bitmap ignore logs when
- midx-bitmap is found
-Message-ID: <Y3vM3GZYFy+l006d@coredump.intra.peff.net>
-References: <cover.1669032425.git.dyroneteng@gmail.com>
- <2acaa3f097e0ab08a63ae1719454f5e11bb15a44.1669032426.git.dyroneteng@gmail.com>
+To:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] lib-httpd: extend module location auto-detection
+Message-ID: <Y3vNvGI4fXun4m5O@coredump.intra.peff.net>
+References: <pull.1426.git.1668999695898.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <2acaa3f097e0ab08a63ae1719454f5e11bb15a44.1669032426.git.dyroneteng@gmail.com>
+In-Reply-To: <pull.1426.git.1668999695898.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 21, 2022 at 08:16:15PM +0800, Teng Long wrote:
+On Mon, Nov 21, 2022 at 03:01:35AM +0000, Eric Sunshine via GitGitGadget wrote:
 
-> From: Jeff King <peff@peff.net>
+> From: Eric Sunshine <sunshine@sunshineco.com>
 > 
-> We retained pack bitmaps as a quick recovery mechanism while
-> test-deploying midx bitmaps. This is an internal mechanism, and we
-> want to expose this rule externally through trace2 so that end users,
-> repo-maintainers, and debuggers know what is happening in the process.
+> Although it is possible to manually set LIB_HTTPD_PATH and
+> LIB_HTTPD_MODULE_PATH to point at the location of `httpd` and its
+> modules, doing so is cumbersome and easily forgotten. To address this,
+> 0d344738dc (t/lib-http.sh: Restructure finding of default httpd
+> location, 2010-01-02) enhanced lib-httpd.sh to automatically detect the
+> location of `httpd` and its modules in order to facilitate out-of-the-
+> box testing on a wider range of platforms. Follow that lead by further
+> enhancing it to automatically detect the `httpd` modules on Void Linux,
+> as well.
 
-Re-reading this outside the context of the earlier thread, I think "this
-rule" is a little vague. Maybe:
-
-  When we find a midx bitmap, we do not bother checking for pack
-  bitmaps, since we can use only one. But since we will warn of unused
-  bitmaps via trace2, let's continue looking for pack bitmaps when
-  tracing is enabled.
-
-> @@ -559,11 +557,20 @@ static int open_midx_bitmap(struct repository *r,
->  static int open_bitmap(struct repository *r,
->  		       struct bitmap_index *bitmap_git)
->  {
-> +	int found = 0;
-> +
->  	assert(!bitmap_git->map);
->  
-> -	if (!open_midx_bitmap(r, bitmap_git))
-> -		return 0;
-> -	return open_pack_bitmap(r, bitmap_git);
-> +	found = !open_midx_bitmap(r, bitmap_git);
-
-I think we can drop the initialization of "found = 0"; that value is
-unused, since we'll always assign to it (I think my initial attempt had
-setting it to 1 inside the conditional).
-
-It's not hurting anything functionally, but it makes the code slightly
-more confusing to read.
+Yeah, this makes perfect sense. There is really no downside to checking
+in more places. :)
 
 -Peff
