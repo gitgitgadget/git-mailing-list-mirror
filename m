@@ -2,76 +2,71 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 64BDFC433FE
-	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 18:04:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BE4D4C4332F
+	for <git@archiver.kernel.org>; Mon, 21 Nov 2022 18:10:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230444AbiKUSEq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Nov 2022 13:04:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54212 "EHLO
+        id S230451AbiKUSKb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Nov 2022 13:10:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbiKUSEp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2022 13:04:45 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 601B95C776
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 10:04:43 -0800 (PST)
-Received: (qmail 12277 invoked by uid 109); 21 Nov 2022 18:04:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 21 Nov 2022 18:04:43 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25945 invoked by uid 111); 21 Nov 2022 18:04:43 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 21 Nov 2022 13:04:43 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 21 Nov 2022 13:04:42 -0500
-From:   Jeff King <peff@peff.net>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Eric Wong <e@80x24.org>,
-        Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Fabian Stelzer <fs@gigacodes.de>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 06/18] chainlint.pl: validate test scripts in parallel
-Message-ID: <Y3u9ul1cu+L5d5IZ@coredump.intra.peff.net>
-References: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com>
- <62fc652eb47a4df83d88a197e376f28dbbab3b52.1661992197.git.gitgitgadget@gmail.com>
- <20220906223537.M956576@dcvr>
- <CAPig+cSx661-HEr3JcAD5MuYfgHviGQ1cSAftkgw6gj2FgTQVg@mail.gmail.com>
- <YxfXQ0IJjq/FT2Uh@coredump.intra.peff.net>
- <CAPig+cTge7kp9bH+Xd8wpqmEZuuEFE0xQdgqaFP1WAQ-F+xyHA@mail.gmail.com>
+        with ESMTP id S229586AbiKUSK3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2022 13:10:29 -0500
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0B8A942F9
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 10:10:27 -0800 (PST)
+Received: from 88-110-102-84.dynamic.dsl.as9105.com ([88.110.102.84] helo=[192.168.1.57])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1oxBFR-000BhI-8v;
+        Mon, 21 Nov 2022 18:10:26 +0000
+Message-ID: <055a0072-ff65-0eea-ed58-bb1c7051dc8a@iee.email>
+Date:   Mon, 21 Nov 2022 18:10:25 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: Looking for a review (pretty-formats, hard truncation), was
+ What's cooking in git.git (Nov 2022, #04; Fri, 18))
+Content-Language: en-GB
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
+References: <Y3g95OYdwzq2OP3z@nand.local>
+ <8791cb85-cf4a-4302-5c1a-54a7e7766cfb@iee.email> <xmqqedtxywg0.fsf@gitster.g>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <xmqqedtxywg0.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cTge7kp9bH+Xd8wpqmEZuuEFE0xQdgqaFP1WAQ-F+xyHA@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 20, 2022 at 11:02:54PM -0500, Eric Sunshine wrote:
+Hi Junio,
 
-> > And if we did cache the results and avoid extra invocations via "make",
-> > then we'd want all the parallelism to move to there anyway.
-> >
-> > Maybe that gives you more food for thought about whether perl's "use
-> > threads" is worth having.
-> 
-> I'm not especially happy about the significant overhead of "ithreads";
-> on my (old) machine, although it does improve perceived time
-> significantly, it eats up quite a bit of additional user-time. As
-> such, I would not be unhappy to see "ithreads" go away, especially
-> since fast linting on Windows seems unattainable (at least with Perl).
-> 
-> Overall, I think Ævar's plan to parallelize linting via "make" is
-> probably the way to go.
+On 21/11/2022 00:37, Junio C Hamano wrote:
+> Philip Oakley <philipoakley@iee.email> writes:
+>
+>> Ping, Hopefully an easy single patch review for someone on-list.
+>>
+>> Potential review points:
+>>
+>> Is the commit message sufficient?
+>> Are the tests: Sufficient, Complete, Correct ?
+>> Is `qz_to_tab_space` conversion applied correctly?
+> Is the feature and the design sensible?
+>
+> Are the tests checking interesting cases?  The underlying mechanism
+> uses strbuf_utf8_replace() because there are character strings whose
+> display columns do not match their byte length (otherwise you can
+> just use strlen() and chomp at byte boundary), so a test whose
+> result would be different if strbuf_utf8_replace() were replaced
+> with a more naive strbuf_splice() would be valuable and meaningful.
 
-TBH, I think just running the linter once per test script when the
-script is run would be sufficient. That is one extra process per script,
-but they are already shell scripts running a bunch of processes. You get
-parallelism for free because you're already running the tests in
-parallel. You lose out on "don't bother linting because the file hasn't
-changed", but I'm not sure that's really worth the extra complexity
-overall.
+The tests do include those  utf8 cases. They are in the existing t/txxxx
+tests that specifically cover the utf8 non-English characters. I did
+check how they were constructed and what they were doing to confirm
+expectations.
 
--Peff
+Were you thinking that an extra comment would be useful in the commit
+message to confirm the completeness of the existing tests?
+
+--
+Philip
