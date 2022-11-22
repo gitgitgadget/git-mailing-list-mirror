@@ -2,95 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 95933C4332F
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 03:52:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20AC6C4332F
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 04:19:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232353AbiKVDwy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Nov 2022 22:52:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33528 "EHLO
+        id S231368AbiKVETt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Nov 2022 23:19:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232355AbiKVDwo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2022 22:52:44 -0500
-Received: from mail11.tencent.com (mail11.tencent.com [14.18.178.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEA0D2B60C
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 19:52:24 -0800 (PST)
-Received: from EX-SZ020.tencent.com (unknown [10.28.6.40])
-        by mail11.tencent.com (Postfix) with ESMTP id 52AEE679C0;
-        Tue, 22 Nov 2022 11:52:22 +0800 (CST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tencent.com;
-        s=s202002; t=1669089142;
-        bh=3oP5lv3aYw8OPUW3Zg/vT1oYnDLnq97nt84vRZQFnlc=;
-        h=From:To:CC:Subject:Date:References:In-Reply-To;
-        b=ep6xbZZzy5wTm06XMp4z9zEuJ2BnobrObdo1lO4IoUa6M9MWhZpuxF76axUIx/FNE
-         F+Meai2dZawFv0tV4ZHvDJ7bU2PONdWsHu2Iq6fMd+Jgvt/MC1k5xGo8Ily0WVFfdc
-         EUWqE+OltdBWQb0SGEZX5SPagsh7+WcmOcvXBLNY=
-Received: from EX-SZ064.tencent.com (10.28.6.16) by EX-SZ020.tencent.com
- (10.28.6.40) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2242.4; Tue, 22 Nov
- 2022 11:52:22 +0800
-Received: from EX-SZ066.tencent.com (10.28.6.18) by EX-SZ064.tencent.com
- (10.28.6.16) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2242.4; Tue, 22 Nov
- 2022 11:52:21 +0800
-Received: from EX-SZ066.tencent.com ([fe80::d867:3d3d:29a0:f571]) by
- EX-SZ066.tencent.com ([fe80::d867:3d3d:29a0:f571%6]) with mapi id
- 15.01.2242.008; Tue, 22 Nov 2022 11:52:21 +0800
-From:   =?utf-8?B?a3lsZXpoYW8o6LW15p+v5a6HKQ==?= <kylezhao@tencent.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Kyle Zhao via GitGitGadget <gitgitgadget@gmail.com>
-CC:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: RE: [Internet]Re: [PATCH v7 1/2] merge-tree.c: add
- --merge-base=<commit> option
-Thread-Topic: [Internet]Re: [PATCH v7 1/2] merge-tree.c: add
- --merge-base=<commit> option
-Thread-Index: AQHY/h8k1bpyBk/0aUWLngHzLviDHK5KSUzQ
-Date:   Tue, 22 Nov 2022 03:52:21 +0000
-Message-ID: <3e5cdd224d76499bbddf55b0b649439b@tencent.com>
-References: <pull.1397.v6.git.1667472621.gitgitgadget@gmail.com>
-        <pull.1397.v7.git.1668210314.gitgitgadget@gmail.com>
-        <1cf1c69b8e8e8e81eccc42b5d8efc605a36ab7eb.1668210314.git.gitgitgadget@gmail.com>
- <xmqqsfibsn9o.fsf@gitster.g>
-In-Reply-To: <xmqqsfibsn9o.fsf@gitster.g>
-Accept-Language: en-AS, zh-CN, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.99.17.237]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        with ESMTP id S231640AbiKVETr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2022 23:19:47 -0500
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9389E12D10
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 20:19:41 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id c203so13233242pfc.11
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 20:19:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=D7I8JxOVOHDbUt+XBc98WsjR+Ri6r1QzylcxoyM83f0=;
+        b=OcZgveR23WqgM35tSrTi25ZthGYBwYBDmRa3Di5pE2JztzpoTHj2MbGq+T8bzRIuNf
+         8xi/0fHzHW6KV/ZLpS2I7rhyoU+irCdJ1y3v0HJPd2/2DU8Y3bPOS6gu36PGXq3yUa32
+         68fpgP27tb4FVBXzlF6R4hgzycmsM7gf5jFhlmcWMrFIXSgpOWNhpqQ0lrc70k7tyljd
+         jC5H5gnxmz7z7yYwg4ZHTOTk6oONbbJS4Nr+frQPkqv+qUuHxPD/cQhJSEL4VzaTF5Bn
+         bQIonwfwpXzIRPt9cTum3oFeQD9nMlu1U6bZ2F+61ik8tjY5lwIAbjJx00OsLjHq1YfO
+         f0cQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=D7I8JxOVOHDbUt+XBc98WsjR+Ri6r1QzylcxoyM83f0=;
+        b=QSvqAoP3dJim/MPwxBMj4hePXWsn6/FS8iQT+dPZZKj0+2DcojuSIbZjwwimB0kwyO
+         u5usOjqxwvPAF38yWPpmXozRU97ex1i1dLTrMsRinOxUmxInOkjNYUYOBA0LC59V4aEH
+         t12gjjlb1rqwN3ecJ2LBnDpv1Wn/XXwBRuDD7b/80kRSQEcZ6p0FI09QXWynisOlN4eC
+         jxY9i7wRKwF0tmTJVNZfbGOe+ElQwJWcrFHS2I7Zmiwwomw8Q8uVH67MOl3Mw5ELHhtd
+         zCQW17m0xloQHD9smgiWNcn0SWTi6el6OEqnh2GK/HgOzZAdcH7Jwb0HEUI6xXpzZtG3
+         aM4Q==
+X-Gm-Message-State: ANoB5plhf9H2gBINKZbymNEY1ol4f5vkXKm95GGr1Jhoj1ceK+huDSn4
+        7K7wVY4lHhRaRXwjfRAF4ag=
+X-Google-Smtp-Source: AA0mqf7/dHC2HaSLT47AFna9sfrJjoH7FO6xz61iZzKOq8sSdB6Cr1xhNNDiMzvHBpUm7jAKR9Xm2Q==
+X-Received: by 2002:a05:6a00:cd5:b0:56d:7aaa:f1ea with SMTP id b21-20020a056a000cd500b0056d7aaaf1eamr3124458pfv.69.1669090780917;
+        Mon, 21 Nov 2022 20:19:40 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id y15-20020aa79e0f000000b005672daedc8fsm9453336pfq.81.2022.11.21.20.19.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Nov 2022 20:19:40 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Taylor Blau <me@ttaylorr.com>, Git List <git@vger.kernel.org>,
+        Kyle Zhao <kylezhao@tencent.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH] t5516: fail to run in verbose mode
+References: <20221121134040.12260-1-worldhello.net@gmail.com>
+Date:   Tue, 22 Nov 2022 13:19:39 +0900
+In-Reply-To: <20221121134040.12260-1-worldhello.net@gmail.com> (Jiang Xin's
+        message of "Mon, 21 Nov 2022 21:40:40 +0800")
+Message-ID: <xmqqo7szsjs4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PiA+ICsJY29uc3QgY2hhciAqbWVyZ2VfYmFzZSA9IE5VTEw7DQo+ID4NCj4gPiAgCWNvbnN0IGNo
-YXIgKiBjb25zdCBtZXJnZV90cmVlX3VzYWdlW10gPSB7DQo+ID4gIAkJTl8oImdpdCBtZXJnZS10
-cmVlIFstLXdyaXRlLXRyZWVdIFs8b3B0aW9ucz5dIDxicmFuY2gxPg0KPiA+IDxicmFuY2gyPiIp
-LCBAQCAtNTE1LDYgKzUzMywxMCBAQCBpbnQgY21kX21lcmdlX3RyZWUoaW50IGFyZ2MsIGNvbnN0
-DQo+IGNoYXIgKiphcmd2LCBjb25zdCBjaGFyICpwcmVmaXgpDQo+ID4gIAkJCSAgICZvLnVzZV9z
-dGRpbiwNCj4gPiAgCQkJICAgTl8oInBlcmZvcm0gbXVsdGlwbGUgbWVyZ2VzLCBvbmUgcGVyIGxp
-bmUgb2YgaW5wdXQiKSwNCj4gPiAgCQkJICAgUEFSU0VfT1BUX05PTkVHKSwNCj4gPiArCQlPUFRf
-U1RSSU5HKDAsICJtZXJnZS1iYXNlIiwNCj4gPiArCQkJICAgJm1lcmdlX2Jhc2UsDQo+ID4gKwkJ
-CSAgIE5fKCJjb21taXQiKSwNCj4gPiArCQkJICAgTl8oInNwZWNpZnkgYSBtZXJnZS1iYXNlIGZv
-ciB0aGUgbWVyZ2UiKSksDQo+ID4gIAkJT1BUX0VORCgpDQo+ID4gIAl9Ow0KPiANCj4gVGhpcyBs
-b29rcyB3cm9uZywgdGhvdWdoLg0KPiANCj4gU2hvdWxkbid0ICJnaXQgbWVyZ2UtdHJlZSAtLW1l
-cmdlLWJhc2U9WCAtLW1lcmdlLWJhc2U9WSBBIEIiDQo+IGFsbG93IHlvdSB0byBjb21wdXRlIHRo
-ZSBtZXJnZSBiZXR3ZWVuIEEgYW5kIEIgaW4gYSBoaXN0b3J5IHdoZXJlIHRoZXJlIGFyZQ0KPiB0
-d28gbWVyZ2UgYmFzZXM/DQo+IA0KPiBVbmZvcnR1bmF0ZWx5IHRoaXMgaXMgYWxyZWFkeSBpbiAn
-bmV4dCcsIHNvIGxldCdzIHNlZSBhbiBpbmNyZW1lbnRhbCBmaXggb24gdG9wLg0KPiANCj4gVGhh
-bmtzLg0KDQpJIGFncmVlLg0KDQpPUFRfU1RSSU5HIG9ubHkgdXNlIHRoZSBsYXN0IHZhbHVlIG9m
-ICItLW1lcmdlLWJhc2UiLg0KSXQgd2lsbCBtaXNsZWFkIHVzZXJzLCB0aGV5IG1heSBzcGVjaWZ5
-IHRoZSBtZXJnZS1iYXNlIG11bHRpcGxlIHRpbWVzLCBidXQgZm91bmQgaXQgZG9lc24ndCB3b3Jr
-Lg0KDQpJIHdlbnQgdG8gY2hlY2sgdGhlIGFwaS1wYXJzZS1vcHRpb24udHh0LCBidXQgSSBkaWRu
-J3QgZm91bmQgYW4gZWxlZ2FudCBzb2x1dGlvbiB0byBzdG9wIHdoZW4gdGhlIHVzZXJzIHVzZXMg
-dGhlDQpzZWNvbmQgIi0tbWVyZ2UtYmFzZSIuICBEaWQgSSBtaXNzIGl0PyBPciB3ZSBqdXN0IG5l
-ZWQgdG8gbWVudGlvbiB0aGlzIGluIHRoZSBnaXQtbWVyZ2UtdHJlZS50eHQsDQpzdWNoIGFzOg0K
-IC0tbWVyZ2UtYmFzZT08Y29tbWl0Pjo6DQogCUluc3RlYWQgb2YgZmluZGluZyB0aGUgbWVyZ2Ut
-YmFzZXMgZm9yIDxicmFuY2gxPiBhbmQgPGJyYW5jaDI+LA0KLQlzcGVjaWZ5IGEgbWVyZ2UtYmFz
-ZSBmb3IgdGhlIG1lcmdlLg0KKyAgICAgICAgICAgIHNwZWNpZnkgYSBtZXJnZS1iYXNlIGZvciB0
-aGUgbWVyZ2UuIFRoaXMgb3B0aW9uIGRvZXNuJ3Qgc3VwcG9ydA0KKyAgICAgICAgICAgIGJlaW5n
-IHNwZWNpZmllZCBtdWx0aXBsZSB0aW1lcywgb25seSB0aGUgbGFzdCB2YWx1ZSB5b3UgcHJvdmlk
-ZSB3aWxsIGJlIHVzZWQuDQoNCg0KVGhhbmtzLA0KS3lsZQ0KDQo=
+Jiang Xin <worldhello.net@gmail.com> writes:
+
+> From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+>
+> The test case "push with config push.useBitmap" of t5516 was introduced
+> in commit 82f67ee13f (send-pack.c: add config push.useBitmaps,
+> 2022-06-17). It won't work in verbose mode, e.g.:
+>
+>     $ sh t5516-fetch-push.sh --run='1,115' -v
+>
+> This is because "git-push" will run in a tty in this case, and the
+
+Right.  "-v" involves redirecting the stdout/stderr of the commands
+being run in the test to stdout/stderr in the environment the tests
+are run, so
+
+    $ sh t5516-fetch-push.sh --run='1,115' -v >log 2>&1
+
+would have succeeded correctly.  Forcing the behaviour with the
+"--quiet" option is certainly a good way to gain stability.
