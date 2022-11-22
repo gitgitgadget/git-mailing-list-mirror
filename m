@@ -2,95 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8047AC433FE
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 16:19:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5EC0C43217
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 16:41:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234354AbiKVQTR convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Tue, 22 Nov 2022 11:19:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49682 "EHLO
+        id S232783AbiKVQk7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 11:40:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234351AbiKVQS6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 11:18:58 -0500
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2694F85159
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 08:16:31 -0800 (PST)
-Received: by mail-pj1-f42.google.com with SMTP id q96-20020a17090a1b6900b00218b8f9035cso5576794pjq.5
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 08:16:31 -0800 (PST)
+        with ESMTP id S232583AbiKVQk4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 11:40:56 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75845275D2
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 08:40:55 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id p13-20020a05600c468d00b003cf8859ed1bso11733378wmo.1
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 08:40:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=IGs14wrbdvZf3I1fhvRc3ltnpVRTvyjlmMwbNmXk0Y0=;
+        b=c1MKrOSLGZuSvhr3jvQ3QhYxdIJ9qS3eNAcwcGnilfaYHcPKLpCDjG3azlnFGcM5Xx
+         lEd1uivUb9/VA6RHLjD9yruel34mZT3llhVovK8G/q5mOROf602IVGUngLdbu78D7Uz7
+         w5uqOg8XwWLUdxMNjNKhVogLrHAw4WZyb32f8+8np6BEdJZ5KWsTEIH2U7QzYQguoOxP
+         cKWYAUMUfBDYO6F1sWw2KQ8WWruVtUBzDVq9e88j9HetXlAHubRzaA4lYbE0URXdoKWN
+         d6BmHDKMTaH2gA32aCP+wGxfEH9MAUdkC8LfG6Two+Z61poIGq+0N/NLcFapIq8qA+JJ
+         I/BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tXRygA97t/cKIkIWzX88NF/4yvALhYa0vBsAom+8Sn8=;
-        b=fvAiSFq3sPVrWpC40K9ACJcebXb6qhnchcUgV+r03zzCoHIUtbSVgT8JazAJeU0Mu7
-         xlbQwJ4D8uBuh+qQiGn6dVCmZPDOwfkPHKSvxedjqkHvqzmUW27gF2uv/Uhk4LJ2T2d+
-         x0pDeAzdANEBfFU2JF/cp52mZgH3KwRFKyM3pgj2L+0TtUVRpkHNe5OkNjvEM6yqOFQw
-         1kOIek7VhFWEpwMTVLHFZzcuIvoUx9JqIgdctSwnaX+j6Xk3gV9q07GYzXYG/XZb2/iJ
-         kW+8DhIhsunVMYCHHBZq0jKKO0lzauvUvqeEJxTW1JxKi4vLtS5/Hlxzsj/GjlZ6OoM+
-         INJQ==
-X-Gm-Message-State: ANoB5pmGWZZlbVgTaJVksUHBiFqtTzWPkeZ5Yq0OzJnFIWUn8nToff1b
-        L3GWMHiLuR+5mRUnuJc5/TKJ03kC24RNvyLpVqE=
-X-Google-Smtp-Source: AA0mqf7rOyQ2pl0TxO5lbz1Eqiz+9sGOmtTSlfGt/UF6OrNmyOzZ2F6YfyFx+0Cbfrbn5Az2wzVktLCMaTF66q9i1Rk=
-X-Received: by 2002:a17:902:868b:b0:186:8c19:d472 with SMTP id
- g11-20020a170902868b00b001868c19d472mr5278867plo.12.1669133772671; Tue, 22
- Nov 2022 08:16:12 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IGs14wrbdvZf3I1fhvRc3ltnpVRTvyjlmMwbNmXk0Y0=;
+        b=oNUHjQZ2CKL1gxuZ6CtDWsnwhCVUeMWnncZdE0qTs1WnugYoeKJ89f5z0v/Mq0W7Os
+         2xuYL0B8c9Uzh5tZ8LziHwLl/px4pjDjsFtX4b+1iGYs3UdkPvA6VYiURWLYGXlfv/qX
+         bpYgiPv1qkGTs6zsW1XRp2WrWUYUet9KfJhH9Vgj+St1QNmXLckjrpxomllaCNCc1aoV
+         qW6TzBQL3eTXqXbnTxpZUFzWtYSFZIScX3q6Jmt8me93QcBU6/9htShn+DqBHRqKSh+q
+         TLZyX8OwNcMP9cveu/1PZ1zPuB/40i4ffMIdfed0A788IOlxD7t4LEE+ZBw3NdvDtHW6
+         68Hg==
+X-Gm-Message-State: ANoB5pnpTYYmhcYRj+2muCQU5gAnZUiFSR2Kcp2EzT4IeyYYn2hSrSz4
+        IrZLq/z0uENOql4wrBpQchc=
+X-Google-Smtp-Source: AA0mqf5pkVxN5KoKmex/I45JbCYNWScLSXTnRO1aj6WkAZ0oAobwIJDh8ReEUJukX0ey3Db7pf2b1g==
+X-Received: by 2002:a05:600c:4386:b0:3cf:a4a6:a048 with SMTP id e6-20020a05600c438600b003cfa4a6a048mr3482156wmn.202.1669135253632;
+        Tue, 22 Nov 2022 08:40:53 -0800 (PST)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id p15-20020a05600c468f00b003cfd10a33afsm22769891wmo.11.2022.11.22.08.40.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Nov 2022 08:40:53 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <61b42a7c-5772-dec2-c895-386f1613ac35@dunelm.org.uk>
+Date:   Tue, 22 Nov 2022 16:40:52 +0000
 MIME-Version: 1.0
-References: <4657a19c-89c3-2237-9e6b-db897a492072@opensuse.org>
- <CAPig+cT92EokWeVA_Ou1P6kkaq90wneRrgPqnKLbkHnc=U56Vg@mail.gmail.com> <221122.86zgcj9hmc.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221122.86zgcj9hmc.gmgdl@evledraar.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 22 Nov 2022 11:16:01 -0500
-Message-ID: <CAPig+cTniT+_7MxMm3Kc2C_oEtQGg-WA3870baL8990Av6HmJQ@mail.gmail.com>
-Subject: Re: git can not be built for s390x since update to git-2.38.0
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Sarah Julia Kriesch <sarah.kriesch@opensuse.org>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 2/2] git-jump: invoke emacs/emacsclient
+Content-Language: en-US
+To:     Yoichi Nakayama via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+References: <pull.1423.v3.git.1669033620.gitgitgadget@gmail.com>
+ <pull.1423.v4.git.1669126703.gitgitgadget@gmail.com>
+ <2f0bffb484beccf58f2440ed5e2c04a1ba26e6c3.1669126703.git.gitgitgadget@gmail.com>
+In-Reply-To: <2f0bffb484beccf58f2440ed5e2c04a1ba26e6c3.1669126703.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 22, 2022 at 9:41 AM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> On Mon, Nov 21 2022, Eric Sunshine wrote:
-> > The empty "chainlinttmp/tests" file also sounds suspicious. If you
-> > haven't already done so, I would recommend following the advice in [1]
-> > and running each command individually which Makefile would have run;
-> > this might allow you to isolate the problematic command or shell
-> > construct if such exists.
->
-> I can also reproduce this on gcc202. It's the same issue with ending up
-> with an empty "tests" file.
+Hi Yoichi
 
-Were you able to determine why the "tests" file is empty? The creation
-loop is simple enough:
+On 22/11/2022 14:18, Yoichi Nakayama via GitGitGadget wrote:
+> From: Yoichi Nakayama <yoichi.nakayama@gmail.com>
+> 
+> It works with GIT_EDITOR="emacs", "emacsclient" or "emacsclient -t"
 
-    for i in $(CHAINLINTTESTS); do \
-        echo "test_expect_success '$$i' '" && \
-        sed -e '/^# LINT: /d' chainlint/$$i.test && \
-        echo "'"; \
-    done >'$(CHAINLINTTMP_SQ)'/tests && \
+Thanks for working on this, I'm looking forward to being able to use 
+"git jump" with emacs.
 
-and the file is never changed after that (or shouldn't be).
+> Signed-off-by: Yoichi Nakayama <yoichi.nakayama@gmail.com>
+> ---
+>   contrib/git-jump/git-jump | 15 +++++++++++++++
+>   1 file changed, 15 insertions(+)
+> 
+> diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
+> index babb3b5c68d..bfd759aa4b2 100755
+> --- a/contrib/git-jump/git-jump
+> +++ b/contrib/git-jump/git-jump
+> @@ -26,6 +26,17 @@ open_editor() {
+>   	eval "$editor -q \$1"
+>   }
+>   
+> +open_emacs() {
+> +	# Supported editor values are:
+> +	# - emacs
+> +	# - emacsclient
+> +	# - emacsclient -t
+> +	editor=`git var GIT_EDITOR`
+> +	# Wait for completion of the asynchronously executed process
+> +	# to avoid race conditions in case of "emacsclient".
+> +	eval "$editor --eval \"(prog1 (switch-to-buffer-other-frame (compilation-start \\\"cat $@\\\" 'grep-mode)) (delete-other-windows) (while (get-buffer-process (current-buffer)) (sleep-for 0.1)) (select-frame-set-input-focus (selected-frame)))\""
 
->         avar@gcc202:/run/user/1632/git/t$ uname -a
->         Linux gcc202 6.0.0-4-sparc64-smp #1 SMP Debian 6.0.8-1 (2022-11-11) sparc64 GNU/Linux
->         avar@gcc202:/run/user/1632/git/t$ lsb_release -a
->         No LSB modules are available.
->         Distributor ID: Debian
->         Description:    Debian GNU/Linux bookworm/sid
->         Release:        n/a
->         Codename:       bookworm
+I just tried this out in a frame (window for non emacs users) showing 
+two files and the (delete-other-windows) call replaced both of them with 
+the grep buffer. It would be nicer if it created a new window in the 
+current frame or showed the grep buffer in one of the existing windows. 
+If I delete (delete-other-windows) then the first time I run "git jump" 
+it shows the grep buffer in the frame I already have open, but then if I 
+run it again without closing the grep buffer it opens a new frame. I 
+wonder if it would be better just to close the buffer if it exists 
+before creating the new one or pass NAME-FUNCTION argument to 
+compilation-start that creates unique names.
 
-This is one of the compile-machines to which you have access?
+I'm using emacsclient as my editor and when I run "git jump" it prints
 
-> The change at the tip of
-> https://lore.kernel.org/git/221122.86cz9fbyln.gmgdl@evledraar.gmail.com/
-> fixes it for me, i.e. getting rid of the perl threads stuff...
+#<buffer *grep*>
 
-I'm confused. How does a change to chainlint.pl -- which only reads
-the "tests" file -- fix the empty "tests" file?
+in the terminal (presumably because that is the return value of 
+select-frame-set-input-focus)
 
-> That box is built with "useithreads=define", so it's not that it doesn't
-> support threading in general.
+Could we read the file and set the buffer's mode to grep-mode (or 
+compilation-mode?) without forking cat?
+
+Best Wishes
+
+Phillip
+
+> +}
+> +
+>   mode_diff() {
+>   	git diff --no-prefix --relative "$@" |
+>   	perl -ne '
+> @@ -98,4 +109,8 @@ tmp=`mktemp -t git-jump.XXXXXX` || exit 1
+>   type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
+>   "mode_$mode" "$@" >"$tmp"
+>   test -s "$tmp" || exit 0
+> +if git var GIT_EDITOR | grep emacs >/dev/null; then
+> +	open_emacs "$tmp"
+> +	exit 0
+> +fi
+>   open_editor "$tmp"
