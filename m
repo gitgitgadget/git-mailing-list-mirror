@@ -2,109 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E1C75C433FE
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 22:26:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A35CC4332F
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 22:29:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235094AbiKVW0t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 17:26:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33836 "EHLO
+        id S235170AbiKVW3v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 17:29:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235066AbiKVW0r (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 17:26:47 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A92937818D
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 14:26:46 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id b8so11775176edf.11
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 14:26:46 -0800 (PST)
+        with ESMTP id S235025AbiKVW3s (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 17:29:48 -0500
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE4FD8E29F
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 14:29:46 -0800 (PST)
+Received: by mail-pf1-x449.google.com with SMTP id z19-20020a056a001d9300b0056df4b6f421so9997844pfw.4
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 14:29:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=3jh/3JWBa2XQOwYBJlO+8K2cA0b320GTvtz1FsaqQF0=;
-        b=j3usXv9+hBq8cNtUSUTeRybPjfBY7nWjiAponvIBfbB2aK0nY2SmUl0CorTLk84Zyn
-         FSx8jXI0+bSWs4cpLDBBPfD+CqD1eVhMvG7EeO5Qvu0iOACFsxT7Ad/Srl6kg33WBGr8
-         /zRNllK5/ZnRMSZQ2ZYm0bdj5uaMz8NHYNcZ4vAJwd1S9onCuHo7O4/g82f0lXsGqrTw
-         z1NNiFxJ0HmleHzecWTwGyAfoWmky2O6NBvjU5R6iku/I9KAkPADlh9h1EgMsyX/+9on
-         0ifCMicpn/iszRWHfSslq8fsWr498v5fGwfeqjsF2JbXdGv+xN1Ts6jDWNnOrTzc17Uy
-         7+Wg==
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=W6OWBwbXzy0Uw2OEIHpiUKbDEaRtBv55ITCKYLNRSCQ=;
+        b=nGrmpuPFo5OCxPpmD8QoSo4MUWEbSkSGkYDW6tILoysF7Wjh5EkkPzV4Ax3ZoXx5cr
+         ckQ84OflKZBgADFw1VBth2gvaSmXdu4Qrg/64xkcyv783MOY427p0e3aefM2r62kP05Z
+         GPuvG1g6kkS5AvKsfnxNaCmWn9or9gQ7Lsn++z3DKyKmh7oIe6VtIOmgEBQDA48GUd/0
+         SoXmqK8ZCpdLI88AO32ygs1JM7cylNiMkDDBWvxlJ3+q0xQST8ttdC5fFxmLMhHZ1sO2
+         hCyrLjFdCL8mmAubsm3D/ZLKVELerytQEjqj8jU3AHKBWGnSRW4qI8A5NI5EPQ7cCXbW
+         BK4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3jh/3JWBa2XQOwYBJlO+8K2cA0b320GTvtz1FsaqQF0=;
-        b=EVXPHZm5piRogFCItOOm6ltA0agPCu2P91UiXaIzFrcBVpy3/5ufYqWoLLYFp+E1Dk
-         1G4LKICiPRU8cV2Z54+xG7D+J3G/tBG08LniJKepWvVSIvzdDjEzbsVSo4LTZrYiSsxf
-         UfZjkkWjPmqhDC6+9jGpsxEXjftyBHXxauKrdDX2q5xpjMj4f9UaXTHPzQxuEDUPQ3Bk
-         w26ZK1VCdkNZlQ/IQsXL4adJBWpOJ08KW7FMhQFHoLdrcBnA204t1IdK3dLRGUy+c4Xz
-         TbdIcFZsEfgDfG8eMt/q0Gqf0e7kXtt4dN9SwCPhL+1V3EU1FtR2U6SrckFTlYBOt22N
-         UvsA==
-X-Gm-Message-State: ANoB5pmb3rKvPvBknJufoXPU+NJfZag1LTKwk1RXojd+tTSUU0j8sVmf
-        cadY0WyxSM35lpFhdx6ttlo=
-X-Google-Smtp-Source: AA0mqf5aRiILlMhHVLvC8ZPCVoJ8V9NSWrRgmnDRSkJCfxigwXB90qiz4z4RyLx3l4tgIDC73uVWeQ==
-X-Received: by 2002:aa7:d7cc:0:b0:45b:4a4b:478c with SMTP id e12-20020aa7d7cc000000b0045b4a4b478cmr5565686eds.317.1669156005158;
-        Tue, 22 Nov 2022 14:26:45 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id q17-20020a1709063d5100b007b7b7600d3dsm1694961ejf.88.2022.11.22.14.26.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Nov 2022 14:26:44 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oxbj2-000o5u-0V;
-        Tue, 22 Nov 2022 23:26:44 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] t3920: don't ignore errors of more than one command
- with `|| true`
-Date:   Tue, 22 Nov 2022 23:24:36 +0100
-References: <febcfb0a-c410-fb71-cff9-92acfcb269e2@kdbg.org>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <febcfb0a-c410-fb71-cff9-92acfcb269e2@kdbg.org>
-Message-ID: <221122.86mt8iaamz.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=W6OWBwbXzy0Uw2OEIHpiUKbDEaRtBv55ITCKYLNRSCQ=;
+        b=z9zSmIlZWErAg+WpW+pv5X8zdORMlo1l95SjeoVDZkQ2FUcwbMVKjUtIidrWTfIng9
+         ztl2yDjvk6LCkTAOV5xZBBeYShZnURiLDAVQ+P9XRQNd/UnXhwUoUaqHrjs25ORnqu7X
+         nFeYKxqlt9qCuAbBGwSz3QZWOVt6lrcWrNqXnK5S+wYbTbe9Haiuef62A5BiFxv++pPU
+         8Ek+4aXVAkbu0I7rZqNzd4TRdu1bYINmr1P6Yrlq/WAGbAXorBSTb30F1cMbPiV4Wvke
+         27qiHpD/yL+EnUHKaxE2Jvg1FpvWfyYoj+KjGsTNqPPFPIhn1J6zxX90yW3z0iYRDGe2
+         X4WQ==
+X-Gm-Message-State: ANoB5pmsIghivf7x/OcZAdr8yL334Hsc2BVRKqona/nWTcVW7sd+5AzJ
+        Z0dW7CI4hTKEqvKuXh/da5IkfmllWgx7yA==
+X-Google-Smtp-Source: AA0mqf53dW+DtnrHo98a7AwnjNb1PIXasIPyR0lOkGs30tAL39Z1/W4QMJ1F7UQogoASzB7ailso0zS5cWnY0g==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a63:902:0:b0:46e:9bb2:f0f7 with SMTP id
+ 2-20020a630902000000b0046e9bb2f0f7mr7064818pgj.203.1669156186171; Tue, 22 Nov
+ 2022 14:29:46 -0800 (PST)
+Date:   Tue, 22 Nov 2022 14:29:35 -0800
+In-Reply-To: <cover-v3-0.9-00000000000-20221119T122853Z-avarab@gmail.com>
+Mime-Version: 1.0
+References: <cover-v2-00.10-00000000000-20221114T100803Z-avarab@gmail.com> <cover-v3-0.9-00000000000-20221119T122853Z-avarab@gmail.com>
+Message-ID: <kl6la64iei7k.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v3 0/9] Get rid of "git --super-prefix"
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>, Robert Coup <robert@coup.net.nz>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thanks! I think we're close to getting this merged :)
 
-On Mon, Nov 21 2022, Johannes Sixt wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> It is customary to write `A || true` to ignore a potential error exit of
-> command A. But when we have a sequence `A && B && C || true && D`, then
-> a failure of any of A, B, or C skips to D right away. This is not
-> intended here. Turn the command whose failure is to be ignored into a
-> compound command to ensure it is the only one that is allowed to fail.
-
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  t/t3920-crlf-messages.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> =3D Changes since v2:
 >
-> diff --git a/t/t3920-crlf-messages.sh b/t/t3920-crlf-messages.sh
-> index 4c661d4d54..a58522c163 100755
-> --- a/t/t3920-crlf-messages.sh
-> +++ b/t/t3920-crlf-messages.sh
-> @@ -12,7 +12,7 @@ create_crlf_ref () {
->  	cat >.crlf-orig-$branch.txt &&
->  	cat .crlf-orig-$branch.txt | append_cr >.crlf-message-$branch.txt &&
->  	grep 'Subject' .crlf-orig-$branch.txt | tr '\n' ' ' | sed 's/[ ]*$//' | tr -d '\n' >.crlf-subject-$branch.txt &&
-> -	grep 'Body' .crlf-message-$branch.txt >.crlf-body-$branch.txt || true &&
-> +	{ grep 'Body' .crlf-message-$branch.txt >.crlf-body-$branch.txt || true; } &&
->  	LIB_CRLF_BRANCHES="${LIB_CRLF_BRANCHES} ${branch}" &&
->  	test_tick &&
->  	hash=$(git commit-tree HEAD^{tree} -p HEAD -F .crlf-message-${branch}.txt) &&
+> * Fixes for test_when_finished() in test setup, and got rid of
+>   redundant test_config_global.
+>
+> * There's a new 2/9, which passes along get_super_prefix() as a
+>   parameter. This allows us to gradually replace it, and drop the
+>   *_sp() variants of functions that the previous version introduced,
+>   and it adds "super_prefix" to the absorb_git_dir_into_superproject()
+>   call in submodule_move_head(), which as Glen noticed I'd missed
+>
+> * Squashed the "deinit" change into that 2/9.
+>
+> * Explain why we keep the "fsmonitor" test bits that we do.
+>
+> * Dropped the new "git branch" output tests, turns out I was just
+>   wrong, and was conflating it with the subsequent read-tree
+>   invocation...
+>
+> So, this should address all outstanding feedbakc, unless I've missed
+> something.
 
-Any reason not to make this:
+As noted in [1], I think we might have missed some sites where we should
+pass super_prefix.
 
-	-       grep 'Body' .crlf-message-$branch.txt >.crlf-body-$branch.txt || true &&
-	+       sed -ne '/Body/p' <.crlf-message-$branch.txt >.crlf-body-$branch.txt &&
+[1] https://lore.kernel.org/git/kl6lcz9eep9k.fsf@chooglen-macbookpro.roam.c=
+orp.google.com,
 
-?
+> The one loose end here is that I still have no idea if you can invoke
+> get "read-tree" to invoke that submodule_move_head() in such a way as
+> to have the "super_prefix" used, I've failed to come up with a test
+> case for that.
+>
+> But for the purposes of this topic it doesn't really matter. In 8/10
+> we'll start passing the new "--super-prefix" that "read-tree" gets
+> down to that function. At worst we're handing it to it redundantly,
+> but that was the case before too.
+>
+> So we can leave potentially turning that into a "NULL" for some other
+> time, for now providing the "super_prefix" is harmless, and guarantees
+> that we avoid any regression in that area from not providing it, in
+> case I've missed a way to have it matter in that case.
 
-We usually use that for "grep when we don't care about the exit
-code". But maybe some CRLF concerns in this code don't allow it (I only
-tested this on *nix).
+Yeah, I tried to do the same too, and it turned out to be harder than
+expected. The "absorbgitdir during read-tree" code is definitely in use
+(e.g. by t1013), so it's certainly possible, but as you noted, I don't
+really think it matters as long as we avoid a regression for the time
+being.
+
