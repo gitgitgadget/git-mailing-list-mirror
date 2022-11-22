@@ -2,116 +2,139 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6957FC43217
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 22:56:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEC9CC433FE
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 23:05:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234874AbiKVW46 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 17:56:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56694 "EHLO
+        id S234580AbiKVXFV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 18:05:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230365AbiKVW45 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 17:56:57 -0500
-Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B409C115
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 14:56:55 -0800 (PST)
-Received: by mail-il1-x132.google.com with SMTP id q13so2347613ild.3
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 14:56:55 -0800 (PST)
+        with ESMTP id S235201AbiKVXFP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 18:05:15 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D58690591
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 15:05:13 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id z63so3655708ede.1
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 15:05:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CjHVb/46+T49x36k+VNAfu5Ygp99Jdc4Iqr+J2Frksw=;
-        b=Hdoht+5CZXx0pe6U0ZUBQ+sCJJtq6gd+kLUg/DRRsxh0fRdNl3+G9oZ9u8Jk6GlZof
-         nQccvyNFRLSXVwXfpEKFyaSXB91CjhWqVlexMEqGPQLOCSzLJ4QrpEWyHn3QlZi0K2I4
-         oMhHrAXnJhab2rDTMHz4SXaCfyWaRJ0AV6HQq9lWjAIiOMXBMWLTHxJKkmae4kehtyIy
-         feoQkuoxMPMqjDH1VYJ8uVDi6kfk67cHcHrwxayb9g9RW9RMjWC6Dfx92C+vZ/CNiTSZ
-         nSZkqN4nUxyyMbrU6XZzFIYhwZ6M9P32yvuhME9SU85PHz/5+X5y8ChtC/OJKyRcHU3Z
-         Ybqg==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=MK0YhmkXTAQ9NN/tfudU2XPAo6MRdW2Tz5raKEygNos=;
+        b=Eq3d16bMYKdN2g7Vl71/QI+jQ5MR0uIWTdSJrVT8f4xgzjN2hRZ5Auu/VorvRIx5M7
+         b347dxvIZQgoomIE3FqUwsjk13U+cj7WcQflGGYfzyl4ud8H7BmN9bYzT+BiHUus3U/5
+         Tu1FInRJLqpW/4e0cMTUz1txlHaYsjjGYXYwFdaIC1YYa3rhKioSXw/EFnJdWAUic4jB
+         j0KldtMJPF2c2tsHwkv5FfOy5XemiRdq7InVwXGNyZ/dTsDJdIpkglgDSXMAY2XX+2xE
+         t3nJjYUCloE7q+pVWwXCPilf2YrBboxqNevNCJ/RmLqKIr5FgUYqFESJzoA5qv3cb0bB
+         k51w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CjHVb/46+T49x36k+VNAfu5Ygp99Jdc4Iqr+J2Frksw=;
-        b=2I62EfRu1ppBxH7Yk13LxuqniKZsiWrZyBkmZfMw0Xce4CLXJPumakknYZOw+oz+uP
-         ZTXr27gpYzQyXksRqRPYQulrJit5xSqRh1k/YzpVQsVJHsEDrbt5d6TNrvwGSZbsrOrf
-         YaUgt3VQ1Ia6uW8LK/UHVfLlLrTN0ZhSjnuhPh6XnMiB1TE85IgcRh682A1NHXvgV0YV
-         xBtYWBSqxUnlN0zJ6J7F7FcVdpKRCCpRPap42BdJEslBvSruvttAuBlElCL8zeT94xOA
-         8BHMgHMFLsbdXQwPHTQh9NsyHmSafGVURSRp822QmUuYEY/ZURpTxhM2TRJ74dgCuX2U
-         I+aA==
-X-Gm-Message-State: ANoB5pne2atBg9aLBodMlxk32nwJTmqQiox/agdEI1LbrrCCChX1R2Uo
-        HVccgOe6eI03f9en18WAnhKCj2MYiPv1OQ==
-X-Google-Smtp-Source: AA0mqf5li2iR8nztIfdKZJhwOHVMQ4qU9U9OVPGU2/Ry3m8GBjTYo+9fSgq04OVzDZvOK3rJx83usQ==
-X-Received: by 2002:a92:ddc4:0:b0:2ff:daa8:dbbe with SMTP id d4-20020a92ddc4000000b002ffdaa8dbbemr6158388ilr.14.1669157815022;
-        Tue, 22 Nov 2022 14:56:55 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id b2-20020a92ce02000000b00302aa2a202dsm4588111ilo.64.2022.11.22.14.56.53
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MK0YhmkXTAQ9NN/tfudU2XPAo6MRdW2Tz5raKEygNos=;
+        b=plQfrZcyiBUDF1/zgf9mfS7VNldmwOE8gC+U0avpxotHNeY9nFnwTZ5/4A30ljPyTl
+         X54PMgC+i8s1KS9Z561lrShWj8q426/6Ma699Malw5WYa4rqfIdAlikAATyo9oT2Ndf+
+         Due2Y1pZ9NBQ+nK+8aFkTdGKctfrPv4e/4+C6+veVQhilF/yavvE3LqFK4pRwDPba6ON
+         qv0tIP0YM1/SPGUvQJn7xPeNp0Hz0C2Cxq6PYhHzPSXbRZzTFnV9nIvGpuVKvCnIeRLx
+         wgYaup/uulDRc9HFY7SDHtyadENrvuPYuxSVxYfbPf1hSeooR+YfMoJkzxshf+AokW0+
+         hLwg==
+X-Gm-Message-State: ANoB5plrSuYLQCg0HWmgZjIQLjbrdHGfbnZTOPp6Smdmg3g3biZfuJ6i
+        ZJQ9Yah99/uB+U7o6IgqAuY=
+X-Google-Smtp-Source: AA0mqf4qYNRq1rHSxP2D47PsdwBvfO7ELi3M7Ds2sXpFQVUlUepZ3zDx0KuJpJOXLs2IzQDhsr5r+A==
+X-Received: by 2002:aa7:cc93:0:b0:462:6b8e:1ddb with SMTP id p19-20020aa7cc93000000b004626b8e1ddbmr22524094edt.276.1669158311781;
+        Tue, 22 Nov 2022 15:05:11 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id kg9-20020a17090776e900b007acbac07f07sm6569388ejc.51.2022.11.22.15.05.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Nov 2022 14:56:54 -0800 (PST)
-Date:   Tue, 22 Nov 2022 17:56:52 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Nov 2022, #04; Fri, 18)
-Message-ID: <Y31TtIatznxRuHln@nand.local>
-References: <Y3g95OYdwzq2OP3z@nand.local>
- <xmqq7czp1a6y.fsf@gitster.g>
- <Y3q9xrq5u9YSuVQC@nand.local>
- <xmqqpmdhx9kr.fsf@gitster.g>
+        Tue, 22 Nov 2022 15:05:11 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oxcKE-000pSV-37;
+        Wed, 23 Nov 2022 00:05:10 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] t3920: don't ignore errors of more than one command
+ with `|| true`
+Date:   Tue, 22 Nov 2022 23:57:20 +0100
+References: <febcfb0a-c410-fb71-cff9-92acfcb269e2@kdbg.org>
+ <221122.86mt8iaamz.gmgdl@evledraar.gmail.com>
+ <271dd9e6-3575-a46f-4c92-fa202aaf95d7@kdbg.org>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <271dd9e6-3575-a46f-4c92-fa202aaf95d7@kdbg.org>
+Message-ID: <221123.86ilj6a8ux.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqpmdhx9kr.fsf@gitster.g>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 21, 2022 at 12:36:36PM +0900, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+
+On Tue, Nov 22 2022, Johannes Sixt wrote:
+
+> Am 22.11.22 um 23:24 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>> On Mon, Nov 21 2022, Johannes Sixt wrote:
+>>> -	grep 'Body' .crlf-message-$branch.txt >.crlf-body-$branch.txt || true=
+ &&
+>>> +	{ grep 'Body' .crlf-message-$branch.txt >.crlf-body-$branch.txt || tr=
+ue; } &&
+>>=20
+>> Any reason not to make this:
+>>=20
+>> 	-       grep 'Body' .crlf-message-$branch.txt >.crlf-body-$branch.txt |=
+| true &&
+>> 	+       sed -ne '/Body/p' <.crlf-message-$branch.txt >.crlf-body-$branc=
+h.txt &&
+>>=20
+>> ?
 >
-> > On Mon, Nov 21, 2022 at 08:24:21AM +0900, Junio C Hamano wrote:
-> >> Taylor Blau <me@ttaylorr.com> writes:
-> >>
-> >> > * ab/various-leak-fixes (2022-11-08) 18 commits
-> >> >   (merged to 'next' on 2022-11-18 at 8828bb7161)
-> >> >  ...
-> >> >  (this branch is used by ab/merge-index-prep.)
-> >>
-> >> > * pw/rebase-no-reflog-action (2022-11-09) 2 commits
-> >> >   (merged to 'next' on 2022-11-14 at 790dadc8d3)
-> >> >  ...
-> >> >  (this branch is used by ab/merge-index-prep.)
-> >>
-> >> The other topic referred to is not described anywhere, and not part
-> >> of 'seen'.  Intended?
-> >
-> > It was merged intentionally via 790dadc8d3 (Merge branch
-> > 'pw/rebase-no-reflog-action' into next, 2022-11-14) as you note, though
-> > I'm not sure why the description from 790dadc8d3 didn't make it into the
-> > WC report.
-> >
-> > In any case, the description I went with is:
-> >
-> >     Avoid setting GIT_REFLOG_ACTION to improve readability of the
-> >     sequencer internals.
->
-> Sorry, but the question was about ab/merge-index-prep that does not
-> exist in the report and not in 'seen'.
->
-> For now, I'll ignore that phantom user of these two topics.  It can
-> come back when dust settles ;-).
+> Yes: I have tested my version, but not this one.
 
-Ah, yes, I remember this topic. It's from [1], and it does indeed use
-ab/various-leak-fixes and pw/rebase-no-reflog-action (cf. [2]), which
-apparently isn't quite sufficient (cf. [3]).
+I don't find that too surprising, as unless there's a discussion of "I
+tried xyz, but it didn't work, so..." a submitted patch is unlikely to
+have tried various alternatives for such a trivial fix, but just gone
+with whatever the author tried first.
 
-If I recall correctly, it had some conflicts when queuing, so I punted
-on it (because at the time when [2] was written the correct base(s) were
-not known).
+But in case it wasn't clear, the implied suggestion is that unless there
+is a good reason to introduce a pattern of:
 
-Thanks,
-Taylor
+	 { <cmd> in >out || true; } &&
 
-[1]: https://lore.kernel.org/git/cover-v9-00.12-00000000000-20221118T110058Z-avarab@gmail.com/
-[2]: https://lore.kernel.org/git/Y3gVekgT7jLibjWo@nand.local/
-[3]: https://lore.kernel.org/git/221119.86o7t3ds49.gmgdl@evledraar.gmail.com/
+That we should use another suitable command with the simpler use of:
+
+	 <cmd2> <in >out &&
+
+If the result is equivalent, as subsequent maintainers won't need to
+puzzle over the seemingly odd pattern.
+
+We have that "sed -n -e" in somewhat wide use:
+
+	$ git grep 'sed (-n -e|-ne).*/p.*&&' | wc -l
+	54
+
+The only existing occurance of this "grep but ignore the exit code" I
+could find was:
+
+	t/t9001-send-email.sh:  { grep '^X-Mailer:' out || :; } >mailer &&
+
+For which we can also:
+
+	-       { grep '^X-Mailer:' out || :; } >mailer &&
+	+       sed -ne '/^X-Mailer:/p' <out >mailer &&
+
+And which I'd think would be great to have in a re-roll, i.e. "here's
+these two cases where a grep-but-dont-care-about-the-exit-code could be
+replaced by sed -ne".
+
+But if re-testing this is tedious etc. I don't mind if it goes in as-is,
+but then I'd think we could safely emulate the t9001-send-email.sh
+pattern of using ":" instead of "true"; we don't need to invoke another
+process just to ignore the exit code.
+
+
+
