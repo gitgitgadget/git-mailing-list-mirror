@@ -2,143 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60D5BC433FE
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 14:33:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FB54C433FE
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 14:41:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234117AbiKVOdI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 09:33:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49626 "EHLO
+        id S230284AbiKVOlV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 09:41:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234148AbiKVOce (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 09:32:34 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56DCE6A6BE
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 06:31:57 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id cl5so25001491wrb.9
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 06:31:57 -0800 (PST)
+        with ESMTP id S229628AbiKVOlS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 09:41:18 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3B162B1AD
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 06:41:17 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id m22so36207898eji.10
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 06:41:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=a13QVWQKOFa+ypomezkq1n/768xI0mAYRNXY9KyPp1E=;
-        b=WJcwhvZpImUyx/uKndLBjFjNOiJ9Y2BldAoOOE6aYylwZmiPDoccaUigR1Xjbv54Zt
-         8Ic5D2HjGcYGMOLrNo8z4weO2skPFb8W+4i0eJvfEbwTOhlYpx2ntCKe1a2BntGE1Yni
-         9wKujnuCzCcpU1g4/syuxXOsmpDSjBcdNwu2pMTKIDSiBf/bMiO1CI1FBSUsh/wXgWOd
-         ZRI+6FqVd12VTbx33lXYnPXMW9y7ZzVyB965lJDal8hyCwywU1GE2HML4SA/vaDfKbCm
-         37gGfvymZQxlQQeDVeg3PH5JPZ+EDml2giqvmWIXfGb6yFyFjADHnueNdp+mKO1vCamX
-         6Z1A==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=no1G19WeH1txx9swh4jGx0yIq+NzkzFZFtzBNXxMhko=;
+        b=L/UG9UcpMPo6MAZWJ41WW57NLTrIPiPzU+elubPilGPXd/75Na4XpjZWgu4KNQ6zZW
+         lR9eEwBRhPeOXmUu2JP468/gK58N94xW/uk9zL40HuVaB0QCIaiWhzIZZ4TdkaGOKdRA
+         Qon+S4stP/fHa3Zh2Est/nIRlOiBJH6FAYAq8cZiLS3yrOg/R/5WoFh6C8RvR5J9iGrs
+         hbMX1TkpqCakQ+nZ5kgOJGZs42LvzHNC9/L4YC7SYrmOI6IgaSpukAB8vnOtdWW05eJN
+         WMIVt6A82Uq8bZ6XoacnxEIecvNDvruMn3Kcn5GsY8gGxIPfKD52nljl0xBTPlNu/h1+
+         jfWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=a13QVWQKOFa+ypomezkq1n/768xI0mAYRNXY9KyPp1E=;
-        b=kswSvjgt2by8hBiECwJdAOQ5ZutweImSyUN9f8Z1d7USdoBhGaxg0AbvXlsU2/3XFE
-         7mcuT1mzact/PvPMdcEGX8UUJHAqlJ7RTpcxBcEMcccSdiFSK4LwqmY2qSN9SHGcViSe
-         kIYswcmwc94h/xlM+ngqFU8k51rnRR8tdMS3p53JiIzrkspPO695XmqtvDAr/ag2lybi
-         O0N/tZEOC1lFDlD0pxzBtGZuFX2qieylHLEJADvVTpSvFePiwPTDEJ3l/DNTbH5V9oUC
-         oyelDWAC6n5sYEsDzKetuCYKKNi597LcMv/6kgDx4vPCCpru8YH/bHA/RarcojSFMhwT
-         3whQ==
-X-Gm-Message-State: ANoB5pnBNTk9VVsWVCjbc9/utRWFZ+qscL97z8xFDiOQgU83FHSxoB+s
-        Um9DxT5YTJGFH+OKkQJ/8sI=
-X-Google-Smtp-Source: AA0mqf7jeO1oH/tMqcNuQW+zrV34eucbuP0q61xEqngyLY+JxnC/DqD/CxNf/AmEMaIYa/mgDYOjdw==
-X-Received: by 2002:adf:e30b:0:b0:236:aacc:ea87 with SMTP id b11-20020adfe30b000000b00236aaccea87mr14629886wrj.414.1669127515838;
-        Tue, 22 Nov 2022 06:31:55 -0800 (PST)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id h16-20020a05600c315000b003cff309807esm23338024wmo.23.2022.11.22.06.31.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Nov 2022 06:31:55 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <9c0ecaff-3d66-2b83-eb78-64632d1fcddd@dunelm.org.uk>
-Date:   Tue, 22 Nov 2022 14:31:52 +0000
+        bh=no1G19WeH1txx9swh4jGx0yIq+NzkzFZFtzBNXxMhko=;
+        b=wf2IF1vGRtzFGT5oS6+Kxxx55BL5CPDMvXtQBInseQhd8A1/5wNZm3DwIB4b10qf8b
+         6oPhov+oSqK+V+PLVUK4rVEsVIW9fyW4kez2Te4kSK6HgY26Z9ujr7cJJLH/ruv9rvCm
+         9aeJvpj5SEP6U06/D0LRuVOZrmFuWogQvbW9R7qtHWfvpSoY8uJVOQuA7dezXZMut/fE
+         y5WbxgT5VpKtUut++Ry6tHq70So/N5Y9ZyeWCHMNgdEwVaYDLKKSq4p071UJRlvW527V
+         mgkoThbCzqPQa6D5n1Lxmb9dwYjqbN6dwT6CgeT1vP3fV18I6dxO+HkZXpgsvTXTgMB1
+         OSNg==
+X-Gm-Message-State: ANoB5pljDIdN9Y8zNR+4USqxcvECPU1On4aHRbX+aY2kqJ0IcS0G9wVI
+        AGvC17x7deQ6lI5pi+1BGQRV95lZRrk=
+X-Google-Smtp-Source: AA0mqf6r930bZ7G6goyP9HRyvsYIfaQrij5D5KI0eIRkKDbpAU6OGbyUfKaho5YmGRKT0RvvKRa+SQ==
+X-Received: by 2002:a17:906:590e:b0:78d:5176:c4d2 with SMTP id h14-20020a170906590e00b0078d5176c4d2mr19751115ejq.532.1669128076054;
+        Tue, 22 Nov 2022 06:41:16 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id q23-20020a170906361700b007adbd01c566sm6175385ejb.146.2022.11.22.06.41.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Nov 2022 06:41:15 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oxUSZ-000cJx-0E;
+        Tue, 22 Nov 2022 15:41:15 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Sarah Julia Kriesch <sarah.kriesch@opensuse.org>,
+        Git List <git@vger.kernel.org>
+Subject: Re: git can not be built for s390x since update to git-2.38.0
+Date:   Tue, 22 Nov 2022 15:35:29 +0100
+References: <4657a19c-89c3-2237-9e6b-db897a492072@opensuse.org>
+ <CAPig+cT92EokWeVA_Ou1P6kkaq90wneRrgPqnKLbkHnc=U56Vg@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <CAPig+cT92EokWeVA_Ou1P6kkaq90wneRrgPqnKLbkHnc=U56Vg@mail.gmail.com>
+Message-ID: <221122.86zgcj9hmc.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] config: introduce an Operating System-specific
- `includeIf` condition
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.1429.git.1669037992587.gitgitgadget@gmail.com>
- <pull.1429.v2.git.1669058388327.gitgitgadget@gmail.com>
- <221122.864juraxl2.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221122.864juraxl2.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/11/2022 14:01, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Mon, Nov 21 2022, Johannes Schindelin via GitGitGadget wrote:
-> 
->> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+
+On Mon, Nov 21 2022, Eric Sunshine wrote:
+
+> [cc:+git; taking this back to the mailing list so others can weigh in]
+>
+> On Wed, Nov 9, 2022 at 1:38 AM Sarah Julia Kriesch
+> <sarah.kriesch@opensuse.org> wrote:
+>>  > Gesendet: Sonntag, 06. November 2022 um 21:42 Uhr
+>>  > Von: "Eric Sunshine" <sunshine@sunshineco.com>
+>>  >
+>>  > On Sun, Nov 6, 2022 at 2:18 PM Sarah Julia Kriesch
+>>  > <sarah.kriesch@opensuse.org> wrote:
+>>  > > We have also identified this week, that chainlint.pl --stats says "0
+>>  > > tests". That can explain the empty output.
+>>  > >
+>>  > > ~/rpmbuild/BUILD/git-2.38.1/t> /usr/bin/perl chainlint.pl --stats
+>>  > > --emit-all chainlinttmp/tests
+>>  > > total: 0 workers, 0 scripts, 0 tests, 0 errors, 0.01s/0.01s (wall/user)
+>>  >
+>>  > Was `--stats` added for debugging this issue, or is that somehow part
+>>  > of your build process?
+>>  >
+>> Yes. We tried to debug that manually. Therefore, we have added the --stats.
 >>
->> +`os`::
->> +	The data that follows this keyword is taken as the name of an
->> +	Operating System, e.g. `Linux` or `Windows`; If it matches the
->> +	current Operating System, the include condition is met.
->> +
->>   A few more notes on matching via `gitdir` and `gitdir/i`:
-> 
-> The reste of the "includeif" use glob matching and "/i" for icase. IOW
-> this is how this new feature would fit in:
-> 	
-> 	|--------+--------+----------+----------+------------------+----|
-> 	|        | gitdir | gitdir/i | onbranch | hasconfig:remote | os |
-> 	|--------+--------+----------+----------+------------------+----|
-> 	| icase? | N      | Y        | N        | N                | Y  |
-> 	| glob?  | Y      | Y        | Y        | Y                | N  |
-> 	| path?  | Y      | Y        | Y        | Y                | N  |
-> 	|--------+--------+----------+----------+------------------+----|
-> 
-> I think at least flipping that "glob" to "Y" so you could match e.g.
-> "*BSD" would be useful, and easier to explain in context, rather than
-> why the rest use wildmatch() and this doesn't.
+>>  > What is the content of the "chainlinttmp/tests" file? Is it empty?
+>>  >
+>> It is empty.
+>>
+>>  > It is quite curious that it reports 0 scripts. It should report 1
+>>  > script even if chainlinttmp/file is empty. This might point a finger
+>>  > at File::Glob::bsd_glob() returning an empty list for some reason, or
+>>  > the problem could be a failure with Perl "ithreads".
+>
+> Do you happen to know if Perl is built with "ithreads" on your
+> platform, and if so, is "ithread" support working?
+>
+> The empty "chainlinttmp/tests" file also sounds suspicious. If you
+> haven't already done so, I would recommend following the advice in [1]
+> and running each command individually which Makefile would have run;
+> this might allow you to isolate the problematic command or shell
+> construct if such exists.
+>
+> [1]: https://lore.kernel.org/git/CAPig+cS184iKk6icG6ML=X+6Ng=fJyfic8izFyp1hT40cChm4g@mail.gmail.com/
 
-Globbing could be useful for the BSDs.
+I can also reproduce this on gcc202. It's the same issue with ending up
+with an empty "tests" file.
+	
+	avar@gcc202:/run/user/1632/git/t$ uname -a
+	Linux gcc202 6.0.0-4-sparc64-smp #1 SMP Debian 6.0.8-1 (2022-11-11) sparc64 GNU/Linux
+	avar@gcc202:/run/user/1632/git/t$ lsb_release -a
+	No LSB modules are available.
+	Distributor ID: Debian
+	Description:    Debian GNU/Linux bookworm/sid
+	Release:        n/a
+	Codename:       bookworm
 
-One other thing I thought of is will users know "Darwin" means MacOS?
+The change at the tip of
+https://lore.kernel.org/git/221122.86cz9fbyln.gmgdl@evledraar.gmail.com/
+fixes it for me, i.e. getting rid of the perl threads stuff...
 
-> For matching the uname the case doesn't really matter, but for
-> consistency of the interface I think making it case-sensitive or adding
-> an "os/i" would make sense. I.e. let's consistently use "/i" if & when
-> something's case-insensitive.
+That box is built with "useithreads=define", so it's not that it doesn't
+support threading in general.
 
-All the other items listed in your table such as branch names are case 
-sensitive. The os name is not so it is of no benefit at all to the user 
-to match it case sensitively. Let's consistently test case sensitive 
-keys cases sensitively and case insensitive keys case insensitively.
-
-Best Wishes
-
-Phillip
-
->> +test_expect_success '[includeIf "os:..."]' '
->> +	test_config x.y 0 &&
->> +	echo "[x] y = z" >.git/xyz &&
->> +
->> +	if test_have_prereq MINGW
->> +	then
->> +		uname_s=Windows
->> +	else
->> +		uname_s="$(uname -s)"
->> +	fi &&
->> +	test_config "includeIf.os:not-$uname_s.path" xyz &&
->> +	test 0 = "$(git config x.y)" &&
->> +	test_config "includeIf.os:$uname_s.path" xyz &&
->> +	test z = "$(git config x.y)"
->> +'
-> 
-> As I pointed out in the v1, this still:
-> 
->   * Hides segfaults in "git config", let's check the exit code.
->   * Doesn't test the "icase" semantics you're introducing. Let's do that
->     if it's intentional.
