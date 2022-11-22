@@ -2,71 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0808EC433FE
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 19:40:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3092C433FE
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 19:40:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233356AbiKVTkK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 14:40:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60158 "EHLO
+        id S234217AbiKVTkk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 14:40:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233912AbiKVTkI (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 14:40:08 -0500
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9906701BD
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 11:40:07 -0800 (PST)
-Received: by mail-pl1-f173.google.com with SMTP id d20so14622951plr.10
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 11:40:07 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rYWcEUFtBxxk9ePaWHlM/lxuWoa+FOVA7Me992p/NZY=;
-        b=YrPT/62d1cSFRBc7BIFaHbPOcUkK81q+KYQnlO/sKKGr5XxN3bVBWk4HUuX7E+/Bk9
-         Y81JAq4mkthfHCYPxV9rndFEpBf4Docd4LykTCzfqKKoHWHjQQ6OQuKyP3uljhXqTEnr
-         dQoifZP/bqNh0Z4JU27ZdmmVpoBMKqEX/eqpmDnEc/uIjgNP3wz4bKWVZVF0w89LBee5
-         dgdqIHZE5PdjdqKYBkDG8bi2vd9jwDu8Nym3uXEJ14Hgtwo8L2zMJqaba6QtQLZxgS2n
-         VOZEJu0JNTyMVLNIL79YfVoEv35aasy+Dwxy8WPpuO+WiPkQwNRoWiVNWo5zPgnV7ngL
-         2vog==
-X-Gm-Message-State: ANoB5plHJbqKu0R9olmij9aAUH35bRZbFEtxBS26D0049q0fUTaCHvD/
-        1lmJapvzdQiBPtNSnTU933kVcdoZPGMz5hcAY1odMKhxGZE=
-X-Google-Smtp-Source: AA0mqf5zqbNmCnA1f+kXh9usQ1WcMhyI8tTxVfjNUZcQAcot8B7DUh902u8Yy8bfCeheODdgu5c+m4anruwJxhUyt5s=
-X-Received: by 2002:a17:902:aa07:b0:188:eee6:e1a6 with SMTP id
- be7-20020a170902aa0700b00188eee6e1a6mr6279130plb.120.1669146007170; Tue, 22
- Nov 2022 11:40:07 -0800 (PST)
+        with ESMTP id S232734AbiKVTkh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 14:40:37 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C47296F36C
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 11:40:36 -0800 (PST)
+Received: (qmail 18905 invoked by uid 109); 22 Nov 2022 19:40:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 22 Nov 2022 19:40:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6115 invoked by uid 111); 22 Nov 2022 19:40:36 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 22 Nov 2022 14:40:36 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 22 Nov 2022 14:40:35 -0500
+From:   Jeff King <peff@peff.net>
+To:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH v2] object-file: use real paths when adding alternates
+Message-ID: <Y30ls8yD7WES0pq9@coredump.intra.peff.net>
+References: <pull.1382.git.git.1668706274099.gitgitgadget@gmail.com>
+ <pull.1382.v2.git.git.1669074557348.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <CANYNYEHXU8ivgAOa8EO5e9kOcbu6XF7rj+9EcSrbDQE+Rvyw_Q@mail.gmail.com>
- <CAPig+cQrXb-YUSzmfgJ2PRoiOP3goVACRCrX9C39kf3oDH+BHg@mail.gmail.com>
- <CANYNYEF+Gsas5s7u3rb3CQeFPL1MoCTweA4e3L90vCD0rPsNgg@mail.gmail.com>
- <CAPig+cS-BWJoWgo3UEk0X6fRjsysR0_23ppn9WX02Gy+ugVdOQ@mail.gmail.com> <CANYNYEEPZjGEogaSqqCO_qnzLqnrd0d0+z-Nv7v7GhKj_M-x-g@mail.gmail.com>
-In-Reply-To: <CANYNYEEPZjGEogaSqqCO_qnzLqnrd0d0+z-Nv7v7GhKj_M-x-g@mail.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 22 Nov 2022 14:39:55 -0500
-Message-ID: <CAPig+cQwxOr7udp4Zg=8dHycRDJrLFMZe1HKm5s5Hp=HSjuOcg@mail.gmail.com>
-Subject: Re: chainlink.pl /proc/cpuinfo regexp fails on s390x
-To:     Andreas Hasenack <andreas@canonical.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1382.v2.git.git.1669074557348.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 22, 2022 at 1:42 PM Andreas Hasenack <andreas@canonical.com> wrote:
-> On Tue, Nov 22, 2022 at 3:14 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > The project doesn't take pull requests directly, but GitGitGadget[1]
-> > will convert a pull request into a mailing list patch. It looks like
-> > https://github.com/git/git/ is one of the repositories with which
-> > GitGitGadget works, so presumably it should work. You could probably
-> > come up with a well-written commit message by paraphrasing your bug
-> > report.
->
-> Ok, let's see how this goes. I opened a PR in
-> https://github.com/git/git/pull/1385 and if someone could add the
-> required /allow, I can take the next steps.
+On Mon, Nov 21, 2022 at 11:49:17PM +0000, Glen Choo via GitGitGadget wrote:
 
-It looks like Dscho already /allow'd you, but GitGitGadget is
-complaining that you don't have a public email address on file with
-GitHub, which GitGitGadget requires so mailing list replies can make
-it back to you. Once you correct that, you should be able to /submit.
+>     Thanks for the feedback on v1. This version takes nearly all of Peff's
+>     patch [1] except for the comment about making an exception for relative
+>     paths in the environment. My reading of the commit [2] is that it was a
+>     workaround for strbuf_normalize_path() not being able to handle relative
+>     paths, so the only reason to special-case the environment is to preserve
+>     the behavior of respecting broken paths, which (unlike relative paths) I
+>     don't think will be missed.
 
-The patch itself and the commit message look fine.
+Yeah, that makes sense. If realpath fails because a path isn't present,
+then we would throw it away anyway. So we don't need to quietly
+tolerate, unless we really care about the difference between reporting
+"this directory doesn't seem to exist" versus "I couldn't run realpath
+on this directory". One is a subset of the other.
+
+> diff --git a/object-file.c b/object-file.c
+> index 957790098fa..ef2b762234d 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -508,6 +508,7 @@ static int link_alt_odb_entry(struct repository *r, const struct strbuf *entry,
+>  {
+>  	struct object_directory *ent;
+>  	struct strbuf pathbuf = STRBUF_INIT;
+> +	struct strbuf tmp = STRBUF_INIT;
+>  	khiter_t pos;
+>  
+>  	if (!is_absolute_path(entry->buf) && relative_base) {
+> @@ -516,12 +517,14 @@ static int link_alt_odb_entry(struct repository *r, const struct strbuf *entry,
+>  	}
+>  	strbuf_addbuf(&pathbuf, entry);
+>  
+> -	if (strbuf_normalize_path(&pathbuf) < 0 && relative_base) {
+> +	if (!strbuf_realpath(&tmp, pathbuf.buf, 0)) {
+>  		error(_("unable to normalize alternate object path: %s"),
+> -		      pathbuf.buf);
+> +			pathbuf.buf);
+>  		strbuf_release(&pathbuf);
+>  		return -1;
+>  	}
+> +	strbuf_swap(&pathbuf, &tmp);
+> +	strbuf_release(&tmp);
+
+So here we are looking at an alternates entry (either from a file or
+from the environment). We do note all errors, even in relative ones from
+the environment, but we don't die, so we'll just ignore the failed
+alternate. Good.
+
+> @@ -596,10 +599,7 @@ static void link_alt_odb_entries(struct repository *r, const char *alt,
+>  		return;
+>  	}
+>  
+> -	strbuf_add_absolute_path(&objdirbuf, r->objects->odb->path);
+> -	if (strbuf_normalize_path(&objdirbuf) < 0)
+> -		die(_("unable to normalize object directory: %s"),
+> -		    objdirbuf.buf);
+> +	strbuf_realpath(&objdirbuf, r->objects->odb->path, 1);
+
+And here we are resolving the actual object directory, and we always
+died if that couldn't be normalized. And we'll continue to do so by
+realpath. Good.
+
+> diff --git a/t/t7700-repack.sh b/t/t7700-repack.sh
+
+And then that's all we needed in the C code, since we already do
+duplicate checks. Good. :)
+
+> index 5be483bf887..ce1954d0977 100755
+> --- a/t/t7700-repack.sh
+> +++ b/t/t7700-repack.sh
+> @@ -90,6 +90,24 @@ test_expect_success 'loose objects in alternate ODB are not repacked' '
+>  	test_has_duplicate_object false
+>  '
+>  
+> +test_expect_success '--local keeps packs when alternate is objectdir ' '
+> +	git init alt_symlink &&
+> +	(
+> +		cd alt_symlink &&
+> +		git init &&
+> +		echo content >file4 &&
+> +		git add file4 &&
+> +		git commit -m commit_file4 &&
+> +		git repack -a &&
+> +		ls .git/objects/pack/*.pack >../expect &&
+> +		ln -s objects .git/alt_objects &&
+> +		echo "$(pwd)/.git/alt_objects" >.git/objects/info/alternates &&
+> +		git repack -a -d -l &&
+> +		ls .git/objects/pack/*.pack >../actual
+> +	) &&
+> +	test_cmp expect actual
+> +'
+
+This probably needs to be protected with a SYMLINKS prereq.
+
+-Peff
