@@ -2,133 +2,236 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5FB54C433FE
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 14:41:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A1081C433FE
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 14:45:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230284AbiKVOlV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 09:41:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57402 "EHLO
+        id S233058AbiKVOpV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 09:45:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229628AbiKVOlS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 09:41:18 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3B162B1AD
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 06:41:17 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id m22so36207898eji.10
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 06:41:17 -0800 (PST)
+        with ESMTP id S232981AbiKVOpS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 09:45:18 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 378C354B0E
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 06:45:17 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id m7-20020a05600c090700b003cf8a105d9eso11441009wmp.5
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 06:45:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=no1G19WeH1txx9swh4jGx0yIq+NzkzFZFtzBNXxMhko=;
-        b=L/UG9UcpMPo6MAZWJ41WW57NLTrIPiPzU+elubPilGPXd/75Na4XpjZWgu4KNQ6zZW
-         lR9eEwBRhPeOXmUu2JP468/gK58N94xW/uk9zL40HuVaB0QCIaiWhzIZZ4TdkaGOKdRA
-         Qon+S4stP/fHa3Zh2Est/nIRlOiBJH6FAYAq8cZiLS3yrOg/R/5WoFh6C8RvR5J9iGrs
-         hbMX1TkpqCakQ+nZ5kgOJGZs42LvzHNC9/L4YC7SYrmOI6IgaSpukAB8vnOtdWW05eJN
-         WMIVt6A82Uq8bZ6XoacnxEIecvNDvruMn3Kcn5GsY8gGxIPfKD52nljl0xBTPlNu/h1+
-         jfWA==
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=9lvDmoTiMNpOAF7F2rGEjodSA+mxBfFzgeznvedeSVk=;
+        b=VrBiSTRqXb+OE5M6kMqRCFp1dZR74Y8j8awi7IMjQOeZnK32B3c07dnTe3rk2Iuy6w
+         qUI5yz8A+bn0hyX5sIJAnwuH3sDyctGApOyJBTcwcl3ZCFYz7S5wFRiGjNN2Qv0K58mM
+         vFsoXz7zq8SF/uL/eYphBOMvyDWJOpQq4fKfstnSOariPgapp/a9sTD5SIUhJ8+sC+Cv
+         ObODvEmPfxN3SIKY1DbhPZmghWucGE/5yWSotG54R9LukwdD2Wy90fACSFaOD5zrKtx2
+         rz1XyJCPdE14rry6kgd9X0xXiIZRH57BBq+uyzgxXtBiJhQea+/4Yhq4kUpQ4bjMA8hF
+         Rqfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=no1G19WeH1txx9swh4jGx0yIq+NzkzFZFtzBNXxMhko=;
-        b=wf2IF1vGRtzFGT5oS6+Kxxx55BL5CPDMvXtQBInseQhd8A1/5wNZm3DwIB4b10qf8b
-         6oPhov+oSqK+V+PLVUK4rVEsVIW9fyW4kez2Te4kSK6HgY26Z9ujr7cJJLH/ruv9rvCm
-         9aeJvpj5SEP6U06/D0LRuVOZrmFuWogQvbW9R7qtHWfvpSoY8uJVOQuA7dezXZMut/fE
-         y5WbxgT5VpKtUut++Ry6tHq70So/N5Y9ZyeWCHMNgdEwVaYDLKKSq4p071UJRlvW527V
-         mgkoThbCzqPQa6D5n1Lxmb9dwYjqbN6dwT6CgeT1vP3fV18I6dxO+HkZXpgsvTXTgMB1
-         OSNg==
-X-Gm-Message-State: ANoB5pljDIdN9Y8zNR+4USqxcvECPU1On4aHRbX+aY2kqJ0IcS0G9wVI
-        AGvC17x7deQ6lI5pi+1BGQRV95lZRrk=
-X-Google-Smtp-Source: AA0mqf6r930bZ7G6goyP9HRyvsYIfaQrij5D5KI0eIRkKDbpAU6OGbyUfKaho5YmGRKT0RvvKRa+SQ==
-X-Received: by 2002:a17:906:590e:b0:78d:5176:c4d2 with SMTP id h14-20020a170906590e00b0078d5176c4d2mr19751115ejq.532.1669128076054;
-        Tue, 22 Nov 2022 06:41:16 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id q23-20020a170906361700b007adbd01c566sm6175385ejb.146.2022.11.22.06.41.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Nov 2022 06:41:15 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oxUSZ-000cJx-0E;
-        Tue, 22 Nov 2022 15:41:15 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Sarah Julia Kriesch <sarah.kriesch@opensuse.org>,
-        Git List <git@vger.kernel.org>
-Subject: Re: git can not be built for s390x since update to git-2.38.0
-Date:   Tue, 22 Nov 2022 15:35:29 +0100
-References: <4657a19c-89c3-2237-9e6b-db897a492072@opensuse.org>
- <CAPig+cT92EokWeVA_Ou1P6kkaq90wneRrgPqnKLbkHnc=U56Vg@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <CAPig+cT92EokWeVA_Ou1P6kkaq90wneRrgPqnKLbkHnc=U56Vg@mail.gmail.com>
-Message-ID: <221122.86zgcj9hmc.gmgdl@evledraar.gmail.com>
+        bh=9lvDmoTiMNpOAF7F2rGEjodSA+mxBfFzgeznvedeSVk=;
+        b=mb9BKgwwMl2iygj6W0UJiXr/aRmt9TpzlgAzZtwKoUfLRCKKJ827Pkz5hRxBzT5/o4
+         BhDxb6Bo4zVYCDBIh5qPdMAGubR7mN3bnKqatHnw9IZQIGOl9QGACUFceWRK0pahDsyc
+         zyC8kWkVogXTvo/hxawD9tCJ1Fjp679SoBJFHudPtiPOUx0QgxVXd3BTVLCD1LifqjlO
+         0Zr7v1Y3RCGCV1LJpSDYisnj7YACPYYf8zIirB0upnuyrNM7l3EyNBoIPFiQhX2z4vc0
+         C7HP/s6yV/kdKZL+qwkzsSOnJ3eSTmUGBQ3xu6KMnm95qV77UVArWBVK4eRA7wo4/gU4
+         /9YA==
+X-Gm-Message-State: ANoB5pluk2WFNOIbUIFtj/IKWthn6B/JHtTuyO8I9CEJKhh+Hyh5fIqx
+        MvxdT8Eq6NzoUj8zSY4yyj0=
+X-Google-Smtp-Source: AA0mqf6ltVssABQnsIg4O2ocV1w6AkXWzDv0+AfTYhoOh6AXXFrP589vUYAM7yqknnFMMHCoKiphLg==
+X-Received: by 2002:a1c:7504:0:b0:3cf:6b10:ca8d with SMTP id o4-20020a1c7504000000b003cf6b10ca8dmr20529084wmc.44.1669128315709;
+        Tue, 22 Nov 2022 06:45:15 -0800 (PST)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id w11-20020a1cf60b000000b003cfbe1da539sm17107421wmc.36.2022.11.22.06.45.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Nov 2022 06:45:15 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <b1ac730b-b4bd-3045-ce3b-1e5d9aca169a@dunelm.org.uk>
+Date:   Tue, 22 Nov 2022 14:45:12 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 0/2] worktree: Support `--orphan` when creating new
+ worktrees
+Content-Language: en-US
+To:     Jacob Abel <jacobabel@nullpo.dev>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>
+References: <20221104010242.11555-1-jacobabel@nullpo.dev>
+ <20221104213401.17393-1-jacobabel@nullpo.dev>
+ <20221110233137.10414-1-jacobabel@nullpo.dev>
+ <CAPig+cTTn764ObHJuw8epOtBdTUwocVRV=tLieCa4zf-PGCegw@mail.gmail.com>
+ <221117.86sfihj3mw.gmgdl@evledraar.gmail.com>
+ <20221119034728.m4kxh4tdpof7us7j@phi>
+In-Reply-To: <20221119034728.m4kxh4tdpof7us7j@phi>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Nov 21 2022, Eric Sunshine wrote:
-
-> [cc:+git; taking this back to the mailing list so others can weigh in]
->
-> On Wed, Nov 9, 2022 at 1:38 AM Sarah Julia Kriesch
-> <sarah.kriesch@opensuse.org> wrote:
->>  > Gesendet: Sonntag, 06. November 2022 um 21:42 Uhr
->>  > Von: "Eric Sunshine" <sunshine@sunshineco.com>
->>  >
->>  > On Sun, Nov 6, 2022 at 2:18 PM Sarah Julia Kriesch
->>  > <sarah.kriesch@opensuse.org> wrote:
->>  > > We have also identified this week, that chainlint.pl --stats says "0
->>  > > tests". That can explain the empty output.
->>  > >
->>  > > ~/rpmbuild/BUILD/git-2.38.1/t> /usr/bin/perl chainlint.pl --stats
->>  > > --emit-all chainlinttmp/tests
->>  > > total: 0 workers, 0 scripts, 0 tests, 0 errors, 0.01s/0.01s (wall/user)
->>  >
->>  > Was `--stats` added for debugging this issue, or is that somehow part
->>  > of your build process?
->>  >
->> Yes. We tried to debug that manually. Therefore, we have added the --stats.
+On 19/11/2022 03:47, Jacob Abel wrote:
+> On 22/11/17 11:00AM, Ævar Arnfjörð Bjarmason wrote:
 >>
->>  > What is the content of the "chainlinttmp/tests" file? Is it empty?
->>  >
->> It is empty.
+>> On Tue, Nov 15 2022, Eric Sunshine wrote:
 >>
->>  > It is quite curious that it reports 0 scripts. It should report 1
->>  > script even if chainlinttmp/file is empty. This might point a finger
->>  > at File::Glob::bsd_glob() returning an empty list for some reason, or
->>  > the problem could be a failure with Perl "ithreads".
->
-> Do you happen to know if Perl is built with "ithreads" on your
-> platform, and if so, is "ithread" support working?
->
-> The empty "chainlinttmp/tests" file also sounds suspicious. If you
-> haven't already done so, I would recommend following the advice in [1]
-> and running each command individually which Makefile would have run;
-> this might allow you to isolate the problematic command or shell
-> construct if such exists.
->
-> [1]: https://lore.kernel.org/git/CAPig+cS184iKk6icG6ML=X+6Ng=fJyfic8izFyp1hT40cChm4g@mail.gmail.com/
+>>> On Thu, Nov 10, 2022 at 6:32 PM Jacob Abel <jacobabel@nullpo.dev> wrote:
+>>>> While working with the worktree based git workflow, I realised that setting
+>>>> up a new git repository required switching between the traditional and
+>>>> worktree based workflows. Searching online I found a SO answer [1] which
+>>>> seemed to support this and which indicated that adding support for this should
+>>>> not be technically difficult.
+>>>>
+>>>>    * adding orphan branch functionality (as is present in `git-switch`)
+>>>>      to `git-worktree-add`
+>>>
+>>> I haven't had a chance yet to read v3, but can we take a step back for
+>>> a moment and look at this topic from a slightly different angle?
+>>> Setting aside the value of adding --orphan to `git worktree add`
+>>> (which, I'm perfectly fine with, as mentioned earlier), I have a
+>>> question about whether the solution proposed by this series is the
+>>> best we can do.
+>>>
+>>> As I understand it, the actual problem this series wants to solve is
+>>> that it's not possible to create a new worktree from an empty bare
+>>> repository; for instance:
+>>>
+>>>      % git init --bare foo.git
+>>>      % git -C foo.git worktree add -b main bar
+>>>      Preparing worktree (new branch 'main')
+>>>      fatal: not a valid object name: 'HEAD'
+>>>      %
+>>>
+>>> This series addresses that shortcoming by adding --orphan, so that the
+>>> following works:
+>>>
+>>>      % git init --bare foo.git
+>>>      % git -C foo.git worktree add --orphan main bar
+>>>      Preparing worktree (new branch 'main')
+>>>      %
+>>>
+>>> However, is this really the best and most user-friendly and most
+>>> discoverable solution? Is it likely that users are somehow going to
+>>> instinctively use --orphan when they see the "fatal: not a valid
+>>> object name: 'HEAD'" error message?
+>>>
+>>> Wouldn't a better solution be to somehow fix `git worktree add -b
+>>> <branch>` so that it just works rather than erroring out? I haven't
+>>> delved into the implementation to determine if this is possible, but
+>>> if it is, it seems a far superior "fix" for the problem shown above
+>>> since it requires no extra effort on the user's part, and doesn't
+>>> raise any discoverability red-flags (since nothing needs to be
+>>> "discovered" if `-b <branch>` works as expected in the first place).
+>>>
+>>> If fixing `-b <branch>` to "just work" is possible, then --orphan is
+>>> no longer a needed workaround but becomes "icing on the cake".
+>>
+>> That's a really good point, and we *could* "fix" that.
+>>
+>> But I don't see how to do it without overloading "-b" even further, in a
+>> way that some users either might not mean, or at least would be
+>> confusing.
+>>
+>> E.g. one script "manually clones" a repo because it does "git init",
+>> "git remote set-url", "git fetch" etc. Another one makes worktrees from
+>> those fresh checkouts once set up.
+>>
+>> If we "DWYM" here that second step will carry forward the bad state
+>> instead of erroring early.
 
-I can also reproduce this on gcc202. It's the same issue with ending up
-with an empty "tests" file.
-	
-	avar@gcc202:/run/user/1632/git/t$ uname -a
-	Linux gcc202 6.0.0-4-sparc64-smp #1 SMP Debian 6.0.8-1 (2022-11-11) sparc64 GNU/Linux
-	avar@gcc202:/run/user/1632/git/t$ lsb_release -a
-	No LSB modules are available.
-	Distributor ID: Debian
-	Description:    Debian GNU/Linux bookworm/sid
-	Release:        n/a
-	Codename:       bookworm
+Wouldn't the first script error out if there was a problem?
 
-The change at the tip of
-https://lore.kernel.org/git/221122.86cz9fbyln.gmgdl@evledraar.gmail.com/
-fixes it for me, i.e. getting rid of the perl threads stuff...
+>> I haven't fully thought this throuh, so maybe it's fine, just
+>> wondering...
+>>
+>> ...an alternate way to perhaps to do this would be to detect this
+>> situation in add(), and emit an advise() telling the user that maybe
+>> they want to use "--orphan" for this?
+>>
+> 
+> Prior to writing this patch, I tried to determine if there was a succinct way
+> to make `-b` "just work" however I wasn't able to find one that wouldn't
+> introduce unintuitive behavior.
 
-That box is built with "useithreads=define", so it's not that it doesn't
-support threading in general.
+Can you say a bit more about what the unintuitive behavior was? As I 
+understand it the problem is that "git branch" errors out when HEAD is a 
+symbolic ref pointing to a ref that does not exist. I think we can use 
+read_ref() to check for that before running "git branch" and act 
+accordingly. We might want to check if HEAD matches init.defaultBranch 
+and only do an orphan checkout in the new worktree in that case.
 
+> My conclusion was that it was probably best
+> to break it out into a separate command as the other tools had.
+> 
+> I'd support adding an `advise()` for at least the basic case where you try to
+> create a worktree and no branches currently exist in the repository.
+> i.e. something like this:
+> 
+>      % git init --bare foo.git
+>      % git -C foo.git branch --list
+> 
+>      % git -C foo.git worktree add foobar/
+>      hint: If you meant to create a new initial branch for this repository,
+>      hint: e.g. 'main', you can do so using the --orphan option:
+>      hint:
+>      hint:   git worktree add --orphan main main/
+>      hint:
+>      fatal: invalid reference: 'foobar'
+> 
+> and
+> 
+>      % git init --bare foo.git
+>      % git -C foo.git --no-pager branch --list
+> 
+>      % git -C foo.git worktree add -b foobar foobardir/
+>      hint: If you meant to create a new initial branch for this repository,
+>      hint: e.g. 'main', you can do so using the --orphan option:
+>      hint:
+>      hint:   git worktree add --orphan main main/
+>      hint:
+>      fatal: invalid reference: 'foobar'
+> 
+> but not in the following circumstances:
+> 
+>      % git init --bare foo.git
+>      % ...
+>      % git -C foo.git --no-pager branch --list
+>      + foo
+>        bar
+>      % git -C foo.git worktree add foobar/
+>      Preparing worktree (new branch 'foobar')
+>      HEAD is now at 319605f8f0 This is a commit message
+> 
+> or
+> 
+>      % git init --bare foo.git
+>      % ...
+>      % git -C foo.git --no-pager branch --list
+>      + foo
+>        bar
+>      % git -C foo.git worktree add -b foobar foobardir/
+>      Preparing worktree (new branch 'foobar)
+>      HEAD is now at 319605f8f0 This is a commit message
+> 
+> Would there be any other circumstances where we'd definitely want an `advise()`?
+> Generally I'd assume that outside of those two circumstances, most users will
+> rarely intend to make an orphan without already knowing they absolutely need to
+> make an orphan.
+
+I don't think it matters if the repository is bare so I think it would 
+be good to advise() on
+
+	% git init foo
+	% git -C foo worktree add bar
+
+Best Wishes
+
+Phillip
