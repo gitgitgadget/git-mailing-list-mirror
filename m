@@ -2,308 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 875D4C433FE
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 23:58:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F3EBC4332F
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 23:59:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234457AbiKVX6R (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 18:58:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33740 "EHLO
+        id S234575AbiKVX7v (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 18:59:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229728AbiKVX6P (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 18:58:15 -0500
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AAD8769F2
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 15:58:13 -0800 (PST)
-Received: by mail-pf1-x429.google.com with SMTP id k15so15854356pfg.2
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 15:58:13 -0800 (PST)
+        with ESMTP id S229728AbiKVX7u (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 18:59:50 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06F78C560D
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 15:59:49 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id ud5so39269948ejc.4
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 15:59:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CIVMDc1NZFF2slx9DEUBGh6lfbUI4DgvmtnKRkUWGtQ=;
-        b=NPzRIz5OUA7SudxwymoP284Ej9DWhJDjAqkDPPce32XWgGVoTevDxYcwFJoW68Jcn2
-         Kz9XTDSNKlC3Rkm5wjtJPGpRPL1qcP4dAA+kFQRWQ7B2eFoTF5T+62nppgoIB8QlDKvA
-         S84EZ+D02GxqrzA7fLbPq06jG4VxLZCLTBGx/mYg3cNnXSsZo86vWwrDVya4pMA8YgHk
-         88775mt6H30dihaR2YdU6QD67S3ezHvzCSOZnM6Cb/GbpwSbnfFrgJ9EWE1u95eTgPei
-         ykftoR/VnPQ3BEMrjpBFJlYEeYqXgCfECpmXIIgtu7kq6V4A4hEvTLYRk6Rn5Y7RMqak
-         GGGA==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=R45eOElfSdOcXkTDY4eJI89XYZyA0uaWtJdXFdWy8ds=;
+        b=ddop38J6pCzcotsPYOCFGLjgxYgHwkDCrkm4zOueCZ0VGR9mC7VBTicUs/PtSgQzFL
+         F/NO/FRQytHi2xKmix8ZlxCs3VV8pi0KiAtKFL6sCVCgHK7HnV8E/BRHgWEgBwsi24s4
+         QnPf13OLLo8FKhc3OnGS2lMFO2/WY9D6uLbznex3R3xw7+dIjR6ce3WAeMa6JGgZwU+i
+         MpS0ahAXSSjFD+qvxluqXQjsM3mHzPhqsPdRCNfG9usIalHMZIZkKhZ/cFvTXynjY6iB
+         isA2OdWiA3MsaqqNrAX+m9My3FIa8LZAYYcOSejMvIj3Se9AxSCZvkrlE2J6RTA/b8oG
+         6WyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=CIVMDc1NZFF2slx9DEUBGh6lfbUI4DgvmtnKRkUWGtQ=;
-        b=bvRWf+BRvVHI7rx9KWX0QgzQQ648+4tmFsMEHXv8JsSAABjtBUhFij9JTEhU7kCQUg
-         MXIJonoi5pErWmopdf1GkjufAoz//PP9pbXrFB9BZ8RLvv5pFG5q7MYRTTO5HaH4PcdU
-         9LS5Yl4ykruwo4yf+p6QsVjZqRr5OplU+Tq4k0tX6wLMcOiawkR4I5l1ouikenTle2KK
-         eqXH+a7Cauc1GZ0yljvRBSKQoisSRnajeoVw0He/Aogmy56fyxNOK5MfEXJOPn61ufqN
-         a85tc0ISnNJguXE27NK8Cy+YchSeI/CLAqiaOLTBJOOPTSoGn33wjh+GaxVmHzM0VyRa
-         clgw==
-X-Gm-Message-State: ANoB5pnUsMF38vz5yd93I1PKtnynNP87+h6/tECtsLmedOQPxrc3lwvV
-        t48x1hoyDddgcSr2aKJDSjJOS9+/OqdNiQ==
-X-Google-Smtp-Source: AA0mqf4yqgJSBzOqIF3B2WHPNGnpVEKEhGc/UGlFhRxvQX2J6SlEUuzabKOEF0URFnep0HNizFWFJA==
-X-Received: by 2002:a62:cd04:0:b0:56b:d19f:33f8 with SMTP id o4-20020a62cd04000000b0056bd19f33f8mr6331212pfg.17.1669161492772;
-        Tue, 22 Nov 2022 15:58:12 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id a2-20020a17090a740200b00212c27abcaesm124055pjg.17.2022.11.22.15.58.12
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=R45eOElfSdOcXkTDY4eJI89XYZyA0uaWtJdXFdWy8ds=;
+        b=Du3J6C4W/lx4iKGmwydhdksNbBvVEFM8Lb2OaaS0FBsR7/7tZQSMfpLfzj/nx6huat
+         Tj2OHjWrFoRcD4YNV6ZJ/Ww0P7OMfbFVKLHnRH5stLKNFxFaLGjHM0dlp1p+l+ACc87D
+         O7cbuL+AfWQpp9RiwsPOmDzRDQWX+/QHtMT7az6/lmOPGS3zQd3+QZJ15Sj+T8JpxSY7
+         WNg9IOrxoPLfaOupc2QXHDy2vpo+NqIPvRWGJUAlhiPYS4orcf+bn0AGhpY1IXztedXN
+         m1BL8IrVFL5q8NkP2/v8l6TYAJSfe6CsZQcAKT2DLUdrCFMxxksuYAZL8/B3mYqBZA3z
+         Zz4A==
+X-Gm-Message-State: ANoB5pknRynDk1N8j+tZU22JGS+y5mrDnCGfogT2Z1XqywTFC1XahOWT
+        OpiBEyhpouEaFLStO3DH9stpZwWMhkr3Mg==
+X-Google-Smtp-Source: AA0mqf7q2ulaTUFemXMRpJsC8QH24+aYi/UFfCTa2i2Pk7ysNNKtyZkAJzrpH7VHgTpaTBzTRkFJPA==
+X-Received: by 2002:a17:906:82d1:b0:7ae:63e3:bfc4 with SMTP id a17-20020a17090682d100b007ae63e3bfc4mr13350625ejy.348.1669161587540;
+        Tue, 22 Nov 2022 15:59:47 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id e24-20020a170906315800b0078d793e7927sm6520359eje.4.2022.11.22.15.59.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Nov 2022 15:58:12 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3] range-diff: support reading mbox files
-References: <pull.1420.v2.git.1668899471058.gitgitgadget@gmail.com>
-        <pull.1420.v3.git.1669108102092.gitgitgadget@gmail.com>
-Date:   Wed, 23 Nov 2022 08:58:12 +0900
-In-Reply-To: <pull.1420.v3.git.1669108102092.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Tue, 22 Nov 2022 09:08:21
-        +0000")
-Message-ID: <xmqqr0xupmnf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Tue, 22 Nov 2022 15:59:47 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oxdB4-000rRb-24;
+        Wed, 23 Nov 2022 00:59:46 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jacob Abel <jacobabel@nullpo.dev>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v3 0/2] worktree: Support `--orphan` when creating new
+ worktrees
+Date:   Wed, 23 Nov 2022 00:55:50 +0100
+References: <20221104010242.11555-1-jacobabel@nullpo.dev>
+ <20221104213401.17393-1-jacobabel@nullpo.dev>
+ <20221110233137.10414-1-jacobabel@nullpo.dev>
+ <CAPig+cTTn764ObHJuw8epOtBdTUwocVRV=tLieCa4zf-PGCegw@mail.gmail.com>
+ <221117.86sfihj3mw.gmgdl@evledraar.gmail.com>
+ <20221119034728.m4kxh4tdpof7us7j@phi>
+ <221119.86a64nf9k5.gmgdl@evledraar.gmail.com>
+ <CAPig+cTGATAYCpFcW2F6byf827-_TOyN1FNLfFCm0NdiReYVpg@mail.gmail.com>
+ <20221122232647.2jdsp5kioq7muymb@phi>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <20221122232647.2jdsp5kioq7muymb@phi>
+Message-ID: <221123.86a64ia6bx.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> +static inline int strtost(char const *s, size_t *result, const char **end)
-> +{
-> +	unsigned long u;
-> +	char *p;
-> +
-> +	errno = 0;
 
-Minor nit.  If this is to be able to see the error condition from
-strtoul(), I think it should be done after the "!isdigit()" test,
-immediately before we make strtoul() call, to avoid clearing errno
-unnecessarily.
+On Tue, Nov 22 2022, Jacob Abel wrote:
 
-> +	/* negative values would be accepted by strtoul */
-> +	if (!isdigit(*s))
-> +		return -1;
-> +	u = strtoul(s, &p, 10);
-> +	if (errno || p == s)
-> +		return -1;
+> On 22/11/22 12:16AM, Eric Sunshine wrote:
+>> On Sat, Nov 19, 2022 at 6:49 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+>> <avarab@gmail.com> wrote:
+>> > On Sat, Nov 19 2022, Jacob Abel wrote:
+>> > > I'd support adding an `advise()` for at least the basic case where y=
+ou try to
+>> > > create a worktree and no branches currently exist in the repository.
+>> > > i.e. something like this:
+>> > >
+>> > >     % git -C foo.git worktree add foobar/
+>> > >     hint: If you meant to create a new initial branch for this repos=
+itory,
+>> > >     hint: e.g. 'main', you can do so using the --orphan option:
+>> > >     hint:
+>> > >     hint:   git worktree add --orphan main main/
+>> > >     hint:
+>> > >     fatal: invalid reference: 'foobar'
+>> > > and
+>> > >     % git -C foo.git worktree add -b foobar foobardir/
+>> > >     hint: If you meant to create a new initial branch for this repos=
+itory,
+>> > >     hint: e.g. 'main', you can do so using the --orphan option:
+>> > >     hint:
+>> > >     hint:   git worktree add --orphan main main/
+>> > >     hint:
+>> > >     fatal: invalid reference: 'foobar'
+>> >
+>> > I think those would make sense, yes.
+>>
+>> Yes, this sort of advice could go a long way toward addressing my
+>> discoverability concerns. (I think, too, we should be able to
+>> dynamically customize the advice to mention "foobar" rather than
+>> "main" in order to more directly help the user.) Along with that,
+>> explaining this use-case in the git-worktree documentation would also
+>> be valuable for improving discoverability.
+>
+> Perfect. I think I've got this working already on my end using more or le=
+ss
+> the following:
+>
+>     diff --git a/builtin/worktree.c b/builtin/worktree.c
+>     index 71786b72f6..f65b63d9d2 100644
+>     --- a/builtin/worktree.c
+>     +++ b/builtin/worktree.c
+>     @@ -736,7 +736,21 @@ static int add(int ac, const char **av, const ch=
+ar *prefix)
+>         if (!opts.quiet)
+>             print_preparing_worktree_line(opts.detach, branch, new_branch=
+, !!new_branch_force);
+>
+>     -	if (new_branch && !opts.orphan_branch) {
+>     +	if (opts.orphan_branch) {
+>     +		branch =3D new_branch;
+>     +	} else if (!lookup_commit_reference_by_name("head")) {
+>     +		/*
+>     +		 * if head does not reference a valid commit, only worktrees
+>     +		 * based on orphan branches can be created.
+>     +		 */
+>     +		advise("if you meant to create a new orphan branch for this reposi=
+tory,\n"
+>     +			 "e.g. '%s', you can do so using the --orphan option:\n"
+>     +			 "\n"
+>     +			 "	git worktree add --orphan %s %s\n"
+>     +			 "\n",
+>     +			 new_branch, new_branch, path);
 
-> +static int parse_hunk_header(const char *p,
-> +			     size_t *old_count, size_t *new_count,
-> +			     const char **end)
-> +{
-> +	size_t o = 1, n = 1;
-> +
-> +	if (!skip_prefix(p, "@@ -", &p) ||
-> +	    strtost(p, NULL, &p) ||
-> +	    /* The range is -<start>[,<count>], defaulting to count = 1 */
-> +	    !(*p == ' ' || (*p == ',' && !strtost(p + 1, &o, &p))) ||
-> +	    !skip_prefix(p, " +", &p) ||
-> +	    strtost(p, NULL, &p) ||
-> +	    /* The range is +<start>[,<count>], defaulting to count = 1 */
-> +	    !(*p == ' ' || (*p == ',' && !strtost(p + 1, &n, &p))) ||
-> +	    !skip_prefix(p, " @@", &p))
-> +		return -1;
-> +
-> +	*old_count = o;
-> +	*new_count = n;
-> +	*end = p;
+We don't consistently check for this, unfortunately (but I have some
+local patches for it), but to add an advice you should:
 
-We care only about how long the hunk is, and do not care exactly
-where in the preimage it sits.  The code looks correct, but for such
-a specialized "parser", the name of the function gives a false
-impression that it does a lot more.  Finding it only slightly
-disturbing.
+ * Add it to Documentation/config/advice.txt (in sorted order)
+ * Add the corresponding enum to advice.h
+ * And to the advice.c listing
+ * Then use advise_if_enabled(<that new enum>, ...) in cases such as this o=
+ne.
+ * End your message with a suggstion about how to disable the advice:
+   git grep -W -F 'git config advice.' -- '*.c'
 
-> + * This function finds the end of the line, replaces the newline character with
-> + * a NUL, and returns the offset of the start of the next line.
-> + *
-> + * If no newline character was found, it returns the offset of the trailing NUL
-> + * instead.
-
-Pretty bog-standard "read each line" helper.  I suspect we may want
-to consolidate multiple copies we may have elsewhere after the dust
-settles.  Looking good.
-
-> +static inline int find_next_line(const char *line, size_t size)
-> +{
-> +	char *eol;
-> +
-> +	eol = memchr(line, '\n', size);
-> +	if (!eol)
-> +		return size;
-> +
-> +	*eol = '\0';
-> +
-> +	return eol + 1 - line;
-> +}
-
-
-
-
-> +static int read_mbox(const char *path, struct string_list *list)
-> +{
-> +	struct strbuf buf = STRBUF_INIT, contents = STRBUF_INIT;
-> +	struct strbuf long_subject = STRBUF_INIT;
-> +	struct patch_util *util = NULL;
-> +	enum {
-> +		MBOX_BEFORE_HEADER,
-> +		MBOX_IN_HEADER,
-> +		MBOX_IN_COMMIT_MESSAGE,
-> +		MBOX_AFTER_TRIPLE_DASH,
-> +		MBOX_IN_DIFF
-> +	} state = MBOX_BEFORE_HEADER;
-> +	char *line, *current_filename = NULL;
-> +	int len;
-> +	size_t size, old_count = 0, new_count = 0;
-> +	const char *author = NULL, *subject = NULL;
-> +
-> +	if (!strcmp(path, "-")) {
-> +		if (strbuf_read(&contents, STDIN_FILENO, 0) < 0)
-> +			return error_errno(_("could not read stdin"));
-> +	} else if (strbuf_read_file(&contents, path, 0) < 0)
-> +		return error_errno(_("could not read '%s'"), path);
-> +
-> +	line = contents.buf;
-> +	size = contents.len;
-> +	for (; size; size -= len, line += len) {
-> +		const char *p;
-> +
-> +		len = find_next_line(line, size);
-> +
-> +		if (state == MBOX_BEFORE_HEADER) {
-> +parse_from_delimiter:
-> +			if (!skip_prefix(line, "From ", &p))
-> +				continue;
-> +
-> +			if (util)
-> +				BUG("util already allocated");
-
-OK.  The only transition that brings us into _BEFORE_HEADER state
-is from _IN_DIFF and we consume and clear the current util there
-before the transition happens, so this BUG() will trigger only when
-there is some programming error, not any data errors.
-
-Good.
-
-> +			util = xcalloc(1, sizeof(*util));
-> +			if (get_oid_hex(p, &util->oid) < 0)
-> +				oidcpy(&util->oid, null_oid());
-> +			util->matching = -1;
-> +			author = subject = NULL;
-> +
-> +			state = MBOX_IN_HEADER;
-> +			continue;
-> +		}
-> +
-> +		if (starts_with(line, "diff --git ")) {
-> +			struct patch patch = { 0 };
-> +			struct strbuf root = STRBUF_INIT;
-> +			int linenr = 0;
-> +			int orig_len;
-> +
-> +			state = MBOX_IN_DIFF;
-> +			old_count = new_count = 0;
-> +			strbuf_addch(&buf, '\n');
-> +			if (!util->diff_offset)
-> +				util->diff_offset = buf.len;
-> +
-> +			orig_len = len;
-> +			/* `find_next_line()`'s replaced the LF with a NUL */
-> +			line[len - 1] = '\n';
-
-Does this work correctly when the input ended with an incomplete
-line that lacked the final LF?  find_next_line() would have given
-the size of the remaining input, and the byte at line[len-1] is the
-last byte on the incomplete line that is not LF.
-
-> +			len = len > 1 && line[len - 2] == '\r' ?
-> +				error(_("cannot handle diff headers with "
-> +					"CR/LF line endings")) :
-> +				parse_git_diff_header(&root, &linenr, 1, line,
-> +						      len, size, &patch);
-
-Cute (in that it tries to use a single "len < 0" for all error
-conditions) but moderately hard to follow.
-
-> +			if (len < 0) {
-> +				error(_("could not parse git header '%.*s'"),
-> +				      orig_len, line);
-> +				release_patch(&patch);
-> +				free(util);
-> +				free(current_filename);
-> +				string_list_clear(list, 1);
-> +				strbuf_release(&buf);
-> +				strbuf_release(&contents);
-> +				strbuf_release(&long_subject);
-> +				return -1;
-> +			}
-
-OK.
-
-> +			if (patch.old_name)
-> +				skip_prefix(patch.old_name, "a/",
-> +					    (const char **)&patch.old_name);
-> +			if (patch.new_name)
-> +				skip_prefix(patch.new_name, "b/",
-> +					    (const char **)&patch.new_name);
-
-Do we only accept "-p1" patches?  From time to time we seem to hear
-on this list from folks in communities that do not use -p1 (aka a/
-and b/) convention.
-
-> +		} else if (state == MBOX_IN_HEADER) {
-> +			if (!line[0]) {
-
-OK.  After seeing a block of header lines, the first empty line
-signals the end of the headers and we transition into a new state.
-
-> +				state = MBOX_IN_COMMIT_MESSAGE;
-
-As an in-body "From:" can have have another blank line or some
-in-body header other than "From: " before it at the beginning of an
-e-mail body, I do not think this is a good code structure.  I would
-have expected that the first blank line would transition us into a
-new state (in-commit-messages state) without doing anything else and
-in that state:
-
- - Leading blank lines are skipped, and we will stay in the same state.
-
- - From:, Subject:, Date:, etc. are interpreted as in-body headers,
-   and we will stay in the same state, expecting more in-body
-   headers,
-
- - Everything else will bring us into "we are now really reading the
-   log" state (do not lose that line that made us transition into
-   the new state---that line is the first line of the body).
-
-would happen.
-
-> +		} else if (state == MBOX_IN_COMMIT_MESSAGE) {
-> +			if (!line[0]) {
-> +				strbuf_addch(&buf, '\n');
-> +			} else if (strcmp(line, "---")) {
-> +				int tabs = 0;
-> +
-> +				/* simulate tab expansion */
-> +				while (line[tabs] == '\t')
-> +					tabs++;
-> +				strbuf_addf(&buf, "%*s%s\n",
-> +					    4 + 8 * tabs, "", line + tabs);
-
-I am not sure if special casing the empty line above is correct.  I
-am assuming that you are pretending as if you read an "git show -s"
-output after applying that patch, but "git log" gives a 4-space
-indent even for an empty line, I think.  A quick sanity check
-
-    $ git show -s | cat -e
-
-on the patch I am responding to tells me that it is the case.
-
-I'll stop here, as I see Phillip saw the reading of "diff --git"
-output well enough to notice that diff.suppressBlankEmpty is handled
-correctly and I'd trust his review.
-
-Thanks.
+That's rather tedious, sorry, but that's the extent of the current
+boilerplate...
