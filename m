@@ -2,87 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 321A2C4332F
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 19:01:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EB04FC4332F
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 19:03:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234182AbiKVTBv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 14:01:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59872 "EHLO
+        id S234290AbiKVTDW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 14:03:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234127AbiKVTBt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 14:01:49 -0500
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F198E8CB8E
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 11:01:47 -0800 (PST)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-36810cfa61fso146112447b3.6
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 11:01:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eInI+OH6Q9h8DNWFU+u2LhSFCHqVvb4BqO3BpixqeP8=;
-        b=c9wveoJ5aF/cuuOKkmEdsPTOKSE8PQA5ufFKe2wNmt9w45rnkuF1077FBshwJ1PKrA
-         rnD1XKBg+yZDgcgnPtR0DcDJfl4bdubYJA38HNJ3WL2SkPUSO5+dHQE6Y/D4XE85CcWT
-         ZOWYDIKgehscrUAIX2RhQhCC0O2Ewf/kWxCVVaA3yeNqlhlewYUWRwqMhyutCGGQ99ej
-         mCQH9Wxrt6WFWaJoBrX34KDExYXULf0FTnLjWDQOLiWbiJ76imNLlOQRAschuD61ZyZb
-         U3eyngqUnB1wAmatMn8rX3scqtfYHmd0l+4p8AWS6qFirtEvoe9eX2nXGmSrIrHXAayV
-         bNKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=eInI+OH6Q9h8DNWFU+u2LhSFCHqVvb4BqO3BpixqeP8=;
-        b=hYP9PJCkJlI/JloEkubPyNzYyNX9aBUnchVaS58szMmUpxnN37DBvVlYqk+nv0NOhT
-         vXQU6v2uMMgpbaZmhc+LVlvZljiCNmdAWN9bjX9aJu4PL2411d5UOxkX+Yd2VYVbHILt
-         vgoltaTouDqxjH2DKrkRms6uLKUIWvTMpeUBnMkFZcQIKFLSIZAx6vrgdC5QdoYpGcwC
-         LSo30bqg/KumLb7rOhhODgZ8QKLdPWMpmx/a1g6lfAJAhY2EAJE2/mUugLzCvQAyUpL0
-         w8oEGaWfLf+eJDdK5pjX7/cNvU9SBqBBJUBMYpsVgQENzUlpwTV/d624/hWv/A6tLBay
-         hglA==
-X-Gm-Message-State: ANoB5pmVcGK6zjcT+VAt1zfdOnTCOIlgIhE0WJPUGFB+om4nbYaEUIdH
-        KVSJnwaRrM/8bYlrwIL/bF3fwuu2fee/JQ==
-X-Google-Smtp-Source: AA0mqf7LmOk01W6K7mlDW+NME1NVd/VJxyJANilj1rs9NZ0DluASs/h+oE3Ofs599Ncnn1hndK4alU8E7JZ6iQ==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a81:f8a:0:b0:345:4844:163a with SMTP id
- 132-20020a810f8a000000b003454844163amr5459888ywp.319.1669143707245; Tue, 22
- Nov 2022 11:01:47 -0800 (PST)
-Date:   Tue, 22 Nov 2022 11:01:30 -0800
-In-Reply-To: <xmqqfseargo4.fsf@gitster.g>
-Mime-Version: 1.0
-References: <xmqqfseargo4.fsf@gitster.g>
-Message-ID: <kl6lk03merud.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: gc/resolve-alternate-symlinks (Re: What's cooking in git.git (Nov
- 2022, #05; Tue, 22))
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S234373AbiKVTDB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 14:03:01 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88604FC7
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 11:02:59 -0800 (PST)
+Received: (qmail 18791 invoked by uid 109); 22 Nov 2022 19:02:58 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 22 Nov 2022 19:02:58 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5799 invoked by uid 111); 22 Nov 2022 19:02:58 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 22 Nov 2022 14:02:58 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 22 Nov 2022 14:02:57 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 0/3] pack-objects: fix and simplify --filter handling
+Message-ID: <Y30c4YYGb5bOaZae@coredump.intra.peff.net>
+References: <c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.de>
+ <d19c6cb4-611f-afea-8a14-5e58d7509113@web.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d19c6cb4-611f-afea-8a14-5e58d7509113@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Sun, Nov 20, 2022 at 11:03:35AM +0100, René Scharfe wrote:
 
-> * gc/resolve-alternate-symlinks (2022-11-22) 1 commit
->  - object-file: use real paths when adding alternates
->
->  Resolve symbolic links when processing the locations of alternate
->  object stores, since failing to do so can lead to confusing and buggy
->  behavior.
->
->  Will merge to 'next'.
->  source: <pull.1382.v2.git.git.1669074557348.gitgitgadget@gmail.com>
+> Fix a regression that prevents using multiple --filter options, simplify
+> the option parsing code and avoid relying on undefined behavior in it.
+> 
+> Patch 3 conflicts with cc/filtered-repack in seen, but not semantically.
+> 
+> Changes since v1:
+> - Added patch 1 to fix an issue with existing tests.
+> - Separate patch 2 for new tests.
+> - Test using blob size filters, only, which is a bit simpler.
+> - Test both combinations to also catch not just the current
+>   last-one-wins regression, but also a possible future first-one-wins
+>   issue.
+> - Actually revert 5cb28270a1 (pack-objects: lazily set up
+>   "struct rev_info", don't leak, 2022-03-28) instead of having a
+>   minimal fix and then adding some kind of middle ground by using a
+>   separate struct list_objects_filter_options.
 
-I plan to do another reroll based off =C3=86var's feedback (thanks!), let's
-hold off on merging until then?
+Thanks, this looks good to me. The new test is a little funny in that
+it's somewhat-nonsensical input, but I find it unlikely that we'd ever
+add code to treat two instances of the same filter type specially.
+Compared to something that produces two distinct effects (like a blob
+and tree-depth filter combined), it also requires the "test in both
+directions" trick to cover everything.
 
-Separately, I'd also prefer to hear from Peff regarding my reading of
-37a95862c6 (alternates: re-allow relative paths from environment,
-2016-11-07) and whether we want to continue 'supporting' broken paths in
-the environment. I doubt it, but since he initially suggested it in his
-fixup patch [1], his opinon would be reassuring :)
+But I do like that it's easier to reason about what the output _should_
+be. So I don't feel too strongly about it either way.
 
-[1] https://lore.kernel.org/git/Y3aBzbzub7flQyca@coredump.intra.peff.net/
+-Peff
