@@ -2,71 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7158C4332F
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 02:27:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7E06C433FE
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 03:04:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230477AbiKVC1h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Nov 2022 21:27:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50528 "EHLO
+        id S231318AbiKVDEY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Nov 2022 22:04:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232700AbiKVC0a (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2022 21:26:30 -0500
-Received: from mail10.tencent.com (mail10.tencent.com [14.18.183.58])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7146672082
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 18:22:54 -0800 (PST)
-Received: from EX-SZ023.tencent.com (unknown [10.28.6.89])
-        by mail10.tencent.com (Postfix) with ESMTP id D8156D46B9;
-        Tue, 22 Nov 2022 10:22:51 +0800 (CST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tencent.com;
-        s=s202002; t=1669083771;
-        bh=h160dch5SZoJFLG0/S0bZt0Zh1AmpMiLTL7uWYNaI6E=;
-        h=From:To:CC:Subject:Date:References:In-Reply-To;
-        b=Z8TlkMwdgdsic/K1sFTsquoh26/QthO/832FxYSKUnZ/deMgxUkEmkkHGBFQeJTu5
-         OyXrnFu5SMVNDALJehAb7Yd/7a5fMlBX+mFP3rkiDAXnPdxBBwxgRtHV5mNMI4KhNg
-         VJ38VcpuyIDNH06bMYdCIRzbd0zs6UyayJ2Cei+0=
-Received: from EX-SZ091.tencent.com (10.28.6.63) by EX-SZ023.tencent.com
- (10.28.6.89) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2242.4; Tue, 22 Nov
- 2022 10:22:51 +0800
-Received: from EX-SZ066.tencent.com (10.28.6.18) by EX-SZ091.tencent.com
- (10.28.6.63) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2242.4; Tue, 22 Nov
- 2022 10:22:36 +0800
-Received: from EX-SZ066.tencent.com ([fe80::d867:3d3d:29a0:f571]) by
- EX-SZ066.tencent.com ([fe80::d867:3d3d:29a0:f571%6]) with mapi id
- 15.01.2242.008; Tue, 22 Nov 2022 10:22:36 +0800
-From:   =?gb2312?B?a3lsZXpoYW8o1dS/wtPuKQ==?= <kylezhao@tencent.com>
-To:     Jiang Xin <worldhello.net@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, "Git List" <git@vger.kernel.org>
-CC:     Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: RE: [Internet][PATCH] t5516: fail to run in verbose mode
-Thread-Topic: [Internet][PATCH] t5516: fail to run in verbose mode
-Thread-Index: AQHY/a7gyoDCmGAnc0yWSU9Nh7XAFK5KNuOQ
-Date:   Tue, 22 Nov 2022 02:22:35 +0000
-Message-ID: <a7abaa2cc8d248faa50ad95fc3670ee0@tencent.com>
-References: <20221121134040.12260-1-worldhello.net@gmail.com>
-In-Reply-To: <20221121134040.12260-1-worldhello.net@gmail.com>
-Accept-Language: en-AS, zh-CN, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.99.17.237]
-Content-Type: text/plain; charset="gb2312"
-Content-Transfer-Encoding: base64
+        with ESMTP id S229739AbiKVDEX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2022 22:04:23 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77C3510E6
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 19:04:22 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id v3-20020a17090ac90300b00218441ac0f6so585260pjt.0
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 19:04:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cndkk09z0dsNvmd6r05/7yxFoPssBkLHPviKTgM2GwI=;
+        b=lXAXNKEvSfOl+f5veiYwX4xGj+41bdx3nMDK8LJXsSGrVc20I9wcThfBqXd5lkjtOB
+         pv7dYZA2C1vI7xERO+sr0Q9p/8LngjJtRPOnjE8pVVJgUQsS9bKEwVXSuqQW8YGGl1U4
+         lhEyACaAtZECzdVxX20g9eAuh4PIVv9kWOh8JI1+caIdcXw24/cOt6S1iVBcyOV4lNqS
+         joC0RrTpXgrm2BJnN6tR2kmSBOZcjmiWNfMWxo0o0CiNWV5Ph2ndalgK0RuuLWWzqkY+
+         ars4n5GKz5Hs/sbNYvRZzLiozL6oO0GD/M3sB80OVLqHYtWGnPFLIDTh6cMB0ZGymJH4
+         eX4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=cndkk09z0dsNvmd6r05/7yxFoPssBkLHPviKTgM2GwI=;
+        b=r/Tfu8bfv99s2eq+eGQuV5fzHQjJrlVascxrLLVa7U+yZMFWJ2kk7wpUFo52UfQk5j
+         fKLJ9v+vR4FyD/hez3VHdx3t17RcdL8FCfNP9/dYON0DVKw4a9RDRSShUNlpJ1rjhNPv
+         uNIfMQXdr8nJOLMsgDFgyes9xfwJCAag6x6w7RDu3jlrZ7HUMveYhtjq6W6jiZRzwI10
+         mZELz/qioZ17+mgcRxwIonT/1PyvENYE/HrqH2Z2vDz4fFx2y5GxIa1ZuFo2/YyPsy1l
+         5QyURI2foyPec1SHhgEc8XjXGQN5/IAGzwcYGHz4N6htXmLI3fJHcE0nXO3gUYLJIZtv
+         IF3w==
+X-Gm-Message-State: ANoB5plfX4fO9kQWodn+nudvlxwzL11qOarVxa7QOVpEMKhR+rpXE5WY
+        fbXTyNHCMem+oRzReci0vYDq10OhcccCDw==
+X-Google-Smtp-Source: AA0mqf6qtMECaZCILv1zy9rj7FghtwK8RmmABcgXe+O2no5tVzrAjudwM0yZxFQjcbG0+OdrGgsM3A==
+X-Received: by 2002:a17:90a:fc84:b0:217:ff37:2fe9 with SMTP id ci4-20020a17090afc8400b00217ff372fe9mr29648164pjb.242.1669086261916;
+        Mon, 21 Nov 2022 19:04:21 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id w13-20020aa79a0d000000b00562a237179esm9366027pfj.131.2022.11.21.19.04.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Nov 2022 19:04:20 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Kyle Zhao via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        kylezhao <kylezhao@tencent.com>, Taylor Blau <me@ttaylorr.com>,
+        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: [PATCH v7 1/2] merge-tree.c: add --merge-base=<commit> option
+References: <pull.1397.v6.git.1667472621.gitgitgadget@gmail.com>
+        <pull.1397.v7.git.1668210314.gitgitgadget@gmail.com>
+        <1cf1c69b8e8e8e81eccc42b5d8efc605a36ab7eb.1668210314.git.gitgitgadget@gmail.com>
+Date:   Tue, 22 Nov 2022 12:04:19 +0900
+In-Reply-To: <1cf1c69b8e8e8e81eccc42b5d8efc605a36ab7eb.1668210314.git.gitgitgadget@gmail.com>
+        (Kyle Zhao via GitGitGadget's message of "Fri, 11 Nov 2022 23:45:13
+        +0000")
+Message-ID: <xmqqsfibsn9o.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-PiBUaGUgdGVzdCBjYXNlICJwdXNoIHdpdGggY29uZmlnIHB1c2gudXNlQml0bWFwIiBvZiB0NTUx
-NiB3YXMgaW50cm9kdWNlZCBpbg0KPiBjb21taXQgODJmNjdlZTEzZiAoc2VuZC1wYWNrLmM6IGFk
-ZCBjb25maWcgcHVzaC51c2VCaXRtYXBzLCAyMDIyLTA2LTE3KS4gSXQNCj4gd29uJ3Qgd29yayBp
-biB2ZXJib3NlIG1vZGUsIGUuZy46DQo+IA0KPiAgICAgJCBzaCB0NTUxNi1mZXRjaC1wdXNoLnNo
-IC0tcnVuPScxLDExNScgLXYNCj4gDQo+IFRoaXMgaXMgYmVjYXVzZSAiZ2l0LXB1c2giIHdpbGwg
-cnVuIGluIGEgdHR5IGluIHRoaXMgY2FzZSwgYW5kIHRoZSBzdWJjb21tYW5kDQo+ICJnaXQgcGFj
-ay1vYmplY3RzIiB3aWxsIGNvbnRhaW4gYW4gYXJndW1lbnQgIi0tcHJvZ3Jlc3MiDQo+IGluc3Rl
-YWQgb2YgIi1xIi4gQWRkaW5nIGEgc3BlY2lmaWMgb3B0aW9uICItLXF1aWV0IiB0byAiZ2l0IHB1
-c2giIHdpbGwgZ2V0IGEgc3RhYmxlDQo+IHJlc3VsdCBmb3IgdDU1MTYuDQo+IA0KDQpUaGF0J3Mg
-dHJ1ZS4gVGhhbmtzIGZvciBub3RpY2luZyBhbmQgZml4aW5nLg0KDQpJIGRpZG4ndCBjb25zaWRl
-ciB0aGlzIHVzYWdlIG9mIHRlc3QgY2FzZSwgYW5kIGl0IHdvcmtzIGFmdGVyIHlvdXIgcGF0Y2gu
-DQoNClRoYW5rcywNCkt5bGUNCg==
+"Kyle Zhao via GitGitGadget" <gitgitgadget@gmail.com> writes:
+
+> +--merge-base=<commit>::
+> +	Instead of finding the merge-bases for <branch1> and <branch2>,
+> +	specify a merge-base for the merge.
+
+OK.
+
+> +	const char *merge_base = NULL;
+>  
+>  	const char * const merge_tree_usage[] = {
+>  		N_("git merge-tree [--write-tree] [<options>] <branch1> <branch2>"),
+> @@ -515,6 +533,10 @@ int cmd_merge_tree(int argc, const char **argv, const char *prefix)
+>  			   &o.use_stdin,
+>  			   N_("perform multiple merges, one per line of input"),
+>  			   PARSE_OPT_NONEG),
+> +		OPT_STRING(0, "merge-base",
+> +			   &merge_base,
+> +			   N_("commit"),
+> +			   N_("specify a merge-base for the merge")),
+>  		OPT_END()
+>  	};
+
+This looks wrong, though.
+
+Shouldn't "git merge-tree --merge-base=X --merge-base=Y A B"
+allow you to compute the merge between A and B in a history
+where there are two merge bases?
+
+Unfortunately this is already in 'next', so let's see an incremental
+fix on top.
+
+Thanks.
