@@ -2,124 +2,180 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BF08C4332F
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 14:11:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 94D95C433FE
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 14:18:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232742AbiKVOLf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 09:11:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34038 "EHLO
+        id S233719AbiKVOS3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 09:18:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233868AbiKVOLP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 09:11:15 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37B45B95
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 06:11:09 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id y24so15754518edi.10
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 06:11:09 -0800 (PST)
+        with ESMTP id S231318AbiKVOS1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 09:18:27 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95CD058BDB
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 06:18:26 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id ay14-20020a05600c1e0e00b003cf6ab34b61so15332119wmb.2
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 06:18:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=oNxf9Mvhap/3yDCTHBU8uMI1zdjVyCGnh//3RJs5IHc=;
-        b=SJsYjTmqvktvXOctiMOwMlSnTkcp/uh/uvPpqRKIt59DmQqeZ9ENkWKKbOLweqlIoH
-         aEt3hOiMAeSblWOCs8ddB3QGDlfSbd2CIETBSpmLBYGVOcuME8b1mrevHGqXIjYE23xS
-         s08C3oN5mCoQDHiuEWlySzRlhnzORuFF5xKEN/rmuiNLQQesiOJjm+uFF/lxNEWzi373
-         VzS84wI89lwfkxvK4LMLrmahsiNxcjeFcy8R9vCotXVH76wVojQC0E3WKLvyDii4csHq
-         cX7QnzFYhnqq1dJcNwAtmqHvaeHUQ8O0hs81SrrNhBSPSqgWSTt+b0hfp1KqfwCBzAXx
-         epLg==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3jIcHiZKOwD9b6QoKA/c82OntNfLukwVD8cnivrE2hE=;
+        b=KjdVdwXQHbXYv28d9Q0cRD8iybeXDgpSuG5PoCT3lH+noBVTG4yun1dbRfP0nxOfS1
+         urYn5FdnxTlhgm0hq4OFu048V0RpjxrcjMf3NgjjeBWDqOy7i53qv6mwsj91Ld31fOBh
+         xFkjPKhlm4irMx3DHj8YgkRCe4W50bkBdEnijm0qKD4S9fn+WISznQ2P4V6MAjGpB8DC
+         +6f34PgaTHcQduFWfRQu2s59b+Ri1PToHcIowVcrFujowGckAiB9Pt6erOZsftzEv2qE
+         xCXr4RUk0JwtitUZjn6qonPgwJqFVBuAuuF0O7rMnwXOtj8qrOjH0BBggE+DnJUIaiDI
+         EPWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oNxf9Mvhap/3yDCTHBU8uMI1zdjVyCGnh//3RJs5IHc=;
-        b=4/oOTkj5fkKjOP+mPcz6J/NLFFlKgLhuQ1IPyvHOjYlNqVHKb6XHRIe7qeuMZRmL5O
-         Z73dXrRMQwzA2/11L+TE3m5HfeC6pmSoFVkkyIgm4qkg6eBMlnq0FZ/xzfDdx6842Oej
-         19AOaJEUxnnnopNLJaDgIQf3a9mpbX+M3aO5F8yJQI/1FrzueXLszQQMtfVEv4i1+hdu
-         DpuxMeKHNw5M9ofblaXb18DCZwt1plfvHtSwp15NDXmHAEkKNuVoiX0sxB05gXCgiVuC
-         F1slCdVzznXD6jC4zxJO7TfgKdkCeDbIA2WmQFTaAq2FObwwxiEh6fnpdUzIxHG0L5CM
-         y9WQ==
-X-Gm-Message-State: ANoB5pl0qnDmjL81nTyBDJARep+/x0WSWzu+ADM9kgqZVIHdP/qOFGE+
-        1IoR8JTzc/BpO0dLi9Hx1G/B6stKV0EyVg==
-X-Google-Smtp-Source: AA0mqf4bYpyLL3wlrItrKA2hs8Jrj904K9rk2iAjNitD3uz7TSIOmokF8r35F8a07xx9HMONBtIooA==
-X-Received: by 2002:a05:6402:1859:b0:469:a5a6:5e9d with SMTP id v25-20020a056402185900b00469a5a65e9dmr8209568edy.418.1669126267181;
-        Tue, 22 Nov 2022 06:11:07 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id w14-20020a056402070e00b004691de0e25bsm5221628edx.54.2022.11.22.06.11.06
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3jIcHiZKOwD9b6QoKA/c82OntNfLukwVD8cnivrE2hE=;
+        b=IO/+pS5k0omEAG1JBU0ozD9jKy4ENwEuUBRro8xhAkAi7keg2uCsIH1SbFrPS9TFz/
+         SL+Hdt5oMBrD//OQ7SSTBNf+32aZJfow6ylc7IyYtEyq29hpuL960Y+xU4uh4kcMwGOY
+         vvfSPW4kq7wSPUPKyor2ppJnAxpG+cAGFXyvHvFxwNgz8A9PxmoZiMr+Qt6z279GFYTK
+         gG8bHRESrEaEMrot+VKRsNM+JlOnwRQuDgSK6ruqQanNCg+unczLy1cR1NqOjo+13jLa
+         vH+chVpJlN6n4PoqMYT/GyBh2EF+JVLPtMPF4RrVSjAmwRd9LbgIqO/vPhEjcQCs/HyX
+         Tllw==
+X-Gm-Message-State: ANoB5pm48rrskz/uGG/YXjdqk7SwWXKAv95KLaGDX94gZGokLAsHXIIJ
+        wA+ng2C8dacgJeVPlRsuTjuFtpR2IH8=
+X-Google-Smtp-Source: AA0mqf5p/ItrrSzZG5ss3Q27fqYypdETJBC3cnSR33i08VqyoKe+l/HrbIRNVRujffI7f8oFhspB4Q==
+X-Received: by 2002:a05:600c:288:b0:3cf:758f:161f with SMTP id 8-20020a05600c028800b003cf758f161fmr15524315wmk.54.1669126704809;
+        Tue, 22 Nov 2022 06:18:24 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q2-20020adffec2000000b00241d544c9b1sm7231352wrs.90.2022.11.22.06.18.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Nov 2022 06:11:06 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oxTzN-000bLh-2b;
-        Tue, 22 Nov 2022 15:11:05 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2] config: introduce an Operating System-specific
- `includeIf` condition
-Date:   Tue, 22 Nov 2022 15:01:24 +0100
-References: <pull.1429.git.1669037992587.gitgitgadget@gmail.com>
- <pull.1429.v2.git.1669058388327.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <pull.1429.v2.git.1669058388327.gitgitgadget@gmail.com>
-Message-ID: <221122.864juraxl2.gmgdl@evledraar.gmail.com>
+        Tue, 22 Nov 2022 06:18:24 -0800 (PST)
+Message-Id: <pull.1423.v4.git.1669126703.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1423.v3.git.1669033620.gitgitgadget@gmail.com>
+References: <pull.1423.v3.git.1669033620.gitgitgadget@gmail.com>
+From:   "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 22 Nov 2022 14:18:21 +0000
+Subject: [PATCH v4 0/2] git-jump: support Emacs
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Add an optional argument 'stdout' to print the quickfix lines to standard
+output. It can be used with M-x grep on Emacs.
 
-On Mon, Nov 21 2022, Johannes Schindelin via GitGitGadget wrote:
+Detect emacsclient by GIT_EDITOR and invoke the function. Tested with
+EDITOR="emacsclient" and EDITOR="emacsclient -t".
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> +`os`::
-> +	The data that follows this keyword is taken as the name of an
-> +	Operating System, e.g. `Linux` or `Windows`; If it matches the
-> +	current Operating System, the include condition is met.
-> +
->  A few more notes on matching via `gitdir` and `gitdir/i`:
+Yoichi Nakayama (2):
+  git-jump: add an optional argument '--stdout'
+  git-jump: invoke emacs/emacsclient
 
-The reste of the "includeif" use glob matching and "/i" for icase. IOW
-this is how this new feature would fit in:
-	
-	|--------+--------+----------+----------+------------------+----|
-	|        | gitdir | gitdir/i | onbranch | hasconfig:remote | os |
-	|--------+--------+----------+----------+------------------+----|
-	| icase? | N      | Y        | N        | N                | Y  |
-	| glob?  | Y      | Y        | Y        | Y                | N  |
-	| path?  | Y      | Y        | Y        | Y                | N  |
-	|--------+--------+----------+----------+------------------+----|
+ contrib/git-jump/README   | 10 +++++++++-
+ contrib/git-jump/git-jump | 40 ++++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 48 insertions(+), 2 deletions(-)
 
-I think at least flipping that "glob" to "Y" so you could match e.g.
-"*BSD" would be useful, and easier to explain in context, rather than
-why the rest use wildmatch() and this doesn't.
 
-For matching the uname the case doesn't really matter, but for
-consistency of the interface I think making it case-sensitive or adding
-an "os/i" would make sense. I.e. let's consistently use "/i" if & when
-something's case-insensitive.
+base-commit: eea7033409a0ed713c78437fc76486983d211e25
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1423%2Fyoichi%2Fgit-jump-emacs-support-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1423/yoichi/git-jump-emacs-support-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1423
 
-> +test_expect_success '[includeIf "os:..."]' '
-> +	test_config x.y 0 &&
-> +	echo "[x] y = z" >.git/xyz &&
-> +
-> +	if test_have_prereq MINGW
-> +	then
-> +		uname_s=Windows
-> +	else
-> +		uname_s="$(uname -s)"
-> +	fi &&
-> +	test_config "includeIf.os:not-$uname_s.path" xyz &&
-> +	test 0 = "$(git config x.y)" &&
-> +	test_config "includeIf.os:$uname_s.path" xyz &&
-> +	test z = "$(git config x.y)"
-> +'
+Range-diff vs v3:
 
-As I pointed out in the v1, this still:
+ 1:  ccfea26de33 ! 1:  446777d300d git-jump: add an optional argument '--stdout'
+     @@ contrib/git-jump/README: git jump grep -i foo_bar
+      +
+      +--------------------------------------------------
+      +# In Emacs, M-x grep and invoke "git jump --stdout <mode>"
+     -+Run grep (like this): git jump --stdout diff
+     ++M-x grep<RET>git jump --stdout diff<RET>
+      +--------------------------------------------------
+       
+       Related Programs
+     @@ contrib/git-jump/git-jump: grep: elements are grep hits. Arguments are given to
+       EOF
+       }
+       
+     -@@ contrib/git-jump/git-jump: if test $# -lt 1; then
+     +@@ contrib/git-jump/git-jump: mode_ws() {
+     + 	git diff --check "$@"
+     + }
+     + 
+     ++use_stdout=
+     ++while test $# -gt 0; do
+     ++	case "$1" in
+     ++	--stdout)
+     ++		use_stdout=t
+     ++		shift
+     ++		;;
+     ++	--*)
+     ++		usage >&2
+     ++		exit 1
+     ++		;;
+     ++	*)
+     ++		break
+     ++		;;
+     ++	esac
+     ++done
+     + if test $# -lt 1; then
+     + 	usage >&2
+       	exit 1
+       fi
+       mode=$1; shift
+     -+if test "$mode" = "--stdout"; then
+     -+	mode=$1; shift
+     -+	type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
+     -+	"mode_$mode" "$@" 2>/dev/null
+     ++if test "$use_stdout" = "t"; then
+     ++	"mode_$mode" "$@"
+      +	exit 0
+      +fi
+       
+ 2:  b4ad4c083c9 ! 2:  2f0bffb484b git-jump: invoke emacs/emacsclient
+     @@ contrib/git-jump/git-jump: open_editor() {
+       }
+       
+      +open_emacs() {
+     ++	# Supported editor values are:
+     ++	# - emacs
+     ++	# - emacsclient
+     ++	# - emacsclient -t
+      +	editor=`git var GIT_EDITOR`
+     -+	eval "$editor --eval \"(prog1 (switch-to-buffer-other-frame (compilation-start \\\"git jump --stdout $@\\\" 'grep-mode)) (delete-other-windows) (select-frame-set-input-focus (selected-frame)))\""
+     ++	# Wait for completion of the asynchronously executed process
+     ++	# to avoid race conditions in case of "emacsclient".
+     ++	eval "$editor --eval \"(prog1 (switch-to-buffer-other-frame (compilation-start \\\"cat $@\\\" 'grep-mode)) (delete-other-windows) (while (get-buffer-process (current-buffer)) (sleep-for 0.1)) (select-frame-set-input-focus (selected-frame)))\""
+      +}
+      +
+       mode_diff() {
+       	git diff --no-prefix --relative "$@" |
+       	perl -ne '
+     -@@ contrib/git-jump/git-jump: if test "$mode" = "--stdout"; then
+     - 	exit 0
+     - fi
+     - 
+     -+# For emacs/emacsclient, call "git jump --stdout" from inside of them.
+     +@@ contrib/git-jump/git-jump: tmp=`mktemp -t git-jump.XXXXXX` || exit 1
+     + type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
+     + "mode_$mode" "$@" >"$tmp"
+     + test -s "$tmp" || exit 0
+      +if git var GIT_EDITOR | grep emacs >/dev/null; then
+     -+	type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
+     -+	open_emacs "$mode" "$@"
+     ++	open_emacs "$tmp"
+      +	exit 0
+      +fi
+     -+
+     - trap 'rm -f "$tmp"' 0 1 2 3 15
+     - tmp=`mktemp -t git-jump.XXXXXX` || exit 1
+     - type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
+     + open_editor "$tmp"
 
- * Hides segfaults in "git config", let's check the exit code.
- * Doesn't test the "icase" semantics you're introducing. Let's do that
-   if it's intentional.
+-- 
+gitgitgadget
