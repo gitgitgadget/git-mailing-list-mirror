@@ -2,97 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5CC60C4332F
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 19:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67FF9C433FE
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 20:22:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232645AbiKVT5X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 14:57:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41020 "EHLO
+        id S234477AbiKVUW1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 15:22:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232517AbiKVT5O (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 14:57:14 -0500
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C765A2897
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 11:57:13 -0800 (PST)
-Received: by mail-pl1-x649.google.com with SMTP id l4-20020a170903244400b00188c393fff1so12197919pls.7
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 11:57:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qzaDcgE06qKShbsT3ozNOcSkfD8Vwc4IvgodUhm3saM=;
-        b=K1C0/13cyUVYiUwFdEOsscVGUK1HXHIUsB0N+ECuX5RosT56onimvtpavqNc3uJeX4
-         FrjTNvN1i0M4Bhbz9LcIhHYMNra4jC5xUAbst3TABnlySqb0yxuzXommS16mejDJu3F9
-         FKYEvB5Se4H0ri5loeEAtmWDhy6b5Gl5bGOTYdzqjqWCRs/8C0sr5E5B+Z16QvcLIMfB
-         qwTnAUb7wrHL+cz+T2Vmwo/BXP9IrEnGnvm3fickl7N8kpOUENC4tGtm0c152e2vFNoJ
-         m9B1yJhAAr+LVA4xmqpZ4ZJCR3rf7qeq5J1MxR/uC61ddJtPzs2duhYGZfSekage/1PT
-         +nuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id:references
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=qzaDcgE06qKShbsT3ozNOcSkfD8Vwc4IvgodUhm3saM=;
-        b=SKw/E2JDWxGF35TxAJzPC53Hbi4MiddGYoPXAD5EzeHtY99xtcJ6kE8LZqAfBj0rsO
-         1QpSZGEyUQjSOFUQRDLMHJbznvuY4SRYl5GW+xt56eo9EBZJWiPDVorok9qror32b7Tx
-         hThr/02+7R/Y2JqYg8fxAMJ2HXkLoN975B8y6pm2QcecLY/QBHzsP1f9EIhL6zhgPeio
-         AIaBlEAHyYzZadkp5rFn+HGBqENgNo7HImMrgJx1wl0iSWcc/1hUKCwaRgajr9HidyNd
-         ZjeKBERKfnOhKtMvcaQFFB6K9K4SUNItlV2QFMTDMyWiUYh8dvA4akyRT8tzgHJOBvzl
-         CsYg==
-X-Gm-Message-State: ANoB5pm3OBP/BtH+iXcqKfMRFJCx2CsMx/VEFciS+fCyln1UF0+fZbwo
-        C2PtC2uC/bfCSDBWTrQrtIQVdNr5ui4O8A==
-X-Google-Smtp-Source: AA0mqf7M6vF+gGCsnPu4P8XussumiwGb8cTreYZFYeHii7VusH2m+lXWy0MCzUHWcdhdYVanc9GR6zMeN2Xffw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:902:ab1d:b0:188:f5de:a8e4 with SMTP
- id ik29-20020a170902ab1d00b00188f5dea8e4mr6139659plb.133.1669147032675; Tue,
- 22 Nov 2022 11:57:12 -0800 (PST)
-Date:   Tue, 22 Nov 2022 11:57:11 -0800
-In-Reply-To: <patch-v3-8.9-f952fa3d01f-20221119T122853Z-avarab@gmail.com>
-Mime-Version: 1.0
-References: <cover-v2-00.10-00000000000-20221114T100803Z-avarab@gmail.com>
- <cover-v3-0.9-00000000000-20221119T122853Z-avarab@gmail.com> <patch-v3-8.9-f952fa3d01f-20221119T122853Z-avarab@gmail.com>
-Message-ID: <kl6lcz9eep9k.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH v3 8/9] read-tree: add "--super-prefix" option, eliminate global
-From:   Glen Choo <chooglen@google.com>
-To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        with ESMTP id S234281AbiKVUW0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 15:22:26 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C88FAB483F
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 12:22:24 -0800 (PST)
+Received: (qmail 19016 invoked by uid 109); 22 Nov 2022 20:22:24 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 22 Nov 2022 20:22:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6781 invoked by uid 111); 22 Nov 2022 20:22:24 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 22 Nov 2022 15:22:24 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 22 Nov 2022 15:22:23 -0500
+From:   Jeff King <peff@peff.net>
+To:     Eric Wong <e@80x24.org>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         git@vger.kernel.org
-Cc:     Taylor Blau <me@ttaylorr.com>, Robert Coup <robert@coup.net.nz>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v2] delta-islands: free island-related data after use
+Message-ID: <Y30vf76mdrSv4We4@coredump.intra.peff.net>
+References: <20221116105013.1777440-1-e@80x24.org>
+ <221116.861qq2kieu.gmgdl@evledraar.gmail.com>
+ <20221117230658.M516129@dcvr>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20221117230658.M516129@dcvr>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Thu, Nov 17, 2022 at 11:06:58PM +0000, Eric Wong wrote:
 
-> @@ -2149,7 +2140,7 @@ int submodule_move_head(const char *path,
->  			strbuf_release(&gitdir);
-> =20
->  			/* make sure the index is clean as well */
-> -			submodule_reset_index(path);
-> +			submodule_reset_index(path, NULL);
->  		}
-> =20
->  		if (old_head && (flags & SUBMODULE_MOVE_HEAD_FORCE)) {
+> Aside from that, v2 below still frees the regex memory early on
+> in the hopes deduplicate_islands() can reuse some of the freed
+> regexp memory.
+> 
+> Anyways, here's v2, which seems to work.  I'm still trying to
+> figure out SATA errors+resets after replacing a CMOS battery,
+> but I really hope this patch isn't the cause.
 
-Here, and..
+This looks OK to me, though I think it would have been easier to review
+split into two patches (one pushing the globals into local variables and
+the other adding the freeing).
 
-> @@ -312,7 +314,7 @@ static int check_submodule_move_head(const struct cac=
-he_entry *ce,
->  	if (o->reset)
->  		flags |=3D SUBMODULE_MOVE_HEAD_FORCE;
-> =20
-> -	if (submodule_move_head(ce->name, old_id, new_id, flags))
-> +	if (submodule_move_head(ce->name, NULL, old_id, new_id, flags))
->  		return add_rejected_path(o, ERROR_WOULD_LOSE_SUBMODULE, ce->name);
->  	return 0;
->  }
+Two small notes:
 
-here I think we should be passing a non-NULL value to super_prefix.
+>  void load_delta_islands(struct repository *r, int progress)
+>  {
+> +	struct island_load_data ild = { 0 };
+> +
+>  	island_marks = kh_init_oid_map();
+> -	remote_islands = kh_init_str();
+>  
+> -	git_config(island_config_callback, NULL);
+> -	for_each_ref(find_island_for_ref, NULL);
+> -	deduplicate_islands(r);
+> +	git_config(island_config_callback, &ild);
+> +	ild.remote_islands = kh_init_str();
 
-Perhaps this was missed when going through the v2 feedback [1]?
+The initialization of the remote_islands khash is now moved after we
+read the config. That's OK, because our callback doesn't read it, but
+it's not immediately obvious without going back to check the callback.
 
-[1] https://lore.kernel.org/git/kl6lv8nhnpba.fsf@chooglen-macbookpro.roam.c=
-orp.google.com
+Splitting it into:
+
+  struct island_load_data {
+	kh_str_t *remote_islands;
+	struct island_regexes regexes {
+		regex_t *rx;
+		size_t nr;
+		size_t alloc;
+	};
+  };
+
+lets you pass:
+
+  git_config(island_config_callback, &ild.regexes);
+
+which makes it clear that the khash part isn't touched. But you still
+get to pass the whole &ild around later. Of course that's all going
+through a void pointer, so you're praying that the callback expects the
+right type anyway. ;)
+
+And with your code we'd hopefully notice the problem right away since
+the khash pointer is NULL. So it might not be that big a deal.
+
+> +	for_each_ref(find_island_for_ref, &ild);
+> +	free_config_regexes(&ild);
+> +	deduplicate_islands(ild.remote_islands, r);
+> +	free_remote_islands(ild.remote_islands);
+
+Here we free the regexes, but they're pointing to garbage memory still.
+But since we pass just the remote_islands part of the struct to those
+functions, we know they can't look at the garbage regexes. Good.
+
+I'd have said it ought to be two separate variables, but the
+for_each_ref() callback forces your hand there.
+
+-Peff
