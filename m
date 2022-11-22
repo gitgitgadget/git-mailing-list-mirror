@@ -2,106 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67280C433FE
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 00:36:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DD3BC433FE
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 00:51:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231689AbiKVAgV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Nov 2022 19:36:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53316 "EHLO
+        id S231899AbiKVAvi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Nov 2022 19:51:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbiKVAgU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2022 19:36:20 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0A5FC6975
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 16:36:18 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id y14-20020a17090a2b4e00b002189a1b84d4so6478120pjc.2
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 16:36:18 -0800 (PST)
+        with ESMTP id S229730AbiKVAvg (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2022 19:51:36 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F41EC75AB
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 16:51:35 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id ft34so32218712ejc.12
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 16:51:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iH3D1zAp1sCWecdm1OXV/9p7M0mxHmaHU02zsegx0u0=;
-        b=VgDfxCi9cwdkyGtI158RhZ7DGXyOq+gJKC3y8O/C3rI1Fzxgb/cc9X1mUxEVsf6HtJ
-         uHGH+lcg+Ndan037hDabX3iBj0OCPsAIPEVlurziWND7Zhav1p24ahbHb8IHYQThs0Iu
-         nGt5RBd/4HS99D2Bxs9qnjkmIRlZgs285GukLBmQ3M8XoP/8heaNL5q+p719SExZAwEC
-         4/LpClqTKE0a7F96kUE2I2OK18Uvo51avFA82MjGLUCRumJ6DdOZhxJVzVwyBydmlwGa
-         wQGJR20QVClqCrLaaVDa17ym+D371JGO4kJMquYxHOxBxnda6CecVESkENBZNJpm5rzZ
-         kSAQ==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ZyVEZ2RFNp3kJDzjcEyV89M0N9Q4/0JTuStdDQ/t/hU=;
+        b=GjArb4XOaRHRDfu+78vyGCqSlGrrDl0FEY9bDq4qnIvxhBgKiwwdz8Y6cZosHByfri
+         bCCsNtKAgBrWd9OnQ4tqZh0L0tmyC3nWLAzIcOFcbUBlwuTlY1GZ/qpW+m4JTH43lREt
+         44Z7bi6ZsJfzRTRUqrUnz7ZgzcYzNxrxKYWAPjA3+QoWC2UU0RSEkL3UCGU7AnNtOmLt
+         xQEYSoedMA6nckfaElUGi1LE925hHhneEsX8oN9iG0N5LEdW4VzcmVblehrOcWpBV7q0
+         oBu8xPnLdPgIcl1aiUCjVDqPM7bsH6zruh9Wdld0L28FEiXzItrIezxaU0nT5qKIbfuM
+         +UcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iH3D1zAp1sCWecdm1OXV/9p7M0mxHmaHU02zsegx0u0=;
-        b=YA4LQNquA+ziB4O0SiQyvpgZzH/7C9qo9jc8MBzmIPypOQOtNzxNa0W/iz2+0OclID
-         cgsz97AfIvYBkMynP4ccf7n+Mny3r1MfIKC4CAD1iCZpQahnj2YYzzVEhkwybhDCZr3I
-         U7hgpSvHixmrYd2rZP1ZAKBnNmL/bHUrVChqBKBktFBpcLUXw7kXOfZNj4OA6t2zPrs6
-         cVRoVCyb5gaOE95cu08cDfBPcMFj4aG+qjPUr5VjDtOjvLnGeRGJOQorlpxj+tgWKHvS
-         +x+3aUGJrswyYipoy49giUy0XjLV3G9R2xRGD3pqlLMWxB5ljzt2WXnPazs+FeCzZS57
-         xedA==
-X-Gm-Message-State: ANoB5pk9SkT/a0RasR+RY5cbZTiRIeUAVYOE0VktjFOnfMNjHLbBiDuf
-        Ti1YuLx3dtDxyy08EjtBt/A=
-X-Google-Smtp-Source: AA0mqf6U750YhzsjQ83+mMjkaTAbXU5xch+FqJn36eRHJlsLiZKlPPbm7bx6t6iIFAenZKRk4VUaCA==
-X-Received: by 2002:a17:902:6b85:b0:187:3c62:582c with SMTP id p5-20020a1709026b8500b001873c62582cmr1612876plk.114.1669077378262;
-        Mon, 21 Nov 2022 16:36:18 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id 125-20020a620683000000b005385e2e86eesm9572741pfg.18.2022.11.21.16.36.17
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZyVEZ2RFNp3kJDzjcEyV89M0N9Q4/0JTuStdDQ/t/hU=;
+        b=gWJkI6YbpD7TObXBXJtrJShruh8pW1rHwmtSzGjs6h6rj5N7Jwzj9FJPCatlrt5lQc
+         JzHv+cWbRN8+8jnLVxmiocj+Rj5mgM4vteLzIIWkp2ahDW6N1YIKiuLZdLOUGFx1ktWb
+         Ggt641KAMkVVRtx6qT5OnI9mBVM5pqowl8UFzmR99AaYN22KG51YE+N8thiP60KlbLjo
+         oP8D2b7gpaJ5fEEKA3e358gT6Cps7P2xkZ0IShk11MsKhyzh1Vo39wk4qjFNLNOFewE1
+         jC29Ozty8xjm9LA2wbQn7p21wMzeZdn/wdBvJ+2jwWy2+PEBxd4QA2FbX21/Udcvl9du
+         tmJA==
+X-Gm-Message-State: ANoB5plURtVvl7FolQ1MgsOj669/MlOcSwy5Qmae9CdMNnDx2If8a9Wy
+        LNNWC7uERp18outp4THHdjSfH3fdLGjuhg==
+X-Google-Smtp-Source: AA0mqf7hu5fbovbFK7st6g/WmkkHLrmpVKE8jWAUrk8cd4HAN5zTbzvnldFYOJCSLbfucUCePlhmpg==
+X-Received: by 2002:a17:906:328e:b0:78d:7f22:2c53 with SMTP id 14-20020a170906328e00b0078d7f222c53mr806949ejw.420.1669078293911;
+        Mon, 21 Nov 2022 16:51:33 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id g14-20020a170906c18e00b0078c468bd604sm5538256ejz.57.2022.11.21.16.51.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Nov 2022 16:36:17 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Teng Long <dyroneteng@gmail.com>
-Subject: Re: [PATCH] docs: de-indent first paragraph of gitformat-* to flow
- the text
-References: <221109.86bkpgriso.gmgdl@evledraar.gmail.com>
-        <patch-1.1-1c1434bba31-20221121T141411Z-avarab@gmail.com>
-Date:   Tue, 22 Nov 2022 09:36:17 +0900
-In-Reply-To: <patch-1.1-1c1434bba31-20221121T141411Z-avarab@gmail.com>
- (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 21 Nov
- 2022 15:15:50 +0100")
-Message-ID: <xmqqmt8ju8ou.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Mon, 21 Nov 2022 16:51:33 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oxHVc-000VF4-34;
+        Tue, 22 Nov 2022 01:51:32 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Jeff King <peff@peff.net>, Eric Wong <e@80x24.org>,
+        Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>,
+        Fabian Stelzer <fs@gigacodes.de>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 06/18] chainlint.pl: validate test scripts in parallel
+Date:   Tue, 22 Nov 2022 01:11:39 +0100
+References: <pull.1322.git.git.1661992197.gitgitgadget@gmail.com>
+ <62fc652eb47a4df83d88a197e376f28dbbab3b52.1661992197.git.gitgitgadget@gmail.com>
+ <20220906223537.M956576@dcvr>
+ <CAPig+cSx661-HEr3JcAD5MuYfgHviGQ1cSAftkgw6gj2FgTQVg@mail.gmail.com>
+ <YxfXQ0IJjq/FT2Uh@coredump.intra.peff.net>
+ <CAPig+cTge7kp9bH+Xd8wpqmEZuuEFE0xQdgqaFP1WAQ-F+xyHA@mail.gmail.com>
+ <Y3u9ul1cu+L5d5IZ@coredump.intra.peff.net>
+ <CAPig+cQfkkY2Eh=QD47QoUGuAiCEpxSsX24x_8ts2GTKVnV1aw@mail.gmail.com>
+ <Y3vI99ZiNdXddX8C@coredump.intra.peff.net>
+ <CAPig+cQEdidB4YHm9OiyOUe8mbTPBajjX5t-_6ZJVwRykXkqmg@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <CAPig+cQEdidB4YHm9OiyOUe8mbTPBajjX5t-_6ZJVwRykXkqmg@mail.gmail.com>
+Message-ID: <221122.86cz9fbyln.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> Fix formatting issues with the documentation added to the new
-> gitformat-* namespace in c0f6dd49f19 (Merge branch
-> 'ab/tech-docs-to-help', 2022-08-14).
+On Mon, Nov 21 2022, Eric Sunshine wrote:
 
-I think I saw you do this before, but please refrain from blaming a
-merge UNLESS there is a regression between the tip of the topic
-getting merged c0f6dd49f19^2 and the result of the merge c0f6dd49f19
-as it is confusing.
+> On Mon, Nov 21, 2022 at 1:52 PM Jeff King <peff@peff.net> wrote:
+>> On Mon, Nov 21, 2022 at 01:47:42PM -0500, Eric Sunshine wrote:
+>> > I think =C3=86var's use-case for `make` parallelization was to speed up
+>> > git-bisect runs. But thinking about it now, the likelihood of "lint"
+>> > problems cropping up during a git-bisect run is effectively nil, in
+>> > which case setting GIT_TEST_CHAIN_LINT=3D1 should be a perfectly
+>> > appropriate way to take linting out of the equation when bisecting.
+>>
+>> Yes. It's also dumb to run a straight "make test" while bisecting in the
+>> first place, because you are going to run a zillion tests that aren't
+>> relevant to your bisection. Bisecting on "cd t && ./test-that-fails" is
+>> faster, at which point you're only running the one lint process (and if
+>> it really bothers you, you can disable chain lint as you suggest).
+>
+> I think I misspoke. Dredging up old memories, I think =C3=86var's use-case
+> is that he now runs:
+>
+>     git rebase -i --exec 'make test' ...
+>
+> in order to ensure that the entire test suite passes for _every_ patch
+> in a series. (This is due to him having missed a runtime breakage by
+> only running "make test" after the final patch in a series was
+> applied, when the breakage was only temporary -- added by one patch,
+> but resolved by some other later patch.)
+>
+> Even so, GIT_TEST_CHAIN_LINT=3D0 should be appropriate here too.
 
->  === CHUNK LOOKUP:
->  
-> -  (C + 1) * 12 bytes listing the table of contents for the chunks:
-> +(C + 1) * 12 bytes listing the table of contents for the chunks:
->        First 4 bytes describe the chunk id. Value 0 is a terminating label.
->        Other 8 bytes provide the byte-offset in current file for chunk to
->        start. (Chunks are ordered contiguously in the file, so you can infer
->        the length using the next chunk position if necessary.) Each chunk
->        ID appears at most once.
->  
-> -  The CHUNK LOOKUP matches the table of contents from
-> +The CHUNK LOOKUP matches the table of contents from
->    the chunk-based file format, see linkgit:gitformat-chunk[5]
+I'd like to make "make" fast in terms of avoiding its own overhead
+before it gets to actual work mainly because of that use-case, but it
+helps in general. E.g. if you switch branches we don't compile a file we
+don't need to, we shouldn't re-run test checks we don't need either.
 
-This makes the result awkward to read for those of us who consume
-the text in the source form.  I do not think a one-time cost of
-reindenting the whole paragraph (and reviewing the patch to do so)
-outweighs the cost of burdening the readers with the awkwardness.
+For t/ this is:
+
+ - Running chainlint.pl on the file, even if it didn't change
+ - Ditto check-non-portable-shell.pl
+ - Ditto "non-portable file name(s)" check
+ - Ditto "test -x" on all test files
+
+I have a branch where these are all checked using dependencies instead,
+e.g. we run a "test -x" on t0071-sort.sh and create a
+".build/check-executable/t0071-sort.sh.ok" if that passed, we don't need
+to shell out in the common case.
+
+The results of that are, and this is a best case in picking one where
+the test itself is cheap:
+=09
+	$ git hyperfine -L rev @{u},HEAD~,HEAD -s 'make CFLAGS=3D-O3' 'make test T=
+=3Dt0071-sort.sh' -w 1
+	Benchmark 1: make test T=3Dt0071-sort.sh' in '@{u}
+	  Time (mean =C2=B1 =CF=83):      1.168 s =C2=B1  0.074 s    [User: 1.534 =
+s, System: 0.082 s]
+	  Range (min =E2=80=A6 max):    1.096 s =E2=80=A6  1.316 s    10 runs
+=09
+	Benchmark 2: make test T=3Dt0071-sort.sh' in 'HEAD~
+	  Time (mean =C2=B1 =CF=83):     719.1 ms =C2=B1  46.1 ms    [User: 910.6 =
+ms, System: 79.7 ms]
+	  Range (min =E2=80=A6 max):   682.0 ms =E2=80=A6 828.2 ms    10 runs
+=09
+	Benchmark 3: make test T=3Dt0071-sort.sh' in 'HEAD
+	  Time (mean =C2=B1 =CF=83):     685.0 ms =C2=B1  34.2 ms    [User: 645.0 =
+ms, System: 56.8 ms]
+	  Range (min =E2=80=A6 max):   657.6 ms =E2=80=A6 773.6 ms    10 runs
+=09
+	Summary
+	  'make test T=3Dt0071-sort.sh' in 'HEAD' ran
+	    1.05 =C2=B1 0.09 times faster than 'make test T=3Dt0071-sort.sh' in 'H=
+EAD~'
+	    1.71 =C2=B1 0.14 times faster than 'make test T=3Dt0071-sort.sh' in '@=
+{u}'
+
+The @{u} being "master", HEAD~ is "incremant without chainlint.pl", and
+"HEAD" is where it's all incremental.
+
+It's very WIP-quality, but I pushed the chainlint.pl part of it as a POC
+just now, I did the others a while ago:
+https://github.com/avar/git/tree/avar/t-Makefile-break-T-to-file-association
 
