@@ -2,140 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A32A3C433FE
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 18:54:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 321A2C4332F
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 19:01:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234385AbiKVSyN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 13:54:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54166 "EHLO
+        id S234182AbiKVTBv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 14:01:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230365AbiKVSyM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 13:54:12 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFDD36037F
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 10:54:11 -0800 (PST)
-Received: (qmail 18769 invoked by uid 109); 22 Nov 2022 18:54:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 22 Nov 2022 18:54:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5652 invoked by uid 111); 22 Nov 2022 18:54:11 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 22 Nov 2022 13:54:11 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 22 Nov 2022 13:54:10 -0500
-From:   Jeff King <peff@peff.net>
-To:     Yoichi Nakayama via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-Subject: Re: [PATCH v4 2/2] git-jump: invoke emacs/emacsclient
-Message-ID: <Y30a0ulfxyE7dnYi@coredump.intra.peff.net>
-References: <pull.1423.v3.git.1669033620.gitgitgadget@gmail.com>
- <pull.1423.v4.git.1669126703.gitgitgadget@gmail.com>
- <2f0bffb484beccf58f2440ed5e2c04a1ba26e6c3.1669126703.git.gitgitgadget@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <2f0bffb484beccf58f2440ed5e2c04a1ba26e6c3.1669126703.git.gitgitgadget@gmail.com>
+        with ESMTP id S234127AbiKVTBt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 14:01:49 -0500
+Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F198E8CB8E
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 11:01:47 -0800 (PST)
+Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-36810cfa61fso146112447b3.6
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 11:01:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eInI+OH6Q9h8DNWFU+u2LhSFCHqVvb4BqO3BpixqeP8=;
+        b=c9wveoJ5aF/cuuOKkmEdsPTOKSE8PQA5ufFKe2wNmt9w45rnkuF1077FBshwJ1PKrA
+         rnD1XKBg+yZDgcgnPtR0DcDJfl4bdubYJA38HNJ3WL2SkPUSO5+dHQE6Y/D4XE85CcWT
+         ZOWYDIKgehscrUAIX2RhQhCC0O2Ewf/kWxCVVaA3yeNqlhlewYUWRwqMhyutCGGQ99ej
+         mCQH9Wxrt6WFWaJoBrX34KDExYXULf0FTnLjWDQOLiWbiJ76imNLlOQRAschuD61ZyZb
+         U3eyngqUnB1wAmatMn8rX3scqtfYHmd0l+4p8AWS6qFirtEvoe9eX2nXGmSrIrHXAayV
+         bNKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=eInI+OH6Q9h8DNWFU+u2LhSFCHqVvb4BqO3BpixqeP8=;
+        b=hYP9PJCkJlI/JloEkubPyNzYyNX9aBUnchVaS58szMmUpxnN37DBvVlYqk+nv0NOhT
+         vXQU6v2uMMgpbaZmhc+LVlvZljiCNmdAWN9bjX9aJu4PL2411d5UOxkX+Yd2VYVbHILt
+         vgoltaTouDqxjH2DKrkRms6uLKUIWvTMpeUBnMkFZcQIKFLSIZAx6vrgdC5QdoYpGcwC
+         LSo30bqg/KumLb7rOhhODgZ8QKLdPWMpmx/a1g6lfAJAhY2EAJE2/mUugLzCvQAyUpL0
+         w8oEGaWfLf+eJDdK5pjX7/cNvU9SBqBBJUBMYpsVgQENzUlpwTV/d624/hWv/A6tLBay
+         hglA==
+X-Gm-Message-State: ANoB5pmVcGK6zjcT+VAt1zfdOnTCOIlgIhE0WJPUGFB+om4nbYaEUIdH
+        KVSJnwaRrM/8bYlrwIL/bF3fwuu2fee/JQ==
+X-Google-Smtp-Source: AA0mqf7LmOk01W6K7mlDW+NME1NVd/VJxyJANilj1rs9NZ0DluASs/h+oE3Ofs599Ncnn1hndK4alU8E7JZ6iQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a81:f8a:0:b0:345:4844:163a with SMTP id
+ 132-20020a810f8a000000b003454844163amr5459888ywp.319.1669143707245; Tue, 22
+ Nov 2022 11:01:47 -0800 (PST)
+Date:   Tue, 22 Nov 2022 11:01:30 -0800
+In-Reply-To: <xmqqfseargo4.fsf@gitster.g>
+Mime-Version: 1.0
+References: <xmqqfseargo4.fsf@gitster.g>
+Message-ID: <kl6lk03merud.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: gc/resolve-alternate-symlinks (Re: What's cooking in git.git (Nov
+ 2022, #05; Tue, 22))
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 22, 2022 at 02:18:23PM +0000, Yoichi Nakayama via GitGitGadget wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-> index babb3b5c68d..bfd759aa4b2 100755
-> --- a/contrib/git-jump/git-jump
-> +++ b/contrib/git-jump/git-jump
-> @@ -26,6 +26,17 @@ open_editor() {
->  	eval "$editor -q \$1"
->  }
->  
-> +open_emacs() {
-> +	# Supported editor values are:
-> +	# - emacs
-> +	# - emacsclient
-> +	# - emacsclient -t
-> +	editor=`git var GIT_EDITOR`
-> +	# Wait for completion of the asynchronously executed process
-> +	# to avoid race conditions in case of "emacsclient".
-> +	eval "$editor --eval \"(prog1 (switch-to-buffer-other-frame (compilation-start \\\"cat $@\\\" 'grep-mode)) (delete-other-windows) (while (get-buffer-process (current-buffer)) (sleep-for 0.1)) (select-frame-set-input-focus (selected-frame)))\""
-> +}
+> * gc/resolve-alternate-symlinks (2022-11-22) 1 commit
+>  - object-file: use real paths when adding alternates
+>
+>  Resolve symbolic links when processing the locations of alternate
+>  object stores, since failing to do so can lead to confusing and buggy
+>  behavior.
+>
+>  Will merge to 'next'.
+>  source: <pull.1382.v2.git.git.1669074557348.gitgitgadget@gmail.com>
 
-Hmm, I know I suggested using a temporary file since "cat $tmpfile"
-should be pretty safe. But it does still have problems if your tmp
-directory has spaces. Or even other metacharacters, which I think will
-be interpreted by the eval, since $@ is expanded in the outermost level
-of the shell.
+I plan to do another reroll based off =C3=86var's feedback (thanks!), let's
+hold off on merging until then?
 
-Those are fairly unlikely, but we could handle it. I think you'd need
-something like:
+Separately, I'd also prefer to hear from Peff regarding my reading of
+37a95862c6 (alternates: re-allow relative paths from environment,
+2016-11-07) and whether we want to continue 'supporting' broken paths in
+the environment. I doubt it, but since he initially suggested it in his
+fixup patch [1], his opinon would be reassuring :)
 
-	open_emacs() {
-		quoted_args=
-		for i in "$@"; do
-			quoted_args="$quoted_args '$(printf %s "$i" | sed "s/'/'\\\\''/g")'"
-		done
-		eval "$editor --eval \"...\\\"cat \$quoted_args\\\"...\""
-	}
-
-which you can test with:
-
-	cat >fake-emacs <<-\EOF
-	#!/bin/sh
-	echo "fake-emacs got args: "
-	for i in "$@"; do
-		echo "arg: $i"
-	done
-	EOF
-	chmod +x fake-emacs
-
-	editor=./fake-emacs
-	open_emacs 'multiple args' 'with spaces'
-	open_emacs '$dollar is ok because we use single-quotes'
-	open_emacs "but 'single quotes' themselves need quoted"
-
-Though it's possible you also need to be adding an extra layer of
-quoting due to emacs parsing the string. So you'd probably need to
-additionally escape double-quotes and backslashes, perhaps by changing
-the sed invocation to:
-
-  sed -e 's/\\/\\\\/g' \
-      -e "s/'/'\\\\''/g" \
-      -e 's/"/\\"/g'
-
-Which is kind of horrific, but I think is bullet-proof.
-
-Like I said, it's not that likely that somebody's tempfile path would
-need all that (though spaces aren't totally out of the question,
-especially on Windows). But...
-
-If we have bullet-proof quoting, then you could go back to skipping the
-tempfile for emacs, which avoids the race and sleep that you have here.
-
-> @@ -98,4 +109,8 @@ tmp=`mktemp -t git-jump.XXXXXX` || exit 1
->  type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
->  "mode_$mode" "$@" >"$tmp"
->  test -s "$tmp" || exit 0
-> +if git var GIT_EDITOR | grep emacs >/dev/null; then
-> +	open_emacs "$tmp"
-> +	exit 0
-> +fi
->  open_editor "$tmp"
-
-If we are going to use a tempfile, this logic should probably get
-stuffed into open_editor itself, like:
-
-  open_editor() {
-          editor=`git var GIT_EDITOR`
-          case "$editor" in
-          *emacs*)
-                  ...do-the-emacs-thing...
-          *)
-                  # assume anything else is vi-compatible
-                  eval "$editor -q \$1"
-          esac
-  }
-
-but if you take the quoting suggestion above, then open_emacs() would
-continue to be a top-level thing, before we even create the tempfile.
-
--Peff
+[1] https://lore.kernel.org/git/Y3aBzbzub7flQyca@coredump.intra.peff.net/
