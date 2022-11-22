@@ -2,75 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38764C4332F
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 17:30:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5E61C433FE
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 17:37:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233916AbiKVRaB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 12:30:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46640 "EHLO
+        id S233773AbiKVRh5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 12:37:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231842AbiKVR37 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 12:29:59 -0500
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8226F76158
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 09:29:58 -0800 (PST)
-Received: by mail-yb1-xb2b.google.com with SMTP id c15so18118116ybf.1
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 09:29:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q29f3VzoEXvnS5H8EYT6SbhzEWQ9DO7xTj3UbIAZNWs=;
-        b=mN0LX2Q5uce+F/oaCQcKW+0czjH64j7bBhAaehu1bxt79Q3CE/PrktrN6Kxkpx8SLQ
-         VGietg2++bz6Rum4JNjiZkEZ4ndgmaHobue9rOUsX9Q3hOloqAsk7khGpeNbB1S1ys1z
-         jVLaUGNJB4XPZYKfSn9RU+oE0kOSesfA8cYB+I5bNBfvUgR+EL278tLlRtctYgAwOSRY
-         4eXVLHR3I/i2VoiYy8U+44W5CvLa7oQ315qZDR7meYWujPY+CeqEHBjIbvf7h1TQiqt1
-         VNQbK/SGSFf14HHll+5eCtxH81R0H5x/L5TJzPdS0PC1Z03drCjoxUqZRcXEu6x9hmzy
-         LCuA==
+        with ESMTP id S232723AbiKVRhy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 12:37:54 -0500
+Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1729E13D5F
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 09:37:53 -0800 (PST)
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com [209.85.208.200])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 256B83F339
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 17:37:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1669138671;
+        bh=kHmmgcYdGPRXQyJFkLWaCfyWhCFOgGRzAgwXlqMaTaU=;
+        h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type;
+        b=QdSdTXNyxrOXNytIpyKC4bfpaTIeOnH1QHLtGsFyilNetCiJcK2wb+5YQ6gpWmCT1
+         r+TaP/RsW0nKCNXGAZNOps0RoCWXbpWdlwWJT1zPzn5OX234qYR1JhvNJsmhfyAIPP
+         VTvcR4Tc0mThidL9MHD+TQ1uDh0KpqThRrM+lBvsG29v/ZLsb7Tng/9T73uy6AkU9Y
+         ffF/4LgYwSr0faZaL3uii9bG5v5cXd6OJ2g3KOpD7Z6FoNstZWa4ATWtO4VI9g7Vdl
+         1aEr/wJ/T7TrJmGnuZVh5DFIOJXzMJjJ/+KVvtapjUVQXexPOv4bWOkXUL8coXBU8u
+         s561RzR4dtspw==
+Received: by mail-lj1-f200.google.com with SMTP id p6-20020a2e8046000000b0027703bb5701so4598648ljg.11
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 09:37:51 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Q29f3VzoEXvnS5H8EYT6SbhzEWQ9DO7xTj3UbIAZNWs=;
-        b=Xa/1hfh5NQ6AttPOjKo43aXA1oonlyth5nMZMJ+Hxb7Yy3qdyxSLVOQm5MrkGnLo7M
-         RtcNCnJ02IxDfYChF1Ai/1rnDA1uKgNjArwTQSIxl31EB3OQW5T0nZRUI4239rjs+s54
-         w+qpiOZfUsaZZ8ZsqsmZqNpbFyBZ4XSpanpaUZAFvg6NwW6bNg3CV91VkMp8xGZ7ZCsV
-         fjH0ZxM/c9J98xaJqmovlYb8kviGj+o2t7LnVM/wxyt9WajpjIouk9UeYNN61Oqj9nWR
-         Mnr4Bu0mIqVqrNbpFTgWOmfwQhraE8XXFDUZlbE9S9C8oIDE3hzzeKs/2zb8uxVXT84h
-         DMeQ==
-X-Gm-Message-State: ANoB5pkK7ujbzdr1V/63VXyvKMZVPGeXqoFG6ZNqD0b5fowk0E9XRTTp
-        APe+/i9bvHBfi0zo4H6oItR94L7ub8rGlmAMMJw=
-X-Google-Smtp-Source: AA0mqf5SfoO26+PfJLIaAaCHlDv+y4Oetkt+TZ9gVrKNoqoC/JpFI5/+a7u2wMQl4qQTghLLeKE0Db0HxgO4WeB1uDE=
-X-Received: by 2002:a25:d0d3:0:b0:6e6:fc12:8553 with SMTP id
- h202-20020a25d0d3000000b006e6fc128553mr5037150ybg.443.1669138197438; Tue, 22
- Nov 2022 09:29:57 -0800 (PST)
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kHmmgcYdGPRXQyJFkLWaCfyWhCFOgGRzAgwXlqMaTaU=;
+        b=pVckzftENY4RX1hdPCyT0zgp48ANagniiBK9ZhDn7HgfuQUe+vpf5z7JzkqYwU1HqU
+         vmTkXdmL2MkeCXmRbR/seWfun2wIU+DCF04Mcnb7lIzjfaJF4B1xh2jbTZb6DMNnwSY6
+         Rj/4DiX3Uq6qUgPGOFv3DtqgZpTke8sp3Yw4PFIzfG69T94mk0frB+vS3iYOROpHP6zS
+         UUraxI1z14AROOID+Kv5R19lE2r8yfYWvRfEqIvHobEyMrltbhj6HMK88xQOr9QdSo5y
+         peJWqCnHYYuEtEeCUUsU9b2uHonSKY/ExSz5PXQlaS67yhY8wo41ApjxOfCsf5EoSyq3
+         58EA==
+X-Gm-Message-State: ANoB5pmegYcYtJFpJANy4uO9C9XRMrwGzmyhjkVn7RY2BZ0MD9cqGvi7
+        yB8rMK8tD9YcQlG87d6qsjQCH0UGnXkdK0j9sbRZq5u3tJBs8cjITN6RoXOEgpbywtCKfsmYIW5
+        rLaPMhxqLB9CoJ9xL+cWGUh+DAC8wiDaSrFYP3BrKaegxkA==
+X-Received: by 2002:a05:651c:1993:b0:26c:4fb:b084 with SMTP id bx19-20020a05651c199300b0026c04fbb084mr7474509ljb.383.1669138670123;
+        Tue, 22 Nov 2022 09:37:50 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf6Q+L2ItpIdpt0X5h8A0TqfZx7lH2arjxKDybt47sqgO1lxwYuCESiDqbDjSXa3RNQcvXGYhuZKBgz9Yp57DiE=
+X-Received: by 2002:a05:651c:1993:b0:26c:4fb:b084 with SMTP id
+ bx19-20020a05651c199300b0026c04fbb084mr7474503ljb.383.1669138669861; Tue, 22
+ Nov 2022 09:37:49 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1384.v5.git.1668110679098.gitgitgadget@gmail.com>
- <pull.1384.v6.git.1668547188070.gitgitgadget@gmail.com> <CAPig+cRPQ7bmG6+U+oQGGUFiSiHoMMpMk8FDJ7GMJvwCXifa9g@mail.gmail.com>
- <CANaDLWJM1VRivm8VLqxg+w8K-+49E0km6AgOzWzN9X=TgzaEiA@mail.gmail.com>
- <CAPig+cQgu=i6pZTzoNYGZ_6X=DGdmwa=dPhSQVqD+eLCZCGJSg@mail.gmail.com>
- <CANaDLWJ+Suye98QKub9nfnknLEsyQ4PK1LxDkPmzGC_-hApkFw@mail.gmail.com>
- <CAPig+cTrpnVOW0Y2m5xtPhLudY=rPCn3qPQA0RSso7ueFytZbQ@mail.gmail.com> <CAPig+cR=kkWVuBDh2FS+869a_P_xaLj5NaCgW7q3M_utLrgSsg@mail.gmail.com>
-In-Reply-To: <CAPig+cR=kkWVuBDh2FS+869a_P_xaLj5NaCgW7q3M_utLrgSsg@mail.gmail.com>
-From:   Rudy Rigot <rudy.rigot@gmail.com>
-Date:   Tue, 22 Nov 2022 11:29:45 -0600
-Message-ID: <CANaDLWLLVqJ6_razCc1-On5dWBv5xC3QRn_Vw1M-yodCs-0XrA@mail.gmail.com>
-Subject: Re: [PATCH v6] status: long status advice adapted to recent capabilities
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Rudy Rigot via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
+From:   Andreas Hasenack <andreas@canonical.com>
+Date:   Tue, 22 Nov 2022 14:37:38 -0300
+Message-ID: <CANYNYEHXU8ivgAOa8EO5e9kOcbu6XF7rj+9EcSrbDQE+Rvyw_Q@mail.gmail.com>
+Subject: chainlink.pl /proc/cpuinfo regexp fails on s390x
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Oops, here is the only Gist URL I had meant to share, sorry about the
-confusion, the other one was a copy-paste mistake:
-https://gist.github.com/rudyrigot/b31fcb6384e829ca7586818758e48d0b
+Hi,
 
-But the suggestions you just gave me are wonderfully helpful! Thanks a
-lot for that, let me give those a try now...
+(please CC me on replies, as I'm not subscribed)
+
+git commit 29fb2ec384a867ca577335a12f4b45c184e7b642[1], present in
+2.38.0 and later, introduced a function that gets the number of cores
+from /proc/cpuinfo. It essentially does this on linux:
+
+    do { local @ARGV='/proc/cpuinfo'; return
+scalar(grep(/^processor\s*:/, <>)); } if -r '/proc/cpuinfo';
+
+On s390x, the ^processor lines are like this:
+
+processor 0: version = FF, identification = 148F67, machine = 2964
+
+In other arches (I checked amd64, armhf and arm64), they are like this instead:
+
+processor : 0
+
+As a result, that function is returning 0 on s390x, and that value is
+used for the number of jobs the script should execute. Since it's
+zero, it exits without doing anything, and that breaks the test and
+the build[3] on s390x.
+
+This is trivial and I don't think a PR is necessary, but let me know
+if you want one.
+
+That regexp could perhaps be:
+
+/^processor\s*\d*\s*:/
+
+or
+
+/^processor[\s\d]*:/
+
+or something else.
+
+
+1. https://github.com/git/git/commit/29fb2ec384a867ca577335a12f4b45c184e7b642
+2. https://github.com/git/git/commit/29fb2ec384a867ca577335a12f4b45c184e7b642#diff-e7042d714d4be11a06d153e6f2daeb3c3a9766b972522baab8ba113b962086cfR574
+3. https://launchpadlibrarian.net/635348769/buildlog_ubuntu-lunar-s390x.git_1%3A2.38.1-1ubuntu1_BUILDING.txt.gz
