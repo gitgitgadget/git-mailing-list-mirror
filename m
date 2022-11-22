@@ -2,82 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35C2DC433FE
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 18:08:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5BBBC4332F
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 18:14:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234375AbiKVSIL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 13:08:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53542 "EHLO
+        id S232554AbiKVSOH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 13:14:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234470AbiKVSH7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 13:07:59 -0500
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 748EA165B1
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 10:07:48 -0800 (PST)
-Received: by mail-pl1-f182.google.com with SMTP id g10so14405726plo.11
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 10:07:48 -0800 (PST)
+        with ESMTP id S232517AbiKVSOF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 13:14:05 -0500
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63BEE4E43A
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 10:14:04 -0800 (PST)
+Received: by mail-pl1-f169.google.com with SMTP id g10so14422126plo.11
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 10:14:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=P1Umb1CkuafzQm8w6snp/aVTrYQW3mWGj/UR0DEyDJw=;
-        b=V03RpahPBK+S+3GNJ13PgIQT2tlg0XirFizEfpfgnR5p9yJKvx8dtUAV8OMLgUpVNB
-         Wc1uw9+rDQ8BXfjkDP4RdAkZXaQUCIPy+tozw6yvUlwZzeks3cgJXpUmxuXZnfa5duPb
-         YpgjvpBURpWJ/0Kj5kVPEjcmvTQlUP72N6mL0OJPRBQeWlep7iIdU2nKCfmUzNh8lBPX
-         YuKC6YM0/i+5huo7Nej7grXQ3PquQfsABR6qrwlmv6KghlANuiR2OF2j1xcH68AVe3RZ
-         hgj//eDap7EKONQzhqFopcBwELSIi6ZAIoRzMCeqMI8myKUlZDZHW9wRlzBZCGl5M/tt
-         O9AQ==
-X-Gm-Message-State: ANoB5pnmhpJ4ja+GESh1N6kCG3JvU5MtZ/BxG0LePSsxgsDDOoZzMoii
-        8B95F5pDBNE5OK10t5+KKeMeY/QjcB6/hnZkikEnFZH5Xbc=
-X-Google-Smtp-Source: AA0mqf7esKwodfneNgdFkFUQNjkVwPnw+kGgrmyOHEzwaKryO8UTUs97g057SzG8HWNgl/Fag25GPbdlN9hJmroC0tI=
-X-Received: by 2002:a17:90a:5d81:b0:212:cf2e:2b0b with SMTP id
- t1-20020a17090a5d8100b00212cf2e2b0bmr32777867pji.169.1669140467534; Tue, 22
- Nov 2022 10:07:47 -0800 (PST)
+        bh=tvyModsgHc2Fj1g+3U2kny4sW6UWLs5G5x1fSA8IcQA=;
+        b=mbOAeaUDF9cdz9CZNpX2jXFyPYt5zm9cSyUwClRFyV8DFT7llZKnjkDciJnUuFAyng
+         McuDw0SSvknST5UX07CJwLUEiUdhB7JIDOSzCYWdyLwsUsCZ96MTaSI4At54heeGy/RG
+         BRlCmhg7PCva6hOR3BV73sjtDnMzUWQr/oPM9Ni0xSmtiS2w5cJNSBA2wpw0TwcOAsDy
+         z/CzzFxVmEzv1bKgUa4m3k2SghAXNbEgf2trWz8DS8tW4+DvCXycTgqCMkWKZhY711ms
+         7eBgCFBjcYrMEcvS2nJ2cJNy6XBgXgKpzAQy8XnDpVbk646xVeLRoQfbu93y46+FpKb4
+         5ugA==
+X-Gm-Message-State: ANoB5plyw5A2MwQYV4ckUr7RWPVqC/O3qjbf6uFItombe+61KYXATjxM
+        gf8qiWS3W8+sK4gU0LhAUA7wI3YQDvjglwyxcM4GfW9SqVs=
+X-Google-Smtp-Source: AA0mqf7BzhKvQarc/MdbQYqnh7Uez7UnZEc+IEqaRpIjH/4ybxXgzAZ60gMIdK4ibldforhB0tgERYZfgim5Goq6wrw=
+X-Received: by 2002:a17:90a:bf17:b0:213:587b:8a83 with SMTP id
+ c23-20020a17090abf1700b00213587b8a83mr16274164pjs.22.1669140843838; Tue, 22
+ Nov 2022 10:14:03 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1384.v5.git.1668110679098.gitgitgadget@gmail.com>
- <pull.1384.v6.git.1668547188070.gitgitgadget@gmail.com> <CAPig+cRPQ7bmG6+U+oQGGUFiSiHoMMpMk8FDJ7GMJvwCXifa9g@mail.gmail.com>
- <CANaDLWJM1VRivm8VLqxg+w8K-+49E0km6AgOzWzN9X=TgzaEiA@mail.gmail.com>
- <CAPig+cQgu=i6pZTzoNYGZ_6X=DGdmwa=dPhSQVqD+eLCZCGJSg@mail.gmail.com>
- <CANaDLWJ+Suye98QKub9nfnknLEsyQ4PK1LxDkPmzGC_-hApkFw@mail.gmail.com>
- <CAPig+cTrpnVOW0Y2m5xtPhLudY=rPCn3qPQA0RSso7ueFytZbQ@mail.gmail.com> <CAPig+cQF8vjGNUux-ZMBRxbEd3V0p27oLWZ7k2=mf40kAkWVeg@mail.gmail.com>
-In-Reply-To: <CAPig+cQF8vjGNUux-ZMBRxbEd3V0p27oLWZ7k2=mf40kAkWVeg@mail.gmail.com>
+References: <CANYNYEHXU8ivgAOa8EO5e9kOcbu6XF7rj+9EcSrbDQE+Rvyw_Q@mail.gmail.com>
+ <CAPig+cQrXb-YUSzmfgJ2PRoiOP3goVACRCrX9C39kf3oDH+BHg@mail.gmail.com> <CANYNYEF+Gsas5s7u3rb3CQeFPL1MoCTweA4e3L90vCD0rPsNgg@mail.gmail.com>
+In-Reply-To: <CANYNYEF+Gsas5s7u3rb3CQeFPL1MoCTweA4e3L90vCD0rPsNgg@mail.gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 22 Nov 2022 13:07:36 -0500
-Message-ID: <CAPig+cSR0MAYRLtPS1YcegqMZn4FDbdRvbCbuDfXWR=wF_ofGw@mail.gmail.com>
-Subject: Re: [PATCH v6] status: long status advice adapted to recent capabilities
-To:     Rudy Rigot <rudy.rigot@gmail.com>
-Cc:     Rudy Rigot via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>
+Date:   Tue, 22 Nov 2022 13:13:52 -0500
+Message-ID: <CAPig+cS-BWJoWgo3UEk0X6fRjsysR0_23ppn9WX02Gy+ugVdOQ@mail.gmail.com>
+Subject: Re: chainlink.pl /proc/cpuinfo regexp fails on s390x
+To:     Andreas Hasenack <andreas@canonical.com>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 22, 2022 at 12:40 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> A minor additional comment if you do go this route and place the new
-> tests in an existing script...
+On Tue, Nov 22, 2022 at 1:04 PM Andreas Hasenack <andreas@canonical.com> wrote:
+> On Tue, Nov 22, 2022 at 2:57 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > We would be happy to take a patch if you're interested in submitting
+> > one. Otherwise, I can submit a patch to fix this case. Let me know
+> > your preference.
+>
+> Can that be a simple PR in https://github.com/git/git/pulls?
 
-And one more comment...
+The project doesn't take pull requests directly, but GitGitGadget[1]
+will convert a pull request into a mailing list patch. It looks like
+https://github.com/git/git/ is one of the repositories with which
+GitGitGadget works, so presumably it should work. You could probably
+come up with a well-written commit message by paraphrasing your bug
+report.
 
-By placing:
-
-    GIT_TEST_UF_DELAY_WARNING=1
-    export GIT_TEST_UF_DELAY_WARNING
-
-at the top of the existing script into which you add the new tests, we
-have to worry about potential side-effects in other tests in the
-scripts. Better would be to place these lines just above the new
-tests, so that the effects are better isolated. However, even better
-than that would be to isolate the environment variable to exactly the
-point it is needed. For instance:
-
-    test_expect_success 'when core.untrackedCache and fsmonitor are unset' '
-       test_unconfig core.untrackedCache &&
-       test_unconfig core.fsmonitor &&
-       GIT_TEST_UF_DELAY_WARNING=1 git status >out &&
-       ...
-    '
+[1]: https://gitgitgadget.github.io/
