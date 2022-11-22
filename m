@@ -2,147 +2,126 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5EC0C43217
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 16:41:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A75C4C4332F
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 16:52:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232783AbiKVQk7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 11:40:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42584 "EHLO
+        id S234228AbiKVQwq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 11:52:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232583AbiKVQk4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 11:40:56 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75845275D2
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 08:40:55 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id p13-20020a05600c468d00b003cf8859ed1bso11733378wmo.1
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 08:40:55 -0800 (PST)
+        with ESMTP id S234330AbiKVQwi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 11:52:38 -0500
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D0EBF3C
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 08:52:33 -0800 (PST)
+Received: by mail-yb1-xb33.google.com with SMTP id n189so5568800yba.8
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 08:52:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=IGs14wrbdvZf3I1fhvRc3ltnpVRTvyjlmMwbNmXk0Y0=;
-        b=c1MKrOSLGZuSvhr3jvQ3QhYxdIJ9qS3eNAcwcGnilfaYHcPKLpCDjG3azlnFGcM5Xx
-         lEd1uivUb9/VA6RHLjD9yruel34mZT3llhVovK8G/q5mOROf602IVGUngLdbu78D7Uz7
-         w5uqOg8XwWLUdxMNjNKhVogLrHAw4WZyb32f8+8np6BEdJZ5KWsTEIH2U7QzYQguoOxP
-         cKWYAUMUfBDYO6F1sWw2KQ8WWruVtUBzDVq9e88j9HetXlAHubRzaA4lYbE0URXdoKWN
-         d6BmHDKMTaH2gA32aCP+wGxfEH9MAUdkC8LfG6Two+Z61poIGq+0N/NLcFapIq8qA+JJ
-         I/BA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=yzMaVYox1/3BJadPiJRbXkyq1bP6DDYGVD0wqAVndgc=;
+        b=eZy40UCkcmgOqeewX6nCHlj1/uRlcxAQMO88J2aVSCxSgtChDF4qPG37fuFepWTvX6
+         VArBmGi1Xb1yjztdTEvYEKL2aieLY1J4+dH9AMrb4E9NTm10Xrl6lpI2QKEDHw2D0hdr
+         ZVPgv0M55DA6A6wVzfYXcpUz1e2xka/nsXGxnRkM4TSgMQ/cg0+PHDnScgYkDoPAvYje
+         u+cjq1boQuURnTjLbb6xb97aQycEcPJ2H9XTWiHs+qYh4V1wmaScHtB6G2rxI8ZYYFwN
+         e+jf/2+5W3EMQ+yw6jfvALy3c71pXFgnztrNvaWeS692asHrPsT0TModaedsKoya8xj8
+         PNaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IGs14wrbdvZf3I1fhvRc3ltnpVRTvyjlmMwbNmXk0Y0=;
-        b=oNUHjQZ2CKL1gxuZ6CtDWsnwhCVUeMWnncZdE0qTs1WnugYoeKJ89f5z0v/Mq0W7Os
-         2xuYL0B8c9Uzh5tZ8LziHwLl/px4pjDjsFtX4b+1iGYs3UdkPvA6VYiURWLYGXlfv/qX
-         bpYgiPv1qkGTs6zsW1XRp2WrWUYUet9KfJhH9Vgj+St1QNmXLckjrpxomllaCNCc1aoV
-         qW6TzBQL3eTXqXbnTxpZUFzWtYSFZIScX3q6Jmt8me93QcBU6/9htShn+DqBHRqKSh+q
-         TLZyX8OwNcMP9cveu/1PZ1zPuB/40i4ffMIdfed0A788IOlxD7t4LEE+ZBw3NdvDtHW6
-         68Hg==
-X-Gm-Message-State: ANoB5pnpTYYmhcYRj+2muCQU5gAnZUiFSR2Kcp2EzT4IeyYYn2hSrSz4
-        IrZLq/z0uENOql4wrBpQchc=
-X-Google-Smtp-Source: AA0mqf5pkVxN5KoKmex/I45JbCYNWScLSXTnRO1aj6WkAZ0oAobwIJDh8ReEUJukX0ey3Db7pf2b1g==
-X-Received: by 2002:a05:600c:4386:b0:3cf:a4a6:a048 with SMTP id e6-20020a05600c438600b003cfa4a6a048mr3482156wmn.202.1669135253632;
-        Tue, 22 Nov 2022 08:40:53 -0800 (PST)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id p15-20020a05600c468f00b003cfd10a33afsm22769891wmo.11.2022.11.22.08.40.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Nov 2022 08:40:53 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <61b42a7c-5772-dec2-c895-386f1613ac35@dunelm.org.uk>
-Date:   Tue, 22 Nov 2022 16:40:52 +0000
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yzMaVYox1/3BJadPiJRbXkyq1bP6DDYGVD0wqAVndgc=;
+        b=GJyNnlCXLUV4xtyDRBRNg1oTpEj9AkAKtH191PqmNgEtkUuG4+2BHLTwN8tQ6+xkSV
+         c+vwrifAAPqmAMrOfBCTQ+OmDrNZxgk5HKICaUWTBDfrj5DljSmWPCrnga8oENoq+o6K
+         5eHPU/BsCijn0w8XitivSIaBkTvhoe+fVw8ueZqljmgI4ypfjyfAvEOzrQRFvZny3jD2
+         b0VLY9SXXUrOtFG48lMq+19kLUnPMeILm4k/Rl6gMSMC/79GDh/k/+KNS36FTcX/LSaI
+         2hUySnK1d9h9rm4r4b3hgjJHnfgCmq+hWF2Wr0z0p9OOQA43RLPxpqhDasd4OmJP3sDx
+         nUeg==
+X-Gm-Message-State: ANoB5plhHTGwx4EhsgM876SoHxKSd12HSAidTEPh7XdyJou/j6mrkV0r
+        5kCQohBtjLgMn//MQFvPX4AKPdSRPJuYZLrqGH4=
+X-Google-Smtp-Source: AA0mqf5f2jM68HghMMg4bDC5odhlsrozbmzlPaCpWvHtkDYvX44bazp5apH3iYtNE4rzc5EnDMeSNNGgMJHXLseP2V4=
+X-Received: by 2002:a25:7653:0:b0:6e3:4ca6:1dca with SMTP id
+ r80-20020a257653000000b006e34ca61dcamr4257403ybc.414.1669135952613; Tue, 22
+ Nov 2022 08:52:32 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 2/2] git-jump: invoke emacs/emacsclient
-Content-Language: en-US
-To:     Yoichi Nakayama via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-References: <pull.1423.v3.git.1669033620.gitgitgadget@gmail.com>
- <pull.1423.v4.git.1669126703.gitgitgadget@gmail.com>
- <2f0bffb484beccf58f2440ed5e2c04a1ba26e6c3.1669126703.git.gitgitgadget@gmail.com>
-In-Reply-To: <2f0bffb484beccf58f2440ed5e2c04a1ba26e6c3.1669126703.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <pull.1384.v5.git.1668110679098.gitgitgadget@gmail.com>
+ <pull.1384.v6.git.1668547188070.gitgitgadget@gmail.com> <CAPig+cRPQ7bmG6+U+oQGGUFiSiHoMMpMk8FDJ7GMJvwCXifa9g@mail.gmail.com>
+ <CANaDLWJM1VRivm8VLqxg+w8K-+49E0km6AgOzWzN9X=TgzaEiA@mail.gmail.com> <CAPig+cQgu=i6pZTzoNYGZ_6X=DGdmwa=dPhSQVqD+eLCZCGJSg@mail.gmail.com>
+In-Reply-To: <CAPig+cQgu=i6pZTzoNYGZ_6X=DGdmwa=dPhSQVqD+eLCZCGJSg@mail.gmail.com>
+From:   Rudy Rigot <rudy.rigot@gmail.com>
+Date:   Tue, 22 Nov 2022 10:52:21 -0600
+Message-ID: <CANaDLWJ+Suye98QKub9nfnknLEsyQ4PK1LxDkPmzGC_-hApkFw@mail.gmail.com>
+Subject: Re: [PATCH v6] status: long status advice adapted to recent capabilities
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Rudy Rigot via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Yoichi
+> Most likely it wasn't a glitch, but rather (I'd guess) that Windows CI
+> uses "main" already, whereas Unix CI's still use "master".
 
-On 22/11/2022 14:18, Yoichi Nakayama via GitGitGadget wrote:
-> From: Yoichi Nakayama <yoichi.nakayama@gmail.com>
-> 
-> It works with GIT_EDITOR="emacs", "emacsclient" or "emacsclient -t"
+My intuition was that it was something like that indeed.
 
-Thanks for working on this, I'm looking forward to being able to use 
-"git jump" with emacs.
+> you might write the commit message like this
 
-> Signed-off-by: Yoichi Nakayama <yoichi.nakayama@gmail.com>
-> ---
->   contrib/git-jump/git-jump | 15 +++++++++++++++
->   1 file changed, 15 insertions(+)
-> 
-> diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-> index babb3b5c68d..bfd759aa4b2 100755
-> --- a/contrib/git-jump/git-jump
-> +++ b/contrib/git-jump/git-jump
-> @@ -26,6 +26,17 @@ open_editor() {
->   	eval "$editor -q \$1"
->   }
->   
-> +open_emacs() {
-> +	# Supported editor values are:
-> +	# - emacs
-> +	# - emacsclient
-> +	# - emacsclient -t
-> +	editor=`git var GIT_EDITOR`
-> +	# Wait for completion of the asynchronously executed process
-> +	# to avoid race conditions in case of "emacsclient".
-> +	eval "$editor --eval \"(prog1 (switch-to-buffer-other-frame (compilation-start \\\"cat $@\\\" 'grep-mode)) (delete-other-windows) (while (get-buffer-process (current-buffer)) (sleep-for 0.1)) (select-frame-set-input-focus (selected-frame)))\""
+The current phrasing was initially copied as is from a past review
+feedback; I have no issues at all replacing it with yours.
 
-I just tried this out in a frame (window for non emacs users) showing 
-two files and the (delete-other-windows) call replaced both of them with 
-the grep buffer. It would be nicer if it created a new window in the 
-current frame or showed the grep buffer in one of the existing windows. 
-If I delete (delete-other-windows) then the first time I run "git jump" 
-it shows the grep buffer in the frame I already have open, but then if I 
-run it again without closing the grep buffer it opens a new frame. I 
-wonder if it would be better just to close the buffer if it exists 
-before creating the new one or pass NAME-FUNCTION argument to 
-compilation-start that creates unique names.
+> So, if there is an existing test script in which
+> these new tests might fit, it's better to add them to that script
+> instead
 
-I'm using emacsclient as my editor and when I run "git jump" it prints
+Oh, sorry about that, it hadn't occurred to me that there could be a
+downside to using new test script numbers.
 
-#<buffer *grep*>
+I'm 100% on board with the thinking, but I'm struggling quite a bit to
+implement it. There are several existing test scripts where these new
+tests would fit very well semantically (t7060-wtstatus.sh,c,
+t7512-status-help.sh, t7519-status-fsmonitor.sh, ...), and I spent
+quite some time yesterday trying to move the 3 news tests to those.
+For some reason, test_cmp is not giving me a diff anymore when working
+in those script files, so I feel in the dark about what the tests are
+failing about, and I'm stumped about what to try next.
 
-in the terminal (presumably because that is the return value of 
-select-frame-set-input-focus)
+What I mean: for instance, if I introduce an intentional mistake in
+the test and run './t7065-wtstatus-slow.sh -v', I get this section
+that clarifies what the issue is:
 
-Could we read the file and set the buffer's mode to grep-mode (or 
-compilation-mode?) without forking cat?
+--- expected    2022-11-21 23:46:00.000000000 +0000
++++ actual    2022-11-21 23:46:00.000000000 +0000
+@@ -1,4 +1,4 @@
+-On branch maine
++On branch main
 
-Best Wishes
+Here is a gist https://gist.github.com/rudyrigot/b31fcb6384e829ca7586818758e48d0b,
+with:
 
-Phillip
+- the patch as I currently have it on t7508-status.sh (it's a bit
+longer than it was, without the isolation in a separate script I've
+had to do a few things to mitigate the side effects from other tests
+in the script)
+- the end of what I get when running 'sh ./t7508-status.sh -v':
+https://gist.github.com/rudyrigot/ee80f3d59231f25698c9dd6c48d8ab85. It
+seems like 2 of my 3 tests are failing, but the output isn't very
+helpful to figure out why.
 
-> +}
-> +
->   mode_diff() {
->   	git diff --no-prefix --relative "$@" |
->   	perl -ne '
-> @@ -98,4 +109,8 @@ tmp=`mktemp -t git-jump.XXXXXX` || exit 1
->   type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
->   "mode_$mode" "$@" >"$tmp"
->   test -s "$tmp" || exit 0
-> +if git var GIT_EDITOR | grep emacs >/dev/null; then
-> +	open_emacs "$tmp"
-> +	exit 0
-> +fi
->   open_editor "$tmp"
+Would you (or someone else) have pointers to help me get through this one?
+
+I'm tempted to throw in the towel, since it sounded like it wasn't too
+huge a deal if this lived in its separate script file, and that other
+people's bandwidth (which I'm aware is what I'm requesting here) is an
+even more scarce resource. So I'll submit a new patch with everything
+else but this, so there's the option to still proceed with it if
+that's the most sensible path forward. But I have to admit I'm quite
+frustrated that I couldn't figure this last one out by myself, so I'm
+more than happy to dig more into it, if anyone has guidance.
+
+Thanks a lot.
