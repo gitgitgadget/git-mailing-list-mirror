@@ -2,114 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35DE1C433FE
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 18:30:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AD91FC433FE
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 18:40:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233709AbiKVSab (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 13:30:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39996 "EHLO
+        id S234195AbiKVSkM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 13:40:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231766AbiKVSa3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 13:30:29 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08C7C86A6E
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 10:30:28 -0800 (PST)
-Received: (qmail 18744 invoked by uid 109); 22 Nov 2022 18:30:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 22 Nov 2022 18:30:28 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5515 invoked by uid 111); 22 Nov 2022 18:30:28 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 22 Nov 2022 13:30:28 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 22 Nov 2022 13:30:27 -0500
-From:   Jeff King <peff@peff.net>
-To:     Yoichi Nakayama via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-Subject: Re: [PATCH v4 1/2] git-jump: add an optional argument '--stdout'
-Message-ID: <Y30VQzJ93h98hVhH@coredump.intra.peff.net>
-References: <pull.1423.v3.git.1669033620.gitgitgadget@gmail.com>
- <pull.1423.v4.git.1669126703.gitgitgadget@gmail.com>
- <446777d300d73498bd7da709fad75731a13d0d59.1669126703.git.gitgitgadget@gmail.com>
+        with ESMTP id S233081AbiKVSkL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 13:40:11 -0500
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0B567615A
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 10:40:09 -0800 (PST)
+Received: by mail-qt1-x835.google.com with SMTP id z6so9863327qtv.5
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 10:40:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jPOezffbzUKVVDsx2DfmAFZ9cisZQs2nFFiVGs5klCI=;
+        b=hNDfdt9wgSlI1HYOVwT4zFv+n9dNpx/afaUzvvmZw38Im6DJtAcvnYQOIYs3KeCv8E
+         8oSJirBQUGSUN84Cz46Pwg3dNai/FizS43Skhh1XDh0RFyG27ysGXY9mOsXZpiBMesPE
+         J91ykFWBXNGVpVxXT/+J06HEh5lkWFcoFeQPPQFaFIebw+AZZaT7ISCpR+XD7P2st6rQ
+         MsoKEQqtI6cArKlRE/HJT1JRriASZvA5r0YOSYErCaB8MU/PZYFlNxU0ZJuTqnXLA5aD
+         u3ncA9APqYXRGf8d1HQFPTa4w/x+ign9w3tqLos/VrAaG2Y4qQzA/CpT+xNF1vhoLwAc
+         MdSw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jPOezffbzUKVVDsx2DfmAFZ9cisZQs2nFFiVGs5klCI=;
+        b=xXfVE+oCQ1oTNCjIP2dq/S61GuC37zhlUm0KYPbvi+8Gb/nsM4f1y8dtllEoUi9u31
+         wUIQ2NE5itSW9RSw3Yk1hxLQfBg9xM7bhk+BCXyAjTD4PMDTTvBjP0da895j0FMnWcbA
+         OLscezsS9Z706W4fHuQFIUkBPNowWgNXHOqk7PmYPd7ktnW18oYaLl9kahs6/vG7r2iQ
+         gS0N0dea8PTXejiFLEEzqQPEpbfW74nVcntY+u9knFgJ5bRwcYaR3yPBi1/qF2NAFNds
+         16ab2QAEm9RdUKMQniSuQzcPs2T7iltFg7Z84xFpHlb+5EfrkJAq37x6PkiB459R9jFZ
+         hOvg==
+X-Gm-Message-State: ANoB5pkLxfhaVewJWtWV7t2Tn+/0w/iqHf2R6xf8m6XPUTn5F5Bo5GcC
+        58bJSLO7jiFv/yEQZnvhI5o=
+X-Google-Smtp-Source: AA0mqf5z1bslLXKPA8tkNUPXp7XB+L+C95pg1y/gMB0kcTAY/mfzJx+ZkM2xva+ByOeNmTgIQ+DSkg==
+X-Received: by 2002:a05:622a:1c1b:b0:39c:d5cd:848e with SMTP id bq27-20020a05622a1c1b00b0039cd5cd848emr10436890qtb.294.1669142409011;
+        Tue, 22 Nov 2022 10:40:09 -0800 (PST)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id l14-20020a37f90e000000b006cfc7f9eea0sm10535144qkj.122.2022.11.22.10.40.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 22 Nov 2022 10:40:08 -0800 (PST)
+Subject: Re: [PATCH v2] config: introduce an Operating System-specific
+ `includeIf` condition
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1429.git.1669037992587.gitgitgadget@gmail.com>
+ <pull.1429.v2.git.1669058388327.gitgitgadget@gmail.com>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <26daec59-2923-39f1-3699-c28c13234241@gmail.com>
+Date:   Tue, 22 Nov 2022 13:40:07 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
+In-Reply-To: <pull.1429.v2.git.1669058388327.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <446777d300d73498bd7da709fad75731a13d0d59.1669126703.git.gitgitgadget@gmail.com>
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 22, 2022 at 02:18:22PM +0000, Yoichi Nakayama via GitGitGadget wrote:
+Hi Dscho,
 
-> @@ -64,11 +67,31 @@ mode_ws() {
->  	git diff --check "$@"
->  }
->  
-> +use_stdout=
-> +while test $# -gt 0; do
-> +	case "$1" in
-> +	--stdout)
-> +		use_stdout=t
-> +		shift
-> +		;;
-> +	--*)
-> +		usage >&2
-> +		exit 1
-> +		;;
-> +	*)
-> +		break
-> +		;;
-> +	esac
-> +done
->  if test $# -lt 1; then
->  	usage >&2
->  	exit 1
->  fi
->  mode=$1; shift
-> +if test "$use_stdout" = "t"; then
-> +	"mode_$mode" "$@"
-> +	exit 0
-> +fi
+Le 2022-11-21 à 14:19, Johannes Schindelin via GitGitGadget a écrit :
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> It is relatively common for users to maintain identical `~/.gitconfig`
+> files across all of their setups, using the `includeIf` construct
+> liberally to adjust the settings to the respective setup as needed.
+> 
+> In case of Operating System-specific adjustments, 
 
-Thanks, this looks pretty good. I think we'd want this on top.
+Here, as well as in the commit title, the rest of the message, and the changes to 
+the doc in the patch, I would downcase "operating system". 
+It's a common word that I don't think should be capitalized (in contrast to
+proper OS names like Windows and Linux).
 
--- >8 --
-Subject: git-jump: move valid-mode check earlier
-
-We check if the "mode" argument supplied by the user is valid by seeing
-if we have a mode_$mode function defined. But we don't do that until
-after creating the tempfile. This is wasteful (we create a tempfile but
-never use it), and makes it harder to add new options (the recent stdout
-option exits before creating the tempfile, so it misses the check and
-"git jump --stdout foo" will produce "git-jump: 92: mode_foo: not found"
-rather than the regular usage message).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- contrib/git-jump/git-jump | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-index babb3b5c68..cc97b0dcf0 100755
---- a/contrib/git-jump/git-jump
-+++ b/contrib/git-jump/git-jump
-@@ -88,14 +88,15 @@ if test $# -lt 1; then
- 	exit 1
- fi
- mode=$1; shift
-+type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
-+
- if test "$use_stdout" = "t"; then
- 	"mode_$mode" "$@"
- 	exit 0
- fi
- 
- trap 'rm -f "$tmp"' 0 1 2 3 15
- tmp=`mktemp -t git-jump.XXXXXX` || exit 1
--type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
- "mode_$mode" "$@" >"$tmp"
- test -s "$tmp" || exit 0
- open_editor "$tmp"
--- 
-2.38.1.970.g3b99f132c8
-
+Cheers,
+Philippe.
