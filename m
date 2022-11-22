@@ -2,58 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09F9DC433FE
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 00:55:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3C705C4332F
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 00:57:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231653AbiKVAzZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Nov 2022 19:55:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38524 "EHLO
+        id S230131AbiKVA5S (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Nov 2022 19:57:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39792 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230368AbiKVAyz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2022 19:54:55 -0500
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5E01E0772
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 16:54:53 -0800 (PST)
-Received: by mail-ot1-x32f.google.com with SMTP id t19-20020a9d7753000000b0066d77a3d474so8388004otl.10
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 16:54:53 -0800 (PST)
+        with ESMTP id S229687AbiKVA5R (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2022 19:57:17 -0500
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D89AE0772
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 16:57:15 -0800 (PST)
+Received: by mail-pf1-x432.google.com with SMTP id x66so4290178pfx.3
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 16:57:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=firstasia.edu.ph; s=google;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=W61jjYLlZa+3jGX8tuSGy/RkYzj0cB6m1DtxdgkZmnA=;
-        b=XjI4HS/c/LqJpO7pzrKzSWHqQ2pwZx92LgIeGTwidSJHXgf70K2hobmG4veIWtTJu9
-         UIzNUG25zbFu0RvbRyfD48ZDc95EdtTH6WVTCgiA1aKY0dAo8udzxLgeljs7DPhddEtC
-         +rrgj+G76Mut3LgaIMLcMUaL9V1exuSZ6+QP0=
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eCbHo70AaF4BDm4dw6hgc5lRuN4UxU+f1EprOZpnsVY=;
+        b=XJIjo5DUIGqm7mIUnNJmK6mtrRKHZP9t3UOhhvcEobD4A/s70+zR12xvfcXK1R4Et3
+         dQ0KZ3+puSYZXWOAHwgMhb0kftWR8z6S4ee4zZmsFPQIEBN18R/FIlcbiIita+Nn4F0U
+         EpDsoViQmnA0a142dSfkztPGOfqj+chu2TDGOJCPIGuY1WuZ9/iWJ6kZp9GO4ymEN9VD
+         Qnxbsyf5vpyLge7ExgXnJ7HgqWEzVnKAW0knqPbit2QC618nq3Alpy6BIAgg5VLLtOkk
+         jtiZEj9+/+scvroLBvHTSZ0xzhU9cUVn5A05XRATas7/iw5737Vq/5o7TXMavw1yI33R
+         TQHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=W61jjYLlZa+3jGX8tuSGy/RkYzj0cB6m1DtxdgkZmnA=;
-        b=c8qFtAHKz+HdsWGngKs+oUeABB5JyhaDVFwoCNxHZXkmTYDF4Frree1e2R8k9J9RQQ
-         CVoC9QLpqL3uc9LuqjrklCajybSJCcKA/hrmS3fv/AnAcKo4TGjUgZLbNcGSLaNuPQwZ
-         gaR7CWIDQJXw8j3By9T1Wtb9IxsRDuNiDzJGu/TyplA/0AoLtBZTgOPsxVOxlbmQNf0d
-         IQaqfNNwoV/Lca7HRH0Uw7b97gVVAg0BunVX7wP5b9J1DsCetABklNdKlE0xCAciMDxr
-         O/cvNPOqoZ6VtShj4vi5wb+jBLtNkCymWvMvERd9brJ5hEE8OW768R29amrOy8Amy9x9
-         HRLA==
-X-Gm-Message-State: ANoB5pnLsmpLWwvVhHGG3zXvbuVUspd+8sQ2cKT3/0pOCwfsVxdyX4vT
-        Be7VzgKu1b9ZTh/PFszsiFqwE5aT6bPs5h6eTb1fmg==
-X-Google-Smtp-Source: AA0mqf5ZuB/c5iqZ8Xrhph+9XKj4Dw5ZJiK9CrxwsWnKM9goNn/cv2Hq9p7an2g/jvRo35jIZP0ikRrk3zEGrbobQLs=
-X-Received: by 2002:a05:6830:1bd2:b0:66c:fcc1:2c9f with SMTP id
- v18-20020a0568301bd200b0066cfcc12c9fmr1936084ota.43.1669078493079; Mon, 21
- Nov 2022 16:54:53 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=eCbHo70AaF4BDm4dw6hgc5lRuN4UxU+f1EprOZpnsVY=;
+        b=wGoPRSxd+f8h4FK8yoZw+c+MFhPwFgITC9fMY9FiYST+kJ17YOH8mHOKKFE0wk9IGH
+         S7+uD+YLK3aXOg0jZ20pO7v93RUq585CxYLkSjYnjB1o7WGqzZ6N6B4qA5I6Z3IFNARW
+         rVxSXkPTGqpx853oGeROC/iuaUbUnMOpLbnd4YagD1uk8Fnq1IsC7FhBvDrd7NDiKba2
+         xKX2uR6gjjSmFbOD2DNFTMNuE+5uGCPrQb3uXjpe8BLf0EHrqq12lLCeohhaUlAzSZ5l
+         SW6hhhXXTEwHA/4FcuKHEXlhfUIToVG7QX7MoG/AQeK3itmY+Rd6lz7O8o417s88sTBS
+         FPJQ==
+X-Gm-Message-State: ANoB5pl2aCgfRzhonM9strNn79lrliigFa+jKYPf9/MJbbsnZ8OZyAVa
+        IRjufu7MqhZUZ3EgWLVzpN4vy8PAti4W/g==
+X-Google-Smtp-Source: AA0mqf6lptB7x+HvJQ1QPWiyGiGtEVq5E1Ke2r4LllFOSg89K7jcr9uyoEySsna6PJ9eCvFoj42rsg==
+X-Received: by 2002:a05:6a00:408b:b0:56b:ca57:ba8c with SMTP id bw11-20020a056a00408b00b0056bca57ba8cmr2536136pfb.43.1669078634840;
+        Mon, 21 Nov 2022 16:57:14 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id m1-20020a170902768100b00187197c4999sm10369711pll.167.2022.11.21.16.57.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 21 Nov 2022 16:57:14 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Philip Oakley <philipoakley@iee.email>
+Cc:     GitList <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
+Subject: Re: [PATCH v4] pretty-formats: add hard truncation, without
+ ellipsis, options
+References: <20221102120853.2013-1-philipoakley@iee.email>
+        <20221112143616.1429-1-philipoakley@iee.email>
+        <xmqqfsedywli.fsf@gitster.g>
+        <d80d1b97-b0c0-148b-afb7-f5210366e463@iee.email>
+Date:   Tue, 22 Nov 2022 09:57:13 +0900
+In-Reply-To: <d80d1b97-b0c0-148b-afb7-f5210366e463@iee.email> (Philip Oakley's
+        message of "Mon, 21 Nov 2022 18:10:48 +0000")
+Message-ID: <xmqqedtvu7py.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:ac9:74c5:0:b0:478:4580:65c0 with HTTP; Mon, 21 Nov 2022
- 16:54:52 -0800 (PST)
-From:   Joshua Llanto <s2021101590@firstasia.edu.ph>
-Date:   Tue, 22 Nov 2022 08:54:52 +0800
-Message-ID: <CAB2Cp6n5CF2UvWwSj=t8j82ORCKxAvfU6tLc=TT-FA=8PvJVeA@mail.gmail.com>
-Subject: Re:ONLINE NOTIFICATION
-To:     gisela grunau <gisela.grunau@t-online.de>,
-        giselaheinrich <giselaheinrich@freenet.de>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-https://bit.ly/3i1q2EZ
+Philip Oakley <philipoakley@iee.email> writes:
+
+>> As a design question, what should "Trunc" do in such a case now?  I
+>> do not think we can still call it "hard truncate" if the feature
+>> gives "[][]" (i.e. fill only 4 display columns, resulting in a
+>> string that is not wide enough) or "[][][]" (i.e. exceed 5 columns
+>> that are given), but of course chomping a letter in the middle is
+>> not acceptable behaviour, so ...
+> The design had already covered those cases. The author already had those
+> thoughts
+
+Sorry, I was saying that none of
+
+ * giving only [][] to fill only 4 display columns, without filling
+   the given 5 display columns,
+
+ * giving [][][] to fill 6 display columns, exceeding the given 5
+   display columns,
+
+ * giving [][][ that chomps a letter in the middle, in a failed
+   attempt to fill exactly 5 displya columns.
+
+would be a sensible design of the behaviour for "Trunc", so I am not
+sure what "had already covered" really mean...
+
