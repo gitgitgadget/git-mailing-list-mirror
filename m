@@ -2,110 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67FF9C433FE
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 20:22:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2077C433FE
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 20:27:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234477AbiKVUW1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 15:22:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32870 "EHLO
+        id S234393AbiKVU1s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 15:27:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234281AbiKVUW0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 15:22:26 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C88FAB483F
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 12:22:24 -0800 (PST)
-Received: (qmail 19016 invoked by uid 109); 22 Nov 2022 20:22:24 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 22 Nov 2022 20:22:24 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6781 invoked by uid 111); 22 Nov 2022 20:22:24 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 22 Nov 2022 15:22:24 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 22 Nov 2022 15:22:23 -0500
-From:   Jeff King <peff@peff.net>
-To:     Eric Wong <e@80x24.org>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2] delta-islands: free island-related data after use
-Message-ID: <Y30vf76mdrSv4We4@coredump.intra.peff.net>
-References: <20221116105013.1777440-1-e@80x24.org>
- <221116.861qq2kieu.gmgdl@evledraar.gmail.com>
- <20221117230658.M516129@dcvr>
+        with ESMTP id S234079AbiKVU1q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 15:27:46 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B0DCF5BB
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 12:27:44 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id t4so11620855wmj.5
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 12:27:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=B7x7WdnO1tzsXNMW/nWgD+/B866p4sIK4INEvYOhz3A=;
+        b=A7uOStjsxXGfp5Fs4vyIGTY3v9bh3EoyaCP8Dz5ZBxwGQu9LzV6r6OjkekOzV1DClp
+         I2cB9uYBjNjCU+R+J21tlhc9X6vWfsdoWz7NLjIrOfW57f8S/5eLXRtHP+c0vHTXbQBr
+         3fds7duooLIEOhNSVb54zajop5r/LO2W2r8AmGBVBUKKJxnRemoHJ+Fz7mzrPNqa4p+W
+         ItP8k8fwMmiwbBTqFOXLy+1hGBQKBZwfRY6EOIKUYQPlmXD2VRxLUM61OLf4xJY0EWpV
+         pjH4QuV4m2EPcauMAa5Z4TBdaqYJuZluZU+kMhrGPXc9g+lVCwyV0yzaxO2eWsYDoWLL
+         5/dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=B7x7WdnO1tzsXNMW/nWgD+/B866p4sIK4INEvYOhz3A=;
+        b=J3Q6Ll1J3DXdMx+HPZfRd9iK14H8AM1TXR8/kCQZzFczKJtOFkQOtCWYuXt6LOwRtr
+         NMh2obzTWkxqCnIq21afY02mR+KJT+ktNES/aeivyYf9E0MEhSKg6uXQLazV+ecci1uj
+         1NvD6ZKFas7JH97Jwqn/+kB2Z+TpEJ209fpqYPF6wELB1Ac961mm/UahCHUh1OPeAR3C
+         +pW8aRaP0n/QbGlb6R+kBXDvgL1p73mHtTqIvxy8mlaL4OZp0KL4bOL0bM2RLFTPdYoT
+         V4L0BNwAUl5Dlkgd744aCmMJdYtCmisxsdQdgFunJyMdG88TorK3X1fRMnSxE3yXNIY1
+         yXjA==
+X-Gm-Message-State: ANoB5plB8gKoUePd+hLP+CPwwpcafMpTIs1HDHx999kMSwFRaTWI/b4+
+        q2Fbr3hZNx7HdJjx2zlqLXc98MCPNWc=
+X-Google-Smtp-Source: AA0mqf6YarXv6kw1mjVOTKAJPkLnepKpAluzC9NdoOWvEAs1dGdEpwOLjc3sAatOJ1+o8ApQb3r8Bg==
+X-Received: by 2002:a05:600c:3d1b:b0:3cf:670e:63cc with SMTP id bh27-20020a05600c3d1b00b003cf670e63ccmr21997202wmb.150.1669148862796;
+        Tue, 22 Nov 2022 12:27:42 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k33-20020a05600c1ca100b003b3365b38f9sm20140334wms.10.2022.11.22.12.27.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Nov 2022 12:27:42 -0800 (PST)
+Message-Id: <pull.1385.git.git.1669148861635.gitgitgadget@gmail.com>
+From:   "Andreas Hasenack via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 22 Nov 2022 20:27:41 +0000
+Subject: [PATCH] chainlint.pl: fix /proc/cpuinfo regexp
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20221117230658.M516129@dcvr>
+To:     git@vger.kernel.org
+Cc:     Andreas Hasenack <andreas.hasenack@canonical.com>,
+        Andreas Hasenack <andreas.hasenack@canonical.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 17, 2022 at 11:06:58PM +0000, Eric Wong wrote:
+From: Andreas Hasenack <andreas.hasenack@canonical.com>
 
-> Aside from that, v2 below still frees the regex memory early on
-> in the hopes deduplicate_islands() can reuse some of the freed
-> regexp memory.
-> 
-> Anyways, here's v2, which seems to work.  I'm still trying to
-> figure out SATA errors+resets after replacing a CMOS battery,
-> but I really hope this patch isn't the cause.
+git commit 29fb2ec384a867ca577335a12f4b45c184e7b642 introduced a
+function that gets the number of cores from /proc/cpuinfo on some
+systems, notably linux.
 
-This looks OK to me, though I think it would have been easier to review
-split into two patches (one pushing the globals into local variables and
-the other adding the freeing).
+The regexp it uses (^processor\s*:) fails to match the desired lines in
+the s390x architecture, where they look like this:
 
-Two small notes:
+processor 0: version = FF, identification = 148F67, machine = 2964
 
->  void load_delta_islands(struct repository *r, int progress)
->  {
-> +	struct island_load_data ild = { 0 };
-> +
->  	island_marks = kh_init_oid_map();
-> -	remote_islands = kh_init_str();
->  
-> -	git_config(island_config_callback, NULL);
-> -	for_each_ref(find_island_for_ref, NULL);
-> -	deduplicate_islands(r);
-> +	git_config(island_config_callback, &ild);
-> +	ild.remote_islands = kh_init_str();
+As a result, on s390x that function returns 0 as the number of cores,
+and the chainlint.pl script exits without doing anything.
 
-The initialization of the remote_islands khash is now moved after we
-read the config. That's OK, because our callback doesn't read it, but
-it's not immediately obvious without going back to check the callback.
+Signed-off-by: Andreas Hasenack <andreas.hasenack@canonical.com>
+---
+    chainlint.pl: fix /proc/cpuinfo regexp
 
-Splitting it into:
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1385%2Fpanlinux%2Fupstream-fix-cpuinfo-regexp-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1385/panlinux/upstream-fix-cpuinfo-regexp-v1
+Pull-Request: https://github.com/git/git/pull/1385
 
-  struct island_load_data {
-	kh_str_t *remote_islands;
-	struct island_regexes regexes {
-		regex_t *rx;
-		size_t nr;
-		size_t alloc;
-	};
-  };
+ t/chainlint.pl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-lets you pass:
+diff --git a/t/chainlint.pl b/t/chainlint.pl
+index 976db4b8a01..31cc086f964 100755
+--- a/t/chainlint.pl
++++ b/t/chainlint.pl
+@@ -656,7 +656,7 @@ sub ncores {
+ 	# Windows
+ 	return $ENV{NUMBER_OF_PROCESSORS} if exists($ENV{NUMBER_OF_PROCESSORS});
+ 	# Linux / MSYS2 / Cygwin / WSL
+-	do { local @ARGV='/proc/cpuinfo'; return scalar(grep(/^processor\s*:/, <>)); } if -r '/proc/cpuinfo';
++	do { local @ARGV='/proc/cpuinfo'; return scalar(grep(/^processor[\s\d]*:/, <>)); } if -r '/proc/cpuinfo';
+ 	# macOS & BSD
+ 	return qx/sysctl -n hw.ncpu/ if $^O =~ /(?:^darwin$|bsd)/;
+ 	return 1;
 
-  git_config(island_config_callback, &ild.regexes);
-
-which makes it clear that the khash part isn't touched. But you still
-get to pass the whole &ild around later. Of course that's all going
-through a void pointer, so you're praying that the callback expects the
-right type anyway. ;)
-
-And with your code we'd hopefully notice the problem right away since
-the khash pointer is NULL. So it might not be that big a deal.
-
-> +	for_each_ref(find_island_for_ref, &ild);
-> +	free_config_regexes(&ild);
-> +	deduplicate_islands(ild.remote_islands, r);
-> +	free_remote_islands(ild.remote_islands);
-
-Here we free the regexes, but they're pointing to garbage memory still.
-But since we pass just the remote_islands part of the struct to those
-functions, we know they can't look at the garbage regexes. Good.
-
-I'd have said it ought to be two separate variables, but the
-for_each_ref() callback forces your hand there.
-
--Peff
+base-commit: a0789512c5a4ae7da935cd2e419f253cb3cb4ce7
+-- 
+gitgitgadget
