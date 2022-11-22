@@ -2,105 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ADD7DC433FE
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 00:03:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3610FC4332F
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 00:07:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231936AbiKVADJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 21 Nov 2022 19:03:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36378 "EHLO
+        id S229671AbiKVAHE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 21 Nov 2022 19:07:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229739AbiKVADG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Nov 2022 19:03:06 -0500
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5059E7208B
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 16:03:05 -0800 (PST)
-Received: by mail-pf1-x434.google.com with SMTP id g62so12790387pfb.10
-        for <git@vger.kernel.org>; Mon, 21 Nov 2022 16:03:05 -0800 (PST)
+        with ESMTP id S229498AbiKVAGx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Nov 2022 19:06:53 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC9827208C
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 16:06:52 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id e13so18476553edj.7
+        for <git@vger.kernel.org>; Mon, 21 Nov 2022 16:06:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PTKx0mL6IA0LpBqp8EMFv12RrObJQyB+ufPwMUkWdW8=;
-        b=PXfx7K/iPKI7QXM4PvroCRT65ajglSmpiKxB85p81pW+vdLVaELbFXlIXyHNxOxZl+
-         rwPAy108ZcFSAea3qg4KGHnu40ZE3CfybMrgR9O/rkOx+p/R9xGibB/SIFT616EaVyxg
-         jELzdGfvJPnz2RhD79cGRI0D1Fj7sE0GqEiPgxdCpGZ17NuIcaVuAhdM5XdPRzrBxTfO
-         TgHXghxo0ka+xkam5VGlrDml5z1OP2B52f1UXczRRB+BPtu6ua1PTRlUnR7hOIO7jVQt
-         baW1iimnXw5NA/C9o4P7ggLus3fe70hrawIvl9P7kpIIGSqaQJG5tOHPbiLtnrIzrD2W
-         xtJg==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=VI5xKAEAjLUL9lidTfU7vp80u8YhGgxQcxipIlKV8W0=;
+        b=oDEOhnU+IKIPDjQgHduaxNuxSkR9W2yvHkHnIUHk9VPz8IH7+5elk2NZEhEk7/eNcC
+         pivjmnY6cqMUwmo/b1aToAcif9ouuusSg7JZTsSmGtR6FczuhBBEe43M23zunw5GnZ3E
+         h53g4o9mUbYGRJ9R1zQJGPbNPvokZXV9djwzQUaUvCMzkqgPOcffqfDdi9Dk7j0gU7Vy
+         1leeECC1g+Rtwx8QKWeqm98RXVg3f4BOcebXJUtg/7qt/zBsamgqCMYJvM6fO2I3LCFX
+         BHG7nKxwxIyfyDjdG9L+vVN5oyqpdQ8DylfHOxgufEOU47ozyKrkgjRop4WJw5QtYFkX
+         GQPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=PTKx0mL6IA0LpBqp8EMFv12RrObJQyB+ufPwMUkWdW8=;
-        b=6Eg7Z4h3G9FDfhOoNr4/Y0S1zXaym67CMVO4kRexiSpn636QEoDzatpdWa37xcdYaR
-         Dy4PmjdJfeZjL/p2a15EcIdl7jWXQ0lgVjhhsHeAMWqiWaiDoKxlrqi3HqFaq+00Nr/H
-         XG12ZaJju3T0bCWg/4C1qpWrmzyghWsh+86RQNfDCA8ARmCmVK56st6YHl1zS/6PbRH8
-         oiy2Nh4hzmnZg8nH76uy/nrEiQ2n4YeS3cm/3+Mlev2pgoyBnAYZYSzG7j+UV4X9IMXB
-         jMKZAOUBMGoD2l50FMHkEglouZDooUz4c7F9vUFWIM/2YqQ57DGg3QvhdBivR6LY/6tV
-         /nmw==
-X-Gm-Message-State: ANoB5pn+ATSf3YDlmpDqvq8lW+v6TRc+vCs/5A8oeG4RcfnOn/6PygFI
-        Myym4idBH4BSaXGHBFP1UQs=
-X-Google-Smtp-Source: AA0mqf5w4+Vbr0GaR9i1c1oWJUYn+eo9KsjUW43txMeX/6CQKf+q2ula0iN9tGdK2wvkx+B42X+9zA==
-X-Received: by 2002:a63:f354:0:b0:476:db6f:e79d with SMTP id t20-20020a63f354000000b00476db6fe79dmr988783pgj.399.1669075384680;
-        Mon, 21 Nov 2022 16:03:04 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id j4-20020a170903028400b001743ba85d39sm10322690plr.110.2022.11.21.16.03.03
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VI5xKAEAjLUL9lidTfU7vp80u8YhGgxQcxipIlKV8W0=;
+        b=ttOiD7NRhXILpd0YwT6WpW8WLNF1+ZpkXbuS+TLzv39NbI5H13ew1W443Qs/jfAIEH
+         xn6oftTl598pYRbfjm2ocqOMRWgrjr999DaooWVniaUQAJArYxdKmoPkx3BD8cTZXvmr
+         w9u8wtrInDBn4JsYrSLAB5rKVRKYNkwd5epytLug7WoYVeGuyDWXe6hIy/jx4zmFEvMB
+         uH83HGzq6Kdzm3dY4kX8UIbl2sfV4OPGH2bPOC36XVvSC7yGn+pEGem6io4/3jKlwPzK
+         MpmeeLQ1qp/OpKSwl7Aqfqf2W2BxR9e7CFXJJLmhnFGUJF5xDDVvnvHfYsMEnZYJ/4sb
+         Vbpw==
+X-Gm-Message-State: ANoB5plhCip7jTi8EKX2NmjiumcrJTmfVCRLZsFrE37qTySia/fMRImK
+        gbprAf4pIYwNhOH3P7pzt+c=
+X-Google-Smtp-Source: AA0mqf5o150QIsgiiuskjwOAxaGjJkYDKncRbzZRgViGIQ0CoQFyzXDperXAgZ6ToF2//aE8xGoJDg==
+X-Received: by 2002:a05:6402:1a:b0:467:30ad:c4ca with SMTP id d26-20020a056402001a00b0046730adc4camr18855669edu.285.1669075611028;
+        Mon, 21 Nov 2022 16:06:51 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id er21-20020a056402449500b00451319a43dasm5725026edb.2.2022.11.21.16.06.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Nov 2022 16:03:04 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] config: introduce an Operating System-specific
- `includeIf` condition
-References: <pull.1429.git.1669037992587.gitgitgadget@gmail.com>
-Date:   Tue, 22 Nov 2022 09:03:03 +0900
-In-Reply-To: <pull.1429.git.1669037992587.gitgitgadget@gmail.com> (Johannes
-        Schindelin via GitGitGadget's message of "Mon, 21 Nov 2022 13:39:52
-        +0000")
-Message-ID: <xmqqwn7nua88.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Mon, 21 Nov 2022 16:06:50 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oxGoM-000Tsm-02;
+        Tue, 22 Nov 2022 01:06:50 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Kousik Sanagavarapu <five231003@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/2] fixing parse_object() check for type mismatch
+Date:   Tue, 22 Nov 2022 01:05:22 +0100
+References: <Y3Up5Vi75Up8LaGQ@coredump.intra.peff.net>
+ <20221116211419.439356-1-jonathantanmy@google.com>
+ <Y3a3qcqNG8W3ueeb@coredump.intra.peff.net> <Y3fXYKj8PdS4EKLB@nand.local>
+ <Y3vQ/6QcTEFfpjLt@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <Y3vQ/6QcTEFfpjLt@coredump.intra.peff.net>
+Message-ID: <221122.86h6yrc0o6.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> It is relatively common for users to maintain identical `~/.gitconfig`
-> files across all of their setups, using the `includeIf` construct
-> liberally to adjust the settings to the respective setup as needed.
->
-> In case of Operating System-specific adjustments, Git currently offers
-> no support to the users and they typically use a work-around like this:
->
-> 	[includeIf "gitdir:/home/"]
-> 		path = ~/.gitconfig-linux
-> 	[includeIf "gitdir:/Users/"]
-> 		path = ~/.gitconfig-mac
-> 	[includeIf "gitdir:C:"]
-> 		path = ~/.gitconfig-windows
->
-> However, this is fragile, as it would not even allow to discern between
-> Operating Systems that happen to host their home directories in
-> `/home/`, such as Linux and the BSDs.
->
-> Let's introduce a new condition: `os:<uname-s>` where `<uname-s>` is the
-> system name, i.e. the output of `uname -s`.
+On Mon, Nov 21 2022, Jeff King wrote:
 
-As I am not confident enough that we made the best choice that would
-last forever with the initial attempt when we picked "uname -s" as
-the way to switch on "OS", I wouldn't call it "OS".  Perhaps
+> On Fri, Nov 18, 2022 at 02:05:04PM -0500, Taylor Blau wrote:
+>
+>> On Thu, Nov 17, 2022 at 05:37:29PM -0500, Jeff King wrote:
+>> > I'm adding Taylor to the cc as the author of t6102, when we were
+>> > tracking down all of these "oops, it's not really a blob" cases. This
+>> > fixes one of the lingering cases from that test script.
+>> >
+>> >   [1/2]: parse_object(): drop extra "has" check before checking object=
+ type
+>> >   [2/2]: parse_object(): check on-disk type of suspected blob
+>> >
+>> >  object.c                               | 5 ++---
+>> >  t/t6102-rev-list-unexpected-objects.sh | 4 ++--
+>> >  2 files changed, 4 insertions(+), 5 deletions(-)
+>>=20
+>> A blast from the past :-).
+>>=20
+>> I took a careful look at both of these patches and they looked good to
+>> me, so let's start merging them down.
+>
+> I saw this hit 'next', but I think =C3=86var's simplification suggestion =
+is
+> worth taking. So here is a patch on top to do so (the original branch is
+> jk/parse-object-type-mismatch for the benefit of any newly-returned
+> maintainers).
+>
+> I was going to do a "helped-by", but since the only thing in the patch
+> is the suggested change, I just handed over authorship. :)
+>
+> I didn't forge a signoff, and I think mine is sufficient under DCO's
+> part (b), but =C3=86var please indicate if that's OK.
 
-	[includeIf "uname-s:Linux"] path = ...
+This looks good to me, thanks for following up. In case my SOB is needed
+feel free to add it, but it's fine without that too as far as I'm
+concerned.
 
-would be what I would pick.  Other than that, the feature makes
-quite a lot of sense.
+> -- >8 --
+> From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> Subject: [PATCH] parse_object(): simplify blob conditional
+>
+> Commit 8db2dad7a0 (parse_object(): check on-disk type of suspected blob,
+> 2022-11-17) simplified the conditional for checking if we might have a
+> blob. But we can simplify it further. In:
+>
+>   !obj || (obj && obj->type =3D=3D OBJ_BLOB)
+>
+> the short-circuit "OR" means "obj" will always be true on the right-hand
+> side. The compiler almost certainly optimized that out anyway, but
+> dropping it makes the conditional easier to understand for humans.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  object.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/object.c b/object.c
+> index fad1a5af4a..682b852a46 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -286,7 +286,7 @@ struct object *parse_object_with_flags(struct reposit=
+ory *r,
+>  			return &commit->object;
+>  	}
+>=20=20
+> -	if ((!obj || (obj && obj->type =3D=3D OBJ_BLOB)) &&
+> +	if ((!obj || obj->type =3D=3D OBJ_BLOB) &&
+>  	    oid_object_info(r, oid, NULL) =3D=3D OBJ_BLOB) {
+>  		if (!skip_hash && stream_object_signature(r, repl) < 0) {
+>  			error(_("hash mismatch %s"), oid_to_hex(oid));
 
