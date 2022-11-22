@@ -2,102 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 10177C4332F
-	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 18:28:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35DE1C433FE
+	for <git@archiver.kernel.org>; Tue, 22 Nov 2022 18:30:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234530AbiKVS22 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 13:28:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39070 "EHLO
+        id S233709AbiKVSab (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 13:30:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234492AbiKVS2T (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 13:28:19 -0500
-Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D14E5DB93
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 10:28:16 -0800 (PST)
-Received: by mail-qk1-x734.google.com with SMTP id d8so10850508qki.13
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 10:28:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QVxfPiJB4q4biDcquivz60BPLb1uw+VEaO8o8ANGqHI=;
-        b=DflcGeBStQ2FSyilhXM6fmRl0hUOivPMtK8PP9roWgL28Oj1NVoRdXADh5yhv0k+8/
-         egtbNRPz+fcZR9p3GVETHtW2YREqiJcPtmocHZPs9LdtLT/8WrWIVwvEKjXzJpDb5HDv
-         LnUTAsmKAlNn7Q0Wcski4w1zBLkxofnmqdDrs2JqKwODRvaYDnHZEEbduO4wwWNNxfyU
-         crlPHLLhKOG2JXYD1U+857Szmgm+MQ3JtyurC/f2hl4E8/5cskMD3lMiDUCyQHKMIDpP
-         rKGB8DyYyDDNS5ro6cYwDzh3JbAoXZdEeuGqmajcJoLn+7eeGghahbxFx+XzoJjgUski
-         urMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QVxfPiJB4q4biDcquivz60BPLb1uw+VEaO8o8ANGqHI=;
-        b=NH7uKMbWbnq81pYtoxCAM6GCp0G8Lt6VVR+XSpgQKjZFSXZZe91m1tlGhh8KqshxZJ
-         X4GpTXB2k4PwshQ1xUKBy/J59RFn99AfC4KnDKS14hXjhnkahmQOKRjvvTjjX3D6HUkB
-         /3Xz58LcwoJOX0qyougIH8PPAamSdrEtcyYXO41JUSxZuGfVidHfb2/Mu5Nmn8VMvHZe
-         Y/X/irlS+yHoyX85xpqfQr6eaj6fQUG7V4jWy6Qcmr3fLh2QvWQ/P/K1Mbi6qFONg28a
-         DOozZNOgBlt30ytNbYrLzr/iJj0EpDhGxosSNvFp/0O+l3cXcjjQ2+TTc80jyHMdglPT
-         CtEQ==
-X-Gm-Message-State: ANoB5pkcJdxiFLHXwbXbcmcM7/xmtZLem79RHDJ4FSl1G9hcOgw5VRQJ
-        LKEzBROaxVBd5wU5Hzw48+AD02FqhtQ=
-X-Google-Smtp-Source: AA0mqf7Zy98tNg3pi6QMWwwFRMLYoxoiyktWIiOwhcNjG3y0j4N48m7QKTGDsQa1w+xMbPK1s848Ww==
-X-Received: by 2002:a37:9a56:0:b0:6fa:156:ef1 with SMTP id c83-20020a379a56000000b006fa01560ef1mr21900884qke.227.1669141695469;
-        Tue, 22 Nov 2022 10:28:15 -0800 (PST)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id ay34-20020a05620a17a200b006b929a56a2bsm10651534qkb.3.2022.11.22.10.28.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 22 Nov 2022 10:28:14 -0800 (PST)
-Subject: Re: [PATCH] t3920: don't ignore errors of more than one command with
- `|| true`
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Git Mailing List <git@vger.kernel.org>
-References: <febcfb0a-c410-fb71-cff9-92acfcb269e2@kdbg.org>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <a8cf5ba2-0593-b8df-a795-c50511fcb38a@gmail.com>
-Date:   Tue, 22 Nov 2022 13:28:13 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        with ESMTP id S231766AbiKVSa3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 13:30:29 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08C7C86A6E
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 10:30:28 -0800 (PST)
+Received: (qmail 18744 invoked by uid 109); 22 Nov 2022 18:30:28 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 22 Nov 2022 18:30:28 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5515 invoked by uid 111); 22 Nov 2022 18:30:28 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 22 Nov 2022 13:30:28 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 22 Nov 2022 13:30:27 -0500
+From:   Jeff King <peff@peff.net>
+To:     Yoichi Nakayama via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+Subject: Re: [PATCH v4 1/2] git-jump: add an optional argument '--stdout'
+Message-ID: <Y30VQzJ93h98hVhH@coredump.intra.peff.net>
+References: <pull.1423.v3.git.1669033620.gitgitgadget@gmail.com>
+ <pull.1423.v4.git.1669126703.gitgitgadget@gmail.com>
+ <446777d300d73498bd7da709fad75731a13d0d59.1669126703.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <febcfb0a-c410-fb71-cff9-92acfcb269e2@kdbg.org>
 Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <446777d300d73498bd7da709fad75731a13d0d59.1669126703.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+On Tue, Nov 22, 2022 at 02:18:22PM +0000, Yoichi Nakayama via GitGitGadget wrote:
 
-Le 2022-11-21 à 12:58, Johannes Sixt a écrit :
-> It is customary to write `A || true` to ignore a potential error exit of
-> command A. But when we have a sequence `A && B && C || true && D`, then
-> a failure of any of A, B, or C skips to D right away. This is not
-> intended here. Turn the command whose failure is to be ignored into a
-> compound command to ensure it is the only one that is allowed to fail.
-> 
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> ---
->  t/t3920-crlf-messages.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/t/t3920-crlf-messages.sh b/t/t3920-crlf-messages.sh
-> index 4c661d4d54..a58522c163 100755
-> --- a/t/t3920-crlf-messages.sh
-> +++ b/t/t3920-crlf-messages.sh
-> @@ -12,7 +12,7 @@ create_crlf_ref () {
->  	cat >.crlf-orig-$branch.txt &&
->  	cat .crlf-orig-$branch.txt | append_cr >.crlf-message-$branch.txt &&
->  	grep 'Subject' .crlf-orig-$branch.txt | tr '\n' ' ' | sed 's/[ ]*$//' | tr -d '\n' >.crlf-subject-$branch.txt &&
-> -	grep 'Body' .crlf-message-$branch.txt >.crlf-body-$branch.txt || true &&
-> +	{ grep 'Body' .crlf-message-$branch.txt >.crlf-body-$branch.txt || true; } &&
->  	LIB_CRLF_BRANCHES="${LIB_CRLF_BRANCHES} ${branch}" &&
->  	test_tick &&
->  	hash=$(git commit-tree HEAD^{tree} -p HEAD -F .crlf-message-${branch}.txt) &&
-> 
+> @@ -64,11 +67,31 @@ mode_ws() {
+>  	git diff --check "$@"
+>  }
+>  
+> +use_stdout=
+> +while test $# -gt 0; do
+> +	case "$1" in
+> +	--stdout)
+> +		use_stdout=t
+> +		shift
+> +		;;
+> +	--*)
+> +		usage >&2
+> +		exit 1
+> +		;;
+> +	*)
+> +		break
+> +		;;
+> +	esac
+> +done
+>  if test $# -lt 1; then
+>  	usage >&2
+>  	exit 1
+>  fi
+>  mode=$1; shift
+> +if test "$use_stdout" = "t"; then
+> +	"mode_$mode" "$@"
+> +	exit 0
+> +fi
 
-Thank you for making that function more robust.
+Thanks, this looks pretty good. I think we'd want this on top.
 
-Philippe.
+-- >8 --
+Subject: git-jump: move valid-mode check earlier
+
+We check if the "mode" argument supplied by the user is valid by seeing
+if we have a mode_$mode function defined. But we don't do that until
+after creating the tempfile. This is wasteful (we create a tempfile but
+never use it), and makes it harder to add new options (the recent stdout
+option exits before creating the tempfile, so it misses the check and
+"git jump --stdout foo" will produce "git-jump: 92: mode_foo: not found"
+rather than the regular usage message).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ contrib/git-jump/git-jump | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
+index babb3b5c68..cc97b0dcf0 100755
+--- a/contrib/git-jump/git-jump
++++ b/contrib/git-jump/git-jump
+@@ -88,14 +88,15 @@ if test $# -lt 1; then
+ 	exit 1
+ fi
+ mode=$1; shift
++type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
++
+ if test "$use_stdout" = "t"; then
+ 	"mode_$mode" "$@"
+ 	exit 0
+ fi
+ 
+ trap 'rm -f "$tmp"' 0 1 2 3 15
+ tmp=`mktemp -t git-jump.XXXXXX` || exit 1
+-type "mode_$mode" >/dev/null 2>&1 || { usage >&2; exit 1; }
+ "mode_$mode" "$@" >"$tmp"
+ test -s "$tmp" || exit 0
+ open_editor "$tmp"
+-- 
+2.38.1.970.g3b99f132c8
+
