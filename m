@@ -2,229 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42035C433FE
-	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 14:58:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 62DE0C433FE
+	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 15:03:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238239AbiKWO64 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Nov 2022 09:58:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60000 "EHLO
+        id S238308AbiKWPDO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Nov 2022 10:03:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238190AbiKWO6b (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Nov 2022 09:58:31 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 170B563B99
-        for <git@vger.kernel.org>; Wed, 23 Nov 2022 06:58:30 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id x17so16319271wrn.6
-        for <git@vger.kernel.org>; Wed, 23 Nov 2022 06:58:30 -0800 (PST)
+        with ESMTP id S238121AbiKWPCu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Nov 2022 10:02:50 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD4664A072
+        for <git@vger.kernel.org>; Wed, 23 Nov 2022 07:02:38 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id w15-20020a17090a380f00b0021873113cb4so2087060pjb.0
+        for <git@vger.kernel.org>; Wed, 23 Nov 2022 07:02:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BXUpc6WPgDhyayBhPnIjaxhO1CCYhVGWSzNR8jV+6SM=;
-        b=GPEcbQwupaz/qv3HMYZYtPodxM8ysohvIgtunSeaoowlaobK4orjMwGrWdZGBQ9sZc
-         6CbAwwmKKxjn/O76PAAwrvpoINwhuvdU6vtu9VqZwlgaizyDFGuzgYgQxmKACsRZIAZ9
-         jra5bFINU77IkthGF9Nhc52vK511oxhs2VuEa4XgWF9HPO32sZihqHSbdJOSZbgPxIQb
-         EFZ9cOxRZ0tB5h5h5lD/6HVKaqKRjE7en075A6FNEWBh2kW9F3sp99tlMHyM9XxgWIIa
-         XU0P7YdO5MEydC233FxlAuzaiwSkYvTd3WfY4Fm4AnRXAfncfzwfPihgbexLUvWAkGxS
-         OArA==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=sFwl63rjvoOJW0d1e0eP1H6pKScq6rF3wgMEGSlhIbs=;
+        b=IRO93NNKlP0Fu1noS7xkIyJ89+jMpJEcM7Wmi2zfrkUuKUfs0NBuE6wsEy0H5YisBy
+         nqXII8WD+Mwi0A67caCZEelo8vJ0d0XDgTaP5h4TyOkee5gcsiT8Jh9Yj8U+yRMqsyUl
+         o4sCgKuT6D15CXTDI8jv473RmWcFqVISqOrO/erJZRBa2gWG6rKHEsbAab+AiB94G3vi
+         xWLGPiaMTVAs5CbCustDQcPXilGpyPVwHIoUtJx9w8WS+26q/PeyAsfh/ohXtruKFnpW
+         6MY5Enve5WLAT9MiluHzxYR62cesMySA82GtSAYHVZFyYpfP77+gL4pjrR0Sx9FT4TOk
+         AWhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BXUpc6WPgDhyayBhPnIjaxhO1CCYhVGWSzNR8jV+6SM=;
-        b=lJwkSzVpQBiwhhYCYTg7iVLHIhN8q7Y/D9h0iUhIwRO1IGAk0xhs31OsWQNWF3mQKw
-         pZU6KdaCVQknOkAvZU+5QrrrXg/ib0FtosUfYkFTgGvLSggDU+YwlIXNkGId9DZg7E13
-         Rdn7JG9ZbQSIJLQztQDa60nNpcysgchEU9+cgUO8gVdyKBoqH1EBTdGsEFH75dy80t9H
-         V7a0jqxx9EJz1saB6xuJ3xGGq4x9Y+h4odh9XCVnq1xao6dyuORT+m1U/WlOWMI+mXQ2
-         zSBhH0ixvP2arLwDjlSZ6UvDvddRfRH7Y/J7HRSZSRj3wWCbLmvGGdBR4F80Hvh2MC5G
-         E4KQ==
-X-Gm-Message-State: ANoB5pmWQ9xCso4ByYLnk2GUKgZTrYE/j62SJto+caDj/eEJaRdxWw9c
-        DUJk4Om5ee0s9DNL874K6nc=
-X-Google-Smtp-Source: AA0mqf5XUOsFyyvoJqQD2Hd44/UjsLwrUkJ49fiJRwyygngAFwtBr/S5NaWYwRGY4m7lp5XXtFiBug==
-X-Received: by 2002:adf:ee03:0:b0:241:c5c5:d48b with SMTP id y3-20020adfee03000000b00241c5c5d48bmr14157098wrn.464.1669215508463;
-        Wed, 23 Nov 2022 06:58:28 -0800 (PST)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id o7-20020a05600c510700b003cf5ec79bf9sm2827767wms.40.2022.11.23.06.58.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Nov 2022 06:58:28 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <feb7db00-db00-6190-47cf-9101052b9be8@dunelm.org.uk>
-Date:   Wed, 23 Nov 2022 14:58:27 +0000
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sFwl63rjvoOJW0d1e0eP1H6pKScq6rF3wgMEGSlhIbs=;
+        b=M3Zd2qFIIjWuMeSA4inGMGSpQbAeKHY5ba2JKU9dX9h/QVpwzwQKiA9Uu3t9KtYQG/
+         CkrUUrf0Qsr8bCNiIZea5CT9VAS9AuDqIBaXtLcv3niNxdcfI6G1tbZgRYmowSQzqNKT
+         G4isAVFgodjjqQiRdvsze4nJ3ffl5ekwcqllWtAbDNFZcNsVquSCLR3jsFcbPJLyAr5Q
+         odWexeTl9TpyEoFskB0O6GBTkepmNGhejFhsuBEPMkiYM39b6QcaWPiTNxaacJlp577o
+         +pzXvq1pGAID5OtWfxiIxVx1JdnjvpF5wSoGGx6l/ZHRw6Dl/S2lnJ0ffeSyw7+lvnoY
+         FDPA==
+X-Gm-Message-State: ANoB5pnsiOpsRB8nHIxNytsaIShyVlNaUpcs/7M9lFWZDWJnfrucdk8E
+        TVIg6FZPj8HQQJTSKuaEr+yVGCbDqvM=
+X-Google-Smtp-Source: AA0mqf5ShP3GMZIpGH4wXVqjn10ARiqqdft136JpH1d8GQvDJ7WWCy8AwmOaDmmsPxF3zlLIxuw7fA==
+X-Received: by 2002:a17:90a:4894:b0:218:a96f:9eec with SMTP id b20-20020a17090a489400b00218a96f9eecmr17651954pjh.159.1669215756856;
+        Wed, 23 Nov 2022 07:02:36 -0800 (PST)
+Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id y185-20020a6232c2000000b0056ddd2b5e9bsm12783263pfy.41.2022.11.23.07.02.36
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Nov 2022 07:02:36 -0800 (PST)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH 0/2] Use fixed github-actions runner image
+Date:   Wed, 23 Nov 2022 23:02:31 +0800
+Message-Id: <20221123150233.13039-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 3/3] git-jump: invoke emacs/emacsclient
-Content-Language: en-US
-To:     Yoichi Nakayama via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-References: <pull.1423.v4.git.1669126703.gitgitgadget@gmail.com>
- <pull.1423.v5.git.1669187053.gitgitgadget@gmail.com>
- <ad7c299cb0f78ae3f36d57b67fa91e5ccaab3181.1669187053.git.gitgitgadget@gmail.com>
-In-Reply-To: <ad7c299cb0f78ae3f36d57b67fa91e5ccaab3181.1669187053.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Yoichi
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-On 23/11/2022 07:04, Yoichi Nakayama via GitGitGadget wrote:
-> From: Yoichi Nakayama <yoichi.nakayama@gmail.com>
-> 
-> It works with GIT_EDITOR="emacs", "emacsclient" or "emacsclient -t"
-> 
-> Signed-off-by: Yoichi Nakayama <yoichi.nakayama@gmail.com>
-> ---
->   contrib/git-jump/git-jump | 17 ++++++++++++++++-
->   1 file changed, 16 insertions(+), 1 deletion(-)
-> 
-> diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-> index cc97b0dcf02..316e9628725 100755
-> --- a/contrib/git-jump/git-jump
-> +++ b/contrib/git-jump/git-jump
-> @@ -23,7 +23,22 @@ EOF
->   
->   open_editor() {
->   	editor=`git var GIT_EDITOR`
-> -	eval "$editor -q \$1"
-> +	case "$editor" in
-> +	*emacs*)
-> +		# Supported editor values are:
-> +		# - emacs
-> +		# - emacsclient
-> +		# - emacsclient -t
-> +		#
-> +		# Wait for completion of the asynchronously executed process
-> +		# to avoid race conditions in case of "emacsclient".
-> +		eval "$editor --eval \"(prog1 (pop-to-buffer (compilation-start \\\"cat $@\\\" 'grep-mode)) (while (get-buffer-process (current-buffer)) (sleep-for 0.1)) (select-frame-set-input-focus (selected-frame)))\""
+Today I found lots of CI errors of my private host git repository
+on GitHub. It is because the runner image "ubuntu-latest" of the
+CI jobs is ubuntu 22.04 (jammy) instead of ubuntu 20.04 (focal).
 
-I've just tried this out and it is much nicer than v4, thank you for 
-tweaking it. It is a little sluggish to pop up the emacs window though - 
-are you sure we need the while loop? I've commented it out and it seems 
-to work just fine. The documentation for pop-to-buffer says it selects 
-the frame displaying the buffer so I don't think we need to wait before 
-calling select-frame-set-input-focus (I'm no emacs expert though). I do 
-think it would be better to quote the filename or better still call 
-git-jump from compilation-start as Peff suggested. It would also be nice 
-to stop emacsclient from printing anything in the terminal.
+The upgrade of runner images is in progress, and my public forked
+repository still use 20.04 (focal) as "ubuntu-latest".
 
-It would be nice to be able to run git-jump from within emacs. I came up 
-with the code below which prompts the user for the directory to run 
-git-jump in (which only matters for grep and diff --relative I think) 
-and then checks for modified buffers visiting files in that repository 
-before running git-jump.
+Two patches in this series try to protect our CI in advance.
 
-Best Wishes
+New CI instance see below:
 
-Phillip
+ * https://github.com/jiangxin/git/actions/runs/3532978329
 
----- >8 ----
-(require 'cl-lib)
+--
 
-(defun git-jump (dir)
-   "Run 'git jump', prompts for the directory to run in. Also prompts to
-    save modified buffers visiting files in the repository containing DIR"
-   (interactive "DDirectory:")
-   (let* ((dir (expand-file-name dir))
-	 (worktree (git-jump--get-worktree dir)))
-     (unless worktree
-       (error "Not in a git repository"))
-     (git-jump--save-worktree-buffers worktree)
-     ;; Use "cd" rather than "git -C" so emacs can tell which directory
-     ;; the command is being run in.
-     (compilation-start (concat "cd " (shell-quote-argument dir)
-			       " && git jump --stdout "
-			       (read-string "Jump command: "))
-		       'grep-mode
-		       (lambda (mode) "*git-jump*"))))
+Jiang Xin (2):
+  github-actions: run gcc-8 on ubuntu-20.04 image
+  ci: upgrade version of p4
 
+ .github/workflows/main.yml | 16 ++++++++++++----
+ ci/install-dependencies.sh | 10 +++++-----
+ ci/lib.sh                  |  8 ++++----
+ 3 files changed, 21 insertions(+), 13 deletions(-)
 
-(defun git-jump--save-worktree-buffers (worktree)
-   "Prompt the user to save all the modified buffers in WORKTREE"
-   (let ((ht (make-hash-table :test 'equal))
-	(off (length worktree))
-	(buffers nil))
-     (dolist (b (buffer-list))
-       (when (buffer-modified-p b)
-	(let ((file (buffer-file-name b)))
-	  (when file
-	    (let ((path (file-truename file)))
-	      (when (string-prefix-p worktree path)
-		(puthash (substring path off) b ht)))))))
-     (let ((modified (hash-table-keys ht)))
-       (when modified
-	(git-jump--ls-files worktree
-			       modified
-			       (lambda (path)
-				 (push (gethash path ht) buffers)))
-	(when buffers
-	  (save-some-buffers nil (lambda ()
-				   (memq (current-buffer) buffers))))))))
-
-
-(defun git-jump--get-worktree (dir)
-   "Get the git worktree containing DIR. Returns nil if DIR is not in a
-    repository"
-   (message (concat "dir: " dir))
-   (let* ((toplevel "")
-	    (filter (lambda (_proc text)
-		      (setf toplevel (concat toplevel text))))
-	    (proc (make-process :name "rev-parse--toplevel"
-				:buffer nil
-				:coding (or file-name-coding-system
-					    default-file-name-coding-system)
-				:command (list "git" "-C" dir "rev-parse"
-					       "--show-toplevel")
-				:connection-type 'pipe
-				:filter filter)))
-        (while (or (accept-process-output proc 120)
-		  (not (memq (process-status proc) '(exit signal)))))
-        (prog1
-	   (if (and (eq (process-status proc) 'exit)
-		    (zerop (process-exit-status proc)))
-	       (concat (substring toplevel 0 -1) "/")
-	     nil)
-	 (delete-process proc))))
-
-
-(defun git-jump--ls-files (worktree paths func)
-   "Run FUNC on PATHS that are tracked by worktree. NB takes paths not 
-pathspecs"
-   (let* ((remainder "")
-	 (filter (lambda (_proc text)
-		   (let* ((text (concat remainder text))
-			  (len (length text))
-			  (pos 0))
-		     (while (< pos len)
-		       (cond
-			((= pos (string-match "\\([^\0]+\\)\0" text pos))
-			 (funcall func (match-string 1 text))
-			 (setq pos (match-end 0)))
-			(t
-			 (setq remainder (substring text pos))
-			 (setq pos len)))))))
-        (proc (make-process :name "ls-files"
-			   :buffer nil
-			   :coding (or file-name-coding-system
-				       default-file-name-coding-system)
-			   :command (cl-list* "git" "-C" worktree
-					      "--literal-pathspecs" "ls-files"
-					      "-z" "--" paths)
-			   :connection-type 'pipe
-			   :filter filter)))
-     (while (or (accept-process-output proc 120)
-	       (not (memq (process-status proc) '(exit signal)))))
-     (delete-process proc)))
-
-(provide 'git-jump)
-
-
+-- 
+2.39.0.rc0
 
