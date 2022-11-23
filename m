@@ -2,132 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7555C4332F
-	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 02:47:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8EF7CC4332F
+	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 04:00:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235288AbiKWCrj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 21:47:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53676 "EHLO
+        id S234338AbiKWEAw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 23:00:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234984AbiKWCrg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 21:47:36 -0500
-Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E10F63E8
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 18:47:32 -0800 (PST)
-Date:   Wed, 23 Nov 2022 02:47:20 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
-        s=protonmail3; t=1669171650; x=1669430850;
-        bh=GR5YbFHNw+Gs0pCkxcguwci8ui7yv/xgPdsOelOx3a8=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=1pmHOT84ZXSqaGnvCZPvxYrJMLP+j9vgScESQ2bNac+A5ga5lHdyDHa7hvfn44dOt
-         nbOfbTQnDMOsrWiPmMaqLZdDWcF6m3s/67hVHCLj5WwMZEairE4ELDBdIW/gtEEJ5q
-         cN60yBkDLrqxqeIU6RYsDw60EYplid4J9IygtTedxaF0f1TmMunK6HfUgVhs2/FG50
-         eWBJnlPxHVJ4M8Z5FWpF5KnPNcWDX6INxYhz0TeFTkuk55nACVbL2+g3Y6AEOqtlNH
-         KEymRDZGuAELqCETJZlzUxsdQjDBhonDjKqlChooBnmQwm/P78VBqltAegoE7W/Q1B
-         D6Tc7sLeRZbiQ==
-To:     =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-From:   Jacob Abel <jacobabel@nullpo.dev>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
-        Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v3 0/2] worktree: Support `--orphan` when creating new worktrees
-Message-ID: <20221123024711.6whxch3lngauyvf2@phi>
-In-Reply-To: <221123.86a64ia6bx.gmgdl@evledraar.gmail.com>
-References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20221104213401.17393-1-jacobabel@nullpo.dev> <20221110233137.10414-1-jacobabel@nullpo.dev> <CAPig+cTTn764ObHJuw8epOtBdTUwocVRV=tLieCa4zf-PGCegw@mail.gmail.com> <221117.86sfihj3mw.gmgdl@evledraar.gmail.com> <20221119034728.m4kxh4tdpof7us7j@phi> <221119.86a64nf9k5.gmgdl@evledraar.gmail.com> <CAPig+cTGATAYCpFcW2F6byf827-_TOyN1FNLfFCm0NdiReYVpg@mail.gmail.com> <20221122232647.2jdsp5kioq7muymb@phi> <221123.86a64ia6bx.gmgdl@evledraar.gmail.com>
-Feedback-ID: 21506737:user:proton
+        with ESMTP id S235667AbiKWEAm (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 23:00:42 -0500
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C5A6E2229
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 20:00:42 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id a1-20020a17090abe0100b00218a7df7789so783431pjs.5
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 20:00:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Tv9ZwrGoTtWMsalZD06/8pS8FLeJUdilqWdFoWGEmqU=;
+        b=GpVxmQ48Jafhbq6u43jVuIICIGWZsg3f9W74svP1Ybkg29JEwOJXhFwkvJ8S06CO5x
+         8zYsskCHtjBiOI+mB2li4gevKyHNLcNNASClhcUaawCzX+I6fcL81KCn8onqWKbBIfyX
+         2DA/h3z27Dn2V7ogPFhrIy57n8biQw4nnIL5vQLUAXisdZBfco3ZrBJIOIHire4gzx6E
+         kpXnusuYzJjSjpQfU/tprkmRroKKOTt7QKgUSvghqjOQ+pyxPuLkUXZAP8D7wqEDXJld
+         H/EJb/RC8Vjow3iBuQszJg1lYiYSIG/wraI6OPEiutENkn15Jbq2HzUiuKSICVhdTful
+         sTzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Tv9ZwrGoTtWMsalZD06/8pS8FLeJUdilqWdFoWGEmqU=;
+        b=oO33Arz1AAK4znRjxU1weES6fV442SxwsLylx1qRR0864ET0EXlYVntvjyfS271THs
+         kEagGevMgRtvJog+slOvUqXFKXDID/urzsT/b6kuM+qe2V/jgmSj7M1vN61XbAoG2fPQ
+         +EMbl9mcQYlq4mr/Pg3ZMI8IWDsIvsI3r5Gf/qKZ4N+AMSZ7wFEzuEiAUdUvYmT/3khm
+         NeLXjb5ui0zs++wxX3WW8zQyZseTbE3nyc/5FegsJlY6sbbCyNExgPYGzCk5CCW+zekp
+         Ncm38FO69yugWguLQ8Ip6Y6inAJKhjlb/v10L4+ueYYrer/E5q0bto3wia6EF6vWLiAo
+         CUGg==
+X-Gm-Message-State: ANoB5pmxwmg1G5iyUMfMKIndAkVFAvwZYcwuOnkkVDjNbrmnSXIouuXr
+        4Ac7blQGhQ+P+lvn+rY6n4k=
+X-Google-Smtp-Source: AA0mqf67dN/y5erkP48i2egPGgaJsP74t3HUFmLZj2PJJAj/rcP3Ke0rSrBRWMKQwS4QkXV6/BQclQ==
+X-Received: by 2002:a17:90a:ad4c:b0:212:d3ec:632f with SMTP id w12-20020a17090aad4c00b00212d3ec632fmr7178387pjv.43.1669176041665;
+        Tue, 22 Nov 2022 20:00:41 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id r11-20020a170902c60b00b00188b63f0773sm12614938plr.289.2022.11.22.20.00.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Nov 2022 20:00:41 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     Glen Choo <chooglen@google.com>,
+        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH v3 8/8] clone, submodule update: create and check out
+ branches
+References: <20221123013319.1597025-1-jonathantanmy@google.com>
+Date:   Wed, 23 Nov 2022 13:00:40 +0900
+In-Reply-To: <20221123013319.1597025-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Tue, 22 Nov 2022 17:33:19 -0800")
+Message-ID: <xmqqbkoynwuv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/11/23 12:55AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
-> On Tue, Nov 22 2022, Jacob Abel wrote:
->
-> > On 22/11/22 12:16AM, Eric Sunshine wrote:
-> >> On Sat, Nov 19, 2022 at 6:49 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> >> <avarab@gmail.com> wrote:
-> >> > On Sat, Nov 19 2022, Jacob Abel wrote:
-> >> > > I'd support adding an `advise()` for at least the basic case where=
- you try to
-> >> > > create a worktree and no branches currently exist in the repositor=
-y.
-> >> > > i.e. something like this:
-> >> > >
-> >> > >     % git -C foo.git worktree add foobar/
-> >> > >     hint: If you meant to create a new initial branch for this rep=
-ository,
-> >> > >     hint: e.g. 'main', you can do so using the --orphan option:
-> >> > >     hint:
-> >> > >     hint:   git worktree add --orphan main main/
-> >> > >     hint:
-> >> > >     fatal: invalid reference: 'foobar'
-> >> > > and
-> >> > >     % git -C foo.git worktree add -b foobar foobardir/
-> >> > >     hint: If you meant to create a new initial branch for this rep=
-ository,
-> >> > >     hint: e.g. 'main', you can do so using the --orphan option:
-> >> > >     hint:
-> >> > >     hint:   git worktree add --orphan main main/
-> >> > >     hint:
-> >> > >     fatal: invalid reference: 'foobar'
-> >> >
-> >> > I think those would make sense, yes.
-> >>
-> >> Yes, this sort of advice could go a long way toward addressing my
-> >> discoverability concerns. (I think, too, we should be able to
-> >> dynamically customize the advice to mention "foobar" rather than
-> >> "main" in order to more directly help the user.) Along with that,
-> >> explaining this use-case in the git-worktree documentation would also
-> >> be valuable for improving discoverability.
-> >
-> > Perfect. I think I've got this working already on my end using more or =
-less
-> > the following:
-> >
-> >     diff --git a/builtin/worktree.c b/builtin/worktree.c
-> >     index 71786b72f6..f65b63d9d2 100644
-> >     --- a/builtin/worktree.c
-> >     +++ b/builtin/worktree.c
-> >     @@ -736,7 +736,21 @@ static int add(int ac, const char **av, const =
-char *prefix)
-> >         if (!opts.quiet)
-> >             print_preparing_worktree_line(opts.detach, branch, new_bran=
-ch, !!new_branch_force);
-> >
-> >     -=09if (new_branch && !opts.orphan_branch) {
-> >     +=09if (opts.orphan_branch) {
-> >     +=09=09branch =3D new_branch;
-> >     +=09} else if (!lookup_commit_reference_by_name("head")) {
-> >     +=09=09/*
-> >     +=09=09 * if head does not reference a valid commit, only worktrees
-> >     +=09=09 * based on orphan branches can be created.
-> >     +=09=09 */
-> >     +=09=09advise("if you meant to create a new orphan branch for this =
-repository,\n"
-> >     +=09=09=09 "e.g. '%s', you can do so using the --orphan option:\n"
-> >     +=09=09=09 "\n"
-> >     +=09=09=09 "=09git worktree add --orphan %s %s\n"
-> >     +=09=09=09 "\n",
-> >     +=09=09=09 new_branch, new_branch, path);
->
-> We don't consistently check for this, unfortunately (but I have some
-> local patches for it), but to add an advice you should:
->
->  * Add it to Documentation/config/advice.txt (in sorted order)
->  * Add the corresponding enum to advice.h
->  * And to the advice.c listing
->  * Then use advise_if_enabled(<that new enum>, ...) in cases such as this=
- one.
->  * End your message with a suggstion about how to disable the advice:
->    git grep -W -F 'git config advice.' -- '*.c'
->
-> That's rather tedious, sorry, but that's the extent of the current
-> boilerplate...
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Noted. Will do.
+> ... My
+> concern is to avoid doing something in a patch set that we will later need to
+> undo; I think that we are indeed avoiding it here (we're doing A but we will
+> still need it in the future, so there is no undoing of A needed).
+>
+> So overall, after this discussion, this patch set looks good to me, except for
+> the minor points that I have commented on in my previous emails.
 
+Thanks for a summary.
