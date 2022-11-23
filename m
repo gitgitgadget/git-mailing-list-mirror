@@ -2,111 +2,161 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EFB8DC433FE
-	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 12:29:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 215C7C4332F
+	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 13:10:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237078AbiKWM3f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Nov 2022 07:29:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33558 "EHLO
+        id S238332AbiKWNKg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Nov 2022 08:10:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237644AbiKWM3F (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Nov 2022 07:29:05 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A8F83FB86
-        for <git@vger.kernel.org>; Wed, 23 Nov 2022 04:27:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1669206476; bh=BEvBBjErmNw6ff6f7LAd+ZFhABzgLTM/F2cOwf8EUs0=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-        b=aaY5OymWRPr7akNEPdKo0YHEPIfdvZwzRr0PUkhZ9Tqh0IDHkeRCBfTB4y0YG9J99
-         HZkAsb5TlPuQCD2ye8E9do+nWr+RnQxPEyQ9I9oHa0SPNI7HquNpV/lYzqXDVe3lx1
-         Ekvi+6jFgziCZkYo/Bg7V3B6PZilAyYrm21OCRio8rVZpU3uMZUK9i4gmy7DGCJIfz
-         HRyuYUk4BhNP+8kFcObiH9jPcEWfonhUaIg9C3dqpQ8guTurrOfweJp6F5vEyn/7PS
-         ZMqw/QZfguEBz9Zfl5Uua4DTKKWHFEn+mxhYFmHZ4Jokj9j4RiPgOtn3x14lBydeMI
-         25Fi+3bW3RhwQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from fv-az703-26.qjxmrcqukxzejbqhl0udth3dcc.gx.internal.cloudapp.net
- ([20.9.35.107]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
- (Nemesis) id 1MbRfl-1pVEjC3d8L-00bw4J; Wed, 23 Nov 2022 13:27:56 +0100
-From:   Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
-        git-packagers@googlegroups.com
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [ANNOUNCE] Git for Windows 2.39.0-rc0
-Date:   Wed, 23 Nov 2022 12:27:53 +0000
-Message-Id: <20221123122753.3132-1-johannes.schindelin@gmx.de>
-X-Mailer: git-send-email 2.38.1
-Content-Type: text/plain; charset=UTF-8
+        with ESMTP id S238578AbiKWNKO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Nov 2022 08:10:14 -0500
+Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 572CA8517B
+        for <git@vger.kernel.org>; Wed, 23 Nov 2022 04:52:13 -0800 (PST)
+Received: by mail-il1-x12c.google.com with SMTP id g7so8477686ile.0
+        for <git@vger.kernel.org>; Wed, 23 Nov 2022 04:52:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
+         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
+        bh=cVzeKu/iwhsrrFJnmNVK91k4+E+ljNIlazWRPZ6vQm4=;
+        b=PvVUAT1Pn1ClU0kJQhk5Nm4v01Ypq2hJZG0djpj6F0rKnK+ouD67T5ZSw7FFWNIare
+         131Xm8+9fNQYVwyA0fhvm6WXayTr6JeugCyYyCrJ8i/2sCOhkQXMjDZe8tqTzeOU3WOP
+         p5EqJyeYdTKM7Pc7tkCyl8A47m2oJZ/5IrsIvV2f6oGTr91jyIB3ldSy0fZ9aouuEx6q
+         Blnx7fy0094mnAzA9K0Lu06s5s3A8pSCyS2VHy+DxZ7lfir7A0tsOlihNoiTecSz+Wbg
+         wxa5vssVaSBDge4aVxH2DIZfUyvN34exoNGaBng3SHOYXGqRfZICgLc88Fzq9hcQLSvP
+         0Syg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
+         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cVzeKu/iwhsrrFJnmNVK91k4+E+ljNIlazWRPZ6vQm4=;
+        b=VJ6dOqhCen99jRWAcNsCYrdS8KCn3Z89KI79yoWZoipHyRV47IIXQEcBqn90RoGlt3
+         lerr3/eRoQP64MhTQbWgKxovG7u8w2YRot/dYA4jz1sBTbuQaf7DtxxZcGyzKl8Ng2w1
+         cszi/UibMi2TDbPq25RlfmFZysY9dCZRajBpZZpSO/4ul8fjLK1k/zKfrsph+PO8us6B
+         9vu9CYZhtO9Jy8b02gDs6u2fTFPYhJ2F0kQcQuPYc8kfwmnLMf3vnqAtyMCo4JTBmvuQ
+         QsXkRaPUrdjl+nPCARn4XsbkFiRGnrXoIIPuYsFV8fOluAkx6Q50dCQWyi6dpmjcmP2c
+         nvcw==
+X-Gm-Message-State: ANoB5plH3hgPzUmPBzZirQEmhCtHiTFw0qwO7VRkOscNJMAgDUkp1Lyb
+        AT5ksQYy6/leMoWrBQ8jpGg=
+X-Google-Smtp-Source: AA0mqf7djC/GtXbLFw2q6bxrplh+t4hqtYpOmGUp87y8/OTVQlDTnyRnn0CUORsAr9s+OcAdK5508g==
+X-Received: by 2002:a05:6e02:4ad:b0:302:a706:1fd2 with SMTP id e13-20020a056e0204ad00b00302a7061fd2mr7830603ils.46.1669207932515;
+        Wed, 23 Nov 2022 04:52:12 -0800 (PST)
+Received: from stargate ([2620:72:0:a40:d75e:9820:e8e0:410c])
+        by smtp.gmail.com with ESMTPSA id m5-20020a056e020de500b00302a1848485sm5595742ilj.63.2022.11.23.04.52.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Nov 2022 04:52:11 -0800 (PST)
+References: <pull.1424.git.1668972017089.gitgitgadget@gmail.com>
+ <xmqq1qpwwwxg.fsf@gitster.g>
+User-agent: mu4e 1.9.0; emacs 28.1
+From:   Sean Allred <allred.sean@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Sean Allred via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Sean Allred <code@seanallred.com>
+Subject: Re: [PATCH] var: add GIT_SEQUENCE_EDITOR variable
+Date:   Wed, 23 Nov 2022 06:21:47 -0600
+In-reply-to: <xmqq1qpwwwxg.fsf@gitster.g>
+Message-ID: <87cz9dq1dx.fsf@gmail.com>
 MIME-Version: 1.0
-Fcc:    Sent
-X-Provags-ID: V03:K1:Bg1kLz5zef4Vhc4Qi7xesomaLcuAGlJZ7e0cKit4hY/NFDtQ6ti
- bss5MAYdjDQ1OPxMN2O7OO9esnMlar3XX2mpOdNveEZaNeIZPpqKLyO1ly6aqrj0AU0CIS1
- ztSS47Xr7VfrPQqBwwNgL+z0uIHyNZDqT92Vp4QGN15BtbieN8v+g5ooLhC54y+x9yxuJ9N
- xlazmWhrzlJUU1XExtbCw==
-UI-OutboundReport: notjunk:1;M01:P0:AT1+41gPvpY=;XN95W0sL5Lc9qZ0bWFt8LMBOFFN
- vBqWQeLWEjGGd31p3nzu4HFiLtc7NQ+Po5ag9RgZT5JZkrV8QgoCLUh4cNrpAMb4GjZdqMTTU
- IdwSGPhzrTOUpxCOPJmG3e4msvfMggAz2eN76RMKUAzNKISc/62vG57OvcbSASPs9+u/3Ia23
- JMY8a0DqFvnMw9+BC9DW0W56ggWJuk1Q5qLOBReEs4i1QrAuTaNZd0seD3zuSZHYLY/KiT5eg
- GmHaFS8WJZgiVN6tcG0SC31RvGa2FfNkiFVGAmiEabUsOy8O8BfbbjZceMHbUXqoDPKeLNzGf
- 0LD8RTerYY71YpHYaNW7MeVcEXOZYyqmtv4ahVBn/b2b19ahN9VaRfDsPsbYa2J1+iDfJtM0r
- wHeNoB/NCAlmJ1wDtAPRGBtGRZ5CwUJ2XmqZx+5NPARA701lWC0Ds6hq5UgQp8CePf3Fv4YiA
- ZjHcwLHjIatdmyPRs5Q8lzg0IVGxim4wsPPZjFt7223QpEJJcEM/3tps3EcWO97TH39tfCTkH
- kq+Um58d8otdu6ODX5YBMsU7dhIPSPFQvTVbrzz5VKXS/CaVa3qbwpM30o5L0PF9R5X4BhQZP
- 4AtmxtueONJR4FAzESy+Z1E94O0cS07tIi8DWT0YxqfI942fGhqgZtuirenKMMsW12cMEZVgS
- LtjvEKjhRTH8IVvKwwnGIrGsoxipgEAxvJtUwbtuISUy/LnB9h1nAKCaOeinem9s4G8wpqo8P
- ioiWmP16qFKjqVr03I75kPfghhyv2h6dLIbjzkTNC/UXFgnxuSSmMHKvOAwfcKXKuW3WL4AnY
- 9uVuU1ek/WSVF/HwOHFjhsS8R8vmCHLrP28llZMFN86Hs9pZhBSTaF0PJ0h1G+kD93sRfD2HH
- kHE70K8vIm1dU5SIquUEvWN4IUr62bu8XMUQw28qE6l9qLqxlkpS8JgsAhiATzbRIyfdnPNjS
- 1HTNwg==
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear Git users,
 
-I hereby announce that Git for Windows 2.39.0-rc0 is available from:
+Junio C Hamano <gitster@pobox.com> writes:
+>> Provides the same benefits to scripts as exposing GIT_EDITOR, but
+>> allows distinguishing the 'sequence' editor from the 'core' editor.
+>>
+>> See also 44fcb4977cbae67f4698306ccfe982420ceebcbf.
+>
+> Why should we ;-)?
 
-    https://github.com/git-for-windows/git/releases/tag/v2.39.0-rc0.windows.1
+I must admit I struggled quite a bit with a useful commit message, so I
+greatly appreciate the suggestion :-) I've incorporated your suggestion
+for a future v2.
 
-Changes since Git for Windows v2.38.1 (October 18th 2022)
+>> +GIT_SEQUENCE_EDITOR::
+>> +    Text editor for use by Git sequencer commands. Like `GIT_EDITOR`,
+>
+> Do our readers know what "Git sequencer commands" are?  "rebase -i"
+> of course is the primary one, but "cherry-pick" and "revert" that
+> deals with multiple commits are technically "sequencer commands", as
+> they also use the sequencer machinery.  But for them, the users do
+> not get a chance to edit the "todo" list with their sequence editor,
+> unlike "rebase -i".
 
-  * Comes with OpenSSL v1.1.1q.
+That's a good point; I hadn't considered that as a potential source of
+confusion -- prefering instead to future-proof the docs at the cost of
+understandability :-)
 
-New Features
+> I am wondering if it is easier to understand, without losing
+> technical correctness, to exactly name the command, without
+> pretending as if the sequence editor is used in situations wider
+> than where "rebase -i" is used, e.g.
+>
+> 	The text editor program used to edit the 'todo' file while
+> 	running "git rebase -i".
 
-  * Comes with Git v2.39.0-rc0.
-  * Comes with OpenSSL v1.1.1s.
-  * Comes with cURL v7.86.0.
-  * The Portable Git edition (which comes as a self-extracting 7-Zip
-    archive) now uses the latest 7-Zip version to self-extract.
-  * Comes with OpenSSH v9.1p1.
-  * It is now possible to generate and use SSH keys protected by
-    security keys (AKA FIDO devices) via Windows Hello, e.g. via
-    ssh-keygen.exe -t ecdsa-sk.
-  * Comes with Bash v5.2 patchlevel 009 .
-  * Portable Git no longer configures color.diff, color.status and
-    color.branch individually, but configures color.ui instead, which
-    makes it easier to override the default.
-  * Comes with GNU TLS v3.7.8.
-  * Comes with Git Credential Manager Core v2.0.877.
+I've incorporated your suggestion. It's possibly worth noting that I had
+wanted to prefer prose ('interactive rebase') over a specific invocation
+('git rebase -i'), but I see existing precedent for referring to it as
+the latter in documentation (and release notes especially). I suppose
+this practice is intended (either consciously or otherwise) to make it
+more straightforward to cross-reference different pieces of the
+documentation?
 
-Bug Fixes
+>> diff --git a/builtin/var.c b/builtin/var.c
+>> index 491db274292..9a2d31dc4aa 100644
+>> --- a/builtin/var.c
+>> +++ b/builtin/var.c
+>> @@ -19,6 +19,16 @@ static const char *editor(int flag)
+>>  	return pgm;
+>>  }
+>>
+>> +static const char *sequence_editor(int flag)
+>> +{
+>> +	const char *pgm = git_sequence_editor();
+>> +
+>> +	if (!pgm && flag & IDENT_STRICT)
+>> +		die("Terminal is dumb, but EDITOR unset");
+>
+> I know this was copied from editor(), but the message does not make
+> much sense.  It's not like the caller of read_var() is not prepared
+> to see a NULL returned, so letting it return NULL would make more
+> sense.  Since the ancient past back when editor() function was
+> written, launch_editor() and the logic to die with "on dumb terminal
+> you must specify an EDITOR" have migrated to editor.c and there is
+> no strong reason to keep the corresponding die() even in editor()
+> function (I do not recommend removing it as part of this topic,
+> though), and adding a new one makes even less sense.
 
-  * The Git executables (e.g. git.exe itself) used to have incomplete
-    version information recorded in their resources, which has been
-    fixed.
-  * A regression introduced in Git for Windows v2.38.0 that prevented
-    git.exe from running in Windows Nano Server containers was fixed.
+I'm glad you brought this up. To be perfectly honest, I'm not confident
+I know what IDENT_STRICT is even supposed to mean -- it looks to be
+undocumented in cache.h. Here's what I *think* I've been able to piece
+together based on what you've said and some commit history:
 
-Git-2.39.0-rc0-64-bit.exe | 74ba237e120c4528102001551f2b2c08a9643a6cad8d7a397b134e4dde5498ef
-Git-2.39.0-rc0-32-bit.exe | 0c14e81e0746a151ca8937c3736160720b4cfecf9bc826f681de7f275978ab51
-PortableGit-2.39.0-rc0-64-bit.7z.exe | 02e73e5f584df658a709f373b0e0b8dc7ff72a754052bd76cd0af67fa23a9701
-PortableGit-2.39.0-rc0-32-bit.7z.exe | 2c6acc55ea0df14be2b1695445ec6ac9061eb6e5a0f50ee8d9a1054899e522c2
-MinGit-2.39.0-rc0-64-bit.zip | 638acc223365fc761655926b2cd86d9f4e2b6618a7ddee183a31c26dd3a63714
-MinGit-2.39.0-rc0-32-bit.zip | bc3c16ba093821ffb254a6c2eb44a9f84de163543f657e03ca1b797a826ab80c
-MinGit-2.39.0-rc0-busybox-64-bit.zip | f898d769d717c85f380f65687b10734aa5cfb28b636805b7bf434b5c24dbc593
-MinGit-2.39.0-rc0-busybox-32-bit.zip | bd79b74dac8b69a8eba4c5324b5190dd85c71b74ffb8e2ca20358d94e244ec00
-Git-2.39.0-rc0-64-bit.tar.bz2 | 48f2855ec77fb608f3831b1aaab725ca599e42a8fb27c6aa6c872c4d3f2f9efd
-Git-2.39.0-rc0-32-bit.tar.bz2 | 036afe5dda8cb98e70bbcbce92570dfe0bc6d6f82f2fb7e0129faf17b62eeb4f
+    f9bc573fdaeaf8621008f3f49aaaa64869791691 suggests that setting
+    IDENT_STRICT is intended to be 'more upset' about 'things' (the
+    commit I mention is specifically talking about identities -- which
+    explains the IDENT_* prefix) that aren't well-defined. In porcelain
+    code, we want to quit immediately if there's nothing available since
+    you can't really open up COMMIT_MSG, e.g., without a well-defined
+    editor. Better to die early with a semi-useful message than to let
+    the issue propagate downstream.
 
-Ciao,
-Johannes
+    This does not apply to git-var since the purpose of this command is
+    not to invoke an editor, but to inspect configuration state via
+    well-defined API. In this context, it's not necessary/appropriate to
+    die early since, for the purposes of git-var, 'no configuration' is
+    a perfectly valid (albeit confusing) state to be in.
+
+I'd like to confirm this / understand more about what's going on here
+before making the code change on this one. If I can understand what's
+going on here well enough to write an informed commit message, I can
+remove this vestigial code from editor() in a separate patch.
+
+--
+Sean Allred
