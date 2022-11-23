@@ -2,81 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0AD0C4332F
-	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 19:11:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5404C433FE
+	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 19:14:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239117AbiKWTLS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Nov 2022 14:11:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41768 "EHLO
+        id S239821AbiKWTOv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Nov 2022 14:14:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45548 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239825AbiKWTLL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Nov 2022 14:11:11 -0500
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B1211E710
-        for <git@vger.kernel.org>; Wed, 23 Nov 2022 11:11:08 -0800 (PST)
-Received: by mail-pl1-f173.google.com with SMTP id k7so17478081pll.6
-        for <git@vger.kernel.org>; Wed, 23 Nov 2022 11:11:08 -0800 (PST)
+        with ESMTP id S239812AbiKWTOs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Nov 2022 14:14:48 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC618B0420
+        for <git@vger.kernel.org>; Wed, 23 Nov 2022 11:14:46 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id ud5so44900063ejc.4
+        for <git@vger.kernel.org>; Wed, 23 Nov 2022 11:14:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=rsYGokz62lFC7cDFdmeLFvkIeZ2jTlrg520pcly9iYg=;
+        b=RE7CYKsBxKrMy876wjbAv1BB4HGVtbBmZO/m+ktFCor/TVmRppl70g/uUfgoMyG8a2
+         zSDViubnkozbXqFb8Ikj1odjk7AViJIZRIpK2ctjUD80Rmu9ISF/p6MorMoBg/tSGSc/
+         /UhH3hf1C1WiE1ZEeovKCIhCyPvQ9smDsVlt72qMuFOYfbK5uOBYTHnk8mNSJDlsaFrv
+         G5GiaGLCJK/KkkROFxXRAeXhJiNV58ew0qy3lQns5/5Ts4mC7+10iocH4Vt6Q5jVgWxT
+         3QibaaT8bQvZhtlXrqQKrsqXx4+Wpu3xVAPKwf8ooa270wj2PldQvtYExm/K4yT6UJg3
+         GleQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=oZ4Xxv7MQd4JOyfHj4dy5eogIjFonW5Yi6168ebePBk=;
-        b=UaEuB071xgchV8Oq1/XQCK2LKACd4V7SH2HsoJe5KCFfh4UKrQHaB2K/RT3ku2S0w8
-         uYkh2tYjk1+NPW68GnLQBYVLUcD+d/WPC1/Eg2pC4CbTjltPeZmG4NMNxain6b2ox7Vo
-         NkJDmmLZgF9JRh6HNQq5dig8rvNyJQEKTtIsG8Z6lozjDmLcqGPpGvam4TtySTymJfo0
-         psufjZ7caSQgSyWUx2UmxLVYlwWXAcvabNujhdr+MzGhJpFyHMGwxRRNEIdxk/mNogn0
-         lazilW/EE0hmZ2pBAVnYy3UxPIDnSz+6aD6c5CENkoBOvPyiHjS8f97G6TqKYxOsPNSd
-         4Yng==
-X-Gm-Message-State: ANoB5pnwfCeqsCk59Gvm4UgmJ6seXnkKfztBBmOeWwEXhXx/35RZ8MfU
-        P1OgtoVkX547iFVVdQOXTmYCxEaldmLao6zFUG0=
-X-Google-Smtp-Source: AA0mqf7x1xk3JpyPInvinXk+tgwxJqdz0Pk+y0G3Sd8Rxj3hW12BE8AhBT1uV07PS6bnt998p5k9SRmzffiqD66YFoQ=
-X-Received: by 2002:a17:902:8f96:b0:189:3803:23e6 with SMTP id
- z22-20020a1709028f9600b00189380323e6mr7555771plo.77.1669230667591; Wed, 23
- Nov 2022 11:11:07 -0800 (PST)
+        bh=rsYGokz62lFC7cDFdmeLFvkIeZ2jTlrg520pcly9iYg=;
+        b=IDFPxpImDfu3DrmB133eHYHXI4wx3dfu37eWwLx+4x/UrDgOFJS5GPsRowB8Y5NlS9
+         CfpKSKvoBghpL34ZoaTChLNRk0xfZDQFTWUr+hcerjrWpuQvxW5t2+jSNR5mgG1AJIOR
+         BLkqUnYU88gUCVXNFmNPCtmb+dxNo+rWK7GDDvVMdr3JUPcGH9IFjvUuxpcfxIo4jtie
+         YpCJlYEk79DhQL8x81lsHp5xj4lYYeiJXpMbxTEHkSTaXqPE1IMqmPeXdtVG1Uu+R/RJ
+         F3MHibN+gBmw8uY9v5PRTHN7eBjz/5X0RWG75eIqpiX31UeLQPIqX5zuL6WETpI5n2R4
+         WTtg==
+X-Gm-Message-State: ANoB5pnksbzsN/67Ss9vh2KdlEuHvlueZ5mlhkQvJgCoH+EpLZnd4lfW
+        zgivFyJ6U8XCK149jCxNL2DzpCyJ/W0FkGIPKDyvv0ub
+X-Google-Smtp-Source: AA0mqf4aCtRY9zmTsd/8mLxNslzIVJEkqY6kc0teTng4TZzIZXK6eiK44ZZD66uwAT479Nb3EDFFmhQnQj9SPw2ofv0=
+X-Received: by 2002:a17:906:2c10:b0:7ad:d051:538f with SMTP id
+ e16-20020a1709062c1000b007add051538fmr25373375ejh.401.1669230884887; Wed, 23
+ Nov 2022 11:14:44 -0800 (PST)
 MIME-Version: 1.0
-References: <CANYNYEHXU8ivgAOa8EO5e9kOcbu6XF7rj+9EcSrbDQE+Rvyw_Q@mail.gmail.com>
- <87v8n6o9du.fsf@igel.home> <CAPig+cRchF_6t-B-cZHLHAH_E6qNmapTezSfCj9AZ8cfWNzivw@mail.gmail.com>
- <mvm1qpu9g2e.fsf@linux-m68k.org>
-In-Reply-To: <mvm1qpu9g2e.fsf@linux-m68k.org>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 23 Nov 2022 14:10:56 -0500
-Message-ID: <CAPig+cT5dxrS2-xUSYfot7k6v0qV0TXh=xSMe7Y-oMGLMhbjVA@mail.gmail.com>
-Subject: Re: chainlink.pl /proc/cpuinfo regexp fails on s390x
-To:     Andreas Schwab <schwab@linux-m68k.org>
-Cc:     Andreas Hasenack <andreas@canonical.com>, git@vger.kernel.org
+References: <CACtGy4i7Jv+UyjwKOLsMOQwUO81=o98AA5SNwi+=xUB76ehD_g@mail.gmail.com>
+In-Reply-To: <CACtGy4i7Jv+UyjwKOLsMOQwUO81=o98AA5SNwi+=xUB76ehD_g@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Wed, 23 Nov 2022 11:14:33 -0800
+Message-ID: <CA+P7+xoAh3bFBEvVcRF8Xb-DxxWbbM=R0gWVQ6JsFCWtHy4SDw@mail.gmail.com>
+Subject: Re: git download
+To:     Vasilij Demyanov <qvasic@gmail.com>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 23, 2022 at 4:27 AM Andreas Schwab <schwab@linux-m68k.org> wrote:
-> On Nov 22 2022, Eric Sunshine wrote:
-> > On Tue, Nov 22, 2022 at 6:37 PM Andreas Schwab <schwab@linux-m68k.org> wrote:
-> >> On Nov 22 2022, Andreas Hasenack wrote:
-> >> > /^processor[\s\d]*:/
-> >> > or something else.
-> >>
-> >> Something else.
-> >> $ getconf _NPROCESSORS_ONLN
-> >
-> > Yes, that works too and was (I'm pretty sure) considered during
-> > development. The reason /proc/cpu was chosen over `getconf` was that
-> > opening & reading /proc/cpu should be faster since it doesn't involve
-> > spawning a process. If we did use `getconf`, we'd have to be careful
-> > to degrade gracefully if `getconf` isn't available or if the
-> > configuration parameter (i.e. "_NPROCESSORS_ONLN") isn't known on the
-> > platform.
+On Wed, Nov 23, 2022 at 9:27 AM Vasilij Demyanov <qvasic@gmail.com> wrote:
 >
-> getconf is surely more portable than poking in /proc, especially
-> /proc/cpuinfo is the antipode of portability.
+> Hello everybody!
+>
 
-No doubt, but for the immediate issue, this tightly-focused fix is
-more appropriate and less likely to lead to unexpected additional
-problems. I'm not arguing against `getconf`, but saying only that
-_this_ patch is fine as-is.
+Hi,
 
-It may very well be a good idea to replace the /proc/cpuinfo probe by
-`getconf` in the future (or remove it altogether as mentioned
-upstream), but that's outside the scope of this patch and the
-immediate problem.
+> I have a need to get just one file from a repository, it would be
+> useful to have a command something like this:
+>
+
+Ok.
+
+> git download repo_url branch_or_commit path/to/file
+>
+> Or maybe there is something like this, I just haven't found it in the docs?
+>
+
+So this isn't something git itself provides. Various web hosting
+services for git provide such access, because they allow viewing the
+repository contents. Git can't provide this easily because of the
+nature of the commits and trees used to store the contents of the
+repository. In order to verify that you got the correct contents, you
+essentially have to fetch the commit and all its parents. You can
+maybe save some download space by using a sparse clone.. but most
+remote repositories may not allow arbitrary commit hash fetching.
+
+If you already have a repository available from some computer/system
+you can extract the file at a given version via something like git
+cat-file:
+
+$ git cat-file -p <commitish>:<path>
+
+where commitish can be a branch or a commit hash, or other way to
+reference a commit, and path is the path of the file.
+
+Unfortunately you will essentially need to have cloned the repository first.
+
+If your project is hosted somewhere using software like github,
+gitlab, etc, or has gitweb-like software operating on it, you may be
+able to find an API or web interface that lets you extract the
+individual file without downloading the repository. This is somewhat
+outside the scope of this mailing list tho.
+
+Thanks,
+Jake
+
+> Best regards,
+> Vasyl
