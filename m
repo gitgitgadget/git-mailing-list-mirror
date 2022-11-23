@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45567C433FE
-	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 19:01:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A72D4C4332F
+	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 19:01:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239612AbiKWTBY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Nov 2022 14:01:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58716 "EHLO
+        id S239338AbiKWTB0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Nov 2022 14:01:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239338AbiKWTBE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Nov 2022 14:01:04 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0665F92097
-        for <git@vger.kernel.org>; Wed, 23 Nov 2022 11:00:55 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id z4so16244926wrr.3
-        for <git@vger.kernel.org>; Wed, 23 Nov 2022 11:00:54 -0800 (PST)
+        with ESMTP id S239427AbiKWTBF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Nov 2022 14:01:05 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2BE1922E4
+        for <git@vger.kernel.org>; Wed, 23 Nov 2022 11:00:56 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id e11so17920999wru.8
+        for <git@vger.kernel.org>; Wed, 23 Nov 2022 11:00:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FGeYWHawFT/RkYnEHv+xVJgDFjPFKnvI5O3/C52qS/w=;
-        b=qJgCaRNa83wXXcgB00WpEqULmGSfo6PKPz9QWPoqiDUpvI1gV6bc6fSeivGHuEv+D8
-         udW78AFjOqgVLFgSGqkOIIm5Ys9wdFYxZ6XAnuQHMXv8D+kAdqOuWorcu64C5bQgv5fV
-         wAR0vrenl/ECWDUgUtI542XN0xqLBusslCixdTEXt5DQzP4ODGPlG0AQpIKOA2VUCPZR
-         eT4cLXwLLLRQUF6Q2TFeHwZBP6C85IPt5CGqSfcdPZSBcFB177AIIAqGEXzigvW1Clpj
-         elJcg2pw7K0rblNZHKIgGiY3905X2ghE3AZi0MlRiy9MfiEVQxooCS3J88RYHrX2qEGw
-         RGbA==
+        bh=Oi1JhA2Y49B3vsv8LyQZ/nUzDuStw5WBLGMA8BZqLVA=;
+        b=UmAFrMfHBOhFifoeTxJB/lTArTwZWGYEFJu2bnZuW5LtEyTvf0xn/E3rPzbReneijI
+         aMKyBZdeb2e91yrJOW2bI5o+iYrpUyLf8NoHU1gluRyMWEbDaBPzwV9DTCx4+tZwd9ag
+         QresmKH+n551uYgUnidxbRordFZPfWYM/OlROspRc2nPL00KxITLJhsurJcX6/T6C4QE
+         F2negrB78T5MRD0maWGSWXVJOSQDgEta6EdFKOXiUdeK+iCLJ37mCw3WBAwPDR1AmNT7
+         3oCuuL5YIbLIpMRsYCj///0HLl1OrYUrZ/30N7nQod8nUe5Xq02xJYlcS0DkhEXVRYVr
+         qTgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FGeYWHawFT/RkYnEHv+xVJgDFjPFKnvI5O3/C52qS/w=;
-        b=Q0wlFkkG4XI3s4bx+aug1u01eSLsVqiVJPTooL/AMj1rZz3Aj4JMxHKvofIQgyU/yy
-         0ptOcUfaxNsZj3kDLRP9eqI7JPxv7rAZozfR6mSW8xkb71/TdtN/95LZhe+CTqvsVwO6
-         fONXnOeLnkN1MYVaXaeQj/1Aa0umm7UAEMgJ9KayZ+ogkE8MW8tckec3g6emC3wlZB1I
-         00r2fscjHKg58arvYKjXcW8n+MUiTqixlMn40kOUMTV3HtWkL5ST3cBMBqqsKlNIp0Rj
-         PnMKIm7kzjWnYaRj52FvElLSo6yF//AeTcdkp6wO/y8zH2lWlu/16JIBP+/ojlo6g1Ka
-         CfEQ==
-X-Gm-Message-State: ANoB5pkcbicpacdyR9CGf7iiCiQRW85J+P/FRlbtu3p1WSGprzC1wtDL
-        i5u8yP3T6zLG96PSBWaSne19hCBiFW4=
-X-Google-Smtp-Source: AA0mqf7nCMpl7R3pvitku7zSAVMkdzJBTqbc/VwM3fCUcsN/Hosbh+XVcK1+x9vF1Et1QtcpsdH1nw==
-X-Received: by 2002:adf:ed8b:0:b0:241:d375:88b6 with SMTP id c11-20020adfed8b000000b00241d37588b6mr10331984wro.88.1669230053303;
-        Wed, 23 Nov 2022 11:00:53 -0800 (PST)
+        bh=Oi1JhA2Y49B3vsv8LyQZ/nUzDuStw5WBLGMA8BZqLVA=;
+        b=Y7XhESvTA7P4qEHURK7wRbAFz3xAL73rONr3YViYBGNTYBZwKP0WKsU2f30RDXftxP
+         kfpsbCKHVMtwmoR83p8GsYoOhETRl+wYhMlrQPttiMeEtaouAWWupwal+5QK2WusYKPy
+         MvRFmnTksN+NlLus4od0ZOR0YlW/bvY1Vgq2SQW/i1Z9rzTrqfOzFMvxeozR3RelcSR0
+         aCfy2DWoJc+fpdsWAnvurzF+qmSUKQQGE/aiFm8zsK4HvdTcZeW2gO1DGpuPBJiiVOtU
+         OJOPxvB8x7cRZa7fU04cPWqnkNcsOy7d4jn4TgHVN+E47y0+opZhLankm8ZSvVp/RF20
+         /WRw==
+X-Gm-Message-State: ANoB5pk+DjxKxGKM6joR9ZPjMhWsMLw5fZUTBodEN4OG9jJ0WfPvIN3V
+        CXkCt4bByJuOVuPbrY8kW2R9vlbwPVo=
+X-Google-Smtp-Source: AA0mqf4rpT2h8PmZBU34/2/WM6+AcXQrFAjszIETg0jIUGj7Z9Strm3BSrTtRdDtpeSPHO2fn6UxIQ==
+X-Received: by 2002:adf:e305:0:b0:236:6089:cc5e with SMTP id b5-20020adfe305000000b002366089cc5emr9394907wrj.118.1669230054373;
+        Wed, 23 Nov 2022 11:00:54 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p15-20020a05600c468f00b003cfaae07f68sm212874wmo.17.2022.11.23.11.00.52
+        by smtp.gmail.com with ESMTPSA id e19-20020a05600c219300b003c6bd12ac27sm2960179wme.37.2022.11.23.11.00.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Nov 2022 11:00:52 -0800 (PST)
-Message-Id: <8d9d469b3566fe45c43cfd348a3a1e2dbd6dc5dd.1669230044.git.gitgitgadget@gmail.com>
+        Wed, 23 Nov 2022 11:00:53 -0800 (PST)
+Message-Id: <5afd03fa6ca3a790eb06213573d9be3c40dee492.1669230044.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1352.v4.git.git.1669230044.gitgitgadget@gmail.com>
 References: <pull.1352.v3.git.git.1668641019.gitgitgadget@gmail.com>
         <pull.1352.v4.git.git.1669230044.gitgitgadget@gmail.com>
 From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Nov 2022 19:00:43 +0000
-Subject: [PATCH v4 5/6] fsmonitor: test updates
+Date:   Wed, 23 Nov 2022 19:00:44 +0000
+Subject: [PATCH v4 6/6] fsmonitor: update doc for Linux
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -74,245 +74,72 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Eric DeCosta <edecosta@mathworks.com>
 
-t7527-builtin-fsmonitor was leaking fsmonitor--daemon processes in some
-cases.
-
-Accomodate slight difference in the number of events generated on Linux.
-
-On lower-powered systems, spin a little to give the daemon time
-to respond to and log filesystem events.
+Update the documentation for Linux.
 
 Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
 ---
- t/t7527-builtin-fsmonitor.sh | 94 ++++++++++++++++++++++++++++++------
- 1 file changed, 80 insertions(+), 14 deletions(-)
+ Documentation/config/fsmonitor--daemon.txt |  4 ++--
+ Documentation/git-fsmonitor--daemon.txt    | 24 ++++++++++++++--------
+ 2 files changed, 18 insertions(+), 10 deletions(-)
 
-diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
-index 4abc74db2bb..951374231b7 100755
---- a/t/t7527-builtin-fsmonitor.sh
-+++ b/t/t7527-builtin-fsmonitor.sh
-@@ -13,7 +13,7 @@ fi
- stop_daemon_delete_repo () {
- 	r=$1 &&
- 	test_might_fail git -C $r fsmonitor--daemon stop &&
--	rm -rf $1
-+	rm -rf $r
- }
+diff --git a/Documentation/config/fsmonitor--daemon.txt b/Documentation/config/fsmonitor--daemon.txt
+index c225c6c9e74..2cafb040d96 100644
+--- a/Documentation/config/fsmonitor--daemon.txt
++++ b/Documentation/config/fsmonitor--daemon.txt
+@@ -4,8 +4,8 @@ fsmonitor.allowRemote::
+     behavior.  Only respected when `core.fsmonitor` is set to `true`.
  
- start_daemon () {
-@@ -72,6 +72,34 @@ start_daemon () {
- 	)
- }
+ fsmonitor.socketDir::
+-    This Mac OS-specific option, if set, specifies the directory in
++    Mac OS and Linux-specific option. If set, specifies the directory in
+     which to create the Unix domain socket used for communication
+     between the fsmonitor daemon and various Git commands. The directory must
+-    reside on a native Mac OS filesystem.  Only respected when `core.fsmonitor`
++    reside on a native filesystem.  Only respected when `core.fsmonitor`
+     is set to `true`.
+diff --git a/Documentation/git-fsmonitor--daemon.txt b/Documentation/git-fsmonitor--daemon.txt
+index 8238eadb0e1..c2b08229c74 100644
+--- a/Documentation/git-fsmonitor--daemon.txt
++++ b/Documentation/git-fsmonitor--daemon.txt
+@@ -76,23 +76,31 @@ repositories; this may be overridden by setting `fsmonitor.allowRemote` to
+ correctly with all network-mounted repositories and such use is considered
+ experimental.
  
-+IMPLICIT_TIMEOUT=5
+-On Mac OS, the inter-process communication (IPC) between various Git
++On Linux and Mac OS, the inter-process communication (IPC) between various Git
+ commands and the fsmonitor daemon is done via a Unix domain socket (UDS) -- a
+-special type of file -- which is supported by native Mac OS filesystems,
+-but not on network-mounted filesystems, NTFS, or FAT32.  Other filesystems
+-may or may not have the needed support; the fsmonitor daemon is not guaranteed
+-to work with these filesystems and such use is considered experimental.
++special type of file -- which is supported by many native Linux and Mac OS
++filesystems, but not on network-mounted filesystems, NTFS, or FAT32.  Other
++filesystems may or may not have the needed support; the fsmonitor daemon is not
++guaranteed to work with these filesystems and such use is considered
++experimental.
+ 
+ By default, the socket is created in the `.git` directory, however, if the
+ `.git` directory is on a network-mounted filesystem, it will be instead be
+ created at `$HOME/.git-fsmonitor-*` unless `$HOME` itself is on a
+ network-mounted filesystem in which case you must set the configuration
+-variable `fsmonitor.socketDir` to the path of a directory on a Mac OS native
++variable `fsmonitor.socketDir` to the path of a directory on a native
+ filesystem in which to create the socket file.
+ 
+ If none of the above directories (`.git`, `$HOME`, or `fsmonitor.socketDir`)
+-is on a native Mac OS file filesystem the fsmonitor daemon will report an
+-error that will cause the daemon and the currently running command to exit.
++is on a native Linux or Mac OS filesystem the fsmonitor daemon will report
++an error that will cause the daemon to exit and the currently running command
++to issue a warning.
 +
-+wait_for_update () {
-+	func=$1 &&
-+	file=$2 &&
-+	sz=$(wc -c < "$file") &&
-+	last=0 &&
-+	$func &&
-+	k=0 &&
-+	while test "$k" -lt $IMPLICIT_TIMEOUT
-+	do
-+		nsz=$(wc -c < "$file")
-+		if test "$nsz" -gt "$sz"
-+		then
-+			if test "$last" -eq "$nsz"
-+			then
-+				cat "$file" &&
-+				return 0
-+			fi
-+			last=$nsz
-+		fi
-+		sleep 1
-+		k=$(( $k + 1 ))
-+	done &&
-+	cat "$file" &&
-+	return 0
-+}
-+
- # Is a Trace2 data event present with the given catetory and key?
- # We do not care what the value is.
- #
-@@ -137,7 +165,6 @@ test_expect_success 'implicit daemon start' '
- # machines (where it might take a moment to wake and reschedule the
- # daemon process) to avoid false alarms during test runs.)
- #
--IMPLICIT_TIMEOUT=5
++On Linux, the fsmonitor daemon registers a watch for each directory in the
++repository.  The default per-user limit for the number of watches on most Linux
++systems is 8192.  This may not be sufficient for large repositories or if
++multiple instances of the fsmonitor daemon are running.
++See https://watchexec.github.io/docs/inotify-limits.html[Linux inotify limits] for more information.
  
- verify_implicit_shutdown () {
- 	r=$1 &&
-@@ -373,6 +400,15 @@ create_files () {
- 	echo 3 >dir2/new
- }
- 
-+rename_directory () {
-+	mv dirtorename dirrenamed
-+}
-+
-+rename_directory_file () {
-+	mv dirtorename dirrenamed &&
-+	echo 1 > dirrenamed/new
-+}
-+
- rename_files () {
- 	mv rename renamed &&
- 	mv dir1/rename dir1/renamed &&
-@@ -427,10 +463,12 @@ test_expect_success 'edit some files' '
- 
- 	start_daemon --tf "$PWD/.git/trace" &&
- 
--	edit_files &&
-+	wait_for_update edit_files "$PWD/.git/trace" &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
- 
-+	test_might_fail git fsmonitor--daemon stop &&
-+
- 	grep "^event: dir1/modified$"  .git/trace &&
- 	grep "^event: dir2/modified$"  .git/trace &&
- 	grep "^event: modified$"       .git/trace &&
-@@ -442,10 +480,12 @@ test_expect_success 'create some files' '
- 
- 	start_daemon --tf "$PWD/.git/trace" &&
- 
--	create_files &&
-+	wait_for_update create_files "$PWD/.git/trace" &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
- 
-+	test_might_fail git fsmonitor--daemon stop &&
-+
- 	grep "^event: dir1/new$" .git/trace &&
- 	grep "^event: dir2/new$" .git/trace &&
- 	grep "^event: new$"      .git/trace
-@@ -456,10 +496,12 @@ test_expect_success 'delete some files' '
- 
- 	start_daemon --tf "$PWD/.git/trace" &&
- 
--	delete_files &&
-+	wait_for_update delete_files "$PWD/.git/trace" &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
- 
-+	test_might_fail git fsmonitor--daemon stop &&
-+
- 	grep "^event: dir1/delete$" .git/trace &&
- 	grep "^event: dir2/delete$" .git/trace &&
- 	grep "^event: delete$"      .git/trace
-@@ -470,10 +512,12 @@ test_expect_success 'rename some files' '
- 
- 	start_daemon --tf "$PWD/.git/trace" &&
- 
--	rename_files &&
-+	wait_for_update rename_files "$PWD/.git/trace" &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
- 
-+	test_might_fail git fsmonitor--daemon stop &&
-+
- 	grep "^event: dir1/rename$"  .git/trace &&
- 	grep "^event: dir2/rename$"  .git/trace &&
- 	grep "^event: rename$"       .git/trace &&
-@@ -487,23 +531,42 @@ test_expect_success 'rename directory' '
- 
- 	start_daemon --tf "$PWD/.git/trace" &&
- 
--	mv dirtorename dirrenamed &&
-+	wait_for_update rename_directory "$PWD/.git/trace" &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
- 
-+	test_might_fail git fsmonitor--daemon stop &&
-+
- 	grep "^event: dirtorename/*$" .git/trace &&
- 	grep "^event: dirrenamed/*$"  .git/trace
- '
- 
-+test_expect_success 'rename directory file' '
-+	test_when_finished clean_up_repo_and_stop_daemon &&
-+
-+	start_daemon --tf "$PWD/.git/trace" &&
-+
-+	wait_for_update rename_directory_file "$PWD/.git/trace" &&
-+
-+	test-tool fsmonitor-client query --token 0 &&
-+
-+	test_might_fail git fsmonitor--daemon stop &&
-+
-+	grep "^event: dirtorename/*$" .git/trace &&
-+	grep "^event: dirrenamed/*$"  .git/trace &&
-+	grep "^event: dirrenamed/new$"  .git/trace
-+'
- test_expect_success 'file changes to directory' '
- 	test_when_finished clean_up_repo_and_stop_daemon &&
- 
- 	start_daemon --tf "$PWD/.git/trace" &&
- 
--	file_to_directory &&
-+	wait_for_update file_to_directory "$PWD/.git/trace" &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
- 
-+	test_might_fail git fsmonitor--daemon stop &&
-+
- 	grep "^event: delete$"     .git/trace &&
- 	grep "^event: delete/new$" .git/trace
- '
-@@ -513,10 +576,12 @@ test_expect_success 'directory changes to a file' '
- 
- 	start_daemon --tf "$PWD/.git/trace" &&
- 
--	directory_to_file &&
-+	wait_for_update directory_to_file "$PWD/.git/trace" &&
- 
- 	test-tool fsmonitor-client query --token 0 &&
- 
-+	test_might_fail git fsmonitor--daemon stop &&
-+
- 	grep "^event: dir1$" .git/trace
- '
- 
-@@ -561,7 +626,7 @@ test_expect_success 'flush cached data' '
- 	test-tool -C test_flush fsmonitor-client query --token "builtin:test_00000002:0" >actual_2 &&
- 	nul_to_q <actual_2 >actual_q2 &&
- 
--	grep "^builtin:test_00000002:0Q$" actual_q2 &&
-+	grep "^builtin:test_00000002:[0-1]Q$" actual_q2 &&
- 
- 	>test_flush/file_3 &&
- 
-@@ -732,7 +797,8 @@ u_values="$u1 $u2"
- for u in $u_values
- do
- 	test_expect_success "unicode in repo root path: $u" '
--		test_when_finished "stop_daemon_delete_repo $u" &&
-+		test_when_finished \
-+		"stop_daemon_delete_repo `echo "$u" | sed 's:x:\\\\\\\\\\\\\\x:g'`" &&
- 
- 		git init "$u" &&
- 		echo 1 >"$u"/file1 &&
-@@ -818,8 +884,7 @@ test_expect_success 'submodule setup' '
- '
- 
- test_expect_success 'submodule always visited' '
--	test_when_finished "git -C super fsmonitor--daemon stop; \
--			    rm -rf super; \
-+	test_when_finished "rm -rf super; \
- 			    rm -rf sub" &&
- 
- 	create_super super &&
-@@ -887,7 +952,8 @@ have_t2_error_event () {
- }
- 
- test_expect_success "stray submodule super-prefix warning" '
--	test_when_finished "rm -rf super; \
-+	test_when_finished "git -C super/dir_1/dir_2/sub fsmonitor--daemon stop; \
-+			    rm -rf super; \
- 			    rm -rf sub;   \
- 			    rm super-sub.trace" &&
- 
+ CONFIGURATION
+ -------------
 -- 
 gitgitgadget
-
