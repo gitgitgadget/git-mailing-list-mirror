@@ -2,59 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97097C433FE
-	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 19:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A523C3A59F
+	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 19:00:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239333AbiKWTAx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Nov 2022 14:00:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58428 "EHLO
+        id S239378AbiKWTAy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Nov 2022 14:00:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58440 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237556AbiKWTAu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Nov 2022 14:00:50 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEC2A91C22
-        for <git@vger.kernel.org>; Wed, 23 Nov 2022 11:00:48 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id x17so17365039wrn.6
-        for <git@vger.kernel.org>; Wed, 23 Nov 2022 11:00:48 -0800 (PST)
+        with ESMTP id S239159AbiKWTAw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Nov 2022 14:00:52 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C05491C3E
+        for <git@vger.kernel.org>; Wed, 23 Nov 2022 11:00:51 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id 83-20020a1c0256000000b003d03017c6efso1517615wmc.4
+        for <git@vger.kernel.org>; Wed, 23 Nov 2022 11:00:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xC8ZZvyVAb/PXhfLFXJgVsX0BOTqFc24j+NxQNOxcPo=;
-        b=B973qpdQ4ghNax/NioGkbhRJ6L8N+GDfvZlzON2mP3Zi7UBl7Q6OkFBRffnuMBaZsz
-         Q4yPKr6R/26hnZG4imNBle8sIYKyl/l9ILndufLp/lPa6sEvUaZoXUjL7eu98tYCrW2X
-         3R5cp5zRMP6cJkkMx0gil8oqfjfzHtD07F4/ApRbAlkNvZ5rcIW320fd3Y9r+Keftmwy
-         tYJ2/FfssgI9OH3HvNEc6auFadu22+NDBgA1hfNTxTub3AD1LgPiZthF/RR5/r2RZywA
-         0gQCnpaGzXccyGH1ZOCJ6pheFCIW96kZ9YkIhHcT4MYKDI8N+Rs4hpjE/AI0Qdk6gCai
-         jiVw==
+        bh=WlX8fRoMkPnEolpDAbYR1NXBm53dpHMaf0+jydPyO8c=;
+        b=emaLUmtqkoChOqRcbodtoAaY37x1SZSrHq0eDIrvFAbhIUkWIsSA+UHguqiczIaud0
+         NMr6llJuLPz6K2sBlmjKB420rUyD7uPOxALLp8bwO610TdzKSJeNevInbSOL9IG5mntR
+         Tr5OB+tkpFHIXpPwJX8N+wg0owv/yMZQvS4Eul/surWEEsg7WB0UHVxPz5/2OrCmU6tD
+         wsSiXuz+/CjQc+HAq8r4bdzTA25l8p/Fpk092MDszwQBbwY8mC9itMYsist/3JdZ5rs+
+         DhvUpR3Jxz0+2nHBq1+brCRwXy6vUM6lhMAa411/mtA1c7aquv6V7Fh5TzGHvZkOfMOv
+         TIFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xC8ZZvyVAb/PXhfLFXJgVsX0BOTqFc24j+NxQNOxcPo=;
-        b=4I/OgMV+XvwH8QBFwNh83vGdyHjrtOqNQg5Uv4UZ5ztNfrFDE+EBYIiozqKQzFe8tf
-         q0k8PU8PpPDCDps4jywuAj7/ChMWie6oOAGQF/QMaRMgvHY4QAHX+uyNOe1Q9uZr687I
-         ieOWpBNz6JqQW3ZDTrapFBzy+mgJs1LfkGpRNbF0hvNAMxkNGHTRT2mlbjxoW3+VJct4
-         /yMq25KBF9IimFeGOYIzEJe0SzQK2DsUtFarxPNVuWlzx6u+GefLMYIIHll6Vj06fhr6
-         FN+bVJM824mSs5SSG9RBzKnKYzxGf1T+1Y07yV1kZnUA6NlbfkcgtvFqB7Ugfrg6f5nw
-         osrw==
-X-Gm-Message-State: ANoB5pn/yPAwLfBjyUzfd4hD5UbDZHVN/yQjDZJRQetoj9qB3wF2nekp
-        vWZQbRw2/9rPFnUCRRxqVJp6ewK8DRs=
-X-Google-Smtp-Source: AA0mqf6JneTvrUxBDOk1eqJrDEfJJjDmcTHc82OK3xVLekzTOZ7qiRwscgzN4AoWN82Ntok9Rw5Mxg==
-X-Received: by 2002:adf:e3cd:0:b0:241:bc27:f8b6 with SMTP id k13-20020adfe3cd000000b00241bc27f8b6mr17795553wrm.367.1669230046918;
-        Wed, 23 Nov 2022 11:00:46 -0800 (PST)
+        bh=WlX8fRoMkPnEolpDAbYR1NXBm53dpHMaf0+jydPyO8c=;
+        b=exGq/ThC0DDHUwr/Kv/5zrfLxVeJdkKoJy3OJSauhQXZUUnM+IZQFLI6PLGvMYxR8e
+         hJGfPuTOsAX+7NGps183adCiBfUW6NQ7n0DzvKP8Wl4ofnWqfMoiXWOMeBIYntSjoIAh
+         oxm2hNezKzZbP2BWcxP6vSfyuiR6VxL7bzcQ/mk6VwRTgrKTczZpKEuwetC581tnUmHq
+         RMThcLyh4CCy8SXLM24ZNao4kbvNMta2Ij1K3xTjlBybaBHd0yfOp/yGokKJ4QUiq04z
+         sYR5rpZbjjApYQmdQKK4Vpw6U8RRZN2wIziGRb7NBIes49y1TUxMZ6BTDA84bERFqngo
+         Unpw==
+X-Gm-Message-State: ANoB5pkA3/CBYR0rfmoB3mWCBo8WCZ8GGZHGIv6wsPPSi7+IT9vg7tvq
+        6yFGSI+gv8ug89a+5nxMCWw3EiZwmbo=
+X-Google-Smtp-Source: AA0mqf5UjVrv8BM2Xtkdq37PCaLiZrB6WvMxpiyfGpM9/LyTpqmBMdE/cvOe2OMmOV02bTFVsXxsgQ==
+X-Received: by 2002:a05:600c:3c96:b0:3cf:a457:2d89 with SMTP id bg22-20020a05600c3c9600b003cfa4572d89mr24138186wmb.20.1669230049495;
+        Wed, 23 Nov 2022 11:00:49 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k1-20020a5d6281000000b0022ae0965a8asm17297705wru.24.2022.11.23.11.00.45
+        by smtp.gmail.com with ESMTPSA id iw8-20020a05600c54c800b003cfbe1da539sm3115993wmb.36.2022.11.23.11.00.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Nov 2022 11:00:46 -0800 (PST)
-Message-Id: <pull.1352.v4.git.git.1669230044.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1352.v3.git.git.1668641019.gitgitgadget@gmail.com>
+        Wed, 23 Nov 2022 11:00:48 -0800 (PST)
+Message-Id: <e53fc07754094aa5ba8080ec7761869c6429a8af.1669230044.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1352.v4.git.git.1669230044.gitgitgadget@gmail.com>
 References: <pull.1352.v3.git.git.1668641019.gitgitgadget@gmail.com>
+        <pull.1352.v4.git.git.1669230044.gitgitgadget@gmail.com>
 From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Nov 2022 19:00:38 +0000
-Subject: [PATCH v4 0/6] fsmonitor: Implement fsmonitor for Linux
+Date:   Wed, 23 Nov 2022 19:00:40 +0000
+Subject: [PATCH v4 2/6] fsmonitor: determine if filesystem is local or remote
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -65,188 +66,216 @@ Cc:     Eric Sunshine <sunshine@sunshineco.com>,
         <avarab@gmail.com>, Glen Choo <chooglen@google.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Taylor Blau <me@ttaylorr.com>,
+        Eric DeCosta <edecosta@mathworks.com>,
         Eric DeCosta <edecosta@mathworks.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Goal is to deliver fsmonitor for Linux that is on par with fsmonitor for
-Windows and Mac OS.
+From: Eric DeCosta <edecosta@mathworks.com>
 
-This patch set builds upon previous work for done for Windows and Mac OS to
-implement a fsmonitor back-end for Linux based on the Linux inotify API.
-inotify differs significantly from the equivalent Windows and Mac OS APIs in
-that a watch must be registered for every directory of interest (rather than
-a singular watch at the root of the directory tree) and special care must be
-taken to handle directory renames correctly.
+Compare the given path to the mounted filesystems. Find the mount that is
+the longest prefix of the path (if any) and determine if that mount is on a
+local or remote filesystem.
 
-More information about inotify:
-https://man7.org/linux/man-pages/man7/inotify.7.html
-
-v3 differs from v2:
-
- * Avoid potential entanglements with GPLv3
- * Classify a reasonable set of filesystems as being remote
-
-v2 differs from v1:
-
- * Prior work for Windows and Mac OS has been merged to master, reducing the
-   patch set from 12 to 6 patches
- * Code review feedback
- * Identified and resolved race condition revealed by CI test system, see
-   "Limitations and caveats" regarding monitoring of directory trees from
-   the man page, above
- * Apologies for being away from this for so long, but my attention was
-   needed elsewhere
-
-v1 differs from v0:
-
- * Code review feedback
- * Update how and which code can be shared between Mac OS and Linux
- * Increase polling frequency to every 1ms (matches Mac OS)
- * Updates to t7527 to improve test stability
-
-Eric DeCosta (6):
-  fsmonitor: prepare to share code between Mac OS and Linux
-  fsmonitor: determine if filesystem is local or remote
-  fsmonitor: implement filesystem change listener for Linux
-  fsmonitor: enable fsmonitor for Linux
-  fsmonitor: test updates
-  fsmonitor: update doc for Linux
-
- Documentation/config/fsmonitor--daemon.txt |   4 +-
- Documentation/git-fsmonitor--daemon.txt    |  24 +-
- compat/fsmonitor/fsm-health-linux.c        |  24 +
- compat/fsmonitor/fsm-ipc-darwin.c          |  53 +-
- compat/fsmonitor/fsm-ipc-linux.c           |   1 +
- compat/fsmonitor/fsm-ipc-unix.c            |  52 ++
- compat/fsmonitor/fsm-listen-linux.c        | 676 +++++++++++++++++++++
- compat/fsmonitor/fsm-path-utils-linux.c    | 186 ++++++
- compat/fsmonitor/fsm-settings-darwin.c     |  63 +-
- compat/fsmonitor/fsm-settings-linux.c      |   1 +
- compat/fsmonitor/fsm-settings-unix.c       |  61 ++
- config.mak.uname                           |   8 +
- contrib/buildsystems/CMakeLists.txt        |  11 +-
- t/t7527-builtin-fsmonitor.sh               |  94 ++-
- 14 files changed, 1119 insertions(+), 139 deletions(-)
- create mode 100644 compat/fsmonitor/fsm-health-linux.c
- create mode 100644 compat/fsmonitor/fsm-ipc-linux.c
- create mode 100644 compat/fsmonitor/fsm-ipc-unix.c
- create mode 100644 compat/fsmonitor/fsm-listen-linux.c
+Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
+---
+ compat/fsmonitor/fsm-path-utils-linux.c | 186 ++++++++++++++++++++++++
+ 1 file changed, 186 insertions(+)
  create mode 100644 compat/fsmonitor/fsm-path-utils-linux.c
- create mode 100644 compat/fsmonitor/fsm-settings-linux.c
- create mode 100644 compat/fsmonitor/fsm-settings-unix.c
 
-
-base-commit: 319605f8f00e402f3ea758a02c63534ff800a711
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1352%2Fedecosta-mw%2Ffsmonitor_linux-v4
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1352/edecosta-mw/fsmonitor_linux-v4
-Pull-Request: https://github.com/git/git/pull/1352
-
-Range-diff vs v3:
-
- 1:  99d684c7bdf = 1:  99d684c7bdf fsmonitor: prepare to share code between Mac OS and Linux
- 2:  aa405379891 ! 2:  e53fc077540 fsmonitor: determine if filesystem is local or remote
-     @@ compat/fsmonitor/fsm-path-utils-linux.c (new)
-      +#include <errno.h>
-      +#include <mntent.h>
-      +#include <sys/mount.h>
-     ++#include <sys/vfs.h>
-      +#include <sys/statvfs.h>
-      +
-     -+/*
-     -+ * https://github.com/coreutils/gnulib/blob/master/lib/mountlist.c
-     -+ */
-     -+#ifndef ME_REMOTE
-     -+/* A file system is "remote" if its Fs_name contains a ':'
-     -+   or if (it is of type (smbfs or cifs) and its Fs_name starts with '//')
-     -+   or if it is of any other of the listed types
-     -+   or Fs_name is equal to "-hosts" (used by autofs to mount remote fs).
-     -+   "VM" file systems like prl_fs or vboxsf are not considered remote here. */
-     -+# define ME_REMOTE(Fs_name, Fs_type)            \
-     -+	(strchr (Fs_name, ':') != NULL              \
-     -+	 || ((Fs_name)[0] == '/'                    \
-     -+		 && (Fs_name)[1] == '/'                 \
-     -+		 && (strcmp (Fs_type, "smbfs") == 0     \
-     -+			 || strcmp (Fs_type, "smb3") == 0   \
-     -+			 || strcmp (Fs_type, "cifs") == 0)) \
-     -+	 || strcmp (Fs_type, "acfs") == 0           \
-     -+	 || strcmp (Fs_type, "afs") == 0            \
-     -+	 || strcmp (Fs_type, "coda") == 0           \
-     -+	 || strcmp (Fs_type, "auristorfs") == 0     \
-     -+	 || strcmp (Fs_type, "fhgfs") == 0          \
-     -+	 || strcmp (Fs_type, "gpfs") == 0           \
-     -+	 || strcmp (Fs_type, "ibrix") == 0          \
-     -+	 || strcmp (Fs_type, "ocfs2") == 0          \
-     -+	 || strcmp (Fs_type, "vxfs") == 0           \
-     -+	 || strcmp ("-hosts", Fs_name) == 0)
-     -+#endif
-     ++static int is_remote_fs(const char* path) {
-     ++	struct statfs fs;
-     ++
-     ++	if (statfs(path, &fs)) {
-     ++		error_errno(_("statfs('%s') failed"), path);
-     ++		return -1;
-     ++	}
-     ++
-     ++	switch (fs.f_type) {
-     ++		case 0x61636673:  /* ACFS */
-     ++		case 0x5346414F:  /* AFS */
-     ++		case 0x00C36400:  /* CEPH */
-     ++		case 0xFF534D42:  /* CIFS */
-     ++		case 0x73757245:  /* CODA */
-     ++		case 0x19830326:  /* FHGFS */
-     ++		case 0x1161970:   /* GFS */
-     ++		case 0x47504653:  /* GPFS */
-     ++		case 0x013111A8:  /* IBRIX */
-     ++		case 0x6B414653:  /* KAFS */
-     ++		case 0x0BD00BD0:  /* LUSTRE */
-     ++		case 0x564C:      /* NCP */
-     ++		case 0x6969:      /* NFS */
-     ++		case 0x6E667364:  /* NFSD */
-     ++		case 0x7461636f:  /* OCFS2 */
-     ++		case 0xAAD7AAEA:  /* PANFS */
-     ++		case 0x517B:      /* SMB */
-     ++		case 0xBEEFDEAD:  /* SNFS */
-     ++		case 0xFE534D42:  /* SMB2 */
-     ++		case 0xBACBACBC:  /* VMHGFS */
-     ++		case 0xA501FCF5:  /* VXFS */
-     ++			return 1;
-     ++		default:
-     ++			break;
-     ++	}
-     ++
-     ++	return 0;
-     ++}
-      +
-      +static int find_mount(const char *path, const struct statvfs *fs,
-      +	struct mntent *ent)
-     @@ compat/fsmonitor/fsm-path-utils-linux.c (new)
-      +			 "statvfs('%s') [flags 0x%08lx] '%s' '%s'",
-      +			 path, fs.f_flag, ment.mnt_type, ment.mnt_fsname);
-      +
-     -+	fs_info->is_remote = ME_REMOTE(ment.mnt_fsname, ment.mnt_type);
-     ++	fs_info->is_remote = is_remote_fs(ment.mnt_dir);
-      +	fs_info->typename = ment.mnt_fsname;
-      +	free(ment.mnt_dir);
-      +	free(ment.mnt_type);
-      +
-     ++	if (fs_info->is_remote < 0) {
-     ++		free(ment.mnt_fsname);
-     ++		return -1;
-     ++	}
-     ++
-      +	trace_printf_key(&trace_fsmonitor,
-      +				"'%s' is_remote: %d",
-      +				path, fs_info->is_remote);
-     ++
-      +	return 0;
-      +}
-      +
- 3:  c2e5a7201aa = 3:  80282efef57 fsmonitor: implement filesystem change listener for Linux
- 4:  05f5b2dd4fb = 4:  cb03803e355 fsmonitor: enable fsmonitor for Linux
- 5:  754355ca44f = 5:  8d9d469b356 fsmonitor: test updates
- 6:  f56175e097a = 6:  5afd03fa6ca fsmonitor: update doc for Linux
-
+diff --git a/compat/fsmonitor/fsm-path-utils-linux.c b/compat/fsmonitor/fsm-path-utils-linux.c
+new file mode 100644
+index 00000000000..d3281422ebc
+--- /dev/null
++++ b/compat/fsmonitor/fsm-path-utils-linux.c
+@@ -0,0 +1,186 @@
++#include "fsmonitor.h"
++#include "fsmonitor-path-utils.h"
++#include <errno.h>
++#include <mntent.h>
++#include <sys/mount.h>
++#include <sys/vfs.h>
++#include <sys/statvfs.h>
++
++static int is_remote_fs(const char* path) {
++	struct statfs fs;
++
++	if (statfs(path, &fs)) {
++		error_errno(_("statfs('%s') failed"), path);
++		return -1;
++	}
++
++	switch (fs.f_type) {
++		case 0x61636673:  /* ACFS */
++		case 0x5346414F:  /* AFS */
++		case 0x00C36400:  /* CEPH */
++		case 0xFF534D42:  /* CIFS */
++		case 0x73757245:  /* CODA */
++		case 0x19830326:  /* FHGFS */
++		case 0x1161970:   /* GFS */
++		case 0x47504653:  /* GPFS */
++		case 0x013111A8:  /* IBRIX */
++		case 0x6B414653:  /* KAFS */
++		case 0x0BD00BD0:  /* LUSTRE */
++		case 0x564C:      /* NCP */
++		case 0x6969:      /* NFS */
++		case 0x6E667364:  /* NFSD */
++		case 0x7461636f:  /* OCFS2 */
++		case 0xAAD7AAEA:  /* PANFS */
++		case 0x517B:      /* SMB */
++		case 0xBEEFDEAD:  /* SNFS */
++		case 0xFE534D42:  /* SMB2 */
++		case 0xBACBACBC:  /* VMHGFS */
++		case 0xA501FCF5:  /* VXFS */
++			return 1;
++		default:
++			break;
++	}
++
++	return 0;
++}
++
++static int find_mount(const char *path, const struct statvfs *fs,
++	struct mntent *ent)
++{
++	const char *const mounts = "/proc/mounts";
++	const char *rp = real_pathdup(path, 1);
++	struct mntent *ment = NULL;
++	struct statvfs mntfs;
++	FILE *fp;
++	int found = 0;
++	int dlen, plen, flen = 0;
++
++	ent->mnt_fsname = NULL;
++	ent->mnt_dir = NULL;
++	ent->mnt_type = NULL;
++
++	fp = setmntent(mounts, "r");
++	if (!fp) {
++		error_errno(_("setmntent('%s') failed"), mounts);
++		return -1;
++	}
++
++	plen = strlen(rp);
++
++	/* read all the mount information and compare to path */
++	while ((ment = getmntent(fp)) != NULL) {
++		if (statvfs(ment->mnt_dir, &mntfs)) {
++			switch (errno) {
++			case EPERM:
++			case ESRCH:
++			case EACCES:
++				continue;
++			default:
++				error_errno(_("statvfs('%s') failed"), ment->mnt_dir);
++				endmntent(fp);
++				return -1;
++			}
++		}
++
++		/* is mount on the same filesystem and is a prefix of the path */
++		if ((fs->f_fsid == mntfs.f_fsid) &&
++			!strncmp(ment->mnt_dir, rp, strlen(ment->mnt_dir))) {
++			dlen = strlen(ment->mnt_dir);
++			if (dlen > plen)
++				continue;
++			/*
++			 * root is always a potential match; otherwise look for
++			 * directory prefix
++			 */
++			if ((dlen == 1 && ment->mnt_dir[0] == '/') ||
++				(dlen > flen && (!rp[dlen] || rp[dlen] == '/'))) {
++				flen = dlen;
++				/*
++				 * https://man7.org/linux/man-pages/man3/getmntent.3.html
++				 *
++				 * The pointer points to a static area of memory which is
++				 * overwritten by subsequent calls to getmntent().
++				 */
++				found = 1;
++				free(ent->mnt_fsname);
++				free(ent->mnt_dir);
++				free(ent->mnt_type);
++				ent->mnt_fsname = xstrdup(ment->mnt_fsname);
++				ent->mnt_dir = xstrdup(ment->mnt_dir);
++				ent->mnt_type = xstrdup(ment->mnt_type);
++			}
++		}
++	}
++	endmntent(fp);
++
++	if (!found)
++		return -1;
++
++	return 0;
++}
++
++int fsmonitor__get_fs_info(const char *path, struct fs_info *fs_info)
++{
++	struct mntent ment;
++	struct statvfs fs;
++
++	if (statvfs(path, &fs))
++		return error_errno(_("statvfs('%s') failed"), path);
++
++
++	if (find_mount(path, &fs, &ment) < 0) {
++		free(ment.mnt_fsname);
++		free(ment.mnt_dir);
++		free(ment.mnt_type);
++		return -1;
++	}
++
++	trace_printf_key(&trace_fsmonitor,
++			 "statvfs('%s') [flags 0x%08lx] '%s' '%s'",
++			 path, fs.f_flag, ment.mnt_type, ment.mnt_fsname);
++
++	fs_info->is_remote = is_remote_fs(ment.mnt_dir);
++	fs_info->typename = ment.mnt_fsname;
++	free(ment.mnt_dir);
++	free(ment.mnt_type);
++
++	if (fs_info->is_remote < 0) {
++		free(ment.mnt_fsname);
++		return -1;
++	}
++
++	trace_printf_key(&trace_fsmonitor,
++				"'%s' is_remote: %d",
++				path, fs_info->is_remote);
++
++	return 0;
++}
++
++int fsmonitor__is_fs_remote(const char *path)
++{
++	struct fs_info fs;
++
++	if (fsmonitor__get_fs_info(path, &fs))
++		return -1;
++
++	free(fs.typename);
++
++	return fs.is_remote;
++}
++
++/*
++ * No-op for now.
++ */
++int fsmonitor__get_alias(const char *path, struct alias_info *info)
++{
++	return 0;
++}
++
++/*
++ * No-op for now.
++ */
++char *fsmonitor__resolve_alias(const char *path,
++	const struct alias_info *info)
++{
++	return NULL;
++}
 -- 
 gitgitgadget
+
