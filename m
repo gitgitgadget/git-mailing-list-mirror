@@ -2,99 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6970C4332F
-	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 11:54:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 29A44C4332F
+	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 12:17:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236769AbiKWLyv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Nov 2022 06:54:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60906 "EHLO
+        id S235939AbiKWMRL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Nov 2022 07:17:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236639AbiKWLyt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Nov 2022 06:54:49 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95DFB4E420
-        for <git@vger.kernel.org>; Wed, 23 Nov 2022 03:54:48 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id k5so15692913pjo.5
-        for <git@vger.kernel.org>; Wed, 23 Nov 2022 03:54:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZzJwSdYaDzLlNhk6YQ/h/s5Zl3+Ivs11nC/xvO1tgcs=;
-        b=XDYHeD4ZITBbzAxvAzI1CuHXhwGgUHyZ71zHSqd9WuiHdIFjis+6pqiL/OwmSnifgg
-         CHr8G5irsxb1AYkbN7FWma/v1rXyuZCb/CG0gp5u3sEDxp7BURxkEXPLKzajKuPjvoAl
-         JJu/KgxRva2Nd33KyBrkiSgv6AqqHSffQPa1wHJHK7QllR7muO87NWVlzyzNroCcNKSq
-         bhU0Ukc0g2MUx5iRzXtBC2QbXy9XGgMoGeUFlzmXiFfY/cDzM4zthmQjO7AuEWXmCvm+
-         VFE7/vdGhlqXikVk5E3jkXu7fTanpA5JGUSK1vta74R63wXKSdALhWxdwCA65hJN3yE3
-         SeBQ==
+        with ESMTP id S235838AbiKWMRJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Nov 2022 07:17:09 -0500
+Received: from smtp-relay-internal-1.canonical.com (smtp-relay-internal-1.canonical.com [185.125.188.123])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E38E2167C8
+        for <git@vger.kernel.org>; Wed, 23 Nov 2022 04:17:07 -0800 (PST)
+Received: from mail-lf1-f70.google.com (mail-lf1-f70.google.com [209.85.167.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id DA14A3F339
+        for <git@vger.kernel.org>; Wed, 23 Nov 2022 12:17:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1669205823;
+        bh=WDWEvq/rxvhEHc8F71FcauyDUOpuJ14c+h+960csrsE=;
+        h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+         To:Cc:Content-Type;
+        b=pXeWyL9Stasa3RSFGMJg+1box5T9ugI5gxBsDq8eBzSSBFdUdYjbY0CUyVg52/szk
+         GFZWUYwhKvrm3jD4favXe+tot2G2Ylw+jyxTG4un8e3sBjYPHcyrSNAYU8Uad8DLLG
+         B2rg+Zv+ndOhKCDfEohjIy/YqBdmR1p+zCeFuHXcJ1CLImhfULAPampqT9BVJCQ5SC
+         CvnCmJIR+2zxlcqp3OD8sPoyrRAETN8ecEzo7P04bt7WZ3wv29+8FKGxp1D4H/NPD8
+         sEcyGLkGuPoxTG1DxpiQ7QEoCltytsm3kal+zsF0SFAd6TnjdNYzPgl6JjRTtXU9Uk
+         eyULamkD2GdvA==
+Received: by mail-lf1-f70.google.com with SMTP id bp18-20020a056512159200b004a2c88a4e1eso6401009lfb.3
+        for <git@vger.kernel.org>; Wed, 23 Nov 2022 04:17:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZzJwSdYaDzLlNhk6YQ/h/s5Zl3+Ivs11nC/xvO1tgcs=;
-        b=KzOYzH5/o8mdxwKT9Ss3b4dNv9wIMY0KO+VqWHDKUhBCSH33sHW4l0kuTDIuXcMtts
-         ILv7Spx3/epSLwDZ/xM1GuSVsge7Rwa1HqswtzohfICIyEAJdBfFb53LxxuC6amzFumM
-         xFGqGmHfYTp2NNPpsSdeGTfaQ1zk86Qm0hZoliY3lA8uhMX+7OpIAnsYRfVYVxlFLtof
-         gM3nL2I/WdeckRgSVvpkkNRNVabaSKiZoZC6ztT9qu1/tR5XNNF7CkGGpMk4nmWGX8eA
-         /JaSPvHAuZSl1Lw198Vs8++BNvh9HAgUPnrVPqP6rJWKCrdLKnffLML39xFYGFm84BQv
-         sHlg==
-X-Gm-Message-State: ANoB5pnSyu1ppvIPBWoDVp7fF6cRWyXJIa8F2FAgth3xGMm6HM3icvcQ
-        ONxF33o78gaYNIy4s6xQk+0=
-X-Google-Smtp-Source: AA0mqf5c0gD8foysWIYLjWf5ngArAXghdaEJ44rxEN9MKBhLN7cK1D7txvDTIYtqfqnWV7MWYocH8g==
-X-Received: by 2002:a17:902:d68b:b0:188:cca8:df29 with SMTP id v11-20020a170902d68b00b00188cca8df29mr14523566ply.148.1669204488103;
-        Wed, 23 Nov 2022 03:54:48 -0800 (PST)
-Received: from localhost ([2001:ee0:4f8b:a070:2a99:1bbd:b117:5037])
-        by smtp.gmail.com with ESMTPSA id d17-20020a170903231100b00178b77b7e71sm10671720plh.188.2022.11.23.03.54.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Nov 2022 03:54:47 -0800 (PST)
-Date:   Wed, 23 Nov 2022 18:54:45 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2] config: introduce an Operating System-specific
- `includeIf` condition
-Message-ID: <Y34KBTx+gQB13GRv@danh.dev>
-References: <pull.1429.git.1669037992587.gitgitgadget@gmail.com>
- <pull.1429.v2.git.1669058388327.gitgitgadget@gmail.com>
- <Y3wKe7aO7I7bpmLm@coredump.intra.peff.net>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WDWEvq/rxvhEHc8F71FcauyDUOpuJ14c+h+960csrsE=;
+        b=J8V/MESRviQQtl5GRLgO0Me02NNkR628Ua68ERCPzH3FA62MUb6XXVf1e1BzewvEhP
+         YAAXQQcgxzNvh4feIemdoYaphzA6vn1QjYuhVimQNg4c5koHx5cJMYX2VDgBulKQ3s54
+         byYEf5BuDl3Rvu+A1il5RcRgDQ+tI+HHakBkfikPQJQcoUGzFRT5Ip/FuwOsDGToCJRw
+         15cD8pt8NDYRD/zLtVi9zYvB+XK7UlXYftSGE0ebjN/saKl/U+tPH9wo4h16rjMsOzRj
+         Z0J3oQm/QK+KSKgq/0G2sJI0838zBa39d7E9cYepXxJRy+RN86bPbhJg0LsRDsSPDG+J
+         1VMA==
+X-Gm-Message-State: ANoB5pkaqJU2+RsS3NRnJuy8Wzu73tMFT/xXAbBH2n2JQQvJhPCdehbN
+        M/Vd4lcn8CEDyinA6cfxWpdosrsiXGo8BhF/GBeymPQn6TgyS6Cq5G2mfKtFfsyBrJcNBdM1TsC
+        4hGgg0Iz0ztbfTh73cyssjw7xqTds5WP2h57pOCKUegsZIw==
+X-Received: by 2002:ac2:4e07:0:b0:4a2:2a60:ecf5 with SMTP id e7-20020ac24e07000000b004a22a60ecf5mr9942872lfr.57.1669205823242;
+        Wed, 23 Nov 2022 04:17:03 -0800 (PST)
+X-Google-Smtp-Source: AA0mqf608loagsdtij2iDyuIopeojtI8n+e2PXIVe6L+WlWIDAa+Rzz22mqMXE7/Atl1s/JAhwLsn/5uWv9qPYhif4I=
+X-Received: by 2002:ac2:4e07:0:b0:4a2:2a60:ecf5 with SMTP id
+ e7-20020ac24e07000000b004a22a60ecf5mr9942860lfr.57.1669205822990; Wed, 23 Nov
+ 2022 04:17:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y3wKe7aO7I7bpmLm@coredump.intra.peff.net>
+References: <pull.1385.git.git.1669148861635.gitgitgadget@gmail.com>
+ <CAPig+cQ6_7wf6C280Rqi7mcTCiQp-n5GiLWTPazfcUcGFeZi0g@mail.gmail.com> <xmqqsfiao47q.fsf@gitster.g>
+In-Reply-To: <xmqqsfiao47q.fsf@gitster.g>
+From:   Andreas Hasenack <andreas@canonical.com>
+Date:   Wed, 23 Nov 2022 09:16:51 -0300
+Message-ID: <CANYNYEETCaaQGOXVLrRCC8wdS-uD66BHqr98Eetb+1GVk5WkTg@mail.gmail.com>
+Subject: Re: [PATCH] chainlint.pl: fix /proc/cpuinfo regexp
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Andreas Hasenack via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-11-21 18:32:11-0500, Jeff King <peff@peff.net> wrote:
-> On Mon, Nov 21, 2022 at 07:19:48PM +0000, Johannes Schindelin via GitGitGadget wrote:
-> 
-> > It is relatively common for users to maintain identical `~/.gitconfig`
-> > files across all of their setups, using the `includeIf` construct
-> > liberally to adjust the settings to the respective setup as needed.
-> 
-> This seems like a reasonable thing to have in general, but I wonder if
-> you have an example of how people use this. Mostly I am wondering:
-> 
->   - is it sometimes a misuse, where users _think_ that the OS is
->     correlated with some feature of Git.  And they would be better off
->     with some flag like "does the current platform support fsmonitor".
+Should I still change the commit message regarding where I mention the
+commit that introduced this, as explained by Eric? From the activity I
+saw overnight it looks like things were already picked up and it
+doesn't matter anymore.
 
-A possible use-case is setting credential.helper based on OS, let's say
-libsecret on Linux, and osxkeychain on macOS. Of course, users can
-have their own helper on specific OS.
-
-> 
->   - for cases where it really  is "uname -s" the best differentiator? Or
->     would they commonly want to lump FreeBSD and Linux into the same
->     category, or to tell the difference between Debian versus Fedora?
-> 
-> -Peff
-
--- 
-Danh
+On Tue, Nov 22, 2022 at 10:21 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+>
+> > Makes sense. Well explained.
+> >
+> > A separate problem is that chainlint.pl doesn't fall back to a
+> > sensible non-zero value if ncores() returns 0 (or some other nonsense
+> > value). That is, of course, outside the scope of the well-focused
+> > problem fix which this standalone patch addresses. I may end up
+> > submitting a fix separately to make it fall back sensibly.
+> > ...
+> > As mentioned elsewhere[1], this code may eventually be dropped
+> > altogether, but this fix is good to have in the meantime. Thanks.
+>
+> Thanks, both.  Will apply.
