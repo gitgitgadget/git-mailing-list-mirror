@@ -2,85 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E6AFC433FE
-	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 00:16:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8995C433FE
+	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 00:20:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235199AbiKWAQX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 19:16:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43076 "EHLO
+        id S234988AbiKWAUR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 19:20:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234546AbiKWAQU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 19:16:20 -0500
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67358D5A0D
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 16:16:19 -0800 (PST)
-Received: by mail-pl1-x629.google.com with SMTP id k7so15180710pll.6
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 16:16:19 -0800 (PST)
+        with ESMTP id S235016AbiKWAUQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 19:20:16 -0500
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27717D5A0F
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 16:20:14 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id 130so15858902pfu.8
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 16:20:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=pU5GNQRaiomwKlhDYYFeCmAQmmXpFUwWy4xGBF+1TlM=;
-        b=mnPfrv9sxyQ0BKDUp6HRMqGnuNV2tTKf18OOCNYExgJKLbaKOXjLkYsB2gHqdLigAZ
-         I6sZjANIqQBY6Rm+9MNJTN1rZUdCkdeo6/LNqDkEQVv6C+P9wxcUwsnb65uSF/h1Qjm1
-         Kt1pFw84sRc5dUjVDE/77at8oJpGto73TVT1A7zKXUav4jwJZVowpKGTm7TITaqk77jt
-         ftvrlbu01e7BqvOmddIu+D7lK6usXq+nlJ3z5KZYvp+BUPlTWUqanILKlNcrbgBiA60F
-         Mcf5G+7kl3gx+BkvYjYleiRYN7LKszB16HxS1ApdTIuCY0sfhXiEiSsE9rWEjoOAupJx
-         LkMw==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZpjJq6Zpj0Wh6NsoSv38rAqmij9mCIBNV9iuF4VHjtQ=;
+        b=VbWNgloAKE+ntciEoiXakI/QptBWhni2InOqwL/FqV1ogeCgI3KIq5qCgquo0KW4uo
+         +Kn+v0XUZggxdN8rXG7c+wVH13peadHYj5qDLqkCOd1WketmKlC6cYjBZdoPObJwrjQ4
+         owiEMK1cHVpT61P8xI61nNexLhvEU00/DtxibaVjEljkL4kG2J8kR4atK788fI+dr0/h
+         dOORzRoUMiofH/iT8Lyrex/IycPCqmCMEcmPS+fgkIeitTQUdmqtaaKbUsYGxZJgXLUL
+         IhReozM3iTidk9joqWohTlruxWSoEXiuUt++Z2ISmL3PV0Z1cnNJevXC0xmSVQsCEyzW
+         7Qlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=pU5GNQRaiomwKlhDYYFeCmAQmmXpFUwWy4xGBF+1TlM=;
-        b=VqShDT79uJd4Gt0cm1PKsgaORfo2i5E5GQ1jC2QJahCCOzjD7LKKrCrBRvpcKUNJgK
-         efKoPQD67M6YVBsBY9A97FrNTQM0hpw3A9mA55URFwCt2yxLrCDDZuDY2rSnErlGtVDv
-         gmk/6u/OHw+3SVhb4T5h0zYiVgyklxJNe6G6CDbhaGWW4EzCvr3Lt9jlPX87A+YU2mOM
-         ghTdstapiFQdyi4lhptLp00lEqCVA291D3n2/wQtsb59IstohFn90qbiIDbXWv7UJJy4
-         eIaKyjZ+zvrsf9m+c1pHwc5UKb48xIdiV7EQrqvMnOE9z2G34LD3eedRkhngcxH3XK25
-         TjtA==
-X-Gm-Message-State: ANoB5pkqGocnSX3kWjjvH0zlUnjnLaYsGV87x6xDsNv9WZyO7IogQnp3
-        kXXVqj80mK5LTIv/mi+vG5g=
-X-Google-Smtp-Source: AA0mqf5knTUm752yTFJr9ezanvym3BPPnYKZwhZ5zkjT/Vcwa0j8q1GYVcgzI2+c/eHiZh9/bAtChw==
-X-Received: by 2002:a17:90b:2809:b0:212:e8da:fc3f with SMTP id qb9-20020a17090b280900b00212e8dafc3fmr33092440pjb.189.1669162578843;
-        Tue, 22 Nov 2022 16:16:18 -0800 (PST)
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZpjJq6Zpj0Wh6NsoSv38rAqmij9mCIBNV9iuF4VHjtQ=;
+        b=G9GhkpcPUgC1VtCXd0PkNfLBfh7mcgc9rqUpsGiu7qv69q1/fOMtzz16+HNi086hqR
+         8/ZoXYMRujVKSfr15Y7mkeaElMIrtGmcRJ62T1SyjzHMuYGGrIpXkGCTtRVS+ewDuRKA
+         WlZ0TjgCjLsisiEJ2HUGcG/VQTeJhYCU+OsRR0lFNOUupfn28FgddKnI/gv+BohIBobf
+         sX1wbLdPYHCrYUQDX/lav0gbSgT46YsktbpW5Xm2pudIJazCyqclPCrAQAQWCoR4GgK8
+         SWGg1ySblXyN2dnRS4HHnCuXJa8wIgLKWsio1TffljJ2mMxlg1+/5rTIuhPAozE3qbb4
+         XTOw==
+X-Gm-Message-State: ANoB5pnjEjeiJxFwAOC+M3hp/ngepx7GmXEmB2rtS4SHvqSFKyi1pbaH
+        pZvq6afE+j6P0yQki7W0dmmoQpK3bWw4YQ==
+X-Google-Smtp-Source: AA0mqf7PpKEltLBZWnw/s6jVPIgyfaMOpgcOrTVhe7rwvh0DyiGhaX0zJ3b1EFfixIILJtb42OAFag==
+X-Received: by 2002:a65:67c3:0:b0:477:96e2:beb8 with SMTP id b3-20020a6567c3000000b0047796e2beb8mr6285684pgs.151.1669162813505;
+        Tue, 22 Nov 2022 16:20:13 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id nk22-20020a17090b195600b00218998eb828sm127121pjb.45.2022.11.22.16.16.18
+        by smtp.gmail.com with ESMTPSA id u7-20020a17090a3fc700b0020087d7e778sm131077pjm.37.2022.11.22.16.20.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Nov 2022 16:16:18 -0800 (PST)
+        Tue, 22 Nov 2022 16:20:13 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2] config: introduce an Operating System-specific
- `includeIf` condition
-References: <pull.1429.git.1669037992587.gitgitgadget@gmail.com>
-        <pull.1429.v2.git.1669058388327.gitgitgadget@gmail.com>
-        <221122.864juraxl2.gmgdl@evledraar.gmail.com>
-        <9c0ecaff-3d66-2b83-eb78-64632d1fcddd@dunelm.org.uk>
-Date:   Wed, 23 Nov 2022 09:16:17 +0900
-In-Reply-To: <9c0ecaff-3d66-2b83-eb78-64632d1fcddd@dunelm.org.uk> (Phillip
-        Wood's message of "Tue, 22 Nov 2022 14:31:52 +0000")
-Message-ID: <xmqqilj6plta.fsf@gitster.g>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Jan-Otto =?utf-8?Q?Kr=C3=B6pke?= <mail@jkroepke.de>,
+        git@vger.kernel.org
+Subject: Re: git tag -l --format results into a malloc fatal error, if tag
+ is signed.
+References: <CAAsn9Yxbb3-4iTfD8gf_EhVbE+yKJdT=Vb5ojeFZOHvMutUn2Q@mail.gmail.com>
+        <7386132c-995a-5bfc-ed67-ec6dc2c3e7f9@web.de>
+Date:   Wed, 23 Nov 2022 09:20:12 +0900
+In-Reply-To: <7386132c-995a-5bfc-ed67-ec6dc2c3e7f9@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Tue, 22 Nov 2022 18:48:44 +0100")
+Message-ID: <xmqqedtuplmr.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+René Scharfe <l.s.r@web.de> writes:
 
-> All the other items listed in your table such as branch names are case
-> sensitive. The os name is not so it is of no benefit at all to the
+> Fixed by b01e1c7ef0 (ref-filter: fix parsing of signatures without blank
+> lines, 2022-11-02).  It hasn't made it into a release, yet, but I would
+> expect it to be included in an upcoming version 2.38.2.
 
-You keep saying that you consider the OS name is case insensitive,
-but I doubt that is the case, not in the sense that MacOS and macOS
-are two different operating systems, but in the sense that OS
-publishers have a single preferred way to spell their ware (which is
-shown in "uname -s" output), and we should respect that.
+I am fairly certain it would be in 2.39 but probably not 2.38
+maintenance track, as b01e1c7ef0 seems to have been applied without
+considering that it is a maint-worthy material.
+
 
