@@ -2,123 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D79ABC4167D
-	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 22:12:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C590C4332F
+	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 23:51:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229735AbiKWWMO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Nov 2022 17:12:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47620 "EHLO
+        id S230046AbiKWXve (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Nov 2022 18:51:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229500AbiKWWLp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Nov 2022 17:11:45 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E785D12E206
-        for <git@vger.kernel.org>; Wed, 23 Nov 2022 14:11:31 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id g12so31454363wrs.10
-        for <git@vger.kernel.org>; Wed, 23 Nov 2022 14:11:31 -0800 (PST)
+        with ESMTP id S230041AbiKWXva (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Nov 2022 18:51:30 -0500
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8CD66316B
+        for <git@vger.kernel.org>; Wed, 23 Nov 2022 15:51:24 -0800 (PST)
+Received: by mail-pg1-x52a.google.com with SMTP id n17so159846pgh.9
+        for <git@vger.kernel.org>; Wed, 23 Nov 2022 15:51:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=9ZuYB3veB4LajEf/GxPb4W7X7h886I2+NXYjZxcWIP8=;
-        b=Alrm2yDbExCjj3IJh93hGh1W5uWc5mFXd5Qo4XOKoCXU+Gki7lW8vQi7aMbrt907lC
-         T9ANXOC7V+l9mAsTkHXCLNCFW09GGwhR+W+OJnZrHurKfbQaxYGjnesNJd4Ae3uwVU8w
-         vz4us3iNl8p0Ttph+AeLt0TmfCQ1bI+yvNbbSu6aGubJGcT9lCRSYliwV8O4q2DFDn8P
-         EC1qneqWig+IifqHSnw1lcQzYNPobNDpVbMJqNabvzErvE2ZmLUa+KGX2kS/KZozTiY6
-         9dTZwcWX/aQJnCdapOzV+g/4T4imCCwM2hxvzwDNmhvpA131Ysy/a9AOcvKdPq5JdyoU
-         dPOQ==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=r8pHHfUNUJkdrs3y8iZaIXeotP2C3swWgRkLVHHHclE=;
+        b=PX+AZyfoCXgPHGjgmo39OGJzLIoUSRgVM5yDye7DFPkzFY70q913kqOrGhTaW+HNIY
+         0arLOQFvqSOPWlKjUbYm7rjOYpW+W8alX/T4J0yJXJ/EQ4dAzbB/jnqWKE0Vsmu/ayvB
+         Zz+ThhuYsVKJqNmxEu3zJfl0Ue1fkDpaXJb8v1TASz/pGmpSm+FiyjXoHASrIZag2p1x
+         O5ZZ3CSNda3ZhwksmtLOpJ7X4gvx6GOHHcVXTB9nazHEWTb3sv++zqMolWgiGZDJIh9M
+         F8bQGDVwlIweikDXflxrw/mC9CYzDdqSMSdPjsb1ZLASWujOP9ptUIyRMEI2XXSgZkwg
+         4zUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9ZuYB3veB4LajEf/GxPb4W7X7h886I2+NXYjZxcWIP8=;
-        b=i89FWahoxwLc/Xzul2ts41ibFwFy2ierWBBS7TRZt2jE/pn+2neyQFVJSFnE98yehW
-         V/+z7PddXFV1aa0i9qyXi0Yi/9i84y+2pDoo5YCK1wCOOGD+SZN0JCU9t8v1SQoG2+9I
-         MxeGZ+v85fipTsWzmM+ePRmFf3ohqUlqa846Ay5+H9mRwPNU1rhti+mwO/fkoeHnGxmH
-         P/uivUAzl6zOys9flSk257BrH5EHWTcsiso0ojjt1nMbjPTL4gFvXb2CEInABmYUgtY6
-         N1B5oyPHSYiFGzeLT2TiPX8sIPuHpdfJy5Il+aRp95UVjYOW32KZrmEjZKBIUoBlaAEX
-         my1A==
-X-Gm-Message-State: ANoB5pmc05YIDkxKbX+0VZRuKoa5ytSJFK8uiOR79RwgSyZ3ZH5ow2t/
-        SS+QiTU9oj4806VG3BIUCT4EfjPL638=
-X-Google-Smtp-Source: AA0mqf63KdwgGKS80Nx78yhy6+kbPzjmVtCtX64/JTnlY21AuRTIffMo2ltD0jhPgVh75hcRKt1BvA==
-X-Received: by 2002:a5d:4950:0:b0:236:aab2:4eb2 with SMTP id r16-20020a5d4950000000b00236aab24eb2mr18595175wrs.412.1669241490159;
-        Wed, 23 Nov 2022 14:11:30 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i1-20020a05600c354100b003cf894c05e4sm3902357wmq.22.2022.11.23.14.11.29
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=r8pHHfUNUJkdrs3y8iZaIXeotP2C3swWgRkLVHHHclE=;
+        b=aaczqnSjznZNsF3LYCEYN8E4hVKghSS5eqWM/bXutU3OxtbzDQEnLZfNu8ZbcHQYWS
+         JeGvqGN8t6YFCqvo5wbV6JxHpf1a11tYwHuqK77fQewRxaavHOibUCwF82G82ACOHQve
+         fzBssum14Dw5LacT6BFu6s3TOaMXU3f5gIEckijBSiuL0oetLX6F6dQSGp8sHlVHr/Oq
+         7VgjdN1alK//kpkigL9aCmnKt3liGHOra1O27K0VrRk9oy0NgobAmqPkZZKkfANFowg0
+         6Agwct5CgUJXBbTZCCkgqBZDxy6QfR8XhZklV9AVeO99XO6I0D2FNXnvOHlk2P+GO/NO
+         n7MA==
+X-Gm-Message-State: ANoB5pnl1zOlbFdJEA+sw+ojNp2INFxlVGJFQYbtwCF6TPxZl59DaPk6
+        PGDzwpDxfnl/77s4Bi0YneM=
+X-Google-Smtp-Source: AA0mqf4YehNJ2uat7iu9ihm+MF4kuwmA6jCOk1R+dS6wx5QNJFPWkeIBXLs3Arx/tPuN/gILT19www==
+X-Received: by 2002:aa7:96e6:0:b0:56d:9eed:61eb with SMTP id i6-20020aa796e6000000b0056d9eed61ebmr32691721pfq.4.1669247484355;
+        Wed, 23 Nov 2022 15:51:24 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id c14-20020a624e0e000000b0056bd6b14144sm13207138pfb.180.2022.11.23.15.51.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Nov 2022 14:11:29 -0800 (PST)
-Message-Id: <pull.1386.git.git.1669241489179.gitgitgadget@gmail.com>
-From:   "Fangyi Zhou via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 23 Nov 2022 22:11:29 +0000
-Subject: [PATCH] revert: add angle bracket around argument 'parent-number' in
- usage
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 23 Nov 2022 15:51:23 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2] config: introduce an Operating System-specific
+ `includeIf` condition
+References: <pull.1429.git.1669037992587.gitgitgadget@gmail.com>
+        <pull.1429.v2.git.1669058388327.gitgitgadget@gmail.com>
+        <221122.864juraxl2.gmgdl@evledraar.gmail.com>
+        <9c0ecaff-3d66-2b83-eb78-64632d1fcddd@dunelm.org.uk>
+        <xmqqilj6plta.fsf@gitster.g>
+        <a07b5cd7-7ada-7cdf-78cc-375ef21687b0@dunelm.org.uk>
+Date:   Thu, 24 Nov 2022 08:51:23 +0900
+In-Reply-To: <a07b5cd7-7ada-7cdf-78cc-375ef21687b0@dunelm.org.uk> (Phillip
+        Wood's message of "Wed, 23 Nov 2022 15:07:41 +0000")
+Message-ID: <xmqqk03lmdqc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Fangyi Zhou <me@fangyi.io>,
-        Fangyi Zhou <me@fangyi.io>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Fangyi Zhou <me@fangyi.io>
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-8c9e292dc0 (doc txt & -h consistency: add missing options and labels,
-2022-10-13) adds detailed usage line for revert and cherry-pick, which
-both contain a flag `-m` for parent number.
-Angle brackets shall be marked around parent-number, since it represents
-an argument.
+> I can see that we would want to respect the preferred spelling in our
+> documentation but it seems a bit mean to penalize users who write
+>
+> 	[IncludeIf "os:windows"]
+>
+> rather than
+>
+> 	[IncludeIf "os:Windows"]
 
-Signed-off-by: Fangyi Zhou <me@fangyi.io>
----
-    revert: add angle bracket around argument 'parent-number' in usage
-    
-    8c9e292dc0 (doc txt & -h consistency: add missing options and labels,
-    2022-10-13) adds detailed usage line for revert and cherry-pick, which
-    both contain a flag -m for parent number. Angle brackets shall be marked
-    around parent-number, since it represents an argument.
-    
-    Signed-off-by: Fangyi Zhou me@fangyi.io
+I do not think "uname-s/i:windows" is out of question.  I am saying
+that the default should be case sensitive for consistency with
+others.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1386%2Ffangyi-zhou%2Frevert-fix-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1386/fangyi-zhou/revert-fix-v1
-Pull-Request: https://github.com/git/git/pull/1386
-
- Documentation/git-revert.txt | 2 +-
- builtin/revert.c             | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
-index 5016755efb6..d2e10d3dceb 100644
---- a/Documentation/git-revert.txt
-+++ b/Documentation/git-revert.txt
-@@ -8,7 +8,7 @@ git-revert - Revert some existing commits
- SYNOPSIS
- --------
- [verse]
--'git revert' [--[no-]edit] [-n] [-m parent-number] [-s] [-S[<keyid>]] <commit>...
-+'git revert' [--[no-]edit] [-n] [-m <parent-number>] [-s] [-S[<keyid>]] <commit>...
- 'git revert' (--continue | --skip | --abort | --quit)
- 
- DESCRIPTION
-diff --git a/builtin/revert.c b/builtin/revert.c
-index ee32c714a76..6a9b550a61f 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -21,7 +21,7 @@
-  */
- 
- static const char * const revert_usage[] = {
--	N_("git revert [--[no-]edit] [-n] [-m parent-number] [-s] [-S[<keyid>]] <commit>..."),
-+	N_("git revert [--[no-]edit] [-n] [-m <parent-number>] [-s] [-S[<keyid>]] <commit>..."),
- 	N_("git revert (--continue | --skip | --abort | --quit)"),
- 	NULL
- };
-
-base-commit: c000d916380bb59db69c78546928eadd076b9c7d
--- 
-gitgitgadget
+Also, as I said already, I do not think we should squat on a good
+name "os" with this "uname -s" feature that may not be a good
+differenciator for two OSes for some cases (e.g. telling Debian and
+Fedora apart was a good example raised upthread already).
