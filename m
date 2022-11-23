@@ -2,102 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF854C4332F
-	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 01:33:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C76AC4332F
+	for <git@archiver.kernel.org>; Wed, 23 Nov 2022 02:19:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234298AbiKWBd2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 22 Nov 2022 20:33:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40760 "EHLO
+        id S235119AbiKWCTM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 22 Nov 2022 21:19:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232341AbiKWBd0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Nov 2022 20:33:26 -0500
-Received: from mail-yb1-xb4a.google.com (mail-yb1-xb4a.google.com [IPv6:2607:f8b0:4864:20::b4a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A8712F003
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 17:33:23 -0800 (PST)
-Received: by mail-yb1-xb4a.google.com with SMTP id c188-20020a25c0c5000000b006d8eba07513so15344301ybf.17
-        for <git@vger.kernel.org>; Tue, 22 Nov 2022 17:33:23 -0800 (PST)
+        with ESMTP id S233896AbiKWCTK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Nov 2022 21:19:10 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C7EBC67DE
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 18:19:10 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id y14-20020a17090a2b4e00b002189a1b84d4so611878pjc.2
+        for <git@vger.kernel.org>; Tue, 22 Nov 2022 18:19:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=jp7raq/LGF2hXYUavhUfcIeuaVXXZvAvpqlXoNDQ1os=;
-        b=Kijp4AL/XrpnQ05lywcY79Y/VRMCNNxMxltvbAPncDZkgxBtuI+buV9W6sMTzZij34
-         ue5TDsP7D88pHA8eUC0nb+eM+H+P0MMG+n6Nca5oQ4PYBZq1rpsr8ZNQHHqyDyC1l9nq
-         90QazmmHJfChTWr52HQUEiBLsRYsjfjVbyM5mzaKKjIjL3tgG4kQ0B/e70eauAabASkq
-         b3f1M2K1wSeBQrh3NKtizVc2ls1agiiL8X2wIJnf4fJDE1aEjFZiaul/uh9WazAgCOL5
-         kagDZa11i126ahiTJCm8DRGSCB8mxgQF1p3RLRXo7b8iRZ2DJK7zYK+0bQ/tsp1WR7ai
-         sWXQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tLDGHv3FK4YNdMBWxWv3X1Y148oqz0HQhInjlBFgZkQ=;
+        b=nkfWbLJx7rnjlD1D334Hw/C7vKzErvALE9AKdKACo+PZb6WVGEb6hMyFlrATvA3iX0
+         g+Mv/61rGUFmfOQkcu7sPsT5NrRwwVOYmY65Qym/C4OFFJ5ph78nDbGngF2jeKjAg2d/
+         tNVdU+YuJrKxA9btShIyj9Uel2DMLA1PWvMKDAaHSlUfahytatuZBdgBrMPfzNFkwi54
+         aI+FAQL4U/td1fHVzORb3X824W89+3z+SqwNQjGf/ct0Z/JV4gSSH2efrOJxCYPB1pSD
+         P/NWXhmu43F++tlOvwgpFwj0y9R8FwFwkxjgsgFyIZLSHcU763atat5Wbl12eMla8iv0
+         lgXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jp7raq/LGF2hXYUavhUfcIeuaVXXZvAvpqlXoNDQ1os=;
-        b=HDNutzKUdhOexI8o5DYbOr+7rxDDlMzw2YcEXeRZV5j1D2zCJfr4pPKGAa5fJOzlIG
-         Adpz1Qi4yejeOU3v2YIXGsRCYn9xSD2cPHbT6ktjF5R707lxUzpQWk+BzEOi4Z8WPRN2
-         YOWmAQ9mrvXIsCIhQGavkVEsSvNPNDRpf/s6ODlDehTMCnVmd4tw7izDMnc5xLF5TCJW
-         Dk8bL8sJGGgFSkCxcvxu13BvBKR4gYN5YWgZwK9YpdjyrhXKMw33NIAzGospILBkpaZ6
-         J6eDg8lTGl3u3oeXtYwDVNQe8osr67xNaWDNyCkwayljuoLqrBUGnU/Ng77jOjS94I/3
-         QV0Q==
-X-Gm-Message-State: ANoB5pm82QygP1mKhF6nkoEwX0SWvv5PU1DW0QZ8fkGr5e/FPGNDJUji
-        zV3RH3tOb3gsLW6uuMvv6I6jfUamTw97izrHhS5p
-X-Google-Smtp-Source: AA0mqf7SGK5g1qbWpq3dubUnPPukY9iEOUQB0FOzg2wq1bnJSItWm1QdfRjtzz625Xz9I26+1kZ4s8aQvhGCSqUvbYNI
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a25:8002:0:b0:6e6:5384:a5f7 with
- SMTP id m2-20020a258002000000b006e65384a5f7mr15466532ybk.210.1669167202774;
- Tue, 22 Nov 2022 17:33:22 -0800 (PST)
-Date:   Tue, 22 Nov 2022 17:33:19 -0800
-In-Reply-To: <kl6lmt8iesmu.fsf@chooglen-macbookpro.roam.corp.google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.38.1.584.g0f3c55d4c2-goog
-Message-ID: <20221123013319.1597025-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v3 8/8] clone, submodule update: create and check out branches
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Philippe Blain <levraiphilippeblain@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        bh=tLDGHv3FK4YNdMBWxWv3X1Y148oqz0HQhInjlBFgZkQ=;
+        b=SZffDkU49d3EXAnlsHfcB5nkZDl7hBqAkPiwPY5LFA+WhiJ3vF7+N3z9r9ZYHjs/7n
+         +hiG75AXKpd9yAmMxiA+y2rgIDFwUbQj03hRHb1sCtHpkSMlTksYW8YibR2diCIueWBH
+         XE7KpMVWqpaB3Tr0GAYgOyJXrhyjGg5Af3Dpw3LG1+R06g0JkdMH3rL1AUs9CbIAkHGp
+         XXd5u/vl/Ne9p7zHdvm/a9GGc8WPPMne9/cVmcVbCmyayfVnl8IBRxMcMrY6ZuMF1rDg
+         n3Ij8YytxH8kZGeuwIrL+64rOT0LoYMPHJjOf+EglFrB/JH5KkgcSoPYzKRFQV7OVj59
+         BFBA==
+X-Gm-Message-State: ANoB5pmltYBt5WXgNLZ5Oe4a9XbnQYZOe+Mw1yHGzyuQ57gul/fPC+rR
+        alY0Z08oy2YeEluXm/zcXEQ=
+X-Google-Smtp-Source: AA0mqf6GkHyZTqrnn1OrGZbMAll5T12PhrqPjQqtvZ785mRMI0F1/oWlNiAtLkHF7XKnAwJlo7c6+A==
+X-Received: by 2002:a17:903:2783:b0:186:a97d:6bc8 with SMTP id jw3-20020a170903278300b00186a97d6bc8mr7255134plb.101.1669169949496;
+        Tue, 22 Nov 2022 18:19:09 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id d33-20020a631d61000000b004777c56747csm3697014pgm.11.2022.11.22.18.19.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Nov 2022 18:19:08 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>
+Subject: Re: ab/remove--super-prefix & ab/submodule-no-abspath
+References: <xmqqfseargo4.fsf@gitster.g>
+        <221123.86edtua8i6.gmgdl@evledraar.gmail.com>
+Date:   Wed, 23 Nov 2022 11:19:08 +0900
+In-Reply-To: <221123.86edtua8i6.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Wed, 23 Nov 2022 00:06:09 +0100")
+Message-ID: <xmqqleo2o1k3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
-> > 1. Checkout the branch, ignoring OID (as in this patch).
-> > 2. Checkout the branch, erroring out if the OID is wrong.
-> > 3. 1 + creating the branch if it does not exist.
-> > 4. 2 + creating the branch if it does not exist.
-> > 5. Always forcibly create the branch at the gitlink's OID and then checking
-> >    it out.
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-[snip]
+>> * ab/submodule-no-abspath (2022-11-09) 1 commit
+>>   (merged to 'next' on 2022-11-18 at 34d0accc7b)
+>>  + submodule--helper absorbgitdirs: no abspaths in "Migrating git..."
+>>  (this branch is used by ab/remove--super-prefix.)
+>>
+>>  Remove an absolute path in the "Migrating git directory" message.
+>>
+>>  Will merge to 'master'.
+>>  source: <patch-1.1-34b54fdd9bb-20221109T020347Z-avarab@gmail.com>
+>
+> Glen pointed out an issue in ab/submodule-no-abspath which I just
+> submitted a fix-on-top for in [1].
 
-> > A. Create only the branch that is checked out in the superproject (as in this
-> >    patch).
-> > B. Create all branches that are present in the superproject.
-> > C. Go back on our previous decision, switching to 3.
+I'll queue that and keep the result in 'next' in the meantime, but
+given that this seems to induce additional conflicts and who knows
+what else is broken in it, I am not sure if it is a good use of our
+time to even worry about "fixing" it.  What upside does it have with
+the patch, other than the "Migrating git" message, which does not
+even look like an improvement, at least to me?
 
-[snip]
+> There will be a merge conflict with ab/remove--super-prefix, but one
+> which I tried to make easy to resolve when crafting [1]. The resolution
+> is:
 
-> But it doesn't make sense to mix both A _and_ C, since C would already
-> give us the same result as A, so it probably makes sense to go straight
-> to C in this series (i.e. only for the initial clone, not subsequent
-> checkouts). I'll do that in v3.
-> 
-> I prefer C in the long run, since both A and B require that the list of
-> submodule branches never get out of sync with the superproject, which is
-> hard to enforce, e.g.:
- 
-I discussed this with Glen in-office and Glen pointed out that A is actually
-not necessarily redundant with respect to C, since a "git submodule add" may
-clone a submodule, but it would not run "git submodule update" (so 3 + C would
-mean that no branch is created in the submodule, which is not what we want). So
-we still need A.
+... not something we would want to even worry about during -rc period.
 
-As for 1 vs. 3, we will still need 3 in the future for the reasons I described
-in my previous e-mail, but I think that that can be done incrementally. My
-concern is to avoid doing something in a patch set that we will later need to
-undo; I think that we are indeed avoiding it here (we're doing A but we will
-still need it in the future, so there is no undoing of A needed).
-
-So overall, after this discussion, this patch set looks good to me, except for
-the minor points that I have commented on in my previous emails.
+Thanks.
