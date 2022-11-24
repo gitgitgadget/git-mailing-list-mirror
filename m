@@ -2,95 +2,194 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 74B17C43217
-	for <git@archiver.kernel.org>; Thu, 24 Nov 2022 13:37:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BA80C43217
+	for <git@archiver.kernel.org>; Thu, 24 Nov 2022 15:39:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229803AbiKXNhV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Nov 2022 08:37:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58042 "EHLO
+        id S229685AbiKXPjm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Nov 2022 10:39:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbiKXNhT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Nov 2022 08:37:19 -0500
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C636D5A6F3
-        for <git@vger.kernel.org>; Thu, 24 Nov 2022 05:37:18 -0800 (PST)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-        by mailout.west.internal (Postfix) with ESMTP id 2EF4C32009C6;
-        Thu, 24 Nov 2022 08:37:18 -0500 (EST)
-Received: from imap45 ([10.202.2.95])
-  by compute1.internal (MEProxy); Thu, 24 Nov 2022 08:37:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=owlfolio.org; h=
-        cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-        :message-id:mime-version:references:reply-to:sender:subject
-        :subject:to:to; s=fm3; t=1669297037; x=1669383437; bh=S5dOCP4MiC
-        8/ZMsjHFawdWzRrEfOMHpfS/qORcmAPzA=; b=w4YH0y4Yuv7DA9TYCg1hkF5Rf8
-        HYmGFA6mMJ3ayANOsPOGfTBsmn9FZg3MNNwrrQ+deYrEvp/Gg0Z0wU0z1G5AxHEF
-        /PSN4C65m9k0C3qwXBa7Q+qB7O8FRqp6Y9YrugOeo5gA+eVx9IpPih9M3EKuCYCh
-        kxLlsnnpmd9+GjWj3le2WJQ4XyRtbbKzuRXGD+IRw4I2wf8ad1uuJZNBPwRW6PWK
-        KmvKliZmw4ArzNT7ykyzjVk8n0Bv0FhVMaWyrXUSNEyUUYjbRny1oHzXjtD10s5i
-        3xrzNgjR0StWZnRhHtk7GmaFvF8J6Hch6RRNLL/huyKsZ3ory/5yrLoKEYcw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm1; t=1669297037; x=1669383437; bh=S5dOCP4MiC8/ZMsjHFawdWzRrEfO
-        MHpfS/qORcmAPzA=; b=pLR9daauxLAxvYO9WCUAdrtNc8PWyV4ewTzbBZ7KlQA1
-        Jjp2Qeogm/VQx1szOhnzXqUmKke9twNJE1nFmnXr7X1GQY44ne+wHZuMbiVxTl+q
-        0TE3SLyHpQApmhMLPby3X+oZTLA8lWuxTQ35zfxNzKoCAHg9UrrPTcdvK+gcN+Wo
-        CjB2d8b+x3NWcfFBRnaSGp08ngqQFbFStN2xjCUiMJvrJ8FAYz8bMDu3lQlNlsMW
-        SlzxrdnRNgA61z6/+9czXTQhY957CGDm6miAmnw8ZkByQWGFrF4s9MWcu6c8eT9Y
-        3b0R6pSFTAwu3wbsD5uPi+fzC47aMItcf71JAVZdkQ==
-X-ME-Sender: <xms:jHN_YyPyqldimS8QGDtJvnhG8FIGuf-EFHikP469OmTcZ5LjNLXazA>
-    <xme:jHN_Yw-njsPM-_ONPvrhPgtftuc6RDGDA2YIBBD-ycXO64uZG1WFjpmBewrxonVDa
-    gxJsJWtThqV6NS6VKw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrieefgdehhecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepofgfggfkjghffffhvffutgesthdtre
-    dtreertdenucfhrhhomhepfdgkrggtkhcuhggvihhnsggvrhhgfdcuoeiirggtkhesohif
-    lhhfohhlihhordhorhhgqeenucggtffrrghtthgvrhhnpefhuefhveeuffetfffgjeetgf
-    ekkeehfedtfeelgfehffffveehkeelfefgheffudenucevlhhushhtvghrufhiiigvpedt
-    necurfgrrhgrmhepmhgrihhlfhhrohhmpeiirggtkhesohiflhhfohhlihhordhorhhg
-X-ME-Proxy: <xmx:jXN_Y5TzCGm7pa9icLM4QUya7irGgrYoq_yIxiTPRFQbdY5ouNep-g>
-    <xmx:jXN_Yysa-uz0zLb-UgwheRY_s0uSvPYkCKV8zEkHoMYpSmrD-M6Exw>
-    <xmx:jXN_Y6eK5z9Yropel7047QoOhBEYwBGLmQcq7G2jE70NtLAfnK1iEA>
-    <xmx:jXN_Y8oMFbWg_gSYvwjlaahxNEVcxwpPxTwTvIP7t9RJlWcwA_-n5w>
-Feedback-ID: i876146a2:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id EF3D4272007A; Thu, 24 Nov 2022 08:37:16 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-1115-g8b801eadce-fm-20221102.001-g8b801ead
-Mime-Version: 1.0
-Message-Id: <cfbd647e-0e66-4417-8c94-c8cac905a78a@app.fastmail.com>
-In-Reply-To: <909b0770-2ac2-1a87-498b-0537a94e94ac@dunelm.org.uk>
-References: <71fcf215-101e-4398-bffa-4ed7e286d9c8@app.fastmail.com>
- <909b0770-2ac2-1a87-498b-0537a94e94ac@dunelm.org.uk>
-Date:   Thu, 24 Nov 2022 08:36:55 -0500
-From:   "Zack Weinberg" <zack@owlfolio.org>
-To:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Subject: Re: [bug] git log --invert-grep --grep=[sufficiently complicated regex] prints
- nothing
-Content-Type: text/plain
+        with ESMTP id S229487AbiKXPjl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Nov 2022 10:39:41 -0500
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA56D30562
+        for <git@vger.kernel.org>; Thu, 24 Nov 2022 07:39:38 -0800 (PST)
+Received: by mail-pg1-x535.google.com with SMTP id n17so1819973pgh.9
+        for <git@vger.kernel.org>; Thu, 24 Nov 2022 07:39:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mjIBdx8w5coPECEV21lKVgSpoWO+3ixUOvM2WdLBQqc=;
+        b=UsEE2Y+sT9nJdUftJeyXr/SLIUrg91IO48dFbs+PMbDjRynyU5+RoVWP5xnDGi0fB9
+         k19XDIe15swqjbCefF8aDtbsJt0HjZKo43M4O8Vxboaq/6QAWa/Ffwo4iKhpAkNacohc
+         sYoyD9lKb2vuDaEInC4uqo16x4Y3ILT+JrGFOR46WCKHzcUHKOgqDpDIJg65qAFLEeIp
+         Ya2Zo/mx3FyUTp4s7oZXTlcgdObaK7NlTIZZElktLRYIxu5vfF1iNdUL8Kovjo2JJ340
+         MJlAAjnTRYYg+NGXu6nF45H/TAQH+4g6eWbWB/Fw+EeIt9dNDfMM+C9N2ftyujhjH6hI
+         E0tA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mjIBdx8w5coPECEV21lKVgSpoWO+3ixUOvM2WdLBQqc=;
+        b=GQDAWLSjWHv1Q5slCCgnyuah6kBKWn3qwbor8qrOwQEWjxBDx5ABZmdQDwYa45QAQW
+         vVoOd/cGpIYim41zuAXjnZVeo74Rucq7XtS6kwi09NTI42UlgkFYkOVPBWcE8PD7trFe
+         Ctu22BwmCC8OC5+mW+bupsVtxOUiwU8yRAdfNsUkIAOjddJHK9wI1XexKyVHHUknaHYS
+         5bmNOwzWvVnrwNYTkaZTOlHyOhlfAyJ/pptY2L2IqSvcqvPEPEvJY0XY0se64i97bTJS
+         OQHddSLVewCZB8Jvk0BH7zoQ7cEhAEb+dIuDqAKOVEH+psppWqZJ/5yNkZvYt0CIVAAH
+         t+bw==
+X-Gm-Message-State: ANoB5plPo4b0qmoM4Paq4HAz09NHQS9BcjLWN/wdY3+paWEFumS4Y1tD
+        4H7jHfw4kL14ZgPi11IsmmbBxl0VBp8=
+X-Google-Smtp-Source: AA0mqf7aUmq8VUy2NNK6ZzkRK6nawPe7sbUTzp8r2ieAt5hAlnIUocjet19k5QKH7EgiOnfyN0vUOA==
+X-Received: by 2002:a63:2117:0:b0:474:f7bd:9462 with SMTP id h23-20020a632117000000b00474f7bd9462mr13764542pgh.189.1669304378111;
+        Thu, 24 Nov 2022 07:39:38 -0800 (PST)
+Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
+        by smtp.gmail.com with ESMTPSA id x22-20020a170902821600b0017f48a9e2d6sm1413089pln.292.2022.11.24.07.39.36
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 24 Nov 2022 07:39:37 -0800 (PST)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH v3 0/4] Fix broken CI on newer github-actions runner image 
+Date:   Thu, 24 Nov 2022 23:39:30 +0800
+Message-Id: <20221124153934.12470-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.32.0.rc3
+In-Reply-To: <20221124090545.4790-1-worldhello.net@gmail.com>
+References: <20221124090545.4790-1-worldhello.net@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 24, 2022, at 5:31 AM, Phillip Wood wrote:
-> I think the problem is that you are excluding the commit that renames 
-> the file and that stops --follow from following the rename. See below 
-> for a simple reproduction using git's test suite.
+From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Yes, I can confirm.  Both of the "incorrect output" examples I gave
-involved excluding a commit that renames the file.  If I don't do that
-there is no problem with an `a|b|c` regex.
+# Changes since v2
 
-> I'm afraid I'm not 
-> familiar with the --follow code so I've no idea how to fix this.
+1. Split patch 2/3 of v2 into two patches:
 
-I'm honestly unsure what the right behavior _should_ be, now.  I
-expected --grep to be applied very late in the process, after the
-set of commits touching the specified file had already been computed
-(including all of its previous names, because of --follow) but the
-documentation is ambiguous.
+   patch 2/4: ci: show error message of "p4 -V"
+   patch 3/4: ci: p4 on Linux has the same version as on macOS
 
-zw
+2. In patch 3/4, remove variable "LINUX_P4_VERSION" and use
+   a fixed version "21.2" for p4 on both Linux and macOS.
+
+3. For patch 4/4, follow Ævar's suggestion to make the code simpler.
+
+
+# Range-diff v2..v3
+
+1:  79c851529c ! 1:  1c0d639487 github-actions: run gcc-8 on ubuntu-20.04 image
+    @@ Commit message
+         In this way, we can change the "ubuntu-latest" runner image to any
+         version such as "ubuntu-22.04" to test CI behavior in advance.
+     
+    +    Reviewed-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+         Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+     
+      ## .github/workflows/main.yml ##
+2:  faa5076fe0 ! 2:  fed880b8bd ci: upgrade version of p4 to 21.2
+    @@ Metadata
+     Author: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+     
+      ## Commit message ##
+    -    ci: upgrade version of p4 to 21.2
+    +    ci: show error message of "p4 -V"
+     
+    -    There would be a segmentation fault when running p4 v16.2 on ubuntu
+    -    22.04 which is the latest version of ubuntu runner image for github
+    -    actions.
+    +    When installing p4 as a dependency, we used to pipe output of "p4 -V" to
+    +    validate the installation, but this would hide potential errors of p4.
+    +    E.g.: A broken p4 installation fails to run.
+     
+    -    By checking each version from [1], p4d version 21.1 and above can work
+    -    properly on ubuntu 22.04. But version 22.x will break some p4 test
+    -    cases. So p4 version 21.x is exactly the version we can use.
+    -
+    -    In addition to upgrade p4 from version 16.2 to 21.2, also add some
+    -    instructions to show errors of command "p4 -V", so we can see why the
+    -    command output doesn't match.
+    -
+    -    [1]: https://cdist2.perforce.com/perforce/
+    +    Add some instructions to show errors of command "p4 -V", so we can see
+    +    why the command output doesn't match.
+     
+    +    Reviewed-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+         Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+     
+      ## ci/install-dependencies.sh ##
+    @@ ci/install-dependencies.sh: esac
+      else
+      	echo >&2 "WARNING: perforce wasn't installed, see above for clues why"
+      fi
+    -
+    - ## ci/lib.sh ##
+    -@@ ci/lib.sh: ubuntu)
+    - 	# were recorded in the Homebrew database upon creating the OS X
+    - 	# image.
+    - 	# Keep that in mind when you encounter a broken OS X build!
+    --	export LINUX_P4_VERSION="16.2"
+    -+	export LINUX_P4_VERSION="21.2"
+    - 	export LINUX_GIT_LFS_VERSION="1.5.2"
+    - 
+    - 	P4_PATH="$HOME/custom/p4"
+-:  ---------- > 3:  da2f516fc9 ci: p4 on Linux has the same version as on macOS
+3:  f080b2fdcd ! 4:  bd1850cc93 ci: install python on ubuntu
+    @@ Commit message
+         Since the "ubuntu-latest" runner image has a higher version, so its safe
+         to use "python2" or "python3" package name.
+     
+    +    Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+         Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+     
+      ## ci/install-dependencies.sh ##
+    @@ ci/install-dependencies.sh: case "$runs_on_os" in
+     
+      ## ci/lib.sh ##
+     @@ ci/lib.sh: ubuntu)
+    - 	if [ "$jobname" = linux-gcc ]
+    + 		break
+    + 	fi
+    + 
+    +-	if [ "$jobname" = linux-gcc ]
+    ++	PYTHON_PACKAGE=python2
+    ++	if test "$jobname" = linux-gcc
+      	then
+    - 		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/python3"
+    +-		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/python3"
+    +-	else
+    +-		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/python2"
+     +		PYTHON_PACKAGE=python3
+    - 	else
+    - 		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/python2"
+    -+		PYTHON_PACKAGE=python2
+      	fi
+    ++	MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/$PYTHON_PACKAGE"
+      
+      	export GIT_TEST_HTTPD=true
+    + 
+
+--
+
+Jiang Xin (4):
+  github-actions: run gcc-8 on ubuntu-20.04 image
+  ci: show error message of "p4 -V"
+  ci: p4 on Linux has the same version as on macOS
+  ci: install python on ubuntu
+
+ .github/workflows/main.yml | 16 ++++++++++++----
+ ci/install-dependencies.sh | 16 ++++++++--------
+ ci/lib.sh                  | 15 +++++++--------
+ 3 files changed, 27 insertions(+), 20 deletions(-)
+
+-- 
+2.39.0.rc0
+
