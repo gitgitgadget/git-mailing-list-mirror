@@ -2,106 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DB032C4332F
-	for <git@archiver.kernel.org>; Thu, 24 Nov 2022 00:42:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C763CC433FE
+	for <git@archiver.kernel.org>; Thu, 24 Nov 2022 00:51:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229554AbiKXAmL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 23 Nov 2022 19:42:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38928 "EHLO
+        id S229927AbiKXAve (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 23 Nov 2022 19:51:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229379AbiKXAmJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Nov 2022 19:42:09 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0524A6A1E
-        for <git@vger.kernel.org>; Wed, 23 Nov 2022 16:42:08 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id mh8-20020a17090b4ac800b0021348e084a0so2239125pjb.8
-        for <git@vger.kernel.org>; Wed, 23 Nov 2022 16:42:08 -0800 (PST)
+        with ESMTP id S229730AbiKXAvL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Nov 2022 19:51:11 -0500
+Received: from mail-pj1-x1049.google.com (mail-pj1-x1049.google.com [IPv6:2607:f8b0:4864:20::1049])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BE9E10FED1
+        for <git@vger.kernel.org>; Wed, 23 Nov 2022 16:50:04 -0800 (PST)
+Received: by mail-pj1-x1049.google.com with SMTP id c10-20020a17090aa60a00b00212e91df6acso83636pjq.5
+        for <git@vger.kernel.org>; Wed, 23 Nov 2022 16:50:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=IKnmofc2dGvaYJJ18HVGWIfxw2W644JQl8q6tPttP+U=;
-        b=g1lVegWRQbzBuCGhsbMPxpqzhCeY/JXSLRNYo4aF5pyh9lFRi/IuGywdSIk33ufb3C
-         ZygfKJhZGQ7OV1PEl4bqowKvO3wccayYal12iVm27jejvs4P3vHpucrOED2lnuOdl8/a
-         cDusJ5JqjdfjndB4tTb21dN7OrzdfuCkuZcCPVK2NFiA55sYdq5gpmdSzrOKB+If4QMZ
-         eA2WDnxbqd146ZCyf/TDxviJ3lfoDVwhLkmFzP6plzmAdTnyYSx9HH8RhqNKaGxeDUtA
-         lgKGYITaNgeLX8DwdNlK8gvSD0WzV9OpmTyV0FX4CLJ0kn5OYDdqx9dkgkaTtq7nQH16
-         6Lyg==
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=DyFXJkVMtZ0cK2lD8OQup4p6T8XynNZbQDlln+LEl94=;
+        b=EwxjkNQPt3ivRUYHMUdyvTRCIG9v8RyaV/ggNYGp7Rz2kZW4Z/POFVgDWPTudCXxuf
+         4SM1++GRTDgPFzdzMgOnZlXmwx5wUW6IzPt8ealJTzYF65c1mrlTJ1E4uXBXnySTQAn7
+         kLTDvCiWqwszukzSBaUQiZ7VoRL2+qWzj2OEpqVonTUOoZkSt9vdo9cJUfyVFrq196Ml
+         1SS5t3TaxbLWs2t+kNY0G4o3TJfdnrbXnfvYouIen0yIrahIJT47P7BJIF5t/b0XmCXl
+         h/Lg8K9iHLHO6bnj1J2+MxVQ6ORRxL/jvcnbactulJgOpf7o5OiftyLusiy7h/qvHSD8
+         m/jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IKnmofc2dGvaYJJ18HVGWIfxw2W644JQl8q6tPttP+U=;
-        b=XnUIfEei5faJxNzjRehItO3RzIwwp+ZdLiNo2tj18/7aoJQREnER8UJYIOK+szpghn
-         psgxPy2wgzA2gviElBGOP9FbUujos1tW0cahH5sD5D6KHEP4aAlNZXL2DQ1GETeziZ7g
-         ENydeP5peN8whxr0d1F3ktRiO2eiyO4MmCVUHijpCf67ShArhX1yJMBJV+okL089PG1J
-         vDpIHKnWAuqBgZ4Tqh/AdPtND5VGmSUsVUo1PeHQIWJwRP7ZEA5M6hhSs7yQJueFAb/3
-         MoA6WdnOS3G0kLgmYXwBryobnSiNtf4vd2Fd4GU6tDs8XG7TF9mmIiIrMvHXlwxEaDbJ
-         ESKA==
-X-Gm-Message-State: ANoB5pmTZrZrVOHC8jyh/WWzQyBxWb5WWFsCKW2K7pjX1QuC8f4dkewO
-        fsW7NwSked/vZRoZrIrrHGs7h1QEgJlDHTui/4r6N91S5XgaLPWUcIV/17YEcvnKe5NsKTrnUfA
-        3TkR07xUjCw1XwU+W5+VYzSO3/EpgVnXX4+wbQYtA/F+7+EGtPQgBX7yeyK3HZFm/CwtHcEGXDm
-        np
-X-Google-Smtp-Source: AA0mqf4ct5+5OVaT3dQ8FVpmqGrsXGT2JALNNV+EKDSaqq9A1aP+YDtQK7e3rpOG7yMWVcXcmGpmlANBNh6VRuB5KNOT
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:902:bb84:b0:184:e4db:e3e with
- SMTP id m4-20020a170902bb8400b00184e4db0e3emr15227955pls.47.1669250528363;
- Wed, 23 Nov 2022 16:42:08 -0800 (PST)
-Date:   Wed, 23 Nov 2022 16:42:05 -0800
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DyFXJkVMtZ0cK2lD8OQup4p6T8XynNZbQDlln+LEl94=;
+        b=wU6sb6B/7pEVzoArS0HXbAtNgV6p4oHU64sb6YfmUxHUzNibiLRpbobvZzzz6IHMmr
+         eBxAQP9wvUX66aZKWclWyUcRk+ZtoZq/tkXRHir8YQ/p/a8UbhVGmFoECMsRv4aUZn+v
+         nebYQtnEqKJpFKqr+GlbuceAbOVr9KkA7i26ze8GzzqGVGGGAmgIDmOd7d8wDLF9HXm+
+         dELjvExwIwGnui7d2fUQmVkYYZ5IJMueMSHcKdNJB3miZwYK1DuCiduJGXmeMOxqpvXF
+         X7SAgIbIsgScJMXQWR1Owcayv88X5x4Z/GJGXYJbmGv590JJTxy43pNC1ituzOE3uRqD
+         ZkZw==
+X-Gm-Message-State: ANoB5plYgCDFS/lbHIEHBJ2Ogn9zegsYf3is3cqcPqR6kMJQigYcoHUT
+        4+wqN71JlwGwVleFE5Oou81f33f7sP5wHg==
+X-Google-Smtp-Source: AA0mqf5mh/HLrf6u6bEzC556QXVw0ykRv672kgxPPH5kCbKs1QeXvZ4Yl2gKYbwiOwNhzUXEz9+FTK89lKEeDw==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:aa7:9ad6:0:b0:571:8e02:54af with SMTP id
+ x22-20020aa79ad6000000b005718e0254afmr14433220pfp.53.1669251003836; Wed, 23
+ Nov 2022 16:50:03 -0800 (PST)
+Date:   Wed, 23 Nov 2022 16:50:02 -0800
+In-Reply-To: <Y30onDTUFmAezkSl@coredump.intra.peff.net>
 Mime-Version: 1.0
-X-Mailer: git-send-email 2.38.1.584.g0f3c55d4c2-goog
-Message-ID: <20221124004205.1777255-1-jonathantanmy@google.com>
-Subject: [Design RFC] Being more defensive about fetching commits in partial clone
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
+References: <pull.1382.git.git.1668706274099.gitgitgadget@gmail.com>
+ <pull.1382.v2.git.git.1669074557348.gitgitgadget@gmail.com>
+ <221122.868rk3bxbb.gmgdl@evledraar.gmail.com> <Y30onDTUFmAezkSl@coredump.intra.peff.net>
+Message-ID: <kl6lwn7lch1h.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v2] object-file: use real paths when adding alternates
+From:   Glen Choo <chooglen@google.com>
+To:     Jeff King <peff@peff.net>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Cc:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-At $DAYJOB, we recently ran into a situation in which through a bug (not
-necessarily through Git) [1], there was corruption in the object store of
-a partial clone. In this particular case, the problem was exposed when "git
-gc" tried to expire reflogs, which calls repo_parse_commit(), which triggers
-fetches of the missing commits.
+Jeff King <peff@peff.net> writes:
 
-We don't want to go to great lengths to improve the user experience in a
-relatively rare case caused by a bug in another program at the expense of the
-regular user experience, so this constrains the solution space. But I think
-there is a solution that works: if we have reason to believe that we are
-parsing a commit, we shouldn't lazy-fetch if it is missing. (I'm not proposing
-a hard guarantee that commits are never lazy-fetched; this just relatively
-increases resilience to object store corruption, and does not guarantee
-absolute defense.) I think that we can use a missing commit as a sign of
-object store corruption in this case because currently, Git does not support
-excluding commits in partial clones.
+>> Doesn't this leak? I've just skimmed strbuf_realpath_1() but e.g. in the
+>> "REALPATH_MANY_MISSING" case it'll have allocated the "resolved" (the
+>> &tmp you pass in here) and then "does a "goto error_out".
+>> 
+>> It then *resets* the strbuf, but doesn't release it, assuming that
+>> you're going to pass it in again. So in that case we'd leak here, no?
+>> 
+>> I.e. a NULL return value from strbuf_realpath() doesn't mean that it
+>> didn't allocate in the scratch area passed to it, so we need to
+>> strbuf_release(&tmp) here too.
+>
+> We don't use MANY_MISSING in this code path, but I didn't read
+> strbuf_realpath_1() carefully enough to see if that is the only case.
+> But regardless, I think it is a bug in strbuf_realpath(). All of the
+> strbuf functions generally try to leave a buffer untouched on error.
+>
+> So IMHO we would want a preparatory patch with s/reset/release/ in that
+> function, which better matches the intent (we might be freeing an
+> allocated buffer, but that's OK from the caller perspective).
 
-There are other possible solutions including passing an argument from "git gc"
-to "git reflog" to inhibit all lazy fetches, but I think that this fix is at
-the wrong level - fixing "git reflog" means that this particular command works
-fine, or so we think (it will fail if it somehow needs to read a legitimately
-missing blob, say, a .gitmodules file), but fixing repo_parse_commit() will fix
-a whole class of bugs.
+Is that always OK? I would think that we'd do something closer to
+strbuf_getcwd():
 
-A question remains of whether we would need to undo all this work if we decide
-to support commit filters in partial clones. Firstly, there are good arguments
-against (and, of course, for) commit filters in partial clones, so commit
-filters may not work out in the end anyway. Secondly, even if we do have commit
-filters, we at $DAYJOB think that we still need to differentiate, in some way,
-a fetch that we have accounted for in our design and a fetch that we haven't;
-commit chains have much greater lengths than tree chains and users wouldn't
-want to wait for Git to fetch commit by commit (or segment by segment, if we
-end up batch fetching commits as we probably will). So we would be building on
-the defensiveness of fetching commits in this case, not tearing it down.
+  int strbuf_getcwd(struct strbuf *sb)
+  {
+    size_t oldalloc = sb->alloc;
+    /* ... */
+    if (oldalloc == 0)
+      strbuf_release(sb);
+    else
+      strbuf_reset(sb);
+  }
 
-My next step will be to send a patch modifying repo_parse_commit() to not
-lazy-fetch, and I think that future work will lie in identifying when we know
-that we are reading a commit and inhibiting lazy-fetches in those cases. If
-anyone has an opinion on this, feel free to let us know (hence the "RFC" in
-the subject).
-
-[1] For the curious, we ran a script that ran "git gc" on a repo having
-configured a symlink to that repo as its alternate, which resulted in many
-objects being deleted.
- 
+i.e. if the caller passed in a strbuf with allocated contents, they're
+responsible for free()-ing it, otherwise we free() it. That does fix the
+leak in this patch, but I don't feel strongly enough about changing
+strbuf_realpath() to do it now, so I'll do without the change for now.
