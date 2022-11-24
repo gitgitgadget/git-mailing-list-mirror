@@ -2,125 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AAE3C433FE
-	for <git@archiver.kernel.org>; Thu, 24 Nov 2022 12:56:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E433FC4321E
+	for <git@archiver.kernel.org>; Thu, 24 Nov 2022 12:58:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229544AbiKXM4s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Nov 2022 07:56:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45082 "EHLO
+        id S230043AbiKXM6a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Nov 2022 07:58:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229455AbiKXM4q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Nov 2022 07:56:46 -0500
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1834912AF6
-        for <git@vger.kernel.org>; Thu, 24 Nov 2022 04:56:46 -0800 (PST)
-Received: by mail-ot1-x330.google.com with SMTP id w26-20020a056830061a00b0066c320f5b49so881505oti.5
-        for <git@vger.kernel.org>; Thu, 24 Nov 2022 04:56:46 -0800 (PST)
+        with ESMTP id S229977AbiKXM6W (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Nov 2022 07:58:22 -0500
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3024FB0400
+        for <git@vger.kernel.org>; Thu, 24 Nov 2022 04:58:16 -0800 (PST)
+Received: by mail-pl1-x62b.google.com with SMTP id k7so1403455pll.6
+        for <git@vger.kernel.org>; Thu, 24 Nov 2022 04:58:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=miAQ1XipH7DAoQzvBFPW5XwiglTbkmQVx3xo2NFqsq4=;
-        b=ZyQcpd+KyAJmxArzdlNIx2xL2yGeTkNQDgwvrwdbfkhNUzo0KJw6QC5WM86gu+DZ8A
-         5d/gxWauoh6p7CBj2HhLP7jg8sTA7HHiIvvs/U1/svT07FVEjX4BMGZymYZZiF4dyH50
-         TLqSVNQNETn8lc801zIwGw5TiY7kAtQS6r10wvo14+55Ph20codnYV5+4pKoUcD0vcpR
-         9V1pUykqjPdBF/1kOhwdBhazPgH7wh/VGZRgk+PBn/JB/MP7UeySmMvT2MtFJD3iLScU
-         h6v9Z0zvrwlX3XiI0Uv0hNWM1oRDhLdNTTP1od0L1l6v2y00ngoKXqq+W15AbelKOMos
-         pfoQ==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=BAEUqP6fcMgMTDO1NsHxuY1kqZA4Or6NIFsg8vyPl5k=;
+        b=SLoX868n2EIHk8gz+Zte5iV+/xMWfc4LD5tVjczcctm22zsA/5INGdreJanrZrdGJn
+         yv2jVm4DZlveeVs/k6GlywmGYj+bvCWxQVJkM7bKzUKzal2sVGEWiDpJfEe9MidKRPQg
+         Cps7omf2Y48YYdnUmAmccfuyvukqa8Iqs0wfRkAEMUZahnGCAQzs/jQXKNg/1+rfDGbh
+         n7sGEba97cgkuEE943JU3a8gAdk3ONYSKfLvbP/A8sghg/sZs/VhEC5pK1WDcJEalhY3
+         yEL/w3fU57dh9syeMSAFQIZFpzoxKDr8B2q16PqtErvoMXs5oXomNMJ4NNI/7qkcpxiC
+         0kbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=miAQ1XipH7DAoQzvBFPW5XwiglTbkmQVx3xo2NFqsq4=;
-        b=CpSt9aAVzCVXL7dEVmp6AoiRGe1Ym/XtER4eVP7PnX+Q/08L1T82dscq1r+jUEk3cR
-         9GAns3FYeGVQb9Ja03ITfqbk3ZSck/BqFZvV5QhKzZ685I7z1UkREmKhg/bcIDiycuQp
-         8dF/tfdTB6KUBjMW4BhUcZYCLpSDwjBMa+Ma669rNWz5tvcVEQpb/r5gl8gePlX1Nx2r
-         Sz/1v7LzvreAm4hcnl29DgQCJKMORSLMIdqFUIlmGD5kykDON3VEuyryUkqiY2xti7GJ
-         Mu6BnEmGGYWCmJ5YDutvKwS1iGvBTfZF5bNRKmb2oZfnIk75d4gBe27uFSKwahAYZO8g
-         ixTw==
-X-Gm-Message-State: ANoB5pksfjgKk/LdxoAfa/aQ8Iyd2h9H1DFt43XTk8wF34lqAxln/fN3
-        Nt9VbfzFk9BzM1lyJmqgzCUlll/le5HpOTb5nMo=
-X-Google-Smtp-Source: AA0mqf7QGcEBoCgBvU9xqkZnLyDKfP2olCrjbwPXyVrkJyUfQg8TrL9KUhpmVHuIjh6xTR0luhg69dHCncAzbIvhhSA=
-X-Received: by 2002:a05:6830:134f:b0:66c:68e7:d673 with SMTP id
- r15-20020a056830134f00b0066c68e7d673mr7312711otq.31.1669294605372; Thu, 24
- Nov 2022 04:56:45 -0800 (PST)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BAEUqP6fcMgMTDO1NsHxuY1kqZA4Or6NIFsg8vyPl5k=;
+        b=u3lrm5ltQAymdw/+h6UAwt5352xLfIyIKwpAHZumhlxgpBr6OAgUPohHaMLj3dem5o
+         +Ni2YZla8noIWi91/mpa+0ZtzQgqwFDc9+pJRc5Y6qKm7vznozl6B+zKihkqtiDLqt3S
+         d2fsV7aUH0+Csl2n4dYOyUg+HCf5BqyfUfSu4Z9rR0IDsEX1cKILwMiAryNapuoqi9N3
+         rTRUaSi6RildTgVleDzOvZvo//jWci9wwGKfiwo5Rbm6NPR9R4SqaA1rMxxpMuCzZH5j
+         7YS1367/wtQ7HSE44Af1PXzjTzdYtPoYaDBizzKIDlGTKzVoab8g+uabec/oPyADhnKf
+         5rQw==
+X-Gm-Message-State: ANoB5plEpX2X9bCyMeDLZZROGEPtDCLiyogNowod4bwOSf84zkYjUr8z
+        8PIOILLWdTEcSOZXLvqMCe3yfxdCbJ6cEMNBYMnrdjbWEvN9ag==
+X-Google-Smtp-Source: AA0mqf4YZipv5XmBgPT67V7/4m4hocK3Y2M2EhBTsZwLpkSJKoB2cy/HAMbNL+Df76TchlICbIec/kWp2L4Rfhuh6ag=
+X-Received: by 2002:a17:902:e9c2:b0:187:4920:3a78 with SMTP id
+ 2-20020a170902e9c200b0018749203a78mr13283669plk.88.1669294695631; Thu, 24 Nov
+ 2022 04:58:15 -0800 (PST)
 MIME-Version: 1.0
-References: <20221123150233.13039-1-worldhello.net@gmail.com>
- <20221124090545.4790-3-worldhello.net@gmail.com> <221124.86ilj4pqfn.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221124.86ilj4pqfn.gmgdl@evledraar.gmail.com>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Thu, 24 Nov 2022 20:56:33 +0800
-Message-ID: <CANYiYbGMdECEWzCOgBrU3su4m=hrp8MND17cZ8ZaNjpgUbXmuw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] ci: upgrade version of p4 to 21.2
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+References: <pull.1423.v3.git.1669033620.gitgitgadget@gmail.com>
+ <pull.1423.v4.git.1669126703.gitgitgadget@gmail.com> <2f0bffb484beccf58f2440ed5e2c04a1ba26e6c3.1669126703.git.gitgitgadget@gmail.com>
+ <Y30a0ulfxyE7dnYi@coredump.intra.peff.net> <CAF5D8-vSsBsdiA8SiDgqUFkL9_3N-v+psVxj-AcibOB88gxWfA@mail.gmail.com>
+ <Y37EPdUkBhsSPmRD@coredump.intra.peff.net> <CAF5D8-u14grTa9cUo=ge8TVRKNYtVHWhFHDW8yYD9gD8=f0Byg@mail.gmail.com>
+In-Reply-To: <CAF5D8-u14grTa9cUo=ge8TVRKNYtVHWhFHDW8yYD9gD8=f0Byg@mail.gmail.com>
+From:   Yoichi Nakayama <yoichi.nakayama@gmail.com>
+Date:   Thu, 24 Nov 2022 21:58:04 +0900
+Message-ID: <CAF5D8-vXK81U_n06u=p=B9urTWyQ5+fN8_w9FeCWQOv1xen07Q@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] git-jump: invoke emacs/emacsclient
+To:     Jeff King <peff@peff.net>
+Cc:     Yoichi Nakayama via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 24, 2022 at 7:01 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+On Thu, Nov 24, 2022 at 9:32 PM Yoichi Nakayama
+<yoichi.nakayama@gmail.com> wrote:
 >
-> Omitted from this context is:
->
->         # The Linux build installs the defined dependency versions below.
->         # The OS X build installs much more recent versions,
->
-> That part should be updated here, as it's now out-of-date, they're now
-> installing the same version: 21.2.
-
-Yes, the versions of p4 for linux and macos happen to be the same. We
-can use one variable to define p4 version for both linux and macos.
-
->
-> >       # were recorded in the Homebrew database upon creating the OS X
-> >       # image.
-> >       # Keep that in mind when you encounter a broken OS X build!
-> > -     export LINUX_P4_VERSION=3D"16.2"
-> > +     export LINUX_P4_VERSION=3D"21.2"
-> >       export LINUX_GIT_LFS_VERSION=3D"1.5.2"
+> On Thu, Nov 24, 2022 at 10:09 AM Jeff King <peff@peff.net> wrote:
 > >
-> >       P4_PATH=3D"$HOME/custom/p4"
+> > On Wed, Nov 23, 2022 at 02:33:50PM +0900, Yoichi Nakayama wrote:
+> >
+> > > On Wed, Nov 23, 2022 at 3:54 AM Jeff King <peff@peff.net> wrote:
+> > > > Hmm, I know I suggested using a temporary file since "cat $tmpfile"
+> > > > should be pretty safe. But it does still have problems if your tmp
+> > > > directory has spaces. Or even other metacharacters, which I think will
+> > > > be interpreted by the eval, since $@ is expanded in the outermost level
+> > > > of the shell.
+> > >
+> > > Right. But the problem is not specific to emacs (it happens in vim too).
+> > > Let's fix it another time (as you noted, that's pretty unlikely, and we may
+> > > not even need to fix it).
+> >
+> > Good point. The vim version is easier to fix (we just need to
+> > double-quote \$1 inside the eval), but the fact that nobody has
+> > complained is an indication that it does not really matter.
 >
-> This is a welcome change, but it would be even more welcome if you
-> followed-up and unified the linux and osx p4 logic as a follow-up.
-> I.e. after this we'll install 21.2 on both osx and linux, so the
-> versions are no longer different.
+> I've confirmed the vim version is fixed by
+>     eval "$editor -q \"\$1\""
 >
-> I think we probably won't need to install different versions for the two
-> ever, we just drifted on the linux version, or maybe (per the comment
-> we'll need to adjust) there was some problem before with upgrading the
-> linux version, but no longer?
+> With your hint, I found the emacs version can be fixed
+> by single-quoting the variable (I found a mistake in the
+> emacs version. Since there is only one argument, I
+> should use $1 instead of $@. I'll fix it.), and the vim
+> version can be also in the similar form with single quote:
+>     eval "$editor -q '$1'"
 >
-> I didn't dig, but covering some of that in the commit message would be
-> most welcome.
+> The original vim version used the notation \$1 instead of $1.
+> I'm worried that the emacs version might need the backslash.
+> What does the backslash mean? Is it necessary?
 
-It is commit d1c9195116 (ci: avoid brew for installing perforce,
-2022-05-12), which changed the installation method of p4 on macOS.
-There is also a note about the obsolete comment in ci/lib.sh in this
-commit.
+I found the answer myself. The backslash is to leave the
+evaluation of the argument to the 'eval' execution.
+And another question arose. Why do we use eval?
+What is the difference from running it directly like below?
+    $editor -q $1
 
-> So can we just s/LINUX_P4_VERSION/P4_VERSION/ or something, and then
-> change this in the "macos-latest";
->
->         wget -q "https://cdist2.perforce.com/perforce/r21.2/bin.macosx101=
-5x86_64/helix-core-server.tgz"
->
-> To:
->
->         wget -q "https://cdist2.perforce.com/perforce/r${P4_VERSION}/bin.=
-macosx1015x86_64/helix-core-server.tgz"
-
-> While doing that we can just move the "LINUX_P4_VERSION" (or whatever we
-> rename it to) from lib.sh to "install-dependencies.sh".
->
-
-Will do.
-
---
-Jiang Xin
+-- 
+Yoichi NAKAYAMA
