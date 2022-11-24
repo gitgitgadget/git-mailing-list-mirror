@@ -2,131 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BA76C43217
-	for <git@archiver.kernel.org>; Thu, 24 Nov 2022 15:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0EE39C4332F
+	for <git@archiver.kernel.org>; Thu, 24 Nov 2022 16:02:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229751AbiKXPju (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Nov 2022 10:39:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55404 "EHLO
+        id S229589AbiKXQCo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Nov 2022 11:02:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229704AbiKXPjo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Nov 2022 10:39:44 -0500
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07FAC30562
-        for <git@vger.kernel.org>; Thu, 24 Nov 2022 07:39:43 -0800 (PST)
-Received: by mail-pf1-x433.google.com with SMTP id 9so1886215pfx.11
-        for <git@vger.kernel.org>; Thu, 24 Nov 2022 07:39:43 -0800 (PST)
+        with ESMTP id S229476AbiKXQCj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Nov 2022 11:02:39 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEE5D1DDF6
+        for <git@vger.kernel.org>; Thu, 24 Nov 2022 08:02:38 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id v7so1628743wmn.0
+        for <git@vger.kernel.org>; Thu, 24 Nov 2022 08:02:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XrodGsdgDfEdezt9f/pW1vlRzb3Km+y0QPGok/vIRE4=;
-        b=MA6Zf3RS0cHzFjVO+JmC4VjiXTisrFyb7hgwHWBd9clXfpdd0rK2mB44HjR2TnEeO+
-         phPIW+GBDSjpJ0UQGjsBwGUiXhJQM2MCFcEZlsXVzmbTQ9WxPie8Ik9lfy5bu4cXVWb7
-         xOZ6YuqzvYga8e/vk4Ka8eu5CuPv6pHs9beNBAnuKyqvaWqk4vA31RRh26DCnfzQXrkO
-         ZD6rvah3rqZUIVArtVMuKItAgBjDHRskSk5F/AB3bmW1YR52eXtTruQDgBlfzQz1Rw//
-         vqJifyctkcFCPyeTt5pox99hX5D6gsB0UvOAwU5aBH64r1IoWAYwYxvFNfUo8ozKxZyn
-         x5LQ==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=DxST/V3Oc7/0xgJShWOGeeCJBr33Hzl12zXtpGVCiQE=;
+        b=V2mJnyDczfoD/03Z1cbm1Fb8HTBbHUXsIgtq26ECXow69TzUi99ZkCHiWJzWGknXNn
+         DihwthadOLK8pNjoOJ24A/7ZFikDhVvjtGRZopPcdiD21cahPjrEkQ0cPMSqevSeznK0
+         ybinI2rLvnA3GNNTCcFN+IsPDl5z4hADJHozV5lJIhGp53/SNDBa+aLy0GC7S3d6rn0L
+         1uEjCwgFijdwJi3H/WtgyarQlqhtaoff+edh3d2FEUehynXlvbI+jvIJtTGeJLHK6MGq
+         qPHqfYACb6XZurzJzp/6EVuq4YoDPyw78j76nib+qRqU/ekjjEBjf4YsbOkzqRCaqg9a
+         uxeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XrodGsdgDfEdezt9f/pW1vlRzb3Km+y0QPGok/vIRE4=;
-        b=gwGEZrT3k1QtHdpZPKLJGhPknrq9vgV+E2/HRJQsxpgpnPiqokBJK/7E3cG4M9IY/h
-         rLN9OwP+5GfOFK6sI+lNcH6IaHuafv4L2tgNynQmPHpvqEZDHTPavJcyMQRzbCo0hRNk
-         2WLE3iuLKpBphmK2exCTsROambt9Z7lciu3/B5pnBcFYTj/OGeYcLrG1jDDuiEsvrpPw
-         5K/UtohHusKaZzSjlvkcfZBdSOCJkdnRcwUEaVRSDfQLtIpbbXAw7qRCpILlAMXE2xbQ
-         Kvwl/aunIIF/MdUv6N4n8Zn2DIjgbrBUrFLobJOw/MTW0o9tHT+j/eNxx7m96196nGyL
-         mNOw==
-X-Gm-Message-State: ANoB5pla12AhQINkN8f0VO6Lwcsg42CuRXXZqQOvrJVCdyxEZXMD0gay
-        K8W2WAFCOY/6BcAEhTNFo0LX03t82iE=
-X-Google-Smtp-Source: AA0mqf5sJsmO8e5N6mo3StvS6asCKyE0vBFperb8Dp/rLDLk9Ysrb8ApV1qD+e9H2hAEQEyK9WkcuQ==
-X-Received: by 2002:a63:1659:0:b0:46e:f23a:e9aa with SMTP id 25-20020a631659000000b0046ef23ae9aamr14884231pgw.428.1669304382305;
-        Thu, 24 Nov 2022 07:39:42 -0800 (PST)
-Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id x22-20020a170902821600b0017f48a9e2d6sm1413089pln.292.2022.11.24.07.39.41
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 24 Nov 2022 07:39:41 -0800 (PST)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v3 4/4] ci: install python on ubuntu
-Date:   Thu, 24 Nov 2022 23:39:34 +0800
-Message-Id: <20221124153934.12470-5-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc3
-In-Reply-To: <20221124090545.4790-1-worldhello.net@gmail.com>
-References: <20221124090545.4790-1-worldhello.net@gmail.com>
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DxST/V3Oc7/0xgJShWOGeeCJBr33Hzl12zXtpGVCiQE=;
+        b=Oi5lT24di8z90EU91HEwtEBZeCL/KsN0bGXZa0IPNvMCQW/9mx2AVbH/+egjBigItW
+         zi3zaB/kxw4KqA4kLyunmgKKtNwRlNnFIUjwr4Brw2FbKssoPLQ0RuznJV11mqv/B3Ab
+         2eTyYIQ2b0z2XPHt0+V6PG9q+gS7trOwdxbGj32mRmuwxONQG/4k2kK9QynB61LI/tOw
+         U+tuOdHfwl1DlfBg4grdp/rzT7ObXQzv7xDNADLi4TFVWHLa2QhJlB+U2AJn8Yp1lXSt
+         8Qo1/oSf5u75RbPEeV5bF368zoN4iAxXI2WL5A2Ra0/D8bIh4JV6JobCPGepbGX9TSwa
+         9iqw==
+X-Gm-Message-State: ANoB5pnucQLF+chE2iG2VqJ0ze3FVsWyDiz/IybhF+CVb+VJPB+db+3x
+        fqDxHxFhUzYC5MLB/XCZLfM=
+X-Google-Smtp-Source: AA0mqf65u18+hJX8QqcKUGIeBNTEJWhirvSSiGJ/B1FxN/pAEhpUpy8P49/9zMacvk3SnONEIE4jOQ==
+X-Received: by 2002:a05:600c:1d24:b0:3cf:6fd0:8168 with SMTP id l36-20020a05600c1d2400b003cf6fd08168mr10519157wms.206.1669305757152;
+        Thu, 24 Nov 2022 08:02:37 -0800 (PST)
+Received: from gmgdl ([149.38.4.46])
+        by smtp.gmail.com with ESMTPSA id az26-20020a05600c601a00b003d01b84e9b2sm2306978wmb.27.2022.11.24.08.02.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Nov 2022 08:02:36 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oyEeH-000E0v-3A;
+        Thu, 24 Nov 2022 17:00:25 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Zack Weinberg <zack@owlfolio.org>
+Cc:     phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Subject: Re: [bug] git log --invert-grep --grep=[sufficiently complicated
+ regex] prints nothing
+Date:   Thu, 24 Nov 2022 16:53:28 +0100
+References: <71fcf215-101e-4398-bffa-4ed7e286d9c8@app.fastmail.com>
+ <909b0770-2ac2-1a87-498b-0537a94e94ac@dunelm.org.uk>
+ <cfbd647e-0e66-4417-8c94-c8cac905a78a@app.fastmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <cfbd647e-0e66-4417-8c94-c8cac905a78a@app.fastmail.com>
+Message-ID: <221124.861qpspckm.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-Python is missing from the default ubuntu-22.04 runner image, which
-prevent git-p4 from working. To install python on ubuntu, we need to
-provide correct package name:
+On Thu, Nov 24 2022, Zack Weinberg wrote:
 
- * On Ubuntu 18.04 (bionic), "/usr/bin/python2" is provided by the
-   "python" package, and "/usr/bin/python3" is provided by the "python3"
-   package.
+> On Thu, Nov 24, 2022, at 5:31 AM, Phillip Wood wrote:
+> [...]
+>> I'm afraid I'm not 
+>> familiar with the --follow code so I've no idea how to fix this.
+>
+> I'm honestly unsure what the right behavior _should_ be, now.  I
+> expected --grep to be applied very late in the process, after the
+> set of commits touching the specified file had already been computed
+> (including all of its previous names, because of --follow) but the
+> documentation is ambiguous.
 
- * On Ubuntu 20.04 (focal) and above, "/usr/bin/python2" is provided by
-   the "python2" package which has a different name from bionic, and
-   "/usr/bin/python3" is provided by "python3".
+This doesn't help with your case, but I remember there being some
+similar confusions and/or expectations mismatches reported in the
+patch. E.g. "--since" here:
+https://lore.kernel.org/git/220401.86pmm1nmvh.gmgdl@evledraar.gmail.com/
 
-Since the "ubuntu-latest" runner image has a higher version, so its safe
-to use "python2" or "python3" package name.
+I couldn't find a reference quickly, but I seem to recall (but perhaps
+I'm imagining it) that we had a report/discussion semi-recently about:
 
-Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
----
- ci/install-dependencies.sh | 2 +-
- ci/lib.sh                  | 8 ++++----
- 2 files changed, 5 insertions(+), 5 deletions(-)
+	git log --reverse --follow -- path
 
-diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index f860c35c75..e804b1935e 100755
---- a/ci/install-dependencies.sh
-+++ b/ci/install-dependencies.sh
-@@ -15,7 +15,7 @@ case "$runs_on_os" in
- ubuntu)
- 	sudo apt-get -q update
- 	sudo apt-get -q -y install language-pack-is libsvn-perl apache2 \
--		$UBUNTU_COMMON_PKGS $CC_PACKAGE
-+		$UBUNTU_COMMON_PKGS $CC_PACKAGE $PYTHON_PACKAGE
- 	mkdir --parents "$P4_PATH"
- 	pushd "$P4_PATH"
- 		wget --quiet "$P4WHENCE/bin.linux26x86_64/p4d"
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 991ea4f8a6..fbebad4b9c 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -232,12 +232,12 @@ ubuntu)
- 		break
- 	fi
- 
--	if [ "$jobname" = linux-gcc ]
-+	PYTHON_PACKAGE=python2
-+	if test "$jobname" = linux-gcc
- 	then
--		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/python3"
--	else
--		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/python2"
-+		PYTHON_PACKAGE=python3
- 	fi
-+	MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=/usr/bin/$PYTHON_PACKAGE"
- 
- 	export GIT_TEST_HTTPD=true
- 
--- 
-2.39.0.rc0
+Which has a similar edge case, e.g. try on git.git:
 
+	git log --reverse --follow -- object-name.c
+
+That's also "correct" if you look at it from the POV of how we implement
+it, i.e. we'll traverse, and the rename to object-name.c is the first
+time we encounter the name from the POV of the walking logic.
+
+Hrm, but shouldn't we show all commits *after* the rename then? Anyway,
+I haven't thought about it this time around, just wanted to provide some
+rabbit-hole references in case you're interested.
+
+In terms of optimization it's *very* useful that we take these
+shortcuts, but as your (and some of these) examples show it can yield
+the wrong or unexpected result in some cases, and in those cases we
+usually have no non-brute-force way of getting the "right" (or
+"desired") result other (brute force being: parse "git log -p"
+yourself).
+
+So it would be nice in general if we had some ability to say what
+filters apply at what stage in the walk, but I suspect that would
+require a rather large UX overhaul...
