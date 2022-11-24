@@ -2,61 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 28639C4332F
-	for <git@archiver.kernel.org>; Thu, 24 Nov 2022 08:19:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3769CC433FE
+	for <git@archiver.kernel.org>; Thu, 24 Nov 2022 08:41:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229899AbiKXITT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Nov 2022 03:19:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40610 "EHLO
+        id S230023AbiKXIlQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Nov 2022 03:41:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39738 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229723AbiKXITE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Nov 2022 03:19:04 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 701BCF003
-        for <git@vger.kernel.org>; Thu, 24 Nov 2022 00:18:15 -0800 (PST)
+        with ESMTP id S229974AbiKXIlO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Nov 2022 03:41:14 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 502CBDF15
+        for <git@vger.kernel.org>; Thu, 24 Nov 2022 00:41:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1669277887; bh=5g0+PQtfbtcO4gWyfL5xT97PQ+z/n9Qsnhy7UrKVwy4=;
+        t=1669279264; bh=r9H/r7vlRhVJYQDxTr2/ko9hbGtCLszoZtqto3TnT8o=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=LuW95Q06bELQalFA6FkhOsSDOTgntq9g01iGCKmLkSUoyheLMdMYw/WZMZnV6y9vY
-         eL6sKnumA/Dt5nlhHtFp02AgbLdTB+1Ehk0oevPZD24AxCBroRhxOXM35dq79Rq1E9
-         wu+hpVC7FGJsC69ePcOOPcOT9w4dV67AKNGVZaQBSWqtNDZtUVI/qHRtmCfosAXqqq
-         LOiFCJE3/nx+NfsB9oXjLO96dR/vNr382iBdgcDUCXdIlbxhnc7gO6dqsQy6TKvFJv
-         ig0Ryp0ymww882WrwlZxMZx6cYBSnFpnBtuTsGka8goZUxCyPlE9t57MZsj7w8uQG/
-         iTDAZpI1upMtA==
+        b=dq2OrW2QVBlv+TnR0HCwZCcGJI+qsffuB3NvXjMXsQ6atDx6QDA46tyy9MvMeuBwZ
+         KRqDfH8QAqfJlERFCPJZWuW81fP9WiOGPpmh2dcJZJxWGkWwshf/n37cjr2ie78VKA
+         miSKmDPjW+i1VisXYrVIeqBpMpNumGp9PT2YxbRUBdQRHOc7/W/o5bb9bBcEixrXI4
+         a+mwT1ejsHRL9gJnJWFeIQWh8JWt3aCU8Vrx3yrClW++L4YPQl4/5FlsdkLFZsCMDb
+         O/XqK77T7+SZIrBsRLdpZYyKI9mVeJwvgtyT5PkR01XdELs9RCNV8AWE9sAqyVakF3
+         YFDmZz74sPSiw==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.25.58.20] ([89.1.212.70]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MNbkp-1oZAzE14kl-00P3ac; Thu, 24
- Nov 2022 09:18:07 +0100
-Date:   Thu, 24 Nov 2022 09:18:05 +0100 (CET)
+Received: from [172.25.58.20] ([89.1.212.70]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MWRRZ-1oQLO72Ro3-00Xu7G; Thu, 24
+ Nov 2022 09:41:04 +0100
+Date:   Thu, 24 Nov 2022 09:41:02 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To:     Jiang Xin <worldhello.net@gmail.com>
 cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH 0/2] Use fixed github-actions runner image
-In-Reply-To: <20221123150233.13039-1-worldhello.net@gmail.com>
-Message-ID: <53qnqqr9-2r34-0804-003p-335q4s884822@tzk.qr>
-References: <20221123150233.13039-1-worldhello.net@gmail.com>
+Subject: Re: [PATCH 2/2] ci: upgrade version of p4
+In-Reply-To: <n79194n5-8q94-29n4-s447-64r0p2po4r76@tzk.qr>
+Message-ID: <9q4525s6-qrq8-1841-n257-711328352n85@tzk.qr>
+References: <20221123150233.13039-1-worldhello.net@gmail.com> <20221123150233.13039-3-worldhello.net@gmail.com> <n79194n5-8q94-29n4-s447-64r0p2po4r76@tzk.qr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:yMMlA3cZBnyuZZ23K2glFtRyxlM5VP9jWaViMgFK2ytZP6jeogl
- 5dttqYYBI4TFbCZ18QJb6txpAO6Bi57mrEj0Lwl1IrPD+wbrrazdwKDsFjQak8e2TkY/1zh
- +0MZsj+NEt5JhjoB7We7iAMYa82KuutCqpLwgQ5qNd7JhAAYYsajLBiYgVeFTp6F5Ls4k4y
- 8WGV+2ciqIQQGzYxZvbDQ==
-UI-OutboundReport: notjunk:1;M01:P0:gxI/zsVfeXs=;rHw80KAc44w4T4EwgYRgoQ7jc+J
- IGv5h7ftvdY6GnOPCHhJFL8iq6dV7813AWceHAXhl1S9HavngoF5aGTThOqv9x5/a+XNguA4f
- EaxTuAsKo08CuyUN2NnPDQyDOAteCx2zRFSdX1qRWJn/hAFgdoM/EPTJA9G1i2BvByqmSFn4G
- 7EvzM/GTAuS/Q+sAO9RTzi92oUjgcmsg9CEOJBgjOjZkYpfyq8ficiXV5ROTZVstrRFQ0xWYQ
- SPLepNLKBiPUAEMkDbj2EzsFbQCnquTFUk4a7bgrc5IHibhuFT6XqBQgB+wse07m7sY+/+N58
- HfdJ1r9p80fBUAyNE8JQPQdzeTQwIVoPZQIT4iSjMHkAMH9AWD3ycCwwlj6H206pkmPrnDnco
- hawpdYytmW+vXEz42Kl5BbKAEvFa/oafrRiZNL1V+YcHjxmhsH+FOq1fkMm8IG8ntEEcErNaQ
- 5j/424+/1yQmdPDKN+WpmCU5R/x6dnnEYoOg9bjLNerxglN8JL1FWel4vUqh4I/Q2pYPCMQVs
- CqSELGsE9QLNABZvny5Td9OguJ6pHnbKiWgit9DUU8P/VR+s89CGPEyfIOBkerF+qEsMFYPgJ
- ETfUtn9kA0vkGwUkXhsOeonAIhsiuR7fYOsOAC48oVWMUvUKFEjNC44GYWSeYmDRhbHD/WzPG
- PrhGZT7BN0muqiA6EC4vhl9OXz6ORq2IUo0ayMO696EL2bpQkdZCjPKNcFl9F1eqTRU9hzQy3
- YIu296MvSu/wIL4uRxmyLTINR6Kp/iXnu6BORRDyXaJfUYHb2Z0zkvlLE13mdILJGw5qsxVzO
- OAJ8+OcgIdTdQS/UcksrKgkzn7pmmAbM1Hgd0VwFpVrRE5afX8fdvihVMZHYIdkBu9tfRv7Xq
- 0F02uy+ULIaufXSkX8lSJS5nm4z51kha0r2rAcTTm31GWPQ6Uc+5BuxkN/Xy2I/K8Xwk1PbpF
- RiTY34U56tKvQJi0FR5TlpLCneM=
+X-Provags-ID: V03:K1:PUUpkuRjtWqmb4vwGZ4qY0t2Zo8kAmilsblbd6BSlO8T5OUQeGO
+ PNz7m/CB00EJIarvLMGeepijvIVI8Dmr9RWccuPFzKRL+Lrq5rtIiv8ZR8YIwX69AqpDyqW
+ dI5I6R/sk2YJ7e1iP+604IQdfatcO4wLDMqMLzyThfe50Ma0e6/rVggCmptgOOSjItazOjz
+ Kk/YuRklZHSN+jrLm9TVw==
+UI-OutboundReport: notjunk:1;M01:P0:ho16F4SCBqg=;3WT2vQE2OGLMCsSulJDmsbbKPJ0
+ wRyOw3scRIS34d/WIuEPaH3N1m9cwKlCTaERvV19zyFnN8ZsMEoNP7ux1JGOolnYqqds/1GCk
+ cIXmmkAlHuhCGn0eYq8JNmRqyab3Ltnc+sWMlXNsMqzNRZnM14jubu9HuU6Q8+KrxXFivlhK/
+ iKQ99TzsOWmn11lWcAZXjywZbelDZhHf85f5y1oHFB1wthNVO8xv3xrKH83vE4K99k+vcBK0o
+ 6KAvcsUrq1OmioE2vvdWvPMHYmV01vqTFIesi2KyAeQ+X0D7q5bLXCSSXICb8NjmHviSkhN3k
+ +5olft8y/1nOfOYend8UA/RaUpUDnxahT5qQ4ZhTwGObGdfQ7Pw9YYiPhPMTgxcXP48Q+vbEP
+ duvHk8jI9SLlOGVpPx765nZsIlnfFXaTjPNA1gNEy3J3fGQeHD2nDsEg5Sd6AJlu+RTi5eRig
+ 99RGImXS0L5uQy2yd8QrqgSHD/lJPePubYNqBLHOf/dYMHeMDqzGIj1XfBnXFNzRa9VX0mo+G
+ VTqv6IQTopjnSPOaRbvO5QIXBYtlrKYZGCH89cgj2PnE37I0eSRqgzCdgKmXriv4I5MuMNoSA
+ rxrE7+9np8KNrTi5pmlcHSq7FxFW0PvbxG5VDb88gNixR+ltc5/eNf+czTHaXDzvFcTKwPF8r
+ 3EXA17nRpwc3Y5akIjDEGjf4lZqz280EbMefOB1v+4d7Kw1o0uOz5PF4FqsrTq1CSWMQ5J/5/
+ VYOWpWJotqgW6h6VEzWFZ7N/S7IgOqKAmCWjo0sqe7pVrl3I+c88cQ1DlPNwvSlvj3fo8PxDf
+ ESRlDoTAOGiohu6KS6VCj/BSFRnGj1+uQnJ+pqwH/id6LEtLvUToOr8hhccvA1sYY+G23KyOs
+ mpfAlGTaovyq9aUaB8i31ny4VmXiLlCh5y79giCOiHy3w3bc46S4yBEbJLaTRZs2ZnlfOzgkT
+ ETUdJQ==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -64,60 +64,88 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi,
 
-On Wed, 23 Nov 2022, Jiang Xin wrote:
+On Thu, 24 Nov 2022, Johannes Schindelin wrote:
 
-> From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> On Wed, 23 Nov 2022, Jiang Xin wrote:
 >
-> Today I found lots of CI errors of my private host git repository
-> on GitHub. It is because the runner image "ubuntu-latest" of the
-> CI jobs is ubuntu 22.04 (jammy) instead of ubuntu 20.04 (focal).
+> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> >
+> > There would be a segmentation fault when running p4 v16.2 on ubuntu
+> > 22.04 which is the latest version of ubuntu runner image for github
+> > actions. Upgrade p4 from version 16.2 to 19.2 will fix this issue.
+>
+> I was about to embark on a debugging session when I had the splendid ide=
+a
+> to look at the Git mailing list archives to see whether anybody else had
+> encountered that particular problem.
+>
+> However, when I pushed a branch with this fix, it still segfaulted even
+> when downloading version 19.2 (link:
+> https://github.com/dscho/git/actions/runs/3538788474/jobs/5939977231#ste=
+p:3:387):
+>
+>  + wget --quiet https://cdist2.perforce.com/perforce/r19.2/bin.linux26x8=
+6_64/p4d
+>  + wget --quiet https://cdist2.perforce.com/perforce/r19.2/bin.linux26x8=
+6_64/p4
+>  + [...]
+>  + echo 'Perforce Server Version'
+>  Perforce Server Version
+>  + p4d -V
+>  + grep Rev.
+>  + echo 'p4d: bad version'
+>  p4d: bad version
+>  + p4d -V
+>  ci/install-dependencies.sh: line 91:  3051 Segmentation fault      (cor=
+e
+>  dumped) p4d -V
+>
+> I guess I'll embark on that debugging session after all ;-)
 
-Excellent timing! This is indeed what I, too, ran into when adjusting
-microsoft/git to v2.39.0-rc0. Here are the relevant links for the failing
-and the succeeding runs, for the very same commit, but in different
-repositories and with different `ubuntu-*` images:
+And I did. It turns out that r22.2 works both on ubuntu-20.04 and
+ubuntu-22.04 (I locally verified for the former, proof for the latter:
+https://github.com/dscho/git/actions/runs/3538941550/jobs/5940295721#step:=
+3:384).
+So I propose this fixup:
 
-Failing (ubuntu-22.04):
-https://github.com/dscho/git/actions/runs/3533530319/jobs/5939252441#step:=
-1:8
+=2D- snip --
+=46rom 81e2d9a4f6ad2d2d9df27edfb666fe2112bdef57 Mon Sep 17 00:00:00 2001
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Date: Thu, 24 Nov 2022 09:31:41 +0100
+Subject: [PATCH] amend! ci: upgrade version of p4
 
-Succeeding (ubuntu-20.04):
-https://github.com/microsoft/git/actions/runs/3532815597/jobs/5927646267#s=
-tep:1:9
+ci: upgrade version of p4
 
-Having said that, I applied your fixes on top and pushed out a test
-branch, but `p4d` still segfaults for me:
+There would be a segmentation fault when running p4 v16.2 on ubuntu
+22.04 which is the latest version of ubuntu runner image for github
+actions. Upgrade p4 from version 16.2 to 22.2 will fix this issue.
 
-https://github.com/dscho/git/actions/runs/3538788474/jobs/5939977231#step:=
-3:387
+Also add some instructions to show errors of command "p4 -V", so we can
+see why the output doesn't match.
 
-I hope that we can get this fixed very soon and am _very much_ in favor of
-fast-tracking the patches once we confirm that they fix the CI builds.
+Reviewed-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+=2D--
+ ci/lib.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks,
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 6c658fa21227..eaa75ab3c07d 100755
+=2D-- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -252,7 +252,7 @@ ubuntu)
+ 	# were recorded in the Homebrew database upon creating the OS X
+ 	# image.
+ 	# Keep that in mind when you encounter a broken OS X build!
+-	export LINUX_P4_VERSION=3D"19.2"
++	export LINUX_P4_VERSION=3D"22.2"
+ 	export LINUX_GIT_LFS_VERSION=3D"1.5.2"
+
+ 	P4_PATH=3D"$HOME/custom/p4"
+=2D- snap --
+
+If you squash this in, please feel free to also use the updated commit
+message.
+
+Thank you,
 Dscho
-
-> The upgrade of runner images is in progress, and my public forked
-> repository still use 20.04 (focal) as "ubuntu-latest".
->
-> Two patches in this series try to protect our CI in advance.
->
-> New CI instance see below:
->
->  * https://github.com/jiangxin/git/actions/runs/3532978329
->
-> --
->
-> Jiang Xin (2):
->   github-actions: run gcc-8 on ubuntu-20.04 image
->   ci: upgrade version of p4
->
->  .github/workflows/main.yml | 16 ++++++++++++----
->  ci/install-dependencies.sh | 10 +++++-----
->  ci/lib.sh                  |  8 ++++----
->  3 files changed, 21 insertions(+), 13 deletions(-)
->
-> --
-> 2.39.0.rc0
->
->
