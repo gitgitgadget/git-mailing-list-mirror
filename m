@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 58D32C4321E
-	for <git@archiver.kernel.org>; Thu, 24 Nov 2022 15:39:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D844C433FE
+	for <git@archiver.kernel.org>; Thu, 24 Nov 2022 15:39:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229733AbiKXPjr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Nov 2022 10:39:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55390 "EHLO
+        id S229717AbiKXPjt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Nov 2022 10:39:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229671AbiKXPjm (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229681AbiKXPjm (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 24 Nov 2022 10:39:42 -0500
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D47575214E
-        for <git@vger.kernel.org>; Thu, 24 Nov 2022 07:39:40 -0800 (PST)
-Received: by mail-pj1-x102e.google.com with SMTP id o5-20020a17090a678500b00218cd5a21c9so1897359pjj.4
-        for <git@vger.kernel.org>; Thu, 24 Nov 2022 07:39:40 -0800 (PST)
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F31C030562
+        for <git@vger.kernel.org>; Thu, 24 Nov 2022 07:39:41 -0800 (PST)
+Received: by mail-pl1-x629.google.com with SMTP id d20so1738686plr.10
+        for <git@vger.kernel.org>; Thu, 24 Nov 2022 07:39:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pRVnSpep1qlRswrNiE8Cg7USHImW3vHd0rLSMiWznFA=;
-        b=QIUHyVZuD0Q4rilE5VTqWMPzshfzfJKFVUSpBsimGXDptDA0qKc8Rnp/mdAl0hqvMA
-         ye9H5cn29eD3y6iq0mlHbTzIT/mulE/uzzBsBr61qjkEdmOVAc+H+w4GnuYKSqLCb04D
-         xv0EFjmoddHFWo4qErVIucRfL0PlRGghWnIzvQO4m2KP+T7BFxDP6x4eztNGwIg3gZPm
-         kRd+7F9G6v2bkK0Jde2Mh+sKhImzOAxVTxw27MAqVF6sLJekxPG+eeBT2iWFf63hT6f9
-         HwZs3+Sm4/Q+Q53yb/UeUTFRYPsC5Kc3e52fbfwfyZ8WlybsUcnwdOsTCGvK55YS2AK3
-         WKAg==
+        bh=pOecyeyTetxTaFOgnmxEvvHNBhzKBuwDfSjKxQpFkO8=;
+        b=DPYnx5fdXyElrdNVMMfVw62fdYAS9dFRcHwVkmpXKnJ76SbRZU5ZCVafpgyNfENFoO
+         GTHTUcT6hukam1qa7490KhH9q1tNDCKjYoWYKvyRWAF1H2EmkSACBpWkruKoKngDJnOo
+         9VLvA2wd3mqRxFxd7ZpfXofr0RRxAybuRZb8R4tWSRcTOixoRX0vuKKuior27jOWvQ7R
+         veu8Hi2Mx4cUwGoXF+qcxO84/2KDDFXAC7HiTqsXZp7/QEla5woJw2Lf7cvVWIfv8Mv9
+         Xxv0nYOBwGa5iCI1OQCJXdKLs4s8uphx09eebxFph89+vftz7V7b1sHKIRxQqs7jXJR+
+         RLMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=pRVnSpep1qlRswrNiE8Cg7USHImW3vHd0rLSMiWznFA=;
-        b=ShPESa/jJHuIW+yOkQSL/wBXCYrbtivX/INhEaPGOhoAD3drUVrp4L30BZsD8YjLL/
-         MA2Hew/FDj6xLOu2oZTrn1LBL/iE6+0pt9SJaPZJmb+yyZFilSFkHilKt13Ha8ozW6Jg
-         Lv4VXy7ZoBi7ILKfZs3okfzI3XNHMP2j0hhryBWDJkQpjabicKtY9PeUxv3d0VAGClQZ
-         cJwfTWpCPX8TAhDEQSVqCx/jq6RtbgwENMfxAGvb8QKxG7BhFWuoXlCz5wkpOAZW+HWN
-         NuIqfHMnk4nWv1UrIAQvf4A2uCuD3uyebDwM58ZK9QMQNi1bv8e1baBmhS6m66zfMqX5
-         PeJQ==
-X-Gm-Message-State: ANoB5pmvy9QL8k6Haohc+4keZl+VZ8VWmYtBmd1wGgnzaYjRJNvl6vTs
-        P/xuAgz/nun6LdsfV63whH9EH9U4C+c=
-X-Google-Smtp-Source: AA0mqf7vN79ys9fiv/AEbBBMmARdTG/qW+UaIh+ZIHkJ276M+BeGiYInaL0DyTXS5vj9b47C+S22Vg==
-X-Received: by 2002:a17:902:a418:b0:187:edc:82f3 with SMTP id p24-20020a170902a41800b001870edc82f3mr14444368plq.161.1669304380174;
-        Thu, 24 Nov 2022 07:39:40 -0800 (PST)
+        bh=pOecyeyTetxTaFOgnmxEvvHNBhzKBuwDfSjKxQpFkO8=;
+        b=odRrHRhySRZCVTL4HghIXEorYYlZrGzsOjvDbt51ECbmPz1OFIFZiMOK7wj7aYofb5
+         lIepPBeRrKDFE9G/RHrtwXFhuViq05E3Dfpiw0IuQ/OWMA1wumHdjMdZNJHhgq0lOBZO
+         CLo3HSS2490MbTA8nEGQ+Gi9g9t8lc4I/6lIRgwC6qi/+XWlCWt1TJHzsKlJAaI+Ubdo
+         JfYW4URgxnEQSNxY5m1aAloVv9EW+xXUnwm6fX3hCS6E+IQ3G3T5Y22T4T98enxkeJZN
+         n7acnNlUUBt0fYqUI6nuob0FrsQxBwt4oQKmm30YWVuJyAqokMTCE+7OWMAbv+2FoycN
+         oOdg==
+X-Gm-Message-State: ANoB5pm/yqlJ80O3i5ILjrJg+yBHs49qqQaqQaSw25PdxEoAwGypnUh1
+        LDBohUdfPACuNb0IHNH0OnC19TMABxU=
+X-Google-Smtp-Source: AA0mqf7UMNUmJtvFaif4hdUFaMhgsqpIQHtx+TdXD9ndekDP2iQn4a8oULghstX6dk/sL3CA03mScw==
+X-Received: by 2002:a17:902:e807:b0:186:fb90:5774 with SMTP id u7-20020a170902e80700b00186fb905774mr14829037plg.137.1669304381209;
+        Thu, 24 Nov 2022 07:39:41 -0800 (PST)
 Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id x22-20020a170902821600b0017f48a9e2d6sm1413089pln.292.2022.11.24.07.39.39
+        by smtp.gmail.com with ESMTPSA id x22-20020a170902821600b0017f48a9e2d6sm1413089pln.292.2022.11.24.07.39.40
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 24 Nov 2022 07:39:39 -0800 (PST)
+        Thu, 24 Nov 2022 07:39:40 -0800 (PST)
 From:   Jiang Xin <worldhello.net@gmail.com>
 To:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -56,13 +56,14 @@ To:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 Cc:     Jiang Xin <zhiyou.jx@alibaba-inc.com>,
         Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v3 2/4] ci: show error message of "p4 -V"
-Date:   Thu, 24 Nov 2022 23:39:32 +0800
-Message-Id: <20221124153934.12470-3-worldhello.net@gmail.com>
+Subject: [PATCH v3 3/4] ci: p4 on Linux has the same version as on macOS
+Date:   Thu, 24 Nov 2022 23:39:33 +0800
+Message-Id: <20221124153934.12470-4-worldhello.net@gmail.com>
 X-Mailer: git-send-email 2.32.0.rc3
 In-Reply-To: <20221124090545.4790-1-worldhello.net@gmail.com>
 References: <20221124090545.4790-1-worldhello.net@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -70,35 +71,67 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 
-When installing p4 as a dependency, we used to pipe output of "p4 -V" to
-validate the installation, but this would hide potential errors of p4.
-E.g.: A broken p4 installation fails to run.
+There would be a segmentation fault when running p4 v16.2 on ubuntu
+22.04 which is the latest version of ubuntu runner image for github
+actions.
 
-Add some instructions to show errors of command "p4 -V", so we can see
-why the command output doesn't match.
+By checking each version from [1], p4d version 21.1 and above can work
+properly on ubuntu 22.04. But version 22.x will break some p4 test
+cases. So p4 version 21.x is exactly the version we can use.
+
+With this update, the versions of p4 for Linux and macOS happen to be
+the same. So we can add the version number directly into the "P4WHENCE"
+variable, and reuse it in p4 installation for macOS.
+
+By removing the "LINUX_P4_VERSION" variable from "ci/lib.sh", the
+comment left above has nothing to do with p4, but still applies to
+git-lfs. Since we have a fixed version of git-lfs installed on Linux,
+we may have a different version on macOS.
+
+[1]: https://cdist2.perforce.com/perforce/
 
 Reviewed-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 ---
  ci/install-dependencies.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ ci/lib.sh                  | 1 -
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index f639263a62..291e49bdde 100755
+index 291e49bdde..f860c35c75 100755
 --- a/ci/install-dependencies.sh
 +++ b/ci/install-dependencies.sh
-@@ -83,9 +83,9 @@ esac
- if type p4d >/dev/null 2>&1 && type p4 >/dev/null 2>&1
- then
- 	echo "$(tput setaf 6)Perforce Server Version$(tput sgr0)"
--	p4d -V | grep Rev.
-+	p4d -V | grep Rev. || { echo >&2 "p4d: bad version"; p4d -V; exit 1; }
- 	echo "$(tput setaf 6)Perforce Client Version$(tput sgr0)"
--	p4 -V | grep Rev.
-+	p4 -V | grep Rev. || { echo >&2 "p4: bad version"; p4 -V; exit 1; }
- else
- 	echo >&2 "WARNING: perforce wasn't installed, see above for clues why"
- fi
+@@ -5,7 +5,7 @@
+ 
+ . ${0%/*}/lib.sh
+ 
+-P4WHENCE=https://cdist2.perforce.com/perforce/r$LINUX_P4_VERSION
++P4WHENCE=https://cdist2.perforce.com/perforce/r21.2
+ LFSWHENCE=https://github.com/github/git-lfs/releases/download/v$LINUX_GIT_LFS_VERSION
+ UBUNTU_COMMON_PKGS="make libssl-dev libcurl4-openssl-dev libexpat-dev
+  tcl tk gettext zlib1g-dev perl-modules liberror-perl libauthen-sasl-perl
+@@ -40,7 +40,7 @@ macos)
+ 	mkdir -p $HOME/bin
+ 	(
+ 		cd $HOME/bin
+-		wget -q "https://cdist2.perforce.com/perforce/r21.2/bin.macosx1015x86_64/helix-core-server.tgz" &&
++		wget -q "$P4WHENCE/bin.macosx1015x86_64/helix-core-server.tgz" &&
+ 		tar -xf helix-core-server.tgz &&
+ 		sudo xattr -d com.apple.quarantine p4 p4d 2>/dev/null || true
+ 	)
+diff --git a/ci/lib.sh b/ci/lib.sh
+index 0c0767d354..991ea4f8a6 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -246,7 +246,6 @@ ubuntu)
+ 	# were recorded in the Homebrew database upon creating the OS X
+ 	# image.
+ 	# Keep that in mind when you encounter a broken OS X build!
+-	export LINUX_P4_VERSION="16.2"
+ 	export LINUX_GIT_LFS_VERSION="1.5.2"
+ 
+ 	P4_PATH="$HOME/custom/p4"
 -- 
 2.39.0.rc0
 
