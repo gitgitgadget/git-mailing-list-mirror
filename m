@@ -2,132 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 48515C43219
-	for <git@archiver.kernel.org>; Thu, 24 Nov 2022 11:23:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CA009C43219
+	for <git@archiver.kernel.org>; Thu, 24 Nov 2022 11:37:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230079AbiKXLXw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Nov 2022 06:23:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57006 "EHLO
+        id S230133AbiKXLho (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Nov 2022 06:37:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229762AbiKXLXv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Nov 2022 06:23:51 -0500
-Received: from mail-oa1-x32.google.com (mail-oa1-x32.google.com [IPv6:2001:4860:4864:20::32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27962442E8
-        for <git@vger.kernel.org>; Thu, 24 Nov 2022 03:23:40 -0800 (PST)
-Received: by mail-oa1-x32.google.com with SMTP id 586e51a60fabf-1432a5f6468so1617290fac.12
-        for <git@vger.kernel.org>; Thu, 24 Nov 2022 03:23:40 -0800 (PST)
+        with ESMTP id S230130AbiKXLhm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Nov 2022 06:37:42 -0500
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F28E21276C
+        for <git@vger.kernel.org>; Thu, 24 Nov 2022 03:37:41 -0800 (PST)
+Received: by mail-ot1-x32d.google.com with SMTP id m7-20020a9d6447000000b0066da0504b5eso751033otl.13
+        for <git@vger.kernel.org>; Thu, 24 Nov 2022 03:37:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=6XyCjVwn8k3QTtTYnqdTeCcGKtow053KmaZ9vS8rt4U=;
-        b=KpF2qkBqhXar9IrHEpaxyiZqOD5J/A3KLpB+29ZrxQUuMS/gqmpVttpiwWbsUw8qnM
-         FIZ1soCGAkk9EnfWt9ht2cJbWBfEWUemv1+LSe7BtTODD/+OkDE54BJKTJLydLTlKMfg
-         6IOC2T2b+7wHkTMGxOmqICO6jbRJwBaukYMyffZTsShmVvf+/GF5Qsu54pb1fc7d1g7f
-         loigMpejFrNz+VVwOnWLNwWvJTad/hEVOLf1JQxA2UsKmadu7pVC7B05Rv5X4iM2XX2y
-         qANoUV6BiPutu+KUxyuak//08Gt3daDOAedZAx3scgVrkgdRauqgN/q9vWuhnD4tNGVm
-         wSoA==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xZcRGAxd0K6ZdYYYhYoE2HDWPNYKn9qv2vbJK4qPeJo=;
+        b=CvnGlP+IOAEZ3cAmPBh0El6YKUO1mmJMPuy1s17wmvdLiI+KLNI9s1yMzvX1103xza
+         SJi68XwNo86VUkIR0akZ7DL5015Q+35BV8lOH+8Nx5cUJyBG9LXqIzUAC5GC3BnG5ZKk
+         VX5H9Bjv389hBElkewnMNNSKEM8zN198oTiVa3xliXXZkPoS5SX/xTdSec+4q/DCGyxl
+         3S5Mfun03X55ALL93/IoJAoA3eBG6vgkxNBKVQiwFD6WIooSIJejM+0y+SVd/3ZDI0TS
+         1iyWujtHyQ8ZMmJsYp4hVpgU78JOYOEsU+b5qCxo6Ez1BkutECOcKSpmtmduTm6Nwnt3
+         b9YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6XyCjVwn8k3QTtTYnqdTeCcGKtow053KmaZ9vS8rt4U=;
-        b=G6C4NzLwnrsL1BHPMEx8VIkZfGuzqkVR9N81SBG23lVGMQpQuxIs4vgFo+5QjAEynE
-         l8LecTA9tq5vvuyBCndftiUCrApyEPkx8AkkvHcpkhdxeccnY/MiJ3IqA2Ec1+b0qtrq
-         83ArEeHfcInpAqXFXIjG1I1D+Ev3LarSXY90R9y5FoeUCC8QAtr8q/+pKqsKs0voRtQ0
-         ZAMSt/XhHcATOv0oqTcA+8gwTUaHutb7jmgR8ea3xavtZvOTogZjsY8fFuBBKQyIFAiz
-         D/UqdlEqEW5ApVYKGzDSm28rHxN/KUNF0esubBhhCBWZuAheT3fjePdzgc5peN1alWdX
-         7W4A==
-X-Gm-Message-State: ANoB5pkDWJ6QyqWR28nR1KO0oJ7FkzRbuEjUe+T4ndtLe5KNGNO7LBIA
-        JKtCcjtawS7KSSoYkYOUaiIoP6FQ1kIdA35EmRHBkzch
-X-Google-Smtp-Source: AA0mqf4dP/Eu/H+ow9sXzZQ8Ta1BeXJCLbI9EyZQGSF9CPmkJfHXcH5paDdUshdGQ0jZfAJyf8dXjXdCFUenG8L4On4=
-X-Received: by 2002:a05:6870:61d6:b0:137:288:b05e with SMTP id
- b22-20020a05687061d600b001370288b05emr18030189oah.80.1669289020150; Thu, 24
- Nov 2022 03:23:40 -0800 (PST)
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xZcRGAxd0K6ZdYYYhYoE2HDWPNYKn9qv2vbJK4qPeJo=;
+        b=uMJc/IWrdI2I55a08OZlCVN4g83hVsBqfYDDotECqk6hyswv3GeP6dU2VScZ8+nyxq
+         BtdEPevmqgjUlMccsiVTaZcxiJb3LSvEtef733wEsNlC7dpm3DI+eCaYCODrA8v+dGxh
+         I+KJNPnFlLyzLX/I20Jr+U5ECkK2crCO5LnAt2NIhAwim0lIlvI6eUPvMlmu3iwlnDZ2
+         3qPdSxmhiD/TQ2EAyGge+HHeSZ59BzhB/fl3VIr0sEWcl6Bpk4v56x4YUc1UmAbspR5A
+         7zxgJ0g/U22eSnPPCqdJw5HMJt/MxubGhtYg0IAPNpwrMeGZRMPeBja5THT6qObMq/Dd
+         XRsQ==
+X-Gm-Message-State: ANoB5pkr/jt9+Viz8kJWq0IH1+a3rUQl2XprMlTjGnEHKuU+7krN05tf
+        tIjPikM4sGEKXSqV6/UbDV12vvwq3i5I3Qeq6Zs=
+X-Google-Smtp-Source: AA0mqf6+q1WOz8mIDl7paJKYh47fz1gjdhB5bC25e/JTkD4w+s7y6UMWzSn9wJxtb04jarWDNTLszv/lcxZy2ZtXg/Y=
+X-Received: by 2002:a05:6830:4d6:b0:659:1976:647e with SMTP id
+ s22-20020a05683004d600b006591976647emr16516655otd.377.1669289861331; Thu, 24
+ Nov 2022 03:37:41 -0800 (PST)
 MIME-Version: 1.0
 References: <20221123150233.13039-1-worldhello.net@gmail.com>
- <20221124090545.4790-1-worldhello.net@gmail.com> <2219s80r-q7s3-391o-o3or-7q70sn37ooo9@tzk.qr>
- <4oonnq45-s269-sr8n-o5sr-n214593nps8s@tzk.qr>
-In-Reply-To: <4oonnq45-s269-sr8n-o5sr-n214593nps8s@tzk.qr>
+ <20221124090545.4790-4-worldhello.net@gmail.com> <221124.86edtspq74.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221124.86edtspq74.gmgdl@evledraar.gmail.com>
 From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Thu, 24 Nov 2022 19:23:28 +0800
-Message-ID: <CANYiYbEbb4sgWtQRSEYJbzcAYTKDRpmVtL62HMR-QekhY_8-bQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] Fix broken CI on newer github-actions runner image
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Thu, 24 Nov 2022 19:37:29 +0800
+Message-ID: <CANYiYbEHXwXTpRiha+0SoO_7_6LrJ7iE5c-fc-uzp21+aXKgBQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] ci: install python on ubuntu
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Jiang Xin <zhiyou.jx@alibaba-inc.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 24, 2022 at 6:48 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+On Thu, Nov 24, 2022 at 7:06 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> Hi,
 >
-> On Thu, 24 Nov 2022, Johannes Schindelin wrote:
+> On Thu, Nov 24 2022, Jiang Xin wrote:
 >
-> > To build even more confidence in the patch series, I will now start a full
-> > run (which will take *a lot* of build minutes, unfortunately).
+> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> >
+> > Python is missing from the default ubuntu-22.04 runner image, which
+> > prevent git-p4 from working. To install python on ubuntu, we need to
+> > provide correct package name:
+> >
+> >  * On Ubuntu 18.04 (bionic), "/usr/bin/python2" is provided by the
+> >    "python" package, and "/usr/bin/python3" is provided by the "python3=
+"
+> >    package.
+> >
+> >  * On Ubuntu 20.04 (focal) and above, "/usr/bin/python2" is provided by
+> >    the "python2" package which has a different name from bionic, and
+> >    "/usr/bin/python3" is provided by "python3".
+> >
+> > Since the "ubuntu-latest" runner image has a higher version, so its saf=
+e
+> > to use "python2" or "python3" package name.
+> >
+> > Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> > ---
+> >  ci/install-dependencies.sh | 2 +-
+> >  ci/lib.sh                  | 2 ++
+> >  2 files changed, 3 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> > index 291e49bdde..e28d93a154 100755
+> > --- a/ci/install-dependencies.sh
+> > +++ b/ci/install-dependencies.sh
+> > @@ -15,7 +15,7 @@ case "$runs_on_os" in
+> >  ubuntu)
+> >       sudo apt-get -q update
+> >       sudo apt-get -q -y install language-pack-is libsvn-perl apache2 \
+> > -             $UBUNTU_COMMON_PKGS $CC_PACKAGE
+> > +             $UBUNTU_COMMON_PKGS $CC_PACKAGE $PYTHON_PACKAGE
+> >       mkdir --parents "$P4_PATH"
+> >       pushd "$P4_PATH"
+> >               wget --quiet "$P4WHENCE/bin.linux26x86_64/p4d"
+> > diff --git a/ci/lib.sh b/ci/lib.sh
+> > index a618d66b81..ebe702e0ea 100755
+> > --- a/ci/lib.sh
+> > +++ b/ci/lib.sh
+> > @@ -235,8 +235,10 @@ ubuntu)
+> >       if [ "$jobname" =3D linux-gcc ]
+> >       then
+> >               MAKEFLAGS=3D"$MAKEFLAGS PYTHON_PATH=3D/usr/bin/python3"
+> > +             PYTHON_PACKAGE=3Dpython3
+> >       else
+> >               MAKEFLAGS=3D"$MAKEFLAGS PYTHON_PATH=3D/usr/bin/python2"
+> > +             PYTHON_PACKAGE=3Dpython2
+> >       fi
 >
-> And it passed: https://github.com/dscho/git/actions/runs/3539451056
+> Let's not copy/paste and repeat ourselves here for no reason. Part of
+> this is pre-existing, but if you just re-arrange these variable decls
+> you can do this instead:
 >
-> I also had a look at the range-diff between v1 and v2:
->
-> -- snip --
-> 1:  ef80c39de1e5 ! 1:  6d4607a4ee46 github-actions: run gcc-8 on ubuntu-20.04 image
->     @@ Commit message
->              ubuntu)
->                  ;;
->
->     +    In this way, we can change the "ubuntu-latest" runner image to any
->     +    version such as "ubuntu-22.04" to test CI behavior in advance.
->     +
->          Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
->
-> 2:  1d0903c8b2f9 ! 2:  eba96648368a ci: upgrade version of p4
->     @@ Metadata
->      Author: Jiang Xin <zhiyou.jx@alibaba-inc.com>
->
->       ## Commit message ##
->     -    ci: upgrade version of p4
->     +    ci: upgrade version of p4 to 21.2
->
->          There would be a segmentation fault when running p4 v16.2 on ubuntu
->          22.04 which is the latest version of ubuntu runner image for github
->     -    actions. Upgrade p4 from version 16.2 to 19.2 will fix this issue.
->     +    actions.
->
->     -    Also add some instructions to show errors of command "p4 -V", so we can
->     -    see why the output doesn't match.
->     +    By checking each version from [1], p4d version 21.1 and above can work
->     +    properly on ubuntu 22.04. But version 22.x will break some p4 test
->     +    cases. So p4 version 21.x is exactly the version we can use.
->     +
->     +    In addition to upgrade p4 from version 16.2 to 21.2, also add some
->     +    instructions to show errors of command "p4 -V", so we can see why the
->     +    command output doesn't match.
->     +
->     +    [1]: https://cdist2.perforce.com/perforce/
->
->          Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
->     @@ ci/lib.sh: ubuntu)
->         # image.
->         # Keep that in mind when you encounter a broken OS X build!
->      -  export LINUX_P4_VERSION="16.2"
->     -+  export LINUX_P4_VERSION="19.2"
->     ++  export LINUX_P4_VERSION="21.2"
->         export LINUX_GIT_LFS_VERSION="1.5.2"
->
->         P4_PATH="$HOME/custom/p4"
-> -:  ------------ > 3:  8e432f13bef8 ci: install python on ubuntu
-> -- snap --
->
-> The changes look good!
+>         PYTHON_PACKAGE=3Dpython2
+>         if test "$jobname" =3D linux-gcc
+>         then
+>                 PYTHON_PACKAGE=3Dpython3
+>         fi
+>         MAKEFLAGS=3D"$MAKEFLAGS PYTHON_PATH=3D/usr/bin/${PYTHON_PACKAGE}"
 
-Thank you for providing this range-diff.
+That was exactly my first edition, but I thought it was weird to write
+as "/usr/bin/${PYTHON_PACKAGE}". But if use two variables like
+PYTHON_BINARY and PYTHON_PACKAGE, looks even more silly. So I choose
+current solution.
 
 --
 Jiang Xin
