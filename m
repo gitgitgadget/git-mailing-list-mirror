@@ -2,96 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA777C4332F
-	for <git@archiver.kernel.org>; Fri, 25 Nov 2022 16:01:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8C574C4167B
+	for <git@archiver.kernel.org>; Fri, 25 Nov 2022 16:52:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229813AbiKYQBa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Nov 2022 11:01:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52098 "EHLO
+        id S229850AbiKYQwi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Nov 2022 11:52:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229770AbiKYQBZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Nov 2022 11:01:25 -0500
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC9781DF26
-        for <git@vger.kernel.org>; Fri, 25 Nov 2022 08:01:24 -0800 (PST)
-Received: by mail-pj1-x1034.google.com with SMTP id w15-20020a17090a380f00b0021873113cb4so4547027pjb.0
-        for <git@vger.kernel.org>; Fri, 25 Nov 2022 08:01:24 -0800 (PST)
+        with ESMTP id S229630AbiKYQwh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Nov 2022 11:52:37 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECF05B1D8
+        for <git@vger.kernel.org>; Fri, 25 Nov 2022 08:52:34 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id o7-20020a05600c510700b003cffc0b3374so3840381wms.0
+        for <git@vger.kernel.org>; Fri, 25 Nov 2022 08:52:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=2U4SkLIhINik3SS5khPCONywgwcHP0YLI6vt39rLCes=;
-        b=hs2yCEpMhdCwSQ1XIKA3ocPXk4A3pBD/VNni+2EnIhoJeODvdQcnr+BCJZFJJDQwv2
-         sXRR3pvWHvoIq8eatIxekh6lGRF6/viVYxTI67OoFeppwNLFuKrO/OGyXrZu1DSsZ1+b
-         5ocXRL5wWR4AF6eVfuFzkWSL0fhJ0MFInNVyGIuy3GuGLJP3i0OnLusmE84/emyNDM3q
-         R6jAWC4HUwkJxt2paMmtdQUZOf//wdCFfVLmCCZu4oL4Olm2z/KxnoHsWUXv6Ps1+oBp
-         XFWXnLYbAWsuBP4JgVN54OfGdcM6630clA78ptEpvS5XFseBYAdANFuwlYtdSgRrefjQ
-         7QNw==
+        bh=dcXlR0h72ZdBeZdt5CS5JyegptARI2JNFD8zhuGiBsk=;
+        b=ayNjDCbwTVPgojfhGtvtq1g2Nk6eQwaJUTK/n/CDK8hGBUAsvZDru20NE73+iWXh4R
+         N0+0cFLCSf9zz96jUbhrTjUU+ITWfI2BhjRkOGJwsLa3nfZiG7n63uocuOqmDsSC27er
+         K0ETNOfxVal8goiLQV0SkX4C1vLk1iE71VHMDoOn5hpfHaEuL+dDwY4Pt5T7xXkcKPLJ
+         lz8VF64Zs7nMSOQPGlOT92v1K5k63AUUmDG6PdpiDu1Rp/c3+yWxb7X+G9BDs2SVLu6N
+         4FH8kcdl6uli541VqBhPJ7ouFxBMkxaWYYIMJHCh0lkBfyhdTjIF7rdLH3cC5x2/Vtwg
+         lYIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=2U4SkLIhINik3SS5khPCONywgwcHP0YLI6vt39rLCes=;
-        b=HDll1PqggTeG84bme35YfX0NST15qFZrp6O9+qS5lExCVWjQpv6Tvt8NQQVULa0giJ
-         BRpZnsHJTzAQ/bPJ+X+DMg4zJ7wTYbD7pA42M7HEGVNXoV/9dLsO7Nrgszd+b0W2JiZR
-         eP7lbYJYpWPN4N6iEYalx+ssZBLy4/iVG+vgC3IuzsCeHGNiDxPafHQeDsLCS0DEQx1Y
-         FEiLVz0bOq3LyPta2hPhNI7P2zDz1T5uX/8+I6zrXhBuYV3hBTNdxyTc0c4NigKZFcn0
-         gn7yDq9dvH/dI/MUl5d0EM7UwUFT9Bdcu9YzZldKTzEq4hIW8viPSWxNp7Bc2yquQ3dm
-         H0DA==
-X-Gm-Message-State: ANoB5pkACWi042iqZk6iTs2SqNXlUQtanLAuBpABYlMTNw/yJQKEgZEq
-        l1LamIMdbgy6xqBj4Sgho7ug9RqVLCU18hwcz2k=
-X-Google-Smtp-Source: AA0mqf6ltX0FiMgm2TmTHIY3WjNHCpPRbG9v2PluKGo/Y2hjRB5fob7Uy7exI5TSLZtWWi3g/8c57Pqw9lH/5SeiapI=
-X-Received: by 2002:a17:90a:bd86:b0:213:8cf1:4d9d with SMTP id
- z6-20020a17090abd8600b002138cf14d9dmr41983513pjr.5.1669392084327; Fri, 25 Nov
- 2022 08:01:24 -0800 (PST)
+        bh=dcXlR0h72ZdBeZdt5CS5JyegptARI2JNFD8zhuGiBsk=;
+        b=xkiCRvw8oZHs9LzA1+jpkUDqgYV++CqZ/JO7mXZ3N/cIu57TwE3tGkSJFzSCiOErPw
+         KyjPXso2imV5vd+07NdLaMFzUXJuvHhe70r/zvjP9CRMgJK4YYkG2ozbEaZ/QFAtsk9v
+         X6A7ih3p4uV3S8xwW8N2z/BcmBvTvCsyRIq9Qjrz/abHg+Ys3rN7jPH9wP1RZ7kh4az/
+         PilArDWscBevXgBPV0WyQfSXNVaEkTDnypRHt2YlCeI1uN8MJoyKugY9wA8VWv9jfH2d
+         vk7Ed0HmcNbPgyszfiKHaYPAHkZmT5Z+Yrlh9+HimAzWM9h3IU9r/+w3jKBckm5KLgVh
+         /3Wg==
+X-Gm-Message-State: ANoB5pku2k/RiOUtAka7++e49NIANo/JQc30JWJ0fDQlQoPSaCLEkpCE
+        IX8zpYgXhaXQRpniSXOa2juP8oMtO8E=
+X-Google-Smtp-Source: AA0mqf40Q/EXZ13Ug0sHBb990Ec/yUuVYJxcSzcd8+dSz9QHlzHz2ksURvh/sFIaVxseRRskNd54Aw==
+X-Received: by 2002:a05:600c:4a9a:b0:3c6:d811:6cff with SMTP id b26-20020a05600c4a9a00b003c6d8116cffmr32882390wmp.43.1669395153028;
+        Fri, 25 Nov 2022 08:52:33 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m7-20020a05600c4f4700b003cf37c5ddc0sm6302703wmq.22.2022.11.25.08.52.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Nov 2022 08:52:32 -0800 (PST)
+Message-Id: <pull.1434.v2.git.1669395151.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1434.git.1669321369.gitgitgadget@gmail.com>
+References: <pull.1434.git.1669321369.gitgitgadget@gmail.com>
+From:   "Sean Allred via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 25 Nov 2022 16:52:29 +0000
+Subject: [PATCH v2 0/2] Improve consistency of git-var
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1423.v6.git.1669261642.gitgitgadget@gmail.com>
- <pull.1423.v7.git.1669347422.gitgitgadget@gmail.com> <d8233f9617563d7c7168afc6e1abfaba57e54038.1669347422.git.gitgitgadget@gmail.com>
- <221125.8635a7o123.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221125.8635a7o123.gmgdl@evledraar.gmail.com>
-From:   Yoichi Nakayama <yoichi.nakayama@gmail.com>
-Date:   Sat, 26 Nov 2022 01:01:12 +0900
-Message-ID: <CAF5D8-uxZOFi8p0bUMaqJCLFxipXCB9fo_Kx=QE6s=DW8Jspgg@mail.gmail.com>
-Subject: Re: [PATCH v7 3/3] git-jump: invoke emacs/emacsclient
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Yoichi Nakayama via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Sean Allred <code@seanallred.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 25, 2022 at 6:08 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> I'd really like to have some closer and smarter emacs integration like
-> this.
->
-> But I don't see why we need to run the grep ourselves, pipe it to a
-> temporary file, and then discover that we're using emacs, and --eval
-> code into it to switch to that buffer, and fake up a "M-x grep" command
-> with a compilation buffer to make it look like we ran M-x grep in the
-> first place.
->
-> Let's just ... run M-x grep earlier? Then we can skip all the earlier
-> steps.
+This patch series makes a few distinct improvements to git-var to support
+the change to git_editor() prompted [here][1] and ultimately support that
+patch to introduce GIT_SEQUENCE_EDITOR as a handled logical variable.
 
-There are two reasons.
+Changes since v1:
 
-First, I want to reuse the modes that git-jump already have. In
-addition to mode_grep,
-mode_{diff,merge,ws} exist, and if we re-implement each for editor
-support, I think it will be
-difficult to maintain.
+ * Fix a whitespace issue in var.c:editor() (where I have my editor
+   configured to use spaces instead of tabs; whoops)
+ * Squash this down to two patches as suggested. I typically organize my
+   commits to make it clear they don't actively break something, but I can
+   certainly see the value in organizing them differently when there is
+   already an extremely robust body of automated tests like there is for
+   Git.
+ * Rebased on current main; no conflicts.
 
-Second, there is a difficulty passing arbitrary arguments properly to
-Emacs Lisp properly.
-For example, your version will cause error with
-        git jump grep "hello world"
-My early patch was doing something similar. But the second problem was
-hard to deal with,
-so I switched to using a temporary file.
---=20
-Yoichi NAKAYAMA
+Sean Allred (2):
+  var: do not print usage() with a correct invocation
+  var: allow GIT_EDITOR to return null
+
+ Documentation/git-var.txt |  3 +-
+ builtin/var.c             | 26 +++++++--------
+ t/t0007-git-var.sh        | 69 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 83 insertions(+), 15 deletions(-)
+
+
+base-commit: c000d916380bb59db69c78546928eadd076b9c7d
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1434%2Fvermiculus%2Fsa%2Fvar-improvements-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1434/vermiculus/sa/var-improvements-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1434
+
+Range-diff vs v1:
+
+ 1:  d5f571f0bb3 ! 1:  a7ff842a3e8 var: do not print usage() with a correct invocation
+     @@ builtin/var.c: static void list_vars(void)
+       			printf("%s=%s\n", ptr->name, val);
+       }
+       
+     +-static const char *read_var(const char *var)
+      +static const struct git_var *get_git_var(const char *var)
+     -+{
+     -+	struct git_var *ptr;
+     -+	for (ptr = git_vars; ptr->read; ptr++) {
+     -+		if (strcmp(var, ptr->name) == 0) {
+     -+			return ptr;
+     -+		}
+     -+	}
+     -+	return NULL;
+     -+}
+     -+
+     - static const char *read_var(const char *var)
+       {
+       	struct git_var *ptr;
+     +-	const char *val;
+     +-	val = NULL;
+     + 	for (ptr = git_vars; ptr->read; ptr++) {
+     + 		if (strcmp(var, ptr->name) == 0) {
+     +-			val = ptr->read(IDENT_STRICT);
+     +-			break;
+     ++			return ptr;
+     + 		}
+     + 	}
+     +-	return val;
+     ++	return NULL;
+     + }
+     + 
+     + static int show_config(const char *var, const char *value, void *cb)
+      @@ builtin/var.c: static int show_config(const char *var, const char *value, void *cb)
+       
+       int cmd_var(int argc, const char **argv, const char *prefix)
+     @@ builtin/var.c: int cmd_var(int argc, const char **argv, const char *prefix)
+       		return 0;
+       	}
+       	git_config(git_default_config, NULL);
+     +-	val = read_var(argv[1]);
+     +-	if (!val)
+      +
+      +	git_var = get_git_var(argv[1]);
+      +	if (!git_var)
+     -+		usage(var_usage);
+     -+
+     - 	val = read_var(argv[1]);
+     - 	if (!val)
+     --		usage(var_usage);
+     -+		return 1;
+     + 		usage(var_usage);
+       
+     ++	val = git_var->read(IDENT_STRICT);
+     ++	if (!val)
+     ++		return 1;
+     ++
+       	printf("%s\n", val);
+       
+     + 	return 0;
+ 2:  905b109b458 < -:  ----------- var: remove read_var
+ 3:  8d49a718038 ! 2:  427cb7b55ac var: allow GIT_EDITOR to return null
+     @@ builtin/var.c: static const char var_usage[] = "git var (-l | <variable>)";
+      -		die("Terminal is dumb, but EDITOR unset");
+      -
+      -	return pgm;
+     -+    return git_editor();
+     ++	return git_editor();
+       }
+       
+       static const char *pager(int flag)
+
+-- 
+gitgitgadget
