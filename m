@@ -2,63 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B96C3C433FE
-	for <git@archiver.kernel.org>; Fri, 25 Nov 2022 06:41:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B051EC4332F
+	for <git@archiver.kernel.org>; Fri, 25 Nov 2022 06:51:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229683AbiKYGlK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Nov 2022 01:41:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44684 "EHLO
+        id S229629AbiKYGvH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Nov 2022 01:51:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229595AbiKYGlJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Nov 2022 01:41:09 -0500
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B1161B9CE
-        for <git@vger.kernel.org>; Thu, 24 Nov 2022 22:41:06 -0800 (PST)
-Received: by mail-pf1-x434.google.com with SMTP id z26so3351419pff.1
-        for <git@vger.kernel.org>; Thu, 24 Nov 2022 22:41:06 -0800 (PST)
+        with ESMTP id S229575AbiKYGvG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Nov 2022 01:51:06 -0500
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F38022A971
+        for <git@vger.kernel.org>; Thu, 24 Nov 2022 22:51:05 -0800 (PST)
+Received: by mail-pg1-x52b.google.com with SMTP id 136so3228967pga.1
+        for <git@vger.kernel.org>; Thu, 24 Nov 2022 22:51:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id:date
          :references:subject:cc:to:from:sender:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=J3Y1+SIyc1z5YT0oqS52ZEFwOLFf3xZzvF30W85PnN4=;
-        b=plBkTYeRoE5iI+jiv4FONB2MpVCcaDGflURfEYSoPPzHEV1RIBTile0/SVt/Q+UvZd
-         hKggY1UxHH/dQS+Bi/2vWqSlbSGMfF9vuO2us64YQsLBWXwS4FD4LfIdx3KwqP1vgovN
-         UDsUZQKG6dNKGkrXPvHQMy37txLnSuNUh4FeY5u0O5CHgBfsAXBtREWSmlWuSE+yi0RY
-         /IumffsbJ69ljdVhuTwVubhm36V6nyDCaRlz0dOHyAsAMmkYDv7+wt0+yxN25BJpI1Zl
-         Bdguo5j6mqpnMTHh5d8CkvozFO4su1SkymaEzFVJsTdGrx5jsgj0YkdFtUN+D6QMX799
-         jL6A==
+        bh=e0r9xyh1YloJWBQFyYUNv75S9S6trBLCUuFsj6//IGc=;
+        b=bv+L90YooG9ak7jfTLI26/HyZ1OM1gVA5wJibLdSVFf23bTpp1e19KuzICICPaJEf+
+         7kne9wSpZq9MolCUbr+/J1NJ09mMEn7eEm3Cpsaxj71oRC6gkn9ELXpIi525r1h3sHGj
+         xepF97jtASDs6cu++ZdC1SSld+4INE+aH6OEUAkxstxDjHVUOZKc6dyLsYUlvxF6nDjE
+         n6Tjg3I7BKnl+AOWHWe7PYG1JSEowFkBj54e7T7n0eGj/bsDVAUn/z6QK9d2/HHlbGeQ
+         FZIigE24rbXHReg39Cl89vy+KjAZlKR1vLHXBdsbqXuqBfYm0CE2aAOZrJvBClYS/Xlr
+         /M1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id:date
          :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=J3Y1+SIyc1z5YT0oqS52ZEFwOLFf3xZzvF30W85PnN4=;
-        b=wsmMiRgUhbaScAvY5GNPO+T58SA7sQE2QD1pM3/7ToSnTJW1kdJ1XyHf4zoqLWF91e
-         Ii9/JgazW6f0hBbYt7Npeh2E9Qp9X7d8tjb9RKDNVHqe9p3WVPVr9ZuezGqTD6KnNKzD
-         LYU7GYRQxRJiJYtvMAt8S+K2no1m4AZ/Jg7nm5Mj3EPkfyrY/WPRQEdCUvJohSaAsAb3
-         9YrlG++zSrovBsZffzWa/szvAV6F4ggM73SAsqhVKLJq6guo4sgRputXd8LL6ZgrBFRy
-         ECi7ppz9tAxZPZZ1BJUU22BwNpShuIe27M+CvtURxztn0Rm+mu0zrvL+yvCgt0SN3q3/
-         qZtA==
-X-Gm-Message-State: ANoB5pm8r+sncJvJPZ4FtukggZdmIQ1anTPAfuwAyj8pHV+Od47CDP7Y
-        ET0YaqRBf9d8Q19UKQEjySPORMyjZ7Ai5Q==
-X-Google-Smtp-Source: AA0mqf7/+qsS7GuCWfU1itxlp7Z31EgzZHsJj58CtLyyDn3u1BxUahA6saNBgWPxMdD6PFl/Ia+Vmw==
-X-Received: by 2002:a63:4c4d:0:b0:46f:8c3a:8b2b with SMTP id m13-20020a634c4d000000b0046f8c3a8b2bmr15134532pgl.477.1669358465696;
-        Thu, 24 Nov 2022 22:41:05 -0800 (PST)
+        bh=e0r9xyh1YloJWBQFyYUNv75S9S6trBLCUuFsj6//IGc=;
+        b=PCMQmR6dLnfbihn73jU9MIXgEpHbJ+kFQeZWq7ZSSQA/SVZgd/lNcFjfNVoRoyV5Zi
+         WUlgyUJo5aZoTfacSXT5fQrFDx4u+CcsWWTrEkDbtlpYlnvGR2tDi4Rhxdz3fS/c1RVr
+         abXt17LUlGEgAmmPAGSKW2OFdqc6WT9tgEzYsBhlN1tYKWh4ucgjqOnaQnNLfkMkNWnB
+         Su3GQwDcKMWZVMm3BS5ZIPAjzlx27GAlP0SSta11uUeoeyABa1ppbgf23iIEBSsmrZ2a
+         NAPW/ky9TLVK/dZpd5GS2M8YNKL8egvxBJhPeOX2CkAtF/oifVaKFXKy5GHIOngDA6AF
+         RLYw==
+X-Gm-Message-State: ANoB5pmhA32P1ow2R1tXvPYBjrnu4Df3ZJLc2bdUJeZ1FBCnyMFayDyd
+        4BQnaAkr6MSwM2wq48sqWcU=
+X-Google-Smtp-Source: AA0mqf7Q8iYPoi+IIh1XfR5uJalrjEz2w9u3/d5nRBODEaShE+m0u0h9Gta81EU1blm7dVpj84m3Zw==
+X-Received: by 2002:a63:d712:0:b0:470:4522:f317 with SMTP id d18-20020a63d712000000b004704522f317mr22724531pgg.129.1669359065409;
+        Thu, 24 Nov 2022 22:51:05 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id b7-20020a170902650700b001896af10ca7sm131313plk.134.2022.11.24.22.41.04
+        by smtp.gmail.com with ESMTPSA id k6-20020a17090a404600b0021282014066sm4253494pjg.9.2022.11.24.22.51.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Nov 2022 22:41:05 -0800 (PST)
+        Thu, 24 Nov 2022 22:51:04 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Cc:     git@vger.kernel.org,
-        "Randall S . Becker" <randall.becker@nexbridge.ca>
-Subject: Re: [PATCH] trace2 tests: guard pthread test with "PTHREAD"
-References: <patch-1.1-f7f21c94a6c-20221124T214813Z-avarab@gmail.com>
-Date:   Fri, 25 Nov 2022 15:41:04 +0900
-Message-ID: <xmqqilj3edtr.fsf@gitster.g>
+To:     Jeff King <peff@peff.net>
+Cc:     Glen Choo via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, Glen Choo <chooglen@google.com>
+Subject: Re: [PATCH v3] object-file: use real paths when adding alternates
+References: <pull.1382.v2.git.git.1669074557348.gitgitgadget@gmail.com>
+        <pull.1382.v3.git.git.1669251331340.gitgitgadget@gmail.com>
+        <Y37EEiJembUN9PmL@coredump.intra.peff.net>
+Date:   Fri, 25 Nov 2022 15:51:04 +0900
+Message-ID: <xmqqcz9bedd3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -67,45 +70,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Since 81071626ba1 (trace2: add global counter mechanism, 2022-10-24)
-> these tests have been failing when git is compiled with NO_PTHREADS=Y,
-> which is always the case e.g. if 'uname -s' is "NONSTOP_KERNEL".
+> On Thu, Nov 24, 2022 at 12:55:31AM +0000, Glen Choo via GitGitGadget wrote:
 >
-> Reported-by: Randall S. Becker <randall.becker@nexbridge.ca>
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  t/t0211-trace2-perf.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-
-Makes sense, to sweep the immediate breakage under prerequisite.
-
-But why would a global counter need threading?  I know that the
-counters can optionally report per-thread stats, but that is
-optional and it would still be useful if we can count events in a
-single-threaded program, no?
-
+>>     object-file: use real paths when adding alternates
+>>     
+>>     Thanks all for the feedback on v2. Once again, this version takes nearly
+>>     all of Ævar's fixup patches [1] :)
 >
-> diff --git a/t/t0211-trace2-perf.sh b/t/t0211-trace2-perf.sh
-> index 0b3436e8cac..b4e91351181 100755
-> --- a/t/t0211-trace2-perf.sh
-> +++ b/t/t0211-trace2-perf.sh
-> @@ -203,7 +203,7 @@ test_expect_success 'stopwatch timer test/test1' '
->  	have_timer_event "main" "timer" "test" "test1" 5 actual
->  '
->  
-> -test_expect_success 'stopwatch timer test/test2' '
-> +test_expect_success PTHREAD 'stopwatch timer test/test2' '
->  	test_when_finished "rm trace.perf actual" &&
->  	test_config_global trace2.perfBrief 1 &&
->  	test_config_global trace2.perfTarget "$(pwd)/trace.perf" &&
-> @@ -249,7 +249,7 @@ test_expect_success 'global counter test/test1' '
->  	have_counter_event "main" "counter" "test" "test1" 15 actual
->  '
->  
-> -test_expect_success 'global counter test/test2' '
-> +test_expect_success PTHREAD 'global counter test/test2' '
->  	test_when_finished "rm trace.perf actual" &&
->  	test_config_global trace2.perfBrief 1 &&
->  	test_config_global trace2.perfTarget "$(pwd)/trace.perf" &&
+> This looks fine to me. I'd probably have done the strbuf_realpath()
+> change I suggested, but I don't mind if you want to punt on it for now.
+
+Thanks, both.
+
+When we designed the alternates long time ago, the "avoid placing
+duplicate directories on list" was done merely as an optimization
+and not as a correctness measure, as there was no plan to add
+anything destructive like "delete all non-local objects".  But now
+this seems to matter X-<.
+
