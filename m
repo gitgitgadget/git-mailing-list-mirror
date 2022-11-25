@@ -2,108 +2,85 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7A48C4332F
-	for <git@archiver.kernel.org>; Fri, 25 Nov 2022 03:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80D48C433FE
+	for <git@archiver.kernel.org>; Fri, 25 Nov 2022 03:46:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229706AbiKYDhW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 24 Nov 2022 22:37:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55738 "EHLO
+        id S229615AbiKYDqs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 24 Nov 2022 22:46:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229683AbiKYDhJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Nov 2022 22:37:09 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A0E32B258
-        for <git@vger.kernel.org>; Thu, 24 Nov 2022 19:37:08 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id q7so4091608wrr.8
-        for <git@vger.kernel.org>; Thu, 24 Nov 2022 19:37:08 -0800 (PST)
+        with ESMTP id S229450AbiKYDqr (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Nov 2022 22:46:47 -0500
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 944582A727
+        for <git@vger.kernel.org>; Thu, 24 Nov 2022 19:46:46 -0800 (PST)
+Received: by mail-pg1-x52f.google.com with SMTP id h193so2916803pgc.10
+        for <git@vger.kernel.org>; Thu, 24 Nov 2022 19:46:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1WHX8dViAKAfzjWn2u4AO+TH2XgCSQ4rv550DeLvV58=;
-        b=j15UIrE86IK0AcQ5S8iA3kxiLsLLb1Qr+2L5Xra7fyse8W3rbWLnI+WW/R4ZpKPzwC
-         mV4A7oT7/PyVVGljz5eMEXEK2N56u9/fjc7uxbvalSXHUjfdPk/rXYh4yAt9jwDKCu+A
-         Q2p5m1XgFYAuYgY/G4OQIIT6TpU86Gu3XNyKlBiNEyWMpXugFOS77xpKIIQBMZUgsNyv
-         EsQhb2YL1UWosLHFxuN9RaFwnsVLiWiA6U81kY8PwCrpvK4AaNR2qs+/u2efdnH8hgJc
-         pntwYZj7jtQ+HUfwtj1REkCfY7RS+zXonBvrsMNRKNZ/8SUG1984Y7/ZRy1xAjqqUHOv
-         wU2g==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=T7nYRHkAT+cfBVTh3dxRqSOZs5vMlHtCbsGhPgbKF+w=;
+        b=WmZWjyAV3qruQsI1wSv1icpMpDdLGqi77xYDnB611hD2LV14fI/on7CDEj+seGFgzq
+         ChsllLOHxUtI24IPHMQX8jGKpXC5l7pR7NpnmOvtB4yjlaqr4r/Wkcu3yZAV1glVecA4
+         cukYLNgeWyz3IGYMElmlJ6pAg5U382HQLeNGu97id1EmmYipa2UGiBpTE2nvvN9WDkGi
+         swVuRs8LWlTqY3py3i5RvggYNH93OBinHwaf8wvgCBItwxT6lgjrMozFU7LuEnkbDWBT
+         AmeGTXzoha0zU1bQ8snodusXz/BU3XviC5PdYQz2U8Iy7ebd/HB584v5mESFqpUzWcGo
+         Qhdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1WHX8dViAKAfzjWn2u4AO+TH2XgCSQ4rv550DeLvV58=;
-        b=7TYixmqGu1YqsBZO4d1XtB+p1eteR20jQuZdGJaaVPkNKZceY/BIQ2//jf7spIeIx0
-         XxiGCRR4LH6GFFtwX5XcUtlokyfk/DUEuCSzNXRKwMfn3cbE8DejBTjHcjgd3UPasWK8
-         QcfdJJtta5gRF3Kr3fteN7FkcNV/re/MonxYK1xgDV3uqEvTzeI85AoklZYaatzEUvLL
-         S1c0mg+ipaOrg5tgBe53lE45EgpoX/FvFzPpoaDnB/m9EIfWh0NBFzTWUNOd+G2LkEry
-         nHNeGY96Eh+hTXndljOOFyuJc8EAhyDlaRPgYoxU48jGGQh39kbgqGqS27dVAkt2FxZV
-         Z0CQ==
-X-Gm-Message-State: ANoB5pksIolPeI4tvV17hYxytfOcx4uPXP9aw70oTwgmbewQmJXdmZ5G
-        PhE/AytI1MZ1lyTSsRBmTgfG+gH2oz8=
-X-Google-Smtp-Source: AA0mqf5vdzQ439L2j+pPy7DNf1cQ2ZXDNrfysP8rqn0aUt9MirsmQgwJTDYY4RZ2cRr9LlKSPkWcmw==
-X-Received: by 2002:a5d:440b:0:b0:241:f901:a7e3 with SMTP id z11-20020a5d440b000000b00241f901a7e3mr4565650wrq.511.1669347426996;
-        Thu, 24 Nov 2022 19:37:06 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s10-20020a1cf20a000000b003cfe1376f68sm3546851wmc.9.2022.11.24.19.37.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Nov 2022 19:37:06 -0800 (PST)
-Message-Id: <d8233f9617563d7c7168afc6e1abfaba57e54038.1669347422.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1423.v7.git.1669347422.gitgitgadget@gmail.com>
-References: <pull.1423.v6.git.1669261642.gitgitgadget@gmail.com>
-        <pull.1423.v7.git.1669347422.gitgitgadget@gmail.com>
-From:   "Yoichi Nakayama via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 25 Nov 2022 03:37:01 +0000
-Subject: [PATCH v7 3/3] git-jump: invoke emacs/emacsclient
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=T7nYRHkAT+cfBVTh3dxRqSOZs5vMlHtCbsGhPgbKF+w=;
+        b=0INrgAJUM1awSzg21pDZsTHOoTdhCMjp+6TfJnLZn3uErR+HUHTc7s8I64dHu11O0n
+         SxQs1q4CP5cOTm/Qab/g9ttVfsty7CI+p3LD2zhZ7IlOfPe2e49zZct2GJcm9UhT5uAE
+         HW+PXCHfPQm5bUmXWawlLdUGWaPBGiFVhIfD0Jzy6Q8BqD/SgoqFJKlMe/MdJHdcR7Fv
+         lf4N3xRKowQ93qC0fT7vctNZBaSphI1KQVBDq3yFJ2WjUu9B/hUPSuBvmtD0jX3RFujK
+         UOZIecRl8tueh9Pom06vyfcKztBeobcohqvWKlEiBy2UfuS53//2nnO0CMbq32YdGH09
+         YW3A==
+X-Gm-Message-State: ANoB5pnpTeL3JBvwQjcMQcNKIPZGcAMpZNNu6cX1SMslIEhbxoyFkaSP
+        2SDzDwvlu5XPB6oTE7+PWKuBx0lHdEDNLo9mGUw=
+X-Google-Smtp-Source: AA0mqf46pacTIx6UQDMLa4S6JRsFyGi8kQ13rN4HJjrwBgo5+Dz0dwO/L6kjhaVn0yZdqNpMs0JUD1FHcL3Oqsfic/o=
+X-Received: by 2002:aa7:93b4:0:b0:56d:1fdc:9d37 with SMTP id
+ x20-20020aa793b4000000b0056d1fdc9d37mr16795705pff.77.1669348005881; Thu, 24
+ Nov 2022 19:46:45 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>,
-        Yoichi Nakayama <yoichi.nakayama@gmail.com>
+References: <pull.1423.v3.git.1669033620.gitgitgadget@gmail.com>
+ <pull.1423.v4.git.1669126703.gitgitgadget@gmail.com> <2f0bffb484beccf58f2440ed5e2c04a1ba26e6c3.1669126703.git.gitgitgadget@gmail.com>
+ <Y30a0ulfxyE7dnYi@coredump.intra.peff.net> <CAF5D8-vSsBsdiA8SiDgqUFkL9_3N-v+psVxj-AcibOB88gxWfA@mail.gmail.com>
+ <Y37EPdUkBhsSPmRD@coredump.intra.peff.net> <CAF5D8-u14grTa9cUo=ge8TVRKNYtVHWhFHDW8yYD9gD8=f0Byg@mail.gmail.com>
+ <Y3+b80Vb2/6lKQ40@coredump.intra.peff.net>
+In-Reply-To: <Y3+b80Vb2/6lKQ40@coredump.intra.peff.net>
+From:   Yoichi Nakayama <yoichi.nakayama@gmail.com>
+Date:   Fri, 25 Nov 2022 12:46:34 +0900
+Message-ID: <CAF5D8-ufUcCfQYMTTRwD07p7+37OBC4zkiWmAa5n1P5pL9EtOQ@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] git-jump: invoke emacs/emacsclient
+To:     Jeff King <peff@peff.net>
+Cc:     Yoichi Nakayama via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Yoichi Nakayama <yoichi.nakayama@gmail.com>
+On Fri, Nov 25, 2022 at 1:29 AM Jeff King <peff@peff.net> wrote:
+> Those are the three tricks I sent in the earlier email (though looking
+> at it again, I think the single-quote bits need to come first, so their
+> backslashes are then quoted to protect against emacs evaluation).
+>
+> It's all quite confusing, which is why I am OK with just skipping it for
+> now. ;) The nice thing, though, is that doing the quoting right means
+> it's safe to get rid of the "cat", which solves your race problems in a
+> more direct and robust way.
 
-It works with GIT_EDITOR="emacs", "emacsclient" or "emacsclient -t"
+Thank you for taking the time to explain the details. I don't fully
+understand it yet, but I know it's hard to deal with properly.
 
-Signed-off-by: Yoichi Nakayama <yoichi.nakayama@gmail.com>
----
- contrib/git-jump/git-jump | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+In PATCH v7, I made it the same level as the vim version (although it
+is not strictly at the same level because there is a Emacs Lisp processing).
+I skip futher treatment of temporary file paths.
 
-diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
-index cc97b0dcf02..eef9cda832f 100755
---- a/contrib/git-jump/git-jump
-+++ b/contrib/git-jump/git-jump
-@@ -23,7 +23,22 @@ EOF
- 
- open_editor() {
- 	editor=`git var GIT_EDITOR`
--	eval "$editor -q \$1"
-+	case "$editor" in
-+	*emacs*)
-+		# Supported editor values are:
-+		# - emacs
-+		# - emacsclient
-+		# - emacsclient -t
-+		#
-+		# Wait for completion of the asynchronously executed process
-+		# to avoid race conditions in case of "emacsclient".
-+		eval "$editor --eval \"(let ((buf (compilation-start \\\"cat \$1\\\" 'grep-mode))) (pop-to-buffer buf) (select-frame-set-input-focus (selected-frame)) (while (get-buffer-process buf) (sleep-for 0.1)))\""
-+		;;
-+	*)
-+		# assume anything else is vi-compatible
-+		eval "$editor -q \$1"
-+		;;
-+	esac
- }
- 
- mode_diff() {
+Regards,
 -- 
-gitgitgadget
+Yoichi NAKAYAMA
