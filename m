@@ -2,68 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0677BC4332F
-	for <git@archiver.kernel.org>; Fri, 25 Nov 2022 22:51:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00604C43217
+	for <git@archiver.kernel.org>; Fri, 25 Nov 2022 23:50:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229901AbiKYWvs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Nov 2022 17:51:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57936 "EHLO
+        id S230258AbiKYXuH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Nov 2022 18:50:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229758AbiKYWvr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Nov 2022 17:51:47 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F230030F7F
-        for <git@vger.kernel.org>; Fri, 25 Nov 2022 14:51:46 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id ud5so13147759ejc.4
-        for <git@vger.kernel.org>; Fri, 25 Nov 2022 14:51:46 -0800 (PST)
+        with ESMTP id S230045AbiKYXtx (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 25 Nov 2022 18:49:53 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1910642D
+        for <git@vger.kernel.org>; Fri, 25 Nov 2022 15:49:05 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id f7so8215017edc.6
+        for <git@vger.kernel.org>; Fri, 25 Nov 2022 15:49:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jsB2jZxtD3qrew4tKJQX6jpxN++/a/02szDnDQQG1wc=;
-        b=pUEZT16JbuGNQW2QkZOYhTWSEyTy8szL2VIhSFVdoV7Mnp0q9F10V1+FaeaVHEqHEm
-         FQ2tx5qc1+Oc/ReTAhRjfXxla31gfwqh+XPuMHJ+pQ/XMviLGUxTLL/hBxv29cNqckKL
-         7dFS2J2O7jD8M5TnPkOKyKoMlUIv17y7vsiokW9XfBOWsLrHe34nRv9NmzZ43KOF+NNX
-         /lhmO4qHW3a/vXeZP36gQlgm9/1GtZw128N2AG1mvbe+v2FV2r2pXPrFJGnpb/1za1+U
-         cM1juHRDBGZqFUbaoWhIqkGsYqyV+UF4dwRCN3KDtIBahxnasqys8Ue3oIaHgxfkdpcc
-         tsZA==
+        bh=vk3hOU6O0WyWiZWJafM03lw4BpmSXY5dzwO9WDnz2gc=;
+        b=gGdot0VUtEeG+TdlI5T/g2KeZRWWm11RXT/Jh7xohHTE83VMRdybt6QvfLJHEWj40H
+         yQRBaus+RxUGUSW3PhJ5xhkN9vD3llzGBFqPgI1DPbobT04YJPiAZlZcPAvI72nvfxW9
+         c+CDeLKzL/188XZtnUBPk3e/GIuNq2fY9FvNaHzqdIj+fH9e2S6ddRPk5S+FX+ypxNp0
+         JbYBi00L2lMQEwx2hCHrjYnHOVbUmZFdLEnorr/ho06NI3l40I1ALSw5ErRploJMObOU
+         Pkqpx/Qq8OrQZfRpI/8TTbai1ZFq3KkdC7BPPAsdgMVQf+UWGAVg+ujmcLnTc4INKov+
+         YzQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jsB2jZxtD3qrew4tKJQX6jpxN++/a/02szDnDQQG1wc=;
-        b=BY6/aCH4g9jRaHVA4JdOl1gHlCM+e36csTs329/DTvrSyTEDoUJCxI+HWT2tQRMxa9
-         m8Ja67BHpeOGeP/EoSt/2ARvnWzzLSBT6/r0WUeNQVJWvrKicl0VSn+WMVRBmhgKq3gh
-         dmpk8dOX8k/7Zoz6vn3lRl5RHtHon193trwYgHXRYBADaqb+vfn3/lOJb2jEHolPkqcO
-         ISsuQnsSEmxBylUWe2yVnYsF9OBPevYFZK2Tv3h3Y9rLxcBVXtIt6WRO6QFlrFU2t/8f
-         Y8VWgYmA2HecKJLlI59tGz/KYqJ3BYvhnRoXW6GwQE95TcyHteZ+EMjXWc1hcMiDHOjH
-         psPw==
-X-Gm-Message-State: ANoB5pkEmmXtthQ3DvFGki8U0VftguBpzjbO8Q5tXYtCm4yPaBAlJd2x
-        M0eSgbvIPkaZOWZ3Jn20E09Q/GQgGQnWw+TJ
-X-Google-Smtp-Source: AA0mqf4dd6CPxqRcnFkF0JHtmCFXqp+W+juWZ7/Nzuu7cQ34N5AaUJuFEoHVTXZTlrlY+2dqediCLA==
-X-Received: by 2002:a17:906:774e:b0:782:55de:4fcf with SMTP id o14-20020a170906774e00b0078255de4fcfmr33964435ejn.85.1669416705294;
-        Fri, 25 Nov 2022 14:51:45 -0800 (PST)
+        bh=vk3hOU6O0WyWiZWJafM03lw4BpmSXY5dzwO9WDnz2gc=;
+        b=pLKc9WA5o4ZJMG31qSPGa8weJj0uMMk9ez7yO6G3HZs2SIONmZRtfcRKbMRGbkXQyw
+         3/ai1gd+8gtE3uPh9nI1XdiV8+yAiZN7uuZ96xv3kpD5ZKSM3r4NX4KJJKMqffw+u5iH
+         mkEuwe2Aiq2pWZrQQxGw4FHzS4FTRZW3OqVsGJbfRBaPaSNsV3P4CwstYHTHKxUTBieK
+         Joysobs/Gqf+69qLEOAX9ICOrlySGJQbAcNgUZghUS9LvJp2rV/0bLmb1PcxN/tZ5D+1
+         akoopwa5JM6FJAdzoHhx0klRGh3ivTQQ1jK/U74Im2Puhl3/iap+XB653GrS9vfZP6+5
+         lL2A==
+X-Gm-Message-State: ANoB5plT4KcQuo1lGlc0UaxZ+JT7GifpIh5TDoBtcOTapIOQSL/XMRTB
+        qdvc2zFFWMxYPw/9LXTCbC6JUS7oBP+Q2ho2
+X-Google-Smtp-Source: AA0mqf4XV06lf7FVuMUL89hCKPs3PSE6ilr8ZKVRj2HTpwix+CAxo/O0gcuLwTuf1uRwNQ3LpYCNOw==
+X-Received: by 2002:a05:6402:1772:b0:46a:7f4d:efe5 with SMTP id da18-20020a056402177200b0046a7f4defe5mr10704457edb.304.1669420139143;
+        Fri, 25 Nov 2022 15:48:59 -0800 (PST)
 Received: from gmgdl ([213.143.127.178])
-        by smtp.gmail.com with ESMTPSA id f23-20020a056402161700b00469f58ee2cdsm2274073edv.47.2022.11.25.14.51.44
+        by smtp.gmail.com with ESMTPSA id r17-20020aa7da11000000b0046aba24985esm1255723eds.91.2022.11.25.15.48.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Nov 2022 14:51:44 -0800 (PST)
+        Fri, 25 Nov 2022 15:48:58 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1oyhXq-000bnG-2l;
-        Fri, 25 Nov 2022 23:51:42 +0100
+        id 1oyiRG-000dPb-0p;
+        Sat, 26 Nov 2022 00:48:58 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Sean Allred via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Sean Allred <code@seanallred.com>,
-        Sean Allred <allred.sean@gmail.com>
-Subject: Re: [PATCH v2 2/2] var: allow GIT_EDITOR to return null
-Date:   Fri, 25 Nov 2022 23:48:08 +0100
-References: <pull.1434.git.1669321369.gitgitgadget@gmail.com>
- <pull.1434.v2.git.1669395151.gitgitgadget@gmail.com>
- <427cb7b55ac3fead1651cbad7318b9c0bb454b08.1669395151.git.gitgitgadget@gmail.com>
+To:     Bagas Sanjaya <bagasdotme@gmail.com>
+Cc:     git@vger.kernel.org, Fabrice Fontaine <fontaine.fabrice@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-compat-util.h: Fix build without threads
+Date:   Sat, 26 Nov 2022 00:47:27 +0100
+References: <20221125092339.29433-1-bagasdotme@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <427cb7b55ac3fead1651cbad7318b9c0bb454b08.1669395151.git.gitgitgadget@gmail.com>
-Message-ID: <221125.86pmdamyv5.gmgdl@evledraar.gmail.com>
+In-reply-to: <20221125092339.29433-1-bagasdotme@gmail.com>
+Message-ID: <221126.86lenymw7p.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -71,49 +69,29 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Nov 25 2022, Sean Allred via GitGitGadget wrote:
+On Fri, Nov 25 2022, Bagas Sanjaya wrote:
 
-> From: Sean Allred <allred.sean@gmail.com>
+> From: Fabrice Fontaine <fontaine.fabrice@gmail.com>
+>
+> Git build with toolchains without threads support is broken (as reported
+> by Buildroot autobuilder [1]) since version 2.29.0, which traces back to
 
-> +test_expect_success 'get GIT_EDITOR without configuration' '
-> +	(
-> +		sane_unset GIT_EDITOR &&
-> +		sane_unset VISUAL &&
-> +		sane_unset EDITOR &&
-> +		>expect &&
-> +		! git var GIT_EDITOR >actual &&
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -1470,7 +1470,8 @@ int open_nofollow(const char *path, int flags);
+>  # define SHELL_PATH "/bin/sh"
+>  #endif
+>  
+> -#ifndef _POSIX_THREAD_SAFE_FUNCTIONS
+> +
+> +#if !defined(_POSIX_THREAD_SAFE_FUNCTIONS) && defined(NO_FLOCKFILE)
 
-Negate git with "test_must_fail", not "!", this would e.g. hide
-segfaults. See t/README's discussion about it.
+Per f43cce23add (git-compat-util: add fallbacks for unlocked stdio,
+2015-04-16) wouldn't it make more sense to do something like:
 
-> +		test_cmp expect actual
+#ifdef NO_FLOCKFILE
+#undef _POSIX_THREAD_SAFE_FUNCTIONS
+#endif
 
-Looks like this should be:
-
-	test_must_fail git ... >out &&
-	test_must_be_empty out
-
-> +test_expect_success 'get GIT_EDITOR with configuration and environment variable EDITOR' '
-> +	test_config core.editor foo &&
-> +	(
-> +		sane_unset GIT_EDITOR &&
-> +		sane_unset VISUAL &&
-> +		sane_unset EDITOR &&
-> +		echo foo >expect &&
-> +		EDITOR=bar git var GIT_EDITOR >actual &&
-> +		test_cmp expect actual
-> +	)
-
-Perhaps these can all be factored into a helper to hide this repetition
-in a function, but maybe not. E.g:
-
-	test_git_var () {
-		cat >expect &&
-		(
-			[...common part of subshell ...]
-		        "$@" >actual &&
-			test_cmp expect actual
-		)
-	}
-
-(untested)
+Or the other way around here? I.e. have _POSIX_THREAD_SAFE_FUNCTIONS
+define/undefine NO_FLOCKFILE?
