@@ -2,107 +2,165 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B68B8C4332F
-	for <git@archiver.kernel.org>; Fri, 25 Nov 2022 03:37:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DB09C433FE
+	for <git@archiver.kernel.org>; Fri, 25 Nov 2022 03:37:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229735AbiKYDhU (ORCPT <rfc822;git@archiver.kernel.org>);
+        id S229695AbiKYDhU (ORCPT <rfc822;git@archiver.kernel.org>);
         Thu, 24 Nov 2022 22:37:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55668 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229684AbiKYDhG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Nov 2022 22:37:06 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 721C42AC7D
-        for <git@vger.kernel.org>; Thu, 24 Nov 2022 19:37:05 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id ay14-20020a05600c1e0e00b003cf6ab34b61so5242177wmb.2
-        for <git@vger.kernel.org>; Thu, 24 Nov 2022 19:37:05 -0800 (PST)
+        with ESMTP id S229527AbiKYDhH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Nov 2022 22:37:07 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FE822B181
+        for <git@vger.kernel.org>; Thu, 24 Nov 2022 19:37:06 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id bs21so4977876wrb.4
+        for <git@vger.kernel.org>; Thu, 24 Nov 2022 19:37:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=v7mTeI2kSpnBWdNgjilNkbd0hoDQrcEyVClzYqvCa9U=;
-        b=k9kAQnTzITYB671WUf01Av2LJHmFjoNP4xaD5kL0nqAMzOTQtxc0EIET7Y5Aq/sbBA
-         Iv3TR+IiDTUqA5JnC9jiGvPzu5Tgv4ayPDtsxVBWBNvyQ+fQnXQQW9qbFZMagpMlCFb0
-         PRLD6P4aF49Hag/fiUq1wlTAXsLZa146R9WzKftMPu7dtVIMm2KVRfz/3ywUFy7K2QbW
-         0cFr4kIVCx6EilFZODlD8tfGc+S1ZDMgaFbLn/GPCLXVFBiAUoK5MK6gdkkAzZ9TmvmD
-         a1MvzlSfE5//RMMWJ9JkEgtPDlHqpZ/cEPqmNgO4IaP/5gOesIbAuwLw3veJ9dzena72
-         Rt7w==
+        bh=hG7afdG0COHOmfVOMrCXQbc2WjB03eSnuN/yf/YSMAs=;
+        b=Y6CPvZkIqNKmNPNsqW+Y7QhSxe7sW9px4gyH+DnpcwPp6xrzpwfSFtSH7liRiBwE0A
+         h6w00QRcMvRlfkwQbAcCYCrnvEyVBc4YgShEIuJIn0AbF+cRw2L2sU6GdXMQtB4v/dqT
+         Iw0rCUvVOesV4E+xaZmbgMC5L5/qX8C2z3Zr7ojAalyAKZ6Eg+3+AeROjOWh4Cl4Ffvf
+         pLi/QX4ojqm8wpo6AO5Dy5Bdyl0NLFLOEdw8ozb+TC6jsMD2J6tTlqGQN5TvHtrc60mH
+         0BD0N+NPVrQfdVN+halaeyl2XzWzd+qqU8gHjB9EXfvRCqqer40bIYBUaZTEFAWPtSWP
+         p5cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=v7mTeI2kSpnBWdNgjilNkbd0hoDQrcEyVClzYqvCa9U=;
-        b=c5tFGSwmnh4JEtoVNGmWi2rbVaFXx8W0b5cs+rfKSWXXtrQVt4rlLJqv+5HgkZ/Uxu
-         lL0XcBtsrmiEw+oPPjl7ieNVFxx5SP0VZ99GVt2EgX6QOoAQNr4TEC8lX0d+rBjRiNVf
-         vmBQrS4lekXfFaVG3hvpJ7NBNmq4d3CSbjHaCXmujkRGpY2Q/bcVikbC5gbHxAKwCKnz
-         nOwT2mYxsmoDkSxGfnSfk7Prh3N5rf5YR0goD9ZFSk3GzytB9z2yLZeVrozDSyAIT8I4
-         x/N672gezS2BYwDaOukyBz1VHAqA/mISi9lsUJ5NCJSlpIg33Q9Pm/0VBcLpbAQYvkqK
-         dmSw==
-X-Gm-Message-State: ANoB5pn/ODb00Y2T+QpnkDblmZCAbPWcclIOR0KDS2JbPik7fRuq+O3K
-        1YK58aVMGjKRKQ1JJqVhU0vyfvDuNQo=
-X-Google-Smtp-Source: AA0mqf4EhPtzv3Y/9holWxHz2d+AbdnwrjHBJqo1zKppid0pFn5Zf5noSeT5Taw+Hg/gOhv1n9742A==
-X-Received: by 2002:a7b:c8c3:0:b0:3cf:b49e:1638 with SMTP id f3-20020a7bc8c3000000b003cfb49e1638mr15502073wml.50.1669347423680;
-        Thu, 24 Nov 2022 19:37:03 -0800 (PST)
+        bh=hG7afdG0COHOmfVOMrCXQbc2WjB03eSnuN/yf/YSMAs=;
+        b=nfaq1C2yCNmYjcXzO52CqhtgaEIuHq3o57jzijLkVGqMkYQL5rJrJGCHJFdq4YADXI
+         sjKGV1oIYm9eWqgqfuMi/MXR6NU2NIbgE80HQ54134kjMu16DZ5O2bh3f/f7lwX0R+7y
+         nbEvKZW9R6e5IdV1olgx/gDQ+MpUosSwjEkH3rkQ5+7xtLsAG8DMDx7mp0/ND83gWjYd
+         dSYDtoEP8WvSrP/WMLHmO8tWGxLjb2Oa8OsBqLj9sXeN9QdAFZq+k4eQqpJeHkkMFKsV
+         7KV1wEp2xzmOgxErkVI0sUUTSWKl8IbqeSj5GlVg2Qb+TzQnGNnLVGlwC1vIYG5qJHk4
+         eRgA==
+X-Gm-Message-State: ANoB5pmWTmRoprvRbOKKdENCe3QkA/9XktFIZ3MCmbly4O3xMGgUh/Cw
+        GUmgiaLJR90yOdVk9nCcdZXFVu7volE=
+X-Google-Smtp-Source: AA0mqf6lUynq7j97DE/VBdebKNJY8QZQVBpemLraK3sg1fVIsIrI37PTwyz9k1N+24NfO/hBaz6pUg==
+X-Received: by 2002:a5d:5948:0:b0:241:e929:fc44 with SMTP id e8-20020a5d5948000000b00241e929fc44mr7452742wri.27.1669347424685;
+        Thu, 24 Nov 2022 19:37:04 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g14-20020a05600c310e00b003a2f2bb72d5sm9430914wmo.45.2022.11.24.19.37.02
+        by smtp.gmail.com with ESMTPSA id l22-20020a05600c4f1600b003cffd3c3d6csm4074950wmq.12.2022.11.24.19.37.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Nov 2022 19:37:02 -0800 (PST)
-Message-Id: <pull.1423.v7.git.1669347422.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1423.v6.git.1669261642.gitgitgadget@gmail.com>
+        Thu, 24 Nov 2022 19:37:04 -0800 (PST)
+Message-Id: <446777d300d73498bd7da709fad75731a13d0d59.1669347422.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1423.v7.git.1669347422.gitgitgadget@gmail.com>
 References: <pull.1423.v6.git.1669261642.gitgitgadget@gmail.com>
-From:   "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 25 Nov 2022 03:36:58 +0000
-Subject: [PATCH v7 0/3] git-jump: support Emacs
+        <pull.1423.v7.git.1669347422.gitgitgadget@gmail.com>
+From:   "Yoichi Nakayama via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Fri, 25 Nov 2022 03:36:59 +0000
+Subject: [PATCH v7 1/3] git-jump: add an optional argument '--stdout'
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
-        Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+        Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>,
+        Yoichi Nakayama <yoichi.nakayama@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add an optional argument 'stdout' to print the quickfix lines to standard
-output. It can be used with M-x grep on Emacs.
+From: Yoichi Nakayama <yoichi.nakayama@gmail.com>
 
-Detect emacsclient by GIT_EDITOR and invoke the function. Tested with
-EDITOR="emacsclient" and EDITOR="emacsclient -t".
+It can be used with M-x grep on Emacs.
 
-Jeff King (1):
-  git-jump: move valid-mode check earlier
+Signed-off-by: Yoichi Nakayama <yoichi.nakayama@gmail.com>
+---
+ contrib/git-jump/README   | 10 +++++++++-
+ contrib/git-jump/git-jump | 25 ++++++++++++++++++++++++-
+ 2 files changed, 33 insertions(+), 2 deletions(-)
 
-Yoichi Nakayama (2):
-  git-jump: add an optional argument '--stdout'
-  git-jump: invoke emacs/emacsclient
-
- contrib/git-jump/README   | 10 ++++++++-
- contrib/git-jump/git-jump | 45 ++++++++++++++++++++++++++++++++++++---
- 2 files changed, 51 insertions(+), 4 deletions(-)
-
-
-base-commit: eea7033409a0ed713c78437fc76486983d211e25
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1423%2Fyoichi%2Fgit-jump-emacs-support-v7
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1423/yoichi/git-jump-emacs-support-v7
-Pull-Request: https://github.com/gitgitgadget/git/pull/1423
-
-Range-diff vs v6:
-
- 1:  446777d300d = 1:  446777d300d git-jump: add an optional argument '--stdout'
- 2:  972d51888ba = 2:  972d51888ba git-jump: move valid-mode check earlier
- 3:  446d39f62fb ! 3:  d8233f96175 git-jump: invoke emacs/emacsclient
-     @@ contrib/git-jump/git-jump: EOF
-      +		#
-      +		# Wait for completion of the asynchronously executed process
-      +		# to avoid race conditions in case of "emacsclient".
-     -+		eval "$editor --eval \"(let ((buf (compilation-start \\\"cat $@\\\" 'grep-mode))) (pop-to-buffer buf) (select-frame-set-input-focus (selected-frame)) (while (get-buffer-process buf) (sleep-for 0.1)))\""
-     ++		eval "$editor --eval \"(let ((buf (compilation-start \\\"cat \$1\\\" 'grep-mode))) (pop-to-buffer buf) (select-frame-set-input-focus (selected-frame)) (while (get-buffer-process buf) (sleep-for 0.1)))\""
-      +		;;
-      +	*)
-      +		# assume anything else is vi-compatible
-
+diff --git a/contrib/git-jump/README b/contrib/git-jump/README
+index 8bcace29d21..3211841305f 100644
+--- a/contrib/git-jump/README
++++ b/contrib/git-jump/README
+@@ -79,6 +79,14 @@ git jump grep -i foo_bar
+ git config jump.grepCmd "ag --column"
+ --------------------------------------------------
+ 
++You can use the optional argument '--stdout' to print the listing to
++standard output instead of feeding it to the editor. You can use the
++argument with M-x grep on Emacs:
++
++--------------------------------------------------
++# In Emacs, M-x grep and invoke "git jump --stdout <mode>"
++M-x grep<RET>git jump --stdout diff<RET>
++--------------------------------------------------
+ 
+ Related Programs
+ ----------------
+@@ -100,7 +108,7 @@ Limitations
+ -----------
+ 
+ This script was written and tested with vim. Given that the quickfix
+-format is the same as what gcc produces, I expect emacs users have a
++format is the same as what gcc produces, I expect other tools have a
+ similar feature for iterating through the list, but I know nothing about
+ how to activate it.
+ 
+diff --git a/contrib/git-jump/git-jump b/contrib/git-jump/git-jump
+index 92dbd4cde18..babb3b5c68d 100755
+--- a/contrib/git-jump/git-jump
++++ b/contrib/git-jump/git-jump
+@@ -2,7 +2,7 @@
+ 
+ usage() {
+ 	cat <<\EOF
+-usage: git jump <mode> [<args>]
++usage: git jump [--stdout] <mode> [<args>]
+ 
+ Jump to interesting elements in an editor.
+ The <mode> parameter is one of:
+@@ -15,6 +15,9 @@ grep: elements are grep hits. Arguments are given to git grep or, if
+       configured, to the command in `jump.grepCmd`.
+ 
+ ws: elements are whitespace errors. Arguments are given to diff --check.
++
++If the optional argument `--stdout` is given, print the quickfix
++lines to standard output instead of feeding it to the editor.
+ EOF
+ }
+ 
+@@ -64,11 +67,31 @@ mode_ws() {
+ 	git diff --check "$@"
+ }
+ 
++use_stdout=
++while test $# -gt 0; do
++	case "$1" in
++	--stdout)
++		use_stdout=t
++		shift
++		;;
++	--*)
++		usage >&2
++		exit 1
++		;;
++	*)
++		break
++		;;
++	esac
++done
+ if test $# -lt 1; then
+ 	usage >&2
+ 	exit 1
+ fi
+ mode=$1; shift
++if test "$use_stdout" = "t"; then
++	"mode_$mode" "$@"
++	exit 0
++fi
+ 
+ trap 'rm -f "$tmp"' 0 1 2 3 15
+ tmp=`mktemp -t git-jump.XXXXXX` || exit 1
 -- 
 gitgitgadget
+
