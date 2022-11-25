@@ -2,132 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 316BDC43217
-	for <git@archiver.kernel.org>; Fri, 25 Nov 2022 16:01:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA777C4332F
+	for <git@archiver.kernel.org>; Fri, 25 Nov 2022 16:01:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229782AbiKYQB1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Nov 2022 11:01:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52078 "EHLO
+        id S229813AbiKYQBa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 25 Nov 2022 11:01:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229743AbiKYQBZ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229770AbiKYQBZ (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 25 Nov 2022 11:01:25 -0500
-X-Greylist: delayed 307 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 25 Nov 2022 08:01:23 PST
-Received: from srv1.79p.de (srv1.79p.de [IPv6:2a01:4f8:222:1281::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 501451EAFF
-        for <git@vger.kernel.org>; Fri, 25 Nov 2022 08:01:23 -0800 (PST)
-X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
-Received: from [IPV6:2001:9e8:2bc5:500:3514:8a82:52b8:1f83] (unknown [IPv6:2001:9e8:2bc5:500:3514:8a82:52b8:1f83])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        (Authenticated sender: sven@cs-ware.de)
-        by srv1.79p.de (Postfix) with ESMTPSA id 4B9DB600098;
-        Fri, 25 Nov 2022 16:56:11 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs-ware.de;
-        s=mail2022; t=1669391771;
-        bh=9UU6fApmNUyjb3J9kEJiHZAKK4WPgwScGbFjfqG5DW4=;
-        h=Date:Subject:To:References:Cc:From:In-Reply-To:From;
-        b=ZpvRxoxBfk+5hs5/UC11yqBfARNQwQ7bsqH3FHBmQ2dI+hFVdeKxrJv2Ps8to9GDa
-         J3VWvtUH7jmK/ZLe4+C2J72g/6LRpoKX1s0w0A2sZu91quQyfSjs820gmpHAHlEhKg
-         WZcWJey4dhxAbznvL0XyGjHy9BVfE42f6MJ5w0ucLbS/j9wdetZK/42EblvfpYUhLk
-         3u44xndJOv9FQ9ZsC36cMwMpQSVqnYEpvYkfBJI92iLHEQrBiCfuujJEPvD/s1mMHz
-         C3+tAQSrAmkE/ye+rWnSvNxUvFFgBXdKE3Zlw87SUSGORhq4REvxFNkP+oKe9caSI6
-         McjH0/WsaRhWA==
-Message-ID: <1ff185c5-4a9e-36e3-3141-8b149c1c7bb0@cs-ware.de>
-Date:   Fri, 25 Nov 2022 16:56:09 +0100
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC9781DF26
+        for <git@vger.kernel.org>; Fri, 25 Nov 2022 08:01:24 -0800 (PST)
+Received: by mail-pj1-x1034.google.com with SMTP id w15-20020a17090a380f00b0021873113cb4so4547027pjb.0
+        for <git@vger.kernel.org>; Fri, 25 Nov 2022 08:01:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2U4SkLIhINik3SS5khPCONywgwcHP0YLI6vt39rLCes=;
+        b=hs2yCEpMhdCwSQ1XIKA3ocPXk4A3pBD/VNni+2EnIhoJeODvdQcnr+BCJZFJJDQwv2
+         sXRR3pvWHvoIq8eatIxekh6lGRF6/viVYxTI67OoFeppwNLFuKrO/OGyXrZu1DSsZ1+b
+         5ocXRL5wWR4AF6eVfuFzkWSL0fhJ0MFInNVyGIuy3GuGLJP3i0OnLusmE84/emyNDM3q
+         R6jAWC4HUwkJxt2paMmtdQUZOf//wdCFfVLmCCZu4oL4Olm2z/KxnoHsWUXv6Ps1+oBp
+         XFWXnLYbAWsuBP4JgVN54OfGdcM6630clA78ptEpvS5XFseBYAdANFuwlYtdSgRrefjQ
+         7QNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2U4SkLIhINik3SS5khPCONywgwcHP0YLI6vt39rLCes=;
+        b=HDll1PqggTeG84bme35YfX0NST15qFZrp6O9+qS5lExCVWjQpv6Tvt8NQQVULa0giJ
+         BRpZnsHJTzAQ/bPJ+X+DMg4zJ7wTYbD7pA42M7HEGVNXoV/9dLsO7Nrgszd+b0W2JiZR
+         eP7lbYJYpWPN4N6iEYalx+ssZBLy4/iVG+vgC3IuzsCeHGNiDxPafHQeDsLCS0DEQx1Y
+         FEiLVz0bOq3LyPta2hPhNI7P2zDz1T5uX/8+I6zrXhBuYV3hBTNdxyTc0c4NigKZFcn0
+         gn7yDq9dvH/dI/MUl5d0EM7UwUFT9Bdcu9YzZldKTzEq4hIW8viPSWxNp7Bc2yquQ3dm
+         H0DA==
+X-Gm-Message-State: ANoB5pkACWi042iqZk6iTs2SqNXlUQtanLAuBpABYlMTNw/yJQKEgZEq
+        l1LamIMdbgy6xqBj4Sgho7ug9RqVLCU18hwcz2k=
+X-Google-Smtp-Source: AA0mqf6ltX0FiMgm2TmTHIY3WjNHCpPRbG9v2PluKGo/Y2hjRB5fob7Uy7exI5TSLZtWWi3g/8c57Pqw9lH/5SeiapI=
+X-Received: by 2002:a17:90a:bd86:b0:213:8cf1:4d9d with SMTP id
+ z6-20020a17090abd8600b002138cf14d9dmr41983513pjr.5.1669392084327; Fri, 25 Nov
+ 2022 08:01:24 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: git pull --verbose with submodules ends in error message
-To:     git <git@vger.kernel.org>
-References: <FR3P281MB21416B718C4C052A28C319B1E90F9@FR3P281MB2141.DEUP281.PROD.OUTLOOK.COM>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        "Robin H. Johnson" <robbat2@gentoo.org>
-From:   Sven Strickroth <sven@cs-ware.de>
-In-Reply-To: <FR3P281MB21416B718C4C052A28C319B1E90F9@FR3P281MB2141.DEUP281.PROD.OUTLOOK.COM>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <pull.1423.v6.git.1669261642.gitgitgadget@gmail.com>
+ <pull.1423.v7.git.1669347422.gitgitgadget@gmail.com> <d8233f9617563d7c7168afc6e1abfaba57e54038.1669347422.git.gitgitgadget@gmail.com>
+ <221125.8635a7o123.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221125.8635a7o123.gmgdl@evledraar.gmail.com>
+From:   Yoichi Nakayama <yoichi.nakayama@gmail.com>
+Date:   Sat, 26 Nov 2022 01:01:12 +0900
+Message-ID: <CAF5D8-uxZOFi8p0bUMaqJCLFxipXCB9fo_Kx=QE6s=DW8Jspgg@mail.gmail.com>
+Subject: Re: [PATCH v7 3/3] git-jump: invoke emacs/emacsclient
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Yoichi Nakayama via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Fri, Nov 25, 2022 at 6:08 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+> I'd really like to have some closer and smarter emacs integration like
+> this.
+>
+> But I don't see why we need to run the grep ourselves, pipe it to a
+> temporary file, and then discover that we're using emacs, and --eval
+> code into it to switch to that buffer, and fake up a "M-x grep" command
+> with a compilation buffer to make it look like we ran M-x grep in the
+> first place.
+>
+> Let's just ... run M-x grep earlier? Then we can skip all the earlier
+> steps.
 
-the reason for the failure of the submodule command after issuing
-"git pull -v --recurse-submodules"
-is that the verbosity of the pull command is passed to the submodules. 
-Commit a56771a668dd4963675914bc5da0e1e015952dae introduced this regression.
+There are two reasons.
 
-I suppose the intention was to pass the '-q' flag to the submodule 
-command, but the issue is that also '-v' is passed which, however, is 
-not supported by the submodule command.
+First, I want to reuse the modes that git-jump already have. In
+addition to mode_grep,
+mode_{diff,merge,ws} exist, and if we re-implement each for editor
+support, I think it will be
+difficult to maintain.
 
-So, either don't pass '-v' to the submodule command or add it there...
-
-Best,
-  Sven
-
-Am 24.11.2022 um 13:47 schrieb Fink, Mike:
-> Dear Sir or Madam,
-> 
-> 
-> Bug Description
-> ===============
-> 
-> when doing a git pull on a repository with submodules, the --verbose option causes an error message like:
-> usage: git submodule [--quiet] [--cached]
->     or: git submodule [--quiet] add [-b <branch>] [-f|--force] [--name <name>] [--reference <repository>] [--] <repository> [<path>]
-> ... and so on.
-> Exit code is 1
-> 
-> This happens, when recursing the submodules. Either add to .gitconfig:
-> [submodule]
-> 	recurse = true
-> or use --recurse-submodules for the git pull command.
-> 
-> Version 2.37.3-64-bit is OK.
-> Version 2.38.1-64-bit is shows the error.
-> Reproducible on Windows and Linux
-> 
-> 
-> How to Reproduce
-> ================
-> # steps to reproduce:
-> # run the following commands in a debian:sid container,
-> # e.g. "docker container run -it debian:sid".
-> 
-> # Any other environment with git 2.38.1 should be fine, too.
-> # Git for windows 2.38.1 also shows the same behaviour.
-> 
-> # install git 2.38.1 (at the time of writing) and clone a public repo with submodules
-> $ apt update && apt install git
-> $ git clone --recurse-submodules https://gitlab.com/tortoisegit/tortoisegit.git
-> $ cd tortoisegit
-> 
-> # this one succeeds
-> $ git pull --recurse-submodules
-> 
-> # this one fails after fetching the submodules, showing
-> # the "git submodule" help text as if we had made a "git submodule"
-> # call with insufficient/wrong arguments.
-> $ git pull --recurse-submodules --verbose
-> 
-> 
-> Workaround
-> ==========
-> 1) Do not use --verbose when pulling a repository with submodules.
->     Unfortunately this workaround does not apply to our workflow,
->     since we happily use TortoiseGit as our graphical Git client on windows.
->     TortoiseGit automatically uses the option -v (--verbose).
->     $ git.exe pull --progress -v --no-rebase "origin"
-> 2) Use Version 2.37.3-64-bit.
-> 
-> 
-> Questions
-> =========
-> Any questions regarding this bug description? Happy to help.
-> 
-> 
-> Kind regards, Mike.
-
+Second, there is a difficulty passing arbitrary arguments properly to
+Emacs Lisp properly.
+For example, your version will cause error with
+        git jump grep "hello world"
+My early patch was doing something similar. But the second problem was
+hard to deal with,
+so I switched to using a temporary file.
+--=20
+Yoichi NAKAYAMA
