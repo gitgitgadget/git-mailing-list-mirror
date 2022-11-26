@@ -2,71 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3518C43217
-	for <git@archiver.kernel.org>; Fri, 25 Nov 2022 23:54:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C10F5C43217
+	for <git@archiver.kernel.org>; Sat, 26 Nov 2022 13:28:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229898AbiKYXyk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 25 Nov 2022 18:54:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44922 "EHLO
+        id S229491AbiKZN2s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Nov 2022 08:28:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229514AbiKYXyj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 25 Nov 2022 18:54:39 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B88EF26AEB
-        for <git@vger.kernel.org>; Fri, 25 Nov 2022 15:54:37 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id x2so8243478edd.2
-        for <git@vger.kernel.org>; Fri, 25 Nov 2022 15:54:37 -0800 (PST)
+        with ESMTP id S229487AbiKZN2r (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Nov 2022 08:28:47 -0500
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F20C1B1D0
+        for <git@vger.kernel.org>; Sat, 26 Nov 2022 05:28:46 -0800 (PST)
+Received: by mail-io1-xd2f.google.com with SMTP id r81so4690012iod.2
+        for <git@vger.kernel.org>; Sat, 26 Nov 2022 05:28:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=dfyVGtw5wHAjJPeIoY+IvUxfWwMuvxnO2A8jILJoDX0=;
-        b=gDuRH/3d/3jSKhbRWxNAJ9kdEMK+/j4JuQojiD4C1UvcXv+5zM7fCKxJbdc3l8oORW
-         easKd+sZiKgcLd4lrPyvQD92YG857woeq0PUPqOBM3PMrwVZDxQOwXrYf9M8AXznGQg/
-         lsIqMoyWdK3rsujdmh/czy1ACfEruYinq0inzba5v7owlB3wuEg30SzmlbCzPVc8ztnW
-         fJ6Gtals9rNaQnasKbcWLv7Kn4nZ3pnMz8WJUzFvq/43/8TKbtZxamBlIyS2LQD/q7bk
-         dPpxfa9hk0BOy2H/ebXdegelo4h7zA0oEVNFTmEqii3kWqptnGROWPlhpy2Io7lJGsd5
-         FEkQ==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to:date
+         :subject:cc:to:from:user-agent:references:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BiQO4BtVzI+ps/Z1+QqRzlKVLu3QMrlFUizPMPwvvDw=;
+        b=OVv1O9oXCQQKhG8szHWDVZ5qlVev8qjkyJaOf88oMGwn/5FrXZJMhaMmOBTsPjUTMe
+         EXvcKd5NVWJMYiwQkZQ6dgMKKKX+aA3EGec4QyVApO9SYi3ctRZN5IjbEAYmMU1l0tx8
+         qX2ppRYGky/XxGN7/EJbU0GDOk9rzM7H2MrtKZEkaBNOeiccGffoREJdhYi2yiYzuq6x
+         EwMcULdvC7jYC3EtHo7vJU7tX+5eSDoDm7m9OcDp+WjPrUi+iZuI9Ty3Xh2IYVSNMwmn
+         9fkzaTDyYhr0czae34CdxHOl79dj5V9WR2bclW2/4sNo98z9FsK5ZeUGXChtjxtdssu7
+         g3fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dfyVGtw5wHAjJPeIoY+IvUxfWwMuvxnO2A8jILJoDX0=;
-        b=0R1cdRVjwWQmansDPNL/zS2pAID1E83/WOoIOmhx6nidPDhhqqXL68DpdxSSNnUY6F
-         TwztiYpDMDHxu84yGc+gX4wiBcue8aI0EDDnVnN8S833zMqn/xiKciC1bY+Yt01NQGjK
-         nAwYTOZaz9IoY6EUYDFdLVH0sB9oKnGFfIbQfhlL2LjNLGz9Ta4QrAvI+8ZXGKbkBBHK
-         8/Q6d8CDJvEH1MIeWlRtzz6KmyvfID8MLRFNqZFBb4Zok1x87iV4KYqFNFwu/Vqmx6D2
-         a/Y9SKNcmeEwapu9318lc+uxz1Wo86zmYMb44OY4edc/IR0mzMxPQ7wm3AtdinV8V3Fp
-         ttxw==
-X-Gm-Message-State: ANoB5pm6RUwKr83vo8BfFxL0LOL+lyjscQQmJ3Zi2feBbbbXmiPVedFL
-        JAm3Kg71cqZX2H84ubeB5xZsO7PIKdgbWgej
-X-Google-Smtp-Source: AA0mqf6cBiH4j6KOk6dw4Wx73acILD0eqTbHLkmcs8KnShpt0wOxQtAH4ee4nk817oY1QI6h1cS1/g==
-X-Received: by 2002:aa7:c04f:0:b0:45c:f13b:4b96 with SMTP id k15-20020aa7c04f000000b0045cf13b4b96mr3159911edo.129.1669420476186;
-        Fri, 25 Nov 2022 15:54:36 -0800 (PST)
-Received: from gmgdl ([213.143.127.178])
-        by smtp.gmail.com with ESMTPSA id y41-20020a50bb2c000000b0045bd257b307sm2336261ede.22.2022.11.25.15.54.35
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to:date
+         :subject:cc:to:from:user-agent:references:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=BiQO4BtVzI+ps/Z1+QqRzlKVLu3QMrlFUizPMPwvvDw=;
+        b=c9YMHArUz9NA54J3Is+6vcM14SRs285L7oSVA8IRKV84oN/qbcNQtJRJoW02CgDMIr
+         Y1YDHSH134ef+E2dKJDmOnmm7EpxSvqWppN73BykhDNgXZ67gEsLhwAjuGyDdYwzW3ar
+         U0y3pTGnYKMut5yGgCkzXcXbRfMD+QTvRuJShxaI+NvCXMbXM/REDOLh+d9jaWV4trmK
+         tILzMrDwpnii0LGSauqEJNsrfkI0cc6SbrRyKDhX5t2mHtw/gW+o4moaLLUn8YXQR8jK
+         1WXl2kZLGDmmCbqqnMRo3sl8GYXBaatSN7xu09XT7IVw7Tt+72JDZ4VssnwpvJSdD9Ri
+         n7Mw==
+X-Gm-Message-State: ANoB5pkoNgjqHs/0MLG4d/GqzFNRyuoMcBKlTjCFyp7AansQ5DrAVQYd
+        Nf27hwrPll7g5IlEgwkIOpo=
+X-Google-Smtp-Source: AA0mqf4qP81yLin46gdo/vINxa5trTqE6MhRg8F0PcGWhERCMoj17iy4i/mdoG1mZfM/mUe2BvKXOA==
+X-Received: by 2002:a5d:97c9:0:b0:6a2:e3df:a40e with SMTP id k9-20020a5d97c9000000b006a2e3dfa40emr19544521ios.113.1669469325983;
+        Sat, 26 Nov 2022 05:28:45 -0800 (PST)
+Received: from stargate ([2620:72:0:a40:5b60:5fdc:536b:b9e4])
+        by smtp.gmail.com with ESMTPSA id f14-20020a056638112e00b00389b36027a6sm1374200jar.92.2022.11.26.05.28.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Nov 2022 15:54:35 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1oyiWh-000ddU-16;
-        Sat, 26 Nov 2022 00:54:35 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Yoichi Nakayama <yoichi.nakayama@gmail.com>
-Cc:     Yoichi Nakayama via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH v7 3/3] git-jump: invoke emacs/emacsclient
-Date:   Sat, 26 Nov 2022 00:52:50 +0100
-References: <pull.1423.v6.git.1669261642.gitgitgadget@gmail.com>
- <pull.1423.v7.git.1669347422.gitgitgadget@gmail.com>
- <d8233f9617563d7c7168afc6e1abfaba57e54038.1669347422.git.gitgitgadget@gmail.com>
- <221125.8635a7o123.gmgdl@evledraar.gmail.com>
- <CAF5D8-uxZOFi8p0bUMaqJCLFxipXCB9fo_Kx=QE6s=DW8Jspgg@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <CAF5D8-uxZOFi8p0bUMaqJCLFxipXCB9fo_Kx=QE6s=DW8Jspgg@mail.gmail.com>
-Message-ID: <221126.86h6ymmvyc.gmgdl@evledraar.gmail.com>
+        Sat, 26 Nov 2022 05:28:45 -0800 (PST)
+References: <pull.1434.git.1669321369.gitgitgadget@gmail.com>
+ <pull.1434.v2.git.1669395151.gitgitgadget@gmail.com>
+ <a7ff842a3e8d30cad7f18427bc812f542b998efc.1669395151.git.gitgitgadget@gmail.com>
+ <221125.86tu2mmz1e.gmgdl@evledraar.gmail.com>
+User-agent: mu4e 1.9.0; emacs 28.1
+From:   Sean Allred <allred.sean@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Sean Allred via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Sean Allred <code@seanallred.com>
+Subject: Re: [PATCH v2 1/2] var: do not print usage() with a correct invocation
+Date:   Sat, 26 Nov 2022 07:19:35 -0600
+In-reply-to: <221125.86tu2mmz1e.gmgdl@evledraar.gmail.com>
+Message-ID: <87k03hsv3n.fsf@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -75,43 +70,44 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sat, Nov 26 2022, Yoichi Nakayama wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> I honestly don't still don't grok what was different here before/after,
+> whatever we are now/should be doing here, a test as part of this change
+> asserting the new behavior would be really useful.
 
-> On Fri, Nov 25, 2022 at 6:08 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
->> I'd really like to have some closer and smarter emacs integration like
->> this.
->>
->> But I don't see why we need to run the grep ourselves, pipe it to a
->> temporary file, and then discover that we're using emacs, and --eval
->> code into it to switch to that buffer, and fake up a "M-x grep" command
->> with a compilation buffer to make it look like we ran M-x grep in the
->> first place.
->>
->> Let's just ... run M-x grep earlier? Then we can skip all the earlier
->> steps.
+Sadly I don't think there are any logical variables that could be tested
+for this behavior until the second patch in the series (where quite a
+few tests are added). I did some brief testing with GIT_COMMITTER_IDENT
+as the most obvious candidate, but it will still die early if
+GIT_COMMITTER_NAME is unset, so it's not a good test case.
+
+If you've got a test case that'll work before the second patch, I'd be
+happy to include it here.
+
+>>  {
+>> +	const struct git_var *git_var =3D NULL;
 >
-> There are two reasons.
+> This assignment to "NULL" can be dropped, i.e....
 >
-> First, I want to reuse the modes that git-jump already have. In
-> addition to mode_grep,
-> mode_{diff,merge,ws} exist, and if we re-implement each for editor
-> support, I think it will be
-> difficult to maintain.
+>>  	const char *val =3D NULL;
+>>  	if (argc !=3D 2)
+>>  		usage(var_usage);
+>> @@ -91,10 +89,15 @@ int cmd_var(int argc, const char **argv, const char =
+*prefix)
+>>  		return 0;
+>>  	}
+>>  	git_config(git_default_config, NULL);
+>> -	val =3D read_var(argv[1]);
+>> -	if (!val)
+>> +
+>> +	git_var =3D get_git_var(argv[1]);
+>
+> ...we first assign to it here, and if we use it uninit'd before the
+> compiler will tell us.
 
-Yeah, maybe that'll be painful. I haven't poked much at it...
+Nice catch! I've removed the premature assignment to both `git_var` and
+`val`. I've updated my branch with this change; I'll send out a v3 later
+today.
 
-> Second, there is a difficulty passing arbitrary arguments properly to
-> Emacs Lisp properly.
-> For example, your version will cause error with
->         git jump grep "hello world"
-> My early patch was doing something similar. But the second problem was
-> hard to deal with,
-> so I switched to using a temporary file.
-
-To the extent that that's painful couldn't we write the grep expression
-/ arguments to the tempfile, then feed the tempfile to the ad-hoc elisp
-code?
-
-It would then read it, get the argument to grep for, and we'd call (grep
-that-argument).
+--
+Sean Allred
