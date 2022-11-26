@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38871C46467
-	for <git@archiver.kernel.org>; Sat, 26 Nov 2022 14:18:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46331C4321E
+	for <git@archiver.kernel.org>; Sat, 26 Nov 2022 14:18:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229680AbiKZOSN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Nov 2022 09:18:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60622 "EHLO
+        id S229640AbiKZOSR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Nov 2022 09:18:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229607AbiKZOSH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Nov 2022 09:18:07 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 140812035E
+        with ESMTP id S229621AbiKZOSJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Nov 2022 09:18:09 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 143162018A
+        for <git@vger.kernel.org>; Sat, 26 Nov 2022 06:18:02 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id h11so3177811wrw.13
         for <git@vger.kernel.org>; Sat, 26 Nov 2022 06:18:01 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id m7-20020a05600c090700b003cf8a105d9eso5299285wmp.5
-        for <git@vger.kernel.org>; Sat, 26 Nov 2022 06:18:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=m/qOVLeuDoqh1lbPOmbnTlzvzkhEMmLJS0FfumeNAyQ=;
-        b=XXuVLiK/SVVUQlBuWgooHfQbJ7mA0bPsWJDAxbKzEci5uXu57srde7c/7/S5uCZFoR
-         JRmLbUpj127r0MyTAJPBVNjnov8cUjsdh+9wkeO6SsRuq59pi12Ippk0gr3K9XCgnTf/
-         2jCQ+OpSb9ORirY99MhzZj+LwK9PsziYMxqa9wQQRkKcwZIy1Us8SSKlimb2ZB+9KGC7
-         PCqL81SuFO+uuCcvWa4nIZqQkaeaA9oqWgHvStABc0z+a7I4JvNEg6Mbo6aZo3cj7Z+l
-         54L85NHXpKNdpOBpk8EzU/rhWspXtclJ71sZ5cEEMHR6i23s3L9uk8Bp2p3NWjeaWTTD
-         xMUg==
+        bh=oRd1ZryOj8z1WOgE+0YVHKmZ9EImRYyLeSbEzNpQk5o=;
+        b=qaj5UhmZ6Jtt1laIdqaq9ClMe/5n/i2I6NBM4K0sXSBXVV0QShqXksz6VKYK3NE1ew
+         6BTDR69XnN1V7URpO4/KjtAuEaFp56N5fNexJmcg2mKOSXxD1UoF5nS54YQGK5Ebr7Xf
+         QwTTetm9f7CYGhlOlgtvl4fl4IxmN+J5CEVvtOrjns+2QgSXE7G5A38Bi7lm1wmRL+9t
+         e5VYGp6ctFURIS+zwybLoRFG0/D8UopTZOpzBFUoGf83KormXI99wFiQLs89Danu+1cD
+         Inu2S4L7bX0t87apvS18Da0taNiC77Xfwv6M6S5PK6hRgqBCp/QC9aWpg8ONOyAmFT3d
+         nCsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=m/qOVLeuDoqh1lbPOmbnTlzvzkhEMmLJS0FfumeNAyQ=;
-        b=EG/q4BPPX2kyAI82g+GD1V6YAfc5XIGSN0Zv86vF7u2F9UvJTnPmwb9pfYAIUGywO3
-         8nSNhZWKDaXhkLnxgZiim6B2My6dYGBSSpIenTxtSc3GB9+F4EURKpJqHiTh6n4NPi9D
-         D2FYq9CZcWCs/W5RzXq65uj/h8sTlXD0re0uEA7wdhcaAUpBeuxLOK0ID+Av8BaHcuYM
-         Nrd55frD7NsKKYVMkAAyBmkf2m/rwPITsbt2eSmKk/HpO+OQFTQOCM86DAtfK99TVYFi
-         Uy6iJWnl3ZciGQywg+YNKjtBDlPrsq1lShSRLPImTr1W6Xo27T1nNRtfUCxDXDoNOgA+
-         O9Bg==
-X-Gm-Message-State: ANoB5pkGpgSvpxCkBeODh76zDKTKamgGx45EnL/jXJ634BzAMwaMJaau
-        9x61qipd5KtmpYe/7LeDJpPgv5CRGB8=
-X-Google-Smtp-Source: AA0mqf4qiMVQpljH/UH9IEopl8bkO/JAU35PtVcRMbQQm/cyWZH+LZ+5NodZBRJwXdnsRdmk/z2+Lg==
-X-Received: by 2002:a05:600c:511c:b0:3cf:6c05:809e with SMTP id o28-20020a05600c511c00b003cf6c05809emr19211213wms.74.1669472279468;
-        Sat, 26 Nov 2022 06:17:59 -0800 (PST)
+        bh=oRd1ZryOj8z1WOgE+0YVHKmZ9EImRYyLeSbEzNpQk5o=;
+        b=aT8akLDTnNtUUubpqQaGN1564R868AEw/6R6xceeu7uyX4oF7Zg/Mx694V0XCICcAg
+         ykFwOp46jS7+9TZC2KrcFKbqjPfiuNyjLegziVRHf77uncDYcVNG5H3BncYFQ/eoglgY
+         gdoBvGbZNG0PyikVBloSYZkP3T08nJ9Z02erXs8Cf4Jo5j2LD/Rh7/ZnvOMbdk07xnYL
+         rXEFdh3l4Y/9ZzanL+4jttxLSKlVu1QOAElekKAiRHsD4dmsX/WGP7ZyTDVOxSV7HV30
+         WZ/CxCAmsW1fCd7d0sj6leNY005yPpsBT4NinJJVb04XgvdWduLSYElTeWR2EEepdjtb
+         IumQ==
+X-Gm-Message-State: ANoB5pmZjdp/U6QCqXHEqiwNwc8FpLEq5hHeQDAjtagXfK3CkYKX5P6A
+        /MJYFDWqwgb5M0NdkuXy6oOCaJo5DgA=
+X-Google-Smtp-Source: AA0mqf7ok2VffVPjils4QVvT/0ysIA019bzjGtcoBkJcCFxIfiJtBqtPDb1aKFjBp6LNHBZgQcOFJA==
+X-Received: by 2002:a05:6000:1046:b0:241:fa2d:debc with SMTP id c6-20020a056000104600b00241fa2ddebcmr9161352wrx.12.1669472280354;
+        Sat, 26 Nov 2022 06:18:00 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a4-20020adffac4000000b002420a2cdc96sm2336313wrs.70.2022.11.26.06.17.58
+        by smtp.gmail.com with ESMTPSA id d5-20020a05600c3ac500b003cfe6fd7c60sm8613207wms.8.2022.11.26.06.17.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Nov 2022 06:17:58 -0800 (PST)
-Message-Id: <889fdf877a13067ece785c9c694ed17dcde19b32.1669472277.git.gitgitgadget@gmail.com>
+        Sat, 26 Nov 2022 06:17:59 -0800 (PST)
+Message-Id: <3d8bf3662fe92e61805a1d9ffbccf7a17b3d1e8c.1669472277.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1434.v3.git.1669472277.gitgitgadget@gmail.com>
 References: <pull.1434.v2.git.1669395151.gitgitgadget@gmail.com>
         <pull.1434.v3.git.1669472277.gitgitgadget@gmail.com>
 From:   "Sean Allred via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 26 Nov 2022 14:17:56 +0000
-Subject: [PATCH v3 1/2] var: do not print usage() with a correct invocation
+Date:   Sat, 26 Nov 2022 14:17:57 +0000
+Subject: [PATCH v3 2/2] var: allow GIT_EDITOR to return null
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,94 +69,117 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Sean Allred <allred.sean@gmail.com>
 
-Before, git-var could print usage() even if the command was invoked
-correctly with a variable defined in git_vars -- provided that its
-read() function returned NULL.
+The handling to die early when there is no EDITOR is valuable when
+used in normal code (i.e., editor.c). In git-var, where
+null/empty-string is a perfectly valid value to return, it doesn't
+make as much sense.
 
-Now, we only print usage() only if it was called with a logical
-variable that wasn't defined -- regardless of read().
-
-Since we now know the variable is valid when we call read_var(), we
-can avoid printing usage() here (and exiting with code 129) and
-instead exit quietly with code 1. While exiting with a different code
-can be a breaking change, it's far better than changing the exit
-status more generally from 'failure' to 'success'.
+Remove this handling from `git var GIT_EDITOR` so that it does not
+fail so noisily when there is no defined editor.
 
 Signed-off-by: Sean Allred <allred.sean@gmail.com>
 ---
- Documentation/git-var.txt |  3 ++-
- builtin/var.c             | 22 +++++++++++++---------
- 2 files changed, 15 insertions(+), 10 deletions(-)
+ builtin/var.c      |  7 +-----
+ t/t0007-git-var.sh | 62 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 63 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-var.txt b/Documentation/git-var.txt
-index 6aa521fab23..0ab5bfa7d72 100644
---- a/Documentation/git-var.txt
-+++ b/Documentation/git-var.txt
-@@ -13,7 +13,8 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--Prints a Git logical variable.
-+Prints a Git logical variable. Exits with code 1 if the variable has
-+no value.
- 
- OPTIONS
- -------
 diff --git a/builtin/var.c b/builtin/var.c
-index 491db274292..5cbe32ec890 100644
+index 5cbe32ec890..a1a2522126f 100644
 --- a/builtin/var.c
 +++ b/builtin/var.c
-@@ -56,18 +56,15 @@ static void list_vars(void)
- 			printf("%s=%s\n", ptr->name, val);
+@@ -11,12 +11,7 @@ static const char var_usage[] = "git var (-l | <variable>)";
+ 
+ static const char *editor(int flag)
+ {
+-	const char *pgm = git_editor();
+-
+-	if (!pgm && flag & IDENT_STRICT)
+-		die("Terminal is dumb, but EDITOR unset");
+-
+-	return pgm;
++	return git_editor();
  }
  
--static const char *read_var(const char *var)
-+static const struct git_var *get_git_var(const char *var)
- {
- 	struct git_var *ptr;
--	const char *val;
--	val = NULL;
- 	for (ptr = git_vars; ptr->read; ptr++) {
- 		if (strcmp(var, ptr->name) == 0) {
--			val = ptr->read(IDENT_STRICT);
--			break;
-+			return ptr;
- 		}
- 	}
--	return val;
-+	return NULL;
- }
+ static const char *pager(int flag)
+diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
+index e56f4b9ac59..433d242897c 100755
+--- a/t/t0007-git-var.sh
++++ b/t/t0007-git-var.sh
+@@ -5,6 +5,12 @@ test_description='basic sanity checks for git var'
+ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
  
- static int show_config(const char *var, const char *value, void *cb)
-@@ -81,7 +78,9 @@ static int show_config(const char *var, const char *value, void *cb)
- 
- int cmd_var(int argc, const char **argv, const char *prefix)
- {
--	const char *val = NULL;
-+	const struct git_var *git_var;
-+	const char *val;
++sane_unset_all_editors () {
++	sane_unset GIT_EDITOR &&
++	sane_unset VISUAL &&
++	sane_unset EDITOR
++}
 +
- 	if (argc != 2)
- 		usage(var_usage);
+ test_expect_success 'get GIT_AUTHOR_IDENT' '
+ 	test_tick &&
+ 	echo "$GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL> $GIT_AUTHOR_DATE" >expect &&
+@@ -47,6 +53,62 @@ test_expect_success 'get GIT_DEFAULT_BRANCH with configuration' '
+ 	)
+ '
  
-@@ -91,10 +90,15 @@ int cmd_var(int argc, const char **argv, const char *prefix)
- 		return 0;
- 	}
- 	git_config(git_default_config, NULL);
--	val = read_var(argv[1]);
--	if (!val)
++test_expect_success 'get GIT_EDITOR without configuration' '
++	(
++		sane_unset_all_editors &&
++		test_expect_code 1 git var GIT_EDITOR >out &&
++		test_must_be_empty out
++	)
++'
 +
-+	git_var = get_git_var(argv[1]);
-+	if (!git_var)
- 		usage(var_usage);
- 
-+	val = git_var->read(IDENT_STRICT);
-+	if (!val)
-+		return 1;
++test_expect_success 'get GIT_EDITOR with configuration' '
++	test_config core.editor foo &&
++	(
++		sane_unset_all_editors &&
++		echo foo >expect &&
++		git var GIT_EDITOR >actual &&
++		test_cmp expect actual
++	)
++'
 +
- 	printf("%s\n", val);
- 
- 	return 0;
++test_expect_success 'get GIT_EDITOR with environment variable GIT_EDITOR' '
++	(
++		sane_unset_all_editors &&
++		echo bar >expect &&
++		GIT_EDITOR=bar git var GIT_EDITOR >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'get GIT_EDITOR with environment variable EDITOR' '
++	(
++		sane_unset_all_editors &&
++		echo bar >expect &&
++		EDITOR=bar git var GIT_EDITOR >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'get GIT_EDITOR with configuration and environment variable GIT_EDITOR' '
++	test_config core.editor foo &&
++	(
++		sane_unset_all_editors &&
++		echo bar >expect &&
++		GIT_EDITOR=bar git var GIT_EDITOR >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'get GIT_EDITOR with configuration and environment variable EDITOR' '
++	test_config core.editor foo &&
++	(
++		sane_unset_all_editors &&
++		echo foo >expect &&
++		EDITOR=bar git var GIT_EDITOR >actual &&
++		test_cmp expect actual
++	)
++'
++
+ # For git var -l, we check only a representative variable;
+ # testing the whole output would make our test too brittle with
+ # respect to unrelated changes in the test suite's environment.
 -- 
 gitgitgadget
-
