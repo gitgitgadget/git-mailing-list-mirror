@@ -2,80 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 804FBC4321E
-	for <git@archiver.kernel.org>; Sun, 27 Nov 2022 00:37:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B681C4321E
+	for <git@archiver.kernel.org>; Sun, 27 Nov 2022 01:19:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229633AbiK0AhV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Nov 2022 19:37:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48524 "EHLO
+        id S229534AbiK0BS6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Nov 2022 20:18:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbiK0AhU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Nov 2022 19:37:20 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2E96BC2A
-        for <git@vger.kernel.org>; Sat, 26 Nov 2022 16:37:19 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id e7-20020a17090a77c700b00216928a3917so10741670pjs.4
-        for <git@vger.kernel.org>; Sat, 26 Nov 2022 16:37:19 -0800 (PST)
+        with ESMTP id S229487AbiK0BS5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Nov 2022 20:18:57 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 658FA13F80
+        for <git@vger.kernel.org>; Sat, 26 Nov 2022 17:18:56 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id b12so11729496wrn.2
+        for <git@vger.kernel.org>; Sat, 26 Nov 2022 17:18:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=K2CvtBDYp1WD5LEquT6TFmL66OCYYg8mb7D6DTdxFC0=;
-        b=fLZ5gnLcPZgk9m+pIw0ejkYoacG6ZnxLAFbvlpkZodzjauF6jwhp2QVRWobqQvQk/0
-         kn91cCKZY/gu1DpFhRs9tvhRP3qL2DJ8bRxreQmRsC1tpk3+TLK8WL1AQatdoVPIWWdp
-         XMF6nBmMdroo3kmQwi1quq+cyUBNKcd6JmHaSwvwAa0w2CeqOhisIyRwjOPh+5vhYe5e
-         kjR5SYuVBYkTf78FIQhdVHXEmqrd2qn9JqroAcrOm3v1sk1ITyxLDF9PZNoOFl225Vb8
-         m3IkW68DQn0kIWFSfaLXIlfWSx+zBbXvfD1OAL0jVqflSIuGulYh4NJmJWvKFepiDGTv
-         kcfw==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kANyRaHit6OCQ9QbD5Oas1SseNgvvqhPKEr8gF/avZA=;
+        b=L4epgvJ2XNyJNblltIt0oneo/7vfQt2mPOidvLPrZm45ttdbWgx9f1GEDjMPfGrF9r
+         VFzVMFLH7IZtomPMNV5o3CdSqMh+zW5EWssLd37EKNs5GIYUg6rVufN2FHucY5P/7zXR
+         ps4jzi+kr4TTW4LSnyj9NdNh9zZYRAQp+hWhxeDwi3Cw2NcYvIDPG3RJhHieLZiijAS4
+         aWB8TEMIU0axkmtbWqv7pBSgGzNyc35ZL9oezH5AXsGp26JMguLTAnaFx/FrsP4rGWDX
+         9LRwN1q3goWxzorihIVEdwhkJ8UapeoVqjmF0uzBu2Mmi+g7Pm0Bj+PK6+PYKcrwkyUJ
+         N8IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=K2CvtBDYp1WD5LEquT6TFmL66OCYYg8mb7D6DTdxFC0=;
-        b=WUp7xc1glmIKWHT4wTHrkClxuThYsiuJqGNTG6uYY7aFAR3UcH3UOpwsyaCpEPdUzV
-         NAhOBy2jJDSy/WrZHYgy2HZzSW+YDOgAAzlJv+fmoghJbjUNn6ximounIleXkywDGAo+
-         qfs2QBfLYnfbWYF0NyJ05oaExgaRbJnWQZNZsrLuaNNWo0an6t3OJ2hFKLV4eA8zHwdg
-         oHoSm8c3LUz3YT+hHo43vnhMUSgf33yfJKYoLn9Z0sFitNHtGgK/6VlEc4zf8D15nCMb
-         EHE0Pmzbk2H+0eOvsv6Q8bK+CSQOO7SPCHjuLPgU4iS1r2+yUASJuBnvlf+fdeq1QZG/
-         AX8A==
-X-Gm-Message-State: ANoB5pnud6g+IL4KCo17LD4ioLhjFFYKoIFNeI3oxcBtA9GSNui5Ri8q
-        zcD+b9uLvrh5RXf/icQ0qrvcjiXi002OblHmeqM/t1MA++8=
-X-Google-Smtp-Source: AA0mqf6r6xiJQngwX1Ika2REI9aQckZYEuEqVCZ786MywCEwT1P6/eCJRIPKdTaKZXMJG/zKZRZw6MV2XIlthtIAEsE=
-X-Received: by 2002:a17:902:e54f:b0:189:6a7f:3046 with SMTP id
- n15-20020a170902e54f00b001896a7f3046mr8630054plf.88.1669509439399; Sat, 26
- Nov 2022 16:37:19 -0800 (PST)
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kANyRaHit6OCQ9QbD5Oas1SseNgvvqhPKEr8gF/avZA=;
+        b=4V5PUTnAhFBodEE80XH5YX5q260FxRUPMGrSUes08kfJsC1aoWWiQ1NcjQpFkGTmGS
+         lMIYlCVsDAIh2xGZeSvWV1F1Fzd3SsWoTRfYfERCkNhXDPqmdzFSrkARvAuX9eUoMVGV
+         Ef/FPhxe2jJMnMxc5QF2jL8P3Xl83oPnulXeJTlSUz0qRsTkz/qBpIaQEcBBlDAXikCJ
+         1PD1EKiIluwMjabHNCBe1LhEyWxqVvSgksOxnyq2Mc6ATEN0djDSXKo3uJM4/F+WScpq
+         h9n34HAh+y7huEB9UdXffKUD6ISmJyqCI2OIbeDsMbTibEY8qI9bg4VyPPkwoiAf9n2q
+         NFaQ==
+X-Gm-Message-State: ANoB5pkWG9tK7/hGMyJlvxP1qL95CDCvpb8+jtR4cocoX3NuNqIaO/vv
+        w0f3NtHxK6BRvPvffUypgoZRSc+Yaxo=
+X-Google-Smtp-Source: AA0mqf57fq6oDFoeT0OedtRUffejVA0+qLgr8JsY5wb7Hh3Fyxx5v3yg5y8ONZkbhCZwXU7Dz9lBUA==
+X-Received: by 2002:a05:6000:71e:b0:241:df3f:f5d6 with SMTP id bs30-20020a056000071e00b00241df3ff5d6mr16299016wrb.288.1669511934697;
+        Sat, 26 Nov 2022 17:18:54 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p16-20020a05600c1d9000b003b3307fb98fsm10117846wms.24.2022.11.26.17.18.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 26 Nov 2022 17:18:54 -0800 (PST)
+Message-Id: <pull.1423.v8.git.1669511933.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1423.v7.git.1669347422.gitgitgadget@gmail.com>
+References: <pull.1423.v7.git.1669347422.gitgitgadget@gmail.com>
+From:   "Yoichi NAKAYAMA via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 27 Nov 2022 01:18:50 +0000
+Subject: [PATCH v8 0/3] git-jump: support Emacs
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1423.v6.git.1669261642.gitgitgadget@gmail.com>
- <pull.1423.v7.git.1669347422.gitgitgadget@gmail.com> <d8233f9617563d7c7168afc6e1abfaba57e54038.1669347422.git.gitgitgadget@gmail.com>
- <221125.8635a7o123.gmgdl@evledraar.gmail.com> <CAF5D8-uxZOFi8p0bUMaqJCLFxipXCB9fo_Kx=QE6s=DW8Jspgg@mail.gmail.com>
-In-Reply-To: <CAF5D8-uxZOFi8p0bUMaqJCLFxipXCB9fo_Kx=QE6s=DW8Jspgg@mail.gmail.com>
-From:   Yoichi Nakayama <yoichi.nakayama@gmail.com>
-Date:   Sun, 27 Nov 2022 09:37:08 +0900
-Message-ID: <CAF5D8-s=6eJSXZbVwebbVcqtzVG1vLGopq7_2HT7rSjDbbJ6aQ@mail.gmail.com>
-Subject: Re: [PATCH v7 3/3] git-jump: invoke emacs/emacsclient
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Yoichi Nakayama via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 26, 2022 at 1:01 AM Yoichi Nakayama
-<yoichi.nakayama@gmail.com> wrote:
-> Second, there is a difficulty passing arbitrary arguments properly to
-> Emacs Lisp properly.
-> For example, your version will cause error with
->         git jump grep "hello world"
-> My early patch was doing something similar. But the second problem was
-> hard to deal with,
-> so I switched to using a temporary file.
+Add an optional argument 'stdout' to print the quickfix lines to standard
+output. It can be used with M-x grep on Emacs.
 
-But even in that case it was fine to use the original grep function
-defined in grep.el.
-I'll fix it in v8.
+Detect emacsclient by GIT_EDITOR and invoke the function. Tested with
+EDITOR="emacsclient" and EDITOR="emacsclient -t".
+
+Jeff King (1):
+  git-jump: move valid-mode check earlier
+
+Yoichi Nakayama (2):
+  git-jump: add an optional argument '--stdout'
+  git-jump: invoke emacs/emacsclient
+
+ contrib/git-jump/README   | 10 ++++++++-
+ contrib/git-jump/git-jump | 45 ++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 51 insertions(+), 4 deletions(-)
 
 
---
-Yoichi NAKAYAMA
+base-commit: eea7033409a0ed713c78437fc76486983d211e25
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1423%2Fyoichi%2Fgit-jump-emacs-support-v8
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1423/yoichi/git-jump-emacs-support-v8
+Pull-Request: https://github.com/gitgitgadget/git/pull/1423
+
+Range-diff vs v7:
+
+ 1:  446777d300d ! 1:  afface9b010 git-jump: add an optional argument '--stdout'
+     @@ contrib/git-jump/git-jump: mode_ws() {
+      +	case "$1" in
+      +	--stdout)
+      +		use_stdout=t
+     -+		shift
+      +		;;
+      +	--*)
+      +		usage >&2
+     @@ contrib/git-jump/git-jump: mode_ws() {
+      +		break
+      +		;;
+      +	esac
+     ++	shift
+      +done
+       if test $# -lt 1; then
+       	usage >&2
+ 2:  972d51888ba = 2:  e9aa6fdf836 git-jump: move valid-mode check earlier
+ 3:  d8233f96175 ! 3:  048f508ca99 git-jump: invoke emacs/emacsclient
+     @@ contrib/git-jump/git-jump: EOF
+      +		#
+      +		# Wait for completion of the asynchronously executed process
+      +		# to avoid race conditions in case of "emacsclient".
+     -+		eval "$editor --eval \"(let ((buf (compilation-start \\\"cat \$1\\\" 'grep-mode))) (pop-to-buffer buf) (select-frame-set-input-focus (selected-frame)) (while (get-buffer-process buf) (sleep-for 0.1)))\""
+     ++		eval "$editor --eval \"(let ((buf (grep \\\"cat \$1\\\"))) (pop-to-buffer buf) (select-frame-set-input-focus (selected-frame)) (while (get-buffer-process buf) (sleep-for 0.1)))\""
+      +		;;
+      +	*)
+      +		# assume anything else is vi-compatible
+
+-- 
+gitgitgadget
