@@ -2,87 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BE44C4332F
-	for <git@archiver.kernel.org>; Sun, 27 Nov 2022 04:34:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00F49C4321E
+	for <git@archiver.kernel.org>; Sun, 27 Nov 2022 09:01:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229616AbiK0Eeq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Nov 2022 23:34:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52262 "EHLO
+        id S229554AbiK0JBT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 27 Nov 2022 04:01:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbiK0Eeo (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Nov 2022 23:34:44 -0500
-X-Greylist: delayed 251 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 26 Nov 2022 20:34:43 PST
-Received: from pb-smtp1.pobox.com (pb-smtp1.pobox.com [64.147.108.70])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AADC9DEF2
-        for <git@vger.kernel.org>; Sat, 26 Nov 2022 20:34:43 -0800 (PST)
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id ED30A16AD32;
-        Sat, 26 Nov 2022 23:30:29 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=pobox.com; h=date:from
-        :to:cc:subject:message-id:references:mime-version:content-type
-        :in-reply-to:content-transfer-encoding; s=sasl; bh=aQwg9YeID60SC
-        9rBeRu11CUvvIKRlqE6Aaffgsc2X8E=; b=C1bXWwW07v1r5pdmvYBXOb0y4BevD
-        wWaLY/WArY1o78b3Jfpj0mNeG4KMa8KzlCSjQ4VZ3jjg18ECB1b9bMHkeqTXwNSE
-        KXQyTNclAZaqiTGP1CeWLwX2fwtFKfkBcDYa4Byk/w5tKvAai/crXlgTccKn3XJf
-        8dssdcOtb8urGQ=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id E386516AD30;
-        Sat, 26 Nov 2022 23:30:29 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-Received: from pobox.com (unknown [108.15.224.39])
-        (using TLSv1.2 with cipher AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 6187016AD2F;
-        Sat, 26 Nov 2022 23:30:29 -0500 (EST)
-        (envelope-from tmz@pobox.com)
-Date:   Sat, 26 Nov 2022 23:30:27 -0500
-From:   Todd Zullinger <tmz@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Fangyi Zhou <me@fangyi.io>,
-        =?iso-8859-1?Q?Jean-No=EBl?= Avila <jn.avila@free.fr>
-Subject: Re: [PATCH] i18n: fix command template placeholder format
-Message-ID: <Y4Ln43f6iP1b6EHo@pobox.com>
-References: <pull.1435.git.1669483442230.gitgitgadget@gmail.com>
- <xmqqr0xp9of5.fsf@gitster.g>
+        with ESMTP id S229536AbiK0JBR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 27 Nov 2022 04:01:17 -0500
+Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D060F9FC2
+        for <git@vger.kernel.org>; Sun, 27 Nov 2022 01:01:16 -0800 (PST)
+Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-1432a5f6468so9822515fac.12
+        for <git@vger.kernel.org>; Sun, 27 Nov 2022 01:01:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ogBW0faOXrCwqajIXVbeyiSe3IT8DEeQP6u5d6Ij5+8=;
+        b=RYm5mmnF8WvRzAq61J1/11sJKSf0omZxN+MOoXJE83QxRuQWkfCjWG1hr0toAN9dXc
+         0NVuFD88sHC0cOBI4jWaPJP5se4lrKuWiwFBonekWXxSL3zAHx108qlOmUJ1gCBXJd5v
+         34ip+OJb84sFp588R+6mbTXHVwDquJGsVnZ87lyrANp2ayQrEYeTYnHEj4U3hwh4nXca
+         H1bRhwhR9cuJp517UzT9VAj5OeJA22A3zpHD7KxSmeViM6eSj34bsIFBstx7Xae92fvQ
+         NjzCCe9KdKH3/jQUjuEOa1g54UMdUncWVwaFNLHKjvH39hzTpMu3fzpQMm0UPJN3bW6g
+         o4wA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ogBW0faOXrCwqajIXVbeyiSe3IT8DEeQP6u5d6Ij5+8=;
+        b=lp9Q6Ee6HORzVYlEyOUSfp58jKBqNkhRfrTTS/GciZXb/xI+T7nzCaY54QlJb1wsaa
+         MeaFWlsk7bSAKb3AfNyG0fC1RmVsrgHbJSTfMVsrhmg9G/CMpTl8N3G02e1z6/I/IPVk
+         nJ10fYZ9+LjpvDTU3Pz1T8+QDRM/Y4+crhFuQBtEakt8dW6bltSj/nUi4hPbAA3MxL1u
+         qCNdJV1rIZfErS/YKLzo5ew0hLrbiZB7VwfPUP3d/bGA218W91m/78zymeUARzKgMi3z
+         PzqmfnW3vv7tQyj59ZNO5DRWWPnLkOJj/BSVKu3cReiReDoT4PGtJsX+mxakbSNoyilU
+         4H5Q==
+X-Gm-Message-State: ANoB5pmvauL0fEvkrsQzM7JuGZLuS5ir5TYQkSLYjlu5GjtsaH/gHvfc
+        /TpPGN+1pHWQhxwDZfDorfME0Lq5096uJWYajywMIsZjO+o=
+X-Google-Smtp-Source: AA0mqf7b+tsQMNzSY6p2Vmv8S2COQEJ+Or/TXaZpc7WlwAyAQ7PA03tEpE4Qg0dOjSZ5BQh82GEoeKNloQBA8cuKv5A=
+X-Received: by 2002:a05:6870:aa09:b0:143:8729:ee47 with SMTP id
+ gv9-20020a056870aa0900b001438729ee47mr3607353oab.251.1669539676167; Sun, 27
+ Nov 2022 01:01:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-In-Reply-To: <xmqqr0xp9of5.fsf@gitster.g>
-X-Pobox-Relay-ID: 39141674-6E0C-11ED-BEC5-2AEEC5D8090B-09356542!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <20221124153934.12470-1-worldhello.net@gmail.com>
+ <20221125095954.4826-5-worldhello.net@gmail.com> <xmqq4julb5nk.fsf@gitster.g>
+In-Reply-To: <xmqq4julb5nk.fsf@gitster.g>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Sun, 27 Nov 2022 17:01:04 +0800
+Message-ID: <CANYiYbGmZjBzRNd9W2kws9KCnxXAvVpkGNUzRJs4LtLKW+ukmQ@mail.gmail.com>
+Subject: Re: [PATCH v4 4/4] ci: install python on ubuntu
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
-> "Jean-No=EBl Avila via GitGitGadget"  <gitgitgadget@gmail.com> writes:
->=20
->>     i18n: fix command template placeholder format
->>    =20
->>     This patch applies to the revision 2.39 rc0 during the l10n proces=
-s.
->=20
-> Thanks, will queue.
+On Sun, Nov 27, 2022 at 8:30 AM Junio C Hamano <gitster@pobox.com> wrote:
+> > Since the "ubuntu-latest" runner image has a higher version, so its safe
+> > to use "python2" or "python3" package name.
+>
+> Makes sense.  Just out of curiousity (read: not a suggestion to
+> change anything), what happens if you say "apt install python" on a
+> recent system?
 
-In case its helpful, an identical patch was sent on
-Wednesday, Subject: [PATCH] revert: add angle bracket around
-argument 'parent-number' in usage.
+In order to reproduce, I start a docker container like  this:
 
-    <pull.1386.git.git.1669241489179.gitgitgadget@gmail.com>
+    $ docker run -it --rm ubuntu:22.04 /bin/bash
 
-Its commit message notes:
+Fetch the latest apt source list, by running:
 
-    8c9e292dc0 (doc txt & -h consistency: add missing
-    options and labels, 2022-10-13) adds detailed usage line
-    for revert and cherry-pick, which both contain a flag
-    `-m` for parent number.
+    $ apt-get update
 
-    Angle brackets shall be marked around parent-number,
-    since it represents
-    an argument.
+Then install python with the following errors:
 
---=20
-Todd
+    $ apt-get install python
+    Reading package lists... Done
+    Building dependency tree... Done
+    Reading state information... Done
+    Package python is not available, but is referred to by another package.
+This may mean that the package is missing, has been obsoleted, or
+is only available from another source
+However the following packages replace it:
+  2to3 python2-minimal python2 dh-python python-is-python3
+
+E: Package 'python' has no installation candidate
+
+We can also find python package name from packages.ubuntu.com:
+
+1. form the link below, we can say Ubuntu 18.04 is the last version
+(LTS?) which has python package:
+
+    https://packages.ubuntu.com/search?keywords=python&searchon=names&suite=all&section=all
+
+2. Ubuntu 20.04 is the first version (LTS) which rename its python
+pacakge to python2 package:
+
+    https://packages.ubuntu.com/search?keywords=python2&searchon=names&suite=all&section=all
+
+> Will queue.  Thanks.
+
+Thanks.
+
+--
+Jiang Xin
