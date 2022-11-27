@@ -2,72 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94549C43217
-	for <git@archiver.kernel.org>; Sat, 26 Nov 2022 23:19:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 09AB5C43217
+	for <git@archiver.kernel.org>; Sun, 27 Nov 2022 00:24:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229487AbiKZXTw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Nov 2022 18:19:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50994 "EHLO
+        id S229633AbiK0AYT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Nov 2022 19:24:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbiKZXTv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Nov 2022 18:19:51 -0500
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 849BD12D09
-        for <git@vger.kernel.org>; Sat, 26 Nov 2022 15:19:47 -0800 (PST)
-Received: by mail-pg1-x52b.google.com with SMTP id r18so6759801pgr.12
-        for <git@vger.kernel.org>; Sat, 26 Nov 2022 15:19:47 -0800 (PST)
+        with ESMTP id S229632AbiK0AYS (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Nov 2022 19:24:18 -0500
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC0061789D
+        for <git@vger.kernel.org>; Sat, 26 Nov 2022 16:24:13 -0800 (PST)
+Received: by mail-pg1-x534.google.com with SMTP id 136so6873676pga.1
+        for <git@vger.kernel.org>; Sat, 26 Nov 2022 16:24:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gUNL0iHvaI8lBoW/AXLjYFlrCe+EASC+XwvyKqpj77M=;
-        b=NK5H2Mj8VDREfHItByYo1F28+0fOm1mKWCPIrpF+tdnT4Azhx05vETMwLST8qpbbGo
-         7nbBjdF6BHPTRn/UveOsxfFsdX3jK0FpBIDyypPsrqAJXsiq6jdC2wn1fwV/EPYMM/oe
-         rDz7PDF6a/NAZNZSuKMsPnVQOK6I4shClg/ocZwsYrAlr4imRac6HawxqIGDCm5eBlZA
-         cFZKiRJHAn0LJtYoZ2VKRX9ibC+m/tv5i2aGBBVKJhfukpbJobXHK4Mxvm1RYt9NuF3Q
-         jmAVgHbqB9Od/L640TK0FAz9qjwzD6dK3KXNFvduGTkMKLgiocQdPQRO67/BUvUx1TVM
-         dzVw==
+        bh=CYazG8gcDBBP/BaqN6MhN2GDq0G8mSvoLSZaer2AhSs=;
+        b=R33kyTRhK1mMdAhOgvZTD/lPG4GoNOZ87bH7zN3UGN5YH7Rudv1MlbGVzJvM5bfAcE
+         oXlfJt8ZjMpmfrTWGKwL73/VvB6SvQo/WQ8Yp2JwwJJJ67TbWtaP7+K1UJLwq8P+vj0C
+         jxqAk3Zt3d+wWZuE2ge8Epc0NX61GqITR1ojcC/jatffSTMCavHMIzoOp/MRJTMilrID
+         smDucCm6hc0nS8jKNP4UlPUd230uReazF213wdaoJQr/+/mPOEwnscDbLkKXKJU9ogBJ
+         UKU9rPKEyq5Tq/5aq3NFRqx78eFE7W8BMxqTBiDu1k4T68EQ56sQKAAOKnfewwgXSqUo
+         +dsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gUNL0iHvaI8lBoW/AXLjYFlrCe+EASC+XwvyKqpj77M=;
-        b=cBP8RNf6XzkrWRU9JDbvQ3HMhhaE0jCjIfHvvTgYj5R+R1PPFLe0NrK8XTj5NL+bu5
-         4dy/VqyLjbP4cQ5W+h3tzNOS198+9ugVlORgF5lULswkyxpA7jd4RtQg67ZNoNDKUkS2
-         /FrqpJAKGM66lknbl0Kj450JpR105YTJ64hhL1HQoy66Y8ycwKq1NyVD1TLfSbLR7+1M
-         aiCI9VpzkxBUOMXxTPcCfCEFb8bAP44nMQBL3kmhbNODt1WWPhZNguUqT6utV2uIwGR7
-         pU3rAtWF26CQ+8pK7FXg4+ACURa92uAlOOMdQ9Vj5hUwbce/xiWVEVlFFUtrMHlMKHrJ
-         tFZQ==
-X-Gm-Message-State: ANoB5pnibwi35CcfTCGQBzh0k3B6VtfVGrE8W1TRrS00xtcvYSPaMJfN
-        Kb5zmI4g5T1N1PqrRXMU1TY=
-X-Google-Smtp-Source: AA0mqf6cusVFiiGebji1hxZDh15lJxIIhKY39mV3VvUNWqt05pdHcTn9vHT93rzq0KRtcY/gvAB+wg==
-X-Received: by 2002:a63:1f21:0:b0:46b:2bd4:f298 with SMTP id f33-20020a631f21000000b0046b2bd4f298mr24040303pgf.135.1669504786800;
-        Sat, 26 Nov 2022 15:19:46 -0800 (PST)
+        bh=CYazG8gcDBBP/BaqN6MhN2GDq0G8mSvoLSZaer2AhSs=;
+        b=EA4jOeAbT9DRfwLJOi1yhGqliFmZGENvTO/MG3nSyutKBUu1bvGiE1iRZ01C9Pw/bL
+         m4UfKs2mAdWrHD5IL/Ggiy6tEp90BtC/eeuFUpXn7Nore1Pe1T/f5r/hLXHTri/lHIt4
+         cbanPU8HyMivvSt7BJ8zd7uc8drGz5gDJ10RplT725ZrKhzz7FSRCbpaKLQ4nFkJbQ0H
+         OAzsSgBw3yBJ6QA43A1NGbBjfYxiZBQ2yyqWkGVbqwyBhWhKhEW6cTHyUVqv6pwEPXF6
+         7FqDuZIs86NDHSV/qvuNpUdRL9kXkY9FdALGnTYx2UHvVtmMj7EhuECgG3O36oloVIcF
+         cv0w==
+X-Gm-Message-State: ANoB5pmfE2F/1Shfux6n10xRJnk/DDLlC5WjbLvvDLmWbjkBpoxPr4Vj
+        592+p7ZpGAop24wtjd7NC/g=
+X-Google-Smtp-Source: AA0mqf6yhEP2evnHp5yLx5jXW74aO2By/fhHcWfLnHHLy2cPPGYm8yYaRfuEM9ZG5QnZ4ZsPBXbzXg==
+X-Received: by 2002:a65:5782:0:b0:470:3fc1:5ed0 with SMTP id b2-20020a655782000000b004703fc15ed0mr21941606pgr.370.1669508653183;
+        Sat, 26 Nov 2022 16:24:13 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id u9-20020a17090341c900b00189758e2babsm1971197ple.125.2022.11.26.15.19.46
+        by smtp.gmail.com with ESMTPSA id q3-20020a170902bd8300b0018689e2c9dfsm5897654pls.153.2022.11.26.16.24.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Nov 2022 15:19:46 -0800 (PST)
+        Sat, 26 Nov 2022 16:24:12 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     GitList <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
-        NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
-Subject: Re: [PATCH v4] pretty-formats: add hard truncation, without
- ellipsis, options
-References: <20221102120853.2013-1-philipoakley@iee.email>
-        <20221112143616.1429-1-philipoakley@iee.email>
-        <xmqqfsedywli.fsf@gitster.g>
-        <d80d1b97-b0c0-148b-afb7-f5210366e463@iee.email>
-        <xmqqedtvu7py.fsf@gitster.g>
-        <7a6c3d32-4494-e209-9877-e8784f0c3502@iee.email>
-        <xmqq7czjecfr.fsf@gitster.g>
-        <f0923db4-7bfe-86d2-7539-c9ebed62fa4f@iee.email>
-Date:   Sun, 27 Nov 2022 08:19:45 +0900
-In-Reply-To: <f0923db4-7bfe-86d2-7539-c9ebed62fa4f@iee.email> (Philip Oakley's
-        message of "Sat, 26 Nov 2022 14:32:28 +0000")
-Message-ID: <xmqq35a5cnhq.fsf@gitster.g>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH v4 2/4] ci: remove the pipe after "p4 -V" to cache errors
+References: <20221124153934.12470-1-worldhello.net@gmail.com>
+        <20221125095954.4826-3-worldhello.net@gmail.com>
+Date:   Sun, 27 Nov 2022 09:24:12 +0900
+In-Reply-To: <20221125095954.4826-3-worldhello.net@gmail.com> (Jiang Xin's
+        message of "Fri, 25 Nov 2022 17:59:52 +0800")
+Message-ID: <xmqqlenxb5xv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -76,66 +71,54 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.email> writes:
+Jiang Xin <worldhello.net@gmail.com> writes:
 
->>  in that they may do "[][].." or "[][][]" when told to
->> "trunc" fill a string with four or more double-width letters into a
->> 5 display space.  But the point is at least for these with ellipsis
->> it is fairly clear what the desired behaviour is.
+> Subject: Re: [PATCH v4 2/4] ci: remove the pipe after "p4 -V" to cache errors
+
+"cache" -> "catch", I think.
+
+> From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 >
-> That "is fairly clear" is probably the problem. In retrospect it's not
-> clear in the docs that the "%<(N" format is (would appear to be) about
-> defining the display width, in terminal character columns, that the
-> selected parameter is to be displayed within.
->
-> The code already pads the displayed parameter with spaces as required if
-> the parameter is shorter than the display width - the else condition in
-> pretty.c L1750
->
->>   For "trunc" in
->> the above example, I think the right thing for it to do would be to
->> do "[][].", i.e. consume exactly 5 display columns, and avoid
->> exceeding the given space by not giving two dots but just one.
->
-> The existing choice is padding "[][]" with a single space to reach 5
-> display chars.
-> For the 6-char "[][][]" truncation it is "[][..", i.e. 3 chars from
-> "[][][]", then the two ".." dots of the ellipsis.
+> When installing p4 as a dependency, we used to pipe output of "p4 -V"
+> and "p4d -V" to validate the installation and output a condensed version
+> information. But this would hide potential errors of p4 and would stop
+> with an empty output. E.g.: p4d version 16.2 running on ubuntu 22.04
+> causes sigfaults.
 
-Here, I realize that I did not explain the scenario well.  The
-message you are responding to was meant to be a clarification of my
-earlier message and it should have done a better job but apparently
-I failed.  Sorry, and let me try again.
+... before it produces any output.
 
-The single example I meant to use to illustrate the scenario I worry
-about is this.  There is a string, in which there are four (or more)
-letters, each of which occupies two display columns.  And '[]' in my
-earlier messages stood for a SINGLE such letter (I just wanted to
-stick to ASCII, instead of using East Asian script, for
-illustration).  So "[][.." is not possible (you are chomping the
-second such letter in half).
+> By removing the pipe after "p4 -V" and "p4d -V", we may get a verbose
+> output, and stop immediately on errors becuase we have "set -e" in
 
-I could use East Asian 一二三四 (there are four letters, denoting
-one, two, three, and four, each occupying two display spaces when
-typeset in a fixed width font), but to make it easier to see in
-ASCII only text, let's pretend "[1]", "[2]", "[3]", "[4]" are such
-letters.  You cannot chomp them in the middle (and please pretend
-each of them occupy two, not three, display spaces).
+"because".
 
-When the given display space is 6 columns, we can fit 2 such letters
-plus ".." in the space.  If the original string were [1][2][3][4],
-it is clear trunk and ltrunk can do "[1][2].." (remember [n] stands
-for a single letter whose width is 2 columns, so that takes 6
-columns) and "..[3][4]", respectively.  It also is clear that Trunk
-and Ltrunk can do "[1][2][3]" and "[2][3][4]", respectively.  We
-truncate the given string so that we fill the alloted display
-columns fully.
+> "ci/lib.sh". Since we won't look at these trace logs unless something
+> fails, so just including the raw output seems most sensible.
 
-If the given display space is 5 columns, the desirable behaviour for
-trunk and ltrunk is still clear.  Instead of consuming two dots, we
-could use a single dot as the filler.  As I said, I suspect that the
-implementation of trunk and ltrunc does this correctly, though.
+You started the sentence with "Since", so "so" should be dropped.
 
-My worry is it is not clear what Trunk and Ltrunk should do in that
-case.  There is no way to fit a substring of [1][2][3][4] into 5
-columns without any filler.
+> Reviewed-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> ---
+>  ci/install-dependencies.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+
+Well reasoned.  Will queue.  Thanks.
+
+> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> index feefd6e9bb..97a1a1f574 100755
+> --- a/ci/install-dependencies.sh
+> +++ b/ci/install-dependencies.sh
+> @@ -83,9 +83,9 @@ esac
+>  if type p4d >/dev/null 2>&1 && type p4 >/dev/null 2>&1
+>  then
+>  	echo "$(tput setaf 6)Perforce Server Version$(tput sgr0)"
+> -	p4d -V | grep Rev.
+> +	p4d -V
+>  	echo "$(tput setaf 6)Perforce Client Version$(tput sgr0)"
+> -	p4 -V | grep Rev.
+> +	p4 -V
+>  else
+>  	echo >&2 "WARNING: perforce wasn't installed, see above for clues why"
+>  fi
