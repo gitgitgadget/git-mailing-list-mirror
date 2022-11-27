@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 09AB5C43217
-	for <git@archiver.kernel.org>; Sun, 27 Nov 2022 00:24:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D3B2C43217
+	for <git@archiver.kernel.org>; Sun, 27 Nov 2022 00:24:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229633AbiK0AYT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 26 Nov 2022 19:24:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45750 "EHLO
+        id S229518AbiK0AYe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 26 Nov 2022 19:24:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229632AbiK0AYS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 26 Nov 2022 19:24:18 -0500
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC0061789D
-        for <git@vger.kernel.org>; Sat, 26 Nov 2022 16:24:13 -0800 (PST)
-Received: by mail-pg1-x534.google.com with SMTP id 136so6873676pga.1
-        for <git@vger.kernel.org>; Sat, 26 Nov 2022 16:24:13 -0800 (PST)
+        with ESMTP id S229634AbiK0AYc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 26 Nov 2022 19:24:32 -0500
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28AD9178A6
+        for <git@vger.kernel.org>; Sat, 26 Nov 2022 16:24:32 -0800 (PST)
+Received: by mail-pf1-x429.google.com with SMTP id 140so7238620pfz.6
+        for <git@vger.kernel.org>; Sat, 26 Nov 2022 16:24:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CYazG8gcDBBP/BaqN6MhN2GDq0G8mSvoLSZaer2AhSs=;
-        b=R33kyTRhK1mMdAhOgvZTD/lPG4GoNOZ87bH7zN3UGN5YH7Rudv1MlbGVzJvM5bfAcE
-         oXlfJt8ZjMpmfrTWGKwL73/VvB6SvQo/WQ8Yp2JwwJJJ67TbWtaP7+K1UJLwq8P+vj0C
-         jxqAk3Zt3d+wWZuE2ge8Epc0NX61GqITR1ojcC/jatffSTMCavHMIzoOp/MRJTMilrID
-         smDucCm6hc0nS8jKNP4UlPUd230uReazF213wdaoJQr/+/mPOEwnscDbLkKXKJU9ogBJ
-         UKU9rPKEyq5Tq/5aq3NFRqx78eFE7W8BMxqTBiDu1k4T68EQ56sQKAAOKnfewwgXSqUo
-         +dsQ==
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XX0ut8MdMXEDMuw+T5Vra7x8yIwsoe8i0hDueMFdRzA=;
+        b=JxXO4l5lGic9YlsoH5fvP0pl0gd2whFrC3qmo1kR4cT7EW9cZuShdH504UL+j/ju+9
+         Uy7+8tjnwbOPPqlo0TRMBMC5dmsxdceSEUOQJTsI+69X8IHqdyB/6e1gS1zTb4ekaVOS
+         y4Cf5CGS5q7ozebw0lk0OntkWHklnNec2S8JpbawsKl/+DKtIdWPkWMCS9YNyUfqefpP
+         ix/5nciVqB61xOcWFsW3O7wTkTeXdretTG3M2cVbUSqipS1WzmhYCvyfJdmVuhQRaes1
+         q7D37JsU6Gr2oyBB/o4maBkr5t3rx7X3Hr0dCJ0s9WDwC7RlXLe2zj4JenSGRWEG4GlV
+         4Ajw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CYazG8gcDBBP/BaqN6MhN2GDq0G8mSvoLSZaer2AhSs=;
-        b=EA4jOeAbT9DRfwLJOi1yhGqliFmZGENvTO/MG3nSyutKBUu1bvGiE1iRZ01C9Pw/bL
-         m4UfKs2mAdWrHD5IL/Ggiy6tEp90BtC/eeuFUpXn7Nore1Pe1T/f5r/hLXHTri/lHIt4
-         cbanPU8HyMivvSt7BJ8zd7uc8drGz5gDJ10RplT725ZrKhzz7FSRCbpaKLQ4nFkJbQ0H
-         OAzsSgBw3yBJ6QA43A1NGbBjfYxiZBQ2yyqWkGVbqwyBhWhKhEW6cTHyUVqv6pwEPXF6
-         7FqDuZIs86NDHSV/qvuNpUdRL9kXkY9FdALGnTYx2UHvVtmMj7EhuECgG3O36oloVIcF
-         cv0w==
-X-Gm-Message-State: ANoB5pmfE2F/1Shfux6n10xRJnk/DDLlC5WjbLvvDLmWbjkBpoxPr4Vj
-        592+p7ZpGAop24wtjd7NC/g=
-X-Google-Smtp-Source: AA0mqf6yhEP2evnHp5yLx5jXW74aO2By/fhHcWfLnHHLy2cPPGYm8yYaRfuEM9ZG5QnZ4ZsPBXbzXg==
-X-Received: by 2002:a65:5782:0:b0:470:3fc1:5ed0 with SMTP id b2-20020a655782000000b004703fc15ed0mr21941606pgr.370.1669508653183;
-        Sat, 26 Nov 2022 16:24:13 -0800 (PST)
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XX0ut8MdMXEDMuw+T5Vra7x8yIwsoe8i0hDueMFdRzA=;
+        b=S2eUr0Rnt3y/wp4kYmHAYVjWzG7dEMsPLxBKIHoQd/4dpj6/hpB7uSUFXdJkWNkceH
+         GZBgtMZasJuBSom97FqwQ+mcWMCn9zVjNPC9gVMaoU0RTwDiKslzDGukSsj7OQPPR41o
+         oORlvADdvqbVtB1DdBtbyitmEWSxMGT6w5ceLXCVYp6ufqymYAI7+B+ppePQAjRiR94j
+         xk+kuMzpQNEy5hZ0/SxqOQ/UTxW7tEcWCuuioiK9HUVZOimn+CLdqCQsDxySUgT7K0g6
+         NX+htse4GNJ0+lh/rMmw8iknS29/7Y0qSepxubpHhxR+rl5i65iPCEb5VAevkGJNui60
+         SyxA==
+X-Gm-Message-State: ANoB5pmvPavPOJ/B/ZKOzKiFKaXphRJQtlnZ9oBVQlCKIwlSIU5ihKfg
+        YnpBY1GtIiUwgcijjfyU110=
+X-Google-Smtp-Source: AA0mqf4CoqaE630g/fR13huIHoj65ul2mWr6+we+Yvej4pT6h72yjZ/F8n7B1EVlxjo3+Bm8QkjZzg==
+X-Received: by 2002:a63:5719:0:b0:476:ea7d:3ff6 with SMTP id l25-20020a635719000000b00476ea7d3ff6mr23298236pgb.73.1669508671496;
+        Sat, 26 Nov 2022 16:24:31 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id q3-20020a170902bd8300b0018689e2c9dfsm5897654pls.153.2022.11.26.16.24.12
+        by smtp.gmail.com with ESMTPSA id d4-20020a62f804000000b0056e8eb09d58sm5379380pfh.170.2022.11.26.16.24.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Nov 2022 16:24:12 -0800 (PST)
+        Sat, 26 Nov 2022 16:24:31 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jiang Xin <worldhello.net@gmail.com>
@@ -56,13 +56,11 @@ Cc:     Git List <git@vger.kernel.org>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
         Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v4 2/4] ci: remove the pipe after "p4 -V" to cache errors
+Subject: Re: [PATCH v4 1/4] github-actions: run gcc-8 on ubuntu-20.04 image
 References: <20221124153934.12470-1-worldhello.net@gmail.com>
-        <20221125095954.4826-3-worldhello.net@gmail.com>
-Date:   Sun, 27 Nov 2022 09:24:12 +0900
-In-Reply-To: <20221125095954.4826-3-worldhello.net@gmail.com> (Jiang Xin's
-        message of "Fri, 25 Nov 2022 17:59:52 +0800")
-Message-ID: <xmqqlenxb5xv.fsf@gitster.g>
+        <20221125095954.4826-2-worldhello.net@gmail.com>
+Date:   Sun, 27 Nov 2022 09:24:30 +0900
+Message-ID: <xmqqedtpb5xd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -73,52 +71,39 @@ X-Mailing-List: git@vger.kernel.org
 
 Jiang Xin <worldhello.net@gmail.com> writes:
 
-> Subject: Re: [PATCH v4 2/4] ci: remove the pipe after "p4 -V" to cache errors
-
-"cache" -> "catch", I think.
-
 > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 >
-> When installing p4 as a dependency, we used to pipe output of "p4 -V"
-> and "p4d -V" to validate the installation and output a condensed version
-> information. But this would hide potential errors of p4 and would stop
-> with an empty output. E.g.: p4d version 16.2 running on ubuntu 22.04
-> causes sigfaults.
+> GitHub starts to upgrade its runner image "ubuntu-latest" from version
+> "ubuntu-20.04" to version "ubuntu-22.04". It will fail to find and
+> install "gcc-8" package on the new runner image.
+>
+> Change some of the runner images from "ubuntu-latest" to "ubuntu-20.04"
+> in order to install "gcc-8" as a dependency.
+>
+> The first revision of this patch tried to replace "$runs_on_pool" in
+> "ci/*.sh" with a new "$runs_on_os" environment variable based on the
+> "os" filed in the matrix strategy. But these "os" fields in matrix
 
-... before it produces any output.
+"filed" -> "field".
 
-> By removing the pipe after "p4 -V" and "p4d -V", we may get a verbose
-> output, and stop immediately on errors becuase we have "set -e" in
-
-"because".
-
-> "ci/lib.sh". Since we won't look at these trace logs unless something
-> fails, so just including the raw output seems most sensible.
-
-You started the sentence with "Since", so "so" should be dropped.
-
+> strategies are obsolete legacies from commit [1] and commit [2], and
+> are no longer useful. So remove these unused "os" fields.
+>
+> [1]: c08bb26010 (CI: rename the "Linux32" job to lower-case "linux32",
+>                  2021-11-23)
+> [2]: 25715419bf (CI: don't run "make test" twice in one job, 2021-11-23)
+>
 > Reviewed-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > Helped-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 > Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 > ---
->  ci/install-dependencies.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
 
-Well reasoned.  Will queue.  Thanks.
+Very well explained.  With the patch text alone, readers would have
+been puzzled about the removal of "os" and the description certainly
+helps.
 
-> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-> index feefd6e9bb..97a1a1f574 100755
-> --- a/ci/install-dependencies.sh
-> +++ b/ci/install-dependencies.sh
-> @@ -83,9 +83,9 @@ esac
->  if type p4d >/dev/null 2>&1 && type p4 >/dev/null 2>&1
->  then
->  	echo "$(tput setaf 6)Perforce Server Version$(tput sgr0)"
-> -	p4d -V | grep Rev.
-> +	p4d -V
->  	echo "$(tput setaf 6)Perforce Client Version$(tput sgr0)"
-> -	p4 -V | grep Rev.
-> +	p4 -V
->  else
->  	echo >&2 "WARNING: perforce wasn't installed, see above for clues why"
->  fi
+I also like the changes to ci/*.sh to match any future versions of
+"ubuntu-*" used in the pool name.  It is a sensible way to future
+proofing.
+
+Will queue.  Thanks, all.
