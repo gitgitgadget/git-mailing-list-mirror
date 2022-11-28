@@ -2,143 +2,119 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0D19C433FE
-	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 11:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2CEA4C433FE
+	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 11:27:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230473AbiK1LDK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Nov 2022 06:03:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53720 "EHLO
+        id S230042AbiK1L1j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Nov 2022 06:27:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230164AbiK1LDH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2022 06:03:07 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D54151839A
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 03:03:06 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id fy37so24746092ejc.11
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 03:03:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Af8u4qxZRm8Mt1HpxTsOpN+ibT5xnIHRHtKF/D2ztS4=;
-        b=ClcO1IVkTR+UScfRzk2kZh0/HOCL9ipuY5JX6AAS/KPC+tL14lAXWU5IZbBL++BeN2
-         jFKyVT1yNwpyiohYFF2snd8NYFRvgMxkR0DcXe3iX3DiTXOlDcz3lrgUTKBDXE/9UJS/
-         7YvZdGBOVq9UbQyHRRrk6SeomxPH7DHfW6Am6RO2sGSvJEPJ8Q9DYohXWL0Tfe/QPtc3
-         gm6sz3k9H/nLO2XnoCx543qTOtQKKn/85BNRgjUmJmIsguwTcI38fLsrtw3DdPhSLzhY
-         I0dzGV3rmbV5WVLeNqbRBzMKVnizRmESaHhumrgyJwix5ipE2Qe6kS/x9zU99zdPcdL1
-         nIrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Af8u4qxZRm8Mt1HpxTsOpN+ibT5xnIHRHtKF/D2ztS4=;
-        b=NNe9X6A/ZyzU++IIK7eaiUoHFzAAC4zDU6V2wZ/RM6WZOdODQJT1Fy3rvWdyj+HeNn
-         UwbEenVJfyZk4LO0EuTATZQsGegpXalKb65vIEgOwgX0MHeopUyKZrpS7EApKf0ncnoz
-         0iT1pIMpi5RuadGgyQEraAli9Yk2NVQCZdJ1GN3XtKKbmx5a/mPYQ5SR1whPXX0zbaLD
-         JRcQUj3jSKweLRamxFP29OxicVZoNE5Op7iwzZy2q+sR6kK1QHiD4mnAVkcynSO9r1LH
-         D1yTLUPwRV5lyhDhyrPYLUYcQdZPWrsLyHVe9kqyTvrGfvSiqZGxDT+3qpX9IbgZHGRH
-         KymQ==
-X-Gm-Message-State: ANoB5pl+GfjIXicclzCf4G2hW58i9kPPPhNCMEXOFkVKuxhpC1YjSOsv
-        M71V3a6feGbNEIWim1nxdu9pm0RUt8I=
-X-Google-Smtp-Source: AA0mqf7m/FxsTnFOXpO1C62L+cVOlsGzh539N9uxtJgdIvBiD221ENyzpAfe6aO8C5hKA8ko1lpCgg==
-X-Received: by 2002:a17:906:ce2d:b0:7ba:b9a:5e7e with SMTP id sd13-20020a170906ce2d00b007ba0b9a5e7emr20530992ejb.735.1669633385127;
-        Mon, 28 Nov 2022 03:03:05 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id ku21-20020a170907789500b0078cf8a743d6sm4806141ejc.100.2022.11.28.03.03.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Nov 2022 03:03:04 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1ozbui-000zIK-0T;
-        Mon, 28 Nov 2022 12:03:04 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Yoichi Nakayama <yoichi.nakayama@gmail.com>,
-        Yoichi Nakayama via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v7 3/3] git-jump: invoke emacs/emacsclient
-Date:   Mon, 28 Nov 2022 11:54:20 +0100
-References: <pull.1423.v6.git.1669261642.gitgitgadget@gmail.com>
- <pull.1423.v7.git.1669347422.gitgitgadget@gmail.com>
- <d8233f9617563d7c7168afc6e1abfaba57e54038.1669347422.git.gitgitgadget@gmail.com>
- <221125.8635a7o123.gmgdl@evledraar.gmail.com>
- <CAF5D8-uxZOFi8p0bUMaqJCLFxipXCB9fo_Kx=QE6s=DW8Jspgg@mail.gmail.com>
- <221126.86h6ymmvyc.gmgdl@evledraar.gmail.com>
- <Y4RC3NZsiy5gXPoJ@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <Y4RC3NZsiy5gXPoJ@coredump.intra.peff.net>
-Message-ID: <221128.86cz97mjdj.gmgdl@evledraar.gmail.com>
+        with ESMTP id S231403AbiK1L1B (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2022 06:27:01 -0500
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6431917A8D
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 03:26:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1669634793; bh=Mbe5sOnkJ8AanVaT3sgPYikQvMziwY3n9rT4aEAlMso=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=BnfaJMlnHONbvxQF6//WNTDAIWVDQocdpqjrlw2JRkQgWwnpln/xH84sI9scB3u/L
+         /KzKJSx4Vl7B4p9B8rRchZyal1LsBDCP80FD3298FjHz7FwPvtHHq9T5iR4lxFQ3E8
+         HkHkPsq/r1SNgWPoKUE34FWOxUMItAcAs+Hg73ign7VW9rnQlSoxTUgXT0MRgZ+61P
+         cwjTqyuorYiyO3Z4mwve2BaDnlZa7feYrypDDQSMOxRoU8yLRFQcF7y1EyEktbSZ2Q
+         HyL+Gqh1tIDIroos3zEBGBoqLhjSJIM5sgdzo40wmHQ3ZyzPzuKIMriZkEvcMceEHS
+         K9WSMk81SKO2g==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.35] ([91.47.154.159]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MRk4e-1pSrAI3WOo-00TPn9; Mon, 28
+ Nov 2022 12:26:32 +0100
+Message-ID: <d10de9b5-e5ff-18d6-d950-1d090d87b113@web.de>
+Date:   Mon, 28 Nov 2022 12:26:31 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v2 3/3] Revert "pack-objects: lazily set up "struct
+ rev_info", don't leak"
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
+        <avarab@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff King <peff@peff.net>
+References: <c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.de>
+ <d19c6cb4-611f-afea-8a14-5e58d7509113@web.de>
+ <f5779e19-813c-cda9-2f84-9fe58f745e89@web.de> <xmqqv8mz5ras.fsf@gitster.g>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqv8mz5ras.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:sa1CB6nOBq5VtWxL7sp9DfCN0w8WA4ErrmpzgYonPhWOvWuuyYD
+ 1GqCiHrEI/5XUIAmaJabP2xmaWV51aEfwAChMYn7uln25u4m87Or/XbZ4MWF/E4ilGQnW9x
+ ip6W9DBRgQo2eIZ3KzER9MaC5AbxN0GDzvKUCRrs82IY+P0M1cPMsVF8d0wZZCTyOKOb9VK
+ LK03yWpndfcTakd0nTH3Q==
+UI-OutboundReport: notjunk:1;M01:P0:nGGBHrIswUE=;x3VpnCX1Eo/vnFkZLllLWhgwEs0
+ YRjNB4dqnTJr5PvwEvx/T3lZpRDfZlv1/WF5ID+H1u8Pfxh4qXXyTNonVTmRg6igK0So0id/3
+ /Xh6+UAObgK0tJMVF76hgH+3mvzxyYys7fGawQmmG22BaBRMg7+Bx/yFGiyaBcWzZRXnHnBTB
+ QGJy19DzVQX4El4u9YBVjpNGsmu1V9rgOZqAdBCy4p26vGJ85slafGiDeeErX2qFAy+sxDM5+
+ 8nFz/JZQGLMuwEYpSu0WAHxjlsXKLJ//ZKN4cmsLgGcUsGddNDv585GL7ZmIE0rd6k3k+1yAT
+ I8zccm5wtvHFibGzbf4NLxJpTDH4k2/UEEPZRtIykCg/KDdr+DI3xXhmH9s/bWWoLVyurRC/7
+ RocqoIyRVbh0lQUqofNM5AXP4Pa2I4kEn9NU8SSJtRCQOd1iVmPUQad5oEMyQAd7pDXc8xyro
+ RDllmkyk+iVsFJ4O4/J7Q4wo+5Xo0gnnjUuA1EAQEgO1DM943RtiJlgVH3rHRyCzewyX5D7s6
+ xMfBNh2hgdDPqh4nBpwsPGKcEtJSukAgMZYn5GUp2S5YD8rzLPWoJ3N2tcNWOBcM5qpOBwu8R
+ XinCbMfOn1i/kUQ0VN+j+HW3jMs9DkTchVFCSLq6l/IhhygPxSWfr9F0QjcmZHhrPAxZFi7rF
+ +bNtfAtBNToYkNY36GmAiuV+H6mgO14VkcefAejYbkk2cYFZanyjUl0KsI6aG9MV7u2vMNA6x
+ FB7BJJ2Pe2eFy4Azuyj95hy88+DAyvfzc3Ms8+kIZdw0MDv8XE5UKTjydK8dCa0Wgyy1Zrozp
+ 6WIyhN8rmn1a4ceU/gJOwTPFwGbz5dE2UaaPE8Uf14bMLqKVWNRf9HpZs6hhkj7y6+qmcV+fI
+ OYwfoBegYvsHEeQLY+c5q/xljMTMZbYvvMVIBCGA0rdw2/Yp1xkc8UPiPxAn/PIXmyjv4qSU0
+ K5WBrJlk3C/nt0sUj0x66i7T4Sw=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Nov 28 2022, Jeff King wrote:
-
-> On Sat, Nov 26, 2022 at 12:52:50AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+Am 28.11.2022 um 11:03 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 >
->> > Second, there is a difficulty passing arbitrary arguments properly to
->> > Emacs Lisp properly.
->> > For example, your version will cause error with
->> >         git jump grep "hello world"
->> > My early patch was doing something similar. But the second problem was
->> > hard to deal with,
->> > so I switched to using a temporary file.
->>=20
->> To the extent that that's painful couldn't we write the grep expression
->> / arguments to the tempfile, then feed the tempfile to the ad-hoc elisp
->> code?
->>=20
->> It would then read it, get the argument to grep for, and we'd call (grep
->> that-argument).
+>> This reverts commit 5cb28270a1ff94a0a23e67b479bbbec3bc993518.
+>>
+>> 5cb28270a1 (pack-objects: lazily set up "struct rev_info", don't leak,
+>> 2022-03-28) avoided leaking rev_info allocations in many cases by
+>> calling repo_init_revisions() only when the .filter member was actually
+>> needed, but then still leaking it.  That was fixed later by 2108fe4a19
+>> (revisions API users: add straightforward release_revisions(),
+>> 2022-04-13), making the reverted commit unnecessary.
 >
-> You'd still need to quote the arguments, since you'll be reading
-> potentially multiple arguments out of the bytestream of the file[1].
+> Hmph, with this merged, 'seen' breaks linux-leaks job in a strange
+> way.
 >
-> If you're not going to quote, the simplest thing is to generate the
-> line-oriented output and read that.
+> https://github.com/git/git/actions/runs/3563546608/jobs/5986458300#step:=
+5:3917
 >
-> If you are going to quote, then you don't need the tempfile at all. You
-> can shove the command into the eval, as if git-jump were run from emacs
-> directly (but you want to use the --stdout mode introduced in this
-> series, and not the git commands directly, because of course they're
-> non-trivial).
->
-> I showed how to do the quoting earlier in the thread. But it is ugly,
-> and this tempfile hack should work (modulo the gross wait loop
-> afterwards).
+> Does anybody want to help looking into it?
+The patch exposes that release_revisions() leaks the diffopt allocations
+as we're yet to address the TODO added by 54c8a7c379 (revisions API: add
+a TODO for diff_free(&revs->diffopt), 2022-04-14).
 
-Thanks, I'd missed
-https://lore.kernel.org/git/Y30a0ulfxyE7dnYi@coredump.intra.peff.net/
+The patch below plugs it locally.
 
-I think the case where the temporary directory itself has spaces in it
-isn't worth worrying about.
+=2D-- >8 ---
+Subject: [PATCH 4/3] fixup! revision: free diffopt in release_revisions()
 
-So, all we'd need to worry about is getting the arguments to be grep'd
-to emacs.
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ builtin/pack-objects.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-That should be simpler & bug-free with some equivalent of
-
-     echo "args" >$tmpfile
-
-then in Emacs, given some "<tmpfile>" variable:
-
-  (with-temp-buffer
-    (insert-file-contents <tempfile>)
-    (buffer-string)))
-
-We'd then invoke M-x grep with that.
-
-I think getting rid of the tempfile isn't worth it, or worth worrying
-about, what I was pointing out is that the implementation as it stands
-works notably differently than if you invoked M-x grep itself.
-
-I.e. it doesn't do highlighting, and (I didn't note this before) if it
-takes a while we'll "hang", if we had emacs itself invoke the "git grep"
-we'd stream out grep results as they came in.
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 3e74fbb0cd..a47a3f0fba 100644
+=2D-- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -4462,6 +4462,7 @@ int cmd_pack_objects(int argc, const char **argv, co=
+nst char *prefix)
+ 	} else {
+ 		get_object_list(&revs, rp.nr, rp.v);
+ 	}
++	diff_free(&revs.diffopt);
+ 	release_revisions(&revs);
+ 	cleanup_preferred_base();
+ 	if (include_tag && nr_result)
+=2D-
+2.30.2
