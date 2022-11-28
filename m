@@ -2,113 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 733A1C43217
-	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 12:47:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E146EC433FE
+	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 12:48:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230508AbiK1Mru (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Nov 2022 07:47:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52880 "EHLO
+        id S230462AbiK1MsU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Nov 2022 07:48:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231361AbiK1Mrm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2022 07:47:42 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10EFF114A
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 04:47:38 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id td2so11371431ejc.5
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 04:47:37 -0800 (PST)
+        with ESMTP id S230186AbiK1MsP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2022 07:48:15 -0500
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 755A2FE3
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 04:48:14 -0800 (PST)
+Received: by mail-pg1-x532.google.com with SMTP id 62so9779403pgb.13
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 04:48:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ajpMRTgHX9zdYCCiYmmd7K5V8om0Ac/YpmMRLbD9ayc=;
-        b=Kq7z8xaJ4Pju8Owky/b6nJ0/J8ZccCuG+F1ssF+yHKgjVYzgcaVXG+N+H+r6Ju7UcR
-         AwBemxKj9IsPVwoJThlXyHdL8RmXILGTHTih6l6HXc261NYgfQ9i5LCU5yb391Nlk1HV
-         g7DjJkcuOuWPgR66g8jXnOdPufAET1vMJfyrnyXeZYD7P0mJmyHnr/VURJhRYvVdEsyx
-         /OvGOOPYEU/kC32FKdxSPBhghRhqARLUQcvHCxfPDUurZBYJt5kYDDggC52J0L6TtiG+
-         awi6+fp/0KJDUPOMrNqyEQJ7FI9HdF/IkiYznA0NTFErJL+/97vdimpzPu1WDS+06UPy
-         Q42w==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iKmFZXnotnJ3VMJTpBgYiWM0pIItYyZlJ3J3K+Ixm74=;
+        b=haksDqczhaIXCCzw5yx3J3gmax37qjlr2ViLarF/3HcjXudp8f4NuyLBSh+qZng6l7
+         coNSs7wiUsP+oQOPVbLofQ3nCFsZqJb8R5rWG1Wu+AUB4OTIcr/igZOJ3ZdVOzeM4bta
+         gOxU7EUOwji4dQGt59BxFClVHKVOdCW/wDaZ4rpzh/d30zJRitQGefM5+WJ4yg/K2Jj5
+         Z15175XTpIh3HrQQnapDJhq8jr1Eglw2uLT4UEO6jxgnIJ89Wr12J+AqCMN4EOEy3ACK
+         TkHkvQ0bLdHDperL86SVM/8sqUkzTqDgbCf0aAjqGOwzj6ska7ERvFA8NKkck5IHXAtX
+         qBwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ajpMRTgHX9zdYCCiYmmd7K5V8om0Ac/YpmMRLbD9ayc=;
-        b=yoYz/lyck70JxxSzJ1Sy+NiQEn/at2Arom9bUgSc+3GnTj2bR5tDt6ipHzXlDT0AIM
-         vBWyo4f1jxEumu1FlXZaiY6MYKayoZW9X+torh5yCuTEzg0v7mKCqY4lndRrBdFXr+gz
-         JClDhvPLC1d/WZEKy00Gx71SA18UMUY8niXEnCjfIRmWQcv0Gn5XLbOJN4p4gx54Cdm6
-         57PtEOGhwPIS6WVqURsZtL1QCXbP2okR3g4czg9Tna5w31i/wyokCO0bMlAtenSp7x52
-         JAZtQ3KUxHRQ0rxhZro36b/BJkHZVZ6JsASwgPvqnBp5WsbrAr5KVpdirbp3bd5bWnnX
-         Mi4w==
-X-Gm-Message-State: ANoB5plYmMnFjmTX2LIvJGhxz4LHQcAc/UlNAzlwWOfn5wk0yrkN3ZOn
-        St0wa0NCV9NInNuKvrBpiJCTOqr4XO8xpQ==
-X-Google-Smtp-Source: AA0mqf4bh8HJaCSF59lYilUAXTtrvf+3dKxdKl6LYtDeG5mbneuNpSs6Lps8pxIQvNd3hgSwviVmUQ==
-X-Received: by 2002:a17:907:c24a:b0:7ac:2e16:bc31 with SMTP id tj10-20020a170907c24a00b007ac2e16bc31mr3891358ejc.242.1669639656541;
-        Mon, 28 Nov 2022 04:47:36 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id j14-20020aa7de8e000000b004616b006871sm5140040edv.82.2022.11.28.04.47.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Nov 2022 04:47:36 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1ozdXr-0012Ow-2I;
-        Mon, 28 Nov 2022 13:47:35 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "signal@dynax.at" <signal@dynax.at>
-Cc:     git@vger.kernel.org
-Subject: Re: making use of $sm_path @ git submodule foreach
- =?utf-8?Q?=E2=80=94recursive?=
-Date:   Mon, 28 Nov 2022 13:43:08 +0100
-References: <70ED2ECF-DAF1-4CCB-9E05-2599211F3569@dynax.at>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <70ED2ECF-DAF1-4CCB-9E05-2599211F3569@dynax.at>
-Message-ID: <221128.86r0xnkzyw.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=iKmFZXnotnJ3VMJTpBgYiWM0pIItYyZlJ3J3K+Ixm74=;
+        b=YMN29+w5g4cSHGUE1GRluzGzgA92B5eOmTTr5wh64ygZivkEWsXnv8fsmrXuPLoesX
+         Twlc11pNh0u00P5Kp8xENhoqMvdCF9Z2/9xWKVTVAC45Zi/HqzpZMI3oMxaOydLDExf+
+         UiHWwxJPWs9wnSZLKSF7oegKYjfUj7MoX+c2km8HrmHMZFeajLD3O1zx3ReZ+TX5J6Ul
+         WXjVC1h0nPUioj+BqoqshON3JMmcZKpzBiEKTUDX8c7SWaRjc6+qC+XkaGPgFY105y7E
+         CqgmWsHVRGIi36i6RGKHNgwbSnyy0OFuUdopEjq+ksz5VQIx1RQ5kvmnwuAvfmYicPRu
+         lrDQ==
+X-Gm-Message-State: ANoB5pmxfj0cFjf8mNxLH3c07T1WuBh43xP43Ddj4QPktOBxHQoygBvv
+        EX6bFYFzn9mHS3JkyA9hJ58=
+X-Google-Smtp-Source: AA0mqf48xngcerSXid7AVyFq+xH7Knqd1ha+1yMkiZjnsbWmpoZ2vBobMd//pguofzb8lndumfDAjA==
+X-Received: by 2002:a65:58ca:0:b0:470:2c91:9579 with SMTP id e10-20020a6558ca000000b004702c919579mr26592864pgu.22.1669639693930;
+        Mon, 28 Nov 2022 04:48:13 -0800 (PST)
+Received: from localhost.localdomain ([47.246.101.57])
+        by smtp.gmail.com with ESMTPSA id u14-20020a170902714e00b0017da2798025sm8671012plm.295.2022.11.28.04.48.11
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 28 Nov 2022 04:48:13 -0800 (PST)
+From:   Teng Long <dyroneteng@gmail.com>
+X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
+To:     peff@peff.net
+Cc:     avarab@gmail.com, derrickstolee@github.com, dyroneteng@gmail.com,
+        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        tenglong.tl@alibaba-inc.com
+Subject: Re: [PATCH v4 0/4] pack-bitmap.c: avoid exposing absolute paths
+Date:   Mon, 28 Nov 2022 20:48:07 +0800
+Message-Id: <20221128124807.54707-1-tenglong.tl@alibaba-inc.com>
+X-Mailer: git-send-email 2.38.1.473.ga0789512c5a.dirty
+In-Reply-To: <Y3vL1zWa99z/Liy7@coredump.intra.peff.net>
+References: <Y3vL1zWa99z/Liy7@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
-On Sun, Nov 27 2022, signal@dynax.at wrote:
-
-> Hi,
+> > Diff since v3:
+> >
+> > I picked Peff's two new constructive patches[1] which I think are meaningful.
+> > Peff also mentioned whether to design a "GIT_TRACE2_BITMAP" ENV to help
+> > debugging bitmap, and I think it's very interesting but maybe it's a bigger
+> > scale on current patchset, so I prefer to do it in another series.
 >
-> when using=20
-> git submodule foreach =E2=80=94recursive [..]=20
-> $sm_path contains only the relative part of the latest
-> recursion. Since the command has no generic way of knowing from which
-> recursion level it is executed any $sm_path of deeper recursion level
-> is useless unless there is a way for the command to find out from
-> which recursion it is called.
->
-> I suggest $sm_path should be extended to be relative to the repo from whe=
-re the submodule recursion started or another variable should contain the r=
-ecursive part.
->
-> Viele Gr=C3=BC=C3=9Fe/Cheers,
-> Hagen.
+> I think the first two are already in 'next', so they aren't eligible for
+> re-roll, though from the range diff it looks like those changes are
+> already there?
 
-I think it might be sensible to have a $super_prefix_sm_path or
-something which does what you suggest here.
+Oops, I created the wrong range-diff. I didn't check the 'next', but now
+I think I shall make the reroll here because the new replies from Junio
+and you.
 
-But the current "$sm_path" is far from useless, it's just not useful for
-what you're trying to do.
-
-When we run a command in sub1/sub2 or whatever the "$sm_path" will be
-"sub1", then as we cd to "sub1" it'll be "sub2".
-
-You want "sub1/sub2" there, but a "sub2" is still useful, because we've
-chdir()'d to the "sub1" at that point.
-
-So you can e.g. run 'git -C "$sm_path" log' in your 'foreach', or
-another command that expects to get the *relative* submodule path.
-
-If we simply changed how "$sm_path" works that would break, and if we
-"fixed" that by not chdir()-ing from the super-project we'd break even
-more things, as e.g.:
-
-	git submodule foreach 'git pull'
-
-Or whatever wouldn't behave as you'd expect.
+Thanks.
