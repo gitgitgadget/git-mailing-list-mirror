@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82EB1C43217
-	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 13:23:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CD8F6C43217
+	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 13:28:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231538AbiK1NXJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Nov 2022 08:23:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51614 "EHLO
+        id S231759AbiK1N2T (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Nov 2022 08:28:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231480AbiK1NXI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2022 08:23:08 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B54B63CE
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 05:23:07 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id ho10so25762756ejc.1
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 05:23:07 -0800 (PST)
+        with ESMTP id S231516AbiK1N2Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2022 08:28:16 -0500
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D96761145C
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 05:28:12 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id bj12so25692782ejb.13
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 05:28:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6jP6UTyFHJqvCjiW0BKRHpAH9lzMo+wt0mGFa0QJO7s=;
-        b=fSyFGoJ5402miWFFx3NX9kmnoOvWLY0RsGGzEKc3AHd4Ly5vf9GfD/DVpqRB0Zi5oM
-         4Y8neBbz3ToRkLwnwQh61rm0hOgZSHzMlKRc2nv6kIb6p2H63QST35XXd2+0BNJB2se/
-         KYilUrXV+hwxuekwLjpccm2EToWO2QgnKb11aAQuiYUBLC2JBxMcARGYHvYS/cZSWMQ5
-         iF+R/NPaywMF07It0XqOy59SGOYXJVBnGpmQyJgAlGpOM58B/qh+MhBxgfcQEg46pWAB
-         +won4QYuZqnfT9ID7nQ5iSc9r9+ntMLhS8ImuPCU9DJTBxS58PlpGB+Rj/kp+C6m6Q8p
-         Qswg==
+        bh=iGT+Cvl2af94ynJ/ainRbYUf2VuhcLcNpyjV8WwGWrw=;
+        b=CqPSaSX/sKCSjWpOwraDzhVZtCMC7W5e/LtXwmFobOn78SBxNMVbqgklFxulveLjEG
+         5ICJ27DU+s/vCjKDSj2RgsySXZ3masBDg9Yozl1Ttn8rvCaUFqNECQ5LvEFc8NMlooxC
+         W2XQjEtdva1kfSeHGWGxWqBWQDJxE28Zo/iZ/DCna1m79q7UK+Wpc01kM7ugH696X4dz
+         EYCo05UoU1XtupHiSkc4OIBMr7ECCl9QHBqPMPfhjopFpt425CzsqeOyl9xcp84dKF/3
+         jp4AASvoMqcNVr2/ER+VfRGfd4Y7hZmyBCF81lV9R6IL+rMj+nD2PEbjl1E2XtrAJFZf
+         n9ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6jP6UTyFHJqvCjiW0BKRHpAH9lzMo+wt0mGFa0QJO7s=;
-        b=8Ew6wL+OhvG7jnAosLOqXxtPIo1n4ZdJJvF3JuRsQEcxJS1RoNBnoEpWRekj566eIC
-         apZqBPmSVy04B7Bh6x4xcd/OSSWLx7tHyKpiPqxBxVdguzdxi+lap/E5pKI/Yao68E6j
-         3bDTIs3xC0UlubmVyT4HZSWpmIAmoACNB62W9vLPtTXUsR2dFGRgSfw4TR6B966X8mmZ
-         7wAyHDx7h1NJVD2AfSUpMhaLmmvifKKQMnZFD4xKg1HTEXsWQf05IKADaec/VrCqZgC6
-         1Wvg3AgIhmuKoboUsO7GhKfRqKcMtgFWvHg5QPHYdhVuD4Q+T6gCozYSpiliyJ5bJjo0
-         avgQ==
-X-Gm-Message-State: ANoB5pnpp4TQ2waD1V/v65GJe2Sv/UrH7ntxkboUOTSWuaCg+MzGCYiu
-        rLtqXNOMh2prx0Vs+Pby2scUQ8/k93/R4Q==
-X-Google-Smtp-Source: AA0mqf6+FFgrQsaaT/t+ElIs3S3iHDh7A1Y+yMHUbk5a65GkBaHtqA1pNQl6Wk4C0vaixb6onubvMA==
-X-Received: by 2002:a17:906:f204:b0:79e:8f4a:c5b3 with SMTP id gt4-20020a170906f20400b0079e8f4ac5b3mr26959766ejb.223.1669641785899;
-        Mon, 28 Nov 2022 05:23:05 -0800 (PST)
+        bh=iGT+Cvl2af94ynJ/ainRbYUf2VuhcLcNpyjV8WwGWrw=;
+        b=4ikh+SViSpDNomOChyF33wzY1iFo97kkP+A7jthziF+Bd1RUm6fleXqAgVd5OE8rW8
+         ghRGKY6KPIM5ogVtBJL59nK8t6vgLie77vbRYePxSg8XoY+UC5w+SMakVWEO3/V9h6y/
+         dLA9QUXolhf1zKrNBs+b8lyUP09HtB4hiiTl8pdcC7o8R6WNFKdpuyk3KaHbAPCzOiw0
+         cZ3YHdDFG/JQ6b0UQN7zIS28r9Rzy+rMaqzaiL64jhsyU8VvQQMRerIzHo6ewklWmifE
+         x0Uz/QEqNEQPfdNkFDrccToNHmH1VS3OpbYNgnYmLyq/1nsxNl+Up/UYwBJbBIOd4WC1
+         URDg==
+X-Gm-Message-State: ANoB5pnN0QyLvVMZ/drfzcqfCjFe52U4mUIrlsOhMxdwViHJP+9HjEU5
+        2F10K+GS6KDii+v00ThuqLjaJo0dZ7ee7g==
+X-Google-Smtp-Source: AA0mqf5RSqBokMTLdiez1Ln39fa42XVvS10WF+9yDmMxnY5kWybzxDL51FXQmP09dFyIcqPtptIkCw==
+X-Received: by 2002:a17:906:6dd5:b0:78d:a633:b55 with SMTP id j21-20020a1709066dd500b0078da6330b55mr45112653ejt.106.1669642091279;
+        Mon, 28 Nov 2022 05:28:11 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id m25-20020aa7c499000000b00462bd673453sm5180843edq.39.2022.11.28.05.23.05
+        by smtp.gmail.com with ESMTPSA id 11-20020a170906300b00b007aee947ce9esm4966946ejz.138.2022.11.28.05.28.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Nov 2022 05:23:05 -0800 (PST)
+        Mon, 28 Nov 2022 05:28:10 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1oze6C-0013Y8-2I;
-        Mon, 28 Nov 2022 14:23:04 +0100
+        id 1ozeB8-0013jv-0h;
+        Mon, 28 Nov 2022 14:28:10 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jiang Xin <worldhello.net@gmail.com>
 Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
         Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Subject: Re: [PATCH v2 3/3] t1301: do not change $CWD in "shared=all" test case
-Date:   Mon, 28 Nov 2022 14:18:45 +0100
+Subject: Re: [PATCH v2 1/3] t1301: fix wrong template dir for git-init
+Date:   Mon, 28 Nov 2022 14:24:33 +0100
 References: <20221127145130.16155-1-worldhello.net@gmail.com>
- <20221128130323.8914-4-worldhello.net@gmail.com>
+ <20221128130323.8914-2-worldhello.net@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <20221128130323.8914-4-worldhello.net@gmail.com>
-Message-ID: <221128.86ilizkybr.gmgdl@evledraar.gmail.com>
+In-reply-to: <20221128130323.8914-2-worldhello.net@gmail.com>
+Message-ID: <221128.86edtnky39.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -74,102 +74,81 @@ On Mon, Nov 28 2022, Jiang Xin wrote:
 
 > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 >
-> In test case "shared=all", the working directory is permanently changed
-> to the "sub" directory. This leads to a strange behavior that the
-> temporary repositories created by subsequent test cases are all in this
-> "sub" directory, such as "sub/new", "sub/child.git". If we bypass this
-> test case, all subsequent test cases will have different working
-> directory.
+> The template dir prepared in test case "forced modes" is not used as
+> expected because a wrong template dir is provided to "git init". This is
+> because the $CWD for "git-init" command is a sibling directory alongside
+> the template directory. Change it to the right template directory and
+> add a protection test using "test_path_is_file".
 >
-> Besides, all subsequent test cases assuming they are in the "sub"
-> directory do not run any destructive operations in their parent
-> directory (".."), and will not make damage out side of $TRASH_DIRECTORY.
+> The wrong template directory was introduced by mistake in commit
+> e1df7fe43f (init: make --template path relative to $CWD, 2019-05-10).
 >
-> So it is a safe change for us to run the test case "shared=all" in
-> current repository instead of creating and changing to "sub".
->
-> For the next test case, we no longer run it in the "sub" repository
-> which is initialized from an empty template, we should not assume the
-> path ".git/info" is missing. So add option "-p" to mkdir.
->
-> Helped-by: Junio C Hamano <gitster@pobox.com>
 > Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 > ---
->  t/t1301-shared-repo.sh | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
+>  t/t1301-shared-repo.sh | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
 > diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
-> index 1225abbb6d..fd10c139f5 100755
+> index 93a2f91f8a..7578e75d77 100755
 > --- a/t/t1301-shared-repo.sh
 > +++ b/t/t1301-shared-repo.sh
-> @@ -46,8 +46,6 @@ do
->  done
->  
->  test_expect_success 'shared=all' '
-> -	mkdir sub &&
-> -	cd sub &&
->  	git init --template= --shared=all &&
->  	test 2 = $(git config core.sharedrepository)
->  '
-> @@ -57,7 +55,7 @@ test_expect_success POSIXPERM 'update-server-info honors core.sharedRepository'
->  	git add a1 &&
->  	test_tick &&
->  	git commit -m a1 &&
-> -	mkdir .git/info &&
-> +	mkdir -p .git/info &&
->  	umask 0277 &&
->  	git update-server-info &&
->  	actual="$(ls -l .git/info/refs)" &&
+> @@ -140,7 +140,8 @@ test_expect_success POSIXPERM 'forced modes' '
+>  	(
+>  		cd new &&
+>  		umask 002 &&
+> -		git init --shared=0660 --template=templates &&
+> +		git init --shared=0660 --template=../templates &&
+> +		test_path_is_file .git/hooks/post-update &&
+>  		>frotz &&
+>  		git add frotz &&
+>  		git commit -a -m initial &&
 
-I think this approach goes against the effort to implicitly stop relying
-on templates. See 3d3874d537a (Merge branch 'ab/test-without-templates',
-2022-07-18) for commits related to that.
+This fix looks fishy to me. The code you're changing looks like it was
+buggy, but this looks like it's sweeping under the rug the fact that
+"templates" never did anything at this point.
 
-I think better thing to do here is to squash this in:
+So I'm not saying you should squash this in, but if you do so you'll see
+that we only ever used this later.
 	
 	diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
-	index 0b3722aa149..b7222b7bc07 100755
+	index d4315b5ef5a..106ccc5704e 100755
 	--- a/t/t1301-shared-repo.sh
 	+++ b/t/t1301-shared-repo.sh
-	@@ -8,6 +8,7 @@ test_description='Test shared repository initialization'
-	 GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-	 export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+	@@ -129,15 +129,12 @@ test_expect_success POSIXPERM 'git reflog expire honors core.sharedRepository' '
+	 '
 	 
-	+TEST_CREATE_REPO_NO_TEMPLATE=1
-	 . ./test-lib.sh
-	 
-	 # Remove a default ACL from the test dir if possible.
-	@@ -55,7 +56,7 @@ test_expect_success POSIXPERM 'update-server-info honors core.sharedRepository'
-	 	git add a1 &&
-	 	test_tick &&
-	 	git commit -m a1 &&
-	-	mkdir -p .git/info &&
-	+	mkdir .git/info &&
-	 	umask 0277 &&
-	 	git update-server-info &&
-	 	actual="$(ls -l .git/info/refs)" &&
+	 test_expect_success POSIXPERM 'forced modes' '
+	-	mkdir -p templates/hooks &&
+	-	echo update-server-info >templates/hooks/post-update &&
+	-	chmod +x templates/hooks/post-update &&
+	 	echo : >random-file &&
+	 	mkdir new &&
+	 	(
+	 		cd new &&
+	 		umask 002 &&
+	-		git init --shared=0660 --template=templates &&
+	+		git init --shared=0660 &&
+	 		>frotz &&
+	 		git add frotz &&
+	 		git commit -a -m initial &&
+	@@ -181,6 +178,10 @@ test_expect_success POSIXPERM 'remote init does not use config from cwd' '
+	 test_expect_success POSIXPERM 're-init respects core.sharedrepository (local)' '
+	 	git config core.sharedrepository 0666 &&
+	 	umask 0022 &&
+	+	mkdir -p templates/hooks &&
+	+	echo update-server-info >templates/hooks/post-update &&
+	+	chmod +x templates/hooks/post-update &&
+	+
+	 	echo whatever >templates/foo &&
+	 	git init --template=templates &&
+	 	echo "-rw-rw-rw-" >expect &&
 
-I.e. before we'd not reply on the template, as we created a directory
-manually, but now we're using the standard templated "git init", so
-AFAICT the first hunk here could be taken, and this could be squashed
-into the second hunk instead:
+From a glance isn't the real fix here to adjust the "post-update hook
+must be 0770" case? I.e. it's conflating "I saw the right permissions"
+with "I didn't see this line at all", isn't it?
 
-	diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
-	index 0b3722aa149..d4315b5ef5a 100755
-	--- a/t/t1301-shared-repo.sh
-	+++ b/t/t1301-shared-repo.sh
-	@@ -55,7 +55,6 @@ test_expect_success POSIXPERM 'update-server-info honors core.sharedRepository'
-	 	git add a1 &&
-	 	test_tick &&
-	 	git commit -m a1 &&
-	-	mkdir -p .git/info &&
-	 	umask 0277 &&
-	 	git update-server-info &&
-	 	actual="$(ls -l .git/info/refs)" &&
+Thus if we take this squash above we're not setting up the post-update
+hook at all, so it's "not broken", but if we ever screw up our test
+setup again it'll be broken again...
 
-I.e. before your change we went from knowing that we're crafting a
-custom repo, to saying that we're unsure what we're doing by using the
-"mkdir -p".
-
-But can't we just use "TEST_CREATE_REPO_NO_TEMPLATE=1" then, and avoid
-the "cd sub?"
+No?
