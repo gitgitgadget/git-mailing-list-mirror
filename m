@@ -2,101 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CE193C43217
-	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 09:46:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF4A4C433FE
+	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 10:04:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229873AbiK1Jqv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Nov 2022 04:46:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33378 "EHLO
+        id S230085AbiK1KEE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Nov 2022 05:04:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45146 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229612AbiK1Jqt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2022 04:46:49 -0500
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 188A519034
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 01:46:49 -0800 (PST)
-Received: by mail-oi1-x233.google.com with SMTP id e205so10943522oif.11
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 01:46:49 -0800 (PST)
+        with ESMTP id S230020AbiK1KD6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2022 05:03:58 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80B7A1A208
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 02:03:57 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id o5-20020a17090a678500b00218cd5a21c9so9669622pjj.4
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 02:03:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=OTB6fJZfaH6mClQyVickdw73O7AHJ6q1iemFd2LWk94=;
-        b=UBJu+BnJ4CosQehJHeoDNNvdByBFRhDsX4CnQiqSkBrGisbM2sBYwXzul8GVp8uIjG
-         AFrsMl/bRBQabPwJGC59gjGaLoCwuDre8itrlNw/9ekGG+fhAf8f1klGV8QARGAl+Uf7
-         lBrEsUqVKEzDQm5V0ifnzIenD5JdVUyG7HydF+D+x15Z/MgCjvswcR6ubFdkeWLuy2AT
-         PyXKGH0MsCk3S14ld5nZC1+97x82LSmjk7kJwmxCPGe0/KHCRjq5AKRwLR2NfzA+Zx0v
-         Hfm5MhP4wUeiCdq8Z1pd+1HOWwmZTByyWYurv66D0Jt+jjKklWcb/sTCYKvuHCYKd6M5
-         MWng==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=s9rJHklcMiQ/LLELdUphyeJ3/xCtbM8/qCPY7J+FUE4=;
+        b=aGZdB7vb1/h0WPrM072DINxIyzULrCjF3mSq4PCfajT4SRjDefdZojlzJqN0sLP64B
+         mTcjgBN8EAJdqaISbpBIMu+qBT3/4EDx2naDFvMSmdb0bZHvzwSu/uBWMEW+Jn6emQYP
+         vab3wy1zKfNyyXUPvyCKmMxg5eb3R4OWo3SdqHhcZDmSXKZw5Yu2rkFzaQlTb/ThawTF
+         61fpj4stOKAuOuyDGOuxfNsg9m+zj6AU9Vm9EvXxSckvCY6Nms4hmX0AihD3pbFcRffJ
+         Z5X4H017ZwzdjMH2zhH8VWN50tJSZ9Ss+fG6HkycihsY+/MUwWQvTvnLpoi+ISEBIV0I
+         KNQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OTB6fJZfaH6mClQyVickdw73O7AHJ6q1iemFd2LWk94=;
-        b=dbdV+WpvDXitpD1zUxz5u4Qkf/V29QBw0WlJNwAVAKM9XRsfhpSs2VcUxnZ7O8oSlg
-         2okBDNkr7LTWMQtrhjqkRtkgGHcUH/8HUFvm8g7UY64r+BV+phqrMqEZinrpcfIHWUc+
-         EgnIZ1WGh4+DkfF0loVec9BxMcgFYeUEY1ryJd2PoflIk7a1kX1ZSVzFObhE0Vt8/Jvi
-         dC5/UFyAWg5Zb4XsgC5g8Mgzp+eLWC31/yQnorR53YzZVOSNxeLIaVsvR5TIbm4PhZg3
-         kU16lrnzNoxdhA4rBvVb8W81VyIpaikK7qV8Q9Py5XhdfQrCRqEX8CuOK5Ypi4SPgpLm
-         Xahw==
-X-Gm-Message-State: ANoB5pmVBDqlpzbxMSTg9/49EIT+Lef0xpChZ/gQ+8H1CxTs4605gHf7
-        qxRPfphydB9Zpv+fd1B7fb1kuCjmutYcIzto3kYRZDSb
-X-Google-Smtp-Source: AA0mqf4YEuLOr/AGuHw/f+32N+wJinfijirnSVKskSB085ACv1xKRW/8qBk2fQt+IdvwqVrAxJkPMGlTuRp7E2STvIc=
-X-Received: by 2002:aca:1004:0:b0:350:d543:7554 with SMTP id
- 4-20020aca1004000000b00350d5437554mr26016436oiq.251.1669628808456; Mon, 28
- Nov 2022 01:46:48 -0800 (PST)
-MIME-Version: 1.0
-References: <20221127145130.16155-1-worldhello.net@gmail.com>
- <20221127145130.16155-4-worldhello.net@gmail.com> <xmqqwn7f7ktb.fsf@gitster.g>
-In-Reply-To: <xmqqwn7f7ktb.fsf@gitster.g>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Mon, 28 Nov 2022 17:46:37 +0800
-Message-ID: <CANYiYbHtC57e4PpsxKRcfU9QVwjiy=__AnfgsUMzBeJr7LYaTw@mail.gmail.com>
-Subject: Re: [PATCH v1 4/4] t1301: do not change $CWD in "shared=all" test case
-To:     Junio C Hamano <gitster@pobox.com>
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=s9rJHklcMiQ/LLELdUphyeJ3/xCtbM8/qCPY7J+FUE4=;
+        b=N0fRzD7pRBNRrFbgWIOn7kjQvbmVtHTU1rB7ZsTMG8V3FaR1FBJxZXBpvADKkZjxUO
+         7QkZm9K+XvG37mk0wbE0SWbD3TQBmtcxj0YfzLnmVzy2nXLaE8E8PHV4//iaTcjl61wo
+         HCFuZKKlqrQsXJf0sxmlyYOc1C6ZCxhSERP1uw0nWUS1Y4VPr8G7wPWMW2HBNfyfV02v
+         BxD+viDXkdyYeNR6K6/0imfsj/LLdJxvTMiizwL/5LY9MpqnJhKGxlOJVJGKSPqebALD
+         wQtYqPdPRJ+DRpMQ6MegU0EVSjiO2BJDvErhbps1YjPAALI/seu4SxNoc9t1ofMIKrOK
+         Lx2A==
+X-Gm-Message-State: ANoB5pk0s7Xv0yXK1LJJjXu0Lgc9g4l91O8vd+q+mQAMbtTSX8H5o4TD
+        Qcesj88kQsXKHLNyzuWR4Lw=
+X-Google-Smtp-Source: AA0mqf49Z2e9Lltv/Va70OboOkdLblFhPLPgBpLoSJdCfJL69+0cdCKGDFDZK2mTcyDjBF79HFbOgQ==
+X-Received: by 2002:a17:902:e550:b0:184:dc59:cc9f with SMTP id n16-20020a170902e55000b00184dc59cc9fmr33711815plf.89.1669629836723;
+        Mon, 28 Nov 2022 02:03:56 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id y2-20020a17090322c200b0017f73dc1549sm8417614plg.263.2022.11.28.02.03.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Nov 2022 02:03:56 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
 Cc:     Git List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Content-Type: text/plain; charset="UTF-8"
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 3/3] Revert "pack-objects: lazily set up "struct
+ rev_info", don't leak"
+References: <c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.de>
+        <d19c6cb4-611f-afea-8a14-5e58d7509113@web.de>
+        <f5779e19-813c-cda9-2f84-9fe58f745e89@web.de>
+Date:   Mon, 28 Nov 2022 19:03:55 +0900
+In-Reply-To: <f5779e19-813c-cda9-2f84-9fe58f745e89@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sun, 20 Nov 2022 11:13:48 +0100")
+Message-ID: <xmqqv8mz5ras.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 28, 2022 at 12:41 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Jiang Xin <worldhello.net@gmail.com> writes:
->
-> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> >
-> > In test case "shared=all", the working directory is permanently changed
-> > to the "sub" directory. This leads to a strange behavior that the
-> > temporary repositories created by subsequent test cases are all in this
-> > "sub" directory, such as "sub/new", "sub/child.git". If we bypass this
-> > test case, all subsequent test cases will have different working
-> > directory.
-> >
-> > Since the test case "shared=all" and all subsequent will work properly
-> > in the default test repository, we don't need to create and change to
-> > the "sub" directory in the test case "shared=all".
->
-> It is much worse than that.  If existing tests after this step were
-> running destructive operations in their "..", because we have this
-> extra "sub" directory and such a destructive test were running
-> there, the damage would have been contained in $TRASH_DIRECTORY but
-> with this change, it will touch t/ (or the parent directory of the
-> $TRASH_DIRECTORY).  So, "will work properly" may not be sufficient;
-> we need to audit the rest of the script and make sure there is no
-> such funny "step outside the test enviromnent" happening before we
-> are sure that this is a "safe" change.
+René Scharfe <l.s.r@web.de> writes:
 
-No such funny operations in the follow test cases, but will add some
-notes in commit log.
+> This reverts commit 5cb28270a1ff94a0a23e67b479bbbec3bc993518.
+>
+> 5cb28270a1 (pack-objects: lazily set up "struct rev_info", don't leak,
+> 2022-03-28) avoided leaking rev_info allocations in many cases by
+> calling repo_init_revisions() only when the .filter member was actually
+> needed, but then still leaking it.  That was fixed later by 2108fe4a19
+> (revisions API users: add straightforward release_revisions(),
+> 2022-04-13), making the reverted commit unnecessary.
+
+Hmph, with this merged, 'seen' breaks linux-leaks job in a strange
+way.
+
+https://github.com/git/git/actions/runs/3563546608/jobs/5986458300#step:5:3917
+
+Does anybody want to help looking into it?
 
 Thanks.
-
---
-Jiang Xin
-
->
-> It is the "right" thing to do, though.  I do not see any reason why
-> we want to have an extra level "sub" directory there.
