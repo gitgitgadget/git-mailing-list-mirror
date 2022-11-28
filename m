@@ -2,95 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF4A4C433FE
-	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 10:04:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0A1EC433FE
+	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 10:13:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230085AbiK1KEE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Nov 2022 05:04:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45146 "EHLO
+        id S230216AbiK1KNy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Nov 2022 05:13:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230020AbiK1KD6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2022 05:03:58 -0500
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80B7A1A208
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 02:03:57 -0800 (PST)
-Received: by mail-pj1-x1030.google.com with SMTP id o5-20020a17090a678500b00218cd5a21c9so9669622pjj.4
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 02:03:57 -0800 (PST)
+        with ESMTP id S230211AbiK1KNt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2022 05:13:49 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C32BD13E35
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 02:13:48 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id q7so15058411wrr.8
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 02:13:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=s9rJHklcMiQ/LLELdUphyeJ3/xCtbM8/qCPY7J+FUE4=;
-        b=aGZdB7vb1/h0WPrM072DINxIyzULrCjF3mSq4PCfajT4SRjDefdZojlzJqN0sLP64B
-         mTcjgBN8EAJdqaISbpBIMu+qBT3/4EDx2naDFvMSmdb0bZHvzwSu/uBWMEW+Jn6emQYP
-         vab3wy1zKfNyyXUPvyCKmMxg5eb3R4OWo3SdqHhcZDmSXKZw5Yu2rkFzaQlTb/ThawTF
-         61fpj4stOKAuOuyDGOuxfNsg9m+zj6AU9Vm9EvXxSckvCY6Nms4hmX0AihD3pbFcRffJ
-         Z5X4H017ZwzdjMH2zhH8VWN50tJSZ9Ss+fG6HkycihsY+/MUwWQvTvnLpoi+ISEBIV0I
-         KNQg==
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=g5Gy4wgKdkathVVCGimA5ZOmeTTqAKc3MZoEjg23BeI=;
+        b=Vc5OH0WjijLOwmLZiaZMAQY1L3aC2YmyECRF02D2GP8XgdrIvpKUJsplR3Rda/eQyL
+         4SCslJ75/CFJaWYscq3/a8BwIVbqCjm+Zf7Qv0SKWRZrh6eFZUjR/d+unD+/HFd5Su/N
+         8E40b++lg1u80dPo4x9Wncf9r6HZkDS4iQPJDVurb2SOIX8ABPlKTmn4usOl99kTf6eH
+         7jtmG64DWtBHkOX2v9+2edZ4njLZ3hviRRFzmOwZeoU78u43Wc8afuGV2TZi0ZIdeMbW
+         Om4M963DhHDklTIFNnX/2y+Ixh3tEoz8kVI6Kna2PSAAyCGVN+OuOYRLvzvnRf0xTCt3
+         XTHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=s9rJHklcMiQ/LLELdUphyeJ3/xCtbM8/qCPY7J+FUE4=;
-        b=N0fRzD7pRBNRrFbgWIOn7kjQvbmVtHTU1rB7ZsTMG8V3FaR1FBJxZXBpvADKkZjxUO
-         7QkZm9K+XvG37mk0wbE0SWbD3TQBmtcxj0YfzLnmVzy2nXLaE8E8PHV4//iaTcjl61wo
-         HCFuZKKlqrQsXJf0sxmlyYOc1C6ZCxhSERP1uw0nWUS1Y4VPr8G7wPWMW2HBNfyfV02v
-         BxD+viDXkdyYeNR6K6/0imfsj/LLdJxvTMiizwL/5LY9MpqnJhKGxlOJVJGKSPqebALD
-         wQtYqPdPRJ+DRpMQ6MegU0EVSjiO2BJDvErhbps1YjPAALI/seu4SxNoc9t1ofMIKrOK
-         Lx2A==
-X-Gm-Message-State: ANoB5pk0s7Xv0yXK1LJJjXu0Lgc9g4l91O8vd+q+mQAMbtTSX8H5o4TD
-        Qcesj88kQsXKHLNyzuWR4Lw=
-X-Google-Smtp-Source: AA0mqf49Z2e9Lltv/Va70OboOkdLblFhPLPgBpLoSJdCfJL69+0cdCKGDFDZK2mTcyDjBF79HFbOgQ==
-X-Received: by 2002:a17:902:e550:b0:184:dc59:cc9f with SMTP id n16-20020a170902e55000b00184dc59cc9fmr33711815plf.89.1669629836723;
-        Mon, 28 Nov 2022 02:03:56 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id y2-20020a17090322c200b0017f73dc1549sm8417614plg.263.2022.11.28.02.03.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Nov 2022 02:03:56 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 3/3] Revert "pack-objects: lazily set up "struct
- rev_info", don't leak"
-References: <c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.de>
-        <d19c6cb4-611f-afea-8a14-5e58d7509113@web.de>
-        <f5779e19-813c-cda9-2f84-9fe58f745e89@web.de>
-Date:   Mon, 28 Nov 2022 19:03:55 +0900
-In-Reply-To: <f5779e19-813c-cda9-2f84-9fe58f745e89@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sun, 20 Nov 2022 11:13:48 +0100")
-Message-ID: <xmqqv8mz5ras.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=g5Gy4wgKdkathVVCGimA5ZOmeTTqAKc3MZoEjg23BeI=;
+        b=Ch/P3Zjq4GmhSnYw14L+7xrgBbcrEvtkfnkRQH3GDnMy/xyiRd7vd0yE9aLPKf6MV9
+         J0lX2OCR7X+iQ7x/CFiWGptTaoVJct2fuAPE4HRqkalEHwH6BxiNP2Ei6Le5yPAz0SYV
+         35ocQnRiRQU8F72B/UovBnPKpiH/1l7Svu88MeKPwz61SZ/yahaR6McH0hz8Sm0jHThf
+         Lp3sRfoObu5+3oE2QWw7bxfSx17hqAwV/2o9eenvhE5Cjarurx/dWLwQt9YeplwH1sIP
+         AFJJTbgPHYzWazT5Vxtk+JpxuHBrbp/XJJlY+kDR7mWvJC1O/Fa9b66vyisdh82z7scW
+         +IBg==
+X-Gm-Message-State: ANoB5pns0KlKXUwEGTWrA66YIpuXdofzARMWIVM6FEJASWdtc0nVViPk
+        B2Z3+BNOfplcRl89RXlgUgx6MxUCen0=
+X-Google-Smtp-Source: AA0mqf7m85Wk+7EW65+bHHcSDRwuyZU+Hi8tuQ/e7rG2I7iiFJzzm1Sn+hRYguPEaxMz2WovAy97mw==
+X-Received: by 2002:adf:f7c8:0:b0:236:720a:e391 with SMTP id a8-20020adff7c8000000b00236720ae391mr23593828wrq.368.1669630427217;
+        Mon, 28 Nov 2022 02:13:47 -0800 (PST)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id o15-20020a5d474f000000b002421a8f4fa6sm1458210wrs.92.2022.11.28.02.13.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Nov 2022 02:13:46 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <b79a4852-1e20-2c9a-a91c-f1ea629af402@dunelm.org.uk>
+Date:   Mon, 28 Nov 2022 10:13:46 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v8 0/3] git-jump: support Emacs
+Content-Language: en-US
+To:     Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>,
+        Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+References: <pull.1423.v7.git.1669347422.gitgitgadget@gmail.com>
+ <pull.1423.v8.git.1669511933.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1423.v8.git.1669511933.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+Hi Yoichi
 
-> This reverts commit 5cb28270a1ff94a0a23e67b479bbbec3bc993518.
->
-> 5cb28270a1 (pack-objects: lazily set up "struct rev_info", don't leak,
-> 2022-03-28) avoided leaking rev_info allocations in many cases by
-> calling repo_init_revisions() only when the .filter member was actually
-> needed, but then still leaking it.  That was fixed later by 2108fe4a19
-> (revisions API users: add straightforward release_revisions(),
-> 2022-04-13), making the reverted commit unnecessary.
+On 27/11/2022 01:18, Yoichi NAKAYAMA via GitGitGadget wrote:
+> Add an optional argument 'stdout' to print the quickfix lines to standard
+> output. It can be used with M-x grep on Emacs.
+> 
+> Detect emacsclient by GIT_EDITOR and invoke the function. Tested with
+> EDITOR="emacsclient" and EDITOR="emacsclient -t".
 
-Hmph, with this merged, 'seen' breaks linux-leaks job in a strange
-way.
+I've tested this version and it addresses all of my previous concerns, 
+thanks for working on it.
 
-https://github.com/git/git/actions/runs/3563546608/jobs/5986458300#step:5:3917
+Best Wishes
 
-Does anybody want to help looking into it?
+Phillip
 
-Thanks.
+> Jeff King (1):
+>    git-jump: move valid-mode check earlier
+> 
+> Yoichi Nakayama (2):
+>    git-jump: add an optional argument '--stdout'
+>    git-jump: invoke emacs/emacsclient
+> 
+>   contrib/git-jump/README   | 10 ++++++++-
+>   contrib/git-jump/git-jump | 45 ++++++++++++++++++++++++++++++++++++---
+>   2 files changed, 51 insertions(+), 4 deletions(-)
+> 
+> 
+> base-commit: eea7033409a0ed713c78437fc76486983d211e25
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1423%2Fyoichi%2Fgit-jump-emacs-support-v8
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1423/yoichi/git-jump-emacs-support-v8
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1423
+> 
+> Range-diff vs v7:
+> 
+>   1:  446777d300d ! 1:  afface9b010 git-jump: add an optional argument '--stdout'
+>       @@ contrib/git-jump/git-jump: mode_ws() {
+>        +	case "$1" in
+>        +	--stdout)
+>        +		use_stdout=t
+>       -+		shift
+>        +		;;
+>        +	--*)
+>        +		usage >&2
+>       @@ contrib/git-jump/git-jump: mode_ws() {
+>        +		break
+>        +		;;
+>        +	esac
+>       ++	shift
+>        +done
+>         if test $# -lt 1; then
+>         	usage >&2
+>   2:  972d51888ba = 2:  e9aa6fdf836 git-jump: move valid-mode check earlier
+>   3:  d8233f96175 ! 3:  048f508ca99 git-jump: invoke emacs/emacsclient
+>       @@ contrib/git-jump/git-jump: EOF
+>        +		#
+>        +		# Wait for completion of the asynchronously executed process
+>        +		# to avoid race conditions in case of "emacsclient".
+>       -+		eval "$editor --eval \"(let ((buf (compilation-start \\\"cat \$1\\\" 'grep-mode))) (pop-to-buffer buf) (select-frame-set-input-focus (selected-frame)) (while (get-buffer-process buf) (sleep-for 0.1)))\""
+>       ++		eval "$editor --eval \"(let ((buf (grep \\\"cat \$1\\\"))) (pop-to-buffer buf) (select-frame-set-input-focus (selected-frame)) (while (get-buffer-process buf) (sleep-for 0.1)))\""
+>        +		;;
+>        +	*)
+>        +		# assume anything else is vi-compatible
+> 
