@@ -2,85 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0931CC4332F
-	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 08:37:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7769C433FE
+	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 09:40:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229589AbiK1Ihr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Nov 2022 03:37:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48216 "EHLO
+        id S230380AbiK1Jk2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Nov 2022 04:40:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229827AbiK1Iho (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2022 03:37:44 -0500
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5E2065C3
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 00:37:43 -0800 (PST)
-Received: by mail-pf1-x430.google.com with SMTP id w79so9774714pfc.2
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 00:37:43 -0800 (PST)
+        with ESMTP id S229771AbiK1Jk1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2022 04:40:27 -0500
+Received: from mail-pg1-x532.google.com (mail-pg1-x532.google.com [IPv6:2607:f8b0:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4BBF6153
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 01:40:26 -0800 (PST)
+Received: by mail-pg1-x532.google.com with SMTP id 136so9454199pga.1
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 01:40:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=47uqb08mq7TNtGBQ3JUYBnS/n/T8GgbJA6UdQ2L4WD0=;
-        b=SANHZrUG1G19NlZaf6efxV1qWcq5YcGZ4TG4kB5O+7NDUZHc0xoWgYFx3bmJAfgAEo
-         wmV5M4jCaMRrLMG9NBaXQkU7TM13fZLoki/hGA8m7gmsjl+HDuU5K4hjyBGF9e5tQxFE
-         Jkbo71gphnnE6Mu/3B1J0WBJZHJUnAs2typyoWSAN7IlSTi2JMFSoYgULp3iXEAiYHkE
-         MsuiipOo2H3PPBVjvhqsuN3WTWnqJSNmh+phCpI7Ak5AiItk1zLQ102UnnFWfQ1lTtIP
-         WRKXkqYt058pfeZ6a8Y7yCZb2FCHSDJKDt2+ZBuDm6HQUJ7rcO8H1C+9Ulh62EYKbjmX
-         0sZw==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=TcCd9UdD12YUQPQywwnxXVJbwpLGFO7NzIVJx0qutZc=;
+        b=qhAlneR2eStPR+UKJOrX73a4wZ6Els1veme7CVwPzp9EK9XldJ3rzaoXFlAKN5IzaN
+         p0q0mnRbQUAlKZ5H6N7xrYEKmwTNV92+VOoRXGLl9j6qeT0Ds5GaYj5qxtmCKANeWbI4
+         Dgb11kN4gPEslo80H7tZT941F72ce+vhrvDyj+ltMAyGg+X16foWBcedRjM8LO7NO97c
+         Vfn13X/+yFrbDEeuEMFgXMLzqSwhMBNQMzga2yF1F+tYMdrZ3eyiof9Of90oG4cebb4r
+         W63YW6as0lEWXcfwe+3Jz1HYyqq3JY7M5ETvG8Zw3b1WdZ2NtUPOg7OBBsEssJV3Ryh9
+         tfug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=47uqb08mq7TNtGBQ3JUYBnS/n/T8GgbJA6UdQ2L4WD0=;
-        b=6PbDszYpnN35w6024V2zDRudm1GJpVh5Xe/6c4Zjzj9AVI7YCDSOvOBr0feMVk/RK6
-         achHDdvrczBVfer9EFAzzoF8YcvuINFZj4E1tzTj6ccM5SJnMlAH/S14f30VaqrPGVgE
-         8A0FEZLCvN2HG53hwyiGS7vGuquiOj2oLpK5uVie/opWDZw16MhDQZ0mV0Gm9oC7eqaO
-         03+eW6Z5kQc7/KlaIUcgHRO7jOaDWK33+/g/QH2TXeIvc0W2XYI9P/HYRJ6x8ZKsybmH
-         cZEQ55iPZnkLnotFPGrhqQ9qAHh/c+0WzDD1m+CJZcXZIa7EcfQFogzb5W56H2LAAI3o
-         mabg==
-X-Gm-Message-State: ANoB5pn3n5K3pNWequep6QsFGXVBuQn/r0h5M27Kt66B7BBKvJ2IgKfS
-        evQJwlf6OYVubmqdcYsaWwo=
-X-Google-Smtp-Source: AA0mqf5Eyu8EDdJPu1xMy4QT+jVyf2eG7xhNsX+tGCW6UMrFErKXRofbtiHHhuQFimEQmADw8kfTYw==
-X-Received: by 2002:a63:cf0e:0:b0:477:b603:f754 with SMTP id j14-20020a63cf0e000000b00477b603f754mr23348403pgg.232.1669624663178;
-        Mon, 28 Nov 2022 00:37:43 -0800 (PST)
-Received: from [192.168.43.80] (subs09a-223-255-225-66.three.co.id. [223.255.225.66])
-        by smtp.gmail.com with ESMTPSA id d4-20020a62f804000000b0056e8eb09d58sm7658906pfh.170.2022.11.28.00.37.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Nov 2022 00:37:42 -0800 (PST)
-Message-ID: <abd9d2ce-a68b-905e-4ec2-4964aef6ee6c@gmail.com>
-Date:   Mon, 28 Nov 2022 15:37:39 +0700
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=TcCd9UdD12YUQPQywwnxXVJbwpLGFO7NzIVJx0qutZc=;
+        b=C6Qx/Rcy0DHpDHnHWfr0MBE7nPfBUoDYMTX117EBYpqavtZnGflKchOTjOLABgqq81
+         C4rM8xI7z9C+eISRhs9I5r7yp9xGT+WH5FEhyRghgLUEoBBFPdXMqLSnqCEf2rYZL5RR
+         qjPH7wMDBZ5JH/+3PXr2N/0Tqn8SeS9VDsnoNoGXX4DL5dENkRBVPKISzsvNBX2MJB1P
+         n4ZZ7pC1NWK3JL2ovu7VDt9b91pWTmkrkqIkgm+2+iey4Op6ogKdWNn6NZEiPouWt/gp
+         9L1fpPu+r6uomiH7lwG0VIUpzUaINaG+QMZCIZ+QOgAqx8KfAiYMiyiuJRvAJxjHUDh1
+         M1Kw==
+X-Gm-Message-State: ANoB5pm3wZaAJSrGOpBRZSJ9PqH6FchMFN/U0PpW7OEkL7uRQwXZYahw
+        Xf2N4/4gHGzlxYmPBytnP5g=
+X-Google-Smtp-Source: AA0mqf4kcwjgS0846SELFxjn7F4V5DbMVJDBWi4zxHQaPARCloIrxOxX9HWupKGXjrFXK+qau3qFZw==
+X-Received: by 2002:a63:e609:0:b0:458:cfe7:8dd with SMTP id g9-20020a63e609000000b00458cfe708ddmr25508277pgh.548.1669628425990;
+        Mon, 28 Nov 2022 01:40:25 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id ij13-20020a170902ab4d00b001785fa792f4sm8298580plb.243.2022.11.28.01.40.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Nov 2022 01:40:25 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Matthew John Cheetham <mjcheetham@outlook.com>,
+        M Hickford <mirth.hickford@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Matthew John Cheetham <mjcheetham@github.com>
+Subject: Re: [PATCH v3 00/11] Enhance credential helper protocol to include
+ auth headers
+References: <pull.1352.v2.git.1666372083.gitgitgadget@gmail.com>
+        <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
+Date:   Mon, 28 Nov 2022 18:40:25 +0900
+In-Reply-To: <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com> (Matthew
+        John Cheetham via GitGitGadget's message of "Wed, 02 Nov 2022 22:09:18
+        +0000")
+Message-ID: <xmqq5yez76ye.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH] i18n: fix command template placeholder format
-To:     =?UTF-8?Q?Jean-No=c3=abl_Avila_via_GitGitGadget?= 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc:     =?UTF-8?Q?Jean-No=c3=abl_Avila?= <jn.avila@free.fr>
-References: <pull.1435.git.1669483442230.gitgitgadget@gmail.com>
-Content-Language: en-US
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-In-Reply-To: <pull.1435.git.1669483442230.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/27/22 00:24, Jean-Noël Avila via GitGitGadget wrote:
- >  static const char * const revert_usage[] = {
-> -	N_("git revert [--[no-]edit] [-n] [-m parent-number] [-s] [-S[<keyid>]] <commit>..."),
-> +	N_("git revert [--[no-]edit] [-n] [-m <parent-number>] [-s] [-S[<keyid>]] <commit>..."),
->  	N_("git revert (--continue | --skip | --abort | --quit)"),
->  	NULL
->  };
-> 
+"Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Looks OK, thanks!
+> Testing these new additions, I introduce a new test helper test-http-server
+> that acts as a frontend to git-http-backend; a mini HTTP server based
+> heavily on git-daemon, with simple authentication configurable by command
+> line args.
 
-Reviewed-by: Bagas Sanjaya <bagasdotme@gmail.com>
+I did not try to figure out the reason but the topic with its tests
+seem to break in 'seen' the linux-cmake-ctest CI job.
 
--- 
-An old man doll... just what I always wanted! - Clara
+  https://github.com/git/git/actions/runs/3562942886/jobs/5985179202
 
+but the same test does not break under usual "make test".
+
+Can people who are interested in the cmake-ctest stuff take a look?
+
+It is tempting to eject the ab/cmake-nix-and-ci topic that is
+already in 'next', under the theory that what that topic does to the
+tests "works" for some tests but not for others, and this topic is
+an unfortunate collateral damage whose tests weren't something the
+other topic did not support well.  If the cmake-ctest stuff is in
+such a shape, then it may have been a bit premature to merge it
+down.
+
+Thanks.
