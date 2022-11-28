@@ -2,92 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7CC5C433FE
-	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 09:44:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CE193C43217
+	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 09:46:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229771AbiK1JoD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Nov 2022 04:44:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60774 "EHLO
+        id S229873AbiK1Jqv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Nov 2022 04:46:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229680AbiK1JoC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2022 04:44:02 -0500
-Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64D8418E31
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 01:44:01 -0800 (PST)
-Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-142b72a728fso12296525fac.9
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 01:44:01 -0800 (PST)
+        with ESMTP id S229612AbiK1Jqt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2022 04:46:49 -0500
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 188A519034
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 01:46:49 -0800 (PST)
+Received: by mail-oi1-x233.google.com with SMTP id e205so10943522oif.11
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 01:46:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=/oJn/PttIIA0VjGbetBluNEGmQpHJguamid9nXqIlP8=;
-        b=XyODy/eerj4e8GablGWD+65fsQiHs6raPzyhj4G+7fY8vFbFcybtE4wcHVKSvyZID6
-         RoNhnpyfecNIbZnPAgcan/3nVtb8i/fEi9sNT2cNt2v7JO4E4JQSEwHaF1mx0xoP4GgP
-         97gFqnuhN0+LKMAOq/HVr8AaGt3UmO/dd3V3by2EMc20etaDKGbJawy0HdV092PpOLAD
-         Q9ZDz5HkdCFVXqXapHJPuNDrA3zBmFbdLNmm+nZ+npyQldipwGeJu3AUeonPyN3dhlDa
-         LepVDuKv1ZEi+8zPGKD0QgHn9a0xbtKax0/0XvM1ZW7liljj+AvCwsBWUPmlAWLuJbVT
-         KIwA==
+        bh=OTB6fJZfaH6mClQyVickdw73O7AHJ6q1iemFd2LWk94=;
+        b=UBJu+BnJ4CosQehJHeoDNNvdByBFRhDsX4CnQiqSkBrGisbM2sBYwXzul8GVp8uIjG
+         AFrsMl/bRBQabPwJGC59gjGaLoCwuDre8itrlNw/9ekGG+fhAf8f1klGV8QARGAl+Uf7
+         lBrEsUqVKEzDQm5V0ifnzIenD5JdVUyG7HydF+D+x15Z/MgCjvswcR6ubFdkeWLuy2AT
+         PyXKGH0MsCk3S14ld5nZC1+97x82LSmjk7kJwmxCPGe0/KHCRjq5AKRwLR2NfzA+Zx0v
+         Hfm5MhP4wUeiCdq8Z1pd+1HOWwmZTByyWYurv66D0Jt+jjKklWcb/sTCYKvuHCYKd6M5
+         MWng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=/oJn/PttIIA0VjGbetBluNEGmQpHJguamid9nXqIlP8=;
-        b=NNxwwQfbXlgGlu7p2BsNkD9EnISv+hlaQyucgOWrYUNdKP6n59JCA46BqiJ4xmVnN/
-         5TNgnrCsI56osXUAiFxW4wBxq5pPi+hvjuLE5AREJeA6ZZMRcFAgwEzH92x1sGaWy7vW
-         t0S7HGHbfShobpQ6s9gP6jnhXa137lYdg8kAKh2ZDDdAVKPP8TiKb3lyZ5J2W74k+F43
-         mS2FPbOvNI+5+GSqvfWW1KwkHAVip96lP0CbklT8N4I03mPhWfjzZNyheK8haqN1m1Ez
-         ow05FrF/ZXjoBa5qY2qmV/lmV+omz/v622jNEPCIdoLcwQSKMvSv3+K+GrUbr4DPskb1
-         dzCg==
-X-Gm-Message-State: ANoB5pnPv8MjCI/DclmBFyq+ei1wfglQ9b2Pk3HRbcG3jFV6qvqpQfKE
-        5lvjIvBryTqn8T6xr09SxJHPRDnfjfBr0wQN6JA=
-X-Google-Smtp-Source: AA0mqf5Dnz94N5Wkc+sueTwOv5mjsZcEkGxQfG1sxUxJ7LESxBHFCsPgn52fazfYIYXsmTevLVbw2j/5XQUgteSrYoc=
-X-Received: by 2002:a05:6871:b2a:b0:143:824a:f05b with SMTP id
- fq42-20020a0568710b2a00b00143824af05bmr6174834oab.80.1669628640745; Mon, 28
- Nov 2022 01:44:00 -0800 (PST)
+        bh=OTB6fJZfaH6mClQyVickdw73O7AHJ6q1iemFd2LWk94=;
+        b=dbdV+WpvDXitpD1zUxz5u4Qkf/V29QBw0WlJNwAVAKM9XRsfhpSs2VcUxnZ7O8oSlg
+         2okBDNkr7LTWMQtrhjqkRtkgGHcUH/8HUFvm8g7UY64r+BV+phqrMqEZinrpcfIHWUc+
+         EgnIZ1WGh4+DkfF0loVec9BxMcgFYeUEY1ryJd2PoflIk7a1kX1ZSVzFObhE0Vt8/Jvi
+         dC5/UFyAWg5Zb4XsgC5g8Mgzp+eLWC31/yQnorR53YzZVOSNxeLIaVsvR5TIbm4PhZg3
+         kU16lrnzNoxdhA4rBvVb8W81VyIpaikK7qV8Q9Py5XhdfQrCRqEX8CuOK5Ypi4SPgpLm
+         Xahw==
+X-Gm-Message-State: ANoB5pmVBDqlpzbxMSTg9/49EIT+Lef0xpChZ/gQ+8H1CxTs4605gHf7
+        qxRPfphydB9Zpv+fd1B7fb1kuCjmutYcIzto3kYRZDSb
+X-Google-Smtp-Source: AA0mqf4YEuLOr/AGuHw/f+32N+wJinfijirnSVKskSB085ACv1xKRW/8qBk2fQt+IdvwqVrAxJkPMGlTuRp7E2STvIc=
+X-Received: by 2002:aca:1004:0:b0:350:d543:7554 with SMTP id
+ 4-20020aca1004000000b00350d5437554mr26016436oiq.251.1669628808456; Mon, 28
+ Nov 2022 01:46:48 -0800 (PST)
 MIME-Version: 1.0
 References: <20221127145130.16155-1-worldhello.net@gmail.com>
- <20221127145130.16155-3-worldhello.net@gmail.com> <xmqq35a390ek.fsf@gitster.g>
-In-Reply-To: <xmqq35a390ek.fsf@gitster.g>
+ <20221127145130.16155-4-worldhello.net@gmail.com> <xmqqwn7f7ktb.fsf@gitster.g>
+In-Reply-To: <xmqqwn7f7ktb.fsf@gitster.g>
 From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Mon, 28 Nov 2022 17:43:49 +0800
-Message-ID: <CANYiYbGwHQiDh7qf-LTtuUM7eC3AEpkuXoejOBkJs-VGZTA14A@mail.gmail.com>
-Subject: Re: [PATCH v1 3/4] t1301: wrap the statements in the for loop
+Date:   Mon, 28 Nov 2022 17:46:37 +0800
+Message-ID: <CANYiYbHtC57e4PpsxKRcfU9QVwjiy=__AnfgsUMzBeJr7LYaTw@mail.gmail.com>
+Subject: Re: [PATCH v1 4/4] t1301: do not change $CWD in "shared=all" test case
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Git List <git@vger.kernel.org>,
-        Heikki Orsila <heikki.orsila@iki.fi>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Jiang Xin <zhiyou.jx@alibaba-inc.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 28, 2022 at 12:19 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Now you have three separate tests in an interation of the loop.  If
-> you skipped the first one in the iteration (by mistake) and let the
-> other two run, they will run with a wrong configuration and values
-> of $x and $y variables, either unset or leftover from the previous
-> round.
+On Mon, Nov 28, 2022 at 12:41 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> So I am not sure how this patch can be an improvement.
+> Jiang Xin <worldhello.net@gmail.com> writes:
+>
+> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> >
+> > In test case "shared=all", the working directory is permanently changed
+> > to the "sub" directory. This leads to a strange behavior that the
+> > temporary repositories created by subsequent test cases are all in this
+> > "sub" directory, such as "sub/new", "sub/child.git". If we bypass this
+> > test case, all subsequent test cases will have different working
+> > directory.
+> >
+> > Since the test case "shared=all" and all subsequent will work properly
+> > in the default test repository, we don't need to create and change to
+> > the "sub" directory in the test case "shared=all".
+>
+> It is much worse than that.  If existing tests after this step were
+> running destructive operations in their "..", because we have this
+> extra "sub" directory and such a destructive test were running
+> there, the damage would have been contained in $TRASH_DIRECTORY but
+> with this change, it will touch t/ (or the parent directory of the
+> $TRASH_DIRECTORY).  So, "will work properly" may not be sufficient;
+> we need to audit the rest of the script and make sure there is no
+> such funny "step outside the test enviromnent" happening before we
+> are sure that this is a "safe" change.
 
-I agree that this patch is not that necessary as the other 3 patches
-and will remove it in next reroll.
+No such funny operations in the follow test cases, but will add some
+notes in commit log.
+
+Thanks.
+
+--
+Jiang Xin
 
 >
-> If you wrapped the setting of $x, $y, $u and the config into a
-> helper shell function, e.g.
->
->         prepare_perm_test_variables () {
->                 u=$1
->                 x=...
->                 y=...
->                 u=...
->                 git config core.sharedrepository "$u"
->         }
->
-> before and outside the loop, and make these two tests in the loop to
-> call it upfront, then your users can skip each test and iteration
-> independently while ensuring that the necessary setup is always done
-> correctly, though.
->
+> It is the "right" thing to do, though.  I do not see any reason why
+> we want to have an extra level "sub" directory there.
