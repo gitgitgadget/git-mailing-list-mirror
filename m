@@ -2,135 +2,176 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE125C43217
-	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 14:12:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 265C3C433FE
+	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 14:19:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232434AbiK1OMf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Nov 2022 09:12:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40328 "EHLO
+        id S232455AbiK1OTL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Nov 2022 09:19:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232344AbiK1OMd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2022 09:12:33 -0500
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AAE1766A
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 06:12:29 -0800 (PST)
-Received: by mail-ot1-x32f.google.com with SMTP id p10-20020a9d76ca000000b0066d6c6bce58so6975497otl.7
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 06:12:29 -0800 (PST)
+        with ESMTP id S232452AbiK1OTB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2022 09:19:01 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAE77E17
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 06:18:58 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id ho10so26200957ejc.1
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 06:18:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=voXnFUZK1tf+FiAqtPrMvt2lsnkMpHtPAfEvPha+Qmo=;
-        b=qi5LZ4siuwW7Pw7vM2lgG4kRQH5IRGML5zvH6E2jSyGDl8VcXTtoMXPpU8aDtdPCNc
-         5mnfWDhxDgE28VBB0a6yaLEfhqU/uABdoD0AMLP6wNkhfztIVO/mjqCevgn/+/YB3qi4
-         2YiL7n5zkDVRF1e/cUHICDZuFioc0WvaXA6eyO/h8Aaw63PFjr4kjQ3xhnz1LOf6ez1r
-         laS+xdQ2Z+zg+7WoC1im/R+VzfsbxZJ2pS+Mu/hVKzgEsgT8tuiOQP2BpUlwmV7w0nX0
-         9cmuZ69vtjtZVH1+SuyeCy8pDFQckfnT36W2hkz8zsDb/qTIXtKxlf6kZwdZtzira3H1
-         8M3A==
+        bh=eefsvac+24WybhDYjdTQaOoeGLlmtlKg82+f6Zs/ruE=;
+        b=jRUPxk9/thMSr/bDNxLZatTPs5XG6y0aWRww5txxAny2vmIT91Dg3xt+BX1LM0x8ea
+         xRL89oIZqLhNFV0I23sQTJ1oMhPr2rViPQnofkMcJ1lgtpZLHkmFCA2TQrErX0p3GcYd
+         gYNhnfuj83aUHN9KCGKqUFq6TsNv12zSjZiXUh98h6YYrHEzhlI9m28f+kIf4tDTjm71
+         VJHqreSx5vKddQ88+BL3KcZWYuwLolJ8sJpCzVgyugEQVkFseuMUf14/SV7qWtGtMkIb
+         2mcXdaTKXjipD630d3XU7SHM28qF4YfEm1KVVU5a72Xqif9Mhw1DVW6e9T654kWavGVs
+         G8Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=voXnFUZK1tf+FiAqtPrMvt2lsnkMpHtPAfEvPha+Qmo=;
-        b=VKb7iMYUaLebkRy+K4cnMtMc/lGJLnYOYJsY753Gm8z+GRPM2RwFlM5VbnW4ARa8ew
-         RT/RkPHh5jkrC0NqNfj8yWzJVV32FCbYUjz4yA0ST16dp/0RR6k7HQ5IRW9kOwq1uZYu
-         ynp4qMK3r0yS1Ntr+t3VcYxiOtK7TiNClMA86VY3GrX1sTw4zIz40D9MQIwKXyZmNJrb
-         YIicpVdfvQUBmBbrS55zH4QDYSeYcxXmX5TSCnA8AFa4SfH/p0ziwzjIKNZVuQApi/Wv
-         1MeKjcdazlbTZeaLwcc+kuVh9SWL1oownCLnNIPlTzzlFFU5ikaq6lKKf7gpyox5AtDR
-         driQ==
-X-Gm-Message-State: ANoB5pmQwUt/blM9n3J/qd5+4cgaSUTG9cshdMguHu5ibP9jZqA5CR0L
-        Rzs8EdZAxGaRqvVJT1aEZWgtTdpOf3b2GYTCzsc=
-X-Google-Smtp-Source: AA0mqf7dawzfUvGz3ZT2GTPDhp4CHFV+f0wtGjWWTE5vWqRgcrYSo1YYiO+cX+UId0Q4LaHILc7t2b+JljDRrgAtE6o=
-X-Received: by 2002:a05:6830:134f:b0:66c:68e7:d673 with SMTP id
- r15-20020a056830134f00b0066c68e7d673mr16126629otq.31.1669644748326; Mon, 28
- Nov 2022 06:12:28 -0800 (PST)
+        bh=eefsvac+24WybhDYjdTQaOoeGLlmtlKg82+f6Zs/ruE=;
+        b=QJ8DAhOEFIjD83zwa2NZI4hgXmZVpfvqE7UBLnZBCyUkIZ6NXZob/+v9zmEkqS0oSR
+         YX0Of969mnwT+rVSXN1rK1mrOXBHEGTpgraLs2VMKLzc8aDQ22C25OK9lFKM7dXPHbxr
+         FDFGy7o8bDd5pIKq0K6WOOUDrZtoqMiU877tnG+mO1f9vTsi6jQlNCrKb7jUe7OLfxA9
+         dU9vRSUK9MruqgWWXjo9QCpRYeJSJQiT5vkQ4kfdWyap0+uThr3oJjv81oCdjSGaBwSG
+         x/q6sbCH5iYEesr8oik4wUrzz3y7dcP+G5qn4YIlq7drn1YTe86a1mSlivRV1sPo4vDJ
+         rRyQ==
+X-Gm-Message-State: ANoB5pnM+u8CbFwfadBBXaeFihLwzdrt7Kfe9yiB5BB+RQ7GYyWmaf3l
+        lFyt4oUYvb34v2sPasrwt/7iztyj0eLZMw==
+X-Google-Smtp-Source: AA0mqf6gEdoGvkF9a2B0D9fx4FAv2/fM5adscpvyyaOrHU12Uoc/ktIhQYPwgeBGPHlrZUbU7N4FLA==
+X-Received: by 2002:a17:906:6dd5:b0:78d:a633:b55 with SMTP id j21-20020a1709066dd500b0078da6330b55mr45363431ejt.106.1669645136993;
+        Mon, 28 Nov 2022 06:18:56 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id oy7-20020a170907104700b007ad69e9d34dsm5098561ejb.54.2022.11.28.06.18.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Nov 2022 06:18:56 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2] t5314: check exit code of "git"
+Date:   Mon, 28 Nov 2022 15:18:55 +0100
+Message-Id: <patch-v2-1.1-ca77a7249e6-20221128T141818Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.39.0.rc0.962.g4ca4168c9ac
+In-Reply-To: <patch-1.1-45b240740eb-20221128T115740Z-avarab@gmail.com>
+References: <patch-1.1-45b240740eb-20221128T115740Z-avarab@gmail.com>
 MIME-Version: 1.0
-References: <20221127145130.16155-1-worldhello.net@gmail.com>
- <20221128130323.8914-2-worldhello.net@gmail.com> <221128.86edtnky39.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221128.86edtnky39.gmgdl@evledraar.gmail.com>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Mon, 28 Nov 2022 22:12:16 +0800
-Message-ID: <CANYiYbHxgktZ27C0tPReS4m-esU9PD4jRacO08tmnrgyrq+jOg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] t1301: fix wrong template dir for git-init
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 28, 2022 at 9:28 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Mon, Nov 28 2022, Jiang Xin wrote:
->
-> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> >
-> > The template dir prepared in test case "forced modes" is not used as
-> > expected because a wrong template dir is provided to "git init". This i=
-s
-> > because the $CWD for "git-init" command is a sibling directory alongsid=
-e
-> > the template directory. Change it to the right template directory and
-> > add a protection test using "test_path_is_file".
-> >
-> > The wrong template directory was introduced by mistake in commit
-> > e1df7fe43f (init: make --template path relative to $CWD, 2019-05-10).
-> >
-> > Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> > ---
-> >  t/t1301-shared-repo.sh | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
-> > index 93a2f91f8a..7578e75d77 100755
-> > --- a/t/t1301-shared-repo.sh
-> > +++ b/t/t1301-shared-repo.sh
-> > @@ -140,7 +140,8 @@ test_expect_success POSIXPERM 'forced modes' '
-> >       (
-> >               cd new &&
-> >               umask 002 &&
-> > -             git init --shared=3D0660 --template=3Dtemplates &&
-> > +             git init --shared=3D0660 --template=3D../templates &&
-> > +             test_path_is_file .git/hooks/post-update &&
-> >               >frotz &&
-> >               git add frotz &&
-> >               git commit -a -m initial &&
->
-> This fix looks fishy to me. The code you're changing looks like it was
-> buggy, but this looks like it's sweeping under the rug the fact that
-> "templates" never did anything at this point.
->
-> So I'm not saying you should squash this in, but if you do so you'll see
-> that we only ever used this later.
->
->         diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
->         index d4315b5ef5a..106ccc5704e 100755
->         --- a/t/t1301-shared-repo.sh
->         +++ b/t/t1301-shared-repo.sh
->         @@ -129,15 +129,12 @@ test_expect_success POSIXPERM 'git reflog e=
-xpire honors core.sharedRepository' '
->          '
->
->          test_expect_success POSIXPERM 'forced modes' '
->         -       mkdir -p templates/hooks &&
->         -       echo update-server-info >templates/hooks/post-update &&
->         -       chmod +x templates/hooks/post-update &&
+Amend the test added in [1] to check the exit code of the "git"
+invocations. An in-flight change[2] introduced a memory leak in these
+invocations, which went undetected unless we were running under
+"GIT_TEST_SANITIZE_LEAK_LOG=true".
 
-The "post-update" is used in this test case. A wrong template dir
-leads to an empty hooks dir in "new/", that cause the test at the
-end of this test case passed by accident.
+Note that the in-flight change made 8 test files fail, but as far as I
+can tell only this one would have had its exit code hidden unless
+under "GIT_TEST_SANITIZE_LEAK_LOG=true". The rest would be caught
+without it.
 
-        # post-update hook must be 0770
-        test -z "$(sed -n -e "/post-update/{
-                /^-rwxrwx---/d
-                p
-        }" actual)" &&
+We could pick other variable names here than "ln%d", e.g. "commit",
+"dummy_blob" and "file_blob", but having the "rev-parse" invocations
+aligned makes the difference between them more readable, so let's pick
+"ln%d".
 
---
-Jiang Xin
+1. 4cf2143e029 (pack-objects: break delta cycles before delta-search
+   phase, 2016-08-11)
+2. https://lore.kernel.org/git/221128.868rjvmi3l.gmgdl@evledraar.gmail.com/
+3. faececa53f9 (test-lib: have the "check" mode for SANITIZE=leak
+   consider leak logs, 2022-07-28)
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+Range-diff against v1:
+1:  45b240740eb ! 1:  ca77a7249e6 t5314: check exit code of "rev-parse"
+    @@ Metadata
+     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## Commit message ##
+    -    t5314: check exit code of "rev-parse"
+    +    t5314: check exit code of "git"
+     
+    -    Amend the test added in [1] to check the exit code of the "rev-parse"
+    +    Amend the test added in [1] to check the exit code of the "git"
+         invocations. An in-flight change[2] introduced a memory leak in these
+         invocations, which went undetected unless we were running under
+         "GIT_TEST_SANITIZE_LEAK_LOG=true".
+    @@ Commit message
+         under "GIT_TEST_SANITIZE_LEAK_LOG=true". The rest would be caught
+         without it.
+     
+    +    We could pick other variable names here than "ln%d", e.g. "commit",
+    +    "dummy_blob" and "file_blob", but having the "rev-parse" invocations
+    +    aligned makes the difference between them more readable, so let's pick
+    +    "ln%d".
+    +
+         1. 4cf2143e029 (pack-objects: break delta cycles before delta-search
+            phase, 2016-08-11)
+         2. https://lore.kernel.org/git/221128.868rjvmi3l.gmgdl@evledraar.gmail.com/
+    @@ t/t5314-pack-cycle-detection.sh: TEST_PASSES_SANITIZE_LEAK=true
+     -	} |
+     -	git pack-objects --stdout |
+     -	git index-pack --stdin --fix-thin
+    -+	grp1=$(git rev-parse "$2") &&
+    -+	grp2=$(git rev-parse "$1:dummy") &&
+    -+	grp3=$(git rev-parse "$1:file") &&
+    ++	ln1=$(git rev-parse "$2") &&
+    ++	ln2=$(git rev-parse "$1:dummy") &&
+    ++	ln3=$(git rev-parse "$1:file") &&
+     +	cat >list <<-EOF
+    -+	-$grp1
+    -+	$grp2 dummy
+    -+	$grp3 file
+    ++	-$ln1
+    ++	$ln2 dummy
+    ++	$ln3 file
+     +	EOF
+     +	git pack-objects --stdout <list >pack &&
+     +	git index-pack --stdin --fix-thin <pack
+
+ t/t5314-pack-cycle-detection.sh | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
+
+diff --git a/t/t5314-pack-cycle-detection.sh b/t/t5314-pack-cycle-detection.sh
+index 73a241743aa..82734b9a3c4 100755
+--- a/t/t5314-pack-cycle-detection.sh
++++ b/t/t5314-pack-cycle-detection.sh
+@@ -63,13 +63,16 @@ TEST_PASSES_SANITIZE_LEAK=true
+ # Note that the two variants of "file" must be similar enough to convince git
+ # to create the delta.
+ make_pack () {
+-	{
+-		printf '%s\n' "-$(git rev-parse $2)"
+-		printf '%s dummy\n' "$(git rev-parse $1:dummy)"
+-		printf '%s file\n' "$(git rev-parse $1:file)"
+-	} |
+-	git pack-objects --stdout |
+-	git index-pack --stdin --fix-thin
++	ln1=$(git rev-parse "$2") &&
++	ln2=$(git rev-parse "$1:dummy") &&
++	ln3=$(git rev-parse "$1:file") &&
++	cat >list <<-EOF
++	-$ln1
++	$ln2 dummy
++	$ln3 file
++	EOF
++	git pack-objects --stdout <list >pack &&
++	git index-pack --stdin --fix-thin <pack
+ }
+ 
+ test_expect_success 'setup' '
+-- 
+2.39.0.rc0.962.g4ca4168c9ac
+
