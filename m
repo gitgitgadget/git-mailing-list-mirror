@@ -2,138 +2,143 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0A1EC433FE
-	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 10:13:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F0D19C433FE
+	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 11:03:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230216AbiK1KNy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Nov 2022 05:13:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50764 "EHLO
+        id S230473AbiK1LDK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Nov 2022 06:03:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230211AbiK1KNt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2022 05:13:49 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C32BD13E35
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 02:13:48 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id q7so15058411wrr.8
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 02:13:48 -0800 (PST)
+        with ESMTP id S230164AbiK1LDH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2022 06:03:07 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D54151839A
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 03:03:06 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id fy37so24746092ejc.11
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 03:03:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=g5Gy4wgKdkathVVCGimA5ZOmeTTqAKc3MZoEjg23BeI=;
-        b=Vc5OH0WjijLOwmLZiaZMAQY1L3aC2YmyECRF02D2GP8XgdrIvpKUJsplR3Rda/eQyL
-         4SCslJ75/CFJaWYscq3/a8BwIVbqCjm+Zf7Qv0SKWRZrh6eFZUjR/d+unD+/HFd5Su/N
-         8E40b++lg1u80dPo4x9Wncf9r6HZkDS4iQPJDVurb2SOIX8ABPlKTmn4usOl99kTf6eH
-         7jtmG64DWtBHkOX2v9+2edZ4njLZ3hviRRFzmOwZeoU78u43Wc8afuGV2TZi0ZIdeMbW
-         Om4M963DhHDklTIFNnX/2y+Ixh3tEoz8kVI6Kna2PSAAyCGVN+OuOYRLvzvnRf0xTCt3
-         XTHQ==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Af8u4qxZRm8Mt1HpxTsOpN+ibT5xnIHRHtKF/D2ztS4=;
+        b=ClcO1IVkTR+UScfRzk2kZh0/HOCL9ipuY5JX6AAS/KPC+tL14lAXWU5IZbBL++BeN2
+         jFKyVT1yNwpyiohYFF2snd8NYFRvgMxkR0DcXe3iX3DiTXOlDcz3lrgUTKBDXE/9UJS/
+         7YvZdGBOVq9UbQyHRRrk6SeomxPH7DHfW6Am6RO2sGSvJEPJ8Q9DYohXWL0Tfe/QPtc3
+         gm6sz3k9H/nLO2XnoCx543qTOtQKKn/85BNRgjUmJmIsguwTcI38fLsrtw3DdPhSLzhY
+         I0dzGV3rmbV5WVLeNqbRBzMKVnizRmESaHhumrgyJwix5ipE2Qe6kS/x9zU99zdPcdL1
+         nIrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=g5Gy4wgKdkathVVCGimA5ZOmeTTqAKc3MZoEjg23BeI=;
-        b=Ch/P3Zjq4GmhSnYw14L+7xrgBbcrEvtkfnkRQH3GDnMy/xyiRd7vd0yE9aLPKf6MV9
-         J0lX2OCR7X+iQ7x/CFiWGptTaoVJct2fuAPE4HRqkalEHwH6BxiNP2Ei6Le5yPAz0SYV
-         35ocQnRiRQU8F72B/UovBnPKpiH/1l7Svu88MeKPwz61SZ/yahaR6McH0hz8Sm0jHThf
-         Lp3sRfoObu5+3oE2QWw7bxfSx17hqAwV/2o9eenvhE5Cjarurx/dWLwQt9YeplwH1sIP
-         AFJJTbgPHYzWazT5Vxtk+JpxuHBrbp/XJJlY+kDR7mWvJC1O/Fa9b66vyisdh82z7scW
-         +IBg==
-X-Gm-Message-State: ANoB5pns0KlKXUwEGTWrA66YIpuXdofzARMWIVM6FEJASWdtc0nVViPk
-        B2Z3+BNOfplcRl89RXlgUgx6MxUCen0=
-X-Google-Smtp-Source: AA0mqf7m85Wk+7EW65+bHHcSDRwuyZU+Hi8tuQ/e7rG2I7iiFJzzm1Sn+hRYguPEaxMz2WovAy97mw==
-X-Received: by 2002:adf:f7c8:0:b0:236:720a:e391 with SMTP id a8-20020adff7c8000000b00236720ae391mr23593828wrq.368.1669630427217;
-        Mon, 28 Nov 2022 02:13:47 -0800 (PST)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id o15-20020a5d474f000000b002421a8f4fa6sm1458210wrs.92.2022.11.28.02.13.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Nov 2022 02:13:46 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <b79a4852-1e20-2c9a-a91c-f1ea629af402@dunelm.org.uk>
-Date:   Mon, 28 Nov 2022 10:13:46 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v8 0/3] git-jump: support Emacs
-Content-Language: en-US
-To:     Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>,
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Af8u4qxZRm8Mt1HpxTsOpN+ibT5xnIHRHtKF/D2ztS4=;
+        b=NNe9X6A/ZyzU++IIK7eaiUoHFzAAC4zDU6V2wZ/RM6WZOdODQJT1Fy3rvWdyj+HeNn
+         UwbEenVJfyZk4LO0EuTATZQsGegpXalKb65vIEgOwgX0MHeopUyKZrpS7EApKf0ncnoz
+         0iT1pIMpi5RuadGgyQEraAli9Yk2NVQCZdJ1GN3XtKKbmx5a/mPYQ5SR1whPXX0zbaLD
+         JRcQUj3jSKweLRamxFP29OxicVZoNE5Op7iwzZy2q+sR6kK1QHiD4mnAVkcynSO9r1LH
+         D1yTLUPwRV5lyhDhyrPYLUYcQdZPWrsLyHVe9kqyTvrGfvSiqZGxDT+3qpX9IbgZHGRH
+         KymQ==
+X-Gm-Message-State: ANoB5pl+GfjIXicclzCf4G2hW58i9kPPPhNCMEXOFkVKuxhpC1YjSOsv
+        M71V3a6feGbNEIWim1nxdu9pm0RUt8I=
+X-Google-Smtp-Source: AA0mqf7m/FxsTnFOXpO1C62L+cVOlsGzh539N9uxtJgdIvBiD221ENyzpAfe6aO8C5hKA8ko1lpCgg==
+X-Received: by 2002:a17:906:ce2d:b0:7ba:b9a:5e7e with SMTP id sd13-20020a170906ce2d00b007ba0b9a5e7emr20530992ejb.735.1669633385127;
+        Mon, 28 Nov 2022 03:03:05 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id ku21-20020a170907789500b0078cf8a743d6sm4806141ejc.100.2022.11.28.03.03.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Nov 2022 03:03:04 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1ozbui-000zIK-0T;
+        Mon, 28 Nov 2022 12:03:04 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Yoichi Nakayama <yoichi.nakayama@gmail.com>,
+        Yoichi Nakayama via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>,
-        Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
-References: <pull.1423.v7.git.1669347422.gitgitgadget@gmail.com>
- <pull.1423.v8.git.1669511933.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1423.v8.git.1669511933.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v7 3/3] git-jump: invoke emacs/emacsclient
+Date:   Mon, 28 Nov 2022 11:54:20 +0100
+References: <pull.1423.v6.git.1669261642.gitgitgadget@gmail.com>
+ <pull.1423.v7.git.1669347422.gitgitgadget@gmail.com>
+ <d8233f9617563d7c7168afc6e1abfaba57e54038.1669347422.git.gitgitgadget@gmail.com>
+ <221125.8635a7o123.gmgdl@evledraar.gmail.com>
+ <CAF5D8-uxZOFi8p0bUMaqJCLFxipXCB9fo_Kx=QE6s=DW8Jspgg@mail.gmail.com>
+ <221126.86h6ymmvyc.gmgdl@evledraar.gmail.com>
+ <Y4RC3NZsiy5gXPoJ@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <Y4RC3NZsiy5gXPoJ@coredump.intra.peff.net>
+Message-ID: <221128.86cz97mjdj.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Yoichi
 
-On 27/11/2022 01:18, Yoichi NAKAYAMA via GitGitGadget wrote:
-> Add an optional argument 'stdout' to print the quickfix lines to standard
-> output. It can be used with M-x grep on Emacs.
-> 
-> Detect emacsclient by GIT_EDITOR and invoke the function. Tested with
-> EDITOR="emacsclient" and EDITOR="emacsclient -t".
+On Mon, Nov 28 2022, Jeff King wrote:
 
-I've tested this version and it addresses all of my previous concerns, 
-thanks for working on it.
+> On Sat, Nov 26, 2022 at 12:52:50AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>
+>> > Second, there is a difficulty passing arbitrary arguments properly to
+>> > Emacs Lisp properly.
+>> > For example, your version will cause error with
+>> >         git jump grep "hello world"
+>> > My early patch was doing something similar. But the second problem was
+>> > hard to deal with,
+>> > so I switched to using a temporary file.
+>>=20
+>> To the extent that that's painful couldn't we write the grep expression
+>> / arguments to the tempfile, then feed the tempfile to the ad-hoc elisp
+>> code?
+>>=20
+>> It would then read it, get the argument to grep for, and we'd call (grep
+>> that-argument).
+>
+> You'd still need to quote the arguments, since you'll be reading
+> potentially multiple arguments out of the bytestream of the file[1].
+>
+> If you're not going to quote, the simplest thing is to generate the
+> line-oriented output and read that.
+>
+> If you are going to quote, then you don't need the tempfile at all. You
+> can shove the command into the eval, as if git-jump were run from emacs
+> directly (but you want to use the --stdout mode introduced in this
+> series, and not the git commands directly, because of course they're
+> non-trivial).
+>
+> I showed how to do the quoting earlier in the thread. But it is ugly,
+> and this tempfile hack should work (modulo the gross wait loop
+> afterwards).
 
-Best Wishes
+Thanks, I'd missed
+https://lore.kernel.org/git/Y30a0ulfxyE7dnYi@coredump.intra.peff.net/
 
-Phillip
+I think the case where the temporary directory itself has spaces in it
+isn't worth worrying about.
 
-> Jeff King (1):
->    git-jump: move valid-mode check earlier
-> 
-> Yoichi Nakayama (2):
->    git-jump: add an optional argument '--stdout'
->    git-jump: invoke emacs/emacsclient
-> 
->   contrib/git-jump/README   | 10 ++++++++-
->   contrib/git-jump/git-jump | 45 ++++++++++++++++++++++++++++++++++++---
->   2 files changed, 51 insertions(+), 4 deletions(-)
-> 
-> 
-> base-commit: eea7033409a0ed713c78437fc76486983d211e25
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1423%2Fyoichi%2Fgit-jump-emacs-support-v8
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1423/yoichi/git-jump-emacs-support-v8
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1423
-> 
-> Range-diff vs v7:
-> 
->   1:  446777d300d ! 1:  afface9b010 git-jump: add an optional argument '--stdout'
->       @@ contrib/git-jump/git-jump: mode_ws() {
->        +	case "$1" in
->        +	--stdout)
->        +		use_stdout=t
->       -+		shift
->        +		;;
->        +	--*)
->        +		usage >&2
->       @@ contrib/git-jump/git-jump: mode_ws() {
->        +		break
->        +		;;
->        +	esac
->       ++	shift
->        +done
->         if test $# -lt 1; then
->         	usage >&2
->   2:  972d51888ba = 2:  e9aa6fdf836 git-jump: move valid-mode check earlier
->   3:  d8233f96175 ! 3:  048f508ca99 git-jump: invoke emacs/emacsclient
->       @@ contrib/git-jump/git-jump: EOF
->        +		#
->        +		# Wait for completion of the asynchronously executed process
->        +		# to avoid race conditions in case of "emacsclient".
->       -+		eval "$editor --eval \"(let ((buf (compilation-start \\\"cat \$1\\\" 'grep-mode))) (pop-to-buffer buf) (select-frame-set-input-focus (selected-frame)) (while (get-buffer-process buf) (sleep-for 0.1)))\""
->       ++		eval "$editor --eval \"(let ((buf (grep \\\"cat \$1\\\"))) (pop-to-buffer buf) (select-frame-set-input-focus (selected-frame)) (while (get-buffer-process buf) (sleep-for 0.1)))\""
->        +		;;
->        +	*)
->        +		# assume anything else is vi-compatible
-> 
+So, all we'd need to worry about is getting the arguments to be grep'd
+to emacs.
+
+That should be simpler & bug-free with some equivalent of
+
+     echo "args" >$tmpfile
+
+then in Emacs, given some "<tmpfile>" variable:
+
+  (with-temp-buffer
+    (insert-file-contents <tempfile>)
+    (buffer-string)))
+
+We'd then invoke M-x grep with that.
+
+I think getting rid of the tempfile isn't worth it, or worth worrying
+about, what I was pointing out is that the implementation as it stands
+works notably differently than if you invoked M-x grep itself.
+
+I.e. it doesn't do highlighting, and (I didn't note this before) if it
+takes a while we'll "hang", if we had emacs itself invoke the "git grep"
+we'd stream out grep results as they came in.
