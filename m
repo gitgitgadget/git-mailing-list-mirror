@@ -2,135 +2,174 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C7FEC433FE
-	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 13:19:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82EB1C43217
+	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 13:23:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231800AbiK1NTH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Nov 2022 08:19:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47860 "EHLO
+        id S231538AbiK1NXJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Nov 2022 08:23:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231947AbiK1NSs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2022 08:18:48 -0500
-X-Greylist: delayed 324 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 28 Nov 2022 05:16:08 PST
-Received: from relay.yourmailgateway.de (relay.yourmailgateway.de [188.68.63.102])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6C231DF09
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 05:16:08 -0800 (PST)
-Received: from mors-relay-2502.netcup.net (localhost [127.0.0.1])
-        by mors-relay-2502.netcup.net (Postfix) with ESMTPS id 4NLQnZ41RDz5yjb
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 14:10:42 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=schrell.de; s=key2;
-        t=1669641042; bh=Y46LlhGJrrCu7T32mGWgj3Bzw/6kCly0/x5CvNx7C+Y=;
-        h=Date:From:To:Subject:From;
-        b=djQ/Zrv2wCGCc6zzgCeqXGWKhqfnUIaxZFMwjfJ29z94OUsy8bjFQvrVD9AlSlbKa
-         AM9VNpMJtAsJiXAXenfGJj1KKr1QAjK2drxl511cWXL3fKT1C4ECKguoNRD3vwTMWn
-         hEZlgUsN/oNyL5RNeNPV7Htdbtx9CQpFNvT1DZO7894jmhkQNcVBREsNZUeVlPvH8v
-         0eIxFQ/3HFR8MsXvfYh+lgMiwuY1mKPqjCZ8LrPczWhPAaJ3hbwVhd7ecBFIPVEyrM
-         yqH3miSaHDEguB3342dFiBI6BQG1YpG65n/4GoqqdxtRd7LNlOQxCDtffpxQePMm5Z
-         n6OGrpNq1duSA==
-Received: from policy01-mors.netcup.net (unknown [46.38.225.35])
-        by mors-relay-2502.netcup.net (Postfix) with ESMTPS id 4NLQnZ3Frtz536x
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 14:10:42 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at policy01-mors.netcup.net
-Received: from mx2f3e.netcup.net (unknown [10.243.12.53])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by policy01-mors.netcup.net (Postfix) with ESMTPS id 4NLQnY6n17z8sbY
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 14:10:41 +0100 (CET)
-Received: from webmail01.netcup.net (unknown [46.38.249.153])
-        by mx2f3e.netcup.net (Postfix) with ESMTPA id 2CE8060886
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 14:10:41 +0100 (CET)
-Authentication-Results: mx2f3e;
-        spf=pass (sender IP is 46.38.249.153) smtp.mailfrom=as@schrell.de smtp.helo=webmail01.netcup.net
-Received-SPF: pass (mx2f3e: connection is authenticated)
+        with ESMTP id S231480AbiK1NXI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2022 08:23:08 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B54B63CE
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 05:23:07 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id ho10so25762756ejc.1
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 05:23:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6jP6UTyFHJqvCjiW0BKRHpAH9lzMo+wt0mGFa0QJO7s=;
+        b=fSyFGoJ5402miWFFx3NX9kmnoOvWLY0RsGGzEKc3AHd4Ly5vf9GfD/DVpqRB0Zi5oM
+         4Y8neBbz3ToRkLwnwQh61rm0hOgZSHzMlKRc2nv6kIb6p2H63QST35XXd2+0BNJB2se/
+         KYilUrXV+hwxuekwLjpccm2EToWO2QgnKb11aAQuiYUBLC2JBxMcARGYHvYS/cZSWMQ5
+         iF+R/NPaywMF07It0XqOy59SGOYXJVBnGpmQyJgAlGpOM58B/qh+MhBxgfcQEg46pWAB
+         +won4QYuZqnfT9ID7nQ5iSc9r9+ntMLhS8ImuPCU9DJTBxS58PlpGB+Rj/kp+C6m6Q8p
+         Qswg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6jP6UTyFHJqvCjiW0BKRHpAH9lzMo+wt0mGFa0QJO7s=;
+        b=8Ew6wL+OhvG7jnAosLOqXxtPIo1n4ZdJJvF3JuRsQEcxJS1RoNBnoEpWRekj566eIC
+         apZqBPmSVy04B7Bh6x4xcd/OSSWLx7tHyKpiPqxBxVdguzdxi+lap/E5pKI/Yao68E6j
+         3bDTIs3xC0UlubmVyT4HZSWpmIAmoACNB62W9vLPtTXUsR2dFGRgSfw4TR6B966X8mmZ
+         7wAyHDx7h1NJVD2AfSUpMhaLmmvifKKQMnZFD4xKg1HTEXsWQf05IKADaec/VrCqZgC6
+         1Wvg3AgIhmuKoboUsO7GhKfRqKcMtgFWvHg5QPHYdhVuD4Q+T6gCozYSpiliyJ5bJjo0
+         avgQ==
+X-Gm-Message-State: ANoB5pnpp4TQ2waD1V/v65GJe2Sv/UrH7ntxkboUOTSWuaCg+MzGCYiu
+        rLtqXNOMh2prx0Vs+Pby2scUQ8/k93/R4Q==
+X-Google-Smtp-Source: AA0mqf6+FFgrQsaaT/t+ElIs3S3iHDh7A1Y+yMHUbk5a65GkBaHtqA1pNQl6Wk4C0vaixb6onubvMA==
+X-Received: by 2002:a17:906:f204:b0:79e:8f4a:c5b3 with SMTP id gt4-20020a170906f20400b0079e8f4ac5b3mr26959766ejb.223.1669641785899;
+        Mon, 28 Nov 2022 05:23:05 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id m25-20020aa7c499000000b00462bd673453sm5180843edq.39.2022.11.28.05.23.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Nov 2022 05:23:05 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1oze6C-0013Y8-2I;
+        Mon, 28 Nov 2022 14:23:04 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Subject: Re: [PATCH v2 3/3] t1301: do not change $CWD in "shared=all" test case
+Date:   Mon, 28 Nov 2022 14:18:45 +0100
+References: <20221127145130.16155-1-worldhello.net@gmail.com>
+ <20221128130323.8914-4-worldhello.net@gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <20221128130323.8914-4-worldhello.net@gmail.com>
+Message-ID: <221128.86ilizkybr.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Date:   Mon, 28 Nov 2022 14:10:41 +0100
-From:   Andreas Schrell <as@schrell.de>
-To:     git@vger.kernel.org
-Subject: Program path added to sparse file specification if leading slash is
- used
-User-Agent: Roundcube Webmail/1.4.13
-Message-ID: <db69818f32a2723cb7ef9ddf79d3ae39@schrell.de>
-X-Sender: as@schrell.de
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-PPP-Message-ID: <166964104131.25399.5412478463136724230@mx2f3e.netcup.net>
-X-PPP-Vhost: schrell.de
-X-Rspamd-Queue-Id: 2CE8060886
-X-Spamd-Result: default: False [-5.60 / 15.00];
-        BAYES_HAM(-5.50)[99.99%];
-        MIME_GOOD(-0.10)[text/plain];
-        ARC_NA(0.00)[];
-        RCVD_COUNT_ZERO(0.00)[0];
-        ASN(0.00)[asn:197540, ipnet:46.38.248.0/22, country:DE];
-        RCPT_COUNT_ONE(0.00)[1];
-        MIME_TRACE(0.00)[0:+];
-        FROM_EQ_ENVFROM(0.00)[];
-        TO_MATCH_ENVRCPT_ALL(0.00)[];
-        MID_RHS_MATCH_FROM(0.00)[];
-        FROM_HAS_DN(0.00)[];
-        TO_DN_NONE(0.00)[]
-X-Rspamd-Server: rspamd-worker-8404
-X-NC-CID: P+JuFyqbakQgA8eUbMKeDaCpfHx4Hclrs26GCTc=
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+On Mon, Nov 28 2022, Jiang Xin wrote:
 
-$ git sparse-checkout set /Workspace/Build/Pipeline $ git 
-sparse-checkout list C:/Program Files/Git/Workspace/Build/Pipeline
+> From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+>
+> In test case "shared=all", the working directory is permanently changed
+> to the "sub" directory. This leads to a strange behavior that the
+> temporary repositories created by subsequent test cases are all in this
+> "sub" directory, such as "sub/new", "sub/child.git". If we bypass this
+> test case, all subsequent test cases will have different working
+> directory.
+>
+> Besides, all subsequent test cases assuming they are in the "sub"
+> directory do not run any destructive operations in their parent
+> directory (".."), and will not make damage out side of $TRASH_DIRECTORY.
+>
+> So it is a safe change for us to run the test case "shared=all" in
+> current repository instead of creating and changing to "sub".
+>
+> For the next test case, we no longer run it in the "sub" repository
+> which is initialized from an empty template, we should not assume the
+> path ".git/info" is missing. So add option "-p" to mkdir.
+>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> ---
+>  t/t1301-shared-repo.sh | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+>
+> diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
+> index 1225abbb6d..fd10c139f5 100755
+> --- a/t/t1301-shared-repo.sh
+> +++ b/t/t1301-shared-repo.sh
+> @@ -46,8 +46,6 @@ do
+>  done
+>  
+>  test_expect_success 'shared=all' '
+> -	mkdir sub &&
+> -	cd sub &&
+>  	git init --template= --shared=all &&
+>  	test 2 = $(git config core.sharedrepository)
+>  '
+> @@ -57,7 +55,7 @@ test_expect_success POSIXPERM 'update-server-info honors core.sharedRepository'
+>  	git add a1 &&
+>  	test_tick &&
+>  	git commit -m a1 &&
+> -	mkdir .git/info &&
+> +	mkdir -p .git/info &&
+>  	umask 0277 &&
+>  	git update-server-info &&
+>  	actual="$(ls -l .git/info/refs)" &&
 
-$ git sparse-checkout set Workspace/Build/Pipeline $ git sparse-checkout 
-list Workspace/Build/Pipeline
+I think this approach goes against the effort to implicitly stop relying
+on templates. See 3d3874d537a (Merge branch 'ab/test-without-templates',
+2022-07-18) for commits related to that.
 
-What did you expect to happen? (Expected behavior) The program path 
-should not be included in the file spec, if I set the leading slash
+I think better thing to do here is to squash this in:
+	
+	diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
+	index 0b3722aa149..b7222b7bc07 100755
+	--- a/t/t1301-shared-repo.sh
+	+++ b/t/t1301-shared-repo.sh
+	@@ -8,6 +8,7 @@ test_description='Test shared repository initialization'
+	 GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+	 export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+	 
+	+TEST_CREATE_REPO_NO_TEMPLATE=1
+	 . ./test-lib.sh
+	 
+	 # Remove a default ACL from the test dir if possible.
+	@@ -55,7 +56,7 @@ test_expect_success POSIXPERM 'update-server-info honors core.sharedRepository'
+	 	git add a1 &&
+	 	test_tick &&
+	 	git commit -m a1 &&
+	-	mkdir -p .git/info &&
+	+	mkdir .git/info &&
+	 	umask 0277 &&
+	 	git update-server-info &&
+	 	actual="$(ls -l .git/info/refs)" &&
 
-What happened instead? (Actual behavior) The git program path was added 
-in the sparce file spec.
+I.e. before we'd not reply on the template, as we created a directory
+manually, but now we're using the standard templated "git init", so
+AFAICT the first hunk here could be taken, and this could be squashed
+into the second hunk instead:
 
-What's different between what you expected and what actually happened?
+	diff --git a/t/t1301-shared-repo.sh b/t/t1301-shared-repo.sh
+	index 0b3722aa149..d4315b5ef5a 100755
+	--- a/t/t1301-shared-repo.sh
+	+++ b/t/t1301-shared-repo.sh
+	@@ -55,7 +55,6 @@ test_expect_success POSIXPERM 'update-server-info honors core.sharedRepository'
+	 	git add a1 &&
+	 	test_tick &&
+	 	git commit -m a1 &&
+	-	mkdir -p .git/info &&
+	 	umask 0277 &&
+	 	git update-server-info &&
+	 	actual="$(ls -l .git/info/refs)" &&
 
-Wrong path
+I.e. before your change we went from knowing that we're crafting a
+custom repo, to saying that we're unsure what we're doing by using the
+"mkdir -p".
 
-Anything else you want to add:
-
-Please review the rest of the bug report below.
-
-You can delete any lines you don't wish to share.
-
-[System Info]
-
-git version:
-
-git version 2.38.1.windows.1
-
-cpu: x86_64
-
-built from commit: b85c8f604d375d4d773a36842964e8a7ec056aae
-
-sizeof-long: 4
-
-sizeof-size_t: 8
-
-shell-path: /bin/sh
-
-feature: fsmonitor--daemon
-
-uname: Windows 10.0 19045
-
-compiler info: gnuc: 12.2
-
-libc info: no libc information available $SHELL (typically, interactive 
-shell): C:\Program Files\Git\usr\bin\bash.exe
-
-[Enabled Hooks]
-
-Mit freundlichen Grüßen
-
-Andreas Schrell
-
-Software Engineer
+But can't we just use "TEST_CREATE_REPO_NO_TEMPLATE=1" then, and avoid
+the "cd sub?"
