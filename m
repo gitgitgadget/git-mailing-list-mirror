@@ -2,143 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F13A7C43217
-	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 13:40:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12501C43217
+	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 13:41:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231828AbiK1NkA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Nov 2022 08:40:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36516 "EHLO
+        id S230364AbiK1NlJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Nov 2022 08:41:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230073AbiK1Nj5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2022 08:39:57 -0500
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93467B1E4
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 05:39:55 -0800 (PST)
-Received: from 88-110-102-84.dynamic.dsl.as9105.com ([88.110.102.84] helo=[192.168.1.57])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1ozeMT-0006o2-Dw;
-        Mon, 28 Nov 2022 13:39:53 +0000
-Message-ID: <b7b84dde-a723-0773-279f-c04c7f35cb7f@iee.email>
-Date:   Mon, 28 Nov 2022 13:39:52 +0000
+        with ESMTP id S229870AbiK1NlH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2022 08:41:07 -0500
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48B1AB1E4
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 05:41:06 -0800 (PST)
+Received: by mail-pg1-x529.google.com with SMTP id f3so9959954pgc.2
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 05:41:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=G8AtT12CHCSPg48rIoIvqEggwYGndBk+VRVuufxJA5M=;
+        b=KUoQPKMOFDi2pvs0Xzqy6ph264DvxQInlKBB1P9SiJNvBw2CY+s4yuQMkinKEiweOe
+         jfUndSK+s5sJPMxqrBAzM/GaouNSw8BxQ9CflOl3GDWNa299Vlp+OS1aWQoOjGjfdE8u
+         AWs4CG0dU9RDnpbyaiIWkFKCta3pC2cR2sw/VUVVWeQemByJ/RzMzpJ/DRLV9UzPiNCd
+         yyH2b1LeGz99EmEMs5p3uCV8tHYHTs8Y/zRz6GjTJXXXTguFqhELuIAad2iouOdmt48v
+         bqDIAGjVsjd9wVZ0/qIz0G0VIyVaPt8Dk03iY8uN94KD59qgmNWhGuM082PWQxIHZEtC
+         ntDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=G8AtT12CHCSPg48rIoIvqEggwYGndBk+VRVuufxJA5M=;
+        b=LGW5mXmJjmhW2jh9+y6VCj6+WIhW7Rj6XY1L4xSemkV1MthXuJn0F9aTQyREeknu0e
+         D8RH3Tkl0HC04qylJzqSCM7CDIYqeGNr/7Tgn++Z/SnVXjrWTKeQDnF0X363bJNvOGpR
+         HS54cc/Y5CLrMaGph9Li7Lll0qTbDXAKclYpBAggCuqtP70W3UwEGbC6jW1Tg+I/truu
+         fuaqFsawiAk4I4jHonvyB5R0biPxRzbJu1sgUQTMCzQb+wmJ7LtPfZ8ICbkdka3moBzv
+         c+2WOlcbJBpBDdobZCkbT7CSAchWpaBGkQcPO+1qCH66Rz3OcSmTLqCj6aTb6G35qZUZ
+         Yx/g==
+X-Gm-Message-State: ANoB5pl8+T/kL+LShPvTeFUiX5sfhDAltUX96J272isBynokNQQ6jHtm
+        uqMTQnSgZ9l5oIyd3eJSgqGjmd3w05TcBA==
+X-Google-Smtp-Source: AA0mqf5d/wK8IYpeay/0JSX26VoB90JXN9X+/jQFRY8gysarJUIt4r8i3UQNLgd90FQUM+neJp+Jcw==
+X-Received: by 2002:a63:2163:0:b0:474:d6fa:f574 with SMTP id s35-20020a632163000000b00474d6faf574mr31171172pgm.190.1669642865486;
+        Mon, 28 Nov 2022 05:41:05 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id c26-20020a056a00009a00b005749f5d9d07sm7716016pfj.99.2022.11.28.05.41.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Nov 2022 05:41:04 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Fangyi Zhou <me@fangyi.io>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH] i18n: fix command template placeholder format
+References: <pull.1435.git.1669483442230.gitgitgadget@gmail.com>
+        <xmqqr0xp9of5.fsf@gitster.g> <Y4Ln43f6iP1b6EHo@pobox.com>
+Date:   Mon, 28 Nov 2022 22:41:04 +0900
+Message-ID: <xmqqpmd75h8v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH v4] pretty-formats: add hard truncation, without ellipsis,
- options
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     GitList <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
-        NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
-References: <20221102120853.2013-1-philipoakley@iee.email>
- <20221112143616.1429-1-philipoakley@iee.email> <xmqqfsedywli.fsf@gitster.g>
- <d80d1b97-b0c0-148b-afb7-f5210366e463@iee.email> <xmqqedtvu7py.fsf@gitster.g>
- <7a6c3d32-4494-e209-9877-e8784f0c3502@iee.email> <xmqq7czjecfr.fsf@gitster.g>
- <f0923db4-7bfe-86d2-7539-c9ebed62fa4f@iee.email> <xmqq35a5cnhq.fsf@gitster.g>
-Content-Language: en-GB
-From:   Philip Oakley <philipoakley@iee.email>
-In-Reply-To: <xmqq35a5cnhq.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 26/11/2022 23:19, Junio C Hamano wrote:
-> Philip Oakley <philipoakley@iee.email> writes:
+Todd Zullinger <tmz@pobox.com> writes:
+
+>> Thanks, will queue.
 >
->>>  in that they may do "[][].." or "[][][]" when told to
->>> "trunc" fill a string with four or more double-width letters into a
->>> 5 display space.  But the point is at least for these with ellipsis
->>> it is fairly clear what the desired behaviour is.
->> That "is fairly clear" is probably the problem. In retrospect it's not
->> clear in the docs that the "%<(N" format is (would appear to be) about
->> defining the display width, in terminal character columns, that the
->> selected parameter is to be displayed within.
->>
->> The code already pads the displayed parameter with spaces as required if
->> the parameter is shorter than the display width - the else condition in
->> pretty.c L1750
->>
->>>   For "trunc" in
->>> the above example, I think the right thing for it to do would be to
->>> do "[][].", i.e. consume exactly 5 display columns, and avoid
->>> exceeding the given space by not giving two dots but just one.
->> The existing choice is padding "[][]" with a single space to reach 5
->> display chars.
->> For the 6-char "[][][]" truncation it is "[][..", i.e. 3 chars from
->> "[][][]", then the two ".." dots of the ellipsis.
-> Here, I realize that I did not explain the scenario well.  The
-> message you are responding to was meant to be a clarification of my
-> earlier message and it should have done a better job but apparently
-> I failed.  Sorry, and let me try again.
->
-> The single example I meant to use to illustrate the scenario I worry
-> about is this.  There is a string, in which there are four (or more)
-> letters, each of which occupies two display columns.  And '[]' in my
-> earlier messages stood for a SINGLE such letter (I just wanted to
-> stick to ASCII, instead of using East Asian script, for
-> illustration).  So "[][.." is not possible (you are chomping the
-> second such letter in half).
->
-> I could use East Asian 一二三四 (there are four letters, denoting
-> one, two, three, and four, each occupying two display spaces when
-> typeset in a fixed width font),
+> In case its helpful, an identical patch was sent on
+> Wednesday, Subject: [PATCH] revert: add angle bracket around
+> argument 'parent-number' in usage.
 
-Thanks for that clarification, I'd been thinking it was about c char
-(bytes) such as ASCII and multi-byte characters (code points), e.g.
-European umlaut style distinctions.
+Yup, more eyes finding the same issue is very good and is very much
+appreciated.  And in a case like this trivial one, it is not
+surprising that there is only a single way to make it correct.
 
-I hadn't really picked up on the distinction between wide and narrow
-'glyphs' (if that's the right term to use).
- 
-I see that the code does properly count the widths of narrow and wide
-code points as 1 and 2 columns of the display, but then doesn't
-explicitly try any adjustment for the wide code point problem you noted.
->  but to make it easier to see in
-> ASCII only text, let's pretend "[1]", "[2]", "[3]", "[4]" are such
-> letters.  You cannot chomp them in the middle (and please pretend
-> each of them occupy two, not three, display spaces).
->
-> When the given display space is 6 columns, we can fit 2 such letters
-> plus ".." in the space.  If the original string were [1][2][3][4],
-> it is clear trunk and ltrunk can do "[1][2].." (remember [n] stands
-> for a single letter whose width is 2 columns, so that takes 6
-> columns) and "..[3][4]", respectively.  It also is clear that Trunk
-> and Ltrunk can do "[1][2][3]" and "[2][3][4]", respectively.  We
-> truncate the given string so that we fill the alloted display
-> columns fully.
->
-> If the given display space is 5 columns, the desirable behaviour for
-> trunk and ltrunk is still clear.  Instead of consuming two dots, we
-> could use a single dot as the filler.  As I said, I suspect that the
-> implementation of trunk and ltrunc does this correctly, though.
+Thanks, all, again for your contributions.
 
-I believe there is a possible solution that, if we detect a column
-over-run, then we can go back and replace the current two column double
-dot with a narrow U+2026 Horizontal ellipsis, to regain the needed column.
->
-> My worry is it is not clear what Trunk and Ltrunk should do in that
-> case.  There is no way to fit a substring of [1][2][3][4] into 5
-> columns without any filler.
-For this case where the final code point overruns, my solution
-could/would be to use the Vertical ellipsis U+22EE "⋮" to re-write that
-final character (though the Unicode Replacement Character "�" could be
-used, but that's ugly)
-
-I suspect the code would need some close reading to ensure that the
-column counting and replacement would correctly cope with the 'off by
-one' wide width case inside the strbuf_utf8_replace().
-
-I.e. given the same off-by-one position and replacement length, get back
-to the same point to replace either the double dot or the final code
-point in an idempotent manner.
-
-The logic feels sound, as long as there are no three wide crocodile
-code-points. Either we counted the right number of columns, or we
-over-ran by one, so we go back and substitute with a one-for-two
-replacement.
-
-Philip
-
-For watchers, https://github.com/microsoft/terminal/issues/4345 shows
-some of the issues in the general case.
