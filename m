@@ -2,97 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AA9B1C43217
-	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 09:41:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D7CC5C433FE
+	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 09:44:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230382AbiK1JlI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Nov 2022 04:41:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59490 "EHLO
+        id S229771AbiK1JoD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Nov 2022 04:44:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229771AbiK1JlG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2022 04:41:06 -0500
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF6C66153
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 01:41:05 -0800 (PST)
-Received: by mail-pg1-x52b.google.com with SMTP id q1so9416873pgl.11
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 01:41:05 -0800 (PST)
+        with ESMTP id S229680AbiK1JoC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2022 04:44:02 -0500
+Received: from mail-oa1-x35.google.com (mail-oa1-x35.google.com [IPv6:2001:4860:4864:20::35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64D8418E31
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 01:44:01 -0800 (PST)
+Received: by mail-oa1-x35.google.com with SMTP id 586e51a60fabf-142b72a728fso12296525fac.9
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 01:44:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=FwPTulx6hfMlaLFIsy4HeNYMJPxkWm07k8HM6CdPP4k=;
-        b=oc2jgb7dQOgaFxwbmM06tbQvW1AMIz+DD2v2EEVBVk7cvWeiZ5yrqwC1QmXQCd2FYO
-         NGXPMvDsocdA7jc9Wfg/6CAWAtcLRMI82elPt559ti3Wvx3Yc00lLPTn49OdYMvvvbsJ
-         ygXd1BEIcQf4aWcpRLneXh/Rjs4XdVLRPS3d9yI+2qWuHc1mAdttCVUrB3FongpHZCzG
-         lhS2/RZ312vhfZ8WnRhZutQipRUpRrK6fLjXIFehHgZjr3Q6ev6QRjKwp2SjWF1ZdYYj
-         O0uxmyAinJGe4OY/ZiCYf/3NGDToRly2qVtev1OscCkHmae5GUxlG2hZfaC+id8iu0BF
-         HSxg==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=/oJn/PttIIA0VjGbetBluNEGmQpHJguamid9nXqIlP8=;
+        b=XyODy/eerj4e8GablGWD+65fsQiHs6raPzyhj4G+7fY8vFbFcybtE4wcHVKSvyZID6
+         RoNhnpyfecNIbZnPAgcan/3nVtb8i/fEi9sNT2cNt2v7JO4E4JQSEwHaF1mx0xoP4GgP
+         97gFqnuhN0+LKMAOq/HVr8AaGt3UmO/dd3V3by2EMc20etaDKGbJawy0HdV092PpOLAD
+         Q9ZDz5HkdCFVXqXapHJPuNDrA3zBmFbdLNmm+nZ+npyQldipwGeJu3AUeonPyN3dhlDa
+         LepVDuKv1ZEi+8zPGKD0QgHn9a0xbtKax0/0XvM1ZW7liljj+AvCwsBWUPmlAWLuJbVT
+         KIwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=FwPTulx6hfMlaLFIsy4HeNYMJPxkWm07k8HM6CdPP4k=;
-        b=lHkdpQSbWWXLvn6DguwDHCOXtlB4/pQ6iz6rsC6TjxSDxv3Xyd+pHbEwLAYDF5IS24
-         G4qaM2/9Y3z7f0eKzhlBOSd7zJjHj/XR2UXwLuEUalHQ7JmqJHojsoBW64RX2Dre4+0p
-         FlFgNzP5Nrhi4owgYDbNq5S4rD6kI0FFT6/r3iGp6oTYvaFUZkCtJ6JxsryEA1NkvnZO
-         jgY9NCkCbrLta5/Z1UI56rUjUAtq7Bt6dxpI/HKOUDFCVNco6dELhDmlwpDI1MQtfDFX
-         uUHyoSfUKzmrmRvUtOz3IoKvDJ0LlFwwZoE2X+8aImSqj3N1tEEJpmON1Y5eqmgI13CY
-         MLgQ==
-X-Gm-Message-State: ANoB5pk22r5Y58Y6QXsp9Y7b9FldKMDgWfHNAGiz42FRJYCTanxnbifW
-        FagYcPM36A3gkPGaifS6UAqQepAWenxF4w==
-X-Google-Smtp-Source: AA0mqf4kVfZn4qdKvfNLpEF9TShC79sqifFRZDSGEnn3TUPDLN3oCSReO9gF7sAPkSa/LAlrslJtYA==
-X-Received: by 2002:a63:5425:0:b0:477:cce0:45b with SMTP id i37-20020a635425000000b00477cce0045bmr17732562pgb.606.1669628465248;
-        Mon, 28 Nov 2022 01:41:05 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id h11-20020a170902f54b00b00177faf558b5sm8343888plf.250.2022.11.28.01.41.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Nov 2022 01:41:04 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kyle Meyer <kyle@kyleam.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH v2] send-email: relay '-v N' to format-patch
-References: <87edtp5uws.fsf@kyleam.com>
-Date:   Mon, 28 Nov 2022 18:41:04 +0900
-Message-ID: <xmqqzgcb5scv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        bh=/oJn/PttIIA0VjGbetBluNEGmQpHJguamid9nXqIlP8=;
+        b=NNxwwQfbXlgGlu7p2BsNkD9EnISv+hlaQyucgOWrYUNdKP6n59JCA46BqiJ4xmVnN/
+         5TNgnrCsI56osXUAiFxW4wBxq5pPi+hvjuLE5AREJeA6ZZMRcFAgwEzH92x1sGaWy7vW
+         t0S7HGHbfShobpQ6s9gP6jnhXa137lYdg8kAKh2ZDDdAVKPP8TiKb3lyZ5J2W74k+F43
+         mS2FPbOvNI+5+GSqvfWW1KwkHAVip96lP0CbklT8N4I03mPhWfjzZNyheK8haqN1m1Ez
+         ow05FrF/ZXjoBa5qY2qmV/lmV+omz/v622jNEPCIdoLcwQSKMvSv3+K+GrUbr4DPskb1
+         dzCg==
+X-Gm-Message-State: ANoB5pnPv8MjCI/DclmBFyq+ei1wfglQ9b2Pk3HRbcG3jFV6qvqpQfKE
+        5lvjIvBryTqn8T6xr09SxJHPRDnfjfBr0wQN6JA=
+X-Google-Smtp-Source: AA0mqf5Dnz94N5Wkc+sueTwOv5mjsZcEkGxQfG1sxUxJ7LESxBHFCsPgn52fazfYIYXsmTevLVbw2j/5XQUgteSrYoc=
+X-Received: by 2002:a05:6871:b2a:b0:143:824a:f05b with SMTP id
+ fq42-20020a0568710b2a00b00143824af05bmr6174834oab.80.1669628640745; Mon, 28
+ Nov 2022 01:44:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20221127145130.16155-1-worldhello.net@gmail.com>
+ <20221127145130.16155-3-worldhello.net@gmail.com> <xmqq35a390ek.fsf@gitster.g>
+In-Reply-To: <xmqq35a390ek.fsf@gitster.g>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Mon, 28 Nov 2022 17:43:49 +0800
+Message-ID: <CANYiYbGwHQiDh7qf-LTtuUM7eC3AEpkuXoejOBkJs-VGZTA14A@mail.gmail.com>
+Subject: Re: [PATCH v1 3/4] t1301: wrap the statements in the for loop
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>,
+        Heikki Orsila <heikki.orsila@iki.fi>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kyle Meyer <kyle@kyleam.com> writes:
-
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index 01c74b8b07..152bd2c697 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -2334,6 +2334,12 @@ test_expect_success $PREREQ 'test that send-email works outside a repo' '
->  		"$(pwd)/0001-add-main.patch"
->  '
->  
-> +test_expect_success $PREREQ 'send-email relays -v 3 to format-patch' '
-> +	test_when_finished "rm -f out" &&
-> +	git send-email --dry-run -v 3 -1 >out &&
-> +	grep "PATCH v3" out
-> +'
-> +
->  test_expect_success $PREREQ 'test that sendmail config is rejected' '
->  	test_config sendmail.program sendmail &&
->  	test_must_fail git send-email \
+On Mon, Nov 28, 2022 at 12:19 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Now you have three separate tests in an interation of the loop.  If
+> you skipped the first one in the iteration (by mistake) and let the
+> other two run, they will run with a wrong configuration and values
+> of $x and $y variables, either unset or leftover from the previous
+> round.
 >
-> base-commit: e7e5c6f715b2de7bea0d39c7d2ba887335b40aa0
+> So I am not sure how this patch can be an improvement.
 
-It seems that this new test, by invoking format-patch, makes a leaks
-check at GitHub CI fail.
+I agree that this patch is not that necessary as the other 3 patches
+and will remove it in next reroll.
 
-  https://github.com/git/git/actions/runs/3562362890/jobs/5984036422
-
-Dropping PASSES_SANITIZE_LEAK from the test script would certainly
-be a short-term workaround, though, but it is a rather broad
-mechanism.  There should be a better way to control the leak
-checker, but that is what we currently have X-<.
-
+>
+> If you wrapped the setting of $x, $y, $u and the config into a
+> helper shell function, e.g.
+>
+>         prepare_perm_test_variables () {
+>                 u=$1
+>                 x=...
+>                 y=...
+>                 u=...
+>                 git config core.sharedrepository "$u"
+>         }
+>
+> before and outside the loop, and make these two tests in the loop to
+> call it upfront, then your users can skip each test and iteration
+> independently while ensuring that the necessary setup is always done
+> correctly, though.
+>
