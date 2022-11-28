@@ -2,89 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2842DC43217
-	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 23:30:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B264CC43217
+	for <git@archiver.kernel.org>; Mon, 28 Nov 2022 23:35:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234518AbiK1XaF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Nov 2022 18:30:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45890 "EHLO
+        id S234721AbiK1XfS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Nov 2022 18:35:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234642AbiK1XaD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2022 18:30:03 -0500
-Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA0E9317F0
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 15:30:02 -0800 (PST)
-Received: by mail-il1-x12a.google.com with SMTP id d14so3294609ilq.11
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 15:30:02 -0800 (PST)
+        with ESMTP id S234724AbiK1XfQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2022 18:35:16 -0500
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B63D2D1D2
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 15:35:16 -0800 (PST)
+Received: by mail-pl1-x62b.google.com with SMTP id k7so11722479pll.6
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 15:35:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7nzT0DsJSUVKCS+qQ3Dmo/stMCVUSlFCcQ6YzJXhcXA=;
-        b=0ynSbujlRgIf0UbXImC3kz1YlbLrFDCDs1jY3c132I9dtW5GFH9UnTfBS4qnXnptDI
-         o/vtqDK9OrsJ25acQd/NpnlTkkUH0V9kAzO4TrQjvPXDiSgteBjRAQXSkUrpZZToVHSf
-         aWY9R3Z4ExakTotT8g/i8i3hiyf/hAOfIC09sblIQVTA7Ed6tyR40gZWf10AK4mZm/Xi
-         zPG+aDrOe3rLgb/QADIiMFcZ78I3X9V3pFLiHIw2l2OUtIReIWhldsVCqpdRZUF8MLZ7
-         Il4uIw7hj3lN4Mh5tSO7pJ8R7DgiL1nFPJG1yT7CvSoM0W7xwGUglgW7YnDr3uNJA/bO
-         AElw==
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jx2uxYCRnDzzyiaT220Yf0FgYPMJCPsiOCCMJQ2LZvk=;
+        b=icKjk+RuNzVYcHNl9PUxiLkOpZ6HIwQyX70k7sBmTMCtbIExxLE3CyNwuqrwyTZrBy
+         K3Wpy+ouz+AM2/ZUSYXTD80VtdtMZctuM4pKYNaF9kY0dKGOMLXaayq+bPOK10ORi5t2
+         rbHuFxmxpd0UTVbMbW9YzRlVLBdr06IenZFnojqHBDc1leo+UGhYSvq5JZa9SNxbsF1D
+         1QLb2iWyDuYH0Gvjw49TuywyZ/GrTNhnFmvPBFTSAUlJojMzSj38VZH4TlygVadD4eEa
+         6LY0BKkSvPnBpzGTbTNyDYTz4HJmjNOTOK66KKrZq1r4/8W6iTzCSVonfsoyhkzQRKam
+         fuag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7nzT0DsJSUVKCS+qQ3Dmo/stMCVUSlFCcQ6YzJXhcXA=;
-        b=mUZcvmfUWpaJ0KihmB53lApWpoPFDEyBQw/4xIa0sKy9nX907LVptQ5Lx39tSWMLca
-         xkOmoCYIWocS8wLFjrQqopU44bzbR66lvIFrB7LtqIxAR9SH+uYDJq0Q6oQQNQvqEuyD
-         3IbLUJTKxjG/RtL/O0MQjyIAFNzEXXk504+M9J0k2puTnCbnKIWQM0zgt1zuxAS7ux1P
-         TwY5JAZY9l8/7YUZF/bkxzMjppQT55FFBhVMxXss0d/j7zKl8LDqOzKQvPR6Ztb3+Guy
-         nwBfsTwHAaw+l6euXj4xYUJevo6K2LRn73ff56ZJazmEX6xOhSARA6yMxGn2lcCX0qA4
-         BL5g==
-X-Gm-Message-State: ANoB5pmIs0RuNVrR+/kzF+n3zNfJHVT/Kd4muaflfZeXtN5y3TAyms6Q
-        ug454ncBN92fsW1VkUpIulbqTA==
-X-Google-Smtp-Source: AA0mqf4cKtenUsyOVPTpRub5WSup+tGcjc+VmzEbs1Z9Jf6JgmVVMMyuykUe/GPcWBd5/4F5pARa0g==
-X-Received: by 2002:a92:2c03:0:b0:302:a769:f7b6 with SMTP id t3-20020a922c03000000b00302a769f7b6mr15396595ile.120.1669678202321;
-        Mon, 28 Nov 2022 15:30:02 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id c18-20020a92d3d2000000b00302e177985fsm4188484ilh.25.2022.11.28.15.30.01
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=jx2uxYCRnDzzyiaT220Yf0FgYPMJCPsiOCCMJQ2LZvk=;
+        b=0CPsOSOOSxJXLuscDDtF3qJulG6pTB4wOqFmOwu4NRzDyWtBaw3ZFNMtd0IBk26aXe
+         XI8uKXzY/4gYOeiwrDx9KZqM0TWtPVf0PgpZV4OKGj5bX6jdiovG4B5uoN+2dYzcUChQ
+         2OaVIZSe4sbJMmklQSoXMfwa1pLWx4f6v2FZNRPiJxjd6iaxPzijOSITLNXRFi7xcuCu
+         CTMvE5VAWn1ycyPdDFFzrOwpT/YtmacdQcEIuBubS77ssx96HvrGfP+bkaJ4Ag6qbaaP
+         ULp5hCjZU2MKl0mpEQMGT/t/YoVnhZZjimrXosC+vBV8ZspB/eCWg5YPjlWB4is+OAsZ
+         wNUQ==
+X-Gm-Message-State: ANoB5plmCW1tLKTa6xjDP79uBjAGCuZ45TPXBF7fkgVSuoODMke/p9ME
+        q55fHkSaJxG0w55GgHF3lio=
+X-Google-Smtp-Source: AA0mqf4oZnOiR2JXZmM2x2Qhv0dCCP9+B5gh3RlYAEAolNpL/wAkAS7siajamkY6Yoa4N0nN8XCElA==
+X-Received: by 2002:a17:902:f646:b0:189:3eb7:1c86 with SMTP id m6-20020a170902f64600b001893eb71c86mr30631899plg.53.1669678515491;
+        Mon, 28 Nov 2022 15:35:15 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id j7-20020a170902da8700b00188f7ad561asm9389386plx.249.2022.11.28.15.35.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Nov 2022 15:30:01 -0800 (PST)
-Date:   Mon, 28 Nov 2022 18:30:00 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     avarab@gmail.com, derrickstolee@github.com, git@vger.kernel.org,
-        gitster@pobox.com, peff@peff.net, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v5 0/4] pack-bitmap.c: avoid exposing absolute paths
-Message-ID: <Y4VEeIC+iInY4MuB@nand.local>
-References: <cover.1669032425.git.dyroneteng@gmail.com>
- <cover.1669644101.git.dyroneteng@gmail.com>
+        Mon, 28 Nov 2022 15:35:14 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     Yoichi NAKAYAMA via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Yoichi NAKAYAMA <yoichi.nakayama@gmail.com>
+Subject: Re: [PATCH v8 0/3] git-jump: support Emacs
+References: <pull.1423.v7.git.1669347422.gitgitgadget@gmail.com>
+        <pull.1423.v8.git.1669511933.gitgitgadget@gmail.com>
+        <b79a4852-1e20-2c9a-a91c-f1ea629af402@dunelm.org.uk>
+Date:   Tue, 29 Nov 2022 08:35:14 +0900
+In-Reply-To: <b79a4852-1e20-2c9a-a91c-f1ea629af402@dunelm.org.uk> (Phillip
+        Wood's message of "Mon, 28 Nov 2022 10:13:46 +0000")
+Message-ID: <xmqqiliy64b1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1669644101.git.dyroneteng@gmail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 28, 2022 at 10:09:49PM +0800, Teng Long wrote:
-> From: Teng Long <dyroneteng@gmail.com>
+Phillip Wood <phillip.wood123@gmail.com> writes:
+
+> Hi Yoichi
 >
-> Changes since v4:
+> On 27/11/2022 01:18, Yoichi NAKAYAMA via GitGitGadget wrote:
+>> Add an optional argument 'stdout' to print the quickfix lines to standard
+>> output. It can be used with M-x grep on Emacs.
+>> Detect emacsclient by GIT_EDITOR and invoke the function. Tested
+>> with
+>> EDITOR="emacsclient" and EDITOR="emacsclient -t".
 >
-> * [3/4] Reroll the commit message.
-> * [4/4] Reroll the commit message and remove the initialization of 'found'.
->
-> Besides of 3/4 and 4/4, the 1/4 and 2/4 seem already in 'next' as
-> 8ddc06631b184e6f43051f7ea8ac9bbc86817127 and
-> 2aa84d5f3ea1966a81477ad31bee0136e39d3917 , but I send again here just for
-> the completeness of the patchset, I think it will be nice to merge Peff's
-> commits of there are no new suggestions.
+> I've tested this version and it addresses all of my previous concerns,
+> thanks for working on it.
 
-As you note, the first couple of patches are already in 'next', so those
-do not need to be queued again.
-
-But the latter two patches look good, and are ready to go.
-
-Thanks for continuing to work on this :-)..
-
-Thanks,
-Taylor
+Thanks.
