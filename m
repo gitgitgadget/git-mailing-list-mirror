@@ -2,256 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C92E9C433FE
-	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 08:09:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A033C4332F
+	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 08:18:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229774AbiK2IJh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Nov 2022 03:09:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56632 "EHLO
+        id S230154AbiK2ISs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Nov 2022 03:18:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229612AbiK2IJg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2022 03:09:36 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E74A153EDD
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 00:09:34 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id e13so18684741edj.7
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 00:09:34 -0800 (PST)
+        with ESMTP id S229808AbiK2ISr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2022 03:18:47 -0500
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B61A326D2
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 00:18:46 -0800 (PST)
+Received: by mail-pl1-x62d.google.com with SMTP id j12so12678695plj.5
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 00:18:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=O/vCRGHwxp5bDc52VTL4zpFMpeVy7OEjwZO/435UPBg=;
-        b=XLSb4X/iFOpf2/6oEm7qnmCuLlw0ICadDR/a+soonaztwFD5cUQE4VJMQGWXzJpvuc
-         za7d8ixQI4qe7cHSDiM9c7IT6MHmITTRlByOyf0fUTr349JPb50sqMHBlpFE0SjTUUy5
-         TETRfbEY7+qvZQbaC3m1Y74GryeO4vFcuJ//KbtKtJ5F9hjkU32wdZUYXJcJASxbLqAE
-         YI3wjKZlgnTtQCDrWzC1W+2fasSqE9EnAJMHV0EnTWPmD25x1YNz2Yk7abJ01c0xlZoC
-         mSJEC3aUxRfmsJfwoVY0KYm57n8OJg1qwsoMaRDhvy5cGE4q0mrObMGmNRX3HzPsYgbZ
-         M68w==
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=/cUUwW9CiNypNGK1mUYdIil9WtiZh+BWwwxajzW6g0I=;
+        b=j3dgZI8lNmzMZHQhRjqjT2GED3G4RK9CVZ4HTidB6H6/wt9r1JT8WN+wtRdAyACS0Q
+         cWP926jU/l6Ustu8/Z9rdCKeL62zuFCWW8hsNQrc/LKueop/LxFT+tSUrJBWG3/3UxIi
+         SAdDgl045lqdBVgBdyU6hiaP9gpOC43O3oHAcPiYGurBtxApmekSjA+LrE5t9pcV+pzP
+         IeDvdLNmWrge95W8qojq6lI1IaaRUg8OyxEAQ7779mog0IBEWwF1GVRI4d4R4I3HBJvL
+         vMAcBmMwfqfLm8zItTQ55UwArJabxMsF0+kmeAD7dyN921plZq/lPuHz/jNbdvSi44vc
+         rzLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=O/vCRGHwxp5bDc52VTL4zpFMpeVy7OEjwZO/435UPBg=;
-        b=dyN4gD3db2Bo11u1BnXPbEyr+s28ad0ayV3n507xzqQ36LvWK51FkMPNA08/c4hW21
-         BRfMvueBipmiCrX50XcCZR3cdZxoPe6L6Xi3NwFjNSxnbxeE2xR59KRtxw6VKCEj4XHQ
-         GvCeQJZb+tM8nR/+JKJZCVFEeSfLSnJef32pW8xtt6WRO2aspm1lnqLMOaQy4gJ9dsvG
-         4MI6gcBAZIZMfp42dU7Nd6KF9AV0jN5b5YVg0g9HFQcikRnpgBYfxpUZRzdg6WvkljEF
-         0CoBar7AZpHdg+kLv3hOxCqU4k+FjKnjDEf7oDCLaZI1QgQruoE1W4+AcgSarkOB392T
-         orFw==
-X-Gm-Message-State: ANoB5plQYvajSUipispXxmoYKmuwieO2mcvMmCzsMmRSgteoXIT5VIZO
-        kth/oIrnHEHyRrMAcHnW9aX3Wb0A3nHXYA==
-X-Google-Smtp-Source: AA0mqf4W0zyA82aprgfLuaO3s6KP2IzPYP972It8E9Io7IJXwLCP3MDeS7OdmVx8WdKXxkqAfJ8K1g==
-X-Received: by 2002:a05:6402:2070:b0:467:5e4f:591 with SMTP id bd16-20020a056402207000b004675e4f0591mr36676527edb.414.1669709373200;
-        Tue, 29 Nov 2022 00:09:33 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id 10-20020a170906218a00b0077a8fa8ba55sm4152884eju.210.2022.11.29.00.09.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Nov 2022 00:09:32 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1ozvgK-001HpD-04;
-        Tue, 29 Nov 2022 09:09:32 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Taylor Blau <me@ttaylorr.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 3/3] Revert "pack-objects: lazily set up "struct
- rev_info", don't leak"
-Date:   Tue, 29 Nov 2022 08:12:25 +0100
-References: <c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.de>
- <d19c6cb4-611f-afea-8a14-5e58d7509113@web.de>
- <f5779e19-813c-cda9-2f84-9fe58f745e89@web.de> <xmqqv8mz5ras.fsf@gitster.g>
- <d10de9b5-e5ff-18d6-d950-1d090d87b113@web.de>
- <221128.864jujmhgp.gmgdl@evledraar.gmail.com>
- <c5aeb93c-763d-3eae-0150-15f6ca675319@web.de>
- <221128.865yezkule.gmgdl@evledraar.gmail.com>
- <59431916-9f55-d0f4-da54-e7369803eb4c@web.de>
- <2488058d-dc59-e8c1-0611-fbcaeb083d73@web.de>
- <221128.86o7sqkjcj.gmgdl@evledraar.gmail.com>
- <0b86ae8b-5523-3857-cdba-12275f727cde@web.de>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <0b86ae8b-5523-3857-cdba-12275f727cde@web.de>
-Message-ID: <221129.86fse2ji6c.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/cUUwW9CiNypNGK1mUYdIil9WtiZh+BWwwxajzW6g0I=;
+        b=cD1OuG6/qwAUBEhGHLVbTWzylsOotj94prwA1BNg8dAOKWuFhSdPTpi4MOlQLbPUsP
+         dSfiPb+RfNGhTCxlyzd8QGzP4Bqk4jOahnrHyFS7mRCj9+BJ4WNxSWIl79Y0kQQQcK8w
+         WtBKBEwiQSkbB/XkN5h/lNKjx3POaDRZd8Sd8veXQwgV4ZPvwronn8xHVVO5Gy+dKsir
+         DH+O5HIQkFsteUZ+Q6Uu8YDQ9K41LCCv5X7l5mhPQ5nXB+1q3B30mxn/entzsblaPGD2
+         JhZUamxDzhZoLn3jOlyiWYjpcUuawSHqvJ7FjTfU7XIY/DtbuPTDUcCa7CMXBH6TePFD
+         SLWQ==
+X-Gm-Message-State: ANoB5pli4wJhvNwIaaHBZS3iuHBecHfn3R98fjYgMqi4/kb2afq6tX8M
+        XIhRMeMfYGXW7cez9LoYOekgUPd5cCc=
+X-Google-Smtp-Source: AA0mqf7BHknUHvxBhZK5gWVtuSMiJaoBbs5zYUFGs9IVpgFozceai06Br2Fu7dFoMXH+BJoueUWW0A==
+X-Received: by 2002:a17:902:e20b:b0:189:6f76:9b57 with SMTP id u11-20020a170902e20b00b001896f769b57mr18416855plb.64.1669709925936;
+        Tue, 29 Nov 2022 00:18:45 -0800 (PST)
+Received: from [192.168.43.80] (subs03-180-214-233-73.three.co.id. [180.214.233.73])
+        by smtp.gmail.com with ESMTPSA id p22-20020a170902a41600b001869b988d93sm10131072plq.187.2022.11.29.00.18.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Nov 2022 00:18:45 -0800 (PST)
+Message-ID: <455e9d7e-7394-bad8-c8f2-3ddf3958f1a2@gmail.com>
+Date:   Tue, 29 Nov 2022 15:18:37 +0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [bug] git diff --word-diff gives wrong result for utf-8 chinese
+To:     Ping Yin <pkufranky@gmail.com>,
+        mailinggit list <git@vger.kernel.org>
+References: <CACSwcnQfTOYHxSJQqc+viiqkCqt=WZieuCw70PqOdvo88XdeOQ@mail.gmail.com>
+ <CACSwcnT9Pz3snq4Jp6K5qxHFiE_zo41bKVUjJ_LJ39WN7h=gbQ@mail.gmail.com>
+Content-Language: en-US
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+In-Reply-To: <CACSwcnT9Pz3snq4Jp6K5qxHFiE_zo41bKVUjJ_LJ39WN7h=gbQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 11/29/22 10:49, Ping Yin wrote:
+> sorry, typo, s/--color-words/--word-diff/g
+> 
 
-On Mon, Nov 28 2022, Ren=C3=A9 Scharfe wrote:
+Hi, welcome to Git mailing list!
 
-> Am 28.11.2022 um 19:32 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->>
->> On Mon, Nov 28 2022, Ren=C3=A9 Scharfe wrote:
->>
->>> Am 28.11.2022 um 16:56 schrieb Ren=C3=A9 Scharfe:>
->>>> The problem is "How to use struct rev_info without leaks?".  No matter
->>>> where you move it, the leak will be present until the TODO in
->>>> release_revisions() is done.
->>>
->>> Wrong.  The following sequence leaks:
->>>
->>> 	struct rev_info revs;
->>> 	repo_init_revisions(the_repository, &revs, NULL);
->>> 	release_revisions(&revs);
->>>
->>> ... and this here doesn't:
->>>
->>> 	struct rev_info revs;
->>> 	repo_init_revisions(the_repository, &revs, NULL);
->>> 	setup_revisions(0, NULL, &revs, NULL);  // leak plugger
->>> 	release_revisions(&revs);
->>>
->>> That's because setup_revisions() calls diff_setup_done(), which frees
->>> revs->diffopt.parseopts, and release_revisions() doesn't.
->>>
->>> And since builtin/pack-objects.c::get_object_list() calls
->>> setup_revisions(), it really frees that memory, as you claimed from the
->>> start.  Sorry, I was somehow assuming that a setup function wouldn't
->>> clean up.  D'oh!
->>>
->>> The first sequence is used in some other places. e.g. builtin/prune.c.
->>> But there LeakSanitizer doesn't complain for some reason; Valgrind
->>> reports the parseopts allocation as "possibly lost".
->>
->> Yes, some of the interactions are tricky. It's really useful to run the
->> tests with GIT_TEST_PASSING_SANITIZE_LEAK=3D[true|check] (see t/README) =
-to
->> check these sorts of assumptions for sanity.
->
-> That may be true, and looks even useful -- I didn't know the check
-> value.  I only get a strange error message, though:
->
->    $ GIT_TEST_PASSING_SANITIZE_LEAK=3Dcheck ./t0001-init.sh
->    Bail out! GIT_TEST_PASSING_SANITIZE_LEAK=3Dtrue has no effect except w=
-hen compiled with SANITIZE=3Dleak
->
-> Same with make test and prove, of course.  And of course I compiled
-> with SANITIZE=3Dleak beforehand.
+Please remind yourself:
 
-The "=3Dtrue" part of the message is unfortunately incorrect (it pre-dates
-"check" being a possible value), but I don't see how you could have
-compiled with "SANITIZE=3Dleak" and get that message.
+  * Do not send HTML mails, send plain-text ones instead. Many mailing
+    lists (including vger.kernel.org that powers Git ML) reject HTML
+    emails for these are likely spam. Make sure your email isn't mangled
+    (tabs and spaces as-is, no line wrapping).
 
-It's unreachable if 'test -n "$SANITIZE_LEAK"', and that'll be non-empty
-in GIT-BUILD-OPTIONS if compiled with it. Perhaps you gave SANITIZE=3Dleak
-to t/Makefile, not the top-level Makefile?
+  * Do not top-post, reply inline with appropriate context instead. I
+    have to cut the reply context as a result.
 
-Try this at the top-level:
+  * When you submit a patch and people reply with their reviews, engage
+    with them (either sending revised patch addressing the reviews or
+    reply with justification). They will ignore you if you ignore them.
 
-	GIT_TEST_PASSING_SANITIZE_LEAK=3Dcheck make SANITIZE=3D test T=3Dt0001-ini=
-t.sh
+Thanks.
 
-> But I don't see a connection between my comment and yours.  I was
-> not running any tests, just the above sequences of function calls,
-> e.g. in git prune.
+-- 
+An old man doll... just what I always wanted! - Clara
 
-The connection is that you submitted patches that fail the CI. I don't
-think you use GitHub, so in particular if you're submitting patches that
-claim to do something with leak checking it's useful to run those modes
-against them to check your assumptions.
-
->>
->>> I still think the assumption that "init_x(x); release_x(x);" doesn't
->>> leak is reasonable.  Let's make it true.  How about this?  It's safe
->>> in the sense that we don't risk double frees and it's close to the
->>> TODO comment so we probably won't forget removing it once diff_free()
->>> becomes used.
->>>
->>> ---
->>>  revision.c | 1 +
->>>  1 file changed, 1 insertion(+)
->>>
->>> diff --git a/revision.c b/revision.c
->>> index 439e34a7c5..6a51ef9418 100644
->>> --- a/revision.c
->>> +++ b/revision.c
->>> @@ -3055,6 +3055,7 @@ void release_revisions(struct rev_info *revs)
->>>  	release_revisions_mailmap(revs->mailmap);
->>>  	free_grep_patterns(&revs->grep_filter);
->>>  	/* TODO (need to handle "no_free"): diff_free(&revs->diffopt) */
->>> +	FREE_AND_NULL(revs->diffopt.parseopts);
->>>  	diff_free(&revs->pruning);
->>>  	reflog_walk_info_release(revs->reflog_info);
->>>  	release_revisions_topo_walk_info(revs->topo_walk_info);
->>
->> At this point I'm unclear on what & why this is needed? I.e. once we
->> narrowly fix the >1 "--filter" options what still fails?
->
-> As I wrote: A call to an initialization function followed by a call to a
-> cleanup function and nothing else shouldn't leak.  There are examples of
-> repo_init_revisions()+release_revisions() without setup_revisions() or
-> diff_setup_done() beyond pack-objects.  I mentioned prune, but there are
-> more, e.g. in sequencer.c.
-
-Yes, I agree it shouldn't leak. And we should definitely fix those
-leaks. I just don't see why a series fixing bugs in --filter needs to
-expand the scope to fix those.
-
->> But in general: I don't really think this sort of thing is worth
->> it. Here we're reaching into a member of "revs->diffopt" behind its back
->> rather than calling diff_free(). I think we should just focus on being
->> able to do do that safely.
->
-> Sure, but the FREE_AND_NULL call is simple and safe, while diff_free()
-> is complicated and calling it one time too many can hurt.
-
-It's "safe" because you've read the internals of it, and know that it
-isn't assuming a non-NULL there once it's past initialization?
-
-Or is it like the revisions init()+release() in this thread, where
-you're assuming it works one way based on the function names etc., only
-for the CI to fail?
-
-In either case, I'm saying that if someone's confident enough to reach
-into the internals of a structure and tweak it they should be confident
-enough to just patch diff_free() or the like.
-
->> WIP patches I have in that direction, partially based on your previous
->> "is_dead" suggestion:
->>
->> 	https://github.com/avar/git/commit/e02a15f6206
->> 	https://github.com/avar/git/commit/c718f36566a
->
-> Copy-typed the interesting parts of the first patch like a medieval monk
-> because there doesn't seem to be a download option. :-|
-
-Jeff pointed out the ".patch" (there's also ".diff"), but also: Git has
-this well-known transport protocol it uses, which typically maps to the
-web URL on public hosting sites ... :)
-
-	git remote add avar https://github.com/avar/git.git
-	git fetch avar
-	git show <OID>
-
->> I haven't poked at that in a while, I think the only outstanding issue
->> with it is that fclose() interaction.
->
-> You mean the t3702-add-edit.sh failure on Windows mentioned in the
-> commit message of e02a15f6206?  That's caused by the file being kept
-> open and thus locked during the call of the editor.  Moving the
-> release_revisions() call in builtin/add.c::edit_patch() before the
-> launch_editor() call fixes that by closing the file.
-
-Yeah, I haven't had time to poke at it in a while, and I had it queued
-behind various other leak fixes.
-
-I'm sure it's not that complicated in the end, just that that
-interaction needs to be dealt with.
-
->> I think for this particular thing there aren't going to be any bad
->> side-effects in practice, but I also think convincing oneself of that
->> basically means putting the same amount of work in as just fixing some
->> of these properly.
->
-> Not to me, but perhaps that TODO is easier solved that I expected.
-> In any case, with the mentioned edit_patch() change described above
-> e02a15f6206 passes the test suite on Windows for me.
-
-Nice! I'll try that out.
