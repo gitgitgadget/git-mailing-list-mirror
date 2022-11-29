@@ -2,78 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C455C433FE
-	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 18:54:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A2341C4332F
+	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 19:01:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236226AbiK2Sy0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Nov 2022 13:54:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60362 "EHLO
+        id S236181AbiK2TBS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Nov 2022 14:01:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235889AbiK2SyY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2022 13:54:24 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5584D56543
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 10:54:23 -0800 (PST)
-Received: (qmail 14551 invoked by uid 109); 29 Nov 2022 18:54:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Nov 2022 18:54:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22320 invoked by uid 111); 29 Nov 2022 18:54:22 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Nov 2022 13:54:22 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 29 Nov 2022 13:54:21 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Ping Yin <pkufranky@gmail.com>,
-        mailinggit list <git@vger.kernel.org>
-Subject: Re: [bug] git diff --word-diff gives wrong result for utf-8 chinese
-Message-ID: <Y4ZVXWNHO25IFYQL@coredump.intra.peff.net>
-References: <CACSwcnQfTOYHxSJQqc+viiqkCqt=WZieuCw70PqOdvo88XdeOQ@mail.gmail.com>
- <221129.867czejabi.gmgdl@evledraar.gmail.com>
- <xmqqlenu2dxx.fsf@gitster.g>
- <Y4ZOHwwgtztwhbhr@coredump.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y4ZOHwwgtztwhbhr@coredump.intra.peff.net>
+        with ESMTP id S236232AbiK2TBA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2022 14:01:00 -0500
+Received: from mail-pg1-x54a.google.com (mail-pg1-x54a.google.com [IPv6:2607:f8b0:4864:20::54a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 613DF68C5A
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 10:59:27 -0800 (PST)
+Received: by mail-pg1-x54a.google.com with SMTP id 38-20020a630b26000000b004773803dda1so9894719pgl.17
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 10:59:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=WDNnWVfEEwDceJtdaYgEbF0KAr8VElZXHr1mgZho1Vc=;
+        b=pK/0kx7ozGZqTH2Neyr1SJghUNdFG4DIQDfnwzHfYDYs/nEL2ml1rRtB9rO91STT0R
+         g3vtIegUshTR8+5TVVuZov38zF+gRlzFTZEwYz/SfGSyjseuRhneK/AM7XzBarVviFv6
+         K9bWxvAuJn3dKeQC8hsJZPt+dDKhpyAwYSeOVCp3suVdXo6+D0UVstDAMCAqYgXmjBUd
+         LpnqZqdvf3JF9AHlXdoVPp1D5QIEX6qaPPi+edQZtUoTtoognhF/j1FVWLU2c9zdMtxo
+         12rasfjQ8Mj5xM9I7oXIyaPkRV1NybAjb4eRCrEGLsYNhiNimnZS1ObWbhcWGzyYvL+V
+         ScAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WDNnWVfEEwDceJtdaYgEbF0KAr8VElZXHr1mgZho1Vc=;
+        b=xIV0iB2vqQOd7AJvF+aRqQZbXtA4LFWNpnlAtay9W5fr/ruF+HqkrBBM3iEyoDue7u
+         KJUVBRqT1e3sHIkYc/GG4ZSfTVidDJaz7AvMioSzxsZotyYt0NRdWW0VU1vyyLTHGKOU
+         iMg12GUywCupPBzi05K2hclk13iz9dI53gE/RLlcLvl/7iGj7xWNNWYVHL+dODN53kix
+         aufscOTZA6bBs4Uo4zyTh0Q+KHG4+ifVK0fJKFIiQK+RnKHkEMJlSi5a8JLsf+pve7Cd
+         CDNzlhn4wJXQ3C6QoT1AuvECI83GwOkUCoUZ2cJga2z7DhP7CDJHXuHbIZHcdXyCiJgu
+         cIAw==
+X-Gm-Message-State: ANoB5pnQONLc/ahXZcz7XZ7goRYjqJ8DTBcT/toNERZ9JmtL+Q+OuBFw
+        kVIjIhjKtQSZR8WXn+N38IPx1oeC8171zA==
+X-Google-Smtp-Source: AA0mqf5wOUfZpDdJF3UK0y5D71R+uZWO0tuaBMVsq5RM/TxGvG+S3jFTTu89QoI0BN2wahnVlffEUezy9SWKUQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a62:f94c:0:b0:56e:174e:efdf with SMTP id
+ g12-20020a62f94c000000b0056e174eefdfmr58865806pfm.29.1669748366857; Tue, 29
+ Nov 2022 10:59:26 -0800 (PST)
+Date:   Tue, 29 Nov 2022 10:59:24 -0800
+In-Reply-To: <xmqqsfi22j67.fsf@gitster.g>
+Mime-Version: 1.0
+References: <xmqqsfi22j67.fsf@gitster.g>
+Message-ID: <kl6lsfi1d1tf.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: ab/remove--super-prefix and -rc0 (was What's cooking in git.git (Nov
+ 2022, #07; Tue, 29))
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 29, 2022 at 01:23:27PM -0500, Jeff King wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> > I suspect that "--word-diff" internal is not even aware what a
-> > character is, but if you assume UTF-8 (precomposed), then you should
-> > be able to tell where the character boundary is by only looking at
-> > the high-bit patterns to avoid producing such an output.
-> 
-> Agreed that we should probably avoid breaking characters. But what
-> puzzles me more is that we break it between B8 and BA, and not
-> elsewhere. Why not between E4 and B8? Why not between BA and "1"?
-> 
-> If the rule is "break on ascii whitespace", then I'd have expected the
-> whole four-character sequence to be taken as a unit. In other words, it
-> does should not have to care that a character is, as long as the bytes
-> for space characters cannot appear inside other characters (which is
-> true of utf8).
+> Here are the topics that have been cooking in my tree.  Commits
+> prefixed with '+' are in 'next' (being in 'next' is a sign that a
+> topic is stable enough to be used and are candidate to be in a future
+> release).  Commits prefixed with '-' are only in 'seen', and aren't
+> considered "accepted" at all.  A topic without enough support may be
+> discarded after a long period of no activity.
+>
+> The preview release -rc0 for this cycle has been tagged.
 
-Even more puzzling is that it produces the expected output for me:
+[...]
 
-  [note that \x is a bash-ism]
-  $ printf '\xe4\xb8\xba1' >one
-  $ printf '\xe4\xb8\xba2' >two
-  $ git diff --no-index --word-diff one two
-  diff --git a/one b/two
-  index 9ae469fc41..576e6e32d8 100644
-  --- a/one
-  +++ b/two
-  @@ -1 +1 @@
-  [-为1-]{+为2+}
+> * ab/remove--super-prefix (2022-11-21) 12 commits
+>  . fetch: rename "--submodule-prefix" to "--super-prefix"
+>  . read-tree: add "--super-prefix" option, eliminate global
+>  . submodule--helper: convert "{update,clone}" to their own "--super-prefix"
+>  . submodule--helper: convert "status" to its own "--super-prefix"
+>  . submodule--helper: convert "sync" to its own "--super-prefix"
+>  . submodule--helper: convert "foreach" to its own "--super-prefix"
+>  . submodule--helper: don't use global --super-prefix in "absorbgitdirs"
+>  . submodule.c & submodule--helper: pass along "super_prefix" param
+>  . read-tree + fetch tests: test failing "--super-prefix" interaction
+>  . Merge branch 'ab/submodule-no-abspath' into ab/remove--super-prefix
+>   (merged to 'next' on 2022-11-18 at 34d0accc7b)
+>  + submodule--helper absorbgitdirs: no abspaths in "Migrating git..."
+>  . Merge branch 'ab/submodule-helper-prep-only' into ab/remove--super-prefix
+>
+>  Remove the top-level `--super-prefix` option.
+>  source: <cover-v3-0.9-00000000000-20221119T122853Z-avarab@gmail.com>
 
-I wonder if OP has diff.wordRegex config (or attributes triggering a
-diff.*.wordRegex) that is doing something else.
+Hm, it looks like ab/remove--super-prefix missed the preview release..
+Per the discussion ending at [1] I think my one-patch fix to "git
+fetch" [2] should have made it into the release (it's pretty low-risk
+and doesn't introduce too much churn to ab/remove--super-prefix). Is it
+too late for that?
 
--Peff
+[1] https://lore.kernel.org/git/221117.86y1s9h2q5.gmgdl@evledraar.gmail.com
+[2] https://lore.kernel.org/git/pull.1378.git.git.1668210935360.gitgitgadget@gmail.com
