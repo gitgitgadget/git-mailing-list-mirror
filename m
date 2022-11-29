@@ -2,147 +2,80 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47189C4332F
-	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 10:03:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BB6BC4332F
+	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 10:03:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232084AbiK2KDC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Nov 2022 05:03:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57770 "EHLO
+        id S231841AbiK2KDs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Nov 2022 05:03:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229630AbiK2KC6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2022 05:02:58 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 683E85B590
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 02:02:56 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id r26so16941714edc.10
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 02:02:56 -0800 (PST)
+        with ESMTP id S231463AbiK2KDr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2022 05:03:47 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 948F65B590
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 02:03:46 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id s5so18991832edc.12
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 02:03:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=user-agent:in-reply-to:content-disposition:mime-version:references
          :message-id:subject:cc:to:from:date:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=65KHMz7WYrnqPXM8GBSDMVAdlyP6ZXLoeEKZDqI114w=;
-        b=YWoLx/GhGWmQSfu8WFt/PnmtIKp4bb1MZ3RivpV5oxHYgOtcjE/wVyHIutRs+VDCdw
-         pBnXbYM2MOuYuXoRWWCSOyTtj9wdG5C6qUdKW0AyJSlXIqKPVoPXcs31PHre2wL0if9U
-         pank7sDMP7K2T2i9UNm7USklhpuQD6gFS2nTt5XydZjk5Mzi7cWT5slGEeY9yiwOnmtM
-         FHJ2EsL0NJkhl4aIfho2lMrbcF7Qr9TK/VuSmcgmJFL2MPWHG2lhiy7b4V1L3i2TYF7d
-         uDQVNZELhRE4rJcd2/ZvV3OmTZUK2ybFCivh2pHa+wvFLCeTq75U2sj8rejkHiGzIK2d
-         dhHw==
+        bh=SDcFHQNDXkzcspLWRMMoyy7omZ9yx1ZuQLjtIYmYwF4=;
+        b=MOTDkNb4TY1LEHL4cSpDUilxvSCWkjCOIU0N3wXSg104ViCI5pUi5B/SzRpK62pkBZ
+         bxBL6GNfCCdOMvnxhcgjdSZuwIHnaJDvtOEwCJFQYvEnmAUMApFyzKynpm1onKgOLLqb
+         8BFM9Ky2PyBz3q7LfXGQGJjWlb89zSuCdZkJdbKHwAMUrwEV5yQSGaZ4yTuwCkrwyvLJ
+         PA6BL9ispNcj8vSIizqCfs/+tUveOVmAw2u3JVf1K/MzXrxliGl8VnaEU+C1mqu5B4yz
+         OflTRAY/JF2uO2xLzD6hOwnRE6KqTbwMnPSXnFnMoVJoIWhpnHm4nAj4LC6EfAvlFzDS
+         cVFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=user-agent:in-reply-to:content-disposition:mime-version:references
          :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=65KHMz7WYrnqPXM8GBSDMVAdlyP6ZXLoeEKZDqI114w=;
-        b=Am2yhvNrDXt8NpkWF0UN82jhrJm7OltIjW98H1AFG8a/sHMKY6LskPpG9/qDpfVew+
-         6Pjn77nQek4gmeHiY2PTRg8/hKoqQH1P5npad8d2jTeCGfZE6jZLnwV2Zdm9sgSFrTC6
-         uVZv30ISnY97kINP9wYrvj4fMI7hUx3i9eK7GxNuj0dvFwrKAqIvPI8O08KLFg4z2sDe
-         IFBcf0va6rS/sOEKERdkpy6tMTNCivEqvPCaBtH3TWMO13MP59Dybg/1MMpnaH0+1ulz
-         fuSvqwjnFeb3Jgoa6C37NdtvQDB4cn3l/Sq0GbBR79WhBrvkt10fE5/kivqHpeEfxVsI
-         yigw==
-X-Gm-Message-State: ANoB5pmi6LPdmG4b/1DtcWoNgCPXDEObwrrmcilZHc71nHj3x2eJRtIC
-        hOxRS2IJxgHHvcZRefNKPJntBy7TAo4=
-X-Google-Smtp-Source: AA0mqf5Wcu6vED1LtBNe0Lec3ttaTXQ6uZEYcajWSiGyay702C7DnHOal7wfGWzl17lhLIRMhjA2Pg==
-X-Received: by 2002:aa7:d3cb:0:b0:461:8d98:3d6d with SMTP id o11-20020aa7d3cb000000b004618d983d6dmr37203373edr.116.1669716174619;
-        Tue, 29 Nov 2022 02:02:54 -0800 (PST)
+        bh=SDcFHQNDXkzcspLWRMMoyy7omZ9yx1ZuQLjtIYmYwF4=;
+        b=bXOaTI7VHbBYzkBtw6f+Z/cPBqLyA3A9jXxz2W4WobXDxtiELxb936XIgNd4EOMgTn
+         QGfhFxvEOfDtOBfXe1E/qeh6hoq9s8ULazyJ9+M8U2FBe3AwyEAQnP1P7yJjOlJn7cSE
+         cPcMvb4J1akdsyEduVjfQZDojL2fvwaRTkPIVyp5lLEGZuKqv5LHtEZrMaFRTmM7Sj7k
+         +bIY6rHHXrr+ngw5bOsjegybmLDmFpv80HsE5/Ipbk4tV471r6tIACt6RTE6AbY8YndX
+         THr+YvpicN7CEDfnS51Rl+6fEoPnEPQbDAASlCrBhzqF0vi/4k0xFgDFt9FJTyTZrEdL
+         7XRw==
+X-Gm-Message-State: ANoB5pmVDnbZHf9Do93vk5z1FBdSNd/UTB58+mu5VqbNecFOLZ1eqeG+
+        QAVXA0SbApCJuA2FOITU3KU=
+X-Google-Smtp-Source: AA0mqf6eyJ88ujgQV9MGp+D0xFxOLhaAyUPrL/j00lnKGncZHYUUVMtRHD39snk208xLKM8dC1XB2g==
+X-Received: by 2002:a05:6402:298f:b0:468:f142:3040 with SMTP id eq15-20020a056402298f00b00468f1423040mr50609448edb.107.1669716224914;
+        Tue, 29 Nov 2022 02:03:44 -0800 (PST)
 Received: from orome (p200300e41f201d00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f20:1d00:f22f:74ff:fe1f:3a53])
-        by smtp.gmail.com with ESMTPSA id c2-20020a17090618a200b007bd15e582a3sm4649406ejf.181.2022.11.29.02.02.53
+        by smtp.gmail.com with ESMTPSA id i25-20020a056402055900b0046730154ccbsm6076324edx.42.2022.11.29.02.03.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Nov 2022 02:02:53 -0800 (PST)
-Date:   Tue, 29 Nov 2022 11:02:52 +0100
+        Tue, 29 Nov 2022 02:03:44 -0800 (PST)
+Date:   Tue, 29 Nov 2022 11:03:42 +0100
 From:   Thierry Reding <thierry.reding@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
 Subject: Re: [PATCH v3] am: Allow passing --no-verify flag
-Message-ID: <Y4XYzPhZLhmoGzZT@orome>
+Message-ID: <Y4XY/tUT+vKOrabX@orome>
 References: <20221128174825.1510407-1-thierry.reding@gmail.com>
- <Y4U/OhHSg85UV+5L@nand.local>
+ <xmqqv8my4kvu.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="UrQ7TDqUuddfI462"
+        protocol="application/pgp-signature"; boundary="Ss3KFi2SiaJ/DaBg"
 Content-Disposition: inline
-In-Reply-To: <Y4U/OhHSg85UV+5L@nand.local>
+In-Reply-To: <xmqqv8my4kvu.fsf@gitster.g>
 User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---UrQ7TDqUuddfI462
+--Ss3KFi2SiaJ/DaBg
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Nov 28, 2022 at 06:07:38PM -0500, Taylor Blau wrote:
-> Hi Thierry,
+On Tue, Nov 29, 2022 at 10:20:05AM +0900, Junio C Hamano wrote:
+> Thierry Reding <thierry.reding@gmail.com> writes:
 >=20
-> This is looking pretty good. Thanks for pushing out a couple of new
-> rounds. I took a look at the discussion and have some thoughts below,
-> but they are minor.
->=20
-> This will likely not be in the upcoming v2.39.0, since Junio has already
-> cut and pushed the first release candidate tag. But you should feel free
-> to keep working on it in the meantime and we can revisit it post-2.39.
-
-That's fine. No rush. I've had local workarounds for this for a very
-long time, so I can be patient for a little longer. =3D)
-
-> On Mon, Nov 28, 2022 at 06:48:25PM +0100, Thierry Reding wrote:
-> > diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-> > index 326276e51ce5..0c1dfb3c98b4 100644
-> > --- a/Documentation/git-am.txt
-> > +++ b/Documentation/git-am.txt
-> > @@ -9,7 +9,7 @@ git-am - Apply a series of patches from a mailbox
-> >  SYNOPSIS
-> >  --------
-> >  [verse]
-> > -'git am' [--signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8]
-> > +'git am' [--signoff] [--keep] [--[no-]keep-cr] [--[no-]utf8] [--no-ver=
-ify]
->=20
-> Spelling this as "[--no-verify]" and not "[--[no-]verify]" is right,
-> since the option itself is called "--no-verify" (and thus has the
-> OPT_NONEG flag bit set), and "--verify" does not exist. Good.
->=20
-> >  	 [--[no-]3way] [--interactive] [--committer-date-is-author-date]
-> >  	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
-> >  	 [--whitespace=3D<option>] [-C<n>] [-p<n>] [--directory=3D<dir>]
-> > @@ -138,6 +138,12 @@ include::rerere-options.txt[]
-> >  --interactive::
-> >  	Run interactively.
-> >
-> > +-n::
-> > +--no-verify::
-> > +	By default, the pre-applypatch and applypatch-msg hooks are run.
-> > +	When any of `--no-verify` or `-n` is given, these are bypassed.
->=20
-> Should we be more explicit here, given the discussion in the earlier
-> rounds? IOW, instead of saying that they are "bypassed" (which might
-> lead the reader to believe that they are run and their output/exit code
-> ignored), should we say that they are "not run" and be clearer?
-
-I adopted the wording as for git commit and since the behavior is
-exactly the same, it seemed best to stay consistent with that. My
-interpretation of "bypassed" is equivalent to "unused" or "ignored",
-though "ignored" in this case relating to their existence rather than
-return value.
-
-Either wording is fine with me, so if you feel strongly I can reword
-this. In that case it might be worth updating the git commit
-documentation as well to avoid the same ambiguity.
-
->=20
-> The (elided) implementation below looks good to me.
->=20
-> > diff --git a/t/t4150-am.sh b/t/t4150-am.sh
-> > index cdad4b688078..84e6bebeca7a 100755
-> > --- a/t/t4150-am.sh
-> > +++ b/t/t4150-am.sh
-> > @@ -345,6 +345,16 @@ test_expect_success 'am with failing applypatch-ms=
-g hook' '
-> >  	test_cmp_rev first HEAD
-> >  '
-> >
 > > +test_expect_success 'am with failing applypatch-msg hook (no verify)' '
 > > +	rm -fr .git/rebase-apply &&
 > > +	git reset --hard &&
@@ -151,33 +84,64 @@ g hook' '
 > > +	exit 1
 > > +	EOF
 > > +	git am --no-verify patch1
+> > +'
+> > +
+> >  test_expect_success 'am with pre-applypatch hook' '
+> >  	rm -fr .git/rebase-apply &&
+> >  	git reset --hard &&
+> > @@ -374,6 +384,16 @@ test_expect_success 'am with failing pre-applypatc=
+h hook' '
+> >  	test_cmp_rev first HEAD
+> >  '
+> > =20
+> > +test_expect_success 'am with failing pre-applypatch hook (no verify)' '
+> > +	rm -fr .git/rebase-apply &&
+> > +	git reset --hard &&
+> > +	git checkout first &&
+> > +	test_hook pre-applypatch <<-\EOF &&
+> > +	exit 1
+> > +	EOF
+> > +	git am --no-verify patch1
+> > +'
+> > +
+> >  test_expect_success 'am with post-applypatch hook' '
+> >  	rm -fr .git/rebase-apply &&
+> >  	git reset --hard &&
 >=20
-> Should we verify that the patch was applied with the expected message?
+> These two tests will still pass if you change the implementation to
+> run the hook and simply ignore its exit status, but I recall you
+> making a good argument against that alternative implementation ,in
+> comparison to "not running the hook at all".
+>=20
+> I think these tests should make sure that the hooks did not even
+> run.  Perhaps by creating a marker file before running "git am",
+> adding a "rm" that marker file in the hook, and making sure that
+> the marker file still exists after "git am" returns, or something
+> like that.
 
-Yes, that's a good point. I've updated both tests to check that the
-patch has been applied and the scripts haven't been run.
+All good points. I've updated both tests to check that patches have been
+applied correctly and that the scripts haven't been run.
 
-Thanks,
 Thierry
 
---UrQ7TDqUuddfI462
+--Ss3KFi2SiaJ/DaBg
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmOF2MwACgkQ3SOs138+
-s6FEtxAAvUWQb9W+5/kiUAo0WeV2O/FbypZtizxwbneDj9ejH5LXLziJWmQ4NCMT
-lyzM+A8zWIOzuz7Znft0eGtQ67GeUZ97ksN5zM9JtO+BLjhf/sgWSankeLe7fb+Y
-c+KA/VlCy//kq0HEpq9+g65451Zdinu5bY8eh4r0h3gaBOBn1oi0RZYoBKo1II8H
-j/9jWjP59KBwxwzvgGUeqS7i4F0PztWlTQuCEXmPc3IEi97DFAeVw28ujoSPlfce
-4IwgIwzaAeCRjtsPk2n3csEtufcX9WTQ2QQKp8FA+mlK5mbw8ogN3ERh9vnbcDWu
-sAUn0PYh15cIUHAXrnXQ093x7TVYefnIe3A2ieCEY4NHw/sExjBx0XmawfU2xC+0
-Cgn15kV0H8sFI5BmPyCdS8Ji8lpqJHqykh+i6BX+IlFEuAwlW6lswJdgej/Hh0EI
-rW5rOt71xBGhDghsVll5H6NfgXxCbWhUJEuBTP5a7pD/5/95i5mrJAQSR5g8Ou/Y
-yalJRfuHdIMnkMdjwtGEp1/WsPRijhXk4+CJ/OlYKKKWR660ZENs/Dvlwt2yDDTQ
-V8nxCxaSf7upl2zdLV2k6MHD1QsPKRMtRHY90OB8T8mS43SPj62d1iV0YlrnhRNz
-OLIiVrB98cUm34QH4txcen381LoGg0UOzhgzbJZYKsKYGF29o8M=
-=cSPH
+iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmOF2P4ACgkQ3SOs138+
+s6GS3A/+OBObJfeasgO7UP5zfxiJzXX2jK7xCzlWoiqTycHESLMHObCPuNQz79oH
+hcnQBWGFKqkPldIg8I61Mg/Uw8J6ThbyjhlWP9luKxGSkxIYm2Ej2MDQ/z31eCe8
+AeoRp9X5jtLehK9rU09ksKRXagWO0/k8+pPkFLLBsR8gJywil5Xk6BiFitmZyC/Y
++rv+InZHFy9snATdTfIDW6FyYnGKSl6I5pHP8EHt4Qb0x4QV1Aw4Yj5yZaS53Jr5
+lhxTPU3FJMLHh+YSZkRaVJEXpcK/SFReDbk44aKpbDajQSKWb5ku2R/3abWSKdWr
+HWKNfPofvDPu8PbbfDXcNnnJ0dZWEzSX+dVce7gZ9O17RIagOaWkXonm0ZaF4I+c
+lCxof14Kvvmu3ZJW6V4ulYPHNe/wD6rhgi7DRXzdbUbutDK6v0m0kULRJ9Ag6I1K
+RouCJiGXjnzM887hJDZG/oRfXswciXjAgwDTPrNPEMr9BL72Eh3AVgXk/6u20krR
+Ob56x55Mn4bQ/j7uuBt3Airpklww+hhH+bJ3Fnhzhpd0d1A/PjSje6uRUcYSxWLm
+3EsttBKF9PhQ08mwUw9Dn9VGs+O0JjovWaz1ZIUzlINZypcGYKThUY51j0bVGnPz
+h+PyzoYdUB1Ex7qd2loxDGVu6UyQMD5sS17BcKef2btcSr+AVws=
+=P7pa
 -----END PGP SIGNATURE-----
 
---UrQ7TDqUuddfI462--
+--Ss3KFi2SiaJ/DaBg--
