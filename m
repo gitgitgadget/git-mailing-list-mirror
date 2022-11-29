@@ -2,131 +2,256 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BB14C4332F
-	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 05:14:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C92E9C433FE
+	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 08:09:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235097AbiK2FOI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Nov 2022 00:14:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44334 "EHLO
+        id S229774AbiK2IJh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Nov 2022 03:09:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233673AbiK2FOH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2022 00:14:07 -0500
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3FDA419BF
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 21:14:05 -0800 (PST)
-Received: by mail-lj1-x22d.google.com with SMTP id z24so15578102ljn.4
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 21:14:05 -0800 (PST)
+        with ESMTP id S229612AbiK2IJg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2022 03:09:36 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E74A153EDD
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 00:09:34 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id e13so18684741edj.7
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 00:09:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=/9o/tM7yF70ZPw8D0BmR8ssawIDQxAIH+GNfNgZe82g=;
-        b=XlVe4i3tztSwzRX9pfm+XPkbwzRd0906TrcikNwlNi4hwKr2xoL9dxrQmRtXBkjQlr
-         UIdzpGFxaE8BqEetz4h+bz/f3nm2xLMGkWIOkaU2+VV9lZKaH4WU3F6I8KYRh7vKYTBf
-         NzF2ZyXMNXYxj2VnVLKhfUdqZ90yIBA3dHJidXtC6mERvLwmFYk7BrErcd53nknbaoGm
-         BSjrtHpjmM1x7ovXEk7LnuXxZoTOs67jsQQ/gJxsyOueTezXZftxf2Au7BGK3rXNG8YE
-         dVhOxgh9CHX4mJjzmOasr6saO0pkLPNhUx4M1dS5ayV2Pk7nZOJ9Hcdp9PnFOYql/Jxq
-         XzWw==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=O/vCRGHwxp5bDc52VTL4zpFMpeVy7OEjwZO/435UPBg=;
+        b=XLSb4X/iFOpf2/6oEm7qnmCuLlw0ICadDR/a+soonaztwFD5cUQE4VJMQGWXzJpvuc
+         za7d8ixQI4qe7cHSDiM9c7IT6MHmITTRlByOyf0fUTr349JPb50sqMHBlpFE0SjTUUy5
+         TETRfbEY7+qvZQbaC3m1Y74GryeO4vFcuJ//KbtKtJ5F9hjkU32wdZUYXJcJASxbLqAE
+         YI3wjKZlgnTtQCDrWzC1W+2fasSqE9EnAJMHV0EnTWPmD25x1YNz2Yk7abJ01c0xlZoC
+         mSJEC3aUxRfmsJfwoVY0KYm57n8OJg1qwsoMaRDhvy5cGE4q0mrObMGmNRX3HzPsYgbZ
+         M68w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/9o/tM7yF70ZPw8D0BmR8ssawIDQxAIH+GNfNgZe82g=;
-        b=pKRf6DQ2DEQGVp7hzr1/oOOoRZB6LbMBEu+7Woo5/OTReUSzv53oEKKEws7BfnjM16
-         pwozRTJh0BY3diChvYaCvwHMOnFhEtTcRYP69gY+AbZnD+H7EXX3v0glL1PEeoAIY2aY
-         rMXfOX9IPvnC58j38HjS3c30wGOWSJsCrFsGASvEjnSny4OMZTtL6UiPeW5Z1X7bFDRO
-         PlTxqOImTbWJtA9otkPAtiLeDcsCGR6221viw+09wHT9ojSf5VXMPkOse2r6QDIILa/g
-         EgHGmY4dkRxlHMTe5y5cnPL1RtPzLitEVSPZkbGSXphVyKNQV5TCPHCch2lr3QtXcBrp
-         jIGw==
-X-Gm-Message-State: ANoB5pmpt6PTenEo2SpDoKOERIKfZt2mt7gpjydfncWLaD2DMgAY3Xaj
-        4oqGcokvAxi7kK2yEGTGiN/Iucyl/eEG6FLLmvk=
-X-Google-Smtp-Source: AA0mqf4U4CN9UYGkI50V0FSYKb1Ps7BHQV7DgiUBtT2ea5ctNnFPgzllltX/2RYH489mhZdXDNIGPMFxd4g3hU3OsXo=
-X-Received: by 2002:a05:651c:12c1:b0:277:2fd5:482 with SMTP id
- 1-20020a05651c12c100b002772fd50482mr13375214lje.194.1669698844208; Mon, 28
- Nov 2022 21:14:04 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=O/vCRGHwxp5bDc52VTL4zpFMpeVy7OEjwZO/435UPBg=;
+        b=dyN4gD3db2Bo11u1BnXPbEyr+s28ad0ayV3n507xzqQ36LvWK51FkMPNA08/c4hW21
+         BRfMvueBipmiCrX50XcCZR3cdZxoPe6L6Xi3NwFjNSxnbxeE2xR59KRtxw6VKCEj4XHQ
+         GvCeQJZb+tM8nR/+JKJZCVFEeSfLSnJef32pW8xtt6WRO2aspm1lnqLMOaQy4gJ9dsvG
+         4MI6gcBAZIZMfp42dU7Nd6KF9AV0jN5b5YVg0g9HFQcikRnpgBYfxpUZRzdg6WvkljEF
+         0CoBar7AZpHdg+kLv3hOxCqU4k+FjKnjDEf7oDCLaZI1QgQruoE1W4+AcgSarkOB392T
+         orFw==
+X-Gm-Message-State: ANoB5plQYvajSUipispXxmoYKmuwieO2mcvMmCzsMmRSgteoXIT5VIZO
+        kth/oIrnHEHyRrMAcHnW9aX3Wb0A3nHXYA==
+X-Google-Smtp-Source: AA0mqf4W0zyA82aprgfLuaO3s6KP2IzPYP972It8E9Io7IJXwLCP3MDeS7OdmVx8WdKXxkqAfJ8K1g==
+X-Received: by 2002:a05:6402:2070:b0:467:5e4f:591 with SMTP id bd16-20020a056402207000b004675e4f0591mr36676527edb.414.1669709373200;
+        Tue, 29 Nov 2022 00:09:33 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id 10-20020a170906218a00b0077a8fa8ba55sm4152884eju.210.2022.11.29.00.09.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Nov 2022 00:09:32 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1ozvgK-001HpD-04;
+        Tue, 29 Nov 2022 09:09:32 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 3/3] Revert "pack-objects: lazily set up "struct
+ rev_info", don't leak"
+Date:   Tue, 29 Nov 2022 08:12:25 +0100
+References: <c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.de>
+ <d19c6cb4-611f-afea-8a14-5e58d7509113@web.de>
+ <f5779e19-813c-cda9-2f84-9fe58f745e89@web.de> <xmqqv8mz5ras.fsf@gitster.g>
+ <d10de9b5-e5ff-18d6-d950-1d090d87b113@web.de>
+ <221128.864jujmhgp.gmgdl@evledraar.gmail.com>
+ <c5aeb93c-763d-3eae-0150-15f6ca675319@web.de>
+ <221128.865yezkule.gmgdl@evledraar.gmail.com>
+ <59431916-9f55-d0f4-da54-e7369803eb4c@web.de>
+ <2488058d-dc59-e8c1-0611-fbcaeb083d73@web.de>
+ <221128.86o7sqkjcj.gmgdl@evledraar.gmail.com>
+ <0b86ae8b-5523-3857-cdba-12275f727cde@web.de>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <0b86ae8b-5523-3857-cdba-12275f727cde@web.de>
+Message-ID: <221129.86fse2ji6c.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20221108184200.2813458-6-calvinwan@google.com>
-In-Reply-To: <20221108184200.2813458-6-calvinwan@google.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 28 Nov 2022 21:13:52 -0800
-Message-ID: <CABPp-BH3hxXhAGeHJ56m=S+GknsVqYExdJ7eKs3bJYkiMaWukQ@mail.gmail.com>
-Subject: Re: [PATCH v4 5/5] diff-lib: parallelize run_diff_files for submodules
-To:     Calvin Wan <calvinwan@google.com>
-Cc:     git@vger.kernel.org, emilyshaffer@google.com, avarab@gmail.com,
-        phillip.wood123@gmail.com, myriamanis@google.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 8, 2022 at 11:32 AM Calvin Wan <calvinwan@google.com> wrote:
->
-> During the iteration of the index entries in run_diff_files, whenever
-> a submodule is found and needs its status checked, a subprocess is
-> spawned for it. Instead of spawning the subprocess immediately and
-> waiting for its completion to continue, hold onto all submodules and
-> relevant information in a list. Then use that list to create tasks for
-> run_processes_parallel. Subprocess output is duplicated and passed to
-> status_pipe_output which parses it.
->
-> Add config option submodule.diffJobs to set the maximum number
-> of parallel jobs. The option defaults to 1 if unset. If set to 0, the
-> number of jobs is set to online_cpus().
->
-> Since run_diff_files is called from many different commands, I chose
-> to grab the config option in the function rather than adding variables
-> to every git command and then figuring out how to pass them all in.
->
-> Signed-off-by: Calvin Wan <calvinwan@google.com>
-> ---
->  Documentation/config/submodule.txt |  12 +++
->  diff-lib.c                         |  80 +++++++++++++--
->  submodule.c                        | 154 +++++++++++++++++++++++++++++
->  submodule.h                        |   9 ++
->  t/t4027-diff-submodule.sh          |  19 ++++
->  t/t7506-status-submodule.sh        |  19 ++++
->  6 files changed, 287 insertions(+), 6 deletions(-)
->
-> diff --git a/Documentation/config/submodule.txt b/Documentation/config/submodule.txt
-> index 6490527b45..1144a5ad74 100644
-> --- a/Documentation/config/submodule.txt
-> +++ b/Documentation/config/submodule.txt
-> @@ -93,6 +93,18 @@ submodule.fetchJobs::
->         in parallel. A value of 0 will give some reasonable default.
->         If unset, it defaults to 1.
->
-> +submodule.diffJobs::
-> +       Specifies how many submodules are diffed at the same time. A
-> +       positive integer allows up to that number of submodules diffed
-> +       in parallel. A value of 0 will give the number of logical cores.
 
-Why hardcode that 0 gives the number of logical cores?  Why not just
-state that a value of 0 "gives a guess at optimal parallelism",
-allowing us to adjust it in the future if we can do some smart
-heuristics?  It'd be nice to not have us tied down and prevented from
-taking a smarter approach.
+On Mon, Nov 28 2022, Ren=C3=A9 Scharfe wrote:
 
-> +       If unset, it defaults to 1. The diff operation is used by many
-> +       other git commands such as add, merge, diff, status, stash and
-> +       more. Note that the expensive part of the diff operation is
-> +       reading the index from cache or memory. Therefore multiple jobs
-> +       may be detrimental to performance if your hardware does not
-> +       support parallel reads or if the number of jobs greatly exceeds
-> +       the amount of supported reads.
+> Am 28.11.2022 um 19:32 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>>
+>> On Mon, Nov 28 2022, Ren=C3=A9 Scharfe wrote:
+>>
+>>> Am 28.11.2022 um 16:56 schrieb Ren=C3=A9 Scharfe:>
+>>>> The problem is "How to use struct rev_info without leaks?".  No matter
+>>>> where you move it, the leak will be present until the TODO in
+>>>> release_revisions() is done.
+>>>
+>>> Wrong.  The following sequence leaks:
+>>>
+>>> 	struct rev_info revs;
+>>> 	repo_init_revisions(the_repository, &revs, NULL);
+>>> 	release_revisions(&revs);
+>>>
+>>> ... and this here doesn't:
+>>>
+>>> 	struct rev_info revs;
+>>> 	repo_init_revisions(the_repository, &revs, NULL);
+>>> 	setup_revisions(0, NULL, &revs, NULL);  // leak plugger
+>>> 	release_revisions(&revs);
+>>>
+>>> That's because setup_revisions() calls diff_setup_done(), which frees
+>>> revs->diffopt.parseopts, and release_revisions() doesn't.
+>>>
+>>> And since builtin/pack-objects.c::get_object_list() calls
+>>> setup_revisions(), it really frees that memory, as you claimed from the
+>>> start.  Sorry, I was somehow assuming that a setup function wouldn't
+>>> clean up.  D'oh!
+>>>
+>>> The first sequence is used in some other places. e.g. builtin/prune.c.
+>>> But there LeakSanitizer doesn't complain for some reason; Valgrind
+>>> reports the parseopts allocation as "possibly lost".
+>>
+>> Yes, some of the interactions are tricky. It's really useful to run the
+>> tests with GIT_TEST_PASSING_SANITIZE_LEAK=3D[true|check] (see t/README) =
+to
+>> check these sorts of assumptions for sanity.
+>
+> That may be true, and looks even useful -- I didn't know the check
+> value.  I only get a strange error message, though:
+>
+>    $ GIT_TEST_PASSING_SANITIZE_LEAK=3Dcheck ./t0001-init.sh
+>    Bail out! GIT_TEST_PASSING_SANITIZE_LEAK=3Dtrue has no effect except w=
+hen compiled with SANITIZE=3Dleak
+>
+> Same with make test and prove, of course.  And of course I compiled
+> with SANITIZE=3Dleak beforehand.
 
-So, in the future, someone who wants to speed things up is going to
-need to configure submodule.diffJobs, submodule.fetchJobs,
-submodule.checkoutJobs, submodule.grepJobs, submodule.mergeJobs, etc.?
- I worry that we're headed towards a bit of a suboptimal user
-experience here.  It'd be nice to have a more central configuration of
-"yes, I want parallelism; please don't make me benchmark things in
-order to take advantage of it", if that's possible.  It may just be
-that the "optimal" parallelism varies significantly between commands,
-and also varies a lot based on hardware, repository sizes, background
-load on the system, etc. such that we can't provide a reasonable
-suggestion for those that want a value greater than 1.  Or maybe in
-the future we allow folks somehow to request our best guess at a good
-parallelization level and then let users override with these
-individual flags.  I'm just a little worried we might be making users
-do work that we should somehow figure out.
+The "=3Dtrue" part of the message is unfortunately incorrect (it pre-dates
+"check" being a possible value), but I don't see how you could have
+compiled with "SANITIZE=3Dleak" and get that message.
+
+It's unreachable if 'test -n "$SANITIZE_LEAK"', and that'll be non-empty
+in GIT-BUILD-OPTIONS if compiled with it. Perhaps you gave SANITIZE=3Dleak
+to t/Makefile, not the top-level Makefile?
+
+Try this at the top-level:
+
+	GIT_TEST_PASSING_SANITIZE_LEAK=3Dcheck make SANITIZE=3D test T=3Dt0001-ini=
+t.sh
+
+> But I don't see a connection between my comment and yours.  I was
+> not running any tests, just the above sequences of function calls,
+> e.g. in git prune.
+
+The connection is that you submitted patches that fail the CI. I don't
+think you use GitHub, so in particular if you're submitting patches that
+claim to do something with leak checking it's useful to run those modes
+against them to check your assumptions.
+
+>>
+>>> I still think the assumption that "init_x(x); release_x(x);" doesn't
+>>> leak is reasonable.  Let's make it true.  How about this?  It's safe
+>>> in the sense that we don't risk double frees and it's close to the
+>>> TODO comment so we probably won't forget removing it once diff_free()
+>>> becomes used.
+>>>
+>>> ---
+>>>  revision.c | 1 +
+>>>  1 file changed, 1 insertion(+)
+>>>
+>>> diff --git a/revision.c b/revision.c
+>>> index 439e34a7c5..6a51ef9418 100644
+>>> --- a/revision.c
+>>> +++ b/revision.c
+>>> @@ -3055,6 +3055,7 @@ void release_revisions(struct rev_info *revs)
+>>>  	release_revisions_mailmap(revs->mailmap);
+>>>  	free_grep_patterns(&revs->grep_filter);
+>>>  	/* TODO (need to handle "no_free"): diff_free(&revs->diffopt) */
+>>> +	FREE_AND_NULL(revs->diffopt.parseopts);
+>>>  	diff_free(&revs->pruning);
+>>>  	reflog_walk_info_release(revs->reflog_info);
+>>>  	release_revisions_topo_walk_info(revs->topo_walk_info);
+>>
+>> At this point I'm unclear on what & why this is needed? I.e. once we
+>> narrowly fix the >1 "--filter" options what still fails?
+>
+> As I wrote: A call to an initialization function followed by a call to a
+> cleanup function and nothing else shouldn't leak.  There are examples of
+> repo_init_revisions()+release_revisions() without setup_revisions() or
+> diff_setup_done() beyond pack-objects.  I mentioned prune, but there are
+> more, e.g. in sequencer.c.
+
+Yes, I agree it shouldn't leak. And we should definitely fix those
+leaks. I just don't see why a series fixing bugs in --filter needs to
+expand the scope to fix those.
+
+>> But in general: I don't really think this sort of thing is worth
+>> it. Here we're reaching into a member of "revs->diffopt" behind its back
+>> rather than calling diff_free(). I think we should just focus on being
+>> able to do do that safely.
+>
+> Sure, but the FREE_AND_NULL call is simple and safe, while diff_free()
+> is complicated and calling it one time too many can hurt.
+
+It's "safe" because you've read the internals of it, and know that it
+isn't assuming a non-NULL there once it's past initialization?
+
+Or is it like the revisions init()+release() in this thread, where
+you're assuming it works one way based on the function names etc., only
+for the CI to fail?
+
+In either case, I'm saying that if someone's confident enough to reach
+into the internals of a structure and tweak it they should be confident
+enough to just patch diff_free() or the like.
+
+>> WIP patches I have in that direction, partially based on your previous
+>> "is_dead" suggestion:
+>>
+>> 	https://github.com/avar/git/commit/e02a15f6206
+>> 	https://github.com/avar/git/commit/c718f36566a
+>
+> Copy-typed the interesting parts of the first patch like a medieval monk
+> because there doesn't seem to be a download option. :-|
+
+Jeff pointed out the ".patch" (there's also ".diff"), but also: Git has
+this well-known transport protocol it uses, which typically maps to the
+web URL on public hosting sites ... :)
+
+	git remote add avar https://github.com/avar/git.git
+	git fetch avar
+	git show <OID>
+
+>> I haven't poked at that in a while, I think the only outstanding issue
+>> with it is that fclose() interaction.
+>
+> You mean the t3702-add-edit.sh failure on Windows mentioned in the
+> commit message of e02a15f6206?  That's caused by the file being kept
+> open and thus locked during the call of the editor.  Moving the
+> release_revisions() call in builtin/add.c::edit_patch() before the
+> launch_editor() call fixes that by closing the file.
+
+Yeah, I haven't had time to poke at it in a while, and I had it queued
+behind various other leak fixes.
+
+I'm sure it's not that complicated in the end, just that that
+interaction needs to be dealt with.
+
+>> I think for this particular thing there aren't going to be any bad
+>> side-effects in practice, but I also think convincing oneself of that
+>> basically means putting the same amount of work in as just fixing some
+>> of these properly.
+>
+> Not to me, but perhaps that TODO is easier solved that I expected.
+> In any case, with the mentioned edit_patch() change described above
+> e02a15f6206 passes the test suite on Windows for me.
+
+Nice! I'll try that out.
