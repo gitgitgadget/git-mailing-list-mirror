@@ -2,63 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7263AC4321E
-	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 22:14:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5A1FC433FE
+	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 22:30:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236710AbiK2WO1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Nov 2022 17:14:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47908 "EHLO
+        id S235779AbiK2WaQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Nov 2022 17:30:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236163AbiK2WOY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2022 17:14:24 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AE9924F0C
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 14:14:24 -0800 (PST)
-Received: (qmail 14828 invoked by uid 109); 29 Nov 2022 22:14:23 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Nov 2022 22:14:23 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24335 invoked by uid 111); 29 Nov 2022 22:14:23 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Nov 2022 17:14:23 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 29 Nov 2022 17:14:22 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jeffrey Walton <noloader@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: Git port to Debian SH4 may have trouble
-Message-ID: <Y4aEPpQsS8QxBYly@coredump.intra.peff.net>
-References: <CAH8yC8niurChnXPrZSeBa7g1z5AF3PqYdf1X0Rm03rDanec6Gw@mail.gmail.com>
- <Y4ZXRx4mf0UMk4H6@coredump.intra.peff.net>
- <CAH8yC8=zv30qNKVGZcT02hfTWgn4x1RCEUioB=jG9yq9X_Qp=g@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAH8yC8=zv30qNKVGZcT02hfTWgn4x1RCEUioB=jG9yq9X_Qp=g@mail.gmail.com>
+        with ESMTP id S237058AbiK2W34 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2022 17:29:56 -0500
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 562CB6F821
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 14:29:52 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id y23-20020aa78057000000b00574277cb386so12385048pfm.16
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 14:29:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=vROFBwLGu5DbSb1iWRc+yLlUNVOTcuRQIlpTsWGmzt0=;
+        b=Gm+QvQ5cO5Gdq42uKse+9t0hsOLbNfB6lsz6zcfg0vhGIXZpvciHhXaJWoz1QoUJXo
+         H9+ahcLCwd4OsE+S3+8AVivXijun4BNC+kKC0QYWZz4erauA/u81Go1Ja+rVNh9BtS6n
+         1EwiH+qPdsml8LQ+d0nPGAbasX1Hy245dLSR13hM5VBJF8tbWhKuLcFM4bqKn8vNLx96
+         Ok7HOchkFu1C/ypGJJXWvOMDq3yoZRwTnQ9PAXbCHbuZnKSaB94cKklzqnpJHnEDYn3+
+         ZvRCgUxxFhmE19cdRzU9OVfgNwlNhPi0TyOQWbhca0ebylMdZTW5wJSxvT36du7aCr7a
+         MPhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vROFBwLGu5DbSb1iWRc+yLlUNVOTcuRQIlpTsWGmzt0=;
+        b=7NAVXKcvkMxsPoKRUm7NDqr4Bpf4ZpKe9XaS43ZO4Ea0iYqEllAjLcfFLiggns959/
+         ErI+lLmhYUxx+k15uexSdmDF0DX3AyeIHzxeZkE6QNcuTLrOlXqSHccDSSZbI6Yutxje
+         NJl4Mqbge78bLt2eT6WX4GQ+snSqpL76FPmWeMaOP/JqOsoqF7yoKLjP33QUmElMgrG/
+         Jj1RvibGjx83sQAYp61Jy4llHyvyqsUQIb+J8MwyS8E1lympjFaHtzzmK6xZ1wFRTV0i
+         iW2Uu69NKJx7Lfj3/cFa1gVkVyX10gK4wlHa4htWGt7fjAVfVX4k7nHyI1u3tKK8dvPj
+         DokQ==
+X-Gm-Message-State: ANoB5pk4+CJXz239B6I6WCD+7BcTWgOUBOnK3A+7aVcFipf0+16z3Dpd
+        Ay4r+WQ/rod2Z1j8jyfFcEN0lAHthXbQgA==
+X-Google-Smtp-Source: AA0mqf61wfpBibgrRpUxHedPho92nZ6Hbr2hibd7P0VhVLfBRQGmhhm8GS+IeZ+rTHKk3c/diYjnHSMqdhcTwA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:298d:b0:561:5d08:761 with SMTP
+ id cj13-20020a056a00298d00b005615d080761mr42290132pfb.14.1669760991856; Tue,
+ 29 Nov 2022 14:29:51 -0800 (PST)
+Date:   Tue, 29 Nov 2022 14:29:43 -0800
+In-Reply-To: <20221128210125.2751300-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20221128210125.2751300-1-jonathantanmy@google.com>
+Message-ID: <kl6lr0xlqtrc.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v4 5/5] diff-lib: parallelize run_diff_files for submodules
+From:   Glen Choo <chooglen@google.com>
+To:     Jonathan Tan <jonathantanmy@google.com>,
+        Calvin Wan <calvinwan@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        emilyshaffer@google.com, avarab@gmail.com,
+        phillip.wood123@gmail.com, myriamanis@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 29, 2022 at 04:49:30PM -0500, Jeffrey Walton wrote:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> > Just a hunch, but does:
-> >
-> >   git config --global pack.threads 1
-> >
-> > help? The delta resolution is multi-threaded, but nothing else in the
-> > clone should be.
-> 
-> Yes, `git config --global pack.threads 1` allowed things to continue.
-> The check-out was successful.
+> Calvin Wan <calvinwan@google.com> writes:
+>>  submodule.c                        | 154 +++++++++++++++++++++++++++++
+>
+> I think the way to implement this is to have a parallel implementation,
+> and then have the serial implementation call the parallel implementation's
+> functions, or have a common set of functions that both the parallel
+> implementation and the serial implementation call. Here, it seems that
+> the parallel implementation exists completely separate from the serial
+> implementation, with no code shared. That makes it both more difficult to
+> review, and also makes it difficult to make changes to how we diff submodules
+> in the future (since we would have to make changes in two parts of the code).
 
-OK, that narrows it down. The question then is why threads don't work.
-Is there something broken with threading or luck primitives on that
-platform? Or are we doing something sketchy with concurrency that
-happens to work on Intel but not elsewhere, and we end up in some kind
-of deadlock?
+It seems that most of the code is copied from is_submodule_modified(),
+so a possible way to do this would be:
 
-I suspect if we want to know more, you'd need to use gdb to grab a
-backtrace for each of the threads during the hang to see what they're
-trying to do.
+- Split is_submodule_modified() into 2 functions, one that sets up the
+  "git status --porcelain=2" process (named something like
+  setup_status_porcelain()) and one that parses its output (this is
+  parse_status_porcelain() in Patch 2). The serial implementation
+  (is_submodule_modified()) uses both of these and has some extra logic
+  to run the child process.
 
--Peff
+- Refactor get_next_submodule_status() (from this patch) to use
+  setup_status_porcelain().
