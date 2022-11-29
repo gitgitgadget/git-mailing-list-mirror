@@ -2,96 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A0B24C433FE
-	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 22:54:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32999C433FE
+	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 23:30:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236152AbiK2WyW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Nov 2022 17:54:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40384 "EHLO
+        id S230101AbiK2XaI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Nov 2022 18:30:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237210AbiK2WyG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2022 17:54:06 -0500
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECD9173B83
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 14:53:35 -0800 (PST)
-Received: by mail-io1-xd33.google.com with SMTP id h206so11196191iof.10
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 14:53:35 -0800 (PST)
+        with ESMTP id S229919AbiK2X3t (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2022 18:29:49 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D06BE716CE
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 15:29:41 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id o15-20020a17090aac0f00b00212e93524c0so244027pjq.2
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 15:29:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=C5XnZXv6HNo8hEZDlhp8z8hMBTnH9Tcb3CK68535FLU=;
-        b=RPDNxISyrjBHAN/GjZYYZQbKf4z88qvrl3GnkWV+9f9ToARIJq+noQX0F2udx5o2tY
-         PREhVUlo1nT9/PmZY7Mc5iYA70IchSWuwssliHxJmv5QLBepHT6pOmTye/tXVw0NS8Dq
-         A7Rd6NuVlv0mrwSeIAEnzroB1bVNAwAbppCOxRe5iXx2JGwp0HxsULKqczHgu2RqFNIe
-         bQL9q2EXcQwJRxgMwSTmNg4cGD5oJA8mG6drw+xKLXr39m1O7AxTI0WC0gTyqsHTXKA7
-         4tW2Wm3tM8yA5xjXvApUTBPmQKphoQY6oeP+MUNrUKMiwfI4bQ/T6IbiYgPniQXIfQX3
-         i7eA==
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CE3o35DP0AJ+KfPbrRnkPbkZdA+gzedIiONUZ2R1Bec=;
+        b=KX6CQYBzdGoHHYZHaHCTEr9X3Mec3DDsB6lqG3xZs558+H4nxWE6C95V7yTjESaMj4
+         VGtFKErty3ZeugqYnC0LXGrBZITgK67gAFChpIcB+w00iS9u3B3sGN4e/jcSalZzdeV4
+         sHokjIkcZDgKpMdQtyLWUg3bzB45azLWVZKwhfhHjPvH2nlepOmZS4dRAIwGfhY5UlSX
+         E08zNET4NCeRDNt9CHmKzyEaVSwhytLa/QCwebk4xHDQjYtkS3oukyiMJX+QaeEY5WCf
+         0R09LT0Z0nzYP8zgogVMJWX9f/fy0B7a9/krAiMkbEggVXsiWrdMuIPK2XpuRJaRPMvO
+         dh/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=C5XnZXv6HNo8hEZDlhp8z8hMBTnH9Tcb3CK68535FLU=;
-        b=FfzbD5VjY42ZaNjTAIf2lYoZ+mSx0CGSqXMOUfLzzA6qvcX+nRO9vognJlqvUuwLQ+
-         XCyPqNGc/+Uaw3AFvRuqeIa3kV1noNWJ4/nUmdrMYssAMZnULq62kl0sUWPNUAuYyZc6
-         7t5gKRy0OZEwMVo7nimKYOc+JazpnC7DLayBnz5FVE4eS0lxyc3BXR+rNXJehY+n2gMe
-         aUII2WxgTHArqQN6z3yK5IdeIN2vidNrTZpfSaEzV+Q7SY/9/3HJ27DSgDNunkTKpLy2
-         WUz8+cDVaD+/Sx1ZIAWB35QZIszma5rS8y+sEfkk4h/auiZEXxLOghQidgArf9atHurn
-         L1wQ==
-X-Gm-Message-State: ANoB5pnvJDica+IA4nbqiqS4V+XOldU/Joj2FQJDQIwpnjn0j7lpjREG
-        O2NlSm5caK+Bb6X9vbAPvYWSKA==
-X-Google-Smtp-Source: AA0mqf7Pl8a9+uCoOT7HZczNFRJFj7bwBzTO3+9RCxdiv4+H5uUNbU+p/AogXRbYf9jFXTiNM6/SIg==
-X-Received: by 2002:a02:3b56:0:b0:375:8878:9c80 with SMTP id i22-20020a023b56000000b0037588789c80mr25692780jaf.157.1669762415335;
-        Tue, 29 Nov 2022 14:53:35 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id z28-20020a056602081c00b006c75c702342sm185630iow.14.2022.11.29.14.53.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Nov 2022 14:53:34 -0800 (PST)
-Date:   Tue, 29 Nov 2022 17:53:33 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Teng Long <dyroneteng@gmail.com>, avarab@gmail.com,
-        git@vger.kernel.org, tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v3 0/5] notes.c: introduce "--no-blank-line" option
-Message-ID: <Y4aNbc1ZMxscyvU1@nand.local>
-References: <cover.1667980450.git.dyroneteng@gmail.com>
- <20221128142032.71179-1-tenglong.tl@alibaba-inc.com>
- <xmqqzgca4lb7.fsf@gitster.g>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqzgca4lb7.fsf@gitster.g>
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CE3o35DP0AJ+KfPbrRnkPbkZdA+gzedIiONUZ2R1Bec=;
+        b=5Mpsqwgjt1InPXYFzCParVP3KTo5uwzcFHH+JoScGubV25B1ZAAjlrEdFgC/VmPXfU
+         m5a97MvfJFhjy7kc4GLS3mgt+jX20oh1H4848nT+WA5HqJegd40mrot0WeR1D2emiZBP
+         y5jQIoOhvaCWOpwOH6RxnjXnDTbAU7PzuN5zCoknq1yoBao1ESkp0Vo3AGRMSBvtO2HM
+         oclLxGnDXrU35DceBd5i3rR08gYH3klpFtsQe8VR64WnFTgVWQfbdmn+/WsMp11P/4By
+         gNGyanX1i0A1FvIDjzpJjwv4R/GzwgiWEF3FhlBJro/DZ782GC7reHpQzLS/gp9RuVoe
+         C3+Q==
+X-Gm-Message-State: ANoB5plZp9tV/Rm/sutkiR7ovo29PGVtrhgBmkCu7RwzgMLaw0mW2TM5
+        CaHNpaYs2cFJE2XH30BOWOjoHqW1dp4+sw==
+X-Google-Smtp-Source: AA0mqf4Gua7GykE6LKwosgs3chnsuyUT8GJ9OXjUHYMyXXFA6UKE4qxQYYiBvbCBdVCOQPnWxm2aJ0BSVbETpQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a05:6a00:1303:b0:561:7dc7:510b with SMTP
+ id j3-20020a056a00130300b005617dc7510bmr60818201pfu.3.1669764581436; Tue, 29
+ Nov 2022 15:29:41 -0800 (PST)
+Date:   Tue, 29 Nov 2022 15:29:39 -0800
+In-Reply-To: <20221108184200.2813458-2-calvinwan@google.com>
+Mime-Version: 1.0
+References: <https://lore.kernel.org/git/20221020232532.1128326-1-calvinwan@google.com/>
+ <20221108184200.2813458-2-calvinwan@google.com>
+Message-ID: <kl6lo7spqqzg.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v4 1/5] run-command: add duplicate_output_fn to run_processes_parallel_opts
+From:   Glen Choo <chooglen@google.com>
+To:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
+Cc:     Calvin Wan <calvinwan@google.com>, emilyshaffer@google.com,
+        avarab@gmail.com, phillip.wood123@gmail.com, myriamanis@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 29, 2022 at 10:10:52AM +0900, Junio C Hamano wrote:
-> Teng Long <dyroneteng@gmail.com> writes:
->
-> >> Teng Long (5):
-> >>   notes.c: cleanup 'strbuf_grow' call in 'append_edit'
-> >>   notes.c: cleanup for "designated init" and "char ptr init"
-> >>   notes.c: drop unreachable code in 'append_edit()'
-> >>   notes.c: provide tips when target and append note are both empty
-> >>   notes.c: introduce "--no-blank-line" option
-> >
-> > I'm not sure if this patch series should continue, and if there are no
-> > updated comments it will be temporarily suspended.
-> >
-> > Thanks for the reviews on the past patches.
->
-> Taylor, This topic was marked to "expect" a reroll in the second
-> issue of November "What's cooking" report you did.  Do you recall
-> what remaining works there were?
+Calvin Wan <calvinwan@google.com> writes:
 
-Looking at the dates, I sent that WC on 2022-11-08, which means that I
-most likely was referencing the discussion between the author and Ævar.
+> @@ -1680,8 +1683,14 @@ static void pp_buffer_stderr(struct parallel_processes *pp,
+>  	for (size_t i = 0; i < opts->processes; i++) {
+>  		if (pp->children[i].state == GIT_CP_WORKING &&
+>  		    pp->pfd[i].revents & (POLLIN | POLLHUP)) {
+> -			int n = strbuf_read_once(&pp->children[i].err,
+> -						 pp->children[i].process.err, 0);
+> +			struct strbuf buf = STRBUF_INIT;
+> +			int n = strbuf_read_once(&buf, pp->children[i].process.err, 0);
+> +			strbuf_addbuf(&pp->children[i].err, &buf);
+> +			if (opts->duplicate_output)
+> +				opts->duplicate_output(&buf, &pp->children[i].err,
+> +					  opts->data,
+> +					  pp->children[i].data);
+> +			strbuf_release(&buf);
+>  			if (n == 0) {
+>  				close(pp->children[i].process.err);
+>  				pp->children[i].state = GIT_CP_WAIT_CLEANUP;
 
-The following WC on 2022-11-14 likely should have changed the status to
-"Waiting for review".
+A common pattern is that optional behavior does not impose additional
+costs on the non-optional part. Here, we unconditionally do a
+strbuf_addbuf() even though we don't use the result in the "else" case.
 
-Thanks,
-Taylor
+So this might be more idiomatically written as:
+
+        int n = strbuf_read_once(&pp->children[i].err,
+        			 pp->children[i].process.err, 0);
+ +      if (opts->duplicate_output) {
+ +          struct strbuf buf = STRBUF_INIT;
+ +          strbuf_addbuf(&buf, &pp->children[i].err);
+ +        	opts->duplicate_output(&buf, &pp->children[i].err,
+ +        		  opts->data,
+ +        		  pp->children[i].data);
+ +          strbuf_release(&buf);
+ +      }
+
+which also has the nice benefit of not touching the strbuf_read_once()
+line.
