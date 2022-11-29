@@ -2,56 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 83669C4332F
-	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 04:51:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CCBBC433FE
+	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 05:10:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235348AbiK2EvG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Nov 2022 23:51:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34082 "EHLO
+        id S235345AbiK2FKm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Nov 2022 00:10:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234251AbiK2EvF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2022 23:51:05 -0500
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 385083E097
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 20:51:01 -0800 (PST)
-Received: by mail-lj1-x234.google.com with SMTP id bn5so15558451ljb.2
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 20:51:01 -0800 (PST)
+        with ESMTP id S232539AbiK2FKk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2022 00:10:40 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1F7C4B768
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 21:10:38 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id g7so20774119lfv.5
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 21:10:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+n2yPWRWXubpkFBazQEHaXd32MxDPYHc3atlzWjxSfQ=;
-        b=E9aU0q+aJx6Ssvlhe1Ozm4SStj5eMcQbWY4FiQ/HI0N8kr347INnVWIlVylgf7adxk
-         pvoNLR/hvrPE5NiWgnztZwbigB3iuvd7PnHkPlB4/gtgtsk0kI1lEOmgeFy2Lo/Ko2ku
-         S4YIHMkaCCZlZT87X8BKiiFmsFLshNtIUA26ViuFw846eu4F6VNERLxXwZRbcLDnFZNM
-         utRg3jUnwreYlqA4wfVt3kLre8Rmr0f0VORxP3+MKbSG1lO44E/MqbbA5MxV76a3Iy/y
-         80ApkRpT0JPU70HzDzSVcfXC1ImfcepxhNfauo9SOOGGlYQgKRUOaHnjzh7oQxp7BhEz
-         dIGQ==
+        bh=OeYSr7qSjWHjQGmokF9FZeZX5XxGysofhT86H63cSik=;
+        b=kwqUemRIb9Py6/6zhovcjjQDwaxt/Ki9yVqKQpc/5snCVP6/Nh9as82FzVL6J8ol/W
+         BqnfJIV46dDezjEl5+wuujrJ9YY5cUZr0dlHXJgwubTk26eWUwTo2yF5/wJeNPVuxNOQ
+         ExZVDJEivmP6i3R8V0av+N6yDbVXKOcMVrErpEESU0Id2cASwZam9LZlr7XblEloo3ca
+         uXHXS9USjOV4xvihBhrGE9YMUwLq7aTH5cnsRQSfBoXuX5DtDnlQNpFdrAoCRydI5xdj
+         ppEyRzp5ZbPquJ4murRyg5YJmXWNdUhzuiHZGHPqIaUn9dJSCZzv57R6D9+j0fBJyDs1
+         CEdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+n2yPWRWXubpkFBazQEHaXd32MxDPYHc3atlzWjxSfQ=;
-        b=JMUyqooKPBNts86IZxs28l5PNtIuhBx+4lEXmEsJQfUfapDE+m4k0rrULLS656mYTh
-         ZjSM0Raog2N2b6TbCTS6fRRGv0heWL1krfphEysWHkH58WKqFFY59KeC/JkUxMN0nNAI
-         VI4W3/jvaXEmiIRsBF2Giyel2/P33NRjvJT0xFLdvSh/+8T703GUf9Txqi6lX9dF2tZU
-         DnYiTr0XntakYHsigLuf5pXgUDL3wEwPsg8dHn9hvpiVYcXyV2eNWHVtm8266ocFx8BQ
-         BQA2Pwo6muWdHeEQ6a34e4gibCktbfWf9yQt2rZVhiUM1nXbvsebWk45ANJgQuajvlUc
-         3plA==
-X-Gm-Message-State: ANoB5plXp25vfPKse5pVTuz8/4NpyMzM7tRjUmK+dg0nSh2SnurSD/M7
-        eEDbTeP2MEsyHt0Rq/rJd1W7xEwye56xm1kmBqE=
-X-Google-Smtp-Source: AA0mqf5QQMgPVOm7+yt8Qx+WHgXl8D+qiGpZ9MvpU3Pkmn7Fv2rOKUiy45x/RSZ3ndablLziydpLo83VLGTk9jmYZS8=
-X-Received: by 2002:a05:651c:c85:b0:278:f572:c9ac with SMTP id
- bz5-20020a05651c0c8500b00278f572c9acmr19076528ljb.73.1669697459059; Mon, 28
- Nov 2022 20:50:59 -0800 (PST)
+        bh=OeYSr7qSjWHjQGmokF9FZeZX5XxGysofhT86H63cSik=;
+        b=KjC9YHfjYEBdUhkwIuxWj93mGsKEyMjEOCrSzqHZV30EvAbZhba41TyPzHsAseA/5W
+         CNujRRrnlD+eTPASk3/2eAHZk+QplO9/+wUeM5BObfKk+O3RhEyOObGClQm8fbn8CK/E
+         DdvDSsiUsDQs9nFTgAR977v8ylH4ziUCXEuXcnErL0K6PVasXxMkuF/ReyTlv8gLXPsc
+         qKk0SYzNz0cTErcI6EPxgWYNEe/DNinJJN4XC0qTa7jMStfMyhA6jwFfbqVQt6FIV7NZ
+         vRuM9aWHiNV8Q3jXfGQobHOr20j7GbuTiKvpaxM6dgxm8oRXnFNpndjeOUZ+sEpGE0Pc
+         XduQ==
+X-Gm-Message-State: ANoB5pn2HA/XXCNDwTUQRvvw/AkWHSbxd0U5bQAhigYEJG7Tx4huUdrZ
+        otFrqeap3x8RubQkzMmzGAt0GiYxofHZh5wpq8Y=
+X-Google-Smtp-Source: AA0mqf4uOg4we8SLTvKrWvCDiIBMHjlwBSx1L86w+aRZHUlxxQKF4VDUZXlAfrexYDZk/B9RvQzUV7Rx5Iozsvu+DPA=
+X-Received: by 2002:a19:3803:0:b0:4b4:ce52:7a63 with SMTP id
+ f3-20020a193803000000b004b4ce527a63mr11685278lfa.65.1669698636880; Mon, 28
+ Nov 2022 21:10:36 -0800 (PST)
 MIME-Version: 1.0
-References: <20221127093721.31012-1-sorganov@gmail.com>
-In-Reply-To: <20221127093721.31012-1-sorganov@gmail.com>
+References: <20221127093721.31012-1-sorganov@gmail.com> <20221127093721.31012-4-sorganov@gmail.com>
+In-Reply-To: <20221127093721.31012-4-sorganov@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 28 Nov 2022 20:50:45 -0800
-Message-ID: <CABPp-BHaPpQdO-uBT6ENHAM1Y-c=SBxktH-S_BTtxJvfd1qSpw@mail.gmail.com>
-Subject: Re: [PATCH 0/5] diff-merges: more features
+Date:   Mon, 28 Nov 2022 21:10:23 -0800
+Message-ID: <CABPp-BFHQ8KwNK=FKGc96iQYqr9xT--WH7kg5R-CzCaAiWiRZg@mail.gmail.com>
+Subject: Re: [PATCH 3/5] diff-merges: implement log.diffMergesForce config
 To:     Sergey Organov <sorganov@gmail.com>
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Philip Oakley <philipoakley@iee.email>,
@@ -66,107 +66,109 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sun, Nov 27, 2022 at 1:37 AM Sergey Organov <sorganov@gmail.com> wrote:
 >
-> 1. --diff-merges=[no]-hide
-
-This seems problematic to me.  Currently, all the options to
-diff-merges are exclusive of each other; the user is picking one of
-them to determine how to format diffs for merges.  Now you are
-introducing the ability to combine various options, leading users to
-think that perhaps they can run with all three of
-`--diff-merges=combined-dense --diff-merges=remerge
---diff-merges=separate` or other nonsensical combinations.  Shouldn't
-this [no-]hide stuff be a separate flag rather than reusing
---diff-merges?
-
-> The set of diff-merges options happened to be incomplete, and failed
-> to implement exact semantics of -m option that hides output of diffs
-> for merge commits unless -p option is active as well.
->
-> The new "hide" option fixes this issue, so that now
->
->   --diff-merges=on --diff-merges=hide
->
-> combo is the exact synonym for -m.
-
-Why is completeness important here?  Perhaps I should state this
-another way: when would users ever want to use this new "hide" option?
- I got through your cover letter not knowing the answer to this, but
-was hoping it'd at least be covered in one of your commit messages or
-documentation changes.  Maybe it was there, but I somehow missed it.
-
-Is the only goal some sense of developer completeness for these
-options, or are these end-user-facing options of utility to actual end
-users?  I'm hoping the latter, but if so, can that be documented and
-explained somewhere?  I'm pretty sure this is explained somewhere in
-an old mailing list discussion, but where?
-
-> The log.diffMerges configuration also accepts "hide" and "no-hide"
-> values, and governs the default value for the hide bit. The
-> configuration behaves as if "--diff-merges=[no-]hide" is inserted
-> first in the command-line.
->
-> 2. log.diffMerges-m-imply-p
->
-> Historically, '-m' doesn't imply '-p' whereas similar '-c' and '--cc'
-> options do. Simply fixing this inconsistency by unconditional
-> modification of '-m' semantics appeared to be a bad idea, as it broke
-> some legacy scripts/aliases. This patch rather provides configuration
-> variable to tweak '-m' behavior accordingly.
-
-> 3. log.diffMergesForce
->
-> Force specific log format for -c, --cc, and --remerge-diff options
+> Force specified log format for -c, --cc, and --remerge-diff options
 > instead of their respective formats. The override is useful when some
 > external tool hard-codes diff for merges format option.
+>
+> Using any of the above options twice or more will get back the
+> original meaning of the option no matter what configuration says.
+>
+> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+> ---
+>  Documentation/config/log.txt | 11 +++++++++++
+>  builtin/log.c                |  2 ++
+>  diff-merges.c                | 32 ++++++++++++++++++++++++++------
+>  diff-merges.h                |  2 ++
+>  t/t4013-diff-various.sh      | 18 ++++++++++++++++++
+>  t/t9902-completion.sh        |  3 +++
+>  6 files changed, 62 insertions(+), 6 deletions(-)
+>
+> diff --git a/Documentation/config/log.txt b/Documentation/config/log.txt
+> index 265a57312e58..7452c7fad638 100644
+> --- a/Documentation/config/log.txt
+> +++ b/Documentation/config/log.txt
+> @@ -43,6 +43,17 @@ log.diffMergesHide::
+>  log.diffMerges-m-imply-p::
+>         `true` enables implication of `-p` by `-m`.
+>
+> +log.diffMergesForce::
+> +       Use specified log format for -c, --cc, and --remerge-diff
+> +       options instead of their respective formats when the option
+> +       appears on the command line one time. See `--diff-merges` in
+> +       linkgit:git-log[1] for allowed values. Using 'off' or 'none'
+> +       disables the override (default).
+> ++
+> +The override is useful when external tool hard-codes one of the above
+> +options. Using any of these options two (or more) times will get back
+> +the original meaning of the options.
 
-Why just these three options and not -m (or --diff-merges=separate)?
+I didn't quite understand your intent here from this explanation.
+When you pointed out to Junio that you wanted to override magit's
+hard-coded `git log --cc` and turn it into `git log -m -p`, then it
+suddenly made more sense.  And the two or more times I guess is your
+escape hatch to allow users to say "I *really* do want this other
+format, so `git log --cc --cc` will get it for me.".
 
-Also, I read this and didn't quite fully grasp the intent; your
-explanation in response to Junio seemed much more enlightening.
-Perhaps the wording/explanation could be cleaned up a bit?  I'll
-comment more on that specific patch...
+Maybe something like:
 
-> 4. Support list of values for --diff-merges
->
-> This allows for shorter --diff-merges=on,hide forms.
+Override -c, --cc, --remerge-diff options and use the specified
+diff-generation scheme for merges instead.  However, this config
+setting can in turn be overridden by specifying an alternate option
+multiple times (e.g. `git log --cc --cc`).  Overriding the
+diff-generation scheme for merges can be useful when an external tool
+has a hard-coded command line it calls such as `git log --cc`.  See
+`--diff-merges` in linkgit:git-log[1] for allowed values.  Using 'off'
+or 'none' disables the override (default).
 
-And thus making users think they can pass
---diff-merges=combined-dense,remerge,separate and suspecting that
-it'll do something useful?  Seems like this is reinforcing a mistake
-to me.
+However:
+  * This feels like we're trying to workaround bugs or inflexibility
+in other tools with code in Git.  This feels like a slippery slope
+issue and/or fixing the wrong tool.
+  * Why is this just for -c, --cc, and --remerge-diff, and not for
+also overriding -m?  It seems odd that one would be left out,
+especially since tools are more likely to have hard-coded it than
+--remerge-diff, given that -m has been around for a long time and
+--remerge-diff is new.
 
+> +
+>  log.follow::
+>         If `true`, `git log` will act as if the `--follow` option was used when
+>         a single <path> is given.  This has the same limitations as `--follow`,
+[...]
+> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+> index 1789dd6063c5..8a90d2dac360 100755
+> --- a/t/t4013-diff-various.sh
+> +++ b/t/t4013-diff-various.sh
+> @@ -557,6 +557,24 @@ test_expect_success 'git config log.diffMerges-m-imply-p has proper effect' '
+>         test_cmp expected actual
+>  '
+>
+> +test_expect_success 'git config log.diffMergesForce has proper effect' '
+> +       git log -m -p master >result &&
+> +       process_diffs result >expected &&
+> +       test_config log.diffMergesForce on &&
 
-> 5. Issue warning for lone '-m'.
->
-> Lone '-m' is in use by scripts/aliases that aim at enabling diff
-> output for merge commits, but only if '-p' is then specified as well.
->
-> As '-m' may now be configured to imply '-p' (using
-> 'log.diffMerges-m-imply-p'), issue warning if lone '-m' is specified,
-> and suggest to instead use '--diff-merges=on,hide' that does not
-> depend on user configuration.
->
-> This is expected to give a provision for enabling
-> log.diffMerges-m-imply-p by default in the future.
->
-> Sergey Organov (5):
->   diff-merges: implement [no-]hide option and log.diffMergesHide config
->   diff-merges: implement log.diffMerges-m-imply-p config
->   diff-merges: implement log.diffMergesForce config
->   diff-merges: support list of values for --diff-merges
->   diff-merges: issue warning on lone '-m' option
->
->  Documentation/config/log.txt                  |  20 ++++
->  Documentation/diff-options.txt                |  20 +++-
->  builtin/log.c                                 |   6 +
->  diff-merges.c                                 | 108 +++++++++++++++---
->  diff-merges.h                                 |   6 +
->  t/t4013-diff-various.sh                       |  89 ++++++++++++++-
->  ...ges=first-parent_--diff-merges=hide_master |  34 ++++++
->  t/t9902-completion.sh                         |   9 ++
->  8 files changed, 272 insertions(+), 20 deletions(-)
->  create mode 100644 t/t4013/diff.log_--diff-merges=first-parent_--diff-merges=hide_master
->
-> --
-> 2.37.3.526.g5f84746cb16b
->
+I think the default for `on` is bad; it made sense at the time, but I
+think we have a better option now.  Perhaps we switch to it, perhaps
+we don't, but if there's _any_ chance at all we change the default for
+"on" (which I think there definitely is), then you should really use
+the option that matches the actual mode you are using rather than a
+synonym for it; doing so future-proofs this testcase.
+
+> +       git log --cc master >result &&
+> +       process_diffs result >actual &&
+> +       test_cmp expected actual
+> +'
+> +
+> +test_expect_success 'git config log.diffMergesForce override by duplicate' '
+> +       git log --cc master >result &&
+> +       process_diffs result >expected &&
+> +       test_config log.diffMergesForce on &&
+
+Matters less here, but just in case "--cc" were to become the default,
+it'd be nice to explicitly use something else like separate here.
+
+> +       git log --cc --cc master >result &&
+> +       process_diffs result >actual &&
+> +       test_cmp expected actual
+> +'
