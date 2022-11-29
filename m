@@ -2,146 +2,149 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BB6BC4332F
-	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 10:03:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3B75C4332F
+	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 10:39:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231841AbiK2KDs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Nov 2022 05:03:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58362 "EHLO
+        id S231415AbiK2KjT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Nov 2022 05:39:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231463AbiK2KDr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2022 05:03:47 -0500
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 948F65B590
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 02:03:46 -0800 (PST)
-Received: by mail-ed1-x529.google.com with SMTP id s5so18991832edc.12
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 02:03:46 -0800 (PST)
+        with ESMTP id S229957AbiK2KjR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2022 05:39:17 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B56B1B798
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 02:39:15 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id v8so19197334edi.3
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 02:39:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SDcFHQNDXkzcspLWRMMoyy7omZ9yx1ZuQLjtIYmYwF4=;
-        b=MOTDkNb4TY1LEHL4cSpDUilxvSCWkjCOIU0N3wXSg104ViCI5pUi5B/SzRpK62pkBZ
-         bxBL6GNfCCdOMvnxhcgjdSZuwIHnaJDvtOEwCJFQYvEnmAUMApFyzKynpm1onKgOLLqb
-         8BFM9Ky2PyBz3q7LfXGQGJjWlb89zSuCdZkJdbKHwAMUrwEV5yQSGaZ4yTuwCkrwyvLJ
-         PA6BL9ispNcj8vSIizqCfs/+tUveOVmAw2u3JVf1K/MzXrxliGl8VnaEU+C1mqu5B4yz
-         OflTRAY/JF2uO2xLzD6hOwnRE6KqTbwMnPSXnFnMoVJoIWhpnHm4nAj4LC6EfAvlFzDS
-         cVFw==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=vAyqlcusCf5yTZcMFOudb90o5dybuVMV2Abelim+4UM=;
+        b=bxlFSfVSusKF00lHtshLyJU6xXCDQoF45zZKz/YzVRgP8+FTGQyrPMRqWON3+mbP0b
+         mDrrynA2uTJJxf6ngYEaPcC7w5x62B2eRRPL5vUfjUSiYoUKg944gjnYr0p+MtSeEm6G
+         BhwgC+axlfbRbBELVhurQ3U3ZRzM2aD2BB87E4Ib6FOppzkqDsghkdKKNQirSisiljeL
+         G02Jj0IvNPIRkU+Y3F9tj3jKp2/4ma8HjePkt0NSZqZA3W54CyYTJVjSScENQ81xC81c
+         MeH9QyYXDvL7/m44Dgws+n+eIqm70cjCX5wP1zzbSjpjbadusQoQ0aFhspsW7xfgHsFr
+         0OrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SDcFHQNDXkzcspLWRMMoyy7omZ9yx1ZuQLjtIYmYwF4=;
-        b=bXOaTI7VHbBYzkBtw6f+Z/cPBqLyA3A9jXxz2W4WobXDxtiELxb936XIgNd4EOMgTn
-         QGfhFxvEOfDtOBfXe1E/qeh6hoq9s8ULazyJ9+M8U2FBe3AwyEAQnP1P7yJjOlJn7cSE
-         cPcMvb4J1akdsyEduVjfQZDojL2fvwaRTkPIVyp5lLEGZuKqv5LHtEZrMaFRTmM7Sj7k
-         +bIY6rHHXrr+ngw5bOsjegybmLDmFpv80HsE5/Ipbk4tV471r6tIACt6RTE6AbY8YndX
-         THr+YvpicN7CEDfnS51Rl+6fEoPnEPQbDAASlCrBhzqF0vi/4k0xFgDFt9FJTyTZrEdL
-         7XRw==
-X-Gm-Message-State: ANoB5pmVDnbZHf9Do93vk5z1FBdSNd/UTB58+mu5VqbNecFOLZ1eqeG+
-        QAVXA0SbApCJuA2FOITU3KU=
-X-Google-Smtp-Source: AA0mqf6eyJ88ujgQV9MGp+D0xFxOLhaAyUPrL/j00lnKGncZHYUUVMtRHD39snk208xLKM8dC1XB2g==
-X-Received: by 2002:a05:6402:298f:b0:468:f142:3040 with SMTP id eq15-20020a056402298f00b00468f1423040mr50609448edb.107.1669716224914;
-        Tue, 29 Nov 2022 02:03:44 -0800 (PST)
-Received: from orome (p200300e41f201d00f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f20:1d00:f22f:74ff:fe1f:3a53])
-        by smtp.gmail.com with ESMTPSA id i25-20020a056402055900b0046730154ccbsm6076324edx.42.2022.11.29.02.03.44
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vAyqlcusCf5yTZcMFOudb90o5dybuVMV2Abelim+4UM=;
+        b=zNX9RwTj/WArbVeb/Y4oXiBk33ep5ffdksw58Dp7Vxu3ux6/uJGIsoj2yEJKfwpLYQ
+         HCwFoPhp390Has1AwwnhRTEXOEuLjxwvFj0VOWV0BbpwytTS21p5MFcokCrqAxb1ZxuO
+         a+n0mmS6G6QQyNfqFtHT9GfKlVHOFsLcTv7UpacJ7bQS2qiUqWkWZnlRlqzlet+r3KC8
+         EOHxJtGNfhd9cep1/KQz3SwUfgzs4JJpl/bEJeopOrNYr9hbI0SjmFYFqtHfWgTiaTQj
+         YfMucwEmTRke+SFrcx4BZebg0tzoY4DmNFtYya8UnCSLbyCpE2WVw4jiGBvkKEVyYa3m
+         51kQ==
+X-Gm-Message-State: ANoB5pkw6bHpvtcQnWUbJuErVVojtfnxhNSQyViaB9F0qzWkuZqxd3qH
+        pADO/8f59cgAziJmOjYZ37A=
+X-Google-Smtp-Source: AA0mqf5zZFltQMpZfTen3N5GwRrsGbDImpt9MWM9LOJ8CswjRWNfrIc+EKjy3xvPYWfcZpIBVNx76A==
+X-Received: by 2002:a05:6402:e9c:b0:458:d064:a8c2 with SMTP id h28-20020a0564020e9c00b00458d064a8c2mr51441335eda.346.1669718353368;
+        Tue, 29 Nov 2022 02:39:13 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id kx12-20020a170907774c00b0078c1e174e11sm5947021ejc.136.2022.11.29.02.39.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Nov 2022 02:03:44 -0800 (PST)
-Date:   Tue, 29 Nov 2022 11:03:42 +0100
-From:   Thierry Reding <thierry.reding@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v3] am: Allow passing --no-verify flag
-Message-ID: <Y4XY/tUT+vKOrabX@orome>
-References: <20221128174825.1510407-1-thierry.reding@gmail.com>
- <xmqqv8my4kvu.fsf@gitster.g>
+        Tue, 29 Nov 2022 02:39:12 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1ozy1A-001N36-19;
+        Tue, 29 Nov 2022 11:39:12 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git List <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 3/3] Revert "pack-objects: lazily set up "struct
+ rev_info", don't leak"
+Date:   Tue, 29 Nov 2022 11:25:12 +0100
+References: <f5779e19-813c-cda9-2f84-9fe58f745e89@web.de>
+        <xmqqv8mz5ras.fsf@gitster.g>
+        <d10de9b5-e5ff-18d6-d950-1d090d87b113@web.de>
+        <221128.864jujmhgp.gmgdl@evledraar.gmail.com>
+        <c5aeb93c-763d-3eae-0150-15f6ca675319@web.de>
+        <221128.865yezkule.gmgdl@evledraar.gmail.com>
+        <59431916-9f55-d0f4-da54-e7369803eb4c@web.de>
+        <2488058d-dc59-e8c1-0611-fbcaeb083d73@web.de>
+        <221128.86o7sqkjcj.gmgdl@evledraar.gmail.com>
+        <0b86ae8b-5523-3857-cdba-12275f727cde@web.de>
+        <Y4VfrsYwWkestQ05@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <Y4VfrsYwWkestQ05@coredump.intra.peff.net>
+Message-ID: <221129.86bkoqjb8v.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="Ss3KFi2SiaJ/DaBg"
-Content-Disposition: inline
-In-Reply-To: <xmqqv8my4kvu.fsf@gitster.g>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---Ss3KFi2SiaJ/DaBg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Mon, Nov 28 2022, Jeff King wrote:
 
-On Tue, Nov 29, 2022 at 10:20:05AM +0900, Junio C Hamano wrote:
-> Thierry Reding <thierry.reding@gmail.com> writes:
->=20
-> > +test_expect_success 'am with failing applypatch-msg hook (no verify)' '
-> > +	rm -fr .git/rebase-apply &&
-> > +	git reset --hard &&
-> > +	git checkout first &&
-> > +	test_hook applypatch-msg <<-\EOF &&
-> > +	exit 1
-> > +	EOF
-> > +	git am --no-verify patch1
-> > +'
-> > +
-> >  test_expect_success 'am with pre-applypatch hook' '
-> >  	rm -fr .git/rebase-apply &&
-> >  	git reset --hard &&
-> > @@ -374,6 +384,16 @@ test_expect_success 'am with failing pre-applypatc=
-h hook' '
-> >  	test_cmp_rev first HEAD
-> >  '
-> > =20
-> > +test_expect_success 'am with failing pre-applypatch hook (no verify)' '
-> > +	rm -fr .git/rebase-apply &&
-> > +	git reset --hard &&
-> > +	git checkout first &&
-> > +	test_hook pre-applypatch <<-\EOF &&
-> > +	exit 1
-> > +	EOF
-> > +	git am --no-verify patch1
-> > +'
-> > +
-> >  test_expect_success 'am with post-applypatch hook' '
-> >  	rm -fr .git/rebase-apply &&
-> >  	git reset --hard &&
->=20
-> These two tests will still pass if you change the implementation to
-> run the hook and simply ignore its exit status, but I recall you
-> making a good argument against that alternative implementation ,in
-> comparison to "not running the hook at all".
->=20
-> I think these tests should make sure that the hooks did not even
-> run.  Perhaps by creating a marker file before running "git am",
-> adding a "rm" that marker file in the hook, and making sure that
-> the marker file still exists after "git am" returns, or something
-> like that.
+> On Mon, Nov 28, 2022 at 10:57:02PM +0100, Ren=C3=A9 Scharfe wrote:
+>
+>> >> diff --git a/revision.c b/revision.c
+>> >> index 439e34a7c5..6a51ef9418 100644
+>> >> --- a/revision.c
+>> >> +++ b/revision.c
+>> >> @@ -3055,6 +3055,7 @@ void release_revisions(struct rev_info *revs)
+>> >>  	release_revisions_mailmap(revs->mailmap);
+>> >>  	free_grep_patterns(&revs->grep_filter);
+>> >>  	/* TODO (need to handle "no_free"): diff_free(&revs->diffopt) */
+>> >> +	FREE_AND_NULL(revs->diffopt.parseopts);
+>> >>  	diff_free(&revs->pruning);
+>> >>  	reflog_walk_info_release(revs->reflog_info);
+>> >>  	release_revisions_topo_walk_info(revs->topo_walk_info);
+>> >
+>> > At this point I'm unclear on what & why this is needed? I.e. once we
+>> > narrowly fix the >1 "--filter" options what still fails?
+>>=20
+>> As I wrote: A call to an initialization function followed by a call to a
+>> cleanup function and nothing else shouldn't leak.  There are examples of
+>> repo_init_revisions()+release_revisions() without setup_revisions() or
+>> diff_setup_done() beyond pack-objects.  I mentioned prune, but there are
+>> more, e.g. in sequencer.c.
+>
+> I tend to agree with you; an init+release combo should release all
+> memory. We _can_ work around it in the caller here, but I think we are
+> better to correct the root cause.
+>
+> I do think what =C3=86var is saying is: once we have fixed the bug, why a=
+re
+> more changes needed? I.e., why would we get rid of the lazy-init. IMHO
+> the answer is that the lazy-init is a more complex pattern, and requires
+> more boilerplate code (which can lead to more bugs, as we saw). So once
+> the bug is fixed, this is purely about cleanup/simplification (if one
+> ignores the C-standard issues), but I tend to think it is one worth
+> doing.
+>
+> (Apologies to =C3=86var if I'm mis-stating your position).
 
-All good points. I've updated both tests to check that patches have been
-applied correctly and that the scripts haven't been run.
+My position isn't that it isn't worth doing, but that we can clearly
+proceed in smaller steps here, and changing one thing at a time is
+better.
 
-Thierry
+So far in this thread we've had, in relation to 3/3 (and I may have lost
+track of some points made):
 
---Ss3KFi2SiaJ/DaBg
-Content-Type: application/pgp-signature; name="signature.asc"
+1. It's fixing the bug where you provide --filter N times
+2. It's refactoring the "lazy init" to "non-lazy init"
+3. It's refactoring the code to avoid relying on the J.5.7 extension in C99.
+4. Due to #2 we run into more leaks
+5. A dozen or so test files fail due to #2. Are we digressing to fix the
+   root cause of the leak(s), or un-marking those tests as passing
+   leak-free & losing test coverage?
 
------BEGIN PGP SIGNATURE-----
+As
+https://lore.kernel.org/git/221128.868rjvmi3l.gmgdl@evledraar.gmail.com/
+shows we can do #1 as a stand-alone change.
 
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmOF2P4ACgkQ3SOs138+
-s6GS3A/+OBObJfeasgO7UP5zfxiJzXX2jK7xCzlWoiqTycHESLMHObCPuNQz79oH
-hcnQBWGFKqkPldIg8I61Mg/Uw8J6ThbyjhlWP9luKxGSkxIYm2Ej2MDQ/z31eCe8
-AeoRp9X5jtLehK9rU09ksKRXagWO0/k8+pPkFLLBsR8gJywil5Xk6BiFitmZyC/Y
-+rv+InZHFy9snATdTfIDW6FyYnGKSl6I5pHP8EHt4Qb0x4QV1Aw4Yj5yZaS53Jr5
-lhxTPU3FJMLHh+YSZkRaVJEXpcK/SFReDbk44aKpbDajQSKWb5ku2R/3abWSKdWr
-HWKNfPofvDPu8PbbfDXcNnnJ0dZWEzSX+dVce7gZ9O17RIagOaWkXonm0ZaF4I+c
-lCxof14Kvvmu3ZJW6V4ulYPHNe/wD6rhgi7DRXzdbUbutDK6v0m0kULRJ9Ag6I1K
-RouCJiGXjnzM887hJDZG/oRfXswciXjAgwDTPrNPEMr9BL72Eh3AVgXk/6u20krR
-Ob56x55Mn4bQ/j7uuBt3Airpklww+hhH+bJ3Fnhzhpd0d1A/PjSje6uRUcYSxWLm
-3EsttBKF9PhQ08mwUw9Dn9VGs+O0JjovWaz1ZIUzlINZypcGYKThUY51j0bVGnPz
-h+PyzoYdUB1Ex7qd2loxDGVu6UyQMD5sS17BcKef2btcSr+AVws=
-=P7pa
------END PGP SIGNATURE-----
-
---Ss3KFi2SiaJ/DaBg--
+I'm not saying the rest of this isn't worth pursuing, except to point
+out in
+https://lore.kernel.org/git/221128.86zgcbl0pe.gmgdl@evledraar.gmail.com/
+that #2 can be split off from #3.
