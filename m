@@ -2,79 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5269EC4321E
-	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 01:31:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5A23C43217
+	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 01:46:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235078AbiK2BbH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 28 Nov 2022 20:31:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60416 "EHLO
+        id S234724AbiK2Bqd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 28 Nov 2022 20:46:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233573AbiK2BbG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 28 Nov 2022 20:31:06 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4264742F4E
-        for <git@vger.kernel.org>; Mon, 28 Nov 2022 17:31:05 -0800 (PST)
-Received: (qmail 11431 invoked by uid 109); 29 Nov 2022 01:31:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Nov 2022 01:31:05 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13532 invoked by uid 111); 29 Nov 2022 01:31:05 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 28 Nov 2022 20:31:05 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 28 Nov 2022 20:31:04 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [Design RFC] Being more defensive about fetching commits in
- partial clone
-Message-ID: <Y4Vg2FkoX/Z8G2Cd@coredump.intra.peff.net>
-References: <Y37DF7THHv3wEbUc@coredump.intra.peff.net>
- <20221128185320.2735382-1-jonathantanmy@google.com>
+        with ESMTP id S234445AbiK2Bqb (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 28 Nov 2022 20:46:31 -0500
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2F4F429B9
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 17:46:29 -0800 (PST)
+Received: by mail-pf1-x42d.google.com with SMTP id 9so12269075pfx.11
+        for <git@vger.kernel.org>; Mon, 28 Nov 2022 17:46:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=veLj4ai3JQMHIb8FIvmBzjhDuAXP1+Yp3H5MCRrUZsY=;
+        b=Qeb/iSkVq1UmVdMi7nIZ7Wt1TgpRd7ChuygvpCoGye8DvghGliCAFbN8dwiK7Nxph4
+         X5HPBnIr+A6jS9XFnMb5tXSiiQqoq8iCtFFgMxsdBKnvbqaPHLA4h+g7oOEnqcmd+h30
+         9zHRPbm6KkeBIfnmGuO4bzAzCwoKxdOPOS/s9GPsEUbYhE8rVKKSR7MrBApBPZE5E1F0
+         r87FSiODXpLIHuv9nkrNCN5arur3hUrKT+bKiBVCetmXcH2g3gHNlpgsf7GMhJYmgPHb
+         BEyBUjNATvMGs+oY1Bs4jOUwCSl21AaMy1v7673bhsC8YTs0F8hQVmntEA/sdMawUDlZ
+         yDwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=veLj4ai3JQMHIb8FIvmBzjhDuAXP1+Yp3H5MCRrUZsY=;
+        b=mq0Ys2VIIksoeo5NzBNc30iCuLxglYj2CyMcR+HJFqIRs6yZjpqlNuqRm9FKhIgIFa
+         vJleCUj8lxK3AOVNPCNc4fkZcFM/lqI1wbNFFkcJOJmONn9SK5NdPqnKewcsHiEZkqtV
+         WiGLnpt0glrYVlVky5dmaZ7t0gnUoMUQSNN52vM/nIT3kyK0yWlU2gxW5sKoYfPOVeFn
+         c7tSiMBAaVBR2laaPGl6WZe+rR1zCUCJ6YfZHRnLxjKu0jvXixBCKl3r/ViRRqOjgh5+
+         Fnh3RcnQ/K55uEsyug0gIx7JMuavf2gKv4DRqSfTZ0BPfcaVd/qymyLTp/eXEOgt82rd
+         7TPQ==
+X-Gm-Message-State: ANoB5pkI6CsVUmy+fHyeaz0TufIU43gcDZrVyaxvngQZWz8ElUTt2p0S
+        NaUUhtLkejA5c+ghFwi28oI=
+X-Google-Smtp-Source: AA0mqf7hbsTXPj5VbjuvcKeZQVcC+NMTc42XgDRihgYejF3YTOnjGVEumCY3QUcw1JOzcWKrpPp0/A==
+X-Received: by 2002:a63:6347:0:b0:478:3375:a1bc with SMTP id x68-20020a636347000000b004783375a1bcmr3997390pgb.239.1669686389191;
+        Mon, 28 Nov 2022 17:46:29 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id z21-20020a63e555000000b004777c56747csm7291607pgj.11.2022.11.28.17.46.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Nov 2022 17:46:28 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?w4Z2YXIgQXJu?= =?utf-8?B?ZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, Git List <git@vger.kernel.org>,
+        Taylor Blau <me@ttaylorr.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2 3/3] Revert "pack-objects: lazily set up "struct
+ rev_info", don't leak"
+References: <f5779e19-813c-cda9-2f84-9fe58f745e89@web.de>
+        <xmqqv8mz5ras.fsf@gitster.g>
+        <d10de9b5-e5ff-18d6-d950-1d090d87b113@web.de>
+        <221128.864jujmhgp.gmgdl@evledraar.gmail.com>
+        <c5aeb93c-763d-3eae-0150-15f6ca675319@web.de>
+        <221128.865yezkule.gmgdl@evledraar.gmail.com>
+        <59431916-9f55-d0f4-da54-e7369803eb4c@web.de>
+        <2488058d-dc59-e8c1-0611-fbcaeb083d73@web.de>
+        <221128.86o7sqkjcj.gmgdl@evledraar.gmail.com>
+        <0b86ae8b-5523-3857-cdba-12275f727cde@web.de>
+        <Y4VfrsYwWkestQ05@coredump.intra.peff.net>
+Date:   Tue, 29 Nov 2022 10:46:28 +0900
+In-Reply-To: <Y4VfrsYwWkestQ05@coredump.intra.peff.net> (Jeff King's message
+        of "Mon, 28 Nov 2022 20:26:06 -0500")
+Message-ID: <xmqqk03e4jnv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20221128185320.2735382-1-jonathantanmy@google.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 28, 2022 at 10:53:19AM -0800, Jonathan Tan wrote:
+Jeff King <peff@peff.net> writes:
 
-> > In general, I think partial clones tend to know which filters were used
-> > to create them, because we save that filter in the config. Would it be
-> > reasonable before lazy-fetching to say "I am looking for an object of
-> > type X; would my configured filters have skipped such an object?".
-> > 
-> > Then not only would you get the behavior you want for commits (which are
-> > never skipped), but a blob:none clone would not try to lazy-fetch trees
-> > (but a tree:depth one would lazy-fetch both trees and blobs).
-> > 
-> > The gotcha I'd worry about is that the config doesn't necessarily match
-> > how the repository was originally created. There is nothing right now
-> > saying you cannot partial-clone with one filter, then change the config
-> > going forward.
-> 
-> Thanks for weighing in. In the general case, we indeed do know what kind of
-> object we're fetching, so it does make sense to generalize my idea to trees and
-> blobs as well. On the other hand, though, besides the issue that the user may
-> subsequently change the config, the benefits of distinguishing between a blob
-> and tree are not that great, I think - we would fail fast when, say, a tree
-> is missing due to object store corruption when trying to check out something
-> in a blob:none clone, but the same object store corruption probably would
-> mean that commits are missing too, so even if we just did this for commits, we
-> would already fail equally as fast. Because of this (and the user being able
-> to change the config), it makes sense to me to handle only the commit case, at
-> least for now.
-> 
-> Having said that, this is not forwards incompatible with restricting lazy fetch
-> for trees and blobs, so if we see fit later to do that, we can still do it.
+> This is the actual reason I responded to your message. ;) Try:
+>
+>   https://github.com/avar/git/commit/e02a15f6206.patch
+>
+> etc. I don't think there's a "raw patch" link or similar in the
+> interface, though. You have to just know about it.
 
-Yeah, I think your reasoning is sound. Certainly it seems reasonable to
-start with commit objects, since we know they can never be filtered, and
-see how that fares in practice. And then think about handling other
-object types later (or never; this is really just a "we might catch
-corruption sooner" nice-to-have, and not a correctness problem in normal
-use).
-
--Peff
+;-)
