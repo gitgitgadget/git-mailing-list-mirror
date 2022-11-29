@@ -2,117 +2,238 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34E77C4321E
-	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 12:19:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2612DC4321E
+	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 12:21:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233735AbiK2MT1 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Nov 2022 07:19:27 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46728 "EHLO
+        id S234100AbiK2MVi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Nov 2022 07:21:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232484AbiK2MTZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2022 07:19:25 -0500
+        with ESMTP id S234046AbiK2MVa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2022 07:21:30 -0500
 Received: from mout.web.de (mout.web.de [212.227.15.4])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 764DF5D699
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 04:19:24 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85CF95DB83
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 04:21:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1669724357; bh=uT5cElCTdv/mAHRqKYgKo0k60whCGn5UMT4DzEBVHZI=;
+        t=1669724478; bh=64RcOQPsVobNySgLG/XWXDVwZQeJNovvPvrxXvUqpHE=;
         h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=L3FqzAGuJEfuLhA4z1IgsnpmNnB5mYaHBIWYU6I/4ShrhA0QjxNON6MjanORgUJke
-         tNKqAYXs3fj+Q0pL3gscprivaN60ceP12H1NdB4nKndybZ1HNFWksjieqfmaPPZRTS
-         ouJXx3VGCAM+XZhUohduLO6xN0zgxBvMYB5/KNTlOkV+ApSe41JZrnKWWjsHs4XcHO
-         fPAy/8Q3zx5ZEO0k1CqJ6wjm5teNmKliy0TiyXmNUHMK0SwalhZAEASDm6Db8ewAXl
-         +9ZY4uiGqlKP2HYCqt1+NoiN+r6zZsdo9Y2obs4tWa8wPJGK9IocMqHBBrnpn09JzE
-         PY8+8zmN8DEag==
+        b=lPa+IgmEXryW72LY36fo2PvG+ai9YGYfjfME2qPP9iOXMH7GcDpCkmKTNNSbmfI12
+         ovfg4jcOwM1z/N4twHINj9O+0vF+gPBxfyB8jaJ32tdrTD2KXWQINnrL83COw5w4Ud
+         ZVMa7h8bVHWPkW8ssTbL0I9Me60g6M1OLaocfki5dbwsN+Utn8P6lHIrq9MsBhBhjK
+         O/wM5Erz5wZ32RdcCmo4P1zo+5syKchzBtZxRp/CFB8MeAQpnZ84dM7Boc9LPc06yQ
+         oIdLXwKe7hxab++li/8xjhjzhl3i3l3IfzdPbFbqIvcLbuzhIkBGdBHbxXPcFTwFvv
+         Rcwj4xWU6MAjQ==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([91.47.154.159]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M59iy-1oyteL2TyO-001Cb7; Tue, 29
- Nov 2022 13:19:17 +0100
-Message-ID: <c2d3e7a3-599f-dae5-8dde-dc969df39f02@web.de>
-Date:   Tue, 29 Nov 2022 13:19:16 +0100
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MP384-1pN08P3ieK-00PMMY; Tue, 29
+ Nov 2022 13:21:17 +0100
+Message-ID: <05f162e2-0687-af8e-d4f8-4ab2ea003518@web.de>
+Date:   Tue, 29 Nov 2022 13:21:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.5.0
-Subject: [PATCH v3 0/5] pack-objects: fix and simplify --filter handling
+Subject: [PATCH v3 1/5] t5317: stop losing return codes of git ls-files
 Content-Language: en-US
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 To:     Git List <git@vger.kernel.org>
 Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
         Taylor Blau <me@ttaylorr.com>,
-        Christian Couder <chriscool@tuxfamily.org>
+        Christian Couder <chriscool@tuxfamily.org>,
+        Jeff King <peff@peff.net>
 References: <c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.de>
-In-Reply-To: <c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.de>
+ <c2d3e7a3-599f-dae5-8dde-dc969df39f02@web.de>
+In-Reply-To: <c2d3e7a3-599f-dae5-8dde-dc969df39f02@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:3zT6XiMABJl+7LhYFPMHjWiUKy+aWgov0Iy0l4zM6ImPKmrixys
- p5AY/Kwl3GbjykV3aI+iDN1Ut+6QL3ES2PiqzeFX8OnO+qFAQkkbWg3ZA4OA0Jx1HDwhjhl
- or/7KPCBZY5zwXFxwP80eO5l7rfWRCOuwvv4VyPjzBHN5+G11HPK8aVJDDsKT4Pp/VUIScB
- k+LBWnuepyZV4DiS13MXg==
-UI-OutboundReport: notjunk:1;M01:P0:GzidxB8eGeo=;Oo4MJT3XWZpDmjwyLBO/aopLkOL
- vZDAI60kx0pzt7U3hy5BBhJYJ3XHyrY3nwe4CPTlGrMIzE8Gyh5CQM8AO+nFG619VNWWK00cY
- EyvBz6xruH2aTJS2X584ofqdcgjGBL3lVJW1eUPg56gbRwKcd5dd24z77KdBtEVWkTZ+tPy37
- ab9nbF8WjncppNt+FtPH8GAftEGV7f3HJoGsZf5Lbl0zY/qwkM3m5FPptrASAAH6Ev45Wtmu7
- IHDxJnsrW7eOyLBdaEsM1MEz/66DpnFkVvY/hln7sHz5r+0V8HBB82rD8HulgwF+adSeEYp8k
- iHrEa8N92rKEJRADZBDW+r1J3GzZWtgzotBdFMa+SlZm/93HcPzTFi4R2UGgMgCZXyGJUrZ3Z
- +V2Kh+2xoGUwAYqgI9CCQ0cFpayfAYZHFc6BRRkBq3c5nytCVqt368ADVLphNkYwLkH9N2gv4
- RyQnw98ZHWhCwva2lAI81huekYaFTO6bLw6S28AqkC0WwcKZuI2GkRfbshpFawWmDa64ypBsY
- GPXNvA0zmMEm0FU8uvzXuSH4/ngdL6OjgaeF0JVhtGhAh0J5hL/qXT2BhAXlmFXRgALROgTNU
- dOmNh8fPMOVDOC2Dzr6PDVnmGvD/Fww2ia2ifDhsa0XRZ18ObxzyfS53Cr806AweWzhqkc9I0
- UYy11ghanmCAjTHUt4vrKOtRG0s4xxTJ4b0OTNkpHbcmzV4AMmUQr+bgd48V1GX9fHR1CSVYs
- dKWGXljC7UQVro3/mupNMTKu+A8WV5TtgXTPotXOpENcVzXHoPEp9L8mCthYv2EVZ74HfvKeY
- /REguVxfTGZfXe56EitzzjcuBPE2g6KCpSjREAkQ21wnH9KKB7D8UUs09yWoi1Yq82DFA8LLF
- SjucfZOxO5ojCvPqkmtNSn5bdevasE4yP06+dAw470nlc6sT42d+aPcTxTZnvru9nj5Nek97g
- K1daww==
+X-Provags-ID: V03:K1:fIXgJz96tp8zGau/DgVED+F5jJV0zqDRSgTvgVlMiti6/WZcyi9
+ JpjB7HI9sEkrIPFjSk3KQw7SzeQlQBBXtN8EpiO1w9UcrcQ7vq1kShdXPtLpXorqFbO7i9S
+ bS4sRlO7KrE4SoIA2tdoLtepl8oM45MBFvzFVSBACLn1svhaXOKVulMH4+D4LrXaOsB/+ul
+ cm4C7Te6N9wbS6qmwd0qA==
+UI-OutboundReport: notjunk:1;M01:P0:cAzyDsWkt+o=;RQ/hnZqKdARfq6HiA8VHL0ZP9lL
+ b/D7hlqxtybkEvvoTxYm9HfSvkjgMxJV8KZbRBctp/0//O1+DjciXlDRZQksC0CBKmPyWW704
+ gAscwSg6abwf7+NWZwfgL8OvMLvp7pGbMD+zTP3Q7Nj7bh4aNIwuY6Ia57lt6KtP1Ya7Yw4sU
+ n4GRDx6hKj0joLPznGmA/nHwKMhVUd9WcTigi+6zzQD2NfjMsYI1GtHaXr3veB0QqDK6wwBaG
+ lJJJN8YDRY/If8UHDYxAHqruS3j2d8UXFfHuQbSdVo8lCUwK9R2C16liTkjJVx5s5HukPW1qv
+ PlVgBb1qUtbHIbVIfTMB/dLLNXHh3HHi+X/CHA1UQrK3r4/CTwExoB3+YiRlT3G9yAvoj1aoc
+ 9vEslz4ezierDRxuKMkf4hVFTO/YVP8hFxohPh67P+w4iOEmfjI7j8QJKt7uZLbV/Mfn5X9mF
+ if4sQsc/iseIwk01k5y2f4lSUTBQkjlp2CIOLR2fG8FOtyk7bLLkGlH0OmRUfDbKFBta1g69n
+ N3kUBz1ssvFpNW6PXi/8WDeGGEekXx7ZIaMX71q9APQ3VEcJcUexLQzCFQj2TqD2Ha0kmnN99
+ x3QQ7feMhlqI9TdsmlVdNlAWwoSgzrH33oTE4IPO/RMnAfAiAVsbzLPSTDivtABidr9rD+urb
+ wAiAsStJlQGrvZlyXZwX1vrGNr62X+DZXZR7PTigcUz1wWxVnCQhK9ks8XwKcbZU+2OoO8dcK
+ uZplX955IbkFuD8y/MtTrLFpW/zS5TkDRgxkdhpiQhe8DJledTBIALMwDE+TUF0KxRfHd3GaT
+ N/xANvQ1Gs48pxlmLLlfsFy3lVUFFwD7hWasXojOzmgT/QEYCbLgxAFfXm8Ur2x4VcfHdl3nJ
+ gSNl5FdCtpHP/T752Ktqpt6FOoNIq3Zt6XcXXaCC7UGAiGKZpsYggBXtXmJM8InTGmfwpnrgv
+ a7msUG95zbixD5VT9vWmdjSeyb4=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a regression that prevents using multiple --filter options, simplify
-the option parsing code and avoid relying on undefined behavior in it.
+fb2d0db502 (test-lib-functions: add parsing helpers for ls-files and
+ls-tree, 2022-04-04) not only started to use helper functions, it also
+started to pipe the output of git ls-files into them directly, without
+using a temporary file.  No explanation was given.  This causes the
+return code of that git command to be ignored.
 
-Patch 4 conflicts with cc/filtered-repack in seen, but not semantically.
+Revert that part of the change, use temporary files and check the return
+code of git ls-files again.
 
-Changes since v2:
-- Split the code changes up again like in v1; keep the separate test
-  patches.  Reverting 5cb28270a1 wholesale is too cumbersome.
-- Bring the dedicated list_objects_filter_options struct back.
-- Move the list_objects_filter_release() call to the cleanup section.
+Suggested-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ t/t5317-pack-objects-filter-objects.sh | 52 ++++++++++++++------------
+ 1 file changed, 28 insertions(+), 24 deletions(-)
 
-Changes since v1:
-- Added patch 1 to fix an issue with existing tests.
-- Separate patch 2 for new tests.
-- Test using blob size filters, only, which is a bit simpler.
-- Test both combinations to also catch not just the current
-  last-one-wins regression, but also a possible future first-one-wins
-  issue.
-- Actually revert 5cb28270a1 (pack-objects: lazily set up
-  "struct rev_info", don't leak, 2022-03-28) instead of having a
-  minimal fix and then adding some kind of middle ground by using a
-  separate struct list_objects_filter_options.
+diff --git a/t/t5317-pack-objects-filter-objects.sh b/t/t5317-pack-objects=
+-filter-objects.sh
+index bb633c9b09..82a22ecaa5 100755
+=2D-- a/t/t5317-pack-objects-filter-objects.sh
++++ b/t/t5317-pack-objects-filter-objects.sh
+@@ -24,8 +24,9 @@ parse_verify_pack_blob_oid () {
+ }
 
-  t5317: stop losing return codes of git ls-files
-  t5317: demonstrate failure to handle multiple --filter options
-  pack-objects: fix handling of multiple --filter options
-  pack-objects: simplify --filter handling
-  list-objects-filter: remove OPT_PARSE_LIST_OBJECTS_FILTER_INIT()
+ test_expect_success 'verify blob count in normal packfile' '
+-	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 |
+-	test_parse_ls_files_stage_oids |
++	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 \
++		>ls_files_result &&
++	test_parse_ls_files_stage_oids <ls_files_result |
+ 	sort >expected &&
 
- builtin/pack-objects.c                 | 27 ++------
- list-objects-filter-options.c          |  4 --
- list-objects-filter-options.h          | 18 +-----
- t/t5317-pack-objects-filter-objects.sh | 90 +++++++++++++++++++-------
- 4 files changed, 74 insertions(+), 65 deletions(-)
+ 	git -C r1 pack-objects --revs --stdout >all.pack <<-EOF &&
+@@ -123,8 +124,8 @@ test_expect_success 'setup r2' '
+ '
 
-Range-Diff gegen v2:
-1:  955ec33c30 =3D 1:  955ec33c30 t5317: stop losing return codes of git l=
-s-files
-2:  966094ef98 =3D 2:  966094ef98 t5317: demonstrate failure to handle mul=
-tiple --filter options
-3:  f5ba2a2f5e < -:  ---------- Revert "pack-objects: lazily set up "struc=
-t rev_info", don't leak"
--:  ---------- > 3:  d51424e8d1 pack-objects: fix handling of multiple --f=
-ilter options
--:  ---------- > 4:  e1fa0fcb1a pack-objects: simplify --filter handling
--:  ---------- > 5:  5865e24c04 list-objects-filter: remove OPT_PARSE_LIST=
-_OBJECTS_FILTER_INIT()
+ test_expect_success 'verify blob count in normal packfile' '
+-	git -C r2 ls-files -s large.1000 large.10000 |
+-	test_parse_ls_files_stage_oids |
++	git -C r2 ls-files -s large.1000 large.10000 >ls_files_result &&
++	test_parse_ls_files_stage_oids <ls_files_result |
+ 	sort >expected &&
+
+ 	git -C r2 pack-objects --revs --stdout >all.pack <<-EOF &&
+@@ -161,8 +162,8 @@ test_expect_success 'verify blob:limit=3D1000' '
+ '
+
+ test_expect_success 'verify blob:limit=3D1001' '
+-	git -C r2 ls-files -s large.1000 |
+-	test_parse_ls_files_stage_oids |
++	git -C r2 ls-files -s large.1000 >ls_files_result &&
++	test_parse_ls_files_stage_oids <ls_files_result |
+ 	sort >expected &&
+
+ 	git -C r2 pack-objects --revs --stdout --filter=3Dblob:limit=3D1001 >fil=
+ter.pack <<-EOF &&
+@@ -179,8 +180,8 @@ test_expect_success 'verify blob:limit=3D1001' '
+ '
+
+ test_expect_success 'verify blob:limit=3D10001' '
+-	git -C r2 ls-files -s large.1000 large.10000 |
+-	test_parse_ls_files_stage_oids |
++	git -C r2 ls-files -s large.1000 large.10000 >ls_files_result &&
++	test_parse_ls_files_stage_oids <ls_files_result |
+ 	sort >expected &&
+
+ 	git -C r2 pack-objects --revs --stdout --filter=3Dblob:limit=3D10001 >fi=
+lter.pack <<-EOF &&
+@@ -197,8 +198,8 @@ test_expect_success 'verify blob:limit=3D10001' '
+ '
+
+ test_expect_success 'verify blob:limit=3D1k' '
+-	git -C r2 ls-files -s large.1000 |
+-	test_parse_ls_files_stage_oids |
++	git -C r2 ls-files -s large.1000 >ls_files_result &&
++	test_parse_ls_files_stage_oids <ls_files_result |
+ 	sort >expected &&
+
+ 	git -C r2 pack-objects --revs --stdout --filter=3Dblob:limit=3D1k >filte=
+r.pack <<-EOF &&
+@@ -215,8 +216,8 @@ test_expect_success 'verify blob:limit=3D1k' '
+ '
+
+ test_expect_success 'verify explicitly specifying oversized blob in input=
+' '
+-	git -C r2 ls-files -s large.1000 large.10000 |
+-	test_parse_ls_files_stage_oids |
++	git -C r2 ls-files -s large.1000 large.10000 >ls_files_result &&
++	test_parse_ls_files_stage_oids <ls_files_result |
+ 	sort >expected &&
+
+ 	echo HEAD >objects &&
+@@ -233,8 +234,8 @@ test_expect_success 'verify explicitly specifying over=
+sized blob in input' '
+ '
+
+ test_expect_success 'verify blob:limit=3D1m' '
+-	git -C r2 ls-files -s large.1000 large.10000 |
+-	test_parse_ls_files_stage_oids |
++	git -C r2 ls-files -s large.1000 large.10000 >ls_files_result &&
++	test_parse_ls_files_stage_oids <ls_files_result |
+ 	sort >expected &&
+
+ 	git -C r2 pack-objects --revs --stdout --filter=3Dblob:limit=3D1m >filte=
+r.pack <<-EOF &&
+@@ -289,8 +290,9 @@ test_expect_success 'setup r3' '
+ '
+
+ test_expect_success 'verify blob count in normal packfile' '
+-	git -C r3 ls-files -s sparse1 sparse2 dir1/sparse1 dir1/sparse2 |
+-	test_parse_ls_files_stage_oids |
++	git -C r3 ls-files -s sparse1 sparse2 dir1/sparse1 dir1/sparse2 \
++		>ls_files_result &&
++	test_parse_ls_files_stage_oids <ls_files_result |
+ 	sort >expected &&
+
+ 	git -C r3 pack-objects --revs --stdout >all.pack <<-EOF &&
+@@ -341,8 +343,9 @@ test_expect_success 'setup r4' '
+ '
+
+ test_expect_success 'verify blob count in normal packfile' '
+-	git -C r4 ls-files -s pattern sparse1 sparse2 dir1/sparse1 dir1/sparse2 =
+|
+-	test_parse_ls_files_stage_oids |
++	git -C r4 ls-files -s pattern sparse1 sparse2 dir1/sparse1 dir1/sparse2 =
+\
++		>ls_files_result &&
++	test_parse_ls_files_stage_oids <ls_files_result |
+ 	sort >expected &&
+
+ 	git -C r4 pack-objects --revs --stdout >all.pack <<-EOF &&
+@@ -359,8 +362,8 @@ test_expect_success 'verify blob count in normal packf=
+ile' '
+ '
+
+ test_expect_success 'verify sparse:oid=3DOID' '
+-	git -C r4 ls-files -s dir1/sparse1 dir1/sparse2 |
+-	test_parse_ls_files_stage_oids |
++	git -C r4 ls-files -s dir1/sparse1 dir1/sparse2 >ls_files_result &&
++	test_parse_ls_files_stage_oids <ls_files_result |
+ 	sort >expected &&
+
+ 	git -C r4 ls-files -s pattern >staged &&
+@@ -379,8 +382,8 @@ test_expect_success 'verify sparse:oid=3DOID' '
+ '
+
+ test_expect_success 'verify sparse:oid=3Doid-ish' '
+-	git -C r4 ls-files -s dir1/sparse1 dir1/sparse2 |
+-	test_parse_ls_files_stage_oids |
++	git -C r4 ls-files -s dir1/sparse1 dir1/sparse2 >ls_files_result &&
++	test_parse_ls_files_stage_oids <ls_files_result |
+ 	sort >expected &&
+
+ 	git -C r4 pack-objects --revs --stdout --filter=3Dsparse:oid=3Dmain:patt=
+ern >filter.pack <<-EOF &&
+@@ -400,8 +403,9 @@ test_expect_success 'verify sparse:oid=3Doid-ish' '
+ # This models previously omitted objects that we did not receive.
+
+ test_expect_success 'setup r1 - delete loose blobs' '
+-	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 |
+-	test_parse_ls_files_stage_oids |
++	git -C r1 ls-files -s file.1 file.2 file.3 file.4 file.5 \
++		>ls_files_result &&
++	test_parse_ls_files_stage_oids <ls_files_result |
+ 	sort >expected &&
+
+ 	for id in `cat expected | sed "s|..|&/|"`
 =2D-
 2.38.1
