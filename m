@@ -2,112 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1349AC4321E
-	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 14:09:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FED4C433FE
+	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 15:22:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235178AbiK2OJe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Nov 2022 09:09:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45152 "EHLO
+        id S235257AbiK2PWk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Nov 2022 10:22:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235082AbiK2OJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2022 09:09:26 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3508859FF3
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 06:09:25 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id n21so34024642ejb.9
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 06:09:25 -0800 (PST)
+        with ESMTP id S235645AbiK2PWK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2022 10:22:10 -0500
+Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 164D5B7D5
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 07:22:04 -0800 (PST)
+Received: by mail-yb1-xb35.google.com with SMTP id i131so17837353ybc.9
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 07:22:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=y8wDyZgg9QMEoWmHITR0hjRGFfAsuwOwI7fxLXhJfso=;
-        b=hwEhj+H7gER4FoAr1PKHQD4b45lXtN4vOcJjBjGYCNHrsqtO1KHeXdhCIgKg9y7KEf
-         0ArDCQGAhwfv5p5lglR3e5WOg8GavrIJAPK/5rNxQKib6S2lU+N5QXTkmUVEgvmmD6O8
-         wMoxLYHvmS8rVRwuY2JSljd56kBN8EWzufrEqD+EFjF5POg2uPuVNdzqDK66zmcHt5cY
-         Ehc2rIEYnPXL89o8mxTDKCnWCYDs4ik/wZ51kH6RmtlOR9yDJT92SZ/XQcFdB+zT6qn0
-         r41q27RWdO+ukcx7h0+lBP2n34UkjE7kQboBuwfcj2ruqcc7py3eb6VuRM/gg6DTjNBB
-         9YQQ==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=RAZ/Hr87LSTIZTCb7Wxs3zhIrvER/YPKf3yjQBgVAuM=;
+        b=qslPD8C4GglreQQY5ky98JTSGjdFo8OXaa5NgMfuLuJPoyfUkvKhHBPPRm6dvbRzJo
+         XS1/NOcBr4l2fIEPYi0s1TYcCvi+WOMqh+VOUccjq4CAcyJ6O4XFZveLFgfNkO7pIjBG
+         ZytegfJ9Ml9RMFqb3ZzwazQUrixALdU1WoagBLHMPXzQL9GJjaYMpuwwj8uzM0ADlPrL
+         K/y9lAMY1Zx+dBYtVOkK4QagFU3uF94hslANZbKRlLJID/lSj5zWUScKTNo0sViSAtlM
+         gAC+M2mtc643wjsebePifWhPlV2Gkg/PMqxWec7KVTJXy2wZSyCEuLGcliyEWL4aqhXG
+         N6zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=y8wDyZgg9QMEoWmHITR0hjRGFfAsuwOwI7fxLXhJfso=;
-        b=b6J0tG2xracDHAEyNdxul1MVZXYYV97kUaVYIN+J8xqZmuuuqWFUbU2lEmj4La97qo
-         y2Fqke8tiicwInPrOHmDsw6YQ+tOl7m/ilgC1KvWUkVakDjOLmXyurBU0h18iykd1SK1
-         z74mAlR17h4BqCx212oWvFH6gSziqLBV0tXkC0NRZT/yL6E+0H+LNin8ySRlkGCHVitD
-         6mToKACJWpRXzRF43MQw9USuhP+nmgbKd7v+Xvct6HgfMcYkncsSMQKvdqrWiL8qRok3
-         0iOVljAKzI3OAI5RsS4FIe794TbWlhyioaUjT0qowfKVytvk7KxsTDy6YZZl7v86ed7i
-         OJSQ==
-X-Gm-Message-State: ANoB5pk8O29Ph7WXFD6J7buls7Y7bSkDCcmzgXyfPwqwLNXQPR3oS43X
-        D4PQbmdCz33k4/NaIHuLKwPpnAe+ose28Q==
-X-Google-Smtp-Source: AA0mqf7FBSJb5wH4YKmzBkM1EMqElmaFgE+7u5Zy492obdGe8eeA5DaQqhgFt68/A7Qp6C8ypAsnpA==
-X-Received: by 2002:a17:906:1e8a:b0:7b2:b992:694d with SMTP id e10-20020a1709061e8a00b007b2b992694dmr42920674ejj.651.1669730963085;
-        Tue, 29 Nov 2022 06:09:23 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id be14-20020a0564021a2e00b00463597d2c25sm6307907edb.74.2022.11.29.06.09.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Nov 2022 06:09:22 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Paul Smith <psmith@gnu.org>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 4/4] Documentation/Makefile: narrow wildcard rules to our known files
-Date:   Tue, 29 Nov 2022 15:09:17 +0100
-Message-Id: <patch-v2-4.4-f1bc3c16904-20221129T140159Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.39.0.rc0.993.g0c499e58e3b
-In-Reply-To: <cover-v2-0.4-00000000000-20221129T140159Z-avarab@gmail.com>
-References: <20221127224251.2508200-1-psmith@gnu.org> <cover-v2-0.4-00000000000-20221129T140159Z-avarab@gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RAZ/Hr87LSTIZTCb7Wxs3zhIrvER/YPKf3yjQBgVAuM=;
+        b=ChFpQrX+0KVKZuxC699c1C0ruD28wRmLxfx4C8SZ0HvZ0NeQrKiaqaj3pQ/H7PwjsZ
+         p6t+Q094K7RQRb/u9rZwEmcHlZSm+xeJSoLXUMZZVrWC1EtzHUbDryjPkUFBnkTZOnc9
+         h2zJKZE8z19srL1acsbJzhY8pZa2V/ur7K44YctPRq0mkREksvjpoLmgkoN7838dkMfK
+         75jOpT76iW7gfdJ0sdho6yzbT4yl1JJJijbpKtKFJcygby8NRVg9wAnmdZaS1wg9zsjg
+         +0fBA6pXo7YGyTiX00ALsOI5SATYz57K2lKL0KkWDtoMi2m1AY/ppKi+qBWMeTucgIkl
+         uTAg==
+X-Gm-Message-State: ANoB5pl0h/wdb7Afd0i/BSAxxYaUPShjNIdXIu91MD3pYRGYEgNHfe6L
+        Rv8N03xnknUPxYlIO7E+QpPO9eie0IA58USQnIvyL6g0IIY=
+X-Google-Smtp-Source: AA0mqf4qpyFzrLGualytYJ2Cj9vnqqjzf7LANoBwKs14yMClz5ZcLQtma+uZqiQKsF1YmO2bxMZkuAP8li4+7SiZYEE=
+X-Received: by 2002:a25:2fc3:0:b0:6f2:2176:43d9 with SMTP id
+ v186-20020a252fc3000000b006f2217643d9mr23977080ybv.414.1669735322898; Tue, 29
+ Nov 2022 07:22:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.1384.v7.git.1669136378754.gitgitgadget@gmail.com>
+ <pull.1384.v8.git.1669154823035.gitgitgadget@gmail.com> <xmqq5yf3fx4s.fsf@gitster.g>
+In-Reply-To: <xmqq5yf3fx4s.fsf@gitster.g>
+From:   Rudy Rigot <rudy.rigot@gmail.com>
+Date:   Tue, 29 Nov 2022 09:21:51 -0600
+Message-ID: <CANaDLW+ukK2GU7NzkCvXVNc9DX3_93Pp+PHq-WcLpRJizPidVA@mail.gmail.com>
+Subject: Re: [PATCH v8] status: modernize git-status "slow untracked files" advice
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Rudy Rigot via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Instead of declaring that we'll generate e.g. any "%.1" from a
-corresponding "%.xml" let's narrow that list down to only our known
-manpage files, and likewise for %.xml.
+Thanks for the amazing feedback, and sorry for the delay.
 
-We already generated e.g. "man1" on the basis of "$(DOC_MAN1)", we
-just weren't keeping track of what we were generating exactly in the
-these middle steps.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- Documentation/Makefile | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+> "time" I can sort of understand ("can reduce the time taken to
+> enumerate untracked files" is how I may phrase it, though), but
+> what did you want to say with "size"?
 
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index 89929e3d60b..f84b54ac093 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -356,14 +356,14 @@ manpage-base-url.xsl: manpage-base-url.xsl.in
- 	$(QUIET_GEN)sed "s|@@MAN_BASE_URL@@|$(MAN_BASE_URL)|" $< > $@
- 
- $(DOC_MANN): manpage-base-url.xsl $(wildcard manpage*.xsl)
--%.1 : %.xml
--	$(QUIET_XMLTO)$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
--%.5 : %.xml
--	$(QUIET_XMLTO)$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
--%.7 : %.xml
--	$(QUIET_XMLTO)$(XMLTO) -m $(MANPAGE_XSL) $(XMLTO_EXTRA) man $<
--
--%.xml : %.txt $(ASCIIDOC_DEPS)
-+define doc-mann-rule
-+$$(DOC_MAN$(1)) : %.$(1) : %.xml
-+	$$(QUIET_XMLTO)$$(XMLTO) -m $$(MANPAGE_XSL) $$(XMLTO_EXTRA) man $$<
-+
-+endef
-+$(eval $(foreach n,1 5 7,$(call doc-mann-rule,$(n))))
-+
-+$(MAN_XML): %.xml : %.txt $(ASCIIDOC_DEPS)
- 	$(QUIET_ASCIIDOC)$(TXT_TO_XML) -d manpage -o $@ $<
- 
- user-manual.xml: user-manual.txt user-manual.conf asciidoctor-extensions.rb GIT-ASCIIDOCFLAGS
--- 
-2.39.0.rc0.993.g0c499e58e3b
+This bit was provided by a past reviewer so I hope I don't
+misrepresent it, but I think the idea was to convey that the reason
+it's faster is because the part of the codebase it will do active work
+on is smaller. I don't think it provides compellingly more information
+for end users, compared to just mentioning time, so I'll simplify with
+your proposal here.
 
+
+> Additionally (read: you do not _have_ to do this to make this topic
+> acceptable, but it probably is worth thinking about), if we need to
+> introduce a new helper function uf_was_slow() anyway, a much better
+> change may be to make the 2 seconds cut-off configurable, than
+> inventing GIT_TEST_UF_DETAIL_WARNING used only for tests.
+
+I agree it would be an improvement, I'm going to try to do this. This
+doesn't feel like a much more involved change compared to your
+alternative suggestion of setting a hardcoded test value for
+`s->untracked_in_ms`, so it feels like there's not much to lose from
+doing it this way, while users would gain some nice configurability.
+
+For transparency, my intuition is that I'm not sure there will be use
+cases where the config will be meaningfully leveraged by users. My gut
+is that the current cut-off time is an arbitrary UX perception
+cut-off, so I'm not sure it would need to be different depending on
+given repo situations. But I'm also very aware that I could be wrong,
+and this could open use cases that I'm not thinking about. And to your
+point, it would be sensible to use it as a test input anyway, so we
+might as well make it a user-facing tweak; so, I'm on board.
+
+
+> Wouldn't it be redacted into "It took 9X seconds to enumerate"?
+> It probably does not happen, only because you are forcing the code
+> to pretend that it took 2.001 seconds or something, I suspect.
+
+Yup, you guessed right. I'll be sure to change the regular expression
+to be resilient to double-digit times.
+
+
+> Also, what do you need /g modifier in "sed" script for?  I do not
+> think we give more than one such number in the message we are
+> testing.
+
+Indeed, it's not useful to anything, and shouldn't be there, I'll fix this too.
+
+
+All of the other comments are crystal clear, and I intend to implement
+them exactly as advised. You can expect a new patch this week, maybe
+even today.
+
+
+Thanks a lot again!
