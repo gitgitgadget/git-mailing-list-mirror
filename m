@@ -2,118 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD3A7C4321E
-	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 10:59:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D469C4321E
+	for <git@archiver.kernel.org>; Tue, 29 Nov 2022 11:33:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232400AbiK2K7S (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Nov 2022 05:59:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42740 "EHLO
+        id S232271AbiK2Ld2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Nov 2022 06:33:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230161AbiK2K7Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2022 05:59:16 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD7515CD0A
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 02:59:15 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id e27so32784972ejc.12
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 02:59:15 -0800 (PST)
+        with ESMTP id S233089AbiK2LdI (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2022 06:33:08 -0500
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A96914666F
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 03:33:00 -0800 (PST)
+Received: by mail-pj1-x1034.google.com with SMTP id o12so4550692pjo.4
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 03:33:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=4ioF3dG9FSZmxjTs5MbUM3QbHj9Rz5UwWmBujpLm5r0=;
-        b=b1+cm5zoLbc1dcIlXNKqyfYn8I1tCpxfqCZAz6lhrUoDQjvQp+FynL0hBECLldRjAC
-         FNDgTk477IHanVKQZHKMgpEZn6kWrlSmf5jmtabv0Gb5huomU9qZbSbD5OBLhJKFuLUu
-         vSP0vBlapwFDNAJuRvF1M/s15NyhBDXACzE3riDsHxdjcOHp2NQtuq1YW3v5ncSV9anz
-         HxhCQL/HVauVeadPn1YOez9L2Uh6s1rVsu+5XB/IBkRrheNE+c1jEGVrvXZqmma8IibS
-         PXMqKviwBfLcOpiXHT86ovnul4TEUNFAZZArlj7ZcAEAlEwfZtNhoDYkIP4v6TKK4lzI
-         VWlQ==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nS/HtHUnOFTi6az614AVk+pj/fiCcdFVM3ZSX6Lt/wE=;
+        b=N3/5sU1b1VPCzRCdSv/0z+oeUtQqMBkbR+0dgHsbvcq8dzC8zNIO8reJaPnufzq/ql
+         9YMKvXbJvw5HChvVnNEaOFflLt7zEZGJAqDqIfbZhMXD0FMJQsjFgQt7bqHmGmwmsxdo
+         hM7OSfIFXHDBG2omxGsHC/SCsalhHiBGK434nMQt13CDR2h+3KnXpZksRPb2xJHFseei
+         T6irbLrZAyvLaWp3HwkgakWMgCkngYMZh6l3QJ6XvKdyRVETT8EmqilDMIyITXY76PJ/
+         JS1kpISO2vfMn212ghvpIElOUK0sDebEly/nlGTlOQ45IObdC+kaxpILpRRZRrzy74VQ
+         NQQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4ioF3dG9FSZmxjTs5MbUM3QbHj9Rz5UwWmBujpLm5r0=;
-        b=iAMGk7uZ/NMvW7I5E1Dg1MqCW0tFMQg9V2obXD50APmIxk9ZMoqnay2Is1h98XCUpd
-         yHlL2XytqrZXfyFE/oISk2nZNByACFo77yMeC2QtC5RtLSVplq82prPSDcxCwNEN9dJ/
-         c6t3IU2+34nbsIJ6tuB59N/tfnNyoXtOVYdtgIl64xzIeBVgEJt5p5TrfILobjYHG9Sb
-         OdwJvheffE1WLde9WyUjogden5g//CFOqsEBfY5U/U7KpLqebTTaUBCg3e10oJGaLm3O
-         NwXIfn6qtJ5m5KNo4BRS4gwVjj8uOy91zyyb2WaBWPoJ5xkwRcz/5IFNUDCWmYK9WEyM
-         CdaQ==
-X-Gm-Message-State: ANoB5pm5v16o34BxLrE1GxZSmRMZEpRprG/p6Q3ZCKedbkZ1YaN7PEjx
-        l8Fmo2fAMVRuK8wXl3HT3jrnekEVw3RUZQ==
-X-Google-Smtp-Source: AA0mqf734MGy22auC/cH43T8gDdEvATs6pQyXsGIeIwfFZxoTjrlhfGjcT9kkaON+PPnyFloUnAfsg==
-X-Received: by 2002:a17:906:a20f:b0:7bf:f0e9:1cde with SMTP id r15-20020a170906a20f00b007bff0e91cdemr7801576ejy.512.1669719554346;
-        Tue, 29 Nov 2022 02:59:14 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id l16-20020aa7c3d0000000b00468f7bb4895sm6152161edr.43.2022.11.29.02.59.13
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nS/HtHUnOFTi6az614AVk+pj/fiCcdFVM3ZSX6Lt/wE=;
+        b=QVxz3cfuiL0CX8FlawITNt3Oz80hZeWea2mg8VwdFgFXvx5uuliylirsERdMYtMYcd
+         M1euD+w1odSL9QxrHjT0ZbNPs3H32oLVaQijZgj3NzaeJbXzTCDuIX1pQxzlRD9HKDLI
+         UZpuDWAnRtB+lt+wEpLljNg1Wi2eMc7UBDzSZeSMLzdJO/TNuGUGCpYGu7br8N+5D2ga
+         JGgzq0Zy+6JVBlMA3Qw6XyEs2caA2J/0IfLnRJf9hijMQVZVQVOj0C599g5RHtyzzZ4a
+         CSRd1HwpyfUet3U/RnYQX+W++RhwamDyGzrpB/CcDIhWRom1b2hu2j72q/KJeNtcoZg+
+         8wQg==
+X-Gm-Message-State: ANoB5pn3Sq4E24H+y+FDl+BIZZzDcXvoqDvHwfEuBMGd311EoNwUVCyd
+        4Q9LRtfLnp93rBkmX7I0xQ+ffOQXXQR6yg==
+X-Google-Smtp-Source: AA0mqf7bMPBECK3MT3NIvLEzzBt26DMzXb8zwZCJ5aoYkvX3p2oALP7BzlLcyVSMDdiudmTRojqjXQ==
+X-Received: by 2002:a17:90a:b018:b0:214:247a:1932 with SMTP id x24-20020a17090ab01800b00214247a1932mr59646949pjq.187.1669721579928;
+        Tue, 29 Nov 2022 03:32:59 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id 199-20020a6216d0000000b0056d7cc80ea4sm9721738pfw.110.2022.11.29.03.32.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Nov 2022 02:59:13 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1ozyKX-001NnO-1g;
-        Tue, 29 Nov 2022 11:59:13 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Ping Yin <pkufranky@gmail.com>
-Cc:     mailinggit list <git@vger.kernel.org>
+        Tue, 29 Nov 2022 03:32:58 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Ping Yin <pkufranky@gmail.com>,
+        mailinggit list <git@vger.kernel.org>
 Subject: Re: [bug] git diff --word-diff gives wrong result for utf-8 chinese
-Date:   Tue, 29 Nov 2022 11:52:38 +0100
 References: <CACSwcnQfTOYHxSJQqc+viiqkCqt=WZieuCw70PqOdvo88XdeOQ@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <CACSwcnQfTOYHxSJQqc+viiqkCqt=WZieuCw70PqOdvo88XdeOQ@mail.gmail.com>
-Message-ID: <221129.867czejabi.gmgdl@evledraar.gmail.com>
+        <221129.867czejabi.gmgdl@evledraar.gmail.com>
+Date:   Tue, 29 Nov 2022 20:32:58 +0900
+In-Reply-To: <221129.867czejabi.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Tue, 29 Nov 2022 11:52:38 +0100")
+Message-ID: <xmqqlenu2dxx.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-On Tue, Nov 29 2022, Ping Yin wrote:
+>> or (if chinese can not be displayed correctly)
+>>
+>> -  <E4><B8><BA>1
+>> +  <E4><B8><BA>2
+>>
+>> Actual result of "git diff --color-words"
+>>
+>> <E4><B8>[-<BA>1-]{+<BA>2+}
+>> ...
+> I think we could provide new ways to do per-language diffs, right now
+> you can use --word-diff-regex, but it would be handy to e.g. have a
+> built-in collection of those (or other non-regex boundary algorithms)
+> for Chinese etc.
 
-> Result of "git diff"
->
-> -  =E4=B8=BA1
-> +  =E4=B8=BA2
->
-> or (if chinese can not be displayed correctly)
->
-> -  <E4><B8><BA>1
-> +  <E4><B8><BA>2
->
-> Actual result of "git diff --color-words"
->
-> <E4><B8>[-<BA>1-]{+<BA>2+}
->
-> Expected result of "git diff --color-words"
->
-> =E4=B8=BA[-1-]{+2+}
->
-> or (if chinese can not be displayed correctly)
+I think you are thinking it with unnecessaarily complexity.  
 
-I think we could provide new ways to do per-language diffs, right now
-you can use --word-diff-regex, but it would be handy to e.g. have a
-built-in collection of those (or other non-regex boundary algorithms)
-for Chinese etc.
+The only thing that needs noticing in the above example, I think is,
+that the three-byte sequence E4-B8-BA in the example is supposed to
+be a single unicode character, and the actual result depicted can
+happen only if we (incorrectly) chomp that single character in the
+middle.
 
-But as for considering this a bug, or changing the existing behavior I
-think we'd need to deal with:
+No matter what language we are using, we shouldn't do that.
 
- * We (approximately) split on space now, which is certainly
-   ASCII-biased, and outside of CJK fairly somewhat universal.
-
- * If we're going to split on "real words" in some cross-language aware
-   way, are we going to run into conflicts between what different
-   languages would consider sensible rules?
-
- * We probably don't want to make the "diff" dependent on the user's
-   locale, but e.g. saying "I want a Chinese diff" via a CLI option
-   would be OK.
-
- * Even for say Chinese, there's probably interesting edge cases when
-   it's combined with other languages or character sets (e.g. Chinese +
-   HTML).
-
-
-
+I suspect that "--word-diff" internal is not even aware what a
+character is, but if you assume UTF-8 (precomposed), then you should
+be able to tell where the character boundary is by only looking at
+the high-bit patterns to avoid producing such an output.
