@@ -2,65 +2,62 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3919AC4321E
-	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 08:26:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55C98C433FE
+	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 08:33:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235014AbiK3I0L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Nov 2022 03:26:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56050 "EHLO
+        id S235603AbiK3Idd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Nov 2022 03:33:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235006AbiK3IZU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2022 03:25:20 -0500
+        with ESMTP id S235599AbiK3IdR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2022 03:33:17 -0500
 Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF9B06F361
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 00:24:14 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id l11so23015548edb.4
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 00:24:14 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCC859490B
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 00:28:32 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id x2so23053818edd.2
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 00:28:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ps8CllkXhPnv5i2uSGSHlQeYH+Ni80579M0j1HnlZTU=;
-        b=ar7LN+rCGYawc2shYtaYYPI4h745j/p/XkmESbW8FzFI9idrjT1onv9nMU7Ls/Dgay
-         wBlXCQbK6Ygo+aH2dQH5GPjVypGGdQQ8zSWYEgezB+HBLiBlRYLr+YSWCr3h432eRmBa
-         hCe2ofTiXHeuci/BI3Jhleg790d+pGTpwE0eb1I/Q2wCNmyzUVhc1r2vFInEl/KuJruC
-         NCsRS2CbRRyaHgb2voir2mUI43VPCbt+6RobghbvR1fXc6YsvYoRVrQRy6Z47DZiggCp
-         DUsg9xGl/e6IVbEHD8W/wHovQ+fzleYWpxbVDFB4SDuJ+DxoZZtbu2OzVfHhbRiBqnpH
-         qo9w==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+etyceKgJZCTo/18L+tr+FzbLhAxxscOBB068do3dzk=;
+        b=cEnaWLbUUznWcC0ppjD925aCHF+RnLBRLKrhpoRs6s6yMUcgTakIE980B00YQdIEUv
+         icMBnQ5OOSHDKLQm0HUMfCykNs7VJJk10fT96DkRSHVjEFEaG3XHQ1GxYIo7xjgdybnb
+         eE9LArybYoqjbmawKJv2KhPLBU+McA1otQDfaI5kveQ6B40n/IFv0XN6UvF0D9BH4CXX
+         756z4umQJBIRX+lPU6vL3ovgjvuvC51AmDQC/+NxnumgldmbpteisjQ0pizheVIVJ8Zj
+         /naggdDzc8LylbWho9DlMoz9Hg/xBplNX/fecQRm7tAdalSckm/bCkobcl2pmrLtmdCD
+         SgTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ps8CllkXhPnv5i2uSGSHlQeYH+Ni80579M0j1HnlZTU=;
-        b=pvOBbkZC5uvIKI0mBWlMl2B/mP6eww4izIPI58pkdX8JbGl7M6V07xCaMnKPviuxgJ
-         o915nW3drXRCtlJU8x5jORLrTOHPLP6KY7IDOWAFLBa5n1TTtHEDikJrd1jAuDruUuZ0
-         qRYFZ2/AtkIIdHHpLr0316G7wKFB1krbGmaZE2MWd/ABCTeFhQVQAhpLEeA212kDMVzb
-         ySYjzh35I3bYs6rkF+4vXBi4B26AETT6MDT9ETzpey7h+zWpmdFR2FuOVjT1J9CtDI+B
-         uvKv1cnWLVRQ3AK0jTeQRKfSQwAw15eLJQD34hJZuwiaNMsPtAIGQVfO5h04OgAGMzat
-         hIEg==
-X-Gm-Message-State: ANoB5pmWnBlMOOSTnsJRLolyzgUizwLXNr6gAzsm7gZrzcE/i2h2hxAI
-        vYmadRdmyqlmqEywXwTggkbxS9NpT6IjYA==
-X-Google-Smtp-Source: AA0mqf7BD6ZbSXPIm/nglj8EA3u3ZqPFfGs2MVfS3PvQg8cKFs/nTm3OVSmWxgnw9zD8RzjNzpTf+A==
-X-Received: by 2002:aa7:cc08:0:b0:461:8a43:e93 with SMTP id q8-20020aa7cc08000000b004618a430e93mr52827243edt.275.1669796649852;
-        Wed, 30 Nov 2022 00:24:09 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+etyceKgJZCTo/18L+tr+FzbLhAxxscOBB068do3dzk=;
+        b=P9vw7FBsolCNVA+ufer5C99gPYK12ywecnJ/Br858ch65mvN0SVxh91LhRxprnJZdD
+         wfDoFBhVUa+WHoyVSiE6vqijwmsPcKx57nfGGopcZAFdj1ub/zx9W0IQXt05RCtgS+cX
+         mgooz5S+V/uZRVf4NJ+9xt47jcWQBWY3VlIyLZk7AUpcTG3NcgqxVJOncDlV/AXbh602
+         zuqkasPsR8sAEOZLCEzqS056QvR0xNHbByjmYQDkj2egoPuRKfsLLUprxgFcGqLud9QO
+         BqIcKmNZNvpaOMM1/aOmV3TdmpqYI8Pz+mowr5B3/IhgN64UhT9bKZOz8pUJ6krNplin
+         5how==
+X-Gm-Message-State: ANoB5pl0UHxA4QI5IcE9RcvrXwxTDwEAncj+mMfT14ZBf/X+GoKaUgBu
+        kt6zFyoEsENdqXGZRrj8oB1IFN9QKbPPcA==
+X-Google-Smtp-Source: AA0mqf7HKHCjSKBRl04Jq0VtTnaQiZEOx0XvBb47SEx8iqVC9dlgvY6nQLrx5ZaEDPvblggISl7waA==
+X-Received: by 2002:a05:6402:1045:b0:461:68e1:ced5 with SMTP id e5-20020a056402104500b0046168e1ced5mr46012740edu.142.1669796911038;
+        Wed, 30 Nov 2022 00:28:31 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id l18-20020a1709060cd200b007adf2e4c6f7sm352064ejh.195.2022.11.30.00.24.09
+        by smtp.gmail.com with ESMTPSA id ju10-20020a17090798aa00b007bb751f9d10sm370095ejc.77.2022.11.30.00.28.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Nov 2022 00:24:09 -0800 (PST)
+        Wed, 30 Nov 2022 00:28:30 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Paul Smith <psmith@gnu.org>,
+Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 1/1] Makefiles: change search through $(MAKEFLAGS) for GNU make 4.4
-Date:   Wed, 30 Nov 2022 09:23:49 +0100
-Message-Id: <patch-v3-1.1-432518b2dd7-20221130T081835Z-avarab@gmail.com>
+Subject: [PATCH] cocci: avoid "should ... be a metavariable" warnings
+Date:   Wed, 30 Nov 2022 09:28:23 +0100
+Message-Id: <patch-1.1-31af153702e-20221130T082521Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.0.rc0.1028.gb88f24da998
-In-Reply-To: <cover-v3-0.1-00000000000-20221130T081835Z-avarab@gmail.com>
-References: <cover-v2-0.4-00000000000-20221129T140159Z-avarab@gmail.com> <cover-v3-0.1-00000000000-20221130T081835Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,79 +65,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since GNU make 4.4 the semantics of the $(MAKEFLAGS) variable has
-changed in a backward-incompatible way, as its "NEWS" file notes:
+Since [1] running "make coccicheck" has resulted in [2] being emitted
+to the *.log files for the "spatch" run, and in the case of "make
+coccicheck-test" we'd emit these to the user's terminal.
 
-  Previously only simple (one-letter) options were added to the MAKEFLAGS
-  variable that was visible while parsing makefiles.  Now, all options are
-  available in MAKEFLAGS.  If you want to check MAKEFLAGS for a one-letter
-  option, expanding "$(firstword -$(MAKEFLAGS))" is a reliable way to return
-  the set of one-letter options which can be examined via findstring, etc.
+Nothing was broken as a result, but let's refactor the relevant rules
+to eliminate the ambiguity between a possible variable and an
+identifier.
 
-This upstream change meant that e.g.:
-
-	make man
-
-Would become very noisy, because in shared.mak we rely on extracting
-"s" from the $(MAKEFLAGS), which now contains long options like
-"--jobserver-auth=fifo:<path>", which we'll conflate with the "-s"
-option.
-
-So, let's change this idiom we've been carrying since [1], [2] and [3]
-as the "NEWS" suggests.
-
-Note that the "-" in "-$(MAKEFLAGS)" is critical here, as the variable
-will always contain leading whitespace if there are no short options,
-but long options are present. Without it e.g. "make --debug=all" would
-yield "--debug=all" as the first word, but with it we'll get "-" as
-intended. Then "-s" for "-s", "-Bs" for "-s -B" etc.
-
-1. 0c3b4aac8ec (git-gui: Support of "make -s" in: do not output
-   anything of the build itself, 2007-03-07)
-2. b777434383b (Support of "make -s": do not output anything of the
-   build itself, 2007-03-07)
-3. bb2300976ba (Documentation/Makefile: make most operations "quiet",
-   2009-03-27)
+1. 0e6550a2c63 (cocci: add a index-compatibility.pending.cocci,
+   2022-11-19)
+2. warning: line 257: should active_cache be a metavariable?
+   warning: line 260: should active_cache_changed be a metavariable?
+   warning: line 263: should active_cache_tree be a metavariable?
+   warning: line 271: should active_nr be a metavariable?
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- git-gui/Makefile | 2 +-
- shared.mak       | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/git-gui/Makefile b/git-gui/Makefile
-index 56c85a85c1e..a0d5a4b28e1 100644
---- a/git-gui/Makefile
-+++ b/git-gui/Makefile
-@@ -116,7 +116,7 @@ ifeq ($(uname_S),Darwin)
- 	TKEXECUTABLE = $(shell basename "$(TKFRAMEWORK)" .app)
- endif
+This warning can be seen e.g. in "master" CI at: https://github.com/git/git/actions/runs/3580246628/jobs/6022212792#step:4:81
+
+Junio: Sorry about missing this, this would be new in v2.39.0, so I'm
+submitting it now in case you'd like to pick it up for v2.39.0, but on
+the other hand there's no negative impact here other than noisy "make"
+output, and noisy coccinelle logs. So it could also wait until after
+the release...
+
+ contrib/coccinelle/index-compatibility.cocci | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
+
+diff --git a/contrib/coccinelle/index-compatibility.cocci b/contrib/coccinelle/index-compatibility.cocci
+index 4c1b890c3ef..8520f03128a 100644
+--- a/contrib/coccinelle/index-compatibility.cocci
++++ b/contrib/coccinelle/index-compatibility.cocci
+@@ -1,22 +1,26 @@
+ // the_index.* variables
+ @@
++identifier AC = active_cache;
++identifier ACC = active_cache_changed;
++identifier ACT = active_cache_tree;
+ @@
+ (
+-- active_cache
++- AC
+ + the_index.cache
+ |
+-- active_cache_changed
++- ACC
+ + the_index.cache_changed
+ |
+-- active_cache_tree
++- ACT
+ + the_index.cache_tree
+ )
  
--ifeq ($(findstring $(MAKEFLAGS),s),s)
-+ifeq ($(findstring $(firstword -$(MAKEFLAGS)),s),s)
- QUIET_GEN =
- endif
+ @@
++identifier AN = active_nr;
+ identifier f != prepare_to_commit;
+ @@
+   f(...) {<...
+-- active_nr
++- AN
+ + the_index.cache_nr
+   ...>}
  
-diff --git a/shared.mak b/shared.mak
-index be1f30ff206..aeb80fc4d5a 100644
---- a/shared.mak
-+++ b/shared.mak
-@@ -37,13 +37,13 @@ space := $(empty) $(empty)
- QUIET_SUBDIR0  = +$(MAKE) -C # space to separate -C and subdir
- QUIET_SUBDIR1  =
- 
--ifneq ($(findstring w,$(MAKEFLAGS)),w)
-+ifneq ($(findstring w,$(firstword -$(MAKEFLAGS))),w)
- PRINT_DIR = --no-print-directory
- else # "make -w"
- NO_SUBDIR = :
- endif
- 
--ifneq ($(findstring s,$(MAKEFLAGS)),s)
-+ifneq ($(findstring s,$(firstword -$(MAKEFLAGS))),s)
- ifndef V
- ## common
- 	QUIET_SUBDIR0  = +@subdir=
 -- 
 2.39.0.rc0.1028.gb88f24da998
 
