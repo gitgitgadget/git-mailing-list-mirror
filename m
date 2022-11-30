@@ -2,100 +2,99 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A3E7C47088
-	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 18:41:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 041A0C47088
+	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 18:43:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231193AbiK3SlS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Nov 2022 13:41:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52494 "EHLO
+        id S231250AbiK3Snc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Nov 2022 13:43:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231157AbiK3SlL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2022 13:41:11 -0500
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA2F898949
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 10:41:04 -0800 (PST)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id DF95ACA1246;
-        Wed, 30 Nov 2022 13:41:03 -0500 (EST)
-Received: from [10.0.0.3] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id A51A3CC8415;
-        Wed, 30 Nov 2022 13:41:03 -0500 (EST)
-Message-ID: <c9ac37d3-99a9-a358-4d49-fea6a5d92efc@jeffhostetler.com>
-Date:   Wed, 30 Nov 2022 13:41:03 -0500
+        with ESMTP id S231251AbiK3SnV (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2022 13:43:21 -0500
+Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C17573720C
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 10:43:20 -0800 (PST)
+Received: by mail-io1-xd31.google.com with SMTP id e189so12938265iof.1
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 10:43:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
+         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
+        bh=/95G2XBbobp3+t2JrqtSxpUn9lUX/UbKdYD0XyHz9tU=;
+        b=Tv07B9lHwnh5GmZJqjcnabySmEaQonCRtOoCx/T0Uij15HllQHPKl929EdwAQDe3Bi
+         4nEoW+GmNnOV/P8DVRITRVtLV89N1gmSZ+huDyzopjlAXlw3YCuTkC4SOMGTBlQsKX2y
+         MtFVduCgBjlrQkC50ai5/zJ63i/k3czbE1Tbqao8ioi+aS7p6Loajya89Gdy2AMy4Qla
+         x8cOPLRGwILqwp99CIdidrHt/sAltWDaxjElU0hqoC7AHZ0C2WoEzujkottDISts2Ds/
+         sUPYIDck32Njmd0DIyNkNEfLg8oJl695PTGGhwdV/e7nwxUXZcGiTfAQCJNcUyed7bEy
+         wPTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
+         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/95G2XBbobp3+t2JrqtSxpUn9lUX/UbKdYD0XyHz9tU=;
+        b=TGg6Q0kGQS0yu+fYV6KaTMqhhyPTbG6A87ciK/6plRkCJ8Xpa+d9e3nyh8+5qZKF17
+         63TTTtHo5FGYNEN50W/8MNW/XqTX2WMVoUDak6Qa7VNaBFsjhBnYuJTz6OA8+1tt8As1
+         /gSXx1wi9fwWld5uvHXVhGvYLflMwzvXI7wYjy2hup2q1fOjnVRdg3cdTPhhA94umXVZ
+         hwySAwjZPTE1geOytGW1ZFt3BFV053GtkMkua0AgxzliKccJ+QXjQR2VC8JJCCFQq8zN
+         44o1yoM/DFpyfTXoLtE39b9D2PVt7tMR7nbdKy4Dq6+rjYRG769hCX5I4NeFBEB/1nUp
+         2hpA==
+X-Gm-Message-State: ANoB5pkW9VBgOBVwiLHNq8Luan1aB/G0MPRNgRUGQ0lzqcULvaXFAOFe
+        mLXV6oBSFodIBJfalV5O5rk=
+X-Google-Smtp-Source: AA0mqf6OBJOlilFx05NTnvSudaGV05zmYmaurLxNDufLMIAq0eBoQbKY9Zu3AKjQHjIHPEACemKBVw==
+X-Received: by 2002:a05:6602:200c:b0:6de:90a6:6b04 with SMTP id y12-20020a056602200c00b006de90a66b04mr27940407iod.101.1669833799676;
+        Wed, 30 Nov 2022 10:43:19 -0800 (PST)
+Received: from stargate ([2620:72:0:a40:27db:8b2:b1b5:493b])
+        by smtp.gmail.com with ESMTPSA id x59-20020a0294c1000000b0037612be6830sm805267jah.140.2022.11.30.10.43.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Nov 2022 10:43:18 -0800 (PST)
+References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
+ <CAFQ2z_MZd150kQNTcxaDRVvALpZcCUbRj_81pt-VBY8DRaoRNw@mail.gmail.com>
+ <f1c45bd5-692e-85db-90c3-c516003f47e5@github.com>
+ <CAFQ2z_MLwUoaSTG04LJYHgJH-QYJEuZ9bQcTsV8mXwxBbz7Egg@mail.gmail.com>
+User-agent: mu4e 1.9.0; emacs 28.1
+From:   Sean Allred <allred.sean@gmail.com>
+To:     Han-Wen Nienhuys <hanwen@google.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, jrnieder@gmail.com,
+        John Cai <johncai86@gmail.com>
+Subject: Re: [PATCH 00/30] [RFC] extensions.refFormat and packed-refs v2
+ file format
+Date:   Wed, 30 Nov 2022 12:37:21 -0600
+In-reply-to: <CAFQ2z_MLwUoaSTG04LJYHgJH-QYJEuZ9bQcTsV8mXwxBbz7Egg@mail.gmail.com>
+Message-ID: <87cz94xozi.fsf@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH] trace2 tests: guard pthread test with "PTHREAD"
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>, git@vger.kernel.org,
-        "Randall S . Becker" <randall.becker@nexbridge.ca>
-References: <patch-1.1-f7f21c94a6c-20221124T214813Z-avarab@gmail.com>
- <xmqqilj3edtr.fsf@gitster.g> <221125.867czjo3ud.gmgdl@evledraar.gmail.com>
- <6c725ed6-4d74-c260-98fb-dc965b4647ee@jeffhostetler.com>
- <221128.86wn7fj72k.gmgdl@evledraar.gmail.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-In-Reply-To: <221128.86wn7fj72k.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: mailmunge 3.10 on 209.68.5.199
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
+Han-Wen Nienhuys <hanwen@google.com> writes:
+> To be honest, I don't understand why symrefs are such a generic
+> concept; I've only ever seen them used for HEAD.
 
-On 11/28/22 12:50 PM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Mon, Nov 28 2022, Jeff Hostetler wrote:
-> 
->> On 11/25/22 3:05 AM, Ævar Arnfjörð Bjarmason wrote:
->> [...]
->>> That was my thought as well, but these tests are specifically testing
->>> how it interacts with threading. The counter mechanism works in general
->>> without threading.
->>> The test descriptions don't help, and should really say that they're
->>> to
->>> do with threading in particular, but I wanted to keep this as small as
->>> possible for rc[12] and the final, so I didn't fix that while-at-it.
->>
->> There is large comment block above `have_timer_event()` and
->> `have_counter_event()` in t0211 that explained the purpose of the
->> test1 and test2 tests for each.  Would it help if that text were moved
->> down before each of the individual tests rather than where it is now?
-> 
-> You did ask :)
+I've been only lurking in this thread (and loosely following along,
+even!) but I do want to call out that I have recently considered perhaps
+abusing symrefs to point to normal feature branches. In our workflow, we
+have documentation records identified by a numeric ID -- the code
+changes corresponding to that documentation (testing instructions, etc.)
+use formulaic branch names like `feature/123456`.
 
-Yes, I did.  :-) :-)
+It is sometimes beneficial for two or more of these documentation
+records to perform their work on the same code branch. There are myriad
+reasons for this, some better than others, but I want to avoid getting
+mired in whether or not this is a good idea. It does happen and is
+sometimes even the best way to do it.
 
+In these scenarios, I've considered having `feature/2` be a symref to
+`feature/1` so that both features can always 'know' what to call their
+branch for operations like checkout. I've done this on a smaller scale
+in the past to great effect.
 
-> I think that better than a comment is to have the test description
-> itself reflect the nature & purpose of the test.
-> 
-> Now the two are:
-> 
-> 	test_expect_success 'global counter test/test1' '
-> 	test_expect_success PTHREAD 'global counter test/test2' '
-> 
-> So at least the PTHREAD shows that it's something to do with threading,
-> but if it fails with that prereq passed you'll need to consult the
-> source to see what "test2" is supposed to do. Better would be to just
-> skip the comment & work "single threaded" and "multi-threaded" etc. into
-> the test name itself.
-> 
-> Ditto symbol names "ut_200counter" and "ut_201counter", again, a comment
-> somewhere in t/helper/test-trace2.c notes that they're single- and
-> multi-threaded, respectively, but why not skip that and make the symbol
-> names self-descriptive?
+Nothing is set in stone here for us, but I did want to call this out as
+a potential real-world use case.
 
-Good points. I'll keep this in mind for the future. I don't
-think I want to send a fix for them now, but maybe the next
-time I'm in the area...
-
-
-Thanks again,
-Jeff
+--
+Sean Allred
