@@ -2,175 +2,145 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43233C4321E
-	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 19:35:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 60480C4321E
+	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 19:58:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229702AbiK3Tfb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Nov 2022 14:35:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47512 "EHLO
+        id S229728AbiK3T6U (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Nov 2022 14:58:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229604AbiK3Tfa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2022 14:35:30 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 627598B188
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 11:35:28 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id b2so27546650eja.7
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 11:35:28 -0800 (PST)
+        with ESMTP id S229778AbiK3T6S (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2022 14:58:18 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06B96865B9
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 11:58:17 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id fy37so43883212ejc.11
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 11:58:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=e5HEV9LTWG8RUziQFD4DWm53/NzIfJCzdN8eno65C7A=;
-        b=LF10KPgPjMNJ9l+eul7IDE9mbxqdZDZU2HKk9W0uD/uCx7S7uph4bFupLL755m16z7
-         Hf5fCTZlIIoQKol+c46r5iS8m2THypRoIA8Vb0by0lf6DFgh6//B5TlYEp9F6dd96fDE
-         mksX4yMn8n7Vq8nHWccR7CXU6olE6TikcUahFxlxnuWdmZupWF95wGxtPSNZ9JYuE+K8
-         1FeV7f0tW+ZGk965yo06U6GH7c7LVbjDZYGlWpW37RD8WG5v//e4Bqzl8GlNWHxygh++
-         4ojnq/BQ78EccfUECUEaDUved6lNRMhJgACUN9V3bx9abPZnI+9+2bxqTmPnEZCk7O5h
-         hODw==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=EvfTYIKr94O8aP2RX5VW7brhBI8v0/oUIXgpBOyKnSk=;
+        b=PSOwJd7/QjG8fLht4t+zrH/uQiqdJrQYGsBMuzVEcQdLlVb9KtsT8/sWmSaz6ZgTqU
+         q1aBa+YX9dFtkA8s4M3YEuNRJwRrUXJ3cD+wxz5Kbx0Yeg1dWztXPPBJ+sZV59vPaXzW
+         T29N5G4ra8J8BUTnwYoN8xvv+p61oWEt3oLO9750g7Dbq2nwwOPYetPfQwns/4Gsqn45
+         cELAPCeeozbIf/olCGdIlo9jZURr5/AsdU38rFiVVX1TZ4Jwk3UZ0gOV1/lJJt49K8xX
+         zp10cLDhvkJimo5K7Eic3vorKnQM23plou8TnnbF6WrP0Z94jR2dYGv8QPYOrpRMdiFm
+         GEVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=e5HEV9LTWG8RUziQFD4DWm53/NzIfJCzdN8eno65C7A=;
-        b=ZFN2DuFgl7kBtj9zKA701cU1Nl6/aZU8CKwlnQlhraL5fRK2pEO4cIcaG9MZOqGB8F
-         47mLhdKlW1s1b01cvi9064iEdcVbFuEpq3XGGUct5wG7PhNPAzoLpeMvHe+YJc4lwJIT
-         S7VtYn52RNvTbmfLoyvjPmyjS8kR5ZZKPtaN4WnRwt7+6WbxGp9asyd23Wd/NyQ/R0d/
-         psnO3yOEzigaCqN2oahq89hR8NkGxoT1U+nZnho4Ls1aKasComcVrl7j1vcNbc6U2DPQ
-         0wPYbewzbSTXqwvMC5fa/DgZ71EMPsKRdrBpdNGaCHxGImie7yYe0aC18v01on7LhrCI
-         //jg==
-X-Gm-Message-State: ANoB5pnZAiU1yCDOoHXGXb+qUOI6Iy0d2m38WVX2rN5zLb7QBRl8IdOb
-        +Zv7LaP5kx3e8YQYRrq/XJo=
-X-Google-Smtp-Source: AA0mqf7pF6K/y/Pene0XRHGcPPM83/R3h7z1FUd3rrKjMFYQW1l32zZZdwiweqE+W0PdzdQR+Un5JA==
-X-Received: by 2002:a17:906:4309:b0:78d:36d7:92ae with SMTP id j9-20020a170906430900b0078d36d792aemr37176238ejm.113.1669836926710;
-        Wed, 30 Nov 2022 11:35:26 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EvfTYIKr94O8aP2RX5VW7brhBI8v0/oUIXgpBOyKnSk=;
+        b=bDHDjDGIH4+zSYDH34ML6jRWXC+9l/Xylfjx/0vstwIcnBzvlcM2zt4COLwPUcFrlB
+         DOShkDl31QPUXxDYhcutjarcBz1X+xR/NzcSS5x0z6Mv3gQObobiWE4gK6TWdCBQm1j9
+         Q7FmO/wABJkxMOlhgaB1CqpCmnJJKJrWE5ibxEL6GkZNxfUqw4Sp4vs8saIIph00Ia+8
+         6WZLdFbttEna9TvuoOtcSEV5vi7MlN9CjOk9vGiT0825BTfbNOP2KP9ymEU0cNOz5TF3
+         qzPd4CzvyYOYYeUz6TC1DwWt8PfSRnXx4Hr8XaAp32rcCX6XAdG7Smj5bzOJ+e1cO0i/
+         LYJw==
+X-Gm-Message-State: ANoB5pnpOMuSaJIahrVSQjAHStfNzcNO1o0En51gOP6pXNowoNTpGuLa
+        r2gZa2PVji+oGx0Lme8MO1Y=
+X-Google-Smtp-Source: AA0mqf49bLPAOVe+ttVq1y/LcJMuEr4XRaVrMW51t2RV8dWOGOJjVZwQEQN0U/Ty8ywFBrTFOLW28Q==
+X-Received: by 2002:a17:906:32d9:b0:7ae:31a0:5727 with SMTP id k25-20020a17090632d900b007ae31a05727mr37948084ejk.540.1669838295237;
+        Wed, 30 Nov 2022 11:58:15 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id ju10-20020a17090798aa00b007bb751f9d10sm961996ejc.77.2022.11.30.11.35.25
+        by smtp.gmail.com with ESMTPSA id 25-20020a170906319900b0077e6be40e4asm987557ejy.175.2022.11.30.11.58.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Nov 2022 11:35:26 -0800 (PST)
+        Wed, 30 Nov 2022 11:58:14 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1p0Src-00212e-0m;
-        Wed, 30 Nov 2022 20:35:24 +0100
+        id 1p0TDi-0021lq-07;
+        Wed, 30 Nov 2022 20:58:14 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Sven Strickroth <email@cs-ware.de>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: [PATCH] Don't pass -v to submodule command
-Date:   Wed, 30 Nov 2022 20:17:23 +0100
-References: <FR3P281MB21416B718C4C052A28C319B1E90F9@FR3P281MB2141.DEUP281.PROD.OUTLOOK.COM>
- <1ff185c5-4a9e-36e3-3141-8b149c1c7bb0@cs-ware.de>
- <cad05012-7bf9-5975-3add-253b11c7bcc8@cs-ware.de>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: ab/remove--super-prefix and -rc0 (was What's cooking in git.git
+ (Nov 2022, #07; Tue, 29))
+Date:   Wed, 30 Nov 2022 20:43:10 +0100
+References: <xmqqsfi22j67.fsf@gitster.g>
+ <kl6lsfi1d1tf.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <xmqqilix150o.fsf@gitster.g>
+ <kl6lh6ygqphu.fsf@chooglen-macbookpro.roam.corp.google.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <cad05012-7bf9-5975-3add-253b11c7bcc8@cs-ware.de>
-Message-ID: <221130.868rjsi6bn.gmgdl@evledraar.gmail.com>
+In-reply-to: <kl6lh6ygqphu.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-ID: <221130.864jugi59l.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Nov 30 2022, Sven Strickroth wrote:
+On Wed, Nov 30 2022, Glen Choo wrote:
 
-> "git pull -v --recurse-submodules" propagates the "-v" to the submdoule
-> command which does not support "-v".
+> Junio C Hamano <gitster@pobox.com> writes:
 >
-> Commit a56771a668dd4963675914bc5da0e1e015952dae introduced this
-> regression.
-
-We refer to commits in commit messages like this: a56771a668d
-(builtin/pull: respect verbosity settings in submodules, 2018-01-25);
-
-Which also shows that this regression is quite old.
-
-> Signed-off-by: Sven Strickroth <email@cs-ware.de>
-> ---
->  builtin/pull.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
+>> Glen Choo <chooglen@google.com> writes:
+>>
+>>> Hm, it looks like ab/remove--super-prefix missed the preview release..
+>>> Per the discussion ending at [1] I think my one-patch fix to "git
+>>> fetch" [2] should have made it into the release (it's pretty low-risk
+>>> and doesn't introduce too much churn to ab/remove--super-prefix). Is it
+>>> too late for that?
+>>
+>> Nobody seemed to have commented on [2].  Is this fixing recent
+>> regressions, or is it more like addressing an "if it hurts, do not
+>> do it then" problem?
 >
-> diff --git a/builtin/pull.c b/builtin/pull.c
-> index 1ab4de0005..b67320fa5f 100644
-> --- a/builtin/pull.c
-> +++ b/builtin/pull.c
-> @@ -256,7 +256,7 @@ static struct option pull_options[] = {
->  /**
->   * Pushes "-q" or "-v" switches into arr to match the opt_verbosity level.
->   */
-> -static void argv_push_verbosity(struct strvec *arr)
-> +static void argv_push_verbosity(struct strvec *arr, int include_v)
->  {
->  	int verbosity;
+> =C3=86var did comment on the patch in [2], but unfortunately it happened =
+on
+> the thread ending at [1] (and others), so it's not easy to follow.
 >
-
-It looks like you're getting somewhere with this, but you never use this
-"include_v", so the bug is still there. We just have the scaffolding
-now.
-
-Did you forget to add that part to this commit?
-
-In any case, that serves as a comment on the other thing this patch
-really needs: tests, please add some.
-
-I can reproduce this locally by just running the command you noted in a
-repo with submodules, so presumably we can use some of the existing
-submodule tests, which have already set up such a repo.
-
-> @@ -520,7 +520,7 @@ static int run_fetch(const char *repo, const char **refspecs)
->  	strvec_pushl(&cmd.args, "fetch", "--update-head-ok", NULL);
+> It's solidly in the latter category. I don't think this has ever worked.
+> c.f. https://lore.kernel.org/git/kl6lsfiivcau.fsf@chooglen-macbookpro.roa=
+m.corp.google.com/
 >
->  	/* Shared options */
-> -	argv_push_verbosity(&cmd.args);
-> +	argv_push_verbosity(&cmd.args, 1);
->  	if (opt_progress)
->  		strvec_push(&cmd.args, opt_progress);
+>> The fact alone that these questions need to be asked _now_ is a good
+>> indication that it is way too late for this cycle, I would have to
+>> say.
 >
-> @@ -629,7 +629,7 @@ static int rebase_submodules(void)
->  	cp.no_stdin = 1;
->  	strvec_pushl(&cp.args, "submodule", "update",
->  		     "--recursive", "--rebase", NULL);
-> -	argv_push_verbosity(&cp.args);
-> +	argv_push_verbosity(&cp.args, 0);
->
->  	return run_command(&cp);
->  }
-> @@ -642,7 +642,7 @@ static int update_submodules(void)
->  	cp.no_stdin = 1;
->  	strvec_pushl(&cp.args, "submodule", "update",
->  		     "--recursive", "--checkout", NULL);
-> -	argv_push_verbosity(&cp.args);
-> +	argv_push_verbosity(&cp.args, 0);
->
->  	return run_command(&cp);
->  }
-> @@ -657,7 +657,7 @@ static int run_merge(void)
->  	strvec_pushl(&cmd.args, "merge", NULL);
->
->  	/* Shared options */
-> -	argv_push_verbosity(&cmd.args);
-> +	argv_push_verbosity(&cmd.args, 1);
->  	if (opt_progress)
->  		strvec_push(&cmd.args, opt_progress);
->
-> @@ -881,7 +881,7 @@ static int run_rebase(const struct object_id *newbase,
->  	strvec_push(&cmd.args, "rebase");
->
->  	/* Shared options */
-> -	argv_push_verbosity(&cmd.args);
-> +	argv_push_verbosity(&cmd.args, 1);
->
->  	/* Options passed to git-rebase */
->  	if (opt_rebase == REBASE_MERGES)
+> At any rate, we shouldn't be rushing review, so this is fair (though
+> unfortunate). Let's continue counting on ab/remove--super-prefix and
+> ignoring my one patch, then.
 
-I think the right longer term fix here is to simply make "git submodule"
-support "-v" and "--verbose".
+For my part I was waiting to see what Junio would do with
+"ab/submodule-no-abspath", which is already in "next". Depending on
+whether it's ejected or not I'd need to re-roll
+"ab/remove--super-prefix" on top of a new "master", as it extends the
+tests it added.
 
-Which, as a funny implementation detail we'd support if we called "git
-submodule--helper update", as its OPT__QUIET() adds both variants, but
-the git-submodule.sh doesn't support it.
+You noted in [1] that you strongly preferred seeing
+"ab/submodule-no-abspath" ejected. I think you're right that the output
+is a bit weird, but:
 
-OTOH we've never supported it in "git submodule", so maybe we should
-just make the C version stricter, I dunno...
+A. I think it's mainly odd/unintuitive for the recursive cases, I think
+  outside of our own test suite absorbing repositories recursively
+  almost never happens.
 
-In any case, this is a good fix for now, let's just stop passing the
-unsupported flag.
+B. I think it's an improvement in the output compared to the absolute
+   paths we have now, especially for the common case of non-recursive.
+
+C. Changing it made it easier to test it, which is how it ended up as a
+   supposedly quick prerequisite for "ab/remove--super-prefix": It's
+   otherwise changing a test blindspot.
+
+D. As you note in [1] the data we'd need to pass around to make it
+   sensible (maybe it should always be consistent with "git mv -v"?)
+   would require passing more state around, some of which is tricky.
+
+I'd prefer to just have it graduate as-is, and build
+"ab/remove--super-prefix" on top. We can always further tweak the output
+later.
+
+But if you & Junio feel otherwise I think the best way forward would be
+to eject both topics, and I'd submit a re-rolled
+"ab/remove--super-prefix".
+
+Either would work as a way forward. Just let me know what you both
+prefer.
+
+1. https://lore.kernel.org/git/kl6l7czmec10.fsf@chooglen-macbookpro.roam.co=
+rp.google.com/
