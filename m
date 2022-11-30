@@ -2,115 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5BCF7C4321E
-	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 16:37:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8A252C433FE
+	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 16:43:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230332AbiK3Qh6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Nov 2022 11:37:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57834 "EHLO
+        id S229565AbiK3QnG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Nov 2022 11:43:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230334AbiK3Qhs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2022 11:37:48 -0500
-Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B50B1CFF3
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 08:37:44 -0800 (PST)
-Received: by mail-il1-x133.google.com with SMTP id d14so5808888ilq.11
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 08:37:44 -0800 (PST)
+        with ESMTP id S230316AbiK3QnC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2022 11:43:02 -0500
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53FAF22B11
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 08:43:00 -0800 (PST)
+Received: by mail-io1-xd30.google.com with SMTP id e189so12695589iof.1
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 08:43:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zb1BapGHpnLtgImOelLe8UQc5wW87LU+s75JGTGvnxs=;
-        b=TJHhvzRyGiJZmJ7rlLj21Hl/K5OZkQmrfcrkxd8pDNd/Dhxf5J+Dq2lo9IlF2rQeDK
-         oNLz2/mgj1dAl/LFc54tm65CESDzjEupNLd9dWWJ0kIfp/wD0VC1flEDhlZKoOsCM5Gw
-         peo0ta+J4E/B9rGsP87eYAlK3n1ckMNW1wfgIILUf4mT0pxeJytdC6VH/2uPo0vwFj2G
-         bsgmmoAemntil1t9aM5N2/krZXcT4V3I/xGg1+/R6JZPl/W1L3kc1Iw0AfPtUC3oNXAr
-         Q9U5k3zz3i1CZygoOXg9/1VB8uMVWQvB0k0kb5iNQ1p77UMJFp9/6DS/V8qcjWQbTDYU
-         O2Dw==
+        bh=IO2IVVTiCr7fuyylzX4V3QNUJbt9UQ0OMd4Xbo/HS3I=;
+        b=ADM24AUD3R/JewQYCX1q/6dUkP4SXRzNKV4Ty9ejC5mCnFlFg+pBCuv+rCgRC6hFGK
+         97G2r/FMC2CqTeFT12CKYJExuwgTzpD82MXdypusx8KrSyOKfz1KHDrLQtTiAW3RHUQs
+         /DAej95s5cYpJzfilEYBg0iGTSNGf9HVs0kTeplCgK3QCkEOUTSwDVZZDSJEnIhmDx5J
+         E3+fwCT3phOXlGfQtf6ppMi7D3QKYTQwFyboxFqWH83pd63lT/ffk7L94dqRhTsabuCC
+         bS22G3nkQdc8eBeamj21e5tWpQPbFrlyGpeSAc1jYgxpuseTJWknKy27h2DEbJBf31z7
+         QQiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zb1BapGHpnLtgImOelLe8UQc5wW87LU+s75JGTGvnxs=;
-        b=5diiNRe0TvSNVR5yWXa+EAJOHIwYxLNapwtg5atVaWHI4hRIuo0TfGOCDnxcpYRftU
-         eOj5Rzi5RMOFoKQBHmTQ0fIJnT0jacgPRIInQ8HvoqgxFuCt+72rq0TO3PAFak1S9yFx
-         jlBzeaG2KmHdN0ZeqYtUuxkABrBGwT6qjtUiQRFdR6cHlq3xnbw2rxDa6fA7n7ae8YoC
-         wnb5CQiZFTPEARM55AQ+pciI7D0/JZtzdkZftkA0Jaiw3P4LLHu7TP22r5sqoqDJ3x3X
-         FCSW80ANZ1J+QeHeiwRl8DYZ4FWQ/CZetvTXop9WoLz+DIcRyy4Dv2RIRN19fmW42k4r
-         1ujQ==
-X-Gm-Message-State: ANoB5pnwpfw5wf7yeYZyK0rlqe1B91kDfJyGR+ksyBWJuXjzUuSHuLc4
-        c5wBq/7cHQo6B5s1OCcyBAkcqA==
-X-Google-Smtp-Source: AA0mqf7TcMBs4TTmi5A86WOhhleWVN2rV5q6t/YA7SVickrBCvHWmoTZTZgvyGSe4dyAR5HeOJVLlQ==
-X-Received: by 2002:a92:6809:0:b0:2f9:4d92:5b2a with SMTP id d9-20020a926809000000b002f94d925b2amr19649825ilc.177.1669826263717;
-        Wed, 30 Nov 2022 08:37:43 -0800 (PST)
+        bh=IO2IVVTiCr7fuyylzX4V3QNUJbt9UQ0OMd4Xbo/HS3I=;
+        b=gkppCSe8Hx/zmiNnEP4uvSiLNP95EoWcNSxoceh1QbLJvVSoV+RDb9qhpnO1jui744
+         KglU9862KWl78KtVYZfB+k+ZXKEgqBlS2z05pWHQ9ZKqkKHw3Olj53YObNmJGDsoaWM8
+         WQLfbWWnZOaBG9RCWPaOV2CJwCo4JrcPKbklkoO8N7h1Bg2a2NxfN3XuVZ1Cll57agYF
+         g8Epk8J1P56NGq1FAh8Lh0SmxdSVtxZYMTfDAn7p4ApyOUpHycpVysNoGqkXxSM/AY5k
+         64LkwnAgNcrqAlr1+xYhL81KQNVedDKZjL3Ygpre8yTBYGuELd4wHhFkjNwF9X9LlEbA
+         O7ug==
+X-Gm-Message-State: ANoB5pl+XamtulFQipcayoPsMwusB+LU6yETT4vEgEqePwDgypZZjDyL
+        4hf22sT+LycEZ9ZksyE/g5i5DA==
+X-Google-Smtp-Source: AA0mqf5drWBw+Z1r0L0DE9UN4t7waeco3VWUi0PTkOh0TJO49S//eWyu1ysel8whEMjDtH+9OaDxdA==
+X-Received: by 2002:a05:6638:4916:b0:389:e42a:eabd with SMTP id cx22-20020a056638491600b00389e42aeabdmr7012541jab.228.1669826579579;
+        Wed, 30 Nov 2022 08:42:59 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id k17-20020a0566022d9100b006a129b10229sm684398iow.31.2022.11.30.08.37.42
+        by smtp.gmail.com with ESMTPSA id q185-20020a6b2ac2000000b006cb4c036d6asm701112ioq.36.2022.11.30.08.42.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Nov 2022 08:37:43 -0800 (PST)
-Date:   Wed, 30 Nov 2022 11:37:41 -0500
+        Wed, 30 Nov 2022 08:42:59 -0800 (PST)
+Date:   Wed, 30 Nov 2022 11:42:58 -0500
 From:   Taylor Blau <me@ttaylorr.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Han-Wen Nienhuys <hanwen@google.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jrnieder@gmail.com,
-        John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH 00/30] [RFC] extensions.refFormat and packed-refs v2 file
- format
-Message-ID: <Y4eG1SDxBqjwUhwM@nand.local>
-References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
- <CAFQ2z_MZd150kQNTcxaDRVvALpZcCUbRj_81pt-VBY8DRaoRNw@mail.gmail.com>
- <f1c45bd5-692e-85db-90c3-c516003f47e5@github.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Teng Long <dyroneteng@gmail.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Nov 2022, #07; Tue, 29)
+Message-ID: <Y4eIEscigSZ3vClo@nand.local>
+References: <xmqqr0xum8tn.fsf@gitster.g>
+ <20221129130841.82302-1-tenglong.tl@alibaba-inc.com>
+ <xmqqa64914jj.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <f1c45bd5-692e-85db-90c3-c516003f47e5@github.com>
+In-Reply-To: <xmqqa64914jj.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 30, 2022 at 10:16:52AM -0500, Derrick Stolee wrote:
-> > Do you mean 'enumerate refs' ? Why would you want to count refs by prefix?
+[-cc git-packagers, lwn]
+
+On Wed, Nov 30, 2022 at 12:53:36PM +0900, Junio C Hamano wrote:
+> Teng Long <dyroneteng@gmail.com> writes:
 >
-> * There was a GitHub feature that counted refs and tags, but wanted to
->   ignore internal ref prefixes (outside of refs/heads/* or refs/tags/*).
->   It turns out that we didn't actually need the full count but an
->   existence indicator, but it would be helpful to quickly identify how
->   many branches or tags are in a repository at a glance. Packed-refs v1
->   requires scanning the whole file while packed-refs v2 does a fixed
->   number of binary searches followed by a subtraction of row indexes.
+> >> * tl/pack-bitmap-absolute-paths (2022-11-29) 4 commits
+> >>  - pack-bitmap.c: trace bitmap ignore logs when midx-bitmap is found
+> >>  - pack-bitmap.c: break out of the bitmap loop early if not tracing
+> >>   (merged to 'next' on 2022-11-14 at 34eb0ea05a)
+> >
+> > Will the two commits which merged to 'next' on 2022-11-14 at 34eb0ea05a
+> > be taken into 2.39.0-rc0 (or v2.39.0 is frozen already)?
+>
+> 2.39-rc0 was a preview of topics that were already done at that
+> point about a week ago.  A topic that is not in -rc0 may hit the
+> release, but it depends on how urgent the "fix" is, I would say.
+> Unless there is a good reason not to, any topic should spend at
+> least a week to cook in 'next' before graduating, and because there
+> typically is about a week between -rc0 and -rc1, anything outside
+> 'next' when -rc0 was tagged is not likely to have spent a week in
+> 'next' when -rc1 is done.
+>
+> We could graduate the early bits separately, but is it so urgent a
+> fix to get them in?
 
-True. On the surface, it seemed odd to use a function which returns
-something like:
-
-    { "refs/heads/*" => NNNN, "refs/tags/*" => MMMM }
-
-only to check whether or not NNNN and MMMM are zero or non-zero.
-
-But there's a little more to the story. That emptiness check does occur
-at the beginning of many page loads. But when it responds "non-empty",
-we then care about how many branches and tags there actually are.
-
-So calling count_refs() (the name of the internal RPC that powers all of
-this) was an optimization written under the assumption that we actually
-are going to ask about the exact number of branches/tags very shortly
-after querying for emptiness.
-
-It turns out that empirically it's faster to do something like:
-
-    $ git show-ref --[heads|tags] | head -n 1
-
-to check if there are any branches and tags at all[^1], and then a
-follow up 'git show-ref --heads | wc -l' to check how many there are.
-
-But it would be nice to do both operations quickly without having
-actually scan all of the entries in each prefix.
+They are nice-to-have, but certainly not essential.
 
 Thanks,
 Taylor
-
-[^1]: Some may remember my series in
-  https://lore.kernel.org/git/cover.1654552560.git.me@ttaylorr.com/
-  which replaced '| head -n 1' with a '--count=1' option. This matches
-  what GitHub runs in production where piping one command to another
-  from Ruby is unfortunately quite complicated.
