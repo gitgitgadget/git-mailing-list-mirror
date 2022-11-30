@@ -2,101 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E664C433FE
-	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 18:08:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BA668C4321E
+	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 18:11:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229617AbiK3SIm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Nov 2022 13:08:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35354 "EHLO
+        id S229617AbiK3SLp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Nov 2022 13:11:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229571AbiK3SIl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2022 13:08:41 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48313554C2
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 10:08:40 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id 94-20020a17090a09e700b002191897f70aso2652217pjo.9
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 10:08:40 -0800 (PST)
+        with ESMTP id S229477AbiK3SLn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2022 13:11:43 -0500
+Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 643FF83E93
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 10:11:42 -0800 (PST)
+Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-3b56782b3f6so179233517b3.13
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 10:11:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PeKhtP+qWaCoJ5cp5WbfNutU2NYdzeIxXw3ricRRGMw=;
-        b=IuonjH24SHJDGRKJF7hmruYxmwoMNn5aySkfQNrMTGBchqfgi/xnBFz318FdIMHnKK
-         lZaqlXcPLgfoBqF/PLRGZ7rG1AKmlQMnpg0wQDPJxKE35Mdvr3uRThTCILuJyGZ/VqRD
-         yx1j3PxcCk0G54VeEaGwEUnWh75KC4Xmq3UWMYo2hns86VRiEE1pv+qFTi7yHM71ITVo
-         QUkpEP+dKzBLIbwttQPLdK25WLsqpffKKc0TNLMpq9DpUiVo/+fTWzHSPiHNwg1hJtn+
-         5HTe0hQAiEMXlksvUf9JrXQE+93njC62rkM24CHhc+2/0HYbNqliiKpvUTasA82V93mY
-         J2xA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=fdEKr+/EcCus+9ZjPBtn0Fgia80Zl0imntctf65ipng=;
+        b=IfYJ1X4ZsQGPf/6T8d3oJhFUgJdVkM9Db/4kyq3HJVgxl/ZQlDzGxTRD+H0koesHZx
+         NcjhiDY7rCiTlMfQER+41EYMtkiHAlNlfAQFjs7FmzaxZKnrqrjVFaq7v3yuUCXJWvYG
+         2A0HuYY/S5/egrltmB+sqaWQCQT+7YKmCxYRv5BHRSUK4RYl2zl4UmG/wJKbsY04MaIL
+         JoxwL5olja8yjj3oyMrkONrKjuhmJXIBG9q8BSKdk8Yowkf3y8U0eXlpu1/or8vQ5LeH
+         eY0Ky1rBInqlR0/OvLy+EjcPGK6bCDjZcDVxcyB5inS2nV4Jon3M2fLv1Z4uGjMPrqbw
+         evCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PeKhtP+qWaCoJ5cp5WbfNutU2NYdzeIxXw3ricRRGMw=;
-        b=CBUgfVnaqptgNc018zn7ql4JQkxiLhhOD4Qv7MR6xmgqP5v1n2W/r/nI/kBGjflL7t
-         /of4nrEl87xHgaX1YxiI7m1OipM2xUnAQbIz2PutwG5zm4zpKIMGOV/BmXzP3yqRlM+k
-         xeKtp20FcvU6V15ah0be3xmyWsWshej94ug655Rpq1drTt7dWH3g4s0fAojo6F7SLHlw
-         sgciXmLKz0yuDmHgA08xgIRMZKHQPWQlUIDNGJsFE9bbPB9fG4OozmSoKUkWsqu1ZaKk
-         yiPnPfpC5gqtyJ1rRJviZSwHxcgm+dMJCJH7Y1DuR/Jrr2FXNC1gZv4uf9Gh+ztlC6nV
-         DGYQ==
-X-Gm-Message-State: ANoB5pnBKgOGf093BYEutXn1BlXEV5Tz8HU8RqRqFvbL10bCC6E+kzYr
-        u/WD/F9DzVHG1/SOzSQdJC2NNg17fV+Arg==
-X-Google-Smtp-Source: AA0mqf5MxDXyHPJ2UWPmC1uicy4G+HqD/c/05CnoTkEeu5a9AF04T+zBu/nvtvX3SBBEsyFqDTRxOEk0g/HN0g==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:903:2154:b0:189:98b0:8842 with SMTP
- id s20-20020a170903215400b0018998b08842mr10944590ple.103.1669831719789; Wed,
- 30 Nov 2022 10:08:39 -0800 (PST)
-Date:   Wed, 30 Nov 2022 10:08:38 -0800
-In-Reply-To: <xmqqedtl14xr.fsf@gitster.g>
-Mime-Version: 1.0
-References: <xmqqsfi22j67.fsf@gitster.g> <kl6lpmd5d1e8.fsf@chooglen-macbookpro.roam.corp.google.com>
- <xmqqedtl14xr.fsf@gitster.g>
-Message-ID: <kl6lk03cqpqx.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: What's cooking in git.git (Nov 2022, #07; Tue, 29)
-From:   Glen Choo <chooglen@google.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
-        Calvin Wan <calvinwan@google.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fdEKr+/EcCus+9ZjPBtn0Fgia80Zl0imntctf65ipng=;
+        b=KMOVl8Dvnwudjj5N0Ci9asIObF0/Cjz4bM+o8kVM8owVl5EPl4F6ECD7AOtKMaS2Jg
+         IkyEQyxOqsLKNoXhP5XiJXolcmKKMHblj3vHdoajwnWUtG2/zmJAFOp+DXqImPis+zqa
+         r/S429i5MjrQWrldXl7MODKbuKlNR7eACjOauWhll8TA9a7kxi5t9IBctbWrlyIgCrhr
+         iVrJHVvW0lEUmz3ZlQ5V8nyuOkxLZbgPj0ETPBFmfWw4yQ10JYQQSW9hvPDuaey/GFm2
+         pnl0mLjdqqD+/SgDGcYvft+RC4oIywduO7UIBlz7ZNx9FQanp+bslqMZckknbFqJU2pe
+         3HLA==
+X-Gm-Message-State: ANoB5pnRrdz20SD6LLyMZ2G3rpKavNplV0jpCOT5OIbWujNHIuj8VVjd
+        dinxJbYvFcPfJ987ln6zYO0sGFlyMvfuh/xAcM3u/Q==
+X-Google-Smtp-Source: AA0mqf4zydyJz2FPSbAfmyL0ywwCW3mFlm+RRhKtdexT0JSD82HUe6m/OIZe4xx9koZZDgJlouz/oDBh/2Orz2svsR0=
+X-Received: by 2002:a81:5345:0:b0:399:36f1:d851 with SMTP id
+ h66-20020a815345000000b0039936f1d851mr40655713ywb.369.1669831901430; Wed, 30
+ Nov 2022 10:11:41 -0800 (PST)
+MIME-Version: 1.0
+References: <20221128210125.2751300-1-jonathantanmy@google.com> <kl6lr0xlqtrc.fsf@chooglen-macbookpro.roam.corp.google.com>
+In-Reply-To: <kl6lr0xlqtrc.fsf@chooglen-macbookpro.roam.corp.google.com>
+From:   Calvin Wan <calvinwan@google.com>
+Date:   Wed, 30 Nov 2022 10:11:30 -0800
+Message-ID: <CAFySSZD8NjOHpM6PBCVxBzB-m2WuBCTppZWB0waP9svo=O1C0A@mail.gmail.com>
+Subject: Re: [PATCH v4 5/5] diff-lib: parallelize run_diff_files for submodules
+To:     Glen Choo <chooglen@google.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
+        emilyshaffer@google.com, avarab@gmail.com,
+        phillip.wood123@gmail.com, myriamanis@google.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Nov 29, 2022 at 2:29 PM Glen Choo <chooglen@google.com> wrote:
+>
+> Jonathan Tan <jonathantanmy@google.com> writes:
+>
+> > Calvin Wan <calvinwan@google.com> writes:
+> >>  submodule.c                        | 154 +++++++++++++++++++++++++++++
+> >
+> > I think the way to implement this is to have a parallel implementation,
+> > and then have the serial implementation call the parallel implementation's
+> > functions, or have a common set of functions that both the parallel
+> > implementation and the serial implementation call. Here, it seems that
+> > the parallel implementation exists completely separate from the serial
+> > implementation, with no code shared. That makes it both more difficult to
+> > review, and also makes it difficult to make changes to how we diff submodules
+> > in the future (since we would have to make changes in two parts of the code).
+>
+> It seems that most of the code is copied from is_submodule_modified(),
+> so a possible way to do this would be:
+>
+> - Split is_submodule_modified() into 2 functions, one that sets up the
+>   "git status --porcelain=2" process (named something like
+>   setup_status_porcelain()) and one that parses its output (this is
+>   parse_status_porcelain() in Patch 2). The serial implementation
+>   (is_submodule_modified()) uses both of these and has some extra logic
+>   to run the child process.
+>
+> - Refactor get_next_submodule_status() (from this patch) to use
+>   setup_status_porcelain().
 
-> Glen Choo <chooglen@google.com> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> * gc/submodule-clone-update-with-branches (2022-10-30) 8 commits
->>>  - clone, submodule update: create and check out branches
->>>  - submodule--helper: remove update_data.suboid
->>>  - submodule update: refactor update targets
->>>  - submodule: return target of submodule symref
->>>  - t5617: drop references to remote-tracking branches
->>>  - submodule--helper clone: create named branch
->>>  - repo-settings: add submodule_propagate_branches
->>>  - clone: teach --detach option
->>>
->>>  "git clone --recurse-submodules" and "git submodule update" learns
->>>  to honor the "propagete branches" option.
->>>
->>>  Waiting for review on the updated round.
->>>  source: <pull.1321.v3.git.git.1666988096.gitgitgadget@gmail.com>
->>
->> Jonathan left adequate feedback on the updated round, and we had decided
->> on a direction for the reroll in [1].
->>
->> However, Calvin is also looking at how we could parallelize worktree
->> updates to speed up "git clone --recurse-submodules", so the Google
->> folks are taking an even bigger step back to figure out how worktree
->> updating should look, which will probably end in a different approach
->> from [1], but it should answer the questions on that thread about "git
->> checkout" with branches.
->>
->> [1] https://lore.kernel.org/git/20221123013319.1597025-1-jonathantanmy@google.com
->
-> Thanks for a status report.
->
-> So it sounds more like "discard for now" to expect a fresh restart.
-
-Yes, that is accurate :)
+That sounds like a reasonable plan to me. Thanks!
