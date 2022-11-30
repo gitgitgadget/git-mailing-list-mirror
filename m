@@ -2,173 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D7492C433FE
-	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 00:37:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB705C4167B
+	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 00:52:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231826AbiK3AhV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Nov 2022 19:37:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45248 "EHLO
+        id S232078AbiK3AwB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Nov 2022 19:52:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229615AbiK3AhT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2022 19:37:19 -0500
-Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05olkn2010.outbound.protection.outlook.com [40.92.90.10])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 859CB5ADE3
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 16:37:17 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=aL0rTSgnF6N0Ubatn2fZiRQ7numAcgAGjCFJDgN8gKWrPqiGDK+FFj+Hb6BsWgaMGzwmNi9uL+xiGjjGX48lEIe6w/whnAoB/ZYOrBoda7d45wi4D/tSWnQVWbuaHdwVBS7mz+hS8gAZBkQ5AfmNCkRGOC/3/X3lhkWrNx8t/e+ckyl6VwA3CFjTIEceyNwdNerz+LkOMn04Hx34IMuFL18w8fo0jpDly/S2pXnrYguym1Yo6l+m5pLcy+Q51AHrC+2wptY5LsdwI0hP6G3sE5AH7dXO0xlweJDnvusth3miz3T8dMgEqMLT2C8INkIjDzJP57ojlldo/ceO+dON9w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=skxzDi6CNlEN8VMy3CByCZC3Vbl74ica3ug2R12r1BU=;
- b=MunuKl7T8WDGUc15z8N2gPFKOXQ3nLurS6isO3EqqVJ3wpRmf0ooLoKjm0ycHhPfM97yvNjdeRs6LtOufmEfXCnt/+VGO7wNWwIsZnDR9SzB+26ZidIMw8MjEOlO4ORyhC5v6VZqXONOQ8tbmwSuHJU+Li8vQzJ/gy0eU0Dmm913+Q53OvKHuFUvk+Kzmkqjowi15XqOtTJ7UDk8pGvac7tn1HPcL4osqzfXg+O/guw9zOu2UyF/VUlQmW2JvnauUtnPblvMGYE9TMe8niFvyIzc0YwBLYRaY3prUX06BcRrqJ4oVUtbOBdDGwtbFdDA+8agGMIS0cs7dkHZqG67tQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=skxzDi6CNlEN8VMy3CByCZC3Vbl74ica3ug2R12r1BU=;
- b=s9LSCujieVB5I1DDI51dr0cmoaenTLLcl3V1CpcM/osq1EUq0PTx+ojpJ2T6cVOeqZXXZCPFh43nRhGPLfVU+8qGsWX409kGglGh5oihvRljOB90xZZo0j5mzBL9anbzl5IIxsM/5Fs270vOD1rNopHTXP33ABxtSudQuOp7A3SrlYZaNz/iUk74ukdg35Y//NLveW/sJr5Vf7Dc4/NsFzmfmb8EU5/hM7dSVclcXTNGcNVIJ31TZX5hhi7XtZbi7JggW99y7GFYxaWf/SciTnkU8rKVYXoH4yw/mbX/YxWnOjeKTQNn0gjq8XC+SrrylkskBVH9z9TkYpO73xYdTg==
-Received: from PRAP192MB1506.EURP192.PROD.OUTLOOK.COM (2603:10a6:102:29f::9)
- by AM7P192MB0690.EURP192.PROD.OUTLOOK.COM (2603:10a6:20b:176::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5857.23; Wed, 30 Nov
- 2022 00:37:15 +0000
-Received: from PRAP192MB1506.EURP192.PROD.OUTLOOK.COM
- ([fe80::49d0:ccf3:d2e2:5f24]) by PRAP192MB1506.EURP192.PROD.OUTLOOK.COM
- ([fe80::49d0:ccf3:d2e2:5f24%6]) with mapi id 15.20.5857.023; Wed, 30 Nov 2022
- 00:37:15 +0000
-Message-ID: <PRAP192MB15064FE07E86792F36FCE267DE159@PRAP192MB1506.EURP192.PROD.OUTLOOK.COM>
-Date:   Wed, 30 Nov 2022 08:37:07 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 0/2] add case insensitivity option to bash completion
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Alison Winters via GitGitGadget <gitgitgadget@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Sibi Siddharthan <sibisiv.siddharthan@gmail.com>,
-        git@vger.kernel.org
-References: <pull.1374.git.git.1667669315.gitgitgadget@gmail.com>
- <xmqqedtm4h93.fsf@gitster.g>
- <PRAP192MB1506B74F9BB25061419FA228DE129@PRAP192MB1506.EURP192.PROD.OUTLOOK.COM>
- <221129.86y1rtirhl.gmgdl@evledraar.gmail.com>
-From:   Alison Winters <alisonatwork@outlook.com>
-In-Reply-To: <221129.86y1rtirhl.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TMN:  [SsFH9gj9nonyIhVife9uAGXA6X/RUBRj]
-X-ClientProxiedBy: KL1PR01CA0061.apcprd01.prod.exchangelabs.com
- (2603:1096:820:5::25) To PRAP192MB1506.EURP192.PROD.OUTLOOK.COM
- (2603:10a6:102:29f::9)
-X-Microsoft-Original-Message-ID: <a595a215-8c9a-7dd1-6598-b1e2eac0dc6c@outlook.com>
+        with ESMTP id S232037AbiK3Av7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2022 19:51:59 -0500
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9BF571F22
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 16:51:56 -0800 (PST)
+Received: by mail-yb1-xb33.google.com with SMTP id 7so19688261ybp.13
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 16:51:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=OdV+Q1z1cjWxcima2Jut4CusdXT/73AXyM8wkN/7PA0=;
+        b=AS7l+ZlQerskhYB6KGLGVf/YlXXzwwiK1YkEUXl0bOXnHD6ne6LMLGufwUmqYXZZRx
+         06zapPv2bNETfiug7Yt6cv6cYQgZCc3QFE0XbDzfQwB8AK6uaA+RWR2m/iwoM3+R0nbT
+         MZgICY0zyUOTFqxAJHReJPgmmqYQioWgs0wRTe6zu700YEAqTMCDYLIwEYo4M4En+Znq
+         12C2DFJxa8dt23a62yw3bmffRTP/AAXBvyvLcOC04erh5KDL8WfXtvasp/ecJXmyvYxs
+         kACYIA+kzbBbONIsHQNCd/OOlpHFh51hAAQy9HWfxpwC2NzL15w7DkiHGepGq49e7d7x
+         Cq1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OdV+Q1z1cjWxcima2Jut4CusdXT/73AXyM8wkN/7PA0=;
+        b=boMHSEbqq1i5WvJDzD5kmjBGEFed2mrgbN1xwP9ar6KK95NhqzXrSJjwwvPMz7IAcZ
+         XPOfkdpMJ3ZFZCr+IxFGurYq8IyUegm0j6N+ILyu5lfTuZLZAzjc5/4sAk8CBByZU8wD
+         Forv7HCfLAi8DcvbswYdaOKtFX6iQu4vrUV81P65WdOHnlFMSSbb9fakuk7m3dRrg2f8
+         p3JGlbILVPP+605eANH9Rtm+LwQEBjC4GAZBvdbxdQFJgNb6AGueJ7/z7CYQO6WDYvnd
+         21/LtcElY1x4+keo4s18sqxjTfgkhEf155T7i4xkphBlsVPIsxJ/0JXdVbDu8zVnwG3S
+         zDrQ==
+X-Gm-Message-State: ANoB5pnk9S1bLR/B7tvXbS+4jq28XSA2OeB9/p6Q+r8df3ALvlo6EG4q
+        k4JV8/MiUig56jg3woRhDzwZZzQpjlpBT9LFlwC/trtV7IQ=
+X-Google-Smtp-Source: AA0mqf4cSEdA+h1ADm+CNhL4IO9kmrsiqPej6oDnzavyhA6duyMP0l1LeNWnjOJAUd/DtQHY+k14RR7z9JJvFg6mB1A=
+X-Received: by 2002:a25:da50:0:b0:6f4:3d4b:73c3 with SMTP id
+ n77-20020a25da50000000b006f43d4b73c3mr19242920ybf.316.1669769496909; Tue, 29
+ Nov 2022 16:51:36 -0800 (PST)
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PRAP192MB1506:EE_|AM7P192MB0690:EE_
-X-MS-Office365-Filtering-Correlation-Id: a89b9797-9bc1-42d2-4711-08dad26b0732
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: GN77F5ofx+/miCQVIohKY9WFw5HF2I1rjrSS2Q/oOkt4fvHXxgDT1I0RNVbonKWurUeWqrFjlHJqraxQDkxKBxNsoniLcxHeOlZHrfKi6XIuBFdOi3nuFNh1/w7D2VfzCGxCALL6v8+6U5qGlQvH37zXmQi0xiHBgopef8Q5YRcXGmBKYVX5SDooNaBdBp0+Fn3Z6aBbJw3MFpFRHzGVVolSkYRuiTLdyyyU0soKu+oiZgrKYsHSiiO8znWydEDHPRwTa4g8MH5RzqS6btB5oU+Hz9wnBTz6cJNemTM7g5IwDqhtrRTXzyLaI5LExnhosRS1v4Aa3goAHS0aXR/u9rkhIJHPOEb0B+RGf8unhz36UAS0Q5yPYBi+fei4iiCKIRYmw+3+2n3tPnW8L407TM9hAnfMDDxenVx1CutJwZQUkDhsac6/nX6GWzCx0llFDsdKenfPXCpiG7sICDEKpN0qP3O2JvOvCVuV/upFb5ZLynZ5gUad/AjlkdHXZXNc7vHDDl3c9gn3s4R3THWmHDMqcGi1EAJYQfKPZgASz5Oa15+VB0JMAN+qfv3wankNHFmSZ0cIHPtoKg2nabCSDNk3qD1eu+h/tcMkye5cK/w9Cc4oRG8zQ/ygQJcayJtPZwsBBIg12hVb+NLJYVcFPg==
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SW52aFpSakpWckZJLytaL1pLUHQ4QkJTTlRjdUoraGt4aXdSbWtsNGlCUHY5?=
- =?utf-8?B?bHFwa0wzY21ac3ZzbWNpV3Y1V3RoRE8zbkp4ZWxBSWFVRHdFcUdTUE1FM0lK?=
- =?utf-8?B?OUorUE8zbFZxeXJ6cFdyMmpyaWs4K3Fja1pLOExpQVp1UmtZSjNFOEpwbjhi?=
- =?utf-8?B?UC9WOGJmUFQzTHhsbFErOXA3ZEtFS3REUUhoWERIWTF3QVoxQktvSjlHQUlH?=
- =?utf-8?B?NEo3YjFScUxlR3Y1U0tjVXMybloycDdpMFFSUDBGWnNRYlErdkt5WkNMZTBp?=
- =?utf-8?B?QmtEN1R4dElVakNGZ3lvaFRkRXllemhHM0NDWTRzOFhmYTdHWU43SHpTZTZm?=
- =?utf-8?B?b1ZlWTQ1ZHVOcjdidUpnZkFLVnBxaDdjb21EVWQzY1dveXdBZjZuSmJqZlBm?=
- =?utf-8?B?ZkQxcnRNa0s2RjJiN0N5TWsvVXMwMUw4Z0hMM2srTE9MMG5FUC94ZkJ4ZnZm?=
- =?utf-8?B?VUJKeURrRUhpZDF4QngvT29UN0tvZjhUQmpZQ3JTNkd4TzR0MnhqSjVqY1Zl?=
- =?utf-8?B?MDkrVFphNEFZbU8wOFNDUnN4WC94S1o3QVkvRko0b1dncThGZDl0WGNGZmFS?=
- =?utf-8?B?OUg1OFJIWUFGRDBseHJydEtpNXdROHlMamxPRnl5MGRJR0J5VkhBLzZuajBS?=
- =?utf-8?B?QitxWFdQMUtRRDFOdEFBdFJURHMrcWlCdlhWeEJlWE8yRTgyYktQTkdNWHVO?=
- =?utf-8?B?Y1dXNkVHUTNPMlFNRld1TmNJL29lWWxtOSt3OVBCSGRaQlFEb3prQ29ZbG52?=
- =?utf-8?B?VWs0ZUZjUEREeWVMWjk4TU5tSCtDdCtkZmNJa1pia2k0bmNFY056a3J1a3ov?=
- =?utf-8?B?RXlPdGk4QVZNclh4Q3dBNDBvTmxLNEovTkdZeVl4MmVQR3dudThyS1M0dzYw?=
- =?utf-8?B?cCs0NUtRTnBDM1hTTXRXRm9ZN2NQL2xaOFlxS3hORi9qbkZFL2xWS1FGVmhJ?=
- =?utf-8?B?K2hWVndrWDY0V0R3SHpnWEcvaEJ2MkFyV1pXOXFhR1FZbHk5RGoxekMxWU1B?=
- =?utf-8?B?QU5uQ2NLMG5ta1pRY3R1cWVJRU44TkZLUjFOakUrdGlScXVQcHRjdVVCVXpy?=
- =?utf-8?B?ZmIyb2hqQUVCQ2hzZlU3cDZDdmZtemVkeFlpSWxzN05vazMxc2Urb2xqUVBB?=
- =?utf-8?B?RC9PNlR4QkJFdjhaRzZkbXJpb0hCZ3poK3puMlVaQTdVRWdUbmVjWXBDTDNv?=
- =?utf-8?B?OHVUenpXZEVMUFlPeDVaVmg2bStMalBoQ3YzbS9iMDlBd1NVOFpqYkplMEVH?=
- =?utf-8?B?K1JxVGlwSWo5aUVUeENZdnMvQmc1WlRwR3NlMVJUbmhnUWpkVnZuc29HdlRS?=
- =?utf-8?B?dFUwbXJubEFMS084S2xlMmFpdXdHQW9oUDNWYXBWblhlOGVLTWlzK0lyVWpz?=
- =?utf-8?B?VzZvZVFvYm1UUE51bTdQb2V1TVVOWkRlRFY2LzM2ZXp1Mkt6RUN2VHVjeWFp?=
- =?utf-8?B?UTlYdnV2MGtKTmFLUW5FTmhqNkNjSlkxV3p6YTlGM1VWb0lyUklEamhERzRn?=
- =?utf-8?B?cUViMEF0KzZpeWRtQU1CamVCOHRmY2dRa1lXR0FFRzY5bExFU21nTW5PUVZG?=
- =?utf-8?B?b1FMVWlDUVRDOHZ3TjFHUjFjaUQvbVRUUkpaNlpYams0QjJCeitaT0NCenlp?=
- =?utf-8?B?d2MrN2dIWC9sZFU2dEFjcmw3V3FDSzNsTVJjTGpwcHlPU3R1di81SDBNZy9K?=
- =?utf-8?B?dld6YTdnNTk1VmVpM2o2ektwSkpyOHkySVZVdTRhRlN4NkpyeFIxNDBRPT0=?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a89b9797-9bc1-42d2-4711-08dad26b0732
-X-MS-Exchange-CrossTenant-AuthSource: PRAP192MB1506.EURP192.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Nov 2022 00:37:15.4802
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM7P192MB0690
+References: <pull.1384.v7.git.1669136378754.gitgitgadget@gmail.com>
+ <pull.1384.v8.git.1669154823035.gitgitgadget@gmail.com> <xmqq5yf3fx4s.fsf@gitster.g>
+ <CANaDLW+ukK2GU7NzkCvXVNc9DX3_93Pp+PHq-WcLpRJizPidVA@mail.gmail.com>
+In-Reply-To: <CANaDLW+ukK2GU7NzkCvXVNc9DX3_93Pp+PHq-WcLpRJizPidVA@mail.gmail.com>
+From:   Rudy Rigot <rudy.rigot@gmail.com>
+Date:   Tue, 29 Nov 2022 18:51:25 -0600
+Message-ID: <CANaDLW+Zuwpk_7jTO5LmWTXDT8LRPPcGARkNtaV6ORioWyZ0tg@mail.gmail.com>
+Subject: Re: [PATCH v8] status: modernize git-status "slow untracked files" advice
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Rudy Rigot via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-11-30 01:40, Ævar Arnfjörð Bjarmason wrote:
- >
- > On Tue, Nov 29 2022, Alison Winters wrote:
- >
- >> On 2022-11-29 10:38, Junio C Hamano wrote:
- >>> I did not try to figure out the reason but the topic with its tests
- >>> seem to break in 'seen' the linux-cmake-ctest CI job.
- >>>
- >>> https://github.com/git/git/actions/runs/3570230611/jobs/6001013549
- >>>
- >>> but the same test does not break under usual "make test".
- >>
- >> I cannot speak for how the changes of the ab/cmake-nix-and-ci impact
- >> the aw/complete-case-insensitive branch, but the failure seems to be
- >> pointing to a test that I have since changed in the v2 patch, on the
- >> suggestion of Szeder Gabor. The variable is no longer exported and
- >> the script is no longer sourced a second time. I don't know if those
- >> v2 changes would change the results of this test, but they might be a
- >> starting point for the other people CC:ed here to consider.
- >
- > The breakage is due to a semantic conflict between the two, which is
- > solved thusly:
- >
- >     diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
- >     index d45d820da28..2aa128075ca 100755
- >     --- a/t/t9902-completion.sh
- >     +++ b/t/t9902-completion.sh
- >     @@ -2261,7 +2261,7 @@ test_expect_success 'checkout does not 
-match ref names of a different case' '
- >
- >      test_expect_success 'checkout matches case insensitively with 
-GIT_COMPLETION_IGNORE_CASE' '
- >          (
- >     -        . "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
- >     +        . 
-"$GIT_SOURCE_DIR/contrib/completion/git-completion.bash" &&
- >              GIT_COMPLETION_IGNORE_CASE=1 && export 
-GIT_COMPLETION_IGNORE_CASE &&
- >              test_completion "git checkout M" <<-\EOF
- >              main Z
- >     @@ -2279,7 +2279,7 @@ test_expect_success 'checkout completes 
-pseudo refs' '
- >
- >      test_expect_success 'checkout completes pseudo refs case 
-insensitively with GIT_COMPLETION_IGNORE_CASE' '
- >          (
- >     -        . "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
- >     +        . 
-"$GIT_SOURCE_DIR/contrib/completion/git-completion.bash" &&
- >              GIT_COMPLETION_IGNORE_CASE=1 && export 
-GIT_COMPLETION_IGNORE_CASE &&
- >              test_completion "git checkout h" <<-\EOF
- >              HEAD Z
+Alright, I tried the "status.enumerateUntrackedDelayMS" approach, but
+I couldn't pull it off and now I am stumped.
 
-In this case, I think the easiest solution will be to move the
-aw/complete-case-insensitive branch forward to the v2 patch (posted to
-the list @ 2022-11-21  0:26 UTC), which no longer includes this line.
 
-Alison
+This is somewhat frustrating, so I'd welcome guidance if anyone has
+time and is interested. Since this doesn't actually work, I don't
+think I should create an actual patch for it on the mailing list, so
+here are two other ways to show what I've got, I hope they're
+acceptable:
+
+- in Gist form:
+https://gist.github.com/rudyrigot/aa3e8e5ddb4f71fdc7fc0e92d9b7a4b8
+- in GitHub compare form:
+https://github.com/git/git/compare/master...rudyrigot:git:status_enumerateUntrackedDelayMS
+
+The issues I'm seeing:
+
+- No matter how I set the config from the test, it doesn't seem to
+have any effect. I'm thinking I might be doing something wrong in how
+I set the value, which I've done in git_status_config in
+builtin/commit.c, which very well may be the wrong place.
+- Therefore, I've been testing things by changing the default value in
+wt_status_prepare in wt-status.c. Setting it at 0 and making the
+operator <= instead of < makes the advice display, which tells me that
+the logic is sound. Setting at its intended value of 2000 doesn't
+display the advice message, as expected. But setting it at -1 also
+doesn't display it. I'm a bit puzzled about why that would be, and I'm
+wondering: maybe the int is unsigned? It doesn't look like it based on
+how the structure field is declared in wt-status.h, but I know my own
+limits in C so I could be wrong.
+
+
+Now, I'm also well aware that Junio raised that advice leaving the
+door wide open to not actually solve this as part of this patch; and I
+did express in my previous reply that I am not intuitively convinced
+there is much value to it for users, although I could be wrong of
+course. So with that, if it's better to let it go, that is fine by me
+too.
+
+With that in mind, I implemented the alternative that Junio was
+proposing instead (assigning the value of `s->untracked_in_ms`), and
+it seems to work all good. It just passed CI, so I'm about to submit
+that as a patch, with every other piece of feedback also addressed.
+
+
+Unrelated note: I noticed that the first 2 bits of feedback applied to
+docs that were part of past patches, but were removed in the last
+patch. The rest of the doc feedback was current, so I was able to
+implement them, but obviously I couldn't implement the first 2 ones,
+since the issues they're about are gone.
