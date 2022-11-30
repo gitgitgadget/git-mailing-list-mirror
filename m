@@ -2,113 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55CD5C433FE
-	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 15:31:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D6452C433FE
+	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 15:38:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229783AbiK3PbP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Nov 2022 10:31:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54148 "EHLO
+        id S229946AbiK3Pih (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Nov 2022 10:38:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229625AbiK3PbO (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2022 10:31:14 -0500
-Received: from mail-il1-x132.google.com (mail-il1-x132.google.com [IPv6:2607:f8b0:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50F644F1B5
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 07:31:11 -0800 (PST)
-Received: by mail-il1-x132.google.com with SMTP id bp12so8245059ilb.9
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 07:31:11 -0800 (PST)
+        with ESMTP id S229939AbiK3Pic (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2022 10:38:32 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EA982982A
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 07:38:31 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id w15so14507210wrl.9
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 07:38:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ANkN0M94/34fDMhWaUCXycKEBAAOtIE+jR6AIK1b+s8=;
-        b=UTosajvvjtGdKyRIULfmh44Yp8tDbl4qdkvIcmrxAazsMtlz4jEsGeVDOhX4LHJkz9
-         qaKTtm2noFMYZWVYKoJMmx1sOocHVjaHhdB76f+OyIBuBoJdqWtpTDAljHHVKD5134q3
-         RYT81Ap2t3s7pGL6lODWtA0xIgJNH1YaeTjlYbzGHOzh4TJs+B2raHU/6IAeCC/CVt1d
-         UVqyQLrbVqr+yM8XKjdrWb1ogkEgo0xzvn402apb3O2FVqGbxtOSbqLlI4Svf99RuHt6
-         2MNZqdV+dkHOXWZjykwfXS7r57R53qF6ziP+uTxSifjS0KbCCIEEs2jTLCjDjxc9FqKE
-         HjVQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wByZyunCH1N5dK8li2pS0yM6EgPGVbYOqutmCTXbXOQ=;
+        b=JINCYVzsrcyJlgiysr3fKIMacj0dIoNO9K5S5LhdqTg4jGIEmWt1is2fQUJMKwe5ha
+         Wc+WmThMaQeQzacqqW1Mazl1ax48ThiMOgzjg++rIfSgkz/LEdSnfiraZSa8YTugsS7I
+         2XRJN0+xOotlyEoWqZHkUisJ1sjvKlstuZrkUfdpFq1d15Mq/o1bjl9L7+EoTPwf16Tg
+         yZx+lvOsHRX5DAY0V6I9ZrvsQ452MmKEI7SsM3KBR+IQAhUdYXdqcNYswHBjjTFU0vVa
+         3fzVd6cgAHb5BAvz5dNgZBL3ojSZvR43JDxgoZrBJzWVwQqBxtH5UJ+x2Ns0WlL2tfb6
+         tsuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ANkN0M94/34fDMhWaUCXycKEBAAOtIE+jR6AIK1b+s8=;
-        b=7yJvhf8NZdo9jBnDju3sbLhiOB5osN1c+qN+LUSDMFdpsFOjnOIIso8LnVfLiqIkNt
-         9y5arDqDq9ynvSU2tK1eNuQ2oBq5QJhH6o/8TpGkFXxb9VtM4LT4rZ0f93dv09H7Wnt3
-         4y4CAEowFZkq57Seb8P+iEjt8wIlVKacJ3jQ/5UylhzzOE9tCMQi5f8WQVVKmUkf/M2+
-         HLCP8q0FDDv4Fh0LTlqfkXCB4y1sF9GRyn1W8CWhknPAGLp6CPg8OrV6VK7P8pnBc9xw
-         oUBP2g6AGmzFriO6xcZLF0QNsiIldKFg0hOhZsz/8oe3xnhfdF1ANDv/vH0Zb0eUXTjV
-         qcrQ==
-X-Gm-Message-State: ANoB5pkXjLbUdPfwh10eEUKFOMkSickRCtAC3AmzBSqnXt7oLf688snU
-        FZ8w38TcMo9CO0O+VtW5QkJP
-X-Google-Smtp-Source: AA0mqf6eyNhPc1k8CPUf/pigKDXYcR/bzaFbJubefeQR9mk7FHb+QN2HSnHwjcMFURzp7cABd2UVeQ==
-X-Received: by 2002:a92:d6cd:0:b0:303:fa0:e40c with SMTP id z13-20020a92d6cd000000b003030fa0e40cmr8260058ilp.105.1669822270634;
-        Wed, 30 Nov 2022 07:31:10 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:2d9d:31ee:c3ec:e9a5? ([2600:1700:e72:80a0:2d9d:31ee:c3ec:e9a5])
-        by smtp.gmail.com with ESMTPSA id v27-20020a02cbbb000000b00389b6c71347sm683548jap.60.2022.11.30.07.31.09
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wByZyunCH1N5dK8li2pS0yM6EgPGVbYOqutmCTXbXOQ=;
+        b=iMuJpAUosm9/4jhx01mjxd/JqLJVH3P8BA+D+g7pRDp1sRjvgVUZ1dJpwZiU4eJeXj
+         JtyssQpTHljDVscbx/tYgB76OUA92yqkk/4U6WhEghMii7cyfAeRzZaccAFytlirr/9t
+         2hAVHySPxHrQ2KIq+Vh4aOyX9S44AIoIPCtpP/51e0hsEvFWoH5IHyJXRF/AUmj1fbny
+         74PgjjFKU57Q3FnDUT2hibSK/x4yK36Hy6kD99PfKj62iRgFEuVe2/MJt2w3UqBRCkZ1
+         Ufg1mHZ3qi1K+H2mlq+LYBj8DrAW+GKPFksYmRdZ0MUzmzgRG0dBZrtCpkclZ15btxmE
+         78EQ==
+X-Gm-Message-State: ANoB5pnHN1WaKLUlVoKC8VoxvaSJ6mmho/DmqSqMAODjh3R0YlfHEXN4
+        f5DQKFuVne9CXl0KI5MhMJQ=
+X-Google-Smtp-Source: AA0mqf4rnGbvaNyCX9wiUcN/CEtjnpbLzMrF4rFhwBOElUK7KhmcQHlOwzy94JrzhY0zpvg8yfvlPw==
+X-Received: by 2002:a5d:51ce:0:b0:236:78cd:f3e7 with SMTP id n14-20020a5d51ce000000b0023678cdf3e7mr36639869wrv.140.1669822710180;
+        Wed, 30 Nov 2022 07:38:30 -0800 (PST)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id l22-20020a05600c4f1600b003cf54b77bfesm6579863wmq.28.2022.11.30.07.38.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Nov 2022 07:31:10 -0800 (PST)
-Message-ID: <c104b0e6-1287-b4ab-dd4a-b4b6eef9996c@github.com>
-Date:   Wed, 30 Nov 2022 10:31:09 -0500
+        Wed, 30 Nov 2022 07:38:29 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <0e3ab2bb-68ed-8e77-ac0b-afeb5ca88def@dunelm.org.uk>
+Date:   Wed, 30 Nov 2022 15:38:29 +0000
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [PATCH 00/30] [RFC] extensions.refFormat and packed-refs v2 file
  format
 Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jrnieder@gmail.com,
+To:     Derrick Stolee <derrickstolee@github.com>,
         Han-Wen Nienhuys <hanwen@google.com>,
-        Taylor Blau <me@ttaylorr.com>
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, jrnieder@gmail.com,
+        John Cai <johncai86@gmail.com>
 References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
- <CABPp-BEZK2KJHY+=Ta3VUzNjJKY=evPiAtp5UQFTVLMD0qreVQ@mail.gmail.com>
- <0e156172-0670-2832-78cb-c7dfe2599192@github.com>
- <xmqqiljbkfg9.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqiljbkfg9.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
+ <CAFQ2z_MZd150kQNTcxaDRVvALpZcCUbRj_81pt-VBY8DRaoRNw@mail.gmail.com>
+ <f1c45bd5-692e-85db-90c3-c516003f47e5@github.com>
+In-Reply-To: <f1c45bd5-692e-85db-90c3-c516003f47e5@github.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/18/2022 6:31 PM, Junio C Hamano wrote:
+Hi Stolee
 
-> I have been and am still offline and haven't examined this proposal
-> in detail, but would it be a better longer-term approach to improve
-> reftable backend, instead of piling more effort on loose+packed
-> filesystem based backend?
+On 30/11/2022 15:16, Derrick Stolee wrote:
+> On 11/28/2022 1:56 PM, Han-Wen Nienhuys wrote:
+>> * Worktrees and the main repository have a separate view of the ref
+>> namespace. This is not explicit in the ref backend API, and there is a
+>> technical limitation that the packed-refs file cannot be in a
+>> worktree. This means that worktrees will always continue to use
+>> loose-ref storage if you only extend the packed-refs backend.
+> 
+> If I'm understanding it correctly [1], only the special refs (like HEAD or
+> REBASE_HEAD) are worktree-specific, and all refs under "refs/*" are
+> repository-scoped. I don't actually think of those special refs as "loose"
+> refs and thus they should still work under the "only packed-refs" value
+> for extensions.refFormat. I should definitely cover this in the
+> documentation, though. Also, [1] probably needs updating because it calls
+> HEAD a pseudo ref even though it explicitly is not [2].
+>
+ > [1] https://git-scm.com/docs/git-worktree#_refs
+ > [2] 
+https://git-scm.com/docs/gitglossary#Documentation/gitglossary.txt-aiddefpseudorefapseudoref
 
-If reftable was complete and stable, then I would have carefully examined
-it to check that it solves the problems at hand. I interpreted the lack of
-progress in the area to be due to significant work required or hard
-problems blocking its completion. That appears to be a wrong assumption,
-so we are exploring what that will take to get it complete.
+Unfortunately I think it is a little messier than that (see 
+refs.c:is_per_worktree_ref()). refs/bisect/*, refs/rewritten/* and 
+refs/worktree/* are all worktree specific.
 
-I am still wary of it requiring a clean slate and not having any way to
-upgrade from an existing repository to one with reftable. I'm going to
-reevaluate this to see how expensive it would be to upgrade to reftable
-and how we can deploy that change safely.
+Best Wishes
 
-These upgrade concerns may require us to eventually consider a world where
-we can upgrade a repository by replacing the packed-refs file with a
-reftable file, then later removing the ability to read or write loose
-refs. To do so might benefit from the multi-valued extensions.refFormat
-that is proposed in this RFC, even if packed-v2 does not become a
-recognized value.
-
-My personal opinion is that if reftable was not already implemented in
-JGit and was not already partially contributed to Git, then we would not
-choose that format or that "all or nothing" upgrade path. Instead,
-incremental improvements on the existing ref formats are easier to
-understand and test in parts.
-
-But my opinion is not the most important one. I'll defer to the
-community in this. I thought it worthwhile to present an alternative.
-
-Thanks,
--Stolee
-
+Phillip
