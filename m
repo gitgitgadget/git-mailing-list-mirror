@@ -2,90 +2,136 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 106E8C4332F
-	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 13:28:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 958A1C46467
+	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 14:36:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235496AbiK3N2b (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Nov 2022 08:28:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35088 "EHLO
+        id S229670AbiK3Oge (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Nov 2022 09:36:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229472AbiK3N2a (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2022 08:28:30 -0500
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFF5E5D698
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 05:28:27 -0800 (PST)
-Received: by mail-pf1-x435.google.com with SMTP id o1so12269617pfp.12
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 05:28:27 -0800 (PST)
+        with ESMTP id S229811AbiK3OgY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2022 09:36:24 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FE2C2CB
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 06:36:23 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id c65-20020a1c3544000000b003cfffd00fc0so1565289wma.1
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 06:36:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=b5YGYVnXpMCvu8VGOMOwEZeh8h09TXMWLk7hFiJsbRI=;
-        b=bZDYRiMXz0Q+jyGKs3B8nEsDWECo+OFKn81UZTmjuMH/u1B56zQhCBI8DHVa+XQcfd
-         FEoeCDm3p6GAk6/z61nJ4KIgY+C/caOy8LUktYupdLNvPkGC5CaeL1K1NWCmGnNR1FsX
-         QndG+rSf/KVqw2YJG+ro5hkzxCFcejQ/P9tgZuSLsZzXbE7/N+Red033mBH93jQu7b/g
-         4I7iSJ+kGUyFbooSWuEHWJQTI5SDeP/0/y0v6zp8Z59bSDl/6gEj2y4Zv2GoKdDszSVg
-         R4uXnVfZeQI0AcDTt1V2f/bZYjmd3eZMlCAhiUTrbp7aNNvER9WUCmDCIXfGKPWVZfsN
-         8x7Q==
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=uhjeUL2NDrmG4wzDv6U1eMxrSpR/bzz9c35DnRAJhqY=;
+        b=bPLrVeBlX19Ckw2jAVP/5QWWr2beETjmGZa6HYrTWIajkhaEqf3mvUDM0fj0Axaepq
+         1U+zMKKHiaOr0/B7xSifsVivZ+T1cB0m5rJ8v03tRziiAhF9q8uo52q63cye0sGC5Ra0
+         g+fUR+KBi5WCrUURSAmhe3ycU5y2npcF+VVJg7PMqJFbTvMsMBkGkqUyrKJExsG7zq3f
+         VE1+ORoMOA9lOhyJHg0PbfSxPI5QFlio18x1TsQtl2Wok/9Ik/6/PyoDObdm9IdXm1M9
+         Yis8T9Ql14fCEhxyGn4BbxI4qpsF0j6RCjN9nRYGlrsZUCkjiCt+YMEfTtNC/qhiEa+3
+         /G+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=b5YGYVnXpMCvu8VGOMOwEZeh8h09TXMWLk7hFiJsbRI=;
-        b=RTGAWra7IljSI9e9XgPPS0Wo+AL9+JCkawS4YArtPi81rtMAoCLCYQQZ4p1J4yQxQ6
-         BhFC7vuv0pGTTsU6Qq47uVlXG/aZpX+xe2Y4vY1gIVjihJFDP5/aG3S0RGgb2PoxW6zR
-         m/pdkMMzJoXhyuvL3rX2coFu4o5g7m7y6v3VJKUipNW09abJ51kAvxLJdx4NgZTTEt5T
-         A2BvEiByOOAA7uvxwQHrmp8+m9Lq3FxIa1irUn9os//kOIw65zT6n6jcbhLAgdUNLNmb
-         wVwUKSoOD303cyR6nYz26K1+sMTxdRom68yFzKPvNOMwNSgRakDMc+2XBoeiTt/NXGMK
-         AZSg==
-X-Gm-Message-State: ANoB5pkiGo88Iy0U5KD9hGjzfb0TSe+Q5wkp0t/4bk2UH85lgbaEZvCq
-        f3DLOq1Q5+T3UFl7zyTjJ8w=
-X-Google-Smtp-Source: AA0mqf41kvOyaP0Cw4BTM/8qRYI7zZpwm7OZx9gI0R8bok6RXWi4FaXLExJBOWLQBEuCZIa3d3mKXw==
-X-Received: by 2002:a63:1a13:0:b0:478:5420:d2c7 with SMTP id a19-20020a631a13000000b004785420d2c7mr4742130pga.105.1669814907063;
-        Wed, 30 Nov 2022 05:28:27 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id d65-20020a623644000000b005750d6b4761sm1368296pfa.168.2022.11.30.05.28.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Nov 2022 05:28:26 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Sergey Organov <sorganov@gmail.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        huang guanlong <gl041188@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 3/5] diff-merges: implement log.diffMergesForce config
-References: <20221127093721.31012-1-sorganov@gmail.com>
-        <20221127093721.31012-4-sorganov@gmail.com>
-        <xmqqedtn957j.fsf@gitster.g> <8735a3gmuq.fsf@osv.gnss.ru>
-        <xmqqbkop3hjb.fsf@gitster.g>
-        <221129.86tu2hiqre.gmgdl@evledraar.gmail.com>
-Date:   Wed, 30 Nov 2022 22:28:26 +0900
-In-Reply-To: <221129.86tu2hiqre.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Tue, 29 Nov 2022 18:59:37 +0100")
-Message-ID: <xmqqtu2gvaf9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uhjeUL2NDrmG4wzDv6U1eMxrSpR/bzz9c35DnRAJhqY=;
+        b=HanxIHjk4WsFaXm2h92PHvN6Gib9R5RXE9Rs+EBTRPDTdEkTh80KtbGan08Yw7SI9T
+         rsbSPuXxBoDYE6Od77rZcUm3ebW10CirpjPVMwVuLYDVWU3UWrTsWeBkVtw9Kv1bxWMi
+         6OQmdPF11fx1WF41cMcTEi6mXWApVKLi72eaNEegdsEzaAJy+mO7xx2OfnBRcEaNXS/e
+         kxTI3WlYwbiyGrrpyyGwqg6VsThYSlLLevtRQpIYODz1/hfiIK/xjZW6DrB+2Wenr3T/
+         x/ToxuUfAwEVhskWWwfKjVZAkn5zpqEgknh0Cw9asFkcjH3+sssBWp6cW+XsD7+J69li
+         K8SA==
+X-Gm-Message-State: ANoB5pk0EzJLg+5vi+wPV8g8wIeADbJMY4OiO3BFzkdRCTN+tNKtkivr
+        838XYlZpc4va+qRcfDhQU5U=
+X-Google-Smtp-Source: AA0mqf5bFs+rTgf++0ItVKSlUVMMx0C7Ly3MlcNEbkUryRoQcWYQ5XaW+xnTmuqucjJKwIEXTcSQoA==
+X-Received: by 2002:a05:600c:3d1b:b0:3cf:670e:63cc with SMTP id bh27-20020a05600c3d1b00b003cf670e63ccmr50414354wmb.150.1669818981615;
+        Wed, 30 Nov 2022 06:36:21 -0800 (PST)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id q128-20020a1c4386000000b003c71358a42dsm8139242wma.18.2022.11.30.06.36.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Nov 2022 06:36:21 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <19f91fea-a2a9-7dc6-d940-cc10f384fe76@dunelm.org.uk>
+Date:   Wed, 30 Nov 2022 14:36:20 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 4/5] diff-lib: refactor match_stat_with_submodule
+Content-Language: en-US
+To:     Calvin Wan <calvinwan@google.com>, git@vger.kernel.org
+Cc:     emilyshaffer@google.com, avarab@gmail.com,
+        phillip.wood123@gmail.com, myriamanis@google.com
+References: <https://lore.kernel.org/git/20221020232532.1128326-1-calvinwan@google.com/>
+ <20221108184200.2813458-5-calvinwan@google.com>
+In-Reply-To: <20221108184200.2813458-5-calvinwan@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+Hi Calven
 
->> If you have your own fork at GitHub of https://github.com/git/git/, I
->> think preparing a pull request against it triggers the CI.
->
-> ...in this case though there's no reason to wait for the glacially slow
-> GitHub CI. You just need spatch installed and:
->
-> 	make coccicheck
+On 08/11/2022 18:41, Calvin Wan wrote:
+> Flatten out the if statements in match_stat_with_submodule so the
+> logic is more readable and easier for future patches to add to.
+> orig_flags didn't need to be set if the cache entry wasn't a
+> GITLINK so defer setting it.
 
-And you have to wait for the glacially slow coccicheck run locally,
-though ;-).
+Thanks for splitting this change out. I have to say I find the original 
+quite a bit easier to read. If you're worried about the code added in 
+the next commit being too indented perhaps you could move the body of 
+the if statement into a separate function.
+
+Best Wishes
+
+Phillip
+
+> Signed-off-by: Calvin Wan <calvinwan@google.com>
+> ---
+>   diff-lib.c | 29 ++++++++++++++++++-----------
+>   1 file changed, 18 insertions(+), 11 deletions(-)
+> 
+> diff --git a/diff-lib.c b/diff-lib.c
+> index 2edea41a23..f5257c0c71 100644
+> --- a/diff-lib.c
+> +++ b/diff-lib.c
+> @@ -73,18 +73,25 @@ static int match_stat_with_submodule(struct diff_options *diffopt,
+>   				     unsigned *dirty_submodule)
+>   {
+>   	int changed = ie_match_stat(diffopt->repo->index, ce, st, ce_option);
+> -	if (S_ISGITLINK(ce->ce_mode)) {
+> -		struct diff_flags orig_flags = diffopt->flags;
+> -		if (!diffopt->flags.override_submodule_config)
+> -			set_diffopt_flags_from_submodule_config(diffopt, ce->name);
+> -		if (diffopt->flags.ignore_submodules)
+> -			changed = 0;
+> -		else if (!diffopt->flags.ignore_dirty_submodules &&
+> -			 (!changed || diffopt->flags.dirty_submodules))
+> -			*dirty_submodule = is_submodule_modified(ce->name,
+> -								 diffopt->flags.ignore_untracked_in_submodules);
+> -		diffopt->flags = orig_flags;
+> +	struct diff_flags orig_flags;
+> +
+> +	if (!S_ISGITLINK(ce->ce_mode))
+> +		goto ret;
+> +
+> +	orig_flags = diffopt->flags;
+> +	if (!diffopt->flags.override_submodule_config)
+> +		set_diffopt_flags_from_submodule_config(diffopt, ce->name);
+> +	if (diffopt->flags.ignore_submodules) {
+> +		changed = 0;
+> +		goto cleanup;
+>   	}
+> +	if (!diffopt->flags.ignore_dirty_submodules &&
+> +	    (!changed || diffopt->flags.dirty_submodules))
+> +		*dirty_submodule = is_submodule_modified(ce->name,
+> +					 diffopt->flags.ignore_untracked_in_submodules);
+> +cleanup:
+> +	diffopt->flags = orig_flags;
+> +ret:
+>   	return changed;
+>   }
+>   
