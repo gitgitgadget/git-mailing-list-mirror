@@ -2,106 +2,174 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ECA9BC4321E
-	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 22:55:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D9EB4C4321E
+	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 23:28:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229736AbiK3WzR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Nov 2022 17:55:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33372 "EHLO
+        id S229695AbiK3X2s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Nov 2022 18:28:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229728AbiK3WzQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2022 17:55:16 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C94891349
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 14:55:15 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id p24so14431287plw.1
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 14:55:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:importance
-         :references:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cVa6BgbyHPICg8SBz2B6aJNcP6BF42EKea5kufVwcPA=;
-        b=Z/QGS/4shQivkeXPMlfEaBzM5CmQc1TF/Mg7Tt2Z93CtCRpklAYxYbFE0zuKX/ARt5
-         0E2ld3izk7CISnc1mpxzD6m/z6vvuBqO2e2OyPPaYEkIKxa3NhsdleuGJipJt9PQvZzr
-         eym4pMBWNX4eOOvE9awbW+CXzfuj1pyPKkCGtzsdRC8d8K+9VuARq5NGR2Lu4uxT0VAQ
-         8bXp4lpH7VvUWgA0RlAUSH8/tOkYtbROq1+ca9bh8pu9X6sfdJ7W2wbZLRu4uA3wVtel
-         FrnvRflEkLyrmR9ksu5PdtDSsRkqctBPsjWJUTe618LiKVqguyPUK9j95HPTous6kvGx
-         +reA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:importance
-         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cVa6BgbyHPICg8SBz2B6aJNcP6BF42EKea5kufVwcPA=;
-        b=YzJTBSZTZgFit//XGi00uHvBZsoUJ5k1YnpF16FsB0ZkrHeH04te6jgTpRnQxXxufp
-         j6JC3q3Oe2F57EmUmJcaNE+MA3U/rPkAOaZJcKsmzCBSB+sDXHmU3+/aZ32Pku65N843
-         hNvoTNO0ibCCClbXmpEaImP9e4/tVNCKOuB2aKSARGFPJvurrdxIDwd9SSg1TP7c6DTE
-         FXvHIvSeLxxYF9UWwh5AFsHEHvOuMqd+2YgeuXeFs5JkUo2m17ryKX5eGfR1efbaHulI
-         tebmI2CrrabuuwsIvedkyq65UfqCBp4FE3Oz6hFbck6AFKphYCaDxwEEzDQuv/F58W50
-         bKIw==
-X-Gm-Message-State: ANoB5pmALt8UqT81J1bwEr8JROzb4tULK0DdL1TisUdIFzM2YfqK4m4R
-        hgcoH0H2fTxrjKsF5sGPWFY=
-X-Google-Smtp-Source: AA0mqf6TXXtipShu8oQ6cO8r8ZRRvlLIMeYyxyUGFEelMV5sdjx5Ms3SRoT/sBIjlMbp8cAYn0EuRw==
-X-Received: by 2002:a17:902:a418:b0:187:edc:82f3 with SMTP id p24-20020a170902a41800b001870edc82f3mr44717607plq.161.1669848914793;
-        Wed, 30 Nov 2022 14:55:14 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id t3-20020a1709027fc300b00187022627d8sm2019511plb.62.2022.11.30.14.55.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Nov 2022 14:55:14 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Han-Wen Nienhuys <hanwen@google.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jrnieder@gmail.com,
-        John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH 00/30] [RFC] extensions.refFormat and packed-refs v2
- file format
-References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
-        <CAFQ2z_MZd150kQNTcxaDRVvALpZcCUbRj_81pt-VBY8DRaoRNw@mail.gmail.com>
-        <f1c45bd5-692e-85db-90c3-c516003f47e5@github.com>
-Importance: high
-Date:   Thu, 01 Dec 2022 07:55:13 +0900
-In-Reply-To: <f1c45bd5-692e-85db-90c3-c516003f47e5@github.com> (Derrick
-        Stolee's message of "Wed, 30 Nov 2022 10:16:52 -0500")
-Message-ID: <xmqqedtkuk6m.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229652AbiK3X22 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2022 18:28:28 -0500
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B04ED90777
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 15:19:12 -0800 (PST)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 79D52CA1246;
+        Wed, 30 Nov 2022 18:18:28 -0500 (EST)
+Received: from [10.0.0.3] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id 40916CC8441;
+        Wed, 30 Nov 2022 18:18:28 -0500 (EST)
+Message-ID: <d9160bf2-4bce-2624-c80d-fd924e014f70@jeffhostetler.com>
+Date:   Wed, 30 Nov 2022 18:18:27 -0500
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: fsmonitor: t7527 racy on OSX?
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric DeCosta <edecosta@mathworks.com>
+Cc:     =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>,
+        Git ML <git@vger.kernel.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <221121.86y1s4bfp6.gmgdl@evledraar.gmail.com>
+ <Y3t/YbZUIuIJkSil@danh.dev>
+ <BL0PR05MB55715FF24BD1AD53EE81A5A2D90D9@BL0PR05MB5571.namprd05.prod.outlook.com>
+ <221122.86r0xuaawz.gmgdl@evledraar.gmail.com>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+In-Reply-To: <221122.86r0xuaawz.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: mailmunge 3.10 on 209.68.5.199
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
 
-> I do want to say that while I admire
-> JGit's dedication to being compatible with repositories created by Git, I
-> don't think the reverse is a goal of the Git project.
 
-The world works better if cross-pollination happens both ways,
-though.
+On 11/22/22 5:12 PM, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Tue, Nov 22 2022, Eric DeCosta wrote:
+> 
+>>> -----Original Message-----
+>>> From: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+>>> Sent: Monday, November 21, 2022 8:39 AM
+>>> To: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>>> Cc: Git ML <git@vger.kernel.org>; Eric DeCosta
+>>> <edecosta@mathworks.com>; Jeff Hostetler <jeffhost@microsoft.com>
+>>> Subject: Re: fsmonitor: t7527 racy on OSX?
+>>>
+>>> On 2022-11-21 14:07:13+0100, Ævar Arnfjörð Bjarmason
+>>> <avarab@gmail.com> wrote:
+>>>> I have access to a Mac OS X M1 box (gcc104 at [1]) where t7527
+>>>> reliably fails due to what seems to be a race us doing something, and
+>>>> assuming that fsmonitor picked up on it.
+>>>
+>>> See also https://lore.kernel.org/git/YvZbGAf+82WtNXcJ@danh.dev/
+>>> <https://protect-
+>>> us.mimecast.com/s/580RCpYn6ETDOBoycYVkUq?domain=lore.kernel.org>
+>>>
+>>> I raised 3 months ago and it seems like Jeff Hostetler is too busy.
+>>>
+>>>>
+>>>> This makes the tests pass:
+>>>>
+>>>> diff --git a/t/t7527-builtin-fsmonitor.sh
+>>>> b/t/t7527-builtin-fsmonitor.sh index 56c0dfffea..ce2555d558 100755
+>>>> --- a/t/t7527-builtin-fsmonitor.sh
+>>>> +++ b/t/t7527-builtin-fsmonitor.sh
+>>>> @@ -428,6 +428,7 @@ test_expect_success 'edit some files' '
+>>>> start_daemon --tf "$PWD/.git/trace" &&
+>>>>
+>>>> edit_files &&
+>>>> + sleep 1 &&
+>>>>
+>>>> test-tool fsmonitor-client query --token 0 &&
+>>>>
+>>>> @@ -443,6 +444,7 @@ test_expect_success 'create some files' '
+>>>> start_daemon --tf "$PWD/.git/trace" &&
+>>>>
+>>>> create_files &&
+>>>> + sleep 1 &&
+>>>>
+>>>> test-tool fsmonitor-client query --token 0 &&
+>>>>
+>>>> @@ -471,6 +473,7 @@ test_expect_success 'rename some files' '
+>>>> start_daemon --tf "$PWD/.git/trace" &&
+>>>>
+>>>> rename_files &&
+>>>> + sleep 1 &&
+>>>>
+>>>> test-tool fsmonitor-client query --token 0 &&
+>>>>
+>>>> @@ -978,6 +981,7 @@ test_expect_success
+>>> !UNICODE_COMPOSITION_SENSITIVE 'Unicode nfc/nfd' '
+>>>> mkdir test_unicode/nfd/d_${utf8_nfd} &&
+>>>>
+>>>> git -C test_unicode fsmonitor--daemon stop &&
+>>>> + sleep 1 &&
+>>>>
+>>>> if test_have_prereq UNICODE_NFC_PRESERVED then
+>>>>
+>>>> The failure is when we grep out the events we expect, which aren't
+>>>> there, but if you manually inspect them they're there. I.e. they're
+>>>> just not "in" yet.
+>>>>
+>>>> I thought this might be a lack of flushing or syncing in our own trace
+>>>> code, but adding an fsync() to trace_write() didn't do the trick.
+>>>>
+>>>> 1. https://cfarm.tetaneutral.net/news/41#
+>>>> <https://protect-
+>>> us.mimecast.com/s/S6YNCqxoXGIWkoNRHEfMzu?domain=cfarm
+>>>> .tetaneutral.net>
+>>>
+>>> --
+>>> Danh
+>>
+>> Honestly, I'm not surprised. Stopping the daemon and grepping for
+>> expected results immediately there after is just asking for these
+>> sorts of races. Sleeping is a bit ugly, but without an explicit means
+>> of synchronization is probably the best that can be done. I can take a
+>> look at it some more as I have access to M1 Macs.
+> 
+> I don't see why it would have to do with stopping the daemon. If
+> anything that should reduce the odds that you're running into a
+> race. I.e. on OSX in general this will work:
+> 
+> 	echo foo >f &&
+> 	grep foo f
+> 
+> Or, the equivalent with an "echo" that's not a shell built-in. I.e. we
+> had a process start, print to a file, and then we grep data out of it
+> agin.
+> 
+> The reason I'm saying it should reduce them is if the "echo" were some
+> long-running daemon process that was still running the "grep" might fail
+> because the "foo" was still in some buffer and hadn't been written or
+> fsync'd to disk.
+> 
+> Anyway, all of that seems inapplicable to these failures, as we're not
+> stopping the daemon yet by the time we run into the synchronization
+> problem. We just *started* it, then renamed some files, but when we ask
+> for those events we don't get them back.
+> 
+> Maybe there's some innocuous reason for that, but I have the sinking
+> feeling that it might be some race between creating the files, the
+> kernel getting those events, acting on them, but not having sent notice
+> of those events to the daemon that's listening.
+> 
+> *That* would be much scarier, and would mean that this fsmonitor
+> implementation would be racy outside of our tests, wouldn't it?
 
->> * Symrefs are refs too, but for some reason the packed-refs file
->> doesn't support them. Does packed-refs v2 support symrefs too?  If you
->> want to snapshot the state of refs, do you want to snapshot the value
->> of HEAD too?
->
-> I forgot that loose refs under .git/refs/ can be symrefs. This definitely
-> is a limitation that I should mention. Again, pseudorefs like HEAD are not
-> included and are stored separately, but symrefs within refs/* are not
-> available in packed-refs (v1 or v2). That should be explicitly called out
-> in the extensions.refFormat docs.
+I managed to reliably reproduce this on my new M1 mac (and while
+working on replacing the call to the deprecated FSEvents routine
+mentioned in another thread).
 
-I expect that, in a typical individual-contributor repository, there
-are at least two symbolic refs, e.g.
+I should have a fix for this/them shortly.
 
-    .git/HEAD
-    .git/refs/remotes/origin/HEAD
+Thanks for your patience.
+Jeff
 
-Having to fall back on the loose ref hierarchy only to be able to
-store the latter is a bit of shame---as long as you are revamping
-the format, the design should allow us to eventually migrate all
-refs to the new format without having to do the "check there, and if
-there isn't then check this other place", which is what the current
-loose + packed combination do, I would think.
