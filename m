@@ -2,109 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 979C4C433FE
-	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 09:43:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75BCDC352A1
+	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 09:57:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233072AbiK3JnX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Nov 2022 04:43:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47990 "EHLO
+        id S232803AbiK3J5g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Nov 2022 04:57:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229580AbiK3JnV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2022 04:43:21 -0500
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B04401C42E
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 01:43:19 -0800 (PST)
-Received: by mail-ej1-x631.google.com with SMTP id ha10so40001467ejb.3
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 01:43:19 -0800 (PST)
+        with ESMTP id S230105AbiK3J5e (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2022 04:57:34 -0500
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4728DB16
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 01:57:32 -0800 (PST)
+Received: by mail-wm1-x32e.google.com with SMTP id j5-20020a05600c410500b003cfa9c0ea76so969620wmi.3
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 01:57:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jv1thiTZtop7+mr98Ia6tEihm3tqJ4VuI+QPKkWxdQE=;
-        b=CE9LJWhe0n/H277fmyRQBygF5lH/ef8pdQh+YqODKM9wOe+oDnyAAJtK4BSo/89Cla
-         ABoYkLI6WH6FOBb+EX3602fK1HsXUdZBGSfz1q39ax/aZqhkTax3SF1MvrvZ1TXoDIzt
-         IMlhyrIPlwQkMRDl6yz5ctAMbhYuB8jcw+BNslTVNwR8zyQXl0qi35zbYlPGM8k7o/at
-         oyq894OcrI07CfibHtoi4q1OVteTeaMPAJ9+fRlhT6uUpwxG71N7x5j5mhZp2l2ZWTCP
-         9q5gmD+z0rp4mrZ4EWqvuXOgqsoH0+N845CgwAn3yUNm8jqD/Fm80nsD6roZUsMjQsGI
-         25Gg==
+        h=content-transfer-encoding:in-reply-to:cc:references:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=m3Ti8lLjLH/oZcTNGBAa1+AMdQiVXm/9RfufJzkbNw8=;
+        b=lWy93Lp3zDdMgAhPoauCYSIq4PfWwFoai3wF1jTnWWNzk0/zYJkVyPqeJuneBpDYyR
+         aEkx9u4ue7mjZo6NwwjqWjm0XbPHLAAao8Qdodwjc1Gky2G4c8U0jSlnFxRu9h41NONc
+         ENr287P2xUWZcvEz7yDqSSqoUQm5D9bqYbItd1KEBPxYc8QwCPQywk8cHdM46O9m477l
+         K+Wv90m781rklKd7vJVze5fXk+G/bQEdfqFpqv+qF+BwIhRp9GQW7W8VPytTDRpAWs+U
+         PNv+Bfq9q89tmlZYhcwdBdSURfo/JAXF5gCJTz6YJ3E2Pn6KBOoN8W+ZiVtG9o9x8+U0
+         txHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+        h=content-transfer-encoding:in-reply-to:cc:references:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Jv1thiTZtop7+mr98Ia6tEihm3tqJ4VuI+QPKkWxdQE=;
-        b=JhpD/clpaAf/cKPStwCDY99nb4ufO4a1Rqq0CEsqlDinmPvS4TL3TiBT6/UwxfsAXH
-         iAS6AhOAp67F0g6yqKq7yxXqOBGY6RuMSRipxNhv8vumAY9GV4ZnuOPVt6/XBz0KaKzU
-         QDAds5aRpgrRTmGOSmCtI35jm5gYZHcZC4ipnLX56KU1bA8XhEFHZcAPwMCHQeKqQHse
-         W9kKbJ4NPLcEchwu85II1PH1fKO3I6sh31yWd0PaJQrq2cp8+mBhJEvgXYlyyxAq3+C1
-         RgAHwQAhclRaldvnNzuoJMC3RK4QYLdo8pAxD0u8fk2X1uhm+jm2rKk5S5tutNH7sXb4
-         yMKA==
-X-Gm-Message-State: ANoB5pn47SnrHyllbrPX8kBfBWMOmd9XA2zb2DfUJK4NbPBkoVFHkG5v
-        vOM4hu4YtTq+XJAiooNNfKg=
-X-Google-Smtp-Source: AA0mqf6x27Xw8CId6IxuQAhvLwPtsMbKSjRPvUWwzKfW/d/wHQ1CMw90r6bn+CFDQ5to0tkkuaKc4g==
-X-Received: by 2002:a17:906:a1cb:b0:781:fcf6:e73a with SMTP id bx11-20020a170906a1cb00b00781fcf6e73amr50008982ejb.352.1669801398124;
-        Wed, 30 Nov 2022 01:43:18 -0800 (PST)
-Received: from gmgdl ([109.38.157.167])
-        by smtp.gmail.com with ESMTPSA id g18-20020a17090604d200b0078d9b967962sm439540eja.65.2022.11.30.01.43.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Nov 2022 01:43:17 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1p0Jca-001xbX-2L;
-        Wed, 30 Nov 2022 10:43:16 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     git@vger.kernel.org, tenglong.tl@alibaba-inc.com, me@ttaylorr.com
-Subject: Re: [RFC PATCH 5/6] ls-tree: introduce 'match_pattern()' function
-Date:   Wed, 30 Nov 2022 10:39:07 +0100
-References: <20221117113023.65865-1-tenglong.tl@alibaba-inc.com>
- <20221117113023.65865-6-tenglong.tl@alibaba-inc.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <20221117113023.65865-6-tenglong.tl@alibaba-inc.com>
-Message-ID: <221130.86pmd4ixqj.gmgdl@evledraar.gmail.com>
+        bh=m3Ti8lLjLH/oZcTNGBAa1+AMdQiVXm/9RfufJzkbNw8=;
+        b=vAVVUdLxprCWCVqWyMSxI82Q667HI1EB1I+0EywrUVyM1lc9YyYNwNFw8bttExc0vm
+         Pcg4k+TLSacfR/PF73sKE1EQk9+dOlBcsWwLzRmcs19d3sRM/IbjTrEmE5hT78Imtg6h
+         ISZ/mMag2pJznY9MJmnzOumxUVBjrDAWyrt43DWmpqzVu33SF9L6xO32S9iFL634aiL7
+         q8ohpejZS7GAUPH+mr8Uwh3GCo8F91E6F8JbYof0TFLIq+p/30W+4TcbfDvXzwpE1lbj
+         MK4UQPxPhZOBhOnK2V/avQLFmModc+tUuo3jqOajTrO/Fkt/xFzYfuzdBS9UA6Mmo7uq
+         oL6g==
+X-Gm-Message-State: ANoB5plpmqmTBZFo5UhTiVXYOPpNO95h9m6aLm15ESkEq/gdoVXS8LZe
+        +Asxt1z6JEEHWIlfxJakCaM=
+X-Google-Smtp-Source: AA0mqf6s/KxLG23WblpT2DISJ6D/ijTx+77Ll2ABxBWB5jeIW6mISW/4scx7B3QDEyEyo8iHFMoFxQ==
+X-Received: by 2002:a05:600c:1d93:b0:3cf:d0ba:e5ff with SMTP id p19-20020a05600c1d9300b003cfd0bae5ffmr43612400wms.36.1669802250737;
+        Wed, 30 Nov 2022 01:57:30 -0800 (PST)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id e15-20020a5d530f000000b002420dba6447sm1031321wrv.59.2022.11.30.01.57.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Nov 2022 01:57:30 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <544fff8a-7d56-57a1-00a3-d1a9302e227c@dunelm.org.uk>
+Date:   Wed, 30 Nov 2022 09:57:29 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: ab/cmake-nix-and-ci (was Re: What's cooking in git.git (Nov 2022,
+ #07; Tue, 29))
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqsfi22j67.fsf@gitster.g>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+In-Reply-To: <xmqqsfi22j67.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio
 
-On Thu, Nov 17 2022, Teng Long wrote:
+On 29/11/2022 09:40, Junio C Hamano wrote:
+> * ab/cmake-nix-and-ci (2022-11-04) 14 commits
+>    (merged to 'next' on 2022-11-08 at 6ef4e93b36)
+>   + CI: add a "linux-cmake-test" to run cmake & ctest on linux
+>   + cmake: copy over git-p4.py for t983[56] perforce test
+>   + cmake: only look for "sh" in "C:/Program Files" on Windows
+>   + cmake: increase test timeout on Windows only
+>   + cmake: support GIT_TEST_OPTS, abstract away WIN32 defaults
+>   + Makefile + cmake: use environment, not GIT-BUILD-DIR
+>   + test-lib.sh: support a "GIT_TEST_BUILD_DIR"
+>   + cmake: set "USE_LIBPCRE2" in "GIT-BUILD-OPTIONS" for test-lib.sh
+>   + cmake & test-lib.sh: add a $GIT_SOURCE_DIR variable
+>   + cmake: chmod +x the bin-wrappers/* & SCRIPT_{SH,PERL} & git-p4
+>   + cmake: don't copy chainlint.pl to build directory
+>   + cmake: update instructions for portable CMakeLists.txt
+>   + cmake: use "-S" and "-B" to specify source and build directories
+>   + cmake: don't invoke msgfmt with --statistics
+> 
+>   Fix assorted issues with CTest on *nix machines.
 
-(I saw this in the latest "seen" push-out)
+If that's all this series did then I think it would be fine. However it 
+also makes changes to test-lib.sh to hard code the build directory in an 
+attempt to remove GIT-BUILD-DIR. I'm not convinced that is an 
+improvement on the status quo. As I mentioned previously [1] I think the 
+non-*nix related patches could do with a review from the windows folks 
+before this hits master.
 
-> From: Teng Long <dyroneteng@gmail.com>
-> [...]
-> +__attribute__((unused))
-> +static int match_pattern(const char *line)
-> +{
-> +	int ret = 0;
-> +	regex_t r;
-> +	regmatch_t m[1];
+Best Wishes
 
-Here we hardcode the size of "m".
+Phillip
 
-(Re-arranged a bit)
+[1] 
+https://lore.kernel.org/git/64b91b29-bbcd-e946-1f20-c0a5be63d9b7@dunelm.org.uk/
 
-> +
-> +	ret = regcomp(&r, pattern, 0);
-> +	if (ret) {
-> +		regerror(ret, &r, errbuf, sizeof(errbuf));
-> +		die("failed regcomp() for pattern '%s' (%s)", pattern, errbuf);
-
-Needs _().
-
-> +	}
-> +	ret = regexec(&r, line, 1, m, 0);
-
-Here we hardcode that "1" again, but we should use ARRAY_SIZE()
-instead. See an existing example at:
-
-	git grep -W regexec.*ARRAY
-
-(Re-arranged from above)
-
-> +	char errbuf[64];
-
-This is a super short errbuf, in other cases we hardcode this to 1024,
-which seems reasonable.
+>   Will cook in 'next'.
+>   source: <cover-v4-00.14-00000000000-20221103T160255Z-avarab@gmail.com>
