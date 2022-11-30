@@ -2,117 +2,474 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB705C4167B
-	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 00:52:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB7BBC4167B
+	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 00:52:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232078AbiK3AwB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 29 Nov 2022 19:52:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52614 "EHLO
+        id S232373AbiK3Aws (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 29 Nov 2022 19:52:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232037AbiK3Av7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 29 Nov 2022 19:51:59 -0500
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9BF571F22
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 16:51:56 -0800 (PST)
-Received: by mail-yb1-xb33.google.com with SMTP id 7so19688261ybp.13
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 16:51:56 -0800 (PST)
+        with ESMTP id S232284AbiK3Awi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 29 Nov 2022 19:52:38 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E7E771F38
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 16:52:19 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id ay14-20020a05600c1e0e00b003cf6ab34b61so286990wmb.2
+        for <git@vger.kernel.org>; Tue, 29 Nov 2022 16:52:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=OdV+Q1z1cjWxcima2Jut4CusdXT/73AXyM8wkN/7PA0=;
-        b=AS7l+ZlQerskhYB6KGLGVf/YlXXzwwiK1YkEUXl0bOXnHD6ne6LMLGufwUmqYXZZRx
-         06zapPv2bNETfiug7Yt6cv6cYQgZCc3QFE0XbDzfQwB8AK6uaA+RWR2m/iwoM3+R0nbT
-         MZgICY0zyUOTFqxAJHReJPgmmqYQioWgs0wRTe6zu700YEAqTMCDYLIwEYo4M4En+Znq
-         12C2DFJxa8dt23a62yw3bmffRTP/AAXBvyvLcOC04erh5KDL8WfXtvasp/ecJXmyvYxs
-         kACYIA+kzbBbONIsHQNCd/OOlpHFh51hAAQy9HWfxpwC2NzL15w7DkiHGepGq49e7d7x
-         Cq1A==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8B+IhBSidaYdb3jqfq8qLIzS2gf0Hc1nGnPSJsiCtHQ=;
+        b=o8iEU5wwAo54rCQ60JyfC2m00T0aGo/2ladvsmiCMpypmtv3rOiDBbXtD24APskzct
+         zxiuk/c9AtdzPgQIiGoeEW80XqKoiUzKP6/J7h3kJee6hOXKEmzqtbojzxskC5u2Q14t
+         KNXJkSSBNmBYQS4oIi1PFAgbpzT6Ofo1Jfd5e+yjqZ0q5TLbV9kRlcy5jZswV9j1KN8X
+         sfENPuKBLJMBbNgQEESf+KwfGR96jmYvS5tBvSqpL0zmSbUYBoNdjqcbmhiP+vjUNAGb
+         449bcwyPAMbNSlWvPo9TzmPI/GSWJQwIHt+atB+0WOaRiiJHcx4yy5DCmaD+wdRfbnz1
+         YcEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OdV+Q1z1cjWxcima2Jut4CusdXT/73AXyM8wkN/7PA0=;
-        b=boMHSEbqq1i5WvJDzD5kmjBGEFed2mrgbN1xwP9ar6KK95NhqzXrSJjwwvPMz7IAcZ
-         XPOfkdpMJ3ZFZCr+IxFGurYq8IyUegm0j6N+ILyu5lfTuZLZAzjc5/4sAk8CBByZU8wD
-         Forv7HCfLAi8DcvbswYdaOKtFX6iQu4vrUV81P65WdOHnlFMSSbb9fakuk7m3dRrg2f8
-         p3JGlbILVPP+605eANH9Rtm+LwQEBjC4GAZBvdbxdQFJgNb6AGueJ7/z7CYQO6WDYvnd
-         21/LtcElY1x4+keo4s18sqxjTfgkhEf155T7i4xkphBlsVPIsxJ/0JXdVbDu8zVnwG3S
-         zDrQ==
-X-Gm-Message-State: ANoB5pnk9S1bLR/B7tvXbS+4jq28XSA2OeB9/p6Q+r8df3ALvlo6EG4q
-        k4JV8/MiUig56jg3woRhDzwZZzQpjlpBT9LFlwC/trtV7IQ=
-X-Google-Smtp-Source: AA0mqf4cSEdA+h1ADm+CNhL4IO9kmrsiqPej6oDnzavyhA6duyMP0l1LeNWnjOJAUd/DtQHY+k14RR7z9JJvFg6mB1A=
-X-Received: by 2002:a25:da50:0:b0:6f4:3d4b:73c3 with SMTP id
- n77-20020a25da50000000b006f43d4b73c3mr19242920ybf.316.1669769496909; Tue, 29
- Nov 2022 16:51:36 -0800 (PST)
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8B+IhBSidaYdb3jqfq8qLIzS2gf0Hc1nGnPSJsiCtHQ=;
+        b=L4TblW8chQRtB3s8dVCtc+6Iq4vViON/g511aRMUkWkY1GXXdAwnKNeUiDcEgg6hGL
+         w1BoGMDja5vjiA4TXSTJqjC/CcbDeW4kZhYfbI0gYuFncG5IQFoOialgt/oRG8E9qyhF
+         NV3fdzYU92AXosQjvotmV2M1c6c4pZGK9XL2NkSW7xY1hAfmocw+OlC7rlORHvUmMEId
+         1z6uReHgcrtOCY4vZcP/ikrrA580g8xI4+r2PV0wbcE1MAirh5zVV+oCZLV2cthAJeiz
+         4p9KTWUQ/UrM0WCNgLmGDHJ4fwpQw5olFdaS3IYQ3gK9UlyzmmLfJeM9hayzqJWxOVjd
+         OUNg==
+X-Gm-Message-State: ANoB5plmfCS1lJ6AyB+dZ3MBs9NKjpUkIT4dHAS8LJx6kwYXp4UunTnk
+        Z67x2DwjgDM/j8PISLiLWAgPLCutvXk=
+X-Google-Smtp-Source: AA0mqf5NcucYhQ18T/nu6Q1+jCjDIQs1K8BaR5VaA+a2ufypkNDHOGQZjB+Fcc5fd4zigIwhnK6EvQ==
+X-Received: by 2002:a05:600c:2057:b0:3c4:5c4:1df1 with SMTP id p23-20020a05600c205700b003c405c41df1mr44813426wmg.103.1669769537692;
+        Tue, 29 Nov 2022 16:52:17 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id o15-20020a5d474f000000b002421a8f4fa6sm6070371wrs.92.2022.11.29.16.52.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Nov 2022 16:52:17 -0800 (PST)
+Message-Id: <pull.1384.v9.git.1669769536707.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1384.v8.git.1669154823035.gitgitgadget@gmail.com>
+References: <pull.1384.v8.git.1669154823035.gitgitgadget@gmail.com>
+From:   "Rudy Rigot via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 30 Nov 2022 00:52:16 +0000
+Subject: [PATCH v9] status: modernize git-status "slow untracked files" advice
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1384.v7.git.1669136378754.gitgitgadget@gmail.com>
- <pull.1384.v8.git.1669154823035.gitgitgadget@gmail.com> <xmqq5yf3fx4s.fsf@gitster.g>
- <CANaDLW+ukK2GU7NzkCvXVNc9DX3_93Pp+PHq-WcLpRJizPidVA@mail.gmail.com>
-In-Reply-To: <CANaDLW+ukK2GU7NzkCvXVNc9DX3_93Pp+PHq-WcLpRJizPidVA@mail.gmail.com>
-From:   Rudy Rigot <rudy.rigot@gmail.com>
-Date:   Tue, 29 Nov 2022 18:51:25 -0600
-Message-ID: <CANaDLW+Zuwpk_7jTO5LmWTXDT8LRPPcGARkNtaV6ORioWyZ0tg@mail.gmail.com>
-Subject: Re: [PATCH v8] status: modernize git-status "slow untracked files" advice
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Rudy Rigot via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
+To:     git@vger.kernel.org
+Cc:     Jeff Hostetler <git@jeffhostetler.com>,
         Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Derrick Stolee <derrickstolee@github.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Rudy Rigot <rudy.rigot@gmail.com>,
+        Rudy Rigot <rudy.rigot@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alright, I tried the "status.enumerateUntrackedDelayMS" approach, but
-I couldn't pull it off and now I am stumped.
+From: Rudy Rigot <rudy.rigot@gmail.com>
+
+`git status` can be slow when there are a large number of
+untracked files and directories since Git must search the entire
+worktree to enumerate them.  When it is too slow, Git prints
+advice with the elapsed search time and a suggestion to disable
+the search using the `-uno` option.  This suggestion also carries
+a warning that might scare off some users.
+
+However, these days, `-uno` isn't the only option.  Git can reduce
+the size and time of the untracked file search when the
+`core.untrackedCache` and `core.fsmonitor` features are enabled by
+caching results from previous `git status` invocations.
+
+Therefore, update the `git status` man page to explain the various
+configuration options, and update the advice to provide more
+detail about the current configuration and to refer to the updated
+documentation.
+
+Signed-off-by: Rudy Rigot <rudy.rigot@gmail.com>
+---
+    status: modernize git-status "slow untracked files" advice
+    
+    Here is version 9 for this patch.
+    
+    Changes since v8:
+    
+     * Improved tests.
+     * The untracked files delay measured is now set to always the same
+       value in test cases. That has allowed to remove all sed calls from
+       tests.
+     * Improved documentation.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1384%2Frudyrigot%2Fadvice_statusFsmonitor-v9
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1384/rudyrigot/advice_statusFsmonitor-v9
+Pull-Request: https://github.com/gitgitgadget/git/pull/1384
+
+Range-diff vs v8:
+
+ 1:  16e3721515b ! 1:  fcb298e6e5a status: modernize git-status "slow untracked files" advice
+     @@ Documentation/git-status.txt: during the write may conflict with other simultane
+       them to fail. Scripts running `status` in the background should consider
+       using `git --no-optional-locks status` (see linkgit:git[1] for details).
+       
+     -+UNTRACKED FILES AND STATUS SPEED
+     -+--------------------------------
+     ++UNTRACKED FILES AND PERFORMANCE
+     ++-------------------------------
+      +
+      +`git status` can be very slow in large worktrees if/when it
+      +needs to search for untracked files and directories. There are
+      +many configuration options available to speed this up by either
+      +avoiding the work or making use of cached results from previous
+      +Git commands. There is no single optimum set of settings right
+     -+for everyone.  Here is a brief summary of the relevant options
+     -+to help you choose which is right for you.
+     -+
+     -+* First, you may want to run `git status` again. Your current
+     -+	configuration may already be caching `git status` results,
+     -+	so it could be faster on subsequent runs.
+     ++for everyone. We'll list a summary of the relevant options to help
+     ++you, but before going into the list, you may want to run `git status`
+     ++again, because your configuration may already be caching `git status`
+     ++results, so it could be faster on subsequent runs.
+      +
+      +* The `--untracked-files=no` flag or the
+     -+	`status.showUntrackedfiles=false` config (see above for both) :
+     ++	`status.showUntrackedfiles=false` config (see above for both):
+      +	indicate that `git status` should not report untracked
+      +	files. This is the fastest option. `git status` will not list
+      +	the untracked files, so you need to be careful to remember if
+      +	you create any new files and manually `git add` them.
+      +
+     -+* `advice.statusUoption=false` (see linkgit:git-config[1]) :
+     -+	this config option disables a warning message when the search
+     -+	for untracked files takes longer than desired. In some large
+     -+	repositories, this message may appear frequently and not be a
+     -+	helpful signal.
+     ++* `advice.statusUoption=false` (see linkgit:git-config[1]):
+     ++	setting this variable to `false` disables the warning message
+     ++	given when enumerating untracked files takes more than 2
+     ++	seconds.  In a large project, it may take longer and the user
+     ++	may have already accepted the trade off (e.g. using "-uno" may
+     ++	not be an acceptable option for the user), in which case, there
+     ++	is no point issuing the warning message, and in such a case,
+     ++	disabling the warning may be the best.
+      +
+     -+* `core.untrackedCache=true` (see linkgit:git-update-index[1]) :
+     ++* `core.untrackedCache=true` (see linkgit:git-update-index[1]):
+      +	enable the untracked cache feature and only search directories
+      +	that have been modified since the previous `git status` command.
+      +	Git remembers the set of untracked files within each directory
+     @@ Documentation/git-status.txt: during the write may conflict with other simultane
+      +
+      +* `core.untrackedCache=true` and `core.fsmonitor=true` or
+      +	`core.fsmonitor=<hook_command_pathname>` (see
+     -+	linkgit:git-update-index[1]) : enable both the untracked cache
+     ++	linkgit:git-update-index[1]): enable both the untracked cache
+      +	and FSMonitor features and only search directories that have
+      +	been modified since the previous `git status` command.  This
+      +	is faster than using just the untracked cache alone because
+     @@ t/t7508-status.sh: test_expect_success 'racy timestamps will be fixed for dirty
+      +		cd slowstatus &&
+      +		git config core.untrackedCache false &&
+      +		git config core.fsmonitor false &&
+     -+		GIT_TEST_UF_DELAY_WARNING=1 git status >out &&
+     -+		sed "s/[0-9]\.[0-9][0-9]/X/g" out >actual &&
+     ++		GIT_TEST_UF_DELAY_WARNING=1 git status >actual &&
+      +		cat >expected <<-\EOF &&
+      +		On branch main
+      +
+     -+		It took X seconds to enumerate untracked files.
+     -+		See '"'"'git help status'"'"' for information on how to improve this.
+     ++		It took 3.25 seconds to enumerate untracked files.
+     ++		See '\''git help status'\'' for information on how to improve this.
+      +
+      +		nothing to commit, working tree clean
+      +		EOF
+     @@ t/t7508-status.sh: test_expect_success 'racy timestamps will be fixed for dirty
+      +		cd slowstatus &&
+      +		git config core.untrackedCache true &&
+      +		git config core.fsmonitor false &&
+     -+		GIT_TEST_UF_DELAY_WARNING=1 git status >out &&
+     -+		sed "s/[0-9]\.[0-9][0-9]/X/g" out >actual &&
+     ++		GIT_TEST_UF_DELAY_WARNING=1 git status >actual &&
+      +		cat >expected <<-\EOF &&
+      +		On branch main
+      +
+     -+		It took X seconds to enumerate untracked files.
+     -+		See '"'"'git help status'"'"' for information on how to improve this.
+     ++		It took 3.25 seconds to enumerate untracked files.
+     ++		See '\''git help status'\'' for information on how to improve this.
+      +
+      +		nothing to commit, working tree clean
+      +		EOF
+     @@ t/t7508-status.sh: test_expect_success 'racy timestamps will be fixed for dirty
+      +		cd slowstatus &&
+      +		git config core.untrackedCache true &&
+      +		git config core.fsmonitor true &&
+     -+		GIT_TEST_UF_DELAY_WARNING=1 git status >out &&
+     -+		sed "s/[0-9]\.[0-9][0-9]/X/g" out >actual &&
+     ++		GIT_TEST_UF_DELAY_WARNING=1 git status >actual &&
+      +		cat >expected <<-\EOF &&
+      +		On branch main
+      +
+     -+		It took X seconds to enumerate untracked files,
+     ++		It took 3.25 seconds to enumerate untracked files,
+      +		but the results were cached, and subsequent runs may be faster.
+     -+		See '"'"'git help status'"'"' for information on how to improve this.
+     ++		See '\''git help status'\'' for information on how to improve this.
+      +
+      +		nothing to commit, working tree clean
+      +		EOF
+     @@ wt-status.c: static void wt_longstatus_print_tracking(struct wt_status *s)
+       	strbuf_release(&sb);
+       }
+       
+     -+static int uf_was_slow(uint32_t untracked_in_ms)
+     ++static int uf_was_slow(struct wt_status *s)
+      +{
+      +	if (getenv("GIT_TEST_UF_DELAY_WARNING"))
+     -+		untracked_in_ms += UF_DELAY_WARNING_IN_MS + 1;
+     -+	return UF_DELAY_WARNING_IN_MS < untracked_in_ms;
+     ++		s->untracked_in_ms = 3250;
+     ++	return UF_DELAY_WARNING_IN_MS < s->untracked_in_ms;
+      +}
+      +
+       static void show_merge_in_progress(struct wt_status *s,
+     @@ wt-status.c: static void wt_longstatus_print(struct wt_status *s)
+       		if (s->show_ignored_mode)
+       			wt_longstatus_print_other(s, &s->ignored, _("Ignored files"), "add -f");
+      -		if (advice_enabled(ADVICE_STATUS_U_OPTION) && 2000 < s->untracked_in_ms) {
+     -+		if (advice_enabled(ADVICE_STATUS_U_OPTION) && uf_was_slow(s->untracked_in_ms)) {
+     ++		if (advice_enabled(ADVICE_STATUS_U_OPTION) && uf_was_slow(s)) {
+       			status_printf_ln(s, GIT_COLOR_NORMAL, "%s", "");
+      +			if (fsm_mode > FSMONITOR_MODE_DISABLED) {
+      +				status_printf_ln(s, GIT_COLOR_NORMAL,
 
 
-This is somewhat frustrating, so I'd welcome guidance if anyone has
-time and is interested. Since this doesn't actually work, I don't
-think I should create an actual patch for it on the mailing list, so
-here are two other ways to show what I've got, I hope they're
-acceptable:
+ Documentation/git-status.txt | 60 +++++++++++++++++++++++++++++++
+ t/t7508-status.sh            | 70 ++++++++++++++++++++++++++++++++++++
+ wt-status.c                  | 28 ++++++++++++---
+ 3 files changed, 153 insertions(+), 5 deletions(-)
 
-- in Gist form:
-https://gist.github.com/rudyrigot/aa3e8e5ddb4f71fdc7fc0e92d9b7a4b8
-- in GitHub compare form:
-https://github.com/git/git/compare/master...rudyrigot:git:status_enumerateUntrackedDelayMS
+diff --git a/Documentation/git-status.txt b/Documentation/git-status.txt
+index 5e438a7fdc1..a051b1e8f38 100644
+--- a/Documentation/git-status.txt
++++ b/Documentation/git-status.txt
+@@ -457,6 +457,66 @@ during the write may conflict with other simultaneous processes, causing
+ them to fail. Scripts running `status` in the background should consider
+ using `git --no-optional-locks status` (see linkgit:git[1] for details).
+ 
++UNTRACKED FILES AND PERFORMANCE
++-------------------------------
++
++`git status` can be very slow in large worktrees if/when it
++needs to search for untracked files and directories. There are
++many configuration options available to speed this up by either
++avoiding the work or making use of cached results from previous
++Git commands. There is no single optimum set of settings right
++for everyone. We'll list a summary of the relevant options to help
++you, but before going into the list, you may want to run `git status`
++again, because your configuration may already be caching `git status`
++results, so it could be faster on subsequent runs.
++
++* The `--untracked-files=no` flag or the
++	`status.showUntrackedfiles=false` config (see above for both):
++	indicate that `git status` should not report untracked
++	files. This is the fastest option. `git status` will not list
++	the untracked files, so you need to be careful to remember if
++	you create any new files and manually `git add` them.
++
++* `advice.statusUoption=false` (see linkgit:git-config[1]):
++	setting this variable to `false` disables the warning message
++	given when enumerating untracked files takes more than 2
++	seconds.  In a large project, it may take longer and the user
++	may have already accepted the trade off (e.g. using "-uno" may
++	not be an acceptable option for the user), in which case, there
++	is no point issuing the warning message, and in such a case,
++	disabling the warning may be the best.
++
++* `core.untrackedCache=true` (see linkgit:git-update-index[1]):
++	enable the untracked cache feature and only search directories
++	that have been modified since the previous `git status` command.
++	Git remembers the set of untracked files within each directory
++	and assumes that if a directory has not been modified, then
++	the set of untracked files within has not changed.  This is much
++	faster than enumerating the contents of every directory, but still
++	not without cost, because Git still has to search for the set of
++	modified directories. The untracked cache is stored in the
++	`.git/index` file. The reduced cost of searching for untracked
++	files is offset slightly by the increased size of the index and
++	the cost of keeping it up-to-date. That reduced search time is
++	usually worth the additional size.
++
++* `core.untrackedCache=true` and `core.fsmonitor=true` or
++	`core.fsmonitor=<hook_command_pathname>` (see
++	linkgit:git-update-index[1]): enable both the untracked cache
++	and FSMonitor features and only search directories that have
++	been modified since the previous `git status` command.  This
++	is faster than using just the untracked cache alone because
++	Git can also avoid searching for modified directories.  Git
++	only has to enumerate the exact set of directories that have
++	changed recently. While the FSMonitor feature can be enabled
++	without the untracked cache, the benefits are greatly reduced
++	in that case.
++
++Note that after you turn on the untracked cache and/or FSMonitor
++features it may take a few `git status` commands for the various
++caches to warm up before you see improved command times.  This is
++normal.
++
+ SEE ALSO
+ --------
+ linkgit:gitignore[5]
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index 2b7ef6c41a4..aed07c5b622 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -1676,4 +1676,74 @@ test_expect_success 'racy timestamps will be fixed for dirty worktree' '
+ 	! test_is_magic_mtime .git/index
+ '
+ 
++test_expect_success 'setup slow status advice' '
++	GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main git init slowstatus &&
++	(
++		cd slowstatus &&
++		cat >.gitignore <<-\EOF &&
++		/actual
++		/expected
++		/out
++		EOF
++		git add .gitignore &&
++		git commit -m "Add .gitignore" &&
++		git config advice.statusuoption true
++	)
++'
++
++test_expect_success 'slow status advice when core.untrackedCache and fsmonitor are unset' '
++	(
++		cd slowstatus &&
++		git config core.untrackedCache false &&
++		git config core.fsmonitor false &&
++		GIT_TEST_UF_DELAY_WARNING=1 git status >actual &&
++		cat >expected <<-\EOF &&
++		On branch main
++
++		It took 3.25 seconds to enumerate untracked files.
++		See '\''git help status'\'' for information on how to improve this.
++
++		nothing to commit, working tree clean
++		EOF
++		test_cmp expected actual
++	)
++'
++
++test_expect_success 'slow status advice when core.untrackedCache true, but not fsmonitor' '
++	(
++		cd slowstatus &&
++		git config core.untrackedCache true &&
++		git config core.fsmonitor false &&
++		GIT_TEST_UF_DELAY_WARNING=1 git status >actual &&
++		cat >expected <<-\EOF &&
++		On branch main
++
++		It took 3.25 seconds to enumerate untracked files.
++		See '\''git help status'\'' for information on how to improve this.
++
++		nothing to commit, working tree clean
++		EOF
++		test_cmp expected actual
++	)
++'
++
++test_expect_success 'slow status advice when core.untrackedCache true, and fsmonitor' '
++	(
++		cd slowstatus &&
++		git config core.untrackedCache true &&
++		git config core.fsmonitor true &&
++		GIT_TEST_UF_DELAY_WARNING=1 git status >actual &&
++		cat >expected <<-\EOF &&
++		On branch main
++
++		It took 3.25 seconds to enumerate untracked files,
++		but the results were cached, and subsequent runs may be faster.
++		See '\''git help status'\'' for information on how to improve this.
++
++		nothing to commit, working tree clean
++		EOF
++		test_cmp expected actual
++	)
++'
++
+ test_done
+diff --git a/wt-status.c b/wt-status.c
+index 5813174896c..b430d25da43 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -18,8 +18,10 @@
+ #include "worktree.h"
+ #include "lockfile.h"
+ #include "sequencer.h"
++#include "fsmonitor-settings.h"
+ 
+ #define AB_DELAY_WARNING_IN_MS (2 * 1000)
++#define UF_DELAY_WARNING_IN_MS (2 * 1000)
+ 
+ static const char cut_line[] =
+ "------------------------ >8 ------------------------\n";
+@@ -1205,6 +1207,13 @@ static void wt_longstatus_print_tracking(struct wt_status *s)
+ 	strbuf_release(&sb);
+ }
+ 
++static int uf_was_slow(struct wt_status *s)
++{
++	if (getenv("GIT_TEST_UF_DELAY_WARNING"))
++		s->untracked_in_ms = 3250;
++	return UF_DELAY_WARNING_IN_MS < s->untracked_in_ms;
++}
++
+ static void show_merge_in_progress(struct wt_status *s,
+ 				   const char *color)
+ {
+@@ -1814,6 +1823,7 @@ static void wt_longstatus_print(struct wt_status *s)
+ {
+ 	const char *branch_color = color(WT_STATUS_ONBRANCH, s);
+ 	const char *branch_status_color = color(WT_STATUS_HEADER, s);
++	enum fsmonitor_mode fsm_mode = fsm_settings__get_mode(s->repo);
+ 
+ 	if (s->branch) {
+ 		const char *on_what = _("On branch ");
+@@ -1870,13 +1880,21 @@ static void wt_longstatus_print(struct wt_status *s)
+ 		wt_longstatus_print_other(s, &s->untracked, _("Untracked files"), "add");
+ 		if (s->show_ignored_mode)
+ 			wt_longstatus_print_other(s, &s->ignored, _("Ignored files"), "add -f");
+-		if (advice_enabled(ADVICE_STATUS_U_OPTION) && 2000 < s->untracked_in_ms) {
++		if (advice_enabled(ADVICE_STATUS_U_OPTION) && uf_was_slow(s)) {
+ 			status_printf_ln(s, GIT_COLOR_NORMAL, "%s", "");
++			if (fsm_mode > FSMONITOR_MODE_DISABLED) {
++				status_printf_ln(s, GIT_COLOR_NORMAL,
++						_("It took %.2f seconds to enumerate untracked files,\n"
++						"but the results were cached, and subsequent runs may be faster."),
++						s->untracked_in_ms / 1000.0);
++			} else {
++				status_printf_ln(s, GIT_COLOR_NORMAL,
++						_("It took %.2f seconds to enumerate untracked files."),
++						s->untracked_in_ms / 1000.0);
++			}
+ 			status_printf_ln(s, GIT_COLOR_NORMAL,
+-					 _("It took %.2f seconds to enumerate untracked files. 'status -uno'\n"
+-					   "may speed it up, but you have to be careful not to forget to add\n"
+-					   "new files yourself (see 'git help status')."),
+-					 s->untracked_in_ms / 1000.0);
++					_("See 'git help status' for information on how to improve this."));
++			status_printf_ln(s, GIT_COLOR_NORMAL, "%s", "");
+ 		}
+ 	} else if (s->committable)
+ 		status_printf_ln(s, GIT_COLOR_NORMAL, _("Untracked files not listed%s"),
 
-The issues I'm seeing:
-
-- No matter how I set the config from the test, it doesn't seem to
-have any effect. I'm thinking I might be doing something wrong in how
-I set the value, which I've done in git_status_config in
-builtin/commit.c, which very well may be the wrong place.
-- Therefore, I've been testing things by changing the default value in
-wt_status_prepare in wt-status.c. Setting it at 0 and making the
-operator <= instead of < makes the advice display, which tells me that
-the logic is sound. Setting at its intended value of 2000 doesn't
-display the advice message, as expected. But setting it at -1 also
-doesn't display it. I'm a bit puzzled about why that would be, and I'm
-wondering: maybe the int is unsigned? It doesn't look like it based on
-how the structure field is declared in wt-status.h, but I know my own
-limits in C so I could be wrong.
-
-
-Now, I'm also well aware that Junio raised that advice leaving the
-door wide open to not actually solve this as part of this patch; and I
-did express in my previous reply that I am not intuitively convinced
-there is much value to it for users, although I could be wrong of
-course. So with that, if it's better to let it go, that is fine by me
-too.
-
-With that in mind, I implemented the alternative that Junio was
-proposing instead (assigning the value of `s->untracked_in_ms`), and
-it seems to work all good. It just passed CI, so I'm about to submit
-that as a patch, with every other piece of feedback also addressed.
-
-
-Unrelated note: I noticed that the first 2 bits of feedback applied to
-docs that were part of past patches, but were removed in the last
-patch. The rest of the doc feedback was current, so I was able to
-implement them, but obviously I couldn't implement the first 2 ones,
-since the issues they're about are gone.
+base-commit: 319605f8f00e402f3ea758a02c63534ff800a711
+-- 
+gitgitgadget
