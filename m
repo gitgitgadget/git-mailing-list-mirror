@@ -2,117 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AAAD9C4321E
-	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 18:04:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 88FDBC4321E
+	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 18:04:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229748AbiK3SEQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Nov 2022 13:04:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58158 "EHLO
+        id S230031AbiK3SEY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Nov 2022 13:04:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229534AbiK3SEN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2022 13:04:13 -0500
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 180E66C72B
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 10:04:12 -0800 (PST)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-3b10392c064so179758437b3.0
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 10:04:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=yopEHLV2QMy+aasWtc7lZ/JPy46gPyRvefGlE6kFE2A=;
-        b=IeSxID7o9mDP8SpVXygklmp7G8DKRQ2hmf0bM7aT4yMkt7NmRZxD+985TBAbFZ+wh5
-         YZ978sqAMHOZT8LQp2EzzninDSRC8FboV9Ca9MKZS5UwgIOk+wn41L6RSULr5JssFUdF
-         Qz2sE2DEtTPWKW1NvDQURYht/3R7eCfPGrvT8Lewl8IKndg1i9tmvSg/Xakt3i7dSz8g
-         Plf5hHOVmzMdpJnUqedumY7kVcXfQuyvgU/Sls2VeUCygHymfRaPDqxWNIqJTQZnrxCO
-         wrYGg5kmZmRu9EU3D2M1ienjScnzj7dVSN4SCQEAjxwUZz6r3ev3VEl4iPS5W+r7wtUS
-         fpRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yopEHLV2QMy+aasWtc7lZ/JPy46gPyRvefGlE6kFE2A=;
-        b=SrfgCcZORx/R5UjnIqRl6ugG9Ue+8FPIWx4YJnLe8kNivQ/KkrAmd+oyC56yG95b3O
-         7fqp4cJ2zEd/NgzPpTJgZREdTZToU0PtuzSOxmfuAkEVYWi97SF98UMZYVWCgodeWt7l
-         DaSbRUEA4fK6VT2cYu2hratk/F92K2OAijSpAkvLu8dgJEehVy1prVcNpaJAxYxsuY1E
-         l1fO1YuovgwcS2Umww3gACWWJue7DGDXqhsgs9o5/9VFCuBbeVBghEJZDCIo+k30KphB
-         KiFzGEcV/eDyp701qGZZ9h88euCTXYiKNFPLngul0iTMu09Tdj/P7yC59Y6+7dC5u8Fx
-         3sjw==
-X-Gm-Message-State: ANoB5pmEna7ji1KcUg0Zq943tScUhpSXS8Bw2eVnF77Ejp72fyYYtvJR
-        TjYJ9AYf5C8S9Ugp7fq03nxNyp6rbVuOR/pmju9l4w==
-X-Google-Smtp-Source: AA0mqf5y7l8TvtSbF8Ik2Z0JGoEOsXsZT2qJa9WC5TGAl2de8XNHetXdUZZ0X6eWJIhDt7IlON/tIBgvOQAs/W9fznw=
-X-Received: by 2002:a81:5345:0:b0:399:36f1:d851 with SMTP id
- h66-20020a815345000000b0039936f1d851mr40621397ywb.369.1669831451141; Wed, 30
- Nov 2022 10:04:11 -0800 (PST)
+        with ESMTP id S229975AbiK3SEU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2022 13:04:20 -0500
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 635827062A
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 10:04:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1669831448; bh=ULKjAoU9yDQjzsXoPz2U6xbYLnHuFks+NR39y5wNP8Q=;
+        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
+        b=CWJjWlKgPPDlhZBgH8D6zOYPoT14i1aun5znETOb23W0wFj0ZSxBteqaNfv7SDqCC
+         WFHN/hTbptcjGx5uw9sDQIMxfMWp9E5nWpbtD6+wED01HCwhaSEWKe3pArLAwa2K5n
+         MsVy5TJRysyShMfzf+g9VEflSOCwdSyssUhXwvX3HiNoOsoH6lq8DqYj9LvcF8fA0G
+         PMYuBZbJ/ms7c8MHjBJ0uZWOhJAWE8kp6/Pr0fPsozf6fnq6/fGOnoH4hxxKugPk5c
+         S3O0gCDOykBO4iG1M4I70VVzCRK2blUBScWL69UMvZDDgZZpb3mqKWlagrnOti5O5A
+         Lod9y9MR9VAOg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.154.159]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MT7aP-1pRD8R3Akx-00UUtw; Wed, 30
+ Nov 2022 19:04:08 +0100
+Message-ID: <b5f611f5-86e2-6b11-20a4-a847c97b145f@web.de>
+Date:   Wed, 30 Nov 2022 19:04:08 +0100
 MIME-Version: 1.0
-References: <20221108184200.2813458-6-calvinwan@google.com> <CABPp-BH3hxXhAGeHJ56m=S+GknsVqYExdJ7eKs3bJYkiMaWukQ@mail.gmail.com>
-In-Reply-To: <CABPp-BH3hxXhAGeHJ56m=S+GknsVqYExdJ7eKs3bJYkiMaWukQ@mail.gmail.com>
-From:   Calvin Wan <calvinwan@google.com>
-Date:   Wed, 30 Nov 2022 10:04:00 -0800
-Message-ID: <CAFySSZBJ1tQk0n+GEW-6MBDafGmTy75QS41oriwGFKiq8McR=Q@mail.gmail.com>
-Subject: Re: [PATCH v4 5/5] diff-lib: parallelize run_diff_files for submodules
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org, emilyshaffer@google.com, avarab@gmail.com,
-        phillip.wood123@gmail.com, myriamanis@google.com
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.5.0
+Subject: [PATCH 2/3] diff: let prep_parse_options() return parseopt array
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>
+References: <0620b4a6-b80a-d8a0-5a35-857b9fe0c986@web.de>
+In-Reply-To: <0620b4a6-b80a-d8a0-5a35-857b9fe0c986@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:OLHQ0ypof7sUGyAboeOGdNJfGnXJdgC9GasGPtT1DhOZuDpA/X+
+ nRfn2kULna9I/ErnScV0IFz6qZyZvMJY0Jo0MsduFRONiyZyFt0/a1l+Wr1zJGxSdTdz7rl
+ Hrx7QATnesctUKB8mcNcBRj5MQCG+4wAb5uyUb3WbarAwQGNIvfgAh91meYKRoqs4lrjIx3
+ OyYTkzk9dkZDeXPM4hZNg==
+UI-OutboundReport: notjunk:1;M01:P0:x5ewp7ErxyU=;XjteSdSwKn0+shy0AgDz40BP2I6
+ CdlfYlDc8cXy8EDs/Fn4RHdsL6D13ag6um6Xim7X6h6HOsD7UTKOp8j0zYw60mSHtWyvgXCZE
+ 31oQRCUVX/XY0VIOHPAWi1doIznaykknz4Izt9TWtQ4mmkL2hYtjPUo8e4lnuoWt5Y/09PJnK
+ yyniYXS4voQ1NCuBBcI+TQZEXxgIk7cduCcxOvt9LMFGpiDc1yBmJTJAITTI6RCjkLKSiSRMW
+ fHQubNOhdgnDVXzAk6g/hQBQxqGYnWKxvVNn1bA08Y0HSnx22q7HWMrlXavxNp9S+s2GJEtLU
+ mqnatiR8bGOPWbnE1RUx1UvqIwMr+Mxd0tGWONddImamVvX3axyCtU5Zh96n5GjuXWuChZiVs
+ 6Lq1nWhjkA7mxIKUdX/pHEXIjhKxP/g2L00uFbce/5OLJTgK6F63X+6WDZyQnkKsPmDPyoZu5
+ t66VqKwc4P7dZceq9p+ZkMGtFI98iEcfio1bywM0cwuENS81UcLa0PRtUARm7FdvQdD1USbRm
+ 35PMGpkp5YLeVX6sfx57xMw5kZRpmlxCT8JZX35eoWvmY9Ql5UOdlRflqc84X64v8debscl+K
+ eKM1gni3kSR69BiXThdFBnnTugh3R1GoywAulU1FO/j25y42bgAGmyyhQaIXHEGTogtcfUmyQ
+ NaEJgx5DOadRzt8PmOuUOeWdvX5goi459q53yQKEtA4lkbFX0Icj6XgcFjVGJnIsjj8jGzK9n
+ kR2jQt2xdDk4HK6LN0W+ioRPi3R4zuUivuiBEr0BerMWl91HW89icZfc3s+O+vn8YGZeC+CNK
+ Lw8cXpxT6ExLkNDzUVDrwfQAgHfjiybVQwwCzF2DhCNR7j6vCHWE2r2QrZD0cTHJ9pC+wq812
+ Pm2jzEDc5bKBOcuu1YekoGymqgIgZqzmd0X7tt1mYbOuvUUZ0yt6DcbwjLKIY2UYDe39f7atg
+ 6HYAwwzH6rk27xJ/Wx1GqwcyNyY=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > diff --git a/Documentation/config/submodule.txt b/Documentation/config/submodule.txt
-> > index 6490527b45..1144a5ad74 100644
-> > --- a/Documentation/config/submodule.txt
-> > +++ b/Documentation/config/submodule.txt
-> > @@ -93,6 +93,18 @@ submodule.fetchJobs::
-> >         in parallel. A value of 0 will give some reasonable default.
-> >         If unset, it defaults to 1.
-> >
-> > +submodule.diffJobs::
-> > +       Specifies how many submodules are diffed at the same time. A
-> > +       positive integer allows up to that number of submodules diffed
-> > +       in parallel. A value of 0 will give the number of logical cores.
->
-> Why hardcode that 0 gives the number of logical cores?  Why not just
-> state that a value of 0 "gives a guess at optimal parallelism",
-> allowing us to adjust it in the future if we can do some smart
-> heuristics?  It'd be nice to not have us tied down and prevented from
-> taking a smarter approach.
+prep_parse_options() sets the parseopts member of struct diff_options.
+Let it return the pointer instead and have its caller do the assignment
+instead and rename the function to get_diff_parseopts() to reflect that
+change.  This allows using it in other places and with other variables.
 
-I was unaware that the original intention of "reasonable default" was for
-flexibility (I have a WIP series standardizing these parallelism config
-options that also used "number of logical cores" but I think that should
-probably change now). There are other parallel config options that
-hardcode 0 as well, so my initial thought was that we should be using
-the more precise wording -- the argument for flexibility now seems
-more preferable, however.
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ diff.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
->
-> > +       If unset, it defaults to 1. The diff operation is used by many
-> > +       other git commands such as add, merge, diff, status, stash and
-> > +       more. Note that the expensive part of the diff operation is
-> > +       reading the index from cache or memory. Therefore multiple jobs
-> > +       may be detrimental to performance if your hardware does not
-> > +       support parallel reads or if the number of jobs greatly exceeds
-> > +       the amount of supported reads.
->
-> So, in the future, someone who wants to speed things up is going to
-> need to configure submodule.diffJobs, submodule.fetchJobs,
-> submodule.checkoutJobs, submodule.grepJobs, submodule.mergeJobs, etc.?
->  I worry that we're headed towards a bit of a suboptimal user
-> experience here.  It'd be nice to have a more central configuration of
-> "yes, I want parallelism; please don't make me benchmark things in
-> order to take advantage of it", if that's possible.  It may just be
-> that the "optimal" parallelism varies significantly between commands,
-> and also varies a lot based on hardware, repository sizes, background
-> load on the system, etc. such that we can't provide a reasonable
-> suggestion for those that want a value greater than 1.  Or maybe in
-> the future we allow folks somehow to request our best guess at a good
-> parallelization level and then let users override with these
-> individual flags.  I'm just a little worried we might be making users
-> do work that we should somehow figure out.
+diff --git a/diff.c b/diff.c
+index e01129f0ea..e469d5d2a0 100644
+=2D-- a/diff.c
++++ b/diff.c
+@@ -4615,7 +4615,7 @@ static void run_checkdiff(struct diff_filepair *p, s=
+truct diff_options *o)
+ 	builtin_checkdiff(name, other, attr_path, p->one, p->two, o);
+ }
 
-I had the same worry as well -- see the discussion I had here:
-https://lore.kernel.org/git/CAFySSZAbsPuyPVX0+DQzArny2CEWs+GpQqJ3AOxUB_ffo8B3SQ@mail.gmail.com/
-I would like to also eventually solve this problem, but this patch
-won't be the one to do so.
+-static void prep_parse_options(struct diff_options *options);
++static struct option *get_diff_parseopts(struct diff_options *options);
+
+ void repo_diff_setup(struct repository *r, struct diff_options *options)
+ {
+@@ -4663,7 +4663,7 @@ void repo_diff_setup(struct repository *r, struct di=
+ff_options *options)
+ 	options->color_moved =3D diff_color_moved_default;
+ 	options->color_moved_ws_handling =3D diff_color_moved_ws_default;
+
+-	prep_parse_options(options);
++	options->parseopts =3D get_diff_parseopts(options);
+ }
+
+ static const char diff_status_letters[] =3D {
+@@ -5419,7 +5419,7 @@ static int diff_opt_rotate_to(const struct option *o=
+pt, const char *arg, int uns
+ 	return 0;
+ }
+
+-static void prep_parse_options(struct diff_options *options)
++static struct option *get_diff_parseopts(struct diff_options *options)
+ {
+ 	struct option parseopts[] =3D {
+ 		OPT_GROUP(N_("Diff output format options")),
+@@ -5689,8 +5689,7 @@ static void prep_parse_options(struct diff_options *=
+options)
+ 		OPT_END()
+ 	};
+
+-	ALLOC_ARRAY(options->parseopts, ARRAY_SIZE(parseopts));
+-	memcpy(options->parseopts, parseopts, sizeof(parseopts));
++	return parse_options_dup(parseopts);
+ }
+
+ struct option *add_diff_options(const struct option *parseopts,
+=2D-
+2.38.1
