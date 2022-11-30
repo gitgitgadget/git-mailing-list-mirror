@@ -2,88 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D435DC433FE
-	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 07:12:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B666C4321E
+	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 08:24:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233202AbiK3HMH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Nov 2022 02:12:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39426 "EHLO
+        id S235109AbiK3IYx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Nov 2022 03:24:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233917AbiK3HMF (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2022 02:12:05 -0500
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 088A725C5A
-        for <git@vger.kernel.org>; Tue, 29 Nov 2022 23:12:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1669792308; bh=Y9SCKSm+DOIgUcbu5QLwczfV2xFX7YGZF+uqTVpbNBE=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=MF3DNKMRX8BHomxH6K8GsroOmSIv65RFMOU1Vh3ADhchoEnVeHfJcAG78ZYNq+O9w
-         x5KTW29YNHlrqn4giQ/ut7QX8pl3mkkLYWJdIoAm9y2DbvH0KVeXaJbBypglGyCmwv
-         KcGqlbLOmIcOwSL+7TXkvoDUs3m4kU9195u9FKHvhL3zuecDxBh+oBm+Pj8xcMUyOm
-         jB6tSz46wBFAllrwM9l0dfeihkk41wDF+9XWMI4xrBd5Lv85jl5uaHDJF5p7noKOpL
-         afGpKXsHC8k4VEaUz6wRpWIKhZpNDeRRySIMHpdMmZTUD5PSBaWOd+HzI/hX17lhWH
-         JZW979kUCOAFQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.154.159]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MVaYw-1pPgQR3sVY-00Rzby; Wed, 30
- Nov 2022 08:11:47 +0100
-Message-ID: <3eefcd8c-3011-0317-c6d2-d554e03d8e6c@web.de>
-Date:   Wed, 30 Nov 2022 08:11:46 +0100
+        with ESMTP id S234754AbiK3IYW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2022 03:24:22 -0500
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E351A697E0
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 00:23:56 -0800 (PST)
+Received: by mail-ej1-x635.google.com with SMTP id ml11so14590107ejb.6
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 00:23:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xLYjpmgfMU2rbBCCxXMPaNpeYb2p5bvoIO+hRWJISuY=;
+        b=e6d5+f1kY5BemoyYD4uI/SL6ieFjF9W6TxMYZ4Lv8435sNqfmg5w98HWJ9kc5WLtEX
+         OK7GyHQmw2E+a2x6efqcZ2L36MMqYPRE75K1OjVsNIBhDP6yaD2/eZOuC1yw1eo0sUoS
+         EbAn8eprp50irz+Cc+Lkl7at+O+cg+OkJ1z1cJAywtpXsh0W8+roaXZAucQ+nsIb+Pxn
+         5B3lSo9UW8IHWg/lBkrcf6gIKsum/KRjCDUbH5kcYeUDELLGOMUQcwlPXSCNLhnknB7z
+         Eq8Nj3h5HMsMllRwTzdLSra3YieR0wudBU6QCsszBZ8NdVBWZgVwaTFmY5AucOPkCEu9
+         oUIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xLYjpmgfMU2rbBCCxXMPaNpeYb2p5bvoIO+hRWJISuY=;
+        b=oS+CFgFpvv50jwfdSBX/1rd7horgsixVy+XuP4Fca2IWkVmSqpCiK5oFk2KaPMAkdB
+         8qqYuq1smuOz6aLNvWTtcjUkbiJTjFsR62Jnq7GC3bSxYypuBphOtTKDDqblWOzUO0MM
+         /Xb6c5fVQD4WbTeK6AGsRiSa/makazpbV53aCnBOEsykVamccKSqGp7793YW4ZoYDec9
+         Jxorzwbblv0DkiM/FEd0MEiCd7a8LqD3NKkkIgHHvdLDmxKXX0YbfJH14mBv++LXjSaa
+         KdHJ5G5ak6JL34cmKzHzMHtilrlPnYBiTGHnyJmoafRyX1twAe82+dg32ggr/GvdyCJv
+         oysw==
+X-Gm-Message-State: ANoB5pk2Em9dc/qPOIZkeeI6nHqM3ujAsWn1SovxgsabGtutjequrbEB
+        wtxHdsZzee6RsDw0jzidGiodOc0AYOb+UA==
+X-Google-Smtp-Source: AA0mqf4AIHB131qeeszP7BMmJJU51slNC0QpWCbWLwBhygSTKLKGmkIQO5CKzhStJIp5isBFHwXy0Q==
+X-Received: by 2002:a17:906:30c1:b0:7b7:eaa9:c1cb with SMTP id b1-20020a17090630c100b007b7eaa9c1cbmr36525489ejb.745.1669796634933;
+        Wed, 30 Nov 2022 00:23:54 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id l18-20020a1709060cd200b007adf2e4c6f7sm352064ejh.195.2022.11.30.00.23.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Nov 2022 00:23:54 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Paul Smith <psmith@gnu.org>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 0/1] Makefiles: GNU make 4.4 fixes
+Date:   Wed, 30 Nov 2022 09:23:48 +0100
+Message-Id: <cover-v3-0.1-00000000000-20221130T081835Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.39.0.rc0.1028.gb88f24da998
+In-Reply-To: <cover-v2-0.4-00000000000-20221129T140159Z-avarab@gmail.com>
+References: <cover-v2-0.4-00000000000-20221129T140159Z-avarab@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.5.0
-Subject: Re: [PATCH v3 3/5] pack-objects: fix handling of multiple --filter
- options
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
-        <avarab@gmail.com>, Taylor Blau <me@ttaylorr.com>,
-        Christian Couder <chriscool@tuxfamily.org>,
-        Jeff King <peff@peff.net>
-References: <c64e4fa5-62c2-2a93-a4ef-bd84407ea570@web.de>
- <c2d3e7a3-599f-dae5-8dde-dc969df39f02@web.de>
- <6c7ef5fb-59b5-df16-036d-9a9a3d987cb0@web.de> <xmqq7czd2qq6.fsf@gitster.g>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqq7czd2qq6.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:irdYnJbnjBGe6njqt8XOYwFO7NUM4NIS9dirjOqDusB0iwAPXeg
- BCLSnbqIoeCwU5B1RBJqbIzQMQ564b3HU7evRy5UylJw6KpXxhyeeLaX42arW4iy8LvnVWR
- JGFYjYnanzoE/oBqxuyqpEW3oR9Wy7EbEH1DqZ/MWFNLqOACL5qaPWiqg1SQ7Ch/iiErS4t
- DID++9SCD/scT0OFVGLRQ==
-UI-OutboundReport: notjunk:1;M01:P0:pQqcDhJBK1A=;5In4zgMHoLtkjVDXBvOTezl+xzC
- 4xh4cjUbv6j6vC9m04ZO1rYOiZPj1DxbwDWULepNYw1TdhzIbKuxKbgK78tEVFC0RjNVRr3K0
- IFhY/cpKXtHj83SO/Hp+oQp2fzjcy5FNGdvArQmA+rsFJs75wTME9YQhuzzEjK5Y5ooGWTpbo
- LnqXXUjLGM3zBzwe5ao0p466qXUHlNiWpttWXCqF/PUsr2E6lK13YeajzRIUxqz0sXfWxFfor
- J9Y3YWWQ4LoJfkZz/AvUI/Ue8mf8sYcL2mCxuWWyD4sW+4ozTailVsarncqGqLI9IaBvgYgjE
- Zs43Gi3qg64PffUSM5yaHP+flHLSVm3vze3eT6opAui9SHmI1NEbtwnSVjNcH02S0Zg2iOvU7
- /ZcekkMDgaXKVarzye9j+48FgLbAO9kOM1jrZG+jWSOanM/7WU+g/U0WmoO4yOZ+gDpZ/JIFJ
- KFrWgf3QAn4vYGaKvcU4d+zWkUJY1fvqEdwSJyjntlFrnDLB9N0KhxJ+wGWWgsHWm9S97C4/Z
- Fce2cY5RJGFgxKagWSIB0XhOsKiTb4W94pvub2a0zziQ8CixxBEhz3rO4zfHi0nIJ4/FS4aFl
- yjz37Lp4lNEgW6sJd+RdwmsI2LvijLBT5gXA0zwffvj0SBTMzELfgtvvgvQtRJj9uwWXzzpW5
- /3diltRUMhnbrsP96tMm+mDWL2fwPuBl8qCTvvLZgRCOG1syhlNI0i1QvgEbke8og2kDaMPjj
- 8q7xDJD2b5CUCWUKlOsILBBNgpgoxeLnNCZY8AoeEtK1J3lWpXwixGOKi+8M8bl0yEjV3nZ/q
- WGYpY1NuWgFKVY9onQvcGGH0Xkwn0WPgK1RsTn5wkjcbx7lpm67T6Et5PDuuiO8VT/SkpptzW
- c+Yaf604neiX8wvyyEgOvVFsfzKgeyzGhNcRQmO31BKG0lzjLwfeO/Vo4TGlal6rqMwXjGM4W
- 0+bayOQ+7SyaLi7Yq/ioYsAIC1k=
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 30.11.22 um 02:09 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
->> Since 5cb28270a1 (pack-objects: lazily set up "struct rev_info", don't
->> leak, 2022-03-28) --filter options given to git pack-objects overrule
->> earlier ones, letting only the leftmost win and leaking the memory
->> allocated for earlier ones.  Fix that by only initializing the rev_info
->> struct once.
->
-> I think "leftmost" -> "rightmost", if your command line goes from
-> left to right?  Or "leftmost" -> "last" (e.g. "last one wins" over
-> "earlier ones")?
+A now much-smaller re-roll of a potential for-v2.39.0 fix for GNU make
+4.4 compatibility.
 
-Yes, indeed, I mixed up left and right again.
+Junio: Sorry about the overlapping submission, at the time I didn't
+see Paul's in the "What's Cooking", and thought it hadn't been picked
+up at all (maybe I just forgot to look at the actual branches).
 
-Ren=C3=A9
+This v3 is just the "MAKEFLAGS" patch. I agree with your [2] that we
+might want to leave this post-release, i.e. it'll just be (a lot) more
+verbose, but does it break anything? Probably not.
+
+On the other hand the fix here is trivial, and literally just the
+exact solution to this compatibility problem suggested by GNU make's
+"NEWS" file, and nothing else. So merging this before the release
+should be low-risk...
+
+1. https://lore.kernel.org/git/cover-v2-0.4-00000000000-20221129T140159Z-avarab@gmail.com/
+2. https://lore.kernel.org/git/xmqqk03dyskc.fsf@gitster.g/
+
+Ævar Arnfjörð Bjarmason (1):
+  Makefiles: change search through $(MAKEFLAGS) for GNU make 4.4
+
+ git-gui/Makefile | 2 +-
+ shared.mak       | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+Range-diff against v2:
+1:  42b4f241c97 < -:  ----------- Documentation/Makefile: de-duplicate *.[157] dependency list
+2:  e232f308e40 < -:  ----------- Documentation/Makefile: avoid multiple patterns when generating one file
+3:  6db7dd74e52 = 1:  432518b2dd7 Makefiles: change search through $(MAKEFLAGS) for GNU make 4.4
+4:  f1bc3c16904 < -:  ----------- Documentation/Makefile: narrow wildcard rules to our known files
+-- 
+2.39.0.rc0.1028.gb88f24da998
+
