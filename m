@@ -2,80 +2,208 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4725CC433FE
-	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 12:41:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD9A7C433FE
+	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 12:58:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229853AbiK3Mlh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Nov 2022 07:41:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52474 "EHLO
+        id S235416AbiK3M6i (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Nov 2022 07:58:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235013AbiK3Ml3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2022 07:41:29 -0500
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 905464AF2B
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 04:41:28 -0800 (PST)
-Received: by mail-pg1-x531.google.com with SMTP id v3so15932603pgh.4
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 04:41:28 -0800 (PST)
+        with ESMTP id S230311AbiK3M6f (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2022 07:58:35 -0500
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D3A427DFF
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 04:58:34 -0800 (PST)
+Received: by mail-lf1-x12c.google.com with SMTP id c1so26797092lfi.7
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 04:58:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=k4kv50m7Cu/TDwU2xz7VbnS0XiCYjjU3hIyskhsm3to=;
-        b=hgI3584DADOwm5P1k0AR9axEh0lNHr/8m2zBzejE6v2I3CuxW9wB+/z+W7KCIWr2Ww
-         mUp4Fr5wOv0E+65rV1/A1s6sLSnQe00xGFCqIFgL+dCbK8rKXc8UMRlqoc/D5GEqNyQA
-         V3eiVCGKtBXbKpxJeQNyZ+WC0GjY21zCegP61FT/Why5ONFoBmWfEe8Jt0PH3mdSu2Pp
-         +LZDueH+q63JEpGbez8KyFECoxJNKXuzt2Jqrdm9egUpkbsKE9zPacAwyaq64+q5z/zE
-         mmKPHaMwpD5R6G4DU1xoxTVqHNWspIB1sYXcxx/p7/qEC6k57MW5Ya9JTeQh4XZmCf50
-         5dtA==
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=F4AfnyvRgZziMvyatpZMd/BxZzpsxDP5GyeQc1H251M=;
+        b=ICI361R84rdagw3ZLk2EMoBAM291HnGfLraDzkjXDPYnuxFj3+wav2Koi27qyoGdn/
+         FvOvGEaPj9cn7lTeTRgelwsbgV8if/SSr/tJktJHofhVTvkBW1S4ZaYO1MGu/tc4673X
+         yexOd4KNxslLpuE+XV4yyZjAP5zpQrBo4hKdxSLupYiivADRVFXqTTZa/p/Fs21k+LwU
+         hUHSt313UV2wW7zQGWU5Is3dlCK0olhv9k8eAb4gXWYbSRIUdFiESyAGnTUEeQecvruU
+         IZ0n5JKO+7gosV0ySz9UnAP1Ib+F4EyrPlYLYX1akIEOF+s9Ym9o+c4VclMuzFCB/W/k
+         gM/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=k4kv50m7Cu/TDwU2xz7VbnS0XiCYjjU3hIyskhsm3to=;
-        b=nyzGQQKNUKqDMoY42Gzxs/bYlSZcgfjKezw2tvOg9Jew7xgpHd6ayBgBO6ZS0Ye0ST
-         Hqp7LML7mBRX4hQr2wMlNFGghh8dOkR4+YcU8mkNWhjpnlV0yd6Skj4rFfbPkYkS2Eau
-         cvKlmlX9uoXqpxE/qBLYFdVgMr1FRKX10A+p4FNnqwzihtCIgcf1z/9ySW1rkK/dA64u
-         QcC8kip2s5JqReuyGlnJH/JfT66FZaohTuU49ua3Y8Hr2GxWY3OWgQxvFrDJI/6SqoKX
-         92xtohsZpPTUhwM358ovLVpNjp9JGkJ5nIlu1eCt86SUn41zPEJcjE0T5XpwovRZHK4G
-         aoGw==
-X-Gm-Message-State: ANoB5pnmnwy3N5mIJVlD8fwU1ZZRdwx/84N0Ft1jlSenX2szh/u0DpMh
-        DA0N2y0VWmgQJpE8u/P3mtU=
-X-Google-Smtp-Source: AA0mqf6UInI2P4k1LOpXiniA6Q8euF2HKWLH+tWTt/5e/jVnbjqCMuCB87SlpPcBATdrkSTkd+0gUg==
-X-Received: by 2002:a63:d14f:0:b0:476:95a8:de78 with SMTP id c15-20020a63d14f000000b0047695a8de78mr39997106pgj.66.1669812087943;
-        Wed, 30 Nov 2022 04:41:27 -0800 (PST)
-Received: from localhost.localdomain ([47.246.101.57])
-        by smtp.gmail.com with ESMTPSA id k12-20020a63d10c000000b004411a054d2dsm919234pgg.82.2022.11.30.04.41.25
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 30 Nov 2022 04:41:27 -0800 (PST)
-From:   Teng Long <dyroneteng@gmail.com>
-To:     me@ttaylorr.com
-Cc:     dyroneteng@gmail.com, git-packagers@googlegroups.com,
-        git@vger.kernel.org, gitster@pobox.com, lwn@lwn.net
-Subject: Re: What's cooking in git.git (Nov 2022, #07; Tue, 29)
-Date:   Wed, 30 Nov 2022 20:41:21 +0800
-Message-Id: <20221130124121.97048-1-dyroneteng@gmail.com>
-X-Mailer: git-send-email 2.38.1.473.ga0789512c5a.dirty
-In-Reply-To: <Y4ZI21F0yYxMk3O3@nand.local>
-References: <Y4ZI21F0yYxMk3O3@nand.local>
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=F4AfnyvRgZziMvyatpZMd/BxZzpsxDP5GyeQc1H251M=;
+        b=73EkBRMwMPEOFzGVxZnQuyQCUn/0QE0nI/gdY5Xwz4OUSQjd+/FQ1YZx2H1L56wLPd
+         0qAePA0gjv3k698NBU1V/Og4nO9vc33HthnVZ7/lLS3MnIGyjGPdXE7cCXz8QHZ/9ZYh
+         wRpOj8aVu2cV/JdF3dNIBhH5LF9tJ/GK3m9sXHjQuwzoW2ohbzW8YyJF7p7jagBNpQXa
+         ulVKLfIDUd/vG0QlNnYHYMg15wwU+Fgl+8CCcN9/ItwpPK3EaKTUvn6fTmwLt+0GX/v+
+         C/DIVV5g+8HWFkIgbuk5SMd79rNseyXUxXZqkzXvWaGxdmrOOoNMU8dxNnfHqFS77tZd
+         okLA==
+X-Gm-Message-State: ANoB5pnbTxwTCZSusvZkkl06Rn0vdFC7+/YS6gGy7aqUG85DPQfnj+GI
+        NXBFfkCpWJCG90B+F1hPMbVk+GZNYs0=
+X-Google-Smtp-Source: AA0mqf5rEWcI//iR15MK6nFAbWrXEkEg/KGiQdb8U3KTqwQ2TXirVFR90kld4Vl+gEoOo+ztOGlEtA==
+X-Received: by 2002:a19:675c:0:b0:4a2:5be6:c0bf with SMTP id e28-20020a19675c000000b004a25be6c0bfmr23044125lfj.390.1669813111918;
+        Wed, 30 Nov 2022 04:58:31 -0800 (PST)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id c24-20020a056512075800b004a01105eea2sm247075lfs.150.2022.11.30.04.58.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Nov 2022 04:58:31 -0800 (PST)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        huang guanlong <gl041188@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 3/5] diff-merges: implement log.diffMergesForce config
+References: <20221127093721.31012-1-sorganov@gmail.com>
+        <20221127093721.31012-4-sorganov@gmail.com>
+        <CABPp-BFHQ8KwNK=FKGc96iQYqr9xT--WH7kg5R-CzCaAiWiRZg@mail.gmail.com>
+Date:   Wed, 30 Nov 2022 15:58:30 +0300
+Message-ID: <87zgc8tx8p.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> > Will the two commits which merged to 'next' on 2022-11-14 at 34eb0ea05a
-> > be taken into 2.39.0-rc0 (or v2.39.0 is frozen already)?
+> On Sun, Nov 27, 2022 at 1:37 AM Sergey Organov <sorganov@gmail.com> wrote:
+>>
+>> Force specified log format for -c, --cc, and --remerge-diff options
+>> instead of their respective formats. The override is useful when some
+>> external tool hard-codes diff for merges format option.
+>>
+>> Using any of the above options twice or more will get back the
+>> original meaning of the option no matter what configuration says.
+>>
+>> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+>> ---
+>>  Documentation/config/log.txt | 11 +++++++++++
+>>  builtin/log.c                |  2 ++
+>>  diff-merges.c                | 32 ++++++++++++++++++++++++++------
+>>  diff-merges.h                |  2 ++
+>>  t/t4013-diff-various.sh      | 18 ++++++++++++++++++
+>>  t/t9902-completion.sh        |  3 +++
+>>  6 files changed, 62 insertions(+), 6 deletions(-)
+>>
+>> diff --git a/Documentation/config/log.txt b/Documentation/config/log.txt
+>> index 265a57312e58..7452c7fad638 100644
+>> --- a/Documentation/config/log.txt
+>> +++ b/Documentation/config/log.txt
+>> @@ -43,6 +43,17 @@ log.diffMergesHide::
+>>  log.diffMerges-m-imply-p::
+>>         `true` enables implication of `-p` by `-m`.
+>>
+>> +log.diffMergesForce::
+>> +       Use specified log format for -c, --cc, and --remerge-diff
+>> +       options instead of their respective formats when the option
+>> +       appears on the command line one time. See `--diff-merges` in
+>> +       linkgit:git-log[1] for allowed values. Using 'off' or 'none'
+>> +       disables the override (default).
+>> ++
+>> +The override is useful when external tool hard-codes one of the above
+>> +options. Using any of these options two (or more) times will get back
+>> +the original meaning of the options.
 >
-> It is rather late in the release cycle to include new patches. I
-> wouldn't be sad to see them in, either, since they are pretty low risk
-> in my opinion.
+> I didn't quite understand your intent here from this explanation.
+> When you pointed out to Junio that you wanted to override magit's
+> hard-coded `git log --cc` and turn it into `git log -m -p`, then it
+> suddenly made more sense.  And the two or more times I guess is your
+> escape hatch to allow users to say "I *really* do want this other
+> format, so `git log --cc --cc` will get it for me.".
 >
-> But I think a safe assumption to make is that they *won't* be in 2.39.0,
-> and that you should resubmit all four as a new series once 'next' is
-> rewound.
+> Maybe something like:
+>
+> Override -c, --cc, --remerge-diff options and use the specified
+> diff-generation scheme for merges instead.  However, this config
+> setting can in turn be overridden by specifying an alternate option
+> multiple times (e.g. `git log --cc --cc`).  Overriding the
+> diff-generation scheme for merges can be useful when an external tool
+> has a hard-coded command line it calls such as `git log --cc`.  See
+> `--diff-merges` in linkgit:git-log[1] for allowed values.  Using 'off'
+> or 'none' disables the override (default).
 
-Thanks, it's unnecessary to hitchhiking after I read the reply of Junio.
+Thanks for suggestion, I'll take this into consideration should we agree
+to actually let this feature in.
+
+>
+> However:
+>   * This feels like we're trying to workaround bugs or inflexibility
+> in other tools with code in Git.  This feels like a slippery slope
+> issue and/or fixing the wrong tool.
+
+Yep, that's why I said in my another answer to Junio that I won't insist
+on it if you guys object, even though it does look useful for me.
+
+>   * Why is this just for -c, --cc, and --remerge-diff, and not for
+> also overriding -m?  It seems odd that one would be left out,
+> especially since tools are more likely to have hard-coded it than
+> --remerge-diff, given that -m has been around for a long time and
+> --remerge-diff is new.
+
+'-m' is rather the first one that got an override support, see
+'log.diffMerges'.
+
+[As for --remerge-diff, as a side note, I'd call it something like --rd
+for short, as we have --diff-merges=remerge anyway. And then I'll think
+about adding --pd  (pure-diff) or --fpd (first-parent-diff) ;-)]
+
+>
+>> +
+>>  log.follow::
+>>         If `true`, `git log` will act as if the `--follow` option was used when
+>>         a single <path> is given.  This has the same limitations as `--follow`,
+> [...]
+>> diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+>> index 1789dd6063c5..8a90d2dac360 100755
+>> --- a/t/t4013-diff-various.sh
+>> +++ b/t/t4013-diff-various.sh
+>> @@ -557,6 +557,24 @@ test_expect_success 'git config log.diffMerges-m-imply-p has proper effect' '
+>>         test_cmp expected actual
+>>  '
+>>
+>> +test_expect_success 'git config log.diffMergesForce has proper effect' '
+>> +       git log -m -p master >result &&
+>> +       process_diffs result >expected &&
+>> +       test_config log.diffMergesForce on &&
+>
+> I think the default for `on` is bad; it made sense at the time, but I
+> think we have a better option now.
+
+We probably disagree about what a better option actually is, but the
+point is valid anyway.
+
+> Perhaps we switch to it, perhaps we don't, but if there's _any_ chance
+> at all we change the default for "on" (which I think there definitely
+> is), then you should really use the option that matches the actual
+> mode you are using rather than a synonym for it; doing so
+> future-proofs this testcase.
+
+Yep, agreed. Thanks for the catch!
+
+>
+>> +       git log --cc master >result &&
+>> +       process_diffs result >actual &&
+>> +       test_cmp expected actual
+>> +'
+>> +
+>> +test_expect_success 'git config log.diffMergesForce override by duplicate' '
+>> +       git log --cc master >result &&
+>> +       process_diffs result >expected &&
+>> +       test_config log.diffMergesForce on &&
+>
+> Matters less here, but just in case "--cc" were to become the default,
+> it'd be nice to explicitly use something else like separate here.
+
+Yes, thanks!
+
+>
+>> +       git log --cc --cc master >result &&
+>> +       process_diffs result >actual &&
+>> +       test_cmp expected actual
+>> +'
+
+-- Sergey Organov
