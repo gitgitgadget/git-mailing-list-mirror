@@ -2,158 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46D6EC433FE
-	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 18:05:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4E664C433FE
+	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 18:08:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230070AbiK3SFH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Nov 2022 13:05:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58744 "EHLO
+        id S229617AbiK3SIm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Nov 2022 13:08:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229607AbiK3SFB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2022 13:05:01 -0500
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D0817062A
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 10:04:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1669831494; bh=GbaZqUO7BxbnE5U9vbbLW7jnKic9TqCT9vIdVMTxECI=;
-        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=poU40zJgHXESUpsOCMdoaoqjs2/tufdK35o5cd9Qxo6LVmlqkGfvW15vP4hEf9D3V
-         YQomh5suTU7pxauTvpxjaVmQl7MDsYctxP/5fDMBQS7XMmks0pgx7znTcGT9oEEZ16
-         QIVfBE3/X6Q79zh3hThWy9lO4MfLOC7dGTcqPtvr1Z3wCPu+Pzm29nJMhdo4bZfWFM
-         pMc6ceBwPVawbjyp89kZnwC9SGQUTpJN1bSw19OsR4vWKqrVGWqAzXku+2/1ua6JCj
-         GZrN6ZcebceKz/wmzqpRQ7qHgYjgPwIsbedJpLv2l3Rp2iygsthuLce4WY5voSHpno
-         vRDo8GZBJ6y6Q==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.154.159]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M7elj-1p5dzH0gUn-0087vD; Wed, 30
- Nov 2022 19:04:54 +0100
-Message-ID: <d226d3bc-fb15-58a4-f516-bda51a912228@web.de>
-Date:   Wed, 30 Nov 2022 19:04:53 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.5.0
-Subject: [PATCH 3/3] diff: remove parseopts member of struct diff_options
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-References: <0620b4a6-b80a-d8a0-5a35-857b9fe0c986@web.de>
-In-Reply-To: <0620b4a6-b80a-d8a0-5a35-857b9fe0c986@web.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Zu14KmhSd1U+C5hkuHFzSSxvksdaMXeK2zRV/6qSril/TpHttPd
- utO3pZ5o8R8K8HPGhaA0/m5e4FblepSLaJ0c9WfVfFk8NVAP1XqUutX1yAx4mJP/tPGktkO
- kPD0ktoiinq2LjjLNdDLj1uWTrUMCtZ5ounnfdRr/vwTSWuxdMrgMUTKA3TAgr/vm48ntAN
- sslPAYEOh5SqvoZbjl5gQ==
-UI-OutboundReport: notjunk:1;M01:P0:764HnfZ1WYA=;zvpoBzBt27TNDzNPZqOJ1n8mdpJ
- gWrix8s/PCedo+QP8+Y7pKG6kWcQilnVaQWOGobKVMLd1d602Fqk/f4fEAwCW73PZf1uNGwoc
- iCajzfhA4BL1PihDC6fHzPLLA3vC/dDqQ5vOuczNQgAYsfsdpK4ErmRxKwZ43vs5RcjhuCCwl
- LekeNvpEEmbXffSgMjONwCj/My5U4MFNKYOc9mPZBUt5MonN2FalnTV0IqnIlGd4RBbl5vE8I
- dduQiI2TaP4Ir4+4IBUIYnH4MnCnVPXiRzNhVqNYPS+FTIthZ3W3hD7Sd8ZOy+ZXGeos0nrPo
- edRefUs+Y+iO2iqdmpPrgL9gN4bC3U9s+4B9h3gOiddsXJOKQol7vQeEiEgbe8jN6FqBNewhf
- RVWSbJs3WwbuSfmHh3qdMIbUsdMiPfHQqglpFu9/O0H0QKlb8+VcCOp+VxeFq0GWRfvryZ9qa
- /3w8/66ohKOu6qPvebB95aTwc+pPsA6mgEjwpkvY4UXyWmJXLpAZfe0hxxGi62dbD5EtdMpGY
- JmwvSzfahFAKSYbqJc6Eby8VqUHNL96qiuMoJFFEW0r6nS1uRuUHxWvsB35a3FekhbgkK0CNT
- DPH9eZbJ2Kmb95n/YOscDsIkyy39WWh0m2bfIjHu/gxe0FNDKHsASvq9heKzKqOe+weGlxX96
- GAa98j4GLQ7oVMLa873KJjDTcQUUcuRfVUfxLgC6pUa0LmbwOSv8NdysWutbIbOP9wASARnwd
- 0CGaImNlLK1fXXpDna7m4y/pSbqMm8ccSvEu2XuELUolWiemT5ML8MtiC/wiQjw/AtF1yCGiL
- UggM+QGcCi4vidAe7Ro78mTsa02u95bC/W+O7nEegGEOSGIUVklpos2KnS7DpIA2zsvUevFdF
- GUEZpkD9IRdCDKdIkMnLNbm8hhXBYux6O0bMdNgVgD3GuBa7/Q8DVFJobSp6mu5u8n+HHFeRk
- pv2CzwYjpETMnNA0mbpOmH7c6fQ=
+        with ESMTP id S229571AbiK3SIl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2022 13:08:41 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48313554C2
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 10:08:40 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id 94-20020a17090a09e700b002191897f70aso2652217pjo.9
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 10:08:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=PeKhtP+qWaCoJ5cp5WbfNutU2NYdzeIxXw3ricRRGMw=;
+        b=IuonjH24SHJDGRKJF7hmruYxmwoMNn5aySkfQNrMTGBchqfgi/xnBFz318FdIMHnKK
+         lZaqlXcPLgfoBqF/PLRGZ7rG1AKmlQMnpg0wQDPJxKE35Mdvr3uRThTCILuJyGZ/VqRD
+         yx1j3PxcCk0G54VeEaGwEUnWh75KC4Xmq3UWMYo2hns86VRiEE1pv+qFTi7yHM71ITVo
+         QUkpEP+dKzBLIbwttQPLdK25WLsqpffKKc0TNLMpq9DpUiVo/+fTWzHSPiHNwg1hJtn+
+         5HTe0hQAiEMXlksvUf9JrXQE+93njC62rkM24CHhc+2/0HYbNqliiKpvUTasA82V93mY
+         J2xA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PeKhtP+qWaCoJ5cp5WbfNutU2NYdzeIxXw3ricRRGMw=;
+        b=CBUgfVnaqptgNc018zn7ql4JQkxiLhhOD4Qv7MR6xmgqP5v1n2W/r/nI/kBGjflL7t
+         /of4nrEl87xHgaX1YxiI7m1OipM2xUnAQbIz2PutwG5zm4zpKIMGOV/BmXzP3yqRlM+k
+         xeKtp20FcvU6V15ah0be3xmyWsWshej94ug655Rpq1drTt7dWH3g4s0fAojo6F7SLHlw
+         sgciXmLKz0yuDmHgA08xgIRMZKHQPWQlUIDNGJsFE9bbPB9fG4OozmSoKUkWsqu1ZaKk
+         yiPnPfpC5gqtyJ1rRJviZSwHxcgm+dMJCJH7Y1DuR/Jrr2FXNC1gZv4uf9Gh+ztlC6nV
+         DGYQ==
+X-Gm-Message-State: ANoB5pnBKgOGf093BYEutXn1BlXEV5Tz8HU8RqRqFvbL10bCC6E+kzYr
+        u/WD/F9DzVHG1/SOzSQdJC2NNg17fV+Arg==
+X-Google-Smtp-Source: AA0mqf5MxDXyHPJ2UWPmC1uicy4G+HqD/c/05CnoTkEeu5a9AF04T+zBu/nvtvX3SBBEsyFqDTRxOEk0g/HN0g==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:903:2154:b0:189:98b0:8842 with SMTP
+ id s20-20020a170903215400b0018998b08842mr10944590ple.103.1669831719789; Wed,
+ 30 Nov 2022 10:08:39 -0800 (PST)
+Date:   Wed, 30 Nov 2022 10:08:38 -0800
+In-Reply-To: <xmqqedtl14xr.fsf@gitster.g>
+Mime-Version: 1.0
+References: <xmqqsfi22j67.fsf@gitster.g> <kl6lpmd5d1e8.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <xmqqedtl14xr.fsf@gitster.g>
+Message-ID: <kl6lk03cqpqx.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: What's cooking in git.git (Nov 2022, #07; Tue, 29)
+From:   Glen Choo <chooglen@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>,
+        Calvin Wan <calvinwan@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-repo_diff_setup() builds the struct option array with git diff's command
-line options and stores a pointer to it in the parseopts member of
-struct diff_options.  The array is freed by diff_setup_done(), but not
-by release_revisions().  repo_init_revisions() calls repo_diff_setup(),
-thus calling repo_init_revisions() then release_revisions() leaks it.
+Junio C Hamano <gitster@pobox.com> writes:
 
-We could free the array in release_revisions() as well to plug that
-leak, but there is a better way: Only build it when needed.  Move the
-get_diff_parseopts() calls to the two places that use the array, free it
-after use and get rid of the parseopts member.
+> Glen Choo <chooglen@google.com> writes:
+>
+>> Junio C Hamano <gitster@pobox.com> writes:
+>>
+>>> * gc/submodule-clone-update-with-branches (2022-10-30) 8 commits
+>>>  - clone, submodule update: create and check out branches
+>>>  - submodule--helper: remove update_data.suboid
+>>>  - submodule update: refactor update targets
+>>>  - submodule: return target of submodule symref
+>>>  - t5617: drop references to remote-tracking branches
+>>>  - submodule--helper clone: create named branch
+>>>  - repo-settings: add submodule_propagate_branches
+>>>  - clone: teach --detach option
+>>>
+>>>  "git clone --recurse-submodules" and "git submodule update" learns
+>>>  to honor the "propagete branches" option.
+>>>
+>>>  Waiting for review on the updated round.
+>>>  source: <pull.1321.v3.git.git.1666988096.gitgitgadget@gmail.com>
+>>
+>> Jonathan left adequate feedback on the updated round, and we had decided
+>> on a direction for the reroll in [1].
+>>
+>> However, Calvin is also looking at how we could parallelize worktree
+>> updates to speed up "git clone --recurse-submodules", so the Google
+>> folks are taking an even bigger step back to figure out how worktree
+>> updating should look, which will probably end in a different approach
+>> from [1], but it should answer the questions on that thread about "git
+>> checkout" with branches.
+>>
+>> [1] https://lore.kernel.org/git/20221123013319.1597025-1-jonathantanmy@google.com
+>
+> Thanks for a status report.
+>
+> So it sounds more like "discard for now" to expect a fresh restart.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- diff.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index e469d5d2a0..6415c4dc2d 100644
-=2D-- a/diff.c
-+++ b/diff.c
-@@ -4615,8 +4615,6 @@ static void run_checkdiff(struct diff_filepair *p, s=
-truct diff_options *o)
- 	builtin_checkdiff(name, other, attr_path, p->one, p->two, o);
- }
-
--static struct option *get_diff_parseopts(struct diff_options *options);
--
- void repo_diff_setup(struct repository *r, struct diff_options *options)
- {
- 	memcpy(options, &default_diff_options, sizeof(*options));
-@@ -4662,8 +4660,6 @@ void repo_diff_setup(struct repository *r, struct di=
-ff_options *options)
-
- 	options->color_moved =3D diff_color_moved_default;
- 	options->color_moved_ws_handling =3D diff_color_moved_ws_default;
--
--	options->parseopts =3D get_diff_parseopts(options);
- }
-
- static const char diff_status_letters[] =3D {
-@@ -4821,8 +4817,6 @@ void diff_setup_done(struct diff_options *options)
- 			options->filter =3D ~filter_bit[DIFF_STATUS_FILTER_AON];
- 		options->filter &=3D ~options->filter_not;
- 	}
--
--	FREE_AND_NULL(options->parseopts);
- }
-
- int parse_long_opt(const char *opt, const char **argv,
-@@ -5695,21 +5689,27 @@ static struct option *get_diff_parseopts(struct di=
-ff_options *options)
- struct option *add_diff_options(const struct option *parseopts,
- 				struct diff_options *options)
- {
--	return parse_options_concat(parseopts, options->parseopts);
-+	struct option *diff_parseopts =3D get_diff_parseopts(options);
-+	struct option *result =3D parse_options_concat(parseopts, diff_parseopts=
-);
-+	free(diff_parseopts);
-+	return result;
- }
-
- int diff_opt_parse(struct diff_options *options,
- 		   const char **av, int ac, const char *prefix)
- {
-+	struct option *diff_parseopts =3D get_diff_parseopts(options);
-+
- 	if (!prefix)
- 		prefix =3D "";
-
--	ac =3D parse_options(ac, av, prefix, options->parseopts, NULL,
-+	ac =3D parse_options(ac, av, prefix, diff_parseopts, NULL,
- 			   PARSE_OPT_KEEP_DASHDASH |
- 			   PARSE_OPT_KEEP_UNKNOWN_OPT |
- 			   PARSE_OPT_NO_INTERNAL_HELP |
- 			   PARSE_OPT_ONE_SHOT |
- 			   PARSE_OPT_STOP_AT_NON_OPTION);
-+	free(diff_parseopts);
-
- 	return ac;
- }
-@@ -6518,7 +6518,6 @@ void diff_free(struct diff_options *options)
- 	diff_free_file(options);
- 	diff_free_ignore_regex(options);
- 	clear_pathspec(&options->pathspec);
--	FREE_AND_NULL(options->parseopts);
- }
-
- void diff_flush(struct diff_options *options)
-=2D-
-2.38.1
+Yes, that is accurate :)
