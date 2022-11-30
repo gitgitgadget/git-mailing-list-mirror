@@ -2,108 +2,203 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B6E0C433FE
-	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 10:28:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B206C433FE
+	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 10:56:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235256AbiK3K2Y (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Nov 2022 05:28:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59058 "EHLO
+        id S232281AbiK3K4y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Nov 2022 05:56:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51980 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233498AbiK3K2X (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2022 05:28:23 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77E7F3D93C
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 02:28:20 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id h11so19058290wrw.13
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 02:28:20 -0800 (PST)
+        with ESMTP id S230100AbiK3K4x (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2022 05:56:53 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B351DA48
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 02:56:50 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id td2so26268388ejc.5
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 02:56:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=gwAZ9VF9g0hg/B4MxGIQP2Gi/LCesS9hzLCTGiWjQuw=;
-        b=UsMawIBqCSE9tdEDctFvL7DgAOJuXx91HRJIJUmhjRUXdnD3UmhDwrcN7BJhU3dOcX
-         /4u5aj6428OCBZDYKH7dXwQujw9mPq9h3VqZqUI81WLzG2pzmmpLN+ye4H67Ek4LVgxx
-         sfv/FjXO+Qa3EXLmD9aI7Frxlvzs5NJk4iU55CX9If2gWJuareiKxInE3lGJxA828vtb
-         ZLwaHl5rK/a0Ktq06wLIr8MRkjQ/bC5pyAlWcr/mWRFTOlvqMyvBzRHHY2DAIaDj/V3u
-         f/6l1rrzfRjUZa1ZWeHEXfQlNAo9aRzyWN0M5drI30bJsAKC/MyuXU24fUGBIGXpbZqE
-         Lzww==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pOJWhfZrzw1lNqgqa7AUtaigfoMMiEH4dTZa0kZNIGI=;
+        b=PL8GriuRFjagxRpmiCsAxQeyNNAcom2hspkORMBMKmrM2LaQ/rZv63nnfGYst6cync
+         8mRGZcEU/gnkOhyu0MF2SuPCT60t+TAxNgmlLclCDMH9mpd126s7K5DM9cGlTC8G8XeQ
+         HG1SQcXgMDxLCJoktX3ryEf6v7f9+PY6JB0tudXASzrZ5LAzDT39W8V97Vd/rWI52x9y
+         uexueCpCT3C3DMl6wubgZq2xRASgt28S/+N7x4lXLM0lxqwMlgq9HvgpFuEBCwQkYHhL
+         sUXL7gaAZPKMoqYnWlzRFQK8/zGJqalT64sOFZwl2WCdFv0RC9kWahmOYpFQKDrPolb3
+         AkcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gwAZ9VF9g0hg/B4MxGIQP2Gi/LCesS9hzLCTGiWjQuw=;
-        b=DxMeQUSYmITFeVsuhX2O1v/S9Ni3p3F50fKddlRAgsQzb5I9QH0Dc2l3V62dzWW7Vn
-         h22sQT5WOscUFQPWs5yOH5oiIJf0u59j2viJ11/myzBQXMJkytCwry0p9EU1dc4gpLBA
-         PIiYGtMmAXxUuFLE7B0s+eEerhNnYIxye7LAATuN6whl7ebnduAhPuTXQoSliWNLkzHv
-         yoGck8E9/1GHKpYd9Mk41FTCgdf6ptlQ5g3pX14Ukd5FnBLn98D0+sAtFDGm437YJCOn
-         509djp4AjGsFeGHPQGPkcDEk06Vpn3b1eD7zlLZDbsit6aGqQ6yLWlnB+k8w2IQudGLH
-         3A5Q==
-X-Gm-Message-State: ANoB5pkE8GHcjsV5CBM1W2urHT1OSCFlDcQQ/Bw1BdjvYi+xjCaSIuLa
-        E0V40I7lWGwHbKah695B98k=
-X-Google-Smtp-Source: AA0mqf7uSqL6COtzoaYHX+j8pWSieqxdvzx/7hY4ypAWUj6ErBvijK3PYllLZ3wcZbfkUF3piiC7dQ==
-X-Received: by 2002:adf:f789:0:b0:242:129b:9cb9 with SMTP id q9-20020adff789000000b00242129b9cb9mr5074159wrp.373.1669804099007;
-        Wed, 30 Nov 2022 02:28:19 -0800 (PST)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id r8-20020a05600c424800b003c5571c27a1sm1696896wmm.32.2022.11.30.02.28.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Nov 2022 02:28:18 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <5f6f0181-c251-0a98-a39f-a910b93f8c1a@dunelm.org.uk>
-Date:   Wed, 30 Nov 2022 10:28:17 +0000
+        bh=pOJWhfZrzw1lNqgqa7AUtaigfoMMiEH4dTZa0kZNIGI=;
+        b=FXzQPynu2UckM0W0XKtCHCBtY13zs0lBNWtWlw13KFNMPx2VD6q1JoDdyvRgacWEcP
+         VKGUSlIoz7IaREfFcmzpocWGbP8vkChO5ftkVQ3bnwuNdXha4wGJ8johZq0RLRfJ9W0Q
+         8m3Miby3wN91olSBoYfY/C0TCu7pia3eIP/PXWvjHAWwspGGOZt/fFqaax2O5Ai65KvE
+         i/0abrXbh4MhwFM4Y2/WUDtWscZWlEJI6zyLNzNAcxIiC/3rtV1uxgNxB+By2/eq+gIo
+         jtrQ5yqeqZ1QowT48onx1p7aX+GgAZGMA3Zo+UUVWP7rlEKvV5BiUnCWcC2k4cDj0oKN
+         Hl2Q==
+X-Gm-Message-State: ANoB5pkjvQRoVjTeU8JwKVVo+GwF6Tes8x0Vq+7gyHms+XhlDM2r+ule
+        guLSPpA0ixsXCnDqD4U4YKUHCsVMOQ9TAA==
+X-Google-Smtp-Source: AA0mqf7GQFlZZhBAGKsvVfoN3zw4q4qunzRWZSDqnUbgvKI10UKUyIjVA0nO1Dy4gPL1jtp1L/de5g==
+X-Received: by 2002:a17:906:547:b0:7ad:9028:4b17 with SMTP id k7-20020a170906054700b007ad90284b17mr51516213eja.366.1669805808764;
+        Wed, 30 Nov 2022 02:56:48 -0800 (PST)
+Received: from gmgdl ([109.38.157.167])
+        by smtp.gmail.com with ESMTPSA id ec16-20020a0564020d5000b00467481df198sm495716edb.48.2022.11.30.02.56.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Nov 2022 02:56:48 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1p0Klj-001zl6-1e;
+        Wed, 30 Nov 2022 11:56:47 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: ab/cmake-nix-and-ci (was Re: What's cooking in git.git (Nov
+ 2022, #07; Tue, 29))
+Date:   Wed, 30 Nov 2022 11:16:40 +0100
+References: <xmqqsfi22j67.fsf@gitster.g>
+ <544fff8a-7d56-57a1-00a3-d1a9302e227c@dunelm.org.uk>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <544fff8a-7d56-57a1-00a3-d1a9302e227c@dunelm.org.uk>
+Message-ID: <221130.86h6ygiuc0.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 1/5] run-command: add duplicate_output_fn to
- run_processes_parallel_opts
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Glen Choo <chooglen@google.com>
-Cc:     git@vger.kernel.org, Calvin Wan <calvinwan@google.com>,
-        emilyshaffer@google.com, phillip.wood123@gmail.com,
-        myriamanis@google.com
-References: <https://lore.kernel.org/git/20221020232532.1128326-1-calvinwan@google.com/>
- <20221108184200.2813458-2-calvinwan@google.com>
- <kl6lo7spqqzg.fsf@chooglen-macbookpro.roam.corp.google.com>
- <221130.86lensiwy0.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221130.86lensiwy0.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 30/11/2022 09:53, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Tue, Nov 29 2022, Glen Choo wrote:
-> 
->> Calvin Wan <calvinwan@google.com> writes:
->> So this might be more idiomatically written as:
->>
->>          int n = strbuf_read_once(&pp->children[i].err,
->>          			 pp->children[i].process.err, 0);
->>   +      if (opts->duplicate_output) {
->>   +          struct strbuf buf = STRBUF_INIT;
->>   +          strbuf_addbuf(&buf, &pp->children[i].err);
->>   +        	opts->duplicate_output(&buf, &pp->children[i].err,
->>   +        		  opts->data,
->>   +        		  pp->children[i].data);
->>   +          strbuf_release(&buf);
->>   +      }
->>
->> which also has the nice benefit of not touching the strbuf_read_once()
->> line.
-> 
-> We should also use "size_t n" there, not "int n", which is what it
-> returns.
 
-It returns an ssize_t not size_t, lower down we test `n < 0` so we 
-certainly should not be using an unsigned type.
+On Wed, Nov 30 2022, Phillip Wood wrote:
 
-Best Wishes
+> Hi Junio
 
-Phillip
+Hi, and thanks for your review of this series.
+
+> On 29/11/2022 09:40, Junio C Hamano wrote:
+>> * ab/cmake-nix-and-ci (2022-11-04) 14 commits
+>>    (merged to 'next' on 2022-11-08 at 6ef4e93b36)
+>>   + CI: add a "linux-cmake-test" to run cmake & ctest on linux
+>>   + cmake: copy over git-p4.py for t983[56] perforce test
+>>   + cmake: only look for "sh" in "C:/Program Files" on Windows
+>>   + cmake: increase test timeout on Windows only
+>>   + cmake: support GIT_TEST_OPTS, abstract away WIN32 defaults
+>>   + Makefile + cmake: use environment, not GIT-BUILD-DIR
+>>   + test-lib.sh: support a "GIT_TEST_BUILD_DIR"
+>>   + cmake: set "USE_LIBPCRE2" in "GIT-BUILD-OPTIONS" for test-lib.sh
+>>   + cmake & test-lib.sh: add a $GIT_SOURCE_DIR variable
+>>   + cmake: chmod +x the bin-wrappers/* & SCRIPT_{SH,PERL} & git-p4
+>>   + cmake: don't copy chainlint.pl to build directory
+>>   + cmake: update instructions for portable CMakeLists.txt
+>>   + cmake: use "-S" and "-B" to specify source and build directories
+>>   + cmake: don't invoke msgfmt with --statistics
+>>   Fix assorted issues with CTest on *nix machines.
+>
+> If that's all this series did then I think it would be fine. However
+> it also makes changes to test-lib.sh to hard code the build directory
+> in an attempt to remove GIT-BUILD-DIR. I'm not convinced that is an 
+> improvement on the status quo.
+
+I think the series as it stands addresses those concerns. In particular
+building outside of contrib/buildsystems/out works, just as before:
+
+	cmake -S contrib/buildsystems -B /tmp/git-build -DCMAKE_BUILD_TYPE=Debug &&
+        make -C /tmp/git-build &&
+        ctest --test-dir /tmp/git-build -R t0001
+
+Per [1] and [2] which added the "ctest" support that's the use-case for
+this part of the build: running the tests with ctest, which works as
+before with the default or custom directories.
+
+Perhaps the reason this has been a sticking point for you is that in
+summarizing this, Johannes's [3] didn't make that distinction between
+running the tests with "ctest" and running them manually by entering the
+"t/" directory after the build. I.e.:
+
+	(cd t && ./t0001-init.sh)
+
+It's only that part which acts differently in this series. I.e. if you
+were to build in /tmp/git-build this would no longer find your built
+assets:
+
+	$ ./t0001-init.sh
+	error: GIT-BUILD-OPTIONS missing (has Git been built?).
+
+If you just leave it at the default of "contrib/buildsystems/out" it'll
+work:
+
+	(cd t && ./t0001-init.sh)
+	ok 1 [...]
+
+I think my [4] convincingly makes the case that nobody will
+care. I.e. as the [5] it links to the use-case for running the test
+after the build without ctest was ("[...]" insert is mine):
+
+	[To build and test with VS] open the worktree as a folder, and
+	Visual Studio will find the `CMakeLists.txt` file and
+	automatically generate the project files.
+
+I.e. we want to support the user who builds with that method, and runs
+the tests manually. I think you're worrying about an edge case that
+nobody's using in practice.
+
+> As I mentioned previously [1] I think
+> the non-*nix related patches could do with a review from the windows
+> folks before this hits master.
+
+I'd welcome another review of it, but at this point it's not for lack of
+waiting for interest from the CC'd Windows people.
+
+Per the above I don't think any special Windows knowledge is really
+needed, just a reading of the above history & use-cases.
+
+All of which I've been careful not to break, and which you can now
+simply test on *nix with this series, so no Windows-specific testing is
+needed anymore for this concern you're raising.
+
+*If* we have someone that's been using this on Windows and e.g. building
+this in /tmp/git-build (or whatever the Windows equivalent) with a
+custom recipe all they'll need to have it work as before is:
+
+	GIT_TEST_BUILD_DIR=/tmp/git-build ./t0001-init.sh
+
+I think nobody's straying off the golden path to do that, but if they
+are doing so and building in some custom directory they're already
+tweaking, just setting an environment variable doesn't seem like a big
+imposition.
+
+The flip-side of that trade-off is (on both Windows and *nix) that the
+existing way to support the use-case has unintended side-effects, which
+the series improves:
+
+* When we pick up the not-a-Makefile tree implicitly like this we'll
+  now emit a message telling you what git we're implicitly using.
+
+* We no longer have edge cases where you can e.g. build with make, then
+  cmake, then run some "make" target that won't go through the path to
+  remove GIT-BUILD-DIR (e.g. changing "git.c" and "make git").
+
+  Then when you run the tests you'll end up with a different git running
+  it than what you'd expect, i.e. the old stale cmake one.
+
+Even that hypothetical user who's going to need to set
+"GIT_TEST_BUILD_DIR" would benefit from that, as they'd no longer
+accidentally flip-flop between the two if they ran "make" and wiped away
+the rather fragile link between the source directory & the linked-to
+cmake build directory.
+
+> [1]
+> https://lore.kernel.org/git/64b91b29-bbcd-e946-1f20-c0a5be63d9b7@dunelm.org.uk/
+>
+>>   Will cook in 'next'.
+>>   source: <cover-v4-00.14-00000000000-20221103T160255Z-avarab@gmail.com>
+
+1. c4b2f41b5f5 (cmake: support for testing git with ctest, 2020-06-26)
+2. 7f5397a07c6 (cmake: support for testing git when building out of the
+   source tree, 2020-06-26)
+3. ee9e66e4e76 (cmake: avoid editing t/test-lib.sh, 2022-10-18)
+4. 16a5421a654 (Makefile + cmake: use environment, not GIT-BUILD-DIR,
+   2022-11-03)
+5. 3eccc7b99d4 (cmake: ignore files generated by CMake as run in Visual
+   Studio, 2020-09-25)
