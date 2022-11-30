@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9425C352A1
-	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 10:26:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B6E0C433FE
+	for <git@archiver.kernel.org>; Wed, 30 Nov 2022 10:28:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235584AbiK3K0P (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Nov 2022 05:26:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56518 "EHLO
+        id S235256AbiK3K2Y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Nov 2022 05:28:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229892AbiK3K0O (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2022 05:26:14 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28588131
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 02:26:13 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id 2-20020a1c0202000000b003d0760654d3so449473wmc.4
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 02:26:13 -0800 (PST)
+        with ESMTP id S233498AbiK3K2X (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2022 05:28:23 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77E7F3D93C
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 02:28:20 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id h11so19058290wrw.13
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 02:28:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Id6QEwgeDKEkI0buAwumvN19Q9b6KebDNxMTc8ZdHFc=;
-        b=UXw1yaxDLV8aOb3Po8kbVtnVEbffr9//04eGgIoR6EjhP83ZMHqz10hXP4TRWu6Kk0
-         yKL3r7VdLLbLPlDQSTtQL7rMfAqpufKkDQ2NVHP2JEsI8vHC96Ft/n8pewvql3OFdhY6
-         HSL13/D36twwRMJfp9wTAa3rh0Pw1+h48JCwo2gD1Jr1wDQKP2c1ESNCKjhUYGd+KPjy
-         x9oFaHk9dg9BUyud/06To250MgQJDAAZVkwtBCCQwGN+yQboBtcnupYN5YpuNc9QM19J
-         iuYXePhp1uE29cf1Vj+ztEZpGUtbJYdQPtVIXIm+nKr1gB+zQUzF0hXqiIG7ns89Alu6
-         0PqQ==
+        bh=gwAZ9VF9g0hg/B4MxGIQP2Gi/LCesS9hzLCTGiWjQuw=;
+        b=UsMawIBqCSE9tdEDctFvL7DgAOJuXx91HRJIJUmhjRUXdnD3UmhDwrcN7BJhU3dOcX
+         /4u5aj6428OCBZDYKH7dXwQujw9mPq9h3VqZqUI81WLzG2pzmmpLN+ye4H67Ek4LVgxx
+         sfv/FjXO+Qa3EXLmD9aI7Frxlvzs5NJk4iU55CX9If2gWJuareiKxInE3lGJxA828vtb
+         ZLwaHl5rK/a0Ktq06wLIr8MRkjQ/bC5pyAlWcr/mWRFTOlvqMyvBzRHHY2DAIaDj/V3u
+         f/6l1rrzfRjUZa1ZWeHEXfQlNAo9aRzyWN0M5drI30bJsAKC/MyuXU24fUGBIGXpbZqE
+         Lzww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Id6QEwgeDKEkI0buAwumvN19Q9b6KebDNxMTc8ZdHFc=;
-        b=2E3G9Ig06UEgcvJ9GIhiAv50f93Zr+QsceV0KNVEjDdU+GSKqtQGZ40DHRSgoeksRw
-         VdDGeRSkjGqUg8dD79bp5GtvI0Holw+Nk0JJztDD+4XrBhxNyLk2aZsolIxYO/phCQin
-         LUYNpUgoy6IYz/lmivFqu6mhQG72lCpVtzuke6Oj8zp8PvC50f0akQi9pXI6usa8Buy4
-         7tQrFMRXDdRVkprVwOxTCkFDUE9gcpMXrMpSU3aojQB4mgCqFZp3hxs4rRJr1YpaU78n
-         4P4Jm+kzQF+fnjtmqQEbXnrt3nqVjGeYtFApwB+Bo7byWE2HrZFZSmVn5SH+SEcK5/Iu
-         ZMvg==
-X-Gm-Message-State: ANoB5pkZ6c4jH57JfpOm4KjyC/VCrGZM3Zt/Nwmm1BXK4chgRcjklwa1
-        qTkyhsXLqq3nBB3+AvmD8pg=
-X-Google-Smtp-Source: AA0mqf4axsT/WhnpXhE/vNVcztg18BfAJQEOTudQe99rrdloA3iy61rBWidRKyunTWZy2Bi85Y1+Kg==
-X-Received: by 2002:a05:600c:5388:b0:3cf:37b1:e581 with SMTP id hg8-20020a05600c538800b003cf37b1e581mr42770956wmb.96.1669803971662;
-        Wed, 30 Nov 2022 02:26:11 -0800 (PST)
+        bh=gwAZ9VF9g0hg/B4MxGIQP2Gi/LCesS9hzLCTGiWjQuw=;
+        b=DxMeQUSYmITFeVsuhX2O1v/S9Ni3p3F50fKddlRAgsQzb5I9QH0Dc2l3V62dzWW7Vn
+         h22sQT5WOscUFQPWs5yOH5oiIJf0u59j2viJ11/myzBQXMJkytCwry0p9EU1dc4gpLBA
+         PIiYGtMmAXxUuFLE7B0s+eEerhNnYIxye7LAATuN6whl7ebnduAhPuTXQoSliWNLkzHv
+         yoGck8E9/1GHKpYd9Mk41FTCgdf6ptlQ5g3pX14Ukd5FnBLn98D0+sAtFDGm437YJCOn
+         509djp4AjGsFeGHPQGPkcDEk06Vpn3b1eD7zlLZDbsit6aGqQ6yLWlnB+k8w2IQudGLH
+         3A5Q==
+X-Gm-Message-State: ANoB5pkE8GHcjsV5CBM1W2urHT1OSCFlDcQQ/Bw1BdjvYi+xjCaSIuLa
+        E0V40I7lWGwHbKah695B98k=
+X-Google-Smtp-Source: AA0mqf7uSqL6COtzoaYHX+j8pWSieqxdvzx/7hY4ypAWUj6ErBvijK3PYllLZ3wcZbfkUF3piiC7dQ==
+X-Received: by 2002:adf:f789:0:b0:242:129b:9cb9 with SMTP id q9-20020adff789000000b00242129b9cb9mr5074159wrp.373.1669804099007;
+        Wed, 30 Nov 2022 02:28:19 -0800 (PST)
 Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id v5-20020adfebc5000000b00241c6729c2bsm1147802wrn.26.2022.11.30.02.26.10
+        by smtp.gmail.com with ESMTPSA id r8-20020a05600c424800b003c5571c27a1sm1696896wmm.32.2022.11.30.02.28.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 30 Nov 2022 02:26:11 -0800 (PST)
+        Wed, 30 Nov 2022 02:28:18 -0800 (PST)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <778b25b4-8eb2-6d02-3ba5-a21724ff2f2f@dunelm.org.uk>
-Date:   Wed, 30 Nov 2022 10:26:10 +0000
+Message-ID: <5f6f0181-c251-0a98-a39f-a910b93f8c1a@dunelm.org.uk>
+Date:   Wed, 30 Nov 2022 10:28:17 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
@@ -82,32 +82,6 @@ On 30/11/2022 09:53, Ævar Arnfjörð Bjarmason wrote:
 > On Tue, Nov 29 2022, Glen Choo wrote:
 > 
 >> Calvin Wan <calvinwan@google.com> writes:
->>
->>> @@ -1680,8 +1683,14 @@ static void pp_buffer_stderr(struct parallel_processes *pp,
->>>   	for (size_t i = 0; i < opts->processes; i++) {
->>>   		if (pp->children[i].state == GIT_CP_WORKING &&
->>>   		    pp->pfd[i].revents & (POLLIN | POLLHUP)) {
->>> -			int n = strbuf_read_once(&pp->children[i].err,
->>> -						 pp->children[i].process.err, 0);
->>> +			struct strbuf buf = STRBUF_INIT;
->>> +			int n = strbuf_read_once(&buf, pp->children[i].process.err, 0);
->>> +			strbuf_addbuf(&pp->children[i].err, &buf);
->>> +			if (opts->duplicate_output)
-
-Shouldn't we be checking if n < 0 before we do this?
-
->>> +				opts->duplicate_output(&buf, &pp->children[i].err,
->>> +					  opts->data,
->>> +					  pp->children[i].data);
->>> +			strbuf_release(&buf);
->>>   			if (n == 0) {
->>>   				close(pp->children[i].process.err);
->>>   				pp->children[i].state = GIT_CP_WAIT_CLEANUP;
->>
->> A common pattern is that optional behavior does not impose additional
->> costs on the non-optional part. Here, we unconditionally do a
->> strbuf_addbuf() even though we don't use the result in the "else" case.
->>
 >> So this might be more idiomatically written as:
 >>
 >>          int n = strbuf_read_once(&pp->children[i].err,
@@ -121,24 +95,14 @@ Shouldn't we be checking if n < 0 before we do this?
 >>   +          strbuf_release(&buf);
 >>   +      }
 >>
-> [...]
-> And why does "&buf" exist at all? 
+>> which also has the nice benefit of not touching the strbuf_read_once()
+>> line.
+> 
+> We should also use "size_t n" there, not "int n", which is what it
+> returns.
 
-I was wondering that as too
-
->Why can't we just pass
-> &pp->children[i].err, and if this callback cares about the last thing we
-> read let's pass it an offset, so it can know what came from the
-> strbuf_read_once() (I don't know if it actually cares about that
-> either...).
-
-Or we could just pass a `const char*`, `size_t` pair.
-
-> That would avoid the copy entirely.
-
-Is the copying quadratic at the moment? - it looks like each call to 
-strbuf_read_once() appends to the buffer and we copy the whole buffer 
-each time.
+It returns an ssize_t not size_t, lower down we test `n < 0` so we 
+certainly should not be using an unsigned type.
 
 Best Wishes
 
