@@ -2,179 +2,113 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4CB74C4321E
-	for <git@archiver.kernel.org>; Thu,  1 Dec 2022 13:25:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F35A8C43217
+	for <git@archiver.kernel.org>; Thu,  1 Dec 2022 13:40:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231497AbiLANZ6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Dec 2022 08:25:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37502 "EHLO
+        id S230193AbiLANk1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Dec 2022 08:40:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231464AbiLANZ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2022 08:25:57 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A39EF88B77
-        for <git@vger.kernel.org>; Thu,  1 Dec 2022 05:25:54 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id td2so4192736ejc.5
-        for <git@vger.kernel.org>; Thu, 01 Dec 2022 05:25:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=umyZyKO8LJ0i+mHCKOX8lJeoydynlbCKNArS82n1Pxg=;
-        b=HD+htG/PeOqDQmzhOmh5mfDnttcZNt3M7NAJQL44LkhikkWo4/LCvh+ZMffviDmo6r
-         BD1claReu00cP5f8Z/rUzeqoBhYqN1VqdTp8HsndtWH7oiX7llNPIZZtUoHTFpK8c1ag
-         TnK/ZmP3mqE2v1NTQK6ix0suD/TwR0CfqF2/drsaUDmwEviCQycBxsqDdKNuJ8rriC87
-         CS8lkbXviIHHJFjV0/hYVvYzNnzH7RJat4vq2cHXu9tjhrzJf5BKe0ysOfKvPbsF3SBt
-         14IGoe+HViOF1OhWznQar1AB5MglPYRui9IJ1O6jCMEJx0xin9oK6zMPzK1AaBfr6oBb
-         WQYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=umyZyKO8LJ0i+mHCKOX8lJeoydynlbCKNArS82n1Pxg=;
-        b=mlZIXn1vZnhDJLzm91PSlmjDHvN4VBbqQgYhg7/V0yCxLgrgIe4GsbLYzCjSzW6k0+
-         gTER94wc+/XPQLty6K3GjCUhTHJJPmvhfn2uzgLRGBMY9SARPHaIEBWFD17brBxbZ5a0
-         ze9o+FX9MF3eDgtdDkwPit77o9S+xW3NYi+JAiJR8I3IbR5sYVZ4uViaSXeKP4kUqPlu
-         ar0y/M6VlLmPGmynD1q3Q7btI+nGSJfdepdsIH78Ocbp1s1vI+RS1X7fDuV/B2AwcELf
-         /w4Nz04v/gmN8R+e4A5wwNrUZ2dydI0VMyw+tBgibVINzAQcyhwUha6tHjh+AX5m1pHM
-         IW0Q==
-X-Gm-Message-State: ANoB5pkHo4f9+dCfs8ZwghaMFGiglucMwtGDonE7ajGVDVOrqipzmR11
-        CTGfEs968rsTBQztEJv4qpVxaYGjJus=
-X-Google-Smtp-Source: AA0mqf7inMhM4YsM1lckO2PHfkSO+uesUQbVTUgl6wBzL21JIwVp+m7jnkEwg1+E8cz9HnStt6boog==
-X-Received: by 2002:a17:906:660d:b0:7ba:5085:864 with SMTP id b13-20020a170906660d00b007ba50850864mr32954832ejp.357.1669901152936;
-        Thu, 01 Dec 2022 05:25:52 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id n12-20020a1709061d0c00b0078ddb518a90sm1737794ejh.223.2022.12.01.05.25.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Dec 2022 05:25:52 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1p0jZY-002Dso-0I;
-        Thu, 01 Dec 2022 14:25:52 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     psmith@gnu.org
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 3/4] Makefiles: change search through $(MAKEFLAGS)
- for GNU make 4.4
-Date:   Thu, 01 Dec 2022 13:37:09 +0100
-References: <20221127224251.2508200-1-psmith@gnu.org>
- <cover-v2-0.4-00000000000-20221129T140159Z-avarab@gmail.com>
- <patch-v2-3.4-6db7dd74e52-20221129T140159Z-avarab@gmail.com>
- <xmqqk03dyskc.fsf@gitster.g>
- <25c59966c83cdae078bdefa49f47ca8d3199475c.camel@gnu.org>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <25c59966c83cdae078bdefa49f47ca8d3199475c.camel@gnu.org>
-Message-ID: <221201.86v8mvgsrj.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229717AbiLANk0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2022 08:40:26 -0500
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9076AD98A
+        for <git@vger.kernel.org>; Thu,  1 Dec 2022 05:40:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1669901995; bh=vN4rs8NxhzgEG5qMQbKKth4Gl71kjJqYQmJkQE3UbsQ=;
+        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
+        b=X46iBYvKoP5e0mqwlfCaWo9Lg8dPwVF8nGegWYM+WPnZ+mAxaIsx5ttqEcm1jBxqd
+         RpQ0mLRmE8onJx/ykKJSBqLfgWxupFKSb440Thjx+AwIVOjvpuHNYBZ5uTk7SqK8VG
+         G+JLF9wZ/e5ZCWIgV77q9J9LzHq+B0HKg45DhBW6t2gVpBur4WTXVnYDSAKIBMZqaC
+         ygbfBY0SgicK3Nch3IRn6DEO8Wz3CpXPM5pLBokv5qjELDbnLn1zDOPhMoIj9zdEbu
+         CmJ62clOwrcWp/vIYYeCrXtBFBDDhYRUEFym3Kc90o92ZVsTEmMLjWsrvPDL36p7wz
+         0NY82/CH7+osA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.154.159]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MWQyX-1pUCdE2uyZ-00Xow1; Thu, 01
+ Dec 2022 14:39:55 +0100
+Message-ID: <ea838ae7-b635-d4d2-d9df-e96b3d8980af@web.de>
+Date:   Thu, 1 Dec 2022 14:39:54 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.5.0
+Subject: [PATCH v2 0/3] diff: build parseopts array on demand
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Jeff King <peff@peff.net>
+References: <0620b4a6-b80a-d8a0-5a35-857b9fe0c986@web.de>
+In-Reply-To: <0620b4a6-b80a-d8a0-5a35-857b9fe0c986@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:N2PEU3jsxRursFVbS193D6P398zt4Hcok5hGpwNAx3qUHAu2sey
+ tImsY+NebX/zh3ixoHSFtqAfps4JmPmp837lFcrbfwJfMyr9nqTtmDpFlmyHSn02VCll66g
+ xXeZGrdfiZeHNeoNex34fNYxTgIB9f+aBEyoOwu2Z2trVGPSF+kbpE2AMgOjetUVqkDtZQ7
+ xKztDMcF7IFr5waUFtYew==
+UI-OutboundReport: notjunk:1;M01:P0:HQE8/H9dMfk=;De0IRPJjZ43rz5u0GzFhodyE+Wa
+ r7RnuaTT8PgsQC5ACYCdqtRW9FHkoeYQfwfVlkzKb49vxh8Lcr1xtuCmFmyycUQrivyJqalP6
+ gpEABqDgitsHZ4ScYZavQhHyKSrNQHmScEzz8uIrimXO6xNkk3n4amxuk99mo1LbENYcEhrpA
+ 55ECiVLPxHVQ1baR7XYsD9zH7jWVMeXIGOZkMZCG4fKoVjX0hVpA0I5AL/8a5GYI2kVST4rpv
+ CIBSaepCF7A4KaKUsq7h4Fs7lweCme4DU3mEWe9yDTf6IBtSb/0CtzeksdRE7M0/YcQJ/GIcs
+ /le0/zF9B0D1jHw9rFz7X2C3gCMxoc4sT7BaOX9muZ10M/oDGk+gEDl1E5R9+WzXIUwSUcgky
+ nD7VA8DKf/SeuMW3zvGDOE8y+y+HZfDveaes7rXpb2LMhk48Lkg4jpafx62+RH5G5iX+pTPJq
+ Fvh/E0Mx09Ped0AhRp7tBEEC3vFUg5mKeBXxvUneySkQhwZP208x/gOyWV3WVyZVz47oyuqQ0
+ +snC78H4qOc7dIe0B0ARao+C4jvqiiSmCAKLozrPB9whBEp8V+ozVi6Qx+a00TZ+ZrfqvWsk2
+ 0xW/+K2MMQghush17LhMGG78kwzU0sSm2RO+ScUo1wDktrp5Z/cwyeJSRQdhi2CWjomjfOqxk
+ fP41AzBhzUc+DXAd2zmRsJGyTAOx+qJryBp2ikjVWWRacV3502IO5mMbdOMlUcNTs9c23ct9N
+ KvL/mvapXdOrbBzPYAad3O3Ic2A27mofPHkXsbNO1VTNYFRkAJKMEaEDQ9fkY0udq3E1dIKtF
+ VcQmFlcA/SId+mnO0dzM4uXuCFBNB+aTTOcbD48CnP9mu/MZ01CyNaVkuFvcmMq8agdZ/u4+R
+ +E75hpRiVUBq7xHMUnbkfbZOGUJAGBrPaf/10EBmpvqm7VqqWGKY715ymTtbYU2sHiNytukc2
+ R2GCa69Ondl/tJ7WQvhajNZra+I=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Calling repo_init_revisions() and release_revisions() in that order
+leaks the memory allocated for the parseopts array in the embedded
+struct diff_options member.  Get rid of that leak by reducing the
+lifetime of that array.
 
-On Wed, Nov 30 2022, Paul Smith wrote:
+Original patch:
+https://lore.kernel.org/git/4fd82dc6-e0f8-0638-5b10-16bfef39a171@web.de/
 
-> On Wed, 2022-11-30 at 13:28 +0900, Junio C Hamano wrote:
->> I have to wonder how many projects they have broken with this change
->
-> Some, but not that many.  Most projects don't try to investigate
-> MAKEFLAGS, and of those that do many were already using the recommended
-> method, because even prior to GNU make 4.4 it was possible for
-> MAKEFLAGS to have stray "s" characters, in unusual situations (for
-> example if MAKEFLAGS were set in the makefile).
->
-> There were various bugs filed that various options could not be
-> investigated from within makefiles and also that running make from
-> within $(shell ...) didn't work right because MAKEFLAGS was not set.
->
-> It was just a mess, trying to keep the value of MAKEFLAGS set to
-> different values at different points in the processing of make.
+Submitted separately from that thread because it's independent enough.
 
-It was definitely a bit of a hack on our part, but to be fair before
-this 4.4 release doing it this way was recommended by the
-documentation. I see you changed that recently, but maybe this on top
-makes sense?
-	
-	diff --git a/doc/make.texi b/doc/make.texi
-	index e3a3ade4..9e9a894e 100644
-	--- a/doc/make.texi
-	+++ b/doc/make.texi
-	@@ -5069,7 +5069,7 @@ Variable @code{MAKEFILES}}.
-	 @vindex MAKEFLAGS
-	 Flags such as @samp{-s} and @samp{-k} are passed automatically to the
-	 sub-@code{make} through the variable @code{MAKEFLAGS}.  This variable is
-	-set up automatically by @code{make} to contain the flag letters that
-	+set up automatically by @code{make} to contain the normalized flag letters that
-	 @code{make} received.  Thus, if you do @w{@samp{make -ks}} then
-	 @code{MAKEFLAGS} gets the value @samp{ks}.
-	 
-	@@ -5085,6 +5085,10 @@ option has both single-letter and long options, the single-letter option is
-	 always preferred.  If there are no single-letter options on the command line,
-	 then the value of @code{MAKEFLAGS} starts with a space.
-	 
-	+The value of @code{MAKEFLAGS} does not correspond to the order in which
-	+command line options are provided. Both @w{@samp{make -sk}} and @w{@samp{make -sk}}
-	+will result in a @code{MAKEFLAGS} value of @samp{ks}.
-	+
-	 @cindex command line variable definitions, and recursion
-	 @cindex variables, command line, and recursion
-	 @cindex recursion, and command line variable definitions
-	@@ -12378,10 +12382,13 @@ influences such as interrupts (@code{SIGINT}), etc.  You may want to install
-	 signal handlers to manage this write-back.
-	 
-	 @item
-	-Your tool may also examine the first word of the @code{MAKEFLAGS} variable and
-	+Your tool may also examine the first word of the @samp{-$(MAKEFLAGS)} expression and
-	 look for the character @code{n}.  If this character is present then
-	 @code{make} was invoked with the @samp{-n} option and your tool may want to
-	 stop without performing any operations.
-	+
-	+Note that this is not equivalent to checking for the first word of
-	+@code{MAKEFLAGS}.
-	 @end itemize
-	 
-	 @node Windows Jobserver,  , POSIX Jobserver, Job Slots
+Change since v1:
+- Actually remove the parseopts member.  Its removal got lost during
+  refactoring in v1.  Thank you for spotting that, Junio!
 
-I.e. that "Your tool" part seems to still be assuming 4.3 semantics.
+  diff: factor out add_diff_options()
+  diff: let prep_parse_options() return parseopt array
+  diff: remove parseopts member from struct diff_options
 
-> Also, ensuring this trick for searching MAKEFLAGS continues to work
-> would have meant strictly controlling what new options we could add to
-> GNU make.  I haven't seen any other project use the filter-out --%
-> trick that the Git makefiles do, but even with that it won't help if a
-> new single-letter option that takes an argument is added.
+ builtin/range-diff.c |  2 +-
+ diff-no-index.c      |  3 +--
+ diff.c               | 26 +++++++++++++++-----------
+ diff.h               |  2 +-
+ 4 files changed, 18 insertions(+), 15 deletions(-)
 
-I'd think it would probably make sense to promise that GNU make will
-never add such options, so that what's currently documented continues to
-work. I.e. it supports:
+Range-Diff gegen v1:
+1:  630f95320f =3D 1:  4dc8b2632b diff: factor out add_diff_options()
+2:  4b56fa795c =3D 2:  10903d355e diff: let prep_parse_options() return pa=
+rseopt array
+3:  7e54e4370a ! 3:  24bd18ae79 diff: remove parseopts member from struct =
+diff_options
+    @@ diff.c: void diff_free(struct diff_options *options)
+      }
 
-	--debug=all
-
-Not these forms:
-
-	-dwhy
-	-d=why
-
-But if we're on the topic: The only reason git's Makefile uses these is
-because it's trying to fake up some pretty verbose-but-not-too-verbose
-mode. You can see this in our tree at "shared.mak", the kernel does
-something similar.
-
-For our Makefile this is pretty close to what we'd get from a simpler:
-
-	make -B --debug=why -s |
-        sed -E -n \
-		-e "s/.*: update target '(.*).o' due to.*/   CC \\1.o/" \
-                -e 's/due to.*//' \
-                -e 'p'
-
-I.e. when we have %.o" targets this is emitting " CC $@" lines, I've
-left matching the rest as an excercise for the reader, but it would be
-e.g. "GEN_PERL" or whatever for %.pm and so on.
-
-I don't know what this would look like exactly, but it would be neat if
-GNU make supported some way to emit such friendly output in
-general. Something like a sprintf format where you'd have access to the
-sort of input that "due to" string gets internally (and perhaps a bit
-more, e.g. something indicating overall progress through the graph...).
-
+      void diff_flush(struct diff_options *options)
+    +
+    + ## diff.h ##
+    +@@ diff.h: struct diff_options {
+    + 	unsigned color_moved_ws_handling;
+    +
+    + 	struct repository *repo;
+    +-	struct option *parseopts;
+    + 	struct strmap *additional_path_headers;
+    +
+    + 	int no_free;
+=2D-
+2.38.1
