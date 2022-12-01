@@ -2,110 +2,83 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 104E1C4332F
-	for <git@archiver.kernel.org>; Thu,  1 Dec 2022 23:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B04C2C4332F
+	for <git@archiver.kernel.org>; Thu,  1 Dec 2022 23:11:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231182AbiLAXGf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Dec 2022 18:06:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35794 "EHLO
+        id S231826AbiLAXLb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Dec 2022 18:11:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230309AbiLAXGc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2022 18:06:32 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06E75B2779
-        for <git@vger.kernel.org>; Thu,  1 Dec 2022 15:06:32 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id td2so7785863ejc.5
-        for <git@vger.kernel.org>; Thu, 01 Dec 2022 15:06:31 -0800 (PST)
+        with ESMTP id S231842AbiLAXLF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2022 18:11:05 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2589DC936C
+        for <git@vger.kernel.org>; Thu,  1 Dec 2022 15:10:00 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id x13-20020a17090a46cd00b00218f611b6e9so3574614pjg.1
+        for <git@vger.kernel.org>; Thu, 01 Dec 2022 15:10:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=QqMav/w4uGx1vPjzvo5DQszhoG5xriDS8JJEFSHbsUs=;
-        b=i3Q+mXGchWRYp2NKhM5vuNrZGZqAljZR6oRyG3OEZ893718W0UbFq7qZnT6LUkC0X9
-         BcKAKfZCrkNceaVD9e8whQ1Ej+PRj222v2NPMxfZQMuj8xC7KMhAvg1g48DVjmlEzVUN
-         0RAOgCWBLDrgapbRfjLqBO9uxr0Xy0VstPL4KX0BsyZmHSdsrGoFVjcbMHDdBDfvd6il
-         MSDrc/Hd+g2J+a6nHLIbd1ed3Cw6rMfz1+sgbhK3/Q/+vp+kbDZr17P/FHX+zThXcYsW
-         Q1JMqieeF+eA6SkXLsIryzIO0/5FZ+g/L4fUDS97YSu8MLf8kV99KMy88QnWPoeSLxGD
-         sN0w==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bPq+ONvLukWF0tWLNTX1gm6qjZKN1KNc3ilv0v4Jozs=;
+        b=NQoXJOrmKw4CFYc8rX5nBRzQMepqARPbj8d/lrtFMotzZkKIQrn62eSRgW8zDg0nET
+         G3d/O5d955Md//9mWYcsT/2J10ylkYum5P63+YL7ba+/MlnWqbtGMqb7rIlWUYYFFsSR
+         JJ3xKFDO9wfJu49VpUmFyKf+11FPyJrz6NS2eeImCpzmQTGBPU2vRS5qHVwDXUNA4d0g
+         yY7y8qTNj1a3ilS5fR0bmNx7nBw6n5ZgE4i/DCeR6FRfu88AjsPX31oli/QbctcxPKRE
+         OEmwMDP+qKo83gcFRueOiYl3ueexIx+3CmHePLJILoJYs647KeOT43wu6WAaMNKl2kHx
+         wurg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QqMav/w4uGx1vPjzvo5DQszhoG5xriDS8JJEFSHbsUs=;
-        b=W855C8VD+cDrliBRH7PlmlIhGaasDmlqi5kqzje/qnLHXYXDX2QHN6js3uTEZRzm/2
-         VfHTZbLulznELkaHU2NDPFYQh41C4Ag6bSMU9tSAF4X/EOQTIBv/VA5JwbGB4wWySdHR
-         y/RfU0l2yoEWvkhiZPJmLfd2y+8F/ss81SxYGa8yxsCxn7Aka25kDlMCCxcf+u15lqIC
-         vPn8vxSdguZ9/0Usxg+DctCswxYCQGw1eFYe8spCy0NvLwgWPBKP3N8MZVwo3N6fuAUb
-         9dLRo8FSvdWdlkQYPcGxCqM1nSl02wQK3ITIN0jthGIZ2dFb5pG1oaxpbGRICzB8aP0r
-         f1Jw==
-X-Gm-Message-State: ANoB5pldgzbXv8rOumhVf8c6G6TJczceknDNT3EtT7oZGrVZU00x6OBr
-        Re3gYWQsQKxQCU2yc230qg4=
-X-Google-Smtp-Source: AA0mqf5+p2AuskgY4s92A7Yc5zt7SYrnv5NXFA0G57388I3OE76Jb4ZuX5bDp4QtS797thZCm1cvCw==
-X-Received: by 2002:a17:907:7611:b0:7c0:9bc2:a7c8 with SMTP id jx17-20020a170907761100b007c09bc2a7c8mr8961703ejc.384.1669935990427;
-        Thu, 01 Dec 2022 15:06:30 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id p8-20020a170906a00800b007ad69e9d34dsm2327782ejy.54.2022.12.01.15.06.29
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=bPq+ONvLukWF0tWLNTX1gm6qjZKN1KNc3ilv0v4Jozs=;
+        b=VlCBOA2pQe3edOMZg/dvn5KxLf3lruXdyLRv74yw0Z8EIIA/KQx47ifmv4nwGn08kt
+         t7Uncw9qpeMn6MyR2surGCJPnB6ACevs41qEdwovjc8cqMqtmXcra6HtEoq+lkPT2xyf
+         PjEGp0gfutSDcAKR/dtYlcFumCyrM89hT8TNiJ0swP0puHZ7LoNIIgpFn/JLGpF05zYO
+         dPAWSh7cXH5LvuRa5ZJIZUf5GYBMFuFQkwvNhj/DpJzIrJtR6pkAWbV04l8YQgEc6jLW
+         VGBBloI4ibE59IDwevWjuia75P/8qiFjrYJw887yzElQy7juVvo1eiYOYxFkg4SrrI9M
+         qLfw==
+X-Gm-Message-State: ANoB5pnL0TWNgB+0vX+S0fndIe9jBVMnwzTYJrgZn2GSg5wd88PTuSkR
+        AlP/pzN6walFN+Y/7z87X5Q=
+X-Google-Smtp-Source: AA0mqf7hnl9CrjoTe8P/DTL1MllHZ3O9/KI9gYgivcsZR+E/LVkDUOllxE9hbGPIblJFnu9kKSBFmQ==
+X-Received: by 2002:a17:903:289:b0:189:25fb:8e83 with SMTP id j9-20020a170903028900b0018925fb8e83mr52176554plr.20.1669936199524;
+        Thu, 01 Dec 2022 15:09:59 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id t197-20020a635fce000000b00476e84c3530sm2966132pgb.60.2022.12.01.15.09.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Dec 2022 15:06:29 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1p0sdR-002LQI-10;
-        Fri, 02 Dec 2022 00:06:29 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] t4205: don't exit test script on failure
-Date:   Fri, 02 Dec 2022 00:05:45 +0100
-References: <c5b4d091-23c1-5a75-a255-99ec83973d8d@web.de>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <c5b4d091-23c1-5a75-a255-99ec83973d8d@web.de>
-Message-ID: <221202.86edtihgga.gmgdl@evledraar.gmail.com>
+        Thu, 01 Dec 2022 15:09:59 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 0/4] Don't lazy-fetch commits when parsing them
+References: <cover.1669839849.git.jonathantanmy@google.com>
+        <cover.1669922792.git.jonathantanmy@google.com>
+        <Y4kGiEXdTOpn5Eyi@coredump.intra.peff.net>
+Date:   Fri, 02 Dec 2022 08:09:58 +0900
+In-Reply-To: <Y4kGiEXdTOpn5Eyi@coredump.intra.peff.net> (Jeff King's message
+        of "Thu, 1 Dec 2022 14:54:48 -0500")
+Message-ID: <xmqqv8mura9l.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jeff King <peff@peff.net> writes:
 
-On Thu, Dec 01 2022, Ren=C3=A9 Scharfe wrote:
+> On Thu, Dec 01, 2022 at 11:27:29AM -0800, Jonathan Tan wrote:
+>
+>> Thanks everyone for your reviews. Here is a reroll with the requested change
+>> (just one small one).
+>
+> Thanks, this looks OK to me. However Junio noted in "What's cooking"
+> that it seems to break CI on windows. The problem is in t5318.93:
+> ...
+> In particular I wonder if obj_read_unlock() might be the culprit here,
+> and something like this might help:
 
-> Only abort the individual check instead of exiting the whole test script
-> if git show fails.  Noticed with GIT_TEST_PASSING_SANITIZE_LEAK=3Dcheck.
->
-> Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> ---
-> Formatted with --function-context for easier review.
-> ac52d9410e (t4205: cover `git log --reflog -z` blindspot,
-> 2019-11-19) added the exit call.
->
->  t/t4205-log-pretty-formats.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-> index e448ef2928..0404491d6e 100755
-> --- a/t/t4205-log-pretty-formats.sh
-> +++ b/t/t4205-log-pretty-formats.sh
-> @@ -154,12 +154,12 @@ done
->  test_expect_success 'NUL termination with --reflog --pretty=3Doneline' '
->  	revs=3D"$(git rev-list --reflog)" &&
->  	for r in $revs
->  	do
->  		git show -s --pretty=3Doneline "$r" >raw &&
-> -		cat raw | lf_to_nul || exit 1
-> +		cat raw | lf_to_nul || return 1
->  	done >expect &&
->  	# the trailing NUL is already produced so we do not need to
->  	# output another one
->  	git log -z --pretty=3Doneline --reflog >actual &&
->  	test_cmp expect actual
->  '
-
-This is also 6/6 in this series to submit a bunch of these sorts of
-issues, which I submitted back in July:
-https://lore.kernel.org/git/cover-0.6-00000000000-20220721T064349Z-avarab@g=
-mail.com/
+Thanks for following-up.
