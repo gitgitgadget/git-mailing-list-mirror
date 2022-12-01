@@ -2,184 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C49E2C4321E
-	for <git@archiver.kernel.org>; Thu,  1 Dec 2022 20:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C189C43217
+	for <git@archiver.kernel.org>; Thu,  1 Dec 2022 20:25:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229921AbiLAUTG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Dec 2022 15:19:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49218 "EHLO
+        id S230211AbiLAUZj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Dec 2022 15:25:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230418AbiLAUTD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2022 15:19:03 -0500
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4591B2746
-        for <git@vger.kernel.org>; Thu,  1 Dec 2022 12:19:00 -0800 (PST)
-Received: by mail-oi1-x235.google.com with SMTP id l127so3235737oia.8
-        for <git@vger.kernel.org>; Thu, 01 Dec 2022 12:19:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7nf3qVzlpOxCb780xY2/mnOYMlBykcBdy4i0yvdRsoI=;
-        b=JnC50WFNKdQOxQBJLnc0ju2grdYsaFv/Zt/WP55z3F3UZlvM1BPl/TLWHcVdRmypYp
-         nmNRU13D5JJ48s6yXyREGPAfXmGu02sRjsUGA9xL4dEIZeh7i09Zxzlg4Zbsm3PX9NOu
-         5pDvJhHcDieysNj8jWz6iTPwTi+STacYg5U93xWiHx0LIZ5dwvT2fERhLy/9p32OzM7m
-         gAVXYdJE50YpeaQWZ1g0cxRdTqZg4RAE9O0T2GeBVSv0xigx3yDjzK+tzRANbF/7JnYD
-         kdySG4v+gApEC9xM7rJgtS5NJ5q296nxuanJYFm5M7Yxp5Kz0pKnWYZBO9Dw1YSRRDBQ
-         8U/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7nf3qVzlpOxCb780xY2/mnOYMlBykcBdy4i0yvdRsoI=;
-        b=6nqo15MGVqmg0PvDiNwKing5W6VtmrkQud3BxLGtdk/5imXm9U0zVAi7RCXBGfWcvr
-         Xv3KO5Lv20KYrciyNe0wCSQqwvkjPoCgie5kv+kFYyqfscVqVI3sJXQeX4oiUGtNSDVd
-         EAO5K7rnmI0HR5Kr3CW+lCLhtiHecK3GemdJg8HzBVN6OQ6mNPPWcGScL01wFZXQ875j
-         hfoMb0c53biHHg7QJX/xmwgDQ/ie4olYqtCetaZCIGV3D9E/G43mJ3oJpSwOcmJuGaVz
-         xYQ2En80d9CJGSYNO9sR0hFsVWmGmSSP+nnVRHufUOqshVB+jAOC8QwEHX9hXzQyoUuj
-         yjwg==
-X-Gm-Message-State: ANoB5pmlodOsBg1xmY1g6ufoCnCiBQ5TMtNPsiKuTdsqtZhitc8QHGGd
-        /R1hw16wa+KsWfQf9yuKFRGX
-X-Google-Smtp-Source: AA0mqf4P7/zPEtUA02i9wnrwkDkWaNhuGWuUJT93oXlXlHeM/nW8UZDi2b8PjUM7lI1k7MWXG8rjMA==
-X-Received: by 2002:a05:6808:1812:b0:354:4bcd:3f53 with SMTP id bh18-20020a056808181200b003544bcd3f53mr27593641oib.135.1669925939887;
-        Thu, 01 Dec 2022 12:18:59 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:1df2:a53f:2e5b:c383? ([2600:1700:e72:80a0:1df2:a53f:2e5b:c383])
-        by smtp.gmail.com with ESMTPSA id g1-20020a056830308100b006618e23df48sm2517616ots.39.2022.12.01.12.18.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Dec 2022 12:18:59 -0800 (PST)
-Message-ID: <f5370fec-d517-eaa9-8e16-82fa20ac8532@github.com>
-Date:   Thu, 1 Dec 2022 15:18:57 -0500
+        with ESMTP id S230202AbiLAUZf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2022 15:25:35 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2BA2BFCDD
+        for <git@vger.kernel.org>; Thu,  1 Dec 2022 12:25:33 -0800 (PST)
+Received: (qmail 25975 invoked by uid 109); 1 Dec 2022 20:25:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 01 Dec 2022 20:25:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28438 invoked by uid 111); 1 Dec 2022 20:25:33 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 01 Dec 2022 15:25:33 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 1 Dec 2022 15:25:31 -0500
+From:   Jeff King <peff@peff.net>
+To:     Todd Zullinger <tmz@pobox.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: t5559-http-fetch-smart-http2 failures
+Message-ID: <Y4kNu9iFQuKjuub1@coredump.intra.peff.net>
+References: <Y4fUntdlc1mqwad5@pobox.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 00/30] [RFC] extensions.refFormat and packed-refs v2 file
- format
-To:     Han-Wen Nienhuys <hanwen@google.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jrnieder@gmail.com,
-        John Cai <johncai86@gmail.com>
-References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
- <CAFQ2z_MZd150kQNTcxaDRVvALpZcCUbRj_81pt-VBY8DRaoRNw@mail.gmail.com>
- <f1c45bd5-692e-85db-90c3-c516003f47e5@github.com>
- <CAFQ2z_MLwUoaSTG04LJYHgJH-QYJEuZ9bQcTsV8mXwxBbz7Egg@mail.gmail.com>
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <CAFQ2z_MLwUoaSTG04LJYHgJH-QYJEuZ9bQcTsV8mXwxBbz7Egg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Y4fUntdlc1mqwad5@pobox.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/30/2022 1:30 PM, Han-Wen Nienhuys wrote:
-> On Wed, Nov 30, 2022 at 4:16 PM Derrick Stolee <derrickstolee@github.com> wrote:
->> (Note: there is a strategy that doesn't need this approach, but it's a bit
->> complicated. It would involve rotating all replicas to new repositories
->> that are configured to use reftable upon creation, getting the refs from
->> other replicas via fetches. In my opinion, this is prohibitively
->> expensive.)
+On Wed, Nov 30, 2022 at 05:09:34PM -0500, Todd Zullinger wrote:
+
+> The changes in 73c49a4474 (t: run t5551 tests with both HTTP
+> and HTTP/2, 2022-11-11) seem to rather frequently trigger
+> test failures on Fedora.
+
+Thanks for the report. I can't seem to reproduce here on my Debian
+system, even with --stress.
+
+I can try a Fedora chroot or vm, but it may take some time to set up. It
+also sounds like you're not able to reproduce it locally on a Fedora
+system? Have you tried "./t5559-* --stress"?
+
+> The most frequent test to fail is "large fetch-pack requests
+> can be sent using chunked encoding" (t5559.30), but earlier
+> tests have also failed on occasion.  For the common failure,
+> the test exits with:
 > 
-> I'm not sure I understand the problem. Any deletion of a ref (that is
-> in packed-refs) today already requires rewriting the entire
-> packed-refs file ("all or nothing" operation). Whether you write a
-> packed-refs or reftable is roughly equally expensive.
+>     expecting success of 5559.30 'large fetch-pack requests can be sent using chunked encoding': 
+> 	    GIT_TRACE_CURL=true git -c http.postbuffer=65536 \
+> 		    clone --bare "$HTTPD_URL/smart/repo.git" split.git 2>err &&
+> 	    {
+> 		    test_have_prereq HTTP2 ||
+> 		    grep "^=> Send header: Transfer-Encoding: chunked" err
+> 	    }
+>     +++ GIT_TRACE_CURL=true
+>     +++ git -c http.postbuffer=65536 clone --bare http://127.0.0.1:5559/smart/repo.git split.git
+>     error: last command exited with $?=128
+>     not ok 30 - large fetch-pack requests can be sent using chunked encoding
 > 
-> Are you looking for a way to upgrade a repo, while concurrent git
-> process may write updates into the repository during the update? That
-> may be hard to pull off, because you probably need to rename more than
-> one file atomically. If you accept momentarily failed writes, you
-> could do
-> 
-> * rename refs/ to refs.old/ (loose ref writes will fail now)
-> * collect loose refs under refs.old/ , put into packed-refs
-> * populate the reftable/ dir
-> * set refFormat extension.
-> * rename refs.old/ to refs/ with a refs/heads a file (as described in
-> the reftable spec.)
->
-> See also https://gerrit.googlesource.com/jgit/+/ca166a0c62af2ea87fdedf2728ac19cb59a12601/org.eclipse.jgit/src/org/eclipse/jgit/internal/storage/file/FileRepository.java#734
+> (Less frequently, I've seen the last command exit 141.)
 
-Yes, I would ideally like for the repository to "upgrade" its ref
-storage mechanism during routine maintenance in a non-blocking way
-while other writes and reads continue as normal.
+Interesting. 141 implies SIGPIPE, but that may be a red herring. The
+operation isn't supposed to fail, but if it does due to the server
+bailing, then the client sometimes hitting SIGPIPE is a known unrelated
+problem.
 
-After discussing it a bit internally, we _could_ avoid the "rotate
-the replicas" solution if there was a "git upgrade-ref-format"
-command that could switch from one to another, but it would still
-involve pulling that replica out of the rotation and then having
-it catch up to the other replicas after that is complete. If I'm
-reading your draft correctly, that is not currently available in
-your work, but we could add it after the fact.
+Is it possible to see the contents of "err" here? That will have the
+message from the client, but also the curl trace, which is probably
+helpful.
 
-Requiring pulling replicas out of rotation is still a bit heavy-
-handed for my liking, but it's much less expensive than moving
-all of the Git data.
+It might also be interesting to see the server's view, which would be in
+httpd/error.log in the trash directory (also access.log, but probably
+that is not interesting).
 
->> The reason to start with this step is that the benefits and risks are
->> clearly understood, which can motivate us to establish the mechanism for
->> changing the ref format by defining the extension.
-> 
-> I believe that the v2 format is a safe change with performance
-> improvements, but it's a backward incompatible format change with only
-> modest payoff. I also don't understand how it will help you do a stack
-> of tables,
-> which you need for your primary goal (ie. transactions/deletions
-> writing only the delta, rather than rewriting the whole file?).
+> I can easily disable the failing tests for a bit, but does
+> anyone have an idea what might be the cause or how to better
+> debug it when it occurs on a buildsystem without direct
+> access?
 
-The v2 format doesn't help me on its own, but it has other benefits
-in terms of size and speed, as well as the "ref count" functionality.
+If t5551 isn't failing similarly, then presumably the problem is either:
 
-The important thing is that the definition of extensions.refFormat
-that I'm proposing in this RFC establishes a way to make incremental
-progress on the ref format, allowing the stacked format to come in
-later with less friction.
+  1. There is some race or bad interaction between curl and apache
+     speaking http2 (possibly a buggy version of one?)
+
+  2. http2 requires using mpm_event instead of mpm_prefork. Maybe this
+     introduces problems with apache on this system?
+
+  3. there is a bug in git. ;) This is always a possibility, of course,
+     but we literally do nothing differently from our end, except pass
+     it to curl via CURLOPT_HTTP_VERSION.
+
+It would be interesting to see if doing this:
+
+diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+index 0294739a77..b24ca44a95 100644
+--- a/t/lib-httpd/apache.conf
++++ b/t/lib-httpd/apache.conf
+@@ -73,16 +73,9 @@ LockFile accept.lock
+ 	LoadModule unixd_module modules/mod_unixd.so
+ </IfModule>
  
->> * The reftable is currently fundamentally different enough that it could
->>   not be used as a replacement for the packed-refs file underneath loose
->>   refs (primarily due to its integration with the reflog). Doing so would
->>   require significant work on top of your prototype.
-> 
-> It could, but I don't see the point.
-
-My point is that we can upgrade repositories by replacing packed-refs
-with reftable during routine maintenance instead of the heavier
-approaches discussed earlier.
-
-* Step 1: replace packed-refs with reftable.
-* Step 2: stop writing loose refs, only update reftable (but still read loose refs).
-* Step 3: collapse all loose refs into reftable, stop reading or writing loose refs.
+-<IfDefine HTTP2>
+ <IfModule !mod_mpm_event.c>
+ 	LoadModule mpm_event_module modules/mod_mpm_event.so
+ </IfModule>
+-</IfDefine>
+-<IfDefine !HTTP2>
+-<IfModule !mod_mpm_prefork.c>
+-	LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
+-</IfModule>
+-</IfDefine>
+ </IfVersion>
  
->> I'm going to take the following actions on my end to better understand the
->> situation:
->>
->> 1. I'll take your draft PR branch and do some performance evaluations on
->>    the speed of ref updates compared to loose refs and my prototype of a
->>    two-stack packed-ref where the second layer of the stack is only for
->>    deleted refs.
-> 
-> (tangent) - wouldn't that design perform poorly once the number of
-> deletions gets large? You'd basically have to rewrite the
-> deleted-packed-refs file all the time.
- 
-We have regular maintenance that is triggered by pushes that rewrites
-the packed-refs file frequently, anyway. The maintenance currently is
-blocked on the amount of time spent repacking object data, so a large
-number of ref updates can come in during this process. (That maintenance
-step would collapse the deleted-refs layer into the base layer.)
+ PassEnv GIT_VALGRIND
 
-I've tested a simple version of this stack that shows that rewriting the
-file with 1,000 deletions is still within 2x the cost of updating a loose
-ref, so it solves the immediate problem using a much simpler stack model,
-at least in the most-common case where ref deletions are less frequent
-than other updates. Even if the size outgrew the 2x cost limit, the
-deleted file is still going to be much smaller than the base packed-refs
-file, which is currently rewritten for every deletion, so it is still an
-improvement.
+also causes t5551 to start failing. If so, then we can blame mpm_event,
+and not http2.
 
-The more complicated stack model would be required to funnel all ref
-updates into that structure and away from loose refs.
-
-Thanks,
--Stolee
+-Peff
