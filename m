@@ -2,58 +2,58 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7756AC43217
-	for <git@archiver.kernel.org>; Thu,  1 Dec 2022 19:27:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C676C4321E
+	for <git@archiver.kernel.org>; Thu,  1 Dec 2022 19:27:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229943AbiLAT1r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Dec 2022 14:27:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48220 "EHLO
+        id S229708AbiLAT15 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Dec 2022 14:27:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229708AbiLAT1l (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2022 14:27:41 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0488E0ED
-        for <git@vger.kernel.org>; Thu,  1 Dec 2022 11:27:39 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id om6-20020a17090b3a8600b0021965c06195so6649128pjb.2
-        for <git@vger.kernel.org>; Thu, 01 Dec 2022 11:27:39 -0800 (PST)
+        with ESMTP id S230256AbiLAT1p (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2022 14:27:45 -0500
+Received: from mail-yw1-x1149.google.com (mail-yw1-x1149.google.com [IPv6:2607:f8b0:4864:20::1149])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC41329C92
+        for <git@vger.kernel.org>; Thu,  1 Dec 2022 11:27:43 -0800 (PST)
+Received: by mail-yw1-x1149.google.com with SMTP id 00721157ae682-3b48b605351so25902017b3.22
+        for <git@vger.kernel.org>; Thu, 01 Dec 2022 11:27:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=6TodTgJTHAfLxIfznVa94Ovf+scmC3jr+AlIcU9Dzm4=;
-        b=pDKF/tpBIVDMEj6owmRAVD6W9Mhf4aR0Wy6qDAF1EuTECUKbh8Dr2X6xOhI68ntEq5
-         TzSdWz5Q8dhzinzq6pOltBrYHRdiZeAmmCcMM3ikJIi8xJ+e+vUrOGNGofDK9b2FcRuC
-         aXg1TPwqjy5jWDlM9/iiaVskyIoo3wZWufb7uKmWM70NuPws1R6+SMYDiTVBlbwIR3Xz
-         BxfIoidiqJ9t8q/p4qVZOxm/lCzlha9WjjN6Q6ZCD0d1FTo3w7w9f9S7XOyMow9Gk2g7
-         GP8N1Ekc0bpv4hz8NdCKComYN5RpxrRx3cXRVFrKLiRS8mOXeJ0CCdGsgfMSHMLbZzeB
-         6nlA==
+        bh=RN/hHorXE4h1LGy1HPs5RWPP6Hyui6R8TjabuvFI1BI=;
+        b=Z8S39NQUWEGmZk+i2iiIKsQXbaLf+IY/zS2oC6lprUfANhefXo1vyys+Dk7I7SKxh8
+         9IFYOEHavw8LBAHMP15r6IZLdMNuLn6FBPt8mNoPgxpHjpSLUeF8X+n18+/Gxi44WdzY
+         2kHK1xGkDVwijGLtLsqhmcfBlPoS61PxAtbX/lErtpuliMgwNzCkm4O3onHGPgh0neda
+         zW7L48g0wgoptlg32Qk7TIn7v9vkCqIxzTmFgOoVH1Bh5yDuddxUfwk3hMbdmWqIgic8
+         igGuLlfagsjwQ5KXC2mebW784j1Ty4uNFr+SRsjswWQbzNYY8eGvxR6FAk2qzpVNlLwm
+         pZYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6TodTgJTHAfLxIfznVa94Ovf+scmC3jr+AlIcU9Dzm4=;
-        b=thYRQfkkG2UBELEpGGj/YbChkzIusvc6XSCRm0XzUXRPCb9WBqjFXr28DYV1rZ0ZZt
-         LrjrDWaAnoCWzWqzcRvHbe8PPceHrsFfFXGmLgn087ec8zD4uoPXfwxGm+FIVb8S1Kqq
-         en+6kQM7yj6XsKVE3BF/hGv37c/e9q3epjDY68bLWrH9kYFtLNBV0MiVqDZStWuU4gjO
-         xTmPCthsQKyVsWjlxMBLxpOd3PquACI21pV+Kim2T8jloO2JFLMXQQJi8ZtcbkSfh+bd
-         +O7z7a1jxNpavcy50nraFYcWoqVuw7PF4rMG9DigWeBvT+VaOD/dyOipofv6caaQ5B7q
-         QaeQ==
-X-Gm-Message-State: ANoB5pmUw3yxIPD/leXt2U2cpgpxpUvqntlbfCf+7QnYc5YZg0wNP67U
-        X8sOrJm/WFf+B86/i0npWNVnrMgpdsbgTYMin0dbXNKpAMeUxoWnd9IeuzPbf6cB1nwMcoZMby9
-        H9AyGEdqqLcJS+X7pGSlpPJY3lGgDYfG1o5quHq4iB4zSOtArXOE/dYBHg20bVXQNIyq1oYAiYZ
-        n9
-X-Google-Smtp-Source: AA0mqf6xd5ciR4YBH5S8DBrWbjY38Ijmrryj2H9mjmHytxFmTN4agLy72Dz5L1INtw9UoMdtjo2/oHSrCWXlvedL/sUG
+        bh=RN/hHorXE4h1LGy1HPs5RWPP6Hyui6R8TjabuvFI1BI=;
+        b=7nJOdhF+JN7osbZ40YupvKXlJArh6OsupvWOOwEj/ywUHpWRvqjfsou867uQOGIVV4
+         BD740IZeYfiWF/tlzCJIOK7aX+jyIY7qqfp+27IUQIahiIXX+6RqNm48tnWkBoJPZRT/
+         IRVex3pyuEWp5zTKbWGmcElHhE+JypbgnqkAkTuvHU3vZtQGVR+YejQZhBxinA3V5Obz
+         OY2sOcPzVYPGtFjB/VEFhVwOVWFfPswf4KOUg4C8iAEOXEOfl5OWVu+9jse/gyqFXHzU
+         6t3Huk8hK/LxLYAv2ojpaxJavEaJ+2oTrQlWWU+bsKFDefTSuiKb0/Xr75VZSZCnGvlf
+         moyg==
+X-Gm-Message-State: ANoB5pnC90lkk5rOTeoX8ZNHHFM9WJZUFfzdYAblYosXNRcZxwjAgDkD
+        izGGQLjoUnbxZ3q6AKSo39ku6WqLewa5IN8y4TLamie6kYpOTKXHSRfH3sRx+aqRnWJCjXBJI2Y
+        kju/fXxdcb6E9gwIHIqMwHDX92eMO35qMYK6X4sgB/zCZr+bHBqBLqP89KaW8adU9ppOxmdA59L
+        gj
+X-Google-Smtp-Source: AA0mqf4whqJsTt5kmp3pbAtP9j0pIBaWjp9+XSmpTntzZcJ1LwMGrcubq9VlKXXThn2v/+vDn2miYwTElCmEYVr+5eoz
 X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a17:90b:f89:b0:219:5b3b:2b9f with
- SMTP id ft9-20020a17090b0f8900b002195b3b2b9fmr1267857pjb.2.1669922859141;
- Thu, 01 Dec 2022 11:27:39 -0800 (PST)
-Date:   Thu,  1 Dec 2022 11:27:31 -0800
+ (user=jonathantanmy job=sendgmr) by 2002:a25:5d5:0:b0:6f9:5e19:4729 with SMTP
+ id 204-20020a2505d5000000b006f95e194729mr12850595ybf.311.1669922862409; Thu,
+ 01 Dec 2022 11:27:42 -0800 (PST)
+Date:   Thu,  1 Dec 2022 11:27:33 -0800
 In-Reply-To: <cover.1669922792.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1669839849.git.jonathantanmy@google.com> <cover.1669922792.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.39.0.rc0.267.gcb52ba06e7-goog
-Message-ID: <1be60f1bf2f368f5e5c8b6550b3e4d4f3efe1496.1669922792.git.jonathantanmy@google.com>
-Subject: [PATCH v2 2/4] object-file: refactor corrupt object diagnosis
+Message-ID: <a38229c42ae1dec4dcc52e6dc949f4a90846129d.1669922792.git.jonathantanmy@google.com>
+Subject: [PATCH v2 4/4] commit: don't lazy-fetch commits
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net,
@@ -63,94 +63,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This functionality will be used from another file in a subsequent patch,
-so refactor it into a public function.
+When parsing commits, fail fast when the commit is missing or
+corrupt, instead of attempting to fetch them. This is done by inlining
+repo_read_object_file() and setting the flag that prevents fetching.
+
+This is motivated by a situation in which through a bug (not necessarily
+through Git), there was corruption in the object store of a partial
+clone. In this particular case, the problem was exposed when "git gc"
+tried to expire reflogs, which calls repo_parse_commit(), which triggers
+fetches of the missing commits.
+
+(There are other possible solutions to this problem including passing an
+argument from "git gc" to "git reflog" to inhibit all lazy fetches, but
+I think that this fix is at the wrong level - fixing "git reflog" means
+that this particular command works fine, or so we think (it will fail if
+it somehow needs to read a legitimately missing blob, say, a .gitmodules
+file), but fixing repo_parse_commit() will fix a whole class of bugs.)
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- object-file.c  | 29 ++++++++++++++++++-----------
- object-store.h |  9 +++++++++
- 2 files changed, 27 insertions(+), 11 deletions(-)
+ commit.c | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/object-file.c b/object-file.c
-index 1cde477267..36f81c7958 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -1705,9 +1705,6 @@ void *read_object_file_extended(struct repository *r,
- 				int lookup_replace)
- {
- 	void *data;
--	const struct packed_git *p;
--	const char *path;
--	struct stat st;
- 	const struct object_id *repl = lookup_replace ?
- 		lookup_replace_object(r, oid) : oid;
+diff --git a/commit.c b/commit.c
+index 572301b80a..17e71f5be4 100644
+--- a/commit.c
++++ b/commit.c
+@@ -508,6 +508,13 @@ int repo_parse_commit_internal(struct repository *r,
+ 	enum object_type type;
+ 	void *buffer;
+ 	unsigned long size;
++	const struct object_id *real_oid;
++	struct object_info oi = {
++		.typep = &type,
++		.sizep = &size,
++		.contentp = &buffer,
++		.real_oidp = &real_oid,
++	};
+ 	int ret;
  
-@@ -1715,26 +1712,36 @@ void *read_object_file_extended(struct repository *r,
- 	data = read_object(r, repl, type, size);
- 	if (data)
- 		return data;
-+	die_if_corrupt(r, oid, repl);
+ 	if (!item)
+@@ -516,11 +523,18 @@ int repo_parse_commit_internal(struct repository *r,
+ 		return 0;
+ 	if (use_commit_graph && parse_commit_in_graph(r, item))
+ 		return 0;
+-	buffer = repo_read_object_file(r, &item->object.oid, &type, &size);
+-	if (!buffer)
 +
-+	return NULL;
-+}
-+
-+void die_if_corrupt(struct repository *r,
-+		    const struct object_id *oid,
-+		    const struct object_id *real_oid)
-+{
-+	const struct packed_git *p;
-+	const char *path;
-+	struct stat st;
- 
- 	obj_read_lock();
- 	if (errno && errno != ENOENT)
- 		die_errno(_("failed to read object %s"), oid_to_hex(oid));
- 
- 	/* die if we replaced an object with one that does not exist */
--	if (repl != oid)
-+	if (!oideq(real_oid, oid))
- 		die(_("replacement %s not found for %s"),
--		    oid_to_hex(repl), oid_to_hex(oid));
-+		    oid_to_hex(real_oid), oid_to_hex(oid));
- 
--	if (!stat_loose_object(r, repl, &st, &path))
-+	if (!stat_loose_object(r, real_oid, &st, &path))
- 		die(_("loose object %s (stored in %s) is corrupt"),
--		    oid_to_hex(repl), path);
-+		    oid_to_hex(real_oid), path);
- 
--	if ((p = has_packed_and_bad(r, repl)))
-+	if ((p = has_packed_and_bad(r, real_oid)))
- 		die(_("packed object %s (stored in %s) is corrupt"),
--		    oid_to_hex(repl), p->pack_name);
-+		    oid_to_hex(real_oid), p->pack_name);
- 	obj_read_unlock();
--
--	return NULL;
- }
- 
- void *read_object_with_reference(struct repository *r,
-diff --git a/object-store.h b/object-store.h
-index 1be57abaf1..88c879c61e 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -256,6 +256,15 @@ static inline void *repo_read_object_file(struct repository *r,
- #define read_object_file(oid, type, size) repo_read_object_file(the_repository, oid, type, size)
- #endif
- 
-+/*
-+ * Dies if real_oid is corrupt, not just missing.
-+ *
-+ * real_oid should be an oid that could not be read.
-+ */
-+void die_if_corrupt(struct repository *r,
-+		    const struct object_id *oid,
-+		    const struct object_id *real_oid);
-+
- /* Read and unpack an object file into memory, write memory to an object file */
- int oid_object_info(struct repository *r, const struct object_id *, unsigned long *);
- 
++	/*
++	 * Git does not support partial clones that exclude commits, so set
++	 * OBJECT_INFO_SKIP_FETCH_OBJECT to fail fast when an object is missing.
++	 */
++	if (oid_object_info_extended(r, &item->object.oid, &oi,
++	    OBJECT_INFO_LOOKUP_REPLACE | OBJECT_INFO_SKIP_FETCH_OBJECT) < 0) {
++		die_if_corrupt(r, &item->object.oid, real_oid);
+ 		return quiet_on_missing ? -1 :
+ 			error("Could not read %s",
+ 			     oid_to_hex(&item->object.oid));
++	}
+ 	if (type != OBJ_COMMIT) {
+ 		free(buffer);
+ 		return error("Object %s not a commit",
 -- 
 2.39.0.rc0.267.gcb52ba06e7-goog
 
