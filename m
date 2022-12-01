@@ -2,66 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34A11C4321E
-	for <git@archiver.kernel.org>; Thu,  1 Dec 2022 01:02:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EE6CC4321E
+	for <git@archiver.kernel.org>; Thu,  1 Dec 2022 01:25:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229702AbiLABCw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 30 Nov 2022 20:02:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48114 "EHLO
+        id S229601AbiLABZP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 30 Nov 2022 20:25:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229476AbiLABCt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 30 Nov 2022 20:02:49 -0500
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4646B11C3A
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 17:02:47 -0800 (PST)
-Received: by mail-pf1-x435.google.com with SMTP id 140so413859pfz.6
-        for <git@vger.kernel.org>; Wed, 30 Nov 2022 17:02:47 -0800 (PST)
+        with ESMTP id S229461AbiLABZN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 30 Nov 2022 20:25:13 -0500
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDBFA8C6A5
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 17:25:12 -0800 (PST)
+Received: by mail-pf1-x429.google.com with SMTP id k79so448957pfd.7
+        for <git@vger.kernel.org>; Wed, 30 Nov 2022 17:25:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=r5O//x4TmAcKcF71d+cFjriVhhKkHad8jr9gzPI5MjA=;
-        b=qfFezGXV2ONWPlRHVgFPILpn8g70VKXZoUoGip23faTlKrb1y6Mn1KfwYXy8ooB6FY
-         zpcQHuSKR3tejucbgCjK1Zb9quVaQrjLmjt4nl+0legTiTFlx0xalPO1NsW7jKSlULWy
-         Gv224XxqTPYNHZsdJGJycX6+IV1b0GtfTi6it6IupynAlaJCQ8+VeL6o0ALOoHIsCNNy
-         BH3t3P8O/tOEgG5+pXOlD/+4IRCaKVa4OxmNjJdwrGgJIx1R1ta6FIhLxRWFu1O0Zj/d
-         EMxercXIe5XPkI2pcRRcrfH79bb0vP1o22hYrMDQtS5pN8JKST2beTgrCbKeQ6wr1YBd
-         QrbQ==
+        bh=6Z3F3u8Nx+/OYrV61KStyKbqRsXQU4nBQ49kpg9eous=;
+        b=SNPTtfCO5VW4gJNiIb4j2woor4BJYmbKFvjpiRO85E49Jv4z6FEuhKp3WccFz1dm75
+         D/TF70mexsDZZE2ENiuCxRQD2YnZvVnAgwQXShbY5Bl9M3OfJtcPM0RIT5LINnSJzB2r
+         OqE+ygXrkUgy1owHqDz1kkBd8/Qj/xrdjyXblyFPpiml49uU59Mzpv+RrUWcwDvrvBTi
+         3tgaOxU1m1Wv9CZJBv0vYCXkH00rBNfcyOTikvmCDgO3yGbo0iCCkKZyBnq2GoN32KQq
+         CZ3+VOenFu6HK5q8p3AMon0/+TDQWLj0pexd4InwERMUh0N0cAp9csjCOniCkUhZfc97
+         aRGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=r5O//x4TmAcKcF71d+cFjriVhhKkHad8jr9gzPI5MjA=;
-        b=4cthpLZhh/jvclcNTFLR1XVFHczQWfVTdG9d+KG6fTOaaOiykT6/QK0zW0xSS1E50W
-         tu+/WA/VqdIP13+w/fKmYYZpEecveby49NSrdn3mYjGAfNLpgFstiI+o6/eQo6bWfERk
-         ejwRgO9omMMlIubUOdo7z3j3taWnCoFBzHBsfqGKA8CF+C1botCvmJNxXUkVQ4c3VEYZ
-         X81qJw5r2k7MZdGqgpOsBfjxrVzmr7YX7HNToDzEb0mBCwiC4WvQt/UKBhw+H/aOzCSK
-         kVakTjB1pyyOK/mh0P4j9qdFeqBfC/1knxEoYb1RsHQmdFsWyDfM5I+v00+nsSW+xdBg
-         axMw==
-X-Gm-Message-State: ANoB5pm186AQ5F017enzUIkcP6/NFpXJux9lzEia6OYFE1KQt6FBdV6R
-        HB8yr2TgAaeZvNpo666EpUM=
-X-Google-Smtp-Source: AA0mqf7x86Bp5s2gW6rFZvjTWKvCODRJq5JiNQBovleVbfDp+yKyR1NGQjIG3MmQwPX7RpB7WRjhrw==
-X-Received: by 2002:aa7:854d:0:b0:56d:6e51:60ee with SMTP id y13-20020aa7854d000000b0056d6e5160eemr43941302pfn.25.1669856566603;
-        Wed, 30 Nov 2022 17:02:46 -0800 (PST)
+        bh=6Z3F3u8Nx+/OYrV61KStyKbqRsXQU4nBQ49kpg9eous=;
+        b=0aWvLqN3xN2GwCgzEi63Pljbrsfr8HZhCiCPv8MyzkQDZrKzGHicCxADWkUs/AEpPX
+         FXKwsxVJbAY68aK30A6G6y6/hvlufi1WaJXzg4S4ybFsrq9LQsNxODLmLMqao+MwVDrg
+         rLw2UYpObk2qGUf6jT+EXAndtbtOxZCehVz0bJ7M9UPOgNUc+LNibtoyOL2NzRar6m2t
+         pHwX0Rv80KD49jM71hKp7qmB7I7kisRSU1Esa8CQHPXTrELWJQUUa7/OJbgR/B3lnUdu
+         USeuKtjUCUFLa2doCQ5s9XlWziCQhkgXbl2KH9a5sO3OoRmUOwOddmZCWC6Cm6ZFI6o+
+         C2xA==
+X-Gm-Message-State: ANoB5pk9tgnTTk6F3ZlkThjQjotirPoSOAhIJ0uBuyotPURfQyacNqvo
+        tY1n9fJioB0BQOr4IK0n0lk=
+X-Google-Smtp-Source: AA0mqf7KtWbHbyi9K4XP7hR5yFsnh0j3Lf/XUR8nsIHG3Y8/AJC5/uicsU8PxD5VHVmcePVY4XJf8A==
+X-Received: by 2002:a63:110d:0:b0:46e:bcc1:28df with SMTP id g13-20020a63110d000000b0046ebcc128dfmr39407657pgl.187.1669857912263;
+        Wed, 30 Nov 2022 17:25:12 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id d12-20020a170903230c00b0016c9e5f291bsm2139801plh.111.2022.11.30.17.02.45
+        by smtp.gmail.com with ESMTPSA id 13-20020a17090a190d00b00218cd71781csm1806186pjg.51.2022.11.30.17.25.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 30 Nov 2022 17:02:45 -0800 (PST)
+        Wed, 30 Nov 2022 17:25:11 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
 Cc:     Git List <git@vger.kernel.org>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/3] diff: build parseopts array on demand
+Subject: Re: [PATCH 3/3] diff: remove parseopts member of struct diff_options
 References: <0620b4a6-b80a-d8a0-5a35-857b9fe0c986@web.de>
-Date:   Thu, 01 Dec 2022 10:02:45 +0900
-In-Reply-To: <0620b4a6-b80a-d8a0-5a35-857b9fe0c986@web.de> (=?utf-8?Q?=22R?=
+        <d226d3bc-fb15-58a4-f516-bda51a912228@web.de>
+Date:   Thu, 01 Dec 2022 10:25:11 +0900
+In-Reply-To: <d226d3bc-fb15-58a4-f516-bda51a912228@web.de> (=?utf-8?Q?=22R?=
  =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Wed, 30 Nov 2022 19:01:22 +0100")
-Message-ID: <xmqqh6ygszpm.fsf@gitster.g>
+        message of "Wed, 30 Nov 2022 19:04:53 +0100")
+Message-ID: <xmqqcz93ud8o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -72,9 +73,36 @@ X-Mailing-List: git@vger.kernel.org
 
 René Scharfe <l.s.r@web.de> writes:
 
-> Calling repo_init_revisions() and release_revisions() in that order
-> leaks the memory allocated for the parseopts array in the embedded
-> struct diff_options member.  Get rid of that leak by reducing the
-> lifetime of that array.
+> repo_diff_setup() builds the struct option array with git diff's command
+> line options and stores a pointer to it in the parseopts member of
+> struct diff_options.  The array is freed by diff_setup_done(), but not
+> by release_revisions().  repo_init_revisions() calls repo_diff_setup(),
+> thus calling repo_init_revisions() then release_revisions() leaks it.
+>
+> We could free the array in release_revisions() as well to plug that
+> leak, but there is a better way: Only build it when needed.  Move the
+> get_diff_parseopts() calls to the two places that use the array, free it
+> after use and get rid of the parseopts member.
+>
+> Signed-off-by: René Scharfe <l.s.r@web.de>
+> ---
+>  diff.c | 17 ++++++++---------
+>  1 file changed, 8 insertions(+), 9 deletions(-)
 
-Makes sense.
+I think this hunk is missing?
+
+ diff.h | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git c/diff.h w/diff.h
+index 5229f20486..6840499844 100644
+--- c/diff.h
++++ w/diff.h
+@@ -394,7 +394,6 @@ struct diff_options {
+ 	unsigned color_moved_ws_handling;
+ 
+ 	struct repository *repo;
+-	struct option *parseopts;
+ 	struct strmap *additional_path_headers;
+ 
+ 	int no_free;
