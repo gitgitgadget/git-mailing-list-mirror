@@ -2,80 +2,97 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0502EC4321E
-	for <git@archiver.kernel.org>; Thu,  1 Dec 2022 21:43:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D48C2C4321E
+	for <git@archiver.kernel.org>; Thu,  1 Dec 2022 21:48:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230456AbiLAVnc convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 1 Dec 2022 16:43:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35180 "EHLO
+        id S230251AbiLAVsg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Dec 2022 16:48:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39940 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229755AbiLAVnb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2022 16:43:31 -0500
-X-Greylist: delayed 3725 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 01 Dec 2022 13:43:30 PST
-Received: from mx0a-00176a03.pphosted.com (mx0b-00176a03.pphosted.com [67.231.157.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BEC5BE4EA
-        for <git@vger.kernel.org>; Thu,  1 Dec 2022 13:43:30 -0800 (PST)
-Received: from pps.filterd (m0048300.ppops.net [127.0.0.1])
-        by m0048300.ppops.net-00176a03. (8.17.1.19/8.17.1.19) with ESMTP id 2B1HPN53002827
-        for <git@vger.kernel.org>; Thu, 1 Dec 2022 15:41:24 -0500
-From:   "Grochowalski, Matthew (GE Aerospace, US)" 
-        <MatthewS.Grochowalski@ge.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: BUG: git log --follow always follows copies as well as renames
-Thread-Topic: BUG: git log --follow always follows copies as well as renames
-Thread-Index: AdkFxHbC536pGTtGRACk1slmrc6XEg==
-Date:   Thu, 1 Dec 2022 20:41:22 +0000
-Message-ID: <604700f9e2e74d0db047a47c0b58ce8a@ge.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-dg-ref: 22ABCDE81E573BA47066CAC5C02F22F8032421A001F10ED0BF1EA87C364B1493
-  04CFC6BeJzVWF1z2lYQ7U9h9K5aEkKIjpWZVUIEadJEbqkthhd9Icz3RAIFfn139
-  15Kk1oVmcQo3QeufFl7zrnn7N6Vb1dpEb64DYvWeuUo0SY5/Fx8KpTW1lHiXya7P
-  P2YTwxd0yxLs+xJuN0mYRFOPm7C1eM6m2i9xDZ7kaW2jaStmqGpqXYnTVUrss0oN
-  HppuxNNVnmW04fa1Y2oY8UJPkS2qutpokapFapT07Ta3cTsTWN9Eq5StUjzYiKz0
-  //KPuPNj45idrtKq3AUvd3WTVPT7I7eMwxLtztKa+Yo2as/Ruvt8P2H7r07nC7f3
-  n8o5sn+z34HNEdpPSaOorSipaNouGzwryit+BFPATD6d4ORfvf73ej1by+zEcCvw
-  /cA7puFPTx+8h/GkMDovv3WKAebRHPvongfQTrTHqAqBvx5eJVVJfQBfHDpabkLb
-  uZffv3GxA93Dd4IHkp3Dp4NUeauwFvAGNwleCZCcrfg9SECd0prkomfxT7n434AU
-  enuYeDD2HcP8Jr3S/D8SujfJ/rnR3kGa1q9mHAgrneEa0f4Qt9dEE/EpRG/wHdzw
-  ol5c1oT3z0+M9jL4nxkL+WS0ue4RD0QZ0DnjLqMWQc+7x2dO/KbgVeSjjvyxbgR8
-  E+Ge34ciuVrfYd8UMc25ceVXr9m1Pkuo5X1QB4b8mFAdSH48r7gNSTd1pSPecfr1
-  c0TUeO7kHVhPTTCGxAPxP+POithsEB9SLeY8rVG+dT7bkMr9wGqHyAf9gn/uc7Qd
-  ynrtqBz2FAe/t6ReEa++8i+5b5oQgzYX549vsl3GusDgl/M/KieiPe5Dsfy+6vpV
-  u+7k59ywn9B/0NfBuJnsc/5uL9ivegcuI88m24X+E76CfGm/iX37oh4T1mv8jujv
-  SjqfXfqY4i3c8m922BfEFHjO8S3l/7QwRsSry3x+gH8VRV1vttJn5XkoyBDHbyF8
-  NV1cX5F1PjuNBf8n+aiGt+hDtiX46f6xEXzbAN1Vee7kuaESK6Ie0m68L2E/Ry/3
-  0rd9pz3RV01ExW++2wOlXoA4X1H9+mUdEh4XxP37I8UFb47+e303oZ1lPMcVIp5F
-  HUw2Jc0FyFPvJcOsm9wnxvL+ykF8h3naVdiVOU7xpFQPaGf0F9cJ3Ep5gh+X0UdE
-  eeM9EtkXxf3WNN9sNp3Md9HPr2nzuUcOud5KPubp5gjfLeQ/px/9p4Loq6Ca1+51
-  b47yHlTlzpwPaU8V5/qi/v4UfbBXaM8zlHtO9HnFny/luL9B9cOzQ+n+kIf6qwni
-  Pv3tN8sr2/ynUF8sQ/upG4z4hv6gl9C82AT/P7lO3CUmxe3N/yPyp/+AriztVI=
-x-originating-ip: [3.159.19.214]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        with ESMTP id S229823AbiLAVse (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2022 16:48:34 -0500
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AB60A322F
+        for <git@vger.kernel.org>; Thu,  1 Dec 2022 13:48:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1669931304; bh=HaWgAv2na7NNYbSyAt5J84R6Xb7AL1UKatVA8J2Wzto=;
+        h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
+        b=D+MJPzA7NvuFVVP9d4pbtOMTvIflcOQMJD2e8HYgEwa89OVNIxB6Yo7xJXfRvgqLo
+         LLH77pUbo0hqftCcCd5HCAJ0J0gihIDsOKJLpXSgYpmRh0YyjcQPLMPbzw3mWki5UI
+         ukdIj7rsuaFJefVLoEOjXn+GKB9WkUFdc/Ym9AbCY+Ss1Hn83mjboqDN4Vq3Qtg7tX
+         EBGA6+PCh63g3JoruuG3ZOoMuDeUMTWlKMGyW00pBAGM0Eg91IRFTRDV+A8GH3ZgDd
+         LSl0JwAb9dYgAJhxWEc+um6sxcNZya94Jr9YNd8mCCacX7Ulu49CvGIPWLr8tIEN+I
+         om1/avLr1jNUA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.34] ([91.47.154.159]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MxpiO-1onLoE2obm-00zQ6b; Thu, 01
+ Dec 2022 22:48:24 +0100
+Message-ID: <c5b4d091-23c1-5a75-a255-99ec83973d8d@web.de>
+Date:   Thu, 1 Dec 2022 22:48:24 +0100
 MIME-Version: 1.0
-X-Proofpoint-ORIG-GUID: p5E0ZIs6EetC8Dhy9Bn91KkMin0qy-iq
-X-Proofpoint-GUID: p5E0ZIs6EetC8Dhy9Bn91KkMin0qy-iq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-01_14,2022-12-01_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 bulkscore=0 clxscore=1011
- priorityscore=1501 malwarescore=0 impostorscore=0 lowpriorityscore=0
- adultscore=0 mlxscore=0 mlxlogscore=488 phishscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2210170000
- definitions=main-2212010159
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] t4205: don't exit test script on failure
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:znt/i5Qy1gBMSeL6vWXx4UguUULmsAOGFMd51vGl/+tWwrn7etx
+ HtEE3Tvb+O14bdh5WXISUnpQmXQhBTnPVC9IvPpmtsMqPKxHxSt6CdS+keq2YW99nmCSASj
+ W5YrXFGT+UE8DCHdzpdglfU7CJAm343YEAffKzR0FFniVX6Q4+UOgPur+mtEyzQASSN3XLf
+ Q9ByXlACNICfnKu8IlSng==
+UI-OutboundReport: notjunk:1;M01:P0:uQ01j4ZZSLk=;BTUW4Sc/Kx2GCqxNL/ah2THD9E4
+ TMtWyiwADU4Ym0gMLxiRZjSfDn4UtsxSXr3JLNdBNIWi9/kBEMDTyeHe77sSE2EboU/byONoM
+ cIf3FKcQDwtpL3TD9oTl/ZOiCFHaEUVZA7fzff7c6srsK6RbdaqFWEoHTwh9QjQMGaeXbd2ry
+ oNTGaWluKiLN7WFKeOiN8g6U4YTZXNHrGe4bdPaIGg4Dp4xde7T38YtwCoY1ks2IdGbBw90eE
+ Rgv6zogmbBaLfPVJfx9Q2BoV7FqG530yCie5XWtRHYCo5MAzTcz4EKexTpH+obNweuC7wvZiC
+ 9TjStgTiIavlE9KYzUg2bmCd+xm1Dt4fs+rgzsXU3z9tcX7cSNcWWv+dnBw4hnqF32BBOXDbF
+ DGt5lb3+n8znQFuxQ9ZaaqJjsmJR2VQTso8SqhG3hcZ6GSNn+QcTccJPZjhEN09erEJzzUAEX
+ oQ+Bb+95erxZf8/DbcZeJnw0rOSWUCXuSCy+sef2U5R1UBJ/n8lbAkVv6mhs5Psdx/UMo/L3p
+ EMuRvUY2ULIbDB6j7brW7DMplmIPs1YuT/kej3kS71gwtSYkGlA1FByRH0fNESf91aXnkq92V
+ DythIpMMuqrFtWjjIeyUvBya1plpKYcDsdsCErUZM437sXG42xD8sB29N7SKfpS2u/a2GG0T5
+ TpOxuM1PCAbi2gxb/QyjUjEynhkpf8Axxz8GuJs7s/RdjDhQsWNdtSGX9OA2Xe2R9YyCDAGdd
+ uHCo3yXHLYYO2y0WTSKz44ks+qPl27Hb7XBELJeFVfM/jUGvUb0mRn6BNsrzcQm13MByYe6ZL
+ 4giNZz6VMesPXbxlbCgB7ABow1biVo8Wp5lmMxqZFK3aPrG09W+nIUgCODdeZ966w6x66oixb
+ yxaw5jIfcTt8XilOmyP2KbkogC38JFxpDP82bnZRQNVLHIQuZxwa+da78vwEPzKiMn5Nr9t2c
+ MroMvUN4pUcPXpr4nPtGngSOKJ0=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Encountered on git 2.38.1.143.g1fc3c0ad40
+Only abort the individual check instead of exiting the whole test script
+if git show fails.  Noticed with GIT_TEST_PASSING_SANITIZE_LEAK=3Dcheck.
 
-Run git log --follow -M100% --no-find-copies --name-status path/to/renamed/file
+Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+Formatted with --function-context for easier review.
+ac52d9410e (t4205: cover `git log --reflog -z` blindspot,
+2019-11-19) added the exit call.
 
-The log follows copies despite being explicitly told not to.
+ t/t4205-log-pretty-formats.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This apparently goes back to at least 2017; see https://stackoverflow.com/questions/44083806/how-to-prevent-git-log-follow-from-following-copies-but-only-follow-renames
-
---Matt Grochowalski
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index e448ef2928..0404491d6e 100755
+=2D-- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -154,12 +154,12 @@ done
+ test_expect_success 'NUL termination with --reflog --pretty=3Doneline' '
+ 	revs=3D"$(git rev-list --reflog)" &&
+ 	for r in $revs
+ 	do
+ 		git show -s --pretty=3Doneline "$r" >raw &&
+-		cat raw | lf_to_nul || exit 1
++		cat raw | lf_to_nul || return 1
+ 	done >expect &&
+ 	# the trailing NUL is already produced so we do not need to
+ 	# output another one
+ 	git log -z --pretty=3Doneline --reflog >actual &&
+ 	test_cmp expect actual
+ '
+=2D-
+2.30.2
