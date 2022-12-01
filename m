@@ -2,97 +2,124 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D48C2C4321E
-	for <git@archiver.kernel.org>; Thu,  1 Dec 2022 21:48:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A33DFC47089
+	for <git@archiver.kernel.org>; Thu,  1 Dec 2022 21:57:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230251AbiLAVsg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Dec 2022 16:48:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39940 "EHLO
+        id S230456AbiLAV5M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Dec 2022 16:57:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229823AbiLAVse (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2022 16:48:34 -0500
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AB60A322F
-        for <git@vger.kernel.org>; Thu,  1 Dec 2022 13:48:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1669931304; bh=HaWgAv2na7NNYbSyAt5J84R6Xb7AL1UKatVA8J2Wzto=;
-        h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
-        b=D+MJPzA7NvuFVVP9d4pbtOMTvIflcOQMJD2e8HYgEwa89OVNIxB6Yo7xJXfRvgqLo
-         LLH77pUbo0hqftCcCd5HCAJ0J0gihIDsOKJLpXSgYpmRh0YyjcQPLMPbzw3mWki5UI
-         ukdIj7rsuaFJefVLoEOjXn+GKB9WkUFdc/Ym9AbCY+Ss1Hn83mjboqDN4Vq3Qtg7tX
-         EBGA6+PCh63g3JoruuG3ZOoMuDeUMTWlKMGyW00pBAGM0Eg91IRFTRDV+A8GH3ZgDd
-         LSl0JwAb9dYgAJhxWEc+um6sxcNZya94Jr9YNd8mCCacX7Ulu49CvGIPWLr8tIEN+I
-         om1/avLr1jNUA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.34] ([91.47.154.159]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MxpiO-1onLoE2obm-00zQ6b; Thu, 01
- Dec 2022 22:48:24 +0100
-Message-ID: <c5b4d091-23c1-5a75-a255-99ec83973d8d@web.de>
-Date:   Thu, 1 Dec 2022 22:48:24 +0100
+        with ESMTP id S230251AbiLAV5G (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2022 16:57:06 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57005C3FC0
+        for <git@vger.kernel.org>; Thu,  1 Dec 2022 13:56:55 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id k5so3117954pjo.5
+        for <git@vger.kernel.org>; Thu, 01 Dec 2022 13:56:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=axQ/mxs9js+At2Ct/fxwc0UMcKL4uADwB/yuzqd1+i8=;
+        b=i6pdtBXg3me66VY1DTkB0mSh6xkPwsuI/WT5Y7NTFwea3Awn3i7nw/HgXNi34izdqE
+         zW3t6v2tss83DqUCPcxvEiplozsPlKhhfU9XH32xhUMv8Mrkl1EEQ2Sus1EMSfPqw/Xz
+         p5R/lhTbL6OWpakzlL8lLu51go+QDuc32uDD2MC9byceQElll1/nviWJnnggU6N9Xj8X
+         fvmYIvowIa49SPZUgGclZG1BPbeaXI+RZlKFf5vXkoZkSfRosMmW6+U87nZtC7M+Pvlo
+         l4A+eK+pv6YlDoW5X30YZ5lLQxHhPgtiB3pxORQg7okfkLIz4wxbopcVNmTzRORiZXZB
+         aHdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=axQ/mxs9js+At2Ct/fxwc0UMcKL4uADwB/yuzqd1+i8=;
+        b=ignH6dlH6iO3Z0coDd6nyuaXMt7pVwPTuJVC5wneAOpNeCG2jcSHAn+G3xTD6+tm9j
+         uRZvRYT2AA/MCqKQqDa4fg1ZMqDQ3UrsgVqOZGJ6Htn/sy22bOhC2J5OxyqtcdinKj7v
+         +OpI6gjZjIe/t1YF/KAPqbelxmn+aQc5s3LGVCQgZzY7gBO2jUz0W5JnBRWkoQPPJ0Sw
+         WDfAPxYFDUsA0D/K9esV9z12q/Sq04P1fHWwMLAwgHMoTn5ussVfffSGxDTi8isbVxZa
+         DsBRQtdD+Z2drdkk5cgfYr6FXGqGMj6iIeIIdNzkPM0I5uFQkBpuISdBVO+wssiay+kV
+         tmEg==
+X-Gm-Message-State: ANoB5pn5zN9W7BjCnm0OvxIZYh/y9Jnya8966yAh8NhFy4hwNxwxBGTS
+        nFuZ/vnWF7cTunoRaw56wYH1tBZwgnBMig==
+X-Google-Smtp-Source: AA0mqf5v/WgyXAd0tq2l3l9wqej5GAcgEGJJiqRdy8JT81w2Ju9SbU8zyLB8mb3iMYO8BwgzvtMJ5w==
+X-Received: by 2002:a17:90b:2544:b0:20a:f341:4ed9 with SMTP id nw4-20020a17090b254400b0020af3414ed9mr77010857pjb.11.1669931788468;
+        Thu, 01 Dec 2022 13:56:28 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id t3-20020a1709027fc300b00187022627d8sm4102155plb.62.2022.12.01.13.56.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Dec 2022 13:56:27 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] diff: remove parseopts member of struct diff_options
+References: <0620b4a6-b80a-d8a0-5a35-857b9fe0c986@web.de>
+        <d226d3bc-fb15-58a4-f516-bda51a912228@web.de>
+        <xmqqcz93ud8o.fsf@gitster.g>
+        <20b5d6d1-ec09-e09f-4f92-5925fb9c96f8@web.de>
+Date:   Fri, 02 Dec 2022 06:56:27 +0900
+In-Reply-To: <20b5d6d1-ec09-e09f-4f92-5925fb9c96f8@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Thu, 1 Dec 2022 08:52:37 +0100")
+Message-ID: <xmqqiliuss8k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] t4205: don't exit test script on failure
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:znt/i5Qy1gBMSeL6vWXx4UguUULmsAOGFMd51vGl/+tWwrn7etx
- HtEE3Tvb+O14bdh5WXISUnpQmXQhBTnPVC9IvPpmtsMqPKxHxSt6CdS+keq2YW99nmCSASj
- W5YrXFGT+UE8DCHdzpdglfU7CJAm343YEAffKzR0FFniVX6Q4+UOgPur+mtEyzQASSN3XLf
- Q9ByXlACNICfnKu8IlSng==
-UI-OutboundReport: notjunk:1;M01:P0:uQ01j4ZZSLk=;BTUW4Sc/Kx2GCqxNL/ah2THD9E4
- TMtWyiwADU4Ym0gMLxiRZjSfDn4UtsxSXr3JLNdBNIWi9/kBEMDTyeHe77sSE2EboU/byONoM
- cIf3FKcQDwtpL3TD9oTl/ZOiCFHaEUVZA7fzff7c6srsK6RbdaqFWEoHTwh9QjQMGaeXbd2ry
- oNTGaWluKiLN7WFKeOiN8g6U4YTZXNHrGe4bdPaIGg4Dp4xde7T38YtwCoY1ks2IdGbBw90eE
- Rgv6zogmbBaLfPVJfx9Q2BoV7FqG530yCie5XWtRHYCo5MAzTcz4EKexTpH+obNweuC7wvZiC
- 9TjStgTiIavlE9KYzUg2bmCd+xm1Dt4fs+rgzsXU3z9tcX7cSNcWWv+dnBw4hnqF32BBOXDbF
- DGt5lb3+n8znQFuxQ9ZaaqJjsmJR2VQTso8SqhG3hcZ6GSNn+QcTccJPZjhEN09erEJzzUAEX
- oQ+Bb+95erxZf8/DbcZeJnw0rOSWUCXuSCy+sef2U5R1UBJ/n8lbAkVv6mhs5Psdx/UMo/L3p
- EMuRvUY2ULIbDB6j7brW7DMplmIPs1YuT/kej3kS71gwtSYkGlA1FByRH0fNESf91aXnkq92V
- DythIpMMuqrFtWjjIeyUvBya1plpKYcDsdsCErUZM437sXG42xD8sB29N7SKfpS2u/a2GG0T5
- TpOxuM1PCAbi2gxb/QyjUjEynhkpf8Axxz8GuJs7s/RdjDhQsWNdtSGX9OA2Xe2R9YyCDAGdd
- uHCo3yXHLYYO2y0WTSKz44ks+qPl27Hb7XBELJeFVfM/jUGvUb0mRn6BNsrzcQm13MByYe6ZL
- 4giNZz6VMesPXbxlbCgB7ABow1biVo8Wp5lmMxqZFK3aPrG09W+nIUgCODdeZ966w6x66oixb
- yxaw5jIfcTt8XilOmyP2KbkogC38JFxpDP82bnZRQNVLHIQuZxwa+da78vwEPzKiMn5Nr9t2c
- MroMvUN4pUcPXpr4nPtGngSOKJ0=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Only abort the individual check instead of exiting the whole test script
-if git show fails.  Noticed with GIT_TEST_PASSING_SANITIZE_LEAK=3Dcheck.
+René Scharfe <l.s.r@web.de> writes:
 
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
-Formatted with --function-context for easier review.
-ac52d9410e (t4205: cover `git log --reflog -z` blindspot,
-2019-11-19) added the exit call.
+> Am 01.12.22 um 02:25 schrieb Junio C Hamano:
+>> René Scharfe <l.s.r@web.de> writes:
+>>
+>>> repo_diff_setup() builds the struct option array with git diff's command
+>>> line options and stores a pointer to it in the parseopts member of
+>>> struct diff_options.  The array is freed by diff_setup_done(), but not
+>>> by release_revisions().  repo_init_revisions() calls repo_diff_setup(),
+>>> thus calling repo_init_revisions() then release_revisions() leaks it.
+>>>
+>>> We could free the array in release_revisions() as well to plug that
+>>> leak, but there is a better way: Only build it when needed.  Move the
+>>> get_diff_parseopts() calls to the two places that use the array, free it
+>>> after use and get rid of the parseopts member.
+>>>
+>>> Signed-off-by: René Scharfe <l.s.r@web.de>
+>>> ---
+>>>  diff.c | 17 ++++++++---------
+>>>  1 file changed, 8 insertions(+), 9 deletions(-)
+>>
+>> I think this hunk is missing?
+>
+> Yes. O_o
 
- t/t4205-log-pretty-formats.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I did not see any other issue in the series, so if no further tweaks
+are needed, I could just squash it in.
 
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index e448ef2928..0404491d6e 100755
-=2D-- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -154,12 +154,12 @@ done
- test_expect_success 'NUL termination with --reflog --pretty=3Doneline' '
- 	revs=3D"$(git rev-list --reflog)" &&
- 	for r in $revs
- 	do
- 		git show -s --pretty=3Doneline "$r" >raw &&
--		cat raw | lf_to_nul || exit 1
-+		cat raw | lf_to_nul || return 1
- 	done >expect &&
- 	# the trailing NUL is already produced so we do not need to
- 	# output another one
- 	git log -z --pretty=3Doneline --reflog >actual &&
- 	test_cmp expect actual
- '
-=2D-
-2.30.2
+Thanks for working on this clean-up.  The way parse-options parser
+was bolted on (eh, rather, the way the original parser of diff
+command line options way predated the parse-options machinery) has
+always disturbed me as being klunky.
+
+>
+>>
+>>  diff.h | 1 -
+>>  1 file changed, 1 deletion(-)
+>>
+>> diff --git c/diff.h w/diff.h
+>> index 5229f20486..6840499844 100644
+>> --- c/diff.h
+>> +++ w/diff.h
+>> @@ -394,7 +394,6 @@ struct diff_options {
+>>  	unsigned color_moved_ws_handling;
+>>
+>>  	struct repository *repo;
+>> -	struct option *parseopts;
+>>  	struct strmap *additional_path_headers;
+>>
+>>  	int no_free;
