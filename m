@@ -2,77 +2,75 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DC121C4332F
-	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 00:30:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FC84C4332F
+	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 01:02:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231749AbiLBAac (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Dec 2022 19:30:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43462 "EHLO
+        id S231961AbiLBBC3 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Thu, 1 Dec 2022 20:02:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232234AbiLBAaL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2022 19:30:11 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79DC9B0B74
-        for <git@vger.kernel.org>; Thu,  1 Dec 2022 16:25:28 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id w4-20020a17090ac98400b002186f5d7a4cso6841458pjt.0
-        for <git@vger.kernel.org>; Thu, 01 Dec 2022 16:25:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ecaTcrec3EkFTRI2UKqRRLjtwvJzVBD53azzNqTAD3s=;
-        b=avqpDI4RvkiwqeFYt/xdbGb1MV1vWKhxdhK28XfbPUgJwIqK/WEry0h1yuoWf5fTo8
-         hThjp0c3ludlZyNBYhS6CGr6NzApLGgTXZZF5FtN7gZSsJj7hcswH7zHapQn76F4QuQW
-         zolAv80xN5cyTLUF/fD6HaQBncweRvvpyNnkIfVSCDVB4K/EFnt5O7Z5A+mHET3QoT9H
-         Dx+zMfM/NUZfMtnPoLZ7HiJ2Nal5+VC4kIZNepVUAqelTuyI+JtoZw+YDBjXx+CDg0UD
-         EJicS277jphdcUQHaet6YY5UEse6XCEqksjxSgH/jptEPHXHJHEAZwY/zWuRu9Hfe2ok
-         IWcg==
+        with ESMTP id S229473AbiLBBC1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2022 20:02:27 -0500
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD3C6C1BD5
+        for <git@vger.kernel.org>; Thu,  1 Dec 2022 17:02:26 -0800 (PST)
+Received: by mail-pg1-f173.google.com with SMTP id 136so3145060pga.1
+        for <git@vger.kernel.org>; Thu, 01 Dec 2022 17:02:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ecaTcrec3EkFTRI2UKqRRLjtwvJzVBD53azzNqTAD3s=;
-        b=QH8/QZAgQ/6/0+QSMtPblgXxopkHxCP9fPKKSLblFmGcQXSb1QperyFXQQ452J37HW
-         IX7vol2Qsi6JMdUZwhVzAguPCchgUTyU8IwMD6SCuwbEwCRaqHJ7rmlp8ElbCMhe/ANt
-         3J0XGw3QxxndORCpRnQD3+Bx+rtCZJHwpjfg5LLzKRdwDrjuBwTB9akCQpEMXO/Hgevu
-         TX8VMt55HkJ3jvcUWSuH2Vj1QR/x4A4tYRyuH1EirYs1Y6ET4GQ33vhl3F4EnskHiot1
-         gnaXh2kc36hCj1/Zai3S1+SXseI5A+BipblZXGocmkq1vcBoo6PuEOYrdmYxnzhNhDWz
-         NTMg==
-X-Gm-Message-State: ANoB5pkZYxlfTqvDOiViaTpIozYgJQbSvkFVlDBFtny3BKuL6O+OE9oV
-        ZOmd4Sj1txBvNuSwwKa615M=
-X-Google-Smtp-Source: AA0mqf6t/aS9slFx38IdiTqRI26VkciFBkCCxSyLUPBpy46lIo6Crvvt/JEfOvLz4HvOfWRau3JSGg==
-X-Received: by 2002:a17:903:2112:b0:186:cf82:91d5 with SMTP id o18-20020a170903211200b00186cf8291d5mr63279047ple.87.1669940727892;
-        Thu, 01 Dec 2022 16:25:27 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id d8-20020a170902cec800b001867fb4056asm4231211plg.32.2022.12.01.16.25.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Dec 2022 16:25:27 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     git@vger.kernel.org
-Subject: Re: ds/bundle-uri-4 (was Re: What's cooking in git.git (Nov 2022,
- #07; Tue, 29))
-References: <xmqqsfi22j67.fsf@gitster.g>
-        <b223202b-0ae2-bdb5-e9d6-21a6321a9e31@github.com>
-        <81dbae6e-b198-c056-5107-99c88ce77f94@github.com>
-Date:   Fri, 02 Dec 2022 09:25:26 +0900
-In-Reply-To: <81dbae6e-b198-c056-5107-99c88ce77f94@github.com> (Derrick
-        Stolee's message of "Thu, 1 Dec 2022 10:06:50 -0500")
-Message-ID: <xmqqedtir6rt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EuTg+Yr7mQdt0lbEEXg3bqmzSXqiVML91aYLfsCzr0Y=;
+        b=6dM285Sp2yv2ar35xChXV5JCvj+7plqIx4R4lBElmLVov2WhlRlj+SHZtRfP9mY9Zu
+         HRrWa6OUdF0d2xZLgXqgxtPt923ZgWN6T4Wq+68dRny90OvsdaxXe9cJD714IUSLnYia
+         9h7wexAfvpZXOozHTbEpoy/3EWtC5K9b5pt3XeVUAOdGUVjRWfObOE2Xw3/9zLEjyxUK
+         Jlvl4enG1TTNtUkN6hDyMAYWLdKLoPyttkyHh3b+mbr26xCHrAuc4gv1wTU/qEUa1qvY
+         o0xG8RqaQoYK3tCmUyzAR/TroWnDTvydcnrRte0rCXRUbX3zV37Z6eo3Pi3oQiRLyTbA
+         eOEQ==
+X-Gm-Message-State: ANoB5pmlrFXvKkDVEaz1Sn6g82M3vZJDEm0NuEyKfzqZI1J1B8dNSXdo
+        Hmv2oSsMLG1b7EJfKojWAZxoAwNrRXqBSUczzyYl4yKU
+X-Google-Smtp-Source: AA0mqf4LBzyrpc7qyfJy/EQA1O7u+qg8p12d5J7U+KzVi3nEp6yos4eSYqYbTJkML1oQDfDwddm49ea3LOHk5a8ENio=
+X-Received: by 2002:aa7:9534:0:b0:575:c857:edc0 with SMTP id
+ c20-20020aa79534000000b00575c857edc0mr12367071pfp.22.1669942945887; Thu, 01
+ Dec 2022 17:02:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover-0.6-00000000000-20220721T064349Z-avarab@gmail.com>
+ <cover-v2-0.8-00000000000-20221202T000227Z-avarab@gmail.com> <patch-v2-1.8-7c9f8d2830f-20221202T000227Z-avarab@gmail.com>
+In-Reply-To: <patch-v2-1.8-7c9f8d2830f-20221202T000227Z-avarab@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 1 Dec 2022 20:02:14 -0500
+Message-ID: <CAPig+cQK8BRU0u0g+jAkyJaqSamYBynJ6s00_6H2beb6gXaRDA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/8] log tests: don't use "exit 1" outside a sub-shell
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> writes:
+On Thu, Dec 1, 2022 at 7:07 PM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+> Change an "exit 1" added in ac52d9410e5 (t4205: cover `git log
+> --reflog -z` blindspot, 2019-11-19) to use "return 1" instead, which
+> curiously was done in an adjacent test case added in the same commit.
+>
+> Using "exit 1" outside a sub-shell will cause the test framework
+> itself to exit on failure, which isn't what we want to do here.
+>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+> diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+> @@ -156,7 +156,7 @@ test_expect_success 'NUL termination with --reflog --pretty=oneline' '
+>         for r in $revs
+>         do
+>                 git show -s --pretty=oneline "$r" >raw &&
+> -               cat raw | lf_to_nul || exit 1
+> +               cat raw | lf_to_nul || return 1
+>         done >expect &&
 
-> I have discovered that the problem is due to the test variable
-> GIT_TEST_PACKED_REFS_VERSION=2, so instead it's probably best
-> to eject ds/packed-refs-v2 from 'seen' instead of ds/bundle-uri-4.
-
-Thanks for digging.  I've shuffled the order of topics in 'seen'.
+Using `return 1` here is "obviously correct" since this code is not
+inside a subshell. Furthermore, the exit code of the for-loop itself
+is not being lost down a pipe, so `return 1` is indeed an appropriate
+way to signal failure. Good.
