@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18409C4321E
-	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 11:54:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97D2CC4321E
+	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 11:54:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233464AbiLBLyQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Dec 2022 06:54:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44500 "EHLO
+        id S232596AbiLBLyT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Dec 2022 06:54:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233426AbiLBLxn (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Dec 2022 06:53:43 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1DD0DA20B
-        for <git@vger.kernel.org>; Fri,  2 Dec 2022 03:53:11 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id ud5so11002178ejc.4
-        for <git@vger.kernel.org>; Fri, 02 Dec 2022 03:53:11 -0800 (PST)
+        with ESMTP id S233403AbiLBLxp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Dec 2022 06:53:45 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59C0FD9B21
+        for <git@vger.kernel.org>; Fri,  2 Dec 2022 03:53:14 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id e13so6124465edj.7
+        for <git@vger.kernel.org>; Fri, 02 Dec 2022 03:53:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mi8iuuk0rywVWdRT179rkZRZo0tAqZnale+pE20tPNc=;
-        b=m17v5xoCOCXC69RD/sK8c2to5aQ8gbaPFB3LULEGjjvIRIg+v568WUZJaI6FQZxMyX
-         yuN+6+eM8fnIU8ApdRV8WScFRvCb4KTpZC7E5v5KGizXqhomsSiq0qy/iD2oHygCJI4v
-         WUay13oQAXnlxaQ3n3ime7I30HNKLQmUDDbYsDQVKikS03eIbxn86dc4Y9g8Yy5xLsb3
-         LaXn8krvJZ52bV8usXMkPPSOVAvpdg5TixvOerjHxJPVcEZk2CD0obfZtRJvvw/oJUWf
-         57YPcBtjd7540KxgrNP9+gFLU5GSxfSsH+s34iaHbFhtuBLPPtSot7hydvxaKiIFg3jl
-         x+ow==
+        bh=XfbtzD8BT1K9zuz35n8QiIE4xf1kJm8lA2E3lAkToe0=;
+        b=KjmeYsIiRbguFdpGsLKlnc5UtJ/qTeJyHkud1xvp8cWIk93r0ZdrhvWjkWruypAdQ3
+         y/lYvRRPTf1ljwElcyQaIggaOXd9gxSwbQli7DGeB7zPZbxxUpkKHufuZhRGMsaLkZ2L
+         pKVICIASIQQ96kB4ErGX+mzuIdY0C1aYErUXoCFtQvzB3Ol7BrygUY5QXMN9US/6dXeO
+         m8+hnrQAyDEh/us+uDEY2T8JC0bVtv0rJVl3Oe10rcKxm8CoyWsRUqMyNaoGA8V2MCdL
+         TqHqEdlQ48Xc+0vwy0NahmjYXi+Ga85zQnTuShPGYEuNFCHYN1heavsea0HRsY1ilLQP
+         EpNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mi8iuuk0rywVWdRT179rkZRZo0tAqZnale+pE20tPNc=;
-        b=TboVV9P/lvYGjW8uSJhCMo6+jYc+Lc2QCRFFrg7Qf+OICDaoAO1pqKSFWlmQamDSoU
-         GzPDdpH6oEXbXBMpivObwX+erevdTZypWg8VsR6E69w/+16ChFxp7urJB9d7WI2tN9er
-         L6eCj3acIjqy8JjYN1Mr5TFWsZx+i1dLemp7cgHLZQV78V/bRDeCdtgaLTO5Nvek3XkH
-         bp5eFTX6lF2cswliXqJC/g9B6aWOQNpH/kq1/vaLuxyXH/OsI+1PzDxINOH7dAkpKZnn
-         JpUCp99dCS0ighpPj8NOzBKuiJnvjCeN28HO6rlWeFqA6D6Nw3/XC3J6ycAma1woLMxd
-         3fKg==
-X-Gm-Message-State: ANoB5pk0P8mJFZkg8f8dhgcGwKWLxA2I/2UeKh2bt0Y7SC8g83uYtkzm
-        tNU1816o2Vt7NXl7CP2eS0CCCXh9dIdEDQ==
-X-Google-Smtp-Source: AA0mqf5nLf2qvw+lA1Ht9XTFHsVrbp9H3vbJuyMxKt+2ZT6E00IG7I4guP8nRQJ21QA+Zx5ISIHYQA==
-X-Received: by 2002:a17:906:f2cb:b0:78d:e645:9f7d with SMTP id gz11-20020a170906f2cb00b0078de6459f7dmr12854213ejb.572.1669981990049;
-        Fri, 02 Dec 2022 03:53:10 -0800 (PST)
+        bh=XfbtzD8BT1K9zuz35n8QiIE4xf1kJm8lA2E3lAkToe0=;
+        b=WGexHz/4a5IQGt5aKpwAqsPJngCmoSNQuJKl2ygUDOCsMII+HXoaLSaP4J1UB6Gq5E
+         GD46GC08pt6EYXYcJ6/I4cuEnOd57ChZVAic1890NZj5h8Nfsm26IZvFrfeMOc+lxo2r
+         iwqtXaZuUj716kILzgO1w4QmRp3N82KBMYwtElTWA4ULN1HTzeTQh8iT3OOphhdveKDe
+         KLHzZHhTShZlOhCguBKycXPHglvolgyknRsKoj6MskHs+Pn3OVVMquQoNZHjaFYnFYnP
+         ENDio+gYnr7KXMSnOMTjzF++1j4ylGX0GZrPId1w+8qVeVaO6DFSQeqof/ey9qLiOsf4
+         xdTw==
+X-Gm-Message-State: ANoB5pnwUR9P2v42obJnEez9FytgQnB/WdiRn4GPU43y5sENZVxUpr/h
+        tgvIUhZyHOqGITzxl++Di2kP1p/WbZXJOQ==
+X-Google-Smtp-Source: AA0mqf6nag/Sjslmk0aQYblAKPmgimxbu+rkA/E9Puei6msuPuXqqiBgNJftq/9oUIIGZ6VNNmtMvA==
+X-Received: by 2002:a05:6402:143:b0:463:f8aa:d2bf with SMTP id s3-20020a056402014300b00463f8aad2bfmr64460796edu.358.1669981992474;
+        Fri, 02 Dec 2022 03:53:12 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id q20-20020aa7da94000000b00458947539desm2833754eds.78.2022.12.02.03.53.08
+        by smtp.gmail.com with ESMTPSA id q20-20020aa7da94000000b00458947539desm2833754eds.78.2022.12.02.03.53.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Dec 2022 03:53:09 -0800 (PST)
+        Fri, 02 Dec 2022 03:53:11 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 5/8] tests: use "test_cmp" instead of "test" in sub-shells
-Date:   Fri,  2 Dec 2022 12:52:38 +0100
-Message-Id: <patch-v3-5.8-58ac6fe5604-20221202T114733Z-avarab@gmail.com>
+Subject: [PATCH v3 7/8] tests: don't lose "git" exit codes in "! ( git ... | grep )"
+Date:   Fri,  2 Dec 2022 12:52:40 +0100
+Message-Id: <patch-v3-7.8-307f25db831-20221202T114733Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.0.rc1.981.gf846af54b4b
 In-Reply-To: <cover-v3-0.8-00000000000-20221202T114733Z-avarab@gmail.com>
 References: <cover-v2-0.8-00000000000-20221202T000227Z-avarab@gmail.com> <cover-v3-0.8-00000000000-20221202T114733Z-avarab@gmail.com>
@@ -71,172 +71,96 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Convert a few cases where we were using "test" inside a sub-shell, and
-were losing the exit code of "git".
+Change tests that would lose the "git" exit code via a negation
+pattern to:
 
-In the case of "t3200-branch.sh" some adjacent code outside of a
-sub-shell that was losing the exit code is also being converted, as
-it's within the same hunk.
+- In the case of "t0055-beyond-symlinks.sh" compare against the
+  expected output instead.
+
+- For "t3700-add.sh" use "sed -n" to print the expected "bad" part,
+  and use "test_must_be_empty" to assert that it's not there.
+
+  We can also remove a repeated invocation of "git ls-files" for the
+  last test that's being modified in that file, and search the
+  existing "files" output instead.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/lib-httpd.sh              |  5 +++--
- t/lib-submodule-update.sh   | 22 +++++++++-------------
- t/t0060-path-utils.sh       |  4 +++-
- t/t3200-branch.sh           | 13 +++++++------
- t/t5605-clone-local.sh      | 15 ++++++++++-----
- t/t7402-submodule-rebase.sh | 14 +++++++++++---
- 6 files changed, 43 insertions(+), 30 deletions(-)
+ t/t0055-beyond-symlinks.sh | 14 ++++++++++++--
+ t/t3700-add.sh             | 18 +++++++++++++-----
+ 2 files changed, 25 insertions(+), 7 deletions(-)
 
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index 608949ea80b..31e7fa3010c 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -217,8 +217,9 @@ test_http_push_nonff () {
- 		git commit -a -m path2 --amend &&
+diff --git a/t/t0055-beyond-symlinks.sh b/t/t0055-beyond-symlinks.sh
+index 6bada370225..c3eb1158ef9 100755
+--- a/t/t0055-beyond-symlinks.sh
++++ b/t/t0055-beyond-symlinks.sh
+@@ -15,12 +15,22 @@ test_expect_success SYMLINKS setup '
  
- 		test_must_fail git push -v origin >output 2>&1 &&
--		(cd "$REMOTE_REPO" &&
--		 test $HEAD = $(git rev-parse --verify HEAD))
-+		echo "$HEAD" >expect &&
-+		git -C "$REMOTE_REPO" rev-parse --verify HEAD >actual &&
-+		test_cmp expect actual
- 	'
- 
- 	test_expect_success 'non-fast-forward push show ref status' '
-diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
-index 2d31fcfda1f..d7c2b670b4a 100644
---- a/t/lib-submodule-update.sh
-+++ b/t/lib-submodule-update.sh
-@@ -168,20 +168,16 @@ replace_gitfile_with_git_dir () {
- # Note that this only supports submodules at the root level of the
- # superproject, with the default name, i.e. same as its path.
- test_git_directory_is_unchanged () {
--	(
--		cd ".git/modules/$1" &&
--		# does core.worktree point at the right place?
--		test "$(git config core.worktree)" = "../../../$1" &&
--		# remove it temporarily before comparing, as
--		# "$1/.git/config" lacks it...
--		git config --unset core.worktree
--	) &&
-+	# does core.worktree point at the right place?
-+	echo "../../../$1" >expect &&
-+	git -C ".git/modules/$1" config core.worktree >actual &&
-+	test_cmp expect actual &&
-+	# remove it temporarily before comparing, as
-+	# "$1/.git/config" lacks it...
-+	git -C ".git/modules/$1" config --unset core.worktree &&
- 	diff -r ".git/modules/$1" "$1/.git" &&
--	(
--		# ... and then restore.
--		cd ".git/modules/$1" &&
--		git config core.worktree "../../../$1"
--	)
-+	# ... and then restore.
-+	git -C ".git/modules/$1" config core.worktree "../../../$1"
- }
- 
- test_git_directory_exists () {
-diff --git a/t/t0060-path-utils.sh b/t/t0060-path-utils.sh
-index 68e29c904a6..53ec717cbca 100755
---- a/t/t0060-path-utils.sh
-+++ b/t/t0060-path-utils.sh
-@@ -255,7 +255,9 @@ test_expect_success 'prefix_path rejects absolute path to dir with same beginnin
- test_expect_success SYMLINKS 'prefix_path works with absolute path to a symlink to work tree having  same beginning as work tree' '
- 	git init repo &&
- 	ln -s repo repolink &&
--	test "a" = "$(cd repo && test-tool path-utils prefix_path prefix "$(pwd)/../repolink/a")"
-+	echo "a" >expect &&
-+	test-tool -C repo path-utils prefix_path prefix "$(cd repo && pwd)/../repolink/a" >actual &&
+ test_expect_success SYMLINKS 'update-index --add beyond symlinks' '
+ 	test_must_fail git update-index --add c/d &&
+-	! ( git ls-files | grep c/d )
++	cat >expect <<-\EOF &&
++	a
++	b/d
++	EOF
++	git ls-files >actual &&
 +	test_cmp expect actual
  '
  
- relative_path /foo/a/b/c/	/foo/a/b/	c/
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 5a169b68d6a..f5fbb84262b 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -242,12 +242,13 @@ test_expect_success 'git branch -M baz bam should succeed when baz is checked ou
- test_expect_success 'git branch -M baz bam should succeed within a worktree in which baz is checked out' '
- 	git checkout -b baz &&
- 	git worktree add -f bazdir baz &&
--	(
--		cd bazdir &&
--		git branch -M baz bam &&
--		test $(git rev-parse --abbrev-ref HEAD) = bam
--	) &&
--	test $(git rev-parse --abbrev-ref HEAD) = bam &&
-+	git -C "$bazdir" branch -M baz bam &&
-+	echo "bam" >expect &&
-+	git -C "$bazdir" rev-parse --abbrev-ref HEAD >actual &&
-+	test_cmp expect actual &&
-+	echo "bam" >expect &&
-+	git rev-parse --abbrev-ref HEAD >actual &&
-+	test_cmp expect actual &&
- 	rm -r bazdir &&
- 	git worktree prune
- '
-diff --git a/t/t5605-clone-local.sh b/t/t5605-clone-local.sh
-index 38b850c10ef..61a2342bc2c 100755
---- a/t/t5605-clone-local.sh
-+++ b/t/t5605-clone-local.sh
-@@ -15,8 +15,12 @@ test_expect_success 'preparing origin repository' '
- 	: >file && git add . && git commit -m1 &&
- 	git clone --bare . a.git &&
- 	git clone --bare . x &&
--	test "$(cd a.git && git config --bool core.bare)" = true &&
--	test "$(cd x && git config --bool core.bare)" = true &&
-+	echo true >expect &&
-+	git -C a.git config --bool core.bare >actual &&
-+	test_cmp expect actual &&
-+	echo true >expect &&
-+	git -C x config --bool core.bare >actual &&
-+	test_cmp expect actual &&
- 	git bundle create b1.bundle --all &&
- 	git bundle create b2.bundle main &&
- 	mkdir dir &&
-@@ -28,9 +32,10 @@ test_expect_success 'preparing origin repository' '
- 
- test_expect_success 'local clone without .git suffix' '
- 	git clone -l -s a b &&
--	(cd b &&
--	test "$(git config --bool core.bare)" = false &&
--	git fetch)
-+	echo false >expect &&
-+	git -C b config --bool core.bare >actual &&
-+	test_cmp expect actual &&
-+	git -C b fetch
- '
- 
- test_expect_success 'local clone with .git suffix' '
-diff --git a/t/t7402-submodule-rebase.sh b/t/t7402-submodule-rebase.sh
-index ebeca12a711..1927a862839 100755
---- a/t/t7402-submodule-rebase.sh
-+++ b/t/t7402-submodule-rebase.sh
-@@ -82,11 +82,19 @@ test_expect_success 'stash with a dirty submodule' '
- 	CURRENT=$(cd submodule && git rev-parse HEAD) &&
- 	git stash &&
- 	test new != $(cat file) &&
--	test submodule = $(git diff --name-only) &&
--	test $CURRENT = $(cd submodule && git rev-parse HEAD) &&
-+	echo submodule >expect &&
-+	git diff --name-only >actual &&
-+	test_cmp expect actual &&
-+
-+	echo "$CURRENT" >expect &&
-+	git -C submodule rev-parse HEAD >actual &&
-+	test_cmp expect actual &&
-+
- 	git stash apply &&
- 	test new = $(cat file) &&
--	test $CURRENT = $(cd submodule && git rev-parse HEAD)
-+	echo "$CURRENT" >expect &&
-+	git -C submodule rev-parse HEAD >actual &&
+ test_expect_success SYMLINKS 'add beyond symlinks' '
+ 	test_must_fail git add c/d &&
+-	! ( git ls-files | grep c/d )
++	cat >expect <<-\EOF &&
++	a
++	b/d
++	EOF
++	git ls-files >actual &&
 +	test_cmp expect actual
- 
  '
  
+ test_done
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index 51afbd7b24a..82dd768944f 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -106,24 +106,32 @@ test_expect_success '.gitignore test setup' '
+ 
+ test_expect_success '.gitignore is honored' '
+ 	git add . &&
+-	! (git ls-files | grep "\\.ig")
++	git ls-files >files &&
++	sed -n "/\\.ig/p" <files >actual &&
++	test_must_be_empty actual
+ '
+ 
+ test_expect_success 'error out when attempting to add ignored ones without -f' '
+ 	test_must_fail git add a.?? &&
+-	! (git ls-files | grep "\\.ig")
++	git ls-files >files &&
++	sed -n "/\\.ig/p" <files >actual &&
++	test_must_be_empty actual
+ '
+ 
+ test_expect_success 'error out when attempting to add ignored ones without -f' '
+ 	test_must_fail git add d.?? &&
+-	! (git ls-files | grep "\\.ig")
++	git ls-files >files &&
++	sed -n "/\\.ig/p" <files >actual &&
++	test_must_be_empty actual
+ '
+ 
+ test_expect_success 'error out when attempting to add ignored ones but add others' '
+ 	touch a.if &&
+ 	test_must_fail git add a.?? &&
+-	! (git ls-files | grep "\\.ig") &&
+-	(git ls-files | grep a.if)
++	git ls-files >files &&
++	sed -n "/\\.ig/p" <files >actual &&
++	test_must_be_empty actual &&
++	grep a.if files
+ '
+ 
+ test_expect_success 'add ignored ones with -f' '
 -- 
 2.39.0.rc1.981.gf846af54b4b
 
