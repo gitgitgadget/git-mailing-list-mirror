@@ -2,136 +2,175 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 35238C4321E
-	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 15:14:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B47F6C4321E
+	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 15:28:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233485AbiLBPOW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Dec 2022 10:14:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46972 "EHLO
+        id S233726AbiLBP2f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Dec 2022 10:28:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233133AbiLBPOV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Dec 2022 10:14:21 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF75FBFCD6
-        for <git@vger.kernel.org>; Fri,  2 Dec 2022 07:14:19 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id v124-20020a1cac82000000b003cf7a4ea2caso6667921wme.5
-        for <git@vger.kernel.org>; Fri, 02 Dec 2022 07:14:19 -0800 (PST)
+        with ESMTP id S233691AbiLBP2c (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Dec 2022 10:28:32 -0500
+Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5900B129
+        for <git@vger.kernel.org>; Fri,  2 Dec 2022 07:28:31 -0800 (PST)
+Received: by mail-il1-x12e.google.com with SMTP id x13so2195777ilp.8
+        for <git@vger.kernel.org>; Fri, 02 Dec 2022 07:28:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=GRVNjqWIdOPh+xW1Kx3+N2X7Jb9WdyNKGGcKsL6izoA=;
-        b=YILKjNp+eGDPP+Yw/ER007uQAJDR/rmZfJ5WoOFlLjOsmUKlwyh8RLTWWzopzoTaVh
-         xUu971cCkcNJ9nlKT8tziqAye1YxVcZ750O1O+MAI27Y5xeqvYeGSsDawJNyl1evX4S/
-         rSmZ3qDZOnF7q5gLcD1FZxzuCPj50c+cL1M/Ahi4SojTdD2ktTlWkrqeaV5jV+ogQxgR
-         z+ZsYp6kedzSQxPOXkasNIO64NBxW0x4QMIq5jEVR+8YYqfMQFqga/v3DdX924g4kgQW
-         am2AhMIy+tALwj0XYhBS9dlH1h9odXwGXh6hilp+yi+wWWjOhvw/EM2TBs/0/rGeifHU
-         0zjg==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6l+ZUklyDp4ve5LuCC7PyWpcYeLId1bc3zemCy3GaeI=;
+        b=ECfkJNKENqH+eEpn2o+SaVnOSVl9/imophKKTw88FZoKM1v7RSCu/u/ySMebgARI9v
+         clSam5Cn2405CF4NTIQgBo/jeSimYsIwQ9WEyJI6J5vtF5nwwQZet/iBYZsgQS8ZQIFB
+         12mjKgeTj5yMFUXT71o9ZgL0fV0L0UiHzgBRynI5KJgDf89fba7/Uyf1LMQh6JCbwzVR
+         Mu3yzZTA0tqQ7kGu3Se7v/miV3kPyk53C8ji8wXFBwKzkiWIosFTYWAGm3FMKZUVMEzq
+         DsAuOXnnUISgdTnuPrYuZHEKB3/1zxoActo7e0qGOImY/5veUGbGTili2l9wpQLiLOo0
+         qXLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GRVNjqWIdOPh+xW1Kx3+N2X7Jb9WdyNKGGcKsL6izoA=;
-        b=0eTyB6RLy3aU05Vfrxtt5KFkhYD1Q8hvFiLwcncWfiXeUVJ494q3+PxuEUYfozI40h
-         A+467VEtWSTeG9Hrs/Pgr4adaQfDUXS9V/qog3x28nmNqbnVYUJE2N8PMi6GX5Z0lrmj
-         bSwV8Qcs7kUuIDuRXFGS5OpukfVRshVvOLZEugViuR5p+ItDBaH/Kc1xKAoU/3V06exv
-         VtF15SU+0VyL4mEYWDID3jciwA13Kghniuh5fLH+iblUI6n18N5TWg9tgfdrIoZfr41B
-         D2ikVLECRMJgOeUxAdFh6cIK3ByWk8xfpKmEZxZvjeVjmnV6IcB+b/r71iUcrz5hTy47
-         qV6Q==
-X-Gm-Message-State: ANoB5pmGU3dA/WgurEN6dRUe6lcFbnNUo9wlIJ4lcba4ispo3HuRf6Ov
-        Jd8zjpDbvbr+MVqzRhJuUj4=
-X-Google-Smtp-Source: AA0mqf6yDCvcJyb0f23IirEb82YbX5ZkGuNHiLVNmbtteXLEDjcRmamqeVUPtTvhkVf+qBa7m8R6wA==
-X-Received: by 2002:a1c:f003:0:b0:3cf:e87a:806a with SMTP id a3-20020a1cf003000000b003cfe87a806amr55123973wmb.58.1669994058154;
-        Fri, 02 Dec 2022 07:14:18 -0800 (PST)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id t67-20020a1c4646000000b003cfa622a18asm12139210wma.3.2022.12.02.07.14.17
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6l+ZUklyDp4ve5LuCC7PyWpcYeLId1bc3zemCy3GaeI=;
+        b=DvcwDNDvW+FMlnwY/JhAQN/ptyD5E9nd5HO65kVU85e3kMQKsqbLa6GPwXHYobCWAp
+         udg7/fRLhQoF5Okh6qrAbTN+yaSwQfJBFp6qXInhkrhC9EU1SNrvFnRa8OIRHtVL9keg
+         Fdz5jr9Qboyg62cOXOnCkWTtmRSyYW4JwmWOmaH43cg4TRSmViwbZUt5D5xLZmqlC6Kc
+         rxrwIJcWhKe5Yer9CkCohgwAJgGHA/gy3Ejj/Toyd17cxsxlweoXkvQGCkKxu5jp4SJp
+         Usu0nM0YwAZMyc5bqxelWXoFEgpfcfsFdQjbGxJvOZfz+CTg6x0EiInNU2TpxRi5s27x
+         40dA==
+X-Gm-Message-State: ANoB5pl1Qz3WUyJyrEe0VESJ5n6+1G6xxDlWPXW5OpGUhWqsheWfM5zZ
+        3DiPx/CsEp9HkjwfCfCLbhUy
+X-Google-Smtp-Source: AA0mqf6xq7c6CmYdBxkKdFUecizwpRcaYhlzxqw9MjJnZllq2ylbLX1hbIfNxY9Woe9Rl8+FQYyvsg==
+X-Received: by 2002:a92:b0f:0:b0:303:929:dc8d with SMTP id b15-20020a920b0f000000b003030929dc8dmr14012819ilf.118.1669994910687;
+        Fri, 02 Dec 2022 07:28:30 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:8051:a31f:2c93:87e9? ([2600:1700:e72:80a0:8051:a31f:2c93:87e9])
+        by smtp.gmail.com with ESMTPSA id b1-20020a92ce01000000b0030014a5556bsm2487242ilo.69.2022.12.02.07.28.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Dec 2022 07:14:17 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <87f22a55-ee84-2f76-7b9b-924a97f44f89@dunelm.org.uk>
-Date:   Fri, 2 Dec 2022 15:14:15 +0000
+        Fri, 02 Dec 2022 07:28:30 -0800 (PST)
+Message-ID: <c3e1aaea-f509-cc00-b093-f114a15692a3@github.com>
+Date:   Fri, 2 Dec 2022 10:28:28 -0500
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.5.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] test-lib.sh: discover "git" in subdirs of
- "contrib/buildsystems/out"
+Subject: Re: [PATCH v2 3/9] bundle-uri client: add helper for testing server
 Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <663b93ef-0c89-a5f6-1069-b4be97915d20@dunelm.org.uk>
- <patch-1.1-f27d8bd4491-20221201T162451Z-avarab@gmail.com>
- <xmqq5yeuspam.fsf@gitster.g>
-In-Reply-To: <xmqq5yeuspam.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Victoria Dye <vdye@github.com>,
+        =?UTF-8?Q?=c3=86var_Arnfj=c3=b6r=c3=b0_Bjarmason_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
+        chooglen@google.com, jonathantanmy@google.com, dyroneteng@gmail.com
+References: <pull.1400.git.1667264854.gitgitgadget@gmail.com>
+ <pull.1400.v2.git.1668628302.gitgitgadget@gmail.com>
+ <c3269a24b5780023cbb4d173cb9cfb10c5a4b0d8.1668628303.git.gitgitgadget@gmail.com>
+ <84c07e84-0805-6163-d77b-cb9f42db402e@github.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <84c07e84-0805-6163-d77b-cb9f42db402e@github.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
-
-On 01/12/2022 23:00, Junio C Hamano wrote:
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
-> 
->>> Junio please drop this series when you rebuild next as it breaks
->>> manually running individual test scripts when building with Visual
->>> Studio.
+On 11/28/2022 7:59 PM, Victoria Dye wrote:
+> Ævar Arnfjörð Bjarmason via GitGitGadget wrote:
+>> From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
+>>  <avarab@gmail.com>
 >>
->> I think the issue you've spotted is easily fixed on top. See below.
-> 
-> Smells more like papering over than fixed, but let's see how folks
-> who need cmake/ctest feel about it.
+>> Add a 'test-tool bundle-uri ls-remote' command. This is a thin wrapper
+>> for issuing protocol v2 "bundle-uri" commands to a server, and to the
+>> parsing routines in bundle-uri.c.
+>>
+>> Since in the "git clone" case we'll have already done the handshake(),
+>> but not here, introduce a "got_advertisement" state along with
+>> "got_remote_heads". It seems to me that the "got_remote_heads" is
+>> badly named in the first place, and the whole logic of eagerly getting
+>> ls-refs on handshake() or not could be refactored somewhat, but let's
+>> not do that now, and instead just add another self-documenting state
+>> variable.
+>
+> Maybe I'm missing something, but why not just rename 'got_remote_heads' to
+> something like 'finished_handshake' rather than adding 'got_advertisement'
+> (since, AFAICT, it's always identical in value to 'got_remote_heads').
 
-As MSVC uses different directories for debug and release builds there 
-can be more than one build directory. I don't think selecting one of 
-them at random using 'find' is a good idea.
+I think that is a reasonable recommendation.
 
-> Let's mark the series never to graduate to 'master' for now,
-> optionally revert it out of 'next'.
-> 
->      Phillip, you asked about rebuilding 'next', which would not
->      happen until 2.39.0 final---did you mean reverting the topic out
->      of 'next'?  Do you need 'next' without this topic, not just
->      'master'?
+>> --- a/t/helper/test-bundle-uri.c
+>> +++ b/t/helper/test-bundle-uri.c
+>> @@ -88,6 +132,8 @@ int cmd__bundle_uri(int argc, const char **argv)
+>>  		return cmd__bundle_uri_parse(argc - 1, argv + 1, KEY_VALUE_PAIRS);
+>>  	if (!strcmp(argv[1], "parse-config"))
+>>  		return cmd__bundle_uri_parse(argc - 1, argv + 1, CONFIG_FILE);
+>> +	if (!strcmp(argv[1], "ls-remote"))
+>> +		return cmd_ls_remote(argc - 1, argv + 1);
+>
+> With this helper being added, I'm not sure if/why 'clone' was needed to test
+> the bundle URIs in patch 2 (I assumed integrating with a command was the
+> only way to test it, which is why I didn't mention this in my review [1]).
+> In the spirit of having commits avoid "doing more than one thing" could
+> these patches be reorganized into something like:
+>
+> 1. Add the no-op client & some basic tests around fetching the bundle URI
+>    list using this test helper.
+> 2. Add the 'transport_get_remote_bundle_uri()' call to 'clone()' with
+>    clone-specific tests.
+>
+> It probably wouldn't make the patches much shorter, but it would help avoid
+> the churn of test changes & changing assumptions around 'quiet' &
+> 'got_advertisement' in this patch.
 
-I don't mind waiting but I'm not a Windows user. I only tested this 
-topic under Windows because I knew Ævar had not and a quick web search 
-for "MSVC CMake" made me worry it was broken.
+I will think more on this as I get further into your review and figure out
+a way to do the error case tests. At minimum, I've split out some things
+so they might be easier to rearrange, but the 'git clone' integration is
+(currently) still paired with the implementation in transport.c.
 
-I'm afraid I wont be spending anymore time on this topic. I had hoped 
-that having the CMake build work under Linux would help developers avoid 
-breaking it. However I'm concerned that if developers do not appreciate 
-that there are differences between the Linux and Windows builds it will 
-actually create a false sense of security and be used as an excuse not 
-to properly test under Windows[1]. Recent events have confirmed my view 
-that changes like this need the attention of someone with experience of 
-Windows development and given that yesterday was the first time I'd used 
-MSVC since about 1994 I do not fit that description.
+>>  test_expect_success "setup protocol v2 $T5730_PROTOCOL:// tests" '
+>>  	git init "$T5730_PARENT" &&
+>>  	test_commit -C "$T5730_PARENT" one &&
+>> -	git -C "$T5730_PARENT" config uploadpack.advertiseBundleURIs true
+>> +	git -C "$T5730_PARENT" config uploadpack.advertiseBundleURIs true &&
+>> +	git -C "$T5730_PARENT" config bundle.version 1 &&
+>> +	git -C "$T5730_PARENT" config bundle.mode all
+>
+> Why are these config settings added here? I don't see them used anywhere?
 
-In addition to the breakage I reported yesterday 623fde1438 (cmake: 
-chmod +x the bin-wrappers/* & SCRIPT_{SH,PERL} & git-p4, 2022-11-03) 
-causes CMake older that 3.19 to error out when run from MSVC because 
-chmod does not exist on Windows. Also when running 'ctest' on "next" I 
-see tests failing because they cannot find 'test-tool' (I haven't tried 
-running the failing tests manually)
+This can be delayed until the next change that actually reads that config.
 
-Best Wishes
+>> diff --git a/transport.c b/transport.c
+>> index a020adc1f56..86460f5be28 100644
+>> --- a/transport.c
+>> +++ b/transport.c
+>> @@ -371,6 +373,33 @@ static int get_bundle_uri(struct transport *transport)
+>>  		init_bundle_list(transport->bundles);
+>>  	}
+>>
+>> +	if (!data->got_advertisement) {
+>> +		struct ref *refs;
+>> +		struct git_transport_data *data = transport->data;
+>> +		enum protocol_version version;
+>> +
+>> +		refs = handshake(transport, 0, NULL, 0);
+>> +		version = data->version;
+>> +
+>> +		switch (version) {
+>> +		case protocol_v2:
+>> +			assert(!refs);
+>> +			break;
+>> +		case protocol_v0:
+>> +		case protocol_v1:
+>> +		case protocol_unknown_version:
+>> +			assert(refs);
+>> +			break;
+>
+> Why were these 'refs' assertions added? What are they intended to validate?
 
-Phillip
+You're right. This is essentially inserting test code into the product
+(although the assert()s would be compiled out, I assume). The only differnce
+here is that after the handshake, protocol v2 has not executed the 'ls-refs'
+command, while the other protocol versions start with a ref advertisement
+in the initial response.
 
-[1] While our CI helps the MSVC job runs CMake manually, performs an 
-in-tree build and does not use ctest. In contrast a user running the 
-MSVC GUI does not run CMake themselves, ends up with an out-of-tree 
-build and runs the tests with ctest.
-
-> I'll then wait for something both camps (you and folks on Visual
-> Studio?) can agree on to requeue.
-> 
-> Thanks.
+Thanks,
+-Stolee
