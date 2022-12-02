@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0567C4321E
-	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 11:29:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D4D64C4321E
+	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 11:29:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233278AbiLBL3t (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Dec 2022 06:29:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47618 "EHLO
+        id S233394AbiLBL3y (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Dec 2022 06:29:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233320AbiLBL3Y (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233384AbiLBL3Y (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 2 Dec 2022 06:29:24 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C4FDD49E7
-        for <git@vger.kernel.org>; Fri,  2 Dec 2022 03:28:55 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id o13so10901450ejm.1
-        for <git@vger.kernel.org>; Fri, 02 Dec 2022 03:28:55 -0800 (PST)
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B173D4ADF
+        for <git@vger.kernel.org>; Fri,  2 Dec 2022 03:28:57 -0800 (PST)
+Received: by mail-ed1-x530.google.com with SMTP id z20so6029185edc.13
+        for <git@vger.kernel.org>; Fri, 02 Dec 2022 03:28:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=x3AL3TONhIIaL9Tkhp/AMidqKGTuXHjzWM8iEgbe56Y=;
-        b=M6WyqD0MP22obmEaC/vE7t969pJplrAwVQMcniL2COhTeVwk63B7cha8JsJcVCs10z
-         T+/ma3xl0CTkH5is17Iz5HBxyEEIKk3TkIKWe5/8KrOFUIXZyQEKao94giBnO/3zdoYw
-         +75h+on95uL/j85i7l7TlmSFY9Akco4htgaMYFa828L7WaXMYCtcLTaIV6aFfVtX4i30
-         S2STW/SdO/6VDGU+f0kc4oXqKRHbxAggCz9p4dUM/mYUqUxRQBlKHJcUEFr0+cx6EuPM
-         kFMYnbm2mh8B6N4S7UodSg0U5ZDz7b3/LUW+piA3P229sQJKSH7jQZhgS/ZBZpDKsJw9
-         4CJA==
+        bh=5SaaH49a18XvqwROcN7BX6dn5yt2Y9QtpQm6OfN6SV4=;
+        b=jIT77XCr2LPXCCGfqZK5OJ+6bmnRZhconJ5ltCO+blAZkPcdWZHnkZApRY5NtE9Klt
+         ommglG5FoLKXJroR2qoqqpUZd4zcFvmch9liqul/GEOpRX+c7yo+eA/jjFJ53Cxy++Ki
+         R/P6X0PmqiJwPB3q6l426i7oFligAJsGm97yWFqCC06k7cBzzDy83an+J1Eh7pxRjZxa
+         KnOer5jUCNHc0iJypg1jG6pQz5iyIXzA4AIy858oj6Roj4t1K5l2eXNwtqy0EcRJE0Jh
+         Y3vEl2ilmb7A5wRgYUKWtV6mCoNQwW7RJKAiIWoZkLleVwMpg0LK4PCTvBo9FdSHIoXa
+         5Gmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=x3AL3TONhIIaL9Tkhp/AMidqKGTuXHjzWM8iEgbe56Y=;
-        b=tZc/nr1cUViPVviq+uid/ez7ZbB5d4l6nTswokR+E4tCRGmsASLysL3qw/RyyZpLH5
-         sfUtui7Q0Huj1tlSHwn6dFJKmuCZOfU4A/JRbijAPlbSyen3oPM4PK7sMg5rrSZuk7hT
-         TRIp610iReWMbnzO9GzFKKZNu8q+12bAfbqTDVk3CP59/ExNXleMbDsy/MRDpz0Haqbw
-         cxD/A9T2GBatmoBcpznEryPYMRp+Mbz/UuIrjCOpyhdgE5Up/ZXvj8PB7kmbR1abpy0p
-         xa9VKoj+J6rhgJUiWNqkpejmHg40xi2kK7KPqbL7x8coEQTC1OTVskAmGlW4bHwpu9H+
-         oZhg==
-X-Gm-Message-State: ANoB5plQhV3jyaBYv8Jdn0qI/pM4rD32XK/oF0KYSuT1t0VsA7djgnZN
-        KsM1IEV6j2wvvGoQ0s1jXQA/e+DYEuZ1ZA==
-X-Google-Smtp-Source: AA0mqf45Lq8huAj+pWRW4TTP+td51CETRHAXiWjSex8aNrNKn/nMld33kccPfeMxwZ+oXk3JptyJEw==
-X-Received: by 2002:a17:906:99d6:b0:7c0:c91c:5d38 with SMTP id s22-20020a17090699d600b007c0c91c5d38mr1274317ejn.50.1669980533920;
-        Fri, 02 Dec 2022 03:28:53 -0800 (PST)
+        bh=5SaaH49a18XvqwROcN7BX6dn5yt2Y9QtpQm6OfN6SV4=;
+        b=zrATZeiwNUimF1ji77CFNTejByuHS3GzPsM7ufEfnvDpnUUyjF84YbbpK63gqr1n1Y
+         iDi5nnuf2E4xC/5HMPn8zPJ9QFu0xhSlmLZbD9JnaMPIvNuAUnjFQ9+7nQE30HZnFm2i
+         my3i2JdxnuJUKoiZ2roWeMbsevEMHnJwHNbIfBTeCywGF26xKyf6+Y6EOFboL+1cayXl
+         xKiM2G6hYYHk6tpgV1S7ts8X0vAA9Kn5/2CqG5AfNiLs0x9RmLHFZ0SjcGvMMJQYtW6h
+         lCkrK9/a+53IBuQqo6OISpa6Y/zZxp2rBoe4E5aYNnjii233o5T9IRqh9/M1CNWy/XHk
+         jypg==
+X-Gm-Message-State: ANoB5pl2SY02+CJvHe4ws2cC/9/4NnJKz2ji8+YT3MNLIocJYjzI5S1g
+        q2v/Wcx/U9ZaXHVkYb3NV9CGDZG+wAWwtg==
+X-Google-Smtp-Source: AA0mqf5FfTbS5+Cn9CB2rV8Ijzgy4Jb7h7Nwvj3OOIydqRsNaCiHNEcQReWxkLMW9NEUiMbUclG87g==
+X-Received: by 2002:a05:6402:10c4:b0:467:7827:232 with SMTP id p4-20020a05640210c400b0046778270232mr65994111edu.268.1669980535487;
+        Fri, 02 Dec 2022 03:28:55 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id b23-20020aa7df97000000b004611c230bd0sm2850780edy.37.2022.12.02.03.28.52
+        by smtp.gmail.com with ESMTPSA id b23-20020aa7df97000000b004611c230bd0sm2850780edy.37.2022.12.02.03.28.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Dec 2022 03:28:53 -0800 (PST)
+        Fri, 02 Dec 2022 03:28:54 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <ericsunshine@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 12/15] cmake: increase test timeout on Windows only
-Date:   Fri,  2 Dec 2022 12:28:33 +0100
-Message-Id: <patch-v5-12.15-c9d550b8558-20221202T110947Z-avarab@gmail.com>
+Subject: [PATCH v5 13/15] cmake: only look for "sh" in "C:/Program Files" on Windows
+Date:   Fri,  2 Dec 2022 12:28:34 +0100
+Message-Id: <patch-v5-13.15-7a5dd684d40-20221202T110947Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.0.rc1.981.gf846af54b4b
 In-Reply-To: <cover-v5-00.15-00000000000-20221202T110947Z-avarab@gmail.com>
 References: <cover-v4-00.14-00000000000-20221103T160255Z-avarab@gmail.com> <cover-v5-00.15-00000000000-20221202T110947Z-avarab@gmail.com>
@@ -72,34 +72,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Per c858750b41c (cmake: increase time-out for a long-running test,
-2022-10-18) the reason to set a custom timeout for
-t7112-reset-submodule.sh is Windows-specific. Let's only do that on
-Windows then.
+Guard the finding of "SH_EXE" in "C:\Program Files" with a check for
+whether we're on Windows.
+
+This Windows-specific code was first added in [1], and later expanded
+on [2], but since some of that was added this build recipe has been
+made portable outside of Windows.
+
+1. 72b6eeb81b1 (cmake: do find Git for Windows' shell interpreter,
+   2020-09-28)
+2. 476e54b1c60 (cmake: support local installations of git,
+   2022-07-27).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- contrib/buildsystems/CMakeLists.txt | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ contrib/buildsystems/CMakeLists.txt | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index cfe8126d939..712caffe8f1 100644
+index 712caffe8f1..da47d9c8397 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -1204,8 +1204,10 @@ if(NOT GIT_CTEST_SETS_BUILD_DIR)
+@@ -138,10 +138,17 @@ if(USE_VCPKG)
+ 	set(CMAKE_TOOLCHAIN_FILE ${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake CACHE STRING "Vcpkg toolchain file")
  endif()
- endforeach()
  
--# This test script takes an extremely long time and is known to time out even
--# on fast machines because it requires in excess of one hour to run
--set_tests_properties("${CMAKE_SOURCE_DIR}/t/t7112-reset-submodule.sh" PROPERTIES TIMEOUT 4000)
+-find_program(SH_EXE sh PATHS "C:/Program Files/Git/bin" "$ENV{LOCALAPPDATA}/Programs/Git/bin")
+-if(NOT SH_EXE)
+-	message(FATAL_ERROR "sh: shell interpreter was not found in your path, please install one."
+-			"On Windows, you can get it as part of 'Git for Windows' install at https://gitforwindows.org/")
 +if(WIN32)
-+	# This test script takes an extremely long time and is known to time out even
-+	# on fast machines because it requires in excess of one hour to run
-+	set_tests_properties("${CMAKE_SOURCE_DIR}/t/t7112-reset-submodule.sh" PROPERTIES TIMEOUT 4000)
-+endif()
++	find_program(SH_EXE sh PATHS "C:/Program Files/Git/bin" "$ENV{LOCALAPPDATA}/Programs/Git/bin")
++	if(NOT SH_EXE)
++		message(FATAL_ERROR "sh: shell interpreter was not found in your path, please install one."
++				"You can get it as part of 'Git for Windows' install at https://gitforwindows.org/")
++	endif()
++else()
++	find_program(SH_EXE sh)
++	if(NOT SH_EXE)
++		message(FATAL_ERROR "cannot find 'sh' in '$PATH'")
++	endif()
+ endif()
  
- endif()#BUILD_TESTING
+ #Create GIT-VERSION-FILE using GIT-VERSION-GEN
 -- 
 2.39.0.rc1.981.gf846af54b4b
 
