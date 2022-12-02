@@ -2,122 +2,127 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6CEBAC4332F
-	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 22:57:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15AC0C4332F
+	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 23:10:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233977AbiLBW5z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Dec 2022 17:57:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56292 "EHLO
+        id S234696AbiLBXK0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Dec 2022 18:10:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233793AbiLBW5y (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Dec 2022 17:57:54 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C6089857F
-        for <git@vger.kernel.org>; Fri,  2 Dec 2022 14:57:52 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id e13so8258930edj.7
-        for <git@vger.kernel.org>; Fri, 02 Dec 2022 14:57:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=GmtlJM7KkiCCmHovxaL0fPoiFZv7laicnorXH8G387w=;
-        b=Nf6Okn0qKKqCg12fVdCkimlJTF4PJcQ9hbxzWVO0Tgt7BudQXM66X0iQ/Ti9VWVoFi
-         bqfLtavfy6TkKf+oll+kehQjxbhtQgX+K9n4MHqmNIJmK3y6iucascEDmSjQFViGm6Cd
-         rW0HHX5Eq99XVh13pmSmpISu8uzFUamau26i21volwZL1SduhoOZ21Va3wqaxPCVJC6P
-         9tYCUYPQiitImeuoox2xlFr8l9faFapYKpJA+xwNH2o7cHN5NrE67HUOPe3tmKGE2zZ5
-         RUMwlXkS+HXOW4GtjHWRZlSe+hJhvQZpKkwYXcTAVBdi6XNv+qEsqydxGVIjqFAiZGvl
-         86LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GmtlJM7KkiCCmHovxaL0fPoiFZv7laicnorXH8G387w=;
-        b=6p8hxVx8rQ+oX9ndBzYigyQeH7bP2zEY2O0fH3LALn13B7QLoNAETdTh5kS3aloSo5
-         olDRsSCeOrrvT4PGB3REU1vmWw1iBgMkmT3t/1CHKLJUXamgYoJq25miS2OskLv1wD1M
-         sChFZfdoR5ycsxonoRNz3Fq0Iqv/a6uW+uh7ydroK2akojxsoKPrKYIDHL3RKYDw80xw
-         dnjYpBMI8kmbm+PddaRqxqNC+Rfc/jjsGmla/sKOMZND5hR+zioqTpuHababwrgerFpz
-         bnvd/g62ETTS+54DV75+aIBJcwDt0+1/8nFWyhq4ibDct9MpSqL0n9bx/gHpOX0eFaaK
-         miKw==
-X-Gm-Message-State: ANoB5pku69JyfY5dwN47dzJh0GXqaFF0Q+KBLrUZGgHr4vlTGVonhwnk
-        /XeB7+5neWnb5htMxOITR14=
-X-Google-Smtp-Source: AA0mqf5u2RcEmGVKnTF9WB0kxyK+KQKNJNHN7Dk+Hi/R35E8j7eqrXo4z9Q+lRZlIkAUAaXqORpXlA==
-X-Received: by 2002:a05:6402:1002:b0:467:7c62:64 with SMTP id c2-20020a056402100200b004677c620064mr63787306edu.82.1670021870769;
-        Fri, 02 Dec 2022 14:57:50 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id r17-20020a17090609d100b007bb32e2d6f5sm3469661eje.207.2022.12.02.14.57.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Dec 2022 14:57:49 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1p1Eyb-002w9E-1I;
-        Fri, 02 Dec 2022 23:57:49 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Rose via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Seija <doremylover123@gmail.com>
-Subject: Re: [PATCH] maintenance: compare output of pthread functions for
- inequality with 0
-Date:   Fri, 02 Dec 2022 23:46:25 +0100
-References: <pull.1389.git.git.1670000578395.gitgitgadget@gmail.com>
- <221202.86k039fz7x.gmgdl@evledraar.gmail.com>
- <Y4pl5BzQnw0Fm+5S@tapette.crustytoothpaste.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <Y4pl5BzQnw0Fm+5S@tapette.crustytoothpaste.net>
-Message-ID: <221202.86y1rpe7ma.gmgdl@evledraar.gmail.com>
+        with ESMTP id S232011AbiLBXKZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Dec 2022 18:10:25 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17D6F1182B
+        for <git@vger.kernel.org>; Fri,  2 Dec 2022 15:10:23 -0800 (PST)
+Received: (qmail 29686 invoked by uid 109); 2 Dec 2022 23:10:23 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 02 Dec 2022 23:10:23 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9102 invoked by uid 111); 2 Dec 2022 23:10:24 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 02 Dec 2022 18:10:24 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 2 Dec 2022 18:10:22 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] test-lib.sh: discover "git" in subdirs of
+ "contrib/buildsystems/out"
+Message-ID: <Y4qF3iHW2s+I0yNe@coredump.intra.peff.net>
+References: <663b93ef-0c89-a5f6-1069-b4be97915d20@dunelm.org.uk>
+ <patch-1.1-f27d8bd4491-20221201T162451Z-avarab@gmail.com>
+ <xmqq5yeuspam.fsf@gitster.g>
+ <87f22a55-ee84-2f76-7b9b-924a97f44f89@dunelm.org.uk>
+ <221202.86sfhxg2ng.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <221202.86sfhxg2ng.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Dec 02, 2022 at 05:40:34PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-On Fri, Dec 02 2022, brian m. carlson wrote:
+> > [1] While our CI helps the MSVC job runs CMake manually, performs an
+> > in-tree build and does not use ctest. In contrast a user running the 
+> > MSVC GUI does not run CMake themselves, ends up with an out-of-tree
+> > build and runs the tests with ctest.
+> 
+> I don't run Windows by choice, and I'm not interested in running a
+> propriterary IDE (VS) either.
+> 
+> The main reason I'm working on this series is that while we as a project
+> are happy to support proprietary OS's, it hasn't been a requirement for
+> participation that you need to buy a copy of Windows, OSX, AIX, HP/UX or
+> whatever to submit patches.
+> 
+> Of course we have platform-specific code. but this CMake component is
+> unique in how invasive it is.
+> 
+> It's easy to e.g. stay away from the OSX-specific code in
+> compat/fsmonitor/*darwin*.[ch], or generally speaking the
+> Windows-specific C code.
+> 
+> But for CMake it's become a hard requirenment for many changes, even
+> though it's a contrib/ component.
 
-> [[PGP Signed Part:Undecided]]
-> On 2022-12-02 at 18:10:57, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>=20
->> But (and especially if you're interested) we really should follow-up
->> here and fix the "error()" etc. part of this. After this we have cases
->> in-tree where we on failure:
->>=20
->>  * Call die_errno() (good)
->>  * Call die(), error() etc., but with a manual strerror() argument,
->>    these should just use the *_errno() helper.
->>  * Don't report on the errno at all, e.g. in this case shown here.
->>=20
->> It seems to me that all of these should be using die_errno(),
->> error_errno() etc.
->
-> Actually, I don't think that's correct.
->
->> Or maybe it's the other way around, and we should not rely on the global
->> "errno", but always capture the return value, and give that to
->> strerror() (or set "errno =3D ret", and call {die,error,warning}_errno()=
-).
->
-> Yeah, I think we need to do this.  That's because unlike most other
-> functions, the pthread functions _don't_ set errno, and instead return
-> the error value.  That's why on a typical Unix system, we would have
-> never failed before this patch: because errno values are always
-> positive.
+I have similar feelings to you here. Back when cmake support was
+introduced, I explicitly wanted it to be something for people who cared
+about it, but that wouldn't bother people who didn't use it:
 
-I was skimming the POSIX docs earlier, which seem to indicate that
-you're not promised anyhting about "errno" being set, just the return
-value.
+  https://lore.kernel.org/git/20200427200852.GC1728884@coredump.intra.peff.net/
 
-But at the same time I was reading glibc's pthread implementation, where
-a lot of the time (but not all the time!) you'll also get errno, just as
-an artifact of the library carrying forward an error from an internal
-API which failed while setting errno (e.g. malloc()).
+I stand by that sentiment, but it seems to have crept up as a required
+thing to deal with, and that is mostly because of CI. Using cmake in CI
+is good for telling developers when a change they make has broken cmake.
+But it also makes cmake their problem, and not the folks interested in
+cmake.
 
-In any case, the best thing to do for our codebase is probably:
+Now maybe attitudes have changed, and I am out of date, and cmake
+support is considered mature and really important (or maybe nobody even
+agreed with me back then ;) ). But if not, should we consider softening
+the CI output so that cmake failures aren't "real" failures? That seems
+drastic and mean, and I don't like it. But it's the root of the issue,
+IMHO.
 
-	if ((errno =3D pthread_create(...)))
-        	die_errno(...);
+As a side note, this isn't the only such instance of this problem. Two
+other things to think about:
 
-Since that gives our usag.[ch] library the chance to do something more
-clever than doing the same strerror() formatting hardcoded at every
-callsite.
+  - You mentioned darwin fsmonitor code. And it's true that you can
+    largely ignore it if you don't touch it. But every once in a while
+    you get bit by it (e.g., enabling a new compiler warning which
+    triggers in code you don't compile on your platform, and now you
+    have to guess-and-check the fix with CI). This sucks, but is kind of
+    inevitable on a cross-platform system. I think the issue with cmake
+    is that because it's basically duplicating/wrapping the Makefile, it
+    _feels_ unnecessary to people on platforms with working make, and
+    triggers more frequently (because changes to the rest of the build
+    system may break cmake in subtle ways).
+
+  - I'd actually put the leak-checking CI in the same boat. It's a good
+    goal, and one I hope we work towards. But it feels like the current
+    state is not very mature, and people often end up wrestling with CI
+    to deal with failures that they didn't even introduce (e.g., adding
+    a new test that happens to run a Git program that has an existing
+    leak, and now you are on the hook for figuring out why the existing
+    "passes leaks" annotation is wrong).
+
+    My original hope is that we would introduce leak-checking tooling
+    that people interested in leaks could use, and other people could
+    ignore until we reached a leak-free state. Because it's in CI it
+    means that people get notified of new leaks in code they write
+    (which is good, and helps people interested in leaks), but it also
+    means they have to deal with the immature state.
+
+I'm not necessarily proposing to drop the leaks CI job here. I'm mostly
+philosophizing about the greater problem. In the early days of Git, the
+cross-platform testing philosophy was: somebody who cares will test on
+that platform and write a patch. If they don't, how important could it
+be? With CI that happens automatically and it becomes everybody's
+problem, which is a blessing and a curse.
+
+-Peff
