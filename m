@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6704BC47088
-	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 11:29:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B8E71C4321E
+	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 11:29:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233276AbiLBL3K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Dec 2022 06:29:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45626 "EHLO
+        id S233318AbiLBL3N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Dec 2022 06:29:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233320AbiLBL2t (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Dec 2022 06:28:49 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 018E1D3DF5
+        with ESMTP id S233173AbiLBL27 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Dec 2022 06:28:59 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01A76D3DF8
         for <git@vger.kernel.org>; Fri,  2 Dec 2022 03:28:48 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id n20so10954536ejh.0
+Received: by mail-ed1-x529.google.com with SMTP id r26so6051324edc.10
         for <git@vger.kernel.org>; Fri, 02 Dec 2022 03:28:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KM99oAo0Mtr8NLyiiEiHiNzbagr/2Yxzh5P55+RLrDE=;
-        b=BGxBXfcaKSjwB90pVT0+8xtgZ7BCFnfc3PUsJ+USMBWwyvmvwYAzyVj5BRa6JFZCa8
-         O5g9cjmZScHbmRgF4l8AQqkcyGYvYGY3pXKaOtIBef+Ma9ttXo3EIVaAYJkbufup7iJr
-         6NTzcCZ0xnZlYrLzsDxOyLQzdvQ8OEp6uLtbCGh6Vn4aralimDG25yk5eUBU9BxOzh0O
-         7nXKKJrebR+3UFusqNjfqZ6qRioYL/c2ueEhSScgjHGN4qFh7CT9a/jOWee8LaC/shUg
-         cqJ2C8ZYUJVkWgokIE75SQ8zCuscBMjtuY1brUPzY9LdVLk75m5H/kCGKoksFufWpCnJ
-         V+MA==
+        bh=zS/eU6TtHqyJ/oDckphr0xZ89WMjaNfJ9wX/FBi1Hv8=;
+        b=AQfSTN8xUeDF2/0EMfKPWxwzRgNQplRQX2CzfYKEfVQlTYs10ygWsr1KKzwph6DUWG
+         uktWzORB4Lj86shgdNbaWSbEWw+3XC7lIQPPBkhktT5UrjUq2QEZKEwVI0OpBTmBMMFX
+         we5xHvakuM/1Ns3bMCu/EgK8GWqPjWKqkG1tOLP45Q54stl0FCVNCrG5/zqjJLShiP6F
+         izCoQW89RM8umwbL3byuGc/HRBJCBsBi814BkeYr0Ua/NBpjVPfda1AHUwAgHErT1boL
+         aA1zyaLyEJ0VZXTeuV/Qi7AvCTqHb5rd2/BE2qEOVeY8H9WTSYt/iah5b/T78vVNMx0b
+         AGgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KM99oAo0Mtr8NLyiiEiHiNzbagr/2Yxzh5P55+RLrDE=;
-        b=nPcFPshMqVsco5lJE5BqQxQiAFVCNd6P132GWzVFgOc3Q4uD5e+2dkUJ4Iov0xDMkm
-         VYAR0TZvOBQlCBnS2e2NuHU6tH4H7w/PfEEcgCXl6DcRnd8Ofdx5WC3gIVmmowXPDdZy
-         KxBFfQdL1eFKJ8DfuKH88XJbjzqV+8IFvT5qa5OazgpMQIe9GbGpV2jL3pKXhUOSTO7s
-         aDDRz/YJPwKW0Ql6QoUwldWFsqQn7Q+kJfg313buA2BfgjGXMkKVqbJ3qLlpO2GvzM66
-         WqsHgg4QM59K1ceaziFOuYd9nuSH4yISCxqGhK/pkHxUhPxwSY8Y8bn/Bz1FVpL74d4E
-         FXJw==
-X-Gm-Message-State: ANoB5pmj0f7ce4FXqo0lL5tgWjihAwTf/CQSpaiS5JBrzm/a5YdBhuTZ
-        ThMfL3jmjjfdR6K6eh3Y4mgdbA77BvU9Cg==
-X-Google-Smtp-Source: AA0mqf4auLRh9V7c8sfQFWIk8qc40ur0Wp6FhmQViaRTtkY+s7qRazq5SeGJIuDzbjvYB0mHEGDQxw==
-X-Received: by 2002:a17:906:aec1:b0:7c0:a04b:6795 with SMTP id me1-20020a170906aec100b007c0a04b6795mr10006652ejb.16.1669980528160;
-        Fri, 02 Dec 2022 03:28:48 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id b23-20020aa7df97000000b004611c230bd0sm2850780edy.37.2022.12.02.03.28.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=zS/eU6TtHqyJ/oDckphr0xZ89WMjaNfJ9wX/FBi1Hv8=;
+        b=G4MAAMwjmVpV5eoI/L0wuD3tmcGruncdfVKdt1gn0Oyqt75wSLVbxPL6c6s0EGZwPX
+         Gf+jwKYdzvfDrBi6AAjVPU09LLFTghZcRtPd5Ks+P1i1EBiSVMUdMpcyGjlyFmxzcPVC
+         8UTZsC4bySb6Z2T9irqN25CIv2RKsjirf6SUwszPrI2O/obQWsF8Nv//gcC6zbzPZKAL
+         mrT8eOiY/6oSLUkvDep2DEqbod51iYOiLW3B+vlR6CC4m1GQWoHhcKVxnowJQz/Lmzmt
+         BwRHloVcD9v0WndTRvIRw2yueXDLv1k8tUjjvqchMKYx0G1jsyIa+Fq+yWRW/fZwGp5m
+         nsVg==
+X-Gm-Message-State: ANoB5pmoa5ZV8Kll4nO49DKoC8q6XMCGmv39BvSF3i4Vq4g2YjK05PNP
+        oFVQ+LK6qruhLBtWzvk8+7UPSGDF8jR7aw==
+X-Google-Smtp-Source: AA0mqf4QfDR/C+ZGwWomeBA6BO8m4ERpKKGu7022THPuTwXH9JlIpFri1Lhxe+hRpN9zjdSv9OM6qg==
+X-Received: by 2002:aa7:c2d6:0:b0:46c:38a4:a54c with SMTP id m22-20020aa7c2d6000000b0046c38a4a54cmr1537763edp.393.1669980527043;
         Fri, 02 Dec 2022 03:28:47 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id b23-20020aa7df97000000b004611c230bd0sm2850780edy.37.2022.12.02.03.28.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Dec 2022 03:28:46 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <ericsunshine@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v5 07/15] cmake: set "USE_LIBPCRE2" in "GIT-BUILD-OPTIONS" for test-lib.sh
-Date:   Fri,  2 Dec 2022 12:28:28 +0100
-Message-Id: <patch-v5-07.15-49645cb1643-20221202T110947Z-avarab@gmail.com>
+Subject: [PATCH v5 06/15] cmake & test-lib.sh: add a $GIT_SOURCE_DIR variable
+Date:   Fri,  2 Dec 2022 12:28:27 +0100
+Message-Id: <patch-v5-06.15-7ee341245a8-20221202T110947Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.0.rc1.981.gf846af54b4b
 In-Reply-To: <cover-v5-00.15-00000000000-20221202T110947Z-avarab@gmail.com>
 References: <cover-v4-00.14-00000000000-20221103T160255Z-avarab@gmail.com> <cover-v5-00.15-00000000000-20221202T110947Z-avarab@gmail.com>
@@ -72,39 +72,222 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we build with libpcre2 which cmake has supported since [1] we
-need to set "USE_LIBPCRE2='YesPlease'" (or similar) in
-"GIT-BUILD-OPTIONS".
+When git is built and tested with cmake & ctest we usually do that
+outside of the top-level source directory. E.g.
 
-Without this e.g. t7810-grep.sh will fail, as it has tests that rely
-on the behavior of !PCRE2. The reason this hasn't been noticed is that
-the Windows CI doesn't have access to libpcre2.
+	cmake -S contrib/buildsystems -B contrib/buildsystems/out
+	make -C contrib/buildsystems/out
+	ctest -j$(nproc) --test-dir contrib/buildsystems/out
 
-With this the remaining two failures we had left after the preceding
-step are resolved, but note that that test run didn't include the
-git-p4 tests, which a subsequent commit will address).
+Since the test-lib.sh makes assumptions about the TEST_DIRECTORY being
+the "t" subdirectory of the top-level "$GIT_BUILD_DIR", the cmake
+recipe has needed to copy various assets to that
+"contrib/buildsystems/out" directory.
 
-1. 80431510a2b (cmake: add pcre2 support, 2022-05-24)
+But we've only been doing this for the subsets of tests that run on
+Windows, and which have otherwise been covered by that CI target. The
+CI target builds (among other things) with "-DPERL_TESTS=OFF
+-DPYTHON_TESTS=OFF -DCURL_NO_CURL_CMAKE=ON", see [1]. Furthermore, the
+CI isn't testing from the "contrib/buildsystems/out" directory,
+instead it clobbers the top-level MAkefile.
+
+There was a recent commit to fix a subset of these issues, see
+6a83b5f0810 (cmake: copy the merge tools for testing, 2022-10-18).
+
+Let's stop going for that approach, and instead teach the test-lib.sh
+that there's such a thing as the "$GIT_SOURCE_DIR" distinct from the
+"$GIT_BUILD_DIR".
+
+Just as the "$TEST_DIRECTORY" always points to our actual "t"
+directory (not the "[...]/out/t" cmake creates), this new
+"$GIT_SOURCE_DIR" will always be the top-level source directory.
+
+With this change we now pass 3/5 of the tests that we still had
+failing with the fixes in the preceding commit.
+
+1. 4c2c38e800f (ci: modification of main.yml to use cmake for vs-build
+   job, 2020-06-26)
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- contrib/buildsystems/CMakeLists.txt | 3 +++
- 1 file changed, 3 insertions(+)
+ contrib/buildsystems/CMakeLists.txt |  6 ------
+ t/lib-gettext.sh                    |  2 +-
+ t/lib-gitweb.sh                     |  2 +-
+ t/t7609-mergetool--lib.sh           |  2 +-
+ t/t9902-completion.sh               | 14 +++++++-------
+ t/t9903-bash-prompt.sh              |  2 +-
+ t/test-lib.sh                       |  8 +++++++-
+ 7 files changed, 18 insertions(+), 18 deletions(-)
 
 diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 73b060a0385..5b3fb93120d 100644
+index 2248b755b3b..73b060a0385 100644
 --- a/contrib/buildsystems/CMakeLists.txt
 +++ b/contrib/buildsystems/CMakeLists.txt
-@@ -1099,6 +1099,9 @@ file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "PYTHON_PATH='${PYTHON_PATH}'\
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "TAR='${TAR}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_CURL='${NO_CURL}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_EXPAT='${NO_EXPAT}'\n")
-+if(PCRE2_FOUND)
-+	file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "USE_LIBPCRE2='YesPlease'\n")
-+endif()
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PERL='${NO_PERL}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_PTHREADS='${NO_PTHREADS}'\n")
- file(APPEND ${CMAKE_BINARY_DIR}/GIT-BUILD-OPTIONS "NO_UNIX_SOCKETS='${NO_UNIX_SOCKETS}'\n")
+@@ -1118,12 +1118,6 @@ if(NOT ${CMAKE_BINARY_DIR}/CMakeCache.txt STREQUAL ${CACHE_PATH})
+ 	#Setting the build directory in test-lib.sh before running tests
+ 	file(WRITE ${CMAKE_BINARY_DIR}/CTestCustom.cmake
+ 		"file(WRITE ${CMAKE_SOURCE_DIR}/GIT-BUILD-DIR \"${CMAKE_BINARY_DIR}\")")
+-	#misc copies
+-	file(COPY ${CMAKE_SOURCE_DIR}/po/is.po DESTINATION ${CMAKE_BINARY_DIR}/po/)
+-	file(GLOB mergetools "${CMAKE_SOURCE_DIR}/mergetools/*")
+-	file(COPY ${mergetools} DESTINATION ${CMAKE_BINARY_DIR}/mergetools/)
+-	file(COPY ${CMAKE_SOURCE_DIR}/contrib/completion/git-prompt.sh DESTINATION ${CMAKE_BINARY_DIR}/contrib/completion/)
+-	file(COPY ${CMAKE_SOURCE_DIR}/contrib/completion/git-completion.bash DESTINATION ${CMAKE_BINARY_DIR}/contrib/completion/)
+ endif()
+ 
+ file(GLOB test_scipts "${CMAKE_SOURCE_DIR}/t/t[0-9]*.sh")
+diff --git a/t/lib-gettext.sh b/t/lib-gettext.sh
+index cc6bb2cdeaa..dcd6e9c3f75 100644
+--- a/t/lib-gettext.sh
++++ b/t/lib-gettext.sh
+@@ -7,7 +7,7 @@
+ . ./test-lib.sh
+ 
+ GIT_TEXTDOMAINDIR="$GIT_BUILD_DIR/po/build/locale"
+-GIT_PO_PATH="$GIT_BUILD_DIR/po"
++GIT_PO_PATH="$GIT_SOURCE_DIR/po"
+ export GIT_TEXTDOMAINDIR GIT_PO_PATH
+ 
+ if test -n "$GIT_TEST_INSTALLED"
+diff --git a/t/lib-gitweb.sh b/t/lib-gitweb.sh
+index 1f32ca66ea5..6f68df247af 100644
+--- a/t/lib-gitweb.sh
++++ b/t/lib-gitweb.sh
+@@ -49,7 +49,7 @@ EOF
+ 		error "Cannot find gitweb at $GITWEB_TEST_INSTALLED."
+ 		say "# Testing $SCRIPT_NAME"
+ 	else # normal case, use source version of gitweb
+-		SCRIPT_NAME="$GIT_BUILD_DIR/gitweb/gitweb.perl"
++		SCRIPT_NAME="$GIT_SOURCE_DIR/gitweb/gitweb.perl"
+ 	fi
+ 	export SCRIPT_NAME
+ }
+diff --git a/t/t7609-mergetool--lib.sh b/t/t7609-mergetool--lib.sh
+index 8b1c3bd39f2..2090d12a489 100755
+--- a/t/t7609-mergetool--lib.sh
++++ b/t/t7609-mergetool--lib.sh
+@@ -8,7 +8,7 @@ TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'mergetool --tool=vimdiff creates the expected layout' '
+-	. "$GIT_BUILD_DIR"/mergetools/vimdiff &&
++	. "$GIT_SOURCE_DIR"/mergetools/vimdiff &&
+ 	run_unit_tests
+ '
+ 
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 43de868b800..1bd4cae92fe 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -33,7 +33,7 @@ complete ()
+ GIT_TESTING_ALL_COMMAND_LIST='add checkout check-attr rebase ls-files'
+ GIT_TESTING_PORCELAIN_COMMAND_LIST='add checkout rebase'
+ 
+-. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash"
++. "$GIT_SOURCE_DIR/contrib/completion/git-completion.bash"
+ 
+ # We don't need this function to actually join words or do anything special.
+ # Also, it's cleaner to avoid touching bash's internal completion variables.
+@@ -2567,7 +2567,7 @@ test_expect_success 'sourcing the completion script clears cached commands' '
+ 	(
+ 		__git_compute_all_commands &&
+ 		verbose test -n "$__git_all_commands" &&
+-		. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
++		. "$GIT_SOURCE_DIR/contrib/completion/git-completion.bash" &&
+ 		verbose test -z "$__git_all_commands"
+ 	)
+ '
+@@ -2576,7 +2576,7 @@ test_expect_success 'sourcing the completion script clears cached merge strategi
+ 	(
+ 		__git_compute_merge_strategies &&
+ 		verbose test -n "$__git_merge_strategies" &&
+-		. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
++		. "$GIT_SOURCE_DIR/contrib/completion/git-completion.bash" &&
+ 		verbose test -z "$__git_merge_strategies"
+ 	)
+ '
+@@ -2587,7 +2587,7 @@ test_expect_success 'sourcing the completion script clears cached --options' '
+ 		verbose test -n "$__gitcomp_builtin_checkout" &&
+ 		__gitcomp_builtin notes_edit &&
+ 		verbose test -n "$__gitcomp_builtin_notes_edit" &&
+-		. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
++		. "$GIT_SOURCE_DIR/contrib/completion/git-completion.bash" &&
+ 		verbose test -z "$__gitcomp_builtin_checkout" &&
+ 		verbose test -z "$__gitcomp_builtin_notes_edit"
+ 	)
+@@ -2599,7 +2599,7 @@ test_expect_success 'option aliases are not shown by default' '
+ 
+ test_expect_success 'option aliases are shown with GIT_COMPLETION_SHOW_ALL' '
+ 	(
+-		. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
++		. "$GIT_SOURCE_DIR/contrib/completion/git-completion.bash" &&
+ 		GIT_COMPLETION_SHOW_ALL=1 && export GIT_COMPLETION_SHOW_ALL &&
+ 		test_completion "git clone --recurs" <<-\EOF
+ 		--recurse-submodules Z
+@@ -2610,7 +2610,7 @@ test_expect_success 'option aliases are shown with GIT_COMPLETION_SHOW_ALL' '
+ 
+ test_expect_success 'plumbing commands are excluded without GIT_COMPLETION_SHOW_ALL_COMMANDS' '
+ 	(
+-		. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
++		. "$GIT_SOURCE_DIR/contrib/completion/git-completion.bash" &&
+ 		sane_unset GIT_TESTING_PORCELAIN_COMMAND_LIST &&
+ 
+ 		# Just mainporcelain, not plumbing commands
+@@ -2622,7 +2622,7 @@ test_expect_success 'plumbing commands are excluded without GIT_COMPLETION_SHOW_
+ 
+ test_expect_success 'all commands are shown with GIT_COMPLETION_SHOW_ALL_COMMANDS (also main non-builtin)' '
+ 	(
+-		. "$GIT_BUILD_DIR/contrib/completion/git-completion.bash" &&
++		. "$GIT_SOURCE_DIR/contrib/completion/git-completion.bash" &&
+ 		GIT_COMPLETION_SHOW_ALL_COMMANDS=1 &&
+ 		export GIT_COMPLETION_SHOW_ALL_COMMANDS &&
+ 		sane_unset GIT_TESTING_PORCELAIN_COMMAND_LIST &&
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index d459fae6551..06f0abfc294 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -10,7 +10,7 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./lib-bash.sh
+ 
+-. "$GIT_BUILD_DIR/contrib/completion/git-prompt.sh"
++. "$GIT_SOURCE_DIR/contrib/completion/git-prompt.sh"
+ 
+ actual="$TRASH_DIRECTORY/actual"
+ c_red='\\[\\e[31m\\]'
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 6db377f68b8..36358811a0f 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -47,6 +47,10 @@ then
+ 	echo "PANIC: Running in a $TEST_DIRECTORY that doesn't end in '/t'?" >&2
+ 	exit 1
+ fi
++
++# For CMake the top-level source directory is different from our build
++# directory. With the top-level Makefile they're the same.
++GIT_SOURCE_DIR="$GIT_BUILD_DIR"
+ if test -f "$GIT_BUILD_DIR/GIT-BUILD-DIR"
+ then
+ 	GIT_BUILD_DIR="$(cat "$GIT_BUILD_DIR/GIT-BUILD-DIR")" || exit 1
+@@ -1447,7 +1451,7 @@ then
+ 		make_valgrind_symlink $file
+ 	done
+ 	# special-case the mergetools loadables
+-	make_symlink "$GIT_BUILD_DIR"/mergetools "$GIT_VALGRIND/bin/mergetools"
++	make_symlink "$GIT_SOURCE_DIR"/mergetools "$GIT_VALGRIND/bin/mergetools"
+ 	OLDIFS=$IFS
+ 	IFS=:
+ 	for path in $PATH
+@@ -1500,6 +1504,8 @@ GIT_CONFIG_NOSYSTEM=1
+ GIT_ATTR_NOSYSTEM=1
+ GIT_CEILING_DIRECTORIES="$TRASH_DIRECTORY/.."
+ export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR GIT_CONFIG_NOSYSTEM GIT_ATTR_NOSYSTEM GIT_CEILING_DIRECTORIES
++MERGE_TOOLS_DIR="$GIT_SOURCE_DIR/mergetools"
++export MERGE_TOOLS_DIR
+ 
+ if test -z "$GIT_TEST_CMP"
+ then
 -- 
 2.39.0.rc1.981.gf846af54b4b
 
