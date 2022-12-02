@@ -2,138 +2,116 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1A0BC4321E
-	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 16:47:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2054AC4321E
+	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 16:51:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233952AbiLBQrH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Dec 2022 11:47:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41220 "EHLO
+        id S233612AbiLBQvY (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Dec 2022 11:51:24 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233449AbiLBQrF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Dec 2022 11:47:05 -0500
-Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D4EECAFA3
-        for <git@vger.kernel.org>; Fri,  2 Dec 2022 08:47:04 -0800 (PST)
-Received: by mail-vs1-xe29.google.com with SMTP id i2so5183098vsc.1
-        for <git@vger.kernel.org>; Fri, 02 Dec 2022 08:47:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3oAtu6SjGH6yVtVn0VuLss0uyIxRS1ZHlkspWx4l+Mo=;
-        b=d74waH6ReGR82SkfExw8n8U/mLIvirzKY6+rTFrFrb+Ht667vvp2OjdInHpGoHmakZ
-         bFMLyfWivPBo0BKZtNHF9+VaExOnjIvbHLhzrITS7sCbV0a3nh8qBVReJt+rs0kfJCN5
-         zaIO8g8acVIU3IH0jm7/8ResVeZJTnS/oib1/Np966rjg5M21v/o6iLrIuLhjMgoK7at
-         CDBOayA2jttAYXk9+MH4YYZM0gbfbfvu4imw75sddsbdMT4LQ7I6IsAaE55v+j3+mMtk
-         f0tGB6dpjDXJkyVvmgAhxLxCanXYxygWyv027MZDYheK98j+604kPiECOwlEJm3o433e
-         +nqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3oAtu6SjGH6yVtVn0VuLss0uyIxRS1ZHlkspWx4l+Mo=;
-        b=QnBFrbd6ug7R8bYYE8mpWtYkJIQ53r2PHonO7ZZecOZTS0tljX1MdSNn12AkXcMgs1
-         OU/3GGC6LAbj7RuA32G4u4r0NryZ8EtpDkxXpvrE6Edi7NKcsbUa07ZD+ZloCe5nssK0
-         p49q52QCg+fxd974/umJtI5bK4DYK6rthRkwUeGYUCGYq3YXnJQGb8XiMBSS5oln3fSE
-         YEgp/V6OLBMNW2Sf8pb+a5nodvVPigBlJzj3dVpkvkZIyJ4zaa0cJb1R3x+fIXl4h2HL
-         lmrODTl0WRs8zvovd+Uke7lNrTRF1IhoKrdE7crmbs3C+/FnYstqJYBW/ppY52Greoxl
-         /5Kg==
-X-Gm-Message-State: ANoB5plr2GDUpV8JlnDge25gfwLrE2aER65kirJ4XuYgf1zbvHaEkzjR
-        ZiHW0FGsDpWjjtag91LPt6+kKXweqVbDxa1/g5R2YQ==
-X-Google-Smtp-Source: AA0mqf4QSJRwCN3Qr2Bsc11SP00eepCnsQPLEuIX5aiv8ZnmcHYDElefmcBn70nLeaDkRTYRma8GfP4ZWOY7GHJdn5g=
-X-Received: by 2002:a05:6102:34f8:b0:3b1:106a:d834 with SMTP id
- bi24-20020a05610234f800b003b1106ad834mr3623044vsb.31.1669999623216; Fri, 02
- Dec 2022 08:47:03 -0800 (PST)
+        with ESMTP id S233546AbiLBQvW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Dec 2022 11:51:22 -0500
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDF66ACA4A
+        for <git@vger.kernel.org>; Fri,  2 Dec 2022 08:51:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1669999874; bh=U0O7dWje4GtmRtvHsPX21rENkUorUyVxer6HFjJ4veU=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=ttLT/mtU/YTERc1fMBPcW2yZ6h4h8DEQBhtGH5CdazkDQXhywtvqMEsVRStMFElWB
+         4mqLIqzsizte8wMWTuDcKc7VUBb542AGm0PNFlYINeCT8bUe8BTpMPpJhRxQhAVpOw
+         W3uu9avr2G+owXjKbyq/cyzU7xp5OHNVYnBXgmdB5Xn+1DWVC51L3bYUe53IBK4kxN
+         cnsN2wdI8Q4LBPL12zPJNGJUrFc4rrWipqiJguA6lxcK6uT3TggQmZnECOy563LKk2
+         +Xo0GMiTtgTxfnvp9H8EocScNsJhE2tVgNgtCtdRHspekUWJYOlTRklTQRHywN80UX
+         tyL/bDzbypuAg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.35] ([91.47.154.159]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MWi9q-1pTn2I2560-00XFUN; Fri, 02
+ Dec 2022 17:51:14 +0100
+Message-ID: <cbe88abc-c1fb-cb50-6057-47ff27f7a12d@web.de>
+Date:   Fri, 2 Dec 2022 17:51:13 +0100
 MIME-Version: 1.0
-References: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
- <CAFQ2z_MZd150kQNTcxaDRVvALpZcCUbRj_81pt-VBY8DRaoRNw@mail.gmail.com>
- <f1c45bd5-692e-85db-90c3-c516003f47e5@github.com> <CAFQ2z_MLwUoaSTG04LJYHgJH-QYJEuZ9bQcTsV8mXwxBbz7Egg@mail.gmail.com>
- <f5370fec-d517-eaa9-8e16-82fa20ac8532@github.com>
-In-Reply-To: <f5370fec-d517-eaa9-8e16-82fa20ac8532@github.com>
-From:   Han-Wen Nienhuys <hanwen@google.com>
-Date:   Fri, 2 Dec 2022 17:46:51 +0100
-Message-ID: <CAFQ2z_NKpgsEsrDdkdp=HDajrzpUDjiUcUdR8TMkYpXZBU0k+g@mail.gmail.com>
-Subject: Re: [PATCH 00/30] [RFC] extensions.refFormat and packed-refs v2 file format
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, jrnieder@gmail.com,
-        John Cai <johncai86@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: [PATCH 2/1] t3920: support CR-eating grep
+To:     Johannes Sixt <j6t@kdbg.org>,
+        Philippe Blain <levraiphilippeblain@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <febcfb0a-c410-fb71-cff9-92acfcb269e2@kdbg.org>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <febcfb0a-c410-fb71-cff9-92acfcb269e2@kdbg.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:1EKaGuOf0WnI9a/DgojWKpm+TEs1OKswOPPioDNVs1Pllq2771/
+ 1Rn25cFwxMYZDpnQbJZlZ0HnytuLbTQrpSOO09YjnmuzHit6I3Ysq1hD84+JsigCTFJu3ay
+ WN9MfCCGRmz5UqK3IKKT/Iv0sua7x1uJEiqF44SgYV8rr/5xBTjC8gUiwatcAqoAGCfTlKb
+ ZY+Bg8/aOSfbUMYqrnByQ==
+UI-OutboundReport: notjunk:1;M01:P0:Rk6Mj6BBGT0=;R/ZJ8+/a0QS1/vod3UHRsRvsvtm
+ 4g/GcT2kRwfv59RwO5z2xo8yQSqnp8dETK2yFNTgDGWQ+fa1J/lbeBroZCSQM0VPW1qOp+u/E
+ 88nWeteWqf+hNmI0Rb31kT0IUBE1z/hyRQb2Ew1jyfH4IDJ3UiwtLBoRC5dMGN1z4KD+dpvD3
+ yxLnMJqsSlgtV+nB9/vgrEoCRBxVHHHPJw6qjLDa1lIEHXzuUYmB9VXm/HfOEhGyKNjVg2M+K
+ 6tYoOvnRb09aM7fTZ4bBR/iR3ROy7mBNgihj/BHxmczFgT9CL10GQeoT90I0Ovr+CoG0/3RN0
+ BbY/nRgzZq7b330afm9MDV1sDKoQdgJpnacuiMcRoWNmSI0Mf1OS56YWAy5v9CYg27SrqPE9I
+ BDL5N8JZv3Cyn1IrHtdktBpK9DYkdxbMcK1Z4qGQmcK04qcwgm32lruMZDJ7M5awY2M/ppZBz
+ tR4RtYbc0G+DADeBwUttvSoUPIRiuzPclpNsTJnrQ5VPBeX31ao06Ncr2MfR1CnqdrERsoKsX
+ 5EsT901QEI04S5fs9lwPEx+nhqjt7TXKbN10T2aO14lrlZeBvR52tH3iQ1OOckEkwvoJcJtM7
+ CRR+P4fgdKcE369QVWrc3+bvRlIHeOvA1aWLCdY215SHDujcTkwV2QdX1u6lwnKstGA/InB7V
+ o745U6m2rDPZVljpxwMyog9HTpEcupkpBc84as+oia3xVC2b/2ipXW5U0BIHxJMS16fP0UOWN
+ ySVorfUzOtqECSzgQqYxD8y1mDflm0S4jO5fddBGXlPilxpN7IaKMF8tMj63Wj4rlSlrayywz
+ 8G/56rEavd4aC9ti3vWhBuoPNf15LoC5lHmalDxu+92YCBvMY3OVQ3fZkeyL2JupHQ5IfuUC4
+ BqMrOT8JgnIgOSO/LdEK+/d/KcPD3omsUwRni3IsmLokYn6/RLxBuF8tZmW5P2yxPt6zgfAAb
+ AuNC4McXMMQte5f0nV4Eqo/qydA=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 1, 2022 at 9:19 PM Derrick Stolee <derrickstolee@github.com> wr=
-ote:
-> >> The reason to start with this step is that the benefits and risks are
-> >> clearly understood, which can motivate us to establish the mechanism f=
-or
-> >> changing the ref format by defining the extension.
-> >
-> > I believe that the v2 format is a safe change with performance
-> > improvements, but it's a backward incompatible format change with only
-> > modest payoff. I also don't understand how it will help you do a stack
-> > of tables,
-> > which you need for your primary goal (ie. transactions/deletions
-> > writing only the delta, rather than rewriting the whole file?).
->
-> The v2 format doesn't help me on its own, but it has other benefits
-> in terms of size and speed, as well as the "ref count" functionality.
->
-> The important thing is that the definition of extensions.refFormat
-> that I'm proposing in this RFC establishes a way to make incremental
-> progress on the ref format, allowing the stacked format to come in
-> later with less friction.
+grep(1) converts CRLF line endings to CR on current MinGW:
 
-I guess you want to move the read/write stack under the loose storage
-(packed backend), and introduce (read loose/packed + write packed
-only) mode that is transitional?
+   $ uname -sr
+   MINGW64_NT-10.0-22621 3.3.6-341.x86_64
 
-Before you embark on this incremental route, I think it would be best
-to think through carefully how an online upgrade would work in detail
-(I think it's currently not specified?) If ultimately it's not
-feasible to do incrementally, then the added complexity of the
-incremental approach will be for naught.
+   $ printf 'a\r\n' | hexdump.exe -C
+   00000000  61 0d 0a                                          |a..|
+   00000003
 
-The incremental mode would only be of interest to hosting providers.
-It will only be used transitionally. It is inherently going to be
-complex, because it has to consider both storage modes at the same
-time, and because it is transitional, it will get less real life
-testing. At the same time, the ref database is comparatively small, so
-the availability blip that converting the storage offline will impair
-is going to be small. So, the incremental approach is rather expensive
-for a comparatively small benefit.
+   $ printf 'a\r\n' | grep . | hexdump.exe -C
+   00000000  61 0a                                             |a.|
+   00000002
 
-I also thought a bit about how you could make the transition seamless,
-but I can't see a good way: you have to coordinate between tables.list
-(the list of reftables active or whatever file signals the presence of
-a stack) and files under refs/heads/. I don't know how to do
-transactions across multiple files without cooperative locking.
+Create the intended test file by grepping the original file with LF
+line endings and adding CRs explicitly.
 
-If you assume you can use filesystem locks, then you could do
-something simpler: if a git repository is marked 'transitional', git
-processes take an FS read lock on .git/ .  The process that converts
-the storage can take an exclusive (write) lock on .git/, so it knows
-nobody will interfere. I think this only works if the repo is on local
-disk rather than NFS, though.
+The missing CRs went unnoticed because test_cmp on MinGW ignores line
+endings since 4d715ac05c (Windows: a test_cmp that is agnostic to random
+LF <> CRLF conversions, 2013-10-26).  Fix this test anyway to avoid
+depending on that special test_cmp behavior, especially since this is
+the only test that needs it.
 
-> * Step 1: replace packed-refs with reftable.
-> * Step 2: stop writing loose refs, only update reftable (but still read l=
-oose refs).
+Piping the output of grep(1) through append_cr has the side-effect of
+ignoring its return value.  That means we no longer need the explicit
+"|| true" to support commit messages without a body.
 
-Does that work? A long running process might not notice the switch in
-step 2, so it could still write a ref as loose, while another process
-racing might write a different value to the same ref through reftable.
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ t/t3920-crlf-messages.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-PS. I'll be away from work until Jan 9th.
---=20
-Han-Wen Nienhuys - Google Munich
-I work 80%. Don't expect answers from me on Fridays.
---
-Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
-Registergericht und -nummer: Hamburg, HRB 86891
-Sitz der Gesellschaft: Hamburg
-Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Liana Sebastian
+diff --git a/t/t3920-crlf-messages.sh b/t/t3920-crlf-messages.sh
+index a58522c163..67fd2345af 100755
+=2D-- a/t/t3920-crlf-messages.sh
++++ b/t/t3920-crlf-messages.sh
+@@ -12,7 +12,7 @@ create_crlf_ref () {
+ 	cat >.crlf-orig-$branch.txt &&
+ 	cat .crlf-orig-$branch.txt | append_cr >.crlf-message-$branch.txt &&
+ 	grep 'Subject' .crlf-orig-$branch.txt | tr '\n' ' ' | sed 's/[ ]*$//' | =
+tr -d '\n' >.crlf-subject-$branch.txt &&
+-	{ grep 'Body' .crlf-message-$branch.txt >.crlf-body-$branch.txt || true;=
+ } &&
++	grep 'Body' .crlf-orig-$branch.txt | append_cr >.crlf-body-$branch.txt &=
+&
+ 	LIB_CRLF_BRANCHES=3D"${LIB_CRLF_BRANCHES} ${branch}" &&
+ 	test_tick &&
+ 	hash=3D$(git commit-tree HEAD^{tree} -p HEAD -F .crlf-message-${branch}.=
+txt) &&
+=2D-
+2.38.1.windows.1
