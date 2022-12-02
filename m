@@ -2,88 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D707CC4332F
-	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 01:48:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35984C4332F
+	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 01:52:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231542AbiLBBsF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 1 Dec 2022 20:48:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39286 "EHLO
+        id S231634AbiLBBw3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 1 Dec 2022 20:52:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231414AbiLBBsE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 1 Dec 2022 20:48:04 -0500
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1664C89AC3
-        for <git@vger.kernel.org>; Thu,  1 Dec 2022 17:48:04 -0800 (PST)
-Received: by mail-pl1-x62c.google.com with SMTP id g10so3332347plo.11
-        for <git@vger.kernel.org>; Thu, 01 Dec 2022 17:48:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UTH5HQwdEJPgvIT0fpBXRh0z3Mpk8r2nHmip060XAjY=;
-        b=ogR9UbUt53Xl+Fu54kh02FzmsMh6j4dO3KRAMQI/0JoSQEgqZZ5i/pTvBlUK5Tt05h
-         UU86oz6VAlFkh+jteUCD4fmDylfzCLDuJGnlFhwjZHUttlrZZ8kTKG5Ai8DLPRhbkYGT
-         kgvk4QPDxKcgpx2fwPuHD18ksiYi/PSUJLYHhdSwyspOsnov3C6uy3V+G51tkjPJvHTs
-         Iwh7W0/AdMqwkviqTeOugFxoAHyG9jJ0RD4e407tb8Pz0/lwikyM4Ne+bYul4zhRVc2Z
-         14kC5jQzazZAUCZ2jV3y33JTNZgfTrUck+28uMQVeyQC8WO6Me6MWuZR/VPh7ZsYJg+3
-         C7bQ==
+        with ESMTP id S231629AbiLBBw1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 1 Dec 2022 20:52:27 -0500
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF685CE424
+        for <git@vger.kernel.org>; Thu,  1 Dec 2022 17:52:26 -0800 (PST)
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-3876f88d320so35348697b3.6
+        for <git@vger.kernel.org>; Thu, 01 Dec 2022 17:52:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=UTH5HQwdEJPgvIT0fpBXRh0z3Mpk8r2nHmip060XAjY=;
-        b=nkho5Gp/a9wN+ZrNFC12gWNs3YFu66bXM4dy1s20GcRhJRJLr3gphV+mzU0UZTB+hY
-         4GeFo5YuxWUzSCIVFg19U16VlGFypIFXNM+30OLuOhbFJGF56pChVtLCQaHzqDLCw0ZQ
-         uast/l+13ipeYiCx5bu2sfbvnT3Ur8gtfCL4KTxac3kpFxE0wlDHo0OWRHin5VDnE3Fx
-         qGh/QevK7hIlKCxDVWO2f8kNeRQzw7cRC9VTo/1nkUXsbq+pC1V8aJ1yCH8Z5C9S9wf7
-         BBshLK5mLK23ooRyQe/AjKGEPTw9+TkXOCjDqT7BfqTOgQtHVxdQZdBiFdWo5U+h2xhf
-         dcZQ==
-X-Gm-Message-State: ANoB5pmGHuzqxPZjVrmr4975eehMitzxgJP8sd2/nf5haS+E1HCXyxme
-        OJ9+a3Sli/KGV88Z4QDdF9Y=
-X-Google-Smtp-Source: AA0mqf6EpCaFSIk2NXKidVwSPdSnpNbNLb9pBJtmW0ddQLqwe7KTsWu3zB7/4c4JUMUIjWEdyuayDQ==
-X-Received: by 2002:a17:902:ea06:b0:186:abaf:8fe with SMTP id s6-20020a170902ea0600b00186abaf08femr63569813plg.95.1669945683515;
-        Thu, 01 Dec 2022 17:48:03 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id q21-20020aa79835000000b00575b6f8b84esm3877674pfl.26.2022.12.01.17.48.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Dec 2022 17:48:03 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v2 1/8] log tests: don't use "exit 1" outside a sub-shell
-References: <cover-0.6-00000000000-20220721T064349Z-avarab@gmail.com>
-        <cover-v2-0.8-00000000000-20221202T000227Z-avarab@gmail.com>
-        <patch-v2-1.8-7c9f8d2830f-20221202T000227Z-avarab@gmail.com>
-        <CAPig+cQK8BRU0u0g+jAkyJaqSamYBynJ6s00_6H2beb6gXaRDA@mail.gmail.com>
-Date:   Fri, 02 Dec 2022 10:48:02 +0900
-In-Reply-To: <CAPig+cQK8BRU0u0g+jAkyJaqSamYBynJ6s00_6H2beb6gXaRDA@mail.gmail.com>
-        (Eric Sunshine's message of "Thu, 1 Dec 2022 20:02:14 -0500")
-Message-ID: <xmqqwn7apodp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Z60bZmttCiz+Ht7BDEFGff+hqfXM2516Q4uwJJ1h7xQ=;
+        b=ot9/IJcgk1wz0S/zwmqoJiUJc52F0iULzjVJ/N4+4aeYjNRz/2IrsEDW65FypNlApf
+         ZHXZblkk42s35vO8ZgoqmrPKGMkMkhP4K4xfUlLRoiczy0h5xm1KNLokRzOCEoMWgRhb
+         XVgGZyIU3yW4gTKmvqIICw+M3/zp5NqnZGqjy/ozXPHRe0XLfwgne3Qh95G/RvqcRzuH
+         0AO/gqGEFxBb7hQNg1/+c/wuYRpY8RTgCe3vZhACaejusmuAETYXiDa6PbgID6Hfc7oh
+         p35JPS7Vb71JelSou18lflkZEN8XWnrVxUePR95jHG+Qfg72Pfd1U178ZCqJbD3ZU7YA
+         ya7g==
+X-Gm-Message-State: ANoB5pm4dPdbP2arwVVm18WnTobnf2jIViuduHo9AREiovdVqASqiGyF
+        wauoWd7E9A8YDzPsYTEesqCX8ZW7bT0rykyYgkk=
+X-Google-Smtp-Source: AA0mqf6pcjWnoMsm+T/k7s7QTqgW91JLqk2fj8/udTZN1CwWidlNyWkGn59J5RZbhkDpCf/ukdUZI152qk9RfYqHRGQ=
+X-Received: by 2002:a81:4a09:0:b0:38e:b5bc:e996 with SMTP id
+ x9-20020a814a09000000b0038eb5bce996mr66962845ywa.493.1669945946072; Thu, 01
+ Dec 2022 17:52:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover-0.6-00000000000-20220721T064349Z-avarab@gmail.com>
+ <cover-v2-0.8-00000000000-20221202T000227Z-avarab@gmail.com>
+ <patch-v2-4.8-c36060934a6-20221202T000227Z-avarab@gmail.com>
+ <CAPig+cTfx4QYBdtSomPRM+BpW+3ELqaQxD7okKhXzykVkyH9NA@mail.gmail.com> <CAPig+cSgnhzFCUVTQCcTKJK+2qVOpdB2R-Vq1DjqspDJudom4w@mail.gmail.com>
+In-Reply-To: <CAPig+cSgnhzFCUVTQCcTKJK+2qVOpdB2R-Vq1DjqspDJudom4w@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 1 Dec 2022 20:52:14 -0500
+Message-ID: <CAPig+cROyCWrweskbUoxjA9ziHPqUR++KgJ9ViTKwkPhz-J3QQ@mail.gmail.com>
+Subject: Re: [PATCH v2 4/8] test-lib-functions: add and use test_cmp_cmd
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
->>                 git show -s --pretty=oneline "$r" >raw &&
->> -               cat raw | lf_to_nul || exit 1
->> +               cat raw | lf_to_nul || return 1
->>         done >expect &&
+On Thu, Dec 1, 2022 at 8:45 PM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> But, even that doesn't
+> seem to buy much. The vast majority of cases where you've converted:
 >
-> Using `return 1` here is "obviously correct" since this code is not
-> inside a subshell. Furthermore, the exit code of the for-loop itself
-> is not being lost down a pipe, so `return 1` is indeed an appropriate
-> way to signal failure. Good.
+>     test "$dir" = "$(test-tool path-utils real_path $dir2)" &&
+>
+> to:
+>
+>     test_cmp_cmd "$dir" test-tool path-utils real_path $dir2 &&
+>
+> could just have easily become:
+>
+>     echo "$dir" >expect &&
+>     test_cmp test-tool path-utils real_path $dir2 &&
+>
+> which isn't bad at all, even if it is one line longer, and it is
+> idiomatic in this test suite.
 
-"return 1" is obvious and safe correction.  I have to wonder if
-test_expect_success can be taught to be smarter to intercept "exit"
-so we do not have to bo so careful, but that would be a much more
-involved change to the lower-level of test framework.
+I can't count. Of course, I meant:
 
+     echo "$dir" >expect &&
+     test-tool path-utils real_path $dir2 >actual &&
+     test_cmp expect actual &&
+
+which is two extra lines.
