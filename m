@@ -2,234 +2,238 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ABA00C4321E
-	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 14:24:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D8CAC47088
+	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 15:00:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232664AbiLBOYh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Dec 2022 09:24:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54728 "EHLO
+        id S233540AbiLBPAp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Dec 2022 10:00:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbiLBOYg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Dec 2022 09:24:36 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5455DC7730
-        for <git@vger.kernel.org>; Fri,  2 Dec 2022 06:24:35 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id m19so3640682wms.5
-        for <git@vger.kernel.org>; Fri, 02 Dec 2022 06:24:35 -0800 (PST)
+        with ESMTP id S232923AbiLBPAk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Dec 2022 10:00:40 -0500
+Received: from mail-qv1-xf32.google.com (mail-qv1-xf32.google.com [IPv6:2607:f8b0:4864:20::f32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C06EE2573
+        for <git@vger.kernel.org>; Fri,  2 Dec 2022 07:00:37 -0800 (PST)
+Received: by mail-qv1-xf32.google.com with SMTP id d13so3557874qvj.8
+        for <git@vger.kernel.org>; Fri, 02 Dec 2022 07:00:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=sRfGL/3RpF2IAYFknPk3eefJnSp+xuuML5GPkGyj074=;
-        b=N0MO0brMVQQmhTUCKXeAUr8L/XZn0iDeaggU03AOHk/pq4kC6hp8vWYYh2Hjqbnbzj
-         Zrq0O9bjnieiD9BpibXOf9/a4vz4nr3CL3kA47KFGZLvBbSku+ONAL03wqioHawJEWvY
-         liOkJd2lY1VYuotvV+DasL64sbCDkKzXRQ0clQqHuHnyg5X5VQm2TKS5dGajZcRxfPmt
-         pde2OdxbPI9giMiGYJ1PDtE36h24SOFcuuj0mYbY9FuZnhJLF23wuHhwJ+L1VDaA34G9
-         bnr2w4AofyT+Z6xIwDQeTmanXoApnhAAlMcXvdjDzOFpTGnZmRJ1c0+Q0E1c7zL71TPP
-         25dQ==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Js0iwRy4F6CJL8Lz2/n5NLV0ovPGzjIcWqqwphJ3EB0=;
+        b=itoddwNnjNFfN0CtWbPstQjEvbcXkbKunKF9PH8Exn3EeIg7AXqQ3DOD2eMv1CHmRH
+         0LmfrZTcWu34o6B8F5rMDaQN+lAZfvwogbBpoePUG1iIT9b7eXpxA1gje3ctjyP8f7Pn
+         QgMXY8Rlbc5sZUavHdU4Dn46Oi142cSt4EuoTxjcwrqT+mi/DR+uXfngXJxwCDJISsP2
+         3qQL5G8wtb8UQTSI+whoBJ4gipwGfn8zTonE2aequx+tK7LHg4Zo+BAH7G4k6lG35rFB
+         zCRgLbv7Sqr/VhMjmF3WLhMGXOGyF02YjSLjrYdOD5mpdSkKE/9jybp1pa2LtiD4Wqhk
+         5rZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sRfGL/3RpF2IAYFknPk3eefJnSp+xuuML5GPkGyj074=;
-        b=KglyhETsXpvBbdE6e7H5ABXFD1ihjBoFjkkR+LKyNrKHvwLfTz1EEFENKxXlG4nkvC
-         WFDIeh632wS5TkOwjwOuOFuvcdGB1//COh4aphb4yeTsYfmCbXvbjF4mGFogEBK6V3d+
-         nrMtl4eO/Mh8b3yACjlOfutaJRw1iM1z1SFGF2IgAUoiG1q5iX0Rqwt50+9+yONDbpKa
-         u1aLfMs3GnCQ1fTNtgqDpbm+WsHcLhjHKnVIv7yzf9jYylntcPdyWAXyGFXD1lwDUj+D
-         vGl3YPbhjih0evkhjK+tG24XyufxmwBA8xC/cnPXnv85KVqLVmMzsRJCrOYuw7mU1alS
-         PZ1Q==
-X-Gm-Message-State: ANoB5pk8Ud1ZTWHsanHsmBxHkgoKNnvOhnpIgk7DfilBahrJbehuNNFj
-        2o0gT4xeNWY98amkvKbhJgPams78txo=
-X-Google-Smtp-Source: AA0mqf6dvu7AmaVFRmdyiVNhHsAQx90ifVLdHTwb7gaZwoThdnvuehiEr9eFfdQyTXhlER8w/X00jA==
-X-Received: by 2002:a05:600c:3393:b0:3cf:81f3:1e4a with SMTP id o19-20020a05600c339300b003cf81f31e4amr57088438wmp.4.1669991073475;
-        Fri, 02 Dec 2022 06:24:33 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w5-20020a5d6805000000b00241ce5d605dsm6898769wru.110.2022.12.02.06.24.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Dec 2022 06:24:33 -0800 (PST)
-Message-Id: <pull.1436.git.1669991072393.gitgitgadget@gmail.com>
-From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 02 Dec 2022 14:24:32 +0000
-Subject: [PATCH] fsmonitor: eliminate call to deprecated FSEventStream
- function
-Fcc:    Sent
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Js0iwRy4F6CJL8Lz2/n5NLV0ovPGzjIcWqqwphJ3EB0=;
+        b=dw9GqAZNiwYvMIiZKPMXFlN6CoyoKaiDe39z7eIR7q12uV2iwKlEPTEE5iS3ZGw5Hx
+         nX9+cGGIQQX0/AqLLyGe2nl7cC0DNd941IVN7ou2elOQ+4Jgpgy/lqOUAbNgzX6Bhf3i
+         scf29K1cebgYglU1hiyfyQhPST5G/IMu8Qc3WPHTRPDV10Wy10Vw3+pZ9PnH1zHyR2OA
+         aZkX0LMKpHuTQ6jY3UDqZ+yfO6+F4u5T5IrZsnPDKXTX8Rzqm8l+plpywK6f66LupmXj
+         ucSAzLOiYHWsQScxkdIAJzXiHqgagI5NRGkfzWEBQLM9b1nhrv0XJcU2/L9Jgb/1tB5c
+         YgqQ==
+X-Gm-Message-State: ANoB5pkDUiU4MDu+6A8G+C6qKw24sI6FSzIezvXZPW11SBvr7PeXU9Uf
+        eeEz7Ojfpgh2NSCrgk4TdjWT
+X-Google-Smtp-Source: AA0mqf7YPswk+QbW+a8IJAlpEN9Ax/Ukh9M++DJTxx+YQYQCkL4jzzkBTAHCUR2ty7l1spLFP8PTXg==
+X-Received: by 2002:a05:6214:4290:b0:4bb:5d3a:bdad with SMTP id og16-20020a056214429000b004bb5d3abdadmr46626111qvb.26.1669993236658;
+        Fri, 02 Dec 2022 07:00:36 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:8051:a31f:2c93:87e9? ([2600:1700:e72:80a0:8051:a31f:2c93:87e9])
+        by smtp.gmail.com with ESMTPSA id bs15-20020a05620a470f00b006fbdeecad51sm5574199qkb.48.2022.12.02.07.00.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Dec 2022 07:00:36 -0800 (PST)
+Message-ID: <4ec12008-620d-c186-38ef-08ea87fec856@github.com>
+Date:   Fri, 2 Dec 2022 10:00:35 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v2 2/9] bundle-uri client: add minimal NOOP client
+Content-Language: en-US
+To:     Victoria Dye <vdye@github.com>,
+        =?UTF-8?Q?=c3=86var_Arnfj=c3=b6r=c3=b0_Bjarmason_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
+        chooglen@google.com, jonathantanmy@google.com, dyroneteng@gmail.com
+References: <pull.1400.git.1667264854.gitgitgadget@gmail.com>
+ <pull.1400.v2.git.1668628302.gitgitgadget@gmail.com>
+ <0d85aef965d62a684b25f388a946abd3c17809fc.1668628303.git.gitgitgadget@gmail.com>
+ <ca410bed-e8d1-415f-5235-b64fe18bed27@github.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <ca410bed-e8d1-415f-5235-b64fe18bed27@github.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Stefan Sundin <git@stefansundin.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Jeff Hostetler <jeffhostetler@github.com>,
-        Jeff Hostetler <jeffhostetler@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff Hostetler <jeffhostetler@github.com>
+On 11/28/2022 7:57 PM, Victoria Dye wrote:
+> Ævar Arnfjörð Bjarmason via GitGitGadget wrote:
+>> From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
+>>  <avarab@gmail.com>
 
-Replace the call to `FSEventStreamScheduleWithRunLoop()` function with
-the suggested `FSEventStreamSetDispatchQueue()` function.
+>> There's a question of what level of encapsulation we should use here,
+>> I've opted to use connect.h in clone.c, but we could also e.g. make
+>> transport_get_remote_refs() invoke this, i.e. make it implicitly get
+>> the bundle-uri list for later steps.
+>
+> I'm not sure I follow what this sentence is saying. Looking at the
+> implementation below [1], you've added a call to
+> 'transport_get_remote_bundle_uri()' in 'clone.c', but that's defined in
+> 'transport.h' (which is already included in 'clone.c'). Why is 'connect.h'
+> needed at all?
 
-The MacOS version of the builtin FSMonitor feature uses the
-`FSEventStreamScheduleWithRunLoop()` function to drive the event loop
-and process FSEvents from the system.  This routine has now been
-deprecated by Apple.  The MacOS 13 (Ventana) compiler tool chain now
-generates a warning when compiling calls to this function.  In
-DEVELOPER=1 mode, this now causes a compile error.
+It's not. Good catch!
 
-The `FSEventStreamSetDispatchQueue()` function is conceptually similar
-and is the suggested replacement.  However, there are some subtle
-thread-related differences.
+>> This approach means that we don't "support" this in "git fetch" for
+>> now. I'm starting with the case of initial clones, although as noted
+>> in preceding commits to the protocol documentation nothing about this
+>> approach precludes getting bundles on incremental fetches.
+>
+> This explanation seems more complicated than necessary. I think it's
+> sufficient to say "The no-op client is initially used only in 'clone' to
+> test the basic functionality. The bundle URI client will be integrated into
+> fetch, pull, etc. in later patches".
 
-Previously, the event stream would be processed by the
-`fsm_listen__loop()` thread while it was in the `CFRunLoopRun()`
-method.  (Conceptually, this was a blocking call on the lifetime of
-the event stream where our thread drove the event loop and individual
-events were handled by the `fsevent_callback()`.)
+Definitely can be reworded. Specifically, fetches need more functionality
+(coming in part V) before there is value in that integration.
 
-With the change, a "dispatch queue" is created and FSEvents will be
-processed by a hidden queue-related thread (that calls the
-`fsevent_callback()` on our behalf).  Our `fsm_listen__loop()` thread
-maintains the original blocking model by waiting on a mutex/condition
-variable pair while the hidden thread does all of the work.
+>> For the t5732-protocol-v2-bundle-uri-http.sh it's not easy to set
+>> environment variables for git-upload-pack (it's started by Apache), so
+>> let's skip the test under T5730_HTTP, and add unused T5730_{FILE,GIT}
+>> prerequisites for consistency and future use.
+>
+> "skip the test" doesn't explain *which* test is skipped (and it doesn't look
+> like you skip all of them). I think you're referring to "bad client with
+> $T5730_PROTOCOL:// using protocol v2" specifically?
 
-Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
----
-    fsmonitor: eliminate call to deprecated FSEventStream function
-    
-    This patch replaces the call to the now deprecated
-    FSEventStreamScheduleWithRunLoop() function with
-    FSEventStreamSetDispatchQueue() as suggested by the compiler warning in
-    the MacOS version of FSMonitor.
-    
-    I have tested this on MacOS 13 on my Intel and M1 laptops. And it has
-    passed all tests on the GGG CI builds. However, I don't have access to
-    an older version of MacOS anymore. The docs say that this new (to us)
-    function has been available since 10.6, so we should be OK using it on
-    older versions of MacOS, but I cannot confirm that.
+Will make the specific test to skip more clear.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1436%2Fjeffhostetler%2Ffsmonitor-macos-dispatch-queue-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1436/jeffhostetler/fsmonitor-macos-dispatch-queue-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1436
+>> diff --git a/bundle-uri.c b/bundle-uri.c
+>> index 32022595964..2201b604b11 100644
+>> --- a/bundle-uri.c
+>> +++ b/bundle-uri.c
+>> @@ -571,6 +571,10 @@ int bundle_uri_advertise(struct repository *r, struct strbuf *value)
+>>  {
+>>  	static int advertise_bundle_uri = -1;
+>>
+>> +	if (value &&
+>> +	    git_env_bool("GIT_TEST_BUNDLE_URI_UNKNOWN_CAPABILITY_VALUE", 0))
+>> +		strbuf_addstr(value, "test-unknown-capability-value");
+>
+> It looks like 'GIT_TEST_BUNDLE_URI_UNKNOWN_CAPABILITY_VALUE' is being used
+> to "mock" server responses to test certain behavior on the client side. I'm
+> somewhat uncomfortable with how this mixes test-specific code paths with
+> application code, and AFAICT nothing similar is done for other
+> advertise/command functions in protocol v2. Is there a way to set up tests
+> to intercept the client requests and customize the response?
 
- compat/fsmonitor/fsm-darwin-gcc.h    |  4 +---
- compat/fsmonitor/fsm-listen-darwin.c | 35 +++++++++++++++++++---------
- 2 files changed, 25 insertions(+), 14 deletions(-)
+I'm going to investigate how we can test similar functionality within the
+test-tool code instead, if possible.
 
-diff --git a/compat/fsmonitor/fsm-darwin-gcc.h b/compat/fsmonitor/fsm-darwin-gcc.h
-index 1c75c3d48e7..3496e29b3a1 100644
---- a/compat/fsmonitor/fsm-darwin-gcc.h
-+++ b/compat/fsmonitor/fsm-darwin-gcc.h
-@@ -80,9 +80,7 @@ void CFRunLoopRun(void);
- void CFRunLoopStop(CFRunLoopRef run_loop);
- CFRunLoopRef CFRunLoopGetCurrent(void);
- extern CFStringRef kCFRunLoopDefaultMode;
--void FSEventStreamScheduleWithRunLoop(FSEventStreamRef stream,
--				      CFRunLoopRef run_loop,
--				      CFStringRef run_loop_mode);
-+void FSEventStreamSetDispatchQueue(FSEventStreamRef stream, dispatch_queue_t q);
- unsigned char FSEventStreamStart(FSEventStreamRef stream);
- void FSEventStreamStop(FSEventStreamRef stream);
- void FSEventStreamInvalidate(FSEventStreamRef stream);
-diff --git a/compat/fsmonitor/fsm-listen-darwin.c b/compat/fsmonitor/fsm-listen-darwin.c
-index cc9af1e3cb3..97a55a6f0a4 100644
---- a/compat/fsmonitor/fsm-listen-darwin.c
-+++ b/compat/fsmonitor/fsm-listen-darwin.c
-@@ -1,4 +1,5 @@
- #ifndef __clang__
-+#include <dispatch/dispatch.h>
- #include "fsm-darwin-gcc.h"
- #else
- #include <CoreFoundation/CoreFoundation.h>
-@@ -38,7 +39,9 @@ struct fsm_listen_data
- 
- 	FSEventStreamRef stream;
- 
--	CFRunLoopRef rl;
-+	dispatch_queue_t dq;
-+	pthread_cond_t dq_finished;
-+	pthread_mutex_t dq_lock;
- 
- 	enum shutdown_style {
- 		SHUTDOWN_EVENT = 0,
-@@ -379,8 +382,11 @@ force_shutdown:
- 	fsmonitor_batch__free_list(batch);
- 	string_list_clear(&cookie_list, 0);
- 
-+	pthread_mutex_lock(&data->dq_lock);
- 	data->shutdown_style = FORCE_SHUTDOWN;
--	CFRunLoopStop(data->rl);
-+	pthread_cond_broadcast(&data->dq_finished);
-+	pthread_mutex_unlock(&data->dq_lock);
-+
- 	strbuf_release(&tmp);
- 	return;
- }
-@@ -441,10 +447,6 @@ int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
- 	if (!data->stream)
- 		goto failed;
- 
--	/*
--	 * `data->rl` needs to be set inside the listener thread.
--	 */
--
- 	return 0;
- 
- failed:
-@@ -471,6 +473,11 @@ void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
- 		FSEventStreamRelease(data->stream);
- 	}
- 
-+	if (data->dq)
-+		dispatch_release(data->dq);
-+	pthread_cond_destroy(&data->dq_finished);
-+	pthread_mutex_destroy(&data->dq_lock);
-+
- 	FREE_AND_NULL(state->listen_data);
- }
- 
-@@ -479,9 +486,11 @@ void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
- 	struct fsm_listen_data *data;
- 
- 	data = state->listen_data;
--	data->shutdown_style = SHUTDOWN_EVENT;
- 
--	CFRunLoopStop(data->rl);
-+	pthread_mutex_lock(&data->dq_lock);
-+	data->shutdown_style = SHUTDOWN_EVENT;
-+	pthread_cond_broadcast(&data->dq_finished);
-+	pthread_mutex_unlock(&data->dq_lock);
- }
- 
- void fsm_listen__loop(struct fsmonitor_daemon_state *state)
-@@ -490,9 +499,11 @@ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
- 
- 	data = state->listen_data;
- 
--	data->rl = CFRunLoopGetCurrent();
-+	pthread_mutex_init(&data->dq_lock, NULL);
-+	pthread_cond_init(&data->dq_finished, NULL);
-+	data->dq = dispatch_queue_create("FSMonitor", NULL);
- 
--	FSEventStreamScheduleWithRunLoop(data->stream, data->rl, kCFRunLoopDefaultMode);
-+	FSEventStreamSetDispatchQueue(data->stream, data->dq);
- 	data->stream_scheduled = 1;
- 
- 	if (!FSEventStreamStart(data->stream)) {
-@@ -501,7 +512,9 @@ void fsm_listen__loop(struct fsmonitor_daemon_state *state)
- 	}
- 	data->stream_started = 1;
- 
--	CFRunLoopRun();
-+	pthread_mutex_lock(&data->dq_lock);
-+	pthread_cond_wait(&data->dq_finished, &data->dq_lock);
-+	pthread_mutex_unlock(&data->dq_lock);
- 
- 	switch (data->shutdown_style) {
- 	case FORCE_ERROR_STOP:
+>> +int get_remote_bundle_uri(int fd_out, struct packet_reader *reader,
+>> +			  struct bundle_list *bundles, int stateless_rpc)
+>> +{
+>> +	int line_nr = 1;
+>> +
+>> +	/* Assert bundle-uri support */
+>> +	server_supports_v2("bundle-uri", 1);
+>> +
+>> +	/* (Re-)send capabilities */
+>> +	send_capabilities(fd_out, reader);
+>> +
+>> +	/* Send command */
+>> +	packet_write_fmt(fd_out, "command=bundle-uri\n");
+>> +	packet_delim(fd_out);
+>> +
+>> +	/* Send options */
+>> +	if (git_env_bool("GIT_TEST_PROTOCOL_BAD_BUNDLE_URI", 0))
+>> +		packet_write_fmt(fd_out, "test-bad-client\n");
+>
+> Same comment as on 'GIT_TEST_BUNDLE_URI_UNKNOWN_CAPABILITY_VALUE'. There's
+> no precedent that I can find for a test variable like this in 'connect.c', and
+> "in the middle of client code" doesn't seem like an ideal place for it.
+>
+> If there really isn't another way of doing this, could the addition of these
+> 'GIT_TEST' variables and their associated tests be split out into a
+> dedicated commit? That would at least separate the test code paths from the
+> application code in the commit history.
 
-base-commit: 7452749a781d84244ecd08c6f6ca7e5df67dfce8
--- 
-gitgitgadget
+I'll definitely split them out, making this change much more about the
+test boilerplate. In addition, most of the test boilerplate actually works
+without the 'git clone' update, so this can be split into three commits:
+
+1. Create the test infrastructure to check that the server advertises
+   the 'bundle-uri' command appropriately.
+
+2. Implement the basic client that issues and parses the 'bundle-uri'
+   command. Add the request to 'git clone' and add a test that verifies
+   that the client makes the request.
+
+3. Add the extra error condition tests.
+
+>> +++ b/t/lib-t5730-protocol-v2-bundle-uri.sh
+>
+> nit: this set of tests is used in more than just 't5730', so the name is
+> somewhat misleading. It also seems a bit overly-specific to include
+> "protocol-v2" in the filename (the tests themselves mention "protocol v2"
+> when it's relevant). What about something like 'lib-proto-bundle-uri.sh'
+> (using "proto" to mimic 'lib-proto-disable.sh')?
+
+I agree. I think 'lib-bundle-uri-protocol.sh' is a clearer name.
+
+>> +# Poor man's URI escaping. Good enough for the test suite whose trash
+>> +# directory has a space in it. See 93c3fcbe4d4 (git-svn: attempt to
+>> +# mimic SVN 1.7 URL canonicalization, 2012-07-28) for prior art.
+>> +test_uri_escape() {
+>> +	sed 's/ /%20/g'
+>> +}
+>
+> This is a good opportunity to unify on a single implementation rather than
+> to have multiple similar ones floating around. Can this be moved into
+> 'test-lib.sh' (or 'test-lib-functions.sh'?), with 't9119' and 't9120'
+> updated to use the new 'test_uri_escape()'?
+
+Will move, although I was not able to find the use in t9120.
+
+>> +test_expect_success "unknown capability value with $T5730_PROTOCOL:// using protocol v2" '
+>
+> Why is this test only run for the 'file://' transport protocol? And, why
+> isn't it in 'lib-t5730-protocol-v2-bundle-uri.sh'? If nothing else, moving
+> this test to that file (even if it needs to be conditional on a specific
+> protocol) puts the '$T5730_PARENT', '$T5730_BUNDLE_URI_ESCAPED' and
+> '$T5730_URI' variables in scope for better readability.
+
+I think this is one of the tests that doesn't work in HTTP, but could be
+skipped using a prereq if it is placed in the common test script.
+
+I will rethink this test coverage to see if there is a different way to
+check similar behavior without as much insertion into the client/server
+code.
+
+>> +int transport_get_remote_bundle_uri(struct transport *transport)
+>> +{
+>> +	const struct transport_vtable *vtable = transport->vtable;
+>> +
+>> +	/* Check config only once. */
+>> +	if (transport->got_remote_bundle_uri++)
+>> +		return 0;
+>
+> We're only ever going to read the bundle list once per command (or, at least
+> once per 'transport' instance), so if 'transport_get_remote_bundle_uri()'
+> has already been called, we can safely assume the correct results (if any)
+> are in the 'transport' structure.
+
+Yes, although it suffers from a mistake of this form I've seen before:
+got_remote_bundle_uri is a single bit, so this only works every other time.
+I will fix this.
+
+Thanks for the detailed review!
+-Stolee
