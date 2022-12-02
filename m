@@ -2,122 +2,173 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63F7EC4708E
-	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 16:00:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E10AC4708E
+	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 16:04:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233901AbiLBQAn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Dec 2022 11:00:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35080 "EHLO
+        id S233497AbiLBQEw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Dec 2022 11:04:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233793AbiLBQAL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Dec 2022 11:00:11 -0500
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D5538AAC5
-        for <git@vger.kernel.org>; Fri,  2 Dec 2022 08:00:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1669996797; bh=zqY0Sdd6Z4T4SP4j1lA033txyXmfjermUYRXg7b3MVA=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=iLnuSUekbvP2M2W5OZ+cx3wSVBo90kTBcFwUZ+WHhZlPjcwwuLT+ZPxPeIis1QfZD
-         ehxs3MeuQfEss+8uJAGXJcaSZKAutTzy3NZTb4wsd7nklgC+hI4ZfCnLDAPIHHI/He
-         SU7v3xKZuX5QQ3NmbGRhxjH39VIvaqH+uPkH6MkxjNQO/uthP7aHCDb3xiPILpCdX1
-         fQGZzkgicE23yVf2XnwVZ2E/usjhnGGZKp/rlf96zC2npsia1XGxkvbwRqxi9MCl3E
-         9fTly9KkYwD5UIRUmfCYpIqi5HrlMXMOUwl6bBwqtyjF3Bsin26a3AEjRyuL/WGDOC
-         Nf2KwN61FCuvg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.154.159]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1McZnl-1oRGOv49hV-00cauD; Fri, 02
- Dec 2022 16:59:57 +0100
-Message-ID: <674c54d5-2458-5e11-debb-9f88489be089@web.de>
-Date:   Fri, 2 Dec 2022 16:59:56 +0100
+        with ESMTP id S233844AbiLBQEa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Dec 2022 11:04:30 -0500
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FB13D969B
+        for <git@vger.kernel.org>; Fri,  2 Dec 2022 08:03:43 -0800 (PST)
+Received: by mail-io1-xd2f.google.com with SMTP id n21so3335900iod.5
+        for <git@vger.kernel.org>; Fri, 02 Dec 2022 08:03:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=meNr4qk8AKpse1yQj0RxxPi0nwrVp8S0cY1nQnJJ2uU=;
+        b=TohKLEJ1+XTxKvddbQrDBc3p86ICC8P8+uJ5ULm+psS3FlesNJfBbUKa3WUcxAiOEN
+         hDeRN2JhsDiDQB0pxQGq+4FoCXpbwwWqbEoPXSbsrdIQ4Wk+unYgA6qU6ZAhqWhy4ZgY
+         OlzdyjV13yJHZzCMVNK2p07P4JHQ6eG+LWSTxNHc9CjsZc8YSkVXVAF9QVmNSJAwQ0VS
+         xgh6U3zFJRRpAMcpkDpN7DTqejsHXXCF4bEiL8h7klcBzkBXIbbjWCwr18d7vOPHUOcM
+         UNMPCjO6rpQajB57UsClFg9QeV5T1bBNhXW1dDw/p7S+iXuO4L450fib/OnFO2rwn41B
+         GM8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=meNr4qk8AKpse1yQj0RxxPi0nwrVp8S0cY1nQnJJ2uU=;
+        b=zMOUxmFqY+5uOl1XGjmWNDjxq3jHxlKhA2ZPzSJd6WXhzILM5ELzPwZGqzT6OWRKxs
+         OiyeBTIAlHuDRc4DWpBjkaZe6r027pCrbcSskSPtT4YyiL+cS94sxx4JAqI/V5gOJfE+
+         rC7S7dUFfcZl/YDfADR8LSAGkqJlJWhyLkK4Iw9e1n7Zq9ECiHXK72cojc8Pf2/gYnZd
+         s3euTbvf7+1OJ3RIooS91XIqxXi0W6kjWCFyjuzkX/axzoXcIcb+XEPYYcUtD2UDrkSR
+         MlYCwmGgc/pKpIsU54gaWbUd0NKjVbcNtAik4UXPfSjdedz2sZN7lI0IqstUhYu3EPum
+         S9og==
+X-Gm-Message-State: ANoB5pmBdUBjHTs+txQNdYIoIeYElZmGxwaSLFIn2g5Fu7hOOHDpfIC2
+        p4aLUuk0/3w0nzQR4BAALsQj
+X-Google-Smtp-Source: AA0mqf4+q3R343Xk/87LR2NqzFxZTbGDav3mzfep4XVCa08wbPD/Ixb3i4WAKw5aFjsmIus1KxKnqg==
+X-Received: by 2002:a02:9141:0:b0:389:f4de:f5cf with SMTP id b1-20020a029141000000b00389f4def5cfmr7670630jag.43.1669997022618;
+        Fri, 02 Dec 2022 08:03:42 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:8051:a31f:2c93:87e9? ([2600:1700:e72:80a0:8051:a31f:2c93:87e9])
+        by smtp.gmail.com with ESMTPSA id s8-20020a92d908000000b00302f8863878sm2571733iln.24.2022.12.02.08.03.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Dec 2022 08:03:42 -0800 (PST)
+Message-ID: <7000a8f3-9b80-75e9-3d36-36982ef5dbb3@github.com>
+Date:   Fri, 2 Dec 2022 11:03:40 -0500
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.5.0
-Subject: Re: [PATCH v3 4/8] t/lib-patch-mode.sh: fix ignored exit codes
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v2 7/9] bundle-uri: allow relative URLs in bundle lists
 Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+To:     Victoria Dye <vdye@github.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Torsten_B=c3=b6gershause?= =?UTF-8?Q?n?= 
-        <tboegi@web.de>
-References: <cover-v2-0.8-00000000000-20221202T000227Z-avarab@gmail.com>
- <cover-v3-0.8-00000000000-20221202T114733Z-avarab@gmail.com>
- <patch-v3-4.8-c080899dd5f-20221202T114733Z-avarab@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <patch-v3-4.8-c080899dd5f-20221202T114733Z-avarab@gmail.com>
+Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
+        chooglen@google.com, jonathantanmy@google.com, dyroneteng@gmail.com
+References: <pull.1400.git.1667264854.gitgitgadget@gmail.com>
+ <pull.1400.v2.git.1668628302.gitgitgadget@gmail.com>
+ <186e112d821d9a42ffbc3c8b46e24b2b4bb3dfe8.1668628303.git.gitgitgadget@gmail.com>
+ <06e45662-699b-52f9-2fdf-6e621444f446@github.com>
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <06e45662-699b-52f9-2fdf-6e621444f446@github.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:3wG2mV5DML9Ec6A6jNvOma+j0xGC8AsEL1yh6rc9UrgzPDr4UUO
- 93z0MlBH1eRhuS+XwVxdA1bv3tAEZ7oMfUJ+7WXPRx/BTEVN2buKiTFArnIzxxBdOsWwAHd
- CvUGUHNVvFTSBAxT2wHBIOJSM8x+c4D8aCeoeycvl7RVVC1dGqWqDvucKFZPcxYBIVvOAqH
- 54QEMpcAYNURlGymgJ5YQ==
-UI-OutboundReport: notjunk:1;M01:P0:LttiaQdAYhU=;Tb8Ir46tg0vxdQpg22nYhl2xcj9
- Iocp5Ais92BxVnWHiGF8BXVNJ9z6SFQJGwWZMq7eOmwrjYtYM38/oIiS0rky6bEjahw6WHY1B
- XYfttRIOYZJqnuvX9LgUu0Brwgmzifo7F9vlmC4aBtrzTT5D2WeK0jmIkKl/3lE2joz9SHnk4
- XT6zlYvdb4YBNp5pCs15WOHbUiFRMeyKedT0w/OTnAumjQI0mnFJGAlQVvkpbVyL04p7W3oiB
- ize5FAIUbSZSVz3lvjsfKN1dUwG7KITIoWRn6/HaZ+lS2KpoMo1WfRUFSw2GX8RRrfOhNK/gC
- zBLyDr9fsebiChmVk9ABM0VIjGp413GOVd/vTgB1qOUeJPzQkdSCioPiiJCLqjPqX0OcVpplA
- reAtGw3Iv0Ky8/nh1e1bZEcPto57FLIY8uY9t4rAcJ87zrQsLkJJx0NOXz2ovuIqDu1j1hs5V
- rRfPEDhjnyAzSKV1XtAIQycxm1l9FMPLEPtIEJzI3532BU3ZI6vDRkCoE3NMm8NQxw3pzNGb8
- l+U7SCwbciU0udPANXUtm3TcWEEiXp+6+Eng7HgnoTynzfLKOwlNbXeAbPY81Nd4xvRyh+ER7
- KkcmVCtcOKoKPLBCGVGKgyiEqRnA4t6BlmNbJxSzlgNyVHZjyqN0S/UBrXoE05ig0CeFI9Eac
- 6U1EV9N5w2wSVTP5/Vrq5/wmNDObYa1IAHi4f4Igu5vym7tcOoLVgIlsybEMiNbSeA0h0Ghjf
- FGqBLh+UOBlWL0acXJlbVPmoLj6o7a2cL3meVth5ezuVDY1kd6B7UHDv2Zpy5U5PSSfrjYJe5
- tRnePzOK5tOeSPhhHPbcu/aFOtC9wYppnQ78T43fyorMa7KaTTg+J+S0SMXlLE7rAZL/8WSTK
- Lxeh7v5FSVcQbtlTrtsFPgNY7+w3SqOJjxfODNLz88vhi1pbbMnjwawQ3VGrR9BCL4z1Vbmhw
- GsgZIqlPmKSO+0d8a8LAWKMiq24=
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 02.12.22 um 12:52 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> Fix code added in b319ef70a94 (Add a small patch-mode testing library,
-> 2009-08-13) to use &&-chaining and the newly added "test_cmp_cmd".
-> This avoids losing both the exit code of a "git" and the "cat"
-> processes.
->
-> This fixes cases where we'd have e.g. missed memory leaks under
-> SANITIZE=3Dleak, this code doesn't leak now as far as I can tell, but I
-> discovered it while looking at leaks in related code.
->
-> The "cat _head >expect" here is redundant, we could simply give
-> "_head" to "test_cmp", but let's be consistent in using the "expect"
-> and "actual" names for clarity.
+On 11/28/2022 8:25 PM, Victoria Dye wrote:
+> Derrick Stolee via GitGitGadget wrote:
 
-The code at the bottom uses _head directly, which is fine IMHO, but then
-this sentence should go.
+>> +	if (!list->baseURI) {
+>> +		struct strbuf baseURI = STRBUF_INIT;
+>> +		strbuf_addstr(&baseURI, uri);
+>> +
+>> +		/*
+>> +		 * If the URI does not end with a trailing slash, then
+>> +		 * remove the filename portion of the path. This is
+>> +		 * important for relative URIs.
+>> +		 */
+>> +		strbuf_strip_file_from_path(&baseURI);
+>> +		list->baseURI = strbuf_detach(&baseURI, NULL);
+>
+> Is the 'baseURI' is set to the URI of the first bundle (ordered by hash)? If
+> data is distributed across multiple CDNs, couldn't this be a suboptimal
+> choice? For example, if the first bundle is on 'A.com', but every other
+> bundle is on 'B.org'?
 
+The baseURI is set to one of two things:
+
+1. The URI used for the clone, specifying the way the client connected to
+   the Git server, or
+
+2. The URI used to download the bundle list itself.
+
+This allows the same bundle list file to be distributed to multiple CDNs,
+assuming that the bundles themselves will have the same relative position
+to the list.
+
+>> +	/**
+>> +	 * The baseURI of a bundle_list is used as the base for any
+>> +	 * relative URIs advertised by the bundle list at that location.
+>> +	 *
+>> +	 * When the list is generated from a Git server, then use that
+>> +	 * server's location.
 >
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  t/lib-patch-mode.sh | 11 ++++++++---
->  1 file changed, 8 insertions(+), 3 deletions(-)
+> Hmmm, I think I'm missing something with my earlier comment. I thought the
+> 'uri' argument to 'bundle_uri_parse_config_format()' was an individual
+> bundle's URI? What's the "server's location" in this context?
+
+I can work to make this concept clearer by rewording this comment.
+
+>> @@ -40,6 +40,8 @@ static int cmd__bundle_uri_parse(int argc, const char **argv, enum input_mode mo
+>>
+>>  	init_bundle_list(&list);
+>>
+>> +	list.baseURI = xstrdup("<uri>");
 >
-> diff --git a/t/lib-patch-mode.sh b/t/lib-patch-mode.sh
-> index cfd76bf987b..89ca1f78055 100644
-> --- a/t/lib-patch-mode.sh
-> +++ b/t/lib-patch-mode.sh
-> @@ -29,8 +29,12 @@ set_and_save_state () {
+> Using a hardcoded value here leads to pretty different behavior in
+> 'test-bundle-uri.c' vs. starting with an unset 'list.baseURI' in something
+> like 'clone'. Why does this need to be set to '<uri>' for the tests?
+
+In this part of the test helper, we are not making a connection to a server
+and instead parsing a bundle list file directly. To demonstrate how the
+relative paths work during this parsing, we add a bogus baseURI here so
+we can clearly see where the relative paths were parsed versus using the
+URI as an absolute URI.
+
+
+>> +test_expect_success 'bundle_uri_parse_line(): relative URIs' '
+>> +	cat >in <<-\EOF &&
+>> +	bundle.one.uri=bundle.bdl
+>> +	bundle.two.uri=../bundle.bdl
+>> +	bundle.three.uri=sub/dir/bundle.bdl
+>> +	EOF
+>> +
+>> +	cat >expect <<-\EOF &&
+>> +	[bundle]
+>> +		version = 1
+>> +		mode = all
+>> +	[bundle "one"]
+>> +		uri = <uri>/bundle.bdl
+>> +	[bundle "two"]
+>> +		uri = bundle.bdl
 >
->  # verify_state <path> <expected-worktree-content> <expected-index-conte=
-nt>
->  verify_state () {
-> -	test "$(cat "$1")" =3D "$2" &&
-> -	test "$(git show :"$1")" =3D "$3"
-> +	echo "$2" >expect &&
-> +	test_cmp expect "$1" &&
-> +
-> +	echo "$3" >expect &&
-> +	git show :"$1" >actual &&
-> +	test_cmp expect actual
->  }
+> This seems a little strange, but it looks like '<uri>/../bundle.bdl'
+> normalizes to 'bundle.bdl' because '<uri>' is treated like a regular path
+> element (like a directory).
 >
->  # verify_saved_state <path>
-> @@ -46,5 +50,6 @@ save_head () {
->  }
->
->  verify_saved_head () {
-> -	test "$(cat _head)" =3D "$(git rev-parse HEAD)"
-> +	git rev-parse HEAD >actual &&
-> +	test_cmp _head actual
->  }
+> Out of curiosity, what would happen if 'bundle.two.uri' was
+> '../../bundle.bdl'?
+
+It will fail! The error message is
+
+	"fatal: cannot strip one component off url '.'"
+
+This is disappointing that an erroneous bundle list could cause a 'git
+clone' command to die(), when we want the bundle URI feature to allow the
+clone to continue normally even if the bundle downloads fail. I will mark
+this for #leftoverbits, since it would involve changing the interface for
+chop_last_dir() and relative_url() in remote.c.
+
+At minimum, I will document this with a test case.
+
+Thanks,
+-Stolee
