@@ -2,69 +2,66 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 44321C4332F
-	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 18:06:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0BB1DC4332F
+	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 18:16:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234029AbiLBSGR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Dec 2022 13:06:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34246 "EHLO
+        id S234362AbiLBSQb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Dec 2022 13:16:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233794AbiLBSGP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Dec 2022 13:06:15 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2C998E590
-        for <git@vger.kernel.org>; Fri,  2 Dec 2022 10:06:14 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id gu23so13288042ejb.10
-        for <git@vger.kernel.org>; Fri, 02 Dec 2022 10:06:14 -0800 (PST)
+        with ESMTP id S234316AbiLBSQ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Dec 2022 13:16:28 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E583E8E1A
+        for <git@vger.kernel.org>; Fri,  2 Dec 2022 10:16:22 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id o13so13412070ejm.1
+        for <git@vger.kernel.org>; Fri, 02 Dec 2022 10:16:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=xLR/ozYMNsKPPGrG/HsOkia/GYbMFnQV3OqOTe6mDMI=;
-        b=ktt+fVLyBQu16QSncEZLDhcenCKJCMM9sw4kZ7JOJ66yyNLveDhPI2iiF/Mj+57T5L
-         W1EHaFtogIWBdxVY8ipwiwzgdH4QWRs/1hb1ytO9k4LL40JS35l2Te7/v32bXGXNaa4B
-         xYPHQuLys0L6uKOs959dztgg/bv41Jetyqd9/KqaH86aI6s6ZzvR2rWuhMrF77gwAzg3
-         LIAUZr0+wH526fujrKbm1osQXYFG5yA1mzT44ygToZ8QTLyw+ue+QBaPlj9GDxLRzQNY
-         HGvSEgj96l4S4MMd5ZVcXB6fPxXFh/652HvVahDrQu/+8+ul2Sg+iGacf4WfMF0wKMet
-         2qTA==
+        bh=IAUuOnfxnBrquJ9Kyink9J0c2vHNxRpAqxmI3clHCR0=;
+        b=gp2Xr9c65o+dwgR4DDkEmA3tsPJFLuXkUl/9sL9sRrIiy3aVB057vM9cmuQ4yc+JdL
+         DTEX3nLtB8oZOK6cQjPgOKHabq1gc4SAL2GoEQ6JCf+1FLXDJv1dRo2HhIXmgg7DtGL+
+         2wGsWCeX6DQIDWcxPxbkPQVOoyOH682ESyWBscLPAKuI6UhgEw2ULqagQF0pY6IvdtZO
+         u2rhC20aGjZ9rUHnw3LC5faDHdu9V/cSXqHCFlrK7BSQp0vLuW9Ynj6cg9I4mgk/QVzI
+         OgkAkkp/VqF3V96jlYXtHUYpNDhaDqm+RZZGA0qDAQGa1mZNZpu9P+vgV0YHGdgJ8KqG
+         mvew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xLR/ozYMNsKPPGrG/HsOkia/GYbMFnQV3OqOTe6mDMI=;
-        b=SYzqcCeXo1xtdc/XLjvBbzk2P+kP/kou5F6NQlMKORrojdk8ZCCQ7bVeFYiPbb9chb
-         lWvIzZrxHWkR3lRZccULwU+Lls0XSTNHP6yqYajGdVH3YFA18EVyYdBrAMgu07o9tnbe
-         9fvgyjla/mhriCSkVdRrl+l+AusejqW4z8nm/lnuMmetravxH/qpgdd5O/R3DDNqToqs
-         x19YxcyXPcWFLS/28Jacvgr8sS3UZ/CW/pQmz3nwL9VLOM7tepPmbWODgTEcwBkF6aDg
-         6XuJnRU3Ar5nFRN/qAY7EL0cYtqYh5xz6zFia1s7cDfYv4YXXBYjuxJfNatK/fhRxjqT
-         fCig==
-X-Gm-Message-State: ANoB5pnRCKgmNlPiX4jCg/7KgBDOKM5eakKMuo356RIugABeenO1KbxQ
-        TH3nOsdR9xcumNHo92+rVTaKRImWfmQ2dg==
-X-Google-Smtp-Source: AA0mqf5m+PvMISfzqAyp5CO0BCXAeBz6yg5YT35yWJ5J9OQ+hNIwHBZJc5UpLW9VsB3e8+j/rKpG+A==
-X-Received: by 2002:a17:907:365:b0:7be:a7f5:28a0 with SMTP id rs5-20020a170907036500b007bea7f528a0mr25779367ejb.421.1670004372790;
-        Fri, 02 Dec 2022 10:06:12 -0800 (PST)
+        bh=IAUuOnfxnBrquJ9Kyink9J0c2vHNxRpAqxmI3clHCR0=;
+        b=uq1FnWiagDo65MvKR6R4XfoS1FVpyglu3zcxkImMOpp+4pX7JhX/OstegMfbnpdip4
+         ooDT+1pblY/FsOSABi88N092TvvQsYaBI2sKrKp9SGqiLtKgRq5FBxx8pbN8qyJQCrYy
+         ehDyZmG1QLremTNINFsYnXFLYuZVuu7CZsYHKHZxRF+6hVFxizYEbL/TEqMyYmhtsHYt
+         +flvJuMvyiIV8lGecs+L5HyeDpwLE3OQ79zfTLgeYKZF6BG20LZwkWq61HwE8EFX8NnR
+         SndiGeiiIufjdgnwz6+C+gty9oMbtmi1ONBt5f2752j/21pDeIwg5x1VqNPlcTUiHh9A
+         0IBQ==
+X-Gm-Message-State: ANoB5pl6HsCs5LJRIN/G2d5U4a6TcfcfwZOhFeRIi7sU6IKtjWnd2FaO
+        Gu5jtSlZPb9qJg9+MmjB69xf0grzuxg0BQ==
+X-Google-Smtp-Source: AA0mqf5qBJmm1zlxU889YLhN989j19GIXI+3JLhGQCGKJQK7GHputxv3jC2Qx3ifjbFv6DyWligGGA==
+X-Received: by 2002:a17:907:8b06:b0:7c0:8e3a:9a54 with SMTP id sz6-20020a1709078b0600b007c08e3a9a54mr14354518ejc.619.1670004980548;
+        Fri, 02 Dec 2022 10:16:20 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id op4-20020a170906bce400b0078df3b4464fsm3358734ejb.19.2022.12.02.10.06.11
+        by smtp.gmail.com with ESMTPSA id ky20-20020a170907779400b007c0ac4e6b6esm2447366ejc.143.2022.12.02.10.16.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Dec 2022 10:06:11 -0800 (PST)
+        Fri, 02 Dec 2022 10:16:19 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1p1AQM-002nee-0L;
-        Fri, 02 Dec 2022 19:06:10 +0100
+        id 1p1AaB-002nxp-00;
+        Fri, 02 Dec 2022 19:16:19 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Stefan Sundin <git@stefansundin.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Jeff Hostetler <jeffhostetler@github.com>
-Subject: Re: [PATCH] fsmonitor: eliminate call to deprecated FSEventStream
- function
-Date:   Fri, 02 Dec 2022 19:02:13 +0100
-References: <pull.1436.git.1669991072393.gitgitgadget@gmail.com>
+To:     Rose via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Seija <doremylover123@gmail.com>
+Subject: Re: [PATCH] maintenance: compare output of pthread functions for
+ inequality with 0
+Date:   Fri, 02 Dec 2022 19:10:57 +0100
+References: <pull.1389.git.git.1670000578395.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <pull.1436.git.1669991072393.gitgitgadget@gmail.com>
-Message-ID: <221202.86o7slfzot.gmgdl@evledraar.gmail.com>
+In-reply-to: <pull.1389.git.git.1670000578395.gitgitgadget@gmail.com>
+Message-ID: <221202.86k039fz7x.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -72,51 +69,99 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Dec 02 2022, Jeff Hostetler via GitGitGadget wrote:
+On Fri, Dec 02 2022, Rose via GitGitGadget wrote:
 
-> From: Jeff Hostetler <jeffhostetler@github.com>
+> From: Seija <doremylover123@gmail.com>
 >
-> Replace the call to `FSEventStreamScheduleWithRunLoop()` function with
-> the suggested `FSEventStreamSetDispatchQueue()` function.
+> The documentation for pthread_create and pthread_sigmask state that:
 >
-> The MacOS version of the builtin FSMonitor feature uses the
-> `FSEventStreamScheduleWithRunLoop()` function to drive the event loop
-> and process FSEvents from the system.  This routine has now been
-> deprecated by Apple.  The MacOS 13 (Ventana) compiler tool chain now
-> generates a warning when compiling calls to this function.  In
-> DEVELOPER=1 mode, this now causes a compile error.
+> "On success, pthread_create() returns 0;
+> on error, it returns an error number"
 >
-> The `FSEventStreamSetDispatchQueue()` function is conceptually similar
-> and is the suggested replacement.  However, there are some subtle
-> thread-related differences.
+> As such, we ought to check for an error
+> by seeing if the output is not 0.
 >
-> Previously, the event stream would be processed by the
-> `fsm_listen__loop()` thread while it was in the `CFRunLoopRun()`
-> method.  (Conceptually, this was a blocking call on the lifetime of
-> the event stream where our thread drove the event loop and individual
-> events were handled by the `fsevent_callback()`.)
+> Checking for "less than" is a mistake
+> as the error code numbers can be greater than 0.
 >
-> With the change, a "dispatch queue" is created and FSEvents will be
-> processed by a hidden queue-related thread (that calls the
-> `fsevent_callback()` on our behalf).  Our `fsm_listen__loop()` thread
-> maintains the original blocking model by waiting on a mutex/condition
-> variable pair while the hidden thread does all of the work.
+> Signed-off-by: Seija <doremylover123@gmail.com>
+> ---
+>     maintenance: compare output of pthread functions for inequality with 0
+>     
+>     The documentation for pthread_create and pthread_sigmask state that "On
+>     success, pthread_create() returns 0; on error, it returns an error
+>     number, and the contents of *thread are undefined."
+>     
+>     As such, we ought to check for an error by seeing if the output is not
+>     0, rather than being less than 0, since nothing stops these functions
+>     from returning a positive number.
+>     
+>     Signed-off by: Seija doremylover123@gmail.com
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1389%2FAtariDreams%2Faddress-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1389/AtariDreams/address-v1
+> Pull-Request: https://github.com/git/git/pull/1389
+>
+>  builtin/fsmonitor--daemon.c | 4 ++--
+>  run-command.c               | 2 +-
+>  2 files changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/builtin/fsmonitor--daemon.c b/builtin/fsmonitor--daemon.c
+> index 6f30a4f93a7..52a08bb3b57 100644
+> --- a/builtin/fsmonitor--daemon.c
+> +++ b/builtin/fsmonitor--daemon.c
+> @@ -1209,7 +1209,7 @@ static int fsmonitor_run_daemon_1(struct fsmonitor_daemon_state *state)
+>  	 * events.
+>  	 */
+>  	if (pthread_create(&state->listener_thread, NULL,
+> -			   fsm_listen__thread_proc, state) < 0) {
+> +			   fsm_listen__thread_proc, state)) {
+>  		ipc_server_stop_async(state->ipc_server_data);
+>  		err = error(_("could not start fsmonitor listener thread"));
+>  		goto cleanup;
+> @@ -1220,7 +1220,7 @@ static int fsmonitor_run_daemon_1(struct fsmonitor_daemon_state *state)
+>  	 * Start the health thread to watch over our process.
+>  	 */
+>  	if (pthread_create(&state->health_thread, NULL,
+> -			   fsm_health__thread_proc, state) < 0) {
+> +			   fsm_health__thread_proc, state)) {
+>  		ipc_server_stop_async(state->ipc_server_data);
+>  		err = error(_("could not start fsmonitor health thread"));
+>  		goto cleanup;
+> diff --git a/run-command.c b/run-command.c
+> index 48b9ba6d6f0..756f1839aab 100644
+> --- a/run-command.c
+> +++ b/run-command.c
+> @@ -1019,7 +1019,7 @@ static void *run_thread(void *data)
+>  		sigset_t mask;
+>  		sigemptyset(&mask);
+>  		sigaddset(&mask, SIGPIPE);
+> -		if (pthread_sigmask(SIG_BLOCK, &mask, NULL) < 0) {
+> +		if (pthread_sigmask(SIG_BLOCK, &mask, NULL)) {
+>  			ret = error("unable to block SIGPIPE in async thread");
+>  			return (void *)ret;
+>  		}
+>
+> base-commit: 805265fcf7a737664a8321aaf4a0587b78435184
 
-I just skimmed the code change and didn't see anything out of place, but
-one thing that's missing about this explanation is:
+This looks good to me, and skimming through the rest of the
+pthread_create() it seems the rest of the code in-tree is correct.
 
-Ok, it's deprecated, but when was it introduced? I.e. we now presumably
-have a hard dependency on a newer API released with a newer version of
-OSX?
+But (and especially if you're interested) we really should follow-up
+here and fix the "error()" etc. part of this. After this we have cases
+in-tree where we on failure:
 
-Is it OK that we're going to throw compilation errors on older versions
-that don't have it? What version is that? Is that older or newer than
-our oldest supported OSX version in general, or is the plan to support
-older OSX, but those users would need to compile without fsmonitor?
+ * Call die_errno() (good)
+ * Call die(), error() etc., but with a manual strerror() argument,
+   these should just use the *_errno() helper.
+ * Don't report on the errno at all, e.g. in this case shown here.
 
-Depending on the answers to the above (hopefully in a re-rolled commit
-message): Should we patch the bit in config.mak.uname where we do the
-OSX version detection? I.e. if we're deprecating an older version anyone
-still on it would be much better off with a straight-up "$(error)" from
-the Makefile, rather than running into a compilation error, only to find
-that we've stopped supporting that older version.
+It seems to me that all of these should be using die_errno(),
+error_errno() etc.
+
+Or maybe it's the other way around, and we should not rely on the global
+"errno", but always capture the return value, and give that to
+strerror() (or set "errno = ret", and call {die,error,warning}_errno()).
+
+In any case, some low-hanging #leftoverbits there...
+
