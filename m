@@ -2,158 +2,148 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C4111C4332F
-	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 23:13:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4024FC4332F
+	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 23:14:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233931AbiLBXNB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Dec 2022 18:13:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42836 "EHLO
+        id S234696AbiLBXOI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Dec 2022 18:14:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233308AbiLBXM7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Dec 2022 18:12:59 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63384A3225
-        for <git@vger.kernel.org>; Fri,  2 Dec 2022 15:12:58 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id v8so8366679edi.3
-        for <git@vger.kernel.org>; Fri, 02 Dec 2022 15:12:58 -0800 (PST)
+        with ESMTP id S233947AbiLBXOG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Dec 2022 18:14:06 -0500
+Received: from mail-qv1-xf2d.google.com (mail-qv1-xf2d.google.com [IPv6:2607:f8b0:4864:20::f2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 204229585
+        for <git@vger.kernel.org>; Fri,  2 Dec 2022 15:14:06 -0800 (PST)
+Received: by mail-qv1-xf2d.google.com with SMTP id u10so4424341qvp.4
+        for <git@vger.kernel.org>; Fri, 02 Dec 2022 15:14:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=55kWaTlaVyjwnnQuExwSmSalTAl+zGNJ4RzE5Tus+S0=;
-        b=Arr/YZLe3LssU/x/Dx+yCg3dsl7hfgrzEwhtVR8Uy89WmObiQFaLKM+ksMeQ8+XzUx
-         /pTugPJUZPJRHnqAnIrW8rm65/QFFyhBlovjj7rs1giEBIzSz/x6hZB+n5LTkxG1X0i8
-         smwbQRHJLs8pn1/Oxno4iDlykSEx/p6zQmEM0wYm1ze23dibm5TkIjhCwn+HGWK9SrS9
-         wGl6qlkZNt2nldGz+Pz4UxjrH8GRvqA/wOXAX/xhy4Z5f7WiJz5Dh3zegVdNPIDfuOp9
-         k8ZygiROEoBJB1KSmHj9XsejNfOuYOeWbu1THkzwOxW/fQX14XIlofzl54OewzB8idX7
-         /nLg==
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tYo+OIuWFiq1SsfInKar0UK7W0vrhhC2bZrTMCEFFhQ=;
+        b=l4KIjRMu2+tFnEN5qCHBKYDy/Y8JQAPmLvJEBCfwfxLllOU94I7QTcSwaxFXUQtrNC
+         n2QPPSkk+lX1WFL38PV/xJIv57V3TReu5wuR95fX9EERYg2ChlTtYnOEs8WcCz0bLAV7
+         fjvNuwSFk2WXFXz92vPNudnaUNTulySXOznkOsfR8nDlQcRIDBnf1ngTHaqFdbWPKS71
+         ebJbxv3Tb7NblNjRwo2FPFUuEuiFte1YPjXnO9S7c3RHjcxzoEHaZ3UqEtGF6i7fPFqM
+         xCHuRATfCGUdpjg9pKyFlWo9NQpNiOZ7398ILyP/QC4sQL95Xw+g0/EKLUGWgxR0Ufhs
+         v+VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=55kWaTlaVyjwnnQuExwSmSalTAl+zGNJ4RzE5Tus+S0=;
-        b=XBylUoYDxHCyjvPppjsuH0uIr525Vr6aBnib+1SniDQTySIrQ9Mmey9X0pY8GtIjtN
-         1v++v6yB3G8PwSmo/UKtclp9HHhXHwcHLSMdR4fJYETuGx20ul+mrnhmkFV4ms8PiCsc
-         NshydiJ+jUZ9AUwYx7U9EIoYdJx25OqY1Bl66PKEvgUKXjWfeuI8rz/3DENy2l7uPYGD
-         maXkdJuT1JzHUvOm35jyVIiqcBdvs/BeuHzNT2U//JxD62sS87Qhf5BuKp3EC+oKXk6M
-         ppz12F0rk6Uu6wQ1BzjPmTP4koTd7gMKxNSNilFcNatgQXEb0CpKA3mKKIqCm7i8IbX5
-         hQLw==
-X-Gm-Message-State: ANoB5pme4vgfaHC/FAKtcbdR3CLmPs3FljxZAJP1LPvvDE2C1N7WNyAz
-        eGmVc2ZtgJgywg2xCR1/GMY=
-X-Google-Smtp-Source: AA0mqf52dbdmGcoVZ2++fUUGYsf0yCb74Vlfs2sjByaGgc7vDWXT61simvamPcGReoHzdAt27rZbOQ==
-X-Received: by 2002:a05:6402:1145:b0:46a:d5ee:d150 with SMTP id g5-20020a056402114500b0046ad5eed150mr30478850edw.312.1670022776747;
-        Fri, 02 Dec 2022 15:12:56 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id ky16-20020a170907779000b007c08091ad7esm3482071ejc.208.2022.12.02.15.12.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Dec 2022 15:12:56 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1p1FDD-002whZ-0e;
-        Sat, 03 Dec 2022 00:12:55 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Stefan Sundin <git@stefansundin.com>
-Cc:     Victoria Dye <vdye@github.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?utf-8?Q?Ren?= =?utf-8?Q?=C3=A9?= Scharfe <l.s.r@web.de>,
-        Jeff Hostetler <jeffhostetler@github.com>,
-        Eric DeCosta <edecosta@mathworks.com>
-Subject: Re: [PATCH] fsmonitor: eliminate call to deprecated FSEventStream
- function
-Date:   Sat, 03 Dec 2022 00:02:07 +0100
-References: <pull.1436.git.1669991072393.gitgitgadget@gmail.com>
- <221202.86o7slfzot.gmgdl@evledraar.gmail.com>
- <3e2bd865-3ca5-b0f7-095e-f8b97ec8822c@jeffhostetler.com>
- <221202.867cz9fwnf.gmgdl@evledraar.gmail.com>
- <4711d955-02b2-f599-7f89-b442dd0b6215@github.com>
- <221202.86359xfs5c.gmgdl@evledraar.gmail.com>
- <1b090929-f2da-f075-01d4-458804fc0717@github.com>
- <CAMDaVWGKx3YMuzRvqGTvvcwh1y9CotFtOCpyAzm=QW3YLy5ROg@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <CAMDaVWGKx3YMuzRvqGTvvcwh1y9CotFtOCpyAzm=QW3YLy5ROg@mail.gmail.com>
-Message-ID: <221203.86tu2de6x4.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tYo+OIuWFiq1SsfInKar0UK7W0vrhhC2bZrTMCEFFhQ=;
+        b=qIk9B7F0LgSF+gZb60Tl5x3bw6HaYnyyT+ov0fAYONqiVfFr5TjkrFdfQiPHb5f9z0
+         2dpK7geAJt6DODRmA+z/tg8AX8wdn+sybEQfW7GG0lC25xnARM+ywrB744kDbq/U+Fv8
+         Ia6tA4xVSEGWmIne4fU9ZEgaSkAm1G3jRuJOQwSkV0F/B1Vnl8uyS3/ej1b+ZalrFLCN
+         RDolMxk5dlIgxtI7ZOOO+vXEcGXW4os8oGyjOQhkpFbgXRGBudqKjFGbsALj8JhVBCoN
+         twzPamZe7Gdko6jktZ4NLP8sXhAFiBoptsqq/dq+NxX1Fbpxmtw4rEz5Qg5Rv5OSTt6O
+         xt0g==
+X-Gm-Message-State: ANoB5pnBPFDN/iqPClBZMuU/Mx3hhUSzRpYezJvvxLASApiAOpo1QaNw
+        swZ4MxkMM5INIPgq1uSFE54=
+X-Google-Smtp-Source: AA0mqf4AZ4hCid1c7OTzwx55T12e+GmHLHDJVfhqgY6iRyCuE+bv53OW1f7sk/ZV1wrmSYFTKJryiA==
+X-Received: by 2002:a05:6214:a0b:b0:4c6:f93f:1cfa with SMTP id dw11-20020a0562140a0b00b004c6f93f1cfamr27667136qvb.49.1670022845261;
+        Fri, 02 Dec 2022 15:14:05 -0800 (PST)
+Received: from [192.168.1.128] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id n16-20020ac86750000000b003a50248b89esm4947175qtp.26.2022.12.02.15.14.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 02 Dec 2022 15:14:04 -0800 (PST)
+Subject: Re: [PATCH 2/1] t3920: support CR-eating grep
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Johannes Sixt <j6t@kdbg.org>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <febcfb0a-c410-fb71-cff9-92acfcb269e2@kdbg.org>
+ <cbe88abc-c1fb-cb50-6057-47ff27f7a12d@web.de>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <cd92755f-de16-0df9-075e-2bd5ab0dd4fb@gmail.com>
+Date:   Fri, 2 Dec 2022 18:14:03 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
+In-Reply-To: <cbe88abc-c1fb-cb50-6057-47ff27f7a12d@web.de>
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi René,
 
-On Fri, Dec 02 2022, Stefan Sundin wrote:
+Le 2022-12-02 à 11:51, René Scharfe a écrit :
+> grep(1) converts CRLF line endings to CR on current MinGW:
+> 
+>    $ uname -sr
+>    MINGW64_NT-10.0-22621 3.3.6-341.x86_64
 
-> On Fri, Dec 2, 2022 at 6:24 AM Jeff Hostetler via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
->> The MacOS version of the builtin FSMonitor feature uses the
->> `FSEventStreamScheduleWithRunLoop()` function to drive the event loop
->> and process FSEvents from the system.  This routine has now been
->> deprecated by Apple.  The MacOS 13 (Ventana) compiler tool chain now
->> generates a warning when compiling calls to this function.  In
->> DEVELOPER=3D1 mode, this now causes a compile error.
->
-> Typo here, MacOS 13 is Ventura not Ventana.
->
->
-> On Fri, Dec 2, 2022 at 1:17 PM Victoria Dye <vdye@github.com> wrote:
->> My point is that such a user for this scenario is so unlikely to exist t=
-hat
->> holding up this patch - which provides a real, tangible benefit to
->> developers *right now* - to implement your suggestion or modify the comm=
-it
->> message is, at best, an unnecessary distraction.
->>
->> If, somewhere, there is a user that 1) keeps up-to-date with the latest
->> version of Git, 2) uses FSMonitor, and 3) is working on the sole version=
- of
->> MacOS that was theoretically compatible with FSMonitor before this change
->> but now is not, we can accommodate that once such a need is shown to exi=
-st.
->
-> Looking at config.mak.uname it seems quite easy to keep git working on
-> old MacOS versions by adding a check like =C3=86var suggested.
->
-> Something like this:
->
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -161,12 +161,15 @@ ifeq ($(uname_S),Darwin)
->
->         # The builtin FSMonitor on MacOS builds upon Simple-IPC.  Both re=
-quire
->         # Unix domain sockets and PThreads.
-> +       # FSMonitor on Darwin requires MacOS 10.6 or later.
->         ifndef NO_PTHREADS
->         ifndef NO_UNIX_SOCKETS
-> +       ifeq ($(shell test "`expr "$(uname_R)" : '\([0-9][0-9]*\)\.'`"
-> -ge 10 && echo 1),1)
->         FSMONITOR_DAEMON_BACKEND =3D darwin
->         FSMONITOR_OS_SETTINGS =3D darwin
->         endif
->         endif
-> +       endif
->
->         BASIC_LDFLAGS +=3D -framework CoreServices
->  endif
+I don't really know the conventions in this regards, but for me 
+"MinGW" refers to the port of GCC to Windows. Here it would be more 
+correct to refer to "the Git for Windows flavor of MSYS2" or something
+like this, in my (maybe uninformed) opinion.
 
-That looks reasonable, but just to be clear I'm completely neutral on
-the question of whether it even makes sense to support versions this
-old. I.e. maybe it should just be:
+> 
+>    $ printf 'a\r\n' | hexdump.exe -C
+>    00000000  61 0d 0a                                          |a..|
+>    00000003
+> 
+>    $ printf 'a\r\n' | grep . | hexdump.exe -C
+>    00000000  61 0a                                             |a.|
+>    00000002
+> 
+> Create the intended test file by grepping the original file with LF
+> line endings and adding CRs explicitly.
+> 
+> The missing CRs went unnoticed because test_cmp on MinGW ignores line
+> endings since 4d715ac05c (Windows: a test_cmp that is agnostic to random
+> LF <> CRLF conversions, 2013-10-26). 
 
-	ifeq [some expression detecting older than OSX <=3D10.X]
-	$(error We do not support building on versions this old, sorry...)
-	endif
+Reading that commit's messages, if I understand correctly it's more MSYS2's Bash
+that is the culprit, rather than its grep, no?
 
-> Looking at that file it seems like a lot of care has gone into keeping
-> compatibility with older MacOS versions so in my mind it seems
-> appropriate to continue that legacy, especially since it is so easy.
+> Fix this test anyway to avoid
+> depending on that special test_cmp behavior, especially since this is
+> the only test that needs it.
 
-There's a lot of care for some of it, but some of it's just old build
-definitions covered in cobwebs that nobody cares about anymore :)
+Do you mean the only test in that file, or in the whole Git test suite (which would
+mean after this series we could completely remove the Windows-specific 'test_cmp' ) ?
 
-E.g. there's bits in there to support AIX v1..4, the last v4 came out
-before this millenium, and I v1..3 was in the 1980s. Ditto probably
-SunOS 5.6 and older (which would be *very* conservative),
+> 
+> Piping the output of grep(1) through append_cr has the side-effect of
+> ignoring its return value.  That means we no longer need the explicit
+> "|| true" to support commit messages without a body.
+> 
+> Signed-off-by: René Scharfe <l.s.r@web.de>
+> ---
+>  t/t3920-crlf-messages.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/t/t3920-crlf-messages.sh b/t/t3920-crlf-messages.sh
+> index a58522c163..67fd2345af 100755
+> --- a/t/t3920-crlf-messages.sh
+> +++ b/t/t3920-crlf-messages.sh
+> @@ -12,7 +12,7 @@ create_crlf_ref () {
+>  	cat >.crlf-orig-$branch.txt &&
+>  	cat .crlf-orig-$branch.txt | append_cr >.crlf-message-$branch.txt &&
+>  	grep 'Subject' .crlf-orig-$branch.txt | tr '\n' ' ' | sed 's/[ ]*$//' | tr -d '\n' >.crlf-subject-$branch.txt &&
+> -	{ grep 'Body' .crlf-message-$branch.txt >.crlf-body-$branch.txt || true; } &&
+> +	grep 'Body' .crlf-orig-$branch.txt | append_cr >.crlf-body-$branch.txt &&
+>  	LIB_CRLF_BRANCHES="${LIB_CRLF_BRANCHES} ${branch}" &&
+>  	test_tick &&
+>  	hash=$(git commit-tree HEAD^{tree} -p HEAD -F .crlf-message-${branch}.txt) &&
+> --
+> 2.38.1.windows.1
+> 
+
+apart from the minor things in the commit message, the 3 patches look good to me :) 
+Here is my Acked-by: for all 3 :
+
+Acked-by: Philippe Blain <levraiphilippeblain@gmail.com>
+
+Thanks for detailed messages as always, it definitely went over my radar at the time
+that both 'grep' and  'test_cmp' acted differently on Windows.
+
+Cheers,
+Philippe.
+p.s. I wonder what happened for format-patch to generate these 2/1, 3/1 and 4/1 patch prefixes :P
