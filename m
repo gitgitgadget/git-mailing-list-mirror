@@ -2,118 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45C57C4321E
-	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 11:05:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6AAF9C4321E
+	for <git@archiver.kernel.org>; Fri,  2 Dec 2022 11:28:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232740AbiLBLFn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Dec 2022 06:05:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49794 "EHLO
+        id S233303AbiLBL2s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Dec 2022 06:28:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232433AbiLBLFl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Dec 2022 06:05:41 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1426BC5A1
-        for <git@vger.kernel.org>; Fri,  2 Dec 2022 03:05:39 -0800 (PST)
-Received: (qmail 28058 invoked by uid 109); 2 Dec 2022 11:05:38 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 02 Dec 2022 11:05:38 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3343 invoked by uid 111); 2 Dec 2022 11:05:40 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 02 Dec 2022 06:05:40 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 2 Dec 2022 06:05:38 -0500
-From:   Jeff King <peff@peff.net>
-To:     Bagas Sanjaya <bagasdotme@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Fabrice Fontaine <fontaine.fabrice@gmail.com>
-Subject: Re: [PATCH] git-compat-util: avoid redefining system function names
-Message-ID: <Y4ncAhIqHkckMljb@coredump.intra.peff.net>
-References: <20221125092339.29433-1-bagasdotme@gmail.com>
- <Y4RAr04vS/TOM5uh@coredump.intra.peff.net>
- <Y4fH4rhcSztHwKvK@coredump.intra.peff.net>
- <Y4nN2h4FIYGNjCSI@debian.me>
+        with ESMTP id S233247AbiLBL2p (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Dec 2022 06:28:45 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61CACAA8F1
+        for <git@vger.kernel.org>; Fri,  2 Dec 2022 03:28:42 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id n20so10953866ejh.0
+        for <git@vger.kernel.org>; Fri, 02 Dec 2022 03:28:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+nor9ScFNpoOWp/qQCcSBYil7PEqQXebXeXj59WjtWc=;
+        b=dzBxZH3us4pBhdO1o+kcR1/nb2tjs6rw96ywrtRS4U4HnlQ7atcEAz1VPAHOX6aRmW
+         MrledyYa/CgLa27A5DNh+6vIUD6AuKScX8lr9pfdkD8Tl26vX7tV//oXZCdRKWRZUP6C
+         EjJhPyM2MG906vNvpBOatS4aAn0en5Q0dslnUH+DL9HxFA1oSdD0VZelOptX6vhkDXlg
+         190iKlZ88GFvIKu0yDisJUls7GVXaymMgV/CUVLelonxAhZGsfLI6MdixMrtnTcv+qRn
+         bryWmIXjB7MNzpIxy48xBlVDxx48PrKZrBwV1nMbBTuOiSOgsyMS9ZXyenkoc97M19hW
+         5Dyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+nor9ScFNpoOWp/qQCcSBYil7PEqQXebXeXj59WjtWc=;
+        b=QURDXC+mQN7aSNVzurpy7jyJ6ZqlvtGE11XYW/1SqsaSHRcRaP/wpOHUQF+XZPk4rE
+         p2uAC1xjGuF9xekXRkKlhFj2B2Al/AcfqzcY4w9RxfDPT+8p8S9te6eQ5JtlBnx86hTy
+         8pv0/9XnhZgvcIbY1hRNP5fpFgM5bOiye9XJ9kwmzVztKwtdJCTm164qSeZ/HHv8a3iZ
+         YuYdqhwY5FEtmjdboF4M4ONj9z/XylCcL2TDWH0YG0c+Psw1LwGKOpffBx7gmo0stW9I
+         pnr6JtS2FiDu4IyR578dYbrUQydacV65U4u4vB7oYtBT+mlpoqxdxWW+kl2y17DUdk1v
+         ZUUQ==
+X-Gm-Message-State: ANoB5pnpJu1bIDUBWYdjrjF7EQwuzKjb736l/N83ZyUpoZ3Go31dhhpk
+        nlOiha5X62UaVdQtC6rvJuyuaiI9l8CnHw==
+X-Google-Smtp-Source: AA0mqf57kk8nr43pvpzm1QWw5/hlL6KgdDDskkzR/xhjbjQFufV4YGegGEuGtbbsU/9juUwJQGTSqw==
+X-Received: by 2002:a17:907:a4c3:b0:7c0:7c22:d70d with SMTP id vq3-20020a170907a4c300b007c07c22d70dmr18831898ejc.707.1669980520633;
+        Fri, 02 Dec 2022 03:28:40 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id b23-20020aa7df97000000b004611c230bd0sm2850780edy.37.2022.12.02.03.28.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Dec 2022 03:28:40 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Victoria Dye <vdye@github.com>,
+        Eric Sunshine <ericsunshine@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v5 01/15] cmake: don't invoke msgfmt with --statistics
+Date:   Fri,  2 Dec 2022 12:28:22 +0100
+Message-Id: <patch-v5-01.15-7d83ff44c61-20221202T110947Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.39.0.rc1.981.gf846af54b4b
+In-Reply-To: <cover-v5-00.15-00000000000-20221202T110947Z-avarab@gmail.com>
+References: <cover-v4-00.14-00000000000-20221103T160255Z-avarab@gmail.com> <cover-v5-00.15-00000000000-20221202T110947Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y4nN2h4FIYGNjCSI@debian.me>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 02, 2022 at 05:05:14PM +0700, Bagas Sanjaya wrote:
+In 2f12b31b746 (Makefile: don't invoke msgfmt with --statistics,
+2021-12-17) I made the same change to our Makefile, let's follow-up
+and do the same here.
 
-> I got many of redefinition warnings when cross-compiling on Buildroot
-> with the patch above, like:
-> 
-> In file included from cache.h:4,
->                  from common-main.c:1:
-> git-compat-util.h:1485: warning: "getc_unlocked" redefined
->  1485 | #define getc_unlocked(fh) getc(fh)
->       | 
-> In file included from git-compat-util.h:216,
->                  from cache.h:4,
->                  from common-main.c:1:
-> /home/bagas/repo/buildroot/output/host/aarch64-buildroot-linux-uclibc/sysroot/usr/include/stdio.h:835: note: this is the location of the previous definition
->   835 | #define getc_unlocked(_fp) __GETC_UNLOCKED(_fp)
+For "cmake" this is particularly nice with "-G Ninja", as before we'd
+emit ~40 lines of overflowed progress bar output, but now it's only
+the one line of "ninja"'s progress bar.
 
-I imagine you'd get that without my patch, too, since I didn't touch the
-getc_unlocked() line at all. Or maybe it simply didn't get that far
-because of the other redeclared functions.
-
-Anyway, we probably want this on top of the other patch.
-
--- >8 --
-Subject: [PATCH] git-compat-util: undefine system names before redeclaring
- them
-
-When we define a macro to point a system function (e.g., flockfile) to
-our custom wrapper, we should make sure that the system did not already
-define it as a macro. This is rarely a problem, but can cause
-compilation failures if both of these are true:
-
-  - we decide to define our own wrapper even though the system provides
-    the function; we know this happens at least with uclibc, which may
-    declare flockfile, etc, without _POSIX_THREAD_SAFE_FUNCTIONS
-
-  - the system version is declared as a macro; we know this happens at
-    least with uclibc's version of getc_unlocked()
-
-So just handling getc_unlocked() would be sufficient to deal with the
-real-world case we've seen. But since it's easy to do, we may as well be
-defensive about the other macro wrappers added in the previous patch.
-
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
-There may be other similar cases lurking throughout the code base, but I
-don't think it's worth anybody's time to go looking for them. If one of
-them triggers on a real platform, we can deal with it then.
+ contrib/buildsystems/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- git-compat-util.h | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 83ec7b7941..76e4b11131 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -346,6 +346,7 @@ static inline int git_setitimer(int which UNUSED,
- 				struct itimerval *newvalue UNUSED) {
- 	return 0; /* pretend success */
- }
-+#undef setitimer
- #define setitimer(which,value,ovalue) git_setitimer(which,value,ovalue)
- #endif
- 
-@@ -1480,6 +1481,9 @@ static inline void git_funlockfile(FILE *fh UNUSED)
- {
- 	; /* nothing */
- }
-+#undef flockfile
-+#undef funlockfile
-+#undef getc_unlocked
- #define flockfile(fh) git_flockfile(fh)
- #define funlockfile(fh) git_funlockfile(fh)
- #define getc_unlocked(fh) getc(fh)
+diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
+index 2f6e0197ffa..8f8b6f375f7 100644
+--- a/contrib/buildsystems/CMakeLists.txt
++++ b/contrib/buildsystems/CMakeLists.txt
+@@ -897,7 +897,7 @@ if(MSGFMT_EXE)
+ 	foreach(po ${po_files})
+ 		file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES)
+ 		add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo
+-				COMMAND ${MSGFMT_EXE} --check --statistics -o ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo ${CMAKE_SOURCE_DIR}/po/${po}.po)
++				COMMAND ${MSGFMT_EXE} --check -o ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo ${CMAKE_SOURCE_DIR}/po/${po}.po)
+ 		list(APPEND po_gen ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo)
+ 	endforeach()
+ 	add_custom_target(po-gen ALL DEPENDS ${po_gen})
 -- 
-2.39.0.rc1.456.gb53e2f823e
+2.39.0.rc1.981.gf846af54b4b
 
