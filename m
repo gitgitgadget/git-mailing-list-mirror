@@ -2,79 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51521C47088
-	for <git@archiver.kernel.org>; Sat,  3 Dec 2022 07:12:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1DA19C4332F
+	for <git@archiver.kernel.org>; Sat,  3 Dec 2022 08:02:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231460AbiLCHMj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 3 Dec 2022 02:12:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56454 "EHLO
+        id S230367AbiLCICO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 3 Dec 2022 03:02:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229887AbiLCHMg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Dec 2022 02:12:36 -0500
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2DCA2669
-        for <git@vger.kernel.org>; Fri,  2 Dec 2022 23:12:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1670051547; bh=mle1GoPtpRGxXW1v4F6NjySX+LwzfQvQZI0bKL7V/PU=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=ctkSFWv1PemntzXjKiezeTU20PijYbH9PAYo2wLyDWEOyzxfFFooXm82p27ZIykt2
-         /NKTnOlNni1AAq0DA81qggLknhTBDTpYCczX8HQ7109i3dUAOeofg3Vnz+F455UGp6
-         36NXyAoFVduxhPGu9JH7YVDs/9A+3x/yrgM+VqnZ5gp4vV078v9N8EnMoKHf/JAcU3
-         M85jYo3QsE97j8yGuFYuCGidjOc5R1s11sZK3qVxytKg1bmFcrqL+r7x9EnZ6J3qhm
-         dbthFTw0SyzobgGmxOOfNr3W4xELpfBnTpVdntnfdacPs+8OIF6nE15Brgk8rgy3tz
-         +vxja8Q8canPg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.154.159]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mq1CC-1oecnp0lKU-00myx0; Sat, 03
- Dec 2022 08:12:27 +0100
-Message-ID: <f20815dc-7d0a-552d-4f7e-8ff21f942d31@web.de>
-Date:   Sat, 3 Dec 2022 08:12:26 +0100
+        with ESMTP id S229781AbiLCICL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Dec 2022 03:02:11 -0500
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 037E19AE13
+        for <git@vger.kernel.org>; Sat,  3 Dec 2022 00:02:11 -0800 (PST)
+Received: by mail-pj1-x102d.google.com with SMTP id k2-20020a17090a4c8200b002187cce2f92so10362143pjh.2
+        for <git@vger.kernel.org>; Sat, 03 Dec 2022 00:02:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=/mMykeCmbW1airAMQUIiT9urcrNcIymoxlrT/RAJJOk=;
+        b=ITDxgDQneZOHj96HNLHr5R7BJkDGoODgfHlEk2ZypDHFnh5PjxPiOH79LK5eWQcdBn
+         2ydyPgtNQMuIU0xSZ8EiTX3PKawYMMbpoB4iIVYwS3EQqZFfTtu8rcs5Z1cSjbDEM9H/
+         HIy6DGJ7O1gSj6d7QUHmqcH4f7n0ebJcMIOwJrHQg1mcpj4kdDwI93I2dNXbnbM/tyK0
+         HHJu61dIOoQNT14JGQQQwToNYoPsRctKqKdCtKJ5MvfeczYeSWQxXqXkhYh/wvmkRigc
+         yTnISzk/QHQ6OP8uqpR2venUVWpa/CDZFGYi4ZFaUK1RSab4NdUwClt0+gzchVjm9Eip
+         QW/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/mMykeCmbW1airAMQUIiT9urcrNcIymoxlrT/RAJJOk=;
+        b=ejG71tiH5NS0aqqjergmJ8ArTsz+bUtyi5Fo0vWJhqGNNQqhGjSqioCr9o+j6BXLYq
+         axUMsG9p1K8aAMYNatrSwf+X79Idnh7HRbGgcn0T8dvPP5962p8AqBBdLNvJ2ci4/z9y
+         4tXGszgD5y3ziDvSZpYyNKDebAjAk/XmkSoddd1512ZpWC4sUIIPPDJ+8ydSLJO5k6Oq
+         j55VFKlXB1a0wttUXs2Z+jvkdzNfhX4Nr5Sufht2/HP5lFmO+iJ/a4VU1soWgVphX4Nf
+         PEE2D2GxhsmfF6h99XGdRkblI0FvSz1KbsOK6AqNiX/rcEsTNfYUJtGjz0xnI5C+qU3a
+         HRqA==
+X-Gm-Message-State: ANoB5pmv1uQmJ5guMBiLl3tDstX2gV/5ubukkEx7rX9DpmD7HbtWbIPm
+        vcwDVmY4Xzn1AH8vh1K1hWooD1qt8cE=
+X-Google-Smtp-Source: AA0mqf485tUYe80xhUNSfn+mN+uvwHb31nEW/159cVm51RnxVPrUrke+dV3uWeN2SPaFskX9leeNyw==
+X-Received: by 2002:a17:90b:4fc2:b0:219:9da6:e93 with SMTP id qa2-20020a17090b4fc200b002199da60e93mr3809795pjb.203.1670054530426;
+        Sat, 03 Dec 2022 00:02:10 -0800 (PST)
+Received: from debian.me (subs03-180-214-233-30.three.co.id. [180.214.233.30])
+        by smtp.gmail.com with ESMTPSA id r6-20020a635146000000b0043b565cb57csm5129381pgl.73.2022.12.03.00.02.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 03 Dec 2022 00:02:09 -0800 (PST)
+Received: by debian.me (Postfix, from userid 1000)
+        id 4A84A104547; Sat,  3 Dec 2022 15:02:06 +0700 (WIB)
+Date:   Sat, 3 Dec 2022 15:02:05 +0700
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Fabrice Fontaine <fontaine.fabrice@gmail.com>
+Subject: Re: [PATCH] git-compat-util: avoid redefining system function names
+Message-ID: <Y4sCfRdWAzjqw7cq@debian.me>
+References: <20221125092339.29433-1-bagasdotme@gmail.com>
+ <Y4RAr04vS/TOM5uh@coredump.intra.peff.net>
+ <Y4fH4rhcSztHwKvK@coredump.intra.peff.net>
+ <Y4nN2h4FIYGNjCSI@debian.me>
+ <Y4ncAhIqHkckMljb@coredump.intra.peff.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.5.0
-Subject: Re: [PATCH 2/1] t3920: support CR-eating grep
-Content-Language: en-US
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <febcfb0a-c410-fb71-cff9-92acfcb269e2@kdbg.org>
- <cbe88abc-c1fb-cb50-6057-47ff27f7a12d@web.de>
- <CAPig+cQBsr30Sr6djCN5_982-nrrhduTcMK2PMJLTXHvsdmYAQ@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <CAPig+cQBsr30Sr6djCN5_982-nrrhduTcMK2PMJLTXHvsdmYAQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:WUPVQ+07zYFRFIQ+L6O7taH3GOwnzyseruPisXi4gbp7HgdQh6L
- x0jY8LQ568qh84UQgu5Z5srz8ik2ZoQTFug+QxKhCRrw+6B9Fjpent4REnUPEg2dvXKsx0E
- 08KuXJZ4rY4sGjGJCRcm9PNLKA9xf16VERlLBxhM9IjMmodCP/p3fBiy4oQ4nxycEY6nVQZ
- cCctpb9Jv/EG4mmTsH+xQ==
-UI-OutboundReport: notjunk:1;M01:P0:ixChrE434b0=;sjUWzNNBQlNF3Kay2jAmzfPSGCB
- 1VNAAVRc836N2de9u4ToHFcr9sducqZEtoM+sWRyhlZ6yLRJehk7H3vocSAWBOlxUYERd9d0c
- EnfW3hzRJbJJKe/Y/0GlgMhRjtACf9EswctSQzjMsV8O0QnMiahHHEc4NVfpfD1tx1P2ybsp7
- JMQXplsg2h4Mvax1wyT0yd6C5Rx3AO9xdnIcDbZCCwLRUsEF2wh5jdbokNYiqHJRWtrU3eC/W
- VJLDJnd+FAwgH0kmBn+mqGSNskzWP0Np715ehd5MAXjgn4GS4GaYnRhYcSGezQeQ5jvL4Copu
- ps18+50O1k+VFZsUIfljLz6mEQTZTYnqU03s4IBlM1QAmTQBhp+yiyn7ohrrZBFA7Q0lX8Hfb
- mpd3NWqgtaIoq1qaMFitNp77gqXVsRza3LXH34fZRT49xroESo5R0tRdJUPklo0TbOigxIJOd
- 7RvHQozuul3jZWkLvesuHTVMw+e2fGQWNLJCXrR6lZ/8BnFdfWRZNA4BP3NLGenLeOiGkZz5S
- c0nbdFWUxV5poI46/XE3ILF1oY8M6ef2XnxR79Hu8Xd1SB2OkZX/8piYp4Dk8QrTG8kHqI5ri
- AxJUNm8PRxq8VK+79BLSTKA4dHcL6AcUhSjicyPump6Mmk6TMGu+K7YkQ8RZziQGwGK/DWuF7
- wrsScN9Tq4cABE2H0KKQ8/rMf2cgZHDpu6bBheNkiWdbsd2r6kjZhnPwl6LfJ6wjLugfslx1A
- B/mIiT3GcIrfN/wYMTgXiqx0n1SLXsDY+AnS6uM4YDPiPNF3Gkacnm3o/QIO9+hQ9k7t88GDw
- cu5zVb5K6Xcul64Sl+AbbEkEwITKWN+1FcbyFb5hGdWGxJEE4djWsQn2sSjCIP4Zu0yDy4dKh
- VMjnDRzhvOQzyvYyvZFMj3JojrDTQ2G/UqOOWyfpJ0ooSyPdVNoFfl9rKgJqn9fZU8199Jwqd
- /sm48Q==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Y4ncAhIqHkckMljb@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 03.12.22 um 00:32 schrieb Eric Sunshine:
-> On Fri, Dec 2, 2022 at 11:51 AM Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
->> grep(1) converts CRLF line endings to CR on current MinGW:
->
-> Did you mean s/to CR/to LF/ ?
+On Fri, Dec 02, 2022 at 06:05:38AM -0500, Jeff King wrote:
+> -- >8 --
+> Subject: [PATCH] git-compat-util: undefine system names before redeclaring
+>  them
+> 
+> When we define a macro to point a system function (e.g., flockfile) to
+> our custom wrapper, we should make sure that the system did not already
+> define it as a macro. This is rarely a problem, but can cause
+> compilation failures if both of these are true:
+> 
+>   - we decide to define our own wrapper even though the system provides
+>     the function; we know this happens at least with uclibc, which may
+>     declare flockfile, etc, without _POSIX_THREAD_SAFE_FUNCTIONS
+> 
+>   - the system version is declared as a macro; we know this happens at
+>     least with uclibc's version of getc_unlocked()
+> 
+> So just handling getc_unlocked() would be sufficient to deal with the
+> real-world case we've seen. But since it's easy to do, we may as well be
+> defensive about the other macro wrappers added in the previous patch.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> There may be other similar cases lurking throughout the code base, but I
+> don't think it's worth anybody's time to go looking for them. If one of
+> them triggers on a real platform, we can deal with it then.
+> 
+>  git-compat-util.h | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 83ec7b7941..76e4b11131 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -346,6 +346,7 @@ static inline int git_setitimer(int which UNUSED,
+>  				struct itimerval *newvalue UNUSED) {
+>  	return 0; /* pretend success */
+>  }
+> +#undef setitimer
+>  #define setitimer(which,value,ovalue) git_setitimer(which,value,ovalue)
+>  #endif
+>  
+> @@ -1480,6 +1481,9 @@ static inline void git_funlockfile(FILE *fh UNUSED)
+>  {
+>  	; /* nothing */
+>  }
+> +#undef flockfile
+> +#undef funlockfile
+> +#undef getc_unlocked
+>  #define flockfile(fh) git_flockfile(fh)
+>  #define funlockfile(fh) git_funlockfile(fh)
+>  #define getc_unlocked(fh) getc(fh)
 
-Yes.
+The warnings gone away, thanks!
 
-Ren=C3=A9
+For this patch and the previous one [1],
+
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+
+[1]: https://lore.kernel.org/git/Y4fH4rhcSztHwKvK@coredump.intra.peff.net/
+
+-- 
+An old man doll... just what I always wanted! - Clara
