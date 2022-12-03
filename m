@@ -2,69 +2,77 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 21B77C4321E
-	for <git@archiver.kernel.org>; Sat,  3 Dec 2022 00:53:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12C5BC4321E
+	for <git@archiver.kernel.org>; Sat,  3 Dec 2022 01:05:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235278AbiLCAxZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 2 Dec 2022 19:53:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38540 "EHLO
+        id S234804AbiLCBFV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 2 Dec 2022 20:05:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234956AbiLCAxI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 2 Dec 2022 19:53:08 -0500
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 140FC1FA
-        for <git@vger.kernel.org>; Fri,  2 Dec 2022 16:46:29 -0800 (PST)
-Received: by mail-pl1-x62c.google.com with SMTP id p24so6125360plw.1
-        for <git@vger.kernel.org>; Fri, 02 Dec 2022 16:46:29 -0800 (PST)
+        with ESMTP id S232011AbiLCBFT (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 2 Dec 2022 20:05:19 -0500
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05A66DEA6F
+        for <git@vger.kernel.org>; Fri,  2 Dec 2022 17:05:19 -0800 (PST)
+Received: by mail-pf1-x435.google.com with SMTP id a14so2379261pfa.1
+        for <git@vger.kernel.org>; Fri, 02 Dec 2022 17:05:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=z3up2WS8nOk3q0+s9W1Yv+4Hr0Swajy0G5r149Zg7h0=;
-        b=NHu/UM9QftrEL7WvelCMpve11IMwE5ywLhg31znXylvJE4QFhbpCOOCh1gXOnpXdWu
-         PTv+vg8hCzi+kiBG/A1bYYSfeFPq7oqPwgd0JQGbm+MmL12wi6hgIB3+hIrCq3VjvGFp
-         Xq88622uni3YkC6Hgf2KPAVIF126JR+ZCy9tsma7evifv+0ZWDij/K0EdqBmlm23Xth5
-         TlWBMq2Cy7b68kww+V9uMFHnyodsWBjB4lt1TH1z4/47S51iZ60n54qojlEwlEVIIo8w
-         HOOoJRVejhe+rZQFWfjOxDBU6AWVl0lwxzCVAXy1DQxn53vMJGd2D7vBj+OkoOPYXw4I
-         d9vw==
+        bh=O80aKMXRozNf7ypOruz889x7UDQPVu36PpZ5t/GKwsg=;
+        b=dEuwaDnuaVlXl10ESMmN4dcvSzYXer+Adaue1DS7PgWVH8HZXNc0CwCTREymZbgi23
+         2Gkexj4dnkH61PFWKqriteN00qczPKFtWnyEYr749u3Q5JLY7k0W1nUG1FA21MJIlbKE
+         4KOCxdlFrGGT5s9IeSA5jGvexPOYDPhevGPB7e0qnL2qDqgXHZDuFkayXNYb7j0iApLZ
+         Rj7uJ60oMmVOZkiNbAQPjpq91FDQ7JGVjY8xU43j1gNHbvfWnF3eyN51XT1SFHQ517Fp
+         LSjCcanutHt25amJYCYUx090Jj612IJQkIq3Jju0y8e2JvpPETeTc6X4qP5untVW8g3Z
+         +jiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=z3up2WS8nOk3q0+s9W1Yv+4Hr0Swajy0G5r149Zg7h0=;
-        b=Rf62ZH9puUdsHo1qJeXBhBjuCojDiNrNXQKcsQm9lAONlhY/dP4MrOh7p5qZ7MQE6X
-         /6UG9/2Jr127RlMfrajMqcrdyobg7q3deC10x4GTq/OzxRx0EsdXlinEkr6lvdFJz4xT
-         D4Ngl7OeMN+5B0uy5ueXIEEBF9bYeYXUY3Qo9T9Kqv7pgyPKTbKJnsluY2J2Wf93UpPj
-         yU62nTTeQ0px4ytmHMqnhBNBsLnQlPr1tFgTzru7OV2leFmVO0eGNgmfExObXdeCP7Xp
-         GNssAvmn5GbAeEFO1cdt5jCFQcuEIAwcCwNosVybGivIa9NLCxyAk7x2yK1ts7Y2bWuD
-         xXxw==
-X-Gm-Message-State: ANoB5pk06fgFnXLAHGvrGMNmdZMtA81mwYwWbFn4NOHyamG02rRYeWfU
-        ZD6WoknBTAchIQmnK1j83M8=
-X-Google-Smtp-Source: AA0mqf54/s+h869S9Z0j9jlYTBEM1I5Jp8wvwKhzmT6RJhe/89ZN/LIfSJkhgG6kKPJBSYAi+DazSw==
-X-Received: by 2002:a17:902:6904:b0:185:3f7a:50cc with SMTP id j4-20020a170902690400b001853f7a50ccmr54075593plk.99.1670028388329;
-        Fri, 02 Dec 2022 16:46:28 -0800 (PST)
+        bh=O80aKMXRozNf7ypOruz889x7UDQPVu36PpZ5t/GKwsg=;
+        b=0aB4hr4IpjJucxjG5+hNqrIzuQkicQ+e6PVcqQXpZq4HGqRBVhOC/3Z2Sih4k8F0CV
+         OeNIDSz9Qx3vd+N0ZbQGwsg7TpUb3EKVmDlTJNEbQgY7ammp/Jt3JmuTqAoa2I1Qu70u
+         /Qm/3gdj7doWha8l8otFW9uQKuu4d/OsTpWXopcTkF7bJTHvts8Q5iCKVWN2wLndYxtG
+         G5YDWgB289O6w5RGDzRXfoo5CSb+Jrx6j6ZPGwiLZ+pGG+vQnzFPF/wCvePw6LX7WGY+
+         CBpoXkgu+RW142nQTEYLMouZPh/WAS5uwfn0tYdRxYFmSNH7KXcnvzOVjX+l1R7lYbV3
+         hPzg==
+X-Gm-Message-State: ANoB5pm7a9fweNDfhAovpXB/PDHWwVnI/xEL9bMtQCS+BV77KnGJallG
+        dhYIQ2iWFKeBMUZxZZRM2ZA=
+X-Google-Smtp-Source: AA0mqf6+Y4DfaCpVBG7KlTXQBp6EhVYre9I8nKG6Zuu8pbefN/5HQkreZvBXQYb+Ew0Dd0CjjAWX6A==
+X-Received: by 2002:a63:ff63:0:b0:477:8d4f:3dda with SMTP id s35-20020a63ff63000000b004778d4f3ddamr50132245pgk.552.1670029518315;
+        Fri, 02 Dec 2022 17:05:18 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id f14-20020aa7968e000000b0056bee23a80bsm5658235pfk.137.2022.12.02.16.46.27
+        by smtp.gmail.com with ESMTPSA id z20-20020aa79f94000000b0056be4dbd4besm5663475pfr.111.2022.12.02.17.05.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Dec 2022 16:46:27 -0800 (PST)
+        Fri, 02 Dec 2022 17:05:17 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Git List <git@vger.kernel.org>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] t4205: don't exit test script on failure
-References: <c5b4d091-23c1-5a75-a255-99ec83973d8d@web.de>
-        <221202.86edtihgga.gmgdl@evledraar.gmail.com>
-        <xmqqr0xir9lk.fsf@gitster.g>
-        <221202.86a646hdb6.gmgdl@evledraar.gmail.com>
-        <xmqq5yeur32x.fsf@gitster.g>
-Date:   Sat, 03 Dec 2022 09:46:27 +0900
-In-Reply-To: <xmqq5yeur32x.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-        02 Dec 2022 10:45:10 +0900")
-Message-ID: <xmqq5yetuxek.fsf@gitster.g>
+To:     Victoria Dye <vdye@github.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Stefan Sundin <git@stefansundin.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Jeff Hostetler <jeffhostetler@github.com>,
+        Eric DeCosta <edecosta@mathworks.com>
+Subject: Re: [PATCH] fsmonitor: eliminate call to deprecated FSEventStream
+ function
+References: <pull.1436.git.1669991072393.gitgitgadget@gmail.com>
+        <221202.86o7slfzot.gmgdl@evledraar.gmail.com>
+        <3e2bd865-3ca5-b0f7-095e-f8b97ec8822c@jeffhostetler.com>
+        <221202.867cz9fwnf.gmgdl@evledraar.gmail.com>
+        <4711d955-02b2-f599-7f89-b442dd0b6215@github.com>
+        <221202.86359xfs5c.gmgdl@evledraar.gmail.com>
+        <1b090929-f2da-f075-01d4-458804fc0717@github.com>
+Date:   Sat, 03 Dec 2022 10:05:17 +0900
+In-Reply-To: <1b090929-f2da-f075-01d4-458804fc0717@github.com> (Victoria Dye's
+        message of "Fri, 2 Dec 2022 13:17:49 -0800")
+Message-ID: <xmqq1qphuwj6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,31 +80,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Victoria Dye <vdye@github.com> writes:
 
->> In my mind that's better than a "LGTM" or "Reviewed-by". Those are both
->> versions of "I looked over your work", but if you independently come up
->> with the same thing that's usually a stronger sign that the proposed
->> solution is a good one.
+>> But git gets ported and backported to a long tail of systems way beyond
+>> that. Eventually we do need to let got, but we've generally drawn the
+>> line at some fuzzy notion of when users don't care anymore, along with
+>> whether it's worth the effort to find out.
 >
-> Not necessarily.
+> My point is that such a user for this scenario is so unlikely to exist that
+> holding up this patch - which provides a real, tangible benefit to
+> developers *right now* - to implement your suggestion or modify the commit
+> message is, at best, an unnecessary distraction.
 >
-> Past effort that did not fare well needs to be re-examined to make
-> sure it was not picked up because it was crappy, because two people
-> independently coming up with the same crappiness does not help us
-> build more confidence.  Instead of forcing other reviewers waste
-> their time looking at older threads, it would help to explain what
-> you find good in the patch you are reviewing.
+> If, somewhere, there is a user that 1) keeps up-to-date with the latest
+> version of Git, 2) uses FSMonitor, and 3) is working on the sole version of
+> MacOS that was theoretically compatible with FSMonitor before this change
+> but now is not, we can accommodate that once such a need is shown to exist.
 
-Related to this, another thing you often do is very helpful: to say
-that the patch being proposed solves the same problem another patch
-that is already in our tree solved in a different part of the code
-base.  If it was good for another part of the system, it is likely
-that the same solution may be a good fit for the part being touched
-as well.
-
-Compared to that, referring to an earlier patch that failed to hit
-our code base is not all that helpful.
+I'd still prefer that our commit messages keep records of the fact
+that we stopped supporting certain older systems and what kind of
+due dilligence we did to decide it is a safe thing to do, which all
+already happened in this thread, thanks to you three discussing the
+issue.  I would be happier even with "Anything older than 2014 does
+not matter to Apple, and we follow that stance" than without any ;-)
 
 Thanks.
-
