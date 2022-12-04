@@ -2,46 +2,46 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26991C4332F
-	for <git@archiver.kernel.org>; Sun,  4 Dec 2022 00:41:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BEF69C4332F
+	for <git@archiver.kernel.org>; Sun,  4 Dec 2022 00:45:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229503AbiLDAlH convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sat, 3 Dec 2022 19:41:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36868 "EHLO
+        id S229597AbiLDAp1 convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Sat, 3 Dec 2022 19:45:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229450AbiLDAlF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 3 Dec 2022 19:41:05 -0500
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EA5E1A229
-        for <git@vger.kernel.org>; Sat,  3 Dec 2022 16:41:01 -0800 (PST)
-Received: by mail-pj1-f48.google.com with SMTP id q17-20020a17090aa01100b002194cba32e9so11652760pjp.1
-        for <git@vger.kernel.org>; Sat, 03 Dec 2022 16:41:01 -0800 (PST)
+        with ESMTP id S229450AbiLDApZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 3 Dec 2022 19:45:25 -0500
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 777D41A3A1
+        for <git@vger.kernel.org>; Sat,  3 Dec 2022 16:45:25 -0800 (PST)
+Received: by mail-pl1-f173.google.com with SMTP id jl24so7820914plb.8
+        for <git@vger.kernel.org>; Sat, 03 Dec 2022 16:45:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4ZVS/Tgm9TQyfeLrYsG1h1S653YWticw60t22lkTpI0=;
-        b=g6Swny0tvV6pp+HXbkE7vo6bMENptFUjpAYTe4sJ/vdB+JnvcP6fuHbN54Jf0bl6ix
-         WAJ5ZYaanjlBLjS2De9Pa81nr514yz9ZeFcsn/q0mw8VelBcd27rTvvVM9PQjB99V3qZ
-         yA5WPepvwdUQE1fX+jBTxKk1D3h2wQ74fKGDjfxBkM902qC0/R3VMdemqqQjinnvPaZf
-         lBAhCaKVL+Ilwc3ISbttV98V9BO8JFptlW7DJ/0IoHRU87Ux/2Slq8OiC8aC4gX4v8YX
-         0Zg4UR/ov9MoUFW9bdwTvLsmzvDE4KeDB3gE0AUwbK1Go269K5ugqKM6M2tS2Nbfr5c2
-         gBJQ==
-X-Gm-Message-State: ANoB5plRMMlMnMvMo8pliT0r0hMYnirhh8l7VpP/ZWeBCrRmkzXh7uF+
-        2phcREZ3xqY3sX5KiKhXntbVhvFHIXuVJYJJBwE=
-X-Google-Smtp-Source: AA0mqf4YgHMBKTLS3/ewqmVfFHuNOxr4UKgtlwoX9R4JaBfWwtNzN3l6xKQ4FmjJ+TF+AozWGIGFcaprDtOGZbIiekI=
-X-Received: by 2002:a17:902:8f96:b0:189:3803:23e6 with SMTP id
- z22-20020a1709028f9600b00189380323e6mr56522528plo.77.1670114460412; Sat, 03
- Dec 2022 16:41:00 -0800 (PST)
+        bh=/S6oCbWFp3tp+QYYlhXTz95o6rQUh74GfrG+u0Ead9U=;
+        b=ous4sdLpV80bT6EwkL/RZEwC6nqJ6Cm/VjH31ZnplPzs2lcoC1yxmUG6qctYxl8M2Q
+         Nq7TUHxkcy/hqgMAuuznFcJHWDDW++BXu/2CcgWR2/RYiZJrl4+xxKB6+EC3SoNoarGt
+         c2iZDHoAYjc6VoZjBJjBZ8OBSyS+6V+2yP0WZ9apD3ykOFWOYv10DVaZxEWO/CT0YbWF
+         /w9PrvyfYNyttWV81mz5WS9C6UE0bg3ylANxjwM6b4CffwBoHKs9HcavwL98dTohcoxA
+         jiYNNMRVObRmRRyUhj0kjaWI3tTS2pbpn+2ZZhdBc9Gb6OSWMKWtd6J+dAYrxjwugI9S
+         xwZg==
+X-Gm-Message-State: ANoB5pniq+YX1hC8yDtJcvSgiR7NdOafznBzRQaE7QSCsrBZKNNYJPbG
+        DFo2LYAdGqZk2eBrr8uW/IhR7cxoGfRuZ9w5Tdc=
+X-Google-Smtp-Source: AA0mqf5a/prxoUQo0RryeUC+96ymGZLng2kniT7yJOVOPipzRece8qF471cIWVscHZ0XGM5CeP3OBnYixj/VmB09hmk=
+X-Received: by 2002:a17:90a:9f46:b0:219:b1db:f7e3 with SMTP id
+ q6-20020a17090a9f4600b00219b1dbf7e3mr3538821pjv.64.1670114724941; Sat, 03 Dec
+ 2022 16:45:24 -0800 (PST)
 MIME-Version: 1.0
 References: <cover-v2-0.8-00000000000-20221202T000227Z-avarab@gmail.com>
- <cover-v3-0.8-00000000000-20221202T114733Z-avarab@gmail.com> <patch-v3-8.8-37c75f4a097-20221202T114733Z-avarab@gmail.com>
-In-Reply-To: <patch-v3-8.8-37c75f4a097-20221202T114733Z-avarab@gmail.com>
+ <cover-v3-0.8-00000000000-20221202T114733Z-avarab@gmail.com> <patch-v3-4.8-c080899dd5f-20221202T114733Z-avarab@gmail.com>
+In-Reply-To: <patch-v3-4.8-c080899dd5f-20221202T114733Z-avarab@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sat, 3 Dec 2022 19:40:49 -0500
-Message-ID: <CAPig+cTh487GoAnw9CD7i2GmKzAtoG=1hwGdxXHQYoK6Vi=Arw@mail.gmail.com>
-Subject: Re: [PATCH v3 8/8] tests: don't lose mist "git" exit codes
+Date:   Sat, 3 Dec 2022 19:45:14 -0500
+Message-ID: <CAPig+cTm5GbpbeSRajEe+uP4MwbAwACL2Q19o1RSLgHQ+eeKKg@mail.gmail.com>
+Subject: Re: [PATCH v3 4/8] t/lib-patch-mode.sh: fix ignored exit codes
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
@@ -53,15 +53,19 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Fri, Dec 2, 2022 at 6:53 AM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> tests: don't lose mist "git" exit codes
+> Fix code added in b319ef70a94 (Add a small patch-mode testing library,
+> 2009-08-13) to use &&-chaining and the newly added "test_cmp_cmd".
+> This avoids losing both the exit code of a "git" and the "cat"
+> processes.
 
-"mist"?
+This still talks about test_cmp_cmd() which is no longer present in v3.
 
-> Fix a few miscellaneous cases where:
+> This fixes cases where we'd have e.g. missed memory leaks under
+> SANITIZE=leak, this code doesn't leak now as far as I can tell, but I
+> discovered it while looking at leaks in related code.
 >
-> - We lost the "git" exit code via "git ... | grep"
-> - Likewise by having a $(git) argument to git itself
-> - Used "test -z" to check that a command emitted no output, we can use
->   "test_must_be_empty" and &&-chaining instead.
+> The "cat _head >expect" here is redundant, we could simply give
+> "_head" to "test_cmp", but let's be consistent in using the "expect"
+> and "actual" names for clarity.
 >
 > Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
