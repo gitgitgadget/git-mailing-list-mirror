@@ -2,87 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 986D9C4321E
-	for <git@archiver.kernel.org>; Mon,  5 Dec 2022 21:04:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC9A0C47089
+	for <git@archiver.kernel.org>; Mon,  5 Dec 2022 21:04:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233857AbiLEVEu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Dec 2022 16:04:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33462 "EHLO
+        id S233898AbiLEVEv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Dec 2022 16:04:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233740AbiLEVEZ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233335AbiLEVEZ (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 5 Dec 2022 16:04:25 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C469B2AC64
-        for <git@vger.kernel.org>; Mon,  5 Dec 2022 13:03:36 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id r188-20020a1c44c5000000b003d1e906ca23so71933wma.3
-        for <git@vger.kernel.org>; Mon, 05 Dec 2022 13:03:36 -0800 (PST)
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99B5F2A408
+        for <git@vger.kernel.org>; Mon,  5 Dec 2022 13:03:38 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id m14so20707805wrh.7
+        for <git@vger.kernel.org>; Mon, 05 Dec 2022 13:03:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DOdVNsD0r6Sk9fhN0ako0bhUI8ZTaaeCJad0qSTPRc0=;
-        b=WLeU3675fNXJINu5BuzwUHdE5N4lvQ0Soev1Ws4LrdP6iTfTwyvPFt9PzySZpo/JvJ
-         zeh4QeT51xYAar8S3YiWk3oqGMYNrEx5Mj+E9V23eV4bflWuYqNwEwmbSapkwO+09EtV
-         30wAs4v4efQnanS/O3ln7nKlLZTHdx7QoDONm6nBwbwqfaxTXV4ZbJPOBkjuJz0cAK8U
-         rCyuDsSR1ijx+yifd2x851/8RqwXPUQvf9+fx+aTbz+FgWLRHApSsNjH00UCwyqIm1p7
-         hMwii0/O4czElf412zACDH9HnGjdDtkEdqnHx/vlcdCeLUCQ7D3oONiO4Mbw4PjdxdK7
-         1lSg==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Sdiw0KoeKYls4SN0B93nawEsjtT9XHHrrVAQbu6zMKg=;
+        b=JjjyGqbJzxOcobCyezRT2BCxlV9gIMf+ziLta3sQLU9EwbXi+iAw9oLzPo60JYOqgg
+         TNsrFAV0iwRBtT9DMOQ7frYnAbzophup6nUlKHkE9cUEgpLJm4UUABnGem9kJeSRha5K
+         tx/r0+zOHjGq7riz1ib1CfcI1cykVAeEHmc1SsM8l0KDdJMjeAecDKDx6hcyAvodqDU1
+         QKpMkiZ30BDNO0SKaXiYZdFVykUem5bSDsNiZhgLmD9Tcxy3jymyNRyr+BogxxDheNJp
+         tSbUXvNrGp3OrPCQ/c3K8A2opXPWlbiT+DjUx90TWmbxys+7/0B3yVFge8jN28XmlzhU
+         livQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DOdVNsD0r6Sk9fhN0ako0bhUI8ZTaaeCJad0qSTPRc0=;
-        b=zdXwLp4KJNVdBbVhLTzMRq05C4CugZLNbsMz5sAC9PiYNjJvrl7vCuAv3iS6VhdEHL
-         h3GEaMXrDyyeZ9VBrMfd8Xx9PI3jDsp0ODt6yw1/Pav6MZopMXWJsQaeGNw3owp6Xuw0
-         QmxAFG7rjiq+dAca7JEtPX8xvCqoaVfkVGZ0N455EAFbp3fx+7wVINa0ao63ybnlfGk5
-         wJQWRG11mYvgQQp3EE4DzLAwSURRGAXq2w95MVGfl/QZ/5+VY84NB1Oj3RDlj28/0P+i
-         pKqn1ZY+/O6uy8+vBJ9TSrODiXlOwrkQPrS3md6uOFY+i6Nur3N0+/cVkADf+PLL2ku+
-         kPsA==
-X-Gm-Message-State: ANoB5pn0gBeQPObZB9C+043AH5e/WJwOdo85a/Welr46rWXkMxlnr5A6
-        fAyLWPuUERCEQCh/yoq5FXjUfV241aM=
-X-Google-Smtp-Source: AA0mqf4EZiuJNM5m4Od7b9ONUQZzemU1zMZ3jytMvKYTrSO13+r1BQ6qJUOmnesS419qUGMl/Gf/ng==
-X-Received: by 2002:a7b:c045:0:b0:3cf:6f5f:da0e with SMTP id u5-20020a7bc045000000b003cf6f5fda0emr46995427wmc.19.1670274215251;
-        Mon, 05 Dec 2022 13:03:35 -0800 (PST)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Sdiw0KoeKYls4SN0B93nawEsjtT9XHHrrVAQbu6zMKg=;
+        b=bykLca1+F3XjpqODCFW7Ur9JYD6/kQfEO80WfqyuLOe29+1PUNcpMZe3U31cYFqjJQ
+         S+YXA/VTZoOsuznmvHKlpLCIlwbhoDFFRjxzsDvo9LCmZfXDQV4/9byrh5uxIUTDnnSJ
+         xf/kwkCAN9nNf8tHsv8qZNxohf1HQzvEDbWBUVW0/8PGdh5uWrZVyCM6eSQ8Y2PMr5Hd
+         ajw03j1CW1NCrqwrzQ2LTcW1hcCNCxJG2a18I0hGAYGdYQSPBsoFyO4S+fhcrYhpsz7q
+         q4qwnF9KZn3gNv672jzfgYhI5I1ttaUzR8HAfPenzqm6PLw81JdLSG4nEfeWaroc0FDm
+         HQdg==
+X-Gm-Message-State: ANoB5pkxAWascYmIlYXM4w2e7t6SMpXQXrCiRaj0XkBOt8zwIDGwpUEJ
+        EzHSTdklnaCrJksuTdcbie4e9o5+3qw=
+X-Google-Smtp-Source: AA0mqf7tRSPJdwfjLVwadmHyMwOUIvaolWaHHSul1LB+Z+MNkKY/L7LE2PHpaIfDIVVbnNyx+657Xw==
+X-Received: by 2002:adf:f54e:0:b0:242:1534:7b57 with SMTP id j14-20020adff54e000000b0024215347b57mr24458207wrp.404.1670274217001;
+        Mon, 05 Dec 2022 13:03:37 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q128-20020a1c4386000000b003c71358a42dsm30713191wma.18.2022.12.05.13.03.34
+        by smtp.gmail.com with ESMTPSA id g3-20020a5d5543000000b0022cc0a2cbecsm14977547wrw.15.2022.12.05.13.03.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Dec 2022 13:03:34 -0800 (PST)
-Message-Id: <pull.1433.git.1670274213.gitgitgadget@gmail.com>
-From:   "Harshil Jani via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 05 Dec 2022 21:03:31 +0000
-Subject: [PATCH 0/2] Remove MSys Support
+        Mon, 05 Dec 2022 13:03:36 -0800 (PST)
+Message-Id: <bc79dfcc4d44e0f006dc64d75a2c7f8a11834229.1670274213.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1433.git.1670274213.gitgitgadget@gmail.com>
+References: <pull.1433.git.1670274213.gitgitgadget@gmail.com>
+From:   "Harshil-Jani via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 05 Dec 2022 21:03:32 +0000
+Subject: [PATCH 1/2] mingw: remove duplicate `USE_NED_ALLOCATOR` directive
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Harshil Jani <harshiljani2002@gmail.com>
+Cc:     Harshil Jani <harshiljani2002@gmail.com>,
+        Harshil-Jani <harshiljani2002@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I am trying to learn more about the git code base and came across the issue
-where the support of MSys environment was to be dropped. This patch is my
-first contribution towards it.
+From: Harshil-Jani <harshiljani2002@gmail.com>
 
-The msysGit and the MSys v1.x has been dropped into this patch and the
-USE_NED_ALLOCATOR variable was duplicated here in the implementation so its
-deduplication was also made in this patch.
+nedalloc was added to fix the slowness of memory allocator. Here
+specifically for the MSys2 build there seems to be a duplication of
+USE_NED_ALLOCATOR directive. So this patch intends to remove the
+duplicate USE_NED_ALLOCATOR and keeping it only into the MSys2 config
+section so it still uses the nedalloc.
 
-Signed-off-by: Harshil-Jani harshiljani2002@gmail.com
+Signed-off-by: Harshil-Jani <harshiljani2002@gmail.com>
+---
+ config.mak.uname | 1 -
+ 1 file changed, 1 deletion(-)
 
-Harshil-Jani (2):
-  mingw: remove duplicate `USE_NED_ALLOCATOR` directive
-  mingw: remove msysGit/MSYS1 support
-
- config.mak.uname | 86 ++++++++++++++++++++----------------------------
- 1 file changed, 35 insertions(+), 51 deletions(-)
-
-
-base-commit: 35a62bb5798092d491e6c7e688db6cb1418c9098
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1433%2FHarshil-Jani%2Fdrop-Msys-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1433/Harshil-Jani/drop-Msys-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1433
+diff --git a/config.mak.uname b/config.mak.uname
+index d63629fe807..377667c4bbc 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -652,7 +652,6 @@ ifeq ($(uname_S),MINGW)
+ 	USE_WIN32_IPC = YesPlease
+ 	USE_WIN32_MMAP = YesPlease
+ 	MMAP_PREVENTS_DELETE = UnfortunatelyYes
+-	USE_NED_ALLOCATOR = YesPlease
+ 	UNRELIABLE_FSTAT = UnfortunatelyYes
+ 	OBJECT_CREATION_USES_RENAMES = UnfortunatelyNeedsTo
+ 	NO_REGEX = YesPlease
 -- 
 gitgitgadget
+
