@@ -2,39 +2,39 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7FF3DC4332F
-	for <git@archiver.kernel.org>; Mon,  5 Dec 2022 19:35:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C1225C4332F
+	for <git@archiver.kernel.org>; Mon,  5 Dec 2022 19:45:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234371AbiLETf5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Dec 2022 14:35:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34182 "EHLO
+        id S235010AbiLETpI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Dec 2022 14:45:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234499AbiLETff (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2022 14:35:35 -0500
-X-Greylist: delayed 475 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 05 Dec 2022 11:31:47 PST
-Received: from smtp82.ord1d.emailsrvr.com (smtp82.ord1d.emailsrvr.com [184.106.54.82])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82B3D24BF4
-        for <git@vger.kernel.org>; Mon,  5 Dec 2022 11:31:47 -0800 (PST)
+        with ESMTP id S235056AbiLETop (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2022 14:44:45 -0500
+X-Greylist: delayed 319 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 05 Dec 2022 11:41:48 PST
+Received: from smtp127.iad3a.emailsrvr.com (smtp127.iad3a.emailsrvr.com [173.203.187.127])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B41B2CC80
+        for <git@vger.kernel.org>; Mon,  5 Dec 2022 11:41:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=oddbit.com;
-        s=20180920-g2b7aziw; t=1670268232;
-        bh=pT8ZoOrAedRtFHOBW44voalrUceEJHcdx3Xm2Yyyc+c=;
+        s=20180920-g2b7aziw; t=1670268988;
+        bh=i9uFfpZDHwe9ZT4ygZyyVJGdOC2jS7SMiavLbEK7uxc=;
         h=From:To:Subject:Date:From;
-        b=ns6jOId+t5YaAnFaswnKQ/dB7QgjPkUB9qLva+o7ww0x1uSokLDT7ak7H773hBPCY
-         uOhsgopHLfBHHv5PLe/LD+BjD5FT33EwH/vHk8okPMgKUX9MNbjbqMwBDHqsuuOFf4
-         yGfKEp/WqdJ6g6lN2FHl4aCaJOT9EjJtuvOq9IA0=
+        b=cNk5BcIvI7X2E86NVYB1c7bwUGVKdTbY2ek/bs5OvE+2jdA4sRnZQmCSwXoQTGPGA
+         MRNFIe9JFqgDmX+dPWhmNh5M9dM1BOjTycVIZWmnJ6hi8XXU5ARzWXaH1ezal6A1Nk
+         bPoeYbajSp9nThK59vTBDyKJuzSclUgvuwqIfa9Q=
 X-Auth-ID: lars@oddbit.com
-Received: by smtp3.relay.ord1d.emailsrvr.com (Authenticated sender: lars-AT-oddbit.com) with ESMTPSA id 32DCE601AB;
-        Mon,  5 Dec 2022 14:23:52 -0500 (EST)
+Received: by smtp16.relay.iad3a.emailsrvr.com (Authenticated sender: lars-AT-oddbit.com) with ESMTPSA id A77B9596A;
+        Mon,  5 Dec 2022 14:36:28 -0500 (EST)
 From:   Lars Kellogg-Stedman <lars@oddbit.com>
 To:     git@vger.kernel.org
 Cc:     Lars Kellogg-Stedman <lars@oddbit.com>
-Subject: [PATCH 1/1] line-range: Fix infinite loop bug with degenerate regex
-Date:   Mon,  5 Dec 2022 14:23:38 -0500
-Message-Id: <20221205192338.2413155-1-lars@oddbit.com>
+Subject: [PATCH v2] line-range: Fix infinite loop bug with degenerate regex
+Date:   Mon,  5 Dec 2022 14:36:25 -0500
+Message-Id: <20221205193625.2424202-1-lars@oddbit.com>
 X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Classification-ID: b0e48c3c-1184-4dc7-935c-ceaf3ab784cc-1-1
+X-Classification-ID: 52272067-2e9d-4e68-8a3e-9b80aca7229e-1-1
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
@@ -56,11 +56,11 @@ Originally reported in <https://stackoverflow.com/q/74690545/147356>.
 
 Signed-off-by: Lars Kellogg-Stedman <lars@oddbit.com>
 ---
- line-range.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ line-range.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/line-range.c b/line-range.c
-index 955a8a9535..9482d93d62 100644
+index 955a8a9535..bdcb810485 100644
 --- a/line-range.c
 +++ b/line-range.c
 @@ -135,7 +135,7 @@ static const char *find_funcname_matching_regexp(xdemitconf_t *xecfg, const char
@@ -72,6 +72,15 @@ index 955a8a9535..9482d93d62 100644
  		const char *bol, *eol;
  		reg_error = regexec(regexp, start, 1, match, 0);
  		if (reg_error == REG_NOMATCH)
+@@ -161,6 +161,8 @@ static const char *find_funcname_matching_regexp(xdemitconf_t *xecfg, const char
+ 			return bol;
+ 		start = eol;
+ 	}
++
++    return NULL;
+ }
+ 
+ static const char *parse_range_funcname(
 -- 
 2.38.1
 
