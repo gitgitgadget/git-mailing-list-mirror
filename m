@@ -2,92 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C6E5C4332F
-	for <git@archiver.kernel.org>; Mon,  5 Dec 2022 08:28:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58474C4321E
+	for <git@archiver.kernel.org>; Mon,  5 Dec 2022 09:15:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231770AbiLEI25 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Dec 2022 03:28:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52400 "EHLO
+        id S230189AbiLEJP5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Dec 2022 04:15:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33706 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231370AbiLEI2z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2022 03:28:55 -0500
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1503E0DB
-        for <git@vger.kernel.org>; Mon,  5 Dec 2022 00:28:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1670228926; bh=yEissstxxLzr1THC1VHrThrp/tdlW4GkJPbDEu5EInw=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=HfG5XFOskZoMTr7C59R/ZOjolR17br9vye8klLfFtaHLEcEMvLmcrKXRt9hNgJ2mc
-         5rdfCtS41CfyyBgc5NL/RJobJhxkMejq8DVbBDxHE5ry9JZU9XOqj2bMaTua+YmQxx
-         NKJVoWSQWT3EPmFpR01eDvP2zheRSFsW+E50J/d5L8xVRbXlA+hQfloSwnJKjmfdvR
-         OcdJwbfKkQGv8PegSbaCK+yJ5WGpYWjhmkWDglxHTena9DgbINaOhQHp1PXjrXNnc0
-         HiNAkfs8dYfXxVL5mP99eSTKhyKJG/liMAf+xTMSwXkwSHpbHBGjrPFMwSdafoY69K
-         vHS8RJItlBmhQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.154.159]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mfc8o-1oUywQ1Hku-00fo49; Mon, 05
- Dec 2022 09:28:46 +0100
-Message-ID: <569714f6-a913-5f7f-855a-b303adbde3ee@web.de>
-Date:   Mon, 5 Dec 2022 09:28:45 +0100
+        with ESMTP id S230161AbiLEJPJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2022 04:15:09 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC194A1A5
+        for <git@vger.kernel.org>; Mon,  5 Dec 2022 01:15:07 -0800 (PST)
+Received: (qmail 7259 invoked by uid 109); 5 Dec 2022 09:15:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 05 Dec 2022 09:15:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2244 invoked by uid 111); 5 Dec 2022 09:15:08 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 05 Dec 2022 04:15:08 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 5 Dec 2022 04:15:06 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>,
+        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] test-lib.sh: discover "git" in subdirs of
+ "contrib/buildsystems/out"
+Message-ID: <Y422mm4Bcu0BWPZt@coredump.intra.peff.net>
+References: <663b93ef-0c89-a5f6-1069-b4be97915d20@dunelm.org.uk>
+ <patch-1.1-f27d8bd4491-20221201T162451Z-avarab@gmail.com>
+ <xmqq5yeuspam.fsf@gitster.g>
+ <87f22a55-ee84-2f76-7b9b-924a97f44f89@dunelm.org.uk>
+ <221202.86sfhxg2ng.gmgdl@evledraar.gmail.com>
+ <Y4qF3iHW2s+I0yNe@coredump.intra.peff.net>
+ <221203.86pmd1dyqn.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.5.1
-Subject: Re: [PATCH 2/1] t3920: support CR-eating grep
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <febcfb0a-c410-fb71-cff9-92acfcb269e2@kdbg.org>
- <cbe88abc-c1fb-cb50-6057-47ff27f7a12d@web.de> <xmqqo7sisllv.fsf@gitster.g>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqo7sisllv.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:WwXvsPN94dj2P6ETJBNdkRAHL7Z+CF3NdbB2wowYxIApCR1ji76
- xtIkSTSxP8nPcwNkDIdp6ZY/UMwCVgFZj0LJCKt3aRNNXAfOEXRbiwOYGomFHJrtTd3Zj/s
- Il6a7Esc70ttBRw+s0nHekfeuPY/ZbimqGInzXW1jz90e7CeBw808xkfzeCxUZZ07ZCSr0a
- bF0mAhxzWygwmsSoz+jnA==
-UI-OutboundReport: notjunk:1;M01:P0:iHqn1HsL1PA=;zSQa0NJF9ekN+9EhAud2i+pu7JH
- BNVtI1F6mC7TKHcPz2u30tc/5uEIqf4+Hlf9VyhbD44127A/8pnxfFP9rGIb9AgOemDIt0E7b
- F9lpaSeqkv92zRG9Bjwluww/jLyCMgmQeRrm0ZKnex7oPjODt2LD8pdXoEZ9OPkIVUemYrE+t
- m9Xi8/e92RJlUFv4t13Fla1b4poEBln2ISomJS9Ln0vIZCZQNgIW7Dvkv6AEdXsI+Ud61j9TP
- NPg++C+imWc4cnKUgoX6Ms+kKfISDvNW7goxHwaz/soy/lmw40/ztn0Q2HunTU+n5Sc6St/kx
- 9LPOKBUe+BVltzZ50VAIiaU+I4FfZ08RPcrMWfLG0Zuj/h8z8bgHBp5dUVSPtZsqVtNGvN6tl
- k9U8D+z4k5nh5q33GrAvEShCs6Xh9k+cSJiWFZ0FgIZfrDbFhE+IVh3D23etpBnC9MUrtNpzt
- BDYQaYADqIr7Svt0/0CwqQCbVHIFlyhDD82416BqpRd4wz/kFsu760Bz6yrMhIWI2QXtAP1Ai
- 5ftODOIP7FGkNerZfVe3wUBWgG6ikANE1ZwWeCISuJia33LDgDACq15ztJlnuqLH6jOuCiAEE
- VYCmmM9jWyN0tkDCUrjX6E9pB53rzUJj6N97biVdT6tyPspW7hkOvCsSGth9hL+wItEnezL4l
- S7kdS4889DmEtV+yzH+xBKkTGcwM/bomdgTeSyeym4JG2no3NqsZC7VU4YWpyogiosRgV3kne
- kcUQhfJM0AFi8Xppo/K5/xa+09IQg3Y+8qntGtMKt6tFLlHKQQerldothTcQBytkT8sjiJ9AR
- Q4AZah7c/GlyabIAD7+RY38CWn+jktqZ5s4In74sjvVdnfYcx3UHInTbdVWZJIfKVD0pwPtUG
- u8ADkF62cTOgRZvsqEmMZ95iZvSlwziboWWolkkZWGD4LjHAyfo+69XQhw4geSpIuDlAYa7h3
- 7i5uc1N+gyaMYrCglT5SVRGv8gk=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <221203.86pmd1dyqn.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.12.22 um 02:08 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
->>  	grep 'Subject' .crlf-orig-$branch.txt | tr '\n' ' ' | sed 's/[ ]*$//'=
- | tr -d '\n' >.crlf-subject-$branch.txt &&
->> -	{ grep 'Body' .crlf-message-$branch.txt >.crlf-body-$branch.txt || tr=
-ue; } &&
->> +	grep 'Body' .crlf-orig-$branch.txt | append_cr >.crlf-body-$branch.tx=
-t &&
->
-> Doesn't append_cr unconditionally adds CR at the end?
+On Sat, Dec 03, 2022 at 02:41:04AM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-It does.
+> > I have similar feelings to you here. Back when cmake support was
+> > introduced, I explicitly wanted it to be something for people who cared
+> > about it, but that wouldn't bother people who didn't use it:
+> >
+> >   https://lore.kernel.org/git/20200427200852.GC1728884@coredump.intra.peff.net/
+> >
+> > I stand by that sentiment, but it seems to have crept up as a required
+> > thing to deal with, and that is mostly because of CI. Using cmake in CI
+> > is good for telling developers when a change they make has broken cmake.
+> > But it also makes cmake their problem, and not the folks interested in
+> > cmake.
+> 
+> That's a bit of a pain, but I don't think the main problem is its
+> integration with CI. It's that there doesn't really seem to be an
+> interest in its active maintenance & review from its supposed main
+> target audience.
 
-> Do we need to
-> touch this test again when "grep" gets fixed on the platform?
+Yeah, there are two issues:
 
-Depends on the meaning of "fixed".  If it stops removing CRs then this
-line is unaffected -- .crlf-orig-$branch.txt contains no CRs.  If it
-starts adding CRs then we'd have a problem with all grep invocations,
-which was addressed by 4d715ac05c (Windows: a test_cmp that is agnostic
-to random LF <> CRLF conversions, 2013-10-26).
+  1. People who don't care about cmake having to think about cmake at
+     all.
 
-Ren=C3=A9
+  2. People trying to fix cmake and not getting traction.
+
+My pain has usually been (1), but you were nice enough here to make it
+to (2). :)
+
+> > Now maybe attitudes have changed, and I am out of date, and cmake
+> > support is considered mature and really important (or maybe nobody even
+> > agreed with me back then ;) ). But if not, should we consider softening
+> > the CI output so that cmake failures aren't "real" failures? That seems
+> > drastic and mean, and I don't like it. But it's the root of the issue,
+> > IMHO.
+> 
+> Yeah, maybe. Maybe if we broke it we'd get people showing up to maintain
+> it again :)
+
+By the way, I looked in the archive, and me complaining about cmake has
+come up once or twice. Johannes offered some helpful guidance on the
+value of running the vsbuild tests and how we might work around them:
+
+  https://lore.kernel.org/git/nycvar.QRO.7.76.6.2008141352430.54@tvgsbejvaqbjf.bet/
+
+> > As a side note, this isn't the only such instance of this problem. Two
+> > other things to think about:
+> >
+> >   - You mentioned darwin fsmonitor code. And it's true that you can
+> >     largely ignore it if you don't touch it. But every once in a while
+> >     you get bit by it (e.g., enabling a new compiler warning which
+> >     triggers in code you don't compile on your platform, and now you
+> >     have to guess-and-check the fix with CI). This sucks, but is kind of
+> >     inevitable on a cross-platform system. I think the issue with cmake
+> >     is that because it's basically duplicating/wrapping the Makefile, it
+> >     _feels_ unnecessary to people on platforms with working make, and
+> >     triggers more frequently (because changes to the rest of the build
+> >     system may break cmake in subtle ways).
+> 
+> Yeah, we'll always have some cross-platform pain.
+> 
+> But e.g. "chmod +x" just works in the Makefile, including when we run it
+> on Windows. And I've run it on Windows CI. But just upthread of here
+> Phillip is reporting that it doesn't work from the context of the CMake
+> recipe.
+> 
+> I've been throwing some things at Windows CI, but I'm pretty stumped as
+> to what that might be.
+> 
+> Some warning on Mac OS X is trivial by comparison :)
+
+That was just an example, of course. :) I have also done this kind of
+"guess and check" with the Windows CI. I think Johannes has given
+examples in the past of how to actually connect to a running CI instance
+and debug interactively, but I've never managed to remember the correct
+incantation at the moment I needed it.
+
+> > I'm not necessarily proposing to drop the leaks CI job here. I'm mostly
+> > philosophizing about the greater problem. In the early days of Git, the
+> > cross-platform testing philosophy was: somebody who cares will test on
+> > that platform and write a patch. If they don't, how important could it
+> > be? With CI that happens automatically and it becomes everybody's
+> > problem, which is a blessing and a curse.
+> 
+> That's a definitely a bit of an irresistible digression :)
+> 
+> First, I think we can agree that however frustrating that's been (and
+> sorry!) it would be a lot worse if my average response time to the leak
+> testing breaking something was measured in months :)
+
+Yes, to be clear, I have no problem with you in terms of responsiveness
+as maintaining the leaks system. It's mostly that I have to think of
+them _at all_ when working on something unrelated (that is not itself
+introducing new leaks).
+
+> I do think that whatever issues we've had with it (and in retrospect I'd
+> do some of it differently) that it's a lot more mature these days than
+> you might remember.
+
+Yeah, it definitely has been getting better, and I admit my opinion is
+based on a longer-term experience of a changing variable. There's
+probably some clever name for that kind of bias, but I don't know it
+offhand.
+
+-Peff
