@@ -2,206 +2,87 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46314C4321E
-	for <git@archiver.kernel.org>; Mon,  5 Dec 2022 21:03:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 986D9C4321E
+	for <git@archiver.kernel.org>; Mon,  5 Dec 2022 21:04:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232691AbiLEVDk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Dec 2022 16:03:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32852 "EHLO
+        id S233857AbiLEVEu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Dec 2022 16:04:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233627AbiLEVDU (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2022 16:03:20 -0500
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B9722B251
-        for <git@vger.kernel.org>; Mon,  5 Dec 2022 13:01:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1670274073; bh=1b+mvNaN9942eiictKr8Cmz3MU4HKV51DZgm7veAlIc=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=Tmg5uHAzUUmdk08lfeCvo9IyAyZA/dUFPss/UT6LrPZXxZ2Wm79EKNqjTSurJW/XJ
-         cdZOdqR7CIGcqxGv3WYeIWHBWyKXuKzAuOeRAAmdpMfe1+itR4suc5UdLUgl+5UVH9
-         lSlG4uAYbHRM6Cu78zRs63aRxBSE1hOZp4u7B8OKeEcqHFkJOi7MbNUHx982NYUhqU
-         Fy+3CHwPfFi6sd6Bw8uI+0nvheOtpV/fwbVamdrvEMoUq8AoyUigEYOCsErTVlpRb8
-         wBLHGic9JLhLT0VjtYEb202WyuzD/1yg+xlQyryFCTgqbrMTGE8S0OgTgB7atoVN1T
-         nC6YJmV6sTyNQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.154.159]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M59nK-1p1C7p0bA4-001G4V; Mon, 05
- Dec 2022 22:01:13 +0100
-Message-ID: <a8e33b1e-1056-5f75-55b5-65c0bceef3ca@web.de>
-Date:   Mon, 5 Dec 2022 22:01:11 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.5.1
-Subject: Re: [PATCH] git-compat-util.h: introduce CALLOC(x)
-Content-Language: en-US
-To:     Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-References: <6694c52b38674859eb0390c7f62da1209a8d8ec3.1670266373.git.me@ttaylorr.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <6694c52b38674859eb0390c7f62da1209a8d8ec3.1670266373.git.me@ttaylorr.com>
+        with ESMTP id S233740AbiLEVEZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2022 16:04:25 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C469B2AC64
+        for <git@vger.kernel.org>; Mon,  5 Dec 2022 13:03:36 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id r188-20020a1c44c5000000b003d1e906ca23so71933wma.3
+        for <git@vger.kernel.org>; Mon, 05 Dec 2022 13:03:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=DOdVNsD0r6Sk9fhN0ako0bhUI8ZTaaeCJad0qSTPRc0=;
+        b=WLeU3675fNXJINu5BuzwUHdE5N4lvQ0Soev1Ws4LrdP6iTfTwyvPFt9PzySZpo/JvJ
+         zeh4QeT51xYAar8S3YiWk3oqGMYNrEx5Mj+E9V23eV4bflWuYqNwEwmbSapkwO+09EtV
+         30wAs4v4efQnanS/O3ln7nKlLZTHdx7QoDONm6nBwbwqfaxTXV4ZbJPOBkjuJz0cAK8U
+         rCyuDsSR1ijx+yifd2x851/8RqwXPUQvf9+fx+aTbz+FgWLRHApSsNjH00UCwyqIm1p7
+         hMwii0/O4czElf412zACDH9HnGjdDtkEdqnHx/vlcdCeLUCQ7D3oONiO4Mbw4PjdxdK7
+         1lSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=DOdVNsD0r6Sk9fhN0ako0bhUI8ZTaaeCJad0qSTPRc0=;
+        b=zdXwLp4KJNVdBbVhLTzMRq05C4CugZLNbsMz5sAC9PiYNjJvrl7vCuAv3iS6VhdEHL
+         h3GEaMXrDyyeZ9VBrMfd8Xx9PI3jDsp0ODt6yw1/Pav6MZopMXWJsQaeGNw3owp6Xuw0
+         QmxAFG7rjiq+dAca7JEtPX8xvCqoaVfkVGZ0N455EAFbp3fx+7wVINa0ao63ybnlfGk5
+         wJQWRG11mYvgQQp3EE4DzLAwSURRGAXq2w95MVGfl/QZ/5+VY84NB1Oj3RDlj28/0P+i
+         pKqn1ZY+/O6uy8+vBJ9TSrODiXlOwrkQPrS3md6uOFY+i6Nur3N0+/cVkADf+PLL2ku+
+         kPsA==
+X-Gm-Message-State: ANoB5pn0gBeQPObZB9C+043AH5e/WJwOdo85a/Welr46rWXkMxlnr5A6
+        fAyLWPuUERCEQCh/yoq5FXjUfV241aM=
+X-Google-Smtp-Source: AA0mqf4EZiuJNM5m4Od7b9ONUQZzemU1zMZ3jytMvKYTrSO13+r1BQ6qJUOmnesS419qUGMl/Gf/ng==
+X-Received: by 2002:a7b:c045:0:b0:3cf:6f5f:da0e with SMTP id u5-20020a7bc045000000b003cf6f5fda0emr46995427wmc.19.1670274215251;
+        Mon, 05 Dec 2022 13:03:35 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q128-20020a1c4386000000b003c71358a42dsm30713191wma.18.2022.12.05.13.03.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Dec 2022 13:03:34 -0800 (PST)
+Message-Id: <pull.1433.git.1670274213.gitgitgadget@gmail.com>
+From:   "Harshil Jani via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 05 Dec 2022 21:03:31 +0000
+Subject: [PATCH 0/2] Remove MSys Support
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:JeJhHaRMak9PtDrHYZbkfSONk+Jr2nj/7PqxCorFFAZFKApagBU
- tCxakQAOUaAz0Qn3sc2CsYDJWM5e2oYBGQqbQNUHDAzuC+DiQkOnDFgQV6DchD+rmL0R3WR
- Yr2QII0rJA0cH+rAvedgYudKaiFL0JA2iZGfsh1v+gw8DA0hbG38PpYq8sWIjz5x6YZhYUH
- xrz2hEDiUsEyyWDlHwqyQ==
-UI-OutboundReport: notjunk:1;M01:P0:SRMZIa53KZI=;2lBFM+mcPIKNXlfwgBH+Fr6LBPy
- DcYjKVxTnZGH9zOkrXkwWmaoOQELJ+k/dQ3gXxUnVmn5H/Dw4RXqMcDS7bzjlE2MTlbQM2Sx9
- JaVhKfOA8Trz1c1dU7jsCAevr4VjQxFQMyu8XcD1ytMTTUwPeXIf95Oysn6JZuIH1zQ0tXScc
- 2ylGVUvgQpR0EjdpUi8kEHHyr3Q0+OLESRFtuXp63EfYtRebFEIUof/LKKiVT3QmJItcLwW3Z
- 5Hgs8TmOyA5Y2wt7KpRelLpjIr9wWOGgwEZ/ervw/KW7rj/ZyRwp/H78yAaqpVKRUz5YBBDFv
- F4GmKw85ryzdwS/kH/HCS6VOpk4rz4n1Z93A2cDX3x4PlCFaWGbQQ0B1kaMfciJOCIv92mibI
- Q86whIgYFvhcJc8zhda/SfTCPgm0CueNBl0z0HkrcSVZpguUVRHPipvuAJTmVRjtXEQxHewcI
- XXQmAvGkSM92PYPWMr/IJvcncEh2Hs5rIhTZWlbHCI+mOTtwnOPxH//OGmjpPzT4dQCVNSmP2
- xq/QHALdotImt0ptKHfV/ONeGP7vzKaTYrtS3ED14HH958NDCCISLTBGyKecU81KfzTm4drI9
- Crt34ZG6rO5gIzuJvKa7cOWXHdBpNhcyT6e3QN+GhoF929cYFjEZKVZ1TJg8n6/zOrY7IEtyi
- GOestK4shmGO8urgDedk3vN1R2qilUqw5Tg/X+KUUZZr8opjIk4wgS+5HbJVDkU82paZJmTOb
- dC/hTweWewGM5yZwi3o1nMcLD5scFBk8o1Mc0zzqweYExBHTnE+EgsLWnB5i37Zk8S7wz3ma6
- kf79Pthoz2/LING3zAhbC0kVXYuvRtEXX2SntmhikTn7RL3VNMfSNl2vzOh2h2L5eS+ByqV21
- uh2WBYzq9DE4B/22SSIPHDmRWDufS9sBj2Z98eXP/9B53KRdIk1XT/BILbe1IOVOS0BxWD2OO
- ibDVVHpNYJ1jEyiL+q6s/0Wx0Fw=
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Harshil Jani <harshiljani2002@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 05.12.22 um 19:54 schrieb Taylor Blau:
-> When zero-initializing a struct without the use of static initializers
-> like "{ 0 }", it is common to write one of:
->
->     T *ptr =3D xcalloc(1, sizeof(T));
->     T *ptr =3D xcalloc(1, sizeof(*ptr));
->
-> These correctly initialize "*ptr" to the all-zeros value, but have a
-> couple of drawbacks. Notably, both initializations are verbose, but the
-> former is a foot-gun. If "*ptr"'s type changes to something other than
-> "T", the programmer has to remember to update not only the type of the
-> variable, but the right-hand side of its initialization, too.
->
-> In git.git, it is sometimes common to write something like:
->
->     T *ptr;
->     CALLOC_ARRAY(ptr, 1);
->
-> ...but that is confusing, since we're not initializing an array. Rather,
-> we're using the CALLOC_ARRAY() macro to pretend like we are. But since
-> the array length is 1, the effect is zero initializing a single element.
+I am trying to learn more about the git code base and came across the issue
+where the support of MSys environment was to be dropped. This patch is my
+first contribution towards it.
 
-An object and a single-element array of objects allocated on the heap are
-indistinguishable.  In that sense there is no confusion -- we are indeed
-allocating a single-element array.  But if the intent is to only get one
-thing then having to fill in 1 in the bulk order form is a bit tedious,
-especially since this is the most common kind of request.  A shortcut for
-the frequent case makes sense.
+The msysGit and the MSys v1.x has been dropped into this patch and the
+USE_NED_ALLOCATOR variable was duplicated here in the implementation so its
+deduplication was also made in this patch.
 
-> Introduce a new variant, CALLOC(x), which initializes "x" to the
-> all-zeros value, without exposing the confusing use of CALLOC_ARRAY(),
-> or the foot-guns available when using xcalloc() directly.
+Signed-off-by: Harshil-Jani harshiljani2002@gmail.com
 
-AFAIK the first "c" in "calloc" is for "continuous", not "zeroed".  A
-single object is always contiguous, so the "C" in "CALLOC" is
-tautologic if read in that way.  It fits our naming scheme for
-ALLOC_ARRAY and CALLOC_ARRAY, though, so that might not be much of a
-problem.
+Harshil-Jani (2):
+  mingw: remove duplicate `USE_NED_ALLOCATOR` directive
+  mingw: remove msysGit/MSYS1 support
 
-And there are lots of occurrences of xmalloc(sizeof(T)) and
-xmalloc(sizeof(*ptr)) that would benefit from the automatic size
-inference of ALLOC_ARRAY -- an ALLOC macro would complement
-CALLOC nicely.
+ config.mak.uname | 86 ++++++++++++++++++++----------------------------
+ 1 file changed, 35 insertions(+), 51 deletions(-)
 
-> Write a Coccinelle patch which codifies these rules, but mark it as
-> "pending" since the resulting diff is too large to include in a single
-> patch:
->
->     $ git apply .build/contrib/coccinelle/xcalloc.pending.cocci.patch
->     $ git diff --shortstat
->      89 files changed, 221 insertions(+), 178 deletions(-)
->
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> ---
-> This is a follow-up on [1], where introducing CALLOC(x) as the preferred
-> alternative to CALLOC_ARRAY(x, 1) was first suggested.
->
-> The patch is straightforward, and I am pretty sure that the Coccinelle
-> rules are right, too ;-). But as a first-time Coccinelle user, any extra
-> scrutiny on those bits would be appreciated.
->
-> The main point of discussion I think is whether we should consider
-> adopting this rule. I am biased, of course, but I think that we should.
->
-> In any case, we should focus our efforts on polishing v2.39.0, but I
-> wanted to send this out to the list before I forgot about it.
->
-> [1]: https://lore.kernel.org/git/Y1MrXoobkVKngYL1@coredump.intra.peff.ne=
-t/
->
->  contrib/coccinelle/xcalloc.pending.cocci | 21 +++++++++++++++++++++
->  git-compat-util.h                        |  8 ++++++++
->  2 files changed, 29 insertions(+)
->  create mode 100644 contrib/coccinelle/xcalloc.pending.cocci
->
-> diff --git a/contrib/coccinelle/xcalloc.pending.cocci b/contrib/coccinel=
-le/xcalloc.pending.cocci
-> new file mode 100644
-> index 0000000000..83e4ca1a68
-> --- /dev/null
-> +++ b/contrib/coccinelle/xcalloc.pending.cocci
-> @@ -0,0 +1,21 @@
-> +@@
-> +type T;
-> +T *ptr;
-> +@@
-> +- ptr =3D xcalloc(1, \( sizeof(T) \| sizeof(*ptr) \) )
-> ++ CALLOC(ptr)
-> +
-> +@@
-> +type T;
-> +identifier ptr;
-> +@@
-> +- T ptr =3D xcalloc(1, \( sizeof(T) \| sizeof(*ptr) \) );
-> ++ T ptr;
-> ++ CALLOC(ptr);
 
-This rule would turn this code:
-
-	struct foo *bar =3D xcalloc(1, sizeof(*bar));
-	int i;
-
-... into:
-
-	struct foo *bar;
-	CALLOC(bar);
-	int i;
-
-... which violates the coding guideline to not mix declarations and
-statements (-Wdeclaration-after-statement).
-
-> +
-> +@@
-> +type T;
-> +T *ptr;
-> +@@
-> +- CALLOC_ARRAY(ptr, 1)
-> ++ CALLOC(ptr)
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index a76d0526f7..827e5be89c 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -1107,6 +1107,14 @@ static inline void move_array(void *dst, const vo=
-id *src, size_t n, size_t size)
->  		memmove(dst, src, st_mult(size, n));
->  }
->
-> +/*
-> + * Like CALLOC_ARRAY, but the argument is treated as a pointer to a
-> + * single struct.
-> + *
-> + * Preferable over xcalloc(1, sizeof(...)), or CALLOC_ARRAY(..., 1).
-> + */
-> +#define CALLOC(x) (x) =3D CALLOC_ARRAY((x), 1)
-> +
->  /*
->   * These functions help you allocate structs with flex arrays, and copy
->   * the data directly into the array. For example, if you had:
-> --
-> 2.38.0.16.g393fd4c6db
-
+base-commit: 35a62bb5798092d491e6c7e688db6cb1418c9098
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1433%2FHarshil-Jani%2Fdrop-Msys-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1433/Harshil-Jani/drop-Msys-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1433
+-- 
+gitgitgadget
