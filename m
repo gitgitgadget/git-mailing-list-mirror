@@ -2,60 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 78645C47089
-	for <git@archiver.kernel.org>; Mon,  5 Dec 2022 23:31:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 824FAC4708C
+	for <git@archiver.kernel.org>; Mon,  5 Dec 2022 23:32:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231454AbiLEXbi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Dec 2022 18:31:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48534 "EHLO
+        id S231713AbiLEXcP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Dec 2022 18:32:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48944 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230036AbiLEXbh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2022 18:31:37 -0500
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59C4213F40
-        for <git@vger.kernel.org>; Mon,  5 Dec 2022 15:31:36 -0800 (PST)
-Received: by mail-pf1-x42b.google.com with SMTP id 130so12918048pfu.8
-        for <git@vger.kernel.org>; Mon, 05 Dec 2022 15:31:36 -0800 (PST)
+        with ESMTP id S230036AbiLEXcO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2022 18:32:14 -0500
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F3A61759F
+        for <git@vger.kernel.org>; Mon,  5 Dec 2022 15:32:13 -0800 (PST)
+Received: by mail-pf1-x42e.google.com with SMTP id d82so4181390pfd.11
+        for <git@vger.kernel.org>; Mon, 05 Dec 2022 15:32:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=SuuufUYL0KPfNi8WMrVons8RGyyvqYBl+OB0UuHg1c8=;
-        b=CSmnNrVbJhNY1/sEhMzd+hH+5QL4lCiYZIa1H6+wYcHV5OmcmGKl+oxItfVIVuFza0
-         01r+YuSCE3qiH162ZsE8F6eAc9feD4AijEBvrIO8c2ME0VtQTcrCc9yrqSq8o/lJuXSX
-         smaw+SQ+xaLYFyXGhNy2fkMOcYVvPMnT5dZZslNQid85FKA3PmZobqM3qf8DnbfcZ6q1
-         eqXWoMZksfrs2byzc5cGRqqg6T7QTEFMNTJFH9tDb8kYh/uueRVbhJ5HEuI0Hg0CcGqW
-         VflmA44c9Dgd6h3gfENN3wOyXQaLho6FAkWo+UX41+8A5Uf+dCJAJXzdjRAFt1u0JEWi
-         K/CQ==
+        bh=wyQ8neM57cTG4KbURBWNbgRggHcfbtZ0zZEtltVvw2Q=;
+        b=e92sLWjTl0WMHU2UDmpuSBKy+tivh2uMvvPLOizqjCkkuMOAh6ID3sysdOaFKEJjQL
+         r9cXIfrb5rM3tOHajxSJJks1TblfeH9XNey+5/8qWALiNcAsNhCUequTewMsNxD5a3F/
+         eNtpZ7EXXVA8nLnTwzoj3ruCLscDK6orH80B89L6XAwjSlGIsoBhmaJmdu6nHgyaQJGR
+         BTcV92/K7UszYHmlDEyuxxwQwC4N25jZtjJSTV1xgg2DjsSW0AnHCE/7y0g//akW3ssE
+         fHsb9ZSUsEBVnkgHum6kzEvnGma+8S6wbmKHjc+jidNtNdcerm1ek/3PbRhUxM1E0MRs
+         vhpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SuuufUYL0KPfNi8WMrVons8RGyyvqYBl+OB0UuHg1c8=;
-        b=Qwi/yrsIrXr6R1YHSucBzG9hOWITD91ghh79DK6KTTuNDtRBjGb6OUSvbXSaAbgFH/
-         /5roJN2PMy+pcIjA985mCreyLfPCAjyx6V/773/GlPjSgzufheL89L5MvEnTtnYEBsAt
-         01HIU7P5iUn0rxDV4w7+UFXwHiRUpZMAyxJ3zmsYhwe9WdgRFod1jeqAN7w5P+XoE1AD
-         mxdA4yhShSpYOUb3frgfnJvxDrtNL4n5kFaH6BLswFig5Alh8smKg5PA6430iRTEzp0k
-         znXkdMX98apKCrsq2bnqfX6wj5NDxYAVHiVCXEvKK+MR3eAQLcph+WmiMHToVOlRKtYF
-         D6Rg==
-X-Gm-Message-State: ANoB5pmj6IX7IJSVG9GwjkRBKm/t5HnM28Fts02nkeNFvTOoVs9clrsd
-        S6lKUk48AcvG7f3dou7Rz/2y
-X-Google-Smtp-Source: AA0mqf7zMaXJ1rSG98v2i5Gtd4AwDMe30C+Ha35JcFenVHuCFN3HeThHHFELUaLuwmrgcjJ4CCMXKw==
-X-Received: by 2002:a63:5b01:0:b0:477:e3df:13ac with SMTP id p1-20020a635b01000000b00477e3df13acmr44820351pgb.321.1670283095811;
-        Mon, 05 Dec 2022 15:31:35 -0800 (PST)
+        bh=wyQ8neM57cTG4KbURBWNbgRggHcfbtZ0zZEtltVvw2Q=;
+        b=gh+rNJTOIcu8cnCdTri8yBmuaKBX++4M16S0V3OXiJ6kf1DstsqQ9tqy5WYuv0J7Cl
+         a3uhn3rxvbSpEU9qguz5XJncVQpKH4sS0YIlItQGAE+qiZ2RGjGAKaro4SGyt3QNbNFH
+         tzGcAcoqy6kTx3OTkfqmmprNbfP2mz99Rbh/Ym0eNY7HogtX+QWSe/5IbIFQUDqp0VwF
+         RUv24llXi12Qt19GuJ8gk1C5E6/WKOOHQXL9JEXJIf1hDjWUgjBd+n+RcsS6+ATUTyk+
+         r6rFwlYRdVcej8FsLx6wM1xPr+2/mBNBv7Kr9jK88ie+WnlMym1aNzxbhx258Uzgh5/C
+         I8yg==
+X-Gm-Message-State: ANoB5pnU5y1bgdFaJuU32umdv73/sMsGHZa9h4Y0n/7c3Xasfj41E+Xz
+        1TEL7GbWoXWqtZz3osXihvDW
+X-Google-Smtp-Source: AA0mqf5gQ9bIOkF7xRzMAQnQv8TbS+hAZXf2MQvjpPEk7917b2xkq8YBaz5PD51iIUh08K/5l3H/vA==
+X-Received: by 2002:a62:1855:0:b0:576:9ced:ebf7 with SMTP id 82-20020a621855000000b005769cedebf7mr12999956pfy.80.1670283132894;
+        Mon, 05 Dec 2022 15:32:12 -0800 (PST)
 Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
-        by smtp.gmail.com with ESMTPSA id a9-20020a17090a6d8900b0020aacde1964sm11427252pjk.32.2022.12.05.15.31.34
+        by smtp.gmail.com with ESMTPSA id e9-20020aa79809000000b0056d98e31439sm10763799pfl.140.2022.12.05.15.32.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Dec 2022 15:31:35 -0800 (PST)
-Message-ID: <e68b4b9e-5925-bf7b-4ffb-3f72adc970dc@github.com>
-Date:   Mon, 5 Dec 2022 15:31:33 -0800
+        Mon, 05 Dec 2022 15:32:12 -0800 (PST)
+Message-ID: <b7b98123-0e78-757e-404d-024e167bfe60@github.com>
+Date:   Mon, 5 Dec 2022 15:32:11 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.5.0
-Subject: Re: [PATCH v3 01/11] protocol v2: add server-side "bundle-uri"
- skeleton
+Subject: Re: [PATCH v3 04/11] bundle-uri client: add boolean
+ transfer.bundleURI setting
 Content-Language: en-US
 To:     =?UTF-8?Q?=c3=86var_Arnfj=c3=b6r=c3=b0_Bjarmason_via_GitGitGadget?= 
         <gitgitgadget@gmail.com>, git@vger.kernel.org
@@ -65,9 +65,9 @@ Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
         dyroneteng@gmail.com, Derrick Stolee <derrickstolee@github.com>
 References: <pull.1400.v2.git.1668628302.gitgitgadget@gmail.com>
  <pull.1400.v3.git.1670262639.gitgitgadget@gmail.com>
- <beae335b85586ff88f89c551af62f91a04086781.1670262639.git.gitgitgadget@gmail.com>
+ <e46118e60f7a59ef25edf5f1378b4ef0c007cce8.1670262639.git.gitgitgadget@gmail.com>
 From:   Victoria Dye <vdye@github.com>
-In-Reply-To: <beae335b85586ff88f89c551af62f91a04086781.1670262639.git.gitgitgadget@gmail.com>
+In-Reply-To: <e46118e60f7a59ef25edf5f1378b4ef0c007cce8.1670262639.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -75,57 +75,67 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Ævar Arnfjörð Bjarmason via GitGitGadget wrote:
-> diff --git a/Documentation/gitprotocol-v2.txt b/Documentation/gitprotocol-v2.txt
-> index 59bf41cefb9..10bd2d40cec 100644
-> --- a/Documentation/gitprotocol-v2.txt
-> +++ b/Documentation/gitprotocol-v2.txt
-> @@ -578,6 +578,207 @@ and associated requested information, each separated by a single space.
+> From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
+>  <avarab@gmail.com>
+> 
+> The yet-to-be introduced client support for bundle-uri will always
+> fall back on a full clone, but we'd still like to be able to ignore a
+> server's bundle-uri advertisement entirely.
+> 
+> The new transfer.bundleURI config option defaults to 'false', but a user
+> can set it to 'true' to enable checking for bundle URIs from the origin
+> Git server using protocol v2.
+> 
+> To enable this setting by default in the correct tests, add a
+> GIT_TEST_BUNDLE_URI environment variable.
+
+It wasn't immediately clear to me from reading this patch, but it looks like
+'GIT_TEST_BUNDLE_URI' is mainly used to allow 'test-tool bundle-uri
+ls-remote' to issue the bundle URI command (since it can't use a '-c
+transfer.bundleURI=true' command line option) in patch 7 [1].
+
+If that's the only use for 'GIT_TEST_BUNDLE_URI', could you avoid the
+environment variable altogether by setting 'transfer.bundleURI=true' with
+'test_config' before the 'test-tool' call (and 'test_unconfig' after, if
+needed)? Alternatively, if you do want to be able to test the bundle URI
+protocol wholesale across all tests (e.g., in the 'linux-TEST-vars' CI job),
+then I think the environment variable makes sense.
+
+[1] https://lore.kernel.org/git/acc5a8f57f903342c47802115f8e3de9e9d588dc.1670262639.git.gitgitgadget@gmail.com/
+
+> diff --git a/t/lib-bundle-uri-protocol.sh b/t/lib-bundle-uri-protocol.sh
+> index d44c6e10f9e..77bfd4f0119 100644
+> --- a/t/lib-bundle-uri-protocol.sh
+> +++ b/t/lib-bundle-uri-protocol.sh
+> @@ -85,9 +85,10 @@ test_expect_success "connect with $BUNDLE_URI_PROTOCOL:// using protocol v2: hav
+>  '
 >  
->  	obj-info = obj-id SP obj-size
+>  test_expect_success "clone with $BUNDLE_URI_PROTOCOL:// using protocol v2: request bundle-uris" '
+> -	test_when_finished "rm -rf log cloned" &&
+> +	test_when_finished "rm -rf log cloned cloned2" &&
 >  
-> +bundle-uri
-> +~~~~~~~~~~
-
-Apologies for not following up on this patch when you updated it for v2.
-This version is much clearer in describing the bundle URI command protocol,
-especially how the 'bundle.*' config is used:
-
-> +When the client issues a `command=bundle-uri` request, the response is a
-> +list of key-value pairs provided as packet lines with value
-> +`<key>=<value>`. Each `<key>` should be interpreted as a config key from
-> +the `bundle.*` namespace to construct a list of bundles. These keys are
-> +grouped by a `bundle.<id>.` subsection, where each key corresponding to a
-> +given `<id>` contributes attributes to the bundle defined by that `<id>`.
-> +See linkgit:git-config[1] for the specific details of these keys and how
-> +the Git client will interpret their values.
+>  	GIT_TRACE_PACKET="$PWD/log" \
+> +	GIT_TEST_BUNDLE_URI=0 \
+>  	git \
+>  		-c protocol.version=2 \
+>  		clone "$BUNDLE_URI_REPO_URI" cloned \
+> @@ -99,6 +100,22 @@ test_expect_success "clone with $BUNDLE_URI_PROTOCOL:// using protocol v2: reque
+>  	# Server advertised bundle-uri capability
+>  	grep "< bundle-uri" log &&
+>  
+> +	# Client did not issue bundle-uri command
+> +	! grep "> command=bundle-uri" log &&
 > +
-> +Clients MUST parse the line according to the above format, lines that do
-> +not conform to the format SHOULD be discarded. The user MAY be warned in
-> +such a case.
-> +
+> +	GIT_TRACE_PACKET="$PWD/log" \
+> +	git \
+> +		-c transfer.bundleURI=true \
+> +		-c protocol.version=2 \
+> +		clone "$BUNDLE_URI_REPO_URI" cloned2 \
+> +		>actual 2>err &&
 
-and the response types/formats:
-
-> +URI CONTENTS::
-> +The content at the advertised URIs MUST be one of two types.
-> ++
-> +The advertised URI may contain a bundle file that `git bundle verify`
-> +would accept. I.e. they MUST contain one or more reference tips for
-> +use by the client, MUST indicate prerequisites (in any) with standard
-> +"-" prefixes, and MUST indicate their "object-format", if
-> +applicable.
-> ++
-> +The advertised URI may alternatively contain a plaintext file that `git
-> +config --list` would accept (with the `--file` option). The key-value
-> +pairs in this list are in the `bundle.*` namespace (see
-> +linkgit:git-config[1]).
-> +
-
-Regarding your point about examples in [1]: after reading the remainder of
-the series, I agree that the test cases in the later patches do a good job
-of documenting the behavior.
-
-Thanks!
-
-[1] https://lore.kernel.org/git/ca11478b-7b44-3018-04d8-0b84c4f43b56@github.com/
+If 'GIT_TEST_BUNDLE_URI' is set to '1' in a more global scope (by a CI job
+or user running the tests), then the '-c transfer.bundleURI' config isn't
+actually what's enabling the behavior. To make this more directly comparable
+to the case earlier in this test, could you add 'GIT_TEST_BUNDLE_URI=0' here
+as well?
 
