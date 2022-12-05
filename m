@@ -2,98 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C68D5C4321E
-	for <git@archiver.kernel.org>; Mon,  5 Dec 2022 14:34:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4B7BC4321E
+	for <git@archiver.kernel.org>; Mon,  5 Dec 2022 14:48:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232113AbiLEOeQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Dec 2022 09:34:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43286 "EHLO
+        id S230151AbiLEOst (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Dec 2022 09:48:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229970AbiLEOeO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2022 09:34:14 -0500
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B77D819026
-        for <git@vger.kernel.org>; Mon,  5 Dec 2022 06:34:13 -0800 (PST)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id D9FACCA1255;
-        Mon,  5 Dec 2022 09:34:12 -0500 (EST)
-Received: from [192.168.1.88] (124.sub-174-216-8.myvzw.com [174.216.8.124])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 1E812CC831F;
-        Mon,  5 Dec 2022 09:34:12 -0500 (EST)
-Message-ID: <de558eb7-8931-a5b5-d711-459ae3f52216@jeffhostetler.com>
-Date:   Mon, 5 Dec 2022 09:34:11 -0500
+        with ESMTP id S230108AbiLEOsh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2022 09:48:37 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A41C31B7A6
+        for <git@vger.kernel.org>; Mon,  5 Dec 2022 06:48:36 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id n7so8899636wms.3
+        for <git@vger.kernel.org>; Mon, 05 Dec 2022 06:48:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=smBiknFvBOb/pWyPHDMNF4jgHU9zm10tMz+NKUJJcH0=;
+        b=GNAPnXGakAltySI/AZCnR273VRHcQB0nuR7/7GJQGaXena9XUlB4qPHXVgbVquoPKk
+         t8uRVtYHmy8lLqpD9WiVEinLaRGuILXjut1Gg5UVGBh94FhsNqa/mQwA9NN1qtHIkIoa
+         pYKYNtkThxuS33ubvDtQd3b9S6WQ1O2TmSa1HOOQ0PQ1BJgZJ9l7OTfIs9kPgy2MjT72
+         FhpQYLM03NB9vwSzxhWPZJcZIpO3xY8dLwY3J0CiWERRZerobn232/N2YVeJRDmoT25S
+         EP9JjAOkwhDfAwx2PBQRiH3C5t/YQ9SkCNsV1A9ryvecjmddt2+dbDoJJh+8fwk7yAoL
+         lX0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=smBiknFvBOb/pWyPHDMNF4jgHU9zm10tMz+NKUJJcH0=;
+        b=rx69cGEgWcApVNXE6LHKIxNRl1K21NjT7BWH+5ggsK7rSDMphyySJc4rEZ5kz/d5p3
+         qNS9om1D1rrXWWPtvPCqbE4BU55EyI3qSh45ONWkshvYYTE0HirgCyCzBk+Pb4pPn6eW
+         5F1xClqub1VevdFulnhJMqnpM9xhm9tPZ+spgSQbhYJlkOrdphkAqOCpdKmehByqasWU
+         XHGVbq9YZwOLY/OBr9Yk8mI/z8Jyr9kD48JI7PV3OiUHMOtK6WQROX0y/ZE9FPQdcU8q
+         21+FYOwjjA75FMC1OgcdMvmQD4vN4u1N1ebu6fELE/88buS1l6VRxgc8+qIY7YLeuSPg
+         4oFw==
+X-Gm-Message-State: ANoB5pkIHPYZAFLXrnHlXjBK/bDV87Vkmnaq8TJTgfY6J87GhhhJzF05
+        gh2bIFnM8uKOH4eQC8VxVRKgkWe8HQc=
+X-Google-Smtp-Source: AA0mqf6VSVyrI0a8pQRgPsjE/E4Nc5QaWwhUfB8Dal8REzNUi1K3vCLOWiDeeXjyDAG5Ik4nI+LQ2g==
+X-Received: by 2002:a1c:5406:0:b0:3d1:e3ba:3bb6 with SMTP id i6-20020a1c5406000000b003d1e3ba3bb6mr984210wmb.29.1670251714949;
+        Mon, 05 Dec 2022 06:48:34 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id d15-20020a5d4f8f000000b0024246991121sm8922957wru.116.2022.12.05.06.48.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Dec 2022 06:48:34 -0800 (PST)
+Message-Id: <pull.1390.git.git.1670251713061.gitgitgadget@gmail.com>
+From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 05 Dec 2022 14:48:32 +0000
+Subject: [PATCH] maintenance: use xcalloc instead of xmalloc where possible
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH] fsmonitor: eliminate call to deprecated FSEventStream
- function
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Victoria Dye <vdye@github.com>
-Cc:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Stefan Sundin <git@stefansundin.com>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
-        Jeff Hostetler <jeffhostetler@github.com>,
-        Eric DeCosta <edecosta@mathworks.com>
-References: <pull.1436.git.1669991072393.gitgitgadget@gmail.com>
- <221202.86o7slfzot.gmgdl@evledraar.gmail.com>
- <3e2bd865-3ca5-b0f7-095e-f8b97ec8822c@jeffhostetler.com>
- <221202.867cz9fwnf.gmgdl@evledraar.gmail.com>
- <4711d955-02b2-f599-7f89-b442dd0b6215@github.com>
- <221202.86359xfs5c.gmgdl@evledraar.gmail.com>
- <1b090929-f2da-f075-01d4-458804fc0717@github.com>
- <xmqq1qphuwj6.fsf@gitster.g> <xmqqv8mqsm2g.fsf@gitster.g>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-In-Reply-To: <xmqqv8mqsm2g.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: mailmunge 3.10 on 209.68.5.199
+To:     git@vger.kernel.org
+Cc:     Rose <83477269+AtariDreams@users.noreply.github.com>,
+        Seija <doremylover123@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Seija <doremylover123@gmail.com>
 
+We can avoid having to call memset by calling xcalloc directly
 
-On 12/4/22 7:58 PM, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> 
->> I'd still prefer that our commit messages keep records of the fact
->> that we stopped supporting certain older systems and what kind of
->> due dilligence we did to decide it is a safe thing to do, which all
->> already happened in this thread, thanks to you three discussing the
->> issue.  I would be happier even with "Anything older than 2014 does
->> not matter to Apple, and we follow that stance" than without any ;-)
-> 
-> I'd propose to have an extra paragraph at the end of the commit log
-> message.
-> 
-> 1:  02a55477b6 ! 1:  df739b6087 fsmonitor: eliminate call to deprecated FSEventStream function
->      @@ Commit message
->           maintains the original blocking model by waiting on a mutex/condition
->           variable pair while the hidden thread does all of the work.
->       
->      +    While the deprecated API used by the original were introduced in
->      +    macOS 10.5 (Oct 2007), the API used by the updated code were
->      +    introduced back in macOS 10.6 (Aug 2009) and has been available
->      +    since then.  So this change _could_ break those who have happily
->      +    been using 10.5 (if there were such people), but these two dates
->      +    both predate the oldest versions of macOS Apple seems to support
->      +    anyway, so we should be safe.
->      +
->           Signed-off-by: Jeff Hostetler <jeffhostetler@github.com>
->           Signed-off-by: Junio C Hamano <gitster@pobox.com>
->       
+Signed-off-by: Seija doremylover123@gmail.com
+---
+    maintenance: use xcalloc instead of xmalloc where possible
+    
+    We can avoid having to call memset by calling xcalloc directly
+    
+    Signed-off-by: Seija doremylover123@gmail.com
 
-I like this new text.  Let's do this and call it done.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1390%2FAtariDreams%2Fcalloc-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1390/AtariDreams/calloc-v1
+Pull-Request: https://github.com/git/git/pull/1390
 
-Since I see that you have already added it to the commit message
-in the branch, so I won't resubmit it unless there are further
-technical review comments to address.
+ remote.c    | 4 +---
+ submodule.c | 3 +--
+ 2 files changed, 2 insertions(+), 5 deletions(-)
 
-Thanks all,
-Jeff
+diff --git a/remote.c b/remote.c
+index 60869beebe7..75315f3563f 100644
+--- a/remote.c
++++ b/remote.c
+@@ -2741,9 +2741,7 @@ void apply_push_cas(struct push_cas_option *cas,
+ 
+ struct remote_state *remote_state_new(void)
+ {
+-	struct remote_state *r = xmalloc(sizeof(*r));
+-
+-	memset(r, 0, sizeof(*r));
++	struct remote_state *r = xcalloc(1, sizeof(*r));
+ 
+ 	hashmap_init(&r->remotes_hash, remotes_hash_cmp, NULL, 0);
+ 	hashmap_init(&r->branches_hash, branches_hash_cmp, NULL, 0);
+diff --git a/submodule.c b/submodule.c
+index 8ac2fca855d..4ca4f6c6590 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1464,8 +1464,7 @@ static const struct submodule *get_non_gitmodules_submodule(const char *path)
+ 	if (!name)
+ 		return NULL;
+ 
+-	ret = xmalloc(sizeof(*ret));
+-	memset(ret, 0, sizeof(*ret));
++	ret = xcalloc(1, sizeof(*ret));
+ 	ret->path = name;
+ 	ret->name = name;
+ 
+
+base-commit: 805265fcf7a737664a8321aaf4a0587b78435184
+-- 
+gitgitgadget
