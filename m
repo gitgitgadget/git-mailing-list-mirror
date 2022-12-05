@@ -2,92 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B246C4321E
-	for <git@archiver.kernel.org>; Mon,  5 Dec 2022 03:26:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C6E5C4332F
+	for <git@archiver.kernel.org>; Mon,  5 Dec 2022 08:28:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231186AbiLED0K (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 4 Dec 2022 22:26:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34710 "EHLO
+        id S231770AbiLEI25 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Dec 2022 03:28:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230439AbiLED0I (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Dec 2022 22:26:08 -0500
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 571AF11A3C
-        for <git@vger.kernel.org>; Sun,  4 Dec 2022 19:26:03 -0800 (PST)
-Received: by mail-pf1-x42b.google.com with SMTP id g1so2064434pfk.2
-        for <git@vger.kernel.org>; Sun, 04 Dec 2022 19:26:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=asgBX/Y/jXj9I/9dJ2a2R1Gtk0ZD8To/wf9CEAF3Gjk=;
-        b=FQaNQzikplTjpdj3N0ntjxsY0X3A+NjMfXI4C+7DhW+QM0hc5mIw1iwTlTrIre9kLE
-         L8HiO1NnUJ/3FpdqWzrNrjD9dFWVXa/PKCn3wI9CbCRNFeDR0r0UHBjE7wX7dBsMJouQ
-         0CqT0SHZvTpM7ZIh//2GzmsH6vO/AvC6B7SL1WL3UOX7qMoES9bHfyAlJdOw+5wQ05fN
-         0GenaKq5DE51/D8bkaMB4+JsbHg2rAO8VOb9kXNFbPLDUHesCV1j2ZgF6G1o4oQQtPdB
-         hNyQkIE7xgsgJ4/VFlHujIHAQZ7fbRls/RdH2KitHRpwfGHwNK5B0LFTOvhgyxdWhiSo
-         FNRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=asgBX/Y/jXj9I/9dJ2a2R1Gtk0ZD8To/wf9CEAF3Gjk=;
-        b=7xcQZSOcfCech1vWIXJ5v+RDKDtlQrYaknrkSBu02qwh5kTiSjMaTQFMHkgUrW2GXx
-         FbkoOs2qUibbdQDAyfeDTOnwYgwbMBYb2R2tuS/ShdgVFGq0ZA+h72QCAzDrF3uQpWWw
-         WXb9OyOV85ded3H59pkhdYY8db5vmnpIGXo9rfneoUwCsBfBNT+ruQcLFYH/O3lyOF4z
-         S2AEYWMo0s+aIr+9WlO9QkUc12FSPy1bw5xD6+uQj1DuCj2hSHh7bbDMdzUbpVSX2ZN5
-         M+VeO702JAIFH7lc7FpwO/T7sB6qmQSy1zJn0/pbywER55hPFEM97S4NvPJ8TB1lEmXZ
-         ZZYQ==
-X-Gm-Message-State: ANoB5pndZCojxQNxowsstvdgwwb/YvZ9/OJMDfwkj0yVmxb3YqAgLXi/
-        E/j86Juvz74K7xecxHfBCfzOtDlncRyX8g==
-X-Google-Smtp-Source: AA0mqf6rg3gml7LtVz+2IA8E1FTka/ZRzENuEtqOugeFPK7gQ9O77WlpsqSJjscD2xFkUkc5S8wuFA==
-X-Received: by 2002:a63:1054:0:b0:42b:9219:d14e with SMTP id 20-20020a631054000000b0042b9219d14emr54721608pgq.176.1670210762694;
-        Sun, 04 Dec 2022 19:26:02 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id pw9-20020a17090b278900b00210c84b8ae5sm8127199pjb.35.2022.12.04.19.26.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Dec 2022 19:26:02 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Victoria Dye <vdye@github.com>
-Cc:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2022, #01; Thu, 1)
-References: <xmqqr0xjs46r.fsf@gitster.g>
-        <c489ad32-1308-06c9-0c92-6e39d1f82a4b@gmail.com>
-        <e0c876db-a230-dfa4-f4e1-5296ffe62c37@github.com>
-Date:   Mon, 05 Dec 2022 12:26:01 +0900
-In-Reply-To: <e0c876db-a230-dfa4-f4e1-5296ffe62c37@github.com> (Victoria Dye's
-        message of "Fri, 2 Dec 2022 12:11:16 -0800")
-Message-ID: <xmqq359usf92.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S231370AbiLEI2z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2022 03:28:55 -0500
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1503E0DB
+        for <git@vger.kernel.org>; Mon,  5 Dec 2022 00:28:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1670228926; bh=yEissstxxLzr1THC1VHrThrp/tdlW4GkJPbDEu5EInw=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=HfG5XFOskZoMTr7C59R/ZOjolR17br9vye8klLfFtaHLEcEMvLmcrKXRt9hNgJ2mc
+         5rdfCtS41CfyyBgc5NL/RJobJhxkMejq8DVbBDxHE5ry9JZU9XOqj2bMaTua+YmQxx
+         NKJVoWSQWT3EPmFpR01eDvP2zheRSFsW+E50J/d5L8xVRbXlA+hQfloSwnJKjmfdvR
+         OcdJwbfKkQGv8PegSbaCK+yJ5WGpYWjhmkWDglxHTena9DgbINaOhQHp1PXjrXNnc0
+         HiNAkfs8dYfXxVL5mP99eSTKhyKJG/liMAf+xTMSwXkwSHpbHBGjrPFMwSdafoY69K
+         vHS8RJItlBmhQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.154.159]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1Mfc8o-1oUywQ1Hku-00fo49; Mon, 05
+ Dec 2022 09:28:46 +0100
+Message-ID: <569714f6-a913-5f7f-855a-b303adbde3ee@web.de>
+Date:   Mon, 5 Dec 2022 09:28:45 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.5.1
+Subject: Re: [PATCH 2/1] t3920: support CR-eating grep
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+References: <febcfb0a-c410-fb71-cff9-92acfcb269e2@kdbg.org>
+ <cbe88abc-c1fb-cb50-6057-47ff27f7a12d@web.de> <xmqqo7sisllv.fsf@gitster.g>
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqo7sisllv.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:WwXvsPN94dj2P6ETJBNdkRAHL7Z+CF3NdbB2wowYxIApCR1ji76
+ xtIkSTSxP8nPcwNkDIdp6ZY/UMwCVgFZj0LJCKt3aRNNXAfOEXRbiwOYGomFHJrtTd3Zj/s
+ Il6a7Esc70ttBRw+s0nHekfeuPY/ZbimqGInzXW1jz90e7CeBw808xkfzeCxUZZ07ZCSr0a
+ bF0mAhxzWygwmsSoz+jnA==
+UI-OutboundReport: notjunk:1;M01:P0:iHqn1HsL1PA=;zSQa0NJF9ekN+9EhAud2i+pu7JH
+ BNVtI1F6mC7TKHcPz2u30tc/5uEIqf4+Hlf9VyhbD44127A/8pnxfFP9rGIb9AgOemDIt0E7b
+ F9lpaSeqkv92zRG9Bjwluww/jLyCMgmQeRrm0ZKnex7oPjODt2LD8pdXoEZ9OPkIVUemYrE+t
+ m9Xi8/e92RJlUFv4t13Fla1b4poEBln2ISomJS9Ln0vIZCZQNgIW7Dvkv6AEdXsI+Ud61j9TP
+ NPg++C+imWc4cnKUgoX6Ms+kKfISDvNW7goxHwaz/soy/lmw40/ztn0Q2HunTU+n5Sc6St/kx
+ 9LPOKBUe+BVltzZ50VAIiaU+I4FfZ08RPcrMWfLG0Zuj/h8z8bgHBp5dUVSPtZsqVtNGvN6tl
+ k9U8D+z4k5nh5q33GrAvEShCs6Xh9k+cSJiWFZ0FgIZfrDbFhE+IVh3D23etpBnC9MUrtNpzt
+ BDYQaYADqIr7Svt0/0CwqQCbVHIFlyhDD82416BqpRd4wz/kFsu760Bz6yrMhIWI2QXtAP1Ai
+ 5ftODOIP7FGkNerZfVe3wUBWgG6ikANE1ZwWeCISuJia33LDgDACq15ztJlnuqLH6jOuCiAEE
+ VYCmmM9jWyN0tkDCUrjX6E9pB53rzUJj6N97biVdT6tyPspW7hkOvCsSGth9hL+wItEnezL4l
+ S7kdS4889DmEtV+yzH+xBKkTGcwM/bomdgTeSyeym4JG2no3NqsZC7VU4YWpyogiosRgV3kne
+ kcUQhfJM0AFi8Xppo/K5/xa+09IQg3Y+8qntGtMKt6tFLlHKQQerldothTcQBytkT8sjiJ9AR
+ Q4AZah7c/GlyabIAD7+RY38CWn+jktqZ5s4In74sjvVdnfYcx3UHInTbdVWZJIfKVD0pwPtUG
+ u8ADkF62cTOgRZvsqEmMZ95iZvSlwziboWWolkkZWGD4LjHAyfo+69XQhw4geSpIuDlAYa7h3
+ 7i5uc1N+gyaMYrCglT5SVRGv8gk=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Victoria Dye <vdye@github.com> writes:
-
-> Rubén Justo wrote:
->> On 01-dic-2022 21:23:40, Junio C Hamano wrote:
->>> * rj/branch-copy-and-rename (2022-11-17) 2 commits
->>>  - branch: clear target branch configuration before copying or renaming
->>>  - branch: force-copy a branch to itself via @{-1} is a no-op
->>> ...
->> We can drop the first commit (branch: clear target branch configuration
->> before copying or renaming) as it needs a better approach.  But we can
->> keep the other (branch: force-copy a branch to itself via @{-1} is a
->> no-op), there were no complaints about it, I think.
+Am 05.12.22 um 02:08 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 >
-> Agreed. I think "branch: clear target branch configuration before copying or
-> renaming" is probably worth revisiting at some point, but "branch:
-> force-copy a branch to itself via @{-1} is a no-op" looks fine to be as-is.
+>>  	grep 'Subject' .crlf-orig-$branch.txt | tr '\n' ' ' | sed 's/[ ]*$//'=
+ | tr -d '\n' >.crlf-subject-$branch.txt &&
+>> -	{ grep 'Body' .crlf-message-$branch.txt >.crlf-body-$branch.txt || tr=
+ue; } &&
+>> +	grep 'Body' .crlf-orig-$branch.txt | append_cr >.crlf-body-$branch.tx=
+t &&
+>
+> Doesn't append_cr unconditionally adds CR at the end?
 
-OK, let's discard the tip one and mark the other one to be merged to
-'next'.
+It does.
 
-Thanks, both.
+> Do we need to
+> touch this test again when "grep" gets fixed on the platform?
+
+Depends on the meaning of "fixed".  If it stops removing CRs then this
+line is unaffected -- .crlf-orig-$branch.txt contains no CRs.  If it
+starts adding CRs then we'd have a problem with all grep invocations,
+which was addressed by 4d715ac05c (Windows: a test_cmp that is agnostic
+to random LF <> CRLF conversions, 2013-10-26).
+
+Ren=C3=A9
