@@ -2,118 +2,100 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B1347C4708C
-	for <git@archiver.kernel.org>; Mon,  5 Dec 2022 22:59:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 126E1C4708E
+	for <git@archiver.kernel.org>; Mon,  5 Dec 2022 23:14:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232119AbiLEW7e (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Dec 2022 17:59:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51110 "EHLO
+        id S232008AbiLEXOW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Dec 2022 18:14:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230437AbiLEW7d (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2022 17:59:33 -0500
-Received: from mail-io1-xd2b.google.com (mail-io1-xd2b.google.com [IPv6:2607:f8b0:4864:20::d2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80183C771
-        for <git@vger.kernel.org>; Mon,  5 Dec 2022 14:59:32 -0800 (PST)
-Received: by mail-io1-xd2b.google.com with SMTP id d123so3173786iof.6
-        for <git@vger.kernel.org>; Mon, 05 Dec 2022 14:59:32 -0800 (PST)
+        with ESMTP id S234134AbiLEXOD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2022 18:14:03 -0500
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F24D3AE66
+        for <git@vger.kernel.org>; Mon,  5 Dec 2022 15:13:27 -0800 (PST)
+Received: by mail-pf1-x436.google.com with SMTP id c13so5785848pfp.5
+        for <git@vger.kernel.org>; Mon, 05 Dec 2022 15:13:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=+bFKiZszbrw0TBey4qVwHiFqvDQrdeyUtHMHA8uTm34=;
-        b=HN0rj0K1vqX4idQMOFuPRwpHSAfiuJVAoUSp/NslGju+AdYR6to5A+qG71sVS8Onn+
-         aMgB4qs/NN4+IewKY8H5wUYMnb0Tpa9YS4nBlQSLs0BcL8ROfxtNqEy9l3LDjHEQ7Fos
-         IP5HNpbT1YIByfJ2BgjM+Rp9Dek97fooO13I75vahTqqbbDt1dZDuo0ZG4XKfSOot5Ll
-         S2NSItdBXaZ+ja/+3dYUb4rKm1kh3j4QnY2Pb1EKmibqN0vmiafFwV8ZoUp9R09/8GFG
-         IjmzgNmHoEJw6W6tTDQh6UWxtI4F8Y3xKD3OU8Kn0plTX5h4lKW9jJ+P4q/mBnU3X/Ja
-         m/oA==
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vpxLm5S7OvUxVBqx8ryxkYBvMYZBeDWwyrRqpm00LiU=;
+        b=B15mitsZCHeJy8BFLjsOGr98akWX/rFjlwqoKqmtmV3B+LbHe6KJe3FYPinuPkLcnk
+         Gd8GpDAE6CljRVSpldwUkkfYMaE10Rtac72dwyzDoiYgCugevJKeDsELK/TMPne3lAtf
+         01LGSRIyPdCGEfNbhBRlPHvbThKp5by30eO8/Hop4M0ZqduzMEYvV9Eydn3OcTN8PoCZ
+         EFmLEv2nUtrPiMRWbmv2ZOA7POAEQzyGSkdY1qq2mAxPJiMzE8LEuHjkfwH+hofNcQ+a
+         rpSLk1wH0URWrxNOQBqdLxzWSAoJEDceC5f1mN9V/fA8Mes4lXxKy4Ef7vVYFeMtedQd
+         X+RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+bFKiZszbrw0TBey4qVwHiFqvDQrdeyUtHMHA8uTm34=;
-        b=euclZDEz/nVocxyBV58ic3/P31f28aHwZzFh9LR13ptS6pu27Ewa5cGbnhUCEAkSYW
-         k9+iypJKY7lDhMby4FKaCe1zQRkEUfshpjaeKcXSAFPiwUyzl9+NN5E6Prxtf+QDLzm4
-         gD/CkqDRPGR82n0RPa7/Nv0zJ5G8kYGnWNMwxaBsfPwY2bTi4gPv+3z7/XleiPvjKXBZ
-         HxKiWf+BEEOvHJ+z9HCDcb2TY6BTeVNgY9GLr0Id0pNA24g77ONP4von1I00ED6iLUqX
-         7YKQUsdQaAlDPqBOVv0XuKglamvCMf7CXn0iJpQXDeOUu09DXlBNdZQ3cjfUS9lQgXH/
-         7igg==
-X-Gm-Message-State: ANoB5pml+TFaZ8Mo/e9IlQ2WeSNz7gpBJpQxYUOsTz+zsRpwjiyOrYHJ
-        zkM18wHon8+ce9n6DvIItU4kBIJI2YJffUk3
-X-Google-Smtp-Source: AA0mqf41Oq2fHQNLNT1HIl3uTqGkeJTbnNrXIGmdXN8H/JtIzuKCg0FNnBn1KQtkQihhpUpGZVIgZw==
-X-Received: by 2002:a02:a312:0:b0:389:f80a:2cb5 with SMTP id q18-20020a02a312000000b00389f80a2cb5mr13317772jai.40.1670281171818;
-        Mon, 05 Dec 2022 14:59:31 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id w62-20020a025d41000000b003884192cc05sm6109113jaa.120.2022.12.05.14.59.30
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=vpxLm5S7OvUxVBqx8ryxkYBvMYZBeDWwyrRqpm00LiU=;
+        b=qcBq7BY7OZyHTtCp6cj5WWDh2CI02Y/ffdLcjpMpjGlkCmNzQFxB8pc4pi8HhBS2IV
+         IR81VsAcENbAesU1GyYVyv7pI5Onarb1gqp56kEqoUkeVZN1OfT+x/o+g/2sCLkm7yii
+         xGbKiFVgyqd2emtaBJG3rA0VM0bzs4wj1ftNZPDTSUQjK6u+NrhI5mCzlOOrXB/HzdG/
+         oKDMGy0n6CFH5dWH1bu/ug6xYWYSp846tJ2OJ32NTtHyI0g1ehx49jZy/vVpJ/jKueMK
+         sflz+qzY7850PFCqFBLxwkDG1hqShKZbcENdM4cRHL8Zg/CrztYL+4I5c3pjrVUvjSIj
+         37gA==
+X-Gm-Message-State: ANoB5pmS1pwmvNYa+KOqoI39hZIIADjcDErpvZhqgtYBbfmh4s943MeE
+        BF7zXIsioInoLL+gwL70y+s=
+X-Google-Smtp-Source: AA0mqf6GkcR+4+DfN8i9ORP0HojxRne1UClL21SITQckBMtxcMtKYLeryfBVXq36eic7HGkpP8/g+A==
+X-Received: by 2002:a62:cd0c:0:b0:576:f200:b64f with SMTP id o12-20020a62cd0c000000b00576f200b64fmr7174361pfg.17.1670282007222;
+        Mon, 05 Dec 2022 15:13:27 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id p7-20020a170902780700b001899007a721sm11036954pll.193.2022.12.05.15.13.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Dec 2022 14:59:31 -0800 (PST)
-Date:   Mon, 5 Dec 2022 17:59:28 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Christian =?utf-8?B?R8O2dHRzY2hl?= <cgzones@googlemail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] setup: avoid unconditional open with write flags
-Message-ID: <Y453yiYAifv/oV5n@nand.local>
-References: <20221205190019.52829-1-cgzones@googlemail.com>
+        Mon, 05 Dec 2022 15:13:26 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Victoria Dye <vdye@github.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Stefan Sundin <git@stefansundin.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Jeff Hostetler <jeffhostetler@github.com>,
+        Eric DeCosta <edecosta@mathworks.com>
+Subject: Re: [PATCH] fsmonitor: eliminate call to deprecated FSEventStream
+ function
+References: <pull.1436.git.1669991072393.gitgitgadget@gmail.com>
+        <221202.86o7slfzot.gmgdl@evledraar.gmail.com>
+        <3e2bd865-3ca5-b0f7-095e-f8b97ec8822c@jeffhostetler.com>
+        <221202.867cz9fwnf.gmgdl@evledraar.gmail.com>
+        <4711d955-02b2-f599-7f89-b442dd0b6215@github.com>
+        <221202.86359xfs5c.gmgdl@evledraar.gmail.com>
+        <1b090929-f2da-f075-01d4-458804fc0717@github.com>
+        <xmqq1qphuwj6.fsf@gitster.g> <xmqqv8mqsm2g.fsf@gitster.g>
+        <de558eb7-8931-a5b5-d711-459ae3f52216@jeffhostetler.com>
+Date:   Tue, 06 Dec 2022 08:13:26 +0900
+In-Reply-To: <de558eb7-8931-a5b5-d711-459ae3f52216@jeffhostetler.com> (Jeff
+        Hostetler's message of "Mon, 5 Dec 2022 09:34:11 -0500")
+Message-ID: <xmqqsfhtphpl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221205190019.52829-1-cgzones@googlemail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 05, 2022 at 08:00:19PM +0100, Christian Göttsche wrote:
-> @@ -1669,7 +1669,14 @@ const char *resolve_gitdir_gently(const char *suspect, int *return_error_code)
->  /* if any standard file descriptor is missing open it to /dev/null */
->  void sanitize_stdfds(void)
->  {
-> -	int fd = xopen("/dev/null", O_RDWR);
+Jeff Hostetler <git@jeffhostetler.com> writes:
 
-So before we would do one syscall here unconditionally. Then in the
-common case, we'll do another syscall to close the descriptor we just
-opened. IOW, ordinarily we expect this function to execute two syscalls.
+> I like this new text.  Let's do this and call it done.
 
-> +	int fd;
-> +
-> +	if (fcntl(0, F_GETFD) != -1 &&
-> +	    fcntl(1, F_GETFD) != -1 &&
-> +	    fcntl(2, F_GETFD) != -1)
-> +		return;
+Good. Thanks.
 
-But under the same circumstances (i.e., where all three descriptors are
-already valid), we now have to make three syscalls to determine the same
-fact.
+> Since I see that you have already added it to the commit message
+> in the branch, so I won't resubmit it unless there are further
+> technical review comments to address.
+>
+> Thanks all,
 
-...So I'm not sure that I agree with brian's "this isn't making anything
-worse" statement earlier in the thread.
+Thanks for working on this.  Let's mark it for 'next'.  Even though
+we'll see -rc2 very soonish, being in 'next' this early would mean
+it will be part of the first (if we need brown paper bag fixes) or
+the second batch in the next cycle.
 
-In practice, however, it appears to be basically undetectable. Here,
-'git.old' is the pre-image of this patch, and 'git.new' is the
-post-image. I figure that running 'git -h' is about the fastest thing I
-could do:
-
-    $ hyperfine -N -L V old,new './git.{V} -h'
-    Benchmark 1: ./git.old -h
-      Time (mean ± σ):       1.6 ms ±   0.2 ms    [User: 1.1 ms, System: 0.4 ms]
-      Range (min … max):     0.8 ms …   2.2 ms    1589 runs
-
-    Benchmark 2: ./git.new -h
-      Time (mean ± σ):       1.6 ms ±   0.2 ms    [User: 1.1 ms, System: 0.4 ms]
-      Range (min … max):     0.9 ms …   2.2 ms    1746 runs
-
-    Summary
-      './git.old -h' ran
-        1.00 ± 0.14 times faster than './git.new -h'
-
-So it appears that the old version is ever-so-slightly faster than the
-new one. But it's so noisy, and the regression is so small that it's
-hard to notice it at all.
-
-So I wouldn't strongly oppose the patch based on those numbers, but in
-principle it seems flawed.
-
-Thanks,
-Taylor
