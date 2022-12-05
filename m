@@ -2,108 +2,134 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF6ABC4321E
-	for <git@archiver.kernel.org>; Sun,  4 Dec 2022 16:39:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5B46C4332F
+	for <git@archiver.kernel.org>; Mon,  5 Dec 2022 00:28:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230162AbiLDQjd convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Sun, 4 Dec 2022 11:39:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55246 "EHLO
+        id S230320AbiLEA07 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 4 Dec 2022 19:26:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229919AbiLDQj3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 4 Dec 2022 11:39:29 -0500
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBBECE1E
-        for <git@vger.kernel.org>; Sun,  4 Dec 2022 08:39:28 -0800 (PST)
-Received: by mail-pj1-f42.google.com with SMTP id hd14-20020a17090b458e00b0021909875bccso9637098pjb.1
-        for <git@vger.kernel.org>; Sun, 04 Dec 2022 08:39:28 -0800 (PST)
+        with ESMTP id S229479AbiLEA05 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 4 Dec 2022 19:26:57 -0500
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 479A0101C8
+        for <git@vger.kernel.org>; Sun,  4 Dec 2022 16:26:56 -0800 (PST)
+Received: by mail-pl1-x634.google.com with SMTP id a9so9367673pld.7
+        for <git@vger.kernel.org>; Sun, 04 Dec 2022 16:26:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QKhjVME74uZI8PBjW5p4hTUJKVmFqXRQe0zxGA8amt8=;
+        b=BxOWYD979syfvLy1YJH1Dy/TEELOBT6g70DRUpSgY1DNNHtyKnC3wT3cRQLGc4AAZK
+         MzIcRDSTdagITKKb7zBZuOcmgcP9Xhs/ynvETI0b3Qq+voZBqK4UqrifOWyGO4tUIftK
+         Xe2zJ/vk8yPy8aKgLKEdQ4qgAvrwerEHGmRJMZ6kk3lbZr9xUt4EfI3NBchzvzJO8kjp
+         5BJS8yDpt9t5nTKPmNSsROWxLgWyRhfdgtb/kQGgp7FSs7Y4rxP09z0wY6okP6TF5sjH
+         el5i7DiZAvx3c79WczYJNLKJvOcAdKdYuOeNvnKbz8oUx90mnF7oeoFOfsb1ChkWEqjc
+         mKRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hgWLSCtULWRlXCWUi2/kn9YfkLaa0S+tAyQbO9+ubQM=;
-        b=stYPeofPqowXkIBObTJd5H4Q3NcKapey5JvgAv50cDqmXkgiTarUHPiSIlqXAYq5e4
-         Ik3FDm/pwnipoDJAEivGdA6VwElLKmpYLftL4kXpFaXlwHTDyYg8aetBI3ZQW7n5BNCg
-         7YrWeMXO58+qHK4poLvuQoNGjBXtBPZ0sVOWvRvu4UWow8mbkQNHGQ/nY+O4pBkOu9o3
-         tJ+jNjRyWXJI0XxqaViXP356GNN/O4f02VX3ROzxPjmApODwdeYsghcgfzBbwX3rqBBw
-         c4jYB48sHCPpNL22qbcUB3jvHc4EZ80dF1E0WScehrUXPLqtzIpUGCulPLKntmdPkIW1
-         hmxA==
-X-Gm-Message-State: ANoB5pmOpOkEt/zVu7HrKsoqiujq/El3iMbwj+nXWdw9I4uZXlL7eqm2
-        SYdSxyTh815E0TI961OIlkNUSnmK9LGCTJo5uCQ=
-X-Google-Smtp-Source: AA0mqf58qQEWy36X2V5jgTssVMVeGFGMsxmBV/Pk1cnN3E1UOkdcZsoYUwAiWDV6dD6ExI+CgnOkQeqCSGfC8JaFN2E=
-X-Received: by 2002:a17:90a:9f46:b0:219:b1db:f7e3 with SMTP id
- q6-20020a17090a9f4600b00219b1dbf7e3mr6329019pjv.64.1670171968109; Sun, 04 Dec
- 2022 08:39:28 -0800 (PST)
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QKhjVME74uZI8PBjW5p4hTUJKVmFqXRQe0zxGA8amt8=;
+        b=v0WcNWvTbf6NEXpFArtuwCT4tOoDdlc1vuWE0UoP4YReEa6f3zzjGc7ly/B6+sPTlS
+         b7gpKPNyk3O/825kX0s0kudSJLf5TOJec5fapR2tskZLelO3VBzmU7qVFxY6HmzDS78F
+         yKyDXyyogmmol4bTdvIVWMISPZeY2ufRZ1hQjJl2ZBA0Hh40MQs8giy/jUua4+1dy4mT
+         tzMb8gZbhLkIYcCn3pLFZ1U12NQkNj6lm1beK7YBDph1dHzKM64GjKqetp7C9GvNxJ1/
+         rDTbY4MPpiEUveTmFQVOHp6DDD81IuUFLV04k99A+gx9sokZghlDtwSuCglWyVgr/ZqZ
+         HzKA==
+X-Gm-Message-State: ANoB5plOvy1e8ZLwyHJ/mJIs2nk2NJCCJMO1+oIravn5t1ImrEJQBj4Y
+        n/tdlfVBp8riluGKnhN1wAg=
+X-Google-Smtp-Source: AA0mqf4oxJfGWlQHaE9GY/V/JYDd9PuRb6IUys4IQUi8s+LWr6pXV6l3Tqn0Anyjuf1qfBUFl5M/QA==
+X-Received: by 2002:a17:903:240a:b0:188:5d24:87e with SMTP id e10-20020a170903240a00b001885d24087emr63516493plo.87.1670200015573;
+        Sun, 04 Dec 2022 16:26:55 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id h15-20020a056a00000f00b0056b6d31ac8asm8836638pfk.178.2022.12.04.16.26.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 04 Dec 2022 16:26:55 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH v3 3/8] diff tests: fix ignored exit codes in t4023
+References: <cover-v2-0.8-00000000000-20221202T000227Z-avarab@gmail.com>
+        <cover-v3-0.8-00000000000-20221202T114733Z-avarab@gmail.com>
+        <patch-v3-3.8-4ec075689f6-20221202T114733Z-avarab@gmail.com>
+Date:   Mon, 05 Dec 2022 09:26:54 +0900
+In-Reply-To: <patch-v3-3.8-4ec075689f6-20221202T114733Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 2 Dec
+ 2022 12:52:36
+        +0100")
+Message-ID: <xmqqlenmu241.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <febcfb0a-c410-fb71-cff9-92acfcb269e2@kdbg.org>
- <203cb627-2423-8a35-d280-9f9ffc66e072@web.de> <CAPig+cQack=pJ04fwEiq81x6+2AAG4ni0Gd4GQgr4FS=PERb_Q@mail.gmail.com>
- <4611a23a-e7e9-6039-5d54-c2f8cadc2f73@web.de> <221203.86lenoeipb.gmgdl@evledraar.gmail.com>
- <491ad25c-1cf3-98dd-f7aa-e8d1f24c8cd0@web.de> <221204.86cz8zecam.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221204.86cz8zecam.gmgdl@evledraar.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 4 Dec 2022 11:39:17 -0500
-Message-ID: <CAPig+cQq6Jy9y8vNCFjW+J-GDqTsgbbGJW_SZpNsrb5pkLFDPw@mail.gmail.com>
-Subject: Re: [PATCH 4/1] t3920: replace two cats with a tee
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 4, 2022 at 4:41 AM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> On Sat, Dec 03 2022, René Scharfe wrote:
-> > Am 03.12.22 um 13:53 schrieb Ævar Arnfjörð Bjarmason:
-> >> On Sat, Dec 03 2022, René Scharfe wrote:
-> >>> Am 03.12.22 um 06:09 schrieb Eric Sunshine:
-> >>>> On Fri, Dec 2, 2022 at 11:51 AM René Scharfe <l.s.r@web.de> wrote:
-> >>>>> -       cat >.crlf-orig-$branch.txt &&
-> >>>>> -       cat .crlf-orig-$branch.txt | append_cr >.crlf-message-$branch.txt &&
-> >>>>> +       tee .crlf-orig-$branch.txt | append_cr >.crlf-message-$branch.txt &&
-> >>>>
-> >>>> This feels slightly magical and more difficult to reason about than
-> >>>> using simple redirection to eliminate the second `cat`. Wouldn't this
-> >>>> work just as well?
-> >>>>
-> >>>>     cat >.crlf-orig-$branch.txt &&
-> >>>>     append_cr <.crlf-orig-$branch.txt >.crlf-message-$branch.txt &&
-> >>>
-> >>> It would work, of course, but this is the exact use case for tee(1).  No
-> >>> repetition, no extra redirection symbols, just an nicely fitting piece
-> >>> of pipework.  Don't fear the tee! ;-)
-> >>
-> >> I don't really care, but I must say I agree with Eric here. Not having
-> >> surprising patterns in the test suite has a value of its own.
-> >
-> > That's a good general guideline, but I wouldn't have expected a pipe
-> > with three holes to startle anyone. *shrug*
->
-> It's more that you're used to seeing one thing, the "cat >in" at the
-> start of a function is a common pattern.
->
-> Then it takes some time to stop and grok an a new pattern. If I was
-> hacking on a function like that I'd probably stop to try to understand
-> "why", even though I understood the "what".
->
-> I'm not saying it's not worth it in this case, just pointing out that
-> boring "standard" patterns have a value of their own in us collectively
-> understanding them, which has a value of its own. Whether optimizing a
-> test case outweighs that is another matter (sometimes it would).
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-Perhaps my experience is atypical, but in decades of using Unix, my
-use of `tee` can (probably) be counted on a single finger, so the
-patch, as implemented, did have higher cognitive load for me than a
-patch using simple redirection would have had. Anyhow, I mentioned the
-redirection approach, not to ask for a change, but only in case you
-had overlooked the (to me) simpler approach. I didn't expect it to
-spark so much discussion (though I do agree with everything Ævar has
-said about following established patterns).
+> Change a "git diff-tree" command to be &&-chained so that we won't
+> ignore its exit code, see the ea05fd5fbf7 (Merge branch
+> 'ab/keep-git-exit-codes-in-tests', 2022-03-16) topic for prior art.
+>
+> This fixes code added in b45563a229f (rename: Break filepairs with
+> different types., 2007-11-30). Due to hiding the exit code we hid a
+> memory leak under SANITIZE=leak.
+>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  t/t4023-diff-rename-typechange.sh | 12 ++++++------
+>  1 file changed, 6 insertions(+), 6 deletions(-)
 
-That said, I'm still rather unclear on the purpose of this patch. In a
-sense, it feels like mere churn for 1/100 of a second gain (assuming
-I'm reading the `hyperfine` output correctly).
+I already have this as 1ebeb849 (diff tests: fix ignored exit codes
+in t4023, 2022-12-02) on ab/t4023-avoid-losing-exit-status-of-diff
+topic.
+
+Thanks.
+
+
+>
+> diff --git a/t/t4023-diff-rename-typechange.sh b/t/t4023-diff-rename-typechange.sh
+> index 7cb99092938..25c31b0cb1b 100755
+> --- a/t/t4023-diff-rename-typechange.sh
+> +++ b/t/t4023-diff-rename-typechange.sh
+> @@ -52,8 +52,8 @@ test_expect_success setup '
+>  '
+>  
+>  test_expect_success 'cross renames to be detected for regular files' '
+> -
+> -	git diff-tree five six -r --name-status -B -M | sort >actual &&
+> +	git diff-tree five six -r --name-status -B -M >out &&
+> +	sort <out >actual &&
+>  	{
+>  		echo "R100	foo	bar" &&
+>  		echo "R100	bar	foo"
+> @@ -63,8 +63,8 @@ test_expect_success 'cross renames to be detected for regular files' '
+>  '
+>  
+>  test_expect_success 'cross renames to be detected for typechange' '
+> -
+> -	git diff-tree one two -r --name-status -B -M | sort >actual &&
+> +	git diff-tree one two -r --name-status -B -M >out &&
+> +	sort <out >actual &&
+>  	{
+>  		echo "R100	foo	bar" &&
+>  		echo "R100	bar	foo"
+> @@ -74,8 +74,8 @@ test_expect_success 'cross renames to be detected for typechange' '
+>  '
+>  
+>  test_expect_success 'moves and renames' '
+> -
+> -	git diff-tree three four -r --name-status -B -M | sort >actual &&
+> +	git diff-tree three four -r --name-status -B -M >out &&
+> +	sort <out >actual &&
+>  	{
+>  		# see -B -M (#6) in t4008
+>  		echo "C100	foo	bar" &&
