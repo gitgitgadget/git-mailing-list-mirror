@@ -2,96 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3762AC4708C
-	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 01:42:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC096C4708E
+	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 01:43:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233105AbiLFBmu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Dec 2022 20:42:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53122 "EHLO
+        id S233417AbiLFBny (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Dec 2022 20:43:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232343AbiLFBmt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2022 20:42:49 -0500
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D871BC00
-        for <git@vger.kernel.org>; Mon,  5 Dec 2022 17:42:48 -0800 (PST)
-Received: by mail-pg1-x530.google.com with SMTP id h33so12050836pgm.9
-        for <git@vger.kernel.org>; Mon, 05 Dec 2022 17:42:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Yut8f8PEYtPXF9CeQEQkUuz9Tv9IjTpwMNUl4pnmTuU=;
-        b=QYrLhHpeJeEqkTbi4o17WlJE2v3Hp47OWsRMV2HwQ0FX1ElO56V8cZttBeGIlXlkgf
-         Pl+f1r6XtmC429AKa451FdIvJsuhNkFTyKsw7NZhICHbj+8Ry+cxGb4cdBfQbDNeOYSy
-         aluCdyybP93rtH1cZVJC2uQnQOHXlYJHJKnLU731WeVU7H73+2Egu2lzpKrixVH5YYti
-         HBS43ovCzRv8PMHW3+tsNtsqpapW/cYywpLTxDsdYqdy8GiF0KWl7cZZLoswBupdoJae
-         QP6DR7KmiFYQU2bMDap+DXCtyWJAVqx32EUKo22UoWw8h8M2j9mw1i5sqDWR2KKgdQU7
-         0ppQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Yut8f8PEYtPXF9CeQEQkUuz9Tv9IjTpwMNUl4pnmTuU=;
-        b=4Z0SLzWDr9S5RcK+GU0/5DHY8qtBJtGZRpT2RzVcQAlevo5obVnAzcr4xKxSchJOaY
-         xLepaGPmajth8KWsUPcvG6aLW5h215JD+MJLVSHfft/dyM71M97DwyvAeoWzlI8W/Hoa
-         B0Eqny8he6RNvB+mT64SO9waIh/s2D9U7QlOrbVzeSuxeTIfVjeA9l3xIqv5yWfO8cME
-         EfomgGa/PGqxQkRlAy3e2I9lCff/o9F0+rxD8f3rBoyuuzzy3gfM4Kso0iG8oB/0vDS8
-         Ek7Iymcaks6MBZajmEx4o6/R1Gis/kTGXiLJ/k7KkLrNvHbOQ3gRJNg/cCnTnOJqPh5d
-         ejzw==
-X-Gm-Message-State: ANoB5pkXEJyLau64dhDKZ+pAySl4o3UVvM7fKoVK+E8zMGF8pDm/kk91
-        Bvy3AYn2rPOf6nzTgSFPm1kIxt9PEXuLDQ==
-X-Google-Smtp-Source: AA0mqf47d5aA9/MgUWuVrvUv6qYXTNgvs5oeGqbJtNJkodKXYgkQhcdghCe3x945c3zpqpaPHCHCjw==
-X-Received: by 2002:a62:198d:0:b0:572:5a7f:9f4a with SMTP id 135-20020a62198d000000b005725a7f9f4amr66832013pfz.33.1670290967755;
-        Mon, 05 Dec 2022 17:42:47 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id y2-20020a17090264c200b00189348ab156sm4206128pli.283.2022.12.05.17.42.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Dec 2022 17:42:47 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "tionis" <out@tionis.dev>
-Cc:     <git@vger.kernel.org>
-Subject: Re: bug report: git push fails in worktree
-References: <COUBW3AG192J.1UCDLVUZ38VJA@tempest>
-Date:   Tue, 06 Dec 2022 10:42:47 +0900
-In-Reply-To: <COUBW3AG192J.1UCDLVUZ38VJA@tempest> (tionis's message of "Tue,
-        06 Dec 2022 02:03:14 +0100")
-Message-ID: <xmqqr0xdnw88.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S232343AbiLFBnw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2022 20:43:52 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0153212D33
+        for <git@vger.kernel.org>; Mon,  5 Dec 2022 17:43:51 -0800 (PST)
+Received: (qmail 11319 invoked by uid 109); 6 Dec 2022 01:43:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 06 Dec 2022 01:43:51 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16078 invoked by uid 111); 6 Dec 2022 01:43:52 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 05 Dec 2022 20:43:52 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 5 Dec 2022 20:43:50 -0500
+From:   Jeff King <peff@peff.net>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-compat-util.h: introduce CALLOC(x)
+Message-ID: <Y46eVnYrcOGAbUhi@coredump.intra.peff.net>
+References: <6694c52b38674859eb0390c7f62da1209a8d8ec3.1670266373.git.me@ttaylorr.com>
+ <a8e33b1e-1056-5f75-55b5-65c0bceef3ca@web.de>
+ <Y45yaYV3xFB/xR2G@nand.local>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Y45yaYV3xFB/xR2G@nand.local>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"tionis" <out@tionis.dev> writes:
+On Mon, Dec 05, 2022 at 05:36:25PM -0500, Taylor Blau wrote:
 
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> Setup two branches.  
-> Check the main one out in a repo.  
-> Checkout the second one using a worktree with
-> ...
-> Execute git push
+> On Mon, Dec 05, 2022 at 10:01:11PM +0100, René Scharfe wrote:
+> > This rule would turn this code:
+> >
+> > 	struct foo *bar = xcalloc(1, sizeof(*bar));
+> > 	int i;
+> >
+> > ... into:
+> >
+> > 	struct foo *bar;
+> > 	CALLOC(bar);
+> > 	int i;
+> >
+> > ... which violates the coding guideline to not mix declarations and
+> > statements (-Wdeclaration-after-statement).
+> 
+> Yeah, I was wondering about this myself when I wrote this part of the
+> Coccinelle patch.
+> 
+> Is there an intelligent way to tell it to put the first statement after
+> all declarations? I couldn't find anything after a quick scan of the
+> documentation nor our own patches.
 
-There must be some steps missing still in the above description.
-You seem to be expecting "git push" to push things out to
-somewhere, but in the above sequence (I am assuming that you started
-with "git init" to create a local repository), there is nothing I
-see that tells "git push" where to push to.  There must have been
-some step not described above that sets configuration to tell where
-to push what when "git push" is run without "where to" and "what"
-on the command line.
+It feels like generating the code as above is not the end of the world.
+The most valuable thing that coccinelle is doing here is _finding_ the
+location, and telling you "it's supposed to be like this". It is great
+when the "this" post-image is perfect and doesn't need further tweaking.
 
-Well, I am assuming too much.  Your "Execute git push" may not mean
-"type g i t SPACE p u s h RETURN and do nothing else" (it may mean
-"run 'git push https://github.com/tionis/sample <RETURN>'", for
-example, and readers cannot tell).
+But if the compiler then reminds you "hey, you need to go a bit further
+manually", that doesn't seem so bad. In other words, I would be happy to
+follow that work flow if I introduced a bare xcalloc(). My only worry is
+that somebody less experienced with the project (or with C) would get
+confused.
 
-If you didn't use an extra worktree, but otherwise do the same
-thing, does "git" push out what you expect it to?
-
+-Peff
