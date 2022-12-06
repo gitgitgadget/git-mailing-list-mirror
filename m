@@ -2,1044 +2,933 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 51073C352A1
-	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 04:00:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 98193C352A1
+	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 04:01:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233778AbiLFEAM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Dec 2022 23:00:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56912 "EHLO
+        id S233417AbiLFEBA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Dec 2022 23:01:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230348AbiLFEAK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2022 23:00:10 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62DE311179;
-        Mon,  5 Dec 2022 20:00:07 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id b11so13230587pjp.2;
-        Mon, 05 Dec 2022 20:00:07 -0800 (PST)
+        with ESMTP id S230348AbiLFEAP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2022 23:00:15 -0500
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EC8911179
+        for <git@vger.kernel.org>; Mon,  5 Dec 2022 20:00:12 -0800 (PST)
+Received: by mail-pj1-x1034.google.com with SMTP id u15-20020a17090a3fcf00b002191825cf02so13564623pjm.2
+        for <git@vger.kernel.org>; Mon, 05 Dec 2022 20:00:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Bk2R7WObhVgRIcyb9y/MVTtb0oBKr9pfW4dIgUU0qWU=;
-        b=SxV2HbRu08M7gDfenEiWY6nO3T+R3Ya9D7TH0liGJR3rHCMNDcuRWRClnd/saOFOX+
-         OHKUsYKGFtqCL6ZUDuwExPfCNe2bJiK3wEh3KKtvTtjUcMd4QOInW157p1Y2AToyyJcq
-         dCKNWTdRtAo1lG9X94ur8nKWmyyFyAw/yoHZa4GvoCEB2eywzbqLtXASEopQE68Df7Pf
-         Uph/b1QwGrxSVS9524KQBSQYt5JC0/7SV8wvyFlJZ0sFYfRz342q5i3CxdwCIACESEDd
-         S1QEhUN5uGTzmi44Cq5H6jN4DeYUNjrmpVCghdKQiigVkajOWRmVkXdOCZ3oak/efWeb
-         WNhQ==
+        h=mime-version:user-agent:message-id:date:subject:to:from:sender:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=3j6Uh32EbP7wGnWAPXlNwwkA00g/NIpLPevLlJZ35CM=;
+        b=eA81W2Viz7iWYYQwzDFSa2gzl+Ci2Z7zKlE5ChuhwFyiXdCzRS1ytFqDnuuZKzR49O
+         sl6KPAkbA0mjPPHoOdFXvWwwkzmLbLIDAICPNI3GjWQCee3KL2WYGRVK69rTCcuZmZCL
+         6qYd6f2vMAI3xLarnPyi3cinKGDARRD545BW4spWXU9fh+zQk1P4sWqDkXiNA/NrGhZi
+         NCQa0SEANuDnGgZ+xsphuTHDa7PQ14ex72vmSX97LNh4M5WV8+Vt2ZUXqB20XE9HLTV/
+         a0PGlcoXV3vVGChHowlpRYdOucF7kW8sAQmN3Rd4yNxJ9DinFADEr7eveN484OsckRiJ
+         hcrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Bk2R7WObhVgRIcyb9y/MVTtb0oBKr9pfW4dIgUU0qWU=;
-        b=TJEqaw4epCKcA0bwa2QBN35cQhIO8JmR+XrtAHWuMwi6UlsWq5oGmPZdh7u4/EMF5J
-         aLUhXvIpSYRVqf6TolE31GEszFdsH+iAnWEONaV8Bl1W15oSAveYsM94OqCz0m9ZwWCO
-         L/ufpmC46GOZxcwSRyocmVF/xOGf8j+MfvUA+aUyPsMitxtayFSqZQstXXqzzQ6cBUJd
-         TBZ/wRTxHdXlNurHsPeV7KpZ8KpXJ/zF9X65uSn+4Mx7xvinlekS48KcRioM9fPdyTao
-         QTARMuWRsUNwinGDtEKFt47x9icA+2hMnfD0njgR611e2yEuArmHpCDcvyObYdRoSIpa
-         MdWQ==
-X-Gm-Message-State: ANoB5pmft5wzdv5zrJSt5vTPhuEu4PuShD71xQqA/5t1moOZXCRq3Xlx
-        fVLK92cPYLVTJwww5ycVFHjnsm3OaNf+0A==
-X-Google-Smtp-Source: AA0mqf6DwqFbaI6f+/IZ+9ZttZsZJ4UoLzVggdznyaB1nErj8+lYQHPKy4YDr/7qUGPoX/tdclHW0g==
-X-Received: by 2002:a17:90a:ce09:b0:219:cc70:5497 with SMTP id f9-20020a17090ace0900b00219cc705497mr9324307pju.138.1670299205932;
-        Mon, 05 Dec 2022 20:00:05 -0800 (PST)
+        h=mime-version:user-agent:message-id:date:subject:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3j6Uh32EbP7wGnWAPXlNwwkA00g/NIpLPevLlJZ35CM=;
+        b=bgdinWGzSYu40FbolYY7n+bBsuHEy69oQOOU4bwF4Fms/P2IjoHXsEqRr149AZXtSv
+         NMu/eyi20DVd6d0JqKNDv5sYKcabZeSJm7Uy/2kvFdDFv2tXOVu2rZL0jNJkvW2uG+YZ
+         q6TgPVubQZgWzAEYXpICW0xlkQ2U2WqG5CyajLIb43vD/v3V2fMp0Y+f+E2sS3YkyF0v
+         Cpi9i+SXwqsuXKw1pELoDdKPhsbexXRaWy4zyMnaGage9K5RpG81ulVgSUzRoahGOUKC
+         rQUDCrODypmR4FTuOCP0P7TtrRTr7RHjwnpkXFT943WilNrD3MwA4lqvvpBgwpGL1kzO
+         IuZw==
+X-Gm-Message-State: ANoB5pk3C4Y0sAOmESkjuGNSj++/WKHJKKCgoez6xqNoI13N89Vw0qB/
+        wlInc2mT8VorJRwn2iWJkOQzXTiZKHkTlg==
+X-Google-Smtp-Source: AA0mqf7cbuadDBmKvjyipGoUE9crwMDGSi6fwXhGy82LpmbabADCPdRsXgaYQJM8KFNt52yPZ53jXQ==
+X-Received: by 2002:a17:90a:3d4c:b0:219:3db6:f194 with SMTP id o12-20020a17090a3d4c00b002193db6f194mr42222687pjf.27.1670299211015;
+        Mon, 05 Dec 2022 20:00:11 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id s1-20020a635241000000b0046ff3634a78sm8965267pgl.71.2022.12.05.20.00.05
+        by smtp.gmail.com with ESMTPSA id x18-20020aa79ad2000000b005773bd639besm397563pfp.10.2022.12.05.20.00.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Dec 2022 20:00:05 -0800 (PST)
+        Mon, 05 Dec 2022 20:00:10 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Cc:     Linux Kernel <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git v2.39.0-rc2
-X-Gnus-Delayed: Tue, 06 Dec 2022 13:05:55 +0900
-Date:   Tue, 06 Dec 2022 13:00:05 +0900
-Message-ID: <xmqq7cz59o6y.fsf@gitster.g>
+Subject: What's cooking in git.git (Dec 2022, #02; Tue, 6)
+X-master-at: 2e71cbbddd64695d43383c25c7a054ac4ff86882
+X-next-at: 4a64d8e25efd5e2bc70b9be34e04379e2ce12632
+Date:   Tue, 06 Dec 2022 13:00:10 +0900
+Message-ID: <xmqqzgc189md.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A release candidate Git v2.39.0-rc2 is now available for testing at
-the usual places.  It is comprised of 463 non-merge commits since
-v2.38.0, contributed by 74 people, 30 of which are new faces [*].
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a future
+release).  Commits prefixed with '-' are only in 'seen', and aren't
+considered "accepted" at all.  A topic without enough support may be
+discarded after a long period of no activity.
 
-The tarballs are found at:
+Git 2.39-rc2 has been tagged.  Hopefully from here on it will be
+smooth sailing and we'd have a good solid Git 2.39 early next week?
 
-    https://www.kernel.org/pub/software/scm/git/testing/
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
-The following public repositories all have a copy of the
-'v2.39.0-rc2' tag and the 'master' branch that the tag points at:
+With maint, master, next, seen, todo:
 
-  url = https://git.kernel.org/pub/scm/git/git
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = https://github.com/gitster/git
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-vcs/git/
 
-New contributors whose contributions weren't in v2.38.0 are as follows.
-Welcome to the Git development community!
+With all the integration branches and topics broken out:
 
-  Alexander Kanavin, Alexander Meshcheryakov, Andreas Hasenack,
-  Anh Le, Arthur Chan, Daniel Sonbolian, Debra Obondo, Diomidis
-  Spinellis, Erik Cervin Edin, Hank Leininger, herr.kaste, John
-  A. Leuenhagen, Julia Ramer, Kevin Backhouse, Kousik Sanagavarapu,
-  Lukáš Doktor, Martin Englund, M Hickford, Michael V. Scovetta,
-  Noah Betzen, Nsengiyumva Wilberforce, orygaw, Ronan Pigott,
-  Rubén Justo, Sotir Danailov, srz_zumix, Stefano Rivera, Tim
-  Jaacks, Vincent Bernat, and Vlad-Stefan Harbuz.
+	https://github.com/gitster/git/
 
-Returning contributors who helped this release are as follows.
-Thanks for your continued support.
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
 
-  Ævar Arnfjörð Bjarmason, Alejandro R. Sedeño, Alex Henrie, Derrick
-  Stolee, Đoàn Trần Công Danh, Elijah Newren, Emily Shaffer, Eric
-  DeCosta, Eric Sunshine, Eric Wong, Glen Choo, Han-Wen Nienhuys,
-  Jan Pokorný, Jean-Noël Avila, Jeff Hostetler, Jeff King, Jerry
-  Zhang, Jiang Xin, Johannes Altmanninger, Johannes Schindelin, John
-  Cai, Jonathan Tan, Julien Moutinho, Junio C Hamano, Kyle Meyer,
-  Martin Ågren, Martin von Zweigbergk, Matthew John Cheetham,
-  Michael J Gruber, Michael McClimon, Patrick Steinhardt, Paul
-  Smith, Philip Oakley, Philippe Blain, Phillip Wood, Randall
-  S. Becker, René Scharfe, Sergey Organov, Shaoxuan Yuan, SZEDER
-  Gábor, Taylor Blau, Torsten Bögershausen, and Victoria Dye.
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
 
-[*] We are counting not just the authorship contribution but issue
-    reporting, mentoring, helping and reviewing that are recorded in
-    the commit trailers.
+Release tarballs are available at:
 
-----------------------------------------------------------------
+	https://www.kernel.org/pub/software/scm/git/
 
-Git v2.39 Release Notes (draft)
-===============================
+--------------------------------------------------
+[New Topics]
 
-UI, Workflows & Features
-------------------------
+* ab/t4023-avoid-losing-exit-status-of-diff (2022-12-05) 1 commit
+  (merged to 'next' on 2022-12-05 at 2f47548cad)
+ + t4023: fix ignored exit codes of git
 
- * "git grep" learned to expand the sparse-index more lazily and on
-   demand in a sparse checkout.
+ Test fix.
 
- * By default, use of fsmonitor on a repository on networked
-   filesystem is disabled. Add knobs to make it workable on macOS.
+ Will cook in 'next'.
+ source: <patch-v2-3.8-c5feef1c808-20221202T000227Z-avarab@gmail.com>
 
- * After checking out a "branch" that is a symbolic-ref that points at
-   another branch, "git symbolic-ref HEAD" reports the underlying
-   branch, not the symbolic-ref the user gave checkout as argument.
-   The command learned the "--no-recurse" option to stop after
-   dereferencing a symbolic-ref only once.
 
- * "git branch --edit-description @{-1}" is now a way to edit branch
-   description of the branch you were on before switching to the
-   current branch.
+* jh/t7527-unflake-by-forcing-cookie (2022-12-02) 1 commit
+  (merged to 'next' on 2022-12-05 at da8e250c87)
+ + fsmonitor: fix race seen in t7527
 
- * "git merge-tree --stdin" is a new way to request a series of merges
-   and report the merge results.
+ Make fsmonitor more robust to avoid the flakiness seen in t7527.
 
- * "git shortlog" learned to group by the "format" string.
+ Will cook in 'next'.
+ source: <pull.1437.git.1669937534944.gitgitgadget@gmail.com>
 
- * A new "--include-whitespace" option is added to "git patch-id", and
-   existing bugs in the internal patch-id logic that did not match
-   what "git patch-id" produces have been corrected.
 
- * Enable gc.cruftpacks by default for those who opt into
-   feature.experimental setting.
+* rs/plug-pattern-list-leak-in-lof (2022-12-02) 1 commit
+  (merged to 'next' on 2022-12-05 at e2c11342b1)
+ + list-objects-filter: plug pattern_list leak
 
- * "git repack" learns to send cruft objects out of the way into
-   packfiles outside the repository.
+ Leak fix.
 
- * 'scalar reconfigure -a' is taught to automatically remove
-   scalar.repo entires which no longer exist.
+ Will cook in 'next'.
+ source: <b4361c3e-852b-e30c-f240-86c34bc9c474@web.de>
 
- * Redact headers from cURL's h2h3 module in GIT_CURL_VERBOSE and
-   others.
 
- * 'git maintenance register' is taught to write configuration to an
-   arbitrary path, and 'git for-each-repo' is taught to expand tilde
-   characters in paths.
+* rs/t4205-do-not-exit-in-test-script (2022-12-02) 1 commit
+  (merged to 'next' on 2022-12-05 at 9db30340b3)
+ + t4205: don't exit test script on failure
 
- * When creating new notes, the template used to get a stray empty
-   newline, which has been removed.
+ Test fix.
 
- * "git receive-pack" used to use all the local refs as the boundary for
-   checking connectivity of the data "git push" sent, but now it uses
-   only the refs that it advertised to the pusher. In a repository with
-   the .hideRefs configuration, this reduces the resources needed to
-   perform the check.
+ Will cook in 'next'.
+ source: <c5b4d091-23c1-5a75-a255-99ec83973d8d@web.de>
 
- * With '--recurse-submodules=on-demand', all submodules are
-   recursively pushed.
 
+* ab/t5314-avoid-losing-exit-status (2022-12-02) 1 commit
+  (merged to 'next' on 2022-12-05 at ff99a5672f)
+ + t5314: check exit code of "git"
 
-Performance, Internal Implementation, Development Support etc.
---------------------------------------------------------------
+ Test fix.
 
- * With a bit of header twiddling, use the native regexp library on
-   macOS instead of the compat/ one.
+ Will cook in 'next'.
+ source: <patch-v2-1.1-ca77a7249e6-20221128T141818Z-avarab@gmail.com>
 
- * Prepare for GNU [ef]grep that throw warning of their uses.
 
- * Sources related to fuzz testing have been moved down to their own
-   directory.
+* ab/t7600-avoid-losing-exit-status-of-git (2022-12-05) 1 commit
+  (merged to 'next' on 2022-12-05 at 7105bccb5e)
+ + t7600: don't ignore "rev-parse" exit code in helper
 
- * Most credential helpers ignored unknown entries in a credential
-   description, but a few died upon seeing them.  The latter were
-   taught to ignore them, too
+ Test fix.
 
- * "scalar unregister" in a repository that is already been
-   unregistered reported an error.
+ Will cook in 'next'.
+ source: <patch-v3-1.8-64dfec31fb3-20221202T114733Z-avarab@gmail.com>
 
- * Remove error detection from a function that fetches from promisor
-   remotes, and make it die when such a fetch fails to bring all the
-   requested objects, to give an early failure to various operations.
 
- * Update CodingGuidelines to clarify what features to use and avoid
-   in C99.
+* jh/fsmonitor-darwin-modernize (2022-12-05) 1 commit
+ - fsmonitor: eliminate call to deprecated FSEventStream function
 
- * Avoid false-positive from LSan whose assumption may be broken with
-   higher optimization levels.
+ Stop using deprecated macOS API in fsmonitor.
 
- * Enable address and undefined sanitizer tasks at GitHub Actions CI.
+ Will merge to 'next'.
+ source: <pull.1436.git.1669991072393.gitgitgadget@gmail.com>
 
- * More UNUSED annotation to help using -Wunused option with the
-   compiler.
-   (merge 4b992f0a24 jk/unused-anno-more later to maint).
 
- * Rewrite a deep recursion in the skipping negotiator to use a loop
-   with on-heap prio queue to avoid stack wastage.
+* js/t3920-shell-and-or-fix (2022-12-05) 1 commit
+  (merged to 'next' on 2022-12-05 at ea2b21208d)
+ + t3920: don't ignore errors of more than one command with `|| true`
 
- * Add documentation for message IDs in fsck error messages.
+ Test fix.
 
- * Define the logical elements of a "bundle list", data structure to
-   store them in-core, format to transfer them, and code to parse
-   them.
+ Will cook in 'next'.
+ source: <febcfb0a-c410-fb71-cff9-92acfcb269e2@kdbg.org>
 
- * The role the security mailing list plays in an embargoed release
-   has been documented.
 
- * Two new facilities, "timer" and "counter", are introduced to the
-   trace2 API.
+* sx/pthread-error-check-fix (2022-12-05) 1 commit
+  (merged to 'next' on 2022-12-05 at 53ef195404)
+ + maintenance: compare output of pthread functions for inequality with 0
 
- * Code simplification by using strvec_pushf() instead of building an
-   argument in a separate strbuf.
+ Correct pthread API usage.
 
- * Make sure generated dependency file is stably sorted to help
-   developers debugging their build issues.
+ Will cook in 'next'.
+ source: <pull.1389.git.git.1670000578395.gitgitgadget@gmail.com>
 
- * The glossary entries for "commit-graph file" and "reachability
-   bitmap" have been added.
+--------------------------------------------------
+[Stalled]
 
- * Various tests exercising the transfer.credentialsInUrl
-   configuration are taught to avoid making requests which require
-   resolving localhost to reduce CI-flakiness.
+* ms/sendemail-validate-headers (2022-11-11) 1 commit
+ . Expose header information to git-send-email's sendemail-validate hook
 
- * A redundant diagnostic message is dropped from test_path_is_missing().
+ Expecting a reroll.
+ Appears to break t9001 completely?
+ source: <20221111194223.644845-2-michael.strawbridge@amd.com>
 
- * Simplify the run-command API.
 
- * Update the actions/github-script dependency in CI to avoid a
-   deprecation warning.
+* hl/archive-recursive (2022-10-19) 10 commits
+ . fixup! archive: add tests for git archive --recurse-submodules
+ . archive: add tests for git archive --recurse-submodules
+ . archive: add --recurse-submodules to git-archive command
+ . archive: remove global repository from archive_args
+ . archive: pass repo objects to write_archive handlers
+ . tree: add repository parameter to read_tree_fn_t
+ . tree: handle submodule case for read_tree_at properly
+ . tree: increase test coverage for tree.c
+ . tree: update cases to use repo_ tree methods
+ . tree: do not use the_repository for tree traversal methods.
 
- * Progress on being able to initialize a rev_info struct with a
-   macro.
+ "git archive" has been taught "--recurse-submodules" option to
+ create a tarball that includes contents from submodules.
 
- * Add trace2 counters to the region to clear skip worktree bits in a
-   sparse checkout.
+ Expecting a reroll.
+ Seems to break win+VS test(8).
+ cf. https://github.com/git/git/actions/runs/3293333066 whose only
+ difference from https://github.com/git/git/actions/runs/3293553109
+ is the inclusion of this topic.
+ source: <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com>
 
- * Modernize test script to avoid "test -f" and friends.
 
- * Avoid calling 'cache_tree_update()' when doing so would be
-   redundant.
+* pw/test-todo (2022-10-06) 3 commits
+ . test_todo: allow [verbose] test as the command
+ . test_todo: allow [!] grep as the command
+ . tests: add test_todo() to mark known breakages
 
- * Update the credential-cache documentation to provide a more
-   realistic example.
+ RFC for test framework improvement.
 
- * Makefile comments updates and reordering to clarify knobs used to
-   choose SHA implementations.
+ Needs review.
+ source: <pull.1374.git.1665068476.gitgitgadget@gmail.com>
 
- * A design document for sparse-checkout's future directions has been
-   added.
 
- * Teach chainlint.pl to annotate the original test definition instead
-   of the token stream.
+* cw/submodule-status-in-parallel (2022-11-08) 6 commits
+ - diff-lib: parallelize run_diff_files for submodules
+ - diff-lib: refactor match_stat_with_submodule
+ - submodule: move status parsing into function
+ - submodule: strbuf variable rename
+ - run-command: add duplicate_output_fn to run_processes_parallel_opts
+ - Merge branch 'ab/run-hook-api-cleanup' into cw/submodule-status-in-parallel
 
- * "make coccicheck" is time consuming. It has been made to run more
-   incrementally.
+ Allow the internal "diff-files" engine to run "how has this
+ submodule changed?" in parallel to speed up "git status".
 
- * `parse_object()` has been hardened to check for the existence of a
-   suspected blob object.
+ Waiting for review.
+ source: <20221020232532.1128326-1-calvinwan@google.com>
 
- * The build procedure has been adjusted to GNUmake version 4.4, which
-   made some changes to how pattern rule with multiple targets are
-   handled.
 
+* js/bisect-in-c (2022-08-30) 17 commits
+ . bisect: no longer try to clean up left-over `.git/head-name` files
+ . bisect: remove Cogito-related code
+ . Turn `git bisect` into a full built-in
+ . bisect: move even the command-line parsing to `bisect--helper`
+ . bisect--helper: make `state` optional
+ . bisect--helper: calling `bisect_state()` without an argument is a bug
+ . bisect: avoid double-quoting when printing the failed command
+ . bisect run: fix the error message
+ . bisect: verify that a bogus option won't try to start a bisection
+ . bisect--helper: migrate to OPT_SUBCOMMAND()
+ . bisect--helper: make the order consistently `argc, argv`
+ . bisect--helper: make `terms` an explicit singleton
+ . bisect--helper: simplify exit code computation
+ . bisect--helper: really retire `--bisect-autostart`
+ . bisect--helper: really retire --bisect-next-check
+ . bisect--helper: retire the --no-log option
+ . Merge branch 'sg/parse-options-subcommand' into js/bisect-in-c
 
-Fixes since v2.38
------------------
+ Final bits of "git bisect.sh" have been rewritten in C.
 
- * The codepath that reads from the index v4 had unaligned memory
-   accesses, which has been corrected.
+ Temporarily ejected from 'seen'. Waiting for a response on how this
+ topic interacts with 'dd/git-bisect-builtin'.
+ cf. <xmqqv8pr8903.fsf@gitster.g>
+ source: <pull.1132.v6.git.1661885419.gitgitgadget@gmail.com>
 
- * Fix messages incorrectly marked for translation.
 
- * "git fsck" failed to release contents of tree objects already used
-   from the memory, which has been fixed.
+* ed/fsmonitor-inotify (2022-11-25) 6 commits
+ - fsmonitor: update doc for Linux
+ - fsmonitor: test updates
+ - fsmonitor: enable fsmonitor for Linux
+ - fsmonitor: implement filesystem change listener for Linux
+ - fsmonitor: determine if filesystem is local or remote
+ - fsmonitor: prepare to share code between Mac OS and Linux
 
- * "git clone" did not like to see the "--bare" and the "--origin"
-   options used together without a good reason.
+ Bundled fsmonitor for Linux using inotify API.
 
- * "git remote rename" failed to rename a remote without fetch
-   refspec, which has been corrected.
+ Needs review on the updated round.
+ source: <pull.1352.v4.git.git.1669230044.gitgitgadget@gmail.com>
 
- * Documentation on various Boolean GIT_* environment variables have
-   been clarified.
 
- * "git rebase -i" can mistakenly attempt to apply a fixup to a commit
-   itself, which has been corrected.
+* ag/merge-strategies-in-c (2022-08-10) 14 commits
+ . sequencer: use the "octopus" strategy without forking
+ . sequencer: use the "resolve" strategy without forking
+ . merge: use the "octopus" strategy without forking
+ . merge: use the "resolve" strategy without forking
+ . merge-octopus: rewrite in C
+ . merge-recursive: move better_branch_name() to merge.c
+ . merge-resolve: rewrite in C
+ . merge-one-file: rewrite in C
+ . update-index: move add_cacheinfo() to read-cache.c
+ . merge-index: add a new way to invoke `git-merge-one-file'
+ . merge-index: drop the index
+ . merge-index: libify merge_one_path() and merge_all()
+ . t6060: add tests for removed files
+ . t6060: modify multiple files to expose a possible issue with merge-index
 
- * "git multi-pack-index repack/expire" used to repack unreachable
-   cruft into a new pack, which have been corrected.
+ An attempt to rewrite remaining merge strategies from shell to C.
 
- * In read-only repositories, "git merge-tree" tried to come up with a
-   merge result tree object, which it failed (which is not wrong) and
-   led to a segfault (which is bad), which has been corrected.
+ Needs more work.
+ At the minimum, we should lose 11/14 and possibly 08/14.
+ cf. <xmqq7d36vfur.fsf@gitster.g>
+ source: <20220809185429.20098-1-alban.gruin@gmail.com>
 
- * Force C locale while running tests around httpd to make sure we can
-   find expected error messages in the log.
 
- * Fix a logic in "mailinfo -b" that miscomputed the length of a
-   substring, which lead to an out-of-bounds access.
+* es/doc-creation-factor-fix (2022-07-28) 2 commits
+ . range-diff: clarify --creation-factor=<factor>
+ . format-patch: clarify --creation-factor=<factor>
 
- * The codepath to sign learned to report errors when it fails to read
-   from "ssh-keygen".
+ Expecting a reroll by somebody more familiar with the logic
+ cf. <xmqqo7wfix7p.fsf@gitster.g>
+ source: <7229p500-p2r4-on87-6802-8o90s36rr3s4@tzk.qr>
 
- * Code clean-up that results in plugging a leak.
 
- * "GIT_EDITOR=: git branch --edit-description" resulted in failure,
-   which has been corrected.
+* cw/remote-object-info (2022-08-13) 7 commits
+ . SQUASH???
+ . cat-file: add remote-object-info to batch-command
+ . transport: add client support for object-info
+ . serve: advertise object-info feature
+ . protocol-caps: initialization bug fix
+ . fetch-pack: move fetch initialization
+ . fetch-pack: refactor packet writing
 
- * The code to clean temporary object directories (used for
-   quarantine) tried to remove them inside its signal handler, which
-   was a no-no.
+ A client component to talk with the object-info endpoint.
 
- * Update comment in the Makefile about the RUNTIME_PREFIX config knob.
+ Expecting a reroll.
+ Under SANITIZE=address, t1006-cat-file.sh finds a breakage.
+ cf. <20220728230210.2952731-1-calvinwan@google.com>
+ cf. <CAFySSZDvgwbbHCHfyuaqX3tKsr-GjJ9iihygg6rNNe46Ys7_EA@mail.gmail.com>
+ source: <20220728230210.2952731-1-calvinwan@google.com>
 
- * Clarify that "the sentence after <area>: prefix does not begin with
-   a capital letter" rule applies only to the commit title.
+--------------------------------------------------
+[Cooking]
 
- * "git branch --edit-description" on an unborh branch misleadingly
-   said that no such branch exists, which has been corrected.
+* od/ci-use-checkout-v3-when-applicable (2022-12-06) 1 commit
+ - ci(main): upgrade actions/checkout to v3
 
- * Work around older clang that warns against C99 zero initialization
-   syntax for struct.
+ Update GitHub CI to use actions/checkout@v3; use of the older
+ checkout@v2 gets annoying deprecation notices.
+ source: <pull.1354.v2.git.git.1670234474721.gitgitgadget@gmail.com>
 
- * Giving "--invert-grep" and "--all-match" without "--grep" to the
-   "git log" command resulted in an attempt to access grep pattern
-   expression structure that has not been allocated, which has been
-   corrected.
-   (merge db84376f98 ab/grep-simplify-extended-expression later to maint).
 
- * "git diff rev^!" did not show combined diff to go to the rev from
-   its parents.
-   (merge a79c6b6081 rs/diff-caret-bang-with-parents later to maint).
+* jk/avoid-redef-system-functions (2022-12-05) 3 commits
+  (merged to 'next' on 2022-12-05 at e6e44a4d66)
+ + Merge branch 'jk/avoid-redef-system-functions-2.30' into jk/avoid-redef-system-functions
+  (merged to 'next' on 2022-12-01 at 7b6131f09f)
+ + Merge branch 'jk/avoid-redef-system-functions-2.30'
+ + Merge branch 'jk/avoid-redef-system-functions-2.30' into maint
+ (this branch uses jk/avoid-redef-system-functions-2.30.)
 
- * Allow configuration files in "protected" scopes to include other
-   configuration files.
-   (merge ecec57b3c9 gc/bare-repo-discovery later to maint).
+ The jk/avoid-redef-system-functions-2.30 topic pre-merged for more
+ recent codebase.
 
- * Give a bit more diversity to macOS CI by using sha1dc in one of the
-   jobs (the other one tests Apple Common Crypto).
-   (merge 1ad5c3df35 jc/ci-osx-with-sha1dc later to maint).
+ Will cook in 'next'.
 
- * A bugfix with tracing support in midx codepath
-   (merge e9c3839944 tb/midx-bitmap-selection-fix later to maint).
 
- * When geometric repacking feature is in use together with the
-   --pack-kept-objects option, we lost packs marked with .keep files.
-   (merge 197443e80a tb/save-keep-pack-during-geometric-repack later to maint).
+* jk/avoid-redef-system-functions-2.30 (2022-12-05) 2 commits
+  (merged to 'next' on 2022-12-05 at 9a9b96be8d)
+ + git-compat-util: undefine system names before redeclaring them
+  (merged to 'next' on 2022-12-01 at b52a884362)
+ + git-compat-util: avoid redefining system function names
+ (this branch is used by jk/avoid-redef-system-functions.)
 
- * Move a global variable added as a hack during regression fixes to
-   its proper place in the API.
-   (merge 0b0ab95f17 ab/run-hook-api-cleanup later to maint).
+ Redefining system functions for a few functions did not follow our
+ usual "implement git_foo() and #define foo(args) git_foo(args)"
+ pattern, which has broken build for some folks.
 
- * Update to build procedure with VS using CMake/CTest.
-   (merge c858750b41 js/cmake-updates later to maint).
+ Will cook in 'next'.
+ source: <Y4fH4rhcSztHwKvK@coredump.intra.peff.net>
 
- * The short-help text shown by "git cmd -h" and the synopsis text
-   shown at the beginning of "git help cmd" have been made more
-   consistent.
 
- * When creating a multi-pack bitmap, remove per-pack bitmap files
-   unconditionally as they will never be consulted.
-   (merge 55d902cd61 tb/remove-unused-pack-bitmap later to maint).
+* jt/avoid-lazy-fetch-commits (2022-12-02) 4 commits
+ - commit: don't lazy-fetch commits
+ - object-file: refactor replace object lookup
+ - object-file: refactor corrupt object diagnosis
+ - object-file: reread object with exact same args
 
- * Fix a longstanding syntax error in Git.pm error codepath.
+ Even in a repository with promissor remote, it is useless to
+ attempt to lazily attempt fetching an object that is expected to be
+ commit, because no "filter" mode omits commit objects.  Take
+ advantage of this assumption to fail fast on errors.
 
- * "git diff --stat" etc. were invented back when everything was ASCII
-   and strlen() was a way to measure the display width of a string;
-   adjust them to compute the display width assuming UTF-8 pathnames.
-   (merge ce8529b2bb tb/diffstat-with-utf8-strwidth later to maint).
+ Seems to break CI (win test (7)).
+ cf. https://github.com/git/git/actions/runs/3591107183/jobs/6045374690
+ source: <cover.1669922792.git.jonathantanmy@google.com>
 
- * "git branch --edit-description" can exit with status -1 which is
-   not a good practice; it learned to use 1 as everybody else instead.
 
- * "git apply" limits its input to a bit less than 1 GiB.
+* rs/diff-parseopts (2022-12-02) 3 commits
+  (merged to 'next' on 2022-12-05 at 7cf5090e50)
+ + diff: remove parseopts member from struct diff_options
+ + diff: use add_diff_options() in diff_opt_parse()
+ + diff: factor out add_diff_options()
 
- * Merging a branch with directory renames into a branch that changes
-   the directory to a symlink was mishandled by the ort merge
-   strategy, which has been corrected.
+ The way the diff machinery prepares the options array for the
+ parse_options API has been refactored to avoid resource leaks.
 
- * A bugfix to "git subtree" in its split and merge features.
+ Will cook in 'next'.
+ source: <19325420-5630-87bb-0c2c-362151214b36@web.de>
 
- * Fix some bugs in the reflog messages when rebasing and changes the
-   reflog messages of "rebase --apply" to match "rebase --merge" with
-   the aim of making the reflog easier to parse.
 
- * "git rebase --keep-base" used to discard the commits that are
-   already cherry-picked to the upstream, even when "keep-base" meant
-   that the base, on top of which the history is being rebuilt, does
-   not yet include these cherry-picked commits.  The --keep-base
-   option now implies --reapply-cherry-picks and --no-fork-point
-   options.
+* sa/git-var-empty (2022-11-27) 2 commits
+  (merged to 'next' on 2022-12-01 at 3b81dcb382)
+ + var: allow GIT_EDITOR to return null
+ + var: do not print usage() with a correct invocation
 
- * The way "git repack" creared temporary files when it received a
-   signal was prone to deadlocking, which has been corrected.
+ "git var UNKNOWN_VARIABLE" and "git var VARIABLE" with the variable
+ given an empty value used to behave identically.  Now the latter
+ just gives an empty output, while the former still gives an error
+ message.
 
- * Various tests exercising the transfer.credentialsInUrl
-   configuration are taught to avoid making requests which require
-   resolving localhost to reduce CI-flakiness.
+ Will cook in 'next'.
+ source: <pull.1434.v3.git.1669472277.gitgitgadget@gmail.com>
 
- * The adjust_shared_perm() helper function learned to refrain from
-   setting the "g+s" bit on directories when it is not necessary.
 
- * "git archive" mistakenly complained twice about a missing
-   executable, which has been corrected.
+* jx/t1301-updates (2022-11-30) 3 commits
+ - t1301: do not change $CWD in "shared=all" test case
+ - t1301: use test_when_finished for cleanup
+ - t1301: fix wrong template dir for git-init
 
- * Fix a bug where `git branch -d` did not work on an orphaned HEAD.
+ Test updates.
+ source: <20221128130323.8914-1-worldhello.net@gmail.com>
 
- * `git rebase --update-refs` would delete references when all
-   `update-ref` commands in the sequencer were removed, which has been
-   corrected.
 
- * Fix a regression in the bisect-helper which mistakenly treats
-   arguments to the command given to 'git bisect run' as arguments to
-   the helper.
+* km/send-email-with-v-reroll-count (2022-11-30) 2 commits
+ - SQUASH???
+ - send-email: relay '-v N' to format-patch
 
- * Correct an error where `git rebase` would mistakenly use a branch or
-   tag named "refs/rewritten/xyz" when missing a rebase label.
+ "git send-email -v 3" used to be expanded to "git send-email
+ --validate 3" when the user meant to pass them down to
+ "format-patch", which has been corrected.
 
- * Assorted fixes of parsing end-user input as integers.
-   (merge 14770cf0de pw/config-int-parse-fixes later to maint).
+ Seems to break CI.
+ source: <87edtp5uws.fsf@kyleam.com>
 
- * "git prune" may try to iterate over .git/objects/pack for trash
-   files to remove in it, and loudly fail when the directory is
-   missing, which is not necessary.  The command has been taught to
-   ignore such a failure.
-   (merge 6974765352 ew/prune-with-missing-objects-pack later to maint).
 
- * Add one more candidate directory that may house httpd modules while
-   running tests.
-   (merge 1c7dc23d41 es/locate-httpd-module-location-in-test later to maint).
+* so/diff-merges-more (2022-11-30) 6 commits
+ - SQUASH??? cocci fix
+ - diff-merges: issue warning on lone '-m' option
+ - diff-merges: support list of values for --diff-merges
+ - diff-merges: implement log.diffMergesForce config
+ - diff-merges: implement log.diffMerges-m-imply-p config
+ - diff-merges: implement [no-]hide option and log.diffMergesHide config
 
- * A handful of leaks in the line-log machinery have been plugged.
+ Assorted updates to "--diff-merges=X" option.
 
- * The format of a line in /proc/cpuinfo that describes a CPU on s390x
-   looked different from everybody else, and the code in chainlint.pl
-   failed to parse it.
-   (merge 1f51b77f4f ah/chainlint-cpuinfo-parse-fix later to maint).
+ Seems to break CI.
+ Cocci complains about "if (func_ptr != NULL)"
+ cf. https://github.com/git/git/actions/runs/3583592108/jobs/6029213624
+ source: <20221127093721.31012-1-sorganov@gmail.com>
 
- * Adjust the GitHub CI to newer ubuntu release.
-   (merge 0d3507f3e7 jx/ci-ubuntu-fix later to maint).
 
- * Other code cleanup, docfix, build fix, etc.
-   (merge 413bc6d20a ds/cmd-main-reorder later to maint).
-   (merge 8d2863e4ed nw/t1002-cleanup later to maint).
-   (merge 7c2dc122f9 rs/list-objects-filter-leakfix later to maint).
-   (merge 288fcb1c94 zk/push-use-bitmaps later to maint).
-   (merge 42db324c0f km/merge-recursive-typofix later to maint).
+* ab/config-multi-and-nonbool (2022-11-27) 9 commits
+ - for-each-repo: with bad config, don't conflate <path> and <cmd>
+ - config API: add "string" version of *_value_multi(), fix segfaults
+ - config API users: test for *_get_value_multi() segfaults
+ - for-each-repo: error on bad --config
+ - config API: have *_multi() return an "int" and take a "dest"
+ - versioncmp.c: refactor config reading next commit
+ - config tests: add "NULL" tests for *_get_value_multi()
+ - config tests: cover blind spots in git_die_config() tests
+ - for-each-repo tests: test bad --config keys
 
-----------------------------------------------------------------
+ Assorted config API updates.
 
-Changes since v2.38.0 are as follows:
+ Waiting for review.
+ source: <cover-v3-0.9-00000000000-20221125T093158Z-avarab@gmail.com>
 
-Alejandro R. Sedeño (1):
-      git-compat-util.h: GCC deprecated message arg only in GCC 4.5+
 
-Alex Henrie (2):
-      fsmonitor--daemon: don't translate literal commands
-      push: improve grammar of branch.autoSetupMerge advice
+* yn/git-jump-emacs (2022-11-27) 3 commits
+  (merged to 'next' on 2022-11-29 at d0960938a0)
+ + git-jump: invoke emacs/emacsclient
+ + git-jump: move valid-mode check earlier
+ + git-jump: add an optional argument '--stdout'
 
-Andreas Hasenack (1):
-      chainlint.pl: fix /proc/cpuinfo regexp
+ "git jump" (in contrib/) learned to present the "quickfix list" to
+ its standard output (instead of letting it consumed by the editor
+ it invokes), and learned to also drive emacs/emacsclient.
 
-Anh Le (2):
-      index: add trace2 region for clear skip worktree
-      index: raise a bug if the index is materialised more than once
+ Will cook in 'next'.
+ source: <pull.1423.v8.git.1669511933.gitgitgadget@gmail.com>
 
-Arthur Chan (1):
-      fuzz: reorganise the path for existing oss-fuzz fuzzers
 
-Daniel Sonbolian (1):
-      git.c: improve code readability in cmd_main()
+* sa/cat-file-mailmap--batch-check (2022-12-02) 2 commits
+ - cat-file: add mailmap support to --batch-check option
+ - cat-file: add mailmap support to -s option
 
-Debra Obondo (1):
-      t7001-mv.sh: modernizing test script using functions
+ 'cat-file' gains mailmap support for its '--batch-check' and '-s'
+ options.
+ source: <20221201155504.320461-1-siddharthasthana31@gmail.com>
 
-Derrick Stolee (15):
-      maintenance: add 'unregister --force'
-      scalar: make 'unregister' idempotent
-      gc: replace config subprocesses with API calls
-      string-list: document iterator behavior on NULL input
-      bundle-uri: fix technical doc issues
-      bundle-uri: use plain string in find_temp_filename()
-      bundle-uri: create bundle_list struct and helpers
-      bundle-uri: create base key-value pair parsing
-      bundle-uri: parse bundle list in config format
-      bundle-uri: limit recursion depth for bundle lists
-      bundle: properly clear all revision flags
-      bundle-uri: fetch a list of bundles
-      bundle: add flags to verify_bundle()
-      bundle-uri: quiet failed unbundlings
-      bundle-uri: suppress stderr from remote-https
 
-Diomidis Spinellis (1):
-      grep: fix multibyte regex handling under macOS
+* ab/tag-object-type-errors (2022-11-22) 5 commits
+ - tag: don't emit potentially incorrect "object is a X, not a Y"
+ - tag: don't misreport type of tagged objects in errors
+ - object tests: add test for unexpected objects in tags
+ - object-file.c: free the "t.tag" in check_tag()
+ - Merge branch 'jk/parse-object-type-mismatch' into ab/tag-object-type-errors
 
-Elijah Newren (4):
-      merge-ort: fix bug with dir rename vs change dir to symlink
-      merge-tree: update documentation for differences in -z output
-      merge-tree: support multiple batched merges with --stdin
-      sparse-checkout.txt: new document with sparse-checkout directions
+ Hardening checks around mismatched object types when one of those
+ objects is a tag.
 
-Emily Shaffer (2):
-      gc: add tests for --cruft and friends
-      config: let feature.experimental imply gc.cruftPacks=true
+ Needs review.
+ source: <cover-0.4-00000000000-20221118T113442Z-avarab@gmail.com>
 
-Eric DeCosta (6):
-      fsmonitor: refactor filesystem checks to common interface
-      fsmonitor: relocate socket file if .git directory is remote
-      fsmonitor: avoid socket location check if using hook
-      fsmonitor: deal with synthetic firmlinks on macOS
-      fsmonitor: check for compatability before communicating with fsmonitor
-      fsmonitor: add documentation for allowRemote and socketDir options
-
-Eric Sunshine (9):
-      check-non-portable-shell: detect obsolescent egrep/fgrep
-      chainlint: add explanatory comments
-      chainlint: tighten accuracy when consuming input stream
-      chainlint: latch start/end position of each token
-      chainlint: annotate original test definition rather than token stream
-      chainlint: sidestep impoverished macOS "terminfo"
-      chainlint: latch line numbers at which each token starts and ends
-      chainlint: prefix annotated test definition with line numbers
-      lib-httpd: extend module location auto-detection
-
-Eric Wong (2):
-      delta-islands: free island-related data after use
-      prune: quiet ENOENT on missing directories
-
-Glen Choo (3):
-      config: respect includes in protected config
-      http: redact curl h2h3 headers in info
-      object-file: use real paths when adding alternates
-
-Han-Wen Nienhuys (1):
-      refs: unify parse_worktree_ref() and ref_type()
-
-Jean-Noël Avila (1):
-      i18n: fix command template placeholder format
-
-Jeff Hostetler (9):
-      config.mak.dev: disable suggest braces error on old clang versions
-      trace2: use size_t alloc,nr_open_regions in tr2tls_thread_ctx
-      tr2tls: clarify TLS terminology
-      api-trace2.txt: elminate section describing the public trace2 API
-      trace2: rename the thread_name argument to trace2_thread_start
-      trace2: improve thread-name documentation in the thread-context
-      trace2: convert ctx.thread_name from strbuf to pointer
-      trace2: add stopwatch timers
-      trace2: add global counter mechanism
-
-Jeff King (43):
-      fsck: free tree buffers after walking unreachable objects
-      fsck: turn off save_commit_buffer
-      parse_object_buffer(): respect save_commit_buffer
-      clone: allow "--bare" with "-o"
-      remote: handle rename of remote without fetch refspec
-      shell: add basic tests
-      shell: limit size of interactive commands
-      sequencer: detect author name errors in read_author_script()
-      test-submodule: inline resolve_relative_url() function
-      multi-pack-index: avoid writing to global in option callback
-      commit: avoid writing to global in option callback
-      attr: drop DEBUG_ATTR code
-      dir: use fspathncmp() in pl_hashmap_cmp()
-      fsmonitor: fix leak of warning message
-      diffstat_consume(): assert non-zero length
-      submodule--helper: drop unused argc from module_list_compute()
-      update-index: drop unused argc from do_reupdate()
-      mark unused parameters in trivial compat functions
-      object-file: mark unused parameters in hash_unknown functions
-      string-list: mark unused callback parameters
-      date: mark unused parameters in handler functions
-      apply: mark unused parameters in handlers
-      apply: mark unused parameters in noop error/warning routine
-      convert: mark unused parameter in null stream filter
-      diffcore-pickaxe: mark unused parameters in pickaxe functions
-      ll-merge: mark unused parameters in callbacks
-      Makefile: force -O0 when compiling with SANITIZE=leak
-      repack: convert "names" util bitfield to array
-      repack: populate extension bits incrementally
-      repack: expand error message for missing pack files
-      repack: use tempfiles for signal cleanup
-      repack: drop remove_temporary_files()
-      Git.pm: trust rev-parse to find bare repositories
-      t7700: annotate cruft-pack failure with ok=sigpipe
-      shortlog: accept `--date`-related options
-      Makefile: force -O0 when compiling with SANITIZE=leak
-      t5516: move plaintext-password tests from t5601 and t5516
-      ref-filter: fix parsing of signatures without blank lines
-      ref-filter: fix parsing of signatures with CRLF and no body
-      branch: gracefully handle '-d' on orphan HEAD
-      t: run t5551 tests with both HTTP and HTTP/2
-      parse_object(): drop extra "has" check before checking object type
-      parse_object(): check on-disk type of suspected blob
-
-Jerry Zhang (6):
-      patch-id: fix stable patch id for binary / header-only
-      patch-id: use stable patch-id for rebases
-      builtin: patch-id: fix patch-id with binary diffs
-      patch-id: fix patch-id for mode changes
-      builtin: patch-id: add --verbatim as a command mode
-      builtin: patch-id: remove unused diff-tree prefix
-
-Jiang Xin (5):
-      t5516: fail to run in verbose mode
-      github-actions: run gcc-8 on ubuntu-20.04 image
-      ci: remove the pipe after "p4 -V" to catch errors
-      ci: use the same version of p4 on both Linux and macOS
-      ci: install python on ubuntu
-
-Johannes Altmanninger (1):
-      sequencer: avoid dropping fixup commit that targets self via commit-ish
-
-Johannes Schindelin (11):
-      merge-ort: fix segmentation fault in read-only repositories
-      merge-ort: return early when failing to write a blob
-      cmake: make it easier to diagnose regressions in CTest runs
-      cmake: copy the merge tools for testing
-      add -p: avoid ambiguous signed/unsigned comparison
-      cmake: avoid editing t/test-lib.sh
-      cmake: increase time-out for a long-running test
-      t5516/t5601: be less strict about the number of credential warnings
-      scalar reconfigure -a: remove stale `scalar.repo` entries
-      ci: use a newer `github-script` version
-      tests(scalar): tighten the stale `scalar.repo` test some
-
-John Cai (3):
-      tmp-objdir: skip clean up when handling a signal
-      fsck: remove the unused BAD_TAG_OBJECT
-      fsck: document msg-id
-
-Jonathan Tan (4):
-      promisor-remote: remove a return value
-      promisor-remote: die upon failing fetch
-      negotiator/skipping: avoid stack overflow
-      Doc: document push.recurseSubmodules=only
-
-Julia Ramer (1):
-      embargoed releases: also describe the git-security list and the process
-
-Junio C Hamano (30):
-      environ: document GIT_SSL_NO_VERIFY
-      environ: explain Boolean environment variables
-      environ: GIT_FLUSH should be made a usual Boolean
-      environ: simplify description of GIT_INDEX_FILE
-      environ: GIT_INDEX_VERSION affects not just a new repository
-      branch: do not fail a no-op --edit-desc
-      SubmittingPatches: use usual capitalization in the log message body
-      Start 2.39 cycle
-      symbolic-ref: teach "--[no-]recurse" option
-      The (real) first batch for 2.39
-      The second batch
-      The third batch
-      The fourth batch
-      ci: add address and undefined sanitizer tasks
-      ci: use DC_SHA1=YesPlease on osx-clang job for CI
-      The fifth batch
-      diff: leave NEEDWORK notes in show_stats() function
-      fsck: remove the unused MISSING_TREE_OBJECT
-      Documentation: add lint-fsck-msgids
-      Downmerge a handful of topics for 2.38.2
-      The sixth batch
-      Downmerge a bit more for 2.38.2
-      The seventh batch
-      The eighth batch
-      adjust_shared_perm(): leave g+s alone when the group does not matter
-      Git 2.39-rc0
-      Another batch before -rc1
-      A bit more before -rc1
-      Git 2.39-rc1
-      Git 2.39-rc2
-
-Kevin Backhouse (1):
-      alias.c: reject too-long cmdline strings in split_cmdline()
-
-Kousik Sanagavarapu (1):
-      repository-version.txt: partialClone casing change
-
-Kyle Meyer (1):
-      merge-recursive: fix variable typo in error message
-
-M Hickford (4):
-      Documentation/gitcredentials.txt: mention password alternatives
-      Documentation: increase example cache timeout to 1 hour
-      docs: clarify that credential discards unrecognised attributes
-      Docs: describe how a credential-generating helper works
-
-Martin Ågren (1):
-      test-lib-functions: drop redundant diagnostic print
-
-Matthew John Cheetham (3):
-      wincred: ignore unknown lines (do not die)
-      netrc: ignore unknown lines (do not die)
-      osxkeychain: clarify that we ignore unknown lines
-
-Michael J Gruber (1):
-      notes: avoid empty line in template
-
-Michael McClimon (1):
-      Git.pm: add semicolon after catch statement
-
-Noah Betzen (1):
-      mergetool.txt: typofix 'overwriten' -> 'overwritten'
-
-Nsengiyumva Wilberforce (1):
-      t1002: modernize outdated conditional
-
-Patrick Steinhardt (7):
-      refs: fix memory leak when parsing hideRefs config
-      refs: get rid of global list of hidden refs
-      revision: move together exclusion-related functions
-      revision: introduce struct to handle exclusions
-      revision: add new parameter to exclude hidden refs
-      rev-parse: add `--exclude-hidden=` option
-      receive-pack: only use visible refs for connectivity check
-
-Paul Smith (1):
-      Makefile: avoid multiple patterns when recipes generate one file
-
-Philip Oakley (4):
-      doc: use "commit-graph" hyphenation consistently
-      doc: use 'object database' not ODB or abbreviation
-      glossary: add "commit graph" description
-      glossary: add reachability bitmap description
-
-Philippe Blain (9):
-      test-lib-functions: mark 'test_commit' variables as 'local'
-      subtree: use 'git rev-parse --verify [--quiet]' for better error messages
-      subtree: add 'die_incompatible_opt' function to reduce duplication
-      subtree: prefix die messages with 'fatal'
-      subtree: define a variable before its first use in 'find_latest_squash'
-      subtree: use named variables instead of "$@" in cmd_pull
-      subtree: process 'git-subtree-split' trailer in separate function
-      subtree: fix squash merging after annotated tag was squashed merged
-      subtree: fix split after annotated tag was squashed merged
-
-Phillip Wood (26):
-      mailinfo -b: fix an out of bounds access
-      ssh signing: return an error when signature cannot be read
-      t3435: remove redundant test case
-      t3416: tighten two tests
-      t3416: set $EDITOR in subshell
-      rebase: be stricter when reading state files containing oids
-      rebase: store orig_head as a commit
-      rebase: rename merge_base to branch_base
-      rebase: factor out branch_base calculation
-      rebase --keep-base: imply --reapply-cherry-picks
-      rebase --keep-base: imply --no-fork-point
-      rebase --apply: remove duplicated code
-      t3406: rework rebase reflog tests
-      rebase --merge: fix reflog when continuing
-      rebase --merge: fix reflog message after skipping
-      rebase --apply: respect GIT_REFLOG_ACTION
-      rebase --apply: make reflog messages match rebase --merge
-      rebase --abort: improve reflog message
-      rebase: cleanup action handling
-      sequencer: stop exporting GIT_REFLOG_ACTION
-      rebase: stop exporting GIT_REFLOG_ACTION
-      git_parse_unsigned: reject negative values
-      config: require at least one digit when parsing numbers
-      git_parse_signed(): avoid integer overflow
-      sequencer: unify label lookup
-      sequencer: tighten label lookups
-
-René Scharfe (21):
-      revision: use strtol_i() for exclude_parent
-      revisions.txt: unspecify order of resolved parts of ^!
-      diff: support ^! for merges
-      gc: simplify maintenance_task_pack_refs()
-      t/lib-httpd: pass LANG and LC_ALL to Apache
-      bisect--helper: plug strvec leak
-      archive: deduplicate verbose printing
-      submodule: use strvec_pushf() for --super-prefix
-      run-command: fix return value comment
-      am: simplify building "show" argument list
-      bisect: simplify building "checkout" argument list
-      bisect--helper: factor out do_bisect_run()
-      sequencer: simplify building argument list in do_exec()
-      use child_process member "args" instead of string array variable
-      use child_process members "args" and "env" directly
-      replace and remove run_command_v_opt_cd_env()
-      replace and remove run_command_v_opt_tr2()
-      replace and remove run_command_v_opt_cd_env_tr2()
-      replace and remove run_command_v_opt()
-      archive-tar: report filter start error only once
-      list-objects-filter: plug combine_filter_data leak
-
-Ronan Pigott (2):
-      for-each-repo: interpolate repo path arguments
-      maintenance: add option to register in a specific config
-
-Rubén Justo (5):
-      ref-filter.c: fix a leak in get_head_description
-      branch: description for non-existent branch errors
-      branch: support for shortcuts like @{-1}, completed
-      branch: error copying or renaming a detached HEAD
-      branch: error code with --edit-description
-
-SZEDER Gábor (4):
-      Documentation/build-docdep.perl: generate sorted output
-      line-log: free diff queue when processing non-merge commits
-      line-log: free the diff queues' arrays when processing merge commits
-      diff.c: use diff_free_queue()
-
-Sergey Organov (3):
-      diff-merges: cleanup func_by_opt()
-      diff-merges: cleanup set_diff_merges()
-      diff-merges: clarify log.diffMerges documentation
-
-Shaoxuan Yuan (1):
-      builtin/grep.c: integrate with sparse index
-
-Sotir Danailov (1):
-      docs: git-send-email: difference between ssl and tls smtp-encryption
-
-Taylor Blau (64):
-      Documentation/git-multi-pack-index.txt: fix typo
-      Documentation/git-multi-pack-index.txt: clarify expire behavior
-      midx.c: prevent `expire` from removing the cruft pack
-      midx.c: avoid cruft packs with `repack --batch-size=0`
-      midx.c: replace `xcalloc()` with `CALLOC_ARRAY()`
-      midx.c: remove unnecessary loop condition
-      midx.c: avoid cruft packs with non-zero `repack --batch-size`
-      builtin/clone.c: disallow `--local` clones with symlinks
-      t/lib-submodule-update.sh: allow local submodules
-      t/t1NNN: allow local submodules
-      t/2NNNN: allow local submodules
-      t/t3NNN: allow local submodules
-      t/t4NNN: allow local submodules
-      t/t5NNN: allow local submodules
-      t/t6NNN: allow local submodules
-      t/t7NNN: allow local submodules
-      t/t9NNN: allow local submodules
-      transport: make `protocol.file.allow` be "user" by default
-      t1092: prepare for changing protocol.file.allow
-      t2080: prepare for changing protocol.file.allow
-      t1092: prepare for changing protocol.file.allow
-      t2080: prepare for changing protocol.file.allow
-      t3207: prepare for changing protocol.file.allow
-      t5516: prepare for changing protocol.file.allow
-      t5537: prepare for changing protocol.file.allow
-      t7814: prepare for changing protocol.file.allow
-      t3206: prepare for changing protocol.file.allow
-      t5537: prepare for changing protocol.file.allow
-      Git 2.30.6
-      Git 2.31.5
-      Git 2.32.4
-      Git 2.33.5
-      Git 2.34.5
-      Git 2.35.5
-      Git 2.36.3
-      t7527: prepare for changing protocol.file.allow
-      Git 2.37.4
-      Git 2.38.1
-      midx.c: fix whitespace typo
-      midx.c: consider annotated tags during bitmap selection
-      midx.c: instrument MIDX and bitmap generation with trace2 regions
-      pack-bitmap-write.c: instrument number of reused bitmaps
-      builtin/repack.c: remove redundant pack-based bitmaps
-      repack: don't remove .keep packs with `--pack-kept-objects`
-      builtin/repack.c: pass "out" to `prepare_pack_objects`
-      builtin/repack.c: pass "cruft_expiration" to `write_cruft_pack`
-      builtin/repack.c: write cruft packs to arbitrary locations
-      builtin/repack.c: implement `--expire-to` for storing pruned objects
-      shortlog: make trailer insertion a noop when appropriate
-      shortlog: extract `--group` fragment for translation
-      shortlog: support arbitrary commit format `--group`s
-      shortlog: extract `shortlog_finish_setup()`
-      shortlog: implement `--group=author` in terms of `--group=<format>`
-      shortlog: implement `--group=committer` in terms of `--group=<format>`
-      apply: reject patches larger than ~1 GiB
-      Documentation/howto/maintain-git.txt: fix Meta/redo-jch.sh invocation
-      The ninth batch
-      Documentation: build redo-jch.sh from master..jch
-      Documentation: build redo-seen.sh from jch..seen
-      The tenth batch
-      The eleventh batch
-      The twelfth batch
-      builtin/gc.c: fix use-after-free in maintenance_unregister()
-      The thirteenth batch
-
-Torsten Bögershausen (1):
-      diff.c: use utf8_strwidth() to count display width
-
-Victoria Dye (7):
-      read-cache: avoid misaligned reads in index v4
-      rebase --update-refs: avoid unintended ref deletion
-      cache-tree: add perf test comparing update and prime
-      unpack-trees: add 'skip_cache_tree_update' option
-      reset: use 'skip_cache_tree_update' option
-      read-tree: use 'skip_cache_tree_update' option
-      rebase: use 'skip_cache_tree_update' option
-
-Vincent Bernat (1):
-      ls-files: fix --ignored and --killed flags in synopsis
-
-Vlad-Stefan Harbuz (1):
-      Documentation: fix typo
-
-srz_zumix (1):
-      fsmonitor--daemon: on macOS support symlink
-
-Ævar Arnfjörð Bjarmason (115):
-      test-lib: have SANITIZE=leak imply TEST_NO_MALLOC_CHECK
-      CodingGuidelines: update for C99
-      CodingGuidelines: mention dynamic C99 initializer elements
-      CodingGuidelines: allow declaring variables in for loops
-      CodingGuidelines: mention C99 features we can't use
-      grep.c: remove "extended" in favor of "pattern_expression", fix segfault
-      CodingGuidelines: recommend against unportable C99 struct syntax
-      bundle-uri: create "key=value" line parsing
-      bundle-uri: unit test "key=value" parsing
-      run-command test helper: use "else if" pattern
-      run-command API: have "run_processes_parallel{,_tr2}()" return void
-      run-command tests: use "return", not "exit"
-      run-command API: make "n" parameter a "size_t"
-      run-command API: don't fall back on online_cpus()
-      run-command.c: use designated init for pp_init(), add "const"
-      run-command API: have run_process_parallel() take an "opts" struct
-      run-command API: move *_tr2() users to "run_processes_parallel()"
-      run-command.c: make "struct parallel_processes" const if possible
-      run-command.c: don't copy *_fn to "struct parallel_processes"
-      run-command.c: don't copy "ungroup" to "struct parallel_processes"
-      run-command.c: don't copy "data" to "struct parallel_processes"
-      run-command.c: use "opts->processes", not "pp->max_processes"
-      run-command.c: pass "opts" further down, and use "opts->processes"
-      run-command.c: remove "max_processes", add "const" to signal() handler
-      tests: assert *.txt SYNOPSIS and -h output
-      CodingGuidelines: update and clarify command-line conventions
-      builtin/bundle.c: indent with tabs
-      bundle: define subcommand -h in terms of command -h
-      doc SYNOPSIS: don't use ' for subcommands
-      doc SYNOPSIS: consistently use ' for commands
-      built-ins: consistently add "\n" between "usage" and options
-      doc txt & -h consistency: word-wrap
-      doc txt & -h consistency: fix incorrect alternates syntax
-      doc txt & -h consistency: add "-z" to cat-file "-h"
-      doc txt & -h consistency: balance unbalanced "[" and "]"
-      doc txt & -h consistency: correct padding around "[]()"
-      stash doc SYNOPSIS & -h: correct padding around "[]()"
-      doc txt & -h consistency: use "<options>", not "<options>..."
-      doc SYNOPSIS & -h: use "-" to separate words in labels, not "_"
-      doc txt & -h consistency: fix mismatching labels
-      doc txt & -h consistency: add or fix optional "--" syntax
-      doc txt & -h consistency: make output order consistent
-      doc txt & -h consistency: add missing options and labels
-      doc txt & -h consistency: make "rerere" consistent
-      doc txt & -h consistency: make "read-tree" consistent
-      doc txt & -h consistency: make "bundle" consistent
-      doc txt & -h consistency: use "git foo" form, not "git-foo"
-      doc txt & -h consistency: add missing options
-      doc txt & -h consistency: make "stash" consistent
-      doc txt & -h consistency: make "annotate" consistent
-      doc txt & -h consistency: use "[<label>...]" for "zero or more"
-      doc txt & -h consistency: make "diff-tree" consistent
-      doc txt & -h consistency: make "commit" consistent
-      reflog doc: list real subcommands up-front
-      worktree: define subcommand -h in terms of command -h
-      doc txt & -h consistency: make "worktree" consistent
-      tests: start asserting that *.txt SYNOPSIS matches -h output
-      tests: assert consistent whitespace in -h output
-      fsmonitor OSX: compile with DC_SHA1=YesPlease
-      merge: remove always-the-same "verbose" arguments
-      hook tests: fix redirection logic error in 96e7225b310
-      submodule tests: reset "trace.out" between "grep" invocations
-      run-command tests: test stdout of run_command_parallel()
-      Makefile + shared.mak: rename and indent $(QUIET_SPATCH_T)
-      cocci rules: remove unused "F" metavariable from pending rule
-      Makefile: add ability to TAB-complete cocci *.patch rules
-      Makefile: have "coccicheck" re-run if flags change
-      Makefile: split off SPATCH_BATCH_SIZE comment from "cocci" heading
-      cocci: split off include-less "tests" from SPATCH_FLAGS
-      cocci: split off "--all-includes" from SPATCH_FLAGS
-      cocci: make "coccicheck" rule incremental
-      cocci: optimistically use COMPUTE_HEADER_DEPENDENCIES
-      Makefile: copy contrib/coccinelle/*.cocci to build/
-      cocci rules: remove <id>'s from rules that don't need them
-      cocci: run against a generated ALL.cocci
-      spatchcache: add a ccache-alike for "spatch"
-      Makefile: always (re)set DC_SHA1 on fallback
-      INSTALL: remove discussion of SHA-1 backends
-      Makefile: correct DC_SHA1 documentation
-      Makefile: create and use sections for "define" flag listing
-      Makefile: rephrase the discussion of *_SHA1 knobs
-      Makefile: document default SHA-256 backend
-      Makefile: document SHA-1 and SHA-256 default and selection order
-      Makefile & test-tool: replace "DC_SHA1" variable with a "define"
-      Makefile: document default SHA-1 backend on OSX
-      Makefile: discuss SHAttered in *_SHA{1,256} discussion
-      submodule--helper: move "config" to a test-tool
-      submodule tests: add tests for top-level flag output
-      submodule--helper: fix a memory leak in "status"
-      submodule tests: test for a "foreach" blind-spot
-      submodule.c: refactor recursive block out of absorb function
-      submodule API & "absorbgitdirs": remove "----recursive" option
-      submodule--helper: remove --prefix from "absorbgitdirs"
-      submodule--helper: drop "update --prefix <pfx>" for "-C <pfx> update"
-      submodule--helper: use OPT_SUBCOMMAND() API
-      revisions API: extend the nascent REV_INFO_INIT macro
-      t7610: fix flaky timeout issue, don't clone from example.com
-      Makefile: don't create a ".build/.build/" for cocci, fix output
-      maintenance --unregister: fix uninit'd data use & -Wdeclaration-after-statement
-      t7610: use "file:///dev/null", not "/dev/null", fixes MinGW
-      cache.h: remove unused "the_index" compat macros
-      builtin/{grep,log}.: don't define "USE_THE_INDEX_COMPATIBILITY_MACROS"
-      cocci & cache.h: remove rarely used "the_index" compat macros
-      read-cache API & users: make discard_index() return void
-      cocci: add a index-compatibility.pending.cocci
-      cocci & cache.h: apply a selection of "pending" index-compatibility
-      cocci & cache.h: apply variable section of "pending" index-compatibility
-      cocci: apply "pending" index-compatibility to "t/helper/*.c"
-      {builtin/*,repository}.c: add & use "USE_THE_INDEX_VARIABLE"
-      cache.h & test-tool.h: add & use "USE_THE_INDEX_VARIABLE"
-      cocci: apply "pending" index-compatibility to some "builtin/*.c"
-      parse_object(): simplify blob conditional
-      trace2 tests: guard pthread test with "PTHREAD"
-      Makefiles: change search through $(MAKEFLAGS) for GNU make 4.4
-      cocci: avoid "should ... be a metavariable" warnings
-
-Đoàn Trần Công Danh (8):
-      CodingGuidelines: allow grep -E
-      t: remove \{m,n\} from BRE grep usage
-      t: convert egrep usage to "grep -E"
-      t: convert fgrep usage to "grep -F"
-      Makefile: clarify runtime relative gitexecdir
-      bisect--helper: remove unused options
-      bisect--helper: move all subcommands into their own functions
-      bisect--helper: parse subcommand with OPT_SUBCOMMAND
 
+* js/range-diff-mbox (2022-11-23) 1 commit
+ - range-diff: support reading mbox files
+
+ 'git range-diff' gained support for reading either side from an .mbox
+ file instead of a revision range.
+
+ Expecting review responses.
+ source: <pull.1420.v3.git.1669108102092.gitgitgadget@gmail.com>
+
+
+* rj/branch-copy-and-rename (2022-11-17) 1 commit
+ - branch: force-copy a branch to itself via @{-1} is a no-op
+
+ Fix a pair of bugs in 'git branch'.
+
+ Will merge to 'next'.
+ source: <f0b2d46c-2e9c-2630-2870-8ed550dd1606@gmail.com>
+
+
+* tl/ls-tree--pattern (2022-11-17) 6 commits
+ - ls-tree: introduce '--pattern' option
+ - ls-tree: introduce 'match_pattern()' function
+ - ls-tree: improving cohension in the print code
+ - ls-tree: optimize params of 'show_tree_common_default_long()'
+ - t3104: remove shift code in 'test_ls_tree_format'
+ - ls-tree: cleanup the redundant SPACE
+
+ A synonym for "ls-tree | grep <pattern>", "ls-tree
+ --pattern=<pattern>" was introduced.
+
+ Waiting for review response, but leaning negative.
+ Seems to break CI.
+ test broken with SHA256 due to hardcoded hexadecimal constants
+ cf. https://github.com/git/git/actions/runs/3581947576/jobs/6025603775#step:4:1846
+ source: <20221117113023.65865-1-tenglong.tl@alibaba-inc.com>
+
+
+* tr/am--no-verify (2022-12-01) 2 commits
+ - SQUASH???
+ - am: allow passing --no-verify flag
+
+ Conditionally skip the pre-applypatch and applypatch-msg hooks when
+ applying patches with 'git am'.
+
+ Expecting a (hopefully final) reroll.
+ source: <20221130172833.2662751-1-thierry.reding@gmail.com>
+
+
+* ew/format-patch-mboxrd (2022-11-14) 1 commit
+ - format-patch: add --mboxrd alias for --pretty=mboxrd
+
+ Teach `format-patch` a convenient alias for `--pretty=mboxrd`.
+
+ Waiting for discussion to settle.
+ source: <20221114094114.18986-1-e@80x24.org>
+
+
+* js/drop-mingw-test-cmp (2022-11-14) 2 commits
+ - tests(mingw): avoid very slow `mingw_test_cmp`
+ - t0021: use Windows-friendly `pwd`
+
+ Use `git diff --no-index` as a test_cmp on Windows.
+
+ Waiting for review response.
+ source: <pull.1309.v4.git.1668434812.gitgitgadget@gmail.com>
+
+
+* mc/switch-advice (2022-11-09) 1 commit
+ - po: use `switch` over `checkout` in error message
+
+ Use 'switch' instead of 'checkout' in an error message.
+
+ Waiting for review response.
+ source: <pull.1308.git.git.1668018620148.gitgitgadget@gmail.com>
+
+
+* rs/multi-filter-args (2022-11-30) 5 commits
+  (merged to 'next' on 2022-12-01 at 5848d16bb6)
+ + list-objects-filter: remove OPT_PARSE_LIST_OBJECTS_FILTER_INIT()
+ + pack-objects: simplify --filter handling
+ + pack-objects: fix handling of multiple --filter options
+ + t5317: demonstrate failure to handle multiple --filter options
+ + t5317: stop losing return codes of git ls-files
+
+ Fix a bug where `pack-objects` would not respect multiple `--filter`
+ arguments when invoked directly.
+
+ Will cook in 'next'.
+ source: <c2d3e7a3-599f-dae5-8dde-dc969df39f02@web.de>
+
+
+* ab/various-leak-fixes (2022-11-21) 16 commits
+  (merged to 'next' on 2022-11-21 at eff484a27c)
+ + built-ins: use free() not UNLEAK() if trivial, rm dead code
+ + revert: fix parse_options_concat() leak
+ + cherry-pick: free "struct replay_opts" members
+ + rebase: don't leak on "--abort"
+ + connected.c: free the "struct packed_git"
+ + sequencer.c: fix "opts->strategy" leak in read_strategy_opts()
+ + ls-files: fix a --with-tree memory leak
+ + revision API: call graph_clear() in release_revisions()
+ + unpack-file: fix ancient leak in create_temp_file()
+ + built-ins & libs & helpers: add/move destructors, fix leaks
+ + dir.c: free "ident" and "exclude_per_dir" in "struct untracked_cache"
+ + read-cache.c: clear and free "sparse_checkout_patterns"
+ + commit: discard partial cache before (re-)reading it
+ + {reset,merge}: call discard_index() before returning
+ + tests: mark tests as passing with SANITIZE=leak
+ + Merge branch 'pw/rebase-no-reflog-action' into ab/various-leak-fixes
+
+ Various leak fixes.
+
+ Will cook in 'next'.
+ source: <cover-v2-00.15-00000000000-20221108T172650Z-avarab@gmail.com>
+
+
+* aw/complete-case-insensitive (2022-11-30) 2 commits
+  (merged to 'next' on 2022-12-05 at 791f41df7c)
+ + completion: add case-insensitive match of pseudorefs
+ + completion: add optional ignore-case when matching refs
+
+ Introduce a case insensitive mode to the Bash completion helpers.
+
+ Will cook in 'next'.
+ source: <pull.1374.v2.git.git.1668990419.gitgitgadget@gmail.com>
+
+
+* dd/git-bisect-builtin (2022-11-15) 13 commits
+  (merged to 'next' on 2022-11-15 at e16e754058)
+ + bisect; remove unused "git-bisect.sh" and ".gitignore" entry
+  (merged to 'next' on 2022-11-14 at fc304fb52f)
+ + Turn `git bisect` into a full built-in
+ + bisect--helper: log: allow arbitrary number of arguments
+ + bisect--helper: handle states directly
+ + bisect--helper: emit usage for "git bisect"
+ + bisect test: test exit codes on bad usage
+ + bisect--helper: identify as bisect when report error
+ + bisect-run: verify_good: account for non-negative exit status
+ + bisect run: keep some of the post-v2.30.0 output
+ + bisect: fix output regressions in v2.30.0
+ + bisect: refactor bisect_run() to match CodingGuidelines
+ + bisect tests: test for v2.30.0 "bisect run" regressions
+ + Merge branch 'dd/bisect-helper-subcommand' into dd/git-bisect-builtin
+
+ `git bisect` becomes a builtin.
+
+ Will cook in 'next'.
+ source: <cover.1668097962.git.congdanhqx@gmail.com>
+
+
+* ds/packed-refs-v2 (2022-11-07) 30 commits
+ - refs: skip hashing when writing packed-refs v2
+ - p1401: create performance test for ref operations
+ - ci: run GIT_TEST_PACKED_REFS_VERSION=2 in some builds
+ - t*: skip packed-refs v2 over http tests
+ - t3210: require packed-refs v1 for some tests
+ - t5502: add PACKED_REFS_V1 prerequisite
+ - t5312: allow packed-refs v2 format
+ - t1409: test with packed-refs v2
+ - packed-backend: create GIT_TEST_PACKED_REFS_VERSION
+ - packed-refs: write prefix chunks
+ - packed-refs: read optional prefix chunks
+ - packed-refs: read file format v2
+ - packed-refs: write file format version 2
+ - packed-backend: create shell of v2 writes
+ - config: add config values for packed-refs v2
+ - packed-backend: create abstraction for writing refs
+ - packed-backend: extract iterator/updates merge
+ - packed-backend: extract add_write_error()
+ - refs: extract packfile format to new file
+ - chunk-format: parse trailing table of contents
+ - chunk-format: allow trailing table of contents
+ - chunk-format: store chunk offset during write
+ - chunk-format: document trailing table of contents
+ - chunk-format: number of chunks is optional
+ - refs: allow loose files without packed-refs
+ - repository: wire ref extensions to ref backends
+ - config: fix multi-level bulleted list
+ - extensions: add refFormat extension
+ - read-cache: add index.computeHash config option
+ - hashfile: allow skipping the hash function
+
+ Waiting for review.
+ Seems to break CI.
+ linux-TEST-vars
+ cf. https://github.com/git/git/actions/runs/3598165328
+ source: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
+
+
+* ja/worktree-orphan (2022-11-10) 2 commits
+ - worktree add: add --orphan flag
+ - worktree add: Include -B in usage docs
+
+ 'git worktree add' learned how to create a worktree based on an
+ orphaned branch with `--orphan`.
+
+ Expecting another round?
+ source: <20221110233137.10414-1-jacobabel@nullpo.dev>
+
+
+* tb/ci-concurrency (2022-11-08) 1 commit
+ - ci: avoid unnecessary builds
+
+ Avoid unnecessary builds in CI, with settings configured in
+ ci-config.
+
+ Waiting for review.
+ source: <ff172f1de982f6f79b598e4ac6d5b2964ca4a098.1667931937.git.me@ttaylorr.com>
+
+
+* tl/notes--blankline (2022-11-09) 5 commits
+ - notes.c: introduce "--no-blank-line" option
+ - notes.c: provide tips when target and append note are both empty
+ - notes.c: drop unreachable code in 'append_edit()'
+ - notes.c: cleanup for "designated init" and "char ptr init"
+ - notes.c: cleanup 'strbuf_grow' call in 'append_edit'
+
+ 'git notes append' was taught '--[no-]blank-line' to conditionally
+ add a LF between a new and existing note.
+
+ Waiting for review.
+ source: <cover.1667980450.git.dyroneteng@gmail.com>
+
+
+* ds/bundle-uri-4 (2022-12-06) 11 commits
+ - clone: unbundle the advertised bundles
+ - bundle-uri: download bundles from an advertised list
+ - bundle-uri: allow relative URLs in bundle lists
+ - strbuf: introduce strbuf_strip_file_from_path()
+ - bundle-uri: serve bundle.* keys from config
+ - bundle-uri client: add helper for testing server
+ - transport: rename got_remote_heads
+ - bundle-uri client: add boolean transfer.bundleURI setting
+ - clone: request the 'bundle-uri' command when available
+ - t: create test harness for 'bundle-uri' command
+ - protocol v2: add server-side "bundle-uri" skeleton
+
+ Bundle URIs part 4.
+
+ Will merge to 'next'.
+ source: <pull.1400.v3.git.1670262639.gitgitgadget@gmail.com>
+
+
+* tl/pack-bitmap-absolute-paths (2022-11-29) 4 commits
+  (merged to 'next' on 2022-11-30 at cb5d17ee40)
+ + pack-bitmap.c: trace bitmap ignore logs when midx-bitmap is found
+ + pack-bitmap.c: break out of the bitmap loop early if not tracing
+  (merged to 'next' on 2022-11-14 at 34eb0ea05a)
+ + pack-bitmap.c: avoid exposing absolute paths
+ + pack-bitmap.c: remove unnecessary "open_pack_index()" calls
+
+ The pack-bitmap machinery is taught to log the paths of redundant
+ bitmap(s) to trace2 instead of stderr.
+
+ Will cook in 'next'.
+ source: <cover.1669644101.git.dyroneteng@gmail.com>
+
+
+* ab/make-bin-wrappers (2022-10-31) 4 commits
+ . Makefile: simplify $(test_bindir_programs) rule by splitting it up
+ . Makefile: rename "test_bindir_programs" variable, pre-declare
+ . Makefile: define "TEST_{PROGRAM,OBJS}" variables earlier
+ . Makefile: factor sed-powered '#!/bin/sh' munging into a variable
+
+ Resolve issues with the bin-wrappers/% rules where "make
+ bin-wrappers/git" would generate the script but not "git" itself.
+
+ Waiting for review discussion to settle, but leaning negative.
+ source: <cover-v3-0.4-00000000000-20221031T222249Z-avarab@gmail.com>
+
+
+* kz/merge-tree-merge-base (2022-11-25) 3 commits
+  (merged to 'next' on 2022-11-25 at 298ca8e2e8)
+ + docs: fix description of the `--merge-base` option
+  (merged to 'next' on 2022-11-14 at 76d48ae21f)
+ + merge-tree.c: allow specifying the merge-base when --stdin is passed
+ + merge-tree.c: add --merge-base=<commit> option
+
+ "merge-tree" learns a new `--merge-base` option.
+
+ Will cook in 'next'.
+ source: <pull.1397.v7.git.1668210314.gitgitgadget@gmail.com>
+ source: <c21466d1db0e7f7fcd7308b61aa1e3cd4e3d67c4.1669261026.git.gitgitgadget@gmail.com>
+
+
+* po/pretty-hard-trunc (2022-11-13) 1 commit
+ - pretty-formats: add hard truncation, without ellipsis, options
+
+ Add a new pretty format which truncates without ellipsis.
+
+ Waiting for review.
+ source: <20221112143616.1429-1-philipoakley@iee.email>
+
+
+* rr/status-untracked-advice (2022-12-01) 1 commit
+  (merged to 'next' on 2022-12-05 at 68527013ef)
+ + status: modernize git-status "slow untracked files" advice
+
+ The advice message given by "git status" when it takes long time to
+ enumerate untracked paths has been updated.
+
+ Will cook in 'next'.
+ source: <pull.1384.v9.git.1669769536707.gitgitgadget@gmail.com>
+
+
+* cc/filtered-repack (2022-11-23) 2 commits
+ - repack: add --filter=<filter-spec> option
+ - pack-objects: allow --filter without --stdout
+
+ "git repack" learns to discard objects that ought to be retrievable
+ again from the promissor remote.
+
+ Needs review.
+ Seems to break CI.
+ cf. https://github.com/git/git/actions/runs/3560918726
+ source: <20221122175150.366828-1-christian.couder@gmail.com>
+
+
+* mc/credential-helper-auth-headers (2022-11-02) 11 commits
+ - t5556: add HTTP authentication tests
+ - test-http-server: add simple authentication
+ - test-http-server: pass Git requests to http-backend
+ - test-http-server: add HTTP request parsing
+ - test-http-server: add HTTP error response function
+ - test-http-server: add stub HTTP server test helper
+ - http: set specific auth scheme depending on credential
+ - http: move proactive auth to first slot creation
+ - http: store all request headers on active_request_slot
+ - credential: add WWW-Authenticate header to cred requests
+ - http: read HTTP WWW-Authenticate response headers
+
+ Extending credential helper protocol.
+
+ Needs review.
+ Seems to break CI (cmake-ctest).
+ cf. https://github.com/git/git/actions/runs/3598431374
+ source: <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
+
+--------------------------------------------------
+[Discarded]
+
+* gc/submodule-clone-update-with-branches (2022-10-30) 8 commits
+ . clone, submodule update: create and check out branches
+ . submodule--helper: remove update_data.suboid
+ . submodule update: refactor update targets
+ . submodule: return target of submodule symref
+ . t5617: drop references to remote-tracking branches
+ . submodule--helper clone: create named branch
+ . repo-settings: add submodule_propagate_branches
+ . clone: teach --detach option
+
+ "git clone --recurse-submodules" and "git submodule update" learns
+ to honor the "propagete branches" option.
+
+ Will discard for now.
+ cf. <xmqqedtl14xr.fsf@gitster.g>
+ source: <pull.1321.v3.git.git.1666988096.gitgitgadget@gmail.com>
+
+
+* ab/remove--super-prefix (2022-11-21) 12 commits
+ . fetch: rename "--submodule-prefix" to "--super-prefix"
+ . read-tree: add "--super-prefix" option, eliminate global
+ . submodule--helper: convert "{update,clone}" to their own "--super-prefix"
+ . submodule--helper: convert "status" to its own "--super-prefix"
+ . submodule--helper: convert "sync" to its own "--super-prefix"
+ . submodule--helper: convert "foreach" to its own "--super-prefix"
+ . submodule--helper: don't use global --super-prefix in "absorbgitdirs"
+ . submodule.c & submodule--helper: pass along "super_prefix" param
+ . read-tree + fetch tests: test failing "--super-prefix" interaction
+ . Merge branch 'ab/submodule-no-abspath' into ab/remove--super-prefix
+  (merged to 'next' on 2022-11-18 at 34d0accc7b)
+ + submodule--helper absorbgitdirs: no abspaths in "Migrating git..."
+ . Merge branch 'ab/submodule-helper-prep-only' into ab/remove--super-prefix
+
+ Remove the top-level `--super-prefix` option.
+ Will discard.
+ cf. the thread leading to <xmqqmt86stm3.fsf@gitster.g>
+ source: <cover-v3-0.9-00000000000-20221119T122853Z-avarab@gmail.com>
+
+
+* ab/submodule-no-abspath (2022-11-23) 2 commits
+  (merged to 'next' on 2022-11-23 at 97b6096e7c)
+ + submodule absorbgitdirs: use relative <from> and <to> paths
+  (merged to 'next' on 2022-11-18 at 34d0accc7b)
+ + submodule--helper absorbgitdirs: no abspaths in "Migrating git..."
+
+ Remove an absolute path in the "Migrating git directory" message.
+
+ Revert out of 'next'.
+ cf. the thread leading to <xmqqmt86stm3.fsf@gitster.g>
+ source: <patch-1.1-34b54fdd9bb-20221109T020347Z-avarab@gmail.com>
+ source: <patch-1.1-065be1da895-20221122T224306Z-avarab@gmail.com>
+
+
+* ab/cmake-nix-and-ci (2022-11-04) 14 commits
+  (merged to 'next' on 2022-11-08 at 6ef4e93b36)
+ + CI: add a "linux-cmake-test" to run cmake & ctest on linux
+ + cmake: copy over git-p4.py for t983[56] perforce test
+ + cmake: only look for "sh" in "C:/Program Files" on Windows
+ + cmake: increase test timeout on Windows only
+ + cmake: support GIT_TEST_OPTS, abstract away WIN32 defaults
+ + Makefile + cmake: use environment, not GIT-BUILD-DIR
+ + test-lib.sh: support a "GIT_TEST_BUILD_DIR"
+ + cmake: set "USE_LIBPCRE2" in "GIT-BUILD-OPTIONS" for test-lib.sh
+ + cmake & test-lib.sh: add a $GIT_SOURCE_DIR variable
+ + cmake: chmod +x the bin-wrappers/* & SCRIPT_{SH,PERL} & git-p4
+ + cmake: don't copy chainlint.pl to build directory
+ + cmake: update instructions for portable CMakeLists.txt
+ + cmake: use "-S" and "-B" to specify source and build directories
+ + cmake: don't invoke msgfmt with --statistics
+
+ Fix assorted issues with CTest on *nix machines.
+
+ Revert out of 'next'.
+ cf. <xmqq5yeuspam.fsf@gitster.g>
+ source: <cover-v4-00.14-00000000000-20221103T160255Z-avarab@gmail.com>
