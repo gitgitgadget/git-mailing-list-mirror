@@ -2,153 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AC030C4708C
-	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 02:34:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7AAAEC4708C
+	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 02:49:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233790AbiLFCer (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Dec 2022 21:34:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49534 "EHLO
+        id S231756AbiLFCtQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Dec 2022 21:49:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233799AbiLFCen (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2022 21:34:43 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64C7B1E719
-        for <git@vger.kernel.org>; Mon,  5 Dec 2022 18:34:40 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id v8so18435827edi.3
-        for <git@vger.kernel.org>; Mon, 05 Dec 2022 18:34:40 -0800 (PST)
+        with ESMTP id S233968AbiLFCtG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2022 21:49:06 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A51A225C71
+        for <git@vger.kernel.org>; Mon,  5 Dec 2022 18:48:45 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id qk9so2997657ejc.3
+        for <git@vger.kernel.org>; Mon, 05 Dec 2022 18:48:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=mnTBg7Fr5eD/i8jc2V1oYNN5oATXLT8+j0yia00TMQ8=;
-        b=jxe6RdjvKD2b7p2dXcLZscX1HHdSOSoCnA0KS5fPYs60A27tC82PN1vc/LtnXBg2Un
-         yXha9VCPi48/Nu12lzG3LSUDtpfnmzgf2r8dV9l672nOO9A6Y1e0YGXYBi30e3tW3n0q
-         0Pqs3zqjop2BGc1GQKvqXTpwKxL2xrwDEKhaZlbQJS/LpG2ogeqBp6LvwYi06OGosWVA
-         udj6fBxP4rnFfi15VKtip1lKtYv2/cKe+/yPXVnYVVZjF3zL/wG2kSdBRQ2NWB/mx1Ww
-         PxcsdRDLbrdQNSqZqdouCNL/JBzgZ5e83sxzIcMyRd9nDWrLthJJ17rq2sdyocoQL6Er
-         RPaw==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=B8IySzC1qT7rYDOdjclUdzaPF20v5JhAT7cK8rdXLpg=;
+        b=fd6NPJKsrPPeawvmpoTaU1d+klSBeO4AdnazSZ+0xL0bGssP8rgfNEXoqKPOcekwWW
+         XPjkrUZ78Y/LKM5g2n/x4vlSR4+lUWGre6erISd+0mbY8eoxlxvSKkZEcmiyzDyiaLom
+         W23D3FYgvC7HlttvrfzZPIpqwoKuW6+VC2eEoD4zMpPGFzkKM041iKue1Yy5QGOBr7a/
+         2SZw6WXPcD+PXtc/m9HOcg7+VrHX5C8peLcordRTNOYL2MrnoPud/Q1ImlxEuZfUu4yt
+         u1t/eaRx8gYYFZY9vYpCZWX0agYtH978GPet482VGJkZUzl/ol750rjoJLXRDORjX29O
+         a6lg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mnTBg7Fr5eD/i8jc2V1oYNN5oATXLT8+j0yia00TMQ8=;
-        b=QBC4ypufWR14h6Yyuo6nXYB7BB5/pOLJJnmzqWox0+gxU+UMV722M/7VNIdCF1E006
-         oIZl1urTil+cmYB0gogzB0Bn6sCcxtYwMF0rwswggedosaJvNZSoO2tHGGBHYgBkwTa3
-         83E+VaTTyJ18XQ3ZlYXcxKJygc7FS7YSmLEFZbn2YxtqhkWh06qaTCyD8SuXSP394yWY
-         WVzfvSLX4huID9sQ5ssV6gDO/IPRZLC2jzAqLSDUECrKzJAmv184ruMDD7TxDqdkwnPr
-         4hSxbdhYNJ/ic8I99Da2TPe2xLKL0nnVSVnlBgVw+HMgxB6yHBD7sgvlNMRlAz3IXlQk
-         bVNA==
-X-Gm-Message-State: ANoB5pkZwUoXAgqdEK9oEMk1MS1mmKKUmLw69Zda+iOj0KSxJsZaKl2y
-        /CIHebcxOapEYfAxB7ZAuPs=
-X-Google-Smtp-Source: AA0mqf6PQe6gl+DW22C1elGg9CE1rAGSBWIZtLfWOK1F7QiOnqb9PMiwG/u1xKRk8qFGphH71ELffA==
-X-Received: by 2002:a50:e603:0:b0:46c:ff45:68e9 with SMTP id y3-20020a50e603000000b0046cff4568e9mr2252002edm.90.1670294078885;
-        Mon, 05 Dec 2022 18:34:38 -0800 (PST)
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=B8IySzC1qT7rYDOdjclUdzaPF20v5JhAT7cK8rdXLpg=;
+        b=nCDh1CLLGzfqHU8ZS/0wdx9dfvG2D1P5yqS6FqEpZEoPnmuYhnqC1CVGeHFKMmeGzy
+         x5j2ZVfZN39wJHvOq9NMPnkB4sJhXl6w7cfABeA6mb2P36JmSDzKv/6vf0nhRPEdCdv1
+         ch2PoZfBEHxpjHuo8a0IJHoPz2sxGl5pAygUGEwnzYIm71Zybt/TnpnHiYaOY9o+/2u5
+         N60PGrcER41qP2no1Z9cD1BZPqOb1GO/LWxQX4OaLYGY672UEzEz4DAjNcweWp3gaJsB
+         pjRyMTA7KMjN+Jrqr8E44vnhCfYFt/B/WSyzJzRDV/Az2EsNNfu6tVG7p4g4zIGMk6gJ
+         Yi+g==
+X-Gm-Message-State: ANoB5pnFOgvor/w3bGqWmq2JPdI2gcee9wx/Lq+ieSgr7wnyqLHlr1Tz
+        KoU+CKC9ald1VSa/Aaibwfg=
+X-Google-Smtp-Source: AA0mqf5jjC6kTGGBS4Bibc1u5/hx14iwDIvixvKv9rDELaYNKJVBlF7rNtKz9cF9JlEVtMGVd/Uv2g==
+X-Received: by 2002:a17:906:99cb:b0:7bb:7dda:7d3c with SMTP id s11-20020a17090699cb00b007bb7dda7d3cmr23353885ejn.182.1670294924042;
+        Mon, 05 Dec 2022 18:48:44 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id h23-20020a1709060f5700b007bfacaea851sm6788354ejj.88.2022.12.05.18.34.38
+        by smtp.gmail.com with ESMTPSA id f25-20020a056402069900b0044ef2ac2650sm442112edy.90.2022.12.05.18.48.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Dec 2022 18:34:38 -0800 (PST)
+        Mon, 05 Dec 2022 18:48:43 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1p2Nn3-003Qn6-2i;
-        Tue, 06 Dec 2022 03:34:37 +0100
+        id 1p2O0h-003RGx-0I;
+        Tue, 06 Dec 2022 03:48:43 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, phillip.wood@dunelm.org.uk,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] test-lib.sh: discover "git" in subdirs of
- "contrib/buildsystems/out"
-Date:   Tue, 06 Dec 2022 03:19:57 +0100
-References: <663b93ef-0c89-a5f6-1069-b4be97915d20@dunelm.org.uk>
-        <patch-1.1-f27d8bd4491-20221201T162451Z-avarab@gmail.com>
-        <xmqq5yeuspam.fsf@gitster.g>
-        <87f22a55-ee84-2f76-7b9b-924a97f44f89@dunelm.org.uk>
-        <221202.86sfhxg2ng.gmgdl@evledraar.gmail.com>
-        <Y4qF3iHW2s+I0yNe@coredump.intra.peff.net>
-        <221203.86pmd1dyqn.gmgdl@evledraar.gmail.com>
-        <Y45/8WnuUnP9gOMo@nand.local>
-        <Y46clyoKk9KzFiqj@coredump.intra.peff.net>
-        <221206.86zgc1cnc3.gmgdl@evledraar.gmail.com>
-        <Y46jT0i/7DhxHzfS@coredump.intra.peff.net>
+To:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 3/3] t1509: facilitate repeated script invocations
+Date:   Tue, 06 Dec 2022 03:42:28 +0100
+References: <pull.1425.git.1668999621.gitgitgadget@gmail.com>
+ <97ada2a1202190776ce3989d3841dd47e2702316.1668999621.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <Y46jT0i/7DhxHzfS@coredump.intra.peff.net>
-Message-ID: <221206.86mt81claa.gmgdl@evledraar.gmail.com>
+In-reply-to: <97ada2a1202190776ce3989d3841dd47e2702316.1668999621.git.gitgitgadget@gmail.com>
+Message-ID: <221206.86ilipckms.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Dec 05 2022, Jeff King wrote:
+On Mon, Nov 21 2022, Eric Sunshine via GitGitGadget wrote:
 
-> On Tue, Dec 06, 2022 at 02:43:17AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+> From: Eric Sunshine <sunshine@sunshineco.com>
 >
->> > I don't mind having it in-tree if I can ignore it (assuming the project
->> > attitude is the "it's a side thing" from above). It's the CI failures
->> > that make it hard to ignore.
->>=20
->> ...but on this thread-at-large, I'd much rather see us focus on just
->> reviewing the patches I have here than raising the burden of proof to
->> whether we should get rid of it entirely.
+> t1509-root-work-tree.sh, which tests behavior of a Git repository
+> located at the root `/` directory, refuses to run if it detects the
+> presence of an existing repository at `/`. This safeguard ensures that
+> it won't clobber a legitimate repository at that location. However,
+> because t1509 does a poor job of cleaning up after itself, it runs afoul
+> of its own safety check on subsequent runs, which makes it painful to
+> run the script repeatedly since each run requires manual cleanup of
+> detritus from the previous run.
 >
-> Fair. In case it is not obvious, I have no interest in reviewing cmake
-> patches. ;) But I will at least stop making noise in the thread.
-
-I'm fine with the running commentary on the future direction, I think
-it's also very useful.
-
-I just wanted to also note the need to keep the eyes on the ball a bit
-:)
-
->> If we make the CI failures "soft" failures or move it out-of-tree
->> entirely it would still be useful to be able to run the cmake recipe on
->> *nix.
+> Address this shortcoming by making t1509 clean up after itself as its
+> last action. This is safe since the script can only make it to this
+> cleanup action if it did not find a legitimate repository at `/` in the
+> first place, so the resources cleaned up here can only have been created
+> by the script itself.
 >
-> Agreed.
+> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+> ---
+>  t/t1509-root-work-tree.sh | 5 +++++
+>  1 file changed, 5 insertions(+)
+>
+> diff --git a/t/t1509-root-work-tree.sh b/t/t1509-root-work-tree.sh
+> index d0417626280..c799f5b6aca 100755
+> --- a/t/t1509-root-work-tree.sh
+> +++ b/t/t1509-root-work-tree.sh
+> @@ -256,4 +256,9 @@ test_expect_success 'go to /foo' 'cd /foo'
+>  
+>  test_vars 'auto gitdir, root' "/" "" ""
+>  
+> +test_expect_success 'cleanup root' '
+> +	rm -rf /.git /refs /objects /info /hooks /branches /foo &&
+> +	rm -f /HEAD /config /description /expected /ls.expected /me /result
+> +'
 
-Just to add my own digression: I asked in some past thread (which I'm
-too lazy to dig up) why it was the cmake file couldn't just dispatch to
-"make" for most things.
+Perhaps it would be nice to split this into a function in an earlier
+step, as this duplicates what you patched in 2/3. E.g.:
+	
+	cleanup_root_git_bare() {
+		rm -rf /.git
+	}
+	cleanup_root_git() {
+		rm -f /HEAD /config /description /expected /ls.expected /me /result
+	}
 
-I.e. it needs to at some level be aware of what it's building for the
-IDE integration, but for say making a "grep.o" there's no reason it
-couldn't be running:
+Then all 3 resulting users could call some combination of those.
 
-	make grep.o
+This is an existing wart, but I also wondered why the "expected",
+"result" etc. was needed. Either we could make the tests creating those
+do a "test_when_finished" removal of it, or better yet just create those
+in the trash directory.
 
-Instead of:
+At this point we've cd'd to /, but there doesn't seem to be a reason we
+couldn't use our original trash directory for our own state.
 
-        cc <args> -o grep grep.c [...]
+The "description" we could then git rid of with "git init --template=".
 
-which requires duplicating much of the Makefile logic (possibly with
-some Makefile shim to not consider any dependencies in that case).
+We could even get rid of the need to maintain "HEAD" etc. by init-ing a
+repo in the trash directory, copying its contents to "/", and then we'd
+know exactly what we needed to remove afterwards. I.e. just a mirror of
+the structure we copied from our just init-ed repo.
 
-Even if we couldn't do that for *.c code for some reason it could do it
-e.g. creating the generated *.h files, which is logic we currentnly
-duplicate.
+But all that's a digression for this series, which I think is good
+enough as-is. I just wondered why we had some of these odd looking
+patterns.
 
-The "win+VS build" job even has a hard dependency on GNU make currently,
-in needing to run "make artifacts-tar" to get to the "win+VS test"
-stage.
 
-But apparently the reason for *that* is that another goal of the
-integration was to avoid having to have GNU make installed at all, which
-comes in a different package than the one that would ship VS+cmake (or
-something?).
 
-Which might be something to re-visit, i.e. maybe we could eventually say
-"yes, you can have VS+cmake, but it's not too much to ask that you
-install GNU make as a one-off".
-
-Doing that would then reduce the duplication to the point where the
-cmake recipe would be a thin shim around the Makefile.
-
-I don't use this development setup, but if the CI job is managing to
-download and run GNU make it can't be that hard for an end-user to
-similarly install it (but what do I know?).
