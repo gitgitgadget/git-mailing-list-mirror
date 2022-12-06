@@ -2,219 +2,457 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67E58C352A1
-	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 11:36:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDE61C352A1
+	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 11:39:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234350AbiLFLgp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Dec 2022 06:36:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38520 "EHLO
+        id S234092AbiLFLjH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Dec 2022 06:39:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234923AbiLFLgo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2022 06:36:44 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E56C0BE1B
-        for <git@vger.kernel.org>; Tue,  6 Dec 2022 03:36:42 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id m18so3926855eji.5
-        for <git@vger.kernel.org>; Tue, 06 Dec 2022 03:36:42 -0800 (PST)
+        with ESMTP id S234173AbiLFLi7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2022 06:38:59 -0500
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3D981403F
+        for <git@vger.kernel.org>; Tue,  6 Dec 2022 03:38:57 -0800 (PST)
+Received: by mail-ej1-x633.google.com with SMTP id x22so5437824ejs.11
+        for <git@vger.kernel.org>; Tue, 06 Dec 2022 03:38:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=C9gKfXmC9gKQC836zfcpebJa/L39X/yamn1Nvg3xP6Q=;
-        b=JJ3Ef4DReVHgkoBg6YHFtDehDzOwC/M0vIXBb4Rhzodf0W8+tkLj03wAT1Z98IuElT
-         PB9rIX+7KWwZRfCl9twz7lxMNcEYISPdofRrRyu/W6ElLU3/EIPWzwYOQIot4/7FtlVU
-         VMz35W5NNB8BT7fkRzkguxmh+1OC0SgWvLxdeLh5t5M6HN97hebGYXzIRil2wzPFVJEk
-         dimxVRIFZkK6DQbqIXugrhFcqpbG1ajRX5T0xoex6aMlsfP3i58p+SqMdFAHqtnb23FV
-         A8gF7pNQFd4chOlXD7WVUQVtacZPrkHbOXi7+zUBtH+cOnX9IpSOYIdkXiFBAu+VMM3q
-         TT6A==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=0W80pOoxCVr8vrzjr2Uh4DUcFId4MjPDfvVZh7eOF5I=;
+        b=oA1fMKJo+IaQgwOWkjR9m66FvDyyl4aAdrViZ44gU1pzf3bTr+H8n1qvZpTbhA0rbh
+         RM1wvywr4Zwr6o6s4PlxPLD5ZbIHbT4OLbUf5xxtHZnICCvFtC6MWpubBXnnkamrxxhc
+         7hXTUWaIoOCjNEo385XcZYEK4EDFo8NVeu1z3keYympG86teGzoNMn90i20xG1C0LR4d
+         GYCLMcA8m35ac8d5dFvs/elvZRG5bMcXpFWnUOYpxCF4uzU5MX+/qYs4GgXwB5oSdOiJ
+         8fmkS5Ta0HrI7ERD3uLwqGYqtAJ1uxvGam8YP9UWRNgxCa7rpD2PWsMReuQYLGhQf4rq
+         kwWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=C9gKfXmC9gKQC836zfcpebJa/L39X/yamn1Nvg3xP6Q=;
-        b=qCt3NHxtqLqWQCHC1TuXHYV0C8DQUJgzKzyolSOSQjC5qdpIHDnTaXhA/J0waagJ53
-         X08bMxaDpqNDjRawKTeKko/sg01SMmZj3EIFrYVH4u2CCIY9pRqaWQyklMPAFrjeLYyG
-         X3P3SR6SxJQNig50NEmvATMKYpyZO/ehuny1RXpTQieYljwLOsz1JRgKvPU7e9sKuo24
-         9c1h2O5ujoIIkENyn+vDOpdODU8mPOec8uOOVT2ZTX/AU3ZOYfpyEJ7EXklnFIRG27Qw
-         QYnbqaht+jj2nodF+wyJrndNY09YbUZVxqJhvFbANLfflq1qGdmqsu02V5pFtsNpF+Sc
-         rvFg==
-X-Gm-Message-State: ANoB5plp6tgxcz50ey9Dy2zioTY4KvH1iPABJnsPMoOn2TogmRAkR9Tw
-        h+TVzDNaCl9tTDKDsesCuAU=
-X-Google-Smtp-Source: AA0mqf5vg5z3i7ssePdVJhd12ySWe99hQ9TEkaJrBEOeTxyS7rxZXizJnlNWnIyLV9lJOAigd/YRCw==
-X-Received: by 2002:a17:906:7f16:b0:7c0:f2cf:8e09 with SMTP id d22-20020a1709067f1600b007c0f2cf8e09mr6999454ejr.257.1670326601317;
-        Tue, 06 Dec 2022 03:36:41 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0W80pOoxCVr8vrzjr2Uh4DUcFId4MjPDfvVZh7eOF5I=;
+        b=5c6RWACrhgmb+8sLrjeA5PPY+stuQUTbQoJp/WWMq8OOEjOTNQwmoDzhW4owtbcbjX
+         QFnO5P6CY+37Ah9BVLn+W/poKevtTeiw4RFemMXHRksfPKuHgDaxPD6yDjnZxsvs5hxr
+         hsFgwzhOS5TY9bpxCHkioR5QB30CLCaGRjmT0T3P1rxT/Sr4MssPvmOxWJhToIQCnwia
+         /f2GmqdEaEMF4PTqxh/mqLOPHOsRQIzxE6QzpMIWGgotLQ6HDgZVA4oQgkJX5n816+pf
+         xhutrzV9YOIw0eh+oG/eugNcAsQcLmGdsa4GQYod4E8QeSUyYYo0mR95pAGbQm6GP6mG
+         La1w==
+X-Gm-Message-State: ANoB5pkOOzHtommCg2VjMQavxo/TeyBN69g/z3uwwGI/N5Lpta/bPpnm
+        wEBwMQ1Y/BjPBwVE40G5boieIe4753G29Q==
+X-Google-Smtp-Source: AA0mqf663JbTqCh1n1sgttYQmel/g/r5gCiyX4GWuwYi6fukIT7Bd1t6+P88szjC82puLgA6IKgITQ==
+X-Received: by 2002:a17:906:7ad0:b0:7c0:f9eb:61fd with SMTP id k16-20020a1709067ad000b007c0f9eb61fdmr5951842ejo.562.1670326735756;
+        Tue, 06 Dec 2022 03:38:55 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id c10-20020a17090618aa00b0077b523d309asm7206141ejf.185.2022.12.06.03.36.40
+        by smtp.gmail.com with ESMTPSA id p4-20020a05640210c400b0046c4553010fsm893110edu.1.2022.12.06.03.38.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Dec 2022 03:36:40 -0800 (PST)
+        Tue, 06 Dec 2022 03:38:55 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1p2WFc-003qBP-16;
-        Tue, 06 Dec 2022 12:36:40 +0100
+        id 1p2WHm-003qIq-2Q;
+        Tue, 06 Dec 2022 12:38:54 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Karthik Nayak <karthik.188@gmail.com>
-Cc:     git@vger.kernel.org, toon@iotcl.com
-Subject: Re: [PATCH 2/2] attr: add flag `-r|--revisions` to work with revisions
-Date:   Tue, 06 Dec 2022 12:27:46 +0100
-References: <20221206103736.53909-1-karthik.188@gmail.com>
- <20221206103736.53909-3-karthik.188@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        newren@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
+        chooglen@google.com, jonathantanmy@google.com,
+        dyroneteng@gmail.com, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v3 08/11] strbuf: introduce strbuf_strip_file_from_path()
+Date:   Tue, 06 Dec 2022 12:37:15 +0100
+References: <pull.1400.v2.git.1668628302.gitgitgadget@gmail.com>
+ <pull.1400.v3.git.1670262639.gitgitgadget@gmail.com>
+ <1eec3426aee12bbd674ebd646075f0d4c0b1f5af.1670262639.git.gitgitgadget@gmail.com>
+ <221206.86a640dda3.gmgdl@evledraar.gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <20221206103736.53909-3-karthik.188@gmail.com>
-Message-ID: <221206.861qpcdarb.gmgdl@evledraar.gmail.com>
+In-reply-to: <221206.86a640dda3.gmgdl@evledraar.gmail.com>
+Message-ID: <221206.86wn74bw35.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Tue, Dec 06 2022, Karthik Nayak wrote:
+On Tue, Dec 06 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> Git check-attr currently doesn't check the git worktree, it either
-> checks the index or the files directly. This means we cannot check the
-> attributes for a file against a certain revision.
+> On Mon, Dec 05 2022, Derrick Stolee via GitGitGadget wrote:
 >
-> Add a new flag `--revision`/`-r` which will allow it work with
-> revisions. This command will now, instead of checking the files/index,
-> try and receive the blob for the given attribute file against the
-> provided revision. The flag overrides checking against the index and
-> filesystem and also works with bare repositories.
+>> From: Derrick Stolee <derrickstolee@github.com>
+>>
+>> The strbuf_parent_directory() method was added as a static method in
+>> contrib/scalar by d0feac4e8c0 (scalar: 'register' sets recommended
+>> config and starts maintenance, 2021-12-03) and then removed in
+>> 65f6a9eb0b9 (scalar: constrain enlistment search, 2022-08-18), but now
+>> there is a need for a similar method in the bundle URI feature.
+>>
+>> Re-add the method, this time in strbuf.c, but with a new name:
+>> strbuf_strip_file_from_path(). The method requirements are slightly
+>> modified to allow a trailing slash, in which case nothing is done, which
+>> makes the name change valuable.
+>>
+>> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+>> ---
+>>  strbuf.c |  6 ++++++
+>>  strbuf.h | 11 +++++++++++
+>>  2 files changed, 17 insertions(+)
+>>
+>> diff --git a/strbuf.c b/strbuf.c
+>> index 0890b1405c5..c383f41a3c5 100644
+>> --- a/strbuf.c
+>> +++ b/strbuf.c
+>> @@ -1200,3 +1200,9 @@ int strbuf_edit_interactively(struct strbuf *buffe=
+r, const char *path,
+>>  	free(path2);
+>>  	return res;
+>>  }
+>> +
+>> +void strbuf_strip_file_from_path(struct strbuf *sb)
+>> +{
+>> +	char *path_sep =3D find_last_dir_sep(sb->buf);
+>> +	strbuf_setlen(sb, path_sep ? path_sep - sb->buf + 1 : 0);
+>> +}
+>> diff --git a/strbuf.h b/strbuf.h
+>> index 76965a17d44..f6dbb9681ee 100644
+>> --- a/strbuf.h
+>> +++ b/strbuf.h
+>> @@ -664,6 +664,17 @@ int launch_sequence_editor(const char *path, struct=
+ strbuf *buffer,
+>>  int strbuf_edit_interactively(struct strbuf *buffer, const char *path,
+>>  			      const char *const *env);
+>>=20=20
+>> +/*
+>> + * Remove the filename from the provided path string. If the path
+>> + * contains a trailing separator, then the path is considered a directo=
+ry
+>> + * and nothing is modified.
+>> + *
+>> + * Examples:
+>> + * - "/path/to/file" -> "/path/to/"
+>> + * - "/path/to/dir/" -> "/path/to/dir/"
+>> + */
+>> +void strbuf_strip_file_from_path(struct strbuf *sb);
+>> +
+>>  void strbuf_add_lines(struct strbuf *sb,
+>>  		      const char *prefix,
+>>  		      const char *buf,
 >
-> We cannot use the `<rev>:<path>` syntax like the one used in `git show`
-> because any non-flag parameter before `--` is treated as an attribute
-> and any parameter after `--` is treated as a pathname.
+> Re your reply in
+> https://lore.kernel.org/git/0980dcd4-30eb-4ef4-9369-279abe5ca5a2@github.c=
+om/
+> I still don't get how this is different from a 1-byte change to
+> strbuf_trim_trailing_dir_sep(), and if it isn't I think it's confusing
+> API design to have two very different ways to return the same data.
 >
-> This involves creating a new function `read_attr_from_blob`, which given
-> the path reads the blob for the path against the provided revision and
-> parses the attributes line by line. This function is plugged into
-> `read_attr()` function wherein we go through the different attributes.
+> There you said "The difference is all about whether or not we start with
+> a slash _and_ no other slash appears in the path.".
 >
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> Co-authored-by: toon@iotcl.com
-> ---
->  archive.c              |   2 +-
->  attr.c                 | 120 ++++++++++++++++++++++++++++-------------
->  attr.h                 |   7 ++-
->  builtin/check-attr.c   |  25 ++++-----
->  builtin/pack-objects.c |   2 +-
->  convert.c              |   2 +-
->  ll-merge.c             |   4 +-
->  pathspec.c             |   2 +-
->  t/t0003-attributes.sh  |  56 ++++++++++++++++++-
->  userdiff.c             |   2 +-
->  ws.c                   |   2 +-
->  11 files changed, 165 insertions(+), 59 deletions(-)
+> But I can't find a case where there's any difference between the two. I
+> tried this ad-hoc test on top:
+>=20=09
+> 	diff --git a/help.c b/help.c
+> 	index f1e090a4428..b0866b01439 100644
+> 	--- a/help.c
+> 	+++ b/help.c
+> 	@@ -765,6 +765,16 @@ int cmd_version(int argc, const char **argv, const =
+char *prefix)
+> 	 			 "also print build options"),
+> 	 		OPT_END()
+> 	 	};
+> 	+	struct strbuf sb1 =3D STRBUF_INIT;
+> 	+	struct strbuf sb2 =3D STRBUF_INIT;
+> 	+
+> 	+	if (getenv("STR")) {
+> 	+		strbuf_addstr(&sb1, getenv("STR"));
+> 	+		strbuf_addstr(&sb2, getenv("STR"));
+> 	+		strbuf_strip_file_from_path(&sb1);
+> 	+		strbuf_trim_trailing_not_dir_sep(&sb2);
+> 	+		fprintf(stderr, "%s: %s | %s\n", strcmp(sb1.buf, sb2.buf) ? "NEQ" : "=
+EQ", sb1.buf, sb2.buf);
+> 	+	}
+>=20=09=20
+> 	 	argc =3D parse_options(argc, argv, prefix, options, usage, 0);
+>=20=09=20
+> 	diff --git a/strbuf.c b/strbuf.c
+> 	index c383f41a3c5..f75d94556fc 100644
+> 	--- a/strbuf.c
+> 	+++ b/strbuf.c
+> 	@@ -114,13 +114,23 @@ void strbuf_rtrim(struct strbuf *sb)
+> 	 	sb->buf[sb->len] =3D '\0';
+> 	 }
+>=20=09=20
+> 	-void strbuf_trim_trailing_dir_sep(struct strbuf *sb)
+> 	+static void strbuf_trim_trailing_dir_sep_1(struct strbuf *sb, int flip)
+> 	 {
+> 	-	while (sb->len > 0 && is_dir_sep((unsigned char)sb->buf[sb->len - 1]))
+> 	+	while (sb->len > 0 && is_dir_sep((unsigned char)sb->buf[sb->len - 1]) =
+- flip)
+> 	 		sb->len--;
+> 	 	sb->buf[sb->len] =3D '\0';
+> 	 }
+>=20=09=20
+> 	+void strbuf_trim_trailing_dir_sep(struct strbuf *sb)
+> 	+{
+> 	+	strbuf_trim_trailing_dir_sep_1(sb, 1);
+> 	+}
+> 	+
+> 	+void strbuf_trim_trailing_not_dir_sep(struct strbuf *sb)
+> 	+{
+> 	+	strbuf_trim_trailing_dir_sep_1(sb, 1);
+> 	+}
+> 	+
+> 	 void strbuf_trim_trailing_newline(struct strbuf *sb)
+> 	 {
+> 	 	if (sb->len > 0 && sb->buf[sb->len - 1] =3D=3D '\n') {
+> 	diff --git a/strbuf.h b/strbuf.h
+> 	index f6dbb9681ee..b936f45ffad 100644
+> 	--- a/strbuf.h
+> 	+++ b/strbuf.h
+> 	@@ -189,6 +189,8 @@ void strbuf_ltrim(struct strbuf *sb);
+>=20=09=20
+> 	 /* Strip trailing directory separators */
+> 	 void strbuf_trim_trailing_dir_sep(struct strbuf *sb);
+> 	+/* Strip trailing not-directory separators */
+> 	+void strbuf_trim_trailing_not_dir_sep(struct strbuf *sb);
+>=20=09=20
+> 	 /* Strip trailing LF or CR/LF */
+> 	 void strbuf_trim_trailing_newline(struct strbuf *sb);
 >
-> diff --git a/archive.c b/archive.c
-> index 941495f5d7..bf64dbdce1 100644
-> --- a/archive.c
-> +++ b/archive.c
-> @@ -120,7 +120,7 @@ static const struct attr_check *get_archive_attrs(struct index_state *istate,
->  	static struct attr_check *check;
->  	if (!check)
->  		check = attr_check_initl("export-ignore", "export-subst", NULL);
-> -	git_check_attr(istate, path, check);
-> +	git_check_attr(istate, path, check, NULL);
->  	return check;
->  }
->  
-> diff --git a/attr.c b/attr.c
-> index 42ad6de8c7..42b67a401f 100644
-> --- a/attr.c
-> +++ b/attr.c
-> @@ -11,8 +11,12 @@
->  #include "exec-cmd.h"
->  #include "attr.h"
->  #include "dir.h"
-> +#include "git-compat-util.h"
+> Then:
+>=20=09
+> 	$ for str in a / b/ /c /d/ /e/ /f/g /h/i/ j/k l//m n/o/p //q/r/s/t; do S=
+TR=3D$str ./git version; done 2>&1 | grep :
+> 	EQ:  |=20
+> 	EQ: / | /
+> 	EQ: b/ | b/
+> 	EQ: / | /
+> 	EQ: /d/ | /d/
+> 	EQ: /e/ | /e/
+> 	EQ: /f/ | /f/
+> 	EQ: /h/i/ | /h/i/
+> 	EQ: j/ | j/
+> 	EQ: l// | l//
+> 	EQ: n/o/ | n/o/
+> 	EQ: //q/r/s/ | //q/r/s/
+>
+> I.e. for those inputs it's the same as the existing
+> strbuf_trim_trailing_dir_sep() with an inverted test. Is there some edge
+> case that I'm missing?
 
-As a rule in this project we include either cache.h at the top, or
-git-compat-util.h, and the former includes the latter.
+FWIW the "overkill" change on top to do this via callbacks is the
+below. Which I tested just to see how easy it was, and whether it would
+fail your tests (it doesn't).
 
-This file already has cache.h at the top, so it won't need this.
+-- >8 --
+Subject: [PATCH] strbuf: generalize "{,r,l}trim" to a callback interface
 
-> +	if (buf == NULL)
+We've had all three variants of "trim" for isspace(), then since
+c64a8d200f4 (worktree move: accept destination as directory,
+2018-02-12) we've had a "is_dir_sep" variant.
 
-if (!buf)
+A preceding change then added a "!is_dir_sep" variant. Let's
+generalize this, and have all these functions that want to trim
+characters matching some criteria be driven by the same logic.
 
-> +		more = (*ep == '\n');
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+---
+ bundle-uri.c      |  7 +------
+ git-compat-util.h |  5 +++++
+ strbuf.c          | 44 ++++++++++++++++++++++++++++----------------
+ strbuf.h          | 41 +++++++++++++++++++++++++++--------------
+ 4 files changed, 61 insertions(+), 36 deletions(-)
 
-Nit: parens not needed.
+diff --git a/bundle-uri.c b/bundle-uri.c
+index c411b871bdd..7240dedcaee 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -195,13 +195,8 @@ int bundle_uri_parse_config_format(const char *uri,
+ 	if (!list->baseURI) {
+ 		struct strbuf baseURI =3D STRBUF_INIT;
+ 		strbuf_addstr(&baseURI, uri);
++		strbuf_trim_trailing_not_dir_sep(&baseURI);
+=20
+-		/*
+-		 * If the URI does not end with a trailing slash, then
+-		 * remove the filename portion of the path. This is
+-		 * important for relative URIs.
+-		 */
+-		strbuf_strip_file_from_path(&baseURI);
+ 		list->baseURI =3D strbuf_detach(&baseURI, NULL);
+ 	}
+ 	result =3D git_config_from_file_with_options(config_to_bundle_list,
+diff --git a/git-compat-util.h b/git-compat-util.h
+index a76d0526f79..5bce9fa768c 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -451,6 +451,11 @@ static inline int git_is_dir_sep(int c)
+ #define is_dir_sep git_is_dir_sep
+ #endif
+=20
++static inline int is_not_dir_sep(int c)
++{
++	return !is_dir_sep(c);
++}
++
+ #ifndef offset_1st_component
+ static inline int git_offset_1st_component(const char *path)
+ {
+diff --git a/strbuf.c b/strbuf.c
+index c383f41a3c5..a5a1c01d539 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -101,24 +101,37 @@ void strbuf_grow(struct strbuf *sb, size_t extra)
+ 		sb->buf[0] =3D '\0';
+ }
+=20
+-void strbuf_trim(struct strbuf *sb)
++void strbuf_trim_fn(struct strbuf *sb, strbuf_ctype_fn_t fn)
+ {
+-	strbuf_rtrim(sb);
+-	strbuf_ltrim(sb);
++	strbuf_rtrim_fn(sb, fn);
++	strbuf_ltrim_fn(sb, fn);
+ }
+=20
+-void strbuf_rtrim(struct strbuf *sb)
++void strbuf_rtrim_fn(struct strbuf *sb, strbuf_ctype_fn_t fn)
+ {
+-	while (sb->len > 0 && isspace((unsigned char)sb->buf[sb->len - 1]))
++	while (sb->len > 0 && fn((unsigned char)sb->buf[sb->len - 1]))
+ 		sb->len--;
+ 	sb->buf[sb->len] =3D '\0';
+ }
+=20
++void strbuf_trim(struct strbuf *sb)
++{
++	strbuf_trim_fn(sb, strbuf_ctype_isspace);
++}
++
++void strbuf_rtrim(struct strbuf *sb)
++{
++	strbuf_rtrim_fn(sb, strbuf_ctype_isspace);
++}
++
+ void strbuf_trim_trailing_dir_sep(struct strbuf *sb)
+ {
+-	while (sb->len > 0 && is_dir_sep((unsigned char)sb->buf[sb->len - 1]))
+-		sb->len--;
+-	sb->buf[sb->len] =3D '\0';
++	strbuf_rtrim_fn(sb, is_dir_sep);
++}
++
++void strbuf_trim_trailing_not_dir_sep(struct strbuf *sb)
++{
++	strbuf_rtrim_fn(sb, is_not_dir_sep);
+ }
+=20
+ void strbuf_trim_trailing_newline(struct strbuf *sb)
+@@ -130,10 +143,10 @@ void strbuf_trim_trailing_newline(struct strbuf *sb)
+ 	}
+ }
+=20
+-void strbuf_ltrim(struct strbuf *sb)
++void strbuf_ltrim_fn(struct strbuf *sb, strbuf_ctype_fn_t fn)
+ {
+ 	char *b =3D sb->buf;
+-	while (sb->len > 0 && isspace(*b)) {
++	while (sb->len > 0 && fn(*b)) {
+ 		b++;
+ 		sb->len--;
+ 	}
+@@ -141,6 +154,11 @@ void strbuf_ltrim(struct strbuf *sb)
+ 	sb->buf[sb->len] =3D '\0';
+ }
+=20
++void strbuf_ltrim(struct strbuf *sb)
++{
++	strbuf_ltrim_fn(sb, strbuf_ctype_isspace);
++}
++
+ int strbuf_reencode(struct strbuf *sb, const char *from, const char *to)
+ {
+ 	char *out;
+@@ -1200,9 +1218,3 @@ int strbuf_edit_interactively(struct strbuf *buffer, =
+const char *path,
+ 	free(path2);
+ 	return res;
+ }
+-
+-void strbuf_strip_file_from_path(struct strbuf *sb)
+-{
+-	char *path_sep =3D find_last_dir_sep(sb->buf);
+-	strbuf_setlen(sb, path_sep ? path_sep - sb->buf + 1 : 0);
+-}
+diff --git a/strbuf.h b/strbuf.h
+index f6dbb9681ee..bb7aa38816f 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -180,15 +180,39 @@ static inline void strbuf_setlen(struct strbuf *sb, s=
+ize_t len)
+  */
+=20
+ /**
+- * Strip whitespace from the beginning (`ltrim`), end (`rtrim`), or both s=
+ide
+- * (`trim`) of a string.
++ * A callback function that acts like the macros defined in
++ * <ctype.h>. To be given to strbuf_{,r,l}trim() below.
++ */
++typedef int (*strbuf_ctype_fn_t)(int c);
++static inline int strbuf_ctype_isspace(int c) { return isspace(c); }
++
++/**
++ * Strip characters matching the 'strbuf_ctype_fn_t' from the
++ * beginning (`ltrim`), end (`rtrim`) or both sides (`trim`) of a
++ * string.
++ */
++void strbuf_trim_fn(struct strbuf *sb, strbuf_ctype_fn_t fn);
++void strbuf_rtrim_fn(struct strbuf *sb, strbuf_ctype_fn_t fn);
++void strbuf_ltrim_fn(struct strbuf *sb, strbuf_ctype_fn_t fn);
++
++/**
++ * The common-case wrapper for strbuf_{,r,l}trim_fn() uses the
++ * strbuf_ctype_isspace() callback function.
+  */
+ void strbuf_trim(struct strbuf *sb);
+ void strbuf_rtrim(struct strbuf *sb);
+ void strbuf_ltrim(struct strbuf *sb);
+=20
+-/* Strip trailing directory separators */
++/**
++ * Strip trailing directory separators. This is strbuf_rtrim_fn() with
++ * is_dir_sep() as the callback..
++ */
+ void strbuf_trim_trailing_dir_sep(struct strbuf *sb);
++/**
++ * Strip trailing not-directory separators. This is strbuf_rtrim_fn()
++ * with is_not_dir_sep() as the callback.
++ */
++void strbuf_trim_trailing_not_dir_sep(struct strbuf *sb);
+=20
+ /* Strip trailing LF or CR/LF */
+ void strbuf_trim_trailing_newline(struct strbuf *sb);
+@@ -664,17 +688,6 @@ int launch_sequence_editor(const char *path, struct st=
+rbuf *buffer,
+ int strbuf_edit_interactively(struct strbuf *buffer, const char *path,
+ 			      const char *const *env);
+=20
+-/*
+- * Remove the filename from the provided path string. If the path
+- * contains a trailing separator, then the path is considered a directory
+- * and nothing is modified.
+- *
+- * Examples:
+- * - "/path/to/file" -> "/path/to/"
+- * - "/path/to/dir/" -> "/path/to/dir/"
+- */
+-void strbuf_strip_file_from_path(struct strbuf *sb);
+-
+ void strbuf_add_lines(struct strbuf *sb,
+ 		      const char *prefix,
+ 		      const char *buf,
+--=20
+2.39.0.rc1.1014.gc37e9814e18
 
-> +	struct object_id oid;
-> +	unsigned long sz;
-> +	enum object_type type;
-> +	void *buf;
-> +	struct strbuf sb;
-> +
-> +	if (object_name == NULL)
-
-Ditto !object_name test.
-
-> +		return NULL;
-> +
-> +	strbuf_init(&sb, strlen(path) + 1 + strlen(object_name));
-> +	strbuf_addstr(&sb, object_name);
-> +	strbuf_addstr(&sb, ":");
-> +	strbuf_addstr(&sb, path);
-
-Is this really performance sensitive so we need to pre-size this, or
-would a simpler:
-
-	struct strbuf sb = STRBUF_INIT;
-        strbuf_addf(&sb, "%s:%s", path, object_name);
-
-Do?
-
-> +	} else if (object_name != NULL) {
-
-else if (object_name)
-
->  void git_check_attr(struct index_state *istate,
-> -		    const char *path, struct attr_check *check);
-> +					const char *path, struct attr_check *check,
-> +					const char *object_name);
-
-This (and possibly other places) seem funnily indented..
-
->  	if (collect_all) {
-> -		git_all_attrs(&the_index, full_path, check);
-> +		git_all_attrs(&the_index, full_path, check, object_name);
->  	} else {
-> -		git_check_attr(&the_index, full_path, check);
-> +		git_check_attr(&the_index, full_path, check, object_name);
->  	}
-
-Earlier you do a get_oid(), shouldn't that be a
-repo_get_oid(istate->repo, ...) to be future-proof? I.e. use the repo of
-the passed-in index.
-
-I think it'll always be "the_repository" for now, but for an API it
-makes sense to hardcode that assumption in fewer places.
-
-> +test_expect_success 'bare repository: with --revision' '
-> +	(
-> +		cd bare.git &&
-> +		(
-> +			echo "f	test=f" &&
-> +			echo "a/i test=a/i"
-
-You don't need a subshell just to echo a string. You can use {}-braces,
-but in this case just:
-
-    printf "%s\n", "f test=f" "a/i test=a/i" | git hash-object .... &&
-
-
-> +		) | git hash-object -w --stdin > id &&
-> +		git update-index --add --cacheinfo 100644 $(cat id) .gitattributes &&
-
-Split the "cat" into a varible, otherwise its failure will be hidden.
-
-> +		git write-tree > id &&
-
-We use ">id" style for redirection, not "> id".
-
-> +		git commit-tree $(cat id) -m "random commit message" > id &&
-
-Ditto..
