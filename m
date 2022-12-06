@@ -2,127 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F1CA6C47089
-	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 03:23:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 35984C3A5A7
+	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 03:52:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233912AbiLFDX2 convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 5 Dec 2022 22:23:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45454 "EHLO
+        id S232865AbiLFDwR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Dec 2022 22:52:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232414AbiLFDX0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2022 22:23:26 -0500
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D61FE090
-        for <git@vger.kernel.org>; Mon,  5 Dec 2022 19:23:25 -0800 (PST)
-Received: by mail-pg1-f171.google.com with SMTP id f3so12247250pgc.2
-        for <git@vger.kernel.org>; Mon, 05 Dec 2022 19:23:25 -0800 (PST)
+        with ESMTP id S230348AbiLFDwP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2022 22:52:15 -0500
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF1121ADB7
+        for <git@vger.kernel.org>; Mon,  5 Dec 2022 19:52:13 -0800 (PST)
+Received: by mail-pg1-x52c.google.com with SMTP id 6so12274602pgm.6
+        for <git@vger.kernel.org>; Mon, 05 Dec 2022 19:52:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=F3wBQTUG2/sAMcL4L1cRCO9AnHmuIRHDwN0zzO23f50=;
+        b=F0AB2N5K4nZpJW2Axv97Tuhxdyz9adsaMTfbyo9RtIHFw9rqPQAwKz3TAxIF4xA3QM
+         gBTlRz/qX5MjaZ12Wj8N7iay9XyFxbLei/lG/TWklkotdl3O4TRg2LqqOkIsvfMlvO8S
+         NZmBdLUHEMFp69IWcdAbvwWAUa4vPYQ6+Pm7GCTkrj5a3vxr9xzB/w9EgDOpEkSXh7Rp
+         QPFgfThU9g1lchKa/kWAlm6j+DLAPb90gpno1dxQxh5QwQNLgi5Glkr/FGaAZdAekjQG
+         W8lD/xEpsjMAQxb/4h52CLpc2IYmWSeC4SdXZ7uzEqgFqHLJKBQla5d4170oDAzC1EhA
+         OLzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5UUY7ePmRJgWrZTrT8N8NFiNAl+UtZDjGhDhd1j++WQ=;
-        b=Y9E+1qbUsITSxjG1cw0WdSUiJBMJobYZuzsmCsJTrNg55emfD7LepHGcka6r8KaTH7
-         ni4mBvF4gx/QbWW9+1516qOdZz1ZloaEEExiOQwjhPKO/4Ad2jnBNK8045vanLK0aoF0
-         jFwApenZ2hCnAQ6szKauEr9A7LL4LP+RQ9L+1zQxB+PjDVu43DoojftV8STW6Ci3/Anh
-         4wlPCwGVvENOVwCs8QMs72238nk0epfQodRojMI6rOl9JPLTqnx0A2swqsV0raRL8KBs
-         ecwAxG/Mu60/fbkOzKuWimPPL7B5fvToGBoLnrvvG9GQND2MKhgMOhK/Ce463sId8kMx
-         JGfQ==
-X-Gm-Message-State: ANoB5plep3Pv3YuH5ZVj+lx+bdEH11BF2SEqVsEohHBZrvaOU8Bg2NyR
-        lpxTEYxWrUO0Fu3AGcvqhvKxPvnG6ZHvIyl9PZE=
-X-Google-Smtp-Source: AA0mqf6LcLLxyBqu+Py1uOtZEAJq1x6zcvC6GSGxQKhd4d33JT7Uz+02q/mQLqkGRDeBvBqhnAwnD0/HrTkF33F+mBI=
-X-Received: by 2002:a63:d43:0:b0:477:66b9:341b with SMTP id
- 3-20020a630d43000000b0047766b9341bmr60190685pgn.130.1670297004757; Mon, 05
- Dec 2022 19:23:24 -0800 (PST)
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=F3wBQTUG2/sAMcL4L1cRCO9AnHmuIRHDwN0zzO23f50=;
+        b=NSpB1h7ePaSCh0wWXK2SN4Ct7kkWrG0DV0KUrrAg+GbxXDu0Av8rLPFDVeSvdSbkki
+         DaobvEjja8L2cJbCeJpn2xO8Q/utnuiyWbVeGreMtqFzVKR4cRKtPXWXX2NfrWxzqTqF
+         7xLgJuxHrK/v/fZ/83+tZfC8oCF35+9mcUq2XyJEtKVK8nDkK+lDQnB7vI3QZ+kuFgL9
+         gNJvMFHsq/HSsDcxenlQWX8sEhLJWcIboNxR71chdi7tQD8T7duntgMRt/rHy6qec/3+
+         YxnvixGbHxfhK8fWHkw3ia4uwpYXP9ZZt/ATRhF0uw3u5fYb8oKuhIZavyizp2gsNP6R
+         Y7Pg==
+X-Gm-Message-State: ANoB5pkJpAQnLI9av/mT6L3R0LVAYxdQqopZpag7aUAp25yxwInP4zQd
+        Sja79gqAbtlkloerMLhiUsg=
+X-Google-Smtp-Source: AA0mqf4Ass7loLZOEPnbcfsuhz2r3H3IFrzQjOnY+jkvoeLTIRmsJhZYgnEql7Likw5Ni3b/p3NCUA==
+X-Received: by 2002:a62:ea0e:0:b0:575:7bb:d6fc with SMTP id t14-20020a62ea0e000000b0057507bbd6fcmr44511152pfh.79.1670298733030;
+        Mon, 05 Dec 2022 19:52:13 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id e17-20020aa798d1000000b005742ee445fdsm10571034pfm.70.2022.12.05.19.52.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Dec 2022 19:52:12 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        phillip.wood@dunelm.org.uk, git@vger.kernel.org,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] test-lib.sh: discover "git" in subdirs of
+ "contrib/buildsystems/out"
+References: <663b93ef-0c89-a5f6-1069-b4be97915d20@dunelm.org.uk>
+        <patch-1.1-f27d8bd4491-20221201T162451Z-avarab@gmail.com>
+        <xmqq5yeuspam.fsf@gitster.g>
+        <87f22a55-ee84-2f76-7b9b-924a97f44f89@dunelm.org.uk>
+        <221202.86sfhxg2ng.gmgdl@evledraar.gmail.com>
+        <Y4qF3iHW2s+I0yNe@coredump.intra.peff.net>
+        <221203.86pmd1dyqn.gmgdl@evledraar.gmail.com>
+        <Y45/8WnuUnP9gOMo@nand.local>
+        <Y46clyoKk9KzFiqj@coredump.intra.peff.net>
+        <221206.86zgc1cnc3.gmgdl@evledraar.gmail.com>
+        <Y46jT0i/7DhxHzfS@coredump.intra.peff.net>
+        <221206.86mt81claa.gmgdl@evledraar.gmail.com>
+Date:   Tue, 06 Dec 2022 12:52:12 +0900
+In-Reply-To: <221206.86mt81claa.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Tue, 06 Dec 2022 03:19:57 +0100")
+Message-ID: <xmqqilipnq8j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1425.git.1668999621.gitgitgadget@gmail.com>
- <97ada2a1202190776ce3989d3841dd47e2702316.1668999621.git.gitgitgadget@gmail.com>
- <221206.86ilipckms.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221206.86ilipckms.gmgdl@evledraar.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 5 Dec 2022 22:23:13 -0500
-Message-ID: <CAPig+cSfvgu8XjvmmAkFWe1G1VDRgrcx5GjUhr4xSDqoJ4cZOA@mail.gmail.com>
-Subject: Re: [PATCH 3/3] t1509: facilitate repeated script invocations
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 5, 2022 at 9:48 PM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
-> On Mon, Nov 21 2022, Eric Sunshine via GitGitGadget wrote:
-> > t1509-root-work-tree.sh, which tests behavior of a Git repository
-> > located at the root `/` directory, refuses to run if it detects the
-> > presence of an existing repository at `/`. This safeguard ensures that
-> > it won't clobber a legitimate repository at that location. However,
-> > because t1509 does a poor job of cleaning up after itself, it runs afoul
-> > of its own safety check on subsequent runs, which makes it painful to
-> > run the script repeatedly since each run requires manual cleanup of
-> > detritus from the previous run.
-> >
-> > Address this shortcoming by making t1509 clean up after itself as its
-> > last action. This is safe since the script can only make it to this
-> > cleanup action if it did not find a legitimate repository at `/` in the
-> > first place, so the resources cleaned up here can only have been created
-> > by the script itself.
-> >
-> > Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-> > ---
-> > +test_expect_success 'cleanup root' '
-> > +     rm -rf /.git /refs /objects /info /hooks /branches /foo &&
-> > +     rm -f /HEAD /config /description /expected /ls.expected /me /result
-> > +'
->
-> Perhaps it would be nice to split this into a function in an earlier
-> step, as this duplicates what you patched in 2/3. E.g.:
->
->         cleanup_root_git_bare() {
->                 rm -rf /.git
->         }
->         cleanup_root_git() {
->                 rm -f /HEAD /config /description /expected /ls.expected /me /result
->         }
->
-> Then all 3 resulting users could call some combination of those.
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-I did something like that originally but decided against it in the
-end, and went with the simpler "just clean up everything we created"
-despite the bit of duplicated cleanup code. After all, this is only a
-tiny bit of duplication in a script filled with much worse: for
-instance, the `test_foobar_root`, `test_foobar_foo`, and
-`test_foobar_foobar` functions are filled with copy/paste code -- not
-to mention having rather poor names. So, considering that the script
-is probably in need of a major overhaul and modernization at some
-point anyhow[1], and because I simply wanted to get the script back
-into a working state, I opted for minimal changes.
-
-[1]: That's assuming anyone even cares enough to clean this script up.
-It's clearly neglected; the breakage addressed by this series has gone
-unnoticed for many months.
-
-> This is an existing wart, but I also wondered why the "expected",
-> "result" etc. was needed. Either we could make the tests creating those
-> do a "test_when_finished" removal of it, or better yet just create those
-> in the trash directory.
+> Just to add my own digression: I asked in some past thread (which I'm
+> too lazy to dig up) why it was the cmake file couldn't just dispatch to
+> "make" for most things.
 >
-> At this point we've cd'd to /, but there doesn't seem to be a reason we
-> couldn't use our original trash directory for our own state.
+> I.e. it needs to at some level be aware of what it's building for the
+> IDE integration, but for say making a "grep.o" there's no reason it
+> couldn't be running:
 >
-> The "description" we could then git rid of with "git init --template=".
+> 	make grep.o
 >
-> We could even get rid of the need to maintain "HEAD" etc. by init-ing a
-> repo in the trash directory, copying its contents to "/", and then we'd
-> know exactly what we needed to remove afterwards. I.e. just a mirror of
-> the structure we copied from our just init-ed repo.
+> Instead of:
+>
+>         cc <args> -o grep grep.c [...]
+>
+> which requires duplicating much of the Makefile logic (possibly with
+> some Makefile shim to not consider any dependencies in that case).
 
-Fodder for an eventual overhaul, I suppose.
-
-> But all that's a digression for this series, which I think is good
-> enough as-is. I just wondered why we had some of these odd looking
-> patterns.
-
-Thanks for reading through the patches.
+That leads to a question at the other extreme.  Why does any logic
+in CMakeLists.txt even have to exist at all?  Whenever it is asked
+to make foo, it can be running "make foo" instead of having its own
+logic at all.  ;-)
