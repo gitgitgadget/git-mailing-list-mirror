@@ -2,119 +2,112 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EA44C4708C
-	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 10:03:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E969CC352A1
+	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 10:14:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235350AbiLFKDM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Dec 2022 05:03:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46158 "EHLO
+        id S232135AbiLFKO4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Dec 2022 05:14:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235721AbiLFKCE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2022 05:02:04 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BF5727DF5
-        for <git@vger.kernel.org>; Tue,  6 Dec 2022 01:55:07 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id j5-20020a05600c410500b003cfa9c0ea76so12249991wmi.3
-        for <git@vger.kernel.org>; Tue, 06 Dec 2022 01:55:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=85G8X2HRfR/saHJz5RlsIx+AHt3kVkEhzuUbq33L40k=;
-        b=VrrRdlZrJ99dVofb9XWJYa0VE14GG2bAQ/gvh4NcQPtGlSxaiR+hXdcNI0TyoTWT7P
-         cyitZRwDra4iTC+anxx/29Vx1roRpfgotXkHgH9ZTWpOW6RRmPAIWMN6Ix/t4ETniUMz
-         q5Tgyy7Ds4xJVOZUQFGJGv8a2H8VzFteFXBA3s1OW7QoyLqIrEP3Q5IGtpNb1EKo+6Cz
-         Wn9is3UjJuyRjQrqRJbEBUYRZ1JcP2Ic8aUUVM5KydMBdT+IW9ytBQsgs5HvlRTGVHFB
-         q3UmQDiR2SktlRlhYZ6c6KjZjwHTvIcTvRvxhZZZGFlC8meZpXR7suGDOSSB7uOYxWcB
-         OtYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=85G8X2HRfR/saHJz5RlsIx+AHt3kVkEhzuUbq33L40k=;
-        b=qINx8Kpo9VckH+d8HEscPdbBYaCLX4GWcYYQ9OgJsAHfPPhP4upra71EOvtUMJW3dm
-         udjeWpBGgO4nEobdcVLhwzunF7xjcpvnQE0FncGU0qP/Ws9vwPwG7hIZVOcy0CyTg0DZ
-         GLwugs+9h+chBY3lnCMx5/v9eLN0qZN6/K8DNKML6DYIfwKxoIwpdjR9zB5J51OKqH7I
-         QpiiUO/nUF975M+IiUBIVlvOiKXkI4MMFibGGv/LuAPKe4FHEKHxYtNppxD4DtJtIfo0
-         sIQ0uPYNzhwt29zeXg363bcFCQ6kiY+0NCukBuVcFvqltTLONjh3J8j4UCz01b/53d1d
-         kwXQ==
-X-Gm-Message-State: ANoB5plGyzfdGU8h1Aoluky11J94MAX/7WlSCELn69ylIdKqD4dUBeqZ
-        okpXHFlm6L8yleM8lxkJiCIHkT2ouPQ=
-X-Google-Smtp-Source: AA0mqf6BeCw+iLVxc1vmEJRNMyCOqH6o/T/8q1DtM5hpBiXgvfcI25aXhoFTD3uBcIIjZqGe4+D7Bg==
-X-Received: by 2002:a05:600c:1554:b0:3d0:e725:8ab8 with SMTP id f20-20020a05600c155400b003d0e7258ab8mr8036001wmg.122.1670320465937;
-        Tue, 06 Dec 2022 01:54:25 -0800 (PST)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id z10-20020a05600c0a0a00b003c70191f267sm28045065wmp.39.2022.12.06.01.54.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Dec 2022 01:54:25 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <30360f4c-91a5-177b-133f-eb7036ed676a@dunelm.org.uk>
-Date:   Tue, 6 Dec 2022 09:54:21 +0000
+        with ESMTP id S234250AbiLFKOe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2022 05:14:34 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECB5517416
+        for <git@vger.kernel.org>; Tue,  6 Dec 2022 02:13:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1670321622; bh=kwKbEm7r/05QxfTGg0mHvZO1AKI89QMH5behokKEBsY=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=NyOs/HSkGXaWugxB/zRGrnkncRhxPpd+HE5wJbfm15vEC+D3V2/L0TOTQAD+Gwehs
+         mP7gSN+TUQMwPhqcPeTymE1Zdj2iiWCNkWB9dkjk6kb6V6abGQsK06CZjW00aLJJtb
+         k6NB8hDBqunHGBoCbu+wtfyCLAmiktzHKw1NDthG3AY9b4lW1Pd+MpPUd1v3wtcSZq
+         fmjI5U6sfF21IROM1hLGBXI0H2KdWF3dy8wvDQ2JXNwPOI8ZOt944uwpX8YixijQFa
+         OKhAx9m3jm7IJAr3qGPrZrbtpmUbnEqIHXSZK/sD9rbJRr6/nSPatrZi9xXzTjxH9K
+         0Np8h+q3USuRA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from
+ fv-az242-313.30y45kzjdhxebl3rnllq33u0kc.cx.internal.cloudapp.net
+ ([20.10.188.108]) by mail.gmx.net (mrgmx105 [212.227.17.168]) with ESMTPSA
+ (Nemesis) id 1MLQxX-1pJLFd0IGR-00IUHC; Tue, 06 Dec 2022 11:13:42 +0100
+From:   Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git-for-windows@googlegroups.com, git@vger.kernel.org,
+        git-packagers@googlegroups.com
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [ANNOUNCE] Git for Windows 2.39.0-rc2
+Date:   Tue,  6 Dec 2022 10:13:39 +0000
+Message-Id: <20221206101339.3276-1-johannes.schindelin@gmx.de>
+X-Mailer: git-send-email 2.38.1
+Content-Type: text/plain; charset=UTF-8
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] test-lib.sh: discover "git" in subdirs of
- "contrib/buildsystems/out"
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <663b93ef-0c89-a5f6-1069-b4be97915d20@dunelm.org.uk>
- <patch-1.1-f27d8bd4491-20221201T162451Z-avarab@gmail.com>
- <xmqq5yeuspam.fsf@gitster.g>
- <87f22a55-ee84-2f76-7b9b-924a97f44f89@dunelm.org.uk>
- <221202.86sfhxg2ng.gmgdl@evledraar.gmail.com>
- <Y4qF3iHW2s+I0yNe@coredump.intra.peff.net>
- <221203.86pmd1dyqn.gmgdl@evledraar.gmail.com> <Y45/8WnuUnP9gOMo@nand.local>
- <Y46clyoKk9KzFiqj@coredump.intra.peff.net>
- <221206.86zgc1cnc3.gmgdl@evledraar.gmail.com>
- <Y46jT0i/7DhxHzfS@coredump.intra.peff.net>
- <221206.86mt81claa.gmgdl@evledraar.gmail.com> <xmqqilipnq8j.fsf@gitster.g>
-In-Reply-To: <xmqqilipnq8j.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+X-Provags-ID: V03:K1:JVj38Hpg/WZp+01ZSRKOiJ+l7oktux5yhYa9UDH+3wekSmCQPoq
+ vcmkXXhh16fFebCEKQvEeoEZeqWIttiPpOu5DPc2Y5uzt/7UxoEO8c8xtZG4wg6WmZvRX5z
+ TojknxU3W2YnhhNrfrckICP8zCpx3ietvMIgh811+XIqhKCMBD9bf9fa/U8+ssrR1D3yovY
+ HxjAZjIC9XUimZeWa1zPw==
+UI-OutboundReport: notjunk:1;M01:P0:5DdRbU5hA6I=;WumIPv93Zb0IdXRchHKTuBaJDYq
+ kMjr50wEK3dNXTcEsRy70m8RbC0iUwvY2N+Gn8k19yBdkh7KulO3Cj1GHOqiwO0hkXvwDXHC0
+ 7S0Chp7v9ZNtCZe4kyHbVfv1HzMW/DO7qBSesqvMGvEDMOQPtzoq2YMSZqm/t52iJlQSwfEOv
+ hCRwCIVGTvpcl/mhzATbEmhse+W8PQgdWvZglJl3KCsahhWj/sgp6DxiCNAe+zc6fZeh6w+cu
+ DHBRlQGg0riXPM2RAp834wK7mRpnv/E+/dTvakGN4jKsvcVISeJlBtaWHV6eLpi21Itg1x+gG
+ SUAqt0CQCgiYoYlNTO2+uinbH1L9LZ3C4iPA6QnltL5MladSa27bk99N7GCl8A7pfv8bCcTqm
+ tP7bzy2oY6wm6UZ601zrQvzmr6GCppJVJDr7x/vwCZvw/j2IlooYAW/0RzOQLMhSMtD1zqXfV
+ 1uRa/4isrO7xi0Y9sEwHHRBNDOyi4mUi0056nqZhJsXG/knkrkLrSEjcF6m6MfBRJioMKoTMr
+ kvTgDPIqwJh7/dF/Dp3KOxIwMv5WiM843GxwMxT+HkM1m6YuTe8NhanE/p9dhGHBdYbYzhGNP
+ 9r1bmcSFagF80n0RR4SAjjoqX9FZn3M5KRHJBpkY+h0m3Qn9u5ph8hasxugCXCUFw/qMid9kY
+ RPkoMpTOMIIBQRyVeRTiYtFK5/AGmJh/NpL94hTVbI23goXKSXkvHwg1AxOkEmAe5hzCTVD0F
+ fBHIkhwnv5FIeid4M3zz7pBdprlHVbwYRwXeKLWeA1wKLOwZW5Tq12n4cJ7Ir9Z98mng2Ochq
+ 1PdyWzgcCgDVmkBV+/SMyOhT+QARt7WWqdQSIIscxlUALaIQzudQCguiIQRELkx5hEjKQevAa
+ 90L1xF5reOmfZsY+GpeJ3EQ9ELujKUZvSgfCB1xHUd7LBW2KJbiJqQbEUMGr+EciK8PEasQ7g
+ sTIc8g==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 06/12/2022 03:52, Junio C Hamano wrote:
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-> 
->> Just to add my own digression: I asked in some past thread (which I'm
->> too lazy to dig up) why it was the cmake file couldn't just dispatch to
->> "make" for most things.
+Dear Git users,
 
-Because make is not installed by default on Windows. Our CI job uses 
-msbuild (whatever that is) and when I was playing with Visual Studio 
-last week it was using ninja.
+I hereby announce that Git for Windows 2.39.0-rc2 is available from:
 
->> I.e. it needs to at some level be aware of what it's building for the
->> IDE integration, but for say making a "grep.o" there's no reason it
->> couldn't be running:
->>
->> 	make grep.o
->>
->> Instead of:
->>
->>          cc <args> -o grep grep.c [...]
->>
->> which requires duplicating much of the Makefile logic (possibly with
->> some Makefile shim to not consider any dependencies in that case).
-> 
-> That leads to a question at the other extreme.  Why does any logic
-> in CMakeLists.txt even have to exist at all?  Whenever it is asked
-> to make foo, it can be running "make foo" instead of having its own
-> logic at all.  ;-)
+    https://github.com/git-for-windows/git/releases/tag/v2.39.0-rc2.windows.1
 
-Yes, if make was available then we wouldn't need to use CMake.
+Changes since Git for Windows v2.38.1 (October 18th 2022)
 
-Best Wishes
+New Features
 
-Phillip
+  * Comes with Git v2.39.0-rc2.
+  * Comes with OpenSSL v1.1.1s.
+  * Comes with cURL v7.86.0.
+  * The Portable Git edition (which comes as a self-extracting 7-Zip
+    archive) now uses the latest 7-Zip version to self-extract.
+  * Comes with OpenSSH v9.1p1.
+  * It is now possible to generate and use SSH keys protected by
+    security keys (AKA FIDO devices) via Windows Hello, e.g. via
+    ssh-keygen.exe -t ecdsa-sk.
+  * Portable Git no longer configures color.diff, color.status and
+    color.branch individually, but configures color.ui instead, which
+    makes it easier to override the default.
+  * Comes with GNU TLS v3.7.8.
+  * Comes with Git Credential Manager Core v2.0.877.
+  * Comes with MinTTY v3.6.2.
+  * Comes with Bash v5.2 patchlevel 12.
+  * Comes with Git LFS v3.3.0.
+
+Bug Fixes
+
+  * The Git executables (e.g. git.exe itself) used to have incomplete
+    version information recorded in their resources, which has been
+    fixed.
+  * A regression introduced in Git for Windows v2.38.0 that prevented
+    git.exe from running in Windows Nano Server containers was fixed.
+
+Git-2.39.0-rc2-64-bit.exe | 00845a71bc814d2ace4a83f25ee042e04e1e742813460ee64b99028c801aaac2
+Git-2.39.0-rc2-32-bit.exe | 214c9e69e1ca6b0a299b4028f0053a735f07cdc27504a187d720048de33f5715
+PortableGit-2.39.0-rc2-64-bit.7z.exe | 62557cbfb57e40da55dc96596d985dc409ee8f665fa265856982b92320773d27
+PortableGit-2.39.0-rc2-32-bit.7z.exe | ba968b714dab78d63ad0fa66c1ab38980d46a591c2752e987f47523c136de90a
+MinGit-2.39.0-rc2-64-bit.zip | c05bd4694da21047083b0858a09453f6cf1c871933ec2c303bf352eb0b0391fb
+MinGit-2.39.0-rc2-32-bit.zip | 6d55bf2e405f7005477af028d670ee5fe79e22d5e1b7ab282ef5c030b3c9625c
+MinGit-2.39.0-rc2-busybox-64-bit.zip | c7617169686d04f6622a545019b000f318151a774e769e900595a1db21b4ba6d
+MinGit-2.39.0-rc2-busybox-32-bit.zip | 9b1593b76b759f41631e43f775ac40ce902eba24247cadd02a0fdd1a265e063a
+Git-2.39.0-rc2-64-bit.tar.bz2 | cf8d13e34810f6e90403098783c47c8c3213a3a6cbc35578d5e63f731b29e1a6
+Git-2.39.0-rc2-32-bit.tar.bz2 | 2e1e4100e80c62bcf7086140ea30e07f107328e2378545302620c27896f87be8
+
+Ciao,
+Johannes
