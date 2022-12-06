@@ -2,159 +2,110 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CFAB7C47089
-	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 01:50:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 74F69C4708C
+	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 02:03:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232399AbiLFBu0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Dec 2022 20:50:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56192 "EHLO
+        id S233686AbiLFCDq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Dec 2022 21:03:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231497AbiLFBuY (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2022 20:50:24 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4BF9167ED
-        for <git@vger.kernel.org>; Mon,  5 Dec 2022 17:50:23 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id m18so1201643eji.5
-        for <git@vger.kernel.org>; Mon, 05 Dec 2022 17:50:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ES911Eq6kw/8dSTANoO+nkamNxURb+CAIVIxPiIUt+Y=;
-        b=NTbDtLbZ5ryEUWKrPoVnJYq+KX4iIr0Q8cXGyqKSty4o1P3tDKuIMc4vJdqf5E+ESv
-         Ul3/XBShfbU647AqpOyL+pgzp0kQEd5Fswzgh3wzG/lGh5iJWdvUQyVn2WcGBwhYQ4Ml
-         PqDzsKz+hcCw9lrN31l+HLpeBxzCpIRQJYz5T2sYvTedU25n8k9b0TfsyuhVcp9rNtOa
-         rGu0xiGauwkJb+A9sVQhQAzT4QkZRTJ2PlQh88Y1Fxi1p/jZ/yiDDyHPSyD06328hwui
-         BFVGo77+4guUx5r2VP9TsxGl9CcWh3ebWVUhDQCSJ8WT3LJQ0EIsWNV1cLHdmSpJq2IO
-         0S7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ES911Eq6kw/8dSTANoO+nkamNxURb+CAIVIxPiIUt+Y=;
-        b=kaQd2cawLn44UomZ6n5kzc/+YVlL3cm0uW6POcKAbhhvGqD/aHN6kB1+HTl8S70RPM
-         MwaPCErJNAPY2bpQ/XFD983SD3oxWyTkH8VKVWzYsf7neVCcb0Z3MW+aMCcCJGvnL9ox
-         xH3/Dac4Ox2Sy8vF2yUO6YLit5k8Rcb+HCOw/lyIGzNjvp6ifG35vJyEoYYq5W4Nf4Qe
-         kxPsXI3x72XfOndrRVvjnTTaTnsJM1iun4wGw11uYjNwU5EnkW6Hhqey8DgyxV+vPKWG
-         Niyi1agGtVIXJxacdiD8aJHPhnv5IARZA48EFFTtW6dmZKSYIwaIeZVdxt70tYG/tf2C
-         u59w==
-X-Gm-Message-State: ANoB5pn2Qd+Su0aG6bZPB6VADxzqWpqGBtZnU/CcDDAJGqwmQF27zDcY
-        /GjWv7JWGVsKSDYUuuxNtQM=
-X-Google-Smtp-Source: AA0mqf4GgnP8oOHE2PTWxZGDhYhYmlysL4msD36Oa6Q0CCCBXkCW86MczGBm5uLWY0mBjIxhyMLkDg==
-X-Received: by 2002:a17:907:76f2:b0:7c0:eb3c:1037 with SMTP id kg18-20020a17090776f200b007c0eb3c1037mr7053034ejc.663.1670291422019;
-        Mon, 05 Dec 2022 17:50:22 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id g1-20020a17090604c100b007c07b23a79bsm6773161eja.213.2022.12.05.17.50.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Dec 2022 17:50:21 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1p2N6C-003PD5-35;
-        Tue, 06 Dec 2022 02:50:20 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, phillip.wood@dunelm.org.uk,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] test-lib.sh: discover "git" in subdirs of
- "contrib/buildsystems/out"
-Date:   Tue, 06 Dec 2022 02:43:17 +0100
-References: <663b93ef-0c89-a5f6-1069-b4be97915d20@dunelm.org.uk>
-        <patch-1.1-f27d8bd4491-20221201T162451Z-avarab@gmail.com>
-        <xmqq5yeuspam.fsf@gitster.g>
-        <87f22a55-ee84-2f76-7b9b-924a97f44f89@dunelm.org.uk>
-        <221202.86sfhxg2ng.gmgdl@evledraar.gmail.com>
-        <Y4qF3iHW2s+I0yNe@coredump.intra.peff.net>
-        <221203.86pmd1dyqn.gmgdl@evledraar.gmail.com>
-        <Y45/8WnuUnP9gOMo@nand.local>
-        <Y46clyoKk9KzFiqj@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <Y46clyoKk9KzFiqj@coredump.intra.peff.net>
-Message-ID: <221206.86zgc1cnc3.gmgdl@evledraar.gmail.com>
+        with ESMTP id S231274AbiLFCDp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2022 21:03:45 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4177810FDD
+        for <git@vger.kernel.org>; Mon,  5 Dec 2022 18:03:44 -0800 (PST)
+Received: (qmail 11360 invoked by uid 109); 6 Dec 2022 02:03:44 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 06 Dec 2022 02:03:44 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16249 invoked by uid 111); 6 Dec 2022 02:03:44 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 05 Dec 2022 21:03:44 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 5 Dec 2022 21:03:42 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v2 0/4] Don't lazy-fetch commits when parsing them
+Message-ID: <Y46i/npXcnsT1pqF@coredump.intra.peff.net>
+References: <Y4lFbemK4HHiCsyJ@coredump.intra.peff.net>
+ <20221206004935.1794596-1-jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <20221206004935.1794596-1-jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Dec 05, 2022 at 04:49:34PM -0800, Jonathan Tan wrote:
 
-On Mon, Dec 05 2022, Jeff King wrote:
+> > So it really seems like we're quite likely to get an errno from opening
+> > or mapping packs. Which implies the original suffers from the same
+> > issue, but we simply never triggered it meaningfully in a test.
+> 
+> Thanks for checking. I'm still not sure how the current code passes CI, but my
+> patches don't. 
 
-> On Mon, Dec 05, 2022 at 06:34:09PM -0500, Taylor Blau wrote:
->
->> I think CI *is* the problem here. The CMake bits are basically a black
->> box to me (and I suspect a large number of other contributors, too). But
->> when it breaks, the only reason we as a project end up noticing it is
->> because it has fallout in CI.
->>=20
->> I would not be sad to make CI failures that are derived from CMake
->> "soft" failures in the sense that they don't make the build red. But I
->> think it's masking over a couple of bigger issues:
->>=20
->>   - Why do we "support" two build systems in CI if one is supposed to
->>     only be here for those that care about it? IOW, even if we say that
->>     CMake support is nominally an opt-in thing, in reality it isn't
->>     because of the dependency via CI.
->
-> I think part of the reason cmake rose in importance via CI is that it's
-> the de facto way to build for vscode. Before that CI job switched to
-> cmake, there was some other alternate build system (vcxproj).
->
-> So two things I'd consider here:
->
->   - how important is it for us to do the vscode build as part of regular
->     CI (as opposed to folks who are interested in it running it
->     themselves). Dscho gave some real data in the thread I linked to
->     earlier (which indicates that yes, it helps, but not that often).
->
->   - what's the status of cmake versus vcxproj? My impression (though I
->     admit based on my half-paying-attention-to of the topic) is that
->     cmake should replace vcxproj, and nobody would ever want to work on
+Hmm. Actually, I am now, too.
 
-I think the intent was to deprecate vcxproj, but I'm not sure, and I
-wonder if the "cmake" is the proposed path forward why we still have it
-in-tree anymore.
+My assumption was that only certain tests would notice the problem,
+because both outcomes are an error, and they only differ in what stderr
+says ("this does not exist" versus "we got this weird errno"). And so I
+assumed that the old spot in read_object_file() did not happen to
+trigger any tests which check stderr, but your new caller in
+repo_parse_commit_internal() was unlucky enough to do so. But since that
+new caller was calling repo_read_object_file() before, I'd think it
+would have triggered the same thing.
 
->     vcxproj anymore. But if that's not right, then does vcxproj cause
->     headaches for non-Windows devs less often? I don't really remember
->     dealing with it much, but I may have just been lucky.
+> > That might make things more verbose for other code paths, but that kind
+> > of seems like a good thing. If you have an object file that we can't
+> > open, we probably _should_ be complaining loudly about it.
+> > 
+> > We may need to be a little more careful about preserving errno in
+> > map_loose_object_1(), though (gee, another place where the existing
+> > check could run into trouble).
+> 
+> Besides needing to be careful in map_loose_object_1(), I'm not sure if this
+> fully solves the problem. This is non-fatal, so the EMFILE commit's work would
+> still remain undone. If this were made fatal, I think this would change the
+> behavior of too much code, especially those that can tolerate loose objects
+> being missing.
 
-It was less painful for non-Windows folks, but I understand the cmake
-integration was also much nicer for VS. I.e. it's picked up by the IDE
-in a way that the "make" shim wasn't.
+True, in the sense that we'd still say "X is corrupt". But I think the
+real sin prior to 3ba7a0655 is that we _only_ said "hey, this looks
+corrupt". If the output is:
 
-> [...]
-> That seems like going in the opposite direction from what you're saying
-> above: doubling down that if cmake is broken by a change, it is the
-> responsibility of the dev who made the change to find and fix it.
->
-> I do like that =C3=86var is trying to make it easier to run cmake from Li=
-nux
-> in order to find that without using CI. But that does seem orthogonal to
-> me to the notion of "who is responsible for finding and fixing cmake
-> problems". To me, that decision is really rooted in "is cmake something
-> the Git project supports, or is it a side-thing that some folks
-> volunteer to keep working?".
+  error: unable to mmap .git/objects/12/3456abcd...
+  fatal: object 123456abcd is corrupt or missing
 
-I agree with that...
+then that is at least not actively misleading (and is broadly similar to
+other cases in Git, where higher-level code only knows "I expected us to
+have this object and for some reason we don't", but without knowing
+whether it was missing, or a system error, or corrupt).
 
->> Personally, I would not be sad to see CMake removed from the tree
->> entirely because it has not seen enough maintenance and seems to be
->> quite a headache.
->
-> I don't mind having it in-tree if I can ignore it (assuming the project
-> attitude is the "it's a side thing" from above). It's the CI failures
-> that make it hard to ignore.
+That said I think all of these die() statements that you moved into
+die_if_corrupt() are already doing the wrong thing. We should probably
+mention errors (besides "missing object") to the user at the lowest
+level where we can give the most detail, and then return errors up the
+stack. That makes Git more verbose, but remember we're talking about
+corrupted or broken repositories here. You shouldn't see these under
+normal circumstances.
 
-...but on this thread-at-large, I'd much rather see us focus on just
-reviewing the patches I have here than raising the burden of proof to
-whether we should get rid of it entirely.
+> What do you think of not putting any die_if_corrupt() calls in the commit
+> parsing code at all? The error message printed would then be different (just a
+> generic message about being unable to parse a commit, versus the specific one
+> here) but it does pass CI [1]. Also, I don't think that we should be doing errno
+> diagnostics separate from what causes the errno anyway.
 
-If we make the CI failures "soft" failures or move it out-of-tree
-entirely it would still be useful to be able to run the cmake recipe on
-*nix.
+So I think that's a lesser version of what I'm proposing above. ;) In
+the sense that yes, I would say that repo_parse_commit_internal() does
+not need to do anything more specific than its existing "could not read"
+message. But I would go further and say:
 
+  - it would be nice the low-level code where errno _is_ valid said more
+    about what happened
+
+  - we should take read_object_file_extended() in the same direction
+
+-Peff
