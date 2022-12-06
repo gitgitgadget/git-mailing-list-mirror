@@ -2,136 +2,153 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 50018C4708C
-	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 02:17:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AC030C4708C
+	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 02:34:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233443AbiLFCRf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Dec 2022 21:17:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42918 "EHLO
+        id S233790AbiLFCer (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Dec 2022 21:34:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233084AbiLFCRe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2022 21:17:34 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E2CB1D31E
-        for <git@vger.kernel.org>; Mon,  5 Dec 2022 18:17:31 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id bj12so2781697ejb.13
-        for <git@vger.kernel.org>; Mon, 05 Dec 2022 18:17:31 -0800 (PST)
+        with ESMTP id S233799AbiLFCen (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2022 21:34:43 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64C7B1E719
+        for <git@vger.kernel.org>; Mon,  5 Dec 2022 18:34:40 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id v8so18435827edi.3
+        for <git@vger.kernel.org>; Mon, 05 Dec 2022 18:34:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=sqK2Vk+dnGKRHPJvF+5vj/RFodLyTczHXw8WjxzfqxQ=;
-        b=hfiG24ARugwyWpraNjWhUl1Og+ber7UddZdNzsG4tHlO77Y2Lbu2bImkitJyrxtV8L
-         bjZluncoohpSLdUF6oR3To5hnXiKz8tDwLe7/HA0D9iJVt9u1KDvrEKEVAELAWks7QKl
-         pWmHN8gl4Vmk0or3NxodGBbUdYbUpWsRdI3fYYH5HqdlLwzx3DqCPrq8ict6hhfx6ir+
-         YZFIWs/fr/c/SgoBAJ+bMpofxhLj+Q2TU0UQmgl7pOzobpFKiK628zS1n21NaBaE2dvQ
-         47zWQDOHVJj8wc5fBLRODUty4Z/A0nJXyXw3shyXyxEyujcaIzD4B6XlohO8CbqtB+uv
-         rVIw==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mnTBg7Fr5eD/i8jc2V1oYNN5oATXLT8+j0yia00TMQ8=;
+        b=jxe6RdjvKD2b7p2dXcLZscX1HHdSOSoCnA0KS5fPYs60A27tC82PN1vc/LtnXBg2Un
+         yXha9VCPi48/Nu12lzG3LSUDtpfnmzgf2r8dV9l672nOO9A6Y1e0YGXYBi30e3tW3n0q
+         0Pqs3zqjop2BGc1GQKvqXTpwKxL2xrwDEKhaZlbQJS/LpG2ogeqBp6LvwYi06OGosWVA
+         udj6fBxP4rnFfi15VKtip1lKtYv2/cKe+/yPXVnYVVZjF3zL/wG2kSdBRQ2NWB/mx1Ww
+         PxcsdRDLbrdQNSqZqdouCNL/JBzgZ5e83sxzIcMyRd9nDWrLthJJ17rq2sdyocoQL6Er
+         RPaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sqK2Vk+dnGKRHPJvF+5vj/RFodLyTczHXw8WjxzfqxQ=;
-        b=T5/BZBSi5exqBS3/ODVOxf59pxJKRyOWmIdzA32SVhP1wV0ModBiHjT5s1G16L3V9h
-         gVVWiKyaKoL9F5pLptPFoaITEBnp8y22wES2H3Ni+UUCAFcanjTbCe4/3DQ44NxdM9B3
-         vWxv6y4aLnD2s5lIpQXvSVs5JeS5M0k1bq1WN7pm/LU06ullg2vyAz/vVLVl6xNohX7m
-         CJhFgyZBT/CkEPb5QPecO07cJqEL3HN/F+y5NVhSj96U8MPCFO/76EYxTwPLPraX2iKw
-         co4inUThBhy2UV0WQZNkos4N+B16BO5ET9fCGyZ5hbW2pfqTHnl5YeF+BB3M+gTR+Cw6
-         iZbg==
-X-Gm-Message-State: ANoB5pnxrMoIzqVXSTJ5zXGHdu/mU91VdMfI0SfA4UQkR2P/aKfeITz2
-        VNIuG3MdSr56Vnevci/tr0EU3mTC4jcARw==
-X-Google-Smtp-Source: AA0mqf41V9JKyyWUOk9Gw6px1Hbf9VBq0SWkdgjAHBMQEJskxhrAKSFQ05J5I7DLOGL/ShZkZwZaiw==
-X-Received: by 2002:a17:906:1985:b0:7ad:d1ab:2431 with SMTP id g5-20020a170906198500b007add1ab2431mr68924076ejd.213.1670293049954;
-        Mon, 05 Dec 2022 18:17:29 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mnTBg7Fr5eD/i8jc2V1oYNN5oATXLT8+j0yia00TMQ8=;
+        b=QBC4ypufWR14h6Yyuo6nXYB7BB5/pOLJJnmzqWox0+gxU+UMV722M/7VNIdCF1E006
+         oIZl1urTil+cmYB0gogzB0Bn6sCcxtYwMF0rwswggedosaJvNZSoO2tHGGBHYgBkwTa3
+         83E+VaTTyJ18XQ3ZlYXcxKJygc7FS7YSmLEFZbn2YxtqhkWh06qaTCyD8SuXSP394yWY
+         WVzfvSLX4huID9sQ5ssV6gDO/IPRZLC2jzAqLSDUECrKzJAmv184ruMDD7TxDqdkwnPr
+         4hSxbdhYNJ/ic8I99Da2TPe2xLKL0nnVSVnlBgVw+HMgxB6yHBD7sgvlNMRlAz3IXlQk
+         bVNA==
+X-Gm-Message-State: ANoB5pkZwUoXAgqdEK9oEMk1MS1mmKKUmLw69Zda+iOj0KSxJsZaKl2y
+        /CIHebcxOapEYfAxB7ZAuPs=
+X-Google-Smtp-Source: AA0mqf6PQe6gl+DW22C1elGg9CE1rAGSBWIZtLfWOK1F7QiOnqb9PMiwG/u1xKRk8qFGphH71ELffA==
+X-Received: by 2002:a50:e603:0:b0:46c:ff45:68e9 with SMTP id y3-20020a50e603000000b0046cff4568e9mr2252002edm.90.1670294078885;
+        Mon, 05 Dec 2022 18:34:38 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id k2-20020a170906680200b0077077c62cadsm6768544ejr.31.2022.12.05.18.17.29
+        by smtp.gmail.com with ESMTPSA id h23-20020a1709060f5700b007bfacaea851sm6788354ejj.88.2022.12.05.18.34.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Dec 2022 18:17:29 -0800 (PST)
+        Mon, 05 Dec 2022 18:34:38 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1p2NWT-003QFZ-0U;
-        Tue, 06 Dec 2022 03:17:29 +0100
+        id 1p2Nn3-003Qn6-2i;
+        Tue, 06 Dec 2022 03:34:37 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-compat-util.h: introduce CALLOC(x)
-Date:   Tue, 06 Dec 2022 03:12:08 +0100
-References: <6694c52b38674859eb0390c7f62da1209a8d8ec3.1670266373.git.me@ttaylorr.com>
- <xmqqedtdpfoe.fsf@gitster.g> <Y46M4oksPQkqwmTC@nand.local>
+To:     Jeff King <peff@peff.net>
+Cc:     Taylor Blau <me@ttaylorr.com>, phillip.wood@dunelm.org.uk,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] test-lib.sh: discover "git" in subdirs of
+ "contrib/buildsystems/out"
+Date:   Tue, 06 Dec 2022 03:19:57 +0100
+References: <663b93ef-0c89-a5f6-1069-b4be97915d20@dunelm.org.uk>
+        <patch-1.1-f27d8bd4491-20221201T162451Z-avarab@gmail.com>
+        <xmqq5yeuspam.fsf@gitster.g>
+        <87f22a55-ee84-2f76-7b9b-924a97f44f89@dunelm.org.uk>
+        <221202.86sfhxg2ng.gmgdl@evledraar.gmail.com>
+        <Y4qF3iHW2s+I0yNe@coredump.intra.peff.net>
+        <221203.86pmd1dyqn.gmgdl@evledraar.gmail.com>
+        <Y45/8WnuUnP9gOMo@nand.local>
+        <Y46clyoKk9KzFiqj@coredump.intra.peff.net>
+        <221206.86zgc1cnc3.gmgdl@evledraar.gmail.com>
+        <Y46jT0i/7DhxHzfS@coredump.intra.peff.net>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <Y46M4oksPQkqwmTC@nand.local>
-Message-ID: <221206.86r0xdcm2u.gmgdl@evledraar.gmail.com>
+In-reply-to: <Y46jT0i/7DhxHzfS@coredump.intra.peff.net>
+Message-ID: <221206.86mt81claa.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Dec 05 2022, Taylor Blau wrote:
+On Mon, Dec 05 2022, Jeff King wrote:
 
-> On Tue, Dec 06, 2022 at 08:57:21AM +0900, Junio C Hamano wrote:
->> Taylor Blau <me@ttaylorr.com> writes:
->>
->> > In git.git, it is sometimes common to write something like:
->> >
->> >     T *ptr;
->> >     CALLOC_ARRAY(ptr, 1);
->> >
->> > ...but that is confusing, since we're not initializing an array.
->>
->> Given that "man calloc" tells us that calloc takes two parameters,
->>
->>     void *calloc(size_t nmemb, size_t size);
->>
->> I personally find CALLOC() that takes only a single parameter and is
->> capable only to allocate a single element array very much confusing.
+> On Tue, Dec 06, 2022 at 02:43:17AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
 >
-> Hmm. I have always considered "calloc" a mental shorthand for "zero
-> initialize some bytes on the heap". It seemed like you were in favor of
-> such a change in:
+>> > I don't mind having it in-tree if I can ignore it (assuming the project
+>> > attitude is the "it's a side thing" from above). It's the CI failures
+>> > that make it hard to ignore.
+>>=20
+>> ...but on this thread-at-large, I'd much rather see us focus on just
+>> reviewing the patches I have here than raising the burden of proof to
+>> whether we should get rid of it entirely.
 >
->     https://lore.kernel.org/git/xmqq8rl8ivlb.fsf@gitster.g/
+> Fair. In case it is not obvious, I have no interest in reviewing cmake
+> patches. ;) But I will at least stop making noise in the thread.
+
+I'm fine with the running commentary on the future direction, I think
+it's also very useful.
+
+I just wanted to also note the need to keep the eyes on the ball a bit
+:)
+
+>> If we make the CI failures "soft" failures or move it out-of-tree
+>> entirely it would still be useful to be able to run the cmake recipe on
+>> *nix.
 >
-> ...but it's entirely possible that I misread your message, in which case
-> I would not be sad if you dropped this patch on the floor since I don't
-> feel that strongly about it.
->
-> I'd be fine to call it CALLOC_ONE() or something, but I'm not sure at
-> that point if it's significantly better to write "CALLOC_ONE(x)" versus
-> "CALLOC_ARRAY(foo, 1)"
->
->> It _might_ be arguable that the order of the parameters CALLOC_ARRAY
->> takes should have been reversed in that the number of elements in
->> the array should come first just like in calloc(), while the pointer
->> that is used to infer the size of an array element should come next,
->> but that is water under the bridge.
->
-> Yes, I agree that that would be better. But it would be frustrating to
-> make a tree-wide change of that magnitude at this point. So I agree it's
-> water under the bridge ;-).
+> Agreed.
 
-I'm not saying you *should*, but now that we use C99 macros we *could*
-also make the "1" an optional argument. I.e. these would be the same
-thing:
+Just to add my own digression: I asked in some past thread (which I'm
+too lazy to dig up) why it was the cmake file couldn't just dispatch to
+"make" for most things.
 
-	CALLOC(x)
-	CALLOC(x, 1)
+I.e. it needs to at some level be aware of what it's building for the
+IDE integration, but for say making a "grep.o" there's no reason it
+couldn't be running:
 
-And you could also do:
+	make grep.o
 
-	CALLOC(x, 123)
+Instead of:
 
-Whether that makes the interface even nastier is another matter.
+        cc <args> -o grep grep.c [...]
 
-That can be done by dispatching to an underlying function, and defining
-the macro as:
+which requires duplicating much of the Makefile logic (possibly with
+some Makefile shim to not consider any dependencies in that case).
 
-	#define CALLOC(...) mycallocfn_1(__VA_ARGS__, NULL)
+Even if we couldn't do that for *.c code for some reason it could do it
+e.g. creating the generated *.h files, which is logic we currentnly
+duplicate.
 
-I.e. for the above you'd get either "x, NULL, NULL", "x, 1, NULL", or
-"x, 123, NULL". The function could then manually check the arity.
+The "win+VS build" job even has a hard dependency on GNU make currently,
+in needing to run "make artifacts-tar" to get to the "win+VS test"
+stage.
 
-Maybe I've just been corrupted by reading the P99 library :)
+But apparently the reason for *that* is that another goal of the
+integration was to avoid having to have GNU make installed at all, which
+comes in a different package than the one that would ship VS+cmake (or
+something?).
+
+Which might be something to re-visit, i.e. maybe we could eventually say
+"yes, you can have VS+cmake, but it's not too much to ask that you
+install GNU make as a one-off".
+
+Doing that would then reduce the duplication to the point where the
+cmake recipe would be a thin shim around the Makefile.
+
+I don't use this development setup, but if the CI job is managing to
+download and run GNU make it can't be that hard for an end-user to
+similarly install it (but what do I know?).
