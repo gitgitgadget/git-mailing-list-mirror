@@ -2,84 +2,111 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ACDA2C352A1
-	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 16:18:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C03BC352A1
+	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 17:07:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235527AbiLFQSg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Dec 2022 11:18:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33708 "EHLO
+        id S234347AbiLFRHG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Dec 2022 12:07:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235537AbiLFQSF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2022 11:18:05 -0500
-Received: from mail-ua1-x932.google.com (mail-ua1-x932.google.com [IPv6:2607:f8b0:4864:20::932])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A179326E1
-        for <git@vger.kernel.org>; Tue,  6 Dec 2022 08:15:16 -0800 (PST)
-Received: by mail-ua1-x932.google.com with SMTP id v21so5140809uam.1
-        for <git@vger.kernel.org>; Tue, 06 Dec 2022 08:15:16 -0800 (PST)
+        with ESMTP id S235171AbiLFRGv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2022 12:06:51 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2214F1134
+        for <git@vger.kernel.org>; Tue,  6 Dec 2022 09:06:50 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id n9-20020a05600c3b8900b003d0944dba41so8469764wms.4
+        for <git@vger.kernel.org>; Tue, 06 Dec 2022 09:06:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=H2xC/76HpHtdBv1vvWd7fdu54x2LJoZ0cbnptpWe0ok=;
-        b=S5SVqEsgyTCagkCv4LzS0Ufqnqt7Wn6/d9bPf35tvQ9hMRIhd6qsZZ+Ht1it9y6OHH
-         lt69or0WydcOx1GcXyzHrHpWArSRfjFTDOSUfjpN4PgpPF9PdUJBOJju+B8ihmdI/0/N
-         sCFN+xX2zbPowbeVr/pQcle5Y0oFd0Y8Cqf/LrOZ/mpgCKA4aq6levi1m4ZVaE++PAwn
-         082KNgmroJ4rJzEW7HkWAqJRrxOojGzzBFTIaApg5gwQrirQpdU8ROhDjx7gptAVLXmG
-         JKza79HAY4NpIFgah6iQNQujWpu7AYMt3rpipsT+bWt/ONzgzE1S2n65WsGQYqrhW5b3
-         Di3Q==
+        d=wikimedia.org; s=google;
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=L4tp0VLbrLfRAy5EqD0mnM8y1Xlbl8DDyC2Q0V1QsYI=;
+        b=r6qDQnpBVSJefBhkIs7xJIwnwUZcfrvYGoPliNBB+9zPhURPz/8NYh5eu1OX3p7KG7
+         8Bf87Ry4uDlcXSjGbmV3oBZnSpxOqAaGVUF/6f8DASBft6W2RJ/qXXBVLiPFucICUSZF
+         yZ6WErfq+POKXV7DC250HGbny68ylieqi+AEQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=H2xC/76HpHtdBv1vvWd7fdu54x2LJoZ0cbnptpWe0ok=;
-        b=wGPd7/pvfAIGoWBFRx8bYbCz2qS8Ta2d4lYb08p3vQUTJcwKdOp+XqiXzzTSD1fGua
-         wiQI/jjwPcn1G2GvPznFp/2o2bSqXr9XT5OXOJSMagbai0YXnDgpshYBIp8I0OGQdfed
-         f0nWOyCqg+RkjJyCfDA2vIBFJIgb5P6eUpEx4e2DG9z9d5juu803rGjdLb5N+5SmMeby
-         DYfQ4fDjGYYQ6A8if+Isb15rLCjqWpMrUBl4+ABctOYPARWiQFd9NojBIDdHwl3PvUaf
-         inXkZUzJ8JVYzJebLwiqAHx/+oNcwf2mrFele+c2VRrTnpNN7Ww8DpM505boaPnn1M0t
-         7AwQ==
-X-Gm-Message-State: ANoB5pkfdiJ3Tsx5ujuWvaBJsYuTxXPP/D27qZd1pjXiOi8xnjC7AEDf
-        Axxzb1Ko0HCsM1P+c4w45Z88pEqCXl19WpnJY8E=
-X-Google-Smtp-Source: AA0mqf5+QvI2zRcLBQ4GLvMy7tEs9PFO3lGLuBslqxRNRY4ytjdSq76AsPjnwBwYFYQhUIHwg4KpH414KuMfHzQVzF0=
-X-Received: by 2002:ab0:238f:0:b0:411:968:212 with SMTP id b15-20020ab0238f000000b0041109680212mr53246865uan.107.1670343314444;
- Tue, 06 Dec 2022 08:15:14 -0800 (PST)
+        h=content-disposition:mime-version:message-id:subject:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=L4tp0VLbrLfRAy5EqD0mnM8y1Xlbl8DDyC2Q0V1QsYI=;
+        b=cYsuwswpitm6SEqCBpAowC9pcg36fJqz2od6hd3lmLSJRoX1IC41o+FTUW0Mgtt2jn
+         p0pZLJ73c+voCfY8X7KHT1zmph8H1oFSSmVUJnweMTrWijanwKo0dJ7LAR/U/cK3BUrb
+         3WC84HkwaEkNbJDoZFpziWZTcAyUw4sd5djbfcTiuG2qG4wXEcgcjHXBTa35+Ndk5xMs
+         3QVf6+YGgrY5aZ3Q11r8utwabjd5TT0KPERSw6PVra9ozvCc9n/ZBG6unIGduzkyV+49
+         VSPiqqrLiO7LGXuLEES78tUrc57vNT9W3EYSt21F5heMqvV/e5L5ew/zehLR3/PAbqyl
+         JU9w==
+X-Gm-Message-State: ANoB5pmY+uglVGYTAtDZMAqrvzvBHTv1Ho2W4fIBDmHEfXmZx+DG0JUJ
+        NWGkoHMMFLilB/0WpkbfljaryTJR2QLe9v9p
+X-Google-Smtp-Source: AA0mqf7sAQ9SUDnJ4A4RyLhiavyDF7+8pNTtN/BlokPYc54zuylykQcjSmHH8EUANXfZEFEM8ObW0A==
+X-Received: by 2002:a05:600c:19cc:b0:3cf:7bdd:e014 with SMTP id u12-20020a05600c19cc00b003cf7bdde014mr58478163wmq.1.1670346408213;
+        Tue, 06 Dec 2022 09:06:48 -0800 (PST)
+Received: from localhost ([2a01:e0a:8e6:e040:a8e5:5d56:8e6f:5401])
+        by smtp.gmail.com with ESMTPSA id co16-20020a0560000a1000b00241b6d27ef1sm17835295wrb.104.2022.12.06.09.06.47
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Dec 2022 09:06:47 -0800 (PST)
+Date:   Tue, 6 Dec 2022 18:06:46 +0100
+From:   David Caro <dcaro@wikimedia.org>
+To:     git@vger.kernel.org
+Subject: Skipping adding Signed-off-by even if it's not the last on git commit
+Message-ID: <20221206170646.6lnpr6h7oprziy5b@vulcanus>
 MIME-Version: 1.0
-References: <20221205190019.52829-1-cgzones@googlemail.com>
- <Y45tGLaJwg3Lt5uJ@tapette.crustytoothpaste.net> <Y46dHWVaU00WFL+f@coredump.intra.peff.net>
-In-Reply-To: <Y46dHWVaU00WFL+f@coredump.intra.peff.net>
-From:   =?UTF-8?Q?Christian_G=C3=B6ttsche?= <cgzones@googlemail.com>
-Date:   Tue, 6 Dec 2022 17:15:03 +0100
-Message-ID: <CAJ2a_DeNQ0KfkKLzhsxA0UtixmLvNxgzR=KC0UjMwVx1WXJMEg@mail.gmail.com>
-Subject: Re: [PATCH] setup: avoid unconditional open with write flags
-To:     Jeff King <peff@peff.net>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="34ptvntwo26zikhl"
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> But it's still no better than the patch here in the happy case, since we
-> still have to perform three fcntl() checks to figure out that all three
-> descriptors are initialized as-expected (versus just one open() and
-> close()).
 
-An alternative to performing three syscalls fot the check one could call
-open(2) with O_RDONLY (O_PATH would also work, but seems not
-yet to be used in the git source) on a common path ("/", "/dev/null", ...)
-and skip the sanitization if the returned descriptor is greater than 2.
-This would lead to two (open + close) syscalls in the common case,
-same as current.
+--34ptvntwo26zikhl
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> If Christian can tighten
-> the environment into somewhat unnatural "opening writable FD is a
-> failure" way, I suspect such a jail can be augmented to further to
-> allow opening /dev/null and other "selected" files writable, so I
-> wouldn't worry too much if we dropped this patch entirely.
 
-The seccomp filter only gets the address of the memory where the path
-is stored, so simple allow-listing paths is not possible.  And even on
-inspection of the path one would need to avoid toctou attacks (the
-filter seeing a different memory content at check time than the kernel
-at use time).
+Hi!
+
+I have noticed that when requesting git commit to add the Signed-off-by hea=
+der, it will add it even if it already exists
+as long as it's not the last in the footer.
+
+It seems that the functionality to do so has been there for a while (see [1=
+]) and it's being used effectively on
+format-patch, but it was never enabled for the rest of commands.
+
+I propose enabling it for commit, merge and am.
+
+I can easily send a patch for it if the change is welcome.
+
+
+Thanks!
+
+[1] https://github.com/git/git/commit/bab4d1097c8be7d688a53b992232063dbf300=
+fd4
+
+--=20
+David Caro
+SRE - Cloud Services
+Wikimedia Foundation <https://wikimediafoundation.org/>
+PGP Signature: 7180 83A2 AC8B 314F B4CE  1171 4071 C7E1 D262 69C3
+
+"Imagine a world in which every single human being can freely share in the
+sum of all knowledge. That's our commitment."
+
+--34ptvntwo26zikhl
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEcYCDoqyLMU+0zhFxQHHH4dJiacMFAmOPdqYACgkQQHHH4dJi
+acN65Qf7Be5uRy7De29gBYE8zqawkChKptuhilAEisdH5VN98oXlUz+43NQkMWom
+IpulJS1j2imsqPSKkDckbwh0/v7CshStO2Q7h0BpShfQsFUsohcSJAvDcz3EEOzC
+BLZOeku+DFZdp0PZaGGmsFUbbEWHvMQHvk+wcGhnCVqMPnC0GKJX6wEt04BTQdJd
+V0xcIn2acd9hBW8hZRTlFvUisozWPqHX7XlU4TGl0lRqK7W5mz9eRrutF0n3AVVZ
+uHyBiYDyDTTrDu5kBJar/dDtZKIGaVmCm6eGBzzuJcznUsv5+Vn311ojbiDt4Cd2
+6wLIiSe3XwOo+pzLX1wDx1BBAXGzbg==
+=sUfn
+-----END PGP SIGNATURE-----
+
+--34ptvntwo26zikhl--
