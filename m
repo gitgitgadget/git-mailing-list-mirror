@@ -2,111 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C03BC352A1
-	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 17:07:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DD776C352A1
+	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 17:25:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234347AbiLFRHG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Dec 2022 12:07:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42788 "EHLO
+        id S233661AbiLFRZd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Dec 2022 12:25:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235171AbiLFRGv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2022 12:06:51 -0500
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2214F1134
-        for <git@vger.kernel.org>; Tue,  6 Dec 2022 09:06:50 -0800 (PST)
-Received: by mail-wm1-x336.google.com with SMTP id n9-20020a05600c3b8900b003d0944dba41so8469764wms.4
-        for <git@vger.kernel.org>; Tue, 06 Dec 2022 09:06:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=wikimedia.org; s=google;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=L4tp0VLbrLfRAy5EqD0mnM8y1Xlbl8DDyC2Q0V1QsYI=;
-        b=r6qDQnpBVSJefBhkIs7xJIwnwUZcfrvYGoPliNBB+9zPhURPz/8NYh5eu1OX3p7KG7
-         8Bf87Ry4uDlcXSjGbmV3oBZnSpxOqAaGVUF/6f8DASBft6W2RJ/qXXBVLiPFucICUSZF
-         yZ6WErfq+POKXV7DC250HGbny68ylieqi+AEQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=L4tp0VLbrLfRAy5EqD0mnM8y1Xlbl8DDyC2Q0V1QsYI=;
-        b=cYsuwswpitm6SEqCBpAowC9pcg36fJqz2od6hd3lmLSJRoX1IC41o+FTUW0Mgtt2jn
-         p0pZLJ73c+voCfY8X7KHT1zmph8H1oFSSmVUJnweMTrWijanwKo0dJ7LAR/U/cK3BUrb
-         3WC84HkwaEkNbJDoZFpziWZTcAyUw4sd5djbfcTiuG2qG4wXEcgcjHXBTa35+Ndk5xMs
-         3QVf6+YGgrY5aZ3Q11r8utwabjd5TT0KPERSw6PVra9ozvCc9n/ZBG6unIGduzkyV+49
-         VSPiqqrLiO7LGXuLEES78tUrc57vNT9W3EYSt21F5heMqvV/e5L5ew/zehLR3/PAbqyl
-         JU9w==
-X-Gm-Message-State: ANoB5pmY+uglVGYTAtDZMAqrvzvBHTv1Ho2W4fIBDmHEfXmZx+DG0JUJ
-        NWGkoHMMFLilB/0WpkbfljaryTJR2QLe9v9p
-X-Google-Smtp-Source: AA0mqf7sAQ9SUDnJ4A4RyLhiavyDF7+8pNTtN/BlokPYc54zuylykQcjSmHH8EUANXfZEFEM8ObW0A==
-X-Received: by 2002:a05:600c:19cc:b0:3cf:7bdd:e014 with SMTP id u12-20020a05600c19cc00b003cf7bdde014mr58478163wmq.1.1670346408213;
-        Tue, 06 Dec 2022 09:06:48 -0800 (PST)
-Received: from localhost ([2a01:e0a:8e6:e040:a8e5:5d56:8e6f:5401])
-        by smtp.gmail.com with ESMTPSA id co16-20020a0560000a1000b00241b6d27ef1sm17835295wrb.104.2022.12.06.09.06.47
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Dec 2022 09:06:47 -0800 (PST)
-Date:   Tue, 6 Dec 2022 18:06:46 +0100
-From:   David Caro <dcaro@wikimedia.org>
-To:     git@vger.kernel.org
-Subject: Skipping adding Signed-off-by even if it's not the last on git commit
-Message-ID: <20221206170646.6lnpr6h7oprziy5b@vulcanus>
+        with ESMTP id S230450AbiLFRZc (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2022 12:25:32 -0500
+Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03722D107
+        for <git@vger.kernel.org>; Tue,  6 Dec 2022 09:25:30 -0800 (PST)
+Received: from siwi.pair.com (localhost [127.0.0.1])
+        by siwi.pair.com (Postfix) with ESMTP id 387B9CA126D;
+        Tue,  6 Dec 2022 12:25:30 -0500 (EST)
+Received: from [192.168.1.65] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by siwi.pair.com (Postfix) with ESMTPSA id CFAABCC8322;
+        Tue,  6 Dec 2022 12:25:29 -0500 (EST)
+Message-ID: <638298b2-4f63-a0b7-c783-b2a4fd4f2266@jeffhostetler.com>
+Date:   Tue, 6 Dec 2022 12:25:29 -0500
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="34ptvntwo26zikhl"
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Subject: Re: [PATCH] fsmonitor: eliminate call to deprecated FSEventStream
+ function
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Victoria Dye <vdye@github.com>,
+        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Stefan Sundin <git@stefansundin.com>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        Jeff Hostetler <jeffhostetler@github.com>,
+        Eric DeCosta <edecosta@mathworks.com>
+References: <pull.1436.git.1669991072393.gitgitgadget@gmail.com>
+ <221202.86o7slfzot.gmgdl@evledraar.gmail.com>
+ <3e2bd865-3ca5-b0f7-095e-f8b97ec8822c@jeffhostetler.com>
+ <221202.867cz9fwnf.gmgdl@evledraar.gmail.com>
+ <4711d955-02b2-f599-7f89-b442dd0b6215@github.com>
+ <221202.86359xfs5c.gmgdl@evledraar.gmail.com>
+ <1b090929-f2da-f075-01d4-458804fc0717@github.com>
+ <xmqq1qphuwj6.fsf@gitster.g> <xmqqv8mqsm2g.fsf@gitster.g>
+ <de558eb7-8931-a5b5-d711-459ae3f52216@jeffhostetler.com>
+ <xmqqsfhtphpl.fsf@gitster.g>
+From:   Jeff Hostetler <git@jeffhostetler.com>
+In-Reply-To: <xmqqsfhtphpl.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: mailmunge 3.10 on 209.68.5.199
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---34ptvntwo26zikhl
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+
+On 12/5/22 6:13 PM, Junio C Hamano wrote:
+> Jeff Hostetler <git@jeffhostetler.com> writes:
+> 
+>> I like this new text.  Let's do this and call it done.
+> 
+> Good. Thanks.
+> 
+>> Since I see that you have already added it to the commit message
+>> in the branch, so I won't resubmit it unless there are further
+>> technical review comments to address.
+>>
+>> Thanks all,
+> 
+> Thanks for working on this.  Let's mark it for 'next'.  Even though
+> we'll see -rc2 very soonish, being in 'next' this early would mean
+> it will be part of the first (if we need brown paper bag fixes) or
+> the second batch in the next cycle.
+> 
 
 
-Hi!
+Great! Thanks!  And yes, there's nothing urgent for this fix,
+so that would be fine.
 
-I have noticed that when requesting git commit to add the Signed-off-by hea=
-der, it will add it even if it already exists
-as long as it's not the last in the footer.
-
-It seems that the functionality to do so has been there for a while (see [1=
-]) and it's being used effectively on
-format-patch, but it was never enabled for the rest of commands.
-
-I propose enabling it for commit, merge and am.
-
-I can easily send a patch for it if the change is welcome.
-
-
-Thanks!
-
-[1] https://github.com/git/git/commit/bab4d1097c8be7d688a53b992232063dbf300=
-fd4
-
---=20
-David Caro
-SRE - Cloud Services
-Wikimedia Foundation <https://wikimediafoundation.org/>
-PGP Signature: 7180 83A2 AC8B 314F B4CE  1171 4071 C7E1 D262 69C3
-
-"Imagine a world in which every single human being can freely share in the
-sum of all knowledge. That's our commitment."
-
---34ptvntwo26zikhl
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEcYCDoqyLMU+0zhFxQHHH4dJiacMFAmOPdqYACgkQQHHH4dJi
-acN65Qf7Be5uRy7De29gBYE8zqawkChKptuhilAEisdH5VN98oXlUz+43NQkMWom
-IpulJS1j2imsqPSKkDckbwh0/v7CshStO2Q7h0BpShfQsFUsohcSJAvDcz3EEOzC
-BLZOeku+DFZdp0PZaGGmsFUbbEWHvMQHvk+wcGhnCVqMPnC0GKJX6wEt04BTQdJd
-V0xcIn2acd9hBW8hZRTlFvUisozWPqHX7XlU4TGl0lRqK7W5mz9eRrutF0n3AVVZ
-uHyBiYDyDTTrDu5kBJar/dDtZKIGaVmCm6eGBzzuJcznUsv5+Vn311ojbiDt4Cd2
-6wLIiSe3XwOo+pzLX1wDx1BBAXGzbg==
-=sUfn
------END PGP SIGNATURE-----
-
---34ptvntwo26zikhl--
+Jeff
