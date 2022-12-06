@@ -2,212 +2,208 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4D212C352A1
-	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 13:09:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ADEC6C352A1
+	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 15:11:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231388AbiLFNJR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Dec 2022 08:09:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46498 "EHLO
+        id S234122AbiLFPLQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Dec 2022 10:11:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231220AbiLFNIt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2022 08:08:49 -0500
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C26E02D1C4
-        for <git@vger.kernel.org>; Tue,  6 Dec 2022 05:07:02 -0800 (PST)
-Received: by mail-oi1-x231.google.com with SMTP id q83so3322063oif.7
-        for <git@vger.kernel.org>; Tue, 06 Dec 2022 05:07:02 -0800 (PST)
+        with ESMTP id S235345AbiLFPKv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2022 10:10:51 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FAF62FC38
+        for <git@vger.kernel.org>; Tue,  6 Dec 2022 07:07:52 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id h8-20020a1c2108000000b003d1efd60b65so1020529wmh.0
+        for <git@vger.kernel.org>; Tue, 06 Dec 2022 07:07:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mhA/YXD3w7WrRiyyVHjIT3ZHV+LQ5LRFLmX+c8KOY5g=;
-        b=XZ8AEgMPR4LsWAps+hp7gvbqfIEbRTiTbTFGkso3X37dbhCiiJhvIaXJ5a3DdVqsd8
-         uBHPyhKeKI9hYtKsygPSsChlDzeik8WizE3JkYL/uW3HE9tf1QH2yd+RLfu9XkcIJMA0
-         GSxLM12RQy6Z7LmCa5GxIKYmBaJkeT8wWuj9BhAV4eTPkenBAcc6+XzMLXfsbfBzgBq/
-         znXWK8eajfRPLdDHEIYjRzcvlQQ+fdmZZSH51GDURd4/66MPpcoKtfa0vnjf20cquVnN
-         H8tTWqZiz0jS+naNXm0h4Cr0J/7BL1NtJ4NUP/n/xfWpK10D759Qr1q9fIPJSe0Ugjtb
-         P9iA==
+        bh=h+YSSZoSXAQMKJynanshzk0AzNteiHT/doRwrP/5Qu8=;
+        b=R4PAJRuM/dtWxeGA05PlepHFAGS1Z6opLbPDOySrTKjsRI9HOlw5WM09YzoXRcNO+1
+         x72+YBr9w98n/u6gejNx20uWNJtDQVmsxOMWFjxfeaZzcGjSENtc5c9Ju4agszoHY40K
+         ZuMP15XLOWh9BFy3TC3Kn2AFR7CuK0vDxDdaNcKSP2IUYM/qphQSOXtvl8iBc1SIAWJw
+         +tb+GuzhpjY3XugVTfdfen9+f8XVxXsmbKqumoQpAiO+efrI10+/W5Hj+qNubh0tQZVq
+         PJJyDZkSfFT1Ghh5xihr2JoK+idLuzHIbfiCn+h7HMjmYbcZmmNafQyen94W0OXXhqSA
+         SfGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mhA/YXD3w7WrRiyyVHjIT3ZHV+LQ5LRFLmX+c8KOY5g=;
-        b=L0B+pgbu83q51iS8dM3wRCkENFXgtsxSCZe6sBtx2KCUPwY+7PMJJyMAnvLcaaKssY
-         jSyjalxAZmdGlb3JwQRjxHvcK/pwVGw6JvJsw7H5kGBV1jaCRwc67D3MTajgu+CQzGTl
-         6Xeyj86gvzaF/ysRTlm3BSAViC12R0XZHbS9P57UlCKErkXHbpEYg9acNf05wZ6z97Fg
-         bLrSe9oa7sifzxoN8dJcCY2RSIE4+Z9LXHYuFOqqFxa0yw+3AX+nRRQXaMA+XYZN7fiM
-         UgbkOVnVQbx2a07ikv/zaWPbo+51Py2x36O3aLXlcyhwTsheezLlfOKI2JV8RJ2UR8n0
-         apmA==
-X-Gm-Message-State: ANoB5pnRyciX9Ge4j4BliA6qgApU+Ch8Dc5IgRqz+IgC00qCM2fHgqew
-        lvhbYvY3Jn64uCDt2TL01cWoxzDltuz8zyIhr5cBrQzqXQw=
-X-Google-Smtp-Source: AA0mqf7p1hd3rZdLmoPW7sBQ52CbBwnnNv2EqNNnvWq1zO/99i4OTjfHTKH7Dvby92lIHINa7T5n1rC/A0DFnq74un4=
-X-Received: by 2002:a05:6808:8c9:b0:35a:cf84:d837 with SMTP id
- k9-20020a05680808c900b0035acf84d837mr41185789oij.270.1670332021955; Tue, 06
- Dec 2022 05:07:01 -0800 (PST)
+        bh=h+YSSZoSXAQMKJynanshzk0AzNteiHT/doRwrP/5Qu8=;
+        b=XbLzHOlM64fOJ0LFmZn+Np9mXItSU1mRY9ibezbgiEPoB7ZWplTkSVoiKu4lBfQMTY
+         nth7nVTRwRyBUsbtwsMM7qKqkiqoVEqxiUJqS0yiAetNVw2tH48Sd3shS1V8oSd/O8La
+         XdrT+i0pI/+5fSAp5KSXO9DWbIpln61ovisI6EdgSdLibS4pwwlc8+mrmseeROPAjGaB
+         gA7zNUxS8Mk7pm01ZM5G6D/IquGq88X8yVNDn/rple1UskHuNAMHSqHOYYoXDeaChs3f
+         uYg6Kdo+nizI7EoNZl/u0NW4HQyzdqXGR9NGscQGCydLekUjAyju7lRI9v0XEGoSsBeU
+         t4Yw==
+X-Gm-Message-State: ANoB5pk6o8/uEmoXLbLTr4SdysUN5NxlguALqZeJCwsS2DEWtzNgT0UC
+        2oQfXJ+kDQC8GYuPSqtLkmZBwuyda/c=
+X-Google-Smtp-Source: AA0mqf50fN8dZ/nLgnYz/vfOMJMofv2aV4k47GCctYVngj4Hi5e1mv6FipcGoGVsD/8ewbq0atjQQg==
+X-Received: by 2002:a05:600c:4e8b:b0:3d1:f1d3:8613 with SMTP id f11-20020a05600c4e8b00b003d1f1d38613mr555181wmq.101.1670339269294;
+        Tue, 06 Dec 2022 07:07:49 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id bh7-20020a05600c3d0700b003cf6e1df4a8sm22020446wmb.15.2022.12.06.07.07.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Dec 2022 07:07:48 -0800 (PST)
+Message-Id: <pull.1309.v5.git.1670339267.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1309.v4.git.1668434812.gitgitgadget@gmail.com>
+References: <pull.1309.v4.git.1668434812.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 06 Dec 2022 15:07:45 +0000
+Subject: [PATCH v5 0/2] tests(mingw): avoid super-slow mingw_test_cmp
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20221206103736.53909-1-karthik.188@gmail.com> <20221206103736.53909-3-karthik.188@gmail.com>
- <221206.861qpcdarb.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221206.861qpcdarb.gmgdl@evledraar.gmail.com>
-From:   Karthik Nayak <karthik.188@gmail.com>
-Date:   Tue, 6 Dec 2022 14:06:36 +0100
-Message-ID: <CAOLa=ZSOhtgmY-j3rj+=qANKOfTH8H+1YpwM63uTKUT04vsM-Q@mail.gmail.com>
-Subject: Re: [PATCH 2/2] attr: add flag `-r|--revisions` to work with revisions
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, toon@iotcl.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello =C3=86var,
+Half a year ago, directly after sending a patch to fix a performance
+regression due to a mis-use of test_cmp
+[https://lore.kernel.org/git/b9203ea247776332e4b6f519aa27d541207adc2f.1659097724.git.gitgitgadget@gmail.com/],
+I got curious to see whether Git for Windows had the same issue. And it did
+not: it passed t5351 in 22 seconds, even while using test_cmp to compare
+pack files
+[https://github.com/git-for-windows/git/blob/3922f62f0d5991e9fe0a0817ebf89a91339c7705/t/t5351-unpack-large-objects.sh#L90].
+This motivated me to upstream Git for Windows' changes.
 
-> >
-> > diff --git a/attr.c b/attr.c
-> > index 42ad6de8c7..42b67a401f 100644
-> > --- a/attr.c
-> > +++ b/attr.c
-> > @@ -11,8 +11,12 @@
-> >  #include "exec-cmd.h"
-> >  #include "attr.h"
-> >  #include "dir.h"
-> > +#include "git-compat-util.h"
->
-> As a rule in this project we include either cache.h at the top, or
-> git-compat-util.h, and the former includes the latter.
->
-> This file already has cache.h at the top, so it won't need this.
->
+Changes since v4:
 
-Right, will remove.
+ * The commit message was rewritten almost completely.
 
-> > +     if (buf =3D=3D NULL)
->
-> if (!buf)
+Changes since v3:
 
-Makes sense.
+ * Fixed the subject of the cover letter (which should have been adjusted in
+   v3)
+ * Elaborated the paragraph about the historical context of this patch
 
->
-> > +             more =3D (*ep =3D=3D '\n');
->
-> Nit: parens not needed.
->
+Changes since v2:
 
-I rather let this be, since it's existing code that I just move.
+ * Dropped the test helper, using diff --no-index instead.
 
-> > +     struct object_id oid;
-> > +     unsigned long sz;
-> > +     enum object_type type;
-> > +     void *buf;
-> > +     struct strbuf sb;
-> > +
-> > +     if (object_name =3D=3D NULL)
->
-> Ditto !object_name test.
->
+Changes since v1:
 
-Will change.
+ * Fixed double "with" in the commit message.
+ * Renamed the test helper to text-cmp.
+ * Made the diff --no-index call more robust by using a double-dash
+   separator.
 
-> > +             return NULL;
-> > +
-> > +     strbuf_init(&sb, strlen(path) + 1 + strlen(object_name));
-> > +     strbuf_addstr(&sb, object_name);
-> > +     strbuf_addstr(&sb, ":");
-> > +     strbuf_addstr(&sb, path);
->
-> Is this really performance sensitive so we need to pre-size this, or
-> would a simpler:
->
->         struct strbuf sb =3D STRBUF_INIT;
->         strbuf_addf(&sb, "%s:%s", path, object_name);
->
-> Do?
->
+Johannes Schindelin (2):
+  t0021: use Windows-friendly `pwd`
+  tests(mingw): avoid very slow `mingw_test_cmp`
 
-This is much simpler and should do, will change.
+ t/t0021-conversion.sh   |  4 +--
+ t/test-lib-functions.sh | 66 -----------------------------------------
+ t/test-lib.sh           |  2 +-
+ 3 files changed, 3 insertions(+), 69 deletions(-)
 
-> > +     } else if (object_name !=3D NULL) {
->
-> else if (object_name)
 
-Will change.
+base-commit: 23b219f8e3f2adfb0441e135f0a880e6124f766c
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1309%2Fdscho%2Fmingw-test-cmp-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1309/dscho/mingw-test-cmp-v5
+Pull-Request: https://github.com/gitgitgadget/git/pull/1309
 
->
-> >  void git_check_attr(struct index_state *istate,
-> > -                 const char *path, struct attr_check *check);
-> > +                                     const char *path, struct attr_che=
-ck *check,
-> > +                                     const char *object_name);
->
-> This (and possibly other places) seem funnily indented..
->
+Range-diff vs v4:
 
-I think it's due to tab-indent being set to a default 4, I fixed it in
-the other files, forgot to
-check the header. Will fix it.
+ 1:  b38b8fb5a85 = 1:  b38b8fb5a85 t0021: use Windows-friendly `pwd`
+ 2:  128b1f348d8 ! 2:  6a80fab7e39 tests(mingw): avoid very slow `mingw_test_cmp`
+     @@ Metadata
+       ## Commit message ##
+          tests(mingw): avoid very slow `mingw_test_cmp`
+      
+     -    It is more performant to run `git diff --no-index` than running the
+     -    `mingw_test_cmp` code with MSYS2's Bash, i.e. the Bash that Git for
+     -    Windows uses. And a lot more readable.
+     +    When Git's test suite uses `test_cmp`, it is not actually trying to
+     +    compare binary files as the name `cmp` would suggest to users familiar
+     +    with Unix' tools, but the tests instead verify that actual output
+     +    matches the expected text.
+      
+     -    The original reason why Git's test suite needs the `mingw_test_cmp`
+     -    function at all (and why `cmp` is not good enough) is that Git's test
+     -    suite is not actually trying to compare binary files when it calls
+     -    `test_cmp`, but it compares text files. And those text files can contain
+     -    CR/LF line endings depending on the circumstances.
+     +    On Unix, `cmp` works well enough for Git's purposes because only Line
+     +    Feed characters are used as line endings. However, on Windows, while
+     +    most tools accept Line Feeds as line endings, many tools produce
+     +    Carriage Return + Line Feed line endings, including some of the tools
+     +    used by the test suite (which are therefore provided via Git for Windows
+     +    SDK). Therefore, `cmp` would frequently fail merely due to different
+     +    line endings.
+      
+     -    Note: The original fix in the Git for Windows project implemented a test
+     -    helper that avoids the overhead of the diff machinery, in favor of
+     -    implementing a behavior that is more in line with what `mingw_test_cmp`
+     -    does now. This was done to minimize the risk in using something as
+     -    complex as the diff machinery to perform something as simple as
+     -    determining whether text output is identical to the expected output or
+     -    not. This approach has served Git for Windows well for years, but the
+     -    attempt to upstream this saw a lot of backlash and distractions during
+     -    the review, was disliked by the Git maintainer and was therefore
+     -    abandoned. For full details, see the thread at
+     -    https://lore.kernel.org/git/pull.1309.git.1659106382128.gitgitgadget@gmail.com/t
+     +    To accommodate for that, the `mingw_test_cmp` function was introduced
+     +    into Git's test suite to perform a line-by-line comparison that ignores
+     +    line endings. This function is a Bash function that is only used on
+     +    Windows, everywhere else `cmp` is used.
+     +
+     +    This is a double whammy because `cmp` is fast, and `mingw_test_cmp` is
+     +    slow, even more so on Windows because it is a Bash script function, and
+     +    Bash scripts are known to run particularly slowly on Windows due to
+     +    Bash's need for the POSIX emulation layer provided by the MSYS2 runtime.
+     +
+     +    The commit message of 32ed3314c104 (t5351: avoid using `test_cmp` for
+     +    binary data, 2022-07-29) provides an illuminating account of the
+     +    consequences: On Windows, the platform on which Git could really use all
+     +    the help it can get to improve its performance, the time spent on one
+     +    entire test script was reduced from half an hour to less than half a
+     +    minute merely by avoiding a single call to `mingw_test_cmp` in but a
+     +    single test case.
+     +
+     +    Learning the lesson to avoid shell scripting wherever possible, the Git
+     +    for Windows project implemented a minimal replacement for
+     +    `mingw_test_cmp` in the form of a `test-tool` subcommand that parses the
+     +    input files line by line, ignoring line endings, and compares them.
+     +    Essentially the same thing as `mingw_test_cmp`, but implemented in
+     +    C instead of Bash. This solution served the Git for Windows project
+     +    well, over years.
+     +
+     +    However, when this solution was finally upstreamed, the conclusion was
+     +    reached that a change to use `git diff --no-index` instead of
+     +    `mingw_test_cmp` was more easily reviewed and hence should be used
+     +    instead.
+     +
+     +    The reason why this approach was not even considered in Git for Windows
+     +    is that in 2007, there was already a motion on the table to use Git's
+     +    own diff machinery to perform comparisons in Git's test suite, but it
+     +    was dismissed in https://lore.kernel.org/git/xmqqbkrpo9or.fsf@gitster.g/
+     +    as undesirable because tests might potentially succeed due to bugs in
+     +    the diff machinery when they should not succeed, and those bugs could
+     +    therefore hide regressions that the tests try to prevent.
+     +
+     +    By the time Git for Windows' `mingw-test-cmp` in C was finally
+     +    contributed to the Git mailing list, reviewers agreed that the diff
+     +    machinery had matured enough and should be used instead.
+     +
+     +    When the concern was raised that the diff machinery, due to its
+     +    complexity, would perform substantially worse than the test helper
+     +    originally implemented in the Git for Windows project, a test
+     +    demonstrated that these performance differences are well lost within the
+     +    100+ minutes it takes to run Git's test suite on Windows.
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
 
-> >       if (collect_all) {
-> > -             git_all_attrs(&the_index, full_path, check);
-> > +             git_all_attrs(&the_index, full_path, check, object_name);
-> >       } else {
-> > -             git_check_attr(&the_index, full_path, check);
-> > +             git_check_attr(&the_index, full_path, check, object_name)=
-;
-> >       }
->
-> Earlier you do a get_oid(), shouldn't that be a
-> repo_get_oid(istate->repo, ...) to be future-proof? I.e. use the repo of
-> the passed-in index.
->
-> I think it'll always be "the_repository" for now, but for an API it
-> makes sense to hardcode that assumption in fewer places.
->
-
-I will make this change, I didn't know about repo_get_oid() before.
-
-> > +test_expect_success 'bare repository: with --revision' '
-> > +     (
-> > +             cd bare.git &&
-> > +             (
-> > +                     echo "f test=3Df" &&
-> > +                     echo "a/i test=3Da/i"
->
-> You don't need a subshell just to echo a string. You can use {}-braces,
-> but in this case just:
->
->     printf "%s\n", "f test=3Df" "a/i test=3Da/i" | git hash-object .... &=
-&
->
->
-
-While I agree with what you're saying, the whole test file does it
-this way (echo in a subshell),
-wouldn't it be better to stay consistent?
-
-> > +             ) | git hash-object -w --stdin > id &&
-> > +             git update-index --add --cacheinfo 100644 $(cat id) .gita=
-ttributes &&
->
-> Split the "cat" into a varible, otherwise its failure will be hidden.
->
-
-Done.
-
-> > +             git write-tree > id &&
->
-> We use ">id" style for redirection, not "> id".
->
-> > +             git commit-tree $(cat id) -m "random commit message" > id=
- &&
->
-> Ditto..
-
-Will make this change too.
-
-Thanks for the review. Will wait a day or two before sending in the
-next version.
-
---=20
-- Karthik
+-- 
+gitgitgadget
