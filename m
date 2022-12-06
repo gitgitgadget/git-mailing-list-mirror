@@ -2,63 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 63349C47089
-	for <git@archiver.kernel.org>; Mon,  5 Dec 2022 23:57:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C95F9C4708C
+	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 00:10:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232135AbiLEX5Z (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 5 Dec 2022 18:57:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34128 "EHLO
+        id S232657AbiLFAKy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 5 Dec 2022 19:10:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230151AbiLEX5X (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 5 Dec 2022 18:57:23 -0500
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3902E1D328
-        for <git@vger.kernel.org>; Mon,  5 Dec 2022 15:57:23 -0800 (PST)
-Received: by mail-pf1-x42e.google.com with SMTP id x66so12988505pfx.3
-        for <git@vger.kernel.org>; Mon, 05 Dec 2022 15:57:23 -0800 (PST)
+        with ESMTP id S229938AbiLFAKx (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 5 Dec 2022 19:10:53 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 987401A835
+        for <git@vger.kernel.org>; Mon,  5 Dec 2022 16:10:52 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id w4-20020a17090ac98400b002186f5d7a4cso16496019pjt.0
+        for <git@vger.kernel.org>; Mon, 05 Dec 2022 16:10:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=MXXlQg/8APyQXBsGr8q/GNF/FUwzI2gm5H1jGeyXMrE=;
-        b=hyHNPCTTR3+IN91yQkpFOhZhEgmfB7BLGo9s+2MvVsG4A8dtNmX0nc6lTgk4kYVsR0
-         ynwnqjZr0FKU5Uul9GdtFEK4ROaFFfyPDvqRLLeTo9PG8bTo+nQLV1HD6auRD+cqZ4aw
-         HbdHRGStC/AMSBZFyWx6+bZsfRfRfnFYK54caTuafym6UHlVJ/HW8aKDuYBLOoWHud4r
-         81AKlQrDGZn/OfQSbLU18P1dE1zbD3B624GH2qJTi+Cpes4CM5qAMpshhz5w2d4FGfaF
-         CBMEh75iUF5MoYKhYWAKdgNaBr0THtxYbxj97xohD/9HGzvQuJHWztHNltynjPanUgWK
-         4L1w==
+        bh=qewRICd4PhgcyTfbslNfQq3T3eKfBGT9XExHJAnWQ6Q=;
+        b=gLQir2xquTB5AMC+DwbDQ82iD1eyusNmo5Y9lxl1wXrhg8+lBaKuYzNkyh2/sZBvLY
+         O2YHBcHY+wRnLTER1C1MNK3i8NZADexmEW09ysIAMVMKlzKyY9vCyINt4L7P2UZcMQiG
+         rIEybYolQf4dvxO72/KrD7LVbKbT28Wospp+v70QclPyWgUZAwpFOTCpnYOGv2Bz41nW
+         GlsDQOmsje7Y0d681sjob5UbDrcLoirrzJ4dVn84vRtYFreqgHWd6BwCuivzU/bieY/R
+         /O5ixP7f7j5L0o/uTw86E9g3NPP887x6jNbqmSHUR6GVlpYoHVqxnsOf9X5HAoPBn3zT
+         +7jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=MXXlQg/8APyQXBsGr8q/GNF/FUwzI2gm5H1jGeyXMrE=;
-        b=uAx4YVyw2nSbmdb17vLIG6Iss+Zb4n2QIEB10quDw6xUS8irD2C9UMPbHvyxpvdUBW
-         HUI398P0EH17UBrWtsJc5wF5WsyNmXgYDR1jPVQYBqjsZmoLyTzu7G5Dos/gOcx9eXPP
-         HsKhyXVg059vE/s8d2j4xO2h/93a01knz6s5dE0naqEqkukpp2kjF2fKZOLzQgZKLFqt
-         whAC6XBUzXYNA0pBLHvtf0Fqrg5lK7LJeetQxYf4Br9lMZQix86RVmwqUr49yvSt1lFs
-         3fT2CZNo+WrjD4eE5IqGxPr00XDl+2/ziBRXD/ybrsJ9bzMWdbrseSyeXKzA6mhwtWm3
-         oNSA==
-X-Gm-Message-State: ANoB5pmca6MtEgKQdh/0a/nWvMc2dyDW26GmsUC/liujleAdtcb4H5ri
-        99+2ds4BqWLb6pKL13SSpKM=
-X-Google-Smtp-Source: AA0mqf6EnKWT8Imu8gxHmj5InxuQ1b/byc/6+9J0WuCvy2C9cxWzFYiIY2NU//2WI7MKNCcsE2aeqg==
-X-Received: by 2002:a05:6a00:4307:b0:576:ba28:29a8 with SMTP id cb7-20020a056a00430700b00576ba2829a8mr11163329pfb.47.1670284642590;
-        Mon, 05 Dec 2022 15:57:22 -0800 (PST)
+        bh=qewRICd4PhgcyTfbslNfQq3T3eKfBGT9XExHJAnWQ6Q=;
+        b=XhXcZ2xw66rviYcGo7fIdB1asnev4jFb9hxD/KpXBYjC9bUfIyq9jVvkbioigFVFmV
+         xaIYTHUrplMvWn1cd3iPTTeT0qphruMZnvAhEribFKX7IdkyTer9viEcWRm5KSWDk5sG
+         6tiS+33WsVsEDH3ZKq58Fj3QBMbt4pipqYRlsBd9Z/yuhO/kh3J1M5fgdd1iVXqcGdj3
+         hccQZ4MIfpUp7anQ8PRjnzLOwXcPUHN8dzMIYV8pW1L2VUQZCF08w3XAaApCwmSqQzUD
+         x1+7/YEwzQQ+qzvHbWu6LBA0JTfkXCfrIyfb5OpsOAt8DvQxBiAyr1m75eSxdouQ5foO
+         sN6A==
+X-Gm-Message-State: ANoB5pn9ciqv9+eUs1yd2Wf+qwOJt/vIFwS9I8omtQvzeMsnXLpV/ESU
+        OuHoYpWTGbHxy/4j1D3YntmMAtQjvsTwIw==
+X-Google-Smtp-Source: AA0mqf6AUwI+DLInsoNqGPjOaq0X0+IBACwfrDfdecFv90MIKnwtIYlcdbjlKJDmjMpVqX0+Zodojw==
+X-Received: by 2002:a17:90a:5102:b0:219:4734:fdeb with SMTP id t2-20020a17090a510200b002194734fdebmr38302241pjh.226.1670285451989;
+        Mon, 05 Dec 2022 16:10:51 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id t3-20020aa79463000000b00576b0893ecasm4436355pfq.46.2022.12.05.15.57.22
+        by smtp.gmail.com with ESMTPSA id 135-20020a62148d000000b00528a097aeffsm10359046pfu.118.2022.12.05.16.10.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Dec 2022 15:57:22 -0800 (PST)
+        Mon, 05 Dec 2022 16:10:51 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Taylor Blau <me@ttaylorr.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] git-compat-util.h: introduce CALLOC(x)
-References: <6694c52b38674859eb0390c7f62da1209a8d8ec3.1670266373.git.me@ttaylorr.com>
-Date:   Tue, 06 Dec 2022 08:57:21 +0900
-In-Reply-To: <6694c52b38674859eb0390c7f62da1209a8d8ec3.1670266373.git.me@ttaylorr.com>
-        (Taylor Blau's message of "Mon, 5 Dec 2022 13:54:38 -0500")
-Message-ID: <xmqqedtdpfoe.fsf@gitster.g>
+Cc:     Christian =?utf-8?Q?G=C3=B6ttsche?= <cgzones@googlemail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] setup: avoid unconditional open with write flags
+References: <20221205190019.52829-1-cgzones@googlemail.com>
+        <Y453yiYAifv/oV5n@nand.local>
+Date:   Tue, 06 Dec 2022 09:10:51 +0900
+In-Reply-To: <Y453yiYAifv/oV5n@nand.local> (Taylor Blau's message of "Mon, 5
+        Dec 2022 17:59:28 -0500")
+Message-ID: <xmqq7cz5pf1w.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,23 +70,23 @@ X-Mailing-List: git@vger.kernel.org
 
 Taylor Blau <me@ttaylorr.com> writes:
 
-> In git.git, it is sometimes common to write something like:
+> So it appears that the old version is ever-so-slightly faster than the
+> new one. But it's so noisy, and the regression is so small that it's
+> hard to notice it at all.
 >
->     T *ptr;
->     CALLOC_ARRAY(ptr, 1);
->
-> ...but that is confusing, since we're not initializing an array.
+> So I wouldn't strongly oppose the patch based on those numbers, but in
+> principle it seems flawed.
 
-Given that "man calloc" tells us that calloc takes two parameters,
+Thanks for writing and reviewing.
 
-    void *calloc(size_t nmemb, size_t size);
+As long as we were touching the function, I suspect that
+the logic should become more like
 
-I personally find CALLOC() that takes only a single parameter and is
-capable only to allocate a single element array very much confusing.
+    if (fd #0 is not open)
+	open /dev/null read-only and give it to fd #0
+    if (fd #1 is not open)
+	open /dev/null write-only and give it to fd #1
+    if (fd #2 is not open)
+	open /dev/null write-only and give it to fd #2
 
-It _might_ be arguable that the order of the parameters CALLOC_ARRAY
-takes should have been reversed in that the number of elements in
-the array should come first just like in calloc(), while the pointer
-that is used to infer the size of an array element should come next,
-but that is water under the bridge.
-
+with opening of /dev/null optimized not to happen when not needed.
