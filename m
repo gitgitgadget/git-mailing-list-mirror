@@ -2,59 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F39B1C352A1
-	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 21:03:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C02C4C352A1
+	for <git@archiver.kernel.org>; Tue,  6 Dec 2022 21:09:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229813AbiLFVDt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Dec 2022 16:03:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50546 "EHLO
+        id S229726AbiLFVJM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Dec 2022 16:09:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229812AbiLFVDq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2022 16:03:46 -0500
-X-Greylist: delayed 147724 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 06 Dec 2022 13:03:44 PST
-Received: from hatewear.ro (hatewear.ro [89.46.7.224])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82D5A2A973
-        for <git@vger.kernel.org>; Tue,  6 Dec 2022 13:03:44 -0800 (PST)
-Received: from smelly-shirt.aeza.network (unknown [89.208.103.237])
-        by server1.hatewear.ro (Postfix) with ESMTPSA id 657BE2AD5AB
-        for <git@vger.kernel.org>; Mon,  5 Dec 2022 02:19:31 +0200 (EET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hatewear.ro;
-        s=default; t=1670199571;
-        bh=RSX8jm1cyouNr8HxZLWylx0fTvkC5V+9TAjXX6FbOEA=; h=From:To:Subject;
-        b=Hkcg4k9Czr/HtAd/QwWcggxOAzzbQ186vY7YFDlogaTyc/Dd8ETVMVMoqke95E81R
-         RcZkpEoDUX1k5BA4UZWAFXz6mAqzvNjPbIx+FlrHBKv5HET47C1bAAj3WHosDofn1l
-         gALVsXpmBuwOharAxpPABC/Gow9RtKrfS+iijB7g=
-Authentication-Results: server1.hatewear.ro;
-        spf=pass (sender IP is 89.208.103.237) smtp.mailfrom=contact@hatewear.ro smtp.helo=smelly-shirt.aeza.network
-Received-SPF: pass (server1.hatewear.ro: connection is authenticated)
-Reply-To: info@investloanconsultant.com
-From:   Fedrick Andreas <contact@hatewear.ro>
-To:     git@vger.kernel.org
-Subject: We  have Capital for your Project
-Date:   5 Dec 2022 03:19:31 +0300
-Message-ID: <20221205031930.1E6F07846C442B02@hatewear.ro>
+        with ESMTP id S229445AbiLFVJL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2022 16:09:11 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0068232BAB
+        for <git@vger.kernel.org>; Tue,  6 Dec 2022 13:09:09 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id t17so9463211eju.1
+        for <git@vger.kernel.org>; Tue, 06 Dec 2022 13:09:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=nKwLoYgfxQWkNR6ZaLTRsX6NtB8fbSGO0a+AsikCUJY=;
+        b=cVJIEHLVc/67m92Fg8W4Oxs/ihWCzAILU+HSyYVUgWOs1qAt/MwjyAMsyjx4JzAaji
+         gaxLbPmHb7vuHrjDX43PQoge0HLUTvipiz9l2wgD8D2YieeXnzczgmdJ9xPTzux+W/QY
+         Ad8jdwJlcTNGIPFaJkOfiMJJAhQxOZrt2nT9Afi4YhdzSRA+HzTLB/qgLGy06qUK73kL
+         BOPS705cOHmrcffYgnpBTg2q0rbZpvx+lwVbUenaHicMqU+kr1FWoM/kLNPlrC4PLmIZ
+         H4toID5NffL028hR4JGs/P4uNw0JB+ARCA/u7FLNexgp2GHhxYWh+dXaLXEFEzNdo15d
+         DgfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nKwLoYgfxQWkNR6ZaLTRsX6NtB8fbSGO0a+AsikCUJY=;
+        b=pJp+fwJfLNPDsOnf7GRSt5khbMkPzOtxrVdJFmOCSEI/lwYAyb5vVJ8FvruF1299xT
+         JpiDtqOCyo9azkHC7Hm4eVhJHcTDjrYtXjXN2BL5UzZfebsxDm2XjTcvNMxNZN0xZOmt
+         Ci0VUOfA57ujStjzrpnJSdI6Eqy4W5AzhGGuX71RLi+XgsNZNEXa5jLYBvK+MG50GWjs
+         mSyNCob5HMksTilgP7VGQ7qKlWjnwEgM7HSoB1+aZZ+iwL850SOZNiOCXMkvlIlcyKz7
+         gp+Lcm0j6sP8BdStkuzMD6Oy2ovVzMRskkK5/pUDPHniZHZsIr531bYXJRdqQ4DWYRp2
+         6VNg==
+X-Gm-Message-State: ANoB5pkJm02hdH1vDkX+U7tBptVR6mC98Xac0eCkUr75N+0bA+Vn3DZK
+        EDCOdkNv7pMw5YN42eA9OEc=
+X-Google-Smtp-Source: AA0mqf6TlQ+KeIOSy3Dcn7ZQVN4u3VutpVyf/16nbOzz5HCNZQOb9A6HLuqg0ej9Wm+eoPaloSLUNg==
+X-Received: by 2002:a17:906:fa98:b0:7c0:a8ff:3380 with SMTP id lt24-20020a170906fa9800b007c0a8ff3380mr22417624ejb.92.1670360948408;
+        Tue, 06 Dec 2022 13:09:08 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id t1-20020a170906a10100b0078d3f96d293sm1036758ejy.30.2022.12.06.13.09.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Dec 2022 13:09:08 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1p2fBb-0046oH-1n;
+        Tue, 06 Dec 2022 22:09:07 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Victoria Dye <vdye@github.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] CI: migrate away from deprecated "set-output" syntax
+Date:   Tue, 06 Dec 2022 22:08:36 +0100
+References: <patch-1.1-deb65805345-20221206T195811Z-avarab@gmail.com>
+ <3859f3a7-ade8-4778-be15-b393694435e3@github.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <3859f3a7-ade8-4778-be15-b393694435e3@github.com>
+Message-ID: <221206.86fsdsb5os.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Greetings,
-=20
-Introducing the company i represent, Abdulla Zayed Capitals LLC=20
-give corporate Funding which we wish to re-invest through=20
-investment loan as debt financing to third party investors,=20
-project owners and entrepreneurs on a 4.5% interest rate per=20
-annum on long term investment projects that can generate up to 5-
-10% ROI within the period of investment.
-=20
-Applications are required from business executives and companies=20
-with proven business records in search of fund for expansion or=20
-for capital investment. Kindly get back to me on E-mail :(=20
-info@investloanconsultant.com) for more information.
-=20
-Fedrick Andreas (Investment Consultant)
-Abdulla Zayed Capitals LLC
-P O Box: 60315, United Arab Emirates
+
+On Tue, Dec 06 2022, Victoria Dye wrote:
+
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> [...]
+>>=20
+>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+>> ---
+>>=20
+>> Along with my just-sent
+>> https://lore.kernel.org/git/patch-1.1-4c1dcc89e7a-20221206T195552Z-avara=
+b@gmail.com/
+>> and Junio's https://lore.kernel.org/git/xmqq1qpd9bys.fsf@gitster.g/
+>> this should make our CI warning free.
+>>=20
+>>  .github/workflows/main.yml | 2 +-
+>>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> Should this also be updated for 'l10n.yml'? There are two usages of
+> '::set-output' there as well.
+
+Yes, I just missed that one. I'll fix that, but will wait a bit to see
+if there's any other comments first. Thanks!
