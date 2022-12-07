@@ -2,87 +2,141 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D4A3C4708D
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 23:58:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4F29C4708D
+	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 00:02:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230089AbiLGX6o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Dec 2022 18:58:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34636 "EHLO
+        id S230191AbiLHACV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Dec 2022 19:02:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230042AbiLGX6n (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2022 18:58:43 -0500
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 460A613F0D
-        for <git@vger.kernel.org>; Wed,  7 Dec 2022 15:58:42 -0800 (PST)
-Received: by mail-pl1-x635.google.com with SMTP id g10so18558423plo.11
-        for <git@vger.kernel.org>; Wed, 07 Dec 2022 15:58:42 -0800 (PST)
+        with ESMTP id S230159AbiLHACT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2022 19:02:19 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E7655BD62
+        for <git@vger.kernel.org>; Wed,  7 Dec 2022 16:02:17 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id i15so50507edf.2
+        for <git@vger.kernel.org>; Wed, 07 Dec 2022 16:02:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=W5u2juIM0OCNUsQ/lXBRMf/cY8Pc32JEgaamRm8HtQc=;
-        b=Q7sNk57dANXuQltsiENyCMASs5mrynOP89aRmPXXmOSD7g8KBrCZ2RwiAc5ci4/hvb
-         /sfuz9YR0tuX8vjHwwFDxejgdCnWBg+1ayI0mTYWzOQtfJ6JNVcdn0lsBh/UoXQ6RIH0
-         zawlpm4xRzmKFmEq8dhXwrMsRqUC0VN4D6ZFg3/GKBx3QkdHgt7gLchwFm5Urzv0TiqM
-         B31R2SoRhQuRl+7Cr1SC4AFIthUYfBaoRIRkmQhG82/PKj1I61F667Uhm/uNVP/hSbZU
-         WlS/+iPX5v55j1Qfqu1Q27mkp4FBkCIS0rBXUA+e9fbFgLes3jdy4PKzPIX/x1iD+fLQ
-         H8Tg==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=UpgW92SpQawh7/XxFA6YAZQaPCluL+QJtRnnA22jX8Q=;
+        b=YwSGEBstBfR22Qc0J8sUn5NOzO7NjvTSMC+RTHsxjkzuwPAOkJBzzefyDOp+IcEibE
+         PD7FdukcpENvgmgix0WvNOP0kbpusI7qS8hDUj1xqRvLeO15wJHHh80PphwLIhJbo2ly
+         jFoUvKB0yBl42jxOanpc/NzWBlskFvIAT6YDL27vN4mqKzaQX0e2dSpXAnIwhSSmJw7A
+         yjIyg5+9SaWpdHnMsA990mVU4NsSt/oC0xpUopBFFQ8xQuOTofdGxh/SVY2IK9qsRMsb
+         vnw0O6OTQ386gXrQRLBTVbl7bPjN39lfkPPfkLRHkKENy2rhHICyyMUvpOkiYkCWo/XB
+         3Qkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=W5u2juIM0OCNUsQ/lXBRMf/cY8Pc32JEgaamRm8HtQc=;
-        b=G/jyICVCi2ZRiyKdRR4eSwWck6yaAYIHuFMVDhFq9ApNOqyJ39vWbOGT/NsgkcNLTW
-         YehmLIEogJYboa+W3APJjECqcBN/N1fUkDnHV6ROzGRYS3PSTrrEJWuvdmxjyYNM/QTc
-         w6fz1eeu7wGVTxhcRZ5sWYIUsT1XElK1XFvAx6fkbj2ywoGwbb66L9X3X9QT9v4CGd1A
-         9/zidXBSykLLVh4AVxUmQHuH2Tm4mrNu7nQb4Eqf3WANqaFwS11ac1mhpJnK280BepZI
-         4dqiTicerdWfrIf8fiThQVg8CrEkHMSooDDsMamQpr5XHhE2nHISBOD7KF6QwVxcV/wN
-         HHcA==
-X-Gm-Message-State: ANoB5pnQ/DFenA7/JWXEJaZt8cgUd4BHMW6of/RvjGqgwFr5m2kGp80t
-        OsFqa3gxG8HaD/fWxKtb+Fm58XKs2Ei/jw==
-X-Google-Smtp-Source: AA0mqf7jTxRPyPTQM0+ZHUY1PZDaYOdOs/WWIffQbuiPa3iwyxmuDz8Cvo/e75UtTosUnEfc6V1Ttg==
-X-Received: by 2002:a17:902:8204:b0:188:ec14:bf17 with SMTP id x4-20020a170902820400b00188ec14bf17mr1213784pln.11.1670457521651;
-        Wed, 07 Dec 2022 15:58:41 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id 12-20020a170902c10c00b001869f2120a4sm15113976pli.94.2022.12.07.15.58.41
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UpgW92SpQawh7/XxFA6YAZQaPCluL+QJtRnnA22jX8Q=;
+        b=GZJ3iPpuq5Zzf1MPZDdBrjfdJTS9gcN2t3STsClv7TBPnckdkClYbgyK1eHMGftdOF
+         2vsOmfkZr60ZWlnilqPSN64RHkKYRSLwntdjNPvkBVs/83M51gsAOFUar17y15d7AHd9
+         tYYNe5eqyg1xR8BYq72PKw7Vc6g903JTEJrOmSRhHKzGqLedpf1kuAenuW0D2LGCsrGS
+         ii4wozxBLD0CvcnkBQRcuW4TjhiFzZpLBI/S3CjXmtHwMFaaV+ET8x7iSYVPCDpOmQTj
+         +EVd6P7aJNrTxSB6G1pPjxMXUlI5MLuKZM6ekUgqSydCUSJ9NkLTU70hDUYYT218DoDW
+         CTfw==
+X-Gm-Message-State: ANoB5plbbMgSl/U7MpcCYiCplKYQ8UXydHbAPNdGTy1gi3MswGnzIIFy
+        W46XshVrf96uDLWiIuwnBk6SJkrH8FEaKw==
+X-Google-Smtp-Source: AA0mqf4yDnNY7RDyOoh4bkrtkOE6A9RGjaikBu9lv0YNJMKE1iXEJBCL71AeVqHN7RLegmsCTdjKdg==
+X-Received: by 2002:aa7:c917:0:b0:46d:8aeb:bc03 with SMTP id b23-20020aa7c917000000b0046d8aebbc03mr631803edt.22.1670457735507;
+        Wed, 07 Dec 2022 16:02:15 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id p4-20020a05640210c400b0046c4553010fsm2798577edu.1.2022.12.07.16.02.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 15:58:41 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/4] Avoid using deprecated features in Git's GitHub
- workflows
-References: <pull.1440.git.1670423680.gitgitgadget@gmail.com>
-        <Y5EWUNbR1X+GrrNs@nand.local>
-Date:   Thu, 08 Dec 2022 08:58:41 +0900
-Message-ID: <xmqqv8mm4vgu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Wed, 07 Dec 2022 16:02:14 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1p34Mg-004iPn-0x;
+        Thu, 08 Dec 2022 01:02:14 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     ZheNing Hu <adlternative@gmail.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        johncai86@gmail.com, Taylor Blau <me@ttaylorr.com>
+Subject: Re: Question: How to execute git-gc correctly on the git server
+Date:   Thu, 08 Dec 2022 00:57:45 +0100
+References: <CAOLTT8Tt3jW2yvm6BRU3yG+EvW1WG9wWFq6PuOcaHNNLQAaGjg@mail.gmail.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <CAOLTT8Tt3jW2yvm6BRU3yG+EvW1WG9wWFq6PuOcaHNNLQAaGjg@mail.gmail.com>
+Message-ID: <221208.86a63y9309.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> writes:
 
-> On Wed, Dec 07, 2022 at 02:34:36PM +0000, Johannes Schindelin via GitGitGadget wrote:
->> Johannes Schindelin (4):
->>   ci: use a newer `github-script` version
->>   ci: avoid deprecated `set-output` workflow command
->>   ci: avoid using deprecated {up,down}load-artifacts Action
->>   ci(l10n): avoid using the deprecated `set-output` workflow command
+On Wed, Dec 07 2022, ZheNing Hu wrote:
+
+> I would like to run git gc on my git server periodically, which should he=
+lp
+> reduce storage space and optimize the read performance of the repository.
+> I know github, gitlab all have this process...
 >
-> These all look reasonable to me, minus the first one which is already
-> on 'master' as-is (unless I am missing something, but see my reply to
-> that email).
+> But the concurrency between git gc and other git commands is holding
+> me back a bit.
+>
+> git-gc [1] docs say:
+>
+>     On the other hand, when git gc runs concurrently with another process,
+>     there is a risk of it deleting an object that the other process is us=
+ing but
+>     hasn=E2=80=99t created a reference to. This may just cause the other =
+process to
+>     fail or may corrupt the repository if the other process later adds
+> a reference
+>     to the deleted object.
+>
+> It seems that git gc is a dangerous operation that may cause data corrupt=
+ion
+> concurrently with other git commands.
+>
+> Then I read the contents of Github's blog [2], git gc ---cruft seems to b=
+e used
+> to keep those expiring unreachable objects in a cruft pack, but the blog =
+says
+> github use some special "limbo" repository to keep the cruft pack for git=
+ data
+> recover. Well, a lot of the details here are pretty hard to understand fo=
+r me :(
+>
+> However, on the other hand, my git server is still at v2.35, and --cruft =
+was
+> introduced in v2.38, so I'm actually more curious about: how did the serv=
+er
+> execute git gc correctly in the past? Do we need a repository level "big =
+lock"
+> that blocks most/all other git operations? What should the behavior of us=
+ers'
+> git clone/push be at this time? Report error that the git server is perfo=
+rming
+> git gc? Or just wait for git gc to complete?
+>
+> Thanks for any comments and help!
+>
+> [1]: https://git-scm.com/docs/git-gc
+> [2]: https://github.blog/2022-09-13-scaling-gits-garbage-collection/
 
-I think we already have set-output ones figured out and queued in
-'seen', and the third one alone cleanly applies without any others
-(and replaces my botched attempt ;-), so we are in good shape, I
-think.
+Is this for a very large hosting site that's anywhere near GitHub,
+GitLab's etc. scale?
 
-Thanks.
+A "git gc" on a "live" repo is always racy in theory, but the odds that
+you'll run into data corrupting trouble tends to approach zero as you
+increase the gc.pruneExpire setting, with the default 2 weeks being more
+than enough for even the most paranoid user.
+
+The "cruft pack" facility does many different things, and my
+understanding of it is that GitHub's not using it only as an end-run
+around potential corruption issues, but that some not yet in tree
+patches on top of it allow more aggressive "gc" without the fear of
+corruption.
+
+So, I think you probably don't need to worry about it. Other major
+hosting sites do run "git gc" on live repositories, but as always take
+backups etc.
