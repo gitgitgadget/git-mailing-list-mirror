@@ -2,116 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E183C352A1
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 00:12:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8FC5AC3A5A7
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 00:24:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229762AbiLGAMU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Dec 2022 19:12:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58784 "EHLO
+        id S229649AbiLGAYl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Dec 2022 19:24:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229573AbiLGAMT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2022 19:12:19 -0500
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E201731F99
-        for <git@vger.kernel.org>; Tue,  6 Dec 2022 16:12:18 -0800 (PST)
-Received: by mail-pf1-x432.google.com with SMTP id 65so3405182pfx.9
-        for <git@vger.kernel.org>; Tue, 06 Dec 2022 16:12:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DuHC1IN2IBKjF5WPQ2jllrHpGaURHvsA5L1zB4NfPgk=;
-        b=ENrJ4HPN/eSxO0oEIVOKvor5CTWF8gNBvj1RRXOeF7K5nh1j1l/AwgXZeLfGtGoRiG
-         dFybpMnMdAILF4JrpXsxiscP9T/z5fHme0mdxLqQgoKBoElJYK6xnA48PRkIkCGxapTX
-         WAZ4okkMR3LjLpvj4MAsTPa6+osvtkMMTg2nmMrhDXwqq9uAi18XhyKnoYSp7iOoQDDU
-         BLqACwykJyjWp4H1URABoqK/sSsEtedrOhqUMfxaFdLvX2J/2jkrPFKB43TFn3ykUNNy
-         S1cxJeHxvelMKkK1dusswyQFupPTMrK7IcAnJPsTWlLJ13M5q8mCXdeGcYHAomxxxfB4
-         qlVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=DuHC1IN2IBKjF5WPQ2jllrHpGaURHvsA5L1zB4NfPgk=;
-        b=j38ClcHpjZuonkjG8q+ZODCf8sRSTmPcktkbPGx+yx+VoqfWkUVZjhIIxjYPTkCyer
-         Gfu5IN++pulhXGNAMbZrFzl/h3fpK86bf3YJd+r1GPox+LuJ7EyOCJho31DeDi8jZ/I+
-         tNUF9CifxeFEYVv+5zVkKH3s49gznYGDr72SL1b405Uqqa03m4ydtwcaYY1j6TNsE/W+
-         qdKfZzG/SHJaJMDkNxRXBxhEgz8gLNsxeDEzCzO43DHvuurqYNIkjjINfAlAJ5NqW4TY
-         gXTYHgzXqeAl2ZPrLEpaDzFkcGmIpNGa9HiSAe5hGl1trasxePaAlYDcR7jXfFMkwDyP
-         49Pg==
-X-Gm-Message-State: ANoB5pmSNR4EVM1Vv5qi/MfQUySPmeSrbROs6CiRIMlVNmplhWdOW91j
-        apFERL5/wXs0yiDvYiePbBARg/Pd3bxyuQ==
-X-Google-Smtp-Source: AA0mqf4YRfh27rcbnvFm4mIrQwK9/YuWQ2A4t0MFzBJ+CukhfOhW+XUpdmJ9fDLaTAs3400YY14Kng==
-X-Received: by 2002:a63:fb11:0:b0:478:e97b:7a1 with SMTP id o17-20020a63fb11000000b00478e97b07a1mr3055975pgh.113.1670371938225;
-        Tue, 06 Dec 2022 16:12:18 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id i17-20020a170902c95100b00189847cd4acsm13349263pla.237.2022.12.06.16.12.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Dec 2022 16:12:17 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Karthik Nayak <karthik.188@gmail.com>
-Cc:     git@vger.kernel.org, toon@iotcl.com
-Subject: Re: [PATCH 2/2] attr: add flag `-r|--revisions` to work with revisions
-References: <20221206103736.53909-1-karthik.188@gmail.com>
-        <20221206103736.53909-3-karthik.188@gmail.com>
-Date:   Wed, 07 Dec 2022 09:12:17 +0900
-In-Reply-To: <20221206103736.53909-3-karthik.188@gmail.com> (Karthik Nayak's
-        message of "Tue, 6 Dec 2022 11:37:36 +0100")
-Message-ID: <xmqqedtc842m.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229583AbiLGAYj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2022 19:24:39 -0500
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA595222
+        for <git@vger.kernel.org>; Tue,  6 Dec 2022 16:24:37 -0800 (PST)
+Received: from 88-110-102-84.dynamic.dsl.as9105.com ([88.110.102.84] helo=[192.168.1.57])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1p2iEl-000A2O-8h;
+        Wed, 07 Dec 2022 00:24:36 +0000
+Message-ID: <093e1dca-b9d4-f1f2-0845-ad6711622cf5@iee.email>
+Date:   Wed, 7 Dec 2022 00:24:34 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+From:   Philip Oakley <philipoakley@iee.email>
+Subject: Re: [PATCH v4] pretty-formats: add hard truncation, without ellipsis,
+ options
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     GitList <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
+        NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
+References: <20221102120853.2013-1-philipoakley@iee.email>
+ <20221112143616.1429-1-philipoakley@iee.email> <xmqqfsedywli.fsf@gitster.g>
+ <d80d1b97-b0c0-148b-afb7-f5210366e463@iee.email> <xmqqedtvu7py.fsf@gitster.g>
+ <7a6c3d32-4494-e209-9877-e8784f0c3502@iee.email> <xmqq7czjecfr.fsf@gitster.g>
+ <f0923db4-7bfe-86d2-7539-c9ebed62fa4f@iee.email> <xmqq35a5cnhq.fsf@gitster.g>
+Content-Language: en-GB
+In-Reply-To: <xmqq35a5cnhq.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Apologies for the delays.
+On 26/11/2022 23:19, Junio C Hamano wrote:
+> Philip Oakley <philipoakley@iee.email> writes:
+>
+>>>  in that they may do "[][].." or "[][][]" when told to
+>>> "trunc" fill a string with four or more double-width letters into a
+>>> 5 display space.  But the point is at least for these with ellipsis
+>>> it is fairly clear what the desired behaviour is.
+>> That "is fairly clear" is probably the problem. In retrospect it's not
+>> clear in the docs that the "%<(N" format is (would appear to be) about
+>> defining the display width, in terminal character columns, that the
+>> selected parameter is to be displayed within.
+>>
+>> The code already pads the displayed parameter with spaces as required if
+>> the parameter is shorter than the display width - the else condition in
+>> pretty.c L1750
+>>
+>>>   For "trunc" in
+>>> the above example, I think the right thing for it to do would be to
+>>> do "[][].", i.e. consume exactly 5 display columns, and avoid
+>>> exceeding the given space by not giving two dots but just one.
+>> The existing choice is padding "[][]" with a single space to reach 5
+>> display chars.
+>> For the 6-char "[][][]" truncation it is "[][..", i.e. 3 chars from
+>> "[][][]", then the two ".." dots of the ellipsis.
+> Here, I realize that I did not explain the scenario well.  The
+> message you are responding to was meant to be a clarification of my
+> earlier message and it should have done a better job but apparently
+> I failed.  Sorry, and let me try again.
+>
+> The single example I meant to use to illustrate the scenario I worry
+> about is this.  There is a string, in which there are four (or more)
+> letters, each of which occupies two display columns.
 
-> Add a new flag `--revision`/`-r` which will allow it work with
-> revisions. This command will now, instead of checking the files/index,
-> try and receive the blob for the given attribute file against the
-> provided revision. The flag overrides checking against the index and
-> filesystem and also works with bare repositories.
+I hadn't appreciated that utf8 has 'wide' characters that are
+effectively double width, i.e. use 2 display columns, such as emojis.
+I had been well aware of the multi-byte nature of utf8, and vaguely
+aware of the potential for combined characters.
 
-As "check-attr" was not invented as a user-facing subcommand but was
-a hack for debugging, I would have minded this change, but these
-days people seem to treat it as if it is just one of the proper
-plumbing commands, the new command line convention bothers me a
-bit.  No other command uses --<anything> to signal that what comes
-after it is a rev.
+>   And '[]' in my
+> earlier messages stood for a SINGLE such letter (I just wanted to
+> stick to ASCII, instead of using East Asian script, for
+> illustration).  So "[][.." is not possible (you are chomping the
+> second such letter in half).
+>
+> I could use East Asian 一二三四 (there are four letters, denoting
+> one, two, three, and four, each occupying two display spaces when
+> typeset in a fixed width font),
 
-But I do not think of a better alternative without making the
-command line ambiguous, so I'll stop at raising a concern, so that
-others who may be better at UI can come up with one.
+These 4 characters came through ok.
+>  but to make it easier to see in
+> ASCII only text, let's pretend "[1]", "[2]", "[3]", "[4]" are such
+> letters.  You cannot chomp them in the middle (and please pretend
+> each of them occupy two, not three, display spaces).
+>
+> When the given display space is 6 columns, we can fit 2 such letters
+> plus ".." in the space.  If the original string were [1][2][3][4],
+> it is clear trunk and ltrunk can do "[1][2].." 
 
-As to the C API, please do not append the new parameter at the end.
-When there are no logical ordering among the things listed, be it in
-the members of a struct or the parameters to a function, we encourage
-to append, but in this case
+> (remember [n] stands
+> for a single letter whose width is 2 columns, so that takes 6
+> columns) 
 
-    void git_check_attr(struct index_state *istate,
-                        const char *path,
-                        struct attr_check *check)
+Aside: The man pages aren't that clear about the distinction between
+display columns and characters, both for these width based formats
+(allow this placeholder parameter a width of <N> columns), and the
+terminal's column position formats (start this parameter at the
+on-screen column <N>) .
 
-we are saying "pick <path>, referring to .gitattributes files from
-the index as needed, and apply the checks in check[]", and the new
-behaviour is "pick <path>, referring to .gitattributes files from
-the tree-ish as needed, and do the same", so istate and the tree-ish
-object should sit together.
 
-Also, at the C API level, I suspect that we strongly prefer to pass
-around either the "struct object_id *" or "struct tree *", not working
-with end-user supplied character strings without any sanity-checking
-or parsing.
+> and "..[3][4]", respectively.  It also is clear that Trunk
+> and Ltrunk can do "[1][2][3]" and "[2][3][4]", respectively.  We
+> truncate the given string so that we fill the alloted display
+> columns fully.
 
-Another concern, among many existing callers of git_check_attr(),
-is there any that will conceivably benefit in the future if they
-could read the attributes from a tree-ish?  If not, it may make a
-lot more sense if you did not butcher them, and instead introduce a
-new API function git_check_attr_from_tree() and use it in the only
-place you handle the "-r tree-ish" command line option in the
-updated part of the "git check-attr" command.
+While this example is clear, it's not clear what should be done if we
+have mixed width strings, e.g. with emojis, as the boundaries in random
+text will also be randomly placed.
+>
+> If the given display space is 5 columns, the desirable behaviour for
+> trunk and ltrunk is still clear.  Instead of consuming two dots, we
+> could use a single dot as the filler.  As I said, I suspect that the
+> implementation of trunk and ltrunc does this correctly, though.
 
-Thanks.
+The current implementation is buggy in the case of combining character
+code points. We forget to add the (zero space) combining code points
+once we have the base character when it is the character before the
+split (where the double dot ".." is inserted). I.e. the zero space
+characters are added after the ".." double dot.
+
+This can cause problems with the existing code for `mtrunc` where the
+'lost' combing code points then become attached to the preceding "two
+dots".
+>
+> My worry is it is not clear what Trunk and Ltrunk should do in that
+> case.  There is no way to fit a substring of [1][2][3][4] into 5
+> columns without any filler.
+
+I'm not sure that anyone has fully solved that issue of what to do when
+a wide character overlaps the end of an available display space, such as
+terminal word-wrap when resizing the window (in my mintty terminal
+window it displays a 'space' then starts the wide character on a new line).
+
+There's also a 'bug' reported for one of the microsoft terminals that
+the user wants to position the cursor at a column that is the middle of
+a wide emoji character and wants half of it over written!
+
+For our case (no wordwrap) I'd be minded to to mark the end column with
+a single width character to show that some (wide) thing should be here,
+but we've had to cut it off, such as the vertical ellipsis. At least
+it's explainable.
+
+I'll at least work on the doc clarification regarding the column width,
+column position and wide char (2-col) issue, and hopefully a few failing
+tests for the combing code point and the wide char fitment issue.
+
+--
+Philip
