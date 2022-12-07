@@ -2,108 +2,140 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47201C3A5A7
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 01:31:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 08D4BC3A5A7
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 01:49:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229757AbiLGBbH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Dec 2022 20:31:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48666 "EHLO
+        id S229669AbiLGBtb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Dec 2022 20:49:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229511AbiLGBbF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2022 20:31:05 -0500
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1646B5131C
-        for <git@vger.kernel.org>; Tue,  6 Dec 2022 17:31:04 -0800 (PST)
-Received: by mail-io1-xd2f.google.com with SMTP id o189so5279220iof.0
-        for <git@vger.kernel.org>; Tue, 06 Dec 2022 17:31:04 -0800 (PST)
+        with ESMTP id S229616AbiLGBt3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2022 20:49:29 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79B2252891
+        for <git@vger.kernel.org>; Tue,  6 Dec 2022 17:49:28 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id a16so22884788edb.9
+        for <git@vger.kernel.org>; Tue, 06 Dec 2022 17:49:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/xhjAa1BAOHADj0w384UjcqYrwGRVFHU5lzveTKGkeo=;
-        b=BMQJzKxuQ9MqG1nzjmiug60CwM+1Y/kURJ04Rjjo4DB7eldLDugfdLHuEfMlw7TTsH
-         v5XtoaxnEnm1pdryKv9C9AX4fBewUENHnJBqWFs4pP6bk+r8TjzcJSPTLy7mJaAYk3Rr
-         TKzoM0HWkbQuos+qOXCuowpStWiGmTf7Fw3X5XxB1XlxAZh60dIvIcq38V4seDuiGAGT
-         suWZSzxGsr//NkOfmJt4E7XAZ/vCTHVTt9z3PNNvsEHD5sbWTv6sRg5Txhl52wurXi4F
-         OwsUdvOcE77dye99qycAvCDKFSevYRdn8L8RUZq7V9htrtRVPje+YKcXVJKcBqzwtkJQ
-         MguQ==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hJlyw7/2tRtVBWt5MPpioiYLtMykVDrNty5EFizifQw=;
+        b=jQYO3siJVImqbqR7y7NEij8uiTNZ2P+Aj4jfS1Nn/vZ1L5S4zumfAfvne7ETqBvg0+
+         ghNBbQqe0lRSgqlv0duKogqrFguv4h8IzBDdLMn4rJRk4ZaKFFKHipR5pYgtUnHUCKgZ
+         PaTdQm0K3z+PS2AwzZX9j5TwPUJPCAIyfpHsLUBfwBRJSwvRmmFD+vWbklj+Jy+eUdZN
+         sX6aBTLOnN5aZrKJ29pvFVIpOYwzNJvlzIAsgw7SaW+6WtkrOprEIVlFdSGq2uf2kHLZ
+         HwL2MxyUSlveso2oTT0JRM+Jx3NvkCslJxKMOg3RsQnYpucqso6yj2g1J3o70nEL1kzN
+         46eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/xhjAa1BAOHADj0w384UjcqYrwGRVFHU5lzveTKGkeo=;
-        b=rAOzA6YpGOjNn7iP2MFTfjLKEXIzH8jZ0+WHJ8PZKCEmoQ/g1pgKIyyrwYcuMInYGq
-         hSfQwFNMDZJRfjpTdw7eVgqcBIPc7zptTGjiOcEj+WaVOBWpsUCQXSmqBez4ATpbSgq2
-         8ZklnE/NvqyyA+dMa0zcNhR5ZsJ6sSr8VJSG9jPzKgF3bC+Bijv653sZ3rHxCF+OibbJ
-         OIr0dJsfm8D2HBpEwOlHUQPMeWOGHWS6BOOQ2Nb8X74tZpNNZ21PwnGKzTb5zARCQ6m0
-         5si8vbEjTp4DXgO8GNCCzABE7RksDov4ZE74/lJczmYidTbUtssPINsgKIMPOW58X7Tq
-         Djvw==
-X-Gm-Message-State: ANoB5plm+tF7XGLQRfyAhpYm28csnidhqvuUa1c89xUABwlWjafvXzIy
-        0jIsUnv5YXJAgl5ea+589a1KZA==
-X-Google-Smtp-Source: AA0mqf5iqzDT5ygklBCckN202IKabNT0kfzNaXIZDeXfr59pRs+a1oCCOJ6gF2toYBuC2zKHVoQNwA==
-X-Received: by 2002:a02:3b56:0:b0:375:8878:9c80 with SMTP id i22-20020a023b56000000b0037588789c80mr38661796jaf.157.1670376663342;
-        Tue, 06 Dec 2022 17:31:03 -0800 (PST)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id a16-20020a027350000000b0038a08d5ac32sm6753525jae.31.2022.12.06.17.31.02
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hJlyw7/2tRtVBWt5MPpioiYLtMykVDrNty5EFizifQw=;
+        b=OZQbI1dKl2R3vfGCswmwC50czBjUaSTHDRKSQQQDZWT+gb8mfveQ8O7cFkwXT14CT8
+         SqVsiOW9NT9DWCJJpSoy11Avb+9H4+l6QwwpWUfNAmOiaDjUwiSKnn77dDxpf4oxDFFn
+         nyOKnbRdN4UyYUHKZnOjTiuP0cKeWvH+pgW/A1WsXrGJhuVbcgKvuwx4U+3VuTg3IfSf
+         BwMzPOkSG+5FdDNXIjW/YRpVYYQhZrlbS345OVofKvPgyLIXCxVTcaeIZ+ZkdnAt+esJ
+         3lvERK3iJMnFekhDlYR3Btgnw/RA6QLCVvHyMHzXIAAtcmnV+/dOE4C6vTw6bZJE3mRt
+         wmng==
+X-Gm-Message-State: ANoB5pnOZuk+N5wcLHzQRXgSj+okpCZANGmTTvq3FPn8T0tuQJTnQXr4
+        ICHV0VE5VAZAlFqUi4/MxNSE5hvDzUbdKQ==
+X-Google-Smtp-Source: AA0mqf4zZLYM/iRvsN+k8XvQxATb8oe4HoNQabJEa2FGE2N8vmUcWLAy2lWAspqnP2mr1j2OiU0qoA==
+X-Received: by 2002:a05:6402:541a:b0:463:be84:5283 with SMTP id ev26-20020a056402541a00b00463be845283mr37923121edb.7.1670377766227;
+        Tue, 06 Dec 2022 17:49:26 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id j10-20020a17090623ea00b00782ee6b34f2sm7888311ejg.183.2022.12.06.17.49.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Dec 2022 17:31:02 -0800 (PST)
-Date:   Tue, 6 Dec 2022 20:31:01 -0500
-From:   Taylor Blau <me@ttaylorr.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v5 2/2] tests(mingw): avoid very slow `mingw_test_cmp`
-Message-ID: <Y4/s1QcVFjjm31n7@nand.local>
-References: <pull.1309.v4.git.1668434812.gitgitgadget@gmail.com>
- <pull.1309.v5.git.1670339267.gitgitgadget@gmail.com>
- <6a80fab7e3936ec56e1583d6136d47487327e907.1670339267.git.gitgitgadget@gmail.com>
+        Tue, 06 Dec 2022 17:49:25 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2] CI: migrate away from deprecated "set-output" syntax
+Date:   Wed,  7 Dec 2022 02:49:18 +0100
+Message-Id: <patch-v2-1.1-4e7db0db3be-20221207T014848Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.39.0.rc2.1019.gce04d262ea9
+In-Reply-To: <patch-1.1-deb65805345-20221206T195811Z-avarab@gmail.com>
+References: <patch-1.1-deb65805345-20221206T195811Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <6a80fab7e3936ec56e1583d6136d47487327e907.1670339267.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes,
+As noted in [1] and the warnings the CI itself is spewing echoing
+outputs to stdout is deprecated, and they should be written to
+"$GITHUB_OUTPUT" instead.
 
-On Tue, Dec 06, 2022 at 03:07:47PM +0000, Johannes Schindelin via GitGitGadget wrote:
-> Learning the lesson to avoid shell scripting wherever possible, the Git
-> for Windows project implemented a minimal replacement for
-> `mingw_test_cmp` in the form of a `test-tool` subcommand that parses the
-> input files line by line, ignoring line endings, and compares them.
-> Essentially the same thing as `mingw_test_cmp`, but implemented in
-> C instead of Bash. This solution served the Git for Windows project
-> well, over years.
->
-> However, when this solution was finally upstreamed, the conclusion was
-> reached that a change to use `git diff --no-index` instead of
-> `mingw_test_cmp` was more easily reviewed and hence should be used
-> instead.
->
-> The reason why this approach was not even considered in Git for Windows
-> is that in 2007, there was already a motion on the table to use Git's
-> own diff machinery to perform comparisons in Git's test suite, but it
-> was dismissed in https://lore.kernel.org/git/xmqqbkrpo9or.fsf@gitster.g/
-> as undesirable because tests might potentially succeed due to bugs in
-> the diff machinery when they should not succeed, and those bugs could
-> therefore hide regressions that the tests try to prevent.
->
-> By the time Git for Windows' `mingw-test-cmp` in C was finally
-> contributed to the Git mailing list, reviewers agreed that the diff
-> machinery had matured enough and should be used instead.
->
-> When the concern was raised that the diff machinery, due to its
-> complexity, would perform substantially worse than the test helper
-> originally implemented in the Git for Windows project, a test
-> demonstrated that these performance differences are well lost within the
-> 100+ minutes it takes to run Git's test suite on Windows.
+1. https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
 
-Thanks for this update. I think these five paragraphs are an accurate
-and helpful record of the history behind this patch and approach. It is
-very much appreciated.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+Range-diff against v1:
+1:  deb65805345 ! 1:  4e7db0db3be CI: migrate away from deprecated "set-output" syntax
+    @@ Commit message
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+    + ## .github/workflows/l10n.yml ##
+    +@@ .github/workflows/l10n.yml: jobs:
+    +             base=${{ github.event.before }}
+    +             head=${{ github.event.after }}
+    +           fi
+    +-          echo "::set-output name=base::$base"
+    +-          echo "::set-output name=head::$head"
+    ++          cat >>$GITHUB_OUTPUT <<-EOF
+    ++          base=$base
+    ++          head=$head
+    ++          EOF
+    +       - name: Run partial clone
+    +         run: |
+    +           git -c init.defaultBranch=master init --bare .
+    +
+      ## .github/workflows/main.yml ##
+     @@ .github/workflows/main.yml: jobs:
+                then
 
-Thanks,
-Taylor
+ .github/workflows/l10n.yml | 6 ++++--
+ .github/workflows/main.yml | 2 +-
+ 2 files changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/.github/workflows/l10n.yml b/.github/workflows/l10n.yml
+index 27f72f0ff34..8fa073db2dc 100644
+--- a/.github/workflows/l10n.yml
++++ b/.github/workflows/l10n.yml
+@@ -23,8 +23,10 @@ jobs:
+             base=${{ github.event.before }}
+             head=${{ github.event.after }}
+           fi
+-          echo "::set-output name=base::$base"
+-          echo "::set-output name=head::$head"
++          cat >>$GITHUB_OUTPUT <<-EOF
++          base=$base
++          head=$head
++          EOF
+       - name: Run partial clone
+         run: |
+           git -c init.defaultBranch=master init --bare .
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index 9afacfa0b33..d1e16009b11 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -34,7 +34,7 @@ jobs:
+           then
+             enabled=no
+           fi
+-          echo "::set-output name=enabled::$enabled"
++          echo "enabled=$enabled" >>$GITHUB_OUTPUT
+       - name: skip if the commit or tree was already tested
+         id: skip-if-redundant
+         uses: actions/github-script@v6
+-- 
+2.39.0.rc2.1019.gce04d262ea9
+
