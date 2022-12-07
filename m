@@ -2,63 +2,63 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6B6FC352A1
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 17:26:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E7661C47089
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 17:26:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229942AbiLGR0X (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Dec 2022 12:26:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33910 "EHLO
+        id S230049AbiLGR00 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Dec 2022 12:26:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229955AbiLGR0E (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2022 12:26:04 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D399669A95
+        with ESMTP id S229940AbiLGR0D (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2022 12:26:03 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1950669A90
         for <git@vger.kernel.org>; Wed,  7 Dec 2022 09:26:02 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id d1so29037017wrs.12
-        for <git@vger.kernel.org>; Wed, 07 Dec 2022 09:26:02 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id l26so7976145wms.4
+        for <git@vger.kernel.org>; Wed, 07 Dec 2022 09:26:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Q/sYCO0g63r3rEs9I2ZMdvq3WSQ0z/98w5Msc+Z9TkE=;
-        b=ANpe3W0O/Pui6JZ12//faaQ9p002uwfUYV0aDEV7wFGV+rI+6WDiIFJ0Rmb+eOd5wX
-         8yy+sjx5b5hJYu0jrUrotgw01yVOiObEvCjvF8vfWag65PgQZ0a3V83quCUOq9JLJz+O
-         mfY6tcZgPIEC6wVS3OMTVyWU+hReU2WQa42upzS2g13wMkk9NtCPW42K7JalcdaUB4/E
-         rWjBvw6UVPl9TxvCNy3mPk0kJx5fhVBQDgM2w8sj3ZrIBpXYHM7QnYDW11cdofTIJFvn
-         1Kx+fo5HXTFN9vik96+pHd70TcVkbCBBwbZve87EiCXWqCeCPs/S7kBdNYAPTz/pRyPf
-         Ijng==
+        bh=/qSHcM9yUUo0nD7eZW5ZD8SkIf1Ai0up1bzvnY0av0A=;
+        b=fk/RKlwTeDijb3xzkNAdwnJBV5MhXWO4XBEMUCXYS6v19aTHBt5ymXdCb1b8Dtxpjo
+         r/Z7LAHJGwibf7kjRgyIP79MV0FA0DB+pQH+YCqCqDM5fJdqm1x4Uc54hRTg6Rh5hxqk
+         LQZvm3n6b6nYdIRkLBerESB+Cpr/4lM2nY2EOcA4xV08gpPRhqeoXwzOhHdzPM4TRVu2
+         Xbk7lKMC0GE1hh5yaEgSqZ8M2TW8XjADot6LY2rIg3BPBrNW5dv/YGulax1uEu94UUv8
+         iZvVLGcxJ59bzMvEj++UIxD9ITtfaK5yOszDKOld7GREnkfgqhz1befSAHjx58UTzV66
+         gYuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Q/sYCO0g63r3rEs9I2ZMdvq3WSQ0z/98w5Msc+Z9TkE=;
-        b=StLrhPRylfRNXGtS30X6FHt9YLBJpjsnOc5lbC0xtbsUYaF43mQuttNTZPO4CMa26c
-         huL5FX9pSqHIbZMHoQxNV6mG08qBLWaA4DvwAbQqfK+XGCaKU1iCf0QQUKPsOAnyMgHl
-         QInXqGSgI6Z2s3POg/ldJDk7coVSMje9gFx1Z75oD0w8eeEi+v5N1XQvMmMhKyM5uolE
-         RdR4uThsIjbOYocn90sHI4DiZr9NDPFZzpGtHLQVLjM4naaK4ExhS7+feHtmTSV5pj7T
-         K2cbjpdYZyjh1Hsx0uAJig67uxJ5D11Q8QbuoAEKJryGdD3HRRdkOqvuuxkYP/S+w5Eq
-         6ZVw==
-X-Gm-Message-State: ANoB5pkGRXMMHq0YQt1HveUrYkD9i/P5ZPGX4nu7xxGwMeOh0pGZB03Q
-        amgpyZQJJLh4Gp5eMovQi8T6KUifSLY=
-X-Google-Smtp-Source: AA0mqf65hAIFm444tbEaZvs2sM0syppFpNOWwFInySB/kHEG80HDZCtdlXNkOua6pTKjul1Owh+/Lw==
-X-Received: by 2002:a05:6000:989:b0:236:91d0:1f with SMTP id by9-20020a056000098900b0023691d0001fmr48952203wrb.33.1670433961243;
-        Wed, 07 Dec 2022 09:26:01 -0800 (PST)
+        bh=/qSHcM9yUUo0nD7eZW5ZD8SkIf1Ai0up1bzvnY0av0A=;
+        b=D5BKbHXv3ft7oimj+ZQtqOifUPe3gKIzAxMIO1O1fjsnmIUvLYXqKZgPzcdHH8noMI
+         FArPAne90JT9ZXv3LPhPnrrw5CTx1Z0+Xa24dXTSTGG+35TMP4S8K6/3G8uA35l94mUw
+         cd9oda7XFNP69UlyK2v9fqk3AMZ0LzA88BswS0PLjzWo/wmGevCeywBhN/0EClAdb2hS
+         ttiPhrZ4MVUbM+tt/9/Fa9WIYcp5f4DNKn4O0C2t6O4cXXzwoYEzhBwH1v1XAIXomHEx
+         ndw7yk5efTW/fQtSaZpTz/zYwBsZ/nDI3smNztBALUUPolrlI5uOol3ToPOsI8/fJwlG
+         kfFg==
+X-Gm-Message-State: ANoB5pleHGUJPI+iPdlEvRsjj9rr2ITMJSuZrB2i4ow1Kh+nDKYjM9zH
+        8bFF00UBE24LQFVItob5OOIVaXgXQjU=
+X-Google-Smtp-Source: AA0mqf4jJe5Nl+Fqcbj3c76KbJicG2J1Ialn7KCf3tNfSS/WqIBCMocuxX8QBSOyJSHVzIf1luq90g==
+X-Received: by 2002:a05:600c:19d1:b0:3cf:4d12:1b4b with SMTP id u17-20020a05600c19d100b003cf4d121b4bmr69062314wmq.23.1670433960394;
+        Wed, 07 Dec 2022 09:26:00 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id n5-20020a1c7205000000b003cf6c2f9513sm2274337wmc.2.2022.12.07.09.26.00
+        by smtp.gmail.com with ESMTPSA id bd10-20020a05600c1f0a00b003d070e45574sm2537434wmb.11.2022.12.07.09.25.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 07 Dec 2022 09:26:00 -0800 (PST)
-Message-Id: <5fb4b5a36ac806f3ee07a614bcb93df2c430507c.1670433958.git.gitgitgadget@gmail.com>
+Message-Id: <40ee8dbaef06f8f4265d12436455279499d7ac01.1670433958.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1439.git.1670433958.gitgitgadget@gmail.com>
 References: <pull.1439.git.1670433958.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 07 Dec 2022 17:25:56 +0000
-Subject: [PATCH 2/4] read-cache: add index.skipHash config option
-MIME-Version: 1.0
+Date:   Wed, 07 Dec 2022 17:25:55 +0000
+Subject: [PATCH 1/4] hashfile: allow skipping the hash function
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Fcc:    Sent
+MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, vdye@github.com, avarab@gmail.com,
         newren@gmail.com, Derrick Stolee <derrickstolee@github.com>,
@@ -69,147 +69,123 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The previous change allowed skipping the hashing portion of the
-hashwrite API, using it instead as a buffered write API. Disabling the
-hashwrite can be particularly helpful when the write operation is in a
-critical path.
+The hashfile API is useful for generating files that include a trailing
+hash of the file's contents up to that point. Using such a hash is
+helpful for verifying the file for corruption-at-rest, such as a faulty
+drive causing flipped bits.
 
-One such critical path is the writing of the index. This operation is so
-critical that the sparse index was created specifically to reduce the
-size of the index to make these writes (and reads) faster.
+Git's index file includes this trailing hash, so it uses a 'struct
+hashfile' to handle the I/O to the file. This was very convenient to
+allow using the hashfile methods during these operations.
 
-Following a similar approach to one used in the microsoft/git fork [1],
-add a new config option (index.skipHash) that allows disabling this
-hashing during the index write. The cost is that we can no longer
-validate the contents for corruption-at-rest using the trailing hash.
+However, hashing the file contents during write comes at a performance
+penalty. It's slower to hash the bytes on their way to the disk than
+without that step. This problem is made worse by the replacement of
+hardware-accelerated SHA1 computations with the software-based sha1dc
+computation.
+
+This write cost is significant, and the checksum capability is likely
+not worth that cost for such a short-lived file. The index is rewritten
+frequently and the only time the checksum is checked is during 'git
+fsck'. Thus, it would be helpful to allow a user to opt-out of the hash
+computation.
+
+We first need to allow Git to opt-out of the hash computation in the
+hashfile API. The buffered writes of the API are still helpful, so it
+makes sense to make the change here.
+
+Introduce a new 'skip_hash' option to 'struct hashfile'. When set, the
+update_fn and final_fn members of the_hash_algo are skipped. When
+finalizing the hashfile, the trailing hash is replaced with the null
+hash.
+
+This use of a trailing null hash would be desireable in either case,
+since we do not want to special case a file format to have a different
+length depending on whether it was hashed or not. When the final bytes
+of a file are all zero, we can infer that it was written without
+hashing, and thus that verification is not available as a check for file
+consistency. This also means that we could easily toggle hashing for any
+file format we desire.
+
+A version of this patch has existed in the microsoft/git fork since
+2017 [1] (the linked commit was rebased in 2018, but the original dates
+back to January 2017). Here, the change to make the index use this fast
+path is delayed until a later change.
 
 [1] https://github.com/microsoft/git/commit/21fed2d91410f45d85279467f21d717a2db45201
 
-While older Git versions will not recognize the null hash as a special
-case, the file format itself is still being met in terms of its
-structure. Using this null hash will still allow Git operations to
-function across older versions.
-
-The one exception is 'git fsck' which checks the hash of the index file.
-This used to be a check on every index read, but was split out to just
-the index in a33fc72fe91 (read-cache: force_verify_index_checksum,
-2017-04-14).
-
-Here, we disable this check if the trailing hash is all zeroes. We add a
-warning to the config option that this may cause undesirable behavior
-with older Git versions.
-
-As a quick comparison, I tested 'git update-index --force-write' with
-and without index.computeHash=false on a copy of the Linux kernel
-repository.
-
-Benchmark 1: with hash
-  Time (mean ± σ):      46.3 ms ±  13.8 ms    [User: 34.3 ms, System: 11.9 ms]
-  Range (min … max):    34.3 ms …  79.1 ms    82 runs
-
-Benchmark 2: without hash
-  Time (mean ± σ):      26.0 ms ±   7.9 ms    [User: 11.8 ms, System: 14.2 ms]
-  Range (min … max):    16.3 ms …  42.0 ms    69 runs
-
-Summary
-  'without hash' ran
-    1.78 ± 0.76 times faster than 'with hash'
-
-These performance benefits are substantial enough to allow users the
-ability to opt-in to this feature, even with the potential confusion
-with older 'git fsck' versions.
-
-It is critical that this test is placed before the test_index_version
-tests, since those tests obliterate the .git/config file and hence lose
-the setting from GIT_TEST_DEFAULT_HASH, if set.
-
+Co-authored-by: Kevin Willford <kewillf@microsoft.com>
+Signed-off-by: Kevin Willford <kewillf@microsoft.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- Documentation/config/index.txt |  8 ++++++++
- read-cache.c                   | 14 +++++++++++++-
- t/t1600-index.sh               |  8 ++++++++
- 3 files changed, 29 insertions(+), 1 deletion(-)
+ csum-file.c | 14 +++++++++++---
+ csum-file.h |  7 +++++++
+ 2 files changed, 18 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/config/index.txt b/Documentation/config/index.txt
-index 75f3a2d1054..3ea0962631d 100644
---- a/Documentation/config/index.txt
-+++ b/Documentation/config/index.txt
-@@ -30,3 +30,11 @@ index.version::
- 	Specify the version with which new index files should be
- 	initialized.  This does not affect existing repositories.
- 	If `feature.manyFiles` is enabled, then the default is 4.
+diff --git a/csum-file.c b/csum-file.c
+index 59ef3398ca2..3243473c3d7 100644
+--- a/csum-file.c
++++ b/csum-file.c
+@@ -45,7 +45,8 @@ void hashflush(struct hashfile *f)
+ 	unsigned offset = f->offset;
+ 
+ 	if (offset) {
+-		the_hash_algo->update_fn(&f->ctx, f->buffer, offset);
++		if (!f->skip_hash)
++			the_hash_algo->update_fn(&f->ctx, f->buffer, offset);
+ 		flush(f, f->buffer, offset);
+ 		f->offset = 0;
+ 	}
+@@ -64,7 +65,12 @@ int finalize_hashfile(struct hashfile *f, unsigned char *result,
+ 	int fd;
+ 
+ 	hashflush(f);
+-	the_hash_algo->final_fn(f->buffer, &f->ctx);
 +
-+index.skipHash::
-+	When enabled, do not compute the trailing hash for the index file.
-+	Instead, write a trailing set of bytes with value zero, indicating
-+	that the computation was skipped.
-++
-+If you enable `index.skipHash`, then older Git clients may report that
-+your index is corrupt during `git fsck`.
-diff --git a/read-cache.c b/read-cache.c
-index 46f5e497b14..fb4d6fb6387 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1817,6 +1817,8 @@ static int verify_hdr(const struct cache_header *hdr, unsigned long size)
- 	git_hash_ctx c;
- 	unsigned char hash[GIT_MAX_RAWSZ];
- 	int hdr_version;
-+	unsigned char *start, *end;
-+	struct object_id oid;
- 
- 	if (hdr->hdr_signature != htonl(CACHE_SIGNATURE))
- 		return error(_("bad signature 0x%08x"), hdr->hdr_signature);
-@@ -1827,10 +1829,16 @@ static int verify_hdr(const struct cache_header *hdr, unsigned long size)
- 	if (!verify_index_checksum)
- 		return 0;
- 
-+	end = (unsigned char *)hdr + size;
-+	start = end - the_hash_algo->rawsz;
-+	oidread(&oid, start);
-+	if (oideq(&oid, null_oid()))
-+		return 0;
++	if (f->skip_hash)
++		memset(f->buffer, 0, the_hash_algo->rawsz);
++	else
++		the_hash_algo->final_fn(f->buffer, &f->ctx);
 +
- 	the_hash_algo->init_fn(&c);
- 	the_hash_algo->update_fn(&c, hdr, size - the_hash_algo->rawsz);
- 	the_hash_algo->final_fn(hash, &c);
--	if (!hasheq(hash, (unsigned char *)hdr + size - the_hash_algo->rawsz))
-+	if (!hasheq(hash, end - the_hash_algo->rawsz))
- 		return error(_("bad index file sha1 signature"));
- 	return 0;
- }
-@@ -2915,9 +2923,13 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 	int ieot_entries = 1;
- 	struct index_entry_offset_table *ieot = NULL;
- 	int nr, nr_threads;
-+	int skip_hash;
+ 	if (result)
+ 		hashcpy(result, f->buffer);
+ 	if (flags & CSUM_HASH_IN_STREAM)
+@@ -108,7 +114,8 @@ void hashwrite(struct hashfile *f, const void *buf, unsigned int count)
+ 			 * the hashfile's buffer. In this block,
+ 			 * f->offset is necessarily zero.
+ 			 */
+-			the_hash_algo->update_fn(&f->ctx, buf, nr);
++			if (!f->skip_hash)
++				the_hash_algo->update_fn(&f->ctx, buf, nr);
+ 			flush(f, buf, nr);
+ 		} else {
+ 			/*
+@@ -153,6 +160,7 @@ static struct hashfile *hashfd_internal(int fd, const char *name,
+ 	f->tp = tp;
+ 	f->name = name;
+ 	f->do_crc = 0;
++	f->skip_hash = 0;
+ 	the_hash_algo->init_fn(&f->ctx);
  
- 	f = hashfd(tempfile->fd, tempfile->filename.buf);
- 
-+	if (!git_config_get_maybe_bool("index.skiphash", &skip_hash))
-+		f->skip_hash = skip_hash;
+ 	f->buffer_len = buffer_len;
+diff --git a/csum-file.h b/csum-file.h
+index 0d29f528fbc..29468067f81 100644
+--- a/csum-file.h
++++ b/csum-file.h
+@@ -20,6 +20,13 @@ struct hashfile {
+ 	size_t buffer_len;
+ 	unsigned char *buffer;
+ 	unsigned char *check_buffer;
 +
- 	for (i = removed = extended = 0; i < entries; i++) {
- 		if (cache[i]->ce_flags & CE_REMOVE)
- 			removed++;
-diff --git a/t/t1600-index.sh b/t/t1600-index.sh
-index 010989f90e6..df07c587e0e 100755
---- a/t/t1600-index.sh
-+++ b/t/t1600-index.sh
-@@ -65,6 +65,14 @@ test_expect_success 'out of bounds index.version issues warning' '
- 	)
- '
++	/**
++	 * If set to 1, skip_hash indicates that we should
++	 * not actually compute the hash for this hashfile and
++	 * instead only use it as a buffered write.
++	 */
++	unsigned int skip_hash;
+ };
  
-+test_expect_success 'index.skipHash config option' '
-+	(
-+		rm -f .git/index &&
-+		git -c index.skipHash=true add a &&
-+		git fsck
-+	)
-+'
-+
- test_index_version () {
- 	INDEX_VERSION_CONFIG=$1 &&
- 	FEATURE_MANY_FILES=$2 &&
+ /* Checkpoint */
 -- 
 gitgitgadget
 
