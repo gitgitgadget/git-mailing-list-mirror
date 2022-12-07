@@ -2,68 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE1CDC352A1
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 11:48:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E5D00C352A1
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 11:58:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229811AbiLGLsi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Dec 2022 06:48:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51540 "EHLO
+        id S230243AbiLGL6h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Dec 2022 06:58:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229652AbiLGLsd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2022 06:48:33 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 987EF1118
-        for <git@vger.kernel.org>; Wed,  7 Dec 2022 03:48:31 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id j4so28331361lfk.0
-        for <git@vger.kernel.org>; Wed, 07 Dec 2022 03:48:31 -0800 (PST)
+        with ESMTP id S230237AbiLGL6R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2022 06:58:17 -0500
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBB812EF5E
+        for <git@vger.kernel.org>; Wed,  7 Dec 2022 03:56:54 -0800 (PST)
+Received: by mail-ed1-x52c.google.com with SMTP id v8so24576604edi.3
+        for <git@vger.kernel.org>; Wed, 07 Dec 2022 03:56:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=VnPASsbuYUrpUlaUuKObNkze/TrNx9mdhjCqhsvXqMM=;
-        b=J/EnPj8oxcDxV9370D25EgSGIk8LWqMDDhX+m0YMVe7wZZDzmU6psEIrMwdeBRAe2Z
-         Y+CuW6D1GeiSTiOnt2s5ul01n7NIyVGyiaqmEEJ7C8u3d+fMi9MVV9gDp66IQTWJRaWT
-         aunD3TK1aKTR0ukEhoIUWnWy8xufCMttrXtd2SHMDqH7nVtU2Y4CSjWXY1urJtZl/+7P
-         4Ppd/lQM/MVULmgrxJ9260gvFbH9FZjson/EJoLOJI1vDzamovPPRuLYHR1Jh7/Hz3Fc
-         95cFnM9QJ6ZDpLatFBtOkZu4WTEDgPOaneWdciKKXnvLRQloTKUf2AJs08O0eQ4bTvE2
-         qVpw==
+        bh=FckHlRm9qT+k4D8HcgANpYJSpnqiUhJhJFet+61LMPM=;
+        b=QPbB/OjiE5MPYtWQzrrazO9oOEsnFC5ugrsGdpIoVBzNednEA+I0R12RD2r3BIyx5n
+         Hyk7Cf8j3PvBX87/CRBSTtVoqqMB/h3wbUbN0eG8Y6GT0sexJZiKiedc0/VCMUxDcRco
+         fhAjEHPvNlU1dOcAQ3D5VzCNVjzYWdGnmiYD7w1G7LRg1Ayq9IVc3VpnRINZvKJJPL+t
+         j9EvLQ0mLzWFb5ENvcPa/mgAw1GV04blrawI544oOZItPGPbC4WVbq0uLPdCo1Sa7GT8
+         3KezBN8N2oDMolhAH7OBfRUgiFGfkpVigdtszN5+xS7JL92RrRUNZMxtl2a+FDqn0BwF
+         +rgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VnPASsbuYUrpUlaUuKObNkze/TrNx9mdhjCqhsvXqMM=;
-        b=qsJbVQbtIywURdfSH3AuGlIH+VwIYLMaIjhhDLeVypt5aUD2WYFJjirXFMuyjwQioh
-         5O36UbV7qsi7ZltM0fdMfxSnWw/j8XSqYnlt+86CYFChFNuw8Z3/59RmK2WvbJWAm1Lv
-         Vlkly2QhdkLUUSh8OPLk0eW55w/CJxdfXaf9PuHsuuvR9u0IX72j523OFH/kDkLx4jUu
-         BSNlWPz5fMqAw69/YmLsdIy/gqFY3yB20QDJy3XWyOpO9vfLAM0ClcoVGmKzmCsnmLRo
-         kt21WdhGm4irv3iNtFSME8i3UqKORF+2DJ7XSpBthexUIVk4JTxwy/P++e5ye4Wck69a
-         jWhQ==
-X-Gm-Message-State: ANoB5pkomClrgzKyGCVkXaF44qIfj6p/FaQJrHggFgOrTjWjePlGiShy
-        Ra07xtbCIHmfwnfsjed/LbhYupC029Jrqw==
-X-Google-Smtp-Source: AA0mqf582DfdtguJQBSXgGvQ5Qmq46uIab20kdHllE4kaMNiZIns5d9HRnKH8k82hAGIoQzgXjWsrw==
-X-Received: by 2002:a17:906:cc0d:b0:7be:bf6c:8756 with SMTP id ml13-20020a170906cc0d00b007bebf6c8756mr39092514ejb.62.1670413699035;
-        Wed, 07 Dec 2022 03:48:19 -0800 (PST)
+        bh=FckHlRm9qT+k4D8HcgANpYJSpnqiUhJhJFet+61LMPM=;
+        b=K9eDjM0yHWCfsUSO6pi19BX6+p4biNM04BD50Gu+AinEKJOiwzHPFKapk3fRHbbpXP
+         aAuRzr5ohXRWtNFvydA4wzdbXmMXUz77JgCUWx57yGSdWROf/E6NArxt3M3DdeyC90tH
+         c5V63OVhistvFBhbVFiEXBxekHx42MtmRNSpaT6UFWtSEoVw/F+rPBEizCAkToCGgd+2
+         PWAah5bt7mDRXeveQKecinGLxBjgupIzsQiOBjK7bu0wJhb0ERtZ1b9yL+3xLcZb85aj
+         HEVR26fgnc3IXRIczfBI5Y4MVGD+WAw7ctlEn+T63kZEnwO2lHlM9LZ1iGERiI5DoFPy
+         OxPw==
+X-Gm-Message-State: ANoB5pkf1Lcc8tiKJKjE43hXJILdjjcIh9nNFN5YKrb3kSojYp9Hobcd
+        FMPcDB/6yDN1ndMNBqmwtyk=
+X-Google-Smtp-Source: AA0mqf6xRmEtAD04B2cMglX3IvtuIwwsKPI+OWd4QFmtXQu8uoQKce8y01oVWed5aKDj6RW83+43zQ==
+X-Received: by 2002:a05:6402:4497:b0:46c:cff8:207d with SMTP id er23-20020a056402449700b0046ccff8207dmr9790118edb.370.1670414213359;
+        Wed, 07 Dec 2022 03:56:53 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id lb25-20020a170907785900b007b43ef7c0basm8384755ejc.134.2022.12.07.03.48.18
+        by smtp.gmail.com with ESMTPSA id x17-20020aa7d6d1000000b00458dc7e8ecasm2116422edr.72.2022.12.07.03.56.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 03:48:18 -0800 (PST)
+        Wed, 07 Dec 2022 03:56:52 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1p2suP-004Otk-3B;
-        Wed, 07 Dec 2022 12:48:17 +0100
+        id 1p2t2i-004PDe-1n;
+        Wed, 07 Dec 2022 12:56:52 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+To:     Karthik Nayak <karthik.188@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
         toon@iotcl.com
 Subject: Re: [PATCH 2/2] attr: add flag `-r|--revisions` to work with revisions
-Date:   Wed, 07 Dec 2022 12:38:23 +0100
+Date:   Wed, 07 Dec 2022 12:53:00 +0100
 References: <20221206103736.53909-1-karthik.188@gmail.com>
  <20221206103736.53909-3-karthik.188@gmail.com>
  <xmqqedtc842m.fsf@gitster.g>
+ <CAOLa=ZS5k=s98Bo9GE+RRa3jtanehL35y-hhLhy1DoM7GyO0cQ@mail.gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <xmqqedtc842m.fsf@gitster.g>
-Message-ID: <221207.86lenja0zi.gmgdl@evledraar.gmail.com>
+In-reply-to: <CAOLa=ZS5k=s98Bo9GE+RRa3jtanehL35y-hhLhy1DoM7GyO0cQ@mail.gmail.com>
+Message-ID: <221207.86h6y7a0l7.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -71,65 +72,36 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Dec 07 2022, Junio C Hamano wrote:
+On Wed, Dec 07 2022, Karthik Nayak wrote:
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
+> On Wed, Dec 7, 2022 at 1:12 AM Junio C Hamano <gitster@pobox.com> wrote:
+> [...]
+>> Also, at the C API level, I suspect that we strongly prefer to pass
+>> around either the "struct object_id *" or "struct tree *", not working
+>> with end-user supplied character strings without any sanity-checking
+>> or parsing.
+>>
 >
->> Add a new flag `--revision`/`-r` which will allow it work with
->> revisions. This command will now, instead of checking the files/index,
->> try and receive the blob for the given attribute file against the
->> provided revision. The flag overrides checking against the index and
->> filesystem and also works with bare repositories.
+> I must admit, I did take the path of least resistance here. So we finally need
+> to parse the `revision:<pathname>` where the `<pathname>` is generated
+> dynamically as we move through the check-attr stack.
 >
-> As "check-attr" was not invented as a user-facing subcommand but was
-> a hack for debugging, I would have minded this change, but these
-> days people seem to treat it as if it is just one of the proper
-> plumbing commands, the new command line convention bothers me a
-> bit.  No other command uses --<anything> to signal that what comes
-> after it is a rev.
->
-> But I do not think of a better alternative without making the
-> command line ambiguous, so I'll stop at raising a concern, so that
-> others who may be better at UI can come up with one.
+> My question is, if I generate an `object_id` at the start (in
+> builtin/check-attr.c)
+> with only the `revision`, is there a way to traverse to find the blob
+> for each of
+> the different <pathnames>? I haven't looked at Git code for a while now, and
+> I'm not sure what the best way to do this. Maybe I've missed some API which
+> would make this simple, any help is appreciated.
 
-I don't really like it either, but maybe we've backed ourselves into a
-corner here.
+The get_oid() that you're doing now happens in a loop, and should be
+pulled out of it.
 
-But let's look at that. So the command takes:
+I suggested making that a feature in
+https://lore.kernel.org/git/221207.86lenja0zi.gmgdl@evledraar.gmail.com/;
+but if you keep the interface you've got where you only support a single
+<rev> it would make the most sense to do that get_oid() in the builtin/
+code at the start, and then pass the oid/path pair down.
 
-	git check-attr <attr>... -- <path>...
-
-Or:
-
-	echo "<path>" |
-	git check-attr --stdin <attr>...
-
-So we'd want to specify a <revision>, without making the <attr> or
-<path> ambiguous.
-
-Now, when we map the attributes we go through attr_name_valid(), which
-checks that the attribute names are valid. A commentthere says:
-
-         * Attribute name cannot begin with '-' and must consist of 
-         * characters from [-A-Za-z0-9_.].
-
-So can't we instead accept:
-
-	git check-attr [<rev>:]<attr>... -- <path>...
-
-I.e.:
-
-	git check-attr HEAD~:foo -- path
-
-And it wouldn't be ambiguous because attribute names can't contain ":"?
-This would be consistent with e.g. "git show" and "git cat-file", just
-with "<attr>" instead of the "<path>".
-
-This would also mean that we'd support:
-
-	git check-attr HEAD:foo HEAD~:bar HEAD~2:baz
-
-etc., i.e. the ability to support multiple revision/attribute
-pairs. Skimming the currently proposed code there seems to be no good
-reason not to support that (we just need to look up other blobs), and it
-would allow querying those without spawning N processes.
+You'd still need to call read_object_file() or equivalent for each
+<rev>:<path> pair though.
