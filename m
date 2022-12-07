@@ -2,95 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 320E8C352A1
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 18:59:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6954DC63709
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 20:30:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229742AbiLGS7r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Dec 2022 13:59:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59430 "EHLO
+        id S229546AbiLGUax (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Dec 2022 15:30:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbiLGS7q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2022 13:59:46 -0500
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 29CF75C77E
-        for <git@vger.kernel.org>; Wed,  7 Dec 2022 10:59:45 -0800 (PST)
-Received: by mail-pl1-f172.google.com with SMTP id y4so17904859plb.2
-        for <git@vger.kernel.org>; Wed, 07 Dec 2022 10:59:45 -0800 (PST)
+        with ESMTP id S229845AbiLGUaw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2022 15:30:52 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 874F57BC08
+        for <git@vger.kernel.org>; Wed,  7 Dec 2022 12:30:51 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id l26so8474868wms.4
+        for <git@vger.kernel.org>; Wed, 07 Dec 2022 12:30:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=UR/+ow8m8tx5Z0MwYGw0GpTRRH7Wq4d7ELcTLJS7i+k=;
+        b=Yg6PvTlPFGmD79hepKdhYG6mSScLA3WTGT4uDthweZ1l+rs53mL0FxN76NlUf8nx6E
+         TYHB8TEigJ0Qo97YmDe1qg4D8n+rZShNzt1saNYSWxgIf72d2zxMtppQONjQduHpLDzF
+         f2IrFD6VwA1nJ9wWFNtA/cVyk3xFkD/1Hbtp57NqYN6YNZYVQJusWDc429pYKTmTsY3k
+         JUjOg/WaLHs1dUtP7Qljvn39k15yexJQs9dTVyohP8bmqDZEN33SjTCCSwJ0Xg4saRJN
+         BakPHhiMLvKqVUNzvd5v9mjb7CNfTk1D296IwyhojahMPISY9Dyqm9P21Jc8uPVKc1Az
+         L2rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ELLspTjugl8PCu5ATOSOnpXjt/jR9ulHszdKqIl/JHU=;
-        b=GOIWjbg0eXqsd1J3X0ZFq5Dhk7bTSAER3F2Q7OOY0mlR2Q4NvBMZrw4Ho0DitgcyUG
-         4N+HL1W80n8VE/++836ANfO0UqFQ2BN/FHWyAOO2NVcl97BwDDsl4Qw11i4LdYw38SuD
-         tSOZiVFV/LeAgexYbpFpjMlbqKMJMhcTS/EKlVToGlwM6R95Sw73cl2sPDb+Q6WSqCuZ
-         KKRmmfggCt+ap3yBLKL3lY80Bh8W8h4d65AEX7TrDswteI9B5velorSI7doPFystrTkW
-         JwFhc+lTjr+Q6vMzAb8ZGXqsnwtUSnT0a35MsPpItxdF16tBFsvO9qaujwbG8rJYbF6t
-         NHWw==
-X-Gm-Message-State: ANoB5pnGo/rH7mzQICCzhHiaIiLSzwdSkoy2swdc0TLBk/nsr/FzG2R2
-        dkcFl6DiSznDcneVrFmfWx9yAN0UPBzwDwrsA6g=
-X-Google-Smtp-Source: AA0mqf4/B1AsMoPrG2u64gpyUDhuq7keACRW2S8HyhwLX8V+FsgwE4RVBAJZBIhqahp9kg3zEWaUeg+/G3JcWfyWuSQ=
-X-Received: by 2002:a17:902:8f96:b0:189:3803:23e6 with SMTP id
- z22-20020a1709028f9600b00189380323e6mr73494656plo.77.1670439584547; Wed, 07
- Dec 2022 10:59:44 -0800 (PST)
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UR/+ow8m8tx5Z0MwYGw0GpTRRH7Wq4d7ELcTLJS7i+k=;
+        b=VjD8/0fawzL2XZQ8m8tewge2v0sHFCYRt+RHx51Ybz/m/tpws2VD3yjw3LkdaEFkVM
+         Qe/JC/En4IrQVDGPo2Q38bXx0KZKmKWPSMCSuZICEePCmrLRmue1Ori7H8I/m4ADIS2Z
+         pfWH43lCwMyjbLoaZH3L0MTxDVrH1J9lWBN+hDBli8fPPrxn4OSwx2b1OGQrlYl4+uZD
+         C+GrbBi9ni62M0JlXjmP6K0/5G0mFKR+YB+4hhQ0gBEawCmwb4E0iFN2x7zu997Wi/xc
+         awGbHs2suG1KBBBY4MuWbgkV1DRzvsRhW1QsOLQBdG6ACjBZGQPDUO7YHReTPM+MoY0z
+         MyEQ==
+X-Gm-Message-State: ANoB5pllpLUjhKPxO5cM+hRvvq7d4ZP+WI6vWXIAsOV8pYtJdB+7g6FP
+        Rql1svW+3raSjYztsDWu/N0=
+X-Google-Smtp-Source: AA0mqf5Ut9pEPX+yNgDLdAmgCkf40i4223JAuEV+pJSwWLoieEWqUlo98JLkO0pSMYcQ5PV14FyBWw==
+X-Received: by 2002:a05:600c:4f89:b0:3d1:caf1:3f56 with SMTP id n9-20020a05600c4f8900b003d1caf13f56mr850919wmq.9.1670445049854;
+        Wed, 07 Dec 2022 12:30:49 -0800 (PST)
+Received: from localhost (94-21-23-215.pool.digikabel.hu. [94.21.23.215])
+        by smtp.gmail.com with ESMTPSA id y24-20020a05600c341800b003d1e763ba46sm2669508wmp.10.2022.12.07.12.30.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Dec 2022 12:30:49 -0800 (PST)
+Date:   Wed, 7 Dec 2022 21:30:47 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Lars Kellogg-Stedman <lars@oddbit.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2] line-range: Fix infinite loop bug with degenerate
+ regex
+Message-ID: <20221207203047.GA2996@szeder.dev>
+References: <20221205193625.2424202-1-lars@oddbit.com>
+ <221207.86tu27aju3.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.1439.git.1670433958.gitgitgadget@gmail.com> <5fb4b5a36ac806f3ee07a614bcb93df2c430507c.1670433958.git.gitgitgadget@gmail.com>
-In-Reply-To: <5fb4b5a36ac806f3ee07a614bcb93df2c430507c.1670433958.git.gitgitgadget@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 7 Dec 2022 13:59:33 -0500
-Message-ID: <CAPig+cRSY+c-fOQBeC5ff0-s3+_kzFEjcBOSHP6C8ca9t7zr+w@mail.gmail.com>
-Subject: Re: [PATCH 2/4] read-cache: add index.skipHash config option
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, vdye@github.com,
-        avarab@gmail.com, newren@gmail.com,
-        Derrick Stolee <derrickstolee@github.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <221207.86tu27aju3.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 7, 2022 at 12:27 PM Derrick Stolee via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> The previous change allowed skipping the hashing portion of the
-> hashwrite API, using it instead as a buffered write API. Disabling the
-> hashwrite can be particularly helpful when the write operation is in a
-> critical path.
->
-> One such critical path is the writing of the index. This operation is so
-> critical that the sparse index was created specifically to reduce the
-> size of the index to make these writes (and reads) faster.
->
-> Following a similar approach to one used in the microsoft/git fork [1],
-> add a new config option (index.skipHash) that allows disabling this
-> hashing during the index write. The cost is that we can no longer
-> validate the contents for corruption-at-rest using the trailing hash.
-> [...]
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
-> diff --git a/Documentation/config/index.txt b/Documentation/config/index.txt
-> @@ -30,3 +30,11 @@ index.version::
-> +index.skipHash::
-> +       When enabled, do not compute the trailing hash for the index file.
-> +       Instead, write a trailing set of bytes with value zero, indicating
-> +       that the computation was skipped.
-> ++
-> +If you enable `index.skipHash`, then older Git clients may report that
-> +your index is corrupt during `git fsck`.
+On Wed, Dec 07, 2022 at 05:52:04AM +0100, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Mon, Dec 05 2022, Lars Kellogg-Stedman wrote:
+> 
+> > When the -L argument to "git log" is passed the degenerate regular
+> > expression "$" (as in "-L :$:line-range.c"), this results in an
+> > infinite loop in find_funcname_matching_regexp() (the function
+> > iterates through the file correctly, but when it reaches the end of
+> > the file it matches $ against the empty string, "", and at that points
+> > loops forever).
+> >
+> > Modify the loop condition from while (1) to while (*start) so that the
+> > loop exits when start is the empty string. In this case, "git log" exits
+> > with the error:
+> >
+> >     fatal: -L parameter '$' starting at line 1: no match
+> >
+> > Originally reported in <https://stackoverflow.com/q/74690545/147356>.
+> >
+> > Signed-off-by: Lars Kellogg-Stedman <lars@oddbit.com>
+> > ---
+> >  line-range.c | 4 +++-
+> >  1 file changed, 3 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/line-range.c b/line-range.c
+> > index 955a8a9535..bdcb810485 100644
+> > --- a/line-range.c
+> > +++ b/line-range.c
+> > @@ -135,7 +135,7 @@ static const char *find_funcname_matching_regexp(xdemitconf_t *xecfg, const char
+> >  {
+> >  	int reg_error;
+> >  	regmatch_t match[1];
+> > -	while (1) {
+> > +	while (*start) {
+> >  		const char *bol, *eol;
+> >  		reg_error = regexec(regexp, start, 1, match, 0);
+> >  		if (reg_error == REG_NOMATCH)
+> > @@ -161,6 +161,8 @@ static const char *find_funcname_matching_regexp(xdemitconf_t *xecfg, const char
+> >  			return bol;
+> >  		start = eol;
+> >  	}
+> > +
+> > +    return NULL;
+> >  }
+> >  
+> >  static const char *parse_range_funcname(
+> 
+> We really should fix this, but why not just count this as a match,
+> rather than erroring out?
+> 
+> That we're mixing up whether '$' always matches here with our iteration
+> loop is our own internal bug, we shouldn't error out on a '$'. It's just
+> a regex that happens to match everything.
 
-This documentation is rather minimal. Given this description, are
-readers going to understand the purpose of the option, when they
-should use it, what the impact will be, when and why they should avoid
-it, etc.?
+Indeed.  The description of '-L...' in the manpage of 'git log' (and
+'blame') states:
 
-> diff --git a/t/t1600-index.sh b/t/t1600-index.sh
-> @@ -65,6 +65,14 @@ test_expect_success 'out of bounds index.version issues warning' '
-> +test_expect_success 'index.skipHash config option' '
-> +       (
-> +               rm -f .git/index &&
-> +               git -c index.skipHash=true add a &&
-> +               git fsck
-> +       )
-> +'
+    If :<funcname> is given in place of <start> and <end>, it is a
+    regular expression that denotes the range from the first funcname
+    line that matches <funcname>, up to the next funcname line.
 
-What is the purpose of the subshell here?
+So, if we use '-L' with a funcname regex that matches every line, be
+it '$', '^' or '.*', then this would mean that it should denote the
+range from the first funcname line in that file to the second.
+
