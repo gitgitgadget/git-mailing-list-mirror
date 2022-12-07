@@ -2,118 +2,91 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 42CA3C4708D
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 22:56:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82A56C63703
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 23:04:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229566AbiLGW45 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Dec 2022 17:56:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49136 "EHLO
+        id S230019AbiLGXEz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Dec 2022 18:04:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229554AbiLGW4z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2022 17:56:55 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D634B201B1
-        for <git@vger.kernel.org>; Wed,  7 Dec 2022 14:56:53 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id m18so15921652eji.5
-        for <git@vger.kernel.org>; Wed, 07 Dec 2022 14:56:53 -0800 (PST)
+        with ESMTP id S230028AbiLGXEs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2022 18:04:48 -0500
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A592417894
+        for <git@vger.kernel.org>; Wed,  7 Dec 2022 15:04:47 -0800 (PST)
+Received: by mail-pl1-x62a.google.com with SMTP id p24so18497016plw.1
+        for <git@vger.kernel.org>; Wed, 07 Dec 2022 15:04:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=AZCms8o1+tst/rWxHi7jUJ/Yb8eME9DoOId4J8Vtf8A=;
-        b=qgH3uKUQ79/SW68XT/ZGBXQJZ21aI5w12Oecq9P+BLb6W/XExdyPWvfEoCu53zTygR
-         QXKod7a85H7BkMAIT01pC1ieJ+GUI8JwIRygkvZhrpPIH6Z8xY6fP2dswMgLSA4htSoK
-         ImGBb1KmzF48Q2Ad68Lgj+B8XB6LRbSL6ipycGo8H+VpRwXiSXpoOKzx0h34OgR1Mxpi
-         JAwvot5h25slJmyk+S2FIlQD0uqoNRuLUbRqmODHCydaE3ZZuMaKWoB/5vN82lv1jW88
-         XMxfyE+5YA7bFfvKZx0i+46JEpAgPA/h2/4nxGcBiL45ujc6T4wg1I48hnzTT9gippHI
-         YYiw==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8BbXO71NA+CoXy9I9QnZsOkZIf9LjB0VWxERoII1qOU=;
+        b=OehyLIRx+QJ+xxZ2mBMe9PWMs9UmaWFwVNxSk2Vb2LZwwjx1dJZubdLJNJOoyO3gnZ
+         C8Ig0G4K3pKOjo2B1pmScY5uw05O2a5akuv4IEpN14rXbr/9CVJCeSuN8u2oj/O5weNG
+         OFKpvSGhM41p8WnI23BhIlekl057GFrnQpA1rYkZkownhrvLYFH0jP5aPDGhMlsGG0Rp
+         oLoEN/bxz8p4w/JyMMa9WNao8hdSIFDXf5+La4x/UJwtU0mNtqNziE/ey4gJrPlOkQSJ
+         Ydgj+SfzrgOz/8gl/bbB8nxhhs84rUiAoBT76qbAzLNq4dAs0J5Jr+1TQuYGSqvWaJRw
+         fEyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AZCms8o1+tst/rWxHi7jUJ/Yb8eME9DoOId4J8Vtf8A=;
-        b=CE1XnO9u6kXDI+eAP0mi4WVShjS8lEaol6GudlZYbsLdELWepo91WB+00vD84PcBfn
-         uHtogD5/A53vNhHTxKICf0+XKuFcQoUdEUhfP9LzWBmUv82kuHOI2Bcaew4P/Dx7mIt7
-         d4/DKYNd0qF6Gga1YG59q/AeBEu8zgLVvZpairXYD6jhczjPuwODOqc+6q66fQNVwlAQ
-         EmkYcBLWSzGIZq6v04o2oVeDpKHRQU23nYKkLU9/thairC4uihOYmRunOgvlRFzjItEF
-         NEyufTSUWVhJE4Ecu8nw+wEzpm/qZOJJiqlp3LQNwHSOCnu/Hzerei0VmutDl5ZJabl/
-         zmAg==
-X-Gm-Message-State: ANoB5pkUWOM3O4QZHFbWnZ4GpM7BPCG4mL4j6UmyRFaED8EwfNgqkSsR
-        gRqbMPxGU7zQJivJStQ8GU9Izw0T06IL3Q==
-X-Google-Smtp-Source: AA0mqf4iwkh0tzndRKChPG9jzO6aS5sBFp6h6a3iFNcnO2+BVJchc2/x1JoLNreDgajuaUFSv2XlaA==
-X-Received: by 2002:a17:906:9705:b0:7c0:fd1e:972e with SMTP id k5-20020a170906970500b007c0fd1e972emr751196ejx.46.1670453812373;
-        Wed, 07 Dec 2022 14:56:52 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id s3-20020a170906284300b007ba9c181202sm9056703ejc.56.2022.12.07.14.56.51
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=8BbXO71NA+CoXy9I9QnZsOkZIf9LjB0VWxERoII1qOU=;
+        b=XJOvu+EEYm7p8MtHLzYLLs+GjXQyzS4L/lQ4VD6GWgTCV6sj4V/mEsqZXZAcBPH3RH
+         iv478VeZWl30p4i5WDcA+JYC/ULYqsWuNu62bZw/mTQnFPWvNz6bM90Y5RiPAn5SAwmY
+         ogOrDaevX4uf1wcHqu9UFCCbJ0VEjLxhfXSdIVafoNMvzNPxRORW64PFgBpkJRBz5fii
+         QQ4ZXZDsvESxrxDxkp4J9KJjM0xWtz9gE1x3D/JU0MG6hU0dFh/KIWNtiRREfxWSRo2c
+         RWTmwhKW/9qvC1bULLNlN7DiuCh6fyxxRjZhDn49cXfkifPMlYZyIdF3hueeRPBtrLZ3
+         b3lA==
+X-Gm-Message-State: ANoB5pkdw0CQ3YxHUhWOkUxhnHdoNkOJIltuyAXuPWr2jYrcTZ3uKV0y
+        0jVayWPAM0GRIWL/kasHXG0=
+X-Google-Smtp-Source: AA0mqf6xARXG04rVFxDMctpswRv4C9HEIH44eMkowuAZwyg05+fpRWZ98iQBMso5qck5qZ0n2WAm5g==
+X-Received: by 2002:a17:902:a617:b0:185:441e:223a with SMTP id u23-20020a170902a61700b00185441e223amr881062plq.53.1670454286961;
+        Wed, 07 Dec 2022 15:04:46 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id f13-20020a170902f38d00b001868bf6a7b8sm15065644ple.146.2022.12.07.15.04.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 14:56:51 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1p33LP-004dX7-1d;
-        Wed, 07 Dec 2022 23:56:51 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/4] Avoid using deprecated features in Git's GitHub
- workflows
-Date:   Wed, 07 Dec 2022 23:42:21 +0100
-References: <pull.1440.git.1670423680.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <pull.1440.git.1670423680.gitgitgadget@gmail.com>
-Message-ID: <221207.86r0xa9618.gmgdl@evledraar.gmail.com>
+        Wed, 07 Dec 2022 15:04:46 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     David Caro <dcaro@wikimedia.org>, git@vger.kernel.org
+Subject: Re: Skipping adding Signed-off-by even if it's not the last on git
+ commit
+References: <20221206170646.6lnpr6h7oprziy5b@vulcanus>
+        <Y4/xSObs9QXvE+xR@nand.local> <xmqqlenj7t0b.fsf@gitster.g>
+        <20221207084027.7dhyaatkzaawrg4g@vulcanus>
+        <Y5EQCD4XCsN10HO+@nand.local>
+Date:   Thu, 08 Dec 2022 08:04:46 +0900
+In-Reply-To: <Y5EQCD4XCsN10HO+@nand.local> (Taylor Blau's message of "Wed, 7
+        Dec 2022 17:13:28 -0500")
+Message-ID: <xmqqtu266cj5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Taylor Blau <me@ttaylorr.com> writes:
 
-On Wed, Dec 07 2022, Johannes Schindelin via GitGitGadget wrote:
+>> > >     $ git commit --signoff[=[no-]dedup]
+> ...
+> Thanks, I look forward to seeing your work. It would be nice to
+> standardize on this `--signoff[=[no-]dedup]` thing throughout all of the
+> different commands that support it.
 
-> I waited for quite a while with submitting this because I did not want to
-> interfere with patch series that are in flight, but it seems that this was
-> unwise, as there is now a patch floating about (ab/ci-retire-set-output)
-> that partially fulfills this here patch series' purpose. However, these
-> patches are more complete, so I proposed to supersede that patch with this
-> more comprehensive solution.
+Also, if I am not mistaken, each of trailers can be configured to
+have its own semantics (e.g. .where and .ifExists).
 
-What does "more complete" here mean? Just that this series is doing more
-things than stand-alone patches?
+ * Should we have similar override to these trailer tokens, not just
+   sign-off?
 
-> This patch series is based on od/ci-use-checkout-v3-when-applicable.
->
-> Johannes Schindelin (4):
->   ci: use a newer `github-script` version
+ * Should we offer not just [no-]dedup (which is equivalent to
+   switching from addIfDifferentNeighbor to addIfDifferent) but
+   other customization?  This affects what --signoff should be
+   allowed to take for consistency across trailers.
 
-Is this the patch that needs or interacts with
-od/ci-use-checkout-v3-when-applicable?
 
-I don't see it in "What's Cooking", but "seen" currently has
-"gitster/js/ci-set-output", which looks to be from
-[1]
-
->   ci: avoid deprecated `set-output` workflow command
-
-This is byte-for-byte the same as the second hunk in my [2].
-
->   ci: avoid using deprecated {up,down}load-artifacts Action
-
-Most of this looks good & doesn't duplicate any existing patch, but why
-is there a change in there that disables the uploading of failed test
-directories for the "linux32" job?
-
->   ci(l10n): avoid using the deprecated `set-output` workflow command
-
-This does the same as the first hunk in my [2], you're just using two
-"echo", I used a here-doc.
-
-I think what would make it valuable to bundle these up is if doing so
-would resolve some tricky interference between these patches.
-
-But I don't see that that's the case, and we can e.g. start writing to
-"$GITHUB_OUTPUT" independent of other changes.
-
-1. https://lore.kernel.org/git/pull.1387.git.1667902408921.gitgitgadget@gmail.com/
-2. https://lore.kernel.org/git/patch-v2-1.1-4e7db0db3be-20221207T014848Z-avarab@gmail.com/
