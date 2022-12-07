@@ -2,81 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C107CC3A5A7
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 01:10:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AAE4EC3A5A7
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 01:12:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229559AbiLGBKk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Dec 2022 20:10:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36766 "EHLO
+        id S229912AbiLGBMQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Dec 2022 20:12:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229486AbiLGBKj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2022 20:10:39 -0500
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 908D9101
-        for <git@vger.kernel.org>; Tue,  6 Dec 2022 17:10:38 -0800 (PST)
-Received: by mail-pj1-f49.google.com with SMTP id b11so16136182pjp.2
-        for <git@vger.kernel.org>; Tue, 06 Dec 2022 17:10:38 -0800 (PST)
+        with ESMTP id S229565AbiLGBMP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2022 20:12:15 -0500
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E186ADE90
+        for <git@vger.kernel.org>; Tue,  6 Dec 2022 17:12:14 -0800 (PST)
+Received: by mail-pf1-x436.google.com with SMTP id d82so7407339pfd.11
+        for <git@vger.kernel.org>; Tue, 06 Dec 2022 17:12:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mJuL4iBI/fjIQQGIrpapwkuRstAncVZWjUnPnD3bgIs=;
+        b=XylQSj8c3+Jqsrt7+s+40Pp11MZR80DdedVzaW5qchbHELW9Xi7p/2ftOqbIwjisEm
+         suoV2BD/0wfCVhy9XHdx8qIwLokROe/OMdTVj7Mg9dndUVFq5OelnBDwUfoHoJ98wYXd
+         phCoBxpA3jPb+y/8ljfBo3KUApyaBH5I3c2zdUJZOeOWzUPpbkMcQHs+0AJ0yttxZ8s0
+         hy1q+l4KGLnWrZPbcKpkpMdtAUqfCK3Ifb+T+VN5XYLTBz/GCPTGivjHxmQ6oOXV/Qu0
+         DqqU/Rqn0XjwaDHAC9EWEWPQ2kPv9GM6RbNsJsT7UR/+dpwtEH76+sZ6yf1/k2UNlQ4o
+         YAlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tM3Z71yWMK9BRWUFh5ns98h/bNTaztd7trbDLoRk5R8=;
-        b=k9lrhKHtQB6VF15lTquwssf6cJai7V0rK6hMTKVZVpLRMY16JCT0sKL+IroMuKBSAk
-         JijFpaktgN3ZgXt2FevUUUiPxATIz08aJaY+din/9Hs95uQ6rcNruMrp+6PVRcYh9moD
-         hlhtLK6oIs0MkFtCA5/KEP2KHdoAc+wLDpLv41csyRMCkDDE09Q3D+rgSSRmLUIuiAk9
-         KF82/PvhQyppn5BIe6BNLolfs1I7Gkrnd9n98n/BEaykTsVdf+X3EYhoLMlmErNyKnN/
-         sh3g1Ss27XIDBqFMQYQ5QFhbfpRB/Uio5j10B4oqkp5UxbMTm0xdkEJrCAajl8u+hV2U
-         aHfw==
-X-Gm-Message-State: ANoB5plmWgFTodgVANNPIl3VhPrEoqIM2HG/fzo4/hVl3dh2sjE+HghI
-        7Dh2A85bTbimNFLxcwVmy0U0lF32sDfAnCLXBZU=
-X-Google-Smtp-Source: AA0mqf58lQK5erV14/C6YXXj/yiP9S1BHk/WQ8ha/4vck95Str4WB8gnDm7NCh9gAOrCl6TMXBDfOYz3U35gw/3FMH0=
-X-Received: by 2002:a17:90a:bd96:b0:219:3553:4ff5 with SMTP id
- z22-20020a17090abd9600b0021935534ff5mr47000852pjr.22.1670375438006; Tue, 06
- Dec 2022 17:10:38 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mJuL4iBI/fjIQQGIrpapwkuRstAncVZWjUnPnD3bgIs=;
+        b=ksJZ9UDgM6QQ4Y0mLIN5+MG+J2dYyx0XSRzjpjIRNVFtOMVt/AWOfMZwSH+X0uesfa
+         fZtpjD4/nxjgyQ0LyBGql9VxUftIwZMEMsY8UYjCN8o0vgHKCQpE+cqAatmg6Nhfwp7j
+         8JXfz9wwL98pq0bt5OPMB2LGeB5QyAJi4oa8bfWqbJ6YQZt18Li3RZu28Qe05mpJVo6B
+         NImV1Js68hzGr/8QAAVBF2FKwoIEpdGhduzpANfzz03zMXuqz1jTjdp8UPvs+B3FSs7b
+         OZtO+olZvepawKRUdPBI57z/eciOb7bn40DAP358C4Y7uo5VPalpMq91RwmzW4V+IiCa
+         b2QA==
+X-Gm-Message-State: ANoB5pnM0hfDwpv1iNqslTstrPZugMWTXUZF9OUxOmDsAnHAwWT0zolK
+        MYR3nRhPSKg7SbJGD6csE9U=
+X-Google-Smtp-Source: AA0mqf5EezIfJs2CgF2IbtV6zxhzbVs+aqx7efho9/yMnR6ucrJFvoyQE6CW13ItWQAZWJ84Wm2Lgw==
+X-Received: by 2002:a63:dd13:0:b0:46e:ccbd:b136 with SMTP id t19-20020a63dd13000000b0046eccbdb136mr67283164pgg.515.1670375534338;
+        Tue, 06 Dec 2022 17:12:14 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id b10-20020a170902d88a00b001868981a18esm13272447plz.6.2022.12.06.17.12.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Dec 2022 17:12:14 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v2 1/3] object-file: don't exit early if skipping loose
+References: <cover.1669839849.git.jonathantanmy@google.com>
+        <cover.1670373420.git.jonathantanmy@google.com>
+        <9ad34a1dce977044066de0bfa6e25977215e8dc9.1670373420.git.jonathantanmy@google.com>
+Date:   Wed, 07 Dec 2022 10:12:13 +0900
+In-Reply-To: <9ad34a1dce977044066de0bfa6e25977215e8dc9.1670373420.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Tue, 6 Dec 2022 16:40:51 -0800")
+Message-ID: <xmqqy1rk6mqa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20221206103736.53909-1-karthik.188@gmail.com> <20221206103736.53909-3-karthik.188@gmail.com>
- <xmqqedtc842m.fsf@gitster.g>
-In-Reply-To: <xmqqedtc842m.fsf@gitster.g>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Tue, 6 Dec 2022 20:10:26 -0500
-Message-ID: <CAPig+cT_xz3m-3kkL_Scf0opNXkikU94kSF46VO8KHkNMWbGzg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] attr: add flag `-r|--revisions` to work with revisions
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-        toon@iotcl.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 6, 2022 at 7:15 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
-> > Add a new flag `--revision`/`-r` which will allow it work with
-> > revisions. This command will now, instead of checking the files/index,
-> > try and receive the blob for the given attribute file against the
-> > provided revision. The flag overrides checking against the index and
-> > filesystem and also works with bare repositories.
+Jonathan Tan <jonathantanmy@google.com> writes:
+
+> Instead, also search the submodule object stores and promisor remotes.
 >
-> As "check-attr" was not invented as a user-facing subcommand but was
-> a hack for debugging, I would have minded this change, but these
-> days people seem to treat it as if it is just one of the proper
-> plumbing commands, the new command line convention bothers me a
-> bit.  No other command uses --<anything> to signal that what comes
-> after it is a rev.
+> This also centralizes what happens when the object is not found (the
+> "return -1"), which is useful for a subsequent patch.
 >
-> But I do not think of a better alternative without making the
-> command line ambiguous, so I'll stop at raising a concern, so that
-> others who may be better at UI can come up with one.
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  object-file.c | 23 +++++++++++------------
+>  1 file changed, 11 insertions(+), 12 deletions(-)
+>
+> diff --git a/object-file.c b/object-file.c
+> index 26290554bb..596dd049fd 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -1575,18 +1575,17 @@ static int do_oid_object_info_extended(struct repository *r,
+>  		if (find_pack_entry(r, real, &e))
+>  			break;
+>  
+> -		if (flags & OBJECT_INFO_IGNORE_LOOSE)
+> -			return -1;
+> -
+> -		/* Most likely it's a loose object. */
+> -		if (!loose_object_info(r, real, oi, flags))
+> -			return 0;
+> -
+> -		/* Not a loose object; someone else may have just packed it. */
+> -		if (!(flags & OBJECT_INFO_QUICK)) {
+> -			reprepare_packed_git(r);
+> -			if (find_pack_entry(r, real, &e))
+> -				break;
+> +		if (!(flags & OBJECT_INFO_IGNORE_LOOSE)) {
+> +			/* Most likely it's a loose object. */
+> +			if (!loose_object_info(r, real, oi, flags))
+> +				return 0;
+> +
+> +			/* Not a loose object; someone else may have just packed it. */
+> +			if (!(flags & OBJECT_INFO_QUICK)) {
+> +				reprepare_packed_git(r);
+> +				if (find_pack_entry(r, real, &e))
+> +					break;
+> +			}
+>  		}
 
-A few minor comments...
+Hmph, who passes IGNORE_LOOSE and why?  Explaining the answer to
+that question would give us confidence why this change is safe.
 
-We don't usually squat on short options, such as `-r`, right from the
-start but only add the short alias once shown that there is demand.
+If the reason IGNORE_LOOSE is set by the callers is because they are
+interested only in locally packed objects, then this change would
+break them because they end up triggering the lazy fetch in the
+updated code, no?  Or do all callers that set IGNORE_LOOSE drop the
+fetch_if_missing global before calling us?
 
-Option `-r` has strong association with "recursive" elsewhere, so I'd
-worry about giving it such a completely different meaning here.
+Thanks.
 
-Rather than calling the option `--revision`, perhaps pattern it after
-git-restore's `--source` option which allows specifying a particular
-commit, tree, tag, etc.?
