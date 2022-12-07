@@ -2,98 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B66CBC352A1
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 01:20:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47201C3A5A7
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 01:31:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229747AbiLGBUO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Dec 2022 20:20:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42782 "EHLO
+        id S229757AbiLGBbH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Dec 2022 20:31:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229573AbiLGBUN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2022 20:20:13 -0500
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B06F2D740
-        for <git@vger.kernel.org>; Tue,  6 Dec 2022 17:20:12 -0800 (PST)
-Received: by mail-oi1-x234.google.com with SMTP id n205so19057499oib.1
-        for <git@vger.kernel.org>; Tue, 06 Dec 2022 17:20:12 -0800 (PST)
+        with ESMTP id S229511AbiLGBbF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2022 20:31:05 -0500
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1646B5131C
+        for <git@vger.kernel.org>; Tue,  6 Dec 2022 17:31:04 -0800 (PST)
+Received: by mail-io1-xd2f.google.com with SMTP id o189so5279220iof.0
+        for <git@vger.kernel.org>; Tue, 06 Dec 2022 17:31:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=p0gp0orPQ6/uMYe6fgAGpYUgYjRRKifXxdTg3m5rcRs=;
-        b=RlTQ6j/14oi877ouaBLpS741ehdTuh7T82tPjuEjtMqjyx5U/gHO6gNo+q6sMonAYr
-         yHCJzBM8AMsl2vWu8f/JIPMKkCtg3exTcfq/VrfGyOCfs9IaUfM++0ApUv1kxU0EJNF5
-         ocOW05OVnoHP4+kWPZAzJOrrCrZPKYXXSEhAdiebeXkUJX0TlJthbSznQZbj9AHN/PiO
-         9JGn6Z4Js8y/ElJ0yIyRWwkt42IjC0v9DCYzsAgv9pHxEBPkMY/HiztUjgVrFm5Zbf+L
-         WibOuWMV/fAp7HDcP29stGrWqH0gNWIU6JG8a2Mtc5VsoHFE51wfeIiOPS1Eg+y7iNH1
-         51+g==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=/xhjAa1BAOHADj0w384UjcqYrwGRVFHU5lzveTKGkeo=;
+        b=BMQJzKxuQ9MqG1nzjmiug60CwM+1Y/kURJ04Rjjo4DB7eldLDugfdLHuEfMlw7TTsH
+         v5XtoaxnEnm1pdryKv9C9AX4fBewUENHnJBqWFs4pP6bk+r8TjzcJSPTLy7mJaAYk3Rr
+         TKzoM0HWkbQuos+qOXCuowpStWiGmTf7Fw3X5XxB1XlxAZh60dIvIcq38V4seDuiGAGT
+         suWZSzxGsr//NkOfmJt4E7XAZ/vCTHVTt9z3PNNvsEHD5sbWTv6sRg5Txhl52wurXi4F
+         OwsUdvOcE77dye99qycAvCDKFSevYRdn8L8RUZq7V9htrtRVPje+YKcXVJKcBqzwtkJQ
+         MguQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=p0gp0orPQ6/uMYe6fgAGpYUgYjRRKifXxdTg3m5rcRs=;
-        b=5Xp/IYuRaI8fY56J16ZkVl6kdT2feR/w2F34fQzE+1MitxPFI81hZlvDHs9nkzZkNO
-         PlKEiEVl6jDblsq58/CQvayTPrJw4XQubjksQAOxjj6oKdHz24CN3j7Uz51Ctc6qHBS6
-         jIMoCZMBm4QcvodaoV3JWWfmJGrNiKcjTetzcoGjGV2ratjapsevb938qbvvR69nikNG
-         NccCEe3hvwjx9v5xGhokhbuPrvkS33o2XN2AuHumkanxXXnY8WDdMD0OdZp2Ii+a7VN/
-         wRrKgJx1mVUliDOPg9GQlJSJtz6OoDKkYrWYZadVaslvO5wzprW7wVfcb08SLfbOLQO4
-         AAjw==
-X-Gm-Message-State: ANoB5pnuGVUm+MjgInJzHl/k99LiWed8eG38Liezg8JY+cXtWP9MHKNp
-        NJBzX3iRsoY9bD4XG5FXCDk+hCUagp/mSTb/vG0=
-X-Google-Smtp-Source: AA0mqf5NWcqram1HKdsWmC21o6tKzKyqVL4fi3B5N5ZweM0gPbThVWc8xfFUSDqPsuRFeI7C+9HU7h0oh6+URH3pbSY=
-X-Received: by 2002:aca:c44:0:b0:35c:3ea1:40c5 with SMTP id
- i4-20020aca0c44000000b0035c3ea140c5mr5640304oiy.54.1670376011896; Tue, 06 Dec
- 2022 17:20:11 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/xhjAa1BAOHADj0w384UjcqYrwGRVFHU5lzveTKGkeo=;
+        b=rAOzA6YpGOjNn7iP2MFTfjLKEXIzH8jZ0+WHJ8PZKCEmoQ/g1pgKIyyrwYcuMInYGq
+         hSfQwFNMDZJRfjpTdw7eVgqcBIPc7zptTGjiOcEj+WaVOBWpsUCQXSmqBez4ATpbSgq2
+         8ZklnE/NvqyyA+dMa0zcNhR5ZsJ6sSr8VJSG9jPzKgF3bC+Bijv653sZ3rHxCF+OibbJ
+         OIr0dJsfm8D2HBpEwOlHUQPMeWOGHWS6BOOQ2Nb8X74tZpNNZ21PwnGKzTb5zARCQ6m0
+         5si8vbEjTp4DXgO8GNCCzABE7RksDov4ZE74/lJczmYidTbUtssPINsgKIMPOW58X7Tq
+         Djvw==
+X-Gm-Message-State: ANoB5plm+tF7XGLQRfyAhpYm28csnidhqvuUa1c89xUABwlWjafvXzIy
+        0jIsUnv5YXJAgl5ea+589a1KZA==
+X-Google-Smtp-Source: AA0mqf5iqzDT5ygklBCckN202IKabNT0kfzNaXIZDeXfr59pRs+a1oCCOJ6gF2toYBuC2zKHVoQNwA==
+X-Received: by 2002:a02:3b56:0:b0:375:8878:9c80 with SMTP id i22-20020a023b56000000b0037588789c80mr38661796jaf.157.1670376663342;
+        Tue, 06 Dec 2022 17:31:03 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id a16-20020a027350000000b0038a08d5ac32sm6753525jae.31.2022.12.06.17.31.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Dec 2022 17:31:02 -0800 (PST)
+Date:   Tue, 6 Dec 2022 20:31:01 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v5 2/2] tests(mingw): avoid very slow `mingw_test_cmp`
+Message-ID: <Y4/s1QcVFjjm31n7@nand.local>
+References: <pull.1309.v4.git.1668434812.gitgitgadget@gmail.com>
+ <pull.1309.v5.git.1670339267.gitgitgadget@gmail.com>
+ <6a80fab7e3936ec56e1583d6136d47487327e907.1670339267.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-References: <CACH4KQSutGnoyFGP2RmkwQT3yhnEg1RcvedXVSMOVVDAnz_aFg@mail.gmail.com>
- <Y4+/VQly2NKnMrFY@tapette.crustytoothpaste.net> <CACH4KQSj64WeqAV3CDkCXc+YW6dr+S2vN_QBj5SwcSP05fM0Eg@mail.gmail.com>
- <Y4/pO55b5DtPnavg@tapette.crustytoothpaste.net>
-In-Reply-To: <Y4/pO55b5DtPnavg@tapette.crustytoothpaste.net>
-From:   Gennady Uraltsev <gennady.uraltsev@gmail.com>
-Date:   Tue, 6 Dec 2022 20:19:44 -0500
-Message-ID: <CACH4KQSJ_3J4qvbbv1+4URg4hpXAur3pzvMouXRkF8WsLVWhRg@mail.gmail.com>
-Subject: Re: Git credential store conflicting configuration leads to
- unexpected behavior
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Gennady Uraltsev <gennady.uraltsev@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <6a80fab7e3936ec56e1583d6136d47487327e907.1670339267.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you! I did miss it. I appreciate your time.
+Hi Johannes,
 
---
-Gennady Uraltsev
-<gennady.uraltsev@gmail.com>
-(https://guraltsev.github.io)
+On Tue, Dec 06, 2022 at 03:07:47PM +0000, Johannes Schindelin via GitGitGadget wrote:
+> Learning the lesson to avoid shell scripting wherever possible, the Git
+> for Windows project implemented a minimal replacement for
+> `mingw_test_cmp` in the form of a `test-tool` subcommand that parses the
+> input files line by line, ignoring line endings, and compares them.
+> Essentially the same thing as `mingw_test_cmp`, but implemented in
+> C instead of Bash. This solution served the Git for Windows project
+> well, over years.
+>
+> However, when this solution was finally upstreamed, the conclusion was
+> reached that a change to use `git diff --no-index` instead of
+> `mingw_test_cmp` was more easily reviewed and hence should be used
+> instead.
+>
+> The reason why this approach was not even considered in Git for Windows
+> is that in 2007, there was already a motion on the table to use Git's
+> own diff machinery to perform comparisons in Git's test suite, but it
+> was dismissed in https://lore.kernel.org/git/xmqqbkrpo9or.fsf@gitster.g/
+> as undesirable because tests might potentially succeed due to bugs in
+> the diff machinery when they should not succeed, and those bugs could
+> therefore hide regressions that the tests try to prevent.
+>
+> By the time Git for Windows' `mingw-test-cmp` in C was finally
+> contributed to the Git mailing list, reviewers agreed that the diff
+> machinery had matured enough and should be used instead.
+>
+> When the concern was raised that the diff machinery, due to its
+> complexity, would perform substantially worse than the test helper
+> originally implemented in the Git for Windows project, a test
+> demonstrated that these performance differences are well lost within the
+> 100+ minutes it takes to run Git's test suite on Windows.
 
+Thanks for this update. I think these five paragraphs are an accurate
+and helpful record of the history behind this patch and approach. It is
+very much appreciated.
 
-On Tue, Dec 6, 2022 at 8:15 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On 2022-12-06 at 23:53:05, Gennady Uraltsev wrote:
-> > Thank you!
-> >
-> > This makes sense and the solution is simple. Is this somewhere in the
-> > documentation (honest question, I am not being a jerk)? I tried my
-> > best to figure this out before bugging people on the mailinglist.
->
-> Yes, but maybe not where you'd expect.  In gitcredentials(7), there's
-> this text:
->
->   If there are multiple instances of the `credential.helper` configuration
->   variable, each helper will be tried in turn, and may provide a username,
->   password, or nothing. Once Git has acquired both a username and a
->   password, no more helpers will be tried.
->
->   If `credential.helper` is configured to the empty string, this resets
->   the helper list to empty (so you may override a helper set by a
->   lower-priority config file by configuring the empty-string helper,
->   followed by whatever set of helpers you would like).
->
-> The `credential.helper` option mentions that manual page.
-> --
-> brian m. carlson (he/him or they/them)
-> Toronto, Ontario, CA
+Thanks,
+Taylor
