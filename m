@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8ACDFC63703
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 14:34:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97B70C4708E
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 14:35:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229677AbiLGOex (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Dec 2022 09:34:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32908 "EHLO
+        id S230201AbiLGOe5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Dec 2022 09:34:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230123AbiLGOet (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2022 09:34:49 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 071394E425
-        for <git@vger.kernel.org>; Wed,  7 Dec 2022 06:34:48 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id f18so28356733wrj.5
-        for <git@vger.kernel.org>; Wed, 07 Dec 2022 06:34:47 -0800 (PST)
+        with ESMTP id S229891AbiLGOeu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2022 09:34:50 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED63A56EC0
+        for <git@vger.kernel.org>; Wed,  7 Dec 2022 06:34:49 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id v7so13773256wmn.0
+        for <git@vger.kernel.org>; Wed, 07 Dec 2022 06:34:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6WmURY8YfLexVIrO9Za9daYjGb0I8oqr1bINI3k7xpA=;
-        b=kgrsWOpa0DESIJLtGytUotgbOpv4gbnR/sJR1eSwX4KPqArVQAq5204tU3nkSp7ehi
-         1NbdQ4O0Wlqv+J7FvR+Tjq4vfPx/0aHt/bi96ffUJEqxi6VDDuiD4WfoLDZRTYQ8ehgH
-         sYqYel+8YeW7/XJ8Af98Biks+ZhzsF9/VflOtDjnL3kZveHpzBZKEgsPYl0nXitOnYZU
-         cbnt6K2Iqd0QA0TT4NHE1ZZ8gKA6w1+S6+P4k2cdMhEc2lSe9KfzhyUIRVSEu4eKeG85
-         GHENgKWLBfNyBKC/jaHuLpN2VOSQMZfK3HoM0y3sbYZ0qR8aA+eJWQALFMYUKYElIpKd
-         To1A==
+        bh=VusIkuWXUFZMceUmM6DwEIP4/HVRWm+3oK8twivGzrY=;
+        b=Pzksq8ntOBy12+Kqq2YT4ZEVF/xoKVX/iHjKi3mqLCY37cLG4YnFqVVSqe1zWQ+sJr
+         Mfx8OPozRnBU1YzRCMpjRibgJt4/HjoPBNNSozqg+FiBBtpkXVKAVFPuDlijyn5vRXrn
+         54aUFkcMp9pvkbb4id/CnVKpvRQSu9uFLlE22wmf6Ao0SMPmUWtbcLsD3Qx5tq/2zAso
+         aBFJQ7yxBoO/uxUkbmGnXVO0Fm5rX23CXxayIs7F5RdnVYh0HSu0nEFQfx8WEPC1fU/7
+         3hxxIIwc+o6EGplb1O8UeqXfiJYISJcnQYKoJSwM0ZKIsPijzgQHs7KIfp1458RPhQq/
+         NKuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6WmURY8YfLexVIrO9Za9daYjGb0I8oqr1bINI3k7xpA=;
-        b=pRqObvw7KAA76g5uSxXuOFVI0qUCfNhY/PIa398c+PsLBcz8XNrLE0vL6fgHkDbpnC
-         qJyHDHKOxorA1LlG4ciKWkDspXnewQUQWVa6Nkrjz1wx9HEyG6V4QEMqEJMo8fbk0rbc
-         A0lXKXRbgDyBAVazFFWNro2HZJTCSUL7+2FSk8gAEFggjU3l1LekhYSIUzGlNKYey8vV
-         11CRho8GRVR9tuu98tx6HwkyDyoJkfXm4wpfocnok7STZukxHIaxjwLEftXkH74oPqp1
-         fL9kr55a5jZ/L39GD6wm6ibHOQ7vRSI+uFJCcTmq8VTP5xkXuIP7zGt8LjLjFfDG7CeS
-         ZcRg==
-X-Gm-Message-State: ANoB5pllDFdUbudKkfFXiDNLTMxewT67hBfNTvbJvOMpootS0GqX5WNM
-        7VytGlCeAq6X5BVR7n3qPtJQWo41dJU=
-X-Google-Smtp-Source: AA0mqf6I/vFNLdXIh68xgfny/00bprJIV+mPHikD9MxnflO1osizGEvU48Uwwk68XvumSz/oRFvGpw==
-X-Received: by 2002:a5d:6751:0:b0:242:122c:6672 with SMTP id l17-20020a5d6751000000b00242122c6672mr29773472wrw.330.1670423685717;
-        Wed, 07 Dec 2022 06:34:45 -0800 (PST)
+        bh=VusIkuWXUFZMceUmM6DwEIP4/HVRWm+3oK8twivGzrY=;
+        b=r9e6bJ0REjCLEEHBCxDnDDhLVJosqYmbpA6idgThlygIX/FSYOc6XHNfKxQtzfX9kv
+         giXag0ygU2281JwPBNeYBptrEjdYCB0/WDf/Fr+wN01ikn4RcTPdXhzMWLuNq5nLaIRn
+         sJx9H8lvtOt1JV1L/fSg2TXASdhUu5VT1slNLK3AZyU1WyO2a4zbrYxMjXYWcr3xLtGC
+         6zNA/4OKj3BjDc2AdpX5jKWf/OB6FT9J/ZEAG7VSkOW5aBBN3EDBeOilM2mkZKNJU+G/
+         Jn+v7zvz2tsitruQwCl0PNIxo8MmIeiG8WHFzwhsDa9nVg4Fbwf9T+hvKs0kr1DQj+bf
+         /aHw==
+X-Gm-Message-State: ANoB5pkrQYgkbngzjx7LylagRaSIf3tPAW6NhnJOHgUFtkp66SbnzFzu
+        T8fc+nOttyVPkicSdixfd/YwlGn5WI4=
+X-Google-Smtp-Source: AA0mqf43GQ8HeddllSO9ffOzxUXo1etgrjiv9cDbTRKRxTELqiuXOi+3LnwTNd6nj3ixcHM6JiaKdg==
+X-Received: by 2002:a05:600c:2241:b0:3cf:9ced:dce4 with SMTP id a1-20020a05600c224100b003cf9ceddce4mr65379060wmm.120.1670423687746;
+        Wed, 07 Dec 2022 06:34:47 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i82-20020a1c3b55000000b003d1ee3a6542sm1867127wma.47.2022.12.07.06.34.44
+        by smtp.gmail.com with ESMTPSA id z6-20020adfec86000000b002368a6deaf8sm19451826wrn.57.2022.12.07.06.34.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 06:34:44 -0800 (PST)
-Message-Id: <1693393443975bc25f3020e61a29944804e35601.1670423680.git.gitgitgadget@gmail.com>
+        Wed, 07 Dec 2022 06:34:46 -0800 (PST)
+Message-Id: <c9e99b4f96fc4e513c62b1b028e45559f6410c57.1670423680.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1440.git.1670423680.gitgitgadget@gmail.com>
 References: <pull.1440.git.1670423680.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 07 Dec 2022 14:34:38 +0000
-Subject: [PATCH 2/4] ci: avoid deprecated `set-output` workflow command
+Date:   Wed, 07 Dec 2022 14:34:39 +0000
+Subject: [PATCH 3/4] ci: avoid using deprecated {up,down}load-artifacts Action
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,28 +68,96 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Due to security concerns, this command was deprecated and we need to
-write into `$GITHUB_OUTPUT` instead. For more details, see
-https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
+The deprecated versions of these Actions still use node.js 12 whereas
+workflows will need to use node.js 16 to avoid problems going forward.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- .github/workflows/main.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .github/workflows/main.yml | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 43d47824dd3..1e95aa86b6c 100644
+index 1e95aa86b6c..5e82d8d2b1b 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -34,7 +34,7 @@ jobs:
-           then
-             enabled=no
-           fi
--          echo "::set-output name=enabled::$enabled"
-+          echo "enabled=$enabled" >>$GITHUB_OUTPUT
-       - name: skip if the commit or tree was already tested
-         id: skip-if-redundant
-         uses: actions/github-script@v6
+@@ -94,7 +94,7 @@ jobs:
+     - name: zip up tracked files
+       run: git archive -o artifacts/tracked.tar.gz HEAD
+     - name: upload tracked files and build artifacts
+-      uses: actions/upload-artifact@v2
++      uses: actions/upload-artifact@v3
+       with:
+         name: windows-artifacts
+         path: artifacts
+@@ -108,7 +108,7 @@ jobs:
+         nr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+     steps:
+     - name: download tracked files and build artifacts
+-      uses: actions/download-artifact@v2
++      uses: actions/download-artifact@v3
+       with:
+         name: windows-artifacts
+         path: ${{github.workspace}}
+@@ -125,7 +125,7 @@ jobs:
+       run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v2
++      uses: actions/upload-artifact@v3
+       with:
+         name: failed-tests-windows
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+@@ -177,7 +177,7 @@ jobs:
+     - name: zip up tracked files
+       run: git archive -o artifacts/tracked.tar.gz HEAD
+     - name: upload tracked files and build artifacts
+-      uses: actions/upload-artifact@v2
++      uses: actions/upload-artifact@v3
+       with:
+         name: vs-artifacts
+         path: artifacts
+@@ -192,7 +192,7 @@ jobs:
+     steps:
+     - uses: git-for-windows/setup-git-for-windows-sdk@v1
+     - name: download tracked files and build artifacts
+-      uses: actions/download-artifact@v2
++      uses: actions/download-artifact@v3
+       with:
+         name: vs-artifacts
+         path: ${{github.workspace}}
+@@ -210,7 +210,7 @@ jobs:
+       run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v2
++      uses: actions/upload-artifact@v3
+       with:
+         name: failed-tests-windows
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+@@ -267,7 +267,7 @@ jobs:
+       run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+-      uses: actions/upload-artifact@v2
++      uses: actions/upload-artifact@v3
+       with:
+         name: failed-tests-${{matrix.vector.jobname}}
+         path: ${{env.FAILED_TEST_ARTIFACTS}}
+@@ -302,7 +302,13 @@ jobs:
+       shell: bash
+       run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+-      if: failure() && env.FAILED_TEST_ARTIFACTS != ''
++      if: failure() && env.FAILED_TEST_ARTIFACTS != '' && matrix.vector.jobname != 'linux32'
++      uses: actions/upload-artifact@v3
++      with:
++        name: failed-tests-${{matrix.vector.jobname}}
++        path: ${{env.FAILED_TEST_ARTIFACTS}}
++    - name: Upload failed tests' directories
++      if: failure() && env.FAILED_TEST_ARTIFACTS != '' && matrix.vector.jobname == 'linux32'
+       uses: actions/upload-artifact@v1
+       with:
+         name: failed-tests-${{matrix.vector.jobname}}
 -- 
 gitgitgadget
 
