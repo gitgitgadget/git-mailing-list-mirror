@@ -2,115 +2,109 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C1AFC4708E
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 08:46:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F6C2C352A1
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 11:08:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229820AbiLGIqE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Dec 2022 03:46:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40094 "EHLO
+        id S229842AbiLGLIo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Dec 2022 06:08:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229835AbiLGIo4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2022 03:44:56 -0500
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BE953B9FF
-        for <git@vger.kernel.org>; Wed,  7 Dec 2022 00:44:37 -0800 (PST)
-Received: by mail-pl1-x62b.google.com with SMTP id 4so16439338pli.0
-        for <git@vger.kernel.org>; Wed, 07 Dec 2022 00:44:37 -0800 (PST)
+        with ESMTP id S229947AbiLGLID (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2022 06:08:03 -0500
+Received: from mail-oa1-x33.google.com (mail-oa1-x33.google.com [IPv6:2001:4860:4864:20::33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23C385288C
+        for <git@vger.kernel.org>; Wed,  7 Dec 2022 03:05:54 -0800 (PST)
+Received: by mail-oa1-x33.google.com with SMTP id 586e51a60fabf-144bd860fdbso7732208fac.0
+        for <git@vger.kernel.org>; Wed, 07 Dec 2022 03:05:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=f3MZPcppe++naXWuPlkrUREowf9vGq1RCBVZkc6DZuo=;
-        b=e/FFOmooOfWfEAvSqc3TyLGWZO25rW7KSwyCD70v+sKiK86G6rhwQOWHuXkW4dd6iH
-         XwG26IO5jl5b5/Yk9CVBfEa7d8Rn6aEIT/AmUxDpoXmPLWsUg43eXe1RkQZZgLH4YfPF
-         AAeu/I9sp2wuT9sR0ECMxPAe6gSuXozfHx986j6QEFnZUXxCghdNOLCaJ0Rn5KgOUY+R
-         4lj7MqsdCI5EAtbqXxHNRO6V29ELy3jJvxbBRoiXAzol8L74kwaBZSp6Tv89Xx/2UQ7f
-         UWekzJH+uG6QXL5D32NXHhm9nteDKNa+Shzfcg8ulfGlYUkufFQXQxvEwvrY7vqhZ7w5
-         +4aQ==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=5s0Sh05c2W4o488Yqv2zkyiBqTfr5bNo1KZWFPNRwYw=;
+        b=UJ1YCgo/XlSLuqTAo7DU60AOO8R9a/GQbT+RX23YGB1tCzdzOV9SMo35D55qeYBCwF
+         DW1axU1FjkHo6mdOCFZS1RTqC+4xFXYRNcEu24EmtQJvu60+CY/NaxpdNMZhD5TQxetb
+         sm2tgkl92eWSPlt+anujvVYR7BheGIX2uI1GD3oH7aet0m9FqZmsnLu46Q9xo3t6PJYX
+         iIfa0DecA7mxjvPrAALkLWNcYHlIBltvctYQFheB4lx3H9hxNT/20KSN6aT2F0cHiHDh
+         Wk64b+bu8kdhurpfSEJ5sTBjGrb0dqG4Ja9v+gec/gUepFaBa7WuM/ARZwldIX5PYFsg
+         fHPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=f3MZPcppe++naXWuPlkrUREowf9vGq1RCBVZkc6DZuo=;
-        b=6NVijIj1DW3BATpQ/j9+SioHhTIKPHv7VWYReIzZMpjXc6luCR5ZD/jPyW91QmdaSN
-         xD9DZzrJnQUboQbs7nrdGmHGjixvtdRIIaSii3AQTe3ZDJgAZL+7uAx7lvjvCL/WKdcM
-         q9X+Cd/qRdMUtNn7u20OfGJLdCXOu4CGflr6azYdklaM9L+SnJ8+QJVqJM6ulVJLLHMq
-         3foiI6nDy5Tazf5BJxU4rdqvbJ6zzXdVd0JQNiNqV+gUWSAYiooJ9YbXZfZ2wWmcbKfo
-         NxW+O+mmY6TWuBJOqRY6htac1lvuINCROYIO+/Hpl2hDk8VWwUJVp80jIJ1k7Gx2zM4x
-         OkqA==
-X-Gm-Message-State: ANoB5pmSdOPGXWScJ1Z2RoyjfgCp/bm1JcXju+Owi9Od/U7R53yDDH0o
-        ir0xWkMlU6kCOmAb2+gTVBc=
-X-Google-Smtp-Source: AA0mqf4yy1vkh2znVEh6FxBnpiipnbHoSsE4n5vqIpXDtDMYmpH3vldhr/ZaZlsZnCQhYi9PffTpKA==
-X-Received: by 2002:a17:90a:2901:b0:219:8b1b:c667 with SMTP id g1-20020a17090a290100b002198b1bc667mr25843648pjd.132.1670402676526;
-        Wed, 07 Dec 2022 00:44:36 -0800 (PST)
-Received: from debian.me (subs03-180-214-233-90.three.co.id. [180.214.233.90])
-        by smtp.gmail.com with ESMTPSA id o26-20020aa7979a000000b00576f9773c80sm4961500pfp.206.2022.12.07.00.44.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 00:44:35 -0800 (PST)
-Received: by debian.me (Postfix, from userid 1000)
-        id 4134110444C; Wed,  7 Dec 2022 15:44:33 +0700 (WIB)
-Date:   Wed, 7 Dec 2022 15:44:33 +0700
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     Rose via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Jeff Hostetler <git@jeffhostetler.com>,
-        Rose <83477269+AtariDreams@users.noreply.github.com>,
-        Seija <doremylover123@gmail.com>
-Subject: Re: [PATCH v6] revision: use calloc instead of malloc where possible
-Message-ID: <Y5BScRmR1fY/SQCq@debian.me>
-References: <pull.1390.v5.git.git.1670348301601.gitgitgadget@gmail.com>
- <pull.1390.v6.git.git.1670356394394.gitgitgadget@gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5s0Sh05c2W4o488Yqv2zkyiBqTfr5bNo1KZWFPNRwYw=;
+        b=7MKHQB8B2hkz5+OIKqAdRuwkJVE6xPC6xLuKQLgsTnlZux/J9JME8qtHF7Uyzs60Eq
+         fkuJhHCb8g7OKTlO6JpJM4q60ahv5FVHue29qdTQqNa2eD3RuodFiSf4EzbeNDCJrBZO
+         8gOP1xsu1857J/ib7XfDjp+WimF6vRRJCWIvSFNh5bsS2LWG+KXrG2BPE4h6utJRDsAp
+         ThWP2VRsTj9VsEjASeoLRYNZX7cCe6dKj11r8Gij6DK7eNra4Y1gOv2V1jejqPnhvXPJ
+         CLBwTj/3+NXAWAYWv+199jb+HYfHiq14mdkLKxsuREZPo7k2d4Ou4I1t878RVx5tyLkI
+         mMcg==
+X-Gm-Message-State: ANoB5pmg/50713jZ+WGUCsJWLxris15x1SbRyzFnE4eiK/4UcQR3QtoF
+        0SCigeTLGa/Xx+DbPLANTUPqefl7YUCJ12hffv8=
+X-Google-Smtp-Source: AA0mqf5F5X/OeN+XJMQeKIHKSLSqm/mK3ukx5xjrJNh4IGL7tjf/zLkZBpoU6Q3Ez1ViPfkXOj/NrwVYDUbAkMqzsKE=
+X-Received: by 2002:a05:6870:f71a:b0:144:e55e:4248 with SMTP id
+ ej26-20020a056870f71a00b00144e55e4248mr607758oab.270.1670411153343; Wed, 07
+ Dec 2022 03:05:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="jtN6Kv3YiU+xbToq"
-Content-Disposition: inline
-In-Reply-To: <pull.1390.v6.git.git.1670356394394.gitgitgadget@gmail.com>
+References: <20221206103736.53909-1-karthik.188@gmail.com> <20221206103736.53909-3-karthik.188@gmail.com>
+ <xmqqedtc842m.fsf@gitster.g> <CAPig+cT_xz3m-3kkL_Scf0opNXkikU94kSF46VO8KHkNMWbGzg@mail.gmail.com>
+In-Reply-To: <CAPig+cT_xz3m-3kkL_Scf0opNXkikU94kSF46VO8KHkNMWbGzg@mail.gmail.com>
+From:   Karthik Nayak <karthik.188@gmail.com>
+Date:   Wed, 7 Dec 2022 12:05:27 +0100
+Message-ID: <CAOLa=ZTSzUh2Ma_EMHHWcDunGyKMaUW9BaG=QdegtMqLd+69Wg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] attr: add flag `-r|--revisions` to work with revisions
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        toon@iotcl.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hey Eric,
 
---jtN6Kv3YiU+xbToq
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, Dec 7, 2022 at 2:10 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>
+> On Tue, Dec 6, 2022 at 7:15 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > Karthik Nayak <karthik.188@gmail.com> writes:
+> > > Add a new flag `--revision`/`-r` which will allow it work with
+> > > revisions. This command will now, instead of checking the files/index,
+> > > try and receive the blob for the given attribute file against the
+> > > provided revision. The flag overrides checking against the index and
+> > > filesystem and also works with bare repositories.
+> >
+> > As "check-attr" was not invented as a user-facing subcommand but was
+> > a hack for debugging, I would have minded this change, but these
+> > days people seem to treat it as if it is just one of the proper
+> > plumbing commands, the new command line convention bothers me a
+> > bit.  No other command uses --<anything> to signal that what comes
+> > after it is a rev.
+> >
+> > But I do not think of a better alternative without making the
+> > command line ambiguous, so I'll stop at raising a concern, so that
+> > others who may be better at UI can come up with one.
+>
+> A few minor comments...
+>
+> We don't usually squat on short options, such as `-r`, right from the
+> start but only add the short alias once shown that there is demand.
+>
+> Option `-r` has strong association with "recursive" elsewhere, so I'd
+> worry about giving it such a completely different meaning here.
+>
+> Rather than calling the option `--revision`, perhaps pattern it after
+> git-restore's `--source` option which allows specifying a particular
+> commit, tree, tag, etc.?
 
-On Tue, Dec 06, 2022 at 07:53:14PM +0000, Rose via GitGitGadget wrote:
-> From: Seija <doremylover123@gmail.com>
->=20
-> We can avoid having to call memset by calling calloc
 
-Who are "we"?
+I'm okay with removing the shortform `-r`. I decided to use `-r|--revision`
+because it is also used in `git svn`.
 
-Please avoid using first-person pronouns (I and we), since these are
-ambiguous in context of many entities (individuals/companies)
-participating in development. Instead, write in imperative mood and
-passive voice, e.g. "Avoid the need to call memset by allocating with
-calloc() instead of malloc().".
+I don't have strong feeling about the naming here, but I do feel that
+`-r|--revision` sounds better than `--source`, because source doesn't directly
+imply a revision and in the context of `git check-attr` is a bit ambiguous
+because it could imply the source regarding which `gitattributes` file to
+check against (although this feature doesn't exist).
 
-Even then, what are justifications of malloc() -> calloc() conversion
-other than the described above?
-
->=20
-> Signed-off-by: Seija doremylover123@gmail.com
-
-The SoB doesn't look OK. It should have been
-"Signed-off-by: Your Real Name <yourname@what.domain>".
-
-Thanks.
-
---=20
-An old man doll... just what I always wanted! - Clara
-
---jtN6Kv3YiU+xbToq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQQZO/gRNchuWgPJR+Z7tWyQc2rTCAUCY5BSYgAKCRB7tWyQc2rT
-CCubAQDJUwX0Q7dTx+ImJAF5kgYPByWt8dF8XzqckF8B1rAsnwD7BsBGXf11LxkW
-SaKaIpyRL0OpvRxxYKaTPN16bIZv8A0=
-=pQA9
------END PGP SIGNATURE-----
-
---jtN6Kv3YiU+xbToq--
+-- 
+- Karthik
