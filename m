@@ -2,133 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DD7CC352A1
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 12:30:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDE65C63705
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 12:34:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229785AbiLGMa0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Dec 2022 07:30:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48372 "EHLO
+        id S229776AbiLGMeP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Dec 2022 07:34:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229776AbiLGMaX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2022 07:30:23 -0500
-Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A0DB4E686
-        for <git@vger.kernel.org>; Wed,  7 Dec 2022 04:30:22 -0800 (PST)
-Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-1442977d77dso19965541fac.6
-        for <git@vger.kernel.org>; Wed, 07 Dec 2022 04:30:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rtTwUXJKoD/00ueo2hB9yuK+P9ZU5hFSO4jtlAxUEzM=;
-        b=JcA6I6AvJjXRsDw9grNV1Y+TUwqz1eCLL3RMcFcMiEvFrOTGzTR8yIV8Q0ECZqXgiS
-         nk0I89MZ4MNqKmCe/07POU7qERt1QQxb8l2B7oJ0FXTItHploAAqpo9ldwQaV9GOk0YO
-         Y5NdCSq3tNtowokIBGqDB6IlLOMQMpTGJ0EsZvK8W0b+i/bXxWdys7jMpXqrE6JNAiGq
-         AyF0H35orZvo7qSNC7p1P6soJMQrmWLBz0IhDAy2jw/ELlvGRAT1iD3c4sTYtgNIZJMF
-         +fDvgvenkXvcbDNJVkR3MSNMM0aIrKE/H+biPOpaFgUm5iqCVmqCLxbX3Kw0ndpdlhmB
-         JblA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rtTwUXJKoD/00ueo2hB9yuK+P9ZU5hFSO4jtlAxUEzM=;
-        b=SnXlwL+G0qp+h+LfqbZ2T6w8QvEmVZ8KqZ0OzJmWCZgRBOVxKFc5xPPIApTYUjGBiJ
-         yo49s1uqaMceLGiVEmztB5MxsS0fR92ZRpd+pO2RnVF+M3N7wyz/O32ehtTh0TY78VbN
-         ZelFFKPuZIXER87MBV5HAk1exqmLJ5UMkH1tLt/j0VIBObteF1052eSIZf51iOEOcw8s
-         DGVaVQXPiNquoVkVESwFeZQtEwPVoIrZ6ssAc1NaTDIzFJh7ThXiFLZq5/Df7Fmuuds2
-         RSSE6RrdC8WplFXftyfCwwQGHW1zpvjqpq2VVuh0sPKV7/DPRaWCDmU9OHqkZs83qOVb
-         6hvw==
-X-Gm-Message-State: ANoB5pkjivBd7ISZgaAiW1GjjJZVZpABEEbJsiToRXTkaYizsknaICKI
-        /7uF4GDMyNQ2hR7IZQJuODsabhxhhnP3Tgn+2KE=
-X-Google-Smtp-Source: AA0mqf5LNTbLcTXUFQepyB/GdCzg+MQ4gLMUxD8diwsMUC9kMMrTrnPdWlNXZ5J5maB+poDfv938tstYB79Ge9eRTcU=
-X-Received: by 2002:a05:6870:f71a:b0:144:e55e:4248 with SMTP id
- ej26-20020a056870f71a00b00144e55e4248mr746024oab.270.1670416221116; Wed, 07
- Dec 2022 04:30:21 -0800 (PST)
+        with ESMTP id S229714AbiLGMeN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2022 07:34:13 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 839294F195
+        for <git@vger.kernel.org>; Wed,  7 Dec 2022 04:33:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1670416419; bh=jBzezZtTbDnsx3q2uh0z1es12Z3Fz03kFjSaskTAvPc=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=uNOzglAH5TgP37zyzq7EMMU6RsRAG9tZHavxhZO4B+Zc87sc3omanZrj9H5BxPwdE
+         bxDFPQaK52EmcXecW+sGTWnFYlttv8cNQNyouxB/FgJpHqJqYn00K2EJkb0hCLgSil
+         Sx7BZQZd1VZtZfj7YZQvI9gD4hkUllBZ6O2otrw8hS4e1MyovpsNPt4FbkSDH3mcOq
+         dHvSZOkHYEVGcKK2mWLSkyUXBqw9qgDZPTURpwxgyYdEu0pprRI9K6lZd5eaNL43xb
+         sVslS3/9h9gwVvP7xU/EN5AUUteG0G6NDklmoUD8wTJLHAcO6uFRVi9NufnZiOdm1e
+         GSPZpiCEIUQMg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.24.155.134] ([89.1.213.44]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N6sn7-1otnv22ORb-018J4W; Wed, 07
+ Dec 2022 13:33:39 +0100
+Date:   Wed, 7 Dec 2022 13:33:37 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org, Oscar Dominguez <dominguez.celada@gmail.com>
+Subject: Re: [PATCH] ci: use actions/{upload,download}-artifact@v3
+In-Reply-To: <xmqqa640830q.fsf@gitster.g>
+Message-ID: <s984sqs4-s134-q7q9-0260-o485683302o8@tzk.qr>
+References: <pull.1354.git.git.1665388136.gitgitgadget@gmail.com>        <pull.1354.v2.git.git.1670234474721.gitgitgadget@gmail.com>        <xmqq1qpd9bys.fsf@gitster.g>        <2s9ppo74-r654-231r-7ss7-o08464s2so6p@tzk.qr>        <xmqqmt8085i6.fsf@gitster.g>
+ <xmqqa640830q.fsf@gitster.g>
 MIME-Version: 1.0
-References: <20221206103736.53909-1-karthik.188@gmail.com> <20221206103736.53909-3-karthik.188@gmail.com>
- <xmqqedtc842m.fsf@gitster.g> <CAOLa=ZS5k=s98Bo9GE+RRa3jtanehL35y-hhLhy1DoM7GyO0cQ@mail.gmail.com>
- <221207.86h6y7a0l7.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221207.86h6y7a0l7.gmgdl@evledraar.gmail.com>
-From:   Karthik Nayak <karthik.188@gmail.com>
-Date:   Wed, 7 Dec 2022 13:29:55 +0100
-Message-ID: <CAOLa=ZTQ9R1dyCb5xp0c5JBLjE33dJFVPg8jQfprU1iSGq+O4g@mail.gmail.com>
-Subject: Re: [PATCH 2/2] attr: add flag `-r|--revisions` to work with revisions
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        toon@iotcl.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:hGNOvkPHtBFhsnfvMQk3xtdVixNL1r6lgOt9SU2yag5CWiHfp6X
+ DxD8uvyVrGlNsdfM08Fhp6SpWArGoUmYEDbcU6giJiC28QHp4osd8mrCsicZLH81pKwGbPd
+ u/xO+daAtiEKDM6ZmU2yu8TuoZ3B4TUP2Z6/9jEgWK0z/+0mmBq4loJabwWFUxHBpK5/Ros
+ ixvE5+2wJ3ikTNYKbNa5w==
+UI-OutboundReport: notjunk:1;M01:P0:4kj0eY1nmf4=;eNYiE1aVKg5i2XlGhgHjfPlqR3n
+ haP34WwPF4Cuclxfcm7tZPrUdKphhfR4zteDE2cGQ7gdkOqMaZhLFbAOm2VI/qBdz1DA8WKnM
+ 0Su3aZKEx94+3uWpDQMJbzrMN3PAFFuUAvNkuUWYt2HHvCAiah01bNLebe3koyaCQfKjihdAe
+ ned/zDldwxXaH1mAndt3FPuzp9TqKj2bjHUoq3itloL9L0Ned/T6Rh+KX3UOo2pW3bACSZUh9
+ 6P8OuZKjgKG1bejsr1n0ziqUv5ZoHvI8Du9Zyslzm87eQlIJAWZAoOVPPln3RjRzoVS00IQC7
+ tgo+fJNu9mgC5vUQXxw6FrnNa4Aaaf7nRLHg+UETahqwdHHhWxOxJsRa2dd2C6XwtUK8H9y/7
+ 5+L1ddSvxrimGeyORruDUNI+QJMc+h6HrZEEMo5VX5UApKcV3nnU9vIgj89eRd7M0EhcFfzgx
+ Amngx3INA/INdbWWi02dX3gr45aY7dnoUm0cXdOOocxmaybWLarIo5F2bdEY2OIHNniStiHC+
+ bX+FHaoNgnEX8OcPpIT9Su7CYuaMGHPPGPi5y/H+hN+icSztF33FVix6kongzVwUKs9lvjO2T
+ c0xyZ173WRz23UDnwruMdUj8YpPaLkkHr+nmmvEmckNW5GtkRlIkUAwpbwmRR+yqubkbE/ZQR
+ 56Q08XZaj/iuI0CAkbp2U7Tqb5ZKLBqQCg2j9gPUnZWZ+c4hT4ytI+ercdKejs+PpFth5Oe9H
+ LYfXopLznFeWgjmEDFzOkjLlrBFWGH1lyJj8KMOmeGOIb8rwzzwCST4y0UrAcTxOozfyFugvJ
+ xK7jK6B9SRA7DkeDgbvpUdGreBEmdUrsBQUIJbrQbR8FBYTtXobpj3ciTuXEHeYNgnQEqAQ6v
+ NfgqdFztj2RyWDCoQSenL/bgzbGj+9VxYw1SnL8uopyvZwNbP4V8uym64k0UA4RYGyW+3SKYr
+ wHaTfw==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 7, 2022 at 12:56 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+Hi Junio,
+
+On Wed, 7 Dec 2022, Junio C Hamano wrote:
+
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->
-> On Wed, Dec 07 2022, Karthik Nayak wrote:
->
-> > On Wed, Dec 7, 2022 at 1:12 AM Junio C Hamano <gitster@pobox.com> wrote=
-:
-> > [...]
-> >> Also, at the C API level, I suspect that we strongly prefer to pass
-> >> around either the "struct object_id *" or "struct tree *", not working
-> >> with end-user supplied character strings without any sanity-checking
-> >> or parsing.
-> >>
+> >> This is probably incorrect, but you wouldn't know until something fai=
+led
+> >> in the `linux32` job.
 > >
-> > I must admit, I did take the path of least resistance here. So we final=
-ly need
-> > to parse the `revision:<pathname>` where the `<pathname>` is generated
-> > dynamically as we move through the check-attr stack.
+> > Yeah, that was what I was afraid to see.
 > >
-> > My question is, if I generate an `object_id` at the start (in
-> > builtin/check-attr.c)
-> > with only the `revision`, is there a way to traverse to find the blob
-> > for each of
-> > the different <pathnames>? I haven't looked at Git code for a while now=
-, and
-> > I'm not sure what the best way to do this. Maybe I've missed some API w=
-hich
-> > would make this simple, any help is appreciated.
+> >> I already have a correct fix in
+> >> https://github.com/git-for-windows/git/pull/4112/commits/b59c1e33fa62=
+029f8d5dca801a8afb480514140c
+> >> and was only waiting for the patch at the root of this here mail thre=
+ad to
+> >> advance further so I could contribute that fix, along with other
+> >> replacements for deprecated operations.
+> >
+> > Wonderful.
+> >
+> >> Maybe we can move these changes forward in a more orderly manner, wit=
+h
+> >> Oscar's patch advancing to `next` once it is done, and the other patc=
+hes
+> >> following after that?
+> >
+> > That was what I was planning to do anyway.  Thanks.
 >
-> The get_oid() that you're doing now happens in a loop, and should be
-> pulled out of it.
->
-> I suggested making that a feature in
-> https://lore.kernel.org/git/221207.86lenja0zi.gmgdl@evledraar.gmail.com/;
-> but if you keep the interface you've got where you only support a single
-> <rev> it would make the most sense to do that get_oid() in the builtin/
-> code at the start, and then pass the oid/path pair down.
->
-> You'd still need to call read_object_file() or equivalent for each
-> <rev>:<path> pair though.
+> Eh, I should have made my intention clear.  I'll drop this one (as I
+> posted it primarily to fish out those who are interested in and more
+> capable than I am at clearing the deprecation warnings from the CI),
+> will mark Oscar's for 'next' (if I haven't done so already), wait for
+> your updates and queue them on a topic forked from Oscar's (or on
+> the same Oscar's topic), and cook them for the first or the second
+> batch of the next cycle.
 
-That's exactly my question, now we're calling `get_oid()` with the pathname=
-.
-Which would directly give us the object_id for the blob. Whereas if we call
-`get_oid()` _without_ the pathname, we would still need to get the object_i=
-d
-for the blob.
+Thank you for clarifying your intention, much appreciated.
 
-My specific question being, how do I, given:
-
-struct object_id oid_1;
-get_oid(revision, &oid)
-
-and pathname, get the equivalent of:
-
-struct object_id oid_2;
-strbuf_addf(&sb, "%s:%s", revision, path);
-get_oid(sb.buf, &oid)
-
-?
-
-Basically, I fail to see how to transform oid_1 to oid_2, using
-pathname. I agree
-this would eventually be fed into `read_object_file`.
-
---=20
-- Karthik
+Ciao,
+Johannes
