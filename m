@@ -2,100 +2,84 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 556F8C352A1
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 00:54:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3B1B4C352A1
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 00:57:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229564AbiLGAyO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Dec 2022 19:54:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55156 "EHLO
+        id S229614AbiLGA5C (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Dec 2022 19:57:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbiLGAyM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2022 19:54:12 -0500
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 303D41EC46
-        for <git@vger.kernel.org>; Tue,  6 Dec 2022 16:54:12 -0800 (PST)
-Received: by mail-pf1-x432.google.com with SMTP id a14so12088668pfa.1
-        for <git@vger.kernel.org>; Tue, 06 Dec 2022 16:54:12 -0800 (PST)
+        with ESMTP id S229449AbiLGA5A (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2022 19:57:00 -0500
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73BBA4E683
+        for <git@vger.kernel.org>; Tue,  6 Dec 2022 16:56:59 -0800 (PST)
+Received: by mail-io1-xd30.google.com with SMTP id r72so5852244iod.5
+        for <git@vger.kernel.org>; Tue, 06 Dec 2022 16:56:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fWLvUxITaT0PeO+0tlQ9AA1oBUujhKA/ZrcR5bXjq18=;
-        b=ReXVAdfBBiUqufyfuM+FEHfy0lANLiv6iAbuZZApEXqkeuDhxvqka2yrZ4juTGIo9c
-         pVP3ZtpNEjHMxz3SsSxXzPYknjaVPkS7IToebpJAoElASJei5fjd36jMjomvrrRNFpy3
-         kmh4zF5wEI9MYDcFlx7zPkIj/C1ry9NkkszSCbwFEKOOGnX2OGXTDBssQIs2FaPhIptv
-         QOrlQG8un8Qg1rc0UjBH/Cd0TTR6flBc6r+NP6Dg6N7GazVDJ6PJaoBotCJIkhXyH1nu
-         UVDIhQU66vgvgnbX36cyJE8dEB6hwkeREmC80LXily4xNYfeLcl6LHdkLkbDuYi19sXs
-         u6+g==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=WnoHmVHCvWpwZ3TLwOX5Xuy6zbiLTVI+O8CJZLhXcfI=;
+        b=Cyix0shr3O6fBAaZiVGsYnlm1+foa738tytcSULZdU+LRRuC+vT20leIXLqHUg2i7I
+         588Dss9f2r+eNEMXHQHlRc5o7WQV26g2sSUEXWboug586JoslITRRy/lOfySUnHpCM77
+         g/0ip0EYzA2zOBaUrLC1yuCsiVfc0HafRCk74G5DLo1+g7g0CBe+e3MKgYiGJ1ij0K4y
+         5M0JB9d3JA+P0hHX+0PH9F+yMvmipd08LBJph8oQCSbBCogXK782au8/T441g57BUXaw
+         kvxx2nxs/B0uViB29CDvRJL+WjOimuLKI72PbTqc+cfPeVmrMFg3t0EXfratlqrg4Wpp
+         LsNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=fWLvUxITaT0PeO+0tlQ9AA1oBUujhKA/ZrcR5bXjq18=;
-        b=c2puwCIHC8XPm3oY/gH1d07r7k80VfkaeRGRsGq/ZGNHnjXhHQAJrD88Ank59/NYkR
-         YRqpEHW6MPpPYONFTOZrE2deC7B9N8cac4C4d3UDp8uTMso0cJc3yQUlFV0gjvrirrYA
-         Mx3cQqqrWJCYwDC+dxd7Iuf8D43qW0Fpjv1GNUVKC4UIfrcgrHcohGMIR9HpyEaZXvJb
-         ENlchgFXelP6gqH0qIa+TX+oB1/anjkih0Sv3dZbK7bXEl5m+cG1WGfd9qczsn29n1Y0
-         XoX9jNF7kSx77H58h0OLPSD4rNGC/JGkPmAuMmgllOj+mVZ6XeXx+0n3fIvrq18746Ts
-         SqOA==
-X-Gm-Message-State: ANoB5plGeGx0ZsVu78C8fz1gZyCm0Bwk2eT2wiXhywqLrlclVGNznhOW
-        FGaSFW1tvWgEhQ+PE9YRX6Q=
-X-Google-Smtp-Source: AA0mqf7W1ZnKnF+cXg8fYwvLXyYwr9hgkyGh74nuajZzpKPbTcI8NdwfmZv4ignMvaVuFR4rYTBOfA==
-X-Received: by 2002:a63:f850:0:b0:477:f9fa:80cb with SMTP id v16-20020a63f850000000b00477f9fa80cbmr46186829pgj.118.1670374451615;
-        Tue, 06 Dec 2022 16:54:11 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id e21-20020a170902d39500b00189240585a7sm617055pld.173.2022.12.06.16.54.11
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WnoHmVHCvWpwZ3TLwOX5Xuy6zbiLTVI+O8CJZLhXcfI=;
+        b=IcEHmcT/1QUWXpQfVCr4i/h7ELFH44sfBP5omqcdMmjZIsv6OlLuIoGGHPLumJXBJT
+         KLY0IweAs1RCtOhGJfZtfX84jt77Xu0clIPbloH67YIre744QllcKfoFyNLBnbA1LIWo
+         inJdX7Omu6GiFVJ0DuBKgDzgNjcpBbSkeR6Rfe98v/nYrHIza6O0h1fkwvsK+qFXQTu8
+         W2BFHD3HcIox38Ka3Ac774O0Q12Cb9FSfXKeehuM199zQcsotkr0Hc/OjApgwc0TkEbh
+         xzG4DMxOEkEh4N2BXMzzb6oQmI/g1SKMMQskrp6G9E0TCMATaFg6klPH8bL5oQtoNfBt
+         nhqA==
+X-Gm-Message-State: ANoB5pntHyW2sgHOGi+lGQSVtAFJfylU1BVRR+wfOfFckB5uWFm7H6qZ
+        ospoEzZT9i+uiF7UkENleFd5Ig==
+X-Google-Smtp-Source: AA0mqf55Bz9pUV7Ra3J9xw5vnkLCdKF+vqi7bhUn30YV+KRqQN7fR1XDVpdM+gqLjr4u4+9z/Z+dKw==
+X-Received: by 2002:a02:5103:0:b0:375:3f45:dc94 with SMTP id s3-20020a025103000000b003753f45dc94mr43729490jaa.144.1670374618727;
+        Tue, 06 Dec 2022 16:56:58 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id f1-20020a056e0204c100b00300c4b978c9sm6579018ils.29.2022.12.06.16.56.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Dec 2022 16:54:11 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     GitList <git@vger.kernel.org>, Taylor Blau <me@ttaylorr.com>,
-        NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
-Subject: Re: [PATCH v4] pretty-formats: add hard truncation, without
- ellipsis, options
-References: <20221102120853.2013-1-philipoakley@iee.email>
-        <20221112143616.1429-1-philipoakley@iee.email>
-        <xmqqfsedywli.fsf@gitster.g>
-        <d80d1b97-b0c0-148b-afb7-f5210366e463@iee.email>
-        <xmqqedtvu7py.fsf@gitster.g>
-        <7a6c3d32-4494-e209-9877-e8784f0c3502@iee.email>
-        <xmqq7czjecfr.fsf@gitster.g>
-        <f0923db4-7bfe-86d2-7539-c9ebed62fa4f@iee.email>
-        <xmqq35a5cnhq.fsf@gitster.g>
-        <093e1dca-b9d4-f1f2-0845-ad6711622cf5@iee.email>
-Date:   Wed, 07 Dec 2022 09:54:10 +0900
-In-Reply-To: <093e1dca-b9d4-f1f2-0845-ad6711622cf5@iee.email> (Philip Oakley's
-        message of "Wed, 7 Dec 2022 00:24:34 +0000")
-Message-ID: <xmqq359s824t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Tue, 06 Dec 2022 16:56:58 -0800 (PST)
+Date:   Tue, 6 Dec 2022 19:56:57 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Victoria Dye <vdye@github.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] CI: migrate away from deprecated "set-output" syntax
+Message-ID: <Y4/k2TW8Udz4LsaI@nand.local>
+References: <patch-1.1-deb65805345-20221206T195811Z-avarab@gmail.com>
+ <3859f3a7-ade8-4778-be15-b393694435e3@github.com>
+ <221206.86fsdsb5os.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <221206.86fsdsb5os.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.email> writes:
-
->> and "..[3][4]", respectively.  It also is clear that Trunk
->> and Ltrunk can do "[1][2][3]" and "[2][3][4]", respectively.  We
->> truncate the given string so that we fill the alloted display
->> columns fully.
+On Tue, Dec 06, 2022 at 10:08:36PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> > Should this also be updated for 'l10n.yml'? There are two usages of
+> > '::set-output' there as well.
 >
-> While this example is clear, it's not clear what should be done if we
-> have mixed width strings, e.g. with emojis, as the boundaries in random
-> text will also be randomly placed.
+> Yes, I just missed that one. I'll fix that, but will wait a bit to see
+> if there's any other comments first. Thanks!
 
-As long as wider letters have widths that is integral of the
-narrowest letters (ASCII?), "use N columns, padding with '.' if
-needed" has a reasonable solution, no?  "[1]A[2]" occupies 2+1+2
-columns, so trunc that is given only 3 (or 4) columns can drop the
-last "[2]" and fit "[1]A" in the given columns with padding.
+No concerns from me. I noticed this warning when I was looking at all of
+the CI builds a few weeks ago.
 
-> I'll at least work on the doc clarification regarding the column width,
-> column position and wide char (2-col) issue, and hopefully a few failing
-> tests for the combing code point and the wide char fitment issue.
+This transition looks obviously correct to me, and as long as we apply
+it in the l10n workflow as Victoria mentions, this should be good to go.
 
-Thanks, that would give us a very good starting point.
+Thanks,
+Taylor
