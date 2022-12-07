@@ -2,90 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 15002C352A1
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 02:11:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 67AEBC352A1
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 02:29:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229761AbiLGCLJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 6 Dec 2022 21:11:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49712 "EHLO
+        id S229523AbiLGC3V (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 6 Dec 2022 21:29:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59756 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbiLGCLH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 6 Dec 2022 21:11:07 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3D6D45A06
-        for <git@vger.kernel.org>; Tue,  6 Dec 2022 18:11:05 -0800 (PST)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 30EBF5A201;
-        Wed,  7 Dec 2022 02:11:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1670379065;
-        bh=kWwZUjl4WLfNwmYGN1brnIwF9uBYoEQdloAa3DhNCY8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=0xkjxLE8RN5/tGSGItSenDmoDrJw7nxNVZE7IrYegPi18go7smK9SziR/sPKVl7Td
-         P8qh2E0QMwUBXdRAkk9eSYwhqcmIm4ETGbA13zuEagM6HLIRpo78QhDK0YSkEc3+rP
-         07TnGY5HMvi5KL3F9ktTX4DRuDPNBWcKuZMCdItWfnTWEFQjYOCLs4mEzHwKvtI2au
-         wRC5NYqsYXHP5aNuF5TDXfQi85ZSf801rLg2XqMgYY5tki2MgfW5o2b0I6TWbsdKOX
-         i3y8YXLEq1cfYsLseKiwKe01WylnmVZfGeQKQHXUBlEeioZQEvP1EQ8b/J4bHSDe09
-         a40+nTskTI/iITlS5eHA2JKCwnGv/BrH09OhFylhZJpaaQzcyIZg16QtXfYkW7XYHm
-         HeOQL/ROOPu8Uj6TypPgcxw+isoeggfB2KeKh8P3qOHlez4chBjuAVkdKepL6fq+M5
-         z8f2rgq8S6Fzynqy7iUdf8K/0qAh4hJOGBObyNZUJuj6GN3hqis
-Date:   Wed, 7 Dec 2022 02:11:03 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-        toon@iotcl.com
-Subject: Re: [PATCH 0/2] check-attr: add support to work with revisions
-Message-ID: <Y4/1uNEcM1If4sA9@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Taylor Blau <me@ttaylorr.com>,
-        Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-        toon@iotcl.com
-References: <20221206103736.53909-1-karthik.188@gmail.com>
- <Y4/ntYotGKz2dx0E@nand.local>
+        with ESMTP id S229479AbiLGC3U (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 6 Dec 2022 21:29:20 -0500
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0E88101CD
+        for <git@vger.kernel.org>; Tue,  6 Dec 2022 18:29:19 -0800 (PST)
+Received: by mail-il1-x12a.google.com with SMTP id x11so6482319ilo.13
+        for <git@vger.kernel.org>; Tue, 06 Dec 2022 18:29:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=0+X2Utzix2EtkUaum6Ns1uT40J2MZPFreBjWdQWpgzA=;
+        b=lLC2+SQvA1v1aOc5N1raeJwBvNwTJTI8CuH0HGRKooOg/p75k8798ALUZIYWu0hT0h
+         r9CGX0tE6K47kPYiWY8+0r8cNKxeZEKsKToSBc0c1M/gBoPcYZFZskFWpJ+sQ1zayvbA
+         10DVdvrNg4ibSqYnxkqiR8g/+UkaQBPCbYkZbKkO8Z+J1p/iVvhpoSSg5AhIefOcC6ZA
+         TNf+HHJF+acqNLgbcd4lVA7jIYeQ3SpzCSji6JW48p4sc7t6LCgmwcJMxj50Rkuyzznw
+         H/Z6CMxYAok1Updlx2GcE8TXIHsiVaUSGQ+IRXTqmhqRvm+Dzl8t8fSgsxF+uTbdRZXM
+         Ul6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0+X2Utzix2EtkUaum6Ns1uT40J2MZPFreBjWdQWpgzA=;
+        b=oF5oTc2tmWy4ySXnnqdD7d/4Fa0lzwGu4OWDXQ33t+P4NvpGmxIsI7yJqlVknwuv8V
+         F1r2fzk03S3fbaBWYtclsNmJ9mSkEM1cjeIsYRIHB661Ma5AMOTpxUOdVY/b5xG2BkqU
+         4gkd24UVihfMiFuyZidQuEBqQ+ptTvTcdWqo2gba8xPsEXlQ+nZseYnoLDW/v6QcEhun
+         PA0YA4Te4LFe6S6l8kTDQoccnD3BsgAF2mx2B34x1G87p2AN9HDMSyxi2GEvkX4TjLgr
+         ikGNUngCL2DCbu7vbQqBBmnIrt0Krg0EROF9Wbj/ypFQvCHIIveNJI+2CvzeAuX5E+lK
+         Qbdw==
+X-Gm-Message-State: ANoB5pliTMvESR5uyY1w8dnNEKI6yCEVthWvQh9s2LO4h+/ka83rdh2n
+        j0XG/LAAnSUmfG2q+PNafjKZqA==
+X-Google-Smtp-Source: AA0mqf4+zqUA/tG+L0gX+dDAPZRdl8SufH4mTXx9DFzBKwwG2wtZvSKRnI0KH4AE1B65YU431y3x/g==
+X-Received: by 2002:a92:c5c5:0:b0:303:1215:ea9d with SMTP id s5-20020a92c5c5000000b003031215ea9dmr20341108ilt.242.1670380159187;
+        Tue, 06 Dec 2022 18:29:19 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id f27-20020a056602071b00b006e25b512bdesm130171iox.33.2022.12.06.18.29.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Dec 2022 18:29:18 -0800 (PST)
+Date:   Tue, 6 Dec 2022 21:29:12 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-compat-util.h: introduce CALLOC(x)
+Message-ID: <Y4/6eDxUeSLYss/a@nand.local>
+References: <6694c52b38674859eb0390c7f62da1209a8d8ec3.1670266373.git.me@ttaylorr.com>
+ <a8e33b1e-1056-5f75-55b5-65c0bceef3ca@web.de>
+ <Y45yaYV3xFB/xR2G@nand.local>
+ <Y46eVnYrcOGAbUhi@coredump.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="lch7JlOjUCR6f4fG"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Y4/ntYotGKz2dx0E@nand.local>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Y46eVnYrcOGAbUhi@coredump.intra.peff.net>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Dec 05, 2022 at 08:43:50PM -0500, Jeff King wrote:
+> On Mon, Dec 05, 2022 at 05:36:25PM -0500, Taylor Blau wrote:
+>
+> > On Mon, Dec 05, 2022 at 10:01:11PM +0100, René Scharfe wrote:
+> > > This rule would turn this code:
+> > >
+> > > 	struct foo *bar = xcalloc(1, sizeof(*bar));
+> > > 	int i;
+> > >
+> > > ... into:
+> > >
+> > > 	struct foo *bar;
+> > > 	CALLOC(bar);
+> > > 	int i;
+> > >
+> > > ... which violates the coding guideline to not mix declarations and
+> > > statements (-Wdeclaration-after-statement).
+> >
+> > Yeah, I was wondering about this myself when I wrote this part of the
+> > Coccinelle patch.
+> >
+> > Is there an intelligent way to tell it to put the first statement after
+> > all declarations? I couldn't find anything after a quick scan of the
+> > documentation nor our own patches.
+>
+> It feels like generating the code as above is not the end of the world.
+> The most valuable thing that coccinelle is doing here is _finding_ the
+> location, and telling you "it's supposed to be like this". It is great
+> when the "this" post-image is perfect and doesn't need further tweaking.
 
---lch7JlOjUCR6f4fG
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I have to agree. If Coccinelle can generate the right output; great. But
+if it can't, the amount of additional work to reorganize an already
+generated and mostly correct *.patch from the tool seems minimal by
+comparison.
 
-On 2022-12-07 at 01:09:09, Taylor Blau wrote:
-> Anyway, my point is that I think that this is a useful feature, and one
-> that I (and I suspect other users, too) have wished for frequently in
-> the past.
+> But if the compiler then reminds you "hey, you need to go a bit further
+> manually", that doesn't seem so bad. In other words, I would be happy to
+> follow that work flow if I introduced a bare xcalloc(). My only worry is
+> that somebody less experienced with the project (or with C) would get
+> confused.
 
-I fully agree.  This would have come in useful for me many times, and I
-can tell you as one of the maintainers of Git LFS that this will be
-enormously useful to many users of that tool as well.  I'm glad to see
-this series come by.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Agreed.
 
---lch7JlOjUCR6f4fG
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY4/2NwAKCRB8DEliiIei
-gTOQAQDiJHLDfaMynPXea5cRTKVnRSuZwK55mwcN8PHPeOQINAEAmVnxii+XyJW9
-cnBu/RGQA9993scva07wP0EA7Yg7oAc=
-=pq4B
------END PGP SIGNATURE-----
-
---lch7JlOjUCR6f4fG--
+Thanks,
+Taylor
