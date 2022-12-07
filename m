@@ -2,94 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1B746C63703
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 23:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EA44FC4708D
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 23:27:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230203AbiLGX0s (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Dec 2022 18:26:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39100 "EHLO
+        id S229829AbiLGX12 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Dec 2022 18:27:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39646 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230165AbiLGX0i (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2022 18:26:38 -0500
-Received: from mail-yw1-x114a.google.com (mail-yw1-x114a.google.com [IPv6:2607:f8b0:4864:20::114a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AACC89ADF
-        for <git@vger.kernel.org>; Wed,  7 Dec 2022 15:26:26 -0800 (PST)
-Received: by mail-yw1-x114a.google.com with SMTP id 00721157ae682-3d0465d32deso206092067b3.20
-        for <git@vger.kernel.org>; Wed, 07 Dec 2022 15:26:26 -0800 (PST)
+        with ESMTP id S229727AbiLGX1Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2022 18:27:24 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B1F08933A
+        for <git@vger.kernel.org>; Wed,  7 Dec 2022 15:27:23 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id e7-20020a17090a77c700b00216928a3917so2895915pjs.4
+        for <git@vger.kernel.org>; Wed, 07 Dec 2022 15:27:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yPawf4lLwLsw+7SoDwNnquhxtzEFskP9yEb/vYY3Deg=;
-        b=R++aRC4WOjt2kyNBobP6Vm29QR8lxv6JqW4vF1Xog9AoSCA6UB41gRUEr+VXrSE32K
-         8+I44koF5oWzoRm2xuEAZ1mknm2AFOQ+B0Fqqi1N7zR6825ro7oIekLr/Yfc0whqAfYd
-         SHUrs0nC6aiQAgPXxQjUF1m+OzvK1GB24sqnwwrEqtMpmTNErqIlMy33RYeoUB7vxgGA
-         hEiO5A1748pj5UYN1JUXIMCzcFFoj9pkGxSopuaU1+rv6NtzI0oJkX6sN6nbKoIlrMbk
-         sEq0LzmFmz0B0g8KufMP5boO+wTJ+nHMxnN2gIZnnM4WdEgN4uvKIkrzrv/A3xLr4Lcz
-         76GQ==
+        bh=qIkKlFQDOhEj7oMj6XZ4xGq8mAGVrm24FEx0czLDzk8=;
+        b=KhqnT29rqLheqYsK5tjTSmLosB9UJ9qK7XOohNTf7+LvvaUOO4uKOVhyEtQHjR5S91
+         p3gX9EbK5HcBUSyeQuu+3Nz6/+qtSzPpFTx1IcFoM45e99i8KfDBU+qdQhkNUYHuFAs6
+         lyizmZJoOt26duFNH/DD+XhNvu107obCFts/t5oHade/7JiPnNW+rC1PU4/3Av4R6YZQ
+         LHMJDWEG9qHLy2xth453a9Xzw2sYbscE/lXwsVSWGBIr1K1sbtrBzOSzTzMFbBH+6viF
+         ThAuUAv08ORPK7NscZlEGV+cJ+ktTDMT2j+sMiA1iqgyM0Jf+Mb8ZTrG9npcLLI3XBpN
+         cHdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:from:subject:message-id
-         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=yPawf4lLwLsw+7SoDwNnquhxtzEFskP9yEb/vYY3Deg=;
-        b=v7rNmc3LbqTBNE9GhXIR42p+X7LF+RZcU1djhs9OSJkxudkpTwEPAQM7+WoxvDsy5a
-         DNv90UBf35/1jHMF6RaaPV4wadTiJwM82jIYFSG3wDI9T/9mjZuuo7oE1whguUkT5Wd2
-         O4J6JQG378h83NU+aYfnbGbrNhZhNzXXVOAl76f6X8DPx8JKSgk9QUoQeJXbduol0DdW
-         CQC+pY/jAiY01xaCbRVIlfteAWikLNHUBysGGuPHb26U5fPU0Ic8fxoVMg8/eOSMRgQu
-         c5lr6SuH5frVCI1TyWLFB+AIKL7H7K+p5tBVK0gX6f8TE488QQAMjuMZf3OqAtnXhGJh
-         W6WQ==
-X-Gm-Message-State: ANoB5pnbkLv3kkE8saenqoq/NgDCv9TCQF86P9nZEkpkaFo01i35aAlN
-        Vs5YS4EYWqrdtbaM/rQy1cQrvX4xLoZc+fnnwW6p
-X-Google-Smtp-Source: AA0mqf6qDl43/pcLj2nPtI4Bb5qbm58qgSglPP2Rlt+WKI0KiZrWg+GUXhBS8oQ0OT095nXlIbKz3xSP6awJqRfVn7BT
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a0d:e801:0:b0:3e7:c742:f827 with
- SMTP id r1-20020a0de801000000b003e7c742f827mr18780801ywe.91.1670455585448;
- Wed, 07 Dec 2022 15:26:25 -0800 (PST)
-Date:   Wed,  7 Dec 2022 15:26:23 -0800
-In-Reply-To: <221207.86pmcva2s8.gmgdl@evledraar.gmail.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.39.0.rc0.267.gcb52ba06e7-goog
-Message-ID: <20221207232623.1439026-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v2 2/3] object-file: emit corruption errors when detected
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org, gitster@pobox.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        bh=qIkKlFQDOhEj7oMj6XZ4xGq8mAGVrm24FEx0czLDzk8=;
+        b=v/OhZ1QX6LgCjpWMrSL+C6xBu761a5I+m0fqKpQ+rET7VEsjVHtemCHugTGC9xE4BO
+         JXh5cKAJBjS9YriB3jgEpp9U0IZftPiWWDave+xVSUPOYfW+UrvLHqkr4iG49PAqMwAw
+         LlJd7w7kMFh5rIqwMglrN6aecEHCNf349HtSR/cAU2Sy5IhASuzc+dPY+BRt1SyC+JzY
+         HzPpWz8lB3YpFHz1MUM4JarwyVRzAiITYDqK23b/x0D+tlFq15XLzRFJTvIO/sLlb+5U
+         rvzcFnCcMNLQtPLrnYhN0tKQF3i9ydoyMeWebWAcKxRjT7gNptoHKk66e1Lz0lqap1uO
+         BrmQ==
+X-Gm-Message-State: ANoB5plIQnLT7ztOLLsaTjfVHMBqy1j+BF2YRrw9F5nKqpjjQbMlAZ0T
+        vFB4o6y/I/YzvEuGKSltfDk=
+X-Google-Smtp-Source: AA0mqf68pQj5xsT3w7JG8nBHq8wZR975kAlhGcdUYpG61Rx/x1UC2zr6S/aGZ2ZlgJKMPlzbYpLeIg==
+X-Received: by 2002:a17:902:eb83:b0:189:e909:32e3 with SMTP id q3-20020a170902eb8300b00189e90932e3mr1152995plg.40.1670455642743;
+        Wed, 07 Dec 2022 15:27:22 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id e12-20020a170902784c00b001888cadf8f6sm15034628pln.49.2022.12.07.15.27.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Dec 2022 15:27:22 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, vdye@github.com, avarab@gmail.com,
+        newren@gmail.com, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 0/4] Optionally skip hashing index on write
+References: <pull.1439.git.1670433958.gitgitgadget@gmail.com>
+Date:   Thu, 08 Dec 2022 08:27:22 +0900
+In-Reply-To: <pull.1439.git.1670433958.gitgitgadget@gmail.com> (Derrick Stolee
+        via GitGitGadget's message of "Wed, 07 Dec 2022 17:25:54 +0000")
+Message-ID: <xmqqilim6bhh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Yeah, I think that's even better, although...
+> Writing the index is a critical action that takes place in multiple Git
+> commands. The recent performance improvements available with the sparse
+> index show how often the I/O costs around the index can affect different Git
+> commands, although reading the index takes place more often than a write.
 
-[snip]
-=20
-> > It's also kind of weird that map_loose_object_1() is a noop on a
-> > negative descriptor. That technically makes this correct, but I think i=
-t
-> > would be much less surprising to always take a valid descriptor, and
-> > this code should do:
-> >
-> >   if (fd)
-> > 	return -1;
-> >   return map_loose_object_1(r, path, fd, size);
-> >
-> > If we are going to make map_loose_object_1() less confusing (and I thin=
-k
-> > that is worth doing), let's go all the way.
->=20
-> ...maybe we should go further in the other direction. I.e. with my
-> earlier suggestion we're left with the mess that the "fd" ownership
-> isn't clear.
+The sparse-index work is great in that it offers correctness while
+taking advantage of the knowledge of which part of the tree is
+quiescent and unused to boost performance.  I am not sure a change
+to reduce file safety can be compared with it, in that one is pure
+improvement, while the other is trade-off.
 
-With Peff's suggestion I think we can make the function always close
-the fd. If we find it not to be clear, we can rename the function
-to ..._close_fd() or something like that.
+As long as we will keep the "create into a new file, write it fully
+and fsync + rename to the final" pattern, we do not need the trailing
+checksum to protect us from a truncated output due to index-writing
+process dying in the middle, so I do not mind that trade-off, though.
 
-Thanks to both of you for your suggestions.
+Protecting files from bit flipping filesystem corruption is a
+different matter.  Folks at hosting sites like GitHub would know how
+often they detect object corruption (I presume they do not have to
+deal with the index file on the server end that often, but loose and
+pack object files have the trailing checksums the same way) thanks
+to the trailing checksum, and what the consequences are if we lost
+that safety (I am guessing it would be minimum, though).
+
+Thanks.
