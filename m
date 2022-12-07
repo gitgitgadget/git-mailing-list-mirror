@@ -2,123 +2,79 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0AC3C63705
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 22:34:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0175C63705
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 22:40:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229601AbiLGWeT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Dec 2022 17:34:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37466 "EHLO
+        id S229593AbiLGWkZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Dec 2022 17:40:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229437AbiLGWeS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2022 17:34:18 -0500
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87C00CFD
-        for <git@vger.kernel.org>; Wed,  7 Dec 2022 14:34:17 -0800 (PST)
-Received: by mail-ed1-x52f.google.com with SMTP id s5so26870712edc.12
-        for <git@vger.kernel.org>; Wed, 07 Dec 2022 14:34:17 -0800 (PST)
+        with ESMTP id S229437AbiLGWkY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2022 17:40:24 -0500
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75B7883240
+        for <git@vger.kernel.org>; Wed,  7 Dec 2022 14:40:23 -0800 (PST)
+Received: by mail-il1-x129.google.com with SMTP id x11so7664955ilo.13
+        for <git@vger.kernel.org>; Wed, 07 Dec 2022 14:40:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8fngCtuMxJnGW05iXuRF5fK6SJuSpEbCuc+/JP4objs=;
-        b=f/L3b/p/yNStMituhOBWMMY2B1BNnCZaTxNQd2xYuF9nv021h53cW9yWSw8tqOSEgk
-         bbwryUlAGjg1mbBDmSNyZBWoquLbocwmPB1zK6eA1uLHah2e3MyZ367o0hbDIEHfPwGu
-         wGC3gFU4ZcqPqGuvRnvE3X6BmLclKu/W6F7LRCOIisO4L55HhcfzXIRsRWpXMVCQ267g
-         aUtj7pZlx5suL9cY8m0ueRZTAEpqDV5Z8ENNZbnge26pH6SzFOSP0FqS/IfrGczEML5I
-         QRMLLtOEWd25DCEv05shuO2ZypIHf/Q0wSFilfp6YxmjWIyLsV062Njx8eBWXQ89m68P
-         co1Q==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=BuJcS99cuDtxi+P9lLHQT0oPWPXWodCCPVIW6iugAIg=;
+        b=WNfsbebk7MdfSvsMvkQEKwr3hKUR92qwye96f3sgCufYSe2e+5UFLMxeW48SyqHy0C
+         hWv8qdN3H9F3wgMInCjHnorSHVLSTv4AJ2wraBHPkm73yp1Wd7Kd5zOmzHBareTxW3ds
+         tqZY/QMRpJwAuRTHMzLmrFGuM0ySg6vGju+AoAJKbQWjSFJ7Hl2G+jYtDBZ75OvoesvB
+         A4NhNHcXqVUT2s7NxjYKm67k5NRIsfVspXIbVRsSRPaRvi2K9rJEwBCWP9e+qI/n/Lbw
+         5323h61G3Ao8uoWHwCTX7XJfb8AnbKNf5z5Ooq8/Qvor6R4l2rYNBVJmTlsRQ7tPuSi9
+         TK6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8fngCtuMxJnGW05iXuRF5fK6SJuSpEbCuc+/JP4objs=;
-        b=D6qsGEu7or7bvRW20TWOIAruMNhGxD7NmpKDDqZe5jXlWhY3CjVH+Q8+kBdmUsH7MB
-         hm0E+kR1xbyQ4rgR9T7oHxcdYecNOCv+icypPptAy1s2aIJCbqf3rSlFQZcQ0gySxFyy
-         X/s7S2I9YPgMVixXWQo3DoeVPbe05Wniw1PREnKfwd6x5PzrgViaKYS6wWeqoitZPhOR
-         twi11nA2vrNqeajLqm2Ky0p/plv29UT6lHYHdvzGehBwq20PmwYmLA2NJLp2j9HjnuWP
-         8RGkNK1MRKpyByoPQsvZLQpxjJLY3m0ZpOO3MDBPebT9hI4UAjHU0C9wnim/vDZ7OH9x
-         qkbg==
-X-Gm-Message-State: ANoB5pne52/jZS+FQIvcqxB3SNtrr5ov2vcX7pZ/RJX7Y0owfbsHewq/
-        iBHIpsGGkZRSMbYUlFgn5a1j2DMVcpmr4A==
-X-Google-Smtp-Source: AA0mqf7TYyojsVEMTjYhxV9R4pR4Pq8kQNFe/GG3Id358/2O43spgKwjdxUatNa9zUYCnKKaeiBkvQ==
-X-Received: by 2002:a05:6402:e06:b0:461:9764:15f0 with SMTP id h6-20020a0564020e0600b00461976415f0mr1082629edh.38.1670452455682;
-        Wed, 07 Dec 2022 14:34:15 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id y7-20020aa7ce87000000b0045c3f6ad4c7sm2713071edv.62.2022.12.07.14.34.15
+        bh=BuJcS99cuDtxi+P9lLHQT0oPWPXWodCCPVIW6iugAIg=;
+        b=p+krrxvGtrwd91b2lgHMDzOzdidUZu7LeCkyyTqCImAWxnajL51jj41DuG+xoOg7TN
+         LcV0pPIg9CW9a4nDAVqInTIBxskQ/GoBEkBYvL3h7SS4nG0N3nsVR2DaI6PLeo2s4uhf
+         ZcPDVqtaytP2/sDivTAg3xVYxNQGVqi6/8uJWlNHdDSAlUn+OELkh4FoyiSlyX5mA8P3
+         vydNLxVYFDAhHuiPyY+4MCjjQw/m5rkUcNBRxcU+0uvIZilA0/H19gm1nY7OZ0dO5YGp
+         8qOrE4B6qkCT3NvfWlwKXNJQ7nbBHVDuL7NrI4BwVwzlPr2CjMrZB2Lmam4UkveuOKCk
+         E0dQ==
+X-Gm-Message-State: ANoB5plYtlH1mPdTp57C5Jmm63AprRetLSLlrvDatZzju9c+S3P7NcQj
+        MXfiMfNaep5Y4QuQ49nnvKgjzBgjUOYrqAej
+X-Google-Smtp-Source: AA0mqf42QjaQqMYU3BLqg6iTiW3xJu5655HVc5imeGKZRxcZtjZJ4iRVyY4jAcimqSxjEeB4b5etfA==
+X-Received: by 2002:a92:ccc2:0:b0:302:f954:e7a with SMTP id u2-20020a92ccc2000000b00302f9540e7amr673801ilq.24.1670452822845;
+        Wed, 07 Dec 2022 14:40:22 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id q18-20020a920512000000b0030341bffab8sm240349ile.31.2022.12.07.14.40.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 14:34:15 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1p32zU-004cmL-2D;
-        Wed, 07 Dec 2022 23:34:12 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, vdye@github.com,
-        newren@gmail.com, Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 4/4] features: feature.manyFiles implies fast index writes
-Date:   Wed, 07 Dec 2022 23:30:04 +0100
-References: <pull.1439.git.1670433958.gitgitgadget@gmail.com>
- <77bf5d5ff27729a39ac00d52af3c09610d733b14.1670433958.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <77bf5d5ff27729a39ac00d52af3c09610d733b14.1670433958.git.gitgitgadget@gmail.com>
-Message-ID: <221207.86v8mm972z.gmgdl@evledraar.gmail.com>
+        Wed, 07 Dec 2022 14:40:22 -0800 (PST)
+Date:   Wed, 7 Dec 2022 17:40:16 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/4] Avoid using deprecated features in Git's GitHub
+ workflows
+Message-ID: <Y5EWUNbR1X+GrrNs@nand.local>
+References: <pull.1440.git.1670423680.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1440.git.1670423680.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Dec 07, 2022 at 02:34:36PM +0000, Johannes Schindelin via GitGitGadget wrote:
+> Johannes Schindelin (4):
+>   ci: use a newer `github-script` version
+>   ci: avoid deprecated `set-output` workflow command
+>   ci: avoid using deprecated {up,down}load-artifacts Action
+>   ci(l10n): avoid using the deprecated `set-output` workflow command
 
-On Wed, Dec 07 2022, Derrick Stolee via GitGitGadget wrote:
+These all look reasonable to me, minus the first one which is already
+on 'master' as-is (unless I am missing something, but see my reply to
+that email).
 
-> From: Derrick Stolee <derrickstolee@github.com>
-> [...]
-> diff --git a/read-cache.c b/read-cache.c
-> index fb4d6fb6387..1844953fba7 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -2923,12 +2923,13 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
->  	int ieot_entries = 1;
->  	struct index_entry_offset_table *ieot = NULL;
->  	int nr, nr_threads;
-> -	int skip_hash;
->  
->  	f = hashfd(tempfile->fd, tempfile->filename.buf);
->  
-> -	if (!git_config_get_maybe_bool("index.skiphash", &skip_hash))
-> -		f->skip_hash = skip_hash;
-> +	if (istate->repo) {
-> +		prepare_repo_settings(istate->repo);
-> +		f->skip_hash = istate->repo->settings.index_skip_hash;
-> +	}
-
-Urm, are we ever going to find ourselves in a situation where:
-
- * We have read the settings for the_repository
- * We have an index we're about to write out as our "main index", but
-   the istate->repo *isn't* the_repository.
- * Even then, wouldn't the two copies of the repos have read the same
-   repo settings?
-
-But maybe there's a really obvious submodule / worktree / whatever edge
-case I'm missing.
-
-But if not, shouldn't we just always read/write this from
-the_repository?
-
-> +		rm -f .git/index &&
-> +		git -c feature.manyFiles=true \
-> +		    -c index.skipHash=false add a &&
-> +		test_trailing_hash .git/index >hash &&
-> +		! test_cmp expect hash
-
-We had a parallel thread where we discussed "! test_cmp" being an
-anti-pattern, i.e. you want them not to be the same, but you want it to
-still show a diff, Maybe just "! cmp" ?
-
-I.e. either the diff will be meaningless, or we really should be
-asserting the actual value we want, not what it shouldn't be.
-
-so in this case, shouldn't we assert that it's the 0000... value, or the
-actual hash (depending on which way around we're testing this)?
+Thanks,
+Taylor
