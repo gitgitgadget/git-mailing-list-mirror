@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D9CF2C352A1
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 14:34:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8ACDFC63703
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 14:34:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230150AbiLGOeu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Dec 2022 09:34:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32886 "EHLO
+        id S229677AbiLGOex (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Dec 2022 09:34:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229565AbiLGOer (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2022 09:34:47 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA3E449085
-        for <git@vger.kernel.org>; Wed,  7 Dec 2022 06:34:45 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id m4-20020a05600c3b0400b003d1cb516ce0so1156569wms.4
-        for <git@vger.kernel.org>; Wed, 07 Dec 2022 06:34:45 -0800 (PST)
+        with ESMTP id S230123AbiLGOet (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2022 09:34:49 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 071394E425
+        for <git@vger.kernel.org>; Wed,  7 Dec 2022 06:34:48 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id f18so28356733wrj.5
+        for <git@vger.kernel.org>; Wed, 07 Dec 2022 06:34:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Q3lbsUXsX4QDHLsVyWRGwYr1rFpXg7abGuNXULKPQgo=;
-        b=Leugf6vrly/iyC6OIvKu4WtuP1onDBuGS3vNcj/0j6AQaWKihM3mXAKQjVaKtIYcFr
-         JqkT1wC3ulJXXLOEkGZy5A4ej5vS9UWjGAokkwu556c5RLZzo6R0OnZPiNqYfStqDGlU
-         dbk9qln0pPIkYm2uiD1JVrPwiw1aM4/wrzSdJS8twQWMKtSnYdUbCLDfR2ah45vL7qXm
-         m1PmZiLorpPqMJoBanztlKWNEbwkOQxIcvVbeWngviRGe6fjYTag/7eeR8Hw1gnTYxFf
-         2tnlWCt934lTKPftZQcvXw6QIS1l+79oR/Cv95z6NU0Qdhjw0iAkkobMbRdYA0sxqsFn
-         YkQQ==
+        bh=6WmURY8YfLexVIrO9Za9daYjGb0I8oqr1bINI3k7xpA=;
+        b=kgrsWOpa0DESIJLtGytUotgbOpv4gbnR/sJR1eSwX4KPqArVQAq5204tU3nkSp7ehi
+         1NbdQ4O0Wlqv+J7FvR+Tjq4vfPx/0aHt/bi96ffUJEqxi6VDDuiD4WfoLDZRTYQ8ehgH
+         sYqYel+8YeW7/XJ8Af98Biks+ZhzsF9/VflOtDjnL3kZveHpzBZKEgsPYl0nXitOnYZU
+         cbnt6K2Iqd0QA0TT4NHE1ZZ8gKA6w1+S6+P4k2cdMhEc2lSe9KfzhyUIRVSEu4eKeG85
+         GHENgKWLBfNyBKC/jaHuLpN2VOSQMZfK3HoM0y3sbYZ0qR8aA+eJWQALFMYUKYElIpKd
+         To1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Q3lbsUXsX4QDHLsVyWRGwYr1rFpXg7abGuNXULKPQgo=;
-        b=N2NYh8J2rO+7Mq8yvdkON8XvKf7fEQFYrU+Ymq42ZYBwAeMjVZFg5oHarUdQq9pRlC
-         8G/kIFnZjU4eGDrZof0jGYdBGXfQbZrHAG2klm79Jbg0YWmRwEW360xHNiiZzPniGc50
-         YF0koIxD3EXIqvvVR7lhlaKNYi16jUsLvr7T4kHFQcUL1/4lLeJdn842pd3MMv7ITXty
-         dAitqlkMCrVtqACMSDOKWeFYKEZMf5ysAU6OjeIs4yi4Crn0q8VncZD2GHzPfFgL6rGn
-         BQJRNsmSYvogglyyYQ5gHGyCl84svo9J2INAlIDxsGSw1ldaDlrwBTuZAqfdVpWiZA3Z
-         kPLA==
-X-Gm-Message-State: ANoB5pmNM5fx5gm2cqVFktO1GlU0dzy+HULNt8SQ6PjIOCu5IHoY2UO9
-        f6HmrH9OrZBvxfiC3gbFwejhacaiPjw=
-X-Google-Smtp-Source: AA0mqf7Pd6edRLV+J0U78CgIo72guJSYSUalkdQghMf4Ro23bPjphPO3lxZA09bvcQpdRGiufd3nYA==
-X-Received: by 2002:a1c:e903:0:b0:3a8:4d01:28e8 with SMTP id q3-20020a1ce903000000b003a84d0128e8mr54372561wmc.94.1670423683819;
-        Wed, 07 Dec 2022 06:34:43 -0800 (PST)
+        bh=6WmURY8YfLexVIrO9Za9daYjGb0I8oqr1bINI3k7xpA=;
+        b=pRqObvw7KAA76g5uSxXuOFVI0qUCfNhY/PIa398c+PsLBcz8XNrLE0vL6fgHkDbpnC
+         qJyHDHKOxorA1LlG4ciKWkDspXnewQUQWVa6Nkrjz1wx9HEyG6V4QEMqEJMo8fbk0rbc
+         A0lXKXRbgDyBAVazFFWNro2HZJTCSUL7+2FSk8gAEFggjU3l1LekhYSIUzGlNKYey8vV
+         11CRho8GRVR9tuu98tx6HwkyDyoJkfXm4wpfocnok7STZukxHIaxjwLEftXkH74oPqp1
+         fL9kr55a5jZ/L39GD6wm6ibHOQ7vRSI+uFJCcTmq8VTP5xkXuIP7zGt8LjLjFfDG7CeS
+         ZcRg==
+X-Gm-Message-State: ANoB5pllDFdUbudKkfFXiDNLTMxewT67hBfNTvbJvOMpootS0GqX5WNM
+        7VytGlCeAq6X5BVR7n3qPtJQWo41dJU=
+X-Google-Smtp-Source: AA0mqf6I/vFNLdXIh68xgfny/00bprJIV+mPHikD9MxnflO1osizGEvU48Uwwk68XvumSz/oRFvGpw==
+X-Received: by 2002:a5d:6751:0:b0:242:122c:6672 with SMTP id l17-20020a5d6751000000b00242122c6672mr29773472wrw.330.1670423685717;
+        Wed, 07 Dec 2022 06:34:45 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l5-20020a5d5605000000b002367ad808a9sm19549700wrv.30.2022.12.07.06.34.42
+        by smtp.gmail.com with ESMTPSA id i82-20020a1c3b55000000b003d1ee3a6542sm1867127wma.47.2022.12.07.06.34.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 06:34:42 -0800 (PST)
-Message-Id: <472481561f03900fb519065d88ae8af910bea794.1670423680.git.gitgitgadget@gmail.com>
+        Wed, 07 Dec 2022 06:34:44 -0800 (PST)
+Message-Id: <1693393443975bc25f3020e61a29944804e35601.1670423680.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1440.git.1670423680.gitgitgadget@gmail.com>
 References: <pull.1440.git.1670423680.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 07 Dec 2022 14:34:37 +0000
-Subject: [PATCH 1/4] ci: use a newer `github-script` version
+Date:   Wed, 07 Dec 2022 14:34:38 +0000
+Subject: [PATCH 2/4] ci: avoid deprecated `set-output` workflow command
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,49 +68,28 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The old version we currently use runs in node.js v12.x, which is being
-deprecated in GitHub Actions. The new version uses node.js v16.x.
-
-Incidentally, this also avoids the warning about the deprecated
-`::set-output::` workflow command because the newer version of the
-`github-script` Action uses the recommended new way to specify outputs.
+Due to security concerns, this command was deprecated and we need to
+write into `$GITHUB_OUTPUT` instead. For more details, see
+https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- .github/workflows/main.yml | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ .github/workflows/main.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 5262823eb1c..43d47824dd3 100644
+index 43d47824dd3..1e95aa86b6c 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -37,14 +37,14 @@ jobs:
-           echo "::set-output name=enabled::$enabled"
+@@ -34,7 +34,7 @@ jobs:
+           then
+             enabled=no
+           fi
+-          echo "::set-output name=enabled::$enabled"
++          echo "enabled=$enabled" >>$GITHUB_OUTPUT
        - name: skip if the commit or tree was already tested
          id: skip-if-redundant
--        uses: actions/github-script@v3
-+        uses: actions/github-script@v6
-         if: steps.check-ref.outputs.enabled == 'yes'
-         with:
-           github-token: ${{secrets.GITHUB_TOKEN}}
-           script: |
-             try {
-               // Figure out workflow ID, commit and tree
--              const { data: run } = await github.actions.getWorkflowRun({
-+              const { data: run } = await github.rest.actions.getWorkflowRun({
-                 owner: context.repo.owner,
-                 repo: context.repo.repo,
-                 run_id: context.runId,
-@@ -54,7 +54,7 @@ jobs:
-               const tree_id = run.head_commit.tree_id;
- 
-               // See whether there is a successful run for that commit or tree
--              const { data: runs } = await github.actions.listWorkflowRuns({
-+              const { data: runs } = await github.rest.actions.listWorkflowRuns({
-                 owner: context.repo.owner,
-                 repo: context.repo.repo,
-                 per_page: 500,
+         uses: actions/github-script@v6
 -- 
 gitgitgadget
 
