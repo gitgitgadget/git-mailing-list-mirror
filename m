@@ -2,158 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9CD5BC4708D
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 22:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 48F51C4708D
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 22:22:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229670AbiLGWVw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Dec 2022 17:21:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58110 "EHLO
+        id S229593AbiLGWWj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Dec 2022 17:22:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58808 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229589AbiLGWVv (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2022 17:21:51 -0500
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2294C63D48
-        for <git@vger.kernel.org>; Wed,  7 Dec 2022 14:21:50 -0800 (PST)
-Received: by mail-ej1-x62e.google.com with SMTP id kw15so13879360ejc.10
-        for <git@vger.kernel.org>; Wed, 07 Dec 2022 14:21:50 -0800 (PST)
+        with ESMTP id S229586AbiLGWWh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2022 17:22:37 -0500
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D42E7D49
+        for <git@vger.kernel.org>; Wed,  7 Dec 2022 14:22:35 -0800 (PST)
+Received: by mail-io1-xd33.google.com with SMTP id v1so8087875ioe.4
+        for <git@vger.kernel.org>; Wed, 07 Dec 2022 14:22:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=NJrN9mX49vxsBY9V4TNEuPnFJHClU1J2430kCDPX0Ew=;
-        b=AxL6TfY/6QYf6lwO8fZNifoyKCT5wNrKffIApzsAs6CP/c5Kd5pYEbC4VwumzYqqWA
-         eba4bBAjMUYdzKlbM4XT0GNDOlaIfzb/vU+BFUzlyc+QlHc9Qz1NgwxkpxUdenKKmZC2
-         TeSzwCNo77VIjcFVYItw2oJSAR9ttEwcMs3kkECJccb1JhfO61mDE8Np/k9M2n0sGWo3
-         DY7PDrx2eOccueV1GshwidQShZPTUcJl2lDerRGXTK+FWyliMiWG8E2Ko0bgf4yzCSiK
-         N0+cC3ndw4LDullcnoSRe1t0GHRkB+L/hP31UwKQVi5CWsS3mhHLdSnPUZPl2aUrNhLa
-         5kjA==
+        d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=oKS3lE9HeaYRwOhYwB2EuryiA7ZomLA9ntRmteP/33s=;
+        b=z1CUqHm9Oo5o3KlXghcopiec2xTMFKv8eyIKLTkabMMHXRLlPTMtJnlGwL9YBibKwV
+         764H7v3Ec341DZiHUpNq349WhijiBJ0wE+4afSRy+aoatAKpRImRoodij99P9nCP+Sc1
+         saWGakmouHThcsIbQqfFqCBtSZw84vGGRH1PPT+tsu28n/gA1EBmx+n6QCPK61X+YIet
+         3mjxU6wKkREoAgspKMn+cbuNCEFKQ/GWXZ5GRW7vJiQco8QZ5o7ogrGTdSeNn+6uxoFh
+         ztU8UDF5IZ2/IMsnzs/rxUtxKL2QrM452vgUE+ZnOpKWjl7mHKddqis9JRKNgMZgS5oo
+         jIxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NJrN9mX49vxsBY9V4TNEuPnFJHClU1J2430kCDPX0Ew=;
-        b=NL3MVFQQYLVonjcIO4pK16JntY8xd6AXk/oKDa2qif65V7XTJscPl8gNPKMejUWCnV
-         TJL743iB9oJtYcCXlX78mRkE3F1ZG7R2YzpIueW9jADbhNZQDtK3J8Hrw1jSSLyybG0m
-         /5MjLiisdgEPUbUU8pd+COpNEAAUxYKnP/NkMFr10kiB+bnb7TvukVEASolydqMQtUOu
-         YkUk8QdOvv/9S0GNNgA6fC1qO1ScfNSq5kPj+oDDvZU2f8Ohy8b0UVyZJ6SU3oZgMj0+
-         MlPHpwwliokMpYyawFw5NRhCDArxicdrg70WY8JXKz+SwnR2ciU3RuZVn+fwp604EtSu
-         5P7A==
-X-Gm-Message-State: ANoB5plACIurVY1krWCjYHxFV1fFQnzExrrdnI2ttdZ6TGlFh3iaBi+S
-        epRnUE7IWqoQkPEQTnaacblkF8avHAFcBg==
-X-Google-Smtp-Source: AA0mqf4N/isshqDD+6iycXJyAQGw/cv3thVfHqkvWfR+YPzLj+FzvfKXoXN/c9Xc7f/pbfJRARnUxw==
-X-Received: by 2002:a17:907:2ace:b0:7c1:eb:b2a7 with SMTP id fm14-20020a1709072ace00b007c100ebb2a7mr621409ejc.13.1670451708153;
-        Wed, 07 Dec 2022 14:21:48 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id r23-20020a170906281700b007c0b9500129sm7402236ejc.68.2022.12.07.14.21.47
+        bh=oKS3lE9HeaYRwOhYwB2EuryiA7ZomLA9ntRmteP/33s=;
+        b=ISE90hQCUG5Zh2XQ7LHXowO0OXYKkfWrdGWzvjNyTGF1amqgcxE1sFcSHBtcYGQ9Ms
+         jv/IoTD67DrKqypSRXRU4YYKWCb2OzhYIFpT2Prw34h2Pn4ba7wFoguIBqZiEDEdLTB5
+         lH7CiFPKyzwPzHo5fU/TNY/TnduDMY9AOgSEcEgDe2s/yw3i0er9T/vEGCIWngMJRgKi
+         zDu46NynMcnJ88lGbS2q9ESSIudjra5TRnGfC1nIfn3lfkY8ggB23qso/MH/xa9BZ4Qh
+         t0VbhVbwq6Fxnq8+QIeAYxA6afXfr3qDd2wJWZjsRMEmFdav6vzlKya/9hIsbGDCwbB2
+         JQRg==
+X-Gm-Message-State: ANoB5plRXCEgn1tCbJgDeVcyQksmdSOlGXDjs8uHiU11WF+O2wwHrCIv
+        NPhjREqjOEz7dqKorHhwwA2aUw==
+X-Google-Smtp-Source: AA0mqf7geRYlQA0/oDrXQUkAv85kMZ6NAODwEG1HmrPPUjz50cqHvmcULCOw1KJjkL7E883eJT+PZw==
+X-Received: by 2002:a5d:9904:0:b0:6bd:1f62:6c97 with SMTP id x4-20020a5d9904000000b006bd1f626c97mr607935iol.3.1670451755254;
+        Wed, 07 Dec 2022 14:22:35 -0800 (PST)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with ESMTPSA id g66-20020a028548000000b0038a183cb719sm6641208jai.141.2022.12.07.14.22.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 14:21:47 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1p32nR-004cJD-0l;
-        Wed, 07 Dec 2022 23:21:45 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, vdye@github.com,
-        newren@gmail.com, Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 1/4] hashfile: allow skipping the hash function
-Date:   Wed, 07 Dec 2022 23:13:15 +0100
-References: <pull.1439.git.1670433958.gitgitgadget@gmail.com>
- <40ee8dbaef06f8f4265d12436455279499d7ac01.1670433958.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <40ee8dbaef06f8f4265d12436455279499d7ac01.1670433958.git.gitgitgadget@gmail.com>
-Message-ID: <221207.868rjiam86.gmgdl@evledraar.gmail.com>
+        Wed, 07 Dec 2022 14:22:34 -0800 (PST)
+Date:   Wed, 7 Dec 2022 17:22:33 -0500
+From:   Taylor Blau <me@ttaylorr.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/4] ci: use a newer `github-script` version
+Message-ID: <Y5ESKYvOyrnbCV+B@nand.local>
+References: <pull.1440.git.1670423680.gitgitgadget@gmail.com>
+ <472481561f03900fb519065d88ae8af910bea794.1670423680.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <472481561f03900fb519065d88ae8af910bea794.1670423680.git.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Dec 07, 2022 at 02:34:37PM +0000, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> The old version we currently use runs in node.js v12.x, which is being
+> deprecated in GitHub Actions. The new version uses node.js v16.x.
+>
+> Incidentally, this also avoids the warning about the deprecated
+> `::set-output::` workflow command because the newer version of the
+> `github-script` Action uses the recommended new way to specify outputs.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
 
-On Wed, Dec 07 2022, Derrick Stolee via GitGitGadget wrote:
+It took me a second to remember why my S-o-b was here, but it looks like
+this is from when I queued this patch in [1], which is on 'master' as of
+63357b79c9 (ci: use a newer `github-script` version, 2022-11-08).
 
-> From: Derrick Stolee <derrickstolee@github.com>
-> [...]
-> However, hashing the file contents during write comes at a performance
-> penalty. It's slower to hash the bytes on their way to the disk than
-> without that step. This problem is made worse by the replacement of
-> hardware-accelerated SHA1 computations with the software-based sha1dc
-> computation.
+So having my S-o-b here is definitely OK (since I was the one who put it
+there in the first place!), but I don't think we need to re-queue this
+patch, unless it was reverted out in the meantime (which it doesn't
+appear to be).
 
-More on that lack of HW accel later...
+Thanks,
+Taylor
 
-> This write cost is significant
-
-Don't you mean hashing cost, or do we also do additional writes if we do
-the hashing?
-
-> , and the checksum capability is likely
-> not worth that cost for such a short-lived file. The index is rewritten
-> frequently and the only time the checksum is checked is during 'git
-> fsck'. Thus, it would be helpful to allow a user to opt-out of the hash
-> computation.
-
-I didn't know that, and had assumed that we at least checked it on the
-full read (and I found this bit of the commit message after writing the
-last paragraphs here at the end, so maybe skipping this is fine...).
-
-> [...]
-> @@ -64,7 +65,12 @@ int finalize_hashfile(struct hashfile *f, unsigned char *result,
->  	int fd;
->  
->  	hashflush(f);
-> -	the_hash_algo->final_fn(f->buffer, &f->ctx);
-> +
-> +	if (f->skip_hash)
-> +		memset(f->buffer, 0, the_hash_algo->rawsz);
-
-Here you're hardcoding a new version of null_oid(), but we can use it
-instead. Perhaps:
-	
-	diff --git a/csum-file.c b/csum-file.c
-	index 3243473c3d7..b54c4f66cbb 100644
-	--- a/csum-file.c
-	+++ b/csum-file.c
-	@@ -63,11 +63,12 @@ int finalize_hashfile(struct hashfile *f, unsigned char *result,
-	 		      enum fsync_component component, unsigned int flags)
-	 {
-	 	int fd;
-	+	const struct object_id *const noid = null_oid();
-	 
-	 	hashflush(f);
-	 
-	 	if (f->skip_hash)
-	-		memset(f->buffer, 0, the_hash_algo->rawsz);
-	+		memcpy(f->buffer, noid, sizeof(*noid));
-	 	else
-	 		the_hash_algo->final_fn(f->buffer, &f->ctx);
-	 
-> @@ -153,6 +160,7 @@ static struct hashfile *hashfd_internal(int fd, const char *name,
->  	f->tp = tp;
->  	f->name = name;
->  	f->do_crc = 0;
-> +	f->skip_hash = 0;
->  	the_hash_algo->init_fn(&f->ctx);
->  
->  	f->buffer_len = buffer_len;
-
-I think I pointed out in the RFC that we'd be much faster with
-non-sha1collisiondetection, and that maybe this would get us partway to
-the performance you desired (or maybe we'd think that was a more
-acceptable trade-off, as it didn't make the format
-backwards-incompatible).
-
-But just from seeing "do_crc" here in the context, did you benchmark it
-against that? How does it perform?
-
-There's no place to put that in the index, but we *could* encode it in
-the hash, just with a lot of leading zeros.
-
-Maybe that would give us some/most of the performance benefits, with the
-benefit of a checksum?
-
-Or maybe not, but I think it's worth exploring & supporting a different
-& faster SHA-1 implementation before making (even opt-in) backwards
-incompatible format changes for performance reasons, and if even that's
-too slow maybe crc32 would be sufficient (but not compatible), but still
-safer?
+[1]: https://lore.kernel.org/git/Y2q9723uEtfkJrah@nand.local/
