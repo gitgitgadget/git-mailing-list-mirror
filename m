@@ -2,141 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B040CC352A1
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 12:14:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DD7CC352A1
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 12:30:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229720AbiLGMOI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Dec 2022 07:14:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39944 "EHLO
+        id S229785AbiLGMa0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Dec 2022 07:30:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229678AbiLGMOG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2022 07:14:06 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FC7F64C2
-        for <git@vger.kernel.org>; Wed,  7 Dec 2022 04:14:05 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id r26so24571735edc.10
-        for <git@vger.kernel.org>; Wed, 07 Dec 2022 04:14:05 -0800 (PST)
+        with ESMTP id S229776AbiLGMaX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2022 07:30:23 -0500
+Received: from mail-oa1-x34.google.com (mail-oa1-x34.google.com [IPv6:2001:4860:4864:20::34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A0DB4E686
+        for <git@vger.kernel.org>; Wed,  7 Dec 2022 04:30:22 -0800 (PST)
+Received: by mail-oa1-x34.google.com with SMTP id 586e51a60fabf-1442977d77dso19965541fac.6
+        for <git@vger.kernel.org>; Wed, 07 Dec 2022 04:30:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0U4CYvg345TgUwslJjrzla9xZtICdqklhsD+VcNIn3c=;
-        b=prqPGShLdB1Eue+yzuRJF5K48Lmvy1MbT83dGY9qYPX4r3E3GqV4FAC+apbkldwnhq
-         P0DUbNkt7l1gJl3JA1c3tBp9F3+PHr1B0CE9ojN3Y4e+k+v02arZc0/WV78DoFExgkfE
-         vXb6kRKEf/J9aDEz2dXUZjRLQVYsXlb/BPFdXw08nGjf/ol76g8JQUNH3i2VFP6Te4Xi
-         CNxfoQBZpYGwr2O9FL1g2HoXnfRij+smhsMNti0LVEGyuXrE3gvMDBIhceudO+A/fqs4
-         W70ainiVdyHnC4fN6KSVUSvIxmp7xLZYE1GcTpu3YxmHIPQ9wGsHtujF30c/ygQW3jtx
-         ys9g==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rtTwUXJKoD/00ueo2hB9yuK+P9ZU5hFSO4jtlAxUEzM=;
+        b=JcA6I6AvJjXRsDw9grNV1Y+TUwqz1eCLL3RMcFcMiEvFrOTGzTR8yIV8Q0ECZqXgiS
+         nk0I89MZ4MNqKmCe/07POU7qERt1QQxb8l2B7oJ0FXTItHploAAqpo9ldwQaV9GOk0YO
+         Y5NdCSq3tNtowokIBGqDB6IlLOMQMpTGJ0EsZvK8W0b+i/bXxWdys7jMpXqrE6JNAiGq
+         AyF0H35orZvo7qSNC7p1P6soJMQrmWLBz0IhDAy2jw/ELlvGRAT1iD3c4sTYtgNIZJMF
+         +fDvgvenkXvcbDNJVkR3MSNMM0aIrKE/H+biPOpaFgUm5iqCVmqCLxbX3Kw0ndpdlhmB
+         JblA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0U4CYvg345TgUwslJjrzla9xZtICdqklhsD+VcNIn3c=;
-        b=O2AFjPO6nulsTvIDn5HyDZrGjg0ybsyDQJg8GLu5lJB7cO3AQXbg3h4yLfKszm28/A
-         8MzZPSfuBytVVgPkKrgive87yzdPEITgUOIMH2QD8GGFvAI3DJ6zgCUhKGByBAyL6SD4
-         2sR3vPQr7LuGVMZ2xgs7ZyiYz03EDWe8qneRVwCbmC60Zu+uWy5dnc73RZCmav11Ec4F
-         m65hQt8BNMSeE4xADxlVmpGH8HvhI8oGNNhdY6BfAlaE2kMnnoZJ2otwxGT7/Jyh8M6k
-         kuM11B+tn0YaGs9RBDK1ViNmfpPxKoN2pmrFUpoVlSkO53dfdOlpL9Pzst8+vlP/OS0N
-         jl5g==
-X-Gm-Message-State: ANoB5pkgkaCUgbNec21s5BmvYetvQgQtjXK2eHuW51KLZ2isEZWpJdOQ
-        l3y2NAnQg0A3BJcrqu+rP9k=
-X-Google-Smtp-Source: AA0mqf6iTjkB3HdTkwwAdvNZlHDmkkSgkSz0IA/0wx4Rw4umbn0D6t5En5ZVqnJgmJmMSYvrSM8RgA==
-X-Received: by 2002:aa7:d543:0:b0:46c:d2b3:5fbb with SMTP id u3-20020aa7d543000000b0046cd2b35fbbmr10318884edr.305.1670415243422;
-        Wed, 07 Dec 2022 04:14:03 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id ha7-20020a170906a88700b007c0bb571da5sm6684832ejb.41.2022.12.07.04.14.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 04:14:02 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1p2tJK-004Ptg-17;
-        Wed, 07 Dec 2022 13:14:02 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Victoria Dye <vdye@github.com>
-Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 1/3] [RFC] tests: add test_todo() to mark known breakages
-Date:   Wed, 07 Dec 2022 13:08:25 +0100
-References: <pull.1374.git.1665068476.gitgitgadget@gmail.com>
- <472d05111a38276192e30f454f42aa39df51d604.1665068476.git.gitgitgadget@gmail.com>
- <07d963f0-45f2-ed8e-ea08-bcea14386a4d@github.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <07d963f0-45f2-ed8e-ea08-bcea14386a4d@github.com>
-Message-ID: <221207.86cz8v9zsl.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rtTwUXJKoD/00ueo2hB9yuK+P9ZU5hFSO4jtlAxUEzM=;
+        b=SnXlwL+G0qp+h+LfqbZ2T6w8QvEmVZ8KqZ0OzJmWCZgRBOVxKFc5xPPIApTYUjGBiJ
+         yo49s1uqaMceLGiVEmztB5MxsS0fR92ZRpd+pO2RnVF+M3N7wyz/O32ehtTh0TY78VbN
+         ZelFFKPuZIXER87MBV5HAk1exqmLJ5UMkH1tLt/j0VIBObteF1052eSIZf51iOEOcw8s
+         DGVaVQXPiNquoVkVESwFeZQtEwPVoIrZ6ssAc1NaTDIzFJh7ThXiFLZq5/Df7Fmuuds2
+         RSSE6RrdC8WplFXftyfCwwQGHW1zpvjqpq2VVuh0sPKV7/DPRaWCDmU9OHqkZs83qOVb
+         6hvw==
+X-Gm-Message-State: ANoB5pkjivBd7ISZgaAiW1GjjJZVZpABEEbJsiToRXTkaYizsknaICKI
+        /7uF4GDMyNQ2hR7IZQJuODsabhxhhnP3Tgn+2KE=
+X-Google-Smtp-Source: AA0mqf5LNTbLcTXUFQepyB/GdCzg+MQ4gLMUxD8diwsMUC9kMMrTrnPdWlNXZ5J5maB+poDfv938tstYB79Ge9eRTcU=
+X-Received: by 2002:a05:6870:f71a:b0:144:e55e:4248 with SMTP id
+ ej26-20020a056870f71a00b00144e55e4248mr746024oab.270.1670416221116; Wed, 07
+ Dec 2022 04:30:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20221206103736.53909-1-karthik.188@gmail.com> <20221206103736.53909-3-karthik.188@gmail.com>
+ <xmqqedtc842m.fsf@gitster.g> <CAOLa=ZS5k=s98Bo9GE+RRa3jtanehL35y-hhLhy1DoM7GyO0cQ@mail.gmail.com>
+ <221207.86h6y7a0l7.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221207.86h6y7a0l7.gmgdl@evledraar.gmail.com>
+From:   Karthik Nayak <karthik.188@gmail.com>
+Date:   Wed, 7 Dec 2022 13:29:55 +0100
+Message-ID: <CAOLa=ZTQ9R1dyCb5xp0c5JBLjE33dJFVPg8jQfprU1iSGq+O4g@mail.gmail.com>
+Subject: Re: [PATCH 2/2] attr: add flag `-r|--revisions` to work with revisions
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        toon@iotcl.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Wed, Dec 7, 2022 at 12:56 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+>
+> On Wed, Dec 07 2022, Karthik Nayak wrote:
+>
+> > On Wed, Dec 7, 2022 at 1:12 AM Junio C Hamano <gitster@pobox.com> wrote=
+:
+> > [...]
+> >> Also, at the C API level, I suspect that we strongly prefer to pass
+> >> around either the "struct object_id *" or "struct tree *", not working
+> >> with end-user supplied character strings without any sanity-checking
+> >> or parsing.
+> >>
+> >
+> > I must admit, I did take the path of least resistance here. So we final=
+ly need
+> > to parse the `revision:<pathname>` where the `<pathname>` is generated
+> > dynamically as we move through the check-attr stack.
+> >
+> > My question is, if I generate an `object_id` at the start (in
+> > builtin/check-attr.c)
+> > with only the `revision`, is there a way to traverse to find the blob
+> > for each of
+> > the different <pathnames>? I haven't looked at Git code for a while now=
+, and
+> > I'm not sure what the best way to do this. Maybe I've missed some API w=
+hich
+> > would make this simple, any help is appreciated.
+>
+> The get_oid() that you're doing now happens in a loop, and should be
+> pulled out of it.
+>
+> I suggested making that a feature in
+> https://lore.kernel.org/git/221207.86lenja0zi.gmgdl@evledraar.gmail.com/;
+> but if you keep the interface you've got where you only support a single
+> <rev> it would make the most sense to do that get_oid() in the builtin/
+> code at the start, and then pass the oid/path pair down.
+>
+> You'd still need to call read_object_file() or equivalent for each
+> <rev>:<path> pair though.
 
-On Tue, Dec 06 2022, Victoria Dye wrote:
+That's exactly my question, now we're calling `get_oid()` with the pathname=
+.
+Which would directly give us the object_id for the blob. Whereas if we call
+`get_oid()` _without_ the pathname, we would still need to get the object_i=
+d
+for the blob.
 
-> Phillip Wood via GitGitGadget wrote:
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->> 
->> test_todo() is intended as a fine grained replacement for
->> test_expect_failure(). Rather than marking the whole test as failing
->> test_todo() is used to mark individual failing commands within a
->> test. This approach to writing failing tests allows us to detect
->> unexpected failures that are hidden by test_expect_failure().
->
-> I love this idea! I've nearly been burned a couple of times by the wrong
-> line in a 'test_expect_failure' triggering the error (e.g., due to bad
-> syntax earlier in the test). The added specificity of 'test_todo' will help
-> both reviewers and people fixing the underlying issues demonstrated by
-> expected-failing tests.
->
->> 
->> Failing commands are reported by the test harness in the same way as
->> test_expect_failure() so there is no change in output when migrating
->> from test_expect_failure() to test_todo(). If a command marked with
->> test_todo() succeeds then the test will fail. This is designed to make
->> it easier to see when a command starts succeeding in our CI compared
->> to using test_expect_failure() where it is easy to fix a failing test
->> case and not realize it.
->> 
->> test_todo() is built upon test_expect_failure() but accepts commands
->> starting with test_* in addition to git. As our test_* assertions use
->> BUG() to signal usage errors any such error will not be hidden by
->> test_todo().
->
-> Should this be so restrictive? I think 'test_todo' would need to handle any
-> arbitrary command (mostly because of custom functions like
-> 'ensure_not_expanded' in 't1092') to be an easy-to-use drop-in replacement
-> for 'test_expect_failure'. 
->
-> I see there's some related discussion in another subthread [1], but I don't
-> necessarily think removing restrictions (i.e. that the tested command must
-> be 'git', 'test_*', etc.) on 'test_todo' requires doing the same for
-> 'test_must_fail' et al. to be internally consistent. On one hand,
-> 'test_todo' could be interpreted as an assertion (like 'test_must_fail'),
-> where we only want to assert on our code - hence the restrictions. From that
-> perspective, it would make sense to ease restrictions uniformly on all of
-> our assertion helpers. 
->
-> On the other hand, I'm interpreting 'test_todo' as
-> 'test_expect_failure_on_line_N' - more of a "post-test result interpreter"
-> than an assertion helper. So because 'test_expect_failure' doesn't require
-> the failing line to come from a particular command, I don't think
-> 'test_todo' needs to either. That leaves assertion helpers like
-> 'test_must_fail' out of the scope of this change, avoiding any hairiness of
-> allowing them to assert on arbitrary code.
->
-> What do you think?
+My specific question being, how do I, given:
 
-Are you saying that for the "test_todo" we shouldn't care whether it
-exits with a "normal" non-zero or a segfault, abort() (e.g. BUG()) etc?
-That's what the "test_must_fail" v.s. "!" is about.
+struct object_id oid_1;
+get_oid(revision, &oid)
 
-Even if we erased tat distinction I think such a thing would be a
-marginal improvement on "test_expect_failure", as we'd at least mark
-what line fails, but like "test_expect_failure" we'd accept segfaults as
-failures.
+and pathname, get the equivalent of:
 
-but as noted in the upthread discussions I think we should do better and
-still check for segfaults etc. I think we have a couple of
-"test_expect_failure" now where we expect a segfault, but for the rest
-we'd like to know if they start segfaulting.
+struct object_id oid_2;
+strbuf_addf(&sb, "%s:%s", revision, path);
+get_oid(sb.buf, &oid)
+
+?
+
+Basically, I fail to see how to transform oid_1 to oid_2, using
+pathname. I agree
+this would eventually be fed into `read_object_file`.
+
+--=20
+- Karthik
