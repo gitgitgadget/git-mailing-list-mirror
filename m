@@ -2,148 +2,105 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46738C63705
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 22:10:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7258C4708D
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 22:13:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229636AbiLGWKh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Dec 2022 17:10:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52614 "EHLO
+        id S229662AbiLGWNc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Dec 2022 17:13:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229550AbiLGWKd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2022 17:10:33 -0500
-Received: from mail-io1-xd31.google.com (mail-io1-xd31.google.com [IPv6:2607:f8b0:4864:20::d31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F8D44E41B
-        for <git@vger.kernel.org>; Wed,  7 Dec 2022 14:10:32 -0800 (PST)
-Received: by mail-io1-xd31.google.com with SMTP id d123so7229667iof.6
-        for <git@vger.kernel.org>; Wed, 07 Dec 2022 14:10:32 -0800 (PST)
+        with ESMTP id S229550AbiLGWNb (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2022 17:13:31 -0500
+Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD9C75B5B8
+        for <git@vger.kernel.org>; Wed,  7 Dec 2022 14:13:30 -0800 (PST)
+Received: by mail-il1-x12c.google.com with SMTP id o13so8476264ilc.7
+        for <git@vger.kernel.org>; Wed, 07 Dec 2022 14:13:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ttaylorr-com.20210112.gappssmtp.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WX42Zh4D2DypDT+TXNgGCX1PrX+PTRSWqF0pmCP4S1w=;
-        b=QRxMxVrdSpmvOHtaMBEaRdjPYoI8RbMxHfmp0MR1Ce0DZ4IZsWwkFZ0e88dceQN+De
-         R+nSP0Uhy46W0NW8BrkDqkXuDOp9nZBAlceTGkW/My3cPhFz0/Ljy+dgODEEYPqJZHqA
-         6jRTKVkXhL7wo3XJC29cCktVhjYhORQ3RWofAmbtXmok+icvYY//SyVLaJ801hMZDyyL
-         eR0VJJ0vi3twQ66kSeqYt/xuEwZ+IFcxhS022qT2afZeKSwyG+6sEjvi1DfWa0Bolyv0
-         8d0+hCINA4Pna9BtDnKLsTQGQ0Smuqj+FsgO+b0e4ZTcac8ww3vBLelamLiGknAv0yNw
-         b8+A==
+        bh=GPxtWOXxLWX0wAlx9Ar3vYzY6vWUdHB8GI63reWx0no=;
+        b=hIOvpRJh1smGxO3YqP/fGbxS58Jt66VUHL7TLvMX/xtCMOyiW8hUC+kvtQnzwDV3Tz
+         EYX3G0ikxdRDgp3xcIZSAYu0rR1Q6xWL8HxnfwK/k3wxn3ZTa07yo1fsaKBECPk4z3xG
+         0pC8sqA+CnHI8iylZcHDUfZYcUCLnZKgdccKqdFoRMwfkWNStOWPJrjFFpST1wHWaeIl
+         glorqpPyVOOYCTi3kq4aPEXitHJWqAdRwAw27IgIxuIBw237BJxIaKsdt0+s1NxCbnIq
+         /cSGTqInZZq7msY4A71HpuO0T4qbcYARQ8ZM5WxQ2Wr5KZrIEwi4j7Q+RGd908lHN2SU
+         Me1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WX42Zh4D2DypDT+TXNgGCX1PrX+PTRSWqF0pmCP4S1w=;
-        b=KJpnm4xEosZr1n0tmvOpuUHfDpF/i+mIGS0uYOZwYbpcS4A7zXRtPJVsN+6Hbdb/R9
-         J4q3k0+dyP6GzQhQMzb5/4CwFEwi2ZVF9MKFGdZDShRk9jyh3d169ZKmjtQZVFqjNR8L
-         1J7SK+vGHSclMf6LuTDs09pwSK3FXdlpCbsBj64ET+oFutTZVShQVmCUTe2R4dSk9XyJ
-         iNYcI4X/46BcdkRW9cyE1ZZJMkUbH15oQM0HQbNd+o2bUWx0zKZt6340VUX1bphzDFRn
-         uTohTPNJN6ifgfh8iTVj+TORMbgVRoI5lBZ9zggzm1lUducI+ewpXMqhu73kj0xjsqBu
-         LzFw==
-X-Gm-Message-State: ANoB5pmn0n0I5TlC8+MYbbFxKEqA+EcKTFdwWWfQLS5xDQ58/vwVO3zB
-        AV1RDHjXIzWu21/cjdv3Ao9zjA==
-X-Google-Smtp-Source: AA0mqf7sXZOmGVJZBNKAT/9J5He46nV8RwfdnowBa8CpkuaC9yhChURDv20UXYso9qETxP2T8qqlJQ==
-X-Received: by 2002:a02:1681:0:b0:375:bdba:52b with SMTP id a123-20020a021681000000b00375bdba052bmr45536585jaa.271.1670451031737;
-        Wed, 07 Dec 2022 14:10:31 -0800 (PST)
+        bh=GPxtWOXxLWX0wAlx9Ar3vYzY6vWUdHB8GI63reWx0no=;
+        b=duQvorFROQ28BgJtC+3oPrq8IO0L94uYJbG6vThjQaRrGbl3DDr1vqS8ZCdH9dFdPU
+         tblohKaegL9VjbLeueLTbDsQ6i83dEbEU9l7kJ+OVZNrABguD1290ZlRRjYVqTyW4pqg
+         +cj/qwQU3Qb/qbZ1p89zCuebgIoGovdFi9TqvjfzDo2DSdM2n02ymJd9FrZbxF0FSfDE
+         1hHNyH7qPsr+NOZuv7jFCqBeD0GDa+2Hn5oMKHlBi0zQJRWOTltrkJNz8L24LNiCrkuW
+         BNwHW+V8ew/ULfCFqqxYBLhAwgMIkQsA72QOp3G6v0sDU/PNi/ptN3FDAFqh8CJ/XnVj
+         Zg0Q==
+X-Gm-Message-State: ANoB5pl4zYRaM37T6olyptnDRcHhIrXCY5wlfgp4z8rdrnhzo+Un8Iur
+        zI444jQS4lG50a0euUj78D/pDAG9rC7d2Nrp
+X-Google-Smtp-Source: AA0mqf5Jk/dnCBxnHqdmsYZu6I+RhmieGGCRvWw90J4mKBZvLGfLa4/Nm8PwIHIMPaV77q6PE2zAUw==
+X-Received: by 2002:a92:130d:0:b0:300:ce7b:8bc3 with SMTP id 13-20020a92130d000000b00300ce7b8bc3mr599108ilt.13.1670451209959;
+        Wed, 07 Dec 2022 14:13:29 -0800 (PST)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with ESMTPSA id y101-20020a02956e000000b003758390c97esm8130139jah.83.2022.12.07.14.10.30
+        by smtp.gmail.com with ESMTPSA id a5-20020a056638004500b0038a47afa8eesm3569304jap.96.2022.12.07.14.13.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 14:10:31 -0800 (PST)
-Date:   Wed, 7 Dec 2022 17:10:30 -0500
+        Wed, 07 Dec 2022 14:13:29 -0800 (PST)
+Date:   Wed, 7 Dec 2022 17:13:28 -0500
 From:   Taylor Blau <me@ttaylorr.com>
-To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH] scalar: use verbose mode in clone
-Message-ID: <Y5EPVpb511wk5Uw/@nand.local>
-References: <pull.1441.git.1670436656379.gitgitgadget@gmail.com>
+To:     David Caro <dcaro@wikimedia.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: Skipping adding Signed-off-by even if it's not the last on git
+ commit
+Message-ID: <Y5EQCD4XCsN10HO+@nand.local>
+References: <20221206170646.6lnpr6h7oprziy5b@vulcanus>
+ <Y4/xSObs9QXvE+xR@nand.local>
+ <xmqqlenj7t0b.fsf@gitster.g>
+ <20221207084027.7dhyaatkzaawrg4g@vulcanus>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.1441.git.1670436656379.gitgitgadget@gmail.com>
+In-Reply-To: <20221207084027.7dhyaatkzaawrg4g@vulcanus>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 07, 2022 at 06:10:56PM +0000, ZheNing Hu via GitGitGadget wrote:
-> So add `[--verbose| -v]` to scalar clone, to enable
-> fetch's output.
-
-Seems reasonable.
-
-> @@ -84,6 +84,11 @@ cloning. If the HEAD at the remote did not point at any branch when
->  	A sparse-checkout is initialized by default. This behavior can be
->  	turned off via `--full-clone`.
+On Wed, Dec 07, 2022 at 09:40:27AM +0100, David Caro wrote:
+> On 12/07 13:11, Junio C Hamano wrote:
+> > Taylor Blau <me@ttaylorr.com> writes:
+> >
+> > >> I propose enabling it for commit, merge and am.
+> > >
+> > > So I think that there are some legitimate uses outside of 'format-patch'
+> > > that we may want to keep the existing behavior. So I don't think we
+> > > should necessarily change the default to have other commands outside of
+> > > 'format-patch' start passing APPEND_SIGNOFF_DEDUP.
+> > >
+> > > But I could see a future where we add a new option that controls whether
+> > > or not we pass that flag, perhaps:
+> > >
+> > >     $ git commit --signoff[=[no-]dedup]
+> >
+> > That sounds sensible.
 >
-> +-v::
-> +--verbose::
-> +	When scalar executes `git fetch`, `--quiet` is used by default to
-> +	suppress the output of fetch, use verbose mode for cancel this.
-> +
+> Agree, I will implement this then for commit for now, thanks!
 
-This description may be exposing a few too many implementation details
-for our liking. E.g., scalar happens to use `git fetch`, but it might
-not always. That is probably academic, but a more practical reason to do
-some hiding here might just be that it's unnecessary detail to expose in
-our documentation.
+Thanks, I look forward to seeing your work. It would be nice to
+standardize on this `--signoff[=[no-]dedup]` thing throughout all of the
+different commands that support it.
 
-Perhaps something like:
+According to:
 
-    -v::
-    --verbose::
-     Enable more verbose output when cloning a repository.
+    $ git grep -- '--signoff' -- Documentation/git-*.txt
 
-Or something simple like that.
+that list is: `git am`, `git cherry-pick`, `git format-patch`, `git
+rebase`, and `git revert`. But there are others, too, via an include of
+`signoff-option.txt`, so that is `git commit`, `git merge`, and `git
+pull`.
 
->  List
->  ~~~~
->
-> diff --git a/scalar.c b/scalar.c
-> index 6c52243cdf1..b1d4504d136 100644
-> --- a/scalar.c
-> +++ b/scalar.c
-> @@ -404,7 +404,7 @@ void load_builtin_commands(const char *prefix, struct cmdnames *cmds)
->  static int cmd_clone(int argc, const char **argv)
->  {
->  	const char *branch = NULL;
-> -	int full_clone = 0, single_branch = 0;
-> +	int full_clone = 0, single_branch = 0, verbosity = 0;
->  	struct option clone_options[] = {
->  		OPT_STRING('b', "branch", &branch, N_("<branch>"),
->  			   N_("branch to checkout after clone")),
-> @@ -413,6 +413,7 @@ static int cmd_clone(int argc, const char **argv)
->  		OPT_BOOL(0, "single-branch", &single_branch,
->  			 N_("only download metadata for the branch that will "
->  			    "be checked out")),
-> +		OPT__VERBOSITY(&verbosity),
->  		OPT_END(),
->  	};
->  	const char * const clone_usage[] = {
-
-Looking good.
-
-> @@ -499,7 +500,9 @@ static int cmd_clone(int argc, const char **argv)
->  	if (set_recommended_config(0))
->  		return error(_("could not configure '%s'"), dir);
->
-> -	if ((res = run_git("fetch", "--quiet", "origin", NULL))) {
-> +	if ((res = run_git("fetch", "origin",
-> +			   verbosity ? NULL : "--quiet",
-> +			   NULL))) {
-
-Hmmph. This and below are a little strange in that they will end up
-calling:
-
-    run_git("fetch", "origin", NULL, NULL);
-
-when running without `--verbose`. `run_git()` will still do the right
-thing and stop reading its arguments after the first NULL that it sees.
-So I doubt that it's a huge deal in practice, but felt worth calling out
-nonetheless.
-
-Is there an opportunity to easily test this new code?
+Phew ;-).
 
 Thanks,
 Taylor
