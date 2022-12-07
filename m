@@ -2,59 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E7661C47089
-	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 17:26:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D039C352A1
+	for <git@archiver.kernel.org>; Wed,  7 Dec 2022 17:26:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230049AbiLGR00 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Dec 2022 12:26:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33860 "EHLO
+        id S229961AbiLGR0d (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Dec 2022 12:26:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229940AbiLGR0D (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2022 12:26:03 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1950669A90
-        for <git@vger.kernel.org>; Wed,  7 Dec 2022 09:26:02 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id l26so7976145wms.4
-        for <git@vger.kernel.org>; Wed, 07 Dec 2022 09:26:01 -0800 (PST)
+        with ESMTP id S229962AbiLGR0F (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2022 12:26:05 -0500
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9639669A9D
+        for <git@vger.kernel.org>; Wed,  7 Dec 2022 09:26:03 -0800 (PST)
+Received: by mail-wr1-x42e.google.com with SMTP id y16so29088703wrm.2
+        for <git@vger.kernel.org>; Wed, 07 Dec 2022 09:26:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/qSHcM9yUUo0nD7eZW5ZD8SkIf1Ai0up1bzvnY0av0A=;
-        b=fk/RKlwTeDijb3xzkNAdwnJBV5MhXWO4XBEMUCXYS6v19aTHBt5ymXdCb1b8Dtxpjo
-         r/Z7LAHJGwibf7kjRgyIP79MV0FA0DB+pQH+YCqCqDM5fJdqm1x4Uc54hRTg6Rh5hxqk
-         LQZvm3n6b6nYdIRkLBerESB+Cpr/4lM2nY2EOcA4xV08gpPRhqeoXwzOhHdzPM4TRVu2
-         Xbk7lKMC0GE1hh5yaEgSqZ8M2TW8XjADot6LY2rIg3BPBrNW5dv/YGulax1uEu94UUv8
-         iZvVLGcxJ59bzMvEj++UIxD9ITtfaK5yOszDKOld7GREnkfgqhz1befSAHjx58UTzV66
-         gYuQ==
+        bh=IvTC4dVaqIpb1NK9YY6HU4hn/glAaEhIyfVbC4Etk6c=;
+        b=UJDvSPXJ4Dky/Ddl0UzBTqEtVRdmWzlvq38/3jm9O2vPgiSQVIsr5syuYosBq01S1M
+         oNs968wNe6CWczOuQZGlvTDss3g0TdfT3K4ow7/9m7LnBBTqRJbxU2yJVIGfjq0yakQr
+         Lx2apTk/ZMvHJw38xiRKzUstYNNlloro0VtKj2GGupzQjiJboe94d0su6VfwDw0Kb1qJ
+         71LKPjfZdt+Mt3AhIulVVz9VTKOTGriNRsxUXfdanB4m7LxaVD9mvYnZ8ZvSdl54UIiY
+         HFzJeEOZ51wEWaJQuroHy03TzCz5RafXywNxOQM1AfX6Avr/T2cO3nGK+ws7vpxn9Jaw
+         MHvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/qSHcM9yUUo0nD7eZW5ZD8SkIf1Ai0up1bzvnY0av0A=;
-        b=D5BKbHXv3ft7oimj+ZQtqOifUPe3gKIzAxMIO1O1fjsnmIUvLYXqKZgPzcdHH8noMI
-         FArPAne90JT9ZXv3LPhPnrrw5CTx1Z0+Xa24dXTSTGG+35TMP4S8K6/3G8uA35l94mUw
-         cd9oda7XFNP69UlyK2v9fqk3AMZ0LzA88BswS0PLjzWo/wmGevCeywBhN/0EClAdb2hS
-         ttiPhrZ4MVUbM+tt/9/Fa9WIYcp5f4DNKn4O0C2t6O4cXXzwoYEzhBwH1v1XAIXomHEx
-         ndw7yk5efTW/fQtSaZpTz/zYwBsZ/nDI3smNztBALUUPolrlI5uOol3ToPOsI8/fJwlG
-         kfFg==
-X-Gm-Message-State: ANoB5pleHGUJPI+iPdlEvRsjj9rr2ITMJSuZrB2i4ow1Kh+nDKYjM9zH
-        8bFF00UBE24LQFVItob5OOIVaXgXQjU=
-X-Google-Smtp-Source: AA0mqf4jJe5Nl+Fqcbj3c76KbJicG2J1Ialn7KCf3tNfSS/WqIBCMocuxX8QBSOyJSHVzIf1luq90g==
-X-Received: by 2002:a05:600c:19d1:b0:3cf:4d12:1b4b with SMTP id u17-20020a05600c19d100b003cf4d121b4bmr69062314wmq.23.1670433960394;
-        Wed, 07 Dec 2022 09:26:00 -0800 (PST)
+        bh=IvTC4dVaqIpb1NK9YY6HU4hn/glAaEhIyfVbC4Etk6c=;
+        b=MASr4zs8hsj21rF0JcE+m60nwcWQ4hWrXo08xpob1LDHvm8nTHn50Kh7xkH6YKBpHh
+         mYTr2unSyWeqwawbZ0pZKP3oaH4u5mXudH2CY2raNpe/qE1y3hMOD3llYF+f8XuxtOFm
+         7h0c4LcdatnJUmCcnbvmrjJeCjBBAIAQ/JAvhqSzrkisxcRIdnkcXNvgoXA+/5iDVyZC
+         1Cj/vORlkNQqr8EkPrrsAIh5DX0KRHH5f9XU+R7yD0XSsEHSJpmPLw9fGvVGQjjks35F
+         ozIFOpVWXwPEqLEoPV9oh9jHbkTwHVPf2pSnD+G/kB8mDcHp5k1iTA0G8bGNLik7HXaP
+         ScEw==
+X-Gm-Message-State: ANoB5pnPUbE6Wa3eYKP5uRb8CGHC64gJxaXCWzlF22zxRF+65qN8vQya
+        /TpIEBBVVTPrXpxrfb3a5yiMBF9z1o8=
+X-Google-Smtp-Source: AA0mqf6RY77g9CV32Da/y7z/78GNtrMrYPW/vIZwpH7wx5PtUvI5e1wW107kAf2hyEN/AszAgwE2AQ==
+X-Received: by 2002:adf:db07:0:b0:241:bf23:47dc with SMTP id s7-20020adfdb07000000b00241bf2347dcmr54121720wri.459.1670433961941;
+        Wed, 07 Dec 2022 09:26:01 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bd10-20020a05600c1f0a00b003d070e45574sm2537434wmb.11.2022.12.07.09.25.59
+        by smtp.gmail.com with ESMTPSA id az23-20020adfe197000000b002425504ae7dsm11845092wrb.80.2022.12.07.09.26.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Dec 2022 09:26:00 -0800 (PST)
-Message-Id: <40ee8dbaef06f8f4265d12436455279499d7ac01.1670433958.git.gitgitgadget@gmail.com>
+        Wed, 07 Dec 2022 09:26:01 -0800 (PST)
+Message-Id: <a20bf8de8645c19a02838d70a7c2c3b00378a50d.1670433958.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1439.git.1670433958.gitgitgadget@gmail.com>
 References: <pull.1439.git.1670433958.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 07 Dec 2022 17:25:55 +0000
-Subject: [PATCH 1/4] hashfile: allow skipping the hash function
+Date:   Wed, 07 Dec 2022 17:25:57 +0000
+Subject: [PATCH 3/4] test-lib-functions: add helper for trailing hash
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,123 +69,54 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <derrickstolee@github.com>
 
-The hashfile API is useful for generating files that include a trailing
-hash of the file's contents up to that point. Using such a hash is
-helpful for verifying the file for corruption-at-rest, such as a faulty
-drive causing flipped bits.
+It can be helpful to check that a file format with a trailing hash has a
+specific hash in the final bytes of a written file. This is made more
+apparent by recent changes that allow skipping the hash algorithm and
+writing a null hash at the end of the file instead.
 
-Git's index file includes this trailing hash, so it uses a 'struct
-hashfile' to handle the I/O to the file. This was very convenient to
-allow using the hashfile methods during these operations.
+Add a new test_trailing_hash helper and use it in t1600 to verify that
+index.skipHash=true really does skip the hash computation, since
+'git fsck' does not actually verify the hash.
 
-However, hashing the file contents during write comes at a performance
-penalty. It's slower to hash the bytes on their way to the disk than
-without that step. This problem is made worse by the replacement of
-hardware-accelerated SHA1 computations with the software-based sha1dc
-computation.
+Keep the 'git fsck' call to ensure that any potential future change to
+check the index hash does not cause an error in this case.
 
-This write cost is significant, and the checksum capability is likely
-not worth that cost for such a short-lived file. The index is rewritten
-frequently and the only time the checksum is checked is during 'git
-fsck'. Thus, it would be helpful to allow a user to opt-out of the hash
-computation.
-
-We first need to allow Git to opt-out of the hash computation in the
-hashfile API. The buffered writes of the API are still helpful, so it
-makes sense to make the change here.
-
-Introduce a new 'skip_hash' option to 'struct hashfile'. When set, the
-update_fn and final_fn members of the_hash_algo are skipped. When
-finalizing the hashfile, the trailing hash is replaced with the null
-hash.
-
-This use of a trailing null hash would be desireable in either case,
-since we do not want to special case a file format to have a different
-length depending on whether it was hashed or not. When the final bytes
-of a file are all zero, we can infer that it was written without
-hashing, and thus that verification is not available as a check for file
-consistency. This also means that we could easily toggle hashing for any
-file format we desire.
-
-A version of this patch has existed in the microsoft/git fork since
-2017 [1] (the linked commit was rebased in 2018, but the original dates
-back to January 2017). Here, the change to make the index use this fast
-path is delayed until a later change.
-
-[1] https://github.com/microsoft/git/commit/21fed2d91410f45d85279467f21d717a2db45201
-
-Co-authored-by: Kevin Willford <kewillf@microsoft.com>
-Signed-off-by: Kevin Willford <kewillf@microsoft.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- csum-file.c | 14 +++++++++++---
- csum-file.h |  7 +++++++
- 2 files changed, 18 insertions(+), 3 deletions(-)
+ t/t1600-index.sh        | 3 +++
+ t/test-lib-functions.sh | 8 ++++++++
+ 2 files changed, 11 insertions(+)
 
-diff --git a/csum-file.c b/csum-file.c
-index 59ef3398ca2..3243473c3d7 100644
---- a/csum-file.c
-+++ b/csum-file.c
-@@ -45,7 +45,8 @@ void hashflush(struct hashfile *f)
- 	unsigned offset = f->offset;
- 
- 	if (offset) {
--		the_hash_algo->update_fn(&f->ctx, f->buffer, offset);
-+		if (!f->skip_hash)
-+			the_hash_algo->update_fn(&f->ctx, f->buffer, offset);
- 		flush(f, f->buffer, offset);
- 		f->offset = 0;
- 	}
-@@ -64,7 +65,12 @@ int finalize_hashfile(struct hashfile *f, unsigned char *result,
- 	int fd;
- 
- 	hashflush(f);
--	the_hash_algo->final_fn(f->buffer, &f->ctx);
+diff --git a/t/t1600-index.sh b/t/t1600-index.sh
+index df07c587e0e..55816756607 100755
+--- a/t/t1600-index.sh
++++ b/t/t1600-index.sh
+@@ -69,6 +69,9 @@ test_expect_success 'index.skipHash config option' '
+ 	(
+ 		rm -f .git/index &&
+ 		git -c index.skipHash=true add a &&
++		test_trailing_hash .git/index >hash &&
++		echo $(test_oid zero) >expect &&
++		test_cmp expect hash &&
+ 		git fsck
+ 	)
+ '
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 796093a7b32..e88acfdb68a 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1875,3 +1875,11 @@ test_cmp_config_output () {
+ 	sort config-actual >sorted-actual &&
+ 	test_cmp sorted-expect sorted-actual
+ }
 +
-+	if (f->skip_hash)
-+		memset(f->buffer, 0, the_hash_algo->rawsz);
-+	else
-+		the_hash_algo->final_fn(f->buffer, &f->ctx);
-+
- 	if (result)
- 		hashcpy(result, f->buffer);
- 	if (flags & CSUM_HASH_IN_STREAM)
-@@ -108,7 +114,8 @@ void hashwrite(struct hashfile *f, const void *buf, unsigned int count)
- 			 * the hashfile's buffer. In this block,
- 			 * f->offset is necessarily zero.
- 			 */
--			the_hash_algo->update_fn(&f->ctx, buf, nr);
-+			if (!f->skip_hash)
-+				the_hash_algo->update_fn(&f->ctx, buf, nr);
- 			flush(f, buf, nr);
- 		} else {
- 			/*
-@@ -153,6 +160,7 @@ static struct hashfile *hashfd_internal(int fd, const char *name,
- 	f->tp = tp;
- 	f->name = name;
- 	f->do_crc = 0;
-+	f->skip_hash = 0;
- 	the_hash_algo->init_fn(&f->ctx);
- 
- 	f->buffer_len = buffer_len;
-diff --git a/csum-file.h b/csum-file.h
-index 0d29f528fbc..29468067f81 100644
---- a/csum-file.h
-+++ b/csum-file.h
-@@ -20,6 +20,13 @@ struct hashfile {
- 	size_t buffer_len;
- 	unsigned char *buffer;
- 	unsigned char *check_buffer;
-+
-+	/**
-+	 * If set to 1, skip_hash indicates that we should
-+	 * not actually compute the hash for this hashfile and
-+	 * instead only use it as a buffered write.
-+	 */
-+	unsigned int skip_hash;
- };
- 
- /* Checkpoint */
++# Given a filename, extract its trailing hash as a hex string
++test_trailing_hash () {
++	local file="$1" &&
++	tail -c $(test_oid rawsz) "$file" | \
++		test-tool hexdump | \
++		sed "s/ //g"
++}
 -- 
 gitgitgadget
 
