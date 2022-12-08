@@ -2,125 +2,128 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A22B2C4332F
-	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 22:03:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 06F3BC001B2
+	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 23:00:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230020AbiLHWDD convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Thu, 8 Dec 2022 17:03:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60234 "EHLO
+        id S229760AbiLHXAg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Dec 2022 18:00:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229702AbiLHWCh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2022 17:02:37 -0500
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A718779C2F
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 14:01:16 -0800 (PST)
-Received: from Mazikeen (163.150.245.213.rev.sfr.net [213.245.150.163])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 2B8M0wOf053031
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 8 Dec 2022 17:00:59 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Jacob Abel'" <jacobabel@nullpo.dev>
-Cc:     "=?UTF-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
-        <avarab@gmail.com>, "'Eric Sunshine'" <sunshine@sunshineco.com>,
-        "'Phillip Wood'" <phillip.wood123@gmail.com>,
-        "=?UTF-8?Q?'Rub=C3=A9n_Justo'?=" <rjusto@gmail.com>,
-        "'Taylor Blau'" <me@ttaylorr.com>, <git@vger.kernel.org>
-References: <20221208214110.bdu5n65c3fvcxjom@phi>
-In-Reply-To: <20221208214110.bdu5n65c3fvcxjom@phi>
-Subject: RE: [PATCH v3 0/2] worktree: Support `--orphan` when creating new worktrees
-Date:   Thu, 8 Dec 2022 17:00:53 -0500
-Organization: Nexbridge Inc.
-Message-ID: <007001d90b50$8ee3c000$acab4000$@nexbridge.com>
+        with ESMTP id S229734AbiLHXAd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2022 18:00:33 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C99748F73A
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 15:00:31 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id c66so881379edf.5
+        for <git@vger.kernel.org>; Thu, 08 Dec 2022 15:00:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=snowflake.com; s=google;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=SsDKWa4Bu84a5GzEhFstGteGtetLq7bD6CrACl7i6c8=;
+        b=Wc50pPiGXQ5gRQbLF5D+x+EvlyyGS1a2vRkEEiCx9F6cZkD4P9ZIsJDbHpud5ZL+nJ
+         HY0g42tJWyV3kBTHhYDLsS3sBv5I0HgZzLiqiLX6K78kxCgCzMzoC9bnsGS38TGq3j+F
+         V7FK9HfsTkDk5TCXCF3T+Aun40QzbXIIyNqnqNRsZaYH7eTMH8Yf//6FfVwHlFiBck28
+         foBk9t249FC5I8qnoM47P4uqHah0AQT+vWocYcKtNyXWcUd2SstNAu2ruWiu66j0IpcX
+         y+HZlw+9ihEHjuPPETPsUvx9AE8T5vFIQEcR9beTROF3Vj1aLJ/MJLj3Eh/vEelrG9ya
+         jlEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=SsDKWa4Bu84a5GzEhFstGteGtetLq7bD6CrACl7i6c8=;
+        b=phy4MMFX/0VTaxPZkiVHoMS1UVKSf2ik/AQUXcNZW79FyqGzPqh1VMxYXJiTwC0isL
+         MG3OZVSPVyD5kp/StG0H4ULTxwc6pKTWxOqO0jkEMU+GP1yAVgio6kwjQK05ZO1hfR6C
+         qTY0mFHXcC+g4AqBjXZaCyQBZ8253T7yXY9TgTVIKhVA7oIJEa8i4j/aIdnvizWOK0Af
+         5wv/3NRyyhDTpYjpVuVGThW9i+a3/8CzfPevDjzgJp71JptAvhLpaRTq6ad2my/MKpDw
+         XQpKT+2U+PmC8yf3VkAhHUBzCc6PbP3h5XZ8WSJrB451Y3oQfksaNdYbNwVUFwxwD4hZ
+         Svng==
+X-Gm-Message-State: ANoB5pkf1lo2B5uXxerxZvoLsVoRrD3xTwZK6CyP0iZAtbV2+D+xGlQn
+        C/9Qycilqn2mXSlOXzmIRc21RlO9x4Ajb1/X6ZUI5gKeOWnC9LAw
+X-Google-Smtp-Source: AA0mqf7oBSjMywzz38VKNmflVDZfBxhfwtlsGq052Zwg0uTDjd6puCy4K2YMBfkW8ydEKMyst9/HwP2aOONzfm+Awk4=
+X-Received: by 2002:aa7:c415:0:b0:46c:4b56:8c06 with SMTP id
+ j21-20020aa7c415000000b0046c4b568c06mr20941937edq.230.1670540429836; Thu, 08
+ Dec 2022 15:00:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQGEkSmpqEJbc/7FIDRH64kYKuSPo68NfkZA
-Content-Language: en-ca
+From:   Eric Musser <eric.musser@snowflake.com>
+Date:   Thu, 8 Dec 2022 15:00:18 -0800
+Message-ID: <CAGW=zr_BD=7d5dZi+yO4cpufFi=jEjH=wQoTndDLfTi14UresQ@mail.gmail.com>
+Subject: rebase update-refs can delete ref branch
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On December 8, 2022 4:41 PM, Jacob Abel wrote:
->Subject: Re: [PATCH v3 0/2] worktree: Support `--orphan` when creating new
->worktrees
->
->Apologies for the delay on the v4 patch. Some unexpected personal stuff has kept
->me away from working on this. I expect v4 to be out in the next few days.
->
->Additionally, I've been doing some reading after writing this reply [1]. I've realised
->I had a misunderstanding about how HEAD is managed. I don't think it changes the
->conclusion of the reply (which is that rolling `--orphan` into DWYM could lead to
->confusing behavior for users) however I think some additional changes might be
->warranted:
->
->* Add some additional text output to `worktree add` when we DWYM to make it
->  clearer what action we end up making. Could possibly be hidden under a
->  "verbose" flag.
->* Annotate what HEAD we are looking at (worktree HEAD vs git repo HEAD) in
->  conditions where this could matter.
->* Expanding HEAD when it's an invalid ref (instead of just `invalid ref: HEAD`).
->* Add a hint when using `worktree add`, with a bare git repo, HEAD points to an
->  invalid ref, not in a worktree, and other branches exist in the repo. The hint
->  would suggest using `git branch -m <branch>` to change the HEAD to an existing
->  branch.
->* Add a hint when there are no local branches and the user is trying to create a
->  worktree off a local branch which has a remote counterpart.
->
->I don't necessarily think any of these changes should hold up this patchset but I
->think they could be worthwhile changes for the future.
->
->And in the meantime, below are the anticipated changes for the next revision. Let
->me know if it looks like I've forgotten anything.
->
->Anticipated changes from v3:
->  * Fix mistake in SYNOPSIS and `--help`. Patch for this change can be found
->    in [2], by courtesy of Ævar Arnfjörð Bjarmason.
->  * Collapsed sequential if statements into if-else chain & simplified
->    conditions as requested in [2].
->  * Simplified tests for mutually exclusive options and removed duplicate
->    `-B/--detach` test case. Patch for this change can be found in [3],
->    by courtesy of Ævar Arnfjörð Bjarmason.
->  * Remove references to `git-switch`. Behavior is now explained fully in docs
->    instead. Changes to the docs suggested in [4], by courtesy of Eric Sunshine.
->  * Updated test case to use `test_path_is_missing` instead of `! test -d` [5].
->  * Updated signature for `make_worktree_orphan()` and changed
->    `const char *orphan_branch` in `struct add_opts` to `int orphan` (boolean)
->    to simplify the patch and maintain consistency with other flags [6].
->  * Added `advise()` to common cases where `--orphan` is desired [7] to address
->    concerns brought up in [8][9]. Slight change from `HEAD` to `branch` as
->    `HEAD` causes existing behavior to break.
->  * Added tests to verify `--lock` and `--reason` work properly with
->    the newly added `--orphan` flag.
->  * Added tests to verify that the orphan advise [7] is emitted only at the
->    proper times.
->  * Added the new advice to the docs, advice.c/h, and switched to use
->    `advise_if_enabled()` as requested in [10].
->  * Added tests to verify the changes [7] do not interfere with existing
->    behavior. ex: creating a worktree from a remote branch when HEAD is
->    an orphan.
->
->1. https://lore.kernel.org/git/20221123042052.t42jmsqjxgx2k3th@phi/
->2. https://lore.kernel.org/git/221115.86edu3kfqz.gmgdl@evledraar.gmail.com/
->3. https://lore.kernel.org/git/221116.86a64rkdcj.gmgdl@evledraar.gmail.com/
->4.
->https://lore.kernel.org/git/CAPig+cQiyd9yGE_XpPZmzLQnNDMypnrEgkV7nqRZZn
->3j6E0APQ@mail.gmail.com/
->5. https://lore.kernel.org/git/221115.86iljfkjjo.gmgdl@evledraar.gmail.com/
->6. https://lore.kernel.org/git/20221119025701.syuscuoqjuqhqsoz@phi/
->7. https://lore.kernel.org/git/20221119034728.m4kxh4tdpof7us7j@phi/
->8.
->https://lore.kernel.org/git/CAPig+cTTn764ObHJuw8epOtBdTUwocVRV=tLieCa4zf-
->PGCegw@mail.gmail.com/
->9. https://lore.kernel.org/git/221117.86sfihj3mw.gmgdl@evledraar.gmail.com/
->10. https://lore.kernel.org/git/221123.86a64ia6bx.gmgdl@evledraar.gmail.com/
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-I am not sure this is entirely related, but there is a gap in worktree configuration, specifically includeIf that I was working on, but suspended waiting for worktree code to stabilize. Do you have a sense as to whether this might run into this topic?
+What did you do before the bug happened? (Steps to reproduce your issue)
+$ git init
+Initialized empty Git repository in /home/emusser/git/test/.git/
+$ git checkout -b working-branch
+Switched to a new branch 'working-branch'
+$ git commit -m "commit 1" --allow-empty
+[working-branch (root-commit) 1238cf8] commit 1
+$ git commit -m "commit 2" --allow-empty
+[working-branch 2dd4408] commit 2
+$ git branch other-branch
+$ git commit -m "commit 3" --allow-empty
+[working-branch 39f626e] commit 3
+$ git rebase -i --update-refs HEAD~2
+[I am presented]:
+pick 2dd4408 commit 2 # empty
+update-ref other-branch
 
-Regards,
-Randall
+pick 39f626e commit 3 # empty
 
+[I deleted first two lines and submitted]:
+pick 39f626e commit 3 # empty
+
+Successfully rebased and updated refs/heads/working-branch.
+Updated the following refs with --update-refs:
+refs/heads/other-branch
+$ git rev-parse other-branch
+other-branch
+fatal: ambiguous argument 'other-branch': unknown revision or path not
+in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+
+What did you expect to happen? (Expected behavior)
+The branch I interactively removed from the rebase to not actually be
+deleted. It is common
+to remove unrelated changes (and refs) from your working branch before pushing.
+I'd hope in this case I would not have to use `git rebase
+--no-update-refs' (if I'm set
+in my config UpdateRefs=true) to avoid branches from being deleted.
+
+What happened instead? (Actual behavior)
+The branch was deleted.
+
+What's different between what you expected and what actually happened?
+The branch was deleted when I would expect branches that are no longer listed
+to not be updated or deleted.
+
+Anything else you want to add:
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.38.0
+cpu: aarch64
+built from commit: 3dcec76d9df911ed8321007b1d197c1a206dc164
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 5.16.13-generic #2 SMP Fri Mar 11 12:48:38 UTC 2022 aarch64
+compiler info: gnuc: 10.2
+libc info: glibc: 2.17
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+pre-commit
