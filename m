@@ -2,171 +2,169 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C00BC4332F
-	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 09:29:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C963EC3A5A7
+	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 10:09:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229717AbiLHJ3r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Dec 2022 04:29:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59098 "EHLO
+        id S229462AbiLHKJp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Dec 2022 05:09:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230023AbiLHJ3o (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2022 04:29:44 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F6091ADAC
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 01:29:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1670491759; bh=Apgo10QomMv5UqLm6smUmt3QA5QShoMvZsPOR4K5jJc=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=mSJ5kKJbJWpK2kkZEGwrCIsRd6Xub7gY9pj+fT6E/yVqbkOOXokrUUYiMIN3H3M0X
-         3q5dhXEVKNO9Thndbly8oBT4mcTIoNOkon9VbFz3pXK0iw0pgKXOBMnxRquUKMI8AC
-         QN9gzq/2LN4dJsP51Z2SWALnODwc64ElT/OqFAECPVKTetq8XjQmSqHX8OfcszNRjf
-         penNjgg3Ija3YjTPy4pw8ikNszd+gwb8xm3ObN3IMV6MS+tc9DJxwHCo/7uZUv6Tf/
-         MdYL5HYFc4uUkUc6pGR2FkjPK2nBjEnqmZYcUqvg2RwWgACkelGiS09rP57wTklHEp
-         C4ngsP/M61GhQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.24.155.134] ([89.1.213.44]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1N4hzZ-1ovgAy2eM3-011iIJ; Thu, 08
- Dec 2022 10:29:19 +0100
-Date:   Thu, 8 Dec 2022 10:29:17 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-Subject: ab/cmake-nix-and-ci, was Re: [PATCH] test-lib.sh: discover "git" in
- subdirs of "contrib/buildsystems/out"
-In-Reply-To: <221206.865yeodbtg.gmgdl@evledraar.gmail.com>
-Message-ID: <oq7p2776-po8p-r9s0-82o2-o77so874n419@tzk.qr>
-References: <663b93ef-0c89-a5f6-1069-b4be97915d20@dunelm.org.uk> <patch-1.1-f27d8bd4491-20221201T162451Z-avarab@gmail.com> <xmqq5yeuspam.fsf@gitster.g> <87f22a55-ee84-2f76-7b9b-924a97f44f89@dunelm.org.uk> <221202.86sfhxg2ng.gmgdl@evledraar.gmail.com>
- <Y4qF3iHW2s+I0yNe@coredump.intra.peff.net> <221203.86pmd1dyqn.gmgdl@evledraar.gmail.com> <Y45/8WnuUnP9gOMo@nand.local> <Y46clyoKk9KzFiqj@coredump.intra.peff.net> <221206.86zgc1cnc3.gmgdl@evledraar.gmail.com> <Y46jT0i/7DhxHzfS@coredump.intra.peff.net>
- <221206.86mt81claa.gmgdl@evledraar.gmail.com> <xmqqilipnq8j.fsf@gitster.g> <30360f4c-91a5-177b-133f-eb7036ed676a@dunelm.org.uk> <221206.865yeodbtg.gmgdl@evledraar.gmail.com>
+        with ESMTP id S229661AbiLHKJn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2022 05:09:43 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4CC32BB03
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 02:09:41 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id v7so698288wmn.0
+        for <git@vger.kernel.org>; Thu, 08 Dec 2022 02:09:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3xJtdK49btHPEToxPMCH1arc6PMd2qVqy6vnK74uPQk=;
+        b=DWnzm47/idL10c0Q8d90xjySV+9m7z80Oj9Uq2JtqDlbm9hwYcDCDlAsU0LgePdSPn
+         l1SG5NPPrBC/UZLNuQY/JMU4Wsvq6sXGH//t2Ih5nwKkgkDYev7LQ2R2smAn8MAUBjxP
+         scx7Vg5BTSO0/G8zDxTuBzS6QbJdUEB0R1DNXPGxvMOU1pcwPgmfbWModdeAhHrH06zt
+         ZOUfpK1g/6QWcUwGfNfxOadzC/W622B0amAbjWB4AQsIcU3RqyTziJmL59/Tqn9XO+o5
+         JEma8lPSrco2Ccs4ZJcPjWr5uU1BdNiS93Qljch9lFTGQzZigBnXx6T9b96UbL2wAnAW
+         fAag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3xJtdK49btHPEToxPMCH1arc6PMd2qVqy6vnK74uPQk=;
+        b=tno+ZX4Q/x4fjhhTyX+u0bMm/PiEvLLEotN04lhabsn4Beiqlw4HiMwPPlRi4UbrTR
+         IOWo4b7zSlcgUrPMj+aJWl0vOVjy2gMqxE5FcvO6UGrtyk2OWJKgav0zrzuR+ebo2Imf
+         vITz8VEuRbXYw6zxl8I+NDhdNmAI36fNeHnkMYXfy3iON1yr6LRIQmg+jvpHNflpgs1+
+         KniAJWy8pGMsPttVxrLpLP4lLAHvHAaVGEBxzyRk4BIQVRWPyvSKsnqCvsJq8s7M1z7x
+         dI9z9t0RY1ABm/wBh6WvipgLrjLfWC6BBvaYRJ76mGrEGG9OCCZWVaYVNTHYHLxHgeA5
+         s2GA==
+X-Gm-Message-State: ANoB5pmIBNlOJZrb7QxliVYtGpTbV8930DzcWlWOAVIIBQUNZEkFOYpl
+        w1NuCRBiqdLSmDiuAKT/xX0DMASe188=
+X-Google-Smtp-Source: AA0mqf462wurakLINUGANLPAR5yPixMH5UEOuXcNRzjn4D0QDaAEX/MpvsUjoegSBItm057tMeexAw==
+X-Received: by 2002:a05:600c:6549:b0:3cf:497c:c59e with SMTP id dn9-20020a05600c654900b003cf497cc59emr1628379wmb.6.1670494180171;
+        Thu, 08 Dec 2022 02:09:40 -0800 (PST)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id p18-20020adfce12000000b00242271fd2besm21514950wrn.89.2022.12.08.02.09.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Dec 2022 02:09:39 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <271d275e-df40-76e5-3930-89ab63961fb2@dunelm.org.uk>
+Date:   Thu, 8 Dec 2022 10:09:38 +0000
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1461207428-1670491759=:3015"
-X-Provags-ID: V03:K1:Q7UtEl+syMnTL/aL1FLXV6VfySwyYlgoKWjvKBehleSrHoKqaPb
- OR06jbZwdW+vaLfaCHGjV2rwqPIPD+XWkHktBGwt44NXsHEAy+7iS38LCyqz0Mb2xH3rcpZ
- M5p3WmT8QgTLCOnAAVJmNcvTKMaGGHp+rXiYg0prvsToqmBwJbl7/MGWeJMmQxKQOscyhvZ
- vRZV63j8Q5zGApe5ynuFg==
-UI-OutboundReport: notjunk:1;M01:P0:VBDljENRvwY=;NmdLz0BsDWnAds75AsB83T8FbRK
- eAcLdhob+JgOlbB+0ujJsoBfKbi+sAVbQLXrK+aepoayKWHj63ajkr+oXfaW6h4vRaRjc21sA
- p9Z9+p0/GJC/aaAYiTycco3vfGeZpdidCllKsvRqOIBPrwFClmSQ6g20U/FUgE9x+l545HDjm
- vwksL97IqKcE3irDDdSinsgAX8XX0Hqr0roxXfficsqU4nJzgxaqXKXsZys7Q/MyINtcYt9Eg
- 0te+XwXbkCgkVm5FLfD9c3z7NVJOEej9qM9RGx+Vv7028B14EJKX3rMGXVBzGsP4yDroJ+NjT
- K60wPugGz4pfRCRsbnO28tUuyxRK8000qphBm4tBJaSPkTNrtr6F8Mkk6YmX6LL8tXDSjzvVU
- e3Z0fTOCohI+Ds2Q/FhFgfAq3XbEG0IMAxQJ0ij+hU2vXeUETJ6RN+vg7A9AJrAO5bdX9oXL2
- BcK8KQ/ySFSrW8WZiqZNuAXAoC7Y/3S0rpagB1cgxDdWw0cPpuc5QJoPue/lpr1XOobcmWBe9
- skbsMHlwXA7Q01sDEIwcnPvS2lZwrimCgkfHrViXBkX0HN4VYE6FC6DJbiilL2HuAGBd+p8ID
- L+5K8HrLUqe6iBJXB1weyuyeQOOtBScEfxLJkO1nd1HzQLyfzTYVVQZrsOPyVHP38VgNlrT51
- mSnvbDjHdeMEvd+nAW8fRZS9kF7bkmUvAZyV1fuJwmLsmeo3pIVDvH6PuknExi26/C/d00o8P
- edR217oEJJ54rF8MwfDVbDJexHaWYkmJtJKANqyeG6OEeKjmndH94q7ZSPjEhij9ukBAw6/bs
- nfuUGSqv/vrg8ltwXSdx/cD6PBMY6hs3cryC6dpUrBC6RBYcWAxLI3h8tVFtn2N+VFZMtMqvj
- OToB8FaSFchyQYezBVM3M1Ma8fQ0gekb1s1kjizoroY6x9zGWeFBqsHyt6TxWI9NY/GZ+nLiq
- skJlhA==
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2] CI: don't explicitly pick "bash" shell outside of
+ Windows, fix regression
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <patch-1.1-08dc682926a-20221207T031459Z-avarab@gmail.com>
+ <patch-v2-1.1-c34fd06623a-20221207T120220Z-avarab@gmail.com>
+In-Reply-To: <patch-v2-1.1-c34fd06623a-20221207T120220Z-avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Ævar
 
---8323328-1461207428-1670491759=:3015
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On 07/12/2022 12:03, Ævar Arnfjörð Bjarmason wrote:
+> When the "js/ci-github-workflow-markup" topic was originally merged in
+> [1] it included a change to get rid of the "ci/print-test-failures.sh"
+> step[2]. This was then brought back in [3] as part of a fix-up patches
+> on top[4].
+> 
+> The problem was that [3] was not a revert of the relevant parts of
+> [2], but rather copy/pasted the "ci/print-test-failures.sh" step that
+> was present for the Windows job to all "ci/print-test-failures.sh"
+> steps. The Windows steps specified "shell: bash", but the non-Windows
+> ones did not.
+> 
+> This broke the "ci/print/test-failures.sh" step for the "linux-musl"
+> job, where we don't have a "bash" shell, just a "/bin/sh" (a
+> "dash"). This breakage was reported at the time[5], but hadn't been
+> fixed.
+> 
+> It would be sufficient to change this only for "linux-musl", but let's
+> change this for both "regular" and "dockerized" to omit the "shell"
+> line entirely, as we did before [2].
+> 
+> Let's also change undo the "name" change that [3] made while
+> copy/pasting the "print test failures" step for the Windows job. These
+> steps are now the same as they were before [2], except that the "if"
+> includes the "env.FAILED_TEST_ARTIFACTS" test.
 
-Hi,
+What's the motivation for this part of the change (which is completely 
+unrelated to the choice of shell)? Having the test failures under "Print 
+test failures" makes it easy for new contributors to see where to click 
+to see the full output for test failures. Now they will appear under 
+"Run ci/print-test-failures.sh" which while not terrible is not as clear.
 
-On Tue, 6 Dec 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Best Wishes
 
-> On Tue, Dec 06 2022, Phillip Wood wrote:
->
-> > On 06/12/2022 03:52, Junio C Hamano wrote:
-> >> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-> >>
-> >>> Just to add my own digression: I asked in some past thread (which
-> >>> I'm too lazy to dig up) why it was the cmake file couldn't just
-> >>> dispatch to "make" for most things.
-> >
-> > Because make is not installed by default on Windows. Our CI job uses
-> > msbuild (whatever that is) and when I was playing with Visual Studio
-> > last week it was using ninja.
-> >
-> >>> I.e. it needs to at some level be aware of what it's building for th=
-e
-> >>> IDE integration, but for say making a "grep.o" there's no reason it
-> >>> couldn't be running:
-> >>>
-> >>> 	make grep.o
-> >>>
-> >>> Instead of:
-> >>>
-> >>>          cc <args> -o grep grep.c [...]
-> >>>
-> >>> which requires duplicating much of the Makefile logic (possibly with
-> >>> some Makefile shim to not consider any dependencies in that case).
-> >> That leads to a question at the other extreme.  Why does any logic
-> >> in CMakeLists.txt even have to exist at all?  Whenever it is asked
-> >> to make foo, it can be running "make foo" instead of having its own
-> >> logic at all.  ;-)
-> >
-> > Yes, if make was available then we wouldn't need to use CMake.
->
-> I think Junio and I are talking about something slightly different. Yes
-> "make" isn't available by default. Getting it requires installing a
-> larger SDK.
->
-> But if you look at the history of contrib/vscode/README.md in our tree
-> you'll see that we used to support this "Visual Studio Solution" for
-> years via GNU make, it probably still works.
+Phillip
 
-It probably doesn't. Last time I had to use it, during the embargoed
-v2.37.1 release process, it didn't. I had to add plenty of patches to make
-it work again:
-https://github.com/git-for-windows/git/compare/323a69709944%5E...323a69709=
-944%5E2
-
-> The change in 4c2c38e800f (ci: modification of main.yml to use cmake for
-> vs-build job, 2020-06-26) shows when the CI was switched over to using
-> cmake instead.
->
-> The code to support that is still in-tree as the "vcxproj" target in
-> "config.mak.uname", which calls out to the ~1k lines of Perl code in
-> contrib/buildsystems/Generators/*.
-
-At some stage we can probably get rid of the `vcxproj` code. Before that,
-we can even get rid of the `vcproj` code that is bit-rotting in
-`contrib/buildsystems/`. But there seems no harm, and less maintenance
-burden, in keeping the `vcxproj`/`vcproj` parts where they are, as they
-are.
-
-Taking a step back, I see that we got far away from the topic that started
-this thread.
-
-So here's my take on `ab/cmake-nix-and-ci`: While that patch series'
-intention is apparently to make it easier to diagnose and fix CI problems,
-I only see that it adds new problems. It won't make it possible to
-diagnose most win+VS problems because they don't reproduce on Linux. But
-the patches already did introduce Windows-specific problems merely by
-trying to get the Linux side of CMake to work. And trying to keep CMake
-working both on Linux and on Windows would cause many more problems in the
-future. And we do not even need CMake support for Linux, `make` works well
-there already. It would increase the maintenance burden unnecessarily.
-
-I am therefore suggesting to drop `cmake-nix-and-ci` entirely.
-
-To address the concern about broken CI runs, I hoped that monitoring them
-and helping contributors by suggesting fixups was working well enough. It
-used to be okay for patches to be contributed that caused CI to fail, we
-simply worked together to fix CI, as a team, and that was that. We didn't
-"blame" the contributors, or anything, when CI runs failed because of
-their patches. After all, possible causes of CI failures include that
-patches might be applied on top of other commits than intended, or that
-patch series interact in unfortunate ways.
-
-Junio, maybe you could clarify your take on this? As project lead, it is
-your decision to define how Git uses Continuous Builds, and how the
-project handles failed CI runs.
-
-Ciao,
-Johannes
-
---8323328-1461207428-1670491759=:3015--
+> 1. fc5a070f591 (Merge branch 'js/ci-github-workflow-markup', 2022-06-07)
+> 2. 08dccc8fc1f (ci: make it easier to find failed tests' logs in the
+>     GitHub workflow, 2022-05-21)
+> 3. 5aeb145780f (ci(github): bring back the 'print test failures' step,
+>     2022-06-08)
+> 4. d0d96b8280f (Merge branch 'js/ci-github-workflow-markup', 2022-06-17)
+> 5. https://lore.kernel.org/git/220725.86sfmpneqp.gmgdl@evledraar.gmail.com/
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+> 
+> I forgot the Signed-off-by in v1, sorry.
+> 
+> Range-diff against v1:
+> 1:  08dc682926a ! 1:  c34fd06623a CI: don't explicitly pick "bash" shell outside of Windows, fix regression
+>      @@ Commit message
+>           4. d0d96b8280f (Merge branch 'js/ci-github-workflow-markup', 2022-06-17)
+>           5. https://lore.kernel.org/git/220725.86sfmpneqp.gmgdl@evledraar.gmail.com/
+>       
+>      +    Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>      +
+>        ## .github/workflows/main.yml ##
+>       @@ .github/workflows/main.yml: jobs:
+>            - uses: actions/checkout@v2
+> 
+>   .github/workflows/main.yml | 8 ++------
+>   1 file changed, 2 insertions(+), 6 deletions(-)
+> 
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index 9afacfa0b33..1a86f6a8ce1 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -265,10 +265,8 @@ jobs:
+>       - uses: actions/checkout@v2
+>       - run: ci/install-dependencies.sh
+>       - run: ci/run-build-and-tests.sh
+> -    - name: print test failures
+> +    - run: ci/print-test-failures.sh
+>         if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+> -      shell: bash
+> -      run: ci/print-test-failures.sh
+>       - name: Upload failed tests' directories
+>         if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+>         uses: actions/upload-artifact@v2
+> @@ -297,10 +295,8 @@ jobs:
+>       - uses: actions/checkout@v1
+>       - run: ci/install-docker-dependencies.sh
+>       - run: ci/run-build-and-tests.sh
+> -    - name: print test failures
+> +    - run: ci/print-test-failures.sh
+>         if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+> -      shell: bash
+> -      run: ci/print-test-failures.sh
+>       - name: Upload failed tests' directories
+>         if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+>         uses: actions/upload-artifact@v1
