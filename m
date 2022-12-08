@@ -2,128 +2,106 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 06F3BC001B2
-	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 23:00:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E60CC4167B
+	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 23:05:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229760AbiLHXAg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Dec 2022 18:00:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46022 "EHLO
+        id S229558AbiLHXFZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Dec 2022 18:05:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229734AbiLHXAd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2022 18:00:33 -0500
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C99748F73A
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 15:00:31 -0800 (PST)
-Received: by mail-ed1-x534.google.com with SMTP id c66so881379edf.5
-        for <git@vger.kernel.org>; Thu, 08 Dec 2022 15:00:31 -0800 (PST)
+        with ESMTP id S229462AbiLHXFW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2022 18:05:22 -0500
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F6266427
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 15:05:21 -0800 (PST)
+Received: by mail-pl1-x64a.google.com with SMTP id k18-20020a170902c41200b001896d523dc8so2572128plk.19
+        for <git@vger.kernel.org>; Thu, 08 Dec 2022 15:05:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=snowflake.com; s=google;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=SsDKWa4Bu84a5GzEhFstGteGtetLq7bD6CrACl7i6c8=;
-        b=Wc50pPiGXQ5gRQbLF5D+x+EvlyyGS1a2vRkEEiCx9F6cZkD4P9ZIsJDbHpud5ZL+nJ
-         HY0g42tJWyV3kBTHhYDLsS3sBv5I0HgZzLiqiLX6K78kxCgCzMzoC9bnsGS38TGq3j+F
-         V7FK9HfsTkDk5TCXCF3T+Aun40QzbXIIyNqnqNRsZaYH7eTMH8Yf//6FfVwHlFiBck28
-         foBk9t249FC5I8qnoM47P4uqHah0AQT+vWocYcKtNyXWcUd2SstNAu2ruWiu66j0IpcX
-         y+HZlw+9ihEHjuPPETPsUvx9AE8T5vFIQEcR9beTROF3Vj1aLJ/MJLj3Eh/vEelrG9ya
-         jlEw==
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=u3td/6uAnx//D54qYP0sqF6HrdUzpGLVwAapY8bX5wQ=;
+        b=Nzre/udlsyR1k2/uL3pS0Z/kCSFa0KFC38bZRz2qdi6OCLfpe1N4MqElm5GC0eaZbZ
+         ykjY5J/6m0zjWevAwkclY+NDMle+ELyu3d/wKoZhiUpKPyqbCtLcQwWOS9N/K8vazSIw
+         khc9LtWJyp8zvZU+lrtgCTXiKbvu2ETOrj58aq8TBv5TzPoTxpSEuUMUBfAQtC8FXJn+
+         8aoTqQr+eKupPJ8U0bvY8+O3KPWQuC60KVBcG308ksMKjTf6b/XJ1MppY6T+GksmFmXB
+         LLw52Mp2TfwdczowwaFymJW7hnrdSiqpqOniBAZtpAOjJfgVJjxKane8u5wTKEkQqEWc
+         bZmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SsDKWa4Bu84a5GzEhFstGteGtetLq7bD6CrACl7i6c8=;
-        b=phy4MMFX/0VTaxPZkiVHoMS1UVKSf2ik/AQUXcNZW79FyqGzPqh1VMxYXJiTwC0isL
-         MG3OZVSPVyD5kp/StG0H4ULTxwc6pKTWxOqO0jkEMU+GP1yAVgio6kwjQK05ZO1hfR6C
-         qTY0mFHXcC+g4AqBjXZaCyQBZ8253T7yXY9TgTVIKhVA7oIJEa8i4j/aIdnvizWOK0Af
-         5wv/3NRyyhDTpYjpVuVGThW9i+a3/8CzfPevDjzgJp71JptAvhLpaRTq6ad2my/MKpDw
-         XQpKT+2U+PmC8yf3VkAhHUBzCc6PbP3h5XZ8WSJrB451Y3oQfksaNdYbNwVUFwxwD4hZ
-         Svng==
-X-Gm-Message-State: ANoB5pkf1lo2B5uXxerxZvoLsVoRrD3xTwZK6CyP0iZAtbV2+D+xGlQn
-        C/9Qycilqn2mXSlOXzmIRc21RlO9x4Ajb1/X6ZUI5gKeOWnC9LAw
-X-Google-Smtp-Source: AA0mqf7oBSjMywzz38VKNmflVDZfBxhfwtlsGq052Zwg0uTDjd6puCy4K2YMBfkW8ydEKMyst9/HwP2aOONzfm+Awk4=
-X-Received: by 2002:aa7:c415:0:b0:46c:4b56:8c06 with SMTP id
- j21-20020aa7c415000000b0046c4b568c06mr20941937edq.230.1670540429836; Thu, 08
- Dec 2022 15:00:29 -0800 (PST)
-MIME-Version: 1.0
-From:   Eric Musser <eric.musser@snowflake.com>
-Date:   Thu, 8 Dec 2022 15:00:18 -0800
-Message-ID: <CAGW=zr_BD=7d5dZi+yO4cpufFi=jEjH=wQoTndDLfTi14UresQ@mail.gmail.com>
-Subject: rebase update-refs can delete ref branch
-To:     git@vger.kernel.org
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=u3td/6uAnx//D54qYP0sqF6HrdUzpGLVwAapY8bX5wQ=;
+        b=6y/t3IXfzlsncRUkwSnBEjmO4bzCnzGCBzSj6rFQSfjHFKhYHtFsxDOpi2yeQgsSi5
+         UR3QyKGZmQD3OXvWVWzmh0SotWkwhWq0/jDB3/LlAOaxLBwetAfCYKqjSgisxCeExd6I
+         Z2Fo2eTqJbmQAcvYKeURA1j5xl9/Q2yI9tPDfKJ8eBHDIi9PQBt6ZpRoIMEFKXH44NB0
+         ugJhhVCi1OHEN0cMuduQNUsFq0lQLz8tnt2iSK5kFnyEe0gpJKn/o7rloaXqfQSdXhyL
+         S3BSMg0QbLCh5jl07v0UzY6934XQmy+cZz6+Kh1wN1m6PKAEKmdH9w1NbSFib+VXhPeS
+         tGyQ==
+X-Gm-Message-State: ANoB5pmYJuczmyMzSTgfMvTVqFOJvvu3t2E9QNrFyP7HUtUmdVAQKkxN
+        TY9K99bDFpkmHLUsRGl4DvaMZEGWBkJODg==
+X-Google-Smtp-Source: AA0mqf5HWT5Syh4HqEpX+X6l3HPlkLAYfkAtp5+kCo6yx9n0G54ldtup5CcwulWwGABXLlUVliYbmabx7GVXVQ==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:903:31d5:b0:187:1461:9b27 with SMTP
+ id v21-20020a17090331d500b0018714619b27mr81676827ple.165.1670540720809; Thu,
+ 08 Dec 2022 15:05:20 -0800 (PST)
+Date:   Thu, 08 Dec 2022 15:05:11 -0800
+In-Reply-To: <87tu26arzy.fsf@osv.gnss.ru>
+Mime-Version: 1.0
+References: <20221127093721.31012-1-sorganov@gmail.com> <kl6lilimepli.fsf@chooglen-macbookpro.roam.corp.google.com>
+ <87tu26arzy.fsf@osv.gnss.ru>
+Message-ID: <kl6lcz8tebtk.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH 0/5] diff-merges: more features
+From:   Glen Choo <chooglen@google.com>
+To:     Sergey Organov <sorganov@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        Alex Henrie <alexhenrie24@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        huang guanlong <gl041188@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+Sergey Organov <sorganov@gmail.com> writes:
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-$ git init
-Initialized empty Git repository in /home/emusser/git/test/.git/
-$ git checkout -b working-branch
-Switched to a new branch 'working-branch'
-$ git commit -m "commit 1" --allow-empty
-[working-branch (root-commit) 1238cf8] commit 1
-$ git commit -m "commit 2" --allow-empty
-[working-branch 2dd4408] commit 2
-$ git branch other-branch
-$ git commit -m "commit 3" --allow-empty
-[working-branch 39f626e] commit 3
-$ git rebase -i --update-refs HEAD~2
-[I am presented]:
-pick 2dd4408 commit 2 # empty
-update-ref other-branch
+> The last time '-m' issue appeared on the list, it all started here:
+>
+> https://lore.kernel.org/git/CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com/
+>
+> In particular, the final patch and its revert is deeper down this tread:
+>
+> https://lore.kernel.org/git/20210520214703.27323-11-sorganov@gmail.com/#t
+>
+> and
+>
+> https://lore.kernel.org/git/YQyUM2uZdFBX8G0r@google.com/
 
-pick 39f626e commit 3 # empty
+Thanks, these provide extremely helpful context :) In particular:
 
-[I deleted first two lines and submitted]:
-pick 39f626e commit 3 # empty
+- Junio describes this "do nothing unless -p" is given behavior as an
+  accident [1].
+- Jonathan Nieder notes that this change accidentally broke scripts
+  where "-m" probably wasn't doing anything useful, but we wanted to
+  avoid breaking the scripts for backwards compatibility anyway [2].
 
-Successfully rebased and updated refs/heads/working-branch.
-Updated the following refs with --update-refs:
-refs/heads/other-branch
-$ git rev-parse other-branch
-other-branch
-fatal: ambiguous argument 'other-branch': unknown revision or path not
-in the working tree.
-Use '--' to separate paths from revisions, like this:
-'git <command> [<revision>...] -- [<file>...]'
+I got the sense that the closest thing to an intentional use case of
+"-m" is for users who thought that "-m" would affect path limiting [3],
+although it doesn't actually do that. So what I've reads so far suggests
+that "do nothing unless -p" (aka --diff-merges=hide) is not actually
+useful, and we should just drop it.
 
-What did you expect to happen? (Expected behavior)
-The branch I interactively removed from the rebase to not actually be
-deleted. It is common
-to remove unrelated changes (and refs) from your working branch before pushing.
-I'd hope in this case I would not have to use `git rebase
---no-update-refs' (if I'm set
-in my config UpdateRefs=true) to avoid branches from being deleted.
+We could keep the warning for "-m" without "-p" (Patch 5), and recommend
+"--diff-merges=(on|m)".
 
-What happened instead? (Actual behavior)
-The branch was deleted.
-
-What's different between what you expected and what actually happened?
-The branch was deleted when I would expect branches that are no longer listed
-to not be updated or deleted.
-
-Anything else you want to add:
-
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.38.0
-cpu: aarch64
-built from commit: 3dcec76d9df911ed8321007b1d197c1a206dc164
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 5.16.13-generic #2 SMP Fri Mar 11 12:48:38 UTC 2022 aarch64
-compiler info: gnuc: 10.2
-libc info: glibc: 2.17
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
-pre-commit
+[1] https://lore.kernel.org/git/xmqqwnsl93m3.fsf@gitster.g/
+[2] https://lore.kernel.org/git/YQtYEftByY8cNMml@google.com/
+[3] https://lore.kernel.org/git/YQyUM2uZdFBX8G0r@google.com/
+>
+> Where do you prefer these references to be put, in the cover letter, in
+> the commit message, or in both places?
+>
+> -- Sergey Organov
