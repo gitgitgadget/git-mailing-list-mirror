@@ -2,94 +2,244 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 45A99C4332F
-	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 12:10:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AEDDAC4332F
+	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 12:18:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229873AbiLHMKP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Dec 2022 07:10:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55362 "EHLO
+        id S229940AbiLHMSc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Dec 2022 07:18:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229810AbiLHMKL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2022 07:10:11 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A458880EA
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 04:10:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1670501406; bh=FBm+79w/Z5mZ1ALyYRSoHbi9Ht+agdh5QDfyd4MfFIU=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=sLLXLUIeVlIxC6Z6owSz6yiQRwMJnnSPtvMbF4JcyiDCcwK/b5cwsLt+GNelmxBDo
-         FMMR58eHAVKNmx43a9vib30EwMyq83qXTxnH4dslMg7Eg5aYYW964S59UgA8cyl64y
-         ui63FP0u7pMnTSwNWuRW0BxHxARYWAwcs7A7Y2OKZiFQUo58ZOdIZ0TtgSSJm5A+wL
-         LAtoM7F555zF4uG/MZocJ/iaukETls9qtHfwmMzWUzLh5VfuKNg5jzIzV88eqw4ozX
-         /imTrKkZf3tKYn2ZGGNd7NcQj4om8gW5mkz2PPTnFREYnGsG1jh9jgz2BWyKd0UX56
-         wK20NawTE6HiA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.24.155.134] ([46.114.106.61]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MUGi9-1pTtYz14kt-00RGpW; Thu, 08
- Dec 2022 13:10:06 +0100
-Date:   Thu, 8 Dec 2022 13:10:04 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-cc:     git@vger.kernel.org,
-        Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>
-Subject: Re: [PATCH 0/3] fix t1509-root-work-tree failure
-In-Reply-To: <CAPig+cT6z5kzM8suwqxJ0wrzHjnj9ChROVBiQO3AR1rJ11pkNw@mail.gmail.com>
-Message-ID: <96178n12-4255-q093-qo51-r37n5o569s6p@tzk.qr>
-References: <pull.1425.git.1668999621.gitgitgadget@gmail.com> <CAPig+cT6z5kzM8suwqxJ0wrzHjnj9ChROVBiQO3AR1rJ11pkNw@mail.gmail.com>
+        with ESMTP id S229522AbiLHMSa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2022 07:18:30 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 928E521265
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 04:18:28 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id t17so3443278eju.1
+        for <git@vger.kernel.org>; Thu, 08 Dec 2022 04:18:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2jksoa14jY2qIYggJLORQN4ADa0ZRQjyKS40qV92SfU=;
+        b=WfRfvjdLDR7eL2aYicbLO+gE/pck/qwEY5NMlXRyJ1I4M7ulHxm9bGBNLb3QlWBg2Z
+         X5cuWeCpiiXa33mz4t00Ed1im0jM5VibyeTCq7A5hfwTPBEmwOnnG954gl3P2XGsh8Oq
+         7IG/M7kz+uhgDT3PigKnhrXMgz9cmi8FybFc7Yu/tTfhDmxQIpnSS8DHIoibUrZeBSzE
+         fjy11WbFCQMPqEIgixqb3KQqxgcFlSMoNHIo2rlOs3kBSbFblH6ehe441iJDJ/N4/WBR
+         dqVbUDc9cZtcov5K9wQKFH/gCI+FflAbGjTtC/A83VldE4mC8ncdBFsflG2fCxJbfNzd
+         UGyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2jksoa14jY2qIYggJLORQN4ADa0ZRQjyKS40qV92SfU=;
+        b=mrRT9B3k6g+MbbmWkDEwUAvR3NRoKl9iWxwUZib3BY8KCjGcUyMnrO897/GCO+eW9t
+         dbxUgjSRTkAZltX9CmX4KNLx0Qtrc/a1zR5zmyTpU1Naxo0rAaTcLIpyMNpdVbabNlIR
+         K2Usv3BxVFZApwh4pwJRJbuzQJJ2DWkGMXZOo2kZkm8WEx4tXzrhrRpsJWizOm1aSzEa
+         Rc6wDpjH2dkxdTwyvFVOy7EJesgI7d+emyT/XAzgGAB4PhI+9vnQoElwAV06mNX2xmIb
+         zC0CWn6IhnCNaMAFisdbHPCp+S31V72TIpOzB9lVV4n+orwmBEk2gLjO6esHSER5PiFA
+         NAyQ==
+X-Gm-Message-State: ANoB5pk1R2s5j7rxAvqQ20owtzCRXFijdHSWN87CD+r8Vml473rKbc+a
+        y1BaDDm6nqlfTfXcEE2vrmY=
+X-Google-Smtp-Source: AA0mqf5/p7fCwe9/VKI5Ubnmy6AVU1scec1EcALEz8GkkmaOL96E4gHw57hOEQIlm/DwyvrAtxmrGg==
+X-Received: by 2002:a17:906:81d0:b0:7c1:22a6:818f with SMTP id e16-20020a17090681d000b007c122a6818fmr1638606ejx.25.1670501906846;
+        Thu, 08 Dec 2022 04:18:26 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id gg9-20020a170906e28900b007c0d41736c0sm6500020ejb.39.2022.12.08.04.18.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Dec 2022 04:18:25 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1p3Fr6-0052Wd-38;
+        Thu, 08 Dec 2022 13:18:24 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     phillip.wood@dunelm.org.uk, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Yuyi Wang <Strawberry_Str@hotmail.com>
+Subject: Re: ab/cmake-nix-and-ci, was Re: [PATCH] test-lib.sh: discover
+ "git" in subdirs of "contrib/buildsystems/out"
+Date:   Thu, 08 Dec 2022 12:34:49 +0100
+References: <663b93ef-0c89-a5f6-1069-b4be97915d20@dunelm.org.uk>
+ <patch-1.1-f27d8bd4491-20221201T162451Z-avarab@gmail.com>
+ <xmqq5yeuspam.fsf@gitster.g>
+ <87f22a55-ee84-2f76-7b9b-924a97f44f89@dunelm.org.uk>
+ <221202.86sfhxg2ng.gmgdl@evledraar.gmail.com>
+ <Y4qF3iHW2s+I0yNe@coredump.intra.peff.net>
+ <221203.86pmd1dyqn.gmgdl@evledraar.gmail.com>
+ <Y45/8WnuUnP9gOMo@nand.local> <Y46clyoKk9KzFiqj@coredump.intra.peff.net>
+ <221206.86zgc1cnc3.gmgdl@evledraar.gmail.com>
+ <Y46jT0i/7DhxHzfS@coredump.intra.peff.net>
+ <221206.86mt81claa.gmgdl@evledraar.gmail.com> <xmqqilipnq8j.fsf@gitster.g>
+ <30360f4c-91a5-177b-133f-eb7036ed676a@dunelm.org.uk>
+ <221206.865yeodbtg.gmgdl@evledraar.gmail.com>
+ <oq7p2776-po8p-r9s0-82o2-o77so874n419@tzk.qr>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <oq7p2776-po8p-r9s0-82o2-o77so874n419@tzk.qr>
+Message-ID: <221208.86wn726qcv.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:1ZdZTO52jWBYTPxW/QB5/KRSQ14cuA2FdZK7nxDXXGj26pHwPhh
- 4Go+JbXR6zi8gAJ9Ck+7o+SPfP3bP/vM+SJLG5/IybRNqz9fkTBzo2ljB2yd0UQeR06ZtKx
- unjL/Bu+zIz129C1vlbksW2t8Qyfh8R+B0alEf3TcdLa3zHge9DTTh6J2tnTds0Hl1Kr0P0
- 7W4c9zlSKG6/tmr34+9tA==
-UI-OutboundReport: notjunk:1;M01:P0:8DLDndS7I/k=;mJd2AGj1wUs17GLsPUgk/cxVtCq
- 3EAV5mSxdOyUHT/TGEfTfSkis+J+52edXQEp5qN948OJMTzJJf4V+GYZy3xvdy4/T1PsFQWxp
- mzeW2ytiMc89N/dDrkRnV/GJ3TTfqX6pr/gtBCTi1UOUJ61YCbDqT4Mh2NzI3ADiGZaXnpqmP
- UL0koF7SGrcujz2Dfg2re0BdCt0wttt8rPhACQSGJGpmpTjLzLjiV9g3PGu1zEkgl8uYjXcxj
- rImAdTZdJize8dvqdDiAHzWQteJvkYN5oFAbwovtTUrwGw3iZevuEoRD7DRCJURrUIp9qsYVb
- j0DoKE5/EvlwAdP6EWIqCOnj3Pijy6TgzvC0dX2p6A8xq7cuQHPgRPPXanpd9+G9OAaUhkXEl
- AmfdfEXNgVyOPSSccQ4XIkSaUrWr9hjX0Y1ozW4J1Yl899PwtZckFAnHJ9Phros0eQAnlv0WS
- 81tuGScMBnAE7VBb1jSyXF+HJcMf55bxgr8F6l6wQz1UinUKo3NZvCJd/1Kx6zM4PfwsxfCE3
- TP7iaFKYO+AIrCuDWaFLcyJ0/Is0AdGiRJaJbXGDwZ87nuKmDqX6UO4/2rp4UVai7Y61plX44
- B00oQrM7FVUV936s4D5sp9AYq6UGRXGm9KDVj+hMW4BD4qQQ48ic5Dj2vQUk0gAmgIyIAjn+S
- 1sqRs/+sVEFLEDvbRC22kXJDWL9Rizl7N8wNo48vp7o6kloH4AqlCCyopTSDRWeWBlC4Epqt8
- bfljJ4BkgEAqskld7HUN45ZkuRSZrqStvfv7OOn9zIj4W9Yl9PDG3PAE9T3Ynhh4ZG5vR8SWl
- +Jg929gTlfVGh0Efdu3bSpVg5RcA1URgCJP0Efu49P14rCFmS0LjxpNNEfrKU2hiJ6lm9yEOg
- XBpgPDcaH0IifLT+jmRmO/0pMfgnuooSxO/vFZ4IOxedihQ4UKW8nz/sTDQFf6Np44xgHKNRs
- eJOqwyfdd+NRkNbfdH5iDucBu+Q=
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
 
-On Mon, 5 Dec 2022, Eric Sunshine wrote:
+On Thu, Dec 08 2022, Johannes Schindelin wrote:
 
-> On Sun, Nov 20, 2022 at 10:00 PM Eric Sunshine via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> > The t1509-root-work-tree script started failing earlier this year but =
-went
-> > unnoticed because the script is rarely run since it requires setting u=
-p a
-> > chroot environment or a sacrificial virtual machine. This patch series=
- fixes
-> > the failure and makes it a bit easier to run the script repeatedly wit=
-hout
-> > it tripping over itself.
-> >
-> > Eric Sunshine (3):
-> >   t1509: fix failing "root work tree" test due to owner-check
-> >   t1509: make "setup" test more robust
-> >   t1509: facilitate repeated script invocations
+> Hi,
 >
-> Ping?
+> On Tue, 6 Dec 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>> On Tue, Dec 06 2022, Phillip Wood wrote:
+>>
+>> > On 06/12/2022 03:52, Junio C Hamano wrote:
+>> >> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>> >>
+>> >>> Just to add my own digression: I asked in some past thread (which
+>> >>> I'm too lazy to dig up) why it was the cmake file couldn't just
+>> >>> dispatch to "make" for most things.
+>> >
+>> > Because make is not installed by default on Windows. Our CI job uses
+>> > msbuild (whatever that is) and when I was playing with Visual Studio
+>> > last week it was using ninja.
+>> >
+>> >>> I.e. it needs to at some level be aware of what it's building for the
+>> >>> IDE integration, but for say making a "grep.o" there's no reason it
+>> >>> couldn't be running:
+>> >>>
+>> >>> 	make grep.o
+>> >>>
+>> >>> Instead of:
+>> >>>
+>> >>>          cc <args> -o grep grep.c [...]
+>> >>>
+>> >>> which requires duplicating much of the Makefile logic (possibly with
+>> >>> some Makefile shim to not consider any dependencies in that case).
+>> >> That leads to a question at the other extreme.  Why does any logic
+>> >> in CMakeLists.txt even have to exist at all?  Whenever it is asked
+>> >> to make foo, it can be running "make foo" instead of having its own
+>> >> logic at all.  ;-)
+>> >
+>> > Yes, if make was available then we wouldn't need to use CMake.
+>>
+>> I think Junio and I are talking about something slightly different. Yes
+>> "make" isn't available by default. Getting it requires installing a
+>> larger SDK.
+>>
+>> But if you look at the history of contrib/vscode/README.md in our tree
+>> you'll see that we used to support this "Visual Studio Solution" for
+>> years via GNU make, it probably still works.
+>
+> It probably doesn't. Last time I had to use it, during the embargoed
+> v2.37.1 release process, it didn't. I had to add plenty of patches to make
+> it work again:
+> https://github.com/git-for-windows/git/compare/323a69709944%5E...323a6970=
+9944%5E2
+>
+>> The change in 4c2c38e800f (ci: modification of main.yml to use cmake for
+>> vs-build job, 2020-06-26) shows when the CI was switched over to using
+>> cmake instead.
+>>
+>> The code to support that is still in-tree as the "vcxproj" target in
+>> "config.mak.uname", which calls out to the ~1k lines of Perl code in
+>> contrib/buildsystems/Generators/*.
+>
+> At some stage we can probably get rid of the `vcxproj` code. Before that,
+> we can even get rid of the `vcproj` code that is bit-rotting in
+> `contrib/buildsystems/`. But there seems no harm, and less maintenance
+> burden, in keeping the `vcxproj`/`vcproj` parts where they are, as they
+> are.
+>
+> Taking a step back, I see that we got far away from the topic that started
+> this thread.
+>
+> So here's my take on `ab/cmake-nix-and-ci`: While that patch series'
+> intention is apparently to make it easier to diagnose and fix CI problems,
+> I only see that it adds new problems. It won't make it possible to
+> diagnose most win+VS problems because they don't reproduce on Linux.
 
-Thank you for the ping. I did not have much time for the Git mailing list
-as of late (too much Git for Windows stuff going on).
+That would also be my take if that was the goal of the series. I agree
+that would be pretty pointless. Why test win+VS-specific code on Linux?
+That makes no sense.
 
-The patch series looks good to me, with or without the `test_atexit`
-change I suggested.
+But that's not the goal.
 
-Thank you,
-Johannes
+It's to make it easier to test the majority of the platform-agnostic
+code in the cmake recipe. E.g. here's some past commits from myself,
+Jeff King and Han-Wen (who I'm pretty sure doesn't use Windows) where
+we've had to patch the cmake recipe in addition to the Makefile:
+=09
+	ef8a6c62687 (reftable: utility functions, 2021-10-07)
+	cfe853e66be (hook-list.h: add a generated list of hooks, like config-list.=
+h, 2021-09-26)
+	d7a5649c82d (make git-bugreport a builtin, 2020-08-13)
+	b5dd96b70ac (make credential helpers builtins, 2020-08-13)
+
+Doing that currently requires bouncing things off the Windows CI. With
+ab/cmake-nix-and-ci you can not only build (which currently works) but
+run the full test against the cmake build on *nix in minutes. That's a
+big improvement.
+
+I think this also misrepresents the nature of the cmake recipe, and how
+much of it is truly MSVC or VS-specific.  I count less than 20 lines in
+a ~1.1k line recipe that are really "MSVC"-specific. I.e. guarded by
+"if" branches checking "MSVC" and 'CMAKE_C_COMPILER_ID STREQUAL "MSVC"'.
+
+The rest are general in nature. E.g. you can run the tests with "ctest"
+from the VS GUI.
+
+That's not because there's a VS-specific "hey Visual Studio, here's our
+tests" part of the recipe. Rather there's a generic cross-platform
+method of declaring how to run the tests, which cmake itself then knows
+to pick up and generate a VS-specific asset with.
+
+Whereas you seem to be suggesting that the recipe is so
+Windows+VS-specific that testing it on other platforms isn't going to
+tell you much. I don't think that's true.
+=09
+> But the patches already did introduce Windows-specific problems merely
+> by trying to get the Linux side of CMake to work.
+
+This seems like vague commentary on past bugs.
+
+Do you have any specific concerns about things that are broken by the
+current v6 iteration?
+
+> And trying to keep CMake
+> working both on Linux and on Windows would cause many more problems in the
+> future. And we do not even need CMake support for Linux, `make` works well
+> there already. It would increase the maintenance burden unnecessarily.
+
+If you're going to argue that "we do not even need CMake support for
+Linux" you're not making an argument against ab/cmake-nix-and-ci, but
+against the status quo on "master".
+
+It's already the case that it mostly "works" on Linux, that's been the
+case since day 1. E.g. Yuyi's a561962479c (cmake: fix CMakeLists.txt on
+Linux, 2022-05-24) earlier this year.
+
+> I am therefore suggesting to drop `cmake-nix-and-ci` entirely.
+
+I wouldn't mind if we declare that it should never work on Linux, and I
+wouldn't mind if we drop ab/cmake-nix-and-ci entirely.
+
+But only *if* the cmake recipe becomes purely a "lag-behind" alternative
+build system that the Windows folks are responsible for updating, or to
+submit follow-up patches for if it breaks.
+
+That's not the status quo now, as e.g. Jeff King summarized nicely here:
+
+	https://lore.kernel.org/git/Y4qF3iHW2s+I0yNe@coredump.intra.peff.net/
+
+You don't seem to be suggesting a productive way forward with that.
+
+I don't think dropping it, or even making the Windows cmake CI optional
+would be a productive way forward, I think it would ultimately waste
+more of your time, and that of other Windows developers.
+
+But I don't see how that isn't the logical conclusion to not providing
+specific feedback on this topic & finding a way forward with it.
