@@ -2,55 +2,55 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6E60CC4167B
-	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 23:05:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 52323C4332F
+	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 23:06:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229558AbiLHXFZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Dec 2022 18:05:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49304 "EHLO
+        id S229917AbiLHXGs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Dec 2022 18:06:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbiLHXFW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2022 18:05:22 -0500
+        with ESMTP id S229462AbiLHXGq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2022 18:06:46 -0500
 Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F6266427
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 15:05:21 -0800 (PST)
-Received: by mail-pl1-x64a.google.com with SMTP id k18-20020a170902c41200b001896d523dc8so2572128plk.19
-        for <git@vger.kernel.org>; Thu, 08 Dec 2022 15:05:21 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FB228F734
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 15:06:46 -0800 (PST)
+Received: by mail-pl1-x64a.google.com with SMTP id u15-20020a170902e5cf00b001899d29276eso2609895plf.10
+        for <git@vger.kernel.org>; Thu, 08 Dec 2022 15:06:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=u3td/6uAnx//D54qYP0sqF6HrdUzpGLVwAapY8bX5wQ=;
-        b=Nzre/udlsyR1k2/uL3pS0Z/kCSFa0KFC38bZRz2qdi6OCLfpe1N4MqElm5GC0eaZbZ
-         ykjY5J/6m0zjWevAwkclY+NDMle+ELyu3d/wKoZhiUpKPyqbCtLcQwWOS9N/K8vazSIw
-         khc9LtWJyp8zvZU+lrtgCTXiKbvu2ETOrj58aq8TBv5TzPoTxpSEuUMUBfAQtC8FXJn+
-         8aoTqQr+eKupPJ8U0bvY8+O3KPWQuC60KVBcG308ksMKjTf6b/XJ1MppY6T+GksmFmXB
-         LLw52Mp2TfwdczowwaFymJW7hnrdSiqpqOniBAZtpAOjJfgVJjxKane8u5wTKEkQqEWc
-         bZmQ==
+        bh=UjH+4vFoVALS5IELiaEJCfAEb6bUnFL4JJZsCJfVoD4=;
+        b=dwAI0CHHLM/TH4689JVnhhVec5UoqnWXuisBfK/aZ7NSsPRBICS457zOEHoK2fNwfP
+         WwG5HAUp/hYv7lVDXwpzLlkTlg9ARlV4p/j9Fl5nGjYGYM426AghShc6Dwuy6q6h7Tid
+         Yu8CzmLP+6gqZIHGAWWgh8XGEe7Eih7oM55DAiTDnSYO+bQ8bzxJFxWt+b/IaihwKs7r
+         cw4gMu17dSUt9BrjNBbAkSpfkw3B+uBdPnlqwlpmoUEfcO8nQ3EDNGYRQvsY1VQ8YGxX
+         M7jxEAgSi8k2h1cUfQK0kdxOILA+2gA4oQVpebMPkkIoy8ND4grw7Pw7fGlRkATqe0AT
+         tTfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=u3td/6uAnx//D54qYP0sqF6HrdUzpGLVwAapY8bX5wQ=;
-        b=6y/t3IXfzlsncRUkwSnBEjmO4bzCnzGCBzSj6rFQSfjHFKhYHtFsxDOpi2yeQgsSi5
-         UR3QyKGZmQD3OXvWVWzmh0SotWkwhWq0/jDB3/LlAOaxLBwetAfCYKqjSgisxCeExd6I
-         Z2Fo2eTqJbmQAcvYKeURA1j5xl9/Q2yI9tPDfKJ8eBHDIi9PQBt6ZpRoIMEFKXH44NB0
-         ugJhhVCi1OHEN0cMuduQNUsFq0lQLz8tnt2iSK5kFnyEe0gpJKn/o7rloaXqfQSdXhyL
-         S3BSMg0QbLCh5jl07v0UzY6934XQmy+cZz6+Kh1wN1m6PKAEKmdH9w1NbSFib+VXhPeS
-         tGyQ==
-X-Gm-Message-State: ANoB5pmYJuczmyMzSTgfMvTVqFOJvvu3t2E9QNrFyP7HUtUmdVAQKkxN
-        TY9K99bDFpkmHLUsRGl4DvaMZEGWBkJODg==
-X-Google-Smtp-Source: AA0mqf5HWT5Syh4HqEpX+X6l3HPlkLAYfkAtp5+kCo6yx9n0G54ldtup5CcwulWwGABXLlUVliYbmabx7GVXVQ==
+        bh=UjH+4vFoVALS5IELiaEJCfAEb6bUnFL4JJZsCJfVoD4=;
+        b=aRILCilO8Ri9GEQ0pV6MqgCjgGX0BWndrxHRm26u8p3h9AzJRDtPguUq5aChZcnV3E
+         Dy9ln9KyvBYT2HPPoHApSnWHiTU6/L1zkomA7VNd8ytJreRR3ZONu6/bZgYklgFqfrHl
+         VRL0adTUx+i1vYiAXqlYtM1jAkGax/XmIooMnaWNigQpJdLSnhcL/nfgEi0S7Fn3Y1k6
+         s+PIV6AUPTbXPoLwVZ/n8iEevnImJ/JWUlT8W/ZvXxOklsM/iZFyvlBJRFEf0LTRr/sj
+         W+sWUnJwjqePcNal7Uj5V3bBk+12lvgfTDzbVVRmE8QmDtp0NBJPlQivzKh3eArfEGI/
+         gPnA==
+X-Gm-Message-State: ANoB5plYGBMkEvapYkZPTiqn7xeEkUmKpGDZaj2uzy6JtBK7omThrI1Z
+        VMMJIV/PSwk7laKfCUCKJzWzlxae+T8NDw==
+X-Google-Smtp-Source: AA0mqf46f/69bUMePcj2qu0Q70bVZ1JBTqS0BJNRZ4AwFOzaLfBMXSPNz2Tt6Mmi//m38Hn5GrHxFd0N1nxiQg==
 X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a17:903:31d5:b0:187:1461:9b27 with SMTP
- id v21-20020a17090331d500b0018714619b27mr81676827ple.165.1670540720809; Thu,
- 08 Dec 2022 15:05:20 -0800 (PST)
-Date:   Thu, 08 Dec 2022 15:05:11 -0800
+ (user=chooglen job=sendgmr) by 2002:a17:90b:1bc6:b0:218:4d16:cecf with SMTP
+ id oa6-20020a17090b1bc600b002184d16cecfmr101512139pjb.96.1670540805926; Thu,
+ 08 Dec 2022 15:06:45 -0800 (PST)
+Date:   Thu, 08 Dec 2022 15:06:44 -0800
 In-Reply-To: <87tu26arzy.fsf@osv.gnss.ru>
 Mime-Version: 1.0
 References: <20221127093721.31012-1-sorganov@gmail.com> <kl6lilimepli.fsf@chooglen-macbookpro.roam.corp.google.com>
  <87tu26arzy.fsf@osv.gnss.ru>
-Message-ID: <kl6lcz8tebtk.fsf@chooglen-macbookpro.roam.corp.google.com>
+Message-ID: <kl6la63xebqz.fsf@chooglen-macbookpro.roam.corp.google.com>
 Subject: Re: [PATCH 0/5] diff-merges: more features
 From:   Glen Choo <chooglen@google.com>
 To:     Sergey Organov <sorganov@gmail.com>
@@ -68,40 +68,11 @@ X-Mailing-List: git@vger.kernel.org
 
 Sergey Organov <sorganov@gmail.com> writes:
 
-> The last time '-m' issue appeared on the list, it all started here:
->
-> https://lore.kernel.org/git/CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com/
->
-> In particular, the final patch and its revert is deeper down this tread:
->
-> https://lore.kernel.org/git/20210520214703.27323-11-sorganov@gmail.com/#t
->
-> and
->
-> https://lore.kernel.org/git/YQyUM2uZdFBX8G0r@google.com/
-
-Thanks, these provide extremely helpful context :) In particular:
-
-- Junio describes this "do nothing unless -p" is given behavior as an
-  accident [1].
-- Jonathan Nieder notes that this change accidentally broke scripts
-  where "-m" probably wasn't doing anything useful, but we wanted to
-  avoid breaking the scripts for backwards compatibility anyway [2].
-
-I got the sense that the closest thing to an intentional use case of
-"-m" is for users who thought that "-m" would affect path limiting [3],
-although it doesn't actually do that. So what I've reads so far suggests
-that "do nothing unless -p" (aka --diff-merges=hide) is not actually
-useful, and we should just drop it.
-
-We could keep the warning for "-m" without "-p" (Patch 5), and recommend
-"--diff-merges=(on|m)".
-
-[1] https://lore.kernel.org/git/xmqqwnsl93m3.fsf@gitster.g/
-[2] https://lore.kernel.org/git/YQtYEftByY8cNMml@google.com/
-[3] https://lore.kernel.org/git/YQyUM2uZdFBX8G0r@google.com/
->
 > Where do you prefer these references to be put, in the cover letter, in
 > the commit message, or in both places?
+
+Wherever it might be relevant as motivation behind the change, so
+probably both, but especially the cover letter :)
+
 >
 > -- Sergey Organov
