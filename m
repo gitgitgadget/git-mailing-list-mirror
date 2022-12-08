@@ -2,151 +2,183 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 822EBC4332F
-	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 15:06:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A79BC4332F
+	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 15:54:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230106AbiLHPGo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Dec 2022 10:06:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52042 "EHLO
+        id S230151AbiLHPyt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Dec 2022 10:54:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230033AbiLHPGj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2022 10:06:39 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C085B8DBC5
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 07:06:38 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id h10so1954026wrx.3
-        for <git@vger.kernel.org>; Thu, 08 Dec 2022 07:06:38 -0800 (PST)
+        with ESMTP id S230070AbiLHPyp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2022 10:54:45 -0500
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD74A528B3
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 07:54:40 -0800 (PST)
+Received: by mail-yb1-xb36.google.com with SMTP id c140so2128289ybf.11
+        for <git@vger.kernel.org>; Thu, 08 Dec 2022 07:54:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=uA5E0p1W1wa4CZtEDzBejOqWbWOUe6AyZslzqQJhts0=;
-        b=prgACmoheGwqyprqU+LVxeRu+W0Ng0eVqKU24q/JW/68z75xuKUJCSFdS5+hJdcZLK
-         LdHkJ0TGAp9Ou7fvngI+8sOggSeD9dlwofOVVC9SDr9apP4YHuLwPh/xcgG2iL43RuQQ
-         KZMR2wypCBU8E/sP/NsquJ+99KjFhSPK/I6jHuXO/Dwl6koQlUznSelJJ2Q6xN0e3CcW
-         CMQ3LPgJTYO7BeqjvMK77KNQP5FezVqlMcnoUxJLeQccTuUfMT/wGS3R5BwLndWiKUAm
-         rDhNROVO20CNAVRO7SQYMBol+LElBxD2igM6DPAYXQjuDPeyzucLcmtCDgOg4m0emPha
-         nQLA==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+sN4u0UYr8IrzpIuUEF5nrb94HTB12qvB9ZYUN2Lz8A=;
+        b=Z/EbqeXjIEjn7aVqtvsQ4gXYyRq0LNpJ+1nTrvXWi6aeLkGhsY+tFaF8tnSqxgqCVV
+         5k6Hrk+WwC9aKDeoVy613VsxEqbnUwvVZ5ZrGfnRezFUpLTHDrAciAdngeM8TyowzAIx
+         Ar0HwmNmymHMUBj2K4bsO/OxAU6l8vhj6Z54WZrM60LYmsNoMDkj9BM/2UJ+ETFM7p9A
+         dh1dPqpcrSFr9GWLxkf9WRohMDl7dXSiZ71hSQTf+GxIcNZYmza3z5v66XNTOk/8E8bi
+         jmKoWFxJP2+ACixDoxdRqD1X1mxy14ui/ewk8HCusAevJEpJV/L69/cjVXh1jFNTKQqm
+         X1gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uA5E0p1W1wa4CZtEDzBejOqWbWOUe6AyZslzqQJhts0=;
-        b=wg6fvFpaFGjV4AwSgAwFuYBq6WQc0xKC1WUqUKdfSqJy1YNvn5+U0KgnHuEbXePsmE
-         eqO6JMr7MMVhjhCKdE2cjTcfbgTPYZQmRwm7n2FsXx4IvXc+1lsFRbODuuoTEFy0INkQ
-         rCztj4a0F33uxt7+zyYvdo8J2B6hpvAsXPxUsKDi/EUXFLoARicKwJq1Z3IBLtVtnFMV
-         sDKKdYy908NGKtTY2h5XnWNhZ9qyQMmmCJEJ23Q4zpO6FwW11DwCZ8hQkwi/e0JzyqLt
-         hFo+mFV5qmZ0YnuapcsGUf1P8EGYj3vyscIgNy3XQ0ZqHe7W1Ix4c8lubP7+lgHJJmHi
-         sf3A==
-X-Gm-Message-State: ANoB5pkfLPVdVuo3jNzgsB5nrcAahi9n5jhtsEZ2ICVpgoVLxwwyvoCB
-        vY1CDoz/onUMrwFjdtMNJvs=
-X-Google-Smtp-Source: AA0mqf5odS4lXPCJfdhDnOgh+XQaWomcC86PwOveXkoaE4pb8SQblAusw4lSpUU4+nRSCkPJvO3z2g==
-X-Received: by 2002:adf:df0c:0:b0:242:1dba:a62a with SMTP id y12-20020adfdf0c000000b002421dbaa62amr1549346wrl.35.1670511997162;
-        Thu, 08 Dec 2022 07:06:37 -0800 (PST)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id p18-20020adfce12000000b00242271fd2besm22155897wrn.89.2022.12.08.07.06.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Dec 2022 07:06:36 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <1b5fc712-9659-1bd6-493c-197b003d21d6@dunelm.org.uk>
-Date:   Thu, 8 Dec 2022 15:06:36 +0000
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+sN4u0UYr8IrzpIuUEF5nrb94HTB12qvB9ZYUN2Lz8A=;
+        b=b76gkjPHrjXI4LQkVxOCGPCFUyZflMWz7mTHGVkxr1Pwx6TFFtRDOmTkNzJTTLJuPC
+         J99kNYMoasGmH9vHexkR/TW+iTkvLciI4D+GMSG9RwMTvFwb6M4yPgGLSrTH+Eo4Zfh/
+         RU/RLBV95DvfUGVZboo4ReTi4PjbgOXheNNLBKNTgt1fevumSvhVix4cZV/L2Wgze5Hi
+         I1/dWj4zWSxPelh2P275BuuQ0/l94PVmBfPnpBYBuq6Q2JRuNXzPgFU38pW+keMTYBPT
+         qClID1eboA9XPCrLVP2rXlnvpYSZz2DYSZtutJqp9xwXcx21JW4zrgFbA9z+KegUPrut
+         XN4Q==
+X-Gm-Message-State: ANoB5pnNedy1qVR+CyXqsNaST7SaQunZ3zgv1QaZq1ev6EvUhBICwsbG
+        ir8Eg6kOUIageopE4bl0HTm37isbphNXRFNmJsU=
+X-Google-Smtp-Source: AA0mqf7rhc1uwBnlIIkZPVzLysXJ5Y/1H+eal8c+3ocq9rZFc6viSIJhb3yAMrp3eOsEu2uTPCmG7G2zaPeLh5CBFe8=
+X-Received: by 2002:a25:8b85:0:b0:6dd:a4b9:442b with SMTP id
+ j5-20020a258b85000000b006dda4b9442bmr92650824ybl.410.1670514879941; Thu, 08
+ Dec 2022 07:54:39 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/3] [RFC] tests: add test_todo() to mark known breakages
-Content-Language: en-US
-To:     Victoria Dye <vdye@github.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
-References: <pull.1374.git.1665068476.gitgitgadget@gmail.com>
- <472d05111a38276192e30f454f42aa39df51d604.1665068476.git.gitgitgadget@gmail.com>
- <07d963f0-45f2-ed8e-ea08-bcea14386a4d@github.com>
-In-Reply-To: <07d963f0-45f2-ed8e-ea08-bcea14386a4d@github.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <pull.1441.git.1670436656379.gitgitgadget@gmail.com> <Y5EPVpb511wk5Uw/@nand.local>
+In-Reply-To: <Y5EPVpb511wk5Uw/@nand.local>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Thu, 8 Dec 2022 23:54:28 +0800
+Message-ID: <CAOLTT8Qb0euc5WLdi7v_3ovXT4jJ1-t8BO40jjdM4Rj0Ok8Etw@mail.gmail.com>
+Subject: Re: [PATCH] scalar: use verbose mode in clone
+To:     Taylor Blau <me@ttaylorr.com>
+Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Victoria
+Taylor Blau <me@ttaylorr.com> =E4=BA=8E2022=E5=B9=B412=E6=9C=888=E6=97=A5=
+=E5=91=A8=E5=9B=9B 06:10=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Wed, Dec 07, 2022 at 06:10:56PM +0000, ZheNing Hu via GitGitGadget wro=
+te:
+> > So add `[--verbose| -v]` to scalar clone, to enable
+> > fetch's output.
+>
+> Seems reasonable.
+>
+> > @@ -84,6 +84,11 @@ cloning. If the HEAD at the remote did not point at =
+any branch when
+> >       A sparse-checkout is initialized by default. This behavior can be
+> >       turned off via `--full-clone`.
+> >
+> > +-v::
+> > +--verbose::
+> > +     When scalar executes `git fetch`, `--quiet` is used by default to
+> > +     suppress the output of fetch, use verbose mode for cancel this.
+> > +
+>
+> This description may be exposing a few too many implementation details
+> for our liking. E.g., scalar happens to use `git fetch`, but it might
+> not always. That is probably academic, but a more practical reason to do
+> some hiding here might just be that it's unnecessary detail to expose in
+> our documentation.
+>
 
-On 06/12/2022 22:37, Victoria Dye wrote:
-> Phillip Wood via GitGitGadget wrote:
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
- >>
->> Failing commands are reported by the test harness in the same way as
->> test_expect_failure() so there is no change in output when migrating
->> from test_expect_failure() to test_todo(). If a command marked with
->> test_todo() succeeds then the test will fail. This is designed to make
->> it easier to see when a command starts succeeding in our CI compared
->> to using test_expect_failure() where it is easy to fix a failing test
->> case and not realize it.
->>
->> test_todo() is built upon test_expect_failure() but accepts commands
->> starting with test_* in addition to git. As our test_* assertions use
->> BUG() to signal usage errors any such error will not be hidden by
->> test_todo().
-> 
-> Should this be so restrictive? I think 'test_todo' would need to handle any
-> arbitrary command (mostly because of custom functions like
-> 'ensure_not_expanded' in 't1092') to be an easy-to-use drop-in replacement
-> for 'test_expect_failure'.
-> 
-> I see there's some related discussion in another subthread [1], but I don't
-> necessarily think removing restrictions (i.e. that the tested command must
-> be 'git', 'test_*', etc.) on 'test_todo' requires doing the same for
-> 'test_must_fail' et al. to be internally consistent. On one hand,
-> 'test_todo' could be interpreted as an assertion (like 'test_must_fail'),
-> where we only want to assert on our code - hence the restrictions. From that
-> perspective, it would make sense to ease restrictions uniformly on all of
-> our assertion helpers.
-> 
-> On the other hand, I'm interpreting 'test_todo' as
-> 'test_expect_failure_on_line_N' - more of a "post-test result interpreter"
-> than an assertion helper. So because 'test_expect_failure' doesn't require
-> the failing line to come from a particular command, I don't think
-> 'test_todo' needs to either. That leaves assertion helpers like
-> 'test_must_fail' out of the scope of this change, avoiding any hairiness of
-> allowing them to assert on arbitrary code.
-> 
-> What do you think?
+Hmmm. There are two steps to downloading data from scalar clone:
+the first step is to let "git fetch partial clone"  to  download commits,
+trees, tags, and the second step is download the blobs corresponding
+to the top-level files of the repository during git checkout. So I'm not su=
+re
+if I should mention "fetch" here, since the progress bar for the "checkout"
+step is able to be displayed.
 
-I don't think we need to remove the restrictions on 'test_must_fail', 
-they seem to be there for a good reason and I'm not aware of anyone 
-complaining about being inconvenienced by them. I think of 'test_todo' 
-and 'test_must_fail' as being distinct, 'test_todo' only reuses the 
-implementation of 'test_must_fail' for convenience rather than any other 
-deep reason.
+> Perhaps something like:
+>
+>     -v::
+>     --verbose::
+>      Enable more verbose output when cloning a repository.
+>
 
-I added the restrictions to 'test_todo' to try and stop it being misused 
-but I'm happy to relax them if needed. I'm keen that test_todo is able 
-to distinguish between an expected failure and a failure due to the 
-wrapped command being misused e.g. 'test_todo grep --invalid-option' 
-should report an error. Restricting the commands makes it easier to 
-guarantee that but we can always just add checks for other commands as 
-we use them. In a way the existing restrictions are kind of pointless 
-because test authors can always name their helper functions test_... to 
-get round them.
+Just mentioning "clone" is fine... But I'm not sure if users will be
+confused, why they will "more verbose" instead of two options
+"full verbose" or "not verbose".
 
-I think you've convinced be to remove the restrictions on what can be 
-wrapped by 'test_todo' when I re-roll.
+> Or something simple like that.
+>
+> >  List
+> >  ~~~~
+> >
+> > diff --git a/scalar.c b/scalar.c
+> > index 6c52243cdf1..b1d4504d136 100644
+> > --- a/scalar.c
+> > +++ b/scalar.c
+> > @@ -404,7 +404,7 @@ void load_builtin_commands(const char *prefix, stru=
+ct cmdnames *cmds)
+> >  static int cmd_clone(int argc, const char **argv)
+> >  {
+> >       const char *branch =3D NULL;
+> > -     int full_clone =3D 0, single_branch =3D 0;
+> > +     int full_clone =3D 0, single_branch =3D 0, verbosity =3D 0;
+> >       struct option clone_options[] =3D {
+> >               OPT_STRING('b', "branch", &branch, N_("<branch>"),
+> >                          N_("branch to checkout after clone")),
+> > @@ -413,6 +413,7 @@ static int cmd_clone(int argc, const char **argv)
+> >               OPT_BOOL(0, "single-branch", &single_branch,
+> >                        N_("only download metadata for the branch that w=
+ill "
+> >                           "be checked out")),
+> > +             OPT__VERBOSITY(&verbosity),
+> >               OPT_END(),
+> >       };
+> >       const char * const clone_usage[] =3D {
+>
+> Looking good.
+>
+> > @@ -499,7 +500,9 @@ static int cmd_clone(int argc, const char **argv)
+> >       if (set_recommended_config(0))
+> >               return error(_("could not configure '%s'"), dir);
+> >
+> > -     if ((res =3D run_git("fetch", "--quiet", "origin", NULL))) {
+> > +     if ((res =3D run_git("fetch", "origin",
+> > +                        verbosity ? NULL : "--quiet",
+> > +                        NULL))) {
+>
+> Hmmph. This and below are a little strange in that they will end up
+> calling:
+>
+>     run_git("fetch", "origin", NULL, NULL);
+>
+> when running without `--verbose`. `run_git()` will still do the right
+> thing and stop reading its arguments after the first NULL that it sees.
+> So I doubt that it's a huge deal in practice, but felt worth calling out
+> nonetheless.
+>
 
-Thanks for your thoughtful comments
+The reason I'm doing this is seeing that toggle_maintenance() already
+does this, and it's not buggy, but it's really inelegant.
 
-Phillip
+My personal understanding is that the original intention of run_git()
+is to help developers simply put git parameters into the variable parameter=
+s
+of the function, and run_git() has no good way to understand null values.
+Here we put it in run_git () The last is an act of desperation.
 
-> [1] https://lore.kernel.org/git/221006.86mta8r860.gmgdl@evledraar.gmail.com/
-> 
->>
->> This commit coverts a few tests to show the intended use of
->> test_todo().  A limitation of test_todo() as it is currently
->> implemented is that it cannot be used in a subshell.
->>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Is there an opportunity to easily test this new code?
+>
+
+It's a bit cumbersome, but I will try.
+
+> Thanks,
+> Taylor
+
+Thanks,
+ZheNing Hu
