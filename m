@@ -2,123 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4B4AC4332F
-	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 14:48:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0C3CC3A5A7
+	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 14:52:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229936AbiLHOsO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Dec 2022 09:48:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39940 "EHLO
+        id S229989AbiLHOw2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Dec 2022 09:52:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229758AbiLHOsM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2022 09:48:12 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8649532FE
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 06:48:10 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id h10so1888205wrx.3
-        for <git@vger.kernel.org>; Thu, 08 Dec 2022 06:48:10 -0800 (PST)
+        with ESMTP id S229888AbiLHOwY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2022 09:52:24 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB14A9D2F7
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 06:52:20 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id n20so4718898ejh.0
+        for <git@vger.kernel.org>; Thu, 08 Dec 2022 06:52:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=mELh/8hla644E/FQHrEWAQfJzxxIZ5gpJ9pKHzKp/dU=;
-        b=WnGa024bgJa3wMEl1DLWBkFs+zo1kUl1eCuy1Nq0dEKHZ1ykojqaNnFlYkcIchepWL
-         DFEtGOLsPCK4r5vFnQBoOtfPSD1EIs+MQP3bzKEQeDqE9xDcs7AoiTSBi2gm9JoFSJAx
-         tZsrIIQLV1t+jf6t7yj5NUNKJLrBrzlkOauY4fUCxY/l/IGfIGYnvbj3R6lojtHw2PPO
-         ztdddMPRE36r8x9QDxhcBiXdlJ/obehDFmLctUkp/qK/Zic7T6doF5i0uN6+qkEbx6gg
-         sq5IpsUMtXqN0LQQ3yaxy4VQxciEdqqi9FL9WPfYxxorXmmIsvk00RaWluRZwaOq70lu
-         xoYQ==
+        d=klerks.biz; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=BK5AI4h1RYa+I66eh18O31OVerpS9KC8kJdwaCLN0Bw=;
+        b=b+AvmcaQrmz6bD8oJ7VUFdL2hCforpgdK2LOo9QWm0utThJEVssoEo+ByKCYWGWETu
+         MLgwhxAYybgUdj5kFxscNQMT4eo6czBamGFqqkQjNifGpnth09yGnFQGybpWFOOn698h
+         WjFLMSpARMNkhKrP97FRKQwZf7Jp7VI/Terfo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mELh/8hla644E/FQHrEWAQfJzxxIZ5gpJ9pKHzKp/dU=;
-        b=c0Rjn3qtg3FZSaAOswF1N7E8rWjvxpnicRxgFwBgdpMk2NP1Vyar6cnoLtV9ICVt32
-         T5pDUlMmvd3g0GPUBT0M2yDxC5VuJGyou7aVku1qfs7noI1ES0b9aGWjDzN0ryJsprYy
-         puNEGkxwBjgILN3FuWD5EiO8fYhveX9SU313qtWi/Yx25+EQLUQmbbxDFFyMX007At8y
-         m5lA/d2qzIUiXVzCU4TN+fSKouVwfst9jMeRvyLXE0b3R9KS+OdKk0tt/NqH24xmwP8B
-         sLejzyvd9RYstfMwpBpD6ZAnCLek6r+bTQyk2UclCK9rg2S5dYgSwKIA9GJ98jFm+KBF
-         mrzw==
-X-Gm-Message-State: ANoB5pmhsaChMGe1bufG9koo4K1reoijQTwRCD8hlB5i0uPPmJYeB37j
-        CKWrOPJ/SGNyOUhdJNgn+a2CUsojzY0=
-X-Google-Smtp-Source: AA0mqf5+xlR8wvRSBIr+pJo3gQUisRWgUmy7nq9w+/AxBdC9aHAplWw6gN8jXd+8qQmAx0IOAH1BfQ==
-X-Received: by 2002:a05:6000:11cf:b0:242:2e74:7930 with SMTP id i15-20020a05600011cf00b002422e747930mr1673240wrx.10.1670510888425;
-        Thu, 08 Dec 2022 06:48:08 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u11-20020a5d6acb000000b00241c4bd6c09sm22089421wrw.33.2022.12.08.06.48.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Dec 2022 06:48:07 -0800 (PST)
-Message-Id: <pull.1442.git.1670510887255.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 08 Dec 2022 14:48:07 +0000
-Subject: [PATCH] Fix a couple of typos in the v2.39.0 release notes
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=BK5AI4h1RYa+I66eh18O31OVerpS9KC8kJdwaCLN0Bw=;
+        b=fyG4RfdLe/MkIDOt31RjzxR3op6W4b1J18HtuUNxpw5SEBiADQRgYNcMsf18xtZkcb
+         SWVc3K02TULgHZVZ9re0jfZok0k1csyHtSUqWO4hcCOXjzW/6upSBSGK+WKmENAsM21d
+         POTz4OxAHJR9dxp1FptGXACQwg8weqhGJgIjPNHzKj+kpfHDJxjMrLAqfXTW+feliNUV
+         TY/w8Mykm9BgVTGEyj0H+gMPT2x9PzZJzEfK69P03hy3DjtV4XAW190+Aj5OaCZf24Qz
+         3JTYiheU7nduwcwvRrncLVzYxpPhjVVdhLOgA4/O2oD+8dO0iXUJkn8tahwdxOpOMXlO
+         PIqQ==
+X-Gm-Message-State: ANoB5pldiKEjcdAGwfgWKWOzMDZyh/LeaMgVQGHOuUgmacOnA1dcFhBQ
+        AUGRl9G6Y/NMsA86lrj6g2AFTPTJnRSZ5pNTKEzWWhdJFBIa4kLfjGE=
+X-Google-Smtp-Source: AA0mqf7Dy/VZSOuPVFbXJi8gvVa6HxhYbiEtxbwk9E8xYEFoWKn+PQ1fuT8QJPCJI0Elib/IgkIXAqGI6Gd0iGyeEt0=
+X-Received: by 2002:a17:907:a801:b0:7c0:e060:e819 with SMTP id
+ vo1-20020a170907a80100b007c0e060e819mr16757901ejc.763.1670511139168; Thu, 08
+ Dec 2022 06:52:19 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <CAPMMpoiN=Rj_z9VEJZ4EFhb8gBeqb6H7JhTUBbn-b-t-jHRVnA@mail.gmail.com>
+ <4dcad1f5-9ebd-d15a-b663-a3513ae1bcb8@github.com>
+In-Reply-To: <4dcad1f5-9ebd-d15a-b663-a3513ae1bcb8@github.com>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Thu, 8 Dec 2022 15:52:07 +0100
+Message-ID: <CAPMMpoii52KrR2MBpPdSEH8-jc7uMPzi4DH5g2bchwd-RPNTJw@mail.gmail.com>
+Subject: Re: Auto packing the repository - foreground or background in Windows?
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Tue, Dec 6, 2022 at 7:03 PM Derrick Stolee <derrickstolee@github.com> wrote:
+>
+> Instead, the modern recommendation for repositories where "git gc --auto"
+> would be slow is to run "git maintenance start" which will schedule
+> background maintenance jobs with the Windows scheduler. Those processes
+> are built to do updates that are non-invasive to concurrent foreground
+> processes. It also sets config to avoid "git gc --auto" commands at the
+> end of foreground Git processes.
+>
+> See [1] for more details.
+>
+> [1] https://git-scm.com/docs/git-maintenance
+>
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    Fix a couple of typos in the v2.39.0 release notes
-    
-    I cheated: I used VS Code's "Code Spell Checker" ;-)
+Thanks Stolee, I've known about the existence of this system for a
+while, but I can't quite figure out what's recommended for who, when,
+given the doc at https://git-scm.com/docs/git-maintenance
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1442%2Fdscho%2Frelease-notes-typos-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1442/dscho/release-notes-typos-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1442
+Clearly on Windows, one reason to do "git maintenance start" is to
+avoid foregrounded "git gc --auto" runs later. That's a clear enough
+benefit to say "frequent users of large repos on windows *should* run
+'git maintenance start' (or have some setup process or GUI do it for
+them) on those large repos".
 
- Documentation/RelNotes/2.39.0.txt | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+Is there a corresponding tangible benefit on MacOS and/or Linux, over
+simply getting "git gc --auto" do its backgrounded thing when it feels
+like it? Or is there an eventual plan to *switch* from the current
+"git gc --auto" spawning to a "git maintenance start" execution when
+trigger conditions are met? Are there any *dis*advantages to running
+"git maintenance start" in general or on any given platform?
 
-diff --git a/Documentation/RelNotes/2.39.0.txt b/Documentation/RelNotes/2.39.0.txt
-index 3b8b0c010f9..1eb16534776 100644
---- a/Documentation/RelNotes/2.39.0.txt
-+++ b/Documentation/RelNotes/2.39.0.txt
-@@ -194,7 +194,7 @@ Fixes since v2.38
-  * Force C locale while running tests around httpd to make sure we can
-    find expected error messages in the log.
- 
-- * Fix a logic in "mailinfo -b" that miscomputed the length of a
-+ * Fix a logic in "mailinfo -b" that mis-computed the length of a
-    substring, which lead to an out-of-bounds access.
- 
-  * The codepath to sign learned to report errors when it fails to read
-@@ -214,7 +214,7 @@ Fixes since v2.38
-  * Clarify that "the sentence after <area>: prefix does not begin with
-    a capital letter" rule applies only to the commit title.
- 
-- * "git branch --edit-description" on an unborh branch misleadingly
-+ * "git branch --edit-description" on an unborn branch misleadingly
-    said that no such branch exists, which has been corrected.
- 
-  * Work around older clang that warns against C99 zero initialization
-@@ -264,7 +264,7 @@ Fixes since v2.38
- 
-  * "git diff --stat" etc. were invented back when everything was ASCII
-    and strlen() was a way to measure the display width of a string;
--   adjust them to compute the display width assuming UTF-8 pathnames.
-+   adjust them to compute the display width assuming UTF-8 path names.
-    (merge ce8529b2bb tb/diffstat-with-utf8-strwidth later to maint).
- 
-  * "git branch --edit-description" can exit with status -1 which is
-@@ -289,7 +289,7 @@ Fixes since v2.38
-    option now implies --reapply-cherry-picks and --no-fork-point
-    options.
- 
-- * The way "git repack" creared temporary files when it received a
-+ * The way "git repack" created temporary files when it received a
-    signal was prone to deadlocking, which has been corrected.
- 
-  * Various tests exercising the transfer.credentialsInUrl
+For "my users", I have something like Scalar that can start the
+maintenance on the repo where it's needed - but it seems like there
+will be lots of users out there in the world who clone things like the
+linux repo, which looks like it is big enough to warrant these kinds
+of concerns, but it doesn't seem obvious that anyone will ever find
+"https://git-scm.com/docs/git-maintenance" and decide to run "git
+maintenance start" on their own...
 
-base-commit: 2e71cbbddd64695d43383c25c7a054ac4ff86882
--- 
-gitgitgadget
+As I noted in another email, I propose to replace "Auto packing the
+repository for optimum performance" with something like "Auto packing
+the repository for optimum performance; to run this kind of
+maintenance in the background, see 'git maintenance' at
+https://git-scm.com/docs/git-maintenance." - but I imagine I'm missing
+a bigger picture / a long-term plan for how these two mechanisms
+should interact.
+
+My apologies if I've missed one or many conversations about this on
+the list, but maybe a pointer here can also help me add directional
+hints at https://git-scm.com/docs/git-maintenance for "outside users"?
