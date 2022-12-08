@@ -2,62 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3772BC3A5A7
-	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 11:50:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 46D25C4332F
+	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 11:51:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230202AbiLHLu5 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Dec 2022 06:50:57 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40332 "EHLO
+        id S229995AbiLHLv0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Dec 2022 06:51:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40424 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229949AbiLHLuf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2022 06:50:35 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C80FF8D645
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 03:49:16 -0800 (PST)
+        with ESMTP id S229815AbiLHLu6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2022 06:50:58 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7234083248
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 03:49:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1670500151; bh=7SXflLX4HSFk6a4fk9EZcFQ7mmA11doedkJQRmdaOzg=;
+        t=1670500187; bh=iCtTkOSx8qcHaOalX61i+ywOr7N//yCXA4ghHJtjBrE=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=FotBGFJBaFP34AAmQdxnzueOPQ+ESKq8pmnMMRGhnItBP73aMdMm3G9fgtUij/Xnj
-         VJjypIM3PUB9Ga0x0A4RLmm6+E8I/BarF0VYmAHVpIrxqbMU/ukrFV1RL+Ogmd+uAY
-         KGXkqfqCKoypiYDR9LXr/VUdjA0reDPnVgKUg8CtG2T0oQxLO+OSps/UHaBx8OP+0U
-         LvQG21QR0YCgfGKUMki5KN2RZeREok26azRpRiJnvFgHBweuihex7okYKL3WjYWqD1
-         ihlSmErkR39OKJDBJkztYN9soaDMKjMFOnqtxIx5BvBdJhgRxtPRlde8IwdBpYa+Tp
-         Z8H1McbTP7uTA==
+        b=LzH68sv+L1c8yJm+KRxL8RcDzsfVB8wTBcJPieUkM6HBaYjq1g/Q8a/gZ1sTOoqPJ
+         FWGUrB2WY+1i2QSmOpPaR5AdJL/DTWAO0qL5uB4u8Wnh9NaI+CnCTjw619caDjqECB
+         duEaFnd6nmf0NMZXYcman8buhPPOYl6MR/DcgiMgRxyPixYEn6gcoYZ5jhCcDZ2YLL
+         kgfgWK7ASmXM/WN8AYRK0keQ8tfFbSR7P5g2IvtBQvTD/qYH2pzjT2JA9AepqmIAa8
+         mHJt2lNo+4uLL2ESlQ1xz3JOn+dhV7gecf27RQHKjZ1QoytlD8sq8W6rMpkOuN25Zw
+         lkzHtSpU3elxg==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from [172.24.155.134] ([89.1.213.44]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M5wLZ-1p1KO52nYh-007WGe; Thu, 08
- Dec 2022 12:49:10 +0100
-Date:   Thu, 8 Dec 2022 12:49:09 +0100 (CET)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbAh0-1oW6Vv0dSa-00bcOd; Thu, 08
+ Dec 2022 12:49:47 +0100
+Date:   Thu, 8 Dec 2022 12:49:46 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>
 cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 1/3] t1509: fix failing "root work tree" test due to
- owner-check
-In-Reply-To: <0efeec8abdb913786c67775cbd79c8e4285ded10.1668999621.git.gitgitgadget@gmail.com>
-Message-ID: <n7q85691-5p25-464n-12o7-q4s4opsr2p0o@tzk.qr>
-References: <pull.1425.git.1668999621.gitgitgadget@gmail.com> <0efeec8abdb913786c67775cbd79c8e4285ded10.1668999621.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 2/3] t1509: make "setup" test more robust
+In-Reply-To: <617f98dcb40d417fbb48d9c1de8fa9ab650f5370.1668999621.git.gitgitgadget@gmail.com>
+Message-ID: <7rs8633n-s68s-4542-o01o-033p86p51p77@tzk.qr>
+References: <pull.1425.git.1668999621.gitgitgadget@gmail.com> <617f98dcb40d417fbb48d9c1de8fa9ab650f5370.1668999621.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:d28RIcwWbuMYyNrfaMhJIIDLrb48t+29heSvZNq3R818SUsPClY
- YKCYfY846tYGzj4iZdujKZyMSUv3QmIRZfTgLMOUHis4Uk+hMevhoIh2Oi58EfGU9qYBBjH
- 6SjMNrAYCeWXHYcLc1+OMVT5SKjunPoBJthN9bS0wD5X6adLLGdmPiKDBfeckmuN5sCHkKH
- +MhqUekIIX50mK+e17maw==
-UI-OutboundReport: notjunk:1;M01:P0:+CXQIhxqxek=;kVus3B5EYMUUOTHUnkKeIm/mE5s
- SWSlo+ijdqsBGVsEMJ9ye5Yx603wX3clG8EcKrbFsefwcBCdp71oJI6P/XPYy+yqXmGAk5A11
- VlB2t9hMijRV7lBvowSaq1SndXlMvucFzGdMdAJSxq9ktZSsopEpz4dHytDuNcDVRLK28Ofn8
- 2LgsYI0vlmC/vzQwGKNavQ0HKcsqH73Ko9E34kIeOTjCcEt+qWHCLvBSSW8RtVQzbD38amKfa
- FpF8wb0aZbzhXpIQ22VhW4TAjOecpzF1lXxO36b7YKDylkp9/n1Sk4XFs2CwwUeAZnb9SNZae
- aF2airWb9xXsAxleadET7Cq+NDcVTRhJwNNAcfoa/QSs070SAslT9EJ5DbVGtGC0j6zm8t+b7
- o+8WNDhfHbXQo+UAGS7K7LqHxwsOcxA61aJlwbXbV7PqhM6581tHsBe+d8tqBqq0K4+Fac73T
- 58rKtRJG/eSZ45F6iPSsyK+U8eeKv/2bK5No9rX2VjmmU7J6kCZBsjVIHglQ9JWPGrjFnmt5r
- KOJ+NUqVPxuA2T7wXu5bOmneo5WF6ppZBRCJp7zSEFhhYhlN6AZQCA51oLOMGXJ9OGIfeNNV5
- Tl47DlSRt8mWtKVu7Qs0D/SC9+sPt3vjKVtfAHwO+9klEKPDnjVGgL1A0HrMkvrjmbWeasoeM
- 4l2cm7BdhgxCiU82zMaGHcQtjSOcIYbaCIFzl+1xuLycy8O4Z49+4oGYh/RR/guI5NPgQf6Rd
- eGNkTOVjuV8Q8mbCXnFl3AyA6egYe9rbirTG8Qwk+D2pa9mwAypvKwvJ3yrGKwgJneywFHtK2
- UyKQWCZGKpexO5YdNjPXr0SJG8OJSfbp+avJJp2xW4W0GLec3KjUShWBPtDXnd3FoZpYKG3T7
- TTHk8jlIr7B38sOSFcHeEv5PcZUl2CYi4GOBrEfuWDzs9ECa34VA7aP0zRMffBaY4KGxZOQ4f
- mQh/lhIvRHiMSdfHdqUOte9GAm4=
+X-Provags-ID: V03:K1:GbKlye5c6vrsyh0YJWPo3Tkpe80TdZlaYxVuEf5erI4OfXtYwxI
+ MFhtdUbGkhIWFcuKNXU2V+PuXh325XnfetEYI0bF8vLFaoc909U12gc82wXhg+X8QPVGj7T
+ fcuVd+jf8ChC0/ysJQ2dto3OAoHfrf9sVD4/pLaIarswZkDraZXdTP9Ar/JxEQ8tkv9p/tj
+ gApIlu65GpzvtEG1iZb4w==
+UI-OutboundReport: notjunk:1;M01:P0:KRE+SCkN+kA=;Um+TRLlrJg5b90XXrPJyoWzVMKU
+ TZHDZXISpzdlMIt2ehlDEJBRyzvdSARu8LeXOGhWGOk7D6FITCWHD7wIAWlAOqxeSwm91Fg/3
+ am35DbZ+8uc/7qsG/Ihfw00Az5MJ24Xv2D5Qt1SZyUhwK2wWfp3RSeGv9YB6atM+66+Vy4cOu
+ bZsHCj3rTsh3ESbfSA8sVSDyvkq+tdfAAwPndEwepyy0K5bo8F2WYi8f/lI1nTE98WuCDST10
+ FgcL+keJ0bAoqF/ERhuQ9eNC9N0FSSmqWf7usBSKJaWQApQpQTjX/SVvRyQWm7jfuFQoFVbMe
+ Dcwl0ZV8X4vs8f+MqcmLIy3jnC/jmdCdJu1aQj+EjZz5/iGoSBSEXtyxiMSvmmEgHTOpvcLEh
+ Zr20EBhGubWbJHkowXo6YSxoQg6h/kqtB9EZEJhRHSsPtxlKgWNHdDKWEX/mM/xSS/8TDnWMM
+ r7/2QzZsirxA1hR+IhOoWoetBIkZGw4kpcvW9bx2INltcGFCoGPUVSlQlivmHiPacou7geOCD
+ Gvvwi4vqxdSGI/HXq76QpIs+ZA5XFMuQTv/cRahoxuBGoogyXwswNADgTFkn/aGbEXJVm+ELt
+ MbcjLhXZgkD4G9j18vFam76zrgfPYzZlmi2qxeh0TBhKH7Tw6O3e9FH9tpikuRYGDcfZqy2cP
+ xa4TBqhAnIjnH7RTVlS1FdIVOydVlpXP75hFc78IT3e6KFmlok1uD5nvRY+gc8v4qE+ovzRmh
+ MOsLRq56BwgoveBCBu/kwrhLRi1ICgpnXgr+5lBulRKXZA33Ef5uDtE0VDNhEnPPnJ7CQyL4n
+ G87J8uEMXr/TeC5ih1TUEEXt+LCGKuVTU6zjpxVt1aQ9Zxdi0byqN3yLpp0UwtUQNlLNUKdJg
+ RbQT/YTUK4SjqugJJlu+6aaXFp6RLK8RRuvIhmVYWU+XgeROISrYxeaYTKx2pnBROJoJeW7kj
+ ilJngA==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -69,49 +68,41 @@ On Mon, 21 Nov 2022, Eric Sunshine via GitGitGadget wrote:
 
 > From: Eric Sunshine <sunshine@sunshineco.com>
 >
-> When 8959555cee (setup_git_directory(): add an owner check for the
-> top-level directory, 2022-03-02) tightened security surrounding
-> directory ownership, it neglected to adjust t1509-root-work-tree.sh to
-> take the new restriction into account. As a result, since the root
-> directory `/` is typically not owned by the user running the test
-> (indeed, t1509 refuses to run as `root`), the ownership check added
-> by 8959555cee kicks in and causes the test to fail:
->
->     fatal: detected dubious ownership in repository at '/'
->     To add an exception for this directory, call:
->
->         git config --global --add safe.directory /
->
-> This problem went unnoticed for so long because t1509 is rarely run
-> since it requires setting up a `chroot` environment or a sacrificial
-> virtual machine in which `/` can be made writable and polluted by any
-> user.
+> One of the t1509 setup tests is very particular about the output it
+> expects from `git init`, and fails if the output differs even slightly
+> which can happen easily if the script is run multiple times since it
+> doesn't do a good job of cleaning up after itself (i.e. it leaves
+> detritus in the root directory `/`). One bit of cruft in particular
+> (`/HEAD`) makes the test fail since its presence causes `git init` to
+> alter its output; rather than reporting "Initialized empty Git
+> repository", it instead reports "Reinitialized existing Git repository"
+> when `/HEAD` is present. Address this problem by making the test do a
+> more careful job of crafting its intended initial state.
 
-ACK, this is the right thing to do.
+Good explanation, and the patch is obviously correct.
 
-Thanks for working on it,
+ACK,
 Johannes
 
 >
 > Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
 > ---
->  t/t1509-root-work-tree.sh | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  t/t1509-root-work-tree.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
 > diff --git a/t/t1509-root-work-tree.sh b/t/t1509-root-work-tree.sh
-> index 553a3f601ba..eb57fe7e19f 100755
+> index eb57fe7e19f..d0417626280 100755
 > --- a/t/t1509-root-work-tree.sh
 > +++ b/t/t1509-root-work-tree.sh
-> @@ -221,7 +221,8 @@ test_expect_success 'setup' '
->  	rm -rf /.git &&
->  	echo "Initialized empty Git repository in /.git/" > expected &&
->  	git init > result &&
-> -	test_cmp expected result
-> +	test_cmp expected result &&
-> +	git config --global --add safe.directory /
->  '
->
->  test_vars 'auto gitdir, root' ".git" "/" ""
+> @@ -243,7 +243,7 @@ say "auto bare gitdir"
+>  # DESTROYYYYY!!!!!
+>  test_expect_success 'setup' '
+>  	rm -rf /refs /objects /info /hooks &&
+> -	rm -f /expected /ls.expected /me /result &&
+> +	rm -f /HEAD /expected /ls.expected /me /result &&
+>  	cd / &&
+>  	echo "Initialized empty Git repository in /" > expected &&
+>  	git init --bare > result &&
 > --
 > gitgitgadget
 >
