@@ -2,72 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2051C4332F
-	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 12:52:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0CE5EC4332F
+	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 13:14:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230123AbiLHMwO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Dec 2022 07:52:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48234 "EHLO
+        id S229750AbiLHNN6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Dec 2022 08:13:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230286AbiLHMv5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2022 07:51:57 -0500
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C7D36DCDC
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 04:51:21 -0800 (PST)
-Received: by mail-ej1-x62d.google.com with SMTP id gh17so3589283ejb.6
-        for <git@vger.kernel.org>; Thu, 08 Dec 2022 04:51:21 -0800 (PST)
+        with ESMTP id S229619AbiLHNN5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2022 08:13:57 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3070A8D655
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 05:13:56 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id fc4so3675162ejc.12
+        for <git@vger.kernel.org>; Thu, 08 Dec 2022 05:13:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=8ithf6xDdW18ZKibD+mk6a5dVl5E1g20IGY+imYcj/o=;
-        b=aWxhp9iIy3KJ/MNNQ67VqjcGp23n4WtywQIqxmTZ4S4ZaTEGnOykr1MBHQCeU0onW1
-         dQMBAOSnMEN3GvPT/xrpZGj9D2s98MxdMVA/u9S4kuaDkgBF7dLZlZiBSfyJzu0v+YFZ
-         BIejf4da7ZUd3ZKmW0pfURSHEpc+U8+pjDiLChF5ReeogdAxWthdORfX7xfd4FXt5lu5
-         CGfOTPD9vSdlHl67nQ8cZvcxDdWyK+KqF48DSnyZV9SGb5prhHSHYK0+lhzyAnho0qmU
-         JhbvmCOK8+4keNpAikqOdCtcPmMe6JyXsVQ5K8rWlLT1YvpZ0MKv+HIvy4USulorLgqr
-         Rd1A==
+        bh=CslX1ahRpKwcMfxrId/6RFNP+R3orCOeCVMqBB1Alos=;
+        b=dBK1Z1BGqbj3+FPp3Soyjh21KKtZwC7yXWa5I8ZPkMusr3uLYRqLGHUvPQKcrLI8Pn
+         pcJRJmedpwSl7Ew+hZi2nd+Hhx802aSOGV9le5VxPXGdcFIBM2f2tcEHOQZK4FipIWPh
+         w3vNMZlwTeK2es68MVOacmDyTDH8o6ynqXajE2D2+PP0sVDILsFI1bLDnXNtBMX9f5q7
+         PBHQlWj72DLpMEALX4i/k4KW4BP0wa+6OTdukyFMrRtltCaJJ+fPHlDsmdWVfVEuxJrI
+         Yhbkgl/eBX8NT9nGgzWrbEe7lFo8k7u9KCpCLb6YzUuas1U30I7fxMMtS1KKU2DttYuN
+         GihQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=8ithf6xDdW18ZKibD+mk6a5dVl5E1g20IGY+imYcj/o=;
-        b=mB8/42oli6R+aN9hXE8qoq4za9KtUiYwuKMbyBlLdO2woFKzAtzkZgXinMx5jB9a4r
-         fqS3iRn71mm97Zf+/18rgTac1o1C0Pmdv7N0NoOHe80RCuEiaQrOdZmOpXFW7D6qe7lY
-         CEsLQFmaTb6rNUujolhPhv+MWDNJfxZIIV4wIXt+mfT9vqMrm+GeJKxKpXuwPFs9tdIA
-         0k2Rbr7U92wC6HIr6oxgazhmgMj0LHqD731gK0LdWgCs24qM3fpJkFg4ubgzrP9ySnHM
-         zNAgbLgVJ+8ICbuVMGTFQrLsfy0noO2ZNZcHzImiZZu53pKtMEbNr8H6FG5wSnt+tMqI
-         SL5g==
-X-Gm-Message-State: ANoB5pn2tBLaxAb9q2T0sSjbrhraXT0rZyl4d3APYa3/dNMtbQpy3/9u
-        AKB6wU93+27p1ZoGwm5qtgw=
-X-Google-Smtp-Source: AA0mqf7oN8UAvUT2imEg7t3aygRvbxbh9zrgIDEqJQcXfjjbDVOVFXP8Lz7pc6vR46/BfwRzXK192A==
-X-Received: by 2002:a17:906:4315:b0:7c0:bc68:757e with SMTP id j21-20020a170906431500b007c0bc68757emr1917590ejm.39.1670503879519;
-        Thu, 08 Dec 2022 04:51:19 -0800 (PST)
+        bh=CslX1ahRpKwcMfxrId/6RFNP+R3orCOeCVMqBB1Alos=;
+        b=VI/qyfTNNLJPJvTsaZRbOwFAwd/XC1DOEMJiQJU1+T0pwpcvfFJw9Sk6dqRZhT8i1h
+         xqjg0xFN/enAGPvNEFKFDp5nCPtD86+o904xxXSWlHCGsJdFljGLeG63Ij34wzY1zxol
+         7JW+c35hqcHh2Vpn4vzjeJQ0fftXxpK9Bq4YHO4u7D+xK7eFwt3Tc2M6jqJeLPoOqvAY
+         o7M4ibdN/EekAWOV0lPjmXbrOokAclWzD9dL1Rf3xg7tAQVw+WWV4NcaJVO170Z0iept
+         usHfVX7rt+z28Z95uLIrfDdgefu7CwhVuZPa0A8WFGvNO9zxMRETkS9djsilFS43NlCO
+         CoFg==
+X-Gm-Message-State: ANoB5pk0eleh3Z1V/wU/rrTJQGXfem9iELtBE18KxAPBoX6nQpqG5Uoi
+        YXgaSUEBs2stmBemsmyqY5Q=
+X-Google-Smtp-Source: AA0mqf45wzH1fASD/CjKoD2aMqtSVh2Ndkm75yajRBV3RnqZES1+8WZQsfUdq6o1wq2N88G5H02ppQ==
+X-Received: by 2002:a17:907:2dab:b0:7c0:eba9:cf0f with SMTP id gt43-20020a1709072dab00b007c0eba9cf0fmr2761871ejc.30.1670505234639;
+        Thu, 08 Dec 2022 05:13:54 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id o3-20020a170906768300b007c099174a12sm9877799ejm.178.2022.12.08.04.51.19
+        by smtp.gmail.com with ESMTPSA id f23-20020a170906139700b007815ca7ae57sm1357699ejc.212.2022.12.08.05.13.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Dec 2022 04:51:19 -0800 (PST)
+        Thu, 08 Dec 2022 05:13:53 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1p3GMw-0053hR-1v;
-        Thu, 08 Dec 2022 13:51:18 +0100
+        id 1p3Gin-0054Vn-1G;
+        Thu, 08 Dec 2022 14:13:53 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     ZheNing Hu <adlternative@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        johncai86@gmail.com, Taylor Blau <me@ttaylorr.com>
-Subject: Re: Question: How to execute git-gc correctly on the git server
-Date:   Thu, 08 Dec 2022 13:35:04 +0100
-References: <CAOLTT8Tt3jW2yvm6BRU3yG+EvW1WG9wWFq6PuOcaHNNLQAaGjg@mail.gmail.com>
- <221208.86a63y9309.gmgdl@evledraar.gmail.com>
- <Y5GLWe4Kdaz+T5P8@coredump.intra.peff.net>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        newren@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
+        chooglen@google.com, jonathantanmy@google.com, dyroneteng@gmail.com
+Subject: Re: [PATCH v3 08/11] strbuf: introduce strbuf_strip_file_from_path()
+Date:   Thu, 08 Dec 2022 13:52:44 +0100
+References: <pull.1400.v2.git.1668628302.gitgitgadget@gmail.com>
+ <pull.1400.v3.git.1670262639.gitgitgadget@gmail.com>
+ <1eec3426aee12bbd674ebd646075f0d4c0b1f5af.1670262639.git.gitgitgadget@gmail.com>
+ <221206.86a640dda3.gmgdl@evledraar.gmail.com>
+ <221206.86wn74bw35.gmgdl@evledraar.gmail.com>
+ <98ee4b5b-9d72-31fc-d5b1-1a978450973f@github.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <Y5GLWe4Kdaz+T5P8@coredump.intra.peff.net>
-Message-ID: <221208.86o7se6ou1.gmgdl@evledraar.gmail.com>
+In-reply-to: <98ee4b5b-9d72-31fc-d5b1-1a978450973f@github.com>
+Message-ID: <221208.86k0326nse.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -76,105 +78,73 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Dec 08 2022, Jeff King wrote:
+On Wed, Dec 07 2022, Derrick Stolee wrote:
 
-> On Thu, Dec 08, 2022 at 12:57:45AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+> On 12/6/22 6:37 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 >
->> Is this for a very large hosting site that's anywhere near GitHub,
->> GitLab's etc. scale?
+>> FWIW the "overkill" change on top to do this via callbacks is the
+>> below. Which I tested just to see how easy it was, and whether it would
+>> fail your tests (it doesn't).
 >>=20
->> A "git gc" on a "live" repo is always racy in theory, but the odds that
->> you'll run into data corrupting trouble tends to approach zero as you
->> increase the gc.pruneExpire setting, with the default 2 weeks being more
->> than enough for even the most paranoid user.
+>> -- >8 --
+>> Subject: [PATCH] strbuf: generalize "{,r,l}trim" to a callback interface
 >
-> I'm a bit less optimistic than "tends to approach zero" here. The
-> objects themselves might be older, but they may become referenced or
-> unreferenced in an immediate racy way. E.g., intending to move branch Z
-> to branch A, a client asks to add A and remove Z. Since there is no
-> atomic view of the ref namespace, a simultaneous gc might see Z gone,
-> but A not yet existing (and of course it could also be _two_ clients,
-> etc).
+> I don't like this approach and think it distracts from the goal
+> of the series. If you want to update it afterwards, then by all
+> means go for it.
 
-Yes, I'm really hand-waiving away the issue there for brevity.
+Yes, I think it shouldn't be part of this series at all.
 
-You've got a really good summary of why exactly that race happens
-somewhere in the list archive, which I'm not digging up now.
+I.e. the part in [1] that you're replying to is just something I poked
+at because you nerd-sniped me into poking at it.
 
-But (and just for the general audience here, I know you know this) that
-race basically happens because "gc" concurrently decides that say a 2
-week old blob containing "foo" isn't referenced, *and* we have a
-concurrent branch push that happens to reference a "foo" blob, along
-with a concurrent "gc".
+I think it's probably not worth it, and I don't think I like the
+API[2]. What I do think is worth including in this series one way or
+another is [3].
 
-I have run into this once or twice in practice (with a very high volume
-in-house git server), and in those cases it was because person "B" doing
-the new push was using person's "A"'s work to push a new branch, after it
-had been ~gc.pruneExpire since the topic branch for "A" was
-simultaneously being deleted.
+You're proposing a new addition to the strbuf API. I think it's relevant
+feedback that you seem to be re-inventing close relative (literally a
+1-byte difference!) of a function that's there already.
 
-In principle what I noted upthread is completely false, but I think in
-practice it's almost always true. I.e. users aren't pushing random
-blobs, and as time goes by the odds that the exact same content is
-re-pushed go down.
+Or I'm just wrong, but then what input does your
+strbuf_strip_file_from_path() handle differently than the
+strbuf_trim_trailing_not_dir_sep() in [3]?
 
-It's also worth noting that some repositories are much more vulnerable
-to this than others.
+Making them sibling functions would make the API more discoverable. The
+comment you're adding would also improve the existing code. I.e. we
+could have this end-state in strbuf.h:
 
-If you have predictable auto-generated content in your repo (think the
-package+version list some languages routinely carry in-tree) you're much
-more likely to run into this: Someone bumped that for a topic ~2 weeks
-ago, nobody else bothered on any of their branches, and then the "A"+"B"
-race described above happens.
+	/**
+	 * Strip trailing directory separators, or not-directory separators.
+	 *
+	 * The "dir_sep" variant portably trims redundant slash(es) from the
+	 * end, while the "not_dir_sep" gets you to the base directory, should
+	 * the path refer to a file:
+	 *
+	 * |---------------+---------------+-------------------|
+	 * | In            | out (dir_sep) | out (not_dir_sep) |
+	 * |---------------+---------------+-------------------|
+	 * | /path/to/file | /path/to/file | /path/to/         |
+	 * | /path/to/dir/ | /path/to/dir  | /path/to/dir/     |
+	 * |---------------+---------------+-------------------|
+	 */
+	void strbuf_trim_trailing_dir_sep(struct strbuf *sb);
+	void strbuf_trim_trailing_not_dir_sep(struct strbuf *sb);
 
-As some practical advice to those running "gc" on live repos: To easily
-mitigate this run expiry on the least busy hours of the day. Even for
-truly global development teams there's usually a big lull when it's high
-noon in the middle of the Pacific.
+Or maybe you still think it's not worth it, I also think that's
+fine. I'd really appreciate knowing if it's a "yeah maybe they're the
+same, but I haven't checked", or if it's "I think you missed a case, but
+I haven't explained it to you".
 
->> The "cruft pack" facility does many different things, and my
->> understanding of it is that GitHub's not using it only as an end-run
->> around potential corruption issues, but that some not yet in tree
->> patches on top of it allow more aggressive "gc" without the fear of
->> corruption.
->
-> I don't think cruft packs themselves help against corruption that much.
-> For many years, GitHub used "repack -k" to just never expire objects.
-> What cruft packs help with is:
->
->   1. They keep cruft objects out of the main pack, which reduces the
->      costs of lookups and bitmaps for the main pack.
->
->   2. When you _do_ choose to expire, you can do so without worrying
->      about accidentally exploding all of those old objects into loose
->      ones (which is not wrong from a correctness point of view, but can
->      have some amazingly bad performance characteristics).
->
-> I think the bits you're thinking of on top are in v2.39. The "repack
-> --expire-to" option lets you write objects that _would_ be deleted into
-> a cruft pack, which can serve as a backup (but managing that is out of
-> scope for repack itself, so you have to roll your own strategy there).
+Otherwise if I do follow-up I'd probably have to start by brute-force
+testing the two to satisfy my own paranoia :)
 
-Yes, that's what I was referring to.
+Thanks.
 
-I think I had feedback on that series saying that if held correctly this
-would also nicely solve that long-time race. Maybe I'm just
-misremembering, but I (mis?)recalled that Taylor indicated that it was
-being used like that at GitHub.
-
-Another thing that really helps to mitigate it is this never-in-tree
-patch of mine (which ran in busy production for years, and probably
-still):
-https://lore.kernel.org/git/20181028225023.26427-1-avarab@gmail.com/
-
-It's sensitive to "transfer.unpackLimit" if it's going to help with
-that, and even if you always write duplicate content it won't fully help
-with the race, as "B" may have seen the old ref, and hence not sent the
-"foo" blob over (so the client would need to not have a copy of "A"'s
-about-to-be-deleted topic).
-
-All of which described a setup I ran it in, so *if* we ever ran into the
-race then most likely we'd just have written duplicate content in the
-incoming PACK, so we'd happily chug along.
-
+1. https://lore.kernel.org/git/221206.86wn74bw35.gmgdl@evledraar.gmail.com/
+2. Although once I started poking at it I found a lot of cases in-tree
+   where we hardcoded that exact loop (or the equivalent strbuf_setlen()
+   variant), which could be replaced by "trim all cases of this
+   character from the end of a strbuf", or "trim all cases of this
+   character match ..." function.
+3. https://lore.kernel.org/git/221206.86a640dda3.gmgdl@evledraar.gmail.com/
