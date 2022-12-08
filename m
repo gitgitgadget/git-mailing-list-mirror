@@ -2,175 +2,187 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E641AC4332F
-	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 18:13:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4826BC001B2
+	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 20:57:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229772AbiLHSNs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Dec 2022 13:13:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39020 "EHLO
+        id S229940AbiLHU50 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Dec 2022 15:57:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229750AbiLHSNo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2022 13:13:44 -0500
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 305E676833
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 10:13:43 -0800 (PST)
-Received: by mail-lf1-x12b.google.com with SMTP id b3so3284868lfv.2
-        for <git@vger.kernel.org>; Thu, 08 Dec 2022 10:13:43 -0800 (PST)
+        with ESMTP id S229905AbiLHU5S (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2022 15:57:18 -0500
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D26219492A
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 12:57:15 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id x21-20020a62fb15000000b0057451601be4so1839507pfm.19
+        for <git@vger.kernel.org>; Thu, 08 Dec 2022 12:57:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Wy+NyRdvUv4qZnhtz5UtZIpOToRcIFATMd7jgrxzvug=;
-        b=O082X2Kt5WqAZAr1xVbN+R+oLkaxfUzuNw9cfDCOIOeIYBIKgLxnz5ofvm05831MID
-         mJILD2N0v9+TpxuXHzvNOMjpKyi65aGxIgy9DjbAqTo9Z4Py2s1+GVnIzg6hsIhRV18h
-         7f11LKqkDuS1dgmMv1641EqfT+ia9gNEqlP5n/xFJtyr7zV9lkeyeSR5MM0M67HjEDIi
-         n5qH2foKz5o/aj67LoCLIA5YsEWFFvq7fbZX02N4AqIhQrjaorZMWPgkQi5I6gI1Ea74
-         Qaxp/ZMdPPxKO7N8/qPfcbwaBaHwRmvU6yqZM7jJIGxAw3z4Z9OcJpjZ2hyz1k2AieOl
-         Mvyw==
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=9COKsWsMFvyCgnaK46XiQUNlyCim5hrhQEKx7wvmNjs=;
+        b=EV8G+cXLW3ayH5E49Ptej36IQGbdg1Ey9zOhisR4HksYtzCwjKPW2mOM5qEl+vQPw6
+         TSQ/RYfRTGo6sm36U3x/r5AggBj1dey6tvnls0DJToMJjV1qTUmaX2msvr9/fRrXYU0P
+         XsAQIqrkJkKp3dHgZgoCRoXxsjdHkl7ZcFLEgcCN8ZlGxziM4oz1Wzz0XaS6QvXPt/pX
+         hg0jN6WZVEbn3rPOjOwPAcdndkJ68f/QqnzANb3FaiO2mnbMt61GpGVDnbn0BT0Oi/jK
+         u76RbOeIZAOZJUhWs+ADSyiliPFHAuSbK6bDwP1gfZBTCWJ/eBF2/VXO5KM5l/kyauv7
+         FzCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Wy+NyRdvUv4qZnhtz5UtZIpOToRcIFATMd7jgrxzvug=;
-        b=gKZGGSI3n1awA+dSQ0CcnqzEYCa0w6qfy2aPNekjI3to6ey9Jh15zIoAXASv/2vqTm
-         uRQALOjPVOWMGZsQfezk5zwkU9I3laLR9vCPWEOQTAGpFURQSahk7keV97wjcKJNpXOr
-         7m5EEyWIo4P9609RrM5NElB+ychU67UzpYCuDMWXm015DMCye0dkvr5CO/ApPV8h4Msr
-         /8ETiZxBl5cWK5gWtcVj0CcHFg/jRJ3sSFaJBbR6epGTlZrwVFuBEG8YQPI6cGWmL/+M
-         s20zku7mgTbocWqA4oK3IN0OYRAcIlR68RuupNn4utnurtt+Yf3GBe7OTghlPSgjgozI
-         DErg==
-X-Gm-Message-State: ANoB5pk0jHzFvyXATnyUzQ9DS/yC3QZpXXZYyRvhihKKdr6s1e2gtMWN
-        XW0JaJujoxBmZtVDYJykrzXAgxblHiw=
-X-Google-Smtp-Source: AA0mqf45oOrN3FqafOo2s22hc15H8F81QTtF6ddkFnrIXXdlS0ELv0ZXrX7S8GQJXpBjG4+mCWTu+Q==
-X-Received: by 2002:ac2:4119:0:b0:4b5:7f15:aa21 with SMTP id b25-20020ac24119000000b004b57f15aa21mr983294lfi.52.1670523221005;
-        Thu, 08 Dec 2022 10:13:41 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id e26-20020ac2547a000000b004b585ff1fcdsm798341lfn.273.2022.12.08.10.13.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Dec 2022 10:13:40 -0800 (PST)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Alex Henrie <alexhenrie24@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        huang guanlong <gl041188@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/5] diff-merges: implement [no-]hide option and
- log.diffMergesHide config
-References: <20221127093721.31012-1-sorganov@gmail.com>
-        <20221127093721.31012-2-sorganov@gmail.com>
-        <kl6lfsdqep25.fsf@chooglen-macbookpro.roam.corp.google.com>
-Date:   Thu, 08 Dec 2022 21:13:38 +0300
-In-Reply-To: <kl6lfsdqep25.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
-        Choo's message of "Wed, 07 Dec 2022 16:06:58 -0800")
-Message-ID: <87zgbxahm5.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9COKsWsMFvyCgnaK46XiQUNlyCim5hrhQEKx7wvmNjs=;
+        b=uwdodBPBnlv3evcB53LW5eIVoDTLP58HZ8oqy07nX1EHbSgwaDrFCTT1BrgywvWjyz
+         8kuONaP5A2Ilks+jutMqXN42Qcr1bKPvwJl/PabBfuiqIWKIxLz358ZNv3I8RBLF/wZw
+         tqTAVnwrSIb5VfL8P6MrtfDZmnxtbksZVPgwBEbEzrFroEpKKdcYM+LU656rQeAfhErP
+         yUvbwaR0IIzK3IdkewSizvawD3c8Keh+yiRn5zVATFOwKbytsw4tP00YLgVjhsFjeQ01
+         l+jz+kh8hPtEaFKC3j4uD6fvnh7pgWMfzssnfEa7kFeHR3PMApO7OCMCqHl5RciNlCdH
+         +YAA==
+X-Gm-Message-State: ANoB5plBc0oyUujTU5QE5sPPrDqzSB7hO/sjwDhgCn7IFZQwqKqMN5Ma
+        fz257xH0Rije8AGTeTMuiP64tFE7Tw5ZwEOM9zudXMnL97wWSlWa0jily9iAgtkZIw+OdfeCLAO
+        AyOBByFUrfy4aGskOEh3I5QLpIqzDB4SPxAyci7msKXVwk8+odIUvRkalLf6W7XD531+3QUoTLz
+        /w
+X-Google-Smtp-Source: AA0mqf5vyM4Bil5GxVBaS3s+M0a6J7jH3zk+PcKQL5sC5f0W+qV8oXcnNrHbu8Wuvc++Ws1SDDq1+r0gw4y7rZpxqGjv
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:a63:c48:0:b0:470:1186:de85 with SMTP
+ id 8-20020a630c48000000b004701186de85mr71527287pgm.609.1670533035082; Thu, 08
+ Dec 2022 12:57:15 -0800 (PST)
+Date:   Thu,  8 Dec 2022 12:57:04 -0800
+In-Reply-To: <cover.1669839849.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <cover.1669839849.git.jonathantanmy@google.com>
+X-Mailer: git-send-email 2.39.0.rc1.256.g54fd8350bd-goog
+Message-ID: <cover.1670532905.git.jonathantanmy@google.com>
+Subject: [PATCH v3 0/4] Don't lazy-fetch commits when parsing them
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, peff@peff.net,
+        avarab@gmail.com, gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+Thanks everyone for your review. map_loose_object_1() definitely looks
+less "busy" than before after following your suggestions.
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->> @@ -49,10 +49,11 @@ ifdef::git-log[]
->>  --diff-merges=m:::
->>  -m:::
->>  	This option makes diff output for merge commits to be shown in
->> -	the default format. `-m` will produce the output only if `-p`
->> -	is given as well. The default format could be changed using
->> +	the default format. The default format could be changed using
->>  	`log.diffMerges` configuration parameter, which default value
->>  	is `separate`.
->> ++
->> +	`-m` is a shortcut for '--diff-merges=on --diff-merges=hide'
->>  +
->
-> I found this description difficult to parse, since
->
-> a) it wasn't clear that multiple "--diff-merges" would all be respected
-> b) I had to read the --diff-merges=hide documentation to understand what
->    this means
->
-> Keeping the plain english description would help, something like:
->
->   `-m` only produces the output if `-p` is also given, i.e. it is a
->   shortcut for '--diff-merges=on --diff-merges=hide'.
+Jonathan Tan (4):
+  object-file: remove OBJECT_INFO_IGNORE_LOOSE
+  object-file: refactor map_loose_object_1()
+  object-file: emit corruption errors when detected
+  commit: don't lazy-fetch commits
 
-Thanks, I'll review the documentation if we decide all this stuff is
-useful.
+ commit.c       |  15 ++++++-
+ object-file.c  | 111 +++++++++++++++++++++++++------------------------
+ object-store.h |   7 ++--
+ 3 files changed, 73 insertions(+), 60 deletions(-)
 
->
->> diff --git a/builtin/log.c b/builtin/log.c
->> index 56e2d95e869d..e031021e53b2 100644
->> --- a/builtin/log.c
->> +++ b/builtin/log.c
->> @@ -581,6 +581,8 @@ static int git_log_config(const char *var, const char *value, void *cb)
->>  	}
->>  	if (!strcmp(var, "log.diffmerges"))
->>  		return diff_merges_config(value);
->> +	if (!strcmp(var, "log.diffmergeshide"))
->> +		return diff_merges_hide_config(git_config_bool(var, value));
->>  	if (!strcmp(var, "log.showroot")) {
->>  		default_show_root = git_config_bool(var, value);
->>  		return 0;
->
-> Since we have log.diffmergeshide that is different from log.diffmerges,
-> it seems like it would be more consistent to have '--diff-merges-hide'
-> as a separate flag.
-
-I'd rather drop log.diffmergeshide, as log.diffMerges=hide does the same
-thing. I'm just not sure if multiple instances of the same
-log.diffMerges config are simple enough to manage through "git config"
-interface.
-
-This is independent of --diff-merges-hide suggestion, that, if
-implemented, I'd prefer to read as --diff-merges-flags=[no-]hide, to
-provide space for future flags, even though I still prefer a syntax
-inside existing "--diff-merges" namespace. Something like:
-
-  --diff-merges=<format>[,<flag>[,...]]
-
-<format>: on|off|c|cc|remerge|...
-<flag>:   [no-]hide|...
-
->
->> @@ -69,6 +87,10 @@ static diff_merges_setup_func_t func_by_opt(const char *optarg)
->>  {
->>  	if (!strcmp(optarg, "off") || !strcmp(optarg, "none"))
->>  		return set_none;
->> +	if (!strcmp(optarg, "hide"))
->> +		return set_hide;
->> +	if (!strcmp(optarg, "no-hide"))
->> +		return set_no_hide;
->>  	if (!strcmp(optarg, "1") || !strcmp(optarg, "first-parent"))
->>  		return set_first_parent;
->>  	if (!strcmp(optarg, "separate"))
->> @@ -105,7 +127,19 @@ int diff_merges_config(const char *value)
->>  	if (!func)
->>  		return -1;
->>  
->> -	set_to_default = func;
->> +	if (func == set_hide)
->> +		hide = 1;
->> +	else if (func == set_no_hide)
->> +		hide = 0;
->> +	else
->> +		set_to_default = func;
->> +
->> +	return 0;
->> +}
->
-> The code is also simpler if we took a separate CLI flag, e.g. we could
-> get rid of this special casing of "(func == X)".
-
-I foresee complications elsewhere. Overall complexity won't be that
-different either way, I think.
-
-Thanks,
+Range-diff against v2:
+1:  9ad34a1dce < -:  ---------- object-file: don't exit early if skipping loose
+-:  ---------- > 1:  be0b08cac2 object-file: remove OBJECT_INFO_IGNORE_LOOSE
+-:  ---------- > 2:  7419e4ac70 object-file: refactor map_loose_object_1()
+2:  9ddfff3585 ! 3:  7c9ed861e7 object-file: emit corruption errors when detected
+    @@ Commit message
+         Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+     
+      ## object-file.c ##
+    -@@ object-file.c: static int quick_has_loose(struct repository *r,
+    -  * searching for a loose object named "oid".
+    -  */
+    - static void *map_loose_object_1(struct repository *r, const char *path,
+    --			     const struct object_id *oid, unsigned long *size)
+    -+				const struct object_id *oid, unsigned long *size,
+    -+				char **mapped_path)
+    - {
+    - 	void *map;
+    - 	int fd;
+    -@@ object-file.c: static void *map_loose_object_1(struct repository *r, const char *path,
+    - 		fd = git_open(path);
+    - 	else
+    - 		fd = open_loose_object(r, oid, &path);
+    -+	if (mapped_path)
+    -+		*mapped_path = xstrdup(path);
+    -+
+    - 	map = NULL;
+    - 	if (fd >= 0) {
+    - 		struct stat st;
+    -@@ object-file.c: void *map_loose_object(struct repository *r,
+    - 		       const struct object_id *oid,
+    - 		       unsigned long *size)
+    - {
+    --	return map_loose_object_1(r, NULL, oid, size);
+    -+	return map_loose_object_1(r, NULL, oid, size, NULL);
+    - }
+    - 
+    - enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
+     @@ object-file.c: static int loose_object_info(struct repository *r,
+      {
+      	int status = 0;
+      	unsigned long mapsize;
+    -+	char *mapped_path = NULL;
+    ++	const char *path = NULL;
+      	void *map;
+      	git_zstream stream;
+      	char hdr[MAX_HEADER_LEN];
+    @@ object-file.c: static int loose_object_info(struct repository *r,
+      	}
+      
+     -	map = map_loose_object(r, oid, &mapsize);
+    --	if (!map)
+    -+	map = map_loose_object_1(r, NULL, oid, &mapsize, &mapped_path);
+    -+	if (!map) {
+    -+		free(mapped_path);
+    ++	map = map_loose_object_1(r, oid, &mapsize, &path);
+    + 	if (!map)
+      		return -1;
+    -+	}
+      
+    - 	if (!oi->sizep)
+    - 		oi->sizep = &size_scratch;
+     @@ object-file.c: static int loose_object_info(struct repository *r,
+      		break;
+      	}
+      
+     +	if (status && (flags & OBJECT_INFO_DIE_IF_CORRUPT))
+     +		die(_("loose object %s (stored in %s) is corrupt"),
+    -+		    oid_to_hex(oid), mapped_path);
+    ++		    oid_to_hex(oid), path);
+     +
+      	git_inflate_end(&stream);
+      cleanup:
+    -+	free(mapped_path);
+      	munmap(map, mapsize);
+    - 	if (oi->sizep == &size_scratch)
+    - 		oi->sizep = NULL;
+     @@ object-file.c: static int do_oid_object_info_extended(struct repository *r,
+      			continue;
+      		}
+    @@ object-file.c: int force_object_loose(const struct object_id *oid, time_t mtime)
+      	if (!buf)
+      		return error(_("cannot read object for %s"), oid_to_hex(oid));
+      	hdrlen = format_object_header(hdr, sizeof(hdr), type, len);
+    -@@ object-file.c: int read_loose_object(const char *path,
+    - 	char hdr[MAX_HEADER_LEN];
+    - 	unsigned long *size = oi->sizep;
+    - 
+    --	map = map_loose_object_1(the_repository, path, NULL, &mapsize);
+    -+	map = map_loose_object_1(the_repository, path, NULL, &mapsize, NULL);
+    - 	if (!map) {
+    - 		error_errno(_("unable to mmap %s"), path);
+    - 		goto out;
+     
+      ## object-store.h ##
+     @@ object-store.h: struct object_info {
+    @@ object-store.h: struct object_info {
+      #define OBJECT_INFO_FOR_PREFETCH (OBJECT_INFO_SKIP_FETCH_OBJECT | OBJECT_INFO_QUICK)
+      
+     +/* Die if object corruption (not just an object being missing) was detected. */
+    -+#define OBJECT_INFO_DIE_IF_CORRUPT 64
+    ++#define OBJECT_INFO_DIE_IF_CORRUPT 32
+     +
+      int oid_object_info_extended(struct repository *r,
+      			     const struct object_id *,
+3:  c5fe42deb0 = 4:  5924a5120b commit: don't lazy-fetch commits
 -- 
-Sergey Organov
+2.39.0.rc1.256.g54fd8350bd-goog
+
