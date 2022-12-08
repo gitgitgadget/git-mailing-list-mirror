@@ -2,108 +2,121 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0C3CC3A5A7
-	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 14:52:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AF4DBC3A5A7
+	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 14:58:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229989AbiLHOw2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Dec 2022 09:52:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41546 "EHLO
+        id S229997AbiLHO6g (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Dec 2022 09:58:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229888AbiLHOwY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2022 09:52:24 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB14A9D2F7
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 06:52:20 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id n20so4718898ejh.0
-        for <git@vger.kernel.org>; Thu, 08 Dec 2022 06:52:20 -0800 (PST)
+        with ESMTP id S229963AbiLHO6e (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2022 09:58:34 -0500
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CAA6391C9
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 06:58:33 -0800 (PST)
+Received: by mail-ot1-x336.google.com with SMTP id a7-20020a056830008700b0066c82848060so1002757oto.4
+        for <git@vger.kernel.org>; Thu, 08 Dec 2022 06:58:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=BK5AI4h1RYa+I66eh18O31OVerpS9KC8kJdwaCLN0Bw=;
-        b=b+AvmcaQrmz6bD8oJ7VUFdL2hCforpgdK2LOo9QWm0utThJEVssoEo+ByKCYWGWETu
-         MLgwhxAYybgUdj5kFxscNQMT4eo6czBamGFqqkQjNifGpnth09yGnFQGybpWFOOn698h
-         WjFLMSpARMNkhKrP97FRKQwZf7Jp7VI/Terfo=
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1Ysc0x3lsk1zAX1VVa8zb+X78/5R4hplgjs//Fo4+NY=;
+        b=C18VoccBrB4hvjsE6hXuYm9dkkw/6LIRlCk4laiNnnpRneHR6xeHoNA3+ZU/mpEbAR
+         AZOK+fILwwtwVb24TYOH7xuB82yUzYO0XZ2jrTtjMzl0HWC7x96RCv9EXvG9uVtbwj1d
+         kDYAEeDgbeFCNB4s4x0NQx8MRqW4YJAk88F9ZAupFwYjmOoAXCsYBJQzTPrcLjzFDSOy
+         CjUpJ9gL5HM3yjyopKoOcjKbckZwSkUlNDysAXplTXvEo/avdAQvJPkwVACEv1we1Y5U
+         /A9fp2nc91q+7O9OKxqO0yHgSoimoHV3vCkvTpu9vn43N/w5BtGmcCWM78Pv0PyAyJwv
+         wWUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BK5AI4h1RYa+I66eh18O31OVerpS9KC8kJdwaCLN0Bw=;
-        b=fyG4RfdLe/MkIDOt31RjzxR3op6W4b1J18HtuUNxpw5SEBiADQRgYNcMsf18xtZkcb
-         SWVc3K02TULgHZVZ9re0jfZok0k1csyHtSUqWO4hcCOXjzW/6upSBSGK+WKmENAsM21d
-         POTz4OxAHJR9dxp1FptGXACQwg8weqhGJgIjPNHzKj+kpfHDJxjMrLAqfXTW+feliNUV
-         TY/w8Mykm9BgVTGEyj0H+gMPT2x9PzZJzEfK69P03hy3DjtV4XAW190+Aj5OaCZf24Qz
-         3JTYiheU7nduwcwvRrncLVzYxpPhjVVdhLOgA4/O2oD+8dO0iXUJkn8tahwdxOpOMXlO
-         PIqQ==
-X-Gm-Message-State: ANoB5pldiKEjcdAGwfgWKWOzMDZyh/LeaMgVQGHOuUgmacOnA1dcFhBQ
-        AUGRl9G6Y/NMsA86lrj6g2AFTPTJnRSZ5pNTKEzWWhdJFBIa4kLfjGE=
-X-Google-Smtp-Source: AA0mqf7Dy/VZSOuPVFbXJi8gvVa6HxhYbiEtxbwk9E8xYEFoWKn+PQ1fuT8QJPCJI0Elib/IgkIXAqGI6Gd0iGyeEt0=
-X-Received: by 2002:a17:907:a801:b0:7c0:e060:e819 with SMTP id
- vo1-20020a170907a80100b007c0e060e819mr16757901ejc.763.1670511139168; Thu, 08
- Dec 2022 06:52:19 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Ysc0x3lsk1zAX1VVa8zb+X78/5R4hplgjs//Fo4+NY=;
+        b=NoOubTz735ma6dTgH/05Pnt4PCokFBV9kK82hEMVPFHzUaNY9Ll4C2t8QqB37tjC07
+         eS3yKmZBilN82YGvg5JZV3Q7zu6A7q1E6a6tkcD8pc9IHkNU6hZbz5Sh9vK0FQXVv9BW
+         t8euIacMJB4NjHyEWtcTgcP518fYVuG7t9czSz5EcXILt6oUHNIHbBF7zXiUiGunOdK0
+         FdrYEx/PxV77g26SURIC8NHHqrXVrHgB8BJMJpAuB3n+IZF0mUAqzsxi3vcG7SDIU7cp
+         dx0n6Zylo+pFYSqs5FJBGx24ehju/8byXvpued31TKHAWX2V4qR4KI3TKFGSkLviI+/8
+         GmCA==
+X-Gm-Message-State: ANoB5plu6YFCawyOgD/HspF1FeVb0Gszrs8NAZjEBe69SigaMH8D6R1U
+        fa+Vel+1e4m/K156RmRJldkN
+X-Google-Smtp-Source: AA0mqf4yIPmBOBrchpSfrx6myuyTdBlTYAwJCFh1k0I95LJFYkc7GZ9MBx4P8kXy7JV36SnhrBQAUA==
+X-Received: by 2002:a9d:833:0:b0:670:6d50:dc7d with SMTP id 48-20020a9d0833000000b006706d50dc7dmr1007614oty.14.1670511512292;
+        Thu, 08 Dec 2022 06:58:32 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:c5e5:e5dd:715:ac2e? ([2600:1700:e72:80a0:c5e5:e5dd:715:ac2e])
+        by smtp.gmail.com with ESMTPSA id i6-20020a9d53c6000000b0066cacb8343bsm11748535oth.41.2022.12.08.06.58.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Dec 2022 06:58:31 -0800 (PST)
+Message-ID: <5ba28171-ede1-8f47-8813-239f591c165c@github.com>
+Date:   Thu, 8 Dec 2022 09:58:30 -0500
 MIME-Version: 1.0
-References: <CAPMMpoiN=Rj_z9VEJZ4EFhb8gBeqb6H7JhTUBbn-b-t-jHRVnA@mail.gmail.com>
- <4dcad1f5-9ebd-d15a-b663-a3513ae1bcb8@github.com>
-In-Reply-To: <4dcad1f5-9ebd-d15a-b663-a3513ae1bcb8@github.com>
-From:   Tao Klerks <tao@klerks.biz>
-Date:   Thu, 8 Dec 2022 15:52:07 +0100
-Message-ID: <CAPMMpoii52KrR2MBpPdSEH8-jc7uMPzi4DH5g2bchwd-RPNTJw@mail.gmail.com>
-Subject: Re: Auto packing the repository - foreground or background in Windows?
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v3 10/11] bundle-uri: download bundles from an advertised
+ list
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        newren@gmail.com, avarab@gmail.com, mjcheetham@outlook.com,
+        steadmon@google.com, chooglen@google.com, jonathantanmy@google.com,
+        dyroneteng@gmail.com
+References: <pull.1400.v2.git.1668628302.gitgitgadget@gmail.com>
+ <pull.1400.v3.git.1670262639.gitgitgadget@gmail.com>
+ <69bf154bec63a22df8e5eac89f975625ce73c8ac.1670262639.git.gitgitgadget@gmail.com>
+ <Y5CNo5kyByIHDVYh@coredump.intra.peff.net>
+ <affbc458-d4f5-525f-d431-5ec1d489afc8@github.com>
+ <Y5GF8ams0k03kiVU@coredump.intra.peff.net>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <Y5GF8ams0k03kiVU@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 6, 2022 at 7:03 PM Derrick Stolee <derrickstolee@github.com> wrote:
->
-> Instead, the modern recommendation for repositories where "git gc --auto"
-> would be slow is to run "git maintenance start" which will schedule
-> background maintenance jobs with the Windows scheduler. Those processes
-> are built to do updates that are non-invasive to concurrent foreground
-> processes. It also sets config to avoid "git gc --auto" commands at the
-> end of foreground Git processes.
->
-> See [1] for more details.
->
-> [1] https://git-scm.com/docs/git-maintenance
->
+On 12/8/2022 1:36 AM, Jeff King wrote:
+> On Wed, Dec 07, 2022 at 10:27:06AM -0500, Derrick Stolee wrote:
+> 
+>>> The "uri" parameter in this function is unused. I'm not sure if that's
+>>> indicative of a bug or missing feature (e.g., could it be the base for a
+>>> relative url?), or if it's just a leftover from development.
+>>
+>> Thanks for your careful eye. This 'uri' is indeed not needed. I think it
+>> was initially there for relative URIs, but the given 'list' is expected
+>> to have that value initialized. I'll make it clear in the doc comment.
+> 
+> That makes sense. I've queued a patch locally to remove it (since
+> locally I build with -Wunused-parameters), which will eventually make
+> its way to the list.
+> 
+>>> If the latter, I'm happy to add it to my list of cleanups.
+>>>
+>>> There are a couple other unused parameters in this series, too, but they
+>>> are all in virtual functions and must be kept. I'll add them to my list
+>>> of annotations.
+>>
+>> Your UNUSED annotations exist in my tree, so I'll try my best to update
+>> them in the next version.
+> 
+> Sounds good (and again, I've queued something locally, but if you beat
+> me to it, it's easy to drop mine).
+> 
+> Note that your series hit 'next' (which is how I noticed it), so there
+> usually would not be a "next version". Though we will rewind
+> post-release, so there may still be an opportunity (I didn't follow the
+> topic closely enough to know if you might want to re-roll for other
+> reasons).
 
-Thanks Stolee, I've known about the existence of this system for a
-while, but I can't quite figure out what's recommended for who, when,
-given the doc at https://git-scm.com/docs/git-maintenance
+I noticed that after reading this round of review, so I'll be preparing
+some fixes on top. I noticed some UNUSED that would be necessary from
+earlier parts of the bundle URI work, and you've probably already queued
+those changes.
 
-Clearly on Windows, one reason to do "git maintenance start" is to
-avoid foregrounded "git gc --auto" runs later. That's a clear enough
-benefit to say "frequent users of large repos on windows *should* run
-'git maintenance start' (or have some setup process or GUI do it for
-them) on those large repos".
+Since I no longer plan to re-roll this series, I'd be happy to review
+your queued annotations, and I'll focus on the other fixups.
 
-Is there a corresponding tangible benefit on MacOS and/or Linux, over
-simply getting "git gc --auto" do its backgrounded thing when it feels
-like it? Or is there an eventual plan to *switch* from the current
-"git gc --auto" spawning to a "git maintenance start" execution when
-trigger conditions are met? Are there any *dis*advantages to running
-"git maintenance start" in general or on any given platform?
-
-For "my users", I have something like Scalar that can start the
-maintenance on the repo where it's needed - but it seems like there
-will be lots of users out there in the world who clone things like the
-linux repo, which looks like it is big enough to warrant these kinds
-of concerns, but it doesn't seem obvious that anyone will ever find
-"https://git-scm.com/docs/git-maintenance" and decide to run "git
-maintenance start" on their own...
-
-As I noted in another email, I propose to replace "Auto packing the
-repository for optimum performance" with something like "Auto packing
-the repository for optimum performance; to run this kind of
-maintenance in the background, see 'git maintenance' at
-https://git-scm.com/docs/git-maintenance." - but I imagine I'm missing
-a bigger picture / a long-term plan for how these two mechanisms
-should interact.
-
-My apologies if I've missed one or many conversations about this on
-the list, but maybe a pointer here can also help me add directional
-hints at https://git-scm.com/docs/git-maintenance for "outside users"?
+Thanks,
+-Stolee
