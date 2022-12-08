@@ -2,126 +2,175 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5DC10C3A5A7
-	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 16:39:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E641AC4332F
+	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 18:13:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229848AbiLHQjF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Dec 2022 11:39:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49018 "EHLO
+        id S229772AbiLHSNs (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Dec 2022 13:13:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230143AbiLHQiu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2022 11:38:50 -0500
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D211CAFCFB
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 08:38:41 -0800 (PST)
-Received: by mail-oi1-x230.google.com with SMTP id k189so1922259oif.7
-        for <git@vger.kernel.org>; Thu, 08 Dec 2022 08:38:41 -0800 (PST)
+        with ESMTP id S229750AbiLHSNo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2022 13:13:44 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 305E676833
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 10:13:43 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id b3so3284868lfv.2
+        for <git@vger.kernel.org>; Thu, 08 Dec 2022 10:13:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=N/05QyAuX71pRVen3zqBcAhuut5Czcf11CZs4nrHelo=;
-        b=Ae2vSjdDZfcEl0maNFxVK3xtK0zA1Ti/gc9+PvTtKXqZocJ68TGWDSXeCOBiwQWB5x
-         dRil1Beh9pLkTEGoMroS5GN7sLw5+W+sy3cpEhA9T4jJwFNcKsyn92frNwIEh/fQXVMx
-         s/65R6q3LEfk3hRKvA0hRNVgi9pkMQXNaYD/PccHIgzQZFvG3lfOIbSt8G1qGqUzdrmu
-         yphSBtmEnm+0/Pi4AvHep2YTvvllBxAFkhElQTWWjgN5uzpbvm9hfbN/Z/vwil81lQsA
-         uoRZhTYMepif+ip89wvm+r1VAUhRuEMoxEDv8oND3wzOP+7788hlopmSJ8YgxZLihXFL
-         KM0Q==
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Wy+NyRdvUv4qZnhtz5UtZIpOToRcIFATMd7jgrxzvug=;
+        b=O082X2Kt5WqAZAr1xVbN+R+oLkaxfUzuNw9cfDCOIOeIYBIKgLxnz5ofvm05831MID
+         mJILD2N0v9+TpxuXHzvNOMjpKyi65aGxIgy9DjbAqTo9Z4Py2s1+GVnIzg6hsIhRV18h
+         7f11LKqkDuS1dgmMv1641EqfT+ia9gNEqlP5n/xFJtyr7zV9lkeyeSR5MM0M67HjEDIi
+         n5qH2foKz5o/aj67LoCLIA5YsEWFFvq7fbZX02N4AqIhQrjaorZMWPgkQi5I6gI1Ea74
+         Qaxp/ZMdPPxKO7N8/qPfcbwaBaHwRmvU6yqZM7jJIGxAw3z4Z9OcJpjZ2hyz1k2AieOl
+         Mvyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=N/05QyAuX71pRVen3zqBcAhuut5Czcf11CZs4nrHelo=;
-        b=rnzwkJ8Xy/SimCZnJSX+LXC04IgDPv9x/r/c+z3elA5iYWQpzoFFFjR3R9bN+otiAJ
-         RqiulxApx7j83m51NnGEc0CCLNV+Zdisoi8PkaoQCO+Oq6SJw40lCseYSwpse4V3tb/n
-         aCqpqh5BJDuG/FH6mZ78oCpJhV6Z+XP8v2348Avk7Rx0KtIwVYkILie9ax1+bpdhd40x
-         I4sSNOqnpI9mZCWTbqRC7LQpG84DAbCO6ILYFPp84ZKYlK/WEYUAuhxSBjfgDmW+PHxf
-         iC4B5qB4287xKJfbdRYrtKseVRsw8FRQskufIYm7U0LnvEGPehCpmAflaiLJW0fCr9CY
-         fU1A==
-X-Gm-Message-State: ANoB5pnt/DSLWu7o/GnqOylKgJt8ZSGWtiPu275WI8tn2Lt81r022Msw
-        kPQKjxJLAv0cACpFRHxz8Udh
-X-Google-Smtp-Source: AA0mqf5XGLpgsn9HzwPX7JLy1TSqyag42XFazx3BMDDi2r6C4HHnX4dtmFMPjIlPX3taZIS/VjXjnQ==
-X-Received: by 2002:aca:5905:0:b0:355:1de8:de62 with SMTP id n5-20020aca5905000000b003551de8de62mr1107478oib.59.1670517521096;
-        Thu, 08 Dec 2022 08:38:41 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:c5e5:e5dd:715:ac2e? ([2600:1700:e72:80a0:c5e5:e5dd:715:ac2e])
-        by smtp.gmail.com with ESMTPSA id g15-20020a544f8f000000b003458d346a60sm10952332oiy.25.2022.12.08.08.38.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Dec 2022 08:38:40 -0800 (PST)
-Message-ID: <3a47b7ac-25dc-5f70-9ab4-08c781df4cda@github.com>
-Date:   Thu, 8 Dec 2022 11:38:39 -0500
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Wy+NyRdvUv4qZnhtz5UtZIpOToRcIFATMd7jgrxzvug=;
+        b=gKZGGSI3n1awA+dSQ0CcnqzEYCa0w6qfy2aPNekjI3to6ey9Jh15zIoAXASv/2vqTm
+         uRQALOjPVOWMGZsQfezk5zwkU9I3laLR9vCPWEOQTAGpFURQSahk7keV97wjcKJNpXOr
+         7m5EEyWIo4P9609RrM5NElB+ychU67UzpYCuDMWXm015DMCye0dkvr5CO/ApPV8h4Msr
+         /8ETiZxBl5cWK5gWtcVj0CcHFg/jRJ3sSFaJBbR6epGTlZrwVFuBEG8YQPI6cGWmL/+M
+         s20zku7mgTbocWqA4oK3IN0OYRAcIlR68RuupNn4utnurtt+Yf3GBe7OTghlPSgjgozI
+         DErg==
+X-Gm-Message-State: ANoB5pk0jHzFvyXATnyUzQ9DS/yC3QZpXXZYyRvhihKKdr6s1e2gtMWN
+        XW0JaJujoxBmZtVDYJykrzXAgxblHiw=
+X-Google-Smtp-Source: AA0mqf45oOrN3FqafOo2s22hc15H8F81QTtF6ddkFnrIXXdlS0ELv0ZXrX7S8GQJXpBjG4+mCWTu+Q==
+X-Received: by 2002:ac2:4119:0:b0:4b5:7f15:aa21 with SMTP id b25-20020ac24119000000b004b57f15aa21mr983294lfi.52.1670523221005;
+        Thu, 08 Dec 2022 10:13:41 -0800 (PST)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id e26-20020ac2547a000000b004b585ff1fcdsm798341lfn.273.2022.12.08.10.13.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Dec 2022 10:13:40 -0800 (PST)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Alex Henrie <alexhenrie24@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        huang guanlong <gl041188@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 1/5] diff-merges: implement [no-]hide option and
+ log.diffMergesHide config
+References: <20221127093721.31012-1-sorganov@gmail.com>
+        <20221127093721.31012-2-sorganov@gmail.com>
+        <kl6lfsdqep25.fsf@chooglen-macbookpro.roam.corp.google.com>
+Date:   Thu, 08 Dec 2022 21:13:38 +0300
+In-Reply-To: <kl6lfsdqep25.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
+        Choo's message of "Wed, 07 Dec 2022 16:06:58 -0800")
+Message-ID: <87zgbxahm5.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 0/4] Optionally skip hashing index on write
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, vdye@github.com, avarab@gmail.com,
-        newren@gmail.com
-References: <pull.1439.git.1670433958.gitgitgadget@gmail.com>
- <xmqqilim6bhh.fsf@gitster.g>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqilim6bhh.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/7/2022 6:27 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> Writing the index is a critical action that takes place in multiple Git
->> commands. The recent performance improvements available with the sparse
->> index show how often the I/O costs around the index can affect different Git
->> commands, although reading the index takes place more often than a write.
-> 
-> The sparse-index work is great in that it offers correctness while
-> taking advantage of the knowledge of which part of the tree is
-> quiescent and unused to boost performance.  I am not sure a change
-> to reduce file safety can be compared with it, in that one is pure
-> improvement, while the other is trade-off.
+Glen Choo <chooglen@google.com> writes:
 
-I agree that this is a trade-off, and we should both be careful about
-whether or not we even make this a possibility for certain file
-formats. The index is an interesting case for a couple reasons:
+> Sergey Organov <sorganov@gmail.com> writes:
+>
+>> @@ -49,10 +49,11 @@ ifdef::git-log[]
+>>  --diff-merges=m:::
+>>  -m:::
+>>  	This option makes diff output for merge commits to be shown in
+>> -	the default format. `-m` will produce the output only if `-p`
+>> -	is given as well. The default format could be changed using
+>> +	the default format. The default format could be changed using
+>>  	`log.diffMerges` configuration parameter, which default value
+>>  	is `separate`.
+>> ++
+>> +	`-m` is a shortcut for '--diff-merges=on --diff-merges=hide'
+>>  +
+>
+> I found this description difficult to parse, since
+>
+> a) it wasn't clear that multiple "--diff-merges" would all be respected
+> b) I had to read the --diff-merges=hide documentation to understand what
+>    this means
+>
+> Keeping the plain english description would help, something like:
+>
+>   `-m` only produces the output if `-p` is also given, i.e. it is a
+>   shortcut for '--diff-merges=on --diff-merges=hide'.
 
-1. Writes block users. Writing the index takes place in many user-
-   blocking foreground operations. The speed improvement directly
-   impacts their use. Other file formats are typically written in
-   the background (commit-graph, multi-pack-index) or are super-
-   critical to correctness (pack-files).
+Thanks, I'll review the documentation if we decide all this stuff is
+useful.
 
-2. Index files are short lived. It is rare that a user leaves an
-   index for a long time with many staged changes. That's the condition
-   that's required for losing an index file to cause a loss of work
-   (or maybe I'm missing something). Outside of staged changes, the
-   index can be completely destroyed and rewritten with minimal impact
-   to the user.
+>
+>> diff --git a/builtin/log.c b/builtin/log.c
+>> index 56e2d95e869d..e031021e53b2 100644
+>> --- a/builtin/log.c
+>> +++ b/builtin/log.c
+>> @@ -581,6 +581,8 @@ static int git_log_config(const char *var, const char *value, void *cb)
+>>  	}
+>>  	if (!strcmp(var, "log.diffmerges"))
+>>  		return diff_merges_config(value);
+>> +	if (!strcmp(var, "log.diffmergeshide"))
+>> +		return diff_merges_hide_config(git_config_bool(var, value));
+>>  	if (!strcmp(var, "log.showroot")) {
+>>  		default_show_root = git_config_bool(var, value);
+>>  		return 0;
+>
+> Since we have log.diffmergeshide that is different from log.diffmerges,
+> it seems like it would be more consistent to have '--diff-merges-hide'
+> as a separate flag.
 
-> As long as we will keep the "create into a new file, write it fully
-> and fsync + rename to the final" pattern, we do not need the trailing
-> checksum to protect us from a truncated output due to index-writing
-> process dying in the middle, so I do not mind that trade-off, though.
-> 
-> Protecting files from bit flipping filesystem corruption is a
-> different matter.  Folks at hosting sites like GitHub would know how
-> often they detect object corruption (I presume they do not have to
-> deal with the index file on the server end that often, but loose and
-> pack object files have the trailing checksums the same way) thanks
-> to the trailing checksum, and what the consequences are if we lost
-> that safety (I am guessing it would be minimum, though).
+I'd rather drop log.diffmergeshide, as log.diffMerges=hide does the same
+thing. I'm just not sure if multiple instances of the same
+log.diffMerges config are simple enough to manage through "git config"
+interface.
 
-I agree that we need to be careful about which files get this
-treatement.
+This is independent of --diff-merges-hide suggestion, that, if
+implemented, I'd prefer to read as --diff-merges-flags=[no-]hide, to
+provide space for future flags, even though I still prefer a syntax
+inside existing "--diff-merges" namespace. Something like:
 
-But I also want to point out that I'm not using hosting servers as
-evidence that this has worked in practice, but instead many developer
-machines in large monorepos who have had this enabled (via the
-microsoft/git fork) for years. We've not come across an instance where
-this loss of a trailing hash has been an issue.
+  --diff-merges=<format>[,<flag>[,...]]
+
+<format>: on|off|c|cc|remerge|...
+<flag>:   [no-]hide|...
+
+>
+>> @@ -69,6 +87,10 @@ static diff_merges_setup_func_t func_by_opt(const char *optarg)
+>>  {
+>>  	if (!strcmp(optarg, "off") || !strcmp(optarg, "none"))
+>>  		return set_none;
+>> +	if (!strcmp(optarg, "hide"))
+>> +		return set_hide;
+>> +	if (!strcmp(optarg, "no-hide"))
+>> +		return set_no_hide;
+>>  	if (!strcmp(optarg, "1") || !strcmp(optarg, "first-parent"))
+>>  		return set_first_parent;
+>>  	if (!strcmp(optarg, "separate"))
+>> @@ -105,7 +127,19 @@ int diff_merges_config(const char *value)
+>>  	if (!func)
+>>  		return -1;
+>>  
+>> -	set_to_default = func;
+>> +	if (func == set_hide)
+>> +		hide = 1;
+>> +	else if (func == set_no_hide)
+>> +		hide = 0;
+>> +	else
+>> +		set_to_default = func;
+>> +
+>> +	return 0;
+>> +}
+>
+> The code is also simpler if we took a separate CLI flag, e.g. we could
+> get rid of this special casing of "(func == X)".
+
+I foresee complications elsewhere. Overall complexity won't be that
+different either way, I think.
 
 Thanks,
--Stolee
+-- 
+Sergey Organov
