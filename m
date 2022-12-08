@@ -2,108 +2,115 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46D25C4332F
-	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 11:51:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A117C4332F
+	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 12:04:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229995AbiLHLv0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Dec 2022 06:51:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40424 "EHLO
+        id S229793AbiLHMER (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Dec 2022 07:04:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229815AbiLHLu6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2022 06:50:58 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7234083248
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 03:49:49 -0800 (PST)
+        with ESMTP id S229760AbiLHMER (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2022 07:04:17 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E95085669
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 04:04:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1670500187; bh=iCtTkOSx8qcHaOalX61i+ywOr7N//yCXA4ghHJtjBrE=;
+        t=1670501052; bh=vrfaUKWRM/xNWao5r3dpMlYG/jsMcr5St4RvyVWsMBg=;
         h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=LzH68sv+L1c8yJm+KRxL8RcDzsfVB8wTBcJPieUkM6HBaYjq1g/Q8a/gZ1sTOoqPJ
-         FWGUrB2WY+1i2QSmOpPaR5AdJL/DTWAO0qL5uB4u8Wnh9NaI+CnCTjw619caDjqECB
-         duEaFnd6nmf0NMZXYcman8buhPPOYl6MR/DcgiMgRxyPixYEn6gcoYZ5jhCcDZ2YLL
-         kgfgWK7ASmXM/WN8AYRK0keQ8tfFbSR7P5g2IvtBQvTD/qYH2pzjT2JA9AepqmIAa8
-         mHJt2lNo+4uLL2ESlQ1xz3JOn+dhV7gecf27RQHKjZ1QoytlD8sq8W6rMpkOuN25Zw
-         lkzHtSpU3elxg==
+        b=LAieANdoSaJ2eunRn2CB42CUhcE/m4RtX9bP95aOuUZ622WLlR1aSvKpipxC4HXuu
+         BltXEx78HMOt7phmSBjjEj4p8cR9CR7k8ARMnuzKEZHRjuhB6PBGhhx3YPMWi0HW8O
+         Wlglw9gB0Oio2FkXsun4AlA1B/HHfAGRSOvvlcr2q7mG8oj3Ag48G7TJ4gS6Io6qJE
+         uQrMQR/++uH+RRLCCGL6Hmy7aQs1dwGloTO3In4fZxtkZwwtVcO6kXKyeSXcGZwKvV
+         nplNsoTQdRYnybmNwtMW6j4FSwznQRuL3/5RhI/RvGXS+jJVSVDqCcF/L1WlXctjCg
+         RVulc44g0vNRg==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.24.155.134] ([89.1.213.44]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbAh0-1oW6Vv0dSa-00bcOd; Thu, 08
- Dec 2022 12:49:47 +0100
-Date:   Thu, 8 Dec 2022 12:49:46 +0100 (CET)
+Received: from [172.24.155.134] ([46.114.106.61]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MdNY2-1oTuoe2L9E-00ZQJz; Thu, 08
+ Dec 2022 13:04:12 +0100
+Date:   Thu, 8 Dec 2022 13:04:10 +0100 (CET)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>
-cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/3] t1509: make "setup" test more robust
-In-Reply-To: <617f98dcb40d417fbb48d9c1de8fa9ab650f5370.1668999621.git.gitgitgadget@gmail.com>
-Message-ID: <7rs8633n-s68s-4542-o01o-033p86p51p77@tzk.qr>
-References: <pull.1425.git.1668999621.gitgitgadget@gmail.com> <617f98dcb40d417fbb48d9c1de8fa9ab650f5370.1668999621.git.gitgitgadget@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>,
+        Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 3/3] t1509: facilitate repeated script invocations
+In-Reply-To: <CAPig+cSfvgu8XjvmmAkFWe1G1VDRgrcx5GjUhr4xSDqoJ4cZOA@mail.gmail.com>
+Message-ID: <n2586428-1r80-9s29-8345-7p2opnor5086@tzk.qr>
+References: <pull.1425.git.1668999621.gitgitgadget@gmail.com> <97ada2a1202190776ce3989d3841dd47e2702316.1668999621.git.gitgitgadget@gmail.com> <221206.86ilipckms.gmgdl@evledraar.gmail.com>
+ <CAPig+cSfvgu8XjvmmAkFWe1G1VDRgrcx5GjUhr4xSDqoJ4cZOA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:GbKlye5c6vrsyh0YJWPo3Tkpe80TdZlaYxVuEf5erI4OfXtYwxI
- MFhtdUbGkhIWFcuKNXU2V+PuXh325XnfetEYI0bF8vLFaoc909U12gc82wXhg+X8QPVGj7T
- fcuVd+jf8ChC0/ysJQ2dto3OAoHfrf9sVD4/pLaIarswZkDraZXdTP9Ar/JxEQ8tkv9p/tj
- gApIlu65GpzvtEG1iZb4w==
-UI-OutboundReport: notjunk:1;M01:P0:KRE+SCkN+kA=;Um+TRLlrJg5b90XXrPJyoWzVMKU
- TZHDZXISpzdlMIt2ehlDEJBRyzvdSARu8LeXOGhWGOk7D6FITCWHD7wIAWlAOqxeSwm91Fg/3
- am35DbZ+8uc/7qsG/Ihfw00Az5MJ24Xv2D5Qt1SZyUhwK2wWfp3RSeGv9YB6atM+66+Vy4cOu
- bZsHCj3rTsh3ESbfSA8sVSDyvkq+tdfAAwPndEwepyy0K5bo8F2WYi8f/lI1nTE98WuCDST10
- FgcL+keJ0bAoqF/ERhuQ9eNC9N0FSSmqWf7usBSKJaWQApQpQTjX/SVvRyQWm7jfuFQoFVbMe
- Dcwl0ZV8X4vs8f+MqcmLIy3jnC/jmdCdJu1aQj+EjZz5/iGoSBSEXtyxiMSvmmEgHTOpvcLEh
- Zr20EBhGubWbJHkowXo6YSxoQg6h/kqtB9EZEJhRHSsPtxlKgWNHdDKWEX/mM/xSS/8TDnWMM
- r7/2QzZsirxA1hR+IhOoWoetBIkZGw4kpcvW9bx2INltcGFCoGPUVSlQlivmHiPacou7geOCD
- Gvvwi4vqxdSGI/HXq76QpIs+ZA5XFMuQTv/cRahoxuBGoogyXwswNADgTFkn/aGbEXJVm+ELt
- MbcjLhXZgkD4G9j18vFam76zrgfPYzZlmi2qxeh0TBhKH7Tw6O3e9FH9tpikuRYGDcfZqy2cP
- xa4TBqhAnIjnH7RTVlS1FdIVOydVlpXP75hFc78IT3e6KFmlok1uD5nvRY+gc8v4qE+ovzRmh
- MOsLRq56BwgoveBCBu/kwrhLRi1ICgpnXgr+5lBulRKXZA33Ef5uDtE0VDNhEnPPnJ7CQyL4n
- G87J8uEMXr/TeC5ih1TUEEXt+LCGKuVTU6zjpxVt1aQ9Zxdi0byqN3yLpp0UwtUQNlLNUKdJg
- RbQT/YTUK4SjqugJJlu+6aaXFp6RLK8RRuvIhmVYWU+XgeROISrYxeaYTKx2pnBROJoJeW7kj
- ilJngA==
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/mixed; boundary="8323328-1993232286-1670501052=:3015"
+X-Provags-ID: V03:K1:UhWBgyS0v/AJoNC5Dn8I1GGS+tCv2tljdJGHnHk/nFdzfEydj9I
+ eLAvJHD9vZ1Yu6+oN/LvaIRrzqf4cnmYVycQnPV4ljvuIP46ymRfRCujRyTxqT/D43PU0uP
+ a8xWj73bmYgYgaNZwFhbaH+gzibi3f7JN+oka/8L7mTGY3yQ5IGF2P46VLmf61vvb4sKA0/
+ vIkxpbc+6tPVTxkNz0SVQ==
+UI-OutboundReport: notjunk:1;M01:P0:LHKXV5n0/yM=;aTAnXk7h9flXYpSisHy6TggV5qt
+ s9wOP4DJBUzk0ElQuIckFM5/W66ofpoUofxObGGqttTzPdxugw49tfBEYWdQPgwmUU0pOvXjS
+ W4UQthP8cdSoT6z5WNXEC3f4ZJTxElyP7Siuo7UOakTq2rk1amFvqgGsHQ83i07F02ocfQvWe
+ fqhMlXuPwRCof+pF1ByrHXHms2RXWojyUUE5dyMB/HfSWLzu0pesvdX537ehb8KfyxBZjufq7
+ eCw3vaL2ulsnMRcGlLNjijsP+inmq0LGnJVW768s9iUv3YUtjSPU69agoFBviZCJu7YBmIolx
+ Vk51cO7rFeZm5WNdM2SzSRPixHIyqhYPuyi0nDLwgz21Tfump1EPAgDatAwEaS8De1nFzz1Rm
+ tRSBZpPDSuMV9rIDpMZFBLZ94Goyyn62nY9T4N1AESQ0FI23UCsPHvWXv8GNwqMqChBPfPYCh
+ XS/YyZOXz0Moz8BTXKW9VGrqvniuYu2/012I+BOrXNjE8d0b2Vl1fkVbVRICmLIO03PKSU3s/
+ mFXvz1dHbArFb0OxYcF5/PQZ+HRUSPE//hRa/i3kxvGdpq5p9wUuf1AS8lN2ZrN6Ik95XvdpG
+ Exo8Ja/YTgBKQHe2RvAg5XnX87x9kbfjMHxklDGNo0cfn1LsCsxvqSxlvtAoiwi2ZJkvV3Pcg
+ ceOUGlnzqG8wSTKnP6rjrhPi+gfv18dbjH2iSrWTrIxQSFT0ntj3G2z0AHMHiwAzD4vhqogfs
+ Grcn8GsyVpIH2C2sqdDr6p4QsxBWvfIQ8QEAz+JMFb87Ia2JaOeWP+UWgroR5hSI/j4b0MFj+
+ cYb23xjzGUFlX11CeQhVDc8nvZNSzBkbn22Pb/uYJwuaY3unbzZVW4sBxHRHkpdhcscRK+tO5
+ ReMgkPo8Q6ovItxLVz525EmHH/doYyse3sNHXtkYgJ3nzfkudaRXn2ChNtaCqDoWqNqds+z3v
+ KTRgtzkVHYcYpkJBR6efC6KzFyw=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Eric,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Mon, 21 Nov 2022, Eric Sunshine via GitGitGadget wrote:
+--8323328-1993232286-1670501052=:3015
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> From: Eric Sunshine <sunshine@sunshineco.com>
->
-> One of the t1509 setup tests is very particular about the output it
-> expects from `git init`, and fails if the output differs even slightly
-> which can happen easily if the script is run multiple times since it
-> doesn't do a good job of cleaning up after itself (i.e. it leaves
-> detritus in the root directory `/`). One bit of cruft in particular
-> (`/HEAD`) makes the test fail since its presence causes `git init` to
-> alter its output; rather than reporting "Initialized empty Git
-> repository", it instead reports "Reinitialized existing Git repository"
-> when `/HEAD` is present. Address this problem by making the test do a
-> more careful job of crafting its intended initial state.
+Hi,
 
-Good explanation, and the patch is obviously correct.
+On Mon, 5 Dec 2022, Eric Sunshine wrote:
 
-ACK,
+> On Mon, Dec 5, 2022 at 9:48 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
+varab@gmail.com> wrote:
+> > On Mon, Nov 21 2022, Eric Sunshine via GitGitGadget wrote:
+> > > t1509-root-work-tree.sh, which tests behavior of a Git repository
+> > > located at the root `/` directory, refuses to run if it detects the
+> > > presence of an existing repository at `/`. This safeguard ensures th=
+at
+> > > it won't clobber a legitimate repository at that location. However,
+> > > because t1509 does a poor job of cleaning up after itself, it runs a=
+foul
+> > > of its own safety check on subsequent runs, which makes it painful t=
+o
+> > > run the script repeatedly since each run requires manual cleanup of
+> > > detritus from the previous run.
+> > >
+> > > Address this shortcoming by making t1509 clean up after itself as it=
+s
+> > > last action. This is safe since the script can only make it to this
+> > > cleanup action if it did not find a legitimate repository at `/` in =
+the
+> > > first place, so the resources cleaned up here can only have been cre=
+ated
+> > > by the script itself.
+
+Makes sense.
+
+> > This is an existing wart, but I also wondered why the "expected",
+> > "result" etc. was needed. Either we could make the tests creating thos=
+e
+> > do a "test_when_finished" removal of it, or better yet just create tho=
+se
+> > in the trash directory.
+
+An even better suggestion would be to use `test_atexit`, of course.
+
+Ciao,
 Johannes
 
->
-> Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
-> ---
->  t/t1509-root-work-tree.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/t1509-root-work-tree.sh b/t/t1509-root-work-tree.sh
-> index eb57fe7e19f..d0417626280 100755
-> --- a/t/t1509-root-work-tree.sh
-> +++ b/t/t1509-root-work-tree.sh
-> @@ -243,7 +243,7 @@ say "auto bare gitdir"
->  # DESTROYYYYY!!!!!
->  test_expect_success 'setup' '
->  	rm -rf /refs /objects /info /hooks &&
-> -	rm -f /expected /ls.expected /me /result &&
-> +	rm -f /HEAD /expected /ls.expected /me /result &&
->  	cd / &&
->  	echo "Initialized empty Git repository in /" > expected &&
->  	git init --bare > result &&
-> --
-> gitgitgadget
->
->
+--8323328-1993232286-1670501052=:3015--
