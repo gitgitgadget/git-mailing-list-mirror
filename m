@@ -2,104 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9BC84C4332F
-	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 14:29:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 97559C63703
+	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 14:30:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229739AbiLHO32 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Dec 2022 09:29:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58078 "EHLO
+        id S229825AbiLHOaB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Dec 2022 09:30:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229524AbiLHO30 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2022 09:29:26 -0500
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8716E1DDF0
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 06:29:25 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id s10so1745571ljg.1
-        for <git@vger.kernel.org>; Thu, 08 Dec 2022 06:29:25 -0800 (PST)
+        with ESMTP id S229524AbiLHO37 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2022 09:29:59 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2160212E
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 06:29:58 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id m18so4476852eji.5
+        for <git@vger.kernel.org>; Thu, 08 Dec 2022 06:29:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=nf/K/316EYp5JtSCrvabZWNJ3umsdzgMX7+GNU+itoQ=;
-        b=XDV1Y3/y0MR5yEY2vrrOGFbEj11rzlwqspTbCmehdus5XwadHRbOGWV1/70wnQ9H9a
-         3a440s2KE1Br4uyRO74d1hG4byKJ0tuG+aGrARjhgrKvPr+l614r3wSCbw1KQptNMbsM
-         pVKCDDB9O7u8YQlO+Q909bydSpV9GjCx+stGuR/qvg8js8heAe3/FdYhO0KUr+JxRtsq
-         aLM/zSfmjaCikRj4FwWaxK/WC0m8tU5sbf768F5fIGz22KjCjovWz43kR1VXcEeQSgqX
-         jfuCL9eaRHoafrF51zZe3p1YLkmn+ZxjrjEAE8LnGMeLA0XutS99SW6zoObJ3h5cC2xz
-         /NrA==
+        d=klerks.biz; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=68nP5MH2l875uIt1yICx7RejsGLCy49bFHWv79Z222M=;
+        b=DhUIXrXBAPhOSGkgxVloqhmqXRCavp+39vbfpXN7i27gyhScNG22SoHXma561Hws+e
+         8ypQiPcCDyfOg4/jfEES9CTBDpC/iwHiQrtAmbAKs7BHhqt63n4G8WtAhrD69akrCPMy
+         KxfEMZc/loG06LEN5biUKILpEBM/ok6OBuaNg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nf/K/316EYp5JtSCrvabZWNJ3umsdzgMX7+GNU+itoQ=;
-        b=R9KtlNc7+6W0w5yPh9CwWTtq2KsVKtz4WuXW+6jcKQd1w350fOk+/qAXIOkcVY9TWA
-         eOV8MxfzS0pMH77SBtywzO/+L1SXJFOJLytyODEsUGqytLouMFFbRl+LWysihq+Ttr0o
-         NjBbwbM+jLTDCtXky2MbnIntm1OayoBVT0tfn0W06/2Ge2DhpReCYwiRxqrurjSIneTI
-         nrBeEqEEtc/wnhgc3mLyr9nV+4cRrxCfWb8NMoC2uAuDVEoPkIjz5wQ43/HijiIjjkTG
-         5FY5V68uPL14FM5d4zw2hYXm5D19KRCfCvZINkl0+a3yCIqKxjCecV55ycO5NHZzs0f3
-         J/Lw==
-X-Gm-Message-State: ANoB5pmdZiR3T+1Kku/0hiXVNhpn1jLIeddf4/3SmLKq7REApGCiigjQ
-        Hi4DqXLZQSYUQBTXNuvon6qi4/tzQAs=
-X-Google-Smtp-Source: AA0mqf5HOXKfpX2kRRNDQ+kLIKStAtRQa8SAd1Plp2nMEnpRvdERt/L8pv32DVLb1TgQYWevKDLoqg==
-X-Received: by 2002:a2e:868d:0:b0:279:e06a:bb45 with SMTP id l13-20020a2e868d000000b00279e06abb45mr542189lji.30.1670509763044;
-        Thu, 08 Dec 2022 06:29:23 -0800 (PST)
-Received: from osv.localdomain ([89.175.180.246])
-        by smtp.gmail.com with ESMTPSA id r6-20020a2e80c6000000b0026daf4fc0f7sm2298083ljg.92.2022.12.08.06.29.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Dec 2022 06:29:22 -0800 (PST)
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Alex Henrie <alexhenrie24@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        huang guanlong <gl041188@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/5] diff-merges: more features
-References: <20221127093721.31012-1-sorganov@gmail.com>
-        <kl6lilimepli.fsf@chooglen-macbookpro.roam.corp.google.com>
-Date:   Thu, 08 Dec 2022 17:29:21 +0300
-In-Reply-To: <kl6lilimepli.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
-        Choo's message of "Wed, 07 Dec 2022 15:55:21 -0800")
-Message-ID: <87tu26arzy.fsf@osv.gnss.ru>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=68nP5MH2l875uIt1yICx7RejsGLCy49bFHWv79Z222M=;
+        b=2SRZ9QO+ziX3I0l2HwL9yPdTen6wj+6BaceuEutqG4OyZA9YNhrfVlSNJYmQNGKf1b
+         ANFjjhAeD+A4Uf8tvS/zM/oZTNZx0RctrZvdal1K2xmexlu8G+BGUST5DQwHTtF8KgDP
+         KUM3csHkQoJFgXPYxyvvPlvqigVl673IbcM14P+Yis8wufyiTUIHo+rDrSh/HgqI2or9
+         DMtUPacOMJcHUHgIVoXf2g5mB6oMEq7NZSDA56wZG52j6rzrND27HE4BFajifcrg3cvh
+         53cK5CQKk+/5NFJ1leor+7cAiaU6dIFrE/C0NPqbCHQfw0EpWGTWXR+E6tLqVzL16VOS
+         wjxA==
+X-Gm-Message-State: ANoB5pkSxNEFyLZHAwJCBlxNgRVFxgP9gDcWEa9iykUBX83XXRGs2Di4
+        M5cq6pDKiYsDuZ/Ci1dsna383a40kUx9Xjpe9ojdy3QFVsxjzybgBEk=
+X-Google-Smtp-Source: AA0mqf6dyYVLT5+PN6mSdH+63+ryZFmThXr+uU77CjgNg0KXGn6gOgH+jfczxgjADS82b5JJ8P+Wpe/ZtPoyAGvbKY4=
+X-Received: by 2002:a17:907:591:b0:7c0:a997:2298 with SMTP id
+ vw17-20020a170907059100b007c0a9972298mr27254602ejb.430.1670509796511; Thu, 08
+ Dec 2022 06:29:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAPMMpoiN=Rj_z9VEJZ4EFhb8gBeqb6H7JhTUBbn-b-t-jHRVnA@mail.gmail.com>
+ <4dcad1f5-9ebd-d15a-b663-a3513ae1bcb8@github.com> <091329e0-9af3-b853-0ed3-edd10d2a2b72@jeffhostetler.com>
+In-Reply-To: <091329e0-9af3-b853-0ed3-edd10d2a2b72@jeffhostetler.com>
+From:   Tao Klerks <tao@klerks.biz>
+Date:   Thu, 8 Dec 2022 15:29:44 +0100
+Message-ID: <CAPMMpojW1mHmZ7_P=JpDZr2JjNxn-Rt_CP5VjtnMVJ6ZDFk36g@mail.gmail.com>
+Subject: Re: Auto packing the repository - foreground or background in Windows?
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+Thank you all. I will try to carry forward a patch with this change
+and a hint about the recommended maintenance approach for longer runs.
 
-> We covered this series in Review Club, thanks for coming Sergey! For
-> those who are interested, the notes are here:
-
-Thank you all guys for the review and for valuable discussion!
-
-[...]
-
-> During the discussion, it also appeared that this "modification of '-m'
-> semantics" refers to a patch that changed the default but got reverted
-> due to breaking legacy scripts. It would be extremely useful to include
-> a link to that previous patch and the discussion around its revert,
-> especially given the discussion about whether users actually need
-> '-diff-merges=hide' ([1] and elsewhere).
-
-The last time '-m' issue appeared on the list, it all started here:
-
-https://lore.kernel.org/git/CAMMLpeR-W35Qq6a343ifrxJ=mwBc_VcXZtVrBYDpJTySNBroFw@mail.gmail.com/
-
-In particular, the final patch and its revert is deeper down this tread:
-
-https://lore.kernel.org/git/20210520214703.27323-11-sorganov@gmail.com/#t
-
-and
-
-https://lore.kernel.org/git/YQyUM2uZdFBX8G0r@google.com/
-
-Where do you prefer these references to be put, in the cover letter, in
-the commit message, or in both places?
-
--- Sergey Organov
+On Tue, Dec 6, 2022 at 11:41 PM Jeff Hostetler <git@jeffhostetler.com> wrote:
+>
+>
+>
+> On 12/6/22 1:03 PM, Derrick Stolee wrote:
+> > On 12/1/2022 7:25 AM, Tao Klerks wrote:
+> >> But my *question* is: Does anyone know where I could/should look to
+> >> understand why the GC was happening in the foreground, even though the
+> >> message says it will run in the background?
+> >
+> > On Windows, Git's foreground process cannot complete without also
+> > killing the background process. I'm not sure on the concrete details,
+> > but the lack of a background "git gc --auto" here is deliberate for
+> > that platform.
+>
+> Here the GC code uses `daemonize()`.  On Posix this is a wrapper around
+> `fork()` where the parent exits and the child continues the computation
+> (without stdin/out).
+>
+> However, `daemonize()` just returns an ENOSYS on Windows, since Windows
+> doesn't have `fork()`.  The net result is that the foreground process
+> falls thru and does the actual work.
+>
+>
+> [...]
+> > Instead, the modern recommendation for repositories where "git gc --auto"
+> > would be slow is to run "git maintenance start" which will schedule
+> > background maintenance jobs with the Windows scheduler. Those processes
+> > are built to do updates that are non-invasive to concurrent foreground
+> > processes. It also sets config to avoid "git gc --auto" commands at the
+> > end of foreground Git processes.
+> >
+> > See [1] for more details.
+> >
+> > [1] https://git-scm.com/docs/git-maintenance
+>
+> It is possible to do the GC in the background on Windows (using other
+> techniques), but I don't think it is worth the bother now that we have
+> `git maintenance` to handle it.
+>
+> And yes, AEvar's suggested fix for printing the correct error message
+> looks helpful.
+>
+>
+> Jeff
