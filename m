@@ -2,183 +2,285 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A79BC4332F
-	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 15:54:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E30BC63703
+	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 16:18:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230151AbiLHPyt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Dec 2022 10:54:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41938 "EHLO
+        id S230035AbiLHQSW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Dec 2022 11:18:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60446 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230070AbiLHPyp (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2022 10:54:45 -0500
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD74A528B3
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 07:54:40 -0800 (PST)
-Received: by mail-yb1-xb36.google.com with SMTP id c140so2128289ybf.11
-        for <git@vger.kernel.org>; Thu, 08 Dec 2022 07:54:40 -0800 (PST)
+        with ESMTP id S229784AbiLHQSR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2022 11:18:17 -0500
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A245098967
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 08:18:16 -0800 (PST)
+Received: by mail-lf1-x12b.google.com with SMTP id d6so2770627lfs.10
+        for <git@vger.kernel.org>; Thu, 08 Dec 2022 08:18:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+sN4u0UYr8IrzpIuUEF5nrb94HTB12qvB9ZYUN2Lz8A=;
-        b=Z/EbqeXjIEjn7aVqtvsQ4gXYyRq0LNpJ+1nTrvXWi6aeLkGhsY+tFaF8tnSqxgqCVV
-         5k6Hrk+WwC9aKDeoVy613VsxEqbnUwvVZ5ZrGfnRezFUpLTHDrAciAdngeM8TyowzAIx
-         Ar0HwmNmymHMUBj2K4bsO/OxAU6l8vhj6Z54WZrM60LYmsNoMDkj9BM/2UJ+ETFM7p9A
-         dh1dPqpcrSFr9GWLxkf9WRohMDl7dXSiZ71hSQTf+GxIcNZYmza3z5v66XNTOk/8E8bi
-         jmKoWFxJP2+ACixDoxdRqD1X1mxy14ui/ewk8HCusAevJEpJV/L69/cjVXh1jFNTKQqm
-         X1gg==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=0ItozFJsernH/GsUZrgIWvdjdqICnEoRCY3dTq/HjZc=;
+        b=Fk3BYZzB7HHV0Uh9Xnx+zEPCijqC2u0FRPNeb7lzcgI5njr04x6fiQFCcbZ7887mOZ
+         Z2NJZ1wpWL8EpLRina9g9ZrFpZXTRnxkq172uG+bWnVp9zyPY5jLru9y3aMgPcc5iQOO
+         YITnd8vW9Ec2zYLQvhUNHm4XcFezyfOxWueygpD3RN5Bhxjwx8QehwPvzBFFPRDFABcQ
+         M0u7DlFhqL3YtYKZk+C7djj3kITd6oKAzcRU4roiqBPib6L1I5Wa6feledy0p3usDk2+
+         gRMRFqtAKJwUukTfIuf9HpW3BW5LrlzMcZ3epm1HaekVBJgwelG2tgFZ82uKVbJuQNMW
+         JzzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+sN4u0UYr8IrzpIuUEF5nrb94HTB12qvB9ZYUN2Lz8A=;
-        b=b76gkjPHrjXI4LQkVxOCGPCFUyZflMWz7mTHGVkxr1Pwx6TFFtRDOmTkNzJTTLJuPC
-         J99kNYMoasGmH9vHexkR/TW+iTkvLciI4D+GMSG9RwMTvFwb6M4yPgGLSrTH+Eo4Zfh/
-         RU/RLBV95DvfUGVZboo4ReTi4PjbgOXheNNLBKNTgt1fevumSvhVix4cZV/L2Wgze5Hi
-         I1/dWj4zWSxPelh2P275BuuQ0/l94PVmBfPnpBYBuq6Q2JRuNXzPgFU38pW+keMTYBPT
-         qClID1eboA9XPCrLVP2rXlnvpYSZz2DYSZtutJqp9xwXcx21JW4zrgFbA9z+KegUPrut
-         XN4Q==
-X-Gm-Message-State: ANoB5pnNedy1qVR+CyXqsNaST7SaQunZ3zgv1QaZq1ev6EvUhBICwsbG
-        ir8Eg6kOUIageopE4bl0HTm37isbphNXRFNmJsU=
-X-Google-Smtp-Source: AA0mqf7rhc1uwBnlIIkZPVzLysXJ5Y/1H+eal8c+3ocq9rZFc6viSIJhb3yAMrp3eOsEu2uTPCmG7G2zaPeLh5CBFe8=
-X-Received: by 2002:a25:8b85:0:b0:6dd:a4b9:442b with SMTP id
- j5-20020a258b85000000b006dda4b9442bmr92650824ybl.410.1670514879941; Thu, 08
- Dec 2022 07:54:39 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0ItozFJsernH/GsUZrgIWvdjdqICnEoRCY3dTq/HjZc=;
+        b=etgTwdPG3QlH1v5v8sYqTLdAN/0xUqKPm8TiuncBQiwAgvHmsAiYzeoG/VHcIBg4OH
+         cKCEdN0rxfeR7/g76oSjGpPHsikXUzXH/sEfIU4rlEVGX24ZMFvGOZAwH+o+7ib89yfj
+         wcPkRrD5r8osaCoz7r26Yhkd8iKYEwGCckM7IXtNAjYd3G8wmaqp+Poi+j9+2azOCTx+
+         HwuCITdKLb3xzJf4oh1rKsWIFUL0zfU3DY5vM51cpeW5bBNvq/IweUO2GxWGX0SWffzW
+         K16DrMU0NvkQfm6tKVQV9ABKNX92Hv1Yrxu65gG3Qf1m5ydGlx5djMk8Uj5p207xN3eB
+         tl1A==
+X-Gm-Message-State: ANoB5pli7cxYLei5RsdpyicLgbSoAEPTaJYt2C3cgtZRXlxQvL7lXM9S
+        h8NwzwlsqmCS6wx6ZOhphqShvrB/y5g=
+X-Google-Smtp-Source: AA0mqf6q789CEqm/hSzGyNXdH/HZ1YtUfSaSMCFbcNomS3nAmDW9PzD+H1eeJXKF0+AUH+PPL5dlHw==
+X-Received: by 2002:ac2:5a43:0:b0:4b5:90c5:281c with SMTP id r3-20020ac25a43000000b004b590c5281cmr722353lfn.19.1670516294244;
+        Thu, 08 Dec 2022 08:18:14 -0800 (PST)
+Received: from osv.localdomain ([89.175.180.246])
+        by smtp.gmail.com with ESMTPSA id i11-20020a196d0b000000b004a03d5c2140sm3404647lfc.136.2022.12.08.08.18.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Dec 2022 08:18:13 -0800 (PST)
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Glen Choo <chooglen@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.email>,
+        Elijah Newren <newren@gmail.com>,
+        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Alex Henrie <alexhenrie24@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        huang guanlong <gl041188@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/5] diff-merges: more features
+References: <20221127093721.31012-1-sorganov@gmail.com>
+        <kl6lilimepli.fsf@chooglen-macbookpro.roam.corp.google.com>
+Date:   Thu, 08 Dec 2022 19:18:12 +0300
+In-Reply-To: <kl6lilimepli.fsf@chooglen-macbookpro.roam.corp.google.com> (Glen
+        Choo's message of "Wed, 07 Dec 2022 15:55:21 -0800")
+Message-ID: <874ju5c1iz.fsf@osv.gnss.ru>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/27.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1441.git.1670436656379.gitgitgadget@gmail.com> <Y5EPVpb511wk5Uw/@nand.local>
-In-Reply-To: <Y5EPVpb511wk5Uw/@nand.local>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Thu, 8 Dec 2022 23:54:28 +0800
-Message-ID: <CAOLTT8Qb0euc5WLdi7v_3ovXT4jJ1-t8BO40jjdM4Rj0Ok8Etw@mail.gmail.com>
-Subject: Re: [PATCH] scalar: use verbose mode in clone
-To:     Taylor Blau <me@ttaylorr.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Taylor Blau <me@ttaylorr.com> =E4=BA=8E2022=E5=B9=B412=E6=9C=888=E6=97=A5=
-=E5=91=A8=E5=9B=9B 06:10=E5=86=99=E9=81=93=EF=BC=9A
->
-> On Wed, Dec 07, 2022 at 06:10:56PM +0000, ZheNing Hu via GitGitGadget wro=
-te:
-> > So add `[--verbose| -v]` to scalar clone, to enable
-> > fetch's output.
->
-> Seems reasonable.
->
-> > @@ -84,6 +84,11 @@ cloning. If the HEAD at the remote did not point at =
-any branch when
-> >       A sparse-checkout is initialized by default. This behavior can be
-> >       turned off via `--full-clone`.
-> >
-> > +-v::
-> > +--verbose::
-> > +     When scalar executes `git fetch`, `--quiet` is used by default to
-> > +     suppress the output of fetch, use verbose mode for cancel this.
-> > +
->
-> This description may be exposing a few too many implementation details
-> for our liking. E.g., scalar happens to use `git fetch`, but it might
-> not always. That is probably academic, but a more practical reason to do
-> some hiding here might just be that it's unnecessary detail to expose in
-> our documentation.
->
+Glen Choo <chooglen@google.com> writes:
 
-Hmmm. There are two steps to downloading data from scalar clone:
-the first step is to let "git fetch partial clone"  to  download commits,
-trees, tags, and the second step is download the blobs corresponding
-to the top-level files of the repository during git checkout. So I'm not su=
-re
-if I should mention "fetch" here, since the progress bar for the "checkout"
-step is able to be displayed.
+> We covered this series in Review Club, thanks for coming Sergey! For
+> those who are interested, the notes are here:
+>
+>   https://docs.google.com/document/d/14L8BAumGTpsXpjDY8VzZ4rRtpAjuGrFSRqn3stCuS_w/edit?usp=sharing
+>
+> and reviewers will send feedback to the list separately anyway. I mostly
+> had comments on the design, so I'll leave most of my comments here.
+>
+> Commenting on the cover letter as a whole, on first read, it wasn't
+> obvious to me what this series was trying to achieve because the CL
+> presents the 5 patches individually instead of a cohesive story. From my
+> understanding, the story is as follows: we want '-m' (enable
+> diff-merges) to also imply '-p', but we can't just change the default
+> behavior, so we do the following instead:
+>
+> - Add a config option that gives the behavior that we want (2/5).
+> - Deprecate '-m' by giving '--diff-merges=on;hide' as a synonym and
+>   encouraging users to use that instead (1,4,5/5).
 
-> Perhaps something like:
->
->     -v::
->     --verbose::
->      Enable more verbose output when cloning a repository.
->
+Well, very close, but not exactly. I'd rather say:
 
-Just mentioning "clone" is fine... But I'm not sure if users will be
-confused, why they will "more verbose" instead of two options
-"full verbose" or "not verbose".
+1. Provide exact semantics of '-m' trough --diff-merges UI by
+   introducing 'hide' option, after which '--diff-merges=on,hide' and
+   '-m' have exactly the same behavior.
 
-> Or something simple like that.
->
-> >  List
-> >  ~~~~
-> >
-> > diff --git a/scalar.c b/scalar.c
-> > index 6c52243cdf1..b1d4504d136 100644
-> > --- a/scalar.c
-> > +++ b/scalar.c
-> > @@ -404,7 +404,7 @@ void load_builtin_commands(const char *prefix, stru=
-ct cmdnames *cmds)
-> >  static int cmd_clone(int argc, const char **argv)
-> >  {
-> >       const char *branch =3D NULL;
-> > -     int full_clone =3D 0, single_branch =3D 0;
-> > +     int full_clone =3D 0, single_branch =3D 0, verbosity =3D 0;
-> >       struct option clone_options[] =3D {
-> >               OPT_STRING('b', "branch", &branch, N_("<branch>"),
-> >                          N_("branch to checkout after clone")),
-> > @@ -413,6 +413,7 @@ static int cmd_clone(int argc, const char **argv)
-> >               OPT_BOOL(0, "single-branch", &single_branch,
-> >                        N_("only download metadata for the branch that w=
-ill "
-> >                           "be checked out")),
-> > +             OPT__VERBOSITY(&verbosity),
-> >               OPT_END(),
-> >       };
-> >       const char * const clone_usage[] =3D {
->
-> Looking good.
->
-> > @@ -499,7 +500,9 @@ static int cmd_clone(int argc, const char **argv)
-> >       if (set_recommended_config(0))
-> >               return error(_("could not configure '%s'"), dir);
-> >
-> > -     if ((res =3D run_git("fetch", "--quiet", "origin", NULL))) {
-> > +     if ((res =3D run_git("fetch", "origin",
-> > +                        verbosity ? NULL : "--quiet",
-> > +                        NULL))) {
->
-> Hmmph. This and below are a little strange in that they will end up
-> calling:
->
->     run_git("fetch", "origin", NULL, NULL);
->
-> when running without `--verbose`. `run_git()` will still do the right
-> thing and stop reading its arguments after the first NULL that it sees.
-> So I doubt that it's a huge deal in practice, but felt worth calling out
-> nonetheless.
->
+2. Add a config option that gives the new behavior we want to '-m': to
+   rather be a synonym for '--diff-merges=on[,hide] -p". (Please notice
+   that 'hide' is not needed here as it's immediately canceled by '-p'.)
 
-The reason I'm doing this is seeing that toggle_maintenance() already
-does this, and it's not buggy, but it's really inelegant.
+So, essentially, after (1) is there, the config option turns '-m'
+meaning from default '--diff-merges=on,hide' to desired
+'--diff-merges=on -p'.
 
-My personal understanding is that the original intention of run_git()
-is to help developers simply put git parameters into the variable parameter=
-s
-of the function, and run_git() has no good way to understand null values.
-Here we put it in run_git () The last is an act of desperation.
+Please also notice that at this point we may instead decide to just switch
+'-m' meaning to new semantics, either without config at all, or with
+config that'd rather restore previous semantics. In fact, the primary
+reason why previously such patch has been reverted was absence of (1),
+and so with (2) maybe I was just overly cautious.
 
-> Is there an opportunity to easily test this new code?
+> Patch 3/5 is completely separate. There was some resistance to it during
+> Review Club, but if we still want this, it might be worth splitting off
+> into its own series so that we can keep the discussions separate.
+
+OK, I'll cut it off for now.
+
 >
+> During the discussion, it also appeared that this "modification of '-m'
+> semantics" refers to a patch that changed the default but got reverted
+> due to breaking legacy scripts. It would be extremely useful to include
+> a link to that previous patch and the discussion around its revert,
+> especially given the discussion about whether users actually need
+> '-diff-merges=hide' ([1] and elsewhere).
 
-It's a bit cumbersome, but I will try.
+Yep, please see references I've sent in my previous answer to this
+message.
 
-> Thanks,
-> Taylor
+>
+> [1] https://lore.kernel.org/git/CABPp-BHaPpQdO-uBT6ENHAM1Y-c=SBxktH-S_BTtxJvfd1qSpw@mail.gmail.com/
+>
+> Sergey Organov <sorganov@gmail.com> writes:
+>
+>> 1. --diff-merges=[no]-hide
+>>
+>> The set of diff-merges options happened to be incomplete, and failed
+>> to implement exact semantics of -m option that hides output of diffs
+>> for merge commits unless -p option is active as well.
+>>
+>> The new "hide" option fixes this issue, so that now
+>>
+>>   --diff-merges=on --diff-merges=hide
+>>
+>> combo is the exact synonym for -m.
+>>
+>> The log.diffMerges configuration also accepts "hide" and "no-hide"
+>> values, and governs the default value for the hide bit. The
+>> configuration behaves as if "--diff-merges=[no-]hide" is inserted
+>> first in the command-line.
+>
+> I had the same concerns as Elijah, which is that this behavior is
+> probably clearer as a separate flag (like "--hide-diff-merges"), which
+> is more consistent with how '--diff-options' is used today, which means
+> that:
+>
+> a) it is easier to explain to users
+> b) the implementation is simpler (I'll comment on Patch 1 code
+>    separately)
+> c) it makes Patch 4 obsolete
+
+I'd postpone implementation/design discussion till we get to agreement
+of the need for this option in the first place.
+
+> But I'm not convinced that we actually want this behavior at all. I
+> don't see why a user would use a flag that says "do nothing unless
+> other flags are given". don't find the 'alias use case' compelling,
+> because the user still has to choose whether to pass '-p', so at that
+> point they could just add a different alias.
+
+If one travels back the history, they will find that originally all -m,
+-c, and --cc were behaving exactly this way: "do nothing, unless diffs
+are actually requested", i.e. they specified only diff format to be used
+once requested, and did not request the output themselves. I prefer to
+stay on the safe side, and assume that such behavior is still useful,
+even though -c/--cc turned to imply '-p' eventually, as doing the same
+to '-m' caused so much desire and resistance simultaneously.
+
+OTOH, --diff-merges=<format> does two things: specifies the format and
+requests the output for merge commits. It could have been design
+mistake, even though it has been discussed at the time of introduction,
+but now the only way to get another behavior is to turn off one of the
+actions they do: turn off requesting the actual output for merge
+commits, and that's what proposed 'hide' means.
+
+> I haven't dug through the code/ML to figure out whether '-m' requiring
+> '-p' was an intentional feature or not, but if you could find the old
+> thread where you changed the default (and it got reverted), that would
+> help the discussion a lot :)
+
+Yep, I gave the links in my first answer to this message.
+
+>
+>> 2. log.diffMerges-m-imply-p
+>>
+>> Historically, '-m' doesn't imply '-p' whereas similar '-c' and '--cc'
+>> options do. Simply fixing this inconsistency by unconditional
+>> modification of '-m' semantics appeared to be a bad idea, as it broke
+>> some legacy scripts/aliases. This patch rather provides configuration
+>> variable to tweak '-m' behavior accordingly.
+>
+> I thought that Junio's suggestion to implement a flag that acts like
+> '-m' with '-p' [2] was quite a good one (maybe '-M' or
+> '--diff-merges=show'), since I think that very few users would actually
+> set this config, but the ones that would actually use it can just
+> replace '-m' with '-M'.
+
+Introducing new short convenience option(s) is out of scope of these
+series, and suggested --diff-merges=show, as I see it, is essentially
+"--diff-merges=on -p" that I find hard to explain inside the
+'--diff-merges=' context which name suggests it affects merge commits
+only.
+
+That said, saying: "we have slightly broken '-m' that we refrain to fix,
+so let's introduce '-M' instead of fixing '-m'" does not sound very
+convincing either.
+
+>
+> [2] https://lore.kernel.org/git/xmqqfse37c0n.fsf@gitster.g/
+>
+>> 3. log.diffMergesForce
+>>
+>> Force specific log format for -c, --cc, and --remerge-diff options
+>> instead of their respective formats. The override is useful when some
+>> external tool hard-codes diff for merges format option.
+>
+> This might be better off as its own series, since the change isn't
+> related to '-m',
+
+Yep, I'm sorry to mix it into the series, -- the only excuse is that it
+looked very relevant to me when I did it :)
+
+> but I'm worried about the precedent that this sets.
+> To my knowledge, CLI options always overwrite config, but this is the
+> opposite. I would prefer not to do this, especially if the use case is
+> to work around an external tool (since it is arguably the tool that is
+> broken).
+
+The tool was only an initial motivation for the patch. From following a
+few discussions on the list I got feeling that every person has their
+own preference for --diff-merges format, and rarely wants to see
+anything else. This config essentially gives them a way to say "please
+use my preferred format everywhere, unless I explicitly say otherwise",
+in a centralized manner.
+
+>
+>> 5. Issue warning for lone '-m'.
+>>
+>> Lone '-m' is in use by scripts/aliases that aim at enabling diff
+>> output for merge commits, but only if '-p' is then specified as well.
+>>
+>> As '-m' may now be configured to imply '-p' (using
+>> 'log.diffMerges-m-imply-p'), issue warning if lone '-m' is specified,
+>> and suggest to instead use '--diff-merges=on,hide' that does not
+>> depend on user configuration.
+>>
+>> This is expected to give a provision for enabling
+>> log.diffMerges-m-imply-p by default in the future.
+>
+> Since '-m' without '-p' is a mistake in most cases, I wonder if we
+> should just emit this warning today (maybe via the advise() API). Even
+> if we don't keep '--diff-options=hide', deprecating lone '-m' and giving
+> a warning seems good to keep.
+
+I'd tend to rather not.
+
+Actually, as far as I'm aware, the only actual use that has been
+detected was "--fist-parent -m", and that use case was exactly what you
+guys don't find useful: specify default format for merge commits. In
+this particular case it is the diff to the first parent, and dates back
+to the days before --diff-merges, when using history traversal option
+--first-parent was the only way to get diffs with respect to the first
+parent for merges.
+
+Maybe we should instead flag the "--first-parent -m" as a warning, as
+producing a warning for lone "-m" without these patches is effectively
+getting users out of using lone "-m" instead of fixing the latter.
+
+I rather see the bright future as using "-m" all the time, as it's now
+extremely configurable.
 
 Thanks,
-ZheNing Hu
+-- 
+Sergey Organov
