@@ -2,140 +2,188 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A5111C4708D
-	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 00:07:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 76A41C4708E
+	for <git@archiver.kernel.org>; Thu,  8 Dec 2022 00:25:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230230AbiLHAHD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 7 Dec 2022 19:07:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38542 "EHLO
+        id S229699AbiLHAZG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 7 Dec 2022 19:25:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230033AbiLHAHB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 7 Dec 2022 19:07:01 -0500
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2DE6633F
-        for <git@vger.kernel.org>; Wed,  7 Dec 2022 16:07:00 -0800 (PST)
-Received: by mail-pl1-x64a.google.com with SMTP id u6-20020a170903124600b00188cd4769bcso20518628plh.0
-        for <git@vger.kernel.org>; Wed, 07 Dec 2022 16:07:00 -0800 (PST)
+        with ESMTP id S229523AbiLHAZF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 7 Dec 2022 19:25:05 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6E2288B45
+        for <git@vger.kernel.org>; Wed,  7 Dec 2022 16:25:03 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id n20so270217ejh.0
+        for <git@vger.kernel.org>; Wed, 07 Dec 2022 16:25:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=USGIckYu294BvBuJPWGz5yfwvA3JeYnEwnZOxPLSDmc=;
-        b=MKtZl7p98rLvL5ci4JBmTKnFJWvTXzSjYztqijA1NZN3EoGMofbLruSDKrUZx/Q4QW
-         SRULJzcTboY1oq/Nikmd3pA2EtB0Jel+VmvGH/ZdXENDf8kQRRE3SeTRIJYbPhRz9NTG
-         95Ui98Cn7oxp/uTNH4n7P2QISqc/7P8MjysQ5UP9hosnLA1q2xJ6vQh5zFfdBSq/cbt1
-         FVK49zaUGCatPYN5qmS9wqQyLis3fmbpBmA1LZTmZRFPvcH7i/22gSNJxvOtmbI16Tdf
-         HrLxEz20ShQQvuX0pv/UKW0ooE0q2QywxoDYXUGGvaPesIqvSUwF8xUx16DOMfhIG5NW
-         1qDg==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=tKoEeVneitihZUqk2PqvLLNMZ5DwP8Sc9r0OSvEafm4=;
+        b=agI5o2vXBjroTXifOp9r6+mCKQqZ7rBKf6ssxou5czJqaY9EUUrVoH4IIcwsYdRP39
+         AYgLgsCdox82k8K1A1uie4VKEJtnj7hy/mUBnZZxOptsegou05y+pdfbih5gHbmE9ChJ
+         BAXedJxBXIk+DNICcm5kOASWG4mTY+PPwcveFEeXKxO8gNOcpF+lrFuZqGJqTaZOeA5p
+         wYZvkb+3VBOrNVlt1WF0bdRS/NgDd/1l+KDGfCvPtrWznaDa/YkMEwdeaoPPpOoRFoJD
+         UDQ5+5L8JX9QOHU96rwPGA8GqLqWdvVD8rqk19bjooNYJ9AsYXTRjSoHAK8/g8MIuyL4
+         R7Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=USGIckYu294BvBuJPWGz5yfwvA3JeYnEwnZOxPLSDmc=;
-        b=GZk/m7frZsn9mMhXRLLypoGBVl3xa1BEveCRJK7AQezCgQiEGQSCrUu9XSBb9dmJT1
-         wnd2TkY/DjbSGaP7y6gM+WVUrQmvf08EHuoeUU9jDCXQmaBqfSft78qsuKg4kX9TBulp
-         OG619GR3jNHebIJxmYL4TgbnLiDfJCLyL3y9Oi2vXw8Ro9dXrso9DvZi/B1J4OhUVjjy
-         A0GKJbo8+Q17goqG+J+Lyw/eyyPq2Zt/efZpa1YBcIWNyy9GXIIrHZZZz9Vq7i1PoYhu
-         GNlt+Am6uRTcmgp85NJ3Y3RuguBMFILJPG8rwlssl+O1JqrOVFCWNP8Ma33U8wEZrZMA
-         H76w==
-X-Gm-Message-State: ANoB5pkU2lgg+RkoXngLNR2O0LdcOmTF+7PH4fSHSQCzCnbLJl9yStmp
-        dPku34/rLP3wmat9EfGh0XDF8NwMTnEAtg==
-X-Google-Smtp-Source: AA0mqf7I8ZpUgMTNUkvzvkebQbVygybsfxiMM4iKVM/czOAujI0Sdwuf0+y1Nf1a7FfLRxrbJuclj3J9S+f0Yw==
-X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
- (user=chooglen job=sendgmr) by 2002:a05:6a00:4308:b0:575:649c:e9e3 with SMTP
- id cb8-20020a056a00430800b00575649ce9e3mr44064786pfb.48.1670458020394; Wed,
- 07 Dec 2022 16:07:00 -0800 (PST)
-Date:   Wed, 07 Dec 2022 16:06:58 -0800
-In-Reply-To: <20221127093721.31012-2-sorganov@gmail.com>
-Mime-Version: 1.0
-References: <20221127093721.31012-1-sorganov@gmail.com> <20221127093721.31012-2-sorganov@gmail.com>
-Message-ID: <kl6lfsdqep25.fsf@chooglen-macbookpro.roam.corp.google.com>
-Subject: Re: [PATCH 1/5] diff-merges: implement [no-]hide option and
- log.diffMergesHide config
-From:   Glen Choo <chooglen@google.com>
-To:     Sergey Organov <sorganov@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        huang guanlong <gl041188@gmail.com>, git@vger.kernel.org,
-        Sergey Organov <sorganov@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tKoEeVneitihZUqk2PqvLLNMZ5DwP8Sc9r0OSvEafm4=;
+        b=Ob6BrYa5kW9/1/RXvlKJSyDlwo9H4fu2ccrUB8ryaJ3qQE7A042UZEXKAd14FzNVJD
+         y27WlwooqJiaaYXGM3gbrgCoaGM70z3i5mPRPmz0w6JVBuyW50QotuY8xRmc4yTR+KHo
+         wjgMhIF2zd8KiZiOv+m/SNOqV8KtAsUBE2F31NuBqHyHLYbGMdNF+BKbfyXC+koupwvF
+         Ru60KWNgi3UGv6rPsMaZKPQ5H9zbUELRzrPYV6H8i3Qm2U39vgO+yVef8ZKLEjoxUqkF
+         pv4ASwCsyAMJ64vS/LTkVVaFwsJLg04Y0kYPwPHyuP3TtPwZhisTwOCzfu7i6VZfMU/d
+         rQmg==
+X-Gm-Message-State: ANoB5pnaxqH/ope6FPI5xqc2LMXeRzMw19kyfOadvOy9MtDvh1roY04q
+        A5JqPeWFoQZj89E9SQvrF9I=
+X-Google-Smtp-Source: AA0mqf6vlAkFETmCGW2aIlB8gypPY0K8cfvRqJZQFFA9Tvz96yeeLY1ZBZkpHN3iSYmLz8EoShjWlQ==
+X-Received: by 2002:a17:906:84d:b0:7bb:7e1a:f770 with SMTP id f13-20020a170906084d00b007bb7e1af770mr863114ejd.35.1670459102115;
+        Wed, 07 Dec 2022 16:25:02 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id gg19-20020a170906e29300b007c0f5d6f754sm4062071ejb.79.2022.12.07.16.25.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Dec 2022 16:25:01 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1p34ij-004j8R-0Q;
+        Thu, 08 Dec 2022 01:25:01 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Victoria Dye <vdye@github.com>,
+        Eric Sunshine <ericsunshine@gmail.com>
+Subject: Re: [PATCH v6 00/15] cmake: document, fix on *nix, add CI
+Date:   Thu, 08 Dec 2022 01:06:07 +0100
+References: <cover-v5-00.15-00000000000-20221202T110947Z-avarab@gmail.com>
+ <cover-v6-00.15-00000000000-20221206T001617Z-avarab@gmail.com>
+ <b56d6f29-b22f-f64a-82b3-e7217c0e720d@dunelm.org.uk>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <b56d6f29-b22f-f64a-82b3-e7217c0e720d@dunelm.org.uk>
+Message-ID: <221208.865yem91ya.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
 
-> @@ -49,10 +49,11 @@ ifdef::git-log[]
->  --diff-merges=m:::
->  -m:::
->  	This option makes diff output for merge commits to be shown in
-> -	the default format. `-m` will produce the output only if `-p`
-> -	is given as well. The default format could be changed using
-> +	the default format. The default format could be changed using
->  	`log.diffMerges` configuration parameter, which default value
->  	is `separate`.
-> ++
-> +	`-m` is a shortcut for '--diff-merges=on --diff-merges=hide'
->  +
+On Wed, Dec 07 2022, Phillip Wood wrote:
 
-I found this description difficult to parse, since
+> Hi =C3=86var
+>
+> On 06/12/2022 02:08, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> This topic gets our tests from passing ~80% with ctest on *nix to
+>> passing 100%.
+>> See passing CI job for "cmake + ctest" on Ubuntu at:
+>> https://github.com/avar/git/actions/runs/3625189647
+>> See
+>> https://lore.kernel.org/git/cover-v5-00.15-00000000000-20221202T110947Z-=
+avarab@gmail.com/
+>> for the v5.
+>> Changes since v5:
+>> * Typo/grammar etc. fixes noted by Eric.
+>> * Phillip reported the "chmod" fallback no working on Windows. I
+>>    couldn't reproduce that, but running it was always redundant there
+>>    we'll now skip doing that on Windows.
+>
+> I suspect the issue is that "chmod" is not in %path% (i.e. $PATH in
+> posix shell speak) when CMake is run from visual studio (the mingw
+> stuff is only available when running "sh" by default to prevent name
+> clashes with the windows find command etc.) but is added to $PATH in
+> the CI after installing the git-for-windows sdk.
 
-a) it wasn't clear that multiple "--diff-merges" would all be respected
-b) I had to read the --diff-merges=hide documentation to understand what
-   this means
+Maybe, presumably the "sh" then sets the $PATH, because we do run
+shellscripts at the top-level that expect to find the binutils,
+e.g. "sed" and the like, which presumably are in the same location as
+"chmod".
 
-Keeping the plain english description would help, something like:
+But in any case this v6 avoids the issue entirely.
 
-  `-m` only produces the output if `-p` is also given, i.e. it is a
-  shortcut for '--diff-merges=on --diff-merges=hide'.
+>> * Adjust 15/15 to fold into an existing "case" statement, rather than
+>>    adding a new "if" statement.
+>> For this v6 I experimented with changing the "win+VS build|test" job
+>> build in "contrib/buildsystems/out" rather than at the top-level[1]. I
+>> left those changes out here, but doing so makes that a lot simpler, as
+>> it no longer needs to rely on the Makefile to tell it what cmake might
+>> have built.
+>
+> Long term I think that is a good direction for the CI job. The CI job
+> is not a good simulation of running CMake from Visual Studio.
 
-> diff --git a/builtin/log.c b/builtin/log.c
-> index 56e2d95e869d..e031021e53b2 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -581,6 +581,8 @@ static int git_log_config(const char *var, const char *value, void *cb)
->  	}
->  	if (!strcmp(var, "log.diffmerges"))
->  		return diff_merges_config(value);
-> +	if (!strcmp(var, "log.diffmergeshide"))
-> +		return diff_merges_hide_config(git_config_bool(var, value));
->  	if (!strcmp(var, "log.showroot")) {
->  		default_show_root = git_config_bool(var, value);
->  		return 0;
+Yes, I just didn't want to make this series even larger, but I can
+submit that after.
 
-Since we have log.diffmergeshide that is different from log.diffmerges,
-it seems like it would be more consistent to have '--diff-merges-hide'
-as a separate flag.
+> That does not normally matter but has been a problem for this
+> series. Ideally it would run the test with CTest as well, I'm not sure
+> how much work that would be.
 
-> @@ -69,6 +87,10 @@ static diff_merges_setup_func_t func_by_opt(const char *optarg)
->  {
->  	if (!strcmp(optarg, "off") || !strcmp(optarg, "none"))
->  		return set_none;
-> +	if (!strcmp(optarg, "hide"))
-> +		return set_hide;
-> +	if (!strcmp(optarg, "no-hide"))
-> +		return set_no_hide;
->  	if (!strcmp(optarg, "1") || !strcmp(optarg, "first-parent"))
->  		return set_first_parent;
->  	if (!strcmp(optarg, "separate"))
-> @@ -105,7 +127,19 @@ int diff_merges_config(const char *value)
->  	if (!func)
->  		return -1;
->  
-> -	set_to_default = func;
-> +	if (func == set_hide)
-> +		hide = 1;
-> +	else if (func == set_no_hide)
-> +		hide = 0;
-> +	else
-> +		set_to_default = func;
-> +
-> +	return 0;
-> +}
+In principle trivial, I did try, but it seems the Windows image doesn't
+have "ctest", but does have "cmake" (unlike the Ubuntu image).
 
-The code is also simpler if we took a separate CLI flag, e.g. we could
-get rid of this special casing of "(func == X)".
+(Or come to think of it, maybe it does and I tried "ctest" and not
+"ctest.exe". I can't remember)
+
+Other than that it should just work, and the "linux-cmake-ctest" CI job
+added by this series already does a run with "ctest".
+
+>> But even without including that here, those changes should give more
+>> confidence in these changes, i.e. they show that our CI's "msbuild"
+>> doesn't require the "cmake" to build things at the top-level.
+>> 1. https://github.com/avar/git/tree/avar/cmake-test-path-no-make-for-win=
+dows-ci
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (15):
+>>    cmake: don't invoke msgfmt with --statistics
+>>    cmake: use "-S" and "-B" to specify source and build directories
+>>    cmake: update instructions for portable CMakeLists.txt
+>>    cmake: don't copy chainlint.pl to build directory
+>>    cmake: chmod +x the bin-wrappers/* & SCRIPT_{SH,PERL} & git-p4
+>>    cmake & test-lib.sh: add a $GIT_SOURCE_DIR variable
+>>    cmake: set "USE_LIBPCRE2" in "GIT-BUILD-OPTIONS" for test-lib.sh
+>>    Makefile + test-lib.sh: don't prefer cmake-built to make-built git
+>
+> As far as I can see this changes test-lib.sh to prefer the make-built
+> git if it exists even after running cmake and ctest. Ideally we'd test=20
+> the most recent build.
+
+Ideally, but as summarized in the v5 CL this already isn't the case on
+"master". I.e. you can e.g. build with cmake, then "make git", then your
+tests will use the cmake (older) git, not your newly built one with
+"make".
+
+I think the only sane state of affairs here is what this series changes
+it to.
+
+If we have a top-level "git" we should always prefer it, as "make" is
+our primary build system, and it would be impractical to plug all the
+gaps and intercept the "latest git" in all places.
+
+But more importantly, isn't this concern entirely academic?
+
+We can imagine scenarios where you build with both, but the VS users
+that are the primary audience of the cmake recipe aren't going to also
+build with "make", they're just building with "cmake" and "msbuild".
+
+So I don't think this will impact anyone in practice.
+
+Even you have both a "make" and "cmake" build in play the "make test"
+and "ctest" will always select the "make" and "cmake" built one,
+respectively.
+
+The only case where we need to pick one is if you run a test manually by
+cd-ing to "t" and invoking a shellscript.
+
+You also brought up a concern about multiple builds in
+contrib/buildsystems/ in a previous iteration. With the way this series
+leaves it that'll actually work in some sensible way. I.e. your "ctest"
+run for a "prod" build run won't switch to a new git that you built
+midway through the run, as it would on "master".
+
