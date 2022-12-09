@@ -2,138 +2,174 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 47049C4332F
-	for <git@archiver.kernel.org>; Fri,  9 Dec 2022 13:52:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75354C4332F
+	for <git@archiver.kernel.org>; Fri,  9 Dec 2022 14:08:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229783AbiLINwv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Dec 2022 08:52:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53490 "EHLO
+        id S230128AbiLIOIl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Dec 2022 09:08:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229777AbiLINwu (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Dec 2022 08:52:50 -0500
+        with ESMTP id S230025AbiLIOII (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Dec 2022 09:08:08 -0500
 Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3087CAE63
-        for <git@vger.kernel.org>; Fri,  9 Dec 2022 05:52:49 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id vp12so11626321ejc.8
-        for <git@vger.kernel.org>; Fri, 09 Dec 2022 05:52:49 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1C3D7F894
+        for <git@vger.kernel.org>; Fri,  9 Dec 2022 06:06:11 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id fc4so11672252ejc.12
+        for <git@vger.kernel.org>; Fri, 09 Dec 2022 06:06:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=KbYFk2rhIbIXn4ruJgaj00aBuLhWwPtlkpTtF8PpeeU=;
-        b=MdFv08r51/WZ5ZEJWZTVib+ze7n1eoUEKE5713+WqpVU5fkuH9XYu1azBIcJwERT7P
-         suAYfbv5YDHM9EVLhgtSBf8etogj8l/1a6P74j4ETBHBEOvaKh17zkiMT3k4ddy2CWgx
-         WOzN0dP3zF4Z+8kYWgzqji4JvyXiMOCV4X0V4GszxVaNZe7l2wygqj0pgnbAdsw1RQtT
-         P1Ru0tc4LcXt0VkddvIlbKSMIFvYh6Zf9p95m1UhPnNH09qFl1N/NObv7cjfFuqYUK8q
-         gX/Wsr5Ze+yoGFXGzMieKdYw9aBkXZPlPR9T59flJCgNcz+Wlm0vo3bAMZBpJiuc9d4s
-         03ig==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=O2UVmn2AXu+jpnpCGVHyzlzUQvbvWV9ZX3bK5oc+M50=;
+        b=OZHxWSHL0cINUZvpbr7GwyOZpfPXJkJXcFJ4MVVkF3k/dYhr4oXMYZ/lMJ3sXiMXrA
+         B6lyKXXVdOmicTByrsQdF7EzYDDo8FiSoIVJaZtFU6RSaa6GwZsJZxTfADtEWRa+RLIf
+         hVI6fj0ogkNsKwiaSTsG8k4VwuYAY8w7yr+17HPz+xsaRraPPIxdZySE1oqzEoFknIgK
+         atz2t/5UM75r8YS31q9zciX1AY6BmQMlRJOuzXR6HpyEq8u//ugk+R1xHOWG/Yuvv2L/
+         sBh0i73NxCbWmJBmVFPSqf/a69dDIDMoJoWhh8SnlZh03WFzLLl49qOaaUjJeIiRvD91
+         YxAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KbYFk2rhIbIXn4ruJgaj00aBuLhWwPtlkpTtF8PpeeU=;
-        b=v7DjoNxhyX6ct55R8J+Ibhd/4hYx6ePhXcvdTzEhvBJtGyUuAX3Iu+4AgnGyHjTF9P
-         iuT5/atEM0a0jPqtE+nUnIHEfN/OQ05wfZb1qAbO7Smjm1k3MSxw87Ey6Bx356Nimm5d
-         09tp4Ym36KoLgfv+nwm/GbRQkq4pPJ3NWGQbs+82wysNolmXz3Z2wjN6GTkz4HMFyTyw
-         LZWTcCQuBPK1eHfqcBz3LzcUHgPy8HkGryCsu8EmVMCwiICb1aoBDxeIbSKnZtCU3CCA
-         r9Bxn3qttjT42Qw9AQRSNkazeqxAP/Id8kJErPjpsU3+TZMa9c5S4gaUg/olPC/HuuuK
-         dHCA==
-X-Gm-Message-State: ANoB5pnpUnuI1VGoJn7qZK4RxTV8/919NCtIXClAMSbgNdmAbs0QEi+L
-        F16sDErAZm4Uw0CdqU+CAk8=
-X-Google-Smtp-Source: AA0mqf6xAaYuJLidZe5GOkGsr0MWd/oNIt1dk2QYxvLxPat9gVyPOfHK+lUr2eH79bTCRSRt7Ki5ow==
-X-Received: by 2002:a17:906:298c:b0:7c1:9eb:845b with SMTP id x12-20020a170906298c00b007c109eb845bmr5084686eje.16.1670593967513;
-        Fri, 09 Dec 2022 05:52:47 -0800 (PST)
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=O2UVmn2AXu+jpnpCGVHyzlzUQvbvWV9ZX3bK5oc+M50=;
+        b=LN4LAJwtjh/rZ+PPkSuBPklXrD2TkORF+JyUApLOKnXqZwmIanvQE7/mLxFLx6rt8l
+         Z52VIBdTkOL8+FOFLD7DNYcRL1xx6DhL6q2k3sPYiT1IhGMNbvH9AeXh6WvKJNlQrD8d
+         4Mn2C4xVINY1V+gdQGrMqX/59fDfMSwxMWzWf7Ti6ZdwBBQraeAruXCJGwT98fTIwF5n
+         ceE8tJncBiU7kciVHjMoCzjUALNODXh0GXQOmUTkmb105l3bUoz3MspOTCp+a/7GfxDq
+         +hWfyBTSXM/wlUkYAoEDwSKMKjSaKoNdgqtmHOPVzTgFihm6CNqomi9UoCbCvIlOrJoi
+         t0YA==
+X-Gm-Message-State: ANoB5pkd4+2HuMHg19dHDwrTdnrrJ/uncoi/nPpExb7KM9yCbpRa8q3Z
+        FU/J79M+O+OxZzUb/zmoChw=
+X-Google-Smtp-Source: AA0mqf6i30vTD6IKzF6M4WcBQMLoi4/DovyWBdYKEzVgbOahdUOugdiOkzTAzOcwO4M6uSthDwbS0g==
+X-Received: by 2002:a17:906:844:b0:7ad:fd3e:8fd4 with SMTP id f4-20020a170906084400b007adfd3e8fd4mr4531607ejd.69.1670594767366;
+        Fri, 09 Dec 2022 06:06:07 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id v9-20020a170906292900b007c0aefd9339sm588845ejd.175.2022.12.09.05.52.46
+        by smtp.gmail.com with ESMTPSA id v25-20020a17090606d900b0073dc5bb7c32sm604900ejb.64.2022.12.09.06.06.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Dec 2022 05:52:46 -0800 (PST)
+        Fri, 09 Dec 2022 06:06:06 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1p3dnx-0057Fs-1V;
-        Fri, 09 Dec 2022 14:52:45 +0100
+        id 1p3e0q-0057lw-1s;
+        Fri, 09 Dec 2022 15:06:04 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        Michal =?utf-8?Q?Such=C3=A1nek?= <msuchanek@suse.de>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        johncai86@gmail.com, Taylor Blau <me@ttaylorr.com>
-Subject: Re: Question: How to execute git-gc correctly on the git server
-Date:   Fri, 09 Dec 2022 14:48:14 +0100
-References: <CAOLTT8Tt3jW2yvm6BRU3yG+EvW1WG9wWFq6PuOcaHNNLQAaGjg@mail.gmail.com>
- <221208.86a63y9309.gmgdl@evledraar.gmail.com>
- <20221208011631.GH28810@kitsune.suse.cz>
- <Y5GLsZgmrxbBtLqo@coredump.intra.peff.net>
- <20221209004918.GI28810@kitsune.suse.cz>
- <Y5KRQMcUlepwNlor@coredump.intra.peff.net>
- <CAOLTT8SR6JWX6mRLbyq4keb4JCfJP6Vq07LzHpb_f+e1jMnsZQ@mail.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk, Jeff King <peff@peff.net>,
+        Taylor Blau <me@ttaylorr.com>, git@vger.kernel.org,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: ab/cmake-nix-and-ci, was Re: [PATCH] test-lib.sh: discover
+ "git" in subdirs of "contrib/buildsystems/out"
+Date:   Fri, 09 Dec 2022 14:55:08 +0100
+References: <663b93ef-0c89-a5f6-1069-b4be97915d20@dunelm.org.uk>
+        <patch-1.1-f27d8bd4491-20221201T162451Z-avarab@gmail.com>
+        <xmqq5yeuspam.fsf@gitster.g>
+        <87f22a55-ee84-2f76-7b9b-924a97f44f89@dunelm.org.uk>
+        <221202.86sfhxg2ng.gmgdl@evledraar.gmail.com>
+        <Y4qF3iHW2s+I0yNe@coredump.intra.peff.net>
+        <221203.86pmd1dyqn.gmgdl@evledraar.gmail.com>
+        <Y45/8WnuUnP9gOMo@nand.local>
+        <Y46clyoKk9KzFiqj@coredump.intra.peff.net>
+        <221206.86zgc1cnc3.gmgdl@evledraar.gmail.com>
+        <Y46jT0i/7DhxHzfS@coredump.intra.peff.net>
+        <221206.86mt81claa.gmgdl@evledraar.gmail.com>
+        <xmqqilipnq8j.fsf@gitster.g>
+        <30360f4c-91a5-177b-133f-eb7036ed676a@dunelm.org.uk>
+        <221206.865yeodbtg.gmgdl@evledraar.gmail.com>
+        <oq7p2776-po8p-r9s0-82o2-o77so874n419@tzk.qr>
+        <xmqqk0311blt.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <CAOLTT8SR6JWX6mRLbyq4keb4JCfJP6Vq07LzHpb_f+e1jMnsZQ@mail.gmail.com>
-Message-ID: <221209.86bkoc7kgi.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqk0311blt.fsf@gitster.g>
+Message-ID: <221209.867cz07jub.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Dec 09 2022, ZheNing Hu wrote:
+On Fri, Dec 09 2022, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> =E4=BA=8E2022=E5=B9=B412=E6=9C=889=E6=97=A5=E5=
-=91=A8=E4=BA=94 09:37=E5=86=99=E9=81=93=EF=BC=9A
->>
->> On Fri, Dec 09, 2022 at 01:49:18AM +0100, Michal Such=C3=A1nek wrote:
->>
->> > > In this case it's the mtime on the object file (or the pack containi=
-ng
->> > > it). But yes, it is far from a complete race-free solution.
->> >
->> > So if you are pushing a branch that happens to reuse commits or other
->> > objects from an earlier branh that might have been collected =C3=ADn t=
-he
->> > meantime you are basically doomed.
->>
->> Basically yes. We do "freshen" the mtimes on object files when we omit
->> an object write (e.g., your index state ends up at the same tree as an
->> old one). But for a push, there is no freshening. We check the graph at
->> the time of the push and decide if we have everything we need (either
->> newly pushed, or from what we already had in the repo). And that is
->> what's racy; somebody might be deleting as that check is happening.
->>
->> > People deleting a branch and then pushing another variant in which many
->> > objects are the same is a risk.
->> >
->> > People exporting files from somewhere and adding them to the repo which
->> > are bit-identical when independently exported by multiple people and
->> > sometimes deleting branches is a risk.
->>
->> Yes, both of those are risky (along with many other variants).
->>
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 >
-> I'm wondering if there's an easy and poor performance way to do
-> gc safely? For example, add a file lock to the repository during
-> git push and git gc?
+>> Junio, maybe you could clarify your take on this? As project lead, it is
+>> your decision to define how Git uses Continuous Builds, and how the
+>> project handles failed CI runs.
+>
+> I have pretty much been with what Peff and Taylor said in the thread
+> already ever since we added CMake support to help Windows/VS folks.
+> I agree with you that we do not need to run it for Linux or macOS,
+> and if the promised/hoped-for benefit, i.e. that running them on
+> non-Windows build would uncover issues that are common across the
+> platform and help Windows, is not something that is likely to
+> materialize, I'd prefer to see our resources (CI time and developer
+> attention) not spent on that.
 
-We don't have any "easy" way to do it, but we probably should. The root
-cause of the race is tricky to fix, and we don't have any "global ref
-lock".
+I think this should be addressed by the "I count less than 20 lines in a
+~1.1k line recipe that are really "MSVC"-specific" in the sibling
+mail[1]. I.e. the large majority of it is generic recipe code that's run
+on all platforms.
 
-But in the context of a client<->server and wanting to do gc on the
-server a good enough and easy solution would be e.g.:
+> I do not think "how the project handles filed CI runs" is a very big
+> issue.  I often ignore partial failures (e.g. "winVS(n) test job
+> triggered rate limit") and the only annoyance I feel is that such a
+> temporary failure contribute one more message to my trash mailbox,
+> and I can learn to do the same for a test that marked as failed due
+> to linux-cmake-ctest job.  I expect that regular contributors are
+> doing the same pretty much.
+>
+> How blocking is a CI failure for drive-by contributors who use GGG?
+> While I do not necessarily value drive-by contributions as much as
+> you do, if such "an unimportant failure we can ignore" discourages
+> those coming from GGG route, that would be unfortunate, exactly
+> because they may not have contributed anything to the failures.
+> This is not just cmake-ctest, but the leak checking job where a new
+> use of a tool that is known to be leaky in a test can turn a test
+> that has been passing to fail.  If we can mark failures in selected
+> jobs as non-blocking, we definitely should do so.
 
- 1. Have a {pre,post}-receive hook logging attempted/finished pushes
- 2. Have the pre-receive hook able to reject (or better yet, hang with
-    sleep()) incoming deletions
- 3. Do a gc with a small wrapper script, which:
-    - Flips the "no deletion ops now" (or "delay deletion ops") switch
-    - Polls until it's sure there's no relevant in-progress operations
-    - Do a full gc
-    - Unlock
+I realize that we've been digressing to the larger topic of what to do
+with CI in general, but I don't think the question of whether say
+"win+VS build" should "soft fail" is something we should conflate with
+this "ab/cmake-nix-and-ci" topic.
 
-You'd need to be certain that all relevant repo operations are going
-through git-receive-pack etc., i.e. a local "git branch -d" or the like
-won't run {pre,post}-receive.
+It doesn't change the status quo there, and I think is a net
+improvement.
+
+Even if we make the CI for anything cmake-related soft-fail, this topic
+will still help to get it back up to speed, as you'll be able to run the
+full cmake+ctest chain on non-Windows.
+
+> Between keeping and marking linux-cmake-ctest as non-blocking, and
+> removing it altogether, I am inclined to say that I'd favor the
+> latter for the reasons I explained earlier in this message.  But to
+> help casual contributors coming via GGG, we would anyway need to (1)
+> allow submitting even with failing tests, and (2) tell them that it
+> is OK to do so.  Which means it is not the end of the world, from
+> the point of view of helping casual developers, if we had kept these
+> brittle CI jobs like linux-cmake-ctest and linux-leaks.
+
+I can peel off the commit that adds the "linux-cmake-ctest" CI job from
+this series, or even just make it do the equivalent of:
+
+	cmake && make || echo oops, we're broken
+
+So it'll "soft-fail" (AFAIK GitHub CI, unlike GitLab[2] doesn't support
+a native way to "soft-fail").
+
+But I don't think that doing that would help without *also* making
+"win+VS {build,test}" soft-fail. I.e. if "linux-cmake-ctest" *and*
+"win+VS" (with all else passing) you can be pretty sure it's a generic
+cmake problem.
+
+If only one or the other is failing somewhere in cmake having the
+"linux-cmake-ctest" job now will help narrow down whether it's a
+platform-specific cmake issue.
+
+So, just let me know what you'd prefer, but I think per the above even
+if you're impatient with cmake failures the "linux-cmake-ctest" job
+should help spend less time on them.
+
+1. https://lore.kernel.org/git/221208.86wn726qcv.gmgdl@evledraar.gmail.com/
+2. https://docs.gitlab.com/ee/ci/yaml/#allow_failure -- In the UX:
+   green=passing, red=failing, yellow=soft-fail
