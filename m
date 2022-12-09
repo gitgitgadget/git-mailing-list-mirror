@@ -2,116 +2,74 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 73601C4332F
-	for <git@archiver.kernel.org>; Fri,  9 Dec 2022 01:24:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 448EFC4332F
+	for <git@archiver.kernel.org>; Fri,  9 Dec 2022 01:37:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229968AbiLIBYT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Dec 2022 20:24:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60210 "EHLO
+        id S229875AbiLIBhJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Dec 2022 20:37:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229601AbiLIBYF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2022 20:24:05 -0500
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AC7BB104F
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 17:23:53 -0800 (PST)
-Received: by mail-pl1-x630.google.com with SMTP id k7so3299064pll.6
-        for <git@vger.kernel.org>; Thu, 08 Dec 2022 17:23:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vVL1IxBqJGpXvHN2TdgK2XX5m5TYUs5T/bdf05X4YbU=;
-        b=f4tPXD6EXWPzUcsMVDs4mShsmVaGEZ1K9OZJb7zOfiUVNsyH2QJ9iaIdX1X7mE/GwN
-         AK8L139hTCOtCCXiz5ByJwO63Gz2T2hTE7pODCOQKEuHoVqHrK48V9pvjWaPlQ/5vn7F
-         32RikwVpPJa5zjgbFbvraH4AgRcNNoY/fg0IJIFGW7kO+BC3hBqb+XHPIcw5e0c5xEH1
-         Nktk7yO01GadZtQNDvQQwo7c1l5OxGUy1og5bTtZGkneB3ac43a0m6qqJbiLf7Lu22Hm
-         UA7FeBhdjJ20MRBgWhQzHH/BdAQ/rFlnehg7fshG9MzhsnMiqhc2SNEvQsvE4qTfgeXd
-         Us5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=vVL1IxBqJGpXvHN2TdgK2XX5m5TYUs5T/bdf05X4YbU=;
-        b=Ss2czFNHevee1h2FLjuePJSdwzhAvWhEhkTq5nZMkOgbGDaO/bJ+9w4nwS3CL+4IYt
-         ZT6OAy+T0vGAP2lrHsPeUHSM8IgsFHWx2DKS2UzcgDB07U90GKeeqHdJWN4VJzWGuPOS
-         PbYeDXXWoZNPnVVlKJjzEfYW+v7zaCaT16flV7skI/l/mvi63kBYg5tALY7VA7Og01a7
-         coYfmbS+4+QF3n2Bu5mPDwAu/5pzmWnFyHRlS05WxwbhSY+E4wEn7rtSuM/tdYjz0fU3
-         kEI36qVg3OJcaxVsktAmq0cvFUZfTculfVsMW11T+iK6mb61ieFYDqFlb74Z8lt3baxk
-         LNHA==
-X-Gm-Message-State: ANoB5pkl8b7HNWpBjx2MgsAVN1osrA7kj0mt8yLHfHXUNX2+GglstM7s
-        QrZKYVcMxKAIq4JiRbgJHAo=
-X-Google-Smtp-Source: AA0mqf7j8a/jjC15E+sRDNP6iOen2rf0py53uC1k5Da0+USJPUfK3G0pN3L4GxzJ8jQCjUjqiwjakA==
-X-Received: by 2002:a17:902:ebc2:b0:185:441e:58ae with SMTP id p2-20020a170902ebc200b00185441e58aemr4058463plg.17.1670549032887;
-        Thu, 08 Dec 2022 17:23:52 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id f14-20020a170902684e00b00187197c4999sm62563pln.167.2022.12.08.17.23.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Dec 2022 17:23:52 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, David Caro <dcaro@wikimedia.org>,
-        git@vger.kernel.org
-Subject: Re: Skipping adding Signed-off-by even if it's not the last on git
- commit
-References: <20221206170646.6lnpr6h7oprziy5b@vulcanus>
-        <Y4/xSObs9QXvE+xR@nand.local> <xmqqlenj7t0b.fsf@gitster.g>
-        <20221207084027.7dhyaatkzaawrg4g@vulcanus>
-        <Y5EQCD4XCsN10HO+@nand.local> <xmqqtu266cj5.fsf@gitster.g>
-        <Y5GRx86i3ZIiVxb3@coredump.intra.peff.net>
-Date:   Fri, 09 Dec 2022 10:23:52 +0900
-In-Reply-To: <Y5GRx86i3ZIiVxb3@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 8 Dec 2022 02:27:03 -0500")
-Message-ID: <xmqq5yel2wuv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229685AbiLIBhH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2022 20:37:07 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E0B986F7B
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 17:37:06 -0800 (PST)
+Received: (qmail 30742 invoked by uid 109); 9 Dec 2022 01:37:06 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 09 Dec 2022 01:37:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19208 invoked by uid 111); 9 Dec 2022 01:37:06 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 Dec 2022 20:37:06 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 8 Dec 2022 20:37:04 -0500
+From:   Jeff King <peff@peff.net>
+To:     Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        johncai86@gmail.com, Taylor Blau <me@ttaylorr.com>
+Subject: Re: Question: How to execute git-gc correctly on the git server
+Message-ID: <Y5KRQMcUlepwNlor@coredump.intra.peff.net>
+References: <CAOLTT8Tt3jW2yvm6BRU3yG+EvW1WG9wWFq6PuOcaHNNLQAaGjg@mail.gmail.com>
+ <221208.86a63y9309.gmgdl@evledraar.gmail.com>
+ <20221208011631.GH28810@kitsune.suse.cz>
+ <Y5GLsZgmrxbBtLqo@coredump.intra.peff.net>
+ <20221209004918.GI28810@kitsune.suse.cz>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221209004918.GI28810@kitsune.suse.cz>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Fri, Dec 09, 2022 at 01:49:18AM +0100, Michal Suchánek wrote:
 
-> This made me curious about the opposite: is there config you can set to
-> get this behavior for --signoff? I think the answer is "no". You can do:
->
->   git -c trailer.ifExists=addIfDifferent \
->       commit --amend --trailer="Signed-off-by: Jeff King <peff@peff.net>"
->
-> to get the desired behavior, but using "--signoff" does not respect
-> trailer settings.
+> > In this case it's the mtime on the object file (or the pack containing
+> > it). But yes, it is far from a complete race-free solution.
+> 
+> So if you are pushing a branch that happens to reuse commits or other
+> objects from an earlier branh that might have been collected ín the
+> meantime you are basically doomed.
 
-A customization to allow addIfDifferent may be an interesting idea.
+Basically yes. We do "freshen" the mtimes on object files when we omit
+an object write (e.g., your index state ends up at the same tree as an
+old one). But for a push, there is no freshening. We check the graph at
+the time of the push and decide if we have everything we need (either
+newly pushed, or from what we already had in the repo). And that is
+what's racy; somebody might be deleting as that check is happening.
 
-> I feel like config is probably a better match for the use cases here,
-> because the decision about de-duping is not something you'd usually set
-> for one particular operation, but is more likely to be a project policy
-> about what the trailer means (and that includes Signed-off-by). So you'd
-> want to set it per-repo, not per-operation.
+> People deleting a branch and then pushing another variant in which many
+> objects are the same is a risk.
+> 
+> People exporting files from somewhere and adding them to the repo which
+> are bit-identical when independently exported by multiple people and
+> sometimes deleting branches is a risk.
 
-Sure.
+Yes, both of those are risky (along with many other variants).
 
-> ... The one exception is that the
-> generic trailer.ifExists, etc, would start affecting --signoff, which
-> _might_ be a surprise. If we wanted to retain the behavior there, we
-> could say "--signoff is special, and doesn't respect generic trailer
-> config".
-
-Yeah, that may be safe, however it is very unsatisfying.
-
-> Alternatively, it would be nice if there was an easy way to put your
-> ident into a trailer (what I wrote above doesn't really work unless you
-> have those variables in your environment, and of course it's a lot of
-> typing). I think you can hack it up like:
->
->   git config trailer.sign.key Signed-off-by
->   git config trailer.sign.cmd \
->     'git var GIT_COMMITTER_IDENT | sed "s/>.*/>/";:'
->   git commit --trailer=sign
->
-> which is only a little more typing than --signoff, but it's not very
-> ergonomic.
-
-It does not look _too_ bad, though.
+-Peff
