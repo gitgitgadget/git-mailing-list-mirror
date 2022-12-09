@@ -2,95 +2,89 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 91AB7C4332F
-	for <git@archiver.kernel.org>; Fri,  9 Dec 2022 01:42:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB035C4332F
+	for <git@archiver.kernel.org>; Fri,  9 Dec 2022 01:58:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229919AbiLIBma (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Dec 2022 20:42:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46322 "EHLO
+        id S230044AbiLIB6E (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Dec 2022 20:58:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229781AbiLIBm1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2022 20:42:27 -0500
+        with ESMTP id S230042AbiLIB5h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2022 20:57:37 -0500
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 442CA8743E
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 17:42:24 -0800 (PST)
-Received: (qmail 30799 invoked by uid 109); 9 Dec 2022 01:42:23 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54B8F7D062
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 17:56:36 -0800 (PST)
+Received: (qmail 30920 invoked by uid 109); 9 Dec 2022 01:56:36 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 09 Dec 2022 01:42:23 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 09 Dec 2022 01:56:36 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19277 invoked by uid 111); 9 Dec 2022 01:42:24 -0000
+Received: (qmail 19408 invoked by uid 111); 9 Dec 2022 01:56:36 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 Dec 2022 20:42:24 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 Dec 2022 20:56:36 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Thu, 8 Dec 2022 20:42:22 -0500
+Date:   Thu, 8 Dec 2022 20:56:34 -0500
 From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Taylor Blau <me@ttaylorr.com>, David Caro <dcaro@wikimedia.org>,
-        git@vger.kernel.org
-Subject: Re: Skipping adding Signed-off-by even if it's not the last on git
- commit
-Message-ID: <Y5KSfsxLO7com2f9@coredump.intra.peff.net>
-References: <20221206170646.6lnpr6h7oprziy5b@vulcanus>
- <Y4/xSObs9QXvE+xR@nand.local>
- <xmqqlenj7t0b.fsf@gitster.g>
- <20221207084027.7dhyaatkzaawrg4g@vulcanus>
- <Y5EQCD4XCsN10HO+@nand.local>
- <xmqqtu266cj5.fsf@gitster.g>
- <Y5GRx86i3ZIiVxb3@coredump.intra.peff.net>
- <xmqq5yel2wuv.fsf@gitster.g>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, avarab@gmail.com, gitster@pobox.com
+Subject: Re: [PATCH v3 3/4] object-file: emit corruption errors when detected
+Message-ID: <Y5KV0vIkxyA95/xf@coredump.intra.peff.net>
+References: <cover.1669839849.git.jonathantanmy@google.com>
+ <cover.1670532905.git.jonathantanmy@google.com>
+ <7c9ed861e7431352df864c8d2c3bec7dee6e3905.1670532905.git.jonathantanmy@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq5yel2wuv.fsf@gitster.g>
+In-Reply-To: <7c9ed861e7431352df864c8d2c3bec7dee6e3905.1670532905.git.jonathantanmy@google.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 09, 2022 at 10:23:52AM +0900, Junio C Hamano wrote:
+On Thu, Dec 08, 2022 at 12:57:07PM -0800, Jonathan Tan wrote:
 
-> > ... The one exception is that the
-> > generic trailer.ifExists, etc, would start affecting --signoff, which
-> > _might_ be a surprise. If we wanted to retain the behavior there, we
-> > could say "--signoff is special, and doesn't respect generic trailer
-> > config".
-> 
-> Yeah, that may be safe, however it is very unsatisfying.
+> Note that in the RHS of this patch's diff, a check for ENOENT that was
+> introduced in 3ba7a06552 (A loose object is not corrupt if it cannot
+> be read due to EMFILE, 2010-10-28) is also removed. The purpose of this
+> check is to avoid a false report of corruption if the errno contains
+> something like EMFILE (or anything that is not ENOENT), in which case
+> a more generic report is presented. Because, as of this patch, we no
+> longer rely on such a heuristic to determine corruption, but surface
+> the error message at the point when we read something that we did not
+> expect, this check is no longer necessary.
 
-Agreed. ;)
+I think this version still has the small issue that we'll _only_ surface
+a generic error return in such a case, and never report EMFILE
+specifically. I.e., I think we'd still want something like this on top:
 
-> > Alternatively, it would be nice if there was an easy way to put your
-> > ident into a trailer (what I wrote above doesn't really work unless you
-> > have those variables in your environment, and of course it's a lot of
-> > typing). I think you can hack it up like:
-> >
-> >   git config trailer.sign.key Signed-off-by
-> >   git config trailer.sign.cmd \
-> >     'git var GIT_COMMITTER_IDENT | sed "s/>.*/>/";:'
-> >   git commit --trailer=sign
-> >
-> > which is only a little more typing than --signoff, but it's not very
-> > ergonomic.
-> 
-> It does not look _too_ bad, though.
+diff --git a/object-file.c b/object-file.c
+index dc7665d6fa..36082bc991 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -1422,6 +1422,7 @@ static int loose_object_info(struct repository *r,
+ 			     struct object_info *oi, int flags)
+ {
+ 	int status = 0;
++	int fd;
+ 	unsigned long mapsize;
+ 	const char *path = NULL;
+ 	void *map;
+@@ -1455,7 +1456,13 @@ static int loose_object_info(struct repository *r,
+ 		return 0;
+ 	}
+ 
+-	map = map_loose_object_1(r, oid, &mapsize, &path);
++	fd = open_loose_object(r, oid, &path);
++	if (fd < 0) {
++		if (errno != ENOENT)
++			error_errno(_("unable to open loose object %s"), path);
++		return -1;
++	}
++	map = map_fd(fd, path, &mapsize);
+ 	if (!map)
+ 		return -1;
+ 
 
-What I don't like about it is:
-
-  - the external cmd is complicated and slow. It would be nice if you
-    could just set trailer.sign.ident=true or something, and it would
-    use your ident by default if no value is given (and maybe even do
-    completion similar to "commit --author" if a value is given).
-
-  - you have to know to be clever enough to define and use
-    --trailer=sign. If --signoff didn't exist, that's not too big a
-    stretch. But since it does, everyone will naturally reach for it
-    first.
-
-The two could be solved independently, of course. And even if we did
-want to solve both by making --signoff behave more like other trailers,
-having trailer.*.ident might be nice in general.
-
-I admit I just thought of this concept, though, so I don't have plans to
-work up patches, and I make no claims there isn't a gotcha waiting
-somewhere. ;)
+Otherwise ENOENT and EMFILE are indistinguishable from the user's
+perspective. And one is normal and routine, but the other points to
+something the user probably needs to fix.
 
 -Peff
