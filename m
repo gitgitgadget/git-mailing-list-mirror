@@ -2,106 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6879DC4332F
-	for <git@archiver.kernel.org>; Fri,  9 Dec 2022 04:03:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7262AC4332F
+	for <git@archiver.kernel.org>; Fri,  9 Dec 2022 04:46:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229591AbiLIEDx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 8 Dec 2022 23:03:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41474 "EHLO
+        id S229651AbiLIEqI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 8 Dec 2022 23:46:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229524AbiLIEDv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 8 Dec 2022 23:03:51 -0500
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C91199F28
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 20:03:46 -0800 (PST)
-Received: by mail-pl1-x62e.google.com with SMTP id g10so3604681plo.11
-        for <git@vger.kernel.org>; Thu, 08 Dec 2022 20:03:46 -0800 (PST)
+        with ESMTP id S229500AbiLIEqG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 8 Dec 2022 23:46:06 -0500
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FF0731A
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 20:46:05 -0800 (PST)
+Received: by mail-pj1-x1034.google.com with SMTP id o12so3646346pjo.4
+        for <git@vger.kernel.org>; Thu, 08 Dec 2022 20:46:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6eihkZ2Kp1fLe2kzPok+blS+I0liN4PA1VVayiME49c=;
-        b=PTc/EYg/W6Q/hjh/62ZKTbnJnVoQfclRFxOt9GxoyHG1Bi0YHq4RkoCOUJaf8n5vRu
-         T8V/k8mNpoZSDJPnvBfo+qr4mNuMeqHoUiyEc/0zLnAiKhBywz81gk3mas+f+WX3jbR7
-         IF7/s7kGDDO2Ab03YH6IyKa0Ed274/I4jFCYbdSA7sy1iS6kxF6i80aByulPEfeG9FAk
-         EbioEKfu1Wus6ZWDTNNO4tS6sdNAYcK+FAFDUecMeGzy8ny2kPlNEET9uOIZ2OgJVE8G
-         EHrBbxIjEW47TSCjRKS58Y4wTSgygne6FQdzJSqn3bitMGB67hDvCH3UF6N+yIZYB+i8
-         dZCA==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=X4jbwM5pjFby3k4r1oGEDHq65VPV3qQvu3QJY812Z6U=;
+        b=Px/aLUBaZQ1Dc794afgCy5/97O8eoUulakCzORSv/szUWfIyWyiFky8rMhCdGkW0LY
+         gvRHYW8oincLG+4/jTMNzB3cO+SZYcTnoAAPRHxQYgwuEMfEpkOYnRpdhLsyXQTFaX6h
+         WYIcSG54Aj54J10IkSbT9/kX0pHx3DD/rHAvDESTwXDun+q3PBHtMtBqL1aYy92S9M4n
+         OxDGctMdRQ9rb8NP+lDIeNBYrzIxhQIuHtsDxHo4jGyYgpv1XZHh+jO2G30szPZGLgQv
+         wsrgyhhykzromh+NlYFh5DnNr/ddC5giFheG9lJvs34RaYBPg0Oh85e2vhlWzoVnyU0K
+         C73A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=6eihkZ2Kp1fLe2kzPok+blS+I0liN4PA1VVayiME49c=;
-        b=WqFRDJ2sp3sZCnJyzTaypZcyGgMZd/lEA93CzINXcGPkR8jjpfxveR2l6ZvQ1az2wH
-         N7T1fhfKKGIiAxNi/wKu7RBORGaLAuCQ5z3eb+oiRHpdKq7O00+/qjyVdWjvCJNAI8Aj
-         jHBLxn+OblK7fiSdaFQjKHV9HZ5gDcuWz+FhWa4VNs0MJIxOksJFxrLIo3dtT4vc6qqh
-         VpdSahOt3Un3SYhCmVaOvNDArQnzHE7pJjjvWCKGNyLoYjXfkF82wbjhcV7T/t5nZJS6
-         YZrkpfzK98VgesVwq3OuWGUnUJiM+Cnl+Gq91fDgpX39mr06kmh0XspoMB0+ic61IOrj
-         kO0Q==
-X-Gm-Message-State: ANoB5pka7PK1VQVQtWBp4Ggkg6UVj9tzgNgaK4E8Vc5h1cV+hS72Y/uc
-        lklA8no5Ua8LCCuFPx8d6l3F7loQj5XTHQ==
-X-Google-Smtp-Source: AA0mqf7DvbXe6Exz5O1Ju4xmD5oHyDIhiLiRslQuiB7rqX/IYNA/vPNXyOEBNoiE+R9WldD6O1bOqQ==
-X-Received: by 2002:a05:6a20:6918:b0:9d:efc0:62 with SMTP id q24-20020a056a20691800b0009defc00062mr8341938pzj.10.1670558625477;
-        Thu, 08 Dec 2022 20:03:45 -0800 (PST)
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=X4jbwM5pjFby3k4r1oGEDHq65VPV3qQvu3QJY812Z6U=;
+        b=3Dd+8CEEvR8KJCcubMq9NvOKDhzeMjCS9rt0DmyvT/EpG0FvUzB41lXKlA75EArWVc
+         6AyYOWovRoPT4Rm5VQCWWA4UYCCWz+T55Jb9FkCPRE8T4Yuv+CfGpmjF4Gz47lbOAFCn
+         znwYfyLqmEbsZ/iGmvWuXFSGRoiGkM5CaWNhxnvHQ088b13eTWl2cnVYjp1T2GoH4uxh
+         j8nNsHGMd0C2dpWbPZ6HA8OTczn5t+grNQb39qGvfqF4EgA39X8D1PIjambGFJw1qzHB
+         /CzaqbY7CaYDqyJaBd19vjkljVjQB2PUYVjP/grpUl3gJCgZiDsiWtRhx3Y+6dAn3ry4
+         khcg==
+X-Gm-Message-State: ANoB5pk0gNudmO+eV5Vqy4nAnoKaX1zXqaHJICQff43QlV3Oyv8s2HqK
+        Jvfel3PxnTB3Qyz0QV6IX+NeKS+hRhUEoQ==
+X-Google-Smtp-Source: AA0mqf5pA9aDEDPeJ95MF0I75z0d2mOxuhZiJ7/oKN5vuUn0+HXw+FhW6/LHf+bIGH0Yj/ESHzleNg==
+X-Received: by 2002:a17:90b:264d:b0:20d:bd60:a0de with SMTP id pa13-20020a17090b264d00b0020dbd60a0demr4453214pjb.15.1670561164827;
+        Thu, 08 Dec 2022 20:46:04 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id u6-20020a17090a890600b0020bfd6586c6sm240673pjn.7.2022.12.08.20.03.44
+        by smtp.gmail.com with ESMTPSA id 5-20020a17090a030500b00212e5068e17sm276681pje.40.2022.12.08.20.46.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Dec 2022 20:03:45 -0800 (PST)
+        Thu, 08 Dec 2022 20:46:04 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Taylor Blau <me@ttaylorr.com>, David Caro <dcaro@wikimedia.org>,
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: Skipping adding Signed-off-by even if it's not the last on git
- commit
-References: <20221206170646.6lnpr6h7oprziy5b@vulcanus>
-        <Y4/xSObs9QXvE+xR@nand.local> <xmqqlenj7t0b.fsf@gitster.g>
-        <20221207084027.7dhyaatkzaawrg4g@vulcanus>
-        <Y5EQCD4XCsN10HO+@nand.local> <xmqqtu266cj5.fsf@gitster.g>
-        <Y5GRx86i3ZIiVxb3@coredump.intra.peff.net>
-        <xmqq5yel2wuv.fsf@gitster.g>
-        <Y5KSfsxLO7com2f9@coredump.intra.peff.net>
-Date:   Fri, 09 Dec 2022 13:03:44 +0900
-In-Reply-To: <Y5KSfsxLO7com2f9@coredump.intra.peff.net> (Jeff King's message
-        of "Thu, 8 Dec 2022 20:42:22 -0500")
-Message-ID: <xmqqcz8t1avz.fsf@gitster.g>
+Subject: Re: "test_atexit" v.s. "test_when_finished"
+References: <pull.1425.git.1668999621.gitgitgadget@gmail.com>
+        <97ada2a1202190776ce3989d3841dd47e2702316.1668999621.git.gitgitgadget@gmail.com>
+        <221206.86ilipckms.gmgdl@evledraar.gmail.com>
+        <CAPig+cSfvgu8XjvmmAkFWe1G1VDRgrcx5GjUhr4xSDqoJ4cZOA@mail.gmail.com>
+        <n2586428-1r80-9s29-8345-7p2opnor5086@tzk.qr>
+        <221208.86fsdq6nci.gmgdl@evledraar.gmail.com>
+Date:   Fri, 09 Dec 2022 13:46:04 +0900
+In-Reply-To: <221208.86fsdq6nci.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+ =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Thu, 08 Dec 2022 14:14:39 +0100")
+Message-ID: <xmqq5yel18xf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
->> >   git config trailer.sign.key Signed-off-by
->> >   git config trailer.sign.cmd \
->> >     'git var GIT_COMMITTER_IDENT | sed "s/>.*/>/";:'
->> >   git commit --trailer=sign
->> >
->> > which is only a little more typing than --signoff, but it's not very
->> > ergonomic.
->> 
->> It does not look _too_ bad, though.
->
-> What I don't like about it is:
->
->   - the external cmd is complicated and slow. It would be nice if you
->     could just set trailer.sign.ident=true or something, and it would
->     use your ident by default if no value is given (and maybe even do
->     completion similar to "commit --author" if a value is given).
+> On failure we'll skip the cleanup for the current test that just failed,
+> but we're not distracted by scratch files from earlier tests, those
+> would have already been cleaned up if they used the same
+> "test_when_finished" pattern.
 
-Ah, "trailer.sign.value" to use the same value does not exist, and
-the closest kludge we can use is the .cmd thing?  Then it is a shame
-but it should be easy to correct?
+Yup.
 
->   - you have to know to be clever enough to define and use
->     --trailer=sign. If --signoff didn't exist, that's not too big a
->     stretch. But since it does, everyone will naturally reach for it
->     first.
+A big benefit of using test_when_finished is that the knowledge of
+what cruft needs to be cleaned is isolated to the exact test piece
+that would create the cruft.  Instead of test_when_finished, We
+could use the other convention to clear what others may have left
+behind to give yourself a clean slate, but that requires you to be
+aware of what other tests that came before you did, which will
+change over time and will add to the maintenance burden.  And to
+some degree, the same downside is shared by the approach to use
+test_atexit.
 
-We could reimplement --signoff to actually take attention to the
-"trailer.sign.*" thing, if we wanted to, and that makes it very easy
-to explain, I guess.
