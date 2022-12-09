@@ -2,159 +2,101 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4C659C4332F
-	for <git@archiver.kernel.org>; Fri,  9 Dec 2022 20:59:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 80023C4332F
+	for <git@archiver.kernel.org>; Fri,  9 Dec 2022 21:03:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229784AbiLIU7v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Dec 2022 15:59:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44566 "EHLO
+        id S229750AbiLIVDb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Dec 2022 16:03:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47452 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229783AbiLIU7t (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Dec 2022 15:59:49 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40AB9AC6E5
-        for <git@vger.kernel.org>; Fri,  9 Dec 2022 12:59:48 -0800 (PST)
-Received: (qmail 8291 invoked by uid 109); 9 Dec 2022 20:59:47 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 09 Dec 2022 20:59:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28778 invoked by uid 111); 9 Dec 2022 20:59:47 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 09 Dec 2022 15:59:47 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Fri, 9 Dec 2022 15:59:46 -0500
-From:   Jeff King <peff@peff.net>
-To:     Todd Zullinger <tmz@pobox.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: t5559-http-fetch-smart-http2 failures
-Message-ID: <Y5OhwqBAq9SCuruq@coredump.intra.peff.net>
-References: <Y4fUntdlc1mqwad5@pobox.com>
- <Y4kNu9iFQuKjuub1@coredump.intra.peff.net>
- <Y5KbUBC1ENOAVuTV@pobox.com>
+        with ESMTP id S229573AbiLIVDa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Dec 2022 16:03:30 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C4BCAFCF3
+        for <git@vger.kernel.org>; Fri,  9 Dec 2022 13:03:29 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id m19so740907wms.5
+        for <git@vger.kernel.org>; Fri, 09 Dec 2022 13:03:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oNZVZYk6ZxxEc1liZnb1SY6e9Ix2+tBiM5EaThu8Enw=;
+        b=ToZtofbbVUV0k6a32N96GXvuU51xNEIQu/3qPdqKc7+sIpfRtJOEvgymuELBPceizm
+         kl8WC5/5h1MlVTqCfzNKQ+b9kiGkmtjL3qHck/fLQG+06ZfiM8NpCHmWPIJdKcbvbi5C
+         lKbRE7oXAQfvgsLGN+5iH90XkL4Rnynh8stI2hd9Wv2VUXlTM2bCbFXHGkYLIhJH1fUh
+         txcvRyhGI0IwDhoPfV5dR9AuFHZgjg9q1r4yVBoGZchChSuANkozGHim88ri3MGQUCRD
+         NdLw+sfVARs+LKNOKvxvvajBORJKVWxYPyfwQMtmgTfsLNAnATc/UhbjGEVAs1Ct/YZe
+         Hl9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oNZVZYk6ZxxEc1liZnb1SY6e9Ix2+tBiM5EaThu8Enw=;
+        b=QdJtEdghiUScizPwhikb43yhIOBlY3Rmbb+G2JZ4MGp/4l46whdO82l4Tb2K7Xs9bj
+         jpZ50tObuGXvMvyOTArF3ZiLU0zLCPJRaNc0JMZOyFMfRAHhS1pCLgXo8X42sw+FObLr
+         V5Du0wjgu/HjxuR43ViHgSQ7QZd57jk/foLpB+gYQEnYEuhAPQCu0KajGYZG9R4tn464
+         j2YyTvoWncQ4SgamMX/yZjItl52h6s8/YTCUdOuZO2IIm1guEp6AICHqR8DX3WtRg4up
+         0wQTicTAX/ovDYz8/MG5GqSN9JvLuo9a1cMEN4JjXT/E/cyUmO72NWxCP0ROVRGFQIlJ
+         2WgA==
+X-Gm-Message-State: ANoB5pnyJXliq/ARhWcSEDfBKZcnwgkYkSdk33Xicwh1/GKKx9TR/2uc
+        VCdmiXoEVNsfX5oqUkM00uJkgG3mktct6w==
+X-Google-Smtp-Source: AA0mqf7XPfXIazs09gQQDPF0DRTbBdPQYyec2wZYSwsJyeHQAe3Wd8v+tB51GodbkyVduQwvlEKhcA==
+X-Received: by 2002:a7b:cd18:0:b0:3cf:9ad3:a1db with SMTP id f24-20020a7bcd18000000b003cf9ad3a1dbmr6160741wmj.7.1670619807355;
+        Fri, 09 Dec 2022 13:03:27 -0800 (PST)
+Received: from archlinux.fritz.box ([2a02:2454:574:5100:bfcd:791:c83b:983c])
+        by smtp.gmail.com with ESMTPSA id w10-20020a05600c474a00b003c701c12a17sm887838wmo.12.2022.12.09.13.03.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Dec 2022 13:03:26 -0800 (PST)
+From:   Karthik Nayak <karthik.188@gmail.com>
+To:     git@vger.kernel.org
+Cc:     toon@iotcl.com, Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v2 1/2] t0003: move setup for `--all` into new block
+Date:   Fri,  9 Dec 2022 22:03:20 +0100
+Message-Id: <20221209210321.709156-2-karthik.188@gmail.com>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221209210321.709156-1-karthik.188@gmail.com>
+References: <20221209210321.709156-1-karthik.188@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y5KbUBC1ENOAVuTV@pobox.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 08, 2022 at 09:20:00PM -0500, Todd Zullinger wrote:
+There is some setup code which is used by multiple tests being setup in
+`attribute test: --all option`. This means when we run "sh
+./t0003-attributes.sh --run=setup,<num>" there is a chance of failing
+since we missed this setup block.
 
-> Sorry for the delay.  I wanted to gather some data but could
-> only do it in small chunks at a time.  Hopefully that
-> doesn't make this too rambling and/or disjointed.
+So to ensure that setups are independent of test logic, move this to a
+new setup block.
 
-No problem. I would be happy if all bug reports were this thorough and
-clear. :)
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+Co-authored-by: toon@iotcl.com
+---
+ t/t0003-attributes.sh | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-> > Thanks for the report. I can't seem to reproduce here on my Debian
-> > system, even with --stress.
-> 
-> One notable difference between Debian/Ubuntu and Fedora is
-> that Debian/Ubuntu uses mod_http2 included with the upstream
-> Apache httpd source.  Fedora is using the newer, stand-alone
-> module (which is the upstream source for the http2 module).
-> 
-> Ubuntu 22.04.1 has httpd-2.4.52 with mod_http2-1.15.26 (per
-> MOD_HTTP2_VERSION in modules/http2/h2_version.h).
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index f7ee2f2ff0..b3aabb8aa3 100755
+--- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -203,9 +203,12 @@ test_expect_success 'attribute test: read paths from stdin' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'attribute test: --all option' '
++test_expect_success 'setup --all option' '
+ 	grep -v unspecified <expect-all | sort >specified-all &&
+-	sed -e "s/:.*//" <expect-all | uniq >stdin-all &&
++	sed -e "s/:.*//" <expect-all | uniq >stdin-all
++'
++
++test_expect_success 'attribute test: --all option' '
+ 	git check-attr --stdin --all <stdin-all >tmp &&
+ 	sort tmp >actual &&
+ 	test_cmp specified-all actual
+-- 
+2.38.1
 
-Makes sense. I'm on Debian unstable, which is httpd-2.4.54 and
-mod_http2-1.15.28 (the latter I pulled from "strings mod_http2.so", so
-uh...it's probably right).
-
-> Fedora 37, 36, and rawhide have httpd-httpd-2.4.54 with
-> mod_http2-2.0.9.  They also have curl-7.86 in rawhide (where
-> I've done the most testing), 7.85.0 in 37, and 7.82.0 in 36.
-
-So that's the same httpd and curl version (7.86.0) I'm using, which
-implies to me the problem is in the newer mod_http2 version. And...
-
-> Interestingly, if I build the same git source rpm against
-> RHEL-9 which has httpd-2.4.53 and mod_http2-1.15.19, I don't
-> see any failures.
-
-...that data point would be consistent with the theory.
-
-> I'm tempted to do a build of mod_http2-1.x or the embedded
-> mod_http2 and test with that, but I have not yet made time
-> to do so.
-
-Yeah, I suspect it would make the problem go away. In theory it may even
-be possible to bisect within mod_http2, but I don't know how painful it
-is to do a build+test cycle.
-
-> With that, one of the more common errors is:
-> 
->     error: RPC failed; HTTP 101 curl 92 HTTP/2 stream 1 was not closed cleanly before end of the underlying stream
-> 
-> others are:
-> 
->     error: RPC failed; HTTP 101 curl 16 Error in the HTTP2 framing layer
->     fatal: expected flush after ref listing
-> 
->     error: RPC failed; HTTP 101 curl 16 Error in the HTTP2 framing layer
-> 
->     error: RPC failed; curl 16 Error in the HTTP2 framing layer 
->     fatal: expected 'packfile'
-
-OK, that makes me pretty confident that there's nothing Git is doing
-wrong here. I don't think we could stimulate a failure at that layer of
-curl even if we wanted to. And those errors plus the racy nature of what
-you're seeing really makes it look like there is just some race
-condition or other bug in mod_http2 (possibly coupled with the mpm).
-
-> The error.log looks the same for the failed runs I've
-> collected:
-> [...]
-> The LogLevel might need to be adjusted to get more useful
-> output there, perhaps?
-
-Yeah, that output is not particularly enlightening. In a sense it's not
-surprising, though. If there's a bug on the server side, we're not
-likely to get a log line saying "sending garbage output to the client".
-It's the client who sees the problem and hangs up. Turning up the log
-level could help, but I'd be surprised.
-
-> > also causes t5551 to start failing. If so, then we can blame mpm_event,
-> > and not http2.
-> 
-> Good idea.  With that applied, I've still not seen a failure
-> in t5551, not even when run via --stress for some minutes.
-
-OK. So I think that rules out mpm_event being a problem by itself. It's
-possible there's some bad interaction between mpm_event and mod_http2,
-but it seems more likely there's simply a bug or race in mod_http2.
-
-> I'm not sure whether any of this points to a bug in Git's
-> http2 code at all.  It _seems_ like it's going to be
-> elsewhere, in curl and/or httpd/mod_http2.  In other words,
-> your 1 above.
-
-My best guess is a bug in mod_http2. But one thing that it still _could_
-be is that Git's server-side CGI interacts badly with mod_http2 somehow
-(or maybe only some versions of it).
-
-I guess some other things to try would be:
-
-  1. Take Git out of the mix completely. If we stress-test command-line
-     curl hitting our test apache, serving up static files, can we
-     trigger the problem? If not, then...
-
-  2. Try the same thing, but hit endpoints that trigger git-http-backend
-     on the server side. If that fails, then we've absolved Git's client
-     code, and the bug is either in mod_http2 or some bad interaction
-     with Git's CGI output.
-
-> If nothing jumps out to point to a possible issue in git,
-> I'll extract a reproduction recipe from the test suite and
-> file a Fedora bug.  Maybe the folks who have looked at
-> similar issues in curl and httpd/mod_http2 will spot
-> something.
-
-You might try running the failing tests with GIT_TRACE_CURL set in the
-environment. That should get you a pretty detailed view of what curl is
-seeing, which would probably be helpful for a bug report.
-
--Peff
