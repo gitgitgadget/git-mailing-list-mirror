@@ -2,106 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AFBF5C10F1B
-	for <git@archiver.kernel.org>; Fri,  9 Dec 2022 07:28:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 779EDC4332F
+	for <git@archiver.kernel.org>; Fri,  9 Dec 2022 07:50:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230219AbiLIH2L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Dec 2022 02:28:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60166 "EHLO
+        id S229721AbiLIHun (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Dec 2022 02:50:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230036AbiLIH1U (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Dec 2022 02:27:20 -0500
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 969C740456
-        for <git@vger.kernel.org>; Thu,  8 Dec 2022 23:27:04 -0800 (PST)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-3cbdd6c00adso41796397b3.11
-        for <git@vger.kernel.org>; Thu, 08 Dec 2022 23:27:04 -0800 (PST)
+        with ESMTP id S229634AbiLIHul (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Dec 2022 02:50:41 -0500
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 964BF50D41
+        for <git@vger.kernel.org>; Thu,  8 Dec 2022 23:50:40 -0800 (PST)
+Received: by mail-pf1-x432.google.com with SMTP id d82so3101245pfd.11
+        for <git@vger.kernel.org>; Thu, 08 Dec 2022 23:50:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lI27dDPxIHYBhQ1cCtoCAZuFO8uL2/6617sVGv0XbLQ=;
-        b=FC26MjmgkopwPJaxaRhQBf8jyO5Sn1S+/BkE+wHgUOQcTkvvktPIBeQKvrrr7RMb1W
-         cY/BU6JZTizVVg438s9e/i63J9zwHm3iNbc7lKdcasprgMFh9Huqr9GpeouXXfJ1aGma
-         d+ASaJu+u0Xtjlv0dNaMsxIB+TSy0xNUNv0ryWlzM5hJTDRJCtmmXWxj6P7zGuSUINFd
-         m4zpVrcSE7JIi6dBh9pjIvdo+uVpds4o0i+sk/nsN8OJa3g7uN0muhDFZtG5fPBUgwiE
-         iLPBTg2ahBwkbDDIpcNtRsvLx0CqfWG308o1x+LXwzOE27QL2X+fTmbW+39LMuvRrJ0c
-         hRQg==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=w9PLSvuQP0gINO0gwH9wZh2EtFWcOJdi0RSoXzO2Vc0=;
+        b=PSpJJKrOQHIhS0oPqt/x2Ip6qw3R2TUjodY6KJFmtsvtPtKYEnpV3JLoiI6sB2fMMW
+         nA2mjFZUyfdwWswzAMaXBDxLv/85sCQ2zmQjyol2xoHQkOa/QY4eFDlgiqMpgQ7vAZXL
+         YpkxlMWaNlRZe1hsEaGHqI5s8YGCE29HxunIwoSY6CQVidC3j1zRZK4ArHSkaBFLD9L+
+         PuPH/GkMw8c6aaZnx17q3oi++lIcgC1AilyskNl6Wx1ZvMABG0repzgUEIgDb3CZ/6Ms
+         H3YoVM55erNvyokqEY7JLKvPf6dB4nFTfDlrHENXii0XNETwE7V2F7ItJGqfLzCiW9Ud
+         NOKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lI27dDPxIHYBhQ1cCtoCAZuFO8uL2/6617sVGv0XbLQ=;
-        b=nwaP/34tvKJuzQD57Oie6YZnf2gnGbaMXupGqhqk7rSd+5fqhU9LEwZ/QojaGyS6wx
-         GOiugzAPMw1ne+tSswmmlymphNPsVW9Gu4rS6Q4+KzPDNNrkpweLC3yFL3ZR3EfdZQk6
-         igS6JJx19m7Y16l0vY6FQW2gHDKUh+apscI9YWO4Cbh0c3cJeGd/Hqae2bH5FWvtaqO+
-         czMlxgKM947gsxvDL3NEuWANIWvpr4s+vD2PzFnEVg4F3gU1xa5LwDlvBy75CQrEAWZR
-         4hAdTJiAu/dh6VIpSankr4rUJBd9ZXWdawpSXS5H26WpdxAE9RdcDOCpM+qKyoXz1vof
-         DGgw==
-X-Gm-Message-State: ANoB5pmT7FLTfFe2bVEgzXpxLCkJO8Fg6k9uR7ShnpxQNh18wpN+tP9X
-        yfSCI2Ixw6y6BoJZvr+N6RL9Djq8lrIqEj6DqSI=
-X-Google-Smtp-Source: AA0mqf5OBhWIWwOlee3fsVYfdr5JB2njec+O99hwJEMEK7vtt9bKhU/9i2eDnxEJAhNei46Zu6pyMkD3ucFB9oItK5U=
-X-Received: by 2002:a81:2546:0:b0:408:5edb:24e2 with SMTP id
- l67-20020a812546000000b004085edb24e2mr533231ywl.43.1670570823630; Thu, 08 Dec
- 2022 23:27:03 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=w9PLSvuQP0gINO0gwH9wZh2EtFWcOJdi0RSoXzO2Vc0=;
+        b=zJap7jTeUuprjn+wi/F/z7KSErn9y+7r3fRj8oLtFBizrBPpkviLM/HbZiKmqmvVFv
+         PihAcJyQyoR4UB5ZWp3RrfmZWA/hMP8a+9pV4w/4ROQbC6sxUEcvZyEQUbgTeXDIQbr4
+         BU9u65CV4V83D0Pl9zvYUnsD84BFE/RohOnvqU4BkOD47U0ATgcv1NImH/xE4HfW1QNu
+         S2w1kXzE56CM/kRQDqutS9Y06Rkc7eL6/HNt6lKf6go3kCap1LMbDWllUhDvnpHrosAX
+         Uz40uqLsjbD9FpO+/NhvwezcPoCDqMTcksP+4y+eOHgcTxWC/MvsDJ6PYiOd36o1pen5
+         irpA==
+X-Gm-Message-State: ANoB5pnoOBVTxCZqcTS/2M0ZbRu2ABcRAXcc9xh4uqrG5Osx153xAvSD
+        jquRei3Fwsg5RLrpXD4D9DKPXTTv8K6i7QI=
+X-Google-Smtp-Source: AA0mqf5zyPZNfVPW2/EzHLe1D3sXENUHGOyujc8czVzGxXm65PmpIkcQbqeSn3DoF+MFCqh6v8Df+A==
+X-Received: by 2002:a62:6d46:0:b0:56c:f87e:64c with SMTP id i67-20020a626d46000000b0056cf87e064cmr5425854pfc.21.1670572240004;
+        Thu, 08 Dec 2022 23:50:40 -0800 (PST)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id y14-20020aa793ce000000b0056ba7ce4d5asm659542pff.52.2022.12.08.23.50.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Dec 2022 23:50:39 -0800 (PST)
+Message-ID: <8edcef4f-4438-e07a-a6fb-698b6179fcc4@github.com>
+Date:   Thu, 8 Dec 2022 23:50:36 -0800
 MIME-Version: 1.0
-References: <CAOLTT8Tt3jW2yvm6BRU3yG+EvW1WG9wWFq6PuOcaHNNLQAaGjg@mail.gmail.com>
- <221208.86a63y9309.gmgdl@evledraar.gmail.com> <20221208011631.GH28810@kitsune.suse.cz>
- <Y5GLsZgmrxbBtLqo@coredump.intra.peff.net> <20221209004918.GI28810@kitsune.suse.cz>
- <Y5KRQMcUlepwNlor@coredump.intra.peff.net>
-In-Reply-To: <Y5KRQMcUlepwNlor@coredump.intra.peff.net>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Fri, 9 Dec 2022 15:26:52 +0800
-Message-ID: <CAOLTT8SR6JWX6mRLbyq4keb4JCfJP6Vq07LzHpb_f+e1jMnsZQ@mail.gmail.com>
-Subject: Re: Question: How to execute git-gc correctly on the git server
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        johncai86@gmail.com, Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.5.0
+Subject: Re: rebase update-refs can delete ref branch
+Content-Language: en-US
+To:     Eric Musser <eric.musser@snowflake.com>, git@vger.kernel.org
+References: <CAGW=zr_BD=7d5dZi+yO4cpufFi=jEjH=wQoTndDLfTi14UresQ@mail.gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <CAGW=zr_BD=7d5dZi+yO4cpufFi=jEjH=wQoTndDLfTi14UresQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> =E4=BA=8E2022=E5=B9=B412=E6=9C=889=E6=97=A5=E5=91=
-=A8=E4=BA=94 09:37=E5=86=99=E9=81=93=EF=BC=9A
->
-> On Fri, Dec 09, 2022 at 01:49:18AM +0100, Michal Such=C3=A1nek wrote:
->
-> > > In this case it's the mtime on the object file (or the pack containin=
-g
-> > > it). But yes, it is far from a complete race-free solution.
-> >
-> > So if you are pushing a branch that happens to reuse commits or other
-> > objects from an earlier branh that might have been collected =C3=ADn th=
-e
-> > meantime you are basically doomed.
->
-> Basically yes. We do "freshen" the mtimes on object files when we omit
-> an object write (e.g., your index state ends up at the same tree as an
-> old one). But for a push, there is no freshening. We check the graph at
-> the time of the push and decide if we have everything we need (either
-> newly pushed, or from what we already had in the repo). And that is
-> what's racy; somebody might be deleting as that check is happening.
->
-> > People deleting a branch and then pushing another variant in which many
-> > objects are the same is a risk.
-> >
-> > People exporting files from somewhere and adding them to the repo which
-> > are bit-identical when independently exported by multiple people and
-> > sometimes deleting branches is a risk.
->
-> Yes, both of those are risky (along with many other variants).
->
+Hi Eric!
 
-I'm wondering if there's an easy and poor performance way to do
-gc safely? For example, add a file lock to the repository during
-git push and git gc?
+> [I am presented]:
+> pick 2dd4408 commit 2 # empty
+> update-ref other-branch
+> 
+> pick 39f626e commit 3 # empty
+> 
+> [I deleted first two lines and submitted]:
+> pick 39f626e commit 3 # empty
+> 
+> Successfully rebased and updated refs/heads/working-branch.
+> Updated the following refs with --update-refs:
+> refs/heads/other-branch
+> $ git rev-parse other-branch
+> other-branch
+> fatal: ambiguous argument 'other-branch': unknown revision or path not
+> in the working tree.
+> Use '--' to separate paths from revisions, like this:
+> 'git <command> [<revision>...] -- [<file>...]'
 
-> -Peff
+I believe this is the same bug as one reported back in October [1], where
+deleting all 'update-ref' lines from the 'rebase-todo' inadvertently causes
+the rebase to delete those refs. The bug was fixed in 44da9e0841 (rebase
+--update-refs: avoid unintended ref deletion, 2022-11-07), so you shouldn't
+see the issue anymore in Git that's built from newer revisions (e.g., the
+latest pre-release v2.39.0-rc2 or the upcoming final v2.39.0).
+
+I hope that helps!
+- Victoria
+
+[1] https://lore.kernel.org/git/CAFzd1+5F4zqQ1CNeY2xaaf0r__JmE4ECiBt5h5OdiJHbaE78VA@mail.gmail.com/
+
+> [System Info]
+> git version:
+> git version 2.38.0
+> cpu: aarch64
+> built from commit: 3dcec76d9df911ed8321007b1d197c1a206dc164
+> sizeof-long: 8
+> sizeof-size_t: 8
+> shell-path: /bin/sh
+> uname: Linux 5.16.13-generic #2 SMP Fri Mar 11 12:48:38 UTC 2022 aarch64
+> compiler info: gnuc: 10.2
+> libc info: glibc: 2.17
+> $SHELL (typically, interactive shell): /bin/bash
+> 
+> 
+> [Enabled Hooks]
+> pre-commit
+
