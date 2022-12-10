@@ -2,111 +2,81 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 601EEC4332F
-	for <git@archiver.kernel.org>; Sat, 10 Dec 2022 00:29:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6204DC4332F
+	for <git@archiver.kernel.org>; Sat, 10 Dec 2022 13:07:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229637AbiLJA3r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Dec 2022 19:29:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34766 "EHLO
+        id S229627AbiLJNGu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 10 Dec 2022 08:06:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229538AbiLJA3p (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Dec 2022 19:29:45 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F97B3FB95
-        for <git@vger.kernel.org>; Fri,  9 Dec 2022 16:29:44 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id hd14-20020a17090b458e00b0021909875bccso9133711pjb.1
-        for <git@vger.kernel.org>; Fri, 09 Dec 2022 16:29:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DEr6mZXiXyUbz+qFxGUXxMP8lfoZKaDBSaNiZbAe9yo=;
-        b=Hb2uGrcOeULHsy/tTNye26GHvQc99WH+KTrjwhOhfMlIzg5Rq09IJsmyKLyfwzHZ5z
-         NhQy+9F433QehQJ9nAiKm0M/hxjI/cfvW9lcnJDlvmRBgVzkFqRcGO8eiNCZyyS/ZUBs
-         mcAa8qOntu1ZGEBFj8GAxC9A9rzc5McdF6pbDd7o66HlLTugfvfZbJcwxtMS01NW7Bq3
-         KI5x5vDWjbIbt8JJYa7CMHzeH4KuwcuaapJRxrPT5DScosAgkZavsQ7tsFtTTlzXCxRx
-         CNvLzBFndIQgDfku61+DKbaTGAXki/MkVkJ7NcxbBxYX503/7ClXTGBbepbmZBgsr2e8
-         427Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=DEr6mZXiXyUbz+qFxGUXxMP8lfoZKaDBSaNiZbAe9yo=;
-        b=OrPoB/GpUhGHwC/Etph5sJZ20dGmMVqHBm5m3qlEzQi1zXYdwq4qf6DHKVUI/57x8P
-         qcXP7ZYOCgPHKZuDVfNk8eMuBU9ushDgT420QopwXieV5FKkq/upSCbYUL9oUM+vO+zh
-         kw1Zb8gq3TqCwpknJ6TeuDWfvd7CBIAW+KUpqh8JfDqI/7pD62BL9x+q6ni88X+8BrOl
-         /9VdSqCrTy1hW+GA2uFdQzTaLoQ+Y46n0XkQXumYQrrwJJOVEfuHK6/IAl6i7DQd/B09
-         Uzq3Vhv/xj8AqoTh+8pCojnjsf1unGxN1hEg4Af/ySrlmuO18TIgfujzKbGNlw5/Q9y0
-         udxw==
-X-Gm-Message-State: ANoB5pmlJFcj5N5sgzeoimti1sts624F7wxar1PPnIpX+VzCObAXDGH/
-        b9XOwdbVKXdCitMQURXyNQQ=
-X-Google-Smtp-Source: AA0mqf4AUbSnLbNaWNG+h5fdGBLdMtLi8RYYtTMxrY+wxuvUm5/sbvgEVT5235vXaTznFeap4t05ZQ==
-X-Received: by 2002:a17:902:9881:b0:185:441e:4d0e with SMTP id s1-20020a170902988100b00185441e4d0emr7707107plp.62.1670632183553;
-        Fri, 09 Dec 2022 16:29:43 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id z20-20020a170903409400b00189667acf15sm1850639plc.162.2022.12.09.16.29.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Dec 2022 16:29:43 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "John Cai via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>
-Subject: Re: [PATCH] docs: link generating patch sections
-References: <pull.1392.git.git.1670614892380.gitgitgadget@gmail.com>
-Date:   Sat, 10 Dec 2022 09:29:42 +0900
-In-Reply-To: <pull.1392.git.git.1670614892380.gitgitgadget@gmail.com> (John
-        Cai via GitGitGadget's message of "Fri, 09 Dec 2022 19:41:32 +0000")
-Message-ID: <xmqqk030xfrd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229475AbiLJNGr (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 10 Dec 2022 08:06:47 -0500
+Received: from srv1.79p.de (srv1.79p.de [213.239.234.118])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B862518B1C
+        for <git@vger.kernel.org>; Sat, 10 Dec 2022 05:06:44 -0800 (PST)
+X-Virus-Scanned: Debian amavisd-new at srv1.79p.de
+Received: from [IPV6:2001:9e8:2bd7:7400:6c37:c1df:83ce:abbb] (unknown [IPv6:2001:9e8:2bd7:7400:6c37:c1df:83ce:abbb])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: sven@cs-ware.de)
+        by srv1.79p.de (Postfix) with ESMTPSA id 7FDDE60009A;
+        Sat, 10 Dec 2022 14:06:40 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=cs-ware.de;
+        s=mail2022; t=1670677601;
+        bh=lID50p9M79g449TnW+apTxyIepGS+NWf+1fgMIho6eE=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=VAIIaVv4B0u3OQWgvcOrRlUWXOQ5JrfrKnW9z23M8Ti82DRm9tkkIQHdt4MELw02D
+         mckYDx8A2o94+ViuTs1iY7g7dZTFr7/hw0BuhXfpTsPQsITyFyeYYJWAUYWtgZG8b/
+         0UqsS3FvjnbUDBu8jODiPKZ3Q5hKWq1Em/rjoEWXNLxdgJgdlkS+Q5mcj8wN15SPa1
+         2FmcTX+yahSh1MGqFUkMo2Hyso438yjBlVSzPmvJlhQ8JAY8rTGxb5z5rrWrMrxve3
+         QNm9SQGq8aivTGf/i64pz2oPD2GjqLoJrC6zwB4JiP6ga52yRgqPjlfG0cXmBEuFq5
+         V3nlm5yF53RiA==
+Message-ID: <f805f2da-a7e1-9fde-cc0a-04a30f79c9af@cs-ware.de>
+Date:   Sat, 10 Dec 2022 14:06:37 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: [PATCH] submodule: Accept -v for update command
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git <git@vger.kernel.org>, "Robin H. Johnson" <robbat2@gentoo.org>
+References: <FR3P281MB21416B718C4C052A28C319B1E90F9@FR3P281MB2141.DEUP281.PROD.OUTLOOK.COM>
+ <1ff185c5-4a9e-36e3-3141-8b149c1c7bb0@cs-ware.de>
+ <cad05012-7bf9-5975-3add-253b11c7bcc8@cs-ware.de>
+ <221130.868rjsi6bn.gmgdl@evledraar.gmail.com> <xmqqiliur6t9.fsf@gitster.g>
+From:   Sven Strickroth <email@cs-ware.de>
+In-Reply-To: <xmqqiliur6t9.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"John Cai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"git pull -v --recurse-submodules" propagates the "-v" to the submodule 
+command which did not support "-v" yet.
 
-> diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-> index 3674ac48e92..5acffdd129e 100644
-> --- a/Documentation/diff-options.txt
-> +++ b/Documentation/diff-options.txt
-> @@ -22,7 +22,13 @@ ifndef::git-format-patch[]
->  -p::
->  -u::
->  --patch::
-> -	Generate patch (see section on generating patches).
-> +	Generate patch (see section on
-> +ifdef::git-log[]
-> +<<_generating_patch_text_with_p, generating patches>>).
+Commit a56771a668d introduced this regression.
 
-Is this "prepend underscore, downcase, and replace each run of
-non-alnum with an underscore" ASCIIDoc magic?  AsciiDoctor magic?
-All such backends prepare the anchor in the same format?
+Signed-off-by: Sven Strickroth <email@cs-ware.de>
+---
+  git-submodule.sh | 3 +++
+  1 file changed, 3 insertions(+)
 
-I am mostly worried about relying on automatic magic that can
-silently be broken when say the title in diff-generate-patch.txt
-file is improved.  Whoever is updating the file would not know
-it is being referenced from elsewhere (and it is hard to check).
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 9a50f2e912..7f9582d923 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -244,6 +244,9 @@ cmd_update()
+  		-q|--quiet)
+  			quiet=1
+  			;;
++		-v|--verbose)
++			quiet=0
++			;;
+  		--progress)
+  			progress=1
+  			;;
+-- 
+2.38.1.windows.1
 
-Or perhaps you forgot a single liner patch to diff-generate-patch.txt
-that adds [[_generating_patch_text_with_p]] anchor yourself?
-
-> +endif::git-log[]
-> +ifndef::git-log[]
-> +Generate patch text with -p).
-
-The capitalization makes it look somewhat odd in the resulting
-text.  Quoting, e.g.
-
-	see the section titled "Generate patch text ..."
-
-may make it acceptable, though.
-
-> +endif::git-log[]
->  ifdef::git-diff[]
->  	This is the default.
->  endif::git-diff[]
->
-> base-commit: 2e71cbbddd64695d43383c25c7a054ac4ff86882
