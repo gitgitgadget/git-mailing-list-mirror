@@ -2,63 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB363C4332F
-	for <git@archiver.kernel.org>; Sat, 10 Dec 2022 00:03:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D782BC4332F
+	for <git@archiver.kernel.org>; Sat, 10 Dec 2022 00:16:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229685AbiLJADV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 9 Dec 2022 19:03:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52488 "EHLO
+        id S229847AbiLJAQp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 9 Dec 2022 19:16:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbiLJADU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 9 Dec 2022 19:03:20 -0500
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F5FD747D4
-        for <git@vger.kernel.org>; Fri,  9 Dec 2022 16:03:17 -0800 (PST)
-Received: by mail-pj1-x102a.google.com with SMTP id b13-20020a17090a5a0d00b0021906102d05so6573909pjd.5
-        for <git@vger.kernel.org>; Fri, 09 Dec 2022 16:03:17 -0800 (PST)
+        with ESMTP id S229470AbiLJAQo (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 9 Dec 2022 19:16:44 -0500
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 643F996542
+        for <git@vger.kernel.org>; Fri,  9 Dec 2022 16:16:43 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id w23so6517758ply.12
+        for <git@vger.kernel.org>; Fri, 09 Dec 2022 16:16:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Y0TSti/As1qftoB2ECuUnP+o1RPNwJmj4CTyEfxg+nM=;
-        b=OUY9FKgld+uufdkpsTtmvYA1FDxfFq9/Kpf1yFOY+RsjP8ThVjEOqnAELGvqeEw6so
-         nPr2aFTV1jorQmvoC2q+72ghQqHgGy+P/nCKo8pKK6oNEIOv8xtc587wvqbWWLSsTxyx
-         /WXzBfMJWwZ9ueM/Yjh4uwD0iRmUYJFQclXZ1BEmyy/AIZdRHXiviX6lodJr2Ec0Jh+p
-         8orzOEM5SIHhEfki/MsEohHbn4kSoUwYBUy4/J1e7RqIUkqTlYvoCFHy3YSIihZjgxfi
-         sB97TdHEH/3nMOiQsfglEjpiSUx2NGf9Wki0iEwUnm+xURghfLSUskRWHzaaWkuWI9p3
-         JeWw==
+        bh=jEqOJc+CrmgFfzFIVJtrC0BfiuEgY61hfeYhynaTohU=;
+        b=Q/fa2gwDEtjJMT8+rqPJPh1xF1rPUZiepmVz5CFYiw/V4Q11lg5w1bIZQLXHuvQq+e
+         EGZYPHZGqS/BmDWedpDD59lW+VC/QnzJatdU8zcukAPBHCXdNbGjFRtKkrNNwvY700bW
+         h+mN0UnZTzsg+QbAuPneZlDxFAkeZuMg1wn25AWYH2nbwsUuWTcyMGAQnTx8c9vyXKKL
+         jMnLzT9KuHD9CCg9L9duK1Vj8rQPp/U5KgOH7SUiVvwBTs4WWFca5g2TcphCNAy1t14o
+         sYkAqrEaAnL4upsXndvuKSJ7B3oQSyYdXU7DAh1OtmMPVhJGsT0lA26PQOc2bDPbssQj
+         BlhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=Y0TSti/As1qftoB2ECuUnP+o1RPNwJmj4CTyEfxg+nM=;
-        b=gGd2VVb/1BfOYIpnaDNzv3sGAHMAmXdffoIbz8lETMEzVTX63ppksW40FJQ+EKAdna
-         cCua0SgZO1FQjJ8j1jYXZZi6CO74paJ2WtRwKk5IgbLjYrl1ZFlyzCCE5Fd3Kw0RnGWl
-         Lkz3bDD7d4VDS5tTzgWAYnhK77hvoLhURxF/sHoy5TWOX0FNQhrcqdTXcVZDiF1bmnsO
-         /mKB/4Hy2KOKTqNjZrx87VWqZ/vaeMx0YjK54YPkPiz/75+KugWP3E7MVjqtiOz3RhBi
-         D7MM1I5+YqGvimd806by3a1y7u4BVtzbfQ4SvTYcpvdHsTVF0gD4dC8uK7oGcId/ZNef
-         Nreg==
-X-Gm-Message-State: ANoB5plCKfxGK/0ZYjA+geLoSooY+Obpwk3KnVn2inxLCoRL1WK2rf95
-        yNob2sDBixAPxuhSk+Qghdw9kqEYNWsxqw==
-X-Google-Smtp-Source: AA0mqf75ZXNvlTaieD6EccCJCQZWl98TT8K7KyPKjc/gSeY9eZ8U4GQyPE67VgRE5Di60+Gat0ugjQ==
-X-Received: by 2002:a17:902:e20c:b0:189:a934:ee33 with SMTP id u12-20020a170902e20c00b00189a934ee33mr6993313plb.58.1670630596872;
-        Fri, 09 Dec 2022 16:03:16 -0800 (PST)
+        bh=jEqOJc+CrmgFfzFIVJtrC0BfiuEgY61hfeYhynaTohU=;
+        b=cspSNMQgkDOPMHxhicWkJCURdeLo6rd0x9jpI7lqg3KV0+LK3bpVzdgdcqS1Md7JE8
+         eqYkFAkOoDrXgpY00wUMIYNViaz3Tbk5SnXE5hXVrPU+SPckwzFngOPAH44tnMpFCRlN
+         /qWOzDBesrylPYxmYGnTVq4H4LWWHoO3e4YAfBrmajHfzARJG83WOV/rME4c6RKztJTt
+         vJnxHImpTrL0SflnSPfUT7iK4I5ZXtDg0sYOTQEJZzcz4+C/OhOnoBNqX37YUA24GfEs
+         510K2k+6D7h6lP4FFJthy6twZFmYmZSmReHYCDs7h/X8WRxUFjNDTTvRJXef6eFDXeQD
+         /yKQ==
+X-Gm-Message-State: ANoB5pl6mAfMsDfxAbVwL9RWeTwTmm9o17bP1iaOCs9t6TkMSFv8j37K
+        GWvuiIkva53elHXpPUbZilk=
+X-Google-Smtp-Source: AA0mqf6AQzlFXgX99zSKb0VV8gMi++1gr1Vv9F5A54TupyZJQt+9Y9gsLopy05if97VDO5myikbzAA==
+X-Received: by 2002:a17:902:ce04:b0:189:323d:df17 with SMTP id k4-20020a170902ce0400b00189323ddf17mr8770040plg.67.1670631402747;
+        Fri, 09 Dec 2022 16:16:42 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id i15-20020a170902c94f00b00189502c8c8bsm1854401pla.87.2022.12.09.16.03.16
+        by smtp.gmail.com with ESMTPSA id q9-20020a170902bd8900b0018941395c40sm1818963pls.285.2022.12.09.16.16.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Dec 2022 16:03:16 -0800 (PST)
+        Fri, 09 Dec 2022 16:16:42 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Karthik Nayak <karthik.188@gmail.com>
-Cc:     git@vger.kernel.org, toon@iotcl.com
-Subject: Re: [PATCH v2 0/2] check-attr: add support to work with revisions
-References: <20221209210321.709156-1-karthik.188@gmail.com>
-Date:   Sat, 10 Dec 2022 09:03:16 +0900
-In-Reply-To: <20221209210321.709156-1-karthik.188@gmail.com> (Karthik Nayak's
-        message of "Fri, 9 Dec 2022 22:03:19 +0100")
-Message-ID: <xmqq1qp8yvjv.fsf@gitster.g>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, peff@peff.net, avarab@gmail.com
+Subject: Re: [PATCH v4 3/4] object-file: emit corruption errors when detected
+References: <cover.1669839849.git.jonathantanmy@google.com>
+        <cover.1670622176.git.jonathantanmy@google.com>
+        <07d28db92c2c61358755b3d501bc5bd35a760de1.1670622176.git.jonathantanmy@google.com>
+Date:   Sat, 10 Dec 2022 09:16:42 +0900
+In-Reply-To: <07d28db92c2c61358755b3d501bc5bd35a760de1.1670622176.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Fri, 9 Dec 2022 13:44:24 -0800")
+Message-ID: <xmqqv8mkxgd1.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,9 +68,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
->     ++'git check-attr' --stdin [-z] [-a | --all | <attr>...] [-r <revision>]
+> +	fd = open_loose_object(r, oid, &path);
+> +	if (fd < 0) {
+> +		if (errno != ENOENT)
+> +			error_errno(_("unable to open loose object %s"), path);
+> +		return -1;
+> +	}
 
-Please never design your CUI to take unbound number of non-option
-arguments before dashed options.
+I know there was a discussion in the previous round, but is this use
+of path truly safe?  Currently it may happen to be as long as there
+is at least one element on the odb list, but when thinking things
+through with future-proofing point of view, I do not think assuming
+that path is always computable is a healthy thing to do in the
+longer term.
+
+Our "struct object_id" may be extended in the future and allow us to
+express "invalid" object name, in which case the error return we get
+may not even be about "loose object file not openable" but "there
+will never be a loose object file for such an invalid object name",
+in which case there won't be any path returned from the function.
+
+Other than that, the series looks quite clearly written.  Nicely
+done.
+
+Thanks.
