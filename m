@@ -2,139 +2,188 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C56ABC4332F
-	for <git@archiver.kernel.org>; Sun, 11 Dec 2022 18:30:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 746BDC4332F
+	for <git@archiver.kernel.org>; Sun, 11 Dec 2022 21:18:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229918AbiLKSab (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Dec 2022 13:30:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46826 "EHLO
+        id S229845AbiLKVSJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Dec 2022 16:18:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229708AbiLKSa2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Dec 2022 13:30:28 -0500
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EC08A447
-        for <git@vger.kernel.org>; Sun, 11 Dec 2022 10:30:26 -0800 (PST)
-Received: by mail-oi1-x22d.google.com with SMTP id m204so9346081oib.6
-        for <git@vger.kernel.org>; Sun, 11 Dec 2022 10:30:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=YKnibp2IjwOCLvhESg21Q83RaGhuoSjq7wosnOr8aIE=;
-        b=o08M6tn9oE63100tn85bf7z3SVuBFDka7jZAHfO5SQ2r04MazppEg7+3D+gJkI8SIe
-         BeXK4SKzIUzFPVe7AZrRk7Y/nm9d3+dLIYq5OjF/eQnUmbyinwjAZj9koGWfLXpsFBh6
-         lk4MnW09oCmR/egHbP4b7kta17p1Om+l4eeDK4ECzc3v4uVsoCg+fW0vxFTMZ/vTFonO
-         PRfsiva+8T/yDnghT8AIrS9/BJIEtnAAFPuGDZ9CDFnYetODlLhjUzQDworkYhT3oV9a
-         wy9g0SsX1T8no65UuyJGr3nVziGRxszmNJRa9IEkxi5jMixfWgDfvi+Gd/NLZ05oeceC
-         XbfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YKnibp2IjwOCLvhESg21Q83RaGhuoSjq7wosnOr8aIE=;
-        b=kxWvhmxoOwWoVR+8CFzkjUJeiws2LyELH3Fg77KvplCcgKlpFzKF75KaDj3teODPMO
-         SAtwMiCSN+HESfeaTZwwV5KbEHGKOYeMRzp+5xOPouWGHvBD9fA8nuVQtBTBgZFz4GVL
-         u9YwKKfe4KK24ndCvHRg45BUC1SCCAShRMRynbMH5ah8uRJobZ/+UNQy+NHNSC8AXOfF
-         jitsc61F6tHS0Y9oI+qOqU/IKyNBW+zMtfuRg4Ab0xIL6cZjq7rbQHjnVl8sZO5Us7Qt
-         JemrOzkJxTbTScjqS9mqvcbozpsdXAm3XWn6gLsm7Xd7tvT7KUZcNSX/S2azrzVdlPH/
-         jI0A==
-X-Gm-Message-State: ANoB5pnD/+VVDbJ17ayqnouNslR752de4Q+df6mi43U31OwX6JDgXGX0
-        sWxGGsBN9TTKhdATaeN6iBH8fLQCPWUJPRksgrSigGFnsPI=
-X-Google-Smtp-Source: AA0mqf73xfxfQw4SqpIWhPab5oeMYg0lPaaH6PKQmiN7v07njFPqnHR0qUTUymZhuI9eD0MQUEd1s5v+Khn0m24sLQA=
-X-Received: by 2002:a05:6808:21a9:b0:355:7d0f:27ae with SMTP id
- be41-20020a05680821a900b003557d0f27aemr427561oib.133.1670783425466; Sun, 11
- Dec 2022 10:30:25 -0800 (PST)
+        with ESMTP id S229471AbiLKVSH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Dec 2022 16:18:07 -0500
+X-Greylist: delayed 398 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 11 Dec 2022 13:18:03 PST
+Received: from mx-out.tlen.pl (mx-out.tlen.pl [193.222.135.158])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8DF3CE25
+        for <git@vger.kernel.org>; Sun, 11 Dec 2022 13:18:03 -0800 (PST)
+Received: (wp-smtpd smtp.tlen.pl 36182 invoked from network); 11 Dec 2022 22:11:20 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=o2.pl; s=1024a;
+          t=1670793080; bh=ZFN/fCReIJ1HrHy6fwkpFzb3oSMAe3d7I2LkBMKMKh4=;
+          h=To:From:Subject;
+          b=GjvjmEEL+4dhufk/X4dsZEp3S/P4WygFrkhlwxn/m2QIPuWt+7SOodVQzXCrkMMNM
+           OrUsltHfLl+pVJRm4AHvMS1ShV15gBuEkEa2HsH0kFG7GiBets62jB4ik171opVHZ9
+           9ByX3QvItHv3oYT88osWf63gR82hVD0T1Ncm+pt8=
+Received: from mail.dtcasino.pl (HELO [192.168.1.5]) (piotrekkr@o2.pl@[212.180.138.13])
+          (envelope-sender <piotrekkr@o2.pl>)
+          by smtp.tlen.pl (WP-SMTPD) with ECDHE-RSA-AES256-GCM-SHA384 encrypted SMTP
+          for <git@vger.kernel.org>; 11 Dec 2022 22:11:20 +0100
+Message-ID: <51d5993f-a1e0-519e-ffa9-ec5205c5e96d@o2.pl>
+Date:   Sun, 11 Dec 2022 22:11:19 +0100
 MIME-Version: 1.0
-References: <CAPkN8xK7JnhatkdurEb16bC0wb+=Khd=xJ51YQUXmf2H23YCGw@mail.gmail.com>
- <CABPp-BGDB6jj+Et44D6D22KXprB89dNpyS_AAu3E8vOCtVaW1A@mail.gmail.com>
- <CAPkN8xK9__74a3aEFsevfdW_hQ-vzWE+c=QypRacTktuZOfdSw@mail.gmail.com>
- <87mtvolbuj.fsf@evledraar.gmail.com> <CAPkN8xLE68d5Ngpy+LOQ8SALNgfB-+q4F3mFK-QBD=+EOKZSVg@mail.gmail.com>
- <xmqqblc2srq0.fsf@gitster.c.googlers.com> <CAPkN8xKM0zi-AB1xKRGp=whEQTZAbn78w0JjvUXfGfRDky0C=w@mail.gmail.com>
- <08f31194-dce6-9434-c362-94d9a2d97563@kdbg.org> <xmqqlfb3g2jp.fsf@gitster.c.googlers.com>
- <CAPkN8x+agKRRD0Zd-pxs_EuYO_Xm8EyE0nJLCWQB4KNuNkvK8Q@mail.gmail.com>
- <CABPp-BH5RhHR-KhhumuhZGy2F4ypUBoqgAatY5MKkQsB46KM4g@mail.gmail.com>
- <CAPkN8xLN_fKdbU8ugxLYJ1YeCJ8CxBWh+kdhAq1mR8hfAe-NAA@mail.gmail.com> <CABPp-BEqvmSaqVrK=nQsk-8PNXq6Pzq4Y-=RopYwTDjtyitAuw@mail.gmail.com>
-In-Reply-To: <CABPp-BEqvmSaqVrK=nQsk-8PNXq6Pzq4Y-=RopYwTDjtyitAuw@mail.gmail.com>
-From:   anatoly techtonik <techtonik@gmail.com>
-Date:   Sun, 11 Dec 2022 21:30:08 +0300
-Message-ID: <CAPkN8xJ_B_t7L6bErsFB+rp6fzy7PO55myWqyJWPNbTgiQ69ow@mail.gmail.com>
-Subject: Re: Round-tripping fast-export/import changes commit hashes
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Content-Language: en-GB-large
+To:     git@vger.kernel.org
+From:   Piotrek <piotrekkr@o2.pl>
+Subject: Issue with git > 2.36.1 and pre-commit hook on macOS M1
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-WP-MailID: 04da83e7259c37060abcd21ce8819c34
+X-WP-AV: skaner antywirusowy Poczty o2
+X-WP-SPAM: NO 0000001 [kWKF]                               
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Aug 10, 2021 at 8:58 PM Elijah Newren <newren@gmail.com> wrote:
->
-> On Tue, Aug 10, 2021 at 8:51 AM anatoly techtonik <techtonik@gmail.com> wrote:
-> >
-> > On Mon, Aug 9, 2021 at 9:15 PM Elijah Newren <newren@gmail.com> wrote:
-> > >
->
-> [2] https://lore.kernel.org/git/CABPp-BH4dcsW52immJpTjgY5LjaVfKrY9MaUOnKT3byi2tBPpg@mail.gmail.com/
->
-> Signed commits is just one issue, and you'll have to add special code
-> to handle a bunch of other special cases if you go down this route.
-> I'd rephrase the problem.  You want to know when _your tool_ (e.g.
-> reposurgeon since you refer to it multiple times; I'm guessing you're
-> contributing to it?) has not modified a commit or any of its
-> ancestors, and when it hasn't, then _your tool_ should remove that
-> commit from the fast-export stream and replace any references to it by
-> the original commit's object id.  I outlined how to do this in [2],
-> referenced above, making use of the --show-original-ids flag to
-> fast-export.  If you do that, then for any commits which you haven't
-> modified (including not modifying any of its ancestors), then you'll
-> keep the same commits as-is with no stripping of gpg-signatures or
-> canonicalization of objects, so that you'll have the exact same commit
-> IDs.  Further, you can do this today, without any changes to git
-> fast-export or git fast-import.
+Hello.
 
-Took me a while to process the reply. Let's recap.
+On MacOS 12.6.1 with M1 chip, git >=2.37.0 (installed by homebrew) and 
+pre-commit hook that is calling *make* target, that is calling *docker 
+compose run* command, we get error:
 
-I want to make a roundtrip export/import of
-https://github.com/simons-public/protonfixes which should get exactly
-the same repository.
+     the input device is not a TTY
 
-# --- fast-export to exported.txt
-git clone https://github.com/simons-public/protonfixes
-git -C protonfixes fast-export --all > exported.txt
-# --- check revision of the repo
-git -C protonfixes rev-parse HEAD
-# 681411ba8ceb5d2d790e674eb7a5b98951d426e6
-
-# --- fast-import into new repo
-git init newrepo
-git -C newrepo fast-import < exported.txt
-# --- checking revision of the new repo
-git -C newrepo rev-parse HEAD
-# 9888762d7857d9721f0c354e7fc187a199754a4b
-
-Hashes don't match. The roundtrip fails.
+All works file with homebrew git version 2.36.1
 
 
-Let's see if --reference-excluded-parents helps.
+* DETAILS OF PROBLEM *
 
-# --- export below produces the same export stream as above
-git -C protonfixes fast-export --reference-excluded-parents --all >
-exported_parents.txt
+There is pre-commit hook in place that is using bash script to call 
+`make` command which is in turn calling `docker compose run` to run some 
+check before commit. After upgrading git version from `2.36.1` to 
+`>=2.37` we constantly get error:
+
+ > the input device is not a TTY
+
+Example pre-commit hook output:
+
+ > docker compose run --rm --entrypoint "" app /code/test.sh
+ > the input device is not a TTY
+ > make: *** [Makefile:6: check] Error 1
+ > !!! FAILING REGARDLESS OF CHECK RESULT !!!
+
+(the latest error message is just so we don't actually commit anything)
+
+AFAIK `docker compose` command is auto-detecting TTY because no `-t` or 
+`-T` were set.
+
+By doing some tests we managed to check that it is a problem with `git` 
+version.
+
+Latest version that it worked was `2.36.1`:
+
+ > docker compose run --rm --entrypoint "" app /code/test.sh
+ > =================== CHECK OK =================
+ > !!! FAILING REGARDLESS OF CHECK RESULT !!!
+
+Machine and software we were testing on:
+
+ > make --version
+ > GNU Make 3.81
+ >
+ > docker compose version
+ > Docker Compose version v2.12.2
+ >
+ > git --version
+ > git version 2.38.1
+ >
+ > which git
+ > /opt/homebrew/bin/git
+
+Also, we tested with linux Ubuntu and all git versions are working fine 
+with same pre-commit hook. It seems related to `macOS` and `git` only.
+
+* REPLICATING THIS PROBLEM *
+
+Easiest way top replicate is to just clone sample repo I prepared here:
+
+https://github.com/piotrekkr/git-tty-issue-macos
+
+and go with replicate instructions from README.md.
+
+If this is not okay then below I will copy and paste instruction with 
+file contents.
 
 
-Because fast-import/fast-export don't work, you propose to keep the old
-repo around until it is clear which commits I am going to modify. Then
-make a new fast-export starting from the first commit I am going to
-modify with --reference-excluded-parents flag. Is that correct so far?
+* FILES *
 
-Then given this partial export and old repo, how to init the new repo
-that fast-import can apply its tail there?
 
-What if I have multiple commits that I modify, but I don't know which
-of their parents was first? And when I touch commits from different
-branches, how to recreate their parent history intact in one repo?
+* Makefile *
 
--- 
-anatoly t.
+     COMPOSE_RUN = docker compose run --rm --entrypoint ""
+     check:
+     	$(COMPOSE_RUN) app /code/test.sh
+
+
+
+* docker-compose.yml *
+
+     version: "3.7"
+     services:
+     app:
+         image: php:8.1.3-fpm-bullseye
+         volumes:
+         - "${PWD}:/code"
+         working_dir: /code
+
+
+* .git/hooks/pre-commit *
+
+     #!/usr/bin/env bash
+
+     make check
+
+     echo "!!! FAILING REGARDLESS OF CHECK RESULT !!!"
+     exit 1
+
+
+* test.sh *
+
+     #!/usr/bin/env bash
+
+     echo "=================== CHECK OK ================="
+
+
+(sorry for attaching like that, I'm not good with those plain text mail 
+lists)
+
+* INSTRUCTIONS *
+
+1. have macOS with M1 chip (can be expensive)
+2. install `docker`, `docker compose v2`, `make`
+3. upgrade git with homebrew to version `>=2.37.0`
+4. clone repo or manually create files (in same directory)
+    - Makefile
+    - docker-compose.yml
+    - .git/hooks/pre-commit (with execute permissions)
+    - test.sh
+5. if using repo, copy pre commit script to `.git/hooks` directory
+
+     cp pre-commit-hook.sh .git/hooks/pre-commit
+     chmod +x .git/hooks/pre-commit
+
+6. Try to commit and you should get TTY error
+7. Switch git to `2.36.1` version (seems to be only possible by `brew 
+extract`)
+
+     brew tap-new --no-git $USER/local-tap
+     brew extract --version=2.36.1 git $USER/local-tap
+     brew install git@2.36.1
+     brew link --overwrite git@2.36.1
+
+8. Try committing again, TTY problem should be fixed
+
+
+Let me know if you need more details etc.
+
+Regards
+Piotrek
