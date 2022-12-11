@@ -2,57 +2,59 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07DC8C4167B
-	for <git@archiver.kernel.org>; Sun, 11 Dec 2022 05:19:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A88C2C4332F
+	for <git@archiver.kernel.org>; Sun, 11 Dec 2022 05:19:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230001AbiLKFTg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Dec 2022 00:19:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42202 "EHLO
+        id S230053AbiLKFTv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Dec 2022 00:19:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229952AbiLKFS4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Dec 2022 00:18:56 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B963F13E88
+        with ESMTP id S230028AbiLKFS7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Dec 2022 00:18:59 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90989109B
         for <git@vger.kernel.org>; Sat, 10 Dec 2022 21:18:16 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id u15-20020a17090a3fcf00b002191825cf02so8979361pjm.2
+Received: by mail-pj1-x1035.google.com with SMTP id js9so7782925pjb.2
         for <git@vger.kernel.org>; Sat, 10 Dec 2022 21:18:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:date:subject:to:from:sender:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=Ef5MxIUnnkqh9fVpAMVIzzlseUNY3/jiEmi6TuFxPps=;
-        b=L+RmsDMAUoQ5IHIGMZZ6IA3WI+pye8+ujTI5d9xONPgs2MK2FkT+bsWdc6XdOHAAcF
-         OS0trTk2aZI41aTms5DRRoTgblwFDZ5D1nKqSDl9nZUqeCPbkuIDSqPmu4fdZT5Ouotq
-         uW4+RQzwB/D4rkqzGrHimnhXmXoSrexoYsjT50W8U9KQXw0JUBAZQAWeWgx4vj7+QnU+
-         /20TkT7VSr04KTneA5buPK07StS2UyRKwumJ9mXldPeqxrdHjk4X/1G5GAYhnov40JKk
-         xmso+vYHTrjRmR4AGohbwvuHef/ANoMqpvx5sIGLooPYYrejYlS/KQCtR3JOZCzEhktO
-         +AbA==
+        bh=6HNOgwhL5SbF4vpisDHWBS0UTS33eaoQKt00iUFwIjM=;
+        b=h8yG60rvfkr6HXXEQ+8Xpb16z85dz7G2vA8mgq6Gg7VHFd9EU3/tqact+UEpWbRN7s
+         xHKX2FfTIpacpP0Qd8/veR+fpU7o5RUPleM7gxSlXeImR3eqjUcVw/Sj2zgJFNvJRw/A
+         tR20qJWK/J5xhmBzDc2YxPRNwD2R92HffXuU7zaY33nC7FoLHJ0ShL3jkCnB60bYKXNo
+         o3bm7ZfynMxkGMcpT9QcBhA55kRZuKup/m2428GtgU9oLZeFTXEnhWIzVqrL1K+0NvMB
+         jSt5GGSPqFpbnb4qkI0nEFCdVARDJ4MyXXXsS07seI2egEOXNsRrCu7ASJWzls+PXOHq
+         oOcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:date:subject:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ef5MxIUnnkqh9fVpAMVIzzlseUNY3/jiEmi6TuFxPps=;
-        b=Ze/tV1bgWOwogkEMjIXMlFzgundHZYFWx7Qr2w9RlX+TNF1gb8pHJhnhnj9i9Vg1aw
-         UDub8uvexGtqbQnUjAme5F8dLSOVhyIpOe9hmFN+i/vgAv9LrrwVeb+dp3T7v9dkSQhm
-         uV9LWHJ/jnv+L/1D11pEz6AW3u6+eCwtUUdJ7dxRsb2WtxO76yhU9arrh07f1sCYpkeP
-         ByQ/XOWKysEHuW3Wl2vbvRv5S/8496cCZJtLLRQ1brZ/ulHH8f5M6eEAkn/+eXbZk1U3
-         HiO026AADWrNXSiEg4kJw1neJG2Is7yqnlgA7fDkhlbhY5LxF9eBNXm62dGy7e5jNJIV
-         KHaQ==
-X-Gm-Message-State: ANoB5pkjHZ3nNgWm335YSUd8JJyEcQkvVHd5VFnnQKJ8Nyzzc2WPEY/3
-        q6Ib+OkmGSKAfRMOaJYP8cjcEmSdyh7j1w==
-X-Google-Smtp-Source: AA0mqf5caGEcuQmj/ke3LpPTYwgi+QqNRpboT6hZDSaS8TEFdhenRoTWIZDLi3vH5MVZs8p8Lv6ESg==
-X-Received: by 2002:a17:902:ce02:b0:186:5d29:1633 with SMTP id k2-20020a170902ce0200b001865d291633mr12599359plg.50.1670735895734;
-        Sat, 10 Dec 2022 21:18:15 -0800 (PST)
+        bh=6HNOgwhL5SbF4vpisDHWBS0UTS33eaoQKt00iUFwIjM=;
+        b=hDrXH+1SIwo/Z9GKuDUEnia5HRWHqqtPTm39M+n402fFYzn5kYx3b03jxUe7njDAo+
+         MTXZbYTelafQcJtwDMGtzoGq6RydqS11XwsMr6jgMFfPkr39N0AbkJRnXI8OSJeMdwVc
+         L6Zy7F9U5eXLohQ/i2Kpx4+czOyNliIDOozve+6iRz4c683eAP/dhIBqH8rYCCg6tdgC
+         eBau3kbTrG4yDq4N3OIFsUlC0fknyrj4gZHM9S7eVDDFg9t1HZXF+UoHp4xpIBXlWD/M
+         f+zMokja7SS67iVtI5XeOIRbZXnhUrsb7gBBmF5JKSvWe7lfs9+US2KiA9a26ikP7FDP
+         BA8A==
+X-Gm-Message-State: ANoB5pl7CsGeAJPUyMjCOohI4C+/qecqi1Bz2ZN7Qh5qIAVqENJLoeoK
+        GCgTeEuIYvJ7a+8+8z98IGo9sTE0WM18Iw==
+X-Google-Smtp-Source: AA0mqf6zvkAzOpxkGVW7uegDYH0eKE5Jpwi5rV0JfS06XUu5w2dlL6vhF/V/SmGyjbSh52spoF1A0Q==
+X-Received: by 2002:a17:902:e74e:b0:18b:ed3f:c6ca with SMTP id p14-20020a170902e74e00b0018bed3fc6camr12337402plf.12.1670735894923;
+        Sat, 10 Dec 2022 21:18:14 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id m20-20020a170902f21400b00189393ab02csm3721772plc.99.2022.12.10.21.18.15
+        by smtp.gmail.com with ESMTPSA id u2-20020a170902e5c200b0017ec1b1bf9fsm3720785plf.217.2022.12.10.21.18.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Dec 2022 21:18:15 -0800 (PST)
+        Sat, 10 Dec 2022 21:18:14 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     git@vger.kernel.org
-Subject: A note from the maintainer
-Date:   Sun, 11 Dec 2022 14:18:15 +0900
-Message-ID: <xmqqk02yv7qg.fsf@gitster.g>
+Subject: What's cooking in git.git (Dec 2022, #03; Sun, 11)
+X-master-at: 694cb1b2abfda78e60c8c74f1e761de6e852f0a2
+X-next-at: 36f55fa649de7ccf398915274a1eeba1a5d9a69e
+Date:   Sun, 11 Dec 2022 14:18:14 +0900
+Message-ID: <xmqqpmcqv7qh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -60,283 +62,944 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Welcome to the Git development community.
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a future
+release).  Commits prefixed with '-' are only in 'seen', and aren't
+considered "accepted" at all.  A topic without enough support may be
+discarded after a long period of no activity.
 
-This message is written by the maintainer and talks about how Git
-project is managed, and how you can work with it.
+I wanted not to distract the developers with CI related changes
+during the pre-release freeze, but ended up merging them to 'master'
+and also to 'maint', as deprecation and upgrade at GitHub does not
+wait for us at all.  It would be better to give us the same stable
+CI environment across four integration branches.  With l10n updates,
+what is at the tip of 'master' today would become the 2.39 final.
 
-The current maintainer is Junio C Hamano <gitster@pobox.com>; please
-do not send any message to this address unless it also goes to the
-mailing list, because it is likely that such a message will not be
-seen by any human being.  Spam filters learned that legitimate
-messages to the address come only from a very few sender addresses
-that are known to be good, and messages from all others are likely to
-be spam unless they are also sent to the mailing list at the same time
-(i.e. "Reply-all" to the list message would reach the mailbox, but
-"Reply" will likely be thrown into the spam folder).
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
+With maint, master, next, seen, todo:
 
-* Mailing list and the community
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-vcs/git/
 
-The development is primarily done on the Git mailing list. Help
-requests, feature proposals, bug reports and patches should be sent to
-the list address <git@vger.kernel.org>.  You don't have to be
-subscribed to send messages.  The convention on the list is to keep
-everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
-I am not subscribed".
+With all the integration branches and topics broken out:
 
-As an anti-spam measure, the mailing list software rejects messages
-that are not text/plain and drops them on the floor.  If you are a
-GMail user, you'd want to make sure "Plain text mode" is checked.
+	https://github.com/gitster/git/
 
-Before sending patches, please read Documentation/SubmittingPatches
-and Documentation/CodingGuidelines to familiarize yourself with the
-project convention.
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
 
-If you sent a patch and you did not hear any response from anybody for
-several days, it could be that your patch was totally uninteresting,
-but it also is possible that it was simply lost in the noise.  Please
-do not hesitate to send a reminder message in such a case.  Messages
-getting lost in the noise may be a sign that those who can evaluate
-your patch don't have enough mental/time bandwidth to process them
-right at the moment, and it often helps to wait until the list traffic
-becomes calmer before sending such a reminder.
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
 
-The list archive is available at a few public sites:
+Release tarballs are available at:
 
-        http://lore.kernel.org/git/
-        http://marc.info/?l=git
-        http://www.spinics.net/lists/git/
+	https://www.kernel.org/pub/software/scm/git/
 
-For those who prefer to read it over NNTP:
+--------------------------------------------------
+[Graduated to 'master']
 
-	nntp://nntp.lore.kernel.org/org.kernel.vger.git
-        nntp://news.public-inbox.org/inbox.comp.version-control.git
+* ab/ci-musl-bash-fix (2022-12-08) 1 commit
+  (merged to 'next' on 2022-12-08 at d8c01829b3)
+ + CI: don't explicitly pick "bash" shell outside of Windows, fix regression
 
-are available.
+ CI fix.
+ source: <patch-v2-1.1-c34fd06623a-20221207T120220Z-avarab@gmail.com>
 
-When you point at a message in a mailing list archive, using its
-message ID is often the most robust (if not very friendly) way to do
-so, like this:
 
-	http://lore.kernel.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org
+* ab/ci-retire-set-output (2022-12-08) 1 commit
+  (merged to 'next' on 2022-12-08 at 422475c2c6)
+ + CI: migrate away from deprecated "set-output" syntax
 
-Often these web interfaces accept the message ID with enclosing <>
-stripped (like the above example to point at one of the most important
-message in the Git list).
+ CI fix.
+ source: <patch-v2-1.1-4e7db0db3be-20221207T014848Z-avarab@gmail.com>
 
-Some members of the development community can sometimes be found on
-the #git and #git-devel IRC channels on Libera Chat.  Their logs are
-available at:
 
-        http://colabti.org/irclogger/irclogger_log/git
-        http://colabti.org/irclogger/irclogger_log/git-devel
+* ab/ci-use-macos-12 (2022-12-07) 1 commit
+  (merged to 'next' on 2022-12-08 at cdf78cca21)
+ + CI: upgrade to macos-12, and pin OSX version
 
-There is a volunteer-run newsletter to serve our community ("Git Rev
-News" http://git.github.io/rev_news/).
+ CI fix.
+ source: <patch-1.1-4c1dcc89e7a-20221206T195552Z-avarab@gmail.com>
 
-Git is a member project of software freedom conservancy, a non-profit
-organization (https://sfconservancy.org/).  To reach a committee of
-liaisons to the conservancy, contact them at <git@sfconservancy.org>.
 
-For our expectations on the behaviour of the community participants
-towards each other, see CODE_OF_CONDUCT.md at the top level of the source
-tree, or:
+* js/ci-use-newer-up-down-artifact (2022-12-08) 1 commit
+  (merged to 'next' on 2022-12-08 at 27a4f05bc0)
+ + ci: avoid using deprecated {up,down}load-artifacts Action
 
-    https://github.com/git/git/blob/master/CODE_OF_CONDUCT.md
+ CI fix.
+ source: <c9e99b4f96fc4e513c62b1b028e45559f6410c57.1670423680.git.gitgitgadget@gmail.com>
 
 
-* Reporting bugs
+* od/ci-use-checkout-v3-when-applicable (2022-12-06) 1 commit
+  (merged to 'next' on 2022-12-05 at f8e139f01a)
+ + ci(main): upgrade actions/checkout to v3
 
-When you think git does not behave as you expect, please do not stop
-your bug report with just "git does not work".  "I used git in this
-way, but it did not work" is not much better, neither is "I used git
-in this way, and X happend, which is broken".  It often is that git is
-correct to cause X happen in such a case, and it is your expectation
-that is broken. People would not know what other result Y you expected
-to see instead of X, if you left it unsaid.
+ Update GitHub CI to use actions/checkout@v3; use of the older
+ checkout@v2 gets annoying deprecation notices.
+ source: <pull.1354.v2.git.git.1670234474721.gitgitgadget@gmail.com>
 
-Please remember to always state
+--------------------------------------------------
+[New Topics]
 
- - what you wanted to achieve;
+* js/t0021-windows-pwd (2022-12-07) 1 commit
+  (merged to 'next' on 2022-12-08 at 63bc7701e8)
+ + t0021: use Windows-friendly `pwd`
 
- - what you did (the version of git and the command sequence to reproduce
-   the behavior);
+ Test fix.
 
- - what you saw happen (X above);
+ Will cook in 'next'.
+ source: <b38b8fb5a85e10d6189d68b6633adf23fca7b65d.1670339267.git.gitgitgadget@gmail.com>
 
- - what you expected to see (Y above); and
 
- - how the last two are different.
+* rs/t3920-crlf-eating-grep-fix (2022-12-07) 1 commit
+  (merged to 'next' on 2022-12-08 at 421b255ad1)
+ + t3920: support CR-eating grep
+ (this branch uses js/t3920-shell-and-or-fix.)
+
+ Test fix.
+
+ Will cook in 'next'.
+ source: <cbe88abc-c1fb-cb50-6057-47ff27f7a12d@web.de>
+
+
+* es/t1509-root-fixes (2022-12-09) 3 commits
+ - t1509: facilitate repeated script invocations
+ - t1509: make "setup" test more robust
+ - t1509: fix failing "root work tree" test due to owner-check
+
+ source: <pull.1425.git.1668999621.gitgitgadget@gmail.com>
+
+--------------------------------------------------
+[Stalled]
+
+* pw/test-todo (2022-10-06) 3 commits
+ . test_todo: allow [verbose] test as the command
+ . test_todo: allow [!] grep as the command
+ . tests: add test_todo() to mark known breakages
+
+ RFC for test framework improvement.
+
+ Needs review.
+ source: <pull.1374.git.1665068476.gitgitgadget@gmail.com>
+
+
+* cw/submodule-status-in-parallel (2022-11-08) 6 commits
+ - diff-lib: parallelize run_diff_files for submodules
+ - diff-lib: refactor match_stat_with_submodule
+ - submodule: move status parsing into function
+ - submodule: strbuf variable rename
+ - run-command: add duplicate_output_fn to run_processes_parallel_opts
+ - Merge branch 'ab/run-hook-api-cleanup' into cw/submodule-status-in-parallel
+
+ Allow the internal "diff-files" engine to run "how has this
+ submodule changed?" in parallel to speed up "git status".
+
+ Waiting for review.
+ source: <20221020232532.1128326-1-calvinwan@google.com>
+
+
+* js/bisect-in-c (2022-08-30) 17 commits
+ . bisect: no longer try to clean up left-over `.git/head-name` files
+ . bisect: remove Cogito-related code
+ . Turn `git bisect` into a full built-in
+ . bisect: move even the command-line parsing to `bisect--helper`
+ . bisect--helper: make `state` optional
+ . bisect--helper: calling `bisect_state()` without an argument is a bug
+ . bisect: avoid double-quoting when printing the failed command
+ . bisect run: fix the error message
+ . bisect: verify that a bogus option won't try to start a bisection
+ . bisect--helper: migrate to OPT_SUBCOMMAND()
+ . bisect--helper: make the order consistently `argc, argv`
+ . bisect--helper: make `terms` an explicit singleton
+ . bisect--helper: simplify exit code computation
+ . bisect--helper: really retire `--bisect-autostart`
+ . bisect--helper: really retire --bisect-next-check
+ . bisect--helper: retire the --no-log option
+ . Merge branch 'sg/parse-options-subcommand' into js/bisect-in-c
 
-See http://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
-hints.  Our `git bugreport` tool gives you a handy way you can use to
-make sure you do not forget these points when filing a bug report.
+ Final bits of "git bisect.sh" have been rewritten in C.
 
-If you think you found a security-sensitive issue and want to disclose
-it to us without announcing it to wider public, please contact us at
-our security mailing list <git-security@googlegroups.com>.  This is
-a closed list that is limited to people who need to know early about
-vulnerabilities, including:
-
-  - people triaging and fixing reported vulnerabilities
-  - people operating major git hosting sites with many users
-  - people packaging and distributing git to large numbers of people
-
-where these issues are discussed without risk of the information
-leaking out before we're ready to make public announcements.
-
-
-* Repositories and documentation.
-
-My public git.git repositories are (mirrored) at:
-
-  https://git.kernel.org/pub/scm/git/git.git/
-  https://kernel.googlesource.com/pub/scm/git/git
-  https://repo.or.cz/alt-git.git/
-  https://github.com/git/git/
-  https://gitlab.com/git-vcs/git/
-
-This one shows not just the main integration branches, but also
-individual topics broken out:
-
-  https://github.com/gitster/git/
-
-A few web interfaces are found at:
-
-  http://git.kernel.org/pub/scm/git/git.git
-  https://kernel.googlesource.com/pub/scm/git/git
-  http://repo.or.cz/w/alt-git.git
-
-Preformatted documentation from the tip of the "master" branch can be
-found in:
-
-  https://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
-  https://repo.or.cz/git-{htmldocs,manpages}.git/
-  https://github.com/gitster/git-{htmldocs,manpages}.git/
-
-The manual pages formatted in HTML for the tip of 'master' can be
-viewed online at:
-
-  https://git.github.io/htmldocs/git.html
-
-
-* How various branches are used.
-
-There are four "integration" branches in git.git repository that track
-the source tree of git: "master", "maint", "next", and "seen".  They
-however almost never get new commits made directly on them.  Instead,
-a branch is forked from either "master" or "maint" for each "topic",
-whether it is a new feature or fix for a bug, and holds a set of
-commits that belong to the same theme, and then such a "topic branch"
-is merged to these integration branches.
-
-The "master" branch is meant to contain what are very well tested and
-ready to be used in a production setting.  Every now and then, a
-"feature release" is cut from the tip of this branch.  They used to be
-named with three dotted decimal digits (e.g. "1.8.5"), but we have
-switched the versioning scheme and "feature releases" are named with
-three-dotted decimal digits that ends with ".0" (e.g. "1.9.0").
-
-The last such release was 2.38 done on Oct 3rd, 2022.  You can expect
-that the tip of the "master" branch is always more stable than any of
-the released versions.
-
-Whenever a feature release is made, "maint" branch is forked off from
-"master" at that point.  Obvious and safe fixes after a feature
-release are merged to this branch and maintenance releases are cut
-from it.  Usually these fixes are merged to the "master" branch first,
-several days before merged to the "maint" branch, to reduce the chance
-of last-minute issues, but things like embargoed security fixes may
-first appear in the maintenance tracks and merged up to "master" at
-the same time.  The maintenance releases used to be named with
-four dotted decimal, named after the feature release they are updates
-to (e.g. "1.8.5.1" was the first maintenance release for "1.8.5"
-feature release).  These days, maintenance releases are named by
-incrementing the last digit of three-dotted decimal name (e.g.
-"2.38.2" was the second maintenance release for the "2.38" series).
-
-New features never go to the "maint" branch.  It is merged into
-"master" primarily to propagate the description in the release notes
-forward.
-
-A new development does not usually happen on "master". When you send a
-series of patches, after review on the mailing list, a separate topic
-branch is forked from the tip of "master" (or somewhere older, especially
-when the topic is about fixing an earlier bug) and your patches are queued
-there, and kept out of "master" while people test it out. The quality of
-topic branches are judged primarily by the mailing list discussions.
-
-Topic branches that are in good shape are merged to the "next" branch. In
-general, the "next" branch always contains the tip of "master".  It might
-not be quite rock-solid, but is expected to work more or less without major
-breakage. The "next" branch is where new and exciting things take place. A
-topic that is in "next" is expected to be polished to perfection before it
-is merged to "master".  Please help this process by building & using the
-"next" branch for your daily work, and reporting any new bugs you find to
-the mailing list, before the breakage is merged down to the "master".
-
-The "seen" (formerly "pu", proposed updates) branch bundles all the
-remaining topic branches the maintainer happens to have seen.  There
-is no guarantee that the maintainer has enough bandwidth to pick up any
-and all topics that are remotely promising from the list traffic, so
-please do not read too much into a topic being on (or not on) the "seen"
-branch.  This branch is mainly to remind the maintainer that the topics
-in them may turn out to be interesting when they are polished, nothing
-more.  The topics on this branch aren't usually complete, well tested,
-or well documented and they often need further work.  When a topic that
-was in "seen" proves to be in a testable shape, it is merged to "next".
-
-You can run "git log --first-parent master..seen" to see what topics are
-currently in flight.  Sometimes, an idea that looked promising turns out
-to be not so good and the topic can be dropped from "seen" in such a case.
-The output of the above "git log" talks about a "jch" branch, which is an
-early part of the "seen" branch; that branch contains all topics that
-are in "next" and a bit more (but not all of "seen") and is used by the
-maintainer for his daily work.
-
-The two branches "master" and "maint" are never rewound, and "next"
-usually will not be either.  After a feature release is made from
-"master", however, "next" will be rebuilt from the tip of "master"
-using the topics that didn't make the cut in the feature release.
-Some topics that used to be in "next" during the previous cycle may
-get ejected from "next" when this happens.
-
-A natural consequence of how "next" and "seen" bundles topics together
-is that until a topic is merged to "next", updates to it is expected
-by replacing the patch(es) in the topic with an improved version,
-and once a topic is merged to "next", updates to it needs to come as
-incremental patches, pointing out what was wrong in the previous
-patches and how the problem was corrected.
-
-Note that being in "next" is not a guarantee to appear in the next
-release, nor even in any future release.  There were cases that topics
-needed reverting a few commits in them before graduating to "master",
-or a topic that already was in "next" was reverted from "next" because
-fatal flaws were found in it after it was merged to "next".
-
-
-* Other people's trees.
-
-Documentation/SubmittingPatches outlines to whom your proposed changes
-should be sent.  As described in contrib/README, I would delegate fixes
-and enhancements in contrib/ area to the primary contributors of them.
-
-Although the following are included in git.git repository, they have their
-own authoritative repository and maintainers:
-
- - git-gui/ comes from git-gui project, maintained by Pratyush Yadav:
-
-        https://github.com/prati0100/git-gui.git
-
- - gitk-git/ comes from Paul Mackerras's gitk project:
-
-        git://ozlabs.org/~paulus/gitk
-
- - po/ comes from the localization coordinator, Jiang Xin:
-
-	https://github.com/git-l10n/git-po/
-
-When sending proposed updates and fixes to these parts of the system,
-please base your patches on these trees, not git.git (the former two
-even have different directory structures).
+ Temporarily ejected from 'seen'. Waiting for a response on how this
+ topic interacts with 'dd/git-bisect-builtin'.
+ cf. <xmqqv8pr8903.fsf@gitster.g>
+ source: <pull.1132.v6.git.1661885419.gitgitgadget@gmail.com>
+
+
+* ed/fsmonitor-inotify (2022-11-25) 6 commits
+ - fsmonitor: update doc for Linux
+ - fsmonitor: test updates
+ - fsmonitor: enable fsmonitor for Linux
+ - fsmonitor: implement filesystem change listener for Linux
+ - fsmonitor: determine if filesystem is local or remote
+ - fsmonitor: prepare to share code between Mac OS and Linux
+
+ Bundled fsmonitor for Linux using inotify API.
+
+ Needs review on the updated round.
+ source: <pull.1352.v4.git.git.1669230044.gitgitgadget@gmail.com>
+
+
+* ag/merge-strategies-in-c (2022-08-10) 14 commits
+ . sequencer: use the "octopus" strategy without forking
+ . sequencer: use the "resolve" strategy without forking
+ . merge: use the "octopus" strategy without forking
+ . merge: use the "resolve" strategy without forking
+ . merge-octopus: rewrite in C
+ . merge-recursive: move better_branch_name() to merge.c
+ . merge-resolve: rewrite in C
+ . merge-one-file: rewrite in C
+ . update-index: move add_cacheinfo() to read-cache.c
+ . merge-index: add a new way to invoke `git-merge-one-file'
+ . merge-index: drop the index
+ . merge-index: libify merge_one_path() and merge_all()
+ . t6060: add tests for removed files
+ . t6060: modify multiple files to expose a possible issue with merge-index
+
+ An attempt to rewrite remaining merge strategies from shell to C.
+
+ Needs more work.
+ At the minimum, we should lose 11/14 and possibly 08/14.
+ cf. <xmqq7d36vfur.fsf@gitster.g>
+ source: <20220809185429.20098-1-alban.gruin@gmail.com>
+
+
+* es/doc-creation-factor-fix (2022-07-28) 2 commits
+ . range-diff: clarify --creation-factor=<factor>
+ . format-patch: clarify --creation-factor=<factor>
+
+ Expecting a reroll by somebody more familiar with the logic
+ cf. <xmqqo7wfix7p.fsf@gitster.g>
+ source: <7229p500-p2r4-on87-6802-8o90s36rr3s4@tzk.qr>
+
+
+* cw/remote-object-info (2022-08-13) 7 commits
+ . SQUASH???
+ . cat-file: add remote-object-info to batch-command
+ . transport: add client support for object-info
+ . serve: advertise object-info feature
+ . protocol-caps: initialization bug fix
+ . fetch-pack: move fetch initialization
+ . fetch-pack: refactor packet writing
+
+ A client component to talk with the object-info endpoint.
+
+ Expecting a reroll.
+ Under SANITIZE=address, t1006-cat-file.sh finds a breakage.
+ cf. <20220728230210.2952731-1-calvinwan@google.com>
+ cf. <CAFySSZDvgwbbHCHfyuaqX3tKsr-GjJ9iihygg6rNNe46Ys7_EA@mail.gmail.com>
+ source: <20220728230210.2952731-1-calvinwan@google.com>
+
+--------------------------------------------------
+[Cooking]
+
+* ab/t4023-avoid-losing-exit-status-of-diff (2022-12-05) 1 commit
+  (merged to 'next' on 2022-12-05 at 2f47548cad)
+ + t4023: fix ignored exit codes of git
+
+ Test fix.
+
+ Will cook in 'next'.
+ source: <patch-v2-3.8-c5feef1c808-20221202T000227Z-avarab@gmail.com>
+
+
+* jh/t7527-unflake-by-forcing-cookie (2022-12-02) 1 commit
+  (merged to 'next' on 2022-12-05 at da8e250c87)
+ + fsmonitor: fix race seen in t7527
+
+ Make fsmonitor more robust to avoid the flakiness seen in t7527.
+
+ Will cook in 'next'.
+ source: <pull.1437.git.1669937534944.gitgitgadget@gmail.com>
+
+
+* rs/plug-pattern-list-leak-in-lof (2022-12-02) 1 commit
+  (merged to 'next' on 2022-12-05 at e2c11342b1)
+ + list-objects-filter: plug pattern_list leak
+
+ Leak fix.
+
+ Will cook in 'next'.
+ source: <b4361c3e-852b-e30c-f240-86c34bc9c474@web.de>
+
+
+* rs/t4205-do-not-exit-in-test-script (2022-12-02) 1 commit
+  (merged to 'next' on 2022-12-05 at 9db30340b3)
+ + t4205: don't exit test script on failure
+
+ Test fix.
+
+ Will cook in 'next'.
+ source: <c5b4d091-23c1-5a75-a255-99ec83973d8d@web.de>
+
+
+* ab/t5314-avoid-losing-exit-status (2022-12-02) 1 commit
+  (merged to 'next' on 2022-12-05 at ff99a5672f)
+ + t5314: check exit code of "git"
+
+ Test fix.
+
+ Will cook in 'next'.
+ source: <patch-v2-1.1-ca77a7249e6-20221128T141818Z-avarab@gmail.com>
+
+
+* ab/t7600-avoid-losing-exit-status-of-git (2022-12-05) 1 commit
+  (merged to 'next' on 2022-12-05 at 7105bccb5e)
+ + t7600: don't ignore "rev-parse" exit code in helper
+
+ Test fix.
+
+ Will cook in 'next'.
+ source: <patch-v3-1.8-64dfec31fb3-20221202T114733Z-avarab@gmail.com>
+
+
+* jh/fsmonitor-darwin-modernize (2022-12-05) 1 commit
+  (merged to 'next' on 2022-12-05 at 335bcafa02)
+ + fsmonitor: eliminate call to deprecated FSEventStream function
+
+ Stop using deprecated macOS API in fsmonitor.
+
+ Will cook in 'next'.
+ source: <pull.1436.git.1669991072393.gitgitgadget@gmail.com>
+
+
+* js/t3920-shell-and-or-fix (2022-12-05) 1 commit
+  (merged to 'next' on 2022-12-05 at ea2b21208d)
+ + t3920: don't ignore errors of more than one command with `|| true`
+ (this branch is used by rs/t3920-crlf-eating-grep-fix.)
+
+ Test fix.
+
+ Will cook in 'next'.
+ source: <febcfb0a-c410-fb71-cff9-92acfcb269e2@kdbg.org>
+
+
+* sx/pthread-error-check-fix (2022-12-05) 1 commit
+  (merged to 'next' on 2022-12-05 at 53ef195404)
+ + maintenance: compare output of pthread functions for inequality with 0
+
+ Correct pthread API usage.
+
+ Will cook in 'next'.
+ source: <pull.1389.git.git.1670000578395.gitgitgadget@gmail.com>
+
+
+* jk/avoid-redef-system-functions (2022-12-05) 3 commits
+  (merged to 'next' on 2022-12-05 at e6e44a4d66)
+ + Merge branch 'jk/avoid-redef-system-functions-2.30' into jk/avoid-redef-system-functions
+  (merged to 'next' on 2022-12-01 at 7b6131f09f)
+ + Merge branch 'jk/avoid-redef-system-functions-2.30'
+ + Merge branch 'jk/avoid-redef-system-functions-2.30' into maint
+ (this branch uses jk/avoid-redef-system-functions-2.30.)
+
+ The jk/avoid-redef-system-functions-2.30 topic pre-merged for more
+ recent codebase.
+
+ Will cook in 'next'.
+
+
+* jk/avoid-redef-system-functions-2.30 (2022-12-05) 2 commits
+  (merged to 'next' on 2022-12-05 at 9a9b96be8d)
+ + git-compat-util: undefine system names before redeclaring them
+  (merged to 'next' on 2022-12-01 at b52a884362)
+ + git-compat-util: avoid redefining system function names
+ (this branch is used by jk/avoid-redef-system-functions.)
+
+ Redefining system functions for a few functions did not follow our
+ usual "implement git_foo() and #define foo(args) git_foo(args)"
+ pattern, which has broken build for some folks.
+
+ Will cook in 'next'.
+ source: <Y4fH4rhcSztHwKvK@coredump.intra.peff.net>
+
+
+* jt/avoid-lazy-fetch-commits (2022-12-10) 4 commits
+ - commit: don't lazy-fetch commits
+ - object-file: emit corruption errors when detected
+ - object-file: refactor map_loose_object_1()
+ - object-file: remove OBJECT_INFO_IGNORE_LOOSE
+
+ Even in a repository with promissor remote, it is useless to
+ attempt to lazily attempt fetching an object that is expected to be
+ commit, because no "filter" mode omits commit objects.  Take
+ advantage of this assumption to fail fast on errors.
+
+ Will merge to 'next'?
+ source: <cover.1670622176.git.jonathantanmy@google.com>
+
+
+* rs/diff-parseopts (2022-12-02) 3 commits
+  (merged to 'next' on 2022-12-05 at 7cf5090e50)
+ + diff: remove parseopts member from struct diff_options
+ + diff: use add_diff_options() in diff_opt_parse()
+ + diff: factor out add_diff_options()
+
+ The way the diff machinery prepares the options array for the
+ parse_options API has been refactored to avoid resource leaks.
+
+ Will cook in 'next'.
+ source: <19325420-5630-87bb-0c2c-362151214b36@web.de>
+
+
+* sa/git-var-empty (2022-11-27) 2 commits
+  (merged to 'next' on 2022-12-01 at 3b81dcb382)
+ + var: allow GIT_EDITOR to return null
+ + var: do not print usage() with a correct invocation
+
+ "git var UNKNOWN_VARIABLE" and "git var VARIABLE" with the variable
+ given an empty value used to behave identically.  Now the latter
+ just gives an empty output, while the former still gives an error
+ message.
+
+ Will cook in 'next'.
+ source: <pull.1434.v3.git.1669472277.gitgitgadget@gmail.com>
+
+
+* jx/t1301-updates (2022-11-30) 3 commits
+ - t1301: do not change $CWD in "shared=all" test case
+ - t1301: use test_when_finished for cleanup
+ - t1301: fix wrong template dir for git-init
+
+ Test updates.
+ source: <20221128130323.8914-1-worldhello.net@gmail.com>
+
+
+* km/send-email-with-v-reroll-count (2022-11-30) 2 commits
+ - SQUASH???
+ - send-email: relay '-v N' to format-patch
+
+ "git send-email -v 3" used to be expanded to "git send-email
+ --validate 3" when the user meant to pass them down to
+ "format-patch", which has been corrected.
+
+ Seems to break CI.
+ source: <87edtp5uws.fsf@kyleam.com>
+
+
+* so/diff-merges-more (2022-11-30) 6 commits
+ - SQUASH??? cocci fix
+ - diff-merges: issue warning on lone '-m' option
+ - diff-merges: support list of values for --diff-merges
+ - diff-merges: implement log.diffMergesForce config
+ - diff-merges: implement log.diffMerges-m-imply-p config
+ - diff-merges: implement [no-]hide option and log.diffMergesHide config
+
+ Assorted updates to "--diff-merges=X" option.
+
+ Seems to break CI.
+ Cocci complains about "if (func_ptr != NULL)"
+ cf. https://github.com/git/git/actions/runs/3583592108/jobs/6029213624
+ source: <20221127093721.31012-1-sorganov@gmail.com>
+
+
+* ab/config-multi-and-nonbool (2022-11-27) 9 commits
+ - for-each-repo: with bad config, don't conflate <path> and <cmd>
+ - config API: add "string" version of *_value_multi(), fix segfaults
+ - config API users: test for *_get_value_multi() segfaults
+ - for-each-repo: error on bad --config
+ - config API: have *_multi() return an "int" and take a "dest"
+ - versioncmp.c: refactor config reading next commit
+ - config tests: add "NULL" tests for *_get_value_multi()
+ - config tests: cover blind spots in git_die_config() tests
+ - for-each-repo tests: test bad --config keys
+
+ Assorted config API updates.
+
+ Waiting for review.
+ source: <cover-v3-0.9-00000000000-20221125T093158Z-avarab@gmail.com>
+
+
+* yn/git-jump-emacs (2022-11-27) 3 commits
+  (merged to 'next' on 2022-11-29 at d0960938a0)
+ + git-jump: invoke emacs/emacsclient
+ + git-jump: move valid-mode check earlier
+ + git-jump: add an optional argument '--stdout'
+
+ "git jump" (in contrib/) learned to present the "quickfix list" to
+ its standard output (instead of letting it consumed by the editor
+ it invokes), and learned to also drive emacs/emacsclient.
+
+ Will cook in 'next'.
+ source: <pull.1423.v8.git.1669511933.gitgitgadget@gmail.com>
+
+
+* sa/cat-file-mailmap--batch-check (2022-12-02) 2 commits
+ - cat-file: add mailmap support to --batch-check option
+ - cat-file: add mailmap support to -s option
+
+ 'cat-file' gains mailmap support for its '--batch-check' and '-s'
+ options.
+ source: <20221201155504.320461-1-siddharthasthana31@gmail.com>
+
+
+* ab/tag-object-type-errors (2022-11-22) 5 commits
+ - tag: don't emit potentially incorrect "object is a X, not a Y"
+ - tag: don't misreport type of tagged objects in errors
+ - object tests: add test for unexpected objects in tags
+ - object-file.c: free the "t.tag" in check_tag()
+ - Merge branch 'jk/parse-object-type-mismatch' into ab/tag-object-type-errors
+
+ Hardening checks around mismatched object types when one of those
+ objects is a tag.
+
+ Needs review.
+ source: <cover-0.4-00000000000-20221118T113442Z-avarab@gmail.com>
+
+
+* js/range-diff-mbox (2022-11-23) 1 commit
+ - range-diff: support reading mbox files
+
+ 'git range-diff' gained support for reading either side from an .mbox
+ file instead of a revision range.
+
+ Expecting review responses.
+ source: <pull.1420.v3.git.1669108102092.gitgitgadget@gmail.com>
+
+
+* rj/branch-copy-and-rename (2022-11-17) 1 commit
+  (merged to 'next' on 2022-12-05 at 730340640b)
+ + branch: force-copy a branch to itself via @{-1} is a no-op
+
+ Fix a pair of bugs in 'git branch'.
+
+ Will cook in 'next'.
+ source: <f0b2d46c-2e9c-2630-2870-8ed550dd1606@gmail.com>
+
+
+* tl/ls-tree--pattern (2022-11-17) 6 commits
+ - ls-tree: introduce '--pattern' option
+ - ls-tree: introduce 'match_pattern()' function
+ - ls-tree: improving cohension in the print code
+ - ls-tree: optimize params of 'show_tree_common_default_long()'
+ - t3104: remove shift code in 'test_ls_tree_format'
+ - ls-tree: cleanup the redundant SPACE
+
+ A synonym for "ls-tree | grep <pattern>", "ls-tree
+ --pattern=<pattern>" was introduced.
+
+ Waiting for review response, but leaning negative.
+ Seems to break CI.
+ test broken with SHA256 due to hardcoded hexadecimal constants
+ cf. https://github.com/git/git/actions/runs/3581947576/jobs/6025603775#step:4:1846
+ source: <20221117113023.65865-1-tenglong.tl@alibaba-inc.com>
+
+
+* tr/am--no-verify (2022-12-01) 2 commits
+ - SQUASH???
+ - am: allow passing --no-verify flag
+
+ Conditionally skip the pre-applypatch and applypatch-msg hooks when
+ applying patches with 'git am'.
+
+ Expecting a (hopefully final) reroll.
+ source: <20221130172833.2662751-1-thierry.reding@gmail.com>
+
+
+* ew/format-patch-mboxrd (2022-11-14) 1 commit
+ - format-patch: add --mboxrd alias for --pretty=mboxrd
+
+ Teach `format-patch` a convenient alias for `--pretty=mboxrd`.
+
+ Waiting for discussion to settle.
+ source: <20221114094114.18986-1-e@80x24.org>
+
+
+* js/drop-mingw-test-cmp (2022-11-14) 2 commits
+ - tests(mingw): avoid very slow `mingw_test_cmp`
+ - t0021: use Windows-friendly `pwd`
+
+ Use `git diff --no-index` as a test_cmp on Windows.
+
+ Waiting for review response.
+ source: <pull.1309.v4.git.1668434812.gitgitgadget@gmail.com>
+
+
+* mc/switch-advice (2022-11-09) 1 commit
+ - po: use `switch` over `checkout` in error message
+
+ Use 'switch' instead of 'checkout' in an error message.
+
+ Waiting for review response.
+ source: <pull.1308.git.git.1668018620148.gitgitgadget@gmail.com>
+
+
+* rs/multi-filter-args (2022-11-30) 5 commits
+  (merged to 'next' on 2022-12-01 at 5848d16bb6)
+ + list-objects-filter: remove OPT_PARSE_LIST_OBJECTS_FILTER_INIT()
+ + pack-objects: simplify --filter handling
+ + pack-objects: fix handling of multiple --filter options
+ + t5317: demonstrate failure to handle multiple --filter options
+ + t5317: stop losing return codes of git ls-files
+
+ Fix a bug where `pack-objects` would not respect multiple `--filter`
+ arguments when invoked directly.
+
+ Will cook in 'next'.
+ source: <c2d3e7a3-599f-dae5-8dde-dc969df39f02@web.de>
+
+
+* ab/various-leak-fixes (2022-11-21) 16 commits
+  (merged to 'next' on 2022-11-21 at eff484a27c)
+ + built-ins: use free() not UNLEAK() if trivial, rm dead code
+ + revert: fix parse_options_concat() leak
+ + cherry-pick: free "struct replay_opts" members
+ + rebase: don't leak on "--abort"
+ + connected.c: free the "struct packed_git"
+ + sequencer.c: fix "opts->strategy" leak in read_strategy_opts()
+ + ls-files: fix a --with-tree memory leak
+ + revision API: call graph_clear() in release_revisions()
+ + unpack-file: fix ancient leak in create_temp_file()
+ + built-ins & libs & helpers: add/move destructors, fix leaks
+ + dir.c: free "ident" and "exclude_per_dir" in "struct untracked_cache"
+ + read-cache.c: clear and free "sparse_checkout_patterns"
+ + commit: discard partial cache before (re-)reading it
+ + {reset,merge}: call discard_index() before returning
+ + tests: mark tests as passing with SANITIZE=leak
+ + Merge branch 'pw/rebase-no-reflog-action' into ab/various-leak-fixes
+
+ Various leak fixes.
+
+ Will cook in 'next'.
+ source: <cover-v2-00.15-00000000000-20221108T172650Z-avarab@gmail.com>
+
+
+* aw/complete-case-insensitive (2022-11-30) 2 commits
+  (merged to 'next' on 2022-12-05 at 791f41df7c)
+ + completion: add case-insensitive match of pseudorefs
+ + completion: add optional ignore-case when matching refs
+
+ Introduce a case insensitive mode to the Bash completion helpers.
+
+ Will cook in 'next'.
+ source: <pull.1374.v2.git.git.1668990419.gitgitgadget@gmail.com>
+
+
+* dd/git-bisect-builtin (2022-11-15) 13 commits
+  (merged to 'next' on 2022-11-15 at e16e754058)
+ + bisect; remove unused "git-bisect.sh" and ".gitignore" entry
+  (merged to 'next' on 2022-11-14 at fc304fb52f)
+ + Turn `git bisect` into a full built-in
+ + bisect--helper: log: allow arbitrary number of arguments
+ + bisect--helper: handle states directly
+ + bisect--helper: emit usage for "git bisect"
+ + bisect test: test exit codes on bad usage
+ + bisect--helper: identify as bisect when report error
+ + bisect-run: verify_good: account for non-negative exit status
+ + bisect run: keep some of the post-v2.30.0 output
+ + bisect: fix output regressions in v2.30.0
+ + bisect: refactor bisect_run() to match CodingGuidelines
+ + bisect tests: test for v2.30.0 "bisect run" regressions
+ + Merge branch 'dd/bisect-helper-subcommand' into dd/git-bisect-builtin
+
+ `git bisect` becomes a builtin.
+
+ Will cook in 'next'.
+ source: <cover.1668097962.git.congdanhqx@gmail.com>
+
+
+* ds/packed-refs-v2 (2022-11-07) 30 commits
+ - refs: skip hashing when writing packed-refs v2
+ - p1401: create performance test for ref operations
+ - ci: run GIT_TEST_PACKED_REFS_VERSION=2 in some builds
+ - t*: skip packed-refs v2 over http tests
+ - t3210: require packed-refs v1 for some tests
+ - t5502: add PACKED_REFS_V1 prerequisite
+ - t5312: allow packed-refs v2 format
+ - t1409: test with packed-refs v2
+ - packed-backend: create GIT_TEST_PACKED_REFS_VERSION
+ - packed-refs: write prefix chunks
+ - packed-refs: read optional prefix chunks
+ - packed-refs: read file format v2
+ - packed-refs: write file format version 2
+ - packed-backend: create shell of v2 writes
+ - config: add config values for packed-refs v2
+ - packed-backend: create abstraction for writing refs
+ - packed-backend: extract iterator/updates merge
+ - packed-backend: extract add_write_error()
+ - refs: extract packfile format to new file
+ - chunk-format: parse trailing table of contents
+ - chunk-format: allow trailing table of contents
+ - chunk-format: store chunk offset during write
+ - chunk-format: document trailing table of contents
+ - chunk-format: number of chunks is optional
+ - refs: allow loose files without packed-refs
+ - repository: wire ref extensions to ref backends
+ - config: fix multi-level bulleted list
+ - extensions: add refFormat extension
+ - read-cache: add index.computeHash config option
+ - hashfile: allow skipping the hash function
+
+ Waiting for review.
+ Seems to break CI.
+ linux-TEST-vars
+ cf. https://github.com/git/git/actions/runs/3598165328
+ source: <pull.1408.git.1667846164.gitgitgadget@gmail.com>
+
+
+* ja/worktree-orphan (2022-11-10) 2 commits
+ - worktree add: add --orphan flag
+ - worktree add: Include -B in usage docs
+
+ 'git worktree add' learned how to create a worktree based on an
+ orphaned branch with `--orphan`.
+
+ Expecting another round?
+ source: <20221110233137.10414-1-jacobabel@nullpo.dev>
+
+
+* tb/ci-concurrency (2022-11-08) 1 commit
+ - ci: avoid unnecessary builds
+
+ Avoid unnecessary builds in CI, with settings configured in
+ ci-config.
+
+ Waiting for review.
+ source: <ff172f1de982f6f79b598e4ac6d5b2964ca4a098.1667931937.git.me@ttaylorr.com>
+
+
+* tl/notes--blankline (2022-11-09) 5 commits
+ - notes.c: introduce "--no-blank-line" option
+ - notes.c: provide tips when target and append note are both empty
+ - notes.c: drop unreachable code in 'append_edit()'
+ - notes.c: cleanup for "designated init" and "char ptr init"
+ - notes.c: cleanup 'strbuf_grow' call in 'append_edit'
+
+ 'git notes append' was taught '--[no-]blank-line' to conditionally
+ add a LF between a new and existing note.
+
+ Waiting for review.
+ source: <cover.1667980450.git.dyroneteng@gmail.com>
+
+
+* ds/bundle-uri-4 (2022-12-06) 11 commits
+  (merged to 'next' on 2022-12-05 at 2fa7bc1763)
+ + clone: unbundle the advertised bundles
+ + bundle-uri: download bundles from an advertised list
+ + bundle-uri: allow relative URLs in bundle lists
+ + strbuf: introduce strbuf_strip_file_from_path()
+ + bundle-uri: serve bundle.* keys from config
+ + bundle-uri client: add helper for testing server
+ + transport: rename got_remote_heads
+ + bundle-uri client: add boolean transfer.bundleURI setting
+ + clone: request the 'bundle-uri' command when available
+ + t: create test harness for 'bundle-uri' command
+ + protocol v2: add server-side "bundle-uri" skeleton
+
+ Bundle URIs part 4.
+
+ Will cook in 'next'.
+ source: <pull.1400.v3.git.1670262639.gitgitgadget@gmail.com>
+
+
+* tl/pack-bitmap-absolute-paths (2022-11-29) 4 commits
+  (merged to 'next' on 2022-11-30 at cb5d17ee40)
+ + pack-bitmap.c: trace bitmap ignore logs when midx-bitmap is found
+ + pack-bitmap.c: break out of the bitmap loop early if not tracing
+  (merged to 'next' on 2022-11-14 at 34eb0ea05a)
+ + pack-bitmap.c: avoid exposing absolute paths
+ + pack-bitmap.c: remove unnecessary "open_pack_index()" calls
+
+ The pack-bitmap machinery is taught to log the paths of redundant
+ bitmap(s) to trace2 instead of stderr.
+
+ Will cook in 'next'.
+ source: <cover.1669644101.git.dyroneteng@gmail.com>
+
+
+* ab/make-bin-wrappers (2022-10-31) 4 commits
+ . Makefile: simplify $(test_bindir_programs) rule by splitting it up
+ . Makefile: rename "test_bindir_programs" variable, pre-declare
+ . Makefile: define "TEST_{PROGRAM,OBJS}" variables earlier
+ . Makefile: factor sed-powered '#!/bin/sh' munging into a variable
+
+ Resolve issues with the bin-wrappers/% rules where "make
+ bin-wrappers/git" would generate the script but not "git" itself.
+
+ Waiting for review discussion to settle, but leaning negative.
+ source: <cover-v3-0.4-00000000000-20221031T222249Z-avarab@gmail.com>
+
+
+* kz/merge-tree-merge-base (2022-11-25) 3 commits
+  (merged to 'next' on 2022-11-25 at 298ca8e2e8)
+ + docs: fix description of the `--merge-base` option
+  (merged to 'next' on 2022-11-14 at 76d48ae21f)
+ + merge-tree.c: allow specifying the merge-base when --stdin is passed
+ + merge-tree.c: add --merge-base=<commit> option
+
+ "merge-tree" learns a new `--merge-base` option.
+
+ Will cook in 'next'.
+ source: <pull.1397.v7.git.1668210314.gitgitgadget@gmail.com>
+ source: <c21466d1db0e7f7fcd7308b61aa1e3cd4e3d67c4.1669261026.git.gitgitgadget@gmail.com>
+
+
+* po/pretty-hard-trunc (2022-11-13) 1 commit
+ - pretty-formats: add hard truncation, without ellipsis, options
+
+ Add a new pretty format which truncates without ellipsis.
+
+ Waiting for review.
+ source: <20221112143616.1429-1-philipoakley@iee.email>
+
+
+* rr/status-untracked-advice (2022-12-01) 1 commit
+  (merged to 'next' on 2022-12-05 at 68527013ef)
+ + status: modernize git-status "slow untracked files" advice
+
+ The advice message given by "git status" when it takes long time to
+ enumerate untracked paths has been updated.
+
+ Will cook in 'next'.
+ source: <pull.1384.v9.git.1669769536707.gitgitgadget@gmail.com>
+
+
+* cc/filtered-repack (2022-11-23) 2 commits
+ - repack: add --filter=<filter-spec> option
+ - pack-objects: allow --filter without --stdout
+
+ "git repack" learns to discard objects that ought to be retrievable
+ again from the promissor remote.
+
+ Needs review.
+ Seems to break CI.
+ cf. https://github.com/git/git/actions/runs/3560918726
+ source: <20221122175150.366828-1-christian.couder@gmail.com>
+
+
+* mc/credential-helper-auth-headers (2022-11-02) 11 commits
+ - t5556: add HTTP authentication tests
+ - test-http-server: add simple authentication
+ - test-http-server: pass Git requests to http-backend
+ - test-http-server: add HTTP request parsing
+ - test-http-server: add HTTP error response function
+ - test-http-server: add stub HTTP server test helper
+ - http: set specific auth scheme depending on credential
+ - http: move proactive auth to first slot creation
+ - http: store all request headers on active_request_slot
+ - credential: add WWW-Authenticate header to cred requests
+ - http: read HTTP WWW-Authenticate response headers
+
+ Extending credential helper protocol.
+
+ Needs review.
+ Seems to break CI (cmake-ctest).
+ cf. https://github.com/git/git/actions/runs/3598431374
+ source: <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
+
+--------------------------------------------------
+[Discarded]
+
+* gc/submodule-clone-update-with-branches (2022-10-30) 8 commits
+ . clone, submodule update: create and check out branches
+ . submodule--helper: remove update_data.suboid
+ . submodule update: refactor update targets
+ . submodule: return target of submodule symref
+ . t5617: drop references to remote-tracking branches
+ . submodule--helper clone: create named branch
+ . repo-settings: add submodule_propagate_branches
+ . clone: teach --detach option
+
+ "git clone --recurse-submodules" and "git submodule update" learns
+ to honor the "propagete branches" option.
+
+ Will discard for now.
+ cf. <xmqqedtl14xr.fsf@gitster.g>
+ source: <pull.1321.v3.git.git.1666988096.gitgitgadget@gmail.com>
+
+
+* ab/remove--super-prefix (2022-11-21) 12 commits
+ . fetch: rename "--submodule-prefix" to "--super-prefix"
+ . read-tree: add "--super-prefix" option, eliminate global
+ . submodule--helper: convert "{update,clone}" to their own "--super-prefix"
+ . submodule--helper: convert "status" to its own "--super-prefix"
+ . submodule--helper: convert "sync" to its own "--super-prefix"
+ . submodule--helper: convert "foreach" to its own "--super-prefix"
+ . submodule--helper: don't use global --super-prefix in "absorbgitdirs"
+ . submodule.c & submodule--helper: pass along "super_prefix" param
+ . read-tree + fetch tests: test failing "--super-prefix" interaction
+ . Merge branch 'ab/submodule-no-abspath' into ab/remove--super-prefix
+  (merged to 'next' on 2022-11-18 at 34d0accc7b)
+ + submodule--helper absorbgitdirs: no abspaths in "Migrating git..."
+ . Merge branch 'ab/submodule-helper-prep-only' into ab/remove--super-prefix
+
+ Remove the top-level `--super-prefix` option.
+ Will discard.
+ cf. the thread leading to <xmqqmt86stm3.fsf@gitster.g>
+ source: <cover-v3-0.9-00000000000-20221119T122853Z-avarab@gmail.com>
+
+
+* ab/submodule-no-abspath (2022-11-23) 2 commits
+  (merged to 'next' on 2022-11-23 at 97b6096e7c)
+ + submodule absorbgitdirs: use relative <from> and <to> paths
+  (merged to 'next' on 2022-11-18 at 34d0accc7b)
+ + submodule--helper absorbgitdirs: no abspaths in "Migrating git..."
+
+ Remove an absolute path in the "Migrating git directory" message.
+
+ Revert out of 'next'.
+ cf. the thread leading to <xmqqmt86stm3.fsf@gitster.g>
+ source: <patch-1.1-34b54fdd9bb-20221109T020347Z-avarab@gmail.com>
+ source: <patch-1.1-065be1da895-20221122T224306Z-avarab@gmail.com>
+
+
+* ab/cmake-nix-and-ci (2022-11-04) 14 commits
+  (merged to 'next' on 2022-11-08 at 6ef4e93b36)
+ + CI: add a "linux-cmake-test" to run cmake & ctest on linux
+ + cmake: copy over git-p4.py for t983[56] perforce test
+ + cmake: only look for "sh" in "C:/Program Files" on Windows
+ + cmake: increase test timeout on Windows only
+ + cmake: support GIT_TEST_OPTS, abstract away WIN32 defaults
+ + Makefile + cmake: use environment, not GIT-BUILD-DIR
+ + test-lib.sh: support a "GIT_TEST_BUILD_DIR"
+ + cmake: set "USE_LIBPCRE2" in "GIT-BUILD-OPTIONS" for test-lib.sh
+ + cmake & test-lib.sh: add a $GIT_SOURCE_DIR variable
+ + cmake: chmod +x the bin-wrappers/* & SCRIPT_{SH,PERL} & git-p4
+ + cmake: don't copy chainlint.pl to build directory
+ + cmake: update instructions for portable CMakeLists.txt
+ + cmake: use "-S" and "-B" to specify source and build directories
+ + cmake: don't invoke msgfmt with --statistics
+
+ Fix assorted issues with CTest on *nix machines.
+
+ Revert out of 'next'.
+ cf. <xmqq5yeuspam.fsf@gitster.g>
+ source: <cover-v4-00.14-00000000000-20221103T160255Z-avarab@gmail.com>
+
+
+* ms/sendemail-validate-headers (2022-11-11) 1 commit
+ . Expose header information to git-send-email's sendemail-validate hook
+
+ Expecting a reroll.
+ Appears to break t9001 completely?
+ source: <20221111194223.644845-2-michael.strawbridge@amd.com>
+
+
+* hl/archive-recursive (2022-10-19) 10 commits
+ . fixup! archive: add tests for git archive --recurse-submodules
+ . archive: add tests for git archive --recurse-submodules
+ . archive: add --recurse-submodules to git-archive command
+ . archive: remove global repository from archive_args
+ . archive: pass repo objects to write_archive handlers
+ . tree: add repository parameter to read_tree_fn_t
+ . tree: handle submodule case for read_tree_at properly
+ . tree: increase test coverage for tree.c
+ . tree: update cases to use repo_ tree methods
+ . tree: do not use the_repository for tree traversal methods.
+
+ "git archive" has been taught "--recurse-submodules" option to
+ create a tarball that includes contents from submodules.
+
+ Expecting a reroll.
+ Seems to break win+VS test(8).
+ cf. https://github.com/git/git/actions/runs/3293333066 whose only
+ difference from https://github.com/git/git/actions/runs/3293553109
+ is the inclusion of this topic.
+ source: <pull.1359.v3.git.git.1665973401.gitgitgadget@gmail.com>
