@@ -2,152 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9B2C0C001B2
-	for <git@archiver.kernel.org>; Sun, 11 Dec 2022 11:59:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5499C4332F
+	for <git@archiver.kernel.org>; Sun, 11 Dec 2022 16:02:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230286AbiLKL7r (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Dec 2022 06:59:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37556 "EHLO
+        id S230247AbiLKQCI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 11 Dec 2022 11:02:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230244AbiLKL7a (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Dec 2022 06:59:30 -0500
-Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23ED41146D
-        for <git@vger.kernel.org>; Sun, 11 Dec 2022 03:59:25 -0800 (PST)
-Received: by mail-pg1-x529.google.com with SMTP id h33so6413276pgm.9
-        for <git@vger.kernel.org>; Sun, 11 Dec 2022 03:59:25 -0800 (PST)
+        with ESMTP id S230080AbiLKQCF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 11 Dec 2022 11:02:05 -0500
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47855BF44
+        for <git@vger.kernel.org>; Sun, 11 Dec 2022 08:02:04 -0800 (PST)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-3b10392c064so115728117b3.0
+        for <git@vger.kernel.org>; Sun, 11 Dec 2022 08:02:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RP87F+8vyTxmUq9Y/6AgEUGexWZrhyr3igPvI0d/T2E=;
-        b=Ga2AMhtwOgTGpg3QJPNlTDQCMPrFekJI6dKVIK1BxKyloJbuXPzDA/+gt1NEaLF9RZ
-         UqkEbxvxi8E8GLoYrRYgrSLcma627o/jGl/gXnvpkD4CpMYiVObVndeqhhkiJZ6QnX5A
-         IhSm9hocqplwqt1RTaJjDwoj6YiDANJss/hA3abzy/0cYqy/KsjP/yt7vVuCD9+EQ8GG
-         AVqmas/A+85kVIQ52f68LYCAClgRyN/w59jZfMEqJ0fs/GLZxNS92TKGLw+/xRFklT9v
-         zj/VvQKQ8G4znOyZkRdqS4eNf1VYsitBWhQ+zqrNYoFYcBQGPBMEjStYPPNA2dFp5mmA
-         djTA==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7kPXCUZ6VAUh0exqa+QCl74UVII2IdLx1UXoUTB6cyI=;
+        b=XPGSgJDxFRWoHrwrjJWzMyPg1IV2e6xjChtnC5Mcej2CFC/pPV43dBixKKeQ0Nw/7y
+         NFZuq93pAHgGQ8g4i0FIDd1WyKUFaPIOXO0AfJwKHEa/57zvT/uUuxYqEzGVgC/3MeXE
+         UMwAQyuubm4qeONF3OEgCXWhUn2dG2iculSjN5cLbfNKtnm8dFv6xrV7W+7jBOsZiHwB
+         z7+AZmZj0wpN/jdYfl/t4nvf5zDqxBskzCNbBL/VbZwGQIanEOo9vDbgOuKV24+XEXJE
+         WYBg0eiEp9NRqLe6IKS3dEmbCi5fUWMeuc5fIlTwIhfPeb8GmByx4DUemIGpCFNECEVR
+         FycQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RP87F+8vyTxmUq9Y/6AgEUGexWZrhyr3igPvI0d/T2E=;
-        b=ag2qA0SjzwJ1xbQ8x9sBOKYoqpudBqEyQWrr+ZamYo+USzlpKuiu58ZBe+CMJ3CBeK
-         KIo94TwiK9C2556Zt7Ud7ieRpkL8UJ2OGpZN9c5WvJhMYxXCSZKzh/2ONsO2/3YFCsg5
-         +Xkw/GtVmk3rpuKoQxM9WgUlhFWshD4kw5KecBX8IfySuuvzKLqOSznRUsYaO3uQGx+q
-         RWCnVtVgoAKdSPckwAcqltkV2DeokAXKBN5RzvqER8N4UKUqKUhvtIgZFjd9vm/Lxzua
-         xuToFXraoVM6bHJox8IBWArExeI0FK/y11GC8UkV+5dzgFrB/g0aRzEFtCLs+LFQTn3p
-         8jpw==
-X-Gm-Message-State: ANoB5pnValLAh1NPelvZxCgdxEw6I77IpOm6C7g0kG6DgpszmOBfwsvL
-        YR36XYDgtOApDIdMbLMuKPk=
-X-Google-Smtp-Source: AA0mqf77IPtXBc3r5FoaATmfFZ5R0O8DMbEddD140CmXoS9Ij11K8Vd9AUHoBpQ7f3ePgG33bxrhbQ==
-X-Received: by 2002:a62:e50e:0:b0:56e:34b0:4fec with SMTP id n14-20020a62e50e000000b0056e34b04fecmr11702892pff.14.1670759964657;
-        Sun, 11 Dec 2022 03:59:24 -0800 (PST)
-Received: from tigtog-proxy.localdomain.localdomain (144.34.163.219.16clouds.com. [144.34.163.219])
-        by smtp.gmail.com with ESMTPSA id v66-20020a626145000000b0057716769289sm3877680pfb.196.2022.12.11.03.59.23
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 11 Dec 2022 03:59:23 -0800 (PST)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Git l10n discussion group <git-l10n@googlegroups.com>
-Cc:     Jiang Xin <worldhello.net@gmail.com>,
-        Git List <git@vger.kernel.org>,
-        Alessandro Menti <alessandro.menti@alessandromenti.it>,
-        Alexander Shopov <ash@kambanaria.org>,
-        Arusekk <arek_koz@o2.pl>, Bagas Sanjaya <bagasdotme@gmail.com>,
-        =?UTF-8?q?Christopher=20D=C3=ADaz?= 
-        <christopher.diaz.riv@gmail.com>,
-        Daniel Santos <dacs.git@brilhante.top>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Emir SARI <bitigchi@me.com>, Emir SARI <emir_sari@icloud.com>,
-        Fangyi Zhou <me@fangyi.io>,
-        Gwan-gyeong Mun <elongbug@gmail.com>,
-        =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-        Jimmy Angelakos <vyruss@hellug.gr>,
-        Jordi Mas <jmas@softcatala.org>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        =?UTF-8?q?Tr=E1=BA=A7n=20Ng=E1=BB=8Dc=20Qu=C3=A2n?= 
-        <vnwildman@gmail.com>, Yi-Jyun Pan <pan93412@gmail.com>
-Subject: [GIT PULL] l10n updates for 2.39.0 round 1
-Date:   Sun, 11 Dec 2022 19:59:20 +0800
-Message-Id: <20221211115920.706-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.32.0.rc3
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7kPXCUZ6VAUh0exqa+QCl74UVII2IdLx1UXoUTB6cyI=;
+        b=Um13US7KSQ1OUDJREYrixX8GaWQv6NbWKRdlAaKMdeglN7gfvXejbu81hQmPg87zpR
+         kvmRoo2MO2XJjaQmVqW3ZNooUJjrKvR+Wku7jUDKhjqCMpJyAcC1Ys1PhIwHdYXuT5Mh
+         qJov547ArALpkXGxFB5YxZafSwDOfP561PPvrPUE5gDQl6RXobiGlCZYxNHyhDdYLs5Z
+         xfi3vCPGRoBOudaa04DV1XklxbPr3wunFBMrp8V+6SYJ6HHWd2BaG6wLdNZAGQ05JBAK
+         mIrgi624rS0/EM2IoBaCzBIeZhnqCjMOYFuEn0c5USJwGX7hsvkKqKF/erY9FMJbflS9
+         01kQ==
+X-Gm-Message-State: ANoB5pmxYfl/b6Chqyxg9/dTx95RZX33ayg+Yv1BNf5sYo39blwUKuDX
+        GcH5Q3aHo5ecmcsA07U9yfmpl5qLzsffwj0YV4I=
+X-Google-Smtp-Source: AA0mqf6IgX2nPFl96D2izsoBHwiIC1Zbt4wCzkMjW2Ux1mdy3MPOcGPYksVdv2RinbnThbjYUSO2Nkerh+pS3Umndh0=
+X-Received: by 2002:a0d:d64b:0:b0:3da:fc23:9796 with SMTP id
+ y72-20020a0dd64b000000b003dafc239796mr31369928ywd.263.1670774523412; Sun, 11
+ Dec 2022 08:02:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <CAOLTT8Tt3jW2yvm6BRU3yG+EvW1WG9wWFq6PuOcaHNNLQAaGjg@mail.gmail.com>
+ <221208.86a63y9309.gmgdl@evledraar.gmail.com> <20221208011631.GH28810@kitsune.suse.cz>
+ <Y5GLsZgmrxbBtLqo@coredump.intra.peff.net> <20221209004918.GI28810@kitsune.suse.cz>
+ <Y5KRQMcUlepwNlor@coredump.intra.peff.net> <CAOLTT8SR6JWX6mRLbyq4keb4JCfJP6Vq07LzHpb_f+e1jMnsZQ@mail.gmail.com>
+ <221209.86bkoc7kgi.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221209.86bkoc7kgi.gmgdl@evledraar.gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Mon, 12 Dec 2022 00:01:51 +0800
+Message-ID: <CAOLTT8SqFJFk2sO6quL_O8gm4FL-w+mbvjH+cg2L7OF3G_-mLw@mail.gmail.com>
+Subject: Re: Question: How to execute git-gc correctly on the git server
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        johncai86@gmail.com, Taylor Blau <me@ttaylorr.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> =E4=BA=8E2022=E5=
+=B9=B412=E6=9C=889=E6=97=A5=E5=91=A8=E4=BA=94 21:52=E5=86=99=E9=81=93=EF=BC=
+=9A
 
-Please pull the following l10n updates for Git 2.39.0.
+>
+>
+> On Fri, Dec 09 2022, ZheNing Hu wrote:
+>
+> > Jeff King <peff@peff.net> =E4=BA=8E2022=E5=B9=B412=E6=9C=889=E6=97=A5=
+=E5=91=A8=E4=BA=94 09:37=E5=86=99=E9=81=93=EF=BC=9A
+> >>
+> >> On Fri, Dec 09, 2022 at 01:49:18AM +0100, Michal Such=C3=A1nek wrote:
+> >>
+> >> > > In this case it's the mtime on the object file (or the pack contai=
+ning
+> >> > > it). But yes, it is far from a complete race-free solution.
+> >> >
+> >> > So if you are pushing a branch that happens to reuse commits or othe=
+r
+> >> > objects from an earlier branh that might have been collected =C3=ADn=
+ the
+> >> > meantime you are basically doomed.
+> >>
+> >> Basically yes. We do "freshen" the mtimes on object files when we omit
+> >> an object write (e.g., your index state ends up at the same tree as an
+> >> old one). But for a push, there is no freshening. We check the graph a=
+t
+> >> the time of the push and decide if we have everything we need (either
+> >> newly pushed, or from what we already had in the repo). And that is
+> >> what's racy; somebody might be deleting as that check is happening.
+> >>
+> >> > People deleting a branch and then pushing another variant in which m=
+any
+> >> > objects are the same is a risk.
+> >> >
+> >> > People exporting files from somewhere and adding them to the repo wh=
+ich
+> >> > are bit-identical when independently exported by multiple people and
+> >> > sometimes deleting branches is a risk.
+> >>
+> >> Yes, both of those are risky (along with many other variants).
+> >>
+> >
+> > I'm wondering if there's an easy and poor performance way to do
+> > gc safely? For example, add a file lock to the repository during
+> > git push and git gc?
+>
+> We don't have any "easy" way to do it, but we probably should. The root
+> cause of the race is tricky to fix, and we don't have any "global ref
+> lock".
+>
+> But in the context of a client<->server and wanting to do gc on the
+> server a good enough and easy solution would be e.g.:
+>
+>  1. Have a {pre,post}-receive hook logging attempted/finished pushes
+>  2. Have the pre-receive hook able to reject (or better yet, hang with
+>     sleep()) incoming deletions
+>  3. Do a gc with a small wrapper script, which:
+>     - Flips the "no deletion ops now" (or "delay deletion ops") switch
+>     - Polls until it's sure there's no relevant in-progress operations
+>     - Do a full gc
+>     - Unlock
+>
 
-The following changes since commit 2e71cbbddd64695d43383c25c7a054ac4ff86882:
+Well, I understand that after the branch is deleted, some objects may be
+unreachable, and then these objects are deleted by concurrent git gc,
+which leads to data corruption in concurrent git push if these objects need
+to be referenced, but what I don't understand that is it enough to just blo=
+ck
+the operation of deleting branches? Once gc happens to be deleting an
+unreachable object, and git push new branch (git receive-pack) happens to
+need it, won't it still go wrong?
 
-  Git 2.39-rc2 (2022-12-06 09:49:31 +0900)
-
-are available in the Git repository at:
-
-  git@github.com:git-l10n/git-po.git tags/l10n-2.39.0-rnd1
-
-for you to fetch changes up to 6d0497d526d0d13680e912b385cddbd52d9f3825:
-
-  l10n: zh_TW.po: Git 2.39-rc2 (2022-12-11 01:27:25 +0800)
-
-----------------------------------------------------------------
-l10n-2.39.0-rnd1
-
-----------------------------------------------------------------
-Alexander Shopov (1):
-      l10n: bg.po: Updated Bulgarian translation (5501t)
-
-Bagas Sanjaya (1):
-      l10n: po-id for 2.39 (round 1)
-
-Emir SARI (1):
-      l10n: tr: v2.39.0 updates
-
-Fangyi Zhou (1):
-      l10n: zh_CN v2.39.0 round 1
-
-Jean-Noël Avila (1):
-      l10n: fr: v2.39 rnd 1
-
-Jiang Xin (8):
-      Merge branch 'fr_v2.39_rnd1' of github.com:jnavila/git
-      Merge branch 'master' of github.com:nafmo/git-l10n-sv
-      Merge branch 'po-id' of github.com:bagasme/git-po
-      Merge branch 'l10n-de-2.39' of github.com:ralfth/git
-      Merge branch 'master' of github.com:alshopov/git-po
-      Merge branch 'fz/po-zh_CN' of github.com:fangyi-zhou/git-po
-      Merge branch 'catalan' of github.com:Softcatala/git-po
-      Merge branch 'turkish' of github.com:bitigchi/git-po
-
-Jordi Mas (1):
-      l10n: Update Catalan translation
-
-Peter Krefting (1):
-      l10n: sv.po: Update Swedish translation (5501t0f0)
-
-Ralf Thielow (1):
-      l10n: de.po: update German translation
-
-Yi-Jyun Pan (1):
-      l10n: zh_TW.po: Git 2.39-rc2
-
- po/bg.po    |  856 +++++++++++++----------
- po/ca.po    |  958 ++++++++++++++------------
- po/de.po    |  814 +++++++++++++---------
- po/fr.po    |  927 ++++++++++++++++---------
- po/id.po    | 1048 +++++++++++++++++++----------
- po/sv.po    |  766 ++++++++++++---------
- po/tr.po    |  848 +++++++++++++----------
- po/zh_CN.po |  853 +++++++++++++----------
- po/zh_TW.po | 2161 ++++++++++++++++++++++++++++++++++-------------------------
- 9 files changed, 5514 insertions(+), 3717 deletions(-)
-
---
-Jiang Xin
+> You'd need to be certain that all relevant repo operations are going
+> through git-receive-pack etc., i.e. a local "git branch -d" or the like
+> won't run {pre,post}-receive.
