@@ -2,72 +2,72 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A17D5C4332F
-	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 08:44:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6381C4332F
+	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 10:46:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231270AbiLLIoD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Dec 2022 03:44:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54336 "EHLO
+        id S232218AbiLLKqX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Dec 2022 05:46:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231520AbiLLIn7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2022 03:43:59 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30CE1DFF2
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 00:43:58 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id bj12so26015269ejb.13
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 00:43:58 -0800 (PST)
+        with ESMTP id S232215AbiLLKoT (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2022 05:44:19 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D78E4EB6
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 02:40:20 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id u19so8327144ejm.8
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 02:40:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=OLY8CuI5S0pKx6ZcEX3HMYI1ZcupOhSNanQnVwFcGWA=;
-        b=q3uojzU14/m0B0rXlZyldehJROhMmSFPcsICMlK13rQ1Me5Vv/l8HrklQhpAdvgXqk
-         aeOzL41kSFnh+QHsDGd6hZhAO8TLtcwdB+RkLw1aboBytIHnlvfKpgj52Wp52l7YMUHs
-         Np0nRl3UBQwZWggWWyPbDJbvU46DWhEDETG4JJHqduCYo3SXz4uVzx4uzH4WJMhrA0wu
-         n2Yi1vcbNkMyzlojJy/YLBwjFnWRLKMGno7S9QJIpjXcWpqp2HXLFiVR2FKZ+DVmi+JL
-         ffAD9GwFYIsBIA1X9I6ZU6gSzP3ZwBxAuySHFlMbxPZwOkiY89RDJFW6D09P6tA/SeCj
-         CqNA==
+        bh=0nrdrR3B/l3H/RJO2PYD/Yg4rm7+5PvctZQb2kqd3PI=;
+        b=IiJFgJe8MEAkNHrD/KYW7NABv2LpLTlhX3hhhe8hzmSb7EfQrJH6NNvvFYj29cDzcp
+         iCs3J96qhoIzuv/KV8oTsQ9jWfbX0/+iVWXopDpO6NhHf26HdObdYDErVO+O9xg6bbsn
+         XKZfRKvAAcA9VyIlQrJ/TQBz50SngErUFqTb919zPznyUCDodaQ1Jq9Ho4SO6/91aIaz
+         9lk1xILgS2iL9ZSXr7ghgl1AHw3zrCko0eQIuTEEZqVIWprMtOaDXCB4dioAAgq6+4BT
+         EobFo5mfBJQxushJiOzUNZnXCnp/e0avSwZd11fO4Bo2cx0H2jf4RFYWZojA7D42Wx0p
+         cgYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OLY8CuI5S0pKx6ZcEX3HMYI1ZcupOhSNanQnVwFcGWA=;
-        b=vfgNDent6FeuggBeMvbxr7KxFolAnsVZ0Fj54EJrzkWecPBpKXgpytvs3cI2XlnDbW
-         SN2SB5ICRfStO2GnQVTCjpfySInLufBe/qiNh9FRANzm6fpMfug+KfmxTv+lhx0iEGJg
-         /p9QFWSXd19XYKlbLCnqvU5M4dmKmNkzoGDRJCN7Tooy67wLM/G3aP2AqqdVXCrOQzHN
-         dapJ72NBBeDLqG3fen88rtrxYONOXL/zBG6oDd21sQ0/4aterqEA2JR89Tz1LoC4vdqV
-         zNDqDNQm9Wc1HJ8HA729Tr7MliuqmEy3IEqnq7YlQUdvYB5t0qaXxoCXhel/AcDGgth/
-         w8bA==
-X-Gm-Message-State: ANoB5pl/1LAPNn2ax5MUf5YKbX/ANw6E0OdI6gNizh1QDg3QUVkZBbkR
-        JzaZX9Dli7SWkZg/U66utuA=
-X-Google-Smtp-Source: AA0mqf4njwDxZ+vlG9R/H23LKkJl9XLEnuRFoT8GNr0Ppg+kXRRYtO4ngFuc15Bh8QJDpcowiBo6JQ==
-X-Received: by 2002:a17:906:af6a:b0:7c1:12ef:bf52 with SMTP id os10-20020a170906af6a00b007c112efbf52mr11584558ejb.3.1670834636699;
-        Mon, 12 Dec 2022 00:43:56 -0800 (PST)
+        bh=0nrdrR3B/l3H/RJO2PYD/Yg4rm7+5PvctZQb2kqd3PI=;
+        b=F9Q5NlgUKuDWpDxCIEBEZ7/PyArLOydnZzK5fLBfHvGNETSLsgqO087ZTGSVs9ONVN
+         3C0v5dCAusNcUNuYlfNvfHXSadvW7y+DM+KCcV+MEEz3z8TxHYZZSA2+uNcI7fsuUCwD
+         2cZgvIYmYhL1inxpEIJvke3U37D8QDd2eCUOBfmBumIThEiAU6EgXKDJdsIkCKFdeDYn
+         eGyxyIhCSnnrPcgZfVZ1gbSVioPS+zwVug1I0WwiFcPi2HzpwHM1g3E3acgjYIkswfjO
+         uQproOZvW78OXbPspWPROgzQ3NvHzxekk2WZ/hJWYMSJli/fqWY5OB0VH2YH1AAX1+v6
+         ObuA==
+X-Gm-Message-State: ANoB5pktNLvy2xVNcwgglNbmjgUyBMZ7HV4b5zD5Mf+/dXcWkWRj+TLE
+        lgpTWFL+YOAB3nr0pyTvCLI=
+X-Google-Smtp-Source: AA0mqf41QpvDGpq0eGzXVKxXFk47/zzmzZ9oX542hLD1ngOtKDJU3ExsL/aUNZheQ2sT3JObqRblIA==
+X-Received: by 2002:a17:907:1719:b0:7c0:f9ef:23a2 with SMTP id le25-20020a170907171900b007c0f9ef23a2mr19897074ejc.30.1670841619227;
+        Mon, 12 Dec 2022 02:40:19 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id hq18-20020a1709073f1200b007c10fe64c5dsm3016576ejc.86.2022.12.12.00.43.56
+        by smtp.gmail.com with ESMTPSA id h1-20020a50ed81000000b00458dc7e8ecasm3698706edr.72.2022.12.12.02.40.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Dec 2022 00:43:56 -0800 (PST)
+        Mon, 12 Dec 2022 02:40:18 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1p4ePj-005D3m-1n;
-        Mon, 12 Dec 2022 09:43:55 +0100
+        id 1p4gEM-005Hho-0Q;
+        Mon, 12 Dec 2022 11:40:18 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jacob Abel <jacobabel@nullpo.dev>
+To:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-Subject: Re: [PATCH v4 3/3] worktree add: Add hint to use --orphan when bad ref
-Date:   Mon, 12 Dec 2022 09:35:10 +0100
-References: <20221104010242.11555-1-jacobabel@nullpo.dev>
- <20221104213401.17393-1-jacobabel@nullpo.dev>
- <20221110233137.10414-1-jacobabel@nullpo.dev>
- <20221212014003.20290-1-jacobabel@nullpo.dev>
- <20221212014003.20290-4-jacobabel@nullpo.dev>
+        Glen Choo <chooglen@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        Eric DeCosta <edecosta@mathworks.com>
+Subject: Re: [PATCH v4 2/6] fsmonitor: determine if filesystem is local or
+ remote
+Date:   Mon, 12 Dec 2022 11:24:27 +0100
+References: <pull.1352.v3.git.git.1668641019.gitgitgadget@gmail.com>
+ <pull.1352.v4.git.git.1669230044.gitgitgadget@gmail.com>
+ <e53fc07754094aa5ba8080ec7761869c6429a8af.1669230044.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <20221212014003.20290-4-jacobabel@nullpo.dev>
-Message-ID: <221212.86pmcp57w4.gmgdl@evledraar.gmail.com>
+In-reply-to: <e53fc07754094aa5ba8080ec7761869c6429a8af.1669230044.git.gitgitgadget@gmail.com>
+Message-ID: <221212.86lenc6h2l.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -75,73 +75,236 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Dec 12 2022, Jacob Abel wrote:
+On Wed, Nov 23 2022, Eric DeCosta via GitGitGadget wrote:
 
->  int git_default_advice_config(const char *var, const char *value);
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index 51b247b2a7..ea306e18de 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -744,6 +744,14 @@ static int add(int ac, const char **av, const char *prefix)
->  		 * If `branch` does not reference a valid commit, a new
->  		 * worktree (and/or branch) cannot be created based off of it.
->  		 */
-> +		advise_if_enabled(ADVICE_WORKTREE_ADD_ORPHAN,
-> +			"If you meant to create a worktree containing a new orphan branch\n"
-> +			"(branch with no commits) for this repository, e.g. '%s',\n"
+> From: Eric DeCosta <edecosta@mathworks.com>
+>
+> Compare the given path to the mounted filesystems. Find the mount that is
+> the longest prefix of the path (if any) and determine if that mount is on a
+> local or remote filesystem.
+>
+> Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
+> ---
+>  compat/fsmonitor/fsm-path-utils-linux.c | 186 ++++++++++++++++++++++++
+>  1 file changed, 186 insertions(+)
+>  create mode 100644 compat/fsmonitor/fsm-path-utils-linux.c
+>
+> diff --git a/compat/fsmonitor/fsm-path-utils-linux.c b/compat/fsmonitor/fsm-path-utils-linux.c
+> new file mode 100644
+> index 00000000000..d3281422ebc
+> --- /dev/null
+> +++ b/compat/fsmonitor/fsm-path-utils-linux.c
+> @@ -0,0 +1,186 @@
+> +#include "fsmonitor.h"
+> +#include "fsmonitor-path-utils.h"
+> +#include <errno.h>
+> +#include <mntent.h>
+> +#include <sys/mount.h>
+> +#include <sys/vfs.h>
+> +#include <sys/statvfs.h>
+> +
+> +static int is_remote_fs(const char* path) {
+> +	struct statfs fs;
+> +
+> +	if (statfs(path, &fs)) {
+> +		error_errno(_("statfs('%s') failed"), path);
+> +		return -1;
+> +	}
 
-I think this '%s' is just confusing, how is repeating the name of the
-branch at the user (which we're about to mention in the example command)
-helpful?
+Nit: Drop the braces and do:
 
-Shouldn't we just omit it, or reword this to e.g.:
+	if (statfs(...) == -1)
+		return error_errno(...)
 
-	If you'd like the '%s' branch to be a worktree containing a
-	new....
+> +	switch (fs.f_type) {
+> +		case 0x61636673:  /* ACFS */
+> +		case 0x5346414F:  /* AFS */
+> +		case 0x00C36400:  /* CEPH */
+> +		case 0xFF534D42:  /* CIFS */
+> +		case 0x73757245:  /* CODA */
+> +		case 0x19830326:  /* FHGFS */
+> +		case 0x1161970:   /* GFS */
+> +		case 0x47504653:  /* GPFS */
+> +		case 0x013111A8:  /* IBRIX */
+> +		case 0x6B414653:  /* KAFS */
+> +		case 0x0BD00BD0:  /* LUSTRE */
+> +		case 0x564C:      /* NCP */
+> +		case 0x6969:      /* NFS */
+> +		case 0x6E667364:  /* NFSD */
+> +		case 0x7461636f:  /* OCFS2 */
+> +		case 0xAAD7AAEA:  /* PANFS */
+> +		case 0x517B:      /* SMB */
+> +		case 0xBEEFDEAD:  /* SNFS */
+> +		case 0xFE534D42:  /* SMB2 */
+> +		case 0xBACBACBC:  /* VMHGFS */
+> +		case 0xA501FCF5:  /* VXFS */
 
+So, before we'd compare against the name, but to avoid the GPLv3
+copy/pasting we're now comparing against the fs.f_type.
 
-> +			"you can do so using the --orphan option:\n"
-> +			"\n"
-> +			"	git worktree add --orphan %s %s\n"
-> +			"\n",
+If we are hardcoding them, our usual convention is to lower-case
+hexdigits, so 0xbacbacbc not 0xBACBACBC.
 
-Missing the usual:
+But at least my statfs() manpage documents the named defines in
+linux/magic.h for most of these. Why not use those?
 
-	"Turn this message off by running\n"
-	"\"git config advice.worktreeAddOrphan false\""
+> +			return 1;
+> +		default:
+> +			break;
 
-blurb.
+You could just "return 0" here, and...
 
-Also, should we really add twe newlines at the end? I see some other API
-users that don't add a \n at all.
+> +	}
+> +
+> +	return 0;
 
-> +# Helper function to test hints for using --orphan in an empty repo.
+...drop this "return 0".
 
-FWIW I think we can do without the comment...
-
-> +test_wt_add_empty_repo_orphan_hint() {
-> +	local context="$1" &&
-> +	local opts="${@:2}" &&
-
-This appears to be some shell pseudo-syntax, and my shell hard-errors on
-this.
-
-But as we don't "shift" after the "$1" I don't see how what you
-*probably* meant could work, i.e. we always have arguments, so surely
-we'd always use "$@"?
-
-
-> +	test_expect_success "'worktree add' show orphan hint in empty repo w/ $context" '
-> +		test_when_finished "rm -rf empty_repo" &&
-> +		GIT_DIR="empty_repo" git init --bare &&
-> +		test_must_fail git -C empty_repo worktree add $opts 2> actual &&
-> +		grep "hint: If you meant to create a worktree containing a new orphan branch" actual
-> +	'
 > +}
 > +
-> +test_wt_add_empty_repo_orphan_hint 'DWIM' foobar/
-> +test_wt_add_empty_repo_orphan_hint '-b' -b foobar_branch foobar/
-> +test_wt_add_empty_repo_orphan_hint '-B' -B foobar_branch foobar/
+> +static int find_mount(const char *path, const struct statvfs *fs,
+> +	struct mntent *ent)
 
-You're just testing how these options interact, so let's have the
-"foobar" part provided by the test function itself.
+Misindentation.
+
+> +{
+> +	const char *const mounts = "/proc/mounts";
+> +	const char *rp = real_pathdup(path, 1);
+> +	struct mntent *ment = NULL;
+> +	struct statvfs mntfs;
+> +	FILE *fp;
+> +	int found = 0;
+> +	int dlen, plen, flen = 0;
+> +
+> +	ent->mnt_fsname = NULL;
+> +	ent->mnt_dir = NULL;
+> +	ent->mnt_type = NULL;
+> +
+> +	fp = setmntent(mounts, "r");
+> +	if (!fp) {
+> +		error_errno(_("setmntent('%s') failed"), mounts);
+> +		return -1;
+
+Ditto "return error_errno()"
+
+
+> +	}
+> +
+> +	plen = strlen(rp);
+
+Let's make "plen", "dlen" and "flen" a "size_t", not "int"
+> +
+> +	/* read all the mount information and compare to path */
+> +	while ((ment = getmntent(fp)) != NULL) {
+
+Drop the "!= NULL"
+
+> +		if (statvfs(ment->mnt_dir, &mntfs)) {
+> +			switch (errno) {
+> +			case EPERM:
+> +			case ESRCH:
+> +			case EACCES:
+> +				continue;
+> +			default:
+> +				error_errno(_("statvfs('%s') failed"), ment->mnt_dir);
+> +				endmntent(fp);
+
+Shouldn't we check the endmntent() error too? Now, from the manpage the
+interface is funny, and always returns 1.
+
+But since this is linux-specific code it seems safe enough to go with it
+& glibc assumptions and:
+
+	errno = 0;
+        endmntent(fp);
+        if (errno)
+        	return error_errno(....);
+
+I.e. it'll just call fclose(), which might set errno() on failure.
+
+Maybe it's not worth it...
+
+> +	if (statvfs(path, &fs))
+> +		return error_errno(_("statvfs('%s') failed"), path);
+
+Here you do use that "return error_errno(...)" pattern...", yay!
+
+
+> +
+> +
+> +	if (find_mount(path, &fs, &ment) < 0) {
+> +		free(ment.mnt_fsname);
+> +		free(ment.mnt_dir);
+> +		free(ment.mnt_type);
+> +		return -1;
+> +	}
+> +
+> +	trace_printf_key(&trace_fsmonitor,
+> +			 "statvfs('%s') [flags 0x%08lx] '%s' '%s'",
+> +			 path, fs.f_flag, ment.mnt_type, ment.mnt_fsname);
+> +
+> +	fs_info->is_remote = is_remote_fs(ment.mnt_dir);
+> +	fs_info->typename = ment.mnt_fsname;
+> +	free(ment.mnt_dir);
+> +	free(ment.mnt_type);
+
+If you're going to \n\n-seperate this and the trace_printf_key() above I
+think moving the second free() here to that "block" would make sense,
+sinec here is the last time we use mnt_dir, but the last time we used
+mnt_type was in the trace_printf_key().
+
+But...
+
+> +
+> +	if (fs_info->is_remote < 0) {
+> +		free(ment.mnt_fsname);
+
+...aren't you NULL init-ing these, why not just for all of these:
+
+	goto error;
+
+Then....
+> +		return -1;
+> +	}
+> +
+> +	trace_printf_key(&trace_fsmonitor,
+> +				"'%s' is_remote: %d",
+> +				path, fs_info->is_remote);
+> +
+> +	return 0;
+
+Have this be:
+
+	int ret = -1; /* earlier */
+
+	ret = 0;
+cleanup:
+	free(...);
+	free(...);
+	return ret;
+
+> +}
+> +
+> +int fsmonitor__is_fs_remote(const char *path)
+> +{
+> +	struct fs_info fs;
+> +
+> +	if (fsmonitor__get_fs_info(path, &fs))
+> +		return -1;
+> +
+> +	free(fs.typename);
+
+This will segfault if you take the part through fsmonitor__get_fs_info()
+where we don't have the fs.typename yet, i.e. if statfs() fails.
+
+There's the trivial NULL-init way to work around it, but I think this
+suggests a leaky abstraction. If we fail to get the fs info, then the
+function itself should have free'd that, shouldn't it?
+
+> +/*
+> + * No-op for now.
+> + */
+> +char *fsmonitor__resolve_alias(const char *path,
+> +	const struct alias_info *info)
+
+Ditto misindentatione
