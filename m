@@ -2,280 +2,371 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0F033C4332F
-	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 21:54:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C356C4332F
+	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 21:58:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233538AbiLLVy3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Dec 2022 16:54:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46236 "EHLO
+        id S233330AbiLLV6N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Dec 2022 16:58:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49116 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233763AbiLLVyA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2022 16:54:00 -0500
-Received: from EUR04-DB3-obe.outbound.protection.outlook.com (mail-db3eur04olkn2023.outbound.protection.outlook.com [40.92.74.23])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A039B1ADB4
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 13:53:21 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=L5LCHsM8AKB3tyEztthetZAnmCBP0TwfGxW7nyavAIDn8Vu4Q465wJ9SD0RB7IMDqKRO6+6qOgPZeUHTqv2CqOrqVIkN04m1mpaJv8tr47wKZRXcueIfka6FLVed+U6ozhdLdGB31EgAZprNUmh9bvAJp040qByG30kH+Eiz4DDh5T73wKI/26KSVfgiOklJeFR9KVqA2yLmJwSszLbE4obDOdGKDkctt7Yre97H5K+pIb04TEoMdHwOTvL6BOruDuq1VFvl7JTsPh2BooNy+CS0tb3eAvUv0j2O9B6JLrNAkB7WiDdl2Y7tbLGEW5DWZrTr4nNLWyhqq5DNVQPnYw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dA7C6mUmRiVshvGOagmZhO9eCYfdiTKrPuCI7ugg9fI=;
- b=HQc1kU/VZXlw2o2Kku3a5iER8yi2MWoeNaKkJ6MrNsHR6eXhsLapKKOE/G1MDtIqRMttSXxbWw59SYPA/pXRFawc1e85TC66NFFKi63CzHEcBd6WsntaVPMDldHybWU5XN/Iygh85EQthRVzH5jCfY86fznf7wRxbKifM6SrTyGrgJ+cSq4gLh62hhnryVteW5vuyZBUGIzFCOPlrHaHz/Zdh+GDV1y3ouwxdmjfeTce2xp7PmiMFuSn5NynXw7RnZd/lmb9yJjyN1o0Je+zpBUQYqeBW0Rbkj8OVjF0XClHp9KboQMxNaIf9i9V9DmDLhGm/4mRRbK8/K/Nt5ryww==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dA7C6mUmRiVshvGOagmZhO9eCYfdiTKrPuCI7ugg9fI=;
- b=V9tOnvGe50mnfCo/Qqk92RUb+O390B3HoJV6IpKipa5MN43k3ZNGRxPiPYIgRVatm6aYaRrTAu6Yy0GwnagVkj3jCn3xdtCgENO9capzABdDjOji9gzELAvvQFxwZFxFcFAMok1VkNf2KxY21q8OLCsahdtgNaYmIO/Yo8Zagf5D1ceOw9H/HmxPM8k+2sOcC/UaMlItAULiHVJrI3E9fW6DRQOsF5gse3dkEtKrjs73h6gfNYn5Hr7NNtOPuqCUAOcFQNmulUVvtrGqKLlXsURd6fRW9cOZHuR+pFaMZhKVOhyYHJqqnkcLpHHkqm39A4IBUwMJVVRGkpHNwo9pIw==
-Received: from AS2PR03MB9815.eurprd03.prod.outlook.com (2603:10a6:20b:609::16)
- by DB4PR03MB9555.eurprd03.prod.outlook.com (2603:10a6:10:3f4::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5880.10; Mon, 12 Dec
- 2022 21:53:19 +0000
-Received: from AS2PR03MB9815.eurprd03.prod.outlook.com
- ([fe80::e829:a187:754:6a85]) by AS2PR03MB9815.eurprd03.prod.outlook.com
- ([fe80::e829:a187:754:6a85%3]) with mapi id 15.20.5880.019; Mon, 12 Dec 2022
- 21:53:19 +0000
-Message-ID: <AS2PR03MB981510046E40F6E943A9B981C0E29@AS2PR03MB9815.eurprd03.prod.outlook.com>
-Date:   Mon, 12 Dec 2022 13:53:10 -0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.5.0
-Subject: Re: [PATCH v3 05/11] http: set specific auth scheme depending on
- credential
-To:     Glen Choo <chooglen@google.com>,
-        Matthew John Cheetham via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
-        Lessley Dennington <lessleydennington@gmail.com>,
-        M Hickford <mirth.hickford@gmail.com>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Matthew John Cheetham <mjcheetham@github.com>
-References: <pull.1352.v2.git.1666372083.gitgitgadget@gmail.com>
- <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
- <2f38427aa8db188060d153d8ece9503e1b604e91.1667426970.git.gitgitgadget@gmail.com>
- <kl6lzgcz3ddq.fsf@chooglen-macbookpro.roam.corp.google.com>
-From:   Matthew John Cheetham <mjcheetham@outlook.com>
-In-Reply-To: <kl6lzgcz3ddq.fsf@chooglen-macbookpro.roam.corp.google.com>
+        with ESMTP id S229638AbiLLV6K (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2022 16:58:10 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 355CCEE33
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 13:58:09 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id y16so13710064wrm.2
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 13:58:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qK0gVXSDCMzkDrhNnSohmq+I1VqbuIoMYpfa29GxSaA=;
+        b=FsT2Ca/G8ol9SbVy9MHnxxGQxIEwxKal218e5eqxuEcfnyt9QhOsu+Yu9I+Eyx3LBS
+         HO+6xIXVpFNZEGh1Nw7fk4Rpt2b72CmPpz0Z0vYbMaGywIX1ybRRWQ/SjkVlCCoohzSF
+         3X4vhECL3T3pbdk33fwRFhXluGwsDJ1NSJmra9D5dLQDVlMjQtCMBIFanTGx4ZfCYV1a
+         Hk+J+MI3rxItYWSGf1uUYjQzvBAyi5dy4eWgBCZn9nS+rmWuOcxguoskpW/16jtyQXv0
+         kjjkR8vkg7lA8JMpc3zK5b4Au/00wNkXDiFU77CQjgtxvD9AnnOOykSVBUSA1BHfeC3R
+         UbwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qK0gVXSDCMzkDrhNnSohmq+I1VqbuIoMYpfa29GxSaA=;
+        b=ZOBGv7bbNOLs7Fk17UpE05L0cR0QuBEsJf9xdcFiQ7y5iAtLJ2CHnBEOyAFPbJIOrK
+         qD1vP7nMbEaxX76mOQ6pUeE/dA+H6E27rrdrvfkmjBcWSNOTU0fM9xNfseBmuManvlvm
+         XJ9i8HXbNezWkmIs9jECnfem/hd+tV/4jjizVZmFllzcw87YWWl1dXuuU7ctUYizTZ5A
+         O1QXop2EJvXQ62XnF8msqrda7/AkZThVj+475EZO9hj+HW56frkvceb/s+p1cUE6+ot9
+         ZahN0EWYWhNGUGmxIRg+7yIzMuQ1BAqGhAGlq48tRiu+Tzx9oeI1aAzOjAz4IRvfizIK
+         VnJg==
+X-Gm-Message-State: ANoB5pn31Hr38hZrlhxY3L3KgPCuhzkg66jFj9j29g0kByDl4WwL5evf
+        Ar2hXrs5pYxpqK0uqJaplXhyBHIzt2o=
+X-Google-Smtp-Source: AA0mqf527R61eb3fY04ynuvut2pt2IiHVXt1RAtb+gRXDKIwZS94WdlaiRyiGzB+PjWQccwLxvVf2g==
+X-Received: by 2002:a05:6000:1d1:b0:250:777b:daa0 with SMTP id t17-20020a05600001d100b00250777bdaa0mr2457013wrx.35.1670882287565;
+        Mon, 12 Dec 2022 13:58:07 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id a15-20020adfe5cf000000b002425787c5easm9732182wrn.96.2022.12.12.13.58.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Dec 2022 13:58:07 -0800 (PST)
+Message-Id: <pull.1352.v5.git.git.1670882286.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1352.v4.git.git.1669230044.gitgitgadget@gmail.com>
+References: <pull.1352.v4.git.git.1669230044.gitgitgadget@gmail.com>
+From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 12 Dec 2022 21:57:59 +0000
+Subject: [PATCH v5 0/6] fsmonitor: Implement fsmonitor for Linux
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TMN:  [VNcnLA3EvxYpYhVrqaGf3JlRr4ykP/hoH7srLzsiNHsflIY48uyorRYKeH95JUmu]
-X-ClientProxiedBy: BY5PR17CA0025.namprd17.prod.outlook.com
- (2603:10b6:a03:1b8::38) To AS2PR03MB9815.eurprd03.prod.outlook.com
- (2603:10a6:20b:609::16)
-X-Microsoft-Original-Message-ID: <5ea224bc-a524-42c9-e8f2-43f12e107412@outlook.com>
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AS2PR03MB9815:EE_|DB4PR03MB9555:EE_
-X-MS-Office365-Filtering-Correlation-Id: f9b0d7fc-c1b4-4539-766e-08dadc8b46b5
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: kVzu02K8KWs1VJmyDXVjZRud5MA1rix/WzUujvRW0Fuck01ylD4JBYs1Jc96vBs4NmhlBkiWjuYCT5cILwFSjbhFI+iBY+dCMTGjidJxBXBhqK6DE1uP6QW6gU/PverkVTaVdi//06lU9i3xa7XO5mo+p0dcN2fBgrw60KjmUlgBB7SLsPtVhR6xiAbmN+Vjqo7lelEr/6UtUD4+IfY2TMM5xGT6CvYULw4JRTUUf77MxeQ2XNTxMkUTKa2fUEdFEAdoMlafP/aHW1tqsQJtrlNQvVGlxYlfjMkZH+wFs/fPDZZWr9Nmmho6IUfm3hpp7mtnJBKibfIN44BAPHJlzolzgxZw6Mr4xNn1ct7gwmDUC+rHNhMn1FjeTd//JOGtCpFxDMGJuLgWliHS5HFZLI5VdtINDptVMvanm2r/ICu0sJCvxfrovhOHhqLR2082WUb6WHBZE6viZmDR/mQj4a9k7LTyoOJv2azNt2UmfFq0yXXofioPf/TiCzWF8q9Ayx2k8s4EGORlYJzCneXoo5wpjKOqjc+Z1C2a8YzJ923hD3CbBg9hhVJC4bJJFa6zM+y50cmWolANsQQ6eLwn33j4bCCfTyQv1XE0kZk4EtU0iSZVI6Mcnr09SAmUJO6WiVIM5TtECxHAKJvxnT8kUw==
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eTkyZTNPUlRIVXdOMHdZS3BhNUFtZWdESDNpbWFQRmJxR0liQTVGYVg4cnNW?=
- =?utf-8?B?TGcwcDlxaXE1R0hvcFBJTk1jMWN1Tlk1TjBqeGZKV2tZejlLRHRWdCtDdEIv?=
- =?utf-8?B?WlUrNWNqbVVNSXBoWW5RZHJhZjhMSTI3bmExdDcxSm9hMytkQS9BVnphU3Bn?=
- =?utf-8?B?Z01RS2hGSVpZbmxKdVQ1a0RSc1RDVXRIVnNEemQrSEppc2ZwbjZXTU11TVdj?=
- =?utf-8?B?aUV5ZGRHZVdBam5jd29zbXBucTV0ajZQOUE0Tzg1ZGF4NlJrWG5CN3pmQ1N1?=
- =?utf-8?B?azJadUF2YlhNRllvYjU2b1ZtTVVoNEhMWTJOVStJcnZYYTFJV3pDbDdzNUtX?=
- =?utf-8?B?bVlkWHpMaFM3dG9pNU5lSllQTGRpMTJvY1RlZ1NZeHA1VnlVTi93TmRBK2dQ?=
- =?utf-8?B?TkhRWmdMM2NTWVdpQ3lvRXNkc2owdVQ1SnFNZm44VUpSbi9ybFV4cmlyMzJF?=
- =?utf-8?B?VDBrS1NzT2VUK0d6RnZ2cnJEdGJaQUQwZDhWQmZzWVcxOEhtMjBqWW5xQUJy?=
- =?utf-8?B?c3c1RE84OGNEZktEYyswbzZOY2JwbDh1T2t2Uk5pRUpwTVN6NDlqSkJ5VGR5?=
- =?utf-8?B?aURZUXViUVRIZU81TlBTRnVsTEV0WWl0ZEt0enpYZkpQOWNGN1BQeHcvc3Qx?=
- =?utf-8?B?dGJ5SmVVcTh3T2pLNGszYmF3bGdqN3NmL0pzaFBSbVpESjNXNnN1c0tYUjBB?=
- =?utf-8?B?NnZMV2Q0Mjh2M2tGMDd3QURONEpoSDN3dzg4YlRNcnZlOHdKOStVVjRJcTJU?=
- =?utf-8?B?WFpjODJIY1ptVUZNbnZtdHQwSlhvUTkwTTBtK1JxU3JXU292NUkyWHhYNFlv?=
- =?utf-8?B?OUx3bjN0TWo4a2NzRkxhR0xMMlF5cUU1MW91ZFRJQUxrWFhFSVVScG9wMGpD?=
- =?utf-8?B?ODg4bXlQcTRDcUE2NHI4bVUxblNDMWJGaEhsbWhLZWdGQ013Rkk3OGNwZ1lQ?=
- =?utf-8?B?d0UzUHhGdndNNk1MV3BFdklZSStjcEpvbnZocWU1bWdUQmJCRlF1TzBnZyt2?=
- =?utf-8?B?Rzcyb1RQeW1kRnJBcE5hb0R2Mis3bW01dDNha1lnSDVhaVBkRTA0Uk5GcHhJ?=
- =?utf-8?B?SDRrY2lhQ01mK2JtT1hJMjZhZVlHZWVHQTVRNWZLcjBIVGNvUnY3MTg3MVQ5?=
- =?utf-8?B?WGZMVkZtVVRpR0RkcWw3bWxCenlpM3F3b2FIcG1KdFdUU1p1b1M0RGdOeTRR?=
- =?utf-8?B?a3FjVmY0S0ZtendwN1VCanB6WUpXU2kwTW1HRkxFenVFZmJEL1pHVTdVZ1lh?=
- =?utf-8?B?ZDI3b3RHcjlEVHV0Mm5Camd6TnJBNXhWcXJWUGk0T2JxU2U2elpGbDJRTk9o?=
- =?utf-8?B?TmRjMzlDYkU3a0NiR05DWHVRbmExVE02aWx3WlkyMkN2NnJHL052RHo1WDZk?=
- =?utf-8?B?cU03WWxRbDh6bnVOQXpTRU4vTmdxWjFYdGEzSlhpWlFaSDh4Y1NpaldIQVQz?=
- =?utf-8?B?K2tWNFBIQjJ5eTh6VlN6VWlsRGFCR0Q5am5wOEZHSm5TYWlpTE83WlhyKzJq?=
- =?utf-8?B?RU4vcjFXN2N5aDNoQXlURDNIK0F2UWlIWERKcWdOOG1oVDVJSUpncThxMW84?=
- =?utf-8?B?enl5Y1c0cTlzYXhhYi9YRDJDSnRNTUhoSEZYSFdhTFVLRWlWNnNZaTNiK2lQ?=
- =?utf-8?B?a2E5Nlowd3RlbTBDbU5pbUZmc3BwYmtSTE1EbVlnYmxldWVrQzZZMExNLzkw?=
- =?utf-8?B?c21YK3dBa2dzbU5GZmpCZzF4ZnIvZ3dudWhERXN1aGo2VDh5MUF4eWxvL0Fz?=
- =?utf-8?B?RnpUcTIwc0hSaTA0QWxLdUtmWlBGdUQyVnFCWjhia1FzRXVHMlRrbjE3MG5u?=
- =?utf-8?B?b05RTkUxTzVnRzVyMXFjdz09?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f9b0d7fc-c1b4-4539-766e-08dadc8b46b5
-X-MS-Exchange-CrossTenant-AuthSource: AS2PR03MB9815.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Dec 2022 21:53:19.2327
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB4PR03MB9555
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Glen Choo <chooglen@google.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Taylor Blau <me@ttaylorr.com>,
+        Eric DeCosta <edecosta@mathworks.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-11-09 15:40, Glen Choo wrote:
-> "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
-> 
->> From: Matthew John Cheetham <mjcheetham@outlook.com>
->>
->> Introduce a new credential field `authtype` that can be used by
->> credential helpers to indicate the type of the credential or
->> authentication mechanism to use for a request.
->>
->> Modify http.c to now specify the correct authentication scheme or
->> credential type when authenticating the curl handle. If the new
->> `authtype` field in the credential structure is `NULL` or "Basic" then
->> use the existing username/password options. If the field is "Bearer"
->> then use the OAuth bearer token curl option. Otherwise, the `authtype`
->> field is the authentication scheme and the `password` field is the
->> raw, unencoded value.
->>
->> Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
->> ---
->>  Documentation/git-credential.txt | 12 ++++++++++++
->>  credential.c                     |  5 +++++
->>  credential.h                     |  1 +
->>  git-curl-compat.h                | 10 ++++++++++
->>  http.c                           | 24 +++++++++++++++++++++---
->>  5 files changed, 49 insertions(+), 3 deletions(-)
->>
->> diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
->> index 791a57dddfb..9069bfb2d50 100644
->> --- a/Documentation/git-credential.txt
->> +++ b/Documentation/git-credential.txt
->> @@ -175,6 +175,18 @@ username in the example above) will be left unset.
->>  	attribute 'wwwauth[]', where the order of the attributes is the same as
->>  	they appear in the HTTP response.
->>  
->> +`authtype`::
->> +
->> +	Indicates the type of authentication scheme that should be used by Git.
->> +	Credential helpers may reply to a request from Git with this attribute,
->> +	such that subsequent authenticated requests include the correct
->> +	`Authorization` header.
->> +	If this attribute is not present, the default value is "Basic".
->> +	Known values include "Basic", "Digest", and "Bearer".
->> +	If an unknown value is provided, this is taken as the authentication
->> +	scheme for the `Authorization` header, and the `password` field is
->> +	used as the raw unencoded authorization parameters of the same header.
->> +
-> 
-> [...]
-> 
->> @@ -525,8 +526,25 @@ static void init_curl_http_auth(struct active_request_slot *slot)
->>  
->>  	credential_fill(&http_auth);
->>  
->> -	curl_easy_setopt(slot->curl, CURLOPT_USERNAME, http_auth.username);
->> -	curl_easy_setopt(slot->curl, CURLOPT_PASSWORD, http_auth.password);
->> +	if (!http_auth.authtype || !strcasecmp(http_auth.authtype, "basic")
->> +				|| !strcasecmp(http_auth.authtype, "digest")) {
->> +		curl_easy_setopt(slot->curl, CURLOPT_USERNAME,
->> +			http_auth.username);
->> +		curl_easy_setopt(slot->curl, CURLOPT_PASSWORD,
->> +			http_auth.password);
->> +#ifdef GIT_CURL_HAVE_CURLAUTH_BEARER
->> +	} else if (!strcasecmp(http_auth.authtype, "bearer")) {
->> +		curl_easy_setopt(slot->curl, CURLOPT_HTTPAUTH, CURLAUTH_BEARER);
->> +		curl_easy_setopt(slot->curl, CURLOPT_XOAUTH2_BEARER,
->> +			http_auth.password);
->> +#endif
->> +	} else {
->> +		struct strbuf auth = STRBUF_INIT;
->> +		strbuf_addf(&auth, "Authorization: %s %s",
->> +			http_auth.authtype, http_auth.password);
->> +		slot->headers = curl_slist_append(slot->headers, auth.buf);
->> +		strbuf_release(&auth);
->> +	}
-> 
-> As expected, a "Bearer" authtype doesn't require passing a username to
-> curl, but as you noted in the cover letter, credential helpers were
-> designed with username-password authentication in mind, which raises the
-> question of what a credential helper should do with "Bearer"
-> credentials.
-> 
-> e.g. it is not clear to me where the "username" comes from in the tests, e.g.
-> 
->   +test_expect_success 'http auth www-auth headers to credential helper basic valid' '
->   +	test_when_finished "per_test_cleanup" &&
->   +	# base64("alice:secret-passwd")
->   +	USERPASS64=YWxpY2U6c2VjcmV0LXBhc3N3ZA== &&
->   +	export USERPASS64 &&
->   +
->   +	start_http_server \
->   +		--auth=bearer:authority=\"id.example.com\"\ q=1\ p=0 \
->   +		--auth=basic:realm=\"example.com\" \
->   +		--auth-token=basic:$USERPASS64 &&
->   +
->   +	cat >get-expected.cred <<-EOF &&
->   +	protocol=http
->   +	host=$HOST_PORT
->   +	wwwauth[]=bearer authority="id.example.com" q=1 p=0
->   +	wwwauth[]=basic realm="example.com"
->   +	EOF
->   +
->   +	cat >store-expected.cred <<-EOF &&
->   +	protocol=http
->   +	host=$HOST_PORT
->   +	username=alice
->   +	password=secret-passwd
->   +	authtype=basic
->   +	EOF
->   +
->   +	cat >get-response.cred <<-EOF &&
->   +	protocol=http
->   +	host=$HOST_PORT
->   +	username=alice
->   +	password=secret-passwd
->   +	authtype=basic
->   +	EOF
->   +
->   +	git -c credential.helper="$CREDENTIAL_HELPER" ls-remote $ORIGIN_URL &&
->   +
->   +	test_cmp get-expected.cred get-actual.cred &&
->   +	test_cmp store-expected.cred store-actual.cred
->   +'
-> 
-> I'm not sure how we plan to handle this. Some approaches I can see are:
-> 
-> - We require that credential helpers set a reasonable value for
->   "username". Presumably most credential helpers generating bearer
->   tokens have some idea of user identity, so this might be reasonable,
->   though it is wasteful, since we never use it in a meaningul way, e.g.
->   I don't think Git asks the credential helper for "username=alice" and
->   the credential helper decides to return the 'alice' credential instead
->   of the 'bob' credential (but I could be mistaken).
-> 
-> - We require that credential helpers set _some_ value for "username",
->   even if it is bogus. If so, we should communicate this explicitly.
-> 
-> - It is okay for "username" to be missing. This seems like the most
->   elegant approach for credential helpers. I'm not sure if we're there
->   yet with this series, e.g. http.c::handle_curl_result() reads:
-> 
->     else if (results->http_code == 401) {
->       if (http_auth.username && http_auth.password) {
->         credential_reject(&http_auth);
->         return HTTP_NOAUTH;
-> 
->   which seems to assume both a username _and_ password. If the username
->   is missing, we presumably don't send "erase", which might be a problem
->   for revoked access tokens (though presumably not an issue for OIDC id
->   tokens).
-You are correct here that a missing username here may cause some unexpected
-issues, and there should be more test coverage here.
+Goal is to deliver fsmonitor for Linux that is on par with fsmonitor for
+Windows and Mac OS.
 
-My recent v4 iteration has actually dropped the `authtype` patches here,
-and I'll pick these back up along with these concerns in a future series.
-Splitting this in to a future series is probably a good idea as I feel
-there's going to need to be several cleanup patches adjacent to the core
-new-feature patch, so I wouldn't want to polute this series :)
+This patch set builds upon previous work for done for Windows and Mac OS to
+implement a fsmonitor back-end for Linux based on the Linux inotify API.
+inotify differs significantly from the equivalent Windows and Mac OS APIs in
+that a watch must be registered for every directory of interest (rather than
+a singular watch at the root of the directory tree) and special care must be
+taken to handle directory renames correctly.
 
-Thanks!
-Matthew
+More information about inotify:
+https://man7.org/linux/man-pages/man7/inotify.7.html
 
+v4 differs from v3:
+
+ * Code review feedback
+
+v3 differs from v2:
+
+ * Avoid potential entanglements with GPLv3
+ * Classify a reasonable set of filesystems as being remote
+
+v2 differs from v1:
+
+ * Prior work for Windows and Mac OS has been merged to master, reducing the
+   patch set from 12 to 6 patches
+ * Code review feedback
+ * Identified and resolved race condition revealed by CI test system, see
+   "Limitations and caveats" regarding monitoring of directory trees from
+   the man page, above
+ * Apologies for being away from this for so long, but my attention was
+   needed elsewhere
+
+v1 differs from v0:
+
+ * Code review feedback
+ * Update how and which code can be shared between Mac OS and Linux
+ * Increase polling frequency to every 1ms (matches Mac OS)
+ * Updates to t7527 to improve test stability
+
+Eric DeCosta (6):
+  fsmonitor: prepare to share code between Mac OS and Linux
+  fsmonitor: determine if filesystem is local or remote
+  fsmonitor: implement filesystem change listener for Linux
+  fsmonitor: enable fsmonitor for Linux
+  fsmonitor: test updates
+  fsmonitor: update doc for Linux
+
+ Documentation/config/fsmonitor--daemon.txt |   4 +-
+ Documentation/git-fsmonitor--daemon.txt    |  24 +-
+ compat/fsmonitor/fsm-health-linux.c        |  24 +
+ compat/fsmonitor/fsm-ipc-darwin.c          |  53 +-
+ compat/fsmonitor/fsm-ipc-linux.c           |   1 +
+ compat/fsmonitor/fsm-ipc-unix.c            |  52 ++
+ compat/fsmonitor/fsm-listen-linux.c        | 676 +++++++++++++++++++++
+ compat/fsmonitor/fsm-path-utils-linux.c    | 193 ++++++
+ compat/fsmonitor/fsm-settings-darwin.c     |  63 +-
+ compat/fsmonitor/fsm-settings-linux.c      |   1 +
+ compat/fsmonitor/fsm-settings-unix.c       |  62 ++
+ config.mak.uname                           |   8 +
+ contrib/buildsystems/CMakeLists.txt        |  11 +-
+ t/t7527-builtin-fsmonitor.sh               |  94 ++-
+ 14 files changed, 1127 insertions(+), 139 deletions(-)
+ create mode 100644 compat/fsmonitor/fsm-health-linux.c
+ create mode 100644 compat/fsmonitor/fsm-ipc-linux.c
+ create mode 100644 compat/fsmonitor/fsm-ipc-unix.c
+ create mode 100644 compat/fsmonitor/fsm-listen-linux.c
+ create mode 100644 compat/fsmonitor/fsm-path-utils-linux.c
+ create mode 100644 compat/fsmonitor/fsm-settings-linux.c
+ create mode 100644 compat/fsmonitor/fsm-settings-unix.c
+
+
+base-commit: c48035d29b4e524aed3a32f0403676f0d9128863
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1352%2Fedecosta-mw%2Ffsmonitor_linux-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1352/edecosta-mw/fsmonitor_linux-v5
+Pull-Request: https://github.com/git/git/pull/1352
+
+Range-diff vs v4:
+
+ 1:  99d684c7bdf ! 1:  7f659603c9a fsmonitor: prepare to share code between Mac OS and Linux
+     @@ compat/fsmonitor/fsm-settings-unix.c (new)
+      +	strbuf_addstr(&path, ipc_path);
+      +
+      +	if (fsmonitor__get_fs_info(dirname(path.buf), &fs) == -1) {
+     ++		free(fs.typename);
+      +		strbuf_release(&path);
+      +		return FSMONITOR_REASON_ERROR;
+      +	}
+ 2:  e53fc077540 ! 2:  eb3ff9d1c05 fsmonitor: determine if filesystem is local or remote
+     @@ compat/fsmonitor/fsm-path-utils-linux.c (new)
+      +#include <sys/vfs.h>
+      +#include <sys/statvfs.h>
+      +
+     -+static int is_remote_fs(const char* path) {
+     ++static int is_remote_fs(const char *path) {
+      +	struct statfs fs;
+      +
+      +	if (statfs(path, &fs)) {
+     @@ compat/fsmonitor/fsm-path-utils-linux.c (new)
+      +	}
+      +
+      +	switch (fs.f_type) {
+     -+		case 0x61636673:  /* ACFS */
+     -+		case 0x5346414F:  /* AFS */
+     -+		case 0x00C36400:  /* CEPH */
+     -+		case 0xFF534D42:  /* CIFS */
+     -+		case 0x73757245:  /* CODA */
+     -+		case 0x19830326:  /* FHGFS */
+     -+		case 0x1161970:   /* GFS */
+     -+		case 0x47504653:  /* GPFS */
+     -+		case 0x013111A8:  /* IBRIX */
+     -+		case 0x6B414653:  /* KAFS */
+     -+		case 0x0BD00BD0:  /* LUSTRE */
+     -+		case 0x564C:      /* NCP */
+     -+		case 0x6969:      /* NFS */
+     -+		case 0x6E667364:  /* NFSD */
+     -+		case 0x7461636f:  /* OCFS2 */
+     -+		case 0xAAD7AAEA:  /* PANFS */
+     -+		case 0x517B:      /* SMB */
+     -+		case 0xBEEFDEAD:  /* SNFS */
+     -+		case 0xFE534D42:  /* SMB2 */
+     -+		case 0xBACBACBC:  /* VMHGFS */
+     -+		case 0xA501FCF5:  /* VXFS */
+     -+			return 1;
+     -+		default:
+     -+			break;
+     ++	case 0x61636673:  /* ACFS */
+     ++	case 0x5346414F:  /* AFS */
+     ++	case 0x00C36400:  /* CEPH */
+     ++	case 0xFF534D42:  /* CIFS */
+     ++	case 0x73757245:  /* CODA */
+     ++	case 0x19830326:  /* FHGFS */
+     ++	case 0x1161970:   /* GFS */
+     ++	case 0x47504653:  /* GPFS */
+     ++	case 0x013111A8:  /* IBRIX */
+     ++	case 0x6B414653:  /* KAFS */
+     ++	case 0x0BD00BD0:  /* LUSTRE */
+     ++	case 0x564C:      /* NCP */
+     ++	case 0x6969:      /* NFS */
+     ++	case 0x6E667364:  /* NFSD */
+     ++	case 0x7461636f:  /* OCFS2 */
+     ++	case 0xAAD7AAEA:  /* PANFS */
+     ++	case 0x517B:      /* SMB */
+     ++	case 0xBEEFDEAD:  /* SNFS */
+     ++	case 0xFE534D42:  /* SMB2 */
+     ++	case 0xBACBACBC:  /* VMHGFS */
+     ++	case 0xA501FCF5:  /* VXFS */
+     ++		return 1;
+     ++	default:
+     ++		break;
+      +	}
+      +
+      +	return 0;
+      +}
+      +
+      +static int find_mount(const char *path, const struct statvfs *fs,
+     -+	struct mntent *ent)
+     ++	struct mntent *entry)
+      +{
+      +	const char *const mounts = "/proc/mounts";
+     -+	const char *rp = real_pathdup(path, 1);
+     ++	char *rp = real_pathdup(path, 1);
+      +	struct mntent *ment = NULL;
+      +	struct statvfs mntfs;
+      +	FILE *fp;
+      +	int found = 0;
+      +	int dlen, plen, flen = 0;
+      +
+     -+	ent->mnt_fsname = NULL;
+     -+	ent->mnt_dir = NULL;
+     -+	ent->mnt_type = NULL;
+     ++	entry->mnt_fsname = NULL;
+     ++	entry->mnt_dir = NULL;
+     ++	entry->mnt_type = NULL;
+      +
+      +	fp = setmntent(mounts, "r");
+      +	if (!fp) {
+     ++		free(rp);
+      +		error_errno(_("setmntent('%s') failed"), mounts);
+      +		return -1;
+      +	}
+     @@ compat/fsmonitor/fsm-path-utils-linux.c (new)
+      +			default:
+      +				error_errno(_("statvfs('%s') failed"), ment->mnt_dir);
+      +				endmntent(fp);
+     ++				free(rp);
+      +				return -1;
+      +			}
+      +		}
+     @@ compat/fsmonitor/fsm-path-utils-linux.c (new)
+      +			if (dlen > plen)
+      +				continue;
+      +			/*
+     -+			 * root is always a potential match; otherwise look for
+     -+			 * directory prefix
+     ++			 * look for the longest prefix (including root)
+      +			 */
+     -+			if ((dlen == 1 && ment->mnt_dir[0] == '/') ||
+     -+				(dlen > flen && (!rp[dlen] || rp[dlen] == '/'))) {
+     ++			if (dlen > flen &&
+     ++				((dlen == 1 && ment->mnt_dir[0] == '/') ||
+     ++				 (!rp[dlen] || rp[dlen] == '/'))) {
+      +				flen = dlen;
+     ++				found = 1;
+     ++
+      +				/*
+      +				 * https://man7.org/linux/man-pages/man3/getmntent.3.html
+      +				 *
+      +				 * The pointer points to a static area of memory which is
+      +				 * overwritten by subsequent calls to getmntent().
+      +				 */
+     -+				found = 1;
+     -+				free(ent->mnt_fsname);
+     -+				free(ent->mnt_dir);
+     -+				free(ent->mnt_type);
+     -+				ent->mnt_fsname = xstrdup(ment->mnt_fsname);
+     -+				ent->mnt_dir = xstrdup(ment->mnt_dir);
+     -+				ent->mnt_type = xstrdup(ment->mnt_type);
+     ++				free(entry->mnt_fsname);
+     ++				free(entry->mnt_dir);
+     ++				free(entry->mnt_type);
+     ++				entry->mnt_fsname = xstrdup(ment->mnt_fsname);
+     ++				entry->mnt_dir = xstrdup(ment->mnt_dir);
+     ++				entry->mnt_type = xstrdup(ment->mnt_type);
+      +			}
+      +		}
+      +	}
+      +	endmntent(fp);
+     ++	free(rp);
+      +
+      +	if (!found)
+      +		return -1;
+     @@ compat/fsmonitor/fsm-path-utils-linux.c (new)
+      +
+      +int fsmonitor__get_fs_info(const char *path, struct fs_info *fs_info)
+      +{
+     -+	struct mntent ment;
+     ++	struct mntent entry;
+      +	struct statvfs fs;
+      +
+     ++	fs_info->is_remote = -1;
+     ++	fs_info->typename = NULL;
+     ++
+      +	if (statvfs(path, &fs))
+      +		return error_errno(_("statvfs('%s') failed"), path);
+      +
+     -+
+     -+	if (find_mount(path, &fs, &ment) < 0) {
+     -+		free(ment.mnt_fsname);
+     -+		free(ment.mnt_dir);
+     -+		free(ment.mnt_type);
+     ++	if (find_mount(path, &fs, &entry) < 0) {
+     ++		free(entry.mnt_fsname);
+     ++		free(entry.mnt_dir);
+     ++		free(entry.mnt_type);
+      +		return -1;
+      +	}
+      +
+      +	trace_printf_key(&trace_fsmonitor,
+      +			 "statvfs('%s') [flags 0x%08lx] '%s' '%s'",
+     -+			 path, fs.f_flag, ment.mnt_type, ment.mnt_fsname);
+     ++			 path, fs.f_flag, entry.mnt_type, entry.mnt_fsname);
+      +
+     -+	fs_info->is_remote = is_remote_fs(ment.mnt_dir);
+     -+	fs_info->typename = ment.mnt_fsname;
+     -+	free(ment.mnt_dir);
+     -+	free(ment.mnt_type);
+     ++	fs_info->is_remote = is_remote_fs(entry.mnt_dir);
+     ++	fs_info->typename = xstrdup(entry.mnt_fsname);
+     ++	free(entry.mnt_fsname);
+     ++	free(entry.mnt_dir);
+     ++	free(entry.mnt_type);
+      +
+     -+	if (fs_info->is_remote < 0) {
+     -+		free(ment.mnt_fsname);
+     ++	if (fs_info->is_remote < 0)
+      +		return -1;
+     -+	}
+      +
+      +	trace_printf_key(&trace_fsmonitor,
+      +				"'%s' is_remote: %d",
+     @@ compat/fsmonitor/fsm-path-utils-linux.c (new)
+      +{
+      +	struct fs_info fs;
+      +
+     -+	if (fsmonitor__get_fs_info(path, &fs))
+     ++	if (fsmonitor__get_fs_info(path, &fs)) {
+     ++		free(fs.typename);
+      +		return -1;
+     ++	}
+      +
+      +	free(fs.typename);
+      +
+ 3:  80282efef57 = 3:  e093a2703b1 fsmonitor: implement filesystem change listener for Linux
+ 4:  cb03803e355 = 4:  c03070fb0a2 fsmonitor: enable fsmonitor for Linux
+ 5:  8d9d469b356 = 5:  6a7b554642c fsmonitor: test updates
+ 6:  5afd03fa6ca = 6:  827410c22ee fsmonitor: update doc for Linux
+
+-- 
+gitgitgadget
