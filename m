@@ -2,93 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C233C4332F
-	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 21:01:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 029E4C4332F
+	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 21:02:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233543AbiLLVBK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Dec 2022 16:01:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42040 "EHLO
+        id S233588AbiLLVCU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Dec 2022 16:02:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233305AbiLLVAk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2022 16:00:40 -0500
-Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 08BCD186E7
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 12:59:59 -0800 (PST)
-Received: by mail-pj1-x104a.google.com with SMTP id v16-20020a17090a899000b00219b1f0ddebso705483pjn.5
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 12:59:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=HgD3LvHOqmdivoiS/CbnMVcTlvtK4+atpwZhfLEOSqA=;
-        b=iV6nIiuscDH8oYyFiZKk7u7FTRBReyGEdg7p59ZXlOQgbAkdRe7a6IH8LW/HzNbaII
-         APbmApZMI0UvLoLpFF4QsKSS3DudtamNiVQQNsC9NTAFF7aUJW+7wQUJ8kEYO0QM6gEv
-         QuDfR97JD2k17ztFLiaaXsYJeZJP6Q+LEviR9wj0G8p+U6UdTZ/WWdaiYIzWqFW8lj5R
-         XMkP+9pzPgUTZZSyUV95mPukIjINIU16k+1YRjWoXMQaueqoKYTmFSx6S0SvfFMpwHk+
-         b12imjbg1QW+GIAZS3Oq9hil2ZXyoiFkXPjV0CzWIxxH/uU4RU7ebIiXYC+dOquf3ImT
-         OQRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:from:subject:message-id:mime-version:in-reply-to:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HgD3LvHOqmdivoiS/CbnMVcTlvtK4+atpwZhfLEOSqA=;
-        b=1oFrH3JHLI2GdcXJgtQUx/pBa/CfFLIupMrpwZzavZmPNpjwMtc6f9ffRGDCs7O67I
-         SQxXP1PyGQb8ltMyu0Affndz3IcTeQq3pap32CSqAUf3nCqjec9Gqz3HFCtYuxgcdpaD
-         9rRSp9+qygRMzcLm8du+Zbw7NFb/ZZz6HPXJvJqS6CTKRh6YG8oqV6yF4IgI7SkX6Agl
-         EbPJ0JMF9hhVvlYl7q4CepMaM421kXCUcTm/XHLTAAMkbKymfwBqT2ZVCCejRsVF1M8f
-         ypWUlXMKIbIWzHs+OeKH29S9wD3vjsaPhn0svu7FtoeFdICmiasAm/Wwkpux0Q1pvPzP
-         umUw==
-X-Gm-Message-State: ANoB5pnWf29CQYmHS//ZVmwa/o7Yf7Mnggh0jIOrWEAHsFRJl08EUmJ7
-        hETW+EmAsanpjJO2a/c9qytUmjl1JQOF/nS9aoVb
-X-Google-Smtp-Source: AA0mqf4eHBrP8wyaA39rwI5av1bKk6H6qckyFXib7BHqaa5sIijC+ul1rhWE/UDswcDjF2MLn7VkAOeXUBiABYqAxQGJ
-X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
- (user=jonathantanmy job=sendgmr) by 2002:a05:6a00:813:b0:578:46bc:fea2 with
- SMTP id m19-20020a056a00081300b0057846bcfea2mr461103pfk.37.1670878798177;
- Mon, 12 Dec 2022 12:59:58 -0800 (PST)
-Date:   Mon, 12 Dec 2022 12:59:55 -0800
-In-Reply-To: <Y5eT6jodUdNr6hK6@coredump.intra.peff.net>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.39.0.rc1.256.g54fd8350bd-goog
-Message-ID: <20221212205955.956380-1-jonathantanmy@google.com>
-Subject: Re: [PATCH v4 3/4] object-file: emit corruption errors when detected
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        avarab@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        with ESMTP id S233418AbiLLVB1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2022 16:01:27 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 028A8193C7
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 13:00:35 -0800 (PST)
+Received: (qmail 6530 invoked by uid 109); 12 Dec 2022 21:00:35 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 12 Dec 2022 21:00:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29631 invoked by uid 111); 12 Dec 2022 20:59:20 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 12 Dec 2022 15:59:20 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Mon, 12 Dec 2022 15:59:19 -0500
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, vdye@github.com, gitster@pobox.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 0/3] Bundle URIs 4.5: fixups from part IV
+Message-ID: <Y5eWJ03XQTqkJHjK@coredump.intra.peff.net>
+References: <pull.1443.git.1670866407.gitgitgadget@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1443.git.1670866407.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-> Actually, I think it is much worse than that. The code as written above
-> is already buggy (which is my fault, as I suggested it).
-> 
-> In open_loose_object() we'll continue to iterate and pick out the "most
-> interesting errno". But we'll throw away the path that gave us that
-> errno. So we might well say:
-> 
->   unable to open loose object /some/alternate/12/34abcd: permission denied
-> 
-> when the actual problem is in /main/objdir/12/34abcd.
-> 
-> It's fixable, but with some pain in handling the allocations. I think it
-> would be sufficient to just say:
-> 
->   error_errno(_("unable to open loose object %s"), oid_to_hex(oid));
-> 
-> here. 
+On Mon, Dec 12, 2022 at 05:33:23PM +0000, Derrick Stolee via GitGitGadget wrote:
 
-OK, let's go with this.
+> These patches represent small fixups that came in review from the last
+> version of 'ds/bundle-uri-4'. Since it was merged to 'next', these patches
+> are forward-fixes on that branch.
+> 
+> Note: I did not include any changes that could be solved by adding an UNUSED
+> macro, saving that for Peff and his already-prepared patches in that area.
 
-> And possibly put a comment above open_loose_object() that "path"
-> is only guaranteed to point to something sensible when a non-negative
-> value is returned.
+Thanks, that sounds good on my part. The first two look obviously
+correct to me. The third looks sensible, too, but isn't an area I'd
+looked at before.
 
-Junio made a point that there could, for example, be no path when the
-odb list is empty (maybe in the future) so I don't think this would be
-sufficient. But there is already a comment there pointing to a comment
-in another function that states "path ... (if any)" so this is something
-that callers should already take care of. In my changes, I'll initialize
-it to NULL and whenever I use it, I'll check for non-NULL first.
+-Peff
