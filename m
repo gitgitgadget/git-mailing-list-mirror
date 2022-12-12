@@ -2,87 +2,61 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3BD10C4332F
-	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 20:51:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B44ACC4332F
+	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 20:55:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233476AbiLLUvI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Dec 2022 15:51:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39164 "EHLO
+        id S233090AbiLLUzC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Dec 2022 15:55:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233384AbiLLUvG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2022 15:51:06 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2E6A183A8
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 12:51:02 -0800 (PST)
-Received: (qmail 6387 invoked by uid 109); 12 Dec 2022 20:51:02 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 12 Dec 2022 20:51:02 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29564 invoked by uid 111); 12 Dec 2022 20:49:47 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 12 Dec 2022 15:49:47 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 12 Dec 2022 15:49:46 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        avarab@gmail.com
-Subject: Re: [PATCH v4 3/4] object-file: emit corruption errors when detected
-Message-ID: <Y5eT6jodUdNr6hK6@coredump.intra.peff.net>
-References: <cover.1669839849.git.jonathantanmy@google.com>
- <cover.1670622176.git.jonathantanmy@google.com>
- <07d28db92c2c61358755b3d501bc5bd35a760de1.1670622176.git.jonathantanmy@google.com>
- <xmqqv8mkxgd1.fsf@gitster.g>
+        with ESMTP id S232815AbiLLUzB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2022 15:55:01 -0500
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 061B055A8
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 12:55:00 -0800 (PST)
+Received: by mail-pj1-f47.google.com with SMTP id w4-20020a17090ac98400b002186f5d7a4cso1267076pjt.0
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 12:55:00 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NAYAFBETj2dAcMtSwHUzaRUDgH++TYSZnGAQ6IKCrGI=;
+        b=3pa0DF0RM9Oa+1k9z+CEb6OPfr1QTZJHYcxi7gpMUAs7tj2OOZEnhU1EuBpzqfl+2Z
+         +tWlzloc+rWLuY8JnrQ5oKe8/XRImHXOCRjI33p2KgdEiwj4w83epWvlOnFen2WxFBq2
+         HNrKznrsey+hPklF+0qC7h9Gl769uLSZqZayLvokLh0FLFDjgXhulC6F0qBSZ4TfqFMJ
+         zTknMybRbMWmAzNwS+v06QoJ07eO4LVPmfENSEPtQT9okLWqtNfdavrYOqlvuKdO4Jl0
+         RtBuF/oWyr4XfL7TCDxPgtFN3vhK7gTQFSM2aKmy6OSb+HKm9NCfoKaHKlXnKRLt438g
+         quLw==
+X-Gm-Message-State: ANoB5pk802H7RkLZHHQPNo0iYN9HZnwqhITFQ8qXDndmeC9yMc4QHD6A
+        wQnPFfISG1nd5RjSpQw/JmkSJ/EqPBNsYkoLlyA=
+X-Google-Smtp-Source: AA0mqf5cqMSEN5Xh21dnnxXiG/9yusUv2EuYgkn8wKzoJ8Y3+pg1M9sv3VqMLJn3Ls7XzAd6vZ7AwiZCGnw72ftQEzE=
+X-Received: by 2002:a17:90a:e2c4:b0:219:3553:4ff5 with SMTP id
+ fr4-20020a17090ae2c400b0021935534ff5mr41452pjb.22.1670878499385; Mon, 12 Dec
+ 2022 12:54:59 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqv8mkxgd1.fsf@gitster.g>
+References: <8316344.DvuYhMxLoT@hosanna>
+In-Reply-To: <8316344.DvuYhMxLoT@hosanna>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 12 Dec 2022 15:54:48 -0500
+Message-ID: <CAPig+cRv02F2yw3Ej1_7PKUV5stKcff82GtdUe5X3wnPfDhfmw@mail.gmail.com>
+Subject: Re: includeIf appears to not be working
+To:     "Joshua J. Kugler" <joshua@azariah.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 10, 2022 at 09:16:42AM +0900, Junio C Hamano wrote:
+On Mon, Dec 12, 2022 at 3:36 PM Joshua J. Kugler <joshua@azariah.com> wrote:
+> So, I've set up includeIf before, and have had it working, but it seems to not
+> be working in my latest attempt.
+>
+> Contents of ~/.gitconfig (truncated):
+>
+> [user]
+>         name = Joshua Kugler
+>         email = joshua@personal.com
+> [includIf "gitdir:~/repos/work/"]
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
-> 
-> > +	fd = open_loose_object(r, oid, &path);
-> > +	if (fd < 0) {
-> > +		if (errno != ENOENT)
-> > +			error_errno(_("unable to open loose object %s"), path);
-> > +		return -1;
-> > +	}
-> 
-> I know there was a discussion in the previous round, but is this use
-> of path truly safe?  Currently it may happen to be as long as there
-> is at least one element on the odb list, but when thinking things
-> through with future-proofing point of view, I do not think assuming
-> that path is always computable is a healthy thing to do in the
-> longer term.
-> 
-> Our "struct object_id" may be extended in the future and allow us to
-> express "invalid" object name, in which case the error return we get
-> may not even be about "loose object file not openable" but "there
-> will never be a loose object file for such an invalid object name",
-> in which case there won't be any path returned from the function.
-
-Actually, I think it is much worse than that. The code as written above
-is already buggy (which is my fault, as I suggested it).
-
-In open_loose_object() we'll continue to iterate and pick out the "most
-interesting errno". But we'll throw away the path that gave us that
-errno. So we might well say:
-
-  unable to open loose object /some/alternate/12/34abcd: permission denied
-
-when the actual problem is in /main/objdir/12/34abcd.
-
-It's fixable, but with some pain in handling the allocations. I think it
-would be sufficient to just say:
-
-  error_errno(_("unable to open loose object %s"), oid_to_hex(oid));
-
-here. And possibly put a comment above open_loose_object() that "path"
-is only guaranteed to point to something sensible when a non-negative
-value is returned.
-
--Peff
+Missing "e" in "includeIf".
