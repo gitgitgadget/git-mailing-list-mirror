@@ -2,61 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 043B5C00145
-	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 21:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85EF6C4332F
+	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 21:58:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233097AbiLLV6a (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Dec 2022 16:58:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49148 "EHLO
+        id S233610AbiLLV6c (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Dec 2022 16:58:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233364AbiLLV6O (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S233516AbiLLV6O (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 12 Dec 2022 16:58:14 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5A07B84D
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 13:58:11 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id c65-20020a1c3544000000b003cfffd00fc0so6460208wma.1
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 13:58:11 -0800 (PST)
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52A76E0F6
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 13:58:13 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id o5so13712875wrm.1
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 13:58:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NWVyY03VyOHrfSqJa6fkgcP3t9WmHSfFLgDykLbO4hQ=;
-        b=JPzTrT7L22YYT4Sz7guS/6v/H7m8kmU3RLv3fpmjGZsBVJNE5J0KFPtN3MAnPWjEGr
-         bOHxNxETstxngo7RelQNXXxLSq8PIDivq4xsqHRfmxYKTab5VvvvwkWHqyndwfzS1Ze9
-         x/m/ze2eml6e1d93RNJ0NPeKUD6HM3jqAGmefAj0LEDBErj7Z7HI5mMeIOf850O2kSlW
-         axhYgH+tZJG+GeaJey1HzlKt4AQEFwTdNJiZCBrIpNo5w2hOyM44berqL8OzRUnyFcbs
-         WcFMwV0RJG8IbmtAA89LhzIwe344RZTrhvVJUZ7YmKpXewaEUIVMF3cry79pZFWt4inn
-         Kurw==
+        bh=FGeYWHawFT/RkYnEHv+xVJgDFjPFKnvI5O3/C52qS/w=;
+        b=XZa/RBbLKLJkP4YnHqjw37K+KY4V4C5AbL8uwWC5hliadqRXzrM7YgT3OjgiSiY7Wo
+         hjkmOVmNMh1+eO+3vUn/XN/FXJbf9BUiJ171U/84B5SKGfPgMiuT84TFe659ptQRjwK8
+         KnAIiWSL3s4SG6UgdNpiQnbsEBs1dre1zoepWmjpS22JpTT4NiDkpXIJ3+HkUGr9468n
+         sCy16gpnNyklXK9AG3ohlB/dHTRugp3g2cdC9YIbwTE/pk4GL+2a8K9KXSs3sqJNjdyD
+         qmnL2IiY7GJxILYLae/aaT86FyeZ3L9qbky3ZC+YJdTiFJ9XaBvZzJlv8D/dqh8OFWbP
+         QyFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NWVyY03VyOHrfSqJa6fkgcP3t9WmHSfFLgDykLbO4hQ=;
-        b=B/qVC9DK1MxFN9KHvrb5QqqIHfc1/1OuEmdzj7GXbKPshr82lPssLWkz/2MZx0c7CM
-         2YPJppHOPYwCYi1GDC23r9uZfwqOFzvRN7pDbnHYLcdtI0QrfekVqB5FAsj6YPmxaFT7
-         bojjQP8HIuv6j+UVcj5VrzNt5DxoKobF9zaOqELs1ngolETIpnyuHrR4OwTD+aOLrsDg
-         ANsAJewrCrq4K19H/GjnMLuImydFk7eVLc7wq9QM3MKi06yTZQX8OQfew8344dxcVuXm
-         tNwfv/p5Zfnt5r5Z0XP0O99xF6Y6gMXIyd05zrBursBGXcpotAQy2xO/51R850JI40h5
-         frDQ==
-X-Gm-Message-State: ANoB5pnk7FRNsxk78k98DPt1kaq4PH3qoV2vrUFt3NHwx/wjx9ejeN0N
-        fTolDj3d1FKFE0K8yBamsbIrH0bJncY=
-X-Google-Smtp-Source: AA0mqf4+6UbiWhPtGIkZtLWxDYQPa6BNjDYjsWoZNfAN+d/jJGIY45gSl6Joy4cufsmpT37IoAwa0Q==
-X-Received: by 2002:a05:600c:204f:b0:3d2:282a:e1f5 with SMTP id p15-20020a05600c204f00b003d2282ae1f5mr3148238wmg.30.1670882289992;
-        Mon, 12 Dec 2022 13:58:09 -0800 (PST)
+        bh=FGeYWHawFT/RkYnEHv+xVJgDFjPFKnvI5O3/C52qS/w=;
+        b=UBnLXRxy8F9gXZsqeOzHEolkUmnvdn5r1T5ejATnU51dyjLJ1+IVPucL2IfIYEX61r
+         qJAWvoIgqbOPsAtJzqI53QD7GSL0QVKBLS2VHM50ntqB0IIqU9lgT0LziZ5ZKVdlJBMc
+         3IDFnjpHWFxEVoU+ulrZWleRQzW9UiSwn1uvunyT+xes7FgzDZ93QsP2TQwx+L5zD+eR
+         6WvgId52ntmkzQUePEcUv0NOW1oh06tlhEQRyf/PaqNTygLA83rHfuQBx9zqKW0yHC7w
+         Qt7JYG73W8RZBRxHZylbmyqO3pKqx5lSgRl2vokQXOkI7WTMd4hOBuP4nHcR8hmVdEyr
+         ji0A==
+X-Gm-Message-State: ANoB5plKYo1GXb6xEPKM7b43X8LNGC3ECF5svVFGPyn7vA8Jrj2xgJI1
+        86FmeYsuZX6ZK2aXSaNZTYRGfIuWRtI=
+X-Google-Smtp-Source: AA0mqf50fV0KUSv2kqt/4cge/vup9+8D3d2+w941jLfydUTl1P6f7z89tgDhsz15rlXukcZBVuLC4A==
+X-Received: by 2002:a5d:670c:0:b0:242:1551:975b with SMTP id o12-20020a5d670c000000b002421551975bmr10774988wru.50.1670882291682;
+        Mon, 12 Dec 2022 13:58:11 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q184-20020a1c43c1000000b003b4fdbb6319sm10802618wma.21.2022.12.12.13.58.09
+        by smtp.gmail.com with ESMTPSA id d4-20020adfe2c4000000b00236488f62d6sm9993786wrj.79.2022.12.12.13.58.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Dec 2022 13:58:09 -0800 (PST)
-Message-Id: <e093a2703b1caa8ca1474d38519b569cbb81d5d4.1670882286.git.gitgitgadget@gmail.com>
+        Mon, 12 Dec 2022 13:58:11 -0800 (PST)
+Message-Id: <6a7b554642c39096e80c0e0146d149eeee55241d.1670882286.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1352.v5.git.git.1670882286.gitgitgadget@gmail.com>
 References: <pull.1352.v4.git.git.1669230044.gitgitgadget@gmail.com>
         <pull.1352.v5.git.git.1670882286.gitgitgadget@gmail.com>
 From:   "Eric DeCosta via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 12 Dec 2022 21:58:02 +0000
-Subject: [PATCH v5 3/6] fsmonitor: implement filesystem change listener for
- Linux
+Date:   Mon, 12 Dec 2022 21:58:04 +0000
+Subject: [PATCH v5 5/6] fsmonitor: test updates
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -75,700 +74,245 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Eric DeCosta <edecosta@mathworks.com>
 
-Implement a filesystem change listener for Linux based on the inotify API:
-https://man7.org/linux/man-pages/man7/inotify.7.html
+t7527-builtin-fsmonitor was leaking fsmonitor--daemon processes in some
+cases.
 
-inotify requires registering a watch on every directory in the worktree and
-special handling of moves/renames.
+Accomodate slight difference in the number of events generated on Linux.
+
+On lower-powered systems, spin a little to give the daemon time
+to respond to and log filesystem events.
 
 Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
 ---
- compat/fsmonitor/fsm-listen-linux.c | 676 ++++++++++++++++++++++++++++
- 1 file changed, 676 insertions(+)
- create mode 100644 compat/fsmonitor/fsm-listen-linux.c
+ t/t7527-builtin-fsmonitor.sh | 94 ++++++++++++++++++++++++++++++------
+ 1 file changed, 80 insertions(+), 14 deletions(-)
 
-diff --git a/compat/fsmonitor/fsm-listen-linux.c b/compat/fsmonitor/fsm-listen-linux.c
-new file mode 100644
-index 00000000000..e8548e4e009
---- /dev/null
-+++ b/compat/fsmonitor/fsm-listen-linux.c
-@@ -0,0 +1,676 @@
-+#include "cache.h"
-+#include "fsmonitor.h"
-+#include "fsm-listen.h"
-+#include "fsmonitor--daemon.h"
-+#include <dirent.h>
-+#include <fcntl.h>
-+#include <sys/inotify.h>
-+#include <sys/stat.h>
+diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
+index 4abc74db2bb..951374231b7 100755
+--- a/t/t7527-builtin-fsmonitor.sh
++++ b/t/t7527-builtin-fsmonitor.sh
+@@ -13,7 +13,7 @@ fi
+ stop_daemon_delete_repo () {
+ 	r=$1 &&
+ 	test_might_fail git -C $r fsmonitor--daemon stop &&
+-	rm -rf $1
++	rm -rf $r
+ }
+ 
+ start_daemon () {
+@@ -72,6 +72,34 @@ start_daemon () {
+ 	)
+ }
+ 
++IMPLICIT_TIMEOUT=5
 +
-+/*
-+ * Safe value to bitwise OR with rest of mask for
-+ * kernels that do not support IN_MASK_CREATE
-+ */
-+#ifndef IN_MASK_CREATE
-+#define IN_MASK_CREATE 0x00000000
-+#endif
-+
-+enum shutdown_reason {
-+	SHUTDOWN_CONTINUE = 0,
-+	SHUTDOWN_STOP,
-+	SHUTDOWN_ERROR,
-+	SHUTDOWN_FORCE
-+};
-+
-+struct watch_entry {
-+	struct hashmap_entry ent;
-+	int wd;
-+	uint32_t cookie;
-+	const char *dir;
-+};
-+
-+struct rename_entry {
-+	struct hashmap_entry ent;
-+	time_t whence;
-+	uint32_t cookie;
-+	const char *dir;
-+};
-+
-+struct fsm_listen_data {
-+	int fd_inotify;
-+	enum shutdown_reason shutdown;
-+	struct hashmap watches;
-+	struct hashmap renames;
-+	struct hashmap revwatches;
-+};
-+
-+static int watch_entry_cmp(const void *cmp_data,
-+			  const struct hashmap_entry *eptr,
-+			  const struct hashmap_entry *entry_or_key,
-+			  const void *keydata)
-+{
-+	const struct watch_entry *e1, *e2;
-+
-+	e1 = container_of(eptr, const struct watch_entry, ent);
-+	e2 = container_of(eptr, const struct watch_entry, ent);
-+	return e1->wd != e2->wd;
++wait_for_update () {
++	func=$1 &&
++	file=$2 &&
++	sz=$(wc -c < "$file") &&
++	last=0 &&
++	$func &&
++	k=0 &&
++	while test "$k" -lt $IMPLICIT_TIMEOUT
++	do
++		nsz=$(wc -c < "$file")
++		if test "$nsz" -gt "$sz"
++		then
++			if test "$last" -eq "$nsz"
++			then
++				cat "$file" &&
++				return 0
++			fi
++			last=$nsz
++		fi
++		sleep 1
++		k=$(( $k + 1 ))
++	done &&
++	cat "$file" &&
++	return 0
 +}
 +
-+static int revwatches_entry_cmp(const void *cmp_data,
-+			  const struct hashmap_entry *eptr,
-+			  const struct hashmap_entry *entry_or_key,
-+			  const void *keydata)
-+{
-+	const struct watch_entry *e1, *e2;
-+
-+	e1 = container_of(eptr, const struct watch_entry, ent);
-+	e2 = container_of(eptr, const struct watch_entry, ent);
-+	return strcmp(e1->dir, e2->dir);
+ # Is a Trace2 data event present with the given catetory and key?
+ # We do not care what the value is.
+ #
+@@ -137,7 +165,6 @@ test_expect_success 'implicit daemon start' '
+ # machines (where it might take a moment to wake and reschedule the
+ # daemon process) to avoid false alarms during test runs.)
+ #
+-IMPLICIT_TIMEOUT=5
+ 
+ verify_implicit_shutdown () {
+ 	r=$1 &&
+@@ -373,6 +400,15 @@ create_files () {
+ 	echo 3 >dir2/new
+ }
+ 
++rename_directory () {
++	mv dirtorename dirrenamed
 +}
 +
-+static int rename_entry_cmp(const void *cmp_data,
-+			  const struct hashmap_entry *eptr,
-+			  const struct hashmap_entry *entry_or_key,
-+			  const void *keydata)
-+{
-+	const struct rename_entry *e1, *e2;
-+
-+	e1 = container_of(eptr, const struct rename_entry, ent);
-+	e2 = container_of(eptr, const struct rename_entry, ent);
-+	return e1->cookie != e2->cookie;
++rename_directory_file () {
++	mv dirtorename dirrenamed &&
++	echo 1 > dirrenamed/new
 +}
 +
-+/*
-+ * Register an inotify watch, add watch descriptor to path mapping
-+ * and the reverse mapping.
-+ */
-+static int add_watch(const char *path, struct fsm_listen_data *data)
-+{
-+	const char *interned = strintern(path);
-+	struct watch_entry *w1, *w2;
-+
-+	/* add the inotify watch, don't allow watches to be modified */
-+	int wd = inotify_add_watch(data->fd_inotify, interned,
-+				(IN_ALL_EVENTS | IN_ONLYDIR | IN_MASK_CREATE)
-+				^ IN_ACCESS ^ IN_CLOSE ^ IN_OPEN);
-+	if (wd < 0)
-+		return error_errno("inotify_add_watch('%s') failed", interned);
-+
-+	/* add watch descriptor -> directory mapping */
-+	CALLOC_ARRAY(w1, 1);
-+	w1->wd = wd;
-+	w1->dir = interned;
-+	hashmap_entry_init(&w1->ent, memhash(&w1->wd, sizeof(int)));
-+	hashmap_add(&data->watches, &w1->ent);
-+
-+	/* add directory -> watch descriptor mapping */
-+	CALLOC_ARRAY(w2, 1);
-+	w2->wd = wd;
-+	w2->dir = interned;
-+	hashmap_entry_init(&w2->ent, memhash(w2->dir, strlen(w2->dir)));
-+	hashmap_add(&data->revwatches, &w2->ent);
-+
-+	return 0;
-+}
-+
-+/*
-+ * Remove the inotify watch, the watch descriptor to path mapping
-+ * and the reverse mapping.
-+ */
-+static void remove_watch(struct watch_entry *w,
-+	struct fsm_listen_data *data)
-+{
-+	struct watch_entry k1, k2, *w1, *w2;
-+
-+	/* remove watch, ignore error if kernel already did it */
-+	if (inotify_rm_watch(data->fd_inotify, w->wd) && errno != EINVAL)
-+		error_errno("inotify_rm_watch() failed");
-+
-+	hashmap_entry_init(&k1.ent, memhash(&w->wd, sizeof(int)));
-+	w1 = hashmap_remove_entry(&data->watches, &k1, ent, NULL);
-+	if (!w1)
-+		BUG("Double remove of watch for '%s'", w->dir);
-+
-+	if (w1->cookie)
-+		BUG("Removing watch for '%s' which has a pending rename", w1->dir);
-+
-+	hashmap_entry_init(&k2.ent, memhash(w->dir, strlen(w->dir)));
-+	w2 = hashmap_remove_entry(&data->revwatches, &k2, ent, NULL);
-+	if (!w2)
-+		BUG("Double remove of reverse watch for '%s'", w->dir);
-+
-+	/* w1->dir and w2->dir are interned strings, we don't own them */
-+	free(w1);
-+	free(w2);
-+}
-+
-+/*
-+ * Check for stale directory renames.
-+ *
-+ * https://man7.org/linux/man-pages/man7/inotify.7.html
-+ *
-+ * Allow for some small timeout to account for the fact that insertion of the
-+ * IN_MOVED_FROM+IN_MOVED_TO event pair is not atomic, and the possibility that
-+ * there may not be any IN_MOVED_TO event.
-+ *
-+ * If the IN_MOVED_TO event is not received within the timeout then events have
-+ * been missed and the monitor is in an inconsistent state with respect to the
-+ * filesystem.
-+ */
-+static int check_stale_dir_renames(struct hashmap *renames, time_t max_age)
-+{
-+	struct rename_entry *re;
-+	struct hashmap_iter iter;
-+
-+	hashmap_for_each_entry(renames, &iter, re, ent) {
-+		if (re->whence <= max_age)
-+			return -1;
-+	}
-+	return 0;
-+}
-+
-+/*
-+ * Track pending renames.
-+ *
-+ * Tracking is done via a event cookie to watch descriptor mapping.
-+ *
-+ * A rename is not complete until matching a IN_MOVED_TO event is received
-+ * for a corresponding IN_MOVED_FROM event.
-+ */
-+static void add_dir_rename(uint32_t cookie, const char *path,
-+	struct fsm_listen_data *data)
-+{
-+	struct watch_entry k, *w;
-+	struct rename_entry *re;
-+
-+	/* lookup the watch descriptor for the given path */
-+	hashmap_entry_init(&k.ent, memhash(path, strlen(path)));
-+	w = hashmap_get_entry(&data->revwatches, &k, ent, NULL);
-+	if (!w) /* should never happen */
-+		BUG("No watch for '%s'", path);
-+	w->cookie = cookie;
-+
-+	/* add the pending rename to match against later */
-+	CALLOC_ARRAY(re, 1);
-+	re->dir = w->dir;
-+	re->cookie = w->cookie;
-+	re->whence = time(NULL);
-+	hashmap_entry_init(&re->ent, memhash(&re->cookie, sizeof(uint32_t)));
-+	hashmap_add(&data->renames, &re->ent);
-+}
-+
-+/*
-+ * Handle directory renames
-+ *
-+ * Once a IN_MOVED_TO event is received, lookup the rename tracking information
-+ * via the event cookie and use this information to update the watch.
-+ */
-+static void rename_dir(uint32_t cookie, const char *path,
-+	struct fsm_listen_data *data)
-+{
-+	struct rename_entry rek, *re;
-+	struct watch_entry k, *w;
-+
-+	/* lookup a pending rename to match */
-+	rek.cookie = cookie;
-+	hashmap_entry_init(&rek.ent, memhash(&rek.cookie, sizeof(uint32_t)));
-+	re = hashmap_get_entry(&data->renames, &rek, ent, NULL);
-+	if (re) {
-+		k.dir = re->dir;
-+		hashmap_entry_init(&k.ent, memhash(k.dir, strlen(k.dir)));
-+		w = hashmap_get_entry(&data->revwatches, &k, ent, NULL);
-+		if (w) {
-+			w->cookie = 0; /* rename handled */
-+			remove_watch(w, data);
-+			add_watch(path, data);
-+		} else {
-+			BUG("No matching watch");
-+		}
-+	} else {
-+		BUG("No matching cookie");
-+	}
-+}
-+
-+/*
-+ * Recursively add watches to every directory under path
-+ */
-+static int register_inotify(const char *path,
-+	struct fsmonitor_daemon_state *state,
-+	struct fsmonitor_batch *batch)
-+{
-+	DIR *dir;
-+	const char *rel;
-+	struct strbuf current = STRBUF_INIT;
-+	struct dirent *de;
-+	struct stat fs;
-+	int ret = -1;
-+
-+	dir = opendir(path);
-+	if (!dir)
-+		return error_errno("opendir('%s') failed", path);
-+
-+	while ((de = readdir_skip_dot_and_dotdot(dir)) != NULL) {
-+		strbuf_reset(&current);
-+		strbuf_addf(&current, "%s/%s", path, de->d_name);
-+		if (lstat(current.buf, &fs)) {
-+			error_errno("lstat('%s') failed", current.buf);
-+			goto failed;
-+		}
-+
-+		/* recurse into directory */
-+		if (S_ISDIR(fs.st_mode)) {
-+			if (add_watch(current.buf, state->listen_data))
-+				goto failed;
-+			if (register_inotify(current.buf, state, batch))
-+				goto failed;
-+		} else if (batch) {
-+			rel = current.buf + state->path_worktree_watch.len + 1;
-+			trace_printf_key(&trace_fsmonitor, "explicitly adding '%s'", rel);
-+			fsmonitor_batch__add_path(batch, rel);
-+		}
-+	}
-+	ret = 0;
-+
-+failed:
-+	strbuf_release(&current);
-+	if (closedir(dir) < 0)
-+		return error_errno("closedir('%s') failed", path);
-+	return ret;
-+}
-+
-+static int em_rename_dir_from(u_int32_t mask)
-+{
-+	return ((mask & IN_ISDIR) && (mask & IN_MOVED_FROM));
-+}
-+
-+static int em_rename_dir_to(u_int32_t mask)
-+{
-+	return ((mask & IN_ISDIR) && (mask & IN_MOVED_TO));
-+}
-+
-+static int em_remove_watch(u_int32_t mask)
-+{
-+	return (mask & IN_DELETE_SELF);
-+}
-+
-+static int em_dir_renamed(u_int32_t mask)
-+{
-+	return ((mask & IN_ISDIR) && (mask & IN_MOVE));
-+}
-+
-+static int em_dir_created(u_int32_t mask)
-+{
-+	return ((mask & IN_ISDIR) && (mask & IN_CREATE));
-+}
-+
-+static int em_dir_deleted(uint32_t mask)
-+{
-+	return ((mask & IN_ISDIR) && (mask & IN_DELETE));
-+}
-+
-+static int em_force_shutdown(u_int32_t mask)
-+{
-+	return (mask & IN_UNMOUNT) || (mask & IN_Q_OVERFLOW);
-+}
-+
-+static int em_ignore(u_int32_t mask)
-+{
-+	return (mask & IN_IGNORED) || (mask & IN_MOVE_SELF);
-+}
-+
-+static void log_mask_set(const char *path, u_int32_t mask)
-+{
-+	struct strbuf msg = STRBUF_INIT;
-+
-+	if (mask & IN_ACCESS)
-+		strbuf_addstr(&msg, "IN_ACCESS|");
-+	if (mask & IN_MODIFY)
-+		strbuf_addstr(&msg, "IN_MODIFY|");
-+	if (mask & IN_ATTRIB)
-+		strbuf_addstr(&msg, "IN_ATTRIB|");
-+	if (mask & IN_CLOSE_WRITE)
-+		strbuf_addstr(&msg, "IN_CLOSE_WRITE|");
-+	if (mask & IN_CLOSE_NOWRITE)
-+		strbuf_addstr(&msg, "IN_CLOSE_NOWRITE|");
-+	if (mask & IN_OPEN)
-+		strbuf_addstr(&msg, "IN_OPEN|");
-+	if (mask & IN_MOVED_FROM)
-+		strbuf_addstr(&msg, "IN_MOVED_FROM|");
-+	if (mask & IN_MOVED_TO)
-+		strbuf_addstr(&msg, "IN_MOVED_TO|");
-+	if (mask & IN_CREATE)
-+		strbuf_addstr(&msg, "IN_CREATE|");
-+	if (mask & IN_DELETE)
-+		strbuf_addstr(&msg, "IN_DELETE|");
-+	if (mask & IN_DELETE_SELF)
-+		strbuf_addstr(&msg, "IN_DELETE_SELF|");
-+	if (mask & IN_MOVE_SELF)
-+		strbuf_addstr(&msg, "IN_MOVE_SELF|");
-+	if (mask & IN_UNMOUNT)
-+		strbuf_addstr(&msg, "IN_UNMOUNT|");
-+	if (mask & IN_Q_OVERFLOW)
-+		strbuf_addstr(&msg, "IN_Q_OVERFLOW|");
-+	if (mask & IN_IGNORED)
-+		strbuf_addstr(&msg, "IN_IGNORED|");
-+	if (mask & IN_ISDIR)
-+		strbuf_addstr(&msg, "IN_ISDIR|");
-+
-+	trace_printf_key(&trace_fsmonitor, "inotify_event: '%s', mask=%#8.8x %s",
-+				path, mask, msg.buf);
-+
-+	strbuf_release(&msg);
-+}
-+
-+int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
-+{
-+	int fd;
-+	int ret = 0;
-+	struct fsm_listen_data *data;
-+
-+	CALLOC_ARRAY(data, 1);
-+	state->listen_data = data;
-+	state->listen_error_code = -1;
-+	data->shutdown = SHUTDOWN_ERROR;
-+
-+	fd = inotify_init1(O_NONBLOCK);
-+	if (fd < 0)
-+		return error_errno("inotify_init1() failed");
-+
-+	data->fd_inotify = fd;
-+
-+	hashmap_init(&data->watches, watch_entry_cmp, NULL, 0);
-+	hashmap_init(&data->renames, rename_entry_cmp, NULL, 0);
-+	hashmap_init(&data->revwatches, revwatches_entry_cmp, NULL, 0);
-+
-+	if (add_watch(state->path_worktree_watch.buf, data))
-+		ret = -1;
-+	else if (register_inotify(state->path_worktree_watch.buf, state, NULL))
-+		ret = -1;
-+	else if (state->nr_paths_watching > 1) {
-+		if (add_watch(state->path_gitdir_watch.buf, data))
-+			ret = -1;
-+		else if (register_inotify(state->path_gitdir_watch.buf, state, NULL))
-+			ret = -1;
-+	}
-+
-+	if (!ret) {
-+		state->listen_error_code = 0;
-+		data->shutdown = SHUTDOWN_CONTINUE;
-+	}
-+
-+	return ret;
-+}
-+
-+void fsm_listen__dtor(struct fsmonitor_daemon_state *state)
-+{
-+	struct fsm_listen_data *data;
-+	struct hashmap_iter iter;
-+	struct watch_entry *w;
-+	int fd;
-+
-+	if (!state || !state->listen_data)
-+		return;
-+
-+	data = state->listen_data;
-+	fd = data->fd_inotify;
-+
-+	hashmap_for_each_entry(&data->watches, &iter, w, ent) {
-+		w->cookie = 0; /* ignore any pending renames */
-+		remove_watch(w, data);
-+	}
-+	hashmap_clear(&data->watches);
-+
-+	hashmap_clear(&data->revwatches); /* remove_watch freed the entries */
-+
-+	hashmap_clear_and_free(&data->renames, struct rename_entry, ent);
-+
-+	FREE_AND_NULL(state->listen_data);
-+
-+	if (fd && (close(fd) < 0))
-+		error_errno(_("closing inotify file descriptor failed"));
-+}
-+
-+void fsm_listen__stop_async(struct fsmonitor_daemon_state *state)
-+{
-+	if (!state->listen_data->shutdown)
-+		state->listen_data->shutdown = SHUTDOWN_STOP;
-+}
-+
-+/*
-+ * Process a single inotify event and queue for publication.
-+ */
-+static int process_event(const char *path,
-+	const struct inotify_event *event,
-+	struct fsmonitor_batch *batch,
-+	struct string_list *cookie_list,
-+	struct fsmonitor_daemon_state *state)
-+{
-+	const char *rel;
-+	const char *last_sep;
-+
-+	switch (fsmonitor_classify_path_absolute(state, path)) {
-+		case IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX:
-+		case IS_INSIDE_GITDIR_WITH_COOKIE_PREFIX:
-+			/* Use just the filename of the cookie file. */
-+			last_sep = find_last_dir_sep(path);
-+			string_list_append(cookie_list,
-+					last_sep ? last_sep + 1 : path);
-+			break;
-+		case IS_INSIDE_DOT_GIT:
-+		case IS_INSIDE_GITDIR:
-+			break;
-+		case IS_DOT_GIT:
-+		case IS_GITDIR:
-+			/*
-+			* If .git directory is deleted or renamed away,
-+			* we have to quit.
-+			*/
-+			if (em_dir_deleted(event->mask)) {
-+				trace_printf_key(&trace_fsmonitor,
-+						"event: gitdir removed");
-+				state->listen_data->shutdown = SHUTDOWN_FORCE;
-+				goto done;
-+			}
-+
-+			if (em_dir_renamed(event->mask)) {
-+				trace_printf_key(&trace_fsmonitor,
-+						"event: gitdir renamed");
-+				state->listen_data->shutdown = SHUTDOWN_FORCE;
-+				goto done;
-+			}
-+			break;
-+		case IS_WORKDIR_PATH:
-+			/* normal events in the working directory */
-+			if (trace_pass_fl(&trace_fsmonitor))
-+				log_mask_set(path, event->mask);
-+
-+			rel = path + state->path_worktree_watch.len + 1;
-+			fsmonitor_batch__add_path(batch, rel);
-+
-+			if (em_dir_deleted(event->mask))
-+				break;
-+
-+			/* received IN_MOVE_FROM, add tracking for expected IN_MOVE_TO */
-+			if (em_rename_dir_from(event->mask))
-+				add_dir_rename(event->cookie, path, state->listen_data);
-+
-+			/* received IN_MOVE_TO, update watch to reflect new path */
-+			if (em_rename_dir_to(event->mask)) {
-+				rename_dir(event->cookie, path, state->listen_data);
-+				if (register_inotify(path, state, batch)) {
-+					state->listen_data->shutdown = SHUTDOWN_ERROR;
-+					goto done;
-+				}
-+			}
-+
-+			if (em_dir_created(event->mask)) {
-+				if (add_watch(path, state->listen_data)) {
-+					state->listen_data->shutdown = SHUTDOWN_ERROR;
-+					goto done;
-+				}
-+				if (register_inotify(path, state, batch)) {
-+					state->listen_data->shutdown = SHUTDOWN_ERROR;
-+					goto done;
-+				}
-+			}
-+			break;
-+		case IS_OUTSIDE_CONE:
-+		default:
-+			trace_printf_key(&trace_fsmonitor,
-+					"ignoring '%s'", path);
-+			break;
-+	}
-+	return 0;
-+done:
-+	return -1;
-+}
-+
-+/*
-+ * Read the inotify event stream and pre-process events before further
-+ * processing and eventual publishing.
-+ */
-+static void handle_events(struct fsmonitor_daemon_state *state)
-+{
-+	 /* See https://man7.org/linux/man-pages/man7/inotify.7.html */
-+	char buf[4096]
-+		__attribute__ ((aligned(__alignof__(struct inotify_event))));
-+
-+	struct hashmap watches = state->listen_data->watches;
-+	struct fsmonitor_batch *batch = NULL;
-+	struct string_list cookie_list = STRING_LIST_INIT_DUP;
-+	struct watch_entry k, *w;
-+	struct strbuf path;
-+	const struct inotify_event *event;
-+	int fd = state->listen_data->fd_inotify;
-+	ssize_t len;
-+	char *ptr, *p;
-+
-+	strbuf_init(&path, PATH_MAX);
-+
-+	for(;;) {
-+		len = read(fd, buf, sizeof(buf));
-+		if (len == -1 && errno != EAGAIN) {
-+			error_errno(_("reading inotify message stream failed"));
-+			state->listen_data->shutdown = SHUTDOWN_ERROR;
-+			goto done;
-+		}
-+
-+		/* nothing to read */
-+		if (len <= 0)
-+			goto done;
-+
-+		/* Loop over all events in the buffer. */
-+		for (ptr = buf; ptr < buf + len;
-+			 ptr += sizeof(struct inotify_event) + event->len) {
-+
-+			event = (const struct inotify_event *) ptr;
-+
-+			if (em_ignore(event->mask))
-+				continue;
-+
-+			/* File system was unmounted or event queue overflowed */
-+			if (em_force_shutdown(event->mask)) {
-+				if (trace_pass_fl(&trace_fsmonitor))
-+					log_mask_set("Forcing shutdown", event->mask);
-+				state->listen_data->shutdown = SHUTDOWN_FORCE;
-+				goto done;
-+			}
-+
-+			hashmap_entry_init(&k.ent, memhash(&event->wd, sizeof(int)));
-+			k.wd = event->wd;
-+
-+			w = hashmap_get_entry(&watches, &k, ent, NULL);
-+			if (!w) /* should never happen */
-+				BUG("No watch for '%s'", event->name);
-+
-+			/* directory watch was removed */
-+			if (em_remove_watch(event->mask)) {
-+				remove_watch(w, state->listen_data);
-+				continue;
-+			}
-+
-+			strbuf_reset(&path);
-+			strbuf_add(&path, w->dir, strlen(w->dir));
-+			strbuf_addch(&path, '/');
-+			strbuf_addstr(&path, event->name);
-+
-+			p = fsmonitor__resolve_alias(path.buf, &state->alias);
-+			if (!p)
-+				p = strbuf_detach(&path, NULL);
-+
-+			if (!batch)
-+				batch = fsmonitor_batch__new();
-+
-+			if (process_event(p, event, batch, &cookie_list, state)) {
-+				free(p);
-+				goto done;
-+			}
-+			free(p);
-+		}
-+		strbuf_reset(&path);
-+		fsmonitor_publish(state, batch, &cookie_list);
-+		string_list_clear(&cookie_list, 0);
-+		batch = NULL;
-+	}
-+done:
-+	strbuf_release(&path);
-+	fsmonitor_batch__free_list(batch);
-+	string_list_clear(&cookie_list, 0);
-+}
-+
-+/*
-+ * Non-blocking read of the inotify events stream. The inotify fd is polled
-+ * frequently to help minimize the number of queue overflows.
-+ */
-+void fsm_listen__loop(struct fsmonitor_daemon_state *state)
-+{
-+	int poll_num;
-+	const int interval = 1000;
-+	time_t checked = time(NULL);
-+	struct pollfd fds[1];
-+	fds[0].fd = state->listen_data->fd_inotify;
-+	fds[0].events = POLLIN;
-+
-+	for(;;) {
-+		switch (state->listen_data->shutdown) {
-+			case SHUTDOWN_CONTINUE:
-+				poll_num = poll(fds, 1, 1);
-+				if (poll_num == -1) {
-+					if (errno == EINTR)
-+						continue;
-+					error_errno(_("polling inotify message stream failed"));
-+					state->listen_data->shutdown = SHUTDOWN_ERROR;
-+					continue;
-+				}
-+
-+				if ((time(NULL) - checked) >= interval) {
-+					checked = time(NULL);
-+					if (check_stale_dir_renames(&state->listen_data->renames,
-+						checked - interval)) {
-+						trace_printf_key(&trace_fsmonitor,
-+							"Missed IN_MOVED_TO events, forcing shutdown");
-+						state->listen_data->shutdown = SHUTDOWN_FORCE;
-+						continue;
-+					}
-+				}
-+
-+				if (poll_num > 0 && (fds[0].revents & POLLIN))
-+					handle_events(state);
-+
-+				continue;
-+			case SHUTDOWN_ERROR:
-+				state->listen_error_code = -1;
-+				ipc_server_stop_async(state->ipc_server_data);
-+				break;
-+			case SHUTDOWN_FORCE:
-+				state->listen_error_code = 0;
-+				ipc_server_stop_async(state->ipc_server_data);
-+				break;
-+			case SHUTDOWN_STOP:
-+			default:
-+				state->listen_error_code = 0;
-+				break;
-+		}
-+		return;
-+	}
-+}
+ rename_files () {
+ 	mv rename renamed &&
+ 	mv dir1/rename dir1/renamed &&
+@@ -427,10 +463,12 @@ test_expect_success 'edit some files' '
+ 
+ 	start_daemon --tf "$PWD/.git/trace" &&
+ 
+-	edit_files &&
++	wait_for_update edit_files "$PWD/.git/trace" &&
+ 
+ 	test-tool fsmonitor-client query --token 0 &&
+ 
++	test_might_fail git fsmonitor--daemon stop &&
++
+ 	grep "^event: dir1/modified$"  .git/trace &&
+ 	grep "^event: dir2/modified$"  .git/trace &&
+ 	grep "^event: modified$"       .git/trace &&
+@@ -442,10 +480,12 @@ test_expect_success 'create some files' '
+ 
+ 	start_daemon --tf "$PWD/.git/trace" &&
+ 
+-	create_files &&
++	wait_for_update create_files "$PWD/.git/trace" &&
+ 
+ 	test-tool fsmonitor-client query --token 0 &&
+ 
++	test_might_fail git fsmonitor--daemon stop &&
++
+ 	grep "^event: dir1/new$" .git/trace &&
+ 	grep "^event: dir2/new$" .git/trace &&
+ 	grep "^event: new$"      .git/trace
+@@ -456,10 +496,12 @@ test_expect_success 'delete some files' '
+ 
+ 	start_daemon --tf "$PWD/.git/trace" &&
+ 
+-	delete_files &&
++	wait_for_update delete_files "$PWD/.git/trace" &&
+ 
+ 	test-tool fsmonitor-client query --token 0 &&
+ 
++	test_might_fail git fsmonitor--daemon stop &&
++
+ 	grep "^event: dir1/delete$" .git/trace &&
+ 	grep "^event: dir2/delete$" .git/trace &&
+ 	grep "^event: delete$"      .git/trace
+@@ -470,10 +512,12 @@ test_expect_success 'rename some files' '
+ 
+ 	start_daemon --tf "$PWD/.git/trace" &&
+ 
+-	rename_files &&
++	wait_for_update rename_files "$PWD/.git/trace" &&
+ 
+ 	test-tool fsmonitor-client query --token 0 &&
+ 
++	test_might_fail git fsmonitor--daemon stop &&
++
+ 	grep "^event: dir1/rename$"  .git/trace &&
+ 	grep "^event: dir2/rename$"  .git/trace &&
+ 	grep "^event: rename$"       .git/trace &&
+@@ -487,23 +531,42 @@ test_expect_success 'rename directory' '
+ 
+ 	start_daemon --tf "$PWD/.git/trace" &&
+ 
+-	mv dirtorename dirrenamed &&
++	wait_for_update rename_directory "$PWD/.git/trace" &&
+ 
+ 	test-tool fsmonitor-client query --token 0 &&
+ 
++	test_might_fail git fsmonitor--daemon stop &&
++
+ 	grep "^event: dirtorename/*$" .git/trace &&
+ 	grep "^event: dirrenamed/*$"  .git/trace
+ '
+ 
++test_expect_success 'rename directory file' '
++	test_when_finished clean_up_repo_and_stop_daemon &&
++
++	start_daemon --tf "$PWD/.git/trace" &&
++
++	wait_for_update rename_directory_file "$PWD/.git/trace" &&
++
++	test-tool fsmonitor-client query --token 0 &&
++
++	test_might_fail git fsmonitor--daemon stop &&
++
++	grep "^event: dirtorename/*$" .git/trace &&
++	grep "^event: dirrenamed/*$"  .git/trace &&
++	grep "^event: dirrenamed/new$"  .git/trace
++'
+ test_expect_success 'file changes to directory' '
+ 	test_when_finished clean_up_repo_and_stop_daemon &&
+ 
+ 	start_daemon --tf "$PWD/.git/trace" &&
+ 
+-	file_to_directory &&
++	wait_for_update file_to_directory "$PWD/.git/trace" &&
+ 
+ 	test-tool fsmonitor-client query --token 0 &&
+ 
++	test_might_fail git fsmonitor--daemon stop &&
++
+ 	grep "^event: delete$"     .git/trace &&
+ 	grep "^event: delete/new$" .git/trace
+ '
+@@ -513,10 +576,12 @@ test_expect_success 'directory changes to a file' '
+ 
+ 	start_daemon --tf "$PWD/.git/trace" &&
+ 
+-	directory_to_file &&
++	wait_for_update directory_to_file "$PWD/.git/trace" &&
+ 
+ 	test-tool fsmonitor-client query --token 0 &&
+ 
++	test_might_fail git fsmonitor--daemon stop &&
++
+ 	grep "^event: dir1$" .git/trace
+ '
+ 
+@@ -561,7 +626,7 @@ test_expect_success 'flush cached data' '
+ 	test-tool -C test_flush fsmonitor-client query --token "builtin:test_00000002:0" >actual_2 &&
+ 	nul_to_q <actual_2 >actual_q2 &&
+ 
+-	grep "^builtin:test_00000002:0Q$" actual_q2 &&
++	grep "^builtin:test_00000002:[0-1]Q$" actual_q2 &&
+ 
+ 	>test_flush/file_3 &&
+ 
+@@ -732,7 +797,8 @@ u_values="$u1 $u2"
+ for u in $u_values
+ do
+ 	test_expect_success "unicode in repo root path: $u" '
+-		test_when_finished "stop_daemon_delete_repo $u" &&
++		test_when_finished \
++		"stop_daemon_delete_repo `echo "$u" | sed 's:x:\\\\\\\\\\\\\\x:g'`" &&
+ 
+ 		git init "$u" &&
+ 		echo 1 >"$u"/file1 &&
+@@ -818,8 +884,7 @@ test_expect_success 'submodule setup' '
+ '
+ 
+ test_expect_success 'submodule always visited' '
+-	test_when_finished "git -C super fsmonitor--daemon stop; \
+-			    rm -rf super; \
++	test_when_finished "rm -rf super; \
+ 			    rm -rf sub" &&
+ 
+ 	create_super super &&
+@@ -887,7 +952,8 @@ have_t2_error_event () {
+ }
+ 
+ test_expect_success "stray submodule super-prefix warning" '
+-	test_when_finished "rm -rf super; \
++	test_when_finished "git -C super/dir_1/dir_2/sub fsmonitor--daemon stop; \
++			    rm -rf super; \
+ 			    rm -rf sub;   \
+ 			    rm super-sub.trace" &&
+ 
 -- 
 gitgitgadget
 
