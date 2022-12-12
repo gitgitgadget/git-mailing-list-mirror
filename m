@@ -2,217 +2,191 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57F36C4332F
-	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 16:14:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D836C4332F
+	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 16:31:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232662AbiLLQOF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Dec 2022 11:14:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60322 "EHLO
+        id S232579AbiLLQbb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Dec 2022 11:31:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232628AbiLLQOB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2022 11:14:01 -0500
-Received: from mail1.bemta37.messagelabs.com (mail1.bemta37.messagelabs.com [85.158.142.112])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 003766333
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 08:13:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=barclays.com;
-        s=barclayscom20180719; t=1670861638; i=@barclays.com;
-        bh=mrjQ0QJUOQMPsHqiBqkf9HxzeaVBz/Ydvgy4nby8PiY=;
-        h=From:To:Subject:Date:Message-ID:Content-Type:
-         Content-Transfer-Encoding:MIME-Version;
-        b=UNS7eqZpUCIuB8k7gdM+qyAZaW7fi034CaBQC37Kzj+CAZ79IHgH/XUdKHTUWRYa+
-         CwUqu6VFcOBAMbITFsdTKPn3/4juESDKrCGq6vGSpxmMLx8ZWx8Ys6Is5bIuGCNXeG
-         AmaXVaCLZhGktilmB7S46WuBamtiBD72q9Ffiq7TqHHAQ8ZUgqU0PuZs/15Eh0rnNO
-         p5V3OKvRsoj0/jZbo8L0bYWRpQ3q0KWTRPUKSBjLffI/ZxY3K7PGlICqEV2zKYC3Dx
-         vDvwoDXtIQlnxT8LBXET+OH2kWditD1CwKKz2GKr9V9lpax1RLNwa7yQW+JxxfM1CK
-         9V5msag3kD95g==
-X-Env-Sender: Mark.Yagnatinsky@barclays.com
-X-Msg-Ref: server-6.tower-727.messagelabs.com!1670861635!4225!2
-X-Originating-IP: [157.83.97.115]
-X-SYMC-ESS-Client-Auth: outbound-route-from=pass
-X-StarScan-Received: 
-X-StarScan-Version: 9.101.2; banners=-,-,-
-X-VirusChecked: Checked
-Received: (qmail 4319 invoked from network); 12 Dec 2022 16:13:56 -0000
-Received: from unknown (HELO IMSMGGCB602P.barclays.com) (157.83.97.115)
-  by server-6.tower-727.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384 encrypted SMTP; 12 Dec 2022 16:13:56 -0000
-Received: from IMSMGGCCP03P.barclays.com (Unknown_Domain [35.49.84.77])
-        (using TLS with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        by IMSMGGCB602P.barclays.com (Symantec Messaging Gateway) with SMTP id E0.F1.46293.34357936; Mon, 12 Dec 2022 16:13:55 +0000 (GMT)
-X-AuditID: 0a118865-02393a800001b4d5-17-63975343eed8
-Received: from MUKPBCC1MEG0006.collab.barclayscorp.com (Unknown_Domain [10.250.250.254])
-        by IMSMGGCCP03P.barclays.com (Symantec Messaging Gateway) with SMTP id E4.73.22733.34357936; Mon, 12 Dec 2022 16:13:55 +0000 (GMT)
-Received: from gbrpsm020010108.collab.barclayscorp.com (Not Verified[10.40.84.45]) by MUKPBCC1MEG0006.collab.barclayscorp.com with Barclays Capital Filter ESMTP (using TLS: TLSv1.2, ECDHE-RSA-AES256-GCM-SHA384)
-        id <B639753430000>; Mon, 12 Dec 2022 16:13:55 +0000
-Received: from gbrpsm020010133.collab.barclayscorp.com (10.109.149.14) by
- gbrpsm020010108.collab.barclayscorp.com (10.49.132.116) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.20; Mon, 12 Dec 2022 16:13:55 +0000
-Received: from xukpbcc4app0193.collab.barclayscorp.com (10.234.4.44) by
- gbrpsm020010133.collab.barclayscorp.com (10.109.149.14) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1118.20 via Frontend Transport; Mon, 12 Dec 2022 16:13:54 +0000
-Received: from NAM04-DM6-obe.outbound.protection.outlook.com (104.47.73.44) by
- edge.barclays.com (10.234.4.28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1118.20; Mon, 12 Dec
- 2022 16:13:54 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=NLPFHs3wmmT4K0TUA1xsEYOYdE5ttMctTTunI0xL4lmqyWNPCJxsFiECVZbBXSW687wpTapAoiqSwUFX7sTwfe2xsdXdvjyxFbGlRin4Q1ZHMaG56VjCAH48B7LaiLDUZM+VKq4CBMlxS3IHbmRRLV3ydEuq1TEkap7cQu5nsVoCI1T2jy61+7/nk1FeN8zmJIyk+CHtZYxBClueZl+J5fXErd5Jrz3fZcpnlHb6xSWO1iRZ3B5FcLCrfdbQKnFjTgoHVTMCmPaqItkNQ29FLnjHpFERtr06kyQQ7P40LwA5uww8QRrOz4T+gqLVtoz33fSq4tdVNq0ZaUG0QaskcQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RrVHfueA3+0/De96XGSeYrXhH1WFSkQ1x+rqc5ut2RM=;
- b=if6d7RCrCS5SkbiM7UD18QR90WPfvLhgYn1XnSZCVJldN5q6hxGemFjBHCXEu4NhL7P7f0K4EHiTeZLG4hlGKGQD3uKyE3G856MEDSIZa+PIzs++nOS0E/LTb+Nt6sK+1T+JLTh8EW+dluVc303QtyIMo4PXghKgkzQxCDVPti9wFMkJwX3bGvwWY3lgbKyyetiH6za+qXV1MbWWgBklfiV78hl4XIyOM2EVgY7zS6Wntk8X3TZdN9hep6w5o2JjxtPhtjYdtcVil6YlG6M3EJrcWMPURR5Y7vsKQiSbdCHzk9UStaM6aiWWT/2yAzAnVnfQHxhfoZztHQcqnxZ/Nw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=barclays.com; dmarc=pass action=none header.from=barclays.com;
- dkim=pass header.d=barclays.com; arc=none
+        with ESMTP id S232286AbiLLQbY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2022 11:31:24 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18A31FCEC
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 08:31:21 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id n9-20020a05600c3b8900b003d0944dba41so5669893wms.4
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 08:31:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=barclays.onmicrosoft.com; s=selector1-barclays-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RrVHfueA3+0/De96XGSeYrXhH1WFSkQ1x+rqc5ut2RM=;
- b=yeod0ZaIykcKAYRa0JLYeWE8JH5klXAs7TnwzvdXMiQSKcNnIAIEVk1La5mj5ErotRMCesv1KRqMh3eSVY6Jd6OCeg+W0e7hSsQeSvqJKOSbeQzgZUiSddx2K1+YtHVFQOn9LmEM4i20gMKs4m9qqsA19krITvZmwblA/8F/0SM=
-Received: from MN2PR12MB3616.namprd12.prod.outlook.com (2603:10b6:208:cc::25)
- by DM6PR12MB4353.namprd12.prod.outlook.com (2603:10b6:5:2a6::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5880.19; Mon, 12 Dec
- 2022 16:13:51 +0000
-Received: from MN2PR12MB3616.namprd12.prod.outlook.com
- ([fe80::fd08:824b:d68d:2ad0]) by MN2PR12MB3616.namprd12.prod.outlook.com
- ([fe80::fd08:824b:d68d:2ad0%3]) with mapi id 15.20.5880.019; Mon, 12 Dec 2022
- 16:13:50 +0000
-From:   <mark.yagnatinsky@barclays.com>
-To:     <git@vger.kernel.org>
-Subject: feature request: git clone --branch should accept commit hash
-Thread-Topic: feature request: git clone --branch should accept commit hash
-Thread-Index: AdkORLZJEPPgK2FDTjiHwr4G4/kKZQ==
-Date:   Mon, 12 Dec 2022 16:13:50 +0000
-Message-ID: <MN2PR12MB3616CCD1EDC3EB976CE32546F9E29@MN2PR12MB3616.namprd12.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_c754cbb2-29ed-4ffe-af90-a08465e0dd2c_Enabled=true;
- MSIP_Label_c754cbb2-29ed-4ffe-af90-a08465e0dd2c_SetDate=2022-12-12T16:13:49Z;
- MSIP_Label_c754cbb2-29ed-4ffe-af90-a08465e0dd2c_Method=Privileged;
- MSIP_Label_c754cbb2-29ed-4ffe-af90-a08465e0dd2c_Name=Unrestricted;
- MSIP_Label_c754cbb2-29ed-4ffe-af90-a08465e0dd2c_SiteId=c4b62f1d-01e0-4107-a0cc-5ac886858b23;
- MSIP_Label_c754cbb2-29ed-4ffe-af90-a08465e0dd2c_ActionId=e35967c0-9782-4c13-81e1-34b5a5ea9ab5;
- MSIP_Label_c754cbb2-29ed-4ffe-af90-a08465e0dd2c_ContentBits=0
-barclaysdc: Unrestricted
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: MN2PR12MB3616:EE_|DM6PR12MB4353:EE_
-x-ms-office365-filtering-correlation-id: 07c7b654-2122-438e-5429-08dadc5bdb64
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: RhGiTKlDqxjJNsTsCEbUs02vIo+mRtzs+W6UTkgD72SA6+qp6B3gV2KgcJgC+GXohc3WSBUwYrZTxUlZXXROPLtdhQMiCtRM0F686ZhspNSbCWMxx3vLQgnOw2rV+YbnYKMb9xPCZgTfzazADAPk9HJayxn6AZnkJAA98YsRwH0pirLpLDdlWyv9MpE+PMT3jeZwxGf4bc6PuzktMpGDOCGPDDUNI2bBB8JgAydws1JugP7fQYNwfo5+gqnm1et/nOG70zjm5N6gyOUYXAjDXpdiky9TRudwvtgYc01mDF4dwkx1TybzirhBjDoiCKRo9R1HbVSKdbcpLEyWkVQeXV705wKE5rQG7DwhHqe1hDjWs/WT7EumOEn3agleuvS40OvoxpGrglDx6ZGMjTprNDg/Iqe8OqfR+WNh8OER56Ja9Zf9acC1MvhQmqOAnklQhgQCELVOGCXOoholg0uWfGAAp+qRcdQvzoy/TRhVqb3R7E0A8tqdGBesNg3qErJCRkxc855tEVaF+/Flo1n+lwTdq8TPvxSUNrmEQo03h/T9Tx1hC54y7t5FQscs8StKT0Bf43ZnINA1OsgCBmgdeJpse0PN4O/ORTCxr4lqDmhUNHlSG0AyM+2aV8zJP4o6GzYaGUSvLa1dXeVKslmuetShTO6ns4JRnuXFuPSZApY1vHJxn6o8UJRV3fCQT6xBMIXzf0dlZ6ovPCKJ1+Apiw==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR12MB3616.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(376002)(366004)(346002)(39860400002)(136003)(396003)(451199015)(558084003)(10290500003)(316002)(52536014)(8936002)(38100700002)(6916009)(6506007)(478600001)(7696005)(122000001)(9686003)(38070700005)(82960400001)(26005)(71200400001)(2906002)(86362001)(33656002)(186003)(55016003)(64756008)(41300700001)(8676002)(76116006)(66446008)(66476007)(66556008)(66946007)(5660300002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?uVnu7OHEXidrf27+A/GeHpbS0X9elgKJLRgDO6fuBI/YHPCa+agvyo4YXZ7s?=
- =?us-ascii?Q?xw6pv+eOaslqLecYxyPCX3ld5diXT5a2LJGAUVRJ4FBBLXDGWRgdLxHpHAxt?=
- =?us-ascii?Q?K6NQE60RGvshWFc5hInSqtICE0sbtWXGLyT7qK+UHph7mbkXrrRymA3XS7Y0?=
- =?us-ascii?Q?euJwDAHM8sz8fmntOZKps3gReaanrrPN4lLsY5kY16L+qjnjE/fJMNS4YBZQ?=
- =?us-ascii?Q?4YJ1tdGYXe3maZ30UvZmIlML9uZ1LhvKexSzIGxjteeaTvdgJZQCwILoh6RS?=
- =?us-ascii?Q?c+wZ+hPyNn9zIlXD+uwhL9C0UWAPrcpEPue3BLP1BPi1poFZuHH18CJyj4qb?=
- =?us-ascii?Q?ygDaodKx3PGmLYMFuhKC6StWSZp3V7V7SzLBkiKmCDLCX/IZ/N8+BO+CDlHL?=
- =?us-ascii?Q?LRd/MGzBbLbYnW5UZL5lgM9/1cAMY5M5Jb10IFDPmmRgHk5KwLqoSNMjG9zl?=
- =?us-ascii?Q?xERP+7IhTKPJLU5AEqUPG6dALsMvyT6IMy90I3618bgA/p2J6uHdnxt2WAIl?=
- =?us-ascii?Q?nCulHqtkX7Zsj9zVMYPKz+WKbmyalwlnY7WQsmo+a5KQUcxfsmSicD06rsCx?=
- =?us-ascii?Q?CHwhCyu459Sm1JBOnBoQxobDrdxKgwKicYhKVNeKxstaRz8bmaRj8ZJUVstn?=
- =?us-ascii?Q?Mr5zGVC5CO+7x8gkqb/T10a7ZRNocfR+K1foG1TP0RLP77P/f0YNJn17bkje?=
- =?us-ascii?Q?op2zX9xqOhU06QkBUZd6OyK8pgZBdrRRrVc4XAENFToLvtUK8jQ9TYxeswYI?=
- =?us-ascii?Q?8V70+edhgO8DBVfquPl3vHkh9V4K/ZMHH3cc9OR0Eu6z3C2489MigMUrp+n1?=
- =?us-ascii?Q?DBN3cLK7EPC/hx/GjhAYMMlb5ljgUVzPBlu+caL8s9enVDW44eJGIici19ZY?=
- =?us-ascii?Q?INMdun6DSi63jb9PUw23orTUATS7cL8RpDLk85ZgHidvNXsukcAQgshtibQn?=
- =?us-ascii?Q?l3yvtZkH2l0CA0vocAhG80Uz3HFFo5psqTpfhECc1vADXctQZQc5YZH4o891?=
- =?us-ascii?Q?zRFdA3hMKtkqiRVPpxsnsh2C2oQRyOksjP1gBR4sjIgHJ9MPR+2eW+Y50wWZ?=
- =?us-ascii?Q?iOTmABiYzqioG4fytN9kVm/O89tFQdvyzqlr15VVmPML5lSorcXOgPOmfIGQ?=
- =?us-ascii?Q?+hG65Wz4/DNNHoNY/Yjv6uA8PvYRdxZ2c6wleyE6AkAEYKgS5oR8opD3NUbB?=
- =?us-ascii?Q?/dhH0nYmvfP8URSt4EZumcdvenU4okEKHOwlnC2DG28vkiaL27YAt9j7HpYW?=
- =?us-ascii?Q?r4I0a9u6+vd2ShFwW4AgYsWaIPOI6xnp/CkuIKYwV7sxYMtWtHipr+BHoT5p?=
- =?us-ascii?Q?dZ8kpGbmcWQr+zg3LG3XsQt2YLBwQW4gKvdPkzRZS6hAUkpWMSU7k5JC1bSB?=
- =?us-ascii?Q?BsqqB0RUZjHUKn1Zn4/0zolgA8MHYcyNU4FiwKsjsWH2xDik2QTHlUxD7cMw?=
- =?us-ascii?Q?LSZLaTfMYOAgjPT5DeR3FuQ+wCB8TCVnXsZACOGJV3GcJ3OdAakLRmwPpKUp?=
- =?us-ascii?Q?YOrSJXAtNpEUSOLoLPcFPusTOT6GlaBI4+xRBBilpiuFn96xr79m2SQP9rEx?=
- =?us-ascii?Q?+aNcQaQtrW1j5bQF+d9l8jfT6vpgzrZ85ZiTp87R0NXMYTgR6KFA7jB+Y54G?=
- =?us-ascii?Q?fw=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ed5q4EI9Rja0zU3IUSIZ9CyNU+B6k57eyHEpfMq9F2s=;
+        b=N9TLo4b0YJAnMqBn7W6Xr+yD4fMQjYFNCu4raw++ZuwTHvvqA8/fRckg1VsCsjkvSc
+         vQ+Y52KRXPeEiYK1FWSW6PhHocXMZNG6vBLjTBK4rNHmskZ+rSN2C82gePUYo4Zi2BAk
+         xByf+GFGHmSgnxmPlXi4+uDqhzOlEPFtl36OEEZqwbbcWH3lQkUyDwfoCM5dEKjLN1eK
+         ZI2T0J5PVBw7TYM5pG+LcvWaCg9YdjZszYCRJ5zd2vSZLXQqrJw8/HrcZHMfq9rLY2jL
+         JovkWzR3WZpkd/u4KPX6zjJLvsR453iYN85wgtWEmDMkfBQ7faIEu66l9T7cEM9K2WnZ
+         YZdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Ed5q4EI9Rja0zU3IUSIZ9CyNU+B6k57eyHEpfMq9F2s=;
+        b=D70omHTwMVTLINh16tOI02xENKmNRvWGjK9iQ8WndjoGbnE2tCurVdhMAjcmEty4EI
+         Ryd9f7DK3UOcEwHSPLp5dxjI6GUfVGI/raTAtmtKT0aapatOdXI8fNNoI6zER6Jxg+aY
+         /8NYBzeEXrVBw8uvZx5UNjxmg6XjCN/KcB/Yf0+8TDWJgtB8vntv17p5iIRd8hsSnAuy
+         /DFMJsEiyVKQq0KE+NzIKUTuMK3l7U4eu4L831jgjG9wrYC/Afj/v5EYhyVX8c2EDCT/
+         9OCKbb87XPPuK6k7F98f5P7AQ3H+8Uw/Vik7T3hf9bzoLbZNVWcUj9tUWZgDdLbWiJRL
+         hrQw==
+X-Gm-Message-State: ANoB5plzmDfCH3dvT1GGj61JyquMka7fu4T5bSFacv2xl32MiA9fss8a
+        NvwQTOVfzdTptYO6h5xfjoEh/qgW8PY=
+X-Google-Smtp-Source: AA0mqf797uGpLey11OSWDFflIbPaz21DA48ut5R8Jh7CP6rz6hlS8Gk+Xw2l6RRljzE0H5ifCYTQsw==
+X-Received: by 2002:a05:600c:2201:b0:3cf:6be3:a7f6 with SMTP id z1-20020a05600c220100b003cf6be3a7f6mr13007975wml.13.1670862679488;
+        Mon, 12 Dec 2022 08:31:19 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n12-20020a05600c3b8c00b003cfd10a33afsm10700061wms.11.2022.12.12.08.31.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Dec 2022 08:31:19 -0800 (PST)
+Message-Id: <b582d681581a356534ef018c3a12004b2d9779a7.1670862677.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1439.v2.git.1670862677.gitgitgadget@gmail.com>
+References: <pull.1439.git.1670433958.gitgitgadget@gmail.com>
+        <pull.1439.v2.git.1670862677.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 12 Dec 2022 16:31:14 +0000
+Subject: [PATCH v2 1/4] hashfile: allow skipping the hash function
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MN2PR12MB3616.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 07c7b654-2122-438e-5429-08dadc5bdb64
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Dec 2022 16:13:50.6954
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: c4b62f1d-01e0-4107-a0cc-5ac886858b23
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 3eDwK+FGUdTQVc+djMoEGUf9CtK/MBOCdPjQDGNwC+pi8Yi+IcKvTd4GK5eEr0L7A5Um0L/l35J4tVYJp85MjBSLS9BwzptRnbcdLWYohUc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4353
-X-OriginatorOrg: barclays.com
-X-CFilter-Loop: Reflected
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFuplleLIzCtJLcpLzFFi42JRNgzx1XUOnp5sMOOEhUXXlW4mB0aPz5vk
-        AhijRG1KcooVilNLSjLz0m2VfEODQ5T07RJEMyYc28ZW0MJf8X9hJ2MDYwtvFyMnh4SAicSS
-        DwvYuxi5OIQEdjFJLDyyjqmLkQMs8eaOLET8LqPEr/OLmSCcDiaJO+3LmSGcSUwSLSfOM0I4
-        y5kkHv5ZyAYyV0jgP6PE329FIAlGgWXMEg//72aDclglOnbfZwWpYhTYwSgx7WU6SIJFYCuz
-        xPmrq9ggZi1ikng+8SoLhPOIUWL3ux1gLWwCqhKzdq5nArFFBCQltj1+xQhiCwu4SSze9Ysd
-        Iu4tMf1IO1SNnsSPtkNgNgtQ7+YjE8FqeAViJB7POMgGcYaYxPdTa8BqmAXEJW49mc8ECRwB
-        iSV7zjND2KISLx//YwU5iFdgCYvEvTcLwA5iEpCQ6F/+nRliULnEh9097BANshKX5nczQtj2
-        Ei93HIIa6iuxpekuVFxOYlXvQ5YJjGazkOyGsHUkFuz+xAZha0ssW/iaeRbY3YISJ2c+YVnA
-        yLKKkcfTN9jX3d3ZyczAKGATIzBdcAl2pO5g3HDyhd4hRiYOxkOMEhzMSiK8qhrTkoV4UxIr
-        q1KL8uOLSnNSiw8xmgIDZCKzlGhyPjBh5ZXEG5qaGhiYGZiYWliYGCiJ805uX5IgJJCeWJKa
-        nZpakFoE08fEwSnVwKR2QL1BcX7HKysPATEeOduuPtbMSz0LpHlcXm9fJ6O0g7M1pLmgvjuj
-        mM1o17RH142KvpxfEcN391DA5bqda54Us+x4YqBZZq35SKh/9tSb1m8WuD5oXx3M+Od2heve
-        lZNV9sd2/TN346lYUHFz+/LQjJPcvA+jv9qLPnnpqPhIPmzKXOtTvrHvs7zZDWu6Hixa0JF6
-        Ri6Fd1aUS1dF93Z99dMfV62aGyLjHXxiT2HAzcN/zkqpflM+1XBzY88dI7tvJudmSxUfvK75
-        1CdV9cOu6dG/FlflaNXJN8z1s7n15KrD+0ubPrlue/r22dkZt8WCWotXLo7/9v3k5cf3fNY1
-        enVz3q5wm2R2wqzvyXclluKMREMt5qLiRAADN8XXoAMAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrGIsWRmVeSWpSXmKPExsXC9evXP13n4OnJBp1vTCy6rnQzOTB6fN4k
-        F8AYxWWTkpqTWZZapG+XwJUx4dg2toIW/or/CzsZGxhbeLsYOTgkBEwk3tyR7WLk4hASuMso
-        8ev8YiYIp4NJ4k77cmYIZxKTRMuJ84wQznImiYd/FrJ1MXICOf8ZJf5+KwJJMAosY5Z4+H83
-        G5TDKtGx+z4rSBWjwA5GiWkv00ESLAJbmSXOX13FBjFrEZPE84lXWSCcR4wSu9/tAGthE1CV
-        mLVzPROILSIgKbHt8StGEFtYwE1i8a5f7BBxb4npR9qhavQkfrQdArNZgHo3H5kIVsMrECPx
-        eMZBNogzxCS+n1oDVsMsIC5x68l8MFtCQEBiyZ7zzBC2qMTLx/9YQQ7iFVjCInHvzQKwg5gE
-        JCT6l39nhhhULvFhdw87RIOsxKX53YwQtr3Eyx2HoIb6SmxpugsVl5NY1fuQBcKWl5i26D1U
-        r4zEgxvb2SYwGs9CchOErSOxYPcnNghbW2LZwtfMs8D+EZQ4OfMJywJGllWMPJ6+wb7u7s7O
-        AQbGAZsYgWlB2TDEdwfj20mZhxiZOBgPMUpwMCuJ8KpqTEsW4k1JrKxKLcqPLyrNSS0+xCjN
-        waIkzivdZpAsJJCeWJKanZpakFoEk2Xi4JRqYPQsNc3gYKlmTY19GsXql/nJt9Cexdu4QJKV
-        ycb4lcKlXkWZFyYRAZ+lfB6+2xegdfr2dw6e5uVNov3XfXjfdFs6eagbzf5/JPHqmu7Uiefj
-        y60dNK5rPw9uMaqXTKtpCfwzWU6LucB01yXRfQ07n53xiViSlvOt8ZH0DP0+Xye284FZ4VZK
-        LMUZiYZazEXFiQCpyf1S+QIAAA==
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, vdye@github.com, avarab@gmail.com,
+        newren@gmail.com, Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git clone has a nice branch flag which can take a branch OR a tag; this i=
-s very handy for shallow clones.
-But it seems that it does NOT take a commit hash.  This would be very use=
-ful for cases when the version you need is not tagged.
-Any chance this can be supported?
-This message is for information purposes only. It is not a recommendation=
-, advice, offer or solicitation to buy or sell a product or service, nor =
-an official confirmation of any transaction. It is directed at persons wh=
-o are professionals and is intended for the recipient(s) only. It is not =
-directed at retail customers. This message is subject to the terms at: ht=
-tps://www.cib.barclays/disclosures/web-and-email-disclaimer.html.=20
+From: Derrick Stolee <derrickstolee@github.com>
 
-For important disclosures, please see: https://www.cib.barclays/disclosur=
-es/sales-and-trading-disclaimer.html regarding marketing commentary from =
-Barclays Sales and/or Trading desks, who are active market participants; =
-https://www.cib.barclays/disclosures/barclays-global-markets-disclosures.=
-html regarding our standard terms for Barclays Corporate and Investment B=
-ank where we trade with you in principal-to-principal wholesale markets t=
-ransactions; and in respect to Barclays Research, including disclosures r=
-elating to specific issuers, see: http://publicresearch.barclays.com.
-_________________________________________________________________________=
-_________=20
-If you are incorporated or operating in Australia, read these important d=
-isclosures: https://www.cib.barclays/disclosures/important-disclosures-as=
-ia-pacific.html.
-_________________________________________________________________________=
-_________
-For more details about how we use personal information, see our privacy n=
-otice: https://www.cib.barclays/disclosures/personal-information-use.html=
-.=20
-_________________________________________________________________________=
-_________
+The hashfile API is useful for generating files that include a trailing
+hash of the file's contents up to that point. Using such a hash is
+helpful for verifying the file for corruption-at-rest, such as a faulty
+drive causing flipped bits.
+
+Git's index file includes this trailing hash, so it uses a 'struct
+hashfile' to handle the I/O to the file. This was very convenient to
+allow using the hashfile methods during these operations.
+
+However, hashing the file contents during write comes at a performance
+penalty. It's slower to hash the bytes on their way to the disk than
+without that step. This problem is made worse by the replacement of
+hardware-accelerated SHA1 computations with the software-based sha1dc
+computation.
+
+This write cost is significant, and the checksum capability is likely
+not worth that cost for such a short-lived file. The index is rewritten
+frequently and the only time the checksum is checked is during 'git
+fsck'. Thus, it would be helpful to allow a user to opt-out of the hash
+computation.
+
+We first need to allow Git to opt-out of the hash computation in the
+hashfile API. The buffered writes of the API are still helpful, so it
+makes sense to make the change here.
+
+Introduce a new 'skip_hash' option to 'struct hashfile'. When set, the
+update_fn and final_fn members of the_hash_algo are skipped. When
+finalizing the hashfile, the trailing hash is replaced with the null
+hash.
+
+This use of a trailing null hash would be desireable in either case,
+since we do not want to special case a file format to have a different
+length depending on whether it was hashed or not. When the final bytes
+of a file are all zero, we can infer that it was written without
+hashing, and thus that verification is not available as a check for file
+consistency. This also means that we could easily toggle hashing for any
+file format we desire.
+
+A version of this patch has existed in the microsoft/git fork since
+2017 [1] (the linked commit was rebased in 2018, but the original dates
+back to January 2017). Here, the change to make the index use this fast
+path is delayed until a later change.
+
+[1] https://github.com/microsoft/git/commit/21fed2d91410f45d85279467f21d717a2db45201
+
+Co-authored-by: Kevin Willford <kewillf@microsoft.com>
+Signed-off-by: Kevin Willford <kewillf@microsoft.com>
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+ csum-file.c | 14 +++++++++++---
+ csum-file.h |  7 +++++++
+ 2 files changed, 18 insertions(+), 3 deletions(-)
+
+diff --git a/csum-file.c b/csum-file.c
+index 59ef3398ca2..cce13c0f047 100644
+--- a/csum-file.c
++++ b/csum-file.c
+@@ -45,7 +45,8 @@ void hashflush(struct hashfile *f)
+ 	unsigned offset = f->offset;
+ 
+ 	if (offset) {
+-		the_hash_algo->update_fn(&f->ctx, f->buffer, offset);
++		if (!f->skip_hash)
++			the_hash_algo->update_fn(&f->ctx, f->buffer, offset);
+ 		flush(f, f->buffer, offset);
+ 		f->offset = 0;
+ 	}
+@@ -64,7 +65,12 @@ int finalize_hashfile(struct hashfile *f, unsigned char *result,
+ 	int fd;
+ 
+ 	hashflush(f);
+-	the_hash_algo->final_fn(f->buffer, &f->ctx);
++
++	if (f->skip_hash)
++		hashclr(f->buffer);
++	else
++		the_hash_algo->final_fn(f->buffer, &f->ctx);
++
+ 	if (result)
+ 		hashcpy(result, f->buffer);
+ 	if (flags & CSUM_HASH_IN_STREAM)
+@@ -108,7 +114,8 @@ void hashwrite(struct hashfile *f, const void *buf, unsigned int count)
+ 			 * the hashfile's buffer. In this block,
+ 			 * f->offset is necessarily zero.
+ 			 */
+-			the_hash_algo->update_fn(&f->ctx, buf, nr);
++			if (!f->skip_hash)
++				the_hash_algo->update_fn(&f->ctx, buf, nr);
+ 			flush(f, buf, nr);
+ 		} else {
+ 			/*
+@@ -153,6 +160,7 @@ static struct hashfile *hashfd_internal(int fd, const char *name,
+ 	f->tp = tp;
+ 	f->name = name;
+ 	f->do_crc = 0;
++	f->skip_hash = 0;
+ 	the_hash_algo->init_fn(&f->ctx);
+ 
+ 	f->buffer_len = buffer_len;
+diff --git a/csum-file.h b/csum-file.h
+index 0d29f528fbc..29468067f81 100644
+--- a/csum-file.h
++++ b/csum-file.h
+@@ -20,6 +20,13 @@ struct hashfile {
+ 	size_t buffer_len;
+ 	unsigned char *buffer;
+ 	unsigned char *check_buffer;
++
++	/**
++	 * If set to 1, skip_hash indicates that we should
++	 * not actually compute the hash for this hashfile and
++	 * instead only use it as a buffered write.
++	 */
++	unsigned int skip_hash;
+ };
+ 
+ /* Checkpoint */
+-- 
+gitgitgadget
+
