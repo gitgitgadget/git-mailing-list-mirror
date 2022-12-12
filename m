@@ -2,56 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B6381C4332F
-	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 10:46:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3B19C4332F
+	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 11:08:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232218AbiLLKqX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Dec 2022 05:46:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39522 "EHLO
+        id S231931AbiLLLIK (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Dec 2022 06:08:10 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232215AbiLLKoT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2022 05:44:19 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D78E4EB6
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 02:40:20 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id u19so8327144ejm.8
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 02:40:20 -0800 (PST)
+        with ESMTP id S231918AbiLLLHW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2022 06:07:22 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B03211A3F
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 02:56:08 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id x22so26898879ejs.11
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 02:56:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0nrdrR3B/l3H/RJO2PYD/Yg4rm7+5PvctZQb2kqd3PI=;
-        b=IiJFgJe8MEAkNHrD/KYW7NABv2LpLTlhX3hhhe8hzmSb7EfQrJH6NNvvFYj29cDzcp
-         iCs3J96qhoIzuv/KV8oTsQ9jWfbX0/+iVWXopDpO6NhHf26HdObdYDErVO+O9xg6bbsn
-         XKZfRKvAAcA9VyIlQrJ/TQBz50SngErUFqTb919zPznyUCDodaQ1Jq9Ho4SO6/91aIaz
-         9lk1xILgS2iL9ZSXr7ghgl1AHw3zrCko0eQIuTEEZqVIWprMtOaDXCB4dioAAgq6+4BT
-         EobFo5mfBJQxushJiOzUNZnXCnp/e0avSwZd11fO4Bo2cx0H2jf4RFYWZojA7D42Wx0p
-         cgYw==
+        bh=SkX/djvfRnHwibylPVHqmjBm/B8SWKXGkkpdpWLEDV8=;
+        b=kv5LcFhUa5sS50vIBf6rkysaU2gInAGQu6Rna8/wghJ30gGjq9t8HPtRSddPrdQbBJ
+         p7uMVE5xFubVIe3f0K6SrtzVtB6i5rzbzGSwjpI9bMs2WdZvBYakJl4LbvQXJ//ejr+q
+         SsGJQcwY5JGIf/af5YPmfHXnG+0eFsY4tZJJjW8hL5QzUkgikKPruw4VW45Qfz/4TwiV
+         AHgE7RGOItAEUcjTadmNN8+u67K6+WZoZnjIYr6Rp93C1QXju+Rh6kBXPbYXkZRAZaN3
+         Cy5l0S0wqm3zWp3ZcPm87QbvwQv0Zz59qazxU9m5l5xBTf1rQ8JFr8M2iMQSqX2l8AOG
+         yTuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0nrdrR3B/l3H/RJO2PYD/Yg4rm7+5PvctZQb2kqd3PI=;
-        b=F9Q5NlgUKuDWpDxCIEBEZ7/PyArLOydnZzK5fLBfHvGNETSLsgqO087ZTGSVs9ONVN
-         3C0v5dCAusNcUNuYlfNvfHXSadvW7y+DM+KCcV+MEEz3z8TxHYZZSA2+uNcI7fsuUCwD
-         2cZgvIYmYhL1inxpEIJvke3U37D8QDd2eCUOBfmBumIThEiAU6EgXKDJdsIkCKFdeDYn
-         eGyxyIhCSnnrPcgZfVZ1gbSVioPS+zwVug1I0WwiFcPi2HzpwHM1g3E3acgjYIkswfjO
-         uQproOZvW78OXbPspWPROgzQ3NvHzxekk2WZ/hJWYMSJli/fqWY5OB0VH2YH1AAX1+v6
-         ObuA==
-X-Gm-Message-State: ANoB5pktNLvy2xVNcwgglNbmjgUyBMZ7HV4b5zD5Mf+/dXcWkWRj+TLE
-        lgpTWFL+YOAB3nr0pyTvCLI=
-X-Google-Smtp-Source: AA0mqf41QpvDGpq0eGzXVKxXFk47/zzmzZ9oX542hLD1ngOtKDJU3ExsL/aUNZheQ2sT3JObqRblIA==
-X-Received: by 2002:a17:907:1719:b0:7c0:f9ef:23a2 with SMTP id le25-20020a170907171900b007c0f9ef23a2mr19897074ejc.30.1670841619227;
-        Mon, 12 Dec 2022 02:40:19 -0800 (PST)
+        bh=SkX/djvfRnHwibylPVHqmjBm/B8SWKXGkkpdpWLEDV8=;
+        b=yV5DjMIGRlw6Xa9mFZOxXiR7ovLweWBcYs9TePupkWc1s6jVdnUr5FImQXqMNf3iFL
+         pP/4/X72pFrQfW7CwX373ek9VUgHssdeJm5cmKK22UR5eZN1HMPTb/HbZWPLLaSRO3oX
+         wxEEu3f3crszkL5Gyo7+ZmwjmOYv6gs5hQM1E9lBV3eumxZ8shk96tcG+7BOAz/K/E7c
+         XlEt0EwhzvqZsvx6K749J6KZNNopuJMbtKS55K5g45ZJ7RSMg3xxs51Hwmbuyn0mh8Mm
+         3n/pv0ds5aQd5gZ1xgUqc2rT/oca9n5xuRHo3U8uNIe4vwDpOX2L1E+Y8E2IhqHp+Ir9
+         DToQ==
+X-Gm-Message-State: ANoB5pnuSXcfsSs14REEnk+MjV5Mv7GbaquZZMuu3II53zNi2XRMf+fu
+        Lrbwn65esUGF3WDmPiTBIlc=
+X-Google-Smtp-Source: AA0mqf53gmUN0SPAm565fDV3ZPTsRNHYF50AYXSaYVvFV784xeD7cCfrbFAKOxUpxsW1D11wfaaBxA==
+X-Received: by 2002:a17:907:988f:b0:7c0:fd1a:79ee with SMTP id ja15-20020a170907988f00b007c0fd1a79eemr15951257ejc.63.1670842566393;
+        Mon, 12 Dec 2022 02:56:06 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id h1-20020a50ed81000000b00458dc7e8ecasm3698706edr.72.2022.12.12.02.40.18
+        by smtp.gmail.com with ESMTPSA id kr12-20020a1709079a0c00b007ae10525550sm3107467ejc.47.2022.12.12.02.56.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Dec 2022 02:40:18 -0800 (PST)
+        Mon, 12 Dec 2022 02:56:05 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1p4gEM-005Hho-0Q;
-        Mon, 12 Dec 2022 11:40:18 +0100
+        id 1p4gTd-005IDt-0u;
+        Mon, 12 Dec 2022 11:56:05 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Eric DeCosta via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
@@ -59,15 +59,15 @@ Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Taylor Blau <me@ttaylorr.com>,
         Eric DeCosta <edecosta@mathworks.com>
-Subject: Re: [PATCH v4 2/6] fsmonitor: determine if filesystem is local or
- remote
-Date:   Mon, 12 Dec 2022 11:24:27 +0100
+Subject: Re: [PATCH v4 3/6] fsmonitor: implement filesystem change listener
+ for Linux
+Date:   Mon, 12 Dec 2022 11:42:26 +0100
 References: <pull.1352.v3.git.git.1668641019.gitgitgadget@gmail.com>
  <pull.1352.v4.git.git.1669230044.gitgitgadget@gmail.com>
- <e53fc07754094aa5ba8080ec7761869c6429a8af.1669230044.git.gitgitgadget@gmail.com>
+ <80282efef5779728022a317388da6790e5db44e2.1669230044.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <e53fc07754094aa5ba8080ec7761869c6429a8af.1669230044.git.gitgitgadget@gmail.com>
-Message-ID: <221212.86lenc6h2l.gmgdl@evledraar.gmail.com>
+In-reply-to: <80282efef5779728022a317388da6790e5db44e2.1669230044.git.gitgitgadget@gmail.com>
+Message-ID: <221212.86h6y06gca.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -78,233 +78,298 @@ X-Mailing-List: git@vger.kernel.org
 On Wed, Nov 23 2022, Eric DeCosta via GitGitGadget wrote:
 
 > From: Eric DeCosta <edecosta@mathworks.com>
->
-> Compare the given path to the mounted filesystems. Find the mount that is
-> the longest prefix of the path (if any) and determine if that mount is on a
-> local or remote filesystem.
->
-> Signed-off-by: Eric DeCosta <edecosta@mathworks.com>
-> ---
->  compat/fsmonitor/fsm-path-utils-linux.c | 186 ++++++++++++++++++++++++
->  1 file changed, 186 insertions(+)
->  create mode 100644 compat/fsmonitor/fsm-path-utils-linux.c
->
-> diff --git a/compat/fsmonitor/fsm-path-utils-linux.c b/compat/fsmonitor/fsm-path-utils-linux.c
-> new file mode 100644
-> index 00000000000..d3281422ebc
-> --- /dev/null
-> +++ b/compat/fsmonitor/fsm-path-utils-linux.c
-> @@ -0,0 +1,186 @@
-> +#include "fsmonitor.h"
-> +#include "fsmonitor-path-utils.h"
-> +#include <errno.h>
-> +#include <mntent.h>
-> +#include <sys/mount.h>
-> +#include <sys/vfs.h>
-> +#include <sys/statvfs.h>
-> +
-> +static int is_remote_fs(const char* path) {
-> +	struct statfs fs;
-> +
-> +	if (statfs(path, &fs)) {
-> +		error_errno(_("statfs('%s') failed"), path);
-> +		return -1;
-> +	}
-
-Nit: Drop the braces and do:
-
-	if (statfs(...) == -1)
-		return error_errno(...)
-
-> +	switch (fs.f_type) {
-> +		case 0x61636673:  /* ACFS */
-> +		case 0x5346414F:  /* AFS */
-> +		case 0x00C36400:  /* CEPH */
-> +		case 0xFF534D42:  /* CIFS */
-> +		case 0x73757245:  /* CODA */
-> +		case 0x19830326:  /* FHGFS */
-> +		case 0x1161970:   /* GFS */
-> +		case 0x47504653:  /* GPFS */
-> +		case 0x013111A8:  /* IBRIX */
-> +		case 0x6B414653:  /* KAFS */
-> +		case 0x0BD00BD0:  /* LUSTRE */
-> +		case 0x564C:      /* NCP */
-> +		case 0x6969:      /* NFS */
-> +		case 0x6E667364:  /* NFSD */
-> +		case 0x7461636f:  /* OCFS2 */
-> +		case 0xAAD7AAEA:  /* PANFS */
-> +		case 0x517B:      /* SMB */
-> +		case 0xBEEFDEAD:  /* SNFS */
-> +		case 0xFE534D42:  /* SMB2 */
-> +		case 0xBACBACBC:  /* VMHGFS */
-> +		case 0xA501FCF5:  /* VXFS */
-
-So, before we'd compare against the name, but to avoid the GPLv3
-copy/pasting we're now comparing against the fs.f_type.
-
-If we are hardcoding them, our usual convention is to lower-case
-hexdigits, so 0xbacbacbc not 0xBACBACBC.
-
-But at least my statfs() manpage documents the named defines in
-linux/magic.h for most of these. Why not use those?
-
-> +			return 1;
-> +		default:
-> +			break;
-
-You could just "return 0" here, and...
-
-> +	}
-> +
-> +	return 0;
-
-...drop this "return 0".
-
+> [...]
 > +}
 > +
-> +static int find_mount(const char *path, const struct statvfs *fs,
-> +	struct mntent *ent)
-
-Misindentation.
-
-> +{
-> +	const char *const mounts = "/proc/mounts";
-> +	const char *rp = real_pathdup(path, 1);
-> +	struct mntent *ment = NULL;
-> +	struct statvfs mntfs;
-> +	FILE *fp;
-> +	int found = 0;
-> +	int dlen, plen, flen = 0;
-> +
-> +	ent->mnt_fsname = NULL;
-> +	ent->mnt_dir = NULL;
-> +	ent->mnt_type = NULL;
-> +
-> +	fp = setmntent(mounts, "r");
-> +	if (!fp) {
-> +		error_errno(_("setmntent('%s') failed"), mounts);
-> +		return -1;
-
-Ditto "return error_errno()"
-
-
-> +	}
-> +
-> +	plen = strlen(rp);
-
-Let's make "plen", "dlen" and "flen" a "size_t", not "int"
-> +
-> +	/* read all the mount information and compare to path */
-> +	while ((ment = getmntent(fp)) != NULL) {
-
-Drop the "!= NULL"
-
-> +		if (statvfs(ment->mnt_dir, &mntfs)) {
-> +			switch (errno) {
-> +			case EPERM:
-> +			case ESRCH:
-> +			case EACCES:
-> +				continue;
-> +			default:
-> +				error_errno(_("statvfs('%s') failed"), ment->mnt_dir);
-> +				endmntent(fp);
-
-Shouldn't we check the endmntent() error too? Now, from the manpage the
-interface is funny, and always returns 1.
-
-But since this is linux-specific code it seems safe enough to go with it
-& glibc assumptions and:
-
-	errno = 0;
-        endmntent(fp);
-        if (errno)
-        	return error_errno(....);
-
-I.e. it'll just call fclose(), which might set errno() on failure.
-
-Maybe it's not worth it...
-
-> +	if (statvfs(path, &fs))
-> +		return error_errno(_("statvfs('%s') failed"), path);
-
-Here you do use that "return error_errno(...)" pattern...", yay!
-
-
-> +
-> +
-> +	if (find_mount(path, &fs, &ment) < 0) {
-> +		free(ment.mnt_fsname);
-> +		free(ment.mnt_dir);
-> +		free(ment.mnt_type);
-> +		return -1;
-> +	}
-> +
-> +	trace_printf_key(&trace_fsmonitor,
-> +			 "statvfs('%s') [flags 0x%08lx] '%s' '%s'",
-> +			 path, fs.f_flag, ment.mnt_type, ment.mnt_fsname);
-> +
-> +	fs_info->is_remote = is_remote_fs(ment.mnt_dir);
-> +	fs_info->typename = ment.mnt_fsname;
-> +	free(ment.mnt_dir);
-> +	free(ment.mnt_type);
-
-If you're going to \n\n-seperate this and the trace_printf_key() above I
-think moving the second free() here to that "block" would make sense,
-sinec here is the last time we use mnt_dir, but the last time we used
-mnt_type was in the trace_printf_key().
-
-But...
-
-> +
-> +	if (fs_info->is_remote < 0) {
-> +		free(ment.mnt_fsname);
-
-...aren't you NULL init-ing these, why not just for all of these:
-
-	goto error;
-
-Then....
-> +		return -1;
-> +	}
-> +
-> +	trace_printf_key(&trace_fsmonitor,
-> +				"'%s' is_remote: %d",
-> +				path, fs_info->is_remote);
-> +
-> +	return 0;
-
-Have this be:
-
-	int ret = -1; /* earlier */
-
-	ret = 0;
-cleanup:
-	free(...);
-	free(...);
-	return ret;
-
-> +}
-> +
-> +int fsmonitor__is_fs_remote(const char *path)
-> +{
-> +	struct fs_info fs;
-> +
-> +	if (fsmonitor__get_fs_info(path, &fs))
-> +		return -1;
-> +
-> +	free(fs.typename);
-
-This will segfault if you take the part through fsmonitor__get_fs_info()
-where we don't have the fs.typename yet, i.e. if statfs() fails.
-
-There's the trivial NULL-init way to work around it, but I think this
-suggests a leaky abstraction. If we fail to get the fs info, then the
-function itself should have free'd that, shouldn't it?
-
 > +/*
-> + * No-op for now.
+> + * Remove the inotify watch, the watch descriptor to path mapping
+> + * and the reverse mapping.
 > + */
-> +char *fsmonitor__resolve_alias(const char *path,
-> +	const struct alias_info *info)
+> +static void remove_watch(struct watch_entry *w,
+> +	struct fsm_listen_data *data)
+> +{
+> +	struct watch_entry k1, k2, *w1, *w2;
+> +
+> +	/* remove watch, ignore error if kernel already did it */
+> +	if (inotify_rm_watch(data->fd_inotify, w->wd) && errno != EINVAL)
+> +		error_errno("inotify_rm_watch() failed");
 
-Ditto misindentatione
+If we error_errno(), shouldn't this function have a return value?
+
+> +
+> +	hashmap_entry_init(&k1.ent, memhash(&w->wd, sizeof(int)));
+> +	w1 = hashmap_remove_entry(&data->watches, &k1, ent, NULL);
+> +	if (!w1)
+> +		BUG("Double remove of watch for '%s'", w->dir);
+> +
+> +	if (w1->cookie)
+> +		BUG("Removing watch for '%s' which has a pending rename", w1->dir);
+> +
+> +	hashmap_entry_init(&k2.ent, memhash(w->dir, strlen(w->dir)));
+> +	w2 = hashmap_remove_entry(&data->revwatches, &k2, ent, NULL);
+> +	if (!w2)
+> +		BUG("Double remove of reverse watch for '%s'", w->dir);
+
+For the BUG() additions: Start with lower-case in messages, see
+CodingGuidelines. I.e. "double remove of ..." etc. Ditto below..
+
+> [...]
+> +/*
+> + * Handle directory renames
+> + *
+> + * Once a IN_MOVED_TO event is received, lookup the rename tracking information
+> + * via the event cookie and use this information to update the watch.
+> + */
+> +static void rename_dir(uint32_t cookie, const char *path,
+> +	struct fsm_listen_data *data)
+> +{
+> +	struct rename_entry rek, *re;
+> +	struct watch_entry k, *w;
+> +
+> +	/* lookup a pending rename to match */
+> +	rek.cookie = cookie;
+> +	hashmap_entry_init(&rek.ent, memhash(&rek.cookie, sizeof(uint32_t)));
+> +	re = hashmap_get_entry(&data->renames, &rek, ent, NULL);
+> +	if (re) {
+> +		k.dir = re->dir;
+> +		hashmap_entry_init(&k.ent, memhash(k.dir, strlen(k.dir)));
+> +		w = hashmap_get_entry(&data->revwatches, &k, ent, NULL);
+> +		if (w) {
+> +			w->cookie = 0; /* rename handled */
+> +			remove_watch(w, data);
+> +			add_watch(path, data);
+
+Elsewhere you check the add_watch() return value, but not here?
+
+> +		} else {
+> +			BUG("No matching watch");
+> +		}
+> +	} else {
+> +		BUG("No matching cookie");
+> +	}
+> +}
+> +
+> +/*
+> + * Recursively add watches to every directory under path
+> + */
+> +static int register_inotify(const char *path,
+> +	struct fsmonitor_daemon_state *state,
+> +	struct fsmonitor_batch *batch)
+> +{
+> +	DIR *dir;
+> +	const char *rel;
+> +	struct strbuf current = STRBUF_INIT;
+> +	struct dirent *de;
+> +	struct stat fs;
+> +	int ret = -1;
+> +
+> +	dir = opendir(path);
+> +	if (!dir)
+> +		return error_errno("opendir('%s') failed", path);
+> +
+> +	while ((de = readdir_skip_dot_and_dotdot(dir)) != NULL) {
+
+ditto drop the "!= NULL"
+
+> +	struct strbuf msg = STRBUF_INIT;
+> +
+> +	if (mask & IN_ACCESS)
+> +		strbuf_addstr(&msg, "IN_ACCESS|");
+> +	if (mask & IN_MODIFY)
+> +		strbuf_addstr(&msg, "IN_MODIFY|");
+> +	if (mask & IN_ATTRIB)
+> +		strbuf_addstr(&msg, "IN_ATTRIB|");
+> +	if (mask & IN_CLOSE_WRITE)
+> +		strbuf_addstr(&msg, "IN_CLOSE_WRITE|");
+> +	if (mask & IN_CLOSE_NOWRITE)
+> +		strbuf_addstr(&msg, "IN_CLOSE_NOWRITE|");
+> +	if (mask & IN_OPEN)
+> +		strbuf_addstr(&msg, "IN_OPEN|");
+> +	if (mask & IN_MOVED_FROM)
+> +		strbuf_addstr(&msg, "IN_MOVED_FROM|");
+> +	if (mask & IN_MOVED_TO)
+> +		strbuf_addstr(&msg, "IN_MOVED_TO|");
+> +	if (mask & IN_CREATE)
+> +		strbuf_addstr(&msg, "IN_CREATE|");
+> +	if (mask & IN_DELETE)
+> +		strbuf_addstr(&msg, "IN_DELETE|");
+> +	if (mask & IN_DELETE_SELF)
+> +		strbuf_addstr(&msg, "IN_DELETE_SELF|");
+> +	if (mask & IN_MOVE_SELF)
+> +		strbuf_addstr(&msg, "IN_MOVE_SELF|");
+> +	if (mask & IN_UNMOUNT)
+> +		strbuf_addstr(&msg, "IN_UNMOUNT|");
+> +	if (mask & IN_Q_OVERFLOW)
+> +		strbuf_addstr(&msg, "IN_Q_OVERFLOW|");
+> +	if (mask & IN_IGNORED)
+> +		strbuf_addstr(&msg, "IN_IGNORED|");
+> +	if (mask & IN_ISDIR)
+> +		strbuf_addstr(&msg, "IN_ISDIR|");
+
+Shouldn't the very last addition to mask omit the "|"?
+
+I think it would be worth just making this a NULL-delimited "int, const char *" array like:
+
+	{
+		{ IN_ACCESS, "IN_ACCESS" },
+		...
+		NULL,
+	};
+
+Then looping over it, or maybe not...
+
+> +	trace_printf_key(&trace_fsmonitor, "inotify_event: '%s', mask=%#8.8x %s",
+> +				path, mask, msg.buf);
+> +
+> +	strbuf_release(&msg);
+> +}
+> +
+> +int fsm_listen__ctor(struct fsmonitor_daemon_state *state)
+> +{
+> +	int fd;
+> +	int ret = 0;
+> +	struct fsm_listen_data *data;
+> +
+> +	CALLOC_ARRAY(data, 1);
+> +	state->listen_data = data;
+> +	state->listen_error_code = -1;
+> +	data->shutdown = SHUTDOWN_ERROR;
+> +
+> +	fd = inotify_init1(O_NONBLOCK);
+> +	if (fd < 0)
+> +		return error_errno("inotify_init1() failed");
+
+Here you leak the "data" you just allocated on error.
+
+> +
+> +	data->fd_inotify = fd;
+> +
+> +	hashmap_init(&data->watches, watch_entry_cmp, NULL, 0);
+> +	hashmap_init(&data->renames, rename_entry_cmp, NULL, 0);
+> +	hashmap_init(&data->revwatches, revwatches_entry_cmp, NULL, 0);
+> +
+> +	if (add_watch(state->path_worktree_watch.buf, data))
+
+I.e. we should only avoid free()-ing it if we can successfully hand it
+over to add_watch(), shouldn't we?n
+
+> +		ret = -1;
+> +	else if (register_inotify(state->path_worktree_watch.buf, state, NULL))
+> +		ret = -1;
+
+We add {}'s to all if/else if branches if one needs it, see CodingGuidelines.
+> +	else if (state->nr_paths_watching > 1) {
+> +		if (add_watch(state->path_gitdir_watch.buf, data))
+> +			ret = -1;
+> +		else if (register_inotify(state->path_gitdir_watch.buf, state, NULL))
+> +			ret = -1;
+
+Can't this be:
+
+	else if (state->nr_paths_watching > 1 &&
+		 (add_watch(...) || register_inotify(...)))
+		ret = -1;
+
+> +	switch (fsmonitor_classify_path_absolute(state, path)) {
+> +		case IS_INSIDE_DOT_GIT_WITH_COOKIE_PREFIX:
+
+Don't indent the "case" label here more than the "switch", see
+CodingGuidelines.
+
+
+> +static void handle_events(struct fsmonitor_daemon_state *state)
+> +{
+> +	 /* See https://man7.org/linux/man-pages/man7/inotify.7.html */
+
+Extra " " here after the "\t".
+
+> +	char buf[4096]
+> +		__attribute__ ((aligned(__alignof__(struct inotify_event))));
+> +
+> +	struct hashmap watches = state->listen_data->watches;
+> +	struct fsmonitor_batch *batch = NULL;
+> +	struct string_list cookie_list = STRING_LIST_INIT_DUP;
+> +	struct watch_entry k, *w;
+> +	struct strbuf path;
+> +	const struct inotify_event *event;
+> +	int fd = state->listen_data->fd_inotify;
+> +	ssize_t len;
+> +	char *ptr, *p;
+> +
+> +	strbuf_init(&path, PATH_MAX);
+
+Just use "struct strbuf path = STRBUF_INIT" instead? I.e...
+> +
+> +	for(;;) {
+> +		len = read(fd, buf, sizeof(buf));
+> +		if (len == -1 && errno != EAGAIN) {
+> +			error_errno(_("reading inotify message stream failed"));
+> +			state->listen_data->shutdown = SHUTDOWN_ERROR;
+> +			goto done;
+> +		}
+> +
+> +		/* nothing to read */
+> +		if (len <= 0)
+> +			goto done;
+> +
+> +		/* Loop over all events in the buffer. */
+> +		for (ptr = buf; ptr < buf + len;
+> +			 ptr += sizeof(struct inotify_event) + event->len) {
+> +
+> +			event = (const struct inotify_event *) ptr;
+> +
+> +			if (em_ignore(event->mask))
+> +				continue;
+> +
+> +			/* File system was unmounted or event queue overflowed */
+> +			if (em_force_shutdown(event->mask)) {
+> +				if (trace_pass_fl(&trace_fsmonitor))
+> +					log_mask_set("Forcing shutdown", event->mask);
+> +				state->listen_data->shutdown = SHUTDOWN_FORCE;
+> +				goto done;
+> +			}
+> +
+> +			hashmap_entry_init(&k.ent, memhash(&event->wd, sizeof(int)));
+> +			k.wd = event->wd;
+> +
+> +			w = hashmap_get_entry(&watches, &k, ent, NULL);
+> +			if (!w) /* should never happen */
+> +				BUG("No watch for '%s'", event->name);
+> +
+> +			/* directory watch was removed */
+> +			if (em_remove_watch(event->mask)) {
+> +				remove_watch(w, state->listen_data);
+> +				continue;
+> +			}
+> +
+> +			strbuf_reset(&path);
+> +			strbuf_add(&path, w->dir, strlen(w->dir));
+> +			strbuf_addch(&path, '/');
+> +			strbuf_addstr(&path, event->name);
+
+... we may not even get to this, so we may pointlessly pre-grow it, if
+we're considering the micro-optimization.
+
+But if we do need it it'll quickly get up to size in the loop, which is
+probably smaller than PATH_MAX, and paths can exceed PATH_MAX....
+
+> +	for(;;) {
+> +		switch (state->listen_data->shutdown) {
+> +			case SHUTDOWN_CONTINUE:
+> +				poll_num = poll(fds, 1, 1);
+> +				if (poll_num == -1) {
+> +					if (errno == EINTR)
+> +						continue;
+> +					error_errno(_("polling inotify message stream failed"));
+> +					state->listen_data->shutdown = SHUTDOWN_ERROR;
+> +					continue;
+> +				}
+> +
+> +				if ((time(NULL) - checked) >= interval) {
+> +					checked = time(NULL);
+
+As this is linux-specific code, shouldn't we use the linux-specific API
+to get the guaranteed atomically growing time here, arther than time()?
+
+Maybe not, but I wonder if this has funny side-effects with ntpd
+adjusting the time concurrently...
