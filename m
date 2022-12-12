@@ -2,84 +2,90 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBCCBC00145
-	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 18:35:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 761D3C4332F
+	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 18:57:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233568AbiLLSfX convert rfc822-to-8bit (ORCPT
-        <rfc822;git@archiver.kernel.org>); Mon, 12 Dec 2022 13:35:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56520 "EHLO
+        id S232558AbiLLS54 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Dec 2022 13:57:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233278AbiLLSfR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2022 13:35:17 -0500
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C75831113
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 10:35:15 -0800 (PST)
-Received: by mail-pl1-f180.google.com with SMTP id d3so12956232plr.10
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 10:35:15 -0800 (PST)
+        with ESMTP id S233723AbiLLS5O (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2022 13:57:14 -0500
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1D4318360
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 10:55:22 -0800 (PST)
+Received: by mail-pf1-f176.google.com with SMTP id k79so547005pfd.7
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 10:55:22 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NChnqIMUF9gifZBnJq7vZpDBtxX8DdQmfgHf3QIWHPY=;
-        b=bGNGPnN1BMf4EKfuW/9DZV07g1RtanehL20+kcOZrkIDSrgY/qhI2ZpG2ID7WTXSfa
-         DmqvFk0Rxw7advfSMkBG6oHQYmaGgGt4Od8GDkqcKLFPviTg+K+WSUOLZ/zH/mUFR5nf
-         07XnUNjsNLz3phF9mF83Ims2qPXTXuhNtCc+ybadZeh5dDMyQ7lMPESI/Uq45wDtL3xs
-         bN7lNTKnWO9lcK/i1U94S2eWyFec550rEtQdJl/R8ikeeaV9Ol5xu9dSKbG1sB5gO89p
-         VSgQVvKSuXaAUiiKvwxKewN7FPI5mpMyrGExgSLcb4lTe/xekcAHCXnOZO5GWdQ/lOsq
-         g2Qw==
-X-Gm-Message-State: ANoB5pm0UT1uE8UN6zx5KBpAGuvl7aNcrIChzXQux4JZr5U9N5mlNokV
-        +YJ+CsH00ZDQUkYCT3Id7hunvw5y8fZFYXQTPJU=
-X-Google-Smtp-Source: AA0mqf7AxxGyfQ6/Gn9aez5ak/1VtpBaOkQBqdKcfONCKVhWKfIFVenjIeoWRBHpoKNMYydL6QA4yapC3nzIwheescc=
-X-Received: by 2002:a17:902:aa07:b0:188:eee6:e1a6 with SMTP id
- be7-20020a170902aa0700b00188eee6e1a6mr80782941plb.120.1670870115149; Mon, 12
- Dec 2022 10:35:15 -0800 (PST)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QQbs9SiyqLk2GXAa19bon+IbbIVzIvauw+kDfKZHpqM=;
+        b=amcARtd4Jo91GZa7BBVLALjr4PZ+kM4NUjxinFGTnKQMuC60hMBRDw7ucHCuJZtxSI
+         Er1nhwtZegm3aXhfQhAEdcRlM69Cs6dZ+pQAKti7QQEpsOxqXlO/GdiFGhu2oePTLadc
+         vg7VDEnPom9NYVioaqrSWIPxTAjVNt/fa+h7pDpmH6SUa9B33qexC6xBTmhc1csRfHUd
+         2EKtGuUdnMQR7kP2LVHHIS/Oopi3OE+tagOuD1qaYtBipF2IR+30fAZYxq5WCt+hYFHq
+         MqjOo+LNK7zudMkGJuUTRs9t1Kfliq6HcRG7JirCxO5FzH93iUhKFvNn0njeYilfTHV0
+         x0IA==
+X-Gm-Message-State: ANoB5pmPlGi78uxslZHaMVGv6yfTiq3wZ/SqJ7/O1HGI70bMAD3RxqXN
+        vet6VnkNSbxg+zpW+PlvNvDADdYHss8OH2bwrj4=
+X-Google-Smtp-Source: AA0mqf7Ylbn/4xa+8M/JID9YEkhAN43sZJ/L4f/xakKGQjN5OIMs7m2AwJmzA+oeJQZCctDHR2OYCaTIJo9/W8l8VFY=
+X-Received: by 2002:a63:d43:0:b0:477:66b9:341b with SMTP id
+ 3-20020a630d43000000b0047766b9341bmr70406692pgn.130.1670871322205; Mon, 12
+ Dec 2022 10:55:22 -0800 (PST)
 MIME-Version: 1.0
-References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20221104213401.17393-1-jacobabel@nullpo.dev>
- <20221110233137.10414-1-jacobabel@nullpo.dev> <20221212014003.20290-1-jacobabel@nullpo.dev>
- <20221212014003.20290-4-jacobabel@nullpo.dev> <221212.86pmcp57w4.gmgdl@evledraar.gmail.com>
- <20221212145913.aftjeq6kn55zbkai@phi> <221212.86zgbs4h9f.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221212.86zgbs4h9f.gmgdl@evledraar.gmail.com>
+References: <pull.1439.git.1670433958.gitgitgadget@gmail.com>
+ <5fb4b5a36ac806f3ee07a614bcb93df2c430507c.1670433958.git.gitgitgadget@gmail.com>
+ <CAPig+cRSY+c-fOQBeC5ff0-s3+_kzFEjcBOSHP6C8ca9t7zr+w@mail.gmail.com> <37efcfcd-fea1-c1d7-65f7-ae5f2d2a12e6@github.com>
+In-Reply-To: <37efcfcd-fea1-c1d7-65f7-ae5f2d2a12e6@github.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 12 Dec 2022 13:35:04 -0500
-Message-ID: <CAPig+cQP4mBFaLX+DtAWHR59WM3vQM+ZHrLkLeZrsxosVwkdTQ@mail.gmail.com>
-Subject: Re: [PATCH v4 3/3] worktree add: Add hint to use --orphan when bad ref
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jacob Abel <jacobabel@nullpo.dev>, git@vger.kernel.org,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?B?UnViw6luIEp1c3Rv?= <rjusto@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
+Date:   Mon, 12 Dec 2022 13:55:11 -0500
+Message-ID: <CAPig+cTA=4DZEhM23tVfoRjxPuBAgs=+UGc5+-6rg4DYQxxKdg@mail.gmail.com>
+Subject: Re: [PATCH 2/4] read-cache: add index.skipHash config option
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, gitster@pobox.com, vdye@github.com,
+        avarab@gmail.com, newren@gmail.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 12, 2022 at 1:19 PM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> On Mon, Dec 12 2022, Jacob Abel wrote:
-> > Also, Is there an easier way to debug the `test_expect_success` statements? I
-> > tried enabling tracing mode but it doesn't seem to trace into those statements.
+On Mon, Dec 12, 2022 at 8:59 AM Derrick Stolee <derrickstolee@github.com> wrote:
+> On 12/7/2022 1:59 PM, Eric Sunshine wrote:
+> > On Wed, Dec 7, 2022 at 12:27 PM Derrick Stolee via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
+> >> +index.skipHash::
+> >> +       When enabled, do not compute the trailing hash for the index file.
+> >> +       Instead, write a trailing set of bytes with value zero, indicating
+> >> +       that the computation was skipped.
+> >> ++
+> >> +If you enable `index.skipHash`, then older Git clients may report that
+> >> +your index is corrupt during `git fsck`.
+> >
+> > This documentation is rather minimal. Given this description, are
+> > readers going to understand the purpose of the option, when they
+> > should use it, what the impact will be, when and why they should avoid
+> > it, etc.?
 >
-> Not really, other than just enabling "-x" for the test-lib.sh itself, i.e.:
->
->         sh -x ./t0001-init.sh
->
-> I *think* that should work, but I didn't test it...
+> I will expand this with explicit version numbers for older Git versions.
 
-Isn't the question here how to debug the body of a
-test_expect_success? If that's the case, then running the test with -x
-and -i should help:
+Okay, but that doesn't address the larger questions I asked. The
+documentation, as written, gives no explanation of the purpose of this
+option. Since you conceived of the option and implemented it, you
+implicitly understand its use-case and repercussions which might arise
+from using it, but is the typical reader going to understand all that?
+Namely, is the reader going to understand:
 
-    ./t001-init.sh -x -i
+* why this option exists
+* what problem it is trying to solve
+* when to use it
+* when not to use it
+* what the repercussions are of not computing a hash for the index
+* etc.
 
-The -x makes it print all the output as it's executing the body of the
-test_expect_success rather than suppressing it, and -i makes it stop
-as soon as it encounters a failing test, which makes it easier to
-examine the state of that test. After the script aborts (via -i), look
-inside the "trash*" directory. Also, you can insert calls to
-test_pause in the body of a test, which will make it drop into an
-interactive shell session in the trash directory at the point of the
-test_pause, so you can examine the state of the test directly as it
-exists at that point (as opposed to examining it after the test
-failed, as with -i).
+Are the answers to those questions documented somewhere? If so, then
+the documentation for this option should link to that discussion (and
+vice-versa). If not, then those questions should be answered by this
+documentation.
