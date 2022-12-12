@@ -2,61 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33DE6C4332F
-	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 21:36:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D220C4332F
+	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 21:36:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233282AbiLLVgg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Dec 2022 16:36:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35336 "EHLO
+        id S233314AbiLLVgk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Dec 2022 16:36:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232318AbiLLVga (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2022 16:36:30 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B36D765E5
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 13:36:29 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id h12so13622697wrv.10
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 13:36:29 -0800 (PST)
+        with ESMTP id S232792AbiLLVgc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2022 16:36:32 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF1DD25E9
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 13:36:31 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id ay2-20020a05600c1e0200b003d22e3e796dso761694wmb.0
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 13:36:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HcsLOR+gIEF9OyHWTKumTW6RBJ2+B1MMahHJ0eVDYgY=;
-        b=N1c/hvAMn1fedz/oGz92qIndQvhgXfDZjsl4nxD3szMioNUyIeP04sJtQ1jKICozHl
-         TIRHp6nmpa7BgBusupJqmmbR9hVKaZo0o7ZbNogc2H/7SrBZoUDg2bWeBLioHR60kfO5
-         hTtpv3g2RKdnndPiFxQ9BY0VOlSIYvN2hCjpNDUcquBiFZEJEcLWF7ZbJ49HyHnTZxSL
-         lbBIr/u0/lws/ehbfo0sWRbIUfVEHDYt/hG2L1AwTZvlLrwLV83xQkPugOi/teyATJ2+
-         A2UnzbgzOHTTpb+F6VdP7Au4VZEHLqkvCHpGpvyixth/8hbveDBX6Vzs55V73rFoDJ6h
-         /RZQ==
+        bh=Oppsb8WsLbEUxkPzx/oHb/EanaXnzcdNH3JS2XbniwU=;
+        b=SIeb3jGdUp/n7SXESrkwlVURMSMU88LPhAaKoZHi7TBM6U1lr1M0Ezn1KlrXkDDn5p
+         P2HQYQBPxuV6yPEP4erM9qXbyi4k9iDxZ8eBXDqgfnbF9VU+Cx3qqVg16WlxNNsafkiq
+         JhMozByKv1uF8dR2iFrpzyvMt6ndgheKh8n5VWoW5zqI6nTr5dvu93sAvPh78WYRcdEi
+         Kb1+b64fF5JlPJ9ZIYp/J4QbJWR3sYfgK9jqEmLuokFE5RFHLnh9tnBOlTx779szIdkg
+         +GtlvT+I2Sj1E3CIk3pzgMqu9mEs2J9VMHW3fASW1af11GYsqV4u9JHSq4c4EoyEEIeB
+         VYfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HcsLOR+gIEF9OyHWTKumTW6RBJ2+B1MMahHJ0eVDYgY=;
-        b=Ep3+R2WWEBEmzz9wUTOPJ89K/E+WpFbu09bGZ5SowAsaWLLbs5xG363IwA0Ly3KhYb
-         sW+NeOu14b64oXZYqgjekdu66wJLcTQYRbm/konRX/O9Br494f2dykUlDFEPd19ViOzH
-         QZlEKcOTGKEnM8gQLllsU41XNpS/8BePHKXGIp4WHNpR1sAF2+rxA+r9RCd9zOw+yXeq
-         hIbU/e5WtAfFTIZ1WL8dq7D07B9gfHYuNcvyBnNZnAdYrcagh8PhVP47g6kI852MNWnw
-         hYUYhqgWmL2Ac0cDZXscoKr7fdOuyV+Blp5XKE9uUjvxEtJHfYfLb9fyz7TEsWWNKsfm
-         Bznw==
-X-Gm-Message-State: ANoB5pnsF7AB2HkCJv0uO88o902763Ck2zfNh2iespJRKYnVDZyxIaHe
-        NOW2SchousyObp3s9OZCABNtMAX40+Q=
-X-Google-Smtp-Source: AA0mqf7NCJBhj67ofMIa1d3rat0giJZyJZH++BV6Ekd06OceMZryP86NUeXATwY1i4PLsdbGNsqvtw==
-X-Received: by 2002:adf:fd52:0:b0:242:7d25:5892 with SMTP id h18-20020adffd52000000b002427d255892mr10570392wrs.16.1670880988133;
-        Mon, 12 Dec 2022 13:36:28 -0800 (PST)
+        bh=Oppsb8WsLbEUxkPzx/oHb/EanaXnzcdNH3JS2XbniwU=;
+        b=E+tUZjfQBnviJvocCfTMSJjf2QbFxPtCE8Wk9RLfKalUWQgA1GC0+MmiO5jyTWLbF+
+         yIAY1+WzvQDMjWyD0O+TGvlwNFIYX4K0Zmg+l06B25dIXU6NX0Zjy2v6/YwYFPUE4Mxc
+         MGTizRWOBlTl3Yr3QDIV5vgvxo1VbS8fx1WB79v8cbahpKWJjfTgh8d/8xemsDbZtAJT
+         m+XGiHNfuFP9rBxb16/3akugz1NXGvx7gXevCP21a4pam6SECR1CZylltW7lCh6NV9FQ
+         TFBsxQ2EHN63kNbmN1xNxLc8ZY2J/XlRPpbFzLLM14NziRn0wzEVib06Ys7D2rrNt8m+
+         T3YA==
+X-Gm-Message-State: ANoB5pn2w1XRjp1YLRrBwmLxJINLLsscZTCsWSo1bFvfyITBpCZ7vVn4
+        2xBCP8sBKR1wskP21l2Z2pFL5rUKtCU=
+X-Google-Smtp-Source: AA0mqf59c9/2zzO4ZukAmL3nAJz10YesJeQztPX+gLPJDTTQABH9xnfk2r06Tve2HnEowWPLeOC1wg==
+X-Received: by 2002:a05:600c:1d9f:b0:3cf:a80d:69ab with SMTP id p31-20020a05600c1d9f00b003cfa80d69abmr13755284wms.31.1670880990324;
+        Mon, 12 Dec 2022 13:36:30 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l2-20020a056000022200b002420dba6447sm9757834wrz.59.2022.12.12.13.36.27
+        by smtp.gmail.com with ESMTPSA id g4-20020a5d46c4000000b00228d52b935asm9859938wrs.71.2022.12.12.13.36.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Dec 2022 13:36:27 -0800 (PST)
-Message-Id: <d02875dda7c0939a0de59a47fa9eb3a73ebd29a4.1670880984.git.gitgitgadget@gmail.com>
+        Mon, 12 Dec 2022 13:36:29 -0800 (PST)
+Message-Id: <98dd286db7c95b6401167c4a9b5e2336843d2629.1670880984.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1352.v4.git.1670880984.gitgitgadget@gmail.com>
 References: <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
         <pull.1352.v4.git.1670880984.gitgitgadget@gmail.com>
 From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 12 Dec 2022 21:36:17 +0000
-Subject: [PATCH v4 2/8] credential: add WWW-Authenticate header to cred
- requests
+Date:   Mon, 12 Dec 2022 21:36:19 +0000
+Subject: [PATCH v4 4/8] test-http-server: add HTTP error response function
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,99 +75,94 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-Add the value of the WWW-Authenticate response header to credential
-requests. Credential helpers that understand and support HTTP
-authentication and authorization can use this standard header (RFC 2616
-Section 14.47 [1]) to generate valid credentials.
-
-WWW-Authenticate headers can contain information pertaining to the
-authority, authentication mechanism, or extra parameters/scopes that are
-required.
-
-The current I/O format for credential helpers only allows for unique
-names for properties/attributes, so in order to transmit multiple header
-values (with a specific order) we introduce a new convention whereby a
-C-style array syntax is used in the property name to denote multiple
-ordered values for the same property.
-
-In this case we send multiple `wwwauth[]` properties where the order
-that the repeated attributes appear in the conversation reflects the
-order that the WWW-Authenticate headers appeared in the HTTP response.
-
-[1] https://datatracker.ietf.org/doc/html/rfc2616#section-14.47
+Introduce a function to the test-http-server test helper to write more
+full and valid HTTP error responses, including all the standard response
+headers like `Server` and `Date`.
 
 Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 ---
- Documentation/git-credential.txt | 18 +++++++++++++++++-
- credential.c                     | 12 ++++++++++++
- 2 files changed, 29 insertions(+), 1 deletion(-)
+ t/helper/test-http-server.c | 59 +++++++++++++++++++++++++++++++++----
+ 1 file changed, 53 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-credential.txt b/Documentation/git-credential.txt
-index ac2818b9f66..bf0de0e9408 100644
---- a/Documentation/git-credential.txt
-+++ b/Documentation/git-credential.txt
-@@ -113,7 +113,13 @@ separated by an `=` (equals) sign, followed by a newline.
- The key may contain any bytes except `=`, newline, or NUL. The value may
- contain any bytes except newline or NUL.
+diff --git a/t/helper/test-http-server.c b/t/helper/test-http-server.c
+index 18f1f741305..53508639714 100644
+--- a/t/helper/test-http-server.c
++++ b/t/helper/test-http-server.c
+@@ -97,9 +97,59 @@ enum worker_result {
+ 	WR_STOP_THE_MUSIC = (WR_IO_ERROR | WR_HANGUP),
+ };
  
--In both cases, all bytes are treated as-is (i.e., there is no quoting,
-+Attributes with keys that end with C-style array brackets `[]` can have
-+multiple values. Each instance of a multi-valued attribute forms an
-+ordered list of values - the order of the repeated attributes defines
-+the order of the values. An empty multi-valued attribute (`key[]=\n`)
-+acts to clear any previous entries and reset the list.
-+
-+In all cases, all bytes are treated as-is (i.e., there is no quoting,
- and one cannot transmit a value with newline or NUL in it). The list of
- attributes is terminated by a blank line or end-of-file.
- 
-@@ -160,6 +166,16 @@ empty string.
- Components which are missing from the URL (e.g., there is no
- username in the example above) will be left unset.
- 
-+`wwwauth[]`::
-+
-+	When an HTTP response is received by Git that includes one or more
-+	'WWW-Authenticate' authentication headers, these will be passed by Git
-+	to credential helpers.
-+	Each 'WWW-Authenticate' header value is passed as a multi-valued
-+	attribute 'wwwauth[]', where the order of the attributes is the same as
-+	they appear in the HTTP response. This attribute is 'one-way' from Git
-+	to pass additional information to credential helpers.
-+
- Unrecognised attributes are silently discarded.
- 
- GIT
-diff --git a/credential.c b/credential.c
-index 897b4679333..8a3ad6c0ae2 100644
---- a/credential.c
-+++ b/credential.c
-@@ -263,6 +263,17 @@ static void credential_write_item(FILE *fp, const char *key, const char *value,
- 	fprintf(fp, "%s=%s\n", key, value);
- }
- 
-+static void credential_write_strvec(FILE *fp, const char *key,
-+				    const struct strvec *vec)
++static enum worker_result send_http_error(
++	int fd,
++	int http_code, const char *http_code_name,
++	int retry_after_seconds, struct string_list *response_headers,
++	enum worker_result wr_in)
 +{
-+	int i = 0;
-+	const char *full_key = xstrfmt("%s[]", key);
-+	for (; i < vec->nr; i++) {
-+		credential_write_item(fp, full_key, vec->v[i], 0);
++	struct strbuf response_header = STRBUF_INIT;
++	struct strbuf response_content = STRBUF_INIT;
++	struct string_list_item *h;
++	enum worker_result wr;
++
++	strbuf_addf(&response_content, "Error: %d %s\r\n",
++		    http_code, http_code_name);
++	if (retry_after_seconds > 0)
++		strbuf_addf(&response_content, "Retry-After: %d\r\n",
++			    retry_after_seconds);
++
++	strbuf_addf  (&response_header, "HTTP/1.1 %d %s\r\n", http_code, http_code_name);
++	strbuf_addstr(&response_header, "Cache-Control: private\r\n");
++	strbuf_addstr(&response_header,	"Content-Type: text/plain\r\n");
++	strbuf_addf  (&response_header,	"Content-Length: %d\r\n", (int)response_content.len);
++	if (retry_after_seconds > 0)
++		strbuf_addf(&response_header, "Retry-After: %d\r\n", retry_after_seconds);
++	strbuf_addf(  &response_header,	"Server: test-http-server/%s\r\n", git_version_string);
++	strbuf_addf(  &response_header, "Date: %s\r\n", show_date(time(NULL), 0, DATE_MODE(RFC2822)));
++	if (response_headers)
++		for_each_string_list_item(h, response_headers)
++			strbuf_addf(&response_header, "%s\r\n", h->string);
++	strbuf_addstr(&response_header, "\r\n");
++
++	if (write_in_full(fd, response_header.buf, response_header.len) < 0) {
++		logerror("unable to write response header");
++		wr = WR_IO_ERROR;
++		goto done;
 +	}
-+	free((void*)full_key);
++
++	if (write_in_full(fd, response_content.buf, response_content.len) < 0) {
++		logerror("unable to write response content body");
++		wr = WR_IO_ERROR;
++		goto done;
++	}
++
++	wr = wr_in;
++
++done:
++	strbuf_release(&response_header);
++	strbuf_release(&response_content);
++
++	return wr;
 +}
 +
- void credential_write(const struct credential *c, FILE *fp)
+ static enum worker_result worker(void)
  {
- 	credential_write_item(fp, "protocol", c->protocol, 1);
-@@ -270,6 +281,7 @@ void credential_write(const struct credential *c, FILE *fp)
- 	credential_write_item(fp, "path", c->path, 0);
- 	credential_write_item(fp, "username", c->username, 0);
- 	credential_write_item(fp, "password", c->password, 0);
-+	credential_write_strvec(fp, "wwwauth", &c->wwwauth_headers);
- }
+-	const char *response = "HTTP/1.1 501 Not Implemented\r\n";
+ 	char *client_addr = getenv("REMOTE_ADDR");
+ 	char *client_port = getenv("REMOTE_PORT");
+ 	enum worker_result wr = WR_OK;
+@@ -110,11 +160,8 @@ static enum worker_result worker(void)
+ 	set_keep_alive(0);
  
- static int run_credential_helper(struct credential *c,
+ 	while (1) {
+-		if (write_in_full(1, response, strlen(response)) < 0) {
+-			logerror("unable to write response");
+-			wr = WR_IO_ERROR;
+-		}
+-
++		wr = send_http_error(1, 501, "Not Implemented", -1, NULL,
++			WR_OK | WR_HANGUP);
+ 		if (wr & WR_STOP_THE_MUSIC)
+ 			break;
+ 	}
 -- 
 gitgitgadget
 
