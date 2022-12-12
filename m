@@ -2,123 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E3480C4332F
-	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 12:32:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E3BEC00145
+	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 13:29:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231370AbiLLMcA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Dec 2022 07:32:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42690 "EHLO
+        id S232131AbiLLN3s (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Dec 2022 08:29:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232152AbiLLMb4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2022 07:31:56 -0500
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A3D910FD4
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 04:31:52 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id d14so12575288edj.11
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 04:31:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=JjX8caMBO1q+gh9y+Z0bmOoAKActXfoMrf+y+b8e3C8=;
-        b=hg+kBzbKnWZxz8yJPBkgdGU9Ry1AVtW8SB1t4HpXijLIkvttpvlkha0kHPPEc9FYk3
-         Tj12qVlg1DqeEDz8yzSxcBKdzDRvB+V40+B/4gcK22VWq9/LJZBJq2txeXdHF/9IzBgz
-         bs+6O6Y+YjAgB9fGyo96bWd767kDPXHcDDafdzRmLplPshUR+lWkcNeN3uYh0ZIYJrBc
-         EhayLQM8r6hhqxsKSbrKNsLw9jBhzKRQUb+GwPwgLK1jfOTgo9HQC9uxhIcZRDvfLQuu
-         89R9+SidZmAZx2NNCxNBc1tsUCnI9DXYAStB0Gq/IyJHXO49jLLPXfOTqipWcGhpYJyh
-         fCIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JjX8caMBO1q+gh9y+Z0bmOoAKActXfoMrf+y+b8e3C8=;
-        b=uptYa1ErEcROIx4SWbI4zWRt7Snr6I+x9sn8kysNwor3/hGGW5V3/sQYGIqZsReP1Z
-         VCoQYyLoUwmtT3g56no6PUc6I1D11A9bDvLTWdnIORKWTJZC2/I6sWfnOMKE/0VTReqz
-         j2yvlSTTV3WheorWAYMktymc+ElwfNRQEBXVJ2k4QC3SgP21oB1BDiyuBQUGO8cbuSrL
-         ZxpfD31mWbcgH3FI20Jcl4ppMGo0l0Ah+34pHvPrSDQtQQ9OU9EcohCEouBx3WcXPNyC
-         XCuHXsLvtwugRfmxGq8QWsYJJItXLhsGi/4VrMLG/GVj6kmUcr+J7/r/O/QrytVfvR0T
-         +IMQ==
-X-Gm-Message-State: ANoB5pkEPL6ote37Tnvwvp5EUeydfBleEcIp3nZu/xLMnfoNTscfBZtx
-        MgsuQuZhU+FsJEExXwG0hApFaC15oXI=
-X-Google-Smtp-Source: AA0mqf4KqNC0EEF334r3hgVdzcbjp2cFdeW0Hf0l3VQvIosXvF4OHYJfmOtxZs9koPr4ODDXv5+Org==
-X-Received: by 2002:aa7:dcd0:0:b0:46a:cc65:5797 with SMTP id w16-20020aa7dcd0000000b0046acc655797mr11941815edu.8.1670848311389;
-        Mon, 12 Dec 2022 04:31:51 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id t4-20020aa7d704000000b00463bc1ddc76sm3719490edq.28.2022.12.12.04.31.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Dec 2022 04:31:50 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1p4hyI-005K4D-1J;
-        Mon, 12 Dec 2022 13:31:50 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 1/1] rebase --onto: Skip previously applied commits
-Date:   Mon, 12 Dec 2022 13:27:35 +0100
-References: <20221212113516.27816-1-cristian.ciocaltea@collabora.com>
- <20221212113516.27816-2-cristian.ciocaltea@collabora.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <20221212113516.27816-2-cristian.ciocaltea@collabora.com>
-Message-ID: <221212.86cz8o6bwp.gmgdl@evledraar.gmail.com>
+        with ESMTP id S232286AbiLLN3q (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2022 08:29:46 -0500
+Received: from mout.web.de (mout.web.de [212.227.17.12])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 057D9B21
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 05:29:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1670851782; bh=3Jc8wCyVfSrqfBRDWTnKVeK7CiLDpxyllUpvPd0YHqQ=;
+        h=X-UI-Sender-Class:Date:Subject:To:References:Cc:From:In-Reply-To;
+        b=SfCQp50T03lSDJiV8wtwWR9GOQ6rg2toFG4xKEL+/RiwO5sHeSX85Rmv7ocV7YcxB
+         QQ2gp3j9XKqT6aivdIXg4Sr0HutDy89Sopp1jyNGwy9KHky3oiIX9qtSDAJi7DKK/p
+         /sl9HZtDww9I4C+BQoE9U7NJfoT+pFRALA1kZC0zwd7c8OXWC62JRkbqxK5UQ+MUxD
+         jhGck/CxnknP7c2w7UVazkxSp3rh0Am0Gf3U/LVYf7D/vGtXGz5x94/Oow7SAMGNql
+         wxgj32Y9p1+rSrU6E9GYY5YVBcmfxGDIYxTnynmuTsnuAuWEmZo2ftYXUBcLP0oA3V
+         jSxl1C/m1SATw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.151.35]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MKuKF-1pNCfL0nZF-00L53K; Mon, 12
+ Dec 2022 14:29:42 +0100
+Message-ID: <30f80aa4-d5c1-4fce-f1c9-710eabeaa022@web.de>
+Date:   Mon, 12 Dec 2022 14:29:41 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.5.1
+Subject: Re: Issue with git > 2.36.1 and pre-commit hook on macOS M1
+To:     Piotrek <piotrekkr@o2.pl>
+References: <51d5993f-a1e0-519e-ffa9-ec5205c5e96d@o2.pl>
+Content-Language: en-US
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <51d5993f-a1e0-519e-ffa9-ec5205c5e96d@o2.pl>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:TmxhXcGFVKeWubZmQ6gyw5qeqELmc5NKW3EZfAAY2GcKuh7jWq5
+ W6vlFwpfJQSJ7kuOki0pN7fgRSzt+Ii6IbWZwRIboA80ZF8nGfE7WtAIuLLksXT3ANtlLKW
+ hCbGhv+pOZXsxm3KCp3YpxGqjk5lTieBM4nBnjo/QNmcUBbDK07EdzPtbBcAcfNfKO66i1t
+ fHLFfrjZy5QX0zWSfACWQ==
+UI-OutboundReport: notjunk:1;M01:P0:OTV/rv1HriM=;WpeiJC5JOk5WY1IxutwNh+yF8kn
+ KzVp9sZeP2UjOaiNaERyfsAUQM0HuianSefQTCBYgh+Qx3MPdOdKDUEqckP/Te7IK40ORPmbA
+ Rpahdz2F99oVgkqx06EaCZVDRsjo9jR1Nu5qwBwUXwM8Ku9eYgbEiMCSmfcyJj/CjnSEGGDW7
+ uBmKlGUMVUIcMfuraB7JlsdF6HyCwsCoMCK/pi9BmbTYhQ1drsLratiGdsdRWv2dh1/62Ns9y
+ iy1JEJp/RnL+2Qf4+UxawJyK+5NIBJVg62fm4R/z5gjcePN7jQUHHmgA+8y0DUWYLiA6XMMn+
+ yAWGV4xvwNf0i+/o5o9+mqkx6saUMwxtXN3M/ZTmKPPLd5AxpPk5UT90TTevJ1MRvxvEEF9XA
+ l9VLzvgM8L759ng4SouiEvp7GrP2Nc0fxba6tjkxmmIyc0M3qb/402xP9t+rFXCC3P/gu/QIE
+ D0qg/ZE6t4Dj0f3B95udmwqJdZqXMuADAc2uvgtVPAGQbw3iZYIDAyp0We8slx47U6cIoRQ2Y
+ VUZdKQJPQUk8cN1jWKfgqeRPBzwytgDtfEQO0Q26TaB9dalDpmDbzw9QTAHVwCC3RO1RfGzmZ
+ gK3I1yJ4TyQRkxTO+6ksyjsPY9Ls4Ia8LyPT0JEr2wWwGlg7H6qJoiU+lDhI4Z7wSP2wi584U
+ r7WtYUXY12iaBQVDFlHW9LJzGnQQUtikeu6w2gVJ0OTQeCgTyWSgf+TTpACcwPhWPwbLoVV82
+ Hx0QQ41Yy/uuq9NP7pOCgIzJaPPSeohZgzvr0zQlhmcdLOmQ33zDtwC7tEAiFmc1je6nwcXKr
+ 4qYY50dDpIcvkToGeAw3JTsmJ2+h4tA7hCbX73TIoGgBQJ5diQOQ/kD+urum0bui8whl9qWeE
+ 5T0dJvTI9A1u6ZxRw7Df/50LodPN9afNriI6IbrEjPcpjp4KrGKg93oeTVoSFHaaT0cf70GZO
+ 4doQCA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Dec 12 2022, Cristian Ciocaltea wrote:
-
-> When rebase is used with '--onto <newbase>', the patches that might have
-> been already applied on <newbase> are not detected, unless they resolve
-> to an empty commit. When the related files contain additional changes
-> merged, the rebase operation fails due to conflicts that require manual
-> intervention.
+Am 11.12.22 um 22:11 schrieb Piotrek:
+> Hello.
 >
-> Ensure the '--onto' variant behaviour is consistent with the common
-> rebase by dropping the already applied commits on the target branch.
+> On MacOS 12.6.1 with M1 chip, git >=3D2.37.0 (installed by homebrew)
+> and pre-commit hook that is calling *make* target, that is calling
+> *docker compose run* command, we get error:
 >
-> Note the current behavior is still reachable by using the
-> '--reapply-cherry-picks' flag.
+> the input device is not a TTY
 >
-> Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-> ---
->  builtin/rebase.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index b22768ca5b9f..2907c6db5cce 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -1659,8 +1659,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  		strbuf_addstr(&buf, "...");
->  		strbuf_addstr(&buf, branch_name);
->  		options.onto_name = xstrdup(buf.buf);
-> -	} else if (!options.onto_name)
-> +	} else if (!options.onto_name) {
->  		options.onto_name = options.upstream_name;
-> +	} else if (options.upstream) {
-> +		options.restrict_revision = options.upstream;
-> +		options.upstream = NULL;
-> +	}
->  	if (strstr(options.onto_name, "...")) {
->  		if (get_oid_mb(options.onto_name, &branch_base) < 0) {
->  			if (keep_base)
+> All works file with homebrew git version 2.36.1
 
-When I apply this & run the tests e.g. t3418 will segfault, and t3403
-seems to fail due to the new behavior not having adjusted the test.
+Bisects to a082345372 (hook API: fix v2.36.0 regression: hooks should be
+connected to a TTY, 2022-06-07).
 
-Which would be my "C" for the "RFC" :)
+Adding "for fd in 0 1 2; do test -t $fd; printf %d $?; done; echo" to
+the shell script .git/hook/pre-commit yields 100 since a082345372, i.e.
+fd 1 (stdout) and fd 2 (stderr) are associated with a terminal, while
+fd 0 (stdin) is not.  Before we got 111, i.e. none of the standard file
+descriptors were associated with a terminal.
 
-I.e. try to get the tests working, and not segfaulting.
+v2.37.0 includes a082345372.  v2.35.0 gives 100 as well, as expected, so
+older versions of Git should have "docker compose" complain as well.
 
-If this is a good idea UX wise (I haven't formed an opinion) the main
-thing that should inform that is having to decide on the various cases
-that the tests are checking for already.
+While "docker compose" is right in that stdin is not a TTY, it never
+was.  Redirecting the output its seems to help.  So I guess it checks if
+stdout is connected to a terminal and then expects stdin to be a TTY as
+well.  Try appending " | cat" to the command in the pre-commit hook,
+which breaks the connection for stdout.
 
-Do I understand this correctly that we'll currently stop and requise a
-"git rebase --continue" if we have an empty patch with "--onto", but
-without "--onto" we'll just print a warning, and that you'd like
-"--onto" to be consistent with the non-onto case?
+Ren=C3=A9
