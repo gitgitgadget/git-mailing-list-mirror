@@ -2,42 +2,42 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B575BC4167B
-	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 22:36:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCF86C00145
+	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 22:38:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233847AbiLLWgZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Dec 2022 17:36:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40416 "EHLO
+        id S233877AbiLLWin (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Dec 2022 17:38:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233794AbiLLWgX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2022 17:36:23 -0500
-Received: from mail-4317.proton.ch (mail-4317.proton.ch [185.70.43.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C83A15705
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 14:36:20 -0800 (PST)
-Date:   Mon, 12 Dec 2022 22:36:01 +0000
+        with ESMTP id S233473AbiLLWi1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2022 17:38:27 -0500
+Received: from mail-4022.proton.ch (mail-4022.proton.ch [185.70.40.22])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C92E255
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 14:38:25 -0800 (PST)
+Date:   Mon, 12 Dec 2022 22:38:14 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
-        s=protonmail3; t=1670884577; x=1671143777;
-        bh=RuyhMQuBiSxsD+mYYzhFh8ykqv42CyJuU37XOooiOog=;
+        s=protonmail3; t=1670884704; x=1671143904;
+        bh=2wwOFLE3o/nby4w5p3ty6svQ5MJ05SvbXwsRMwAiSuc=;
         h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
          Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
          Message-ID:BIMI-Selector;
-        b=HJJJC8N+S/pbAoEet6ktPrD0S3nWJ4E8/OaxnpgIwZCFYAFx3TVMxGl5nfj/E7lhn
-         AhcQ0KVhRCm5NEiTQ1zR3AMC2BKgEPAq3NsgS0Agc4h7l3u78mbqEDFwxLN+I4aeI3
-         RkRJ8xeD2Qv64kruZkziGHbsz/VtjUDEU667bHpWJtKfmmkAZFHNhn8VEigkAE9KEr
-         tteQeOQjbxgQOI4E6qUFQwpqPg3+9TVzEyPKssxFokcnG23YtBczpq+J+dh/wrRm5R
-         igGbPY7l3kr5EPYISVHUyFwZBYn0SvMkCM6Zj+kgN15pmm8cCxvw8uxnd1JoByttpW
-         OGTP9N45ITr0Q==
-To:     Eric Sunshine <sunshine@sunshineco.com>
+        b=iAoBTgLOeIUaog1ZvRJTp391fdWXhBs58IAsOonEKwoZDX+EsG4wZsUyF++dBlC5C
+         RzMhEa2KLSYI76zWFQ78tzPRYdWV83Y8aYh4BsZhfT6wZGSuqEaugdCSbFuThswlpv
+         R2t/3YfJxH0HfxYm8ZlUFdPvghOSgQMomQPYsu5yMJfJdaNqrxw0dgi5jXKdesluFA
+         1BE6b0BWZsk2cFJZH8mew24UtrDiW+WzjxDJaiBElgeqhdG9sZfo+YRm9Q7t0TVt6k
+         1oi0t7afHXh0NPU8ZnHaungo3suKt+k/p8mh6dg+SkR2uwuDa743ewaZtJ4kK+82hh
+         94i72pKm54WgQ==
+To:     =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
 From:   Jacob Abel <jacobabel@nullpo.dev>
-Cc:     =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, git@vger.kernel.org,
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
         Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
 Subject: Re: [PATCH v4 3/3] worktree add: Add hint to use --orphan when bad ref
-Message-ID: <20221212223547.awuqa6xhwd2juuah@phi>
-In-Reply-To: <CAPig+cQP4mBFaLX+DtAWHR59WM3vQM+ZHrLkLeZrsxosVwkdTQ@mail.gmail.com>
-References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20221104213401.17393-1-jacobabel@nullpo.dev> <20221110233137.10414-1-jacobabel@nullpo.dev> <20221212014003.20290-1-jacobabel@nullpo.dev> <20221212014003.20290-4-jacobabel@nullpo.dev> <221212.86pmcp57w4.gmgdl@evledraar.gmail.com> <20221212145913.aftjeq6kn55zbkai@phi> <221212.86zgbs4h9f.gmgdl@evledraar.gmail.com> <CAPig+cQP4mBFaLX+DtAWHR59WM3vQM+ZHrLkLeZrsxosVwkdTQ@mail.gmail.com>
+Message-ID: <20221212223806.nswh5i3l6s7drjek@phi>
+In-Reply-To: <221212.86zgbs4h9f.gmgdl@evledraar.gmail.com>
+References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20221104213401.17393-1-jacobabel@nullpo.dev> <20221110233137.10414-1-jacobabel@nullpo.dev> <20221212014003.20290-1-jacobabel@nullpo.dev> <20221212014003.20290-4-jacobabel@nullpo.dev> <221212.86pmcp57w4.gmgdl@evledraar.gmail.com> <20221212145913.aftjeq6kn55zbkai@phi> <221212.86zgbs4h9f.gmgdl@evledraar.gmail.com>
 Feedback-ID: 21506737:user:proton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -46,42 +46,38 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/12/12 01:35PM, Eric Sunshine wrote:
-> On Mon, Dec 12, 2022 at 1:19 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
-> > On Mon, Dec 12 2022, Jacob Abel wrote:
-> > > Also, Is there an easier way to debug the `test_expect_success` state=
-ments? I
-> > > tried enabling tracing mode but it doesn't seem to trace into those s=
-tatements.
+On 22/12/12 07:16PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> > The following are what I have made for this set of changes (against v4)=
+.
 > >
-> > Not really, other than just enabling "-x" for the test-lib.sh itself, i=
-.e.:
-> >
-> >         sh -x ./t0001-init.sh
-> >
-> > I *think* that should work, but I didn't test it...
+> > diff --git a/builtin/worktree.c b/builtin/worktree.c
+> > index 8bb1453e0f..38f7a27927 100644
+> > --- a/builtin/worktree.c
+> > +++ b/builtin/worktree.c
+> > @@ -732,12 +732,11 @@ static int add(int ac, const char **av, const cha=
+r *prefix)
+> >         } else if (!lookup_commit_reference_by_name(branch)) {
+> >                 advise_if_enabled(ADVICE_WORKTREE_ADD_ORPHAN,
+> >                         "If you meant to create a worktree containing a=
+ new orphan branch\n"
+> > -                       "(branch with no commits) for this repository, =
+e.g. '%s',\n"
+> > -                       "you can do so using the --orphan option:\n"
+> > +                       "(branch with no commits) for this repository, =
+you can do so\n"
+> > +                       "using the --orphan option:\n"
+> >                         "\n"
+> > -                       "       git worktree add --orphan %s %s\n"
+> > -                       "\n",
+> > -                        new_branch, new_branch, path);
+> > +                       "       git worktree add --orphan %s %s\n",
+> > +                        new_branch, path);
 >
-> Isn't the question here how to debug the body of a
-> test_expect_success? If that's the case, then running the test with -x
-> and -i should help:
+> Looks good, we'd usually put the "new_branch, path" on the previous line
+> (to the extent that it fits within 79 chars.
 >
->     ./t001-init.sh -x -i
->
-> The -x makes it print all the output as it's executing the body of the
-> test_expect_success rather than suppressing it, and -i makes it stop
-> as soon as it encounters a failing test, which makes it easier to
-> examine the state of that test. After the script aborts (via -i), look
-> inside the "trash*" directory. Also, you can insert calls to
-> test_pause in the body of a test, which will make it drop into an
-> interactive shell session in the trash directory at the point of the
-> test_pause, so you can examine the state of the test directly as it
-> exists at that point (as opposed to examining it after the test
-> failed, as with -i).
+> Also: This string should use _() to mark this for translation.
 
-This works fantastically. I'm not sure why `sh -x ./tXXXX-script.sh` doesn'=
-t
-work but `./tXXXX-script.sh -x` does but this makes debugging a lot simpler=
-. The
-`-i` flag is also super useful here. Appreciated.
+Done.
+
 
