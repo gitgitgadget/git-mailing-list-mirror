@@ -2,125 +2,123 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0016CC4332F
-	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 12:28:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E3480C4332F
+	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 12:32:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231741AbiLLM2h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Dec 2022 07:28:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41476 "EHLO
+        id S231370AbiLLMcA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Dec 2022 07:32:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231370AbiLLM2g (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2022 07:28:36 -0500
-Received: from mx-out1.startmail.com (mx-out1.startmail.com [145.131.90.139])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED6706386
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 04:28:33 -0800 (PST)
-References: <20221209150048.2400648-1-toon@iotcl.com>
- <20221209150048.2400648-2-toon@iotcl.com>
- <93d61412-3786-b2b3-3fe8-4574336b08fb@dunelm.org.uk>
- <xmqq5yekyvrh.fsf@gitster.g>
- <ddae1940-f58f-e410-7606-d0bcf8d06cd3@dunelm.org.uk>
- <xmqq8rjdv5um.fsf@gitster.g>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=startmail.com;
-        s=2020-07; t=1670848112;
-        bh=OLBpWlp8oRgxibg4dBjHY75yaURLUhVajhQd/oLjT9E=;
-        h=References:From:To:Subject:Date:In-reply-to:Message-ID:
-         Mime-Version:Content-Type:From:Subject:To:Date:Sender:Content-Type:
-         Content-Transfer-Encoding:Content-Disposition:Mime-Version:
-         Reply-To:In-Reply-To:References:Message-Id:Autocrypt;
-        b=cfYvwTVnWTAjDeujs7HNVOKVnzdQsPqvQAeRNW3BZ7drTSbqlPb3irNmZhTHAI9RC
-         TxsDsRLsxYDM4mP6vGvJRgHRG0bitX4s193A9MURrXYxc4BkghXEmKAgESbRs6AdWS
-         HGKw035ZTeL40+kAP7PmwULN6QT2yGvJ2lJLT6fcfm8VMR/EFoi1hN3TTSJvNU3JhP
-         2ZBuNBLzP7WMJah/JFQL1frmjcQgCknQ/cCXQ+xj4zJbviLm59af53toVrZrOWpWfB
-         zd7pv4V1iKAPxdUFFQhVc+lsGTwmXfiYIaDohYja/Cb+ABCXG+rvFRlMPKmqpMJTBB
-         aniiBPE+HGudA==
-From:   Toon Claes <toon@to1.studio>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>,
-        Toon Claes <toon@iotcl.com>, git@vger.kernel.org
-Subject: Re: [PATCH 1/1] cat-file: quote-format name in error when using -z
-Date:   Mon, 12 Dec 2022 12:34:46 +0100
-In-reply-to: <xmqq8rjdv5um.fsf@gitster.g>
-Message-ID: <87cz8ohklt.fsf@to1.studio>
-Mime-Version: 1.0
+        with ESMTP id S232152AbiLLMb4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2022 07:31:56 -0500
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A3D910FD4
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 04:31:52 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id d14so12575288edj.11
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 04:31:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=JjX8caMBO1q+gh9y+Z0bmOoAKActXfoMrf+y+b8e3C8=;
+        b=hg+kBzbKnWZxz8yJPBkgdGU9Ry1AVtW8SB1t4HpXijLIkvttpvlkha0kHPPEc9FYk3
+         Tj12qVlg1DqeEDz8yzSxcBKdzDRvB+V40+B/4gcK22VWq9/LJZBJq2txeXdHF/9IzBgz
+         bs+6O6Y+YjAgB9fGyo96bWd767kDPXHcDDafdzRmLplPshUR+lWkcNeN3uYh0ZIYJrBc
+         EhayLQM8r6hhqxsKSbrKNsLw9jBhzKRQUb+GwPwgLK1jfOTgo9HQC9uxhIcZRDvfLQuu
+         89R9+SidZmAZx2NNCxNBc1tsUCnI9DXYAStB0Gq/IyJHXO49jLLPXfOTqipWcGhpYJyh
+         fCIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JjX8caMBO1q+gh9y+Z0bmOoAKActXfoMrf+y+b8e3C8=;
+        b=uptYa1ErEcROIx4SWbI4zWRt7Snr6I+x9sn8kysNwor3/hGGW5V3/sQYGIqZsReP1Z
+         VCoQYyLoUwmtT3g56no6PUc6I1D11A9bDvLTWdnIORKWTJZC2/I6sWfnOMKE/0VTReqz
+         j2yvlSTTV3WheorWAYMktymc+ElwfNRQEBXVJ2k4QC3SgP21oB1BDiyuBQUGO8cbuSrL
+         ZxpfD31mWbcgH3FI20Jcl4ppMGo0l0Ah+34pHvPrSDQtQQ9OU9EcohCEouBx3WcXPNyC
+         XCuHXsLvtwugRfmxGq8QWsYJJItXLhsGi/4VrMLG/GVj6kmUcr+J7/r/O/QrytVfvR0T
+         +IMQ==
+X-Gm-Message-State: ANoB5pkEPL6ote37Tnvwvp5EUeydfBleEcIp3nZu/xLMnfoNTscfBZtx
+        MgsuQuZhU+FsJEExXwG0hApFaC15oXI=
+X-Google-Smtp-Source: AA0mqf4KqNC0EEF334r3hgVdzcbjp2cFdeW0Hf0l3VQvIosXvF4OHYJfmOtxZs9koPr4ODDXv5+Org==
+X-Received: by 2002:aa7:dcd0:0:b0:46a:cc65:5797 with SMTP id w16-20020aa7dcd0000000b0046acc655797mr11941815edu.8.1670848311389;
+        Mon, 12 Dec 2022 04:31:51 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id t4-20020aa7d704000000b00463bc1ddc76sm3719490edq.28.2022.12.12.04.31.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Dec 2022 04:31:50 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1p4hyI-005K4D-1J;
+        Mon, 12 Dec 2022 13:31:50 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/1] rebase --onto: Skip previously applied commits
+Date:   Mon, 12 Dec 2022 13:27:35 +0100
+References: <20221212113516.27816-1-cristian.ciocaltea@collabora.com>
+ <20221212113516.27816-2-cristian.ciocaltea@collabora.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <20221212113516.27816-2-cristian.ciocaltea@collabora.com>
+Message-ID: <221212.86cz8o6bwp.gmgdl@evledraar.gmail.com>
+MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Dec 12 2022, Cristian Ciocaltea wrote:
 
-> Phillip Wood <phillip.wood123@gmail.com> writes:
+> When rebase is used with '--onto <newbase>', the patches that might have
+> been already applied on <newbase> are not detected, unless they resolve
+> to an empty commit. When the related files contain additional changes
+> merged, the rebase operation fails due to conflicts that require manual
+> intervention.
 >
->> Without "-z" you cannot pass object names that contain newlines so not
->> quoting the output does not cause a problem. We could start quoting
->> the object name without "-z" but we'd be changing the output without a
->> huge benefit.
+> Ensure the '--onto' variant behaviour is consistent with the common
+> rebase by dropping the already applied commits on the target branch.
 >
-> That's fair.  The next question is from a devil's advocate:
-> is switching to the full cquote the best thing to do?
+> Note the current behavior is still reachable by using the
+> '--reapply-cherry-picks' flag.
 >
-> If we were using the full cquote from the very beginning, of course
-> it is, simply because that is what is used in all other places in
-> Git.  Using the full cquote does mean a LF byte will be protected
-> (i.e. instead of shown literally in the middle of other letters
-> around LF, "other\nletters around LF" would be shown), but pathnames
-> with backslashes and double quotes in them that have been shown
-> without problems would be shown differently and will break existing
-> parsers, which are written lazily with the assumption that they are
-> perfectly happy to be "simple" thans to not having to deal with LF
-> (because in their environment a path with LF in it do not matter).
+> Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+> ---
+>  builtin/rebase.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 >
-> A bit safer thing to do is to replace LF (and not any other bytes
-> that would be quoted with full cquote) in the path given in these
-> messages with something else (like NUL to truncate the output
-> there).
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index b22768ca5b9f..2907c6db5cce 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -1659,8 +1659,12 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  		strbuf_addstr(&buf, "...");
+>  		strbuf_addstr(&buf, branch_name);
+>  		options.onto_name = xstrdup(buf.buf);
+> -	} else if (!options.onto_name)
+> +	} else if (!options.onto_name) {
+>  		options.onto_name = options.upstream_name;
+> +	} else if (options.upstream) {
+> +		options.restrict_revision = options.upstream;
+> +		options.upstream = NULL;
+> +	}
+>  	if (strstr(options.onto_name, "...")) {
+>  		if (get_oid_mb(options.onto_name, &branch_base) < 0) {
+>  			if (keep_base)
 
-So object name "HEAD:other\nletters around LF" would give the error
-message "other missing"? That error message would also occur when the
-user does not provide -z. I think that might be confusing.
+When I apply this & run the tests e.g. t3418 will segfault, and t3403
+seems to fail due to the new behavior not having adjusted the test.
 
-> As these answers are given in order, the object names are
-> not absolutely needed to identify and match up the input and the
-> output, and properly written parsers would be prepared to see a
-> response with an object name that it did not request and handle it
-> sanely, such a change may not break such a parser for a path with
-> any byte that are modified with full cquote.
+Which would be my "C" for the "RFC" :)
 
-Yes, the answers are returned in order, so personally I don't care too
-much about the returned object name format. I even would be fine with a
-generic error message that omits the input name, for example "object
-missing". As long as it's clear that the requested object is not found.
+I.e. try to get the tests working, and not segfaulting.
 
-For your information, there is an extreme edge case a user could fake an
-object, and that's what we want to avoid as well. For example the
-command (line break included):
+If this is a good idea UX wise (I haven't formed an opinion) the main
+thing that should inform that is having to decide on the various cases
+that the tests are checking for already.
 
-printf "aabbccddeeff00112233445566778899aabbccdd blob 26
-this object is not" | git cat-file --batch -z
-
-Would print:
-
-aabbccddeeff00112233445566778899aabbccdd blob 26
-this object is not missing
-
-This is perfectly valid git-cat-file output. Luckily I don't see any way
-how this can be abused. Generally I think it's a good idea to not return
-the input as-is in any situation. We could only replace newlines, but
-cquoting already sanitizes the input, so why not use that?
-
-> The above is with a devil's adovocate hat on, and I do not care too
-> much, as I do not think butchering backslash with full cquote would
-> not hurt even existing Windows users (if "HEAD:t\README.txt" named
-> the same blob as "HEAD:t/README.txt" on a platform, doubling the
-> backslashes in the output would have made quite a lot of damage, but
-> I do not think we allow backslashes to name tree paths).
-
-> By the way, there is another use of obj_name in batch_object_write()
-> that can show whatever byte in it literally to the output.
-
-Ah thanks! I will include in the next version, when we reach a consensus
-on when or what to cquote.
-
---
-Toon
+Do I understand this correctly that we'll currently stop and requise a
+"git rebase --continue" if we have an empty patch with "--onto", but
+without "--onto" we'll just print a warning, and that you'd like
+"--onto" to be consistent with the non-onto case?
