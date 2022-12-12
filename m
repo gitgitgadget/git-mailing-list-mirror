@@ -2,74 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 649FAC4332F
-	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 22:39:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E19FDC4332F
+	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 22:46:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233803AbiLLWj6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Dec 2022 17:39:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43282 "EHLO
+        id S233914AbiLLWqw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Dec 2022 17:46:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48242 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233783AbiLLWj5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2022 17:39:57 -0500
-Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95F27C31
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 14:39:56 -0800 (PST)
-Date:   Mon, 12 Dec 2022 22:39:47 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
-        s=protonmail3; t=1670884794; x=1671143994;
-        bh=GjDD4+PF2BTMvvn72dYlynpn6EQs3p3Fign7aqnVE48=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=TNl7y1vX/ukJWSTR8+uR8VvQvcRcDUr3Jr5n4oPMOCER30NR+whphrHdy8J1NmqA8
-         bwVrDlPb7d8H1GDsw9A14rECN4C7V1U0EtDGzuIoR8HrT0n9MHumm6m9MbHCVxD4L9
-         m9EoBj5jo/UYEl6+xSDtZu66Hfj2ksOVFY19QbqJGwdDVUxlgX9WW5+TKj0wZW6NYl
-         muKYFOhfzYiLeDXMjyEDigRrptAib/VZ+xN3++uUYb0Y9yDeLC2oPg3Y8R3jFuqwIJ
-         +x4jVmwUcqI9lM/sM3DZId1SFUeMm+yqlO8K2PE07SuXPudRDeIA6Ri5wL093KnN7n
-         Uhf/XFcIRm+1Q==
-To:     =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-From:   Jacob Abel <jacobabel@nullpo.dev>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-Subject: Re: [PATCH v4 2/3] worktree add: add --orphan flag
-Message-ID: <20221212223939.oetchpx4u7uysd25@phi>
-In-Reply-To: <221212.864ju05vyx.gmgdl@evledraar.gmail.com>
-References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20221104213401.17393-1-jacobabel@nullpo.dev> <20221110233137.10414-1-jacobabel@nullpo.dev> <20221212014003.20290-1-jacobabel@nullpo.dev> <20221212014003.20290-3-jacobabel@nullpo.dev> <221212.86tu2158bz.gmgdl@evledraar.gmail.com> <20221212145515.pohzoyllo3bgz7eb@phi> <221212.864ju05vyx.gmgdl@evledraar.gmail.com>
-Feedback-ID: 21506737:user:proton
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        with ESMTP id S233405AbiLLWqf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2022 17:46:35 -0500
+Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0CC3D57
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 14:46:34 -0800 (PST)
+Received: by mail-pl1-x64a.google.com with SMTP id o18-20020a170902d4d200b00189d4c25568so11611977plg.13
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 14:46:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=1hscUdynSG6YVZn84sRRxflERLuTDYwtLboS7BDgf9Y=;
+        b=V1cSHUEYFXjZOjwl/yjO4cN1MfkHFx+4uDdxNYHovEOl5/LIm4G0r1duHfPuMSINdu
+         FTRHszTrFEtTtPPe7sLw6A4nLkGhsE9WP+25wKQQio7iqYkCtsPO2DNKW5WpJGp3fmNK
+         AFRIEalBrjU+KcygtdI6mFkLON/2sbrt60SvOL4VCYcOgUECopGqVxKEFvQvaqfRCKXD
+         cNgzPoJqZG8wOSzTdKL5J2UUz/iHHZeHU1dDnWzXAYmKZ67lLzZ82LCaEKiKWUYgoMlC
+         DjxJhXItPdRl+SoV0BVi0S9Lj/mYeHlMdEJ/p/ZZo6DoUHDYBqktMAb/QrOOEDQoBHbR
+         V2RQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1hscUdynSG6YVZn84sRRxflERLuTDYwtLboS7BDgf9Y=;
+        b=4H1De3qO3L6gBiNT149ecyRiJ6KINFEjqio/0BVwtUDTrx/jqDQZwUZXuG3GASN+Jh
+         mb1oTsyaHpSsJakS/LAlYWx7nzm1f+xF/VK4NepmK2oayGXxP7/3Mn0rGtiOGWv7Xvly
+         UVqj2bZ7mX9xXyjShOYGyNqXjFJ/VQHrx28W4pzuJFUXp/6gCiH5gnlrLm9N7Hh0SXhS
+         eaJ750BIldI2pgkdM0dlqMbOyOxPdGnjml4BKOHfjeukEliKzWhj/tolRBzLNHytDF62
+         o/w2oaPIg5OiXFd17jfOd5c0ID7iwCHkerSSJERZZGafs3xsLVnxK2iGMClgXyasR8Hm
+         OFLw==
+X-Gm-Message-State: ANoB5plwm13bElyhteG3ftknKsJp4v13ekOaX3aPTUr5KpFQR1TOAahj
+        MxmybleWsw0k3whk6E1ccbyKw7NxJR5Efht+a3P8oOI2+lQ6ZpN/2mi0flh2m8Xq7EodTYW0+4T
+        tf9jLsjl0afw6He/aE7v1mTOiAzCZfinX1KWwCouSE0B+/G+yC84VFd0MsPpRxDyELOvCR86Lnf
+        CD
+X-Google-Smtp-Source: AA0mqf5Y9Mjijcj5cPe+LBhE+wNMkzkMGrT8e2AqVPBRJo60h5ppp635DMEy1wiKyy0PuIJVPA9AazEOjwwmArp8SSd7
+X-Received: from twelve4.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:437a])
+ (user=jonathantanmy job=sendgmr) by 2002:aa7:9159:0:b0:572:24c7:34da with
+ SMTP id 25-20020aa79159000000b0057224c734damr80271308pfi.73.1670885193935;
+ Mon, 12 Dec 2022 14:46:33 -0800 (PST)
+Date:   Mon, 12 Dec 2022 14:46:30 -0800
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.39.0.rc1.256.g54fd8350bd-goog
+Message-ID: <20221212224630.2553391-1-jonathantanmy@google.com>
+Subject: [PATCH] http-fetch: invoke trace2_cmd_name()
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/12/12 07:14PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
-> On Mon, Dec 12 2022, Jacob Abel wrote:
->
-> > On 22/12/12 09:11AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >>
-> >> > +=09struct strbuf symref =3D STRBUF_INIT;
-> >> > +=09struct child_process cp =3D CHILD_PROCESS_INIT;
-> >> > +=09cp.git_cmd =3D 1;
-> >>
-> >> (aside: We usually split up variables & decls, I think this is better
-> >> right before the run_command() line).
-> >
-> > Sorry, I'm not quite clear what you mean.
->
-> I mean that we usually put two newlines between the last deceleration
-> and the start of any code.
->
-> And additionally, that the usual pattern for CHILD_PROCESS_INIT is to do
-> these "flag" assignments right before the run_command().
->
-> See e.g. the code in "check_clean_worktree()"
->
-> So following its example would resolve the decl style nit
+ee4512ed48 ("trace2: create new combined trace facility", 2019-02-
+22) introduced trace2_cmd_name() and taught both the Git built-ins and
+some non-built-ins to use it. However, http-fetch was not one of them
+(perhaps due to its low usage at the time).
 
-Ah OK. I understand what you mean now. I've made the change.
+Teach http-fetch to invoke this function. After this patch, this
+function will be invoked right after argument parsing, just like in
+remote-curl.c.
+
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+This was discovered at $DAYJOB after we noticed that there were command
+names missing in the trace whenever a user did a fetch that involved
+packfile offloading.
+---
+ http-fetch.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/http-fetch.c b/http-fetch.c
+index 31bc5c7767..258fec2068 100644
+--- a/http-fetch.c
++++ b/http-fetch.c
+@@ -5,6 +5,7 @@
+ #include "walker.h"
+ #include "strvec.h"
+ #include "urlmatch.h"
++#include "trace2.h"
+ 
+ static const char http_fetch_usage[] = "git http-fetch "
+ "[-c] [-t] [-a] [-v] [--recover] [-w ref] [--stdin | --packfile=hash | commit-id] url";
+@@ -137,6 +138,8 @@ int cmd_main(int argc, const char **argv)
+ 	if (nongit)
+ 		die(_("not a git repository"));
+ 
++	trace2_cmd_name("http-fetch");
++
+ 	git_config(git_default_config, NULL);
+ 
+ 	if (packfile) {
+-- 
+2.39.0.rc1.256.g54fd8350bd-goog
 
