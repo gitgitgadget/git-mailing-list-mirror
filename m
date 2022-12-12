@@ -2,103 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 394B9C4332F
-	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 17:06:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C16A0C4332F
+	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 17:34:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232890AbiLLRGd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Dec 2022 12:06:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58190 "EHLO
+        id S233040AbiLLReE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Dec 2022 12:34:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232974AbiLLRGL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2022 12:06:11 -0500
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B27A1056C
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 09:05:53 -0800 (PST)
-Received: by mail-qt1-x831.google.com with SMTP id i20so2907344qtw.9
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 09:05:53 -0800 (PST)
+        with ESMTP id S233023AbiLLRdj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2022 12:33:39 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6E122BC4
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 09:33:30 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id ja17so3209352wmb.3
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 09:33:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wSo03PPxo0StPEDXfZJ1QxknWIHzN9PZI56LpwZVvJg=;
-        b=Jf+qEE8PN5yhCtQEDt08f/qqcHJqOYHfyFwMCshLgYsKbsdmIuqDeJmQ0nef/Cq0wu
-         pvcGz3KDK6y1ZAUA40xd8G7EbnAxq2g8h3r5OWUK4C9P5KsxC1l3rtnBuF6pGeroHEPI
-         58aXcRP+xxejjuNWRboOKZ9WDA1s2vhuLFrSo=
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Reyr8Pyqpy9YCMGpliM/nnpFRAyJ1iyyQG1u1NYZFCU=;
+        b=CNSI8KvwX827ZTbBNi9ysh/ns9cmi4sUMPqjM3a9l8SQCGGl4E7xRBB1pCVcSAPUoY
+         MydJowWfxjgps8j3SOViBKaEDiJspYttW8PJEjl1wrGRL1j5/Q0oeSTnBOFfSdDd2fBo
+         AsgSsjxD1o9kwsTrNJiFAgxMWTm4YQNTzQhPmv7gBeOsQa/rGWae1kk2lQ12NHXUGAP4
+         UGTYLOil2yib+u5A1HsaySnP3DQW5L0KwVojB+RMgGPRKpRBQyU5xmgD4+jMTcjaGjoG
+         3456zRkcybJ+2mblZe9byUK2jWT6b7MvlwkBgja8EW9Bb2/XbJnIrjptZAhrXTdbJPMz
+         D7XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wSo03PPxo0StPEDXfZJ1QxknWIHzN9PZI56LpwZVvJg=;
-        b=cqW7bNpQWe3fFTw+EJspGMv5c/hgDbFfmvmW0qFz0nI88Kg68bCoq7XG1phGrd/yBy
-         mDHsFaWOeklfWPUub1SKAvCxpMnqTrQce7F49GGIHbOkt+OFacO9m4ReMFldlb1Aa6r5
-         i8a9V/Hl/OeBBwL4/7u6mBWyWsuL1rNKow4GcYLNqgtoYyRvZAvlCnELPkJBjgk2mpNS
-         2svIlIF/ZA82vFXOKng3LU6m7ULLpiIu6Vgw8rTEmRkFYBPxkXCr6acNiZ2RPlTgqK18
-         Ywg7aou6deUGpsdo1JdxNjB7ZkZHZA6dDa4ZHyUaqNp0aUUpuNsutzZrWHvxoQTkwyE1
-         hxAg==
-X-Gm-Message-State: ANoB5pkeI3Njn3CRz+Bu7YeF3ui3ZlIZ8BhASZ/yDXAKm7lz7/rVzyRh
-        a/Un/fEUJIN/UPiGb2DEuoZTDw==
-X-Google-Smtp-Source: AA0mqf5ik2q7U/8xr5E2EArhPoRgb9A1u7zE1t86VlTENaLIF+W9QtWMMZov5xCLyhuG8i9Kpmpxkw==
-X-Received: by 2002:a05:622a:1309:b0:3a5:258c:d6a5 with SMTP id v9-20020a05622a130900b003a5258cd6a5mr31696171qtk.12.1670864752592;
-        Mon, 12 Dec 2022 09:05:52 -0800 (PST)
-Received: from meerkat.local ([142.113.79.147])
-        by smtp.gmail.com with ESMTPSA id o2-20020a05622a008200b0039cc0fbdb61sm2286182qtw.53.2022.12.12.09.05.51
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Reyr8Pyqpy9YCMGpliM/nnpFRAyJ1iyyQG1u1NYZFCU=;
+        b=PbWUG0VvSpX8FTTFMWEhWEDTMBRj2MdA4PCb+bObCT1EYXpiiHHUBUYA9n11qMr8/o
+         T5e3rUP2lOasL3NFWSyymBV4rHI37aLwJoVKosreTChoOHu/QQF7WfMMTF30p4Jg66SH
+         kWw9ymiIX/47osxyPl1QiIZlY47QqufWKCUbDTu25tfS1GLW5OCNZB+H27FESwj8CVty
+         srtJMhWVlfL5lrIYaEvwtc3KDY37rGXFM363KFF5DNr73KokxJRRv/WzKvL8qrxf1i7n
+         QPo02v3VSOWPIykNh3ir58b3kE4tWT+dGLnlHLsNLAeeFsIgiRbL8L1i1SJo7joEQ5aw
+         Vx8A==
+X-Gm-Message-State: ANoB5pmSaIyaOtTo/rpTBqjSZFpe0JIct1gWQABicGCtottVuBlXkBEm
+        F03tDgYM0OLJFO4SimdEi9CcjFU5cCQ=
+X-Google-Smtp-Source: AA0mqf6+pNayil6TjQRos5ygd6MdB3wZf7bRRy0P55S04CjWetiLeLGtXMYzzknUxPof0ZlJUMax7g==
+X-Received: by 2002:a7b:cd89:0:b0:3d2:2651:64bd with SMTP id y9-20020a7bcd89000000b003d2265164bdmr3536196wmj.10.1670866409405;
+        Mon, 12 Dec 2022 09:33:29 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j18-20020a5d5652000000b002427bfd17b6sm11282694wrw.63.2022.12.12.09.33.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Dec 2022 09:05:51 -0800 (PST)
-Date:   Mon, 12 Dec 2022 12:05:47 -0500
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     mark.yagnatinsky@barclays.com
-Cc:     git@vger.kernel.org
-Subject: Re: feature request: git clone --branch should accept commit hash
-Message-ID: <20221212170547.a23nyw6j7sco3n4b@meerkat.local>
-References: <MN2PR12MB3616CCD1EDC3EB976CE32546F9E29@MN2PR12MB3616.namprd12.prod.outlook.com>
- <MN2PR12MB3616C1F2E97A18547740651DF9E29@MN2PR12MB3616.namprd12.prod.outlook.com>
+        Mon, 12 Dec 2022 09:33:29 -0800 (PST)
+Message-Id: <857d1abec4cf124e011c7f84276ce105cb5b3a96.1670866407.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1443.git.1670866407.gitgitgadget@gmail.com>
+References: <pull.1443.git.1670866407.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 12 Dec 2022 17:33:25 +0000
+Subject: [PATCH 2/3] bundle-uri: advertise based on repo config
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <MN2PR12MB3616C1F2E97A18547740651DF9E29@MN2PR12MB3616.namprd12.prod.outlook.com>
+To:     git@vger.kernel.org
+Cc:     peff@peff.net, vdye@github.com, gitster@pobox.com,
+        Derrick Stolee <derrickstolee@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 12, 2022 at 04:44:49PM +0000, mark.yagnatinsky@barclays.com wrote:
-> Never mind, I see, feature exists but server needs to allow it.  Sigh.
+From: Derrick Stolee <derrickstolee@github.com>
 
-There are good reasons for remote servers to not allow this by default.
-Imagine the following scenario:
+The bundle_uri_advertise() method was not using its repository
+parameter, but this is a mistake. Use repo_config_get_maybe_bool()
+instead of git_config_maybe_bool().
 
-Repo 1: officialrepo.git -- official project repository
-Repo 2: forkedrepo.git   -- a random fork by someone
+Signed-off-by: Derrick Stolee <derrickstolee@github.com>
+---
+ bundle-uri.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Frequently, these repositories will use a common object storage backend, which
-allows saving a LOT of space on the remote server. So, on the backend these
-repositories will be organized as:
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 8efb4e7acad..5f158cc52e1 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -610,7 +610,7 @@ int bundle_uri_advertise(struct repository *r, struct strbuf *value)
+ 		goto cached;
+ 
+ 	advertise_bundle_uri = 0;
+-	git_config_get_maybe_bool("uploadpack.advertisebundleuris", &advertise_bundle_uri);
++	repo_config_get_maybe_bool(r, "uploadpack.advertisebundleuris", &advertise_bundle_uri);
+ 
+ cached:
+ 	return advertise_bundle_uri;
+-- 
+gitgitgadget
 
-Repo 0: sharedrepo.git
-Repo 1: officialrepo.git (with alternates to sharedrepo.git)
-Repo 2: forkedrepo.git   (with alternates to sharedrepo.git)
-
-So, if a random developer pushes commit abcde into forkedrepo.git and the
-backend server pulls that object into sharedrepo.git, you are now able to
-"see" commit abcde from officialrepo.git. It's just a "loose object" and if
-you clone officialrepo.git, that object won't be in it, because it's not
-connected to any of the heads or tags.
-
-This situation is frequently abused for silly reasons like making it appear
-as if Linus committed something that he actually didn't:
-
-https://github.com/torvalds/linux/blob/ac632c504d0b881d7cfb44e3fdde3ec30eb548d9/Makefile#L6
-
-For this reason, Github prints that big warning at the top to tell you that
-what you are viewing isn't actually part of linux.git.
-
-However, there's no way to print this warning if you issue "git clone", so if
-this feature were to be allowed by default, it would make it easy for someone
-to trick you into cloning malicious commits by making it look like you're
-cloning an official repository.
-
-I go into it in some detail here:
-https://people.kernel.org/monsieuricon/cross-fork-object-sharing-in-git-is-not-a-bug
-
-Best regards,
-Konstantin
