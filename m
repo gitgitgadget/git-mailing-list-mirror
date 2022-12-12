@@ -2,154 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6656C4332F
-	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 01:43:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D38BC4332F
+	for <git@archiver.kernel.org>; Mon, 12 Dec 2022 07:50:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231166AbiLLBnS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 11 Dec 2022 20:43:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60104 "EHLO
+        id S231390AbiLLHuO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 12 Dec 2022 02:50:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229475AbiLLBnQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 11 Dec 2022 20:43:16 -0500
-Received: from mail-40136.proton.ch (mail-40136.proton.ch [185.70.40.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99D17B4A2
-        for <git@vger.kernel.org>; Sun, 11 Dec 2022 17:43:15 -0800 (PST)
-Date:   Mon, 12 Dec 2022 01:43:03 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
-        s=protonmail3; t=1670809393; x=1671068593;
-        bh=faw1dode0pAcgAI+Mn1lHgyudxSfGTvoH7TMbqisGjs=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=vqmwBviNP5e12teq/3BfZ26NziPbszsrCryV3clnOPHEug0HDt+6uJTTGCUevK2zT
-         z753PsHYlqOnITZti9nsv2jLmBX3KvEhifG9i03YVki0Qbhw/qG25CbPO0mChFzBaz
-         8HNgjPGz6eW7xSQhc7txvw1EnsVAOPhTo5Ab+CN4OwHIi7VGMVNBeCd5CycdZdoIpH
-         TkfsG3RzAsMLkHi4HfD+iO5p5mnvMVe4hOcLoT9nEJms9A+/6kWeq/DgwGIJUPow8o
-         IVFoSRfdXux73Z+VW6HzBwmnxLCi5FEaTXKeaY425TBYcUmjJHUtGvJsEPMvK72Vlo
-         nk5Y+tYROKr8A==
-To:     git@vger.kernel.org
-From:   Jacob Abel <jacobabel@nullpo.dev>
-Cc:     Jacob Abel <jacobabel@nullpo.dev>,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-Subject: [PATCH v4 3/3] worktree add: Add hint to use --orphan when bad ref
-Message-ID: <20221212014003.20290-4-jacobabel@nullpo.dev>
-In-Reply-To: <20221212014003.20290-1-jacobabel@nullpo.dev>
-References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20221104213401.17393-1-jacobabel@nullpo.dev> <20221110233137.10414-1-jacobabel@nullpo.dev> <20221212014003.20290-1-jacobabel@nullpo.dev>
-Feedback-ID: 21506737:user:proton
+        with ESMTP id S231314AbiLLHuM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Dec 2022 02:50:12 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26B8EB86B
+        for <git@vger.kernel.org>; Sun, 11 Dec 2022 23:50:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1670831404; bh=RKJYqowt742P6zUXI2tq19ivQR+zpp7ymAxXCuzfOuw=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=h3Rw0NiRPMwpbNvWLTUlPtv3opzR0mGo4jHA6jKJDnpiu3Kd6d2jPcaediAjptKfX
+         FoGFeBJsQfS4y98JJtfMqnR4797bO4CfvcrP3bF5Uh8a4XkqNQLoau8RSdaqBDrqx/
+         5yxM7Sl6jnDlZB3v9FdKi9utq8iGzW1kIqzA45Ywb5XyLTaDj7eADLU9Rs7jqzZw62
+         nRHsFgr+9Ndx7oDlVN2bDB1sNGh9nIWAg7Jk9ri66Zq7iivzNeBpfzLXoBBhznJE68
+         9Dm0Ct00kou46Vsye0KNV3J4EGtXNyo4cVIiQjpl4ziJQ+uSOaEg7cyti9OJK4RgiL
+         1OMrh/ya4ZLYw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.29.107.233] ([89.1.215.49]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Ma24y-1pPTq41qi4-00VuOW; Mon, 12
+ Dec 2022 08:50:04 +0100
+Date:   Mon, 12 Dec 2022 08:50:02 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: js/drop-mingw-test-cmp, was Re: What's cooking in git.git (Dec 2022,
+ #03; Sun, 11)
+In-Reply-To: <xmqqpmcqv7qh.fsf@gitster.g>
+Message-ID: <o428pr88-sn2p-o715-52ns-1r6750762572@tzk.qr>
+References: <xmqqpmcqv7qh.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:MlLTBvbf8tRabH0v4JMDuHHZAlScSlfSabgLqOuRYVBxezNBi0R
+ y1LY8xRrqDfqSumCyHJAEACsqLEDFwVEErvzIkl/oC+qQ2J9Uf/vllQDS6U66R6AMVFnseI
+ jq9Rdb5dwbYAeWWE14vg9CwQ4j7esaZTl62JDQeLESmlFKIqmPtjRgkJEh/J6hHDjg0R5qx
+ lY1dwa61AbTb6NK9epjPg==
+UI-OutboundReport: notjunk:1;M01:P0:DucLYkKzdys=;W2udbcpoFcoxcoSfsRXpyytQuv4
+ JiUE0jeEOz1Duiw+G6jDMlqK/quLhfz7vffYoSCRr6+pV+wxDGWT9n+8AbbPCdkXQURrQPnGC
+ tpU1Cslhsoub+ojbglgROLr7m0ELtPtP900qWS+gW+3nrNx/qUaouJRBwc7k2kxO6ulkI3N7P
+ pDQ//apl2yoi8QZAE0VT3W8ymQedZXA+43Bf55tD+rGbuPiJtFwt/5MOAcxz5YFt7IG7cyc+t
+ xWEYNYDeGwLFm+zFzUUsZAacDR/sOfYFmkXKYDOLSbRFMWYzy3vsITKNKzonLHau4sdem6HoN
+ gVHhfQWM341RayESHYzlzAxo/Ij+1bIfVTzeWQFXxWlRGmtnSUkLwGiRHNmZQ9U9JTTllk6YD
+ 4EsH+hfhA2nIx59hSAChIaBRn8zerJUXH02wDfeLWvhWbekvnFeT72BQF0sd4uiAvtEcaUvhY
+ gGfGyR8YNwcAhD7ie07vYU1mnGuw1kuT/idoS71zKW/7K5ezfG1hrPpsxmP+iP+MrBkYLZm7G
+ afykmUmuCjL7btzGpL+gD/ZScSZjaro+hprrvzzQPH0VHSeyTdubn5GnA8218NHT9/OR6uBcj
+ kbd6A2OYFqukgADbTZ+nZgxWOZ6BmWrxER8B4M1/Cs9bxwEtq5aIQZHmdz42XLAu+kjbuBw8d
+ 8y8CbArZc0dRw5a27/ZlAee0zJdBw/hy6VkIyj/1tpKtbiEZz5vqllOO/EGGRntEeo7/VLxEF
+ lUKsE5PyeCmXtp9YyjeOUkf8pKAY1G5BpU6C4yaDsvW6ivYT3Fes/hOfy900P4yeS4RF7HqkU
+ vyZ13QY8Uy4B+pexdyC9wtCLMTrGl6xFmx1GSH8QxtuR1+uXwcnYSEFJtfVtJVrZLCRESHurL
+ lMQmKQ0cu56UxFAiS6qGY7zDs7KSmmWOeB/DAMMJkGRqhTFq810NzjOkh/wxhdzWUOMHSywXX
+ 87jZNQ==
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Adds a new advice/hint in `git worktree add` for when the user
-tries to create a new worktree from a reference that doesn't exist.
+Hi Junio,
 
-Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
----
- Documentation/config/advice.txt |  4 ++++
- advice.c                        |  1 +
- advice.h                        |  1 +
- builtin/worktree.c              |  8 ++++++++
- t/t2400-worktree-add.sh         | 16 ++++++++++++++++
- 5 files changed, 30 insertions(+)
+On Sun, 11 Dec 2022, Junio C Hamano wrote:
 
-diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.=
-txt
-index a00d0100a8..3e58521613 100644
---- a/Documentation/config/advice.txt
-+++ b/Documentation/config/advice.txt
-@@ -136,4 +136,8 @@ advice.*::
- =09=09Advice shown when either linkgit:git-add[1] or linkgit:git-rm[1]
- =09=09is asked to update index entries outside the current sparse
- =09=09checkout.
-+=09worktreeAddOrphan::
-+=09=09Advice shown when a user tries to create a worktree from an
-+=09=09invalid reference, to instruct how to create a new orphan
-+=09=09branch instead.
- --
-diff --git a/advice.c b/advice.c
-index fd18968943..53e91fdb85 100644
---- a/advice.c
-+++ b/advice.c
-@@ -75,6 +75,7 @@ static struct {
- =09[ADVICE_SUBMODULES_NOT_UPDATED] =09=09=3D { "submodulesNotUpdated", 1 }=
-,
- =09[ADVICE_UPDATE_SPARSE_PATH]=09=09=09=3D { "updateSparsePath", 1 },
- =09[ADVICE_WAITING_FOR_EDITOR]=09=09=09=3D { "waitingForEditor", 1 },
-+=09[ADVICE_WORKTREE_ADD_ORPHAN]=09=09=09=3D { "worktreeAddOrphan", 1 },
- };
+> * js/drop-mingw-test-cmp (2022-11-14) 2 commits
+>  - tests(mingw): avoid very slow `mingw_test_cmp`
+>  - t0021: use Windows-friendly `pwd`
+>
+>  Use `git diff --no-index` as a test_cmp on Windows.
+>
+>  Waiting for review response.
+>  source: <pull.1309.v4.git.1668434812.gitgitgadget@gmail.com>
 
- static const char turn_off_instructions[] =3D
-diff --git a/advice.h b/advice.h
-index 07e0f76833..919d8c0064 100644
---- a/advice.h
-+++ b/advice.h
-@@ -50,6 +50,7 @@ struct string_list;
- =09ADVICE_UPDATE_SPARSE_PATH,
- =09ADVICE_WAITING_FOR_EDITOR,
- =09ADVICE_SKIPPED_CHERRY_PICKS,
-+=09ADVICE_WORKTREE_ADD_ORPHAN,
- };
+There is a new iteration available here:
+https://lore.kernel.org/git/pull.1309.v5.git.1670339267.gitgitgadget@gmail=
+.com/
 
- int git_default_advice_config(const char *var, const char *value);
-diff --git a/builtin/worktree.c b/builtin/worktree.c
-index 51b247b2a7..ea306e18de 100644
---- a/builtin/worktree.c
-+++ b/builtin/worktree.c
-@@ -744,6 +744,14 @@ static int add(int ac, const char **av, const char *pr=
-efix)
- =09=09 * If `branch` does not reference a valid commit, a new
- =09=09 * worktree (and/or branch) cannot be created based off of it.
- =09=09 */
-+=09=09advise_if_enabled(ADVICE_WORKTREE_ADD_ORPHAN,
-+=09=09=09"If you meant to create a worktree containing a new orphan branch=
-\n"
-+=09=09=09"(branch with no commits) for this repository, e.g. '%s',\n"
-+=09=09=09"you can do so using the --orphan option:\n"
-+=09=09=09"\n"
-+=09=09=09"=09git worktree add --orphan %s %s\n"
-+=09=09=09"\n",
-+=09=09=09 new_branch, new_branch, path);
- =09=09die(_("invalid reference: %s"), branch);
- =09} else if (new_branch) {
- =09=09struct child_process cp =3D CHILD_PROCESS_INIT;
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index 6118ace92d..455cddcdd2 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -376,6 +376,22 @@ test_expect_success '"add" worktree with orphan branch=
-, lock, and reason' '
- =09test_cmp expect .git/worktrees/orphan-with-lock-reason/locked
- '
-
-+# Helper function to test hints for using --orphan in an empty repo.
-+test_wt_add_empty_repo_orphan_hint() {
-+=09local context=3D"$1" &&
-+=09local opts=3D"${@:2}" &&
-+=09test_expect_success "'worktree add' show orphan hint in empty repo w/ $=
-context" '
-+=09=09test_when_finished "rm -rf empty_repo" &&
-+=09=09GIT_DIR=3D"empty_repo" git init --bare &&
-+=09=09test_must_fail git -C empty_repo worktree add $opts 2> actual &&
-+=09=09grep "hint: If you meant to create a worktree containing a new orpha=
-n branch" actual
-+=09'
-+}
-+
-+test_wt_add_empty_repo_orphan_hint 'DWIM' foobar/
-+test_wt_add_empty_repo_orphan_hint '-b' -b foobar_branch foobar/
-+test_wt_add_empty_repo_orphan_hint '-B' -B foobar_branch foobar/
-+
- test_expect_success 'local clone from linked checkout' '
- =09git clone --local here here-clone &&
- =09( cd here-clone && git fsck )
---
-2.37.4
-
-
+Ciao,
+Johannes
