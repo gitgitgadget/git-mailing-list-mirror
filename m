@@ -2,125 +2,117 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8B56EC4332F
-	for <git@archiver.kernel.org>; Tue, 13 Dec 2022 01:52:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A8C74C4332F
+	for <git@archiver.kernel.org>; Tue, 13 Dec 2022 06:20:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234051AbiLMBwC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 12 Dec 2022 20:52:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34102 "EHLO
+        id S233881AbiLMGUT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Dec 2022 01:20:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234224AbiLMBwA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Dec 2022 20:52:00 -0500
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D995D19020
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 17:51:58 -0800 (PST)
-Received: by mail-pf1-x434.google.com with SMTP id g1so1220302pfk.2
-        for <git@vger.kernel.org>; Mon, 12 Dec 2022 17:51:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xyEg3+Pt5diCnL0ON9hAGHADC+1vzy1C69M/b46eeh8=;
-        b=WXusC9FLUUsowdU/lKCESgcOliJkr1WxawQEcGeOOi1/VNd9PiY+n5iapVPRL3/N06
-         ioET+kPCF6p6ft9jIk7ASYZrkvJzZBiBXb7rZKlMA2SG7qsisBqdcJQ3f5l/g65qL4gA
-         q6bBzCuyfNwsVJqZa2lVf+5I3NrGn1cuqy9sHEy0Q4k68/NU23gQkcjzDmx3HU5ktZHA
-         6n1ur68EMqTydOyVItO4iEPen1snZDsCKGEV4cnWjeuS72ta7yPTpgmGbMadTegr0al8
-         wnZAeN6UQr8y7PlPdaO25r1dIHdgMCfeaxC2zFali5fokJXKmeX6gLrCBYPRB596qXB3
-         td1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=xyEg3+Pt5diCnL0ON9hAGHADC+1vzy1C69M/b46eeh8=;
-        b=7iqBxkW8feCcciZcT7OgXPDgwsR3PhG6nF6XboLdH+llSvqAzeBn5JL4V3rGgPsWAF
-         Ncj5imkm3V0pOc7lor6P5QAggpiwqfhUPb5+73EXGrx26Hu35jWaQYZLITDA+CBRdVGi
-         BmwSZiTQ6ge0mtFoZtxa4uzrfwpPXQ7yNB3wogS+2Eg42LUOtQij0LRyoYJNy/tKJsp/
-         nVY6NTfz+N6MFxW18OFVZcAQwoyvbJYHmrb0Jx/eeAtIje6YGqwJjwyz4HRUrmwa92QU
-         SzLIi78IuOZUD8ac3FSV2cla/EnvOMNlU2eZxHyD/mB9nGYlM4xCFUHKLzqzGKioieDu
-         pNVA==
-X-Gm-Message-State: ANoB5plhZebOeTKj/P5xKeN6BJbaJBGkv3q6p4y9GI4bfNtEXbMEl4DY
-        d4YmWw1qmNdxGvumvnfkWXJRGhgw7lGsjw==
-X-Google-Smtp-Source: AA0mqf7+EgHXGFZhtgogvO0gKyxBoc7DjJwA6nUoLH9r5ernyj25vkGMvbf8m7GCusrwMKbZBnaHPA==
-X-Received: by 2002:a05:6a00:3393:b0:566:900e:1d85 with SMTP id cm19-20020a056a00339300b00566900e1d85mr17814140pfb.1.1670896318185;
-        Mon, 12 Dec 2022 17:51:58 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id 69-20020a621548000000b005741cb643bdsm6383181pfv.215.2022.12.12.17.51.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Dec 2022 17:51:57 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net
-Subject: Re: [PATCH v5 3/4] object-file: emit corruption errors when detected
-References: <cover.1669839849.git.jonathantanmy@google.com>
-        <cover.1670885252.git.jonathantanmy@google.com>
-        <a229ea0b1122f55e91f98475cd7e508f4dd8501a.1670885252.git.jonathantanmy@google.com>
-Date:   Tue, 13 Dec 2022 10:51:57 +0900
-In-Reply-To: <a229ea0b1122f55e91f98475cd7e508f4dd8501a.1670885252.git.jonathantanmy@google.com>
-        (Jonathan Tan's message of "Mon, 12 Dec 2022 14:48:50 -0800")
-Message-ID: <xmqqzgbsoyte.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229803AbiLMGUR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2022 01:20:17 -0500
+Received: from mout.web.de (mout.web.de [212.227.15.14])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D86341C138
+        for <git@vger.kernel.org>; Mon, 12 Dec 2022 22:20:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1670912410; bh=TfCsMo5WU/MwnxZvlCwFXUoiiJbJg7L9xDPdtnu9ov4=;
+        h=X-UI-Sender-Class:Date:To:Cc:From:Subject;
+        b=QvckWDggdU6J7D5a+My6tC4m0PVZDHoBPr8nn376WYTJ6gfJvbw+xEwfCGQptzCH0
+         ofcPIN/hjEphnhVjswK00/SRLddSvSSEOH3buS/ddnQMzig1k0hSJMKCjHismQMr6l
+         AlxbBavZDKv1ithOKrgSGIndlbqy/1fDJf9gyJK4M6Ucsn4DY4d1p3edlTY2fYj0aV
+         XXGEeCZ0Ak2x0rkYCArOdWODBQVPI3MqfIticEYRl2KZbvRBSRl22vOi+EZTz5Zdud
+         eKL+vxobPRwnilGrWtrLiJtbhNrJ4rK71/L3DZVWSwz7cAjIZeL2B+uIlhoOcm8qb5
+         0q1DdDLiJ3IoA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.151.35]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MN6FV-1pO1V927sb-00J5cL; Tue, 13
+ Dec 2022 07:20:10 +0100
+Message-ID: <a53d4df3-4b2c-585a-e8ad-2a9b9017fb8c@web.de>
+Date:   Tue, 13 Dec 2022 07:20:09 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.5.1
+Content-Language: en-US
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Subject: [PATCH] reflog: clear leftovers in reflog_expiry_cleanup()
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:R8H6LmkY1DLDP6gE3bYjWUGXxDTrZvgTa66uL3M3LU7ujtGQNFT
+ NZi7Hiudnnf0DG+4XKszIYWZ9oPnnB0DL/d+pyWbusDTmd/1NENGLl0B0jegbUbp9fbX29B
+ 3Nh6dKECRD1Zwm1S01nZdSJotZww8Ii+RgohMRThrf5DLdD8YWKZx4zSlUrXjIiGAiUNIJr
+ lA6lQN/4N7mqtFvFBJxrQ==
+UI-OutboundReport: notjunk:1;M01:P0:Qy5xBBu3zBw=;Jamjc6n9NPrt288scm2Uj+Hyajb
+ RNSn/3ITfHSn0HL5jA4ni3CwRUzEFZoEv2cln2g2pn6V5Bp04THhIN6dRP507zZEIDh60u2JA
+ YrAMcWgZuKYRDL8bEUFpd8r6YIS4eOKBqPflhcp3aziwSRDEmg+56su1H6S62PuUl2vRFl3aI
+ UcpeHTxpxyJdlMnZzwoketeROTGRYojpeXF4NwJzwijAE/Z76SyHEhaF1muvFrVrDGyqn0bkq
+ H276LCfAoIQmdoQ3lD43XrKvZ9OP3LZvs2rUmc5WDuLkm+voq6otVtCDQca6dAiiLGdCnYY2X
+ 8XGYeUxsYoDlb+86GpuO7EEr15c0pUiPGGvtEe069odVOK4lAEPPEtTdemI6cWk/ForBWjKAq
+ GAasa0sZQ00nN9y2QWuDrYDwy6ayxkzuIFM1voPZneyF410XkBCoJnGbtH/lDTr72h7onTcss
+ QslWm12BjVm0SWH+HgQpveJoCWxjcM1WxY5zDhyyRGXfYT6zMfDA1JkPa1sI57f1quLvmgflp
+ sxYeXpBVcxCKLdtSkbJxIZBpodpE4x1FP5MGgvR7Fx2NOyNFIU+S7UAUJyb5XTbDWNQ5qjNhM
+ hC667BNZnpLQ/GTWw0o/9n7z8ItLqsJpztEYc1sLBNyYEnmTvmzCDlGD72GiD4veTD5YjAno1
+ yyHWNwQoISqlYW5+ZEE/8wL8GJMUiZxfztXfUpgf2sycLuOcb82cZsk6U5zAMdBbR5lrTudcj
+ 4QXXSVTt2rfIVhhds+Wmwy2cAsvKuQb0EsB9j13Jp+jhpFUmZg2vqZxlML2eM2H/ge3a/+xRm
+ tFS9YA47sxc+cq43g36A3k0jjQtCKBUH5iyQn/ccae8DDzRHeznGjSl8TLjYAe6x5evzGBtp1
+ aZSLbhBWQtiUVkgEQ/nQX+JQUpcwPJaOOMEnXlpwnhgiQysfL76rm1P06fp5zNlm7NYBX45A+
+ BFTjYA==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+reflog_expiry_prepare() calls mark_reachable(), which recurively flags
+commits as REACHABLE.  The traversal stops beyond a certain age
+threshold; the boundary commits also marked as REACHABLE and put back
+into mark_list at the end.  unreachable() finishes the traversal down to
+the roots if necessary -- but if all interesting commits are younger
+than the age threshold then only recent commits need to be visited.
 
-> diff --git a/object-file.c b/object-file.c
-> index 429e3a746d..e0cef8b906 100644
-> --- a/object-file.c
-> +++ b/object-file.c
-> @@ -1422,7 +1422,9 @@ static int loose_object_info(struct repository *r,
->  			     struct object_info *oi, int flags)
->  {
->  	int status = 0;
-> +	int fd;
->  	unsigned long mapsize;
-> +	const char *path = NULL;
+When this optimization works then the boundary commits still sit there
+in mark_list at the end.  Clear their REACHABLE flag and release the
+commit list allocations.
 
-It may be OK to leave this uninitialized, as long as the contract of
-open_loose_object() is that a successful opening will report the path
-to the loose object file that was opened.  Because ...
+While at it remove a duplicate code line from mark_reachable(); the same
+flag is already set five lines up.
 
-> @@ -1454,7 +1455,13 @@ static int loose_object_info(struct repository *r,
->  		return 0;
->  	}
->  
-> -	map = map_loose_object(r, oid, &mapsize);
-> +	fd = open_loose_object(r, oid, &path);
-> +	if (fd < 0) {
-> +		if (errno != ENOENT)
-> +			error_errno(_("unable to open loose object %s"), oid_to_hex(oid));
-> +		return -1;
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+Formatted with -U5 for easier review.
 
-... we no longer refer to "path" which may not be populated here, and ...
+ reflog.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-> +	}
+diff --git a/reflog.c b/reflog.c
+index 78e9350e20..04630f56ec 100644
+=2D-- a/reflog.c
++++ b/reflog.c
+@@ -191,11 +191,10 @@ static void mark_reachable(struct expire_reflog_poli=
+cy_cb *cb)
+ 		commit->object.flags |=3D REACHABLE;
+ 		if (commit->date < expire_limit) {
+ 			commit_list_insert(commit, &leftover);
+ 			continue;
+ 		}
+-		commit->object.flags |=3D REACHABLE;
+ 		parent =3D commit->parents;
+ 		while (parent) {
+ 			commit =3D parent->item;
+ 			parent =3D parent->next;
+ 			if (commit->object.flags & REACHABLE)
+@@ -369,10 +368,13 @@ void reflog_expiry_cleanup(void *cb_data)
+ 		break;
+ 	case UE_NORMAL:
+ 		clear_commit_marks(cb->tip_commit, REACHABLE);
+ 		break;
+ 	}
++	for (elem =3D cb->mark_list; elem; elem =3D elem->next)
++		clear_commit_marks(elem->item, REACHABLE);
++	free_commit_list(cb->mark_list);
+ }
 
-... at this point, we know we successfully opened, and populated path.
-
-> +	map = map_fd(fd, path, &mapsize);
->  	if (!map)
->  		return -1;
->  
-> @@ -1492,6 +1499,10 @@ static int loose_object_info(struct repository *r,
->  		break;
->  	}
->  
-> +	if (status && path && (flags & OBJECT_INFO_DIE_IF_CORRUPT))
-
-Also, here, "path" should be valid, as we have successfully opened
-the loose object file (otherwise we would have hit the early return
-that reports only the oid_to_hex(oid)).
-
-> +		die(_("loose object %s (stored in %s) is corrupt"),
-> +		    oid_to_hex(oid), path);
-
-If we didn't have path and did not die, we'd end up ignoring
-DIE_IF_CORRUPT request and force the caller to handle non-zero
-status.  But I do not think that should happen, because path would
-be valid here.  No?
+ int count_reflog_ent(struct object_id *ooid UNUSED,
+ 		     struct object_id *noid UNUSED,
+ 		     const char *email UNUSED,
+=2D-
+2.38.2
