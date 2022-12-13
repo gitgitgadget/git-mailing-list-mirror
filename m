@@ -2,89 +2,65 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56809C4332F
-	for <git@archiver.kernel.org>; Tue, 13 Dec 2022 20:16:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CC50AC4332F
+	for <git@archiver.kernel.org>; Tue, 13 Dec 2022 21:02:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236812AbiLMUQd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 13 Dec 2022 15:16:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60116 "EHLO
+        id S236809AbiLMVCy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 13 Dec 2022 16:02:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236839AbiLMUQE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Dec 2022 15:16:04 -0500
-Received: from siwi.pair.com (siwi.pair.com [209.68.5.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D90F25285
-        for <git@vger.kernel.org>; Tue, 13 Dec 2022 12:15:25 -0800 (PST)
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 74C31CA124E;
-        Tue, 13 Dec 2022 15:15:24 -0500 (EST)
-Received: from [192.168.4.22] (162-238-212-202.lightspeed.rlghnc.sbcglobal.net [162.238.212.202])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id 4A950CC833E;
-        Tue, 13 Dec 2022 15:15:24 -0500 (EST)
-Message-ID: <b9dc32bb-628c-4056-4c16-21bd51ad94fc@jeffhostetler.com>
-Date:   Tue, 13 Dec 2022 15:15:23 -0500
+        with ESMTP id S236601AbiLMVCx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Dec 2022 16:02:53 -0500
+Received: from mx-out.tlen.pl (mx-out.tlen.pl [193.222.135.142])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 719935F59
+        for <git@vger.kernel.org>; Tue, 13 Dec 2022 13:02:50 -0800 (PST)
+Received: (wp-smtpd smtp.tlen.pl 8452 invoked from network); 13 Dec 2022 22:02:46 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=o2.pl; s=1024a;
+          t=1670965366; bh=WCTLTcy4okJdHdi4KpGrnlwnkGotr4pgBQjFKMrBIdo=;
+          h=Subject:To:Cc:From;
+          b=Ur2pZsAwb+OdgBZOCurY20esLsUqCnmvj5fXAhWF13/DLLbuz4841eTX7Xg0AdtoU
+           zlt2pzUsIvXEDXjqXnzWMiIAXfSPDdLjq17q0dTt8+CRMthh7ljuE45U/E0bdgTIGm
+           Gn1emqaTS7biVozeczNuCje7YYV7adVj0EGELRn4=
+Received: from mail.dtcasino.pl (HELO [192.168.1.5]) (piotrekkr@o2.pl@[212.180.138.13])
+          (envelope-sender <piotrekkr@o2.pl>)
+          by smtp.tlen.pl (WP-SMTPD) with ECDHE-RSA-AES256-GCM-SHA384 encrypted SMTP
+          for <l.s.r@web.de>; 13 Dec 2022 22:02:46 +0100
+Message-ID: <c07a5ac4-3da6-6fb4-4586-a83373bc05d4@o2.pl>
+Date:   Tue, 13 Dec 2022 22:02:46 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.4.2
-Subject: Re: [PATCH] http-fetch: invoke trace2_cmd_name()
-To:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
-References: <20221212224630.2553391-1-jonathantanmy@google.com>
-Content-Language: en-US
-From:   Jeff Hostetler <git@jeffhostetler.com>
-In-Reply-To: <20221212224630.2553391-1-jonathantanmy@google.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: Issue with git > 2.36.1 and pre-commit hook on macOS M1
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+References: <51d5993f-a1e0-519e-ffa9-ec5205c5e96d@o2.pl>
+ <30f80aa4-d5c1-4fce-f1c9-710eabeaa022@web.de>
+Content-Language: en-GB-large
+From:   Piotrek <piotrekkr@o2.pl>
+In-Reply-To: <30f80aa4-d5c1-4fce-f1c9-710eabeaa022@web.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: mailmunge 3.10 on 209.68.5.199
+Content-Transfer-Encoding: 8bit
+X-WP-MailID: 8edf3adc2f91ca212115ccef80bc89c3
+X-WP-AV: skaner antywirusowy Poczty o2
+X-WP-SPAM: NO 0000001 [EaLV]                               
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 12.12.2022 14:29, René Scharfe wrote:
 
-
-On 12/12/22 5:46 PM, Jonathan Tan wrote:
-> ee4512ed48 ("trace2: create new combined trace facility", 2019-02-
-> 22) introduced trace2_cmd_name() and taught both the Git built-ins and
-> some non-built-ins to use it. However, http-fetch was not one of them
-> (perhaps due to its low usage at the time).
+> While "docker compose" is right in that stdin is not a TTY, it never
+> was.  Redirecting the output its seems to help.  So I guess it checks if
+> stdout is connected to a terminal and then expects stdin to be a TTY as
+> well.  Try appending " | cat" to the command in the pre-commit hook,
+> which breaks the connection for stdout.
 > 
-> Teach http-fetch to invoke this function. After this patch, this
-> function will be invoked right after argument parsing, just like in
-> remote-curl.c.
-> 
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
-> This was discovered at $DAYJOB after we noticed that there were command
-> names missing in the trace whenever a user did a fetch that involved
-> packfile offloading.
-> ---
->   http-fetch.c | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/http-fetch.c b/http-fetch.c
-> index 31bc5c7767..258fec2068 100644
-> --- a/http-fetch.c
-> +++ b/http-fetch.c
-> @@ -5,6 +5,7 @@
->   #include "walker.h"
->   #include "strvec.h"
->   #include "urlmatch.h"
-> +#include "trace2.h"
->   
->   static const char http_fetch_usage[] = "git http-fetch "
->   "[-c] [-t] [-a] [-v] [--recover] [-w ref] [--stdin | --packfile=hash | commit-id] url";
-> @@ -137,6 +138,8 @@ int cmd_main(int argc, const char **argv)
->   	if (nongit)
->   		die(_("not a git repository"));
->   
-> +	trace2_cmd_name("http-fetch");
-> +
->   	git_config(git_default_config, NULL);
->   
->   	if (packfile) {
+> René
 
-LGTM
+Just to be sure if I understand this correctly. It is probably a bug in 
+docker compose expecting stdin to be a TTY, right? I'll write some bug 
+report to them, maybe they will take care of this since it is only on 
+MacOS and all works fine with Linux.
 
-Thanks for catching this.
-Jeff
+Thank you for checking this René.
