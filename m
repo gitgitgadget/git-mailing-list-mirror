@@ -2,147 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 720C8C4332F
-	for <git@archiver.kernel.org>; Wed, 14 Dec 2022 14:05:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 097B5C4332F
+	for <git@archiver.kernel.org>; Wed, 14 Dec 2022 14:53:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238000AbiLNOFG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Dec 2022 09:05:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33874 "EHLO
+        id S238719AbiLNOxp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Dec 2022 09:53:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238627AbiLNOEl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Dec 2022 09:04:41 -0500
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13BCA27FF0
-        for <git@vger.kernel.org>; Wed, 14 Dec 2022 06:04:31 -0800 (PST)
-Received: by mail-yb1-xb33.google.com with SMTP id y135so21470787yby.12
-        for <git@vger.kernel.org>; Wed, 14 Dec 2022 06:04:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=xWP3SyU+nZzvc5GGLtnpYLBTaSPeIIi7UEqHPBIlL74=;
-        b=O+yIwMeBl7m+ZuEOZQsv9FkLkTTFMiNdXM450j/pY2Z9KLd/kHNLEspHgLkU2J8o/g
-         N+JsEK4eUfVwcvyxM2B+nfAlrXzYruUSiKwlwRSZ4+JXuGTm93g3jThJegbzFlXg3cnF
-         cBx7yAxG4El5EIQUPddRvrtgvqs2Li8cdeYP5kLUEP7Jg5WV+mQKCYWuUUpp90PxGmGt
-         9RUT6med+fgJLdTNtLdmEJh9MgnV1gEGTiEDFKxTnLS8ImmgerLVPSoVV56RGXq2QRVu
-         tqd1RZvhXv3sFVcBitDEd8b2V20i16BTw1QvGdwBt/xb/27xnB7f54DY+SkhhB6WWb80
-         F3MQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xWP3SyU+nZzvc5GGLtnpYLBTaSPeIIi7UEqHPBIlL74=;
-        b=WEE/aAnizZoNhA7cjbWII+jebBvWceMI4gy3+aLkEExNN/CacBfcLs7cT7UNw9GADo
-         qgURLyxmknfo39eldGN2tLDHGkd3XWd0zYsTyFxO7nbl54z32vvDrVKHIU+GDHFF1f/9
-         lj1C8vcsLaT+4wrjzBMEG50O73z8eM+5dH9r9AGchwJAhZ8Y0g5ydJpqAF68JvJWauut
-         l8Pu8BuhQwsjLklOVc0wXKMHYAGiWSBxv9sIweRhwsBAZ3i97vNF+bMvYLnk8+u8/cbj
-         obRrQOqm5P8+Gv7wd1uhNUoX3uHWRWNYdJpWVTxfo6nDytrW82gi3rkHi0Woor/xXflr
-         m/qg==
-X-Gm-Message-State: ANoB5pk7RPEQZ6SVmMiuv6EpxmOB9qRWnGnrE/Z0inI8ASoeTs09c6rv
-        COTRj3roycjJtri+zPQmzoXwY5xYtuZ2AKDPhVA/CD0jbJs=
-X-Google-Smtp-Source: AA0mqf7Fl9Pst3R16J/XtoDRuPYNZLqxuYzXZRxOluDZNquqluZQ9k0Hk3Ki+g9rs/5fBWVFKIIWUZJxDyoLKsVHAwE=
-X-Received: by 2002:a5b:8cf:0:b0:6f8:92de:92e3 with SMTP id
- w15-20020a5b08cf000000b006f892de92e3mr42347947ybq.105.1671026670195; Wed, 14
- Dec 2022 06:04:30 -0800 (PST)
+        with ESMTP id S238491AbiLNOxo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Dec 2022 09:53:44 -0500
+Received: from smtp95.ord1d.emailsrvr.com (smtp95.ord1d.emailsrvr.com [184.106.54.95])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D97226A84
+        for <git@vger.kernel.org>; Wed, 14 Dec 2022 06:53:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=oddbit.com;
+        s=20180920-g2b7aziw; t=1671029622;
+        bh=wZ/1r/VpBERjOo+Qbn5gp6WIXRkMs0Rw2zCHhAm2WrI=;
+        h=Date:From:To:Subject:From;
+        b=LoYlrj0JD2NQziTL00Pb4AihavzlotKZOAmc+l2w4er8zGrPRr6dT+8Alb6FDMRDs
+         J2PpGriwGuRgGpKsAlujNutA3TtLrSr5UxvU55QjAD1jLucV7Ky7VDFF/FQjN+cF0Y
+         JJQrybCciuIx/SbTCLXcP51wi6dn56GebUYBeT2s=
+X-Auth-ID: lars@oddbit.com
+Received: by smtp20.relay.ord1d.emailsrvr.com (Authenticated sender: lars-AT-oddbit.com) with ESMTPSA id 3891DC0223;
+        Wed, 14 Dec 2022 09:53:42 -0500 (EST)
+Date:   Wed, 14 Dec 2022 09:53:41 -0500
+From:   Lars Kellogg-Stedman <lars@oddbit.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3] line-range: Fix infinite loop bug with degenerate '$'
+ regex
+Message-ID: <20221214145341.sonppjtshwqoxs6n@oddbit.com>
+References: <20221205193625.2424202-1-lars@oddbit.com>
+ <20221211015340.2181837-1-lars@oddbit.com>
+ <xmqq5yeiwr6x.fsf@gitster.g>
 MIME-Version: 1.0
-References: <20220916205946.178925-1-siddharthasthana31@gmail.com>
- <20221201155504.320461-1-siddharthasthana31@gmail.com> <20221201155504.320461-3-siddharthasthana31@gmail.com>
-In-Reply-To: <20221201155504.320461-3-siddharthasthana31@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Wed, 14 Dec 2022 15:04:17 +0100
-Message-ID: <CAP8UFD0_86GiwNXmCZzVfDJTE5C6KWz=8F9S4hVEA5Xi8XhgDw@mail.gmail.com>
-Subject: Re: [PATCH v6 2/2] cat-file: add mailmap support to --batch-check option
-To:     Siddharth Asthana <siddharthasthana31@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, johncai86@gmail.com,
-        Johannes.Schindelin@gmx.de, avarab@gmail.com, me@ttaylorr.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq5yeiwr6x.fsf@gitster.g>
+X-Classification-ID: a54f1369-a459-4aa1-89f0-46d2eea8b97f-1-1
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 1, 2022 at 4:55 PM Siddharth Asthana
-<siddharthasthana31@gmail.com> wrote:
+On Sun, Dec 11, 2022 at 12:32:38PM +0900, Junio C Hamano wrote:
+> Lars Kellogg-Stedman <lars@oddbit.com> writes:
+> 
+> > When the -L argument to "git log" is passed the degenerate regular
+> > expression "$" (as in "-L :$:line-range.c"), this results in an
+> > infinite loop in find_funcname_matching_regexp().
+> 
+> Is "matching an empty line" the only way a regular expression can be
+> a "degenerate" one?  If not, perhaps being a bit more explicit would
+> help the readers, e.g.
 
-> diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
-> index f82d702d6b..81235c60a3 100644
-> --- a/Documentation/git-cat-file.txt
-> +++ b/Documentation/git-cat-file.txt
-> @@ -91,26 +91,49 @@ OPTIONS
->  --batch::
->  --batch=<format>::
->         Print object information and contents for each object provided
-> -       on stdin.  May not be combined with any other options or arguments
-> -       except `--textconv` or `--filters`, in which case the input lines
+"Matching an empty line" isn't the issue (and if I implied that it
+was, that's my bad). The issue only crops up when matching the
+zero-width regular expression at the *end* of a line.
 
-Nit: here there were backticks around --textconv and --filters ...
+I'll update the subject and description to be more clear...
 
-> -       also need to specify the path, separated by whitespace.  See the
-> -       section `BATCH OUTPUT` below for details.
-> +       on stdin. May not be combined with any other options or arguments
-> +       except --textconv, --filters, or --use-mailmap.
+> This clear explanation probably deserves to be in the commit log
+> message proper.
 
-... but here there are no backticks anymore.
+...including adding the extended description to the commit message. Some projects
+object if commit messages get too wordy.
 
-It would be better if backticks were used.
+> Please write it on two lines, and highlight an empty body of the
+> loop, like so
 
-> +       +
-> +       * When used with `--textconv` or `--filters`, the input lines
+Will do.
 
-Here and below backticks are used which is good.
+> > @@ -161,6 +160,7 @@ static const char *find_funcname_matching_regexp(xdemitconf_t *xecfg, const char
+> >  			return bol;
+> >  		start = eol;
+> >  	}
+> > +	return NULL;
+> >  }
+> 
+> What is this change about?  Isn't the above an endless loop without
+> break, from which the only way for the control to leave it is by
+> returning?
 
-> +         must specify the path, separated by whitespace. See the section
-> +         `BATCH OUTPUT` below for details.
-> +       +
-> +       * When used with `--use-mailmap`, for commit and tag objects, the
-> +         contents part of the output shows the identities replaced using the
-> +         mailmap mechanism, while the information part of the output shows
-> +         the size of the object as if it actually recorded the replacement
-> +         identities.
->
->  --batch-check::
->  --batch-check=<format>::
-> -       Print object information for each object provided on stdin.  May
-> -       not be combined with any other options or arguments except
-> -       `--textconv` or `--filters`, in which case the input lines also
-> -       need to specify the path, separated by whitespace.  See the
-> -       section `BATCH OUTPUT` below for details.
-> +       Print object information for each object provided on stdin. May not be
-> +       combined with any other options or arguments except --textconv, --filters
-> +       or --use-mailmap.
+It's not an endless loop without break; this change modified the loop
+condition:
 
-Here backticks are also missing.
+> -       while (1) {
+> +       while (*start) {
 
-> +       +
-> +       * When used with `--textconv` or `--filters`, the input lines must
-> +        specify the path, separated by whitespace. See the section
-> +        `BATCH OUTPUT` below for details.
-> +       +
-> +       * When used with `--use-mailmap`, for commit and tag objects, the
-> +         printed object information shows the size of the object as if the
-> +         identities recorded in it were replaced by the mailmap mechanism.
->
->  --batch-command::
->  --batch-command=<format>::
->         Enter a command mode that reads commands and arguments from stdin. May
-> -       only be combined with `--buffer`, `--textconv` or `--filters`. In the
-> -       case of `--textconv` or `--filters`, the input lines also need to specify
-> -       the path, separated by whitespace. See the section `BATCH OUTPUT` below
-> -       for details.
-> +       only be combined with `--buffer`, `--textconv`, `--use-mailmap` or
-> +       `--filters`.
+That would have prevented the infinite loop in the first place. I'm
+happy to drop this change if you prefer, but if this condition had
+been in place originally we wouldn't have had the infinite loop bug
+(we would still have had incorrect behavior, but it would have been
+perhaps easier for an end user to diagnose).
 
-Here they are used which is good.
+> Style: lose the SP after "cat >".
 
-> +       +
-> +       * When used with `--textconv` or `--filters`, the input lines must
-> +         specify the path, separated by whitespace. See the section
-> +         `BATCH OUTPUT` below for details.
-> +       +
-> +       * When used with `--use-mailmap`, for commit and tag objects, the
-> +         `contents` command shows the identities replaced using the
-> +         mailmap mechanism, while the `info` command shows the size
-> +         of the object as if it actually recorded the replacement
-> +         identities.
+Will do.
 
-Thanks!
+-- 
+Lars Kellogg-Stedman <lars@oddbit.com> | larsks @ {irc,twitter,github}
+http://blog.oddbit.com/                | N1LKS
