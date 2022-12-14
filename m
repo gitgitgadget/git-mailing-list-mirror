@@ -2,73 +2,147 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F86CC4332F
-	for <git@archiver.kernel.org>; Wed, 14 Dec 2022 13:36:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 720C8C4332F
+	for <git@archiver.kernel.org>; Wed, 14 Dec 2022 14:05:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238147AbiLNNg3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Dec 2022 08:36:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51814 "EHLO
+        id S238000AbiLNOFG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Dec 2022 09:05:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238219AbiLNNgY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Dec 2022 08:36:24 -0500
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E0D326116
-        for <git@vger.kernel.org>; Wed, 14 Dec 2022 05:36:24 -0800 (PST)
-Received: by mail-pl1-x62e.google.com with SMTP id d3so3316486plr.10
-        for <git@vger.kernel.org>; Wed, 14 Dec 2022 05:36:24 -0800 (PST)
+        with ESMTP id S238627AbiLNOEl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Dec 2022 09:04:41 -0500
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13BCA27FF0
+        for <git@vger.kernel.org>; Wed, 14 Dec 2022 06:04:31 -0800 (PST)
+Received: by mail-yb1-xb33.google.com with SMTP id y135so21470787yby.12
+        for <git@vger.kernel.org>; Wed, 14 Dec 2022 06:04:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=nkBFwgT9L+6tfNxKEvrcOGRBS2KYtf99uk6sPX2agU8=;
-        b=fDIjI53CgZpMbbC/drc6uSy1zgKhPwvNyOD9LgB+cgNyooDdAo62uR4ejQ4eQpnBho
-         ky8xUV6taFE9oYRhBShNaAuYaDb0LIbH92BEPPiSmRfkkoWYnrPJNfCbJJbRTSp/B0Ir
-         RqWiD+W/UmAYi68W3YBJvQhR03Fw+T2XJTXCFYoaB1NfsyVYmK7k+a/JyRmhhbVDl+CF
-         23glivIQW3TOp+1Ia6cAps31ES3MYCxv677ZMcLWUU7hCucGXH75OTkIUJXAzjXjib3U
-         /XtssmZbOC1Y8UEMTMCCMVFc+HmkZl6sLuZLnvSfjp5B8tgPyqQi8kNnYg0z6ronB/+X
-         /QfQ==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=xWP3SyU+nZzvc5GGLtnpYLBTaSPeIIi7UEqHPBIlL74=;
+        b=O+yIwMeBl7m+ZuEOZQsv9FkLkTTFMiNdXM450j/pY2Z9KLd/kHNLEspHgLkU2J8o/g
+         N+JsEK4eUfVwcvyxM2B+nfAlrXzYruUSiKwlwRSZ4+JXuGTm93g3jThJegbzFlXg3cnF
+         cBx7yAxG4El5EIQUPddRvrtgvqs2Li8cdeYP5kLUEP7Jg5WV+mQKCYWuUUpp90PxGmGt
+         9RUT6med+fgJLdTNtLdmEJh9MgnV1gEGTiEDFKxTnLS8ImmgerLVPSoVV56RGXq2QRVu
+         tqd1RZvhXv3sFVcBitDEd8b2V20i16BTw1QvGdwBt/xb/27xnB7f54DY+SkhhB6WWb80
+         F3MQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nkBFwgT9L+6tfNxKEvrcOGRBS2KYtf99uk6sPX2agU8=;
-        b=ZEmb8Yh6gWZCoB/5zyKP6YLBqmb6BxaPsFgObpdGjU8YqU1LhYnnaUnUroBNsqpmuI
-         ryhgOjUcsag5T9oIQTIPt8YBzmkvnC5yK2OHtFEZt95k6L9JqM/HDsNVJD2t1UkheBTi
-         TnEb3xauEaWrG0znLNF7LiG359q8vy2RP9W3ajsEJmx8/qOJCwgAcBIUymRWH+45qZZW
-         zq1iomIACRmAsdeI3IqROnhow3xhx8WW77OdcQQNL4cOvdglPzWYoD7lf1ksQrpBIVBJ
-         2TZLCEzN98zRD+v8pY91eLv2j4Q116LAkVBxK4FWvrHm8wO+KSLe3EmMMk4skJKhTcpL
-         zlBQ==
-X-Gm-Message-State: AFqh2kpbIbN6lxd/FjNsIWVvRJnTK2nRRbFI5CcKn/wwhob+mX8PaqTT
-        jhtgPFs3r1nWMZWhlcJPIgce2lM7wHt753Lo6GlVQYTTa6WSYQ==
-X-Google-Smtp-Source: AMrXdXuii7JaxpdFT7XhiNA3zJ3p9Xj7v5yNuArUPuRI3TZf+vhGI45YowP8QPPeN5op3sewcraoAz9YarZpalsTp9M=
-X-Received: by 2002:a17:90b:314b:b0:213:df25:7e8a with SMTP id
- ip11-20020a17090b314b00b00213df257e8amr354236pjb.154.1671024983065; Wed, 14
- Dec 2022 05:36:23 -0800 (PST)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xWP3SyU+nZzvc5GGLtnpYLBTaSPeIIi7UEqHPBIlL74=;
+        b=WEE/aAnizZoNhA7cjbWII+jebBvWceMI4gy3+aLkEExNN/CacBfcLs7cT7UNw9GADo
+         qgURLyxmknfo39eldGN2tLDHGkd3XWd0zYsTyFxO7nbl54z32vvDrVKHIU+GDHFF1f/9
+         lj1C8vcsLaT+4wrjzBMEG50O73z8eM+5dH9r9AGchwJAhZ8Y0g5ydJpqAF68JvJWauut
+         l8Pu8BuhQwsjLklOVc0wXKMHYAGiWSBxv9sIweRhwsBAZ3i97vNF+bMvYLnk8+u8/cbj
+         obRrQOqm5P8+Gv7wd1uhNUoX3uHWRWNYdJpWVTxfo6nDytrW82gi3rkHi0Woor/xXflr
+         m/qg==
+X-Gm-Message-State: ANoB5pk7RPEQZ6SVmMiuv6EpxmOB9qRWnGnrE/Z0inI8ASoeTs09c6rv
+        COTRj3roycjJtri+zPQmzoXwY5xYtuZ2AKDPhVA/CD0jbJs=
+X-Google-Smtp-Source: AA0mqf7Fl9Pst3R16J/XtoDRuPYNZLqxuYzXZRxOluDZNquqluZQ9k0Hk3Ki+g9rs/5fBWVFKIIWUZJxDyoLKsVHAwE=
+X-Received: by 2002:a5b:8cf:0:b0:6f8:92de:92e3 with SMTP id
+ w15-20020a5b08cf000000b006f892de92e3mr42347947ybq.105.1671026670195; Wed, 14
+ Dec 2022 06:04:30 -0800 (PST)
 MIME-Version: 1.0
-From:   Niklas Volcz <niklas.volcz@gmail.com>
-Date:   Wed, 14 Dec 2022 14:36:11 +0100
-Message-ID: <CAGWBhH7ZiU_tJGj_UAB29v9Eq6C2Q-1_0YxLLN16LaEOcuV1Xw@mail.gmail.com>
-Subject: Whitepace parameter for git restore
-To:     git@vger.kernel.org
+References: <20220916205946.178925-1-siddharthasthana31@gmail.com>
+ <20221201155504.320461-1-siddharthasthana31@gmail.com> <20221201155504.320461-3-siddharthasthana31@gmail.com>
+In-Reply-To: <20221201155504.320461-3-siddharthasthana31@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 14 Dec 2022 15:04:17 +0100
+Message-ID: <CAP8UFD0_86GiwNXmCZzVfDJTE5C6KWz=8F9S4hVEA5Xi8XhgDw@mail.gmail.com>
+Subject: Re: [PATCH v6 2/2] cat-file: add mailmap support to --batch-check option
+To:     Siddharth Asthana <siddharthasthana31@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, johncai86@gmail.com,
+        Johannes.Schindelin@gmx.de, avarab@gmail.com, me@ttaylorr.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Is there a way to pass apply.whitespace when using "git restore" like
-how it is done for git apply? I believe this might be a bug/missing
-feature.
-I have apply.whitespace=fix in my user git config. This usually works
-fine but I was working on a patch for a project today which is using
-tabs and spaces which messed up the commit. In order to avoid
-cluttering the diff with whitespace changes I tried to remove the
-whitespace changes with "git restore -p
-src/the-file-with-tabs-and-spaces.sh" but it seems that this causes
-git to fix the whitespaces again due to the configuration. I worked
-around this by setting a repo local config with
-"apply.whitespace=warn" but I wonder if there shouldn't be an
---whitespace flag for git restore like it is for git apply. Is this a
-bug?
+On Thu, Dec 1, 2022 at 4:55 PM Siddharth Asthana
+<siddharthasthana31@gmail.com> wrote:
 
-Best regards,
-Niklas
+> diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
+> index f82d702d6b..81235c60a3 100644
+> --- a/Documentation/git-cat-file.txt
+> +++ b/Documentation/git-cat-file.txt
+> @@ -91,26 +91,49 @@ OPTIONS
+>  --batch::
+>  --batch=<format>::
+>         Print object information and contents for each object provided
+> -       on stdin.  May not be combined with any other options or arguments
+> -       except `--textconv` or `--filters`, in which case the input lines
+
+Nit: here there were backticks around --textconv and --filters ...
+
+> -       also need to specify the path, separated by whitespace.  See the
+> -       section `BATCH OUTPUT` below for details.
+> +       on stdin. May not be combined with any other options or arguments
+> +       except --textconv, --filters, or --use-mailmap.
+
+... but here there are no backticks anymore.
+
+It would be better if backticks were used.
+
+> +       +
+> +       * When used with `--textconv` or `--filters`, the input lines
+
+Here and below backticks are used which is good.
+
+> +         must specify the path, separated by whitespace. See the section
+> +         `BATCH OUTPUT` below for details.
+> +       +
+> +       * When used with `--use-mailmap`, for commit and tag objects, the
+> +         contents part of the output shows the identities replaced using the
+> +         mailmap mechanism, while the information part of the output shows
+> +         the size of the object as if it actually recorded the replacement
+> +         identities.
+>
+>  --batch-check::
+>  --batch-check=<format>::
+> -       Print object information for each object provided on stdin.  May
+> -       not be combined with any other options or arguments except
+> -       `--textconv` or `--filters`, in which case the input lines also
+> -       need to specify the path, separated by whitespace.  See the
+> -       section `BATCH OUTPUT` below for details.
+> +       Print object information for each object provided on stdin. May not be
+> +       combined with any other options or arguments except --textconv, --filters
+> +       or --use-mailmap.
+
+Here backticks are also missing.
+
+> +       +
+> +       * When used with `--textconv` or `--filters`, the input lines must
+> +        specify the path, separated by whitespace. See the section
+> +        `BATCH OUTPUT` below for details.
+> +       +
+> +       * When used with `--use-mailmap`, for commit and tag objects, the
+> +         printed object information shows the size of the object as if the
+> +         identities recorded in it were replaced by the mailmap mechanism.
+>
+>  --batch-command::
+>  --batch-command=<format>::
+>         Enter a command mode that reads commands and arguments from stdin. May
+> -       only be combined with `--buffer`, `--textconv` or `--filters`. In the
+> -       case of `--textconv` or `--filters`, the input lines also need to specify
+> -       the path, separated by whitespace. See the section `BATCH OUTPUT` below
+> -       for details.
+> +       only be combined with `--buffer`, `--textconv`, `--use-mailmap` or
+> +       `--filters`.
+
+Here they are used which is good.
+
+> +       +
+> +       * When used with `--textconv` or `--filters`, the input lines must
+> +         specify the path, separated by whitespace. See the section
+> +         `BATCH OUTPUT` below for details.
+> +       +
+> +       * When used with `--use-mailmap`, for commit and tag objects, the
+> +         `contents` command shows the identities replaced using the
+> +         mailmap mechanism, while the `info` command shows the size
+> +         of the object as if it actually recorded the replacement
+> +         identities.
+
+Thanks!
