@@ -2,95 +2,193 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7CC52C4332F
-	for <git@archiver.kernel.org>; Wed, 14 Dec 2022 23:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 254D6C4332F
+	for <git@archiver.kernel.org>; Wed, 14 Dec 2022 23:48:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229514AbiLNXjp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Dec 2022 18:39:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37688 "EHLO
+        id S229637AbiLNXsP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Dec 2022 18:48:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbiLNXjn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Dec 2022 18:39:43 -0500
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AF1530F73
-        for <git@vger.kernel.org>; Wed, 14 Dec 2022 15:39:42 -0800 (PST)
-Received: by mail-pj1-x102e.google.com with SMTP id w4-20020a17090ac98400b002186f5d7a4cso999415pjt.0
-        for <git@vger.kernel.org>; Wed, 14 Dec 2022 15:39:42 -0800 (PST)
+        with ESMTP id S229446AbiLNXsN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Dec 2022 18:48:13 -0500
+Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C855630F70
+        for <git@vger.kernel.org>; Wed, 14 Dec 2022 15:48:11 -0800 (PST)
+Received: by mail-pl1-x62b.google.com with SMTP id w23so5055381ply.12
+        for <git@vger.kernel.org>; Wed, 14 Dec 2022 15:48:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3c3T0L2WpPqJpZqFxMk9RVb4r1+nLPbr/1cG8c08C1k=;
-        b=ZvFpwhqVBtLL/b/H9D/bm5Af5nvfAr5nMrnIfQfS+KzG6W2n5RmwstXb+C5j06BivI
-         lNuUIEM/Jl+BK5B2i940SAt6wqUhQicg7V3XJSaH0gOU6mbaBOcOtHipwccWWMv8qFBp
-         Nd2WWO8QJmdcCg41M0jGFbHTVyRnJwYW15crGFnPn3hyjabrgPz96IBSxBXpvFkWSvPZ
-         cYbZRdtH8pavckBxhir9JGIhBWmzJpVBLC3nt4MS6qwsOWl1eV9ZIubRAUVzrznX0IUy
-         vVwi/YVZJFbLtHzGX5ndx4IbqZhCZoBUT6KN1Q1OK64V7iOg2sdb3kgupKYXtgwP8SrS
-         Eezg==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QgJ4UBs2exEnZCMiIduldFhlPKYFO/nsECA626Beeho=;
+        b=TTOJ5xPht+YgUGjtRzl+LAW0QyGF2VvIiDI3cwR32TsOPO49xBuXFhMqt29Q0a7w6i
+         3u5+DDW/55D2nlpbsnGIErNYE+9/BhJmsQAyvocOyB5wl31WRPd4RMziSGIisbvPf49Y
+         PyIXNyXclQFqoeBHiyVWWObC9uFrS5MlksSf/hbG/In6fiGPwryd9x1fXWxdAZGFM01B
+         gHzJgLJ6tcFwdjBUKFV6MuMNqvGO+egwB7dYYtCWK5asW2Jxhq6S9qNm0aYhQp+n3ECM
+         AOLkyYhkthDOBb5NXnGv4HFgYGtCOq4ROF5DcpmMlwAzPvEAYwZnGTxhgVYOi7J2MSFg
+         5ZxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=3c3T0L2WpPqJpZqFxMk9RVb4r1+nLPbr/1cG8c08C1k=;
-        b=hCmecpWs1KWmczrQxwxZBQ6lW3gsyW7O8+6uk9D1HKK3eZHhNx+wjtddgZhQ2nf8Dg
-         8NJ/XCflJtdQBCH7wsWQtVTZVrgxdYHEuJXUF/BgBUhkliE3+w0HHtTxxVlPFKCgk4ut
-         iCv+4XcJVeP5y8VeX1gR6MfkUpUQ2zp22tbFIjJugH1nErWvhOAc/dMWyKogK0nQYByQ
-         MeGu79ZtSFvowOGvvGBFn2GvIADAmfTy2UVNrlajHZ4b8Goaple2SFAMPaWezcfX60Bv
-         Ya4xY3EJyJ7FsXIX04OFR0bPnx9EIXrwnIDqSl1P6UudQ6LSUfAsb9Ki71KxXv5SAcL+
-         nTTg==
-X-Gm-Message-State: ANoB5plPkUFn5PiyU473/wykfiQRBYuqVhioLkG0u/RgkCB+Y0DACQnm
-        kOQF1YM41QUnMplsXBZ0Y19Os03iNAcbBQ==
-X-Google-Smtp-Source: AA0mqf4G1HyZIrX137NERwdo9gvtHg9eDSZWAyDZgr1yEnuT5yrKMXjPZ0fxcK1s3hi3+b39yi6qAg==
-X-Received: by 2002:a17:90a:e10d:b0:219:e38b:5079 with SMTP id c13-20020a17090ae10d00b00219e38b5079mr27098553pjz.38.1671061181856;
-        Wed, 14 Dec 2022 15:39:41 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id bw4-20020a17090af60400b00218bedf8739sm1934852pjb.17.2022.12.14.15.39.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Dec 2022 15:39:41 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Niklas Volcz <niklas.volcz@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Whitepace parameter for git restore
-References: <CAGWBhH7ZiU_tJGj_UAB29v9Eq6C2Q-1_0YxLLN16LaEOcuV1Xw@mail.gmail.com>
-Date:   Thu, 15 Dec 2022 08:39:41 +0900
-In-Reply-To: <CAGWBhH7ZiU_tJGj_UAB29v9Eq6C2Q-1_0YxLLN16LaEOcuV1Xw@mail.gmail.com>
-        (Niklas Volcz's message of "Wed, 14 Dec 2022 14:36:11 +0100")
-Message-ID: <xmqqmt7pv9ky.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QgJ4UBs2exEnZCMiIduldFhlPKYFO/nsECA626Beeho=;
+        b=JP1DUvfKDUlNUYvLccwQNG5kzPNAEQfNQMo5rjwQal3N158yF0ALKCjafM1Ho8Iwxy
+         OMDVk8J/HqvRyn6+XxqI5KfLh3/70NTH8OUv6XbzpA4cBJ69o5xo366MDJRYOQhjzL6d
+         QuDCFNIDp4VQA8hl43MP2hGZzrrFQuAgg9gYh9sQldbsTGJfDa/wqCyfx6qnybzo2amt
+         kLgDWZY9Q9GyU0JXsmfn9E3AaPYZO29EmObfEssVNjbHyrRZ7A8OzG+4H/tLA6CC7cvO
+         7b+OPAjqvMcmP7+xnTFRoEYAw4E80Z3r30+IIj2H4QsEuRcRXO6MKooXgqFkRzBXxi31
+         7rZA==
+X-Gm-Message-State: ANoB5pm+TvfysMV4MBvKRlh0h3Neg8rWaZTH66F7fZS+Pkkc/k70Q6Ts
+        dSWqQagegmU2PiqYLn70jwN5
+X-Google-Smtp-Source: AA0mqf4cQ8RmX9wB8KKwvhbhdWp+PDsJdparSUPq0P/FXGVObTe35SLJ3BZblyXuevjLNsKV1m5mJQ==
+X-Received: by 2002:a17:902:be05:b0:188:dd4c:c315 with SMTP id r5-20020a170902be0500b00188dd4cc315mr26759566pls.45.1671061691291;
+        Wed, 14 Dec 2022 15:48:11 -0800 (PST)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id f17-20020a170902ce9100b00178b6ccc8a0sm2431917plg.51.2022.12.14.15.48.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Dec 2022 15:48:10 -0800 (PST)
+Message-ID: <1dc44716-2550-47de-e666-9972b102905d@github.com>
+Date:   Wed, 14 Dec 2022 15:48:08 -0800
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.5.0
+Subject: Re: [PATCH v4 8/8] t5556: add HTTP authentication tests
+Content-Language: en-US
+To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Matthew John Cheetham <mjcheetham@outlook.com>,
+        M Hickford <mirth.hickford@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Glen Choo <chooglen@google.com>,
+        Matthew John Cheetham <mjcheetham@github.com>
+References: <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
+ <pull.1352.v4.git.1670880984.gitgitgadget@gmail.com>
+ <8ecf63835229676677e3f7e33f634eb5d3a568b7.1670880984.git.gitgitgadget@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <8ecf63835229676677e3f7e33f634eb5d3a568b7.1670880984.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Niklas Volcz <niklas.volcz@gmail.com> writes:
+Matthew John Cheetham via GitGitGadget wrote:
+> From: Matthew John Cheetham <mjcheetham@outlook.com>
+> 
+> Add a series of tests to exercise the HTTP authentication header parsing
+> and the interop with credential helpers. Credential helpers will receive
+> WWW-Authenticate information in credential requests.
 
-> Is there a way to pass apply.whitespace when using "git restore" like
-> how it is done for git apply? I believe this might be a bug/missing
-> feature.
-> I have apply.whitespace=fix in my user git config. This usually works
-> fine but I was working on a patch for a project today which is using
-> tabs and spaces which messed up the commit. In order to avoid
-> cluttering the diff with whitespace changes I tried to remove the
-> whitespace changes with "git restore -p
-> src/the-file-with-tabs-and-spaces.sh" but it seems that this causes
-> git to fix the whitespaces again due to the configuration. I worked
-> around this by setting a repo local config with
-> "apply.whitespace=warn" but I wonder if there shouldn't be an
-> --whitespace flag for git restore like it is for git apply. Is this a
-> bug?
+A general comment about this series - the way you have the patches organized
+means that the "feature" content you're trying to integrate (the first two
+patches) is contextually separated from these tests. For people that
+learn/understand code via examples in tests, this makes it really difficult
+to understand what's going on. To avoid that, I think you could rearrange
+the patches pretty easily:
 
-It is arguable what should qualify as a "bug", but "restore" or
-"checkout" are primarily "grab the recorded blob out of the object
-store and materialize its contents as a whole in a file in the
-working tree", and there is no place for features that are about
-patch application like "apply to fix whitespace" to come in.  So a
-command line option --whitespace=warn would not be a very good fit.
+1. test-http-server: add stub HTTP server test helper (prev. patch 3)
+  - t5556 could be introduced here with the basic "anonymous" test in patch
+    6, but marked 'test_expect_failure'.
+2. test-http-server: add HTTP error response function (prev. patch 4)
+3. test-http-server: add HTTP request parsing (prev. patch 5)
+4. test-http-server: pass Git requests to http-backend (prev. patch 6)
+5. test-http-server: add simple authentication (prev. patch 7)
+6. http: read HTTP WWW-Authenticate response headers (prev. patch 1)
+7. credential: add WWW-Authenticate header to cred requests (prev patch 2)
+  - Some/all of the tests from the current patch (patch 8) could be squashed
+    into this one so that the tests exist directly alongside the new
+    functionality they're testing.
 
-Having said that, I wonder if you can cheat by
+> 
+> Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
+> ---
+>  t/helper/test-credential-helper-replay.sh |  14 +++
+>  t/t5556-http-auth.sh                      | 120 +++++++++++++++++++++-
+>  2 files changed, 133 insertions(+), 1 deletion(-)
+>  create mode 100755 t/helper/test-credential-helper-replay.sh
+> 
+> diff --git a/t/helper/test-credential-helper-replay.sh b/t/helper/test-credential-helper-replay.sh
+> new file mode 100755
+> index 00000000000..03e5e63dad6
+> --- /dev/null
+> +++ b/t/helper/test-credential-helper-replay.sh
 
-    $ git -c apply.whitespace=ignore restore -p ...
+I'm not sure a 't/helper' file is the right place for this - it's a pretty
+simple shell script, but it defines a lot of information (namely 'teefile',
+'catfile') that is otherwise unexplained in 't5556'. 
+
+What about something like 'lib-rebase.sh' and its 'set_fake_editor()'? You
+could create a similar test lib ('lib-credential-helper.sh') and wrapper
+function (' that writes out a custom credential helper. Something like
+'set_fake_credential_helper()' could also take 'teefile' and 'catfile' as
+arguments, making their names more transparent to 't5556'.
+
+> @@ -0,0 +1,14 @@
+> +cmd=$1
+> +teefile=$cmd-actual.cred
+> +catfile=$cmd-response.cred
+> +rm -f $teefile
+> +while read line;
+> +do
+> +	if test -z "$line"; then
+> +		break;
+> +	fi
+> +	echo "$line" >> $teefile
+> +done
+> +if test "$cmd" = "get"; then
+> +	cat $catfile
+> +fi
+> diff --git a/t/t5556-http-auth.sh b/t/t5556-http-auth.sh
+> index 78da151f122..541fa32bd77 100755
+> --- a/t/t5556-http-auth.sh
+> +++ b/t/t5556-http-auth.sh
+> @@ -26,6 +26,8 @@ PID_FILE="$(pwd)"/pid-file.pid
+>  SERVER_LOG="$(pwd)"/OUT.server.log
+>  
+>  PATH="$GIT_BUILD_DIR/t/helper/:$PATH" && export PATH
+> +CREDENTIAL_HELPER="$GIT_BUILD_DIR/t/helper/test-credential-helper-replay.sh" \
+> +	&& export CREDENTIAL_HELPER
+
+I see - this is how you connect the "test" credential helper to the HTTP
+server and header parsing (as implemented in patches 1 & 2), so that the
+results can be compared for correctness.
+
+nit: you can just 'export CREDENTIAL_HELPER="..."', rather than breaking it
+into two lines. You also shouldn't need to 'export' at all - the value will
+be set in the context of the test.
+
+>  
+>  test_expect_success 'setup repos' '
+>  	test_create_repo "$REPO_DIR" &&
+> @@ -91,7 +93,8 @@ start_http_server () {
+>  
+>  per_test_cleanup () {
+>  	stop_http_server &&
+> -	rm -f OUT.*
+> +	rm -f OUT.* &&
+> +	rm -f *.cred
+>  }
+>  
+>  test_expect_success 'http auth anonymous no challenge' '
+> @@ -102,4 +105,119 @@ test_expect_success 'http auth anonymous no challenge' '
+>  	git ls-remote $ORIGIN_URL
+>  '
+>  
+> +test_expect_success 'http auth www-auth headers to credential helper basic valid' '
+
+...
+
+> +test_expect_success 'http auth www-auth headers to credential helper custom schemes' '
+
+...
+
+> +test_expect_success 'http auth www-auth headers to credential helper invalid' '
+
+These tests all look good. That said, is there any way to test more
+bizarre/edge cases (headers too long to fit on one line, headers that end
+with a long string of whitespace, etc.)?
 
