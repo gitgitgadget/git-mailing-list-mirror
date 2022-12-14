@@ -2,164 +2,93 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1A114C4332F
-	for <git@archiver.kernel.org>; Wed, 14 Dec 2022 22:01:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D305C4332F
+	for <git@archiver.kernel.org>; Wed, 14 Dec 2022 22:23:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229702AbiLNWBO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 14 Dec 2022 17:01:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44802 "EHLO
+        id S229655AbiLNWXJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 14 Dec 2022 17:23:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbiLNWBM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Dec 2022 17:01:12 -0500
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7462DFDD
-        for <git@vger.kernel.org>; Wed, 14 Dec 2022 14:01:10 -0800 (PST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id A6BE75C0197;
-        Wed, 14 Dec 2022 17:01:07 -0500 (EST)
-Received: from imap48 ([10.202.2.98])
-  by compute6.internal (MEProxy); Wed, 14 Dec 2022 17:01:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jpgrayson.net;
-         h=cc:cc:content-type:date:date:from:from:in-reply-to
-        :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm1; t=1671055267; x=1671141667; bh=Wg
-        h5e23nLQWT1Dlq7lMLdIVTIzCD9hGin06dYmim2QE=; b=OE8AFWEgalKhRL6nmQ
-        kgNKyQ/Xf+vtdC9sUA9XzWnQ/B4SNJeaUz3D9wNUVE7MWBUvVGPfdQExFo3kq349
-        bGLeJbK9hgMtTabNkRUQNDWAFZkZTgPB2wUd8hSj0XDuOKyDaXs5jdGegRc4Lt6/
-        cn6h8H2BxD/aPDYV8csNIYIAl+lBSF+4u+sohHN3KCWI/rYtaUGs9Ow5cgOuMt+D
-        ZIIwfvorjs0rrRqATNz/BdXNzmJNeDu3tlsIUm0LXTltvmE8gBBhvTU5jHXdwfOl
-        QxJERLw+oDeBsfywv76ItLtm/1cT3Njfuxs4rcvOiBvpb6wBpkT6z/ocdP9dGFlH
-        znnA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-        :feedback-id:from:from:in-reply-to:in-reply-to:message-id
-        :mime-version:references:reply-to:sender:subject:subject:to:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm2; t=1671055267; x=1671141667; bh=Wgh5e23nLQWT1Dlq7lMLdIVTIzCD
-        9hGin06dYmim2QE=; b=vHmOHLwzW4JLRbFmkDZv9kmqqfSbTJu2Pwu68bgmQPHq
-        AkCsY7qYwZi7xm5gIzWd09H8hnYXtBh0+GapjGPuAywPgplZlFu2tXnsXXebrCLC
-        8EKRMf42soQL/wVwPz2Aq76MYDe3xdG2uVack2LmGqBGDuZ4elRksm7kMKkClku7
-        WOI9xiLt4J+8sIeeZA7+4ZpFeqsv1dIk6Ur/Qko8SzPsanXwJqOQnKyOqVsiZqAn
-        9ECEJuCU6GRbyyq2aaunuYJ94w66277RtAG0CT1ub4bDWjrQJgomkvLgtUMdX7de
-        9Zu+tB1fXX1/srSnUVZpbYGaYf7iOEzrguTDsUa+Yg==
-X-ME-Sender: <xms:o0eaY-06LZ8IALSyPh8G3mafeNXTCrtUb1uu9vJQcFGGk6J4L8A5XQ>
-    <xme:o0eaYxEhpYmOnIGqsBCG87YecwaIalFpBZMUgdkrKgZxotf521U-QgYGDToeuzydH
-    qtUERxhNZdq_-YAxQY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeefgdduheejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefofgggkfgjfhffhffvvefutgesth
-    dtredtreertdenucfhrhhomhepfdfrvghtvghrucfirhgrhihsohhnfdcuoehpvghtvges
-    jhhpghhrrgihshhonhdrnhgvtheqnecuggftrfgrthhtvghrnhepvdfgteeljeelveeghf
-    ettedtueehveetgfejkeejledtveeghffhlefhieefveehnecuvehluhhsthgvrhfuihii
-    vgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgvthgvsehjphhgrhgrhihsohhnrd
-    hnvght
-X-ME-Proxy: <xmx:o0eaY26yECjdXCu59YNnqTHEvJR0IYLjxPV-YuNy7DFNCY7Mq13qtw>
-    <xmx:o0eaY_04tjXJUHL7hLq8yIfZDynoSEswFdypPC6sFDltTUiK_KwXLg>
-    <xmx:o0eaYxFWScG8Zpv-FTDnFtMDoYAoQfF6ChIskjtDDqn5meseTYe00Q>
-    <xmx:o0eaYwwFDBSzSB_y5kizImpIRCmU9daWM9WR46K0cmylPs7Ec9ao7g>
-Feedback-ID: iefe944c0:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id 5FF3631A0063; Wed, 14 Dec 2022 17:01:07 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-1185-g841157300a-fm-20221208.002-g84115730
-Mime-Version: 1.0
-Message-Id: <71f44490-6ee9-4208-92a4-5932b524d719@app.fastmail.com>
-In-Reply-To: <Y5pCHAWnNUUy6TW+@coredump.intra.peff.net>
-References: <20221214174150.404821-1-pete@jpgrayson.net>
- <Y5pCHAWnNUUy6TW+@coredump.intra.peff.net>
-Date:   Wed, 14 Dec 2022 17:01:06 -0500
-From:   "Peter Grayson" <pete@jpgrayson.net>
-To:     "Jeff King" <peff@peff.net>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: [PATCH] diff: fix regression with --stat and unmerged file
-Content-Type: text/plain
+        with ESMTP id S229451AbiLNWXH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Dec 2022 17:23:07 -0500
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9389D25D9
+        for <git@vger.kernel.org>; Wed, 14 Dec 2022 14:23:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1671056584; bh=llEigiom55fO9Pv/H1RYx2UIy4FhHZo3xlLv+ZAYC3E=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=mVc72BQcuCzqCZHdozIHNkasKBkaTvo6HRy3iphp8kujxSyWPigl0QGOeA4p8oMEr
+         f+CPFAL4korYaCESBrNYxrGepEjkkZaw3JRMdXLd29OMwHckt7HXQ82TGlHWvHotxL
+         5/R7HAwj3tJ2J8aSpMC1H0MEHcetZCno9qgl0PN443lRT79t1n6FGoG1O1TRq3pDyA
+         jhabZS6vs79jdrjAjkI2KSkbPZswfDRN/iGlPGGJOU3QoQArNe0XhTRabYTE9bUxfF
+         PGbpqUvkmEx+EWR1WU+aRq/tLBwvU6iEw1y0F1N3dQb4R15uajtXtigPgTVDKkzdAz
+         sPmfgXZf9lUxw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.34] ([91.47.151.35]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MjgX3-1ocsJX1ffX-00kpgm; Wed, 14
+ Dec 2022 23:23:04 +0100
+Message-ID: <7054faf0-0f5b-e4a8-3166-bf715ed45a32@web.de>
+Date:   Wed, 14 Dec 2022 23:23:04 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: Issue with git > 2.36.1 and pre-commit hook on macOS M1
+To:     Piotrek <piotrekkr@o2.pl>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+References: <51d5993f-a1e0-519e-ffa9-ec5205c5e96d@o2.pl>
+ <30f80aa4-d5c1-4fce-f1c9-710eabeaa022@web.de>
+ <c07a5ac4-3da6-6fb4-4586-a83373bc05d4@o2.pl>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <c07a5ac4-3da6-6fb4-4586-a83373bc05d4@o2.pl>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:I0Krp6/YwMMPMzbgAkupHmJUaBxP0TeOgJpGl6ufvTquzXiVG2F
+ 81TxXP/WlMbo8qiGUOGWiIqNyS2IGoFdwed/+J44t2BXDl2v/uNgJrkljY9T3lLAP1fcftk
+ Sh3Ah9/CBXxW+Gx01+8e5gEw/hphiaDHbN69Qg4QQLCCI7Jjxnh0Wl8o5G6cYZ6KJqfmYkh
+ fd+qCeH2mlQVY+XqXROlQ==
+UI-OutboundReport: notjunk:1;M01:P0:ojm9gsT/8GA=;DtFdvaQxoOwiRllAv8ZYaG8dlxy
+ 0BkDy9PARX8Wg/YdvtjN8Too/aJtcfwQ1zWuzB9qfuEwtDLJiMFnPfl58JGkTCuNogQSXXYcB
+ 0y7M56j5jrWUgYzg9sF6sP2SDSArRpWATUjkgVcU6LP1RbF6IwwqCYDAW9IOG/yfXyz/ybaY1
+ IP3WPF04e+o1ELgvCT4dONs63w66g9qB/Yb4DfqbOtBlUAllD5f3sqYM66snY1tCjIHj6Zqx/
+ hwgEh8Ei4IL8QLk5n/mATUHuRRaB20RgmXgqU7vk04klNBsrRz1yInosoNK+o4CH4IhVJIu+W
+ I6J/16IZZoMj69Hw4839KaeubygpZ8wkEx/HIrlSZyPa/D18nn8qeCZXYr653g9XmwCwwWrlL
+ KzuQXqusBeEOg+oo6pcF9HzsHuUqoPpD4XCBW25RRiir511vvaPRK+YYaEjEt326f5MofbZSP
+ Svh8abcjTvwEp4bLpo/9b4LaJy3g8QRaPgtjTxXLv+uAbO3o9ICeadCkn79vd/OJJbTcRA3fR
+ gueaSF3xmuLXS7W74XdK6g6HZgyOCObR53ySWxpveQlLcgYhm6zod+DdM565CwgjZxLSEen2k
+ 0EL3339D2Cn9S/G9UJ56gA5GKI6v4iUM/NuayGpQIfTIBW4Jq196yOSN9G7XaGGktE7SPqNLX
+ zO5bW0A+7zgba0KmyUN2BuH1WJ5JsoGYZCET2mbgzsLt1ssLuAt4cDmPIYMy8XfWnm7UliFNI
+ GaDYiKhxSvXCUKL5VWdm0ba++fe364QsTSEeTXV1e8NRYdlNnQCpuG5EMCBQT4A50ZYvRM6Si
+ 1Irmxc1hBWFfuE3YOXcERzsoxhazdCdcEJZNSXHEQ85Psz3ykoHNCVZsEQx+vhH3gJmkWTDlW
+ 5cpc6pCEmBsncXXlrzyUV4ZHLE5aNUmADU6Tio855aqzO9CgDxpoRoaznMRoHong03rVuGpCc
+ ZQFf0g==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 14, 2022, at 4:37 PM, Jeff King wrote:
-> On Wed, Dec 14, 2022 at 12:41:51PM -0500, Peter Grayson wrote:
+Am 13.12.2022 um 22:02 schrieb Piotrek:
+> On 12.12.2022 14:29, Ren=C3=A9 Scharfe wrote:
 >
->> A regression was introduced in
->> 
->> 12fc4ad89e (diff.c: use utf8_strwidth() to count display width, 2022-09-14)
->> 
->> that causes missing newlines after "Unmerged" entries in `git diff --cached
->> --stat` output.
+>> While "docker compose" is right in that stdin is not a TTY, it
+>> never was.  Redirecting the output its seems to help.  So I guess
+>> it checks if stdout is connected to a terminal and then expects
+>> stdin to be a TTY as well.  Try appending " | cat" to the command
+>> in the pre-commit hook, which breaks the connection for stdout.
+>>
+>> Ren=C3=A9
 >
-> Oof, clearly we don't have good test coverage here. Thanks for catching
-> it.
->
->> This patch adds the missing newline along with a new test to cover this
->> behavior.
->
-> Both look good to me, but two quick comments:
->
->> diff --git a/diff.c b/diff.c
->> index 1054a4b732..85f035a9e8 100644
->> --- a/diff.c
->> +++ b/diff.c
->> @@ -2801,7 +2801,7 @@ static void show_stats(struct diffstat_t *data, struct diff_options *options)
->>  		else if (file->is_unmerged) {
->>  			strbuf_addf(&out, " %s%s%*s | %*s",
->>  				    prefix, name, padding, "",
->> -				    number_width, "Unmerged");
->> +				    number_width, "Unmerged\n");
->>  			emit_diff_symbol(options, DIFF_SYMBOL_STATS_LINE,
->>  					 out.buf, out.len, 0);
->>  			strbuf_reset(&out);
->
-> Looking at the offending patch, it also touches "Bin". But that one
-> handles its newline separately (since sometimes there is more data on
-> the line). So this is the only spot that needs to be fixed.
+> Just to be sure if I understand this correctly. It is probably a bug
+> in docker compose expecting stdin to be a TTY, right? I'll write some
+> bug report to them, maybe they will take care of this since it is
+> only on MacOS and all works fine with Linux.
 
-Agreed.
+I don't know "docker compose" well enough to say whether it's a bug,
+but it seems it turns on some kind of terminal mode that needs both
+stdin and stdout to be connected to a TTY after only checking that one
+of them actually is.  Why not check both?
 
->> diff --git a/t/t4046-diff-unmerged.sh b/t/t4046-diff-unmerged.sh
->> index 0ae0cd3a52..ffaf69335f 100755
->> --- a/t/t4046-diff-unmerged.sh
->> +++ b/t/t4046-diff-unmerged.sh
->> @@ -86,4 +86,14 @@ test_expect_success 'diff-files -3' '
->>  	test_cmp diff-files-3.expect diff-files-3.actual
->>  '
->>  
->> +test_expect_success 'diff --stat' '
->> +	for path in $paths
->> +	do
->> +		echo " $path | Unmerged" || return 1
->> +	done >diff-stat.expect &&
->> +	echo " 0 files changed" >>diff-stat.expect &&
->> +	git diff --cached --stat >diff-stat.actual &&
->> +	test_cmp diff-stat.expect diff-stat.actual
->> +'
->
-> The rest of this script uses diff-files, but here we're using "diff
-> --cached". It feels like it would be simple to use diff-files for
-> consistency, but strangely it errors out, complaining that the blob
-> can't be read.
->
-> This has to do with the setup for the test, which uses "hash-object"
-> without "-w", meaning our index mentions objects we don't actually have.
-> I'm not sure if this is the test trying to cleverly assert that we don't
-> look at the objects themselves, but regardless it seems weird to me that
-> "diff-files" wants to look at the unmerged entries but "diff --cached"
-> doesn't (it does seem like "diff --cached" is right here; diff-files
-> would produce two lines).
+Curious that only macOS should be affected.  Is stdin of a hook script a
+TTY on that platform?  Or can "docker compose" handle stdin not being a
+TTY and stdout being one there?
 
-I also noticed this when I originally wrote the test using diff-files,
-but didn't dig deeper. Thanks for taking the next step with that. I
-figure that the "diff" porcelain is a good vehicle to test this
-particular behavior even if its a bit inconsistent with other cases
-in this test module.
-
-> So there may be another bug, but if so I don't think it's a recent one.
-> And we are better off working around it for your regression fix, which
-> we'd hope to see merged quickly.
-
-I would also like to see this repair for the clear-and-present
-regression merged sooner and independent of exploration of the
-other potential problem with diff-files.
-
-Thanks for taking the time to review this change. I appreciate it!
-
-Pete
+Ren=C3=A9
