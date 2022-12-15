@@ -2,134 +2,146 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DE253C4332F
-	for <git@archiver.kernel.org>; Thu, 15 Dec 2022 15:40:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C6F6AC4332F
+	for <git@archiver.kernel.org>; Thu, 15 Dec 2022 15:47:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230172AbiLOPkV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Dec 2022 10:40:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58506 "EHLO
+        id S229830AbiLOPrA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Dec 2022 10:47:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229480AbiLOPkT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Dec 2022 10:40:19 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D15212A95A
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 07:40:17 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id bg10so14091674wmb.1
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 07:40:17 -0800 (PST)
+        with ESMTP id S229959AbiLOPq4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Dec 2022 10:46:56 -0500
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF3D115FF3
+        for <git@vger.kernel.org>; Thu, 15 Dec 2022 07:46:55 -0800 (PST)
+Received: by mail-ed1-x52e.google.com with SMTP id d14so27549895edj.11
+        for <git@vger.kernel.org>; Thu, 15 Dec 2022 07:46:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=XwyaEqyCk97ZmrTuSW7Q7ei5ngeCVLs3A7ezb8MJCek=;
-        b=QoxHHokaOivogkQXdiFlbFArOgip9eR7gOITbQTpKm+0kGs8vP/MbKrjTM7wDtn8xJ
-         IfrWnRs04cdus2V4mV6YFsn+WxpDt75ldAUiFfB78DHWm+myZ+a/v5c1ySJpU6HPIECx
-         9lPcECrxvYSgKmHhp5eAjWPKWH9iZW3ukhz38Ss/kVu339u7r0zUN8nMM8Dp3JkE5/RU
-         4QRPF6uETzLRXMQIkffGoun+T0OECbQNX0+FIOMVa3vD/1EQ3m2ltPr4NVQvaEt7+8/o
-         +DsRJr3TQFpQBXtw4icFNUa9HqjkYlW/+R43ZkQEGtiD8yhZoUvLxJrvlMkrQZs3+w3b
-         Y6gg==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=A7CcwHqx1MGN1A9mVBe2so7yl3UoKlGOv4z8qk1xp9U=;
+        b=Ehp6zGXn1ZhC5OMzgOS8hfcIGXOo4C2813WLRhG4KZIgzXbO/bEK3D61Lf2VLtEICd
+         Prj+udXZTc5DudrFuwcO6GrK6071ufdY4mCu+TXK8A5JRrIk/OmJ5J19C6CBWGv47llp
+         CPNNq1HxjaFFJjNqxLPw2Y7YcJEOwBQmFAfM98qYqmcyJIjelwMiqHek7u8+Bd/ShdE7
+         IQ1vNjGLjByvElghFA2xdrDKbiuS6ODKsCufICaaLxGMLCNrybzFAjWD86t8cOyQPueo
+         jHshr8T+UHdmNTDefwrTvbdXTQB7VTcBEp/zjnHiVgZ7qQb5ign+NJFHT+lFV9Pl3qq+
+         1hCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XwyaEqyCk97ZmrTuSW7Q7ei5ngeCVLs3A7ezb8MJCek=;
-        b=Hlfu/Zsn/me2b51PFp0sK8aSx6FnnfvGpILgyfBnauag+hUNXyGY425AoLwH9TJOja
-         PKqI8K5lSLsthls+uAzIrj4OkBSoHJSJxraNz77b0+Aa7Lb+VBs6p42y7YzgaqS4upL4
-         Ei1IXpKzsscf2DBquprgqP08FrnDiK7EP24k2Mtofs7YPTPlKDaFpXTRpmElRf2RXcJD
-         1WmuUY2gyi/EDdTj74EasK8ABU9/zWXnIotF5ADghAxs/S8ixFAOp1XkwcacpOjwFZXL
-         97rWWPgZQs/JJorSDc2c0uZ3HU0MaviWAW8P3ph7JGAqWRhP+6yYnchGfJLCKURhgcbf
-         Z30A==
-X-Gm-Message-State: ANoB5pmDXMINbu5IICoy/zXUNsAuC8YQzVtoreubEPm2LZmQCm0J0eNW
-        9tk1mMybATgEJxdXfCN+KNE6A12anUI=
-X-Google-Smtp-Source: AA0mqf5vgIlLIzsMD1eXImfNj34jjbCtdf3RCOeknezeCaELgOKpkzGlirAOtwwfWq/y0e8I0mskMg==
-X-Received: by 2002:a05:600c:1e18:b0:3d2:26e1:bd45 with SMTP id ay24-20020a05600c1e1800b003d226e1bd45mr17493533wmb.29.1671118816294;
-        Thu, 15 Dec 2022 07:40:16 -0800 (PST)
-Received: from [192.168.1.14] (host-92-2-151-214.as13285.net. [92.2.151.214])
-        by smtp.gmail.com with ESMTPSA id o13-20020a05600c4fcd00b003b4868eb71bsm7930855wmq.25.2022.12.15.07.40.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Dec 2022 07:40:15 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <3c5cb346-e6b4-7b85-6d3e-4b625cc21a94@dunelm.org.uk>
-Date:   Thu, 15 Dec 2022 15:40:13 +0000
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=A7CcwHqx1MGN1A9mVBe2so7yl3UoKlGOv4z8qk1xp9U=;
+        b=ZfzgTizhoQpNYKYqfVwd+JlOeNIbqBxTOrKaUEseim9MS0VnIU57vbkpgyAhEDClTh
+         WPGrV9k5QvRtzHS7yoyi+hJvoXZXx/9Kx8ygU21GulSSQbUE3izoErUaGUnU2TqCEwp6
+         3Q8R2D0f1OLYAwy8Gi1DyW6Ti6Gx1yjYb936H7DmONKSrjy2EJEw4rmqx9yEjqxqq/y7
+         cfRhO5hu0RgWQj29k0LSWnlF+CXDeThwt46GqWoQwIo67QEGpa/CbLMmi40Or4l29bCV
+         ThikPvmQSrG5wKMz7YCORQVqbBfhHvGox2GU1hK/N17DtrJpAkbkhOJzPXfgYrTirSHu
+         L7aA==
+X-Gm-Message-State: ANoB5pktit4p1GjqSEcuIXpJlgFScC12Mzi+YzZIOjylcTuBnn7OjTTL
+        S2RMlFMxcEdazjNA7dijm5GyVVoNdVsFIg==
+X-Google-Smtp-Source: AA0mqf4geRdZQ2AWJypnpF+S8fUwf8Jj5H55yO+RZM9uhK3mCTuc3U7NFJKDzUIVCItL2+nFRvraDw==
+X-Received: by 2002:a05:6402:eaa:b0:462:c7ed:7b41 with SMTP id h42-20020a0564020eaa00b00462c7ed7b41mr22950447eda.21.1671119214089;
+        Thu, 15 Dec 2022 07:46:54 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id ca15-20020aa7cd6f000000b0046bd3b366f9sm7602272edb.32.2022.12.15.07.46.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Dec 2022 07:46:53 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1p5qRh-006MvP-0F;
+        Thu, 15 Dec 2022 16:46:53 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: Re: ag/merge-strategies-in-c (was: What's cooking in git.git (Dec
+ 2022, #05; Wed, 14))
+Date:   Thu, 15 Dec 2022 16:32:48 +0100
+References: <xmqqiliewbje.fsf@gitster.g>
+        <221215.865yed3tzv.gmgdl@evledraar.gmail.com>
+        <c9c2c979-82b3-8be1-1edb-343661cf4b32@dunelm.org.uk>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <c9c2c979-82b3-8be1-1edb-343661cf4b32@dunelm.org.uk>
+Message-ID: <221215.86a63o3c0i.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [RFC PATCH 0/1] rebase --onto detection of already applied
- commits
-Content-Language: en-US
-To:     Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <20221212113516.27816-1-cristian.ciocaltea@collabora.com>
- <xmqqlencqhxy.fsf@gitster.g>
- <f4b485c8-3bc4-fb0c-3f7a-084daac7c14d@collabora.com>
- <51209c56-c82e-c393-6983-2a8c1a7388d3@dunelm.org.uk>
- <9e06bfd1-3e63-2414-e18c-6901fbb290e3@collabora.com>
-In-Reply-To: <9e06bfd1-3e63-2414-e18c-6901fbb290e3@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Cristian
 
-On 13/12/2022 15:34, Cristian Ciocaltea wrote:
-> Hi Phillip,
-> 
-> On 12/13/22 15:04, Phillip Wood wrote:
->> Hi Christian
->>
->> On 13/12/2022 10:37, Cristian Ciocaltea wrote:
->>> Currently '--onto' works as if the user provided the 
->>> '--reapply-cherry-picks' flag,
->>
->> --onto does not affect the cherry-pick detection. When running
->>
->>      git rebase --onto new-base upstream feature
->>
->> any commits in upstream have been cherry-picked from feature they will 
->> not be rebased. What it does not do is look for cherry-picks in 
->> onto...feature. It would be nice to add that but I'm not sure it is 
->> straight forward to do so and still exclude commits that have been 
->> cherry-picked from feature to upstream.
-> 
-> The proposed patch enables looking for commits into new-base..feature 
-> range and excluding the ones reachable from upstream. Since this is a 
-> change in the existing behavior, we might need to introduce a new flag 
-> to enable it. I previously suggested to use '--no-reapply-cherry-picks' 
-> for this purpose, but now it's pretty obvious this will be a source of 
-> confusion, since the "cherry-picks" term refers to the commits picked 
-> from feature to upstream instead of new-base, as you already mentioned.
-> 
-> I agree it would be nice to support both exclusion ranges, but I'm not 
-> sure how complicated the implementation would be, since I don't have any 
-> previous experience with the Git internals. Could this be added as a 
-> separate feature at a later point?
+On Thu, Dec 15 2022, Phillip Wood wrote:
 
-If we can I'd rather add code that excludes cherry-pick both ranges. To 
-remove the cherry-picks that are in upstream and new-base you could 
-rework the todo list generation as follows
+> On 15/12/2022 09:14, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> On Wed, Dec 14 2022, Junio C Hamano wrote:
+>>=20
+>>> * ag/merge-strategies-in-c (2022-08-10) 14 commits
+>>>   . sequencer: use the "octopus" strategy without forking
+>>>   . sequencer: use the "resolve" strategy without forking
+>>>   . merge: use the "octopus" strategy without forking
+>>>   . merge: use the "resolve" strategy without forking
+>>>   . merge-octopus: rewrite in C
+>>>   . merge-recursive: move better_branch_name() to merge.c
+>>>   . merge-resolve: rewrite in C
+>>>   . merge-one-file: rewrite in C
+>>>   . update-index: move add_cacheinfo() to read-cache.c
+>>>   . merge-index: add a new way to invoke `git-merge-one-file'
+>>>   . merge-index: drop the index
+>>>   . merge-index: libify merge_one_path() and merge_all()
+>>>   . t6060: add tests for removed files
+>>>   . t6060: modify multiple files to expose a possible issue with merge-=
+index
+>>>
+>>>   An attempt to rewrite remaining merge strategies from shell to C.
+>>>
+>>>   Tired of waiting for too long.
+>>>   source: <20220809185429.20098-1-alban.gruin@gmail.com>
+>> I submitted a v9 of this during Taylor's maintainership, but it fell
+>> between the cracks. I've submitted a rebased-on-master v10 now (there
+>> were some conflicts):
+>> https://lore.kernel.org/git/cover-v10-00.12-00000000000-20221215T084803Z=
+-avarab@gmail.com/
+>> It's just the "prep" patches, the real meaty part is converting the
+>> merge drivers, which will come after. Some of the performance numbers
+>> for those are really impressive...
+>
+> I think splitting this in two is a good idea as there were only a
+> couple of outstanding issues with the first half of Alban's V8. When
+> you posted V9 I looked at the range-diff hoping to see a couple of
+> localized changes addressing those issues. Instead it looks like
+> you've rewritten most of the patches that people have already spent a
+> considerable time reviewing. I don't think it is a good use of
+> reviewers' time to essentially start reviewing again from scratch.
 
-1. Calculate the merge-base $mb of feature and upstream
-2. Store the list of commits $mb..feature in an array and in a hash
-    table indexed their patch-id.
-3. Walk $mb..upstream calculating the patch-id for each commit and
-    removing any commit in the list from step 2 that matches.
-4. If onto is equal to upstream skip to step 7
-5. Calculate the merge-base $mb of feature and onto.
-6. Walk $mb..new-base calculating the patch-id for each commit and
-    removing any commit in the list from step 2 that matches.
-7. Generate the todo list using the modified list of commits from step
-    2.
+What do you consider a good way to turn this comment into something
+actionable?
 
-I don't have much time at the moment but I can try and help a bit more 
-in the New Year if you want.
+To have a minimal re-submission of the v8 which simply fixes the
+semnatic & textual merge conflicts we've had on "master" in the interim?
 
-Best Wishes
+I think such a re-submission would need to address the issues I noted in
+the v9 CL[1]. E.g. that in over-libifying merge-index its behavior was
+changed, e.g. emitting N error() instead of die()-ing on the 1st
+one. Addressing that is going to need to require around the same code
+changes.
 
-Phillip
+This is also a case where the range-diff looks overly scary, aside from
+such specific fixes the end result is substantially the same, but I did
+split up (and mostly not rewrite) the existing patches to:
+
+* Cleanly separate those bits that were changing behavior, from those
+  that were not (and precede them with tests to assert that)
+
+* Make the eventual libification change as small as possible, now it
+  really benefits from the diff rename detection.
+
+If you have some more specific suggestions for how to move forward I'm
+all ears.
+
+1. https://lore.kernel.org/git/cover-v9-00.12-00000000000-20221118T110058Z-=
+avarab@gmail.com/
