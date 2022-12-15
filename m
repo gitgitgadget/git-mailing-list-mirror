@@ -2,102 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EA43C4332F
-	for <git@archiver.kernel.org>; Thu, 15 Dec 2022 22:19:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D638C3DA6E
+	for <git@archiver.kernel.org>; Thu, 15 Dec 2022 22:37:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229734AbiLOWTb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Dec 2022 17:19:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56466 "EHLO
+        id S229913AbiLOWhv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Dec 2022 17:37:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34430 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbiLOWT3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Dec 2022 17:19:29 -0500
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEAFC5214F
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 14:19:28 -0800 (PST)
-Received: by mail-pl1-x630.google.com with SMTP id g10so423606plo.11
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 14:19:28 -0800 (PST)
+        with ESMTP id S229947AbiLOWhh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Dec 2022 17:37:37 -0500
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8150D5EDCB
+        for <git@vger.kernel.org>; Thu, 15 Dec 2022 14:37:36 -0800 (PST)
+Received: by mail-pg1-x52b.google.com with SMTP id q71so588954pgq.8
+        for <git@vger.kernel.org>; Thu, 15 Dec 2022 14:37:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vlaepv4I6o8yIuH/dLql20qbgK/S3gI363HyxtfZbB4=;
-        b=gC7jxJJW0x1yJhoiO5YyloZQRpaw6tZDdf2P7Af24HHQHMRbH17cBWZOeciUpbUdBU
-         fVR48jDIF4LvSyGYwFwxIwMQffqfENg1QzkpJP5Jx343k8MwR2kvLiSb0E5GBLODEKCz
-         9qeXFfVZNU+ivPB4EvKeEu0SEasYIBcqd0YXv15vNSAJb4BOPkPbnnEmNZmZo3XL6Z88
-         f5afppqA8iRA1iavRvPgJLpfCRSDue9FbIPJ8PfUQREozOxnW2PflMsdAXWc/8FQtQS7
-         kuZk4hVkZfBE38hhrOrdYNpQ9r8JTBGqJ04WUQLKYzvMk+x/O0tIea8OQqByyZBKE5d6
-         SlTg==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2Jdk7yXJIcxtb9tN8DjMf4J8RCvLe7ao3n7c7FKGOK0=;
+        b=dZamopHjhgDmQ3XonWmRIhnTu0ftafkp+AZfGHLAJ2ZF2Cn+3TsiB5t+0UwCs1DdNX
+         ZYHqU9QKJz8rC+pOcoeEDkjDi6xWQhJnGCqc1mPpXc2t9qSMlKJLxTdcR3JpeDwY7gLX
+         FMFgdpUn1AmlXj1QbfuDTnZ7oxM5wKgsjdK0o89fte66q9TTnuQG/armfNgTlFeSCuVs
+         kvWVVPstu7wPNhyiTIMZs2W1UzNJ8v570AcdtSRGBcGdZhf3blinBEFpa0HQF+Yy17ms
+         +MGoJgrHdIRipk1sb+g+bQt+FXAgzXh9QJ/dLgNAPo1LLvRIFUxr3LylTtdBGqYOlcsp
+         M50g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vlaepv4I6o8yIuH/dLql20qbgK/S3gI363HyxtfZbB4=;
-        b=CEZyWVV0UFyvxhfeDfE7c2MXy3tmIbaWhNtkal0yZQScth4lHZlkndx/fQ51ZN0Xfd
-         LuDXq4BXlvBQvKKXLKVyZhU3Qqr0H+Je5/sX5t/OCn8fCe7nnJwDIH81UuY0JT+oLqSQ
-         r3MzzYen9BP5x9p1QXHz6wQPlZV90IhrJRO87+4N0kVwJtC7dsOclXaf6C6kURqnv1P+
-         Rod0C55CHfax0cBDL/NHsHi2U9UUj7+5mDdUSmbyk/smA85iVwwiKFSVB+yUhNtQB9IZ
-         +++jUut8rtQ4WofHOySYQD0r+IWJWyNNx5oWab76asKrOPhcJDG2bBvx/W0CRY1YqgMD
-         WuIg==
-X-Gm-Message-State: ANoB5pnvfQSzb8KKrtUO9FCtLO3hst1yGkCIengr8fjpFI8wGE8qefna
-        HlJ8kmlMfcq8lHBM0IPgJJw=
-X-Google-Smtp-Source: AA0mqf6yObrMsSWONP8gXbjpZQyB6EkZDQoTQ4llaC3dZRvC7HlalO4z63AgtreCDZA0d62w26SW8w==
-X-Received: by 2002:a05:6a20:d2c5:b0:9d:efbe:2065 with SMTP id ir5-20020a056a20d2c500b0009defbe2065mr12599532pzb.27.1671142768239;
-        Thu, 15 Dec 2022 14:19:28 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2Jdk7yXJIcxtb9tN8DjMf4J8RCvLe7ao3n7c7FKGOK0=;
+        b=JVFZzmz1QJCSi8SiDZs57DZ6nXzIS0cbZjmK8cq5oOBGl4ZhM0JleSf68quxjvmwHk
+         kQqLQX7AYmCZObE3hiv5vh0YhKIEUoLmSg3dmTVzkWePxW9c45bD6KmXQvOjwQ8fRySO
+         HgyMwcmSKQRHyLDvwbdov2HP5RSLcxVUHAvk9qjHpiNHaMfjofSH1DvzZfi52MuztNEF
+         1MFru3+PWvC3sGAXCKRTPLIjOyVovHCWasSLDMis7Ur2pCKuTKhAOHPhcj3OhsQKZzeW
+         kSfLUoqxcCcBkYQl6BJCSNwYPYTpQdVdeI7MONEn+lScXMhi2TlwAzFEXNBskW0L0TKZ
+         3EdA==
+X-Gm-Message-State: ANoB5pnk63q6Vu4wNTHlvnqVh2/OWnfwwGo74agJhCEKNOJivVgkf0WB
+        uo+bSFxDWVn6t+q7ygb+jC9UtDGdu8iBUA==
+X-Google-Smtp-Source: AA0mqf4fCs3A1DKSf8bDQXuH5s9g+QaynM3kEAdaqU2qcbSpAO4xVMXtsfl0mW992I17iVoYqToaUg==
+X-Received: by 2002:aa7:928f:0:b0:56d:465d:9fbc with SMTP id j15-20020aa7928f000000b0056d465d9fbcmr26074061pfa.25.1671143855963;
+        Thu, 15 Dec 2022 14:37:35 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id h5-20020a656385000000b0045ff216a0casm213069pgv.3.2022.12.15.14.19.27
+        by smtp.gmail.com with ESMTPSA id 74-20020a62194d000000b005771d583893sm111621pfz.96.2022.12.15.14.37.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Dec 2022 14:19:27 -0800 (PST)
+        Thu, 15 Dec 2022 14:37:35 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Glen Choo <chooglen@google.com>
-Cc:     =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, git@vger.kernel.org,
-        Taylor Blau <me@ttaylorr.com>,
-        Robert Coup <robert@coup.net.nz>,
-        Emily Shaffer <emilyshaffer@google.com>
-Subject: Re: [PATCH v4 0/9] Get rid of "git --super-prefix"
-References: <cover-v3-0.9-00000000000-20221119T122853Z-avarab@gmail.com>
-        <cover-v4-0.9-00000000000-20221215T083502Z-avarab@gmail.com>
-        <kl6lzgbocqki.fsf@chooglen-macbookpro.roam.corp.google.com>
-Date:   Fri, 16 Dec 2022 07:19:27 +0900
-Message-ID: <xmqqwn6sqphs.fsf@gitster.g>
+To:     Jeff Hostetler <git@jeffhostetler.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Dec 2022, #05; Wed, 14)
+References: <xmqqiliewbje.fsf@gitster.g>
+        <aedc0911-5538-603e-b0e0-71435039545e@jeffhostetler.com>
+Date:   Fri, 16 Dec 2022 07:37:35 +0900
+In-Reply-To: <aedc0911-5538-603e-b0e0-71435039545e@jeffhostetler.com> (Jeff
+        Hostetler's message of "Wed, 14 Dec 2022 14:18:01 -0500")
+Message-ID: <xmqqfsdgqonk.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Glen Choo <chooglen@google.com> writes:
+Jeff Hostetler <git@jeffhostetler.com> writes:
 
-> Thanks! I only spotted typos this time, so I think this is ready to
-> merge once we fix those.
+> On 12/14/22 4:59 AM, Junio C Hamano wrote:
+>> * jh/t7527-unflake-by-forcing-cookie (2022-12-02) 1 commit
+>>   - fsmonitor: fix race seen in t7527
+>>   Make fsmonitor more robust to avoid the flakiness seen in t7527.
+>>   Will merge back to 'next'.
+>>   source:<pull.1437.git.1669937534944.gitgitgadget@gmail.com>
+>> 
 >
-> (FYI I will be OOO for the next 3 weeks or so, so don't wait on a
-> response from me :))
->
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
->
->> Changes since v4:
->> * I ejected the previous 10/10 to refactor "git fetch". I have more
->>   patches on top of this to do some post-refactoring (e.g. saving
->>   memory churn by getting rid of "submodule_prefix" from "struct
->>   repository"), but none of that's essential for now, so let's drop
->>   that patch.
->
-> Okay, dropping the "git fetch" refactor probably makes sense in light of
-> bigger refactoring.
->
-> This might be premature (since the patches aren't out yet), but I'm a
-> bit apprehensive about removing "submodule_prefix" from "struct
-> repository". You've noted that it isn't needed right now (which I'll
-> grant), but it feels taking away API features that we'll need soon™ to,
-> e.g. run library functions against arbitrary repositories, some of which
-> may need additional submodule information. Feel free to CC me on those
-> patches, perhaps my fears will be unfounded :)
+> There was no discussion on this item and nothing needs to be
+> revisited, so it could go as is.
 
-Thanks, both.  Will await for the hopefully final update.
+No discussion is not a good news, though.
+
+Always using cookie files means we no longer sometimes use them and
+sometimes not---which means fewer variations to think about and in
+general is a good thing.
+
+As you explain in the last paragraph of the proposed log message, if
+the test caught a bug introduced by a premature optimization that
+was not-well-thought-out, the test served its purpose very well.
+Good.
+
+Let's mark it as "Will merge to 'next'" again.
+
+Thanks.
 
