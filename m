@@ -2,144 +2,182 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 97095C4332F
-	for <git@archiver.kernel.org>; Thu, 15 Dec 2022 18:03:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 20EFFC4332F
+	for <git@archiver.kernel.org>; Thu, 15 Dec 2022 20:20:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229847AbiLOSDe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Dec 2022 13:03:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38568 "EHLO
+        id S229544AbiLOUUp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Dec 2022 15:20:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33208 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229517AbiLOSDc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Dec 2022 13:03:32 -0500
-Received: from bee.birch.relay.mailchannels.net (bee.birch.relay.mailchannels.net [23.83.209.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A8F6442D1
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 10:03:31 -0800 (PST)
-X-Sender-Id: dreamhost|x-authsender|roger@ecstaticsignal.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id 3B619341206
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 17:55:04 +0000 (UTC)
-Received: from pdx1-sub0-mail-a248.dreamhost.com (unknown [127.0.0.6])
-        (Authenticated sender: dreamhost)
-        by relay.mailchannels.net (Postfix) with ESMTPA id 97B883413DD
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 17:55:03 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1671126903; a=rsa-sha256;
-        cv=none;
-        b=EXsO9R6fA3rWsNLskXYpxp2ogIX9njdUOOS1JjTSXpK7Y7bdxzrZacu8pbOFgboCv0LvMD
-        Eym/dc1dSSA3zDrg+g99J9SiAs1RbR7rg825wYGLB0Ufiagw+keCiI0K/oHDbTNcbbxpSf
-        /bsoKE3qAweCd79JrgRuykAuKSRvedaw2+JRwfcLJQcMvcoJEBDGhCgvsHzzNtHuIFdQJP
-        oPo1ohnAouWedOSx+n2gN/jekjU2oIzK8qatjktW67z7S4iUwxymxLudIX1kGATrqoGQTD
-        rXaXQQm056GocXFliYH5azAZZPW5N1gzXm4+B/6FCxamli+SPqvM/Mz9w7V+sQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-        s=arc-2022; t=1671126903;
-        h=from:from:reply-to:reply-to:subject:subject:date:date:
-         message-id:message-id:to:to:cc:mime-version:mime-version:
-         content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:dkim-signature;
-        bh=exgFJREJZFgcgBq+GtWyY5t/4ipHDy0ll7/FWgOdQr8=;
-        b=kA9KR+czHeOv0CfBW8+ojeW5ZW7phD6Ki98zRuxXPVPcEg4C3TMZ9KnQyum3o32kRUn9+P
-        u/Ytju0pHS+oD35EllKVd8hobv/leu+T92to2o+uW671kN/gOH9RwS587wutJWBFIo+6vX
-        2n3e4IxjD9hlZULc+MWWXa+pWX4uW/p2zVjF+DrK45bSfD20XHvXcZcnPmTSeUORYh1Uh3
-        EQLWSaVjvEoXQwc7gGJpHcW7xJcpUeaZpzg2chSM2s7nToTf8jimcdC0vUMoiA0+F5PR74
-        5vdaSaqbwuDjr+R8DfjKgBoI3s0zdv+jKrrZLVpH+1I2bb/VMr7l2Cx9MmR9lA==
-ARC-Authentication-Results: i=1;
-        rspamd-d48c5ddb-tqrcc;
-        auth=pass smtp.auth=dreamhost smtp.mailfrom=roger@ecstaticsignal.com
-X-Sender-Id: dreamhost|x-authsender|roger@ecstaticsignal.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|roger@ecstaticsignal.com
-X-MailChannels-Auth-Id: dreamhost
-X-Tasty-Whimsical: 42d64fb95938040d_1671126903845_2260054943
-X-MC-Loop-Signature: 1671126903845:123926605
-X-MC-Ingress-Time: 1671126903845
-Received: from pdx1-sub0-mail-a248.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-        by 100.103.24.57 (trex/6.7.1);
-        Thu, 15 Dec 2022 17:55:03 +0000
-Received: from smtpclient.apple (23-93-204-144.fiber.dynamic.sonic.net [23.93.204.144])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: roger@ecstaticsignal.com)
-        by pdx1-sub0-mail-a248.dreamhost.com (Postfix) with ESMTPSA id 4NY0Hq2W5Xz1s
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 09:55:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ecstaticsignal.com;
-        s=dreamhost; t=1671126903;
-        bh=exgFJREJZFgcgBq+GtWyY5t/4ipHDy0ll7/FWgOdQr8=;
-        h=From:Content-Type:Content-Transfer-Encoding:Reply-To:Subject:Date:
-         To;
-        b=rAsCiHFsVB2ktQEAXQV+PgXOlLpYf/NxIIFePDgOWcVelcCCqbZEnJOZwMP4Ok0O3
-         y/r9OJQoW2kbf90HvlvrxB1C6UBArL/ZTR3nKXrUSNpnEIpJ04mSo0iyaSChCsKjeU
-         EoeAM5P+DGVoPwG2s33hE5D5kSzBiM2KX3Ji2UOm01csKDxH7kv3wJfBIdTRAqc0mW
-         XrdlQ48PoaZ6luFySwDAEaqW649eUvTOEacTho19RGCaY2CGkbcvfmGfggdpDd/uKu
-         AO11yv+7otTX7ytlWZT1Cx+XeiSlPEptUREo7XmblcHSwAVCOl6DYVUsZtBOxaoDbr
-         rGqJXTLjiVmUw==
-From:   Roger Rohrbach <roger@ecstaticsignal.com>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Reply-To: Roger Rohrbach <r.rohrbach@elsevier.com>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
-Subject: Commiting old version of file introduces other files to commit
-Message-Id: <2AA962BD-8AB4-4DEE-A56E-5C10DE7FDE3F@ecstaticsignal.com>
-Date:   Thu, 15 Dec 2022 09:55:02 -0800
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3696.120.41.1.1)
+        with ESMTP id S229475AbiLOUUn (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Dec 2022 15:20:43 -0500
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B81E17426
+        for <git@vger.kernel.org>; Thu, 15 Dec 2022 12:20:41 -0800 (PST)
+Received: by mail-ot1-x329.google.com with SMTP id p24-20020a0568301d5800b0066e6dc09be5so166758oth.8
+        for <git@vger.kernel.org>; Thu, 15 Dec 2022 12:20:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=mvYEYI0bW6YXcPGx6k0HF6f+E5TFQouZYTRvghiu7W8=;
+        b=IS9mzExq83ZpyGbBwVRnjQXUBDNVQghWWnPY3oTo0NJgbdKGoceucZwDm4nFKKVYTc
+         iWO+Qtv/EoFE9yWOl4nLZ2e2nbC1gmNCUW90IhhUtC3840WWxDtpxYvpk+3Ezr2eeNPT
+         25yYN5P/ZV01hUxm+TfUB6z893J08Zt/pbHt7GL/xMOHWlUVe0b0ZMXJcQDMrL4/6qQZ
+         cHqwxCYHClPs6YaopnCOOGVtpBoih1l6GU6LDKpFlF/20qQA8/4qKgAgmx0ycghBe/m3
+         DGdHh3n5quzImY3fXVChkLSW61N/E1jlEqfSz+UQRx6u325cNdykowX6R0X7nLUcJq2B
+         WC6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mvYEYI0bW6YXcPGx6k0HF6f+E5TFQouZYTRvghiu7W8=;
+        b=B4g2WlHyLykbOf211fzHevPlhJoyMaOTfIM4sx5QZ2PdxxM8WNindrpsOIOMcLAZ5p
+         DRkQnxgedKsG57tW9LOYTe19ebIQZIKLP2ormDBsDPzr5RhLeWj3Irtqa3qI3nJsMvLq
+         DDeNtl6lLVVKCvWfdn5Zqj37VTd0U9HEI0PwncoUWGapjk/M/WwDuKHT/HzyvWYqhbxK
+         3HUIPlWiooBhmRfIqnf7fsd596flIAzkzgiHOyjbXbM+rTIBhXGdBxC+wGLHz3mTIj4c
+         AmOzIlwdj+ZIX9jXuK1Be45bmB39/U/ba5gq0BMQI1gWBfr8PRD9ZVXiDAoE8P+PnlaE
+         gI3A==
+X-Gm-Message-State: ANoB5pl7lONthQtrOANeAGsPij7tWYLFJihi5GhDKZZuhxdtj6k6HCEu
+        j9Yo/vD469RgDBueERjmZosDGXP4K+JECfov2dkBSP0W/JqprA==
+X-Google-Smtp-Source: AA0mqf5hQu7E+xZzwxpJX8IaMi7oIAgCWLoY8Yx+pCd8D9FqsD+g+fB1qBd84ly1s7TXiBXujHDMXeVQfo7zENBC2FQ=
+X-Received: by 2002:a9d:7656:0:b0:663:c86f:7573 with SMTP id
+ o22-20020a9d7656000000b00663c86f7573mr40353736otl.187.1671135640458; Thu, 15
+ Dec 2022 12:20:40 -0800 (PST)
+MIME-Version: 1.0
+References: <20221209210321.709156-1-karthik.188@gmail.com>
+ <20221209210321.709156-3-karthik.188@gmail.com> <674caf56-940b-8130-4a5e-ea8dc4783e81@dunelm.org.uk>
+ <xmqqzgbqydso.fsf@gitster.g>
+In-Reply-To: <xmqqzgbqydso.fsf@gitster.g>
+From:   Karthik Nayak <karthik.188@gmail.com>
+Date:   Thu, 15 Dec 2022 21:20:14 +0100
+Message-ID: <CAOLa=ZQ2CKcKNOq3AvZHWxKW_L=zLTJXGEGkUbCSYUmBRMDRZg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] attr: add flag `-r|--revisions` to work with revisions
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
+        toon@iotcl.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-My commit changed one file, and deleted another:
-=20
-    commit 5ad22bab408029fde463eae0354becfee702c89b
-    Author: Roger Rohrbach <rrohrbach@bepress.com>
-    Date:   Fri Dec 9 20:43:04 2022 -0800
-=20
-        Automatically disallow robots for ringfenced site
-=20
-        As a side effect of setting "Ringfence this site" to "Yes," =
-install a
-        Robots Exclusion Protocol file (overwriting any existing one) =
-that
-        disallows all robots.
-=20
-        Also remove unused static robots.txt file with same rules, to =
-avoid
-        confusion.
-=20
-    diff --git a/opt/bepress/share/robots.txt =
-b/opt/bepress/share/robots.txt
-    deleted file mode 100644
-    index 6ffbc308f7..0000000000
-    --- a/opt/bepress/share/robots.txt
-    <diffs redacted>
-    diff --git a/perllib/Site.pm b/perllib/Site.pm
-    index b531e6dade..671d2f0a97 100644
-    --- a/perllib/Site.pm
-    +++ b/perllib/Site.pm
-    <diffs redacted>
-=20
-I needed to revert the change to the first file, but wished not to =
-restore the deleted file.  So, instead of 'git revert 5ad22ba', I did =
-this:
-=20
-    # Check out the version of the file immediately preceding my commit:
-    git checkout 68e2db7 perllib/Site.pm
-    # Commit it:
-    git commit -m "Back out Site.postsave installation of robots.txt"
-=20
-Imagine my surprise when this introduced two additional files to the =
-commit:
-=20
-    [DCIR-188-3 1daac3bdf0] Back out Site.postsave installation of =
-robots.txt
-    3 files changed, 3 insertions(+), 20 deletions(-)
-    create mode 100644 opt/bepress/share/robots.txt
-    delete mode 100644 perllib/.htaccess
-=20
-Not only did this restore the file I was taking pains not to restore; it =
-arbitrarily deleted another file I'd never touched.
-=20
-Is this some weird hash collision problem?
+On Wed, Dec 14, 2022 at 2:28 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+>
+> > I've got a couple of comments below about the details of the
+> > implementation but the basic idea seems reasonable.
+> >
+> > On 09/12/2022 21:03, Karthik Nayak wrote:
+> >> Git check-attr currently doesn't check the git worktree,
+> >
+> > Normally worktree refers to the directory on disk where the
+> > repository's working copy is checked out. Here you seem to mean
+> > something else.
+>
+> Strictly speaking, what you just said is "working tree".  The term
+> "worktree" in Git's context yet means something slightly different.
+> You can arrange to have multiple working trees attached to a single
+> repository, and each of these is called a "worktree" attached to the
+> repository.
+>
+> In any case, thanks for pointing out that the original's wording is
+> wrong.  It is natural to read it to claim that we do not check the
+> .gitattributes files that are checked out in the working trees,
+> which is utterly incorrect.
+>
+> >> it either
+> >> checks the index or the files directly.
+>
+> > This means we cannot check the
+> > attributes for a file against a certain revision.
+>
+> Whenever one is tempted to say "This means", one should realize that
+> one does not have absolute confidence in whatever written before it,
+> in other words, without additional explanation, one suspects that
+> what one wanted to say would not be understood.
+>
+> A good piece of advice for such a person is to try rewriting WITHOUT
+> anything before (and including) "This means".  And I think this is a
+> good example to which the advice applies well.
+>
 
+I agree with what you're saying here. I think that's excellent advice,
+too. Thanks!
 
+>     There is no way with "git check-attr" to apply attributes from
+>     .gitattributes files recorded in the same treeish to paths in a
+>     treeish object.
+>
+> Our usual preference is to (1) start by describing the current state
+> and (2) propose what can be done by deviating from it, in that
+> order, so one might write it like so:
+>
+>     The contents of the .gitattributes files may evolve over time,
+>     but "git check-attr" always checks attributes against them in
+>     the working tree and/or in the index.  It may be beneficial to
+>     optionally allow the version of .gitattributes found in the same
+>     commit when checking the attributes for paths in an older commit.
+>
+
+Furthermore, I think you've put it nice here, I will copy this over and modify
+the last statement to:
+
+    It may be beneficial to optionally allow the users to check attributes
+    against paths from older commits.
+
+> By the way, applying the attributes from the working tree is by
+> design and it should stay to be the default.  People are almost
+> always working near the tip of the history, and working tree files
+> are by definition ahead of any committed version---it is a feature
+> that users can correct attribute definitions in their working tree
+> files and then apply them to paths in the committed version.
+>
+
+Yeah, this was my understanding as well, I don't think I tried to change this or
+implied the same anywhere.
+
+> >> Add a new flag `--revision`/`-r` which will allow it work with
+> >> revisions. This command will now, instead of checking the files/index,
+> >> try and receive the blob for the given attribute file against the
+> >> provided revision. The flag overrides checking against the index and
+> >> filesystem and also works with bare repositories.
+> >
+> > The system, global and the attributes in .git/info/attributes from the
+> > filesystem are still used. It would be useful to document that and
+> > explain in the commit message why that is useful when using -r.
+> >
+> > -r is documented as accepting a revision but actually accepts any
+> >  tree. That means a user can pass "-r HEAD:subdirectory" and all the
+> >  attributes will be looked up as if subdirectory was the root
+> >  directory of the repository which might be confusing. It would be
+> >  helpful to know if passing a tree rather than a revision is
+> >  useful. If it isn't then you could use lookup_commit_reference() to
+> > ensure the user passes a revision.
+>
+> Unless you use ancestry relationships in any way [*], you do not
+> want to require commits when an operation only requires trees.  In
+> this case, taking tree-ish and documenting it as such is the right
+> thing to do.
+>
+> [Footnote]
+>
+> * A good example that makes sense to limit to commit-ishes is when
+>   merging two histories (without requiring the user to supply the
+>   merge-base). You'd need to compute the merge-bases, so you require
+>   two committishes and it is not enough to take two trees.
+
+Will leave it as it is then.
+
+Thanks both for the review. I think I will push a version 3 now,
+mostly changes would be:
+1. Documentation
+2. Commit message
+
+Also, it has been a while for me on this list, but I did notice this
+topic missing from the
+`What's cooking in git.git` mail, do I need to do something further?
+
+--
+- Karthik
