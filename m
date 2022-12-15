@@ -2,94 +2,114 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B3DAEC4332F
-	for <git@archiver.kernel.org>; Thu, 15 Dec 2022 12:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73213C4332F
+	for <git@archiver.kernel.org>; Thu, 15 Dec 2022 12:27:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229851AbiLOMIv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Dec 2022 07:08:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35852 "EHLO
+        id S229620AbiLOM12 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Dec 2022 07:27:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229551AbiLOMIt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Dec 2022 07:08:49 -0500
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 468BF2D1C3
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 04:08:48 -0800 (PST)
-Received: by mail-io1-xd2d.google.com with SMTP id d123so4971580iof.6
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 04:08:48 -0800 (PST)
+        with ESMTP id S229547AbiLOM10 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Dec 2022 07:27:26 -0500
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE0B0E03B
+        for <git@vger.kernel.org>; Thu, 15 Dec 2022 04:27:25 -0800 (PST)
+Received: by mail-pl1-x634.google.com with SMTP id w23so6656194ply.12
+        for <git@vger.kernel.org>; Thu, 15 Dec 2022 04:27:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:from:to:cc:subject:date:message-id:reply-to;
-        bh=+/VOHpLY7SKzgAUCwchGyTKAf3xtglHngMmlZXSFaw0=;
-        b=OxqhLCvhQFjWH6naXcoBIr6ZqzIe4go5Uty0saCQg//Z0G2JQkLnWiK4lGLK8IOm/h
-         Lasvq9yy+Y+RicP8zXfRMg+hxw0UwCjHry+b5WOXT98GM4etUun2us8mxuYpPspzgsA1
-         rpOSY8xLUcyDtR9wqG/jmyRdG8pESTWrTNmOdEzSzfNGwbzDI7AbtqmEZ8JoAstV2Ald
-         ScIM5Rr0/3nYaLp7MWwbvYyLqXju4VjzcetijWHmcBCNhrHmCP+y4RtTSPkAsJQLREf2
-         m9FpySdwyD/zadBUkOOb198F8QBj8T4mBvTdH+VPSPnZlb6Guzpa5Nb+TwfvKUOGmgUY
-         +seQ==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=E5Re+VGPrEJn8ym0/dM3iSIhRMWWS+h5HK0+QLM12bk=;
+        b=Cki5bjjb/wCBJ7no60Tl97a42uovcb7s38wRQSWrp9MBGGJqFz+Z9abCSLnwyOtcm0
+         V4ipYzzX2vXMfnS+Kv12eO4zAeKt0cyFAn1t05wok15z6+02G/YhMivbR3P+LLxa07fZ
+         ojxceAGySVNIzQSI5vbeNyXfzBRWqKrAhBCYiBfmnk4UcRIU+TNxxqSklvE4+QAtDQ3l
+         ncIuJUKZhOc23h/IqHqAhW4oTcsj42dKtKPGjoAHSaav0PGp+QfrjbU0Kjbuftki0NTC
+         8HRQgTNw0Sw64J/0EDwjkjDNRWchs1PU4vrsnSSFJl02hZ7mpZfqihSWEuxai6dSIzHi
+         bnvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:date:subject:cc:to:from
-         :user-agent:references:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+/VOHpLY7SKzgAUCwchGyTKAf3xtglHngMmlZXSFaw0=;
-        b=WG8F3pd1DoYX9DKO4x7doGDMDmO/XI0eBWoeUCPf1g/LycwVNwCfvWSkt9YU6etak2
-         kHnw+E0Sfu6yfndCnZNqF9cA59H93UQPlqkHLkNQvDHpX+wQbx97WtxubxaNbmr7BI7M
-         NMSi+tZEk3+83exJR6xHHSLXmzqmmh7I2j1ophPtFUPs3PTscdd3jwoR8tZapIJlvp+Q
-         BKXYh3FVX0YIZL2VswtKTLdaECEsr/4N9GU0YFAvYv6j/ZMS6F3NxkFMv7rMAGvVLH4H
-         sCdTxdnluFnVa7y0yom1njukmir3KEZ7m5YlA6aQ/ghiMh9U9deE+/m0RAlhdXZ4lWCB
-         aTqw==
-X-Gm-Message-State: ANoB5pnF6ROsrESnMsCE/eGj+It/j+q5kM1/Xcps3PWF5ejOWf6clCAd
-        R+HtaEB2OBW58t6oP6UJk8KcARme4XY=
-X-Google-Smtp-Source: AA0mqf6AjVWxkSTnO2I7iZhzxAKLfNsz0VG4jVd7KGclrg0ypySSNY6VvqXotDerHz8IG5E/CVMNEg==
-X-Received: by 2002:a5d:9343:0:b0:6db:3123:261 with SMTP id i3-20020a5d9343000000b006db31230261mr3405138ioo.2.1671106126829;
-        Thu, 15 Dec 2022 04:08:46 -0800 (PST)
-Received: from stargate ([2620:72:0:a40:8650:b190:3f96:89cb])
-        by smtp.gmail.com with ESMTPSA id k13-20020a92c9cd000000b003024a44cd95sm5304769ilq.34.2022.12.15.04.08.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Dec 2022 04:08:46 -0800 (PST)
-References: <xmqqiliewbje.fsf@gitster.g>
-User-agent: mu4e 1.9.0; emacs 28.1
-From:   Sean Allred <allred.sean@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2022, #05; Wed, 14)
-Date:   Thu, 15 Dec 2022 05:55:39 -0600
-In-reply-to: <xmqqiliewbje.fsf@gitster.g>
-Message-ID: <87k02svpgy.fsf@gmail.com>
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=E5Re+VGPrEJn8ym0/dM3iSIhRMWWS+h5HK0+QLM12bk=;
+        b=t92SBo9Aobnrp9SiLmnnH7HF6w+2QfNXgVc16AxI4G1VbcobCMZdLPMz4g4M/pL5c0
+         CvA4uDw70InK3qkpAr4td2CcNicYZFZNyUWiS9zf8wwJvrZXqN+U4UF6lcAVXVmBOaG8
+         zmWYGn1nGeizKyjx9u7k9912bBVnQHZO8I3XNp+SGyBp7RaRD7l9zO5QxYG5K22nfPBy
+         a4iSYaaOUhPPOjnu48vqyJJLjvc84Dg/v9LEwLdnnD0zNVRh0NvNi7CfPXd3R4gi829h
+         SpwuJ4BotBELFs1HxQYmPqy+astZdYshgvWNdyI76xJGe3g4/TVUCh9gKnge/R+iimZE
+         jIfg==
+X-Gm-Message-State: ANoB5pnHGGBYf2GgoSAfExBZxX5SCYQLdE94ODtBFTtPiqFcvzR5n/45
+        hPvep/YlBV2EH+4h+H3U/7zXwk5Z79d1vkRy
+X-Google-Smtp-Source: AA0mqf6EXeAQX1Lj17j0+SmZ8kpjIA3pJsmvcqnCLSz/84HAZoEQNTZDwLZN4ogXZKf9oRp8LnEuUQ==
+X-Received: by 2002:a17:90b:eca:b0:219:1767:da71 with SMTP id gz10-20020a17090b0eca00b002191767da71mr29830002pjb.27.1671107245359;
+        Thu, 15 Dec 2022 04:27:25 -0800 (PST)
+Received: from localhost.localdomain ([47.246.101.63])
+        by smtp.gmail.com with ESMTPSA id co10-20020a17090afe8a00b0021806f631ccsm3106400pjb.30.2022.12.15.04.27.23
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 15 Dec 2022 04:27:24 -0800 (PST)
+From:   Teng Long <dyroneteng@gmail.com>
+X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
+To:     gitster@pobox.com
+Cc:     --cc=avarab@gmail.com, dyroneteng@gmail.com, git@vger.kernel.org,
+        me@ttaylorr.com, tenglong.tl@alibaba-inc.com
+Subject: Re: [RFC PATCH 0/1] push: introduce '--heads' option
+Date:   Thu, 15 Dec 2022 20:27:19 +0800
+Message-Id: <20221215122719.11996-1-tenglong.tl@alibaba-inc.com>
+X-Mailer: git-send-email 2.39.0.rc1.5.gad6de9d3003.dirty
+In-Reply-To: <xmqqilippgp2.fsf@gitster.g>
+References: <xmqqilippgp2.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Junio C Hamano <gitster@pobox.com> writes:
 
-> * sa/git-var-empty (2022-11-27) 2 commits
->   (merged to 'next' on 2022-12-01 at 3b81dcb382)
->  + var: allow GIT_EDITOR to return null
->  + var: do not print usage() with a correct invocation
+> My knee-jerk reaction is to avoid "--heads" and instead use
+> "--branches", if this is about pushing all local branches.  The
+> option "--heads" may still remain in some commands added to the
+> system in the earliest part of our history, but soon we started
+> to use "branch" over "head", as it is a more commonly used word.
+
+OK, that's true, I just misled by some existing '--heads' in other
+commands.
+
+> How should it interact with --follow-tags?  Just as if you listed
+> all local branch names on the command line?  I.e. is
+
+Actually I didn't try '--follow-tags' before, but the documentation
+about it is a  ittle hard to understand for me on first reading. Then,
+I think it supports to use as negative '--[no-]follow-tags' but not
+marked in the git-push.txt documentation.
+
+>     git push $URL --heads
 >
->  "git var UNKNOWN_VARIABLE" and "git var VARIABLE" with the variable
->  given an empty value used to behave identically.  Now the latter
->  just gives an empty output, while the former still gives an error
->  message.
->  source: <pull.1434.v3.git.1669472277.gitgitgadget@gmail.com>
+> equivalent to the long-hand
+>
+>     git push $URL $(git for-each-ref --format='%(refname)' refs/heads/\*)
 
-After reading gitworkflows.txt and maintaingit.txt, I take it 'next' is
-a proving ground for the larger community to have a chance to suss out
-any bugs/regressions. I'm going to assume no further input is needed
-from me regarding this topic (unless of course I've got a bug!), but let
-me know if I'm mistaken :-) (and thanks to all the folks who've already
-provided review!)
+git push $URL $(git for-each-ref --format='%(refname)' refs/heads/\*\*) maybe
+to recursivly subdirectories matching?
 
-Is now a good time to resume the conversation of exposing
-GIT_SEQUENCE_EDITOR variable within git-var [1]? I expect the patch to
-be mostly the same, but instead following the now-corrected pattern laid
-out for GIT_EDITOR (and updated to use the new test helper functions).
-Should I then base my branch on 'next' or upon 'sa/git-var-empty'
-specifically (now merged to 'next')?
+Actually I didn't get why you represent this, maybe try to let's us know there
+is another way we could make it as the same result?
 
-[1]: https://lore.kernel.org/git/pull.1424.git.1668972017089.gitgitgadget@gmail.com/T/#u
+> and because of that, does
+>
+>     git push $URL --any --other --option --heads
+>
+> behave identically to the long-hand with these other options added?
 
---
-Sean Allred
+I think you concerned about the compatibility with the interaction of
+the options, if so, I think a direct way is to keep --all and --heads
+both have the some behavior when interact with other options, a little
+confused why we have to use the long-hand to do that.
+
+By the way, it seems like there are no specify tests for '--all', maybe
+we can add some tests about '--all' first if this RFC patch is worthy to
+continue.
+
+Thanks.
