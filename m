@@ -2,70 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A8E5AC4332F
-	for <git@archiver.kernel.org>; Thu, 15 Dec 2022 08:43:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 649C4C4332F
+	for <git@archiver.kernel.org>; Thu, 15 Dec 2022 08:52:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229517AbiLOInT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Dec 2022 03:43:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39214 "EHLO
+        id S229547AbiLOIw3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Dec 2022 03:52:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbiLOInP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Dec 2022 03:43:15 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EBC733C3F
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 00:43:12 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id k22-20020a05600c1c9600b003d1ee3a6289so1252661wms.2
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 00:43:12 -0800 (PST)
+        with ESMTP id S229451AbiLOIw1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Dec 2022 03:52:27 -0500
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63B191D64D
+        for <git@vger.kernel.org>; Thu, 15 Dec 2022 00:52:26 -0800 (PST)
+Received: by mail-wr1-x42c.google.com with SMTP id o5so2320931wrm.1
+        for <git@vger.kernel.org>; Thu, 15 Dec 2022 00:52:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PYyKV5pN+qHylshYA7c8ZoHhSWm2tKwnEpXtLI3i3ks=;
-        b=Ow1v+u5wrY5n3H+Hl9c355mnvnkR4WFa8sN6TIEP2tAdSdV5NDZgflaDv242dwWt8I
-         av4ULVsGVzGxKtsZ4qOICjyFOrkqnv98KyXHnia4Md+sZbgAh+ZFeVdwxI/d2T9XCwH7
-         lspuiFpBI2JBUicwc650cTQGccIQXr3TIsZatNhj4JsnNiV7YbyRSxGWE5ztRRWZTBof
-         ouegYXHegmzqyLKzCrbxwtaUN5/W3x+0MyUHsi//9e9nJfU2mXtS5AVtaEYLJ45TPd/7
-         7D1EwNH6oRgwQedZX7jof4eI2ZfA+C9F+0ttlWzRkHIHRebOpe6CByMRefypfgtBAlpK
-         jKgA==
+        bh=kvU6CV6U8xi0CQQxXFk0wfAp1nTRdMrFB+Q4Qg7UDtA=;
+        b=BGiMGwucRWQZ9BdS0KtbPSxwGyRpk8ixtdx9oWhSdR0CO2UOrFQ8UWo1hHmthlB8Nj
+         /775M4JXrnCTWlesc672tTcoShFwfORsA+9d6cBiWK8oql2JSdCYXzjYfGpLNO3rVs4p
+         bpOycfjpWnASKtw5QkGXIcMwlfdZ19PuBWp9HmamzxtXTbq+CFRhn0OUZQGoREhtpGo1
+         6+zQKXxudrZIITxRXkpm0vSiYvHYKXYvMurYTXexsmg1rE/Q0Z56rNNYp4WwaCaiMmCk
+         Nus1OLZB0G7Q0a5dvo1tGVqHgY8JF5pxJl3I/dBaHTMkMHKyXcwK/P7xv6OIIVjwxw39
+         bN2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PYyKV5pN+qHylshYA7c8ZoHhSWm2tKwnEpXtLI3i3ks=;
-        b=kQeQwmjADbub4e3wSPLwNVfZ5KVhLhJbbSzxL2NtlCVGeymKdastH6VSq8IRYu1Xfy
-         27E1j7QjtGe/QR6jAyLG1pVK1x+KIlHgtuGilchLiOYtn66//59krjEqQRf31zKKtuxB
-         4sB9PMNfndeHSTSMldYMV0SL6fZUm+p8YWLSD4lcr9LibHS28MeZ/54JuGnRYydYNqRp
-         H7avYB08seaF49EqaaUpv0b4+UfoZjgtzQ7HDl1OFGeZDAw0t8eJXY6qpOX0eyE8NOMq
-         curuDZtYwdrLdauxAfnAfEvqoJOhox+ROf6slPPOhvJMQ7yL4Zl7DbQBoA/1ZZUxkWrc
-         FvWQ==
-X-Gm-Message-State: ANoB5pnbHELSrkjo2kFbU9aw4KQKnEwn2PDAhMmXGfa2ucKP/YpU+A5q
-        aaFX4jqgUaI9AMTzo+eExfYJ0wnL730fUA==
-X-Google-Smtp-Source: AA0mqf71BFqMrsNnx8mrNvs971U4BfLhdYtrcOdceP1TTBKpXccAVOrTqqlmBnAJTYJfrPVCRbsLFQ==
-X-Received: by 2002:a05:600c:4e14:b0:3d2:4234:e8fe with SMTP id b20-20020a05600c4e1400b003d24234e8femr1669916wmq.19.1671093790279;
-        Thu, 15 Dec 2022 00:43:10 -0800 (PST)
+        bh=kvU6CV6U8xi0CQQxXFk0wfAp1nTRdMrFB+Q4Qg7UDtA=;
+        b=D0t5PAREuKUbyzyIFhkPJXCFkALqeviOPuXdB6CvPDDt8rdo4XOcmBkHM/Z1HJLRSb
+         Yrc4DueVsxz6wAqeyhHZFd/UnlsfdrvX3YxiY380wdHpryro6h98yyuwDi8Lp5LvMuWM
+         vLdRXozEtS24M+kp19M30JzXv2S3KqxjCb0YXH+1oDA7QIiIVJRXfuIF+rifD4ki/wtD
+         JMFiMK0fwove+6Fc0/jnZq3XC0F9CYJJfrSyuruxTCh/heTS0SXkG+TtHhDNKj0yxXaY
+         3+aZadVhYG0q8LPZrVsPqMDw/cJrJ6Ae+iqcIblI0V7aC5JXSNUnJPMwwE+WOxfCZalv
+         PyYg==
+X-Gm-Message-State: ANoB5pnGQF5ydonZ0Jb+ZvsqDsz1LwqF/phBU11mx5ZoC0zClscEjBL0
+        9bOc25vx+UxHrAKCpEhopTFDnMWbWeCWZA==
+X-Google-Smtp-Source: AA0mqf7W8ejsrYztqCE7+qHG1P2JD7QSsnZaxZPegbm6BLnRn4yj5Kkf4XyXX45uo6DxTWULyOr39w==
+X-Received: by 2002:a5d:404f:0:b0:242:7c7a:7ee7 with SMTP id w15-20020a5d404f000000b002427c7a7ee7mr17903163wrp.53.1671094344203;
+        Thu, 15 Dec 2022 00:52:24 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id n7-20020a05600c4f8700b003d1e90717ccsm6765356wmq.30.2022.12.15.00.43.09
+        by smtp.gmail.com with ESMTPSA id r10-20020a0560001b8a00b0024274a5db0asm5464905wru.2.2022.12.15.00.52.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Dec 2022 00:43:09 -0800 (PST)
+        Thu, 15 Dec 2022 00:52:23 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Mike Hommey <mh@glandium.org>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Glen Choo <chooglen@google.com>,
-        Eric DeCosta <edecosta@mathworks.com>,
+Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
+        Alban Gruin <alban.gruin@gmail.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2] Makefile: use sha1collisiondetection by default on OSX and Darwin
-Date:   Thu, 15 Dec 2022 09:43:05 +0100
-Message-Id: <patch-v2-1.1-3de7cdbd260-20221215T084129Z-avarab@gmail.com>
+Subject: [PATCH v10 00/12] merge-index: prepare to rewrite merge drivers in C
+Date:   Thu, 15 Dec 2022 09:52:04 +0100
+Message-Id: <cover-v10-00.12-00000000000-20221215T084803Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.0.rc2.1048.g0e5493b8d5b
-In-Reply-To: <patch-1.1-1f4e39be97b-20221020T225305Z-avarab@gmail.com>
-References: <patch-1.1-1f4e39be97b-20221020T225305Z-avarab@gmail.com>
+In-Reply-To: <cover-v9-00.12-00000000000-20221118T110058Z-avarab@gmail.com>
+References: <cover-v9-00.12-00000000000-20221118T110058Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,153 +72,234 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the sha1collisiondetection library was added and made the default
-in [1] the interaction with APPLE_COMMON_CRYPTO added in [2] and [3]
-seems to have been missed. On modern OSX and Darwin we are able to use
-Apple's CommonCrypto both for SHA-1, and as a generic (but partial)
-OpenSSL replacement.
+This is a prep series for a re-roll of Alban Gruin's series to rewrite
+various merge drivers from *.sh to *.c, and being able to call those
+in-process.
 
-This left OSX and Darwin without protection against the SHAttered
-attack when building Git in its default configuration.
+That series was discussed on-list in August[1], and has now been
+ejected from "seen" due to staleness. This v10 re-roll is my second
+attempt at re-starting this topic, see [2] for v9.
 
-Let's also use sha1collisiondetection on OSX, to do so we'll need to
-split up the "APPLE_COMMON_CRYPTO" flag into that flag and a new
-"APPLE_COMMON_CRYPTO_SHA1".
+In v8 there were concerns with the later part of this topic, but the
+parts that are included here weren't controversial, those will be part
+2 (and I think I've addressed those concerns).
 
-Because of this we can stop conflating whether we want to use Apple's
-CommonCrypto at all, and whether we want to use it for SHA-1.  This
-makes the CI recipe added in [4] simpler.
+Changes since v9:
 
-1. e6b07da2780 (Makefile: make DC_SHA1 the default, 2017-03-17)
-2. 4dcd7732db0 (Makefile: add support for Apple CommonCrypto facility, 2013-05-19)
-3. 61067954ce1 (cache.h: eliminate SHA-1 deprecation warnings on Mac OS X, 2013-05-19)
-4. 1ad5c3df35a (ci: use DC_SHA1=YesPlease on osx-clang job for CI,
-   2022-10-20)
+* Rebase on minor (unrelated) merge-index and
+  "USE_THE_INDEX_COMPATIBILITY_MACROS" changes that have since landed.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
-Range-diff against v1:
-1:  1f4e39be97b ! 1:  3de7cdbd260 Makefile: use sha1collisiondetection by default on OSX and Darwin
+* Trivial adjustments to error messages, including marking one that
+  wasn't marked with _() for translation.
+
+See [3] for my branch for this topic, which includes passing CI.
+
+1. https://lore.kernel.org/git/20220809185429.20098-9-alban.gruin@gmail.com/
+2. https://lore.kernel.org/git/cover-v9-00.12-00000000000-20221118T110058Z-avarab@gmail.com/
+3. https://github.com/avar/git/tree/ag/merge-strategies-in-c-prep-3
+
+Alban Gruin (4):
+  t6060: modify multiple files to expose a possible issue with
+    merge-index
+  t6060: add tests for removed files
+  merge-index: improve die() error messages
+  merge-index: libify merge_one_path() and merge_all()
+
+Ævar Arnfjörð Bjarmason (8):
+  merge-index doc & -h: fix padding, labels and "()" use
+  merge-index tests: add usage tests
+  merge-index: migrate to parse_options() API
+  merge-index i18n: mark die() messages for translation
+  merge-index: stop calling ensure_full_index() twice
+  builtin/merge-index.c: don't USE_THE_INDEX_VARIABLE
+  merge-index: use "struct strvec" and helper to prepare args
+  merge-index: make the argument parsing sensible & simpler
+
+ Documentation/git-merge-index.txt |   2 +-
+ Makefile                          |   1 +
+ builtin/merge-index.c             | 167 ++++++++++++++----------------
+ git.c                             |   2 +-
+ merge-strategies.c                |  87 ++++++++++++++++
+ merge-strategies.h                |  19 ++++
+ t/t0450/txt-help-mismatches       |   1 -
+ t/t6060-merge-index.sh            |  65 +++++++++++-
+ 8 files changed, 249 insertions(+), 95 deletions(-)
+ create mode 100644 merge-strategies.c
+ create mode 100644 merge-strategies.h
+
+Range-diff against v9:
+ 1:  660b1242707 !  1:  9240ab10649 merge-index doc & -h: fix padding, labels and "()" use
+    @@ builtin/merge-index.c: int cmd_merge_index(int argc, const char **argv, const ch
+     -		usage("git merge-index [-o] [-q] <merge-program> (-a | [--] [<filename>...])");
+     +		usage("git merge-index [-o] [-q] <merge-program> (-a | ([--] <file>...))");
+      
+    - 	read_cache();
+    + 	repo_read_index(the_repository);
+      
+     
+      ## t/t0450/txt-help-mismatches ##
+ 2:  caf4a3790c4 =  2:  de36b52286b t6060: modify multiple files to expose a possible issue with merge-index
+ 3:  d659ac983f8 =  3:  5edc8132329 t6060: add tests for removed files
+ 4:  7c5b7c36411 =  4:  aa731011e0a merge-index tests: add usage tests
+ 5:  07f6936011a !  5:  a3f69564ac5 merge-index: migrate to parse_options() API
     @@ Commit message
-         split up the "APPLE_COMMON_CRYPTO" flag into that flag and a new
-         "APPLE_COMMON_CRYPTO_SHA1".
      
-    -    Let's also change the CI for "osx-clang" to test with the new
-    -    APPLE_COMMON_CRYPTO_SHA1 knob ("osx-gcc" uses the new
-    -    sha1collisiondetection default).
-    -
-    -    In practice this will spot issues like the one noted in [4], as
-    -    testing with just two backends should be enough to spot unportable
-    -    code. Ideally we'd have other CI jobs to test the various SHA-1
-    -    combinations, but for now we have better CI coverage than before.
-    +    Because of this we can stop conflating whether we want to use Apple's
-    +    CommonCrypto at all, and whether we want to use it for SHA-1.  This
-    +    makes the CI recipe added in [4] simpler.
+      ## builtin/merge-index.c ##
+     @@
+    - #define USE_THE_INDEX_COMPATIBILITY_MACROS
+    + #define USE_THE_INDEX_VARIABLE
+      #include "builtin.h"
+     +#include "parse-options.h"
+      #include "run-command.h"
+    @@ builtin/merge-index.c: int cmd_merge_index(int argc, const char **argv, const ch
+     +		usage_msg_opt(_("'-a' and '<file>...' are mutually exclusive"),
+     +			      usage, options);
+      
+    - 	read_cache();
+    + 	repo_read_index(the_repository);
+      
+      	/* TODO: audit for interaction with sparse-index. */
+      	ensure_full_index(&the_index);
+ 6:  8d6cfd4bacc !  6:  324368401a2 merge-index: improve die() error messages
+    @@ builtin/merge-index.c
+     @@ builtin/merge-index.c: static int merge_entry(int pos, const char *path)
+      	struct child_process cmd = CHILD_PROCESS_INIT;
+      
+    - 	if (pos >= active_nr)
+    + 	if (pos >= the_index.cache_nr)
+     -		die("git merge-index: %s not in the cache", path);
+     +		die("'%s' is not in the cache", path);
+      	found = 0;
+      	do {
+    - 		const struct cache_entry *ce = active_cache[pos];
+    + 		const struct cache_entry *ce = the_index.cache[pos];
+     @@ builtin/merge-index.c: static int merge_entry(int pos, const char *path)
+      		arguments[stage + 4] = ownbuf[stage];
+    - 	} while (++pos < active_nr);
+    + 	} while (++pos < the_index.cache_nr);
+      	if (!found)
+     -		die("git merge-index: %s not in the cache", path);
+     +		die("'%s' is not in the cache", path);
+ 7:  62c5fd4faaa !  7:  de4d11798db merge-index i18n: mark die() messages for translation
+    @@ builtin/merge-index.c
+     @@ builtin/merge-index.c: static int merge_entry(int pos, const char *path)
+      	struct child_process cmd = CHILD_PROCESS_INIT;
+      
+    - 	if (pos >= active_nr)
+    + 	if (pos >= the_index.cache_nr)
+     -		die("'%s' is not in the cache", path);
+     +		die(_("'%s' is not in the cache"), path);
+      	found = 0;
+      	do {
+    - 		const struct cache_entry *ce = active_cache[pos];
+    + 		const struct cache_entry *ce = the_index.cache[pos];
+     @@ builtin/merge-index.c: static int merge_entry(int pos, const char *path)
+      		arguments[stage + 4] = ownbuf[stage];
+    - 	} while (++pos < active_nr);
+    + 	} while (++pos < the_index.cache_nr);
+      	if (!found)
+     -		die("'%s' is not in the cache", path);
+     +		die(_("'%s' is not in the cache"), path);
+ 8:  e44d58a505a !  8:  45cf7995448 merge-index: stop calling ensure_full_index() twice
+    @@ builtin/merge-index.c: static void merge_one_path(const char *path)
+     -	/* TODO: audit for interaction with sparse-index. */
+     -	ensure_full_index(&the_index);
+     +
+    - 	for (i = 0; i < active_nr; i++) {
+    - 		const struct cache_entry *ce = active_cache[i];
+    + 	for (i = 0; i < the_index.cache_nr; i++) {
+    + 		const struct cache_entry *ce = the_index.cache[i];
+      		if (!ce_stage(ce))
+     @@ builtin/merge-index.c: int cmd_merge_index(int argc, const char **argv, const char *prefix)
+      	/* TODO: audit for interaction with sparse-index. */
+ 9:  1f7c941035d !  9:  fc9a05ee034 builtin/merge-index.c: don't USE_THE_INDEX_COMPATIBILITY_MACROS
+    @@ Metadata
+     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
      
-         1. e6b07da2780 (Makefile: make DC_SHA1 the default, 2017-03-17)
-         2. 4dcd7732db0 (Makefile: add support for Apple CommonCrypto facility, 2013-05-19)
-         3. 61067954ce1 (cache.h: eliminate SHA-1 deprecation warnings on Mac OS X, 2013-05-19)
-    -    4. 32205655dc7 (fsmonitor OSX: compile with DC_SHA1=YesPlease, 2022-10-19)
-    +    4. 1ad5c3df35a (ci: use DC_SHA1=YesPlease on osx-clang job for CI,
-    +       2022-10-20)
+      ## Commit message ##
+    -    builtin/merge-index.c: don't USE_THE_INDEX_COMPATIBILITY_MACROS
+    +    builtin/merge-index.c: don't USE_THE_INDEX_VARIABLE
+     
+    -    Remove "USE_THE_INDEX_COMPATIBILITY_MACROS" and instead pass
+    -    "the_index" around between the functions in this file. In a subsequent
+    -    commit we'll libify this, and don't want to use
+    -    "USE_THE_INDEX_COMPATIBILITY_MACROS" in any more places in the
+    -    top-level *.c files. Doing this first makes that diff a lot smaller.
+    +    Remove "USE_THE_INDEX_VARIABLE" and instead pass "the_index" around
+    +    between the functions in this file. In a subsequent commit we'll
+    +    libify this, and don't want to use "USE_THE_INDEX_VARIABLE" in any
+    +    more places in the top-level *.c files. Doing this first makes that
+    +    diff a lot smaller.
      
          Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
      
-    @@ Makefile: include shared.mak
-      #
-     -# Define NO_APPLE_COMMON_CRYPTO on OSX to opt-out of using the
-     -# "APPLE_COMMON_CRYPTO" backend for SHA-1, which is currently the
-    --# default on that OS. We'll define NO_APPLE_COMMON_CRYPTO on Mac OS
-    --# 10.4 or older ("Tiger", released in early 2005).
-    +-# default on that OS. On macOS 01.4 (Tiger) or older,
-    +-# NO_APPLE_COMMON_CRYPTO is defined by default.
-     +# Define APPLE_COMMON_CRYPTO_SHA1 to use Apple's CommonCrypto for
-     +# SHA-1.
-      #
-    - # === SHA-256 backend ===
-    - #
-    + # If don't enable any of the *_SHA1 settings in this section, Git will
-    + # default to its built-in sha1collisiondetection library, which is a
-     @@ Makefile: ifdef NO_POSIX_GOODIES
-      	BASIC_CFLAGS += -DNO_POSIX_GOODIES
-      endif
-    @@ Makefile: ifdef BLK_SHA1
-      else
-     
-      ## ci/lib.sh ##
-    -@@ ci/lib.sh: macos-latest)
-    - esac
+      ## builtin/merge-index.c ##
+     @@
+    --#define USE_THE_INDEX_COMPATIBILITY_MACROS
+    +-#define USE_THE_INDEX_VARIABLE
+      #include "builtin.h"
+      #include "parse-options.h"
+      #include "run-command.h"
+    @@ builtin/merge-index.c: static int merge_entry(int pos, const char *path)
+      	char ownbuf[4][60];
+      	struct child_process cmd = CHILD_PROCESS_INIT;
+      
+    --	if (pos >= active_nr)
+    +-	if (pos >= the_index.cache_nr)
+     +	if (pos >= istate->cache_nr)
+      		die(_("'%s' is not in the cache"), path);
+      	found = 0;
+      	do {
+    --		const struct cache_entry *ce = active_cache[pos];
+    +-		const struct cache_entry *ce = the_index.cache[pos];
+     +		const struct cache_entry *ce = istate->cache[pos];
+      		int stage = ce_stage(ce);
+      
+    @@ builtin/merge-index.c: static int merge_entry(int pos, const char *path)
+      		xsnprintf(ownbuf[stage], sizeof(ownbuf[stage]), "%o", ce->ce_mode);
+      		arguments[stage] = hexbuf[stage];
+      		arguments[stage + 4] = ownbuf[stage];
+    --	} while (++pos < active_nr);
+    +-	} while (++pos < the_index.cache_nr);
+     +	} while (++pos < istate->cache_nr);
+      	if (!found)
+      		die(_("'%s' is not in the cache"), path);
+    @@ builtin/merge-index.c: static int merge_entry(int pos, const char *path)
+     -static void merge_one_path(const char *path)
+     +static void merge_one_path(struct index_state *istate, const char *path)
+      {
+    --	int pos = cache_name_pos(path, strlen(path));
+    +-	int pos = index_name_pos(&the_index, path, strlen(path));
+     +	int pos = index_name_pos(istate, path, strlen(path));
+      
+      	/*
+    @@ builtin/merge-index.c: static int merge_entry(int pos, const char *path)
+      {
+      	int i;
+      
+    --	for (i = 0; i < active_nr; i++) {
+    --		const struct cache_entry *ce = active_cache[i];
+    +-	for (i = 0; i < the_index.cache_nr; i++) {
+    +-		const struct cache_entry *ce = the_index.cache[i];
+     +	for (i = 0; i < istate->cache_nr; i++) {
+     +		const struct cache_entry *ce = istate->cache[i];
+      		if (!ce_stage(ce))
+    @@ builtin/merge-index.c: static int merge_entry(int pos, const char *path)
+      }
+      
+     @@ builtin/merge-index.c: int cmd_merge_index(int argc, const char **argv, const char *prefix)
+    - 		usage_msg_opt(_("'-a' and '<file>...' are mutually exclusive"),
+    - 			      usage, options);
     - 
-    - case "$jobname" in
-    -+osx-clang)
-    -+	MAKEFLAGS="$MAKEFLAGS APPLE_COMMON_CRYPTO_SHA1=Yes"
-    -+	;;
-    - linux32)
-    - 	CC=gcc
-    +@@ ci/lib.sh: macos-*)
-    + 		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python3)"
-    + 	else
-    + 		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python2)"
-    +-		MAKEFLAGS="$MAKEFLAGS NO_APPLE_COMMON_CRYPTO=NoThanks"
-    +-		MAKEFLAGS="$MAKEFLAGS NO_OPENSSL=NoThanks"
-    ++		MAKEFLAGS="$MAKEFLAGS APPLE_COMMON_CRYPTO_SHA1=Yes"
-    + 	fi
-      	;;
-    + esac
-
- Makefile  | 10 ++++------
- ci/lib.sh |  3 +--
- 2 files changed, 5 insertions(+), 8 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 0f7d7ab1fd2..db447d07383 100644
---- a/Makefile
-+++ b/Makefile
-@@ -511,10 +511,8 @@ include shared.mak
- # Define BLK_SHA1 to make use of optimized C SHA-1 routines bundled
- # with git (in the block-sha1/ directory).
- #
--# Define NO_APPLE_COMMON_CRYPTO on OSX to opt-out of using the
--# "APPLE_COMMON_CRYPTO" backend for SHA-1, which is currently the
--# default on that OS. On macOS 01.4 (Tiger) or older,
--# NO_APPLE_COMMON_CRYPTO is defined by default.
-+# Define APPLE_COMMON_CRYPTO_SHA1 to use Apple's CommonCrypto for
-+# SHA-1.
- #
- # If don't enable any of the *_SHA1 settings in this section, Git will
- # default to its built-in sha1collisiondetection library, which is a
-@@ -1911,7 +1909,7 @@ ifdef NO_POSIX_GOODIES
- 	BASIC_CFLAGS += -DNO_POSIX_GOODIES
- endif
- 
--ifdef APPLE_COMMON_CRYPTO
-+ifdef APPLE_COMMON_CRYPTO_SHA1
- 	# Apple CommonCrypto requires chunking
- 	SHA1_MAX_BLOCK_SIZE = 1024L*1024L*1024L
- endif
-@@ -1928,7 +1926,7 @@ ifdef BLK_SHA1
- 	LIB_OBJS += block-sha1/sha1.o
- 	BASIC_CFLAGS += -DSHA1_BLK
- else
--ifdef APPLE_COMMON_CRYPTO
-+ifdef APPLE_COMMON_CRYPTO_SHA1
- 	COMPAT_CFLAGS += -DCOMMON_DIGEST_FOR_OPENSSL
- 	BASIC_CFLAGS += -DSHA1_APPLE
- else
-diff --git a/ci/lib.sh b/ci/lib.sh
-index 706e3ba7e93..db7105e8a8d 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -258,8 +258,7 @@ macos-*)
- 		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python3)"
- 	else
- 		MAKEFLAGS="$MAKEFLAGS PYTHON_PATH=$(which python2)"
--		MAKEFLAGS="$MAKEFLAGS NO_APPLE_COMMON_CRYPTO=NoThanks"
--		MAKEFLAGS="$MAKEFLAGS NO_OPENSSL=NoThanks"
-+		MAKEFLAGS="$MAKEFLAGS APPLE_COMMON_CRYPTO_SHA1=Yes"
- 	fi
- 	;;
- esac
+    --	read_cache();
+    -+	repo_read_index(the_repository);
+    + 	repo_read_index(the_repository);
+      
+      	/* TODO: audit for interaction with sparse-index. */
+     -	ensure_full_index(&the_index);
+10:  8c43b64dec4 = 10:  0efc5039e46 merge-index: libify merge_one_path() and merge_all()
+11:  592db883dad = 11:  748fef4434f merge-index: use "struct strvec" and helper to prepare args
+12:  5a2c4dd3acf = 12:  40b6d296f3a merge-index: make the argument parsing sensible & simpler
 -- 
 2.39.0.rc2.1048.g0e5493b8d5b
 
