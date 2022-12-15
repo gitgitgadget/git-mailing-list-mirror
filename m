@@ -2,122 +2,92 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0DB15C10F1E
-	for <git@archiver.kernel.org>; Thu, 15 Dec 2022 21:17:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E58FEC4332F
+	for <git@archiver.kernel.org>; Thu, 15 Dec 2022 21:20:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229975AbiLOVRX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Dec 2022 16:17:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55228 "EHLO
+        id S230060AbiLOVU3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Dec 2022 16:20:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229971AbiLOVRT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Dec 2022 16:17:19 -0500
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AA4F54346
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 13:17:18 -0800 (PST)
-Received: by mail-pf1-x42e.google.com with SMTP id 124so511069pfy.0
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 13:17:18 -0800 (PST)
+        with ESMTP id S230082AbiLOVUG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Dec 2022 16:20:06 -0500
+Received: from mail-pj1-x104a.google.com (mail-pj1-x104a.google.com [IPv6:2607:f8b0:4864:20::104a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04EE956D66
+        for <git@vger.kernel.org>; Thu, 15 Dec 2022 13:20:00 -0800 (PST)
+Received: by mail-pj1-x104a.google.com with SMTP id b16-20020a17090a10d000b00221653b4526so203420pje.2
+        for <git@vger.kernel.org>; Thu, 15 Dec 2022 13:19:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zG9gQkOQPJHnNhWdA6x8pw/Hibffem7Z0cMEGxsu8ho=;
-        b=hEgj51xqauanM4Vee9YEFtbE+xuS3/CNkAFXjK9yDhkAQtKECn0XBR3IQeZfPRDeg5
-         pYiVsNRNxCQytkTUx7HcZA1BAj+fTkdRG6/l0IzdStuVjlgxWHPHJK72oYLBjXu0l/4n
-         atZuvlV/sdZdRGIlyNZkqM1jRptNubVUvsy2FKRw96xicbEs+zzCw7GP8qSSn0r9nbQe
-         MGLnmzcfdtMZkb8QE+fRlHuv1Q3GHoBJ1/ehrouCxWeP2Kanv1aW4I5l9XlKKcSfaLX1
-         EhAQ98zZXIEAMi6stGIP90eBKCMo77cBMN6qiDnsG+YIr77IC2Lym6NADo0e5o3S+Rtm
-         724A==
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zHLfGidvuI2qBWpzylFgxWuTVxUfZ/PIrUDVBn/gHxY=;
+        b=feuHaAhU2VX0jhWDhjIz/aCHLKnB1+rz+AvoWPDN5Q6D3US2De648yElqHbXevbLO9
+         6t6K32ICNWSNawhIln64IrmDMvbpO+lWozVklq4n1z0sEA/fRi8BgDhhabJo/SROh8S/
+         H3W0OPuGRC9Uki4qSRrtt+dl0zuX63HctVpJpk6PbmJq1bTpvvdr9cVySibIOFIy0eia
+         a2cziYUhlLT61MNRNNUlvBDZIhAAUObpoQmeuynIcKSK9gSqeqRwVr7odr/ZTp9O+RpO
+         fBQYxJr0xLxXgVZL4CBzBya9qxzKsyCR+jz0lnrtKjMHTjGXeFiWwAh5ru9+HSGdFFMK
+         DE7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zG9gQkOQPJHnNhWdA6x8pw/Hibffem7Z0cMEGxsu8ho=;
-        b=W8zJq4yRR8zQu4/vsO9aDUvYHw06sB6oz4w8aRGmek+3Q83B9FMNo+QYRyTLIqip/D
-         fpNCP75v4ezC3kTyMLIYULaLhROmOFb1tICpAvF5rram5f2HvAHea7ZO/sxmv0BSzmlG
-         bWnSpNfR2YJmB8RrIuRcMN4xJacvnLt8m5AVbXnCa2zUNSDHXzdaFb04E9PsYWWVT+40
-         vmqzgJhJuidDZ2hx72FG9iBz2cVJxNLwhQz3ndiKZjae9y3kfJm8TmSTXfWMUPyLYYCT
-         xPy8bNb2ngxT5ecptmDP7BW2RnXkwNzWfBqbYo5zpMWhHitdr0PArLhKu4RlK3qFzv00
-         C6Ug==
-X-Gm-Message-State: ANoB5pmV1mzmPXOD9cVXXU4MJpdaTnH2yTD/LC1cFoT58Y1wd0NhoPmN
-        Birt7BObl9EewaTU3iluCpk=
-X-Google-Smtp-Source: AA0mqf7FhyUY+KXt9MAqPIjQztQHITGiUEUC93qdpwbX9/9SnKoZ5VGbxFmdn5z5wMYph+DMLcf8dQ==
-X-Received: by 2002:a05:6a00:1988:b0:577:49da:6074 with SMTP id d8-20020a056a00198800b0057749da6074mr38782061pfl.19.1671139037652;
-        Thu, 15 Dec 2022 13:17:17 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id x128-20020a626386000000b005767cb32fdasm37561pfb.188.2022.12.15.13.17.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Dec 2022 13:17:17 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Mike Hommey <mh@glandium.org>,
-        "brian m . carlson" <sandals@crustytoothpaste.net>,
-        Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= 
-        <carenas@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Glen Choo <chooglen@google.com>,
-        Eric DeCosta <edecosta@mathworks.com>
-Subject: Re: [PATCH v2] Makefile: use sha1collisiondetection by default on
- OSX and Darwin
-References: <patch-1.1-1f4e39be97b-20221020T225305Z-avarab@gmail.com>
-        <patch-v2-1.1-3de7cdbd260-20221215T084129Z-avarab@gmail.com>
-Date:   Fri, 16 Dec 2022 06:17:16 +0900
-In-Reply-To: <patch-v2-1.1-3de7cdbd260-20221215T084129Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu, 15 Dec
- 2022 09:43:05
-        +0100")
-Message-ID: <xmqqlen8s6xv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        h=content-transfer-encoding:cc:to:from:subject:message-id:references
+         :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=zHLfGidvuI2qBWpzylFgxWuTVxUfZ/PIrUDVBn/gHxY=;
+        b=RqtDiQ9nmpflNG5J+rFkqy2Ze8zh+siINB4I80DAbyyYoJqREo4Ya1Llva43QNru3L
+         VFlqc1BkFHFrTHknKB222Ed8t3dzZsGChBYmoA8fLSXAgomN54EsWI0C9HuKLIFdeic4
+         Q1j1KsnFLslrcaePoR1xME195Fw1Hkko+AwI8ooupUpn30kn8z32C5GggKMexu0Rnwo4
+         QoJWH3J1p18hBZQIREe5Dn4GnzPX3oVv/+J7UsZTj/ZXoR58S0HAFtwBzQuKkt5YHDdW
+         N2wm6iKIIh/R0+iy+izVKeEL12uVoaqdrb54z4O4WmNa2UNcAsDX4ifvTwu0kM/LvsJr
+         PUXA==
+X-Gm-Message-State: ANoB5ploe4cciMF/hevjNZFNhwulFB28LjbEYbljf5KbZ9bMG9um4gTz
+        3ycypBdxekPgtiG7tFOEES5WPPa0Chb8dg==
+X-Google-Smtp-Source: AA0mqf589pZ3o9m3KLt2AmyHCUjlsst206AEd/hm5lHZC39tbRDqEa5e7XJt2qNBi1FvKHAUeczHt4T/2vWkMA==
+X-Received: from chooglen.c.googlers.com ([fda3:e722:ac3:cc00:24:72f4:c0a8:26d9])
+ (user=chooglen job=sendgmr) by 2002:a17:902:d547:b0:189:5c50:ce5 with SMTP id
+ z7-20020a170902d54700b001895c500ce5mr69951956plf.14.1671139199488; Thu, 15
+ Dec 2022 13:19:59 -0800 (PST)
+Date:   Thu, 15 Dec 2022 13:19:57 -0800
+In-Reply-To: <cover-v4-0.9-00000000000-20221215T083502Z-avarab@gmail.com>
+Mime-Version: 1.0
+References: <cover-v3-0.9-00000000000-20221119T122853Z-avarab@gmail.com> <cover-v4-0.9-00000000000-20221215T083502Z-avarab@gmail.com>
+Message-ID: <kl6lzgbocqki.fsf@chooglen-macbookpro.roam.corp.google.com>
+Subject: Re: [PATCH v4 0/9] Get rid of "git --super-prefix"
+From:   Glen Choo <chooglen@google.com>
+To:     "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Taylor Blau <me@ttaylorr.com>, Robert Coup <robert@coup.net.nz>,
+        "=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason" <avarab@gmail.com>,
+        Emily Shaffer <emilyshaffer@google.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Thanks! I only spotted typos this time, so I think this is ready to
+merge once we fix those.
 
-> Let's also use sha1collisiondetection on OSX, to do so we'll need to
-> split up the "APPLE_COMMON_CRYPTO" flag into that flag and a new
-> "APPLE_COMMON_CRYPTO_SHA1".
+(FYI I will be OOO for the next 3 weeks or so, so don't wait on a
+response from me :))
 
-That's well reasoned
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-This leaves these in Makefile:
+> Changes since v4:
+> * I ejected the previous 10/10 to refactor "git fetch". I have more
+>   patches on top of this to do some post-refactoring (e.g. saving
+>   memory churn by getting rid of "submodule_prefix" from "struct
+>   repository"), but none of that's essential for now, so let's drop
+>   that patch.
 
-        # Define NO_APPLE_COMMON_CRYPTO if you are building on Darwin/Mac OS X
-        # and do not want to use Apple's CommonCrypto library.  This allows you
-        # to provide your own OpenSSL library, for example from MacPorts.
+Okay, dropping the "git fetch" refactor probably makes sense in light of
+bigger refactoring.
 
-        ifndef NO_APPLE_COMMON_CRYPTO
-                NO_OPENSSL = YesPlease
-                APPLE_COMMON_CRYPTO = YesPlease
-                COMPAT_CFLAGS += -DAPPLE_COMMON_CRYPTO
-        endif
-
-Because we only mention what it does to use NO_APPLE_COMMON_CRYPTO
-here, without promising anything about what happens otherwise, we
-can do this change without breaking any promises ;-)
-
-However there is this bit:
-
-        ifdef APPLE_COMMON_CRYPTO
-                LIB_4_CRYPTO += -framework Security -framework CoreFoundation
-        endif
-
-So, if one says 
-
-    make NO_APPLE_COMMON_CRYPTO=NoThanks APPLE_COMMON_CRYPTO_SHA1=YesPlease
-
-presumably the end result will fail to link?  I _think_ that falls
-into "if it hurts, don't do that", and 
-
- (1) automatically disabling the latter when the former is set would
-     be more confusing than helpful.
-
- (2) explicitly detecting the situation and issue an error message
-     from the Makefile might appear nicer, but if the linker does
-     the failing with a messaage fine, that would be sufficient.
-
-so in the end, the posted patch as-is should be fine, I think.
+This might be premature (since the patches aren't out yet), but I'm a
+bit apprehensive about removing "submodule_prefix" from "struct
+repository". You've noted that it isn't needed right now (which I'll
+grant), but it feels taking away API features that we'll need soon=E2=84=A2=
+ to,
+e.g. run library functions against arbitrary repositories, some of which
+may need additional submodule information. Feel free to CC me on those
+patches, perhaps my fears will be unfounded :)
