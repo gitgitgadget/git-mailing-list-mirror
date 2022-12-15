@@ -2,53 +2,53 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 593DCC4332F
-	for <git@archiver.kernel.org>; Thu, 15 Dec 2022 09:11:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 05FA9C4332F
+	for <git@archiver.kernel.org>; Thu, 15 Dec 2022 09:11:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229610AbiLOJLc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Dec 2022 04:11:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52858 "EHLO
+        id S229543AbiLOJLg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Dec 2022 04:11:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229798AbiLOJLZ (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S229832AbiLOJLZ (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 15 Dec 2022 04:11:25 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 618302AE1E
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8667E2AE26
         for <git@vger.kernel.org>; Thu, 15 Dec 2022 01:11:23 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id h16so2311407wrz.12
+Received: by mail-wr1-x42b.google.com with SMTP id i7so2335761wrv.8
         for <git@vger.kernel.org>; Thu, 15 Dec 2022 01:11:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zRyxpIWW+z3OydWyjnLV2szstKc/52/russrvwVr2S0=;
-        b=ZzlqKc7GLMQNRaIUmJEa2QC9+kQXkqJoqTNVdog2rFnU57e1NNBuEovHjmT/Sp/FUY
-         MVBrKM0ifCBmWfEJi0gjtC5jv9rAtN51olfvmE6k05vqmoPE7Hrs750rL8Ojju7bdAqT
-         skCnQ9e1xLqRWKnubU9MNwV5E2l/QSW/etabOTaIchyzoJdMqeTRSgP+H0rfHufEt+6I
-         1Zl5KTC7MRTrB2RfbpJXxLGtiZUMtq1KUf4XuUVfKsFF35QXKGQFL2/aIUe1jAyKs1rR
-         TdPf5FoH890XMA7YyEKiQa8EGq6j9MvC8rIs6q/C36Roynl6gSQETuKK/Q0jpSRqyqoJ
-         WvtA==
+        bh=tc/AVdeBNo/O4MFtSmnlLl/fOt0AG45CEfP9RBQJuJ4=;
+        b=lOR70rqyFe9anwDRhg/xsb2Jc9JjFUbjwEMOkhRN8C6LczbKY57j0f+GLBJ2nAzckl
+         mWBetnNrTXLXReQ3EwZeU4Is3wVlH/1S0HupLsBnHeiDboujCVlPvoYhGQlSude0v1Qi
+         W2NSnbn9VaVg8NJsl5VaVAdTywLHxONGUTqJF1VgWcAuf0EyL+4Zezsm44YFiGXaAHyi
+         Fo3YaOlx1LCOfb+/EhqxJb0dG1yd8vxhS0LgFbpdTl5RwRmAThnwsiVcRjQaevjk/++e
+         aHid0n7V/788BltXxpD+uGYxsVMBlqxG/giNpQii6eLHGFzOCWJ1tQf4WeEvb6/DGCLC
+         R8Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zRyxpIWW+z3OydWyjnLV2szstKc/52/russrvwVr2S0=;
-        b=B/2K/iMLoVE6l3BJD8oLZf3OwYf4BCV1KZvGLHKDhctNQB9OIALe2832uSNdfdEqvc
-         vw3q+yOt/hMoFcaOineb3Wmkt9JUFpcB8SF3M8d9e1bDnTA/LOMRvYvGEtmhnMGvUbUJ
-         uHYAzXA2g4n0VkK5rtaImAW4znG/7Qapn2PPVR332wpvCz8isHXpv34dgJdaaTUZGiLs
-         VsO0OIYDwmNi6v4MvYpcLad5VVtaBfDwz9hA8512wGSox0RGBeTnYL3Nx+SkHHrViyj8
-         SCl+HXa2LaGjQYROKKqCk4x8P7ghnQDBU7+Tg5XOPWZ+dB4V5nnSFh+CZKUpX9cpmv+C
-         t79g==
-X-Gm-Message-State: ANoB5plQS9W/+hmfrHljABS+z7tbmqHxTxXrk6B4buG/tMnqznVK+zhB
-        URi7CtYFdjTvmLXZACUbameSChAN/sbjHw==
-X-Google-Smtp-Source: AA0mqf5aFL0sNolYSwfuQSjlo2E2hkFXCZkg2rBYFNyb8djGTQk+uSJO4zGSTWx+Gg9O/qAsklWPEA==
-X-Received: by 2002:a5d:4578:0:b0:242:7248:fbe with SMTP id a24-20020a5d4578000000b0024272480fbemr19145680wrc.25.1671095482645;
-        Thu, 15 Dec 2022 01:11:22 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m7-20020a056000024700b002366f9bd717sm6193835wrz.45.2022.12.15.01.11.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        bh=tc/AVdeBNo/O4MFtSmnlLl/fOt0AG45CEfP9RBQJuJ4=;
+        b=QfSNtOk3VQSTJOtYvcaV0VoLvXmzFkwW02CwngukDPyg7eBHrNzdmuCtcZVDZc4Ups
+         YR7Dwj7vOtqqZNq2nkSQhgEVjAXCGhYdAZkzYbY7Eqt+MYvBRT3bh+x0XAkk6WWUtHHI
+         aQQrI5buOMDYAl1jaUbdlgYJ/epNmTYABFfkzoohs69O8q0rH4osNiUHUh5gORTVWRIU
+         YrqK/ks2X58YnkbDJyDtdXvfkrUxAd8x5S5c59FwcrI4/o6BKwLLH6FUEQS4lSxzpbby
+         1OOQCUsfAcyT4PXiTbNdQwW1WHEftwwTXUJvFlW8UbxK/mrDerEWeJxInRRdhZUz6nji
+         kzog==
+X-Gm-Message-State: ANoB5plMZwIrFU3WRDrvJL2eI9iJZoDcOIOsno2UEYNTFMePMR7ONs3Y
+        4iCVf1vpM91yJ8nIFNg/fjXqcPguzikTow==
+X-Google-Smtp-Source: AA0mqf7oJjm23vgmY9agPhCf0WDTGpO3gb/r6I0U1CeBl+ECLH+K4ncxE1LvuGJHN1dNqeESj070mQ==
+X-Received: by 2002:adf:f212:0:b0:242:192c:9b34 with SMTP id p18-20020adff212000000b00242192c9b34mr17161209wro.59.1671095481736;
         Thu, 15 Dec 2022 01:11:21 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id m7-20020a056000024700b002366f9bd717sm6193835wrz.45.2022.12.15.01.11.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Dec 2022 01:11:20 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [RFC PATCH 5/5] strvec API users: fix more leaks by using "STRVEC_INIT_NODUP"
-Date:   Thu, 15 Dec 2022 10:11:11 +0100
-Message-Id: <RFC-patch-5.5-81742a8a6ed-20221215T090226Z-avarab@gmail.com>
+Subject: [RFC PATCH 4/5] strvec API users: fix leaks by using "STRVEC_INIT_NODUP"
+Date:   Thu, 15 Dec 2022 10:11:10 +0100
+Message-Id: <RFC-patch-4.5-6051c309d0d-20221215T090226Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.0.rc2.1048.g0e5493b8d5b
 In-Reply-To: <RFC-cover-0.5-00000000000-20221215T090226Z-avarab@gmail.com>
 References: <221214.86ilie48cv.gmgdl@evledraar.gmail.com> <RFC-cover-0.5-00000000000-20221215T090226Z-avarab@gmail.com>
@@ -69,117 +69,144 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For these cases where most of the the strings we were pushing to the
-"struct strvec" were fixed strings, but others are dynamically
-allocated. For the latter we keep around a "to_free" list of them.
+For these cases where all of the strings we're pushing to the "struct
+strvec" are fixed strings we can fix widespread memory leaks by
+skipping the xstrdup() on strvec_push().
+
+More in-tree users could benefit from this to save needless
+xstrdup()-ing, but for all of these we were munging the "v" member, so
+the subsequent strvec_clear() wouldn't free the memory.
+
+Now there's no need to free the individual elements, but we'll still
+need to free the container with the strvec_clear().
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/describe.c       | 22 +++++++++++++++++-----
- builtin/upload-archive.c |  9 +++++++--
- t/t5003-archive-zip.sh   |  1 +
- 3 files changed, 25 insertions(+), 7 deletions(-)
+ builtin/am.c                  | 2 +-
+ builtin/annotate.c            | 2 +-
+ builtin/stash.c               | 2 +-
+ t/t0023-crlf-am.sh            | 1 +
+ t/t4152-am-subjects.sh        | 2 ++
+ t/t4254-am-corrupt.sh         | 2 ++
+ t/t4256-am-format-flowed.sh   | 1 +
+ t/t4257-am-interactive.sh     | 2 ++
+ t/t5403-post-checkout-hook.sh | 1 +
+ 9 files changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index cb205f6b561..eda59ebb19a 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -596,8 +596,10 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 		die(_("options '%s' and '%s' cannot be used together"), "--long", "--abbrev=0");
- 
- 	if (contains) {
-+		struct string_list to_free = STRING_LIST_INIT_DUP;
- 		struct string_list_item *item;
--		struct strvec args = STRVEC_INIT;
-+		struct strvec args = STRVEC_INIT_NODUP;
-+
- 		int ret;
- 
- 		strvec_pushl(&args, "name-rev",
-@@ -607,10 +609,19 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 			strvec_push(&args, "--always");
- 		if (!all) {
- 			strvec_push(&args, "--tags");
--			for_each_string_list_item(item, &patterns)
--				strvec_pushf(&args, "--refs=refs/tags/%s", item->string);
--			for_each_string_list_item(item, &exclude_patterns)
--				strvec_pushf(&args, "--exclude=refs/tags/%s", item->string);
-+			for_each_string_list_item(item, &patterns) {
-+				char *str = xstrfmt("--refs=refs/tags/%s", item->string);
-+				const char *item = string_list_append_nodup(&to_free, str)->string;
-+
-+				strvec_push(&args, item);
-+			}
-+			for_each_string_list_item(item, &exclude_patterns) {
-+				char *str = xstrfmt("--exclude=refs/tags/%s", item->string);
-+
-+				const char *item = string_list_append_nodup(&to_free, str)->string;
-+
-+				strvec_push(&args, item);
-+			}
- 		}
- 		if (argc)
- 			strvec_pushv(&args, argv);
-@@ -618,6 +629,7 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 			strvec_push(&args, "HEAD");
- 		ret = cmd_name_rev(args.nr, args.v, prefix);
- 		strvec_clear(&args);
-+		string_list_clear(&to_free, 0);
- 		return ret;
- 	}
- 
-diff --git a/builtin/upload-archive.c b/builtin/upload-archive.c
-index 6ef0d06ee8b..95c6cdc4be0 100644
---- a/builtin/upload-archive.c
-+++ b/builtin/upload-archive.c
-@@ -19,7 +19,8 @@ static const char deadchild[] =
- 
- int cmd_upload_archive_writer(int argc, const char **argv, const char *prefix)
+diff --git a/builtin/am.c b/builtin/am.c
+index 30c9b3a9cd7..691ec1d152d 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1471,7 +1471,7 @@ static int parse_mail_rebase(struct am_state *state, const char *mail)
+ static int run_apply(const struct am_state *state, const char *index_file)
  {
--	struct strvec sent_argv = STRVEC_INIT;
-+	struct string_list to_free = STRING_LIST_INIT_DUP;
-+	struct strvec sent_argv = STRVEC_INIT_NODUP;
- 	const char *arg_cmd = "argument ";
+ 	struct strvec apply_paths = STRVEC_INIT;
+-	struct strvec apply_opts = STRVEC_INIT;
++	struct strvec apply_opts = STRVEC_INIT_NODUP;
+ 	struct apply_state apply_state;
+ 	int res, opts_left;
+ 	int force_apply = 0;
+diff --git a/builtin/annotate.c b/builtin/annotate.c
+index de58deadfc7..99d97c1a8c0 100644
+--- a/builtin/annotate.c
++++ b/builtin/annotate.c
+@@ -9,7 +9,7 @@
+ 
+ int cmd_annotate(int argc UNUSED, const char **argv, const char *prefix)
+ {
+-	struct strvec args = STRVEC_INIT;
++	struct strvec args = STRVEC_INIT_NODUP;
  	int ret;
  
-@@ -34,6 +35,7 @@ int cmd_upload_archive_writer(int argc, const char **argv, const char *prefix)
- 	/* put received options in sent_argv[] */
- 	strvec_push(&sent_argv, "git-upload-archive");
- 	for (;;) {
-+		struct string_list_item *item;
- 		char *buf = packet_read_line(0, NULL);
- 		if (!buf)
- 			break;	/* got a flush */
-@@ -42,13 +44,16 @@ int cmd_upload_archive_writer(int argc, const char **argv, const char *prefix)
- 
- 		if (!starts_with(buf, arg_cmd))
- 			die("'argument' token or flush expected");
--		strvec_push(&sent_argv, buf + strlen(arg_cmd));
-+
-+		item = string_list_append(&to_free, buf + strlen(arg_cmd));
-+		strvec_push(&sent_argv, item->string);
- 	}
- 
- 	/* parse all options sent by the client */
- 	ret = write_archive(sent_argv.nr, sent_argv.v, prefix,
- 			    the_repository, NULL, 1);
- 	strvec_clear(&sent_argv);
-+	string_list_clear(&to_free, 0);
- 	return ret;
- }
- 
-diff --git a/t/t5003-archive-zip.sh b/t/t5003-archive-zip.sh
-index fc499cdff01..cc1ce060558 100755
---- a/t/t5003-archive-zip.sh
-+++ b/t/t5003-archive-zip.sh
+ 	strvec_pushl(&args, argv[0], "-c", NULL);
+diff --git a/builtin/stash.c b/builtin/stash.c
+index e504e22e0b9..b15dd2ebb3c 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1823,7 +1823,7 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
+ {
+ 	pid_t pid = getpid();
+ 	const char *index_file;
+-	struct strvec args = STRVEC_INIT;
++	struct strvec args = STRVEC_INIT_NODUP;
+ 	parse_opt_subcommand_fn *fn = NULL;
+ 	struct option options[] = {
+ 		OPT_SUBCOMMAND("apply", &fn, apply_stash),
+diff --git a/t/t0023-crlf-am.sh b/t/t0023-crlf-am.sh
+index f9bbb91f64e..575805513a3 100755
+--- a/t/t0023-crlf-am.sh
++++ b/t/t0023-crlf-am.sh
 @@ -2,6 +2,7 @@
  
- test_description='git archive --format=zip test'
+ test_description='Test am with auto.crlf'
  
 +TEST_PASSES_SANITIZE_LEAK=true
- TEST_CREATE_REPO_NO_TEMPLATE=1
  . ./test-lib.sh
  
+ cat >patchfile <<\EOF
+diff --git a/t/t4152-am-subjects.sh b/t/t4152-am-subjects.sh
+index 4c68245acad..9f2edba1f83 100755
+--- a/t/t4152-am-subjects.sh
++++ b/t/t4152-am-subjects.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='test subject preservation with format-patch | am'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ make_patches() {
+diff --git a/t/t4254-am-corrupt.sh b/t/t4254-am-corrupt.sh
+index 54be7da1611..45f1d4f95e5 100755
+--- a/t/t4254-am-corrupt.sh
++++ b/t/t4254-am-corrupt.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='git am with corrupt input'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ make_mbox_with_nul () {
+diff --git a/t/t4256-am-format-flowed.sh b/t/t4256-am-format-flowed.sh
+index 2369c4e17ad..1015273bc82 100755
+--- a/t/t4256-am-format-flowed.sh
++++ b/t/t4256-am-format-flowed.sh
+@@ -2,6 +2,7 @@
+ 
+ test_description='test format=flowed support of git am'
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+diff --git a/t/t4257-am-interactive.sh b/t/t4257-am-interactive.sh
+index aed8f4de3d6..f26d7fd2dbd 100755
+--- a/t/t4257-am-interactive.sh
++++ b/t/t4257-am-interactive.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='am --interactive tests'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'set up patches to apply' '
+diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
+index 978f240cdac..cfaae547398 100755
+--- a/t/t5403-post-checkout-hook.sh
++++ b/t/t5403-post-checkout-hook.sh
+@@ -7,6 +7,7 @@ test_description='Test the post-checkout hook.'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success setup '
 -- 
 2.39.0.rc2.1048.g0e5493b8d5b
 
