@@ -2,211 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 05FA9C4332F
-	for <git@archiver.kernel.org>; Thu, 15 Dec 2022 09:11:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 743A0C4332F
+	for <git@archiver.kernel.org>; Thu, 15 Dec 2022 09:18:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229543AbiLOJLg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Dec 2022 04:11:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52870 "EHLO
+        id S229897AbiLOJSe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Dec 2022 04:18:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229832AbiLOJLZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Dec 2022 04:11:25 -0500
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8667E2AE26
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 01:11:23 -0800 (PST)
-Received: by mail-wr1-x42b.google.com with SMTP id i7so2335761wrv.8
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 01:11:23 -0800 (PST)
+        with ESMTP id S229785AbiLOJSc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Dec 2022 04:18:32 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4858F4732C
+        for <git@vger.kernel.org>; Thu, 15 Dec 2022 01:18:31 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id u19so32279059ejm.8
+        for <git@vger.kernel.org>; Thu, 15 Dec 2022 01:18:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tc/AVdeBNo/O4MFtSmnlLl/fOt0AG45CEfP9RBQJuJ4=;
-        b=lOR70rqyFe9anwDRhg/xsb2Jc9JjFUbjwEMOkhRN8C6LczbKY57j0f+GLBJ2nAzckl
-         mWBetnNrTXLXReQ3EwZeU4Is3wVlH/1S0HupLsBnHeiDboujCVlPvoYhGQlSude0v1Qi
-         W2NSnbn9VaVg8NJsl5VaVAdTywLHxONGUTqJF1VgWcAuf0EyL+4Zezsm44YFiGXaAHyi
-         Fo3YaOlx1LCOfb+/EhqxJb0dG1yd8vxhS0LgFbpdTl5RwRmAThnwsiVcRjQaevjk/++e
-         aHid0n7V/788BltXxpD+uGYxsVMBlqxG/giNpQii6eLHGFzOCWJ1tQf4WeEvb6/DGCLC
-         R8Iw==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iiBmNYPnwResYFVFmjwnMb7qOC8TOlX9ivQr/W8uLMc=;
+        b=f+VoOPRe8v6DsIE8EzK5knqzpNA7f/jIuM5CctR/EErm7cFtAx2yokXsuQoM6RXqpR
+         WJr/NZv6zXKgsfiQN3ynIRXKnNCJc6GDlswUFsFR5vz+enWEZ79fD3IMmJV3AujXWUG2
+         cKPRGPK5i1LbbEVGxAkxZvPEDIym41bglHjf+4dKNaKprIP1FY7Zo1Lk+G0X9ODkkWPv
+         YWNw6bm+l7a4Q0kDTzcdZevleRL20tuPVHiRleWIW9O3YyDYfFJs452FsKp3tAwP3bGf
+         CfJBYXU8swgy4zb2zghOl8j5b9fZdKJzkk4ItBB/4GtOA+D+Oyffv9P/6zfghSiDm5ev
+         24MA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tc/AVdeBNo/O4MFtSmnlLl/fOt0AG45CEfP9RBQJuJ4=;
-        b=QfSNtOk3VQSTJOtYvcaV0VoLvXmzFkwW02CwngukDPyg7eBHrNzdmuCtcZVDZc4Ups
-         YR7Dwj7vOtqqZNq2nkSQhgEVjAXCGhYdAZkzYbY7Eqt+MYvBRT3bh+x0XAkk6WWUtHHI
-         aQQrI5buOMDYAl1jaUbdlgYJ/epNmTYABFfkzoohs69O8q0rH4osNiUHUh5gORTVWRIU
-         YrqK/ks2X58YnkbDJyDtdXvfkrUxAd8x5S5c59FwcrI4/o6BKwLLH6FUEQS4lSxzpbby
-         1OOQCUsfAcyT4PXiTbNdQwW1WHEftwwTXUJvFlW8UbxK/mrDerEWeJxInRRdhZUz6nji
-         kzog==
-X-Gm-Message-State: ANoB5plMZwIrFU3WRDrvJL2eI9iJZoDcOIOsno2UEYNTFMePMR7ONs3Y
-        4iCVf1vpM91yJ8nIFNg/fjXqcPguzikTow==
-X-Google-Smtp-Source: AA0mqf7oJjm23vgmY9agPhCf0WDTGpO3gb/r6I0U1CeBl+ECLH+K4ncxE1LvuGJHN1dNqeESj070mQ==
-X-Received: by 2002:adf:f212:0:b0:242:192c:9b34 with SMTP id p18-20020adff212000000b00242192c9b34mr17161209wro.59.1671095481736;
-        Thu, 15 Dec 2022 01:11:21 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m7-20020a056000024700b002366f9bd717sm6193835wrz.45.2022.12.15.01.11.20
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iiBmNYPnwResYFVFmjwnMb7qOC8TOlX9ivQr/W8uLMc=;
+        b=4mHJOIzTC9tO2QbCQvvF97VNKwvYnvDTNwtmo9LxWEjpCSKXDexWRF4RKOZyBbW3MW
+         aSecB8zA1GvyP3nUYTcfgPhLhoronPvMjOqepUKkt8WNrh4VvED1ey3pYlvpMOjp8rjl
+         uXjjMhA/tdLYP7+30u+rMY2QxDkYE0DNLbETykvb6i28ypC/MlY1arDOo8dJzJubUq3M
+         jtIhM6ZNXiaPH040/34c7J4f3HukrtAT/fpXculAoOMFpar9x/kuGwBewiA5mLawJIq7
+         bLe9KTJGf/0AcJZwiP6v3QAWiTz9OF5iHJO09xNxHBVVrhQalla7fn1Mz2JvzulW0Pm2
+         9NKg==
+X-Gm-Message-State: ANoB5pl4+CJdA50ZJE3LzXIesRe1ekSZYUYBVNyIOF0yXNCEtDBRfrli
+        WjHEbGM/oh9pvb1Ky2zJ9GM=
+X-Google-Smtp-Source: AA0mqf7DP6mSAHSSwCKLN6nnDNerua4MQd1dASFJiRaG1/J8K7L5wXEan+vayYpg+p1y4SK6Asp6Dw==
+X-Received: by 2002:a17:906:d15a:b0:7c1:32:3574 with SMTP id br26-20020a170906d15a00b007c100323574mr23335468ejb.12.1671095909801;
+        Thu, 15 Dec 2022 01:18:29 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id lb19-20020a170907785300b007c0a90663d5sm6771455ejc.162.2022.12.15.01.18.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Dec 2022 01:11:20 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [RFC PATCH 4/5] strvec API users: fix leaks by using "STRVEC_INIT_NODUP"
-Date:   Thu, 15 Dec 2022 10:11:10 +0100
-Message-Id: <RFC-patch-4.5-6051c309d0d-20221215T090226Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.39.0.rc2.1048.g0e5493b8d5b
-In-Reply-To: <RFC-cover-0.5-00000000000-20221215T090226Z-avarab@gmail.com>
-References: <221214.86ilie48cv.gmgdl@evledraar.gmail.com> <RFC-cover-0.5-00000000000-20221215T090226Z-avarab@gmail.com>
+        Thu, 15 Dec 2022 01:18:29 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1p5kNo-0069qJ-2F;
+        Thu, 15 Dec 2022 10:18:28 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Alban Gruin <alban.gruin@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>
+Subject: ag/merge-strategies-in-c (was: What's cooking in git.git (Dec 2022,
+ #05; Wed, 14))
+Date:   Thu, 15 Dec 2022 10:14:20 +0100
+References: <xmqqiliewbje.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <xmqqiliewbje.fsf@gitster.g>
+Message-ID: <221215.865yed3tzv.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For these cases where all of the strings we're pushing to the "struct
-strvec" are fixed strings we can fix widespread memory leaks by
-skipping the xstrdup() on strvec_push().
 
-More in-tree users could benefit from this to save needless
-xstrdup()-ing, but for all of these we were munging the "v" member, so
-the subsequent strvec_clear() wouldn't free the memory.
+On Wed, Dec 14 2022, Junio C Hamano wrote:
 
-Now there's no need to free the individual elements, but we'll still
-need to free the container with the strvec_clear().
+> * ag/merge-strategies-in-c (2022-08-10) 14 commits
+>  . sequencer: use the "octopus" strategy without forking
+>  . sequencer: use the "resolve" strategy without forking
+>  . merge: use the "octopus" strategy without forking
+>  . merge: use the "resolve" strategy without forking
+>  . merge-octopus: rewrite in C
+>  . merge-recursive: move better_branch_name() to merge.c
+>  . merge-resolve: rewrite in C
+>  . merge-one-file: rewrite in C
+>  . update-index: move add_cacheinfo() to read-cache.c
+>  . merge-index: add a new way to invoke `git-merge-one-file'
+>  . merge-index: drop the index
+>  . merge-index: libify merge_one_path() and merge_all()
+>  . t6060: add tests for removed files
+>  . t6060: modify multiple files to expose a possible issue with merge-index
+>
+>  An attempt to rewrite remaining merge strategies from shell to C.
+>
+>  Tired of waiting for too long.
+>  source: <20220809185429.20098-1-alban.gruin@gmail.com>
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/am.c                  | 2 +-
- builtin/annotate.c            | 2 +-
- builtin/stash.c               | 2 +-
- t/t0023-crlf-am.sh            | 1 +
- t/t4152-am-subjects.sh        | 2 ++
- t/t4254-am-corrupt.sh         | 2 ++
- t/t4256-am-format-flowed.sh   | 1 +
- t/t4257-am-interactive.sh     | 2 ++
- t/t5403-post-checkout-hook.sh | 1 +
- 9 files changed, 12 insertions(+), 3 deletions(-)
+I submitted a v9 of this during Taylor's maintainership, but it fell
+between the cracks. I've submitted a rebased-on-master v10 now (there
+were some conflicts):
+https://lore.kernel.org/git/cover-v10-00.12-00000000000-20221215T084803Z-avarab@gmail.com/
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 30c9b3a9cd7..691ec1d152d 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1471,7 +1471,7 @@ static int parse_mail_rebase(struct am_state *state, const char *mail)
- static int run_apply(const struct am_state *state, const char *index_file)
- {
- 	struct strvec apply_paths = STRVEC_INIT;
--	struct strvec apply_opts = STRVEC_INIT;
-+	struct strvec apply_opts = STRVEC_INIT_NODUP;
- 	struct apply_state apply_state;
- 	int res, opts_left;
- 	int force_apply = 0;
-diff --git a/builtin/annotate.c b/builtin/annotate.c
-index de58deadfc7..99d97c1a8c0 100644
---- a/builtin/annotate.c
-+++ b/builtin/annotate.c
-@@ -9,7 +9,7 @@
- 
- int cmd_annotate(int argc UNUSED, const char **argv, const char *prefix)
- {
--	struct strvec args = STRVEC_INIT;
-+	struct strvec args = STRVEC_INIT_NODUP;
- 	int ret;
- 
- 	strvec_pushl(&args, argv[0], "-c", NULL);
-diff --git a/builtin/stash.c b/builtin/stash.c
-index e504e22e0b9..b15dd2ebb3c 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1823,7 +1823,7 @@ int cmd_stash(int argc, const char **argv, const char *prefix)
- {
- 	pid_t pid = getpid();
- 	const char *index_file;
--	struct strvec args = STRVEC_INIT;
-+	struct strvec args = STRVEC_INIT_NODUP;
- 	parse_opt_subcommand_fn *fn = NULL;
- 	struct option options[] = {
- 		OPT_SUBCOMMAND("apply", &fn, apply_stash),
-diff --git a/t/t0023-crlf-am.sh b/t/t0023-crlf-am.sh
-index f9bbb91f64e..575805513a3 100755
---- a/t/t0023-crlf-am.sh
-+++ b/t/t0023-crlf-am.sh
-@@ -2,6 +2,7 @@
- 
- test_description='Test am with auto.crlf'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- cat >patchfile <<\EOF
-diff --git a/t/t4152-am-subjects.sh b/t/t4152-am-subjects.sh
-index 4c68245acad..9f2edba1f83 100755
---- a/t/t4152-am-subjects.sh
-+++ b/t/t4152-am-subjects.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='test subject preservation with format-patch | am'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- make_patches() {
-diff --git a/t/t4254-am-corrupt.sh b/t/t4254-am-corrupt.sh
-index 54be7da1611..45f1d4f95e5 100755
---- a/t/t4254-am-corrupt.sh
-+++ b/t/t4254-am-corrupt.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='git am with corrupt input'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- make_mbox_with_nul () {
-diff --git a/t/t4256-am-format-flowed.sh b/t/t4256-am-format-flowed.sh
-index 2369c4e17ad..1015273bc82 100755
---- a/t/t4256-am-format-flowed.sh
-+++ b/t/t4256-am-format-flowed.sh
-@@ -2,6 +2,7 @@
- 
- test_description='test format=flowed support of git am'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
-diff --git a/t/t4257-am-interactive.sh b/t/t4257-am-interactive.sh
-index aed8f4de3d6..f26d7fd2dbd 100755
---- a/t/t4257-am-interactive.sh
-+++ b/t/t4257-am-interactive.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='am --interactive tests'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'set up patches to apply' '
-diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
-index 978f240cdac..cfaae547398 100755
---- a/t/t5403-post-checkout-hook.sh
-+++ b/t/t5403-post-checkout-hook.sh
-@@ -7,6 +7,7 @@ test_description='Test the post-checkout hook.'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success setup '
--- 
-2.39.0.rc2.1048.g0e5493b8d5b
-
+It's just the "prep" patches, the real meaty part is converting the
+merge drivers, which will come after. Some of the performance numbers
+for those are really impressive...
