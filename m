@@ -2,211 +2,168 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE7D5C4332F
-	for <git@archiver.kernel.org>; Fri, 16 Dec 2022 03:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D406AC4332F
+	for <git@archiver.kernel.org>; Fri, 16 Dec 2022 03:38:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229953AbiLPDgW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Dec 2022 22:36:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54990 "EHLO
+        id S229910AbiLPDiP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Dec 2022 22:38:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229910AbiLPDgU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Dec 2022 22:36:20 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EA7520F60
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 19:36:19 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id k88-20020a17090a4ce100b00219d0b857bcso1153841pjh.1
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 19:36:19 -0800 (PST)
+        with ESMTP id S229471AbiLPDiN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Dec 2022 22:38:13 -0500
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BD841DA75
+        for <git@vger.kernel.org>; Thu, 15 Dec 2022 19:38:13 -0800 (PST)
+Received: by mail-pf1-x430.google.com with SMTP id a14so966050pfa.1
+        for <git@vger.kernel.org>; Thu, 15 Dec 2022 19:38:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NW+RuuE4i41pMNSs0Q3JLlFzD3PRpadeGB+AfmHYtb8=;
-        b=dHRYM/jwe6nrb4kb3MQ9lAXRMlRNJQ4E0rnqQwyBUvb+UoonhYHtatNTFsHz4aPuQR
-         4m0xWyDaaMwkI9xyoZg8031qDZnoJ0EHCx0gt7ci6y587Rjko6o88MByiRBs9zvs55lG
-         1b39L0lpi44aV+r8hBgDiJSLs4urozH0H0GeFPhr3FjJo2uZ7yoqZUiOoM1jTzITbK52
-         iXrvV2kAgjTqiCC5LuNYFq61SnZBRHE0FYZHH4Qv+FbxNdMV90tM5DRnz1MeVOodpkvg
-         vXkR56LJMLK276fwK9nZgQsPHzFOdYaRQoF7F1/4QFGXYuE8OrZAyyFaFglMWxOcUW5T
-         0zTw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=v/YB/bkYiFdPxVuIl3rzDXP8sUy3C6a9Ak5QxMLnwzs=;
+        b=Yl+38RK5y1RZqGZO+BK5Q5B0X6WBRo2m07z1NfDm2DfVZQJ3OGZ0Pad1aYVs577hOQ
+         yPr/7vnbPJ9o1tsiu1Ak2q18CGOaYW/lq2wlcy9e9fSbIIdmE2RVJOGxjQbkfD1O2zBg
+         b5MHv9ZY3EMGera9jaSSZ62YQBOe2rrFp4nPgSP5CSIlNPqHlvyPrUS5mmqSx7ksdKsg
+         AgiAsZFJJYt0HKg7O1GD/ApVvL37FjzhNAiBSPHvLCAkqCgSb2P+I5SwEz0PLhk3kFPO
+         NzoW119FDAb3/VJ9RhQy9bB/eA1lFn13hjQUuZKCAZZbG9dxkI4cPnAElJC6W/zjp+EC
+         39UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=NW+RuuE4i41pMNSs0Q3JLlFzD3PRpadeGB+AfmHYtb8=;
-        b=QThuUPDpMcsFm+iMEmXB16kCfrpFob+l9Na5/FrfuvMZ6Oloivl+RXFW+7UsMzksNH
-         FI9U76Hm4zqAzVjozS/w0x3xBtZYSPVDAqqhi1Fh1xRdF8gUbe8+kbPiZ8YkPeq7d8Xg
-         ampSk0b1irjgh9OvQCpmIQU8/2BvNY1/djrk1VRnla9GnJn0FJchB+kNNYNXffZM62Lu
-         ypGKwdwMQKsxOPCwWZUPrN9Uh/zFNTQnVjzaVtqFDy6yxRYb/ZQpXBeYv7oX7JUITbok
-         UU1SEmJE9rOzM2GO+5nGYFtkCSQcBlc9ZpKgTx28+Z1ZhJtfVo+HIlLuUZfiqshqOEeH
-         UHRQ==
-X-Gm-Message-State: ANoB5pklog1qhpIgikufqL0SCOJF2BJwVSMqJFn/qbnIPb+tcs4q5Ibu
-        0h43tAvXmb1FP7t4hz6c/QCRTUJBFXw3ew==
-X-Google-Smtp-Source: AA0mqf58oyn9kZ0NTsbKbbfdyJDeBIsDuY/D493ZtAvSOGOkTD1cbTqzf0gD+bPMfa1Vxh819Ocxzw==
-X-Received: by 2002:a17:90a:a00f:b0:220:bad8:b4e7 with SMTP id q15-20020a17090aa00f00b00220bad8b4e7mr24714823pjp.7.1671161778363;
-        Thu, 15 Dec 2022 19:36:18 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id l32-20020a635b60000000b004351358f056sm428943pgm.85.2022.12.15.19.36.17
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=v/YB/bkYiFdPxVuIl3rzDXP8sUy3C6a9Ak5QxMLnwzs=;
+        b=PeF2TGFDgAe5y76IGsR3JsIimfbn0NbJez0TB/GkqqclGptruESwKeeRMjSUuVUt4z
+         64SWOVH32lRUrxyJHPj8ey8oBCNDAh3hBz2fscaklby82TFH0dXrEsH4AChuz8Fnp/jd
+         lFX2lVegIcvIkBbF1Krz7gahfdYRvUW8OyooZzkzt8aon6GMgj68HXi1Bfh4q09ukp4e
+         NiggC451ELUb7B4Um2/Fic8XEi8IZTZnr0adLU+RG+Ejv0IHHgVhxtqFa7pjtYC6SGYP
+         1TTanfeMvhGrexdZ6hsexYjKduhaBwlsO7kNkeGPu3xDECk293ZkAwsxe83IlT20MQQ/
+         lv4A==
+X-Gm-Message-State: ANoB5pkRskix+5rUOib8HzqHgm4+DuTORYWTP2a45PQboZHlMdkPDazI
+        j9s9orDXol//WnxWX9QFwN24p+VgGl993A==
+X-Google-Smtp-Source: AA0mqf6Y5oRMHfuFgrurxBq4+f2u1ra8jbiNXD27Kmo0bCZGX2tLxM3sxuR+A/hPWNXHz/zh4Hh2Yg==
+X-Received: by 2002:a05:6a00:bd8:b0:576:65f5:c60a with SMTP id x24-20020a056a000bd800b0057665f5c60amr27017165pfu.27.1671161892120;
+        Thu, 15 Dec 2022 19:38:12 -0800 (PST)
+Received: from phord-x1y5.purestorage.com ([64.84.68.252])
+        by smtp.gmail.com with ESMTPSA id i22-20020aa796f6000000b0057630286100sm106253pfq.164.2022.12.15.19.38.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Dec 2022 19:36:17 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Seija Kijin <doremylover123@gmail.com>
-Subject: Re: [PATCH] git: edit variable types to match what is assigned to them
-References: <pull.1399.git.git.1671157765711.gitgitgadget@gmail.com>
-Date:   Fri, 16 Dec 2022 12:36:17 +0900
-In-Reply-To: <pull.1399.git.git.1671157765711.gitgitgadget@gmail.com> (Rose
-        via GitGitGadget's message of "Fri, 16 Dec 2022 02:29:25 +0000")
-Message-ID: <xmqqa63onhou.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Thu, 15 Dec 2022 19:38:11 -0800 (PST)
+From:   Phil Hord <phil.hord@gmail.com>
+X-Google-Original-From: Phil Hord
+To:     git@vger.kernel.org
+Cc:     congdanhqx@gmail.com, plavarre@purestorage.com,
+        Phil Hord <phil.hord@gmail.com>
+Subject: [PATCH] date.c: allow ISO 8601 reduced precision times
+Date:   Thu, 15 Dec 2022 19:36:39 -0800
+Message-Id: <20221216033638.2582956-1-phil.hord@gmail.com>
+X-Mailer: git-send-email 2.39.0.56.g57e2c6ebbe
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Rose via GitGitGadget" <gitgitgadget@gmail.com> writes:
+From: Phil Hord <phil.hord@gmail.com>
 
-> diff --git a/add-interactive.c b/add-interactive.c
-> index ae1839c04a7..59ac88f8b5a 100644
-> --- a/add-interactive.c
-> +++ b/add-interactive.c
-> @@ -469,7 +469,7 @@ static void collect_changes_cb(struct diff_queue_struct *q,
->  
->  	for (i = 0; i < stat.nr; i++) {
->  		const char *name = stat.files[i]->name;
-> -		int hash = strhash(name);
-> +		unsigned int hash = strhash(name);
->  		struct pathname_entry *entry;
->  		struct file_item *file_item;
->  		struct adddel *adddel, *other_adddel;
+ISO 8601 permits "reduced precision" time representations to omit the
+seconds value or both the minutes and the seconds values.  The
+abbreviate times could look like 17:45 or 1745 to omit the seconds,
+or simply as 17 to omit both the minutes and the seconds.
 
-This is unquestionably correct.  strhash() returns unsigned, and
-hash is passed to hashmap functions that expect unsigned.
+parse_date_basic accepts the 17:45 format but it rejects the other two.
+Fix it to accept 4-digit and 2-digit time values when they follow a
+recognized date but no time has yet been parsed.
 
-> diff --git a/apply.c b/apply.c
-> index bc338143134..ee5dcdb9133 100644
-> --- a/apply.c
-> +++ b/apply.c
-> @@ -443,7 +443,7 @@ static int name_terminate(int c, int terminate)
->  /* remove double slashes to make --index work with such filenames */
->  static char *squash_slash(char *name)
->  {
-> -	int i = 0, j = 0;
-> +	size_t i = 0, j = 0;
->  
->  	if (!name)
->  		return NULL;
+Add tests for these formats and some others, with and without colons.
 
-These pointers are used to iterate over the same array from the
-beginning to the end, so size_t is very much appropriate.
+Before this change:
 
-> @@ -654,7 +654,7 @@ static char *find_name_common(struct strbuf *root,
->  			      const char *end,
->  			      int terminate)
->  {
-> -	int len;
-> +	size_t len;
->  	const char *start = NULL;
->  
->  	if (p_value == 0)
-> @@ -685,13 +685,13 @@ static char *find_name_common(struct strbuf *root,
->  	 * or "file~").
->  	 */
->  	if (def) {
-> -		int deflen = strlen(def);
-> +		size_t deflen = strlen(def);
->  		if (deflen < len && !strncmp(start, def, deflen))
->  			return squash_slash(xstrdup(def));
->  	}
+$ test-tool date approxidate 2022-12-13T23:00 2022-12-13T2300 2022-12-13T23
+2022-12-13T23:00 -> 2022-12-14 07:00:00 +0000
+2022-12-13T2300 -> 2022-12-14 03:00:55 +0000
+2022-12-13T23 -> 2022-12-14 03:00:55 +0000
 
-The above look sensible as these two variables are to hold the
-result from strlen().
+After this change:
 
->  	if (root->len) {
-> -		char *ret = xstrfmt("%s%.*s", root->buf, len, start);
-> +		char *ret = xstrfmt("%s%.*s", root->buf, (int)len, start);
+$ test-tool date approxidate 2022-12-13T23:00 2022-12-13T2300 2022-12-13T23
+2022-12-13T23:00 -> 2022-12-14 07:00:00 +0000
+2022-12-13T2300 -> 2022-12-14 07:00:00 +0000
+2022-12-13T23 -> 2022-12-14 07:00:00 +0000
 
-This rewrite is correct, but having to do this makes the careful use
-of (potentially larger) size_t more or less a moot point.  If the
-length does not fit in "int", the returned pathname would not have
-the correct contents.
+Note: ISO 8601 also allows reduced precision date strings such as
+"2022-12" and "2022". This patch does not attempt to address these.
 
-> @@ -790,7 +790,7 @@ static int has_epoch_timestamp(const char *nameline)
->  	const char *timestamp = NULL, *cp, *colon;
->  	static regex_t *stamp;
->  	regmatch_t m[10];
-> -	int zoneoffset, epoch_hour, hour, minute;
-> +	long zoneoffset, epoch_hour, hour, minute;
->  	int status;
+Reported-by: Pat LaVarre <plavarre@purestorage.com>
+Signed-off-by: Phil Hord <phil.hord@gmail.com>
+---
+ date.c          | 22 +++++++++++++++++++++-
+ t/t0006-date.sh |  6 ++++++
+ 2 files changed, 27 insertions(+), 1 deletion(-)
 
-This are not wrong per-se, but is not necessary.
+diff --git a/date.c b/date.c
+index 53bd6a7932..b011b9d6b3 100644
+--- a/date.c
++++ b/date.c
+@@ -638,6 +638,18 @@ static inline int nodate(struct tm *tm)
+ 		tm->tm_sec) < 0;
+ }
+ 
++/*
++ * Have we filled in any part of the time yet?
++ * We just do a binary 'and' to see if the sign bit
++ * is set in all the values.
++ */
++static inline int notime(struct tm *tm)
++{
++	return (tm->tm_hour &
++		tm->tm_min &
++		tm->tm_sec) < 0;
++}
++
+ /*
+  * We've seen a digit. Time? Year? Date?
+  */
+@@ -689,7 +701,11 @@ static int match_digit(const char *date, struct tm *tm, int *offset, int *tm_gmt
+ 
+ 	/* 8 digits, compact style of ISO-8601's date: YYYYmmDD */
+ 	/* 6 digits, compact style of ISO-8601's time: HHMMSS */
+-	if (n == 8 || n == 6) {
++	/* 4 digits, compact style of ISO-8601's time: HHMM */
++	/* 2 digits, compact style of ISO-8601's time: HH */
++	if (n == 8 || n == 6 ||
++		(!nodate(tm) && notime(tm) &&
++		(n == 4 || n == 2))) {
+ 		unsigned int num1 = num / 10000;
+ 		unsigned int num2 = (num % 10000) / 100;
+ 		unsigned int num3 = num % 100;
+@@ -698,6 +714,10 @@ static int match_digit(const char *date, struct tm *tm, int *offset, int *tm_gmt
+ 		else if (n == 6 && set_time(num1, num2, num3, tm) == 0 &&
+ 			 *end == '.' && isdigit(end[1]))
+ 			strtoul(end + 1, &end, 10);
++		else if (n == 4)
++			set_time(num2, num3, 0, tm);
++		else if (n == 2)
++			set_time(num3, 0, 0, tm);
+ 		return end - date;
+ 	}
+ 
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index 2490162071..16fb0bf4bd 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -88,6 +88,12 @@ check_parse 2008-02-14 bad
+ check_parse '2008-02-14 20:30:45' '2008-02-14 20:30:45 +0000'
+ check_parse '2008-02-14 20:30:45 -0500' '2008-02-14 20:30:45 -0500'
+ check_parse '2008.02.14 20:30:45 -0500' '2008-02-14 20:30:45 -0500'
++check_parse '20080214T20:30:45' '2008-02-14 20:30:45 +0000'
++check_parse '20080214T20:30' '2008-02-14 20:30:00 +0000'
++check_parse '20080214T20' '2008-02-14 20:00:00 +0000'
++check_parse '20080214T203045' '2008-02-14 20:30:45 +0000'
++check_parse '20080214T2030' '2008-02-14 20:30:00 +0000'
++check_parse '20080214T20' '2008-02-14 20:00:00 +0000'
+ check_parse '20080214T203045-04:00' '2008-02-14 20:30:45 -0400'
+ check_parse '20080214T203045 -04:00' '2008-02-14 20:30:45 -0400'
+ check_parse '20080214T203045.019-04:00' '2008-02-14 20:30:45 -0400'
+-- 
+2.39.0.56.g57e2c6ebbe
 
-We use strtol() at the beginning of a string to read into hour, but
-we clamp the source digit string with regexp that begins with
-"^[0-2][0-9]:([0-5][0-9]):00(\\.0+)?" so unless your int is so small
-that it cannot hold 29, the code should be safe.  The same holds for
-the minute.  The latter part of the same regexp clamps the zone
-offset in a similar fashion and we won't feed a string longer than 4
-decimal digits to strtol() to read the zone offset.
-
-> @@ -1083,7 +1083,7 @@ static int gitdiff_index(struct gitdiff_data *state,
->  	 * and optional space with octal mode.
->  	 */
->  	const char *ptr, *eol;
-> -	int len;
-> +	size_t len;
->  	const unsigned hexsz = the_hash_algo->hexsz;
-
-Absolutely correct.  The variable is used to hold a ptrdiff and is
-used to count number of bytes memcpy() should copy.
-
-> @@ -2172,9 +2172,9 @@ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long si
->  				"Files ",
->  				NULL,
->  			};
-> -			int i;
-> +			size_t i;
->  			for (i = 0; binhdr[i]; i++) {
-> -				int len = strlen(binhdr[i]);
-> +				size_t len = strlen(binhdr[i]);
->  				if (len < size - hd &&
->  				    !memcmp(binhdr[i], buffer + hd, len)) {
->  					state->linenr++;
-
-OK.  But I think there are bigger fish in the same function to fry
-around hdrsize and find_header(), both of which may want to become
-size_t (I didn't look too carefully, though).
-
-> diff --git a/base85.c b/base85.c
-> index 5ca601ee14f..ad32ba1411a 100644
-> --- a/base85.c
-> +++ b/base85.c
-> @@ -37,14 +37,15 @@ static void prep_base85(void)
->  	}
->  }
->  
-> -int decode_85(char *dst, const char *buffer, int len)
-> +int decode_85(char *dst, const char *buffer, size_t len)
->  {
->  	prep_base85();
->  
-> -	say2("decode 85 <%.*s>", len / 4 * 5, buffer);
-> +	say2("decode 85 <%.*s>", (int)(len / 4 * 5), buffer);
->  	while (len) {
->  		unsigned acc = 0;
-> -		int de, cnt = 4;
-> +		int de;
-> +		size_t cnt = 4;
->  		unsigned char ch;
->  		do {
->  			ch = *buffer++;
-
-Correct.  The debug-only bits around say2() spoils the careful
-debugging the same way as the "len" in find_name_common() we saw
-earlier, though
-
-I'd stop here for now.
-
-Thanks.
