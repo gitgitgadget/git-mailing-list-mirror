@@ -2,124 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB537C4332F
-	for <git@archiver.kernel.org>; Fri, 16 Dec 2022 00:43:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5AD6EC10F1E
+	for <git@archiver.kernel.org>; Fri, 16 Dec 2022 01:03:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229763AbiLPAn2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 15 Dec 2022 19:43:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57100 "EHLO
+        id S229705AbiLPBDc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 15 Dec 2022 20:03:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229549AbiLPAn0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Dec 2022 19:43:26 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63BA432BA9
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 16:43:25 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id u12so1021600wrr.11
-        for <git@vger.kernel.org>; Thu, 15 Dec 2022 16:43:25 -0800 (PST)
+        with ESMTP id S229506AbiLPBDa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Dec 2022 20:03:30 -0500
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94BF818E16
+        for <git@vger.kernel.org>; Thu, 15 Dec 2022 17:03:29 -0800 (PST)
+Received: by mail-pf1-x436.google.com with SMTP id t18so739713pfq.13
+        for <git@vger.kernel.org>; Thu, 15 Dec 2022 17:03:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=kwaNqMKgH1pWD606B9qBrtR/UWuBXj9K6Je2p5gTQbE=;
-        b=SAxKq5jQ6Gpu1PuowPhczwCWfbZq+lBB50PpdgdfGNOMRYRlkkFeQaz2nuhlV4F+og
-         D7qPk7FWPfDPD4t2JJEDHZtlDW/gZVyS+9rSxSD1kufwtdTUmaMSCNAR858nx5eYKRkr
-         k7fwvG5bR7pLuxiv02BLzd1IjMXgeosflLF/MNWxTR/tJsCG+5LGAy+tUO0DGl8+v3DV
-         CldHE6LY1RiCm9ziM5/pscULxCPkilX8LREscaxSaFCIo8ool93Dn3SjJPzsGmX04iCp
-         dxxj1Uz0DRUQutGF+iEJwU+Vn17nUNsSFi/x0PGPzGaNoHTFDWCFcX2LTk8OokCLE57c
-         Buvg==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=haZw52W/brY+nDqTBgvwLm0g0iFQuQBulqw6QEarjuc=;
+        b=QYaTxIeGYUb5dJzXIuGflmzVpi0K3J9PnfI5fXKxEO2DpRjkj/cR5y2fAgBgKmCgJb
+         EUaaA2NFyoZCMlwPFLfQd6MHj1ID2Y0az4+pW0ZxXbJb5tMryBL7sPtrMPDfj5bdHvxk
+         sILYLWlOLrYdumijOspATihXTjLDjACWjXbqi2NshdT195Softg+ZFV8Ub5jZ0aHQHj/
+         iqoJi6BUj8m3gnwrfqDZDfqq5awTtO6hsYPVbkK8gHHy+foTcESTGmP7hNpgtGOTE1eb
+         Flo+uJV6PUiw8x3LyryPscDMoXYQ5OrqILGRM63Oh7VbO2YKjI0pxk2wdLR4gMcMqLdc
+         i1Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kwaNqMKgH1pWD606B9qBrtR/UWuBXj9K6Je2p5gTQbE=;
-        b=jJ5lunX0WyKTHv/4Hp0poZ0h+jYoANMB2upGVpPveZeWOsRibwOA8Hde60iXSedFET
-         sYLh38GZj0KF5ezVUROSnu3OVVHNXKlRavm7+MGYi2Yao97vsEObPqqkIqU3XylHVD9n
-         Hgf0zWr3vaCbYojZMXfPetvgC3ioVoBQq+X4jwCShPyssX/O2PD26yZlQFmCUjNzHGWa
-         q09SmdWmcYDBN5qpD79LefDahLsCUGexPiwxDKbxzHOobq6QK3RioXiNDvhLx7KCzrF4
-         F5CXnDIN+xqyrDrBwWZZuoQHjPv9fJVq1VQKfMYLLDkNAlDZJ2nidRgMgot9D1fDxN57
-         MMsg==
-X-Gm-Message-State: ANoB5pnM9h6JJWGmqrTGs7ExB6uFiZvffjgi+8ywu8m1eKDXlma6U94I
-        fNyMcDgf3fH3yqUjFc2jIfgPxHaVsqw=
-X-Google-Smtp-Source: AA0mqf4PtdBIhdnibPdEdQkizGrlrYpz6yO+ZvTHoKBBnhQrO35jKlZL8g54+grWKLO1SzMm2ggeNA==
-X-Received: by 2002:adf:f14c:0:b0:24f:dbcd:7726 with SMTP id y12-20020adff14c000000b0024fdbcd7726mr12724938wro.5.1671151403631;
-        Thu, 15 Dec 2022 16:43:23 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p2-20020adfe602000000b002368f6b56desm893393wrm.18.2022.12.15.16.43.23
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=haZw52W/brY+nDqTBgvwLm0g0iFQuQBulqw6QEarjuc=;
+        b=P9KXh1C0bOdWYXu4JK13k1lt9nlyCaF+zFj3TmmHR0KkEEcMYeN/CuEvkzxgMV6T8o
+         M8MX6TMVxy4+KX62lDtxFt2oGFq4Xx6wuR5K5M0qJI8YjUtipUtkRpPZX2XFyWy/nAvg
+         UuTgndjcwVBlPB9e9Ssz5Gib28l0b3R4kgD7vovmbuZq58xl0OvnxubVOsNZqXUi/F4P
+         ZHK+MvhoUyZDrNkP0rb1cwB68m6mU/7L8n2djsF7WIxHmQ4zQrJPL6dCA0AF+BZi0nPH
+         DjjV/wcOFmFOMH2d1y3A+AsaMHv1vElUzy/2N8xaG8DX+0kqO69uPftM2mJWoYuxhIIV
+         CihA==
+X-Gm-Message-State: AFqh2kobG71o6znkjEYTQM/4P3+9oto0Qr1bRKsqZDk6NaPOhym6VPK1
+        9d/zX8vIGk01uT031spWWjc=
+X-Google-Smtp-Source: AMrXdXtmQ72TztvdOLqV97vmzL6ZKIu4oNkpf8IeWHBRb0p1AzDYoqgDuWXKIOSKTE0w8GBz8WE10A==
+X-Received: by 2002:a05:6a00:1344:b0:57e:f1a2:1981 with SMTP id k4-20020a056a00134400b0057ef1a21981mr1033229pfu.8.1671152608952;
+        Thu, 15 Dec 2022 17:03:28 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id i73-20020a62874c000000b0056bc5ad4862sm225882pfe.28.2022.12.15.17.03.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Dec 2022 16:43:23 -0800 (PST)
-Message-Id: <pull.1397.git.git.1671151402532.gitgitgadget@gmail.com>
-From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 16 Dec 2022 00:43:22 +0000
-Subject: [PATCH] bisect: remove check for fp and move the goto label after the
- fclose
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Thu, 15 Dec 2022 17:03:28 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Rose via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Seija Kijin <doremylover123@gmail.com>
+Subject: Re: [PATCH] bisect: remove check for fp and move the goto label
+ after the fclose
+References: <pull.1397.git.git.1671151402532.gitgitgadget@gmail.com>
+Date:   Fri, 16 Dec 2022 10:03:27 +0900
+In-Reply-To: <pull.1397.git.git.1671151402532.gitgitgadget@gmail.com> (Rose
+        via GitGitGadget's message of "Fri, 16 Dec 2022 00:43:22 +0000")
+Message-ID: <xmqqy1r8nork.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Rose <83477269+AtariDreams@users.noreply.github.com>,
-        Seija Kijin <doremylover123@gmail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Seija Kijin <doremylover123@gmail.com>
+"Rose via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-The fp check in these function are only relevant if goto has been taken.
+> From: Seija Kijin <doremylover123@gmail.com>
+>
+> The fp check in these function are only relevant if goto has been taken.
+>
+> Because of this, we should move the label so that fclose is not called.
+>
+> This is because the goto is taken when fp is 0 anyway.
 
-Because of this, we should move the label so that fclose is not called.
+It may happen to be so with today's code, but for the health of the
+code in the longer term, I do not think this patch is a good idea.
+We may add more "check error and jump to the label to clean it up"
+exit paths to these functions, and change to add such exit paths
+would essentially need to revert this change.
 
-This is because the goto is taken when fp is 0 anyway.
+By the way, I do not know if this is something GGG end-users can
+fix, or requires a fix in GGG itself, but somebody keeps adding an
+e-mail address in the @users.noreply.github.com domain to the Cc:
+field of these patches.  For folks whose work is GitHub only, it
+might be fine to declare "this user only has e-mail-address-looking
+string but does not receive e-mail at all", but as working with GGG
+is all about following e-mail based workflow, such an address should
+be added to patch e-mails sent to the list this say.
 
-Signed-off-by: Seija Kijin <doremylover123@gmail.com>
----
-    bisect: remove check for fp and move the goto label after the fclose
-    
-    The fp check in these function are only relevant if goto has been taken.
-    
-    Because of this, we should move the label so that fclose is not called.
-    
-    This is because the goto is taken when fp is 0 anyway.
-    
-    Signed-off-by: Seija Kijin doremylover123@gmail.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1397%2FAtariDreams%2Ffclose-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1397/AtariDreams/fclose-v1
-Pull-Request: https://github.com/git/git/pull/1397
-
- builtin/bisect.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/bisect.c b/builtin/bisect.c
-index cc9483e8515..2e5dbc8be3b 100644
---- a/builtin/bisect.c
-+++ b/builtin/bisect.c
-@@ -316,9 +316,9 @@ static int bisect_write(const char *state, const char *rev,
- 	if (!nolog)
- 		fprintf(fp, "git bisect %s %s\n", state, rev);
- 
-+	fclose(fp);
-+
- finish:
--	if (fp)
--		fclose(fp);
- 	strbuf_release(&tag);
- 	return res;
- }
-@@ -484,9 +484,9 @@ static int get_terms(struct bisect_terms *terms)
- 	strbuf_getline_lf(&str, fp);
- 	terms->term_good = strbuf_detach(&str, NULL);
- 
-+	fclose(fp);
-+
- finish:
--	if (fp)
--		fclose(fp);
- 	strbuf_release(&str);
- 	return res;
- }
-
-base-commit: 57e2c6ebbe7108b35ba30184dcbcb6c34c929ad8
--- 
-gitgitgadget
+Thanks.
