@@ -2,96 +2,98 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBED0C4332F
-	for <git@archiver.kernel.org>; Sat, 17 Dec 2022 02:51:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1AADBC4332F
+	for <git@archiver.kernel.org>; Sat, 17 Dec 2022 07:50:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229676AbiLQCvQ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 16 Dec 2022 21:51:16 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53186 "EHLO
+        id S229925AbiLQHuM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Dec 2022 02:50:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229949AbiLQCuz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Dec 2022 21:50:55 -0500
-Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE4F8101D3
-        for <git@vger.kernel.org>; Fri, 16 Dec 2022 18:50:53 -0800 (PST)
-Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-14449b7814bso5506235fac.3
-        for <git@vger.kernel.org>; Fri, 16 Dec 2022 18:50:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=D2/KD3sivAZKIr0N6dq9nhuYkXO7OF0fLfSvz00kzuI=;
-        b=ZCuWHB630ANILFq6tjH4tWVbdhCCjQBf2+bijY5ptHRrdI914YNPHJMuK6c1nuDuSu
-         KP4UpOh6FPelDqSYJ635le0FBVYGxVkoRQ1E9Ihsm3JPL47T//P9RwqTCFlKbthHFo0r
-         1e/SfQmkQoi7eUodnabBnE3ULkTQx3oAzKxdkiS49gJf6Clslrytoo161WZtVUN5iAon
-         uROeync7FCy9pmDdtDrYCzL+cEC7AlbOf1utegEjfmcCWR3xt0a6ubSvZFV4sbWyy/l2
-         +uRMetdQepEnpfMyZ0JSOo/xfyMLJzGPnM5puoDdAdnirZkMTsOdfax5+pCQZQu6lPvZ
-         UqTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=D2/KD3sivAZKIr0N6dq9nhuYkXO7OF0fLfSvz00kzuI=;
-        b=eyrYyAAZWJAPrQuyoUHc92YNNYBs8zO68mdGlbTLQuyq3o9MI4FbvHpfNe/f2YQVpB
-         W1DYtrlW+ycyY93C3dw5ihC+FN3DLA6b5jBHrFlrb6JlfYNRjm1KlGIQTbnlz2p98hW+
-         QvZStg6a/FiMVp+O4QHqtyOxvSeWSUHtAMxwV7c/rrBDkDjNFUBvaOhyQBiuUt6HC0Pz
-         MxAeJiccBOCNDVofp8/vCGbR3ucLV6eo9SLOgYMOdAPzNQxiwPElyuybohFcpHrYnZ2m
-         IBY1VbT9bJr3RVXeEJjUwItxXQoSRkw/f4WJ5CoqP32JDxXNXi6GxsWzh7u0EMWgFZMT
-         fLxg==
-X-Gm-Message-State: AFqh2kpqPCK9EkxDf6lT2S/SG327VE3eNsNFS0izjLr49Gr+0Mpkoilt
-        vSfHoliWtJV7sN/zpyHhLHifON/77bFumpMQvx/5P5Kg
-X-Google-Smtp-Source: AMrXdXsfH1ypZoOvE3Qec0fhXTd9CfBloXyxTDdJqM9qQ3D9OhCqpUurwRvkJADRUVIXv1usGJewVi/A4HpuurnVZqM=
-X-Received: by 2002:a05:6870:7883:b0:144:687:9ac0 with SMTP id
- hc3-20020a056870788300b0014406879ac0mr722077oab.277.1671245453005; Fri, 16
- Dec 2022 18:50:53 -0800 (PST)
+        with ESMTP id S229453AbiLQHuK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Dec 2022 02:50:10 -0500
+Received: from mx-out.tlen.pl (mx-out.tlen.pl [193.222.135.140])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF6C8222A1
+        for <git@vger.kernel.org>; Fri, 16 Dec 2022 23:50:06 -0800 (PST)
+Received: (wp-smtpd smtp.tlen.pl 2725 invoked from network); 17 Dec 2022 08:50:02 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=o2.pl; s=1024a;
+          t=1671263402; bh=JgRSL6WG3qcll1tmyaTcivagHs5mze9gxpHF4aDXZvo=;
+          h=Subject:To:Cc:From;
+          b=u3zNDLI7bmm4HhNrGoy/2Uw7EbERMoIY1q9icVzI0TlSq7QHUxX6wfqXlj2ydQg0S
+           w9otEU4bjsVm/UqEOhgsXsHrV4ZW2CAOTS6UvjveyKwSAAMNY0fN1vStNiRZ421dos
+           dGE+vcnElGGTl9vuZSOyvaNt6b/ZlGpqZTH7Usas=
+Received: from mail.dtcasino.pl (HELO [192.168.1.5]) (piotrekkr@o2.pl@[212.180.138.13])
+          (envelope-sender <piotrekkr@o2.pl>)
+          by smtp.tlen.pl (WP-SMTPD) with ECDHE-RSA-AES256-GCM-SHA384 encrypted SMTP
+          for <l.s.r@web.de>; 17 Dec 2022 08:50:02 +0100
+Message-ID: <a1fb9d92-5161-5ba0-54f2-a03cbc45f399@o2.pl>
+Date:   Sat, 17 Dec 2022 08:50:02 +0100
 MIME-Version: 1.0
-References: <20221216121557.30714-1-minipli@grsecurity.net>
- <221216.86o7s31fyt.gmgdl@evledraar.gmail.com> <62a06c5b-9646-17f8-b4d5-39823d3cc25a@grsecurity.net>
- <xmqqlen7kksr.fsf@gitster.g>
-In-Reply-To: <xmqqlen7kksr.fsf@gitster.g>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Fri, 16 Dec 2022 18:50:41 -0800
-Message-ID: <CAPUEspjqgSOS4KKw2nTaRYdiCFo4Ok6OfmKrqb+Mjq+oXn5nsg@mail.gmail.com>
-Subject: Re: [PATCH] grep: fall back to interpreter mode if JIT fails
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Mathias Krause <minipli@grsecurity.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: Issue with git > 2.36.1 and pre-commit hook on macOS M1
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+References: <51d5993f-a1e0-519e-ffa9-ec5205c5e96d@o2.pl>
+ <30f80aa4-d5c1-4fce-f1c9-710eabeaa022@web.de>
+ <c07a5ac4-3da6-6fb4-4586-a83373bc05d4@o2.pl>
+ <7054faf0-0f5b-e4a8-3166-bf715ed45a32@web.de>
+Content-Language: en-GB-large
+From:   Piotrek <piotrekkr@o2.pl>
+In-Reply-To: <7054faf0-0f5b-e4a8-3166-bf715ed45a32@web.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-WP-MailID: 23996040e4f3e1406479e3ab6ec83b2b
+X-WP-AV: skaner antywirusowy Poczty o2
+X-WP-SPAM: NO 0000001 [0ZIl]                               
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 16, 2022 at 3:09 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Mathias Krause <minipli@grsecurity.net> writes:
->
-> > ... However, from a user's point of view a fall back to
-> > interpreter mode might still be desired in this case, as a failing
-> > 'git grep' is simply not acceptable, IMHO.
->
-> "git grep" that silently produces a wrong result (by falling back
-> after a problem is detected) would not be acceptable, either.
+On 14.12.2022 23:23, René Scharfe wrote:
 
-except that an error at this point only invalidates the use of JIT,
-so calling pcre2_jit_match() is invalid but calling pcre2_match() is not.
+> I don't know "docker compose" well enough to say whether it's a bug,
+> but it seems it turns on some kind of terminal mode that needs both
+> stdin and stdout to be connected to a TTY after only checking that one
+> of them actually is.  Why not check both?
+> 
+> Curious that only macOS should be affected.  Is stdin of a hook script a
+> TTY on that platform?  Or can "docker compose" handle stdin not being a
+> TTY and stdout being one there?
+> 
+> René
 
-the later is setup to be used later by the code that is added,
+Well, seems like I somehow tested this wrong. Tried it again from 
+scratch and on linux I also get this error. So this looks like not a 
+bug. Docker compose CLI options page is a little confusing because of these:
 
-> Receiving BADOPTION could be a sign that there is something wrong in
-> the input, not from the end-user but from the code, in which case
-> stopping with BUG() may be a more appropriate?
+ >--interactive , -i  true  Keep STDIN open even if not attached.
+ >--no-TTY , -T 	     true  Disable pseudo-TTY allocation (default: 
+auto-detected).
+ >--tty , -t          true  Allocate a pseudo-TTY.
 
-The way PCRE handles this kind of errors internally is to instruct pcre2_match()
-to use the interpreter.
+Second column with `true` values is titled `Default`, whatever it means.
+So `--tty` and `--no-TTY` is set by default? Anyway, seems like it is 
+checking if at least one of stdout, stding, stderr is a tty and then 
+tries to allocate a tty to all.
 
-While a BUG() might be a way to ensure the code is using the right set
-of options
-I would expect that the failure will be reported by pcre2_compile
-instead, with the
-only cases left, only being interna to PCRE (ex: JIT can't yet support
-a feature the
-interpreter has)
+You can check docs here 
+https://docs.docker.com/engine/reference/commandline/compose_run/#options
 
-Carlo
+As a final solution I used makefile "magic" with `ifeq` and shell 
+command like this:
+
+     $(shell test -t 0)
+     ifeq ($(.SHELLSTATUS), 1)
+     ALLOCATE_TTY = --no-TTY
+     endif
+
+     docker compose run $(ALLOCATE_TTY) --rm --entrypoint "" app 
+/code/test.sh
+
+
+Maybe I'll just write to to them to clarify documentation on how those 
+TTY options actually works by default.
+
+Thanks for help with this.
+Piotr
