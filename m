@@ -2,141 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EA11C3DA78
-	for <git@archiver.kernel.org>; Sat, 17 Dec 2022 15:27:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1127CC4332F
+	for <git@archiver.kernel.org>; Sat, 17 Dec 2022 16:04:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229737AbiLQP1j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Dec 2022 10:27:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60578 "EHLO
+        id S230264AbiLQQE2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Dec 2022 11:04:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229524AbiLQP1g (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Dec 2022 10:27:36 -0500
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 090B412621
-        for <git@vger.kernel.org>; Sat, 17 Dec 2022 07:27:36 -0800 (PST)
-Received: by mail-ot1-x332.google.com with SMTP id i26-20020a9d68da000000b00672301a1664so3062258oto.6
-        for <git@vger.kernel.org>; Sat, 17 Dec 2022 07:27:36 -0800 (PST)
+        with ESMTP id S229611AbiLQQEH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Dec 2022 11:04:07 -0500
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1998DF02D
+        for <git@vger.kernel.org>; Sat, 17 Dec 2022 08:01:28 -0800 (PST)
+Received: by mail-lf1-x131.google.com with SMTP id m29so7618478lfo.11
+        for <git@vger.kernel.org>; Sat, 17 Dec 2022 08:01:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fWe9Xm/SygIgWy3RbUeNViZ6QVXDkm4BEPvwFMxcd+s=;
-        b=DkLBeJRIhsK3PqIwBpR5SBHMpn/xtBuoeDFASoPfthB5xa0iaAp6fMzwZXeSTjvKRX
-         /S1kgEe/T0qpu9qiuNX3iLtnxgna6yWopRprrMgsO+kpwXVXdYreP+8KPzZ9xequfZws
-         txM4EonxZz3RRufqn59CUyEv7ZZeHFITHUsvDnidSbUtzCCGJ9ILZvHA2A7yqp0J2AeT
-         g0FDhZUela5GzKX6ynuWvQq3bD6HfFxr3gJIFsjCHI4FUNAvF8eGL8lQiFmDKezWlMDI
-         e6ld7Ia7Z8KYDUguYbvBsXLqYpNaNruhbcec1ZbzUDr1TlzkpyIQhsk/XAaOHf27ViIG
-         K4mw==
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mbUCDigQrDEAWXrlIcVg/o4BfpXVvvWMcAFow8QvRAE=;
+        b=DcmY3znBfTV8u60BpLIrus4o2lNA4reZhRZqhmopPczT+MZCx5S79g/W6hOj+wygTK
+         Ka44ZpMeAFzdT9jYrSALegUkRFYXAC/Pkdfb7iRT1lJtz5K8Y9gKaTHLlYaf0tChpUAl
+         aYtS+2/0QoaSOWZBVe4epQE0oAs4zTRrtl32Q65uUyAFImdJKHihogJUmSMFjS9Z6baD
+         E5gFXpWlp0KR2IX7Qo5UboGO6UZeXYW27ZBUa8SASRxfjOT1VD7v9c6DD3IrCB6w5CEj
+         Fs60jDedv4yForfkIBqVYZT0VYPNg/kDAfM6Y5cA/ir2C02H8vNzn4VHKbqe+T2uOADd
+         vnOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fWe9Xm/SygIgWy3RbUeNViZ6QVXDkm4BEPvwFMxcd+s=;
-        b=xsq+BF5j1Ors2k1cvF8jdep2a0pFGAzZx+bTzgmhhXBEGEWSkKKrR0qDG6I/+L4mUr
-         qmH4DQNXH6jRwh6D0t69N5VJYnPekopD8O0daPYnidzyksGIdw24lAnWU6u/MrXxh/aq
-         b+HDwvTqL1AVDE8B02bSsuEzZYePIRtnDWigPPzXaPNJ9HTMsvaIRiI9UKCKtfgeVygB
-         dSTfyfP7D4T2kAWKOmQbgcgaKvzbysKzeoFKfxTCpQsP15amOgjETnYigMxgZWPXzCDN
-         +RWsDWsVgnIkEUqynUiU2bwamJwHHXCjIXtSw+0Nyk1JPzJKKlhtYWbuX/tCjJedwDNT
-         p9Lg==
-X-Gm-Message-State: ANoB5pni6Dm3y7G4u6FdoLP4B0ZK+jH6Df7jW9U7SnubJLhqswvLQbSb
-        C6/IF5gbjI9VmqdsTI3iGN8yL99LrT+txbE9CzE=
-X-Google-Smtp-Source: AA0mqf7aXSfyhMum5X6sdGXJ91BEwhKmECKXpCmJwsliL7fZvnoRifkOXwHU2/grpjZ++ibTiFaeHqdvYWyjSSKAySI=
-X-Received: by 2002:a9d:550d:0:b0:66d:6909:e477 with SMTP id
- l13-20020a9d550d000000b0066d6909e477mr49571938oth.114.1671290855289; Sat, 17
- Dec 2022 07:27:35 -0800 (PST)
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mbUCDigQrDEAWXrlIcVg/o4BfpXVvvWMcAFow8QvRAE=;
+        b=hTJiX2PSdxk2HS/FZNJ8iRBIPC/UDdg1kbkHbDCGEM2+7cuAcqyC1EH6Z1wnI717+Y
+         NlsJMjCMs1MSUWtBNVkTQW24H3Fkt2U6aA+3wmVwkYgCcgmRbLraW4eEEqqSjxc3+3tk
+         vBaaIBwOHUEb9oRw7UsrwcVC9zYt38crE7XcV71tb1H1d5fp6jzB2HqKVi30saS9yohw
+         0ixkrQwCO0zAiae3DmlhiLNjhk7vhZZHYrn5ufE4v6qcjJlxcxLK2HPeN+IotveVFDZ6
+         qPh+8Az6+c/94ETThWWKZJrrAuOFHQ3B0ro/AdGxXHAPujtZFIBvWzkEMVmaEzrHsaUD
+         eIfA==
+X-Gm-Message-State: ANoB5pkZDenXmfG81GQDRxI+FXxr8/ICDPMgFv8lJQlBErnIm0rNqiXG
+        2wmpgIZUcYDJHz1bQ5zufL9vzrp2yPTPkAEqMVMSMsZH4xs=
+X-Google-Smtp-Source: AA0mqf6X5wOJbztcfInM+sJNwTc+LBnO0B84xF1CdwB34dnxk9anzR37o7qKv8URxvL6XLS3mLjQ9mN+IlcfgPDjuc4=
+X-Received: by 2002:a05:6512:3f9a:b0:4b4:bcaf:5713 with SMTP id
+ x26-20020a0565123f9a00b004b4bcaf5713mr26263389lfa.103.1671292886132; Sat, 17
+ Dec 2022 08:01:26 -0800 (PST)
 MIME-Version: 1.0
-References: <20221216093552.3171319-1-karthik.188@gmail.com>
- <20221216093552.3171319-3-karthik.188@gmail.com> <xmqqcz8ikgxs.fsf@gitster.g>
-In-Reply-To: <xmqqcz8ikgxs.fsf@gitster.g>
-From:   Karthik Nayak <karthik.188@gmail.com>
-Date:   Sat, 17 Dec 2022 16:27:09 +0100
-Message-ID: <CAOLa=ZTXQ6e_JY+3jN6r52j71qTo5-OJBs-_vLaE_obn+3Fb1Q@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] attr: add flag `-r|--revisions` to work with revisions
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, toon@iotcl.com
+From:   Askar Safin <safinaskar@gmail.com>
+Date:   Sat, 17 Dec 2022 19:00:49 +0300
+Message-ID: <CAPnZJGABhczzs-6Pri2SAOkujJXT1+JDH9FiwdDns6=miZmvFQ@mail.gmail.com>
+Subject: https://github.com/rust-lang/rust is not bisectable
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 17, 2022 at 1:33 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> > diff --git a/attr.c b/attr.c
-> > index 42ad6de8c7..99883024ec 100644
-> > --- a/attr.c
-> > +++ b/attr.c
-> > @@ -11,8 +11,13 @@
-> >  #include "exec-cmd.h"
-> >  #include "attr.h"
-> >  #include "dir.h"
-> > +#include "git-compat-util.h"
->
-> Unneeded.  cf. Documentation/CodingGuidelines
->
->  - The first #include in C files, except in platform specific compat/
->    implementations, must be either "git-compat-util.h", "cache.h" or
->    "builtin.h".  You do not have to include more than one of these.
->
-> and this file already begins with including "cache.h".
->
+Hi. It seems that either "git bisect" has a bug, either repo at
+https://github.com/rust-lang/rust is broken.
 
-Thanks, I thought this was removed.
+(Keep in mind that Rust project has somehow custom git setup:
+https://doc.rust-lang.org/nightly/clippy/development/infrastructure/sync.html#patching-git-subtree-to-work-with-big-repos
+)
 
-> By the way,
->
->     $ make
->     $ cd t
->     $ sh t0003-attributes.sh -i -x
->     Initialized empty Git repository in /home/gitster/w/git.git/t/trash directory.t0003-attributes/.git/
->     expecting success of 0003.1 'open-quoted pathname':
->             echo "\"a test=a" >.gitattributes &&
->             attr_check a unspecified
->
->     ++ echo '"a test=a'
->     ++ attr_check a unspecified
->     ++ attr_check_basic a unspecified
->     ++ path=a
->     ++ expect=unspecified
->     ++ git_opts=
->     ++ git check-attr test -- a
->     t0003-attributes.sh: line 9: 1508946 Segmentation fault      git $git_opts check-attr test -- "$path" > actual 2> err
->     error: last command exited with $?=139
->     not ok 1 - open-quoted pathname
->     #
->     #           echo "\"a test=a" >.gitattributes &&
->     #           attr_check a unspecified
->     #
->     1..1
->     $ exit
->
-> there seems to be something fishy in this patch.
->
+So, here are steps to reproduce. I use fresh debian sid with git 2.39.0.
 
-Seems to be because tree_oid is not NULL initialized. I think I only
-tested the new
-feature, but the other tests are failing. Should be fixed with
+root@f6ca188fd101:/# git clone https://github.com/rust-lang/rust
+Cloning into 'rust'...
+remote: Enumerating objects: 2107155, done.
+remote: Counting objects: 100% (145/145), done.
+remote: Compressing objects: 100% (79/79), done.
+remote: Total 2107155 (delta 73), reused 102 (delta 64), pack-reused 2107010
+Receiving objects: 100% (2107155/2107155), 1009.95 MiB | 2.74 MiB/s, done.
+Resolving deltas: 100% (1647434/1647434), done.
+Updating files: 100% (38754/38754), done.
+root@f6ca188fd101:/# cd rust
 
-    -+  struct object_id tree_oid;
-    ++  struct object_id *tree_oid = NULL;
-        int cnt, i, doubledash, filei;
+Now let's notice that commit 7175c499ecc32cb3ff713be0bbac9fd12990a34e
+has word "bootstrap" in file "compiler/rustc_target/src/abi/mod.rs",
+but commit 49c2279ef658d8732597c4da93897d84838f3df5 (master as of
+2022-12-17) - does not.
 
-        if (!is_bare_repository())
-    @@ builtin/check-attr.c: int cmd_check_attr(int argc, const char
-**argv, const char
-                }
-        }
+Also, let's notice that 7175c499ecc32cb3ff713be0bbac9fd12990a34e is an
+ancestor of 49c2279ef658d8732597c4da93897d84838f3df5. (Everywhere I
+say that X is an ancestor of Y, I mean that X can be found in "git log
+Y", in other words "git log Y | grep -q '^commit X' " returns true.)
 
-    -+  if (revision)
-    -+          if (repo_get_oid_tree(the_repository, revision, &tree_oid))
-    ++  if (revision) {
-    ++          tree_oid = xmalloc(sizeof(struct object_id));
-    ++
-    ++          if (repo_get_oid_tree(the_repository, revision, tree_oid))
-     +                  error("%s: not a valid revision", revision);
-    ++  }
+Now let's find the first commit, which doesn't contain "bootstrap" in
+that file in this interval. Let's do it using "git bisect".
 
-will include in version 4. Thanks for the support, Junio.
+root@f6ca188fd101:/rust# git bisect start
+status: waiting for both good and bad commits
+root@f6ca188fd101:/rust# git bisect good
+7175c499ecc32cb3ff713be0bbac9fd12990a34e
+status: waiting for bad commit, 1 good commit known
+root@f6ca188fd101:/rust# git bisect bad 49c2279ef658d8732597c4da93897d84838f3df5
+Bisecting: 23901 revisions left to test after this (roughly 15 steps)
+[26562973b3482a635416b2b663a13016d4d90e20] Auto merge of #13653 -
+VannTen:fix/doc-typo-vim-lsp, r=Veykril
+
+Okay, so "git bisect" gave us commit
+26562973b3482a635416b2b663a13016d4d90e20. And here I see a bug:
+7175c499ecc32cb3ff713be0bbac9fd12990a34e is NOT ancestor of
+26562973b3482a635416b2b663a13016d4d90e20! But I think "git bisect"
+should give us some commit between "good" and "bad", so presumably
+"good" should be an ancestor of the commit returned by "git bisect".
 
 -- 
-- Karthik
+Askar Safin
