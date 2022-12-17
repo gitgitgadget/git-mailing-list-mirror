@@ -2,107 +2,86 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED20CC4332F
-	for <git@archiver.kernel.org>; Sat, 17 Dec 2022 17:38:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A14CC4332F
+	for <git@archiver.kernel.org>; Sat, 17 Dec 2022 21:53:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229844AbiLQRiP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Dec 2022 12:38:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55710 "EHLO
+        id S230015AbiLQVxy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Dec 2022 16:53:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229547AbiLQRiN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Dec 2022 12:38:13 -0500
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F0AF1144B
-        for <git@vger.kernel.org>; Sat, 17 Dec 2022 09:38:11 -0800 (PST)
-Received: by mail-ed1-x536.google.com with SMTP id v8so7718297edi.3
-        for <git@vger.kernel.org>; Sat, 17 Dec 2022 09:38:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=npPBBahI7V8wLM86WE/we797cQH56qDJQ9Wd84gp4iM=;
-        b=XFSOx4YGd9H9t4GOh6i+HtR+s5lKSBMvOGtGJC7s1+NT5pZdtMPYnHaaTlO3/NLmMB
-         dmH/04sPXuP6/ZbCQ2HFCKhWhAY1Yyo0FNYwySJ0q8169sHFnQqzuUdfEE3zKMKHQRRt
-         BFg2gODpHknsVkNK2qmfwROT/fhmiE7BgK0RdG4cyY/8j3ZAir4M/mS7fVc32zaouZfK
-         yFQlfNGwuwjxNl44C1eCz+ogMXSzJmmj+HbJLdG361Qppoh3+TIO/jYgNyrT9oS5o0Yj
-         ItRL4xyep35Tmr2F2eAuDn4xGidS7k4RztyU2h9UrmnP3k1zeCmInO9kToUvt3rqgXgd
-         DcKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=npPBBahI7V8wLM86WE/we797cQH56qDJQ9Wd84gp4iM=;
-        b=NAnM/Pf6dXNsVGQsNY7JY5erxkJupgrLB+4P1gnKsO9t3pHjOP4GBqVox79bJDq77y
-         ULrOWDGQHVUN28O+1Pn+Dnm7SYhWz7S+F9nckQ5+SFEa/plQpkoy3FkNZ+/29NBteFFK
-         +ws6FQ07FtxLbQBqOTsvdIdr15dIVPqSR3G+ZVNixhQMb4HA7k56Xa1pVFIic01xhBQC
-         Fi0tTCWCME9UCjsz9JkQJ9SQkUrO0A5JNa1Y9x7neqv9RrCRQGg8MFi/mkVDnsZsrenQ
-         R4wpFrctZcbs6qKvsSie8YvXMl7xfrmsupqhR0dF6AWdZgHeADUl3qX5lprYJDS5Q1Wa
-         7Bcg==
-X-Gm-Message-State: ANoB5plpmE7au8q7HcmQbplsl5nXRBXYo4t1HNIYNB4/f82W2DUZ4nA6
-        M3x4hGljbcXZW9Bqul4oQ1SqHJ9ov50=
-X-Google-Smtp-Source: AA0mqf7joVc2qJcAoV8GFj9qHoH844uD3CMwMFWStyLVleVGmck172BBcHPRZPGgFGxZG8ip4ee7TQ==
-X-Received: by 2002:a05:6402:3889:b0:462:9baa:e3ad with SMTP id fd9-20020a056402388900b004629baae3admr28400192edb.10.1671298689972;
-        Sat, 17 Dec 2022 09:38:09 -0800 (PST)
-Received: from localhost (78-131-14-113.pool.digikabel.hu. [78.131.14.113])
-        by smtp.gmail.com with ESMTPSA id kx22-20020a170907775600b007c17b3a4163sm2263142ejc.15.2022.12.17.09.38.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Dec 2022 09:38:09 -0800 (PST)
-Date:   Sat, 17 Dec 2022 18:37:58 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, vdye@github.com, avarab@gmail.com,
-        newren@gmail.com, Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v2 3/4] test-lib-functions: add helper for trailing hash
-Message-ID: <20221217173758.GB3411@szeder.dev>
-References: <pull.1439.git.1670433958.gitgitgadget@gmail.com>
- <pull.1439.v2.git.1670862677.gitgitgadget@gmail.com>
- <813e81a058227bd373cec802e443fcd677042fb4.1670862677.git.gitgitgadget@gmail.com>
- <20221212181438.GA3411@szeder.dev>
- <xmqqh6y0qfzg.fsf@gitster.g>
+        with ESMTP id S229506AbiLQVxw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Dec 2022 16:53:52 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4057DFDB
+        for <git@vger.kernel.org>; Sat, 17 Dec 2022 13:53:51 -0800 (PST)
+Received: (qmail 5372 invoked by uid 109); 17 Dec 2022 21:53:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 17 Dec 2022 21:53:51 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27939 invoked by uid 111); 17 Dec 2022 21:53:51 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 17 Dec 2022 16:53:51 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Sat, 17 Dec 2022 16:53:50 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] am: don't pass strvec to apply_parse_options()
+Message-ID: <Y546bgdvYIkfwTlv@coredump.intra.peff.net>
+References: <baf93e4a-7f05-857c-e551-09675496c03c@web.de>
+ <221213.86mt7r4ru2.gmgdl@evledraar.gmail.com>
+ <2d0d77a4-f6ac-1fa7-bddb-9083579d8dd7@web.de>
+ <Y53DAoJ4eK01rEji@coredump.intra.peff.net>
+ <91c5120d-bbd4-8aa5-a205-d1f5387a7f19@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqh6y0qfzg.fsf@gitster.g>
+In-Reply-To: <91c5120d-bbd4-8aa5-a205-d1f5387a7f19@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 13, 2022 at 09:55:47AM +0900, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
-> 
-> >> +	test_trailing_hash .git/index >hash &&
-> >> +	echo $(test_oid zero) >expect &&
+On Sat, Dec 17, 2022 at 05:07:12PM +0100, René Scharfe wrote:
+
+> > If we are just re-ordering argv, though, it feels like this could still
+> > work with a strvec. Right now a strvec with "nr" items will free items 0
+> > through nr-1, assuming that v[nr] is its NULL invariant. But it could
+> > free v[nr], too, in case the NULL was swapped into an earlier position.
 > >
-> > Nit: test_oid zero >expect
-> >
-> >> +	test_cmp expect hash &&
+> > It's a little weird already, because that swap has violated the
+> > invariant, so trying to strvec_push() onto it would cause confusing
+> > results. But if the general use case is to pass the strvec to
+> > parse_options(), get reordered, and then clear() it, it should work. If
+> > you wanted to get really fancy, push() et al could double-check the
+> > invariant and BUG().
 > 
-> Unfortunately they are not equivalent.
+> Yes, parse_options() and strvec are not fitting perfectly.  Changing the
+> former to reorder the elements and keeping them all would require
+> checking that all callers use the return value.  Feels like a lot of work.
+
+I think we're already munging the strvec arrays in the option parser,
+though. I'm just suggesting that parse_options() swap arguments to the
+end instead of overwriting a NULL (actually, I'm not even sure it
+doesn't do that already), and strvec_clear() checking the final element.
+The end state is not necessarily safe, but it's no worse than what we
+have today.
+
+That said...
+
+> A variant that takes a strvec and removes and frees parsed items from it
+> would be clean, but would require refactoring indirect callers like
+> apply_parse_options() users.  Busywork.
 > 
-> Usually we write these helpers to terminate their output with LF,
-> relying on the fact that terminating LF will be dropped when used in
-> a command substition, e.g. VAR=$(HELPER), but test_oid deviates from
-> the pattern and does not give the terminating LF to its output.
+> Making a shallow copy to give to parse_options() in callers that currently
+> pass a strvec directly or indirectly seems like the simplest solution to
+> me for now.
 
-Oh, indeed.  But why does it omit the trailing LF?!  Alas, 2c02b110da
-(t: add test functions to translate hash-related values, 2018-09-13)
-doesn't seem to mention anything about it.  However, skimming through
-the output of
+Yes, I thought your original patch actually got to the root of the
+problem. strvec owns the array and its elements, and parse-options wants
+to munge the array itself (but not the elements). Making a shallow copy
+is eliminates the conflict over ownership.
 
-  git grep 'test_oid ' -- ':/t/*.sh'
-
-it appears that all but three uses of 'test_oid' are in command
-substitutions, and those three exceptions are in t0000 checking that
-'test_oid' actually works.  So I don't see any benefit of omitting
-that trailing LF, but this and similar cases show its drawbacks.
-
-  $ git grep 'echo $(test_oid ' -- ':/t/*.sh'
-  t/t1302-repo-version.sh:        echo $(test_oid version) >expect &&
-  t/t5313-pack-bounds-checks.sh:  echo $(test_oid oidfff) >file &&
-
-
+-Peff
