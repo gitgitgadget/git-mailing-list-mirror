@@ -2,86 +2,155 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6BE1AC4167B
-	for <git@archiver.kernel.org>; Sat, 17 Dec 2022 14:52:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B9FADC4332F
+	for <git@archiver.kernel.org>; Sat, 17 Dec 2022 15:24:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229823AbiLQOwx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Dec 2022 09:52:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52172 "EHLO
+        id S229774AbiLQPYC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Dec 2022 10:24:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59820 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229737AbiLQOww (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Dec 2022 09:52:52 -0500
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6979713F8F
-        for <git@vger.kernel.org>; Sat, 17 Dec 2022 06:52:51 -0800 (PST)
-Received: by mail-ot1-x32e.google.com with SMTP id db10-20020a0568306b0a00b0066d43e80118so3048776otb.1
-        for <git@vger.kernel.org>; Sat, 17 Dec 2022 06:52:51 -0800 (PST)
+        with ESMTP id S229613AbiLQPYA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Dec 2022 10:24:00 -0500
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C06BEE05
+        for <git@vger.kernel.org>; Sat, 17 Dec 2022 07:23:58 -0800 (PST)
+Received: by mail-oo1-xc35.google.com with SMTP id x38-20020a4a97e9000000b004a5d69cfc90so809221ooi.6
+        for <git@vger.kernel.org>; Sat, 17 Dec 2022 07:23:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=NJ1FtX0fW7RtRf/2INuoKOMilH4yrNOAW/2FG1Ty/Wk=;
-        b=QfMQ1iLYOqxzgtrKTqEQtviwU6m8VtE1DeslXCsie40A5hMMJ2Xxg0fBYMXP/FcDT3
-         r20P7KodP/EC/BwbA8MCXpTUM0YdAZC1M3++SgCchnfVRFE2Gr39hlsSb0jnQ0fTKiny
-         2ehHN/c0UuNneoXQBKY3sqZmMskr9YuoJyetraToc4/cvE1xGMumW1/rBITF1pFin+qx
-         /6M6PJhrPmaykaRohBI6ZPi1OmzPDA0MZA3KponrSFYEiWXioZeaw81BuHmv7yIP8UMT
-         Qa3kTgky0FU2ZeSAO0+/Mt0OEgzKnWk8TxLH9ctOVgHBwrN5w0SatQxoQ00BDZt0FPgW
-         3Zug==
+        bh=8R6E/5QVpGgcoVxiEmho9IbWMCULh+lsa+EGf6Ej2og=;
+        b=DuHVITsGIqDi0VjGAapSgQ1tEf1TRY62xQ+ST+tgVLD63eGTY46WzguWe5UCr0ZDpA
+         03e8XDyzASu4NPQxq7aNjI0tDgZZtbMaQ6aMGxwS8mjV8hp/yDahbXjhwfuOq6/OSyCG
+         +q8/1p31bbxjn9EXpZfBnYaA29M05ugf9DyywgjxgWdSMo8xbbyE86XdsXRFxR9B4KU2
+         qvVWp1Xqi2GInI3ghZeGtRPZdvcElqjEIRXfM795zrUHTNdgzlxAbfGQYo0lqXSedkSa
+         mhA9CDmF3M44BTQCM534jGExAYBm9C0btq915R0ak297EtjnnVaKWqjinCupzwtyDMvu
+         kLug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=NJ1FtX0fW7RtRf/2INuoKOMilH4yrNOAW/2FG1Ty/Wk=;
-        b=06ac62gldr6CVfGAZrit4sSextxWIJ2Xv44np81Tpa8NnsnUKA+YYGN6oYK1riKIuF
-         0LRojkdYJxTvgSbjUKuIbO0qAOHrofQMoboYZ9ANt9OBvt+GlgGYsyA4yCN4BCMqwOT3
-         FVPoWf5IGiL/sARECBRE49ZFjUKGwTc4jqsJQrzVbtzSO6TC+3FtQ+BrN0eOMVK0b5Tb
-         oDGwPoX3O+aNXOkC333SnqC2w5UqcysIDrlk9CffzhbOTkvESTjkhUjmfL8u5hgcgt4L
-         usqpax7w0ieoTsNaxLjJ6eabPkPg3UiXrIgBhCn+vNGjt/y8Q//0kmRQPOJtl7TUC18P
-         rxUA==
-X-Gm-Message-State: ANoB5plPma96vCr4KMzAjlwr3XovLqV4W4JHksJdYreHSdQz6BSG2Mgy
-        9gbwFcw4tLrf2VUtVZt4FLRxl/fCSs5DxBdzJyXl5JCpPg8=
-X-Google-Smtp-Source: AA0mqf71ylMqkP6yc4TK1wtenZqx2duV+NPAXKR5ubHsumc3tpcdXD9cQ07doiX2ImcoxonWyK3nnZxNjLvpfdvIEec=
-X-Received: by 2002:a9d:550d:0:b0:66d:6909:e477 with SMTP id
- l13-20020a9d550d000000b0066d6909e477mr49566565oth.114.1671288769267; Sat, 17
- Dec 2022 06:52:49 -0800 (PST)
+        bh=8R6E/5QVpGgcoVxiEmho9IbWMCULh+lsa+EGf6Ej2og=;
+        b=zkTp2vPiXG8MXcbsZk2UlJmWLRk1roKj17ozhzPktdGZxIdg9+b0o7YZqhXZLrlL/M
+         dXgj3MgnIXZhVq6hHVGd8lqau8IJP+O+u8yqI10+rBawBMzcFBPTUXaJ51z1ZFD1cmgP
+         BTb+FVkpHQg/Pucr15YKAnLDDJ5TpeBBtxgWUInde0XXt8pgPcVTmosyqvFMH7fMQS5Z
+         4km9QlbgTXLqCz34bL/sGnq5DXNiPDBVcZ57xY50hsZ8SLXHypwG6WyOgKAIynMmmQjj
+         WPTTzpeOmxnzElXgnDm6qCzC40LlOuHOvEZtSNTw0OdpFgUgylYDCmhNmc41eh8q8kSP
+         Le4w==
+X-Gm-Message-State: ANoB5plAPmpZgL8puLXqxetG9m7MsQBpEQmuitOPdwMSAqdWlWSTV7Aj
+        mxSOp46n1RKf/mkTeJALp7Ev/ItZJ4EZai2kNgnYPrehWYiLIw==
+X-Google-Smtp-Source: AA0mqf5P9p2mQv+XZmtKMZzEPUP39Ep022AkCm+FL8qql6LEz54PCdHVM5wduPQ7AxnUiAscGvpTBdf5AbydnoZZNLc=
+X-Received: by 2002:a05:6820:1b15:b0:4a0:91e7:8b51 with SMTP id
+ bv21-20020a0568201b1500b004a091e78b51mr12275730oob.64.1671290637708; Sat, 17
+ Dec 2022 07:23:57 -0800 (PST)
 MIME-Version: 1.0
-References: <20221216093552.3171319-1-karthik.188@gmail.com> <071e44b5-607e-0db5-af90-85daae81f611@dunelm.org.uk>
-In-Reply-To: <071e44b5-607e-0db5-af90-85daae81f611@dunelm.org.uk>
+References: <20221216093552.3171319-1-karthik.188@gmail.com>
+ <20221216093552.3171319-3-karthik.188@gmail.com> <xmqqr0wykj59.fsf@gitster.g>
+In-Reply-To: <xmqqr0wykj59.fsf@gitster.g>
 From:   Karthik Nayak <karthik.188@gmail.com>
-Date:   Sat, 17 Dec 2022 15:52:23 +0100
-Message-ID: <CAOLa=ZRp+JjFbdhyv9wFLyQgKmQN8p6xwUsHe7=254_q6xqPxQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] check-attr: add support to work with revisions
-To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, toon@iotcl.com,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
+Date:   Sat, 17 Dec 2022 16:23:31 +0100
+Message-ID: <CAOLa=ZSo7zMVB6c-9gjAS-1zKkdVbRmUV02q4hT_LbU8dAt0tw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] attr: add flag `-r|--revisions` to work with revisions
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, toon@iotcl.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 17, 2022 at 11:53 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
-> > This is specifically useful in bare repositories wherein the gitattributes are
-> > only present in the git working tree but not available directly on the
-> > filesystem.
+On Sat, Dec 17, 2022 at 12:45 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> I was thinking about this and wondering if the problem is really that
-> bare repositories ignore attributes because they don't have a working
-> copy. If that's the case then we should perhaps be looking to fix that
-> so that all git commands such as diff as log benefit rather than just
-> adding a flag to check-attr. A simple solution would be to read the
-> attributes from HEAD in a bare repository in the same way that we
-> fallback to the index if there are no attributes in the working copy for
-> non-bare repositories.
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+> > ... to optionally allow the users
+> > to check attributes against paths from older commits.
+>
+> The above makes it sounds as if attributes are taken from places
+> that are unrelated to the "older commits" and the point of the
+> change allows "paths in an older commit" to be inspected.  I do not
+> think that is what is going on, though.  Isn't the point of the patch
+> to take attributes definitions from arbitrary tree-ish?
+>
+> Also, "older commits" is misleading.  You may be chasing a bug in
+> older codebase and you have a checkout of an old commit, but you
+> know you have corrected the attributes definition since that old
+> version.  In such a case, you may want to take the attributes from
+> the latest release and apply to the currently checked out working
+> tree or commit that is older.  That is checking attributes taken
+> from newer commit.
+>
+>         ... to check attributes taken from a commit other than HEAD
+>         against paths.
+>
+> or something, perhaps?
 >
 
-This is actually the direction I started this series in, but I soon
-realized it's also useful
-to have a more generic version (which is currently what we have in
-this patch series)
-which also satisfies the bare repository scenario. It seemed like a
-natural extension.
+I agree with your wording, it's much better. I'll stick to it.
 
-I thought it's also useful because it lets you see how attributes
-changes over history.
+> > Add a new flag `--revision`/`-r` which will allow users to check the
+> > attributes against a tree-ish revision.
+>
+> "tree-ish revision" sounds a bit strange.  We used to use "revision"
+> very loosely to mean an "object name", but we weaned ourselves off
+> of such a loose terminology over time.  These days, the word
+> "revision" only refers to a commit (or commit-ish).
+>
+> I would understand "... against a tree-ish."  If you feared that
+> "tree-ish" is not widely understood (which is a valid concern), then
+> "... against a commit (actually any tree-ish would do)" is probably
+> what I would write.
+>
+
+Thanks for explaining, I somehow keep associating revision to be the universal
+set, which consists of tree, commit. I'll use your wording though.
+
+>
+> > Since we use a tree-ish object, the user can pass "-r HEAD:subdirectory"
+> > and all the attributes will be looked up as if subdirectory was the root
+> > directory of the repository.
+>
+> Is this meant to explain a feature, or a misfeature?  In other
+> words, when would this be useful?  I would omit this paragraph if I
+> were writing it.
+
+It's a misfeature to be honest, I think it was called out in the
+previous version
+of the series. I'm happy to drop it, because I initially didn't include it.
+
+https://lore.kernel.org/git/674caf56-940b-8130-4a5e-ea8dc4783e81@dunelm.org.uk/
+
+>
+> > We cannot use the `<rev>:<path>` syntax like the one used in `git show`
+> > because any non-flag parameter before `--` is treated as an attribute
+> > and any parameter after `--` is treated as a pathname.
+>
+> I do not see what this one wants to say.  <rev>:<path> is an
+> established way to name an object that is sitting at the <path> in
+> the tree-ish whose name is <rev>.  The user can use "-r
+> <rev>:<path>" and if the <path> in <rev> is a tree, then all the
+> attributes will be looked up as if <path> were the root.  So the
+> users can use the <rev>:<path> syntax, cannot they?
+>
+
+Yes ofcourse, this one merely is stating why we cannot use `<rev>:<path>`
+directly (i.e. without the --revision flag).
+
+I'll correct it to:
+
+    We cannot simply use the `<rev>:<path>` syntax without the `--revision`
+    flag, similar to how it is used in `git show` because any non-flag
+    parameter before `--` is treated as an attribute and any parameter after
+    `--` is treated as a pathname.
+
+> > Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> > Co-authored-by: toon@iotcl.com
+>
+> Co-authoring is fine, but as one of the copyright holder, the other
+> author needs to sign it off, too.
+
+Can I simply add this, or does Toon need to provide his approval on this list?
+
+-- 
+- Karthik
