@@ -2,93 +2,102 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 989BFC4332F
-	for <git@archiver.kernel.org>; Sat, 17 Dec 2022 13:13:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 422DBC4332F
+	for <git@archiver.kernel.org>; Sat, 17 Dec 2022 13:24:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230123AbiLQNNH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Dec 2022 08:13:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56870 "EHLO
+        id S230305AbiLQNYX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Dec 2022 08:24:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229452AbiLQNNF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Dec 2022 08:13:05 -0500
+        with ESMTP id S230253AbiLQNYV (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Dec 2022 08:24:21 -0500
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF9C217416
-        for <git@vger.kernel.org>; Sat, 17 Dec 2022 05:13:03 -0800 (PST)
-Received: (qmail 1905 invoked by uid 109); 17 Dec 2022 13:13:02 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 335DD1742A
+        for <git@vger.kernel.org>; Sat, 17 Dec 2022 05:24:20 -0800 (PST)
+Received: (qmail 1962 invoked by uid 109); 17 Dec 2022 13:24:19 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 17 Dec 2022 13:13:02 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 17 Dec 2022 13:24:19 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 22622 invoked by uid 111); 17 Dec 2022 13:13:02 -0000
+Received: (qmail 22682 invoked by uid 111); 17 Dec 2022 13:24:19 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 17 Dec 2022 08:13:02 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 17 Dec 2022 08:24:19 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Sat, 17 Dec 2022 08:13:02 -0500
+Date:   Sat, 17 Dec 2022 08:24:18 -0500
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH 0/5] strvec: add a "nodup" mode, fix memory leaks
-Message-ID: <Y53AXmfabIvdkfZz@coredump.intra.peff.net>
-References: <221214.86ilie48cv.gmgdl@evledraar.gmail.com>
- <RFC-cover-0.5-00000000000-20221215T090226Z-avarab@gmail.com>
+Subject: Re: [PATCH] am: don't pass strvec to apply_parse_options()
+Message-ID: <Y53DAoJ4eK01rEji@coredump.intra.peff.net>
+References: <baf93e4a-7f05-857c-e551-09675496c03c@web.de>
+ <221213.86mt7r4ru2.gmgdl@evledraar.gmail.com>
+ <2d0d77a4-f6ac-1fa7-bddb-9083579d8dd7@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <RFC-cover-0.5-00000000000-20221215T090226Z-avarab@gmail.com>
+In-Reply-To: <2d0d77a4-f6ac-1fa7-bddb-9083579d8dd7@web.de>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 15, 2022 at 10:11:06AM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Tue, Dec 13, 2022 at 07:31:13PM +0100, René Scharfe wrote:
 
-> This is an alternative to René's [1], his already fixes a leak in "git
-> am", and this could be done later, so I'm submitting it as RFC, but it
-> could also replace it.
+> > I think less of a hack is to teach the eventual parse_options() that
+> > when it munges it it should free() it. I did that for the revisions API
+> > in f92dbdbc6a8 (revisions API: don't leak memory on argv elements that
+> > need free()-ing, 2022-08-02).
+> >
+> > What do you think?
 > 
-> I think as this series shows extending the "strvec" API to get a
-> feature that works like the existing "strdup_strings" that the "struct
-> string_list" has can make memory management much simpler.
+> Generating string lists and then parsing them is weird.  When calls have
+> to cross a process boundary then we have no choice, but in-process we
+> shouldn't have to lower our request to an intermediate text format.  git
+> am does it anyway because it writes its options to a file and reads them
+> back when it resumes with --continue, IIUC.
 
-I know this is kind of a surface level review, but...please don't do
-this. We have chased so many bugs over the years due to string-list's
-"maybe this is allocated and maybe not", in both directions (accidental
-leaks and double-frees).
+The argument has been made[1] in the past that the public API for the
+revision machinery is not poking bits in the rev_info struct yourself,
+but passing the appropriate options to setup_revisions().
 
-One of the reasons I advocated for strvec in the first place is so that
-it would have consistent memory management semantics, at the minor cost
-of sometimes duplicating them when we don't need to.
+And I can see the point; if option "--foo" requires twiddling both
+revs.foo and revs.bar, then we have no way to enforce that callers have
+remembered to do both. But if the only code which handles this is the
+parser for "--foo", then we're OK.
 
-And having a nodup form doesn't even save you from having to call
-strvec_clear(); you still need to do so to avoid leaking the array
-itself. It only helps in the weird parse-options case, where we don't
-handle ownership of the array very well (the strvec owns it, but
-parse-options wants to modify it).
+In a non-C language, we'd probably mark "foo" and "bar" as private and
+provide a method to enable the option. We could provide a function, but
+we'd have no compiler help to ensure that it was used over fiddling the
+bits. Possibly calling them "foo_private" would be sufficient to make
+people think twice about tweaking them, though.
 
-> This does make the API slightly more dangerous to use, as it's no
-> longer guaranteed that it owns all the members it points to. But as
-> the "struct string_list" has shown this isn't an issue in practice,
-> and e.g. SANITIZE=address et al are good about finding double-frees,
-> or frees of fixed strings.
+[1] Apologies for the passive voice; I didn't want to muddle the
+    paragraph by discussing who and when. But I know this is an argument
+    Junio has made; I don't know if he still stands by it these days
+    (there is quite a lot of field-twiddling of rev_info by now). I'm
+    not sure to what degree I agree with it myself, but I thought it was
+    worth mentioning here.
 
-I would disagree that this hasn't been an issue in practice. A few
-recent examples:
+> If we have to change parse_options() at all then I'd prefer it to not
+> free() anything (to keep it usable with main()'s parameters), but to
+> reorder in a non-destructive way.  That would mean keeping the NULL
+> sentinel where it is, and making sure all callers use only the returned
+> argc to determine which arguments parse_options() didn't recognize.
 
-  - 5eeb9aa208 (refs: fix memory leak when parsing hideRefs config,
-    2022-11-17)
-  - 7e2619d8ff (list_objects_filter_options: plug leak of filter_spec
-    strings, 2022-09-08)
-  - 4c81ee9669 (submodule--helper: fix "reference" leak, 2022-09-01)
+My findings with -Wunused-parameter show that there are quite a lot of
+places that take argv/argc but assume the NULL-termination of the argv.
 
-Now you could argue that those leaks might still exist if we only had a
-duplicating version of string-list (after all, the problem in a leak is
-an extra duplication). But IMHO it is the ambiguity and the games we
-play with setting/unsetting the strdup_strings field that lead to these
-errors.
+If we are just re-ordering argv, though, it feels like this could still
+work with a strvec. Right now a strvec with "nr" items will free items 0
+through nr-1, assuming that v[nr] is its NULL invariant. But it could
+free v[nr], too, in case the NULL was swapped into an earlier position.
 
-And yes, leak-checking and sanitizers can sometimes find these bugs. But
-that implies triggering the bug in the test suite. And it implies extra
-time to track and fix them. An interface which is harder to get wrong in
-the first place is preferable.
+It's a little weird already, because that swap has violated the
+invariant, so trying to strvec_push() onto it would cause confusing
+results. But if the general use case is to pass the strvec to
+parse_options(), get reordered, and then clear() it, it should work. If
+you wanted to get really fancy, push() et al could double-check the
+invariant and BUG().
 
 -Peff
