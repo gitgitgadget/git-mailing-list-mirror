@@ -2,56 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9FADC4332F
-	for <git@archiver.kernel.org>; Sat, 17 Dec 2022 15:24:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6EA11C3DA78
+	for <git@archiver.kernel.org>; Sat, 17 Dec 2022 15:27:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229774AbiLQPYC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Dec 2022 10:24:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59820 "EHLO
+        id S229737AbiLQP1j (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Dec 2022 10:27:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60578 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229613AbiLQPYA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Dec 2022 10:24:00 -0500
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C06BEE05
-        for <git@vger.kernel.org>; Sat, 17 Dec 2022 07:23:58 -0800 (PST)
-Received: by mail-oo1-xc35.google.com with SMTP id x38-20020a4a97e9000000b004a5d69cfc90so809221ooi.6
-        for <git@vger.kernel.org>; Sat, 17 Dec 2022 07:23:58 -0800 (PST)
+        with ESMTP id S229524AbiLQP1g (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Dec 2022 10:27:36 -0500
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 090B412621
+        for <git@vger.kernel.org>; Sat, 17 Dec 2022 07:27:36 -0800 (PST)
+Received: by mail-ot1-x332.google.com with SMTP id i26-20020a9d68da000000b00672301a1664so3062258oto.6
+        for <git@vger.kernel.org>; Sat, 17 Dec 2022 07:27:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8R6E/5QVpGgcoVxiEmho9IbWMCULh+lsa+EGf6Ej2og=;
-        b=DuHVITsGIqDi0VjGAapSgQ1tEf1TRY62xQ+ST+tgVLD63eGTY46WzguWe5UCr0ZDpA
-         03e8XDyzASu4NPQxq7aNjI0tDgZZtbMaQ6aMGxwS8mjV8hp/yDahbXjhwfuOq6/OSyCG
-         +q8/1p31bbxjn9EXpZfBnYaA29M05ugf9DyywgjxgWdSMo8xbbyE86XdsXRFxR9B4KU2
-         qvVWp1Xqi2GInI3ghZeGtRPZdvcElqjEIRXfM795zrUHTNdgzlxAbfGQYo0lqXSedkSa
-         mhA9CDmF3M44BTQCM534jGExAYBm9C0btq915R0ak297EtjnnVaKWqjinCupzwtyDMvu
-         kLug==
+        bh=fWe9Xm/SygIgWy3RbUeNViZ6QVXDkm4BEPvwFMxcd+s=;
+        b=DkLBeJRIhsK3PqIwBpR5SBHMpn/xtBuoeDFASoPfthB5xa0iaAp6fMzwZXeSTjvKRX
+         /S1kgEe/T0qpu9qiuNX3iLtnxgna6yWopRprrMgsO+kpwXVXdYreP+8KPzZ9xequfZws
+         txM4EonxZz3RRufqn59CUyEv7ZZeHFITHUsvDnidSbUtzCCGJ9ILZvHA2A7yqp0J2AeT
+         g0FDhZUela5GzKX6ynuWvQq3bD6HfFxr3gJIFsjCHI4FUNAvF8eGL8lQiFmDKezWlMDI
+         e6ld7Ia7Z8KYDUguYbvBsXLqYpNaNruhbcec1ZbzUDr1TlzkpyIQhsk/XAaOHf27ViIG
+         K4mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8R6E/5QVpGgcoVxiEmho9IbWMCULh+lsa+EGf6Ej2og=;
-        b=zkTp2vPiXG8MXcbsZk2UlJmWLRk1roKj17ozhzPktdGZxIdg9+b0o7YZqhXZLrlL/M
-         dXgj3MgnIXZhVq6hHVGd8lqau8IJP+O+u8yqI10+rBawBMzcFBPTUXaJ51z1ZFD1cmgP
-         BTb+FVkpHQg/Pucr15YKAnLDDJ5TpeBBtxgWUInde0XXt8pgPcVTmosyqvFMH7fMQS5Z
-         4km9QlbgTXLqCz34bL/sGnq5DXNiPDBVcZ57xY50hsZ8SLXHypwG6WyOgKAIynMmmQjj
-         WPTTzpeOmxnzElXgnDm6qCzC40LlOuHOvEZtSNTw0OdpFgUgylYDCmhNmc41eh8q8kSP
-         Le4w==
-X-Gm-Message-State: ANoB5plAPmpZgL8puLXqxetG9m7MsQBpEQmuitOPdwMSAqdWlWSTV7Aj
-        mxSOp46n1RKf/mkTeJALp7Ev/ItZJ4EZai2kNgnYPrehWYiLIw==
-X-Google-Smtp-Source: AA0mqf5P9p2mQv+XZmtKMZzEPUP39Ep022AkCm+FL8qql6LEz54PCdHVM5wduPQ7AxnUiAscGvpTBdf5AbydnoZZNLc=
-X-Received: by 2002:a05:6820:1b15:b0:4a0:91e7:8b51 with SMTP id
- bv21-20020a0568201b1500b004a091e78b51mr12275730oob.64.1671290637708; Sat, 17
- Dec 2022 07:23:57 -0800 (PST)
+        bh=fWe9Xm/SygIgWy3RbUeNViZ6QVXDkm4BEPvwFMxcd+s=;
+        b=xsq+BF5j1Ors2k1cvF8jdep2a0pFGAzZx+bTzgmhhXBEGEWSkKKrR0qDG6I/+L4mUr
+         qmH4DQNXH6jRwh6D0t69N5VJYnPekopD8O0daPYnidzyksGIdw24lAnWU6u/MrXxh/aq
+         b+HDwvTqL1AVDE8B02bSsuEzZYePIRtnDWigPPzXaPNJ9HTMsvaIRiI9UKCKtfgeVygB
+         dSTfyfP7D4T2kAWKOmQbgcgaKvzbysKzeoFKfxTCpQsP15amOgjETnYigMxgZWPXzCDN
+         +RWsDWsVgnIkEUqynUiU2bwamJwHHXCjIXtSw+0Nyk1JPzJKKlhtYWbuX/tCjJedwDNT
+         p9Lg==
+X-Gm-Message-State: ANoB5pni6Dm3y7G4u6FdoLP4B0ZK+jH6Df7jW9U7SnubJLhqswvLQbSb
+        C6/IF5gbjI9VmqdsTI3iGN8yL99LrT+txbE9CzE=
+X-Google-Smtp-Source: AA0mqf7aXSfyhMum5X6sdGXJ91BEwhKmECKXpCmJwsliL7fZvnoRifkOXwHU2/grpjZ++ibTiFaeHqdvYWyjSSKAySI=
+X-Received: by 2002:a9d:550d:0:b0:66d:6909:e477 with SMTP id
+ l13-20020a9d550d000000b0066d6909e477mr49571938oth.114.1671290855289; Sat, 17
+ Dec 2022 07:27:35 -0800 (PST)
 MIME-Version: 1.0
 References: <20221216093552.3171319-1-karthik.188@gmail.com>
- <20221216093552.3171319-3-karthik.188@gmail.com> <xmqqr0wykj59.fsf@gitster.g>
-In-Reply-To: <xmqqr0wykj59.fsf@gitster.g>
+ <20221216093552.3171319-3-karthik.188@gmail.com> <xmqqcz8ikgxs.fsf@gitster.g>
+In-Reply-To: <xmqqcz8ikgxs.fsf@gitster.g>
 From:   Karthik Nayak <karthik.188@gmail.com>
-Date:   Sat, 17 Dec 2022 16:23:31 +0100
-Message-ID: <CAOLa=ZSo7zMVB6c-9gjAS-1zKkdVbRmUV02q4hT_LbU8dAt0tw@mail.gmail.com>
+Date:   Sat, 17 Dec 2022 16:27:09 +0100
+Message-ID: <CAOLa=ZTXQ6e_JY+3jN6r52j71qTo5-OJBs-_vLaE_obn+3Fb1Q@mail.gmail.com>
 Subject: Re: [PATCH v3 2/2] attr: add flag `-r|--revisions` to work with revisions
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, toon@iotcl.com
@@ -60,97 +60,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 17, 2022 at 12:45 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Sat, Dec 17, 2022 at 1:33 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Karthik Nayak <karthik.188@gmail.com> writes:
+> > diff --git a/attr.c b/attr.c
+> > index 42ad6de8c7..99883024ec 100644
+> > --- a/attr.c
+> > +++ b/attr.c
+> > @@ -11,8 +11,13 @@
+> >  #include "exec-cmd.h"
+> >  #include "attr.h"
+> >  #include "dir.h"
+> > +#include "git-compat-util.h"
 >
-> > ... to optionally allow the users
-> > to check attributes against paths from older commits.
+> Unneeded.  cf. Documentation/CodingGuidelines
 >
-> The above makes it sounds as if attributes are taken from places
-> that are unrelated to the "older commits" and the point of the
-> change allows "paths in an older commit" to be inspected.  I do not
-> think that is what is going on, though.  Isn't the point of the patch
-> to take attributes definitions from arbitrary tree-ish?
+>  - The first #include in C files, except in platform specific compat/
+>    implementations, must be either "git-compat-util.h", "cache.h" or
+>    "builtin.h".  You do not have to include more than one of these.
 >
-> Also, "older commits" is misleading.  You may be chasing a bug in
-> older codebase and you have a checkout of an old commit, but you
-> know you have corrected the attributes definition since that old
-> version.  In such a case, you may want to take the attributes from
-> the latest release and apply to the currently checked out working
-> tree or commit that is older.  That is checking attributes taken
-> from newer commit.
->
->         ... to check attributes taken from a commit other than HEAD
->         against paths.
->
-> or something, perhaps?
+> and this file already begins with including "cache.h".
 >
 
-I agree with your wording, it's much better. I'll stick to it.
+Thanks, I thought this was removed.
 
-> > Add a new flag `--revision`/`-r` which will allow users to check the
-> > attributes against a tree-ish revision.
+> By the way,
 >
-> "tree-ish revision" sounds a bit strange.  We used to use "revision"
-> very loosely to mean an "object name", but we weaned ourselves off
-> of such a loose terminology over time.  These days, the word
-> "revision" only refers to a commit (or commit-ish).
+>     $ make
+>     $ cd t
+>     $ sh t0003-attributes.sh -i -x
+>     Initialized empty Git repository in /home/gitster/w/git.git/t/trash directory.t0003-attributes/.git/
+>     expecting success of 0003.1 'open-quoted pathname':
+>             echo "\"a test=a" >.gitattributes &&
+>             attr_check a unspecified
 >
-> I would understand "... against a tree-ish."  If you feared that
-> "tree-ish" is not widely understood (which is a valid concern), then
-> "... against a commit (actually any tree-ish would do)" is probably
-> what I would write.
+>     ++ echo '"a test=a'
+>     ++ attr_check a unspecified
+>     ++ attr_check_basic a unspecified
+>     ++ path=a
+>     ++ expect=unspecified
+>     ++ git_opts=
+>     ++ git check-attr test -- a
+>     t0003-attributes.sh: line 9: 1508946 Segmentation fault      git $git_opts check-attr test -- "$path" > actual 2> err
+>     error: last command exited with $?=139
+>     not ok 1 - open-quoted pathname
+>     #
+>     #           echo "\"a test=a" >.gitattributes &&
+>     #           attr_check a unspecified
+>     #
+>     1..1
+>     $ exit
 >
-
-Thanks for explaining, I somehow keep associating revision to be the universal
-set, which consists of tree, commit. I'll use your wording though.
-
->
-> > Since we use a tree-ish object, the user can pass "-r HEAD:subdirectory"
-> > and all the attributes will be looked up as if subdirectory was the root
-> > directory of the repository.
->
-> Is this meant to explain a feature, or a misfeature?  In other
-> words, when would this be useful?  I would omit this paragraph if I
-> were writing it.
-
-It's a misfeature to be honest, I think it was called out in the
-previous version
-of the series. I'm happy to drop it, because I initially didn't include it.
-
-https://lore.kernel.org/git/674caf56-940b-8130-4a5e-ea8dc4783e81@dunelm.org.uk/
-
->
-> > We cannot use the `<rev>:<path>` syntax like the one used in `git show`
-> > because any non-flag parameter before `--` is treated as an attribute
-> > and any parameter after `--` is treated as a pathname.
->
-> I do not see what this one wants to say.  <rev>:<path> is an
-> established way to name an object that is sitting at the <path> in
-> the tree-ish whose name is <rev>.  The user can use "-r
-> <rev>:<path>" and if the <path> in <rev> is a tree, then all the
-> attributes will be looked up as if <path> were the root.  So the
-> users can use the <rev>:<path> syntax, cannot they?
+> there seems to be something fishy in this patch.
 >
 
-Yes ofcourse, this one merely is stating why we cannot use `<rev>:<path>`
-directly (i.e. without the --revision flag).
+Seems to be because tree_oid is not NULL initialized. I think I only
+tested the new
+feature, but the other tests are failing. Should be fixed with
 
-I'll correct it to:
+    -+  struct object_id tree_oid;
+    ++  struct object_id *tree_oid = NULL;
+        int cnt, i, doubledash, filei;
 
-    We cannot simply use the `<rev>:<path>` syntax without the `--revision`
-    flag, similar to how it is used in `git show` because any non-flag
-    parameter before `--` is treated as an attribute and any parameter after
-    `--` is treated as a pathname.
+        if (!is_bare_repository())
+    @@ builtin/check-attr.c: int cmd_check_attr(int argc, const char
+**argv, const char
+                }
+        }
 
-> > Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> > Co-authored-by: toon@iotcl.com
->
-> Co-authoring is fine, but as one of the copyright holder, the other
-> author needs to sign it off, too.
+    -+  if (revision)
+    -+          if (repo_get_oid_tree(the_repository, revision, &tree_oid))
+    ++  if (revision) {
+    ++          tree_oid = xmalloc(sizeof(struct object_id));
+    ++
+    ++          if (repo_get_oid_tree(the_repository, revision, tree_oid))
+     +                  error("%s: not a valid revision", revision);
+    ++  }
 
-Can I simply add this, or does Toon need to provide his approval on this list?
+will include in version 4. Thanks for the support, Junio.
 
 -- 
 - Karthik
