@@ -2,129 +2,120 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 497BAC4332F
-	for <git@archiver.kernel.org>; Sun, 18 Dec 2022 03:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AB11FC4167B
+	for <git@archiver.kernel.org>; Sun, 18 Dec 2022 03:18:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230013AbiLRDKh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Dec 2022 22:10:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37076 "EHLO
+        id S230051AbiLRDQ0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Dec 2022 22:16:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229537AbiLRDKf (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Dec 2022 22:10:35 -0500
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 948C3633C
-        for <git@vger.kernel.org>; Sat, 17 Dec 2022 19:10:34 -0800 (PST)
-Received: by mail-pl1-x62a.google.com with SMTP id t2so5975504ply.2
-        for <git@vger.kernel.org>; Sat, 17 Dec 2022 19:10:34 -0800 (PST)
+        with ESMTP id S229537AbiLRDQZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Dec 2022 22:16:25 -0500
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 894719FEF
+        for <git@vger.kernel.org>; Sat, 17 Dec 2022 19:16:22 -0800 (PST)
+Received: by mail-lf1-x133.google.com with SMTP id y25so9095385lfa.9
+        for <git@vger.kernel.org>; Sat, 17 Dec 2022 19:16:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PjaVC/dSfQ60Z0IU8/dOI30BKuDtIZix4KKBR29cx8A=;
-        b=layDyvq8lDSv8g1B1xruPKqYyvn9q1t/UdDg/2NbrnWqvJgdOJb3DmacBk0ywud6LN
-         9Lm44M8zj3ZCeI5e3cKD1oztt5/ykwMEJn0JjAnIqAzwXUf3/heJ0Au9OZLD2h38/rju
-         2vrT0EpV3aRh2GDb4DNIYb82lIej4TWseyIusBA2N2DTAbMT4mklynBZ4KGiZNf40UoZ
-         QBRjxSFFUDURMTKpCMa0QdgntmR+KWEJw5iSy48BCnODCLiq3ps97FVwSBpSvtWV9/m5
-         2QQpk/7JBPNiGSAuaKXm7+HbtJfV7K+WaXRI9jXpa1rlgGG+794CzPmEOZBHQSj5cIaN
-         ovbw==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=PA4gaR1OCOnWpwOQgvlxBB4+9aJzuo8GKoMMeV8pyaE=;
+        b=SgzVubVmr2O+ACeEvLPCKJb5XbkxWl/ItCCVldJ7J/qsBRVBV212tsUYo1XUkXN68K
+         E7aTl5Xs9xLJjl9rASVH1UdXgSRRKwOXWb0cbbsETZbwA/FcmJVpRsMhETbvgZcVWTyL
+         Ik1qvVoGWJ12jGcW2I/VFgIu+NfF6zxdCQ3EM9BbPp5QU+X7U6tlYSPyCenSfSC+5gY6
+         f+mHd04u0G9OafYtEBzH5NyCieNHdjF34DvKqv5GSuYn7s/+SpXCwvLjijAnKppfNR2l
+         OaFnboABbSZVxI4fqKOaDNLdNeX/Wrtfo2vTgB4+FksXwGDyJe1kPwAnAaMteUkq+PlV
+         Dp+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=PjaVC/dSfQ60Z0IU8/dOI30BKuDtIZix4KKBR29cx8A=;
-        b=wGT0YJ4YOC+aVNsfKRsANqyqFwWpMF5++wCwFC1oFBFktFBnbO09KXzlt3Ynnqxae4
-         HFElTZZ/RJogHH8q7Lx9IKnCgwNUrQuEwMLu/l6ZtSpTkjgP7ykNHvRbS+wBdZpK+IAU
-         n1AQny13oKGyeWONf0+8Z41gQavy1Eqo+Pn8HTrpeTzXh90HFHDqd1cWYXMdXl++6nuR
-         FaQ7idMgNuUkNRj5V5Y3njqNmWLcrnt23zBCODclTHcauxl+k11t0SpadFhBV4NECANi
-         QXFBCm9OhbelakTJa9MMY9FS/uN14A/9FdHcQnal9lGDoBsJ/0nm0caSyOw2wTGlmWcv
-         QmSA==
-X-Gm-Message-State: ANoB5pko/FsfEHp8tEtOR7ZrUnbXearrvrVscAJVUDeWg9Jx1iy7/Hay
-        oNNzRc68n1LRiy1LiEJY04I=
-X-Google-Smtp-Source: AA0mqf7Ak1aETPSX53Q9Nz4D8+PSfSFf2aWIuHu55v+WOITsfRDPmck2yb2wu+3fqEMDNY3+uwuh6Q==
-X-Received: by 2002:a17:902:ce07:b0:180:f32c:7501 with SMTP id k7-20020a170902ce0700b00180f32c7501mr39023186plg.0.1671333033823;
-        Sat, 17 Dec 2022 19:10:33 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id j5-20020a170902da8500b00188fdae6e0esm4254151plx.44.2022.12.17.19.10.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Dec 2022 19:10:33 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Philip Oakley <philipoakley@iee.email>,
-        Elijah Newren <newren@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Alex Henrie <alexhenrie24@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        huang guanlong <gl041188@gmail.com>,
-        Glen Choo <chooglen@google.com>, git@vger.kernel.org
-Subject: Re: [PATCH v1 0/5] diff-merges: more features to fix '-m'
-References: <kl6lilimepli.fsf@chooglen-macbookpro.roam.corp.google.com>
-        <20221217132955.108542-1-sorganov@gmail.com>
-Date:   Sun, 18 Dec 2022 12:10:33 +0900
-In-Reply-To: <20221217132955.108542-1-sorganov@gmail.com> (Sergey Organov's
-        message of "Sat, 17 Dec 2022 16:29:50 +0300")
-Message-ID: <xmqqbko1xv86.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PA4gaR1OCOnWpwOQgvlxBB4+9aJzuo8GKoMMeV8pyaE=;
+        b=iamRRQehX35S2vW1PA2EQtqAeCOYj8tKH7c4Rc7uy8DiqSd/eFM2VQu4PE3osReUoG
+         0T7mhz08OLy6qeodSBaFYXkwHuU6sU8VvOLxpV8UmtwpmZ8AjZXl1Bsa+/fyKViCPylF
+         B1o+nDRi5ARguxzkyv8+sPk9K24ZmTeAo5FkF0koSsyl8U/8ThzfzUmbggbrHXPh1Sdz
+         kONzMo1e3ns+X/EErGfX1Ps9K5phF3Cu03QcGWNjCVRLwR63CBZYr5+9mcZ4Ompa1N8r
+         ANWGWxquEr0u3p5l8hPiA09mxd110vCL6V/SMLyXg5mdG550tPBIlyZyK8//ZgBzh1Wt
+         SJTw==
+X-Gm-Message-State: ANoB5pkd90JRKyBJ+QeQF3cid7afI7+O84f/GnB6DwzSAA6gRz9Kh3WB
+        ZvZTMcCPJNni91vK0AXH3bJknTpjfFbaBVWeJOJ1J6OFG8Q=
+X-Google-Smtp-Source: AA0mqf44GLIxCr8Xc2awtHG/9Qrp9RNQx5OL+bXcHAg0eCERMP0Q+oeirpxIMsEj9T/6V5Y9nxm6H/CN4Pob5GuUjiI=
+X-Received: by 2002:a05:6512:298c:b0:4a4:4f35:45dc with SMTP id
+ du12-20020a056512298c00b004a44f3545dcmr26617456lfb.424.1671333380765; Sat, 17
+ Dec 2022 19:16:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAPnZJGABhczzs-6Pri2SAOkujJXT1+JDH9FiwdDns6=miZmvFQ@mail.gmail.com>
+ <878rj6rnuo.fsf@igel.home>
+In-Reply-To: <878rj6rnuo.fsf@igel.home>
+From:   Askar Safin <safinaskar@gmail.com>
+Date:   Sun, 18 Dec 2022 06:15:44 +0300
+Message-ID: <CAPnZJGAMRY02s6UvMg7B6f=NSAgK0PJQAoftwnhXk-ufD2YknQ@mail.gmail.com>
+Subject: Re: https://github.com/rust-lang/rust is not bisectable
+To:     Andreas Schwab <schwab@linux-m68k.org>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
+At some point that "bootstrap" word appeared, then at some point it
+disappeared again. I'm trying to find a point where it has
+disappeared. Consider this script:
 
-> The last attempt to fix '-m' option for "git log" to imply '-p', to
-> make it consistent with similar options (-c/--cc), was called by the
-> request on the mailing list, here:
+==begin
+#!/bin/bash
 
-In retrospect, this old attempt may probably shouldn't have been
-done, as there wasn't really a compelling need to change the
-behaviour of "-m".  The "combined diff" options were "if specified,
-give output" from day one, unlike "-m" which was "modify the
-behaviour of '-p' if given" for a long time.  Changing any
-established behaviour risks breaking the exising users and the
-upside must outweigh the risk.  There wasn't overwhelming upside
-back then to risk, and of course it backfired, ...
+set -e
+set -x
 
-> However, the suggested (and accepted at first) patch series:
->
-> https://lore.kernel.org/git/20210520214703.27323-11-sorganov@gmail.com/#t
->
-> appeared to have two problems:
->
-> * --diff-merges options are incomplete and have no way to provide
->   exact existing '-m' semantics.
->
-> * implying '-p' by '-m' by default broke some legacy uses of
->   "git log --firt-parent -m".
+git bisect reset
+git bisect start
+git bisect good 7175c499ecc32cb3ff713be0bbac9fd12990a34e
+git bisect bad 49c2279ef658d8732597c4da93897d84838f3df5
 
-... like so.  Without learning from the experience, we may repeat
-doing the same thing over and over and expecting different outcome,
-but it would not give us a very good end-user experience if it
-breaks them every time we try doing that.
+while :; do
+  if grep -q bootstrap compiler/rustc_target/src/abi/mod.rs; then
+    git bisect good
+  else
+    git bisect bad
+  fi
+  sleep 1
+done
+==end
 
-> Due to this, the last patch of those patch series has been later
-> reverted:
->
-> https://lore.kernel.org/git/YQyUM2uZdFBX8G0r@google.com/
->
-> effectively leaving the issue unresolved.
+Here is the output: https://paste.debian.net/1264444/ . As you can
+see, we always choose "else git bisect bad". And we reach... initial
+commit!
 
-Fairly accurate description.
+Well, technically speaking, this is correct: initial commit is
+actually the first commit, where word "bootstrap" is not present in
+compiler/rustc_target/src/abi/mod.rs . But this is not what I want! I
+want to find commit, which is the first one, which doesn't have
+"bootstrap" in compiler/rustc_target/src/abi/mod.rs, AND which is
+descendant of good commit ( 7175c499ecc32cb3ff713be0bbac9fd12990a34e
+).
 
-These patches do look like a good approach to solve the first point
-among the "two problems" in the previous round. Thanks for working
-on it.
+Also, after failing with "git bisect", I did MANUAL BISECT!!!!!! I did
+this: I run command "gitk --ancestry-path $GOOD..$BAD". Then I clicked
+to some commit located nearly in the middle of history, then I copied
+its ID. Then I switched to this commit and checked whether it is good.
+Then I again run command "gitk --ancestry-path $GOOD..$BAD", this time
+with a smaller interval. I did this several times and eventually I was
+able to find the faulty commit! (Well, the result was not good enough:
+this manual bisecting gave me some merge commit, so I still don't see
+the actual commit. But it is still better than "git bisect": "git
+bisect" simply gave me the initial commit.)
 
-IIRC, the previous round (why is this round marked as v1, by the
-way?) was reviewed by some folks, so lets wait to hear from them
-how this round does better.
+So, as you can see, manual bisecting (somewhat) works and "git bisect"
+doesn't. This means that something is wrong with "git bisect". (Maybe
+there is a way to make "git bisect" behave similar to that "gitk"
+experiment above?)
 
-Unfortunately, I do not think of any "solution" that would avoid
-breaking folks, if its end goal is to flip the default, either by
-hardcoding or with a configuration variable.  IOW, the other one
-among the "two problems" in the previous round sounds unsolvable.
-We should question if it was really an "issue" worth "resolving",
-though.
+Let me say this in other words: I want git-bisect to mark all commits,
+which are not descendants of good, as good. (Here I assume bad is
+descendant of good.)
+
+-- 
+Askar Safin
