@@ -2,270 +2,125 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D1441C4332F
-	for <git@archiver.kernel.org>; Sat, 17 Dec 2022 23:10:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6234DC4167B
+	for <git@archiver.kernel.org>; Sun, 18 Dec 2022 01:32:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230039AbiLQXKF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 17 Dec 2022 18:10:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33352 "EHLO
+        id S229885AbiLRBZz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 17 Dec 2022 20:25:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53750 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229469AbiLQXKE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Dec 2022 18:10:04 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F402F5FA7
-        for <git@vger.kernel.org>; Sat, 17 Dec 2022 15:10:02 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id p13-20020a05600c468d00b003cf8859ed1bso4095725wmo.1
-        for <git@vger.kernel.org>; Sat, 17 Dec 2022 15:10:02 -0800 (PST)
+        with ESMTP id S229480AbiLRBZw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Dec 2022 20:25:52 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6352DE95
+        for <git@vger.kernel.org>; Sat, 17 Dec 2022 17:25:51 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id q17-20020a17090aa01100b002194cba32e9so9725955pjp.1
+        for <git@vger.kernel.org>; Sat, 17 Dec 2022 17:25:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WDWjjv2i9dxkH1aM0awrZBbFUb3swnvJKWAy6QNp1y8=;
-        b=ZstcDNTDQJPyI5pj7np6gUKJwoOjM+bs0BcdBbXoXODB3BoH3BqmkwlHy4ViChLXme
-         Lcb8+uZelsykZz7UxpddPkj7d8D8Whw/H5Ii7PyBvrzpD9Pz2AmnOOMUFbpk21+KQy3l
-         JrBb2+ZHeRz5vwLmFd707Xg2+D5hJkr012xXwm2sKa0bHed5930LwQCoxs6C6XI+2RuZ
-         ONiRe9nGR5gN/ldiPVJ4LiFp/yQxgLyX+8qKrRXwrxLfOiqrCFJvEj9pMEnrAx0MDSzU
-         p39KIomDtp6kX+N0fTgXx4V4ikzlW9bqTVGZvc8/2XVjeXE4uDCx1EUSNdgylnyZ2Pyt
-         JnmQ==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Lkn4QblcDPOyXCHvgb1a3wxjatIC7X1gBcrkpyuPzuA=;
+        b=FmrUjQFIO57ZB/q6bmGleFMef2jG4Pw+QUf+Y8guwr9a7Nup0V6Mm3MsvpbWUA4gRB
+         jkEM9GHBexnrYrxy8KeJfGFwPAgRM7aQYn57oAc/6knuX/7uWH7WaFNuFB6JyPK9G5nc
+         4tix8q8nfMCmWDWTnGiyNfU9eFXDvyqPid59f6qYqjARbAAAu2hIzVRbr8/bHgZVyZ8B
+         sUY6AmLeoBnObw+zjFHJ59jcN2Lhq4sAAuuhRHZwDaWYMog8+m/u4eIJWUEWPHhaArjA
+         Iclyo5OHJ+0HZoorQaeBZMXTDxIw599ITSZ1sdj6oXcNYn6N2M24wmjtcEONb3aKSI/G
+         gtdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WDWjjv2i9dxkH1aM0awrZBbFUb3swnvJKWAy6QNp1y8=;
-        b=mE+dXDjCnsGY3qOnAAXFQQvFsunOPmiAI9dI4bCSggd2s9b+int1xi6xgmRiDxTS6Q
-         3lQ8RETSJaBITki5RJJ3FzKJAv5avGWjLhf2vXaNEe/yzHFDDmRfpst9AOnO+a7jey3c
-         o6q9xQ23SnQL0irfGcMttguqK3clEwNxFOSgUeqMO7rrYex2gAFIouH3YsSPeL1zQA8J
-         GCEL/rLvl++NJw46TJ6E5HTWW2m4GPOCWa2pMUQHsv+7YZKyKZXwZi6q1G42O3oJM0De
-         aznckN3omK4oE05ve7d1VRHPvwZTnI6ejTlvBiXhjG2Zxe6h0/kpLWvCog0t7LJ476BK
-         wANA==
-X-Gm-Message-State: ANoB5pmbwXKZuytbYYPMHi2ycB5Uv5Ybrj2gVytAND7DHIo3C8hJBMj2
-        KsuujY5rjey8Ewg4R7f2+yDSiTNOwFQ=
-X-Google-Smtp-Source: AA0mqf6eiDl+Zdmcvfw7xNOw+Mhk4Uuhwg+Q4jx7ASqfxH8xEjTGb98sCYdz3OMscTuL3gOmuWCoeg==
-X-Received: by 2002:a05:600c:1c90:b0:3d2:274d:be7c with SMTP id k16-20020a05600c1c9000b003d2274dbe7cmr18419436wms.19.1671318601105;
-        Sat, 17 Dec 2022 15:10:01 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d22-20020a05600c34d600b003a6125562e1sm7191271wmq.46.2022.12.17.15.10.00
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Lkn4QblcDPOyXCHvgb1a3wxjatIC7X1gBcrkpyuPzuA=;
+        b=j3yTeFV5q8/4pcim+SrPca2KKOAg/wIz9w7KpQM7RU9fRk6Kyw6ysLcXblC05zF2Uo
+         B147cEtFVfOXNxpJp2jYL52XDMvT/A/Wyo/ddttB7Q7mUoi58od6BL2A+0BsqDdmIbvp
+         ivHA8nPcXRa1JiIpa5Q30SwfNNeZ/lOdRBM5iX4pGNZ10GXASiWt5C3YKUk6ao0xH9O4
+         AcPSlqbkBOeVBO6UaBJFvlY9PTE3bGFb0mDYLnzB/si+UPKuOAliszKiYeKBgMTRMejL
+         puLG77VBWtOq7uzlAoq/Sh3u5IzGxOCfPXDGtzzHCwY6Jq/u2VTTCH9g/8U9R8SYXoSP
+         OCjQ==
+X-Gm-Message-State: AFqh2kpI2frO9CHDAhDueQhXzTZwN8XDLSBxP1xY4HsHtfSxgwi9Fa9H
+        nfKE/6lPNnHX2HbupAstE8k=
+X-Google-Smtp-Source: AMrXdXu0M0n0AjgXGdyKXW5n1/oo7Y5ns5ZaE9DJvx2iFGIRuShDIK1xWCreVhJqUZkaajTij4YECA==
+X-Received: by 2002:a17:903:22cc:b0:190:fbbd:277d with SMTP id y12-20020a17090322cc00b00190fbbd277dmr16092595plg.17.1671326750762;
+        Sat, 17 Dec 2022 17:25:50 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id p1-20020a1709026b8100b0017fe9b038fdsm4168431plk.14.2022.12.17.17.25.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 Dec 2022 15:10:00 -0800 (PST)
-Message-Id: <pull.1424.v2.git.1671318599482.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1424.git.1668972017089.gitgitgadget@gmail.com>
-References: <pull.1424.git.1668972017089.gitgitgadget@gmail.com>
-From:   "Sean Allred via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sat, 17 Dec 2022 23:09:59 +0000
-Subject: [PATCH v2] var: add GIT_SEQUENCE_EDITOR variable
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sat, 17 Dec 2022 17:25:50 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Sven Strickroth <email@cs-ware.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git <git@vger.kernel.org>,
+        "Robin H. Johnson" <robbat2@gentoo.org>
+Subject: Re: [PATCH] submodule: Accept -v for update command
+References: <FR3P281MB21416B718C4C052A28C319B1E90F9@FR3P281MB2141.DEUP281.PROD.OUTLOOK.COM>
+        <1ff185c5-4a9e-36e3-3141-8b149c1c7bb0@cs-ware.de>
+        <cad05012-7bf9-5975-3add-253b11c7bcc8@cs-ware.de>
+        <221130.868rjsi6bn.gmgdl@evledraar.gmail.com>
+        <xmqqiliur6t9.fsf@gitster.g>
+        <f805f2da-a7e1-9fde-cc0a-04a30f79c9af@cs-ware.de>
+Date:   Sun, 18 Dec 2022 10:25:49 +0900
+In-Reply-To: <f805f2da-a7e1-9fde-cc0a-04a30f79c9af@cs-ware.de> (Sven
+        Strickroth's message of "Sat, 10 Dec 2022 14:06:37 +0100")
+Message-ID: <xmqqedsxzen6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Sean Allred <allred.sean@gmail.com>,
-        Sean Allred <code@seanallred.com>,
-        Sean Allred <allred.sean@gmail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Sean Allred <allred.sean@gmail.com>
+Sven Strickroth <email@cs-ware.de> writes:
 
-The editor program used by Git when editing the sequencer "todo" file
-is determined by examining a few environment variables and also
-affected by configuration variables. Introduce "git var
-GIT_SEQUENCE_EDITOR" to give users access to the final result of the
-logic without having to know the exact details.
+> Subject: Re: [PATCH] submodule: Accept -v for update command
+>
+> "git pull -v --recurse-submodules" propagates the "-v" to the
+> submodule command which did not support "-v" yet.
+>
+> Commit a56771a668d introduced this regression.
+>
+> Signed-off-by: Sven Strickroth <email@cs-ware.de>
+> ---
 
-This is very similar in spirit to 44fcb497 (Teach git var about
-GIT_EDITOR, 2009-11-11) that introduced "git var GIT_EDITOR".
+This unfortunately fell in the cracks.  Thanks for a few people who
+reported the issue this patch tried to fix recently (it is curous
+why this regression that is almost 5 years old suddenly started
+biting people).
 
-Signed-off-by: Sean Allred <allred.sean@gmail.com>
----
-    var: add GIT_SEQUENCE_EDITOR variable
+Applying the improvement suggestions given in the review messages to
+the other patch to deal with this regression from the "pull" side,
+let's explain the commit this way:
+
+    Subject: [PATCH] submodule: accept -v for the update command
+
+    Since a56771a6 (builtin/pull: respect verbosity settings in
+    submodules, 2018-01-25), "git pull -v --recurse-submodules"
+    propagates the "-v" to the submodule command, but because the
+    latter command does not understand the option, it barfs.
+
+    Teach "git submodule update" to accept the option to fix it.
+
+    Signed-off-by: Sven Strickroth <email@cs-ware.de>
     
-    In my case, I'm overriding the sequence editor in git rebase -i to do
-    some pre-processing on the todo file, but I'd still like to open up the
-    editor for further manipulation/verification of the todo steps. Just
-    using GIT_EDITOR here will clobber folks' expectations that their
-    custom-built sequence editor pops up (e.g. VSCode or Git Cola).
-    
-    Changes since v1:
-    
-     * rebased on current main
-     * following new, simplified patterns from my previous pull-request
-       merged in d8184580
+Thanks.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1424%2Fvermiculus%2Fsa%2Fgit-var-sequence-editor-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1424/vermiculus/sa/git-var-sequence-editor-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1424
-
-Range-diff vs v1:
-
- 1:  aa5ac73ab39 ! 1:  c9683fabf3d var: add GIT_SEQUENCE_EDITOR variable
-     @@ Metadata
-       ## Commit message ##
-          var: add GIT_SEQUENCE_EDITOR variable
-      
-     -    Provides the same benefits to scripts as exposing GIT_EDITOR, but
-     -    allows distinguishing the 'sequence' editor from the 'core' editor.
-     +    The editor program used by Git when editing the sequencer "todo" file
-     +    is determined by examining a few environment variables and also
-     +    affected by configuration variables. Introduce "git var
-     +    GIT_SEQUENCE_EDITOR" to give users access to the final result of the
-     +    logic without having to know the exact details.
-      
-     -    See also 44fcb4977cbae67f4698306ccfe982420ceebcbf.
-     +    This is very similar in spirit to 44fcb497 (Teach git var about
-     +    GIT_EDITOR, 2009-11-11) that introduced "git var GIT_EDITOR".
-      
-          Signed-off-by: Sean Allred <allred.sean@gmail.com>
-      
-     @@ Documentation/git-var.txt: ifdef::git-default-editor[]
-       endif::git-default-editor[]
-       
-      +GIT_SEQUENCE_EDITOR::
-     -+    Text editor for use by Git sequencer commands. Like `GIT_EDITOR`,
-     -+    the value is meant to be interpreted by the shell when it is used.
-     -+    The order of preference is the `$GIT_SEQUENCE_EDITOR` environment
-     -+    variable, then `sequence.editor` configuration, and then the value
-     -+    of `git var GIT_EDITOR`.
-     ++    Text editor used to edit the 'todo' file while running `git rebase
-     ++    -i`. Like `GIT_EDITOR`, the value is meant to be interpreted by
-     ++    the shell when it is used. The order of preference is the
-     ++    `$GIT_SEQUENCE_EDITOR` environment variable, then
-     ++    `sequence.editor` configuration, and then the value of `git var
-     ++    GIT_EDITOR`.
-      +
-       GIT_PAGER::
-           Text viewer for use by Git commands (e.g., 'less').  The value
-     @@ Documentation/git-var.txt: ifdef::git-default-editor[]
-      
-       ## builtin/var.c ##
-      @@ builtin/var.c: static const char *editor(int flag)
-     - 	return pgm;
-     + 	return git_editor();
-       }
-       
-      +static const char *sequence_editor(int flag)
-      +{
-     -+	const char *pgm = git_sequence_editor();
-     -+
-     -+	if (!pgm && flag & IDENT_STRICT)
-     -+		die("Terminal is dumb, but EDITOR unset");
-     -+
-     -+	return pgm;
-     ++	return git_sequence_editor();
-      +}
-      +
-       static const char *pager(int flag)
-     @@ builtin/var.c: static struct git_var git_vars[] = {
-       	{ "", NULL },
-      
-       ## t/t0007-git-var.sh ##
-     -@@ t/t0007-git-var.sh: test_expect_success 'get GIT_DEFAULT_BRANCH with configuration' '
-     +@@ t/t0007-git-var.sh: test_expect_success 'get GIT_EDITOR with configuration and environment variable
-       	)
-       '
-       
-
-
- Documentation/git-var.txt |  8 ++++++++
- builtin/var.c             |  6 ++++++
- t/t0007-git-var.sh        | 38 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 52 insertions(+)
-
-diff --git a/Documentation/git-var.txt b/Documentation/git-var.txt
-index 0ab5bfa7d72..f40202b8e3a 100644
---- a/Documentation/git-var.txt
-+++ b/Documentation/git-var.txt
-@@ -50,6 +50,14 @@ ifdef::git-default-editor[]
-     The build you are using chose '{git-default-editor}' as the default.
- endif::git-default-editor[]
- 
-+GIT_SEQUENCE_EDITOR::
-+    Text editor used to edit the 'todo' file while running `git rebase
-+    -i`. Like `GIT_EDITOR`, the value is meant to be interpreted by
-+    the shell when it is used. The order of preference is the
-+    `$GIT_SEQUENCE_EDITOR` environment variable, then
-+    `sequence.editor` configuration, and then the value of `git var
-+    GIT_EDITOR`.
-+
- GIT_PAGER::
-     Text viewer for use by Git commands (e.g., 'less').  The value
-     is meant to be interpreted by the shell.  The order of preference
-diff --git a/builtin/var.c b/builtin/var.c
-index a1a2522126f..a80c1df86fd 100644
---- a/builtin/var.c
-+++ b/builtin/var.c
-@@ -14,6 +14,11 @@ static const char *editor(int flag)
- 	return git_editor();
- }
- 
-+static const char *sequence_editor(int flag)
-+{
-+	return git_sequence_editor();
-+}
-+
- static const char *pager(int flag)
- {
- 	const char *pgm = git_pager(1);
-@@ -36,6 +41,7 @@ static struct git_var git_vars[] = {
- 	{ "GIT_COMMITTER_IDENT", git_committer_info },
- 	{ "GIT_AUTHOR_IDENT",   git_author_info },
- 	{ "GIT_EDITOR", editor },
-+	{ "GIT_SEQUENCE_EDITOR", sequence_editor },
- 	{ "GIT_PAGER", pager },
- 	{ "GIT_DEFAULT_BRANCH", default_branch },
- 	{ "", NULL },
-diff --git a/t/t0007-git-var.sh b/t/t0007-git-var.sh
-index 433d242897c..eeb8539c1bc 100755
---- a/t/t0007-git-var.sh
-+++ b/t/t0007-git-var.sh
-@@ -109,6 +109,44 @@ test_expect_success 'get GIT_EDITOR with configuration and environment variable
- 	)
- '
- 
-+test_expect_success 'get GIT_SEQUENCE_EDITOR without configuration' '
-+	(
-+		sane_unset GIT_SEQUENCE_EDITOR &&
-+		git var GIT_EDITOR >expect &&
-+		git var GIT_SEQUENCE_EDITOR >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'get GIT_SEQUENCE_EDITOR with configuration' '
-+	test_config sequence.editor foo &&
-+	(
-+		sane_unset GIT_SEQUENCE_EDITOR &&
-+		echo foo >expect &&
-+		git var GIT_SEQUENCE_EDITOR >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'get GIT_SEQUENCE_EDITOR with environment variable' '
-+	(
-+		sane_unset GIT_SEQUENCE_EDITOR &&
-+		echo bar >expect &&
-+		GIT_SEQUENCE_EDITOR=bar git var GIT_SEQUENCE_EDITOR >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
-+test_expect_success 'get GIT_SEQUENCE_EDITOR with configuration and environment variable' '
-+	test_config sequence.editor foo &&
-+	(
-+		sane_unset GIT_SEQUENCE_EDITOR &&
-+		echo bar >expect &&
-+		GIT_SEQUENCE_EDITOR=bar git var GIT_SEQUENCE_EDITOR >actual &&
-+		test_cmp expect actual
-+	)
-+'
-+
- # For git var -l, we check only a representative variable;
- # testing the whole output would make our test too brittle with
- # respect to unrelated changes in the test suite's environment.
-
-base-commit: 57e2c6ebbe7108b35ba30184dcbcb6c34c929ad8
--- 
-gitgitgadget
+>  git-submodule.sh | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 9a50f2e912..7f9582d923 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -244,6 +244,9 @@ cmd_update()
+>  		-q|--quiet)
+>  			quiet=1
+>  			;;
+> +		-v|--verbose)
+> +			quiet=0
+> +			;;
+>  		--progress)
+>  			progress=1
+>  			;;
