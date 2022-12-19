@@ -2,116 +2,122 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB1A1C4332F
-	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 18:36:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4B9E8C4332F
+	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 18:38:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232415AbiLSSgk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 13:36:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51850 "EHLO
+        id S232603AbiLSSiA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Dec 2022 13:38:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232394AbiLSSgN (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 13:36:13 -0500
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B890915FFD
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 10:33:27 -0800 (PST)
-Received: by mail-ej1-x62a.google.com with SMTP id x22so23629928ejs.11
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 10:33:27 -0800 (PST)
+        with ESMTP id S232604AbiLSShc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2022 13:37:32 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A63813F34
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 10:34:39 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id co23so9594830wrb.4
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 10:34:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jIWAyUKlEeXjRAe/2UvOxIdmpnSOm1f55PXjOIgIkbM=;
-        b=RPC3vFJnumhAIDr+P8bol9BlR+GFxRg2tpBCa1iwBIq3f2mfreqdys4ogTcECj9xGO
-         KYj9QqFjfcPSyciQGJlz4jbbzWvQ8JZ7ifsKqTbOMRNxodMOfANIxy9DYzOV/Hu67g8S
-         u7U3HAu/v9dF+hENV9aVg/qtlZGQhzYv5stPTeQznjIG2TJJLocR2p6QfZNO0RQzy4RQ
-         13wbeJJntF1npI1ia7juouvOvxqNHt+oXthNe58cXtgVb9C9onZtPDHu9L+qC0KRaEdp
-         E/coQ7ckXpsTn6j3BbEKbZ7+nuiy9lRoZ+rc3SvGMKSaQs89lHSnV2MyVZxN5xDdF7YV
-         nMsQ==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=8q70x0q/h/3KRURt0JizQYnaRjKxactmoygBWFeLBx0=;
+        b=omGQdiubKJzIW+EO8aSs4LfxJGGDIyI90kxtzbLKGs7Ue2UZS9Pbgk8gP9GtStVHMu
+         4OyQzuq1bqi4XlNna9RvToOBzFLzg9hHxOHWB86FE25EJexsY4jHAQObxltLpt/1jh3w
+         5KLwMuZoH8W057pHlc1Er2vMuOA0F0xPQK6dG+XsVLFsw3u17QNWL7aUH8KpDaB03C4T
+         m0vr98n5+t7nWwj95iQ0XmbUkRKvArhEFqJe6escccDHYvgrKukCKV3U5gb9+GnSkHaP
+         9881cn000S5THALpMEzJDsTXiBLOc7pLF5D8XL4Oz/9phTfQ2ZxagO9bf9sLBVOaravZ
+         8Z8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jIWAyUKlEeXjRAe/2UvOxIdmpnSOm1f55PXjOIgIkbM=;
-        b=dJCknEvgig0nZlr79M5gn4NVinhJiHkm4Yq6XMxVH+qWRKzhgVNsLGgoZQt75oxhY3
-         pG7OfUT6/cT+2hswqOF/tuTcaM3RBh214guE0cgJgGnEluswGlqHyoHn39Il97OvLFAh
-         rmyRShs4OjrvZ2Lcc1Rjtcsal/sHsUUz/kGL4SVP/Rbtj3xxLfd19KcvWLwktMi4vpnx
-         mOVfVYby57+Smx6v/89eJS0xDML1ee3I6Fla1dXAnBSIJpi1h4GmEQo3qEHnTZ8HY2WG
-         lfER78DOx4qZvO9yuhGwsGJbg+gyrlEQbIioiYQ3nyx0nGex2Hh+Nts8K1IGRgYkTaGM
-         nbiQ==
-X-Gm-Message-State: ANoB5pmCcFEItak1epLT/7STZujNA8QC4f/kQ9TKhxxExZIZCaGX1PSM
-        ZDhBp8Ob0uAys4VgGHSfAOraZDda6O7OKQ==
-X-Google-Smtp-Source: AA0mqf5hN9Wgzf+zfdPjt5kbNDdGd/a1WE3qOgtRnsjPK62XFp9xT84kfdVjaY6+/yyfIHslYrVzAg==
-X-Received: by 2002:a17:906:668e:b0:79e:5ea1:4f9f with SMTP id z14-20020a170906668e00b0079e5ea14f9fmr35320151ejo.54.1671474805919;
-        Mon, 19 Dec 2022 10:33:25 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id p4-20020a17090628c400b007c0a7286ac8sm4697472ejd.69.2022.12.19.10.33.25
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8q70x0q/h/3KRURt0JizQYnaRjKxactmoygBWFeLBx0=;
+        b=GIpFg7AgIKT0VSkxMF/MbGvmQKFU/IFdAIhGTe/nWn2WMvOp/XXBsBIGjlNkZ0huZ5
+         yYvym8G1fL/e9Cb/Rgas+qxNSrNw+kdZF2UN5EY+/DJuzyfiwCFWABuCQkP/iCkv66DU
+         eBE2NcdZo7j1OwLdXcVzQPTGveR/Wl0a/TmeboxCBNVU9AniMc86L3g7FafTxUM6Oawo
+         Cxt/WFrI6Z8I1hD3uO1wZghk+kiah6W91l0+RSUoctbmeQdxNEep4MuYbD2n8T0Q+ec2
+         lO8E3MJjzAmpjrwuNuKfc7Z75jTY6mVNrFqN9noliEN2kFSXzLvGgitK4TD5pa264o4B
+         bDxg==
+X-Gm-Message-State: AFqh2ko1BdSa9gDuxBYe/Up+5C2i2IfL1ScWvGYQkoAqQywhUFqZEdTL
+        tdda31SCM+7EJm/vQFB7a4HjNF8ex6o=
+X-Google-Smtp-Source: AMrXdXtqH49SkOQqWilA8YS24DpaGzdO9UqhzXI1vI/+5Rf6Lk1DpCdajEI6y8ltd670gm5meRV3/Q==
+X-Received: by 2002:a05:6000:68e:b0:25a:f8a1:f138 with SMTP id bo14-20020a056000068e00b0025af8a1f138mr9602539wrb.65.1671474877490;
+        Mon, 19 Dec 2022 10:34:37 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id bq19-20020a5d5a13000000b002421db5f279sm10723313wrb.78.2022.12.19.10.34.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 10:33:25 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1p7Kx3-006i8e-0X;
-        Mon, 19 Dec 2022 19:33:25 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Rose via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Seija Kijin <doremylover123@gmail.com>
-Subject: Re: [PATCH] diff: use strncmp to check for "diff." prefix
-Date:   Mon, 19 Dec 2022 19:26:11 +0100
-References: <pull.1403.git.git.1671467624143.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <pull.1403.git.git.1671467624143.gitgitgadget@gmail.com>
-Message-ID: <221219.86r0wvxmyy.gmgdl@evledraar.gmail.com>
+        Mon, 19 Dec 2022 10:34:37 -0800 (PST)
+Message-Id: <pull.1406.git.git.1671474876207.gitgitgadget@gmail.com>
+From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 19 Dec 2022 18:34:36 +0000
+Subject: [PATCH] win32: close handles of threads that have been joined
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Rose <83477269+AtariDreams@users.noreply.github.com>,
+        Seija Kijin <doremylover123@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Seija Kijin <doremylover123@gmail.com>
 
-On Mon, Dec 19 2022, Rose via GitGitGadget wrote:
+After joining threads, the handle to the original thread
+should be closed as it no longer needs to be open.
 
-> From: Seija Kijin <doremylover123@gmail.com>
->
-> This would be a lot more efficient than
-> checking for the full string, as
-> so many of the accepted values
-> begin with "diff."
->
-> This allows the computer to skip most checks
-> if var did not start with diff at all.
->
-> It would also let us add more "diff." strings
-> in the future without having to duplicate
-> these 5 character so many times.
+Signed-off-by: Seija Kijin <doremylover123@gmail.com>
+---
+    win32: close handles of threads that have been joined
+    
+    After joining threads, the handle to the original thread should be
+    closed as it no longer needs to be open.
+    
+    Signed-off-by: Seija Kijin doremylover123@gmail.com
 
-This is missing a "why", is this one-off really needed for optimization
-purposes? If not it doesn't seem worth the churn.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1406%2FAtariDreams%2Fjoin-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1406/AtariDreams/join-v1
+Pull-Request: https://github.com/git/git/pull/1406
 
-That we duplicate the "diff." part of "diff.renames" (as opposed to
-"renames" is also a feature in my opinion, it makes things easier to
-grep for.
+ compat/win32/pthread.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
-It would really just be preferrable to have the compiler do this work
-for us. A while ago I experimented with that, i.e. if/else if/else
-chains of strcmp(): https://godbolt.org/z/rrnYWW7nj
+diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
+index 2e7eead42cb..de89667ef70 100644
+--- a/compat/win32/pthread.c
++++ b/compat/win32/pthread.c
+@@ -39,14 +39,20 @@ int win32_pthread_join(pthread_t *thread, void **value_ptr)
+ {
+ 	DWORD result = WaitForSingleObject(thread->handle, INFINITE);
+ 	switch (result) {
+-		case WAIT_OBJECT_0:
+-			if (value_ptr)
+-				*value_ptr = thread->arg;
+-			return 0;
+-		case WAIT_ABANDONED:
+-			return EINVAL;
+-		default:
+-			return err_win_to_posix(GetLastError());
++	case WAIT_OBJECT_0:
++		if (value_ptr)
++			*value_ptr = thread->arg;
++		/* detach the thread once the join succeeds */
++		CloseHandle(thread->handle);
++		return 0;
++	case WAIT_ABANDONED:
++		/* either thread is not joinable or another thread is waiting on
++		 * this, so we do not detatch */
++		return EINVAL;
++	default:
++	case WAIT_FAILED:
++		/* the function failed so we do not detach */
++		return err_win_to_posix(GetLastError());
+ 	}
+ }
+ 
 
-As that example shows at least GCC doesn't do anything interesting with
-it as optimizations are concerned, i.e. you'd really want something like
-this instead (but for the compiler to do it for you):
-https://godbolt.org/z/7hsPo59TM
-
-But, as you can be seen at https://godbolt.org/z/zWK46rGK5 it *will* do
-that if we just use memcmp().
-
-So, doing that really seems preferrable, perhaps with some macro that
-would provide the "n" to memcmp, so we wouldn't need to hardcode the
-length.
-
-But all of that would be predicated on whether the optimization is
-actually worth it.
-
-If we are micro-optimizing config reading we should be moving the
-relevant code to the configset API, where we have the parsed keys as a
-hash, rather than trying to micro-optimize the callback API, where we'll
-call the callback N times, just to brute-force ask it if it's interested
-in some small subset of the config space.
+base-commit: 7c2ef319c52c4997256f5807564523dfd4acdfc7
+-- 
+gitgitgadget
