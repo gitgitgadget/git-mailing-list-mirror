@@ -2,67 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7670C4332F
-	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 11:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 82A99C4332F
+	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 11:17:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231787AbiLSLHF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 06:07:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59452 "EHLO
+        id S231919AbiLSLRN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Dec 2022 06:17:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231130AbiLSLHD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 06:07:03 -0500
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E50B10D9
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 03:07:02 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id bj12so20479873ejb.13
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 03:07:02 -0800 (PST)
+        with ESMTP id S231301AbiLSLRL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2022 06:17:11 -0500
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A489E1127
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 03:17:10 -0800 (PST)
+Received: by mail-ej1-x632.google.com with SMTP id u19so20617891ejm.8
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 03:17:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=isQgPvUIODR4PXnzPj6vS++iKm86cvgpBv5qWjy16TM=;
-        b=TQJm5tROtOfIdc+NbZDLZHvI8jENSyebFDh2RxiS3gE8vjuKlSiMnYIxukRJn/DrGX
-         p3Xz0a+5NEa2eBSXLEUpntS7/DPh2ca9m050HAX7vNGPH15TNY9GQjKEsOC3BoFfwQTw
-         j7cCnmBA7MtbSyqhh0J8Q35kNSrJkUEA5jy3FyhZToSMQCwxchYwr/sL1nvWv9QHwIXl
-         FCXt0F953ZjiEfoQH0XMW6PXAKZvTPrffPwCvPshrN/O7EQumWG97FJXteFatO7U3D6m
-         RgihrGnxYy8cH8mig+KKyjGMvDM1si8lS3JKuSxsRIc9lDWcb4CZCrGWe9yWI3kf5ly5
-         Hkiw==
+        bh=kkK3QiAThcvhqVZ+gjZCA62S38jS/rJ2Y0siC+sel8g=;
+        b=IwpWLnTyBEOkmeW7ESr618ChstjHfR/XQ5Jw8dW+DwnYWVzkYsag5MQAxuFYxdZh1r
+         mUB/fJk6lPut+8Oh1v5rbuvwgvC+AmeyVLgOn+c+ltKhtTXbbmaxywUfKzvGs6wonBcU
+         XBHcgUfFNQxqb27NHPRp5kuCii7tQ3oKLO3kM/6d+yUZ7xGSGvXuOwu1VMskmBy+JsS0
+         l+FjOOfeP3u4UveKMIGWDTgt4O7vjyCQqiSIwZ08/5lyAYeZBTbpd2eYw+IJe3fAEdzu
+         wyPnPSWpGshssu2BQItGf7jy+Nsm5RkaeWPIrx1zxGkqSt4MFFX/n4H8Bpk6IC5gdcsP
+         CE5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=isQgPvUIODR4PXnzPj6vS++iKm86cvgpBv5qWjy16TM=;
-        b=RHT4O1bFIQfjF2sP9Z0kSaFl8fHV8qCqU3/B4e5O/FFR30z8Rxjh4iAzhiKk3ggr2v
-         ISiZQyVwuAZKZmBgRLPEQixaLdpBpm5PMJNLV0VfOcU+KRGOfo3whK3CqviX+kRa97aN
-         1y/iLDla9zz5KXCkqoQu3EAlFFXRkt7xOu74kgPrh2zka51Lqi93lbTmmE4Ie4mN1qnu
-         9fa42WYruC0plbQTDSQ8fwOm+lBXNDYCcYt9Eq+86TGY/ES/h9CO59NuenR9cEVgehlZ
-         7a7IpNYEimR/SiKdTlQgQn/jShGGlCHsqvQXs9USVfzqBvccjKeQq9SNpHz0R+PJdVud
-         /v2A==
-X-Gm-Message-State: ANoB5pk+EqQn8J8ee+5l6iN7f6ymsxmprjSF8as6jCYndbxHBoZvoMbg
-        r5XKjzLm4+17wWrrxaevLSU=
-X-Google-Smtp-Source: AA0mqf5uHwXhT5gOhM4C04UqD0oDmrUNhSA4h/JIvAoaQZ2+SR/2CwDSYG6bFiBVT9pL7JU3KU5Cuw==
-X-Received: by 2002:a17:907:2a02:b0:7c1:10b8:e6a4 with SMTP id fd2-20020a1709072a0200b007c110b8e6a4mr28757699ejc.19.1671448020975;
-        Mon, 19 Dec 2022 03:07:00 -0800 (PST)
+        bh=kkK3QiAThcvhqVZ+gjZCA62S38jS/rJ2Y0siC+sel8g=;
+        b=g2/IkdM+Y0q5LoD0YHBy+QN7d4ZL6vJmPeswee5ldMXrkXO2hEok6JrxCu6iIDgpsV
+         eL+1Ex7zQYTu3mWQxAG2bUT/2iraxiWxDJwNrk+YAedjX9qQ7ZvLboEX1iHsRAIeU77R
+         wmH+qA3Mzrx9NVSDdhnPFoSm2GO5jFOELN2c3C9kdzywmbMEZFr6E34ZjldzrusYNqmg
+         xhobkGsTaxsuD2D0ADWsNGjyotlD3whLT0m66Dso2J3VmQvgFl7E9VjbJj6TtZI3Br5a
+         FIdsbS3NR5ZuAPzVdOWpouJp9TV/ULRwRFgNl1xaiFYZkq2ktzC79epdq6OVUiP6/WKU
+         GaRA==
+X-Gm-Message-State: AFqh2kq6LVPPcn3RMksCOL5xNtURbqo9vU3Do+pCEitcnpbCBKNcnlz5
+        K8Sjpa+zPxvZSyyP64zhJxo=
+X-Google-Smtp-Source: AMrXdXuWJ3cBacOGp2exha2jQx1VsJVK42LJqrkxAhGOkD7reRJk+0wTcdIRVOzuboIaLPxS9ohlmg==
+X-Received: by 2002:a17:907:d68e:b0:7c1:4f7c:947f with SMTP id wf14-20020a170907d68e00b007c14f7c947fmr95821ejc.72.1671448629146;
+        Mon, 19 Dec 2022 03:17:09 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id 18-20020a170906211200b007c073be0127sm4204477ejt.202.2022.12.19.03.07.00
+        by smtp.gmail.com with ESMTPSA id s8-20020a170906500800b007a9c3831409sm4265952ejj.137.2022.12.19.03.17.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 03:07:00 -0800 (PST)
+        Mon, 19 Dec 2022 03:17:08 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1p7Dz1-006YAd-2t;
-        Mon, 19 Dec 2022 12:06:59 +0100
+        id 1p7E8q-006YXU-0a;
+        Mon, 19 Dec 2022 12:17:08 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, peff@peff.net, vdye@github.com,
         gitster@pobox.com, Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 2/3] bundle-uri: advertise based on repo config
-Date:   Mon, 19 Dec 2022 12:04:48 +0100
+Subject: Re: [PATCH 3/3] bundle-uri: remove GIT_TEST_BUNDLE_URI env variable
+Date:   Mon, 19 Dec 2022 12:09:14 +0100
 References: <pull.1443.git.1670866407.gitgitgadget@gmail.com>
- <857d1abec4cf124e011c7f84276ce105cb5b3a96.1670866407.git.gitgitgadget@gmail.com>
+ <aafee168fbae2a1887f53febc4abd15522b12bc2.1670866407.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <857d1abec4cf124e011c7f84276ce105cb5b3a96.1670866407.git.gitgitgadget@gmail.com>
-Message-ID: <221219.86pmcfzm7g.gmgdl@evledraar.gmail.com>
+In-reply-to: <aafee168fbae2a1887f53febc4abd15522b12bc2.1670866407.git.gitgitgadget@gmail.com>
+Message-ID: <221219.86len3zlqj.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -74,41 +74,32 @@ On Mon, Dec 12 2022, Derrick Stolee via GitGitGadget wrote:
 
 > From: Derrick Stolee <derrickstolee@github.com>
 >
-> The bundle_uri_advertise() method was not using its repository
-> parameter, but this is a mistake. Use repo_config_get_maybe_bool()
-> instead of git_config_maybe_bool().
->
-> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
-> ---
->  bundle-uri.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/bundle-uri.c b/bundle-uri.c
-> index 8efb4e7acad..5f158cc52e1 100644
-> --- a/bundle-uri.c
-> +++ b/bundle-uri.c
-> @@ -610,7 +610,7 @@ int bundle_uri_advertise(struct repository *r, struct strbuf *value)
->  		goto cached;
->  
->  	advertise_bundle_uri = 0;
-> -	git_config_get_maybe_bool("uploadpack.advertisebundleuris", &advertise_bundle_uri);
-> +	repo_config_get_maybe_bool(r, "uploadpack.advertisebundleuris", &advertise_bundle_uri);
->  
->  cached:
->  	return advertise_bundle_uri;
+> The GIT_TEST_BUNDLE_URI environment variable is used in the t573* suite
+> of tests that consume the bundle URIs advertised by the Git server. This
+> variable is equivalent to setting transfer.bundleURI=true, so we can do
+> that in these tests instead.
 
-This looks good, but as with another parallel topic of yours that I
-commented on[1] leaves us wondering if this had any effect.
+I think this is probably OK. I can't remember why I added both the env
+variable and the setting in what became 0ef961dda05 (bundle-uri client:
+add boolean transfer.bundleURI setting, 2022-12-05).
 
-I.e. is this just for good measure because we have a "r" parameter, or
-did we do the wrong thing for submodules before this change? In that
-case let's add the missing test coverage.
+But I think this commit message really doesn't explain why it's OK to
+remove it. In general we do have GIT_TEST_* settings that duplicate
+config, e.g. GIT_TEST_PROTOCOL_VERSION.
 
-Or, if it's the former let's update the commit message here, saying e.g.:
+We do so because we'd like the environment variable to override the
+setting, or the other way around (I think depending on the GIT_TEST_*
+variable it's either-or, it's a mess).
 
-	While we should use "r" for <good measure or other reason>, we
-	already did the right thing for submodules, as "the_repository"
-	would be set to the submodule because <reasons I don't
-	know about...>.
+But in this case we'd never like to combine the two?
 
-1. https://lore.kernel.org/git/221215.865yec3b1j.gmgdl@evledraar.gmail.com/
+> The environment variable has a name that implies it would be useful
+> outside of these tests. It is not useful to set across all tests since
+> it would do very little without some setup on the server side. Remove
+> it.
+
+This part I really don't get, why does its name imply that? We use
+GIT_TEST_* variables for this sort of thing, maybe it's not needed here,
+but what should it have been named? GIT_TEST_T57XX_* or something?
+
+I named it like that for consistency with existing test variables, ...
