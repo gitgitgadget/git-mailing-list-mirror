@@ -2,215 +2,154 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6FA15C4167B
-	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 12:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 70548C4332F
+	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 13:16:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231986AbiLSMLC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 07:11:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56612 "EHLO
+        id S232067AbiLSNQe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Dec 2022 08:16:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231381AbiLSMKM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 07:10:12 -0500
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4758910FF6
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 04:08:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1671451680; bh=8s6ohaiXtlmvRTHpTbQfxVCUK6PrWx2Mgyh15VpaguE=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=lOV+3h8+6AXR3ijH4+J0Zr/sKFp/8OKOVHgVJcy+UaFt73zUk2jK9tI9T2+gEMSNR
-         0Vn3FkK88wiNJ6/+yWFFpF7PAz2tQC2e3S4Q51uB8deQ8RAqYfYLz7d3bugIX/xD/k
-         ULIYu4+7VifaNsVOwO9fmbZ3ZU3idlGYk78rkhBTPE0W+hF3vFrLw2ZeZpciYuBzz+
-         3meMXudE6LiU9og/vrTsM1S+i0ktjVKZAizqvR+AcDh2NWtmyKYz8HVRQuUKhFuwrZ
-         xMtawf+FZpwChowGk1MeR5V8uWQawLa1aKhOWGNo8gNrh9xGOhCcft2tlCUKi2Ev7x
-         ZG8g9NgyH1eYQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.151.35]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MkEhH-1oRtph1w7N-00kHRb; Mon, 19
- Dec 2022 13:08:00 +0100
-Message-ID: <1182283a-4a78-3c99-e716-a8c3e58a5823@web.de>
-Date:   Mon, 19 Dec 2022 13:07:59 +0100
+        with ESMTP id S231292AbiLSNQc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2022 08:16:32 -0500
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EFA5260D
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 05:16:31 -0800 (PST)
+Received: by mail-ot1-x331.google.com with SMTP id i26-20020a9d68da000000b00672301a1664so5291912oto.6
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 05:16:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=agfAIqekB+IIxVZw+RKuBN1fcQxXri9KHycDGXFkJq4=;
+        b=Gy1mL4A1qCUSnsiJnKVKlBxwe1WqWmL+BwMKboT6CKkPGt4tMvGJJAKVBzhvzpWLiy
+         REmBVTnMNBN6wE6mxtk8Pz8CE5VUOO6aGcdgfBiEObaPr1Wo+3eECxpiZT3SkDLlA5j4
+         xnyJG66gAN1ooC76ODqHRuNRXlwfKPf0+O/3MegFs4cyHSVYf+2ueQR0kQD45Sta+9tt
+         3Sa+dEJDracEif9GtZdlI3ZHr3hBKqW7EbHwflMqoh2LtuwD6UpNYsJu2Kz95NT96zLa
+         q9F3aEoo7t+iyntm8sQ3Hih4P+9Pm8zsdUrFcTpmR8eEcISoJH45tPrN8rtwiF/vf3yi
+         y4Qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=agfAIqekB+IIxVZw+RKuBN1fcQxXri9KHycDGXFkJq4=;
+        b=Hyrn+MwHDc41aN84A8EoPjfLELSQonT3LJ3KecnYmI94BRMThFII3jyVu4/dcoOWCY
+         4vfHQIQSKeOouGbe1/7+HcXlScC2G4KnZbV9AVY9Cyrw7qEy//u8hd4jjaFzGNA7d6XC
+         SwRYTRBJoByFhq5BcljqoBpk5wypeOW28pAGpAf6xkpHYNq/IKipMdpc0wl6yZcrOlOp
+         Dn+EmdIM59Vy3cR0Dustrwj7KQpd7w8BbUgqg1TvPjAsjcCmEgemGYDQyOkTQ74S+TOn
+         nv6jzwzvWyaQvcolXUy3/PQcw+vhc47TSRsqhUVs2hrGdfIFYpDkRdQtaesxzroa0mDl
+         R5RQ==
+X-Gm-Message-State: ANoB5pmfyoKhSiIbAq6i+JCCHK/yDokPr6Fc4b3WEldnFePp213p+us9
+        nhaZE0RdAh+xq1lUO7X4ZqyN9VW8gH5Oi9faNz8ADI/kAccsRg==
+X-Google-Smtp-Source: AA0mqf62PGKGgZb0Piq3jlAgfEN6a7FVdwj7dJ82cN7PlUYGerL4XtH1xtVbuIM/1x66uQVxmTlEFg3Oqr08vrgeeiU=
+X-Received: by 2002:a9d:550d:0:b0:66d:6909:e477 with SMTP id
+ l13-20020a9d550d000000b0066d6909e477mr49937882oth.114.1671455790660; Mon, 19
+ Dec 2022 05:16:30 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.0
-Subject: Re: [PATCH v4 1/6] auto-crlf tests: don't lose exit code in loops and
- outside tests
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?Q?Torsten_B=c3=b6gershause?= =?UTF-8?Q?n?= 
-        <tboegi@web.de>
-References: <cover-v3-0.8-00000000000-20221202T114733Z-avarab@gmail.com>
- <cover-v4-0.6-00000000000-20221219T101240Z-avarab@gmail.com>
- <patch-v4-1.6-68d276dd421-20221219T101240Z-avarab@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <patch-v4-1.6-68d276dd421-20221219T101240Z-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8
+References: <20221216093552.3171319-1-karthik.188@gmail.com> <221219.86359b20bc.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221219.86359b20bc.gmgdl@evledraar.gmail.com>
+From:   Karthik Nayak <karthik.188@gmail.com>
+Date:   Mon, 19 Dec 2022 14:16:04 +0100
+Message-ID: <CAOLa=ZScE7ifK2K=8RYLwdwdXafH05j7ONU1CT1rjPWgYXRZVA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] check-attr: add support to work with revisions
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, toon@iotcl.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:YOXk70dEQ9VkJqOR5B29IaSacPVk2/P7omarjzVIl0xh/aFBrKf
- wFVUnu/+Nj9GIimPIsPWAmgbgn+rwhxr4OnuwW3rx3LlmU/njEApnZ90Ex7oya/34m4SY9d
- QR7IiTXXjzV/+ZOtgN+6/ghoDTMPsS9xMVnuVCjRLKmMvbF1QdIbQcjvHapPJbkEEAQAwml
- cZe1+yIxO0GIL/JbGyM1Q==
-UI-OutboundReport: notjunk:1;M01:P0:qF7aTlrTsEQ=;5I0Ms7g9PNGE0rW2ZaL1HGXNWUV
- 24xbLr66Ko5H5EPgzMZe6+K6Rpuix74IR93IC+DID+tR8o3lKOabHPH2zMhft5pj8ZFn/pp6p
- nv01iD5Oq9HAIPxaAnT7svccBeoPP9t+Hi9n66bvhgQ7uPO1t/N2UhPdfQr4HlenM3jFrHDY6
- 2nu3OhCd/p1qZ5NuzsIQqCWgY430ll5A11+tGE/D2UK6U31VBvciyUObvL79i2U0/dUkZlrlU
- KeXqILxIJQTNw0ntStfT34WxNYhBtGkvVFo7QzeDLutIS28+c53RSfiqD6/Jy96fE7O6f/yNJ
- FiKLn36lscb3+/84DG4GgW3d06PqFBcghR2p2G6HazWwgAqMarM1pqo67FSaxRbMjsK2Ksy4s
- 0z1DQ2P657brmWigMkOWnHjaXxJjsMQu4Pvs2snPcbcAmAcFVH13CQ9axbbouheOA+esVE9QJ
- NmuBh/dt8yLm1goWfToCDd4S/Vm3NCAtDLPwg4wNzO+bQMNtRRdvfYK06Vq5CBP6j71a1/y3t
- GST29ROMm1/1w6Gic6dpPBXc7hhOavULDc1Bqru/wBR3lUfYKxh/n72AFgOFsR5Cg9MJHI6XZ
- XbutjMZ7syLHjpyuz5seThssUjKJzG15+438ZTWb5/fuS6gN5bKerTT2eE0gtudv6PezfcRN5
- K8q3awNA9zI+3ZS7LgFhI6T3ScIO4yZvDxNMoGTnmRF+9oFqr2FcWYEO6DclboOxd6ogkgQVl
- popmcIC3W/Zbx/Mag9oK637wvrrvD2KGvJqEM4QyS05uIcwdjharUdL1widMr662TmtkCdehe
- 6h952Vred9F9jLzn6eBLtE5L0YXWXFY8UEGSxXp9CBwLIXu80j/Pwmw1qc8yZGLZEjanbs0Lk
- UlaA1tCqB9Am2Fg87G8hrHRYxJ4CwHsIzoe4OPAw0xw9Lmo5kaRXDAD0WqaX60FqAiOiU4sYc
- jNBFFg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 19.12.22 um 11:19 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> Change the functions which are called from within
-> "test_expect_success" to add the "|| return 1" idiom to their
-> for-loops, so we won't lose the exit code of "cp", "git" etc.
+On Mon, Dec 19, 2022 at 10:46 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> Then for those setup functions that aren't called from a
-> "test_expect_success" we need to put the setup code in a
-> "test_expect_success" as well. It would not be enough to properly
-> &&-chain these, as the calling code is the top-level script itself. As
-> we don't run the tests with "set -e" we won't report failing commands
-> at the top-level.
 >
-> The "checkout" part of this would miss memory leaks under
-> SANITIZE=3Dleak, this code doesn't leak (the relevant "git checkout"
-> leak has been fixed), but in a past version of git we'd continue past
-> this failure under SANITIZE=3Dleak when these invocations had errored
-> out, even under "--immediate".
+> On Fri, Dec 16 2022, Karthik Nayak wrote:
 >
-> Helped-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  t/t0027-auto-crlf.sh | 66 +++++++++++++++++++++++++-------------------
->  1 file changed, 38 insertions(+), 28 deletions(-)
+> > v1: https://lore.kernel.org/git/20221206103736.53909-1-karthik.188@gmai=
+l.com/
+> > v2: https://lore.kernel.org/git/CAOLa=3DZSsFGBw3ta1jWN8cmUch2ca=3DzTEjp=
+1xMA6Linafx9W53g@mail.gmail.com/T/#t
+> >
+> > Given a pathname, git-check-attr(1) will list the attributes which appl=
+y to that
+> > pathname by reading all relevant gitattributes files. Currently there i=
+s no way
+> > to specify a revision to read the gitattributes from.
+> >
+> > This is specifically useful in bare repositories wherein the gitattribu=
+tes are
+> > only present in the git working tree but not available directly on the
+> > filesystem.
+> >
+> > This series aims to add a new flag `-r|--revisions` to git-check-attr(1=
+) which
+> > allows us to read gitattributes from the specified revision.
+> >
+> > Changes since version 2:
+> > - Changes to the commit message [1/2] to use more specific terms and to
+> >   be more descriptive.
+> > - Moved the flag's position in the documentation to be before the unbou=
+nd
+> >   list of non-options.
 >
-> diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
-> index a94ac1eae37..2f57c8669cb 100755
-> --- a/t/t0027-auto-crlf.sh
-> +++ b/t/t0027-auto-crlf.sh
-> @@ -70,7 +70,8 @@ create_NNO_MIX_files () {
->  				cp CRLF        ${pfx}_CRLF.txt &&
->  				cp CRLF_mix_LF ${pfx}_CRLF_mix_LF.txt &&
->  				cp LF_mix_CR   ${pfx}_LF_mix_CR.txt &&
-> -				cp CRLF_nul    ${pfx}_CRLF_nul.txt
-> +				cp CRLF_nul    ${pfx}_CRLF_nul.txt ||
-> +				return 1
->  			done
->  		done
->  	done
-> @@ -101,7 +102,8 @@ commit_check_warn () {
->  	do
->  		fname=3D${pfx}_$f.txt &&
->  		cp $f $fname &&
-> -		git -c core.autocrlf=3D$crlf add $fname 2>"${pfx}_$f.err"
-> +		git -c core.autocrlf=3D$crlf add $fname 2>"${pfx}_$f.err" ||
-> +		return 1
->  	done &&
->  	git commit -m "core.autocrlf $crlf" &&
->  	check_warning "$lfname" ${pfx}_LF.err &&
-> @@ -121,15 +123,19 @@ commit_chk_wrnNNO () {
->  	lfmixcr=3D$1 ; shift
->  	crlfnul=3D$1 ; shift
->  	pfx=3DNNO_attr_${attr}_aeol_${aeol}_${crlf}
-> -	#Commit files on top of existing file
-> -	create_gitattributes "$attr" $aeol &&
-> -	for f in LF CRLF CRLF_mix_LF LF_mix_CR CRLF_nul
-> -	do
-> -		fname=3D${pfx}_$f.txt &&
-> -		cp $f $fname &&
-> -		printf Z >>"$fname" &&
-> -		git -c core.autocrlf=3D$crlf add $fname 2>"${pfx}_$f.err"
-> -	done
-> +
-> +	test_expect_success 'setup commit NNO files' '
-> +		#Commit files on top of existing file
-> +		create_gitattributes "$attr" $aeol &&
-> +		for f in LF CRLF CRLF_mix_LF LF_mix_CR CRLF_nul
-> +		do
-> +			fname=3D${pfx}_$f.txt &&
-> +			cp $f $fname &&
-> +			printf Z >>"$fname" &&
-> +			git -c core.autocrlf=3D$crlf add $fname 2>"${pfx}_$f.err" ||
-> +			return 1
-> +		done
-> +	'
+> Aside from the UX concerns with this series, this segfaults with it, but
+> not on "master":
 >
->  	test_expect_success "commit NNO files crlf=3D$crlf attr=3D$attr LF" '
->  		check_warning "$lfwarn" ${pfx}_LF.err
-> @@ -163,15 +169,19 @@ commit_MIX_chkwrn () {
->  	lfmixcr=3D$1 ; shift
->  	crlfnul=3D$1 ; shift
->  	pfx=3DMIX_attr_${attr}_aeol_${aeol}_${crlf}
-> -	#Commit file with CLRF_mix_LF on top of existing file
-> -	create_gitattributes "$attr" $aeol &&
-> -	for f in LF CRLF CRLF_mix_LF LF_mix_CR CRLF_nul
-> -	do
-> -		fname=3D${pfx}_$f.txt &&
-> -		cp CRLF_mix_LF $fname &&
-> -		printf Z >>"$fname" &&
-> -		git -c core.autocrlf=3D$crlf add $fname 2>"${pfx}_$f.err"
-> -	done
-> +
-> +	test_expect_success 'setup commit file with mixed EOL' '
-> +		#Commit file with CLRF_mix_LF on top of existing file
-> +		create_gitattributes "$attr" $aeol &&
-> +		for f in LF CRLF CRLF_mix_LF LF_mix_CR CRLF_nul
-> +		do
-> +			fname=3D${pfx}_$f.txt &&
-> +			cp CRLF_mix_LF $fname &&
-> +			printf Z >>"$fname" &&
-> +			git -c core.autocrlf=3D$crlf add $fname 2>"${pfx}_$f.err" ||
-> +			return 1
-> +		done
-> +	'
+>         ./git check-attr diff git-send-email.perl foo.perl git-send-email=
+.perl
+>         AddressSanitizer:DEADLYSIGNAL
+>         =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+>         =3D=3D1828755=3D=3DERROR: AddressSanitizer: SEGV on unknown addre=
+ss (pc 0x0000008ee4a8 bp 0x7fffe4cef820 sp 0x7fffe4cef800 T0)
+>         =3D=3D1828755=3D=3DThe signal is caused by a READ memory access.
+>         =3D=3D1828755=3D=3DHint: this fault was caused by a dereference o=
+f a high value address (see register values below).  Disassemble the provid=
+ed pc to learn which register was used.
+>             #0 0x8ee4a8 in hasheq_algop hash.h:236
+>             #1 0x8ee632 in oideq hash.h:253
+>             #2 0x8ee657 in is_null_oid hash.h:258
+>             #3 0x8f79e2 in do_oid_object_info_extended object-file.c:1550
+>             #4 0x8f8206 in oid_object_info_extended object-file.c:1640
+>             #5 0x8f860c in read_object object-file.c:1672
+>             #6 0x8f8a8a in read_object_file_extended object-file.c:1715
+>             #7 0x8f01ef in repo_read_object_file object-store.h:253
+>             #8 0x8f8e37 in read_object_with_reference object-file.c:1756
+>             #9 0xafb411 in get_tree_entry tree-walk.c:612
+>             #10 0x6d1975 in read_attr_from_blob attr.c:776
+>             #11 0x6d1b80 in read_attr attr.c:826
+>             #12 0x6d1f35 in bootstrap_attr_stack attr.c:912
+>             #13 0x6d2173 in prepare_attr_stack attr.c:948
+>             #14 0x6d3285 in collect_some_attrs attr.c:1143
+>             #15 0x6d33e1 in git_check_attr attr.c:1157
+>             #16 0x453581 in check_attr builtin/check-attr.c:72
+>             #17 0x453f1f in cmd_check_attr builtin/check-attr.c:190
+>             #18 0x40b63d in run_builtin git.c:466
+>             #19 0x40bf7f in handle_builtin git.c:721
+>             #20 0x40c686 in run_argv git.c:788
+>             #21 0x40d42f in cmd_main git.c:926
+>             #22 0x6885b5 in main common-main.c:57
+>             #23 0x7f96725a8189 in __libc_start_call_main ../sysdeps/nptl/=
+libc_start_call_main.h:58
+>             #24 0x7f96725a8244 in __libc_start_main_impl ../csu/libc-star=
+t.c:381
+>             #25 0x407230 in _start (git+0x407230)
 >
->  	test_expect_success "commit file with mixed EOL onto LF crlf=3D$crlf a=
-ttr=3D$attr" '
->  		check_warning "$lfwarn" ${pfx}_LF.err
-> @@ -289,17 +299,17 @@ checkout_files () {
->  	lfmixcrlf=3D$1 ; shift
->  	lfmixcr=3D$1 ; shift
->  	crlfnul=3D$1 ; shift
-> -	create_gitattributes "$attr" $ident $aeol &&
-> -	git config core.autocrlf $crlf &&
-> +	test_expect_success "setup config for checkout attr=3D$attr ident=3D$i=
-dent aeol=3D$aeol core.autocrlf=3D$crlf" '
-> +		create_gitattributes "$attr" $ident $aeol &&
-> +		git config core.autocrlf $crlf
-> +	'
->  	pfx=3Deol_${ceol}_crlf_${crlf}_attr_${attr}_ &&
->  	for f in LF CRLF LF_mix_CR CRLF_mix_LF LF_nul
->  	do
-> -		rm crlf_false_attr__$f.txt &&
-> -		if test -z "$ceol"; then
-> -			git checkout -- crlf_false_attr__$f.txt
-> -		else
-> -			git -c core.eol=3D$ceol checkout -- crlf_false_attr__$f.txt
-> -		fi
-> +		test_expect_success "setup $f checkout ${ceol:+ with -c core.eol=3D$c=
-eol}"  '
-> +			rm -f crlf_false_attr__$f.txt &&
-> +			git ${ceol:+-c core.eol=3D$ceol} checkout -- crlf_false_attr__$f.txt
-> +		'
+>         AddressSanitizer can not provide additional info.
+>         SUMMARY: AddressSanitizer: SEGV hash.h:236 in hasheq_algop
+>         =3D=3D1828755=3D=3DABORTING
+>         Aborted
+>
+> If the tests are still passing for you (I didn't check) then we probably
+> have a bad test blind spot with kthat we should start by addressing
+> before adding the new feature.
 
-OK, but why have test_expect_success inside the loop here, while a simlila=
-r
-loop is inside the two test_expect_success bodies above?  Do we really nee=
-d
-five invocations here instead of one?  It's just setup code.
+This seems to be what Junio mentioned here:
+https://lore.kernel.org/git/xmqqcz8ikgxs.fsf@gitster.g/
+Should be fixed in v4!
 
->  	done
->
->  	test_expect_success "ls-files --eol attr=3D$attr $ident aeol=3D$aeol c=
-ore.autocrlf=3D$crlf core.eol=3D$ceol" '
+--=20
+- Karthik
