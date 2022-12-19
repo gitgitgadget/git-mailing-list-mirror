@@ -2,71 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 38C2EC4332F
-	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 15:10:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A29FAC4332F
+	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 15:14:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232740AbiLSPKo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 10:10:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41810 "EHLO
+        id S232819AbiLSPOW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Dec 2022 10:14:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232736AbiLSPKm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 10:10:42 -0500
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E0D83A9
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 07:10:41 -0800 (PST)
-Received: by mail-ed1-x52d.google.com with SMTP id a16so13265229edb.9
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 07:10:41 -0800 (PST)
+        with ESMTP id S231556AbiLSPOV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2022 10:14:21 -0500
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD5A5F1D
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 07:14:20 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id qk9so22260025ejc.3
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 07:14:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=Em/car1iL96S6RqPbnRKqFd6iuclA1tRyMReeMvUAig=;
-        b=ITfXgPBI0BXsBHcMKLsjHlTPx8gtWvj3Mi0SN2nixDd9tu94LItAnHFhOR8mtChHBM
-         Laqz7RI+bYxSDAyncx8NswZGM9RHjiktKoOfGz+qPr5CJ2Ps7dKBb4guAL0hzF9hkg/A
-         F3kdYVOKK9BH8ns2je/CrcHHEFZ9l+FHTxkDIIiBPYzA6l/r5kilAbzbSMRSPIrOXl2W
-         YUHG9ZNO3jkazbd9XbGvSxrp1HZu+G1zdUFAFgjOd1oHJC/vH95GxZhxGP9s5JvIRDHp
-         J+WxqTFTD4muusaTA7toEl7oAAEp8PEp/a0nCS5mrybGSuGIA5xw1CuwlRMwa4MlT2K3
-         GFMQ==
+        bh=LOCOM/oyWoYfwOehvXnvgGzdFRMrpHA9kJIyEiPoPRA=;
+        b=gCn453ev4e7HzLXKGbDFci8H78R4DWQUFyvNNwbCKtoZQJnRRwdm03Kl/7gojXltz4
+         Nf9Uvp1yCxrX8Z7y1nv7x23qPWhYh8KXahae+Ed7knChGMr1D4AF+DpOAJfdE0ajlSV8
+         UkFGSyvcwZSM9KsPxuhZxq5bLxsJ3uz3mcZCnOfSwYDlsUtnAXEcDJjKch3h+UOoM26l
+         eiGqm0qlJ8BPKQU85ZSOqoaYDRMADmCTcAuk2IgoAN6rkTW9Do4e9zlPyPb7AavNxZoa
+         VgS4gOHg3cAUUo5EYFRGQlQ8Q/8aRcxMKR/3g0BWplfB1vTm/7WcmdSYYJGs86VgwiAW
+         zloQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:in-reply-to
          :user-agent:references:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Em/car1iL96S6RqPbnRKqFd6iuclA1tRyMReeMvUAig=;
-        b=fT5hW9V2qoKig1VhycbP34FZE+ANhnKsyMRcLCYp6wOXa4LK6AAQOsdKWfBiE7a9hV
-         6tjhIZE4mr3BgkoDzn+MzuRwGGLCUNgn/oFdW4fM0TZDZuoEMZl3TwVcrquEKzqUejrJ
-         vJJCFbBzIp7aO1mvhdpjWMuTmMG6mA8MC/IRWaC8dku3rNJJMhMajVsmV7UO7SbVnQbb
-         yeyAgAdOpmaSaUI4k4Rag7avzimRmrDFw5/OEVV18jso4YndBlzv67JFMaPJWF++oo0d
-         jdNoTlPtWGhS0DUC71083vfubArYj7igox/pEw2bWFIirg54aXB28lhhPLdYKYC84eDX
-         4/xA==
-X-Gm-Message-State: ANoB5plQnDwZ2AkCIENNf729gopkTl3bizLG49yAPXAVrfHo2HrV1E/H
-        ECphvCZME+p0nfihhl2jXBM=
-X-Google-Smtp-Source: AA0mqf7az50RTbRSLHu8NHqtnMLoD+6isMLlBstXsu0YtKhMTJ15frukw6RsCUrIn6AyqoJHZeqj+Q==
-X-Received: by 2002:a05:6402:12d6:b0:46b:444b:ec40 with SMTP id k22-20020a05640212d600b0046b444bec40mr35858400edx.15.1671462639842;
-        Mon, 19 Dec 2022 07:10:39 -0800 (PST)
+        bh=LOCOM/oyWoYfwOehvXnvgGzdFRMrpHA9kJIyEiPoPRA=;
+        b=qugYgzEfYtzXY75nmQrkZ9TS+2ysqvNZTWaECD/g0M9YJC9vVOqKPI0lebCX67FJEd
+         t0bo5skmPEOJPRQgTETp5RfCa+LdqF/AoDO8xXP85WDbIJK402qj/ubzUcJb8/7/Csw4
+         F7bQEGf9vT9bR4xrmRTpMREXoVcmUhnyiDjlQkjJSyXtjpqmBWYnkIDP8vGNHU6+A4WT
+         orICQDOvdrgKj1I7S43Z5Yw/2Qi9ty4zcPwlN2uWu6qCzuJcv9e0l1dh048VdW3VH11z
+         qi0bO1e5XCWNOhX7kWkChaqgf089ovOFay22xhQfqRyNCfvApl0fHeLkSHmbVhgmKDSn
+         8Wwg==
+X-Gm-Message-State: AFqh2krZPcqnECl3YjW8NzhfIx9FZvLl0kcbMeIs3K51C5R0IBMSH/Yx
+        zaHzie37/0ynyiS6exTSf+o=
+X-Google-Smtp-Source: AA0mqf4+gAqB2S5YbgN37X3QomJ5ltv5ZUfUbK5AflN38cBmIz8xpG0tPKocIqLCVzgdv1w+0mnO8g==
+X-Received: by 2002:a17:906:ad0:b0:7c4:ed62:5b5d with SMTP id z16-20020a1709060ad000b007c4ed625b5dmr18367461ejf.49.1671462859246;
+        Mon, 19 Dec 2022 07:14:19 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id s2-20020a05640217c200b004615e1bbaf4sm4507780edy.87.2022.12.19.07.10.39
+        by smtp.gmail.com with ESMTPSA id kw16-20020a170907771000b007ba46867e6asm4582077ejc.16.2022.12.19.07.14.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 07:10:39 -0800 (PST)
+        Mon, 19 Dec 2022 07:14:18 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1p7Hmo-006arM-0x;
-        Mon, 19 Dec 2022 16:10:38 +0100
+        id 1p7HqL-006b13-3A;
+        Mon, 19 Dec 2022 16:14:17 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     phillip.wood@dunelm.org.uk
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Victoria Dye <vdye@github.com>,
-        Eric Sunshine <ericsunshine@gmail.com>
-Subject: Re: [PATCH 0/2] cmake doc: modernize and cross-platform-ize the docs
-Date:   Mon, 19 Dec 2022 16:06:13 +0100
-References: <cover-0.2-00000000000-20221219T102813Z-avarab@gmail.com>
- <f67e0281-8a14-669d-0d1c-ed0b1351a64a@dunelm.org.uk>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH 0/6] remove USE_THE_INDEX_COMPATIBILITY_MACROS
+Date:   Mon, 19 Dec 2022 16:11:36 +0100
+References: <cover-0.6-00000000000-20221215T095335Z-avarab@gmail.com>
+ <11545cde-9ce2-acf4-7c08-1b49d2dbefa2@dunelm.org.uk>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <f67e0281-8a14-669d-0d1c-ed0b1351a64a@dunelm.org.uk>
-Message-ID: <221219.86h6xrzaxd.gmgdl@evledraar.gmail.com>
+In-reply-to: <11545cde-9ce2-acf4-7c08-1b49d2dbefa2@dunelm.org.uk>
+Message-ID: <221219.86cz8fzara.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -79,27 +77,40 @@ On Mon, Dec 19 2022, Phillip Wood wrote:
 
 > Hi =C3=86var
 >
-> On 19/12/2022 10:32, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> Change the cmake docs to use one-command build instructions using
->> options that "cmake" supports an ill our supported versions, and in
->> 2/2 re-arrange the docs to make it clearer which part of the
->> instructions are platform-specific.
->> Like the just-submitted [1] this extracted from [2], and the range
->> diff below is to [2]. The only change since [2] is a trivial reflow
->> change in the commit message.
->> There were no outstanding issues or feedback with this part of [2],
->> so
->> hopefully this can advance relatively quickly.
+> On 15/12/2022 09:58, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> My recent now-landed topic[1] to remove most use of
+>> "USE_THE_INDEX_COMPATIBILITY_MACROS" was merged in 041df69edd3 (Merge
+>> branch 'ab/fewer-the-index-macros', 2022-11-28).
+>> It left out use of the macros that would have conflicted with
+>> in-flight changes, but as those topics have landed we can now complete
+>> the migration.
+>> As before this is almost entirely a matter of applying the existing
+>> "pending" coccinelle rules, the exceptions being 1/6, and the *.h
+>> changes where we remove the macro definitions (the macro users being
+>> edited by coccinelle).
+>> The 4-5/6 then handle some edge cases we had left (but the code
+>> change
+>> itself is done by coccinelle).
 >
-> I'm afraid my inclination would be to let the people who actually use
-> CMake make any changes to the CMake documentation as I think they are=20
-> best placed to know what information is most important.
+> I've only given these patches a quick scan, but I think they look
+> good. None of the callers that are converted here are in library code
+> so using the_index makes perfect sense.
 
-I think that after kicking this "cmake" series back & forth for a while
-I can be described as a person who "uses cmake", I also have cmake+ctest
-as part of my local build & branch integration.
+Thanks for the review.
 
-I'm not sure what else to do with this comment, if you think that
-e.g. there might be some issue with the proposed changes here due to a
-blindspot I have in not using it with MSVC can you comment on the
-specific parts that you're concerned about?
+That's correct, although even if that were the case that wouldn't be an
+issue with this migration, as we'd have been using "the_index" before,
+just indirectly through a macro.
+
+That wasn't the case here, but I do I have another similar migration for
+migrating "the_repository" wrappers.
+
+In those cases there's surely instances where e.g. we really should be
+using a "r" argument instead, but I've opted to leave that question out,
+as it would make the coccinelle rules involved & diffs much harder to
+deal with.
+
+And because in the end the result is the same if viewed with "cc -E",
+i.e. these are just the macro shims we've been meaning to stop using for
+a while.
+
