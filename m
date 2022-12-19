@@ -2,165 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E28A6C4332F
-	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 18:46:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2EB35C4332F
+	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 20:37:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231897AbiLSSqf (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 13:46:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55844 "EHLO
+        id S232616AbiLSUhO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Dec 2022 15:37:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229712AbiLSSqe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 13:46:34 -0500
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6A5C26E2
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 10:46:32 -0800 (PST)
-Received: by mail-ed1-x52b.google.com with SMTP id a16so14200556edb.9
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 10:46:32 -0800 (PST)
+        with ESMTP id S232604AbiLSUhM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2022 15:37:12 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB0056343
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 12:37:11 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id i7so9854137wrv.8
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 12:37:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=4hzBCptF5NmY1jL4PYh+mLMEaMMl35WqFnQKwsW+5dw=;
-        b=gg2Vxvc6s37ZRwBy42r/vrztjgSynXWIv1i/ZENdqEnPAmHiLX1PnazKMn9gRENjdg
-         JJSC8CsRy16XKmVkYJr7WSF7jtX6x1drwMDEeYWmbw2pjQemgvuFIssueuvy2t0uyJxn
-         We8wf+wpwGVrvsIcdLMVd4CYDFnZQ2s9UfNf/px/9sIBHpVLVJGHhymQgGjMdRFT/ySv
-         wXxfyXk8Owu46C89qWxTfSYTqGKSEswdUJoDH3q/9/ASnaD4bASdju44htXTCK8N39w2
-         ujrhI3MXWsRY0Zn3WOPOg+Hp8+fx3jcoK0QBLZHeQ5Rql4+MsDYwhX6ijJTwEVPKmdJX
-         XhWw==
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/PkA/EVkuraXmCY9SUjUuSFO3K669oeI4Iy42P4wzl0=;
+        b=ZTqcgcSX2bM3DHfnu5eK5rCIYdVwonFbHVsznerYIO6PgBkf3HNw5/xLNi5LHL01lt
+         lilRP5o0pyjo8Nj9lumbdaN3GsVcNPxdngCBHCGama8uojxGQyem14TwfXuq12o1rtFL
+         qqwSctgU+gm13C3jLY7tWK/u8kz3zQNEVmLVt1Z7CTSEqsk0YQQ44dyREUc4mWCGKY49
+         WfmXnXz0tXOWmovBb20TgL91SdV6yAEbYcCJvJHTlVXONd4FtYatQ5K+2X2tLEgUgvkq
+         c6J+iFHKKB2n0OSHcAsa1egfAJjCqXWl2J9M2iUrrw+UA1WujRJIp1MAbNShKqBpL9F6
+         gaFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4hzBCptF5NmY1jL4PYh+mLMEaMMl35WqFnQKwsW+5dw=;
-        b=yIDeCJCL9ILJ1MGYwwCghUaiUBba4b7yd0171/4sam5Ysae6qBF1LTlxqZB0agPMxO
-         UEs1UNYYc1BgHP6461pDXt07SzF6nfiEkUOx8U0lgMjAtn6Fu9Xt8dSuVPASLNnj522B
-         U1fKqFgqbvEAs1Lirwd3VJjefGXIrzMZDCWPT8Bn1Co7/buAp+DGCDnBe6xITZUkvvkP
-         w6RSTNVMYyv4VaKSsB6RQNfyFo/tUkIT3fAYIKjNXz6WmP2WIjc81TXiVMjpkkkrBcsc
-         GO+v+M4YWToLRp+6ZnhvZPK0L/f88g7g5q0S89xr5gG6llnx5j8SlbAuVc5lpqhuzFE7
-         PgwQ==
-X-Gm-Message-State: ANoB5plpILI9HITx017Xf+pBL92X7wxfHCBLGy6tI3Q2JZ0xOA+nv85R
-        jvP0OKJG5vAWDPxcTCpMrDmrTl78sQD35w==
-X-Google-Smtp-Source: AA0mqf7ZHWgiW1Kcs+1xFYPQctaVm3OVu2xT/9O1h4sbw4iBRTVBbHJhLbO5N841mrgPn75erUc4pA==
-X-Received: by 2002:a05:6402:e9e:b0:470:2270:c508 with SMTP id h30-20020a0564020e9e00b004702270c508mr26496117eda.41.1671475590985;
-        Mon, 19 Dec 2022 10:46:30 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id a2-20020a170906274200b007bb86679a32sm4719232ejd.217.2022.12.19.10.46.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 10:46:30 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1p7L9i-006ik5-0M;
-        Mon, 19 Dec 2022 19:46:30 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Rose via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Seija Kijin <doremylover123@gmail.com>
-Subject: Re: [PATCH] win32: close handles of threads that have been joined
-Date:   Mon, 19 Dec 2022 19:40:37 +0100
-References: <pull.1406.git.git.1671474876207.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <pull.1406.git.git.1671474876207.gitgitgadget@gmail.com>
-Message-ID: <221219.86ili7xmd5.gmgdl@evledraar.gmail.com>
+        bh=/PkA/EVkuraXmCY9SUjUuSFO3K669oeI4Iy42P4wzl0=;
+        b=Xu8sBShCfZ+Zh7di8icktyA9Qa2PM1IyYb+lk4QFDhIywNdtuVPMqN6pzRNvsDxfEE
+         rNozlKCwpzdcV4ENL4PyZTv77SjkOj5QpBDBN3Iw1XZFKTinmHCLADGxErEj5WllWBVB
+         pm848B75kO7mXZPacXFoEPrBYEGaDwiEzoE18g1f4ZHz8TfbY6UCklRnzEMU1OBEHWwC
+         rfHkvrHhBQqQVDrOiA0oooPaTZo7NS5JGxbbCaOoadvWuSQ8IzCbmhjNomdkcaUfv2gC
+         u7uJ5AyXGFdQMOEKq/acloZYoT0YCmmJz0VT0FrrGWZrM6qdXilwGiI+oqBFJ9FYtXjE
+         SslA==
+X-Gm-Message-State: ANoB5pmnSPvzWFRKKeOaOuHdCz5Kd45oqK/sTCeZiAhn8f/6d7D34HuU
+        9YTH6oCzGs4ZdFaWN4zVYXo=
+X-Google-Smtp-Source: AA0mqf5RoHj9th1hAzUUduR3joDMM2q9PEaaS5/WI+LDa1ddaNUkERs+2R7MKBghAv7NcYzq7gcdCA==
+X-Received: by 2002:a05:6000:83:b0:242:fd7:285f with SMTP id m3-20020a056000008300b002420fd7285fmr26740063wrx.45.1671482230358;
+        Mon, 19 Dec 2022 12:37:10 -0800 (PST)
+Received: from [192.168.1.14] (host-92-2-151-214.as13285.net. [92.2.151.214])
+        by smtp.gmail.com with ESMTPSA id w4-20020adfec44000000b00241dd5de644sm10858821wrn.97.2022.12.19.12.37.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Dec 2022 12:37:10 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <dd47cbd0-35a6-1009-26e8-6a281224436d@dunelm.org.uk>
+Date:   Mon, 19 Dec 2022 20:37:07 +0000
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] win32: ensure len does not cause any overreads
+Content-Language: en-US
+To:     Rose via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc:     Rose <83477269+AtariDreams@users.noreply.github.com>,
+        Seija Kijin <doremylover123@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <pull.1404.git.git.1671470222521.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1404.git.git.1671470222521.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Dec 19 2022, Rose via GitGitGadget wrote:
-
+On 19/12/2022 17:17, Rose via GitGitGadget wrote:
 > From: Seija Kijin <doremylover123@gmail.com>
->
-> After joining threads, the handle to the original thread
-> should be closed as it no longer needs to be open.
->
+> 
+> Check to make sure len is always less than MAX_PATH,
+> otherwise an overread will occur, which is
+> undefined behavior.
+> 
 > Signed-off-by: Seija Kijin <doremylover123@gmail.com>
 > ---
->     win32: close handles of threads that have been joined
->     
->     After joining threads, the handle to the original thread should be
->     closed as it no longer needs to be open.
->     
->     Signed-off-by: Seija Kijin doremylover123@gmail.com
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1406%2FAtariDreams%2Fjoin-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1406/AtariDreams/join-v1
-> Pull-Request: https://github.com/git/git/pull/1406
->
->  compat/win32/pthread.c | 22 ++++++++++++++--------
->  1 file changed, 14 insertions(+), 8 deletions(-)
->
-> diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
-> index 2e7eead42cb..de89667ef70 100644
-> --- a/compat/win32/pthread.c
-> +++ b/compat/win32/pthread.c
-> @@ -39,14 +39,20 @@ int win32_pthread_join(pthread_t *thread, void **value_ptr)
->  {
->  	DWORD result = WaitForSingleObject(thread->handle, INFINITE);
->  	switch (result) {
-> -		case WAIT_OBJECT_0:
-> -			if (value_ptr)
-> -				*value_ptr = thread->arg;
-> -			return 0;
-> -		case WAIT_ABANDONED:
-> -			return EINVAL;
-> -		default:
-> -			return err_win_to_posix(GetLastError());
-> +	case WAIT_OBJECT_0:
-> +		if (value_ptr)
-> +			*value_ptr = thread->arg;
-> +		/* detach the thread once the join succeeds */
-> +		CloseHandle(thread->handle);
-> +		return 0;
-> +	case WAIT_ABANDONED:
-> +		/* either thread is not joinable or another thread is waiting on
-> +		 * this, so we do not detatch */
+>      win32: ensure len does not cause any overreads
+>      
+>      Check to make sure len is always less than MAX_PATH, otherwise an
+>      overread will occur, which is undefined behavior.
+>      
+>      Signed-off-by: Seija Kijin doremylover123@gmail.com
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1404%2FAtariDreams%2Foverread-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1404/AtariDreams/overread-v1
+> Pull-Request: https://github.com/git/git/pull/1404
+> 
+>   compat/win32/dirent.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/compat/win32/dirent.c b/compat/win32/dirent.c
+> index 52420ec7d4d..0c1bdccdd58 100644
+> --- a/compat/win32/dirent.c
+> +++ b/compat/win32/dirent.c
+> @@ -27,7 +27,7 @@ DIR *opendir(const char *name)
+>   	DIR *dir;
+>   
+>   	/* convert name to UTF-16 and check length < MAX_PATH */
+> -	if ((len = xutftowcs_path(pattern, name)) < 0)
+> +	if ((len = xutftowcs_path(pattern, name)) < 0 || len > MAX_PATH)
 
-See CodingGuidelines for how multi-line comments should look like.
+The documentation for xutftowcs_path() says
 
-	/*
-	 * Like this
-	 * Another line etc.
-	 */
-> +		return EINVAL;
-> +	default:
-> +	case WAIT_FAILED:
-> +		/* the function failed so we do not detach */
-> +		return err_win_to_posix(GetLastError());
+/**
+  * Simplified file system specific variant of xutftowcsn, assumes output
+  * buffer size is MAX_PATH wide chars and input string is \0-terminated,
+  * fails with ENAMETOOLONG if input string is too long.
+  */
 
-The post-image adhares to our CodingGuidelines better than the
-pre-image, but please split up such re-indentation into a "prep" change.
-Manually looking at this with "git show -w" shows the actual (and
-smaller) functional change.
+Looking at the implementation it seems it does check the length so I 
+don't think we need this change. I haven't looked into why 0217569bb2d 
+(Win32: Unicode file name support (dirent), 2012-01-14) changed the 
+length check from "len + 2 >= MAX_PATH" though.
 
-You add a "case" for WAIT_FAILED", but keep "default".
+Best Wishes
 
-I have no idea about this API, but a search turned up:
-https://learn.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-waitforsingleobject
+Phillip
 
-That seems to suggest that it only returns 4 possible values.
-
-Rather than having the "default" case shouldn't we (and this is just a
-suggestion, and should be its own prep change in any case) do:
-
-	switch (result) {
-	case WAIT_OBJECT_0:
-		return ...;
-	case WAIT_ABANDONED:
-		return ...;
-	case WAIT_TIMEOUT:
-	case WAIT_FAILED:
-		return ...;
-	default:
-		BUG("unhandled result %d", result);
-	}
-
-I.e. instead of keeping "default" you can just list "WAIT_TIMEOUT".
-
-I don't know if that's OK with this API, it does say "If the function
-succeeds, the return value indicates, so maybe that "default" handles a
-lot more still?
-
-
-
+>   		return NULL;
+>   
+>   	/* append optional '/' and wildcard '*' */
+> 
+> base-commit: 7c2ef319c52c4997256f5807564523dfd4acdfc7
