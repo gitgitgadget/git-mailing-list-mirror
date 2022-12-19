@@ -2,60 +2,56 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD40BC4167B
-	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 16:20:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BCFF3C4332F
+	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 16:33:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232058AbiLSQUd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 11:20:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53374 "EHLO
+        id S231700AbiLSQdu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Dec 2022 11:33:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231991AbiLSQUa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 11:20:30 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6D4F133
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 08:20:28 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id i7so9183484wrv.8
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 08:20:28 -0800 (PST)
+        with ESMTP id S231531AbiLSQds (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2022 11:33:48 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94F40219B
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 08:33:46 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id y16so9264075wrm.2
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 08:33:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mXSB/dfnZXZjH9qaVx2Tou4UhmraPLlafdZJ0IRl9tI=;
-        b=N5mytT2Wa5eWrpySaBDz7AdPldKyikQ0m7fLCKb+AEUG9iXDtGCn6bu+xRzGj4+Rgq
-         QSjJn/PbIT5n6B3tK55CZSde/fdkAEh9FraaW9efrmUwO6W6VffLTTZKH28R9ng6NCIY
-         3Z2prR8JBJHuAMpZCmHzo9vOvXczYo6v747rGiWqZkZr24N1LkJWp65wAdqKDRzP00fh
-         taKGEQpJPqMnGQ47WbvriM0YrH7PTiL/EeTAlT0MHlG6LPLECO5lqxxcmgMxb2x0+ZcU
-         M4s1tePHeQoFqeLscJpo44f1heofZe4qNASVSbH7W4QRytqtXnqkkqS8uv5gXs48UCb4
-         VEig==
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=wNaixnfnblPNV4LP3+aBN0XGaA8te4lWnXDNGep08y4=;
+        b=Yx7y4STqL8YykdILGKsDu9SRagSxPTRLmeloJ6ds3kpr72EzP+vYybaUp7hLUGwEon
+         LkBq4VH6w2+6njoTovphntEeA2NESFFoQefQu2DOmHA3Y9dh6kvSsQV9ISxJ1Lo7AXkd
+         4oxlgEv78+d3uLlhoqI4iIHcqACIDvjDfe+pCd2m0Ml9CkBTmtMNkC3OMkjhj400uDM3
+         /AkgOCEqH/IRiJycNjm/RiJveX6+CylTSiAugElhvcvyom6DgmBa4biowLtxLUiQfK9I
+         xEQUbu/qMdnt1uTKGkfzdRGHsmhewkJdEneitMZ+o6YOjUF0oAlPuKsPX36BO9OXeLOY
+         zA6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mXSB/dfnZXZjH9qaVx2Tou4UhmraPLlafdZJ0IRl9tI=;
-        b=q/+51pdh5cceV+NTzwLsTkvDzk3LtOTlppYCJ6AOLuyg51h1fx1bssBTYNWQLmpl/T
-         He8WjJLT3R59nTocRYiWS/plH0UXbuCDzia99P9+jx/G345mM2r0eEEdUp5opOOvbx9J
-         7FPkRDcwVsvoVmoKR7SFi8UHszdyvwopExcaYk60htoGUSBqOq0hUGllpXhDb0K9pYA7
-         +ksl4/gyyTYyzvtKf9DwJ+IruZwHZScAbc/ZPj54EpneCfPcxQmSoFNliytqS2NXKc5g
-         hPXscJS0ikVI50rOd/L3yPtAr1F9FwS1MpKEl24KGpAGsx7/JWCv4J6139GSm6NYBA58
-         b0CQ==
-X-Gm-Message-State: AFqh2kqdfnqxswwPghvZrJVw31WMs7rLLvMdBto+SPlC4/mRAIKas6nB
-        qw3htFl/HNHe5tSuOQ/JxZFgbSYgHz4=
-X-Google-Smtp-Source: AMrXdXsw+LHp8Cz7Fm/7IFqRhYpT0t4ymX/1IJcqm/A+TCx8oUyr5pwfp7kjUzBSd6XYMDgtZARn7w==
-X-Received: by 2002:a05:6000:408b:b0:256:8985:af4c with SMTP id da11-20020a056000408b00b002568985af4cmr8184283wrb.14.1671466827166;
-        Mon, 19 Dec 2022 08:20:27 -0800 (PST)
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wNaixnfnblPNV4LP3+aBN0XGaA8te4lWnXDNGep08y4=;
+        b=OvERz6LbztIKiIxet4VIv1zNJ9cjsgKzjiUZVNTd2ZrDXMKcTiJQYSYOvwcVLl02d2
+         u4+MkJJoroF03eKU0P6fjkIhk61F10u5vm9VMtCDD5JpJDHW8wyBmYgvwnH07qt8J1pL
+         Cx81ivHZHC9cSc4TMUQ21YFV7us78a6E+GufRFsGrFaZGdBQrIlVUVZn1htGFRz5O5rY
+         71eUG4avnwhGtrAR7W+8HjuUc90JHe21+TQQTF8eQLyAge+g7LztFmTQcBfcaPipklRb
+         WJf34CRHc+Io7tpW1EuT06rN6JxDV2g0ZYDrrgKTpJTCJNVUcjIM1ELkoE5GLfKZrQmh
+         LwDw==
+X-Gm-Message-State: ANoB5pkMlOwOxAmwglr+da1nGHnAUu3RNIR6RUtoVmKPT/80h9Cqr7NW
+        VeIghUByk8+4wN1u66Vd9UGOQ4HRIgs=
+X-Google-Smtp-Source: AA0mqf7xOvDFk2xuKajd8iSnhl1u7tExbYa3kjUMnnlCFHbYiia2mDIXwhFuhuD4WfJgZFBqhXKDAg==
+X-Received: by 2002:a5d:6f10:0:b0:242:43f3:8950 with SMTP id ay16-20020a5d6f10000000b0024243f38950mr29510693wrb.22.1671467625016;
+        Mon, 19 Dec 2022 08:33:45 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ay9-20020a5d6f09000000b002425504ae7dsm10452941wrb.80.2022.12.19.08.20.26
+        by smtp.gmail.com with ESMTPSA id d4-20020a5d6dc4000000b0024165454262sm10481428wrz.11.2022.12.19.08.33.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 08:20:26 -0800 (PST)
-Message-Id: <pull.1402.v2.git.git.1671466826159.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1402.git.git.1671465108414.gitgitgadget@gmail.com>
-References: <pull.1402.git.git.1671465108414.gitgitgadget@gmail.com>
+        Mon, 19 Dec 2022 08:33:44 -0800 (PST)
+Message-Id: <pull.1403.git.git.1671467624143.gitgitgadget@gmail.com>
 From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 19 Dec 2022 16:20:26 +0000
-Subject: [PATCH v2] win32: explicitly set errno to enoent if err is not
- error_directory
+Date:   Mon, 19 Dec 2022 16:33:43 +0000
+Subject: [PATCH] diff: use strncmp to check for "diff." prefix
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -69,64 +65,214 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Seija Kijin <doremylover123@gmail.com>
 
-At this point, the only two possible errors are
-ERROR_DIRECTORY or ERROR_BAD_PATHNAME.
+This would be a lot more efficient than
+checking for the full string, as
+so many of the accepted values
+begin with "diff."
 
-This code clarifies this and also saves a call to
-err_win_to_posix.
+This allows the computer to skip most checks
+if var did not start with diff at all.
+
+It would also let us add more "diff." strings
+in the future without having to duplicate
+these 5 character so many times.
 
 Signed-off-by: Seija Kijin <doremylover123@gmail.com>
 ---
-    win32: explicitly set errno to enoent if err is not error_directory
+    diff: use strncmp to check for "diff." prefix
     
-    At this point, the only two possible errors are ERROR_DIRECTORY or
-    ERROR_BAD_PATHNAME.
+    This would be a lot more efficient than checking for the full string, as
+    so many of the accepted values begin with "diff."
     
-    This code clarifies this and also saves a call to err_win_to_posix.
+    This allows the computer to skip most checks if var did not start with
+    diff at all.
+    
+    It would also let us add more "diff." strings in the future without
+    having to duplicate these 5 character so many times.
     
     Signed-off-by: Seija Kijin doremylover123@gmail.com
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1402%2FAtariDreams%2Fopendir-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1402/AtariDreams/opendir-v2
-Pull-Request: https://github.com/git/git/pull/1402
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1403%2FAtariDreams%2Fdiff-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1403/AtariDreams/diff-v1
+Pull-Request: https://github.com/git/git/pull/1403
 
-Range-diff vs v1:
+ diff.c | 158 +++++++++++++++++++++++++++++++--------------------------
+ 1 file changed, 87 insertions(+), 71 deletions(-)
 
- 1:  6e66c0deaf9 ! 1:  bf757aee0be Explicitly set errno to ENOENT if err is not ERROR_DIRECTORY
-     @@ Metadata
-      Author: Seija Kijin <doremylover123@gmail.com>
-      
-       ## Commit message ##
-     -    Explicitly set errno to ENOENT if err is not ERROR_DIRECTORY
-     +    win32: explicitly set errno to enoent if err is not error_directory
-      
-          At this point, the only two possible errors are
-          ERROR_DIRECTORY or ERROR_BAD_PATHNAME.
-
-
- compat/win32/dirent.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/compat/win32/dirent.c b/compat/win32/dirent.c
-index 52420ec7d4d..8f94a5ab6db 100644
---- a/compat/win32/dirent.c
-+++ b/compat/win32/dirent.c
-@@ -34,13 +34,13 @@ DIR *opendir(const char *name)
- 	if (len && !is_dir_sep(pattern[len - 1]))
- 		pattern[len++] = '/';
- 	pattern[len++] = '*';
--	pattern[len] = 0;
-+	pattern[len] = '\0';
+diff --git a/diff.c b/diff.c
+index 4dfe824c858..e0fddbe6009 100644
+--- a/diff.c
++++ b/diff.c
+@@ -345,82 +345,98 @@ static unsigned parse_color_moved_ws(const char *arg)
  
- 	/* open find handle */
- 	h = FindFirstFileW(pattern, &fdata);
- 	if (h == INVALID_HANDLE_VALUE) {
- 		DWORD err = GetLastError();
--		errno = (err == ERROR_DIRECTORY) ? ENOTDIR : err_win_to_posix(err);
-+		errno = (err == ERROR_DIRECTORY) ? ENOTDIR : ENOENT;
- 		return NULL;
+ int git_diff_ui_config(const char *var, const char *value, void *cb)
+ {
+-	if (!strcmp(var, "diff.color") || !strcmp(var, "color.diff")) {
++	if (!strcmp(var, "color.diff")) {
+ 		diff_use_color_default = git_config_colorbool(var, value);
+ 		return 0;
+ 	}
+-	if (!strcmp(var, "diff.colormoved")) {
+-		int cm = parse_color_moved(value);
+-		if (cm < 0)
+-			return -1;
+-		diff_color_moved_default = cm;
+-		return 0;
+-	}
+-	if (!strcmp(var, "diff.colormovedws")) {
+-		unsigned cm = parse_color_moved_ws(value);
+-		if (cm & COLOR_MOVED_WS_ERROR)
+-			return -1;
+-		diff_color_moved_ws_default = cm;
+-		return 0;
+-	}
+-	if (!strcmp(var, "diff.context")) {
+-		diff_context_default = git_config_int(var, value);
+-		if (diff_context_default < 0)
+-			return -1;
+-		return 0;
+-	}
+-	if (!strcmp(var, "diff.interhunkcontext")) {
+-		diff_interhunk_context_default = git_config_int(var, value);
+-		if (diff_interhunk_context_default < 0)
+-			return -1;
+-		return 0;
+-	}
+-	if (!strcmp(var, "diff.renames")) {
+-		diff_detect_rename_default = git_config_rename(var, value);
+-		return 0;
+-	}
+-	if (!strcmp(var, "diff.autorefreshindex")) {
+-		diff_auto_refresh_index = git_config_bool(var, value);
+-		return 0;
+-	}
+-	if (!strcmp(var, "diff.mnemonicprefix")) {
+-		diff_mnemonic_prefix = git_config_bool(var, value);
+-		return 0;
+-	}
+-	if (!strcmp(var, "diff.noprefix")) {
+-		diff_no_prefix = git_config_bool(var, value);
+-		return 0;
+-	}
+-	if (!strcmp(var, "diff.relative")) {
+-		diff_relative = git_config_bool(var, value);
+-		return 0;
+-	}
+-	if (!strcmp(var, "diff.statgraphwidth")) {
+-		diff_stat_graph_width = git_config_int(var, value);
+-		return 0;
+-	}
+-	if (!strcmp(var, "diff.external"))
+-		return git_config_string(&external_diff_cmd_cfg, var, value);
+-	if (!strcmp(var, "diff.wordregex"))
+-		return git_config_string(&diff_word_regex_cfg, var, value);
+-	if (!strcmp(var, "diff.orderfile"))
+-		return git_config_pathname(&diff_order_file_cfg, var, value);
+ 
+-	if (!strcmp(var, "diff.ignoresubmodules"))
+-		handle_ignore_submodules_arg(&default_diff_options, value);
+-
+-	if (!strcmp(var, "diff.submodule")) {
+-		if (parse_submodule_params(&default_diff_options, value))
+-			warning(_("Unknown value for 'diff.submodule' config variable: '%s'"),
+-				value);
+-		return 0;
+-	}
++	if (!strncmp(var, "diff.", 5)) {
++		const char *tmp = var + 5;
++		if (!strcmp(var, "color")) {
++			diff_use_color_default =
++				git_config_colorbool(var, value);
++			return 0;
++		}
++		if (!strcmp(tmp, "colormoved")) {
++			int cm = parse_color_moved(value);
++			if (cm < 0)
++				return -1;
++			diff_color_moved_default = cm;
++			return 0;
++		}
++		if (!strcmp(tmp, "colormovedws")) {
++			unsigned cm = parse_color_moved_ws(value);
++			if (cm & COLOR_MOVED_WS_ERROR)
++				return -1;
++			diff_color_moved_ws_default = cm;
++			return 0;
++		}
++		if (!strcmp(tmp, "context")) {
++			diff_context_default = git_config_int(var, value);
++			if (diff_context_default < 0)
++				return -1;
++			return 0;
++		}
++		if (!strcmp(tmp, "interhunkcontext")) {
++			diff_interhunk_context_default =
++				git_config_int(var, value);
++			if (diff_interhunk_context_default < 0)
++				return -1;
++			return 0;
++		}
++		if (!strcmp(tmp, "renames")) {
++			diff_detect_rename_default =
++				git_config_rename(var, value);
++			return 0;
++		}
++		if (!strcmp(tmp, "autorefreshindex")) {
++			diff_auto_refresh_index = git_config_bool(var, value);
++			return 0;
++		}
++		if (!strcmp(tmp, "mnemonicprefix")) {
++			diff_mnemonic_prefix = git_config_bool(var, value);
++			return 0;
++		}
++		if (!strcmp(tmp, "noprefix")) {
++			diff_no_prefix = git_config_bool(var, value);
++			return 0;
++		}
++		if (!strcmp(tmp, "relative")) {
++			diff_relative = git_config_bool(var, value);
++			return 0;
++		}
++		if (!strcmp(tmp, "statgraphwidth")) {
++			diff_stat_graph_width = git_config_int(var, value);
++			return 0;
++		}
++		if (!strcmp(tmp, "external"))
++			return git_config_string(&external_diff_cmd_cfg, var,
++						 value);
++		if (!strcmp(tmp, "wordregex"))
++			return git_config_string(&diff_word_regex_cfg, var,
++						 value);
++		if (!strcmp(tmp, "orderfile"))
++			return git_config_pathname(&diff_order_file_cfg, var,
++						   value);
++
++		if (!strcmp(tmp, "ignoresubmodules"))
++			handle_ignore_submodules_arg(&default_diff_options,
++						     value);
++
++		if (!strcmp(tmp, "submodule")) {
++			if (parse_submodule_params(&default_diff_options,
++						   value))
++				warning(_("Unknown value for 'diff.submodule' config variable: '%s'"),
++					value);
++			return 0;
++		}
+ 
+-	if (!strcmp(var, "diff.algorithm")) {
+-		diff_algorithm = parse_algorithm_value(value);
+-		if (diff_algorithm < 0)
+-			return -1;
+-		return 0;
++		if (!strcmp(tmp, "algorithm")) {
++			diff_algorithm = parse_algorithm_value(value);
++			if (diff_algorithm < 0)
++				return -1;
++			return 0;
++		}
  	}
  
+ 	if (git_color_config(var, value, cb) < 0)
 
 base-commit: 7c2ef319c52c4997256f5807564523dfd4acdfc7
 -- 
