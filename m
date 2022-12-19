@@ -2,111 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 877B5C4332F
-	for <git@archiver.kernel.org>; Sun, 18 Dec 2022 21:41:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D12F1C4332F
+	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 00:48:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230520AbiLRVlr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 18 Dec 2022 16:41:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36828 "EHLO
+        id S230228AbiLSAsy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 18 Dec 2022 19:48:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229537AbiLRVlp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Dec 2022 16:41:45 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B6A9A1A9
-        for <git@vger.kernel.org>; Sun, 18 Dec 2022 13:41:42 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id ja17so5261472wmb.3
-        for <git@vger.kernel.org>; Sun, 18 Dec 2022 13:41:42 -0800 (PST)
+        with ESMTP id S229730AbiLSAsw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Dec 2022 19:48:52 -0500
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEA316374
+        for <git@vger.kernel.org>; Sun, 18 Dec 2022 16:48:50 -0800 (PST)
+Received: by mail-pl1-x62a.google.com with SMTP id n4so7569159plp.1
+        for <git@vger.kernel.org>; Sun, 18 Dec 2022 16:48:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=iLBtMEKtJnpBv8UjK5M0ZBeHX1CJQak3Si0qeSFNRlo=;
-        b=GYz60TZ6coVfVz97smX8opCZ6qnjB5ub+254syifwRFFYIY2VHtYZRJ9qG88cYXpQR
-         XL/7dySqBFLnynoawZUi2OPjw12QmEbnbYSKm1OG6/EeUq681KQ+CAp3sXqKSgeBSwHr
-         PksDOgq/wU9XEPHDtz0cImL7lFyflDegGJvT4tqUeFU2FD72nefSHoKL2USTpwMBCBtm
-         tZLksMWVAvyWsdTX3Fp9/omI4Ru9uu4cZtIJU9WVQc6tk5am1yk6myVSegmmvGB0lU/G
-         aGuw3LiLlK7ycLBbYYQ4pKCZ5UVzs3U+YgDc4+Q/g6Axiprc/7Nt8NZreJotoiUgx6nB
-         gNgg==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mI7uAlPklBFbvXMQyg0A9/cI6noFaYRDaUygqSP5/XM=;
+        b=QyIN5o+fhtoQVSF+DVQVwSXDkYUwcLPClx0T0jiWlUSrvSTPFaYHCl2lN1ij0s3/gE
+         398ZzW9O9xNCzCVqxORbTnQzEQv7XxGvKOo9s/a0l2oVKmYqcB4E4hjYP7kQwS+U9IQ1
+         Ctv9tN56/vSteW9Bmrf3XwyPAoZJzQFiNUCxuttLU8icnR2LbWAJbR4eD0HiyM+s2VnN
+         4vQ84MMpLlcrAd2sjOKb9LD9XD2I5L9PKgs3RgR+2BElCjld2TeEn5bXPDutVS1XXjIt
+         V0tFuuGdH9QXfmu4eGx3RMJOYqyAzXfP9JbPRaPeMvcVEFp9lsJvWfBCflPrigEGO9sS
+         UAMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=iLBtMEKtJnpBv8UjK5M0ZBeHX1CJQak3Si0qeSFNRlo=;
-        b=0uhIfd1oA/MYDlZvaIGtZ8AbbiKfhIvFukMqHLlfgQMeZh4Y/bSmTJhWvyYTk7R6t5
-         mDU0/msXkROvF5P2j1jlbKKO8WHhoapiGlAWyPNWdTKR4CUGihgxmVaU7UngyI1B+Di7
-         E//JL/8X6S/Qa349Z6zIz2RTbj2y7EiGMjQL/uz1P2ARGQrw64FcQx/1ef8M5eNV8E5C
-         bW4iOd4O451cOnVZS5gKV0pXqoV5tdGMB4czwu9evcfKoTDmcxUokrN44G9qrR0/UNFo
-         0vJMshdri77xeUkNGAEi+6BR2/LvwBiDpq+QiBNqilIq2HrX78wdTqCcmQO/PzpYOxn/
-         j+Yw==
-X-Gm-Message-State: AFqh2kot09Jv0PSXc25/H59K+3OwYGVwLV7beObrkEZsg1N4hvC33Tzq
-        U1iXhItwvuthB6vrXSWTXO3GEz2tqYQ=
-X-Google-Smtp-Source: AMrXdXsYs64GMvgw8HxIPPBaSyEbQ6qaQpwetTQd/OyjOM1Y7SHojE3+LHys1gowSvZI4vpW/vVXLA==
-X-Received: by 2002:a05:600c:500d:b0:3d3:4367:ba34 with SMTP id n13-20020a05600c500d00b003d34367ba34mr7572215wmr.26.1671399700501;
-        Sun, 18 Dec 2022 13:41:40 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t7-20020a05600c198700b003c6f1732f65sm19446712wmq.38.2022.12.18.13.41.39
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mI7uAlPklBFbvXMQyg0A9/cI6noFaYRDaUygqSP5/XM=;
+        b=RxczIOOJvG4E8ndL7jkwbQwWh01/JLAaAxQWtJQoBC1iiixNPQcTExfge/aat3DigQ
+         r+gVXxMIXPcVtxcqFncnjd31aoLwd3lfSM0ZT2C7GZ3K5g9H16uCmu3grY2sMkc3ZJoy
+         bkXB2R1+JUQlPbe8EX4mjT7j+FJIRc8ooSB1hz3I3GskmoQWdjDO3D1ClY7+JiTAd7j4
+         2JZk1b6MEXsCHv3RCUvJvtgxeWiXsDRsSzM5Dvn0fyCJSib9KMxIP74jagQ4leL+zsiO
+         XvCzfa620FG3SzdgDKOryGIMfRlOBplActnywj7Ij8hIyqsOMl8UY406jq/57W4j9c3c
+         0QFw==
+X-Gm-Message-State: AFqh2krvSxQZ8h60MauipJF2wwOcUZdtN6TQG512iAEV3z1BYj6fM5cH
+        ns7/EdzZWjqnA+713CSsFLFrxG9MDe7H+Q==
+X-Google-Smtp-Source: AMrXdXszzRuVLQxcVFkiK7uvmFsHyPeWJMfjIimVmX1rMnUrelykdVEtejxakvIcQ/iC6BT35qGoaA==
+X-Received: by 2002:a17:902:e845:b0:191:1fc4:5c19 with SMTP id t5-20020a170902e84500b001911fc45c19mr3720952plg.48.1671410930093;
+        Sun, 18 Dec 2022 16:48:50 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id b5-20020a170902650500b0018869119e37sm5687984plk.142.2022.12.18.16.48.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Dec 2022 13:41:40 -0800 (PST)
-Message-Id: <pull.1400.git.git.1671399699603.gitgitgadget@gmail.com>
-From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 18 Dec 2022 21:41:39 +0000
-Subject: [PATCH] git: remove redundant notes_ref check
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Sun, 18 Dec 2022 16:48:49 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] tests: make 'test_oid' print trailing newline
+References: <20221218162905.3508164-1-szeder.dev@gmail.com>
+Date:   Mon, 19 Dec 2022 09:48:49 +0900
+In-Reply-To: <20221218162905.3508164-1-szeder.dev@gmail.com> ("SZEDER
+ =?utf-8?Q?G=C3=A1bor=22's?=
+        message of "Sun, 18 Dec 2022 17:29:05 +0100")
+Message-ID: <xmqqy1r4usjy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Rose <83477269+AtariDreams@users.noreply.github.com>,
-        Seija Kijin <doremylover123@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Seija Kijin <doremylover123@gmail.com>
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-Earlier in the init_notes function, notes_ref is guaranteed
-to be the default ref if it is NULL by then,
-making future checks for notes_ref to be redundant,
-and xstrdup_or_null can just be xstrdup.
+> Unlike other test helper functions, 'test_oid' doesn't terminate its
+> output with a LF, but, alas, the reason for this, if any, is not
+> mentioned in 2c02b110da (t: add test functions to translate
+> hash-related values, 2018-09-13)).
 
-Signed-off-by: Seija Kijin <doremylover123@gmail.com>
----
-    git: remove redundant notes_ref check
-    
-    Earlier in the init_notes function, notes_ref is guaranteed to be the
-    default ref if it is NULL by then, making future checks for notes_ref to
-    be redundant, and xstrdup_or_null can just be xstrdup.
+I (obviously) agree with the analysis in the proposed log message.
+Having to touch the sanity checking tests in 0-basic is a bit
+annoying, but having to do an artificial echo is even more annoying,
+so these changes may probably be a net win, I would say.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1400%2FAtariDreams%2Fxstrdup-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1400/AtariDreams/xstrdup-v1
-Pull-Request: https://github.com/git/git/pull/1400
+Having said that.
 
- notes.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+>       $ git grep '\stest_oid ' -- ':/t/*.sh'
+>       $ git grep 'echo "\?$(test_oid ' -- ':/t/*.sh'
 
-diff --git a/notes.c b/notes.c
-index f2805d51bb1..a2283b9ace4 100644
---- a/notes.c
-+++ b/notes.c
-@@ -1014,14 +1014,13 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
- 	t->root = (struct int_node *) xcalloc(1, sizeof(struct int_node));
- 	t->first_non_note = NULL;
- 	t->prev_non_note = NULL;
--	t->ref = xstrdup_or_null(notes_ref);
-+	t->ref = xstrdup(notes_ref);
- 	t->update_ref = (flags & NOTES_INIT_WRITABLE) ? t->ref : NULL;
- 	t->combine_notes = combine_notes;
- 	t->initialized = 1;
- 	t->dirty = 0;
- 
--	if (flags & NOTES_INIT_EMPTY || !notes_ref ||
--	    get_oid_treeish(notes_ref, &object_oid))
-+	if (flags & NOTES_INIT_EMPTY || get_oid_treeish(notes_ref, &object_oid))
- 		return;
- 	if (flags & NOTES_INIT_WRITABLE && read_ref(notes_ref, &object_oid))
- 		die("Cannot use notes ref %s", notes_ref);
+I found these examples in the log message a bit annoying to see, as
+both invite an undefined behaviour by having an ordinary character
+('s' or '?')  preceded by an unescaped backslash in a POSIXly
+correct implementation of BRE.  GNU libc seems to be OK with it (I
+double checked by adding "-G" on the command line to make sure my
+experiments are not affected by any grep.patterntype), but they may
+fail for folks on stricter platforms.
 
-base-commit: 57e2c6ebbe7108b35ba30184dcbcb6c34c929ad8
--- 
-gitgitgadget
+Thanks.  Will queue.
