@@ -2,93 +2,104 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3C07C4332F
-	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 01:07:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D0C91C4332F
+	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 02:27:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231204AbiLSBHv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 18 Dec 2022 20:07:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40270 "EHLO
+        id S231124AbiLSC1X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 18 Dec 2022 21:27:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231273AbiLSBHX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Dec 2022 20:07:23 -0500
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 706AFBE04
-        for <git@vger.kernel.org>; Sun, 18 Dec 2022 17:07:11 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id o1-20020a17090a678100b00219cf69e5f0so11446241pjj.2
-        for <git@vger.kernel.org>; Sun, 18 Dec 2022 17:07:11 -0800 (PST)
+        with ESMTP id S230427AbiLSC1O (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Dec 2022 21:27:14 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D046AE5C
+        for <git@vger.kernel.org>; Sun, 18 Dec 2022 18:26:53 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id f18so7331452wrj.5
+        for <git@vger.kernel.org>; Sun, 18 Dec 2022 18:26:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vxogOBVyabnWhmzdQd2hQs67lLCA2/f1W6daqw8MXYU=;
-        b=PBEvGZ8eLi3INwB+UuY98wi0R1PfhsUf0DEceN9yJk8c7oDM5R4qqzLe/lkAjsMOlT
-         bsSJMWl7NrtYabiYa+pMF7J6AUwuviKXeKrvBU3T4Px6+IG9aj7dwTWdY9wL84DRY6tF
-         9492+4ZfjAMzTsnKYEL4wEFfikyn50j4wFw7cZmKZnRWmgHl3F2OhzhLpiY++XGdy9K8
-         YRhUZTk1zcNL06+DsM4sZGnTEexVDef6PHRvqckQSD4vCPR14CcuPxEu8MEO2czNw7/K
-         LQSEMqZUfMLcPcKO3P/WRlIAFjgf0DeoOXsIjUUCxIj2zRngHVIaV2xyaUGQVHIQ5AYe
-         jl2w==
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=8D34xtXHLsg3uRChwHnfTjNTnd/5x6kMqem+PWNCWQQ=;
+        b=MA/OQ6MUIdkUlyWuaXEPCYvLYWbwB4++PSS47/sEe3uL2BdeV0CQBr8phInmwEIBmc
+         rj9wk66dJ9ViRFWGpUr9dms2CKngj7A7kZacSnDneJ1jRURqFMwHhrHX8d7ug4vyzEfe
+         aBohIVLihNCXE6O7kbRACjf0feQDi9vdj6XxcfRqit7/Qor2y56RMFZ4Nak6mWZo34zs
+         2ATfFL14VymvzXvtom8eq1LQA4VI+aBsOoBdcvafvKvUoqA9qcViICDlsvUMW9PcG9dF
+         56MufBinl70NtBS32dbt+lodJUAhOQXkkQf/dSv+rF8dWoNd1dar6NQHluH9n6FUVnKC
+         Qg1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=vxogOBVyabnWhmzdQd2hQs67lLCA2/f1W6daqw8MXYU=;
-        b=L5DJGskumXyu40DeIU4mxjei+PyHoz9B8npCmqCnpnVHJ1MdW2Bub4TC8nIQbAMk4f
-         er/fs0EmPGSUDN2GKoRLOP1kMKyKdJSxLm6X+7LHicOTNytUK9bGDMhWfmw63koz6c0B
-         wjMkweYDF6y6IItbcU78zczItPEOIn5Xzh7Q9AetzdFQIF4mABwF/3JNV1p8qAft1Ddh
-         Wu6N8HVkmw5vguqL3ZBR5Caf3Uq+FylN/0gB3PIr57KhSKZP8WWT7XsUGqzgAwF0RiSm
-         an+yfUWtRFOl4m8Qf2mf84XJtcA+qzI3qxLS51nL9TUMG6Yln5x36Fny3CK4IU08A+VR
-         AklQ==
-X-Gm-Message-State: ANoB5pnP1KWA/aTjIC95qVqQdOOYWdkMfnSzu2k7dWdYwz7yitw0VaR4
-        ReRmbdAUQc1aA0lfgLoyjyZiWzZzG5t31w==
-X-Google-Smtp-Source: AA0mqf5cEA3mkDzAfkoD3d2l/CyAPJV/0ZNdg/2k7RrRV323NwD8d/v9rYdy09rjxcKV81Px0R/hYw==
-X-Received: by 2002:a17:902:7242:b0:18f:a4e1:9908 with SMTP id c2-20020a170902724200b0018fa4e19908mr29762594pll.15.1671412030613;
-        Sun, 18 Dec 2022 17:07:10 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id jh19-20020a170903329300b001869efb722csm5684241plb.215.2022.12.18.17.07.10
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8D34xtXHLsg3uRChwHnfTjNTnd/5x6kMqem+PWNCWQQ=;
+        b=vw4IL7y3r891Xr9z5QhjeP8WBcWwfnb71yduFxjXmoDZTsrW4ESKSE3vLSKAGl4+3T
+         WPYspPbhViBbyw4DF73Ki4SONiAD4Zsyqe0yaGvzhTK2lQyB1S38S7WxZCCO9ERyr1GP
+         IWk12mIT0sUf9QST+GZ1kHtDvUAeCwZNTNprkCpQ8XovYzV169ILoZjYExrfUJeA29ih
+         E77OYg2xx02po4ueYDX2lMwnqzPI7KnSEFF/6xY3IUU6LYbcPBImbdI/U7wd7ATIq54T
+         Fo8R3h+AY5wgy00Q2P6vFTuqJysUrEtK7OHRZZTCuKmLeXinFVTC0Sk24BwAPjNAzFZ0
+         H0qg==
+X-Gm-Message-State: ANoB5plu8puEAsk81Fb8zikTmOk484k/P3LaA2v/URmmKPX7gJnZrNQM
+        vFz9DoNKWi/nWkdwVKH//AZhDwjR+Lg=
+X-Google-Smtp-Source: AA0mqf60uVpra+xG0KpBsGVnX8uPiy9CImqV3JJ+4LKuzbEZGUns8VOeHnnpbYPYbemU4mCFPo2T0g==
+X-Received: by 2002:a5d:484e:0:b0:242:154e:5f14 with SMTP id n14-20020a5d484e000000b00242154e5f14mr26155816wrs.17.1671416811861;
+        Sun, 18 Dec 2022 18:26:51 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id bs29-20020a056000071d00b002420d51e581sm3055320wrb.67.2022.12.18.18.26.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 Dec 2022 17:07:10 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Rose via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Seija Kijin <doremylover123@gmail.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH] git: remove unneeded casts
-References: <pull.1396.git.git.1671032126602.gitgitgadget@gmail.com>
-        <Y5o9NNVx7dFLhIMd@coredump.intra.peff.net>
-        <xmqqh6xxv946.fsf@gitster.g>
-        <Y53E7PNu05VTdvXG@coredump.intra.peff.net>
-Date:   Mon, 19 Dec 2022 10:07:09 +0900
-In-Reply-To: <Y53E7PNu05VTdvXG@coredump.intra.peff.net> (Jeff King's message
-        of "Sat, 17 Dec 2022 08:32:28 -0500")
-Message-ID: <xmqqo7s0urpe.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Sun, 18 Dec 2022 18:26:51 -0800 (PST)
+Message-Id: <pull.1393.git.git.1671416810927.gitgitgadget@gmail.com>
+From:   "Sheepolution via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 19 Dec 2022 02:26:50 +0000
+Subject: [PATCH] Fix word "does" sticking to "not" by adding space
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc:    Sent
+To:     git@vger.kernel.org
+Cc:     Sheepolution <danielhaazen@hotmail.com>,
+        =?UTF-8?q?Dani=C3=ABl=20Haazen?= <danielhaazen@hotmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+From: =?UTF-8?q?Dani=C3=ABl=20Haazen?= <danielhaazen@hotmail.com>
 
-> ... So perhaps:
->
->   - this used to be "char **argv" because of main(), but either because
->     of becoming a builtin or cmd_main() it is now const
->
->   - this used to require casting from non-const to const to free()
->
->   - etc, with one-offs for cases that don't fit in any group
->
-> The keeps a single patch's explanation from being too overwhelming, and
-> avoids repeating yourself when the same logic applies to multiple cases.
+Signed-off-by: Daniël Haazen <danielhaazen@hotmail.com>
+---
+    git: fix word "does" sticking to "not" in message
+    
+    When a repository is on a FAT32 file system it will send a message to
+    the user explaining they should use git config --global --add
+    safe.directory. To prevent a long line in the file the message is made
+    up of two string literals. In this change the first literal has a space
+    added to it to fix the issue that the last and the first word of the two
+    literals stick together like the example image below.
+    
+    image
+    [https://user-images.githubusercontent.com/2232780/206909378-147775f8-e7f6-46e3-8746-17181cac69d2.png]
 
-Thanks, that would be the organization I would use, too, if I were
-doing this change myself.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1393%2FSheepolution%2Fpatch-1-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1393/Sheepolution/patch-1-v1
+Pull-Request: https://github.com/git/git/pull/1393
 
-> That said, I am happy with any solution that explains why we are sure
-> each case is OK to do. :)
+ compat/mingw.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Yup.
+diff --git a/compat/mingw.c b/compat/mingw.c
+index d614f156df1..af397e68a1d 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -2752,7 +2752,7 @@ int is_path_owned_by_current_sid(const char *path, struct strbuf *report)
+ 			/*
+ 			 * On FAT32 volumes, ownership is not actually recorded.
+ 			 */
+-			strbuf_addf(report, "'%s' is on a file system that does"
++			strbuf_addf(report, "'%s' is on a file system that does "
+ 				    "not record ownership\n", path);
+ 		} else if (report) {
+ 			LPSTR str1, str2, to_free1 = NULL, to_free2 = NULL;
+
+base-commit: 694cb1b2abfda78e60c8c74f1e761de6e852f0a2
+-- 
+gitgitgadget
