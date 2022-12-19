@@ -2,148 +2,156 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 204A6C4332F
-	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 15:00:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 75325C4332F
+	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 15:04:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232153AbiLSPAb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 10:00:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60570 "EHLO
+        id S231975AbiLSPEf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Dec 2022 10:04:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232166AbiLSPAK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 10:00:10 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEB03F016
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 07:00:08 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id w15so8895755wrl.9
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 07:00:08 -0800 (PST)
+        with ESMTP id S231754AbiLSPEc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2022 10:04:32 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D105B7C4
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 07:04:31 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id m5-20020a7bca45000000b003d2fbab35c6so6631546wml.4
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 07:04:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=kI5zGq07QQ9KF7+ekJdATdZculCy+RbLgCek/r+z2dQ=;
-        b=AjFJKHqiSv60dqZsG+YlvHxeCdFuoZura09jUAEwd00ZLsd6ojV08FZkqvgcO7ucM/
-         1rfiMdc9Clo/FN6dBkeOAtY4J0cFtngCHpP8D97Y1sLNDg2ZaaxEYuM/vGpsFUfF9yoo
-         Ap8t8imWn9yVptXKZ+wNeyuwoxjmmAWPKssqAHintf7MVKS8xUZ4fOYMnh4V3UUSVu5f
-         HCCKNuLJXPMq7wrHp0z2uu/ENg3deBsuz4sVaksOCOWyL8ZW6IlUV7yKEwMQBVyFcR4q
-         Va/oo7yGEhfeQFUxnTSsDEHK3I8BoahQ/bzdt8bGJ9K3IinIzt7lQrDcIT62ZiiEHIPI
-         2C+g==
+        bh=P+1VC/D/bJA0oqPR+/yHD1fgIeYL0mDAkH5dFfPTOK0=;
+        b=Dh+9pFC6VWVaDhGlyOAlE4EA9B00cpYUmK4N3z2B5bmN4Qqhs3YxFXTcu9H1TWspYU
+         lKt9rM20ONYgT7f3awhdl04eQYuf43Rp6oGi/pWPKkiuC2cNUVFLhHnHZ9o3vFrDe2LK
+         9qfXZrG9fcG2gBY4lSVhiMc0juVGvD5zAIH3S1sc/YPUIPHie8h9GWM2F9bnyac2nF1K
+         rdpWJRVEhYhp2GbSTW5zLV5nUTmJcqK125VCo5yHtPbGoPDkblKH91kOqha3Hq+np7N2
+         q5L5c2zTcRkj5heNLGlJyJLi5D9+FYBsyrSng7so1iNAPK6CPnRSrS0/UYoaLmWkI1Wv
+         f2/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kI5zGq07QQ9KF7+ekJdATdZculCy+RbLgCek/r+z2dQ=;
-        b=J4M7ZUQJb9K7FSebOfmya/OytldKLLtQzrz1P13HJb+LTuykISdT5q9oy9djFoSw6n
-         OMOZKqXNBuG5gSGIyJ78wWjC57AbAMH9pETdLqswZEXizjqAaNuEkKRInluJ8TcbqjRI
-         7v0m+iljEGsbG/Dg6QaQPxbs2BneQpZyIV7Jshv6mcVAAyhWGfP/k3EIzCqn1DQqJ2S1
-         +R2ev7d8bU7zDYAiRJ3M9WWygSdunwSCMossRonNhdPJmrSfRHLMeWUjPIbRgfwTqSJ1
-         oyDhiM6LPhjFrirP6vX8dZCw6wCKJr9BK9oWtLz642EHSDZpvJzHS13cNRYvidfaI1kk
-         2Q2A==
-X-Gm-Message-State: ANoB5pnVWmXgwZeWO2L06YEdZA/VFdEFIjrzsCZ7/IKKRlBYEEIVvDme
-        s0tMYH2mtThe8PFeS71sZXo=
-X-Google-Smtp-Source: AA0mqf4wW0BhznjUXcSDLAnCknmujqY9PEUdOLZq7BEjjPrGJOiLKoIworHV87a8x7MXmpWtGOe9kQ==
-X-Received: by 2002:adf:ee4c:0:b0:242:879f:411b with SMTP id w12-20020adfee4c000000b00242879f411bmr25005004wro.41.1671462007389;
-        Mon, 19 Dec 2022 07:00:07 -0800 (PST)
+        bh=P+1VC/D/bJA0oqPR+/yHD1fgIeYL0mDAkH5dFfPTOK0=;
+        b=d4ZfI2Oo5zYYWVxCte+3qNx8TZk21Xo42VuiMBafrTqs4mH9eY5V8kN6NvQt1SChkZ
+         edJ/uNlbsFY0HsDYu94kwUR58C3nKKZ5V1i0G8v0NDgRyPHPPax5Dpp6sA+cEEWUj8Dz
+         Jlksi82vaB1EZOwo0fHT3OlDyzyKTrXsGuPxAqKoZNVJv4IXqfX1qymk2OTSJFJJCOZW
+         UWSh0Ibu+jFZuy8Zke2YXyN7Ow0dWZ1r/Y203CHMIGz+QpmAt35WQaQ1/nOCmOiyxpr1
+         jG98zspLFVbWEMzKGTRm3NtSrXFVJxcq/fttGPNGyy+Hbc+9s/05kaHtE0PUyP8qlXAK
+         Bocw==
+X-Gm-Message-State: ANoB5pntgMsh87yKsSI0VCYpGQBD7JOx0GFyZtRMTeunq34eqMsQwJ+7
+        reGnX/9+D6LfjwU18Y8SrRQ=
+X-Google-Smtp-Source: AA0mqf7YlRdVJMjJWz/kJrybJBuD5n/FbrEg9kLxcIEwKSVUlB/AmRZl9JVYFgPVbAoyyZWGpm3vtw==
+X-Received: by 2002:a05:600c:1c81:b0:3d1:e907:17cb with SMTP id k1-20020a05600c1c8100b003d1e90717cbmr32105618wms.1.1671462269992;
+        Mon, 19 Dec 2022 07:04:29 -0800 (PST)
 Received: from [192.168.1.14] (host-92-2-151-214.as13285.net. [92.2.151.214])
-        by smtp.gmail.com with ESMTPSA id i7-20020adffc07000000b00241d544c9b1sm11790493wrr.90.2022.12.19.07.00.06
+        by smtp.gmail.com with ESMTPSA id bd26-20020a05600c1f1a00b003d070e45574sm12742431wmb.11.2022.12.19.07.04.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Dec 2022 07:00:07 -0800 (PST)
+        Mon, 19 Dec 2022 07:04:29 -0800 (PST)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <45d8d9fc-ca68-5902-0aa7-70034f8383ff@dunelm.org.uk>
-Date:   Mon, 19 Dec 2022 15:00:06 +0000
+Message-ID: <1e701a54-0356-9f55-ab53-9d8bfdd93e55@dunelm.org.uk>
+Date:   Mon, 19 Dec 2022 15:04:28 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.0
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] cmake: don't invoke msgfmt with --statistics
+Subject: Re: [PATCH] ci: only run win+VS build & tests in Git for Windows'
+ fork
 Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Victoria Dye <vdye@github.com>,
-        Eric Sunshine <ericsunshine@gmail.com>
-References: <patch-1.1-0fa41115261-20221219T102205Z-avarab@gmail.com>
-In-Reply-To: <patch-1.1-0fa41115261-20221219T102205Z-avarab@gmail.com>
+Cc:     avarab@gmail.com, peff@peff.net, me@ttaylorr.com,
+        phillip.wood123@gmail.com,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1445.git.1671461414191.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1445.git.1671461414191.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar
+Hi Dscho
 
-On 19/12/2022 10:26, Ævar Arnfjörð Bjarmason wrote:
-> In [1] I made the same change to our Makefile, let's follow-up and do
-> the same here.
+On 19/12/2022 14:50, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> [...] 
+> This developer's initial hope was that it would be enough to fix win+VS
+> failures and provide the changes to be squashed into contributors'
+> patches, and that it would be worth the benefit of attracting
+> Windows-based developers' contributions.
 > 
-> For "cmake" this is particularly nice with "-G Ninja", as before we'd
-> emit ~40 lines of overflowed progress bar output, but now it's only
-> the one line of "ninja"'s progress bar.
+> Neither of these hopes have panned out.
 
-I don't really have a strong opinion either way on this but if it 
-matches what we do in the Makefile than it sounds sensible.
+I'm sad that those hopes have not panned out, but I think this patch is 
+probably the best way forward. It is certainly the lowest effort for 
+non-windows developers and the improvement it CI minutes is very welcome.
 
 Best Wishes
 
 Phillip
 
-
-> 1. 2f12b31b746 (Makefile: don't invoke msgfmt with --statistics,
->     2021-12-17)
+> To lower the frustration, and incidentally benefit from using way less
+> build minutes, let's just not run the win+VS jobs by default, which
+> appears to be the consensus of the mail thread leading up to
+> https://lore.kernel.org/git/xmqqk0311blt.fsf@gitster.g/
 > 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> Since the Git for Windows project still needs to at least try to attract
+> more of said Windows-based developers, let's keep the jobs, but disable
+> them everywhere except in Git for Windows' fork. This will help because
+> Git for Windows' branch thicket is "continuously rebased" via automation
+> to the `shears/maint`, `shears/main`, `shears/next` and `shears/seen`
+> branches at https://github.com/git-for-windows/git. That way, the Git
+> for Windows project will still be notified early on about potential
+> breakages, but the Git project won't be burdened with fixing them
+> anymore, which seems to be the best compromise we can get on this issue.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
+>      Explicitly make CMake-based CI failures the responsibility of "Windows
+>      folks"
+>      
+>      Ævar and I have brain-stormed off-list what would be the best way to
+>      resolve the mounting frustration with CI failures that are caused by
+>      needing to mirror Makefile changes into the CMake-based build, a burden
+>      that the Git project never wanted to bear.
+>      
+>      While he still wants to improve the CMake support (which will benefit
+>      Git for Windows), the main driver of trying to extend CMake support to
+>      Linux (which does not need it because make works very well there,
+>      indeed) was said frustration with CI failures.
+>      
+>      A much quicker method to reduce that friction to close to nil is to
+>      simply disable the win+VS jobs, which is what this proposal is about.
+>      (Almost, at least, we still want to keep those job definitions and run
+>      them in Git for Windows' fork to ensure that CMake-based builds still
+>      work.)
+>      
+>      A very welcome side effect is to reduce the CI build time again, which
+>      became alarmingly long as of recent, causing friction on its own.
 > 
-> This trivial fix is extracted from the ab/cmake-nix-and-ci topic which
-> was ejected around the time of the release for that previous
-> submission see [1], the range-diff is to that topic.
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1445%2Fdscho%2Fonly-run-win%2BVS-in-the-git-for-windows-fork-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1445/dscho/only-run-win+VS-in-the-git-for-windows-fork-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1445
 > 
-> I'm re-arranging and re-submitting topic more piecemeal. There were no
-> outstanding issues or feedback with this part of it, so hopefully this
-> can advance relatively quickly.
-> 
-> I'll also submit some of the other uncontroversial bits today
-> independently, none of which conflict with one another. Then once
-> those have landed try to find some acceptable way forward for the
-> later bits, which at that point will be easier to review.
-> 
-> 1. https://lore.kernel.org/git/cover-v6-00.15-00000000000-20221206T001617Z-avarab@gmail.com/
-> 
-> Range-diff:
->   1:  fc190b379cd =  1:  0fa41115261 cmake: don't invoke msgfmt with --statistics
->   2:  1a11aa233a3 <  -:  ----------- cmake: use "-S" and "-B" to specify source and build directories
->   3:  b9ddb5db1d3 <  -:  ----------- cmake: update instructions for portable CMakeLists.txt
->   4:  7b7850c00ee <  -:  ----------- cmake: don't copy chainlint.pl to build directory
->   5:  82ecb797915 <  -:  ----------- cmake: chmod +x the bin-wrappers/* & SCRIPT_{SH,PERL} & git-p4
->   6:  1f326944a07 <  -:  ----------- cmake & test-lib.sh: add a $GIT_SOURCE_DIR variable
->   7:  973c8038f54 <  -:  ----------- cmake: set "USE_LIBPCRE2" in "GIT-BUILD-OPTIONS" for test-lib.sh
->   8:  b8448c7a8a6 <  -:  ----------- Makefile + test-lib.sh: don't prefer cmake-built to make-built git
->   9:  5135e40969e <  -:  ----------- test-lib.sh: support a "GIT_TEST_BUILD_DIR"
-> 10:  65204463730 <  -:  ----------- cmake: optionally be able to run tests before "ctest"
-> 11:  e25992b16f1 <  -:  ----------- cmake: support GIT_TEST_OPTS, abstract away WIN32 defaults
-> 12:  4905ce5321d <  -:  ----------- cmake: increase test timeout on Windows only
-> 13:  6c6b530965d <  -:  ----------- cmake: only look for "sh" in "C:/Program Files" on Windows
-> 14:  563f1b9b045 <  -:  ----------- cmake: copy over git-p4.py for t983[56] perforce test
-> 15:  917a884eb65 <  -:  ----------- CI: add a "linux-cmake-test" to run cmake & ctest on linux
-> 
->   contrib/buildsystems/CMakeLists.txt | 2 +-
+>   .github/workflows/main.yml | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-> index 2f6e0197ffa..8f8b6f375f7 100644
-> --- a/contrib/buildsystems/CMakeLists.txt
-> +++ b/contrib/buildsystems/CMakeLists.txt
-> @@ -897,7 +897,7 @@ if(MSGFMT_EXE)
->   	foreach(po ${po_files})
->   		file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES)
->   		add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo
-> -				COMMAND ${MSGFMT_EXE} --check --statistics -o ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo ${CMAKE_SOURCE_DIR}/po/${po}.po)
-> +				COMMAND ${MSGFMT_EXE} --check -o ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo ${CMAKE_SOURCE_DIR}/po/${po}.po)
->   		list(APPEND po_gen ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo)
->   	endforeach()
->   	add_custom_target(po-gen ALL DEPENDS ${po_gen})
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index e67847a682c..8af3c67f605 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -132,7 +132,7 @@ jobs:
+>     vs-build:
+>       name: win+VS build
+>       needs: ci-config
+> -    if: needs.ci-config.outputs.enabled == 'yes'
+> +    if: github.event.repository.owner.login == 'git-for-windows' && needs.ci-config.outputs.enabled == 'yes'
+>       env:
+>         NO_PERL: 1
+>         GIT_CONFIG_PARAMETERS: "'user.name=CI' 'user.email=ci@git'"
+> 
+> base-commit: c48035d29b4e524aed3a32f0403676f0d9128863
