@@ -2,149 +2,187 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AF7A7C4332F
-	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 15:26:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2D76FC10F1B
+	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 15:32:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231935AbiLSP0l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 10:26:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50124 "EHLO
+        id S231893AbiLSPb7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Dec 2022 10:31:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231783AbiLSP0j (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 10:26:39 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C925D6467
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 07:26:38 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id vv4so22395350ejc.2
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 07:26:38 -0800 (PST)
+        with ESMTP id S232359AbiLSPbn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2022 10:31:43 -0500
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 198F7626A
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 07:31:39 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id x22so22320424ejs.11
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 07:31:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=iuPe8ge5Iy/g3iF2YU1nafyO8clOiphVKWzcSCQQ9qk=;
-        b=Yc+g+65Xz+g4ehSTfYQf9R7xkYpMw8MjR3UR4ioOGBQjW4GXv/mjU+HhIJ5aR5pa4H
-         vE4doY14KwDr5loa67MODOaSPTSW0uNVPbNBSSML/JaAUO1sg9tfkojCUr9mZOxcdUOY
-         RCUN7CTobt34+ZwO2t+QdFvJhyBvSG9cuzbUUSIBEVYAcjq+KyvhwN/4lGuqoDde58u7
-         BdFKDSyq6yYemgjdd8BR0bRFj8jTS2de/eg+kZSn7qOQgkBBOId0Yz33ctonHZNo73yN
-         qIsEPW67EUUOEmJT3tSczy3EIs1CaTnGB1jVqRzPZRAzMEuAXSBh2GctTJOEBxA8gVxl
-         rFsg==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=IcCRkSGvWtOGoUMUku2maqlGbiLVhRlt7evAAIPXqKs=;
+        b=QfbuRV5lHS1zKSZmpkkdgMnr5oVvwNVo67sZB5sZATVavkcqJUb7KozR9Heyg2xuKq
+         TJMBUOfrquPkEAUaJ67O7YjobWLmTdURtmcSqMXf4jULrWtbqHCYBAl/HDyU/0X9kqT7
+         3KcHT+EdTOIRUVZOHuJbsUf0CYrXypiMbWgNZL462v/p3Xg5avJmUsHl/ino5Y5cFBIn
+         jA/lrPb+Af2XkJwKnBs+Qndy2S2CZo+FJ2BRC+cNZYl4ngBml0tH60Qji36PbUOd3zGH
+         TDlMbcIQM6tKuA2sOWzJyXd1Slh2FPpW3CjGZsObDE4gf4RZ46EnNsFWDOKTwjXsAN8b
+         V68Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iuPe8ge5Iy/g3iF2YU1nafyO8clOiphVKWzcSCQQ9qk=;
-        b=E+DH/yEelAphKnSwDdoiGSU6uYIdsgQlQBqfUKxhofTpaYq4mZdDMqXxfORI4I7msu
-         9QFgPR6+rJHlhIP7pPVL+eplCjGjo512yElGqVz4cujLDtpL7JgY5DGsQUDobPZRcnHG
-         h+qC1ynXDTVC6RF2OfpoQ23oUoGp4JlF63ABWGcSrwgnJ+O9+tp5muit6ap0LG69BJSL
-         w1v8xN6Q/cg4ITmySYAVoSGr/LL/dNXayYDSF/WGN7WcrmqTwRGXb9Nj0W9wbuqz3R+A
-         Kzco/cWuCVatMXI039vZmKJtfiD+i2Gk5iT16xguLtJMNY1SsjWddQ6cyZVo9dd/JkGg
-         3M5g==
-X-Gm-Message-State: ANoB5pkbLDqJGlNj3M83LqB883QBsP7JI09+S+s0lmD1x8E20uFFT7KB
-        8XDdRy0LODLV5wmppjhuoq11bA7+nUs+OA==
-X-Google-Smtp-Source: AA0mqf4KJbfT9hrqecw6mQ674kfpAPly685L533Um5J+8JWvKyjUmVWp0B0L9DikYhZ+3L4JB9dpzw==
-X-Received: by 2002:a17:906:b1c6:b0:78d:f455:b5d4 with SMTP id bv6-20020a170906b1c600b0078df455b5d4mr36441262ejb.20.1671463596652;
-        Mon, 19 Dec 2022 07:26:36 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IcCRkSGvWtOGoUMUku2maqlGbiLVhRlt7evAAIPXqKs=;
+        b=uSFR64EkSjMIORU/oMh2gfRiMQ0NZJyu7Gx6EB4GSpoQom0BpibjgovgFCf5iOSrL/
+         Bl/ym3C7RlQV5ZX4EIst0y+v/Hgt9e3hOOgVq4n9QZUMDSFcgt859X0xlI1sDzxVHz+R
+         dT9P9HcMa3vfgEii+ASY2JOOWwE4YuHti3Hw+3HpymvDMnymUjyt7l0WB1f9fzPmxvfb
+         lHNE+xyt0ucNoMt5ZdEOiFb2uEChV3ut6eFsrphQOespRQArSizi7I06DCKASeUna7xS
+         kZDAOTyWXzeIW2zkl7V/uyubVLqRJysl5vp6BSncZq767hAIHVXMo/NuIaH8gPOquDEu
+         t7kg==
+X-Gm-Message-State: ANoB5plBisOO9UDnQs37ogmIHFA0qoSkzQJzcf1xLUXL90PqZIbpsnRV
+        84PwZzBNWurzj405wptXIhpDYGxIo2C9gA==
+X-Google-Smtp-Source: AA0mqf59IbS8YQcbBYYa4QUrDjSz/BcKlFIKPjPgyhhNjO77OeFB3EFrtSeUgS6eVBHnqunWx1do1Q==
+X-Received: by 2002:a17:906:ae82:b0:7ae:4de9:68ff with SMTP id md2-20020a170906ae8200b007ae4de968ffmr35515415ejb.64.1671463897422;
+        Mon, 19 Dec 2022 07:31:37 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id 20-20020a170906311400b0073d81b0882asm4533150ejx.7.2022.12.19.07.26.36
+        by smtp.gmail.com with ESMTPSA id o21-20020a170906769500b007aee7ca1199sm4614956ejm.10.2022.12.19.07.31.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 07:26:36 -0800 (PST)
+        Mon, 19 Dec 2022 07:31:36 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1p7I2F-006bZR-2u;
-        Mon, 19 Dec 2022 16:26:35 +0100
+        id 1p7I76-006blI-24;
+        Mon, 19 Dec 2022 16:31:36 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Rose via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Seija Kijin <doremylover123@gmail.com>
-Subject: Re: [PATCH] Remove redundant double exclamation points
-Date:   Mon, 19 Dec 2022 16:19:23 +0100
-References: <pull.1401.git.git.1671459163559.gitgitgadget@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] tests: make 'test_oid' print trailing newline
+Date:   Mon, 19 Dec 2022 16:27:12 +0100
+References: <20221218162905.3508164-1-szeder.dev@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <pull.1401.git.git.1671459163559.gitgitgadget@gmail.com>
-Message-ID: <221219.868rj3za6s.gmgdl@evledraar.gmail.com>
+In-reply-to: <20221218162905.3508164-1-szeder.dev@gmail.com>
+Message-ID: <221219.864jtrz9yf.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Mon, Dec 19 2022, Rose via GitGitGadget wrote:
+On Sun, Dec 18 2022, SZEDER G=C3=A1bor wrote:
 
-> From: Seija Kijin <doremylover123@gmail.com>
+> Unlike other test helper functions, 'test_oid' doesn't terminate its
+> output with a LF, but, alas, the reason for this, if any, is not
+> mentioned in 2c02b110da (t: add test functions to translate
+> hash-related values, 2018-09-13)).
 >
-> S_ISDIR is a macro that involves a "==" comparison.
-
-It does? The POSIX standard
-(https://pubs.opengroup.org/onlinepubs/009604499/basedefs/sys/stat.h.html)
-says:
-
-	The following macros shall be provided to test whether a file is
-	of the specified type. The value m supplied to the macros is the
-	value of st_mode from a stat structure. The macro shall evaluate
-	to a non-zero value if the test is true; 0 if the test is false.
-
-The "non-zero" there seems to intentionally leave open that this may be
-defined e.g. as via a "&" test, as opposed to "==" which according to
-C99's 6.5.9.3 says:
-
-	The == (equal to) and != (not equal to) operators are analogous
-	to the relational operators except for their lower
-	precedence.90) Each of the operators yields 1 if the specified
-	relation is true and 0 if it is false. The result has type
-	int. For any pair of operands, exactly one of the relations is
-	true.
-
-> This means the !! is redundant and not needed.
-
-I think you're therefore introducing a bug here, this may work on your
-platform, but we have no guarantee that it'll work elsewhere.
-
-I thought that it probably wouldn't matter, as we'd treat the argument
-as a boolean, but we don't. In within_depth() we proceed to use the
-passed-in 3rd argument (depth) as a counter, so it really does matter if
-it's 0, 1, or other non-zero.
-
->  tree-walk.c | 9 ++++-----
->  1 file changed, 4 insertions(+), 5 deletions(-)
+> Now, in the vast majority of cases 'test_oid' is invoked in a command
+> substitution that is part of a heredoc or supplies an argument to a
+> command or the value to a variable, and the command substitution would
+> chop off any trailing LFs, so in these cases the lack or presence of a
+> trailing LF in its output doesn't matter.  However:
 >
-> diff --git a/tree-walk.c b/tree-walk.c
-> index 74f4d710e8f..6b51d27ccb2 100644
-> --- a/tree-walk.c
-> +++ b/tree-walk.c
-> @@ -1040,9 +1040,9 @@ static enum interesting do_match(struct index_state *istate,
->  		    ps->max_depth == -1)
->  			return all_entries_interesting;
->  		return within_depth(base->buf + base_offset, baselen,
-> -				    !!S_ISDIR(entry->mode),
-> -				    ps->max_depth) ?
-> -			entry_interesting : entry_not_interesting;
-> +				    S_ISDIR(entry->mode), ps->max_depth) ?
-> +			       entry_interesting :
-> +			       entry_not_interesting;
->  	}
->  
->  	pathlen = tree_entry_len(entry);
+>   - There appear to be only three cases where 'test_oid' is not
+>     invoked in a command substitution:
+>
+>       $ git grep '\stest_oid ' -- ':/t/*.sh'
+>       t0000-basic.sh:  test_oid zero >actual &&
+>       t0000-basic.sh:  test_oid zero >actual &&
+>       t0000-basic.sh:  test_oid zero >actual &&
+>
+>     These are all in test cases checking that 'test_oid' actually
+>     works, and that the size of its output matches the size of the
+>     corresponding hash function with conditions like
+>
+>       test $(wc -c <actual) -eq 40
+>
+>     In these cases the lack of trailing LF does actually matter,
+>     though they could be trivially updated to account for the presence
+>     of a trailing LF.
+>
+>   - There are also a few cases where the lack of trailing LF in
+>     'test_oid's output actually hurts, because tests need to compare
+>     its output with LF terminated file contents, forcing developers to
+>     invoke it as 'echo $(test_oid ...)' to append the missing LF:
+>
+>       $ git grep 'echo "\?$(test_oid ' -- ':/t/*.sh'
+>       t1302-repo-version.sh:  echo $(test_oid version) >expect &&
+>       t1500-rev-parse.sh:     echo "$(test_oid algo)" >expect &&
+>       t4044-diff-index-unique-abbrev.sh:      echo "$(test_oid val1)" > f=
+oo &&
+>       t4044-diff-index-unique-abbrev.sh:      echo "$(test_oid val2)" > f=
+oo &&
+>       t5313-pack-bounds-checks.sh:    echo $(test_oid oidfff) >file &&
+>
+>     And there is yet another similar case in an in-flight topic at:
+>
+>       https://public-inbox.org/git/813e81a058227bd373cec802e443fcd677042f=
+b4.1670862677.git.gitgitgadget@gmail.com/
+>
+> Arguably we would be better off if 'test_oid' terminated its output
+> with a LF.  So let's update 'test_oid' accordingly, update its tests
+> in t0000 to account for the extra character in those size tests, and
+> remove the now unnecessary 'echo $(...)' command substitutions around
+> 'test_oid' invocations as well.
 
-Aside from whether or not this is a bug, could you please submit
-proposed refactorings of the git project via coccinelle patches if
-possible (as I suggested to you before).
+I'm inclined to like this, as it certainly makes some examples better,
+but e.g. here:
 
-I realize that it has a slight learning curve, but it makes writing &
-maintaining these so much easier, and it'll fix (mis)uses going forward,
-not just as a one-off.
+> @@ -826,7 +827,7 @@ test_expect_success 'test_oid can look up data for SH=
+A-1' '
+>  	grep "^00*\$" actual &&
+>  	rawsz=3D"$(test_oid rawsz)" &&
+>  	hexsz=3D"$(test_oid hexsz)" &&
+> -	test $(wc -c <actual) -eq 40 &&
+> +	test $(wc -c <actual) -eq 41 &&
+>  	test "$rawsz" -eq 20 &&
+>  	test "$hexsz" -eq 40
+> [...]
+>  '
+> @@ -838,7 +839,7 @@ test_expect_success 'test_oid can look up data for SH=
+A-256' '
+>  	grep "^00*\$" actual &&
+>  	rawsz=3D"$(test_oid rawsz)" &&
+>  	hexsz=3D"$(test_oid hexsz)" &&
+> -	test $(wc -c <actual) -eq 64 &&
+> +	test $(wc -c <actual) -eq 65 &&
+>  	test "$rawsz" -eq 32 &&
+>  	test "$hexsz" -eq 64
 
-So, as an example (and assuming this wasn't buggy), you'd do that in
-this case as e.g. (untested, but you can see similar syntax in our
-existing *.cocci files):
-	
-	@@
-	@@
-	- !!
-	(
-	S_ISDIR
-	|
-	S_ISFIFO
-        // |
-        // we'd continue to list the rest here...
-	)
-	  (...)
+
+If we have sibling tests we really should try to make these
+consistent. These are still understandable, but it's rather annoying
+that we aren't consistent here. I.e. we have 64 changed to 65, but not
+32 to 33 etc.
+
+I also vaguely recall (although probably nobody worries about such a
+platform anymore) that POSIX utilities left themselves room to not work
+on things that weren't \n-terminated.
+
+>  test_expect_success 'gitdir selection on normal repos' '
+> -	echo $(test_oid version) >expect &&
+> +	test_oid version >expect &&
+>  	git config core.repositoryformatversion >actual &&
+>  	git -C test config core.repositoryformatversion >actual2 &&
+>  	test_cmp expect actual &&
+> diff --git a/t/t1500-rev-parse.sh b/t/t1500-rev-parse.sh
+> index 81de584ea2..37ee5091b5 100755
+> --- a/t/t1500-rev-parse.sh
+> +++ b/t/t1500-rev-parse.sh
+> @@ -195,7 +195,7 @@ test_expect_success 'rev-parse --is-shallow-repositor=
+y in non-shallow repo' '
+>  '
+>=20=20
+>  test_expect_success 'rev-parse --show-object-format in repo' '
+> -	echo "$(test_oid algo)" >expect &&
+> +	test_oid algo >expect &&
+>  	git rev-parse --show-object-format >actual &&
+>  	test_cmp expect actual &&
+>  	git rev-parse --show-object-format=3Dstorage >actual &&
+
+This sort of thing is much nicer though, so maybe it's all worth it...
+
+I wonder though if we shouldn't just have a test_cmp_oid, which would
+abstract this away, and not care if it's \n-terminated or not...
