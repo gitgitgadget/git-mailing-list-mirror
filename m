@@ -2,127 +2,129 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B098BC001B2
-	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 20:42:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17493C4332F
+	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 22:49:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232447AbiLSUmN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 15:42:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56016 "EHLO
+        id S231726AbiLSWtA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Dec 2022 17:49:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229624AbiLSUmL (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 15:42:11 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4DF7635E
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 12:42:10 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id h10so9881984wrx.3
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 12:42:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jOEhIgF9NtnW08k3+o4uvOZzsNG3mbadugO4b/77Xcc=;
-        b=RZq9AONsaDamXJ7duIq9gd+AHrJ//yzakzqkl6QKLeBfcPt5Wri+pD2tLqeSf/ZiXw
-         dGTChG+T5VpwFlXz5xo9T1H7GkzUud0aNWxEBGCaOjfHGPCtNsSvEwR3MGKcOtS+xSG1
-         74S+YetEsmzx8OX4sZzWNfnELXVVRaoQnt49j/eSXIriNzkTE8IcmldfgAhJhg06KH9M
-         niwdyH8koTgE9RV43KSjlbLfpFEszf3Ky5ukB5FeO4UWAd/rYdj/rSNfLwmoiaeF+dMC
-         abuPFukAQfVYKEjACd3r9xoMsCfberCvlQpGFampub6d6CrynpNbZo1hbFMpA+ULDLRM
-         ovBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jOEhIgF9NtnW08k3+o4uvOZzsNG3mbadugO4b/77Xcc=;
-        b=VbFJj/1BRFyzvfqe37DEUlJAO+O6Gzzc7vRBSCXRPUmlHAV/E7y+ZVXouElRXq+D2/
-         8VExAv35sdoB66wB2BWMMGi2FBFdeKiPP4I/478jomLfy2DaYxqwhum0vOBAFA+dbYYk
-         fPd8RBPRoCB9UGPT0XruCsQZyjdbyQxgL08FaNGPZbp3uJN7cczmwWaBey5sIwWceXaF
-         lonv7QA2VJN6A/bbrUPrRqcEXQk5NHlYpm6VY8tfHWVbR3z6Edyi8o893ZmDvcS3FN8d
-         HR0lnoQodrjqJpsWk0CsmoeXujrf2inSwuhazECLQE6oGDnL/0iIy+aFKnrvUsMFiB7C
-         s7XQ==
-X-Gm-Message-State: ANoB5pm4Y/LjJOtJSWCrFXogZsr/6xOcTnO0NtxZkslTaajePVeXGgAi
-        +HE+/kqyngFkRrLaf1v8i4g=
-X-Google-Smtp-Source: AA0mqf5BePzmWiZhJzqHQMPzBz9P/C08XfHBKtxDanqBbAH1NTXnLKwqxCts/AVBdREdO5wjjm3JCA==
-X-Received: by 2002:adf:ee11:0:b0:242:331b:cc81 with SMTP id y17-20020adfee11000000b00242331bcc81mr25437456wrn.11.1671482529454;
-        Mon, 19 Dec 2022 12:42:09 -0800 (PST)
-Received: from [192.168.1.14] (host-92-2-151-214.as13285.net. [92.2.151.214])
-        by smtp.gmail.com with ESMTPSA id z7-20020a5d4407000000b0024245e543absm10591766wrq.88.2022.12.19.12.42.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Dec 2022 12:42:09 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <a6efeaa9-0995-1d1e-a557-e320fbfe5d2b@dunelm.org.uk>
-Date:   Mon, 19 Dec 2022 20:42:07 +0000
+        with ESMTP id S229515AbiLSWs5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2022 17:48:57 -0500
+Received: from smtp73.ord1d.emailsrvr.com (smtp73.ord1d.emailsrvr.com [184.106.54.73])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 273152719
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 14:48:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=oddbit.com;
+        s=20180920-g2b7aziw; t=1671490134;
+        bh=ax9b+nYMzpaqs8NKCu9mvYwmC+1H7qjdTqEtgDY4nrs=;
+        h=From:To:Subject:Date:From;
+        b=MO7gpeqQAGbn/xv9BgKbsURuTYHwh6iGREwdGRy/ee9W7Ns6GIpptucJYx82y3WcF
+         v8/RcoXnnywPZ6Hfo3pmM+EEw2S97ncMlpZyxQRIH5yBkplM2xyIYE82h98jvF1BK6
+         cv1fAUIgaQGlYZhhRu6geqKMkGapL2YdSvIvVki8=
+X-Auth-ID: lars@oddbit.com
+Received: by smtp2.relay.ord1d.emailsrvr.com (Authenticated sender: lars-AT-oddbit.com) with ESMTPSA id A5D2C200A6;
+        Mon, 19 Dec 2022 17:48:54 -0500 (EST)
+From:   Lars Kellogg-Stedman <lars@oddbit.com>
+To:     git@vger.kernel.org
+Cc:     Lars Kellogg-Stedman <lars@oddbit.com>
+Subject: [PATCH v4] line-range: fix infinite loop bug with '$' regex
+Date:   Mon, 19 Dec 2022 17:48:50 -0500
+Message-Id: <20221219224850.2703967-1-lars@oddbit.com>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221205193625.2424202-1-lars@oddbit.com>
+References: <20221205193625.2424202-1-lars@oddbit.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 0/6] remove USE_THE_INDEX_COMPATIBILITY_MACROS
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-References: <cover-0.6-00000000000-20221215T095335Z-avarab@gmail.com>
- <11545cde-9ce2-acf4-7c08-1b49d2dbefa2@dunelm.org.uk>
- <221219.86cz8fzara.gmgdl@evledraar.gmail.com>
-In-Reply-To: <221219.86cz8fzara.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Classification-ID: b758d8b4-3e12-42e1-9105-167a531a76bb-1-1
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 19/12/2022 15:11, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Mon, Dec 19 2022, Phillip Wood wrote:
-> 
->> Hi Ævar
->>
->> On 15/12/2022 09:58, Ævar Arnfjörð Bjarmason wrote:
->>> My recent now-landed topic[1] to remove most use of
->>> "USE_THE_INDEX_COMPATIBILITY_MACROS" was merged in 041df69edd3 (Merge
->>> branch 'ab/fewer-the-index-macros', 2022-11-28).
->>> It left out use of the macros that would have conflicted with
->>> in-flight changes, but as those topics have landed we can now complete
->>> the migration.
->>> As before this is almost entirely a matter of applying the existing
->>> "pending" coccinelle rules, the exceptions being 1/6, and the *.h
->>> changes where we remove the macro definitions (the macro users being
->>> edited by coccinelle).
->>> The 4-5/6 then handle some edge cases we had left (but the code
->>> change
->>> itself is done by coccinelle).
->>
->> I've only given these patches a quick scan, but I think they look
->> good. None of the callers that are converted here are in library code
->> so using the_index makes perfect sense.
-> 
-> Thanks for the review.
-> 
-> That's correct, although even if that were the case that wouldn't be an
-> issue with this migration, as we'd have been using "the_index" before,
-> just indirectly through a macro.
+When the -L argument to "git log" is passed the zero-width regular
+expression "$" (as in "-L :$:line-range.c"), this results in an
+infinite loop in find_funcname_matching_regexp().
 
-Indeed, I'm just not convinced that it is worth removing the macro in 
-library code without changing to take a struct istate (I don't see the 
-existence of the macro itself as a problem as I think it is just a 
-symptom of the real problem) but I seem to be in the minority on that point.
+Modify find_funcname_matching_regexp to correctly match the entire line
+instead of the zero-width match at eol and update the loop condition to
+prevent an infinite loop in the event of other undiscovered corner cases.
 
-Best Wishes
+The primary change is that we pre-decrement the beginning-of-line marker
+('bol') before comparing it to '\n'. In the case of '$', where we match the
+'\n' at the end of the line and start the loop with bol == eol, this
+ensures that bol will find the beginning of the line on which the match
+occurred.
 
-Phillip
+Originally reported in <https://stackoverflow.com/q/74690545/147356>.
 
-> That wasn't the case here, but I do I have another similar migration for
-> migrating "the_repository" wrappers.
-> 
-> In those cases there's surely instances where e.g. we really should be
-> using a "r" argument instead, but I've opted to leave that question out,
-> as it would make the coccinelle rules involved & diffs much harder to
-> deal with.
-> 
-> And because in the end the result is the same if viewed with "cc -E",
-> i.e. these are just the macro shims we've been meaning to stop using for
-> a while.
-> 
+Signed-off-by: Lars Kellogg-Stedman <lars@oddbit.com>
+---
+ line-range.c        |  7 ++++---
+ t/t4211-line-log.sh | 22 ++++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 3 deletions(-)
+
+diff --git a/line-range.c b/line-range.c
+index 955a8a9535..47bf0d6f1a 100644
+--- a/line-range.c
++++ b/line-range.c
+@@ -135,7 +135,7 @@ static const char *find_funcname_matching_regexp(xdemitconf_t *xecfg, const char
+ {
+ 	int reg_error;
+ 	regmatch_t match[1];
+-	while (1) {
++	while (*start) {
+ 		const char *bol, *eol;
+ 		reg_error = regexec(regexp, start, 1, match, 0);
+ 		if (reg_error == REG_NOMATCH)
+@@ -148,8 +148,8 @@ static const char *find_funcname_matching_regexp(xdemitconf_t *xecfg, const char
+ 		/* determine extent of line matched */
+ 		bol = start+match[0].rm_so;
+ 		eol = start+match[0].rm_eo;
+-		while (bol > start && *bol != '\n')
+-			bol--;
++		while (bol > start && *--bol != '\n')
++			; /* nothing */
+ 		if (*bol == '\n')
+ 			bol++;
+ 		while (*eol && *eol != '\n')
+@@ -161,6 +161,7 @@ static const char *find_funcname_matching_regexp(xdemitconf_t *xecfg, const char
+ 			return bol;
+ 		start = eol;
+ 	}
++	return NULL;
+ }
+ 
+ static const char *parse_range_funcname(
+diff --git a/t/t4211-line-log.sh b/t/t4211-line-log.sh
+index ac9e4d0928..c6540e822f 100755
+--- a/t/t4211-line-log.sh
++++ b/t/t4211-line-log.sh
+@@ -315,4 +315,26 @@ test_expect_success 'line-log with --before' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'setup tests for zero-width regular expressions' '
++	cat >expect <<-EOF
++	Modify func1() in file.c
++	Add func1() and func2() in file.c
++	EOF
++'
++
++test_expect_success 'zero-width regex $ matches any function name' '
++	git log --format="%s" --no-patch "-L:$:file.c" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'zero-width regex ^ matches any function name' '
++	git log --format="%s" --no-patch "-L:^:file.c" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'zero-width regex .* matches any function name' '
++	git log --format="%s" --no-patch "-L:.*:file.c" >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.38.1
+
