@@ -2,155 +2,162 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B67E4C4332F
-	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 09:15:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B3C7C4332F
+	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 09:31:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231481AbiLSJPi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 04:15:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43948 "EHLO
+        id S231550AbiLSJbu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Dec 2022 04:31:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231370AbiLSJPg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 04:15:36 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2252D2D8
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 01:15:35 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id tz12so19883022ejc.9
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 01:15:35 -0800 (PST)
+        with ESMTP id S229865AbiLSJbs (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2022 04:31:48 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2867DBCA4
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 01:31:47 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id x22so19960795ejs.11
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 01:31:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=j3wX0jumOuTvZY0Lq7SzJYaU7NZOCRDiLUwpopz6Qcw=;
-        b=D+94x31a0gRe4Yc05tMmI2ftN0OGUY0JvIJ58DT+VRqjsDB2j1REOBzBNL1RMxItfX
-         j8k12sJc4dCjeLI5ddhwConSFASFBNVlzDr/5JSQ+g0rHRAQaafy2l0euqPlkPTajexB
-         +MlbiqxdF4U2yoTBhiSMBfB8yfGoG/XYL/m5d3voIJjNjiab9wphk30iplpauNfPE38d
-         +He2PkavbFCPu50uwx0xgjKAWrhcBIUVKl9y+Zf+NX+K7IBAKLwMhojeiotijRtEQA1v
-         cPJ3KhSiwYR0PHD+pdWZB6g9e7uJGs2XhGvSYOk4CQvryd+kiDelrU04/9qvjxu5XQT/
-         CjcQ==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=eq9m+4wuM3mVAiCnHBcbkaH+v+dunfVIPomfsULc9X0=;
+        b=CCgYMfiUOu7Rzdm7FW3rK0r1FWl+jWvShYYxaLiORclyQFxV7u5I0Y35gns0H5hs7+
+         20cM9z8M25w/28IctCc/y+TZLg0Zo5GsA9KqYq8JrwYRTAW9yvEX5OXgLyMZWJicUiRf
+         +5no2dsxQYNvAlcMhbcLp6jh4O+xaOWr5uHmww6zs97ubcmACB86IfXN+sn0BoWdNofw
+         cih/fHfnIVJhLeT0534SSWM488vB0hW0u/MsoYWZInc+JHxnZHBgyHU/D6Kgd0in1EbR
+         iQw3220nSALUBJkbJ93xn201IppMHp7iJsSZu7fPTKgcGMjfevGxiuIU10nhFHFSA5L/
+         F0og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=j3wX0jumOuTvZY0Lq7SzJYaU7NZOCRDiLUwpopz6Qcw=;
-        b=KPMY6gPkMsDyl9Q3wWDQJQnM1j5fyQfQFgmn8J2zSRZ6K+QUG7ZaIxXJiAsPz/Hde/
-         EPkR7MscDCWsnAQwEdubIgbRnZ7YqFmaXYQizEmAEefPL9Jm99teoBEPbdsBDNX8JCyW
-         hwsgn8Uf0k8BYrqpNZapWL4tIZaORtA0PmKOMoF/TLtQKXMQOgMhcE3+I8uHJRGa0JRQ
-         qxTnX4x1JzuYtkE5KUshXWqaxBRd8EvaD6DBp+GdYjZJbrAixS6PcyUIJy6ZqLyDOq4c
-         nKhW8NNZ6/QZLXp/mA1Fl0Cge1cSHO57m0jvNl04ndUCaqtfBx3LNvgbWFjC8fatxNo8
-         txCg==
-X-Gm-Message-State: ANoB5pnBx+JWYUkUp9Qz3ipner7so/8nR4/tpx8XAmEgf/mvbjfAgcP/
-        66a9AgG0tqOQgd488Q5Lve0=
-X-Google-Smtp-Source: AA0mqf59ldue3iF4yhpWDKln06CfDaaB3ehH6WKvCeLs6aUavpSzqMvEfBJ7e3NPy2ZGBQgSjUfGdA==
-X-Received: by 2002:a17:907:1110:b0:7c0:fd1a:79ef with SMTP id qu16-20020a170907111000b007c0fd1a79efmr34065544ejb.48.1671441333575;
-        Mon, 19 Dec 2022 01:15:33 -0800 (PST)
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=eq9m+4wuM3mVAiCnHBcbkaH+v+dunfVIPomfsULc9X0=;
+        b=gMoE/YsAfUbdb2JI/e31VEGubayEfQbb4Tg76fG5v8KcuHW0cbT/Na9jls0S9vbiVT
+         +ZsjuhXzEmMy2UYwicByWkzc3s75DAgjlV6HM5hgXyuA6hKPsh0+qhZhxBdgZBj64pPD
+         OcuyBF6HSNQ9iqANAovnwxVRaCR+x9DejTyD1sZl0Ce9qUTDj2Otpc7ESpkEn5LEtyjc
+         oKurD+dkp3UoGGQAej5ZIaZtRVUi+nPVIO0RzCtIuFY/b4r4daHOHRaO/U9Nqf7Camnl
+         7Dn0bLuhK21lyd53YzTxuDM8jtIAKj7gLtyw+1wZPc8s+mlXLoX2145870trEjro/C3q
+         dWqg==
+X-Gm-Message-State: ANoB5pl7ZU5ZNxUlWsskuDgZXFQhrAs725gbFxSBbQmlacNtHx4r25mE
+        FrJOJo8w1ln5ku0hfIV5JWw=
+X-Google-Smtp-Source: AA0mqf5lYiZVh9QOiPLM3iBzRZA7nVffIZhOfoCy1G2HQjQMOHU5qdLRibGJ39OFlRfGIJ1vNjq0iQ==
+X-Received: by 2002:a17:906:2442:b0:7ad:8f6f:806d with SMTP id a2-20020a170906244200b007ad8f6f806dmr34125459ejb.24.1671442305667;
+        Mon, 19 Dec 2022 01:31:45 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id o22-20020a17090611d600b0073022b796a7sm4141554eja.93.2022.12.19.01.15.32
+        by smtp.gmail.com with ESMTPSA id z1-20020a170906944100b007c491f53497sm4176846ejx.170.2022.12.19.01.31.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 01:15:32 -0800 (PST)
+        Mon, 19 Dec 2022 01:31:45 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1p7CFA-006UF4-0t;
-        Mon, 19 Dec 2022 10:15:32 +0100
+        id 1p7CUq-006UjJ-1v;
+        Mon, 19 Dec 2022 10:31:44 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Mathias Krause <minipli@grsecurity.net>, git@vger.kernel.org,
-        pcre-dev@exim.org
-Subject: Re: [PATCH] grep: fall back to interpreter mode if JIT fails
-Date:   Mon, 19 Dec 2022 10:00:11 +0100
-References: <20221216121557.30714-1-minipli@grsecurity.net>
- <221216.86o7s31fyt.gmgdl@evledraar.gmail.com>
- <62a06c5b-9646-17f8-b4d5-39823d3cc25a@grsecurity.net>
- <xmqqlen7kksr.fsf@gitster.g>
- <CAPUEspjqgSOS4KKw2nTaRYdiCFo4Ok6OfmKrqb+Mjq+oXn5nsg@mail.gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH 0/5] strvec: add a "nodup" mode, fix memory leaks
+Date:   Mon, 19 Dec 2022 10:20:00 +0100
+References: <221214.86ilie48cv.gmgdl@evledraar.gmail.com>
+ <RFC-cover-0.5-00000000000-20221215T090226Z-avarab@gmail.com>
+ <Y53AXmfabIvdkfZz@coredump.intra.peff.net>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <CAPUEspjqgSOS4KKw2nTaRYdiCFo4Ok6OfmKrqb+Mjq+oXn5nsg@mail.gmail.com>
-Message-ID: <221219.86bknz21qj.gmgdl@evledraar.gmail.com>
+In-reply-to: <Y53AXmfabIvdkfZz@coredump.intra.peff.net>
+Message-ID: <221219.867cyn20zj.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Dec 16 2022, Carlo Arenas wrote:
+On Sat, Dec 17 2022, Jeff King wrote:
 
-[CC-ing pcre-dev@ for this "future error API" discussion]
-
-> On Fri, Dec 16, 2022 at 3:09 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Mathias Krause <minipli@grsecurity.net> writes:
->>
->> > ... However, from a user's point of view a fall back to
->> > interpreter mode might still be desired in this case, as a failing
->> > 'git grep' is simply not acceptable, IMHO.
->>
->> "git grep" that silently produces a wrong result (by falling back
->> after a problem is detected) would not be acceptable, either.
+> On Thu, Dec 15, 2022 at 10:11:06AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
 >
-> except that an error at this point only invalidates the use of JIT,
-> so calling pcre2_jit_match() is invalid but calling pcre2_match() is not.
+>> This is an alternative to Ren=C3=A9's [1], his already fixes a leak in "=
+git
+>> am", and this could be done later, so I'm submitting it as RFC, but it
+>> could also replace it.
+>>=20
+>> I think as this series shows extending the "strvec" API to get a
+>> feature that works like the existing "strdup_strings" that the "struct
+>> string_list" has can make memory management much simpler.
 >
-> the later is setup to be used later by the code that is added,
-
-I think we could stumble ahead, but if this were to happen our
-assumptions about how the API works have been invalidated.
-
-The pcre2_jit_compile() doesn't promise to return a finite set of error
-codes, but:
-
-	[...]0 for success, or a negative error code otherwise[...]
-
-But if new codes were added it's anyone's guess what state we'd be in,
-so I think the safe thing is to BUG() out if we get as far as
-pcre2_jit_compile() and don't get either PCRE2_ERROR_JIT_BADOPTION or
-PCRE2_ERROR_NOMEMORY.
-
->> Receiving BADOPTION could be a sign that there is something wrong in
->> the input, not from the end-user but from the code, in which case
->> stopping with BUG() may be a more appropriate?
+> I know this is kind of a surface level review, but...please don't do
+> this. We have chased so many bugs over the years due to string-list's
+> "maybe this is allocated and maybe not", in both directions (accidental
+> leaks and double-frees).
 >
-> The way PCRE handles this kind of errors internally is to instruct pcre2_match()
-> to use the interpreter.
+> One of the reasons I advocated for strvec in the first place is so that
+> it would have consistent memory management semantics, at the minor cost
+> of sometimes duplicating them when we don't need to.
 >
-> While a BUG() might be a way to ensure the code is using the right set
-> of options
-> I would expect that the failure will be reported by pcre2_compile
-> instead, with the
-> only cases left, only being interna to PCRE (ex: JIT can't yet support
-> a feature the
-> interpreter has)
+> And having a nodup form doesn't even save you from having to call
+> strvec_clear(); you still need to do so to avoid leaking the array
+> itself. It only helps in the weird parse-options case, where we don't
+> handle ownership of the array very well (the strvec owns it, but
+> parse-options wants to modify it).
 
-I agree that it's possible in general that an external library might
-start returning a "benign" error code that we could recover from, so
-BUG(...) would be overdoing it.
+Yes, just like "struct string_list" in the "nodup" mode.
 
-I just don't see that libpcre would do that in this case. In general the
-JIT supports all patterns that the normal engine does, so if we're past
-the "is it available?" hump it should work.
+I hear you, but I also think you're implicitly conflating two things
+here.
 
-If it starts not doing that I'd think they'd do a major version upgrade,
-or opt-in with a new flag etc.
+There's the question of whether we should in general optimize for safety
+over more optimila memory use. I.e. if we simply have every strvec,
+string_list etc. own its memory fully we don't need to think as much
+about allocation or ownership.
 
-Note that it already has a way of checking for "we tried to do the jit
-thing, but it wasn't on in the end". See the code I added in
-a25b9085043[1] (grep: fix segfault under -P + PCRE2 <=10.30 + (*NO_JIT),
-2017-11-23), which comes right after the pcre2_jit_compile().
+I think we should do that in general, but we also have cases where we'd
+like to not do that, e.g. where we're adding thousands of strings to a
+string_list, which are all borrewed from elsewhere, except for a few
+we'd like to xstrdup().
 
-So not only would a BUG() biting us here require them to create a new
-code for the state of "we have the JIT, but can't use it here" (for some
-reason I can't imagine, as "PCRE2_ERROR_NOMEMORY" is already
-"overloaded" to mean that).
+Such API use *is* tricky, but I think formalizing it as the
+"string_list" does is making it better, not worse. In particular...:
 
-It would also require them to invent a new "soft" failure mode for the
-JIT, i.e. not the facility added in a25b9085043, where we can use the
-JIT, but it's not on after all due to a "(*NO_JIT)" in the pattern
-itself.
+>> This does make the API slightly more dangerous to use, as it's no
+>> longer guaranteed that it owns all the members it points to. But as
+>> the "struct string_list" has shown this isn't an issue in practice,
+>> and e.g. SANITIZE=3Daddress et al are good about finding double-frees,
+>> or frees of fixed strings.
+>
+> I would disagree that this hasn't been an issue in practice. A few
+> recent examples:
+>
+>   - 5eeb9aa208 (refs: fix memory leak when parsing hideRefs config,
+>     2022-11-17)
+>   - 7e2619d8ff (list_objects_filter_options: plug leak of filter_spec
+>     strings, 2022-09-08)
+>   - 4c81ee9669 (submodule--helper: fix "reference" leak, 2022-09-01)
 
-But I may be wrong, so I've CC'd pcre-dev@ to see if they have any
-commentary on this proposed API paranoia. For them: The greater context
-of this thread on the git ML is at [2].
+...it's funny that those are the examples I would have dug up to argue
+that this is a good idea, and to add some:
 
-1. https://github.com/git/git/commit/a25b9085043b8029169b4d5b172b78ca3f38fb37
-2. https://lore.kernel.org/git/20221216121557.30714-1-minipli@grsecurity.net/
+	- 4a0479086a9 (commit-graph: fix memory leak in misused
+          string_list API, 2022-03-04)
+	- b202e51b154 (grep: fix a "path_list" memory leak, 2021-10-22)
+
+I.e. above you note "in both directions [...] leaks [...] and double
+frees", but these (and the ones I added) are all in the second category.
+
+Which is why I don't think it's an issue in practice. The leaks have
+been a non-issue, and to the extent that we care the SANITIZE=3Dleak
+testing is closing that gap.
+
+The dangerous issue is the double-free, but (and over the years I have
+looked at pretty much every caller) I can't imagine a string_list
+use-case where we:
+
+ a) Actually still want to keep that memory optimization, i.e. it
+    wouldn't be better by just saying "screw it, let's dup it".
+ b) Given "a", we'd be better off with some bespoke custom pattern over
+    the facility to do this with the "string_list".
+
+So I really think we're in agreement about 99% of this, I just don't see
+how *if* we want to do this why we're better of re-inventing this
+particular wheel for every caller.
