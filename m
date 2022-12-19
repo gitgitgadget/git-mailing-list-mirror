@@ -2,56 +2,60 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 683ACC4332F
-	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 15:53:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD40BC4167B
+	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 16:20:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232724AbiLSPxx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 10:53:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39552 "EHLO
+        id S232058AbiLSQUd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Dec 2022 11:20:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232433AbiLSPx1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 10:53:27 -0500
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3698D12087
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 07:51:51 -0800 (PST)
-Received: by mail-wr1-x42f.google.com with SMTP id h10so9103269wrx.3
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 07:51:51 -0800 (PST)
+        with ESMTP id S231991AbiLSQUa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2022 11:20:30 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6D4F133
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 08:20:28 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id i7so9183484wrv.8
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 08:20:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=EtDAz+FYEeL+Kqq1tRnLGXIEnscCZTjc+zSHtJSGhs0=;
-        b=gsIbYaLSJw2NdfFg0MRzLF6zqlttco0/6j1hCgqRLKj8rcxdnt6Lj7O7fd9UUQoHaX
-         I3QUZK7yE7Ftp6lwrmy1wWqLvzAqHlpcxxxbu3+aR8KVdxCmh9v14uZ6Fl+pqF3Bi67T
-         BV0Fy/L0nhB/bFUO518u2zGQ6u25BBOS1aJz/Zm14B9Vm04hruzjCtJIRUUrEXeCCZyh
-         lDm+/P1Q9Bq9CcBUIEqK8F4aJzp1Uw1IcpcCUrN/GYWu5DWN2MPiuCC5OcPCbyxmbGTp
-         Hu/zpfZgZm0UofvWRFRixF0P6Od0v7M1V1ylWsR7/IxxsWCVe6PN2CJvpPGKIN4mUPdi
-         VcGg==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mXSB/dfnZXZjH9qaVx2Tou4UhmraPLlafdZJ0IRl9tI=;
+        b=N5mytT2Wa5eWrpySaBDz7AdPldKyikQ0m7fLCKb+AEUG9iXDtGCn6bu+xRzGj4+Rgq
+         QSjJn/PbIT5n6B3tK55CZSde/fdkAEh9FraaW9efrmUwO6W6VffLTTZKH28R9ng6NCIY
+         3Z2prR8JBJHuAMpZCmHzo9vOvXczYo6v747rGiWqZkZr24N1LkJWp65wAdqKDRzP00fh
+         taKGEQpJPqMnGQ47WbvriM0YrH7PTiL/EeTAlT0MHlG6LPLECO5lqxxcmgMxb2x0+ZcU
+         M4s1tePHeQoFqeLscJpo44f1heofZe4qNASVSbH7W4QRytqtXnqkkqS8uv5gXs48UCb4
+         VEig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EtDAz+FYEeL+Kqq1tRnLGXIEnscCZTjc+zSHtJSGhs0=;
-        b=5+Gyg8aKCixPre/2RQ30rXxJBoKY96UpfmyzZxmzam145TQO1uV+B48n3YCJa3VdcB
-         Qej7BlfmqUJX84VbLrP1oEenEe9npxCXLcbR8CKfherpkMqIrZBoX5Oiuun2o40FNTAq
-         9nl1ns3LlEolR82v0pifTQdqftg5SkYaz5Ls/3l8NEzhPlusQ3zc57BtVUIBUlUbpSEd
-         0ph4lhddp3PBmZtF05/rC0/yTIsFo2AiRrCeE/vK50InmoGFbz9xX4kDKr0n7GC6xWQh
-         8Q7fyjFpJbcAhfr0ZyNB51suY2RBSkgngEMxfxCtJAFfkz3jOQnwGwyu5ffsi0KsZOzl
-         xWng==
-X-Gm-Message-State: ANoB5pnK+aqoijnu3w9md3Sp0HzvsqyNeA8GC86ReLikRWEWEIU6AFYb
-        LKMsfHkBh8tyWuQZTtMoSU2Cs/EGQy8=
-X-Google-Smtp-Source: AA0mqf4sEAoWCOvWZC3kXuyHRk4BhXcAZqpwOLX0/LsdTMJ+bkeTS0uLsUdE67+Bd47dhJk2Wl38wQ==
-X-Received: by 2002:a5d:410c:0:b0:242:1c5f:9bf5 with SMTP id l12-20020a5d410c000000b002421c5f9bf5mr24106785wrp.8.1671465109489;
-        Mon, 19 Dec 2022 07:51:49 -0800 (PST)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mXSB/dfnZXZjH9qaVx2Tou4UhmraPLlafdZJ0IRl9tI=;
+        b=q/+51pdh5cceV+NTzwLsTkvDzk3LtOTlppYCJ6AOLuyg51h1fx1bssBTYNWQLmpl/T
+         He8WjJLT3R59nTocRYiWS/plH0UXbuCDzia99P9+jx/G345mM2r0eEEdUp5opOOvbx9J
+         7FPkRDcwVsvoVmoKR7SFi8UHszdyvwopExcaYk60htoGUSBqOq0hUGllpXhDb0K9pYA7
+         +ksl4/gyyTYyzvtKf9DwJ+IruZwHZScAbc/ZPj54EpneCfPcxQmSoFNliytqS2NXKc5g
+         hPXscJS0ikVI50rOd/L3yPtAr1F9FwS1MpKEl24KGpAGsx7/JWCv4J6139GSm6NYBA58
+         b0CQ==
+X-Gm-Message-State: AFqh2kqdfnqxswwPghvZrJVw31WMs7rLLvMdBto+SPlC4/mRAIKas6nB
+        qw3htFl/HNHe5tSuOQ/JxZFgbSYgHz4=
+X-Google-Smtp-Source: AMrXdXsw+LHp8Cz7Fm/7IFqRhYpT0t4ymX/1IJcqm/A+TCx8oUyr5pwfp7kjUzBSd6XYMDgtZARn7w==
+X-Received: by 2002:a05:6000:408b:b0:256:8985:af4c with SMTP id da11-20020a056000408b00b002568985af4cmr8184283wrb.14.1671466827166;
+        Mon, 19 Dec 2022 08:20:27 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id y6-20020adfe6c6000000b00241e8d00b79sm11978215wrm.54.2022.12.19.07.51.49
+        by smtp.gmail.com with ESMTPSA id ay9-20020a5d6f09000000b002425504ae7dsm10452941wrb.80.2022.12.19.08.20.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 07:51:49 -0800 (PST)
-Message-Id: <pull.1402.git.git.1671465108414.gitgitgadget@gmail.com>
+        Mon, 19 Dec 2022 08:20:26 -0800 (PST)
+Message-Id: <pull.1402.v2.git.git.1671466826159.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1402.git.git.1671465108414.gitgitgadget@gmail.com>
+References: <pull.1402.git.git.1671465108414.gitgitgadget@gmail.com>
 From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 19 Dec 2022 15:51:48 +0000
-Subject: [PATCH] Explicitly set errno to ENOENT if err is not ERROR_DIRECTORY
+Date:   Mon, 19 Dec 2022 16:20:26 +0000
+Subject: [PATCH v2] win32: explicitly set errno to enoent if err is not
+ error_directory
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,7 +77,7 @@ err_win_to_posix.
 
 Signed-off-by: Seija Kijin <doremylover123@gmail.com>
 ---
-    Explicitly set errno to ENOENT if err is not ERROR_DIRECTORY
+    win32: explicitly set errno to enoent if err is not error_directory
     
     At this point, the only two possible errors are ERROR_DIRECTORY or
     ERROR_BAD_PATHNAME.
@@ -82,9 +86,23 @@ Signed-off-by: Seija Kijin <doremylover123@gmail.com>
     
     Signed-off-by: Seija Kijin doremylover123@gmail.com
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1402%2FAtariDreams%2Fopendir-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1402/AtariDreams/opendir-v1
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1402%2FAtariDreams%2Fopendir-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1402/AtariDreams/opendir-v2
 Pull-Request: https://github.com/git/git/pull/1402
+
+Range-diff vs v1:
+
+ 1:  6e66c0deaf9 ! 1:  bf757aee0be Explicitly set errno to ENOENT if err is not ERROR_DIRECTORY
+     @@ Metadata
+      Author: Seija Kijin <doremylover123@gmail.com>
+      
+       ## Commit message ##
+     -    Explicitly set errno to ENOENT if err is not ERROR_DIRECTORY
+     +    win32: explicitly set errno to enoent if err is not error_directory
+      
+          At this point, the only two possible errors are
+          ERROR_DIRECTORY or ERROR_BAD_PATHNAME.
+
 
  compat/win32/dirent.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
