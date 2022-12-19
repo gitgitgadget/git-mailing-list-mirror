@@ -2,103 +2,82 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 82335C4332F
-	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 17:17:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B6C53C4332F
+	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 17:26:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232107AbiLSRRO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 12:17:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50020 "EHLO
+        id S232038AbiLSR0X (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Dec 2022 12:26:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232417AbiLSRRH (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 12:17:07 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8963646A
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 09:17:04 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id ay2-20020a05600c1e0200b003d22e3e796dso7027052wmb.0
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 09:17:04 -0800 (PST)
+        with ESMTP id S229618AbiLSR0U (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2022 12:26:20 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 068A91056E
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 09:26:19 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id r26so13856771edc.10
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 09:26:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=76iW3mDnqSjAVhB2a43w1yWRCDg2+y4HpMJh2iFPvFs=;
-        b=Pq7lKfGXD76X/B2tRkSUsvXmn/aD//BeRHYttvXRRQJoBjRrrX2d1ceklxjwiIX0mx
-         C84t1l848B6ffYFwU2O34lVMUllkMBFNARqD9HXoXxIUkPEXu0RAw1GcPtXZXaJfsrn8
-         S+GWicdGb9eLiGAad2C4gtUvu3RspIRbNvXmACCS/DC6zC7haONxbe1AkWwQMV6MV1o4
-         dCr2iqZ9PbFP9WPegaBg6dsv0Ruta4RlkAtfchkTL4/fLf+KW6jqfKYtVGKkYPn4DUKw
-         kKMn5pYjyWfuP7xioeg+y6Od+xb48rvIQXf/Vjjq0h/Ldq5jWsHUTqdCqu1ldK4Ph3vy
-         +sEQ==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=cl14d/kmaDSM3SiuZzXuTP1bfh9R1lKq7HCYrQJ+VRU=;
+        b=D4BEcCurIpV5S8bafUFgYvy8t6hfa8bZ5P3ibJucb2jfklbnvLhRpPfvoJZDjKDAy5
+         yrKRQEsTGB/fTzkStlSVjZuOs12Ir17dYWnzChRFaIKmIpMQC4nPyz4mpGGoHr1ZhgAI
+         /7r3z47XKOtO0gQFMngbedlpsUC3Xb9ufwVFD8cyepILU7d4Sesk+wC0rpAArIG8uqGq
+         qD1V+hDmZPeu999RViIMmSqkzo5tL3uZjsBKwlMMun99GY+P/V3r4y1ygssDbRkLMwgj
+         etNFwk1V7crpjez+OUfbL3ISN7ov1mY3uGhfXrr4DjSNUDrOzJqDlti0yHpx2bPp/fIk
+         oliA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=76iW3mDnqSjAVhB2a43w1yWRCDg2+y4HpMJh2iFPvFs=;
-        b=AMXmvW6NPyD3xsJI+pUWRqhb06Y/XRQoD3zHx2xcCUNpeqfPemo09boWEWsVOOUH+A
-         +RlOEEZAEcw9kBD0ir3z7vl4lznNmpnkxt7gSb7Frlizr6Jqnsvqp4idU/Cvq9LPgOja
-         kFTPlYN2ZxI5koIsBEca3NMc6hIQHza31/ThruLhZisRg+FAC/XAXbtWDm8k/MkI21aw
-         jRxfniRHjibLx4v2CuMlBJg+YIl1dchuPSR58/HttYBR6Auezb3t3WaNIQEwjWu6X1ZP
-         tIVr9z+pW94I3V/bGt85LmtIupikFb2oE4DG4l/AvPtz1yeIVN1Z7Bd2d6dxKWk6artW
-         NeFw==
-X-Gm-Message-State: ANoB5pkmhN4a5HQ10Y/pCF6hY0n8SfjVkaMD7q3+qo2y7Ov3NQjZd7Tl
-        47PEiR7AUVgaRKKnl15x4VDJStDxqoQ=
-X-Google-Smtp-Source: AA0mqf7DBSFsUU/e9ru6a8N7QOWh1Y2Rsdk9aJoL0JDXVhOB4y8/E0+K94O9EA3Xf0dmZEn1ahjP/Q==
-X-Received: by 2002:a05:600c:1d02:b0:3cf:d365:1ea3 with SMTP id l2-20020a05600c1d0200b003cfd3651ea3mr33223057wms.12.1671470223312;
-        Mon, 19 Dec 2022 09:17:03 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t16-20020a1c7710000000b003c6f3f6675bsm19502777wmi.26.2022.12.19.09.17.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 09:17:03 -0800 (PST)
-Message-Id: <pull.1404.git.git.1671470222521.gitgitgadget@gmail.com>
-From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 19 Dec 2022 17:17:02 +0000
-Subject: [PATCH] win32: ensure len does not cause any overreads
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        bh=cl14d/kmaDSM3SiuZzXuTP1bfh9R1lKq7HCYrQJ+VRU=;
+        b=wUDefyTbieIDyRVIuWB3oEP2P1cQ8fSfDZ0OQIAaLBWCFxvYXBKK1nfh8UprUCXxFh
+         OZyWPqFzcZZEPpx4x8/RLbMH4l+Xax/RJyeA7M7tT825h5Ozxr/B/V0NyFFfEqx+k5Ie
+         L0jU92aV03feBSt0XFyS/9eSOGjuYRlrqhzYNBmvpbkP5L24qtg2zr7wNTdNkcv/SqqM
+         ngMjc7I26Id8mjJr9uTQfti6ujugSZvN8J0bGucN47vAPqS6r3mxO1WgsQiqOt1k4AvA
+         V3XN4M2yoHDVPE+51zYZmZMl1dND4NwY3tDuZ4qHFCJjX45PDJLl6s2AQPU4hidzJ3L+
+         CNSA==
+X-Gm-Message-State: ANoB5pmhV3k0jMZJhtpYEXdakZ/XAO4FR04Hd5VgD8QRC9a++gjzTbey
+        eYVCUeNURsUOhSNetZvc1Z1pI9Xe8wTzAVH3nwW1STmishI=
+X-Google-Smtp-Source: AA0mqf7TeBLaONgQbm+RQTQByqyyD48XVe/0Bt0iZbjvuCRy8kOVIxrjzZRQFO+rqtmiJ+pq1eO/4fCvWVef0vWjAQQ=
+X-Received: by 2002:a05:6402:a52:b0:46b:d3b3:669f with SMTP id
+ bt18-20020a0564020a5200b0046bd3b3669fmr33113360edb.414.1671470777467; Mon, 19
+ Dec 2022 09:26:17 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Rose <83477269+AtariDreams@users.noreply.github.com>,
-        Seija Kijin <doremylover123@gmail.com>
+References: <CAC5-4e-hViTA36gg=ui5=kUsSswVe+XhRmBz56H-4PkuhYLrrQ@mail.gmail.com>
+ <xmqqtu1vkl38.fsf@gitster.g>
+In-Reply-To: <xmqqtu1vkl38.fsf@gitster.g>
+From:   Prajwal S N <prajwalnadig21@gmail.com>
+Date:   Mon, 19 Dec 2022 22:56:06 +0530
+Message-ID: <CAC5-4e_TeVon0MAHUk99Kci5XWfeY_mozvGoYk-WGja7A3XCTQ@mail.gmail.com>
+Subject: Re: Add git config variable for signoff
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Seija Kijin <doremylover123@gmail.com>
+> I think the latest round was the thread leading to this message:
+>
+>   https://lore.kernel.org/git/xmqqpnfw8gyn.fsf@gitster-ct.c.googlers.com/
+>
+> There was an earlier round:
+>
+>   https://lore.kernel.org/git/20161229084701.GA3643@starla/
 
-Check to make sure len is always less than MAX_PATH,
-otherwise an overread will occur, which is
-undefined behavior.
+I went through these threads as well as the other related ones, and I
+understand some of the arguments. It definitely makes sense to have
+this specifically as opt-in, since it is important for developers to
+be aware that they are adding a DCO to their commits. This is exactly
+what my patch suggestion proposes - let us not touch the defaults for
+signing off, but simply provide a `commit.signoff` config flag
+identical to the existing `format.signoff` flag that works with `git
+format-patch`. This would mean that only the developers who regularly
+signoff every commit can add this to their config, taking full
+responsibility for choosing to do so :)
 
-Signed-off-by: Seija Kijin <doremylover123@gmail.com>
----
-    win32: ensure len does not cause any overreads
-    
-    Check to make sure len is always less than MAX_PATH, otherwise an
-    overread will occur, which is undefined behavior.
-    
-    Signed-off-by: Seija Kijin doremylover123@gmail.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1404%2FAtariDreams%2Foverread-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1404/AtariDreams/overread-v1
-Pull-Request: https://github.com/git/git/pull/1404
-
- compat/win32/dirent.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/compat/win32/dirent.c b/compat/win32/dirent.c
-index 52420ec7d4d..0c1bdccdd58 100644
---- a/compat/win32/dirent.c
-+++ b/compat/win32/dirent.c
-@@ -27,7 +27,7 @@ DIR *opendir(const char *name)
- 	DIR *dir;
- 
- 	/* convert name to UTF-16 and check length < MAX_PATH */
--	if ((len = xutftowcs_path(pattern, name)) < 0)
-+	if ((len = xutftowcs_path(pattern, name)) < 0 || len > MAX_PATH)
- 		return NULL;
- 
- 	/* append optional '/' and wildcard '*' */
-
-base-commit: 7c2ef319c52c4997256f5807564523dfd4acdfc7
--- 
-gitgitgadget
+Cheers,
+Prajwal S N
