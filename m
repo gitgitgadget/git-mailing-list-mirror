@@ -2,180 +2,107 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39C53C4332F
-	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 10:33:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CCA0BC4332F
+	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 10:54:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231830AbiLSKdC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 05:33:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45342 "EHLO
+        id S231888AbiLSKyx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Dec 2022 05:54:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54626 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231817AbiLSKc5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 05:32:57 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0202B6348
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 02:32:56 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id s5so12150894edc.12
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 02:32:55 -0800 (PST)
+        with ESMTP id S229618AbiLSKyr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2022 05:54:47 -0500
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8205643D
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 02:54:46 -0800 (PST)
+Received: by mail-ed1-x533.google.com with SMTP id z92so12311147ede.1
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 02:54:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hYvgCmr5emtAAGZAHJBmIKlnSEitCV9nCUr2NxODjEU=;
-        b=MZ12R/ZoaP/tlzWfjZnDnTR2Dtwtnnlr7YvGR6paVXB6nWJRbgkZSG8Kl5+4tiuRRn
-         B8Val3H3CaKseXQG3fdtrltQGsHA2f5T0XJzAl/LqkLTgwujbJwNcaJo/d91wt6jVIN5
-         4Wq4kPVJ0BiEttDqgWKwcQGFZXpJAwlPU2tOjTNMJSA9hMEnQuoujeEbmGPth8sLvu93
-         wX2j39TEkBzOevblJWiUuiKyuygkDmWNM2KVBorC0t30SXGo+w6HSSX/xPfzfhzQl9SD
-         N6QvHGoTl5skPIZwgfubRzvIkpm/1RfjkNTnkbZ8FmDxQrOxReL1wyXIjSPtumhlM73c
-         BOfA==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=r2ZpvQEJo3K/ooe91RthdUcOFIqzqcjBIjQ3OR9Rwsk=;
+        b=Syc/O00HtGBlP2vtfyhNCnHEaPiNwWnFkQLUFYtnu2J36tVfM4hkyb7xnIL5P4F8gF
+         OPC0h1fFwI4LIJqwZyLzSw5kqRuNGmZYy7cqoTnlKDsAvfZcTXIddTQTLql9PqfJN4tT
+         PFeycJOJpjkq1U1J+ZEcwU0U5VY8v8K9hr7adWJtUY4cLD+1syQlbinRMCNtIbtwxPLQ
+         6g8UYRKvzvWJZxE4pJWxz3V/lqHeGEYahEzOp+uynFfvPNykl60U7eX+/cYmKAgLlVH7
+         7XMBUSseg05i2v6XDBAr50FUWUOVgaPywD5M8HuzLhs3w3gIgJzr++T4QMCh6tQfyLgA
+         Ktbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hYvgCmr5emtAAGZAHJBmIKlnSEitCV9nCUr2NxODjEU=;
-        b=qLE/mi2WIhq1qtXxzITsfVAy6ZhnCbJrKW+h73fVmqItwl8U84m03hGiQj19CyTpUH
-         cJDjtfd4Ki8ia+jW5xjFc+Pg6l3+4xgAACg5D6lTYWC/cOC5hgKu17VJXFJuTWTz5bDl
-         8OKIAAWp3VTaBy6Oj2/CDc1Q9XBcRi8zdjTKFnwUKDrNr+cEXcIGWssn8teXHrHqi+2J
-         7PzSGxeHClLVg7EQcYqM8+7HF2Df3DUUNqITXuwi0ETrB9k8hqNsBdDh77QnakjvLEWt
-         3z4mROLS7L98mz+Yj1/V60+Wax9qdR77XegjwRc3gUTbsI+vzdLVzjjVP9fivBL1kfxl
-         NY+Q==
-X-Gm-Message-State: ANoB5pkTp7HaMDbfAEOtWw9k2uTN3fWRd8OBDH7JSj9Y45Llc+8En+74
-        lxcrAR9Vu4b0sxeTQDi4hI5udGlMhBEe6A==
-X-Google-Smtp-Source: AA0mqf4NDwhxKMC3pztgDonf2smEW+coU2pnlZVxGMS1+GMHkVa9e0X4Yls+eEbukd21ZMg0ulXnhQ==
-X-Received: by 2002:a05:6402:6c1:b0:46f:d396:a7bc with SMTP id n1-20020a05640206c100b0046fd396a7bcmr27066301edy.28.1671445974228;
-        Mon, 19 Dec 2022 02:32:54 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id p26-20020a056402045a00b004610899742asm4177918edw.13.2022.12.19.02.32.53
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=r2ZpvQEJo3K/ooe91RthdUcOFIqzqcjBIjQ3OR9Rwsk=;
+        b=KWdUeCvfO/8cnjS5ePo0cwp/ViCO9bRzCDy26+e5fbqWEOnvDHCAyPV9hTmmanMQ3d
+         +0B1BCLM/bfLuaA7K0tWwRxB9E22eP/T8iGmmrTN64L505WiTMObzef8zOQAZErznoD+
+         6EPwUclfK8g0BFOGJeNAw2ArfGJQUD24ofzzJ77y+T8nEoGitDcLGgKsY1RCaS7CTzJ1
+         AuNn5kv0vdpkDh2GVEVPFCsek/v/ooEFvaivu0upShQfGKT4CygSryQ0HK0GROLDbX7x
+         UWtLNeM6Pgc+2l+2045bC+aQfCu8O5kguu1p3xmqrs8yHOqPlsPHrcYlD3fZObD5Eug2
+         1RXg==
+X-Gm-Message-State: AFqh2krkujQ49yYTy5K2F061+XZcuCHvjaTg5yiK5v8DkCuIF+7PbZuP
+        h4k8sR2l3N0Nl+YWn5i4RwY=
+X-Google-Smtp-Source: AMrXdXsFtY4AoTo7TDUK6Fs7+dfcRPHzmrNiNstx4fp/OQQoQ3o7enmcy+ZGrORyVLPTpL9asIXh7A==
+X-Received: by 2002:aa7:d38b:0:b0:473:280e:1959 with SMTP id x11-20020aa7d38b000000b00473280e1959mr14485539edq.16.1671447285420;
+        Mon, 19 Dec 2022 02:54:45 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id a9-20020a17090682c900b007c09d37eac7sm4179103ejy.216.2022.12.19.02.54.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 02:32:53 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        Victoria Dye <vdye@github.com>,
-        Eric Sunshine <ericsunshine@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 2/2] cmake: update instructions for portable CMakeLists.txt
-Date:   Mon, 19 Dec 2022 11:32:46 +0100
-Message-Id: <patch-2.2-d6058ed0f22-20221219T102813Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.39.0.1071.g97ce8966538
-In-Reply-To: <cover-0.2-00000000000-20221219T102813Z-avarab@gmail.com>
-References: <cover-0.2-00000000000-20221219T102813Z-avarab@gmail.com>
+        Mon, 19 Dec 2022 02:54:44 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1p7DnA-006Xgo-1e;
+        Mon, 19 Dec 2022 11:54:44 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
+Subject: ds/omit-trailing-hash-in-index (was: What's cooking in git.git (Dec
+ 2022, #06; Sun, 18))
+Date:   Mon, 19 Dec 2022 11:49:30 +0100
+References: <xmqqh6xtw4uw.fsf@gitster.g>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <xmqqh6xtw4uw.fsf@gitster.g>
+Message-ID: <221219.86y1r3zmrv.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The instructions for running CMake went back & forth between *nix,
-Windows and Visual Studio instructions Let's create headings and split
-the existing instructions up into those new sections.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- contrib/buildsystems/CMakeLists.txt | 68 +++++++++++++++++++++--------
- 1 file changed, 50 insertions(+), 18 deletions(-)
+On Sun, Dec 18 2022, Junio C Hamano wrote:
 
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 5b22a9b217f..80290edd72a 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -4,7 +4,31 @@
- 
- #[[
- 
--Instructions how to use this in Visual Studio:
-+== Overview ==
-+
-+The top-level Makefile is Git's primary build environment, and a lot
-+of things are missing (and probably always will be) from this CMake
-+alternative.
-+
-+The primary use-case for maintaining this CMake build recipe is to
-+have nicer IDE integration on Windows.
-+
-+== Creating a build recipe ==
-+
-+The "cmake" command creates a build file from this recipe:
-+
-+    cmake -S contrib/buildsystems -B contrib/buildsystems/out -DCMAKE_BUILD_TYPE=Release
-+
-+Running this will create files in the contrib/buildsystems/out
-+directory (our top-level .gitignore file knows to ignore contents of
-+this directory).
-+
-+See "cmake options" below for a discussion of
-+"-DCMAKE_BUILD_TYPE=Release" and other options to "cmake".
-+
-+== Building with Visual Visual Studio ==
-+
-+To use this in Visual Studio:
- 
- Open the worktree as a folder. Visual Studio 2019 and later will detect
- the CMake configuration automatically and set everything up for you,
-@@ -14,13 +38,33 @@ Note: Visual Studio also has the option of opening `CMakeLists.txt`
- directly; Using this option, Visual Studio will not find the source code,
- though, therefore the `File>Open>Folder...` option is preferred.
- 
--Instructions to run CMake manually:
-+By default CMake will install vcpkg locally to your source tree on configuration,
-+to avoid this, add `-DNO_VCPKG=TRUE` to the command line when configuring.
- 
--    cmake -S contrib/buildsystems -B contrib/buildsystems/out -DCMAKE_BUILD_TYPE=Release
-+== Building on Windows without Visual Studio ==
- 
--This will build the git binaries in contrib/buildsystems/out
--directory (our top-level .gitignore file knows to ignore contents of
--this directory).
-+Open contrib/buildsystems/git.sln and build Git. Or use the "msbuild"
-+command-line tool (see our own ".github/workflows/main.yml" for a real
-+example):
-+
-+	msbuild git.sln
-+
-+== Building on *nix ==
-+
-+On all other platforms running "cmake" will generate a Makefile; to
-+build with it run:
-+
-+	make -C contrib/buildsystems/out
-+
-+It's also possible to use other generators, e.g. Ninja has arguably
-+slightly better output. Add "-G Ninja" to the cmake command above,
-+then:
-+
-+	ninja -C contrib/buildsystems/out
-+
-+== cmake options ==
-+
-+=== -DCMAKE_BUILD_TYPE=<type> ===
- 
- Possible build configurations(-DCMAKE_BUILD_TYPE) with corresponding
- compiler flags
-@@ -32,18 +76,6 @@ empty(default) :
- 
- NOTE: -DCMAKE_BUILD_TYPE is optional. For multi-config generators like Visual Studio
- this option is ignored
--
--This process generates a Makefile(Linux/*BSD/MacOS) , Visual Studio solution(Windows) by default.
--Run `make -C contrib/buildsystems/out` to build Git on Linux/*BSD/MacOS.
--Open contrib/buildsystems/git.sln on Windows and build Git.
--
--NOTE: By default CMake uses Makefile as the build tool on Linux and Visual Studio in Windows,
--to use another tool say `ninja` add this to the command line when configuring.
--`-G Ninja`
--
--NOTE: By default CMake will install vcpkg locally to your source tree on configuration,
--to avoid this, add `-DNO_VCPKG=TRUE` to the command line when configuring.
--
- ]]
- cmake_minimum_required(VERSION 3.14)
- 
--- 
-2.39.0.1071.g97ce8966538
+> * ds/omit-trailing-hash-in-index (2022-12-17) 4 commits
+>  - features: feature.manyFiles implies fast index writes
+>  - test-lib-functions: add helper for trailing hash
+>  - read-cache: add index.skipHash config option
+>  - hashfile: allow skipping the hash function
+>
+>  Introduce an optional configuration to allow the trailing hash that
+>  protects the index file from bit flipping.
+>
+>  Will merge to 'next'?
+>  source: <pull.1439.v4.git.1671204678.gitgitgadget@gmail.com>
 
+I've been following this closely & reviewing it. I think the end-state
+is probably good, but noted in [1] that the intermediate progression
+equates bad config with "true", so:
+
+	git -c index.skipHash=blahblah status
+
+Enables it, fixing that is trivial, and probably worth a re-roll.
+
+The "probably" above is then because the patches seemingly try to make
+this compatible with different config for submodules, but there's no
+tests for submodule interaction, so that may or may not work.
+
+Normally we could just trust the "struct repository *" parameter we get,
+but in this case it's "istate->repo", which (as I showed in the v3
+feedback[2]) is sometimes NULL.
+
+Perhaps that NULL is benign, and perhaps it's a symptom that would
+result in a bug exposed by this topic bug. I don't know, but think that
+before this lands we really should have tests to tease out those
+interactions.
+
+1. https://lore.kernel.org/git/221216.86sfhf1gbc.gmgdl@evledraar.gmail.com/
+2. https://lore.kernel.org/git/221215.865yec3b1j.gmgdl@evledraar.gmail.com/
