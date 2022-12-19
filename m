@@ -2,52 +2,52 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FFBBC4332F
-	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 10:27:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DFBBC10F1B
+	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 10:32:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231431AbiLSK1D (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 05:27:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42444 "EHLO
+        id S231818AbiLSKc5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Dec 2022 05:32:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231795AbiLSK04 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 05:26:56 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99449AD
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 02:26:54 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id o15so6048932wmr.4
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 02:26:54 -0800 (PST)
+        with ESMTP id S229622AbiLSKcz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2022 05:32:55 -0500
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7EAFD6347
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 02:32:54 -0800 (PST)
+Received: by mail-ed1-x52d.google.com with SMTP id a16so12187186edb.9
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 02:32:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=yfhQu6h2PAJV8R2Opb4Nv9RkqOMTorzq5HX3nSxNuJc=;
-        b=UYpJns0SzkM8IVBRTbW1POdhcpbX+5XUncreD2VcW/IKfZTVXfSUJeuVh0V23faGRS
-         fm+PDwBj/zlnfMHUWDkJ0Bw2kQ2q0IgUi9o+Fi0giLd2d7+YeH2262ELOloY/2Y+O3UZ
-         mtFTcUkh51o900k+1Vjq30eA6CP8wdlsfQ7xq1p0w8QVjtgvKwmA7eTaMtTGrZgCTPAc
-         tAOPBQ/4ICNrzuhBnM2FgfJ7dyX+Ejixa9P2K0tieJwMC0k+I2VFvoysWBum6V+/GhPy
-         K2b2I7zo0IJkvjW/2nwHsEO8lxj++Y/S+bqpNqGWvGAnIGcVpCz4TP9dTDX9VaVEeS/j
-         Q7wg==
+        bh=vHJtcCXxvgJtmSGiGjJvyzcO09YKQEqOfUIkN13cJRE=;
+        b=BWPSbqRD8PaXox0tZJ2Hdhl2cKTwf1PZgt+/2V9WXZS3va+gPLAnaygbdnF+M9eMV9
+         vV/ayvGCk/6XF+9eiIPXqJ85BaOXsURq/+HaoZSKCOMBqX06vnDVgLUh5GYak14Oa205
+         CpRvWGC11WWC+u+OdrSzpfhEiBB+ycF3YLw5puG1k+/LWpnExOk3Vw0GOSULvURzxQpn
+         nyyPFjAT2mCTvNoCUntRNhurUnQTt7bWZcxAzRXd06NeXCwiDCz9jcwJWWsw2G7N86cK
+         pV6kEXI777hxBBvchcaXxh3nEGyKBFSLpPilXOUVPpp+6ObsKmYjzTUI1hazHrNuF70o
+         RyRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yfhQu6h2PAJV8R2Opb4Nv9RkqOMTorzq5HX3nSxNuJc=;
-        b=zh1UDw9KJQ5UrDI9lWT99SQIr3dxZm8nuIR3sNK/VSGIKoTtXcLh+CJipX6/SqZ34Z
-         mlOUZSQ00Qz7axbPtKrIJG3aGBeSMGVal1S7ukebR2zYTH+CzqqB8c/bTq0KzU0+RdF7
-         V/9IRgeFIjTcAcizjb7T4sisjhKfSXVbkrqpqoH0gb7KcoUQ4nJWlW0MUaOpkTKOysKN
-         aySItcK5AhoT3AQ6iXqNmdhWThDQkv/7Zm2TZNcsCYQKTDyhRbxje2CbCrWIP91dE2Kj
-         ic+XQdBFwUVzivaDprbBAMBUvJSgp8CfwtYu3D919VS3XQn/+2ZEXihAZAEy4gjHyilU
-         M4QQ==
-X-Gm-Message-State: ANoB5pn2+/YN0vHhctqGpXEfSNBVDERN8NqUJyY6fWSfxJsmmwBIFMMI
-        OJxt6vwRdNNNqTxJFIDQPZqWrE+u6aPXhg==
-X-Google-Smtp-Source: AA0mqf7nDz3LQ3KT/j4HNYRQFiuw6Dh5HorpZ0rFPphAInxw56yrZUnR5hE0co4ieBY+Z4E2CW0reg==
-X-Received: by 2002:a05:600c:4909:b0:3d1:f3eb:c718 with SMTP id f9-20020a05600c490900b003d1f3ebc718mr42674642wmp.19.1671445612802;
-        Mon, 19 Dec 2022 02:26:52 -0800 (PST)
+        bh=vHJtcCXxvgJtmSGiGjJvyzcO09YKQEqOfUIkN13cJRE=;
+        b=LablNBqa3Tz9saUP0cwzCEGbAf1Z/Oc7VOiisEGOqgvH5JrGIX/Avf3DjTL5tx8lff
+         Il5eSnsfuzAdJu9jo9P4IlooVR0RC9ErYPNYtG44zu94pTu1vFHgzFqm/jUJD3iZOGpa
+         vfaIHWtGh3YWU3a3JAEvtDnm05CEyJo8sBDD2D8xioqgCylzdw4F1IsnGUicwDTaj6+j
+         reVVsNAEE45x1PuUtsN1fA7d27dy/aTBUVNUcCiQCEOp/DEkSiT+BUWq+6vhjHeKHqbI
+         VP9c+LBUciJ4L9wTvc7cHhrnNK9jRAGIiluRZ+3S6JEghEf9SVDEktaKmAXWLkZf7wkn
+         ZwMg==
+X-Gm-Message-State: AFqh2koR0MdXG43YKEK9EiDEVDLTBbNjdwO17Uzjkh0iuSK6+WbI1vji
+        JHxboOU4NKHdZiC4pKBMBzhv1da4+VGFyA==
+X-Google-Smtp-Source: AMrXdXurkT0+EXPp83dskmhlvywBZ00Tj5E/4voixgK65A+K5S/jyRYnVSIoA7enkC/mXm7BsPHRpA==
+X-Received: by 2002:a05:6402:1595:b0:475:c621:a0e4 with SMTP id c21-20020a056402159500b00475c621a0e4mr10900486edv.26.1671445972436;
+        Mon, 19 Dec 2022 02:32:52 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id fc6-20020a05600c524600b003cf54b77bfesm21850008wmb.28.2022.12.19.02.26.51
+        by smtp.gmail.com with ESMTPSA id p26-20020a056402045a00b004610899742asm4177918edw.13.2022.12.19.02.32.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 02:26:52 -0800 (PST)
+        Mon, 19 Dec 2022 02:32:51 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <ericsunshine@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH] cmake: don't invoke msgfmt with --statistics
-Date:   Mon, 19 Dec 2022 11:26:46 +0100
-Message-Id: <patch-1.1-0fa41115261-20221219T102205Z-avarab@gmail.com>
+Subject: [PATCH 0/2] cmake doc: modernize and cross-platform-ize the docs
+Date:   Mon, 19 Dec 2022 11:32:44 +0100
+Message-Id: <cover-0.2-00000000000-20221219T102813Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.0.1071.g97ce8966538
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -69,38 +69,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In [1] I made the same change to our Makefile, let's follow-up and do
-the same here.
+Change the cmake docs to use one-command build instructions using
+options that "cmake" supports an ill our supported versions, and in
+2/2 re-arrange the docs to make it clearer which part of the
+instructions are platform-specific.
 
-For "cmake" this is particularly nice with "-G Ninja", as before we'd
-emit ~40 lines of overflowed progress bar output, but now it's only
-the one line of "ninja"'s progress bar.
+Like the just-submitted [1] this extracted from [2], and the range
+diff below is to [2]. The only change since [2] is a trivial reflow
+change in the commit message.
 
-1. 2f12b31b746 (Makefile: don't invoke msgfmt with --statistics,
-   2021-12-17)
+There were no outstanding issues or feedback with this part of [2], so
+hopefully this can advance relatively quickly.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+1. https://lore.kernel.org/git/patch-1.1-0fa41115261-20221219T102205Z-avarab@gmail.com/T/#u
+2. https://lore.kernel.org/git/cover-v6-00.15-00000000000-20221206T001617Z-avarab@gmail.com/
 
-This trivial fix is extracted from the ab/cmake-nix-and-ci topic which
-was ejected around the time of the release for that previous
-submission see [1], the range-diff is to that topic.
+Ævar Arnfjörð Bjarmason (2):
+  cmake: use "-S" and "-B" to specify source and build directories
+  cmake: update instructions for portable CMakeLists.txt
 
-I'm re-arranging and re-submitting topic more piecemeal. There were no
-outstanding issues or feedback with this part of it, so hopefully this
-can advance relatively quickly.
-
-I'll also submit some of the other uncontroversial bits today
-independently, none of which conflict with one another. Then once
-those have landed try to find some acceptable way forward for the
-later bits, which at that point will be easier to review.
-
-1. https://lore.kernel.org/git/cover-v6-00.15-00000000000-20221206T001617Z-avarab@gmail.com/
+ contrib/buildsystems/CMakeLists.txt | 70 ++++++++++++++++++++---------
+ 1 file changed, 50 insertions(+), 20 deletions(-)
 
 Range-diff:
- 1:  fc190b379cd =  1:  0fa41115261 cmake: don't invoke msgfmt with --statistics
- 2:  1a11aa233a3 <  -:  ----------- cmake: use "-S" and "-B" to specify source and build directories
- 3:  b9ddb5db1d3 <  -:  ----------- cmake: update instructions for portable CMakeLists.txt
+ 1:  fc190b379cd <  -:  ----------- cmake: don't invoke msgfmt with --statistics
+ 2:  1a11aa233a3 !  1:  2411acc9d4c cmake: use "-S" and "-B" to specify source and build directories
+    @@ Commit message
+         cmake: use "-S" and "-B" to specify source and build directories
+     
+         Rather than the multi-line "mkdir/cd/cmake" recipe provide an
+    -    equivalent one-liner using the "-S" and "-B" options, and then suggest building with "make -C <build-dir>".
+    +    equivalent one-liner using the "-S" and "-B" options, and then suggest
+    +    building with "make -C <build-dir>".
+     
+         The rest of these instructions discuss e.g. running tests from our
+         top-level "t/" directory, so it's more helpful to avoid changing the
+ 3:  b9ddb5db1d3 =  2:  d6058ed0f22 cmake: update instructions for portable CMakeLists.txt
  4:  7b7850c00ee <  -:  ----------- cmake: don't copy chainlint.pl to build directory
  5:  82ecb797915 <  -:  ----------- cmake: chmod +x the bin-wrappers/* & SCRIPT_{SH,PERL} & git-p4
  6:  1f326944a07 <  -:  ----------- cmake & test-lib.sh: add a $GIT_SOURCE_DIR variable
@@ -113,23 +117,6 @@ Range-diff:
 13:  6c6b530965d <  -:  ----------- cmake: only look for "sh" in "C:/Program Files" on Windows
 14:  563f1b9b045 <  -:  ----------- cmake: copy over git-p4.py for t983[56] perforce test
 15:  917a884eb65 <  -:  ----------- CI: add a "linux-cmake-test" to run cmake & ctest on linux
-
- contrib/buildsystems/CMakeLists.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/contrib/buildsystems/CMakeLists.txt b/contrib/buildsystems/CMakeLists.txt
-index 2f6e0197ffa..8f8b6f375f7 100644
---- a/contrib/buildsystems/CMakeLists.txt
-+++ b/contrib/buildsystems/CMakeLists.txt
-@@ -897,7 +897,7 @@ if(MSGFMT_EXE)
- 	foreach(po ${po_files})
- 		file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES)
- 		add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo
--				COMMAND ${MSGFMT_EXE} --check --statistics -o ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo ${CMAKE_SOURCE_DIR}/po/${po}.po)
-+				COMMAND ${MSGFMT_EXE} --check -o ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo ${CMAKE_SOURCE_DIR}/po/${po}.po)
- 		list(APPEND po_gen ${CMAKE_BINARY_DIR}/po/build/locale/${po}/LC_MESSAGES/git.mo)
- 	endforeach()
- 	add_custom_target(po-gen ALL DEPENDS ${po_gen})
 -- 
 2.39.0.1071.g97ce8966538
 
