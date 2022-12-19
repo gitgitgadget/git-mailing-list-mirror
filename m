@@ -2,66 +2,67 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CCA0BC4332F
-	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 10:54:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 15A7AC4332F
+	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 11:04:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231888AbiLSKyx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 05:54:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54626 "EHLO
+        id S231421AbiLSLEa (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Dec 2022 06:04:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229618AbiLSKyr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 05:54:47 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8205643D
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 02:54:46 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id z92so12311147ede.1
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 02:54:46 -0800 (PST)
+        with ESMTP id S231130AbiLSLE1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2022 06:04:27 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2871D9FF6
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 03:04:26 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id vv4so20620299ejc.2
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 03:04:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=r2ZpvQEJo3K/ooe91RthdUcOFIqzqcjBIjQ3OR9Rwsk=;
-        b=Syc/O00HtGBlP2vtfyhNCnHEaPiNwWnFkQLUFYtnu2J36tVfM4hkyb7xnIL5P4F8gF
-         OPC0h1fFwI4LIJqwZyLzSw5kqRuNGmZYy7cqoTnlKDsAvfZcTXIddTQTLql9PqfJN4tT
-         PFeycJOJpjkq1U1J+ZEcwU0U5VY8v8K9hr7adWJtUY4cLD+1syQlbinRMCNtIbtwxPLQ
-         6g8UYRKvzvWJZxE4pJWxz3V/lqHeGEYahEzOp+uynFfvPNykl60U7eX+/cYmKAgLlVH7
-         7XMBUSseg05i2v6XDBAr50FUWUOVgaPywD5M8HuzLhs3w3gIgJzr++T4QMCh6tQfyLgA
-         Ktbw==
+        bh=ZJrGHJUxI+ENbH+1VaWjbfNmBiq1iZmn/HlqT3hpjZg=;
+        b=lMULT3BwbMTm5E3l4L6PJhLWiS9deQjMVECjtMZNSt7QRxBKvhP2h/I3LdcbXreLqT
+         Sl57I5LCxFjp4Gb22y+mvraWwIYker2o71Y2yn2MmQYFSyTo7aVMwjxacwRjcklVfEpF
+         vD2OLMGEZGidwna8xY6vLkpH1My5+JsFSsnxgbcowEdoun1mYkUBKvVwQ5fd1WwUHQMw
+         gd009ZzvV/DSPlSgRyBTvJ99DJM/ErvIWGRh5evMpYrzUeqRrVA9ZjJePxUlyq9BADQ/
+         Mghi2nx70SSvhySa61T56gxxooZlM16zyNFn1CrejEpjMeRdQdm3dq5T65vrtPR2L+as
+         zq0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=r2ZpvQEJo3K/ooe91RthdUcOFIqzqcjBIjQ3OR9Rwsk=;
-        b=KWdUeCvfO/8cnjS5ePo0cwp/ViCO9bRzCDy26+e5fbqWEOnvDHCAyPV9hTmmanMQ3d
-         +0B1BCLM/bfLuaA7K0tWwRxB9E22eP/T8iGmmrTN64L505WiTMObzef8zOQAZErznoD+
-         6EPwUclfK8g0BFOGJeNAw2ArfGJQUD24ofzzJ77y+T8nEoGitDcLGgKsY1RCaS7CTzJ1
-         AuNn5kv0vdpkDh2GVEVPFCsek/v/ooEFvaivu0upShQfGKT4CygSryQ0HK0GROLDbX7x
-         UWtLNeM6Pgc+2l+2045bC+aQfCu8O5kguu1p3xmqrs8yHOqPlsPHrcYlD3fZObD5Eug2
-         1RXg==
-X-Gm-Message-State: AFqh2krkujQ49yYTy5K2F061+XZcuCHvjaTg5yiK5v8DkCuIF+7PbZuP
-        h4k8sR2l3N0Nl+YWn5i4RwY=
-X-Google-Smtp-Source: AMrXdXsFtY4AoTo7TDUK6Fs7+dfcRPHzmrNiNstx4fp/OQQoQ3o7enmcy+ZGrORyVLPTpL9asIXh7A==
-X-Received: by 2002:aa7:d38b:0:b0:473:280e:1959 with SMTP id x11-20020aa7d38b000000b00473280e1959mr14485539edq.16.1671447285420;
-        Mon, 19 Dec 2022 02:54:45 -0800 (PST)
+        bh=ZJrGHJUxI+ENbH+1VaWjbfNmBiq1iZmn/HlqT3hpjZg=;
+        b=DqRUnk8s672HuRKJ0yrzK+yk4gfj/hBh5zWOwBtjF9KDzZauqsI6VDmxgPITGb9h6e
+         gDq7r6vPXZn4igyHlagZqyX1R0qwUPND5dQ8unkpdR3JeWr7LJGtdrqTdHZ0j1C8Ye2G
+         NjiZRsW5IegpAh9Y263Rida1D+C+Tmw+qj3ii590lgmiVmBT9+d97b939isLrVaY4Xaa
+         otbpS1hZlvd0Jc5WpyWp9J30Y5qnD+ABO0XpNv/379YtcTtsUknC2bL+kauXhADm2ILT
+         sGTMTYtF8FMAhDEazHSxNMBwsEs0IQx7SGPDUw8VgIm/32yzUYGe46v32E3TrtA7LbcV
+         Gkkg==
+X-Gm-Message-State: ANoB5pl1YqY4OqA2VVOtl+VCF1TE7/jFTcO10QFwcfEZZFr//q+65DSj
+        RUVBT0okeBcHRvTWnqiWDkk=
+X-Google-Smtp-Source: AA0mqf5goQJwDr7+fdFHf+T2/2HHSOqcgASaJMBEwINY3iLfoUYHPSwZs0J4O6sDNqodRGlvTzc9mg==
+X-Received: by 2002:a17:906:351b:b0:7c0:a6a9:64e9 with SMTP id r27-20020a170906351b00b007c0a6a964e9mr46736500eja.36.1671447864557;
+        Mon, 19 Dec 2022 03:04:24 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id a9-20020a17090682c900b007c09d37eac7sm4179103ejy.216.2022.12.19.02.54.44
+        by smtp.gmail.com with ESMTPSA id wi18-20020a170906fd5200b007c0ae137404sm4279571ejb.97.2022.12.19.03.04.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 02:54:44 -0800 (PST)
+        Mon, 19 Dec 2022 03:04:23 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1p7DnA-006Xgo-1e;
-        Mon, 19 Dec 2022 11:54:44 +0100
+        id 1p7DwV-006Y2n-12;
+        Mon, 19 Dec 2022 12:04:23 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>
-Subject: ds/omit-trailing-hash-in-index (was: What's cooking in git.git (Dec
- 2022, #06; Sun, 18))
-Date:   Mon, 19 Dec 2022 11:49:30 +0100
-References: <xmqqh6xtw4uw.fsf@gitster.g>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, vdye@github.com,
+        gitster@pobox.com, Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 1/3] bundle-uri: drop unused 'uri' parameter
+Date:   Mon, 19 Dec 2022 11:57:17 +0100
+References: <pull.1443.git.1670866407.gitgitgadget@gmail.com>
+ <d17f08ed4b68d711b452b5cfb54a949845bdea81.1670866407.git.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <xmqqh6xtw4uw.fsf@gitster.g>
-Message-ID: <221219.86y1r3zmrv.gmgdl@evledraar.gmail.com>
+In-reply-to: <d17f08ed4b68d711b452b5cfb54a949845bdea81.1670866407.git.gitgitgadget@gmail.com>
+Message-ID: <221219.86tu1rzmbs.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -69,40 +70,71 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sun, Dec 18 2022, Junio C Hamano wrote:
+On Mon, Dec 12 2022, Derrick Stolee via GitGitGadget wrote:
 
-> * ds/omit-trailing-hash-in-index (2022-12-17) 4 commits
->  - features: feature.manyFiles implies fast index writes
->  - test-lib-functions: add helper for trailing hash
->  - read-cache: add index.skipHash config option
->  - hashfile: allow skipping the hash function
+> From: Derrick Stolee <derrickstolee@github.com>
 >
->  Introduce an optional configuration to allow the trailing hash that
->  protects the index file from bit flipping.
->
->  Will merge to 'next'?
->  source: <pull.1439.v4.git.1671204678.gitgitgadget@gmail.com>
+> The 'uri' parameter of fetch_bundle_list() was added early in
+> development, but is not required since the 'list' parameter includes a
+> 'baseURI' member. Remove the 'uri' parameter and make this expectation
+> explicit.
 
-I've been following this closely & reviewing it. I think the end-state
-is probably good, but noted in [1] that the intermediate progression
-equates bad config with "true", so:
+Makes sense, and this is a straightforward commit, but...
 
-	git -c index.skipHash=blahblah status
+> diff --git a/bundle-uri.h b/bundle-uri.h
+> index b2c9c160a52..29b0c98ee65 100644
+> --- a/bundle-uri.h
+> +++ b/bundle-uri.h
+> @@ -68,8 +68,8 @@ struct bundle_list {
+>  	 * In the case of the 'bundle-uri' protocol v2 command, the base
+>  	 * URI is the URI of the Git remote.
+>  	 *
+> -	 * Otherewise, the bundle list was downloaded over HTTP from some
+> -	 * known URI.
+> +	 * Otherwise, the bundle list was downloaded over HTTP from some
+> +	 * known URI. 'baseURI' is set to that value.
 
-Enables it, fixing that is trivial, and probably worth a re-roll.
+...here we have a stray typo fix, not called out in the commit
+message. I think that can pass, but if you're re-rolling I think any
+such "while-at-it" would be better split into their own commits.
 
-The "probably" above is then because the patches seemingly try to make
-this compatible with different config for submodules, but there's no
-tests for submodule interaction, so that may or may not work.
+But more importantly:
 
-Normally we could just trust the "struct repository *" parameter we get,
-but in this case it's "istate->repo", which (as I showed in the v3
-feedback[2]) is sometimes NULL.
+>  	 *
+>  	 * The baseURI is used as the base for any relative URIs
+>  	 * advertised by the bundle list at that location.
+> @@ -112,10 +112,10 @@ int fetch_bundle_uri(struct repository *r, const char *uri);
+>   * bundle-uri protocol v2 verb) at the given uri, fetch and unbundle the
+>   * bundles according to the bundle strategy of that list.
+>   *
+> - * Returns non-zero if no bundle information is found at the given 'uri'.
+> + * It is expected that the given 'list' is initialized, including its
+> + * 'baseURI' value
 
-Perhaps that NULL is benign, and perhaps it's a symptom that would
-result in a bug exposed by this topic bug. I don't know, but think that
-before this lands we really should have tests to tease out those
-interactions.
+At first sight this seems like a regression. Why have we stopped
+documenting the exit code?
 
-1. https://lore.kernel.org/git/221216.86sfhf1gbc.gmgdl@evledraar.gmail.com/
-2. https://lore.kernel.org/git/221215.865yec3b1j.gmgdl@evledraar.gmail.com/
+But looking again is this because in 7cc47a980ac (bundle-uri: download
+bundles from an advertised list, 2022-12-05) you accidentally
+copy/pasted the documentation for fetch_bundle_uri(), and this was never
+applicable to this function?
+
+Even then, not documenting the code we return now is a regression. If it
+was wrong before, let's make it correct, not stop discussing it
+entirely.
+
+In either case this is another while-at-it entirely unrelated to the
+$subject here of dropping an unused parameter.
+
+The same goes for the added docs, that we "expect [that] 'list' is
+initialized" may be true, but that would have been true before we
+removed this unused parameter, so let's not stick that in this unrelated
+"UNUSED" change.
+
+>   */
+>  int fetch_bundle_list(struct repository *r,
+> -		      const char *uri,
+>  		      struct bundle_list *list);
+>  
+>  /**
+
