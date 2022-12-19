@@ -2,93 +2,118 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54F52C4332F
-	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 14:03:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D859C4332F
+	for <git@archiver.kernel.org>; Mon, 19 Dec 2022 14:12:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231835AbiLSODb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 09:03:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52428 "EHLO
+        id S231871AbiLSOMt (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Dec 2022 09:12:49 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231700AbiLSODZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 09:03:25 -0500
-Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5B2BDFE6
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 06:03:23 -0800 (PST)
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2001:470:b056:101:e59a:3ed0:5f5c:31f3])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id BB3EA5A20E;
-        Mon, 19 Dec 2022 14:03:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1671458602;
-        bh=HLIHfMb/+fQBsgPRVp36DLdHgk+ZRqw/Go9xHoIeVKU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=xHO7vyp3VI8URfYN3wrYFC220QLqqlVzUF6FwJ3tmnowKyXHJTGiKQv0cOJXsQgfD
-         ImB6lBK/xj+2KpQugkKAozHTjh0jFjW6frHXt0Xe4y9mTU8l0W3GX4B9bOeRzjIga/
-         2FM7a/EApecJ2P9l6aqk18CqmAP0+hqRi18RVNLtkaFoKzs3kMz3K3LVumufSIh/Sd
-         8pqMwmVc5y+gvcLGSuH004pzMJ3ePG4Lid9xYMIRDnqyYpxLFS6GypE1pBGKUlQr08
-         PbP6aVzZEN2zZ90qlHJu+nx6IDvsf5MV1kizOoqDIWsR1QwxnZO3Mk+Jxb+2VgMAlX
-         TJQd3fmZS5O7v1n+tUkG08OkqzBFjC3LR0CgCwGgWZ1ZLWX4UgXX6nfOsKtBaVW45Q
-         ta/CHACXoToDMU4iz2geOM6hQB633pRWqAX0w0L5ExJLzkEMmX0+uKT98Ve0tjXVSE
-         STk39YuFn0Fj/0vYvbzMIdPsADKzgOE8H9upqTTstzzroq2QkFL
-Date:   Mon, 19 Dec 2022 14:03:21 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tests: make 'test_oid' print trailing newline
-Message-ID: <Y6BvKdWJIHKq7GMs@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <20221218162905.3508164-1-szeder.dev@gmail.com>
+        with ESMTP id S231344AbiLSOMr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2022 09:12:47 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7891164D7
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 06:12:46 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id h10so8763945wrx.3
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 06:12:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=4r6YnCTH6Xe8GPWFDApClR9NZO4XWcsNCY12Yd8bjPA=;
+        b=P8m3W0YcdgvsZGitFPx0kBJ0zI8zKgB09Zaqkn0dhvYcHRqqxJmDR4o7hK/MhShtwx
+         udgDqbNoU4lWW6+xVs4Ky/jYEcZEprGyhfOUZZSZfvm97nO96+tshanWCM1elcHkK2YB
+         852Fg+ewv57VCCCHCZogkkSaUxH+br8XqhxQr75VjiTmlC67lP76QCEnJw30qn5Q7dnn
+         fgcoPdpXnsSCFMuFg0DmxSv5YK2cX3zVWcqr3qAkOI2v/+1hXZyyj4oXW2qVD56jnmcm
+         1k0ChaAc0lc4rgU4lPDkZVXZhRMM/nveTWTIDibDLvpWMDP4SD5nS1NY5wCphfGvKADc
+         MgQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4r6YnCTH6Xe8GPWFDApClR9NZO4XWcsNCY12Yd8bjPA=;
+        b=fKEJQ9LUj+Dp9dGy8TuccwFaOaHpvbOoQmzDUrpY0aAXqFqWCuQg9iYptC/zsn8rP/
+         KBlnKosa6KtE16RzfDEk4C9UKKdNHJ2ZVjHQ4EqInK6ZaPA74Q/8ZdPbx/V0bojK7ZUW
+         N7bd+zQqxPombC9hOqKxIID22n1j53it7z2v/kbsOn1Zh7JuCiaRAytHSChdZCkD+e8Y
+         DiUZfxNLg9JNtDFBQVIUxr8G/0tB7Qemtvd7Ny1hR6yj8CPGixJHFK8tQaDqtLzHbTy4
+         qjEvwbRXFGY3vqfh26E+nuN4sdUShwpoh+PFOaAWXtg3xFVz1ZVC5xeSB4zGcIMf1lRS
+         67EA==
+X-Gm-Message-State: ANoB5plIK4wH9a1QbyRgIYuEx+v8Kbc/xCEGvkqOEYXvUJ/UfKfETp8V
+        W8FYqDkvijGy2dkYlAoUiIpzUL+xvEA=
+X-Google-Smtp-Source: AA0mqf5Hg9qW0LuxCnPAHfuSRM+gs8jySntmcO5nouXWQFaM0KD8zHBiHcLrOZTl57zTh2seTr7eTA==
+X-Received: by 2002:a5d:4f92:0:b0:242:4c00:f544 with SMTP id d18-20020a5d4f92000000b002424c00f544mr27476302wru.45.1671459164597;
+        Mon, 19 Dec 2022 06:12:44 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m2-20020a5d4a02000000b0022ae0965a8asm10203490wrq.24.2022.12.19.06.12.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Dec 2022 06:12:44 -0800 (PST)
+Message-Id: <pull.1401.git.git.1671459163559.gitgitgadget@gmail.com>
+From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 19 Dec 2022 14:12:43 +0000
+Subject: [PATCH] Remove redundant double exclamation points
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="EGxfMnx6atw6yzxe"
-Content-Disposition: inline
-In-Reply-To: <20221218162905.3508164-1-szeder.dev@gmail.com>
-User-Agent: Mutt/2.2.9 (2022-11-12)
+To:     git@vger.kernel.org
+Cc:     Rose <83477269+AtariDreams@users.noreply.github.com>,
+        Seija Kijin <doremylover123@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Seija Kijin <doremylover123@gmail.com>
 
---EGxfMnx6atw6yzxe
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+S_ISDIR is a macro that involves a "==" comparison.
 
-On 2022-12-18 at 16:29:05, SZEDER G=C3=A1bor wrote:
-> Arguably we would be better off if 'test_oid' terminated its output
-> with a LF.  So let's update 'test_oid' accordingly, update its tests
-> in t0000 to account for the extra character in those size tests, and
-> remove the now unnecessary 'echo $(...)' command substitutions around
-> 'test_oid' invocations as well.
+This means the !! is redundant and not needed.
 
-I don't recall that there was a particular reason for me to do it the
-way that it was, and if the commit message doesn't mention it, I think
-it's fine to replace it.  Perhaps I intended to allow writing the binary
-form as well as the text form, in which case a newline would be
-undesirable, but I simply don't recall.
+Signed-off-by: Seija Kijin <doremylover123@gmail.com>
+---
+    Remove redundant double exclamation points
+    
+    S_ISDIR is a macro that involves a "==" comparison.
+    
+    This means the !! is redundant and not needed.
+    
+    Signed-off-by: Seija Kijin doremylover123@gmail.com
 
-All that to say, I think this patch is fine as it stands.
---=20
-brian m. carlson (he/him or they/them)
-Toronto, Ontario, CA
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1401%2FAtariDreams%2FIS_DIR-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1401/AtariDreams/IS_DIR-v1
+Pull-Request: https://github.com/git/git/pull/1401
 
---EGxfMnx6atw6yzxe
-Content-Type: application/pgp-signature; name="signature.asc"
+ tree-walk.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.40 (GNU/Linux)
+diff --git a/tree-walk.c b/tree-walk.c
+index 74f4d710e8f..6b51d27ccb2 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -1040,9 +1040,9 @@ static enum interesting do_match(struct index_state *istate,
+ 		    ps->max_depth == -1)
+ 			return all_entries_interesting;
+ 		return within_depth(base->buf + base_offset, baselen,
+-				    !!S_ISDIR(entry->mode),
+-				    ps->max_depth) ?
+-			entry_interesting : entry_not_interesting;
++				    S_ISDIR(entry->mode), ps->max_depth) ?
++			       entry_interesting :
++			       entry_not_interesting;
+ 	}
+ 
+ 	pathlen = tree_entry_len(entry);
+@@ -1073,8 +1073,7 @@ static enum interesting do_match(struct index_state *istate,
+ 
+ 			if (within_depth(base_str + matchlen + 1,
+ 					 baselen - matchlen - 1,
+-					 !!S_ISDIR(entry->mode),
+-					 ps->max_depth))
++					 S_ISDIR(entry->mode), ps->max_depth))
+ 				goto interesting;
+ 			else
+ 				return entry_not_interesting;
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY6BvKQAKCRB8DEliiIei
-gYDCAQDhOu0YnS/UFha/ku91Mcp4MmqD0lyMPHwLfpae58C1PwEAxxIgq868BiIu
-rQ//lKvxtSF5aVatewZrMXCbjl55iwE=
-=khSD
------END PGP SIGNATURE-----
-
---EGxfMnx6atw6yzxe--
+base-commit: 7c2ef319c52c4997256f5807564523dfd4acdfc7
+-- 
+gitgitgadget
