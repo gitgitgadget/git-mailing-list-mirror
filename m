@@ -2,93 +2,103 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E05EDC4332F
-	for <git@archiver.kernel.org>; Tue, 20 Dec 2022 00:36:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D3C3AC4332F
+	for <git@archiver.kernel.org>; Tue, 20 Dec 2022 00:43:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232725AbiLTAgB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 19:36:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33352 "EHLO
+        id S232023AbiLTAnH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Dec 2022 19:43:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232589AbiLTAfy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 19:35:54 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B930F6
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 16:35:53 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id p13-20020a05600c468d00b003cf8859ed1bso7685671wmo.1
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 16:35:53 -0800 (PST)
+        with ESMTP id S229527AbiLTAnG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2022 19:43:06 -0500
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5675B1D7
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 16:43:04 -0800 (PST)
+Received: by mail-pg1-x534.google.com with SMTP id 62so7300151pgb.13
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 16:43:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vRyKBtVFUSsZz+7gjwjpM753NymGAbljoWelkpcw22E=;
-        b=NGQ8H3Hfb6+61G8nvYM41RfFtIJMuKWsWGQT9zrSYMt5Rwsz48q27oT1sGUQwzUmhl
-         befWtmRhaqAgG3KCFuByTm24oe6P/oDyvVrI9P9GXgLtpdMFhwmrHcfvapDTzkD5qR9p
-         sPtElgjcYDCzk5rZh4AZPp+miukuythhmLpfZ72UTjXmPFtKBgvRSnYW3dp+4QfKMxpe
-         69NoCraEsO6IkPtI0DzW8Ka8J0EcDxhosPDGGDUtJZBnGp/9WmQGC+5rosGiqTMqn9fc
-         zGOnACkBo+1K9aA8PT86Y0nlTx+gAXVd3XCvPwSWOpPUvYMPm5rio9G2tYN3LijolWUp
-         YhRw==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=PwyuB76tA69KehWH0tG6oL7sOox4qvBGzrWR82d4G20=;
+        b=cdN0p2YFdH9mYxdzh3Ai7VQ3hrmZkzVPtcWG0oMYsxozwAaPG25Tbq6lDuWbVrGAVh
+         WKE7W+RE4RGghAUd/VJtkEfIi7ItJxeDufivvMFbBaSJJQ5WPHCArXI70ShfOrm6NLqz
+         6JvxGBNMoo2ALs/P76VM+75NnEGgofvFWyJNIlk5k4kosygIfbL/WR09l2uIdmy9UUGh
+         CuE0AybZnzmh/T1g2cyxk/Ov5Bg6llXu54FqNcKm3H+0fG3OANILoJnXOVbVm4Dkl2Jy
+         TWoo6g1D2NJX3otrqU6qdNiNHK9yxXrkqt4kplqpsF2ABuvY5zdL9lzq77XIa5zQiiQq
+         KJ9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vRyKBtVFUSsZz+7gjwjpM753NymGAbljoWelkpcw22E=;
-        b=CEmfukNpe2gEVuOXv49+qHT3TcFh5skVdu1QevsfuKfkA1uvgkQuCpth6g0WogDO2A
-         BeTwk0bPP21ARV44Ih84XZz7lZz6iDZU1Rap5W47BVVJvBF1dcIc/rqV3crCYqZe+GWr
-         GENmaFsOVIwLhrTiDnbLWDN44XfYCqTs1uttF/kwUHl8qFJMtmieman93gs1oUXUdVC1
-         IQHno/6fmj0IMPAo0v7huw3udvYHRf/aCmEl7CDph7uVuT+p0eNoSn4RLD1VBuIcgE0L
-         A9pEGC5vWkujhp600iURtqCAiP1Yfp0mvqUEJ4OZz9rI8eI7B7aO4h3yHYo7MRaVDmip
-         6pzg==
-X-Gm-Message-State: ANoB5pmJgyrQwgYLA8xOxshwVHjjRxn1IhJ0hqdkXKYOXpMkuJakFUUj
-        bxa+f6+oYUsD1vMib62aScclXy+qcOU=
-X-Google-Smtp-Source: AA0mqf5Z/l+5r04Tx71lQGvZg5kInjYII3dcLi3J3TiK1UFWYOyyedwf/uNU5optDjwvr5nUkG4miQ==
-X-Received: by 2002:a05:600c:3512:b0:3d1:fcb4:4074 with SMTP id h18-20020a05600c351200b003d1fcb44074mr45316816wmq.22.1671496551471;
-        Mon, 19 Dec 2022 16:35:51 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k5-20020a05600c1c8500b003d237d60318sm15114777wms.2.2022.12.19.16.35.50
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PwyuB76tA69KehWH0tG6oL7sOox4qvBGzrWR82d4G20=;
+        b=vUv8kvVVOnjtyqDFCgA2UwMupGDhnhaoFWMrOj9ErpkHE/MKnExiJ2fPGK23qbGbdt
+         bLpEGiJwLeZQ+6fANXuOO/eMZuTYoOQTuk5XdoHYKfEx5icUz98+Q1TGHEx4ngoyHUNj
+         rsZ0CLIm7rXFFGXWHm4tMcZzaJlmK3rOI0JGIj1q/6zmL7QKT3eTuPkEqVuU74P0cqsg
+         LomRNcMeWo5p0AAygiWFGj7Ffp2cgAKLnWwiatecBcsXc8TGJPQkOBk015iiszcstUyd
+         oj2Z89T64r3f60QyQZTEgg+NOdHmFw84tGQD5Jg70ZuN4CKumQVXxhSfic2TaVjf0r5S
+         Z+Xg==
+X-Gm-Message-State: AFqh2kqEDEGx0mrI42TpTLWhzjYFIH2IUsZptWd9LUsquhXvnQA7gbNS
+        uANrzVEhRMtNHqDs704cHqI=
+X-Google-Smtp-Source: AMrXdXur4mmGyS+caZ9CC23WM7Py3DZYLn4P97VLGJIiZHSfAPcUPEqMoF7+tadon8awyAitAUy92Q==
+X-Received: by 2002:a62:1d07:0:b0:56b:a2f8:1d0f with SMTP id d7-20020a621d07000000b0056ba2f81d0fmr11253389pfd.0.1671496983608;
+        Mon, 19 Dec 2022 16:43:03 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id e14-20020aa7980e000000b00575fbe1cf2esm7287769pfl.109.2022.12.19.16.43.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 16:35:51 -0800 (PST)
-Message-Id: <aa8cd9409401a6407eb6f92bd161ba0562ff3fc8.1671496548.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1444.v2.git.1671496548.gitgitgadget@gmail.com>
-References: <pull.1444.git.1671179520.gitgitgadget@gmail.com>
-        <pull.1444.v2.git.1671496548.gitgitgadget@gmail.com>
-From:   "Chris. Webster via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 20 Dec 2022 00:35:47 +0000
-Subject: [PATCH v2 3/3] ci (check-whitespace): move to actions/checkout@v3
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 19 Dec 2022 16:43:03 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Phillip Wood <phillip.wood123@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Victoria Dye <vdye@github.com>,
+        Eric Sunshine <ericsunshine@gmail.com>
+Subject: Re: [PATCH] cmake: don't invoke msgfmt with --statistics
+References: <patch-1.1-0fa41115261-20221219T102205Z-avarab@gmail.com>
+        <45d8d9fc-ca68-5902-0aa7-70034f8383ff@dunelm.org.uk>
+Date:   Tue, 20 Dec 2022 09:43:02 +0900
+In-Reply-To: <45d8d9fc-ca68-5902-0aa7-70034f8383ff@dunelm.org.uk> (Phillip
+        Wood's message of "Mon, 19 Dec 2022 15:00:06 +0000")
+Message-ID: <xmqqcz8e29d5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     "Chris. Webster" <chris@webstech.net>,
-        "Chris. Webster" <chris@webstech.net>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Chris. Webster" <chris@webstech.net>
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Get rid of deprecation warnings in the CI runs.  Also gets the latest
-security patches.
+> On 19/12/2022 10:26, Ævar Arnfjörð Bjarmason wrote:
+>> In [1] I made the same change to our Makefile, let's follow-up and do
+>> the same here.
+>> For "cmake" this is particularly nice with "-G Ninja", as before
+>> we'd
+>> emit ~40 lines of overflowed progress bar output, but now it's only
+>> the one line of "ninja"'s progress bar.
+>
+> I don't really have a strong opinion either way on this but if it
+> matches what we do in the Makefile than it sounds sensible.
 
-Signed-off-by: Chris. Webster <chris@webstech.net>
----
- .github/workflows/check-whitespace.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+As a one-shot change, it might be sensible to claim consistency by
+saying "we do the same thing in two places", but I'd worry more
+about the root cause of such inconsistency in the first place, i.e.
+can we have some trick to ensure that two build systems will not
+reimplement the same thing slightly differently?
 
-diff --git a/.github/workflows/check-whitespace.yml b/.github/workflows/check-whitespace.yml
-index 552894f736a..da557fd5914 100644
---- a/.github/workflows/check-whitespace.yml
-+++ b/.github/workflows/check-whitespace.yml
-@@ -13,7 +13,7 @@ jobs:
-   check-whitespace:
-     runs-on: ubuntu-latest
-     steps:
--    - uses: actions/checkout@v2
-+    - uses: actions/checkout@v3
-       with:
-         fetch-depth: 0
- 
--- 
-gitgitgadget
+It also is worth examining if having "the same change" is a good
+idea in the first place.  The justification given "In [1]" was that
+a build driven by our Makefile were concise and non-verbose overall,
+but with --stat that concise output pattern was broken.
+
+I do not know (and I do not have particular interest in knowing) how
+a build driven by cmake looks like, but does it also aim the same
+concise output where output --stat does not fit well, or do folks
+who daily build with cmake find the output with --stat sit well in
+the output from other things given there?  If the latter, making
+"the same change" as the Makefile side may not make much sense.
