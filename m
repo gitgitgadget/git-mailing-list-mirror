@@ -2,68 +2,69 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A7B81C001B2
-	for <git@archiver.kernel.org>; Tue, 20 Dec 2022 00:07:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C4861C4332F
+	for <git@archiver.kernel.org>; Tue, 20 Dec 2022 00:09:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232470AbiLTAHA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 19:07:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51786 "EHLO
+        id S232455AbiLTAJl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 19 Dec 2022 19:09:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232958AbiLTAGb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 19:06:31 -0500
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B83C210040
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 16:06:12 -0800 (PST)
-Received: by mail-pl1-x632.google.com with SMTP id m4so10631229pls.4
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 16:06:12 -0800 (PST)
+        with ESMTP id S229515AbiLTAJj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Dec 2022 19:09:39 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F810B26
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 16:09:38 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id t11-20020a17090a024b00b0021932afece4so14780301pje.5
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 16:09:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+lsDJuIFxTUpOOkx8KdTBg+Fjr65tPTyb4bkgiYjkOU=;
-        b=XvUVHOGZOfS+TCCq/HjKqyMf87U5Vi3QnaBNK57R4p98z9ltB+zFKrs0mXSsOHs3r+
-         L7UXXyYd62dLpaCAcDJ2vrTtT/6f3vDsj6Ccry/6W4RPoNLgMn0g77/vPDd9SDoakQxf
-         4Z//F8wTO/p3OpFcEIjQJXlMDAjR8p7XEGy1RpnSsWPbK+CSW9eZnl4TYroZmNLcDc2P
-         cvHVCkcZJQ8OcuePki8vaALuvm/4j+1t9JBjxKMs5p0ukTc+tn7XUDBWnX6Y9SMgYsnY
-         07UAC9e1K8t91rFPLYTDJvvG10/USTzqb5mn4uTjF/yHqzhUfMAGtslw8F8LxGOsAacv
-         DSDA==
+        bh=iAfCz8cwT0hU37Yp2W1nXZ1UrE9GKBUhK46JCdCglXQ=;
+        b=ZsHzt2s9hCXX09ws/7t9Rsd10r+EZzszp+Mr3Z75/pmmLEV9Qpu96mN7OS7pW7VVDG
+         fljSOZNNjWITmh1ehn67gGVHZxqOgGaICJyNHJSQeFOWQs5TZm/YaexYyB/2+60Jj5Tl
+         kMgCbx4bXjhneN8CmLdDmaO8wT4nIpYblJv0gJVh3MG6q6A9fgyhcCkhonNhspvQdWYM
+         hXd3fHJReJ3PgxAuKjjSozQ6jGbrqLC3sf6JxcbD+QopJDhMulk4NxePFSwCnLMTwuRo
+         NHHl94atX9WLvhHeLUGYj35l7cbCfJQQ/JePoFJC+c2XiMZ8ZC9TRocDU+6JVsm7+I0O
+         gG+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+lsDJuIFxTUpOOkx8KdTBg+Fjr65tPTyb4bkgiYjkOU=;
-        b=x+A10i/aeuGdU5so5SjTjyGyY9yLriTcctDKdeZehgVCWzCQOLkg68Q/BsjPyMNLcO
-         H9dCzMuQJN5QXlFl9XUMwZJ3A06I0nZ/psyw5pR6T/bbvWJSuSK0GTcS8w8I4eWfSAOp
-         7ei+1dqr8Bgj0KzphWZ8IjgIsQH6CnTaPwRmrcDDh6cboYymokQVhP7K6gqhr8Nyta8E
-         e7WuBY5y81jyUT0+8M1J7Iv1+HjDlUWObPJ/HOUc5p9iFdgsGftcVPuRr6Sx36ekbidX
-         0iSbMHLscP0adncyiRnBMPjLHYQ3hoPI9oNjP3BrT3FCSdI0fJR/A6a13tOsEwVG5BJF
-         4MDA==
-X-Gm-Message-State: AFqh2kqhTh2e6CxX7J6Akbb4OMSuZrPYP/U+1Wbx1U588VK+Za7dwkt0
-        W+r7NNnu79Wu5gj5OEfrq29Y9geVmPzg6Q==
-X-Google-Smtp-Source: AMrXdXs1P/DdfVtmDZfmrHmbpQgdgTIaSXCGtES+Llhw9iMVZBoGEPvs2eSd7kAjIawRLnIwasju9w==
-X-Received: by 2002:a17:90a:de98:b0:223:415c:6876 with SMTP id n24-20020a17090ade9800b00223415c6876mr20284304pjv.30.1671494772099;
-        Mon, 19 Dec 2022 16:06:12 -0800 (PST)
+        bh=iAfCz8cwT0hU37Yp2W1nXZ1UrE9GKBUhK46JCdCglXQ=;
+        b=PRtYoe72UGqMOZE8hdhSWHVss0az9feBn7BPJ0wAEPD9mTVnB+gXdl+F+R5EeV4ncz
+         s1bdiRdMIF9mA/z6ZGobUEM1jl3MOzTYCun/9xPrO+7PK6HTzalVjXAnqGOxn+41UjB2
+         Hsfx/nKVRZ4ag8h+HFxkYCQT4UA8Qu/5xvFX2QOCk89N4t/U7xUQmO4TXgZ3KSWn6m4Z
+         5QlwE8hlPzbwHCYBSMNlLES9nDsfbQK+sjD7LqfDawvT2tlQbabKYNyd92+HDr0aI1w2
+         ob5wQzghsrE0KnqIVXY2PCWn37l8PSZ13if2wDsCd6y9WBlFuJT1l2peMXRp7NNy48DK
+         8T9w==
+X-Gm-Message-State: ANoB5pkhAIisOoR9E/U1uJHQPMrlrvAbhGbvI+UDyBgJE6oWX/u/h8YR
+        cfQgtavYcbsWVuB9agle5+0=
+X-Google-Smtp-Source: AA0mqf5jZmDo7fqCMiR8APqETMEFc3OQzHwJ2KoeTwsnj8aPvpDT5qgxpA46Cs4He/7KQ2Z5zbXASg==
+X-Received: by 2002:a17:90a:e10d:b0:219:e38b:5079 with SMTP id c13-20020a17090ae10d00b00219e38b5079mr45631101pjz.38.1671494977416;
+        Mon, 19 Dec 2022 16:09:37 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id mi14-20020a17090b4b4e00b0020d67a726easm9902614pjb.10.2022.12.19.16.06.11
+        by smtp.gmail.com with ESMTPSA id b15-20020a17090a5a0f00b002192529a692sm10025669pjd.9.2022.12.19.16.09.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 16:06:11 -0800 (PST)
+        Mon, 19 Dec 2022 16:09:37 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v4 0/6] tests: fix ignored & hidden exit codes
+Subject: Re: [PATCH v4 2/6] t/lib-patch-mode.sh: fix ignored exit codes
 References: <cover-v3-0.8-00000000000-20221202T114733Z-avarab@gmail.com>
         <cover-v4-0.6-00000000000-20221219T101240Z-avarab@gmail.com>
-Date:   Tue, 20 Dec 2022 09:06:11 +0900
-In-Reply-To: <cover-v4-0.6-00000000000-20221219T101240Z-avarab@gmail.com>
+        <patch-v4-2.6-d351075f0ab-20221219T101240Z-avarab@gmail.com>
+Date:   Tue, 20 Dec 2022 09:09:36 +0900
+In-Reply-To: <patch-v4-2.6-d351075f0ab-20221219T101240Z-avarab@gmail.com>
         (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon, 19 Dec
- 2022 11:19:23
+ 2022 11:19:25
         +0100")
-Message-ID: <xmqq8rj32b2k.fsf@gitster.g>
+Message-ID: <xmqq4jtr2awv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -74,19 +75,47 @@ X-Mailing-List: git@vger.kernel.org
 
 Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> I think this should address all of the feedback on the v3, except
-> Junio's suggestion of perhaps re-arranging this series around file
-> boundaries.
+> Fix code added in b319ef70a94 (Add a small patch-mode testing library,
+> 2009-08-13) to use &&-chaining.
 >
-> Given the potential size of that range-diff I thought it was better to
-> mosttly keep the same structure.
+> This avoids losing both the exit code of a "git" and the "cat"
+> processes.
+>
+> This fixes cases where we'd have e.g. missed memory leaks under
+> SANITIZE=leak, this code doesn't leak now as far as I can tell, but I
+> discovered it while looking at leaks in related code.
+>
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  t/lib-patch-mode.sh | 11 ++++++++---
+>  1 file changed, 8 insertions(+), 3 deletions(-)
 
-Sorry, I do not recall making such a suggestion but if I did, it
-probably was an indication that the group of patches I suggested
-such a change were unreviewable as-is, and by definition range-diff
-is irrelevant if that is the case (i.e. the part that was
-unreviewable would be freshly reviewed with reorganization).
+Looks quite sensible.
 
-In any case, I think we have been seeing patches to unhide the exit
-status from more individual command invocations, a theme this series
-should fit well.  Thanks for working on it.
+> diff --git a/t/lib-patch-mode.sh b/t/lib-patch-mode.sh
+> index cfd76bf987b..89ca1f78055 100644
+> --- a/t/lib-patch-mode.sh
+> +++ b/t/lib-patch-mode.sh
+> @@ -29,8 +29,12 @@ set_and_save_state () {
+>  
+>  # verify_state <path> <expected-worktree-content> <expected-index-content>
+>  verify_state () {
+> -	test "$(cat "$1")" = "$2" &&
+> -	test "$(git show :"$1")" = "$3"
+> +	echo "$2" >expect &&
+> +	test_cmp expect "$1" &&
+> +
+> +	echo "$3" >expect &&
+> +	git show :"$1" >actual &&
+> +	test_cmp expect actual
+>  }
+>  
+>  # verify_saved_state <path>
+> @@ -46,5 +50,6 @@ save_head () {
+>  }
+>  
+>  verify_saved_head () {
+> -	test "$(cat _head)" = "$(git rev-parse HEAD)"
+> +	git rev-parse HEAD >actual &&
+> +	test_cmp _head actual
+>  }
