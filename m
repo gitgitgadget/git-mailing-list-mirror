@@ -2,165 +2,138 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A4F5BC4332F
-	for <git@archiver.kernel.org>; Tue, 20 Dec 2022 09:35:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1BC4DC4332F
+	for <git@archiver.kernel.org>; Tue, 20 Dec 2022 10:18:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230088AbiLTJfh (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Dec 2022 04:35:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42510 "EHLO
+        id S233305AbiLTKS5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Dec 2022 05:18:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43294 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230047AbiLTJfg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Dec 2022 04:35:36 -0500
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B419017581
-        for <git@vger.kernel.org>; Tue, 20 Dec 2022 01:35:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
-        t=1671528906; bh=eiYaWQaDDMiQSrGOQbWzUVce1jY4xO2P8h8GyPwtWLM=;
-        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
-        b=J7ChYCzjhlfz9G0DeiIiCSAxRRFGAQoI/u6GnIbhqVvqsymV9ZA5vQXJZMMcjvvJa
-         Ngb42cdvFqvTrnhr7HoheNZtJGpQpoCkejltTDcb42FxGjY/K5eCFr7GEHBatZZ5Ak
-         x0a9jkdYuDxy3VTVIobjWbh94sZHefSBqqXNe30FFcH14gqLDsemYIPIMm/stTxazK
-         Lz6XF/PKJ7TLfy1MSrv7YiQrK3CwMo9cVzCTo5q3WYBbJIMPAx5hiAOYoCzTn1ePlJ
-         fjFwsx+MHoHtXheb/gz2CPa0MpJqQxNYWa32YU0J3PEPD+ASgZpZMDFMm60l6XPSfy
-         5KL+0cmYY6Osw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.64.45] ([89.1.213.120]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MCbIn-1oz4iP2qUV-009kFP; Tue, 20
- Dec 2022 10:35:06 +0100
-Date:   Tue, 20 Dec 2022 10:35:04 +0100 (CET)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, phillip.wood@dunelm.org.uk, peff@peff.net,
-        me@ttaylorr.com, phillip.wood123@gmail.com,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] ci: only run win+VS build & tests in Git for Windows'
- fork
-In-Reply-To: <221219.86zgbjxnqg.gmgdl@evledraar.gmail.com>
-Message-ID: <6c26c788-6fa9-da89-700f-f589ea4eba49@gmx.de>
-References: <pull.1445.git.1671461414191.gitgitgadget@gmail.com> <221219.86zgbjxnqg.gmgdl@evledraar.gmail.com>
+        with ESMTP id S233121AbiLTKSz (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Dec 2022 05:18:55 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A25F3106
+        for <git@vger.kernel.org>; Tue, 20 Dec 2022 02:18:54 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id o5-20020a05600c510500b003d21f02fbaaso10719871wms.4
+        for <git@vger.kernel.org>; Tue, 20 Dec 2022 02:18:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:user-agent:mime-version:date:message-id:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bUkFnAFyfCqx2Fg3aU2ORl+DC76Ful6pYHrjpNwmGbc=;
+        b=ck4+cOjAHK3X1IUI7pR6Y/glAaaYE7Q12FXqKpMR6TjL4HEOnj3uLAvM5R/SbPWZ5w
+         d2XSPGvaPGs0U3sQu8Xl6SxJzg8Pvb6Hmp1hemVSIPjeV9bjFdIaem+lstDnQ0LnyPyN
+         OWAViQ4vRe6oHa+iyOVxbbV+LPx9ao/WlmBkorxpGoXdKW0e6/oXyQwt3hyTqTACcAtG
+         BNKaK3YpnbuzvkjLHzSuHHhJFyyqBJsJTi8XYtYA+3sJi8c87g9A7bkmVMAvc9QaQg6A
+         9Z30vQByx/s6jxJ2JZCaC8dierCXHN5NDbNHStB+fo5i7ifJlbCJvAwBCMEdq49RCuox
+         1/gA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:user-agent:mime-version:date:message-id:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bUkFnAFyfCqx2Fg3aU2ORl+DC76Ful6pYHrjpNwmGbc=;
+        b=UoV0PVhy0lw5Ez8Hw/7jcAOVDKyMR2LAcbi/Ovvw4xVaz8HkWabo420kfrumWNceX4
+         gwTPOnMPZBXttfKRhvdRF7nUyCHKmZEF6SHidhDmJbrtMlJnQ91hmUbXQ1Yjz9lPeAw8
+         iSCHjJQPbHB8DdopuKAIO+gvAsp2H7fjLvqOTNyYBh9bWtX2X0/yu2Eyx8C/PU6qAQNP
+         IeAs6txWrpJoyDJ9fpdjWYjBv2Hdd5ifWZ2RYARdNoNXf02pcrKaA7Vru3yuYQYz+vkI
+         /Wli9TzMvnqGEbmmDpn6hCSd3M2zxGi3S2VPBneumfT4q2E2VVWud5hq+5puWHkrzYOw
+         ZQxw==
+X-Gm-Message-State: AFqh2kqtpW+Q/LHtD3OmJrI94++GXheK0DYaSvzmT1Yx6ii/U57rc1Ki
+        fbEJCc0i5tyqUIXZhD18WXE=
+X-Google-Smtp-Source: AMrXdXuzdDcv9dxOng3nr9ySvUvLWM8NxKqg0g6MnmHpHYmIJD+dlOV9Encxw2VNbSkxygKMcm5Zpw==
+X-Received: by 2002:a05:600c:500e:b0:3cf:88c3:d008 with SMTP id n14-20020a05600c500e00b003cf88c3d008mr1151519wmr.28.1671531533137;
+        Tue, 20 Dec 2022 02:18:53 -0800 (PST)
+Received: from [192.168.1.14] (host-92-2-151-214.as13285.net. [92.2.151.214])
+        by smtp.gmail.com with ESMTPSA id c6-20020a05600c0a4600b003d1e3b1624dsm24891480wmq.2.2022.12.20.02.18.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Dec 2022 02:18:52 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <aab41ec5-7854-b62c-f11c-ba850cbac95b@dunelm.org.uk>
+Date:   Tue, 20 Dec 2022 10:18:51 +0000
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-333628499-1671528906=:3779"
-X-Provags-ID: V03:K1:rvPYf0gxh8GF6oNUahExeLc3nKIwBEX18QuZBoch4tTqnhmRxB6
- vtbEKBdu6o9AJ+3/NgXn7iY3d9ZQk3XpFxOnkEuK80/oidjcSRviZUPNAHcmk7yxLUqhdMh
- wFAWO8H6YE0cjFeaeCkZOQpFlIcMR7nK/KcOXMVcxsxJc3UMEtMU1ABSHKnIblVj2lp4Y9X
- jCFerlAUdcJ3jQ5EVCoSA==
-UI-OutboundReport: notjunk:1;M01:P0:5Bf9q3V7bWs=;qxY16EOo+1NNaxxnnSZYyp2eB45
- ywJ4PVl6j8dWP9bNbkKHUj5f+VJQKsXIPp0RCTbEFLW3zT8NBmDTKzwqUbOo7POgnTEDL7/XH
- 77cVNCsiP4mWfZWwe+3Hee7enoJ+iwOVMss8zopE/aCsawNTCFd/IRKkqoLIAY76QpFWyyFKN
- OpybfVyHpvwPctpiTC8Lah+HyXUQWgPNYnRwk8olMfZz528GMczPA6n9zQEUUbBGvNMIIBR8V
- STyhZptcimJWBhxTbpl02qGio8JK4QZqz2LxrkAAC7H6pcA/X+krYzjdrRR0JbHsRMQMQWlQk
- srIKIZ53+tkOp6ELOAZVNUlzzQQ9HI2Gs9vQK5HXQ4/S+Mn/hUFrrYuKoqAvvNk0Epe60S45/
- pHcUkRejopZ5UsgYxpw2Z+3dhiLV6NSVFSUMvr5VvmtjeIMXThJGZSJaYjGl4L5PTrg7654Ms
- yF0y+AYHlstG6FNTZQKAJ8nY1u7wGcZe41CeJg1spJ3rg3gm3qDwPmS4ParS03007p6hRavia
- EjB+CsPGKAmxd4w+ad3vbby5TE5xNqGYPIEeXg9foRK8l9K73XY3mrRqNgGGDQZwJb/Nuvqnz
- A2drtCMOORvDfi6i39KoslPiWYPY41JPHNES9qLYkbT/jopnHSkM7F2Ro9fTG6xFcSTZpAxWO
- 1/daneb5vPtFppDcVuKSyinr40WMzAYkp90vxMmmKIRUD6sM3i2HIBu2CeDIZMrNZX5B74SvP
- AtkXo4nDDUQw2xS37rrU9DXp3iTTHnFPofAHnjJGIZYW63GsR589+bnC4IyvctZSUxY5Q6wI2
- wdPtvRDgPsn6v+taa/+FGYScF1CQchJnTEGL2Gd0WGYwGoa5Sv6WnJGSiPAXmh+uie5OT3jWC
- nEiayBl3jnn30428x/NLtaBhJB+2xpUyLtKWDoYBQ1blV91j2aLuHChieY9Fz6+bh1eomZruM
- upwecw==
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/1] cat-file: quote-format name in error when using -z
+To:     Toon Claes <toon@to1.studio>
+Cc:     Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>
+References: <20221209150048.2400648-1-toon@iotcl.com>
+ <20221209150048.2400648-2-toon@iotcl.com>
+ <93d61412-3786-b2b3-3fe8-4574336b08fb@dunelm.org.uk>
+ <87a63i7h8h.fsf@to1.studio>
+Content-Language: en-US
+In-Reply-To: <87a63i7h8h.fsf@to1.studio>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Toon
 
---8323328-333628499-1671528906=:3779
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On 20/12/2022 05:31, Toon Claes wrote:
+> 
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> Thanks for working on this. I'd previously suggested NUL terminating the output
+>> of "git cat-file -z" to avoid this problem [1]
+>>
+>> [1]
+>> https://lore.kernel.org/git/66b71194-ad0e-18d0-e43b-71e5c47ba111@gmail.com/
+> 
+> What happened to this proposal? I don't see any replies to that. That's
+> a bit sad, because it would have been nice to have it this behavior from
+> the start.
 
-Hi =C3=86var,
+Yes it would have been nice, unfortunately it feel through the cracks 
+due to a combination of unfortunate timing and lack of time. I think the 
+patch was probably in next by the time I realized the problem and wrote 
+that email. Taylor was on holiday at the time and then I went away 
+around the time he got back. I know it was on his todo list but I think 
+he was busy catching up from being away getting ready for git merge. I 
+had other things I was working on and unfortunately didn't get round to 
+following it up.
 
-On Mon, 19 Dec 2022, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> but quoting the object name is a better solution.
+> 
+> I would not say it's a better solution, but it's a less invasive
+> solution that /minimizes/ breaking changes. Ideally I'd like to have NUL
+> terminated output for "git cat-file -z". In a success situation I
+> assume this would return:
+> 
+>      <oid> SP <type> SP <size> NUL
+>      <contents> NUL
+> 
+> In a failure situation something like:
+> 
+>      <object> SP missing NUL
+> 
+> So when you pass -z you can keep reading until the first NUL and then
+> you'll know if you should read for contents as well.
+> 
+> Would you consider change behavior to this now?
 
-> On Mon, Dec 19 2022, Johannes Schindelin via GitGitGadget wrote:
->
-> > diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> > index e67847a682c..8af3c67f605 100644
-> > --- a/.github/workflows/main.yml
-> > +++ b/.github/workflows/main.yml
-> > @@ -132,7 +132,7 @@ jobs:
-> >    vs-build:
-> >      name: win+VS build
-> >      needs: ci-config
-> > -    if: needs.ci-config.outputs.enabled =3D=3D 'yes'
-> > +    if: github.event.repository.owner.login =3D=3D 'git-for-windows' =
-&& needs.ci-config.outputs.enabled =3D=3D 'yes'
-> >      env:
-> >        NO_PERL: 1
-> >        GIT_CONFIG_PARAMETERS: "'user.name=3DCI' 'user.email=3Dci@git'"
->
-> In terms of implementation: I would like this to use ci-config.
+Hmm I'm not sure (and luckily it isn't up to me to take the final 
+decision!). I really don't know how many people are using "-z" I suspect 
+it is not many and so the fallout wouldn't be too bad but we'd still be 
+inconveniencing some users. I theory we could so "sorry we made a 
+mistake when implementing this feature and have decided to change it" 
+but we have a solution in your patch which hopefully does not break any 
+users (I say hopefully because think if one is careful and keep track of 
+which responses you've read it is possible to detect missing objects now 
+even if their name contains a new line but it will be messy and probably 
+slightly inefficient but anyone doing that will notice the change in 
+output).
 
-I really do not see any value in that.
+Overall I'd say it is tempting but risky and inconvenient to any 
+existing users of "-z" (assuming someone else is actually using it). 
+Quoting the object name is definitively the safer option at this point.
 
-If you _really_ want to run those tests, you can easily add a commit on
-top of your branch.
+Best Wishes
 
-It's not like you always want to run the win+VS tests on a certain subset
-of your branches.
-
-But. A big part of the reason for this patch is to codify that it
-is _not_ the responsibility of core Git contributors to take care of these
-tests. Trying to do this via the utterly convoluted and under-documented
-`ci-config` would only water down this quite clear statement.
-
-> The outstanding "tb/ci-concurrency" topic shows how to do that (and
-> tweaks an earlier submission of yours where it was similarly hardcoded).
-
-I fear that the `tb/ci-concurrency` topic is a good example of "death by
-committee". Let's put in a collective effort to avoid that here.
-
-> > The purpose of these win+VS jobs is to maintain the CMake-based build
-> > of Git, with the target audience being Visual Studio users on Windows
-> > who are typically quite unfamiliar with `make` and POSIX shell
->
-> I thought the initial purpose of it was to test compiling & testing with
-> MSVC rather than GCC?
-
-That might have been the motivation, but there have been preciously few
-patches coming in from that side.
-
-So few, in fact, that the question "is it worth spending all of that
-energy to run these builds and tests all the time" most likely has to be
-answered with a resounding "No".
-
-I can think of just two bugs that were identified in the MSVC builds, one
-where we had to change some code to explicitly use a stable sort (which
-MSVC would otherwise not have used), and one where we now avoid an
-unsigned/signed comparison where MSVC cast the signed value to a
-now-insanely-large unsigned, i.e. in the wrong direction.
-
-That's two bugs identified in how many years?
-
-We still can catch those bugs in git-for-windows/git. And avoid some of
-the long build times.
-
-> > A very welcome side effect is to reduce the CI build time again, which
-> > became alarmingly long as of recent, causing friction on its own.
->
-> I think this is a good goal, but what does the "as of recent" refer to
-> here? When the ASAN job was introduced?
-
-It's not only `linux-asan`. The overall build time of every single job has
-gone up. I picked randomly two runs that were roughly 6 months apart,
-https://github.com/git/git/actions/runs/2537915353 and
-https://github.com/git/git/actions/runs/3728047162. As an indicator, the
-`osx-gcc` job took 35m half a year ago, now it takes 40m. The overall time
-went up from 7h40 (which is already _quite_ a cost!) to 8h01.
-
-I don't think that we, collectively, are judicious enough about the
-balance between cost and benefit here.
-
-Having said that, there is a silver lining: while the linux-asan job is
-new and takes a whopping 44m to complete, the difference between the total
-run time 6 months ago and today is less than that, so we must have saved
-on _something_, _somewhere_. Or GitHub bought faster hardware.
-
-Ciao,
-Johannes
-
---8323328-333628499-1671528906=:3779--
+Phillip
