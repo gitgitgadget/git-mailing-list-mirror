@@ -2,134 +2,73 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46403C4332F
-	for <git@archiver.kernel.org>; Tue, 20 Dec 2022 04:19:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9FF5C4332F
+	for <git@archiver.kernel.org>; Tue, 20 Dec 2022 05:50:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232809AbiLTETy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 19 Dec 2022 23:19:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39960 "EHLO
+        id S232605AbiLTFu4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Dec 2022 00:50:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229540AbiLTETv (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Dec 2022 23:19:51 -0500
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C125614F
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 20:19:50 -0800 (PST)
-Received: by mail-pg1-x52c.google.com with SMTP id f9so7558070pgf.7
-        for <git@vger.kernel.org>; Mon, 19 Dec 2022 20:19:50 -0800 (PST)
+        with ESMTP id S229690AbiLTFux (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Dec 2022 00:50:53 -0500
+Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEAA91011
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 21:50:52 -0800 (PST)
+Received: by mail-qv1-xf2a.google.com with SMTP id o12so7699046qvn.3
+        for <git@vger.kernel.org>; Mon, 19 Dec 2022 21:50:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uYU2qilkJpui0Gddnqpxe3BAXfKzaBjYJCNeUvbB0kI=;
-        b=TscOssS063KBZsuf8hn+JT3Z4/6CKvjyO8ZOZAHgDhwnGT0Kkj5lmDCS1aXio/kPPD
-         SZYlzng954uuvihspZqFI3ha2/T22jJmAKYoh4zJiOdKk+W45a4zHE4G9FYsbMXxC6f9
-         hYZyXQz/iy5Qwl/SsS7yY3RVder/X7wDN7j2Z6BKH648ZSIzaASOkqUjeRACAXSg98tk
-         nVzsMIQYbiF3SXqOHnb2IvT4TIviNnF6/4Md5KevGBCXNC0zyBzHZJ1VdRw7ei7/MoWV
-         G4y9hOT/+VxKjczH1SkCW91ctZYscCAAO6/7+PMeNQuUyJBI2UMNDN4F1OyNB8GHfQCQ
-         9xIQ==
+        d=webstech-net.20210112.gappssmtp.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=5CV7ERNy9Apm4xH/dHC2sZHaPDTs/IdD4LUPOF7/WXI=;
+        b=I/VD+xnbrurecdjd0G4zFx7GWYF+cHFJeQePvP/jxRYPGijeKpWtC91hy/XFKszM2/
+         IAkL4ZnrEHyodzi5+FVDu985KH7NuZrq2/gJW1cm7zg5Nep2zJQSqVTkCg0WuXrCejYO
+         k9WeUAxmaoKteednwdz/N3oxQHAfxC6slx5+tYF6a6qAgEOVIRwXGII8K73G4tjkyMdU
+         MIxQidy6B6hdCZD5kksAQcCWaRCi4gnaclnlB27jqD5L/wAgcXlyBfSHPVhiUtpCOlUP
+         nUDAOybP9xIeD7fyQ9uxpjL272E3xZqjRtapZj6Sc1roi9s3outoOf5SyC61qGtfzg/+
+         4YeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uYU2qilkJpui0Gddnqpxe3BAXfKzaBjYJCNeUvbB0kI=;
-        b=Z0kkX25fGaPD5n9W8yTJ6Evpd6UVSwg8zSc0HyBFHrxOdPMFyiMElmpHkkvAn+WJYf
-         a0AJtmhtprKtJcMdqDpRZHAmocX2U02pXGHxV4c00ua8fvJYcVcQMcOyPU+CgYvbk3kV
-         k6RWFHrIWiXvU9bsTdtFHSYGNGMIgZJRApZGA/cJYDIbAxdFO12RaxP1fb6C/mFBE/8j
-         JJzUj45oNvDTj4wwSSLmEl6nRStIeLE9Qbmgn/nkDyo4vPihhNID7UkPScqvDLaIVLlQ
-         nqpffTWdAx7/aXoIvN/aoujnqLFYNJEcZiX2l5FnEe1Jjq3lbjhJngUPGA1c6yXN7F5y
-         A83g==
-X-Gm-Message-State: AFqh2kqAhtvOkfmHI/W1opXJt8EwkLWAoiJufYeL0BDPhJ/Y0uuW/7LD
-        fZGIantHSezCXBYJ3GYMvJ4=
-X-Google-Smtp-Source: AMrXdXtkZc9lI8CSvi7egrTOxE3xkb8dPWuBgRhPNoLxdIJTVaPT4wHtOM/AHlKrFgHUiIKAbBnsdQ==
-X-Received: by 2002:a05:6a00:bcb:b0:57f:94e4:5a61 with SMTP id x11-20020a056a000bcb00b0057f94e45a61mr10112638pfu.16.1671509989474;
-        Mon, 19 Dec 2022 20:19:49 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id s7-20020a625e07000000b0057691fb0d37sm7434152pfb.193.2022.12.19.20.19.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Dec 2022 20:19:48 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jacob Abel <jacobabel@nullpo.dev>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-Subject: Re: [PATCH v5 3/4] worktree add: add --orphan flag
-References: <20221104010242.11555-1-jacobabel@nullpo.dev>
-        <20221104213401.17393-1-jacobabel@nullpo.dev>
-        <20221110233137.10414-1-jacobabel@nullpo.dev>
-        <20221212014003.20290-1-jacobabel@nullpo.dev>
-        <20221220023637.29042-1-jacobabel@nullpo.dev>
-        <20221220023637.29042-4-jacobabel@nullpo.dev>
-Date:   Tue, 20 Dec 2022 13:19:48 +0900
-In-Reply-To: <20221220023637.29042-4-jacobabel@nullpo.dev> (Jacob Abel's
-        message of "Tue, 20 Dec 2022 02:38:02 +0000")
-Message-ID: <xmqqlen2wvtn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5CV7ERNy9Apm4xH/dHC2sZHaPDTs/IdD4LUPOF7/WXI=;
+        b=4B/L2QXHi2nSWmbCNn8CZV9I7GGDhUlKbvHowR3fR8FzuZAvM4SIdWcy67ZSNzz5aT
+         z+mgzudGBEJZJ/8P0I6Ob4pkgDk8ub0az2mURQpSjQKoXUR3lMeUl/y7aD4OGTMOvlxf
+         MYX23fve1rthdMabcIz8O8cGPgLFv1adtQHmlQhpgsvwSuv1ZG2tdvLL2i8g1G56s6JA
+         jV1r+Gbf9hRDO/EuDrMOQkjWI7Q+demWY+JavQoyNoQFDdGkJ1rZBP0S28sbbaRD+1WM
+         Gx03YYueYW8dsDuo31L0UGjEucB0kLTT6F3L+7WcJZbsJv2iYtkawR1Ku8xi/xej0+zq
+         NDGg==
+X-Gm-Message-State: ANoB5pkHHAi/IZEjb4QA3hF65QVrsWvhY1CjNgXMfc0NEDhP7MqVh0sp
+        MkVLFeNCKn8mEym73oFZ1e3p44yMLK13YlH3rBQHbrSTezyQxnlzYek=
+X-Google-Smtp-Source: AA0mqf7FBNxesHCXod7jhUroUcTjtALY1K8snvYPp3hiidqj9T+akPW6ef2YT1SQywO7oiS8aX1TqI5SLMM9JZiroow=
+X-Received: by 2002:a05:6214:19c2:b0:4cb:4272:e569 with SMTP id
+ j2-20020a05621419c200b004cb4272e569mr3675976qvc.48.1671515451851; Mon, 19 Dec
+ 2022 21:50:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <pull.1444.git.1671179520.gitgitgadget@gmail.com>
+ <67f60e4e5cbb470bbf3f556f962403af5dd5938c.1671179520.git.gitgitgadget@gmail.com>
+ <xmqqo7s3mzlt.fsf@gitster.g> <CAGT1KpXDHc2bqiiPqxwBiW2UV8BKMnbKD68hKa3fHdCA5GDAzw@mail.gmail.com>
+ <xmqq5ye6zwin.fsf@gitster.g>
+In-Reply-To: <xmqq5ye6zwin.fsf@gitster.g>
+From:   Chris Webster <chris@webstech.net>
+Date:   Mon, 19 Dec 2022 21:50:39 -0800
+Message-ID: <CAGT1KpWgu6j-Rb3ezmO+Uwj_LgsgXDbyogkHV=y1099SAk3=Zg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] Make `check-whitespace` failures more helpful
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jacob Abel <jacobabel@nullpo.dev> writes:
+On Mon, Dec 19, 2022 at 5:36 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Do we specifically ask for bash in our .github/ files?  That would
+> be perfectly acceptable.  Then we only have to worry about their
+> withdrawing support for bash which would never happen ;-)
 
-> Adds support for creating an orphan branch when adding a new worktree.
-> This functionality is equivalent to git switch's --orphan flag.
->
-> The original reason this feature was implemented was to allow a user
-> to initialise a new repository using solely the worktree oriented
-> workflow.
->
-> Current Behavior:
->
-> % git init --bare foo.git
-> Initialized empty Git repository in /path/to/foo.git/
-> % git -C foo.git worktree add main/
-> Preparing worktree (new branch 'main')
-> fatal: not a valid object name: 'HEAD'
-> %
->
-> New Behavior:
->
-> % git init --bare foo.git
-> Initialized empty Git repository in /path/to/foo.git/
-> % git -C foo.git worktree add --orphan main main/
-> Preparing worktree (new branch 'main')
-> %
+We use the default but the default can be changed
+https://docs.github.com/en/actions/using-jobs/setting-default-values-for-jobs.
+IOW we can always use bash if the default changes.
 
-Hmph, I suspect that in reviews for the previous rounds someboddy
-must have brought this up, but I wonder if we can detect the case
-automatically and behave as if "--orphan" were given.  In other
-words, shouldn't the desired outcome (i.e. "worktree add" can be run
-to create an orphan branch even when the original were on an unborn
-branch) become the new behaviour WITHOUT having the user learn new
-option?
-
-If the point of "--orphan" is to create a worktree that checks out a
-yet-to-be-bork branch, whether the original is an empty repository
-or a populated one, then the user may need "--orphan" option, but
-the above illustration is very misleading if that is the intention.
-
-Rather, you should start from a populated repository and explain
-that "worktree add" without "--orphan" (i.e. the current behaviour)
-does not give you an empty tree with empty history, so run an extra
-"switch --orphan" after that.  Then illustrate that you can lose the
-last step with the new option "--orphan".
-
-Or something like that.
-
-> Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-
-This e-mail coming from you and not from Ævar, with you apparently
-being the author of the patch, makes these two S-o-b lines
-questionable.  What's the chain of custody of the change?  If Ævar
-showed some code changes, and you swallowed that into a larger piece
-of work (i.e. this patch), then the above two lines are swapped.
-
+...chris.
