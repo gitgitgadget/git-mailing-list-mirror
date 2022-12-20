@@ -2,79 +2,78 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF6C6C10F1E
-	for <git@archiver.kernel.org>; Tue, 20 Dec 2022 15:44:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 618A0C4332F
+	for <git@archiver.kernel.org>; Tue, 20 Dec 2022 17:30:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233988AbiLTPoj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Dec 2022 10:44:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40238 "EHLO
+        id S233877AbiLTRau (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Dec 2022 12:30:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233928AbiLTPoV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Dec 2022 10:44:21 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DC2D1D0C8
-        for <git@vger.kernel.org>; Tue, 20 Dec 2022 07:44:16 -0800 (PST)
-Received: (qmail 21523 invoked by uid 109); 20 Dec 2022 15:44:15 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 20 Dec 2022 15:44:15 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19239 invoked by uid 111); 20 Dec 2022 15:44:16 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 20 Dec 2022 10:44:16 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 20 Dec 2022 10:44:14 -0500
-From:   Jeff King <peff@peff.net>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] refs: fix corruption by not correctly syncing
- packed-refs to disk
-Message-ID: <Y6HYTt58iecdBEdw@coredump.intra.peff.net>
-References: <8c8ecf8e3718cbca049ee7a283edd7b7887e464e.1671547905.git.ps@pks.im>
+        with ESMTP id S229536AbiLTRar (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Dec 2022 12:30:47 -0500
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D9E72624
+        for <git@vger.kernel.org>; Tue, 20 Dec 2022 09:30:45 -0800 (PST)
+Received: by mail-ed1-x531.google.com with SMTP id i9so18519910edj.4
+        for <git@vger.kernel.org>; Tue, 20 Dec 2022 09:30:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Wra6fGr6joPufpSupkdfguUKHjo6SXwEPpsKnlDFQMg=;
+        b=Ozj7mqeCyGcXyyIrU6FkloEwxwq7vytDrRNrKOMoA0Qx19TvB8Qjyhqxp2vj69n361
+         j/QUdPd8qyWoImSoJcVYF59EHbmJ+aFHovMMCLAHSA2Qi1cSs7jVafmAuHMDRMGlgGdh
+         sQ+hojoccIsMNrx1i5FUQ2ilyR1CYYEI5OwCbMiJ+Ys59JNXa2nrlvS7FfMk3u3061ro
+         tE9jm2V0t0cIz9zrzY0lH9qECODt9WYSKaCOFY+veq8qKn5QCJY9bjoemAYz4h4ofa/I
+         NpEBPYHJWH4SGXm4ZrmmnFRXZU34GooAQSn+Naf3nGa7oiV2IYHIQaacGMJtFARNDi2F
+         uL4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Wra6fGr6joPufpSupkdfguUKHjo6SXwEPpsKnlDFQMg=;
+        b=JBKWjjYWhVZu4lB6PMHDjyKd4ECvS0kGAfJseSKuZ+TsHZh1I/uF+a1DRZLuNnY4Mw
+         BCEw+28OAnFmjKbUsh41mFnF1zqH2kJZiZ1ihDbRfyplmws7VPyXhjc6pm+DvDJL2dDq
+         dz+HFkEirQbh2vvt8c8COh6yJs3ZiNSl+gagR+N++7JiCscTEW1/TLmno7zJBdqkPs+C
+         HGB8zEUR2CnupO8J3mOVnhqFzpr6pyJzgLiUDP324JR5rKZg5wfgNYHcJbt2Zh8+TUKv
+         hhU9GxiB5B5fCMHsRsiLvA9gvAK6gyfGGsnONl14C7cSyRTvfZrb5nWCOn3DLoYkB44o
+         k8kA==
+X-Gm-Message-State: ANoB5pmphbeOaOi8aTVft/echMZ30eHtg2222oN+uBW2XqzOFIl8gE4u
+        SwOqQz763IcBcOcB2B6b/3PpmC2pZ4A=
+X-Google-Smtp-Source: AA0mqf62EahgWq/95fTuFoI05Y/Nqct8eDsI7UqmzH1q2+Zcq0x/zVehw+Z2odxL9G88zuCxYSob4w==
+X-Received: by 2002:aa7:d4cb:0:b0:46d:35f6:5a9b with SMTP id t11-20020aa7d4cb000000b0046d35f65a9bmr35964385edr.24.1671557443792;
+        Tue, 20 Dec 2022 09:30:43 -0800 (PST)
+Received: from ?IPV6:2a02:810a:8c80:15d0:5471:5cf5:3620:10b? ([2a02:810a:8c80:15d0:5471:5cf5:3620:10b])
+        by smtp.gmail.com with ESMTPSA id n14-20020aa7db4e000000b0047466e46662sm5913197edt.39.2022.12.20.09.30.42
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 Dec 2022 09:30:43 -0800 (PST)
+Message-ID: <d891cfa7-1592-198a-606c-3fb4f9c51007@gmail.com>
+Date:   Tue, 20 Dec 2022 18:30:42 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <8c8ecf8e3718cbca049ee7a283edd7b7887e464e.1671547905.git.ps@pks.im>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Content-Language: en-US
+To:     git@vger.kernel.org
+From:   =?UTF-8?Q?Andreas_Mei=c3=9fner?= <real08121985@gmail.com>
+Subject: Question about figure 5-15 in Pro Git Second Edition
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 20, 2022 at 03:52:14PM +0100, Patrick Steinhardt wrote:
+Hello,
 
-> And while we do the dance when writing the `packed-refs` file, there is
-> indeed one gotcha: we use a `FILE *` stream to write the temporary file,
-> but don't flush it before synchronizing it to disk. As a consequence any
-> data that is still buffered will not get synchronized and a crash of the
-> machine may cause corruption.
+I'm reading the book Pro Git Second Edition to learn Git. I wanted to 
+ask if there is some mistake in the picture. Can it be that the names of 
+John and Josie need to be swapped in figure 5-15? Cause John is working 
+on featureA and Josie has created the featureBee.
 
-The problem description makes sense, and so does your fix.
+https://git-scm.com/book/ms/v2/Distributed-Git-Contributing-to-a-Project
 
-Grepping for other uses of fsync_component(), this looks like the only
-buggy case (loose refs use write() directly, and most other files go via
-finalize_hashfile(), which does likewise).
+Kind regards,
+Andreas Meissner
 
-> diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> index c1c71d183e..6f5a0709fb 100644
-> --- a/refs/packed-backend.c
-> +++ b/refs/packed-backend.c
-> @@ -1263,7 +1263,8 @@ static int write_with_updates(struct packed_ref_store *refs,
->  		goto error;
->  	}
->  
-> -	if (fsync_component(FSYNC_COMPONENT_REFERENCE, get_tempfile_fd(refs->tempfile)) ||
-> +	if (fflush(out) ||
-> +	    fsync_component(FSYNC_COMPONENT_REFERENCE, get_tempfile_fd(refs->tempfile)) ||
->  	    close_tempfile_gently(refs->tempfile)) {
-
-It kind of feels like this ought to be part of fsync_component() or
-close_tempfile_gently(), but it would pollute those interfaces:
-
-  - fsync_component() doesn't otherwise know about stdio
-
-  - close_tempfile_gently() doesn't otherwise know about syncing (and it
-    would have to learn about fsync_components to do it right).
-
-So given that this is the only affected site, it makes sense to just fix
-it for now and worry about a more generalized solution if we run into it
-again.
-
--Peff
