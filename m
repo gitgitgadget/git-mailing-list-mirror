@@ -2,127 +2,96 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CEBD6C4332F
-	for <git@archiver.kernel.org>; Tue, 20 Dec 2022 13:54:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D47D8C4332F
+	for <git@archiver.kernel.org>; Tue, 20 Dec 2022 13:57:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233718AbiLTNyo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Dec 2022 08:54:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33512 "EHLO
+        id S233754AbiLTN5M (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Dec 2022 08:57:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229827AbiLTNym (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Dec 2022 08:54:42 -0500
-Received: from mail-qv1-xf2b.google.com (mail-qv1-xf2b.google.com [IPv6:2607:f8b0:4864:20::f2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AED4A1AF16
-        for <git@vger.kernel.org>; Tue, 20 Dec 2022 05:54:41 -0800 (PST)
-Received: by mail-qv1-xf2b.google.com with SMTP id pp21so8287602qvb.5
-        for <git@vger.kernel.org>; Tue, 20 Dec 2022 05:54:41 -0800 (PST)
+        with ESMTP id S233263AbiLTN5K (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Dec 2022 08:57:10 -0500
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB6B81AD8D
+        for <git@vger.kernel.org>; Tue, 20 Dec 2022 05:57:09 -0800 (PST)
+Received: by mail-qt1-x829.google.com with SMTP id x11so10909298qtv.13
+        for <git@vger.kernel.org>; Tue, 20 Dec 2022 05:57:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Xt+flUKzTga4aYK+oTOpycq0pZrVVQVHqXpqtIP0BeY=;
-        b=KU5cCKfxwbGN6q8Ue80AGwdOsRvqbFr8eRebTHLTPxq2Z37fFckuXFtiD1mHhqrj4M
-         F/xQ/iqOEVWsdkEmED3A1YElGOVe0UQPAaPRt1CySpn8t6SJDGOPcKzi8aauZ7GjcRK1
-         tU9t12KYhwyh1q2c56wqe2VOAjIEQu5LIV2FHMD/VbzSFQWjNIoQn0YQPPK9YWS8hcrl
-         FVYKYrAtAMKpmZsWNacOJ9UBLmxDyHRuyPxpAXuHq54JUInPkJTjcOg68tYClJwXcQSz
-         jxmsBKdGBuqqDuycjalCo5njKtuPyVL7QNBVhEXmzavHInYQDeXqjB6M5tjthjL5Hbqo
-         Ai0w==
+        bh=ZReEnepLhav0GfPdYq6SdcknLe/8w4Vjw1eyXErLNg0=;
+        b=OX2nhmXb5/xH0hf03+9d8QaQVmxCJwDUhRWo40PFkCqXcel5zgYy8u0slWmbYCTXUO
+         Um5dVilUIwynubnwzjoUUK/Xa+UeyBnHXLAnuftTVantKMQPIGVTIMX3XvT1Un0hJ+0I
+         dII/v0l7Xz+NSG4uD1EcvGBuf3cfA2sAyDQsj59s4ZC+USOgvKnn7io9qRNs4p2zCoot
+         I+Ee/PDgzsKQ4MLHo1DKHy9RGQzBj88T2nrTuOrWuafgz1md1qdQ3NB6buePNWJ1B2xG
+         VC52rEbPsLrRnc/Z0FE8HFR5TEOUeDEF4TCE7oDJqqg38wx+jq236qymmJiIZqNadHAh
+         HxEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xt+flUKzTga4aYK+oTOpycq0pZrVVQVHqXpqtIP0BeY=;
-        b=jDMxGiv9arM2/9HjwCt7Nd9T+jrU58gwsKCfrutbe5Zvn36Gd2f3dkpw600KuV82j7
-         qYUI6Vd5Qk7h3QkjEKomWeY5gjF2LogTuTYkxmhEj8V3v3GUcHUA/Gu/5MoEPBPzC1uX
-         I0lvl27bvBNntvGIuhdbJLsVldd17FNWDqIRQKJsKjUnBHgOy6ZKzMWV6gLHvPvBgvSP
-         JYIJCVfTLSoG5MAmXBOIEec7hfb+09sh6Ih17hm1mbbDRJgS4NOQAfL0VmOebqJXvbML
-         /PuUWY146OgaIVXb6O6pG+C06MW/39CAyQC+aeY3FTppgcgQk9Yl1nrXqS6KyWkTvfs6
-         40rg==
-X-Gm-Message-State: ANoB5pkHdXMcjxzkft0+n8tqQXcKPlvHDCPif7Rahuw4wlkjOyp73jNU
-        6F8aRFiP70Ys1kSJq0LBBXaXdMgV9em6Evs=
-X-Google-Smtp-Source: AA0mqf4t9/R6vVLoDpYV9dxMLP88jg3Z6Gljjj9FIGcPkbuk/EEreRA5q7VoZaWbrvi+6Cmfinmk4Q==
-X-Received: by 2002:ad4:4f43:0:b0:4c6:d886:2680 with SMTP id eu3-20020ad44f43000000b004c6d8862680mr63454354qvb.40.1671544480761;
-        Tue, 20 Dec 2022 05:54:40 -0800 (PST)
+        bh=ZReEnepLhav0GfPdYq6SdcknLe/8w4Vjw1eyXErLNg0=;
+        b=1zXpBGBvO0KXNNcb6DGgZT8fv9fL4lvPKQIwon7efM+NaDj9huAt7oq+tRsg/fSgiK
+         +9xpfJB+2fZHO6Uw7+e+MNTZqIHi3I/pXyiIVwXLaIeVXmVD99rQdSs4n7ZZgqlmpHXt
+         6TeP0pvx6+W0TbPeKxXXTVG64tIOY1B3Dw12nL1wlpGJDij894cejdsCVHidi5kwtzz3
+         cb7HG7IIoGcteIJNBk1TKNIsn7mbWOU6zbnIaE5lgoF6c9GSU42PqumwW3gn4V/I+1Ur
+         +rJekb6NMJdIyxQy+T4F23vVEcV1QneouFnfUKhUCJ6I+JJPB+xPZamcFb+yGTFIOz/U
+         WAwA==
+X-Gm-Message-State: ANoB5pn63Pp+iWQfxXSMODmAcYFKvTTzHto8lKsJU0Km9gxZjNRfc+yT
+        AA4WRil+6SSCb93zTQ+z0cIK/gRr7calINw=
+X-Google-Smtp-Source: AA0mqf7zEL77W5DdwQxF5whXM5j1FRB7sjdWsMqeR/saBqs8xojGR2YFmZfcbEmCoYOmK3g8AGRVWA==
+X-Received: by 2002:ac8:51d2:0:b0:3a8:171d:2414 with SMTP id d18-20020ac851d2000000b003a8171d2414mr47133530qtn.15.1671544628909;
+        Tue, 20 Dec 2022 05:57:08 -0800 (PST)
 Received: from ?IPV6:2600:1700:e72:80a0:6103:2a44:3e02:702f? ([2600:1700:e72:80a0:6103:2a44:3e02:702f])
-        by smtp.gmail.com with ESMTPSA id 195-20020a370ccc000000b006eee3a09ff3sm8782791qkm.69.2022.12.20.05.54.40
+        by smtp.gmail.com with ESMTPSA id de26-20020a05620a371a00b006cfc01b4461sm8853462qkb.118.2022.12.20.05.57.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Dec 2022 05:54:40 -0800 (PST)
-Message-ID: <49eb61a4-2b5d-c695-25e1-621bac6f3421@github.com>
-Date:   Tue, 20 Dec 2022 08:54:39 -0500
+        Tue, 20 Dec 2022 05:57:08 -0800 (PST)
+Message-ID: <75107325-bd28-1adf-b260-ba8846c63229@github.com>
+Date:   Tue, 20 Dec 2022 08:57:07 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.5.1
-Subject: Re: [PATCH 2/3] bundle-uri: advertise based on repo config
+Subject: Re: [PATCH 1/3] bundle-uri: drop unused 'uri' parameter
 Content-Language: en-US
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org, peff@peff.net, vdye@github.com,
         gitster@pobox.com
 References: <pull.1443.git.1670866407.gitgitgadget@gmail.com>
- <857d1abec4cf124e011c7f84276ce105cb5b3a96.1670866407.git.gitgitgadget@gmail.com>
- <221219.86pmcfzm7g.gmgdl@evledraar.gmail.com>
+ <d17f08ed4b68d711b452b5cfb54a949845bdea81.1670866407.git.gitgitgadget@gmail.com>
+ <221219.86tu1rzmbs.gmgdl@evledraar.gmail.com>
 From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <221219.86pmcfzm7g.gmgdl@evledraar.gmail.com>
+In-Reply-To: <221219.86tu1rzmbs.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/19/22 6:04 AM, Ævar Arnfjörð Bjarmason wrote:
-> 
+On 12/19/22 5:57 AM, Ævar Arnfjörð Bjarmason wrote:
 > On Mon, Dec 12 2022, Derrick Stolee via GitGitGadget wrote:
-> 
->> From: Derrick Stolee <derrickstolee@github.com>
->>
->> The bundle_uri_advertise() method was not using its repository
->> parameter, but this is a mistake. Use repo_config_get_maybe_bool()
->> instead of git_config_maybe_bool().
->>
->> Signed-off-by: Derrick Stolee <derrickstolee@github.com>
->> ---
->>  bundle-uri.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/bundle-uri.c b/bundle-uri.c
->> index 8efb4e7acad..5f158cc52e1 100644
->> --- a/bundle-uri.c
->> +++ b/bundle-uri.c
->> @@ -610,7 +610,7 @@ int bundle_uri_advertise(struct repository *r, struct strbuf *value)
->>  		goto cached;
->>  
->>  	advertise_bundle_uri = 0;
->> -	git_config_get_maybe_bool("uploadpack.advertisebundleuris", &advertise_bundle_uri);
->> +	repo_config_get_maybe_bool(r, "uploadpack.advertisebundleuris", &advertise_bundle_uri);
->>  
->>  cached:
->>  	return advertise_bundle_uri;
-> 
-> This looks good, but as with another parallel topic of yours that I
-> commented on[1] leaves us wondering if this had any effect.
-> 
-> I.e. is this just for good measure because we have a "r" parameter, or
-> did we do the wrong thing for submodules before this change? In that
-> case let's add the missing test coverage.
-> 
-> Or, if it's the former let's update the commit message here, saying e.g.:
-> 
-> 	While we should use "r" for <good measure or other reason>, we
-> 	already did the right thing for submodules, as "the_repository"
-> 	would be set to the submodule because <reasons I don't
-> 	know about...>.
 
-As I mentioned in another thread, we should always be using a
-local 'struct repository *' if we can so we aren't contributing
-to that particular dimension of technical debt, but submodules
-have a lot of work ahead before these kinds of things can be
-tested individually.
+>> @@ -112,10 +112,10 @@ int fetch_bundle_uri(struct repository *r, const char *uri);
+>>   * bundle-uri protocol v2 verb) at the given uri, fetch and unbundle the
+>>   * bundles according to the bundle strategy of that list.
+>>   *
+>> - * Returns non-zero if no bundle information is found at the given 'uri'.
+>> + * It is expected that the given 'list' is initialized, including its
+>> + * 'baseURI' value
 
-This is especially the case when working with server code, where
-we would never be in the submodule, but we don't want to block
-future removals of the non-repo versions of these methods.
+> The same goes for the added docs, that we "expect [that] 'list' is
+> initialized" may be true, but that would have been true before we
+> removed this unused parameter, so let's not stick that in this unrelated
+> "UNUSED" change.
+
+It is _not_ unrelated. The 'uri' parameter looks like it should
+be used to determine relative URLs for the included list. However,
+this reasoning around the 'baseURI' value points out that we are
+using that value _instead_ of the 'uri' value, which is why it
+is safe to remove the parameter.
 
 Thanks,
 -Stolee
