@@ -2,129 +2,216 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B0FA2C4332F
-	for <git@archiver.kernel.org>; Tue, 20 Dec 2022 21:08:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72C2DC4332F
+	for <git@archiver.kernel.org>; Tue, 20 Dec 2022 21:18:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233281AbiLTVIY (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Dec 2022 16:08:24 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44366 "EHLO
+        id S233812AbiLTVSL (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Dec 2022 16:18:11 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229791AbiLTVIW (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Dec 2022 16:08:22 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CD071E706
-        for <git@vger.kernel.org>; Tue, 20 Dec 2022 13:08:19 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id u19so32223851ejm.8
-        for <git@vger.kernel.org>; Tue, 20 Dec 2022 13:08:19 -0800 (PST)
+        with ESMTP id S232913AbiLTVSJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Dec 2022 16:18:09 -0500
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD1061E3FB
+        for <git@vger.kernel.org>; Tue, 20 Dec 2022 13:18:07 -0800 (PST)
+Received: by mail-wr1-x42f.google.com with SMTP id y8so22991wrl.13
+        for <git@vger.kernel.org>; Tue, 20 Dec 2022 13:18:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BNW74pxi1ijPz77BoW1q/jUQyE1ZgUM7W3WJP3ZgkEM=;
-        b=qpmYyDXQ5gywa65cHBaMiACjysNuJ4mcLjt+e9ezisv+sZ1E/6pBMdNJ+VlzCmABnU
-         XKn1dSd1VYyd24KtBITxpzKUmujFxARfRhF/+BmFLQDALnKRQokYr8rImixoL0uaatXb
-         /PcbT0wm1H7lkcTcSTW2jmJ+M0lDd9anS01MojPp2JPWQC6HvHG5YkBIbqxvDAaB8SDF
-         xW8hokPaVWWjh3RbMGCXYLVpT3EVoGibbJKA2Ho+Ht+Wg11GIrOvVgkgWWxoRHo5dp1u
-         duh5uEDB2yXkI+oKujx4QyxPtLNTV76F8ON8VT+XodkoP2xxH6EfwF5VkAh5Qvfgf4zk
-         ZXIA==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+k0BYoH7pbtzHeQQc9OhAVKU5yx70Q614wSxp4J52Tc=;
+        b=nSUI4Bgay1gFrBA12oH0ftQlE0yfMyWL/u9F6Np1HmbjdnrZBjVtOMypC8BdXJIEIt
+         9hp1GMhv2dgKca4bsGi8qFunuWBu2hrCy07VHdkHseB8CcPsudtlfoBA4CY+p/0uQRii
+         SBi37opyWVIlbSQAXjREmyQ4moHUagXFIVq+xAl6mozSoaQyp8/HcsR0fSPRw/czrSLH
+         y2x21/CrMGMFYHjzudgmBfn6VSoNx6B14kqOjSAxlME4UYIJ0tOoJyGRXFobaRXTCeeF
+         Yh175QQlMJ/GnsTP49jSaLvV4gQzdhHEzV/cbVTps4yrpzM3MoukoPOo7iClW1FZ1B1z
+         C6Hw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=BNW74pxi1ijPz77BoW1q/jUQyE1ZgUM7W3WJP3ZgkEM=;
-        b=GvAS8GmlZg8S3AVkFARtbbbLjTStldrw613D0dz7l2corWIPVn2j6ahFjQnMuXH0X7
-         DVpmupRzgDEkQYkgcp1NDta6GpeZjIRczIc0+zn2AxghfH8NYraxNOpuWHHTb+4I38lE
-         HtKBf8tcW+D5PXsg/wLl6lXyNVw2g7dCACxHLTunDcSu+fU4WAEOGpcO7MiwuTIJTQ8q
-         ecNU6BoKzZ2YM0Tjx1MoEdIYc5g4FEehSz9a8yH8Jz+DFT86iS+jYkzDWmMsM4cMLiJ7
-         h8hsbOiTJUtX4KG7gapMC8BjgubAPYirz1DCwbAVrD9Ce+ZTvplSP1CdP07pWGOU/2m3
-         1KIQ==
-X-Gm-Message-State: ANoB5pmXL4G5qVc20sjWCK343opHwIxtE0iSLNWepS2AzuX1RrduNozc
-        PPENL1w54ckCb1CxvNyYqHE=
-X-Google-Smtp-Source: AA0mqf7ReF6505cgrXtCzWIccsBJsOV0sb/6QygvTJJpADV88e4AydgOULQyyddpqjpWSYh5qqQqmA==
-X-Received: by 2002:a17:906:408e:b0:7c0:eba3:e2e with SMTP id u14-20020a170906408e00b007c0eba30e2emr36204072ejj.31.1671570497935;
-        Tue, 20 Dec 2022 13:08:17 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id la26-20020a170907781a00b0078d9cd0d2d6sm6310904ejc.11.2022.12.20.13.08.17
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+k0BYoH7pbtzHeQQc9OhAVKU5yx70Q614wSxp4J52Tc=;
+        b=O2E5nK7lm4z/Tfa49xHlmV0lfbywVJM372JcAQs/Ak7CaZmaLJgCl4eFtr8Y/EnEjT
+         xtnsGqSKxVd7knLb8VgZa7HnOORnE9cTALwNyiJ+78fz4U7J0JeskrQnHOuFZ/NzqTDr
+         sHHb1YQtIwJ3pFd2KaUJY9wZyHGvm36jvavBVMwGGSpnGV3BlCPhKQooNaor0WFapZ9U
+         tIIqhNW+F8AXpGGRZwW5yOqfRwX9xNBM5mN17OdKvWoUEZkYnsfONZaN1crR7r/Nw22e
+         LOYeBrG45Ty+MiF06fJaRQsKxn5UhKZzeduuYK0WAcQplcMvMn7vhOg7/Yz9xWB99QDF
+         NeJg==
+X-Gm-Message-State: ANoB5pmmxLfJL9pIS2brTle0iv2XSN3DwajS9f/bztb0UI1hi8q685iD
+        tON5m3riFxl7RxwOr/xkISPPbjiyr9A=
+X-Google-Smtp-Source: AA0mqf7LKMm3zohwRH1QDub9kNfazMJaHXKY34YlkViG8RRU19ehrpaHsF8pvsDCt7zvIjk6FLkpTQ==
+X-Received: by 2002:adf:f0d1:0:b0:24e:f72a:4285 with SMTP id x17-20020adff0d1000000b0024ef72a4285mr20839980wro.24.1671571086135;
+        Tue, 20 Dec 2022 13:18:06 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id k17-20020adfd851000000b0024194bba380sm13851306wrl.22.2022.12.20.13.18.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Dec 2022 13:08:17 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1p7jqS-007Xls-2n;
-        Tue, 20 Dec 2022 22:08:16 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, peff@peff.net, vdye@github.com
-Subject: Re: [PATCH 1/3] bundle-uri: drop unused 'uri' parameter
-Date:   Tue, 20 Dec 2022 21:50:29 +0100
-References: <pull.1443.git.1670866407.gitgitgadget@gmail.com>
- <d17f08ed4b68d711b452b5cfb54a949845bdea81.1670866407.git.gitgitgadget@gmail.com>
- <221219.86tu1rzmbs.gmgdl@evledraar.gmail.com> <xmqq4jtq292e.fsf@gitster.g>
- <be44ef00-2d80-18d5-4dab-357faca20853@github.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <be44ef00-2d80-18d5-4dab-357faca20853@github.com>
-Message-ID: <221220.86fsd9wzpb.gmgdl@evledraar.gmail.com>
+        Tue, 20 Dec 2022 13:18:05 -0800 (PST)
+Message-Id: <pull.1406.v5.git.git.1671571084753.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1406.v4.git.git.1671566641.gitgitgadget@gmail.com>
+References: <pull.1406.v4.git.git.1671566641.gitgitgadget@gmail.com>
+From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 20 Dec 2022 21:18:04 +0000
+Subject: [PATCH v5] win32: close handles of threads that have been joined
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Rose <83477269+AtariDreams@users.noreply.github.com>,
+        Seija Kijin <doremylover123@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Seija Kijin <doremylover123@gmail.com>
 
-On Tue, Dec 20 2022, Derrick Stolee wrote:
+After joining threads, the handle to the original thread
+should be closed as it no longer needs to be open.
 
-> On 12/19/22 7:49 PM, Junio C Hamano wrote:
->
->> I think these three patches were designed to be "oops, that was
->> wrong and here is a band-aid" follow-up fixes on top of what was
->> back then in 'next'.  Now the base topic has been kicked out of
->> 'next' together with these, we can afford to roll them into the base
->> series before merging it back to 'next', but due to things generally
->> being slow toward the end of the year, that hasn't happened yet.
->
-> I wasn't expecting to re-roll the base topic, but I'll get
-> started on that now.
->
-> However, the comments in this review are barely actionable.
+Because this only needs to happen if the
+WaitForSingleObject fails, the function was
+rewritten to accommodate this change.
 
-Skimming over my comments again the actionable bits are:
+The function is still POSIX compliant.
 
- * 1/3: Commit says it's removing an unused param, also has while-at-it
-   typo fix, maybe split that up?
- * 1/3: Commit says <same>, has while-at-it removal of documenting what
-   a function's return value means, maybe keep that?
- * 1/3: Commit says <same>, has seeming while-at-it discussion of what
-   another parameter is expected to contain (you replied saying they
-   were related)
- * 2/3: Question about whether reading "r" v.s. "the_repository" has an
-   observable behavior change. If yes let's add a test, if no let's note
-   "it's for good measure".
- * 3/3: A question about whether we really didn't need
-   GIT_TEST_BUNDLE_URI. You managed to convince me that no, we don't
- * 3/3: Question about what the 2nd paragraph of the commit message is
-   trying to convey (you didn't reply to this bit). The actionable thing
-   would be to clarify it, or remove it.
+Signed-off-by: Seija Kijin <doremylover123@gmail.com>
+---
+    win32: close handles of threads that have been joined
+    
+    After joining threads, the handle to the original thread should be
+    closed as it no longer needs to be open.
+    
+    Signed-off-by: Seija Kijin doremylover123@gmail.com
 
-> They provide very little value especially for how verbose they are.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1406%2FAtariDreams%2Fjoin-v5
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1406/AtariDreams/join-v5
+Pull-Request: https://github.com/git/git/pull/1406
 
-I agree that this was all of relatively little value, these are all
-rather trivial patches after all, and the bundle-uri feature is opt-in
-and WIP at this point.
+Range-diff vs v4:
 
-But even trivial patches can be helped along by review. I'm just trying
-to help this topic land & show Junio that others have reviewed this
-carefully.
+ 1:  526ef7cc339 < -:  ----------- win32: close handles of threads that have been joined
+ 2:  2cb4d5c7007 ! 1:  94ed068d25b prep
+     @@ Metadata
+      Author: Seija Kijin <doremylover123@gmail.com>
+      
+       ## Commit message ##
+     -    prep
+     +    win32: close handles of threads that have been joined
+     +
+     +    After joining threads, the handle to the original thread
+     +    should be closed as it no longer needs to be open.
+     +
+     +    Because this only needs to happen if the
+     +    WaitForSingleObject fails, the function was
+     +    rewritten to accommodate this change.
+     +
+     +    The function is still POSIX compliant.
+      
+          Signed-off-by: Seija Kijin <doremylover123@gmail.com>
+      
+       ## compat/win32/pthread.c ##
+     -@@ compat/win32/pthread.c: static unsigned __stdcall win32_start_routine(void *arg)
+     - }
+     - 
+     - int pthread_create(pthread_t *thread, const void *unused,
+     --		   void *(*start_routine)(void*), void *arg)
+     -+		   void *(*start_routine)(void *), void *arg)
+     - {
+     - 	thread->arg = arg;
+     - 	thread->start_routine = start_routine;
+     --	thread->handle = (HANDLE)
+     --		_beginthreadex(NULL, 0, win32_start_routine, thread, 0, NULL);
+     -+	thread->handle = (HANDLE)_beginthreadex(NULL, 0, win32_start_routine,
+     -+						thread, 0, NULL);
+     +@@ compat/win32/pthread.c: int pthread_create(pthread_t *thread, const void *unused,
+       
+     - 	if (!thread->handle)
+     - 		return errno;
+     -@@ compat/win32/pthread.c: int win32_pthread_join(pthread_t *thread, void **value_ptr)
+     + int win32_pthread_join(pthread_t *thread, void **value_ptr)
+       {
+     - 	DWORD result = WaitForSingleObject(thread->handle, INFINITE);
+     - 	switch (result) {
+     +-	DWORD result = WaitForSingleObject(thread->handle, INFINITE);
+     +-	switch (result) {
+      -		case WAIT_OBJECT_0:
+      -			if (value_ptr)
+      -				*value_ptr = thread->arg;
+     --			/* detach the thread once the join succeeds */
+     --			CloseHandle(thread->handle);
+      -			return 0;
+      -		case WAIT_ABANDONED:
+     --			/* either thread is not joinable or another thread is
+     --			 * waiting on this, so do not detatch */
+      -			return EINVAL;
+      -		default:
+     --			/* the function failed, so do not detach */
+      -			return err_win_to_posix(GetLastError());
+     -+	case WAIT_OBJECT_0:
+     -+		if (value_ptr)
+     -+			*value_ptr = thread->arg;
+     -+		/* detach the thread once the join succeeds */
+     -+		CloseHandle(thread->handle);
+     -+		return 0;
+     -+	case WAIT_ABANDONED:
+     -+		/* either thread is not joinable or another thread is
+     -+		 * waiting on this, so do not detatch */
+     -+		return EINVAL;
+     -+	default:
+     -+		/* the function failed, so do not detach */
+     ++	if (WaitForSingleObject(thread->handle, INFINITE) == WAIT_FAILED)
+      +		return err_win_to_posix(GetLastError());
+     ++
+     ++	if (value_ptr) {
+     ++		*value_ptr = thread->arg;
+       	}
+     ++
+     ++	CloseHandle(thread->handle);
+     ++	return 0;
+       }
+       
+     + pthread_t pthread_self(void)
 
-I agree that my E-Mails are verbose, sorry. This isn't my native
-language, it's a balancing act between trying to be unambiguously
-understood, and verbosity. sorry.
 
-> frustrated to see such a drive-by review so late in the process.
+ compat/win32/pthread.c | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
-This I'm confused by. You submitted this ~1 week ago on the 12th, Junio
-rewound the parent topic out of "next" on the 14th.
+diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
+index 2e7eead42cb..7f8503b4b50 100644
+--- a/compat/win32/pthread.c
++++ b/compat/win32/pthread.c
+@@ -37,17 +37,15 @@ int pthread_create(pthread_t *thread, const void *unused,
+ 
+ int win32_pthread_join(pthread_t *thread, void **value_ptr)
+ {
+-	DWORD result = WaitForSingleObject(thread->handle, INFINITE);
+-	switch (result) {
+-		case WAIT_OBJECT_0:
+-			if (value_ptr)
+-				*value_ptr = thread->arg;
+-			return 0;
+-		case WAIT_ABANDONED:
+-			return EINVAL;
+-		default:
+-			return err_win_to_posix(GetLastError());
++	if (WaitForSingleObject(thread->handle, INFINITE) == WAIT_FAILED)
++		return err_win_to_posix(GetLastError());
++
++	if (value_ptr) {
++		*value_ptr = thread->arg;
+ 	}
++
++	CloseHandle(thread->handle);
++	return 0;
+ }
+ 
+ pthread_t pthread_self(void)
 
-Isn't this the appropriate time to comment on both this topic & its
-parent?
+base-commit: 7c2ef319c52c4997256f5807564523dfd4acdfc7
+-- 
+gitgitgadget
