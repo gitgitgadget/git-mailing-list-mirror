@@ -2,162 +2,108 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86033C4332F
-	for <git@archiver.kernel.org>; Tue, 20 Dec 2022 13:40:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DDDEEC4332F
+	for <git@archiver.kernel.org>; Tue, 20 Dec 2022 13:45:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233629AbiLTNke (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Dec 2022 08:40:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55186 "EHLO
+        id S232937AbiLTNpf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Dec 2022 08:45:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57046 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233416AbiLTNkc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Dec 2022 08:40:32 -0500
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 354CF18E34
-        for <git@vger.kernel.org>; Tue, 20 Dec 2022 05:40:28 -0800 (PST)
-Received: by mail-wm1-x332.google.com with SMTP id c65-20020a1c3544000000b003cfffd00fc0so11162762wma.1
-        for <git@vger.kernel.org>; Tue, 20 Dec 2022 05:40:28 -0800 (PST)
+        with ESMTP id S230132AbiLTNpd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Dec 2022 08:45:33 -0500
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BDFB1A07B
+        for <git@vger.kernel.org>; Tue, 20 Dec 2022 05:45:32 -0800 (PST)
+Received: by mail-ej1-x62d.google.com with SMTP id tz12so29285013ejc.9
+        for <git@vger.kernel.org>; Tue, 20 Dec 2022 05:45:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bAM8fLL6nPTKKRKuCB3KncxAhNS6pj0vTCvdD8vDXfE=;
-        b=Yt3xp/4B8ag2bZeJBamSmiwiZ8XGRGuYeBKllSZUCXJ3i6Do1gCHDwz10OpZyFmKJu
-         LSzPKZVeaoqWPkm3Q9424vrwEfaGU4BmmRTZFJjCicoaI2X3M0riTMmrhmqbczu9fBNE
-         jy7++aHARhiRoexCWffIZVeYtd71a1e2B+55JtRgEkD/WFEcb3bzrq6K/+ElACoEs0hw
-         pyuwS0OprQk0aniUVAaMK+eLwEAbucT2I2YFB81gUHUow0oLOQ5kp9JP7dEjjszyRCxX
-         FedAxJwmowPPPlGN39SKG3Nya8BxPHZP1mjA1RkRsIJ2HQppigpiWPlCuRlhhYryN/Rk
-         dP2w==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=E0PCFSGIYsmiLDXciMTv05fxXRo2UvzLC0v8QGQS1ow=;
+        b=WSOFRR/zPdirEPdUT6nvTatjYcoJZ04kHB6/2Yo+nEjkhRprx6dCrpveqOI5xwZzu5
+         eVjo5VNcwO+J/9Ngy/bCcLIo8jPob4/XKawh8wKP5JskPpPkqsCAx1IAWJpS/uc9STGZ
+         TiT9Jr97/8WfwKOtm8Kr2CO7pFZELrUTXQ+k0TBwV4GgD1p2ZPi+jsUsRc3H2kirR6qO
+         uzqD35ARsarho+cWr61BIs0PrU6ISQiaUO9fyQEmFlZmOBcFFpzUXloJNISyzxD2j0rw
+         Cj+KbrrJzdzfygDiIfiCcSgjfyeOVkT46xAYdw5W1XDJYCuyW+muS3feQS6q2Tlrbxm6
+         Hmeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bAM8fLL6nPTKKRKuCB3KncxAhNS6pj0vTCvdD8vDXfE=;
-        b=wxTkFqAZhmiA8PDs2v1VXhraVOP1R5pkLuL5+oMmDYzKIoRdN7xiXAPhpR51mV2W/C
-         H4zlVaIjDAzHSx2BPL+OmhQhKg4nCEGW2QjLg43BxzPP3pMOnyXU5NcsxaDl3pUX3WbI
-         PU/eXDKdMjzFCwZEbr+SSeYmno3n7iXp6buPO6H5CrRDioXZzDhKXR9oRlUTbQURq1dW
-         tFbjQPWxJOB6DAsAvKftThtcD6ce4EK7T08EFOjXWo/VfiWVZlpGswyCjMCh0Q0WPNqy
-         bYS3iY7TMD7D6HzGsK8Dc5dj8BLi6vu3oQG8ir9FuKZZQ7SJMf0brvzDF0ZmUSenWHtU
-         byzg==
-X-Gm-Message-State: AFqh2kqWttwlkiK87UlOgwHxMDj9J9jmA36ueDu+SEIsSCnriO2wX/ES
-        8Tsg8N1mIR0rDMviN6VB1nMClWKru0eO4Q==
-X-Google-Smtp-Source: AMrXdXtLAJ6L1k/G1n3L1QVCsaIaT4qlp/xbfvHnKfoWRNKe9YqufIoO6ZZ34ofwkdQEdDOupBnCkw==
-X-Received: by 2002:a05:600c:4e48:b0:3cf:5d41:b748 with SMTP id e8-20020a05600c4e4800b003cf5d41b748mr1616994wmq.36.1671543626371;
-        Tue, 20 Dec 2022 05:40:26 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id m34-20020a05600c3b2200b003d208eb17ecsm16971713wms.26.2022.12.20.05.40.25
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=E0PCFSGIYsmiLDXciMTv05fxXRo2UvzLC0v8QGQS1ow=;
+        b=W6314XuMRJ2BVz9svghQjhN0AXqJa0DCXOJ4ppju8YpMsCmb6aInre9e1YrSCFLbVK
+         sFZ3gP1HpRbfF+6vWh73VuB9q0T3pTaIepiIHO0xqHJNXZqleC/EPt03WmhykLhgRIbe
+         3sbhv1Xjyb0n1gplizy5/NjNbhBD6p86jRFSMGOyfrQHUlKifevr8JSZq34MnXm8ADv2
+         ZUROYdiW+/ZPSQQ+6MFhCaY7hcvvaNvfvneGZ0EPNS0lD2nwHDaAF4RTGowIzUgiPMlc
+         3+AuydP3sNO5CJOi1BFThNUygEvctzG9K7dLNJPNQHUH8HS5Tp4tDO4hkQTjaCDRJ/kb
+         RwKg==
+X-Gm-Message-State: ANoB5pmgnelANcj+NbQllS9DSumj511f3k7jILLe2GxdCX9q0tJFgQKM
+        O4qZCTFfv4pzwsDCZIbImFY=
+X-Google-Smtp-Source: AA0mqf6wepeIhSmnnnJV53q5wQREKFN0w6t+PJWr/HQJHUQLA0hUQClLXfQQrWI/ndenSCoeJg9wBw==
+X-Received: by 2002:a17:906:2209:b0:7c1:1b89:1fe0 with SMTP id s9-20020a170906220900b007c11b891fe0mr39419598ejs.65.1671543931048;
+        Tue, 20 Dec 2022 05:45:31 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id lf24-20020a170906ae5800b0078de26f66b9sm5733918ejb.114.2022.12.20.05.45.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Dec 2022 05:40:25 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Hubert Jasudowicz <hubertj@stmcyber.pl>,
-        Derrick Stolee <derrickstolee@github.com>,
+        Tue, 20 Dec 2022 05:45:30 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1p7cvy-007KDZ-0E;
+        Tue, 20 Dec 2022 14:45:30 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Hubert Jasudowicz <hubertj@stmcyber.pl>, git@vger.kernel.org,
         Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH] bundle: don't segfault on "git bundle <subcmd>"
-Date:   Tue, 20 Dec 2022 14:40:18 +0100
-Message-Id: <patch-1.1-2319eb2ddbd-20221220T133941Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.39.0.1106.g08bce9674be
-In-Reply-To: <20221220123142.812965-1-hubertj@stmcyber.pl>
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH] Revert "builtin/bundle.c: let parse-options parse
+ subcommands"
+Date:   Tue, 20 Dec 2022 14:42:46 +0100
 References: <20221220123142.812965-1-hubertj@stmcyber.pl>
+ <0609575c-68ad-5392-0631-3563c179f177@github.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <0609575c-68ad-5392-0631-3563c179f177@github.com>
+Message-ID: <221220.861qouxk79.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since aef7d75e580 (builtin/bundle.c: let parse-options parse
-subcommands, 2022-08-19) we've been segfaulting if no argument was
-provided.
 
-The fix is easy, as all of the "git bundle" subcommands require a
-non-option argument we can check that we have arguments left after
-calling parse-options().
+On Tue, Dec 20 2022, Derrick Stolee wrote:
 
-This makes use of code added in 73c3253d75e (bundle: framework for
-options before bundle file, 2019-11-10), before this change that code
-has always been unreachable. In 73c3253d75e we'd never reach it as we
-already checked "argc < 2" in cmd_bundle() itself.
+> On 12/20/22 7:31 AM, Hubert Jasudowicz wrote:
+>> This reverts commit aef7d75e5809eda765bbe407c7f8e0f8617f0fd0.
+>> 
+>> The change breaks git bundle command. Running any subcommand
+>> results with:
+>> 
+>> $ git bundle create
+>> Segmentation fault (core dumped)
+>
+> Could you be more specific?
 
-Then when aef7d75e580 (whose segfault we're fixing here) migrated this
-code to the subcommand API it removed that "argc < 2" check, but we
-were still checking the wrong "argc" in parse_options_cmd_bundle(), we
-need to check the "newargc". The "argc" will always be >= 1, as it
-will necessarily contain at least the subcommand name
-itself (e.g. "create").
+I don't think the report can get more specific than (quoting it):
 
-As an aside, this could be safely squashed into this, but let's not do
-that for this minimal segfault fix, as it's an unrelated refactoring:
+	$ git bundle create
+	Segmentation fault (core dumped)
 
-	--- a/builtin/bundle.c
-	+++ b/builtin/bundle.c
-	@@ -55,13 +55,12 @@ static int parse_options_cmd_bundle(int argc,
-	 		const char * const usagestr[],
-	 		const struct option options[],
-	 		char **bundle_file) {
-	-	int newargc;
-	-	newargc = parse_options(argc, argv, NULL, options, usagestr,
-	+	argc = parse_options(argc, argv, NULL, options, usagestr,
-	 			     PARSE_OPT_STOP_AT_NON_OPTION);
-	-	if (!newargc)
-	+	if (!argc)
-	 		usage_with_options(usagestr, options);
-	 	*bundle_file = prefix_filename(prefix, argv[0]);
-	-	return newargc;
-	+	return argc;
-	 }
+:) Did you try running it?
 
-	 static int cmd_bundle_create(int argc, const char **argv, const char *prefix) {
+> We have tests that verify that
+> these commands work without a segfault. There must be something
+> different about your environment that makes the segfault occur.
 
-Reported-by: Hubert Jasudowicz <hubertj@stmcyber.pl>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+We don't have those tests, I submitted an alternate smaller fix in
+https://lore.kernel.org/git/patch-1.1-2319eb2ddbd-20221220T133941Z-avarab@gmail.com/
+that adds some.
 
-A proposed replacement for
-https://lore.kernel.org/git/20221220123142.812965-1-hubertj@stmcyber.pl/;
-let's move forward & add a test rather than reverting away from the
-subcommand APIe
+I think what you're misrecalling here is probably that we have general
+tests for running "git <cmd> -h" for all built-in <cmd>, but we don't
+have any such tests for running sub-commands.
 
- builtin/bundle.c       | 2 +-
- t/t6020-bundle-misc.sh | 7 +++++++
- 2 files changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/bundle.c b/builtin/bundle.c
-index c12c09f8549..61c76284768 100644
---- a/builtin/bundle.c
-+++ b/builtin/bundle.c
-@@ -58,7 +58,7 @@ static int parse_options_cmd_bundle(int argc,
- 	int newargc;
- 	newargc = parse_options(argc, argv, NULL, options, usagestr,
- 			     PARSE_OPT_STOP_AT_NON_OPTION);
--	if (argc < 1)
-+	if (!newargc)
- 		usage_with_options(usagestr, options);
- 	*bundle_file = prefix_filename(prefix, argv[0]);
- 	return newargc;
-diff --git a/t/t6020-bundle-misc.sh b/t/t6020-bundle-misc.sh
-index 833205125ab..3a1cf30b1d7 100755
---- a/t/t6020-bundle-misc.sh
-+++ b/t/t6020-bundle-misc.sh
-@@ -11,6 +11,13 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-bundle.sh
- 
-+for cmd in create verify list-heads unbundle
-+do
-+	test_expect_success "usage: git bundle $cmd needs an argument" '
-+		test_expect_code 129 git bundle $cmd
-+	'
-+done
-+
- # Create a commit or tag and set the variable with the object ID.
- test_commit_setvar () {
- 	notick=
--- 
-2.39.0.1106.g08bce9674be
-
+And even then, that wouldn't catch this, as it's a bespoke segfault in
+the bundle code, as it can't handle not getting at least one non-option
+argument.
