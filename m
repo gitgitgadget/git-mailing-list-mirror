@@ -2,160 +2,142 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6137CC4332F
-	for <git@archiver.kernel.org>; Tue, 20 Dec 2022 20:40:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3252DC4332F
+	for <git@archiver.kernel.org>; Tue, 20 Dec 2022 20:44:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234209AbiLTUk4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Dec 2022 15:40:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35716 "EHLO
+        id S233939AbiLTUoq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Dec 2022 15:44:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229727AbiLTUky (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Dec 2022 15:40:54 -0500
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B065D14D15
-        for <git@vger.kernel.org>; Tue, 20 Dec 2022 12:40:52 -0800 (PST)
-Received: by mail-wm1-x333.google.com with SMTP id 131-20020a1c0289000000b003d35acb0f9fso1990323wmc.2
-        for <git@vger.kernel.org>; Tue, 20 Dec 2022 12:40:52 -0800 (PST)
+        with ESMTP id S229906AbiLTUoo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Dec 2022 15:44:44 -0500
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC3A718695
+        for <git@vger.kernel.org>; Tue, 20 Dec 2022 12:44:41 -0800 (PST)
+Received: by mail-ed1-x529.google.com with SMTP id s5so19189458edc.12
+        for <git@vger.kernel.org>; Tue, 20 Dec 2022 12:44:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=grsecurity.net; s=grsec;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5GyYOkfZas+Cj5d8X3NvhRBw/OdTSLwK87eMQca9D9Y=;
-        b=rX299CTHn8rNqdGDzvxv01viz1DDsiD2k67wUYa53xudqg86ckH5zxpYDnIsWSfNc0
-         zkBrDtIgStxes6/Ww0zo66zXCQTo3zEaXk7IqNYpCsvi6OqZnBEW5ACUqEAKFc+16RCV
-         ygNTEBni+Eg1Fpu7NZfwZ8SDTQmQ0ly2pOa4s19U8Ou97Jm9xWGyjOBinCi9VKQy9c3b
-         AfY7u1uBHZfO509Ra/9IzcnQDruHiw2ip7lrilZ76WEfQzvIri5enw7nwLnsJn540wfL
-         5a4GLoOqxoejZ4bu+PQcsn0rJQCQJnjnhbZPPKlfWvHt2yHY1pZ4xDi+bXq7Z3xm+k3V
-         JdXw==
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=a5tUaD5Ezdmal8SeFC+q+N3G7QRTUR1tc2sTOPN1lQw=;
+        b=kULZxc92EOpVkv8GZQSblwT7aIW5nXfPkbiMZoOHb9J9ODAubXdmdXPY5iM3b+AmYl
+         k2kfqdyrGThsM5y6FDLlxwUGRrmeIE/Stj0c+7FydUXFJQICwXlqr5s70GYx88kFQxVJ
+         VzhlS0m7R+T9zN/PlBfZyaoDYASpIDNAYpKs3/A43cr3mcuTGjMQN1w8Cp31Aq/3hfMf
+         JICDK7jXT/88XglCs+HXcr4qbgAC62rQCN9Num822JPWKnAwJpvD8zy7mHGPFqxL6qYS
+         1yjAb3KtNmKCmi8dCeZQJIVdaYr3rub1giMIa88vzQiCQ3E8ahuYVA7Fn2gDXQ5+dWQ+
+         WIXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5GyYOkfZas+Cj5d8X3NvhRBw/OdTSLwK87eMQca9D9Y=;
-        b=vIwzzP3/rGOLbyWiZhJLHQjMAtdneqgPtAvznj12kt8sTrkUFUnE7MO6LK5mhgzH5J
-         I3F8tBqUXHRawlEQiFKebYS7B18EUI1jFHtBjuLdpgBpe762XkOJu6AFVM3+oG034RTq
-         yM3mzGltcB/73LCnSf4iXOnDt4bA/qrjGUwxHR7px7Fg6s6nf9vupq5ZP4S0uB2yE+XJ
-         Bkuv8ll1ip67IW9CieQb8Z00pGx02RlRs0TlQVh3P7ESro98ZV37C6XcqZGK8NAPPvtD
-         TDNtfarHT+qYbU/+Dn1Gx45Zr+Ai2H22RBqMZfXYIIggpefyXLd+y7MYQVZbMnjXyw8p
-         h/DA==
-X-Gm-Message-State: AFqh2krAcph5nrCafr0Bcp+xrb0r3ndDJMB+JrlAjjNnnviXVhYptTUU
-        FJHe1/wfMa5x2TxRvBWDOEHebmQljzUWBkQF
-X-Google-Smtp-Source: AMrXdXsZdDBq0/MG0H4vTTcaO9YWl6a1HcE4O62Yq/oQvBbbs1gEPUJc6YdZoIAPYK48i49DxvPJWw==
-X-Received: by 2002:a05:600c:3acd:b0:3d0:7415:c5a9 with SMTP id d13-20020a05600c3acd00b003d07415c5a9mr2614862wms.21.1671568851227;
-        Tue, 20 Dec 2022 12:40:51 -0800 (PST)
-Received: from ?IPV6:2003:f6:af0c:f800:f5ff:4df9:7300:71d0? (p200300f6af0cf800f5ff4df9730071d0.dip0.t-ipconnect.de. [2003:f6:af0c:f800:f5ff:4df9:7300:71d0])
-        by smtp.gmail.com with ESMTPSA id m22-20020a05600c3b1600b003cfd4cf0761sm27487881wms.1.2022.12.20.12.40.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 Dec 2022 12:40:49 -0800 (PST)
-Message-ID: <7a657644-cd7c-8638-55aa-667c528a5624@grsecurity.net>
-Date:   Tue, 20 Dec 2022 21:40:47 +0100
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=a5tUaD5Ezdmal8SeFC+q+N3G7QRTUR1tc2sTOPN1lQw=;
+        b=sDU1T8o4ZCylq2WW7EN8HUDRH+AZSpQdSMAmeoTYRmqd3DcV8th+M4D+Xk4jwkL+Yd
+         VRrTYDmCXx7M/FtzHjirnpUvQV3Ax9PKrED71nOQO1ssXAvovW95Kh1QeoT/b2jCq72d
+         2+aM1Y6I6agoIIZX1JquAdYwKtT4lzgW4pZAMr1ibsANHtMR0/NHNg4KTJc6E2TAo4tY
+         uMAY5lxnoGVgxhAq9jWNS2aupYv4H1AUEPF6CesVwUpSZDEOavzZS5nnXXTHtZzMnStD
+         Su2ZDPblid+RTIpfsZdJjpMdSrj09OUNtek+M61cxUBQTrUXTlnBWqtXenug+BJBliOh
+         MnWw==
+X-Gm-Message-State: ANoB5pmgrq2UYOyUENCg6PiqOTmQg19OvWSPTOdftOV9pIQvh/pM/sNm
+        w6mQdqOxI8S1AqTWSqWV+VQkVOH7m80FeQ==
+X-Google-Smtp-Source: AA0mqf7Mhs+6AJrup7moX7D9jfx4v6IRPPjx0R/heQ3dLGc0rfmhCD0wuEVzQSZE8bjOvbg9rShZSw==
+X-Received: by 2002:a05:6402:142:b0:46f:f36b:a471 with SMTP id s2-20020a056402014200b0046ff36ba471mr44603394edu.22.1671569080257;
+        Tue, 20 Dec 2022 12:44:40 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id f7-20020a056402194700b00463a83ce063sm6006690edz.96.2022.12.20.12.44.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Dec 2022 12:44:39 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1p7jTb-007WyO-0O;
+        Tue, 20 Dec 2022 21:44:39 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee <derrickstolee@github.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, peff@peff.net, vdye@github.com,
+        gitster@pobox.com
+Subject: Re: [PATCH 3/3] bundle-uri: remove GIT_TEST_BUNDLE_URI env variable
+Date:   Tue, 20 Dec 2022 21:41:05 +0100
+References: <pull.1443.git.1670866407.gitgitgadget@gmail.com>
+ <aafee168fbae2a1887f53febc4abd15522b12bc2.1670866407.git.gitgitgadget@gmail.com>
+ <221219.86len3zlqj.gmgdl@evledraar.gmail.com>
+ <de1aca07-dd03-3f46-9f56-1cc7616b573a@github.com>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
+In-reply-to: <de1aca07-dd03-3f46-9f56-1cc7616b573a@github.com>
+Message-ID: <221220.86o7rxx0so.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH] grep: fall back to interpreter mode if JIT fails
-Content-Language: en-US
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>
-References: <20221216121557.30714-1-minipli@grsecurity.net>
- <xmqq359fm06c.fsf@gitster.g>
-From:   Mathias Krause <minipli@grsecurity.net>
-In-Reply-To: <xmqq359fm06c.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 16.12.22 um 23:52 schrieb Junio C Hamano:
-> Mathias Krause <minipli@grsecurity.net> writes:
-> 
->> Such a change was already proposed 4 years ago [1] but wasn't merged for
->> unknown reasons.
->>
->> 1. https://lore.kernel.org/r/20181209230024.43444-3-carenas@gmail.com
-> 
-> This part does not belong to the log message but should go below
-> three-dash line.  If you have a more concrete "it was rejected
-> because ...", to help judging why this version improves upon the
-> previous attempt and it is clear the reason for past rejection no
-> longer applies, that is a very different story, though.
-> 
-> The way I read the original thread (assuming that the lore archive
-> is showing all relevant messages there) is that RFC was reviewed
-> well and everybody was happy about the direction it took.  It even
-> received fairly concrete suggestions for the real, non-RFC version,
-> but that never materialized.
 
-It had a follow-up RFC[1] half a year later, adding a config option and,
-after some more discussion, even command line switches[2]. But not just
-IMHO is that far too much, but even you suggested to simply revert back
-to the initial RFC and implement the automatic fallback[3], basically
-merging it with a proper changelog[4]. As that never happened, I took up
-the work and tried to do just that.
+On Tue, Dec 20 2022, Derrick Stolee wrote:
 
-1. https://lore.kernel.org/git/20190728235427.41425-1-carenas@gmail.com/
-2. https://lore.kernel.org/git/20190729105955.44390-1-carenas@gmail.com/
-3. https://lore.kernel.org/git/xmqqh874vikk.fsf@gitster-ct.c.googlers.com/
-4. https://lore.kernel.org/git/xmqqef1zmkp5.fsf@gitster-ct.c.googlers.com/
+> On 12/19/22 6:09 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>=20
+>> On Mon, Dec 12 2022, Derrick Stolee via GitGitGadget wrote:
+>>=20
+>>> From: Derrick Stolee <derrickstolee@github.com>
+>>>
+>>> The GIT_TEST_BUNDLE_URI environment variable is used in the t573* suite
+>>> of tests that consume the bundle URIs advertised by the Git server. This
+>>> variable is equivalent to setting transfer.bundleURI=3Dtrue, so we can =
+do
+>>> that in these tests instead.
+>>=20
+>> I think this is probably OK. I can't remember why I added both the env
+>> variable and the setting in what became 0ef961dda05 (bundle-uri client:
+>> add boolean transfer.bundleURI setting, 2022-12-05).
+>>=20
+>> But I think this commit message really doesn't explain why it's OK to
+>> remove it. In general we do have GIT_TEST_* settings that duplicate
+>> config, e.g. GIT_TEST_PROTOCOL_VERSION.
+>>=20
+>> We do so because we'd like the environment variable to override the
+>> setting, or the other way around (I think depending on the GIT_TEST_*
+>> variable it's either-or, it's a mess).
+>
+> If the variable is named GIT_TEST_* then it should be intended for
+> use within tests. However, it provides _no value_ over the existing
+> config option, so the tests are updated to use the config value
+> instead.
+>
+> As mentioned, the one exception is where we don't want to uddate
+> every test to use the config variable and instead want to set the
+> GIT_TEST_* variable across all tests and see how it interacts with
+> other tests. However, _as mentioned in the commit message_ this
+> variable would not have any effect in other tests because the
+> advertisement depends on other config options on the server side.
 
-> It is very clear that the posted patch was not yet in a mergeable
-> state as-is; "for unknown reasons" is less than helpful.
-> 
-> Now, we learned a more concrete reason, i.e. "it got tons of help
-> improving the draft into the final version, but the help was
-> discarded and the final version did not materialize", does the
-> attempt this time around improve on it sufficiently to make it
-> mergeable, or is it sufficiently different that it needs a fresh
-> review from scratch?  If the latter, then "for unknown reasons"
-> becomes even less relevant.
+Makes sense, I think I had a bit of a mental block on it in my initial
+look at it. Re-reading your commit message it does make sense.
 
-Sorry for not digging up that information for the initial patch
-submission. I'll add it to v2.
+I think it makes sense to squash this in:
+=09
+	diff --git a/transport.c b/transport.c
+	index 77a61a9d7bb..efc8fa43183 100644
+	--- a/transport.c
+	+++ b/transport.c
+	@@ -1523,7 +1523,7 @@ int transport_fetch_refs(struct transport *transport=
+, struct ref *refs)
+=09=20
+	 int transport_get_remote_bundle_uri(struct transport *transport)
+	 {
+	-	int value =3D 0;
+	+	int value;
+	 	const struct transport_vtable *vtable =3D transport->vtable;
+=09=20
+	 	/* Check config only once. */
 
-> The rest of the proposed log message, and the change itself, both
-> look very reasonable and well explained, at least to me.
+The reason we init'd the variable was because we were looking for this
+either in the environment or the config, so we needed to have a fallback
+in case we used the env var.
 
-Thanks a lot for the detailed review. I'll update the commit log
-accordingly but will wait for more feedback to see on which solution we
-want to settle on.
+But with the logic after your fix-up we know that if we end up in the
+RHS of the "||" that "value" was initialized, as we returned 0 from the
+config API call.
 
-> Thanks.
-> 
-> 
->> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
->> Signed-off-by: Mathias Krause <minipli@grsecurity.net>	# tweaked changelog, added comment
->> ---
->>  grep.c | 17 +++++++++++++++--
->>  1 file changed, 15 insertions(+), 2 deletions(-)
->>
->> diff --git a/grep.c b/grep.c
->> index 06eed694936c..f2ada528b21d 100644
->> --- a/grep.c
->> +++ b/grep.c
->> @@ -317,8 +317,21 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
->>  	pcre2_config(PCRE2_CONFIG_JIT, &p->pcre2_jit_on);
->>  	if (p->pcre2_jit_on) {
->>  		jitret = pcre2_jit_compile(p->pcre2_pattern, PCRE2_JIT_COMPLETE);
->> -		if (jitret)
->> -			die("Couldn't JIT the PCRE2 pattern '%s', got '%d'\n", p->pattern, jitret);
->> +		if (jitret) {
->> +			/*
->> +			 * Even though pcre2_config(PCRE2_CONFIG_JIT, ...)
->> +			 * indicated JIT support, the library might still
->> +			 * fail to generate JIT code for various reasons,
->> +			 * e.g. when SELinux's 'deny_execmem' or PaX's
->> +			 * MPROTECT prevent creating W|X memory mappings.
->> +			 *
->> +			 * Instead of faling hard, fall back to interpreter
->> +			 * mode, just as if the pattern was prefixed with
->> +			 * '(*NO_JIT)'.
->> +			 */
->> +			p->pcre2_jit_on = 0;
->> +			return;
->> +		}
->>  
->>  		/*
->>  		 * The pcre2_config(PCRE2_CONFIG_JIT, ...) call just
