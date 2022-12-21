@@ -2,99 +2,95 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DFA7C4332F
-	for <git@archiver.kernel.org>; Wed, 21 Dec 2022 00:43:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EBFC6C4332F
+	for <git@archiver.kernel.org>; Wed, 21 Dec 2022 01:53:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234216AbiLUAnH (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Dec 2022 19:43:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33974 "EHLO
+        id S229791AbiLUBx2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Dec 2022 20:53:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229750AbiLUAnG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Dec 2022 19:43:06 -0500
-Received: from mail-4018.proton.ch (mail-4018.proton.ch [185.70.40.18])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80E4C1FCEE
-        for <git@vger.kernel.org>; Tue, 20 Dec 2022 16:43:04 -0800 (PST)
-Date:   Wed, 21 Dec 2022 00:42:57 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
-        s=protonmail3; t=1671583382; x=1671842582;
-        bh=uOJ3nM9CgJFknDF8ybuBzSoDG4XAUQw2cmyAEgYtktU=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=o/3+Jim6371WBiblLe0nu0wr8JAX9nRpdW49Hcv+T5agBSA7H++mknKqQ+4pS+i7I
-         hX1c6UVCk1+BEjXXNIsUxblqh7S+T6++8OCJmNMlcYiAxtjKsGbugXuwkzeUJfRUgc
-         tLflzTyp5uFyqbpgancLbVnNWOL380eKGoQH95mW4ZsgbK2PX2YCyBXnoU5nNXe07g
-         +lniMur7kb7dVP2bkbdV3qelp4DZhJ/tVyCI0O+vo20dX/gop84cAOXdnHc308PYmG
-         C8GfiFrHuinS1f0yHUAFic6MVQV+AveH/jV3u3fcH0s5YApNGJcltFatso2Kfn5BD7
-         Up6hw+sKA9w9w==
-To:     Junio C Hamano <gitster@pobox.com>
-From:   Jacob Abel <jacobabel@nullpo.dev>
-Cc:     git@vger.kernel.org,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-Subject: Re: [PATCH v5 4/4] worktree add: Add hint to use --orphan when bad ref
-Message-ID: <20221221004246.an5633ccwljhwzzs@phi>
-In-Reply-To: <xmqqfsdawqbw.fsf@gitster.g>
-References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20221104213401.17393-1-jacobabel@nullpo.dev> <20221110233137.10414-1-jacobabel@nullpo.dev> <20221212014003.20290-1-jacobabel@nullpo.dev> <20221220023637.29042-1-jacobabel@nullpo.dev> <20221220023637.29042-5-jacobabel@nullpo.dev> <xmqqfsdawqbw.fsf@gitster.g>
-Feedback-ID: 21506737:user:proton
+        with ESMTP id S229899AbiLUBx0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Dec 2022 20:53:26 -0500
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DA071F9EF
+        for <git@vger.kernel.org>; Tue, 20 Dec 2022 17:53:26 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id gt4so14269030pjb.1
+        for <git@vger.kernel.org>; Tue, 20 Dec 2022 17:53:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jtj94THtPaFkfIhyY7ONlTckk9CVCPCyPN+0FPVpzlU=;
+        b=Zd8cAT1PUF5jezQkfIUT4qEcQoOAy9nxhRKIxMcizzyub7l8M22nkjxqOr7UvXk1ZI
+         d5xcLwtmLVR/+QA6KLC8IfqCUV5IDBosvibTk9xxwwyQvf6nbJfSqQOVSV0QW/1L9R25
+         3BUEjdV4YOKQ+eoOAAWjKOaBbGjBDV14smsfaq+Msf3THwEj46L4cqAoH379Z2OeFb4G
+         9XHWRkm4QCvo4tOy2E6QZvg/eaISK2Jk6qB1CFvUbq7jdWhz1onCwbh15WewMzNPluNb
+         qMA9InVSfnB1qt9HUxly1Nyp89zwdEw/IepfKJaH0t+GOBJIDbNNpU1qKiRQlnfpJxtS
+         oORA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Jtj94THtPaFkfIhyY7ONlTckk9CVCPCyPN+0FPVpzlU=;
+        b=b7riikkTpUHgOHZmcpaelkJobnXyRs6XL76O426lTg+7csZxP8NN4N/YlA174KRsmM
+         cvOiwK3XdsyXaFLys5ZabAP3aJTxUogNyQieg1NQnMRqbfkuRPBw09nYmTFQQmJVwF4I
+         G85djgz2D639kZ/p/bgMTrEMjpcE9va6T8lRmO/2YhgaW+TosAqjP186+XbhFdZTIMLi
+         nmAL0kyHN/HQbLQSMG+zNUyjEgMR4iZZ2VXyQCnO41p/i70MnPGajyfzuKEVEE4384r0
+         q2rDy9b9cJ29BpiuJ7qH10a/R7Qi29T0KIaBqgznjAXjGejtiqffcn/4bErXbUhNtEqU
+         BS0A==
+X-Gm-Message-State: AFqh2kpM/pWNcl+Ce24kGHOvvXrOEUtIC6vxa97Y0gmAVeIfekY4XnoG
+        ed81ANJ9l014CWJcNHPSwGheGvPPd9Q=
+X-Google-Smtp-Source: AMrXdXtU3xnz0K1a7jwEp+a/wwkdPIsXiY5iNh4uDxUBh7ZmzZ8O5wlqMm6yswfGEriU4aWZmLJoXQ==
+X-Received: by 2002:a17:902:7291:b0:189:6b31:dc50 with SMTP id d17-20020a170902729100b001896b31dc50mr146232pll.31.1671587605506;
+        Tue, 20 Dec 2022 17:53:25 -0800 (PST)
+Received: from localhost ([2001:ee0:50c6:3450:b0ce:46ff:fe04:76aa])
+        by smtp.gmail.com with ESMTPSA id a4-20020a170902ecc400b001895d871c95sm10035249plh.70.2022.12.20.17.53.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 Dec 2022 17:53:24 -0800 (PST)
+Date:   Wed, 21 Dec 2022 08:53:21 +0700
+From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
+        <congdanhqx@gmail.com>
+To:     Chris Webster <chris@webstech.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] ci (check-whitespace): suggest fixes for errors
+Message-ID: <Y6JnEQY2VWU8gSZX@danh.dev>
+References: <pull.1444.git.1671179520.gitgitgadget@gmail.com>
+ <pull.1444.v2.git.1671496548.gitgitgadget@gmail.com>
+ <a2b5f3e87d6ef62d8005cff5568ad3afc4af3771.1671496548.git.gitgitgadget@gmail.com>
+ <Y6Fle8gzVU5si3T/@danh.dev>
+ <CAGT1KpV0igMKk4FvapuZCdJ7kFS+_cNe2ouczQsomheOGhgLZg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGT1KpV0igMKk4FvapuZCdJ7kFS+_cNe2ouczQsomheOGhgLZg@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/12/20 03:18PM, Junio C Hamano wrote:
-> Jacob Abel <jacobabel@nullpo.dev> writes:
->
-> > Subject: Re: [PATCH v5 4/4] worktree add: Add hint to use --orphan when=
- bad ref
->
-> Incomplete sentence that invites "when bad ref, what?"
+On 2022-12-20 11:55:57-0800, Chris Webster <chris@webstech.net> wrote:
+> > I think this change is getting too long to be embeded in a yaml file.
+> > I think it's better to move the shell code into its own script, so we
+> > can have better code highlight in editor and a proper shebang (/bin/bash).
+> 
+> That would need to be a separate patch?
 
-Noted. Changed commit title to the following:
+Yes, I think, a patch to move the whole block into a script, maybe in
+ci/ folder.
+> 
+> > > +          echo "Run \`git rebase --whitespace=fix ${lastcommit}\` and \`git push --force\` to correct the problem." >>$GITHUB_STEP_SUMMARY
+> >
+> > When move this block into its own script, we can use single quote
+> > string here, too.
+> 
+> I am not sure what you mean.
 
-    worktree add: add hint to direct users towards --orphan
+I mean we can write:
 
->
-> > +=09=09=09"=09git worktree add --orphan %s %s\n"), new_branch, path
->
-> OK.  "git worktree add -b <name-of-branch> <path>" is how you create
-> a worktree and have it on a named branch.  And instead of saying -b,
-> you would say --orphan.  This sounds like a fairly easy-to-understand
-> parallel to how "git checkout [-b/-B/--orphan] name-of-branch" takes
-> its parameters.
+	echo 'Run `git rebase ...` to correct the problem'
 
-Yes. Originally it was a direct reproduction of `git checkout --orphan` wit=
-h the
-syntax being `git worktree add --orphan new_branch path/ old_branch` and th=
-e
-operation checking out `old_branch` then discarding the commit history to m=
-ake
-the orphan branch `new_branch`. However after some discussion[1], the optio=
-n was
-changed to match `git switch --orphan` with the syntax and behavior we have=
- now.
+With single quote, we need less escape.
 
->
-> > +test_wt_add_empty_repo_orphan_hint() {
-> > +=09local context=3D"$1"
-> > +=09shift
-> > +=09local opts=3D"$@"
-> > +=09test_expect_success "'worktree add' show orphan hint in empty repo =
-w/ $context" '
-> > +=09=09test_when_finished "rm -rf empty_repo" &&
-> > +=09=09GIT_DIR=3D"empty_repo" git init --bare &&
-> > +=09=09test_must_fail git -C empty_repo worktree add $opts foobar/ 2> a=
-ctual &&
->
-> The comments on "$@" (vs "$*") in an earlier step equally applies here.
 
-Noted. Changed.
-
-1. https://lore.kernel.org/git/CAPig+cSVzewXpk+eDSC-W-+Q8X_7ikZXXeSQbmpHBcd=
-LCU5svw@mail.gmail.com/
-
+-- 
+Danh
