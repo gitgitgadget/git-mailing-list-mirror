@@ -2,95 +2,164 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBFC6C4332F
-	for <git@archiver.kernel.org>; Wed, 21 Dec 2022 01:53:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A053DC4332F
+	for <git@archiver.kernel.org>; Wed, 21 Dec 2022 03:54:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229791AbiLUBx2 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Dec 2022 20:53:28 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51240 "EHLO
+        id S233966AbiLUDyS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Dec 2022 22:54:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229899AbiLUBx0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Dec 2022 20:53:26 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DA071F9EF
-        for <git@vger.kernel.org>; Tue, 20 Dec 2022 17:53:26 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id gt4so14269030pjb.1
-        for <git@vger.kernel.org>; Tue, 20 Dec 2022 17:53:26 -0800 (PST)
+        with ESMTP id S229652AbiLUDyR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Dec 2022 22:54:17 -0500
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6A0F1CFDE
+        for <git@vger.kernel.org>; Tue, 20 Dec 2022 19:54:15 -0800 (PST)
+Received: by mail-yb1-xb2c.google.com with SMTP id 186so15172540ybe.8
+        for <git@vger.kernel.org>; Tue, 20 Dec 2022 19:54:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Jtj94THtPaFkfIhyY7ONlTckk9CVCPCyPN+0FPVpzlU=;
-        b=Zd8cAT1PUF5jezQkfIUT4qEcQoOAy9nxhRKIxMcizzyub7l8M22nkjxqOr7UvXk1ZI
-         d5xcLwtmLVR/+QA6KLC8IfqCUV5IDBosvibTk9xxwwyQvf6nbJfSqQOVSV0QW/1L9R25
-         3BUEjdV4YOKQ+eoOAAWjKOaBbGjBDV14smsfaq+Msf3THwEj46L4cqAoH379Z2OeFb4G
-         9XHWRkm4QCvo4tOy2E6QZvg/eaISK2Jk6qB1CFvUbq7jdWhz1onCwbh15WewMzNPluNb
-         qMA9InVSfnB1qt9HUxly1Nyp89zwdEw/IepfKJaH0t+GOBJIDbNNpU1qKiRQlnfpJxtS
-         oORA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=OTedeXISPqHKRXbkuUETo2MlJSXglhzV03SM9O3jUmI=;
+        b=Jnbr/5PA1W1FmF6nrYexFaYKNuYg6lkuMjGbI+Adq4bf42QJbCZrT4IGNXIYl5t9xw
+         lIAS37gn/aYURsJsVZd1dRxEklXMXXt9KqnmQ6Bk/TLy1aAvwAEg8OnuJlTMqu5ROtRt
+         fbnQA7pvMCxyG9CWPs5boO1bAqIJ3qXHcXfhK2zCHXpoYf+2afFRm0gSN8RxfoeqKioy
+         +ih1NaxmiwnVPfkRb2UQPf9JkC7yjjhzdreB4umWRHrbro/mAIcm0PZ87uObjAPcYejb
+         5LkcyLtpwCslBI47AerFZ5liW3B/iIPemnvJN4KPH25JRJCREQ/Mi9qY5AqYoOlMO3n+
+         M+Kw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Jtj94THtPaFkfIhyY7ONlTckk9CVCPCyPN+0FPVpzlU=;
-        b=b7riikkTpUHgOHZmcpaelkJobnXyRs6XL76O426lTg+7csZxP8NN4N/YlA174KRsmM
-         cvOiwK3XdsyXaFLys5ZabAP3aJTxUogNyQieg1NQnMRqbfkuRPBw09nYmTFQQmJVwF4I
-         G85djgz2D639kZ/p/bgMTrEMjpcE9va6T8lRmO/2YhgaW+TosAqjP186+XbhFdZTIMLi
-         nmAL0kyHN/HQbLQSMG+zNUyjEgMR4iZZ2VXyQCnO41p/i70MnPGajyfzuKEVEE4384r0
-         q2rDy9b9cJ29BpiuJ7qH10a/R7Qi29T0KIaBqgznjAXjGejtiqffcn/4bErXbUhNtEqU
-         BS0A==
-X-Gm-Message-State: AFqh2kpM/pWNcl+Ce24kGHOvvXrOEUtIC6vxa97Y0gmAVeIfekY4XnoG
-        ed81ANJ9l014CWJcNHPSwGheGvPPd9Q=
-X-Google-Smtp-Source: AMrXdXtU3xnz0K1a7jwEp+a/wwkdPIsXiY5iNh4uDxUBh7ZmzZ8O5wlqMm6yswfGEriU4aWZmLJoXQ==
-X-Received: by 2002:a17:902:7291:b0:189:6b31:dc50 with SMTP id d17-20020a170902729100b001896b31dc50mr146232pll.31.1671587605506;
-        Tue, 20 Dec 2022 17:53:25 -0800 (PST)
-Received: from localhost ([2001:ee0:50c6:3450:b0ce:46ff:fe04:76aa])
-        by smtp.gmail.com with ESMTPSA id a4-20020a170902ecc400b001895d871c95sm10035249plh.70.2022.12.20.17.53.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Dec 2022 17:53:24 -0800 (PST)
-Date:   Wed, 21 Dec 2022 08:53:21 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Chris Webster <chris@webstech.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] ci (check-whitespace): suggest fixes for errors
-Message-ID: <Y6JnEQY2VWU8gSZX@danh.dev>
-References: <pull.1444.git.1671179520.gitgitgadget@gmail.com>
- <pull.1444.v2.git.1671496548.gitgitgadget@gmail.com>
- <a2b5f3e87d6ef62d8005cff5568ad3afc4af3771.1671496548.git.gitgitgadget@gmail.com>
- <Y6Fle8gzVU5si3T/@danh.dev>
- <CAGT1KpV0igMKk4FvapuZCdJ7kFS+_cNe2ouczQsomheOGhgLZg@mail.gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OTedeXISPqHKRXbkuUETo2MlJSXglhzV03SM9O3jUmI=;
+        b=G5E43F2wvabCvVF45yh5VmiusMz8ZFAj5vYvg9UtvQZwQ8QVxxum+YGkzE5DiUuLUl
+         CLofYO26N9xwoCm8cR5ATKqC7NSFm5nz1Qg4w45xaUGL2raK/EPy+Vsp6fw6JIRpP4SN
+         EKCci9F7xAL6e998dYdz23Sw4C0CtozYZTjApBcHcBxVFaX0VtlVRqAcuBn3V+2ALY6i
+         b00W3lbhjzNqEFIEbSljIcPbu0eAyrojsdnbrRxgnDJtQo0bRGsjkpnnaBYpM86Vzwtp
+         0sHHxosiRSVVKIcwWzURhJm4pT75L2QPLyj8zKOQmevdlM9wQcRlE8+MJ3VDvEbPQob1
+         tfVg==
+X-Gm-Message-State: AFqh2kq54foN+rsAYGNoWYlqf+A7D1vVinArzBpT2KRG0KmJZNsdq/rN
+        abfQkBYo5OG0hZ1Or+vxgOAKWnbv1xwXJVv8Hks=
+X-Google-Smtp-Source: AMrXdXsKQt6mwFteZvNeEnfEruT6SGt83sNRHJRK+zMuwTr39cm5lVFSW5Ws/CTsrcLzZf98v4jfvdmc9nvhFJ1g1cA=
+X-Received: by 2002:a05:6902:1365:b0:741:41be:2f03 with SMTP id
+ bt5-20020a056902136500b0074141be2f03mr51637ybb.242.1671594854740; Tue, 20 Dec
+ 2022 19:54:14 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGT1KpV0igMKk4FvapuZCdJ7kFS+_cNe2ouczQsomheOGhgLZg@mail.gmail.com>
+References: <20221025122856.20204-1-christian.couder@gmail.com>
+ <20221122175150.366828-1-christian.couder@gmail.com> <xmqqa64ipl4r.fsf@gitster.g>
+In-Reply-To: <xmqqa64ipl4r.fsf@gitster.g>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 21 Dec 2022 04:53:50 +0100
+Message-ID: <CAP8UFD2_ZbrOh4Tto2V80wn4ki+3j6Giegx+QyrLqd7uH6U4GQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] Implement filtering repacks
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, John Cai <johncai86@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-12-20 11:55:57-0800, Chris Webster <chris@webstech.net> wrote:
-> > I think this change is getting too long to be embeded in a yaml file.
-> > I think it's better to move the shell code into its own script, so we
-> > can have better code highlight in editor and a proper shebang (/bin/bash).
-> 
-> That would need to be a separate patch?
+On Wed, Nov 23, 2022 at 1:31 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+> > In the discussions with Junio and Taylor following the first and
+> > second versions, Junio suggested adding `--filter=<filter-spec>` to
+> > `git gc` and I am still Ok with doing it, either later in a followup
+> > patch or in a v4. I haven't done it yet, as it's not clear how to
+> > implement it efficiently only in `git gc`.
+>
+> Did I make such a suggestion?  I only said --filter=<filter-spec>
+> does not seem like a good option to surface and stress at the
+> end-user level for "git pack-objects".
 
-Yes, I think, a patch to move the whole block into a script, maybe in
-ci/ folder.
-> 
-> > > +          echo "Run \`git rebase --whitespace=fix ${lastcommit}\` and \`git push --force\` to correct the problem." >>$GITHUB_STEP_SUMMARY
-> >
-> > When move this block into its own script, we can use single quote
-> > string here, too.
-> 
-> I am not sure what you mean.
+In https://lore.kernel.org/git/xmqqilkm9wv6.fsf@gitster.g/ you wrote:
 
-I mean we can write:
+-> Unlike prune-packed, pruning objects that could be refetched has
+-> negative performance impact.  So adding an option to enable/disable
+-> such pruning is needed.  If the frontmost UI entry point were "gc",
+-> it needs an opt-in option to invoke the "filtering repack", in other
+-> words.  "pack-objects" should not need any more work than what you
+-> have here (with the "terminal" and "force" discarded), as "--filter"
+-> is such an opt-in option already.
 
-	echo 'Run `git rebase ...` to correct the problem'
+I understood the above to mean that you would be Ok with adding
+a "--filter" flag to `git gc`.
 
-With single quote, we need less escape.
+> The similarity of "git prune-packed" with this new operation was
+> brought up to illustrate the point that users of "git gc" do not
+> want to even know about having to remove redundantly available
+> objects via "prune-packed" by giving an extra option to "git gc"
+> (hence --prune is the default), and honoring the filter spec when
+> objects are known to be available via the configured promisor remote
+> is likely what users at the "git gc" level would want to see happen
+> automatically.  IOW, adding more options to "gc" would be the last
+> thing I would want to see.
 
+I still think that users should be able to control if `git gc` performs
+such a filtering when repacking, and I don't see how it could be done
+without any new option at all. I think that for example only checking
+the 'remote.<name>.partialclonefilter' config variable to decide if it
+should be done or not is just too dangerous for people already using
+this variable.
 
--- 
-Danh
+In the v4 I will send really soon now, I tentatively implemented a
+'gc.repackFilter' config option for the purpose of telling `git gc` that it
+should perform filtering repacks with the specified filter. I hope that
+this will help move the discussion forward.
+
+BTW in the latest "What's cooking in git.git" emails there is the
+following about this patch series:
+
+-> Seems to break CI.
+-> cf. https://github.com/git/git/actions/runs/3560918726
+
+I took a look at the failures in the different failing tests and they
+don't seem related to this patch
+series and seem quite random:
+
+=== Failed test: t3106-ls-tree-pattern ===
+The full logs are in the 'print test failures' step below.
+See also the 'failed-tests-*' artifacts attached to this run.
+Error: failed: t3106.3 combine with "--object-only"
+failure: t3106.3 combine with "--object-only"
+Error: failed: t3106.5 combine with "--long"
+failure: t3106.5 combine with "--long"
+
+=== Failed test: t5601-clone ===
+The full logs are in the 'print test failures' step below.
+See also the 'failed-tests-*' artifacts attached to this run.
+skip: t5601.60 clone c:temp is dos drive
+skip: t5601.101 colliding file detection
+Error: failed: t5601.110 auto-discover bundle URI from HTTP clone
+failure: t5601.110 auto-discover bundle URI from HTTP clone
+Error: failed: t5601.111 auto-discover multiple bundles from HTTP clone
+failure: t5601.111 auto-discover multiple bundles from HTTP clone
+
+=== Failed test: t5556-http-auth ===
+The full logs are in the 'print test failures' step below.
+See also the 'failed-tests-*' artifacts attached to this run.
+Error: failed: t5556.2 http auth anonymous no challenge
+failure: t5556.2 http auth anonymous no challenge
+Error: failed: t5556.3 http auth www-auth headers to credential helper
+bearer valid
+failure: t5556.3 http auth www-auth headers to credential helper bearer valid
+
+=== Failed test: t4203-mailmap ===
+The full logs are in the 'print test failures' step below.
+See also the 'failed-tests-*' artifacts attached to this run.
+Error: failed: t4203.66 git cat-file -s returns correct size with --use-mailmap
+failure: t4203.66 git cat-file -s returns correct size with --use-mailmap
+Error: failed: t4203.67 git cat-file -s returns correct size with
+--use-mailmap for tag objects
+failure: t4203.67 git cat-file -s returns correct size with
+--use-mailmap for tag objects
+
+etc
+
+I tried different build flags but can't reproduce locally.
