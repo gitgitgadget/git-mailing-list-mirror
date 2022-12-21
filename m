@@ -2,85 +2,94 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 24BD6C4332F
-	for <git@archiver.kernel.org>; Wed, 21 Dec 2022 11:36:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68B0DC4332F
+	for <git@archiver.kernel.org>; Wed, 21 Dec 2022 11:47:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232647AbiLULgE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Dec 2022 06:36:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47172 "EHLO
+        id S234562AbiLULrr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Dec 2022 06:47:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbiLULgB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Dec 2022 06:36:01 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05D72111F
-        for <git@vger.kernel.org>; Wed, 21 Dec 2022 03:36:01 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id fy4so15488662pjb.0
-        for <git@vger.kernel.org>; Wed, 21 Dec 2022 03:36:00 -0800 (PST)
+        with ESMTP id S229448AbiLULrp (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Dec 2022 06:47:45 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B186F1D33B
+        for <git@vger.kernel.org>; Wed, 21 Dec 2022 03:47:44 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id q17-20020a17090aa01100b002194cba32e9so1986184pjp.1
+        for <git@vger.kernel.org>; Wed, 21 Dec 2022 03:47:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZHCOHgt9dz7GyNzaW5sHd74JZmMyi2q0M+cBz50rVZw=;
-        b=q4Ol5PL0pNFvXttbRW3VrvhJE8F0q97ksMwT+DzuXjkAmubsi2L2oh2iu97UkT61zL
-         CUYnSIID5iz1rYP8sMjq+GK0RvP57ITf5A7ocR2Yfnb+0LPQkK30JeQgUuXG1Pk7+bIs
-         vyUMC/OZhznHyXn9EYK9k07/FfS7goKxu2mpF8Oj1fKMDejWoBIcDk1sxlfen8eaBVQy
-         VRDJhhB6IguTKH+7ekij8OzBwwr9iQpJyEA2MzBrdvDU4itjyBtQBrpYDXkRTBCNbbw+
-         xz10DQ+mvMUFcY0yCZCGlxrZuU/dTUS2c+iTn/u8/2iR/K8S92U6hKwZva525GsNEi7Y
-         vXYw==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qeMqx/+KCByXjOH+htAc4kgXMDgg7wleuatgoxYfJHg=;
+        b=ENWk/nCD/lxpBS+bAvEtd0l3q9LfTJoJThdrWzeNa6UG4vDRAaQgs5b+s8/s4UQ8oF
+         9Im5i7vUvAa2QPyS2YRphAr/kdhRRMXxqGL4W5jaqXipEqoS6PVLrdM8m3FhsyS94uCB
+         5nbloLKkd752yXXYCY9OpicGvr/wpBdCkPV8rLctjnx3G6wgy7TTTdscVoPKiASvv942
+         3MLBo4O03RY2qn7mxLqwz7t84O3I4N19R59NjjMwLMsONioMpX8oKiq24lr1Sh0jOgwq
+         XC0X91GIaiweZD+XWFgOTvVfok8wVNFYQvcvmG+3HM1mWiIOPzc+j+lt24Vg4j1eQPHy
+         hcmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZHCOHgt9dz7GyNzaW5sHd74JZmMyi2q0M+cBz50rVZw=;
-        b=FbI/cgmo+D8X96Z43YFZbnHwxKnMNeeDkl/ho9C5UmU8650MFbEwHW65RRaLEBxWXW
-         3UKImJY4mC4KScxPXhadaofzzsPwaHX6y/we1USYTmvnzetXpwf+t8OU/hJ1ImpsFyrN
-         7krJM2HcB2iVkyPeOboi+hUlQ4dVLPJVZgS3qKHNrNs30vBgLobH3KbgsvUOs1Snd/US
-         7Gt0l9iqO7CMSJ9HXw/wjdqmN4wY38c+xnOO1hiT3Gfbi9UuJdJPxkEAyDK9q5o8XOQ6
-         cNXkbgXwZwfEndgoPiCZ3XVWR0C8o37lA+dR1RMc0srvWsckYrrjLGCb4J8AUEmCjGC5
-         C6cg==
-X-Gm-Message-State: AFqh2kqF2GtD9R8HvzIspnQZhp4sub1A53Tmq0+j7S+wArVGw/sox2Rp
-        N63yTH5hwSCTm6N28IbY/pc=
-X-Google-Smtp-Source: AMrXdXuoRCiW/bMsD/HKdB569qfrDNgsGdA2gBs0Q+nv907WMo1lDg5Q9seUU8tVCxXcrEjn7yLzkg==
-X-Received: by 2002:a17:902:da86:b0:189:747e:97cc with SMTP id j6-20020a170902da8600b00189747e97ccmr2165468plx.26.1671622560324;
-        Wed, 21 Dec 2022 03:36:00 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id h7-20020a170902680700b0017f36638010sm19155plk.276.2022.12.21.03.35.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Dec 2022 03:35:59 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     sunshine@sunshineco.com, avarab@gmail.com, git@vger.kernel.org,
-        tenglong.tl@alibaba-inc.com
-Subject: Re: [PATCH v3 0/5] notes.c: introduce "--no-blank-line" option
-References: <CAPig+cRcezSp4Rqt1Y9bD-FT6+7b0g9qHfbGRx65AOnw2FQXKg@mail.gmail.com>
-        <20221221091650.43359-1-tenglong.tl@alibaba-inc.com>
-Date:   Wed, 21 Dec 2022 20:35:59 +0900
-Message-ID: <xmqqili5rnts.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qeMqx/+KCByXjOH+htAc4kgXMDgg7wleuatgoxYfJHg=;
+        b=wjTC5WHehzN1Z9qXG/mLDAcPsxGJE9e4ncbv7FGBBi39xioX+RugfNqyuHhat7NsYO
+         peFMjmQ80uctyyTbIm2G3d7FpD71uMgtvPhwak6LoV6DAkQEcbTSJEqzVaSxJFdo7TFJ
+         hFktu38KmoIhXS/TatJVOm6ylipAyDwDep2UY/K9DTrDGn/oArtB0/3TfwhSCgFgD2PV
+         915Ep2ifQEbM7O4BR9+O2wwz4UPWhE/+sC0KsuphexCPDseSCHAM9/4UaCUDsrJfyFQT
+         W2Vg0vRGjEElvIGEoMPjGaO+Qny4MRVK/j+dW81HpWJXGSE1xwB4x1513Yt4EIZifycZ
+         TDzw==
+X-Gm-Message-State: AFqh2kp3jHdtcwSqvLdhZaFTYwq4EIfWVAXTcW11aWd+xSLInHLxrv8v
+        dxzR06bqtp1ubtJDFmfgCQpZ+vwCR8XXz33R
+X-Google-Smtp-Source: AMrXdXt7WVU+5YWi8YJ972Y4B7gJNDYbs7p9Do/PddTUDWmHDKhIddWaxjd02U5NU2iDZaOp3EpdFw==
+X-Received: by 2002:a17:90a:a516:b0:219:3dba:be16 with SMTP id a22-20020a17090aa51600b002193dbabe16mr1776700pjq.38.1671623264090;
+        Wed, 21 Dec 2022 03:47:44 -0800 (PST)
+Received: from localhost.localdomain ([47.246.101.55])
+        by smtp.gmail.com with ESMTPSA id n6-20020a17090a670600b00212735c8898sm1219082pjj.30.2022.12.21.03.47.41
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 21 Dec 2022 03:47:43 -0800 (PST)
+From:   Teng Long <dyroneteng@gmail.com>
+X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
+To:     avarab@gmail.com
+Cc:     dyroneteng@gmail.com, git@vger.kernel.org, me@ttaylorr.com
+Subject: [RFC PATCH 1/4] ls-tree: don't use "show_tree_data" for "fast" callbacks
+Date:   Wed, 21 Dec 2022 19:47:37 +0800
+Message-Id: <20221221114737.51375-1-tenglong.tl@alibaba-inc.com>
+X-Mailer: git-send-email 2.39.0.96.gf7c8a0386a7
+In-Reply-To: <RFC-patch-1.4-2d8bcfe2cab-20221117T134528Z-avarab@gmail.com>
+References: <RFC-patch-1.4-2d8bcfe2cab-20221117T134528Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Teng Long <dyroneteng@gmail.com> writes:
+"Ævar Arnfjörð Bjarmason" <avarab@gmail.com> writes:
 
-> Eric Sunshine <sunshine@sunshineco.com> writes:
+> As noted in [1] the code that made it in as part of
+> 9c4d58ff2c3 (ls-tree: split up "fast path" callbacks, 2022-03-23) was
+> a "maybe a good idea, maybe not" RFC-quality patch. I hadn't looked
+> very carefully at the resulting patterns.
 >
->> Taking a step back, perhaps think of this in terms of "separator". The
->> default behavior is to insert "\n" as a separator between notes. If
->> you add a --separator option, then users could supply their own
->> separator, such as "----\n" or, in your case, "" to suppress the blank
->> line.
+> The implementation shared the "struct show_tree_data data", which was
+> introduced in e81517155e0 (ls-tree: introduce struct "show_tree_data",
+> 2022-03-23) both for use in 455923e0a15 (ls-tree: introduce "--format"
+> option, 2022-03-23), and because the "fat" callback hadn't been split
+> up as 9c4d58ff2c3 did.
 >
-> Your idea is an enhancement of the original one of me. I think it's a suitable
-> name and I could implement it, maybe we could hear about Junio's advice of the
-> naming?
+> Now that that's been done we can see that most of what
+> show_tree_common() was doing could be done lazily by the callbacks
+> themselves, who in the pre-image were often using an odd mis-match of
+> their own arguments and those same arguments stuck into the "data"
+> structure. Let's also have the callers initialize the "type", rather
+> than grabbing it from the "data" structure afterwards.
+>
+> 1. https://lore.kernel.org/git/cover-0.7-00000000000-20220310T134811Z-avarab@gmail.com/
 
-Yeah, saying "separator" clarifies what that empty line is meant to
-be (i.e. it is an inter-paragraph separator), and is much better
-than "newline" or "blankline", I would think.
+Because in "show_tree_common(&data, &recurse, oid, base, pathname, mode)", the
+"data" and the other args exist redundant, we could just not to pass  "data",
+because it's enough, do I understand right?
 
 Thanks.
