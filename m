@@ -2,184 +2,133 @@ Return-Path: <git-owner@kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 88238C4332F
-	for <git@archiver.kernel.org>; Wed, 21 Dec 2022 04:05:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1E45C4332F
+	for <git@archiver.kernel.org>; Wed, 21 Dec 2022 04:35:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234327AbiLUEFa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 20 Dec 2022 23:05:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57212 "EHLO
+        id S234401AbiLUEfZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 20 Dec 2022 23:35:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234299AbiLUEFL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Dec 2022 23:05:11 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F1CD17E06
-        for <git@vger.kernel.org>; Tue, 20 Dec 2022 20:05:10 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id y8so737047wrl.13
-        for <git@vger.kernel.org>; Tue, 20 Dec 2022 20:05:10 -0800 (PST)
+        with ESMTP id S229448AbiLUEfV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Dec 2022 23:35:21 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61E881B7B0
+        for <git@vger.kernel.org>; Tue, 20 Dec 2022 20:35:20 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id ay40so10347255wmb.2
+        for <git@vger.kernel.org>; Tue, 20 Dec 2022 20:35:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qw18Se/n5FS5WvsxAGh1hXZyZ8m6t3Ryt3oHM1GO9J0=;
-        b=gYHHevw9VEN91hK+i9wwKYaOYDvYuCJPHimyqMnaBCDKgNvBmU4M/d2tlpyKs2n2tr
-         ejDFBMhUOYrVGj3L6lXlMoG9Q27ePUib8w3VWZJfVbso8hxIQ9FVHBR9rQ806VnN34u1
-         xEiKGNpz4NMx1xKnbJtVdjkMHTmvP7QmArfu8kgVMx5aAYIZXFDZnwAnrZ3jo1mXcck+
-         QamACTPBDqYfpAplBZNpWuQi6AkZ07UL8lSkeTweB5eqHHfMsRGnwjk0T7V4v4UjTVXW
-         pPB/MPNit8gzvtmeE+d7fJN0s+dYOkyfqh5PZqLR+iEb/RHMu5fGhPAxiuMKqp7C5RQJ
-         Kg6g==
+        bh=BeMRu3MJPLWwp9T88nXe1Yvd7l+IZ+d12HxCnWQyn68=;
+        b=gMAmmcsDL5COKNu/MtCnYGennMyC3TZj5jBlkVlCq3uOLz5zW/Ti6Po3SwkiJ3DXpj
+         Kc6Qtr1M0NO/5bXU90LEFWohVVE+A+UXoAUP4FH/TyQ7U8B/61nu7bBvrgYhjdnSSUPC
+         Rz45oR0MqNn1/bGBFUwmiPY2UIh9GJikk/xs5ZeLcxUlWk1+gnYFlUcBSN7kXPj3WPvC
+         4lxDiefZdlEVMIc7n5OzKZmI9Fggi/w2lNPlytrslDO4kr376zjlwlTrQ8H67xfKN8ks
+         0JcoIBoKXGPFHpEAHZ4W58sz+XCDXHWaPO58mLBsLSpm/Bg9pPbBVrzK6dcL4gdoPNsh
+         4QBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qw18Se/n5FS5WvsxAGh1hXZyZ8m6t3Ryt3oHM1GO9J0=;
-        b=SeM2Q+m4hcV5DmBn91Bv1DqN6N26lnDVqWzyca0TnVM9crroukR4BpwAxP2O07aGu2
-         sS/Zn15Gl/0huqm9ey0fMChsrcDXzZxnZXCX0opshktzfR7hg2ZRq7M7E1GUPJlGYOK3
-         jDmlCVY+hikKNvIqzgUcHnruWk0ow+ZNDVbZAKJByDKQT5nD5MCs5CVkYMAMEYnK9A7H
-         4FJMl+u+h5uJgxaI7WTPiBMLNE/WVNKt/CAIuGAl7vw4X/8GQTelGycMLA1KqLNACPAr
-         ExAZix1zn9KZ+SeBLtSH3DtFbWfAX6e6mADl3VYrnuGOyzCSN8cVW59Ctq6/xCC9AsbP
-         bKuw==
-X-Gm-Message-State: AFqh2kqopDARtb3g297Nlc715I8sZBB0IUQ0n08cVag+/s696vRcVCXZ
-        mBOasbZSLjVM/XSet195x6KEq7IAjFY=
-X-Google-Smtp-Source: AMrXdXu/lRkxw69lZZFIpEQLd5YaUDpEIKFw1/uzIXLb1h+GKW0p6DSiciaRB/OoW5U1Lkox4MKK8A==
-X-Received: by 2002:a05:6000:18cb:b0:242:63e5:2451 with SMTP id w11-20020a05600018cb00b0024263e52451mr2573828wrq.71.1671595508656;
-        Tue, 20 Dec 2022 20:05:08 -0800 (PST)
-Received: from Precision-5550.. ([2a04:cec0:1195:e411:35ab:b445:697e:1e87])
-        by smtp.gmail.com with ESMTPSA id p9-20020a5d4e09000000b00236c1f2cecesm16462298wrt.81.2022.12.20.20.05.07
+        bh=BeMRu3MJPLWwp9T88nXe1Yvd7l+IZ+d12HxCnWQyn68=;
+        b=HQKsOJY+KPmcv7x8XxRGwBi9nfrAR8iW8TA2oc1PkOQ6njejvjHAp8d84XrsbV7G60
+         cCvCe2U5/23szHru2T85VfL/ah2ZN6BrAWN/INFOogaqA8Qu1jmO3uqC5zRK1qOhetKS
+         dIesUg1EumJPQpgnV7q2kFcjZeh0gLW15A6P2DZu5qSHeip1WYMeptTBVtkYVzGnjwTP
+         WF4RB8ot2Wvc52gTKvaSciWFuIEWIWNUnRGq3cjVeaDaqq0UrQCxgDqk6LgwcTeTQtL2
+         x2U5FIsMTfTK6o4aHZecE/3QC34azuGfD+kUUupLAouxrohvVijugO3/KnHHlrJwqowj
+         +r5w==
+X-Gm-Message-State: AFqh2kpV4cn7C0MvvXrI4yfmb7tQFaoPsWXS96Jx5suKAMYglYE3+Z/z
+        DeLQfd11HnlO0Ai8Xt3V8gyqIuQOp3w=
+X-Google-Smtp-Source: AMrXdXv2zEzOD6cZ8UhoIwGrdXLigRWvhUZwHcPzbMWPTQQuOaj7ejoqdz35nTx5YKCW+lVmmLwioQ==
+X-Received: by 2002:a05:600c:5108:b0:3d1:ce35:4224 with SMTP id o8-20020a05600c510800b003d1ce354224mr486637wms.11.1671597318705;
+        Tue, 20 Dec 2022 20:35:18 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id i25-20020a1c5419000000b003c6c182bef9sm889187wmb.36.2022.12.20.20.35.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Dec 2022 20:05:08 -0800 (PST)
-From:   Christian Couder <christian.couder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 3/3] gc: add gc.repackFilter config option
-Date:   Wed, 21 Dec 2022 05:04:46 +0100
-Message-Id: <20221221040446.2860985-4-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.39.0.59.g6bb98b4b00
-In-Reply-To: <20221221040446.2860985-1-christian.couder@gmail.com>
-References: <20221122175150.366828-1-christian.couder@gmail.com>
- <20221221040446.2860985-1-christian.couder@gmail.com>
-MIME-Version: 1.0
+        Tue, 20 Dec 2022 20:35:18 -0800 (PST)
+Message-Id: <pull.1406.v6.git.git.1671597317.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1406.v5.git.git.1671571084753.gitgitgadget@gmail.com>
+References: <pull.1406.v5.git.git.1671571084753.gitgitgadget@gmail.com>
+From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 21 Dec 2022 04:35:15 +0000
+Subject: [PATCH v6 0/2] win32: close handles of threads that have been joined
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        Rose <83477269+AtariDreams@users.noreply.github.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A previous commit has implemented `git repack --filter=<filter-spec>` to
-allow users to remove objects that are available on a promisor remote
-but that they don't want locally.
+After joining threads, the handle to the original thread should be closed as
+it no longer needs to be open.
 
-Users might want to perform such a cleanup regularly at the same time as
-they perform other repacks and cleanups, so as part of `git gc`.
+Signed-off-by: Seija Kijin doremylover123@gmail.com
 
-Let's allow them to configure a <filter-spec> for that purpose using a
-new gc.repackFilter config option.
+Seija Kijin (2):
+  win32: close handles of threads that have been joined
+  prep
 
-Now when `git gc` will perform a repack with a <filter-spec> configured
-through this option and not empty, the repack process will be passed a
-corresponding `--filter=<filter-spec>` argument.
+ compat/win32/pthread.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/config/gc.txt |  9 +++++++++
- builtin/gc.c                |  6 ++++++
- t/t6500-gc.sh               | 19 +++++++++++++++++++
- 3 files changed, 34 insertions(+)
 
-diff --git a/Documentation/config/gc.txt b/Documentation/config/gc.txt
-index 38fea076a2..9359136f14 100644
---- a/Documentation/config/gc.txt
-+++ b/Documentation/config/gc.txt
-@@ -130,6 +130,15 @@ or rebase occurring.  Since these changes are not part of the current
- project most users will want to expire them sooner, which is why the
- default is more aggressive than `gc.reflogExpire`.
- 
-+gc.repackFilter::
-+	When repacking, use the specified filter to omit certain
-+	objects from the resulting packfile. WARNING: this could
-+	easily corrupt the current repo and lose data if ANY of the
-+	omitted objects hasn't been already pushed to a remote. Be
-+	very careful about objects that might have been created
-+	locally! See the `--filter=<filter-spec>` option of
-+	linkgit:git-repack[1].
-+
- gc.rerereResolved::
- 	Records of conflicted merge you resolved earlier are
- 	kept for this many days when 'git rerere gc' is run.
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 02455fdcd7..bf28619723 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -52,6 +52,7 @@ static timestamp_t gc_log_expire_time;
- static const char *gc_log_expire = "1.day.ago";
- static const char *prune_expire = "2.weeks.ago";
- static const char *prune_worktrees_expire = "3.months.ago";
-+static char *repack_filter;
- static unsigned long big_pack_threshold;
- static unsigned long max_delta_cache_size = DEFAULT_DELTA_CACHE_SIZE;
- 
-@@ -161,6 +162,8 @@ static void gc_config(void)
- 	git_config_get_ulong("gc.bigpackthreshold", &big_pack_threshold);
- 	git_config_get_ulong("pack.deltacachesize", &max_delta_cache_size);
- 
-+	git_config_get_string("gc.repackfilter", &repack_filter);
-+
- 	git_config(git_default_config, NULL);
- }
- 
-@@ -346,6 +349,9 @@ static void add_repack_all_option(struct string_list *keep_pack)
- 
- 	if (keep_pack)
- 		for_each_string_list(keep_pack, keep_one_pack, NULL);
-+
-+	if (repack_filter && *repack_filter)
-+		strvec_pushf(&repack, "--filter=%s", repack_filter);
- }
- 
- static void add_repack_incremental_option(void)
-diff --git a/t/t6500-gc.sh b/t/t6500-gc.sh
-index d9acb63951..b1492b521a 100755
---- a/t/t6500-gc.sh
-+++ b/t/t6500-gc.sh
-@@ -56,6 +56,7 @@ test_expect_success 'gc -h with invalid configuration' '
- '
- 
- test_expect_success 'gc is not aborted due to a stale symref' '
-+	test_when_finished "rm -rf remote client" &&
- 	git init remote &&
- 	(
- 		cd remote &&
-@@ -202,6 +203,24 @@ test_expect_success 'one of gc.reflogExpire{Unreachable,}=never does not skip "e
- 	grep -E "^trace: (built-in|exec|run_command): git reflog expire --" trace.out
- '
- 
-+test_expect_success 'gc.repackFilter launches repack with a filter' '
-+	test_when_finished "rm -rf server client" &&
-+	test_create_repo server &&
-+	git -C server config uploadpack.allowFilter true &&
-+	git -C server config uploadpack.allowAnySHA1InWant true &&
-+	test_commit -C server 1 &&
-+	git clone --bare --no-local server client &&
-+	git -C client config remote.origin.promisor true &&
-+	git -C client rev-list --objects --all --missing=print >objects &&
-+	test $(grep -c "^?" objects) = 0 &&
-+
-+	GIT_TRACE=$(pwd)/trace.out git -C client -c gc.repackFilter=blob:none -c repack.writeBitmaps=false -c gc.pruneExpire=now gc &&
-+
-+	grep -E "^trace: (built-in|exec|run_command): git repack .* --filter=blob:none ?.*" trace.out &&
-+	git -C client rev-list --objects --all --missing=print >objects &&
-+	test $(grep -c "^?" objects) = 1
-+'
-+
- prepare_cruft_history () {
- 	test_commit base &&
- 
+base-commit: 7c2ef319c52c4997256f5807564523dfd4acdfc7
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1406%2FAtariDreams%2Fjoin-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1406/AtariDreams/join-v6
+Pull-Request: https://github.com/git/git/pull/1406
+
+Range-diff vs v5:
+
+ 1:  94ed068d25b ! 1:  0b5afdb93db win32: close handles of threads that have been joined
+     @@ Commit message
+          After joining threads, the handle to the original thread
+          should be closed as it no longer needs to be open.
+      
+     -    Because this only needs to happen if the
+     -    WaitForSingleObject fails, the function was
+     -    rewritten to accommodate this change.
+     -
+     -    The function is still POSIX compliant.
+     +    This change makes the function POSIX compliant.
+      
+          Signed-off-by: Seija Kijin <doremylover123@gmail.com>
+      
+     @@ compat/win32/pthread.c: int pthread_create(pthread_t *thread, const void *unused
+      -			return EINVAL;
+      -		default:
+      -			return err_win_to_posix(GetLastError());
+     -+	if (WaitForSingleObject(thread->handle, INFINITE) == WAIT_FAILED)
+     ++	switch (WaitForSingleObject(thread->handle, INFINITE)) {
+     ++	case WAIT_OBJECT_0:
+     ++		if (value_ptr)
+     ++			*value_ptr = thread->arg;
+     ++		CloseHandle(thread->handle);
+     ++		return 0;
+     ++	case WAIT_ABANDONED:
+     ++		CloseHandle(thread->handle);
+     ++		return EINVAL;
+     ++	default:
+     ++		/* the function failed, so do not detach */
+      +		return err_win_to_posix(GetLastError());
+     -+
+     -+	if (value_ptr) {
+     -+		*value_ptr = thread->arg;
+       	}
+     -+
+     -+	CloseHandle(thread->handle);
+     -+	return 0;
+       }
+       
+     - pthread_t pthread_self(void)
+ -:  ----------- > 2:  5b35362e5d2 prep
+
 -- 
-2.39.0.59.g395bcb85bc.dirty
-
+gitgitgadget
