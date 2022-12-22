@@ -2,103 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E01A7C4332F
-	for <git@archiver.kernel.org>; Thu, 22 Dec 2022 17:17:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A490C4167B
+	for <git@archiver.kernel.org>; Thu, 22 Dec 2022 17:40:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230207AbiLVRRq (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Dec 2022 12:17:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60572 "EHLO
+        id S230038AbiLVRkS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Dec 2022 12:40:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229524AbiLVRRi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Dec 2022 12:17:38 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2ED114D02
-        for <git@vger.kernel.org>; Thu, 22 Dec 2022 09:17:36 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id o5so2335084wrm.1
-        for <git@vger.kernel.org>; Thu, 22 Dec 2022 09:17:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=egx8Tc1dl4FS7rrBDx3AVHu2d0Z6g+EfiY3hLnF+dWE=;
-        b=DoID0s0FX5p1xreohhe1SSl8hnzJ2QhKh3xxcf2bLqHTsoI+UlsVgb84MUXKH2IgCU
-         wACjd+oawtMYiOeS792+xOT9hIn6sVWnJXmSu/GL7w23eO7xhXmqr4GSQNxO6bv9w8MZ
-         K10yfOrkEdZpPQKqgJ+E7mmfeMz25IH09lRuFbztYCnW6zNUnWRdKDNwo6IxFYgBZMh/
-         RgOfumxcx4KkhB+/kYzfCBUlT3DTQzY2mgVEVbmFlyY3uc1U3QUZGFOlUhoOAMur2imw
-         IDsqXQV/xRJxwjPKn2V90W9sIWfLpGmXB1wj4Z3CCXlBv7FMAzcjrSNcCKETQ9e6hmZB
-         hbfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=egx8Tc1dl4FS7rrBDx3AVHu2d0Z6g+EfiY3hLnF+dWE=;
-        b=Yk2Rj5DHNcfNzJX3pKDkbVFQOSdwIXNmyAyCPMxlU8FoAoomq7WDHAK4paMalKyBF/
-         VEe2ypQQ/kElYQLZXekjLSrr25VZgKNbBjIv8SXRUHsrCEXFdGa+8Jb0DxYDz4xP28vP
-         Cs+rz8IxjKDto2m0u24HQCTTXx1WS59bB5XEazO3SFtj4NH7jNxsegbzswXs+VncaE04
-         X6PXxzjFL8OS0R/V0pGyC/QjyT1ZKTt9ppH5MSgRFTeVEV+M2IDnjpmXSJAgVFk1JAEB
-         N8Y3+0zlBP0YG/zT0czhIgVbcNGdOjXN2ggis/4ao+Wl0eIWCCAnjyuDXgxcJvQ/anTL
-         HFQA==
-X-Gm-Message-State: AFqh2kpfoaZrcvUSLNIjATWpA+1k66YyoEgOGORmSOh+c+fvKebEZlEy
-        QaXJIchqqJ1gXqRYf2RvmN47vDU6wEM=
-X-Google-Smtp-Source: AMrXdXuH5CVOa9uzVPtbiw2sg3pxoJizu4viCwbyegT5lRiu9UywxEr+rCt82C00FKEwW3tju45RAw==
-X-Received: by 2002:a5d:4104:0:b0:268:cb75:53ee with SMTP id l4-20020a5d4104000000b00268cb7553eemr4488649wrp.37.1671729455329;
-        Thu, 22 Dec 2022 09:17:35 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m9-20020a056000008900b00225307f43fbsm1016676wrx.44.2022.12.22.09.17.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Dec 2022 09:17:34 -0800 (PST)
-Message-Id: <d9b1df22e0390efef784ace62785dc5f8c248ed6.1671729453.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1406.v9.git.git.1671729453.gitgitgadget@gmail.com>
-References: <pull.1406.v8.git.git.1671724911188.gitgitgadget@gmail.com>
-        <pull.1406.v9.git.git.1671729453.gitgitgadget@gmail.com>
-From:   "Seija Kijin via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 22 Dec 2022 17:17:32 +0000
-Subject: [PATCH v9 1/2] win32: close handles of threads that have been joined
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S229795AbiLVRkO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Dec 2022 12:40:14 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E89E113D71
+        for <git@vger.kernel.org>; Thu, 22 Dec 2022 09:40:13 -0800 (PST)
+Received: (qmail 11167 invoked by uid 109); 22 Dec 2022 17:40:13 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 22 Dec 2022 17:40:13 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13658 invoked by uid 111); 22 Dec 2022 17:40:14 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 22 Dec 2022 12:40:14 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 22 Dec 2022 12:40:12 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric DeCosta <edecosta@mathworks.com>, git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Oct 2022, #03; Mon, 10)
+Message-ID: <Y6SWfOQrvOkLM67P@coredump.intra.peff.net>
+References: <xmqqlepnz1vu.fsf@gitster.g>
+ <Y0S7/jA5tNeoQ2Hm@coredump.intra.peff.net>
+ <xmqqczazx7dn.fsf@gitster.g>
+ <Y0Vq3iGifYeBxPbn@coredump.intra.peff.net>
+ <92cc457a-d267-d20f-b516-295646b989ca@gmx.de>
+ <Y6OTR2iwcORPsTxz@coredump.intra.peff.net>
+ <221222.867cyjx0d3.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
-        <avarab@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
-        Rose <83477269+AtariDreams@users.noreply.github.com>,
-        Seija Kijin <doremylover123@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <221222.867cyjx0d3.gmgdl@evledraar.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Seija Kijin <doremylover123@gmail.com>
+On Thu, Dec 22, 2022 at 09:58:01AM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-After the thread terminates, the handle to the
-original thread should be closed.
+> > I do think it would be less noisy if we could somehow convince Coverity
+> > that yes, strbuf really does NUL-terminate the result. But I haven't
+> > wanted to sink time into figuring out how to annotate it.
+> 
+> I don't have Coverity set up, but perhaps it's satisfied by the same
+> thing that placeted GCC's -fanalyzers in strbuf.c:
+> 
+> 	https://lore.kernel.org/git/RFC-patch-07.15-cf1a5f3ed0f-20220603T183608Z-avarab@gmail.com/
+> 
+> I run my local build with a version of that branch, I'd still like to
+> follow-up on it (and as that RFC thread shows others had some alternate
+> suggestions, e.g. for this strbuf case).
 
-This change makes win32_pthread_join POSIX compliant.
+I don't think that will help. The most common strbuf problem in Coverity
+is "this string isn't NUL terminated". And having walked through their
+step-by-step analysis, I think what is going on is that it sees that:
 
-Signed-off-by: Seija Kijin <doremylover123@gmail.com>
----
- compat/win32/pthread.c | 3 +++
- 1 file changed, 3 insertions(+)
+  strbuf_addstr(&sb, "foo");
 
-diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
-index 2e7eead42cb..81178ed93b7 100644
---- a/compat/win32/pthread.c
-+++ b/compat/win32/pthread.c
-@@ -42,10 +42,13 @@ int win32_pthread_join(pthread_t *thread, void **value_ptr)
- 		case WAIT_OBJECT_0:
- 			if (value_ptr)
- 				*value_ptr = thread->arg;
-+			CloseHandle(thread->handle);
- 			return 0;
- 		case WAIT_ABANDONED:
-+			CloseHandle(thread->handle);
- 			return EINVAL;
- 		default:
-+			/* the wait failed, so do not detach */
- 			return err_win_to_posix(GetLastError());
- 	}
- }
--- 
-gitgitgadget
+is doing:
 
+  memcpy(sb->buf, "foo", strlen(foo));
+
+under the hood, and it says "aha, this is an anti-pattern where you
+forgot to copy the NUL byte!" and creates a warning. And it ignores
+completely the fact that the next line is calling strbuf_setlen() and
+adding the NUL byte.
+
+Now there may be other false positives around strbufs (like not
+realizing the buffer grows), but this is the one I feel like I've seen
+the most.
+
+> I don't think it's true that a strbuf "really does NUL-terminate the
+> result" the way an analyzer like -fanalyzer sees it. I.e. if you do:
+> 
+> 	struct strbuf sb = { .alloc = 123 };
+> 	strbuf_addstr(&sb, "blah");
+> 
+> You'll segfault because the sb->buf isn't the slopbuf, nor
+> '\0'-terminated, it's just NULL.
+
+Yeah, I didn't mean to say that there can't be real problems with
+strbufs. I just meant that there are many false positives where the code
+is correct, but the tool doesn't realize it.
+
+-Peff
