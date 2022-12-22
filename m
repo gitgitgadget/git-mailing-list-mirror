@@ -2,178 +2,178 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7E196C10F1D
-	for <git@archiver.kernel.org>; Thu, 22 Dec 2022 15:14:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B3996C4332F
+	for <git@archiver.kernel.org>; Thu, 22 Dec 2022 15:14:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235673AbiLVPOv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Dec 2022 10:14:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59672 "EHLO
+        id S235712AbiLVPOx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Dec 2022 10:14:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235345AbiLVPO1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Dec 2022 10:14:27 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D629B23157
+        with ESMTP id S235574AbiLVPO0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Dec 2022 10:14:26 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27494FE2
         for <git@vger.kernel.org>; Thu, 22 Dec 2022 07:14:25 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id w15so1950397wrl.9
+Received: by mail-wm1-x32d.google.com with SMTP id ja17so1626648wmb.3
         for <git@vger.kernel.org>; Thu, 22 Dec 2022 07:14:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AXP7ZJ7T/+kkP8EsJl/0WuAJ4TG9ORZbUaFHwLWlnYQ=;
-        b=aaeknxAaHcFZlX5DT7xqol49wp62IV3pS5bUuaz7P2HWdJmyZ2/f5r6990VgIrWtiB
-         SvYGapynZUWo8N8cVBTw3G5d/5iIChIZsK4j9PvLmOYSHwrs/4gLPbARs08i7+9S51Wc
-         GJFhwpqLMNOjcT0qu1jgBdEw8JWLD3V3S3GuXu5suoqPrXAnXnVRHHdSJ0IJIaEcW47T
-         dUAzmFxlTxE8tOQpczYxByR1RcaquqFgFviuU2UEbHpqSCLW6XY4SatIOq5YlWdq1oD7
-         qLTOQCCkLhblOQVYn45rdul8cqigv3ll34V5Ai8ZrEdRy6gxnk+a30QL18QPX4cc4u1S
-         8wpQ==
+        bh=8U8zfWN47or1CWj7YTDiNX6qhV2CR343X60qq8TUyW4=;
+        b=Kr7G1DMLEsCV7Aa2Uyg/xKYc/YEqY5FNKQbKNA0MpHYPsr0LBjy4oxrg97Sc4uJDlR
+         NzdgN/enNWyMWO37vz2D8GXwYLVhNV6EwGSGa2IdwO/CSqq4XC+AoU+Hq0MD+Kltha6Z
+         SmSnRnQdxpAsoq1oEAgmhR+hOUZVHitY6INJcglX2VixLNpLd/wmheQPwRP1pjFiGm9h
+         rG3siwGpQAvdNfIb/hIYZxh0dSfg3EWTA6BYpIXGY1u59ov1Jq6bDHLjbljHXttT+Scd
+         +uQfWPfq5o9ukqBIN2XrfWFUjPvuKBuZhwiCAYBabvwadYIRxkHOmIqIxQiDbWT0HsF/
+         f8Yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AXP7ZJ7T/+kkP8EsJl/0WuAJ4TG9ORZbUaFHwLWlnYQ=;
-        b=iEFxuSxKGPuT5CRncM+j4fcOrXZv5Ql1q/ed2egJWQwrllKhbLD0Z6rHiDJlAldbUP
-         7S5mycgfSxZfCnZFtgYPWg21D9ikGxzkTxC5yrCw4wMNGBGmGxu2nfuknIAxP9DdTVDx
-         Ist8qyB3tw1KaQh05ojosXMTnyn/Qs8Meyr59WoNOBv1tzya4XEsEIUWEJVwKFverAwj
-         91iiBK4d7WE/0x/0FWVNu7jUIMRgvAeFiddFwfqB9uoqCH+i8RsAPESlY4cIoGDKPMA+
-         GYgTzdoY9KxIssWMk0ZAlTjfqzXP83LXq2L5ZC1/51aZC2Dv/d+cuUmvhXOL15QJhxMl
-         7wiQ==
-X-Gm-Message-State: AFqh2kpEWSp1bYDI31PNc25IgdylWHxro1Mn38PkchTzyH0ZgIYZIP5L
-        aalk69DyerOmlUReAGWt8d+LGKyQsY0=
-X-Google-Smtp-Source: AMrXdXtV0y+/g54OpNhEEiD+s9z0I3LAVVsZo2kWXUrKd1aHIdsfUqBrKYRhsk/ZbyXRQrMV1mm9xg==
-X-Received: by 2002:adf:e8c1:0:b0:242:782c:f397 with SMTP id k1-20020adfe8c1000000b00242782cf397mr3568243wrn.25.1671722064243;
-        Thu, 22 Dec 2022 07:14:24 -0800 (PST)
+        bh=8U8zfWN47or1CWj7YTDiNX6qhV2CR343X60qq8TUyW4=;
+        b=s52geKItygIYC51T+va0wRi+c7PJZ4zYCb7zK0HSEcUeI6F59SotrlYxunx6zFIQaT
+         FK+SZyDUplZOoJKGMYEPWQu0i0HhpzBriOwrnzCNDk8e3bYaJn8Z5mGDZfcJoLR8eYjo
+         KH0H3ipZSPbzatT6YlYLqYhKNT1dLWmaR0u3N5XkTD37ejqmBnqezSCfwfC5T4UnXZQG
+         BZY3LVSamqjjepODOT5pe4sB9l+D0P1rlOkFpLJ+/0aMEzt+PbLjGizgsDU8M/hwBgHC
+         A0GwuJP7yaN7cMGMH58Q7EMM2LzkSBuwNEFg+WvCi4eSqeLETrhpGgJGd+IAc8CbAp2F
+         5gaA==
+X-Gm-Message-State: AFqh2kpUyC0s8tp5VEOcyD3+QZLtYOr6BXUQfLBHhweOUCsesoqrtX9C
+        dHrpr7J8eFGv6tC5scj4UcI/ESdGQf0=
+X-Google-Smtp-Source: AMrXdXvK6XfhauN0xjiF8blgQdwEsoXI6WKRmzGy+PTbS0ySGvni/MtyuKbAedvKqkaziN0o3D0YUw==
+X-Received: by 2002:a05:600c:1d03:b0:3d3:4aa6:4fe6 with SMTP id l3-20020a05600c1d0300b003d34aa64fe6mr4679516wms.3.1671722063385;
+        Thu, 22 Dec 2022 07:14:23 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w14-20020adfee4e000000b002422bc69111sm984577wro.9.2022.12.22.07.14.23
+        by smtp.gmail.com with ESMTPSA id o15-20020a05600c4fcf00b003c6f3f6675bsm6770532wmq.26.2022.12.22.07.14.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 22 Dec 2022 07:14:23 -0800 (PST)
-Message-Id: <8f5a483c32958b8ab2ac6deeef383165e7214260.1671722058.git.gitgitgadget@gmail.com>
+Message-Id: <876dd3f221fe575dc0407983e15280de4e9e18e0.1671722058.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1400.v4.git.1671722058.gitgitgadget@gmail.com>
 References: <pull.1400.v3.git.1670262639.gitgitgadget@gmail.com>
         <pull.1400.v4.git.1671722058.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 22 Dec 2022 15:14:11 +0000
-Subject: [PATCH v4 05/11] transport: rename got_remote_heads
-Fcc:    Sent
+From:   "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Date:   Thu, 22 Dec 2022 15:14:10 +0000
+Subject: [PATCH v4 04/11] bundle-uri client: add boolean transfer.bundleURI
+ setting
+MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
+Fcc:    Sent
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, me@ttaylorr.com, newren@gmail.com,
         avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
         chooglen@google.com, jonathantanmy@google.com,
         dyroneteng@gmail.com, Victoria Dye <vdye@github.com>,
         Derrick Stolee <derrickstolee@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <derrickstolee@github.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
+ <avarab@gmail.com>
 
-The 'got_remote_heads' member of 'struct git_transport_data' was used
-historically to indicate that the initial server connection was made and
-the ref advertisement was returned. With protocol v2, that initial
-handshake does not necessarily include the ref advertisement, so this
-member is not an accurate name. Thankfully, all uses of the member are
-only checking to see if the handshake should take place, not whether or
-not some local data has the ref advertisement.
+The yet-to-be introduced client support for bundle-uri will always
+fall back on a full clone, but we'd still like to be able to ignore a
+server's bundle-uri advertisement entirely.
 
-Rename the member to 'finished_handshake' to represent the proper state.
-Note that the variable is only set to 1 during the handshake() method.
+The new transfer.bundleURI config option defaults to 'false', but a user
+can set it to 'true' to enable checking for bundle URIs from the origin
+Git server using protocol v2.
 
+Co-authored-by: Derrick Stolee <derrickstolee@github.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Derrick Stolee <derrickstolee@github.com>
 ---
- transport.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ Documentation/config/transfer.txt |  6 ++++++
+ t/lib-bundle-uri-protocol.sh      | 19 ++++++++++++++++++-
+ transport.c                       |  8 ++++++++
+ 3 files changed, 32 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/config/transfer.txt b/Documentation/config/transfer.txt
+index 264812cca4d..c3ac767d1e4 100644
+--- a/Documentation/config/transfer.txt
++++ b/Documentation/config/transfer.txt
+@@ -115,3 +115,9 @@ transfer.unpackLimit::
+ transfer.advertiseSID::
+ 	Boolean. When true, client and server processes will advertise their
+ 	unique session IDs to their remote counterpart. Defaults to false.
++
++transfer.bundleURI::
++	When `true`, local `git clone` commands will request bundle
++	information from the remote server (if advertised) and download
++	bundles before continuing the clone through the Git protocol.
++	Defaults to `false`.
+diff --git a/t/lib-bundle-uri-protocol.sh b/t/lib-bundle-uri-protocol.sh
+index d44c6e10f9e..75ea8c4418f 100644
+--- a/t/lib-bundle-uri-protocol.sh
++++ b/t/lib-bundle-uri-protocol.sh
+@@ -85,10 +85,11 @@ test_expect_success "connect with $BUNDLE_URI_PROTOCOL:// using protocol v2: hav
+ '
+ 
+ test_expect_success "clone with $BUNDLE_URI_PROTOCOL:// using protocol v2: request bundle-uris" '
+-	test_when_finished "rm -rf log cloned" &&
++	test_when_finished "rm -rf log cloned cloned2" &&
+ 
+ 	GIT_TRACE_PACKET="$PWD/log" \
+ 	git \
++		-c transfer.bundleURI=false \
+ 		-c protocol.version=2 \
+ 		clone "$BUNDLE_URI_REPO_URI" cloned \
+ 		>actual 2>err &&
+@@ -99,6 +100,22 @@ test_expect_success "clone with $BUNDLE_URI_PROTOCOL:// using protocol v2: reque
+ 	# Server advertised bundle-uri capability
+ 	grep "< bundle-uri" log &&
+ 
++	# Client did not issue bundle-uri command
++	! grep "> command=bundle-uri" log &&
++
++	GIT_TRACE_PACKET="$PWD/log" \
++	git \
++		-c transfer.bundleURI=true \
++		-c protocol.version=2 \
++		clone "$BUNDLE_URI_REPO_URI" cloned2 \
++		>actual 2>err &&
++
++	# Server responded using protocol v2
++	grep "< version 2" log &&
++
++	# Server advertised bundle-uri capability
++	grep "< bundle-uri" log &&
++
+ 	# Client issued bundle-uri command
+ 	grep "> command=bundle-uri" log
+ '
 diff --git a/transport.c b/transport.c
-index b4cf2c0252e..757ad552bf3 100644
+index b6f279e92cb..b4cf2c0252e 100644
 --- a/transport.c
 +++ b/transport.c
-@@ -198,7 +198,7 @@ struct git_transport_data {
- 	struct git_transport_options options;
- 	struct child_process *conn;
- 	int fd[2];
--	unsigned got_remote_heads : 1;
-+	unsigned finished_handshake : 1;
- 	enum protocol_version version;
- 	struct oid_array extra_have;
- 	struct oid_array shallow;
-@@ -345,7 +345,7 @@ static struct ref *handshake(struct transport *transport, int for_push,
- 	case protocol_unknown_version:
- 		BUG("unknown protocol version");
- 	}
--	data->got_remote_heads = 1;
-+	data->finished_handshake = 1;
- 	transport->hash_algo = reader.hash_algo;
+@@ -1516,6 +1516,7 @@ int transport_fetch_refs(struct transport *transport, struct ref *refs)
  
- 	if (reader.line_peeked)
-@@ -421,7 +421,7 @@ static int fetch_refs_via_pack(struct transport *transport,
- 	args.negotiation_tips = data->options.negotiation_tips;
- 	args.reject_shallow_remote = transport->smart_options->reject_shallow;
- 
--	if (!data->got_remote_heads) {
-+	if (!data->finished_handshake) {
- 		int i;
- 		int must_list_refs = 0;
- 		for (i = 0; i < nr_heads; i++) {
-@@ -461,7 +461,7 @@ static int fetch_refs_via_pack(struct transport *transport,
- 			  to_fetch, nr_heads, &data->shallow,
- 			  &transport->pack_lockfiles, data->version);
- 
--	data->got_remote_heads = 0;
-+	data->finished_handshake = 0;
- 	data->options.self_contained_and_connected =
- 		args.self_contained_and_connected;
- 	data->options.connectivity_checked = args.connectivity_checked;
-@@ -846,7 +846,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
- 	if (transport_color_config() < 0)
- 		return -1;
- 
--	if (!data->got_remote_heads)
-+	if (!data->finished_handshake)
- 		get_refs_via_connect(transport, 1, NULL);
- 
- 	memset(&args, 0, sizeof(args));
-@@ -894,7 +894,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
- 	else
- 		ret = finish_connect(data->conn);
- 	data->conn = NULL;
--	data->got_remote_heads = 0;
-+	data->finished_handshake = 0;
- 
- 	return ret;
- }
-@@ -914,7 +914,7 @@ static int disconnect_git(struct transport *transport)
+ int transport_get_remote_bundle_uri(struct transport *transport)
  {
- 	struct git_transport_data *data = transport->data;
- 	if (data->conn) {
--		if (data->got_remote_heads && !transport->stateless_rpc)
-+		if (data->finished_handshake && !transport->stateless_rpc)
- 			packet_flush(data->fd[1]);
- 		close(data->fd[0]);
- 		if (data->fd[1] >= 0)
-@@ -949,7 +949,7 @@ void transport_take_over(struct transport *transport,
- 	data->conn = child;
- 	data->fd[0] = data->conn->out;
- 	data->fd[1] = data->conn->in;
--	data->got_remote_heads = 0;
-+	data->finished_handshake = 0;
- 	transport->data = data;
++	int value = 0;
+ 	const struct transport_vtable *vtable = transport->vtable;
  
- 	transport->vtable = &taken_over_vtable;
-@@ -1150,7 +1150,7 @@ struct transport *transport_get(struct remote *remote, const char *url)
- 		ret->smart_options = &(data->options);
+ 	/* Check config only once. */
+@@ -1523,6 +1524,13 @@ int transport_get_remote_bundle_uri(struct transport *transport)
+ 		return 0;
+ 	transport->got_remote_bundle_uri = 1;
  
- 		data->conn = NULL;
--		data->got_remote_heads = 0;
-+		data->finished_handshake = 0;
- 	} else {
- 		/* Unknown protocol in URL. Pass to external handler. */
- 		int len = external_specification_len(url);
++	/*
++	 * Don't request bundle-uri from the server unless configured to
++	 * do so by the transfer.bundleURI=true config option.
++	 */
++	if (git_config_get_bool("transfer.bundleuri", &value) || !value)
++		return 0;
++
+ 	if (!vtable->get_bundle_uri)
+ 		return error(_("bundle-uri operation not supported by protocol"));
+ 
 -- 
 gitgitgadget
 
