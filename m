@@ -2,86 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07A10C4332F
-	for <git@archiver.kernel.org>; Thu, 22 Dec 2022 18:58:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 44E9EC4332F
+	for <git@archiver.kernel.org>; Thu, 22 Dec 2022 19:27:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235405AbiLVS6L (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Dec 2022 13:58:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38478 "EHLO
+        id S235594AbiLVT1N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Dec 2022 14:27:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229984AbiLVS6J (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Dec 2022 13:58:09 -0500
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3C98112C
-        for <git@vger.kernel.org>; Thu, 22 Dec 2022 10:58:08 -0800 (PST)
-Received: by mail-ed1-x52c.google.com with SMTP id m19so4178078edj.8
-        for <git@vger.kernel.org>; Thu, 22 Dec 2022 10:58:08 -0800 (PST)
+        with ESMTP id S235614AbiLVT06 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Dec 2022 14:26:58 -0500
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FEFE1CFFD
+        for <git@vger.kernel.org>; Thu, 22 Dec 2022 11:26:50 -0800 (PST)
+Received: by mail-ej1-x634.google.com with SMTP id fc4so7124921ejc.12
+        for <git@vger.kernel.org>; Thu, 22 Dec 2022 11:26:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ODegHHSNxaPgsD1LFjPoiB5uQwFJDXYPyhhRWNNUDKw=;
-        b=XFUz0zYWHV8zXW50QjE+uqsSHe9Kf6Lb8vJIJorMVsQ5W5qL1mztUdVRXJglfe4GPl
-         JT4pPXTsXl6ILrBd5DaderPvHm2OxW/yFe1T4gBuZvW6FLMD5AkSYU646Tqrjx/Khh6c
-         CxjwoC7F56KRhJzM6navcJjbLTM4Cw1oo3qeYWLglaiP5dn5XIXMrik/AC39INYFmCA8
-         seLixL9RItNIkmUEAMGja+ymHW7WSfPUTDwmqyqxbjraiG3oLMIVF36RUk2CBWrbLvrl
-         B+uvx7ve3rKFrek09BRr8rIBhUTxBbZCIZuoYhKXVtfuP8fPbnTLIZBx2ZErav5BTMvL
-         oJwQ==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=O8aCcPtdO16WWUAjnnKhaX6Sa6jL/pcfNqzCsXPUKjc=;
+        b=SwG65JmJAV8tDoJPCBSRPOiY4acenmtM1Moq6HXw34D3OZVsAsCoX2liX2D0j1NLlh
+         SW7R5/DCyX7Jpj+xBQut5gxwFPvcPgULMYEL0hZj0KD4MLT+rAXjXMkvdvztUdfws2Mm
+         e9tFTNdzN0tVXfHrJce8KZarAZoSzDlbmBJ89EMXEuK2ZGLyd2zMTG96sGkUCBecJXvv
+         tpYc3Yw7Edaf6jnwveiuGEIQ+iPLWaod3ZXXMlB/IpAzGbLXQ7ElkW8mFcw3rEXCVH47
+         dH35gxSpea0wnAfvjf63zoSAxZVM6pptu76KVi+0iEcIGvfNJWWFqaCA47Y0E68CU+XJ
+         FPiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ODegHHSNxaPgsD1LFjPoiB5uQwFJDXYPyhhRWNNUDKw=;
-        b=D9FzkICEoWBwzlc4QplxWh/agUadztTZV3oyIryGkaYYCxIUHvdhSTK9gk7p6T20x2
-         eSXkO2zHjDu6p/4NByUN3e6YzqSvQ8LleYVeu04dXDaWm3Wj12sjF19cELW9rIqwqWwg
-         Df9u+0PVGotdimcsThj6xXAO7cGcXHW1KhhRqFunHYuDnng9naCIjCc1XhD0U/bbs3M9
-         Yb2uJ27zSWtx7CTTYUI5tbbpJAm3WWBPKEWmN3ZZFPTF1heItyqijoFEzuYNGhO2ZZYo
-         R3DRC6Q7PsVxKlqatbtFfgENF9c7jHqrBYJUVoWmsgPXGwQkdXigBvspe1Ha5gQqOfE7
-         Nr0g==
-X-Gm-Message-State: AFqh2kp3v1tH4DpNgQ6JbuXQ8hdb1lyY/ptk0D0xlnhb9fu6V7RiKnXL
-        WzIpSFF+bZYJ8tRZqrBB6ao=
-X-Google-Smtp-Source: AMrXdXtNRR71LE6gBuhQB6QDFtWLMN69QwGaaihWG6pbwn7w5HsjSDrF3NhXhbg08lJH8djTPxLPMg==
-X-Received: by 2002:a05:6402:4005:b0:46d:87a5:4dac with SMTP id d5-20020a056402400500b0046d87a54dacmr6271442eda.36.1671735486601;
-        Thu, 22 Dec 2022 10:58:06 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=O8aCcPtdO16WWUAjnnKhaX6Sa6jL/pcfNqzCsXPUKjc=;
+        b=YbP7/p7QKwVr4BtgUS+uHcdjMtEVwi4Zy9xm0f9Rn73PjZsdgyOk2ExUA5ObFL+mCX
+         0GSANhLvrD9OsJmIPCaoJQVVR3wxXYxydVMtF/9a00pCqqfKUu2D8sXdoPhEdpDS12FM
+         Ph0tubpW76eOuvlC300hEZYMhSdMVBGxGGG5bIpxuhEWzggK1xfNdcbTNtC4gxrs+kGb
+         5XaKvUEyTKbs79dtp29qAM0oguCqDabT93Ogmz4+PDlCAvJzm9Q3SRngYLTkWWtlc89Z
+         XCWa+IqySIcgvK3kqT6jaqUv9Hgog2MkeFVeFknuvQsOhKHwUe+2pYuWva/HTLaFiRzz
+         4Rjg==
+X-Gm-Message-State: AFqh2kp/Lj1hX851c/osMQSg6M9sLD8k39gfGtCLehAFtfqyHVRlAQld
+        5LLx+f1waapKmjuR72PMmu0=
+X-Google-Smtp-Source: AMrXdXswP2fE0hzztXsbplQ93Ir4BykHO0NWUiZqsvd8+TkP+MzDGoMRuqJo4Vd8X/5Usqc2SLhVfw==
+X-Received: by 2002:a17:907:c386:b0:81e:8988:71ac with SMTP id tm6-20020a170907c38600b0081e898871acmr6129242ejc.24.1671737208818;
+        Thu, 22 Dec 2022 11:26:48 -0800 (PST)
 Received: from localhost (94-21-37-252.pool.digikabel.hu. [94.21.37.252])
-        by smtp.gmail.com with ESMTPSA id t4-20020aa7db04000000b0046f73b46c5csm658739eds.23.2022.12.22.10.58.04
+        by smtp.gmail.com with ESMTPSA id e22-20020a170906045600b0073022b796a7sm559494eja.93.2022.12.22.11.26.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Dec 2022 10:58:05 -0800 (PST)
-Date:   Thu, 22 Dec 2022 19:58:04 +0100
+        Thu, 22 Dec 2022 11:26:48 -0800 (PST)
+Date:   Thu, 22 Dec 2022 20:26:46 +0100
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] tests: make 'test_oid' print trailing newline
-Message-ID: <20221222185804.GE3411@szeder.dev>
-References: <20221218162905.3508164-1-szeder.dev@gmail.com>
- <xmqqy1r4usjy.fsf@gitster.g>
+To:     NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: GitHub actions are failing
+Message-ID: <20221222192646.GF3411@szeder.dev>
+References: <CA+PPyiHtPsRwqMmr6annuuqzeUEf+7pFUSbnXdThjNNVtxFCGw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqy1r4usjy.fsf@gitster.g>
+In-Reply-To: <CA+PPyiHtPsRwqMmr6annuuqzeUEf+7pFUSbnXdThjNNVtxFCGw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 19, 2022 at 09:48:49AM +0900, Junio C Hamano wrote:
-> SZEDER Gábor <szeder.dev@gmail.com> writes:
-> >       $ git grep '\stest_oid ' -- ':/t/*.sh'
-> >       $ git grep 'echo "\?$(test_oid ' -- ':/t/*.sh'
+On Thu, Dec 22, 2022 at 08:55:43PM +0300, NSENGIYUMVA WILBERFORCE wrote:
+> Hi
+> So I have been working in the signature atom patches. I have been
+> testing my commits on my fork. However, the actions are failing.
+> One of the errors is
 > 
-> I found these examples in the log message a bit annoying to see, as
-> both invite an undefined behaviour by having an ordinary character
-> ('s' or '?')  preceded by an unescaped backslash in a POSIXly
-> correct implementation of BRE.  GNU libc seems to be OK with it (I
-> double checked by adding "-G" on the command line to make sure my
-> experiments are not affected by any grep.patterntype), but they may
-> fail for folks on stricter platforms.
+> -------------
+> E: Package 'gcc-8' has no installation candidate
+> + end_group
+> + test -n ''
+> + return 0
+> Error: Process completed with exit code 100.
+> -------------
+> 
+> I would like to have any help, my branch is
+> https://github.com/nsengiyumva-wilberforce/git/commits/signature5
 
-Please feel free to amend the commit message as you see fit.  Usually
-I would do that myself as I'm rather picky of my commit messages, but,
-alas, I'm not versed in portability issues of regexes, so I'm not sure
-what the right regexes would be.
+This should be fixed in 0178420b9c (github-actions: run gcc-8 on
+ubuntu-20.04 image, 2022-11-25), which is in v2.39.0-rc1, but your
+branch is based on v2.39.0-rc0.  I would suggest to rebase your branch
+on top of v2.39.0, because it contains a few other CI fixes that are
+not yet present in any of its prereleases.
 
