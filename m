@@ -2,94 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C076C4332F
-	for <git@archiver.kernel.org>; Wed, 21 Dec 2022 23:14:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 406E9C4332F
+	for <git@archiver.kernel.org>; Thu, 22 Dec 2022 02:41:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229913AbiLUXOU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 21 Dec 2022 18:14:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60234 "EHLO
+        id S234634AbiLVClP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 21 Dec 2022 21:41:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229561AbiLUXOS (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Dec 2022 18:14:18 -0500
+        with ESMTP id S230099AbiLVClN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Dec 2022 21:41:13 -0500
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E00523BEC
-        for <git@vger.kernel.org>; Wed, 21 Dec 2022 15:14:17 -0800 (PST)
-Received: (qmail 3652 invoked by uid 109); 21 Dec 2022 23:14:16 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC429FCC3
+        for <git@vger.kernel.org>; Wed, 21 Dec 2022 18:41:12 -0800 (PST)
+Received: (qmail 6143 invoked by uid 109); 22 Dec 2022 02:41:12 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 21 Dec 2022 23:14:16 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 22 Dec 2022 02:41:12 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 5421 invoked by uid 111); 21 Dec 2022 23:14:18 -0000
+Received: (qmail 6850 invoked by uid 111); 22 Dec 2022 02:41:14 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Dec 2022 18:14:18 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 21 Dec 2022 21:41:14 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Wed, 21 Dec 2022 18:14:15 -0500
+Date:   Wed, 21 Dec 2022 21:41:11 -0500
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric DeCosta <edecosta@mathworks.com>, git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Oct 2022, #03; Mon, 10)
-Message-ID: <Y6OTR2iwcORPsTxz@coredump.intra.peff.net>
-References: <xmqqlepnz1vu.fsf@gitster.g>
- <Y0S7/jA5tNeoQ2Hm@coredump.intra.peff.net>
- <xmqqczazx7dn.fsf@gitster.g>
- <Y0Vq3iGifYeBxPbn@coredump.intra.peff.net>
- <92cc457a-d267-d20f-b516-295646b989ca@gmx.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     M Hickford via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, M Hickford <mirth.hickford@gmail.com>
+Subject: Re: [PATCH] Documentation: clarify that cache forgets credentials if
+ the system restarts
+Message-ID: <Y6PDx7Ij4NA/kBB7@coredump.intra.peff.net>
+References: <pull.1447.git.1671610994375.gitgitgadget@gmail.com>
+ <xmqqo7rxror4.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <92cc457a-d267-d20f-b516-295646b989ca@gmx.de>
+In-Reply-To: <xmqqo7rxror4.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 21, 2022 at 12:11:54AM +0100, Johannes Schindelin wrote:
+On Wed, Dec 21, 2022 at 08:15:59PM +0900, Junio C Hamano wrote:
 
-> > > Is there anybody else who is reading Coverity reports, I wonder.
-> > > This one is a clear positive.
-> >
-> > I doubt it.
+> This is not a new issue, but I am not sure if "never touch the disk"
+> is a honest thing to say (I know there is no "write this in a file"
+> done by the cache daemon, but the running daemon can be swapped out
+> and I do not think we do anything to prevent the in-core structure
+> credential_cache_entry from getting written to the swap.
+
+Right, we don't do anything like mlock(), mostly because of the
+portability problems (though obviously we could make an optional
+wrapper, which is strictly better than the status quo). On the other
+hand, neither does git itself, so we're only holding credential-cache to
+the same standard. Arguably the cache holds credentials longer, but a
+fetch or push may run for quite a while bottle-necked on network or pack
+generation/indexing (and both of those operations create memory pressure
+which may trigger swap).
+
+But I agree that it is more accurate to say "does not touch the
+filesystem" or your "instead of written to a file".
+
+> Taking all of the above together, perhaps something like this?
 > 
-> As I mentioned to you previously (e.g. in
-> https://lore.kernel.org/git/3896n74p-0r16-866o-r668-70q6pos078n9@tzk.qr/),
-> I do have a look at them, usually a closer look during the -rc phases.
+>     ... caches credentials for use by future Git programs.  The
+>     stored credentials are kept in memory of the cache-daemon
+>     process (instead of written to a file) and are forgotten after a
+>     configuarble timeout.  The cache-daemon dies with the cached
+>     credentials upon a system shutdown/restart, or when it receives
+>     SIGHUP (i.e. by logging out, you disconnect from the terminal
+>     the daemon was started from); the latter can be disabled with
+>     credentialCache.ignoreSIGHUP configuration.  The cache is
+>     accessible over a Unix domain socket, ...
 
-Thanks for the reminder. I had a vague recollection that you were pretty
-negative on Coverity's quality, but you do say pretty clearly there that
-you'll continue with builds.
+That seems reasonable. I was going to suggest also mentioning that we
+can ask the daemon to exit manually, but that is pretty well covered
+later in the document. On the other hand, it may make sense to put all
+of this together in the description.
 
-That said, I stand by the sentiment that hardly anybody is looking at
-them. It sounds like it's mostly just you and me.
+As brian mentioned, not every system behaves the same with respect to
+SIGHUP here. So we may need to be a little more vague here.
 
-> > My personal fork still has the coverity github-action which I showed
-> > last year[1]. We could merge that, but giving access to the project is a
-> > minor pain. And of course the full list is full of false positives. One
-> > nice thing about coverity is that it marks each defect by date, and
-> > tells you how many new ones there are. So when I push up my
-> > next+personal branches build, I usually just skim over any new ones it
-> > reports. I'd say about 10% of them are actionable.
-> 
-> That 10% number does not match up with my experience.
-> 
-> In the v2.39.0-rc period, I looked through over a hundred new issues.
-> Pretty much all of them were strvec/strbuf false positives, and even the
-> remaining ones were not actionable. (I typically glance over leaks such as
-> the one you reported, in favor of focusing on bugs that may cause crashes
-> or other serious problems.)
+So maybe more like:
 
-My counting method may be a bit more generous to Coverity. I build
-'next' (plus my local topics) every day or three, and get an email from
-Coverity if there's anything new. If so, I look at it. So I'm counting
-"times I got an email and looked" as the denominator, and the numerator
-is "there was at least one useful warning". So that skips some useless
-ones that appear along side useful ones.
+  ...are forgotten after a configurable timeout, or if the daemon exits.
 
-I'm not sure how you saw a hundred new issues, though. My dashboard has
-10 unresolved issues total since the beginning of September, which is
-before 2.38 was released, and I think I sent 2 fixes since then (which
-are not counted, since they're now resolved, so 2/12).
+  You can ask the daemon to exit manually, forgetting all cached
+  credentials before their timeout, by running:
 
-I do think it would be less noisy if we could somehow convince Coverity
-that yes, strbuf really does NUL-terminate the result. But I haven't
-wanted to sink time into figuring out how to annotate it.
+    git credential-cache exit
+
+  The daemon will also exit when it receives a signal. Depending on the
+  configuration of your system, this may happen automatically when you
+  log out. If you want to inhibit this behavior (and let items time out
+  as normal even when you're logged out), you can set the
+  credentialCache.ignoreSIGHUP configuration variable to `true`.
+
+There are many possible variations, of course. I was mostly just trying
+to get across the point that:
+
+  - there are several ways for the daemon to exit
+
+  - sighup / logout handling may depend on your system
+
+And I am happy with any text that says so.
 
 -Peff
