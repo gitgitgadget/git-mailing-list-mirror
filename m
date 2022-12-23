@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 94410C4332F
-	for <git@archiver.kernel.org>; Fri, 23 Dec 2022 19:26:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 504C3C4332F
+	for <git@archiver.kernel.org>; Fri, 23 Dec 2022 19:35:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231267AbiLWT0m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Dec 2022 14:26:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38450 "EHLO
+        id S231216AbiLWTfu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Dec 2022 14:35:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230369AbiLWT0k (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Dec 2022 14:26:40 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8572F1FCD2
-        for <git@vger.kernel.org>; Fri, 23 Dec 2022 11:26:37 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id f13-20020a1cc90d000000b003d08c4cf679so4104389wmb.5
-        for <git@vger.kernel.org>; Fri, 23 Dec 2022 11:26:37 -0800 (PST)
+        with ESMTP id S230366AbiLWTfr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Dec 2022 14:35:47 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65513F32
+        for <git@vger.kernel.org>; Fri, 23 Dec 2022 11:35:44 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id ay40so4204051wmb.2
+        for <git@vger.kernel.org>; Fri, 23 Dec 2022 11:35:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=K8lAtLWzs4lZf2850wstMit5dz7j8cHLDad+19w9H4M=;
-        b=OJ3atwemPBjdQt5OIom++gqJLr2W/eO+zUBjpNf09bg1dlXbhvIF4HElNXaO+cb6pl
-         OCIa6r5ehTgzKH79wek1zMivzyucfoHSN2XvmPZQcjj7vw3Kx65wO44lyLho1MVmviT0
-         n0fn8W1aoR+YHtcy0hvNSA7wLCqf/k3WMfsmfpLPB5GPLIBvnxH7PgJ9a4o/d70CEu9a
-         3k51k164f9izE6v/Hedupy4s8udX6DUojTAUDe5Eew8fjfFGi1dGFt1jUQWgCWbXbUVX
-         tZnP255aaaYeNjVEfCZP63f06FLvC9E3nHBipRjdG/pUPn5gdbH3GvflKN9isL6Mgwu/
-         /GcA==
+        bh=Fp5Dj9LM2zhxWbURXmtliNhA5/sT81Q9wfashppED7o=;
+        b=P7BMxfqCAm0VrXaa823VtHvOaz+EWNwrfirN5YiWRy64Z2jR+Ob0DkTp1KqtgyUEGe
+         aB+sgy5KAPkc3NZoSuFFpZkyZ0uOldDjxc7jF4TF3j696FyBZ9izXyohBSZXbzwrVvzP
+         L1gJ88a3nTsrO+Wuzy32G/ncVzGkqF7Cplw7c0lLHf4ZnAdnZ5EZT1dluQNWGYWsLDjh
+         ra3X/cmJtKzDFYXpUjqchCAWn2a4ZxmGB8pualw8QukARaQ7Lye/7CJCKsIjCRZpOUW/
+         D1vxuyOn8jNu89I1dttgEW7lYPt0ubpwPRLUG4TP3M2CcoBrcbo3wU4viZhCb21yA3SX
+         /MXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=K8lAtLWzs4lZf2850wstMit5dz7j8cHLDad+19w9H4M=;
-        b=qRRGsEus4ciwNxIXWSa1J/ujCbzL1QmnRnSbZp3Y+dNnQZawB7+6XkRNBzMjsdlUQz
-         uOIw+K+5LRaRcdrKR/IWCouxxsFV49DPa7C7KS85VN0+qUQRan9DNFTxjtkxr3f2Pjps
-         wZ8fyUGS8JaVM6EySmdO6YJN2rJl3QSjK1k9tXZc/toBgfwLjeEbb+Pq8iTr/Qz2pmPK
-         bw13UTyHmN1gcH/E9WvqkQgcf3zyuyEr2qdSlXQi/SyFwzY1awGE9cMmViG1/6dzf9ZB
-         sBMdFzeX5QTbW5RuaykrdZ69KnnmuYkT6JFE1C3so7fdHgfQTqBdR8+cvJi8tgCSVPyr
-         rrTA==
-X-Gm-Message-State: AFqh2kptCzH8DLHOikdAzf+JUtiKF0cX6hebKgQ5BnFSqRSi+yCTF98i
-        p6D/+TRdjr+89X6fQi57n5Kc2wB1bxs=
-X-Google-Smtp-Source: AMrXdXtD/sGHZG1W7yDvLIpk32b+TSq6875ApSWcritSQp+7s2lKvLCdX2nH5wRmHlNAmJrq8mEb8w==
-X-Received: by 2002:a05:600c:501e:b0:3d3:47b7:56ab with SMTP id n30-20020a05600c501e00b003d347b756abmr9053497wmr.27.1671823594947;
-        Fri, 23 Dec 2022 11:26:34 -0800 (PST)
+        bh=Fp5Dj9LM2zhxWbURXmtliNhA5/sT81Q9wfashppED7o=;
+        b=lfp42pGWPw6joZWngqeJ/5QntFs9yBYfkZ95lIVFRvXRRGNrBqJ1NE7lpRMOcB/X3r
+         GW4UdwMQWbyBdAEHDr7Zi3ZzBXTpENaD90vn0iYnivMCa5qlkP0dzDmmZP2gwqDKORiz
+         YspCn2WlS43HEAA+kb4W2oQF5SEUFs22zGvDHNprLD0hJNYkr+yrhC7Q1aT+en8OHwiS
+         RJiZjBUhltNbHYKPQr/PhiKWlL52K4zb1uMKsQzcsFLQ1nE0OA+FjYvmwVMLNzYP5sCj
+         gXWy++TVUfWBrgY9eA9USwoWqf3nD3f9ntKOYwrNk1ft5fqqs36jcNEn0V2VtO779XjZ
+         oAsQ==
+X-Gm-Message-State: AFqh2kqYHmefJ/QOgFn4kf5/KrG1FZI7iq0oTwhoOYn1I6hazJGHVoO1
+        7J5FddKoXCtXwgZhAXI+pEZn3oqNTbI=
+X-Google-Smtp-Source: AMrXdXt89k9mWJWzBgE3l1wEAAph7sO9ER8szBBN6nmBYMLgrobJwsKYayOM3DXh/0g8uWWGvG/1jQ==
+X-Received: by 2002:a7b:ca51:0:b0:3d2:7a7:5cc6 with SMTP id m17-20020a7bca51000000b003d207a75cc6mr10890425wml.18.1671824142555;
+        Fri, 23 Dec 2022 11:35:42 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a1-20020a05600c348100b003b47b80cec3sm10076765wmq.42.2022.12.23.11.26.34
+        by smtp.gmail.com with ESMTPSA id s6-20020a05600c384600b003d1e4120700sm5974843wmr.41.2022.12.23.11.35.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Dec 2022 11:26:34 -0800 (PST)
-Message-Id: <pull.1399.v5.git.git.1671823593187.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1399.v4.git.git.1671598870906.gitgitgadget@gmail.com>
-References: <pull.1399.v4.git.git.1671598870906.gitgitgadget@gmail.com>
+        Fri, 23 Dec 2022 11:35:42 -0800 (PST)
+Message-Id: <pull.1399.v6.git.git.1671824140973.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1399.v5.git.git.1671823593187.gitgitgadget@gmail.com>
+References: <pull.1399.v5.git.git.1671823593187.gitgitgadget@gmail.com>
 From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 23 Dec 2022 19:26:32 +0000
-Subject: [PATCH v5] git: edit variable types to match what is assigned to them
+Date:   Fri, 23 Dec 2022 19:35:40 +0000
+Subject: [PATCH v6] git: edit variable types to match what is assigned to them
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,38 +83,39 @@ Signed-off-by: Seija Kijin <doremylover123@gmail.com>
     and then expansion back from int to size_t. Not to mention this is poor
     logic and needless truncations can add extra unneeded instructions.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1399%2FAtariDreams%2Ffix-type-v5
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1399/AtariDreams/fix-type-v5
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1399%2FAtariDreams%2Ffix-type-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1399/AtariDreams/fix-type-v6
 Pull-Request: https://github.com/git/git/pull/1399
 
-Range-diff vs v4:
+Range-diff vs v5:
 
- 1:  e4af173fccc ! 1:  d0fb60496c6 git: edit variable types to match what is assigned to them
+ 1:  d0fb60496c6 ! 1:  5fe5b2890a0 git: edit variable types to match what is assigned to them
      @@ notes.c: void string_list_add_refs_from_colon_sep(struct string_list *list,
-       	string_list_split_in_place(&split, globs_copy, ':', -1);
        	string_list_remove_empty_items(&split, 0);
       
-     + ## range-diff.c ##
-     +@@ range-diff.c: int is_range_diff_range(const char *arg)
+       ## range-diff.c ##
+     +@@ range-diff.c: struct patch_util {
+     + 	struct hashmap_entry e;
+     + 	const char *diff, *patch;
+     + 
+     +-	int i, shown;
+     ++	size_t i;
+     ++	int shown;
+     + 	int diffsize;
+     + 	size_t diff_offset;
+     + 	/* the index of the matching item in the other branch, or -1 */
+     +@@ range-diff.c: static int patch_util_cmp(const void *cmp_data UNUSED,
+     + static void find_exact_matches(struct string_list *a, struct string_list *b)
      + {
-     + 	char *copy = xstrdup(arg); /* setup_revisions() modifies it */
-     + 	const char *argv[] = { "", copy, "--", NULL };
-     +-	int i, positive = 0, negative = 0;
-     ++	unsigned int i, positive = 0, negative = 0;
-     + 	struct rev_info revs;
+     + 	struct hashmap map = HASHMAP_INIT((hashmap_cmp_fn)patch_util_cmp, NULL);
+     +-	int i;
+     ++	size_t i;
      + 
-     + 	init_revisions(&revs, NULL);
-     +@@ range-diff.c: int is_range_diff_range(const char *arg)
-     + 
-     + 	free(copy);
-     + 	release_revisions(&revs);
-     +-	return negative > 0 && positive > 0;
-     ++	return negative != 0 && positive != 0;
-     + }
-     +
-       ## read-cache.c ##
-      @@ read-cache.c: static struct mem_pool *find_mem_pool(struct index_state *istate)
-       
+     + 	/* First, add the patches of a to a hash map */
+     + 	for (i = 0; i < a->nr; i++) {
+      @@ range-diff.c: int is_range_diff_range(const char *arg)
+       {
+       	char *copy = xstrdup(arg); /* setup_revisions() modifies it */
 
 
  add-interactive.c             |  2 +-
@@ -135,11 +136,11 @@ Range-diff vs v4:
  merge-recursive.c             |  4 +--
  merge-recursive.h             |  2 +-
  notes.c                       |  2 +-
- range-diff.c                  |  4 +--
+ range-diff.c                  |  9 ++++---
  read-cache.c                  | 49 +++++++++++++++++++----------------
  run-command.c                 | 11 ++++----
  xdiff-interface.c             |  6 ++---
- 22 files changed, 105 insertions(+), 90 deletions(-)
+ 22 files changed, 108 insertions(+), 92 deletions(-)
 
 diff --git a/add-interactive.c b/add-interactive.c
 index ae1839c04a7..59ac88f8b5a 100644
@@ -656,10 +657,29 @@ index f2805d51bb1..e800007434f 100644
  	string_list_split_in_place(&split, globs_copy, ':', -1);
  	string_list_remove_empty_items(&split, 0);
 diff --git a/range-diff.c b/range-diff.c
-index 8b7d81adc1b..6d81d820e65 100644
+index 8b7d81adc1b..d6a54eb756c 100644
 --- a/range-diff.c
 +++ b/range-diff.c
-@@ -578,7 +578,7 @@ int is_range_diff_range(const char *arg)
+@@ -18,7 +18,8 @@ struct patch_util {
+ 	struct hashmap_entry e;
+ 	const char *diff, *patch;
+ 
+-	int i, shown;
++	size_t i;
++	int shown;
+ 	int diffsize;
+ 	size_t diff_offset;
+ 	/* the index of the matching item in the other branch, or -1 */
+@@ -235,7 +236,7 @@ static int patch_util_cmp(const void *cmp_data UNUSED,
+ static void find_exact_matches(struct string_list *a, struct string_list *b)
+ {
+ 	struct hashmap map = HASHMAP_INIT((hashmap_cmp_fn)patch_util_cmp, NULL);
+-	int i;
++	size_t i;
+ 
+ 	/* First, add the patches of a to a hash map */
+ 	for (i = 0; i < a->nr; i++) {
+@@ -578,7 +579,7 @@ int is_range_diff_range(const char *arg)
  {
  	char *copy = xstrdup(arg); /* setup_revisions() modifies it */
  	const char *argv[] = { "", copy, "--", NULL };
@@ -668,7 +688,7 @@ index 8b7d81adc1b..6d81d820e65 100644
  	struct rev_info revs;
  
  	init_revisions(&revs, NULL);
-@@ -599,5 +599,5 @@ int is_range_diff_range(const char *arg)
+@@ -599,5 +600,5 @@ int is_range_diff_range(const char *arg)
  
  	free(copy);
  	release_revisions(&revs);
