@@ -2,134 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41250C4332F
-	for <git@archiver.kernel.org>; Thu, 22 Dec 2022 22:01:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A33DBC4332F
+	for <git@archiver.kernel.org>; Fri, 23 Dec 2022 00:56:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231345AbiLVWBL (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Dec 2022 17:01:11 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56638 "EHLO
+        id S229734AbiLWA4o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Dec 2022 19:56:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229732AbiLVWBJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Dec 2022 17:01:09 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 339C4DEBD
-        for <git@vger.kernel.org>; Thu, 22 Dec 2022 14:01:07 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id y16so2984666wrm.2
-        for <git@vger.kernel.org>; Thu, 22 Dec 2022 14:01:07 -0800 (PST)
+        with ESMTP id S229524AbiLWA4m (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Dec 2022 19:56:42 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71A7820988
+        for <git@vger.kernel.org>; Thu, 22 Dec 2022 16:56:41 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id m4so3574672pls.4
+        for <git@vger.kernel.org>; Thu, 22 Dec 2022 16:56:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=W21fIF9hEVBSUj6ZpMoAYYrlg9Rl00aLRwXMNsZm/J8=;
-        b=pvWipQDjMsBrbofySMioNFzPTKTXO8ir10G95Gl6LRycn42rKqlF30SAqpL6rappxS
-         BL9qhXnW6X2Z1woJgQB3F6xcr0jyoZjajES1e8zXx8eAmdIrTvxzXiCzX2AtsB1VmUgz
-         bPaZ3/XcRc5x76BPRYcTmqCEfxAV2dyXxq1OBE3+2SKMwFgzVVuCkm6wG35SGxGwcP6d
-         gq0XMx5mdrtffL5RZgfoTPU9BEnvk4rg47qqAkcDsG4PleSd8GC7Vt/IaOWtPU6T8Ml8
-         d+eM/G7hpmKEKmpJSQ0cJFOFspKo7OPvKQUCethzIjnylgA9rcuZ0R/S6Nh0GEhyGvjb
-         cq3g==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Y1nl2OxyUC8WUoZR1lBZyl4mu5QNhnE+2bZjJIeqC3o=;
+        b=NhS5vTWr/ja0hjXopHYYNgikHwsq7Rhdpgf8KKO5RzcM2ejZzrp0qGxI7QQL32AIWj
+         iq+OL4BXtJIGPBKTF53wM1GJi4q1bt2pz7q8ep3tszUPzYR68SwOTkAfpkoU0ToCsjWw
+         tMAqCb9Tf+3Gtl2RCppdUma10BK2V4vxeDLhPK53GjqNd7/9O784TudhrbXOXw2K2Xat
+         ajusyDkUztLNuSp8IiEddtHvXu/JtwJHddsi+Rti100sAq0pmxrKSVZ+glSjTEEM/uKP
+         rxrt17qOZPd5+Jrd7OKVH+3BZvkBGVzhQjhMzCSX1KQYNQ2seLTTdp0EDyY/OFqKn6i3
+         oJgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=W21fIF9hEVBSUj6ZpMoAYYrlg9Rl00aLRwXMNsZm/J8=;
-        b=GSKq+1uQSThG7g71TjPC+lU8xVsAgMvKIQYfk8o8yACZ2pLuGmYd/CY6P2hUxIpvBn
-         rXSMcfjCgjedql3QRE0gjnM0ijYLjf6ou4FTtXxzESmFTeFtniqhFXodVL0+2BuE1/rY
-         LokqJzgTxUVzhHy/1Vm9fgKCPjw/nYMAzPUkEgUzBM9A7wm9r6QPX5MTKwcB4mYFbPhZ
-         hFILRNiuHHWp4y4j/ZGU57edwZlQh1iivyEW/g5RVx8GVJnF91cr2miJ3r4TkBLt6V3Y
-         NhDrtRyaOvDm4Fn4IZqP5KySWR3j10H0FlC2lxb/CLDq9J0VQQC/GNXlZFTC8EtrtM98
-         1rdQ==
-X-Gm-Message-State: AFqh2koRCWlKomI+CobR7uBl4ES+362nq+fqzp9xOHuJGcJMhJ+r/6KA
-        EFwzLZWL2jqFoo+yVPCJ+Gdw1cBSffA=
-X-Google-Smtp-Source: AMrXdXvDWZnxAWCMGah7cFL0SQsoAua0n+QRMBVaGLtrh9fqDM0TurUP7naWagbJ7uMYgaPQESUKuA==
-X-Received: by 2002:adf:fa8f:0:b0:269:13b:b6f with SMTP id h15-20020adffa8f000000b00269013b0b6fmr4855435wrr.30.1671746465506;
-        Thu, 22 Dec 2022 14:01:05 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x15-20020a5d490f000000b00236883f2f5csm1535363wrq.94.2022.12.22.14.01.05
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y1nl2OxyUC8WUoZR1lBZyl4mu5QNhnE+2bZjJIeqC3o=;
+        b=0umiVkLVkWSWMlMakSsCervqMbwS1JCvAQUobzk46r9hhnU8HpjGjJjlAWqXOdXJg3
+         AU+bcR5PauhClYfkI6hOp+WXXZVE1TZh8kuf1sUtECyRuMhXbEfGNuglKMeZgmLIpKgR
+         nw+TykBoeLE1q8Lqc/QdJ4v4Nhsez+7+rRHsF03cjzv+rm+xG1LeecZk/q+ftdDQf0jE
+         Rkb/NmJ74QysqECxwN5itypwRXZeT1iE4VWhA0f/iwBnIRVgVyMevAMTr4GcAYPQ/WVa
+         Yma3ohaWNedqj6xVNu8d0GZZy3/ROURipdTn4zZ4BxYxEao7ZFkKOGzKgsiWC0FB4DpS
+         A5TA==
+X-Gm-Message-State: AFqh2kpqxmT8y0V7eRBHhVVMSrDtTrPUirbXO3pPE/7FJDigAOZzOjGV
+        uKnzMU4mAfzSp9npyCPqrJVlwxOmNqdZZA==
+X-Google-Smtp-Source: AMrXdXsqSM68xlbWd5A2mLopL9jusa58jJeKaT4vQl+7mafxx6MRcPzwPb0vc2qv22y1usrzVwO6+A==
+X-Received: by 2002:a17:902:d891:b0:189:d979:22a with SMTP id b17-20020a170902d89100b00189d979022amr8331166plz.29.1671757000628;
+        Thu, 22 Dec 2022 16:56:40 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id o4-20020a170902bcc400b0019254c19697sm1028419pls.289.2022.12.22.16.56.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Dec 2022 14:01:05 -0800 (PST)
-Message-Id: <pull.1415.git.git.1671746464482.gitgitgadget@gmail.com>
-From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Thu, 22 Dec 2022 22:01:04 +0000
-Subject: [PATCH] range-diff: heck for NULL over comparisons
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Thu, 22 Dec 2022 16:56:39 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org,
+        "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH] tests: make 'test_oid' print trailing newline
+References: <20221218162905.3508164-1-szeder.dev@gmail.com>
+        <xmqqy1r4usjy.fsf@gitster.g> <20221222185804.GE3411@szeder.dev>
+Date:   Fri, 23 Dec 2022 09:56:39 +0900
+In-Reply-To: <20221222185804.GE3411@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
+ =?utf-8?Q?bor=22's?= message of
+        "Thu, 22 Dec 2022 19:58:04 +0100")
+Message-ID: <xmqq3597rl88.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Rose <83477269+AtariDreams@users.noreply.github.com>,
-        Seija Kijin <doremylover123@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Seija Kijin <doremylover123@gmail.com>
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-Although at first it may seem easier to
-check for the same comparison that
-determined whether a_util or b_util is NULL
-or not, checking for null directly
-would make more sense for developers
-and static analysis tools, which false-flag
-this area specifically as having potential NULL
-pointers.
+> On Mon, Dec 19, 2022 at 09:48:49AM +0900, Junio C Hamano wrote:
+>> SZEDER Gábor <szeder.dev@gmail.com> writes:
+>> >       $ git grep '\stest_oid ' -- ':/t/*.sh'
+>> >       $ git grep 'echo "\?$(test_oid ' -- ':/t/*.sh'
+>>  ...
+>> I found these examples in the log message a bit annoying to see, as
+>> experiments are not affected by any grep.patterntype), but they may
+>> fail for folks on stricter platforms.
+>
+> Please feel free to amend the commit message as you see fit.  Usually
+> I would do that myself as I'm rather picky of my commit messages, but,
+> alas, I'm not versed in portability issues of regexes, so I'm not sure
+> what the right regexes would be.
 
-Signed-off-by: Seija Kijin <doremylover123@gmail.com>
----
-    range-diff: heck for NULL over comparisons
-    
-    Although at first it may seem easier to check for the same comparison
-    that determined whether a_util or b_util is NULL or not, checking for
-    null directly would make more sense for developers and static analysis
-    tools, which false-flag this area specifically as having potential NULL
-    pointers.
-    
-    Signed-off-by: Seija Kijin doremylover123@gmail.com
+I guess ERE would give us enough expressiveness to say "zero or one"
+without relying on GNU extension.  Saying "Any whitespace" concisely
+as "\s" would require PCRE (i.e. "grep -P") but because use of it is
+optional, the best we could do is "[ ]" (in the [bracket]), one is
+TAB and the other is SPACE).
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1415%2FAtariDreams%2Fmore-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1415/AtariDreams/more-v1
-Pull-Request: https://github.com/git/git/pull/1415
+But reading the message again, they are what the author of the patch
+did to observe the current codebase, so I think being faithful to
+what you did would be fine ;-)
 
- range-diff.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+In any case, thanks for cleaning it up.
 
-diff --git a/range-diff.c b/range-diff.c
-index 8b7d81adc1b..a5f5996c0ec 100644
---- a/range-diff.c
-+++ b/range-diff.c
-@@ -506,11 +506,11 @@ static void output(struct string_list *a, struct string_list *b,
- 		b_util = j < b->nr ? b->items[j].util : NULL;
- 
- 		/* Skip all the already-shown commits from the LHS. */
--		while (i < a->nr && a_util->shown)
-+		while (a_util && a_util->shown)
- 			a_util = ++i < a->nr ? a->items[i].util : NULL;
- 
- 		/* Show unmatched LHS commit whose predecessors were shown. */
--		if (i < a->nr && a_util->matching < 0) {
-+		if (a_util && a_util->matching < 0) {
- 			if (!range_diff_opts->right_only)
- 				output_pair_header(&opts, patch_no_width,
- 					   &buf, &dashes, a_util, NULL);
-@@ -519,7 +519,7 @@ static void output(struct string_list *a, struct string_list *b,
- 		}
- 
- 		/* Show unmatched RHS commits. */
--		while (j < b->nr && b_util->matching < 0) {
-+		while (b_util && b_util->matching < 0) {
- 			if (!range_diff_opts->left_only)
- 				output_pair_header(&opts, patch_no_width,
- 					   &buf, &dashes, NULL, b_util);
-@@ -527,7 +527,7 @@ static void output(struct string_list *a, struct string_list *b,
- 		}
- 
- 		/* Show matching LHS/RHS pair. */
--		if (j < b->nr) {
-+		if (b_util) {
- 			a_util = a->items[b_util->matching].util;
- 			output_pair_header(&opts, patch_no_width,
- 					   &buf, &dashes, a_util, b_util);
 
-base-commit: 7c2ef319c52c4997256f5807564523dfd4acdfc7
--- 
-gitgitgadget
