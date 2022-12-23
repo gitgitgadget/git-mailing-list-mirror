@@ -2,146 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6815C4332F
-	for <git@archiver.kernel.org>; Fri, 23 Dec 2022 01:36:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 69A1CC4332F
+	for <git@archiver.kernel.org>; Fri, 23 Dec 2022 01:51:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235474AbiLWBgp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Dec 2022 20:36:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46986 "EHLO
+        id S230019AbiLWBvy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Dec 2022 20:51:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229666AbiLWBgm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Dec 2022 20:36:42 -0500
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98F181409D
-        for <git@vger.kernel.org>; Thu, 22 Dec 2022 17:36:41 -0800 (PST)
-Received: by mail-pg1-f179.google.com with SMTP id v3so2443127pgh.4
-        for <git@vger.kernel.org>; Thu, 22 Dec 2022 17:36:41 -0800 (PST)
+        with ESMTP id S229524AbiLWBvw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Dec 2022 20:51:52 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AF5C6566
+        for <git@vger.kernel.org>; Thu, 22 Dec 2022 17:51:52 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id z8-20020a17090abd8800b00219ed30ce47so7468489pjr.3
+        for <git@vger.kernel.org>; Thu, 22 Dec 2022 17:51:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hsmmq5bhWd0pTupkDupZv7SiBbtiyNHvz67bJ/xfZTE=;
+        b=iqjPclm2Pcz6eyedPsCVXQBJbB7MMVfLMYZ1WK6BBqjS3iksB4pSsdiLBkQg4wFK1F
+         qHp9Ul4u0e9M3gtpZCcdpQxLXOzaSrC+3Ree/cMFPIIgOZnS2hpEiy/p2wJB2WRrkvLD
+         d4uUEN8nIZBFtmKWjVdf7tisKxsj5VbYyjZpCEZIaoe0Q3qcJSqQAz0lWWw8hSNXC3MK
+         E5OpAgSrfg28iTn8f5FDkOY2Isqc3Y77TL8tMCZ1ELik33FxQ+6ZdAhSySSo6M4fhnX5
+         dj8QJfnpX8nkNLR0lAsvs9Eu0lWjOVhKCHi9eBrgu8djwBJeLKHgJSh4gGGYjLMU3iZx
+         5WZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fyMLh/AKpwSYaCwXTLKP2oCaO73A3B2DomtuP3UUMkE=;
-        b=kSDHLcuypYFMjZXKlw4lGFBUXBsllkklU5J/hVyDnn7c/H/cMBBfcKx4U0Pc0acafG
-         BZc74qdbLAN+KVvfOjoxrktjMsQtOBj4s3ogndXzw3wn8GcCLZv/aUtk3Zluotse1/Ci
-         4Y2pZUkAIawqQ33SSE+rJXn1xFtQ8cGdOvUieGnPd4irEf03HZEmXUyoMensXynfalyQ
-         cE+XqCR+mh3aEX4ePT1Xa/lbKZ8DV/TdzVfU5cuzwtYvQguIf4R4e3ja/kxnhiCNgeQy
-         0v/vovZas3ldVcc4hHL1zaIOFYlNlyTY0GAf0n+BL3APDHFtNaW1UZJ5ayrAWcMF7nsX
-         QUhw==
-X-Gm-Message-State: AFqh2kr/2aK/g/MAaiO/WNPpSVB2okDKvrsJypuidmuoIzgQdyjc0ClO
-        0cKMBzJeqsTWmrLUMpwG5o3+lZbVQ5tpD2EmjJBhzkSaMLE=
-X-Google-Smtp-Source: AMrXdXsrooZqvj/KZGtFHej0Wc5BjQrJ1ey33eWrRPJ4eJ7TmzPeEpb2CFD1hU5bQIamZUKA5v8Bx4XAztndOjMG0Q8=
-X-Received: by 2002:a63:a12:0:b0:478:fbfd:5278 with SMTP id
- 18-20020a630a12000000b00478fbfd5278mr408160pgk.268.1671759401040; Thu, 22 Dec
- 2022 17:36:41 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=hsmmq5bhWd0pTupkDupZv7SiBbtiyNHvz67bJ/xfZTE=;
+        b=ZIISk28bD9tqxlxstza4Ace9XJMUnxZYnWrsRHtLoCHrdgGMGE5whg7iGXxwWsjNUw
+         mti8Pee0K52Ws01f/z2HtUxQ5YYaxb1Q27ZefQRsXzmnmYgpTtYDez+QpoD5EvScNRLa
+         Bwl9ueqsIT8VJFypecbI18W91Zkbw1B7kUInVAY6P+ze9HdDmTc6wH+JvUp306MjVTL4
+         WwU4tKVAj1zp4wLojFRpYmh1NyZA6dIENZiR0QrHlplbe+4iMWQ6I92OoA0AkSFdV3V0
+         isiJjYRtZrwy7exQqinmfjYHOUbhCtpM5tQAKt2sVAdPsbHUnamuGna9La8xvQptDEXl
+         S2Qg==
+X-Gm-Message-State: AFqh2kpE7nH6bYSp2yykkxAlmw5PRW+gJb6i1VwVo8KgZniD1zo+pFMu
+        V1Pai6EJ/HJ5Ov4Ul4WH//c=
+X-Google-Smtp-Source: AMrXdXsdktQCeLVQSuPH0bqTu0ZYCXuPVsieE+2lg8py2GxZvGtOvcctkpj3icWhfmt/UnhuV4JOkQ==
+X-Received: by 2002:a17:902:f392:b0:189:d8fb:151f with SMTP id f18-20020a170902f39200b00189d8fb151fmr6658532ple.23.1671760311526;
+        Thu, 22 Dec 2022 17:51:51 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id c5-20020a170902c1c500b001891ea4d133sm1192250plc.12.2022.12.22.17.51.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Dec 2022 17:51:50 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Seija Kijin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Seija Kijin <doremylover123@gmail.com>
+Subject: Re: [PATCH v9 2/2] prep: reformat pthread.c to fit coding guidelines
+References: <pull.1406.v8.git.git.1671724911188.gitgitgadget@gmail.com>
+        <pull.1406.v9.git.git.1671729453.gitgitgadget@gmail.com>
+        <4c82a16a9950b67416530249157332a6b2afa839.1671729453.git.gitgitgadget@gmail.com>
+Date:   Fri, 23 Dec 2022 10:51:50 +0900
+In-Reply-To: <4c82a16a9950b67416530249157332a6b2afa839.1671729453.git.gitgitgadget@gmail.com>
+        (Seija Kijin via GitGitGadget's message of "Thu, 22 Dec 2022 17:17:33
+        +0000")
+Message-ID: <xmqqa63erio9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CAPig+cRcezSp4Rqt1Y9bD-FT6+7b0g9qHfbGRx65AOnw2FQXKg@mail.gmail.com>
- <20221222093021.5251-1-tenglong.tl@alibaba-inc.com>
-In-Reply-To: <20221222093021.5251-1-tenglong.tl@alibaba-inc.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 22 Dec 2022 20:36:29 -0500
-Message-ID: <CAPig+cTFBVAL2gd3LqQEzS--cXqJXR+1OVerii-D6JqFvJwXqQ@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] notes.c: introduce "--no-blank-line" option
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     avarab@gmail.com, git@vger.kernel.org, gitster@pobox.com,
-        tenglong.tl@alibaba-inc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 22, 2022 at 4:30 AM Teng Long <dyroneteng@gmail.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > Taking a step back, perhaps think of this in terms of "separator". The
-> > default behavior is to insert "\n" as a separator between notes. If
-> > you add a --separator option, then users could supply their own
-> > separator, such as "----\n" or, in your case, "" to suppress the blank
-> > line.
->
-> There is another question for me, if the separator we passed contains "\n"
-> string , the argument the cmd receives will need to tranfer to '\n' character
-> instead to make sure it's a linebreak but not a "\n" instead.
->
-> So maybe like:
-> +static void insert_separator(struct strbuf *message, const char *separator)
-> +{
-> +               while (*separator) {
-> +                       if (*separator == '\\'){
-> +                               switch (separator[1]) {
-> +                                       case 'n':
-> +                                               strbuf_addstr(&transfered, "\n");
-> +                                               separator++;
-> +                                               break;
-> + [...]
-> +                       separator++;
-> +               }
-> +}
->
-> If the above is understood correctly, is there an api that handles escape
-> characters already in the existing code (I haven't found one so far, so I need
-> to confirm and replace it if there is one). In addition, the insert_separator
-> function above handles three special characters \t\n\r. Do we need more?
+"Seija Kijin via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-You could probably use unquote_c_style() from quote.[hc]; something like this:
+> Subject: Re: [PATCH v9 2/2] prep: reformat pthread.c to fit coding guidelines
 
-    struct strbuf orig = STRBUF_INIT;
-    struct strbuf unquoted = STRBUF_INIT;
-    strbuf_addf(&orig, "\"%s\"", separator);
-    if (unquote_c_style(&unquoted, orig.buf, NULL) < 0) {
-        strbuf_release(&unquoted);
-        strbuf_release(&orig);
-        die(_("some suitable error message"));
-    }
-    /* unquote succeeded -- use "unquoted" here */
+I am guessing that you meant to have "prep" stand for "preparation"
+(which by the way is not a good thing to have instead of <area>:
+prefix).  Perhaps "windows-pthread:" or something?
 
-However, I suspect that this is overkill, and you should explore
-simpler ideas first.
+In any case, this step should be done first, i.e. [1/2] of a
+two-patch series, as a preparation for the real change, I would
+think.
 
-For instance, it is perfectly acceptable to embed newlines directly in
-shell strings, so this would work just fine without having to write
-any extra string-unquoting code:
-
-    % git notes add --separator='---
-    ' <object>
-
-But, I think you can make this even friendlier without having to do
-any extra coding to support string-unquoting. In particular, use this
-heuristic:
-
-    - if the separator is zero-length, use it as-is
-    - otherwise, if the separator ends with a newline, use it as-is
-    - otherwise add a newline to the separator
-
-In other words:
-
-    if (!separator)
-        separator = "\n"; /* default is one blank line */
-    if (*separator == '\0')
-        /* separator is empty; use as-is (no blank line) */
-    else if (separator[strlen(separator) - 1] == '\n')
-        /* user supplied newline; use as-is */
-    else
-        /* separator lacks newline; add it ourselves */
-
-With the above logic, this defaults to a blank line between notes:
-
-    % git notes add ...
-
-this has no blank line between notes:
-
-    % git notes add --separator='' ...
-
-this uses a "---" + "\n" as separator:
-
-    % git notes add --separator='---' ...
-
-as does this:
-
-    % git notes add --separator='---
-    ' ...
-
-and this places two blank lines between notes:
-
-    % git notes add --separator='
-
-    ' ...
