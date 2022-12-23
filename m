@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ACB2AC4332F
-	for <git@archiver.kernel.org>; Fri, 23 Dec 2022 19:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C96AEC4332F
+	for <git@archiver.kernel.org>; Fri, 23 Dec 2022 19:43:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232463AbiLWTkd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 23 Dec 2022 14:40:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43118 "EHLO
+        id S231645AbiLWTn0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 23 Dec 2022 14:43:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231228AbiLWTkc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Dec 2022 14:40:32 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D9A11FFA8
-        for <git@vger.kernel.org>; Fri, 23 Dec 2022 11:40:29 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id bs20so3271385wrb.3
-        for <git@vger.kernel.org>; Fri, 23 Dec 2022 11:40:29 -0800 (PST)
+        with ESMTP id S233247AbiLWTnM (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Dec 2022 14:43:12 -0500
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 088D123328
+        for <git@vger.kernel.org>; Fri, 23 Dec 2022 11:43:10 -0800 (PST)
+Received: by mail-wm1-x32f.google.com with SMTP id f13-20020a1cc90d000000b003d08c4cf679so4124404wmb.5
+        for <git@vger.kernel.org>; Fri, 23 Dec 2022 11:43:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=b+XtKmsOvKYPDhz6Kf1/43F6R7K7vjacGQvORQxmMQc=;
-        b=R9drnJlXAmbG+mVTeptT0Cygw87dIg+ZDdRRZq9yfwIjbgZVqOgLU1j1cfdufmXnqJ
-         EgfeuVssOrd9zv7NWilghNlZ6DOYzpJDBTS9fXHDx6vz/f4d03z6e0LRZ6sz+R8n1iiq
-         HD9HQze6FrX9UBFZ9ZDRJNl54tWxR+8xqYJiHJ8hbCxCmvImsRpiyHI4ETmktO4pG3pF
-         NfL1ejdwPivHBt+fU6yF+3nyavFI0oDwfmYWrIoYi798vZHD1nt1NwPIQ8ruZFmwl/Ld
-         SBr4Pnl+cylTTJ2ONRwIJqr0/ocXBO2czBskj07P05aWtvojmFmRdHhR74Hdb9xE91BL
-         BpwQ==
+        bh=QeZBgWJ78eAR79W51+t0TCy2GE2UuHpg2zl0Llcsejc=;
+        b=cuIu8j+Ruzv7/kD+Ig0E8c78ItIvv5g9LzCTaKneRkE4D9jpjaU6fQLlJgoJoF0M83
+         ZCWDboF+JGXmtMEcYJUOVg7QI9Gf2yDLucoYY0Sxwc93V1vhbtxiQ/YFDUu7dGvMLxsH
+         KaLxOwQbcEwcS5MCmJtg3slCSou7/7YLKCnXgLKaxrFJZ6KSrE9fE0DYDIvpJXxEObKY
+         GiVkQ/iCozW3NOpqPQbO/6cl6WzJEFbJti0WNcS65W9yhpByKryjIhRJUHXU6LVlLhvH
+         FkxMZC08OG+jG+2vpC4hv5shQc+tzfYk3BOlJ4VaRamT8rvfH4/b3UPT0OJKMpG6bcoO
+         4nuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=b+XtKmsOvKYPDhz6Kf1/43F6R7K7vjacGQvORQxmMQc=;
-        b=GlU+GJPjVAVLnV9bRSIKew+gc0WpuNapWEgBp2C6JCLIUfGE/7kvdSvIfbrsRnUXBd
-         Cu94o13aIKWlvgkOmMfTOa6OYtr/h61GASobu7foVsYZrh+XU9PT0qHe3tGSB6+AsG1t
-         BkLfrd/9njc1CAj7gR4JTNTa7ZJKnatrNyUsrPEV3E0RY1VUzlH5z/u9vnQBMQom3NgT
-         W4x8UOBxGVC2FYmoexJCja8qavAXfvGhvvLy+XiwJ2GCW77Hg75L3YxTBhZW4+m1P0EK
-         OXuq4SiRUgNWu6CRlufZynUXnH8+iUQKEJpore3BflgqphfGChk76/WBTJfX5oUHRG6z
-         b3Tw==
-X-Gm-Message-State: AFqh2kqIX+VZuZ+SE8SM6U3bP/bkuUOFiL/HJjYUQuo/EHxhKo4U7CzT
-        cNpUuCammcjNI8JOngYx0x4MS1KoYiU=
-X-Google-Smtp-Source: AMrXdXuz796EwqjXEQ2lnSY4xjuQtW7MT8t78j7DvEBTaF6BM7V35Vwx7HCO9PbphYEVG5h41qb7dQ==
-X-Received: by 2002:a5d:5508:0:b0:242:865b:903a with SMTP id b8-20020a5d5508000000b00242865b903amr6840795wrv.17.1671824427757;
-        Fri, 23 Dec 2022 11:40:27 -0800 (PST)
+        bh=QeZBgWJ78eAR79W51+t0TCy2GE2UuHpg2zl0Llcsejc=;
+        b=OwhoPu+SUvHtV8LfcaB92gLZK3dTzGou02ap0GfeYrzs34qigAwoE++SMwTnHaf33K
+         OyPvaimgIKnECpAO4wKjS9UcJkH5USAHsDx6wR0xSCxYdhj6M8tUBzjE1oXklQsVj4NF
+         KnaM1Lh/shWIddGwdiRdAFxpAJOdFhw8klnp2mLasv3XwvxvKXqzRWfuhhQoMo9nzU9C
+         2bNned6x8f3pI3yISYIX7lXk0LONFt2GEPQ7lGdsVcTuAq1Jki2OmCMQbbKhFR9PN+r2
+         gUgdXSn+HFIyjT/z0Oko3i8qV1IV6i+fCh+0xSRs89RRS4qdqa29vZu8KTNcOWlCi+9O
+         3JBg==
+X-Gm-Message-State: AFqh2kpd+tK7r+tmV0gHrVzMv7ZW8cLHVh+HqjhnzyOvWRVyGywJ4QQ4
+        PCuNH3/STaBzVZDwx6Ei+WpPeX8ebe4=
+X-Google-Smtp-Source: AMrXdXtEDAGkeBpEstMBKaH+3CPOjD19qKTEBkTxrFoFEdOjfVvTMg7WjLPGfGijRLrkmWxZDDjnKA==
+X-Received: by 2002:a1c:1983:0:b0:3d2:392b:3169 with SMTP id 125-20020a1c1983000000b003d2392b3169mr8063142wmz.28.1671824588199;
+        Fri, 23 Dec 2022 11:43:08 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id x2-20020adfec02000000b0025e86026866sm4701657wrn.0.2022.12.23.11.40.27
+        by smtp.gmail.com with ESMTPSA id x15-20020a1c7c0f000000b003c6bbe910fdsm12989832wmc.9.2022.12.23.11.43.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Dec 2022 11:40:27 -0800 (PST)
-Message-Id: <pull.1399.v7.git.git.1671824426074.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1399.v6.git.git.1671824140973.gitgitgadget@gmail.com>
-References: <pull.1399.v6.git.git.1671824140973.gitgitgadget@gmail.com>
+        Fri, 23 Dec 2022 11:43:07 -0800 (PST)
+Message-Id: <pull.1399.v8.git.git.1671824586607.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1399.v7.git.git.1671824426074.gitgitgadget@gmail.com>
+References: <pull.1399.v7.git.git.1671824426074.gitgitgadget@gmail.com>
 From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Fri, 23 Dec 2022 19:40:25 +0000
-Subject: [PATCH v7] git: edit variable types to match what is assigned to them
+Date:   Fri, 23 Dec 2022 19:43:06 +0000
+Subject: [PATCH v8] git: edit variable types to match what is assigned to them
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,38 +83,31 @@ Signed-off-by: Seija Kijin <doremylover123@gmail.com>
     and then expansion back from int to size_t. Not to mention this is poor
     logic and needless truncations can add extra unneeded instructions.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1399%2FAtariDreams%2Ffix-type-v7
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1399/AtariDreams/fix-type-v7
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1399%2FAtariDreams%2Ffix-type-v8
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1399/AtariDreams/fix-type-v8
 Pull-Request: https://github.com/git/git/pull/1399
 
-Range-diff vs v6:
+Range-diff vs v7:
 
- 1:  5fe5b2890a0 ! 1:  8da0c61e544 git: edit variable types to match what is assigned to them
-     @@ range-diff.c: static int patch_util_cmp(const void *cmp_data UNUSED,
+ 1:  8da0c61e544 ! 1:  6d7410b6878 git: edit variable types to match what is assigned to them
+     @@ range-diff.c: static void output_pair_header(struct diff_options *diffopt,
+       		strbuf_addf(buf, "%*s:  %s ", patch_no_width, "-", dashes->buf);
+       	else
+      -		strbuf_addf(buf, "%*d:  %s ", patch_no_width, a_util->i + 1,
+     -+		strbuf_addf(buf, "%*lu:  %s ", patch_no_width, a_util->i + 1,
+     ++		strbuf_addf(buf, "%*zu:  %s ", patch_no_width, a_util->i + 1,
+       			    find_unique_abbrev(&a_util->oid, DEFAULT_ABBREV));
        
-       	/* First, add the patches of a to a hash map */
-       	for (i = 0; i < a->nr; i++) {
-     +@@ range-diff.c: static void output_pair_header(struct diff_options *diffopt,
-     + 	if (!a_util)
-     + 		strbuf_addf(buf, "%*s:  %s ", patch_no_width, "-", dashes->buf);
-     + 	else
-     +-		strbuf_addf(buf, "%*d:  %s ", patch_no_width, a_util->i + 1,
-     ++		strbuf_addf(buf, "%*lu:  %s ", patch_no_width, a_util->i + 1,
-     + 			    find_unique_abbrev(&a_util->oid, DEFAULT_ABBREV));
-     + 
-     + 	if (status == '!')
-     +@@ range-diff.c: static void output_pair_header(struct diff_options *diffopt,
-     + 	if (!b_util)
-     + 		strbuf_addf(buf, " %*s:  %s", patch_no_width, "-", dashes->buf);
-     + 	else
-     +-		strbuf_addf(buf, " %*d:  %s", patch_no_width, b_util->i + 1,
-     ++		strbuf_addf(buf, " %*lu:  %s", patch_no_width, b_util->i + 1,
-     + 			    find_unique_abbrev(&b_util->oid, DEFAULT_ABBREV));
-     + 
-     + 	commit = lookup_commit_reference(the_repository, oid);
-      @@ range-diff.c: int is_range_diff_range(const char *arg)
-       {
-       	char *copy = xstrdup(arg); /* setup_revisions() modifies it */
+       	if (status == '!')
+     @@ range-diff.c: static void output_pair_header(struct diff_options *diffopt,
+       		strbuf_addf(buf, " %*s:  %s", patch_no_width, "-", dashes->buf);
+       	else
+      -		strbuf_addf(buf, " %*d:  %s", patch_no_width, b_util->i + 1,
+     -+		strbuf_addf(buf, " %*lu:  %s", patch_no_width, b_util->i + 1,
+     ++		strbuf_addf(buf, " %*zu:  %s", patch_no_width, b_util->i + 1,
+       			    find_unique_abbrev(&b_util->oid, DEFAULT_ABBREV));
+       
+       	commit = lookup_commit_reference(the_repository, oid);
 
 
  add-interactive.c             |  2 +-
@@ -656,7 +649,7 @@ index f2805d51bb1..e800007434f 100644
  	string_list_split_in_place(&split, globs_copy, ':', -1);
  	string_list_remove_empty_items(&split, 0);
 diff --git a/range-diff.c b/range-diff.c
-index 8b7d81adc1b..e7c8c6d9deb 100644
+index 8b7d81adc1b..616285181dd 100644
 --- a/range-diff.c
 +++ b/range-diff.c
 @@ -18,7 +18,8 @@ struct patch_util {
@@ -683,7 +676,7 @@ index 8b7d81adc1b..e7c8c6d9deb 100644
  		strbuf_addf(buf, "%*s:  %s ", patch_no_width, "-", dashes->buf);
  	else
 -		strbuf_addf(buf, "%*d:  %s ", patch_no_width, a_util->i + 1,
-+		strbuf_addf(buf, "%*lu:  %s ", patch_no_width, a_util->i + 1,
++		strbuf_addf(buf, "%*zu:  %s ", patch_no_width, a_util->i + 1,
  			    find_unique_abbrev(&a_util->oid, DEFAULT_ABBREV));
  
  	if (status == '!')
@@ -692,7 +685,7 @@ index 8b7d81adc1b..e7c8c6d9deb 100644
  		strbuf_addf(buf, " %*s:  %s", patch_no_width, "-", dashes->buf);
  	else
 -		strbuf_addf(buf, " %*d:  %s", patch_no_width, b_util->i + 1,
-+		strbuf_addf(buf, " %*lu:  %s", patch_no_width, b_util->i + 1,
++		strbuf_addf(buf, " %*zu:  %s", patch_no_width, b_util->i + 1,
  			    find_unique_abbrev(&b_util->oid, DEFAULT_ABBREV));
  
  	commit = lookup_commit_reference(the_repository, oid);
