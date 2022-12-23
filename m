@@ -2,100 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A33DBC4332F
-	for <git@archiver.kernel.org>; Fri, 23 Dec 2022 00:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 00581C4167B
+	for <git@archiver.kernel.org>; Fri, 23 Dec 2022 01:00:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229734AbiLWA4o (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 22 Dec 2022 19:56:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56286 "EHLO
+        id S236006AbiLWBAd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 22 Dec 2022 20:00:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229524AbiLWA4m (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Dec 2022 19:56:42 -0500
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71A7820988
-        for <git@vger.kernel.org>; Thu, 22 Dec 2022 16:56:41 -0800 (PST)
-Received: by mail-pl1-x630.google.com with SMTP id m4so3574672pls.4
-        for <git@vger.kernel.org>; Thu, 22 Dec 2022 16:56:41 -0800 (PST)
+        with ESMTP id S235805AbiLWA7m (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Dec 2022 19:59:42 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CDC92229D
+        for <git@vger.kernel.org>; Thu, 22 Dec 2022 16:58:24 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id c65-20020a1c3544000000b003cfffd00fc0so5173004wma.1
+        for <git@vger.kernel.org>; Thu, 22 Dec 2022 16:58:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Y1nl2OxyUC8WUoZR1lBZyl4mu5QNhnE+2bZjJIeqC3o=;
-        b=NhS5vTWr/ja0hjXopHYYNgikHwsq7Rhdpgf8KKO5RzcM2ejZzrp0qGxI7QQL32AIWj
-         iq+OL4BXtJIGPBKTF53wM1GJi4q1bt2pz7q8ep3tszUPzYR68SwOTkAfpkoU0ToCsjWw
-         tMAqCb9Tf+3Gtl2RCppdUma10BK2V4vxeDLhPK53GjqNd7/9O784TudhrbXOXw2K2Xat
-         ajusyDkUztLNuSp8IiEddtHvXu/JtwJHddsi+Rti100sAq0pmxrKSVZ+glSjTEEM/uKP
-         rxrt17qOZPd5+Jrd7OKVH+3BZvkBGVzhQjhMzCSX1KQYNQ2seLTTdp0EDyY/OFqKn6i3
-         oJgg==
+        h=content-transfer-encoding:content-language:mime-version:user-agent
+         :date:message-id:subject:from:to:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ISehqMrRMBPP/YrKq0rUIYCYpQwaYTqMYWS3UUOrSV8=;
+        b=RoJ2tBGbbo7Z8NUN7fhOHzc+QKVp2+ko1iD/au3WvW5jvZMAH+CJIihfrL09ZSvm1z
+         EYNXZMcWpbcL6O1UcwKNEh9Qdiq9A6tOFAhIw93GlYYc9Qq3MWBTUK+6dVPMEnYd0NTT
+         CsLgFLUYvwLgwFg/VOuQ7N2iqn0MkDrgKt7qDBAPrG91arpTXr9Qx+2+cB+VG7gF29F8
+         y8uz95b/G4Zfn/r3/GdPRaiUjYGSAXYjwYRLXeKvpG6whNDGMTmfKyo2AWndxEmCaNLp
+         ShQ6UzVULhOGbSqdUDqaSGwRM0e4c09aggAai0gM8KB5D895KkyXiZLqhXOaC8E/zuwF
+         eEcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Y1nl2OxyUC8WUoZR1lBZyl4mu5QNhnE+2bZjJIeqC3o=;
-        b=0umiVkLVkWSWMlMakSsCervqMbwS1JCvAQUobzk46r9hhnU8HpjGjJjlAWqXOdXJg3
-         AU+bcR5PauhClYfkI6hOp+WXXZVE1TZh8kuf1sUtECyRuMhXbEfGNuglKMeZgmLIpKgR
-         nw+TykBoeLE1q8Lqc/QdJ4v4Nhsez+7+rRHsF03cjzv+rm+xG1LeecZk/q+ftdDQf0jE
-         Rkb/NmJ74QysqECxwN5itypwRXZeT1iE4VWhA0f/iwBnIRVgVyMevAMTr4GcAYPQ/WVa
-         Yma3ohaWNedqj6xVNu8d0GZZy3/ROURipdTn4zZ4BxYxEao7ZFkKOGzKgsiWC0FB4DpS
-         A5TA==
-X-Gm-Message-State: AFqh2kpqxmT8y0V7eRBHhVVMSrDtTrPUirbXO3pPE/7FJDigAOZzOjGV
-        uKnzMU4mAfzSp9npyCPqrJVlwxOmNqdZZA==
-X-Google-Smtp-Source: AMrXdXsqSM68xlbWd5A2mLopL9jusa58jJeKaT4vQl+7mafxx6MRcPzwPb0vc2qv22y1usrzVwO6+A==
-X-Received: by 2002:a17:902:d891:b0:189:d979:22a with SMTP id b17-20020a170902d89100b00189d979022amr8331166plz.29.1671757000628;
-        Thu, 22 Dec 2022 16:56:40 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id o4-20020a170902bcc400b0019254c19697sm1028419pls.289.2022.12.22.16.56.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 Dec 2022 16:56:39 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] tests: make 'test_oid' print trailing newline
-References: <20221218162905.3508164-1-szeder.dev@gmail.com>
-        <xmqqy1r4usjy.fsf@gitster.g> <20221222185804.GE3411@szeder.dev>
-Date:   Fri, 23 Dec 2022 09:56:39 +0900
-In-Reply-To: <20221222185804.GE3411@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
- =?utf-8?Q?bor=22's?= message of
-        "Thu, 22 Dec 2022 19:58:04 +0100")
-Message-ID: <xmqq3597rl88.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:content-language:mime-version:user-agent
+         :date:message-id:subject:from:to:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ISehqMrRMBPP/YrKq0rUIYCYpQwaYTqMYWS3UUOrSV8=;
+        b=k1O8zXrMLdMoX03MkDnC5oG9q+V1sstBJ7zmgwPzeJ380DfyzZQGgGjM9fH3ZEbq9n
+         kNez7eRqtpLJ6NV7wdbY4Zhgkc1WLWJTXXJzwm4PNXMl4HcZeg3Wbg32TGvbiGiQpjif
+         bbaTtTA5OfFyYVq5gxtgn38aFMwoJyS/OmhbgiVvdMt1AwIDapHW/b5mCNfJQwZ5Nd/n
+         bBy1ZV9dsrvf84E4WqS1d7viwQVy/OlegL9T8K0xIlQ2mn1tTd73n9djKiKkmc9Tom1v
+         5RIXvJPns+vyDEMVdRFrE8DYeVwk/SomxqvjySCJ0N4cxj0clObcJFf6mNl08FYYon17
+         aMDQ==
+X-Gm-Message-State: AFqh2kq0YEknZW6hIeeVcT4W33khJ8JCa3gpkRjNR8NZG4sgzcpGXFDn
+        dwkTZfAs9/RqYNysje3Zkjc=
+X-Google-Smtp-Source: AMrXdXtRJ2I4mAIxArJ4WKbwIVOT0EUBnQ4vHGxdkxCMhYMe78r3+HfoMJVz7fMHfKg8q+zAyRFQmw==
+X-Received: by 2002:a05:600c:358f:b0:3d1:cdf7:debf with SMTP id p15-20020a05600c358f00b003d1cdf7debfmr5841442wmq.26.1671757094396;
+        Thu, 22 Dec 2022 16:58:14 -0800 (PST)
+Received: from [192.168.2.52] (94.red-88-14-213.dynamicip.rima-tde.net. [88.14.213.94])
+        by smtp.gmail.com with ESMTPSA id h14-20020a05600c314e00b003d237d60318sm2986118wmo.2.2022.12.22.16.58.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Dec 2022 16:58:13 -0800 (PST)
+To:     Git List <git@vger.kernel.org>
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+Subject: [PATCH] branch: consider orphans when validate_branchname()
+Message-ID: <4247f730-5592-de10-a238-5582eac2952d@gmail.com>
+Date:   Fri, 23 Dec 2022 01:58:12 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+When a branch does not yet have a commit, we call that an orphan branch.
+More technically, an orphan branch is a HEAD that points to a
+nonexistent ref.
 
-> On Mon, Dec 19, 2022 at 09:48:49AM +0900, Junio C Hamano wrote:
->> SZEDER Gábor <szeder.dev@gmail.com> writes:
->> >       $ git grep '\stest_oid ' -- ':/t/*.sh'
->> >       $ git grep 'echo "\?$(test_oid ' -- ':/t/*.sh'
->>  ...
->> I found these examples in the log message a bit annoying to see, as
->> experiments are not affected by any grep.patterntype), but they may
->> fail for folks on stricter platforms.
->
-> Please feel free to amend the commit message as you see fit.  Usually
-> I would do that myself as I'm rather picky of my commit messages, but,
-> alas, I'm not versed in portability issues of regexes, so I'm not sure
-> what the right regexes would be.
+Orphan branches are not normal branches; can only be created, we cannot
+simply switch to them.  The initial branch in an empty repository is
+an orphan branch.  We can create new orphan branches using
+"switch --orphan".
 
-I guess ERE would give us enough expressiveness to say "zero or one"
-without relying on GNU extension.  Saying "Any whitespace" concisely
-as "\s" would require PCRE (i.e. "grep -P") but because use of it is
-optional, the best we could do is "[ ]" (in the [bracket]), one is
-TAB and the other is SPACE).
+An orphan branch becomes an ordinary branch when the ref it points to is
+created, i.e. when the first commit for the branch is done or the branch
+is reset to an existing commit.
 
-But reading the message again, they are what the author of the patch
-did to observe the current codebase, so I think being faithful to
-what you did would be fine ;-)
+When we are asked to create a new branch, orphan or not, we use
+validate_branchname() to check if a branch already exists in the
+repository with the same desired name for the new branch.  In that
+function we use ref_exists(), so we are not considering any orphan
+branches as there is no ref related to an orphan branch.
 
-In any case, thanks for cleaning it up.
+If we switch from an orphan branch to a different one, orphan or not,
+the initial orphan branch is simply lost.  We cannot switch back to it,
+there is nothing to switch back to.  Therefore, there is no major
+problem if we only check for valid refs when creating branches, orphans
+or not, as there is no orphan branches to consider in the worktree.
 
+Since 529fef20 (checkout: support checking out into a new working
+directory, 2014-12-01) we have a safe way to use multiple worktrees with
+a Git repository.
+
+This allows the possibility of having multiple (ordinary and orphan)
+branches simultaneously, and since we do not check for orphan branches
+in validate_branchname(), the same orphan branch name can be used
+multiple times.  Once any one of them becomes an ordinary branch, or a
+new ordinary branch with the same name is created, all of them will be
+/switched/ to that new branch.
+
+It also opens the possibility to copy or rename a normal branch to a
+name currently used by an orphan branch, with similar results.
+
+Since 31ad6b61bd (branch: add branch_checked_out() helper, 2022-06-15)
+we have a convenient way to see if a branch is checked out in any
+worktree.
+
+Let's use branch_checked_out() in validate_branchname() to prevent using
+the same branch name multiple times, considering orphan branches too.
+
+Signed-off-by: Rubén Justo <rjusto@gmail.com>
+---
+ branch.c                |  2 +-
+ t/t2400-worktree-add.sh | 10 ++++++++++
+ t/t3200-branch.sh       | 10 ++++++++++
+ 3 files changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/branch.c b/branch.c
+index d182756827..4029721806 100644
+--- a/branch.c
++++ b/branch.c
+@@ -367,7 +367,7 @@ int validate_branchname(const char *name, struct strbuf *ref)
+ 	if (strbuf_check_branch_ref(ref, name))
+ 		die(_("'%s' is not a valid branch name"), name);
+ 
+-	return ref_exists(ref->buf);
++	return ref_exists(ref->buf) || branch_checked_out(ref->buf);
+ }
+ 
+ static int initialized_checked_out_branches;
+diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+index d587e0b20d..f1e4b605da 100755
+--- a/t/t2400-worktree-add.sh
++++ b/t/t2400-worktree-add.sh
+@@ -118,6 +118,16 @@ test_expect_success '"add" worktree creating new branch' '
+ 	)
+ '
+ 
++test_expect_success 'do not allow multiple worktrees with same orphan branch' '
++	test_when_finished "git worktree remove --force detached-wt-A" &&
++	test_when_finished "git worktree remove --force detached-wt-B" &&
++	git worktree add --detach detached-wt-A &&
++	git -C detached-wt-A checkout --orphan orphan-branch &&
++	git worktree add --detach detached-wt-B &&
++	test_must_fail git -C detached-wt-B checkout --orphan orphan-branch &&
++	test_must_fail git checkout --orphan orphan-branch
++'
++
+ test_expect_success 'die the same branch is already checked out' '
+ 	(
+ 		cd here &&
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 5a169b68d6..68bc579fff 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -192,6 +192,16 @@ test_expect_success 'git branch -M foo bar should fail when bar is checked out i
+ 	test_must_fail git branch -M bar wt
+ '
+ 
++test_expect_success 'git branch -M/-C bar should fail when destination exists as orphan' '
++	test_when_finished "git worktree remove --force orphan-worktree" &&
++	git worktree add --detach orphan-worktree &&
++	git -C orphan-worktree checkout --orphan orphan-branch &&
++	test_must_fail git checkout --orphan orphan-branch &&
++	test_must_fail git branch orphan-branch &&
++	test_must_fail git branch -M orphan-branch &&
++	test_must_fail git branch -C orphan-branch
++'
++
+ test_expect_success 'git branch -M baz bam should succeed when baz is checked out' '
+ 	git checkout -b baz &&
+ 	git branch bam &&
+-- 
+2.36.1
 
