@@ -2,117 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAB9DC4332F
-	for <git@archiver.kernel.org>; Sat, 24 Dec 2022 22:13:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4A193C4332F
+	for <git@archiver.kernel.org>; Sat, 24 Dec 2022 23:09:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229655AbiLXWNo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 24 Dec 2022 17:13:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33174 "EHLO
+        id S229506AbiLXXJN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Dec 2022 18:09:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229499AbiLXWNn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Dec 2022 17:13:43 -0500
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C596764A
-        for <git@vger.kernel.org>; Sat, 24 Dec 2022 14:13:41 -0800 (PST)
-Received: by mail-yb1-xb35.google.com with SMTP id g4so8611981ybg.7
-        for <git@vger.kernel.org>; Sat, 24 Dec 2022 14:13:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AfzBv+21EnNngjyYHk2KTnWdpuGE95c0S/wZU1dkm0U=;
-        b=Bslsvdjm0HACaRhqVfj8XUf+ugruo55mtXda2vsx/ZA0F81DY2o///2Gt3XVQgtNus
-         sjTv6taG5NKQk4UTnp1HmZ4gvkuNwVx8zJIaKNe151rn9/XZMSjJ+8h3tpgqQLQJilQO
-         YcsO7q3z15FNlz4K8JrRFPe03a1pdjXM8sTw1ALwxlf+sydpe479y4GIOJEnmtHpHOOr
-         sSBO3uZBZDM3M9KZZKKcJmiWhPfpmjYFjIfxN11Gg9wGG0Hgd4wOnEvk5heEQZvRnV++
-         q+kQiUHA3YY3ZKUHnS1Qk3+lXE/C1zoOvW+TCAx9sLOTpZ2eGm7d+cys8jhlJ0Dgk/am
-         NvUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AfzBv+21EnNngjyYHk2KTnWdpuGE95c0S/wZU1dkm0U=;
-        b=ERRsIu4QyfrTucHCaMbN4yLZBF4bCFi1AzgdjVN8WUn4OtYH0yHQxkNz3OhZ32WJU4
-         0ZibiKuM22XybDJ8+dda207KzjjmRxHY0w5GJ7hXmYJLpnsVTuT7237Tz5AjoHBNCsOn
-         GNK/zoKfRdx9qrayaZRd8azQZzHIgbMT1Fzw1z7GvC0jE4w7qJWYwCzKfQk13wN6hrm3
-         xbijDGIuDE6YQXF2JbBFOzIH7gB/vWR4RrCKquPnnOLFpBOWBSWilU5IZ6K2exMpZsTN
-         PWKeN5Zt5OM78tUqhPO6wVtiA3CT8YpFlO4KkzRxjnOBLtwZWXEqYjtvTHzxZXs8kXGo
-         u/7w==
-X-Gm-Message-State: AFqh2kqPzLMafllbEPx1QiPj5utOmt2iEvN6kVOZlGc/v98UJl+fAsYc
-        tftDkjZGZ5wbMLWKSy1+8nKkTwNpW+aNsgZF4Uu4Aodr8s2t7g==
-X-Google-Smtp-Source: AMrXdXucYvh26aFpIbtIn+iaFQYF+KWIDMcF0J+fUx4T8w1emp4ck3Ijp952WrP9Er4Uv9I/j9g8KQZEEU6VC84rrss=
-X-Received: by 2002:a25:c50f:0:b0:6fc:b841:cf42 with SMTP id
- v15-20020a25c50f000000b006fcb841cf42mr1422030ybe.372.1671920020557; Sat, 24
- Dec 2022 14:13:40 -0800 (PST)
+        with ESMTP id S229445AbiLXXJM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Dec 2022 18:09:12 -0500
+X-Greylist: delayed 1006 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 24 Dec 2022 15:09:09 PST
+Received: from dalaran.tastycake.net (dalaran.tastycake.net [IPv6:2001:ba8:0:1c0::1:1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63BFE64CE
+        for <git@vger.kernel.org>; Sat, 24 Dec 2022 15:09:09 -0800 (PST)
+Received: from c.a.1.d.d.f.6.c.f.8.d.f.b.e.b.6.d.a.0.2.5.1.e.d.0.b.8.0.1.0.0.2.ip6.arpa ([2001:8b0:de15:20ad:6beb:fd8f:c6fd:d1ac] helo=lucy.dinwoodie.org)
+        by dalaran.tastycake.net with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.90_1)
+        (envelope-from <adam@lucy.dinwoodie.org>)
+        id 1p9DNM-0002it-HQ; Sat, 24 Dec 2022 22:52:20 +0000
+Received: from adam by lucy.dinwoodie.org with local (Exim 4.96)
+        (envelope-from <adam@lucy.dinwoodie.org>)
+        id 1p9DNL-004JQt-1g;
+        Sat, 24 Dec 2022 22:52:19 +0000
+From:   Adam Dinwoodie <adam@dinwoodie.org>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Fabian Stelzer <fs@gigacodes.de>
+Subject: [RFC PATCH] test-lib: allow storing counts with test harnesses
+Date:   Sat, 24 Dec 2022 22:52:00 +0000
+Message-Id: <20221224225200.1027806-1-adam@dinwoodie.org>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-References: <CA+PPyiHtPsRwqMmr6annuuqzeUEf+7pFUSbnXdThjNNVtxFCGw@mail.gmail.com>
- <20221222192646.GF3411@szeder.dev> <CA+PPyiHtSrLwandGcjWxzZzfuwaxX_Cpa0h40HCLBekH1vSK7g@mail.gmail.com>
-In-Reply-To: <CA+PPyiHtSrLwandGcjWxzZzfuwaxX_Cpa0h40HCLBekH1vSK7g@mail.gmail.com>
-From:   NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
-Date:   Sun, 25 Dec 2022 01:13:29 +0300
-Message-ID: <CA+PPyiH55E128M83v7qvCM3QT5vL97cuKbQSrKu7nO8w8P8JUA@mail.gmail.com>
-Subject: Re: GitHub actions are failing
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > This should be fixed in 0178420b9c (github-actions: run gcc-8 on
-> > ubuntu-20.04 image, 2022-11-25), which is in v2.39.0-rc1, but your
-> > branch is based on v2.39.0-rc0.  I would suggest to rebase your branch
-> > on top of v2.39.0, because it contains a few other CI fixes that are
-> > not yet present in any of its prereleases.
->
-> Thanks for the advice, how can I do this?
+Currently, test result files are only stored in test-results/*.counts if
+$HARNESS_ACTIVE is not set.  This dates from 8ef1abe550 (test-lib: Don't
+write test-results when HARNESS_ACTIVE, 2010-08-11), where the
+assumption was that if someone were using a test harness like prove,
+that would track results and the count files wouldn't be required.
+However, as of 49da404070 (test-lib: show missing prereq summary,
+2021-11-20), those files also store the list of git test prerequisites
+that were missing during the test run, which isn't something that a
+generic test harness like prove can provide.
 
-Oh, I have finally learned how to do it. just search around the internet.
-And it solves the problems, Github Actions are no longer failing.
+To allow folk using test harnesses to access the lists of missing
+prerequisites, add a --counts argument to test-lib that will keep these
+counts files even if a test harness is in use.  This means that a
+subsequent call of, say, `make -C t aggregate-results` will report
+useful information.
 
-Best Regards
-Wilberforce
+It might be preferable to do make a wider-ranging change, including
+storing the missing prerequisites separately from the count files, so
+the results can be reported regardless of whether the success/failure
+counts are wanted, but that would be more disruptive and more work for
+relatively little gain.
 
+Signed-off-by: Adam Dinwoodie <adam@dinwoodie.org>
+---
 
-On Sun, Dec 25, 2022 at 12:11 AM NSENGIYUMVA WILBERFORCE
-<nsengiyumvawilberforce@gmail.com> wrote:
->
-> > This should be fixed in 0178420b9c (github-actions: run gcc-8 on
-> > ubuntu-20.04 image, 2022-11-25), which is in v2.39.0-rc1, but your
-> > branch is based on v2.39.0-rc0.  I would suggest to rebase your branch
-> > on top of v2.39.0, because it contains a few other CI fixes that are
-> > not yet present in any of its prereleases.
->
-> Thanks for the advice, how can I do this?
->
->
-> On Thu, Dec 22, 2022 at 2:26 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> =
-wrote:
-> >
-> > On Thu, Dec 22, 2022 at 08:55:43PM +0300, NSENGIYUMVA WILBERFORCE wrote=
-:
-> > > Hi
-> > > So I have been working in the signature atom patches. I have been
-> > > testing my commits on my fork. However, the actions are failing.
-> > > One of the errors is
-> > >
-> > > -------------
-> > > E: Package 'gcc-8' has no installation candidate
-> > > + end_group
-> > > + test -n ''
-> > > + return 0
-> > > Error: Process completed with exit code 100.
-> > > -------------
-> > >
-> > > I would like to have any help, my branch is
-> > > https://github.com/nsengiyumva-wilberforce/git/commits/signature5
-> >
-> > This should be fixed in 0178420b9c (github-actions: run gcc-8 on
-> > ubuntu-20.04 image, 2022-11-25), which is in v2.39.0-rc1, but your
-> > branch is based on v2.39.0-rc0.  I would suggest to rebase your branch
-> > on top of v2.39.0, because it contains a few other CI fixes that are
-> > not yet present in any of its prereleases.
-> >
+The key reason I'm submitting this as an RFC is that last paragraph:
+I've tested the below patch, and it achieves what I'm after (letting me
+both use prove and audit missing prerequisites), but it further embeds
+the use of the "count" files for recording missing prerequisites, where
+it might be preferable to do something a bit more complex that treats
+the prerequisite reporting as a separate function, rather than a bolt-on
+to the pass/fail/etc. counts.
+
+ t/test-lib.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 6db377f68b..bbd9ee0e34 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -157,6 +157,8 @@ parse_option () {
+ 	local opt="$1"
+ 
+ 	case "$opt" in
++	-c|--c|--co|--cou|--coun|--count|--counts)
++		record_counts=t ;;
+ 	-d|--d|--de|--deb|--debu|--debug)
+ 		debug=t ;;
+ 	-i|--i|--im|--imm|--imme|--immed|--immedi|--immedia|--immediat|--immediate)
+@@ -1282,7 +1284,7 @@ test_done () {
+ 
+ 	finalize_test_output
+ 
+-	if test -z "$HARNESS_ACTIVE"
++	if test -z "$HARNESS_ACTIVE" || test -n "$record_counts"
+ 	then
+ 		mkdir -p "$TEST_RESULTS_DIR"
+ 
+-- 
+2.39.0
+
