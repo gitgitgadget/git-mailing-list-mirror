@@ -2,108 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 14255C4332F
-	for <git@archiver.kernel.org>; Sun, 25 Dec 2022 08:54:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2F14EC4332F
+	for <git@archiver.kernel.org>; Sun, 25 Dec 2022 11:08:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230468AbiLYIya (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Dec 2022 03:54:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59604 "EHLO
+        id S229530AbiLYLGM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Dec 2022 06:06:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbiLYIy3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Dec 2022 03:54:29 -0500
-Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80B4B62C1
-        for <git@vger.kernel.org>; Sun, 25 Dec 2022 00:54:26 -0800 (PST)
-Received: from [192.168.0.98] (unknown [93.83.142.38])
-        by bsmtp1.bon.at (Postfix) with ESMTPSA id 4NfvqL55nMz5tlB;
-        Sun, 25 Dec 2022 09:54:22 +0100 (CET)
-Message-ID: <983ce25f-82e1-e20d-ffb5-fd04fa9a9231@kdbg.org>
-Date:   Sun, 25 Dec 2022 09:54:22 +0100
+        with ESMTP id S229441AbiLYLGJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Dec 2022 06:06:09 -0500
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92469F17
+        for <git@vger.kernel.org>; Sun, 25 Dec 2022 03:06:03 -0800 (PST)
+Received: by mail-pf1-x436.google.com with SMTP id n3so5847641pfq.10
+        for <git@vger.kernel.org>; Sun, 25 Dec 2022 03:06:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:user-agent
+         :references:in-reply-to:subject:cc:to:from:sender:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ixgw5yuJ8KSO7rx5IFK3Zp30S03niTlBwl1uUMyeCBo=;
+        b=bxDa0K8EZHJ2EcE+fK3XUx5f4hK9uBTcwortgLWL8Vy5vGVxL7uo73HbMX/zkfAAyP
+         cbxZuLtylTrBI9JtY/9hOQaAM5gJObVB3RQtT3jN0tbNnzNG+fuVsWI/XUtdzaq+eBrk
+         QgWLeHJ1ipB7lPX8+EjIbrGuWdtp54G8YeZ4fsHhTFLqwylmELoUTVYo7BbDdSvxklA5
+         I/0TlmNgeSFrLHahD11niQEVVCfy/QfbSHnj61/No+ePeAa0zzCbB42rhR8DsP8y65M2
+         aQRaztTvjb8Fqqua4jJULG/1fgCD3Gc8FzKK15UaKGH8H74mC/f24lnGY3vqRieYpIQ3
+         yEeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:user-agent
+         :references:in-reply-to:subject:cc:to:from:sender:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ixgw5yuJ8KSO7rx5IFK3Zp30S03niTlBwl1uUMyeCBo=;
+        b=rFJfSCUZF31+jDyj2lnP9uW0xtVVSpOTi2cy0PyLzJsFA6S3gGrehFGV9iWQo6BXoM
+         M4aMT5Eg0s8BtrOBO8lV/0VQVGLd3W8XYPSaTgQ/jTosZ+N8xPbIkmF1ksbnfzP6aGND
+         nU4lKxBd27OOs6QMUtj/yAklYOA/oG/vql4F+fjdoI0pgin1x0iPJvcOGGfy6t0qtZ4A
+         +sbFMkzSadKksqzWIZV3ZRAvh/U5wrzuM1bqLaPjdUISM/xqr7sQIEm0VpSpnSQRHOp9
+         IE4SZ4GwHlLtf5O/7kaus4+Fh0FEvEqMmYiGPp5rzLcvSizqnJLBM+O5vgioSdUeytcH
+         CEKg==
+X-Gm-Message-State: AFqh2kqYJxi8X67istsTDxzNqorQplW2SOyGPFVccHUOqIZJXYqktl4N
+        iRJ2BcIwtGsEEdsAZ+vsX0XHXoJMwDWSBQ==
+X-Google-Smtp-Source: AMrXdXsZL+YVvG7sygeEOi8Jls7GdCPM9uG3xnjtzOH0UYk7n7DoFUm2keaj9pHDa1ptiQ6TG7Tfcg==
+X-Received: by 2002:a05:6a00:1248:b0:576:9455:4c5e with SMTP id u8-20020a056a00124800b0057694554c5emr20805019pfi.24.1671966361046;
+        Sun, 25 Dec 2022 03:06:01 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id p62-20020a625b41000000b005765a5ff1fasm5127632pfb.213.2022.12.25.03.05.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 25 Dec 2022 03:06:00 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Hubert Jasudowicz <hubertj@stmcyber.pl>,
+        Derrick Stolee <derrickstolee@github.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: Re: [PATCH] bundle: don't segfault on "git bundle <subcmd>"
+In-Reply-To: <patch-1.1-2319eb2ddbd-20221220T133941Z-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyCUFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 20 Dec
+ 2022 14:40:18 +0100")
+References: <20221220123142.812965-1-hubertj@stmcyber.pl>
+        <patch-1.1-2319eb2ddbd-20221220T133941Z-avarab@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+Date:   Sun, 25 Dec 2022 20:05:59 +0900
+Message-ID: <xmqq5ydzpwtk.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH v2] win32: use _endthreadex to terminate threads, not
- ExitThread
-To:     Rose via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Seija Kijin <doremylover123@gmail.com>, git@vger.kernel.org
-References: <pull.1414.git.git.1671742750504.gitgitgadget@gmail.com>
- <pull.1414.v2.git.git.1671932510529.gitgitgadget@gmail.com>
-Content-Language: en-US
-From:   Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <pull.1414.v2.git.git.1671932510529.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 25.12.22 um 02:41 schrieb Rose via GitGitGadget:
-> From: Seija Kijin <doremylover123@gmail.com>
-> 
-> Because we use the C runtime and
-> use _beginthreadex to create pthreads,
-> pthread_exit MUST use _endthreadex.
-> 
-> Otherwise, according to Microsoft:
-> "Failure to do so results in small
-> memory leaks when the thread
-> calls ExitThread."
-> 
-> Simply put, this is not the same as ExitThread.
-> 
-> Signed-off-by: Seija Kijin <doremylover123@gmail.com>
-> ---
->     win32: use _endthreadex to terminate threads, not ExitThread
->     
->     Because we use the C runtime and use _beginthread to create pthreads,
->     pthread_exit MUST use _endthread.
->     
->     Otherwise, according to Microsoft: "Failure to do so results in small
->     memory leaks when the thread calls ExitThread."
->     
->     Simply put, this is not the same as ExitThread.
->     
->     Signed-off-by: Seija Kijin doremylover123@gmail.com
-> 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1414%2FAtariDreams%2Fsevere-bug-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1414/AtariDreams/severe-bug-v2
-> Pull-Request: https://github.com/git/git/pull/1414
-> 
-> Range-diff vs v1:
-> 
->  1:  78f9d54c304 ! 1:  3e8212fb9a7 win32: use _endthreadex to terminate threads, not ExitThread
->      @@ Metadata
->        ## Commit message ##
->           win32: use _endthreadex to terminate threads, not ExitThread
->       
->      -    This is a pretty serious bug actually:
->           Because we use the C runtime and
->           use _beginthreadex to create pthreads,
->           pthread_exit MUST use _endthreadex.
-> 
-> 
->  compat/win32/pthread.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/compat/win32/pthread.h b/compat/win32/pthread.h
-> index 737983d00ba..cc3221cb2c8 100644
-> --- a/compat/win32/pthread.h
-> +++ b/compat/win32/pthread.h
-> @@ -66,7 +66,7 @@ pthread_t pthread_self(void);
->  
->  static inline void NORETURN pthread_exit(void *ret)
->  {
-> -	ExitThread((DWORD)(intptr_t)ret);
-> +	_endthreadex((unsigned)(uintptr_t)ret);
->  }
->  
->  typedef DWORD pthread_key_t;
-> 
-> base-commit: 7c2ef319c52c4997256f5807564523dfd4acdfc7
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-Thank you! This patch is now
+> As an aside, this could be safely squashed into this, but let's not do
+> that for this minimal segfault fix, as it's an unrelated refactoring:
+>
+> 	--- a/builtin/bundle.c
+> 	+++ b/builtin/bundle.c
+> 	@@ -55,13 +55,12 @@ static int parse_options_cmd_bundle(int argc,
+> 	 		const char * const usagestr[],
+> 	 		const struct option options[],
+> 	 		char **bundle_file) {
+> 	-	int newargc;
+> 	-	newargc = parse_options(argc, argv, NULL, options, usagestr,
+> 	+	argc = parse_options(argc, argv, NULL, options, usagestr,
+> 	 			     PARSE_OPT_STOP_AT_NON_OPTION);
+> 	-	if (!newargc)
+> 	+	if (!argc)
+> 	 		usage_with_options(usagestr, options);
+> 	 	*bundle_file = prefix_filename(prefix, argv[0]);
+> 	-	return newargc;
+> 	+	return argc;
+> 	 }
 
-Acked-by: Johannes Sixt <j6t@kdbg.org>
+That would actually make the intent much clearer and if the code
+were written to update argc instead of introducing a separate
+varilable, this bug would not have happened.
 
--- Hannes
-
+Thanks, will queue (without the clean-up at least for now).
