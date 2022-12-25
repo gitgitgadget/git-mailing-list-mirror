@@ -2,59 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C0610C4167B
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D1E3AC3DA7A
 	for <git@archiver.kernel.org>; Sun, 25 Dec 2022 01:40:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229730AbiLYBkP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 24 Dec 2022 20:40:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48910 "EHLO
+        id S230019AbiLYBkT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 24 Dec 2022 20:40:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbiLYBkM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Dec 2022 20:40:12 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C08096467
-        for <git@vger.kernel.org>; Sat, 24 Dec 2022 17:40:08 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id f13-20020a1cc90d000000b003d08c4cf679so5812144wmb.5
-        for <git@vger.kernel.org>; Sat, 24 Dec 2022 17:40:08 -0800 (PST)
+        with ESMTP id S229672AbiLYBkO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Dec 2022 20:40:14 -0500
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FCB3646A
+        for <git@vger.kernel.org>; Sat, 24 Dec 2022 17:40:09 -0800 (PST)
+Received: by mail-wr1-x431.google.com with SMTP id co23so7645501wrb.4
+        for <git@vger.kernel.org>; Sat, 24 Dec 2022 17:40:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3gtGPm1pzJL5r63uC24zmwZC6Wm2BeyyzRoQmed4nTA=;
-        b=h8vhHuExLpLhidHFEM4TJD9D7BCqwAv87XpW1SEgLmggKGbynpRjeOAwnbYdWLONtt
-         Y7VMsGbPNflj/nX7Uo3Fes3mO/1s6ik7uK+wObO/BiUFqJArK6L6VW8Juo41wE0OXqi3
-         uBXzvo0O9Jw9mSDEGBqiAfbQ9DwASSq/0J9lSEGVaAPb3r3m+Hp47LK6hD+DvPWbZTca
-         cN+pcVTHhK9ec+Hh0RgX5XG49kR/ReLrhla7EW1PT+PmKneCvAR5Mw9KalnMLSrZg7/E
-         IzS+BkkpBfDAbucbrWPMMKPjLbxjUaumefF3R5sx9uX0p0oafPo8yO8cOt03PmlWU/bt
-         i4EQ==
+        bh=A6GP/eZ3XXrZHZXftNTRfIXvKeFBn1NYVoQFNtA6JMQ=;
+        b=SUkQ9JgOMdscFHaf1903nTVQ6AquFdnbEro7RGA5tM7SiO/AFspZvNwsx92D23BANU
+         Nb76g0AbbDf20qmU505NXiHGe8ncO5qPNGMZPMdiv5HEYN864cqjDTiiks5V+eqImpX7
+         hkYl4o0G87TfdvThRVSdkzkW9e+dMBXhyeeWdJ/6IN+9JnQEpk+R1p8vptCtQuxfx59g
+         DabZKltlFsiEhDJQ7w4ewJyvtlYDJQdf1u+u3LzGLo8fkXvaBA6elCdcMUmzCYKwCAi7
+         MdjjQVvHIBy2EtyVn7QnKOV5h9Xt3WNcUqTIqbW6r6Ns1sYrjfk+ABdYNTq02bfe4rIc
+         Hxkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3gtGPm1pzJL5r63uC24zmwZC6Wm2BeyyzRoQmed4nTA=;
-        b=H2Exaygm0B3yynp4dEJeflHsyKWTBjz3TmvDggOkXchjKHU63wj47ygHuOw3RHpotG
-         5Pt95NClRD9jvnYP5qlOB+ScQ6t2KO5ohfiZUXLFqQ7eHUNaxkx2vG/nIA3pzWng//eQ
-         Zl0+MHg2zQ+dNgBmnUjRd0t5sSbSEt3M6FERCO2qqYvhGLjxBcJ8KgLsn/nGeVD4b5w/
-         4KvxttELKPXcBhUu6KUyIUrh9Gih9nxUkID+sohUQlEU9a8tN/fjBKxxCuObhY5fCiHm
-         D+aJUBXm+OjTewxLj9nmJHqqrQsVYeaDRdBCVhKDwOm1kKY1C8HpigJWMPomBR8a8Zci
-         2ULA==
-X-Gm-Message-State: AFqh2kqCGMSr7QRdebgefjq2uupi6d/kPW5GvHiHzNsZfPIQa4giD6dP
-        NB4KpivkhxaweF6ch75FstMnqxCbDkw=
-X-Google-Smtp-Source: AMrXdXtS/ZhQ7NN8ECNRk33us9clrfl7ohoLcVoxl0lMUbDw1jSaEQeOLrfBtYxxjh/sPTZnhJhS+g==
-X-Received: by 2002:a05:600c:22ca:b0:3d1:ebdf:d586 with SMTP id 10-20020a05600c22ca00b003d1ebdfd586mr10290934wmg.29.1671932406755;
-        Sat, 24 Dec 2022 17:40:06 -0800 (PST)
+        bh=A6GP/eZ3XXrZHZXftNTRfIXvKeFBn1NYVoQFNtA6JMQ=;
+        b=3lGlDuppE6ea7DwUZdtzWRQ5Xr1mKULQJ5vnb2W7Wk2QMlyTbrFWIamDCWkLNspZcR
+         IXSy0z4yn6+557Ev+rREJlQ73YRYDGRvZssMF3dmKNhaf79/nN+0utHjCDAtFYtYnZMw
+         pFobRIYODmFz2e+MIbyRnWup3pDAS0sV5XTgVwpqN52sgFlm98KYc7Njk4Cdf4kzPATn
+         mvXqzzw1z1/NJSXgxbJPWVn0eJC64GhW1pVmmDFX3ckMjIF2ygPQT2iUfONUOui3tUzb
+         Qbpzp+1Oscm2dTQUXACEl6cX6R+uaZ3+Lbn95GYJsNUILCc7Sdz2l2lepzcNB0l84Ckw
+         d68A==
+X-Gm-Message-State: AFqh2krOHxEWaymfFZjm5N6O4K1x33DFyGXSxONSsUQA9LCTe6otu2eu
+        +q94Zm3ahAmPA597FzjdHBM5zuaY1IM=
+X-Google-Smtp-Source: AMrXdXuFIe12o2/D0jd+dtJITp9/+dWydIatR6vByCvnBLHlFqiAdy471Oa+i7rHBtj0DiLlrdgwIg==
+X-Received: by 2002:adf:f1c9:0:b0:271:808e:ad8b with SMTP id z9-20020adff1c9000000b00271808ead8bmr6622341wro.34.1671932407722;
+        Sat, 24 Dec 2022 17:40:07 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s17-20020a5d5111000000b00269e69e65c4sm6639004wrt.62.2022.12.24.17.40.06
+        by smtp.gmail.com with ESMTPSA id c8-20020a5d4148000000b002428c4fb16asm6699371wrq.10.2022.12.24.17.40.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Dec 2022 17:40:06 -0800 (PST)
-Message-Id: <pull.1406.v12.git.git.1671932405.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1406.v11.git.git.1671823177.gitgitgadget@gmail.com>
+        Sat, 24 Dec 2022 17:40:07 -0800 (PST)
+Message-Id: <e0cc43efc6c498706559ae4fc71c597a6481f64c.1671932405.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1406.v12.git.git.1671932405.gitgitgadget@gmail.com>
 References: <pull.1406.v11.git.git.1671823177.gitgitgadget@gmail.com>
-From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 25 Dec 2022 01:40:03 +0000
-Subject: [PATCH v12 0/2] win32: close handles of threads that have been joined
+        <pull.1406.v12.git.git.1671932405.gitgitgadget@gmail.com>
+From:   "Seija Kijin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 25 Dec 2022 01:40:04 +0000
+Subject: [PATCH v12 1/2] win32-pthread: prepare pthread.c for change by
+ formatting
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -63,45 +65,67 @@ To:     git@vger.kernel.org
 Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
         <avarab@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
         =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Rose <83477269+AtariDreams@users.noreply.github.com>
+        Rose <83477269+AtariDreams@users.noreply.github.com>,
+        Seija Kijin <doremylover123@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After joining threads, the handle to the original thread should be closed as
-it no longer needs to be open.
+From: Seija Kijin <doremylover123@gmail.com>
 
-Signed-off-by: Seija Kijin doremylover123@gmail.com
+File has been formatted to meet coding guidelines
 
-Seija Kijin (2):
-  win32-pthread: prepare pthread.c for change by formatting
-  win32: close handles of threads that have been joined
+Signed-off-by: Seija Kijin <doremylover123@gmail.com>
+---
+ compat/win32/pthread.c | 25 ++++++++++++-------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
- compat/win32/pthread.c | 28 +++++++++++++++-------------
- 1 file changed, 15 insertions(+), 13 deletions(-)
-
-
-base-commit: 7c2ef319c52c4997256f5807564523dfd4acdfc7
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1406%2FAtariDreams%2Fjoin-v12
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1406/AtariDreams/join-v12
-Pull-Request: https://github.com/git/git/pull/1406
-
-Range-diff vs v11:
-
- 1:  e0cc43efc6c = 1:  e0cc43efc6c win32-pthread: prepare pthread.c for change by formatting
- 2:  c5d2ddad166 ! 2:  fa5cbfa5e0c win32: close handles of threads that have been joined
-     @@ compat/win32/pthread.c: int win32_pthread_join(pthread_t *thread, void **value_p
-      +		CloseHandle(thread->handle);
-       		return EINVAL;
-       	default:
-     --		return err_win_to_posix(GetLastError());
-      +		/* the wait failed, so do not detach */
-     -+		errno = err_win_to_posix(GetLastError());
-     -+		return errno;
-     + 		return err_win_to_posix(GetLastError());
-       	}
-       }
-     - 
-
+diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
+index 2e7eead42cb..65e15a560d5 100644
+--- a/compat/win32/pthread.c
++++ b/compat/win32/pthread.c
+@@ -22,12 +22,12 @@ static unsigned __stdcall win32_start_routine(void *arg)
+ }
+ 
+ int pthread_create(pthread_t *thread, const void *unused,
+-		   void *(*start_routine)(void*), void *arg)
++		   void *(*start_routine)(void *), void *arg)
+ {
+ 	thread->arg = arg;
+ 	thread->start_routine = start_routine;
+-	thread->handle = (HANDLE)
+-		_beginthreadex(NULL, 0, win32_start_routine, thread, 0, NULL);
++	thread->handle = (HANDLE)_beginthreadex(NULL, 0, win32_start_routine,
++						thread, 0, NULL);
+ 
+ 	if (!thread->handle)
+ 		return errno;
+@@ -37,16 +37,15 @@ int pthread_create(pthread_t *thread, const void *unused,
+ 
+ int win32_pthread_join(pthread_t *thread, void **value_ptr)
+ {
+-	DWORD result = WaitForSingleObject(thread->handle, INFINITE);
+-	switch (result) {
+-		case WAIT_OBJECT_0:
+-			if (value_ptr)
+-				*value_ptr = thread->arg;
+-			return 0;
+-		case WAIT_ABANDONED:
+-			return EINVAL;
+-		default:
+-			return err_win_to_posix(GetLastError());
++	switch (WaitForSingleObject(thread->handle, INFINITE)) {
++	case WAIT_OBJECT_0:
++		if (value_ptr)
++			*value_ptr = thread->arg;
++		return 0;
++	case WAIT_ABANDONED:
++		return EINVAL;
++	default:
++		return err_win_to_posix(GetLastError());
+ 	}
+ }
+ 
 -- 
 gitgitgadget
+
