@@ -2,93 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 985D4C4332F
-	for <git@archiver.kernel.org>; Sun, 25 Dec 2022 11:38:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DA3CAC4332F
+	for <git@archiver.kernel.org>; Sun, 25 Dec 2022 12:45:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229530AbiLYLgF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Dec 2022 06:36:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45794 "EHLO
+        id S229530AbiLYMks (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Dec 2022 07:40:48 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbiLYLgD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Dec 2022 06:36:03 -0500
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC97D5F48
-        for <git@vger.kernel.org>; Sun, 25 Dec 2022 03:36:00 -0800 (PST)
-Received: by mail-pg1-x52e.google.com with SMTP id 79so5827528pgf.11
-        for <git@vger.kernel.org>; Sun, 25 Dec 2022 03:36:00 -0800 (PST)
+        with ESMTP id S229489AbiLYMkq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Dec 2022 07:40:46 -0500
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD55FF3
+        for <git@vger.kernel.org>; Sun, 25 Dec 2022 04:40:41 -0800 (PST)
+Received: by mail-pl1-x636.google.com with SMTP id 17so8860937pll.0
+        for <git@vger.kernel.org>; Sun, 25 Dec 2022 04:40:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aK0W+IMu8cncUtY6f8qgsBgmjwjRsLMXobfmhqCLAI4=;
-        b=qWpdFPWP1GslT3RHVNR8Uwag0MHp8fAKx94V1I3xD0ZeIwMm6TYTEfgGGXNuI/cUAb
-         3w3eXtm/JgYNG9C0W9hdiAgrA+NQz4kIIs4xB7aXx/GD/wpMNCOrH/XNm7s0DLj4hChC
-         hp38GeO2hEyOT/4Rvzan177lRNfQcpxgyJMtCtvzaQHSd/C+wCCGBHZSF7uPI3hhT/tK
-         +vEkF7Q0zft2PS5bCAcbyPusZ4p9w1DrCRYzLSazxRbv8bFa9KjggXB4r1Fd+rZVujsM
-         R1rZqx/WiDVcCGQmB/kwiJp9jqb+Y+D41lJvnuDFLwHvNfe23ygCc9hW8AWXhcv1Ovoe
-         IvEw==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ACcjJx2yXBJ85D2PResjMwuQYK9i4I7zdITz6o0gIOY=;
+        b=TmkzSi2S/XOTds8EThT7cVXLPI6zqLotyCoUEZgIKu8uR+EanGQn025fxzOfGNxj/F
+         9U7URai0eS5wnTxfTPAyrig8MJoJNdMGABOV2yDKFVUFNvBWvxYfuanESfPdbCgo0pRL
+         geS+w1iT4Mp+q9ITNqsxI0F2yyssrqP6k+3eD9juvFEi27t4cZIt9gxVlRuFsk6ry4EI
+         IouMnOvDbcWnI1FqDPuniZQuvdJg3qIHmkpPHBhpHz3qe7WRjGzLQfKq+y0+4d/hGZhv
+         LyKsRlk2rI44dpBgGFhq8557BxKIWOc0R2iIuWVjba3HY+MAWR+0aME1/fQfOjKWKG/p
+         YHNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aK0W+IMu8cncUtY6f8qgsBgmjwjRsLMXobfmhqCLAI4=;
-        b=EXpn/UnKb7BbN6LB1r7msnk2Ra8MHtAnFgTcCwd309HcB7xmOdxug7jc7l0/jQfOtL
-         3gp/HXIxRugtrQq9wxiFru5qZzJyXyvwje3OwH9IVb5pxGpsZxhCZRUfQtWX2LDsMreL
-         5IQH5/73TqX9V59XSfFHxVaCd5ncckqS8gmNXnHXiL/133qxpjyxomYF1fYJYmMYHRe0
-         LstKPZQ8Bh3evT2wQQSGlOs7wweZzUOaw1b3jvrhX3Y/NkgnVgkSG8Tp0oMSo+X+FpEM
-         l6cc7Mv4hIWf5lRn4RLLE8cj9AXBQT0zjrY4+4iITE76tFZG4o09giuBSJ8EXSszBKVA
-         tiwg==
-X-Gm-Message-State: AFqh2kqD+rmn0V3YtfeNK6hvtWu2bTDLxSIJ7nEbGiGI6uTeIYwTLFpO
-        JfxwmZfS6huIre1alJdS5m8=
-X-Google-Smtp-Source: AMrXdXvfAYmkxCnz5lIMbtl61UDt7AMHRj/xXGZrtDhx8k70Df6/JLO/pUpypu3UPn6yzs3kdvRAIw==
-X-Received: by 2002:a62:1d07:0:b0:56b:a2f8:1d0f with SMTP id d7-20020a621d07000000b0056ba2f81d0fmr31563443pfd.0.1671968160209;
-        Sun, 25 Dec 2022 03:36:00 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=ACcjJx2yXBJ85D2PResjMwuQYK9i4I7zdITz6o0gIOY=;
+        b=ewP7IsC77oal0YoT6u75oCff9KYDzvtwDh87NlZzR/r7Qp1rLT2ufXRMpc23jLS60/
+         5G5ArhYIatWtH8zLjYyM/aY9H6gCWH0Gs3dPqHF4qDYYAADAjJwsmkPee3m1aolwo7M+
+         0BBQz8ZGqYY4DzqGLcSZJIPR9YuJWALliDtOoKgIxeKpvtCUzjDTA9jr5XNa2MCshjDF
+         v3KLGIHt45czBelyJA4sW0DP73gOxbxYhcey+JcNy2kf27fkHEnO2tLJ31dymzsgIroR
+         c/4po7Dfg9qBFd5CyeydqCtinN9XYt304RZo6lzitzlTs0xUJJ6IcGhmrFH6Qaelx/I6
+         5aDg==
+X-Gm-Message-State: AFqh2kqc0PtyYMomBPhzvSbCzubLhblg/pv3R/G6D0+fN+W8zBW3WSnm
+        zyNYLQaIPoD8wUqjY15bSg8=
+X-Google-Smtp-Source: AMrXdXsQMLjn/nko/48fypLKYujcRHzguyJLU6J5UEQdBtgxp/Y48EXWXGSG+lgjlK9n7Layz3Q95w==
+X-Received: by 2002:a17:903:ca:b0:188:da5c:152b with SMTP id x10-20020a17090300ca00b00188da5c152bmr15687621plc.9.1671972040916;
+        Sun, 25 Dec 2022 04:40:40 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id 189-20020a6204c6000000b0057691fb0d37sm5117742pfe.193.2022.12.25.03.35.59
+        by smtp.gmail.com with ESMTPSA id h17-20020a170902f55100b00186cd4a8aedsm5296301plf.252.2022.12.25.04.40.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Dec 2022 03:35:59 -0800 (PST)
+        Sun, 25 Dec 2022 04:40:40 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
-        avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
-        chooglen@google.com, jonathantanmy@google.com,
-        dyroneteng@gmail.com, Victoria Dye <vdye@github.com>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH v4 00/11] Bundle URIs IV: advertise over protocol v2
-References: <pull.1400.v3.git.1670262639.gitgitgadget@gmail.com>
-        <pull.1400.v4.git.1671722058.gitgitgadget@gmail.com>
-Date:   Sun, 25 Dec 2022 20:35:59 +0900
-Message-ID: <xmqqilhzogv4.fsf@gitster.g>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Rose via GitGitGadget <gitgitgadget@gmail.com>,
+        Seija Kijin <doremylover123@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2] win32: use _endthreadex to terminate threads, not
+ ExitThread
+References: <pull.1414.git.git.1671742750504.gitgitgadget@gmail.com>
+        <pull.1414.v2.git.git.1671932510529.gitgitgadget@gmail.com>
+        <983ce25f-82e1-e20d-ffb5-fd04fa9a9231@kdbg.org>
+Date:   Sun, 25 Dec 2022 21:40:40 +0900
+In-Reply-To: <983ce25f-82e1-e20d-ffb5-fd04fa9a9231@kdbg.org> (Johannes Sixt's
+        message of "Sun, 25 Dec 2022 09:54:22 +0100")
+Message-ID: <xmqqedsnodvb.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> This version includes squashed-in versions of the fixups that were
-> previously known as ds/bundle-uri-4-fixup.
+> Am 25.12.22 um 02:41 schrieb Rose via GitGitGadget:
+>> From: Seija Kijin <doremylover123@gmail.com>
+>>  ...
+> Thank you! This patch is now
 >
->  * Some unused parameters are now marked with UNUSED, since we are
->    introducing those parameters for the first time. In one case an unused
->    parameter should have been used in repo_config_...() instead of
->    git_config_...().
->  * The GIT_TEST_BUNDLE_URI environment variable is removed in favor of the
->    transfer.bundleURI config option in all cases.
->  * A stale commit message is fixed to no longer refer to a rename that was
->    split into a different commit as part of v3.
->  * The documentation comment for fetch_bundle_list() explicitly defines a
->    non-zero return value as an error.
+> Acked-by: Johannes Sixt <j6t@kdbg.org>
 
-I guess that sprinkling the fixes from "4-fixup" series into the
-original commits will resolve many comments by Ævar about the
-logical ordering of changes in the "fixup" series, mostly by making
-them all moot points?  Thanks for working on this, and let's start
-merging it down to 'next'.
-
+Thanks.  Will queue.
