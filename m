@@ -2,98 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6DF01C4167B
-	for <git@archiver.kernel.org>; Sun, 25 Dec 2022 11:26:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 985D4C4332F
+	for <git@archiver.kernel.org>; Sun, 25 Dec 2022 11:38:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229489AbiLYL0E (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 25 Dec 2022 06:26:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44712 "EHLO
+        id S229530AbiLYLgF (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 25 Dec 2022 06:36:05 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45794 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229441AbiLYL0C (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Dec 2022 06:26:02 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E49FD62CD
-        for <git@vger.kernel.org>; Sun, 25 Dec 2022 03:26:00 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id o2so3108163pjh.4
-        for <git@vger.kernel.org>; Sun, 25 Dec 2022 03:26:00 -0800 (PST)
+        with ESMTP id S229441AbiLYLgD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Dec 2022 06:36:03 -0500
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC97D5F48
+        for <git@vger.kernel.org>; Sun, 25 Dec 2022 03:36:00 -0800 (PST)
+Received: by mail-pg1-x52e.google.com with SMTP id 79so5827528pgf.11
+        for <git@vger.kernel.org>; Sun, 25 Dec 2022 03:36:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=3dBtrxoRykL5POt1yEzAvPYRQXBk4Paxj5W8nRj+HqU=;
-        b=l7fhG2UjNJRYz4jjKi9gBjze77v73ph+f2F+BmkJkTmtdT1JFTdptAAEFyFeL1tN5f
-         B4lKeAHQBX3rnF5Zj0qDWpt9n+aXwAVDc2sv8oZvFQmFvjABQ0qnQ1PzAM4McJw9swQR
-         DJg8Lv9h7GzpTt7Qq2E1uAX8BJuWbVNtwkPOf9vWhMgxddDlW6jKrhv2SYXZupWUXgRM
-         Wq4b94Xk7UFovDVxwnZz2TSlU89Rm7J+uLlj9gBZYc+RZtwozXwwhr1x3K7LzBPvQuPL
-         2GHMgG2Ay4N59zsIQL98xf89m9lHW+9AAsHBJYA3wcJmQ+MVChmsJTEdwA6nrwUBsWnS
-         Bomw==
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aK0W+IMu8cncUtY6f8qgsBgmjwjRsLMXobfmhqCLAI4=;
+        b=qWpdFPWP1GslT3RHVNR8Uwag0MHp8fAKx94V1I3xD0ZeIwMm6TYTEfgGGXNuI/cUAb
+         3w3eXtm/JgYNG9C0W9hdiAgrA+NQz4kIIs4xB7aXx/GD/wpMNCOrH/XNm7s0DLj4hChC
+         hp38GeO2hEyOT/4Rvzan177lRNfQcpxgyJMtCtvzaQHSd/C+wCCGBHZSF7uPI3hhT/tK
+         +vEkF7Q0zft2PS5bCAcbyPusZ4p9w1DrCRYzLSazxRbv8bFa9KjggXB4r1Fd+rZVujsM
+         R1rZqx/WiDVcCGQmB/kwiJp9jqb+Y+D41lJvnuDFLwHvNfe23ygCc9hW8AWXhcv1Ovoe
+         IvEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3dBtrxoRykL5POt1yEzAvPYRQXBk4Paxj5W8nRj+HqU=;
-        b=2J/jWzYe2dzN6kwEmfBx9DHv0J41UlNDDQH6iQkhGaj5jVk2LO+OyDcTxoNHWurabc
-         A97JH1zsgy3k5WkzSz5VEFjTZMJR3ZpTv13QEtd31rT57AG68cx5VJr4VW8Lqr2xwXsz
-         1f7KZOvkvx6CTT3EeDUt24xXPuxWLX+sA2fK9MedkjKKwJC1d3yJYotIDxsRwdrUHvC8
-         4mSuuvSzego2qGnmhO2Y41C7sMUA9xZQXdWC9zANplovfuW7S/5fZ/yCbPPJp8r3S8Fp
-         fS61rYBtFsy1B02imeO5/3g2fWsGak4irPvjCTd2OzcQ7RgK6Wqev70vPnS1XDVC+Tko
-         YWSQ==
-X-Gm-Message-State: AFqh2krRXCLfjmdRbtwZkDeYN55QJEmfAW1ksCK/EO3Fhoow28H0ylHd
-        A+SgI6brqQsFxE12Lywq0aIvQpyjuDKtzA==
-X-Google-Smtp-Source: AMrXdXsIQ+yl9+aR3xFZTNuostOcBAoWxEeV48Y9FFANzo2lRrupcAIM43bTjyYG1dKBPCrvKJX2Sg==
-X-Received: by 2002:a17:90a:854b:b0:219:ce72:f480 with SMTP id a11-20020a17090a854b00b00219ce72f480mr17175994pjw.13.1671967560314;
-        Sun, 25 Dec 2022 03:26:00 -0800 (PST)
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aK0W+IMu8cncUtY6f8qgsBgmjwjRsLMXobfmhqCLAI4=;
+        b=EXpn/UnKb7BbN6LB1r7msnk2Ra8MHtAnFgTcCwd309HcB7xmOdxug7jc7l0/jQfOtL
+         3gp/HXIxRugtrQq9wxiFru5qZzJyXyvwje3OwH9IVb5pxGpsZxhCZRUfQtWX2LDsMreL
+         5IQH5/73TqX9V59XSfFHxVaCd5ncckqS8gmNXnHXiL/133qxpjyxomYF1fYJYmMYHRe0
+         LstKPZQ8Bh3evT2wQQSGlOs7wweZzUOaw1b3jvrhX3Y/NkgnVgkSG8Tp0oMSo+X+FpEM
+         l6cc7Mv4hIWf5lRn4RLLE8cj9AXBQT0zjrY4+4iITE76tFZG4o09giuBSJ8EXSszBKVA
+         tiwg==
+X-Gm-Message-State: AFqh2kqD+rmn0V3YtfeNK6hvtWu2bTDLxSIJ7nEbGiGI6uTeIYwTLFpO
+        JfxwmZfS6huIre1alJdS5m8=
+X-Google-Smtp-Source: AMrXdXvfAYmkxCnz5lIMbtl61UDt7AMHRj/xXGZrtDhx8k70Df6/JLO/pUpypu3UPn6yzs3kdvRAIw==
+X-Received: by 2002:a62:1d07:0:b0:56b:a2f8:1d0f with SMTP id d7-20020a621d07000000b0056ba2f81d0fmr31563443pfd.0.1671968160209;
+        Sun, 25 Dec 2022 03:36:00 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id z3-20020a17090a6d0300b00225daca646csm1852398pjj.34.2022.12.25.03.25.59
+        by smtp.gmail.com with ESMTPSA id 189-20020a6204c6000000b0057691fb0d37sm5117742pfe.193.2022.12.25.03.35.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 Dec 2022 03:25:59 -0800 (PST)
+        Sun, 25 Dec 2022 03:35:59 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Steinhardt <ps@pks.im>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Subject: Re: [PATCH] refs: fix corruption by not correctly syncing
- packed-refs to disk
-References: <8c8ecf8e3718cbca049ee7a283edd7b7887e464e.1671547905.git.ps@pks.im>
-        <Y6HYTt58iecdBEdw@coredump.intra.peff.net>
-Date:   Sun, 25 Dec 2022 20:25:59 +0900
-Message-ID: <xmqqtu1johbs.fsf@gitster.g>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, newren@gmail.com,
+        avarab@gmail.com, mjcheetham@outlook.com, steadmon@google.com,
+        chooglen@google.com, jonathantanmy@google.com,
+        dyroneteng@gmail.com, Victoria Dye <vdye@github.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH v4 00/11] Bundle URIs IV: advertise over protocol v2
+References: <pull.1400.v3.git.1670262639.gitgitgadget@gmail.com>
+        <pull.1400.v4.git.1671722058.gitgitgadget@gmail.com>
+Date:   Sun, 25 Dec 2022 20:35:59 +0900
+Message-ID: <xmqqilhzogv4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> On Tue, Dec 20, 2022 at 03:52:14PM +0100, Patrick Steinhardt wrote:
+> This version includes squashed-in versions of the fixups that were
+> previously known as ds/bundle-uri-4-fixup.
 >
->> And while we do the dance when writing the `packed-refs` file, there is
->> indeed one gotcha: we use a `FILE *` stream to write the temporary file,
->> but don't flush it before synchronizing it to disk. As a consequence any
->> data that is still buffered will not get synchronized and a crash of the
->> machine may cause corruption.
->
-> The problem description makes sense, and so does your fix.
->
-> Grepping for other uses of fsync_component(), this looks like the only
-> buggy case (loose refs use write() directly, and most other files go via
-> finalize_hashfile(), which does likewise).
-> ...
-> So given that this is the only affected site, it makes sense to just fix
-> it for now and worry about a more generalized solution if we run into it
-> again.
+>  * Some unused parameters are now marked with UNUSED, since we are
+>    introducing those parameters for the first time. In one case an unused
+>    parameter should have been used in repo_config_...() instead of
+>    git_config_...().
+>  * The GIT_TEST_BUNDLE_URI environment variable is removed in favor of the
+>    transfer.bundleURI config option in all cases.
+>  * A stale commit message is fixed to no longer refer to a rename that was
+>    split into a different commit as part of v3.
+>  * The documentation comment for fetch_bundle_list() explicitly defines a
+>    non-zero return value as an error.
 
-Sounds good.
-
-This came from bc22d845 (core.fsync: new option to harden
-references, 2022-03-11), before which we did not even fsync() the
-file, so let me apply directly on top of that commit.  Those who are
-stuck on older versions of Git can choose to merge the result, even
-though I may probably not bother merging it down to anything older
-than 2.39 maintenance track.
-
-Thanks.
-
+I guess that sprinkling the fixes from "4-fixup" series into the
+original commits will resolve many comments by Ævar about the
+logical ordering of changes in the "fixup" series, mostly by making
+them all moot points?  Thanks for working on this, and let's start
+merging it down to 'next'.
 
