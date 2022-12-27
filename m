@@ -2,119 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CA42C4332F
-	for <git@archiver.kernel.org>; Tue, 27 Dec 2022 12:52:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 490C4C4332F
+	for <git@archiver.kernel.org>; Tue, 27 Dec 2022 12:52:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231343AbiL0Mwv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Dec 2022 07:52:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47344 "EHLO
+        id S231373AbiL0Mwx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Dec 2022 07:52:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229620AbiL0Mwu (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S231277AbiL0Mwu (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 27 Dec 2022 07:52:50 -0500
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B99B210DB
-        for <git@vger.kernel.org>; Tue, 27 Dec 2022 04:52:48 -0800 (PST)
-Received: by mail-pl1-x631.google.com with SMTP id m4so13170762pls.4
-        for <git@vger.kernel.org>; Tue, 27 Dec 2022 04:52:48 -0800 (PST)
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C2C81173
+        for <git@vger.kernel.org>; Tue, 27 Dec 2022 04:52:50 -0800 (PST)
+Received: by mail-pj1-x102e.google.com with SMTP id j8-20020a17090a3e0800b00225fdd5007fso3550572pjc.2
+        for <git@vger.kernel.org>; Tue, 27 Dec 2022 04:52:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bMGRoCtTWrJkVv3OycXZpOCg1/pie1Z7Mgdk0nhtxH4=;
-        b=bi8wXEKDlkmCnutS7FAWKXoG3kfQof9fK9kZnvtG2SACEYS17a/zHDP8SfXYof89nV
-         gUseHMz6JmqYdLvVoav9Z0k9lGeL+KINPbsOyq5mTXuACPooOzYkvo43/PHj+EqjfG2K
-         Y3Hfh4hsJkXdpaJhIkplI2XhZAlFoQKVr+mRets/jJFQEfiGdaLsFV0aDNgWnLRElqLf
-         /CU+oXSN9NPzRlPCdxmB9M81RXX4hzHUrO3xGOr9vK2oBVxl7R8hIiWt36cmw7raAvIh
-         R1m9uVlwfXYBlcEYVSErY77lkhNNANFHpmQ6ynhDFHCuH1Xzd+Mb1kPDPJ1A4JSvGvNj
-         dfqQ==
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=BbQHZvPdkHYxnQaG8fA5Lz14/ViNQ/nS9goqyYx7gcg=;
+        b=Jr3XFVRWY0RQLUOVlTEv7EnPHIXGplyDRAJjGkmh11ZWX0rzF0gqtt1Hlr5XyAsoAU
+         gISSsIRn3CpFF4m+7wNXuXGLLfsX+GYgBPUvThmOZZEuDv8DscQPerkHN8LKLNvUl7Od
+         G+2UF7BJVWuUGLkmndlGhzGGp83tQZnJnOKP9m2ebiwCIyweCrjLBf8LIEZI7Re6jzZb
+         wKsDUrklImkmyEOJYYBXxqVMcolCwtvwcCFRl0PtQS+bzmlt84obeUT3VgD1lnNp99OI
+         0tyh8bpKo2awCrLi37o6OCyqV1Xe8Kz6L3Z1J9p+5H5FDIuOk7vu/KPi1ju+l+SQ7nTw
+         VUtQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bMGRoCtTWrJkVv3OycXZpOCg1/pie1Z7Mgdk0nhtxH4=;
-        b=W0ncpsSFsyFt016IXAmVxEQ966RKKoOAgH6GOAJgIZCrFtZt5lVg7IcBgnHAKeNiK2
-         yU+CNFdlgMe56QZg3KektA3tSXofmkbk4NLCUznFZCf5f25kLMdL7/TokOkCO2Jp/9o7
-         SFDo6/KcOEn8TTuQsHVu70QWkifGZxxW6aKvS2J26NDhXjdbmTGRbQZa100VJ0lwZVMM
-         9oMSXgpzZEtNscsJGMohele/J/5ZxrWljEra3HA/n0LdOqiUXPimHFRucB9K9WB5Uux7
-         ybEnTMjUd+g0SydOVXg9pZA7SBdkfr4J1YJJ+n86Veo4sxlgKvB6t+tgCt6ZhA6ytV7f
-         HVyA==
-X-Gm-Message-State: AFqh2kpISYoB+670KGDAlu4RjyyhTrsSWwZO0ewXe+tb+ixs738BP1ZK
-        3LLojSa+XM726rzl046c6cM=
-X-Google-Smtp-Source: AMrXdXtkzI9jxMGaFvtowwBX+UU5iBYQzpV2qAfrQ7RJE1xDW5FYwugCrK/AkvHPUQUxAUOCbqZrPw==
-X-Received: by 2002:a17:902:e2ca:b0:18e:c6b0:b2f6 with SMTP id l10-20020a170902e2ca00b0018ec6b0b2f6mr20755156plc.14.1672145567827;
-        Tue, 27 Dec 2022 04:52:47 -0800 (PST)
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BbQHZvPdkHYxnQaG8fA5Lz14/ViNQ/nS9goqyYx7gcg=;
+        b=vtPsPze+5tHJ0bRFH9Z7bm0XEqrA4wZY0ijGTOCEFNbAGuIwEG7GovBC9tDAAPTK1O
+         YiRzK8q3EUS0MYF5B7oeUYa9VOm2klg3HSQEkWNV9TXTY1NlNn2NKTh/sYkPhs5KzjEW
+         ufPtRPIueSDZ4FEWRHYfRH+aZOVfrutIZoZBxKis8NVpe9Q/LliIyOfJ1BZhJuJRhYuQ
+         gX6H/yuMtsc9ZfNKADsT+oT8DbfkqgrLLiM4kmc9m9zxQ/FGui49BWGwdhbxsladiKQb
+         ZoQ8H6rSOqO9CXw/0bZGoVAKt93Llkrc4pTzpMgelA+xDW+uXdKQy53hpVeLUDLg/SMi
+         kP4A==
+X-Gm-Message-State: AFqh2koBotkSLkHGztF04K92l9K088/b2YGTmrOxY45wfoI0amLbrCTk
+        BG4BVLx/359UxpeHjdEx1s0=
+X-Google-Smtp-Source: AMrXdXs3EKY0cQbS1+/tto4uE9q+muenfqjp8M/ItXjQF1JPBO9HYWafcYCgd+3dvgI8WVzvkRfIkg==
+X-Received: by 2002:a17:902:eb8f:b0:186:f57d:8573 with SMTP id q15-20020a170902eb8f00b00186f57d8573mr23796287plg.2.1672145569403;
+        Tue, 27 Dec 2022 04:52:49 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id q10-20020a170902daca00b00185402cfedesm8999600plx.246.2022.12.27.04.52.46
+        by smtp.gmail.com with ESMTPSA id i6-20020a170902c94600b00189651e5c26sm9010273pla.236.2022.12.27.04.52.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Dec 2022 04:52:46 -0800 (PST)
+        Tue, 27 Dec 2022 04:52:48 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: js/drop-mingw-test-cmp, was Re: What's cooking in git.git (Dec
- 2022, #03; Sun, 11)
-References: <xmqqpmcqv7qh.fsf@gitster.g>
-        <o428pr88-sn2p-o715-52ns-1r6750762572@tzk.qr>
-        <xmqqa63ss3fl.fsf@gitster.g>
-        <c57ecd23-7ca7-2501-983f-6661c7872a01@gmx.de>
-        <xmqq7cyksy88.fsf@gitster.g>
-        <3c55ac67-5090-b7af-a212-2996bad66fb2@kdbg.org>
-        <2090204b-52e9-a22f-f0c9-f812d1231863@web.de>
-        <ef79236a-1c47-8775-3acb-aa23b7a300f9@kdbg.org>
-        <2a5433ae-ec48-0c24-c18e-9a415d29e590@web.de>
-Date:   Tue, 27 Dec 2022 21:52:46 +0900
-Message-ID: <xmqqilhxt3dt.fsf@gitster.g>
+To:     Tim Hockin <thockin@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: git fetch --dry-run changes the local repo and transfers data
+References: <CAO_RewZeUBVvqT+UgXL5V5EeTOt14zZ-5vJYA4YvNr-jNyupXg@mail.gmail.com>
+Date:   Tue, 27 Dec 2022 21:52:48 +0900
+Message-ID: <xmqqcz85t3dr.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+Tim Hockin <thockin@google.com> writes:
 
-> Logged the sizes of files handed to test_cmp (on macOS).  19170 calls,
-> median size 42 bytes, average size 617 bytes.  2307 calls with empty
-> files, 1093 of which in t1092 alone.  The two biggest files in t1050,
-> 2000000 and 2500000 bytes.  t9300 in third place with 180333, one
-> magnitude smaller.
+> I'm trying to test if a remote repo has a given SHA. `ls-remote` does
+> not work for this unless it is a tag or a HEAD (which is not
+> guaranteed for this case).
 >
-> t1050 at 8a4e8f6a67 (The second batch, 2022-12-26) on Windows:
->
-> Benchmark 1: sh.exe t1050-large.sh
->   Time (mean ± σ):     18.312 s ±  0.069 s    [User: 0.000 s, System: 0.003 s]
->   Range (min … max):   18.218 s … 18.422 s    10 runs
->
-> ... and with the patch:
->
-> Benchmark 1: sh.exe t1050-large.sh
->   Time (mean ± σ):      5.709 s ±  0.046 s    [User: 0.000 s, System: 0.003 s]
->   Range (min … max):    5.647 s …  5.787 s    10 runs
->
-> So it works as advertised for big files, but calling an external
-> program 19000 times takes time as well, which explain the longer
-> overall test suite duration.
->
-> If we use test_cmp_bin for the two biggest comparisons we get the
-> same speedup:
->
-> Benchmark 1: sh.exe t1050-large.sh
->   Time (mean ± σ):      5.719 s ±  0.089 s    [User: 0.000 s, System: 0.006 s]
->   Range (min … max):    5.659 s …  5.960 s    10 runs
->
-> Is this safe?  The files consist of X's and Y's at the point of
-> comparison, so they aren't typical binary files, but they don't
-> have line endings at all or any user-readable content, so I think
-> treating them as blobs is appropriate.
+> `git fetch --dry-run $remote $rev` SEEMS to fit the bill, except it
+> changes local state. For example:
 
-Nice analysis.
+Well, without changing the "local state", you cannot see if that
+report repository has or does not have the commit.
 
-If we can use the platform "diff -u" (i.e. we somehow find that it
-is possible to stop ignoring crlf vs lf difference), then it should
-give us similarly good performance for large files (but the cost to
-spawn the tool 19000 times would also be comparable), but we are not
-there yet, I presume.
+> FETCH_HEAD was not updated (good)
+
+None of your refs are updated, either.
+
+There are things that are not reachable from your refs (or other
+anchoring points like the index and the reflog).  As far as Git is
+concerned, they don't exist [*], and that is why Git will happily
+remove them with "git gc", for example.  They are crufts and it is
+easier to think of them as not a part of "local data".
+
+So I suspect that ...
+
+> but the rev in question is now
+> present locally (bad),
+
+... this complaint is a bit misguided.  After all, the procdure you
+gave above is exactly how you would ask the "I'm trying to test if a
+remote repo has a given SHA" question about commit f80f1b23b4ca.  If
+the operation did not transfer data, you would not be able to get
+the answer to that question.
+
+> Am I using --dry-run wrong (or misunderstanding its purpose)?
+
+Maybe (mis)understanding on Git's data model (see above [*]) is the
+root cause of this confusion.
