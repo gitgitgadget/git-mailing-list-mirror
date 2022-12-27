@@ -2,98 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C97A7C4167B
-	for <git@archiver.kernel.org>; Tue, 27 Dec 2022 04:46:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C93BC3DA7D
+	for <git@archiver.kernel.org>; Tue, 27 Dec 2022 06:11:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230325AbiL0EqT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 26 Dec 2022 23:46:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53494 "EHLO
+        id S229719AbiL0GLi (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Dec 2022 01:11:38 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229565AbiL0EqR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Dec 2022 23:46:17 -0500
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA73A2620
-        for <git@vger.kernel.org>; Mon, 26 Dec 2022 20:46:16 -0800 (PST)
-Received: by mail-pl1-x62d.google.com with SMTP id d7so12231031pll.9
-        for <git@vger.kernel.org>; Mon, 26 Dec 2022 20:46:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z8obgmjtel3d36bz4zZ1Kaml6wSbpoVWpXPFWQYw2aM=;
-        b=e33uYuyar8PS34b40PdJULGc0/YWdnde0+ilTDK9VpebRcClVDnKjiYaTqMkFMsGyM
-         vhJSbKpWBTLnoze2kpSqxnbTu8uc/kWqy+4k2zlShuRDKG9EHSOsGOE/JGp4q4sKN025
-         zmwR41O4isdakMJ7joeSbBydM9CVrncnInL6v3cvLYQTv5hx2RRhzTyFIzS3wFkX6s4x
-         8xXkFAZ/WyAo3F5CuWP2HYhiqDeqjMEioYAOm8WNeiw13KLEAzwaL08m31isM9ffj+FW
-         Nt9TiwFT7gUAQSBLlFu5GSKlDvriNt4KuedELL2msl7zQrXMK/K7cF1rm4s+iUKdVPDr
-         7lRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Z8obgmjtel3d36bz4zZ1Kaml6wSbpoVWpXPFWQYw2aM=;
-        b=Kcu1gu2ZnWSYajaQDp62CrmhRPVe0yQuT8pH/xW/tep8bpZ2CtG6tRISbJ0JpcGm8h
-         OY30Dw2qjURo84SQ2Ef9hnAo5g4wsXvZtilMl3wDx2NKNFSC3vys2Y4nitiHEB/C8Xvj
-         vra+YXuHpFAHfYrOKs5fhsMHlJuGqSEbB6ySAhlNS200KPeQ2hLCkkJ8JX2LuePvONKE
-         dhEEpIe8UZ/kC8Go7zpuAxnuO4Ge1svBkilx6UxbliEDL7/+JCgdRD3WXspywdlkXx8N
-         TK6TQWa5sIrhNrSx1euPv4ttIJyQzDpvxIOsKZWB8iEeIVpD0PpqPgby/KJQdWOavy4z
-         8spw==
-X-Gm-Message-State: AFqh2koIRQWeMLhzXBYIpqjyf3gab53/fTo5nrMKhy8X6EOKG4SaelzB
-        SVU/kqr5XqVZ4G1kC0MiJxs=
-X-Google-Smtp-Source: AMrXdXvYO3yKjtzFrgTatGBel8x6Y/45vn6El8GyhcizDge9kL771cg1CDrwE7CHgXUQFhlU8psH8w==
-X-Received: by 2002:a17:902:a708:b0:187:467f:c76c with SMTP id w8-20020a170902a70800b00187467fc76cmr20750898plq.51.1672116376105;
-        Mon, 26 Dec 2022 20:46:16 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id m19-20020a170902f21300b001766a3b2a26sm7967431plc.105.2022.12.26.20.46.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Dec 2022 20:46:15 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Kyle Meyer <kyle@kyleam.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] doc/git-branch: fix --force description typo
-References: <20221226165441.126625-1-kyle@kyleam.com>
-Date:   Tue, 27 Dec 2022 13:46:15 +0900
-Message-ID: <xmqqcz85v4h4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229496AbiL0GLg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Dec 2022 01:11:36 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1CFCB8C
+        for <git@vger.kernel.org>; Mon, 26 Dec 2022 22:11:33 -0800 (PST)
+Received: (qmail 29173 invoked by uid 109); 27 Dec 2022 06:11:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 27 Dec 2022 06:11:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4591 invoked by uid 111); 27 Dec 2022 06:11:36 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Dec 2022 01:11:36 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 27 Dec 2022 01:11:31 -0500
+From:   Jeff King <peff@peff.net>
+To:     nsengaw4c via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, nsengaw4c <nsengiyumvawilberforce@gmail.com>
+Subject: Re: [PATCH] ref-filter: add new atom "signature" atom
+Message-ID: <Y6qMk3e+FqEThL5f@coredump.intra.peff.net>
+References: <pull.1452.git.1672102523902.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1452.git.1672102523902.gitgitgadget@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Kyle Meyer <kyle@kyleam.com> writes:
+On Tue, Dec 27, 2022 at 12:55:23AM +0000, nsengaw4c via GitGitGadget wrote:
 
-> Subject: Re: [PATCH] doc/git-branch: fix --force description typo
+> This only works for commits. Add "signature" atom with `grade`,
+> `signer`, `key`, `fingerprint`, `primarykeyfingerprint`, `trustlevel`
+> as arguments. This code and it's documentation are inspired by
+> how the %GG, %G?, %GS, %GK, %GF, %GP, and %GT pretty formats were
+> implemented.
 
-> Update the description of --force to use '<start-point>' rather than
-> '<startpoint>' to match the spelling used everywhere else in the
-> git-branch documentation.
+I don't have a real review for you, but rather two small requests since
+I was working in this area recently.
 
-Thanks.  This <startpoint> was written in 2017, and all other lines
-that say "start-point", except for one, blame on commits made in
-2019-2022, but they have been inherited from older versions.
-
-Apparently we missed to convert this single one for consistency.
-
-Good find.  Will queue.  Thanks.
-
-> Signed-off-by: Kyle Meyer <kyle@kyleam.com>
-> ---
->  Documentation/git-branch.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-> index 12c5f84e3b..aa2f78c4c2 100644
-> --- a/Documentation/git-branch.txt
-> +++ b/Documentation/git-branch.txt
-> @@ -116,7 +116,7 @@ OPTIONS
+> @@ -378,6 +383,30 @@ static int subject_atom_parser(struct ref_format *format, struct used_atom *atom
+>  	return 0;
+>  }
 >  
->  -f::
->  --force::
-> -	Reset <branchname> to <startpoint>, even if <branchname> exists
-> +	Reset <branchname> to <start-point>, even if <branchname> exists
->  	already. Without `-f`, 'git branch' refuses to change an existing branch.
->  	In combination with `-d` (or `--delete`), allow deleting the
->  	branch irrespective of its merged status, or whether it even
+> +static int signature_atom_parser(struct ref_format *format, struct used_atom *atom,
+> +			       const char *arg, struct strbuf *err)
+
+Can you squash in an annotation for the unused parameter, like this:
+
+diff --git a/ref-filter.c b/ref-filter.c
+index a4c3f89f64..3b3592acb2 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -405,8 +405,9 @@ static int subject_atom_parser(struct ref_format *format UNUSED,
+ 	return 0;
+ }
+ 
+-static int signature_atom_parser(struct ref_format *format, struct used_atom *atom,
+-			       const char *arg, struct strbuf *err)
++static int signature_atom_parser(struct ref_format *format UNUSED,
++				 struct used_atom *atom,
++				 const char *arg, struct strbuf *err)
+ {
+ 	if (arg) {
+ 		if (!strcmp(arg, "signer"))
+
+This will eventually be necessary once we turn on -Wunused-parameter.
+I'm preparing a patch to convert all of the other parsers that need it,
+and I don't want to create a dependency between the two patches (it's OK
+for you to add the UNUSED now, it's just not enforced yet).
+
+I can also circle back after your patch is merged and add it, but it's a
+bit easier to do it up front.
+
+> +{
+> +	if (arg) {
+> +		if (!strcmp(arg, "signer"))
+> +			atom->u.signature.option = S_SIGNER;
+> +		else if (!strcmp(arg, "grade"))
+> +			atom->u.signature.option = S_GRADE;
+> +		else if (!strcmp(arg, "key"))
+> +			atom->u.signature.option = S_KEY;
+> +		else if (!strcmp(arg, "fingerprint"))
+> +			atom->u.signature.option = S_FINGERPRINT;
+> +		else if (!strcmp(arg, "primarykeyfingerprint"))
+> +			atom->u.signature.option = S_PRI_KEY_FP;
+> +		else if (!strcmp(arg, "trustlevel"))
+> +			atom->u.signature.option = S_TRUST_LEVEL;
+> +		else
+> +			return strbuf_addf_ret(err, -1, _("unknown %%(signature) argument: %s"), arg);
+> +	}
+
+The ref-filter code recently got a helper function to report this kind
+of argument error consistently, via dda4fc1a84 (ref-filter: factor out
+"unrecognized %(foo) arg" errors, 2022-12-14). If you rebase the patch
+on the current master, you can just do:
+
+  return err_bad_arg(err, "signature", arg);
+
+which will make the error message match the others (which in turn saves
+work for translators).
+
+-Peff
