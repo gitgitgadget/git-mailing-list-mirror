@@ -2,69 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F2D1C4332F
-	for <git@archiver.kernel.org>; Tue, 27 Dec 2022 23:17:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C9AE9C4332F
+	for <git@archiver.kernel.org>; Tue, 27 Dec 2022 23:27:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229918AbiL0XRc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Dec 2022 18:17:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54706 "EHLO
+        id S231533AbiL0X1e (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Dec 2022 18:27:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56804 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229744AbiL0XRa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Dec 2022 18:17:30 -0500
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7193B4A3
-        for <git@vger.kernel.org>; Tue, 27 Dec 2022 15:17:29 -0800 (PST)
-Received: by mail-pj1-x102d.google.com with SMTP id n65-20020a17090a2cc700b0021bc5ef7a14so14521230pjd.0
-        for <git@vger.kernel.org>; Tue, 27 Dec 2022 15:17:29 -0800 (PST)
+        with ESMTP id S229801AbiL0X1d (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Dec 2022 18:27:33 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2946038D
+        for <git@vger.kernel.org>; Tue, 27 Dec 2022 15:27:32 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id p4so14614167pjk.2
+        for <git@vger.kernel.org>; Tue, 27 Dec 2022 15:27:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=XXQ1Mn0O68QosIe82PcCmmBhOMDgscjTyj89YhKrVzs=;
-        b=o8H8qCVT3z2TzBYiM8YasMPdaRptjR8WeDVeigrTpHl6/RlYtYbrSFzn8hLDldnyLf
-         Ge+iI2vqujrPBAZgloO7wElZvSuUQiRbHBn22qr0vozkepXRLrBw6QmeXGw+sxgKpxw5
-         VPRKJhaADPnVeKD5/0BYZrNijIJ2Ju6BKFFWil5sY2ezRcD11wPP0TBPcck2+13PkoIf
-         f0sxznV5OgE3PJ4HBSL4VSpJ6Gq0W18jmgksjgtdZ8sz3BWlG53cDHalERxUZ1+J/VuL
-         /E/peK29Sb49Jbqfvar3MqdXY3RkDtZJxoXuM1mJTJlrNC3UwLq/8rFsFIwB9MGRtxYj
-         YoyA==
+        bh=ID3FdEmoshjq28QYcjulBlQVe0CPrzHhffvPqJ+lz5A=;
+        b=lIZodN8jNoCMGobf9YV6mdxUDkv/V+ko1xwlG/tNkvKgR2ohgXb0JzsZRqtz3np36G
+         QVkEa6+Y2YmjHfRXkoGgQSgzYVd8xvxgqXIZReN+XP+/2dzVE7uXrCu4jWcLlwx75CU+
+         gtFt/64uJ3BuIyTO5dKARwXc5mo4EAKDvrKCOtZRbThPPQX3LSsyWsAq3Rc5cdStN2k9
+         /PY+jalZh+MwQSOxdEHjyLtcgInS7o/ugwKGnaNh5fq5b7KzQG+ADbI0LDsYjx0bTg3p
+         qdrx8ycReqTxvXYf8qeBNDmcyvkFh569zTzCRVvE7zt5oWxu1ZkZTksu/uTK+fDvfFox
+         U9pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=XXQ1Mn0O68QosIe82PcCmmBhOMDgscjTyj89YhKrVzs=;
-        b=MuCLima6lbnz5UkZb2yCugKhI7qw3yrJR3OeFpPGen3M6UV9ufN3NLAR6kd/O5TxQa
-         q2UKqTXr061pitbhGxZk3M40QONpw4nfZqiwlAbUCYi4neZbuCMpceQ049O7jGT+LKmx
-         FeZjIzY+XgnxYZvaTcU2MFKRW8MrqHxQh18wllWD9Vg75AZMr+jLrE6eN0U0OrFj9Ev8
-         PEDBzel0Tz4QpFf/jCPNZGI1Z9wh2l07hbJIQ845KTX/RS2TVsC//9Pzy7Qjtbrl6aO9
-         bGvdOunjm6S+F1STDy4NNE9w7a4t16qttOxo0eFGfN1m6CZIdkBF5sa2twbb/XyVNP4O
-         5+MA==
-X-Gm-Message-State: AFqh2koXvcjE9ddFBnJtYtn0xA1ZdA67yIPEuLOKTUmq17SWvnieDHqC
-        sf8PdTR+QFLiAQO72xXM2KI=
-X-Google-Smtp-Source: AMrXdXu+bILiwzakvo2QRRxoRIOsd+laWei1B2ofQqQXmkNDnS1EAzdr2dBREl5iqbUKkArmUrzOyg==
-X-Received: by 2002:a17:902:e411:b0:18c:cde:fdda with SMTP id m17-20020a170902e41100b0018c0cdefddamr25423791ple.37.1672183049141;
-        Tue, 27 Dec 2022 15:17:29 -0800 (PST)
+        bh=ID3FdEmoshjq28QYcjulBlQVe0CPrzHhffvPqJ+lz5A=;
+        b=rmeq4O3QwKKlTR2PL9WMQqiooISroiJ+14SEWGWPYFQJiY5MXyTT9tTWdMJ77o5XT8
+         Hr2T8RMukXIMVoKQTrHjPk/e+WbfZR0jbQA+KVRGiIoQXyerH1Bpzn4PzhRQNE+G9EsS
+         ii8UQ29760csvfR2qCl7ThIlLTii3i9wFrualzrqADBTqWGmMLqz5RUPqQ2k87tDYjcU
+         J3nj7ZWn7KAl4XceA8Fu826j7NMMDGqldMbdM4Qb6elIE7vumekrrZ6Mdj3GRu8Up5l/
+         7fgKhu0XWL3tnPa0+PPl4qcNE0CEldgD43dcQBvYe0F5fnGTKtXfY5S+OEGrUFazXa3Z
+         +NTQ==
+X-Gm-Message-State: AFqh2kper0hkIpZs6563NeinOTzwve2/C0Wf2cQyCEM2nHDo5TAEJoeJ
+        uag/VShqGpCPHiX3s+3SJK9aDiH4nzDdxQ==
+X-Google-Smtp-Source: AMrXdXuA+EA8ozln1r0H8rE1SM17z5krI93+VP5st+Bd/fxwM9KjzFACWKrcbi58ow7ksoXEHjDH6g==
+X-Received: by 2002:a05:6a20:a5a1:b0:a7:7c23:6cf4 with SMTP id bc33-20020a056a20a5a100b000a77c236cf4mr33826996pzb.2.1672183651622;
+        Tue, 27 Dec 2022 15:27:31 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id w17-20020a170902e89100b00189ac5a2340sm9643081plg.124.2022.12.27.15.17.28
+        by smtp.gmail.com with ESMTPSA id jd15-20020a170903260f00b00186b69157ecsm9565171plb.202.2022.12.27.15.27.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Dec 2022 15:17:28 -0800 (PST)
+        Tue, 27 Dec 2022 15:27:31 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH v4 6/6] tests: don't lose misc "git" exit codes
-References: <cover-v3-0.8-00000000000-20221202T114733Z-avarab@gmail.com>
-        <cover-v4-0.6-00000000000-20221219T101240Z-avarab@gmail.com>
-        <patch-v4-6.6-94df7a1764e-20221219T101240Z-avarab@gmail.com>
-        <6efe13ea-8782-2337-1626-9687e2219680@dunelm.org.uk>
-Date:   Wed, 28 Dec 2022 08:17:28 +0900
-In-Reply-To: <6efe13ea-8782-2337-1626-9687e2219680@dunelm.org.uk> (Phillip
-        Wood's message of "Tue, 27 Dec 2022 16:46:59 +0000")
-Message-ID: <xmqqo7roqvw7.fsf@gitster.g>
+To:     Andrei Rybak <rybak.a.v@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] gitattributes.txt: fix typo in "comma separated"
+References: <20221227210156.1532168-1-rybak.a.v@gmail.com>
+Date:   Wed, 28 Dec 2022 08:27:30 +0900
+In-Reply-To: <20221227210156.1532168-1-rybak.a.v@gmail.com> (Andrei Rybak's
+        message of "Tue, 27 Dec 2022 22:01:56 +0100")
+Message-ID: <xmqqbknoqvfh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,15 +66,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Andrei Rybak <rybak.a.v@gmail.com> writes:
 
->> -	test -z "$(git diff file)"
->> ...
->> +	git diff file >out &&
->> +	test_must_be_empty out
->
-> "git diff --exit-code file" would suffice here, we don't need to
-> redirect the output and check that it is empty.
+> Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+> ---
+>  Documentation/gitattributes.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Yes, but the test is trying to be faithful to not just the intent
-but also the implementation of the original, I think.
+Obviously correct.  Will queue.  Thanks.
+
+> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+> index 4b36d51beb..c19e64ea0e 100644
+> --- a/Documentation/gitattributes.txt
+> +++ b/Documentation/gitattributes.txt
+> @@ -1155,7 +1155,7 @@ Unspecified::
+>  
+>  String::
+>  
+> -	Specify a comma separate list of common whitespace problems to
+> +	Specify a comma separated list of common whitespace problems to
+>  	notice in the same format as the `core.whitespace` configuration
+>  	variable.
