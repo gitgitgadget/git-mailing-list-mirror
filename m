@@ -2,112 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C93BC3DA7D
-	for <git@archiver.kernel.org>; Tue, 27 Dec 2022 06:11:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1CA42C4332F
+	for <git@archiver.kernel.org>; Tue, 27 Dec 2022 12:52:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229719AbiL0GLi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Dec 2022 01:11:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59918 "EHLO
+        id S231343AbiL0Mwv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Dec 2022 07:52:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229496AbiL0GLg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Dec 2022 01:11:36 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1CFCB8C
-        for <git@vger.kernel.org>; Mon, 26 Dec 2022 22:11:33 -0800 (PST)
-Received: (qmail 29173 invoked by uid 109); 27 Dec 2022 06:11:33 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 27 Dec 2022 06:11:33 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4591 invoked by uid 111); 27 Dec 2022 06:11:36 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 27 Dec 2022 01:11:36 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 27 Dec 2022 01:11:31 -0500
-From:   Jeff King <peff@peff.net>
-To:     nsengaw4c via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, nsengaw4c <nsengiyumvawilberforce@gmail.com>
-Subject: Re: [PATCH] ref-filter: add new atom "signature" atom
-Message-ID: <Y6qMk3e+FqEThL5f@coredump.intra.peff.net>
-References: <pull.1452.git.1672102523902.gitgitgadget@gmail.com>
+        with ESMTP id S229620AbiL0Mwu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Dec 2022 07:52:50 -0500
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B99B210DB
+        for <git@vger.kernel.org>; Tue, 27 Dec 2022 04:52:48 -0800 (PST)
+Received: by mail-pl1-x631.google.com with SMTP id m4so13170762pls.4
+        for <git@vger.kernel.org>; Tue, 27 Dec 2022 04:52:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bMGRoCtTWrJkVv3OycXZpOCg1/pie1Z7Mgdk0nhtxH4=;
+        b=bi8wXEKDlkmCnutS7FAWKXoG3kfQof9fK9kZnvtG2SACEYS17a/zHDP8SfXYof89nV
+         gUseHMz6JmqYdLvVoav9Z0k9lGeL+KINPbsOyq5mTXuACPooOzYkvo43/PHj+EqjfG2K
+         Y3Hfh4hsJkXdpaJhIkplI2XhZAlFoQKVr+mRets/jJFQEfiGdaLsFV0aDNgWnLRElqLf
+         /CU+oXSN9NPzRlPCdxmB9M81RXX4hzHUrO3xGOr9vK2oBVxl7R8hIiWt36cmw7raAvIh
+         R1m9uVlwfXYBlcEYVSErY77lkhNNANFHpmQ6ynhDFHCuH1Xzd+Mb1kPDPJ1A4JSvGvNj
+         dfqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bMGRoCtTWrJkVv3OycXZpOCg1/pie1Z7Mgdk0nhtxH4=;
+        b=W0ncpsSFsyFt016IXAmVxEQ966RKKoOAgH6GOAJgIZCrFtZt5lVg7IcBgnHAKeNiK2
+         yU+CNFdlgMe56QZg3KektA3tSXofmkbk4NLCUznFZCf5f25kLMdL7/TokOkCO2Jp/9o7
+         SFDo6/KcOEn8TTuQsHVu70QWkifGZxxW6aKvS2J26NDhXjdbmTGRbQZa100VJ0lwZVMM
+         9oMSXgpzZEtNscsJGMohele/J/5ZxrWljEra3HA/n0LdOqiUXPimHFRucB9K9WB5Uux7
+         ybEnTMjUd+g0SydOVXg9pZA7SBdkfr4J1YJJ+n86Veo4sxlgKvB6t+tgCt6ZhA6ytV7f
+         HVyA==
+X-Gm-Message-State: AFqh2kpISYoB+670KGDAlu4RjyyhTrsSWwZO0ewXe+tb+ixs738BP1ZK
+        3LLojSa+XM726rzl046c6cM=
+X-Google-Smtp-Source: AMrXdXtkzI9jxMGaFvtowwBX+UU5iBYQzpV2qAfrQ7RJE1xDW5FYwugCrK/AkvHPUQUxAUOCbqZrPw==
+X-Received: by 2002:a17:902:e2ca:b0:18e:c6b0:b2f6 with SMTP id l10-20020a170902e2ca00b0018ec6b0b2f6mr20755156plc.14.1672145567827;
+        Tue, 27 Dec 2022 04:52:47 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id q10-20020a170902daca00b00185402cfedesm8999600plx.246.2022.12.27.04.52.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Dec 2022 04:52:46 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: js/drop-mingw-test-cmp, was Re: What's cooking in git.git (Dec
+ 2022, #03; Sun, 11)
+References: <xmqqpmcqv7qh.fsf@gitster.g>
+        <o428pr88-sn2p-o715-52ns-1r6750762572@tzk.qr>
+        <xmqqa63ss3fl.fsf@gitster.g>
+        <c57ecd23-7ca7-2501-983f-6661c7872a01@gmx.de>
+        <xmqq7cyksy88.fsf@gitster.g>
+        <3c55ac67-5090-b7af-a212-2996bad66fb2@kdbg.org>
+        <2090204b-52e9-a22f-f0c9-f812d1231863@web.de>
+        <ef79236a-1c47-8775-3acb-aa23b7a300f9@kdbg.org>
+        <2a5433ae-ec48-0c24-c18e-9a415d29e590@web.de>
+Date:   Tue, 27 Dec 2022 21:52:46 +0900
+Message-ID: <xmqqilhxt3dt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1452.git.1672102523902.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 27, 2022 at 12:55:23AM +0000, nsengaw4c via GitGitGadget wrote:
+René Scharfe <l.s.r@web.de> writes:
 
-> This only works for commits. Add "signature" atom with `grade`,
-> `signer`, `key`, `fingerprint`, `primarykeyfingerprint`, `trustlevel`
-> as arguments. This code and it's documentation are inspired by
-> how the %GG, %G?, %GS, %GK, %GF, %GP, and %GT pretty formats were
-> implemented.
+> Logged the sizes of files handed to test_cmp (on macOS).  19170 calls,
+> median size 42 bytes, average size 617 bytes.  2307 calls with empty
+> files, 1093 of which in t1092 alone.  The two biggest files in t1050,
+> 2000000 and 2500000 bytes.  t9300 in third place with 180333, one
+> magnitude smaller.
+>
+> t1050 at 8a4e8f6a67 (The second batch, 2022-12-26) on Windows:
+>
+> Benchmark 1: sh.exe t1050-large.sh
+>   Time (mean ± σ):     18.312 s ±  0.069 s    [User: 0.000 s, System: 0.003 s]
+>   Range (min … max):   18.218 s … 18.422 s    10 runs
+>
+> ... and with the patch:
+>
+> Benchmark 1: sh.exe t1050-large.sh
+>   Time (mean ± σ):      5.709 s ±  0.046 s    [User: 0.000 s, System: 0.003 s]
+>   Range (min … max):    5.647 s …  5.787 s    10 runs
+>
+> So it works as advertised for big files, but calling an external
+> program 19000 times takes time as well, which explain the longer
+> overall test suite duration.
+>
+> If we use test_cmp_bin for the two biggest comparisons we get the
+> same speedup:
+>
+> Benchmark 1: sh.exe t1050-large.sh
+>   Time (mean ± σ):      5.719 s ±  0.089 s    [User: 0.000 s, System: 0.006 s]
+>   Range (min … max):    5.659 s …  5.960 s    10 runs
+>
+> Is this safe?  The files consist of X's and Y's at the point of
+> comparison, so they aren't typical binary files, but they don't
+> have line endings at all or any user-readable content, so I think
+> treating them as blobs is appropriate.
 
-I don't have a real review for you, but rather two small requests since
-I was working in this area recently.
+Nice analysis.
 
-> @@ -378,6 +383,30 @@ static int subject_atom_parser(struct ref_format *format, struct used_atom *atom
->  	return 0;
->  }
->  
-> +static int signature_atom_parser(struct ref_format *format, struct used_atom *atom,
-> +			       const char *arg, struct strbuf *err)
-
-Can you squash in an annotation for the unused parameter, like this:
-
-diff --git a/ref-filter.c b/ref-filter.c
-index a4c3f89f64..3b3592acb2 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -405,8 +405,9 @@ static int subject_atom_parser(struct ref_format *format UNUSED,
- 	return 0;
- }
- 
--static int signature_atom_parser(struct ref_format *format, struct used_atom *atom,
--			       const char *arg, struct strbuf *err)
-+static int signature_atom_parser(struct ref_format *format UNUSED,
-+				 struct used_atom *atom,
-+				 const char *arg, struct strbuf *err)
- {
- 	if (arg) {
- 		if (!strcmp(arg, "signer"))
-
-This will eventually be necessary once we turn on -Wunused-parameter.
-I'm preparing a patch to convert all of the other parsers that need it,
-and I don't want to create a dependency between the two patches (it's OK
-for you to add the UNUSED now, it's just not enforced yet).
-
-I can also circle back after your patch is merged and add it, but it's a
-bit easier to do it up front.
-
-> +{
-> +	if (arg) {
-> +		if (!strcmp(arg, "signer"))
-> +			atom->u.signature.option = S_SIGNER;
-> +		else if (!strcmp(arg, "grade"))
-> +			atom->u.signature.option = S_GRADE;
-> +		else if (!strcmp(arg, "key"))
-> +			atom->u.signature.option = S_KEY;
-> +		else if (!strcmp(arg, "fingerprint"))
-> +			atom->u.signature.option = S_FINGERPRINT;
-> +		else if (!strcmp(arg, "primarykeyfingerprint"))
-> +			atom->u.signature.option = S_PRI_KEY_FP;
-> +		else if (!strcmp(arg, "trustlevel"))
-> +			atom->u.signature.option = S_TRUST_LEVEL;
-> +		else
-> +			return strbuf_addf_ret(err, -1, _("unknown %%(signature) argument: %s"), arg);
-> +	}
-
-The ref-filter code recently got a helper function to report this kind
-of argument error consistently, via dda4fc1a84 (ref-filter: factor out
-"unrecognized %(foo) arg" errors, 2022-12-14). If you rebase the patch
-on the current master, you can just do:
-
-  return err_bad_arg(err, "signature", arg);
-
-which will make the error message match the others (which in turn saves
-work for translators).
-
--Peff
+If we can use the platform "diff -u" (i.e. we somehow find that it
+is possible to stop ignoring crlf vs lf difference), then it should
+give us similarly good performance for large files (but the cost to
+spawn the tool 19000 times would also be comparable), but we are not
+there yet, I presume.
