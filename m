@@ -2,139 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D88F7C4332F
-	for <git@archiver.kernel.org>; Tue, 27 Dec 2022 13:59:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF263C4332F
+	for <git@archiver.kernel.org>; Tue, 27 Dec 2022 14:32:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229883AbiL0N7H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 27 Dec 2022 08:59:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36520 "EHLO
+        id S229711AbiL0OcM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 27 Dec 2022 09:32:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229445AbiL0N7G (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Dec 2022 08:59:06 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F6652719
-        for <git@vger.kernel.org>; Tue, 27 Dec 2022 05:59:05 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id tz12so32071445ejc.9
-        for <git@vger.kernel.org>; Tue, 27 Dec 2022 05:59:05 -0800 (PST)
+        with ESMTP id S229445AbiL0OcL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Dec 2022 09:32:11 -0500
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DBA4281
+        for <git@vger.kernel.org>; Tue, 27 Dec 2022 06:32:10 -0800 (PST)
+Received: by mail-ej1-x630.google.com with SMTP id x22so32257854ejs.11
+        for <git@vger.kernel.org>; Tue, 27 Dec 2022 06:32:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=hQ6bPKhGs09JkXU30cDixd576KKpgfX/PGOgFm/HXfg=;
-        b=RJwwfdzSEgonOOQrJIBQD1kB6GXrUU4cIsyPxUImegDKAOdshxZlZYJyt8uAT/XT5r
-         ho5pzTzmhErl/cq/2fgAzsibSuLpqfi8tWqS07uRu+a/uSQBmOixdJdgX/e8gWh4DnA/
-         8OJ9taFNehXNbzrPhAChzSDi8otE2TSMqnSyhmt7hVMByVJaz4inq57nIeJxiPsqPWZv
-         hpOj9Jn73sB8sc8BFdyjOyoHZqNdzZXBR+Rc1V5cVLna/5FXYpepyZtJm/o7CQTMx3Q8
-         6MzqVIws7CDqR8MKHlR9110rhFGEH60lHGmLw9w9FHpiv6ANG0/3f/VJz0Iq7z6cTKzF
-         cbJg==
+        d=googlemail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qe7oFgpCmwjeG9MnvH4DLB/rRTHeE65dFFxF0EgJipQ=;
+        b=eDjLp01QxDzBcX/sCCw0+dWltvCbUT2F8qsilow50v2pV8OF6P1OEfR5pQ4TKjCpov
+         EEjIICjH4ARLsBW/pz3+iVCu341gmhu3mRQd4oTej7B3JBkvS6GdFgUpUwbUMiEtNwlF
+         v2lmGePjkS493dV+vEclv6GKFhPQl42ac+J2Fd3gsdposHhTZUMR+h/bDVBQ31MCWXtk
+         yo+1tq1hnaxUaQPvVqyubwvqz/2EixTfbLzIf0MuzkIKE94dncb8SXqMlm+ySWOtGofw
+         x1/OU+tueo2n/1HjSVpndG7AdPV42KyZNNzmge4xZEzplSybajl53U5uxLwIdivjZXhi
+         EuaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hQ6bPKhGs09JkXU30cDixd576KKpgfX/PGOgFm/HXfg=;
-        b=J5jVQtCWBYoDNNmSu+Tg3QXkuqNjSM9CT9efS2Gc3dRWNB6p0mSFMnxoAuXwoMUapJ
-         45izCxNuk08XiG6WKTpKWnZ7ScAIcSUOYdXq9HS8/ECLPDJMDBviq1PjyUD+YcEm4xOZ
-         08M5Jdp39LQWo5T+yPoFByuYrTgVnNPiMQmTMLQsqVBG4NoVpmcnwOzN2w0rBRsmtgnv
-         gPUf8pK9nDacEnUSpZm1JVWgCMijxyvWG/eqXFyDz9d0n/uhGlsJM1SEVMFhxggGURd+
-         Hvq8URtStKkpS/YTB/bwE1o79yrLQWf9FNgdpOZg1ZQ3rFyr6C+xUWdBe1/vWpYDqvgX
-         V71g==
-X-Gm-Message-State: AFqh2krc2Q5BLO8eTbwMHpq/dvQHVY218nPLX9HQ8peZdAAip1LIh/xB
-        2XuTZPWZ6zIPEbTFUTt2bvY=
-X-Google-Smtp-Source: AMrXdXsS4c52dzQ1vDNbG5Tw/wHq/hneamH2FPMp9I/Nm5MeldqNY3y0TB3zJRgpXCmVo7oltt074Q==
-X-Received: by 2002:a17:907:77da:b0:803:3f50:a7ae with SMTP id kz26-20020a17090777da00b008033f50a7aemr16443015ejc.57.1672149543536;
-        Tue, 27 Dec 2022 05:59:03 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id u22-20020a056402111600b0046ee136fa3bsm5890738edv.69.2022.12.27.05.59.02
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qe7oFgpCmwjeG9MnvH4DLB/rRTHeE65dFFxF0EgJipQ=;
+        b=q8yL8TEmPJW0UyJTfVZjP0d4fnPW5/tAvWlZKeYNFCKnJjPAOwbUuf3DjIcx07JIce
+         ytY/St969eheD62pGkwAv72UgiHLkRdWOVkIJht1Vb3KXCDoNgkFi9GtcfbUXSWIMzvK
+         4GQ22G4eZP4H5myjHrNKGaWWpRrlW9vmVlgnj0ZNmrpTz67wya9YhMhdVXrA1Ow6fliL
+         wKj0QGW/IjrmKT0Z5pO/8a+hGC1wUmdvG5WQPbSyGtKK8ptLaJPipTlZtxMbHrK0Zzl7
+         VUU8dcA0jaCtiPilJWm4+zAjjxt70Hg5rHG/prZNJkeAONvkYE+iIZleHpJ3ACgTGGOu
+         OlCA==
+X-Gm-Message-State: AFqh2kqFNdUDRDVlyVbkCQVNae9sXZjm79PXdZMFPvxRddCTG9ubssCY
+        7d6UvVBOVnhLdBdrIwbi5GD2wuDnYP8/RQ==
+X-Google-Smtp-Source: AMrXdXtSNg2wf/FKsqSvCN5rcvcCSMBrU0Hoo3dcaGg83ziW7zIoVwcqzabDHD2g/oOfFsUW5O4N9g==
+X-Received: by 2002:a17:907:d311:b0:829:5e3f:3c92 with SMTP id vg17-20020a170907d31100b008295e3f3c92mr26037018ejc.73.1672151528849;
+        Tue, 27 Dec 2022 06:32:08 -0800 (PST)
+Received: from debianHome.localdomain (dynamic-095-119-040-067.95.119.pool.telefonica.de. [95.119.40.67])
+        by smtp.gmail.com with ESMTPSA id t19-20020a170906609300b007bf71053d97sm6118967ejj.40.2022.12.27.06.32.08
+        for <git@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Dec 2022 05:59:02 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pAATu-009DtL-17;
-        Tue, 27 Dec 2022 14:59:02 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>,
-        Eric Sunshine <ericsunshine@gmail.com>
-Subject: Re: [PATCH] cmake: don't invoke msgfmt with --statistics
-Date:   Tue, 27 Dec 2022 14:51:17 +0100
-References: <patch-1.1-0fa41115261-20221219T102205Z-avarab@gmail.com>
- <45d8d9fc-ca68-5902-0aa7-70034f8383ff@dunelm.org.uk>
- <xmqqcz8e29d5.fsf@gitster.g>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <xmqqcz8e29d5.fsf@gitster.g>
-Message-ID: <221227.86tu1huevt.gmgdl@evledraar.gmail.com>
+        Tue, 27 Dec 2022 06:32:08 -0800 (PST)
+From:   =?UTF-8?q?Christian=20G=C3=B6ttsche?= <cgzones@googlemail.com>
+To:     git@vger.kernel.org
+Subject: [RFC PATCH v2] setup: avoid unconditional open syscall with write flags
+Date:   Tue, 27 Dec 2022 15:32:00 +0100
+Message-Id: <20221227143200.1182341-1-cgzones@googlemail.com>
+X-Mailer: git-send-email 2.39.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Commit 57f5d52a942 ("common-main: call sanitize_stdfds()") added the
+sanitization for standard file descriptors (stdin, stdout, stderr) to
+all binaries.  The lead to all binaries unconditionally opening
+/dev/null with the flag O_RDWR (read and write).  Most of the time the
+standard file descriptors should be set up properly and the sanitization
+ends up doing nothing.
 
-On Tue, Dec 20 2022, Junio C Hamano wrote:
+There are many git operations, like `git status` or `git stash list`,
+which might be called by a parent to gather information about the
+repository and should work on a read-only repository.  That parent might
+run under a seccomp filter to avoid accidental modification or unwanted
+command execution on memory corruptions.  As part of that seccomp filter
+open(2) and openat(2) might be only allowed in read-only mode
+(O_RDONLY), thus preventing git's sanitation and stopping the
+application.
 
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->
->> On 19/12/2022 10:26, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>> In [1] I made the same change to our Makefile, let's follow-up and do
->>> the same here.
->>> For "cmake" this is particularly nice with "-G Ninja", as before
->>> we'd
->>> emit ~40 lines of overflowed progress bar output, but now it's only
->>> the one line of "ninja"'s progress bar.
->>
->> I don't really have a strong opinion either way on this but if it
->> matches what we do in the Makefile than it sounds sensible.
->
-> As a one-shot change, it might be sensible to claim consistency by
-> saying "we do the same thing in two places", but I'd worry more
-> about the root cause of such inconsistency in the first place, i.e.
-> can we have some trick to ensure that two build systems will not
-> reimplement the same thing slightly differently?
+Check the need of sanitization with a file descriptor in read-only mode,
+keep it as replacement for stdin and open replacement file descriptors
+for stdout and stderr in write-only mode.
 
-We could & should, but I think doing prep changes like these first makes
-sense, as eventually e.g. driving both the Makefile & CMake via some
-shared resource won't have to waste time on explaining why the msgfmt
-invocation is slightly different.
+Signed-off-by: Christian Göttsche <cgzones@googlemail.com>
+---
 
-> It also is worth examining if having "the same change" is a good
-> idea in the first place.  The justification given "In [1]" was that
-> a build driven by our Makefile were concise and non-verbose overall,
-> but with --stat that concise output pattern was broken.
->
-> I do not know (and I do not have particular interest in knowing) how
-> a build driven by cmake looks like, but does it also aim the same
-> concise output where output --stat does not fit well, ...
+v2:
+  - switch to xopen("/dev/null", O_RDONLY) to stay at 2 syscalls in the
+    common case and use O_WRONLY for stdout and stderr, as suggested
+    by René Scharfe
+---
+ setup.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-It's the same with CMake, as e.g. the reference to "ninja" in the commit
-message covers (it would also happen with the "make" backend, but that
-one's a bit more verbose by default).
+diff --git a/setup.c b/setup.c
+index cefd5f6..c57582b 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1669,7 +1669,15 @@ const char *resolve_gitdir_gently(const char *suspect, int *return_error_code)
+ /* if any standard file descriptor is missing open it to /dev/null */
+ void sanitize_stdfds(void)
+ {
+-	int fd = xopen("/dev/null", O_RDWR);
++	int fd;
++
++	fd = xopen("/dev/null", O_RDONLY);
++	if (fd > 0)
++		close(fd);
++	if (fd > 2)
++		return;
++
++	fd = xopen("/dev/null", O_WRONLY);
+ 	while (fd < 2)
+ 		fd = xdup(fd);
+ 	if (fd > 2)
+-- 
+2.39.0
 
-> [...] or do folks who daily build with cmake find the output with
-> --stat sit well in the output from other things given there?  If the
-> latter, making "the same change" as the Makefile side may not make
-> much sense.
-
-I think the only justification that's needed here (and which should
-short-circuit any questions about what someone using cmake may or may
-not like) is the one given in my 2f12b31b746 (Makefile: don't invoke
-msgfmt with --statistics, 2021-12-17).
-
-I.e. this was something I added as part of the initial i18n support, but
-I had no good reason for using --statistics other than ad-hoc eyeballing
-the output at the time.
-
-The CMake recipe then just copy/pasted whatever it found in the
-Makefile, and the two then drifted apart.
-
-So, in general with those sorts of changes I think it's sufficient to
-say that we're not bringing them in line again, unless there's some
-reason to suppose that the cmake version has since come to rely on the
-divergence for some reason.
-
-Which, in this case is clearly not the case, as we're just spewing this
-output to the user's terminal.
