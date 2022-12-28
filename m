@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D160C4167B
-	for <git@archiver.kernel.org>; Wed, 28 Dec 2022 18:01:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D79ADC4167B
+	for <git@archiver.kernel.org>; Wed, 28 Dec 2022 18:01:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234195AbiL1SA6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Dec 2022 13:00:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47278 "EHLO
+        id S234241AbiL1SBA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Dec 2022 13:01:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233818AbiL1SAl (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Dec 2022 13:00:41 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2911F183B3
-        for <git@vger.kernel.org>; Wed, 28 Dec 2022 10:00:35 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id t15so6697256wro.9
-        for <git@vger.kernel.org>; Wed, 28 Dec 2022 10:00:35 -0800 (PST)
+        with ESMTP id S234056AbiL1SAt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Dec 2022 13:00:49 -0500
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DAC4186B5
+        for <git@vger.kernel.org>; Wed, 28 Dec 2022 10:00:38 -0800 (PST)
+Received: by mail-wr1-x42a.google.com with SMTP id d4so7536943wrw.6
+        for <git@vger.kernel.org>; Wed, 28 Dec 2022 10:00:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AzAZSaACoe/whop57XlBvgLBVC5IEyXOdcawpn/kwJ8=;
-        b=K92cuGpOm8ZKGJBWeD+XGbMUyNIhLDWv0JahIib8nX90h+U7gn0yLpKsJltmdlAq2u
-         6guRiUcbC639uwG07uP7QbdU9J50nehWjTtSqJF4bSZGFD6QDyvTKV7mgu2A49ZA9Urd
-         4epaDjZHvoPEYUHP0HUl7ktS/GsWwk8B2WOi/8t3NZRXRr5HyEkdkL2lO+dXpWqzpleF
-         LfsLlsJhZa30XyWYofS3nGdE32/MN1VcJ3adLpwWn1nm++gQ4j+8jO4wXp0arKj9i25Y
-         ftQJv+Ob5pzTx97Zh/0OejR9tsANa3e1RG3vKYTq1T1SGcWjK8SgyjOw5VWOsTpQuEwn
-         4y9Q==
+        bh=T7cSFu4wamPHRmI3bGL0Hkg3f3NMwKBCd3DUSSku+Ys=;
+        b=eG4pDaLYipaEzTJ7q9Pbtht69sOhB/FVlCP36IcheBvy/zdgTuqaQv+cA+foYDz10+
+         m3JhBXdEA8fad6Y3NPhGWtmDTRoJXwb1oyuI82YDBw3omWQPttlAWnZC5oLeALGoTpbn
+         5mW+WQHM67nP/06qQA6aNHB383kwpa0/XmtNAycN3wFdgzxHqkvwwrFC6T6RBt++d5SC
+         M1Mv0Rtgyu2LzWXJyM1OytSSQPFmkoC30Qafymga6HGREX4fk2F2UjVJ21jCfhVj02eG
+         Ab7Pp4OGc+5o0BQpjS24MmhKa+Rwym06FZewVkuDw5Valn0MpSwIRv23R7zh6fJLG9ir
+         LSWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AzAZSaACoe/whop57XlBvgLBVC5IEyXOdcawpn/kwJ8=;
-        b=Tzs9ILlAIpxaMrYIMzuFnkxyQSxYVJZOrY4b/Oz+kBUDdllY4vvv8ZH/0aNJSm5wWX
-         3dsrVEukfsyFve1/2MZ/PID1NyN02MgA/XUL4UZPZKpNgHgo/iVNk/ugG0NC8fQDxs6A
-         /hIRdJV1bYLzkxjvu1x5AKPzpvyL1paZu7JIPq8Z3dVW6UDnSN6G448TPhKkIim6lhCn
-         gANmWeXUNFYRAZpeoMWrvpG3nY2yxiO2afyaa+CLG2XQ/y8nrXL7d+iapZa+0hn5olAr
-         IcaDa3/wAPYg2tLjnhchY709Bssd8DTYMn3adNTep/l3Y/k0F8p2KGlf/YV5lvQGUD/w
-         LoAw==
-X-Gm-Message-State: AFqh2kqSvYaNDJJuZ1oEm5DNOkdQIyzTM5hcMfl+oNJ0kwgEAPCruN4K
-        fBqFsCVF6Ujxp70x0oOKlXXXdP/f12CVAA==
-X-Google-Smtp-Source: AMrXdXu1Btvo/IB1ljwiodfGG9YNHxN61Fqv8p0OW2sMM2n9e95QIWZuEiqK8P1O3Bi+i1dwa0QmBQ==
-X-Received: by 2002:adf:fc07:0:b0:288:ebd8:dc1f with SMTP id i7-20020adffc07000000b00288ebd8dc1fmr1377057wrr.55.1672250434037;
-        Wed, 28 Dec 2022 10:00:34 -0800 (PST)
+        bh=T7cSFu4wamPHRmI3bGL0Hkg3f3NMwKBCd3DUSSku+Ys=;
+        b=uWbtZtLXoasy36ivlEHfTs60WJ0EIu51zXVy92f8T1R5Pt1BpoEP3iCWvVcXObNHf/
+         W5eFJSB6yAa3sVLZ8FjcwDXoaXu3M5yUsCBU4teZG9pjd35iOOsUMHo5WaLLhRZP3qQ9
+         H3sTNracS1B9GT18r9vBy0d2iox5bTcNUZ6O8Q4QjKZv/69mgHNc9+9TIAbeanL9hV6/
+         ejFlP9ylR4qsq5660JzS2Do4fijHGD3uAKKMX9JCAP0Z991KxJ5XnSk1GC8rAo9OLVAc
+         bmk0ZpHXvNYcqI2YajtEGvO88jh+gT04ZlR+Me3DtER3eAgPCw8F7prHqjuhoXZ2aRW2
+         rKHg==
+X-Gm-Message-State: AFqh2kp0rlq7++Ldp24midUtMu+2UGHbnFOompsOtvqMUwa/JkY2R8Va
+        fOvJndHjOVMvuAXPsCRUwadcq3XIP/8jWw==
+X-Google-Smtp-Source: AMrXdXvaDUXtSxIc6egahxWoKQQ6/PPwyd2dm5SpV+bOr41Q0ilH4XKrSlDXE0daKbhd58FU4MKPKQ==
+X-Received: by 2002:a5d:550e:0:b0:274:c846:4201 with SMTP id b14-20020a5d550e000000b00274c8464201mr10538618wrv.68.1672250437755;
+        Wed, 28 Dec 2022 10:00:37 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c8-20020a5d4148000000b002428c4fb16asm16022480wrq.10.2022.12.28.10.00.33
+        by smtp.gmail.com with ESMTPSA id c8-20020a5d4148000000b002428c4fb16asm16022480wrq.10.2022.12.28.10.00.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Dec 2022 10:00:33 -0800 (PST)
+        Wed, 28 Dec 2022 10:00:37 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 08/20] reset: fix cmd_reset() leaks with a clear_pathspec() call
-Date:   Wed, 28 Dec 2022 19:00:08 +0100
-Message-Id: <patch-08.20-21670099c84-20221228T175512Z-avarab@gmail.com>
+Subject: [PATCH 12/20] http-backend.c: fix cmd_main() memory leak, refactor reg{exec,free}()
+Date:   Wed, 28 Dec 2022 19:00:12 +0100
+Message-Id: <patch-12.20-9be5b0c7836-20221228T175512Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.0.1153.gb0033028ca9
 In-Reply-To: <cover-00.20-00000000000-20221228T175512Z-avarab@gmail.com>
 References: <cover-00.20-00000000000-20221228T175512Z-avarab@gmail.com>
@@ -69,90 +69,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add clear_pathspec() calls to cmd_reset(), including to the codepaths
-where we'd return early.
+Fix a memory leak that's been with us ever since
+2f4038ab337 (Git-aware CGI to provide dumb HTTP transport,
+2009-10-30). In this case we're not calling regerror() after a failed
+regexec(), and don't otherwise use "re" afterwards.
+
+We can therefore simplify this code by calling regfree() right after
+the regexec(). An alternative fix would be to add a regfree() to both
+the "return" and "break" path in this for-loop.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/reset.c                | 11 ++++++++---
- t/t7105-reset-patch.sh         |  2 ++
- t/t7106-reset-unborn-branch.sh |  2 ++
- t/t7107-reset-pathspec-file.sh |  1 +
- 4 files changed, 13 insertions(+), 3 deletions(-)
+ http-backend.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/reset.c b/builtin/reset.c
-index fea20a9ba0b..e9c10618cd3 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -390,7 +390,8 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 		if (reset_type != NONE)
- 			die(_("options '%s' and '%s' cannot be used together"), "--patch", "--{hard,mixed,soft}");
- 		trace2_cmd_mode("patch-interactive");
--		return run_add_interactive(rev, "--patch=reset", &pathspec);
-+		update_ref_status = run_add_interactive(rev, "--patch=reset", &pathspec);
-+		goto cleanup;
+diff --git a/http-backend.c b/http-backend.c
+index 6eb3b2fe51c..9bb63c458b1 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -759,10 +759,14 @@ int cmd_main(int argc, const char **argv)
+ 		struct service_cmd *c = &services[i];
+ 		regex_t re;
+ 		regmatch_t out[1];
++		int ret;
+ 
+ 		if (regcomp(&re, c->pattern, REG_EXTENDED))
+ 			die("Bogus regex in service table: %s", c->pattern);
+-		if (!regexec(&re, dir, 1, out, 0)) {
++		ret = regexec(&re, dir, 1, out, 0);
++		regfree(&re);
++
++		if (!ret) {
+ 			size_t n;
+ 
+ 			if (strcmp(method, c->method))
+@@ -774,7 +778,6 @@ int cmd_main(int argc, const char **argv)
+ 			dir[out[0].rm_so] = 0;
+ 			break;
+ 		}
+-		regfree(&re);
  	}
  
- 	/* git reset tree [--] paths... can be used to
-@@ -439,8 +440,10 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 				       LOCK_DIE_ON_ERROR);
- 		if (reset_type == MIXED) {
- 			int flags = quiet ? REFRESH_QUIET : REFRESH_IN_PORCELAIN;
--			if (read_from_tree(&pathspec, &oid, intent_to_add))
--				return 1;
-+			if (read_from_tree(&pathspec, &oid, intent_to_add)) {
-+				update_ref_status = 1;
-+				goto cleanup;
-+			}
- 			the_index.updated_skipworktree = 1;
- 			if (!no_refresh && get_git_work_tree()) {
- 				uint64_t t_begin, t_delta_in_ms;
-@@ -488,5 +491,7 @@ int cmd_reset(int argc, const char **argv, const char *prefix)
- 
- 	discard_index(&the_index);
- 
-+cleanup:
-+	clear_pathspec(&pathspec);
- 	return update_ref_status;
- }
-diff --git a/t/t7105-reset-patch.sh b/t/t7105-reset-patch.sh
-index fc2a6cf5c7a..9b46da7aaa7 100755
---- a/t/t7105-reset-patch.sh
-+++ b/t/t7105-reset-patch.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='git reset --patch'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./lib-patch-mode.sh
- 
- test_expect_success PERL 'setup' '
-diff --git a/t/t7106-reset-unborn-branch.sh b/t/t7106-reset-unborn-branch.sh
-index ecb85c3b823..a0b67a0b843 100755
---- a/t/t7106-reset-unborn-branch.sh
-+++ b/t/t7106-reset-unborn-branch.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='git reset should work on unborn branch'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
-diff --git a/t/t7107-reset-pathspec-file.sh b/t/t7107-reset-pathspec-file.sh
-index 523efbecde1..af5ea406db3 100755
---- a/t/t7107-reset-pathspec-file.sh
-+++ b/t/t7107-reset-pathspec-file.sh
-@@ -2,6 +2,7 @@
- 
- test_description='reset --pathspec-from-file'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_tick
+ 	if (!cmd)
 -- 
 2.39.0.1153.gb0033028ca9
 
