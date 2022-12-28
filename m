@@ -2,118 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 41917C4332F
-	for <git@archiver.kernel.org>; Wed, 28 Dec 2022 22:13:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E4B10C4332F
+	for <git@archiver.kernel.org>; Wed, 28 Dec 2022 22:25:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231351AbiL1WN4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Dec 2022 17:13:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51376 "EHLO
+        id S230280AbiL1WZM (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Dec 2022 17:25:12 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53420 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232129AbiL1WNw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Dec 2022 17:13:52 -0500
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F31E9E7
-        for <git@vger.kernel.org>; Wed, 28 Dec 2022 14:13:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1672265622; bh=aCfB+cFQeHPv+OINjuuf8R/M2jJ7YvOrnMPkZNE47Pw=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=Q66qIKXFZpShUZs71V5E48/fGZjZb0DcF5bCzT5EWwaR2G2jqy/oBhADbUWUgbbc7
-         dUNwaYzQZRpqAr1LcqdS2dkx5e59IB+iwK80BBZxQ7gGSxeLQJpgCW9rpHo3/+aKtD
-         HsMqJNRsNawX8Of31eKiatUnBbc3NLfnqUHpI59KF7AMQiISPgEvJ3Ddajk44jmlix
-         AP9lL870FILPl8UI5qhdHzBm9VAsX95YmAV/uqzP9WXng0ybq7SjuIQqMlvBICFF6n
-         mr+u+iYMD5ji6+tdUsj8X/K23yWAT4ha4MUy/H8DMVjZ/iW/sOt9Z3Wxj05x/gTBaV
-         vXwglu8nHSaiA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.151.35]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MIL0Q-1p56F002Xk-00EnII; Wed, 28
- Dec 2022 23:13:42 +0100
-Message-ID: <24cd9d7c-2eb5-e17b-3cd2-98a2c6bd1424@web.de>
-Date:   Wed, 28 Dec 2022 23:13:41 +0100
+        with ESMTP id S229587AbiL1WZL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Dec 2022 17:25:11 -0500
+Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 931F213D0D
+        for <git@vger.kernel.org>; Wed, 28 Dec 2022 14:25:08 -0800 (PST)
+Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 2BSMP5P0079592
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Wed, 28 Dec 2022 17:25:05 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Jonathan Nieder'" <jrnieder@gmail.com>
+Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Taylor Blau'" <me@ttaylorr.com>, <git@vger.kernel.org>
+References: <00f901d91a47$09400110$1bc00330$@nexbridge.com> <xmqqilhwp5g4.fsf@gitster.g> <011201d91aca$a5db7800$f1926800$@nexbridge.com> <Y6y+zkUsPhknTYH/@google.com>
+In-Reply-To: <Y6y+zkUsPhknTYH/@google.com>
+Subject: RE: [BUG] fatal: transport 'file' not allowed during submodule add
+Date:   Wed, 28 Dec 2022 17:25:00 -0500
+Organization: Nexbridge Inc.
+Message-ID: <013501d91b0b$3cd4ceb0$b67e6c10$@nexbridge.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.1
-Subject: Re: [PATCH 16/20] builtin/merge.c: free "&buf" on "Your local
- changes..." error
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <cover-00.20-00000000000-20221228T175512Z-avarab@gmail.com>
- <patch-16.20-95d59b914d0-20221228T175512Z-avarab@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <patch-16.20-95d59b914d0-20221228T175512Z-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:Lq7pAd6NDrFjnA6Ucn8gE4aSR7rOL1yNy0lmxbwrsSnYGjUukm0
- t42smZszWD5jhjv9PGbUMow1wEu3kgSu1kyvOu2Zy1C2M/0S6pt+ZKZ2dLo2CFPVq+Vpz0+
- Pc8bbnj+R7ap78cU3H6No9HUIapDTUZND/bUU/yR7MLXcdG/oh2IFTAcMcEqRgYk8r88wKQ
- VDNpBta26XHWG7QBMCD3w==
-UI-OutboundReport: notjunk:1;M01:P0:osaVVsxghOY=;blKftwiTHczsTxw87uUZb5hcoyO
- axJa4WCOmyxgEFW0SN+vjWkRHPjdnJ4ZM5CuVQdYYw9azOSBBTN24dty3msXImwRLL2AClEOj
- Ph618C5SPerxtQXy84Bh4F7qWB34Ed09Fk2poQN1NQZuszbaD8MM9Egi5CDRfjg35Va5nuZQ+
- E8Fc7qAaP7Hv8+faskyWJ3g25kzkd4JqSlNOnIJr9B/LUIboMDgxG2dcD4XS4kb1NB/8R0Jlv
- QT02Vi2VTOdNnXjhtxPAyXCvRr6jc4GTJRETa8WimgaaA1yOkbtxyOYMz4cBD5lC022dOjGRy
- Q4UBbWDX28BxTgPOvueN9/teoxbJCZd2fWSGRL7oa+FO1UnsgTYLYW9Bw6eDyY5+OzqmeA8a8
- MHB+zHtaLv1dw+ImK+u3Z9UeccVVAOmltgzcWrqVavnK/w/Kl9CkUiAKO4IF4FXvNcDguj2KU
- KbRBVsCW/ohkQX12SWCe2yit7WVPeVtlmp0cCpIHfobHuQkNad99EDuD42z22ajPCWJ44QyPQ
- pyx0Iw1KV7+nmfVbV0RhpXQbmWG993/xqSVf5eUH7rcdozAmUHl4hPofBFTqLAmK3t/8ruxOe
- DhoeCi+OzauvXWeqDRJuz2kPZ6/iSW5Ei7dgIVJZ35ngEbCwscmKknVc3FRlODDAOJ2BfaYQz
- /iZlp34H64nz9rlJIJNmxv7O+r57wQQTcZHjJ9/KXgVTN4fxE4WckfR5vUorkrLnaayVkaY+L
- C+AhEOvhM3I7764TjiaVfDz88KfTQbKmajUhpRgRd1OaWJerJhtOLfOHYIUZxtroo+C+W808s
- MIYyYAT68q8oelLxmUab0GE4IisKR3jx7h6+S7diKcdMKY11mEm/J26ZebmfR2GzJ9n/hcFTC
- VpwPmvReNRAdEsrD5DbPg+qX+pm1oGF8nTGtfwsmG/4RVSNxkWE4/flDKPG9bq3SvqxeWUc3Q
- FH/yMGm9yZJ8/vC5iDzIpXnH4kI=
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQIU6GJDc0yG7ZReRHFxQVmMhwXR0AFwOXgbAkFw3nkCX13a/q3bujWQ
+Content-Language: en-ca
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 28.12.22 um 19:00 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> Plug a memory leak introduced in [1], since that change didn't follow
-> the "goto done" pattern introduced in [2] we'd leak the "&buf" memory.
+On December 28, 2022 5:11 PM, Jonathan Nieder wrote:
+>Hi Randall,
 >
-> 1. e4cdfe84a0d (merge: abort if index does not match HEAD for trivial
->    merges, 2022-07-23)
-> 2. d5a35c114ab (Copy resolve_ref() return value for longer use,
->    2011-11-13)
+>rsbecker@nexbridge.com wrote:
+>> Junio C Hamano wrote:
 >
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  builtin/merge.c                | 3 ++-
->  t/t6439-merge-co-error-msgs.sh | 1 +
->  2 files changed, 3 insertions(+), 1 deletion(-)
+>>> This suspiciously sounds like what a1d4f67c (transport: make
+>>> `protocol.file.allow` be "user" by default, 2022-07-29) is doing
+deliberately.
+>>
+>> I have tried using 'git config --local protocol.file.allow always'
+>> and/or 'git config --local protocol.allow always' to get past this,
+>> without success.
 >
-> diff --git a/builtin/merge.c b/builtin/merge.c
-> index 8f78f326dbe..e29b456f92c 100644
-> --- a/builtin/merge.c
-> +++ b/builtin/merge.c
-> @@ -1623,7 +1623,8 @@ int cmd_merge(int argc, const char **argv, const c=
-har *prefix)
->  				error(_("Your local changes to the following files would be overwri=
-tten by merge:\n  %s"),
->  				      sb.buf);
->  				strbuf_release(&sb);
-> -				return 2;
-> +				ret =3D 2;
-> +				goto done;
+>Does `git config --global protocol.file.allow always` do the trick?
 
-Good change -- only a single return remains, which is easier to handle.
+I tried git config --local protocol.file.allow always after the initial
+clone. This should work but does not.
+I also tried git config --global protocol.file.allow always before the
+initial clone.  This also did not work.
 
-If it was only about "buf" then moving its strbuf_release() call way up to
-free it immediately after its last use would work as well.
+>>>                                                           Taylor,
+>>> does this look like a corner case the 2.30.6 updates forgot to consider?
+>
+>I think it's the intended effect (preventing file:// submodules), but I
+wonder if this
+>hints that we'd want that protection to be more targeted.  A file://
+submodule (as
+>opposed to a bare path without URL
+>scheme) wouldn't trigger the "git clone --local" behavior that that commit
+>mentions wanting to protect against, so at first glance it would appear to
+be no
+>more or less dangerous than cloning from a remote repository.
+>
+>One thing I'd be curious about is whether --local happening automatically
+is
+>actually worth it nowadays.  "git worktree" does a better job of sharing
+with an
+>existing local repository, since the sharing continues even after the
+worktree has
+>been created, after any "git gc" operations, and so on.  Meanwhile, the
+distinction
+>between file:// and bare paths is subtle enough that I regularly encounter
+people
+>not being aware of it (for example when wanting a way to test protocol code
+>locally and not understanding why a bare-path clone doesn't do that).
+Would it be
+>more in the spirit of secure defaults to require --local when someone wants
+to
+>request the hardlinking trick of local clone?
 
->  			}
->
->  			/* See if it is really trivial. */
-> diff --git a/t/t6439-merge-co-error-msgs.sh b/t/t6439-merge-co-error-msg=
-s.sh
-> index 52cf0c87690..0cbec57cdab 100755
-> --- a/t/t6439-merge-co-error-msgs.sh
-> +++ b/t/t6439-merge-co-error-msgs.sh
-> @@ -5,6 +5,7 @@ test_description=3D'unpack-trees error messages'
->  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=3Dmain
->  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->
-> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
->  . ./test-lib.sh
->
->
+I think the risk of someone hacking a hardlink is less risky than someone
+misdirecting a remote site not under a user's direct control.
+
+The tests I did show the same behaviour no matter which combination of the
+above. --local appears to be implied, at least there is no apparent
+behavioural difference between specifying the argument and not.
+
+--Randall
+
+
