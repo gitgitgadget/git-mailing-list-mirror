@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4371C4167B
-	for <git@archiver.kernel.org>; Wed, 28 Dec 2022 18:01:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BB33EC4167B
+	for <git@archiver.kernel.org>; Wed, 28 Dec 2022 18:01:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234592AbiL1SBi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Dec 2022 13:01:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47916 "EHLO
+        id S234676AbiL1SBk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Dec 2022 13:01:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234572AbiL1SAx (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Dec 2022 13:00:53 -0500
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C32B21EA
-        for <git@vger.kernel.org>; Wed, 28 Dec 2022 10:00:42 -0800 (PST)
-Received: by mail-wr1-x42a.google.com with SMTP id d4so7537085wrw.6
-        for <git@vger.kernel.org>; Wed, 28 Dec 2022 10:00:42 -0800 (PST)
+        with ESMTP id S234636AbiL1SAy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Dec 2022 13:00:54 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F1762DC
+        for <git@vger.kernel.org>; Wed, 28 Dec 2022 10:00:43 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id h16so15507309wrz.12
+        for <git@vger.kernel.org>; Wed, 28 Dec 2022 10:00:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/lqA3yuulvDMdeQe8LLJKH1qTvxkQsuxqj8I7uFcZJQ=;
-        b=JkgyC4c1ysJH4oxXMqZxgGaNnZd9STwfLPxSCJKLG3CU8U34c0YL7Qdie1EXcJ0/HE
-         kgIFqTPiSNp4ebP2MNTtahK1KhGFmTbv2rAM5B0MKeJpMqWFuuE422tLrZG0sKEhcgKU
-         msH3DUo0gtB2ISJtuvipmGEXFZ9oyI1ZnCNqKM9RmKNIvqjKdtEVY1dSaET8fBsx33Qq
-         GVZZrMtMhkIiVbTVVMZmF+fdgCfvtTURzBki6/jtRkXlKilJfgrGCXEiRvT4yDUG0hkE
-         oI5HIIHsKyJks2erDPsi4AlSBiDoGOyn55KmB7GvD+Ccbyo9WNd6n2uHPmLdG7lT0d1U
-         vuqg==
+        bh=413D+CELXTZtussK+RVwQ2qyX4Y9wpLeV+m+KMRcll4=;
+        b=jRWqGzAK2VjPAr7O0tO585AdjfxSjFY7RNSqbTF2rr6Wl4f/HHDmwLLhdvqZs9qf/M
+         F4rLYYYZdp/PPczhzRvODLG/ZG0hzFw81d0C03NoXp+e3kOT75ms96xOPD2igVDMsL7i
+         N2UZ2/iPku+CYyG84h5drI+t1tK7MHFw73TlT9jgQInxy57cB5NH43DEKq+v6nzDtvo3
+         hpA7n2Y5D7YuvHF7ZUJudsYQ4SFbNRRuehOv3OVmCXKAlGpQ8txhZxVhXecRAgl4WZSy
+         mZwmj2NcyneWnZpt6zOgeQKtn1a2E0EXBWnL2MiEdwWTHjR5pNuDAcWSsxf+Dy1aV23H
+         ALkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/lqA3yuulvDMdeQe8LLJKH1qTvxkQsuxqj8I7uFcZJQ=;
-        b=YyXXIqj4a/7O7jzSSFBPUJJLjIjYF0qW6AUC+q8aDS76gpSs/MHQ8+V+DEKCKcGRXl
-         8hFHuRFSE2YKz+6vX9SOUzRXdyKIfB9EsUJiurIcWxd8JlZewZn+dDn6jfDBmn1djHRa
-         kapSGxiv7IXk/a5DdqpZlxqoObvs6mKatBJF+inNNZP1N5hK9nHXlqc1QBHbywhGEPs1
-         d1/ARIagrrat6rQj9pktYOHcunjTgp3VxUbVEosahcCM4mbhx77JwPCquJxXsLS4cNU8
-         KuWET/EvXJVHsBPOTAeB5hP5ugIChH+/dzaSIweswBbM1WChPgf7yDS7D4kLpKIGZL2q
-         TdyA==
-X-Gm-Message-State: AFqh2kpeMfakOmn4jVnU/343CUwLXyTGYKDEeLnmTANflG1QSKOb1LSD
-        xus6REakE1dxWyADVRiSShO5vmFD7fl6RA==
-X-Google-Smtp-Source: AMrXdXsiY7/2TUKHE+Sz8nUHEzfszvlGftRiV4xpCXOzVOpVCH4rT9zXuW1Kk7f/RX8wzd36jLubBg==
-X-Received: by 2002:a5d:6145:0:b0:27a:5709:7d96 with SMTP id y5-20020a5d6145000000b0027a57097d96mr8178265wrt.41.1672250441575;
-        Wed, 28 Dec 2022 10:00:41 -0800 (PST)
+        bh=413D+CELXTZtussK+RVwQ2qyX4Y9wpLeV+m+KMRcll4=;
+        b=iJAd701SsuCtwtJAU+udRm/WNkl0Yc/KRpWr2e5QeBB6hkzAkVR/KG6MXba+8re4vb
+         TmaXaLTTznfXOR97leySWHv7r/DycYH44viHZFu1RUIxY5hWa2hE0S4EnkzNIHPZzEie
+         TPC04TClqSL3+Pw+EmZZKbhmpYJ/ImID81uXJkqQuhO5kjDi3qAFzZE3nRL4GK4ceSNW
+         +o1dxAG68NutzgN+cKHtOOvCc7RaAXZC+frrPUI6SWbZ5PHlnOKijHWOtgAGcnR4USBH
+         bJCXrk8uFXMOAIJqkibhNfX4f2ogH78KuChY8qYuOYpJQmtf5SFWO6ChiTjDjMlqiUzh
+         dckA==
+X-Gm-Message-State: AFqh2kpBowTHmoh4dJtNzSyx92m//XlYFzSHTnRi1wZlNAxdCp3ZQJLK
+        UKCGGBvQTEt+anaFerh74m8QrqjXq96Nbg==
+X-Google-Smtp-Source: AMrXdXtjOgRkftq6XhV9IhaB3AaKHB4b3RlhhHI1J8OwrJ2AXOF8+LtAo+GDZgF9TDLt50wS1OZkfQ==
+X-Received: by 2002:adf:e6d1:0:b0:27c:dcf5:ad52 with SMTP id y17-20020adfe6d1000000b0027cdcf5ad52mr8733391wrm.11.1672250442576;
+        Wed, 28 Dec 2022 10:00:42 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c8-20020a5d4148000000b002428c4fb16asm16022480wrq.10.2022.12.28.10.00.40
+        by smtp.gmail.com with ESMTPSA id c8-20020a5d4148000000b002428c4fb16asm16022480wrq.10.2022.12.28.10.00.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Dec 2022 10:00:40 -0800 (PST)
+        Wed, 28 Dec 2022 10:00:41 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 16/20] builtin/merge.c: free "&buf" on "Your local changes..." error
-Date:   Wed, 28 Dec 2022 19:00:16 +0100
-Message-Id: <patch-16.20-95d59b914d0-20221228T175512Z-avarab@gmail.com>
+Subject: [PATCH 17/20] connected.c: free(new_pack) in check_connected()
+Date:   Wed, 28 Dec 2022 19:00:17 +0100
+Message-Id: <patch-17.20-ae2f4931315-20221228T175512Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.0.1153.gb0033028ca9
 In-Reply-To: <cover-00.20-00000000000-20221228T175512Z-avarab@gmail.com>
 References: <cover-00.20-00000000000-20221228T175512Z-avarab@gmail.com>
@@ -69,46 +69,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Plug a memory leak introduced in [1], since that change didn't follow
-the "goto done" pattern introduced in [2] we'd leak the "&buf" memory.
-
-1. e4cdfe84a0d (merge: abort if index does not match HEAD for trivial
-   merges, 2022-07-23)
-2. d5a35c114ab (Copy resolve_ref() return value for longer use,
-   2011-11-13)
+Fix a memory leak that's been with us since this code was introduced
+in c6807a40dcd (clone: open a shortcut for connectivity check,
+2013-05-26). We'd never free() the "new_pack" that we'd potentially
+allocate. Since it's initialized to "NULL" it's safe to call free()
+here unconditionally.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/merge.c                | 3 ++-
- t/t6439-merge-co-error-msgs.sh | 1 +
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ connected.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 8f78f326dbe..e29b456f92c 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -1623,7 +1623,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 				error(_("Your local changes to the following files would be overwritten by merge:\n  %s"),
- 				      sb.buf);
- 				strbuf_release(&sb);
--				return 2;
-+				ret = 2;
-+				goto done;
- 			}
+diff --git a/connected.c b/connected.c
+index b90fd61790c..e4d404e10b2 100644
+--- a/connected.c
++++ b/connected.c
+@@ -38,7 +38,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+ 	if (!oid) {
+ 		if (opt->err_fd)
+ 			close(opt->err_fd);
+-		return err;
++		goto cleanup;
+ 	}
  
- 			/* See if it is really trivial. */
-diff --git a/t/t6439-merge-co-error-msgs.sh b/t/t6439-merge-co-error-msgs.sh
-index 52cf0c87690..0cbec57cdab 100755
---- a/t/t6439-merge-co-error-msgs.sh
-+++ b/t/t6439-merge-co-error-msgs.sh
-@@ -5,6 +5,7 @@ test_description='unpack-trees error messages'
- GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
- export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 	if (transport && transport->smart_options &&
+@@ -85,8 +85,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+ promisor_pack_found:
+ 			;
+ 		} while ((oid = fn(cb_data)) != NULL);
+-		free(new_pack);
+-		return 0;
++		goto cleanup;
+ 	}
  
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
+ no_promisor_pack_found:
+@@ -123,8 +122,8 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+ 		rev_list.no_stderr = opt->quiet;
  
+ 	if (start_command(&rev_list)) {
+-		free(new_pack);
+-		return error(_("Could not run 'git rev-list'"));
++		err = error(_("Could not run 'git rev-list'"));
++		goto cleanup;
+ 	}
  
+ 	sigchain_push(SIGPIPE, SIG_IGN);
+@@ -157,6 +156,8 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
+ 		err = error_errno(_("failed to close rev-list's stdin"));
+ 
+ 	sigchain_pop(SIGPIPE);
++	err = finish_command(&rev_list) || err;
++cleanup:
+ 	free(new_pack);
+-	return finish_command(&rev_list) || err;
++	return err;
+ }
 -- 
 2.39.0.1153.gb0033028ca9
 
