@@ -2,104 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4B10C4332F
-	for <git@archiver.kernel.org>; Wed, 28 Dec 2022 22:25:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C959C4332F
+	for <git@archiver.kernel.org>; Wed, 28 Dec 2022 22:26:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230280AbiL1WZM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Dec 2022 17:25:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53420 "EHLO
+        id S230406AbiL1W0I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Dec 2022 17:26:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229587AbiL1WZL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Dec 2022 17:25:11 -0500
-Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 931F213D0D
-        for <git@vger.kernel.org>; Wed, 28 Dec 2022 14:25:08 -0800 (PST)
-Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
-        (authenticated bits=0)
-        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 2BSMP5P0079592
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Wed, 28 Dec 2022 17:25:05 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-Reply-To: <rsbecker@nexbridge.com>
-From:   <rsbecker@nexbridge.com>
-To:     "'Jonathan Nieder'" <jrnieder@gmail.com>
-Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
-        "'Taylor Blau'" <me@ttaylorr.com>, <git@vger.kernel.org>
-References: <00f901d91a47$09400110$1bc00330$@nexbridge.com> <xmqqilhwp5g4.fsf@gitster.g> <011201d91aca$a5db7800$f1926800$@nexbridge.com> <Y6y+zkUsPhknTYH/@google.com>
-In-Reply-To: <Y6y+zkUsPhknTYH/@google.com>
-Subject: RE: [BUG] fatal: transport 'file' not allowed during submodule add
-Date:   Wed, 28 Dec 2022 17:25:00 -0500
-Organization: Nexbridge Inc.
-Message-ID: <013501d91b0b$3cd4ceb0$b67e6c10$@nexbridge.com>
+        with ESMTP id S229587AbiL1W0G (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Dec 2022 17:26:06 -0500
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B43613EA8
+        for <git@vger.kernel.org>; Wed, 28 Dec 2022 14:26:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1672266358; bh=nw8kHkkI9UYTQJ9FG7Cis0PMiaMiBVcebKfDEz7BqQY=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=D9rzbaLwU7q7A+W9b0YP6JDZzs65DrE2aDPD4diHOPkoEdPoAUBvXxVKjEMXY8PmF
+         RO0D73C0YkB3uxy5lp/NHzDQRdVynqgsJLru3VvLBPgmfdbx297AKlshT9Ju+Jaf7t
+         iHNfS/4Ph/SVJ6NwtpKELcI81XuXQEMIRt8QXWhkXx5LKNdBvvOZfmI+adWzUOmjwY
+         yiW+wsGH12Q4VNxQzdPJPgesY0IMdbtqFg0TPLO6lZ3IkD8+aH256wV4gsbWhSsE0S
+         mzqt3BZ3vTvfTNz41PRLr/Mzvs1pJ8bITNh7BYFegWCInayIKtThs+yCZN5ERpGp9H
+         c19Hv1Y/PQd+g==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.151.35]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MmQYd-1oSpnD37J3-00i4YN; Wed, 28
+ Dec 2022 23:25:58 +0100
+Message-ID: <b6cd3023-2d9f-b1bd-d8e8-16dca4899cfb@web.de>
+Date:   Wed, 28 Dec 2022 23:25:58 +0100
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQIU6GJDc0yG7ZReRHFxQVmMhwXR0AFwOXgbAkFw3nkCX13a/q3bujWQ
-Content-Language: en-ca
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: [PATCH 18/20] object-file.c: free the "t.tag" in check_tag()
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <cover-00.20-00000000000-20221228T175512Z-avarab@gmail.com>
+ <patch-18.20-aa4df0e1b5c-20221228T175512Z-avarab@gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <patch-18.20-aa4df0e1b5c-20221228T175512Z-avarab@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:Kl14U0HZ3Xcvms6Mza9q0DzcqLsqLgvZfaBZD2kZDsaeGzd38Oq
+ 9QUI2CWhA6/uP3FO0seIZnWBgpXTpz0uo3Q750H61b6mOnWZSJEo0B6fjb+yTU+cwfxC1J3
+ NLc7zT29ZwD4poAsccZTTxo1pCLawlZQ5uaUTgJlPI1zsdaIEqw5IZCEuSDfKiTgJeDg0nu
+ seS4SqiKozI6COmuZ+NHA==
+UI-OutboundReport: notjunk:1;M01:P0:JoDpzOUtKqo=;hOseh62LGuC85nhywDXktyE2LLv
+ 66JclXvJPsMDqr9dy+iOH+EHfL8a1Ae28TTEK2Za8uahSiG7E19/8DuHPpQcWZTV42aKL4bmk
+ jAoSXURMJHkgEMk2Ofvv5aNMibxDbpr8GxBXqSrx5l0HLt2YptJGOpJI60IIUoVjCHSLxTA3q
+ Ra5UiGF5St13pYwFbKyasl1rRLD2RSE2ATPUMmdzDazJAnIxURYKScnpLcM6u2i6McFFK+EoN
+ JgNQWI09fPq1gNt2qmkasRDLBqp1R8AOCCWgnspwox0XqgDap0WtZnIGGtLp2ce9jzs7cdtU7
+ uyePibnKN2teEMnIb55CWI+Gh+/Mxqe3EAYTRuPcPh73rOJrnQBxeFMCJoPbXy0As2NwAAzcL
+ X9KaPAZdP4pO9ExKl0CmQ8d501khwStsgWe04sgauk/3yjOoPMqSPPyDHl2JwB7rn6E4B/ojk
+ D/bPwfW8ge27hOazI5yUdR/zuvOzPiY5BatXI1PJl8JoULREQF5Bp6UJzCWO/BnwgGr7MrNhB
+ VYVM4krOq+AV5qwi+jDyvulI/YlBVdJ7deDBvcuh3/HHKgyU8wF5aiMFref6UeI4IQ+O0FHpj
+ UqyW3rxypJ4qhaS7Q2L5aPINbjhKONrxFrN99rvkzyNWNLmI7KRc8gpzO3O1uGyieeJKY3/Og
+ +Rey/uKvms47Rl7x9FfQRnXifiQbhI970sjTJe++wFsn4RMTJgFdGA7YInDvyWXjN7rWAWPjv
+ xWrJtKStf9v0WGf416ZirkVacXtBHccbldNY0tdXyoFqbcH5wbo8YNRvCrZVgbaMu0qhjaim+
+ ikiweNjz/H35Bf0cwdRfNoOQcMnjz+wfPqd7iloUm6VYwtjTryj9kziRNccxLXbY7g5yDYT/7
+ k9DG7/KiWfvtHmroPVGQEivGM5CZQdM1us/hRjqlS3rygEaKSPQu7R57QU5GYy6yrXtFacT/N
+ yPEuc+TUCwZ2Zmjx2oyDmiNjRjY=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On December 28, 2022 5:11 PM, Jonathan Nieder wrote:
->Hi Randall,
+Am 28.12.22 um 19:00 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+> Fix a memory leak that's been with us ever since c879daa2372 (Make
+> hash-object more robust against malformed objects, 2011-02-05). With
+> "HASH_FORMAT_CHECK" (used by "hash-object" and "replace") we'll parse
+> tags into a throwaway variable on the stack, but weren't freeing the
+> "item->tag" we might malloc() when doing so.
 >
->rsbecker@nexbridge.com wrote:
->> Junio C Hamano wrote:
+> Mark the tests that now pass in their entirety as passing under
+> "SANITIZE=3Dleak", which means we'll test them as part of the
+> "linux-leaks" CI job.
 >
->>> This suspiciously sounds like what a1d4f67c (transport: make
->>> `protocol.file.allow` be "user" by default, 2022-07-29) is doing
-deliberately.
->>
->> I have tried using 'git config --local protocol.file.allow always'
->> and/or 'git config --local protocol.allow always' to get past this,
->> without success.
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> ---
+>  object-file.c         | 1 +
+>  t/t3800-mktag.sh      | 1 +
+>  t/t5302-pack-index.sh | 2 ++
+>  3 files changed, 4 insertions(+)
 >
->Does `git config --global protocol.file.allow always` do the trick?
+> diff --git a/object-file.c b/object-file.c
+> index c1b71c28347..36ed6c3122c 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -2331,6 +2331,7 @@ static void check_tag(const void *buf, size_t size=
+)
+>  	memset(&t, 0, sizeof(t));
+>  	if (parse_tag_buffer(the_repository, &t, buf, size))
+>  		die(_("corrupt tag"));
+> +	free(t.tag);
 
-I tried git config --local protocol.file.allow always after the initial
-clone. This should work but does not.
-I also tried git config --global protocol.file.allow always before the
-initial clone.  This also did not work.
+Better use release_tag_memory() instead to avoid leaking knowledge of tag
+internals, no?
 
->>>                                                           Taylor,
->>> does this look like a corner case the 2.30.6 updates forgot to consider?
+>  }
 >
->I think it's the intended effect (preventing file:// submodules), but I
-wonder if this
->hints that we'd want that protection to be more targeted.  A file://
-submodule (as
->opposed to a bare path without URL
->scheme) wouldn't trigger the "git clone --local" behavior that that commit
->mentions wanting to protect against, so at first glance it would appear to
-be no
->more or less dangerous than cloning from a remote repository.
+>  static int index_mem(struct index_state *istate,
+> diff --git a/t/t3800-mktag.sh b/t/t3800-mktag.sh
+> index e3cf0ffbe59..d3e428ff46e 100755
+> --- a/t/t3800-mktag.sh
+> +++ b/t/t3800-mktag.sh
+> @@ -4,6 +4,7 @@
 >
->One thing I'd be curious about is whether --local happening automatically
-is
->actually worth it nowadays.  "git worktree" does a better job of sharing
-with an
->existing local repository, since the sharing continues even after the
-worktree has
->been created, after any "git gc" operations, and so on.  Meanwhile, the
-distinction
->between file:// and bare paths is subtle enough that I regularly encounter
-people
->not being aware of it (for example when wanting a way to test protocol code
->locally and not understanding why a bare-path clone doesn't do that).
-Would it be
->more in the spirit of secure defaults to require --local when someone wants
-to
->request the hardlinking trick of local clone?
-
-I think the risk of someone hacking a hardlink is less risky than someone
-misdirecting a remote site not under a user's direct control.
-
-The tests I did show the same behaviour no matter which combination of the
-above. --local appears to be implied, at least there is no apparent
-behavioural difference between specifying the argument and not.
-
---Randall
-
-
+>  test_description=3D'git mktag: tag object verify test'
+>
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+>
+>  ###########################################################
+> diff --git a/t/t5302-pack-index.sh b/t/t5302-pack-index.sh
+> index b0095ab41d3..54b11f81c63 100755
+> --- a/t/t5302-pack-index.sh
+> +++ b/t/t5302-pack-index.sh
+> @@ -4,6 +4,8 @@
+>  #
+>
+>  test_description=3D'pack index with 64-bit offsets and object CRC'
+> +
+> +TEST_PASSES_SANITIZE_LEAK=3Dtrue
+>  . ./test-lib.sh
+>
+>  test_expect_success 'setup' '
