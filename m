@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BAA26C3DA7D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CDDB6C3DA7A
 	for <git@archiver.kernel.org>; Wed, 28 Dec 2022 18:01:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234890AbiL1SBT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Dec 2022 13:01:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47898 "EHLO
+        id S234928AbiL1SBV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Dec 2022 13:01:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234248AbiL1SAv (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234330AbiL1SAv (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 28 Dec 2022 13:00:51 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E7C0178BB
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 847B418391
         for <git@vger.kernel.org>; Wed, 28 Dec 2022 10:00:40 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id n3so14786411wrc.5
+Received: by mail-wr1-x42d.google.com with SMTP id w1so3415056wrt.8
         for <git@vger.kernel.org>; Wed, 28 Dec 2022 10:00:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=24AYxfGOKt0kvEpasKToBFMori2rehTHt7xakRSaeNM=;
-        b=H2kZSFta6rFTvn90DR/vGCaBPQZ5Unx5lJR5/Fg04THXcprFz6ZHhpD2kGOn9xqydo
-         1AQxQFZ+DsvcoYxFAQNtyIqXXAZY3TTkHWM7Ge3ZRV28QRtiQaLhxrTA80uybkEyrPHr
-         nMFvLWshpkXtl+1p7ZEO22QfCoEzwvzJdaEgSdM5+iQsnhdiL552ZkP8u0lUwW1JA9Vg
-         DhDS29vqPR44tgNL5Bs+ZbnCIovHfMwV/O6qvzifK0vhQNWTIF7thJL2fevasbJIx2zs
-         p7x8ULeyqLdLxa4TibM1OimkwiEYGkHR1AxjCMTFW0zFH8MoeCZe004JnaYBggMM4lUQ
-         mu7A==
+        bh=TEoAVPFWQj6eTEnHFPwT8ljXdYVMaWUYtcAMHRyg+Aw=;
+        b=Tqh6eAvz0nA/Jwat8t1vV3DjX8LZLGJpyptlBTG/CYz4n7otb4EPEHUkmHSsmlUCX1
+         7FQ/nDv9sxfTElvveQdiaC6Q06U8ZYVH++Zn5G1t5MytHqb6VwOJ0Pq7DmvyorUDaCXV
+         XOAx/uKgVCZ4JgZT/Bqotnzik7xM0qijxLk/SmD7oiI9b69QrvrkttbsPHyFcLp97f/P
+         oMHh8/VTr0aj1XcGTK68j/q73Mlb/vyVJRyIHXsWvaED43qktm42RYtE5VtY+hlT1GRo
+         xw9dxB4tFLLLC2sgzgqOrt/fP5iKhvhLcv6QeWoZNhtVKGkQyZ3uyvhu1Rc37KQGuSui
+         Eaeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=24AYxfGOKt0kvEpasKToBFMori2rehTHt7xakRSaeNM=;
-        b=ORSczpCnENmPFKp9zQM+6Un6Age/G+EqmuIKvVZGVE0eP6e1ps3dQ6xyt/b286fkPk
-         6tcyh+27dbg5+GfeHhBKnKTKGdjZqu5V4XUxG37rTgUuFHEisv8qTAyZl9RJQ9ZzOHaf
-         44yT8S3oNgaGlESmPTTh6pImPL90XCPchpT7cPpyHyMVXBK4jnCwsox0ubPy4KDdanDr
-         NGA2nJBMOJvGlCMi6IAOCzDT8E3J+aQrv6YS00e/tTL2mfN3zNsj5sU1M8lKNuak8ySH
-         jL62TD0OQwsfJpgn76bwpFxnP5mJkBoveihgNtrFDgkCc9aPp6FVrim7pRjPA3KFNbrV
-         9O2w==
-X-Gm-Message-State: AFqh2kpZZoTSUvzK/oYpVE97C2dwJH6CB4AQWDnTyxa99utG5xiC+/qo
-        OCh5iBlU3vVrvzxT0TN7maNmxwaPCIHp4A==
-X-Google-Smtp-Source: AMrXdXusfVu1Bl+YK3bg2/t+4vhJctBZNBRSZU+tsghhBQaN3p/hO7+mY82xN1fQaFsNkgZJA9fyZQ==
-X-Received: by 2002:a5d:430e:0:b0:279:53e1:5178 with SMTP id h14-20020a5d430e000000b0027953e15178mr8642521wrq.45.1672250438610;
-        Wed, 28 Dec 2022 10:00:38 -0800 (PST)
+        bh=TEoAVPFWQj6eTEnHFPwT8ljXdYVMaWUYtcAMHRyg+Aw=;
+        b=Q0stN8vBlcjxJ8rC7rzfHbtfM3TMaJ2Y4NxVe9E5ENIXYD0NK9SysYU4JD/rXue2Vu
+         Z0yfQxl8CkShj+iglgWbVOW7dTf+CNoRd9Mq7uB1nN365lcOYHumnompBaG0GmlmkdpX
+         esQXUX4Etl/Ovl5YmPGMq3hSBHStHuN00lpYQ2cMGyn0+b4o1cdIQWxghFxxHD5bWZ7X
+         +I1jzDeAkyFBy1CQgTKgfSTq9vPSVJ+81TaERV6ONYgNJB8xuuRuJyhi1VAzZvk1xGlE
+         iNBNhEXiJhC3ZEol9lXFw+TzdCky5kRxMm3i+dqzf4sR8+1hGbx7a9RtzPqLWhcqtI35
+         OF/Q==
+X-Gm-Message-State: AFqh2kqPyzkVTXZ+xLX6s/cBYIM83rfpM4mfByT2T+jH2onwdjlARfjz
+        Y3J3HJJvLw63ktzblc+qW542lNTYkxXJew==
+X-Google-Smtp-Source: AMrXdXtXFOMBazJTE26wDoat7N1vojh2p30JQ8k1zOy11NVsHe9TL6Yz4XynKRpqODbloCdVD3K2lg==
+X-Received: by 2002:a5d:4ed1:0:b0:285:4b69:ba06 with SMTP id s17-20020a5d4ed1000000b002854b69ba06mr3526402wrv.6.1672250439772;
+        Wed, 28 Dec 2022 10:00:39 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c8-20020a5d4148000000b002428c4fb16asm16022480wrq.10.2022.12.28.10.00.37
+        by smtp.gmail.com with ESMTPSA id c8-20020a5d4148000000b002428c4fb16asm16022480wrq.10.2022.12.28.10.00.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Dec 2022 10:00:37 -0800 (PST)
+        Wed, 28 Dec 2022 10:00:39 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 13/20] commit-graph: fix a parse_options_concat() leak
-Date:   Wed, 28 Dec 2022 19:00:13 +0100
-Message-Id: <patch-13.20-78f12259ac5-20221228T175512Z-avarab@gmail.com>
+Subject: [PATCH 14/20] show-branch: free() allocated "head" before return
+Date:   Wed, 28 Dec 2022 19:00:14 +0100
+Message-Id: <patch-14.20-9df41b090b4-20221228T175512Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.0.1153.gb0033028ca9
 In-Reply-To: <cover-00.20-00000000000-20221228T175512Z-avarab@gmail.com>
 References: <cover-00.20-00000000000-20221228T175512Z-avarab@gmail.com>
@@ -69,33 +69,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the parse_options_concat() was added to this file in
-84e4484f128 (commit-graph: use parse_options_concat(), 2021-08-23) we
-wouldn't free() it if we returned early in these cases.
+Stop leaking the "head" variable, which we've been leaking since it
+was originally added in [1], and in its current form since [2]
 
-Since "result" is 0 by default we can "goto cleanup" in both cases,
-and only need to set "result" if write_commit_graph_reachable() fails.
+1. ed378ec7e85 (Make ref resolution saner, 2006-09-11)
+2. d9e557a320b (show-branch: store resolved head in heap buffer,
+   2017-02-14).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/commit-graph.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/show-branch.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index b6e5726b082..c76faffde4b 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -269,8 +269,8 @@ static int graph_write(int argc, const char **argv, const char *prefix)
- 
- 	if (opts.reachable) {
- 		if (write_commit_graph_reachable(odb, flags, &write_opts))
--			return 1;
--		return 0;
-+			result = 1;
-+		goto cleanup;
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index c013abaf942..358ac3e519a 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -956,5 +956,6 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 		if (shown_merge_point && --extra < 0)
+ 			break;
  	}
- 
- 	if (opts.stdin_packs) {
++	free(head);
+ 	return 0;
+ }
 -- 
 2.39.0.1153.gb0033028ca9
 
