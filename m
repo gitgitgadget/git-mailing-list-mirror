@@ -2,75 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81001C4332F
-	for <git@archiver.kernel.org>; Wed, 28 Dec 2022 08:05:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 12A63C4708D
+	for <git@archiver.kernel.org>; Wed, 28 Dec 2022 08:43:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229912AbiL1IFV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Dec 2022 03:05:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37898 "EHLO
+        id S232892AbiL1Inr (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Dec 2022 03:43:47 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229656AbiL1IFT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Dec 2022 03:05:19 -0500
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7908DDF24
-        for <git@vger.kernel.org>; Wed, 28 Dec 2022 00:05:17 -0800 (PST)
-Received: by mail-ej1-x632.google.com with SMTP id ud5so36789474ejc.4
-        for <git@vger.kernel.org>; Wed, 28 Dec 2022 00:05:17 -0800 (PST)
+        with ESMTP id S232653AbiL1InI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Dec 2022 03:43:08 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BD42FCD4
+        for <git@vger.kernel.org>; Wed, 28 Dec 2022 00:42:16 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id tz12so36925007ejc.9
+        for <git@vger.kernel.org>; Wed, 28 Dec 2022 00:42:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=XZJW2tzjZ2v51M2vLLzq7YJ7jbiAT9T4MD6IAFfdAs0=;
-        b=kfhpL3KcW1miW8to7aHWFE0cRayv0mwE5SGwh/ZLCyHPphad9TI3S73ZKLiHAl7jdH
-         qy1YrPkjtBWliwqdvayyZgS6Ac8XzhLaaEW9EXOlgTaGMwK4uytLuoe/lJsbezsbkqhB
-         s+HyHMGJyfY1vRncDSvG//sD+JxxpuVRdhEzsGTCNViMCWjXrzJu68AMMQRbvQ7GZQhT
-         a7WAGVRtMN2IVtYePwZgGHMvcWwVk2WYUqpu5E4I33CWWvgs3sFrRw04jfvg3s/LJFvM
-         X4Re4PVa5D4riqggvyfb6h3ddOC9kIL8lSXtKkdNUOCsWJDC37TEK/X0NgLhraMou/HA
-         nwpQ==
+        bh=iQZo+Y62G211mBrVFX+zTVI0sLssMp3FccO/uVf01Ts=;
+        b=SMxC4QLCnvvXh+7n6GFCP7Itd7yMSRZdo6AoQlobKuALer/HGYaDksJrFYAXHzKYGm
+         rBSWaiw7ipZpftkF/BnWJmDDUZOcYQoXfGsySfC6DIo9r3kkWg+/FP4A7sU0YAPvaAAS
+         YGgSfMNaF9wjE95hDhkb5kp/srhMzMpwuNU4SuMwPoojWd16FylNxlepXLSjnqkP+MZI
+         7UPSA35jnJn7/Ev+hnf92FMTKun+shWsIdpf60oWWnUI4OpWEO7TdWGhfwsymT4AkCh4
+         N5u+doZjt/nkhAYt+fIDWPt2+GVRx+ivMilADr7uY4jqX3jLo7K7NDnVGTyatKvmQPBZ
+         6Idw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XZJW2tzjZ2v51M2vLLzq7YJ7jbiAT9T4MD6IAFfdAs0=;
-        b=5pi9cE/GMMwr8xqT9w0WuHT12I0iZFPYGgZ4lqzCRgrpgMwxjjuSQOknrwclTEdKDc
-         oPBEWX/87J+FrfmC89hwDdOzI5ASYctLvLDkzSQbCa02yQwCzlgf5jpdhbKdRWW0vqQ3
-         G7xl0TtSRSSrvVHa9u434liYOuSl+gw47BHg97UJyP3I4kmupdQu6g8HefgOV7YrqVom
-         8y2wEMYtn21HxTGN6Uc9DC9TADerhtkl5kzVZNdXSUlSH9uHZMt1BZ3pKz5LChTCoZBk
-         5tI5V79xGvPmiTfKSEUNGkLOvNp8UxJgKG4qL/QKAcffyiie33lJsgk3WtMlituOhktI
-         KjmQ==
-X-Gm-Message-State: AFqh2krNm70+AFi94wgYFWFxrnnEDBtzh9I3y6U5AL/8XDzftpIKItSl
-        70QfHedFACNkC9sFAlNiOaHeQSgwPryXZw==
-X-Google-Smtp-Source: AMrXdXuDRwN9c8wpvl6v5/dpFjBrpwqSdJRAGCYQ64T7YI2N/7Ph58EV5L9nZq/lZ5WyxxcdqU6tnA==
-X-Received: by 2002:a17:906:2ccc:b0:7c0:e23d:12c4 with SMTP id r12-20020a1709062ccc00b007c0e23d12c4mr19146115ejr.63.1672214715834;
-        Wed, 28 Dec 2022 00:05:15 -0800 (PST)
+        bh=iQZo+Y62G211mBrVFX+zTVI0sLssMp3FccO/uVf01Ts=;
+        b=wMrKle57YSi6AzSGpJYCFBUkGMP5g9iBqjwoZbG8PhAu6krNLpyWisgED0tOR6mUY6
+         L4mYNLH0yLrfN7SmZ70Y9Bm0qJnL4zqcSm1juJhVM0I7eNZwu3CB0q1lLKhWPvptP9+6
+         4RsY5yIf9V4Ad4FPWWkIZn5iELL3Wf/nCCqOUvb3jV6fAGgRy39RVnsI3gw+nIl9Oda1
+         sMJPWDJ+fMOqWqTIfbWv+933/+d5kc0BB11bhwYYVM9wq4P3nJEBYVgZ5YjfhD8uifxy
+         coUHDw6OBd/iYwxO9a6YLRjpPA0+57+F3rLlFWe3a6hW8NdJeG1f0F4XRJFSIwdy9INM
+         wxyg==
+X-Gm-Message-State: AFqh2kphnrPtFmo6vNFZ3iwLb0ti5MqWwkxSKAcrYQmCzJPtgekZPhXX
+        4YDsIrgsmfhBXLo+b+W3IfL5rmm0QnSL5Q==
+X-Google-Smtp-Source: AMrXdXu1w8jNw924QnZpuxYUAD/L5W3Qs8STQf1uADByKFAQ4JhkxJybIqXeoHfjG6fOR1sw+Hqi4g==
+X-Received: by 2002:a17:907:8b09:b0:7c1:bb5:5704 with SMTP id sz9-20020a1709078b0900b007c10bb55704mr21513525ejc.26.1672216935040;
+        Wed, 28 Dec 2022 00:42:15 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id q2-20020a1709063d4200b0082ddfb47d06sm7177537ejf.148.2022.12.28.00.05.15
+        by smtp.gmail.com with ESMTPSA id g18-20020a17090604d200b008448d273670sm385934eja.49.2022.12.28.00.42.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Dec 2022 00:05:15 -0800 (PST)
+        Wed, 28 Dec 2022 00:42:14 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1pARR4-009Vth-1c;
-        Wed, 28 Dec 2022 09:05:14 +0100
+        id 1pAS0r-009XFr-2z;
+        Wed, 28 Dec 2022 09:42:13 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jacob Abel <jacobabel@nullpo.dev>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-Subject: Re: [PATCH v6 0/4] worktree: Support `--orphan` when creating new
- worktrees
-Date:   Wed, 28 Dec 2022 09:01:16 +0100
-References: <20221104010242.11555-1-jacobabel@nullpo.dev>
- <20221104213401.17393-1-jacobabel@nullpo.dev>
- <20221110233137.10414-1-jacobabel@nullpo.dev>
- <20221212014003.20290-1-jacobabel@nullpo.dev>
- <20221220023637.29042-1-jacobabel@nullpo.dev>
- <20221228061539.13740-1-jacobabel@nullpo.dev>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Glen Choo <chooglen@google.com>,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: built-in-submodule & in-flight dependencies (was: What's cooking in
+ git.git (Dec 2022, #07; Mon, 26))
+Date:   Wed, 28 Dec 2022 09:36:43 +0100
+References: <xmqqcz86n8bn.fsf@gitster.g>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <20221228061539.13740-1-jacobabel@nullpo.dev>
-Message-ID: <221228.868risuf5x.gmgdl@evledraar.gmail.com>
+In-reply-to: <xmqqcz86n8bn.fsf@gitster.g>
+Message-ID: <221228.864jtfvs0q.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -78,144 +70,55 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Dec 28 2022, Jacob Abel wrote:
+On Mon, Dec 26 2022, Junio C Hamano wrote:
 
->   * Added save_param_arr() to preserve "$@" from being reset by
->     test_expect_success() in test_wt_add_excl() (2/4).
 > [...]
-> 2:  3d8b26f9d6 ! 2:  c03c112f79 worktree add: refactor opt exclusion tests
->     @@ t/t2400-worktree-add.sh: test_expect_success '"add" no auto-vivify with --detach
->      -test_expect_success '"add" -b/-B mutually exclusive' '
->      -	test_must_fail git worktree add -b poodle -B poodle bamboo main
->      -'
->     --
->     ++# Saves parameter sequence/array as a string so they can be safely stored in a
->     ++# variable and restored with `eval "set -- $arr"`. Sourced from
->     ++# https://stackoverflow.com/a/27503158/15064705
->     ++save_param_arr () {
->     ++	local i
->     ++	for i;
->     ++	do
->     ++		# For each argument:
->     ++		# 1. Append "\n" after each entry
->     ++		# 2. Convert "'" into "'\''"
->     ++		# 3. Prepend "'" before each entry
->     ++		# 4. Append " \" after each entry
->     ++		printf "%s\\n" "$i" | sed "
->     ++			s/'/'\\\\''/g
->     ++			1s/^/'/
->     ++			\$s/\$/' \\\\/
->     ++		"
->     ++	done
->     ++	echo " "
->     ++}
->     +
-> [...]
->       ## Documentation/config/advice.txt ##
->     @@ t/t2400-worktree-add.sh: test_expect_success '"add" worktree with orphan branch,
->       	test_cmp expect .git/worktrees/orphan-with-lock-reason/locked
->       '
+> [Cooking]
 >
->     -+test_wt_add_empty_repo_orphan_hint() {
->     ++test_wt_add_empty_repo_orphan_hint () {
->      +	local context="$1"
->      +	shift
->     -+	local opts="$@"
->     ++	local arr=$(save_param_arr "$@")
->      +	test_expect_success "'worktree add' show orphan hint in empty repo w/ $context" '
->     ++		eval "set -- $arr" &&
->      +		test_when_finished "rm -rf empty_repo" &&
->      +		GIT_DIR="empty_repo" git init --bare &&
->     -+		test_must_fail git -C empty_repo worktree add $opts foobar/ 2> actual &&
->     ++		test_must_fail git -C empty_repo worktree add "$@" foobar/ 2> actual &&
->      +		grep "hint: If you meant to create a worktree containing a new orphan branch" actual
->      +	'
->      +}
+> * ab/no-more-git-global-super-prefix (2022-12-26) 9 commits
+>  - read-tree: add "--super-prefix" option, eliminate global
+>  - submodule--helper: convert "{update,clone}" to their own "--super-prefix"
+>  - submodule--helper: convert "status" to its own "--super-prefix"
+>  - submodule--helper: convert "sync" to its own "--super-prefix"
+>  - submodule--helper: convert "foreach" to its own "--super-prefix"
+>  - submodule--helper: don't use global --super-prefix in "absorbgitdirs"
+>  - submodule.c & submodule--helper: pass along "super_prefix" param
+>  - read-tree + fetch tests: test failing "--super-prefix" interaction
+>  - submodule absorbgitdirs tests: add missing "Migrating git..." tests
+>
+>  Stop using "git --super-prefix" and narrow the scope of its use to
+>  the submodule--helper.
+>
+>  Will merge to 'next'.
+>  source: <cover-v5-0.9-00000000000-20221220T104519Z-avarab@gmail.com>
+> [...]
+> * ab/config-multi-and-nonbool (2022-11-27) 9 commits
+>  - for-each-repo: with bad config, don't conflate <path> and <cmd>
+>  - config API: add "string" version of *_value_multi(), fix segfaults
+>  - config API users: test for *_get_value_multi() segfaults
+>  - for-each-repo: error on bad --config
+>  - config API: have *_multi() return an "int" and take a "dest"
+>  - versioncmp.c: refactor config reading next commit
+>  - config tests: add "NULL" tests for *_get_value_multi()
+>  - config tests: cover blind spots in git_die_config() tests
+>  - for-each-repo tests: test bad --config keys
+>
+>  Assorted config API updates.
+>
+>  Waiting for review.
+>  source: <cover-v3-0.9-00000000000-20221125T093158Z-avarab@gmail.com>
 
-The rest of this looks good to me, but this bit looks like you went down
-the rabbit hole of responding to Junio's feedback in
-https://lore.kernel.org/git/xmqqsfhawwqf.fsf@gitster.g/
+I see that ab/no-more-git-global-super-prefix has landed in "next", I
+was planning to submit the built-in submodule topic after it, i.e. the
+change to get rid of git-submodule.sh.
 
-I think as we're not dealing with any quoted arguments here it's not
-worth copy/pasting some code to do shell quoting from StackOverflow,
-i.e. for this series this squashed at the tip passes all the tests:
-	
-	diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-	index f43de591173..e5b01583cf2 100755
-	--- a/t/t2400-worktree-add.sh
-	+++ b/t/t2400-worktree-add.sh
-	@@ -298,33 +298,11 @@ test_expect_success '"add" no auto-vivify with --detach and <branch> omitted' '
-	 	test_must_fail git -C mish/mash symbolic-ref HEAD
-	 '
-	 
-	-# Saves parameter sequence/array as a string so they can be safely stored in a
-	-# variable and restored with `eval "set -- $arr"`. Sourced from
-	-# https://stackoverflow.com/a/27503158/15064705
-	-save_param_arr () {
-	-	local i
-	-	for i;
-	-	do
-	-		# For each argument:
-	-		# 1. Append "\n" after each entry
-	-		# 2. Convert "'" into "'\''"
-	-		# 3. Prepend "'" before each entry
-	-		# 4. Append " \" after each entry
-	-		printf "%s\\n" "$i" | sed "
-	-			s/'/'\\\\''/g
-	-			1s/^/'/
-	-			\$s/\$/' \\\\/
-	-		"
-	-	done
-	-	echo " "
-	-}
-	-
-	 # Helper function to test mutually exclusive options.
-	 test_wt_add_excl () {
-	-	local arr=$(save_param_arr "$@")
-	-	test_expect_success "'worktree add' with $* has mutually exclusive options" '
-	-		eval "set -- $arr" &&
-	-		test_must_fail git worktree add "$@"
-	+	local args="$@" &&
-	+	test_expect_success "'worktree add' with '$args' has mutually exclusive options" '
-	+		test_must_fail git worktree add $args
-	 	'
-	 }
-	 
-	@@ -398,21 +376,20 @@ test_expect_success '"add" worktree with orphan branch, lock, and reason' '
-	 '
-	 
-	 test_wt_add_empty_repo_orphan_hint () {
-	-	local context="$1"
-	-	shift
-	-	local arr=$(save_param_arr "$@")
-	+	local context="$1" &&
-	+	shift &&
-	+	local args="$@" &&
-	 	test_expect_success "'worktree add' show orphan hint in empty repo w/ $context" '
-	-		eval "set -- $arr" &&
-	 		test_when_finished "rm -rf empty_repo" &&
-	 		GIT_DIR="empty_repo" git init --bare &&
-	-		test_must_fail git -C empty_repo worktree add "$@" foobar/ 2> actual &&
-	+		test_must_fail git -C empty_repo worktree add $args foobar/ 2> actual &&
-	 		grep "hint: If you meant to create a worktree containing a new orphan branch" actual
-	 	'
-	 }
-	 
-	-test_wt_add_empty_repo_orphan_hint 'DWIM'
-	-test_wt_add_empty_repo_orphan_hint '-b' -b foobar_branch
-	-test_wt_add_empty_repo_orphan_hint '-B' -B foobar_branch
-	+test_wt_add_empty_repo_orphan_hint DWIM
-	+test_wt_add_empty_repo_orphan_hint -b -b foobar_branch
-	+test_wt_add_empty_repo_orphan_hint -B -B foobar_branch
-	 
-	 test_expect_success 'local clone from linked checkout' '
-	 	git clone --local here here-clone &&
+But the post-cleanup in that topic of moving the relevant code from
+builtin/submodule--helper.c to builtin/submodule.c would conflict with
+ab/config-multi-and-nonbool, as some of it uses the *_multi() API.
 
-Note also that you lost the &&-chaining.
+Now, it would be relatively easy to solve those conflicts, but I'd also
+like to make it easier for you, Junio.
 
-If we do want to be slightly paranoid about it, doesn't just creating a:
-
-	local args_str="$*" &&
-
-And then using that in the description argument to test_expect_success()
-also address Junio's feedback, without the need for this quoting helper?
+So more reviews on that topic would be most welcome. It fixes quite a
+few segfaults we currently have in-tree, so I'm a bit surprised at the
+relative lack of interest.
