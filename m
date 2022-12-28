@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6142C4167B
-	for <git@archiver.kernel.org>; Wed, 28 Dec 2022 18:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 85596C3DA7D
+	for <git@archiver.kernel.org>; Wed, 28 Dec 2022 18:00:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233788AbiL1SAi (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Dec 2022 13:00:38 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47016 "EHLO
+        id S233819AbiL1SAl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Dec 2022 13:00:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233656AbiL1SAc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Dec 2022 13:00:32 -0500
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33AEF167C0
-        for <git@vger.kernel.org>; Wed, 28 Dec 2022 10:00:31 -0800 (PST)
-Received: by mail-wr1-x429.google.com with SMTP id y16so15544046wrm.2
-        for <git@vger.kernel.org>; Wed, 28 Dec 2022 10:00:31 -0800 (PST)
+        with ESMTP id S233713AbiL1SAd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Dec 2022 13:00:33 -0500
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20AB9167DB
+        for <git@vger.kernel.org>; Wed, 28 Dec 2022 10:00:32 -0800 (PST)
+Received: by mail-wm1-x333.google.com with SMTP id i17-20020a05600c355100b003d99434b1cfso1560037wmq.1
+        for <git@vger.kernel.org>; Wed, 28 Dec 2022 10:00:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ykWqZXWyl7svJ+WNwzbKCePyys9rgWLoCf4uryIgFVk=;
-        b=o7QIMe2CPmfRtnLIsbwkCEtvzbystEA/zwe9X6EFXOkrZjf/0gXFmloC/jAB8ikQtO
-         RccrJdaT6s8DLKz7xBrswllvYpglGwhBVFHNA2Jn3JVFcM28tEBFAwntjKA3jSo8V7HR
-         puu735EDbVCTP4hhHnu9p3hvdU3vASvVjRT72LG16QDq4MRD2sVala5MiHIwZ3TBFYCp
-         8qWmoXqD4hkE3q1ks6rYeTzrWYbZ2X0elDwuP5Tx7O59ovpE/t4aEz9K6GyP1Vzngirg
-         gQXAOfOrgBiplyKaqQiENGay6ntoCVmPjfSx7bxNi05F9SE2IAQeRItfrFw7FCKUZxpV
-         ytIA==
+        bh=eXWIagbtD2cbO2YSWei28RkhNOZXX5YB0XQXtnbi628=;
+        b=HNZVyr7Dq7sbgpaQsf/mRGGC8oTRueCpZ/AQemifgUeJAKH8BNaU9Cn6yO2TL7tI7x
+         NYUQFMsAspeT4M6Gem1w+ziplInm2FlWS6eNai7+yqNd56g8fig5goRisMlHNcLPkTRS
+         iCEtYCnfycwErrxJ1aWQ3fm84ehejF+YtcyoI0ASTvlpxDknDreo3Thw3yi8S8CZ1dGN
+         yyY5Ouj08m6NmbpsciIObXY/t3l+mMqFjsltrFRXm0FOI8kxK3AxMVfFEOr7ZqCrF0M8
+         RYNo1Hy0OyBwPD5RRYBoddQEk4n0zVnXJoGsTiF1+bwqLTePPI/yHxYnm7ygnSGb1imZ
+         w7eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ykWqZXWyl7svJ+WNwzbKCePyys9rgWLoCf4uryIgFVk=;
-        b=XGFtQRzMNglUA5eQSo7vYFcP3Q43HEyGBt4jC58sRsttWDV48pDqgimGOAwZ9R6IZv
-         ALaIDQSlfVSJlSTQRvj0KtzTTPLSUuzLcmFHZRfzOhm0RVcota0Ra7DL8GxjZNtimEes
-         HFEyTsEBbOtefE2bC9tTvPQ5J9I5iyLFyJFKM6mq4EwKrkIpai1/Mev7iwamVUmpucsA
-         2TKfcEIG9VyIy9ahx7eLOqTTIchN43IT8aWx+6PBw0uPb5nDopWsRHObpP1sVDu2//S8
-         BseToc9dgjxkkrRfeqr1ys7E6glZ02swBkq13P6s5+9tHl2grBbZLRmKwWq6iTuijeze
-         5kSw==
-X-Gm-Message-State: AFqh2krV26QU9BHvM/Cp/1eUBZQC8aMzoBd6taiR3Lm7JekMSHC8LZjE
-        h4cUcUkLA3ihlgJ5TJ3/ntQmH4FtcepjOg==
-X-Google-Smtp-Source: AMrXdXsht7dEHH0PKOZop1C3Fps4aKI+kf+jFx8uW1Bbky0Zuto0gDZ6aMEEvMoou40bWT4+MGLaHw==
-X-Received: by 2002:a5d:4b81:0:b0:274:ecce:b3bf with SMTP id b1-20020a5d4b81000000b00274ecceb3bfmr11161859wrt.61.1672250429036;
-        Wed, 28 Dec 2022 10:00:29 -0800 (PST)
+        bh=eXWIagbtD2cbO2YSWei28RkhNOZXX5YB0XQXtnbi628=;
+        b=tT7RFPJNYMQytOm1X5JlEHVm9PKb631ITHo4G8QmW0k8VXbw85TaNSRAoyVrix6itS
+         gvrua8/xuymzenUc2ZKEDjegMVA2PSNPHQ00iBNbteWa4t+vgDBZJJ4mBJQftuq9hdB5
+         87KYzBpVTnux4m63uevqC4Yd9749oxugXnvk5PwCj19/LhYiUk0o/PjDprCSuDyMDUE8
+         +FJf1vNlHiBOuJ5641dZxqH53fZ+IhLNLyGiXGEL6ibQUgsJUaH7SbSOex5NSs2qWBPD
+         ICXJnmyeLULjwuOO7M0L+7oRpFNHWkK9+A+3gnr6uK1dFKivW5zhlohNzI641+PksyJY
+         tDbg==
+X-Gm-Message-State: AFqh2kqGERhnP3Clb2F5cx9f+k+HbTxC3SB9HtYsYi7xWxgG1JW+nDeB
+        Pa6par9o9cFxDDoCWyTzcl+/cPMydap+HQ==
+X-Google-Smtp-Source: AMrXdXummI7vwJWlBvJtpHtRrZnPcSL7i/61F59qG6U2xifYK+/GY6GCghjPaPiR7t56WUAd9OUmQw==
+X-Received: by 2002:a05:600c:1ca5:b0:3d1:d746:7bca with SMTP id k37-20020a05600c1ca500b003d1d7467bcamr18404854wms.4.1672250430308;
+        Wed, 28 Dec 2022 10:00:30 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c8-20020a5d4148000000b002428c4fb16asm16022480wrq.10.2022.12.28.10.00.28
+        by smtp.gmail.com with ESMTPSA id c8-20020a5d4148000000b002428c4fb16asm16022480wrq.10.2022.12.28.10.00.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Dec 2022 10:00:28 -0800 (PST)
+        Wed, 28 Dec 2022 10:00:29 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 03/20] bundle.c: don't leak the "args" in the "struct child_process"
-Date:   Wed, 28 Dec 2022 19:00:03 +0100
-Message-Id: <patch-03.20-a8b373ddef9-20221228T175512Z-avarab@gmail.com>
+Subject: [PATCH 04/20] commit-graph: use free() instead of UNLEAK()
+Date:   Wed, 28 Dec 2022 19:00:04 +0100
+Message-Id: <patch-04.20-5be87f9720c-20221228T175512Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.0.1153.gb0033028ca9
 In-Reply-To: <cover-00.20-00000000000-20221228T175512Z-avarab@gmail.com>
 References: <cover-00.20-00000000000-20221228T175512Z-avarab@gmail.com>
@@ -69,43 +69,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a leak that's been here since 7366096de9d (bundle API: change
-"flags" to be "extra_index_pack_args", 2021-09-05), if can't verify
-the bundle we didn't call child_process_clear() to clear the "args".
-
-But rather than doing that let's verify the bundle before we start
-preparing the process we're going to spawn, if we get an error we
-don't need to push anything to the "args".
+In 0bfb48e6723 (builtin/commit-graph.c: UNLEAK variables, 2018-10-03)
+this was made to UNLEAK(), but we can just as easily free() the memory
+instead.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- bundle.c | 6 ++++--
+ builtin/commit-graph.c | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/bundle.c b/bundle.c
-index 4ef7256aa11..9ebb10a8f72 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -627,6 +627,10 @@ int unbundle(struct repository *r, struct bundle_header *header,
- 	     enum verify_bundle_flags flags)
- {
- 	struct child_process ip = CHILD_PROCESS_INIT;
-+
-+	if (verify_bundle(r, header, flags))
-+		return -1;
-+
- 	strvec_pushl(&ip.args, "index-pack", "--fix-thin", "--stdin", NULL);
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index e8f77f535f3..b6e5726b082 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -67,6 +67,7 @@ static int graph_verify(int argc, const char **argv, const char *prefix)
+ 	int fd;
+ 	struct stat st;
+ 	int flags = 0;
++	int ret;
  
- 	/* If there is a filter, then we need to create the promisor pack. */
-@@ -638,8 +642,6 @@ int unbundle(struct repository *r, struct bundle_header *header,
- 		strvec_clear(extra_index_pack_args);
- 	}
+ 	static struct option builtin_commit_graph_verify_options[] = {
+ 		OPT_BOOL(0, "shallow", &opts.shallow,
+@@ -111,8 +112,9 @@ static int graph_verify(int argc, const char **argv, const char *prefix)
+ 	if (!graph)
+ 		return !!open_ok;
  
--	if (verify_bundle(r, header, flags))
--		return -1;
- 	ip.in = bundle_fd;
- 	ip.no_stdout = 1;
- 	ip.git_cmd = 1;
+-	UNLEAK(graph);
+-	return verify_commit_graph(the_repository, graph, flags);
++	ret = verify_commit_graph(the_repository, graph, flags);
++	free(graph);
++	return ret;
+ }
+ 
+ extern int read_replace_refs;
 -- 
 2.39.0.1153.gb0033028ca9
 
