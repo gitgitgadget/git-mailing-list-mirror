@@ -2,164 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0AEB4C4332F
-	for <git@archiver.kernel.org>; Wed, 28 Dec 2022 19:45:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A252C4167B
+	for <git@archiver.kernel.org>; Wed, 28 Dec 2022 20:31:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233180AbiL1Tph (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 28 Dec 2022 14:45:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51522 "EHLO
+        id S231139AbiL1Ubb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 28 Dec 2022 15:31:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233067AbiL1Tpd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Dec 2022 14:45:33 -0500
+        with ESMTP id S229668AbiL1Ub3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Dec 2022 15:31:29 -0500
 Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6953C120B7
-        for <git@vger.kernel.org>; Wed, 28 Dec 2022 11:45:31 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B5EDBF7F
+        for <git@vger.kernel.org>; Wed, 28 Dec 2022 12:31:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1672256725; bh=ZyR4wR+uc0pfDgxmBXz+gwUJHDMHwIe4aWLA66u+KPI=;
+        t=1672259482; bh=L8jT4NWkmxEsQ+3v8TfP7a7dVQjGyUzJEm0xHHcmDDA=;
         h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=PeRK8ZaFuYzcfIcD2DnhzhaZEhLCENL9QB+YOdaQySv1dEoC6hzy0/IaAyAOSPFd1
-         AFqJWHNNf8FTXma5IyJGMqbsMsyF5VPpAeNoO5WiDc+6FkJ/9sBwkixDIYVZaWqMGC
-         vVNdFeIarFHJNqx0JTQUdFXBmU9NPvuAqnR3VIc8NSAcyct3i0m8dA1IDPCCDnpRWw
-         6JUwjNwyIg6r+ruVj/oTyIcPg5sX0oiUjsBitGbDuGaE/5s93AaH0NC+C7f434jHsS
-         Z69cuzl7rTk/p1enA2J/UmvsKiw71wtnxxpG+T5ezRzsAuW63wYslFAoNRSQU4YPXX
-         SXmfKxXfxPgMA==
+        b=Tk8MF0jrE/3N9lh4u77njyqO0/bNzJljMa61px5mbEEwNBi6OHezIAOgmTSUhnzop
+         xwXwmVvzwVla1Ea1WmDfydGy8L/CWufQ+fkh64aKY10MvEt9vr3xN8ERoxKFrDyTg1
+         Rc97t3cDycM79lPPcqS+DQrjZtCqBAStUEYA9jaS3H+3GWNhtJWc3lEyGSgF6+IEtJ
+         Y7hFL+AkpHpVcsTdWwhmg6PfKCsrq4v8yugO9mNFdlogOr3aqH+Fmya3c8XayLSqNP
+         Gl0h6t7c+0spit1BsrszaE5AIhdp8xnnmrKCjS7DTXF4jkTiRhTIdPa391Z/ipek3Z
+         VAC4wGUhNr9dw==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.178.29] ([91.47.151.35]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N0qvH-1owVHs1ms9-00wLTF; Wed, 28
- Dec 2022 20:45:25 +0100
-Message-ID: <ac9621a0-1046-30de-872f-0171412049bd@web.de>
-Date:   Wed, 28 Dec 2022 20:45:24 +0100
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MidHZ-1ofQar0hOR-00fMXU; Wed, 28
+ Dec 2022 21:31:22 +0100
+Message-ID: <dbc7c55d-d546-d004-ef44-62bd7349d5c9@web.de>
+Date:   Wed, 28 Dec 2022 21:31:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.6.1
-Subject: Re: [PATCH 07/20] stash: fix a "struct pathspec" leak
+Subject: Re: [PATCH 09/20] name-rev: don't xstrdup() an already dup'd string
 Content-Language: en-US
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>
 References: <cover-00.20-00000000000-20221228T175512Z-avarab@gmail.com>
- <patch-07.20-e5a0134d1bb-20221228T175512Z-avarab@gmail.com>
+ <patch-09.20-77fcdeb9284-20221228T175512Z-avarab@gmail.com>
 From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <patch-07.20-e5a0134d1bb-20221228T175512Z-avarab@gmail.com>
+In-Reply-To: <patch-09.20-77fcdeb9284-20221228T175512Z-avarab@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:aytun2Yjv4/cTyN0YhVMNcSwHzDHRr0fob9d4a3jVO3socGGcO+
- cJK3O92cgjLpx4S+BSq/NujmHMCElFXEkv8Jnc0aMXETHyyCq4ufLmJ61UH2JeiBZntxjJC
- fDS3WrcBcUrb254h4O8SEOtymYJPa+le87vWw6LKZFleR9Ri82ZndKeJHLE8sX3mAVL2rSZ
- 8dTh0u8xGPzXbpIHrMNtg==
-UI-OutboundReport: notjunk:1;M01:P0:jHTvZXmq7qM=;GZaC3TJGjYvRab32udoPrkpgMwj
- v4/a6b6fgYJsDuDHmaoj8MasS9lW/wBWBLMxxJKJVZPcfX7L++C/hFW02o6cHQQMFZykQogfu
- V5n1JbZHcikss5icOb689WTDG5FFcHvcnKWi/+6JAcnGuArPkvu/G9k5J8MemxvQYgdzOgpvM
- hAvUdWqQZ6MoDci411yeR21CisnKK+QncxgGS/vHyrABKcdWjueDqZs4yF3e0ZW5OJIz72uga
- POUEbtVmi5fydbNjsYcrhoZhY6MO8J8Ia3rLLMd9nbXSRJsCsMnRWzXgHnbN2FacqZupHR1lr
- h23GFtjNakcdA3pMbXL6EUv+GmMhoJwZsNhIJFSzUuojcPhbrfXFsCQjWWu6FsZgXKBtoaAat
- BiQR69cUG+rtuhU3r/pSdsqdGK2swB4BaodrcJqBU1BwKiukOgAqqnHnH5TYzc4k32DwDb833
- opyyIJbHYYjiCOOBPhtkXC5KVQ1Uwt3RCv0Dgz8sYiT1NsfFtRg/bIbd8zL1U2R8Xm3Lt6qB7
- 4vyRDjT3S9/9h3+D+UMOxh74h7aU+EyEGa/nF89023SHceIowiM3saAKnBwMmk7L8dECH4LW4
- cviWb5AKA4V4Te/LgNTopzNWIh3dhW9ntAVaRRQDVXwm6T2/r3PBsdY1k2nP1zv+ImtZEAWA1
- r+azwSYGQcM5vtrdpHP+ndguHFLU2StsVmXbiqkCfQMmd4Yg6+2TOqyNvBgwYBM4mA6OV5yLj
- X8t0dXDc/RxWoLyDQMZhaqFiZQZhb4y90vMgEjNZaqBG2DozdcwG9FuMdAd5yVBNA+Xe2rpjx
- RyuMiz7nye0caHh9Np+6YihDV+aUptrxrkJeyjA+D94TpcpoH+e3aoEEWK2hEUPwcrjAc7DGc
- AzH981b3X866fu1lXXmUoJ6C6tNLXdtErJQ6u+e88/EiOSOKemcYTV1js774TxhbkHHOcGKgT
- h16CGg==
+X-Provags-ID: V03:K1:as0PNyeTY26G/9jldrKMs9IDb/pWSn1DzirfGHvGkyS7OgpVKhx
+ A9SjRSqALjmT4y/an4i7nq5fcOwOwPVHj6vueRVr2AXm9eisUxE09v31eMt+nfJKgjorBIO
+ D1TrzRDMoav0dpueyNpwiPa1vLhDEenz5zr+xzamNV+Z443TvIOIqzEFJJh9SF7rbgJVod3
+ lbRBx96fYCvgU6p9fO0kQ==
+UI-OutboundReport: notjunk:1;M01:P0:NV7a/9bKHkQ=;/i8YKGNwBwC7Zu+aLeaD4vTg2fD
+ c6jYeSRBeC7lDEnQR4kvnXKRUjd2gnLIlxPS8FMwysZQG2J7eMZ3yLHPA/ViE6lycsME/9GU5
+ cTKHqzbTJCejH0l0aLUbLGcFQ114ar/zj0fmNqx0zWfQFcZET4Z3t7eEk3eKgn9/lLVVRZJkb
+ gGL4D5PtBbVH1RAh8phlmaeD4ot8Pkabr1GBIqpphGvEZe2kRXsLCe5YZtBJlgZAH2gGLxyWD
+ PrcmKF+M/Xjztqoh32H8xFPuMMlziV25aanyOPecmmh/YNt+UmtXEXZZxCLM4IGo5YU0NsJk9
+ 7DjV3cCcOIoSVormUlb7vXE8A9bTpJqu8dNjt7sqDjW6NMNYQIbcqqxc7BWgG5xEmD3zpJ3jW
+ 2keWZCMdaaZfRWTGrvAa0qhbjT37nqBHY8NadB/7R69ruEmT4gV9vf2BusWR7xfFTDs7j2Av4
+ 4YpQweZjsQbomhmduvhieNdOzbFDUzHGLad3BoVyE7R131j/EM0BAn+YY3jOFr3m9w6fCjcD/
+ jsllsXR0NKhH9gkVU9LwN3r/FtkVJVq3GdCYJNHcHTwqTyT+sItlE/tJryH1/b0NmdRrXk2Yg
+ zMXFnaJCBjf15cSn9zrt0nln4OM0ODRn9JdLIvHwjQrqjS8ebYqyWIxfJNlVed59UMUZdN8Uo
+ Yyc4CYLR2v/BSM+15dBhiOTP97LhhJNmlX53josyA7eb0rLoi3nWMLSfo134p2Rrx0ExTAVE+
+ XSJijLzbh1op0mzGWeqfShYTnB/kyn/Pzc/WMVH1UAYgRYakPLY2Q5g4Nys16WDimLP7rRtFc
+ bKGt6dlVdXuv9va+3S4iC0FuISwZee0ed3fughGfmDxHOlXylDln9ClwBrrQeQY+tLpYOc3wl
+ pHjohOT21k07NIq0HXZJaADy29dExzzs/LHD8aQuNVQWCgwJilN5Ir8va2c5c5XPpFxm1Bs15
+ HZbVINz8cuF+dO90RmKtTQbP+kw=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 Am 28.12.22 um 19:00 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> Call clear_pathspec() on the pathspec initialized in
-> push_stash().
-
-This puzzled me for a while.  This patch adds an {0} initializer to the
-declaration of the pathspec.  I assumed that this is necessary to avoid
-giving clear_pathspec() an uninitialized struct.  It isn't, though,
-because the pathspec is handed to parse_pathspec() first, which
-initializes it.  So you can safely drop the first hunk.
-
-> Initializing that structure in this way is already done
-> by a few other callers, and now we have:
+> When "add_to_tip_table()" is called with a non-zero
+> "shorten_unambiguous" we always return an xstrdup()'d string, which
+> we'd then xstrdup() again, leaking memory. See [1] and [2] for how
+> this leak came about.
 >
-> 	$ git grep -e 'struct pathspec.* =3D { 0 }' -e memset.pathspec
-> 	add-interactive.c:              struct pathspec ps_selected =3D { 0 };
-> 	builtin/sparse-checkout.c:              struct pathspec p =3D { 0 };
-> 	builtin/stash.c:        struct pathspec ps =3D { 0 };
-> 	pathspec.c:     memset(pathspec, 0, sizeof(*pathspec));
-> 	wt-status.c:                    struct pathspec ps =3D { 0 };
-
-Not sure if this part of the commit message is useful.  It seems to
-suggest that the only place to initialize a pathspec with memset is
-pathspec.c itself, but there are a few more.  Here's a really sloppy
-way to find (some of?) them:
-
-   $ git grep -e 'struct pathspec [^*]' -e memset --all-match -p -n | awk =
-'
-      /struct pathspec [^*]/ {
-         decl=3D$0
-         declfunc=3Dprevfunc
-         var=3Ddecl; sub(/^.* /, "", var); sub(/;/, "", var)
-         next
-      }
-      /memset/ && declfunc=3D=3Dprevfunc && match($0, var) {
-         print decl
-         print
-         next
-      }
-      {prevfunc=3D$0}'
-   builtin/log.c:726:	struct pathspec match_all;
-   builtin/log.c:737:	memset(&match_all, 0, sizeof(match_all));
-   builtin/ls-files.c:572:	struct pathspec pathspec;
-   builtin/ls-files.c:600:		memset(&pathspec, 0, sizeof(pathspec));
-   builtin/stash.c:1469:	struct pathspec ps;
-   builtin/stash.c:1474:	memset(&ps, 0, sizeof(ps));
-   builtin/stash.c:1787:	struct pathspec ps;
-   builtin/stash.c:1813:	memset(&ps, 0, sizeof(ps));
-   merge-recursive.c:479:	struct pathspec match_all;
-   merge-recursive.c:480:	memset(&match_all, 0, sizeof(match_all));
-   sparse-index.c:364:		struct pathspec ps;
-   sparse-index.c:388:		memset(&ps, 0, sizeof(ps));
-
+> 1. 98c5c4ad015 (name-rev: allow to specify a subpath for --refs
+>    option, 2013-06-18)
+> 2. b23e0b9353e (name-rev: allow converting the exact object name at
+>    the tip of a ref, 2013-07-07)
 >
 > Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 > ---
->  builtin/stash.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
+>  builtin/name-rev.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index bb0fd861434..e82fb69c2b3 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -1708,7 +1708,7 @@ static int push_stash(int argc, const char **argv,=
- const char *prefix,
->  	int pathspec_file_nul =3D 0;
->  	const char *stash_msg =3D NULL;
->  	const char *pathspec_from_file =3D NULL;
-> -	struct pathspec ps;
-> +	struct pathspec ps =3D { 0 };
->  	struct option options[] =3D {
->  		OPT_BOOL('k', "keep-index", &keep_index,
->  			 N_("keep index")),
-> @@ -1727,6 +1727,7 @@ static int push_stash(int argc, const char **argv,=
- const char *prefix,
->  		OPT_PATHSPEC_FILE_NUL(&pathspec_file_nul),
->  		OPT_END()
->  	};
-> +	int ret;
+> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+> index 15535e914a6..24f4438eb01 100644
+> --- a/builtin/name-rev.c
+> +++ b/builtin/name-rev.c
+> @@ -313,7 +313,8 @@ static void add_to_tip_table(const struct object_id =
+*oid, const char *refname,
 >
->  	if (argc) {
->  		force_assume =3D !strcmp(argv[0], "-p");
-> @@ -1766,8 +1767,10 @@ static int push_stash(int argc, const char **argv=
-, const char *prefix,
->  		die(_("the option '%s' requires '%s'"), "--pathspec-file-nul", "--pat=
-hspec-from-file");
->  	}
->
-> -	return do_push_stash(&ps, stash_msg, quiet, keep_index, patch_mode,
-> -			     include_untracked, only_staged);
-> +	ret =3D do_push_stash(&ps, stash_msg, quiet, keep_index, patch_mode,
-> +			    include_untracked, only_staged);
-> +	clear_pathspec(&ps);
-> +	return ret;
->  }
->
->  static int push_stash_unassumed(int argc, const char **argv, const char=
- *prefix)
+>  	ALLOC_GROW(tip_table.table, tip_table.nr + 1, tip_table.alloc);
+>  	oidcpy(&tip_table.table[tip_table.nr].oid, oid);
+> -	tip_table.table[tip_table.nr].refname =3D xstrdup(refname);
+> +	tip_table.table[tip_table.nr].refname =3D shorten_unambiguous ? refnam=
+e :
+> +		xstrdup(refname);
+
+Hmm, this works based on knowledge about the inner workings of
+name_ref_abbrev(), which provides the refname.  Could be cleaned up by
+inlining that short function, or by moving the xstrdup() call there.
+
+>  	tip_table.table[tip_table.nr].commit =3D commit;
+>  	tip_table.table[tip_table.nr].taggerdate =3D taggerdate;
+>  	tip_table.table[tip_table.nr].from_tag =3D from_tag;
