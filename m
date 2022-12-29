@@ -2,64 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E2497C4332F
-	for <git@archiver.kernel.org>; Thu, 29 Dec 2022 07:13:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A55F0C4332F
+	for <git@archiver.kernel.org>; Thu, 29 Dec 2022 07:33:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231142AbiL2HNE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Dec 2022 02:13:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46404 "EHLO
+        id S229992AbiL2HdE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Dec 2022 02:33:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229685AbiL2HND (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Dec 2022 02:13:03 -0500
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADDE3A477
-        for <git@vger.kernel.org>; Wed, 28 Dec 2022 23:13:00 -0800 (PST)
-Received: by mail-pj1-x102e.google.com with SMTP id w4-20020a17090ac98400b002186f5d7a4cso22183059pjt.0
-        for <git@vger.kernel.org>; Wed, 28 Dec 2022 23:13:00 -0800 (PST)
+        with ESMTP id S229721AbiL2HdB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Dec 2022 02:33:01 -0500
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A61A8208
+        for <git@vger.kernel.org>; Wed, 28 Dec 2022 23:33:00 -0800 (PST)
+Received: by mail-pj1-x1029.google.com with SMTP id o1-20020a17090a678100b00219cf69e5f0so22191294pjj.2
+        for <git@vger.kernel.org>; Wed, 28 Dec 2022 23:33:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id:date
          :references:subject:cc:to:from:sender:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rBp/nibF7JoB1kNzrvPC3+DisjfWCt1DnU1xBZD4axo=;
-        b=IdyJ5fxqJ5gCF5LGSKyO16+NBssSZpCJWA3oyUUSUa1p+H6k/l+56DFB4Uc23TN/D6
-         TVH0i4Nb7T0q3+h+N6rfxYdQzoB6YeSlk6PsR8sHPUV3BzzmbUA6e5xuwlnwpWjqVtwI
-         ZfiYaxhsqnNdy9kT8UqGZwfWcudhTghfFbXMYHxI9gMbli0W2EzyfO/k+jdAz9KSDjLx
-         P43qpLJUolf1VFNevjOK4nrxaM15jg0Rl4h7csNHvuTP4buLe/ET4Ryl/XYC5nNzMXBR
-         krb8JAy+c+VzYlcizMnWHGE0hkHHgrq81P24ACrIgc6gQwX8gopmwIJsacO0gzX0q/ym
-         gHXQ==
+        bh=JcXgNsybyplpV5y63td1bvJ4aoot6mcH9ToZnw8fZQI=;
+        b=cNge+mHNGrrBSxJaPR65NFolzyH4QCbAQAbtdzXMKNsYYQYfLZnO2k83IMj8xKwo/S
+         pMzKTO832tKDYRDn/GKzumr93sfldPFF1XBSwmHj0F7oWJFgLMXb1CXNTEXfy3LyavqP
+         EK0EfWpeILFWS2pI1qE/qkOD+G4JG9zP6a+t/LM9vKESKbYN211k09/+culkVk0TcEsg
+         ku4pjNzGIeoonwuI78BIkGvfBMMyHAuX9n465mGngLlGTNbCEuqM7JJNK6Yz0cTZKMmK
+         hoboPXK4STtZlb0bkl0kbHCjRd5j6RVHZohWGPGaqqfnEO6v1cDVr65cY+NWUFdY0aUO
+         plNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id:date
          :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rBp/nibF7JoB1kNzrvPC3+DisjfWCt1DnU1xBZD4axo=;
-        b=RWniGYDGa5qVtC10tuNGIQ9tjmRLZayhlZKQbXPC2FZygGo4Zn7vk8FSNwoGcWNm5Y
-         S4h16SS7ICZky8Y1LwqNZDMmAwFR4T/VVficNOi1VdSyi/Yd+EY5RpwoH5tfh0W/12bN
-         1HScHZzr4XX0Gv75kDbdYct9GB1hZIl6HKWGtCKmyuBmuYGhzoM6agjGaP8FxLKdJdgK
-         Upn3w8dzbdanlL0tPEA690tz8d9fnASOGzryNVxGe6x0g0lZxVCTGdWZlILv7uf5epAE
-         M+GgCUjmZGPNujLFbVhkbtTZVdhoYr8g7/mIWXi1KMtbQPbEE6T7E03FZseqTcr2wOjI
-         SY2Q==
-X-Gm-Message-State: AFqh2konFHK6QSIB09VZu6tbt1+ouQi8jKETDoSv3KiAdg3Y+7fJcSTQ
-        xoKPxJ8yICeLaNWFz7RkyrSQsFm/E9kxEA==
-X-Google-Smtp-Source: AMrXdXus/JMT2Vu7ehXZjpgZyyZQyRgeLhwonFzdy00gWpXjp1KSOm0uVnIN7Ma8A1vmWtQcS3MDQA==
-X-Received: by 2002:a05:6a20:6aa8:b0:b3:87f8:8387 with SMTP id bi40-20020a056a206aa800b000b387f88387mr7526287pzb.50.1672297979995;
-        Wed, 28 Dec 2022 23:12:59 -0800 (PST)
+        bh=JcXgNsybyplpV5y63td1bvJ4aoot6mcH9ToZnw8fZQI=;
+        b=B89+LgP14RwUkNiK7w8RX1/YZEMthus+hM4otjvL8zwoMhDcHeVuVbnAld7k3sH/YF
+         l01K5GvgPPn+oQ1RPnZbKTGKPi2Qb3FHVOjgUhQszQ8fLe1bxAodS1o4Mj5JNJn/eVBD
+         BiuNnT0icdJP9Wk/7vwYlSoTw1YDsCn7SXJRb2VBowZ0iVGY1tco/ITkKQYdppTLyr2i
+         C21pzZgPqqosumsbONPVYUek+xcJOTDOfZdLtwziJRHRc8cppmgjBpT7UYY1fYb4D4P1
+         K5CqJPrlpmwGlGJQcryAJXQS9k6DUunjVZERGvcr7jLWv2m0HqwR7ye3lbyO6iOx8wgO
+         DqMA==
+X-Gm-Message-State: AFqh2kp9FDxRAa22VnrF6y74jrqtOwsr2M0QtM1pi5up6cD4JmSSz3sS
+        QlQMFo0xPDx9sQ9CbhzL4Xx7V/CBlCdppg==
+X-Google-Smtp-Source: AMrXdXtVYXeJZAEJMBC6cB5G1nVWdWlENjd/anYsAqy4EmSfak7CbrfLtwqJK8rpB8ozBS7+QccMkQ==
+X-Received: by 2002:a05:6a20:8ed6:b0:af:953a:12b2 with SMTP id m22-20020a056a208ed600b000af953a12b2mr28088028pzk.43.1672299179943;
+        Wed, 28 Dec 2022 23:32:59 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id 12-20020a62170c000000b005769436a23dsm11366088pfx.218.2022.12.28.23.12.59
+        by smtp.gmail.com with ESMTPSA id y5-20020a63ce05000000b00478f0aa945csm10560692pgf.7.2022.12.28.23.32.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Dec 2022 23:12:59 -0800 (PST)
+        Wed, 28 Dec 2022 23:32:59 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
 Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH 09/20] name-rev: don't xstrdup() an already dup'd string
+Subject: Re: [PATCH 12/20] http-backend.c: fix cmd_main() memory leak,
+ refactor reg{exec,free}()
 References: <cover-00.20-00000000000-20221228T175512Z-avarab@gmail.com>
-        <patch-09.20-77fcdeb9284-20221228T175512Z-avarab@gmail.com>
-        <dbc7c55d-d546-d004-ef44-62bd7349d5c9@web.de>
-Date:   Thu, 29 Dec 2022 16:12:59 +0900
-Message-ID: <xmqqv8lun0n8.fsf@gitster.g>
+        <patch-12.20-9be5b0c7836-20221228T175512Z-avarab@gmail.com>
+        <5ca7b3ce-dda9-270a-6439-bd897cd5df28@web.de>
+Date:   Thu, 29 Dec 2022 16:32:59 +0900
+Message-ID: <xmqqpmc2mzpw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -70,17 +71,41 @@ X-Mailing-List: git@vger.kernel.org
 
 René Scharfe <l.s.r@web.de> writes:
 
->> -	tip_table.table[tip_table.nr].refname = xstrdup(refname);
->> +	tip_table.table[tip_table.nr].refname = shorten_unambiguous ? refname :
->> +		xstrdup(refname);
+>> diff --git a/http-backend.c b/http-backend.c
+>> index 6eb3b2fe51c..9bb63c458b1 100644
+>> --- a/http-backend.c
+>> +++ b/http-backend.c
+>> @@ -759,10 +759,14 @@ int cmd_main(int argc, const char **argv)
+>>  		struct service_cmd *c = &services[i];
+>>  		regex_t re;
+>>  		regmatch_t out[1];
+>> +		int ret;
+>>
+>>  		if (regcomp(&re, c->pattern, REG_EXTENDED))
+>>  			die("Bogus regex in service table: %s", c->pattern);
+>> -		if (!regexec(&re, dir, 1, out, 0)) {
+>> +		ret = regexec(&re, dir, 1, out, 0);
+>> +		regfree(&re);
+>> +
+>> +		if (!ret) {
+>>  			size_t n;
+>>
 >
-> Hmm, this works based on knowledge about the inner workings of
-> name_ref_abbrev(), which provides the refname.  Could be cleaned up by
-> inlining that short function, or by moving the xstrdup() call there.
+> ... i.e. right here.  But only after copying the offsets out of "out"!
 
-Yeah, name_ref_abbrev() returns sometimes an allocated and some
-other times a borrowed piece of memory, which is a poor design that
-ignores memory ownership issues.  Luckily the function being touched
-is the sole caller of it, and I agree with you that inlining may give
-us a better fix.
+"only after..."?  Do out[i].rm_eo and out[i].rm_so become invalid
+after calling regfree() on the regex out[] was taken against?  I do
+not think so, and am confused by the comment.  After all, if we can
+free only after copying the offsets out of "out", the posted patch
+in question is already wrong ;-)
+
+> Anyway, the ret approach taken here is fine.
+
+Yup.
+
+> "dir" is still leaking, by the way.  Probably worth a separate patch.
+
+Good eyes.  But I'd actually say UNLEAK() is fine for that one.
+
+Thanks.
 
