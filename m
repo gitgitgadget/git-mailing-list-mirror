@@ -2,742 +2,969 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39527C4332F
-	for <git@archiver.kernel.org>; Thu, 29 Dec 2022 12:51:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5094C4332F
+	for <git@archiver.kernel.org>; Thu, 29 Dec 2022 15:45:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233469AbiL2MvN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Dec 2022 07:51:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39518 "EHLO
+        id S232749AbiL2Ppk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Dec 2022 10:45:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233467AbiL2Muc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Dec 2022 07:50:32 -0500
-Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 434F313F80
-        for <git@vger.kernel.org>; Thu, 29 Dec 2022 04:50:21 -0800 (PST)
-Received: from fews2.riseup.net (fews2-pn.riseup.net [10.0.1.84])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256
-         client-signature RSA-PSS (2048 bits) client-digest SHA256)
-        (Client CN "mail.riseup.net", Issuer "R3" (not verified))
-        by mx1.riseup.net (Postfix) with ESMTPS id 4NjSsm4x7KzDqvJ
-        for <git@vger.kernel.org>; Thu, 29 Dec 2022 12:50:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-        t=1672318220; bh=U2MXytnFR/9UHHAoNpV4vm677mai+61ZBfbPBAVkekI=;
-        h=Date:From:To:Subject:From;
-        b=J4FP5Q8KkPL0GsJdBcypalQmbKhz+ag+ROVb2KHqDS4SZfqIhLe3GxAZ7VhetflI3
-         qf7umd7r0cAeWAWsiboYdVL6gV8tcoMuUz2B6kaQL6tqd0PBg5fyrBuP8w5AnQ8Dqw
-         4zXdUIcZY/q53uJ+BojSWDauEudz+tG0gwz2ryKQ=
-X-Riseup-User-ID: 35E886573C775B0EFCF9387C121540BE74C83D22623D043AD553700FF9E2D548
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-         by fews2.riseup.net (Postfix) with ESMTPSA id 4NjSsl37s2z20SJ
-        for <git@vger.kernel.org>; Thu, 29 Dec 2022 12:50:19 +0000 (UTC)
-Date:   Thu, 29 Dec 2022 12:50:12 +0000
-From:   Samanta Navarro <ferivoz@riseup.net>
-To:     git@vger.kernel.org
-Subject: [PATCH] maintenance: fix typos
-Message-ID: <20221229125012.cp5tjdlnvxbln44l@localhost>
+        with ESMTP id S229996AbiL2Ppj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Dec 2022 10:45:39 -0500
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F18B13F10
+        for <git@vger.kernel.org>; Thu, 29 Dec 2022 07:45:36 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id y16so17733220wrm.2
+        for <git@vger.kernel.org>; Thu, 29 Dec 2022 07:45:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WkNNmfONaTpKP2knIWdVV6oGBoWIi3elBT0XgMQsmAo=;
+        b=RfN+/7DRnVRlchLc55b5CMwLMmOuMKbAO8x+LWpXScwXwvW2eh0DBCuJRwnK3VUNSO
+         LPNbU1bE0f0XFGZYYAiCkCaBcN4DQb26ksZw6iG38AHmvBuWI5+4AsKtHCTBF4SE99r8
+         RVwQhFof9twi4pJkbD6KsZj4IODcMmySfBk+9vQ9D51hBT8AgzfFa4CS/Y7ZUXp15tJR
+         6S5DhjhRr20ReL/mdXZ1nnmaBoUunxcLf5vzgXyXFkGWAHKvzxdxLoPAlZ2bORm8+PQh
+         2NTFZQg7NKq7X5YYBAt7lGZzyIxWK+w/dVHBr7ia/4ParE9SB587eQEQ6g/zynUdwfJy
+         Jy4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WkNNmfONaTpKP2knIWdVV6oGBoWIi3elBT0XgMQsmAo=;
+        b=U0tWRdHcuAyhCyFBVdpKQprd99vYnIs9G+G4h+bn8YVG96d6Z3xvJWAWnIoCUQwRIQ
+         ymFfYFN+RN5gvX7DLZI5lWZ3O5A6LjeFcf5674sojampYRY2xu95hl5IJr9WA0LbZJMZ
+         CydWxp+MT/1DFD7U1ijPVvlDT3Hre3Dd36p1Tep6eRh7Ky3fI/zD5PByEvunNUeATDec
+         Y9s9BRgcC9os4czIt8qW3kucHEiNN4QO0GhgrFgOIiw3BctQxX0F3LaEVtQQvu+e2/7k
+         bagwz3X50kLwmm13mz3aqeDthY5rZBhPaAO7XkRe04b2ulGfbXnZQTd+ongT5nOMU/Ed
+         SQKQ==
+X-Gm-Message-State: AFqh2krBSzFPWAPk4u5SIYlFKFDRsWHnz25228y/di2U1+i4zF5j/KIg
+        Z3PCW6rbixVh2cxLBTOYZksIL/t6kXs=
+X-Google-Smtp-Source: AMrXdXuv8COs8w6LmeOXQmRJ2/9HyLZl+WCEG9Co9ElbaIT1rI4krHnZIxnP8+wsIN9oseNEWD7egg==
+X-Received: by 2002:a05:6000:1e04:b0:273:e385:1a89 with SMTP id bj4-20020a0560001e0400b00273e3851a89mr14741131wrb.67.1672328734618;
+        Thu, 29 Dec 2022 07:45:34 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id e16-20020adfdbd0000000b002362f6fcaf5sm18340602wrj.48.2022.12.29.07.45.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Dec 2022 07:45:33 -0800 (PST)
+Message-Id: <pull.1399.v11.git.git.1672328732375.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1399.v10.git.git.1671825145574.gitgitgadget@gmail.com>
+References: <pull.1399.v10.git.git.1671825145574.gitgitgadget@gmail.com>
+From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 29 Dec 2022 15:45:31 +0000
+Subject: [PATCH v11] git: edit variable types to match what is assigned to
+ them
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+To:     git@vger.kernel.org
+Cc:     Rose <83477269+AtariDreams@users.noreply.github.com>,
+        Seija Kijin <doremylover123@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Typos found with codespell.
+From: Seija Kijin <doremylover123@gmail.com>
 
-Signed-off-by: Samanta Navarro <ferivoz@riseup.net>
+There are many places where "int len = strlen(foo);" is written,
+just for len to be passed as a parameter of size_t.
+
+This causes truncation and then expansion
+back from int to size_t. This is poor logic.
+
+Signed-off-by: Seija Kijin <doremylover123@gmail.com>
 ---
- Documentation/CodingGuidelines           | 2 +-
- Documentation/config.txt                 | 2 +-
- Documentation/fsck-msgids.txt            | 2 +-
- Documentation/git-cvsserver.txt          | 2 +-
- Documentation/git-describe.txt           | 2 +-
- Documentation/git-format-patch.txt       | 2 +-
- Documentation/git-ls-tree.txt            | 2 +-
- Documentation/git-mktag.txt              | 2 +-
- Documentation/git-sparse-checkout.txt    | 2 +-
- Documentation/git-stash.txt              | 2 +-
- Documentation/gitformat-commit-graph.txt | 2 +-
- Documentation/gitweb.txt                 | 2 +-
- bloom.h                                  | 2 +-
- builtin/help.c                           | 2 +-
- builtin/name-rev.c                       | 2 +-
- cache.h                                  | 2 +-
- cbtree.c                                 | 2 +-
- commit-graph.h                           | 2 +-
- compat/fsmonitor/fsm-listen-win32.c      | 4 ++--
- compat/precompose_utf8.c                 | 2 +-
- compat/simple-ipc/ipc-unix-socket.c      | 2 +-
- config.mak.dev                           | 2 +-
- contrib/coccinelle/unused.cocci          | 2 +-
- contrib/completion/git-completion.bash   | 2 +-
- contrib/subtree/git-subtree.sh           | 2 +-
- contrib/subtree/t/t7900-subtree.sh       | 2 +-
- diffcore-rename.c                        | 4 ++--
- fsmonitor-settings.c                     | 2 +-
- fsmonitor.c                              | 2 +-
- git-gui/lib/themed.tcl                   | 2 +-
- git-instaweb.sh                          | 2 +-
- git-p4.py                                | 4 ++--
- gpg-interface.c                          | 2 +-
- http.c                                   | 2 +-
- merge-ort.c                              | 6 +++---
- object-file.c                            | 2 +-
- perl/Git/I18N.pm                         | 2 +-
- rebase.c                                 | 2 +-
- refs.h                                   | 4 ++--
- reftable/reader.h                        | 2 +-
- revision.h                               | 2 +-
- run-command.h                            | 2 +-
- setup.c                                  | 2 +-
- sideband.c                               | 2 +-
- trace2/tr2_ctr.c                         | 2 +-
- trace2/tr2_tls.h                         | 2 +-
- 46 files changed, 52 insertions(+), 52 deletions(-)
+    git: edit variable types to match what is assigned to them
+    
+    There are many places where "int len = strlen(foo);" is written, just
+    for len to be passed as a parameter of size_t. This causes truncation
+    and then expansion back from int to size_t. Not to mention this is poor
+    logic and needless truncations can add extra unneeded instructions.
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 9d5c27807a..6c7465d690 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -683,7 +683,7 @@ Writing Documentation:
-    Do: [-q | --quiet]
-    Don't: [-q|--quiet]
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1399%2FAtariDreams%2Ffix-type-v11
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1399/AtariDreams/fix-type-v11
+Pull-Request: https://github.com/git/git/pull/1399
+
+Range-diff vs v10:
+
+ 1:  869065779c0 ! 1:  ba551274887 git: edit variable types to match what is assigned to them
+     @@ compat/compiler.h: static inline void get_compiler_info(struct strbuf *info)
+       #ifdef __GLIBC__
+       	strbuf_addf(info, "glibc: %s\n", gnu_get_libc_version());
+      
+     + ## daemon.c ##
+     +@@ daemon.c: static struct daemon_service daemon_service[] = {
+     + 
+     + static void enable_service(const char *name, int ena)
+     + {
+     +-	int i;
+     ++	size_t i;
+     + 	for (i = 0; i < ARRAY_SIZE(daemon_service); i++) {
+     + 		if (!strcmp(daemon_service[i].name, name)) {
+     + 			daemon_service[i].enabled = ena;
+     +@@ daemon.c: static void enable_service(const char *name, int ena)
+     + 
+     + static void make_service_overridable(const char *name, int ena)
+     + {
+     +-	int i;
+     ++	size_t i;
+     + 	for (i = 0; i < ARRAY_SIZE(daemon_service); i++) {
+     + 		if (!strcmp(daemon_service[i].name, name)) {
+     + 			daemon_service[i].overridable = ena;
+     +@@ daemon.c: static void canonicalize_client(struct strbuf *out, const char *in)
+     + static char *parse_host_arg(struct hostinfo *hi, char *extra_args, int buflen)
+     + {
+     + 	char *val;
+     +-	int vallen;
+     ++	size_t vallen;
+     + 	char *end = extra_args + buflen;
+     + 
+     + 	if (extra_args < end && *extra_args) {
+     +
+       ## diff.c ##
+      @@ diff.c: static void emit_binary_diff_body(struct diff_options *o,
+       	/* emit data encoded in base85 */
+
+
+ add-interactive.c             |  2 +-
+ apply.c                       | 16 ++++++------
+ archive-tar.c                 |  8 +++---
+ base85.c                      | 11 ++++----
+ builtin/add.c                 |  3 ++-
+ builtin/merge-file.c          |  3 ++-
+ builtin/submodule--helper.c   |  3 ++-
+ cache.h                       | 13 ++++++----
+ color.c                       | 30 +++++++++++----------
+ color.h                       |  2 +-
+ column.c                      |  7 ++---
+ compat/compiler.h             |  9 ++++---
+ daemon.c                      |  6 ++---
+ diff.c                        |  4 +--
+ fsck.c                        |  4 +--
+ list-objects-filter-options.c |  2 +-
+ merge-recursive.c             |  4 +--
+ merge-recursive.h             |  2 +-
+ notes.c                       |  2 +-
+ range-diff.c                  |  4 +--
+ read-cache.c                  | 49 +++++++++++++++++++----------------
+ run-command.c                 | 11 ++++----
+ strbuf.c                      |  2 +-
+ xdiff-interface.c             |  6 ++---
+ 24 files changed, 109 insertions(+), 94 deletions(-)
+
+diff --git a/add-interactive.c b/add-interactive.c
+index 00a0f6f96f3..12cb87914f7 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -469,7 +469,7 @@ static void collect_changes_cb(struct diff_queue_struct *q,
  
-- Don't use spacing around "|" tokens when they're used to seperate the
-+ Don't use spacing around "|" tokens when they're used to separate the
-  alternate arguments of an option:
-     Do: --track[=(direct|inherit)]
-     Don't: --track[=(direct | inherit)]
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 0e93aef862..229b63a454 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -182,7 +182,7 @@ included, Git breaks the cycle by prohibiting these files from affecting
- the resolution of these conditions (thus, prohibiting them from
- declaring remote URLs).
- +
--As for the naming of this keyword, it is for forwards compatibiliy with
-+As for the naming of this keyword, it is for forwards compatibility with
- a naming scheme that supports more variable-based include conditions,
- but currently Git only supports the exact keyword described above.
- 
-diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
-index 7af76ff99a..841ffeee38 100644
---- a/Documentation/fsck-msgids.txt
-+++ b/Documentation/fsck-msgids.txt
-@@ -155,7 +155,7 @@
- 	(FATAL) Missing end-of-line in the object header.
- 
- `zeroPaddedDate`::
--	(ERROR) Found a zero padded date in an author/commiter line.
-+	(ERROR) Found a zero padded date in an author/committer line.
- 
- `zeroPaddedFilemode`::
- 	(WARN) Found a zero padded filemode in a tree.
-diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
-index 53f111bc0a..cf4a5a283e 100644
---- a/Documentation/git-cvsserver.txt
-+++ b/Documentation/git-cvsserver.txt
-@@ -118,7 +118,7 @@ for example:
-    myuser:$5$.NqmNH1vwfzGpV8B$znZIcumu1tNLATgV2l6e1/mY8RzhUDHMOaVOeL1cxV3
- ------
- You can use the 'htpasswd' facility that comes with Apache to make these
--files, but only with the -d option (or -B if your system suports it).
-+files, but only with the -d option (or -B if your system supports it).
- 
- Preferably use the system specific utility that manages password hash
- creation in your platform (e.g. mkpasswd in Linux, encrypt in OpenBSD or
-diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-index c6a79c2a0f..8ace8fb78a 100644
---- a/Documentation/git-describe.txt
-+++ b/Documentation/git-describe.txt
-@@ -140,7 +140,7 @@ at the end.
- 
- The number of additional commits is the number
- of commits which would be displayed by "git log v1.0.4..parent".
--The hash suffix is "-g" + an unambigous abbreviation for the tip commit
-+The hash suffix is "-g" + an unambiguous abbreviation for the tip commit
- of parent (which was `2414721b194453f058079d897d13c4e377f92dc6`). The
- length of the abbreviation scales as the repository grows, using the
- approximate number of objects in the repository and a bit of math
-diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-index dfcc7da4c2..f4b6dbd2e1 100644
---- a/Documentation/git-format-patch.txt
-+++ b/Documentation/git-format-patch.txt
-@@ -246,7 +246,7 @@ populated with placeholder text.
- 	or "--reroll-count=4rev2" are allowed), but the downside of
- 	using such a reroll-count is that the range-diff/interdiff
- 	with the previous version does not state exactly which
--	version the new interation is compared against.
-+	version the new iteration is compared against.
- 
- --to=<email>::
- 	Add a `To:` header to the email headers. This is in addition
-diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
-index 0240adb8ee..fa9a6b9f2c 100644
---- a/Documentation/git-ls-tree.txt
-+++ b/Documentation/git-ls-tree.txt
-@@ -145,7 +145,7 @@ FIELD NAMES
- -----------
- 
- Various values from structured fields can be used to interpolate
--into the resulting output. For each outputing line, the following
-+into the resulting output. For each outputting line, the following
- names can be used:
- 
- objectmode::
-diff --git a/Documentation/git-mktag.txt b/Documentation/git-mktag.txt
-index 466a697519..b2a2e80d42 100644
---- a/Documentation/git-mktag.txt
-+++ b/Documentation/git-mktag.txt
-@@ -33,7 +33,7 @@ from warnings to errors (so e.g. a missing "tagger" line is an error).
- 
- Extra headers in the object are also an error under mktag, but ignored
- by linkgit:git-fsck[1]. This extra check can be turned off by setting
--the appropriate `fsck.<msg-id>` varible:
-+the appropriate `fsck.<msg-id>` variable:
- 
-     git -c fsck.extraHeaderEntry=ignore mktag <my-tag-with-headers
- 
-diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
-index 68392d2a56..d6d4d42fbd 100644
---- a/Documentation/git-sparse-checkout.txt
-+++ b/Documentation/git-sparse-checkout.txt
-@@ -263,7 +263,7 @@ patterns in non-cone mode has a number of shortcomings:
-     problem above?  Also, if it suggests paths, what if the user has a
-     file or directory that begins with either a '!' or '#' or has a '*',
-     '\', '?', '[', or ']' in its name?  And if it suggests paths, will
--    it complete "/pro" to "/proc" (in the root filesytem) rather than to
-+    it complete "/pro" to "/proc" (in the root filesystem) rather than to
-     "/progress.txt" in the current directory?  (Note that users are
-     likely to want to start paths with a leading '/' in non-cone mode,
-     for the same reason that .gitignore files often have one.)
-diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-index f4bb6114d9..06fb7f1d18 100644
---- a/Documentation/git-stash.txt
-+++ b/Documentation/git-stash.txt
-@@ -366,7 +366,7 @@ only the commit ends-up being in the stash and not on the current branch.
- # ... hack hack hack ...
- $ git add --patch foo           # add unrelated changes to the index
- $ git stash push --staged       # save these changes to the stash
--# ... hack hack hack, finish curent changes ...
-+# ... hack hack hack, finish current changes ...
- $ git commit -m 'Massive'       # commit fully tested changes
- $ git switch fixup-branch       # switch to another branch
- $ git stash pop                 # to finish work on the saved changes
-diff --git a/Documentation/gitformat-commit-graph.txt b/Documentation/gitformat-commit-graph.txt
-index 31cad585e2..76312fa249 100644
---- a/Documentation/gitformat-commit-graph.txt
-+++ b/Documentation/gitformat-commit-graph.txt
-@@ -122,7 +122,7 @@ All multi-byte numbers are in network byte order.
-       for commits with corrected commit date offsets that cannot be
-       stored within 31 bits.
-     * Generation Data Overflow chunk is present only when Generation Data
--      chunk is present and atleast one corrected commit date offset cannot
-+      chunk is present and at least one corrected commit date offset cannot
-       be stored within 31 bits.
- 
- ==== Extra Edge List (ID: {'E', 'D', 'G', 'E'}) [Optional]
-diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
-index 7cee9d3689..74c35e8953 100644
---- a/Documentation/gitweb.txt
-+++ b/Documentation/gitweb.txt
-@@ -234,7 +234,7 @@ from the template during repository creation, usually installed in
- configuration variable, but the file takes precedence.
- 
- category (or `gitweb.category`)::
--	Singe line category of a project, used to group projects if
-+	Single line category of a project, used to group projects if
- 	`$projects_list_group_categories` is enabled.  By default (file and
- 	configuration variable absent), uncategorized projects are put in the
- 	`$project_list_default_category` category.  You can use the
-diff --git a/bloom.h b/bloom.h
-index adde6dfe21..83eb989d85 100644
---- a/bloom.h
-+++ b/bloom.h
-@@ -15,7 +15,7 @@ struct bloom_filter_settings {
- 
- 	/*
- 	 * The number of times a path is hashed, i.e. the
--	 * number of bit positions tht cumulatively
-+	 * number of bit positions that cumulatively
- 	 * determine whether a path is present in the
- 	 * Bloom filter.
- 	 */
-diff --git a/builtin/help.c b/builtin/help.c
-index 53f2812dfb..bad3344016 100644
---- a/builtin/help.c
-+++ b/builtin/help.c
-@@ -536,7 +536,7 @@ static void open_html(const char *path)
- 
- static void show_html_page(const char *page)
+ 	for (i = 0; i < stat.nr; i++) {
+ 		const char *name = stat.files[i]->name;
+-		int hash = strhash(name);
++		unsigned int hash = strhash(name);
+ 		struct pathname_entry *entry;
+ 		struct file_item *file_item;
+ 		struct adddel *adddel, *other_adddel;
+diff --git a/apply.c b/apply.c
+index 85822280476..b409a323ca5 100644
+--- a/apply.c
++++ b/apply.c
+@@ -443,7 +443,7 @@ static int name_terminate(int c, int terminate)
+ /* remove double slashes to make --index work with such filenames */
+ static char *squash_slash(char *name)
  {
--	struct strbuf page_path; /* it leaks but we exec bellow */
-+	struct strbuf page_path; /* it leaks but we exec below */
+-	int i = 0, j = 0;
++	size_t i = 0, j = 0;
  
- 	get_html_page_path(&page_path, page);
- 
-diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-index 15535e914a..210c6a8e86 100644
---- a/builtin/name-rev.c
-+++ b/builtin/name-rev.c
-@@ -59,7 +59,7 @@ static void set_commit_cutoff(struct commit *commit)
- static void adjust_cutoff_timestamp_for_slop(void)
+ 	if (!name)
+ 		return NULL;
+@@ -654,7 +654,7 @@ static char *find_name_common(struct strbuf *root,
+ 			      const char *end,
+ 			      int terminate)
  {
- 	if (cutoff) {
--		/* check for undeflow */
-+		/* check for underflow */
- 		if (cutoff > TIME_MIN + CUTOFF_DATE_SLOP)
- 			cutoff = cutoff - CUTOFF_DATE_SLOP;
- 		else
-diff --git a/cache.h b/cache.h
-index fcf49706ad..631b2c5854 100644
---- a/cache.h
-+++ b/cache.h
-@@ -321,7 +321,7 @@ enum sparse_index_mode {
+-	int len;
++	size_t len;
+ 	const char *start = NULL;
  
- 	/*
- 	 * The index has already been collapsed to sparse directories
--	 * whereever possible.
-+	 * wherever possible.
+ 	if (p_value == 0)
+@@ -685,13 +685,13 @@ static char *find_name_common(struct strbuf *root,
+ 	 * or "file~").
  	 */
- 	INDEX_COLLAPSED,
+ 	if (def) {
+-		int deflen = strlen(def);
++		size_t deflen = strlen(def);
+ 		if (deflen < len && !strncmp(start, def, deflen))
+ 			return squash_slash(xstrdup(def));
+ 	}
  
-diff --git a/cbtree.c b/cbtree.c
-index 336e46dbba..caeb232a79 100644
---- a/cbtree.c
-+++ b/cbtree.c
-@@ -11,7 +11,7 @@ static struct cb_node *cb_node_of(const void *p)
- 	return (struct cb_node *)((uintptr_t)p - 1);
+ 	if (root->len) {
+-		char *ret = xstrfmt("%s%.*s", root->buf, len, start);
++		char *ret = xstrfmt("%s%.*s", root->buf, (int)len, start);
+ 		return squash_slash(ret);
+ 	}
+ 
+@@ -790,7 +790,7 @@ static int has_epoch_timestamp(const char *nameline)
+ 	const char *timestamp = NULL, *cp, *colon;
+ 	static regex_t *stamp;
+ 	regmatch_t m[10];
+-	int zoneoffset, epoch_hour, hour, minute;
++	long zoneoffset, epoch_hour, hour, minute;
+ 	int status;
+ 
+ 	for (cp = nameline; *cp != '\n'; cp++) {
+@@ -1083,7 +1083,7 @@ static int gitdiff_index(struct gitdiff_data *state,
+ 	 * and optional space with octal mode.
+ 	 */
+ 	const char *ptr, *eol;
+-	int len;
++	size_t len;
+ 	const unsigned hexsz = the_hash_algo->hexsz;
+ 
+ 	ptr = strchr(line, '.');
+@@ -2172,9 +2172,9 @@ static int parse_chunk(struct apply_state *state, char *buffer, unsigned long si
+ 				"Files ",
+ 				NULL,
+ 			};
+-			int i;
++			size_t i;
+ 			for (i = 0; binhdr[i]; i++) {
+-				int len = strlen(binhdr[i]);
++				size_t len = strlen(binhdr[i]);
+ 				if (len < size - hd &&
+ 				    !memcmp(binhdr[i], buffer + hd, len)) {
+ 					state->linenr++;
+diff --git a/archive-tar.c b/archive-tar.c
+index f8fad2946ef..6d91eb01157 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -352,12 +352,12 @@ static void write_global_extended_header(struct archiver_args *args)
  }
  
--/* locate the best match, does not do a final comparision */
-+/* locate the best match, does not do a final comparison */
- static struct cb_node *cb_internal_best_match(struct cb_node *p,
- 					const uint8_t *k, size_t klen)
+ static struct archiver **tar_filters;
+-static int nr_tar_filters;
+-static int alloc_tar_filters;
++static size_t nr_tar_filters;
++static size_t alloc_tar_filters;
+ 
+ static struct archiver *find_tar_filter(const char *name, size_t len)
  {
-diff --git a/commit-graph.h b/commit-graph.h
-index 37faee6b66..aea51b57a0 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -13,7 +13,7 @@
-  * This method is only used to enhance coverage of the commit-graph
-  * feature in the test suite with the GIT_TEST_COMMIT_GRAPH and
-  * GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS environment variables. Do not
-- * call this method oustide of a builtin, and only if you know what
-+ * call this method outside of a builtin, and only if you know what
-  * you are doing!
-  */
- void git_test_write_commit_graph_or_die(void);
-diff --git a/compat/fsmonitor/fsm-listen-win32.c b/compat/fsmonitor/fsm-listen-win32.c
-index 03df8d951b..6a1b6435a8 100644
---- a/compat/fsmonitor/fsm-listen-win32.c
-+++ b/compat/fsmonitor/fsm-listen-win32.c
-@@ -430,9 +430,9 @@ static int recv_rdcw_watch(struct one_watch *watch)
- 	 * but I observed ERROR_ACCESS_DENIED (0x05) errors during
- 	 * testing.
- 	 *
--	 * Note that we only get notificaiton events for events
-+	 * Note that we only get notification events for events
- 	 * *within* the directory, not *on* the directory itself.
--	 * (These might be properies of the parent directory, for
-+	 * (These might be properties of the parent directory, for
- 	 * example).
- 	 *
- 	 * NEEDSWORK: We might try to check for the deleted directory
-diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
-index cce1d57a46..e330904497 100644
---- a/compat/precompose_utf8.c
-+++ b/compat/precompose_utf8.c
-@@ -80,7 +80,7 @@ const char *precompose_string_if_needed(const char *in)
- 		out = reencode_string_iconv(in, inlen, ic_prec, 0, &outlen);
- 		if (out) {
- 			if (outlen == inlen && !memcmp(in, out, outlen))
--				free(out); /* no need to return indentical */
-+				free(out); /* no need to return identical */
- 			else
- 				in = out;
- 		}
-diff --git a/compat/simple-ipc/ipc-unix-socket.c b/compat/simple-ipc/ipc-unix-socket.c
-index 28a79289d4..bffe6eacce 100644
---- a/compat/simple-ipc/ipc-unix-socket.c
-+++ b/compat/simple-ipc/ipc-unix-socket.c
-@@ -711,7 +711,7 @@ static int accept_thread__wait_for_connection(
-  * Block SIGPIPE in this thread for the life of the thread.  This
-  * avoids any stray SIGPIPE signals when closing pipe fds under
-  * extremely heavy loads (such as when the fifo queue is full and we
-- * drop incomming connections).
-+ * drop incoming connections).
-  */
- static void *accept_thread_proc(void *_accept_thread_data)
+-	int i;
++	size_t i;
+ 	for (i = 0; i < nr_tar_filters; i++) {
+ 		struct archiver *ar = tar_filters[i];
+ 		if (!strncmp(ar->name, name, len) && !ar->name[len])
+@@ -525,7 +525,7 @@ static struct archiver tar_archiver = {
+ 
+ void init_tar_archiver(void)
  {
-diff --git a/config.mak.dev b/config.mak.dev
-index 981304727c..055e1a6799 100644
---- a/config.mak.dev
-+++ b/config.mak.dev
-@@ -69,7 +69,7 @@ DEVELOPER_CFLAGS += -Wno-missing-braces
- endif
- endif
+-	int i;
++	size_t i;
+ 	register_archiver(&tar_archiver);
  
--# Old versions of clang complain about initializaing a
-+# Old versions of clang complain about initializing a
- # struct-within-a-struct using just "{0}" rather than "{{0}}".  This
- # error is considered a false-positive and not worth fixing, because
- # new clang versions do not, so just disable it.
-diff --git a/contrib/coccinelle/unused.cocci b/contrib/coccinelle/unused.cocci
-index d84046f82e..142a5a1f02 100644
---- a/contrib/coccinelle/unused.cocci
-+++ b/contrib/coccinelle/unused.cocci
-@@ -1,4 +1,4 @@
--// This rule finds sequences of "unused" declerations and uses of a
-+// This rule finds sequences of "unused" declarations and uses of a
- // variable, where "unused" is defined to include only calling the
- // equivalent of alloc, init & free functions on the variable.
- @@
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index dc95c34cc8..f414639f52 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -3330,7 +3330,7 @@ _git_worktree ()
- 		# Here we are not completing an --option, it's either the
- 		# path or a ref.
- 		case "$prev" in
--		-b|-B)	# Complete refs for branch to be created/reseted.
-+		-b|-B)	# Complete refs for branch to be created/resetted.
- 			__git_complete_refs
- 			;;
- 		-*)	# The previous word is an -o|--option without an
-diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
-index 10c9c87839..8c4e2c0460 100755
---- a/contrib/subtree/git-subtree.sh
-+++ b/contrib/subtree/git-subtree.sh
-@@ -921,7 +921,7 @@ cmd_split () {
- 		rev=$(git rev-parse -q --verify "$1^{commit}") ||
- 			die "fatal: '$1' does not refer to a commit"
- 	else
--		die "fatal: you must provide exactly one revision, and optionnally a repository.  Got: '$*'"
-+		die "fatal: you must provide exactly one revision, and optionally a repository.  Got: '$*'"
- 	fi
- 	repository=""
- 	if test "$#" = 2
-diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
-index 341c169eca..fa5bd9b7af 100755
---- a/contrib/subtree/t/t7900-subtree.sh
-+++ b/contrib/subtree/t/t7900-subtree.sh
-@@ -47,7 +47,7 @@ last_commit_subject () {
- # pre-2.32.0 versions of 'git subtree' would write the hash of the tag
- # (sub1 below), instead of the commit (sub1^{commit}) in the
- # "git-subtree-split" trailer.
--# We immitate this behaviour below using a replace ref.
-+# We imitate this behaviour below using a replace ref.
- # This function creates 3 repositories:
- # - $1
- # - $1-sub (added as subtree "sub" in $1)
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index c0422d9e70..3f6bc98375 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -926,7 +926,7 @@ static int find_basename_matches(struct diff_options *options,
- 	 * spend more cycles to find similarities between files, so it may
- 	 * be less likely that this heuristic is wanted.  If someone is
- 	 * doing break detection, that means they do not want filename
--	 * similarity to imply any form of content similiarity, and thus
-+	 * similarity to imply any form of content similarity, and thus
- 	 * this heuristic would definitely be incompatible.
- 	 */
+ 	tar_filter_config("tar.tgz.command", internal_gzip_command, NULL);
+diff --git a/base85.c b/base85.c
+index 5ca601ee14f..ad32ba1411a 100644
+--- a/base85.c
++++ b/base85.c
+@@ -37,14 +37,15 @@ static void prep_base85(void)
+ 	}
+ }
  
-@@ -1527,7 +1527,7 @@ void diffcore_rename_extended(struct diff_options *options,
- 		 *   - remove ones not found in relevant_sources
- 		 * and
- 		 *   - remove ones in relevant_sources which are needed only
--		 *     for directory renames IF no ancestory directory
-+		 *     for directory renames IF no ancestry directory
- 		 *     actually needs to know any more individual path
- 		 *     renames under them
- 		 */
-diff --git a/fsmonitor-settings.c b/fsmonitor-settings.c
-index ee63a97dc5..ce23659dbd 100644
---- a/fsmonitor-settings.c
-+++ b/fsmonitor-settings.c
-@@ -6,7 +6,7 @@
- #include "fsmonitor-path-utils.h"
+-int decode_85(char *dst, const char *buffer, int len)
++int decode_85(char *dst, const char *buffer, size_t len)
+ {
+ 	prep_base85();
  
- /*
-- * We keep this structure defintion private and have getters
-+ * We keep this structure definition private and have getters
-  * for all fields so that we can lazy load it as needed.
-  */
- struct fsmonitor_settings {
-diff --git a/fsmonitor.c b/fsmonitor.c
-index 08af00c738..d48e089c9b 100644
---- a/fsmonitor.c
-+++ b/fsmonitor.c
-@@ -215,7 +215,7 @@ static void fsmonitor_refresh_callback(struct index_state *istate, char *name)
+-	say2("decode 85 <%.*s>", len / 4 * 5, buffer);
++	say2("decode 85 <%.*s>", (int)(len / 4 * 5), buffer);
+ 	while (len) {
+ 		unsigned acc = 0;
+-		int de, cnt = 4;
++		int de;
++		size_t cnt = 4;
+ 		unsigned char ch;
+ 		do {
+ 			ch = *buffer++;
+@@ -76,7 +77,7 @@ int decode_85(char *dst, const char *buffer, int len)
+ 	return 0;
+ }
+ 
+-void encode_85(char *buf, const unsigned char *data, int bytes)
++void encode_85(char *buf, const unsigned char *data, size_t bytes)
+ {
+ 	say("encode 85");
+ 	while (bytes) {
+@@ -90,7 +91,7 @@ void encode_85(char *buf, const unsigned char *data, int bytes)
  		}
+ 		say1(" %08x", acc);
+ 		for (cnt = 4; cnt >= 0; cnt--) {
+-			int val = acc % 85;
++			unsigned val = acc % 85;
+ 			acc /= 85;
+ 			buf[cnt] = en85[val];
+ 		}
+diff --git a/builtin/add.c b/builtin/add.c
+index 0c604022676..5a6686d42dc 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -40,7 +40,8 @@ struct update_callback_data {
  
- 		/*
--		 * We need to remove the traling "/" from the path
-+		 * We need to remove the trailing "/" from the path
- 		 * for the untracked cache.
- 		 */
- 		name[len - 1] = '\0';
-diff --git a/git-gui/lib/themed.tcl b/git-gui/lib/themed.tcl
-index f43d84e54f..68c999a9be 100644
---- a/git-gui/lib/themed.tcl
-+++ b/git-gui/lib/themed.tcl
-@@ -4,7 +4,7 @@
+ static int chmod_pathspec(struct pathspec *pathspec, char flip, int show_only)
+ {
+-	int i, ret = 0;
++	unsigned int i;
++	int ret = 0;
  
- namespace eval color {
- 	# Variable colors
--	# Preffered way to set widget colors is using add_option.
-+	# Preferred way to set widget colors is using add_option.
- 	# In some cases, like with tags in_diff/in_sel, we use these colors.
- 	variable select_bg				lightgray
- 	variable select_fg				black
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index c68f49454c..652d0b2dd3 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -612,7 +612,7 @@ python_conf() {
- 	ln -sf "$root/static" "$fqgitdir/gitweb/$httpd_only/"
+ 	for (i = 0; i < the_index.cache_nr; i++) {
+ 		struct cache_entry *ce = the_index.cache[i];
+diff --git a/builtin/merge-file.c b/builtin/merge-file.c
+index c923bbf2abb..28b032dadb6 100644
+--- a/builtin/merge-file.c
++++ b/builtin/merge-file.c
+@@ -29,7 +29,8 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
+ 	mmfile_t mmfs[3] = { 0 };
+ 	mmbuffer_t result = { 0 };
+ 	xmparam_t xmp = { 0 };
+-	int ret = 0, i = 0, to_stdout = 0;
++	int ret = 0, to_stdout = 0;
++	unsigned int i = 0;
+ 	int quiet = 0;
+ 	struct option options[] = {
+ 		OPT_BOOL('p', "stdout", &to_stdout, N_("send results to standard output")),
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 6743fb27bd5..6583d755edc 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -186,7 +186,8 @@ static int module_list_compute(const char **argv,
+ 			       struct pathspec *pathspec,
+ 			       struct module_list *list)
+ {
+-	int i, result = 0;
++	unsigned int i;
++	int result = 0;
+ 	char *ps_matched = NULL;
  
- 	# generate a standalone 'python http.server' script in $fqgitdir/gitweb
--	# This asumes that python is in user's $PATH
-+	# This assumes that python is in user's $PATH
- 	# This script is Python 2 and 3 compatible
- 	cat > "$fqgitdir/gitweb/gitweb.py" <<EOF
- #!/usr/bin/env python
-diff --git a/git-p4.py b/git-p4.py
-index d26a980e5a..595a2dad37 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -54,7 +54,7 @@
- import zipfile
- import zlib
+ 	parse_pathspec(pathspec, 0,
+diff --git a/cache.h b/cache.h
+index fcf49706ad5..6f4d380e2e2 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1609,10 +1609,13 @@ int repo_interpret_branch_name(struct repository *r,
  
--# On python2.7 where raw_input() and input() are both availble,
-+# On python2.7 where raw_input() and input() are both available,
- # we want raw_input's semantics, but aliased to input for python3
- # compatibility
- # support basestring in python3
-@@ -1800,7 +1800,7 @@ def __init__(self):
-     status from the script will abort the process.
+ int validate_headref(const char *ref);
  
-     The purpose of the hook is to edit the message file in place, and it is not
--    supressed by the `--no-verify` option. This hook is called even if
-+    suppressed by the `--no-verify` option. This hook is called even if
-     `--prepare-p4-only` is set.
+-int base_name_compare(const char *name1, int len1, int mode1, const char *name2, int len2, int mode2);
+-int df_name_compare(const char *name1, int len1, int mode1, const char *name2, int len2, int mode2);
++int base_name_compare(const char *name1, size_t len1, int mode1,
++		      const char *name2, size_t len2, int mode2);
++int df_name_compare(const char *name1, size_t len1, int mode1,
++		    const char *name2, size_t len2, int mode2);
+ int name_compare(const char *name1, size_t len1, const char *name2, size_t len2);
+-int cache_name_stage_compare(const char *name1, int len1, int stage1, const char *name2, int len2, int stage2);
++int cache_name_stage_compare(const char *name1, size_t len1, int stage1,
++			     const char *name2, size_t len2, int stage2);
  
-     The `p4-changelist` hook is executed after the changelist message has been
-diff --git a/gpg-interface.c b/gpg-interface.c
-index f877a1ea56..89c2ec08be 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -379,7 +379,7 @@ static void parse_ssh_output(struct signature_check *sigc)
- 	 * Note that "PRINCIPAL" can contain whitespace, "RSA" and
- 	 * "SHA256" part could be a different token that names of
- 	 * the algorithms used, and "FINGERPRINT" is a hexadecimal
--	 * string.  By finding the last occurence of " with ", we can
-+	 * string.  By finding the last occurrence of " with ", we can
- 	 * reliably parse out the PRINCIPAL.
- 	 */
- 	sigc->result = 'B';
-diff --git a/http.c b/http.c
-index 8a5ba3f477..77ac7ce24e 100644
---- a/http.c
-+++ b/http.c
-@@ -1425,7 +1425,7 @@ void run_active_slot(struct active_request_slot *slot)
- 	 * The value of slot->finished we set before the loop was used
- 	 * to set our "finished" variable when our request completed.
- 	 *
--	 * 1. The slot may not have been reused for another requst
-+	 * 1. The slot may not have been reused for another request
- 	 *    yet, in which case it still has &finished.
- 	 *
- 	 * 2. The slot may already be in-use to serve another request,
-diff --git a/merge-ort.c b/merge-ort.c
-index d1611ca400..73b1321dd0 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -1121,7 +1121,7 @@ static void collect_rename_info(struct merge_options *opt,
- 	 * Update dir_rename_mask (determines ignore-rename-source validity)
- 	 *
- 	 * dir_rename_mask helps us keep track of when directory rename
--	 * detection may be relevant.  Basically, whenver a directory is
-+	 * detection may be relevant.  Basically, whenever a directory is
- 	 * removed on one side of history, and a file is added to that
- 	 * directory on the other side of history, directory rename
- 	 * detection is relevant (meaning we have to detect renames for all
-@@ -2042,7 +2042,7 @@ static int handle_content_merge(struct merge_options *opt,
- 	 * the three blobs to merge on various sides of history.
- 	 *
- 	 * extra_marker_size is the amount to extend conflict markers in
--	 * ll_merge; this is neeed if we have content merges of content
-+	 * ll_merge; this is needed if we have content merges of content
- 	 * merges, which happens for example with rename/rename(2to1) and
- 	 * rename/add conflicts.
- 	 */
-@@ -3726,7 +3726,7 @@ static int write_completed_directory(struct merge_options *opt,
- 	 *     	   src/moduleB  2
- 	 *
- 	 *     which is used to know that xtract.c & token.txt are from the
--	 *     toplevel dirctory, while umm.c & stuff.h & baz.c are from the
-+	 *     toplevel directory, while umm.c & stuff.h & baz.c are from the
- 	 *     src/moduleB directory.  Again, following the example above,
- 	 *     once we need to process src/moduleB, then info->offsets is
- 	 *     updated to
-diff --git a/object-file.c b/object-file.c
-index c1b71c2834..149039745c 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -2177,7 +2177,7 @@ int stream_loose_object(struct input_stream *in_stream, size_t len,
+ void *read_object_with_reference(struct repository *r,
+ 				 const struct object_id *oid,
+@@ -1822,8 +1825,8 @@ extern const char *askpass_program;
+ extern const char *excludes_file;
  
- 	/*
- 	 * Common steps for write_loose_object and stream_loose_object to
--	 * end writing loose oject:
-+	 * end writing loose object:
- 	 *
- 	 *  - End the compression of zlib stream.
- 	 *  - Get the calculated oid.
-diff --git a/perl/Git/I18N.pm b/perl/Git/I18N.pm
-index 895e759c57..228e4d6659 100644
---- a/perl/Git/I18N.pm
-+++ b/perl/Git/I18N.pm
-@@ -111,7 +111,7 @@ =head2 __n($$$)
- =head2 N__($)
+ /* base85 */
+-int decode_85(char *dst, const char *line, int linelen);
+-void encode_85(char *buf, const unsigned char *data, int bytes);
++int decode_85(char *dst, const char *line, size_t linelen);
++void encode_85(char *buf, const unsigned char *data, size_t bytes);
  
- No-operation that only returns its argument. Use this if you want xgettext to
--extract the text to the pot template but do not want to trigger retrival of the
-+extract the text to the pot template but do not want to trigger retrieval of the
- translation at run time.
- 
- =head1 AUTHOR
-diff --git a/rebase.c b/rebase.c
-index 6775cddb28..4711863c81 100644
---- a/rebase.c
-+++ b/rebase.c
-@@ -10,7 +10,7 @@
-  * The callers that care if (any) rebase is requested should say
-  *   if (REBASE_TRUE <= rebase_parse_value(string))
-  *
-- * The callers that want to differenciate an unrecognised value and
-+ * The callers that want to differentiate an unrecognised value and
-  * false can do so by treating _INVALID and _FALSE differently.
+ /* pkt-line.c */
+ void packet_trace_identity(const char *prog);
+diff --git a/color.c b/color.c
+index f05d8a81d72..81de82b323d 100644
+--- a/color.c
++++ b/color.c
+@@ -54,7 +54,7 @@ struct color {
+  * "word" is a buffer of length "len"; does it match the NUL-terminated
+  * "match" exactly?
   */
- enum rebase_type rebase_parse_value(const char *value)
-diff --git a/refs.h b/refs.h
-index 935cdd1ece..1301f33629 100644
---- a/refs.h
-+++ b/refs.h
-@@ -477,7 +477,7 @@ int delete_reflog(const char *refname);
-  * from UTC.  Its absolute value is formed by multiplying the hour
-  * part by 100 and adding the minute part.  For example, 1 hour ahead
-  * of UTC, CET == "+0100", is represented as positive one hundred (not
-- * postiive sixty).
-+ * positive sixty).
-  *
-  * The msg parameter is a single complete line; a reflog message given
-  * to refs_delete_ref, refs_update_ref, etc. is returned to the
-@@ -955,7 +955,7 @@ struct ref_store *get_worktree_ref_store(const struct worktree *wt);
+-static int match_word(const char *word, int len, const char *match)
++static int match_word(const char *word, size_t len, const char *match)
+ {
+ 	return !strncasecmp(word, match, len) && !match[len];
+ }
+@@ -73,14 +73,14 @@ static int get_hex_color(const char *in, unsigned char *out)
+  * If an ANSI color is recognized in "name", fill "out" and return 0.
+  * Otherwise, leave out unchanged and return -1.
+  */
+-static int parse_ansi_color(struct color *out, const char *name, int len)
++static int parse_ansi_color(struct color *out, const char *name, size_t len)
+ {
+ 	/* Positions in array must match ANSI color codes */
+ 	static const char * const color_names[] = {
+ 		"black", "red", "green", "yellow",
+ 		"blue", "magenta", "cyan", "white"
+ 	};
+-	int i;
++	unsigned int i;
+ 	int color_offset = COLOR_FOREGROUND_ANSI;
+ 
+ 	if (match_word(name, len, "default")) {
+@@ -119,7 +119,7 @@ static int parse_ansi_color(struct color *out, const char *name, int len)
+ 	return -1;
+ }
+ 
+-static int parse_color(struct color *out, const char *name, int len)
++static int parse_color(struct color *out, const char *name, size_t len)
+ {
+ 	char *end;
+ 	long val;
+@@ -219,7 +219,8 @@ int color_parse(const char *value, char *dst)
+  * already have the ANSI escape code in it. "out" should have enough
+  * space in it to fit any color.
+  */
+-static char *color_output(char *out, int len, const struct color *c, int background)
++static char *color_output(char *out, size_t len, const struct color *c,
++			  int background)
+ {
+ 	int offset = 0;
+ 
+@@ -250,17 +251,17 @@ static int color_empty(const struct color *c)
+ 	return c->type <= COLOR_NORMAL;
+ }
+ 
+-int color_parse_mem(const char *value, int value_len, char *dst)
++int color_parse_mem(const char *value, size_t value_len, char *dst)
+ {
+ 	const char *ptr = value;
+-	int len = value_len;
++	size_t len = value_len;
+ 	char *end = dst + COLOR_MAXLEN;
+-	unsigned int has_reset = 0;
++	int has_reset = 0;
+ 	unsigned int attr = 0;
+ 	struct color fg = { COLOR_UNSPECIFIED };
+ 	struct color bg = { COLOR_UNSPECIFIED };
+ 
+-	while (len > 0 && isspace(*ptr)) {
++	while (len && isspace(*ptr)) {
+ 		ptr++;
+ 		len--;
+ 	}
+@@ -271,10 +272,11 @@ int color_parse_mem(const char *value, int value_len, char *dst)
+ 	}
+ 
+ 	/* [reset] [fg [bg]] [attr]... */
+-	while (len > 0) {
++	while (len) {
+ 		const char *word = ptr;
+ 		struct color c = { COLOR_UNSPECIFIED };
+-		int val, wordlen = 0;
++		int val;
++		size_t wordlen = 0;
+ 
+ 		while (len > 0 && !isspace(word[wordlen])) {
+ 			wordlen++;
+@@ -319,7 +321,7 @@ int color_parse_mem(const char *value, int value_len, char *dst)
+ 
+ 	if (has_reset || attr || !color_empty(&fg) || !color_empty(&bg)) {
+ 		int sep = 0;
+-		int i;
++		unsigned int i;
+ 
+ 		OUT('\033');
+ 		OUT('[');
+@@ -334,7 +336,7 @@ int color_parse_mem(const char *value, int value_len, char *dst)
+ 			attr &= ~bit;
+ 			if (sep++)
+ 				OUT(';');
+-			dst += xsnprintf(dst, end - dst, "%d", i);
++			dst += xsnprintf(dst, end - dst, "%u", i);
+ 		}
+ 		if (!color_empty(&fg)) {
+ 			if (sep++)
+@@ -351,7 +353,7 @@ int color_parse_mem(const char *value, int value_len, char *dst)
+ 	OUT(0);
+ 	return 0;
+ bad:
+-	return error(_("invalid color value: %.*s"), value_len, value);
++	return error(_("invalid color value: %.*s"), (int)value_len, value);
+ #undef OUT
+ }
+ 
+diff --git a/color.h b/color.h
+index cfc8f841b23..35c0cf09d08 100644
+--- a/color.h
++++ b/color.h
+@@ -119,7 +119,7 @@ int want_color_fd(int fd, int var);
+  * name ("red"), a RGB code (#0xFF0000) or a 256-color-mode from the terminal.
+  */
+ int color_parse(const char *value, char *dst);
+-int color_parse_mem(const char *value, int len, char *dst);
++int color_parse_mem(const char *value, size_t len, char *dst);
  
  /*
-  * Some of the names specified by refs have special meaning to Git.
-- * Organize these namespaces in a comon 'ref_namespace' array for
-+ * Organize these namespaces in a common 'ref_namespace' array for
-  * reference from multiple places in the codebase.
+  * Output the formatted string in the specified color (and then reset to normal
+diff --git a/column.c b/column.c
+index 1261e18a72e..98c32485cc7 100644
+--- a/column.c
++++ b/column.c
+@@ -32,7 +32,7 @@ static int item_length(const char *s)
   */
+ static void layout(struct column_data *data, int *width)
+ {
+-	int i;
++	size_t i;
  
-diff --git a/reftable/reader.h b/reftable/reader.h
-index e869165f23..8d69ff3d0e 100644
---- a/reftable/reader.h
-+++ b/reftable/reader.h
-@@ -30,7 +30,7 @@ struct reftable_reader_offsets {
+ 	*width = 0;
+ 	for (i = 0; i < data->list->nr; i++)
+@@ -101,7 +101,7 @@ static void shrink_columns(struct column_data *data)
+ static void display_plain(const struct string_list *list,
+ 			  const char *indent, const char *nl)
+ {
+-	int i;
++	size_t i;
  
- /* The state for reading a reftable file. */
- struct reftable_reader {
--	/* for convience, associate a name with the instance. */
-+	/* for convenience, associate a name with the instance. */
- 	char *name;
- 	struct reftable_block_source source;
+ 	for (i = 0; i < list->nr; i++)
+ 		printf("%s%s%s", indent, list->items[i].string, nl);
+@@ -146,7 +146,8 @@ static void display_table(const struct string_list *list,
+ 			  const struct column_options *opts)
+ {
+ 	struct column_data data;
+-	int x, y, i, initial_width;
++	int x, y, initial_width;
++	size_t i;
+ 	char *empty_cell;
  
-diff --git a/revision.h b/revision.h
-index 30febad09a..1786ead648 100644
---- a/revision.h
-+++ b/revision.h
-@@ -541,7 +541,7 @@ int rewrite_parents(struct rev_info *revs,
-  * The log machinery saves the original parent list so that
-  * get_saved_parents() can later tell what the real parents of the
-  * commits are, when commit->parents has been modified by history
-- * simpification.
-+ * simplification.
-  *
-  * get_saved_parents() will transparently return commit->parents if
-  * history simplification is off.
-diff --git a/run-command.h b/run-command.h
-index 072db56a4d..b27743be29 100644
---- a/run-command.h
-+++ b/run-command.h
-@@ -523,7 +523,7 @@ enum start_bg_result {
- 	/* timeout expired waiting for child to become "ready" */
- 	SBGR_TIMEOUT,
+ 	memset(&data, 0, sizeof(data));
+diff --git a/compat/compiler.h b/compat/compiler.h
+index 10dbb65937d..33d51f461c9 100644
+--- a/compat/compiler.h
++++ b/compat/compiler.h
+@@ -10,7 +10,8 @@
  
--	/* child process exited or was signalled before becomming "ready" */
-+	/* child process exited or was signalled before becoming "ready" */
- 	SBGR_DIED,
- };
+ static inline void get_compiler_info(struct strbuf *info)
+ {
+-	int len = info->len;
++	size_t len = info->len;
++
+ #ifdef __clang__
+ 	strbuf_addf(info, "clang: %s\n", __clang_version__);
+ #elif defined(__GNUC__)
+@@ -18,8 +19,8 @@ static inline void get_compiler_info(struct strbuf *info)
+ #endif
  
-diff --git a/setup.c b/setup.c
-index cefd5f63c4..f883a238ae 100644
---- a/setup.c
-+++ b/setup.c
-@@ -452,7 +452,7 @@ static void setup_original_cwd(void)
- 	 * directory we inherited from our parent process, which is a
- 	 * directory we want to avoid removing.
- 	 *
--	 * For convience, we would like to have the path relative to the
-+	 * For convenience, we would like to have the path relative to the
- 	 * worktree instead of an absolute path.
- 	 *
- 	 * Yes, startup_info->original_cwd is usually the same as 'prefix',
-diff --git a/sideband.c b/sideband.c
-index 85bddfdcd4..faea1dd100 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -184,7 +184,7 @@ int demultiplex_sideband(const char *me, int status,
- 			int linelen = brk - b;
+ #ifdef _MSC_VER
+-	strbuf_addf(info, "MSVC version: %02d.%02d.%05d\n",
+-		    _MSC_VER / 100, _MSC_VER % 100, _MSC_FULL_VER % 100000);
++	strbuf_addf(info, "MSVC version: %02d.%02d.%05d\n", _MSC_VER / 100,
++		    _MSC_VER % 100, _MSC_FULL_VER % 100000);
+ #endif
  
- 			/*
--			 * For message accross packet boundary, there would have
-+			 * For message across packet boundary, there would have
- 			 * a nonempty "scratch" buffer from last call of this
- 			 * function, and there may have a leading CR/LF in "buf".
- 			 * For this case we should add a clear-to-eol suffix to
-diff --git a/trace2/tr2_ctr.c b/trace2/tr2_ctr.c
-index 483ca7c308..22aae61f54 100644
---- a/trace2/tr2_ctr.c
-+++ b/trace2/tr2_ctr.c
-@@ -5,7 +5,7 @@
- #include "trace2/tr2_ctr.h"
+ 	if (len == info->len)
+@@ -28,7 +29,7 @@ static inline void get_compiler_info(struct strbuf *info)
+ 
+ static inline void get_libc_info(struct strbuf *info)
+ {
+-	int len = info->len;
++	size_t len = info->len;
+ 
+ #ifdef __GLIBC__
+ 	strbuf_addf(info, "glibc: %s\n", gnu_get_libc_version());
+diff --git a/daemon.c b/daemon.c
+index 0ae7d12b5c1..6fef18ecd8b 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -517,7 +517,7 @@ static struct daemon_service daemon_service[] = {
+ 
+ static void enable_service(const char *name, int ena)
+ {
+-	int i;
++	size_t i;
+ 	for (i = 0; i < ARRAY_SIZE(daemon_service); i++) {
+ 		if (!strcmp(daemon_service[i].name, name)) {
+ 			daemon_service[i].enabled = ena;
+@@ -529,7 +529,7 @@ static void enable_service(const char *name, int ena)
+ 
+ static void make_service_overridable(const char *name, int ena)
+ {
+-	int i;
++	size_t i;
+ 	for (i = 0; i < ARRAY_SIZE(daemon_service); i++) {
+ 		if (!strcmp(daemon_service[i].name, name)) {
+ 			daemon_service[i].overridable = ena;
+@@ -605,7 +605,7 @@ static void canonicalize_client(struct strbuf *out, const char *in)
+ static char *parse_host_arg(struct hostinfo *hi, char *extra_args, int buflen)
+ {
+ 	char *val;
+-	int vallen;
++	size_t vallen;
+ 	char *end = extra_args + buflen;
+ 
+ 	if (extra_args < end && *extra_args) {
+diff --git a/diff.c b/diff.c
+index 9b14543e6ed..ffa9b599fc5 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3305,8 +3305,8 @@ static void emit_binary_diff_body(struct diff_options *o,
+ 	/* emit data encoded in base85 */
+ 	cp = data;
+ 	while (data_size) {
+-		int len;
+-		int bytes = (52 < data_size) ? 52 : data_size;
++		size_t len;
++		size_t bytes = (52 < data_size) ? 52 : data_size;
+ 		char line[71];
+ 		data_size -= bytes;
+ 		if (bytes <= 26)
+diff --git a/fsck.c b/fsck.c
+index b3da1d68c0b..c51a4aa3d06 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -35,7 +35,7 @@ static struct {
+ 
+ static void prepare_msg_ids(void)
+ {
+-	int i;
++	size_t i;
+ 
+ 	if (msg_id_info[0].downcased)
+ 		return;
+@@ -43,7 +43,7 @@ static void prepare_msg_ids(void)
+ 	/* convert id_string to lower case, without underscores. */
+ 	for (i = 0; i < FSCK_MSG_MAX; i++) {
+ 		const char *p = msg_id_info[i].id_string;
+-		int len = strlen(p);
++		size_t len = strlen(p);
+ 		char *q = xmalloc(len);
+ 
+ 		msg_id_info[i].downcased = q;
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index ee01bcd2cc3..dcb84ee81e9 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -397,7 +397,7 @@ void list_objects_filter_copy(
+ 	struct list_objects_filter_options *dest,
+ 	const struct list_objects_filter_options *src)
+ {
+-	int i;
++	size_t i;
+ 
+ 	/* Copy everything. We will overwrite the pointers shortly. */
+ 	memcpy(dest, src, sizeof(struct list_objects_filter_options));
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 2fd0aa96875..8ba57b64db2 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -3805,7 +3805,7 @@ static struct commit *get_ref(struct repository *repo,
+ int merge_recursive_generic(struct merge_options *opt,
+ 			    const struct object_id *head,
+ 			    const struct object_id *merge,
+-			    int num_merge_bases,
++			    unsigned int num_merge_bases,
+ 			    const struct object_id **merge_bases,
+ 			    struct commit **result)
+ {
+@@ -3816,7 +3816,7 @@ int merge_recursive_generic(struct merge_options *opt,
+ 	struct commit_list *ca = NULL;
+ 
+ 	if (merge_bases) {
+-		int i;
++		unsigned int i;
+ 		for (i = 0; i < num_merge_bases; ++i) {
+ 			struct commit *base;
+ 			if (!(base = get_ref(opt->repo, merge_bases[i],
+diff --git a/merge-recursive.h b/merge-recursive.h
+index b88000e3c25..f8d7517dc50 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -118,7 +118,7 @@ int merge_recursive(struct merge_options *opt,
+ int merge_recursive_generic(struct merge_options *opt,
+ 			    const struct object_id *head,
+ 			    const struct object_id *merge,
+-			    int num_merge_bases,
++			    unsigned int num_merge_bases,
+ 			    const struct object_id **merge_bases,
+ 			    struct commit **result);
+ 
+diff --git a/notes.c b/notes.c
+index f2805d51bb1..e800007434f 100644
+--- a/notes.c
++++ b/notes.c
+@@ -956,7 +956,7 @@ void string_list_add_refs_from_colon_sep(struct string_list *list,
+ {
+ 	struct string_list split = STRING_LIST_INIT_NODUP;
+ 	char *globs_copy = xstrdup(globs);
+-	int i;
++	size_t i;
+ 
+ 	string_list_split_in_place(&split, globs_copy, ':', -1);
+ 	string_list_remove_empty_items(&split, 0);
+diff --git a/range-diff.c b/range-diff.c
+index 8255ab4349c..c65b6c81b53 100644
+--- a/range-diff.c
++++ b/range-diff.c
+@@ -582,7 +582,7 @@ int is_range_diff_range(const char *arg)
+ {
+ 	char *copy = xstrdup(arg); /* setup_revisions() modifies it */
+ 	const char *argv[] = { "", copy, "--", NULL };
+-	int i, positive = 0, negative = 0;
++	unsigned int i, positive = 0, negative = 0;
+ 	struct rev_info revs;
+ 
+ 	init_revisions(&revs, NULL);
+@@ -603,5 +603,5 @@ int is_range_diff_range(const char *arg)
+ 
+ 	free(copy);
+ 	release_revisions(&revs);
+-	return negative > 0 && positive > 0;
++	return negative != 0 && positive != 0;
+ }
+diff --git a/read-cache.c b/read-cache.c
+index 1ff518b2a7f..8717dc3b56b 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -109,7 +109,8 @@ static struct mem_pool *find_mem_pool(struct index_state *istate)
+ 
+ static const char *alternate_index_output;
+ 
+-static void set_index_entry(struct index_state *istate, int nr, struct cache_entry *ce)
++static void set_index_entry(struct index_state *istate, unsigned int nr,
++			    struct cache_entry *ce)
+ {
+ 	if (S_ISSPARSEDIR(ce->ce_mode))
+ 		istate->sparse_index = INDEX_COLLAPSED;
+@@ -118,7 +119,8 @@ static void set_index_entry(struct index_state *istate, int nr, struct cache_ent
+ 	add_name_hash(istate, ce);
+ }
+ 
+-static void replace_index_entry(struct index_state *istate, int nr, struct cache_entry *ce)
++static void replace_index_entry(struct index_state *istate, unsigned int nr,
++				struct cache_entry *ce)
+ {
+ 	struct cache_entry *old = istate->cache[nr];
+ 
+@@ -488,11 +490,11 @@ int ie_modified(struct index_state *istate,
+ 	return 0;
+ }
+ 
+-int base_name_compare(const char *name1, int len1, int mode1,
+-		      const char *name2, int len2, int mode2)
++int base_name_compare(const char *name1, size_t len1, int mode1,
++		      const char *name2, size_t len2, int mode2)
+ {
+ 	unsigned char c1, c2;
+-	int len = len1 < len2 ? len1 : len2;
++	size_t len = len1 < len2 ? len1 : len2;
+ 	int cmp;
+ 
+ 	cmp = memcmp(name1, name2, len);
+@@ -517,10 +519,10 @@ int base_name_compare(const char *name1, int len1, int mode1,
+  * This is used by routines that want to traverse the git namespace
+  * but then handle conflicting entries together when possible.
+  */
+-int df_name_compare(const char *name1, int len1, int mode1,
+-		    const char *name2, int len2, int mode2)
++int df_name_compare(const char *name1, size_t len1, int mode1,
++		    const char *name2, size_t len2, int mode2)
+ {
+-	int len = len1 < len2 ? len1 : len2, cmp;
++	size_t len = len1 < len2 ? len1 : len2, cmp;
+ 	unsigned char c1, c2;
+ 
+ 	cmp = memcmp(name1, name2, len);
+@@ -555,7 +557,8 @@ int name_compare(const char *name1, size_t len1, const char *name2, size_t len2)
+ 	return 0;
+ }
+ 
+-int cache_name_stage_compare(const char *name1, int len1, int stage1, const char *name2, int len2, int stage2)
++int cache_name_stage_compare(const char *name1, size_t len1, int stage1,
++			     const char *name2, size_t len2, int stage2)
+ {
+ 	int cmp;
+ 
+@@ -703,7 +706,7 @@ static int index_name_pos_also_unmerged(struct index_state *istate,
+ 		return pos;
+ 
+ 	/* maybe unmerged? */
+-	pos = -1 - pos;
++	pos = -pos - 1;
+ 	if (pos >= istate->cache_nr ||
+ 			compare_name((ce = istate->cache[pos]), path, namelen))
+ 		return -1;
+@@ -718,7 +721,7 @@ static int index_name_pos_also_unmerged(struct index_state *istate,
+ 
+ static int different_name(struct cache_entry *ce, struct cache_entry *alias)
+ {
+-	int len = ce_namelen(ce);
++	unsigned int len = ce_namelen(ce);
+ 	return ce_namelen(alias) != len || memcmp(ce->name, alias->name, len);
+ }
+ 
+@@ -735,7 +738,7 @@ static struct cache_entry *create_alias_ce(struct index_state *istate,
+ 					   struct cache_entry *ce,
+ 					   struct cache_entry *alias)
+ {
+-	int len;
++	unsigned int len;
+ 	struct cache_entry *new_entry;
+ 
+ 	if (alias->ce_flags & CE_ADDED)
+@@ -902,7 +905,7 @@ struct cache_entry *make_cache_entry(struct index_state *istate,
+ 				     unsigned int refresh_options)
+ {
+ 	struct cache_entry *ce, *ret;
+-	int len;
++	size_t len;
+ 
+ 	if (verify_path_internal(path, mode) == PATH_INVALID) {
+ 		error(_("invalid path '%s'"), path);
+@@ -931,7 +934,7 @@ struct cache_entry *make_transient_cache_entry(unsigned int mode,
+ 					       struct mem_pool *ce_mem_pool)
+ {
+ 	struct cache_entry *ce;
+-	int len;
++	size_t len;
+ 
+ 	if (!verify_path(path, mode)) {
+ 		error(_("invalid path '%s'"), path);
+@@ -982,7 +985,7 @@ int chmod_index_entry(struct index_state *istate, struct cache_entry *ce,
+ 
+ int ce_same_name(const struct cache_entry *a, const struct cache_entry *b)
+ {
+-	int len = ce_namelen(a);
++	unsigned int len = ce_namelen(a);
+ 	return ce_namelen(b) == len && !memcmp(a->name, b->name, len);
+ }
+ 
+@@ -1109,8 +1112,8 @@ static int has_file_name(struct index_state *istate,
+ 			 const struct cache_entry *ce, int pos, int ok_to_replace)
+ {
+ 	int retval = 0;
+-	int len = ce_namelen(ce);
+-	int stage = ce_stage(ce);
++	unsigned int len = ce_namelen(ce);
++	unsigned int stage = ce_stage(ce);
+ 	const char *name = ce->name;
+ 
+ 	while (pos < istate->cache_nr) {
+@@ -1151,7 +1154,7 @@ int strcmp_offset(const char *s1, const char *s2, size_t *first_change)
+ 			break;
+ 
+ 	*first_change = k;
+-	return (unsigned char)s1[k] - (unsigned char)s2[k];
++	return (const unsigned char)s1[k] - (const unsigned char)s2[k];
+ }
  
  /*
-- * A global counter block to aggregrate values from the partial sums
-+ * A global counter block to aggregate values from the partial sums
-  * from each thread.
-  */
- static struct tr2_counter_block final_counter_block; /* access under tr2tls_mutex */
-diff --git a/trace2/tr2_tls.h b/trace2/tr2_tls.h
-index f9049805d4..a72dd54561 100644
---- a/trace2/tr2_tls.h
-+++ b/trace2/tr2_tls.h
-@@ -12,7 +12,7 @@
-  */
+@@ -1598,7 +1601,7 @@ int refresh_index(struct index_state *istate, unsigned int flags,
+ 		  const struct pathspec *pathspec,
+ 		  char *seen, const char *header_msg)
+ {
+-	int i;
++	unsigned int i;
+ 	int has_errors = 0;
+ 	int really = (flags & REFRESH_REALLY) != 0;
+ 	int allow_unmerged = (flags & REFRESH_UNMERGED) != 0;
+@@ -2762,7 +2765,7 @@ static int ce_write_entry(struct hashfile *f, struct cache_entry *ce,
+ 	size = offsetof(struct ondisk_cache_entry,data) + ondisk_data_size(ce->ce_flags, 0);
  
- /*
-- * Arbitry limit for thread names for column alignment.
-+ * Arbitrary limit for thread names for column alignment.
-  */
- #define TR2_MAX_THREAD_NAME (24)
+ 	if (!previous_name) {
+-		int len = ce_namelen(ce);
++		unsigned int len = ce_namelen(ce);
+ 		copy_cache_entry_to_ondisk(ondisk, ce);
+ 		hashwrite(f, ondisk, size);
+ 		hashwrite(f, ce->name, len);
+@@ -2842,8 +2845,8 @@ static int repo_verify_index(struct repository *repo)
  
--- 
-2.39.0
+ int has_racy_timestamp(struct index_state *istate)
+ {
+-	int entries = istate->cache_nr;
+-	int i;
++	unsigned int entries = istate->cache_nr;
++	unsigned int i;
+ 
+ 	for (i = 0; i < entries; i++) {
+ 		struct cache_entry *ce = istate->cache[i];
+@@ -3471,7 +3474,7 @@ int repo_read_index_unmerged(struct repository *repo)
+ 	for (i = 0; i < istate->cache_nr; i++) {
+ 		struct cache_entry *ce = istate->cache[i];
+ 		struct cache_entry *new_ce;
+-		int len;
++		unsigned int len;
+ 
+ 		if (!ce_stage(ce))
+ 			continue;
+diff --git a/run-command.c b/run-command.c
+index 756f1839aab..511bed961c3 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -1632,9 +1632,9 @@ static void pp_buffer_stderr(struct parallel_processes *pp,
+ 			     const struct run_process_parallel_opts *opts,
+ 			     int output_timeout)
+ {
+-	int i;
++	size_t i;
+ 
+-	while ((i = poll(pp->pfd, opts->processes, output_timeout) < 0)) {
++	while (poll(pp->pfd, opts->processes, output_timeout) < 0) {
+ 		if (errno == EINTR)
+ 			continue;
+ 		pp_cleanup(pp, opts);
+@@ -1642,11 +1642,12 @@ static void pp_buffer_stderr(struct parallel_processes *pp,
+ 	}
+ 
+ 	/* Buffer output from all pipes. */
+-	for (size_t i = 0; i < opts->processes; i++) {
++	for (i = 0; i < opts->processes; i++) {
+ 		if (pp->children[i].state == GIT_CP_WORKING &&
+ 		    pp->pfd[i].revents & (POLLIN | POLLHUP)) {
+-			int n = strbuf_read_once(&pp->children[i].err,
+-						 pp->children[i].process.err, 0);
++			ssize_t n = strbuf_read_once(
++				&pp->children[i].err,
++				pp->children[i].process.err, 0);
+ 			if (n == 0) {
+ 				close(pp->children[i].process.err);
+ 				pp->children[i].state = GIT_CP_WAIT_CLEANUP;
+diff --git a/strbuf.c b/strbuf.c
+index 0890b1405c5..3b500636eb1 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -172,7 +172,7 @@ struct strbuf **strbuf_split_buf(const char *str, size_t slen,
+ 	struct strbuf *t;
+ 
+ 	while (slen) {
+-		int len = slen;
++		size_t len = slen;
+ 		if (max <= 0 || nr + 1 < max) {
+ 			const char *end = memchr(str, terminator, slen);
+ 			if (end)
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index e87950de32e..d4bec9905ff 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -210,8 +210,8 @@ static long ff_regexp(const char *line, long len,
+ {
+ 	struct ff_regs *regs = priv;
+ 	regmatch_t pmatch[2];
+-	int i;
+-	int result;
++	size_t i;
++	long result;
+ 
+ 	/* Exclude terminating newline (and cr) from matching */
+ 	if (len > 0 && line[len-1] == '\n') {
+@@ -244,7 +244,7 @@ static long ff_regexp(const char *line, long len,
+ 
+ void xdiff_set_find_func(xdemitconf_t *xecfg, const char *value, int cflags)
+ {
+-	int i;
++	size_t i;
+ 	struct ff_regs *regs;
+ 
+ 	xecfg->find_func = ff_regexp;
 
+base-commit: 6bae53b138a1f38d8887f6b46d17661357a1468b
+-- 
+gitgitgadget
