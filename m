@@ -2,70 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8593C4332F
-	for <git@archiver.kernel.org>; Thu, 29 Dec 2022 06:52:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F3B7DC4332F
+	for <git@archiver.kernel.org>; Thu, 29 Dec 2022 07:03:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230416AbiL2GwD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Dec 2022 01:52:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41330 "EHLO
+        id S231264AbiL2HDG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Dec 2022 02:03:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229644AbiL2GwB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Dec 2022 01:52:01 -0500
-Received: from mail-4317.proton.ch (mail-4317.proton.ch [185.70.43.17])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2938810B61
-        for <git@vger.kernel.org>; Wed, 28 Dec 2022 22:51:59 -0800 (PST)
-Date:   Thu, 29 Dec 2022 06:51:53 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
-        s=protonmail3; t=1672296717; x=1672555917;
-        bh=CiJy9INMqNkzcMogjF2dd8Di5OC9iIaazxR97MHrXrs=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=0xampXmvmt7GHmEr74+GBwlFnPQtdqy0wW+FY6IEkMhQM/hPzB0T7TAFqa/SxID3a
-         8gaEc+mQtXF+fjTQcTx1ZwXYzFsXMVMZ3ORYVL5lOK+SPLJHKtROCbwC2Ki0KuNV78
-         7g3WpRe+UDm5zPhQuhMrrkK2LqT+nbJw5OPsQC+SVrTsIlhvBI6iuaODC4q8dNCKqU
-         47W7AdfsZA7pT1hPqmwL47k8zG/IWoOw+47PE8zu5V9iEIdq0RS+iuTDMGCqxRhYWZ
-         F53F3PcQEi5gYwaEcYv8rvItwxhn2zVNKdr/6VuZJhzVUYhS6Rz96GTgObDPbFOMER
-         tBHcnm/VT3mTg==
-To:     Junio C Hamano <gitster@pobox.com>
-From:   Jacob Abel <jacobabel@nullpo.dev>
-Cc:     git@vger.kernel.org,
-        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-Subject: Re: [PATCH v6 2/4] worktree add: refactor opt exclusion tests
-Message-ID: <20221229065142.fmfviwisjmxsey7b@phi>
-In-Reply-To: <xmqq5ydvpu1o.fsf@gitster.g>
-References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20221104213401.17393-1-jacobabel@nullpo.dev> <20221110233137.10414-1-jacobabel@nullpo.dev> <20221212014003.20290-1-jacobabel@nullpo.dev> <20221220023637.29042-1-jacobabel@nullpo.dev> <20221228061539.13740-1-jacobabel@nullpo.dev> <20221228061539.13740-3-jacobabel@nullpo.dev> <xmqq5ydvpu1o.fsf@gitster.g>
-Feedback-ID: 21506737:user:proton
+        with ESMTP id S231255AbiL2HDC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Dec 2022 02:03:02 -0500
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8869F1260B
+        for <git@vger.kernel.org>; Wed, 28 Dec 2022 23:03:00 -0800 (PST)
+Received: by mail-pj1-x1030.google.com with SMTP id w4-20020a17090ac98400b002186f5d7a4cso22163252pjt.0
+        for <git@vger.kernel.org>; Wed, 28 Dec 2022 23:03:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bLUpzCzK3CQT/3Kph5RW8fbvaVURlll2Bt1na7w4J7c=;
+        b=aB+FbTMO3QW4Mh3BwnFju1H27A7WccYPtqO0/2DZRnyvmpTeX/4PgUR0G/MVHsN0pA
+         Mvo22xjFeXDdF34EohyIs27j2dSavuh20ORsnk82fFsv4iYMnnGk1Ld/RA7+bJ6sjh4w
+         bkjKf+0T9b7VR0L72MEB0kDDHj5H9BCt7SxtVrhXzpA0skmEkvXt/7GAbNPyLOxCrlqe
+         /2JHOZnEnTwSwhugfhtAUBv6y6IFOsbHRKbpEbqa5vItZex3f96WXnvStuIj2cHDZJ/9
+         hg6ViicHGnIyMapcMvOSYikc2i/kqeTeDV0IXaZ/4AVTttoXCAuvTOvCXZUY5vzAS4yB
+         NcEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:subject:cc:to:from:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bLUpzCzK3CQT/3Kph5RW8fbvaVURlll2Bt1na7w4J7c=;
+        b=JsaPZbQbErihkjFxSQq9wQ9XEGbPDHaoIdcGiHBmHUFf8zhxJh/FgTmwVv+DZhefXX
+         COyJMRy6hMIi6tartD7SQnCWtZXTwaz9hFWIAxZXnNRBFz1QfIgIrUfjS06sr5aFXmZj
+         CE/ex/kDJ09w3GyDUMABMUJBEO5aNgXdq77fCeF+LznP/++PUTQfvIbbU1at2y9ivKXw
+         C/cvivkEyZemrryZynPSv+9Q9KH8RoEkgJUr0e3ILmz7WWVSW5rH8ygTlrJ2wuFUt6sM
+         MRkjRJ3pHeGKGYUXdnVKLU9lKSObQEqrRUspSBEYtQnixG6h4jCzk/anpEw+lW1dE/yy
+         dqMQ==
+X-Gm-Message-State: AFqh2krXWctn4Z8HzFI2Bh3LUTzZcdzuUbqS5Mg2shiJfaXYtMwAIKGq
+        rZsTnhhu1XmON22FBDq083w=
+X-Google-Smtp-Source: AMrXdXsEkUYijr8Y0pkHavnGxEIVlVwwXJ3k5KRWn0BTdFNeW0WzccfNbdMyFQoatKjyvERO0hjdaw==
+X-Received: by 2002:a17:902:f38d:b0:192:62df:a3e9 with SMTP id f13-20020a170902f38d00b0019262dfa3e9mr19096045ple.68.1672297379827;
+        Wed, 28 Dec 2022 23:02:59 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id t9-20020a170902e1c900b001927ebc40e2sm6595674pla.193.2022.12.28.23.02.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Dec 2022 23:02:59 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 07/20] stash: fix a "struct pathspec" leak
+References: <cover-00.20-00000000000-20221228T175512Z-avarab@gmail.com>
+        <patch-07.20-e5a0134d1bb-20221228T175512Z-avarab@gmail.com>
+        <ac9621a0-1046-30de-872f-0171412049bd@web.de>
+Date:   Thu, 29 Dec 2022 16:02:59 +0900
+Message-ID: <xmqq1qoiofoc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/12/28 09:54PM, Junio C Hamano wrote:
-> Jacob Abel <jacobabel@nullpo.dev> writes:
+René Scharfe <l.s.r@web.de> writes:
+
+> Am 28.12.22 um 19:00 schrieb Ævar Arnfjörð Bjarmason:
+>> Call clear_pathspec() on the pathspec initialized in
+>> push_stash().
 >
-> > +# Saves parameter sequence/array as a string so they can be safely sto=
-red in a
-> > +# variable and restored with `eval "set -- $arr"`. Sourced from
-> > +# https://stackoverflow.com/a/27503158/15064705
->
-> Please do not copy from source with unknown licensing terms.
+> This puzzled me for a while.  This patch adds an {0} initializer to the
+> declaration of the pathspec.  I assumed that this is necessary to avoid
+> giving clear_pathspec() an uninitialized struct.  It isn't, though,
+> because the pathspec is handed to parse_pathspec() first, which
+> initializes it.  So you can safely drop the first hunk.
 
-Understood. I have removed it.
->
-> Isn't it sufficient to stringify "$*" and let it later split at $IFS
-> boundary for the particular purpose of this test anyway?
-
-Yes for these particular tests that should be acceptable. I tried putting a=
-n
-alternative together that still provides an avenue for handling quoted
-arguments without the helper [1]. Would this work?
-
-1. https://lore.kernel.org/git/20221229063823.ij3jjuaar2fsayju@phi/
-
+It did mislead me too.  I expected that addition of "= { 0 }" was to
+remove memset('\0') somewhere else, but that is not the case.
