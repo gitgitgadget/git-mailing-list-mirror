@@ -2,155 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5EF88C4167B
-	for <git@archiver.kernel.org>; Fri, 30 Dec 2022 17:35:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F1EF3C4167B
+	for <git@archiver.kernel.org>; Fri, 30 Dec 2022 20:06:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231234AbiL3RfU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Dec 2022 12:35:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36868 "EHLO
+        id S235064AbiL3UGI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Dec 2022 15:06:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229681AbiL3RfS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Dec 2022 12:35:18 -0500
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D3EE165A9
-        for <git@vger.kernel.org>; Fri, 30 Dec 2022 09:35:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1672421708; bh=HyQgc15TMc0Xr9mpajE7PvH9aoxhtzjeILuUTWSRDOw=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=avfVDk89P1ZZII8wG0jy3LvhqQBwIT/9aXRAPiC2elcxNyIyy/SQPqBJvKZM++Zov
-         nhqyJ9utodnwqSFhj5i2iV5ODoAwcNIi2ivuM/ow/HoccxGrzaXic1RdZUOaW9BeDl
-         SLK4/su6b4vZFR7H7QDF7qhxRJ5EQxYS8hD7LFA2Hgq0hdo4wFLyb9AVMrjY+E13uL
-         hyGKjwdW+ky6iZfgipohsx0FEltrNnaHxSBks0UH/bvsWLpMTF0BEgfdsCx7TbdV5u
-         zLbliDhr64ihtPbvH8SHbBxBhp7Yt2hj5UGyIn3VYhT7YQdtTk/RmEQ5LM6jnOc3VL
-         Cl2oPiwl9+rxg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.151.35]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MDv9a-1p1NfM1lA4-00APXs; Fri, 30
- Dec 2022 18:35:08 +0100
-Message-ID: <efa1d3d9-03a8-6558-fdfa-ff2d776cdacb@web.de>
-Date:   Fri, 30 Dec 2022 18:35:07 +0100
+        with ESMTP id S229464AbiL3UGH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Dec 2022 15:06:07 -0500
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com [IPv6:2607:f8b0:4864:20::b33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9C1D1A833
+        for <git@vger.kernel.org>; Fri, 30 Dec 2022 12:06:05 -0800 (PST)
+Received: by mail-yb1-xb33.google.com with SMTP id j206so24555761ybj.1
+        for <git@vger.kernel.org>; Fri, 30 Dec 2022 12:06:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=VHt4lw/QRU0mj50zF5JbRBxzxE+JjcRdHwRdBs1eumA=;
+        b=bC045j5Gs3Z4cbhlRrwL7cag4zrsfbWBHfYaZxjxBGBM1M3W5S7KJvQZ0Lf6nAJh9p
+         0afNjYWfrWfgDpX9PGLshjNkq9Hrsq8zZYzJZ7PkPcEQmxfVaBV/C/ofTjlDtW+7Rd7x
+         oMJ99ErRz/psshEvc3m3kNeOkThF4hOCyNCD9pwuFLhhz30svyepjeD+LGiK2jiazsev
+         nx0kvZ86W7fl7z/c+hFJ6PR6RbFofQur3+32NEqySLextdDfNWg9AT9QSGE+0JgtQs11
+         R+D2HPyRMdxDw4bItf/8bnuYnFf+Oz64iu0RmJjMEQoqDXoCyMXTGwcoophU7Xt4BmAb
+         UlUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=VHt4lw/QRU0mj50zF5JbRBxzxE+JjcRdHwRdBs1eumA=;
+        b=vmIS0hhjc0i6bIDdQJ1uWuga+2W96C7Ucu7nd4A5bRCzPF5rhsRXVrXYBgaGzJiP8F
+         KemWyCe9fwCZ4xQFBulFilrK9Hk+kQFU0rzwpxiYBs2yTC/gbOWMgzGv9BpRikSGTq7s
+         k+uYOjk5ifP+Ol2A8k2h5cIPlI6g3uUykxrugSF4SjAM8kteHWzuIwYS2Rf7DonA9l88
+         e7Ai/5xBhUcdNOx9xq+R3zmt9wnOMBw44M4xRMLcUT8H0sADeGrI3RaZCb+r5vx22bcl
+         s6RL3O4MhsDsjYJs15nWXLpYLgmMD626gVaO89C5mvVJEv8YNu3ZY92NnhT8mhkvSqJG
+         QP4g==
+X-Gm-Message-State: AFqh2krxcnLYp5If3Ndc76q94gn2wYwEfRz+NchAiDCZGwGMbdVu/0CV
+        cGnJUTdqQsYOAcSz7D91IQ4lPgKi9z+y2TkvKNzecrK9ivY=
+X-Google-Smtp-Source: AMrXdXsM2KjsvFGgMxrpI6BELHTK4/XrpiJv0F4KpnxGax6CSz268QiEwdLYwTp0B5px+Mgq1p6OUaYBR4PKCy5V0Sc=
+X-Received: by 2002:a25:7910:0:b0:6f6:e111:a9ec with SMTP id
+ u16-20020a257910000000b006f6e111a9ecmr2439678ybc.259.1672430764562; Fri, 30
+ Dec 2022 12:06:04 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.1
-Subject: Re: [PATCH 02/10] sequencer.c: split up sequencer_remove_state()
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 30 Dec 2022 21:05:53 +0100
+Message-ID: <CAP8UFD1uDd6d-8Qk-4Uxrn55wzuqRnr6s6AaQ5Gh+KE8L+g8OA@mail.gmail.com>
+Subject: Draft of Git Rev News edition 94
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>
-References: <cover-00.10-00000000000-20221230T071741Z-avarab@gmail.com>
- <patch-02.10-4994940a0a9-20221230T071741Z-avarab@gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <patch-02.10-4994940a0a9-20221230T071741Z-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:i/BriRONLbmyEuNyHzQjeQaoNgwradFQ9k0DFQ6MKPRiGU2CGN0
- x2rse0z7aEW98pZgyyVLfRNPzKhNkezjRU5Km2uETXgVbWurfwkxDGaaNz0EBp8RpJBbRxb
- AHjY2xOQ8a7gn0RPkFLERtbTHEk+nWcBGfPjcttnB9uxyqsp4Ymenkg7ntOlBfALn9vfBvM
- xu3vksUnht9pGwzO9OOZQ==
-UI-OutboundReport: notjunk:1;M01:P0:xHVrqevEMaw=;tTHu1y5H8h0yC/5eBtFzRNQqJDX
- Zr2QHIpXUctv5EzclHwBPniveGJbOOjdmaZBXjik1ToltZ+NYbCbScEtFVLG7ZAKual3u9Adg
- hO+XLoXceZO2n3GSaNlqGCyXIXgdPHrpm2y4YMJJ/9qBrGGo++klGmLXBGCwA6Ka/Zai7hQ65
- SCXugCsA/LIes79gHxNUTFyH2pT1QyI4XUhwRR7duFo4aWdjllcyTLO9LZs1dVxSyuwxC8fJA
- rkjPHX2giJDm8UZJu2FOqNq1jPvl/7fHkkfBGEomgkYghokYvlVGsGm61/puYWpTOcOH+9j59
- C274nCV/dQRB0M+JdKSAj34pDXtxv42VSolaQ4Fy0mYcb9cy35kK0EpbSonwZksufEMtd3jf8
- VHNMvT3thkG1KOUuhsgTyWx0a87d3mHw4DWRs1gvP3xS4WwDLsFl7zSmicmmR/MG7jF13rTLF
- sd91V4YwyypmnbfZF2FIjJT2QAJ49m/e9hkvhfC40A1/J/U9z/ouTISmWApRYaFbTCYYxg3BS
- N2U6W6wVUm71tjt4WqDTHsmywSz7EDUehxdXKQEcGo0coKa1GS2lTYNEvvjoF64YZCcGr7Rol
- qyGJOKD+Ty2LPUheizgsS2hsl+gq7OKZhrkUG4iCNryoD8wF2NNn5hAsDxSJVtVVockPMKZ/L
- qPb9TMg2eoqDJHONl6XniJGZzehAO3LwzUy4duWovWl0kyMhqypRX0O9EUhv/SQvoqqY719eb
- DvjLKLKH5V2aJsNnPgenf2uMlA/Vq4W/DgagzsdZfm2V8yHd+dizEyzej/uNhoOAp9qIFaT5J
- J4dn708gZlfAZf9L0hhqKdIuXVm5KMhv63lWirLl9Dy7KSGJfKUC9vGQmROjdOQQbrudAId/v
- qqZIj0rQttgMTGkYam6+nKBWRsUegHE03/kuhDTvI4b47PG3MKMFhiYglNx9ACyQEYRbcpN+R
- kWiujw==
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Philippe Blain <levraiphilippeblain@gmail.com>,
+        Martin Englund <martin@englund.nu>,
+        Philip Oakley <philipoakley@iee.email>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Elijah Newren <newren@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>,
+        Siddharth Asthana <siddharthasthana31@gmail.com>,
+        Mirth Hickford <mirth.hickford@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 30.12.22 um 08:28 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> Split off the free()-ing in sequencer_remove_state() into a utility
-> function, which will be adjusted and called independent of the other
-> code in sequencer_remove_state() in a subsequent commit.
->
-> The only functional changes here are:
->
->  * Changing the "int" to a "size_t", which is the correct type, as
->    "xopts_nr" is a "size_t".
+Hi everyone!
 
-Good, and you declare it in the for statement, which we can do now!
+A draft of a new Git Rev News edition is available here:
 
->
->  * Calling the free() before the "if (is_rebase_i(opts) && ...)",
->    which is OK, and makes a subsequent change smaller.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-94.md
 
-It's true that is_rebase_i() can be called after all that free()ing;
-here is its definition:
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-	static inline int is_rebase_i(const struct replay_opts *opts)
-	{
-		return opts->action =3D=3D REPLAY_INTERACTIVE_REBASE;
-	}
+  https://github.com/git/git.github.io/issues/620
 
-But why?  Making a subsequent change smaller is just a trivial fact if
-you do a part if it earlier, but that in itself is not a valid reason
-for the reordering.
+You can also reply to this email.
 
-And I can't find that patch -- sequencer_remove_state() is not touched
-again in this series.
+In general all kinds of contributions, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub,
+volunteering for being interviewed and so on, are very much
+appreciated.
 
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-> ---
->  sequencer.c | 25 +++++++++++++++----------
->  1 file changed, 15 insertions(+), 10 deletions(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index bcb662e23be..655ae9f1a72 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -351,10 +351,24 @@ static const char *gpg_sign_opt_quoted(struct repl=
-ay_opts *opts)
->  	return buf.buf;
->  }
->
-> +static void replay_opts_release(struct replay_opts *opts)
-> +{
-> +	free(opts->gpg_sign);
-> +	free(opts->reflog_action);
-> +	free(opts->default_strategy);
-> +	free(opts->strategy);
-> +	for (size_t i =3D 0; i < opts->xopts_nr; i++)
-> +		free(opts->xopts[i]);
-> +	free(opts->xopts);
-> +	strbuf_release(&opts->current_fixups);
-> +}
-> +
->  int sequencer_remove_state(struct replay_opts *opts)
->  {
->  	struct strbuf buf =3D STRBUF_INIT;
-> -	int i, ret =3D 0;
-> +	int ret =3D 0;
-> +
-> +	replay_opts_release(opts);
->
->  	if (is_rebase_i(opts) &&
->  	    strbuf_read_file(&buf, rebase_path_refs_to_delete(), 0) > 0) {
-> @@ -373,15 +387,6 @@ int sequencer_remove_state(struct replay_opts *opts=
-)
->  		}
->  	}
->
-> -	free(opts->gpg_sign);
-> -	free(opts->reflog_action);
-> -	free(opts->default_strategy);
-> -	free(opts->strategy);
-> -	for (i =3D 0; i < opts->xopts_nr; i++)
-> -		free(opts->xopts[i]);
-> -	free(opts->xopts);
-> -	strbuf_release(&opts->current_fixups);
-> -
->  	strbuf_reset(&buf);
->  	strbuf_addstr(&buf, get_dir(opts));
->  	if (remove_dir_recursively(&buf, 0))
+I tried to Cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
+
+Jakub, Markus, Kaartic and I plan to publish this edition on Sunday
+January 1st in the evening.
+
+Thanks,
+Christian.
