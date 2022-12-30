@@ -2,143 +2,140 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BB46FC4332F
-	for <git@archiver.kernel.org>; Fri, 30 Dec 2022 06:07:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7D96CC4332F
+	for <git@archiver.kernel.org>; Fri, 30 Dec 2022 07:28:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234523AbiL3GHP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Dec 2022 01:07:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36254 "EHLO
+        id S234629AbiL3H2Z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Dec 2022 02:28:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234521AbiL3GHM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Dec 2022 01:07:12 -0500
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EE13FCC3
-        for <git@vger.kernel.org>; Thu, 29 Dec 2022 22:07:11 -0800 (PST)
-Received: by mail-pf1-x430.google.com with SMTP id k137so9134614pfd.8
-        for <git@vger.kernel.org>; Thu, 29 Dec 2022 22:07:11 -0800 (PST)
+        with ESMTP id S230405AbiL3H2V (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Dec 2022 02:28:21 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3029F18E09
+        for <git@vger.kernel.org>; Thu, 29 Dec 2022 23:28:20 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id m26-20020a05600c3b1a00b003d9811fcaafso8145641wms.5
+        for <git@vger.kernel.org>; Thu, 29 Dec 2022 23:28:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AAenKjPtIkMlG+C4Hef1goi7QqbXfz/ONzW4GA2f1Q0=;
-        b=kgdgfGiv9VOedKr10BipH7IcM7vh6Pu4+bGFqDAIi4Mp8lDKxfxSxzvVFuABCJ73FB
-         KqbmXdsOdCNUixiiwfy44qhdYEiXhh4Ph5VM6oW6ASDDT27FNTfRT59d2fgs31fnmMnE
-         VaYVcCh9Rp75wRTc2a3XDNvUZh94LCDgod2JrydPIaj1+5G/Blm1ClHd62nGvF1TmHDv
-         EMZU53M8fDTOvJEmp59pFyoezkc+EXRuBMFMhJdrujtAeiB2hhCMDXAOXKFqUwAjtskv
-         B1NRkbERbr0C5tzTfVPevgpmzTlwHhciRwY3qRI43LE3pzvl7ADsxRjottlaQlhJFZB9
-         qj6A==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OJMpYJWDmmKV+lHuO18zvZX8WDVA7DvLNVfig9FOXsM=;
+        b=Xl120IgStGY210JzmW+l0aFDJv8PmGVbAbq0BW4IGm0yStTB0uXs8TI5CA1/caGZlM
+         NfGSHvRTZi0Kr7NJW90M8Bhh984SC3NryNLZ0IXw1P5W4+ijmZtx38QJye5+7v6Ozwt7
+         HwblzNlLwSQ0CFC5aaQYPXkrLvCdvL7ZuTnuhgHUt0SLW5Drh5GYgbFNV51yhc8m0ilE
+         6yQ5qu6OaGFSQVD6aK1QNXXFTbQ1ph3fV9rgZHBoeExAJCnbab450SKXKyDzZtLJy7No
+         W/TkxH+29cTTMJHboBRUcNiAl/50Sxpz54ACp5XuVRpV7coW40cWnbhzLeuOcRX4V0Ax
+         h2Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AAenKjPtIkMlG+C4Hef1goi7QqbXfz/ONzW4GA2f1Q0=;
-        b=dKi7HBIwSamHI5yhZneS37OIyrljxlNodpLqGMqE8fhL3rf79jSCiGK5xsKlFi39ud
-         EHOXSk7WlNO5fqgZDhB3yPeDpiIXWNsHGn4yAHUd4T3fOL5yof15kSacnb8TYs2BUPyw
-         bxcC3EJfDtiBfa71uB5XzHyxG8eEzRZZV+xWKqmZI1oa9X4azBiFtOH9nhWWQeZnRfnY
-         jbJ0NzSz1KWz+Nb9Zs1n8Fv7zSAbwAy+MerYNlZgAAzKHhL4ejwrzmg8/HbgNjC7Vn2L
-         UaciMOxJanA+LXijNfLN90jOTkyUp4HSMzovEdE+NjbQGHiR94LmjuONyxL1bP8/0oq6
-         19oQ==
-X-Gm-Message-State: AFqh2krUUO72avJveiRPyBvIijdjKZpS12HlOOqPg4K40C8B2nYPtGwn
-        k6ckrIpklSYzFlpX0mUMih4=
-X-Google-Smtp-Source: AMrXdXtLHGqrHwAHMFkZ3sHZtnifebaWyY6U+HvC0CbHwAZHprh1oE9PhI0EJMsAaFPsZmqMeiH6jw==
-X-Received: by 2002:a62:ee0e:0:b0:578:f6f:efab with SMTP id e14-20020a62ee0e000000b005780f6fefabmr35869995pfi.11.1672380430780;
-        Thu, 29 Dec 2022 22:07:10 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id g7-20020a625207000000b00573a9d13e9esm9655773pfb.36.2022.12.29.22.07.10
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OJMpYJWDmmKV+lHuO18zvZX8WDVA7DvLNVfig9FOXsM=;
+        b=3YwNApzVMwHsf73jsu2SIUjOeU32k1bDcTeRRqZ4X1/y4O6ZVjDv5hsFrPVeFHWopf
+         OhdqkQ241QalHP9UJYlhCPTtOYzXf+dbevRa5NbY2wjOMcARsi80A6G1Ic84sSZCu6aT
+         VeStOgyScuxGneUxz12/MXPckclU3EfJspmhzOPXjAbp6/RBeH2+13N4kObYIDVXenWB
+         tkxbPrbe/r2btGcx3nchlufbHbzkd7GDyZRxtC+FbiTs44ks/4I2uBIHTKHubxACieso
+         vPuYCceqFdfYw135eVSB2iqmzZrPDCCnQdVTqJAQCSCbLuBv6sw1EptwOivzad5rPXXd
+         UKJQ==
+X-Gm-Message-State: AFqh2ko/z3x10AgB01SclWKfuRkpL9trEgt/1cbws5gEa3qR5PXBCPYK
+        tRR3S3rClC2xGraqH89ftXIy1z/KUXZZxQ==
+X-Google-Smtp-Source: AMrXdXvEWm+qgmmSUnQ+pVEFMYMbyJ2XZbBconvTr+ypA+CKkUq6mhBU8hyvWZQYi4QeCzcy3YGxdA==
+X-Received: by 2002:a05:600c:48a1:b0:3d1:f270:a81e with SMTP id j33-20020a05600c48a100b003d1f270a81emr21971078wmp.17.1672385298118;
+        Thu, 29 Dec 2022 23:28:18 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id v13-20020a05600c444d00b003d998412db6sm6526449wmn.28.2022.12.29.23.28.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Dec 2022 22:07:10 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
-        Jeff King <peff@peff.net>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Kousik Sanagavarapu <five231003@gmail.com>
-Subject: Re: [PATCH v2 2/3] tag: don't misreport type of tagged objects in
- errors
-References: <cover-0.4-00000000000-20221118T113442Z-avarab@gmail.com>
-        <cover-v2-0.3-00000000000-20221230T011725Z-avarab@gmail.com>
-        <patch-v2-2.3-96398731841-20221230T011725Z-avarab@gmail.com>
-Date:   Fri, 30 Dec 2022 15:07:09 +0900
-In-Reply-To: <patch-v2-2.3-96398731841-20221230T011725Z-avarab@gmail.com>
-        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 30 Dec
- 2022 02:52:15
-        +0100")
-Message-ID: <xmqqsfgxjugi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Thu, 29 Dec 2022 23:28:17 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH 00/10] sequencer API & users: fix widespread leaks
+Date:   Fri, 30 Dec 2022 08:28:05 +0100
+Message-Id: <cover-00.10-00000000000-20221230T071741Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.39.0.1153.g589e4efe9dc
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+This series fixes various widespread leaks in the sequencer and its
+users (rebase, revert, cherry-pick). As a result 18 tests become
+leak-free in their entirety.
 
-> diff --git a/blob.c b/blob.c
-> index 8f83523b0cd..d6e3d64213d 100644
-> --- a/blob.c
-> +++ b/blob.c
-> @@ -5,12 +5,19 @@
->  
->  const char *blob_type = "blob";
->  
-> -struct blob *lookup_blob(struct repository *r, const struct object_id *oid)
-> +struct blob *lookup_blob_type(struct repository *r,
-> +			      const struct object_id *oid,
-> +			      enum object_type type)
->  {
->  	struct object *obj = lookup_object(r, oid);
->  	if (!obj)
->  		return create_object(r, oid, alloc_blob_node(r));
-> -	return object_as_type(obj, OBJ_BLOB, 0);
-> +	return object_as_type_hint(obj, OBJ_BLOB, type);
-> +}
-> +
-> +struct blob *lookup_blob(struct repository *r, const struct object_id *oid)
-> +{
-> +	return lookup_blob_type(r, oid, OBJ_NONE);
->  }
+The main change is the 3/10 here, where we introduce a
+replay_opts_release() to free the "struct replay_opts". The rest is
+then either refactorings to be able to call that destructor
+(e.g. "return" to "goto cleanup"), or other miscellanious adjacent
+leaks.
 
-Between lookup_blob() and lookup_blob_type(), the distinction is
-that the latter calls object_as_type_hint() to ensure that the real
-type of the given object is of the type, which is given as "hint"?
+This is a follow-up to the discussion ending at [1], as noted there
+the recent ff84d031a9d (Merge branch 'pw/rebase-no-reflog-action',
+2022-11-23) ended up introducing a leak because of the disfunctional
+lack of a destructor (or rather, the current logic being tied up in
+sequencer_remove_state().
 
-Very confusing naming.  Perhaps because "hint" argument given to
-"as-type-hint" is playing a role that is FAR stronger than "hint"?
-It sounds more like enforcement.  Perhaps s/hint/check/ or something?
+This can be queued and graduated independently of the other concurrent
+leak series I've submitted[2]. When the two are combined we'll end up
+passing more tests, i.e. both topics combined get us over the finish
+line for some of them, but neither one is enough in isolation.
 
-I am not sure exactly why, but lookup_blob_type() does look
-confusing.  A natural question anybody would ask after seeing the
-function mame and the extra parmater is: "If we want/expect to see a
-blob, why do we give an extra type?"  To answer that question, "_type"
-at the end of the function name and "type" that is an extra argument
-should say what that thing is used for.  "enum object_type" is enough
-to say what the extra argument is---we should use the parameter name
-to convey what it is there for.
+But that's OK, we just won't opt them into the "linux-leaks"
+testing. I'll submit a follow-up similar to [3] at some later date to
+mark them as passing. I think that's a better trade-off than making
+these two depend on one another.
 
-> +void *object_as_type_hint(struct object *obj, enum object_type type,
-> +			  enum object_type hint)
-> +{
-> +	if (hint != OBJ_NONE && obj->type != OBJ_NONE && obj->type != type) {
-> +		error(_("object %s is a %s, not a %s"), oid_to_hex(&obj->oid),
-> +		      type_name(type), type_name(obj->type));
-> +		obj->type = type;
-> +		return NULL;
-> +	}
+1. https://lore.kernel.org/git/221108.864jv9sc9r.gmgdl@evledraar.gmail.com/
+2. https://lore.kernel.org/git/cover-v2-00.20-00000000000-20221230T020341Z-avarab@gmail.com/
+3. https://lore.kernel.org/git/patch-v2-01.20-3de29c6d75f-20221230T020341Z-avarab@gmail.com/
 
-There must be something utterly wrong in the above implementation.
-As long as "hint" is ANY type other than OBJ_NONE, "check if type
-and obj->type match and otherwise complain" logic kicks in, and the
-actual value of "hint" does not contribute anything to the outcome.
+Ævar Arnfjörð Bjarmason (10):
+  rebase: use "cleanup" pattern in do_interactive_rebase()
+  sequencer.c: split up sequencer_remove_state()
+  rebase & sequencer API: fix get_replay_opts() leak in "rebase"
+  builtin/revert.c: refactor run_sequencer() return pattern
+  builtin/revert.c: fix common leak by using replay_opts_release()
+  builtin/revert.c: move free-ing of "revs" to replay_opts_release()
+  builtin/rebase.c: fix "options.onto_name" leak
+  sequencer.c: always free() the "msgbuf" in do_pick_commit()
+  builtin/rebase.c: free() "options.strategy_opts"
+  commit.c: free() revs.commit in get_fork_point()
 
-IOW, the "hint" parameter is misleading to be "enum object_type", as
-it is only used as a Boolean "do we bother to check?".
+ builtin/rebase.c                       | 19 +++++-----
+ builtin/revert.c                       | 40 +++++++++++----------
+ commit.c                               |  1 +
+ sequencer.c                            | 48 +++++++++++++++++---------
+ sequencer.h                            |  1 +
+ t/t3405-rebase-malformed.sh            |  1 +
+ t/t3412-rebase-root.sh                 |  1 +
+ t/t3416-rebase-onto-threedots.sh       |  1 +
+ t/t3419-rebase-patch-id.sh             |  1 +
+ t/t3423-rebase-reword.sh               |  1 +
+ t/t3425-rebase-topology-merges.sh      |  2 ++
+ t/t3431-rebase-fork-point.sh           |  1 +
+ t/t3432-rebase-fast-forward.sh         |  1 +
+ t/t3437-rebase-fixup-options.sh        |  1 +
+ t/t3438-rebase-broken-files.sh         |  2 ++
+ t/t3501-revert-cherry-pick.sh          |  1 +
+ t/t3502-cherry-pick-merge.sh           |  1 +
+ t/t3503-cherry-pick-root.sh            |  1 +
+ t/t3506-cherry-pick-ff.sh              |  1 +
+ t/t3511-cherry-pick-x.sh               |  1 +
+ t/t7402-submodule-rebase.sh            |  1 +
+ t/t9106-git-svn-commit-diff-clobber.sh |  1 -
+ t/t9164-git-svn-dcommit-concurrent.sh  |  1 -
+ 23 files changed, 82 insertions(+), 47 deletions(-)
 
-> +	return object_as_type(obj, type, 0);;
+-- 
+2.39.0.1153.g589e4efe9dc
 
-Stray extra semicolon at the end.
-
-> +}
