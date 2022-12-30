@@ -2,237 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 62DEDC4332F
-	for <git@archiver.kernel.org>; Fri, 30 Dec 2022 03:13:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EF988C4332F
+	for <git@archiver.kernel.org>; Fri, 30 Dec 2022 04:25:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234415AbiL3DNX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Dec 2022 22:13:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56806 "EHLO
+        id S234162AbiL3EZ5 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Dec 2022 23:25:57 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229607AbiL3DNW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Dec 2022 22:13:22 -0500
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB23813D48
-        for <git@vger.kernel.org>; Thu, 29 Dec 2022 19:13:18 -0800 (PST)
-Received: by mail-pg1-x534.google.com with SMTP id w37so13472224pga.5
-        for <git@vger.kernel.org>; Thu, 29 Dec 2022 19:13:18 -0800 (PST)
+        with ESMTP id S230355AbiL3EZy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Dec 2022 23:25:54 -0500
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01A926308
+        for <git@vger.kernel.org>; Thu, 29 Dec 2022 20:25:52 -0800 (PST)
+Received: by mail-pl1-x634.google.com with SMTP id g16so11128404plq.12
+        for <git@vger.kernel.org>; Thu, 29 Dec 2022 20:25:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LkgbhfT4hGqavIC8xbClZyowbFYCOcLLGbUPDfsrBR8=;
-        b=cHhgolzQ84BSOZMtvK3QVluHrsBsgVFiei+chUCPSQSbbxd6yuK1/UhaB2V58vNpYo
-         l96zCfrEberygDdXDbA4o0kmQ6Ceo55aIlajFNWDLJWbdctOnC5aRMQ6PG96RM51s9m2
-         3g3YgCEM0uRjvuLZt2qOI124pIjAc+FGyH0PtpreRdG1rVXG39SdpRqZK8m0LAsXjz8t
-         dJQ412tOx944HIGnDr32FpYdHaDbSRJiKl+p3LSBkPFViyCXUWYUQaVnI9WVaVPYT4jz
-         4DaRelg8Av8e/B55gSyii0NISrq9lN22b6eg2B9hz+pASVxJ5Tv4480rFmaqeZcrnB5G
-         tlGA==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TijNPxLahhl6fzKIyeqauQsKuLVN0bj+zyN1p4QLei0=;
+        b=lRya8zSSfFA7X9nQpSzwUc1KmbnWb1LSeFFLa/0GddDL4R9Bh94WAKcRVhKHdr6Qo2
+         NQEn4N0PVmxiuQUwMZHF7sNISgA43aOPte9/jVI0QzuXHz3cuqWByc5IWRz/e31fFIKy
+         SZ2gI3HiZ11SBgV46J9R0QdgkaP6sxgXceu4PNKsrc5mqx9c3+NI859BhU96zVgWoNx1
+         gbdYtQlAZpglGZrhfiwcOjo3W1TX4PlqLbMUHDbp9oZXohHvT3iEOd+1KVkMldMqFkbE
+         T9K/3f/GOZ6BPfodeDY1k1u0q1h7bYpT6vw6ioD/qqQNRPjfOYsV8SnQC4sKush3yMq8
+         939g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=LkgbhfT4hGqavIC8xbClZyowbFYCOcLLGbUPDfsrBR8=;
-        b=YHwFdPDE/04/pKFlA2w0xinR/og+m0G/l4Dfmae1ZgDbYd6VOXoAEQRF9qOprdsMR7
-         hlGvX7QWZksRZXTJ+qqxKT6dGZDbzvSP5fJbm4IEnmYMUQCyV32D9rRYd3pR1xx4hLYk
-         Ez92+Pg8AuSvjLaVleGACuXbt2imhFlyN1i/R4LR9FvO1ACRYQn6/XE3KDwZuHzuxHb0
-         TJGKdykO+K36ixPP+RqAFvLpIi0lEqiKm90tppfCwbTWjTluLQWGeaSj8NVXy1qhrqNX
-         8G/Ly3CD6T2ZIIsEXIOjh+MTDGdvp6ouSzJ33SYEVeigZcqsVTNRU3VmgQaVXP7Y3MBM
-         1nDg==
-X-Gm-Message-State: AFqh2koV9n9fDioRRRF8eZr2HoTCSDcVJrcNsmscXBFf3GY5fBvSc+Gw
-        EI/fp0NZXT1Gbukw4M9jmnDjFczIXFYaLg==
-X-Google-Smtp-Source: AMrXdXvDlwsa31VFy99+87BVi5ArEnmDrbIIgkvKnFpR6tNTsU61SbDxoHSBsUjSqtJvEXzHNy6aTA==
-X-Received: by 2002:aa7:8215:0:b0:580:9151:afe5 with SMTP id k21-20020aa78215000000b005809151afe5mr23948276pfi.22.1672369997805;
-        Thu, 29 Dec 2022 19:13:17 -0800 (PST)
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TijNPxLahhl6fzKIyeqauQsKuLVN0bj+zyN1p4QLei0=;
+        b=4iSaJCdrg5BEtSN3bRou8lU9lTr46ncboMHVgJ0YIlU4CpXVkVSVM6EcNKb5GVSBfl
+         wA4OaNks3N9Be545CkgWyIuXNjTOND/4mr444YXzCk0IHZaUe3a9p8hPbzQqHEj1OcwN
+         NERH90VWj+jnNgI6gYHQXFyHARoeSud//rrKVCEPhRMYJH9JfSR+Z24x4EOzR8cuPCwz
+         QfX8HofcWAPbtZ8Gday22sMemcrsv5H3zDtMjZvvZfIGmeS93kMdFHjTPDmQhr6foZr9
+         naFe4hZ9t0WmH+tEqLNxHvIRb17RiqksIi4RgL11o3ruQpgjKKF2i03ZXfhwLq6S4h5g
+         X8qQ==
+X-Gm-Message-State: AFqh2krsaNnRc8gRsMpwu0JylT/um4P+vs/2mPSfs7LLicNFSrOJbg0w
+        McnUO326UOrRasUDY7mu1Kg=
+X-Google-Smtp-Source: AMrXdXvc6rGpg7/XVOxyIIHBzqvCpMobyrTvdtglPT0QHisTmxagViec805NU+1pM9zEaHigRkErEQ==
+X-Received: by 2002:a17:90a:4b4e:b0:226:3901:27db with SMTP id o14-20020a17090a4b4e00b00226390127dbmr3290090pjl.47.1672374352216;
+        Thu, 29 Dec 2022 20:25:52 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id b67-20020a621b46000000b0053e38ac0ff4sm12674440pfb.115.2022.12.29.19.13.17
+        by smtp.gmail.com with ESMTPSA id ml4-20020a17090b360400b00217090ece49sm12314316pjb.31.2022.12.29.20.25.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Dec 2022 19:13:17 -0800 (PST)
+        Thu, 29 Dec 2022 20:25:51 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Samanta Navarro <ferivoz@riseup.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] maintenance: fix typos
-References: <20221229125012.cp5tjdlnvxbln44l@localhost>
-Date:   Fri, 30 Dec 2022 12:13:16 +0900
-In-Reply-To: <20221229125012.cp5tjdlnvxbln44l@localhost> (Samanta Navarro's
-        message of "Thu, 29 Dec 2022 12:50:12 +0000")
-Message-ID: <xmqqmt75lh2r.fsf@gitster.g>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+        Jeff King <peff@peff.net>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Kousik Sanagavarapu <five231003@gmail.com>
+Subject: Re: [PATCH v2 1/3] object tests: add test for unexpected objects in
+ tags
+References: <cover-0.4-00000000000-20221118T113442Z-avarab@gmail.com>
+        <cover-v2-0.3-00000000000-20221230T011725Z-avarab@gmail.com>
+        <patch-v2-1.3-0abf873f1e3-20221230T011725Z-avarab@gmail.com>
+Date:   Fri, 30 Dec 2022 13:25:51 +0900
+In-Reply-To: <patch-v2-1.3-0abf873f1e3-20221230T011725Z-avarab@gmail.com>
+        (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri, 30 Dec
+ 2022 02:52:14
+        +0100")
+Message-ID: <xmqqzgb5jz5c.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Samanta Navarro <ferivoz@riseup.net> writes:
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-> Subject: Re: [PATCH] maintenance: fix typos
+> +test_expect_success !SANITIZE_LEAK 'setup unexpected non-tag tag' '
+> +	test_when_finished "git tag -d tag-commit tag-tag" &&
+> +
+> +	git tag -a -m"my tagged commit" tag-commit $commit &&
+> +	tag_commit=$(git rev-parse tag-commit) &&
+> +	git tag -a -m"my tagged tag" tag-tag tag-commit &&
+> +	tag_tag=$(git rev-parse tag-tag) &&
+> +
+> +	git cat-file tag tag-tag >good-tag-tag &&
+> +	git cat-file tag tag-commit >good-commit-tag &&
+> +
+> +	sed -e "s/$tag_commit/$commit/" <good-tag-tag >broken-tag-tag-commit &&
+> +	sed -e "s/$tag_commit/$tree/" <good-tag-tag >broken-tag-tag-tree &&
+> +	sed -e "s/$tag_commit/$blob/" <good-tag-tag >broken-tag-tag-blob &&
+> +
+> +	sed -e "s/$commit/$tag_commit/" <good-commit-tag >broken-commit-tag-tag &&
+> +	sed -e "s/$commit/$tree/" <good-commit-tag >broken-commit-tag-tree &&
+> +	sed -e "s/$commit/$blob/" <good-commit-tag >broken-commit-tag-blob &&
+> +
+> +	tag_tag_commit=$(git hash-object -w -t tag broken-tag-tag-commit) &&
+> +	tag_tag_tree=$(git hash-object -w -t tag broken-tag-tag-tree) &&
+> +	tag_tag_blob=$(git hash-object -w -t tag broken-tag-tag-blob) &&
 
-What's "maintenance:" doing here?  This touches all over the tree,
-not only the part that are related to "git maintenance" subcommand.
+If the second block of 3 sed commands to prepare data for tags that
+incorrectly claim to point at a commit are moved a bit, i.e. make
+"sed's && hash-object's && update-ref's" as a logical group, the
+above would become slightly easier to read, but in any case the
+set-up step looks quite repetitive and boring to read ;-)
 
->  git-gui/lib/themed.tcl                   | 2 +-
+There is no strong reason to use broken-tag-* temporary files,
+though.  Each of them is used exactly once, but you can just
+pipe the output from "sed" to "git hash-object --stdin" without
+losing any exit status, e.g.
 
-This is part of a separately managed project and a patch wants to go
-there first, not mixed with changes to my tree.
+	tag_tag_commit=$(sed -e '...' good-commit-tag |
+			git hash-object -w -t tag --stdin)
 
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> index 9d5c27807a..6c7465d690 100644
-> --- a/Documentation/CodingGuidelines
-> +++ b/Documentation/CodingGuidelines
-> @@ -683,7 +683,7 @@ Writing Documentation:
-> - Don't use spacing around "|" tokens when they're used to seperate the
-> + Don't use spacing around "|" tokens when they're used to separate the
+> +	git update-ref refs/tags/tag_tag_commit $tag_tag_commit &&
+> +	git update-ref refs/tags/tag_tag_tree $tag_tag_tree &&
+> +	git update-ref refs/tags/tag_tag_blob $tag_tag_blob &&
+> +
+> +	commit_tag_tag=$(git hash-object -w -t tag broken-commit-tag-tag) &&
+> +	commit_tag_tree=$(git hash-object -w -t tag broken-commit-tag-tree) &&
+> +	commit_tag_blob=$(git hash-object -w -t tag broken-commit-tag-blob) &&
+> +
+> +	git update-ref refs/tags/commit_tag_tag $commit_tag_tag &&
+> +	git update-ref refs/tags/commit_tag_tree $commit_tag_tree &&
+> +	git update-ref refs/tags/commit_tag_blob $commit_tag_blob
+> +'
+> +
+> +test_expect_failure !SANITIZE_LEAK 'traverse unexpected incorrectly typed tag (to commit & tag)' '
+> +	test_must_fail git rev-list --objects $tag_tag_commit 2>err &&
 
-Good.
+Does this have to be "rev-list --objects" or would something like
+"cat-file -t $tag_tag_commit^0" do?
 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 0e93aef862..229b63a454 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -182,7 +182,7 @@ included, Git breaks the cycle by prohibiting thes
-> -As for the naming of this keyword, it is for forwards compatibiliy with
-> +As for the naming of this keyword, it is for forwards compatibility with
+Especially because "rev-list --objects" is a rather heavy-weight
+command that does a lot of checking, I am wondering if it is
+sensible to rely on the assumption that the errors expected below
+will stay to be the only errors we get before the command exits
+(hence a wish to replace it with a more narrowly focused comamnd).
 
-Good.
+> +	cat >expect <<-EOF &&
+> +	error: object $commit is a commit, not a tag
+> +	fatal: bad object $commit
+> +	EOF
+> +	test_cmp expect err &&
 
-> diff --git a/Documentation/fsck-msgids.txt b/Documentation/fsck-msgids.txt
-> index 7af76ff99a..841ffeee38 100644
-> --- a/Documentation/fsck-msgids.txt
-> +++ b/Documentation/fsck-msgids.txt
-> @@ -155,7 +155,7 @@
-> -	(ERROR) Found a zero padded date in an author/commiter line.
-> +	(ERROR) Found a zero padded date in an author/committer line.
 
-Good.
 
-> diff --git a/Documentation/git-cvsserver.txt b/Documentation/git-cvsserver.txt
-> index 53f111bc0a..cf4a5a283e 100644
-> --- a/Documentation/git-cvsserver.txt
-> +++ b/Documentation/git-cvsserver.txt
-> @@ -118,7 +118,7 @@ for example:
-> -files, but only with the -d option (or -B if your system suports it).
-> +files, but only with the -d option (or -B if your system supports it).
+> +test_expect_failure !SANITIZE_LEAK 'traverse unexpected objects with for-each-ref' '
+> +	cat >expect <<-EOF &&
+> +	error: bad tag pointer to $tree in $tag_tag_tree
+> +	fatal: parse_object_buffer failed on $tag_tag_tree for refs/tags/tag_tag_tree
+> +	EOF
 
-Good.
+This depends on the fact that among the broken ones tag_tag_tree
+sorts the earliest (and the command stops after barfing on a single
+bad object), doesn't it?  I wonder if it makes the test more robust
+by feeding refs/tags/tag_tag_tree from the command line to limit the
+tips the command needs to inspect.
 
-> diff --git a/Documentation/git-describe.txt b/Documentation/git-describe.txt
-> index c6a79c2a0f..8ace8fb78a 100644
-> --- a/Documentation/git-describe.txt
-> +++ b/Documentation/git-describe.txt
-> @@ -140,7 +140,7 @@ at the end.
-> -The hash suffix is "-g" + an unambigous abbreviation for the tip commit
-> +The hash suffix is "-g" + an unambiguous abbreviation for the tip commit
+> +>fsck-object-isa
 
-Good.
+Move it inside the setup as the first command in case "git fsck"
+succeeds?
 
-> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-> index dfcc7da4c2..f4b6dbd2e1 100644
-> --- a/Documentation/git-format-patch.txt
-> +++ b/Documentation/git-format-patch.txt
-> @@ -246,7 +246,7 @@ populated with placeholder text.
-> -	version the new interation is compared against.
-> +	version the new iteration is compared against.
-
-Good.
-
-> diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.txt
-> index 0240adb8ee..fa9a6b9f2c 100644
-> --- a/Documentation/git-ls-tree.txt
-> +++ b/Documentation/git-ls-tree.txt
-> @@ -145,7 +145,7 @@ FIELD NAMES
-> -into the resulting output. For each outputing line, the following
-> +into the resulting output. For each outputting line, the following
->  names can be used:
-
-The updated may use the correct spelling, but neither the original
-or the updated sounds correct, neither gramatically or semantically.
-
- * Is "output" an intransitive verb (i.e. "The line outputs." is a
-   complete sentence)?  I do not think so, but "each outputting
-   line" implies so.  Like "InkJet printers output lines very
-   slowly", "line" is an object of verb "output".  To make it
-   readable, "for each line that is output" might work.
-
- * But the fields have nothing to do with "each line".  As described
-   by an earlier paragraph, "--format" can take multiple fieldname
-   and it is not like each fieldname substitutes to its one line.
-
-Probably
-
-    FIELD NAMES
-    -----------
-
-    Values from various structured fields can be interpolated into
-    the resulting output.  The following can be used to name the
-    fields in the `--format=<format>` option.
-
-or something would work.
-
-In any case, such a correction is beyond a typofix and should be
-done outside the scope of this already unreadably big patch.
-
-> diff --git a/Documentation/git-mktag.txt b/Documentation/git-mktag.txt
-> index 466a697519..b2a2e80d42 100644
-> --- a/Documentation/git-mktag.txt
-> +++ b/Documentation/git-mktag.txt
-> @@ -33,7 +33,7 @@ from warnings to errors (so e.g. a missing "tagger" line is an error).
-> -the appropriate `fsck.<msg-id>` varible:
-> +the appropriate `fsck.<msg-id>` variable:
-
-Good.
-
-> diff --git a/Documentation/git-sparse-checkout.txt b/Documentation/git-sparse-checkout.txt
-> index 68392d2a56..d6d4d42fbd 100644
-> --- a/Documentation/git-sparse-checkout.txt
-> +++ b/Documentation/git-sparse-checkout.txt
-> @@ -263,7 +263,7 @@ patterns in non-cone mode has a number of shortcomings:
-> -    it complete "/pro" to "/proc" (in the root filesytem) rather than to
-> +    it complete "/pro" to "/proc" (in the root filesystem) rather than to
-
-Good.
-
-> diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
-> index f4bb6114d9..06fb7f1d18 100644
-> --- a/Documentation/git-stash.txt
-> +++ b/Documentation/git-stash.txt
-> @@ -366,7 +366,7 @@ only the commit ends-up being in the stash
-> -# ... hack hack hack, finish curent changes ...
-> +# ... hack hack hack, finish current changes ...
-
-Good.
-
-> diff --git a/Documentation/gitformat-commit-graph.txt b/Documentation/gitformat-commit-graph.txt
-> index 31cad585e2..76312fa249 100644
-> --- a/Documentation/gitformat-commit-graph.txt
-> +++ b/Documentation/gitformat-commit-graph.txt
-> @@ -122,7 +122,7 @@ All multi-byte numbers are in network byte order.
-> -      chunk is present and atleast one corrected commit date offset cannot
-> +      chunk is present and at least one corrected commit date offset cannot
-
-Good.
-
-> diff --git a/Documentation/gitweb.txt b/Documentation/gitweb.txt
-> index 7cee9d3689..74c35e8953 100644
-> --- a/Documentation/gitweb.txt
-> +++ b/Documentation/gitweb.txt
-> @@ -234,7 +234,7 @@ from the template during repository creation, usually installed in
-> -	Singe line category of a project, used to group projects if
-> +	Single line category of a project, used to group projects if
-
-Good.
-
-As the patch is unreably long and boring to review for any sane
-person in a single sitting, I would suggest splitting the above into
-at least two patches, i.e.
-
- * [PATCH 1/n] doc: clarify ls-tree '--format' placeholders
- * [PATCH 2/n] Documentation: fix various typos
-
-I haven't read the rest so I do not know what value 'n' will become,
-but I would imagine fixes to typos in in-code comments may be one,
-or it may need more than one.
-
-I'll stop here, at least for now.  Thanks for working on it.
+> +test_expect_success 'setup: unexpected objects with fsck' '
+> +	test_must_fail git fsck 2>err &&
+> +	sed -n -e "/^error: object .* is a .*, not a .*$/ {
+> +		s/^error: object \([0-9a-f]*\) is a \([a-z]*\), not a [a-z]*$/\\1 \\2/;
+> +		p;
+> +	}" <err >fsck-object-isa
+> +'
