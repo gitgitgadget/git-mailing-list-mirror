@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 717FDC4167B
-	for <git@archiver.kernel.org>; Fri, 30 Dec 2022 01:52:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9012FC3DA79
+	for <git@archiver.kernel.org>; Fri, 30 Dec 2022 01:52:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234337AbiL3Bw0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Dec 2022 20:52:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42158 "EHLO
+        id S234339AbiL3Bw1 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Dec 2022 20:52:27 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234146AbiL3BwZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Dec 2022 20:52:25 -0500
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BBDAA1649E
-        for <git@vger.kernel.org>; Thu, 29 Dec 2022 17:52:23 -0800 (PST)
-Received: by mail-wm1-x32c.google.com with SMTP id b24-20020a05600c4a9800b003d21efdd61dso14379586wmp.3
-        for <git@vger.kernel.org>; Thu, 29 Dec 2022 17:52:23 -0800 (PST)
+        with ESMTP id S229607AbiL3BwY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Dec 2022 20:52:24 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAD59164B7
+        for <git@vger.kernel.org>; Thu, 29 Dec 2022 17:52:22 -0800 (PST)
+Received: by mail-wm1-x335.google.com with SMTP id g25-20020a7bc4d9000000b003d97c8d4941so8918843wmk.4
+        for <git@vger.kernel.org>; Thu, 29 Dec 2022 17:52:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lse1QU+Lhi4H6766Oof8f1cQlpMBRTUDHNMyx1/V7W4=;
-        b=Apc8D92jR62J9MBHUSowk3Lf5gT+Kcie87wjIs9tCPrDRCHLiyBDGlHeOvxdCKl5y/
-         kXBFqyzDoMaNfhcFRsSMAHnLXa+I6V//TdVsJ3fkqnnHoDAfBJaTayf5Im7IZNd2+ML/
-         VrReHt1I0iJAsl4vbIO2UwCjLHX0XqK4D3PSiVnNxvBLCEF6Dz66pAJkO3cT4SH+G3Or
-         xIGA+N8eF7rU6CK26ND/ivsL9Nrmw1P51wBKmDeEE70NVYx0v91ZsYCIZy9nuc2I3bLc
-         5lKRKhZ9SmtDa/vVq81vgGohYnm+YmUxE6pQno89kBKHloTl9PYWUqbt4IbklX4p+8up
-         4HpA==
+        bh=jpPohnICRcatsV64UM+JJQf5OOr79RrrN9Ym4hkrjY0=;
+        b=DMP4pWgoYOWpG294S1rQLe4gkW71VYy2Il0wqEcdbYkdEayfH2bePj/Iw5T/4O61BM
+         TAOSC/uWg9jLH94Kn6jDk9+Y2t9H1riNWbHSY9bHZ1O6s8cJy1LsIHKs6mQ+pah2nwtV
+         eFrLtHnkfYdjD5GVpqbF6RZSKB4g+srnnUsKx1zMsYAODIBIZgl/QCPxLm9+raj0NCgO
+         Q7ac/ODl163n4RVscv+OBLzK4GbvUsraACP1UVHrIeYOR9iGd/b4W5JNLqj2y8Th8lae
+         BUjgRwiC49bLTxBa131Mqd0aX3kX/+NyRsXp6TyAM95eXBKVE4lZ4+Fa7NphHLPoVmTz
+         mV8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lse1QU+Lhi4H6766Oof8f1cQlpMBRTUDHNMyx1/V7W4=;
-        b=g5kGKNVTaGhtHMbYS6dw8z74uKZjK+xLZNb4RqIr/13IiqqCTp2sTb/TW4EJe7sW4Q
-         BkrD2XC6Nikw7KqxmjGBokzM8JLL3R3mRll59tcdd/mCBE7MFHviG/ogMe7s90DoTrxm
-         m+VdMoABsJ/AmCCRdKEEm1qLokY9RhjwHhHqhATi2qI7vCTua2+k2zftruY5uvCZKJzV
-         aR4/teKHEyYwgbXEKuXY48FWgpHZb2zIHDnLectS5KRPrJEy3hBxQXFVSKnN8BsaqVbe
-         Cque/S3OdV0BdmqsNxhb+uOptFr3umjyIx/FcP9Pw9fqbQt7o6JrMOo/4ioQs76vpL0p
-         Q7vA==
-X-Gm-Message-State: AFqh2kqo572sdtVWmrijNF+vbbMx3UFve4MNt7n3Yzw6etLkAHnJ/yEF
-        gPRY5YpPd8yihalwoazEgi4dCoI+j1Z4sQ==
-X-Google-Smtp-Source: AMrXdXsVQdFwU2Ymf3VS6ZM+w9JmKx/1T2XU7hGM1d7gYfUDEVFq8C81IlGNmAKsm06gOmkBPQftNA==
-X-Received: by 2002:a05:600c:3c8c:b0:3d9:719b:bd1b with SMTP id bg12-20020a05600c3c8c00b003d9719bbd1bmr19441274wmb.33.1672365141924;
-        Thu, 29 Dec 2022 17:52:21 -0800 (PST)
+        bh=jpPohnICRcatsV64UM+JJQf5OOr79RrrN9Ym4hkrjY0=;
+        b=FHpRl7i3tc27DJ24K0000+oc/Q1mj+Vtlji5atENesAe2QUE6GwaE7CmmPCzIYQMQi
+         Y0HFi8qPjroiH7xILd2wupV/T29R/Rgx/5aoj/Ft9dK5xWFkMj6e8XYgGwXVS7nfEGl2
+         KJRVd6iakp+fSiXWLL/ekIHmUeYruLOFFLkIsKJdBJ4DcJdyum1K42IfLdzV0ZM1Dduq
+         aUEPLXddn5zl6Sg68Jg8B6A3poOmTExaE/hLTX07rvK8fQQD9ExakQPibnOFVJOYAgvQ
+         ugkzUqbaiCMa+giEANgH6FQ+cFMwjlZDEkardnOGaeix5X6l5n/ZevSkSPDAJrIpa6+5
+         pVBw==
+X-Gm-Message-State: AFqh2kolU0pNS3Nx8ufArOMqo53wahSfzQAI1yVMls6MBEV/ynKJWvNt
+        5AQwpmq46fnsKW6nb5zVb9UpEZEXJX9avw==
+X-Google-Smtp-Source: AMrXdXsNzXWJFlvVTMy1Q6YMF59MXpznvtsjX8K5wtLa4NUhE00avmRGjHPMTNcfj9MVQqSkNHwwdw==
+X-Received: by 2002:a05:600c:5008:b0:3cf:6f4d:c25d with SMTP id n8-20020a05600c500800b003cf6f4dc25dmr21404664wmr.21.1672365140863;
+        Thu, 29 Dec 2022 17:52:20 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
         by smtp.gmail.com with ESMTPSA id bh12-20020a05600c3d0c00b003cfa81e2eb4sm26649298wmb.38.2022.12.29.17.52.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Dec 2022 17:52:21 -0800 (PST)
+        Thu, 29 Dec 2022 17:52:20 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,12 +58,12 @@ Cc:     Taylor Blau <me@ttaylorr.com>, Junio C Hamano <gitster@pobox.com>,
         Kousik Sanagavarapu <five231003@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 1/3] object tests: add test for unexpected objects in tags
-Date:   Fri, 30 Dec 2022 02:52:14 +0100
-Message-Id: <patch-v2-1.3-0abf873f1e3-20221230T011725Z-avarab@gmail.com>
+Subject: [PATCH v2 0/3] tag: don't misreport type of tagged objects in errors
+Date:   Fri, 30 Dec 2022 02:52:13 +0100
+Message-Id: <cover-v2-0.3-00000000000-20221230T011725Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.0.1153.g589e4efe9dc
-In-Reply-To: <cover-v2-0.3-00000000000-20221230T011725Z-avarab@gmail.com>
-References: <cover-0.4-00000000000-20221118T113442Z-avarab@gmail.com> <cover-v2-0.3-00000000000-20221230T011725Z-avarab@gmail.com>
+In-Reply-To: <cover-0.4-00000000000-20221118T113442Z-avarab@gmail.com>
+References: <cover-0.4-00000000000-20221118T113442Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,198 +71,300 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a blind spot in the tests added in 0616617c7e1 (t: introduce tests
-for unexpected object types, 2019-04-09), there were no meaningful
-tests for checking how we reported on finding the incorrect object
-type in a tag, i.e. one that broke the "type" promise in the tag
-header.
+This series fixes a very long-standing issue where we'll get confused
+when we parse a tag whose "type" lies about the type of the target
+object.
 
-We'll report the wrong object type in these cases, and thus fail on
-the "test_cmp", e.g. for the first "error: " output being tested here
-we should say "$commit is a tag, not a commit", instead we say
-"$commit is a commit, not a tag". This will be fixed in a subsequent
-commit.
+The v1 was on top of jk/parse-object-type-mismatch, which has since
+landed on "master". As I noted in [1] this covers remaining
+misreporting cases which weren't addressed in that series.
 
-See the discussion & notes in [1] and downthread of there for test
-snippets that are adapted here.
+Currently we'll parse tags and note what the "type" claims to be. Say
+a pointer to a "blob" object that claims to be a "commit" in the
+envelope.
 
-In the case of "fsck" which objects we visit in what order, and if we
-report errors on them depends on their OIDs. So the test uses the
-technique of extracting the OID/type combinations that fsck does
-report, and asserting that those are correct (currently, it's far from
-correct).
+Then when we we'd try to parse that supposed "commit' for real we'd
+emit a message like:
 
-As these tests happen to run into a memory leak skip them under
-SANITIZE=leak, as the test file was previously marked leak-free in
-[3]. There is a concurrent fix for the leak in question[4].
+	error: object <oid> is a blob, not a commit
 
-1. https://lore.kernel.org/git/YGTGgFI19fS7Uv6I@coredump.intra.peff.net/
-2. https://lore.kernel.org/git/patch-18.20-aa4df0e1b5c-20221228T175512Z-avarab@gmail.com/
-3. dd9cede9136 (leak tests: mark some rev-list tests as passing with
-   SANITIZE=leak, 2021-10-31)
-4. https://lore.kernel.org/git/patch-18.20-aa4df0e1b5c-20221228T175512Z-avarab@gmail.com/
+Which is reversed, i.e. we'd remember the first "blob" we saw, and
+then get confused about seeing a "commit" when we did the actual
+parsing.
 
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
+This is now fixed in almost all cases by having the one caller of
+parse_tag() which actually knows the type tell it "yes, I'm sure this
+is a commit".
+
+We'll then be able to see that we have a non-parsed object as
+scaffolding, but that it's really a commit, and emit the correct:
+
+	error: object <oid> is a commit not a blob
+
+Which goes along with other errors where the tag object itself yells
+about being unhappy with the object reference.
+
+I submitted a version of these patches back in early 2021[2], this is
+significantly slimmed down since then.
+
+At the time Jeff King noted[3] that this approach inherently can't cover
+all possible scenarios. I.e. sometimes our parsing of the envelope
+isn't followed up by the "real" parse.
+
+Even in those cases we can "get it right as 3/3 here demonstrates.
+
+But there are going to be cases left where we get it wrong, but
+they're all cases where we get it wrong now. It's probably not worth
+fixing the long tail of those issues, but now we'll emit a sensible
+error on the common case of "log" etc.
+
+Changes since v1:
+
+* The v1 of this included a fix for the t.tag memory leak, which has
+  now been ejected. I'm fixing that in another series[4]
+
+  As a result we need to mark the new tests with !SANITIZE_LEAK, once
+  some version of [4] lands we can un-mark these, so we'll test them
+  under SANITIZE=leak.
+
+* In the previous 1st patch I marked a "setup" test as
+  "test_expect_failure", which will pass at that point, let's make it
+  "test_expect_success" from the outset.
+
+CI & branch at [5]. The "win build" CI failure is unrelated, it also
+happens when I re-push master, root cause unknown, but unrelated to
+this topic.
+
+1. https://lore.kernel.org/git/221118.86cz9lgjxu.gmgdl@evledraar.gmail.com/
+2. https://lore.kernel.org/git/cover-00.11-00000000000-20210328T021238Z-avarab@gmail.com/
+3. https://lore.kernel.org/git/YGTGgFI19fS7Uv6I@coredump.intra.peff.net/
+4. https://lore.kernel.org/git/cover-00.20-00000000000-20221228T175512Z-avarab@gmail.com/
+5. https://github.com/avar/git/tree/avar/correct-object-as-type-minimal-2
+
+
+Ævar Arnfjörð Bjarmason (3):
+  object tests: add test for unexpected objects in tags
+  tag: don't misreport type of tagged objects in errors
+  tag: don't emit potentially incorrect "object is a X, not a Y"
+
+ blob.c                                 |  11 +-
+ blob.h                                 |   3 +
+ commit.c                               |  11 +-
+ commit.h                               |   2 +
+ object.c                               |  20 +++-
+ object.h                               |   2 +
  t/t6102-rev-list-unexpected-objects.sh | 146 +++++++++++++++++++++++++
- 1 file changed, 146 insertions(+)
+ tag.c                                  |  22 +++-
+ tag.h                                  |   2 +
+ tree.c                                 |  11 +-
+ tree.h                                 |   2 +
+ 11 files changed, 218 insertions(+), 14 deletions(-)
 
-diff --git a/t/t6102-rev-list-unexpected-objects.sh b/t/t6102-rev-list-unexpected-objects.sh
-index 9350b5fd2c2..f1c30db2654 100755
---- a/t/t6102-rev-list-unexpected-objects.sh
-+++ b/t/t6102-rev-list-unexpected-objects.sh
-@@ -130,4 +130,150 @@ test_expect_success 'traverse unexpected non-blob tag (seen)' '
- 	test_i18ngrep "not a blob" output
- '
- 
-+test_expect_success !SANITIZE_LEAK 'setup unexpected non-tag tag' '
-+	test_when_finished "git tag -d tag-commit tag-tag" &&
-+
-+	git tag -a -m"my tagged commit" tag-commit $commit &&
-+	tag_commit=$(git rev-parse tag-commit) &&
-+	git tag -a -m"my tagged tag" tag-tag tag-commit &&
-+	tag_tag=$(git rev-parse tag-tag) &&
-+
-+	git cat-file tag tag-tag >good-tag-tag &&
-+	git cat-file tag tag-commit >good-commit-tag &&
-+
-+	sed -e "s/$tag_commit/$commit/" <good-tag-tag >broken-tag-tag-commit &&
-+	sed -e "s/$tag_commit/$tree/" <good-tag-tag >broken-tag-tag-tree &&
-+	sed -e "s/$tag_commit/$blob/" <good-tag-tag >broken-tag-tag-blob &&
-+
-+	sed -e "s/$commit/$tag_commit/" <good-commit-tag >broken-commit-tag-tag &&
-+	sed -e "s/$commit/$tree/" <good-commit-tag >broken-commit-tag-tree &&
-+	sed -e "s/$commit/$blob/" <good-commit-tag >broken-commit-tag-blob &&
-+
-+	tag_tag_commit=$(git hash-object -w -t tag broken-tag-tag-commit) &&
-+	tag_tag_tree=$(git hash-object -w -t tag broken-tag-tag-tree) &&
-+	tag_tag_blob=$(git hash-object -w -t tag broken-tag-tag-blob) &&
-+
-+	git update-ref refs/tags/tag_tag_commit $tag_tag_commit &&
-+	git update-ref refs/tags/tag_tag_tree $tag_tag_tree &&
-+	git update-ref refs/tags/tag_tag_blob $tag_tag_blob &&
-+
-+	commit_tag_tag=$(git hash-object -w -t tag broken-commit-tag-tag) &&
-+	commit_tag_tree=$(git hash-object -w -t tag broken-commit-tag-tree) &&
-+	commit_tag_blob=$(git hash-object -w -t tag broken-commit-tag-blob) &&
-+
-+	git update-ref refs/tags/commit_tag_tag $commit_tag_tag &&
-+	git update-ref refs/tags/commit_tag_tree $commit_tag_tree &&
-+	git update-ref refs/tags/commit_tag_blob $commit_tag_blob
-+'
-+
-+test_expect_failure !SANITIZE_LEAK 'traverse unexpected incorrectly typed tag (to commit & tag)' '
-+	test_must_fail git rev-list --objects $tag_tag_commit 2>err &&
-+	cat >expect <<-EOF &&
-+	error: object $commit is a commit, not a tag
-+	fatal: bad object $commit
-+	EOF
-+	test_cmp expect err &&
-+
-+	test_must_fail git rev-list --objects $commit_tag_tag 2>err &&
-+	cat >expect <<-EOF &&
-+	error: object $tag_commit is a tag, not a commit
-+	fatal: bad object $tag_commit
-+	EOF
-+	test_cmp expect err
-+'
-+
-+test_expect_failure !SANITIZE_LEAK 'traverse unexpected incorrectly typed tag (to tree)' '
-+	test_must_fail git rev-list --objects $tag_tag_tree 2>err &&
-+	cat >expect <<-EOF &&
-+	error: object $tree is a tree, not a tag
-+	fatal: bad object $tree
-+	EOF
-+	test_cmp expect err &&
-+
-+	test_must_fail git rev-list --objects $commit_tag_tree 2>err &&
-+	cat >expect <<-EOF &&
-+	error: object $tree is a tree, not a commit
-+	fatal: bad object $tree
-+	EOF
-+	test_cmp expect err
-+'
-+
-+test_expect_failure !SANITIZE_LEAK 'traverse unexpected incorrectly typed tag (to blob)' '
-+	test_must_fail git rev-list --objects $tag_tag_blob 2>err &&
-+	cat >expect <<-EOF &&
-+	error: object $blob is a blob, not a tag
-+	fatal: bad object $blob
-+	EOF
-+	test_cmp expect err &&
-+
-+	test_must_fail git rev-list --objects $commit_tag_blob 2>err &&
-+	cat >expect <<-EOF &&
-+	error: object $blob is a blob, not a commit
-+	fatal: bad object $blob
-+	EOF
-+	test_cmp expect err
-+'
-+
-+test_expect_failure !SANITIZE_LEAK 'traverse unexpected non-tag tag (tree seen to blob)' '
-+	test_must_fail git rev-list --objects $tree $commit_tag_blob 2>err &&
-+	cat >expect <<-EOF &&
-+	error: object $blob is a blob, not a commit
-+	fatal: bad object $blob
-+	EOF
-+	test_cmp expect err &&
-+
-+	test_must_fail git rev-list --objects $tree $tag_tag_blob 2>err &&
-+	cat >expect <<-EOF &&
-+	error: object $blob is a blob, not a tag
-+	fatal: bad object $blob
-+	EOF
-+	test_cmp expect err
-+'
-+
-+
-+test_expect_failure !SANITIZE_LEAK 'traverse unexpected objects with for-each-ref' '
-+	cat >expect <<-EOF &&
-+	error: bad tag pointer to $tree in $tag_tag_tree
-+	fatal: parse_object_buffer failed on $tag_tag_tree for refs/tags/tag_tag_tree
-+	EOF
-+	test_must_fail git for-each-ref --format="%(*objectname)" 2>actual &&
-+	test_cmp expect actual
-+'
-+
-+>fsck-object-isa
-+test_expect_success 'setup: unexpected objects with fsck' '
-+	test_must_fail git fsck 2>err &&
-+	sed -n -e "/^error: object .* is a .*, not a .*$/ {
-+		s/^error: object \([0-9a-f]*\) is a \([a-z]*\), not a [a-z]*$/\\1 \\2/;
-+		p;
-+	}" <err >fsck-object-isa
-+'
-+
-+while read oid type
-+do
-+	test_expect_failure "fsck knows unexpected object $oid is $type" '
-+		git cat-file -t $oid >expect &&
-+		echo $type >actual &&
-+		test_cmp expect actual
-+	'
-+done <fsck-object-isa
-+
-+test_expect_success !SANITIZE_LEAK 'traverse unexpected non-tag tag (blob seen to blob)' '
-+	test_must_fail git rev-list --objects $blob $commit_tag_blob 2>err &&
-+	cat >expected <<-EOF &&
-+	error: object $blob is a blob, not a commit
-+	error: bad tag pointer to $blob in $commit_tag_blob
-+	fatal: bad object $commit_tag_blob
-+	EOF
-+	test_cmp expected err &&
-+
-+	test_must_fail git rev-list --objects $blob $tag_tag_blob 2>err &&
-+	cat >expected <<-EOF &&
-+	error: object $blob is a blob, not a tag
-+	error: bad tag pointer to $blob in $tag_tag_blob
-+	fatal: bad object $tag_tag_blob
-+	EOF
-+	test_cmp expected err
-+'
-+
- test_done
+Range-diff against v1:
+1:  2be8477cd78 < -:  ----------- object-file.c: free the "t.tag" in check_tag()
+2:  1b5544ec868 ! 1:  0abf873f1e3 object tests: add test for unexpected objects in tags
+    @@ Commit message
+         report, and asserting that those are correct (currently, it's far from
+         correct).
+     
+    +    As these tests happen to run into a memory leak skip them under
+    +    SANITIZE=leak, as the test file was previously marked leak-free in
+    +    [3]. There is a concurrent fix for the leak in question[4].
+    +
+         1. https://lore.kernel.org/git/YGTGgFI19fS7Uv6I@coredump.intra.peff.net/
+    +    2. https://lore.kernel.org/git/patch-18.20-aa4df0e1b5c-20221228T175512Z-avarab@gmail.com/
+    +    3. dd9cede9136 (leak tests: mark some rev-list tests as passing with
+    +       SANITIZE=leak, 2021-10-31)
+    +    4. https://lore.kernel.org/git/patch-18.20-aa4df0e1b5c-20221228T175512Z-avarab@gmail.com/
+     
+         Helped-by: Jeff King <peff@peff.net>
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+    @@ t/t6102-rev-list-unexpected-objects.sh: test_expect_success 'traverse unexpected
+      	test_i18ngrep "not a blob" output
+      '
+      
+    -+test_expect_success 'setup unexpected non-tag tag' '
+    ++test_expect_success !SANITIZE_LEAK 'setup unexpected non-tag tag' '
+     +	test_when_finished "git tag -d tag-commit tag-tag" &&
+     +
+     +	git tag -a -m"my tagged commit" tag-commit $commit &&
+    @@ t/t6102-rev-list-unexpected-objects.sh: test_expect_success 'traverse unexpected
+     +	git update-ref refs/tags/commit_tag_blob $commit_tag_blob
+     +'
+     +
+    -+test_expect_failure 'traverse unexpected incorrectly typed tag (to commit & tag)' '
+    ++test_expect_failure !SANITIZE_LEAK 'traverse unexpected incorrectly typed tag (to commit & tag)' '
+     +	test_must_fail git rev-list --objects $tag_tag_commit 2>err &&
+     +	cat >expect <<-EOF &&
+     +	error: object $commit is a commit, not a tag
+    @@ t/t6102-rev-list-unexpected-objects.sh: test_expect_success 'traverse unexpected
+     +	test_cmp expect err
+     +'
+     +
+    -+test_expect_failure 'traverse unexpected incorrectly typed tag (to tree)' '
+    ++test_expect_failure !SANITIZE_LEAK 'traverse unexpected incorrectly typed tag (to tree)' '
+     +	test_must_fail git rev-list --objects $tag_tag_tree 2>err &&
+     +	cat >expect <<-EOF &&
+     +	error: object $tree is a tree, not a tag
+    @@ t/t6102-rev-list-unexpected-objects.sh: test_expect_success 'traverse unexpected
+     +	test_cmp expect err
+     +'
+     +
+    -+test_expect_failure 'traverse unexpected incorrectly typed tag (to blob)' '
+    ++test_expect_failure !SANITIZE_LEAK 'traverse unexpected incorrectly typed tag (to blob)' '
+     +	test_must_fail git rev-list --objects $tag_tag_blob 2>err &&
+     +	cat >expect <<-EOF &&
+     +	error: object $blob is a blob, not a tag
+    @@ t/t6102-rev-list-unexpected-objects.sh: test_expect_success 'traverse unexpected
+     +	test_cmp expect err
+     +'
+     +
+    -+test_expect_failure 'traverse unexpected non-tag tag (tree seen to blob)' '
+    ++test_expect_failure !SANITIZE_LEAK 'traverse unexpected non-tag tag (tree seen to blob)' '
+     +	test_must_fail git rev-list --objects $tree $commit_tag_blob 2>err &&
+     +	cat >expect <<-EOF &&
+     +	error: object $blob is a blob, not a commit
+    @@ t/t6102-rev-list-unexpected-objects.sh: test_expect_success 'traverse unexpected
+     +'
+     +
+     +
+    -+test_expect_failure 'traverse unexpected objects with for-each-ref' '
+    ++test_expect_failure !SANITIZE_LEAK 'traverse unexpected objects with for-each-ref' '
+     +	cat >expect <<-EOF &&
+     +	error: bad tag pointer to $tree in $tag_tag_tree
+     +	fatal: parse_object_buffer failed on $tag_tag_tree for refs/tags/tag_tag_tree
+    @@ t/t6102-rev-list-unexpected-objects.sh: test_expect_success 'traverse unexpected
+     +'
+     +
+     +>fsck-object-isa
+    -+test_expect_failure 'setup: unexpected objects with fsck' '
+    ++test_expect_success 'setup: unexpected objects with fsck' '
+     +	test_must_fail git fsck 2>err &&
+     +	sed -n -e "/^error: object .* is a .*, not a .*$/ {
+     +		s/^error: object \([0-9a-f]*\) is a \([a-z]*\), not a [a-z]*$/\\1 \\2/;
+    @@ t/t6102-rev-list-unexpected-objects.sh: test_expect_success 'traverse unexpected
+     +	'
+     +done <fsck-object-isa
+     +
+    -+test_expect_success 'traverse unexpected non-tag tag (blob seen to blob)' '
+    ++test_expect_success !SANITIZE_LEAK 'traverse unexpected non-tag tag (blob seen to blob)' '
+     +	test_must_fail git rev-list --objects $blob $commit_tag_blob 2>err &&
+     +	cat >expected <<-EOF &&
+     +	error: object $blob is a blob, not a commit
+3:  468af961dc4 ! 2:  96398731841 tag: don't misreport type of tagged objects in errors
+    @@ blob.c
+     +	return lookup_blob_type(r, oid, OBJ_NONE);
+      }
+      
+    - int parse_blob_buffer(struct blob *item, void *buffer, unsigned long size)
+    + void parse_blob_buffer(struct blob *item)
+     
+      ## blob.h ##
+     @@ blob.h: struct blob {
+    @@ blob.h: struct blob {
+     +			      const struct object_id *oid,
+     +			      enum object_type type);
+      
+    - int parse_blob_buffer(struct blob *item, void *buffer, unsigned long size);
+    - 
+    + /**
+    +  * Blobs do not contain references to other objects and do not have
+     
+      ## commit.c ##
+     @@ commit.c: struct commit *lookup_commit_object(struct repository *r,
+    @@ object.c: struct object *parse_object_buffer(struct repository *r, const struct
+     -		struct blob *blob = lookup_blob(r, oid);
+     +		struct blob *blob = lookup_blob_type(r, oid, type);
+      		if (blob) {
+    - 			if (parse_blob_buffer(blob, buffer, size))
+    - 				return NULL;
+    + 			parse_blob_buffer(blob);
+      			obj = &blob->object;
+      		}
+      	} else if (type == OBJ_TREE) {
+    @@ object.h: struct object *lookup_object(struct repository *r, const struct object
+       * Returns the object, having parsed it to find out what it is.
+     
+      ## t/t6102-rev-list-unexpected-objects.sh ##
+    -@@ t/t6102-rev-list-unexpected-objects.sh: test_expect_success 'setup unexpected non-tag tag' '
+    +@@ t/t6102-rev-list-unexpected-objects.sh: test_expect_success !SANITIZE_LEAK 'setup unexpected non-tag tag' '
+      	git update-ref refs/tags/commit_tag_blob $commit_tag_blob
+      '
+      
+    --test_expect_failure 'traverse unexpected incorrectly typed tag (to commit & tag)' '
+    -+test_expect_success 'traverse unexpected incorrectly typed tag (to commit & tag)' '
+    +-test_expect_failure !SANITIZE_LEAK 'traverse unexpected incorrectly typed tag (to commit & tag)' '
+    ++test_expect_success !SANITIZE_LEAK 'traverse unexpected incorrectly typed tag (to commit & tag)' '
+      	test_must_fail git rev-list --objects $tag_tag_commit 2>err &&
+      	cat >expect <<-EOF &&
+      	error: object $commit is a commit, not a tag
+    -@@ t/t6102-rev-list-unexpected-objects.sh: test_expect_failure 'traverse unexpected incorrectly typed tag (to commit & tag)
+    +@@ t/t6102-rev-list-unexpected-objects.sh: test_expect_failure !SANITIZE_LEAK 'traverse unexpected incorrectly typed tag (t
+      	test_cmp expect err
+      '
+      
+    --test_expect_failure 'traverse unexpected incorrectly typed tag (to tree)' '
+    -+test_expect_success 'traverse unexpected incorrectly typed tag (to tree)' '
+    +-test_expect_failure !SANITIZE_LEAK 'traverse unexpected incorrectly typed tag (to tree)' '
+    ++test_expect_success !SANITIZE_LEAK 'traverse unexpected incorrectly typed tag (to tree)' '
+      	test_must_fail git rev-list --objects $tag_tag_tree 2>err &&
+      	cat >expect <<-EOF &&
+      	error: object $tree is a tree, not a tag
+    -@@ t/t6102-rev-list-unexpected-objects.sh: test_expect_failure 'traverse unexpected incorrectly typed tag (to tree)' '
+    +@@ t/t6102-rev-list-unexpected-objects.sh: test_expect_failure !SANITIZE_LEAK 'traverse unexpected incorrectly typed tag (t
+      	test_cmp expect err
+      '
+      
+    --test_expect_failure 'traverse unexpected incorrectly typed tag (to blob)' '
+    -+test_expect_success 'traverse unexpected incorrectly typed tag (to blob)' '
+    +-test_expect_failure !SANITIZE_LEAK 'traverse unexpected incorrectly typed tag (to blob)' '
+    ++test_expect_success !SANITIZE_LEAK 'traverse unexpected incorrectly typed tag (to blob)' '
+      	test_must_fail git rev-list --objects $tag_tag_blob 2>err &&
+      	cat >expect <<-EOF &&
+      	error: object $blob is a blob, not a tag
+    -@@ t/t6102-rev-list-unexpected-objects.sh: test_expect_failure 'traverse unexpected incorrectly typed tag (to blob)' '
+    +@@ t/t6102-rev-list-unexpected-objects.sh: test_expect_failure !SANITIZE_LEAK 'traverse unexpected incorrectly typed tag (t
+      	test_cmp expect err
+      '
+      
+    --test_expect_failure 'traverse unexpected non-tag tag (tree seen to blob)' '
+    -+test_expect_success 'traverse unexpected non-tag tag (tree seen to blob)' '
+    +-test_expect_failure !SANITIZE_LEAK 'traverse unexpected non-tag tag (tree seen to blob)' '
+    ++test_expect_success !SANITIZE_LEAK 'traverse unexpected non-tag tag (tree seen to blob)' '
+      	test_must_fail git rev-list --objects $tree $commit_tag_blob 2>err &&
+      	cat >expect <<-EOF &&
+      	error: object $blob is a blob, not a commit
+4:  1a9dcb9e05d ! 3:  2493988c41c tag: don't emit potentially incorrect "object is a X, not a Y"
+    @@ Commit message
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## t/t6102-rev-list-unexpected-objects.sh ##
+    -@@ t/t6102-rev-list-unexpected-objects.sh: test_expect_success 'traverse unexpected non-tag tag (tree seen to blob)' '
+    +@@ t/t6102-rev-list-unexpected-objects.sh: test_expect_success !SANITIZE_LEAK 'traverse unexpected non-tag tag (tree seen t
+      '
+      
+      
+    --test_expect_failure 'traverse unexpected objects with for-each-ref' '
+    -+test_expect_success 'traverse unexpected objects with for-each-ref' '
+    +-test_expect_failure !SANITIZE_LEAK 'traverse unexpected objects with for-each-ref' '
+    ++test_expect_success !SANITIZE_LEAK 'traverse unexpected objects with for-each-ref' '
+      	cat >expect <<-EOF &&
+      	error: bad tag pointer to $tree in $tag_tag_tree
+      	fatal: parse_object_buffer failed on $tag_tag_tree for refs/tags/tag_tag_tree
+    -@@ t/t6102-rev-list-unexpected-objects.sh: test_expect_failure 'traverse unexpected objects with for-each-ref' '
+    - '
+    - 
+    - >fsck-object-isa
+    --test_expect_failure 'setup: unexpected objects with fsck' '
+    -+test_expect_success 'setup: unexpected objects with fsck' '
+    - 	test_must_fail git fsck 2>err &&
+    - 	sed -n -e "/^error: object .* is a .*, not a .*$/ {
+    - 		s/^error: object \([0-9a-f]*\) is a \([a-z]*\), not a [a-z]*$/\\1 \\2/;
+    -@@ t/t6102-rev-list-unexpected-objects.sh: test_expect_failure 'setup: unexpected objects with fsck' '
+    +@@ t/t6102-rev-list-unexpected-objects.sh: test_expect_success 'setup: unexpected objects with fsck' '
+      
+      while read oid type
+      do
 -- 
 2.39.0.1153.g589e4efe9dc
 
