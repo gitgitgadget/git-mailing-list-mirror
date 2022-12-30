@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DD352C4332F
-	for <git@archiver.kernel.org>; Fri, 30 Dec 2022 02:19:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 90C14C4332F
+	for <git@archiver.kernel.org>; Fri, 30 Dec 2022 02:19:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234383AbiL3CTc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 29 Dec 2022 21:19:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46130 "EHLO
+        id S234385AbiL3CTf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 29 Dec 2022 21:19:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229473AbiL3CS4 (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S234340AbiL3CS4 (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 29 Dec 2022 21:18:56 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6FA9C17882
-        for <git@vger.kernel.org>; Thu, 29 Dec 2022 18:18:50 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id c17so28840089edj.13
-        for <git@vger.kernel.org>; Thu, 29 Dec 2022 18:18:50 -0800 (PST)
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E45F0178BE
+        for <git@vger.kernel.org>; Thu, 29 Dec 2022 18:18:53 -0800 (PST)
+Received: by mail-ed1-x52f.google.com with SMTP id l29so21832633edj.7
+        for <git@vger.kernel.org>; Thu, 29 Dec 2022 18:18:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0pq4xbFTh2jF0itR3ZIPXejvF+NP8xceGshYiJYNvNA=;
-        b=iGxJiXifWfg0p1otGqPS2zLPmTXcfwaPKD6f8NfMSeQngRA/gpyKACup1r1qr8yx6o
-         4rD6fW05Pv/JGm8AVrjuplWBF5cTRrIfdCbPJxsir/cgeU50BAsY8cQtWhOB9G6Q2iaB
-         XT+tibYjhWmsaR2n+dmULcDL3RbLBxfHNboNkVKIrbawypgPhVZ5I0JAoPQwcDzIm0ug
-         D014goBd5pUQDP0W4E6a0y4HlEPIJxn8VcHKJetp/5sFkAd41UB++77JaqS0Yxebdq6K
-         6rYIMFJnZXC4OROyaDZm0sP03cufPbZRO6aWiKDWYyAUnCQnEo3P/e0R47R9DD0Gzurd
-         TXEA==
+        bh=ihL02fWLnPVa1G+vouJKVEijt+XqGqjvL0PoGlNa2RY=;
+        b=mtTQXLgfXSFRekrhLcDghcsT5u3KOqa0oW9KTjeVXj5+XgGBSvooHFwlJiOOU17qpd
+         uNG7UdE2a8+Zl4P3/lPHAgBDAzk7EM0A/tJTSwRy0fy+Yj9jvft9x75AT4Aho3TVUbB3
+         OCKkYxbHcw0Ng1R22ZerIcLBpcWewZTtwxNk7dwUvuIu3V12qyKdWX+9scxcC8/qKn8O
+         1riXiyPfKFKapT0Fn0Ym0RadJ2HR7S2/Bbn+Uz8Ati6NH4jmImsvw4itPPu+tSpQoeI4
+         rKAc4A6Y0U/Sxaduda9Q7F8PsH4wmziUxM1EtSDyyiqNp1bAFPfcAo86PinsS+sRM270
+         sNkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0pq4xbFTh2jF0itR3ZIPXejvF+NP8xceGshYiJYNvNA=;
-        b=y4Nrj6ZFuU3yYupbUVFXGNDSvQQdelcPKIGtNuV0MekDFIygvrRSIJg+1hvxlyxaXv
-         tgLdIo/KUorpX1fghufEOep1N0j4p4Y2V55qUVu+ZM1tMgG3dqST5nY1CGzgUmCGl6PR
-         XYVoQ8izNma0cFIQ3Q8Ai9wMVA0wDgXUW6FnhFwTzqzSaTG/QLJy2Hj/nBos69i/X5w+
-         KBsWQikqh2X79YYe8O9LJ/fWO2xAzJjCdVavfoSV+yjc2TEHTJaZ4zOUdBVUlsDwQjeq
-         9GH9NmrZOXr2rylMfJ29g0Kk6WSZ2jjbzmXoNNseBc2FrGC7bWn8ie61Oa1Wu8NhPj0W
-         NDVw==
-X-Gm-Message-State: AFqh2kp6w6i05XAV2Nv8GCjaFuIBGHs6BBUDnLJsVIbfTY6IPOQoLXWg
-        +QGD6Q5ymtyq+H7AttPHFOjWJF91j0khig==
-X-Google-Smtp-Source: AMrXdXsIRiINjAZaUBQw5pGigBvVsfBb5nbpcqZChXVXD8GvKTK15taLeadqcoBcl3JlN4Vt+F0KEQ==
-X-Received: by 2002:a05:6402:1770:b0:461:8be6:1ac5 with SMTP id da16-20020a056402177000b004618be61ac5mr23613215edb.3.1672366729340;
-        Thu, 29 Dec 2022 18:18:49 -0800 (PST)
+        bh=ihL02fWLnPVa1G+vouJKVEijt+XqGqjvL0PoGlNa2RY=;
+        b=ZQZhQ1vF2ymBJRHODCLQNbRvY+hU78huVB8QiVK2+0elksdGPi2FgY8l039Ulco8L/
+         uSHCKFJvQlkTU2Op1o+5UsMsKzZAi/tLd3auZ/kZkNVahVhQUxWbzqc2vytfbmtmozQG
+         BjSxdX9MOCVMxZ9YkSU4g/EwJYfTzEprt7rNtpoErC9ZLA88ihdLkLP6bKuMEfHlJZsR
+         YCw0fU1RemcIS+ROrK9MYRpE5oQSaC8O+2sXnUN5/7jZ2HmU18OYPG+Wl6z4YO3oxWw/
+         Jq4QsfMVLRjEwx4Vo8I5JZuzZKem8reAifcBz/7HK3iuTN90jHOdkYciJwXUOwke6AI0
+         iwAA==
+X-Gm-Message-State: AFqh2koXUpk2ywDYcWzdxSNyrZeqQmFsvyJK6/rYKEw7t50NCRNBU3V9
+        174vvOan1su1LFtOk9qZQBfcQFq3IGtnNg==
+X-Google-Smtp-Source: AMrXdXtnAs2ci5aT+bxEVXMoP0ihYPMw6WHegSGz1Bq0JbmtkjdGmOxngz+4sYs1rRCfAdHSQfEL0Q==
+X-Received: by 2002:a05:6402:174c:b0:467:8dd2:b42 with SMTP id v12-20020a056402174c00b004678dd20b42mr24089728edx.10.1672366732150;
+        Thu, 29 Dec 2022 18:18:52 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id ay15-20020a056402202f00b0046dd0c2a08esm8861991edb.36.2022.12.29.18.18.48
+        by smtp.gmail.com with ESMTPSA id ay15-20020a056402202f00b0046dd0c2a08esm8861991edb.36.2022.12.29.18.18.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Dec 2022 18:18:48 -0800 (PST)
+        Thu, 29 Dec 2022 18:18:51 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 11/20] commit-graph: fix a parse_options_concat() leak
-Date:   Fri, 30 Dec 2022 03:18:26 +0100
-Message-Id: <patch-v2-11.20-f7005f32cc0-20221230T020341Z-avarab@gmail.com>
+Subject: [PATCH v2 14/20] builtin/merge.c: free "&buf" on "Your local changes..." error
+Date:   Fri, 30 Dec 2022 03:18:29 +0100
+Message-Id: <patch-v2-14.20-bdd2bc9a956-20221230T020341Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.0.1153.g589e4efe9dc
 In-Reply-To: <cover-v2-00.20-00000000000-20221230T020341Z-avarab@gmail.com>
 References: <cover-00.20-00000000000-20221228T175512Z-avarab@gmail.com> <cover-v2-00.20-00000000000-20221230T020341Z-avarab@gmail.com>
@@ -70,33 +70,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the parse_options_concat() was added to this file in
-84e4484f128 (commit-graph: use parse_options_concat(), 2021-08-23) we
-wouldn't free() it if we returned early in these cases.
+Plug a memory leak introduced in [1], since that change didn't follow
+the "goto done" pattern introduced in [2] we'd leak the "&buf" memory.
 
-Since "result" is 0 by default we can "goto cleanup" in both cases,
-and only need to set "result" if write_commit_graph_reachable() fails.
+1. e4cdfe84a0d (merge: abort if index does not match HEAD for trivial
+   merges, 2022-07-23)
+2. d5a35c114ab (Copy resolve_ref() return value for longer use,
+   2011-11-13)
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/commit-graph.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/merge.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 0102ac8540e..93704f95a9d 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -269,8 +269,8 @@ static int graph_write(int argc, const char **argv, const char *prefix)
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 91dd5435c59..2b13124c497 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1618,7 +1618,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 				error(_("Your local changes to the following files would be overwritten by merge:\n  %s"),
+ 				      sb.buf);
+ 				strbuf_release(&sb);
+-				return 2;
++				ret = 2;
++				goto done;
+ 			}
  
- 	if (opts.reachable) {
- 		if (write_commit_graph_reachable(odb, flags, &write_opts))
--			return 1;
--		return 0;
-+			result = 1;
-+		goto cleanup;
- 	}
- 
- 	if (opts.stdin_packs) {
+ 			/* See if it is really trivial. */
 -- 
 2.39.0.1153.g589e4efe9dc
 
