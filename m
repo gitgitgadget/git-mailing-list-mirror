@@ -2,104 +2,201 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EBE2EC3DA7D
-	for <git@archiver.kernel.org>; Sat, 31 Dec 2022 02:51:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1D91C3DA7A
+	for <git@archiver.kernel.org>; Sat, 31 Dec 2022 14:13:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236272AbiLaCv7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Dec 2022 21:51:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60400 "EHLO
+        id S230367AbiLaONq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 31 Dec 2022 09:13:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236295AbiLaCvz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Dec 2022 21:51:55 -0500
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 894F211450
-        for <git@vger.kernel.org>; Fri, 30 Dec 2022 18:51:54 -0800 (PST)
-Received: by mail-pl1-x62b.google.com with SMTP id jn22so23573019plb.13
-        for <git@vger.kernel.org>; Fri, 30 Dec 2022 18:51:54 -0800 (PST)
+        with ESMTP id S229657AbiLaONl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Dec 2022 09:13:41 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7457B841
+        for <git@vger.kernel.org>; Sat, 31 Dec 2022 06:13:39 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id bn26so3035400wrb.0
+        for <git@vger.kernel.org>; Sat, 31 Dec 2022 06:13:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=vK5IBaC2nTe0sfHZBlrM3vx4UTvVjKuM5VigaUjW6dE=;
-        b=MbPcXDF/lRhuAKKt0wScID9vGvUE2IxxlUoQV9cQfGHG7gub72FU+4mfm5meprLkay
-         hSq0rVgD+CgjvT9NJ83jVEDN0eHWg92RJtiOH3Sot93+Rbuohy0tM0gI2bBq47a6PRWp
-         s9L+LBha+aU0D6DP2aoY4Ds0puJafZFuv0PP12qQ2+tmNxBJnFUqJLepr70w95yee9Tg
-         tQT9mSscYkgw4Z+lTWBMGe2zYMfkHMViU1hsRdEgc2UayJvU2QXxTyNgimAIBYBUT/sC
-         RH2te4zwIUFdgBBBwYXh5AIeznJQ2rUdPMl8gfiR0fsQQtVpaORR+2fkIHDM7y/0ZdiG
-         CqLA==
+        h=content-transfer-encoding:content-language:mime-version:user-agent
+         :date:message-id:subject:from:cc:to:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WY6zT+iNRAgRXAmF6hXSlCkCYx0v2MoRNOw1eZ3gglY=;
+        b=XywCGoANNVhZJXpSr/eu3cI1+8l33KRep2yxktG8s9tQKD1FxtiOEB9Kd9VAvO9IKY
+         9vR2JuzN8oSxjtdScxRg6nP+6HoIvfnX28D45xvM+1kE0urloKQgC4+nuay6dq7G+guJ
+         vHaNDnCq8K2PQ+nlXD7ZLrVKpMPyGzD5/e25QlPOPW3cq++B+BNE2pvEgZDxYmbjRvjk
+         MPlLtXAYE9nPJ8eQN/2G3bLbuVYnygkYxGRKdAHz5zh5HUke0uf4BT4PNxp3H1wCFj+9
+         ts0mWbBBDuQc00wYCM/Ix5vwOpxxR5t3f3fDkjD+ZoCeOirhJh+nbCyYa1fjmvPMJqwe
+         gX+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vK5IBaC2nTe0sfHZBlrM3vx4UTvVjKuM5VigaUjW6dE=;
-        b=0ahBln25GTvcFKuQ9OkilJkqhJzbYlOBqcimAReEtcFJxvZN8h6s/OQbYU2HlpTE45
-         jqksWV/So8s/BOue7y9zk23EONXJr7yeQ/ApP22dCVzXSLfv0dwLNyDQ2co7AuHbCYwk
-         MzuAvyw5jPfgM9WEAKUH0yizPA5AklPmTiGMtIu/4ge+GRP1YUJDEoZaog14pOJkgEwV
-         ZREhAUFm3DOyFstT946Kujw6PQ6xwssDAbwIZbDLdEoem1ZvwAZHPhekKgwyeG6maAmy
-         LtsX7ewXTWrqmnFMz+wlKPSTRCq3+JYDs1sry3HfeYJTtW2LH7g1nlG6nsEGxnSflZbO
-         evqA==
-X-Gm-Message-State: AFqh2kr8Vofwjz9C/hItfJGdupSMMntcWr4/HU7cOwm+47rr16wPl+h9
-        /rqANmqbopGJwHdJJ4gXLp0=
-X-Google-Smtp-Source: AMrXdXvHDjgeLLGyocb5S3DX0WF81yh1wgL3VEjrt6xVcFImVE0Syg9N5iO+vHOTm4BXPTjO3g1Irg==
-X-Received: by 2002:a17:902:e845:b0:188:fc0c:b736 with SMTP id t5-20020a170902e84500b00188fc0cb736mr75969550plg.67.1672455114008;
-        Fri, 30 Dec 2022 18:51:54 -0800 (PST)
-Received: from localhost ([2001:ee0:50c6:a3f0:4a98:acc:5d63:954a])
-        by smtp.gmail.com with ESMTPSA id q12-20020a17090311cc00b0018c990ce7fesm15718626plh.239.2022.12.30.18.51.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Dec 2022 18:51:53 -0800 (PST)
-Date:   Sat, 31 Dec 2022 09:51:50 +0700
-From:   =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-To:     Rose via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Rose <83477269+AtariDreams@users.noreply.github.com>,
-        Seija Kijin <doremylover123@gmail.com>
-Subject: Re: [PATCH] win32: remove return_0 inline function
-Message-ID: <Y6+jxkZjBMurBiw5@danh.dev>
-References: <pull.1420.git.git.1672453222075.gitgitgadget@gmail.com>
+        h=content-transfer-encoding:content-language:mime-version:user-agent
+         :date:message-id:subject:from:cc:to:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WY6zT+iNRAgRXAmF6hXSlCkCYx0v2MoRNOw1eZ3gglY=;
+        b=hPSaZu1MkRcesKTInTQ9qQXBjrLEDshUOH0PAC8YnlbvtISDykCJBwkxNZYBuWqSMU
+         tKZbvb8a9gtLtIXdBY5nHUi34+L2Xk7GvdnXcciXOVyKKCnPa/xfXC/flcEsRbTKTxZB
+         U2RiHJTHprP9x+IjP6LJEScqMZZp21sccbn1G/CxPICP5QaJN0Rk2ApKw7Wodmti+H1g
+         NjX0QMWrjdGMDv8BKJL7EsuQOn3jaLwoGbk9Ldioq7g4kcW2gTo/XWA/RNNZ2/gXNDJ5
+         GHfgitzn2pRmEqqiul9UAjNmvtD6bdXSJH9dwHOI31VzGUkU/cYtBsKCC6wio66peNEW
+         KFSg==
+X-Gm-Message-State: AFqh2kor7BE80+hd5VuYu+/8+IxM51lQh0UatKvMvJJLGs0CoGyXh1Pk
+        a9Q667uAEJNV248PXbwmrU0=
+X-Google-Smtp-Source: AMrXdXt0a6VNuMcF5X+rfjAK9qCPJM3VTUL1zY/E2QYczZFzdRiwVNDNfLRu5diwXn6MmVSn5vxGlg==
+X-Received: by 2002:a5d:6545:0:b0:27f:4a7e:fc47 with SMTP id z5-20020a5d6545000000b0027f4a7efc47mr11800095wrv.67.1672496018119;
+        Sat, 31 Dec 2022 06:13:38 -0800 (PST)
+Received: from [192.168.2.52] (94.red-88-14-213.dynamicip.rima-tde.net. [88.14.213.94])
+        by smtp.gmail.com with ESMTPSA id h10-20020a5d4fca000000b00281eab50380sm15473205wrw.117.2022.12.31.06.13.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 31 Dec 2022 06:13:37 -0800 (PST)
+To:     Git List <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Felipe Contreras <felipe.contreras@gmail.com>,
+        Jeff King <peff@peff.net>
+From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
+Subject: [PATCH] get_oid_basic: detached HEAD and @{-1}
+Message-ID: <c18c0328-9292-aa02-2922-f139e578ac07@gmail.com>
+Date:   Sat, 31 Dec 2022 15:13:36 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.1420.git.git.1672453222075.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-12-31 02:20:21+0000, Rose via GitGitGadget <gitgitgadget@gmail.com> wrote:
-> From: Seija Kijin <doremylover123@gmail.com>
-> 
-> The macro works on its own without the helper function
+We discourage the use of branch names that resemble commit ids; but
+for convenience not as a limitation:
 
-NACK
+	$ git commit --allow-empty -m first
+	[... 000001] first
+	$ oid=$(git rev-parse HEAD)
+	$ git commit --allow-empty -m second
+	[... 000002] second
+	$ git checkout -b $oid
+	Switched to a new branch '000001...'
 
->  #define pthread_mutex_t CRITICAL_SECTION
->  
-> -static inline int return_0(int i) {
-> -	return 0;
-> +static inline int return_i(int i) {
-> +	return i;
->  }
-> -#define pthread_mutex_init(a,b) return_0((InitializeCriticalSection((a)), 0))
-> +#define pthread_mutex_init(a,b) return_i((InitializeCriticalSection((a)), 0))
+With this usage, removing that risky-named branch and trying to re-use
+the branch name again, the result expected is an error but:
 
-This change does nothing and harmless in its own.
+	$ git checkout -
+	$ git branch -d $oid
+	Deleted branch 000001... (was 000002).
+	$ git checkout $oid
+	... You are in 'detached HEAD' state...
+	HEAD is now at 000001...
 
->  #define pthread_mutex_destroy(a) DeleteCriticalSection((a))
->  #define pthread_mutex_lock EnterCriticalSection
->  #define pthread_mutex_unlock LeaveCriticalSection
-> @@ -36,7 +36,7 @@ typedef int pthread_mutexattr_t;
->  
->  #define pthread_cond_init(a,b) InitializeConditionVariable((a))
->  #define pthread_cond_destroy(a) do {} while (0)
-> -#define pthread_cond_wait(a,b) return_0(SleepConditionVariableCS((a), (b), INFINITE))
-> +#define pthread_cond_wait(a,b) SleepConditionVariableCS((a), (b), INFINITE)
+With @{-1} shortcuts the result is the same, but here we can do better
+and give an error as a result:  from the reflog we know @{-1} refers
+to a branch named '000001...' which pointed to commit '000002...'.
 
-But this is not,
-pthread_cond_wait return 0 on success, otherwise error number.
-SleepConditionVariableCS return non-zero on success, 0 on failure.
+Let's use this unused-yet information to avoid the ambiguity in the
+result.
 
-IOW, this change is broken on Windows.
+Signed-off-by: Rubén Justo <rjusto@gmail.com>
+---
+ object-name.c                         | 20 ++++++++++++++------
+ t/t3204-branch-name-interpretation.sh | 10 ++++++++++
+ 2 files changed, 24 insertions(+), 6 deletions(-)
 
+diff --git a/object-name.c b/object-name.c
+index 2dd1a0f56e..3fae19de2f 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -878,7 +878,8 @@ static inline int push_mark(const char *string, int len)
+ }
+ 
+ static enum get_oid_result get_oid_1(struct repository *r, const char *name, int len, struct object_id *oid, unsigned lookup_flags);
+-static int interpret_nth_prior_checkout(struct repository *r, const char *name, int namelen, struct strbuf *buf);
++static int interpret_nth_prior_checkout(struct repository *r, const char *name,
++		int namelen, struct strbuf *buf, struct object_id *ooid);
+ 
+ static int get_oid_basic(struct repository *r, const char *str, int len,
+ 			 struct object_id *oid, unsigned int flags)
+@@ -940,10 +941,12 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
+ 
+ 	if (nth_prior) {
+ 		struct strbuf buf = STRBUF_INIT;
++		struct object_id ooid;
+ 		int detached;
+ 
+-		if (interpret_nth_prior_checkout(r, str, len, &buf) > 0) {
+-			detached = (buf.len == r->hash_algo->hexsz && !get_oid_hex(buf.buf, oid));
++		if (interpret_nth_prior_checkout(r, str, len, &buf, &ooid) > 0) {
++			detached = (buf.len == r->hash_algo->hexsz &&
++				!get_oid_hex(buf.buf, oid)) && !oidcmp(oid, &ooid);
+ 			strbuf_release(&buf);
+ 			if (detached)
+ 				return 0;
+@@ -1383,9 +1386,10 @@ static int get_oid_oneline(struct repository *r,
+ struct grab_nth_branch_switch_cbdata {
+ 	int remaining;
+ 	struct strbuf *sb;
++	struct object_id *ooid;
+ };
+ 
+-static int grab_nth_branch_switch(struct object_id *ooid UNUSED,
++static int grab_nth_branch_switch(struct object_id *ooid,
+ 				  struct object_id *noid UNUSED,
+ 				  const char *email UNUSED,
+ 				  timestamp_t timestamp UNUSED,
+@@ -1405,6 +1409,8 @@ static int grab_nth_branch_switch(struct object_id *ooid UNUSED,
+ 		len = target - match;
+ 		strbuf_reset(cb->sb);
+ 		strbuf_add(cb->sb, match, len);
++		if (cb->ooid)
++			oidcpy(cb->ooid, ooid);
+ 		return 1; /* we are done */
+ 	}
+ 	return 0;
+@@ -1416,7 +1422,8 @@ static int grab_nth_branch_switch(struct object_id *ooid UNUSED,
+  */
+ static int interpret_nth_prior_checkout(struct repository *r,
+ 					const char *name, int namelen,
+-					struct strbuf *buf)
++					struct strbuf *buf,
++					struct object_id *ooid)
+ {
+ 	long nth;
+ 	int retval;
+@@ -1438,6 +1445,7 @@ static int interpret_nth_prior_checkout(struct repository *r,
+ 		return -1;
+ 	cb.remaining = nth;
+ 	cb.sb = buf;
++	cb.ooid = ooid;
+ 
+ 	retval = refs_for_each_reflog_ent_reverse(get_main_ref_store(r),
+ 			"HEAD", grab_nth_branch_switch, &cb);
+@@ -1621,7 +1629,7 @@ int repo_interpret_branch_name(struct repository *r,
+ 		namelen = strlen(name);
+ 
+ 	if (!options->allowed || (options->allowed & INTERPRET_BRANCH_LOCAL)) {
+-		len = interpret_nth_prior_checkout(r, name, namelen, buf);
++		len = interpret_nth_prior_checkout(r, name, namelen, buf, NULL);
+ 		if (!len) {
+ 			return len; /* syntax Ok, not enough switches */
+ 		} else if (len > 0) {
+diff --git a/t/t3204-branch-name-interpretation.sh b/t/t3204-branch-name-interpretation.sh
+index 3399344f25..5839884ae4 100755
+--- a/t/t3204-branch-name-interpretation.sh
++++ b/t/t3204-branch-name-interpretation.sh
+@@ -167,4 +167,14 @@ test_expect_success 'modify branch upstream via "@{-1}" and "@{-1}@{upstream}"'
+ 	test_must_fail git config branch.upstream-other.merge
+ '
+ 
++test_expect_success '@{-1} might look erroneously like a detached HEAD' '
++	oid=$(git rev-parse HEAD) &&
++	git checkout -b $oid &&
++	test_commit new-oid &&
++	git checkout - &&
++	git branch -D $oid &&
++	test_must_fail git checkout @{-1} &&
++	test_must_fail git rev-parse @{-1}
++'
++
+ test_done
 -- 
-Danh
+2.39.0
+
