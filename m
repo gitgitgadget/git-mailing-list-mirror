@@ -2,309 +2,204 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CB7F9C3DA7A
-	for <git@archiver.kernel.org>; Sat, 31 Dec 2022 14:54:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BAC8C3DA7A
+	for <git@archiver.kernel.org>; Sat, 31 Dec 2022 14:56:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235614AbiLaOy6 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 31 Dec 2022 09:54:58 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38608 "EHLO
+        id S231882AbiLaO4A (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 31 Dec 2022 09:56:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229546AbiLaOy5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Dec 2022 09:54:57 -0500
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91857FD0
-        for <git@vger.kernel.org>; Sat, 31 Dec 2022 06:54:55 -0800 (PST)
-Received: by mail-wm1-x32d.google.com with SMTP id k26-20020a05600c1c9a00b003d972646a7dso14386479wms.5
-        for <git@vger.kernel.org>; Sat, 31 Dec 2022 06:54:55 -0800 (PST)
+        with ESMTP id S231156AbiLaOz7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Dec 2022 09:55:59 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB271110A
+        for <git@vger.kernel.org>; Sat, 31 Dec 2022 06:55:57 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id fm16-20020a05600c0c1000b003d96fb976efso15398739wmb.3
+        for <git@vger.kernel.org>; Sat, 31 Dec 2022 06:55:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=4IgNsqetMpCq0p45upZadmdv38Tl2HxLBd4cc0itKLQ=;
-        b=PwfbSRj2GVhlvi5yHRuYSkq4EOqJQQshqAVRsu1fa7B1/1ZQjj+06VcSruWRm4Z/X7
-         rIMaS4WF+7DWORtJulmtTP5xjEZXhrnOR9jce8xHioLL92k3CxEp9wUxCBrZqUb0ml+X
-         WrT9mBz/y+xt71Tn6Ou9QB587tEmGGl+c7wHR70jtRCLKH2QIoxgwSVh/Vp6jg7n7yBE
-         sDY/btIqWY4ACOehD3wOEmdLPs87WanuQZ/MaJPw8K1sGZl6dTJXY2jJpi9KoXRd+yGm
-         kYUN36RZ6wIenbxLqjpj5uPjQ7D1dxD7UwGi3hNgaf8/TkB1P16Gv3ujSk4Zrk++KYbf
-         BEDA==
+        bh=B/GSEMEDMrQ3oH30498JTOBRlFjale9Rq3XJFSQV8QE=;
+        b=PGu5qdFYIGMg5OBG8PeyUF6V0YS5dBPPfuL4Pu5q1QXa2CtAiEznIHcIDf7W3LShN1
+         nQI1AFtRjkUdfJG4Rgmw2DeVOUgWmch/Vy91eYgJgBomrJ25cf/e1h+k8VmSPwemD0fU
+         xItt5YZWETfBD+5+t9NsnMUU45LS94x6JIb9mCB7tjXbYj6s9gWsb6f+vM7HsyMSzPLf
+         x/zSJEfXyiFcqAtrhRa7NI8rzsLtJcQpuwRQqlHF3V4k8C6gAX6ujChtRCJuTi13kVpg
+         1mB+g0Hbq7hbM4CHR6wXXPqrMdNDQ9VU6SUhsHKm9iozB7vbjicfq3IjzZQwF1bR2fvn
+         O/uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4IgNsqetMpCq0p45upZadmdv38Tl2HxLBd4cc0itKLQ=;
-        b=TizUbSanqNgLt7K3kPg+76y3BaMtLE/zgEdNG7zRNy9jia7agB6rtJbfQ+w3EM7EzV
-         KKOicTJAriUM3WWmH/Dfu8fxD0TcYaxW2tQMqOmMa3TQM9Ex1IlnU2+Z5FMfkiwzDG/1
-         JWLuuxXNs2MDJqOiqyT8XXq7/EetN9aou3oEpmRnwrMuqEWg3YIP+83LmNWShf7S3Hdr
-         0lHhbJ88aRY7N8dNTFzf/YBpyZpqSbbIAHRQy7ALnCX0za6zeTFovwsasoGvqHAF3OpU
-         srrqY7i3zP9shnQH8EWbKnFVEk7X2dvBKvw3GjG6riTq3qh2B7QFzz03A6orkNR+p/vp
-         ihKA==
-X-Gm-Message-State: AFqh2koEHT1QeBBPw4labUrFj7lQ3hZ/8VjKxu71dX5lYv1cvz+j895d
-        9rUDCzFhLlF7dVvM/BQ1xro=
-X-Google-Smtp-Source: AMrXdXtGRFodgVrOcjY2iUxYLUxFiEqlWGQLFS1of2NirvEPzUN5ZnxpJRIMbp9NVgZxE35yujm+hQ==
-X-Received: by 2002:a05:600c:4995:b0:3d3:4f43:fbc2 with SMTP id h21-20020a05600c499500b003d34f43fbc2mr25225657wmp.41.1672498494112;
-        Sat, 31 Dec 2022 06:54:54 -0800 (PST)
+        bh=B/GSEMEDMrQ3oH30498JTOBRlFjale9Rq3XJFSQV8QE=;
+        b=nWh33tte93oiBvC/cqrnCOKJE2iCRWWmdRxtO2VdU8LApxwrf/3xpZt9YD3Fab0mSU
+         wntxGmEIJHCRZmtpY1v9GI6RAJiUXPi16SIEUHSzcZoqrKc69ozDfYTTeDCki2lANcNg
+         hrXvL/XASR8M6EABQSIqMKrUDkR+GZRfXXdZTYsZ0ijka7u0h39AohDnLDyVTMuGRTpp
+         nMMxKWtgnUgsOnHd8YGOafShAREotqYlRRNU5QSKvqzvIp5q35WHgpNxSxcx3aVEB+Zw
+         YLMmgQmD/KkC1t8R7PgMuOk8jOnKdvpmsLAm2dyoZVz197X4jNJScMFa1Gijxt/zsB3F
+         bDPQ==
+X-Gm-Message-State: AFqh2krMXL5pLNikc6EWfPvT2jHz0D7yEi2y4W+hBpRGVGq5x//YJoFa
+        PtZS7U2vgy9a0EYSOLpKszg=
+X-Google-Smtp-Source: AMrXdXvNiQWrlKwNZF7Nfr4STuIM6xnPEPYoaJEa3ge00FQSLbl7CGCLEbXHIt5xPAZL0+ds1+GACA==
+X-Received: by 2002:a05:600c:16c5:b0:3d1:f687:1fd0 with SMTP id l5-20020a05600c16c500b003d1f6871fd0mr25129443wmn.12.1672498556530;
+        Sat, 31 Dec 2022 06:55:56 -0800 (PST)
 Received: from [192.168.1.14] (host-92-2-151-214.as13285.net. [92.2.151.214])
-        by smtp.gmail.com with ESMTPSA id k39-20020a05600c1ca700b003a84375d0d1sm41133275wms.44.2022.12.31.06.54.53
+        by smtp.gmail.com with ESMTPSA id p13-20020a05600c358d00b003d1f2c3e571sm40711192wmq.33.2022.12.31.06.55.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 31 Dec 2022 06:54:53 -0800 (PST)
+        Sat, 31 Dec 2022 06:55:56 -0800 (PST)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <0fd32979-9beb-93e8-8a03-253a08588c42@dunelm.org.uk>
-Date:   Sat, 31 Dec 2022 14:54:52 +0000
+Message-ID: <cacace0b-822a-e4fe-2d01-cb0058f83fd9@dunelm.org.uk>
+Date:   Sat, 31 Dec 2022 14:55:54 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 03/10] rebase & sequencer API: fix get_replay_opts() leak
- in "rebase"
+Subject: Re: [PATCH 05/10] builtin/revert.c: fix common leak by using
+ replay_opts_release()
 Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+        Taylor Blau <me@ttaylorr.com>
 References: <cover-00.10-00000000000-20221230T071741Z-avarab@gmail.com>
- <patch-03.10-3e9c4df61fe-20221230T071741Z-avarab@gmail.com>
-In-Reply-To: <patch-03.10-3e9c4df61fe-20221230T071741Z-avarab@gmail.com>
+ <patch-05.10-e2895bb9795-20221230T071741Z-avarab@gmail.com>
+ <3a823d76-9ea3-d6a0-c9ed-9e84fe57042c@web.de>
+In-Reply-To: <3a823d76-9ea3-d6a0-c9ed-9e84fe57042c@web.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar
-
-On 30/12/2022 07:28, Ævar Arnfjörð Bjarmason wrote:
-> Make the recently added replay_opts_release() function non-static and
-> use it for freeing the "struct replay_opts" constructed by the
-> get_replay_opts() function in "builtin/rebase.c". See [1] for the
-> initial addition of get_replay_opts().
+On 30/12/2022 23:37, René Scharfe wrote:
+> Am 30.12.22 um 08:28 schrieb Ævar Arnfjörð Bjarmason:
+>> Use the replay_opts_release() function introduced in a preceding
+>> commit to fix a memory leak in run_sequencer().
+>>
+>> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>> ---
+>>   builtin/revert.c                  | 1 +
+>>   t/t3419-rebase-patch-id.sh        | 1 +
+>>   t/t3425-rebase-topology-merges.sh | 2 ++
+>>   t/t3501-revert-cherry-pick.sh     | 1 +
+>>   t/t3502-cherry-pick-merge.sh      | 1 +
+>>   t/t3503-cherry-pick-root.sh       | 1 +
+>>   t/t3506-cherry-pick-ff.sh         | 1 +
+>>   t/t3511-cherry-pick-x.sh          | 1 +
+>>   8 files changed, 9 insertions(+)
+>>
+>> diff --git a/builtin/revert.c b/builtin/revert.c
+>> index e956d125a2b..2f656b25619 100644
+>> --- a/builtin/revert.c
+>> +++ b/builtin/revert.c
+>> @@ -240,6 +240,7 @@ static int run_sequencer(int argc, const char **argv, struct replay_opts *opts)
+>>   		cmd == 's' ? sequencer_skip :
+>>   		sequencer_pick_revisions;
+>>   	ret = cbfun(the_repository, opts);
+>> +	replay_opts_release(opts);
 > 
-> To safely call our new replay_opts_release() we'll need to change all
-> the free() to a FREE_AND_NULL(), and set "xopts_nr" to "0" after we
-> loop over it and free() it (the free() in the loop doesn't need to be
-> a FREE_AND_NULL()).
-> 
-> This is because in e.g. do_interactive_rebase() we construct a "struct
-> replay_opts" with "get_replay_opts()", and then call
-> "complete_action()". If we get far enough in that function without
-> encountering errors we'll call "pick_commits()" which (indirectly)
-> calls sequencer_remove_state() at the end.
+> Is this the right place for this call?  opts is passed in by this function's
+> two callers.  They should clean it up instead, no?  That would add one line,
+> but avoid the need for patch 4.  Would make patch 6 easier to read as well.
 
-The way to fix this is to stop calling replay_opts_release() from 
-sequencer_remove_state(), then you can be sure to call 
-replay_opts_release() only once by adding calls to the functions that 
-initialize a "struct replay_opts". That would be much cleaner than this 
-FREE_AND_NULL() hackery.
+Yes I agree that would be a better approach.
 
 Best Wishes
 
 Phillip
 
-> But if we encounter errors anywhere along the way we'd punt out early,
-> and not free() the memory we allocated. Remembering whether we
-> previously called sequencer_remove_state() would be a hassle, so let's
-> make it safe to re-invoke replay_opts_release() instead.
+>>   	return ret;
+>>   }
+>>
+>> diff --git a/t/t3419-rebase-patch-id.sh b/t/t3419-rebase-patch-id.sh
+>> index 7181f176b81..6c61f240cf9 100755
+>> --- a/t/t3419-rebase-patch-id.sh
+>> +++ b/t/t3419-rebase-patch-id.sh
+>> @@ -5,6 +5,7 @@ test_description='git rebase - test patch id computation'
+>>   GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+>>   export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>>
+>> +TEST_PASSES_SANITIZE_LEAK=true
+>>   . ./test-lib.sh
+>>
+>>   scramble () {
+>> diff --git a/t/t3425-rebase-topology-merges.sh b/t/t3425-rebase-topology-merges.sh
+>> index 63acc1ea4da..a16428bdf54 100755
+>> --- a/t/t3425-rebase-topology-merges.sh
+>> +++ b/t/t3425-rebase-topology-merges.sh
+>> @@ -1,6 +1,8 @@
+>>   #!/bin/sh
+>>
+>>   test_description='rebase topology tests with merges'
+>> +
+>> +TEST_PASSES_SANITIZE_LEAK=true
+>>   . ./test-lib.sh
+>>   . "$TEST_DIRECTORY"/lib-rebase.sh
+>>
+>> diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
+>> index 1f4cfc37449..2f3e3e24169 100755
+>> --- a/t/t3501-revert-cherry-pick.sh
+>> +++ b/t/t3501-revert-cherry-pick.sh
+>> @@ -13,6 +13,7 @@ test_description='test cherry-pick and revert with renames
+>>   GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+>>   export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>>
+>> +TEST_PASSES_SANITIZE_LEAK=true
+>>   . ./test-lib.sh
+>>
+>>   test_expect_success setup '
+>> diff --git a/t/t3502-cherry-pick-merge.sh b/t/t3502-cherry-pick-merge.sh
+>> index 5495eacfec1..1b2c0d6aca6 100755
+>> --- a/t/t3502-cherry-pick-merge.sh
+>> +++ b/t/t3502-cherry-pick-merge.sh
+>> @@ -11,6 +11,7 @@ test_description='cherry picking and reverting a merge
+>>   GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+>>   export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>>
+>> +TEST_PASSES_SANITIZE_LEAK=true
+>>   . ./test-lib.sh
+>>
+>>   test_expect_success setup '
+>> diff --git a/t/t3503-cherry-pick-root.sh b/t/t3503-cherry-pick-root.sh
+>> index 95fe4feaeee..76d393dc8a3 100755
+>> --- a/t/t3503-cherry-pick-root.sh
+>> +++ b/t/t3503-cherry-pick-root.sh
+>> @@ -5,6 +5,7 @@ test_description='test cherry-picking (and reverting) a root commit'
+>>   GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+>>   export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>>
+>> +TEST_PASSES_SANITIZE_LEAK=true
+>>   . ./test-lib.sh
+>>
+>>   test_expect_success setup '
+>> diff --git a/t/t3506-cherry-pick-ff.sh b/t/t3506-cherry-pick-ff.sh
+>> index 7e11bd4a4c5..b71bad17b85 100755
+>> --- a/t/t3506-cherry-pick-ff.sh
+>> +++ b/t/t3506-cherry-pick-ff.sh
+>> @@ -5,6 +5,7 @@ test_description='test cherry-picking with --ff option'
+>>   GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+>>   export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>>
+>> +TEST_PASSES_SANITIZE_LEAK=true
+>>   . ./test-lib.sh
+>>
+>>   test_expect_success setup '
+>> diff --git a/t/t3511-cherry-pick-x.sh b/t/t3511-cherry-pick-x.sh
+>> index 84a587daf3a..dd5d92ef302 100755
+>> --- a/t/t3511-cherry-pick-x.sh
+>> +++ b/t/t3511-cherry-pick-x.sh
+>> @@ -2,6 +2,7 @@
+>>
+>>   test_description='Test cherry-pick -x and -s'
+>>
+>> +TEST_PASSES_SANITIZE_LEAK=true
+>>   . ./test-lib.sh
+>>
+>>   pristine_detach () {
 > 
-> I experimented with a change to be more paranoid instead, i.e. to
-> exhaustively check our state via an enum. We could make sure that we:
-> 
-> - Only allow calling "replay_opts_release()" after
->    "sequencer_remove_state()", but not the other way around.
-> 
-> - Forbid invoking either function twice in a row.
-> 
-> But such paranoia isn't warranted here, let's instead take the easy
-> way out and FREE_AND_NULL() this.
-> 
-> See [2] for the initial implementation of "sequencer_remove_state()",
-> which assumed that it should be removing the full (including on-disk)
-> rebase state as a one-off.
-> 
-> 1. 73fdc535d26 (rebase -i: use struct rebase_options to parse args,
->     2019-04-17)
-> 2. 26ae337be11 (revert: Introduce --reset to remove sequencer state,
->     2011-08-04)
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
-> 
-> Re the "I experimented with...", the earlier version can be seen at
-> https://github.com/avar/git/commit/7a150d1b7e2; It's the commit I
-> linked to from
-> https://lore.kernel.org/git/221108.864jv9sc9r.gmgdl@evledraar.gmail.com/
-> (which is mentioned in the CL).
-> 
->   builtin/rebase.c                       |  2 ++
->   sequencer.c                            | 13 +++++++------
->   sequencer.h                            |  1 +
->   t/t3405-rebase-malformed.sh            |  1 +
->   t/t3412-rebase-root.sh                 |  1 +
->   t/t3423-rebase-reword.sh               |  1 +
->   t/t3437-rebase-fixup-options.sh        |  1 +
->   t/t3438-rebase-broken-files.sh         |  2 ++
->   t/t7402-submodule-rebase.sh            |  1 +
->   t/t9106-git-svn-commit-diff-clobber.sh |  1 -
->   t/t9164-git-svn-dcommit-concurrent.sh  |  1 -
->   11 files changed, 17 insertions(+), 8 deletions(-)
-> 
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 7141fd5e0c1..91bf55be6e6 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -301,6 +301,7 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
->   	}
->   
->   cleanup:
-> +	replay_opts_release(&replay);
->   	string_list_clear(&commands, 0);
->   	free(revisions);
->   	free(shortrevisions);
-> @@ -343,6 +344,7 @@ static int run_sequencer_rebase(struct rebase_options *opts)
->   		struct replay_opts replay_opts = get_replay_opts(opts);
->   
->   		ret = sequencer_continue(the_repository, &replay_opts);
-> +		replay_opts_release(&replay_opts);
->   		break;
->   	}
->   	case ACTION_EDIT_TODO:
-> diff --git a/sequencer.c b/sequencer.c
-> index 655ae9f1a72..e29a97b6caa 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -351,15 +351,16 @@ static const char *gpg_sign_opt_quoted(struct replay_opts *opts)
->   	return buf.buf;
->   }
->   
-> -static void replay_opts_release(struct replay_opts *opts)
-> +void replay_opts_release(struct replay_opts *opts)
->   {
-> -	free(opts->gpg_sign);
-> -	free(opts->reflog_action);
-> -	free(opts->default_strategy);
-> -	free(opts->strategy);
-> +	FREE_AND_NULL(opts->gpg_sign);
-> +	FREE_AND_NULL(opts->reflog_action);
-> +	FREE_AND_NULL(opts->default_strategy);
-> +	FREE_AND_NULL(opts->strategy);
->   	for (size_t i = 0; i < opts->xopts_nr; i++)
->   		free(opts->xopts[i]);
-> -	free(opts->xopts);
-> +	opts->xopts_nr = 0;
-> +	FREE_AND_NULL(opts->xopts);
->   	strbuf_release(&opts->current_fixups);
->   }
->   
-> diff --git a/sequencer.h b/sequencer.h
-> index 888c18aad71..3bcdfa1b586 100644
-> --- a/sequencer.h
-> +++ b/sequencer.h
-> @@ -158,6 +158,7 @@ int sequencer_pick_revisions(struct repository *repo,
->   int sequencer_continue(struct repository *repo, struct replay_opts *opts);
->   int sequencer_rollback(struct repository *repo, struct replay_opts *opts);
->   int sequencer_skip(struct repository *repo, struct replay_opts *opts);
-> +void replay_opts_release(struct replay_opts *opts);
->   int sequencer_remove_state(struct replay_opts *opts);
->   
->   #define TODO_LIST_KEEP_EMPTY (1U << 0)
-> diff --git a/t/t3405-rebase-malformed.sh b/t/t3405-rebase-malformed.sh
-> index 25243318618..8979bc34073 100755
-> --- a/t/t3405-rebase-malformed.sh
-> +++ b/t/t3405-rebase-malformed.sh
-> @@ -5,6 +5,7 @@ test_description='rebase should handle arbitrary git message'
->   GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->   export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   . "$TEST_DIRECTORY"/lib-rebase.sh
->   
-> diff --git a/t/t3412-rebase-root.sh b/t/t3412-rebase-root.sh
-> index 58371d8a547..e75b3d0e07c 100755
-> --- a/t/t3412-rebase-root.sh
-> +++ b/t/t3412-rebase-root.sh
-> @@ -7,6 +7,7 @@ Tests if git rebase --root --onto <newparent> can rebase the root commit.
->   GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->   export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   log_with_names () {
-> diff --git a/t/t3423-rebase-reword.sh b/t/t3423-rebase-reword.sh
-> index 4859bb8f722..2fab703d615 100755
-> --- a/t/t3423-rebase-reword.sh
-> +++ b/t/t3423-rebase-reword.sh
-> @@ -2,6 +2,7 @@
->   
->   test_description='git rebase interactive with rewording'
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   . "$TEST_DIRECTORY"/lib-rebase.sh
-> diff --git a/t/t3437-rebase-fixup-options.sh b/t/t3437-rebase-fixup-options.sh
-> index c023fefd681..274699dadb8 100755
-> --- a/t/t3437-rebase-fixup-options.sh
-> +++ b/t/t3437-rebase-fixup-options.sh
-> @@ -14,6 +14,7 @@ to the "fixup" command that works with "fixup!", "fixup -C" works with
->   "amend!" upon --autosquash.
->   '
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   . "$TEST_DIRECTORY"/lib-rebase.sh
-> diff --git a/t/t3438-rebase-broken-files.sh b/t/t3438-rebase-broken-files.sh
-> index b92a3ce46b8..c614c4f2e4b 100755
-> --- a/t/t3438-rebase-broken-files.sh
-> +++ b/t/t3438-rebase-broken-files.sh
-> @@ -1,6 +1,8 @@
->   #!/bin/sh
->   
->   test_description='rebase behavior when on-disk files are broken'
-> +
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   test_expect_success 'set up conflicting branches' '
-> diff --git a/t/t7402-submodule-rebase.sh b/t/t7402-submodule-rebase.sh
-> index ebeca12a711..b19792b3269 100755
-> --- a/t/t7402-submodule-rebase.sh
-> +++ b/t/t7402-submodule-rebase.sh
-> @@ -5,6 +5,7 @@
->   
->   test_description='Test rebasing, stashing, etc. with submodules'
->   
-> +TEST_PASSES_SANITIZE_LEAK=true
->   . ./test-lib.sh
->   
->   test_expect_success setup '
-> diff --git a/t/t9106-git-svn-commit-diff-clobber.sh b/t/t9106-git-svn-commit-diff-clobber.sh
-> index 3cab0b9720a..bca496c40e0 100755
-> --- a/t/t9106-git-svn-commit-diff-clobber.sh
-> +++ b/t/t9106-git-svn-commit-diff-clobber.sh
-> @@ -3,7 +3,6 @@
->   # Copyright (c) 2006 Eric Wong
->   test_description='git svn commit-diff clobber'
->   
-> -TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   
->   test_expect_success 'initialize repo' '
-> diff --git a/t/t9164-git-svn-dcommit-concurrent.sh b/t/t9164-git-svn-dcommit-concurrent.sh
-> index 1465156072e..c8e6c0733f4 100755
-> --- a/t/t9164-git-svn-dcommit-concurrent.sh
-> +++ b/t/t9164-git-svn-dcommit-concurrent.sh
-> @@ -5,7 +5,6 @@
->   
->   test_description='concurrent git svn dcommit'
->   
-> -TEST_FAILS_SANITIZE_LEAK=true
->   . ./lib-git-svn.sh
->   
->   
