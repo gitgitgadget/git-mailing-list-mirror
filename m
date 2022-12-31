@@ -2,136 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D4B40C3DA7D
-	for <git@archiver.kernel.org>; Sat, 31 Dec 2022 00:57:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E20A6C4332F
+	for <git@archiver.kernel.org>; Sat, 31 Dec 2022 02:07:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235940AbiLaA5M (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 30 Dec 2022 19:57:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38826 "EHLO
+        id S236150AbiLaCHb (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 30 Dec 2022 21:07:31 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230017AbiLaA5K (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Dec 2022 19:57:10 -0500
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C7B8F03A
-        for <git@vger.kernel.org>; Fri, 30 Dec 2022 16:57:09 -0800 (PST)
-Received: by mail-lj1-x229.google.com with SMTP id u12so19850381ljj.11
-        for <git@vger.kernel.org>; Fri, 30 Dec 2022 16:57:09 -0800 (PST)
+        with ESMTP id S231494AbiLaCHa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Dec 2022 21:07:30 -0500
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B839140DE
+        for <git@vger.kernel.org>; Fri, 30 Dec 2022 18:07:29 -0800 (PST)
+Received: by mail-pl1-x62f.google.com with SMTP id jl4so17270290plb.8
+        for <git@vger.kernel.org>; Fri, 30 Dec 2022 18:07:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :references:in-reply-to:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XMb+xM98e/sch94eYiydpxt6MlEvgKYEJwJtKBowU7c=;
-        b=djAaYDJaWL2wCcLfB+U0FfswwN2O3Ts93ojsPMCDpslZ5tbF+C3RjKltgUTMpsvurT
-         tWaLgaF/UlRfiYIexR/233Xr/8QTYstdiFKV6D1AycAeU3DMdoZPKRylAPLgDhLXKbDU
-         LiP7pRKn/uSH2Z+i0jlNsmY9zpKn2tJMJPCX32JChFHSmghzlBKd3c1UL/Vl3yZkBU8Z
-         P4zlpn5mJu1b/SpUIxuKzVS0R38ahN+XjKX4m0rHU1DtV9gfjwyVhCfRk922C3bXNlIm
-         0zaCPcT3gJfGMq2/s4z3Nqm5lnOGYhc07tDqCBHvzoEuFPxFpXNDjQtHHIAJeEx8U+Cx
-         vq6g==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JOpqbbvSAJqlQoDNmHk9RvOHt2DD+POAwS3Uapbowyg=;
+        b=bdyMMQ4NhHK6fSyBgqZhyLnWepzRlo/D4K4Zqns4iinoSx3yk2q0viWXaeI6kJgNKU
+         3hMZIkZMCavbv5PwL13IxK6AWSyMihUtlHHFofpnSZmtuX/LUeknDVjFwf4ciBL/KqQW
+         MTJ1Qzja52rE+Cv9ys1UpQCjiA0Y5wLfPaUpWurd8vJWIrSifYQLfW7I3TNRY6NhKn42
+         lPPXcmCRCa1dehnzJvbd1karbRSri4I0adTs9c11c0sbxinAbgnoIWCK6jzzyOjd7t/F
+         0BlSJc+9CGa7jPuXkWk2e4qu9FvsqJ/ygrvB2iOhoBTncC9JCzIWdRtFU1bfR6c/pzSm
+         pscw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :references:in-reply-to:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XMb+xM98e/sch94eYiydpxt6MlEvgKYEJwJtKBowU7c=;
-        b=uWirVOs+61jvBaz+UGJMOqj2nFxY2ybu3OZtYx0842brIkgA1H4Y7xiBG5iAniI4tZ
-         emnPmzsMsH+ABS/o9E5MrzMXLbFvIxrirjpVLAzBukUC+vOUlLB3g4oY8PWMfn6l82eZ
-         mzgV9v/Tqt4R2hgyi2jCy1dBC4YNQaJB3z5BWOKl/YOrsurwEkFgBhsH74f9OuVrWVc/
-         xoOCI7U4/grZlcx7oznIKe4x8Dp7JpNW07ocF0Z6zBklpAW9CpaNPTQ35qu8aqoRRIQR
-         n9kk/7Bi7e1KApvzD0Xl3GRqmLmLjgjPVMgOSARKc8HHpxAHSEOrbZRdr7rBP2wy1p+d
-         B50Q==
-X-Gm-Message-State: AFqh2kq5ZYzs/0DQUdDtji96BXK24vMSuQ+sVqm9gAvrN6djxky5kNi4
-        LDX9FeVJ1evNeNdSkIK4t2ddx8hsMiDPDwFbAeFWWOT2uYfr2tLL
-X-Google-Smtp-Source: AMrXdXsDvcGedxyD/33A0LQMxwvVwIUdEaFzpsr+CjlkwFCbMbg+j43kC1U/UQ9JMYlFYotaHP154LMW895HBcCQ/8I=
-X-Received: by 2002:a2e:b048:0:b0:279:fd34:154b with SMTP id
- d8-20020a2eb048000000b00279fd34154bmr1254672ljl.185.1672448227636; Fri, 30
- Dec 2022 16:57:07 -0800 (PST)
-MIME-Version: 1.0
-Received: by 2002:aa6:c266:0:b0:23b:5e81:46ba with HTTP; Fri, 30 Dec 2022
- 16:57:06 -0800 (PST)
-In-Reply-To: <000701d91cae$6c8cbbf0$45a633d0$@nexbridge.com>
-References: <CAJcAo8tjMLFisK5_13iD_JGo2xVQDJRX3wAC7wRD_V2GKFGevQ@mail.gmail.com>
- <000701d91cae$6c8cbbf0$45a633d0$@nexbridge.com>
-From:   Samuel Wales <samologist@gmail.com>
-Date:   Fri, 30 Dec 2022 17:57:06 -0700
-Message-ID: <CAJcAo8tY55sUNr=HX9-tVPYDoSOx-xkH0WtZuXuLqs0S3sXu-A@mail.gmail.com>
-Subject: Re: is this data corruption?
-To:     rsbecker@nexbridge.com
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=JOpqbbvSAJqlQoDNmHk9RvOHt2DD+POAwS3Uapbowyg=;
+        b=CloS0AhCGOBiXwVTUC6ULnt1q9OTQFegyRi3swfAA11lq76OYVRMbFpxsNUiur3fu6
+         y5nuad6RUK7ja0E8ApUV03lIlOhi170YzEMoAINOKIZMc60BspN6GTqijre+OUNI2DS2
+         cUCi9/GkTg4TTGetj9crOaeiG/m4Himc60Kwr3xMtuKew/QJss+RBwEZHiyGjJ0hXJrS
+         DZocdVNyzKIYDL1cAwlv8/gzCkgNQu1Z4RDFbRmr50585InwffUotd8G3KqfAqfr0Jfd
+         3APgc/rYkhVbgx/g1ur3r/ziHxTdy0WscTMEmG+79UMN+ueEgWIDKe4bEAoXEKnklYx2
+         JYxA==
+X-Gm-Message-State: AFqh2kovZ+5LSG8BDdJcZ2WMA4Mljr2WlVblbZ4uzbXNXP05YNBN9Y52
+        nfKP/St4IrtcmqhBrV8rQoJDOm7DgQRtyA==
+X-Google-Smtp-Source: AMrXdXtKwm/YmeKITkIBL0FOPw5zLFOPiWZ9j66nCgmDMe2q99mKxkpjN9Ftg5AFMeAtymPqcZz48w==
+X-Received: by 2002:a17:902:7c90:b0:18f:6b2b:e88d with SMTP id y16-20020a1709027c9000b0018f6b2be88dmr35091569pll.36.1672452448534;
+        Fri, 30 Dec 2022 18:07:28 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id b7-20020a170902650700b00189c536c72asm15601630plk.148.2022.12.30.18.07.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Dec 2022 18:07:27 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Samanta Navarro <ferivoz@riseup.net>
 Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH] maintenance: fix typos
+References: <20221229125012.cp5tjdlnvxbln44l@localhost>
+Date:   Sat, 31 Dec 2022 11:07:27 +0900
+In-Reply-To: <20221229125012.cp5tjdlnvxbln44l@localhost> (Samanta Navarro's
+        message of "Thu, 29 Dec 2022 12:50:12 +0000")
+Message-ID: <xmqqpmc0iaw0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-more below.
+Samanta Navarro <ferivoz@riseup.net> writes:
 
-On 12/30/22, rsbecker@nexbridge.com <rsbecker@nexbridge.com> wrote:
-> On December 30, 2022 7:18 PM, Samuel Wales wrote:
->>i am not subscribed, but am of the impression that's ok.  please copy me
->> directly.
+[continuing from <xmqqmt75lh2r.fsf@gitster.g>; this is second part]
 
-...
+Starting from here
 
-> I cannot account for your emacs issues, but have a question. Have you don=
-e
-> any git add operations? Git diff is subject to what specifically is stage=
-d.
+> diff --git a/bloom.h b/bloom.h
+> index adde6dfe21..83eb989d85 100644
+> --- a/bloom.h
+> +++ b/bloom.h
+> @@ -15,7 +15,7 @@ struct bloom_filter_settings {
+> -	 * number of bit positions tht cumulatively
+> +	 * number of bit positions that cumulatively
 
-idk what this means.  there is nothing in the staging area at this
-time, if that is relevant.
+... down to here ...
 
-> So you might be comparing your file with partially staged content that co=
-uld
-> account for partial diffs. See if diff --cached makes a difference. Also =
-try
+> diff --git a/contrib/coccinelle/unused.cocci b/contrib/coccinelle/unused.cocci
+> index d84046f82e..142a5a1f02 100644
+> --- a/contrib/coccinelle/unused.cocci
+> +++ b/contrib/coccinelle/unused.cocci
+> @@ -1,4 +1,4 @@
+> -// This rule finds sequences of "unused" declerations and uses of a
+> +// This rule finds sequences of "unused" declarations and uses of a
 
-diff --cached produces nothing.  0 bytes.
+look all good.
 
-> different algorithms, like --patience or --diff-algorithm=3Dhistogram.
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index dc95c34cc8..f414639f52 100644
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -3330,7 +3330,7 @@ _git_worktree ()
+>  		# Here we are not completing an --option, it's either the
+>  		# path or a ref.
+>  		case "$prev" in
+> -		-b|-B)	# Complete refs for branch to be created/reseted.
+> +		-b|-B)	# Complete refs for branch to be created/resetted.
 
-i tried both with git 2.20.  they produce different output from
-regular git diff.  i looked for the paragraph i mentioned.  in regular
-git diff, the problem is the same as i described, with - - +.  in both
-patience and histogram, it is -.
+Past Participle of verb "reset" is "reset", not "resetted", so
 
-it occurs to me that, although unlikely, i might have in principle had
-a duplicate copy of those lines in A, and deleted one, and moved the
-other, when i created the current version, B. thus, i /think/ both
-regular and patience/histogram could be /in principle/ correct on that
-one point.  to confirm, i will check rsnapshot using grep -c to count
-the matches in all versions of the original files.  unless i report
-back, the number will be 1 in all of them, i.e. git diff and magit
-status buffer are both producing an incorrect diff.
+	... to be created or reset.
 
-however, even if this is user error, i.e., i deleted a duplicate and
-moved it, the patience/histogram - result seems still incorrect:
+I think.
 
- The next few commands work with both=C2=A0grub>=C2=A0and=C2=A0grub rescue>=
-.
--***************** REF bigpart is a partition
--biglike and homelike are distracting nonsense i think except
--to describe inferior filesets.  anomalous subset of home
--might be called homelike or so.
+Restarting from here ...
 
- 1) The first command you should run invokes the pager, for
+> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+> index 10c9c87839..8c4e2c0460 100755
+> --- a/contrib/subtree/git-subtree.sh
+> +++ b/contrib/subtree/git-subtree.sh
+> @@ -921,7 +921,7 @@ cmd_split () {
+> -		die "fatal: you must provide exactly one revision, and optionnally a repository.  Got: '$*'"
+> +		die "fatal: you must provide exactly one revision, and optionally a repository.  Got: '$*'"
 
-you can see here that the context lines are from a different org
-entry.  it is intermingling a live - line with a context line that is
-not adjacent to it.  that seems corrupt unless i, even more
-improbably, moved an entry from inside another entry.
+... down to here ..
 
->
-> --Randall
+> diff --git a/fsmonitor.c b/fsmonitor.c
+> index 08af00c738..d48e089c9b 100644
+> --- a/fsmonitor.c
+> +++ b/fsmonitor.c
+> @@ -215,7 +215,7 @@ static void fsmonitor_refresh_callback(struct index_s
+> -		 * We need to remove the traling "/" from the path
+> +		 * We need to remove the trailing "/" from the path
+
+look all good.
+
+> diff --git a/git-gui/lib/themed.tcl b/git-gui/lib/themed.tcl
+> index f43d84e54f..68c999a9be 100644
+> --- a/git-gui/lib/themed.tcl
+> +++ b/git-gui/lib/themed.tcl
+> @@ -4,7 +4,7 @@
+> -	# Preffered way to set widget colors is using add_option.
+> +	# Preferred way to set widget colors is using add_option.
+
+Good, but patches to this part of the tree should be against
+
+    https://github.com/prati0100/git-gui.git
+
+not my tree (they are rooted differently).
+
+Restarting again from here ...
+
+> diff --git a/git-instaweb.sh b/git-instaweb.sh
+> index c68f49454c..652d0b2dd3 100755
+> --- a/git-instaweb.sh
+> +++ b/git-instaweb.sh
+> @@ -612,7 +612,7 @@ python_conf() {
+> -	# This asumes that python is in user's $PATH
+> +	# This assumes that python is in user's $PATH
+
+... down to here ...
+
+> diff --git a/gpg-interface.c b/gpg-interface.c
+> index f877a1ea56..89c2ec08be 100644
+> --- a/gpg-interface.c
+> +++ b/gpg-interface.c
+> @@ -379,7 +379,7 @@ static void parse_ssh_output(struct signature_check *sigc)
+> -	 * string.  By finding the last occurence of " with ", we can
+> +	 * string.  By finding the last occurrence of " with ", we can
+
+all look good.  I'd stop here for now.
+
+Thanks.
 
 
-
->
->
-
-
---=20
-The Kafka Pandemic
-
-A blog about science, health, human rights, and misopathy:
-https://thekafkapandemic.blogspot.com
