@@ -2,101 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2C063C4332F
-	for <git@archiver.kernel.org>; Sun,  1 Jan 2023 12:12:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 01DEEC3DA7D
+	for <git@archiver.kernel.org>; Sun,  1 Jan 2023 12:32:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229969AbjAAMMD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Jan 2023 07:12:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40044 "EHLO
+        id S230442AbjAAMcZ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Jan 2023 07:32:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43496 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229844AbjAAMMC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Jan 2023 07:12:02 -0500
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A48C8B65
-        for <git@vger.kernel.org>; Sun,  1 Jan 2023 04:12:00 -0800 (PST)
-Received: by mail-pg1-x52d.google.com with SMTP id 79so16834339pgf.11
-        for <git@vger.kernel.org>; Sun, 01 Jan 2023 04:12:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PjnwgcF4r5rYl7YWQIni+MSRuGHHAfwDvBtHdWyYOLE=;
-        b=jnGwQK3NG52kPKzD/LQFOOfLZ64FSmLWqo8Pg0c6b7BymMF9CUKdM1ha9iCS0mCQpm
-         xvd3jR0B3GiBxI/RfBuAvgJFMHthc69T3YmhnU5Vuyrs2X6xaSPxjBhzNQ2jfl84er58
-         Ku+YTneve5WMSbc6AEhysJeO/7tEwyqb20nrrUWKwI2OckW4xXSXbUOyhXULKnK7a+Pj
-         CrzeA64dZBwjkzCo5a5PUxNcxNCqnmPaP3qPk7CuT2fAA4bMW57X+PcABaGtUqAlCVOz
-         Oz0aLelOQrjm4QXgxs9PoJFY712BJv1cpQdE8WdAnnzUNrhNLPjpjUdV2vcRsSUzMCmX
-         hDNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PjnwgcF4r5rYl7YWQIni+MSRuGHHAfwDvBtHdWyYOLE=;
-        b=CEGIaz0Im980t2YVXfAA0XUmeFO5IBCOCUJ7kpQLgWFS+eaJddL4BTS0Gga3IjdXeB
-         dWu0jWVsl552sQ7DcAm7g8Jh7eoyINVonILF99zDaM9dnbP3axaE0gXpir9R+Y0L1jAd
-         C1o7JS9n/xpet3uyTHQtuSA6s52Zy9Itp7oIfCVns0L9MKo7NWxxgKmQOTlGBU0U3nmg
-         YlgNDU1soOxA3xP5AuGx6PMCSSgMWZzlaclA4bqL3GlSOlpzy/MD/YLP5zmu4pmebsK6
-         rHytBl/yqQ7WHtkwfeT72S/9o0P9kHXj/0GbNl1rlovbqhEDZelybDXGTXPuEnd+cRPj
-         /lLw==
-X-Gm-Message-State: AFqh2koQKjIRvz83vw8eGHnHyTG108zxLVsSo0sBWOmVL1qR9JHhMRLq
-        JDJjKnlbler3mkHQv9Uc9zo=
-X-Google-Smtp-Source: AMrXdXtsIIOL1JtAUB0/gJx+VIHv2z4LsgbYHImPKZbhibiC90dJ0X5DtjrdPGDfyYBqD9b8SW0HPg==
-X-Received: by 2002:a05:6a00:1a45:b0:582:294d:f465 with SMTP id h5-20020a056a001a4500b00582294df465mr5765999pfv.13.1672575119975;
-        Sun, 01 Jan 2023 04:11:59 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id f6-20020aa79686000000b005769ccca18csm9647393pfk.85.2023.01.01.04.11.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Jan 2023 04:11:59 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] do full type check in COPY_ARRAY and MOVE_ARRAY
-References: <efe7ec20-201e-a1c1-8e16-2f714a0aee8e@web.de>
-        <f3b9e9be-06ef-3773-a496-da5e479f9d49@web.de>
-        <xmqq8rinhs7t.fsf@gitster.g> <xmqqsfguhplc.fsf@gitster.g>
-        <220515b3-3924-c8d2-ff20-7017caa7dead@web.de>
-        <bf4e6798-c687-270d-1344-37bacb403e13@web.de>
-Date:   Sun, 01 Jan 2023 21:11:59 +0900
-In-Reply-To: <bf4e6798-c687-270d-1344-37bacb403e13@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sun, 1 Jan 2023 11:45:41 +0100")
-Message-ID: <xmqqzgb2fo8g.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229683AbjAAMcX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Jan 2023 07:32:23 -0500
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECC202708
+        for <git@vger.kernel.org>; Sun,  1 Jan 2023 04:32:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1672576331; bh=S1B+xy+4V5G6uGheGZrSbnwrOd3qvJJx/LVS+7HKRzQ=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=dtoqd4Y9a9XiUsBuZ1A7eCTA22vyRGigpIAIWTriViKPr911sW6erUCXCzh1V2Qw/
+         KSMOvC/zntvO/s1qwEnEgQajY6qGVyWZHqm/IZYdoEM/kn/kaWSr9Ew8P8YGB+qPmU
+         AlnBlE7ANMWFWbk5EedZhqnP44spIrhWAYGknnPSSFNgyY+CgaVQvzs0T0LYy9YAd6
+         cS+xbOTJIa92H/Q2M5pDxB6qrKm97DutJpdnJIp+YT7GceQobLWkbXkuam7s3iOr/u
+         SSP8cYd6mbrQpc9jv0JqFBVlPHBYq/yCynpwK4VuIbkP6tkngoCBG+8Jq+VLlU5a1l
+         YqGtJWh5ZGtaQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([91.47.151.35]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mtguh-1oxzYi3CZz-00usYE; Sun, 01
+ Jan 2023 13:32:11 +0100
+Message-ID: <269d85de-1448-0198-8251-9af898fedc67@web.de>
+Date:   Sun, 1 Jan 2023 13:32:11 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: [PATCH 1/3] do full type check in COPY_ARRAY and MOVE_ARRAY
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git List <git@vger.kernel.org>
+References: <efe7ec20-201e-a1c1-8e16-2f714a0aee8e@web.de>
+ <f3b9e9be-06ef-3773-a496-da5e479f9d49@web.de> <xmqq8rinhs7t.fsf@gitster.g>
+ <xmqqsfguhplc.fsf@gitster.g> <220515b3-3924-c8d2-ff20-7017caa7dead@web.de>
+ <bf4e6798-c687-270d-1344-37bacb403e13@web.de> <xmqqzgb2fo8g.fsf@gitster.g>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqqzgb2fo8g.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:Kp2PYyyB4dLoCRz8nMgbzuYB7ae/ct3gk2A3IOFPuFv5WhV7/CR
+ xUzuudzlf6FCqckVYRcEHxSE+FG7MtFWprFcZrLz5MZ1irGrN0+suhQUCXVeUH4CcIuiI7k
+ F2D500xZr4F034J+V8MXtsV6HK80+IQCdxYoh42OW2rzaU+7vlBb7j0h6utFgvvDGH2mO4j
+ m7zY+O0Pkz7neeAsSWklg==
+UI-OutboundReport: notjunk:1;M01:P0:8WjbjkHxznk=;5HrkIMbEVytKytc27hsu9DjU84c
+ etVT96HCkcDoXdTyz4s7rhYLHR2TQfEdv7a1/IUO02ffizCRZXASOYBy8oP4wml0z/G2wBxLv
+ AOGQGCH8vS8x2CEULaS2eGLeZzJZ+1Zg9jXQWHsiKLzlpDCsjavnKxZl7tB9Q46Smp7Y39SN5
+ GPoo108gLRRCtZ6KmsugmRAG+EsGJ1HdhOjAMa0dB7mAFlEmhnssOf2h9ppBpNADJb5kLF82I
+ M9fwaMtfJtiVF5DY08kPb58HjvK02BxUpehPz5kDd49Wzr3O12mvVeTyxtA1wzfZTXpR6j1Zv
+ 8roE2AoZP3uuGfxrTx3lOiKilp64UXGwPFvFyF7VaRD/YBkXFyDfJoL+bpdjE5ebK+r7wKawj
+ eUCMuHhF9blt8Z3noxwap/LRuQfHAlwUKozzIH07bZapr2Hkm9Lm+zEJLqpNiPx554HMukYkq
+ wJoAmMzBlAmaJyvWd8LIhTNq9QNNMm6x2gR+1U/OlHWgt4YuyTh/ooyI2m46DTmHPjf1jnAn2
+ mlk1JyDiaZzxR1l+43htfD6FK/NFCu+f7uMxSqbEgjzWNG3gnaWrcKLS08WhJX0x/epj2Tjzx
+ yVGheA6lyULz1tF8lNVnEtf26kZTEMPaR2bA52wba2rwSYWNRo2lYK9ELf7ywDhVgkKt5JfGp
+ nMm8Ezt+3qIGPzuVsfadyYLysh+5/vJwes9HbmWkXz6ehUo7gMjUj9UYf06g3L5+cfeICmxIj
+ FUuwSiOrnKkNBntsp4R+thRgrTNbAC/WOarfHkM2GMBYvyXuD034jL0Fvu+x3yakrB67X7J6P
+ yrxLULm8glN/96nmoRFUTOinfszdXTn4Zdidle6L0/h0PUcUeRuhBPXIkD+HFTZ7AYqZFItkY
+ kx/7b6I2pBRPA7nAxDCXGm9+3yXR00uRnnFUo0EjhpVC1/0+bgSwOWhVc/dGAmu0ZP86r2/H4
+ haK1Bg==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+Am 01.01.23 um 13:11 schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>
+>> On second thought, what do we gain by using __builtin_types_compatible_=
+p
+>> here?  Does it catch cases that the assignment check plus the element
+>> size check wouldn't?
+>
+> I was reacting to this part of an earlier message in the thread:
+>
+> Presumably we cannot catch
+>
+> 	int *ip;
+> 	unsigned *up;
+>
+> 	(0 ? (*(ip) =3D *(up), 0) : 0);
+> 	(0 ? (*(up) =3D *(ip), 0) : 0);
+>
+> with the approach?
+>
+> i.e. *ip and *up are of the same size.  Would the assignment check
+> trigger?
 
-> On second thought, what do we gain by using __builtin_types_compatible_p
-> here?  Does it catch cases that the assignment check plus the element
-> size check wouldn't?
+Ah, right, __builtin_types_compatible_p returns 0 in this case and an
+assignment is silently allowed.
 
-I was reacting to this part of an earlier message in the thread:
-
-Presumably we cannot catch
-	
-	int *ip;
-	unsigned *up;
-
-	(0 ? (*(ip) = *(up), 0) : 0);
-	(0 ? (*(up) = *(ip), 0) : 0);
-
-with the approach?
-
-i.e. *ip and *up are of the same size.  Would the assignment check
-trigger?
-
-> We actually need to compare the types of the elements here, because
-> otherwise we'd disallow copies between arrays (int arr[7]) and pointers
-> (int *p), which would be unnecessarily strict.
-
-Yup.  Thanks for inferring what I meant to give, despite the two
-typoes (the other one is ", 0").
-
+Ren=C3=A9
