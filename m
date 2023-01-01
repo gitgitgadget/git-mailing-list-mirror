@@ -2,65 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C49FC4332F
-	for <git@archiver.kernel.org>; Sun,  1 Jan 2023 03:59:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B067CC4167B
+	for <git@archiver.kernel.org>; Sun,  1 Jan 2023 04:07:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229882AbjAAD7q (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 31 Dec 2022 22:59:46 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43000 "EHLO
+        id S229636AbjAAEHH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 31 Dec 2022 23:07:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229636AbjAAD7p (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Dec 2022 22:59:45 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF6D610BE
-        for <git@vger.kernel.org>; Sat, 31 Dec 2022 19:59:44 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id v13-20020a17090a6b0d00b00219c3be9830so25290109pjj.4
-        for <git@vger.kernel.org>; Sat, 31 Dec 2022 19:59:44 -0800 (PST)
+        with ESMTP id S229775AbjAAEHE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Dec 2022 23:07:04 -0500
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1235160F1
+        for <git@vger.kernel.org>; Sat, 31 Dec 2022 20:07:02 -0800 (PST)
+Received: by mail-pl1-x631.google.com with SMTP id 17so26062502pll.0
+        for <git@vger.kernel.org>; Sat, 31 Dec 2022 20:07:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=cRQuY36SZIKCIAcydlQHFaBeluSiDr7eTS5biVdUxE4=;
-        b=qlroBoOkObL/f+EEhCUYwPk+0uMeRBYvMUUrNfSx567zCXWcAaEWgdZtX93pMrUitS
-         8ySwGaoKURF4eivATM7Ey6JFa6UjsufT0SPPXwrmF/6nnTsPgTf+zuXG+UUXTsL2RRiI
-         0OfA45nTKkZ6lrFU1ds46sJ0moC6WGFsWe5zxllRoLwHAZ89ksSphECT7cIAOBZCwfrx
-         nWrUl41NN4Zb5XQdoGpOlBwP/QIpA2gOauaSKeApfDvOUkQq/Ob77gwx3p/WivHgJCK5
-         BEkdbPB+G5+H/BLTKvZu+yUBj+X3SQJu0lTgk2VaqJ1fPWQokBsL8hEKVWIrtf7mGcD9
-         zI3Q==
+        bh=RQc+dRWyL8ktAF61WKJ/hf9uGBnWtRX/n2x36vZMtR4=;
+        b=aBUkVWw4fRDRvrwHmH+XOjEcxC1/ZIsA5yLr6K2/fJ2ymqYoYYkqGqxvGlrj+kQ5DC
+         a1DZd1yYITFjcrkPqfmsLVPGTmMzrF08jnTVAvzMz6W4vs9fGuWJtwlnCO54iwT8aysR
+         DfU+Dfif+fWQaVJI5sq4wj6cOw46yB9CIWY4/lleMx//bRaRWjgoHbmKcm7wBSUwDQQl
+         YLQfVcJPJPx6pmajSzkeV4b7tdTyjJ7mP7G2UM7ih2nEzmsPLZuArzI507WxCB7bMF4a
+         /oaqJll9a0TTGl4T3nYeqBTr48CXOtcuDtl+oml7h9BDfgW6Xmz4Wk1xRsrPhs5T0Mpu
+         eIsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=cRQuY36SZIKCIAcydlQHFaBeluSiDr7eTS5biVdUxE4=;
-        b=L2TxrR21B6lBeCtE7k8b5ADFeoeKMSZ5RA1Y+5oen20V3SKitWr6irvFbsAVUOsm2/
-         ZF6dVd751MDR194CsWUrMac4xRWleDluazWJKC2ZExHDn0/IUoI7kcsjoFtUrwf1/z7V
-         8+ir8IjWMh/KM+jaxsX7eyxlcbWoHojdC4t+YYUF+ZWYChBRryy7SR2/WM2EgOvnTCsF
-         qNycX+70s6C6J18Vh09zDFWtC6mDNxUmcvc1yirsIGxdkz+LbESObybIYo8OVv9nFQqM
-         lkzK3hfzHNZj3UAzAxaehj12tE7kc0t79eG7CmaJ0KoBhZN8z8NHMEgp+TcdZJ0vgIiQ
-         olqA==
-X-Gm-Message-State: AFqh2kqfYaYkBmwXVDQdv08N/P3qUH/NOSvoPmVvjOD9WIDTCXy0LRlk
-        H2mERj7uGH9uUfNx15f3RQE=
-X-Google-Smtp-Source: AMrXdXutsCyONBRUWYAdMTXGfpm3lHOfKyzAs74WQR/zHbPe+cOG5WXK+wjgi7OIna+hYjcxwoVfpA==
-X-Received: by 2002:a17:902:efc4:b0:192:85f2:49d with SMTP id ja4-20020a170902efc400b0019285f2049dmr21561794plb.18.1672545584099;
-        Sat, 31 Dec 2022 19:59:44 -0800 (PST)
+        bh=RQc+dRWyL8ktAF61WKJ/hf9uGBnWtRX/n2x36vZMtR4=;
+        b=ml5MDLYOjs8SfTIRuEt7K9ECizbvGR/ngg2KGgT4LndEmbnbVEtlqp+4BBCkiPq1Oo
+         zWfT5nZfaDEJN3yLrCHl//+X7dDU6d42UzgJ7GN0cP9T69iCznZ3Fnqe43MxmN1yOJk3
+         l2+Ut3iQH01GUaeMnYbh+Y6Ey14nwjmqu90kVqACbelKSPOgk+DtymtUgqDDraGYeVv9
+         f3ZL67Qwwnua6UkS5xo8BJWIyVoiHlQ1hOmUb5Rh8XT+958pNzyRKnLB3Ua1h9t4G2Yw
+         NuyQXRPoQjUS75pWgzzAuxX6U+9OZzop5tKT+CW38Lhxo23b8JELgBMOIMbuBueqnNDc
+         AnYw==
+X-Gm-Message-State: AFqh2kqyuJnN9URu2gWtaU9OemOJ0vuW5CoK/whcAt1U9JWDm56mS1LW
+        5MbBjTs6pbxz8/FJXSouC11WIEsKiYJMBA==
+X-Google-Smtp-Source: AMrXdXu4Sq6UxGnJX5SuEmyZkECpckCl0JJIT2QnBqxt8n0+HYiqNNhfPUXGmJLs18+/iLaLNz14HQ==
+X-Received: by 2002:a17:902:cf02:b0:191:283d:5afb with SMTP id i2-20020a170902cf0200b00191283d5afbmr39466177plg.50.1672546021423;
+        Sat, 31 Dec 2022 20:07:01 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id w3-20020a170902e88300b0018f69009f3esm845499plg.284.2022.12.31.19.59.43
+        by smtp.gmail.com with ESMTPSA id p15-20020a170902780f00b00189371b5971sm17522245pll.220.2022.12.31.20.07.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 31 Dec 2022 19:59:43 -0800 (PST)
+        Sat, 31 Dec 2022 20:07:00 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] do full type check in COPY_ARRAY and MOVE_ARRAY
-References: <efe7ec20-201e-a1c1-8e16-2f714a0aee8e@web.de>
-        <f3b9e9be-06ef-3773-a496-da5e479f9d49@web.de>
-        <xmqq8rinhs7t.fsf@gitster.g>
-Date:   Sun, 01 Jan 2023 12:59:43 +0900
-In-Reply-To: <xmqq8rinhs7t.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
-        01 Jan 2023 12:03:02 +0900")
-Message-ID: <xmqqsfguhplc.fsf@gitster.g>
+To:     Samuel Wales <samologist@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: is this data corruption?
+References: <CAJcAo8tjMLFisK5_13iD_JGo2xVQDJRX3wAC7wRD_V2GKFGevQ@mail.gmail.com>
+Date:   Sun, 01 Jan 2023 13:07:00 +0900
+In-Reply-To: <CAJcAo8tjMLFisK5_13iD_JGo2xVQDJRX3wAC7wRD_V2GKFGevQ@mail.gmail.com>
+        (Samuel Wales's message of "Fri, 30 Dec 2022 17:17:51 -0700")
+Message-ID: <xmqqlemmhp97.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,32 +66,21 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Samuel Wales <samologist@gmail.com> writes:
 
-> ...  I think what you ideally want to enforce is that
-> typeof(dst) is exactly typeof(src), or typeof(src) sans constness
-> (i.e. you can populate non-const array from a const template)?
+> the problem that seems like data corruption is that a few lines appear
+> twice as - and once as +.  but in the current version of the files,
+> those lines exist only once.  here are the lines.  there are 2 -
+> versions and one + version:
+>
+> +***************** REF bigpart is a partition
+> +biglike and homelike are distracting nonsense i think except
+> +to describe inferior filesets.  anomalous subset of home
+> +might be called homelike or so.
 
-IOW, I am wondering if something like this is an improvement.
+Sorry, but I do not see any "-" versions in the above.  Simple and
+minimum reproduction recipe would be useful for the list to help.
 
- git-compat-util.h | 5 +++++
- 1 file changed, 5 insertions(+)
+https://www.chiark.greenend.org.uk/~sgtatham/bugs.html
 
-diff --git c/git-compat-util.h w/git-compat-util.h
-index a76d0526f7..be435615f0 100644
---- c/git-compat-util.h
-+++ w/git-compat-util.h
-@@ -97,8 +97,13 @@ struct strbuf;
- # define BARF_UNLESS_AN_ARRAY(arr)						\
- 	BUILD_ASSERT_OR_ZERO(!__builtin_types_compatible_p(__typeof__(arr), \
- 							   __typeof__(&(arr)[0])))
-+# define ARRAYS_COPYABLE_OR_ZERO(src,dst) \
-+	(BUILD_ASSERT_OR_ZERO(!__builtin_types_compatible_p(__typeof__(src), \
-+							    __typeof__(dst))) + \
-+			      (0 ? *(dst) = *(src) : 0))
- #else
- # define BARF_UNLESS_AN_ARRAY(arr) 0
-+# define ARRAYS_COPYABLE_OR_ZERO(src,dst) (0 ? *(dst) = *(src) : 0))
- #endif
- /*
-  * ARRAY_SIZE - get the number of elements in a visible array
+Thanks.
