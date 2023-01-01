@@ -2,152 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 856ABC4332F
-	for <git@archiver.kernel.org>; Sun,  1 Jan 2023 01:15:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1E9BEC4332F
+	for <git@archiver.kernel.org>; Sun,  1 Jan 2023 03:03:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232284AbjAABPN (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 31 Dec 2022 20:15:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56694 "EHLO
+        id S229636AbjAADDH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 31 Dec 2022 22:03:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229532AbjAABPM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Dec 2022 20:15:12 -0500
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C3C77647
-        for <git@vger.kernel.org>; Sat, 31 Dec 2022 17:15:11 -0800 (PST)
-Received: by mail-lj1-x233.google.com with SMTP id g14so25855363ljh.10
-        for <git@vger.kernel.org>; Sat, 31 Dec 2022 17:15:11 -0800 (PST)
+        with ESMTP id S229532AbjAADDF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Dec 2022 22:03:05 -0500
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4740E62F9
+        for <git@vger.kernel.org>; Sat, 31 Dec 2022 19:03:04 -0800 (PST)
+Received: by mail-pl1-x630.google.com with SMTP id d9so9156860pll.9
+        for <git@vger.kernel.org>; Sat, 31 Dec 2022 19:03:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:references:in-reply-to
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=p60EDrIqS2rYSj+Fi8oeSXotoB1EwCKX+SjktuEFGnI=;
-        b=IhRPsqyFTFwK7fDB3d8bbdHCB8TaAsjMGW9acuvs91m+CtBvLpKDEiNo+2baADAwfL
-         Pp5J2S0wE/zyJxfNTzO7uOjz17edeFH24YtgRlCZ4EkcdCzaOf06Y5ioitPGAxt/0Ilq
-         MuEyS4cMBfzMja+Atr+Wm97ZLUYAT1p1Mn/0MxbwvPFBt/53544Rzjth4GpRuOvMLPze
-         Q+m1pgPijNrEvTfxc8SY0qvTcUPxF1uaXnYs/mXbRi7cFfzmRERUhmYnxAU8hyXiWjL3
-         wezr6l4/q5di6JH0BYeXXP0hISMqNyIqQayxtworl01r72k44CTmfalzkfEPH03IleLy
-         Zd0Q==
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sDsULaof14bZMZUUC+XMSEsPZ94eEcLySRhMLDNBSCo=;
+        b=f6vTVNwDpHvTNP0NkB38xCRTxyevGyaIjYHtfHrAJKDgj4W0XsZ0sJa0uKpVWhTv2Y
+         CeHk7roasM2V4GCG/VlHKL3lrtZu1NZmTsi9dFN/VbefdaDTQlcCzMhfeB25otQv44N2
+         wN8txsW77qoEQqvX9wRsSkX72W/Uaov8gMf+1/eOz4QuUhiUhK9FPWimSAzkHwV7xjh8
+         jRVEN2A+33jcenGw9tpoKpDZyMBFAsOLbLHC6l+OAj64eZQYPfMlPOMOgbR3IEqGW+fR
+         BxA8b6njyAw25rlPfeNeFQOygQAwknacSSXqoQIeCJ8k+goJ1rR78t+soAA7+rUCR7B5
+         RUMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:references:in-reply-to
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=p60EDrIqS2rYSj+Fi8oeSXotoB1EwCKX+SjktuEFGnI=;
-        b=4Ee7cu8olIkoWs+DUlfX2Uh0DljpN0MVNDhRpNjX1v2WkwhvhZjepnbd34qyKYgVBd
-         gP+SRO41NlWlTTYvgS255ujYDPh0guMALo4hPfHIQHPfhBoUbZc5/29mBIxwYr3OPgX2
-         a6rL/IeeDB4pLOtehBpfgi49stbiYo2lDRyNA5/lz+RbHbL5LXMsCwf9np4wekInR7m7
-         p9DQJdcbJhy9ipqw6BMe9Fu7uXMI8e1SyQsfs7+X209X4uZdQjN2gwGE6leiBADAJ4kT
-         kljEl99gCmUAcKBw8mdOiHzUJjNfmjim6Xf6EZZFr2NWYUkVd3gBetx8w0XruQfDJxh9
-         oaXA==
-X-Gm-Message-State: AFqh2krpJVAiA1XyFe1GAqSCCjDP6sfJmfq52L4aTGgi4lMpBlC4tF5l
-        uKeomH01RSUR19X0Dn4kmD0q3TnQTQYa6RsL2qb96YxHsRxsbY/r
-X-Google-Smtp-Source: AMrXdXuiU5dLq3Ep1OwwwrtpnwCdh/syy2qh0H8Yr3vxg6UL7nmS4JSBfG1v5VvtWMu2SA0noCs9LR7KpSXEcHpNYrQ=
-X-Received: by 2002:a05:651c:1142:b0:27f:a93e:1d21 with SMTP id
- h2-20020a05651c114200b0027fa93e1d21mr1154404ljo.503.1672535709829; Sat, 31
- Dec 2022 17:15:09 -0800 (PST)
+        h=content-transfer-encoding:mime-version:user-agent:message-id
+         :in-reply-to:date:references:subject:cc:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sDsULaof14bZMZUUC+XMSEsPZ94eEcLySRhMLDNBSCo=;
+        b=esgt5l1equnvncCuWGph2OD2oU+F4F1uit2wHrYqyDXxlkN8w4vQU+L4MpyAWfd329
+         eqtIya+ta89MbVwwYygwvlCiXKI8v84TakndCzLc2sftbHegF/V44DxXZpCM33VI9X4N
+         K3Mb0JeWfvu5ikJT/uDFPF8jLkGhmq337Tr/Trj4IPgSUHbq5aJmrMhKtHkOD8710+bU
+         gujWU5hfeQ9pqWNWWHFa5lzrjwkUWSLr+A3naBBD0A5CNwcdHeoUgnYNizhbevyxvgJQ
+         vmsEPYhfWeaDdLRh/DZZHvC4vBySbn/KnuTkWUgRq3h8rNqTDSZJITW6UO/Q22/2dLpC
+         w87g==
+X-Gm-Message-State: AFqh2koyAveujAJQGHSRlnp/3K/0PloPFslOVSZnJMh4ioihxrQUhq5z
+        BBb2zwR6/zTyHgWQxQjoxAM=
+X-Google-Smtp-Source: AMrXdXsijDXzZokwUYOTuQU41NVRDDWLh8CSDp1JvJWI85Ca9QRyC7e2DhdVJZ1eaDNrNpDnUvn4aQ==
+X-Received: by 2002:a05:6a20:2d99:b0:af:c871:c723 with SMTP id bf25-20020a056a202d9900b000afc871c723mr41645240pzb.33.1672542183588;
+        Sat, 31 Dec 2022 19:03:03 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id x124-20020a623182000000b005779110635asm16095177pfx.51.2022.12.31.19.03.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 31 Dec 2022 19:03:02 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/3] do full type check in COPY_ARRAY and MOVE_ARRAY
+References: <efe7ec20-201e-a1c1-8e16-2f714a0aee8e@web.de>
+        <f3b9e9be-06ef-3773-a496-da5e479f9d49@web.de>
+Date:   Sun, 01 Jan 2023 12:03:02 +0900
+In-Reply-To: <f3b9e9be-06ef-3773-a496-da5e479f9d49@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Fri, 30 Dec 2022 22:56:44 +0100")
+Message-ID: <xmqq8rinhs7t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Received: by 2002:aa6:c266:0:b0:23b:5e81:46ba with HTTP; Sat, 31 Dec 2022
- 17:15:08 -0800 (PST)
-In-Reply-To: <CAJcAo8tY55sUNr=HX9-tVPYDoSOx-xkH0WtZuXuLqs0S3sXu-A@mail.gmail.com>
-References: <CAJcAo8tjMLFisK5_13iD_JGo2xVQDJRX3wAC7wRD_V2GKFGevQ@mail.gmail.com>
- <000701d91cae$6c8cbbf0$45a633d0$@nexbridge.com> <CAJcAo8tY55sUNr=HX9-tVPYDoSOx-xkH0WtZuXuLqs0S3sXu-A@mail.gmail.com>
-From:   Samuel Wales <samologist@gmail.com>
-Date:   Sat, 31 Dec 2022 18:15:08 -0700
-Message-ID: <CAJcAo8scjTMqUGsJ8BDp95avmmv1vEvEUx-iqNvN14f9VkkTGg@mail.gmail.com>
-Subject: Re: is this data corruption?
-To:     rsbecker@nexbridge.com
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-as expected, there is only one copy of bigpart is a partition in all
-of my rsnapshot files and all of my emacs backup files.
+René Scharfe <l.s.r@web.de> writes:
 
-therefore, the diff in git and magit are incorrect.  it was not a
-question of me removing a duplicate.
+> Extend the element size comparison between source and destination with
+> a full type check using an assignment.  It is not actually evaluated and
+> even optimized out, but compilers check the types before getting to that
+> point, and report mismatches.
 
-for future reference, is this mailing list correct for this question
-or should i use the git help list which i discovered just now?
+It is not actually evaluated and is (even) optimized out, which is a
+neat and clever trick.  The above made me read it twice, though, as
+I misread on my first read that you are saying that the code is left
+in the binary but in an unreachable form (i.e. "it is not (evaluated
+or optimized out"), though.
 
+> The stricter check improves safety, as it catches attempts to copy
+> between different types that happen to have the same size.  The size
+> check is still needed to avoid allowing copies from a array with a
+> smaller element type to a bigger one, e.g. from a char array to an int
+> array, which would be allowed by the assignment check alone.
 
-On 12/30/22, Samuel Wales <samologist@gmail.com> wrote:
-> more below.
+Do you mean
+
+	int *ip;
+	char *cp;
+
+	(0 ? (*(ip) = *(cp), 0) : 0); /* silently allowed */
+	(0 ? (*(cp) = *(ip), 0) : 0); /* truncation noticed */
+
+Presumably we cannot catch
+	
+	int *ip;
+	unsinged *up;
+
+	(0 ? (*(ip) = *(up), 0) : 0);
+	(0 ? (*(up) = *(ip), 0) : 0);
+
+with the approach?  I think what you ideally want to enforce is that
+typeof(dst) is exactly typeof(src), or typeof(src) sans constness
+(i.e. you can populate non-const array from a const template)?
+
+>  #define COPY_ARRAY(dst, src, n) copy_array((dst), (src), (n), sizeof(*(dst)) + \
+> +	(0 ? (*(dst) = *(src), 0) : 0) + \
+>  	BUILD_ASSERT_OR_ZERO(sizeof(*(dst)) == sizeof(*(src))))
+>  static inline void copy_array(void *dst, const void *src, size_t n, size_t size)
+>  {
+> @@ -1102,6 +1103,7 @@ static inline void copy_array(void *dst, const void *src, size_t n, size_t size)
+>  }
 >
-> On 12/30/22, rsbecker@nexbridge.com <rsbecker@nexbridge.com> wrote:
->> On December 30, 2022 7:18 PM, Samuel Wales wrote:
->>>i am not subscribed, but am of the impression that's ok.  please copy me
->>> directly.
->
-> ...
->
->> I cannot account for your emacs issues, but have a question. Have you
->> done
->> any git add operations? Git diff is subject to what specifically is
->> staged.
->
-> idk what this means.  there is nothing in the staging area at this
-> time, if that is relevant.
->
->> So you might be comparing your file with partially staged content that
->> could
->> account for partial diffs. See if diff --cached makes a difference. Also
->> try
->
-> diff --cached produces nothing.  0 bytes.
->
->> different algorithms, like --patience or --diff-algorithm=histogram.
->
-> i tried both with git 2.20.  they produce different output from
-> regular git diff.  i looked for the paragraph i mentioned.  in regular
-> git diff, the problem is the same as i described, with - - +.  in both
-> patience and histogram, it is -.
->
-> it occurs to me that, although unlikely, i might have in principle had
-> a duplicate copy of those lines in A, and deleted one, and moved the
-> other, when i created the current version, B. thus, i /think/ both
-> regular and patience/histogram could be /in principle/ correct on that
-> one point.  to confirm, i will check rsnapshot using grep -c to count
-> the matches in all versions of the original files.  unless i report
-> back, the number will be 1 in all of them, i.e. git diff and magit
-> status buffer are both producing an incorrect diff.
->
-> however, even if this is user error, i.e., i deleted a duplicate and
-> moved it, the patience/histogram - result seems still incorrect:
->
->  The next few commands work with both grub> and grub rescue>.
-> -***************** REF bigpart is a partition
-> -biglike and homelike are distracting nonsense i think except
-> -to describe inferior filesets.  anomalous subset of home
-> -might be called homelike or so.
->
->  1) The first command you should run invokes the pager, for
->
-> you can see here that the context lines are from a different org
-> entry.  it is intermingling a live - line with a context line that is
-> not adjacent to it.  that seems corrupt unless i, even more
-> improbably, moved an entry from inside another entry.
->
->>
->> --Randall
->
->
->
->>
->>
->
->
+>  #define MOVE_ARRAY(dst, src, n) move_array((dst), (src), (n), sizeof(*(dst)) + \
+> +	(0 ? (*(dst) = *(src), 0) : 0) + \
+>  	BUILD_ASSERT_OR_ZERO(sizeof(*(dst)) == sizeof(*(src))))
+>  static inline void move_array(void *dst, const void *src, size_t n, size_t size)
+>  {
 > --
-> The Kafka Pandemic
->
-> A blog about science, health, human rights, and misopathy:
-> https://thekafkapandemic.blogspot.com
->
-
-
--- 
-The Kafka Pandemic
-
-A blog about science, health, human rights, and misopathy:
-https://thekafkapandemic.blogspot.com
+> 2.39.0
