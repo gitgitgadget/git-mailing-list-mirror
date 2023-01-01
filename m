@@ -2,111 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D3D09C4167B
-	for <git@archiver.kernel.org>; Sun,  1 Jan 2023 21:09:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B1910C4167B
+	for <git@archiver.kernel.org>; Sun,  1 Jan 2023 21:10:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230285AbjAAVJD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Jan 2023 16:09:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53162 "EHLO
+        id S230304AbjAAVKO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Jan 2023 16:10:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229453AbjAAVJB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Jan 2023 16:09:01 -0500
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22D9D18E
-        for <git@vger.kernel.org>; Sun,  1 Jan 2023 13:08:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1672607334; bh=+XDYoBNly11/mzLi5c4ogTejJL7sEwPIOEpkFGAYtGI=;
-        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
-        b=exzutYmmiHREbodr1mWPjKaSqj7NoKTbTcbORhLm9rtaDz1K/JLdgz1bJF9xBi8qi
-         F94YLnFE8O2qhFtkMSIZuauBmyb0pQkSLwC5E4DSI27oF4Jelc3BEKHvGgfOq00tYA
-         FMXD13AnnMG71ucywFumUz8eaDUk8LSg7AfqsLAdUBFmkAn2JGNtR1Qksxj6ulBpFh
-         8hODnoOzyu+tE+YNN8TyPzsBa31h/UO1D82adnun9xdRO+TMNxANrt/e4ayuWp/Ywy
-         5Lr5IX5sdzpNkG9xWMIGRTCI/TSTb6LAluYafVlVeuozp72oH4FHQXQ7zcmILapquG
-         tzJWcspSwUBjw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([91.47.151.35]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MqqPN-1oPEI83uvR-00mZgV; Sun, 01
- Jan 2023 22:08:53 +0100
-Message-ID: <66ec2a0e-e4f8-1d27-76d3-3451ac2335d2@web.de>
-Date:   Sun, 1 Jan 2023 22:08:53 +0100
+        with ESMTP id S230300AbjAAVKO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Jan 2023 16:10:14 -0500
+Received: from ring.crustytoothpaste.net (ring.crustytoothpaste.net [IPv6:2600:3c04::f03c:92ff:fe9e:c6d8])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 243BAC7F
+        for <git@vger.kernel.org>; Sun,  1 Jan 2023 13:10:12 -0800 (PST)
+Received: from tapette.crustytoothpaste.net (unknown [66.244.218.237])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (3072 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ring.crustytoothpaste.net (Postfix) with ESMTPSA id 1DC5A5A344;
+        Sun,  1 Jan 2023 21:10:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1672607411;
+        bh=dq06/DsepKbXv+bW658YcuwFABLksBCXqfohUwBxv+Y=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=scbh0Y32BpFVlFiBAbZyraK4PxpbaRwj97ZiijGG4gdBR31HvuA2zzGq69aPesi7v
+         L+ByFDtSiQZp/zUhZNbwun394aryr3tQt0NnScf2nLtOt6rJOUsV+gpYSVX4SWF8NY
+         1halBJ2kbzX2IDCHx8g/zLnBzjRewnAr5iA42tkxc5i1anJwjV8UUbwGsSNyuJNx9z
+         Bv9NJl+NxSP8MJXCvhu9+E7MMHoLbUt1m2w5lL50Aa0/YSkc4WWhcZVpmuQleGHmJZ
+         5vleG1ldVLmENrYmjT2mlpDbEitZ+u1JHIg3CHq+oTwKKUi5zT2ThD3pSD/npaEib9
+         ht/HCfOF/bO21HcBktqayX9W/u6MOiOgaFiIfQHEyN7IJMaW1Wb0KpVk6ZrKEdWYW5
+         Az2LFH+yaW1ZxeegjwLG70FmQZcpk6fWIJb0+/bU0ZZOpFbi88QRdqf5NoY6zjcjun
+         6WGx4KOhYTRYo5l3olD04qwxgTVjkEfXGI2fU/KPXhyhNZkujIN
+Date:   Sun, 1 Jan 2023 21:10:08 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Filip Lipien <aaa@164.ooo>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Request to remove Junio C Hamano as the Git Maintainer
+Message-ID: <Y7H2sN1fEZ8pi6xY@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Filip Lipien <aaa@164.ooo>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <7hfRSnKTRnT4uJh5Pok8U8gfLm_NXzCS6w_7_Rc9OH3a9Lv8hpjySZqxDglBFC-fTOdZHi-ODCihiEHlQD9nIhUmld5jYvRx_JvB0z2IAL0=@164.ooo>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.1
-Subject: [PATCH v2 1/4] factor out BARF_UNLESS_COPYABLE
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-To:     Git List <git@vger.kernel.org>
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <efe7ec20-201e-a1c1-8e16-2f714a0aee8e@web.de>
- <9bc1bd74-f72c-1b43-df7c-950815babb03@web.de>
-In-Reply-To: <9bc1bd74-f72c-1b43-df7c-950815babb03@web.de>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:1tB2cfCtN7LM3LF0Zdh2XGCXwM6M5OPwFn/Smpd4Dyj70YpJukw
- AF+RfXewWQneGOVEq2vak51DVvsmeIYnSMC7929XUNSb5y0FCpMpiccpOsA2id05aPgt1jz
- Di8KPLqvqPMBQO3iYRnktDKld9t76O2/E/ymn+4he8D0neicDVgHLU5TUK256WQwJ84hXfN
- +yVgwrjYOC1CYv+xfzUOw==
-UI-OutboundReport: notjunk:1;M01:P0:9GjJTe5Yv8A=;77GtSkzM1bVe2aLJ5OSefIPsEis
- 7A4Yo0kH3egZhAve2QLOkOd5fgL8WeiQJcUlxOeoagVMDvaHYKw06+jTlI/S+THQ/L9TkVe6w
- ykvICAaU1DCuW/bFSJ+fThRc5avT9y5khBMjmed7kpud3r+jutB+u6d3TyPYPs7tfVXt2ukMY
- HNMv6GIYpCFGQOQEctbgXoC67hPM4KU2/tjJgAhByYMOMXdK1BXdIre8Kxji1X0W9DBhNohR1
- n+8CWMNXMTvR1OqBk3le83P9EZitBRojxXEXYSl1vA0OqrhGZPg3oVAKzIJZQAsIX2o3GLCHZ
- 54lU2vDNnPq//gFTrJrWAujy75jo7fAbn07LfF2f9cb9rVLrJppWMMwO8L5yhlaSLwdFCvFDA
- g4Se1lzzAo6mC7ht2wv/hNx2djJXk5zWDm5t6fx+RKQ+f/N4I85RaS5V6MbTxuEIVRGUO0aWm
- Jva1/Ezr8lWViySeQzD6F/Pm5wiIBi09e84idFNymFcWyA767g2/4fADfWjckcOiCH78sECK7
- f9NCNAa8wNib+4n8/6cXb7mwmRBvX02GzDE43NNToUAEO74svciAFi+59IMWK0JmM24rbWoSG
- WXEyRGIsThtIdt2MomXsSaw7Lw41uJhTjdvsb/JZBycmoXpKFhVl4D0wR7vUo0JAwDPtLAHiw
- woVR7YtyC0/iy0hd9iGTd1ijT8qOlgQvf+3JAreTW1GeyvUo7iduFSjyWsqa7oGkRia2jJn9j
- ekuZPt2syERpXFe7bDGpbG+LN/8m7VUJjs8Bbn6HImQ5p2TQxAnETHbYlO9fBYE5HwPXJyIfZ
- 8cUiJsyIsz37ynZ++CwTRpCZ/4jfUmECPmWG3Xzu3xQx6xb3rhBKQkr4WZidlta8gkJ26z0UX
- 80w5iu9xrDNF9OhOCjrRa2Mx9LqQhT718SQQ5VGXeoSSCOdedZSmNpMiRN/KKQCyWgSW8BGUg
- 3yi2ADK/AYofbZvylpXCxngd8N0=
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="2x9QdFqG6sbACF0W"
+Content-Disposition: inline
+In-Reply-To: <7hfRSnKTRnT4uJh5Pok8U8gfLm_NXzCS6w_7_Rc9OH3a9Lv8hpjySZqxDglBFC-fTOdZHi-ODCihiEHlQD9nIhUmld5jYvRx_JvB0z2IAL0=@164.ooo>
+User-Agent: Mutt/2.2.9 (2022-11-12)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Move the common basic element type check of COPY_ARRAY and MOVE_ARRAY to
-a new macro.  This reduces code duplication and simplifies adding more
-elaborate checks.
 
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- git-compat-util.h | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+--2x9QdFqG6sbACF0W
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 76e4b11131..940d03150c 100644
-=2D-- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -1093,8 +1093,11 @@ int xstrncmpz(const char *s, const char *t, size_t =
-len);
- #define CALLOC_ARRAY(x, alloc) (x) =3D xcalloc((alloc), sizeof(*(x)))
- #define REALLOC_ARRAY(x, alloc) (x) =3D xrealloc((x), st_mult(sizeof(*(x)=
-), (alloc)))
+On 2022-12-31 at 18:11:17, Filip Lipien wrote:
+> There are more than one million questions on Stackoverflow related to the=
+ usage of Git.
+> This is not normal.=C2=A0
+>
+> Git is in its current state not a tool that's made for humans.
 
-+#define BARF_UNLESS_COPYABLE(dst, src) \
-+	BUILD_ASSERT_OR_ZERO(sizeof(*(dst)) =3D=3D sizeof(*(src)))
-+
- #define COPY_ARRAY(dst, src, n) copy_array((dst), (src), (n), sizeof(*(ds=
-t)) + \
--	BUILD_ASSERT_OR_ZERO(sizeof(*(dst)) =3D=3D sizeof(*(src))))
-+	BARF_UNLESS_COPYABLE((dst), (src)))
- static inline void copy_array(void *dst, const void *src, size_t n, size_=
-t size)
- {
- 	if (n)
-@@ -1102,7 +1105,7 @@ static inline void copy_array(void *dst, const void =
-*src, size_t n, size_t size)
- }
+There are also many questions related to Windows and Linux.  It is
+unsurprising that software that is flexible is also very complicated and
+that many people may have questions about how it works or the best way
+to work with it.  Git is also extremely portable and popular and as such
+there are many people who use it or want to use it, and therefore people
+asking many questions.
 
- #define MOVE_ARRAY(dst, src, n) move_array((dst), (src), (n), sizeof(*(ds=
-t)) + \
--	BUILD_ASSERT_OR_ZERO(sizeof(*(dst)) =3D=3D sizeof(*(src))))
-+	BARF_UNLESS_COPYABLE((dst), (src)))
- static inline void move_array(void *dst, const void *src, size_t n, size_=
-t size)
- {
- 	if (n)
-=2D-
-2.39.0
+As I mentioned above, many people have questions about the best way to
+accomplish a task on Linux, which is also very popular.  We should not
+force Linus Torvalds to step down because Linux is complex or because
+people have many questions about it because it may differ from other
+software they've used.
+
+> It's realistic to assume, that=C2=A0millions of working hours were wasted=
+ due to his ignorance of=C2=A0developer experience.
+> The financial damage goes into the billions.
+
+Do I think Git could benefit from improved developer experience?
+Certainly.  I think there would be substantial value in doing that, and
+such topics have been discussed at contributor summits in the past.  I
+was left with the impression that most contributors would like to see
+this kind of work done.
+
+However, I think you misunderstand how Junio acts as the maintainer
+here.  This is not a corporation where Junio tells people what to do and
+how to do it.
+
+Instead, this is an open-source project, and it's my impression that
+Junio spends most of his time shepherding other people's patches and
+making sure that the project and contributions are in a good state.  He
+sends relatively few patches himself, and while he might make a
+suggestion on what he'd like to see out of a series or project, he
+doesn't really tell people what to do because people don't have to
+do what he says.
+
+As a result, it's not really fair to blame him for a poor developer
+experience.  If that's valuable to someone, then someone will send
+patches to work on it, and I'm confident that Junio would accept those
+once they were suitable for merging.  If nobody has sent such patches,
+then the presumption is that nobody is interested in doing the work for
+that at this point, and Junio isn't going to be able to just tell people
+to work on it, since people work on what they want or what their
+employers want (if they're working on Git in their professional
+capacity).
+
+In my role as a contributor, I've sent and reviewed patches that
+correspond to my areas of interests and expertise.  While I think a
+better developer experience would be valuable, I lack the experience to
+contribute meaningfully in this regard, and as a consequence, I've sent
+no patches here.  I welcome contributions from others in this area who
+are more familiar with the work that needs to be done.
+
+> I hereby request the removal of Junio C Hamano=C2=A0=E6=BF=B1=E9=87=8E=E7=
+=B4=94 as the Git Maintainer.
+
+I think, given my explanation above, that this is completely
+unwarranted.  The maintainer of this project has no authority over
+participants to force them to address developer experience here.
+
+While I don't always agree with him on everything, I think Junio is
+doing a fine job as maintainer, and assuming things stay as they are, I
+would be happy with him remaining as maintainer for the indefinite
+future.
+--=20
+brian m. carlson (he/him or they/them)
+Toronto, Ontario, CA
+
+--2x9QdFqG6sbACF0W
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.40 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCY7H2rwAKCRB8DEliiIei
+gUpPAQCImzH+C/DplDY0Z2Iucgk4CKw7MRVgznPIfY8CXqdkEgD9ETJ1PsUO83My
+cijBSIjmD9bCcqfb39QY5bP97/5/BAc=
+=YUIp
+-----END PGP SIGNATURE-----
+
+--2x9QdFqG6sbACF0W--
