@@ -2,146 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EE24FC4332F
-	for <git@archiver.kernel.org>; Sun,  1 Jan 2023 03:45:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C49FC4332F
+	for <git@archiver.kernel.org>; Sun,  1 Jan 2023 03:59:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229636AbjAADpw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 31 Dec 2022 22:45:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41846 "EHLO
+        id S229882AbjAAD7q (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 31 Dec 2022 22:59:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229532AbjAADpu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 31 Dec 2022 22:45:50 -0500
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D81BE63
-        for <git@vger.kernel.org>; Sat, 31 Dec 2022 19:45:48 -0800 (PST)
-Received: by mail-pj1-x1035.google.com with SMTP id fy4so26651053pjb.0
-        for <git@vger.kernel.org>; Sat, 31 Dec 2022 19:45:48 -0800 (PST)
+        with ESMTP id S229636AbjAAD7p (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 31 Dec 2022 22:59:45 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF6D610BE
+        for <git@vger.kernel.org>; Sat, 31 Dec 2022 19:59:44 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id v13-20020a17090a6b0d00b00219c3be9830so25290109pjj.4
+        for <git@vger.kernel.org>; Sat, 31 Dec 2022 19:59:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QH+HugJArEskCgKN0B7F35R4UEGp05GowZ8NpzO/MAk=;
-        b=fpf24/8A3HUw1utSFD6daHO5pWUG2HQ+kfiS9eyoZTDXDe04nHBZspmLOO5e5Qy6r7
-         3FNmSBia/+MVEoZSjBY8ibUmiXRxEx7/0G/p/OPHhcgxEfJYVCw4aFPCR+3fIzfPFcWa
-         slG7dOfyxqRShnUJVQ7zcu4etCJyKsx5a7jVEVDf8+alIvB0RD82yDRYEoUQlnMBVOgl
-         JC9j0dbBAkVaJNrjILVjckh/twLw9gLVElcZF5k7ojxRSwd/caQ1gwyiDivPDf1p/cUX
-         uwqKF1D45SYnr7ZjvSMRvVKEJl+/9TcA2xQQrtW7O0fiAt9WqQWmiSko1Q9yWx3xxftz
-         2M+w==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cRQuY36SZIKCIAcydlQHFaBeluSiDr7eTS5biVdUxE4=;
+        b=qlroBoOkObL/f+EEhCUYwPk+0uMeRBYvMUUrNfSx567zCXWcAaEWgdZtX93pMrUitS
+         8ySwGaoKURF4eivATM7Ey6JFa6UjsufT0SPPXwrmF/6nnTsPgTf+zuXG+UUXTsL2RRiI
+         0OfA45nTKkZ6lrFU1ds46sJ0moC6WGFsWe5zxllRoLwHAZ89ksSphECT7cIAOBZCwfrx
+         nWrUl41NN4Zb5XQdoGpOlBwP/QIpA2gOauaSKeApfDvOUkQq/Ob77gwx3p/WivHgJCK5
+         BEkdbPB+G5+H/BLTKvZu+yUBj+X3SQJu0lTgk2VaqJ1fPWQokBsL8hEKVWIrtf7mGcD9
+         zI3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QH+HugJArEskCgKN0B7F35R4UEGp05GowZ8NpzO/MAk=;
-        b=u3Z0sYZhupwKcGnOOS8bdq10Vk0KU6ZlYytefkoNUUJ2Jh6Mm29dcTj61aNfzIOgVp
-         JgvKyXMgFHs9Y6n0/SRl0cmyPPXzHoP9WAjfFw/nBKSFRsrIFFL/QyvU4lKEbrQ/g7Pe
-         DWO/JNiuAb931p2Kso+/UuazmxIcwZzX+MRuvpW4Uihvks9FNIMPxRhuDbwLQRqHWwaC
-         ldz40GNWd9jxfbGV6kIBNVOlfFEKZ2Kz8yKV0nMGeI6H7N1x4X6wDzT5JRLMr7/64aDH
-         QrJYVzCjeQjceMGqrnuP/mAp6B2fd0AHot8DBZDZ/QixvaW5Krsyt+HqCSoipZRQe1O2
-         fyQg==
-X-Gm-Message-State: AFqh2kpTrZ8tRDvHXoAL1HTWpqsCD1sYQw/vpFSXz86OQGBuINTsq21u
-        GJndjOhKoLGDTSc9DfDvFDE=
-X-Google-Smtp-Source: AMrXdXuuGgIp9Pl8Olsh+TyQ6DsrkODVpK8qGjDuJyFwHdZP3is/O6EM84Tn3i90JUhn1pyBXTyKSw==
-X-Received: by 2002:a05:6a21:2d85:b0:aa:7ed2:6f39 with SMTP id ty5-20020a056a212d8500b000aa7ed26f39mr67006656pzb.41.1672544747776;
-        Sat, 31 Dec 2022 19:45:47 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=cRQuY36SZIKCIAcydlQHFaBeluSiDr7eTS5biVdUxE4=;
+        b=L2TxrR21B6lBeCtE7k8b5ADFeoeKMSZ5RA1Y+5oen20V3SKitWr6irvFbsAVUOsm2/
+         ZF6dVd751MDR194CsWUrMac4xRWleDluazWJKC2ZExHDn0/IUoI7kcsjoFtUrwf1/z7V
+         8+ir8IjWMh/KM+jaxsX7eyxlcbWoHojdC4t+YYUF+ZWYChBRryy7SR2/WM2EgOvnTCsF
+         qNycX+70s6C6J18Vh09zDFWtC6mDNxUmcvc1yirsIGxdkz+LbESObybIYo8OVv9nFQqM
+         lkzK3hfzHNZj3UAzAxaehj12tE7kc0t79eG7CmaJ0KoBhZN8z8NHMEgp+TcdZJ0vgIiQ
+         olqA==
+X-Gm-Message-State: AFqh2kqfYaYkBmwXVDQdv08N/P3qUH/NOSvoPmVvjOD9WIDTCXy0LRlk
+        H2mERj7uGH9uUfNx15f3RQE=
+X-Google-Smtp-Source: AMrXdXutsCyONBRUWYAdMTXGfpm3lHOfKyzAs74WQR/zHbPe+cOG5WXK+wjgi7OIna+hYjcxwoVfpA==
+X-Received: by 2002:a17:902:efc4:b0:192:85f2:49d with SMTP id ja4-20020a170902efc400b0019285f2049dmr21561794plb.18.1672545584099;
+        Sat, 31 Dec 2022 19:59:44 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id n12-20020a63e04c000000b00478162d9923sm14638330pgj.13.2022.12.31.19.45.47
+        by smtp.gmail.com with ESMTPSA id w3-20020a170902e88300b0018f69009f3esm845499plg.284.2022.12.31.19.59.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 31 Dec 2022 19:45:47 -0800 (PST)
+        Sat, 31 Dec 2022 19:59:43 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>
-Subject: Re: [PATCH 1/2] branch: description for orphan branch errors
-References: <ffd675e9-8a64-ae05-fc3b-36ae99092735@gmail.com>
-        <dd86016b-3232-563b-940e-03bc36af917a@gmail.com>
-Date:   Sun, 01 Jan 2023 12:45:47 +0900
-In-Reply-To: <dd86016b-3232-563b-940e-03bc36af917a@gmail.com>
- (=?utf-8?Q?=22Rub=C3=A9n?= Justo"'s
-        message of "Sat, 31 Dec 2022 00:04:51 +0100")
-Message-ID: <xmqqy1qmhq8k.fsf@gitster.g>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/3] do full type check in COPY_ARRAY and MOVE_ARRAY
+References: <efe7ec20-201e-a1c1-8e16-2f714a0aee8e@web.de>
+        <f3b9e9be-06ef-3773-a496-da5e479f9d49@web.de>
+        <xmqq8rinhs7t.fsf@gitster.g>
+Date:   Sun, 01 Jan 2023 12:59:43 +0900
+In-Reply-To: <xmqq8rinhs7t.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
+        01 Jan 2023 12:03:02 +0900")
+Message-ID: <xmqqsfguhplc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rubén Justo <rjusto@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> In bcfc82bd48 (branch: description for non-existent branch errors,
-> 2022-10-08) we used "strcmp(head, branch)" to check if we're asked to
-> operate in a branch that is the current HEAD, and
-> "ref_exists(branch_ref)" to check if it points to a valid ref, i.e. it
-> is an orphan branch.  We are doing this with the intention of avoiding
-> the confusing error: "No branch named..."
+> ...  I think what you ideally want to enforce is that
+> typeof(dst) is exactly typeof(src), or typeof(src) sans constness
+> (i.e. you can populate non-const array from a const template)?
 
-I agree that it is good to notice "the user thinks the branch should
-already exist, for they have 'checked out' that branch, but there is
-no commit on the branch yet".  I am not sure checked out on a separate
-worktree as an unborn branch is always the indication that the user
-thinks the branch should exist (e.g. "you allowed somebody else, or
-yourself, prepare a separate worktree to work on something a few
-weeks ago, but no single commit has been made there and you forgot
-about the worktree---should the branch still exist?"), but that is a
-separate topic.  Let's assume that the two are equivalent.
+IOW, I am wondering if something like this is an improvement.
 
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index f63fd45edb..954008e51d 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -528,8 +528,8 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
->  			die(_("Invalid branch name: '%s'"), oldname);
->  	}
->  
-> -	if ((copy || strcmp(head, oldname)) && !ref_exists(oldref.buf)) {
-> -		if (copy && !strcmp(head, oldname))
-> +	if ((copy || !branch_checked_out(oldref.buf)) && !ref_exists(oldref.buf)) {
-> +		if (copy && branch_checked_out(oldref.buf))
->  			die(_("No commit on branch '%s' yet."), oldname);
->  		else
->  			die(_("No branch named '%s'."), oldname);
+ git-compat-util.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Isn't branch_checked_out() a fairly heavyweight operation when you
-have multiple worktrees?  The original went to the filesystem
-(i.e. check ref_exists()) only after seeing that a condition that
-can be computed using only in-core data holds (i.e. the branch names
-are the same or we are doing a copy), which is an optimum order to
-avoid doing unnecessary work in most common cases, but I am not sure
-if the order the checks are done in the updated code optimizes for
-the common case.  If branch_checked_out() is more expensive than a
-call to ref_exists() for a single brnch, that would change the
-equation.  Calling such a heavyweight operation twice would make it
-even more expensive but that is a perfectly fine thing to do in the
-error codepath, inside the block that is entered after we noticed an
-error condition.
-
-> +test_expect_success 'error descriptions on orphan or unborn-yet branch' '
-> +	cat >expect <<-EOF &&
-> +	error: No commit on branch '\''orphan-branch'\'' yet.
-> +	EOF
-> ...
-> +'
-> +
-> +test_expect_success 'fatal descriptions on orphan or unborn-yet branch' '
-> +	cat >expect <<-EOF &&
-> +	fatal: No commit on branch '\''orphan-branch'\'' yet.
-> +	EOF
-> ...
-> +'
-
-Do we already cover existing "No branch named" case the same way in
-this test script, so that it is OK for these new tests to cover only
-the "not yet" cases?  I am asking because if we have existing
-coverage, before and after the change to the C code in this patch,
-some of the existing tests would change the behaviour (i.e. they
-would have said "No branch named X" when somebody else created an
-unborn branch in a separate worktree, but now they would say "No
-commit on branch X yet"), but I see no such change in the test.  If
-we lack existing coverage, we probably should --- otherwise we would
-not notice when somebody breaks the command to say "No commit on
-branch X yet" when it should say "No such branch X".
-
+diff --git c/git-compat-util.h w/git-compat-util.h
+index a76d0526f7..be435615f0 100644
+--- c/git-compat-util.h
++++ w/git-compat-util.h
+@@ -97,8 +97,13 @@ struct strbuf;
+ # define BARF_UNLESS_AN_ARRAY(arr)						\
+ 	BUILD_ASSERT_OR_ZERO(!__builtin_types_compatible_p(__typeof__(arr), \
+ 							   __typeof__(&(arr)[0])))
++# define ARRAYS_COPYABLE_OR_ZERO(src,dst) \
++	(BUILD_ASSERT_OR_ZERO(!__builtin_types_compatible_p(__typeof__(src), \
++							    __typeof__(dst))) + \
++			      (0 ? *(dst) = *(src) : 0))
+ #else
+ # define BARF_UNLESS_AN_ARRAY(arr) 0
++# define ARRAYS_COPYABLE_OR_ZERO(src,dst) (0 ? *(dst) = *(src) : 0))
+ #endif
+ /*
+  * ARRAY_SIZE - get the number of elements in a visible array
