@@ -2,100 +2,336 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BE481C3DA7A
-	for <git@archiver.kernel.org>; Mon,  2 Jan 2023 03:38:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CDB47C3DA7A
+	for <git@archiver.kernel.org>; Mon,  2 Jan 2023 04:58:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230118AbjABDiU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 1 Jan 2023 22:38:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33012 "EHLO
+        id S229500AbjABEtR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 1 Jan 2023 23:49:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229972AbjABDiS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 1 Jan 2023 22:38:18 -0500
-Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7A702199
-        for <git@vger.kernel.org>; Sun,  1 Jan 2023 19:38:16 -0800 (PST)
-Received: from letrec.thunk.org (host-67-21-23-146.mtnsat.com [67.21.23.146] (may be forged))
-        (authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 3023bk0q010559
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sun, 1 Jan 2023 22:37:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
-        t=1672630677; bh=hJgt3cniDblWTGbdG6TKiMOvP8E5zY31/KXVzE3wu4o=;
-        h=Date:From:To:Subject:References:In-Reply-To;
-        b=mzbC9wAoqcAE7E8EUgDruBuAaCPkWesJCh5pGPYL91obDqdfSleTfem9z7wQZv8j8
-         tge2iXFdvEFugeYpkDkMPiIsFDwKOZqDh70lRbTJX1ri+/IVVghZboJTBBrq0bvL4r
-         T4UAjWawYzD46wWeFNCthkthgfrAmPjtA2/K3Y5FNgwbDrrAFxE6F0Cz6qYlP+MnpB
-         NSNcVrTiFy2aI9xWfYlvYeyqkjY0u8m2icoH0+uSiqa9aunKk8bae4nDmQOkEQh/SD
-         so5WNl+SSJX+9EBq6yiMerrXZuIiIvNMHI+RuoL0PQvX8bizG1BnEgjcbdWbcyQvJc
-         FEozX3U3Ge9kg==
-Received: by letrec.thunk.org (Postfix, from userid 15806)
-        id 842D88C03BC; Sun,  1 Jan 2023 22:37:43 -0500 (EST)
-Date:   Sun, 1 Jan 2023 22:37:43 -0500
-From:   "Theodore Ts'o" <tytso@mit.edu>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Filip Lipien <aaa@164.ooo>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Request to remove Junio C Hamano as the Git Maintainer
-Message-ID: <Y7JRh6WZ1YZ2AkKJ@mit.edu>
-References: <7hfRSnKTRnT4uJh5Pok8U8gfLm_NXzCS6w_7_Rc9OH3a9Lv8hpjySZqxDglBFC-fTOdZHi-ODCihiEHlQD9nIhUmld5jYvRx_JvB0z2IAL0=@164.ooo>
- <Y7H2sN1fEZ8pi6xY@tapette.crustytoothpaste.net>
+        with ESMTP id S229447AbjABEtP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 1 Jan 2023 23:49:15 -0500
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DDA91103
+        for <git@vger.kernel.org>; Sun,  1 Jan 2023 20:49:13 -0800 (PST)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-43ea87d0797so384579937b3.5
+        for <git@vger.kernel.org>; Sun, 01 Jan 2023 20:49:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=wiogJ5jPd2WYTgz4/aHmZOz4yibmmioUoJ1s94KI6hQ=;
+        b=gUKS3y4HvqMpV3MehslvpnakFaaOCxZ9bGIxlneGKWg341ccu6zBpBHwH0dAjLwqiZ
+         /4ZfX6JbWMwCK8xKEaZJk1tS0BXYUAedyu5fAMY94tudGnE4epN6IVzsVIUYek0CEWEY
+         gQ4j2TrissZA00Q/czvz1afJArxZNXnLC7Bu67AD9+HLk26M/nvbXlGI57XsfZr/gfBE
+         vKZBWeHZ+wLsYZ9Vjqhm44UBr4c5Lth/Zg5MYF+qCNIKfOuTK5uEvrwArxO9ha1rmZdE
+         xS4GbtjvN3NHjXToCrL8u7h8E+kScpB7DA4LFosZKuf855N+LYsDrwtDGf2G93N50hgr
+         AmEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wiogJ5jPd2WYTgz4/aHmZOz4yibmmioUoJ1s94KI6hQ=;
+        b=J5w1INJhbDpIreGRIglpeU07k2ZJc3AGcRlw9i7pDJehpaenxwSEjNNyr5fB/8fo+1
+         /I9Wcj09gihUTle9Q3+suUMwjIdU0PZZ57Ph4mwj7ho0lEt/3x03K1Bst1V0sl8ZFR/x
+         j0TuMlQqhU9UUi0Pqpn76V4gnafavc00r71XC27JWrjb5X1sD7FEEp7Ow5U29QnRQkHy
+         +ddKUahnqWpucGdXOZvF1XtZRs0GHF5Nyo6hKWhR6ML+47UOe6ZPFMJAW2Ke58KgRL/C
+         AtF/ixvGlLKIP7diJEonk90UpuL6ThEcVs/C+nmdFPW9IkJeiEI+y7CzSuNsNkngew1e
+         1YiQ==
+X-Gm-Message-State: AFqh2korLjWD4ZOaF7XVqccCovSjhvJ2UXSYlFADdJnbyv6NlmDP1X/P
+        lD6qjJzjYo+9MLFICRQgWWDwD+hrDiynzq5FFtM=
+X-Google-Smtp-Source: AMrXdXurSjuIt2AQIqqt+LXC2aeC290QU8WLfimesHDhz+u3+xJm/+0qMtpRQYZw9QaXEay5ymdgX6Ht85467fhntKk=
+X-Received: by 2002:a81:6354:0:b0:49e:278:43fd with SMTP id
+ x81-20020a816354000000b0049e027843fdmr837738ywb.449.1672634951999; Sun, 01
+ Jan 2023 20:49:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y7H2sN1fEZ8pi6xY@tapette.crustytoothpaste.net>
+References: <pull.1452.git.1672102523902.gitgitgadget@gmail.com> <xmqqo7rpvb83.fsf@gitster.g>
+In-Reply-To: <xmqqo7rpvb83.fsf@gitster.g>
+From:   NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
+Date:   Sun, 1 Jan 2023 23:49:00 -0500
+Message-ID: <CA+PPyiGPRztaLsty5LqT-7GfjPusyt=7hi22z1aPdm-G8pZpuQ@mail.gmail.com>
+Subject: Re: [PATCH] ref-filter: add new atom "signature" atom
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     nsengaw4c via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 01, 2023 at 09:10:08PM +0000, brian m. carlson wrote:
-> Instead, this is an open-source project, and it's my impression that
-> Junio spends most of his time shepherding other people's patches and
-> making sure that the project and contributions are in a good state.  He
-> sends relatively few patches himself, and while he might make a
-> suggestion on what he'd like to see out of a series or project, he
-> doesn't really tell people what to do because people don't have to
-> do what he says.
+Hi
+>
+> > From: Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
+> >
+> > This only works for commits. Add "signature" atom with `grade`,
+> > `signer`, `key`, `fingerprint`, `primarykeyfingerprint`, `trustlevel`
+> > as arguments. This code and it's documentation are inspired by
+> > how the %GG, %G?, %GS, %GK, %GF, %GP, and %GT pretty formats were
+> > implemented.
+>
+> Lacking motivation.  Without explaining why somebody may want to
+> have the feature and what it would be used for, "only works for
+> commits" would invite a "so what?  does it even have to work?"  as a
+> response, so start with a brief descrioption "with the current set
+> of atoms, $this_useful_thing cannot easily be achieved" before
+> describing its limitation.
 
-Another way of putting this is that git is perfectly usable for
-intermediate to expert developers.  As a long-time Linux
-developer/maintainer, my opinion is that git developer experience is
-just *fine*.  I like how powerful it it is; I like how it improves my
-productivity; and I don't have any problems using git.
+Ok, I will edit the commit message. Thanks
+>
+> > diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+> > index 6da899c6296..9a0be85368b 100644
+> > --- a/Documentation/git-for-each-ref.txt
+> > +++ b/Documentation/git-for-each-ref.txt
+> > @@ -212,6 +212,33 @@ symref::
+> >       `:lstrip` and `:rstrip` options in the same way as `refname`
+> >       above.
+> >
+> > +signature::
+> > +...
+> > +signature:trustlevel::
+> > +     The Trust level of the GPG signature of a commit. Possible
+> > +     outputs are `ultimate`, `fully`, `marginal`, `never` and `undefined`.
+>
+> A good list.  How do these work for signature made with a tool other
+> than GPG (in other words, when "gpg.format" is set to something
+> other than "openpgp")?
 
-One of the ways this can be seen is that we haven't see a huge amount
-of contributions trying to make git more novice-firendly.  The fact
-that we haven't seen those contributions is a strong indication that
-it's not really a problem for git development community.  And given
-that git developers are humans, there is very clearly a set of humans
-who find their experience of git sufficiently convivial that it's not
-worth their time to make it better.
+You mean ssh and X509, right? honestly, I did not check the behavior.
+I am going to check
 
-So the claim that git has a poor developer experience is not accurate.
-It may be that the experience for novice / beginner developers could
-be improved, sure.  Unfortunately for novice / beginner developers,
-they generally do not have the expertise to contribute those sorts of
-patches to git.  They can send petulant messages to the git mailing
-list, not understanding the difference between an open source
-maintainer and a "product manager", but that's not going to be
-effective.
+> Having said that, wouldn't it be natural to expect that the same
+> code can deal with signed tags?  After all we use the same signature
+> verification machinery at the lowest level in the callchain.
 
-And by the time that they do become experienced git developers, they
-understand why things are the way things are, and very often, they
-will find better things to do with their time.  For those that do
-become experienced git contributors and who continue to be passionate
-about making git easier for novice users, the challenge is how to make
-git more friendly to novices while not compromising backwards
-compatibilty or the power that expert users are happily using every
-day.
+Very right, it works for signed tags too.
 
-And of course, if they are contributing to git on company time, their
-company has to be willing invest their engineers' times on making git
-easier for novices, which implies that most companies will want a
-valid business case for making git more friendly more users for
-developers like (presumably), Filip.  And if we aren't seeing those
-contributions from corporately funded git developers, perhaps that is
-a strong suggestion that the business case simply doesn't exist.
+>
+> Handing the !arg case first will make the if/else if/... cascade
+> easier to follow, no?  Also the body of the function may want to
+> become a separate function that returns one of these S_FOO constants.
+>
+>         static enum signatore_option signature_atom_parser(...)
+>         {
+>                 enum signature_option opt = parse_signature_option(arg);
+>                 if (opt < 0)
+>                         return strbuf_addf_ret(err, opt, _("unknown ..."), arg);
+>                 return opt;
+>         }
+>
+> where parse_signature_option() would look like
+>
+>         static enum signature_option parse_signature_option(const char *arg)
+>         {
+>                 if (!arg)
+>                         return S_BARE;
+>                 else if (!strcmp(arg, "signer"))
+>                         return S_SIGNER;
+>                 ...
+>                 else
+>                         return -1;
+>         }
+>
+> or something like that?
 
-						- Ted
+ It makes more sense
+>
+> > +{
+> > +     int i;
+> > +     struct commit *commit = (struct commit *) obj;
+>
+> Style?  No SP between cast and value?
 
+ok, noted
+>
+> > +
+> > +     for (i = 0; i < used_atom_cnt; i++) {
+> > +             struct used_atom *atom = &used_atom[i];
+> > +             const char *name = atom->name;
+> > +             struct atom_value *v = &val[i];
+> > +             struct signature_check sigc = { 0 };
+> > +
+> > +             if (!!deref != (*name == '*'))
+> > +                     continue;
+> > +             if (deref)
+> > +                     name++;
+> > +             if (strcmp(name, "signature") &&
+> > +                     strcmp(name, "signature:signer") &&
+> > +                     strcmp(name, "signature:grade") &&
+> > +                     strcmp(name, "signature:key") &&
+> > +                     strcmp(name, "signature:fingerprint") &&
+> > +                     strcmp(name, "signature:primarykeyfingerprint") &&
+> > +                     strcmp(name, "signature:trustlevel"))
+> > +                     continue;
+>
+> And with the helper above, we can avoid the repetition here that can
+> go out of sync with the parser function.
+
+I am not sure I have understood this, which helper?
+
+> > +             check_commit_signature(commit, &sigc);
+>
+> If a format asks for signature:signer and signature:key, we
+> shouldn't be running GPG twice.  First check used_atom[] to see if
+> we even need to do _any_ signature processing (and leave if there is
+> not), populate the sigc just once and then enter the loop, perhaps?
+
+Yeah, I think it was not right calling check_commit_signature() in the
+loop. Populating sigc at once looks more good to me
+
+
+>
+>  In adddition, a call to check_commit_signature() should have a
+>
+> matching call to signature_check_clear(); otherwise all the
+>
+> resources held by sigc would leak, wouldn't it?
+
+Yeah, it would.
+
+
+On Mon, Dec 26, 2022 at 9:20 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> "nsengaw4c via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > From: Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
+> >
+> > This only works for commits. Add "signature" atom with `grade`,
+> > `signer`, `key`, `fingerprint`, `primarykeyfingerprint`, `trustlevel`
+> > as arguments. This code and it's documentation are inspired by
+> > how the %GG, %G?, %GS, %GK, %GF, %GP, and %GT pretty formats were
+> > implemented.
+>
+> Lacking motivation.  Without explaining why somebody may want to
+> have the feature and what it would be used for, "only works for
+> commits" would invite a "so what?  does it even have to work?"  as a
+> response, so start with a brief descrioption "with the current set
+> of atoms, $this_useful_thing cannot easily be achieved" before
+> describing its limitation.
+>
+> Having said that, wouldn't it be natural to expect that the same
+> code can deal with signed tags?  After all we use the same signature
+> verification machinery at the lowest level in the callchain.
+>
+> > diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+> > index 6da899c6296..9a0be85368b 100644
+> > --- a/Documentation/git-for-each-ref.txt
+> > +++ b/Documentation/git-for-each-ref.txt
+> > @@ -212,6 +212,33 @@ symref::
+> >       `:lstrip` and `:rstrip` options in the same way as `refname`
+> >       above.
+> >
+> > +signature::
+> > +...
+> > +signature:trustlevel::
+> > +     The Trust level of the GPG signature of a commit. Possible
+> > +     outputs are `ultimate`, `fully`, `marginal`, `never` and `undefined`.
+>
+> A good list.  How do these work for signature made with a tool other
+> than GPG (in other words, when "gpg.format" is set to something
+> other than "openpgp")?
+>
+> > @@ -378,6 +383,30 @@ static int subject_atom_parser(struct ref_format *format, struct used_atom *atom
+> >       return 0;
+> >  }
+> >
+> > +static int signature_atom_parser(struct ref_format *format, struct used_atom *atom,
+> > +                            const char *arg, struct strbuf *err)
+> > +{
+> > +     if (arg) {
+> > +             if (!strcmp(arg, "signer"))
+> > +                     atom->u.signature.option = S_SIGNER;
+> > +             else if (!strcmp(arg, "grade"))
+> > +                     atom->u.signature.option = S_GRADE;
+> > +             else if (!strcmp(arg, "key"))
+> > +                     atom->u.signature.option = S_KEY;
+> > +             else if (!strcmp(arg, "fingerprint"))
+> > +                     atom->u.signature.option = S_FINGERPRINT;
+> > +             else if (!strcmp(arg, "primarykeyfingerprint"))
+> > +                     atom->u.signature.option = S_PRI_KEY_FP;
+> > +             else if (!strcmp(arg, "trustlevel"))
+> > +                     atom->u.signature.option = S_TRUST_LEVEL;
+> > +             else
+> > +                     return strbuf_addf_ret(err, -1, _("unknown %%(signature) argument: %s"), arg);
+> > +     }
+> > +     else
+> > +             atom->u.signature.option = S_BARE;
+> > +     return 0;
+> > +}
+>
+> Handing the !arg case first will make the if/else if/... cascade
+> easier to follow, no?  Also the body of the function may want to
+> become a separate function that returns one of these S_FOO constants.
+>
+>         static enum signatore_option signature_atom_parser(...)
+>         {
+>                 enum signature_option opt = parse_signature_option(arg);
+>                 if (opt < 0)
+>                         return strbuf_addf_ret(err, opt, _("unknown ..."), arg);
+>                 return opt;
+>         }
+>
+> where parse_signature_option() would look like
+>
+>         static enum signature_option parse_signature_option(const char *arg)
+>         {
+>                 if (!arg)
+>                         return S_BARE;
+>                 else if (!strcmp(arg, "signer"))
+>                         return S_SIGNER;
+>                 ...
+>                 else
+>                         return -1;
+>         }
+>
+> or something like that?
+>
+> > @@ -1344,6 +1374,69 @@ static void grab_person(const char *who, struct atom_value *val, int deref, void
+> >       }
+> >  }
+> >
+> > +static void grab_signature(struct atom_value *val, int deref, struct object *obj)
+>
+> To be considerate for future developers, perhaps rename this to
+> grab_commit_signature(), so that they can add grab_tag_signature()
+> when they lift the limitation of this implementaiton?
+>
+> > +{
+> > +     int i;
+> > +     struct commit *commit = (struct commit *) obj;
+>
+> Style?  No SP between cast and value?
+>
+> > +
+> > +     for (i = 0; i < used_atom_cnt; i++) {
+> > +             struct used_atom *atom = &used_atom[i];
+> > +             const char *name = atom->name;
+> > +             struct atom_value *v = &val[i];
+> > +             struct signature_check sigc = { 0 };
+> > +
+> > +             if (!!deref != (*name == '*'))
+> > +                     continue;
+> > +             if (deref)
+> > +                     name++;
+> > +             if (strcmp(name, "signature") &&
+> > +                     strcmp(name, "signature:signer") &&
+> > +                     strcmp(name, "signature:grade") &&
+> > +                     strcmp(name, "signature:key") &&
+> > +                     strcmp(name, "signature:fingerprint") &&
+> > +                     strcmp(name, "signature:primarykeyfingerprint") &&
+> > +                     strcmp(name, "signature:trustlevel"))
+> > +                     continue;
+>
+> And with the helper above, we can avoid the repetition here that can
+> go out of sync with the parser function.
+>
+> > +             check_commit_signature(commit, &sigc);
+>
+> If a format asks for signature:signer and signature:key, we
+> shouldn't be running GPG twice.  First check used_atom[] to see if
+> we even need to do _any_ signature processing (and leave if there is
+> not), populate the sigc just once and then enter the loop, perhaps?
+>
+> In adddition, a call to check_commit_signature() should have a
+> matching call to signature_check_clear(); otherwise all the
+> resources held by sigc would leak, wouldn't it?
