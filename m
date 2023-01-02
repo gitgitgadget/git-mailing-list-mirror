@@ -2,119 +2,379 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F089C3DA7A
-	for <git@archiver.kernel.org>; Mon,  2 Jan 2023 08:38:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4EAE5C3DA7A
+	for <git@archiver.kernel.org>; Mon,  2 Jan 2023 11:04:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231890AbjABIiG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Jan 2023 03:38:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51898 "EHLO
+        id S231793AbjABLES (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Jan 2023 06:04:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231484AbjABIiB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jan 2023 03:38:01 -0500
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74DDBC19
-        for <git@vger.kernel.org>; Mon,  2 Jan 2023 00:38:00 -0800 (PST)
-Received: by mail-yb1-xb30.google.com with SMTP id 83so28742996yba.11
-        for <git@vger.kernel.org>; Mon, 02 Jan 2023 00:38:00 -0800 (PST)
+        with ESMTP id S229621AbjABLEQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jan 2023 06:04:16 -0500
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B71B362CA
+        for <git@vger.kernel.org>; Mon,  2 Jan 2023 03:04:13 -0800 (PST)
+Received: by mail-ed1-x534.google.com with SMTP id c17so39450183edj.13
+        for <git@vger.kernel.org>; Mon, 02 Jan 2023 03:04:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=WC9zvfzhmbjyN5oHblaphQIgWLy/OTxHLzd7EQtVw24=;
-        b=h9nM9AQ6fDCj4QbR9NeW+Up5ETg7GSgWDLA3nmOrvHaBTotTcCBCgAb9DqXGKynuWv
-         WVh+4E3Xn+rsEykhDwH09NnQz6d37Be6D/0JlrtMMS8bZif88G9j82WI8LXcdB7VDQj+
-         2yvUlWT1uxwYqt8VFnl9pjvF8F5Y88qhSarmcbIgv4VMhMHmbZjiYyV2KMpUiX/KIqjD
-         2K1KNo4b0oWYXyxUAoRfF0ynoV/oNawE0ueRtvFUih+l5fBn3TYtVp1+YzvT1MGqaZ6y
-         huzev4jiIhv7fx3efICqEzCJ8MbwT56D+/i0C+TXwyNKqU3CCeowSfpb/ciLsP1ZduWf
-         V1mg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GLgV2LEbSzAErj3/5rbwwqFKGmG4r/ibu8Ug7UN3cxk=;
+        b=j9WspobdaEFXm67axl/PdDYanPsDe6AXHW1mRksoqu7IvYq5987Fd/JuVRSb5CIctf
+         6ZWe+9bUcZD6PQmBgZYHQf5p9FJGfOJB6sVQv++BwpL80Rqallj81Do0KxMEjwnMmjM9
+         nT7nYUSfbg4xXeR9s50xNrRSMOUkWrTqCDUnYMqrEGbqyu+H/mKpZot0RrlWStm8D/Vr
+         +bzz08iMoMGO80IQ+mC/G+nOwFOIYOUvjBNZFYywzFxPKso72D8knEzfnCUUdZko+VmQ
+         ur3cF0O6Ry/xQtOXvc7HPG/0JTq6t3MEmMBXQxAyIysGEFrOmQda9TkzcUcS+YAhippv
+         Dxag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WC9zvfzhmbjyN5oHblaphQIgWLy/OTxHLzd7EQtVw24=;
-        b=gabMF8A6oz+WUxrT+6uWaNgmds0yOHrCf+x1u+PK1HdqczuL1VFVUfGmosjUBdC650
-         e3WhTfdaPzhCgd8mFLXuRGM7shgpOc7ZW6hwLrz2NTt5mle/SaTnHuKe6naqX75LdRck
-         Qq3Cf1VXu9zzeFzyD583PjfbwteyWS0sYZxBndig5lbfXtpsQHsm/Z/JVKazBWPABnn+
-         ZcHxLH06R8DcYftH1oWL2gQ3rJCoe1UpX82hPfPEZv5f173S25Wm1pKqkWnCSwekYRoo
-         NkMjnsyyGTCPTuCgF4d3bSfhF2SljUhlvHLZ63B/lknNS2cvFbL8QVB7qEllxBcIzAlS
-         KjNA==
-X-Gm-Message-State: AFqh2kr2+YqiXqdXQunBTTArVn6TiRdeKPlCu6/QEVsNF0pqLipu4i9I
-        mQ0bITpHLUbJc7GZBFwEKFUmYfq0oSLf1uXSO+psSmNyZ+s=
-X-Google-Smtp-Source: AMrXdXuWy4bPYT+XHUbV/Qco3fYr8lgnocPeWzVQNIaTDhadvIKBt50+KqP1sRz7RHyVFfpZ8uT2H5WPQWkLn3g76yg=
-X-Received: by 2002:a25:6dc4:0:b0:75c:55f:b0d4 with SMTP id
- i187-20020a256dc4000000b0075c055fb0d4mr3907379ybc.13.1672648679685; Mon, 02
- Jan 2023 00:37:59 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GLgV2LEbSzAErj3/5rbwwqFKGmG4r/ibu8Ug7UN3cxk=;
+        b=hZL6AbGSVlLzDMS3KLsQMhbtm1++M2zCNPjM5hT2owr/ONGESEWqL+o+hsf+d1V9Gc
+         uYBZV0b4eA3hHZx3jomxUzduoh8Gc9F3pU9yVesEVcpxLh8e38Ul9Va1uxbaz7MsLmqK
+         XgPfxmehQYi0LMZxqp1rIZD4R5EZSGhyioE0QLCK3uSZmt5BRc1jI07gjD5rtsbCEssg
+         /xF5LUkAv1MEKfmS6y8foZwH2pvYOd8wxG0M24R8tYHgkPDKcRA5KC/vUQUNKdgAHo+b
+         Nbq6MJwGPD7/QsuAttAhzwFM5HYPksXztndDvNqnZmx+kdNpkGHRLwscoZ5Ab7sz6kVE
+         OLRg==
+X-Gm-Message-State: AFqh2kptuL0n9cf7yP4cRT8/OejqfVpzntaeG/LK4fopQNQHpeNJW1sn
+        Kw9f+uiA9SncMAGQ8r2N4OfYI+3lR4DCsA==
+X-Google-Smtp-Source: AMrXdXuAxcF0/2htjYx0Uyq6E1DhzWDD0vxd7wjkaf1fAI3w6M9RxZg8WGU3fKBpjK4VsnY2nstR6g==
+X-Received: by 2002:a05:6402:2a04:b0:463:9193:404a with SMTP id ey4-20020a0564022a0400b004639193404amr38724972edb.21.1672657451744;
+        Mon, 02 Jan 2023 03:04:11 -0800 (PST)
+Received: from archlinux.fritz.box ([2a02:2454:574:5100:bfcd:791:c83b:983c])
+        by smtp.gmail.com with ESMTPSA id m2-20020aa7d342000000b00488117821ffsm6651821edr.31.2023.01.02.03.04.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Jan 2023 03:04:11 -0800 (PST)
+From:   Karthik Nayak <karthik.188@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v5 0/2] check-attr: add support to work with tree-ish
+Date:   Mon,  2 Jan 2023 12:04:04 +0100
+Message-Id: <cover.1671793109.git.karthik.188@gmail.com>
+X-Mailer: git-send-email 2.39.0
+In-Reply-To: <https://lore.kernel.org/git/cover.1671630304.git.karthik.188@gmail.com/>
+References: <https://lore.kernel.org/git/cover.1671630304.git.karthik.188@gmail.com/>
 MIME-Version: 1.0
-References: <pull.1452.git.1672102523902.gitgitgadget@gmail.com>
- <xmqqo7rpvb83.fsf@gitster.g> <CA+PPyiGPRztaLsty5LqT-7GfjPusyt=7hi22z1aPdm-G8pZpuQ@mail.gmail.com>
-In-Reply-To: <CA+PPyiGPRztaLsty5LqT-7GfjPusyt=7hi22z1aPdm-G8pZpuQ@mail.gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Mon, 2 Jan 2023 09:37:48 +0100
-Message-ID: <CAP8UFD3i7C2c79V2ORxh-Q-rNuwKVqkMRX0VoXy3iugw=u5K+A@mail.gmail.com>
-Subject: Re: [PATCH] ref-filter: add new atom "signature" atom
-To:     NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        nsengaw4c via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 2, 2023 at 6:01 AM NSENGIYUMVA WILBERFORCE
-<nsengiyumvawilberforce@gmail.com> wrote:
+v1: https://lore.kernel.org/git/20221206103736.53909-1-karthik.188@gmail.com/
+v2: https://lore.kernel.org/git/CAOLa=ZSsFGBw3ta1jWN8cmUch2ca=zTEjp1xMA6Linafx9W53g@mail.gmail.com/T/#t
+v3: https://lore.kernel.org/git/20221216093552.3171319-1-karthik.188@gmail.com/
+v4: https://lore.kernel.org/git/cover.1671630304.git.karthik.188@gmail.com
 
-> > Handing the !arg case first will make the if/else if/... cascade
-> > easier to follow, no?  Also the body of the function may want to
-> > become a separate function that returns one of these S_FOO constants.
-> >
-> >         static enum signatore_option signature_atom_parser(...)
-> >         {
-> >                 enum signature_option opt = parse_signature_option(arg);
-> >                 if (opt < 0)
-> >                         return strbuf_addf_ret(err, opt, _("unknown ..."), arg);
-> >                 return opt;
-> >         }
-> >
-> > where parse_signature_option() would look like
-> >
-> >         static enum signature_option parse_signature_option(const char *arg)
-> >         {
-> >                 if (!arg)
-> >                         return S_BARE;
-> >                 else if (!strcmp(arg, "signer"))
-> >                         return S_SIGNER;
-> >                 ...
-> >                 else
-> >                         return -1;
-> >         }
-> >
-> > or something like that?
+Given a pathname, git-check-attr(1) will list the attributes which apply to that
+pathname by reading all relevant gitattributes files. Currently there is no way
+to specify a tree-ish to read the gitattributes from.
 
-[...]
+This is specifically useful in bare repositories wherein the gitattributes are
+only present in the git working tree but not available directly on the
+filesystem.
 
-> > > +             if (strcmp(name, "signature") &&
-> > > +                     strcmp(name, "signature:signer") &&
-> > > +                     strcmp(name, "signature:grade") &&
-> > > +                     strcmp(name, "signature:key") &&
-> > > +                     strcmp(name, "signature:fingerprint") &&
-> > > +                     strcmp(name, "signature:primarykeyfingerprint") &&
-> > > +                     strcmp(name, "signature:trustlevel"))
-> > > +                     continue;
-> >
-> > And with the helper above, we can avoid the repetition here that can
-> > go out of sync with the parser function.
->
-> I am not sure I have understood this, which helper?
+This series aims to add a new flag `--source` to git-check-attr(1) which
+allows us to read gitattributes from the specified tree-ish.
 
-I think Junio is talking about the following function:
+Changes since version 4:
+- Changed the flag from `--revision` to `--source`
+- Removed uneeded header imports
+- Using a pre-initialized variable instead of malloc for the tree_oid
+- Using `die()` instead of `error()` for bad tree-ish provided
 
-static enum signature_option parse_signature_option(const char *arg)
+Range-diff against v4:
 
-he suggested above.
+1:  6224754179 = 1:  6224754179 t0003: move setup for `--all` into new block
+2:  a161dbdf8b ! 2:  d835d989ad attr: add flag `--revision` to work with revisions
+    @@ Metadata
+     Author: Karthik Nayak <karthik.188@gmail.com>
+     
+      ## Commit message ##
+    -    attr: add flag `--revision` to work with revisions
+    +    attr: add flag `--source` to work with tree-ish
+     
+         The contents of the .gitattributes files may evolve over time, but "git
+         check-attr" always checks attributes against them in the working tree
+         and/or in the index. It may be beneficial to optionally allow the users
+         to check attributes taken from a commit other than HEAD against paths.
+     
+    -    Add a new flag `--revision` which will allow users to check the
+    +    Add a new flag `--source` which will allow users to check the
+         attributes against a commit (actually any tree-ish would do). When the
+         user uses this flag, we go through the stack of .gitattributes files but
+         instead of checking the current working tree and/or in the index, we
+         check the blobs from the provided tree-ish object. This allows the
+         command to also be used in bare repositories.
+     
+    -    Since we use a tree-ish object, the user can pass "--revision
+    +    Since we use a tree-ish object, the user can pass "--source
+         HEAD:subdirectory" and all the attributes will be looked up as if
+         subdirectory was the root directory of the repository.
+     
+    -    We cannot simply use the `<rev>:<path>` syntax without the `--revision`
+    +    We cannot simply use the `<rev>:<path>` syntax without the `--source`
+         flag, similar to how it is used in `git show` because any non-flag
+         parameter before `--` is treated as an attribute and any parameter after
+         `--` is treated as a pathname.
+     
+         The change involves creating a new function `read_attr_from_blob`, which
+    -    given the path reads the blob for the path against the provided revision and
+    +    given the path reads the blob for the path against the provided source and
+         parses the attributes line by line. This function is plugged into
+         `read_attr()` function wherein we go through the stack of attributes
+         files.
+    @@ Documentation/git-check-attr.txt: git-check-attr - Display gitattributes informa
+      [verse]
+     -'git check-attr' [-a | --all | <attr>...] [--] <pathname>...
+     -'git check-attr' --stdin [-z] [-a | --all | <attr>...]
+    -+'git check-attr' [--revision <revision>] [-a | --all | <attr>...] [--] <pathname>...
+    -+'git check-attr' --stdin [-z] [--revision <revision>] [-a | --all | <attr>...]
+    ++'git check-attr' [--source <tree>] [-a | --all | <attr>...] [--] <pathname>...
+    ++'git check-attr' --stdin [-z] [--source <tree>] [-a | --all | <attr>...]
+      
+      DESCRIPTION
+      -----------
+    @@ Documentation/git-check-attr.txt: OPTIONS
+      	If `--stdin` is also given, input paths are separated
+      	with a NUL character instead of a linefeed character.
+      
+    -+--revision=<revision>::
+    -+	Check attributes against the specified commit. All the attributes will
+    -+	be checked against the provided revision. Paths provided as part of the
+    -+	revision will be treated as the root directory.
+    ++--source=<tree>::
+    ++	Check attributes against the specified tree-ish. Paths provided as part
+    ++	of the revision will be treated as the root directory. It is common to
+    ++	specify the source tree by naming a commit, branch or tag associated
+    ++	with it.
+     +
+      \--::
+      	Interpret all preceding arguments as attributes and all following
+    @@ archive.c: static const struct attr_check *get_archive_attrs(struct index_state
+     
+      ## attr.c ##
+     @@
+    - #include "exec-cmd.h"
+    - #include "attr.h"
+      #include "dir.h"
+    -+#include "strbuf.h"
+    -+#include "tree-walk.h"
+      #include "utf8.h"
+      #include "quote.h"
+     +#include "revision.h"
+    @@ attr.c: void git_check_attr(struct index_state *istate,
+      		const char *name = check->all_attrs[i].attr->name;
+     
+      ## attr.h ##
+    -@@
+    - #ifndef ATTR_H
+    - #define ATTR_H
+    - 
+    -+#include "hash.h"
+    -+
+    - /**
+    -  * gitattributes mechanism gives a uniform way to associate various attributes
+    -  * to set of paths.
+     @@ attr.h: void attr_check_free(struct attr_check *check);
+      const char *git_attr_name(const struct git_attr *);
+      
+    @@ attr.h: void attr_check_free(struct attr_check *check);
+      enum git_attr_direction {
+     
+      ## builtin/check-attr.c ##
+    -@@
+    -+#include "repository.h"
+    - #define USE_THE_INDEX_VARIABLE
+    - #include "builtin.h"
+    - #include "cache.h"
+     @@
+      static int all_attrs;
+      static int cached_attrs;
+      static int stdin_paths;
+    -+static char *revision;
+    ++static char *source;
+      static const char * const check_attr_usage[] = {
+     -N_("git check-attr [-a | --all | <attr>...] [--] <pathname>..."),
+     -N_("git check-attr --stdin [-z] [-a | --all | <attr>...]"),
+    -+N_("git check-attr [--revision <revision>] [-a | --all | <attr>...] [--] <pathname>..."),
+    -+N_("git check-attr --stdin [-z] [--revision <revision>] [-a | --all | <attr>...]"),
+    ++N_("git check-attr [--source <tree>] [-a | --all | <attr>...] [--] <pathname>..."),
+    ++N_("git check-attr --stdin [-z] [--source <tree>] [-a | --all | <attr>...]"),
+      NULL
+      };
+      
+    @@ builtin/check-attr.c: static const struct option check_attr_options[] = {
+      	OPT_BOOL(0 , "stdin", &stdin_paths, N_("read file names from stdin")),
+      	OPT_BOOL('z', NULL, &nul_term_line,
+      		 N_("terminate input and output records by a NUL character")),
+    -+	OPT_STRING(0, "revision", &revision, N_("revision"), N_("check attributes at this revision")),
+    ++	OPT_STRING(0, "source", &source, N_("<tree-ish>"), N_("which tree-ish to check attributes at")),
+      	OPT_END()
+      };
+      
+    @@ builtin/check-attr.c: static NORETURN void error_with_usage(const char *msg)
+      {
+      	struct attr_check *check;
+     +	struct object_id *tree_oid = NULL;
+    ++	struct object_id initialized_oid;
+      	int cnt, i, doubledash, filei;
+      
+      	if (!is_bare_repository())
+    @@ builtin/check-attr.c: int cmd_check_attr(int argc, const char **argv, const char
+      		}
+      	}
+      
+    -+	if (revision) {
+    -+		tree_oid = xmalloc(sizeof(struct object_id));
+    -+
+    -+		if (repo_get_oid_tree(the_repository, revision, tree_oid))
+    -+			error("%s: not a valid revision", revision);
+    ++	if (source) {
+    ++		if (repo_get_oid_tree(the_repository, source, &initialized_oid))
+    ++			die("%s: not a valid tree-ish source", source);
+    ++		tree_oid = &initialized_oid;
+     +	}
+     +
+      	if (stdin_paths)
+    @@ t/t0003-attributes.sh: attr_check_quote () {
+      	test_cmp expect actual
+     +}
+     +
+    -+attr_check_revision () {
+    -+	path="$1" expect="$2" revision="$3" git_opts="$4" &&
+    ++attr_check_source () {
+    ++	path="$1" expect="$2" source="$3" git_opts="$4" &&
+      
+    -+	git $git_opts check-attr --revision $revision test -- "$path" >actual 2>err &&
+    ++	git $git_opts check-attr --source $source test -- "$path" >actual 2>err &&
+     +	echo "$path: test: $expect" >expect &&
+     +	test_cmp expect actual
+    ++	test_must_be_empty err
+      }
+      
+      test_expect_success 'open-quoted pathname' '
+    @@ t/t0003-attributes.sh: test_expect_success 'setup' '
+      '
+      
+     +test_expect_success 'setup branches' '
+    -+	(
+    -+		echo "f	test=f" &&
+    -+		echo "a/i test=n"
+    -+	) | git hash-object -w --stdin >id &&
+    -+	git update-index --add --cacheinfo 100644,$(cat id),foo/bar/.gitattributes &&
+    -+	git write-tree >id &&
+    -+	tree_id=$(cat id) &&
+    -+	git commit-tree $tree_id -m "random commit message" >id &&
+    -+	commit_id=$(cat id) &&
+    -+	git update-ref refs/heads/branch1 $commit_id &&
+    ++	mkdir -p foo/bar &&
+    ++	test_commit --printf "add .gitattributes" foo/bar/.gitattribute \
+    ++		"f test=f\na/i test=n\n" tag-1 &&
+     +
+    -+	(
+    -+		echo "g test=g" &&
+    -+		echo "a/i test=m"
+    -+	) | git hash-object -w --stdin >id &&
+    -+	git update-index --add --cacheinfo 100644,$(cat id),foo/bar/.gitattributes &&
+    -+	git write-tree >id &&
+    -+	tree_id=$(cat id) &&
+    -+	git commit-tree $tree_id -m "random commit message" >id &&
+    -+	commit_id=$(cat id) &&
+    -+	git update-ref refs/heads/branch2 $commit_id
+    ++	mkdir -p foo/bar &&
+    ++	test_commit --printf "add .gitattributes" foo/bar/.gitattribute \
+    ++		"g test=g\na/i test=m\n" tag-2
+     +'
+     +
+      test_expect_success 'command line checks' '
+    @@ t/t0003-attributes.sh: test_expect_success 'setup' '
+      	test_must_fail git check-attr test &&
+      	test_must_fail git check-attr test -- &&
+      	test_must_fail git check-attr -- f &&
+    -+	test_must_fail git check-attr --revision &&
+    -+	test_must_fail git check-attr --revision not-a-valid-ref &&
+    ++	test_must_fail git check-attr --source &&
+    ++	test_must_fail git check-attr --source not-a-valid-ref &&
+      	echo "f" | test_must_fail git check-attr --stdin &&
+      	echo "f" | test_must_fail git check-attr --stdin -- f &&
+      	echo "f" | test_must_fail git check-attr --stdin test -- f &&
+    @@ t/t0003-attributes.sh: test_expect_success 'using --git-dir and --work-tree' '
+      	)
+      '
+      
+    -+test_expect_success 'using --revision' '
+    -+	attr_check_revision foo/bar/f f branch1 &&
+    -+	attr_check_revision foo/bar/a/i n branch1 &&
+    -+	attr_check_revision foo/bar/f unspecified branch2 &&
+    -+	attr_check_revision foo/bar/a/i m branch2 &&
+    -+	attr_check_revision foo/bar/g g branch2 &&
+    -+	attr_check_revision foo/bar/g unspecified branch1
+    ++test_expect_success 'using --source' '
+    ++	attr_check_source foo/bar/f f tag-1 &&
+    ++	attr_check_source foo/bar/a/i n tag-1 &&
+    ++	attr_check_source foo/bar/f unspecified tag-2 &&
+    ++	attr_check_source foo/bar/a/i m tag-2 &&
+    ++	attr_check_source foo/bar/g g tag-2 &&
+    ++	attr_check_source foo/bar/g unspecified tag-1
+     +'
+     +
+      test_expect_success 'setup bare' '
+    @@ t/t0003-attributes.sh: test_expect_success 'bare repository: check that .gitattr
+      	)
+      '
+      
+    -+test_expect_success 'bare repository: with --revision' '
+    ++test_expect_success 'bare repository: with --source' '
+     +	(
+     +		cd bare.git &&
+    -+		(
+    -+			echo "f	test=f" &&
+    -+			echo "a/i test=a/i"
+    -+		) | git hash-object -w --stdin >id &&
+    -+		git update-index --add --cacheinfo 100644 $(cat id) .gitattributes &&
+    -+		git write-tree >id &&
+    -+		tree_id=$(cat id) &&
+    -+		git commit-tree $tree_id -m "random commit message" >id &&
+    -+		commit_id=$(cat id) &&
+    -+		git update-ref refs/heads/master $commit_id &&
+    -+		attr_check_revision f f HEAD &&
+    -+		attr_check_revision a/f f HEAD &&
+    -+		attr_check_revision a/c/f f HEAD &&
+    -+		attr_check_revision a/i a/i HEAD &&
+    -+		attr_check_revision subdir/a/i unspecified HEAD
+    ++		attr_check_source foo/bar/f f tag-1 &&
+    ++		attr_check_source foo/bar/a/i n tag-1 &&
+    ++		attr_check_source foo/bar/f unspecified tag-2 &&
+    ++		attr_check_source foo/bar/a/i m tag-2 &&
+    ++		attr_check_source foo/bar/g g tag-2 &&
+    ++		attr_check_source foo/bar/g unspecified tag-1
+     +	)
+     +'
+     +
 
-With this function the above code could be just something like:
 
-if (parse_signature_option(name) < 0)
-                    continue;
+Karthik Nayak (2):
+  t0003: move setup for `--all` into new block
+  attr: add flag `--source` to work with tree-ish
+
+ Documentation/git-check-attr.txt | 10 +++-
+ archive.c                        |  2 +-
+ attr.c                           | 97 +++++++++++++++++++++++---------
+ attr.h                           |  5 +-
+ builtin/check-attr.c             | 35 +++++++-----
+ builtin/pack-objects.c           |  2 +-
+ convert.c                        |  2 +-
+ ll-merge.c                       |  4 +-
+ pathspec.c                       |  2 +-
+ t/t0003-attributes.sh            | 49 +++++++++++++++-
+ userdiff.c                       |  2 +-
+ ws.c                             |  2 +-
+ 12 files changed, 157 insertions(+), 55 deletions(-)
+
+-- 
+2.39.0
+
