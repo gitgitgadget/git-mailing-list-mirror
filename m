@@ -2,655 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B9E67C5479D
-	for <git@archiver.kernel.org>; Mon,  2 Jan 2023 11:04:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5F184C3DA7A
+	for <git@archiver.kernel.org>; Mon,  2 Jan 2023 16:45:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232086AbjABLEZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 2 Jan 2023 06:04:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35040 "EHLO
+        id S233004AbjABQpB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 2 Jan 2023 11:45:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44530 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231445AbjABLES (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 2 Jan 2023 06:04:18 -0500
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D38D262D1
-        for <git@vger.kernel.org>; Mon,  2 Jan 2023 03:04:15 -0800 (PST)
-Received: by mail-ed1-x52e.google.com with SMTP id z11so23646492ede.1
-        for <git@vger.kernel.org>; Mon, 02 Jan 2023 03:04:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rMjzk/4LR9bzRL+MEjn94+kE4clRD+6U71ReijOAwAU=;
-        b=q32mPbhrAsICSp++QVLa1nlyVSSH7fTpfjhMy+Dg3fhqwsOrQKvldRwC+S0r06b1x+
-         Vzn9nvxEsjuihjmXWdsXlbIyOQpO0mbyGNuiFvBBEuZ6lvX3GTSSWLQtkMuxM9F4IQKg
-         BEnWwELW0zmrFDtzsc4NgqyuBGK+MoV+SJJNzI2fHuZFlVPuQVe2ARzHOhwGNzVxD9Zw
-         7P3LVxhH0TkQT/XrJGJbTwLRK9ts31gQYovZAIT1bdSBhmhorPBDXPiYmxM2M3Sg2UiB
-         jAf1rb6tcgqmPcR+dIEcLhcVQObKmJMXR7WwY/Ymc0J9dsebjaT7puMi2ZssG/5V9Cy+
-         LgFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rMjzk/4LR9bzRL+MEjn94+kE4clRD+6U71ReijOAwAU=;
-        b=gHLY4O32AeTIjQsQOVY1fsctQYY8jJXkLuJrE4LVzFx8asokEnySW64lUj3zL5CC3o
-         i7QKh6DWwVGL3DVOQLCJlZST3wJZGp1vzKsUlV5AS2cVRSveBamzNi+BEm3jABX3wL3m
-         oTwGobMq2BXTNGKvom4d050aVjq5fgnTVgORw40iNztalVUgylvbFUI1UXWPH3Q3VlKR
-         vfFw7+3aqXH91vBZVp3YgMfYxn/hpLzgEQ6SvwCjS/LFoH+ZPLIbbu08g6eCSaFqgf9M
-         oJOipmzuMDsaILOQOkGjVBgjCmkAI+fE22jJlbm66FOacefoW5FlNBaZ/KZ6V9UdGJZr
-         05PA==
-X-Gm-Message-State: AFqh2kpgpuF5lv9MXfTqLgFBy6RI8cAUQj5b+5x+XcvKX5okNtGy5EeD
-        5lT3izTx8sWlCtBhUrhX+uF9sMlD3JZo/w==
-X-Google-Smtp-Source: AMrXdXuqXjyp70NVvWWn1hRLT5laa81Gy80e1u9sy07WsPddprFfu5bXfGCCrynbLqrpJr6qvD9bLQ==
-X-Received: by 2002:a05:6402:1055:b0:467:c3cb:49aa with SMTP id e21-20020a056402105500b00467c3cb49aamr34523083edu.4.1672657453885;
-        Mon, 02 Jan 2023 03:04:13 -0800 (PST)
-Received: from archlinux.fritz.box ([2a02:2454:574:5100:bfcd:791:c83b:983c])
-        by smtp.gmail.com with ESMTPSA id m2-20020aa7d342000000b00488117821ffsm6651821edr.31.2023.01.02.03.04.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jan 2023 03:04:13 -0800 (PST)
-From:   Karthik Nayak <karthik.188@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Karthik Nayak <karthik.188@gmail.com>, Toon Claes <toon@iotcl.com>
-Subject: [PATCH v5 2/2] attr: add flag `--source` to work with tree-ish
-Date:   Mon,  2 Jan 2023 12:04:06 +0100
-Message-Id: <23813496fc73b7e5cb9f09b166e05c9a02bac43c.1671793109.git.karthik.188@gmail.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <cover.1671793109.git.karthik.188@gmail.com>
-References: <https://lore.kernel.org/git/cover.1671630304.git.karthik.188@gmail.com/> <cover.1671793109.git.karthik.188@gmail.com>
+        with ESMTP id S230120AbjABQpA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 2 Jan 2023 11:45:00 -0500
+Received: from EUR01-DB5-obe.outbound.protection.outlook.com (mail-db5eur01on2119.outbound.protection.outlook.com [40.107.15.119])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA470B0
+        for <git@vger.kernel.org>; Mon,  2 Jan 2023 08:44:59 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=I7iIxVGYFiGThInKEce0bquOiiHeQpgLyv+gh80EjeOXtZWDsyhpMGS966D0Qh/c6IueYTr3WYjzPkgyY8FVb5VwSayKXbboYphgHa38sQHSTY/QHccEdOJLJsm2g/smldF0AOQT2jRNWHXxdEtPOR9/fBVmgFCsBYxRYocGgmGbtIhq+qsj+DFKnsfsY9Ye0xCcKQvE31tikkIUMerOqBFjEvv8RFbSoMGFomZ/gYAuz03b75o0F9q65z929JnDa/Uug5cSrKTNHjgqc8NrzKYfxoN2pRe9xwql8sSH5/4BxmvsdGlH38s3UtLH3udIPPYzZj8JDNBdSJE9bUsOfw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=zWEhAn93BFm3gZYdtxqvcqinS2yK69JAScWmzsIy5fI=;
+ b=RVfKQbxbIojSqPIsvQ3TMoFTVdCo+SBGBNDui5qfIJ05qk16FfZG3QoYAB2Uhoo820qo9CPMaGtVFf0k/oH4fueRaFlTH8aH7DRd6HTh7EMKGylREMobQYxsbvRwj+rsXkStrso0q4QSrchVPELt9GyraenOrI3Hjdb4q5/RE1EH48m3p78bVy8LGfzUy/Ms/7z2N2GbD06Csub9JsASm/cpmPgp5pk1NxPSezXVxfwRAVxvthaUwMcDqAbpl+PN5kWpaRPO3+bAygz4egkIFuWnzbStNTKrST5mKy4InnHL28/hrMTDxUqYrV6WZRzMJ+Al7Wo6ZWJ2jdlPv7ReVw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vitesco.com; dmarc=pass action=none header.from=vitesco.com;
+ dkim=pass header.d=vitesco.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vitesco.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zWEhAn93BFm3gZYdtxqvcqinS2yK69JAScWmzsIy5fI=;
+ b=CPZi09Fs8f2VbY2wn/aQFTNwrlbQ1Jp5xrTLl4wd4+nEqK3FbphMCRS97iDv6vJLcRFg0/Af5kCdFHKmSPiEdRbt/04omkrylC+tCrZoPRxN9TpXuF1Bubq1QJIAJu2auql/5NP/wShj6AbFkwuuhJ8rP8ZOCU2kWtdux6qWfR0=
+Received: from DB5PR02MB10069.eurprd02.prod.outlook.com (2603:10a6:10:3c1::22)
+ by AS8PR02MB10106.eurprd02.prod.outlook.com (2603:10a6:20b:631::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5944.19; Mon, 2 Jan
+ 2023 16:44:57 +0000
+Received: from DB5PR02MB10069.eurprd02.prod.outlook.com
+ ([fe80::ab81:958a:a811:7de]) by DB5PR02MB10069.eurprd02.prod.outlook.com
+ ([fe80::ab81:958a:a811:7de%5]) with mapi id 15.20.5944.019; Mon, 2 Jan 2023
+ 16:44:57 +0000
+From:   "Zitzmann, Christian" <Christian.Zitzmann@vitesco.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Parallelism for submodule update 
+Thread-Topic: Parallelism for submodule update 
+Thread-Index: AdkeucE8zVh8kEwpTW+MtNPu9m+gTQ==
+Date:   Mon, 2 Jan 2023 16:44:57 +0000
+Message-ID: <DB5PR02MB100691E6422F5E94228F0E0EC8AF79@DB5PR02MB10069.eurprd02.prod.outlook.com>
+Accept-Language: de-DE, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_3f3ac890-09a1-47d3-8d04-15427d7fec91_ActionId=eba52539-610f-4ddc-959b-32cfae5f4ba8;MSIP_Label_3f3ac890-09a1-47d3-8d04-15427d7fec91_ContentBits=0;MSIP_Label_3f3ac890-09a1-47d3-8d04-15427d7fec91_Enabled=true;MSIP_Label_3f3ac890-09a1-47d3-8d04-15427d7fec91_Method=Standard;MSIP_Label_3f3ac890-09a1-47d3-8d04-15427d7fec91_Name=Internal;MSIP_Label_3f3ac890-09a1-47d3-8d04-15427d7fec91_SetDate=2023-01-02T14:50:18Z;MSIP_Label_3f3ac890-09a1-47d3-8d04-15427d7fec91_SiteId=39b77101-99b7-41c9-8d6a-7794b9d48476;
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=vitesco.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DB5PR02MB10069:EE_|AS8PR02MB10106:EE_
+x-ms-office365-filtering-correlation-id: b4041e54-e004-4a93-32db-08daece0aeb8
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: gZFI/wYqAbqGvjFc1DJhaTgtGO/xD+vwLOpI/KN06rugvruC4OL9swL99mYMr0keyjRGsjnnXnaJ25+bS+vIgm/POO20HP0SSOG+KNtJJKI3FsPRCSYVww53ZOX6A79MqYFTgJMViY/ESKYb9iqGD8nJLTPebumYRENMuASWueRD4lRpc7kS0YHD1S+C4js9QkSvn2d/FD848eKotMrGKFRMZrHn5CV6suy9alsESFqbBg6EaYhayXfW1mevO0rFzBS4dwWdvjzinScs4fjhjPwJ40VYytdhJYwhrfNHiGhvHcgWkrJ6oAmIkFz/WkrX6lCy0QrNDFUEl3hcaA+3HJTHJsLBP1ptJljHVO8nfqMwaWR+KQnG4rdxnGM4ELnNnc4uUKaQ9dIPUWH56AvFir1gAaz8KqO1zZkSECbtPHqlY4n1FGLvgl8aF28CR7y+wR6gFexpP3FYdKRRMCy8lBA9ySy+dpQqyxsAkwMN/U6cEBR4+4UTW7mAWSYrqKjOx+3LWsbjBXqudoE2mbSiOGedTx3uS/myogqjRVyCp0DTIkLIOyZkLX94vYeJPy9IHtN4Dec5vC9BOrthIQLn4iNSGeVj0iS6EW94pOclhPJ3/BZYH6a4IjvAKamEQvnTnP/zyLgQ0ufZR5dCg3jOPrspSIsMzF2FCiQ9q+odf/IUa+wUDkC5r/38lulCkCdWfnuaOo+oWsLQWC9932v2t33Ak7VH4oVKO9uPWEpy0b8=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB5PR02MB10069.eurprd02.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(396003)(136003)(376002)(346002)(39860400002)(366004)(451199015)(6506007)(71200400001)(478600001)(86362001)(55016003)(3480700007)(4743002)(82960400001)(122000001)(38070700005)(38100700002)(9686003)(186003)(26005)(33656002)(83380400001)(7696005)(5660300002)(76116006)(52536014)(64756008)(66446008)(8676002)(66476007)(66556008)(8936002)(66946007)(41300700001)(316002)(2906002)(6916009)(22166006);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Tjc5WExXMkNBTmx6cGlTQXVGMU5ZK1ZBaVNQZlRJRFdkWSs4WmhkK2tua0lY?=
+ =?utf-8?B?OStjR2o2bkdTM09WYjdUSjlXNis0elFaWHhMVnFSWldyaE1YeWQzRHNiV0JS?=
+ =?utf-8?B?WitMdFZYZWROSXBwbzJrSDZma3JvSDFWRTR0cFpKSlF1OGJTSXJSMU5NZGFn?=
+ =?utf-8?B?UFozWlI5a3ZsVEVORlNTNDRNQllaazREV2JEQ0hBMFpIRGNpQUgwSERNRy9K?=
+ =?utf-8?B?RGcrM1BPNUJpVGtTa1BWWWRGUDJjMUh4RGF1TjFIMGZwdi9VN1JCQURMZlZk?=
+ =?utf-8?B?Vjk3T1VoMUV6OWZaL0hKbjc2VTNwRlpqa3ptTk9KNU5JQ0lhUGVUcEQvd3ZF?=
+ =?utf-8?B?N3NoTUd2dmhpdXRaeUw0ZjduQXNQZnBQT0tiMVh6NW5kQ1dZTlBQZWtxMmRr?=
+ =?utf-8?B?WDNYYmZNU2d1RFV4T1FDNnkzRW5jam0weHpCd3orSHZwSS8wcU51Q1JrRXV4?=
+ =?utf-8?B?cXUwUWhOZW5JK0NqVCtYanEzejdMckhuK2Ewak9pVmZFdEg4alZtSktpY2FN?=
+ =?utf-8?B?bzVRREh2KzlTdU5LOU1VUUtQMk8vV0RGNFZEcHVpVGZkYXhaa2JTOEtGSDdX?=
+ =?utf-8?B?UTdMQUxlMzd6aUdMNUEyRytieFlaL0NpcTYzb2FqLzB1NkErWmR0Y09NSzhh?=
+ =?utf-8?B?eUNFdFIxUGtaYTZyUlRRU0tzUk5JWEtGbC9McmZBcUcyZlU1eUZmbFNPREVS?=
+ =?utf-8?B?V1hwRHBlWEd5ZVFHbUxPYU54RW1idWRIdlFORHZiZWRreXEyTmJ4SDJSRXEy?=
+ =?utf-8?B?K1FDY2IrSVluNGhvZFR0UDRNaGRuVEdheStCUWJIYnQwalRpRmw0d2ozYkd5?=
+ =?utf-8?B?eWlKa2ErMkFSZElrdTNoYkFtUXIrU3R1MXhpOVFTWWFSVzkxK1U1NzVjcURO?=
+ =?utf-8?B?M2REdVE3Z3NBRUV2WWw4QzFCSUp5aTNkOSsxQjAyR0tnSlNoMVpJMTNXcDRi?=
+ =?utf-8?B?RXY5eG9qczlUTU5Dc2JBMzI2VG1HS1pMWkVVdFZxU05mZ0M3WERlSm55TUFO?=
+ =?utf-8?B?a1AvWCthVFNrbHhzRFZmUTNTUzY3RmFaREdHKy9HMXJaWXgxd09xOVl3OU9O?=
+ =?utf-8?B?M0dqUTduUnRLUDlhSXgxMVdlSWhwN3prRnNmOXNoWE9pYUZ3ZnoyVXNzd2tI?=
+ =?utf-8?B?Z3VVV2FNd0FvYkE5aWFUM2hkZmtqbE9vamlYUllIRU9HZzc4ZCtlQW9nTXVX?=
+ =?utf-8?B?UEJzQjU0ODF4NEZHdmFJS3g1cFpBMW9pck4zZW9iVGlnMldGUnE5UlVLeWlG?=
+ =?utf-8?B?QlcxTXp3V1JHczhkRHpBam02ZnQ5Y3Q5d25XVlQyTXZiSjJ0YUVaRVhzOVJB?=
+ =?utf-8?B?ak1Od3JxUzlqTm05WklkbThjeWJHSGFqKzJGZEtnSEpnc0c0c0ZZM3Fjb2Z2?=
+ =?utf-8?B?ZXZtOXlxdjgvK2tucnd2elNCajZMTHk4MlkwMFBCbkdwNFBQL0VhK21kejBG?=
+ =?utf-8?B?Mnc2eHJ6bXExVUZMTlNiTE12SHljNHhOakpId3VubEU5MHhtZGxjMXVFcjRv?=
+ =?utf-8?B?eVFWRHcvODdaZFc3dDZ1RkNoVTBxQktHbFhuYlI2bkhYc2lPcHVwQVg1NlBx?=
+ =?utf-8?B?MzA0VHJCNkxHWVRqY3RPajV5WGp2RHRxUTIyYWQwQjcyaE1rWjBsajBzbm9F?=
+ =?utf-8?B?TnYyaXFDN05yeDgwdHNRdXloYUxCOXFkNFZQRlNqVWxtQ1dSZklhMVo1blIr?=
+ =?utf-8?B?RnJ1Z0tQUjYwVzhqbHlWcWFGVHh2cVBSK203ZGdGLzlFN0JvZWdtbCt5bjdw?=
+ =?utf-8?B?Q1VoS0wzd1dPMDQyeXZPUmlqNzllN0loMkFPUkdtSGpFaDF1NUhhYlMwTDln?=
+ =?utf-8?B?Q0hwdFg5RDRIekdWMSs0eGVEeXJFV0UvNUlEWEkvZ3BaL0QvT1U3Q3dXdk5M?=
+ =?utf-8?B?aWFkN1lWS003NzZYSE00QXdhamt1NytDd24xcktycUxSNGJ4R28zbjQ5Z0Ew?=
+ =?utf-8?B?ZHpkL00ya285N3JHY2hSZGFXOFhDUi84ODl3bFhaeDJMakVvN1loRDJHNGdk?=
+ =?utf-8?B?dHRnSTlndm9EYUNlb09BZzE5U0Raa0dUK2NxTWcwNDJ4bXh0Z0tZUUoralVI?=
+ =?utf-8?B?a01ZQVRSU1N6RVNEVEQxRkh2R0xuK0NLMWV0ZGpYREFFNGlsZDFHNHBCV3F3?=
+ =?utf-8?Q?eghidAdFGgK+4Od0fQ+eiArFR?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: vitesco.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DB5PR02MB10069.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b4041e54-e004-4a93-32db-08daece0aeb8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Jan 2023 16:44:57.3858
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 39b77101-99b7-41c9-8d6a-7794b9d48476
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 3ahQSEuR+RlVPTXTsNsIkNeNwsMw8SCTLmGUgW5qxO5skjeMX9Fyh2NeSVXE60iVVeEZycfytgBxuMa0AXBZvQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR02MB10106
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The contents of the .gitattributes files may evolve over time, but "git
-check-attr" always checks attributes against them in the working tree
-and/or in the index. It may be beneficial to optionally allow the users
-to check attributes taken from a commit other than HEAD against paths.
-
-Add a new flag `--source` which will allow users to check the
-attributes against a commit (actually any tree-ish would do). When the
-user uses this flag, we go through the stack of .gitattributes files but
-instead of checking the current working tree and/or in the index, we
-check the blobs from the provided tree-ish object. This allows the
-command to also be used in bare repositories.
-
-Since we use a tree-ish object, the user can pass "--source
-HEAD:subdirectory" and all the attributes will be looked up as if
-subdirectory was the root directory of the repository.
-
-We cannot simply use the `<rev>:<path>` syntax without the `--source`
-flag, similar to how it is used in `git show` because any non-flag
-parameter before `--` is treated as an attribute and any parameter after
-`--` is treated as a pathname.
-
-The change involves creating a new function `read_attr_from_blob`, which
-given the path reads the blob for the path against the provided source and
-parses the attributes line by line. This function is plugged into
-`read_attr()` function wherein we go through the stack of attributes
-files.
-
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-Signed-off-by: Toon Claes <toon@iotcl.com>
-Co-authored-by: toon@iotcl.com
----
- Documentation/git-check-attr.txt | 10 +++-
- archive.c                        |  2 +-
- attr.c                           | 97 +++++++++++++++++++++++---------
- attr.h                           |  5 +-
- builtin/check-attr.c             | 35 +++++++-----
- builtin/pack-objects.c           |  2 +-
- convert.c                        |  2 +-
- ll-merge.c                       |  4 +-
- pathspec.c                       |  2 +-
- t/t0003-attributes.sh            | 42 +++++++++++++-
- userdiff.c                       |  2 +-
- ws.c                             |  2 +-
- 12 files changed, 152 insertions(+), 53 deletions(-)
-
-diff --git a/Documentation/git-check-attr.txt b/Documentation/git-check-attr.txt
-index 84f41a8e82..fb15c44598 100644
---- a/Documentation/git-check-attr.txt
-+++ b/Documentation/git-check-attr.txt
-@@ -9,8 +9,8 @@ git-check-attr - Display gitattributes information
- SYNOPSIS
- --------
- [verse]
--'git check-attr' [-a | --all | <attr>...] [--] <pathname>...
--'git check-attr' --stdin [-z] [-a | --all | <attr>...]
-+'git check-attr' [--source <tree>] [-a | --all | <attr>...] [--] <pathname>...
-+'git check-attr' --stdin [-z] [--source <tree>] [-a | --all | <attr>...]
- 
- DESCRIPTION
- -----------
-@@ -36,6 +36,12 @@ OPTIONS
- 	If `--stdin` is also given, input paths are separated
- 	with a NUL character instead of a linefeed character.
- 
-+--source=<tree>::
-+	Check attributes against the specified tree-ish. Paths provided as part
-+	of the revision will be treated as the root directory. It is common to
-+	specify the source tree by naming a commit, branch or tag associated
-+	with it.
-+
- \--::
- 	Interpret all preceding arguments as attributes and all following
- 	arguments as path names.
-diff --git a/archive.c b/archive.c
-index 941495f5d7..81ff76fce9 100644
---- a/archive.c
-+++ b/archive.c
-@@ -120,7 +120,7 @@ static const struct attr_check *get_archive_attrs(struct index_state *istate,
- 	static struct attr_check *check;
- 	if (!check)
- 		check = attr_check_initl("export-ignore", "export-subst", NULL);
--	git_check_attr(istate, path, check);
-+	git_check_attr(istate, NULL, path, check);
- 	return check;
- }
- 
-diff --git a/attr.c b/attr.c
-index 42ad6de8c7..a63f267187 100644
---- a/attr.c
-+++ b/attr.c
-@@ -13,6 +13,8 @@
- #include "dir.h"
- #include "utf8.h"
- #include "quote.h"
-+#include "revision.h"
-+#include "object-store.h"
- #include "thread-utils.h"
- 
- const char git_attr__true[] = "(builtin)true";
-@@ -729,14 +731,62 @@ static struct attr_stack *read_attr_from_file(const char *path, unsigned flags)
- 	return res;
- }
- 
--static struct attr_stack *read_attr_from_index(struct index_state *istate,
--					       const char *path,
--					       unsigned flags)
-+static struct attr_stack *read_attr_from_buf(char *buf, const char *path,
-+					     unsigned flags)
- {
- 	struct attr_stack *res;
--	char *buf, *sp;
-+	char *sp;
- 	int lineno = 0;
- 
-+	if (!buf)
-+		return NULL;
-+
-+	CALLOC_ARRAY(res, 1);
-+	for (sp = buf; *sp;) {
-+		char *ep;
-+		int more;
-+
-+		ep = strchrnul(sp, '\n');
-+		more = (*ep == '\n');
-+		*ep = '\0';
-+		handle_attr_line(res, sp, path, ++lineno, flags);
-+		sp = ep + more;
-+	}
-+	free(buf);
-+
-+	return res;
-+}
-+
-+static struct attr_stack *read_attr_from_blob(struct index_state *istate,
-+					      const struct object_id *tree_oid,
-+					      const char *path, unsigned flags)
-+{
-+	struct object_id oid;
-+	unsigned long sz;
-+	enum object_type type;
-+	void *buf;
-+	unsigned short mode;
-+
-+	if (!tree_oid)
-+		return NULL;
-+
-+	if (get_tree_entry(istate->repo, tree_oid, path, &oid, &mode))
-+		return NULL;
-+
-+	buf = read_object_file(&oid, &type, &sz);
-+	if (!buf || type != OBJ_BLOB) {
-+		free(buf);
-+		return NULL;
-+	}
-+
-+	return read_attr_from_buf(buf, path, flags);
-+}
-+
-+static struct attr_stack *read_attr_from_index(struct index_state *istate,
-+					       const char *path, unsigned flags)
-+{
-+	char *buf;
-+
- 	if (!istate)
- 		return NULL;
- 
-@@ -758,28 +808,19 @@ static struct attr_stack *read_attr_from_index(struct index_state *istate,
- 	if (!buf)
- 		return NULL;
- 
--	CALLOC_ARRAY(res, 1);
--	for (sp = buf; *sp; ) {
--		char *ep;
--		int more;
--
--		ep = strchrnul(sp, '\n');
--		more = (*ep == '\n');
--		*ep = '\0';
--		handle_attr_line(res, sp, path, ++lineno, flags);
--		sp = ep + more;
--	}
--	free(buf);
--	return res;
-+	return read_attr_from_buf(buf, path, flags);
- }
- 
- static struct attr_stack *read_attr(struct index_state *istate,
-+				    const struct object_id *tree_oid,
- 				    const char *path, unsigned flags)
- {
- 	struct attr_stack *res = NULL;
- 
- 	if (direction == GIT_ATTR_INDEX) {
- 		res = read_attr_from_index(istate, path, flags);
-+	} else if (tree_oid) {
-+		res = read_attr_from_blob(istate, tree_oid, path, flags);
- 	} else if (!is_bare_repository()) {
- 		if (direction == GIT_ATTR_CHECKOUT) {
- 			res = read_attr_from_index(istate, path, flags);
-@@ -839,6 +880,7 @@ static void push_stack(struct attr_stack **attr_stack_p,
- }
- 
- static void bootstrap_attr_stack(struct index_state *istate,
-+				 const struct object_id *tree_oid,
- 				 struct attr_stack **stack)
- {
- 	struct attr_stack *e;
-@@ -864,7 +906,7 @@ static void bootstrap_attr_stack(struct index_state *istate,
- 	}
- 
- 	/* root directory */
--	e = read_attr(istate, GITATTRIBUTES_FILE, flags | READ_ATTR_NOFOLLOW);
-+	e = read_attr(istate, tree_oid, GITATTRIBUTES_FILE, flags | READ_ATTR_NOFOLLOW);
- 	push_stack(stack, e, xstrdup(""), 0);
- 
- 	/* info frame */
-@@ -878,6 +920,7 @@ static void bootstrap_attr_stack(struct index_state *istate,
- }
- 
- static void prepare_attr_stack(struct index_state *istate,
-+			       const struct object_id *tree_oid,
- 			       const char *path, int dirlen,
- 			       struct attr_stack **stack)
- {
-@@ -899,7 +942,7 @@ static void prepare_attr_stack(struct index_state *istate,
- 	 * .gitattributes in deeper directories to shallower ones,
- 	 * and finally use the built-in set as the default.
- 	 */
--	bootstrap_attr_stack(istate, stack);
-+	bootstrap_attr_stack(istate, tree_oid, stack);
- 
- 	/*
- 	 * Pop the "info" one that is always at the top of the stack.
-@@ -954,7 +997,7 @@ static void prepare_attr_stack(struct index_state *istate,
- 		strbuf_add(&pathbuf, path + pathbuf.len, (len - pathbuf.len));
- 		strbuf_addf(&pathbuf, "/%s", GITATTRIBUTES_FILE);
- 
--		next = read_attr(istate, pathbuf.buf, READ_ATTR_NOFOLLOW);
-+		next = read_attr(istate, tree_oid, pathbuf.buf, READ_ATTR_NOFOLLOW);
- 
- 		/* reset the pathbuf to not include "/.gitattributes" */
- 		strbuf_setlen(&pathbuf, len);
-@@ -1074,8 +1117,8 @@ static void determine_macros(struct all_attrs_item *all_attrs,
-  * Otherwise all attributes are collected.
-  */
- static void collect_some_attrs(struct index_state *istate,
--			       const char *path,
--			       struct attr_check *check)
-+			       const struct object_id *tree_oid,
-+			       const char *path, struct attr_check *check)
- {
- 	int pathlen, rem, dirlen;
- 	const char *cp, *last_slash = NULL;
-@@ -1094,7 +1137,7 @@ static void collect_some_attrs(struct index_state *istate,
- 		dirlen = 0;
- 	}
- 
--	prepare_attr_stack(istate, path, dirlen, &check->stack);
-+	prepare_attr_stack(istate, tree_oid, path, dirlen, &check->stack);
- 	all_attrs_init(&g_attr_hashmap, check);
- 	determine_macros(check->all_attrs, check->stack);
- 
-@@ -1103,12 +1146,12 @@ static void collect_some_attrs(struct index_state *istate,
- }
- 
- void git_check_attr(struct index_state *istate,
--		    const char *path,
-+		    const struct object_id *tree_oid, const char *path,
- 		    struct attr_check *check)
- {
- 	int i;
- 
--	collect_some_attrs(istate, path, check);
-+	collect_some_attrs(istate, tree_oid, path, check);
- 
- 	for (i = 0; i < check->nr; i++) {
- 		size_t n = check->items[i].attr->attr_nr;
-@@ -1119,13 +1162,13 @@ void git_check_attr(struct index_state *istate,
- 	}
- }
- 
--void git_all_attrs(struct index_state *istate,
-+void git_all_attrs(struct index_state *istate, const struct object_id *tree_oid,
- 		   const char *path, struct attr_check *check)
- {
- 	int i;
- 
- 	attr_check_reset(check);
--	collect_some_attrs(istate, path, check);
-+	collect_some_attrs(istate, tree_oid, path, check);
- 
- 	for (i = 0; i < check->all_attrs_nr; i++) {
- 		const char *name = check->all_attrs[i].attr->name;
-diff --git a/attr.h b/attr.h
-index 3fb40cced0..84a3279215 100644
---- a/attr.h
-+++ b/attr.h
-@@ -190,13 +190,14 @@ void attr_check_free(struct attr_check *check);
- const char *git_attr_name(const struct git_attr *);
- 
- void git_check_attr(struct index_state *istate,
--		    const char *path, struct attr_check *check);
-+		    const struct object_id *tree_oid, const char *path,
-+		    struct attr_check *check);
- 
- /*
-  * Retrieve all attributes that apply to the specified path.
-  * check holds the attributes and their values.
-  */
--void git_all_attrs(struct index_state *istate,
-+void git_all_attrs(struct index_state *istate, const struct object_id *tree_oid,
- 		   const char *path, struct attr_check *check);
- 
- enum git_attr_direction {
-diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-index 0fef10eb6b..4ffef29d9c 100644
---- a/builtin/check-attr.c
-+++ b/builtin/check-attr.c
-@@ -9,9 +9,10 @@
- static int all_attrs;
- static int cached_attrs;
- static int stdin_paths;
-+static char *source;
- static const char * const check_attr_usage[] = {
--N_("git check-attr [-a | --all | <attr>...] [--] <pathname>..."),
--N_("git check-attr --stdin [-z] [-a | --all | <attr>...]"),
-+N_("git check-attr [--source <tree>] [-a | --all | <attr>...] [--] <pathname>..."),
-+N_("git check-attr --stdin [-z] [--source <tree>] [-a | --all | <attr>...]"),
- NULL
- };
- 
-@@ -23,6 +24,7 @@ static const struct option check_attr_options[] = {
- 	OPT_BOOL(0 , "stdin", &stdin_paths, N_("read file names from stdin")),
- 	OPT_BOOL('z', NULL, &nul_term_line,
- 		 N_("terminate input and output records by a NUL character")),
-+	OPT_STRING(0, "source", &source, N_("<tree-ish>"), N_("which tree-ish to check attributes at")),
- 	OPT_END()
- };
- 
-@@ -55,27 +57,26 @@ static void output_attr(struct attr_check *check, const char *file)
- 	}
- }
- 
--static void check_attr(const char *prefix,
--		       struct attr_check *check,
--		       int collect_all,
-+static void check_attr(const char *prefix, struct attr_check *check,
-+		       const struct object_id *tree_oid, int collect_all,
- 		       const char *file)
-+
- {
- 	char *full_path =
- 		prefix_path(prefix, prefix ? strlen(prefix) : 0, file);
- 
- 	if (collect_all) {
--		git_all_attrs(&the_index, full_path, check);
-+		git_all_attrs(&the_index, tree_oid, full_path, check);
- 	} else {
--		git_check_attr(&the_index, full_path, check);
-+		git_check_attr(&the_index, tree_oid, full_path, check);
- 	}
- 	output_attr(check, file);
- 
- 	free(full_path);
- }
- 
--static void check_attr_stdin_paths(const char *prefix,
--				   struct attr_check *check,
--				   int collect_all)
-+static void check_attr_stdin_paths(const char *prefix, struct attr_check *check,
-+				   const struct object_id *tree_oid, int collect_all)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct strbuf unquoted = STRBUF_INIT;
-@@ -89,7 +90,7 @@ static void check_attr_stdin_paths(const char *prefix,
- 				die("line is badly quoted");
- 			strbuf_swap(&buf, &unquoted);
- 		}
--		check_attr(prefix, check, collect_all, buf.buf);
-+		check_attr(prefix, check, tree_oid, collect_all, buf.buf);
- 		maybe_flush_or_die(stdout, "attribute to stdout");
- 	}
- 	strbuf_release(&buf);
-@@ -105,6 +106,8 @@ static NORETURN void error_with_usage(const char *msg)
- int cmd_check_attr(int argc, const char **argv, const char *prefix)
- {
- 	struct attr_check *check;
-+	struct object_id *tree_oid = NULL;
-+	struct object_id initialized_oid;
- 	int cnt, i, doubledash, filei;
- 
- 	if (!is_bare_repository())
-@@ -176,11 +179,17 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
-+	if (source) {
-+		if (repo_get_oid_tree(the_repository, source, &initialized_oid))
-+			die("%s: not a valid revision", source);
-+		tree_oid = &initialized_oid;
-+	}
-+
- 	if (stdin_paths)
--		check_attr_stdin_paths(prefix, check, all_attrs);
-+		check_attr_stdin_paths(prefix, check, tree_oid, all_attrs);
- 	else {
- 		for (i = filei; i < argc; i++)
--			check_attr(prefix, check, all_attrs, argv[i]);
-+			check_attr(prefix, check, tree_oid, all_attrs, argv[i]);
- 		maybe_flush_or_die(stdout, "attribute to stdout");
- 	}
- 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 573d0b20b7..89535cfa6a 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1318,7 +1318,7 @@ static int no_try_delta(const char *path)
- 
- 	if (!check)
- 		check = attr_check_initl("delta", NULL);
--	git_check_attr(the_repository->index, path, check);
-+	git_check_attr(the_repository->index, NULL, path, check);
- 	if (ATTR_FALSE(check->items[0].value))
- 		return 1;
- 	return 0;
-diff --git a/convert.c b/convert.c
-index 9b67649032..a54d1690c0 100644
---- a/convert.c
-+++ b/convert.c
-@@ -1308,7 +1308,7 @@ void convert_attrs(struct index_state *istate,
- 		git_config(read_convert_config, NULL);
- 	}
- 
--	git_check_attr(istate, path, check);
-+	git_check_attr(istate, NULL, path, check);
- 	ccheck = check->items;
- 	ca->crlf_action = git_path_check_crlf(ccheck + 4);
- 	if (ca->crlf_action == CRLF_UNDEFINED)
-diff --git a/ll-merge.c b/ll-merge.c
-index 22a603e8af..130d26501c 100644
---- a/ll-merge.c
-+++ b/ll-merge.c
-@@ -391,7 +391,7 @@ enum ll_merge_result ll_merge(mmbuffer_t *result_buf,
- 		normalize_file(theirs, path, istate);
- 	}
- 
--	git_check_attr(istate, path, check);
-+	git_check_attr(istate, NULL, path, check);
- 	ll_driver_name = check->items[0].value;
- 	if (check->items[1].value) {
- 		marker_size = atoi(check->items[1].value);
-@@ -419,7 +419,7 @@ int ll_merge_marker_size(struct index_state *istate, const char *path)
- 
- 	if (!check)
- 		check = attr_check_initl("conflict-marker-size", NULL);
--	git_check_attr(istate, path, check);
-+	git_check_attr(istate, NULL, path, check);
- 	if (check->items[0].value) {
- 		marker_size = atoi(check->items[0].value);
- 		if (marker_size <= 0)
-diff --git a/pathspec.c b/pathspec.c
-index 46e77a85fe..48dec2c709 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -732,7 +732,7 @@ int match_pathspec_attrs(struct index_state *istate,
- 	if (name[namelen])
- 		name = to_free = xmemdupz(name, namelen);
- 
--	git_check_attr(istate, name, item->attr_check);
-+	git_check_attr(istate, NULL, name, item->attr_check);
- 
- 	free(to_free);
- 
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index b3aabb8aa3..78e9f47dbf 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -25,7 +25,15 @@ attr_check_quote () {
- 	git check-attr test -- "$path" >actual &&
- 	echo "\"$quoted_path\": test: $expect" >expect &&
- 	test_cmp expect actual
-+}
-+
-+attr_check_source () {
-+	path="$1" expect="$2" source="$3" git_opts="$4" &&
- 
-+	git $git_opts check-attr --source $source test -- "$path" >actual 2>err &&
-+	echo "$path: test: $expect" >expect &&
-+	test_cmp expect actual
-+	test_must_be_empty err
- }
- 
- test_expect_success 'open-quoted pathname' '
-@@ -33,7 +41,6 @@ test_expect_success 'open-quoted pathname' '
- 	attr_check a unspecified
- '
- 
--
- test_expect_success 'setup' '
- 	mkdir -p a/b/d a/c b &&
- 	(
-@@ -80,12 +87,24 @@ test_expect_success 'setup' '
- 	EOF
- '
- 
-+test_expect_success 'setup branches' '
-+	mkdir -p foo/bar &&
-+	test_commit --printf "add .gitattributes" foo/bar/.gitattribute \
-+		"f test=f\na/i test=n\n" tag-1 &&
-+
-+	mkdir -p foo/bar &&
-+	test_commit --printf "add .gitattributes" foo/bar/.gitattribute \
-+		"g test=g\na/i test=m\n" tag-2
-+'
-+
- test_expect_success 'command line checks' '
- 	test_must_fail git check-attr &&
- 	test_must_fail git check-attr -- &&
- 	test_must_fail git check-attr test &&
- 	test_must_fail git check-attr test -- &&
- 	test_must_fail git check-attr -- f &&
-+	test_must_fail git check-attr --source &&
-+	test_must_fail git check-attr --source not-a-valid-ref &&
- 	echo "f" | test_must_fail git check-attr --stdin &&
- 	echo "f" | test_must_fail git check-attr --stdin -- f &&
- 	echo "f" | test_must_fail git check-attr --stdin test -- f &&
-@@ -287,6 +306,15 @@ test_expect_success 'using --git-dir and --work-tree' '
- 	)
- '
- 
-+test_expect_success 'using --source' '
-+	attr_check_source foo/bar/f f tag-1 &&
-+	attr_check_source foo/bar/a/i n tag-1 &&
-+	attr_check_source foo/bar/f unspecified tag-2 &&
-+	attr_check_source foo/bar/a/i m tag-2 &&
-+	attr_check_source foo/bar/g g tag-2 &&
-+	attr_check_source foo/bar/g unspecified tag-1
-+'
-+
- test_expect_success 'setup bare' '
- 	git clone --template= --bare . bare.git
- '
-@@ -306,6 +334,18 @@ test_expect_success 'bare repository: check that .gitattribute is ignored' '
- 	)
- '
- 
-+test_expect_success 'bare repository: with --source' '
-+	(
-+		cd bare.git &&
-+		attr_check_source foo/bar/f f tag-1 &&
-+		attr_check_source foo/bar/a/i n tag-1 &&
-+		attr_check_source foo/bar/f unspecified tag-2 &&
-+		attr_check_source foo/bar/a/i m tag-2 &&
-+		attr_check_source foo/bar/g g tag-2 &&
-+		attr_check_source foo/bar/g unspecified tag-1
-+	)
-+'
-+
- test_expect_success 'bare repository: check that --cached honors index' '
- 	(
- 		cd bare.git &&
-diff --git a/userdiff.c b/userdiff.c
-index 151d9a5278..b66f090a0b 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -412,7 +412,7 @@ struct userdiff_driver *userdiff_find_by_path(struct index_state *istate,
- 		check = attr_check_initl("diff", NULL);
- 	if (!path)
- 		return NULL;
--	git_check_attr(istate, path, check);
-+	git_check_attr(istate, NULL, path, check);
- 
- 	if (ATTR_TRUE(check->items[0].value))
- 		return &driver_true;
-diff --git a/ws.c b/ws.c
-index 6e69877f25..eadbbe5667 100644
---- a/ws.c
-+++ b/ws.c
-@@ -78,7 +78,7 @@ unsigned whitespace_rule(struct index_state *istate, const char *pathname)
- 	if (!attr_whitespace_rule)
- 		attr_whitespace_rule = attr_check_initl("whitespace", NULL);
- 
--	git_check_attr(istate, pathname, attr_whitespace_rule);
-+	git_check_attr(istate, NULL, pathname, attr_whitespace_rule);
- 	value = attr_whitespace_rule->items[0].value;
- 	if (ATTR_TRUE(value)) {
- 		/* true (whitespace) */
--- 
-2.39.0
-
+SGVsbG8sDQp3ZSBhcmUgdXNpbmcgZ2l0IHNpbmNlIG1hbnkgeWVhcnMgd2l0aCBhbHNvIGhlYXZp
+bHkgdXNpbmcgc3VibW9kdWxlcy4gDQoNCldoZW4gdXBkYXRpbmcgdGhlIHN1Ym1vZHVsZXMsIG9u
+bHkgdGhlIGZldGNoaW5nIHBhcnQgaXMgZG9uZSBpbiBwYXJhbGxlbCAod2l0aCBjb25maWcgc3Vi
+bW9kdWxlLmZldGNoam9icyBvciAtLWpvYnMpIGJ1dCB0aGUgY2hlY2tvdXQgaXMgZG9uZSBzZXF1
+ZW50aWFsbHkNCg0KV2hhdCBJ4oCZdmUgcmVjb2duaXplZCB3aGVuIGNsb25pbmcgd2l0aA0KLSBz
+Y2FsYXIgY2xvbmUgLS1mdWxsLWNsb25lIC0tcmVjdXJzZS1zdWJtb2R1bGVzIDxVUkw+DQpvcg0K
+LSBnaXQgY2xvbmUgLS1maWx0ZXI9YmxvYjpub25lIC0tYWxzby1maWx0ZXItc3VibW9kdWxlcyAt
+LXJlY3Vyc2Utc3VibW9kdWxlcyA8VVJMPg0KDQpXZSBsb29zZSBwZXJmb3JtYW5jZSwgYXMgdGhl
+IGZldGNoIG9mIHRoZSBibG9icyBpcyBkb25lIGluIHRoZSBzZXF1ZW50aWFsIGNoZWNrb3V0IHBh
+cnQsIGluc3RlYWQgb2YgaW4gdGhlIHBhcmFsbGVsIHBhcnQuDQoNCkZ1cnRoZXJtb3JlLCB0aGUg
+dXRpbGl6YXRpb24gLSB3aXRob3V0IHBhcnRpYWwgY2xvbmUgLSBvZiBuZXR3b3JrIGFuZCBoYXJk
+ZGlzayBpcyBub3QgYWx3YXlzIGdvb2QsIGFzIGZpcnN0IHRoZSBuZXR3b3JrIGlzIHV0aWxpemVk
+IChmZXRjaCkgYW5kIHRoZW4gdGhlIGhhcmRkaXNrIChjaGVja291dCkNCg0KQXMgdGhlIGNoZWNr
+b3V0IHBhcnQgaXMgbG9jYWwgdG8gdGhlIHN1Ym1vZHVsZSAobm8gc2hhcmVkIHJlc291cmNlcyB0
+byBibG9jayksIGl0IHdvdWxkIGJlIGdyZWF0IGlmIHdlIGNvdWxkIG1vdmUgdGhlIGNoZWNrb3V0
+IGludG8gdGhlIHBhcmFsbGVsaXplZCBwYXJ0Lg0KRS5nLiBieSBkb2luZyBmZXRjaCBhbmQgY2hl
+Y2tvdXQgKHdpdGggYmxvYiBmZXRjaGluZykgaW4gb25lIHN0ZXAgd2l0aCBlLmcuIHJ1bl9wcm9j
+ZXNzZXNfcGFyYWxsZWxfdHIyDQoNCkkgZXhwZWN0IHRoYXQgdGhpcyBzaWduaWZpY2FudGx5IGlt
+cHJvdmVzIHRoZSBwZXJmb3JtYW5jZSwgZXNwZWNpYWxseSB3aGVuIHVzaW5nIHBhcnRpYWwgY2xv
+bmVzLg0KDQpEbyB5b3UgdGhpbmsgdGhpcyBpcyBwb3NzaWJsZT8gRG8gSSBtaXNzIGFueXRoaW5n
+IGluIG15IHRob3VnaHRzPw0KDQpCZXN0IHJlZ2FyZHMsDQoNCkNocmlzdGlhbiBaaXR6bWFubg0K
+DQoNCg==
