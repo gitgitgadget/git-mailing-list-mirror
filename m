@@ -2,109 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 650D1C3DA7D
-	for <git@archiver.kernel.org>; Tue,  3 Jan 2023 11:07:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 65DC6C46467
+	for <git@archiver.kernel.org>; Tue,  3 Jan 2023 13:25:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236816AbjACLHW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Jan 2023 06:07:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49034 "EHLO
+        id S237136AbjACNZU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Jan 2023 08:25:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33104 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237474AbjACLHH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jan 2023 06:07:07 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2911610A5
-        for <git@vger.kernel.org>; Tue,  3 Jan 2023 03:07:05 -0800 (PST)
-Received: (qmail 9362 invoked by uid 109); 3 Jan 2023 11:07:05 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 03 Jan 2023 11:07:05 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9947 invoked by uid 111); 3 Jan 2023 11:07:10 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 03 Jan 2023 06:07:10 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Tue, 3 Jan 2023 06:07:04 -0500
-From:   Jeff King <peff@peff.net>
-To:     Tim Hockin <thockin@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: git fetch --dry-run changes the local repo and transfers data
-Message-ID: <Y7QMWN86dDLXc4dZ@coredump.intra.peff.net>
-References: <CAO_RewZeUBVvqT+UgXL5V5EeTOt14zZ-5vJYA4YvNr-jNyupXg@mail.gmail.com>
- <xmqqcz85t3dr.fsf@gitster.g>
- <CAO_RewbVicTznpDeCDG0Uqng-MdQ_GKtp-Vgz8kmtaXoczQGOg@mail.gmail.com>
+        with ESMTP id S237420AbjACNZR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jan 2023 08:25:17 -0500
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14EB0FD3F
+        for <git@vger.kernel.org>; Tue,  3 Jan 2023 05:25:16 -0800 (PST)
+Received: from 88-110-102-84.dynamic.dsl.as9105.com ([88.110.102.84] helo=[192.168.1.57])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1pChI1-00052h-6k;
+        Tue, 03 Jan 2023 13:25:13 +0000
+Message-ID: <d84712ed-1504-4d54-a664-63713db570b6@iee.email>
+Date:   Tue, 3 Jan 2023 13:25:12 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAO_RewbVicTznpDeCDG0Uqng-MdQ_GKtp-Vgz8kmtaXoczQGOg@mail.gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: Request to remove Junio C Hamano as the Git Maintainer
+To:     _g e r r y _ _l o w r y _ 
+        <gerry.lowry@abilitybusinesscomputerservices.com>,
+        'Filip Lipien' <aaa@164.ooo>
+Cc:     git@vger.kernel.org, torvalds@linux-foundation.org
+References: <7hfRSnKTRnT4uJh5Pok8U8gfLm_NXzCS6w_7_Rc9OH3a9Lv8hpjySZqxDglBFC-fTOdZHi-ODCihiEHlQD9nIhUmld5jYvRx_JvB0z2IAL0=@164.ooo>
+ <064601d91f0e$b5521940$1ff64bc0$@abilitybusinesscomputerservices.com>
+Content-Language: en-GB
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <064601d91f0e$b5521940$1ff64bc0$@abilitybusinesscomputerservices.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 27, 2022 at 10:42:25AM -0800, Tim Hockin wrote:
+On 03/01/2023 00:59, _g e r r y _ _l o w r y _ wrote:
+> Git stands head and shoulders above other versioning software products;
+> the reason is that Linus designed a superior system.
 
-> Thanks.  What threw me is that I expected it to be "very fast" and
-> "very cheap" . If I commit a multi-gig file on the server, I see the
-> dry-run fetch takes several seconds (clearly indicating some work
-> proportional to the server repo size).  I don't want to transfer that
-> file on a dry-run, I hoped the server and client were both
-> dry-running, andb the server could simply say "here's metadata for
-> what I _would have_ returned if this was real".  Not possible?
+I don't think that ("superior") is quite true, in the same way that
+'world class' and 'best practice' don't have the meaning they hope to
+convey ;-)
 
-No, the server has no notion of a dry run.
+However, what Linus managed to do was to cut the Gordian Knot of the
+historical versioning systems that had their original designs created in
+the quill pen era, and are totally unsuited for the modern, high speed
+computation and perfect replication digital age. Finally, I have control
+over my versioning system (at least for software)!
 
-I think the best you could do with fetch is to ask for a smaller set of
-objects. For example:
+In some ways, Git is like the 'Coming of the Railways'. It has brought
+radical change, but at the same time, confusion, reorganisation and new
+ways of thinking and working.
 
-  git fetch --depth=1 --filter=tree:0 \
-    https://github.com/git/git \
-    2e71cbbddd64695d43383c25c7a054ac4ff86882
 
-will grab a single object. You can even "git show -s 2e71cbbd" on the
-result to see it (the "-s" is important to avoid it fetching the trees
-to do a diff!). Two things to be aware of:
+*Filip* has accidentally fallen into the attribution trap of blaming the
+maintainer, rather than having an analysis and reflection on how Git is
+being used in different user contexts. His user context may have
+alternate expectations to that of the Linux eco-system, but that doesn't
+excuse the lack of self reflection.
 
-  - this may have some lingering effects in your repository, as the
-    shallow and partial features store some metadata locally to make
-    sense of the situation. You're probably best off doing it in a
-    temporary repository.
-
-  - not all servers will support --filter; it has to be enabled in the
-    config.
-
-There is potentially a more direct option, though. A while back, commit
-a2ba162cda (object-info: support for retrieving object info, 2021-04-20)
-added an extension that lets you get the size of an object on the
-server. Unfortunately I don't think anybody ever wrote client-side
-support. So you'd have to rig up something yourself like:
-
-  # write git's packet format: 4-hex length followed by data
-  pkt() {
-    printf '%04x%s' "$((4+${#1}))" "$1"
-  }
-
-  # a sample input; you should be able to query multiple objects if you
-  # want by adding more "oid" lines
-  {
-    pkt "command=object-info"
-    printf "0001"
-    pkt "size"
-    pkt "oid 2e71cbbddd64695d43383c25c7a054ac4ff86882"
-    printf "0000"
-  } >input
-
-  # this makes a local request; it's important we're in v2 mode, since
-  # the extension only applies there. For http, I think you'd want
-  # something like:
-  #
-  #  curl -H 'Git-Protocol: version=2' https://example.com/repo.git/git-upload-pack
-  #
-  # but I didn't test it.
-  GIT_PROTOCOL=version=2 git-upload-pack /path/to/repo.git <input >output
-
-I've left parsing the output as an exercise for the reader. But you
-should be able to notice whether the object is present or not based on
-the result.
-
-Not all servers may support the extension. For example, I think GitHub's
-servers have disabled it.
-
--Peff
+--
+Philip
