@@ -2,156 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 57430C54EBC
-	for <git@archiver.kernel.org>; Tue,  3 Jan 2023 17:59:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D26B4C3DA7D
+	for <git@archiver.kernel.org>; Tue,  3 Jan 2023 18:13:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238414AbjACR7l (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Jan 2023 12:59:41 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53056 "EHLO
+        id S238734AbjACSNQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Jan 2023 13:13:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238612AbjACR7g (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jan 2023 12:59:36 -0500
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9EB212637
-        for <git@vger.kernel.org>; Tue,  3 Jan 2023 09:59:35 -0800 (PST)
-Received: by mail-wm1-x32a.google.com with SMTP id g10so9652848wmo.1
-        for <git@vger.kernel.org>; Tue, 03 Jan 2023 09:59:35 -0800 (PST)
+        with ESMTP id S238646AbjACSNM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jan 2023 13:13:12 -0500
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB95C11A2A
+        for <git@vger.kernel.org>; Tue,  3 Jan 2023 10:13:06 -0800 (PST)
+Received: by mail-wm1-x334.google.com with SMTP id z8-20020a05600c220800b003d33b0bda11so16884440wml.0
+        for <git@vger.kernel.org>; Tue, 03 Jan 2023 10:13:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=q1zM/G+l7xBBn3eniUdPvx+6S9sWlDwg6zmtcgLX3/Q=;
-        b=cvv/XC7lZciPZmbcUI4oWXPYmmVOIxoH6lQ/T56pp3CQPLCAe1lVHg/RNZ6p2s0eXu
-         EAdNwRJZhjTWkIDpdULeu/RpJQTIkpU5HjFNshIvG8IVK0f4XFWFauJ/jEVgQsi+yWt9
-         EHruG5i4V+5MVWY0et2u/gzAJCkFrSdXdK8S4y/T8Xozt08OCs/ZICgtAkVlpxDfB8DV
-         o9CiVN9bIV8bEm3MuMZAoaA81wt68bw8cECDhZUgUlK6HlAfXM55ShshhWXbQj+Q9hpm
-         B/IpI8GO7O8ESuPmCt6fIjvkVC0aIr1NlsqttkejSLMKVxqVlbePuKIkj15KQVlDT1hr
-         Nn5w==
+        d=enterprisedb.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=c9JlUiPqpoYcRpK6kjK1nNnuhl3X2myWuVAqTmouQOQ=;
+        b=Un6zqdfBwLIWUcQ8Jl8tNQYj7TfXNou8aYQmHgceKzXnBWrYbMSFWoj4C+gSBins+4
+         B0AZeBUqEiw7lfuttj8BR+kAOrGa9WNyccNDAb2xkMaGMgBd8QXXUqWmmYB+ozUoP4cs
+         sD1QDHXV1rbEPYHM7/JKjzWpfjcjKsqEXC/NkuUaoINSARxkrtoEZkRIwoB0kDOIZM4p
+         RN6gDQbhloz1dIfArr0IWDmfXHBTbiodojNWJ1VMiY/XBDCtJRbUI/UqiBYfBOIBTh0J
+         haqVQQIaz2JR+wlC9Qh8kB+dC2CgH75h0MmfF5LA6v0Q8jl7i655bsGmJK5e6QSjHfRv
+         QLEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=q1zM/G+l7xBBn3eniUdPvx+6S9sWlDwg6zmtcgLX3/Q=;
-        b=tjcXXNSARdPjtSb3TZv47LCZCuyA71m5tXg7+8fHvBJ2ymZZvuDniGyk8OVnni2xoS
-         TMKXM6wIy5g6FEXv8XZuFz/KVULynMw0yTnag/7qo5WPnORhyrB1/+5slhN0hoEndo5Q
-         WUp6KxQg4FgjKsp1u3xjt/rQrpYhi4LPqTg1iRfkbfscTlodI8LKv+Qg8/+PULUpEMq0
-         qNjiZd5zr33V76ut+l93xWsUeQivbVwhYjTVYItoYUMgi2E4bPA+/0apWh+qm7T3NByF
-         YuU4q8yHzEEAikjyogWqoS/mco5LPkf9Sgje/PuSjcsuhWX0x0uUZMLl/gwSBp6dH5bV
-         lfGQ==
-X-Gm-Message-State: AFqh2koqv7e9OSnYnYOZog6MidkTy5Qzcv4PNfVDJcvkDeD6k36L8hXV
-        KQPL2E4mX9MG6dc0clpPBQcJwduhyME=
-X-Google-Smtp-Source: AMrXdXtrNbWHscYPlOb26g93BIKQ/MeVU9s8XFGrLnVP2VRrYnRrmY0+bEyrALveljnMQ4GrAmjtwA==
-X-Received: by 2002:a05:600c:3b82:b0:3d3:4877:e560 with SMTP id n2-20020a05600c3b8200b003d34877e560mr31281250wms.27.1672768773677;
-        Tue, 03 Jan 2023 09:59:33 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l42-20020a05600c1d2a00b003cfbbd54178sm70543510wms.2.2023.01.03.09.59.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Jan 2023 09:59:33 -0800 (PST)
-Message-Id: <pull.1423.git.git.1672768772484.gitgitgadget@gmail.com>
-From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 03 Jan 2023 17:59:32 +0000
-Subject: [PATCH] run-command: make async_exit usage consistent
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=c9JlUiPqpoYcRpK6kjK1nNnuhl3X2myWuVAqTmouQOQ=;
+        b=GVDOPCnoMuIwVmRY7VrHwiqoPR7HuvURaafBhK/kDNlWvAZxi0ilc2YSFIxS68IYG5
+         fH3ByJ7W9iwbCGZu9mbeaLLpSP+1rPzOhnVgJnOXrpptcwcIDmFXyUSLzW5pTYVRWnTm
+         SZPKFr2juM1anSTowXbtH63BrfNzL31/z0EaLC4FhyyXn+ie20O4DQWRtOqB5vl6TTd6
+         tE5J+cS5H7TudQy1x0uP0wChLtApGjuP0mFxoVnw0yBplyF3eim9AX3j3XUxKlThjfZN
+         wdXUP5nN6sWcQrx/SCPCglZMgu6PMm1/DblDTxJ2sutw3GeTBNxLOoOFc2f52Y42xVS8
+         WUEw==
+X-Gm-Message-State: AFqh2kpUIhhEzDyWhzrRv8CHXxNfhGNIXVd7ADmxEgt1td8sLZCp2BXH
+        daxSc01334IPVVrLkQkB7IDsWsBXfFoxYuLig3jG8wG3Y0eawUBbfu49AgEnZdjdn+MYXnaMDo/
+        87Cna+ZrhGaexJQNwnWypzwzfWid28vPW4jOti9oeBeAq2ztlTc8Y5WjpDYXjsrU7IrABQgzrQm
+        IHHw10lhURO4XWl+IVfHbxQp92Ungp5N+VISniXDJZAEjeTF0N4GEo98bX185GYQShqLxK2Son
+X-Google-Smtp-Source: AMrXdXt11Lri5Nq12i5ylEbJn1FaeJLiKvie2ZWc5a6QybCIj04xUgJz90FQebZ7PyNGq9xfPlWxQQ==
+X-Received: by 2002:a05:600c:1d03:b0:3d3:4aa6:4fe6 with SMTP id l3-20020a05600c1d0300b003d34aa64fe6mr30919768wms.3.1672769585390;
+        Tue, 03 Jan 2023 10:13:05 -0800 (PST)
+Received: from [192.168.5.172] (net-93-145-27-202.cust.vodafonedsl.it. [93.145.27.202])
+        by smtp.gmail.com with ESMTPSA id h9-20020a05600c314900b003d99469ece1sm26330282wmo.24.2023.01.03.10.13.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Jan 2023 10:13:04 -0800 (PST)
+Message-ID: <1f61b660-b2d0-ba93-3182-05a9ab97b00e@enterprisedb.com>
+Date:   Tue, 3 Jan 2023 19:13:03 +0100
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Rose <83477269+AtariDreams@users.noreply.github.com>,
-        Seija Kijin <doremylover123@gmail.com>
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: BUG: git grep behave oddly with alternatives
+Content-Language: en-US
+To:     =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>, git@vger.kernel.org
+References: <f82ae28a-fb56-8d1f-96c8-550b61439d3a@enterprisedb.com>
+ <634f47a8-b370-81cb-00e7-d93ffc7534a8@web.de>
+From:   Marco Nenciarini <marco.nenciarini@enterprisedb.com>
+In-Reply-To: <634f47a8-b370-81cb-00e7-d93ffc7534a8@web.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-CLOUD-SEC-AV-Info: enterprisedb,google_mail,monitor
+X-CLOUD-SEC-AV-Sent: true
+X-Gm-Spam: 0
+X-Gm-Phishy: 0
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Seija Kijin <doremylover123@gmail.com>
+On 03/01/23 17:29, René Scharfe wrote:
+> Am 03.01.23 um 10:53 schrieb Marco Nenciarini:
+>> I've installed latest git from brew and suddenly git grep started behaving oddly when using alternatives.
+>>
+>> ```
+>> $ echo abd > test.file
+>> $ git grep --untracked 'a\(b\|c\)d' test.file
+>> $ git grep --untracked 'a\(b\)d' test.file
+>> test.file:abd
+>> ```
+>>
+>> It should have matched in both cases.
+>>
+>>
+>> If I switch to exented pattern it starts working again
+>>
+>> ```
+>> $ git grep --untracked -E 'a(b|c)d' test.file
+>> test.file:abd
+>> ```
+> 
+> This is expected: Basic regular expressions don't support alternation.
+> 
+> Under which circumstances did it work for you without -E or -P?
+> 
 
-Use async_exit instead of pthread_exit,
-and make async_exit inline.
+It has always worked until I installed 2.39.0 on my mac. I've also 
+checked with other developers that are using a mac and they reports the 
+same. On Linux it works regardless the git version.
 
-Functions were reordered
-so that this would compile.
+Using grep directly also works, so it is a different behavior between 
+grep and git grep, that is surprising.
 
-Luckily, the order remains consistent.
+>>
+>> [System Info]
+>> git version:
+>> git version 2.39.0
+>> cpu: x86_64
+>> no commit associated with this build
+>> sizeof-long: 8
+>> sizeof-size_t: 8
+>> shell-path: /bin/sh
+>> feature: fsmonitor--daemon
+>> uname: Darwin 22.2.0 Darwin Kernel Version 22.2.0: Fri Nov 11 02:08:47 PST 2022; root:xnu-8792.61.2~4/RELEASE_X86_64 x86_64
+>> compiler info: clang: 14.0.0 (clang-1400.0.29.202)
+>> libc info: no libc information available
+>> $SHELL (typically, interactive shell): /usr/local/bin/bash
+>>
+>>
+> 
 
-Signed-off-by: Seija Kijin <doremylover123@gmail.com>
----
-    run-command: make async_exit usage consistent
-    
-    Use async_exit instead of pthread_exit, and make async_exit inline.
-    
-    Finally, make the parameter an unsigned int, because the Win32 API uses
-    unsigned int, and for other platforms, we cast to void anyway.
-    
-    Signed-off-by: Seija Kijin doremylover123@gmail.com
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1423%2FAtariDreams%2Fconsistency-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1423/AtariDreams/consistency-v1
-Pull-Request: https://github.com/git/git/pull/1423
-
- run-command.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
-
-diff --git a/run-command.c b/run-command.c
-index 756f1839aab..e1eab4cb69b 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1030,6 +1030,18 @@ static void *run_thread(void *data)
- 	return (void *)ret;
- }
- 
-+int in_async(void)
-+{
-+	if (!main_thread_set)
-+		return 0; /* no asyncs started yet */
-+	return !pthread_equal(main_thread, pthread_self());
-+}
-+
-+static inline void NORETURN async_exit(int code)
-+{
-+	pthread_exit((void *)(intptr_t)code);
-+}
-+
- static NORETURN void die_async(const char *err, va_list params)
- {
- 	report_fn die_message_fn = get_die_message_routine();
-@@ -1042,7 +1054,7 @@ static NORETURN void die_async(const char *err, va_list params)
- 			close(async->proc_in);
- 		if (async->proc_out >= 0)
- 			close(async->proc_out);
--		pthread_exit((void *)128);
-+		async_exit(128);
- 	}
- 
- 	exit(128);
-@@ -1055,18 +1067,6 @@ static int async_die_is_recursing(void)
- 	return ret != NULL;
- }
- 
--int in_async(void)
--{
--	if (!main_thread_set)
--		return 0; /* no asyncs started yet */
--	return !pthread_equal(main_thread, pthread_self());
--}
--
--static void NORETURN async_exit(int code)
--{
--	pthread_exit((void *)(intptr_t)code);
--}
--
- #else
- 
- static struct {
-@@ -1112,7 +1112,7 @@ int in_async(void)
- 	return process_is_async;
- }
- 
--static void NORETURN async_exit(int code)
-+static inline void NORETURN async_exit(int code)
- {
- 	exit(code);
- }
-
-base-commit: 2b4f5a4e4bb102ac8d967cea653ed753b608193c
 -- 
-gitgitgadget
+Marco Nenciarini - EnterpriseDB
+marco.nenciarini@enterprisedb.com | www.enterprisedb.com
+
