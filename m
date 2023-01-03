@@ -2,113 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 651B4C4708E
-	for <git@archiver.kernel.org>; Tue,  3 Jan 2023 09:54:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A5DE2C4708E
+	for <git@archiver.kernel.org>; Tue,  3 Jan 2023 10:28:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236984AbjACJyF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Jan 2023 04:54:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36396 "EHLO
+        id S236883AbjACK1o (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 3 Jan 2023 05:27:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233082AbjACJxr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jan 2023 04:53:47 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A12DDB5A
-        for <git@vger.kernel.org>; Tue,  3 Jan 2023 01:53:45 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id d9so309853wrp.10
-        for <git@vger.kernel.org>; Tue, 03 Jan 2023 01:53:45 -0800 (PST)
+        with ESMTP id S232990AbjACK1Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 3 Jan 2023 05:27:25 -0500
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53D8410C1
+        for <git@vger.kernel.org>; Tue,  3 Jan 2023 02:27:23 -0800 (PST)
+Received: by mail-wm1-x336.google.com with SMTP id m26-20020a05600c3b1a00b003d9811fcaafso16198874wms.5
+        for <git@vger.kernel.org>; Tue, 03 Jan 2023 02:27:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=enterprisedb.com; s=google;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=I29jPXeqO+blleCB5dossp92OeLYz96C00HXgQkLrQw=;
-        b=fEGvdVOl6rY9Mf5qvL3MM9DiYxNp2sZD9Q3XHWzHx/lupwMz2tU6DsGAIxEw5STsvr
-         b9gDdWbpjWG6mVuBHZKf5rpaGUxQg4uPgsm9JlfT6uGWN/aMqjsJ1+bI9B3/PxYcIyjC
-         MhaO/zLUPhvHnsIE3yF6P5pVSdLAPCgkeuMFPqnks30lwSwu7iAOlAAV1b3GZyJqAfYy
-         c6BQDw4EEY775z5l6hoSj1ifaN3lLyLH+AYoQcQxVvVIB7gxbw8tGYh8r568K/XgYQWT
-         EEoyVtEuw0A3fFWW/UFuciIdTDBMQgak7VPznsKHq8KLR1v7bMzr59FrKQHtnsEw9WWy
-         5UVQ==
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=8BsX3Wk7Lkzq5h0lIffcd94lNs2btVl51fbahcL+XxI=;
+        b=mVThPO+0JBtolqbcILttswvEeQBjwsgMKy6bU/S58YB1hke7T/NQP9DLfVsF2FVl2X
+         HBHfmpyK+isyvymu7lUjCgtWikhkV7UEhvThopauFPsASbdNosOLG7Fi3/985DhynHAg
+         mh5NqvfEvY3SPQG7TnkZzU6Fw2GIh9mFjbtUqMU2Ji7NzHKIvqfup+iOqVEGw6UqU2EA
+         MYlxr0/DIm4WiIt2kplWw/5EWoH+cyT4d+gnkfpOaWiQJBqnATYUatezauNh/AnUEDLv
+         Y2k1FOooR8s3w62MFTsw/37pr4cSgvvRSvPoAAob2kCyHxPbtz0aNBMkG5XRjbi0aOVX
+         fz6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=I29jPXeqO+blleCB5dossp92OeLYz96C00HXgQkLrQw=;
-        b=T16NoXLXPMFFpFTsafazFg+tgVaX2AacUVIYHh6yiSKlge4NUPoHgd1EQMUEynU90m
-         FoPnY0Xyvwzs4Gf7LQPI+fRuw3i1ARAYT8P/NobsFmgJDSSIKaY35eAqBLCnRBtFj9mv
-         4WvVW+3ldb7HitFXKbX8VCijqsZBiUUm8T8uJFWTtzPLh2t8T1als3zWLG46PdBzOq6l
-         Aep2cb6HkKUiiYburDj9xyhJU4y95oekW1Jf0bUejJ7JlS/KmtuHYOg8y88UDo2KkowL
-         xgVGdzCbWSMGV8UIqk7F4q2SeNtu2awZr499HVnWIq5AHu9y2Vs077uP/0RciMp87V9W
-         yvcQ==
-X-Gm-Message-State: AFqh2kppl/nCpLDD0Qjb74/mMS0n6Xw2FB2O3F10iGJnYNND/r38QQM3
-        ky7PkycnO/xSRcxTDPcClY0gwGIhMgE3oUzr7hAXjKKH4SR+BwJaJ6wrD0ITKl86GOlj+hkdl94
-        h1/myyeFY6TlFd+Yy1IwAc27k270a5K9T8fRZ35nTDUtNR5NALthwvoVIb6EzzR5YfZHU1viFie
-        VZgK9+CsKLZTAganDE1mVh8s4fBRrXp8fMGInoT3LehU33WdPvH/L/a9xa/coqG6QgM+k/BuGsj
-        sh8a56E1xS1VcRuOatjXtxqQLWnWdiP9gulAROuTo2+nEIjomDvvZ3mwVg8RUese53sNIKpffFp
-        gjH9zw==
-X-Google-Smtp-Source: AMrXdXseZqc6ZLu4/PXc5cG2aL1zvWp6hDeNNTzzGpRnTEkIKOpgYMlwDM/dwnXgYx+Ra7B2OMUb0w==
-X-Received: by 2002:adf:d083:0:b0:289:845a:ec61 with SMTP id y3-20020adfd083000000b00289845aec61mr14002608wrh.4.1672739623840;
-        Tue, 03 Jan 2023 01:53:43 -0800 (PST)
-Received: from [192.168.5.172] (net-93-145-27-202.cust.vodafonedsl.it. [93.145.27.202])
-        by smtp.gmail.com with ESMTPSA id m22-20020a05600c161600b003cfa622a18asm43884752wmn.3.2023.01.03.01.53.43
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Jan 2023 01:53:43 -0800 (PST)
-Message-ID: <f82ae28a-fb56-8d1f-96c8-550b61439d3a@enterprisedb.com>
-Date:   Tue, 3 Jan 2023 10:53:42 +0100
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8BsX3Wk7Lkzq5h0lIffcd94lNs2btVl51fbahcL+XxI=;
+        b=LgZdPPCibmJnF/p+Ylz3AjluDubwiVEsfMhP+Z+tmIelVlvsXVyJKgp1lDs93EuN6U
+         PaUaTcAT7CiMsWQ+aaVYxu2xnP8JluX1kx7j66sc9uBjJzrNXyt2alaq1/gBCqutmiWG
+         95gA03wb6Ag5ePkOTMvuu5ny5NEKBK5svPNYefkNayfN9ptrkRNI4nET4R08Yiu3csQ3
+         ypHJi8PBZ7IDRwvJlduVlif0jSUkOa/72DzBzHM53A/VywYCaPlXsOUaCIfKEsNbghc6
+         AgDhGIKUrl+WmSfcYVZYw4JLKte0zXGeh9XPJGDFBJ6lLdDp0AKFUbVMljaYzr/L5ywv
+         bsew==
+X-Gm-Message-State: AFqh2kr8o/wvFAOr84i/cShtvpd/lOr3cEYSaYSwRKK/D/CPjgvezBnQ
+        JE6b6fb6aazD4sDiNYoY2wwBJj8SaJY=
+X-Google-Smtp-Source: AMrXdXsKMxhiItx7KFnLUvIsETH4K2XAla/YIgWDOqKk72fj5agSJf23j2uQScwRd3Zg14eCGDdJmw==
+X-Received: by 2002:a05:600c:6016:b0:3d3:3c93:af5e with SMTP id az22-20020a05600c601600b003d33c93af5emr30847743wmb.35.1672741641576;
+        Tue, 03 Jan 2023 02:27:21 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n64-20020a1ca443000000b003d21759db42sm46434869wme.5.2023.01.03.02.27.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Jan 2023 02:27:21 -0800 (PST)
+Message-Id: <pull.1453.git.1672741640587.gitgitgadget@gmail.com>
+From:   "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Tue, 03 Jan 2023 10:27:20 +0000
+Subject: [PATCH] ci(github): restore "print test failures" step name
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.1
-Content-Language: en-US
 To:     git@vger.kernel.org
-From:   Marco Nenciarini <marco.nenciarini@enterprisedb.com>
-Subject: BUG: git grep behave oddly with alternatives
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-CLOUD-SEC-AV-Info: enterprisedb,google_mail,monitor
-X-CLOUD-SEC-AV-Sent: true
-X-Gm-Spam: 0
-X-Gm-Phishy: 0
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've installed latest git from brew and suddenly git grep started 
-behaving oddly when using alternatives.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-```
-$ echo abd > test.file
-$ git grep --untracked 'a\(b\|c\)d' test.file
-$ git grep --untracked 'a\(b\)d' test.file
-test.file:abd
-```
+As well as removing the explicit shell setting d8b21a0fe2 (CI: don't
+explicitly pick "bash" shell outside of Windows, fix regression,
+2022-12-07) also reverted the name of the print test failures step
+introduced by 5aeb145780f (ci(github): bring back the 'print test
+failures' step, 2022-06-08). This is unfortunate as 5aeb145780f added a
+message to direct contributors to the "print test failures" step when a
+test fails and that step is no-longer known by that name on the
+non-windows ci jobs.
 
-It should have matched in both cases.
+In principle we could update the message to print the correct name for
+the step but then we'd have to deal with having two different names for
+the same step on different jobs. It is simpler for the implementation
+and contributors to use the same name for this step on all jobs.
 
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+    ci(github): restore "print test failures" step name
+    
+    Ævar seems to think the name change in 5aeb145780f was unintentional [1]
+    but looking at the original commit I don't think that's the case.
+    
+    [1]
+    https://lore.kernel.org/git/221208.86sfhq6pmg.gmgdl@evledraar.gmail.com/
 
-If I switch to exented pattern it starts working again
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1453%2Fphillipwood%2Fci-print-test-failures-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1453/phillipwood/ci-print-test-failures-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1453
 
-```
-$ git grep --untracked -E 'a(b|c)d' test.file
-test.file:abd
-```
+ .github/workflows/main.yml | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-[System Info]
-git version:
-git version 2.39.0
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Darwin 22.2.0 Darwin Kernel Version 22.2.0: Fri Nov 11 02:08:47 
-PST 2022; root:xnu-8792.61.2~4/RELEASE_X86_64 x86_64
-compiler info: clang: 14.0.0 (clang-1400.0.29.202)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /usr/local/bin/bash
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index e67847a682c..126eac8239d 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -265,8 +265,9 @@ jobs:
+     - uses: actions/checkout@v3
+     - run: ci/install-dependencies.sh
+     - run: ci/run-build-and-tests.sh
+-    - run: ci/print-test-failures.sh
++    - name: print test failures
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
++      run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
+       uses: actions/upload-artifact@v3
+@@ -298,8 +299,9 @@ jobs:
+       if: matrix.vector.jobname == 'linux32'
+     - run: ci/install-docker-dependencies.sh
+     - run: ci/run-build-and-tests.sh
+-    - run: ci/print-test-failures.sh
++    - name: print test failures
+       if: failure() && env.FAILED_TEST_ARTIFACTS != ''
++      run: ci/print-test-failures.sh
+     - name: Upload failed tests' directories
+       if: failure() && env.FAILED_TEST_ARTIFACTS != '' && matrix.vector.jobname != 'linux32'
+       uses: actions/upload-artifact@v3
 
-
+base-commit: 8a4e8f6a67e7fc97048d4666eec38399b88e0e3b
 -- 
-Marco Nenciarini - EnterpriseDB
-marco.nenciarini@enterprisedb.com | www.enterprisedb.com
+gitgitgadget
