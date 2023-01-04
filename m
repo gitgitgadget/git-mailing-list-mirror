@@ -2,201 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B81A5C53210
-	for <git@archiver.kernel.org>; Wed,  4 Jan 2023 21:51:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5575CC53210
+	for <git@archiver.kernel.org>; Wed,  4 Jan 2023 21:54:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240328AbjADVvK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Jan 2023 16:51:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57310 "EHLO
+        id S240352AbjADVyo (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Jan 2023 16:54:44 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231480AbjADVvJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Jan 2023 16:51:09 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74D7113FA1
-        for <git@vger.kernel.org>; Wed,  4 Jan 2023 13:51:06 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id l26so25088396wme.5
-        for <git@vger.kernel.org>; Wed, 04 Jan 2023 13:51:06 -0800 (PST)
+        with ESMTP id S229610AbjADVym (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Jan 2023 16:54:42 -0500
+Received: from mail-pf1-x44a.google.com (mail-pf1-x44a.google.com [IPv6:2607:f8b0:4864:20::44a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8963D1EAD6
+        for <git@vger.kernel.org>; Wed,  4 Jan 2023 13:54:41 -0800 (PST)
+Received: by mail-pf1-x44a.google.com with SMTP id bx21-20020a056a00429500b00582d85bb03bso2510822pfb.16
+        for <git@vger.kernel.org>; Wed, 04 Jan 2023 13:54:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Jz7bVE/wpp9cMR7nLe5/CsMilMiqHpNNP+irT5x64NY=;
-        b=ZN8SlIGUQnsK7CQjdt5JLJ/Iy3ojYLA3i8FymqFxtlkz0/CTPlcim4bI8JIeEsuNjv
-         acmMvUy0KhxZcWl1aH/6pdihyAWsR+6NYZXhZAGifqmP4n66QsMzLkto03Rcg9sDXJbe
-         2o9pIKw0VjfMdOssofosQrXo3bcjJ3mBS+FD9T0iTClYUWuHd+d4BsvsKh/19xK4En58
-         pHWFx4ApJuZmvwsWYfH0rq5aSIf3lYBRmkOE4iIUgUK9bQ70NplBiBqYejbPkNQ/cw5E
-         gk+hYefq8uG9Z7lOhSHSkmSQkTR0oq0gTmcvM84uDWyN/EDGfxpESQ6lofFs9F41fhBr
-         RnmQ==
+        d=google.com; s=20210112;
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=BjOd64Vt30MPOvxIADLPY9fH/Fiv9AI+iKcqfuY/RWU=;
+        b=iKmmHXavuTV/W3sMHTqNsor4XPEzkH8OuUa0wXwfmcZdD4Q2KVAgMRWMyS+wKZY0vB
+         /AXr6CI9iXoYQQjG0IEESy359KOasG6G6ZpuQfn+Evkn2jrUSczECTKimf/ZbH6MppuJ
+         pAskK0Nx4WtTMxssQ5xzwbFcKYfjI4ApGuJd7iNdwo0rQwEeD9FKpe8U30CoWRukpORu
+         iJL7Fe2MtD4BQIMrXxXVwAxU10xUs7RODxS3eObsdyKCzKvGmFyK7QizBxTuLJBl+S65
+         1go2ZR+h5yqtBaSPKPWmZ+MZXrVAQ7oJtYmNHJfB1buAQpW7zAAo3PBrPtw3PzAmmLjB
+         IrVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Jz7bVE/wpp9cMR7nLe5/CsMilMiqHpNNP+irT5x64NY=;
-        b=Kp6+SJzU/D27eoC8eeHaP3+eUYn3K1aYGaDH2CVEOGtYOu9OMZb4WL12jvjqzBu0b/
-         FueiUfvgjVdNhMInCP8uFSaaqI9LrGUD6yLZXOclYxqKYQv1GpMg7QlnkKCy1zMS3m87
-         AropZdE3BbO6spzJynwPxf00fGULLpYkCmEYuG3JvEUCdq5/ZT13Hn/uQnfS3BSN29OM
-         Bxzw6ccuiXJtSF+rElGIA8fP4Y1sFJEIcFQy9xZMOPSQvUtaHZFTOMd9j/GkF5lB/EOw
-         JiLY/Fmo5EsrzAJVe7EEpR2HPvWlvqocubzDiPfXoj3d+PJkSKyS07h0z9hGdfWYh14b
-         5Apw==
-X-Gm-Message-State: AFqh2kpv56gw3HeegYItOJHDMYJXI+gS+94duQe5Pn19zzikKkZkIepu
-        IgOj9jOax2qd6ATjq9gs/uI=
-X-Google-Smtp-Source: AMrXdXtn4eESgKRj74pFzLDsCFrbXk0B0IQV+wuKGFT7pSOQnW2k1vqs68EeA3P843sTtNAsgAeZPw==
-X-Received: by 2002:a05:600c:1d98:b0:3d3:3d51:7d4b with SMTP id p24-20020a05600c1d9800b003d33d517d4bmr35892376wms.29.1672869064821;
-        Wed, 04 Jan 2023 13:51:04 -0800 (PST)
-Received: from gmgdl (dsl-59-113.bl26.telepac.pt. [176.78.59.113])
-        by smtp.gmail.com with ESMTPSA id m17-20020a05600c3b1100b003cfbbd54178sm4058978wms.2.2023.01.04.13.51.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Jan 2023 13:51:04 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pDBf5-00CU80-1o;
-        Wed, 04 Jan 2023 22:51:03 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] ci(github): restore "print test failures" step name
-Date:   Wed, 04 Jan 2023 22:41:32 +0100
-References: <pull.1453.git.1672741640587.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 27.1; mu4e 1.9.0
-In-reply-to: <pull.1453.git.1672741640587.gitgitgadget@gmail.com>
-Message-ID: <230104.86mt6yt1dk.gmgdl@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BjOd64Vt30MPOvxIADLPY9fH/Fiv9AI+iKcqfuY/RWU=;
+        b=iV4VheWRDlL7eIP7Q3jj3cIMlGRS8Z0mHC4/MieRUfWz8dTZFbwjtUBQwmp8f7RaqC
+         /tT+X3kz3tjKnE5eAXchq2HkApQgCdXndSOkZKB618zOhQfpZdjcCV17OOAUWEUEjsX2
+         LCOpZ1z1ktJAHg2rqX4hX5ZDlN3gVoMGgtCZscZnWzWd9eYI+RlbBy1riSSy3L/QC01G
+         lkonvCegPrX5Jq2DFuMDszitQiU85jYBVTHSefiE5lRrQ7Qv4IkFVhsHy886BJseifFQ
+         2B8FG1cjJz1MFl+nKE1c7uCLh+Uh9XScRz9Ko8T7wdYipyf+3O7dMryoKgBVCXJq6Bbh
+         MnJg==
+X-Gm-Message-State: AFqh2koAUnol3GVLHZA2iudhtneOaMRCoP12lDwhQuxdZI+f1JZ1q/T7
+        sjRR+Fjya7zLY47h8mU/Me5hZYB80/ZML8nBY5+5OkBil3gYrheXZSCLf5UBQns10WkErzvrw+o
+        1A8iQnurmTnNVeO8KX9s4F4CAZfkLYpWyQ5N8ZAuD6q5t35lSzSYiRNg+cl6IvLoyrQ==
+X-Google-Smtp-Source: AMrXdXu9urHrlqhbJIpDAxj0DZYT9iK2+Fn+jLr9vM+tpjYjcQzVTTMODgRBOh9L3aUWARkvpLZApu3EOj+oL3k=
+X-Received: from barleywine.c.googlers.com ([fda3:e722:ac3:cc00:7f:e700:c0a8:3bd4])
+ (user=calvinwan job=sendgmr) by 2002:a05:6a00:328d:b0:582:e311:877d with SMTP
+ id ck13-20020a056a00328d00b00582e311877dmr424841pfb.54.1672869280892; Wed, 04
+ Jan 2023 13:54:40 -0800 (PST)
+Date:   Wed,  4 Jan 2023 21:54:09 +0000
+In-Reply-To: <https://lore.kernel.org/git/20221108184200.2813458-1-calvinwan@google.com/>
+Mime-Version: 1.0
+References: <https://lore.kernel.org/git/20221108184200.2813458-1-calvinwan@google.com/>
+X-Mailer: git-send-email 2.39.0.314.g84b9a713c41-goog
+Message-ID: <20230104215415.1083526-1-calvinwan@google.com>
+Subject: [PATCH v5 0/6] submodule: parallelize diff
+From:   Calvin Wan <calvinwan@google.com>
+To:     git@vger.kernel.org
+Cc:     Calvin Wan <calvinwan@google.com>, emilyshaffer@google.com,
+        avarab@gmail.com, phillip.wood123@gmail.com, chooglen@google.com,
+        newren@gmail.com, jonathantanmy@google.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Original cover letter for context:
+https://lore.kernel.org/git/20221011232604.839941-1-calvinwan@google.com/
 
-On Tue, Jan 03 2023, Phillip Wood via GitGitGadget wrote:
+Thank you again everyone for the numerous reviews! For this reroll, I
+incorporated most of the feedback given, fixed a bug I found, and made
+some stylistic refactors. I also added a new patch at the end that swaps
+the serial implementation in is_submodule_modified for the new parallel
+one. While I had patch 6 originally smushed with the previous one,
+the diff came out not very reviewer friendly so it has been separated
+out.
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> As well as removing the explicit shell setting d8b21a0fe2 (CI: don't
-> explicitly pick "bash" shell outside of Windows, fix regression,
-> 2022-12-07) also reverted the name of the print test failures step
-> introduced by 5aeb145780f (ci(github): bring back the 'print test
-> failures' step, 2022-06-08). This is unfortunate as 5aeb145780f added a
-> message to direct contributors to the "print test failures" step when a
-> test fails and that step is no-longer known by that name on the
-> non-windows ci jobs.
->
-> In principle we could update the message to print the correct name for
-> the step but then we'd have to deal with having two different names for
-> the same step on different jobs. It is simpler for the implementation
-> and contributors to use the same name for this step on all jobs.
->
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->     ci(github): restore "print test failures" step name
->=20=20=20=20=20
->     =C3=86var seems to think the name change in 5aeb145780f was unintenti=
-onal [1]
->     but looking at the original commit I don't think that's the case.
->=20=20=20=20=20
->     [1]
->     https://lore.kernel.org/git/221208.86sfhq6pmg.gmgdl@evledraar.gmail.c=
-om/
+Changes since v4
 
-Reading it again I think you're right, i.e. that the migration of
-everything to "bash" was unintentional & a result of copy/pasting, but
-the initial goal was to mention the "print test failures" step....
+(Patch 1)
+The code in run-command.c that calls duplicate_output_fn has been
+cleaned up and no longer passes a separate strbuf for the output. It
+instead passes an offset that represents the starting point in the
+original strbuf.
 
-> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> index e67847a682c..126eac8239d 100644
-> --- a/.github/workflows/main.yml
-> @@ -265,8 +265,9 @@ jobs:
->      - uses: actions/checkout@v3
->      - run: ci/install-dependencies.sh
->      - run: ci/run-build-and-tests.sh
-> -    - run: ci/print-test-failures.sh
-> +    - name: print test failures
->        if: failure() && env.FAILED_TEST_ARTIFACTS !=3D ''
-> +      run: ci/print-test-failures.sh
->      - name: Upload failed tests' directories
->        if: failure() && env.FAILED_TEST_ARTIFACTS !=3D ''
->        uses: actions/upload-artifact@v3
-> @@ -298,8 +299,9 @@ jobs:
->        if: matrix.vector.jobname =3D=3D 'linux32'
->      - run: ci/install-docker-dependencies.sh
->      - run: ci/run-build-and-tests.sh
-> -    - run: ci/print-test-failures.sh
-> +    - name: print test failures
->        if: failure() && env.FAILED_TEST_ARTIFACTS !=3D ''
-> +      run: ci/print-test-failures.sh
->      - name: Upload failed tests' directories
->        if: failure() && env.FAILED_TEST_ARTIFACTS !=3D '' && matrix.vecto=
-r.jobname !=3D 'linux32'
->        uses: actions/upload-artifact@v3
->
-> base-commit: 8a4e8f6a67e7fc97048d4666eec38399b88e0e3b
+(Patch 5)
+Moved status parsing from status_duplicate_output to status_finish. In
+pp_buffer_stderr::run-command.c, output is gathered by strbuf_read_once
+which reads 8192 bytes at once so a longer status message would error
+out during status parsing since part of it would be cut off. Therefore,
+status parsing must happen at the end of the process rather than in
+duplicate_output_fn (and has subsequently been moved).
 
-...but as far as moving forward, why make every other job be
-inconsistent in naming this one step, rather than just making the
-Windows ones consistent with rest?
+(Patch 6)
+New patch swapping serial implementation in is_submodule_modified for
+the new parallel one.
 
-I.e. why not:
+Calvin Wan (6):
+  run-command: add duplicate_output_fn to run_processes_parallel_opts
+  submodule: strbuf variable rename
+  submodule: move status parsing into function
+  diff-lib: refactor match_stat_with_submodule
+  diff-lib: parallelize run_diff_files for submodules
+  submodule: call parallel code from serial status
 
-	diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-	index e67847a682c..2bfb841206e 100644
-	--- a/.github/workflows/main.yml
-	+++ b/.github/workflows/main.yml
-	@@ -119,8 +119,7 @@ jobs:
-	     - name: test
-	       shell: bash
-	       run: . /etc/profile && ci/run-test-slice.sh ${{matrix.nr}} 10
-	-    - name: print test failures
-	-      if: failure() && env.FAILED_TEST_ARTIFACTS !=3D ''
-	+    - if: failure() && env.FAILED_TEST_ARTIFACTS !=3D ''
-	       shell: bash
-	       run: ci/print-test-failures.sh
-	     - name: Upload failed tests' directories
-	diff --git a/ci/lib.sh b/ci/lib.sh
-	index db7105e8a8d..d6450fd4957 100755
-	--- a/ci/lib.sh
-	+++ b/ci/lib.sh
-	@@ -183,7 +183,7 @@ then
-	 			test_name=3D"${test_exit%.exit}"
-	 			test_name=3D"${test_name##*/}"
-	 			printf "\\e[33m\\e[1m=3D=3D=3D Failed test: ${test_name} =3D=3D=3D\\e[=
-m\\n"
-	-			echo "The full logs are in the 'print test failures' step below."
-	+			echo "The full logs are in the 'ci/print-test-failures.sh' step below."
-	 			echo "See also the 'failed-tests-*' artifacts attached to this run."
-	 			cat "t/test-results/$test_name.markup"
-=09=20
+ Documentation/config/submodule.txt |  12 ++
+ diff-lib.c                         | 104 ++++++++++--
+ run-command.c                      |  16 +-
+ run-command.h                      |  27 ++++
+ submodule.c                        | 250 ++++++++++++++++++++++-------
+ submodule.h                        |   9 ++
+ t/helper/test-run-command.c        |  21 +++
+ t/t0061-run-command.sh             |  39 +++++
+ t/t4027-diff-submodule.sh          |  19 +++
+ t/t7506-status-submodule.sh        |  19 +++
+ 10 files changed, 441 insertions(+), 75 deletions(-)
 
-The implicit argument being made here & in the original 5aeb145780f is
-that it's a good thing to give explicit "names"'s to all of these steps.
+-- 
+2.39.0.314.g84b9a713c41-goog
 
-For some of the steps I agree, e.g. "test" is probably better than
-". /etc/profile && ci/run-test-slice.sh ${{matrix.nr}} 10" or whatever,
-and e.g. "generate Visual Studio solution" is definitely better than
-some multi-line shellscript (I'm not sure how the UX would even turn
-that into a collapsible title).
-
-But in the case of "ci/print-test-failures.sh",
-"ci/run-build-and-tests.sh", "ci/install-dependencies.sh" etc. the
-script name is already self-descriptive, so giving it a name just serves
-to obscure the connection between the step & the script implementing it,
-which is otherwise immediately apparent.
-
-So I think it's better to just remove the "name" label in those cases
-where the Windows jobs can use such a script, which we're already not
-naming in the *nix jobs.
-
-It's a minor point either way, and your change would also be an
-improvement. I just think it's better to aim for e.g. this snippet (from
-the current main.yml):
-
-    - run: ci/install-docker-dependencies.sh
-    - run: ci/run-build-and-tests.sh
-    - run: ci/print-test-failures.sh
-
-Rather than providing "name" fields for them all, and doubling the line
-count for no apparent (at least to me) reason.
