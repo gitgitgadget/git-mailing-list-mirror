@@ -2,166 +2,178 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 86FDDC3DA7D
-	for <git@archiver.kernel.org>; Tue,  3 Jan 2023 23:11:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9C184C4332F
+	for <git@archiver.kernel.org>; Wed,  4 Jan 2023 06:07:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234132AbjACXLk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 3 Jan 2023 18:11:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40446 "EHLO
+        id S233111AbjADGHX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Jan 2023 01:07:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233335AbjACXLj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 3 Jan 2023 18:11:39 -0500
-Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9A4AC3D
-        for <git@vger.kernel.org>; Tue,  3 Jan 2023 15:11:37 -0800 (PST)
-Received: (Authenticated sender: robin@jarry.cc)
-        by mail.gandi.net (Postfix) with ESMTPSA id 43946FF805;
-        Tue,  3 Jan 2023 23:11:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jarry.cc; s=gm1;
-        t=1672787496;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=4yFlHoZYIziJgnZJqttQKAf0RTdPuLOWNrpLX//zaVs=;
-        b=MHEMeuHGMBjNCbWTCdLxQ0QLp7PLtxtxDc4Ue0RPMUFIeAltJYLPtIWaj+88I8x9gVD4IA
-        QRmi6EsxXgnnxS5U2+KGnDRGJtqRWGQFGPwV4G7Iy5ZCmuIh7BcXJcllj9UZ23kaF7pdz0
-        s/eT1W9Of2vzTgzLoA4RJ37IyibCVgGQVHFYfsM34Mut64Gy9HB/HHnqcduZ6r1JLh3B+F
-        exWPfEg7zQTwJYrsWDJzeCvt0l23/mDBLI3qB/FllnUxYQGkHPu0rIRB1XFydiDazPTEgn
-        vgOkNXu9XgYP5Ql4Z+eZYE2kpuMwoyMAUI6CtNLZOcpeK1n+xOT7lSQ7mf7E/w==
-From:   Robin Jarry <robin@jarry.cc>
-To:     git@vger.kernel.org
-Cc:     Robin Jarry <robin@jarry.cc>
-Subject: [PATCH] hooks: add sendemail-validate-series
-Date:   Wed,  4 Jan 2023 00:11:33 +0100
-Message-Id: <20230103231133.64050-1-robin@jarry.cc>
-X-Mailer: git-send-email 2.39.0
+        with ESMTP id S233290AbjADGHU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Jan 2023 01:07:20 -0500
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D2C5DF90
+        for <git@vger.kernel.org>; Tue,  3 Jan 2023 22:07:19 -0800 (PST)
+Received: by mail-pf1-x42b.google.com with SMTP id k137so17334679pfd.8
+        for <git@vger.kernel.org>; Tue, 03 Jan 2023 22:07:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bTvx7L+Qlwikg2IYxmhoE6n6dGuSvzrf5n+zqDUe9Io=;
+        b=A2Av9vArcNMlAO3/dJPGhdiTUKtUF/QphfQcoyehhFaWwnfV2Y8/EywYRxDqqg3T7V
+         MqEnL9WlCuZuSc0O9jdUmB0RCfjBSrDn6N+qO3nf7VgjGXCVYQTPYs9yYAF5apLSOt1V
+         a9hU8kqw8N87pzk3QqzS/3oRDlzZkbkDl9A4OK7jGusDBQ/QKuDTcg4b/gbSvRgYHt65
+         tasOGHD4wr05rA+KAVcFj+I3UdnmuKVUD5zRGCCRyDF8B2xdYvrxW2YQBtmE+susNdLX
+         sHszfXf3mG138G3xSgDFfKo5/el6hq/4cFLOxNCJSN27q20JaxzNJcb7Wlz5W7gwml4+
+         Aqiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=bTvx7L+Qlwikg2IYxmhoE6n6dGuSvzrf5n+zqDUe9Io=;
+        b=ROAFdTqz6D9Pyb15c3PQG+1bhLDpDz3ZWMcD0KKrmcek+yGbDQsS7iIbGScDcmUvZI
+         538tkmLshIN+QgSEPXcN2TCnmisNN9zqH6nE16512Al6BkLRuT5TqWxb9M0sO6qenqqu
+         lpC/ugxG9H8Q/U+jgaLvMzouTAGL4ufRFdxOjq0/fIlM5WnUirK0qDQb9X1IMQS/F1Sa
+         piUE6FIGfJfxhQJZ4AAXyRt1IYrkxAX13/XRbtQK8bEUw+Oxuv2+xDHDV+DB8/o+o6a8
+         O1AjoREs7bIca5OG281jUWbK9bQKtQhLp+oxnsxjjB3FKETt9eZ74yeEeqaUcfKDHgav
+         MgTg==
+X-Gm-Message-State: AFqh2koOy13Q1ULW8c8/dlS4YFM8TCR0Hxp03pqkyGkbXBbfL1M6imUm
+        BnE4RfbMwJLxt2vVpwhAjkQ=
+X-Google-Smtp-Source: AMrXdXuoSoeYai0i0qOmqtsjWO73jebUq7RdKnANtIJDpnt/5Pd4+RIxbBwWmgwHOInMgCX+BmkRNw==
+X-Received: by 2002:a05:6a00:7ca:b0:582:fba:319f with SMTP id n10-20020a056a0007ca00b005820fba319fmr15195926pfu.27.1672812438812;
+        Tue, 03 Jan 2023 22:07:18 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id d12-20020aa797ac000000b0056bb36c047asm11558383pfq.105.2023.01.03.22.07.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Jan 2023 22:07:18 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Derrick Stolee <derrickstolee@github.com>,
+        Elijah Newren <newren@gmail.com>,
+        Victoria Dye <vdye@github.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        William Sprent <williams@unity3d.com>,
+        "William Sprent via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: Re: [PATCH v2] dir: check for single file cone patterns
+References: <pull.1446.git.1671546459151.gitgitgadget@gmail.com>
+        <pull.1446.v2.git.1672734059938.gitgitgadget@gmail.com>
+Date:   Wed, 04 Jan 2023 15:07:17 +0900
+In-Reply-To: <pull.1446.v2.git.1672734059938.gitgitgadget@gmail.com> (William
+        Sprent via GitGitGadget's message of "Tue, 03 Jan 2023 08:20:59
+        +0000")
+Message-ID: <xmqqfscqvnmy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When sending patch series (with a cover-letter or not)
-sendemail-validate is called with every email/patch file independently
-from the others. When the one of the patches depend on a previous one to
-apply, it may not be possible to use this hook in a meaningful way.
+"William Sprent via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Changing sendemail-validate to take all patches as arguments would break
-backward compatibility.
+> From: William Sprent <williams@unity3d.com>
+>
+> The sparse checkout documentation states that the cone mode pattern set
+> is limited to patterns that either recursively include directories or
+> patterns that match all files in a directory. In the sparse checkout
+> file, the former manifest in the form:
+>
+>     /A/B/C/
+>
+> while the latter become a pair of patterns either in the form:
+>
+>     /A/B/
+>     !/A/B/*/
+>
+> or in the special case of matching the toplevel files:
+>
+>     /*
+>     !/*/
+>
+> The 'add_pattern_to_hashsets()' function contains checks which serve to
+> disable cone-mode when non-cone patterns are encountered. However, these
+> do not catch when the pattern list attempts to match a single file or
+> directory, e.g. a pattern in the form:
+>
+>     /A/B/C
+>
+> This causes sparse-checkout to exhibit unexpected behaviour when such a
+> pattern is in the sparse-checkout file and cone mode is enabled.
+> Concretely, with the pattern like the above, sparse-checkout, in
+> non-cone mode, will only include the directory or file located at
+> '/A/B/C'. However, with cone mode enabled, sparse-checkout will instead
+> just manifest the toplevel files but not any file located at '/A/B/C'.
+>
+> Relatedly, issues occur when supplying the same kind of filter when
+> partial cloning with '--filter=sparse:oid=<oid>'. 'upload-pack' will
+> correctly just include the objects that match the non-cone pattern
+> matching. Which means that checking out the newly cloned repo with the
+> same filter, but with cone mode enabled, fails due to missing objects.
+>
+> To fix these issues, add a cone mode pattern check that asserts that
+> every pattern is either a directory match or the pattern '/*'. Add a
+> test to verify the new pattern check and modify another to reflect that
+> non-directory patterns are caught earlier.
+>
+> Signed-off-by: William Sprent <williams@unity3d.com>
+> ---
 
-Add a new hook to allow validating patch series instead of patch by
-patch. The patch files are provided in the hook script standard input.
+Summoning those who worked in the area, which includes area experts,
+for further comments, picked out of output from
 
-git hook run cannot be used since it closes the hook standard input. Run
-the hook directly.
+    $ git shortlog --no-merges --grep=cone --since=2.years -s -n -e
 
-Signed-off-by: Robin Jarry <robin@jarry.cc>
----
- Documentation/git-send-email.txt |  1 +
- Documentation/githooks.txt       | 17 +++++++++++++
- git-send-email.perl              | 42 ++++++++++++++++++++++++++++++++
- 3 files changed, 60 insertions(+)
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 765b2df8530d..45113b928593 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -438,6 +438,7 @@ have been specified, in which case default to 'compose'.
- +
- --
- 		*	Invoke the sendemail-validate hook if present (see linkgit:githooks[5]).
-+		*	Invoke the sendemail-validate-series hook if present (see linkgit:githooks[5]).
- 		*	Warn of patches that contain lines longer than
- 			998 characters unless a suitable transfer encoding
- 			('auto', 'base64', or 'quoted-printable') is used;
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index a16e62bc8c8e..e2dc0b49eda5 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -588,6 +588,23 @@ the name of the file that holds the e-mail to be sent.  Exiting with a
- non-zero status causes `git send-email` to abort before sending any
- e-mails.
- 
-+sendemail-validate-series
-+~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+This hook is invoked by linkgit:git-send-email[1].  It allows performing
-+validation on a complete patch series at once, instead of patch by patch with
-+`sendemail-validate`.
-+
-+`sendemail-validate-series` takes no arguments, but for each e-mail to be sent
-+it receives on standard input a line of the format:
-+
-+  <patch-file> LF
-+
-+where `<patch-file>` is a name of a file that holds an e-mail to be sent,
-+
-+If the hook exits with non-zero status, `git send-email` will abort before
-+sending any e-mails.
-+
- fsmonitor-watchman
- ~~~~~~~~~~~~~~~~~~
- 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 5861e99a6eb2..30bce599b565 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -793,6 +793,7 @@ sub is_format_patch_arg {
- 			validate_patch($f, $target_xfer_encoding);
- 		}
- 	}
-+	validate_patch_series(@files)
- }
- 
- if (@files) {
-@@ -2118,6 +2119,47 @@ sub validate_patch {
- 	return;
- }
- 
-+sub validate_patch_series {
-+	my @files = @_;
-+
-+	unless ($repo) {
-+		return;
-+	}
-+
-+	my $hook_name = 'sendemail-validate-series';
-+	my $hooks_path = $repo->command_oneline('rev-parse', '--git-path', 'hooks');
-+	require File::Spec;
-+	my $validate_hook = File::Spec->catfile($hooks_path, $hook_name);
-+	my $hook_error;
-+	unless (-x $validate_hook) {
-+		return;
-+	}
-+
-+	# The hook needs a correct cwd and GIT_DIR.
-+	require Cwd;
-+	my $cwd_save = Cwd::getcwd();
-+	chdir($repo->wc_path() or $repo->repo_path()) or die("chdir: $!");
-+	local $ENV{"GIT_DIR"} = $repo->repo_path();
-+	# cannot use git hook run, it closes stdin before forking the hook
-+	open(my $stdin, "|-", $validate_hook) or die("fork: $!");
-+	chdir($cwd_save) or die("chdir: $!");
-+	for my $fn (@files) {
-+		unless (-p $fn) {
-+			$fn = Cwd::abs_path($fn);
-+			$stdin->print("$fn\n");
-+		}
-+	}
-+	close($stdin); # calls waitpid
-+	if ($? & 0x7f) {
-+		my $sig = $? & 0x7f;
-+		die("fatal: hook $hook_name killed by signal $sig")
-+	} elsif ($? >> 8) {
-+		my $err = $? >> 8;
-+		die("fatal: hook $hook_name rejected patch series (exit code $err)")
-+	}
-+	return;
-+}
-+
- sub handle_backup {
- 	my ($last, $lastlen, $file, $known_suffix) = @_;
- 	my ($suffix, $skip);
--- 
-2.39.0
-
+> diff --git a/dir.c b/dir.c
+> index fbdb24fc819..4e99f0c868f 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -732,6 +732,13 @@ static void add_pattern_to_hashsets(struct pattern_list *pl, struct path_pattern
+>  		goto clear_hashmaps;
+>  	}
+>  
+> +	if (!(given->flags & PATTERN_FLAG_MUSTBEDIR) &&
+> +	    strcmp(given->pattern, "/*")) {
+> +		/* Not a cone pattern. */
+> +		warning(_("unrecognized pattern: '%s'"), given->pattern);
+> +		goto clear_hashmaps;
+> +	}
+> +
+>  	prev = given->pattern;
+>  	cur = given->pattern + 1;
+>  	next = given->pattern + 2;
+> diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
+> index b563d6c263e..627267be153 100755
+> --- a/t/t1091-sparse-checkout-builtin.sh
+> +++ b/t/t1091-sparse-checkout-builtin.sh
+> @@ -238,7 +238,7 @@ test_expect_success 'cone mode: match patterns' '
+>  test_expect_success 'cone mode: warn on bad pattern' '
+>  	test_when_finished mv sparse-checkout repo/.git/info/ &&
+>  	cp repo/.git/info/sparse-checkout . &&
+> -	echo "!/deep/deeper/*" >>repo/.git/info/sparse-checkout &&
+> +	echo "!/deep/deeper/*/" >>repo/.git/info/sparse-checkout &&
+>  	git -C repo read-tree -mu HEAD 2>err &&
+>  	test_i18ngrep "unrecognized negative pattern" err
+>  '
+> @@ -667,6 +667,15 @@ test_expect_success 'pattern-checks: starting "*"' '
+>  	check_read_tree_errors repo "a deep" "disabling cone pattern matching"
+>  '
+>  
+> +test_expect_success 'pattern-checks: non directory pattern' '
+> +	cat >repo/.git/info/sparse-checkout <<-\EOF &&
+> +	/deep/deeper1/a
+> +	EOF
+> +	check_read_tree_errors repo deep "disabling cone pattern matching" &&
+> +	check_files repo/deep deeper1 &&
+> +	check_files repo/deep/deeper1 a
+> +'
+> +
+>  test_expect_success 'pattern-checks: contained glob characters' '
+>  	for c in "[a]" "\\" "?" "*"
+>  	do
+>
+> base-commit: 7c2ef319c52c4997256f5807564523dfd4acdfc7
