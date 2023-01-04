@@ -2,69 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3D9BBC4332F
-	for <git@archiver.kernel.org>; Wed,  4 Jan 2023 06:13:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27A32C4332F
+	for <git@archiver.kernel.org>; Wed,  4 Jan 2023 06:37:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231418AbjADGNe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 4 Jan 2023 01:13:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40074 "EHLO
+        id S233497AbjADGh6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 4 Jan 2023 01:37:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231280AbjADGNb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 4 Jan 2023 01:13:31 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C06A21582F
-        for <git@vger.kernel.org>; Tue,  3 Jan 2023 22:13:30 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id jn22so34903423plb.13
-        for <git@vger.kernel.org>; Tue, 03 Jan 2023 22:13:30 -0800 (PST)
+        with ESMTP id S229559AbjADGh4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 4 Jan 2023 01:37:56 -0500
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB25E164B1
+        for <git@vger.kernel.org>; Tue,  3 Jan 2023 22:37:55 -0800 (PST)
+Received: by mail-pg1-x533.google.com with SMTP id v3so21606039pgh.4
+        for <git@vger.kernel.org>; Tue, 03 Jan 2023 22:37:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9/45Zv3hJuSeCsrWwqJvRnMDVHx8RweXGfH0qUKRi6U=;
-        b=Y1hgYAhJJId+r8XILByhZqSmBtb5bHrSrcduptAABrHJyJmFaupcEbBk0nICqMnsbY
-         8RDfH8rhlrZurCOn0xCdIZT3SuFxBUgFMO3Mh/pGgCMs1JMzJJEgrjWqtBKdYyqmDOfn
-         79yEqzipEyE7+gJk2AWlchYxVW4F1uHJcFmL7EVJWWz0Y/VxV2r/eN5q0wBXjVIW84GJ
-         jYuJdp47d5ItHv0fE4ezUlaUwS7ZsM8ruwsDVfHvyD3Wn9hZtTp4wpsvc+dHS/pGJD1N
-         KOPKGZTfpC3UhDmx3cAZjCe6FF7gvmOottbYJ/xhJhTiaW//Lxl8VoiSrX0IuIdhVtD2
-         PuLw==
+        bh=VX61AFnVEzYpHqlRQ7C5bciKYVenko4mcHQoqFNH8xo=;
+        b=UVbqPIzij7TVSXo/jM00lnn9TwWcJczU62Ln9aexnqV3nJvjQ5i58Plrmtdn9cBYG2
+         hZv5lmZU9/TLcmhvOTZC87FOznFblxQWXan6f+wP6MmpPTR6mQp1Un7qXw80Plc5RfH7
+         R0PFKpFMEQekIX6IFU2JQ6QK+9AkGcONKu7NWohBiF/tBfw5muNXgk6LEQoh6lRMi+6T
+         dZeBb264VTXBj1dGXFfFwHcZSoXkrK+8o39pQjw8n/dWutFA3wfc3+vKVrNQAj636aGy
+         kHzy2kGw0jXazjJANR1RRxphnDYTMFfrY2JJGofKZ3S67HRf/xQXc3I/4P8OX+F0Lta0
+         50Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9/45Zv3hJuSeCsrWwqJvRnMDVHx8RweXGfH0qUKRi6U=;
-        b=gyPb9hQf0iWyPDib6buZfvubrHmhIod+5evBAMVxRMleTW7WnG2FJtNgXjt30owA4+
-         ku5acqY96T0gcLM1MNsRdGjrShEJ/yQG7nZsASbqolT7C+az7QjSlxrCylxOoeFUPwFB
-         xBETTmiL5B92PJbk73eqEE2Yblq1b6iVJCIpZpbkGG57016OoJxuLrH+qty0pWxJVjSk
-         8xx6oPQiOR4Eu0L9cSK60KVvQ6JqipZHi68ryRpchozvvDFgSTBl2nr+NsSMNCOlt5Jb
-         KQeh9ACEx4hxqCwL+xGg0Ta7uPC5TFl42Ci5R8MxtnPO5dIVuaSwC6drrWvlfOS/hRq+
-         /Log==
-X-Gm-Message-State: AFqh2kojpOEOO5grF3glrzp4t71pKHcpHQXsZPcMrEFpGDajXE2UOHB9
-        DNavgjTMPRWuKQNQGX0zazY=
-X-Google-Smtp-Source: AMrXdXscgzGSMftF2RNavcG/y6MMrC1ycgy/WpJ4KB7zFZab5wP4cp1kDWyZgmtBr7Mlzc6Kog38lQ==
-X-Received: by 2002:a17:903:2283:b0:192:8b51:a9f5 with SMTP id b3-20020a170903228300b001928b51a9f5mr45317600plh.68.1672812810123;
-        Tue, 03 Jan 2023 22:13:30 -0800 (PST)
+        bh=VX61AFnVEzYpHqlRQ7C5bciKYVenko4mcHQoqFNH8xo=;
+        b=gJsyCSNKmyjuM8u8Jkftkypv6X+93nUYgapf4h3Mf9+n1/jRWNJhfXyKq2qWPleOxU
+         +YCMrpSHtsBXiTbUWJK66sxK0ASkez0nnhAtXV1yhkr8eDroGtz/z1vTavPiJU7/aFkH
+         nMtc3XvknI7yHqZ2t0AhSzCTlfaWNY9OnD+HDEaxLl+ukFEc6+15XdtYmp00T3DMYhLC
+         j/KpIW/5p+wtIuHF5ficjOXmGWiTXyzV9uCxxQrfI2QL4nqHTFdGE3i4m1/vl2340OHd
+         1HvpI27J+pLyc60zt5oG/1pddRLLE2WuQ3FtL5uApmg1ZIBPKcJwIya63MhlGi6EKudd
+         8mEA==
+X-Gm-Message-State: AFqh2kq+vXRstyFwFm+JdaLZlzBT3kprRMe+tiMnU8ay1cjbB03iMZTe
+        XDpxf9FuUm5vJQccjc4zCKg=
+X-Google-Smtp-Source: AMrXdXtgdfzrURnZEILEZx3borSd/tHYWxViEHhiG3F2/OH5Mr4KfZjiY/8cyaXBEdY4+skb5ynleg==
+X-Received: by 2002:a62:6d07:0:b0:581:b3f4:21f8 with SMTP id i7-20020a626d07000000b00581b3f421f8mr20437012pfc.31.1672814275075;
+        Tue, 03 Jan 2023 22:37:55 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id e2-20020a17090301c200b001868981a18esm23283633plh.6.2023.01.03.22.13.29
+        by smtp.gmail.com with ESMTPSA id y13-20020aa79aed000000b00582cb9d9ad3sm2412881pfp.178.2023.01.03.22.37.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Jan 2023 22:13:29 -0800 (PST)
+        Tue, 03 Jan 2023 22:37:54 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Marco Nenciarini <marco.nenciarini@enterprisedb.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: BUG: git grep behave oddly with alternatives
-References: <f82ae28a-fb56-8d1f-96c8-550b61439d3a@enterprisedb.com>
-        <634f47a8-b370-81cb-00e7-d93ffc7534a8@web.de>
-        <1f61b660-b2d0-ba93-3182-05a9ab97b00e@enterprisedb.com>
-        <343a891e-d737-0ace-26a9-3839d3bd5583@web.de>
-Date:   Wed, 04 Jan 2023 15:13:29 +0900
-In-Reply-To: <343a891e-d737-0ace-26a9-3839d3bd5583@web.de> (=?utf-8?Q?=22R?=
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 3/5] environ: GIT_FLUSH should be made a usual Boolean
+References: <xmqq8rmkpsit.fsf@gitster.g>
+        <20220915160659.126441-1-gitster@pobox.com>
+        <20220915160659.126441-4-gitster@pobox.com>
+        <c58476c9-f7d1-bea4-17eb-c5346790df2e@web.de>
+Date:   Wed, 04 Jan 2023 15:37:54 +0900
+In-Reply-To: <c58476c9-f7d1-bea4-17eb-c5346790df2e@web.de> (=?utf-8?Q?=22R?=
  =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Tue, 3 Jan 2023 21:52:27 +0100")
-Message-ID: <xmqq8riivncm.fsf@gitster.g>
+        message of "Tue, 3 Jan 2023 18:18:32 +0100")
+Message-ID: <xmqqwn62u7nh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -75,90 +73,36 @@ X-Mailing-List: git@vger.kernel.org
 
 René Scharfe <l.s.r@web.de> writes:
 
->    "For enhanced basic REs, ‘+’, ‘?’ and ‘|’ remain regular characters,
->     but ‘\+’, ‘\?’ and ‘\|’ have the same special meaning as the
->     unescaped characters do for extended REs, i.e., one or more
->     matches, zero or one matches and alteration, respectively."
+> Subject: [PATCH] environ: use git_parse_maybe_bool() for GIT_FLUSH
 >
-> So apparently Apple chose a middle ground between basic and extended
-> regular expressions for its grep and git grep.
-
-Sounds like GNU extension to me.
-
-> So GNU grep apparently made the same choice as Apple, probably far
-> earlier.
-
-Yup.
-
-> Based on that I suggest:
-> ...
+> Accept textual boolean values like "true" and "false" for GIT_FLUSH by
+> using git_parse_maybe_bool() to parse the variable's value.  Here's
+> how this changes whether to flush:
 >
-> It would be simpler to use REG_ENHANCED everywhere it is defined instead
-> of adding a Makefile setting, but it's a non-standard extension and
-> might mean something else on other platforms.
+>                        before                  with this patch
+> ---------------------- ----------------------- -----------------------
+> (unset)                if stdin is not a file  if stdin is not a file
+> GIT_FLUSH=             no                      no
+> GIT_FLUSH=0            no                      no
+> GIT_FLUSH=1	       yes                     yes
+> GIT_FLUSH=false        no                      no
+> GIT_FLUSH=true         no                      yes
+> GIT_FLUSH=bogus        no                      if stdin is not a file
 
-OK.  Very conservative and good.
+The above looks easy to grok, but the following caught my eyes.
 
-> Reported-by: Marco Nenciarini <marco.nenciarini@enterprisedb.com>
+> GIT_FLUSH=10000000000  yes                     if stdin is not a file
+
+Is this because the int is so large that git_parse_signed() notices
+that it is out of bound (hence "bogus")?
+
+> Requested-by: Junio C Hamano <gitster@pobox.com>
 > Signed-off-by: René Scharfe <l.s.r@web.de>
 > ---
->  Makefile         | 8 ++++++++
->  config.mak.uname | 1 +
->  grep.c           | 4 ++++
->  3 files changed, 13 insertions(+)
->
-> diff --git a/Makefile b/Makefile
-> index db447d0738..15e7edc9d2 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -289,6 +289,10 @@ include shared.mak
->  # Define NO_REGEX if your C library lacks regex support with REG_STARTEND
->  # feature.
->  #
-> +# Define GIT_GREP_USES_REG_ENHANCED if your C library provides the flag
-> +# REG_ENHANCED to enable enhanced basic regular expressions and you'd
-> +# like to use it in git grep.
-> +#
->  # Define HAVE_DEV_TTY if your system can open /dev/tty to interact with the
->  # user.
->  #
-> @@ -2037,6 +2041,10 @@ endif
->  ifdef NO_REGEX
->  	COMPAT_CFLAGS += -Icompat/regex
->  	COMPAT_OBJS += compat/regex/regex.o
-> +else
-> +ifdef GIT_GREP_USES_REG_ENHANCED
-> +	COMPAT_CFLAGS += -DGIT_GREP_USES_REG_ENHANCED
-> +endif
->  endif
->  ifdef NATIVE_CRLF
->  	BASIC_CFLAGS += -DNATIVE_CRLF
-> diff --git a/config.mak.uname b/config.mak.uname
-> index d63629fe80..14c145ae42 100644
-> --- a/config.mak.uname
-> +++ b/config.mak.uname
-> @@ -147,6 +147,7 @@ ifeq ($(uname_S),Darwin)
->  	FREAD_READS_DIRECTORIES = UnfortunatelyYes
->  	HAVE_NS_GET_EXECUTABLE_PATH = YesPlease
->  	CSPRNG_METHOD = arc4random
-> +	GIT_GREP_USES_REG_ENHANCED = YesPlease
->
->  	# Workaround for `gettext` being keg-only and not even being linked via
->  	# `brew link --force gettext`, should be obsolete as of
-> diff --git a/grep.c b/grep.c
-> index 06eed69493..a8430daaba 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -502,6 +502,10 @@ static void compile_regexp(struct grep_pat *p, struct grep_opt *opt)
->  		regflags |= REG_ICASE;
->  	if (opt->pattern_type_option == GREP_PATTERN_TYPE_ERE)
->  		regflags |= REG_EXTENDED;
-> +#if defined(GIT_GREP_USES_REG_ENHANCED) && defined(REG_ENHANCED)
-> +	else
-> +		regflags |= REG_ENHANCED;
-> +#endif
->  	err = regcomp(&p->regexp, p->pattern, regflags);
->  	if (err) {
->  		char errbuf[1024];
-> --
-> 2.39.0
+>  Documentation/git.txt | 10 ++++------
+>  write-or-die.c        | 18 +++++++++---------
+>  2 files changed, 13 insertions(+), 15 deletions(-)
+
+I may have suggested it, but don't think I requested ;-)
+
+The patch text looks good.  Thanks.
