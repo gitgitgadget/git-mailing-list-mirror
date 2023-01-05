@@ -2,131 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2336EC3DA7A
-	for <git@archiver.kernel.org>; Thu,  5 Jan 2023 18:56:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A27BC3DA7A
+	for <git@archiver.kernel.org>; Thu,  5 Jan 2023 19:09:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235237AbjAES4N (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Jan 2023 13:56:13 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34390 "EHLO
+        id S234623AbjAETJj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Jan 2023 14:09:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235245AbjAES4I (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Jan 2023 13:56:08 -0500
-X-Greylist: delayed 511 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 05 Jan 2023 10:56:05 PST
-Received: from mail-200165.simplelogin.co (mail-200165.simplelogin.co [176.119.200.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54CBF37261
-        for <git@vger.kernel.org>; Thu,  5 Jan 2023 10:56:05 -0800 (PST)
+        with ESMTP id S230089AbjAETJh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Jan 2023 14:09:37 -0500
+Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2107264
+        for <git@vger.kernel.org>; Thu,  5 Jan 2023 11:09:36 -0800 (PST)
+Received: by mail-qt1-x834.google.com with SMTP id s9so30725186qtx.6
+        for <git@vger.kernel.org>; Thu, 05 Jan 2023 11:09:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AfQaaj1UpUmrk2MIuYb/SCQoc6iXIC0BLAFa6gnSs5Q=;
+        b=BaM+BlAp7tQM1btacPqh/ECm8WWbnHX58v56GOo6z4RgKZphILgYmpxMZXGxmEWvgo
+         c64u/HFAENG4jZhI8RuYNaHXSNNqPsS3TkUbLyXwbZAZYA2IqAWa6wkTXGe7aPG82U2U
+         ner9KrRCS3twRlPjDgKPbkB/JRBjiZmadt8zR/qpbNQJGSE4L5KOiF2z7rHGaeAe6Hat
+         amvW/rmSxCxAynDbaZC1cOVt/DUgouOYE7Xg2N7KeSTwggdZZj5rpQce6VWVvdOWFiOo
+         NJnPJHvFIWiNd2HzCN2Lr69AOVVzPlg+Tx8pXcKHNuqtmYcQ9RvhkYdCld0DMiyJFHZ+
+         1AMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AfQaaj1UpUmrk2MIuYb/SCQoc6iXIC0BLAFa6gnSs5Q=;
+        b=QTwkjJhs/FqSoQy28wvU617VVTi2+pBcs9rxAoe2X3jWmNY7H+IyRyoXTLnAXa9nAc
+         h0qIwxTeoihx9MXMREJD1KiRh8lYG7ZhP0chhENoMXBg6ESa6yqx6clUiuIl+L9EoBH9
+         YlNWkgOgK2qyB8P/uOhXcA006CVchgYoKsFzxgs6xTVJQaMMK10ztUYNo4ABmvmps1Wk
+         QF39HrCuNybGNNli56MrTq3pFrlqaQIAyPwY5LCiXc476rXSEGk/k8zZhNflwZ/X+/xW
+         Ov7xclaYw5sNMg0ViXYHhFQtbhYP+5d5k8Vy0ytk3tdnLdr27IX1ZZSW3I4A/VWw4I8y
+         jDMg==
+X-Gm-Message-State: AFqh2kqRs+lj4KvTuiuZBEdMd+Vqus/HWsf/xaooWAPusUFVt3ZuPV8I
+        R8z4xNPZukWQg3OYHxG1MCqX
+X-Google-Smtp-Source: AMrXdXs1d4XXXoSLEd0uNOjVAPcUpVDmAQCXFCsAIX7GRJaOvsvzaeEZ1J9Vcj5lI6YkTXe6nrpmgw==
+X-Received: by 2002:ac8:7648:0:b0:3a8:20e5:49bc with SMTP id i8-20020ac87648000000b003a820e549bcmr69083766qtr.41.1672945775727;
+        Thu, 05 Jan 2023 11:09:35 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:64ab:8abc:361c:e8c7? ([2600:1700:e72:80a0:64ab:8abc:361c:e8c7])
+        by smtp.gmail.com with ESMTPSA id a19-20020ac81093000000b003a4f435e381sm21848322qtj.18.2023.01.05.11.09.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 Jan 2023 11:09:35 -0800 (PST)
+Message-ID: <9bc96719-d6c7-a127-d80e-a42ecaa0803c@github.com>
+Date:   Thu, 5 Jan 2023 14:09:34 -0500
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smancill.dev;
-        s=dkim; t=1672944453;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=6Nw2VyrSoSG4aV8q4zX9I/RAuSvyeyAVEP3Igr7CNkM=;
-        b=SLdH+Q+e4lW6pbtZzk5IdV2ke+iefmPtKgnvDz7xAl5UxNL3MqLjUeoRLDAJwBoUix0T/n
-        Lfltga/bUFWNtTQFyDH6d+M9GUTivgoIhweO9OvhTfNXkPCpiLN9jGIg3EjHGCBRGbolzH
-        c3X1kUdLqFNVbE/XwMyg1JnTfa2sGe4=
-Date:   Thu, 5 Jan 2023 15:47:15 -0300
-Subject: mergetools: wrong window selected for vimdiff1
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-From:   =?utf-8?q?Sebasti=C3=A1n_Mancilla?= <smancill@smancill.dev>
-To:     git@vger.kernel.org
-Message-ID: <167294445271.7.3739319158947040124.89448053@smancill.dev>
-X-SimpleLogin-Type: Reply
-X-SimpleLogin-EmailLog-ID: 89448053
-X-SimpleLogin-Want-Signing: yes
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: [PATCH v4 06/11] bundle-uri client: add helper for testing server
+To:     Jeff King <peff@peff.net>,
+        =?UTF-8?Q?=c3=86var_Arnfj=c3=b6r=c3=b0_Bjarmason_via_GitGitGadget?= 
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, me@ttaylorr.com,
+        newren@gmail.com, avarab@gmail.com, mjcheetham@outlook.com,
+        steadmon@google.com, chooglen@google.com, jonathantanmy@google.com,
+        dyroneteng@gmail.com, Victoria Dye <vdye@github.com>
+References: <pull.1400.v3.git.1670262639.gitgitgadget@gmail.com>
+ <pull.1400.v4.git.1671722058.gitgitgadget@gmail.com>
+ <13e4c82e3380d8b91583550e61671bd8eac69ab1.1671722058.git.gitgitgadget@gmail.com>
+ <Y68Sc3V5x6xSucZW@coredump.intra.peff.net>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <Y68Sc3V5x6xSucZW@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The layout for the vimdiff1 mergetool is "@LOCAL,REMOTE". From the man page=
-:
+On 12/30/22 11:31 AM, Jeff King wrote:
+> On Thu, Dec 22, 2022 at 03:14:12PM +0000, Ævar Arnfjörð Bjarmason via GitGitGadget wrote:
+> 
+>> +static int cmd_ls_remote(int argc, const char **argv)
+>> +{
+>> +	const char *uploadpack = NULL;
+>> +	struct string_list server_options = STRING_LIST_INIT_DUP;
+> 
+> These two variables are initialized to NULL and empty respectively, and
+> then not accessed until here:
+> 
+>> +	transport = transport_get(remote, NULL);
+>> +	if (uploadpack)
+>> +		transport_set_option(transport, TRANS_OPT_UPLOADPACK, uploadpack);
+>> +	if (server_options.nr)
+>> +		transport->server_options = &server_options;
+> 
+> where neither conditional will trigger, since they will still be NULL
+> and empty.
+> 
+> Is this function missing some argv parsing that would affect these? Or
+> if it's not needed, would we want to remove them, like:
 
-    o   layout =3D "@LOCAL,REMOTE"
+...
 
-        When MERGED is not present in the layout, you must "mark" one
-        of the buffers with an asterisk. That will become the buffer
-        you need to edit and save after resolving the conflicts.
+> Not a huge deal, but I noticed that Coverity complained about the
+> uploadpack one because this hit 'next' (the server_options one I found
+> manually, but it was kind of obvious when looking at the other).
 
-            ------------------------------------------
-            |                   |                    |
-            |                   |                    |
-            |                   |                    |
-            |     LOCAL         |    REMOTE          |
-            |                   |                    |
-            |                   |                    |
-            |                   |                    |
-            ------------------------------------------
+Yes, removing these lines would be fine. Perhaps there were
+uses for these in an earlier version that were dropped. But
+we can remove them now and then add them back when they
+actually connect to functionality.
 
-But after opening the buffers, the cursor is in the *right window*.
-
-This is confusing, since it makes you think the right buffer is the one tha=
-t
-needs to be edited, instead of the left one.
-
-Debug output (the make-conflicts.sh script in this repository [0] can be us=
-ed
-to quickly test a file with conflicts):
-
-    Merging:
-    poem.txt
-
-    Normal merge conflict for 'poem.txt':
-      {local}: modified file
-        {remote}: modified file
-
-        LAYOUT    : @LOCAL,REMOTE
-        CMD       : echo
-        NESTED MIN: 0
-        CLEAN     : @LOCAL,REMOTE
-
-        LAYOUT    : @LOCAL
-        CMD       : echo | leftabove vertical split
-        NESTED MIN: 0
-        CLEAN     : @LOCAL
-
-        LAYOUT    : REMOTE
-        CMD       : echo | leftabove vertical split | 1b | wincmd l
-        NESTED MIN: 0
-        CLEAN     : REMOTE
-
-        FINAL CMD : -c "set hidden diffopt-=3Dhiddenoff | echo |
-leftabove vertical split | 1b | wincmd l | 3b | execute 'tabdo windo
-diffthis' | tabfirst"
-        FINAL TAR : LOCAL
-        4 files to edit
-
-Also note that when vimdiff1 was introduced by 30bb8088af
-(mergetools/vimdiff: add
-vimdiff1 merge tool variant, 2021-02-13), Vim echoed a nice message to
-remember which buffer shall be edited:
-
-> +        *vimdiff1)
-> +                "$merge_tool_path" -f -d \
-> +                        -c 'echon "Resolve conflicts leftward then save.=
- Use :cq to abort."' \
-> +                        "$LOCAL" "$REMOTE"
-
-But with the refactor done by 0041797449 (vimdiff: new implementation with
-layout support, 2022-03-30), now the message is gone:
-
->          *vimdiff1)
-> -                "$merge_tool_path" -f -d \
-> -                        -c 'echon "Resolve conflicts leftward then save.=
- Use :cq to abort."' \
-> -                        "$LOCAL" "$REMOTE"
-> -                ret=3D"$?"
-> -                if test "$ret" -eq 0
-> -                then
-> -                        cp -- "$LOCAL" "$MERGED"
-> -                fi
-> -                return "$ret"
-> +                layout=3D"@LOCAL,REMOTE"
->                  ;;
-
-
-[0]: https://github.com/whiteinge/diffconflicts/tree/master/_utils
-
---=20
-Sebasti=C3=A1n Mancilla
-
+Thanks,
+-Stolee
