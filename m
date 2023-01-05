@@ -2,99 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D54E9C3DA7A
-	for <git@archiver.kernel.org>; Thu,  5 Jan 2023 11:39:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 870A3C3DA7A
+	for <git@archiver.kernel.org>; Thu,  5 Jan 2023 15:44:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231549AbjAELjK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Jan 2023 06:39:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37850 "EHLO
+        id S234741AbjAEPon (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Jan 2023 10:44:43 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231147AbjAELjJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Jan 2023 06:39:09 -0500
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8BDB13CDF
-        for <git@vger.kernel.org>; Thu,  5 Jan 2023 03:39:07 -0800 (PST)
-Received: by mail-ej1-x629.google.com with SMTP id tz12so89420010ejc.9
-        for <git@vger.kernel.org>; Thu, 05 Jan 2023 03:39:07 -0800 (PST)
+        with ESMTP id S234651AbjAEPoj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Jan 2023 10:44:39 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39D1C5C919
+        for <git@vger.kernel.org>; Thu,  5 Jan 2023 07:44:38 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id p1-20020a05600c1d8100b003d8c9b191e0so1628514wms.4
+        for <git@vger.kernel.org>; Thu, 05 Jan 2023 07:44:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=unity3d.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=LeDpdlCq/SaB3ApLoNcisToh2F+3MnJeEpMsYHwtl3w=;
-        b=jdGEuCaKLMi7f9oIKp7b12vxtsYyMXAUtosQ2mIJ0i+4kK4efRnkhx8ECZ95mvdqDi
-         l2X2+M5UCiGYHBw6wA75+ahw0fXAsZ+Za51hzRFaUhhCV2oOC7I62fkJj0ACTN/ruUGD
-         L+I/UvJjr0MkHnlOQpbwO9mTun/5jbXowhYD9BPWBd2Db0juX+xlGEvVk65Hx4QozaWX
-         wwc/sZVaSE2NTwr1Ua9+Ec/rrxOUqq9W2l8Xqvzmg+3RccKs4H57mzQXz1SUVBM5wFRA
-         QHonKC5mlAr+kf2E8WL1erMXlNhUkYtpfmSw4Nbw5FCcBbpl77b1Nq1VorAeWJQMh4Iu
-         nz/Q==
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=b0pKBDD2cFEcMLMyG95NYGpS2hFKDXbsupSJgR2jDfM=;
+        b=FeyDsZETZQKqqScf47Ddww2uMtdFoqDExL+pQJ+hxEJkFr2LxJv7mGeGXgLVZ3TNQ5
+         koZaY/uAoPlZHqeW53W+C12BsSkhT69ZDIfyVMMQ+/88cIlE1fmRLeKQtIC0JA3Iyz4F
+         brYBktuUZXJjUe73PorAZiOTAb9Z/agvfZRzw3yzsmHsUzhayeDCnUn9m0/8iS776Sa9
+         czc/wiN248LZ4v68XswZwCIdN8gZUt4lDxh+2z5ZezIbKQY7gP8HN3kpIzVibrYHmccn
+         P24yjDVIeWkqoBCv3qYtDDwSc8ejytu3EPeWOXjE1kK9VQrZ1BVFCUmI1yQCHsdmb89f
+         tRCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LeDpdlCq/SaB3ApLoNcisToh2F+3MnJeEpMsYHwtl3w=;
-        b=jP/1j4ZRbt47B/kqSw0ADr5OQZRnh34H8IL3ITzqItRIbAJBRg44Hvj15bi8yXZWMy
-         3IQ3VpfZ0PyE0q0K2c+BevVHC5kUvvKDkTDKHGYjbkvIpxYSexCcus8C+kIrHHK7N68k
-         ILDbkhLxtaxhHSdQwelSFxM3ak0UiWAoiJnhKEV6dHGIGDPnqVdOyZVJ4EUbzPcLdjmg
-         WnVVRFgR6oS4x/jSnNCqtVVTGaA4Zzf4kCw0sR8Cl2jdOaL7ZUIq9LmVoqiA0xcYut4r
-         lrWRsFgParJswhnNddYbyAmQxFUPGphI4uUXt0W866h+CAot+GlQQbxeahuP1gtUzcMI
-         35jw==
-X-Gm-Message-State: AFqh2kpAfjs0G+pexYJWOhqAFXrJoQnJ4OTX3sCNYhYV3JqTZhG03Nmg
-        91deQdOESuQIaushkSsqyclzFw==
-X-Google-Smtp-Source: AMrXdXsugolXSEBtwAJz5EvjzgcpHjlD5b0br7k2Pdo5veeyqug+Jj/Ywb48kjbDbqqPncSeLP1MXw==
-X-Received: by 2002:a17:906:17d2:b0:846:fafa:5c77 with SMTP id u18-20020a17090617d200b00846fafa5c77mr36476611eje.48.1672918746451;
-        Thu, 05 Jan 2023 03:39:06 -0800 (PST)
-Received: from [10.45.33.168] ([80.80.14.217])
-        by smtp.gmail.com with ESMTPSA id nd12-20020a170907628c00b0084cc87c03ebsm4915032ejc.110.2023.01.05.03.39.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Jan 2023 03:39:06 -0800 (PST)
-Message-ID: <fd873f47-1f7b-b1dc-8a2d-e1bf8fdfcf05@unity3d.com>
-Date:   Thu, 5 Jan 2023 12:39:05 +0100
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=b0pKBDD2cFEcMLMyG95NYGpS2hFKDXbsupSJgR2jDfM=;
+        b=hD26JAjyWqDbTOb8dyEe2uW+5SbKpZTt2wi2mtrPKRP8EVFAkuEBh7wfdzZy1anb6B
+         TdD5GyvutJ/46RhMXAgzsQyry4tLH4od2b1yA+n89wR6Ypx8CKClCSIT/e30ObtUjtH9
+         dkHfxiIoN5XIXiP44Bz7/KP6yZC2bITiXCU5mkJ972xdW33nnplor17Jmj4YRR6p7DMr
+         JdhPTykJSsW60fTELi7bRPshu63sioWqi/Hu5Uy4ga5nPUInxQzTbR4ZyvXCRT8nHRK+
+         rQ4tAFsxHz1t0Hz0Lg7DAoEVVqo+J/7UC7kUZczsOn+vV4vaBpIR9KF2feQkG6nFxva8
+         IrjQ==
+X-Gm-Message-State: AFqh2kogJ1nLepVjrvJP9Vv8FPbApgSOcm9Dq3NKzZYApZIuWani79Xw
+        41BiZIKsox1X2RFabCR8ag0fnpiWjc4=
+X-Google-Smtp-Source: AMrXdXssbZcgke6oZA2Y3VNrtkqgprR1cvejd7vws0SJInQHMMI0H/TcoWf8Q5N0sLTgTxHHe3s8Ag==
+X-Received: by 2002:a1c:7c0f:0:b0:3d5:816e:2fb2 with SMTP id x15-20020a1c7c0f000000b003d5816e2fb2mr39564473wmc.14.1672933476691;
+        Thu, 05 Jan 2023 07:44:36 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b2-20020adff242000000b0023662245d3csm37384945wrp.95.2023.01.05.07.44.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Jan 2023 07:44:36 -0800 (PST)
+Message-Id: <a20eafb954193fe5cd2bad2f65d86f6116339380.1672933474.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1406.v14.git.git.1672933474.gitgitgadget@gmail.com>
+References: <pull.1406.v13.git.git.1672762819.gitgitgadget@gmail.com>
+        <pull.1406.v14.git.git.1672933474.gitgitgadget@gmail.com>
+From:   "Seija Kijin via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Thu, 05 Jan 2023 15:44:33 +0000
+Subject: [PATCH v14 1/2] win32: prepare pthread.c for change by formatting
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.1
-Subject: Re: [PATCH v2] dir: check for single file cone patterns
-Content-Language: en-US
-To:     Victoria Dye <vdye@github.com>,
-        William Sprent via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.1446.git.1671546459151.gitgitgadget@gmail.com>
- <pull.1446.v2.git.1672734059938.gitgitgadget@gmail.com>
- <99e3c0f9-ecfa-7c26-eea5-685bc324f674@github.com>
-From:   William Sprent <williams@unity3d.com>
-In-Reply-To: <99e3c0f9-ecfa-7c26-eea5-685bc324f674@github.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason 
+        <avarab@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+        =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Rose <83477269+AtariDreams@users.noreply.github.com>,
+        Seija Kijin <doremylover123@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 05/01/2023 00.48, Victoria Dye wrote:
-> 
-> I think this is the best way to maintain the current intended behavior of
-> cone mode sparse-checkout. While the idea of single file "exceptions" to
-> cone patterns has been brought up in the past (I think most recently at the
-> Contributor's Summit this past September [1]), it'd be a substantial change
-> that's definitely out-of-scope of this small bugfix.
-> 
-> [1] https://lore.kernel.org/git/YzXwOsaoCdBhHsX1@nand.local/
-> 
+From: Seija Kijin <doremylover123@gmail.com>
 
-Thanks for the context. I didn't know that it had been discussed.
+File has been formatted to meet coding guidelines.
 
->>
->> ...
->>
-> 
-> And this test ensures the new check is working for the appropriate patterns.
-> 
-> This patch looks good to me, thanks for finding & fixing the bug!
-> 
+Signed-off-by: Seija Kijin <doremylover123@gmail.com>
+---
+ compat/win32/pthread.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-Thanks for taking the time to review!
+diff --git a/compat/win32/pthread.c b/compat/win32/pthread.c
+index 2e7eead42cb..cf53bc61d82 100644
+--- a/compat/win32/pthread.c
++++ b/compat/win32/pthread.c
+@@ -22,12 +22,12 @@ static unsigned __stdcall win32_start_routine(void *arg)
+ }
+ 
+ int pthread_create(pthread_t *thread, const void *unused,
+-		   void *(*start_routine)(void*), void *arg)
++		   void *(*start_routine)(void *), void *arg)
+ {
+ 	thread->arg = arg;
+ 	thread->start_routine = start_routine;
+-	thread->handle = (HANDLE)
+-		_beginthreadex(NULL, 0, win32_start_routine, thread, 0, NULL);
++	thread->handle = (HANDLE)_beginthreadex(NULL, 0, win32_start_routine,
++						thread, 0, NULL);
+ 
+ 	if (!thread->handle)
+ 		return errno;
+@@ -39,14 +39,14 @@ int win32_pthread_join(pthread_t *thread, void **value_ptr)
+ {
+ 	DWORD result = WaitForSingleObject(thread->handle, INFINITE);
+ 	switch (result) {
+-		case WAIT_OBJECT_0:
+-			if (value_ptr)
+-				*value_ptr = thread->arg;
+-			return 0;
+-		case WAIT_ABANDONED:
+-			return EINVAL;
+-		default:
+-			return err_win_to_posix(GetLastError());
++	case WAIT_OBJECT_0:
++		if (value_ptr)
++			*value_ptr = thread->arg;
++		return 0;
++	case WAIT_ABANDONED:
++		return EINVAL;
++	default:
++		return err_win_to_posix(GetLastError());
+ 	}
+ }
+ 
+-- 
+gitgitgadget
 
