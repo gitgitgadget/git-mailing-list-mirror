@@ -2,69 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E24CC3DA7D
-	for <git@archiver.kernel.org>; Thu,  5 Jan 2023 17:51:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2336EC3DA7A
+	for <git@archiver.kernel.org>; Thu,  5 Jan 2023 18:56:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235351AbjAERv0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 5 Jan 2023 12:51:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59570 "EHLO
+        id S235237AbjAES4N (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 5 Jan 2023 13:56:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235327AbjAERvS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 5 Jan 2023 12:51:18 -0500
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AF78564C2
-        for <git@vger.kernel.org>; Thu,  5 Jan 2023 09:51:17 -0800 (PST)
-Received: by mail-qv1-xf29.google.com with SMTP id t13so20062099qvp.9
-        for <git@vger.kernel.org>; Thu, 05 Jan 2023 09:51:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Hpc/oR7KYHTtxY4v57JD6eRTctd7s1QJuEamXPD3RFI=;
-        b=Vdw7skkr1ZnzhiUuYq40Q4WFvgCZqtBoOTz0/HHPy4dv75HxO77B/zlttcgrnFcuPn
-         6X3Vsx5FyaB/+cXCKNwU6Jz9cErKTJomBqwzueYDQ+NPScFEyTE02DXldwkzMU69LboL
-         k+epMa4uxIeoUbyg0cY4Ym3AxQZb0+HCkvn3dnNBcT41f5skHOZu1GaBAm8DoNOdkFr1
-         OcKi+iXd76Fd03RQc49DMZiwWshH41Um9ZgKNl9MSiGvIeqJkXEKm8A1tF0CATnPRRJM
-         bq89BaIx9I7KViuUd/HEP+e+9g2a8Wun9KNrHEhzVGbejmY5Cyv6Y2vDCZtBtqWT9vRB
-         p3Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Hpc/oR7KYHTtxY4v57JD6eRTctd7s1QJuEamXPD3RFI=;
-        b=HwXNKRXtrblA0WZOBk3mJ0kbPw72Zi7gzS8uAR5+CBR+QUenNwIYwKMDaXAI4Jfw9+
-         Gwo6/WKVpqxmPhkC6Hhq2rWkKj8BfaOZ41WOqz+qAM+ar/g1aUPhv9JbwDuOrExRxgCb
-         IVhxFTumLWf8Z3ouO5EsC3/WvbgWQuQxnsHrOE3nZWm0kTSK3fwYQy29XYtv66IPqNcH
-         JBVeSPr/n2s2BMItxAOiLuwLdTRSFa1VrbGTP6EcRmqaXyh6APMWgcgQnRyI/JFvQeWx
-         Tgl9zHAAUyiazJ+mfmJdcAO0bRPacjAs7Fk9dZZT4/5TxzsZpyiYcgC3iCdSo8qIVY1C
-         e7nQ==
-X-Gm-Message-State: AFqh2kphEMT3pDrFqFjqxnrpUpR/W0OCgMLz2Cp5WLMCxblw7GuLPIHo
-        zSEN4qBUl9aynNqsmpDJu+YYhtDz5J0wbqv5ahxGfHpTtg==
-X-Google-Smtp-Source: AMrXdXsq53FEUrJJpaKcH2XN9fH7aG8vLFSHE4Mk+gVXD56hyd4TtQTz+2ZZyKJNg4EaxguiSNDRRdFW+CNrXie6ZA8=
-X-Received: by 2002:a0c:e7c7:0:b0:4c7:8c1b:68d9 with SMTP id
- c7-20020a0ce7c7000000b004c78c1b68d9mr2710058qvo.52.1672941075976; Thu, 05 Jan
- 2023 09:51:15 -0800 (PST)
+        with ESMTP id S235245AbjAES4I (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 5 Jan 2023 13:56:08 -0500
+X-Greylist: delayed 511 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 05 Jan 2023 10:56:05 PST
+Received: from mail-200165.simplelogin.co (mail-200165.simplelogin.co [176.119.200.165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54CBF37261
+        for <git@vger.kernel.org>; Thu,  5 Jan 2023 10:56:05 -0800 (PST)
 MIME-Version: 1.0
-From:   "Roberto A. Foglietta" <roberto.foglietta@gmail.com>
-Date:   Thu, 5 Jan 2023 18:50:40 +0100
-Message-ID: <CAJGKYO5UGmFZjZ2ucFY=1MojzVur69EjRgy=aWW7wnhZ6=DaVA@mail.gmail.com>
-Subject: git.functions to improve the git users experience in your bash
-To:     git@vger.kernel.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smancill.dev;
+        s=dkim; t=1672944453;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=6Nw2VyrSoSG4aV8q4zX9I/RAuSvyeyAVEP3Igr7CNkM=;
+        b=SLdH+Q+e4lW6pbtZzk5IdV2ke+iefmPtKgnvDz7xAl5UxNL3MqLjUeoRLDAJwBoUix0T/n
+        Lfltga/bUFWNtTQFyDH6d+M9GUTivgoIhweO9OvhTfNXkPCpiLN9jGIg3EjHGCBRGbolzH
+        c3X1kUdLqFNVbE/XwMyg1JnTfa2sGe4=
+Date:   Thu, 5 Jan 2023 15:47:15 -0300
+Subject: mergetools: wrong window selected for vimdiff1
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+From:   =?utf-8?q?Sebasti=C3=A1n_Mancilla?= <smancill@smancill.dev>
+To:     git@vger.kernel.org
+Message-ID: <167294445271.7.3739319158947040124.89448053@smancill.dev>
+X-SimpleLogin-Type: Reply
+X-SimpleLogin-EmailLog-ID: 89448053
+X-SimpleLogin-Want-Signing: yes
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+The layout for the vimdiff1 mergetool is "@LOCAL,REMOTE". From the man page=
+:
 
- today, I have published this project which aims to deliver some
-advanced functions for git and also a lot of smart shortcuts for the
-most frequently used git commands. I hope you will like it and
-possibly also contribute to its future development with your feedback.
-At the moment, the project is limited to support bash. However, if
-someone is interested in using it under dash, I will be happy to plan
-a porting.
+    o   layout =3D "@LOCAL,REMOTE"
 
- https://github.com/robang74/git-functions
+        When MERGED is not present in the layout, you must "mark" one
+        of the buffers with an asterisk. That will become the buffer
+        you need to edit and save after resolving the conflicts.
 
- Best regards, R-
+            ------------------------------------------
+            |                   |                    |
+            |                   |                    |
+            |                   |                    |
+            |     LOCAL         |    REMOTE          |
+            |                   |                    |
+            |                   |                    |
+            |                   |                    |
+            ------------------------------------------
+
+But after opening the buffers, the cursor is in the *right window*.
+
+This is confusing, since it makes you think the right buffer is the one tha=
+t
+needs to be edited, instead of the left one.
+
+Debug output (the make-conflicts.sh script in this repository [0] can be us=
+ed
+to quickly test a file with conflicts):
+
+    Merging:
+    poem.txt
+
+    Normal merge conflict for 'poem.txt':
+      {local}: modified file
+        {remote}: modified file
+
+        LAYOUT    : @LOCAL,REMOTE
+        CMD       : echo
+        NESTED MIN: 0
+        CLEAN     : @LOCAL,REMOTE
+
+        LAYOUT    : @LOCAL
+        CMD       : echo | leftabove vertical split
+        NESTED MIN: 0
+        CLEAN     : @LOCAL
+
+        LAYOUT    : REMOTE
+        CMD       : echo | leftabove vertical split | 1b | wincmd l
+        NESTED MIN: 0
+        CLEAN     : REMOTE
+
+        FINAL CMD : -c "set hidden diffopt-=3Dhiddenoff | echo |
+leftabove vertical split | 1b | wincmd l | 3b | execute 'tabdo windo
+diffthis' | tabfirst"
+        FINAL TAR : LOCAL
+        4 files to edit
+
+Also note that when vimdiff1 was introduced by 30bb8088af
+(mergetools/vimdiff: add
+vimdiff1 merge tool variant, 2021-02-13), Vim echoed a nice message to
+remember which buffer shall be edited:
+
+> +        *vimdiff1)
+> +                "$merge_tool_path" -f -d \
+> +                        -c 'echon "Resolve conflicts leftward then save.=
+ Use :cq to abort."' \
+> +                        "$LOCAL" "$REMOTE"
+
+But with the refactor done by 0041797449 (vimdiff: new implementation with
+layout support, 2022-03-30), now the message is gone:
+
+>          *vimdiff1)
+> -                "$merge_tool_path" -f -d \
+> -                        -c 'echon "Resolve conflicts leftward then save.=
+ Use :cq to abort."' \
+> -                        "$LOCAL" "$REMOTE"
+> -                ret=3D"$?"
+> -                if test "$ret" -eq 0
+> -                then
+> -                        cp -- "$LOCAL" "$MERGED"
+> -                fi
+> -                return "$ret"
+> +                layout=3D"@LOCAL,REMOTE"
+>                  ;;
+
+
+[0]: https://github.com/whiteinge/diffconflicts/tree/master/_utils
+
+--=20
+Sebasti=C3=A1n Mancilla
+
