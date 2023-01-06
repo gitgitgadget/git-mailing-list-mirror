@@ -2,101 +2,292 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8FE2C5479D
-	for <git@archiver.kernel.org>; Fri,  6 Jan 2023 23:41:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A849CC54EBE
+	for <git@archiver.kernel.org>; Fri,  6 Jan 2023 23:48:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236177AbjAFXlS (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Jan 2023 18:41:18 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50698 "EHLO
+        id S236177AbjAFXsI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Jan 2023 18:48:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52934 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236441AbjAFXlJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jan 2023 18:41:09 -0500
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9B0A3D5E7
-        for <git@vger.kernel.org>; Fri,  6 Jan 2023 15:40:56 -0800 (PST)
-Received: by mail-qt1-x82d.google.com with SMTP id i20so3442847qtw.9
-        for <git@vger.kernel.org>; Fri, 06 Jan 2023 15:40:56 -0800 (PST)
+        with ESMTP id S229949AbjAFXsH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jan 2023 18:48:07 -0500
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EE783C710
+        for <git@vger.kernel.org>; Fri,  6 Jan 2023 15:48:05 -0800 (PST)
+Received: by mail-pj1-x1033.google.com with SMTP id w4-20020a17090ac98400b002186f5d7a4cso6891191pjt.0
+        for <git@vger.kernel.org>; Fri, 06 Jan 2023 15:48:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sHQoV23YVtELHQnxUilXh9FqW1UmpMC5GRkGy8OuaNg=;
-        b=gtcdfh4W7Q9Jd44fRd2gmVZJ05Txb32HRtBvV5jOFvnf23zjHkIjDuIRB+fIVA10sl
-         7BzK6zfyT19O7MAB8wS94wxTVKcwqrNG/9KOtpe4gtbNaRDIw/wl5pu/6whORtAdwYYI
-         Bncma6v/XAsuAENXBvPf9Pa5tQOGaYGAFehS91bsrz0lFmEEX/7KiX4+OOj1wtyeYXKU
-         EFs95VetC09c2PU0N1vN2JtrmtGSxdXwTBo4hf/vE0ClSlqFTJ6LqkRd+vHyUsXO+ke+
-         OFBjO4f+JdtBPdLHCePQf2+h0TqSa6rQlSYwxS2eRRCo/quzm/wD02rt3zRFdgsEDjfQ
-         mxqQ==
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lv7ZLVMA/MiSoKqcWY21wRa5kb8FyOsqYSAqtl4GS0w=;
+        b=SLmyelHbQY1UWDt9EtxsMWmNHWZyzHdgyVT1S73NlXyBmvRgMuyve+pf+4trD0pS6b
+         WUNG1o0Af4Z3QNZkyqRmAIQx/pKsvgRoXF3+2omQJJbtOlpBJut3P2RA8RIZhwyCcYA8
+         L8UHTw8ue6894c5a/qU2lO1+O4AM+8mMFAkpDwj5vv1aoSAnjXSyNhoYmXg2ocK3s3yl
+         Zx51JzxX7Gslt8RcARq1gy1vPVly3ImW4S/iElEJckpftygH1175/qejw8owZhJiNvZW
+         RW/c/Pth+Vpxdk6Oh4ScVxVlTt8G6C0maMx7nTC9Ok7RpZynPcw6IRFrHxBH+mtDvhDl
+         fk/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sHQoV23YVtELHQnxUilXh9FqW1UmpMC5GRkGy8OuaNg=;
-        b=lIrm4HZeSbLucuQAvmVbkyOoDIxfWV7w61xsNPiCFRYCRhjvnqIY1GGg9m9eys2uYr
-         yB9XYw9pOO08iLfGLSxn7Yoc3ArZUcNpVmb4EgyeaTZWGjI6tJVtpWD4AAp2LqoWWkK6
-         K/Md5FGkenKFj+X80hezgOMIIknAyZlQf3JDUtMr1W0a87rP9zt4vFEffEGrIIriJysj
-         /WrpC7iubkWTMsBLJz4EWKoB1WJ3I/Y62Hq7tRcG/9CkAVRLVyabXxOV1Jikv8Y0Xd85
-         x0FwZzkVPW27rQOzjblfoR3IeUoN9yXVYGO91YKsjdov0dEFp2Ad6tt6de+l38v0UHQz
-         wTWA==
-X-Gm-Message-State: AFqh2kpYWf51JxUimse4QPmULc/7vNqGq2I3Wstc4wbPy3yBlZsSI85N
-        tW8Fc9V3WkoEShKd+7B+cp+kA3pbaQsE1Sk=
-X-Google-Smtp-Source: AMrXdXtGvmxLEy2UWtcpEzTFNlKlUu2qy6tOUC3wPc7iM9NRpIWzvzgu1GXLHh0NZF98ieu+WlHXBg==
-X-Received: by 2002:a05:622a:4d47:b0:3a7:f183:7f66 with SMTP id fe7-20020a05622a4d4700b003a7f1837f66mr86504130qtb.22.1673048455881;
-        Fri, 06 Jan 2023 15:40:55 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:e894:2488:e26c:1f55? ([2600:1700:e72:80a0:e894:2488:e26c:1f55])
-        by smtp.gmail.com with ESMTPSA id l13-20020ac8724d000000b00399fe4aac3esm1163723qtp.50.2023.01.06.15.40.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Jan 2023 15:40:55 -0800 (PST)
-Message-ID: <bb48b1e2-819f-8bf3-ef4a-b9e4d23080b2@github.com>
-Date:   Fri, 6 Jan 2023 18:40:52 -0500
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=lv7ZLVMA/MiSoKqcWY21wRa5kb8FyOsqYSAqtl4GS0w=;
+        b=EdcSai5EHK2zUGJGGte46IXJtK4BHG7UR5B59l1llAxhLObXvsFUQkKmMSGcWyar7R
+         ZQSMt4u8baiS/NQw22SlBKDohrqw196OECsM7tZy59q5Wz/rCdSlCu0ndf44PK6hXQtP
+         psypwEhuU1AP07DduATCMsLR+hmzNQxD7EhfHwugVbTmARYxmuRzxWrvQDUxGdHLXv1w
+         xzeXX9wdh8SijSmos8vjZrJz62ElJrmKJHe1/PFykN3isKOnhrKTLypAVT9+gNTqreIx
+         reVJ9PqvOWRhv6t5v5m1DK5cagIeiP6m+vEqRVhfxWQtJ6yyNkEfSyNuVGm3mco3RfPA
+         vTTw==
+X-Gm-Message-State: AFqh2ko6FmJtr/pRDONxiz20BlcbeJ3dgR5IRbLtnAdvMK5WuSR2tYhk
+        d4S38sTldqtv41LLM8x8oMOSuyt3cJywpA==
+X-Google-Smtp-Source: AMrXdXu8wUbiQYiyts1HCLNWOF4GxXEmtEoPbXuAKsblL2o25gq5tffF8Mkg4ZQVcTUfyd+A4Crr3A==
+X-Received: by 2002:a17:902:bf45:b0:189:fa12:c98a with SMTP id u5-20020a170902bf4500b00189fa12c98amr50928667pls.66.1673048884368;
+        Fri, 06 Jan 2023 15:48:04 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id n20-20020a170902d0d400b00192e1590349sm1415046pln.216.2023.01.06.15.48.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Jan 2023 15:48:03 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Strawbridge, Michael" <Michael.Strawbridge@amd.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Tuikov, Luben" <Luben.Tuikov@amd.com>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v4 1/1] Expose header information to git-send-email's
+ sendemail-validate hook
+References: <20230106215012.1079319-1-michael.strawbridge@amd.com>
+        <20230106215012.1079319-2-michael.strawbridge@amd.com>
+Date:   Sat, 07 Jan 2023 08:48:03 +0900
+In-Reply-To: <20230106215012.1079319-2-michael.strawbridge@amd.com> (Michael
+        Strawbridge's message of "Fri, 6 Jan 2023 21:51:09 +0000")
+Message-ID: <xmqqcz7rp6mk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v4 0/4] Optionally skip hashing index on write
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, vdye@github.com, newren@gmail.com,
-        Jacob Keller <jacob.keller@gmail.com>
-References: <pull.1439.v3.git.1671116820.gitgitgadget@gmail.com>
- <pull.1439.v4.git.1671204678.gitgitgadget@gmail.com>
- <221216.86sfhf1gbc.gmgdl@evledraar.gmail.com>
- <b2164be2-72e9-cee5-26db-3e4fbfec3051@github.com>
- <xmqqmt6vqo2w.fsf@gitster.g>
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <xmqqmt6vqo2w.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/6/2023 5:45 PM, Junio C Hamano wrote:
-> Derrick Stolee <derrickstolee@github.com> writes:
-> 
->> After investigating some of the failures from creating a BUG() statement
->> when istate->repo is NULL I see several problems, and they are not related
->> to submodules for the most part.
->>
->> The first issues I've found are due to code paths that operate on the_index
->> without actually initializing it with a do_read_index(), or otherwise
->> initialize an index using a memset() instead of a common initializer. This
->> looks to be a frequent enough problem that solving it would require a
->> significant effort. It's not a quick fix.
-> 
-> Thanks.  It is not entirely unexpected X-<, considering how the
-> connection from the in-core repository and the in-core index has
-> been developed and evolved.  So in short, istate->repo is not yet
-> ready to be used, until the problems you identified are resolved?
-> 
-> We probably should start paying down such technical debts.  We've
-> punted on them too many times, saying "yes this is klunky but what
-> we have is good enough for adding this feature", I suspect?
+"Strawbridge, Michael" <Michael.Strawbridge@amd.com> writes:
 
-Yes, I'll make note to prioritize this soon.
+> Subject: Re: [PATCH v4 1/1] Expose header information to git-send-email's sendemail-validate hook
 
-Thanks,
--Stolee
+Subject: [PATCH v5 1/1] send-email: expose blah blah ...
+
+I.e. follow "<area>: describe the change with a single sentence"
+convention to allow this change blend in better in "git shortlog"
+output in the future release, once we accept the change.
+
+> To allow further flexibility in the git hook, the smtp header
+
+I recall that in the cover letter for a previous round you mentioned
+that s/smtp/SMTP/ was done?
+
+> information of the email that git-send-email intends to send, is now
+> passed as a 2nd argument to the sendemail-validate hook.
+
+OK.  Existing hooks will not see the second argument, ignore it and
+continue to work as before in the best case.  In the worst case, it
+notices that there is an unexpected argument on its command line and
+barf.
+
+> A new t9001
+> test was added to test this 2nd arg and docs are also updated.
+
+It is not wrong per-se but it is perfectly expected to add tests to
+protect a new feature from future breakage and docs to describe it,
+so strictly speaking this sentence is not necessary.
+
+> As an example, this can be useful for acting upon keywords in the
+> subject or specific email addresses.
+
+Good.
+
+> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+> index a16e62bc8c..346e536cbe 100644
+> --- a/Documentation/githooks.txt
+> +++ b/Documentation/githooks.txt
+> @@ -583,10 +583,10 @@ processed by rebase.
+>  sendemail-validate
+>  ~~~~~~~~~~~~~~~~~~
+>  
+> -This hook is invoked by linkgit:git-send-email[1].  It takes a single parameter,
+> -the name of the file that holds the e-mail to be sent.  Exiting with a
+> -non-zero status causes `git send-email` to abort before sending any
+> -e-mails.
+> +This hook is invoked by linkgit:git-send-email[1].  It takes two parameters,
+> +the name of a file that holds the patch and the name of a file that holds the
+> +SMTP headers.  Exiting with a non-zero status causes `git send-email` to abort
+> +before sending any e-mails.
+
+Are you changing the format and contents of what you feed as the
+first command line argument?  I am wondering why you did "the name
+of the file that holds the e-mail to be sent" (which is very clear
+that it would contain both the proposed log message and the patch
+proper) to "the name of the file that holds the patch" (which now is
+very unclear if we lost the proposed log message before the patch
+proper).
+
+If we expect that the "SMTP headers" is the last update for this
+feature, then the above is OK, but most likely we will want to add
+the third one in a few years.  Doing
+
+    It takes these command line arguments:
+
+    1. the name of the file that holds the e-mail to be sent.
+    2. the name of the file that holds the SMTP headers to be used.
+
+would be more future-proof.
+
+The added description does not make (at least) one thing clear for
+me to write an experimental hook to make use of this new feature.
+
+The message I am responding to has these headers, for example:
+
+    From:   "Strawbridge, Michael" <Michael.Strawbridge@amd.com>
+    Subject: [PATCH v4 1/1] Expose header information to git-send-email's
+     sendemail-validate hook
+    To:     "git@vger.kernel.org" <git@vger.kernel.org>
+    CC:     "Strawbridge, Michael" <Michael.Strawbridge@amd.com>,
+            "Tuikov, Luben" <Luben.Tuikov@amd.com>,
+            "brian m . carlson" <sandals@crustytoothpaste.net>
+
+Now, does my hook need to know about RFC 5322 rules govering the 
+e-mail headers, like "Cc:" and "CC:" are equivalent, and a line that
+begins with a whitespace adds to the value of the previous line
+(i.e. header folding)?
+
+Another thing.  This is not a new issue, but the above paragraph
+does not mention the fact that the hook silently chdir's to the root
+of the working tree (or the repository) while running the hook.  We
+should fix that but not as a part of this patch.
+
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 5861e99a6e..5a626a4238 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -787,14 +787,6 @@ sub is_format_patch_arg {
+
+The patch looks very messy and unreviewable.  Each step of a patch
+should do a single logical change well and cover the change in the
+behaviour in documentation and tests if necessary.
+
+But this seems to do too many things in a single step, I suspect.
+It probably should be split into a handful of steps, earlier ones
+just reorganizing the code structure (like splitting the early part
+of "send-message" into a separate "gen-header" helper function, or
+not calling validate_patch() early) without changing any externally
+observable behaviour, and then final ones (possibly just the single
+last step) changing how the hook is invoked (hence the documentation
+and test changes would only appear in later steps).
+
+>  @files = handle_backup_files(@files);
+>  
+> -if ($validate) {
+> -	foreach my $f (@files) {
+> -		unless (-p $f) {
+> -			validate_patch($f, $target_xfer_encoding);
+> -		}
+> -	}
+> -}
+> -
+>  if (@files) {
+>  	unless ($quiet) {
+>  		print $_,"\n" for (@files);
+> @@ -1495,16 +1487,7 @@ sub file_name_is_absolute {
+>  	return File::Spec::Functions::file_name_is_absolute($path);
+>  }
+>  
+> -# Prepares the email, then asks the user what to do.
+> -#
+> -# If the user chooses to send the email, it's sent and 1 is returned.
+> -# If the user chooses not to send the email, 0 is returned.
+> -# If the user decides they want to make further edits, -1 is returned and the
+> -# caller is expected to call send_message again after the edits are performed.
+> -#
+> -# If an error occurs sending the email, this just dies.
+> -
+> -sub send_message {
+> +sub gen_header {
+>  	my @recipients = unique_email_list(@to);
+>  	@cc = (grep { my $cc = extract_valid_address_or_die($_);
+>  		      not grep { $cc eq $_ || $_ =~ /<\Q${cc}\E>$/ } @recipients
+> @@ -1546,6 +1529,22 @@ sub send_message {
+>  	if (@xh) {
+>  		$header .= join("\n", @xh) . "\n";
+>  	}
+> +	my $recipients_ref = \@recipients;
+> +	return ($recipients_ref, $to, $date, $gitversion, $cc, $ccline, $header);
+> +}
+> +
+> +# Prepares the email, then asks the user what to do.
+> +#
+> +# If the user chooses to send the email, it's sent and 1 is returned.
+> +# If the user chooses not to send the email, 0 is returned.
+> +# If the user decides they want to make further edits, -1 is returned and the
+> +# caller is expected to call send_message again after the edits are performed.
+> +#
+> +# If an error occurs sending the email, this just dies.
+> +
+> +sub send_message {
+> +	my ($recipients_ref, $to, $date, $gitversion, $cc, $ccline, $header) = gen_header();
+> +	my @recipients = @$recipients_ref;
+>  
+>  	my @sendmail_parameters = ('-i', @recipients);
+>  	my $raw_from = $sender;
+> @@ -1955,6 +1954,15 @@ sub process_file {
+>  		}
+>  	}
+>  
+> +
+> +	if ($validate) {
+> +		foreach my $f (@files) {
+> +			unless (-p $f) {
+> +				validate_patch($f, $target_xfer_encoding);
+> +			}
+> +		}
+> +	}
+> +
+
+Is this now done inside "process_file"?  Is your "process_file"
+still called once per e-mail message?  If both are true, then this
+part of the patch smells very wrong.  The original checks _all_
+files with validate_patch() before sending even a single message,
+because it does not send just a few, find a problem in the third
+patch and stop.  Moving the loop to check all messages into a
+function that is called once for each message simply does not make
+sense---the desired "all or none" semantics may be retained because
+the invocation of process_file for the first message will make all
+messages to be inspected and a failure on any of them would cause
+the process to stop, but that is by accident and not by a sound
+design.  When sending a 5-patch series, in the normal case where the
+patches we have are all good, we will inspect these patches over and
+over again, no?
+
+> @@ -2088,11 +2096,20 @@ sub validate_patch {
+>  			chdir($repo->wc_path() or $repo->repo_path())
+>  				or die("chdir: $!");
+>  			local $ENV{"GIT_DIR"} = $repo->repo_path();
+> +
+> +			my ($recipients_ref, $to, $date, $gitversion, $cc, $ccline, $header) = gen_header();
+> +
+> +			require File::Temp;
+> +			my ($header_filehandle, $header_filename) = File::Temp::tempfile(
+> +                            ".gitsendemail.header.XXXXXX", DIR => $repo->repo_path());
+> +			print $header_filehandle $header;
+> +
+>  			my @cmd = ("git", "hook", "run", "--ignore-missing",
+>  				    $hook_name, "--");
+>  			my @cmd_msg = (@cmd, "<patch>");
+> -			my @cmd_run = (@cmd, $target);
+> +			my @cmd_run = (@cmd, $target, $header_filename);
+>  			$hook_error = system_or_msg(\@cmd_run, undef, "@cmd_msg");
+> +			unlink($header_filehandle);
+>  			chdir($cwd_save) or die("chdir: $!");
+>  		}
+
+Outside this topic, we probably would want to get rid of these "chdir()"
+and possibly "local $ENV{}" assignments.  The former should be
+doable simply by starting @cmd with ("git", "-C", $dir).
