@@ -2,223 +2,200 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81FEAC4708D
-	for <git@archiver.kernel.org>; Fri,  6 Jan 2023 14:19:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0335DC3DA7A
+	for <git@archiver.kernel.org>; Fri,  6 Jan 2023 14:30:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232226AbjAFOTg (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Jan 2023 09:19:36 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56868 "EHLO
+        id S230511AbjAFOaV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Jan 2023 09:30:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235083AbjAFOTR (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jan 2023 09:19:17 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E88D7BDF6
-        for <git@vger.kernel.org>; Fri,  6 Jan 2023 06:19:16 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id m7so1379706wrn.10
-        for <git@vger.kernel.org>; Fri, 06 Jan 2023 06:19:16 -0800 (PST)
+        with ESMTP id S235290AbjAFO3k (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jan 2023 09:29:40 -0500
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5370181110
+        for <git@vger.kernel.org>; Fri,  6 Jan 2023 06:29:22 -0800 (PST)
+Received: by mail-wm1-x32d.google.com with SMTP id g10so1172158wmo.1
+        for <git@vger.kernel.org>; Fri, 06 Jan 2023 06:29:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KOuqG5aZf3NOYcdMvpHas/tFRy7twm8XPejdkVLXnNo=;
-        b=ZBolVhChAuPN4tBNOibyg3T7S0P9RspXOo5nzBs4vtyhs9dP51tJ4pD38i07tU3Fmp
-         5xe2AHVmCnEshjC5CiT3XzhKkTJJp7i+ChKLkFxIpjxrTCYk2rhM1/j5jJxutL1NbeTv
-         LiTapFWUp3Ru++iqh4D/cwsm8FEHsAuEHUYUq8jasqCjaXqQSqWLPgBuC8Y8m4FAGcjM
-         GN2YwI84FnKbbXvLLzg6GTNOOUzR9+m1VgQTfC2sugCUp/EmSQr2LWAu7u0XQGyJs04U
-         su7QGObEdE48RKn5e9oaq5qfgntfaJX+bdAwxlv26/iapP90HL+zUzQYAZ3PxFCmaLG7
-         fHLA==
+        bh=7h1ogK+KdZUzEXCBepFfgllfleDQBgcVyYPQByc8Fww=;
+        b=UdUx6WwgmxwM804quMCtgzDuJwN09evrKhDGBTVKicw84JkaXoO+VGoee2ATXGwHIv
+         0CopdrnDlcAmwzDXljrbtQf3rw6CDfTbihbgbaCmUfwFRaniX6XjAbyVRcmePFmQMJQW
+         ktxE+l6AN6tnW5b4816t2x1NSNEobAzROEEfCjUHbZwqMu5krKKGATMOao0Iuuet/cOv
+         BJsTzoJlABzVao5Pw1GBWJ6kesQf8B66L2dnHSBOtbBc0Z0xQ0/F3jPSNdagFzOo0LAC
+         TlTXZL2FMvloVH/ga3uwwWg4qwEABsr6/cWpPmZ9IzvTq5TZSEv7nEcakni2B356h72w
+         YYKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KOuqG5aZf3NOYcdMvpHas/tFRy7twm8XPejdkVLXnNo=;
-        b=mqhU+kq5/OWeuky4m/8l1GtYE//Au9+lGf6lcYM8M6qbNDJCugTyJkdf/C+6QAzIlW
-         wwE6kyQCtROakG/VPZiGaAU8oVg53rVn9bIu97OklZ71W1Yjp6S/7H0TPmriKVht9sBm
-         3FJQhEnjjOI/1ZDOAyq1zSiJ2eaCEWH/3T6z+LgCRB8cDhRcU9vRq7/RAGYOFtjyf7Ka
-         sEd8ILnpV2pAb9nUi11l+HRns5lmf2kEmdK8B27oTzWv6yLy9H0ilTvYM9AAxfs6eEyv
-         ntHB4g4SVXFrWm5pvq9WVsB7t5JyQFf1xF25mRZwUmEA24nkFcn05n+IlohbpDRgW6Y9
-         /e5g==
-X-Gm-Message-State: AFqh2kooPf0MU0oZ1rwB41EmghPijT5hsLOsBH19JiMaQpRVGwFEAPSe
-        GIC+9Nxx1aWPx+MwPzkbDsyib3IQYNg=
-X-Google-Smtp-Source: AMrXdXvs+Bx+GWvT3f5uVlTlCcxQfPdhia0SnipnslVBMG+MYlLxSjkwvo13TxokV8/AaMZ+Z7ZXeA==
-X-Received: by 2002:adf:f34c:0:b0:28f:e8ef:5b21 with SMTP id e12-20020adff34c000000b0028fe8ef5b21mr15314120wrp.62.1673014754823;
-        Fri, 06 Jan 2023 06:19:14 -0800 (PST)
+        bh=7h1ogK+KdZUzEXCBepFfgllfleDQBgcVyYPQByc8Fww=;
+        b=xb6nP4BqHZEQ9eXiVrV39vJzPHpvHTt5ofo4yMG4DYHTV1hsYWfOGNlQ6DmCswMzw1
+         SNxyRY9eh5gBi2SKBlJrALuBOBKy0avgMWZUMA4yDD/Smhpv9IT4R5HfgbrEJdkP8M9/
+         8eQm41Ayhk7rSHjwRlDS208L/N+KAU8nDz2fb0jtODqIXbO5fR1PpmUSc6NeEe+QT1z0
+         weYK5m+Bk9eJn1GagC9GHWLZ6D26WYrK5kWFZpFLtONoxIiDv+zMWL9rOsLFmn3IQbT8
+         Q+16gjEy4/UFNfyqvHIdC8K1n9+fZzCBuZKt/F9LGNG43B58Qmfwc42kIN4xTtHD00fv
+         Xg9A==
+X-Gm-Message-State: AFqh2kqGvcy5muYOSOqwuzugSJFROr/6WopAWyBMa4DHjAomYS7dfdjE
+        KXtpQDSqYuf+GKAagp8MSXk4j5tvUqE=
+X-Google-Smtp-Source: AMrXdXsPNz5w2CRb9AE6jo1K1ZWr8x05A2rxte+kiemji6HGpjNhnkihj+TxNtwZOXFbYTw3OhAzvA==
+X-Received: by 2002:a1c:720e:0:b0:3d1:f629:6b56 with SMTP id n14-20020a1c720e000000b003d1f6296b56mr39245197wmc.20.1673015360860;
+        Fri, 06 Jan 2023 06:29:20 -0800 (PST)
 Received: from [192.168.1.14] (host-92-2-151-214.as13285.net. [92.2.151.214])
-        by smtp.gmail.com with ESMTPSA id t18-20020a5d6a52000000b0029c5e06516bsm1307406wrw.14.2023.01.06.06.19.13
+        by smtp.gmail.com with ESMTPSA id o12-20020adfe80c000000b0024258722a7fsm1278377wrm.37.2023.01.06.06.29.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Jan 2023 06:19:14 -0800 (PST)
+        Fri, 06 Jan 2023 06:29:20 -0800 (PST)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <952bd500-1a4c-068b-0b44-df0f16e04f6f@dunelm.org.uk>
-Date:   Fri, 6 Jan 2023 14:19:13 +0000
+Message-ID: <81218256-5354-4b0a-6f74-7e9605131968@dunelm.org.uk>
+Date:   Fri, 6 Jan 2023 14:29:19 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v6 4/4] worktree add: add hint to direct users towards
- --orphan
+Subject: Re: bug?: ORIG_HEAD incorrect after reset during git-rebase -i
 Content-Language: en-US
-To:     Jacob Abel <jacobabel@nullpo.dev>, git@vger.kernel.org
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-References: <20221104010242.11555-1-jacobabel@nullpo.dev>
- <20221104213401.17393-1-jacobabel@nullpo.dev>
- <20221110233137.10414-1-jacobabel@nullpo.dev>
- <20221212014003.20290-1-jacobabel@nullpo.dev>
- <20221220023637.29042-1-jacobabel@nullpo.dev>
- <20221228061539.13740-1-jacobabel@nullpo.dev>
- <20221228061539.13740-5-jacobabel@nullpo.dev>
-In-Reply-To: <20221228061539.13740-5-jacobabel@nullpo.dev>
+To:     Philippe Blain <levraiphilippeblain@gmail.com>,
+        Erik Cervin Edin <erik@cervined.in>
+Cc:     git@vger.kernel.org
+References: <CA+JQ7M-ynq1cLN-3ZodXae=x-H5k7Ab6uPBwUFhG+kgtOvCgtA@mail.gmail.com>
+ <e6adaad6-f6ee-57d3-dc8f-d14a760c57c2@talktalk.net>
+ <CA+JQ7M9G8HqqieRAK3C6csMM93PHOmaMd8GMPrDEfogWG0bteA@mail.gmail.com>
+ <ef389a14-8513-4650-21e4-89421a24df2d@gmail.com>
+In-Reply-To: <ef389a14-8513-4650-21e4-89421a24df2d@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jacob
+Hi Philippe & Erik
 
-On 28/12/2022 06:17, Jacob Abel wrote:
-> Adds a new advice/hint in `git worktree add` for when the user
-> tries to create a new worktree from a reference that doesn't exist.
+On 05/01/2023 00:11, Philippe Blain wrote:
+> Hi Phillip and Erik,
+> 
+> Le 2021-12-16 à 11:44, Erik Cervin Edin a écrit :
+>> Hi Phillip,
+>>
+>> Yes, I know.
+>> It's just that I was under the impression ORIG_HEAD was to be reverted
+>> to .git/rebase-merge/orig-head at the finish of the rebase.
+>> Personally, it's the behavior I would expect.
+>>
+>> Thanks for the tips.
+> 
+> I just hit the same bug (I think it qualifies as one). In fact git-rebase(1) explicitely mentions
+> that ORIG_HEAD is set to the branch tip before the rebase starts:
 
-I was concerned that this description meant that
-
-	git worktree add wt ref-that-does-not-exist
-
-would print a hint rather than just error out but having tested it 
-that's not the case. We only print the hint if the user does not give an 
-explicit branch name. The implementation looks fine to me and the test 
-looks sensible apart from save_param_arr which I think you're already 
-planning to address.
+Strictly speaking that is what we do so we're documentation the 
+implemented behavior. What's not clear from the documentation is that if 
+the user run 'git reset' while rebasing then ORIG_HEAD will be 
+overwritten. We could update ORIG_HEAD at the end of the rebase as you 
+suggested but I wouldn't be surprised if some else complains that 
+ORIG_HEAD no longer points to the commit that the reset while running 
+rebase. I also wonder if users would expect 'git rebase --continue' to 
+update ORIG_HEAD to point to the pre-rebase HEAD so it is consistent 
+each time rebase stops. Basically I think the situation is confusing and 
+I don't have a clear idea as to how to make it better. If someone 
+submits a patch to try and clean things up I'll happily look at it but 
+unless I'm hit by a bright idea as to how to fix it I probably wont work 
+on it myself.
 
 Best Wishes
 
 Phillip
 
-> Current Behavior:
+> $ git grep -C2 ORIG_HEAD Documentation/git-rebase.txt
+> Documentation/git-rebase.txt-36-The current branch is reset to `<upstream>` or `<newbase>` if the
+> Documentation/git-rebase.txt-37-`--onto` option was supplied.  This has the exact same effect as
+> Documentation/git-rebase.txt:38:50:`git reset --hard <upstream>` (or `<newbase>`). `ORIG_HEAD` is set
+> Documentation/git-rebase.txt-39-to point at the tip of the branch before the reset.
+> Documentation/git-rebase.txt-40-
 > 
-> % git init --bare foo.git
-> Initialized empty Git repository in /path/to/foo.git/
-> % git -C foo.git worktree add main/
-> Preparing worktree (new branch 'main')
-> fatal: invalid reference: HEAD
-> %
+> Here is my runnable reproducer. It is slightly more complicated than Erik's, since
+> I split the second commit in two, but this is not necessary to trigger the bug; just
+> running 'git reset HEAD^' as Erik wrote is enough.
 > 
-> New Behavior:
+> ```bash
+> #!/bin/bash
+> rm -rf repro
+> git init repro
+> (
+> cd repro
+> # Create 3 commits
+> cat << EOF >test
+> hello
+> every
+> one
+> EOF
+> git add test
+> git commit -m initial
+> cat << EOF >test
+> hello
 > 
-> % git init --bare foo.git
-> Initialized empty Git repository in /path/to/foo.git/
-> % git -C foo.git worktree add main/
-> Preparing worktree (new branch 'main')
-> hint: If you meant to create a worktree containing a new orphan branch
-> hint: (branch with no commits) for this repository, you can do so
-> hint: using the --orphan option:
-> hint:
-> hint:   git worktree add --orphan main ./main
-> hint:
-> hint: Disable this message with "git config advice.worktreeAddOrphan false"
-> fatal: invalid reference: HEAD
-> %
+> add new lines
 > 
-> Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
-> ---
->   Documentation/config/advice.txt |  4 ++++
->   advice.c                        |  1 +
->   advice.h                        |  1 +
->   builtin/worktree.c              |  6 ++++++
->   t/t2400-worktree-add.sh         | 17 +++++++++++++++++
->   5 files changed, 29 insertions(+)
+> every
 > 
-> diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
-> index a00d0100a8..3e58521613 100644
-> --- a/Documentation/config/advice.txt
-> +++ b/Documentation/config/advice.txt
-> @@ -136,4 +136,8 @@ advice.*::
->   		Advice shown when either linkgit:git-add[1] or linkgit:git-rm[1]
->   		is asked to update index entries outside the current sparse
->   		checkout.
-> +	worktreeAddOrphan::
-> +		Advice shown when a user tries to create a worktree from an
-> +		invalid reference, to instruct how to create a new orphan
-> +		branch instead.
->   --
-> diff --git a/advice.c b/advice.c
-> index fd18968943..53e91fdb85 100644
-> --- a/advice.c
-> +++ b/advice.c
-> @@ -75,6 +75,7 @@ static struct {
->   	[ADVICE_SUBMODULES_NOT_UPDATED] 		= { "submodulesNotUpdated", 1 },
->   	[ADVICE_UPDATE_SPARSE_PATH]			= { "updateSparsePath", 1 },
->   	[ADVICE_WAITING_FOR_EDITOR]			= { "waitingForEditor", 1 },
-> +	[ADVICE_WORKTREE_ADD_ORPHAN]			= { "worktreeAddOrphan", 1 },
->   };
+> and also here
 > 
->   static const char turn_off_instructions[] =
-> diff --git a/advice.h b/advice.h
-> index 07e0f76833..919d8c0064 100644
-> --- a/advice.h
-> +++ b/advice.h
-> @@ -50,6 +50,7 @@ struct string_list;
->   	ADVICE_UPDATE_SPARSE_PATH,
->   	ADVICE_WAITING_FOR_EDITOR,
->   	ADVICE_SKIPPED_CHERRY_PICKS,
-> +	ADVICE_WORKTREE_ADD_ORPHAN,
->   };
+> one
+> EOF
+> git commit -am second
+> cat << EOF >test
+> hello
 > 
->   int git_default_advice_config(const char *var, const char *value);
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index ac82c5feda..d975628353 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -730,6 +730,12 @@ static int add(int ac, const char **av, const char *prefix)
->   	if (opts.orphan) {
->   		branch = new_branch;
->   	} else if (!lookup_commit_reference_by_name(branch)) {
-> +		advise_if_enabled(ADVICE_WORKTREE_ADD_ORPHAN,
-> +			_("If you meant to create a worktree containing a new orphan branch\n"
-> +			"(branch with no commits) for this repository, you can do so\n"
-> +			"using the --orphan option:\n"
-> +			"\n"
-> +			"	git worktree add --orphan %s %s\n"), new_branch, path);
->   		die(_("invalid reference: %s"), branch);
->   	} else if (new_branch) {
->   		struct child_process cp = CHILD_PROCESS_INIT;
-> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-> index 43c95e6426..f43de59117 100755
-> --- a/t/t2400-worktree-add.sh
-> +++ b/t/t2400-worktree-add.sh
-> @@ -397,6 +397,23 @@ test_expect_success '"add" worktree with orphan branch, lock, and reason' '
->   	test_cmp expect .git/worktrees/orphan-with-lock-reason/locked
->   '
+> add new lines
 > 
-> +test_wt_add_empty_repo_orphan_hint () {
-> +	local context="$1"
-> +	shift
-> +	local arr=$(save_param_arr "$@")
-> +	test_expect_success "'worktree add' show orphan hint in empty repo w/ $context" '
-> +		eval "set -- $arr" &&
-> +		test_when_finished "rm -rf empty_repo" &&
-> +		GIT_DIR="empty_repo" git init --bare &&
-> +		test_must_fail git -C empty_repo worktree add "$@" foobar/ 2> actual &&
-> +		grep "hint: If you meant to create a worktree containing a new orphan branch" actual
-> +	'
-> +}
-> +
-> +test_wt_add_empty_repo_orphan_hint 'DWIM'
-> +test_wt_add_empty_repo_orphan_hint '-b' -b foobar_branch
-> +test_wt_add_empty_repo_orphan_hint '-B' -B foobar_branch
-> +
->   test_expect_success 'local clone from linked checkout' '
->   	git clone --local here here-clone &&
->   	( cd here-clone && git fsck )
-> --
-> 2.38.2
+> every
 > 
+> and also here
 > 
+> one
+> 
+> still more changes
+> EOF
+> git commit -am third
+> # Rebase to split the second commit
+> GIT_SEQUENCE_EDITOR="sed -ie '1 s/^p /e /'" git rebase -i HEAD~2
+> git reset HEAD^
+> cat << EOF >test
+> hello
+> 
+> add new lines
+> 
+> every
+> one
+> EOF
+> git ci -am "second 1/2"
+> cat <<EOF >test
+> hello
+> 
+> add new lines
+> 
+> every
+> 
+> and also here
+> 
+> one
+> EOF
+> git ci -am "second 2/2"
+> # Finish rebase and demonstrate bug
+> git rebase --continue
+> echo ---
+> echo "@{1} is :"
+> git log -1 @{1}
+> echo "ORIG_HEAD is :"
+> git log -1 ORIG_HEAD
+> 
+> )
+> ```
+> 
+> Cheers,
+> 
+> Philippe.
