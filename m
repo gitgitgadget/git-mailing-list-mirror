@@ -2,109 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9D769C3DA7A
-	for <git@archiver.kernel.org>; Fri,  6 Jan 2023 12:49:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D51F4C3DA7A
+	for <git@archiver.kernel.org>; Fri,  6 Jan 2023 13:05:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230208AbjAFMtJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Jan 2023 07:49:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38788 "EHLO
+        id S229511AbjAFNFT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Jan 2023 08:05:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232898AbjAFMtF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jan 2023 07:49:05 -0500
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50B4F745A5
-        for <git@vger.kernel.org>; Fri,  6 Jan 2023 04:48:58 -0800 (PST)
-Received: by mail-pl1-x636.google.com with SMTP id p24so1544257plw.11
-        for <git@vger.kernel.org>; Fri, 06 Jan 2023 04:48:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yh0iHzTtm0ioaUY3wXf3bSL3ZSE1FV1eeL7PLhJIkxE=;
-        b=PGQSOERjyjnITzGzzNpVEZupUVmucsr8iw4P6iGO7JqfLMyVASZ4WMOQL1bPjzzSon
-         lYw5HyrWyfoEGWOA6T27Ye0KJDDZOhPljQ+D0ODpEF0DV4DxHSd4v/mnQnNET+G9bAyh
-         zhvwdkOKjYHuC3G4chQloRPxyHnLyDh4vVquV+Zx4urkIvuIAjJxTTxLfJ88kFJRSHOF
-         q6XmPWdPftfz6Yxza6X0XZX2CA5UIWET5xuIZAz0SH7iXLBw5MKOfJGAAa6djYg2pgCR
-         maVATt/A7hf7U0rXgWLIRhrqteHHpSyukdB5dy5yobseegzB/3XpNJh/nUXnaLvL1Y7A
-         YBFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=yh0iHzTtm0ioaUY3wXf3bSL3ZSE1FV1eeL7PLhJIkxE=;
-        b=ehK0tQzX3Bjtqs4FSd8PuhBhLg+2Bf0ViGYGC/iJ+rYIFFWjt70Smpp4dp5LH+32Vo
-         EqMRVcNBCMSUbnKFEGwZoYwnS1uuzPJxQoEpfY2BXW+RW9PQn4y9GZcOskxkh3B5RjSM
-         AefH2cgRfCeZ7iL9WONKCHtr+qRCbZmveqgcmT/PlXjb2GxDrFcISI7NA2DY7j2uMXGq
-         Y1/r8igkT94gYyUBDXqHialf1wzGo+B8hWpFwEJ0u1nRPeMiBjWnmZtjOwuTwJNpgKj+
-         EUpZ8lm63qoG6We7ULLZlJiAc9qOkNyMYppVHx9kDqAvJ4iswN5iliyft1FrOTnIf25s
-         p3JA==
-X-Gm-Message-State: AFqh2kohtJ7Z8I2YwklyJbHLVJdWrQRQEQgr7qbJKGjoj7Gr+VspE8Ct
-        nb82D3jR33ONPEVLdSTO3pA=
-X-Google-Smtp-Source: AMrXdXsMtBuV3iBP6K0XJBhsvR1IEpW6m0lviZZLIx6g81CdC3I7croZImKoLMqvYYMB6CxvEqP9Ww==
-X-Received: by 2002:a17:902:c702:b0:191:2a9b:ec9b with SMTP id p2-20020a170902c70200b001912a9bec9bmr54317871plp.67.1673009337668;
-        Fri, 06 Jan 2023 04:48:57 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id j6-20020a170902690600b00192aecb231asm902134plk.121.2023.01.06.04.48.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Jan 2023 04:48:57 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Carl Baldwin <carl@ecbaldwin.net>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/3] diff: use filespec path to set up tempfiles for
- ext-diff
-References: <Y7f/YiVu1TgbucDI@coredump.intra.peff.net>
-        <Y7gAHenwmIo4gXTb@coredump.intra.peff.net>
-Date:   Fri, 06 Jan 2023 21:48:57 +0900
-In-Reply-To: <Y7gAHenwmIo4gXTb@coredump.intra.peff.net> (Jeff King's message
-        of "Fri, 6 Jan 2023 06:03:57 -0500")
-Message-ID: <xmqqbknbsu9y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S230003AbjAFNEy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jan 2023 08:04:54 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21F71718A6
+        for <git@vger.kernel.org>; Fri,  6 Jan 2023 05:04:52 -0800 (PST)
+Received: (qmail 14535 invoked by uid 109); 6 Jan 2023 13:04:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 06 Jan 2023 13:04:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14391 invoked by uid 111); 6 Jan 2023 13:04:52 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 06 Jan 2023 08:04:52 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Fri, 6 Jan 2023 08:04:51 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Andrew Hlynskyi <ahlincq@gmail.com>, git@vger.kernel.org
+Subject: Re: [BUG] `git gc` or `git pack-refs` wipes all notes for `git
+ notes` command
+Message-ID: <Y7gcczFWyTePVjlk@coredump.intra.peff.net>
+References: <CAAYtLELp4v=id-UUdGT+BoCxLuTV05Z0fFMQmPfd3Mt-yXJ9Tw@mail.gmail.com>
+ <Y7Pvqk00sj3R7cZv@coredump.intra.peff.net>
+ <CAAYtLE+PWK_v0cc8uqaiKnTHKghrkxuCCgfWyo9bhD23+vxK1g@mail.gmail.com>
+ <Y7fikyZV1ky2modr@coredump.intra.peff.net>
+ <xmqqilhjsuo9.fsf@gitster.g>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqilhjsuo9.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Fri, Jan 06, 2023 at 09:40:22PM +0900, Junio C Hamano wrote:
 
-> We can fix this by passing the pathname from the diff_filespec, which
-> should always be a full repository path (and that's what we want even if
-> reusing a worktree file, since we're always operating from the top-level
-> of the working tree).
+> > I don't think we have any fsck checks that the packed-refs file is in
+> > sorted order. It might be reasonable to have them. Likewise, when
+> > pack-refs rewrites the file, it should be able to cheaply double-check
+> > that the input is sorted by comparing each entry against its previous.
+> 
+> True.  I would not mind a patch to make us do so in the code path
+> where we rewrite the file and add "sorted" trait to the file.
+> refs/packed-backend.c::sort_snapshot() seems to be already equipped
+> to do this?
 
-Very sensible.
+I think it may be a little trickier than that. Yes, sort_snapshot()
+knows about sorting, but it only kicks in when the file isn't already
+marked as sorted (and we sort on the fly so that the rest of the code
+can use the same lookup routines).
 
-> The breakage seems to go all the way back to cd676a5136 (diff
-> --relative: output paths as relative to the current subdirectory,
-> 2008-02-12).
+And it's possible that we can just sort_snapshot() before writing, even
+if the original claims to be sorted. But I'm not sure what performance
+impact that might have on the normal case that everything is already in
+good order. Maybe it's not a big deal; the write is already O(n), so
+adding an O(n log n) might not be the end of the world.
 
-Not surprising.  When I wrote all the rest of "diff", I didn't
-plan to do "--relative" ;-)
+But I was thinking more that write_with_updates() would, while iterating
+through the existing entries, check that the values it gets from the
+ref_iterator are indeed in sorted order. And if not, I think it needs to
+actually bail, since we might already have written a partially-confused
+result. And there "bail" may mean "write a warning to the user, abort
+the current write, call sort_snapshot(), and then try again".
 
-> So the only bug is just the interaction with external diff drivers and
-> --relative.
->
-> Reported-by: Carl Baldwin <carl@ecbaldwin.net>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  diff.c                   |  2 +-
->  t/t4045-diff-relative.sh | 29 +++++++++++++++++++++++++++++
->  2 files changed, 30 insertions(+), 1 deletion(-)
+All of which is to say I don't think it's conceptually _too_ hard, but
+it was not simple enough that I was comfortable dashing off a one-liner
+and saying "probably something like this". ;)
 
-Thanks for a clear description.  The fix looks trivially obvious and
-correct.
+> So we can conclude that this discussion thread has an
+> incorrect Subject: and the symptom was caused by human error?
 
-> diff --git a/diff.c b/diff.c
-> index 9b14543e6e..59039773a1 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -4281,7 +4281,7 @@ static void add_external_diff_name(struct repository *r,
->  				   const char *name,
->  				   struct diff_filespec *df)
->  {
-> -	struct diff_tempfile *temp = prepare_temp_file(r, name, df);
-> +	struct diff_tempfile *temp = prepare_temp_file(r, df->path, df);
+That's my read on it.
+
+-Peff
