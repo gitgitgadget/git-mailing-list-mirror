@@ -2,119 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 320B8C46467
-	for <git@archiver.kernel.org>; Sat,  7 Jan 2023 17:06:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1D444C54EBC
+	for <git@archiver.kernel.org>; Sat,  7 Jan 2023 17:34:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231718AbjAGRGW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 7 Jan 2023 12:06:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59610 "EHLO
+        id S229997AbjAGRe0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 7 Jan 2023 12:34:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229542AbjAGRGU (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Jan 2023 12:06:20 -0500
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25A9540C1E
-        for <git@vger.kernel.org>; Sat,  7 Jan 2023 09:06:18 -0800 (PST)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-4c24993965eso54881487b3.12
-        for <git@vger.kernel.org>; Sat, 07 Jan 2023 09:06:18 -0800 (PST)
+        with ESMTP id S229542AbjAGReZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Jan 2023 12:34:25 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB8124EC95
+        for <git@vger.kernel.org>; Sat,  7 Jan 2023 09:34:23 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id qk9so10296744ejc.3
+        for <git@vger.kernel.org>; Sat, 07 Jan 2023 09:34:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PvLgnB1bSTD2AYSOGJWyy/Yxg/zOqnu8TRJt8n7mfFM=;
-        b=Z/PF8sOlfy6fyOILf8qIXtSdEsP3vgXCq+H2lPBYMU6ET13zQqaUynm1ByJGOja6M2
-         iofhHG3IISz5jnpYjVEGRBoufsEz9vuSyQKQMFvRSzzM3CRY0c4cqH6b2sNz10FLge14
-         fCJ0s2qRmaDcXqU1db+VS2r+nxbW7JkYrC1SVqshoWPu7Heyi7KKobIY7zENoHRG2IE5
-         ylxmYtZQw7c7jdtj3c/H5qg6iaSb/l5m0i45zby3ouFH3uayZGoC7AzHGviOwiXbiKSi
-         KCTa6+9SvdazQPzkVb3O060w7kWqmvxi+ipBP9GZTOfKrzrLjAcppAN29WYa1kt/PDD7
-         6AWA==
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=L8+d6RPPqF+wHNFWo+eGjh2iENhwevxQHjLiPRfE9IY=;
+        b=KoaefYygfZSCYJSEiaqP9LoVOlPMBYZRS4OW1M3vuUnKlECA0tCNpQ1+WvqX7IwLHR
+         E+BmXYSWYBDIhBthp3JEMP+pc2L9xxE9iEG7xdD7DzJnuak8Ww8NLZRaF94fEyfpZsDb
+         CeHphwZwKazNccJdZO4Ihcopn/jkryYcQS4EsiNA4OZGzjqo53IGDdV8zW4vIshYJC6I
+         SfJsj2uquxZGtFaQMVo3z9z0chCNrzndA0bNDQd4IagQ1HEFM0kUQSoqfB1mhcD/XXtz
+         Taz1Uu0y6Z5ebrTLPOIqxkGECnWXS1hFTAFlj7m3Ng5Ma80oX+PMpASBT+wCn2TtqC4s
+         AFuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PvLgnB1bSTD2AYSOGJWyy/Yxg/zOqnu8TRJt8n7mfFM=;
-        b=Y6+M4lJECoHQNVk+j/k5Vdf+jF0/TtZQZV7baZQcCDrs0L6Yrf/qVFEFHOghWUTpQc
-         9nJFJOJkOF5dl9owPmgEpf0bipTdxY9Lo/wMb+fOuz1ScOxO2ECUWM/fmdDuxvuNH5r5
-         KmxD3LiGZiDs4i4ZH60R7cc2PPXGfWdlq4mmozS9jhpcfkmG21ZLRHO73WRr+h7Fb5YX
-         tOiNlgr6bkRv4malScewBYPgeRez+UFRaQYCY+ZOYCH9AhasnjOUqETMsGAGSjN9Ciah
-         Jjw5GypPq5yAap7mcpn9E3XTFn4r+CfOLNwRZ3HXJAmlGC7jUgFA14/nn69pOXTwCnm8
-         MgEA==
-X-Gm-Message-State: AFqh2kpVr3kHMO/X+OsZXhnqEzgYb7qinmIIFjx/7arqJHNEvjmsC7ET
-        oAbdpMVXXGUPmqebsRaE7kQRD23Xb28=
-X-Google-Smtp-Source: AMrXdXs8In6w1x3K3vbT4wS9fOVKXchdZtO6RCWFVGC0os6AdvXh8sUEvmquaPBKi8B3GaJS/7g27w==
-X-Received: by 2002:a0d:e68f:0:b0:4b8:6935:d57 with SMTP id p137-20020a0de68f000000b004b869350d57mr12411304ywe.10.1673111177014;
-        Sat, 07 Jan 2023 09:06:17 -0800 (PST)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id bi1-20020a05620a318100b006fb0e638f12sm2426817qkb.4.2023.01.07.09.06.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 07 Jan 2023 09:06:16 -0800 (PST)
-Subject: Re: bug?: ORIG_HEAD incorrect after reset during git-rebase -i
-To:     phillip.wood@dunelm.org.uk, Erik Cervin Edin <erik@cervined.in>
-Cc:     git@vger.kernel.org
-References: <CA+JQ7M-ynq1cLN-3ZodXae=x-H5k7Ab6uPBwUFhG+kgtOvCgtA@mail.gmail.com>
- <e6adaad6-f6ee-57d3-dc8f-d14a760c57c2@talktalk.net>
- <CA+JQ7M9G8HqqieRAK3C6csMM93PHOmaMd8GMPrDEfogWG0bteA@mail.gmail.com>
- <ef389a14-8513-4650-21e4-89421a24df2d@gmail.com>
- <81218256-5354-4b0a-6f74-7e9605131968@dunelm.org.uk>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <1b2b8e98-5506-a1e6-6059-a967757b3bb8@gmail.com>
-Date:   Sat, 7 Jan 2023 12:06:15 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=L8+d6RPPqF+wHNFWo+eGjh2iENhwevxQHjLiPRfE9IY=;
+        b=e2/DV2Kcl3PXuAW5XOgFh4bwRLkTzxP/R0yR2hbAW8Ha5nfsjZIj+XogO06F86Ocfj
+         x11UR8DfDW9GjDxJezeHO1beAvoUbu9a0TfQGV4k/VQlmZ120VasoPUxrJ6szrunWnER
+         NL/HL+o9IzXoFGHlcIL+Bc2npYDFB805AhH7ubsp5OIHLAN3XlFdLgjjlJUpzce1VcDp
+         O9IYiSzcD/RlLNDLQ2yPW+OvpOlnh+uCG0VzLEL3iDf1jX4HdhHDN1u382+i5ntDl2bD
+         kgrSzSuyIV1O/4VVishcpcUcxegX/fw3PdN35ego9Ht2HzoCWp8JZf1kVjXanUG/UXYM
+         91zA==
+X-Gm-Message-State: AFqh2kq2KT5iRpR4BY2RpUc5SgcpZtrAgv8fUIJSpzoSQST8hYrsdxdR
+        o0wQCz9whdfVsj+hc6csgddBAIiyKPd/stDudZnuEWWlAzs=
+X-Google-Smtp-Source: AMrXdXv55mpjP5QQBtey3jZXUw1YS5LPHG8wdZAZnlAw/D2fdIJVKD8CNZ5WC9YQ3SDAT5346pAR4vVg078/1P/blEM=
+X-Received: by 2002:a17:907:c00d:b0:7ae:ef99:6fb2 with SMTP id
+ ss13-20020a170907c00d00b007aeef996fb2mr5664288ejc.761.1673112862194; Sat, 07
+ Jan 2023 09:34:22 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <81218256-5354-4b0a-6f74-7e9605131968@dunelm.org.uk>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+From:   muzimuzhi Z <muzimuzhi@gmail.com>
+Date:   Sun, 8 Jan 2023 01:34:09 +0800
+Message-ID: <CAEg0tHSLyaewkgGs0dEXfwQhKmbiO65bXZVU8t7Kn4WwJ1p0Fw@mail.gmail.com>
+Subject: Did config `branch.<name>.fetch` ever exist?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi all,
 
-Hi Phillip,
+(originally posted on stackoverflow: https://stackoverflow.com/q/75040372)
 
-Le 2023-01-06 à 09:29, Phillip Wood a écrit :
-> Hi Philippe & Erik
-> 
-> On 05/01/2023 00:11, Philippe Blain wrote:
->> Hi Phillip and Erik,
->>
->> Le 2021-12-16 à 11:44, Erik Cervin Edin a écrit :
->>> Hi Phillip,
->>>
->>> Yes, I know.
->>> It's just that I was under the impression ORIG_HEAD was to be reverted
->>> to .git/rebase-merge/orig-head at the finish of the rebase.
->>> Personally, it's the behavior I would expect.
->>>
->>> Thanks for the tips.
->>
->> I just hit the same bug (I think it qualifies as one). In fact git-rebase(1) explicitely mentions
->> that ORIG_HEAD is set to the branch tip before the rebase starts:
-> 
-> Strictly speaking that is what we do so we're documentation the
-> implemented behavior. What's not clear from the documentation is that
-> if the user run 'git reset' while rebasing then ORIG_HEAD will be
-> overwritten. 
+Git configuration `branch.<name>.fetch` is mentioned in the first
+`git-fetch` example [1]:
 
-Yes, I agree. I think we could highlight it in the doc.
+> - Update the remote-tracking branches:
+>       $ git fetch origin
+>   The above command copies all branches from the remote refs/heads/ namespace and stores them to the local refs/remotes/origin/ namespace, unless the branch..fetch option is used to specify a non-default refspec.
 
-> We could update ORIG_HEAD at the end of the rebase as
-> you suggested but I wouldn't be surprised if some else complains that
-> ORIG_HEAD no longer points to the commit that the reset while running
-> rebase. I also wonder if users would expect 'git rebase --continue'
-> to update ORIG_HEAD to point to the pre-rebase HEAD so it is
-> consistent each time rebase stops. Basically I think the situation is
-> confusing and I don't have a clear idea as to how to make it better.
-> If someone submits a patch to try and clean things up I'll happily
-> look at it but unless I'm hit by a bright idea as to how to fix it I
-> probably wont work on it myself.
+But I can't find its doc in `git-config`'s doc. Did
+`branch.<name>.fetch` ever exist?
 
-Thanks for your thoughts. I think you make good points, it's true that 
-some people might be relying on the current behaviour.
+Searching in `git-config`'s doc for configs starting with `branch.` or
+ending with `.fetch`, it seems `branch.<name>.fetch` is a typo of
+`remote.<name>.fetch`.
 
-I'll try to send a few updates to the doc to make this hopefully clearer.
+PS: That `git-fetch` example was added in commit d504f69 in 2009. [3]
 
-Cheers,
-Philippe.
+[1] https://git-scm.com/docs/git-fetch#_examples
+[2] https://git-scm.com/docs/git-config
+[3] https://github.com/git/git/commit/d504f6975d34025ed3b5478b657789410b52cdb1
+
+best regards,
+Yukai Chou
