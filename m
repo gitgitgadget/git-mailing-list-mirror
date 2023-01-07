@@ -2,99 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 54938C54EBD
-	for <git@archiver.kernel.org>; Sat,  7 Jan 2023 00:37:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 45A5FC54EBD
+	for <git@archiver.kernel.org>; Sat,  7 Jan 2023 04:45:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236387AbjAGAhF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 6 Jan 2023 19:37:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43970 "EHLO
+        id S236741AbjAGEpk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 6 Jan 2023 23:45:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236794AbjAGAgk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 6 Jan 2023 19:36:40 -0500
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7ABE240C0D
-        for <git@vger.kernel.org>; Fri,  6 Jan 2023 16:35:55 -0800 (PST)
-Received: by mail-wr1-x433.google.com with SMTP id w13so1479643wrk.9
-        for <git@vger.kernel.org>; Fri, 06 Jan 2023 16:35:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ugemgnT6eWiKyDxIeaMjSCD8aOYSsWtY9m4/jbaXhBg=;
-        b=mD8NEA1rrD/sxrBmeS0tDa/9wnW1Ov6M2I/PTQ8m1SfuHy+ufpvngJE4byhSzX7cy5
-         I/bVTiTLQK2tvxaTYHYxUj9jAWQZiYSdh6g9fqK1+qwqhRNY/IHYI5zjnNhcHy5ZQZTD
-         AFz19Ktc8v8sD9ku1pYNP5D+xNWMlNvnRB74ye/giTo/xhXQyhpdMXUqLoHv899OcwpB
-         75EqWn4QrNn1tDeGX7B95OVgYBKl6iQa3LiZBnOVv/QTIHjApNarDLqn6g8wDf0JpIex
-         LIc7+UP06QluZg1c5bVilmlIiNx/pfUCu5ea5GsV9ioFh/2OuI8CfYjTQJZEkoMzo8f5
-         FY8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ugemgnT6eWiKyDxIeaMjSCD8aOYSsWtY9m4/jbaXhBg=;
-        b=x1sc307emHDJCYAszsbHiLcE1y2f3dpFzQ5qPyYyMjJXhaXAKjqpt9AF/9DLvvWjSu
-         dqOSbwlNgoieIF1msM7LxlxLIv4ITzB6IO48MsEKQbfLMf9sDVR4C25xLYlWxcW3ryvU
-         sTe7ZR7c7mBq3gdCAwP0tW/LwxevSD3QOikAtphcW9IK5XmCrs8HuTh2h6BS2pLimFXt
-         H4D2M3omSpeiCYvue2Tfvmu6z5Js7v3OkqSbxi1CJAWi7n0zkDVI+urPw+cqAhIjb4U+
-         fhjYdB+84f8leCdnhgAyLKEYNbsztanHGZAug9WPTFoXuvT3Ve1Mzp7U4pv9ZhsMd4MS
-         xH+A==
-X-Gm-Message-State: AFqh2koWnSJDUQZnNQFcQ+vthzWLJJ5fcLZRPyIHvlM8gvblbJkCy+GV
-        MANmLgIWt1uvakewwUg0YJLj29VH7Lo=
-X-Google-Smtp-Source: AMrXdXvo4fFLvnSkBCrvcNKqjP1LDnIhDb/ZODrD+CB8IljREO1qqDj+coTe9FQf3vZVbRpumagGyw==
-X-Received: by 2002:a05:6000:501:b0:26b:8177:a5e6 with SMTP id a1-20020a056000050100b0026b8177a5e6mr33924458wrf.51.1673051753996;
-        Fri, 06 Jan 2023 16:35:53 -0800 (PST)
-Received: from [192.168.2.52] (94.red-88-14-213.dynamicip.rima-tde.net. [88.14.213.94])
-        by smtp.gmail.com with ESMTPSA id h15-20020a5d548f000000b002425dc49024sm2416463wrv.43.2023.01.06.16.35.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Jan 2023 16:35:53 -0800 (PST)
-Subject: Re: [PATCH 1/2] branch: description for orphan branch errors
+        with ESMTP id S229542AbjAGEpf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 6 Jan 2023 23:45:35 -0500
+Received: from mail-4018.proton.ch (mail-4018.proton.ch [185.70.40.18])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85795848F6
+        for <git@vger.kernel.org>; Fri,  6 Jan 2023 20:45:32 -0800 (PST)
+Date:   Sat, 07 Jan 2023 04:45:17 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
+        s=protonmail3; t=1673066729; x=1673325929;
+        bh=Q2KF8kZxPoElGpJEennh+l7+1TKhd1E2nZhfqYVtrvw=;
+        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+         Message-ID:BIMI-Selector;
+        b=VV9RWZnyYwToz0iUfaUJ+l/qm36CqIWUSUN4CCumP70SZQ4dp75oLVDSLhYhHUDJT
+         GL7PCfscCAKN0hBg7EfwsHjdtz0CfRct7OKcUpcLHsWdBMZYY0ldfr7kJFUWZ2gw8s
+         7OVw2p/u/mUG7vc0ZoujlrH45gxq9os051QnuNF5w4JYK4v3/KSuv2yVuyiLsFkBJ+
+         yMjSfTsigoPDklVnd+Royvpe+Y7BAnaF/V+6KWSZmKl8nU1SLwZqN1bjG2DOSo3LHZ
+         G7hp8I550umjqmjAoTTUExMxZw6vMiG+OzLDXidoulTmWyJ1d0bPf6JuZXg06H83MK
+         GfMGL2+TQBxww==
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        Derrick Stolee <derrickstolee@github.com>
-References: <ffd675e9-8a64-ae05-fc3b-36ae99092735@gmail.com>
- <dd86016b-3232-563b-940e-03bc36af917a@gmail.com> <xmqqy1qmhq8k.fsf@gitster.g>
- <18ca1e65-3e26-8352-cabd-daebdd0cf7f2@gmail.com> <xmqqr0wau6px.fsf@gitster.g>
- <db348ac3-571c-f6ba-c889-9f476f4ae04b@gmail.com> <xmqq8rifp63p.fsf@gitster.g>
-From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
-Message-ID: <9a050344-27ea-4f26-e66a-2795596eb11d@gmail.com>
-Date:   Sat, 7 Jan 2023 01:35:51 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+From:   Jacob Abel <jacobabel@nullpo.dev>
+Cc:     git@vger.kernel.org,
+        =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
+Subject: Re: [PATCH v6 2/4] worktree add: refactor opt exclusion tests
+Message-ID: <20230107044504.lbxphqaoaa5g6z5x@phi>
+In-Reply-To: <xmqqo7rbsuyh.fsf@gitster.g>
+References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20221220023637.29042-1-jacobabel@nullpo.dev> <20221228061539.13740-1-jacobabel@nullpo.dev> <20221228061539.13740-3-jacobabel@nullpo.dev> <xmqq5ydvpu1o.fsf@gitster.g> <20221229065142.fmfviwisjmxsey7b@phi> <xmqqa636mskf.fsf@gitster.g> <20230106063130.v4npgjzp6dwq2p3r@phi> <xmqqo7rbsuyh.fsf@gitster.g>
+Feedback-ID: 21506737:user:proton
 MIME-Version: 1.0
-In-Reply-To: <xmqq8rifp63p.fsf@gitster.g>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 23/01/06 09:34PM, Junio C Hamano wrote:
+> Jacob Abel <jacobabel@nullpo.dev> writes:
+>
+> > On 22/12/29 03:49PM, Jacob Abel wrote:
+> >>
+> >> [...]
+> >>
+> >> So from my understanding of the situation, the only two options that p=
+ass all
+> >> the existing tests are either:
+> >>
+> >> A: Use the diff in [1] without the two quote example tests included.
+> >>
+> >> B: Revert the changes to how this was done in v5 [3].
+> > ...
+> > Sorry to poke this but I wanted to confirm which path I should proceed =
+with.
+> > Both options are functionally complete and it'd just be a matter of cho=
+osing
+> > which version to push out for the revision.
+>
+> I think B. with "$@" -> "$*" (because you only want a flattened
+> stringified version of the arguments in $opt to insert into the
+> test name string) would be the more sensible avenue.  Let's not
+> over-engineer the tests---it is not the point of these new tests to
+> ensure that "git worktree add" can take arguments that require to be
+> quoted on the command line.
+>
+> Thanks.
 
-On 7/1/23 0:59, Junio C Hamano wrote:
-> Rubén Justo <rjusto@gmail.com> writes:
-> 
->> Thinking of this as a whole, perhaps after this series we can add:
-> 
-> Why "after"?  If we already know that the existing patches are
-> making things worse and need to fix the regression with a future
-> patch to make it usable again, why introduce a regression in the
-> first place?
-> 
+Perfect, Thank you. The revision should be out shortly.
 
-I'm not sure if it is so worse, and if the optimization is a fix.
-
-We're actually paying for worktrees twice in:
-reject_rebase_or_bisedt_branch() and
-replace_each_worktree_head_symref().
-
-Making the change this way makes more obvious IMHO what we are moving
-and why.
-
-Start moving the ref_exists() in 1/2, easily leads to 2/1 and this patch
-squashed with 1/2, for little gain (IMHO) and worse history.
-
-This is why I think it's a good sequence.  But I understand your point
-and I'm not opposed to doing it as you suggest if you think the current
-way doesn't pay off.
