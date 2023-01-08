@@ -2,97 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 26F25C53210
-	for <git@archiver.kernel.org>; Sun,  8 Jan 2023 07:28:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A50ECC53210
+	for <git@archiver.kernel.org>; Sun,  8 Jan 2023 08:24:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231287AbjAHH2w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Jan 2023 02:28:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36180 "EHLO
+        id S231274AbjAHIYG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Jan 2023 03:24:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230390AbjAHH2u (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jan 2023 02:28:50 -0500
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4448A1D0F6
-        for <git@vger.kernel.org>; Sat,  7 Jan 2023 23:28:49 -0800 (PST)
-Received: by mail-pj1-x1036.google.com with SMTP id b9-20020a17090a7ac900b00226ef160dcaso4406246pjl.2
-        for <git@vger.kernel.org>; Sat, 07 Jan 2023 23:28:49 -0800 (PST)
+        with ESMTP id S229716AbjAHIYE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jan 2023 03:24:04 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C296815712
+        for <git@vger.kernel.org>; Sun,  8 Jan 2023 00:24:03 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id w1so5206869wrt.8
+        for <git@vger.kernel.org>; Sun, 08 Jan 2023 00:24:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=m3nn4ZPPnPNxg6SU5s2TgpmGTHLSv8xlv6HDce7KC80=;
-        b=iPLU6+lXO+fdcbRG0lYDPUD6qx+TjUIjMO4AfDMY8CN2UCQ65mlngBBs2RZ/67WS1Z
-         paNPn8hOpHdrtB3XoMoFWb1/NVW0g8S/Ub0zf40iuv+I8Lh5DWVX26RUUpfoHIOyIuIC
-         nCKtT6NGwxZNOZvHRwb7LijUUsPXOQrJcvNLlpztFn/JGEglFmJSeaqUCSpnMNdJ9flN
-         Uba/k/66kEHPexMTsy0a2Vu0ICW8H9RJ/1ri8gmoiUKP9fYueR5n/EyIxV3uRlsTtMmD
-         hd1b/DnpVodLB56a2OVXeyjulK9dJ3dSOcLRA2fHIauxLtASvRxe8gDNhYuAmTpzc9Dk
-         HVFg==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=GytMGzeU9Ftz/VwQoyMsmg5ZVkFot3TInWqxth3UwvI=;
+        b=YedzKteKgH/zZimZeQrlJK6wPI7hXfKx4W65EvY1Ia4zxipdiSsWnRk5Bdm8B0dwRC
+         zc08UOqE8+9OZGmbDdz7nKrt+/E2yO8m8hBtYibsIpNXu7qknUonYQnoRJQl6QJDpveF
+         akVzHS9LrqSUY/+6nBX6piN6ahLhuMvEni0W44/Sg6R74lnZS0mZ/U0FH+iifTgEnOWp
+         OXsZGhyXfBt62DOqEPYggGNvYYYhp96e2etBAcaKV49I8hJr5IR1wrDZ8XxQifK44po1
+         tHvBwjYsXNoLj1pxUYVmQedqO5CXovCKBJ6e6Bwkjx2HO6J5cDzGa8aDiIdcuWOl0Qy7
+         0TAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=m3nn4ZPPnPNxg6SU5s2TgpmGTHLSv8xlv6HDce7KC80=;
-        b=239PcmGyN7VwtT8LpJdXFWTVeZm5Zc2mhPwjKxqYkR8g/uwZVau3BGAs6WGfNqZLpu
-         l5cUBTCnFgodY7/+9ff9Ybjf63W5N6n+ih+oSsnqytTwj2YjwgtmQezTu+FtufGFobFT
-         sigmK5as69h1uZZKYEWFOtcJh3fWIop5CarvTSX1fhGAxmpJAGUT6fg+TcfNjsY5Iug7
-         nC4nc1OnB7vS6n2TWIEK2q3rvvvCdv5msJX6Z9toTwXrTSEj329dlRZtYyOFkyO59/9Y
-         QcJtkmHwv3pOq7CrDIGMyuOtArAb/rABupWdoRdOUzDbA08b0Uow94OnxJlnMkCZyxc8
-         UOyQ==
-X-Gm-Message-State: AFqh2ko2OjxXyGXpxthwDX9TYSJwgZZRQHGfw1Dl235Bn4R7wcLuWDoY
-        KxUJzFn2GROUzXtgzvjjugk=
-X-Google-Smtp-Source: AMrXdXtcuqDNhoQYGAxZn3M4iuJND+rYJL++ho9nA275w9nF+/MG30/j1lbbROQFkmOOsp2qqqDBBg==
-X-Received: by 2002:a17:902:8484:b0:192:d631:be14 with SMTP id c4-20020a170902848400b00192d631be14mr19011438plo.13.1673162928595;
-        Sat, 07 Jan 2023 23:28:48 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id o3-20020a170902d4c300b001886ff822ffsm3700377plg.186.2023.01.07.23.28.48
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GytMGzeU9Ftz/VwQoyMsmg5ZVkFot3TInWqxth3UwvI=;
+        b=roHNj3Ddy1W6OkEzUluPV6c1fL3dePqPeyCzSt/nxN0VENAQ2zxKAsY6fo95r0kAWA
+         i0KWGnSQcOHPVehii5gLGrOq8+quSuCS6EF6J8vKE4/MhqGv8i1TM/hVf3o4zRO9XW+B
+         781uRkEmSbmhKRsGiIGxhKoM8Yc8femBhcqTFjL5BeIcartcCSLGiToYMIOwpMVOBc+q
+         IblFmueXWn3CDg6NDC7WjlefTzOjfLlr9rDqPMLzmh8hBySRDqq7WN0roxFf81/IldbO
+         Nt9irxONkdNfnZ3hycKtwq9ZMffMp/TamYdrR/josm368uF8yUlRdZtE2cULIq1hvZWH
+         ZN9g==
+X-Gm-Message-State: AFqh2kqywO6VTr/bRHbZDOLihTkgBv7YlJoxWsOyZdAI33c00L+dhjBX
+        G2+CpFDwe58pzZzSVYq/s50FWu38Nkg=
+X-Google-Smtp-Source: AMrXdXuQ9Q1IV8XsIU9FNVfMqs67TVrKRUe0F5ADlGUJf/+IpTi3mUXkQ7EREMWeXPPF/JGfUzAVxQ==
+X-Received: by 2002:adf:f402:0:b0:24c:f1ac:9a3 with SMTP id g2-20020adff402000000b0024cf1ac09a3mr34944957wro.27.1673166242220;
+        Sun, 08 Jan 2023 00:24:02 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q11-20020adf9dcb000000b00268aae5fb5bsm5637069wre.3.2023.01.08.00.24.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Jan 2023 23:28:48 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 2/4] do full type check in BARF_UNLESS_COPYABLE
-References: <efe7ec20-201e-a1c1-8e16-2f714a0aee8e@web.de>
-        <9bc1bd74-f72c-1b43-df7c-950815babb03@web.de>
-        <4f161041-b299-f79a-e01b-cc00e2880850@web.de>
-Date:   Sun, 08 Jan 2023 16:28:48 +0900
-In-Reply-To: <4f161041-b299-f79a-e01b-cc00e2880850@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sun, 1 Jan 2023 22:11:20 +0100")
-Message-ID: <xmqqy1qdxz67.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        Sun, 08 Jan 2023 00:24:01 -0800 (PST)
+Message-Id: <pull.1422.git.git.1673166241185.gitgitgadget@gmail.com>
+From:   "Yutaro Ohno via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 08 Jan 2023 08:24:01 +0000
+Subject: [PATCH] doc: use "git switch -c" rather than "git checkout -b"
+ consistently
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Yutaro Ohno <yutaro.ono.418@gmail.com>,
+        Yutaro Ohno <yutaro.ono.418@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+From: Yutaro Ohno <yutaro.ono.418@gmail.com>
 
-> Use __builtin_types_compatible_p to perform a full type check if
-> possible.  Otherwise fall back to the old size comparison, but add a
-> non-evaluated assignment to catch more type mismatches.  It doesn't flag
-> copies between arrays with different signedness, but that's as close to
-> a full type check as it gets without the builtin, as far as I can see.
+In the "DETACHED HEAD" section in the git-checkout doc, it suggests
+using "git checkout -b <branch-name>" to create a new branch on the
+detached head.
 
-This seems to unfortunately break builds for compat/mingw.c
+On the other hand, when you checkout a commit that is not at the tip of
+any named branch (e.g., when you checkout a tag), git suggests using
+"git switch -c <branch-name>".
 
-cf. https://github.com/git/git/actions/runs/3865788736/jobs/6589504628#step:4:374
+Use "git switch -c" and fix this inconsistency.
 
-   1848 |                 COPY_ARRAY(&argv2[1], &argv[1], argc);
+Signed-off-by: Yutaro Ohno <yutaro.ono.418@gmail.com>
+---
+    doc: use "git switch -c" rather than "git checkout -b" consistently
 
-where the two arrays are "char *const *argv" in the parameter list, and
-a local variable
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1422%2Fohno418%2Fimprove-git-checkout-doc-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1422/ohno418/improve-git-checkout-doc-v1
+Pull-Request: https://github.com/git/git/pull/1422
 
-#ifndef _MSC_VER
-		const
-#endif
-		char **argv2;
+ Documentation/git-checkout.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-It seems that (const char **) and (char **) are compatible but the
-pointers themselves being const breaks the type compatibility?
-Perhaps the latter should be "(optionally const) char *const *argv2"?
+diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
+index 4cb9d555b4b..ba3d6164847 100644
+--- a/Documentation/git-checkout.txt
++++ b/Documentation/git-checkout.txt
+@@ -477,9 +477,9 @@ before that happens. If we have not yet moved away from commit `f`,
+ any of these will create a reference to it:
+ 
+ ------------
+-$ git checkout -b foo   <1>
+-$ git branch foo        <2>
+-$ git tag foo           <3>
++$ git switch -c foo   <1>
++$ git branch foo      <2>
++$ git tag foo         <3>
+ ------------
+ 
+ <1> creates a new branch `foo`, which refers to commit `f`, and then
 
+base-commit: 2b4f5a4e4bb102ac8d967cea653ed753b608193c
+-- 
+gitgitgadget
