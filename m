@@ -2,91 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1970BC53210
-	for <git@archiver.kernel.org>; Sun,  8 Jan 2023 04:36:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B89BC53210
+	for <git@archiver.kernel.org>; Sun,  8 Jan 2023 06:26:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231252AbjAHEgB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 7 Jan 2023 23:36:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49130 "EHLO
+        id S230460AbjAHGZp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Jan 2023 01:25:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229745AbjAHEf6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Jan 2023 23:35:58 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 853F521A0
-        for <git@vger.kernel.org>; Sat,  7 Jan 2023 20:35:51 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id b9-20020a17090a7ac900b00226ef160dcaso4228551pjl.2
-        for <git@vger.kernel.org>; Sat, 07 Jan 2023 20:35:51 -0800 (PST)
+        with ESMTP id S232419AbjAHGZA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jan 2023 01:25:00 -0500
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84D2A27199
+        for <git@vger.kernel.org>; Sat,  7 Jan 2023 22:24:59 -0800 (PST)
+Received: by mail-pl1-x632.google.com with SMTP id v23so1241049plo.1
+        for <git@vger.kernel.org>; Sat, 07 Jan 2023 22:24:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kUcEWEqsP8xZRc+QX2deuLIlocRQY7zr2PBv19BXFLk=;
-        b=cidAAH09ujFLEpQlwWtvie3xo/wXfOv97ISnKBdKPcmJCr//lyUpf/vTLPl1N0YfjJ
-         c5fs1cpnNFf7sMpB4Vb5cVueeXe0yK8uC0ZXS/ptOWPB8ftjNWTboiLdVCcOJ0KgRfM0
-         aQvHDPLjyjPS3U+3/ULvYyiSmn1z57umSIAWicPFIzkxbw+WW8aIMu6RxUYWKvc0BeKC
-         ycUranROHynJAk/nrOTK+MwCjT/QxHdgI+ITep8PxdpwMfHmI0VRJfJZT6jtcSwKyKiS
-         +BD5PRuejkxD6Q9Wruu03nP7IRYI8HmWpUgfS0VyHmrkmTmIQpD5SJSTCtOxHyqMWW38
-         sWGw==
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GMA05UlF9ER51m5ZtVyHeDW7DSWz0Um+7ejRazix8Zw=;
+        b=pqoloDrK/7OFaU1t0Ryrpos2CFxogvp8ttR8iOEy0bVhY8bYPR9So855Gu/B5HsCEW
+         9pHVbsWu04PGA9QHBkRuvd5XCR1RE9lIl5i7me74D2kD992u/NzSArHEPDUZyvsXMPZZ
+         VqhN4SqES5kQHh7m9LToDrWw+Svn37jBer0laGsbm246bhzLr1QSb/eDodNe5bQKGQqF
+         BRAH2vZ5/yRfmQE6S+AmdVbhwz6oAKblgC+k0+Fdm/ewcHgqJXlVb31FlT+5/RDlMQSY
+         HgP0AeLUbkBOXUqtVwgJws2jbLLL6/mYhcBmVwsn4qX9RHXtPmmfksclyDAIYHB7eOWS
+         q9Nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=kUcEWEqsP8xZRc+QX2deuLIlocRQY7zr2PBv19BXFLk=;
-        b=sy7Qi38dnRxXzkfy8icc+KSaeXVjENGPFZxJ2gL9GBbi3Dg1XcxGgr3InTbYiMNgBW
-         d+F+My7KgwKqAZWDn0lKDpKVQ2INa6q+PsSpz9HUnIPjo+b+GIRIJ9MfDzwYbHXB79qM
-         YIeeoWOJGqEvGANo0WFOUbBrEA+J4PtOGsia/b8WAAaZeJ3dEdMskGz0PMBQcMMMPi93
-         OfO9OvmYzgMNYjRfSbLLN5fItYFTJUoecKHtB08TQS5d1lIBVoFQAl7OVYwtAre55j0S
-         X/hOef8lVZUc/ZmhOmP3jTF+xlkWN92yxdGrrGE93GrhvIznZoy6HQdhZYRTiwPxZwWn
-         nBiQ==
-X-Gm-Message-State: AFqh2kq7GGRlx4YDh4jqUqvP1spr3dRmb1Gfd6wUIG5sKhVK6wOrGfqK
-        kgdku+kJD11m5T898p0Q8ts=
-X-Google-Smtp-Source: AMrXdXsXDXtUi6Lvzm7uN/eWb+hl8nKBLVqudWD4OIQYQTYgV2eMqKmhxYqws9GfWuAlQ8yO4lGRhw==
-X-Received: by 2002:a05:6a20:4904:b0:9d:efbf:8156 with SMTP id ft4-20020a056a20490400b0009defbf8156mr79706751pzb.31.1673152550736;
-        Sat, 07 Jan 2023 20:35:50 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id q2-20020a63cc42000000b004788780dd8esm3029694pgi.63.2023.01.07.20.35.50
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GMA05UlF9ER51m5ZtVyHeDW7DSWz0Um+7ejRazix8Zw=;
+        b=ZR61646060WN7g1P5fW32WVmZBVbyZdETxyNJvGv0n6ePrVNQwIOwlPbV3WMKYjIA0
+         4wJ8YwhTEQfaOQxQhlWzyWCZj0jCue7Zbq4+Kp3CULlwaB/GW48MfeWKZWYcbbQ6/QeW
+         wVxQ9VKjfJnCMlAFwvSWoRAGNYURCsmXKmz+N/ZqGui3KM9lLyrYRQHx9qKsGSz5YK1N
+         KFN8dSfgyrDl/hyMCR307nNU87t0pSAlaDamkb3Yc4p3o5SlbttEp4f9xVOvvrUoUKdG
+         ZAlG7nNPod/IG+D/dwGw4xmFFGNQyI4ZDz7NItsQim+iiqC9HXMPIAGXEzcSgbk409Tm
+         j3VA==
+X-Gm-Message-State: AFqh2koDRH1RaTlvQ73ApNIZa5U4ptT7zd6YMzUM6P2kgT3KVn6eXG/n
+        N2VqKnUPsSNfK8EF1ibRZjDhzUf0gRA=
+X-Google-Smtp-Source: AMrXdXtLe+U9wP1lifbuxEffGu1XtQwwQ74MqIFm2lOC35HVvysZY7nPSWC4HEJYrIXX36oKbG8IdQ==
+X-Received: by 2002:a17:903:2c2:b0:189:c8d9:ed30 with SMTP id s2-20020a17090302c200b00189c8d9ed30mr57714660plk.24.1673159098562;
+        Sat, 07 Jan 2023 22:24:58 -0800 (PST)
+Received: from localhost.localdomain (192-184-217-7.fiber.dynamic.sonic.net. [192.184.217.7])
+        by smtp.gmail.com with ESMTPSA id l9-20020a170903120900b00189618fc2d8sm3578788plh.242.2023.01.07.22.24.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Jan 2023 20:35:50 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     muzimuzhi Z <muzimuzhi@gmail.com>,
-        Clemens Buchacher <drizzd@aon.at>
-Cc:     git@vger.kernel.org
-Subject: Re: Did config `branch.<name>.fetch` ever exist?
-References: <CAEg0tHSLyaewkgGs0dEXfwQhKmbiO65bXZVU8t7Kn4WwJ1p0Fw@mail.gmail.com>
-Date:   Sun, 08 Jan 2023 13:35:50 +0900
-In-Reply-To: <CAEg0tHSLyaewkgGs0dEXfwQhKmbiO65bXZVU8t7Kn4WwJ1p0Fw@mail.gmail.com>
-        (muzimuzhi Z.'s message of "Sun, 8 Jan 2023 01:34:09 +0800")
-Message-ID: <xmqqfsclzlqx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Sat, 07 Jan 2023 22:24:57 -0800 (PST)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH] grep: correctly identify utf-8 characters with \{b,w} in -P
+Date:   Sat,  7 Jan 2023 22:23:35 -0800
+Message-Id: <20230108062335.72114-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.37.1 (Apple Git-137.1)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-muzimuzhi Z <muzimuzhi@gmail.com> writes:
+When UTF is enabled for a PCRE match, the corresponding flags are
+added to the pcre2_compile() call, but PCRE2_UCP wasn't included.
 
-> Git configuration `branch.<name>.fetch` is mentioned in the first
-> `git-fetch` example [1]:
->
->> - Update the remote-tracking branches:
->>       $ git fetch origin
->>   The above command copies all branches from the remote
->>   refs/heads/ namespace and stores them to the local
->>   refs/remotes/origin/ namespace, unless the branch.<name>.fetch
->>   option is used to specify a non-default refspec.
->
-> But I can't find its doc in `git-config`'s doc. Did
-> `branch.<name>.fetch` ever exist?
->
-> Searching in `git-config`'s doc for configs starting with `branch.` or
-> ending with `.fetch`, it seems `branch.<name>.fetch` is a typo of
-> `remote.<name>.fetch`.
+This prevents extending the meaning of the character classes to
+include those new valid characters and therefore result in failed
+matches for expressions that rely on that extention, for ex:
 
-Correct.  Care to send a patch to correct it?
+  $ git grep -P '\bÆvar'
 
-Thanks.
+Add PCRE2_UCP so that \w will include Æ and therefore \b could
+correctly match the beginning of that word.
+
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+ grep.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/grep.c b/grep.c
+index 06eed69493..1687f65b64 100644
+--- a/grep.c
++++ b/grep.c
+@@ -293,7 +293,7 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
+ 		options |= PCRE2_CASELESS;
+ 	}
+ 	if (!opt->ignore_locale && is_utf8_locale() && !literal)
+-		options |= (PCRE2_UTF | PCRE2_MATCH_INVALID_UTF);
++		options |= (PCRE2_UTF | PCRE2_UCP | PCRE2_MATCH_INVALID_UTF);
+ 
+ #ifndef GIT_PCRE2_VERSION_10_36_OR_HIGHER
+ 	/* Work around https://bugs.exim.org/show_bug.cgi?id=2642 fixed in 10.36 */
+-- 
+2.37.1 (Apple Git-137.1)
 
