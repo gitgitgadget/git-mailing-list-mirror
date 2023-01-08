@@ -2,112 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E73C7C53210
-	for <git@archiver.kernel.org>; Sun,  8 Jan 2023 09:35:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AA0BAC53210
+	for <git@archiver.kernel.org>; Sun,  8 Jan 2023 09:59:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231295AbjAHJfk (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Jan 2023 04:35:40 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51712 "EHLO
+        id S233221AbjAHJ6x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Jan 2023 04:58:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58144 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229520AbjAHJfh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jan 2023 04:35:37 -0500
-X-Greylist: delayed 475 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 08 Jan 2023 01:35:34 PST
-Received: from denver.dinauz.org (denver.dinauz.org [37.59.56.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7152EFD28
-        for <git@vger.kernel.org>; Sun,  8 Jan 2023 01:35:34 -0800 (PST)
-Received: from localhost (localhost.localdomain [127.0.0.1])
-        by denver.dinauz.org (Postfix) with ESMTP id BFED060581
-        for <git@vger.kernel.org>; Sun,  8 Jan 2023 10:27:37 +0100 (CET)
-Received: from denver.dinauz.org ([127.0.0.1])
-        by localhost (denver.dinauz.org [127.0.0.1]) (amavisd-new, port 10024)
-        with ESMTP id MMT8doI7IVQ4 for <git@vger.kernel.org>;
-        Sun,  8 Jan 2023 10:27:37 +0100 (CET)
-Received: from [192.168.1.6] (176.143-2-105.abo.bbox.fr [176.143.2.105])
-        by denver.dinauz.org (Postfix) with ESMTPSA id 97CBE6047E
-        for <git@vger.kernel.org>; Sun,  8 Jan 2023 10:27:37 +0100 (CET)
-Message-ID: <b1051e73-e663-82bf-bda6-015e64102248@trigofacile.com>
-Date:   Sun, 8 Jan 2023 10:27:37 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.1
-To:     git@vger.kernel.org
-From:   =?UTF-8?Q?Julien_=c3=89LIE?= <julien@trigofacile.com>
-Subject: Ignored commits appearing in git blame
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        with ESMTP id S233035AbjAHJ6s (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jan 2023 04:58:48 -0500
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71A28B4B5
+        for <git@vger.kernel.org>; Sun,  8 Jan 2023 01:58:47 -0800 (PST)
+Received: by mail-wr1-x429.google.com with SMTP id j7so325839wrn.9
+        for <git@vger.kernel.org>; Sun, 08 Jan 2023 01:58:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=9jpiAshJMwawFQWlAcjvAUPgfrSFdTV/qUt4xh4RNVc=;
+        b=N/AXEiO4FQ/S06FObhUQVD+hqAafWIpN/QQ1HENP3Mg1YgMzq8TRShCk9hPXcJYEsl
+         oYmYtoPsxlpIAucaSDCCNgMe526PrhV+pbq2jf3gNk+fTQPtfobUuv+sWe2j667kuz5r
+         U4A2xKu/Q8GPfJ8EJ0voYebTXP21dgO8PcBxeXcm0jGYpwitESpGg0RXbaEPXVag7l9R
+         3ervemvPwkyl5gi9HPm8GCQHTHwbLCNPquoN4AjFdVrPkXqVtOOSFj5SPmizHRqAl1yX
+         CKKQJgnhrsEV0J4gNeXcwps517GFp4yfiQ4+Om8wIcqWz5NkW9TnKE31kyopl0LKDjpf
+         91Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9jpiAshJMwawFQWlAcjvAUPgfrSFdTV/qUt4xh4RNVc=;
+        b=B5Ti+RLh2R1ZO14CnGf4w6dpoRXUsAEwxc5LrTo9BumNhWUg7GJrort4rVpXnzalDZ
+         AHlt2HPirb5dloBK9+mV9+YL779GwbxQwyPiT9oRWSeofOUNBf2RIZISMkDT6mRwMAtt
+         KdlZpeELqkWsRCLaFoWSbBtQ0C/wuBiUOby9fpDKalROqGR9S6x1BOP39++n3GAnZjpC
+         Fvwr2whjthFw3y4WjH/bvg5HD7oXPozm841uWXQYtvmjKTf7oJttwD0eJcP3yZPESLqE
+         wGvqa0t8C43p36373F2yoO4eXPt7GAalPe0nd/NdSECxcGEqoqgHC7DaoG3nZWindXd4
+         X8sQ==
+X-Gm-Message-State: AFqh2kpoQVWlWSve3NyFUdGL3ikgk1lBMMCBluUPJfHHt3+pmgEV59Vt
+        vyn+qeRwUA2VUFDw6Gw4PPuNkwB6bwY=
+X-Google-Smtp-Source: AMrXdXtvQ1DEWMs4lEkz8i7khKX/YgtFoK6pfmN3KHU8sHS1zBHTZAxc+LSirSurZ8AxwUYZNF0E9Q==
+X-Received: by 2002:adf:a2d1:0:b0:2bb:e7ef:ed8a with SMTP id t17-20020adfa2d1000000b002bbe7efed8amr1437271wra.50.1673171925793;
+        Sun, 08 Jan 2023 01:58:45 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id l8-20020a5d6688000000b0029e1aa67fd2sm5637463wru.115.2023.01.08.01.58.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Jan 2023 01:58:45 -0800 (PST)
+Message-Id: <pull.1457.git.1673171924727.gitgitgadget@gmail.com>
+From:   "Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sun, 08 Jan 2023 09:58:44 +0000
+Subject: [PATCH] githooks: discuss Git operations in foreign repositories
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Preston Tunnell Wilson <prestontunnellwilson@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+From: Eric Sunshine <sunshine@sunshineco.com>
 
-I'm facing an issue with the use of "git blame" which shows commits marked to be ignored.
+Hook authors are periodically caught off-guard by difficult-to-diagnose
+errors when their hook invokes Git commands in a repository other than
+the local one. In particular, Git environment variables, such as GIT_DIR
+and GIT_WORK_TREE, which reference the local repository cause the Git
+commands to operate on the local repository rather than on the
+repository which the author intended. This is true whether the
+environment variables have been set manually by the user or
+automatically by Git itself. The same problem crops up when a hook
+invokes Git commands in a different worktree of the same repository, as
+well.
 
-We have a .git-blame-ignore-revs file that can be retrievable at <https://github.com/InterNetNews/inn/blob/main/.git-blame-ignore-revs>.
+Recommended best-practice[1,2,3,4,5,6] for avoiding this problem is for
+the hook to ensure that Git variables are unset before invoking Git
+commands in foreign repositories or other worktrees:
 
-The Git command line I'm using is:
-     git blame --ignore-revs-file .git-blame-ignore-revs radius.c
+    unset $(git rev-parse --local-env-vars)
 
-Here is an extract where commit 36944f2b16 appears at line 59, though it should be ignored (present in .git-blame-ignore-revs):
+However, this advice is not documented anywhere. Rectify this
+shortcoming by mentioning it in githooks.txt documentation.
 
-8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  50)     int radport;
-8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  51)     char *lochost;
-a9d899ddbe (Russ Allbery       1999-11-29 01:40:47 +0000  52)     int locport;
-8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  53)
-8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  54)     char *prefix, *suffix; /* futz with the username, if necessary */
-9f21a39f37 (Katsuhiro Kondou   1999-06-12 09:33:48 +0000  55)     int ignore_source;
-d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  56)
-d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  57)     struct _rad_config_t *next; /* point to any additional servers */
-8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  58) } rad_config_t;
-36944f2b16 (Julien ÉLIE        2021-10-31 10:04:59 +0100  59)
-d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  60) typedef struct _sending_t {
-d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  61)     auth_req req;
-d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  62)     int reqlen;
+[1]: https://lore.kernel.org/git/YFuHd1MMlJAvtdzb@coredump.intra.peff.net/
+[2]: https://lore.kernel.org/git/20200228190218.GC1408759@coredump.intra.peff.net/
+[3]: https://lore.kernel.org/git/20190516221702.GA11784@sigill.intra.peff.net/
+[4]: https://lore.kernel.org/git/20190422162127.GC9680@sigill.intra.peff.net/
+[5]: https://lore.kernel.org/git/20180716183942.GB22298@sigill.intra.peff.net/
+[6]: https://lore.kernel.org/git/20150203163235.GA9325@peff.net/
 
+Signed-off-by: Eric Sunshine <sunshine@sunshineco.com>
+---
+    githooks: discuss Git operations in foreign repositories
 
-When running git blame without ignoring revisions, commit 36944f2b16 appears at lines 54, 57 and 59:
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1457%2Fsunshineco%2Fhookenv-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1457/sunshineco/hookenv-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1457
 
-8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  50)     int radport;
-8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  51)     char *lochost;
-a9d899ddbe (Russ Allbery       1999-11-29 01:40:47 +0000  52)     int locport;
-8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  53)
-36944f2b16 (Julien ÉLIE        2021-10-31 10:04:59 +0100  54)     char *prefix, *suffix; /* futz with the username, if necessary */
-9f21a39f37 (Katsuhiro Kondou   1999-06-12 09:33:48 +0000  55)     int ignore_source;
-d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  56)
-36944f2b16 (Julien ÉLIE        2021-10-31 10:04:59 +0100  57)     struct _rad_config_t *next; /* point to any additional servers */
-8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  58) } rad_config_t;
-36944f2b16 (Julien ÉLIE        2021-10-31 10:04:59 +0100  59)
-d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  60) typedef struct _sending_t {
-d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  61)     auth_req req;
-d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  62)     int reqlen;
+ Documentation/githooks.txt | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index a16e62bc8c8..6e9a5420b7c 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -31,6 +31,17 @@ Hooks can get their arguments via the environment, command-line
+ arguments, and stdin. See the documentation for each hook below for
+ details.
+ 
++If your hook needs to invoke Git commands in a foreign repository or in a
++different working tree of the same repository, then it should clear local Git
++environment variables, such as `GIT_DIR`, `GIT_WORK_TREE`, etc., which could
++interfere with Git operations in the foreign repository since those variables
++will be referencing the local repository and working tree. For example:
++
++------------
++local_desc=$(git describe)
++foreign_desc=$(unset $(git rev-parse --local-env-vars); git -C ../foreign-repo describe)
++------------
++
+ `git init` may copy hooks to the new repository, depending on its
+ configuration. See the "TEMPLATE DIRECTORY" section in
+ linkgit:git-init[1] for details. When the rest of this document refers
 
-Shouldn't 36944f2b16 have disappeared from the output at line 59?
-
-It should have been d65e228465 which already had that line, as it can be seen in the commit (line 53 at that time):
-   https://github.com/InterNetNews/inn/blob/d65e228465700ff044b75aecacb7062d2a1250f9/authprogs/radius.c
-
-
-The result of that command is the same as the one GitHub shows; you can therefore find the whole ouput here:
-
-     https://github.com/InterNetNews/inn/blame/main/authprogs/radius.c
-
-Commit 36944f2b16 is mentioned at lines 59, 129, 144, 293, etc. though present in .git-blame-ignore-revs.
-Yet, that very commit is correctly ignored at other places of the same file.
-
-Other files and other commits in the project are also affected.  I can give more examples if needed.
-
-
-Is it the expected behaviour of "git blame"?
-Is there a reason for these commits to appear in some portions of the blame output?
-
-
-Thanks beforehand,
-
+base-commit: a38d39a4c50d1275833aba54c4dbdfce9e2e9ca1
 -- 
-Julien ÉLIE
-
-« – Cet homme qui est sorti du palais, nous renseignera peut-être sur la
-     façon d'y entrer. Suivons-le.
-   – Mais… Il sait sortir d'accord, mais rien ne prouve qu'il sache
-     entrer, et… » (Astérix)
+gitgitgadget
