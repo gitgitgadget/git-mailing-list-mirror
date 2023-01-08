@@ -2,63 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9309BC46467
-	for <git@archiver.kernel.org>; Sun,  8 Jan 2023 02:46:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1970BC53210
+	for <git@archiver.kernel.org>; Sun,  8 Jan 2023 04:36:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232889AbjAHCen (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 7 Jan 2023 21:34:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57830 "EHLO
+        id S231252AbjAHEgB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 7 Jan 2023 23:36:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230390AbjAHCel (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 7 Jan 2023 21:34:41 -0500
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 973991DF32
-        for <git@vger.kernel.org>; Sat,  7 Jan 2023 18:34:40 -0800 (PST)
-Received: by mail-pj1-x102b.google.com with SMTP id dw9so3956578pjb.5
-        for <git@vger.kernel.org>; Sat, 07 Jan 2023 18:34:40 -0800 (PST)
+        with ESMTP id S229745AbjAHEf6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 7 Jan 2023 23:35:58 -0500
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 853F521A0
+        for <git@vger.kernel.org>; Sat,  7 Jan 2023 20:35:51 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id b9-20020a17090a7ac900b00226ef160dcaso4228551pjl.2
+        for <git@vger.kernel.org>; Sat, 07 Jan 2023 20:35:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mbcBmXAGqRwqa9vgftk8oVJx+AEhcjD7FZ8gyDqsewo=;
-        b=N+rmqd47Gk8DJCfX1H4W1cXlW5hYt9gFr116+PP+abbW/b9E2pz83te3XBGkXDgR5H
-         j1Z0uGmUorUCNAK2VuYB+2lFcbaGK7e5DIn+RIKnpJlsoWtvtS3UPjPkh+UlxhpyycZc
-         tWOra4RGv2OPxuq1t3nI2kR3RjSrm7nS5j/r7oIzn+VD1qoPqnMcReOWvtEEzy1SpNba
-         S4pBLinnhjvXr3Y5zXOX3ASToXFaRuPii9Rzw2VmtaJkzBTBSDxp99DHjwKjsSDbm3lx
-         CVHlFDUSuAIkRxcCuRvAzp0rtkRhSKOXWBhbo3orrpkP38zKXky92KgCsHR4J+psKiY8
-         fThw==
+        bh=kUcEWEqsP8xZRc+QX2deuLIlocRQY7zr2PBv19BXFLk=;
+        b=cidAAH09ujFLEpQlwWtvie3xo/wXfOv97ISnKBdKPcmJCr//lyUpf/vTLPl1N0YfjJ
+         c5fs1cpnNFf7sMpB4Vb5cVueeXe0yK8uC0ZXS/ptOWPB8ftjNWTboiLdVCcOJ0KgRfM0
+         aQvHDPLjyjPS3U+3/ULvYyiSmn1z57umSIAWicPFIzkxbw+WW8aIMu6RxUYWKvc0BeKC
+         ycUranROHynJAk/nrOTK+MwCjT/QxHdgI+ITep8PxdpwMfHmI0VRJfJZT6jtcSwKyKiS
+         +BD5PRuejkxD6Q9Wruu03nP7IRYI8HmWpUgfS0VyHmrkmTmIQpD5SJSTCtOxHyqMWW38
+         sWGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=mbcBmXAGqRwqa9vgftk8oVJx+AEhcjD7FZ8gyDqsewo=;
-        b=NpsU98PVlH4TuBNoRkGCHWofcL3bk+lKMEHhFYcJK66GElUzv3B0l09EuzoxZAGpMR
-         EzD4cEYG45Ss7jW+cu1zLxpQfZ+RMgNiQgf1Ti9QDONPq6mU01zkwZF/BD6g9oMrEomk
-         NPNtW9mj6qrLo/xneF2TMcfTYlXhlcaHdSDBnz0hjmtpbOkfQk0DVr8pK5E7kUV5Jk6O
-         odrGpobyBYsMHPvzUCJbCI4J1qoQg+XBQXJ4ETMS09/62Ztr2+6AMS96k/NG947t3h4S
-         eqen24d3g+h0Di55jkXh9HN1rksQd6R21+BcuQ5xwvFotyPXa88tosl5aUpN4ikZ65JS
-         Ahjg==
-X-Gm-Message-State: AFqh2kpeA6YDki115gX1eFkofS4kY/7KnNpOBJBxLjq3D9aV2wCpHlRz
-        zsB+RM5m/CMNyVfC+5suau7J36ERP2R1JQ==
-X-Google-Smtp-Source: AMrXdXvelmGlhphSc5AO4cP5JcZvz0j0Ze4J137eXlzXZJB24M1Rv/DIieU/6FgHifA43cbGEF55TA==
-X-Received: by 2002:a17:902:f80c:b0:189:ea4c:e414 with SMTP id ix12-20020a170902f80c00b00189ea4ce414mr65753158plb.61.1673145279938;
-        Sat, 07 Jan 2023 18:34:39 -0800 (PST)
+        bh=kUcEWEqsP8xZRc+QX2deuLIlocRQY7zr2PBv19BXFLk=;
+        b=sy7Qi38dnRxXzkfy8icc+KSaeXVjENGPFZxJ2gL9GBbi3Dg1XcxGgr3InTbYiMNgBW
+         d+F+My7KgwKqAZWDn0lKDpKVQ2INa6q+PsSpz9HUnIPjo+b+GIRIJ9MfDzwYbHXB79qM
+         YIeeoWOJGqEvGANo0WFOUbBrEA+J4PtOGsia/b8WAAaZeJ3dEdMskGz0PMBQcMMMPi93
+         OfO9OvmYzgMNYjRfSbLLN5fItYFTJUoecKHtB08TQS5d1lIBVoFQAl7OVYwtAre55j0S
+         X/hOef8lVZUc/ZmhOmP3jTF+xlkWN92yxdGrrGE93GrhvIznZoy6HQdhZYRTiwPxZwWn
+         nBiQ==
+X-Gm-Message-State: AFqh2kq7GGRlx4YDh4jqUqvP1spr3dRmb1Gfd6wUIG5sKhVK6wOrGfqK
+        kgdku+kJD11m5T898p0Q8ts=
+X-Google-Smtp-Source: AMrXdXsXDXtUi6Lvzm7uN/eWb+hl8nKBLVqudWD4OIQYQTYgV2eMqKmhxYqws9GfWuAlQ8yO4lGRhw==
+X-Received: by 2002:a05:6a20:4904:b0:9d:efbf:8156 with SMTP id ft4-20020a056a20490400b0009defbf8156mr79706751pzb.31.1673152550736;
+        Sat, 07 Jan 2023 20:35:50 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id d11-20020a170902cecb00b001925016e34bsm3428308plg.79.2023.01.07.18.34.39
+        by smtp.gmail.com with ESMTPSA id q2-20020a63cc42000000b004788780dd8esm3029694pgi.63.2023.01.07.20.35.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Jan 2023 18:34:39 -0800 (PST)
+        Sat, 07 Jan 2023 20:35:50 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     demerphq <demerphq@gmail.com>
-Cc:     Git <git@vger.kernel.org>
-Subject: Re: should git rev-parse -q --verify on a range produce output?
-References: <CANgJU+Vo3B=YuqgWVgiRMMiBwTFEh98O0LSJJ+ES6EM=MP4Cew@mail.gmail.com>
-Date:   Sun, 08 Jan 2023 11:34:38 +0900
-In-Reply-To: <CANgJU+Vo3B=YuqgWVgiRMMiBwTFEh98O0LSJJ+ES6EM=MP4Cew@mail.gmail.com>
-        (demerphq@gmail.com's message of "Sun, 8 Jan 2023 00:03:55 +0100")
-Message-ID: <xmqqmt6tzrcx.fsf@gitster.g>
+To:     muzimuzhi Z <muzimuzhi@gmail.com>,
+        Clemens Buchacher <drizzd@aon.at>
+Cc:     git@vger.kernel.org
+Subject: Re: Did config `branch.<name>.fetch` ever exist?
+References: <CAEg0tHSLyaewkgGs0dEXfwQhKmbiO65bXZVU8t7Kn4WwJ1p0Fw@mail.gmail.com>
+Date:   Sun, 08 Jan 2023 13:35:50 +0900
+In-Reply-To: <CAEg0tHSLyaewkgGs0dEXfwQhKmbiO65bXZVU8t7Kn4WwJ1p0Fw@mail.gmail.com>
+        (muzimuzhi Z.'s message of "Sun, 8 Jan 2023 01:34:09 +0800")
+Message-ID: <xmqqfsclzlqx.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,29 +67,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-demerphq <demerphq@gmail.com> writes:
+muzimuzhi Z <muzimuzhi@gmail.com> writes:
 
-> I was curious if it is a bug that `rev-parse -q --verify` produces
-> output for a commit range, and only reveals it is supposed to be used
-> with a single commit as an error message?
+> Git configuration `branch.<name>.fetch` is mentioned in the first
+> `git-fetch` example [1]:
+>
+>> - Update the remote-tracking branches:
+>>       $ git fetch origin
+>>   The above command copies all branches from the remote
+>>   refs/heads/ namespace and stores them to the local
+>>   refs/remotes/origin/ namespace, unless the branch.<name>.fetch
+>>   option is used to specify a non-default refspec.
+>
+> But I can't find its doc in `git-config`'s doc. Did
+> `branch.<name>.fetch` ever exist?
+>
+> Searching in `git-config`'s doc for configs starting with `branch.` or
+> ending with `.fetch`, it seems `branch.<name>.fetch` is a typo of
+> `remote.<name>.fetch`.
 
-I know that the original scenario that the combination of "--verify"
-and "--quiet" was invented for was "I have a string that ought to
-resolve to a single object name, but the object may be missing", and
+Correct.  Care to send a patch to correct it?
 
-	if git cat-file -e "$name" 2>/dev/null
-	then
-		rawname=$(git rev-parse --verify "$name")
-		true
-	else
-		false
-	fi &&
-	... do something that uses $rawname here ...
-	
-is a mouthful.  It becomes easier to use if we can say
+Thanks.
 
-	rawname=$(git rev-parse -q --verify "$name") &&
-	... do something that uses $rawname here ...
-
-I do not think the behaviour in usecase outside that was carefully
-designed to the details.
