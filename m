@@ -2,59 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8750FC53210
-	for <git@archiver.kernel.org>; Sun,  8 Jan 2023 14:33:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D850AC53210
+	for <git@archiver.kernel.org>; Sun,  8 Jan 2023 14:46:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230193AbjAHOdI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Jan 2023 09:33:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34186 "EHLO
+        id S230425AbjAHOqS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Jan 2023 09:46:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbjAHOdH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jan 2023 09:33:07 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8D4BFAEE
-        for <git@vger.kernel.org>; Sun,  8 Jan 2023 06:33:05 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id m7so5722649wrn.10
-        for <git@vger.kernel.org>; Sun, 08 Jan 2023 06:33:05 -0800 (PST)
+        with ESMTP id S229822AbjAHOqR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jan 2023 09:46:17 -0500
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD096FAF1
+        for <git@vger.kernel.org>; Sun,  8 Jan 2023 06:46:15 -0800 (PST)
+Received: by mail-wm1-x32c.google.com with SMTP id m3so4504740wmq.0
+        for <git@vger.kernel.org>; Sun, 08 Jan 2023 06:46:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Hmy6EhS9MeJBOFTnGIwlUmTlZJ4HFoRdT+v4I7H8V74=;
-        b=KY0ksxWMIPEIwn9LtjTli2D10H05Jnbwd0pnH4H2ebYTV6aOWsm/djEQp0U7q36ihs
-         OYrWcUyAC6KxwpHAkDDDpSnlApoITLYlw5ORM+JqgjoZ49cDeVq+dkPrM1WiNOy3ExG6
-         D3rkqh9/cEFHY7mrGQaco3e6Bqf+0ngQJgQdW9aUiMWAQPmKmOjz8jYROFxlbhIX0RZ7
-         5Tz/OKWd31fWiXV3V2xfZevUJj+kSPdPtbOpNRusAly/TndKUzL/kGUqLI1zRabF/9Dr
-         gOBRGXr6D4ToXoKOmnNDuJ4iTXpnBv9rkmW4RVkOPLtItLzHE4aoDgCWlVnqjszQGvwW
-         F2BQ==
+        bh=InnoFkWSMns9yjFQb/dU5ODsmZuZJDlZkFt/Tn/b/7Y=;
+        b=nyO3dUPJ2myjg637uk6odtzIlXV9Glgmyfo3JR45g4RHF2BVDy6U80XEw1sDAwUzvy
+         6YzHS5zApThYYE701Gp1ldlyr2tY3+W59cbi2qOazcwaJvC0KGVrr2x2s3/9WrLJPZZz
+         hDdsgTnxHyP6qVAeYKE2ueBoJDqsP8NYKGGhs3IEbWiXkq9Xbt45bu1K/jZfjUC+m++l
+         X7ZnQfdYAYWYlXcZpHJN02aRKP9N7W9X6vDIntgwXiXFzAaOHNzVXB386ZZfYf7YYLXJ
+         VguUWdW9O5M0g2QVmUT+R2bHGJcb3vvkvRhUDAboNzKzgpm2ApTHNfaKgqxR44tk2A3y
+         JazA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Hmy6EhS9MeJBOFTnGIwlUmTlZJ4HFoRdT+v4I7H8V74=;
-        b=lkcFhqz4BT4fDXRExXWS3ydPaP/KZpsPezYl3sq+h3wEGE0DXS5qO0/wc/+5BXjeVL
-         0XFwHSUJS0Y7kVD7nabGQQ7pTV24R9BLGc0habE1xtP7qxzhCfo5lTTDtOKCpITfCvYe
-         rNl6nVR66v7yeoj7kfMLWStLoGp7xYU4+RwG3AhjY/MGw9rovdKvp6KPmpeF1uskfd2z
-         VJXfTH4uoZHXPJux5MAup4etDBnuGBzh1FBjOHzOrkY4P6yomUGqTox8Er6RW2p2G1g5
-         q3UJQuQ9XFS7wwTEBWqXASsL0p1qlttX59h12ukGFDNNYq6kkv/3kukVpllL8GiSq/5I
-         B6+g==
-X-Gm-Message-State: AFqh2kp74ulKuzZlE3AzOPFHEJLfojs4zlJvf1SQI/1td+6HIv3riKpu
-        VRxVSXbs0SMozrAH0mpwJTjyvH7Q3D4=
-X-Google-Smtp-Source: AMrXdXt6SwVXBuOvAN0ZbI5SCfcWO7/jN3kbFbYdVjsxiH/c72ahpPXOYprWuBnrcffBi15NDIVmiw==
-X-Received: by 2002:adf:f011:0:b0:2ba:e2b3:118 with SMTP id j17-20020adff011000000b002bae2b30118mr6148943wro.44.1673188383551;
-        Sun, 08 Jan 2023 06:33:03 -0800 (PST)
+        bh=InnoFkWSMns9yjFQb/dU5ODsmZuZJDlZkFt/Tn/b/7Y=;
+        b=DC1apJY81OKtGtzmOCUNRdpKW0LOzZkh4+wIF4STY0Dk5dq/xItkJOeITsj3sbeo/m
+         nVuxjHfqr3/vLL5LH5dMuLP1OKIPJqkk0RsVOq6Il/g9uJ4E+YLzGIp79j1ACDwHqsgd
+         etWON7d5bSAZWwRLnXnmuXB9F598hWC9F2IH1UyygAkd8pr4YJuLS8IOnsnNTN2LrvkP
+         wAGCJ7Ce63Kn3FUKtq6LI2PTqOTIAX6f2WSjBiucmh1pSRx9STGSi9OGvLNw9PZKSzpZ
+         1GfwAeEBPPs1sqNF9QfbKv8TH1ZNHprLtZ610F79jlFOs2Il6Yzytr5KcdYvuDYAMsp8
+         uZ8Q==
+X-Gm-Message-State: AFqh2ko2y2irSJFjDWblcCy8BVvflTuXZ92PsHZv18mmLC7a8mTJVfwG
+        BYHM5Nku1WqHuHI5M55zp1aCpqDgnfo=
+X-Google-Smtp-Source: AMrXdXs3mA31oLOvdMVFkO0WuAqKnLye+WwiBGX7sh7NGEXo2hVcXlPCTBbN8qQGN2lcXbHPcOyirA==
+X-Received: by 2002:a7b:c8ca:0:b0:3cf:728e:c224 with SMTP id f10-20020a7bc8ca000000b003cf728ec224mr44435818wml.6.1673189174128;
+        Sun, 08 Jan 2023 06:46:14 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w10-20020a5d404a000000b00275970a85f4sm6110030wrp.74.2023.01.08.06.33.02
+        by smtp.gmail.com with ESMTPSA id r5-20020a05600c35c500b003d98f92692fsm9105125wmq.17.2023.01.08.06.46.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Jan 2023 06:33:03 -0800 (PST)
-Message-Id: <pull.1423.v2.git.git.1673188382186.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1423.git.git.1672768772484.gitgitgadget@gmail.com>
-References: <pull.1423.git.git.1672768772484.gitgitgadget@gmail.com>
+        Sun, 08 Jan 2023 06:46:13 -0800 (PST)
+Message-Id: <pull.1413.v2.git.git.1673189172832.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1413.git.git.1671740551466.gitgitgadget@gmail.com>
+References: <pull.1413.git.git.1671740551466.gitgitgadget@gmail.com>
 From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 08 Jan 2023 14:33:02 +0000
-Subject: [PATCH v2] run-command: make async_exit usage consistent
+Date:   Sun, 08 Jan 2023 14:46:12 +0000
+Subject: [PATCH v2] mingw: check that the file attributes are valid
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,104 +68,51 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Seija Kijin <doremylover123@gmail.com>
 
-Use async_exit instead of pthread_exit,
-and make async_exit inline.
-
-Functions were reordered
-so that this would compile.
+If the attributes are invalid, return -1
+to indicate an error.
 
 Signed-off-by: Seija Kijin <doremylover123@gmail.com>
 ---
-    run-command: make async_exit usage consistent
-    
-    Use async_exit instead of pthread_exit, and make async_exit inline.
-    
-    Finally, make the parameter an unsigned int, because the Win32 API uses
-    unsigned int, and for other platforms, we cast to void anyway.
-    
-    Signed-off-by: Seija Kijin doremylover123@gmail.com
+    mingw: check that the file attributes are valid
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1423%2FAtariDreams%2Fconsistency-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1423/AtariDreams/consistency-v2
-Pull-Request: https://github.com/git/git/pull/1423
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1413%2FAtariDreams%2Fset-hidden-flag-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1413/AtariDreams/set-hidden-flag-v2
+Pull-Request: https://github.com/git/git/pull/1413
 
 Range-diff vs v1:
 
- 1:  b5f29059d79 ! 1:  d4cf19107ed run-command: make async_exit usage consistent
-     @@ Commit message
-          Functions were reordered
-          so that this would compile.
+ 1:  d2992745f3f ! 1:  f1cc7d9a98b mingw: check that the file attributes are valid
+     @@ Metadata
+       ## Commit message ##
+          mingw: check that the file attributes are valid
       
-     -    Luckily, the order remains consistent.
-     -
+     -    If the attributes are invalid, return an error.
+     +    If the attributes are invalid, return -1
+     +    to indicate an error.
+      
           Signed-off-by: Seija Kijin <doremylover123@gmail.com>
       
-       ## run-command.c ##
 
 
- run-command.c | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
+ compat/mingw.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/run-command.c b/run-command.c
-index 756f1839aab..e1eab4cb69b 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1030,6 +1030,18 @@ static void *run_thread(void *data)
- 	return (void *)ret;
- }
- 
-+int in_async(void)
-+{
-+	if (!main_thread_set)
-+		return 0; /* no asyncs started yet */
-+	return !pthread_equal(main_thread, pthread_self());
-+}
-+
-+static inline void NORETURN async_exit(int code)
-+{
-+	pthread_exit((void *)(intptr_t)code);
-+}
-+
- static NORETURN void die_async(const char *err, va_list params)
+diff --git a/compat/mingw.c b/compat/mingw.c
+index af397e68a1d..01bafa01e92 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -435,6 +435,11 @@ static inline int needs_hiding(const char *path)
+ static int set_hidden_flag(const wchar_t *path, int set)
  {
- 	report_fn die_message_fn = get_die_message_routine();
-@@ -1042,7 +1054,7 @@ static NORETURN void die_async(const char *err, va_list params)
- 			close(async->proc_in);
- 		if (async->proc_out >= 0)
- 			close(async->proc_out);
--		pthread_exit((void *)128);
-+		async_exit(128);
- 	}
- 
- 	exit(128);
-@@ -1055,18 +1067,6 @@ static int async_die_is_recursing(void)
- 	return ret != NULL;
- }
- 
--int in_async(void)
--{
--	if (!main_thread_set)
--		return 0; /* no asyncs started yet */
--	return !pthread_equal(main_thread, pthread_self());
--}
--
--static void NORETURN async_exit(int code)
--{
--	pthread_exit((void *)(intptr_t)code);
--}
--
- #else
- 
- static struct {
-@@ -1112,7 +1112,7 @@ int in_async(void)
- 	return process_is_async;
- }
- 
--static void NORETURN async_exit(int code)
-+static inline void NORETURN async_exit(int code)
- {
- 	exit(code);
- }
+ 	DWORD original = GetFileAttributesW(path), modified;
++	if (original == INVALID_FILE_ATTRIBUTES) {
++		errno = err_win_to_posix(GetLastError());
++		return -1;
++	}
++
+ 	if (set)
+ 		modified = original | FILE_ATTRIBUTE_HIDDEN;
+ 	else
 
 base-commit: a38d39a4c50d1275833aba54c4dbdfce9e2e9ca1
 -- 
