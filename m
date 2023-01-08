@@ -2,148 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E2ACC53210
-	for <git@archiver.kernel.org>; Sun,  8 Jan 2023 10:11:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 17B54C53210
+	for <git@archiver.kernel.org>; Sun,  8 Jan 2023 10:45:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232883AbjAHKLK (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Jan 2023 05:11:10 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33068 "EHLO
+        id S231454AbjAHKp2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Jan 2023 05:45:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229716AbjAHKLI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jan 2023 05:11:08 -0500
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7451CC741
-        for <git@vger.kernel.org>; Sun,  8 Jan 2023 02:11:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1673172660; bh=/jv4k6rwh6ez7wlhL/qzSoNnDfVptdsFrHOQpqZyIss=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=WSvlShCHe5gN3oPZ8F4HdNVPZKZPkcdFkax7pJswKWc8uBOFUX1DFY1hSEnBSeMq0
-         QrZ2nfhHmsuuXjsAjmHbseAfwPNVEsVqMjpVdYCLTut0M7J62GaPcYebxqPA3z1OKR
-         3N+blhTgkVJ3kwUDNFiv9EP1sXuYtZ/iYI5wK0pXN2p5caIAzbSXcHsKipM1WasNST
-         qGNodBWmjrQN3sqdYDXzI4untaK2zVHhQh8nYFO2zdLAYSBVCpzPHa6dv1jAq9gCji
-         cnRmkUoAtZ2JnTkxLuT7LJ0Jj0Ac/xJBPC99sv8vHY5eupb9SEDrQjgYQ4TSZsDciY
-         L1C6brgcnpF8w==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.35] ([79.203.21.69]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MqqPN-1oSDe11ZoH-00mZd7; Sun, 08
- Jan 2023 11:11:00 +0100
-Message-ID: <3e04e283-cad0-7be4-d85c-65d0a52289e2@web.de>
-Date:   Sun, 8 Jan 2023 11:10:59 +0100
+        with ESMTP id S229822AbjAHKp1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jan 2023 05:45:27 -0500
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5589FFAE2
+        for <git@vger.kernel.org>; Sun,  8 Jan 2023 02:45:26 -0800 (PST)
+Received: by mail-qt1-x829.google.com with SMTP id c7so5695336qtw.8
+        for <git@vger.kernel.org>; Sun, 08 Jan 2023 02:45:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=lDnsK+iDLufdfkXq/s7A2tgRz0X1ESmGRBqByQntAWw=;
+        b=SsYvpR/mpq3ovzdpqZAIcgyh1kRoGaMV1jnpsBZm0BkynAms6mt97QwdpSSBehf86o
+         3Sn5fcWgwbs+GW4SgwcrFKUdCugJIVmSKJX5FWaM0B3CqklimMcmW9R9XnAL5PPJyqzF
+         mw2ArRUvBnhRD+9TxcxohQ+gS5MzXvIT+vs1o6ZQ4Vf+dS36TSN19NEO0Bq/46r1+jGH
+         kc/3h9lpy/a8YBxVdZqp26tfmYmYuGyGH2hGM5NA0Zf57nl0FFaq9J4RoFgG+H4e0Frp
+         HslSzWBCkVRLERAGsbrvCy0coiogIVAlT7oeEZCYboCcoZO+mGwsPalrp63QeCfX2AFf
+         MhZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lDnsK+iDLufdfkXq/s7A2tgRz0X1ESmGRBqByQntAWw=;
+        b=URhgqvzexp2T/dh2fN8yAQCtBVWupS+DhtKTvLT0G1worE4IKyZyJ800sy1nIGsCnl
+         Zm+CewCNOPK+MqbUOfOA8VYSk5UyFZhAeedupskFrW++jIq4WjVg7Wu6DGwRWFoEiKqb
+         8zV7S69cYiFjdVsKPqxv4Utr0YR/7stvqErJ6q4WKlYz0QmohNrABnf2oiMLvQgLISPR
+         NQbLBu0W1WRsSh3dJNqTPytjIkYU9IgWtIDnpoj+x4AftKti/QsyTNBQLp4i9olL8zj9
+         DUsPZj8GtWj8ispx195Hh/V1slTl8OWz+oaQHs0BSpzxRMhPuKoQn95/LLMYXGspUITI
+         nVzg==
+X-Gm-Message-State: AFqh2kqEXfW1xukenVGEjK4D1zb3GR0vPZfOPzWkuX1NtcD5Q7dMQCMz
+        kj+4to9/fx3uVxQLFZxl3XhkUjK1pbBPzGOydQI+YAj7RuXzCg==
+X-Google-Smtp-Source: AMrXdXvqRboNDuuEE8yTeEvuzEcKK95+/hoc3xZc+9cyfJ3TT9wnl08dLAlrpPRwNDDl/finuKLyvuTLTAu0J2PWWeg=
+X-Received: by 2002:ac8:720b:0:b0:3a6:18ff:c6c1 with SMTP id
+ a11-20020ac8720b000000b003a618ffc6c1mr3848287qtp.683.1673174724600; Sun, 08
+ Jan 2023 02:45:24 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v2 2/4] do full type check in BARF_UNLESS_COPYABLE
+References: <CANgJU+Vo3B=YuqgWVgiRMMiBwTFEh98O0LSJJ+ES6EM=MP4Cew@mail.gmail.com>
+ <xmqqmt6tzrcx.fsf@gitster.g>
+In-Reply-To: <xmqqmt6tzrcx.fsf@gitster.g>
+From:   demerphq <demerphq@gmail.com>
+Date:   Sun, 8 Jan 2023 11:45:13 +0100
+Message-ID: <CANgJU+UeZJP=tBx7ALd8_X=b25RkAdQ1NkQpueSL-p+kpCO17Q@mail.gmail.com>
+Subject: Re: should git rev-parse -q --verify on a range produce output?
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-References: <efe7ec20-201e-a1c1-8e16-2f714a0aee8e@web.de>
- <9bc1bd74-f72c-1b43-df7c-950815babb03@web.de>
- <4f161041-b299-f79a-e01b-cc00e2880850@web.de> <xmqqy1qdxz67.fsf@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqy1qdxz67.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:2lRRLsQTmYJXegiH+XZVcdrw7TN2wV6t1pcdteY/PbJWBCPaAe6
- YYLscY164GBPofIDghF8N/boMY/rmL4RZrZBt7LfAQG63OOPRg7bcdJHF+ET2L98bs5QC5P
- SW08ma2jiDoxHLI3qKpSxR7VbjW7HS+0kwlcsG3jUv218QPMGmdBOSrRK1lX/YJM2Ei0X4C
- WDQRwG3Szllh4hMHIGogQ==
-UI-OutboundReport: notjunk:1;M01:P0:6EQ+MbeYaDU=;T5ZSGtS5kmFkL900+DUQjMw+Iuw
- Z9OwMb0GuittNtt7/H/Ac4VZBxK05u01luPbt0RmMRJNxu5Q/IxIFM3cvoDU9iO6icOMT8SlQ
- zq6mRQtaS9lDskaBjzl+PhF2sWDWz+0qyv8PxY1kKGfkIUP6cXQJZXaw6dUkz4bvl3MFg+GwM
- 2qvjIKE+HReeWjCCW/KTVtHu5oEj2QptvwUHqKzQrR6UcK8QGZHVcM2jUNBzKFuUD5ADqCek9
- xjue+I9D7PanfNvUWYm1vW+CzUzhTzs2zV9BIZJeiOEIGh5w2XKHOkVfKeGKvF5JXFHNp1y7l
- nlCmiwRwcE4w8wi0Ux37bbbjA06De8si62RvrjrS8NAfaW9ed964Km2rd0Log4xFvhGiZcB9Q
- zrMsQP4Xg/p0mSHmskgUDBmQ1/yay5BSYzQuen3HMnpXYhedgCfGWsn6+bI68ggfOD85WW1if
- 7ymeVETOf2YL8ekcI4Z9/fh3kM5u+bJPwGMGAaurVfg5ykNPNt6OP6vjDhCz4fueOCU1ktXZS
- n/jfOANsALaukJGcw2UxnWcPpbITPbxh256FkBR7RHMV/97NEuJ8o7kfkZR/s3JT9D0E5VBD0
- mUTLkvttRIT7pF/vDHmPMXiBUPDrGh7gR5New0OmKF8PDkeFBw2v5toISoby+05jEx8TP4xoq
- JFihpatF9ZUU+9KKuTNI8F/bkgIYoYiNBWWvF9NaJml9P1EzarWOyppHleNSv6YuvgkIpTD7J
- gE1P80FfJVW25mkG2/mTcpu1HrIREmoMcKEh6AH8diLUY0RNJm28uxsPMxNR+EIDFNG2d1hyd
- O6GhjPaV0QNWIg5DEMkNB03V3kDG75vmafLIza704LlLHgBT1mFRlC1IrOkdalfYsErbM5cWS
- eRD9KFx4Loh74leO240NHJGXe4EeWY8FrTbtZTblzj2JVYqG4TBFUc0XfQ9f4VIfLcszcRp74
- vMT4Bw==
+Cc:     Git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 08.01.2023 um 08:28 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+On Sun, 8 Jan 2023 at 03:34, Junio C Hamano <gitster@pobox.com> wrote:
 >
->> Use __builtin_types_compatible_p to perform a full type check if
->> possible.  Otherwise fall back to the old size comparison, but add a
->> non-evaluated assignment to catch more type mismatches.  It doesn't fla=
-g
->> copies between arrays with different signedness, but that's as close to
->> a full type check as it gets without the builtin, as far as I can see.
+> demerphq <demerphq@gmail.com> writes:
 >
-> This seems to unfortunately break builds for compat/mingw.c
+> > I was curious if it is a bug that `rev-parse -q --verify` produces
+> > output for a commit range, and only reveals it is supposed to be used
+> > with a single commit as an error message?
 >
-> cf. https://github.com/git/git/actions/runs/3865788736/jobs/6589504628#s=
-tep:4:374
+> I know that the original scenario that the combination of "--verify"
+> and "--quiet" was invented for was "I have a string that ought to
+> resolve to a single object name, but the object may be missing", and
 >
->    1848 |                 COPY_ARRAY(&argv2[1], &argv[1], argc);
+>         if git cat-file -e "$name" 2>/dev/null
+>         then
+>                 rawname=$(git rev-parse --verify "$name")
+>                 true
+>         else
+>                 false
+>         fi &&
+>         ... do something that uses $rawname here ...
 >
-> where the two arrays are "char *const *argv" in the parameter list, and
-> a local variable
+> is a mouthful.  It becomes easier to use if we can say
 >
-> #ifndef _MSC_VER
-> 		const
-> #endif
-> 		char **argv2;
+>         rawname=$(git rev-parse -q --verify "$name") &&
+>         ... do something that uses $rawname here ...
 >
-> It seems that (const char **) and (char **) are compatible but the
-> pointers themselves being const breaks the type compatibility?
-> Perhaps the latter should be "(optionally const) char *const *argv2"?
+> I do not think the behaviour in usecase outside that was carefully
+> designed to the details.
 
-We compare the types of the elements, so effectively we do this:
+Is this something you think should be fixed? I would give it a go if
+there was some direction on what it should do in this case. Just error
+early and produce no output?
 
-   __builtin_types_compatible_p(__typeof__(const char *),  __typeof__(char=
- *))
+BTW, the weird behavior of it is documented here:
+https://github.com/Perl/perl5/pull/20657
 
-... which returns 0.
+We have some tooling which we use to generate lists of contributors
+for each release from the git commits, and we test this code each
+build on specific known commit ranges. We noticed this because some of
+our tests run in shallow clones and we were using rev-parse to disable
+the test if the clone didnt have the right commit range. But it was
+failing sometimes when it didnt have the complete range and we were
+"doing it wrong" by not checking the error code and just checking to
+see if it output anything.
 
-We can remove the const like we already do for Visual Studio.  But
-then we have to add two casts when passing on argv2, like in
-mingw_execv(), because adding a const to a pointer of a pointer
-must be done explicitly in C (even though Visual Studio seems to
-do it implicitly without complaining).  Feels a bit silly. :-|
+cheers,
+Yves
 
-=2D-- >8 ---
-Subject: [PATCH 1.5/4] mingw: make argv2 in try_shell_exec() non-const
-
-Prepare for a stricter type check in COPY_ARRAY by removing the const
-qualifier of argv2, like we already do to placate Visual Studio.  We
-have to add it back using explicit casts when actually using the
-variable, unfortunately, because GCC (rightly) refuses to add it
-implicitly.  Similar casts are already used in mingw_execv().
-
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- compat/mingw.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
-
-diff --git a/compat/mingw.c b/compat/mingw.c
-index d614f156df..e131eb9b07 100644
-=2D-- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1839,16 +1839,13 @@ static int try_shell_exec(const char *cmd, char *c=
-onst *argv)
- 	if (prog) {
- 		int exec_id;
- 		int argc =3D 0;
--#ifndef _MSC_VER
--		const
--#endif
- 		char **argv2;
- 		while (argv[argc]) argc++;
- 		ALLOC_ARRAY(argv2, argc + 1);
- 		argv2[0] =3D (char *)cmd;	/* full path to the script file */
- 		COPY_ARRAY(&argv2[1], &argv[1], argc);
--		exec_id =3D trace2_exec(prog, argv2);
--		pid =3D mingw_spawnv(prog, argv2, 1);
-+		exec_id =3D trace2_exec(prog, (const char **)argv2);
-+		pid =3D mingw_spawnv(prog, (const char **)argv2, 1);
- 		if (pid >=3D 0) {
- 			int status;
- 			if (waitpid(pid, &status, 0) < 0)
-=2D-
-2.38.1.windows.1
+-- 
+perl -Mre=debug -e "/just|another|perl|hacker/"
