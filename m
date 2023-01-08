@@ -2,99 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B89BC53210
-	for <git@archiver.kernel.org>; Sun,  8 Jan 2023 06:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 595B1C53210
+	for <git@archiver.kernel.org>; Sun,  8 Jan 2023 06:33:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230460AbjAHGZp (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Jan 2023 01:25:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57882 "EHLO
+        id S231716AbjAHGdI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Jan 2023 01:33:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59570 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232419AbjAHGZA (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jan 2023 01:25:00 -0500
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84D2A27199
-        for <git@vger.kernel.org>; Sat,  7 Jan 2023 22:24:59 -0800 (PST)
-Received: by mail-pl1-x632.google.com with SMTP id v23so1241049plo.1
-        for <git@vger.kernel.org>; Sat, 07 Jan 2023 22:24:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=GMA05UlF9ER51m5ZtVyHeDW7DSWz0Um+7ejRazix8Zw=;
-        b=pqoloDrK/7OFaU1t0Ryrpos2CFxogvp8ttR8iOEy0bVhY8bYPR9So855Gu/B5HsCEW
-         9pHVbsWu04PGA9QHBkRuvd5XCR1RE9lIl5i7me74D2kD992u/NzSArHEPDUZyvsXMPZZ
-         VqhN4SqES5kQHh7m9LToDrWw+Svn37jBer0laGsbm246bhzLr1QSb/eDodNe5bQKGQqF
-         BRAH2vZ5/yRfmQE6S+AmdVbhwz6oAKblgC+k0+Fdm/ewcHgqJXlVb31FlT+5/RDlMQSY
-         HgP0AeLUbkBOXUqtVwgJws2jbLLL6/mYhcBmVwsn4qX9RHXtPmmfksclyDAIYHB7eOWS
-         q9Nw==
+        with ESMTP id S230092AbjAHGdF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jan 2023 01:33:05 -0500
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36DF1C76E
+        for <git@vger.kernel.org>; Sat,  7 Jan 2023 22:33:04 -0800 (PST)
+Received: by mail-pf1-f174.google.com with SMTP id a184so3948187pfa.9
+        for <git@vger.kernel.org>; Sat, 07 Jan 2023 22:33:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=GMA05UlF9ER51m5ZtVyHeDW7DSWz0Um+7ejRazix8Zw=;
-        b=ZR61646060WN7g1P5fW32WVmZBVbyZdETxyNJvGv0n6ePrVNQwIOwlPbV3WMKYjIA0
-         4wJ8YwhTEQfaOQxQhlWzyWCZj0jCue7Zbq4+Kp3CULlwaB/GW48MfeWKZWYcbbQ6/QeW
-         wVxQ9VKjfJnCMlAFwvSWoRAGNYURCsmXKmz+N/ZqGui3KM9lLyrYRQHx9qKsGSz5YK1N
-         KFN8dSfgyrDl/hyMCR307nNU87t0pSAlaDamkb3Yc4p3o5SlbttEp4f9xVOvvrUoUKdG
-         ZAlG7nNPod/IG+D/dwGw4xmFFGNQyI4ZDz7NItsQim+iiqC9HXMPIAGXEzcSgbk409Tm
-         j3VA==
-X-Gm-Message-State: AFqh2koDRH1RaTlvQ73ApNIZa5U4ptT7zd6YMzUM6P2kgT3KVn6eXG/n
-        N2VqKnUPsSNfK8EF1ibRZjDhzUf0gRA=
-X-Google-Smtp-Source: AMrXdXtLe+U9wP1lifbuxEffGu1XtQwwQ74MqIFm2lOC35HVvysZY7nPSWC4HEJYrIXX36oKbG8IdQ==
-X-Received: by 2002:a17:903:2c2:b0:189:c8d9:ed30 with SMTP id s2-20020a17090302c200b00189c8d9ed30mr57714660plk.24.1673159098562;
-        Sat, 07 Jan 2023 22:24:58 -0800 (PST)
-Received: from localhost.localdomain (192-184-217-7.fiber.dynamic.sonic.net. [192.184.217.7])
-        by smtp.gmail.com with ESMTPSA id l9-20020a170903120900b00189618fc2d8sm3578788plh.242.2023.01.07.22.24.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Jan 2023 22:24:57 -0800 (PST)
-From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-To:     git@vger.kernel.org
-Cc:     avarab@gmail.com,
-        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
-        <carenas@gmail.com>
-Subject: [PATCH] grep: correctly identify utf-8 characters with \{b,w} in -P
-Date:   Sat,  7 Jan 2023 22:23:35 -0800
-Message-Id: <20230108062335.72114-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.37.1 (Apple Git-137.1)
+        bh=nKhPC7GrV999/Ut+oeExezhMG2ZY7tDJH6U0znI+6jg=;
+        b=pc5GM/8tFdBmW2c4Xu2UJApBNUGuL7O2yCVMQi8/UG1nfRnMeCOfLju/iXxVZ81KNL
+         s5LGS+675GUZmEU9T74wPccUeaAgZ4cmhPgGeC0HfTqfIMSGv6TNd26KpcT2K/G/bbnC
+         YUevVAHppJHS+uSDR5GGwhilLz28r94jWCunXlPcD1xi5/1i3zDOMf1rCopuY9iRmzS+
+         xssdapVhc0wry3OlkVQ8E2tUWlpPwYCeLds9dTm+qC/uAuivIMttWlxpbg+oyO49p+4Q
+         SkjAni6FN46DaOjhzX+c95wKM7kX7EBleOWkqNQSdF1dJuQsu35KJUiFO96nXWo9m8mz
+         nLCA==
+X-Gm-Message-State: AFqh2kouNfzs8WiwfiLp/UfvAeQucWK4xjoEQajRs4jFZwblUntqvGT9
+        h3MCtwSwU2EV6aA8ohlWOiIs3iCxx9RtTmaVPEsxJ9i8drM=
+X-Google-Smtp-Source: AMrXdXt6CVS55YDsdVuS2Fql9c9tJck/WwoKtOUp2dh3nBEUUPKz/OtZdPzqhIdmKS0Mq77nfBxU7P9g8GOHwySeurE=
+X-Received: by 2002:a05:6a00:1414:b0:580:e5ef:79f2 with SMTP id
+ l20-20020a056a00141400b00580e5ef79f2mr2981211pfu.60.1673159583316; Sat, 07
+ Jan 2023 22:33:03 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <CAC-j02OVoFDFjeGUjcs0ZMwPSXKLL_GBme2m2-ttzGTbxXNP-w@mail.gmail.com>
+In-Reply-To: <CAC-j02OVoFDFjeGUjcs0ZMwPSXKLL_GBme2m2-ttzGTbxXNP-w@mail.gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 8 Jan 2023 01:32:52 -0500
+Message-ID: <CAPig+cScBFJCBN97g12v9Eg1-7+m8_EzAnpT2uSSdzTNwqjjVQ@mail.gmail.com>
+Subject: Re: Bug report between git hooks and git worktree
+To:     Preston Tunnell Wilson <prestontunnellwilson@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When UTF is enabled for a PCRE match, the corresponding flags are
-added to the pcre2_compile() call, but PCRE2_UCP wasn't included.
+On Sat, Jan 7, 2023 at 2:20 PM Preston Tunnell Wilson
+<prestontunnellwilson@gmail.com> wrote:
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>
+> Add a git hook that executes git commands inside of another folder. Let's
+> call this other folder `FolderA`.
+> Add a git worktree branch/folder, `cd` to it, and commit something there.
+> Let's call this git worktree folder `FolderW`.
+>
+> I would expect the git command to output details from `FolderA`.
+> It's confusing to me that there is a difference in behavior between
+> the "main" branch and `FolderW` in git hooks.
 
-This prevents extending the meaning of the character classes to
-include those new valid characters and therefore result in failed
-matches for expressions that rely on that extention, for ex:
+This issue comes up from time to time[1][2]. What is happening is that
+Git is setting environment variables pointing at the original
+repository, so even though you invoke a Git command in a different
+repository, it's picking up the environment variables and consulting
+the original repository instead. When writing hooks which invoke Git
+commands in a foreign repository, the "best practice" approach is to
+clear the environment variables before running the Git command in the
+other repository[3]. If you add this to the top of your hook script,
+it works as expected:
 
-  $ git grep -P '\bÆvar'
+    unset $(git rev-parse --local-env-vars)
 
-Add PCRE2_UCP so that \w will include Æ and therefore \b could
-correctly match the beginning of that word.
+Unfortunately, this "fix" isn't actually documented anywhere.
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- grep.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/grep.c b/grep.c
-index 06eed69493..1687f65b64 100644
---- a/grep.c
-+++ b/grep.c
-@@ -293,7 +293,7 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
- 		options |= PCRE2_CASELESS;
- 	}
- 	if (!opt->ignore_locale && is_utf8_locale() && !literal)
--		options |= (PCRE2_UTF | PCRE2_MATCH_INVALID_UTF);
-+		options |= (PCRE2_UTF | PCRE2_UCP | PCRE2_MATCH_INVALID_UTF);
- 
- #ifndef GIT_PCRE2_VERSION_10_36_OR_HIGHER
- 	/* Work around https://bugs.exim.org/show_bug.cgi?id=2642 fixed in 10.36 */
--- 
-2.37.1 (Apple Git-137.1)
-
+[1]: https://lore.kernel.org/git/CAPig+cQEC6CAV-Es9Ok96s8Cj=Dj76PRyOt4qKQus+rppswuyA@mail.gmail.com/
+[2]: https://lore.kernel.org/git/CAJFQqN+Z9eX6onaj8vVSqpvf-nOC7-Y0Un4NLUie6x6bGfmvZA@mail.gmail.com/
+[3]: https://lore.kernel.org/git/20190516221702.GA11784@sigill.intra.peff.net/
