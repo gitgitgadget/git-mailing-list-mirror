@@ -2,380 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0C16FC53210
-	for <git@archiver.kernel.org>; Sun,  8 Jan 2023 15:21:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EAE5AC53210
+	for <git@archiver.kernel.org>; Sun,  8 Jan 2023 15:54:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233253AbjAHPVo (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Jan 2023 10:21:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47640 "EHLO
+        id S231134AbjAHPyH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Jan 2023 10:54:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233743AbjAHPVk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jan 2023 10:21:40 -0500
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21F3DDF8F
-        for <git@vger.kernel.org>; Sun,  8 Jan 2023 07:21:39 -0800 (PST)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-4c131bede4bso83554277b3.5
-        for <git@vger.kernel.org>; Sun, 08 Jan 2023 07:21:39 -0800 (PST)
+        with ESMTP id S229520AbjAHPyG (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jan 2023 10:54:06 -0500
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A933262C
+        for <git@vger.kernel.org>; Sun,  8 Jan 2023 07:54:03 -0800 (PST)
+Received: by mail-pf1-x42b.google.com with SMTP id g20so4459681pfb.3
+        for <git@vger.kernel.org>; Sun, 08 Jan 2023 07:54:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+RiGEX+4idPmorgtl0/Yr3Yxguw+/wFlyIbWde6CT2c=;
-        b=hw7zCrKdkY2zAUFw4HPFfJW1zSAT947r+Or3zPaUG/ZEhLthoF3QlPRVGkW3PYmem5
-         THXbxTsRIFaEHJbGDK7Rum6wj4EtVbQp+aB3wMmXMF2R+Z7mx2Lk0O+nO4guEDt57haz
-         PlWmJs5cahpgt93+EYmYyFTKWSk5gjBrww9q6AlB5uMQfBn0fqJOfpl0bEo4pLwTKpvP
-         pc9n0PVyeNrw37NKvofbY8KIr0jbnDj/aLgVJcTn1oBFSHf9okkngd8YYVaEvC5MV0WA
-         hiZHUiBabvEpDtMs7QUjJH00fdhTo1S/iHy4ExBv8sTKollv2VcKyVaI7jHF9QrEXPBZ
-         Oc9w==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4+Ps4SvooOpJTaHa6RZIsxHlRxpN7glVRix3bFq7oL8=;
+        b=d2BWKuKcK/yCNdoxFcwxtfAAM3kRP1LHWM5Ntf1M+ZCc/6kpWrvhN3TNrWJ7nB1cUR
+         ih2D++/HKv9IrGNyeSXcgLUNMUkmXjJQcpWKLOkQNDI4nDI1XIe++eOr58PmXIQ+Rx9S
+         vqfizBCEQ3IOv5bvaaFEv6Z4cE8CL+M8fNvtdTueOQ2lJNGAKBBTc1H2S0BFU3ZZ8Rk3
+         c1o3zM8qqMeGHhvtgOC6gG83faEzpAR68k4JaxefqBjWm2B4XpHOj5KExm1eOg9O2h/t
+         0X6wuyVbnVExEfLQ+sUymfXnKmaMibt7rrdgFGWEWcr5rPQ7Jre0PKCL0pOTBQSJ8cdf
+         JoDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+RiGEX+4idPmorgtl0/Yr3Yxguw+/wFlyIbWde6CT2c=;
-        b=tLqyOvcS9XDikflXqyS4jboAxwVenCbs3Zz7P4wY6E/jg4NqTiYY2vi9cAQ8222Nm5
-         GVAFNhpLqSoGa7N/mrQEOy0pNzYbP/hPNKWZ7FGuQdwp9pf3maBBgmZAvPyyRBxNjBdk
-         vwGjXIszykTS7iCbS0dTEKUXDhT+tVh7H4GXt+U1wn9eTQvHxa2czZzK68nZJViCsWS5
-         oplmJcaOv4YnbB5eRTkaE4m/CyoM2x+GMmcCOfCxMbBPd0tES/Iby/08WviL0j9UTvKP
-         itu2rM8idpvwgkbQvwfOjF9L1hLzGQI2kbQ4WpgHgcA+brKCCuBd0CC0YXAMZqSsUD4V
-         /9hg==
-X-Gm-Message-State: AFqh2kqYQcndcuLVVhNik9lS7dApFSgvq6+z7tsDQW/46vUPCi+BwSBk
-        YOarI5ZmMOyDJO/QrlibkrXd/0NaySnu6UN5wRdOlDgr
-X-Google-Smtp-Source: AMrXdXsMwx2TPFYSGMZGy9ha2JG1sWIuvSJHO0XazGMsbveaqryOZRm67KaxJxhh516yFkO1/ebUD6O7ONgb8E2B1Pg=
-X-Received: by 2002:a81:ee01:0:b0:3d9:b834:fb5a with SMTP id
- l1-20020a81ee01000000b003d9b834fb5amr941275ywm.406.1673191298149; Sun, 08 Jan
- 2023 07:21:38 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4+Ps4SvooOpJTaHa6RZIsxHlRxpN7glVRix3bFq7oL8=;
+        b=TpVYqR0LzQRl+eNA+ipoipcYQZ46wIlEisFFccIi0rAvo6mSoXKo+eBQk/pSi1P4Vp
+         d4kMwjWbug+IWEKz8GwfTa+W5phZ3Q8vjk2r3A47qXu/FW+Cv9NqZmctI3fupZUB5f4G
+         Xoa0ZRoPNS09nrmdvJrp1/QEgRHQwLEj4HTH8hksONIveevozYQlcghMWK4y7OeZHgeA
+         F+NqFm3WWsVwyY6bKwv0ZQ/qReFAF5cNEpMFdWMVUyR157YggtwePbFRs2EtGlVHEQq4
+         FCmopVakXvLIhdf6LOrZ96kmZu22rV0x6gDYVTPddAlsOt2/+zdhAsg/GHWtQq1oE1Ay
+         83ww==
+X-Gm-Message-State: AFqh2kqt8AcH97Amxf58WJM4lQ8M9kWgBM0oYFeP8LS3qvhR815bCxxI
+        tbLNsGsqo3i2KfxQLro7yKu9fKVoE5A=
+X-Google-Smtp-Source: AMrXdXvGnuaaCi8pBxXMKaqRbO7YHzDtRgykjIKFb2RdUxd3loJIh3DQxvoY+itpz4L82/BVlx7SAg==
+X-Received: by 2002:a05:6a00:198c:b0:582:d44f:3948 with SMTP id d12-20020a056a00198c00b00582d44f3948mr18168547pfl.18.1673193242503;
+        Sun, 08 Jan 2023 07:54:02 -0800 (PST)
+Received: from localhost.localdomain (192-184-217-7.fiber.dynamic.sonic.net. [192.184.217.7])
+        by smtp.gmail.com with ESMTPSA id b188-20020a62cfc5000000b00581fb8e665csm4393551pfg.67.2023.01.08.07.54.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Jan 2023 07:54:02 -0800 (PST)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     avarab@gmail.com, gitster@pobox.com,
+        =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+Subject: [PATCH v2] grep: correctly identify utf-8 characters with \{b,w} in -P
+Date:   Sun,  8 Jan 2023 07:52:17 -0800
+Message-Id: <20230108155217.2817-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.39.0.199.g555ddd67e6
+In-Reply-To: <20230108062335.72114-1-carenas@gmail.com>
+References: <20230108062335.72114-1-carenas@gmail.com>
 MIME-Version: 1.0
-References: <pull.1452.git.1672102523902.gitgitgadget@gmail.com>
- <xmqqo7rpvb83.fsf@gitster.g> <CA+PPyiGd0-AiwhPa5e+fDdA9RybS+c5XeOYm5yycCZco3VHAxg@mail.gmail.com>
-In-Reply-To: <CA+PPyiGd0-AiwhPa5e+fDdA9RybS+c5XeOYm5yycCZco3VHAxg@mail.gmail.com>
-From:   NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
-Date:   Sun, 8 Jan 2023 18:21:27 +0300
-Message-ID: <CA+PPyiH5ANyHw-RSzMK+RXxio8gYk2DybY=XnDBvfD1M9s6Mmw@mail.gmail.com>
-Subject: Re: [PATCH] ref-filter: add new atom "signature" atom
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     nsengaw4c via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> >> I am not sure I have understood this, which helper?
-> >
-> > I think Junio is talking about the following function:
-> >
-> > static enum signature_option parse_signature_option(const char *arg)
-> >
-> > he suggested above.
->
-> Correct.
->
-> > With this function the above code could be just something like:
-> >
-> > if (parse_signature_option(name) < 0)
-> >                     continue;
->
-> More or less so, but the first "if" in the helper I wrote in the
-> message above is broken.  It should be
->
->          static enum signature_option parse_signature_option(const char *arg)
->          {
->                  if (!*arg)
->                          return S_BARE;
->                  else if (!strcmp(arg, "signer"))
->                          return S_SIGNER;
->                  ...
->                  else
->                          return -1;
->          }
+When UTF is enabled for a PCRE match, the corresponding flags are
+added to the pcre2_compile() call, but PCRE2_UCP wasn't included.
 
-This way, running git for-each-ref refs/heads/signature8
---format="%(signature)" raises a seg fault, I looked for the bug using
-gdb when I check the contents of *arg like this:p *arg, I get this:
-Cannot access memory at 0x0.
+This prevents extending the meaning of the character classes to
+include those new valid characters and therefore result in failed
+matches for expressions that rely on that extention, for ex:
 
-However, others like signature:key, signature:signer, etc are ok.
-Leaving it as arg makes everything fine. So I decided to leave it as
-you had suggested first.
+  $ git grep -P '\bÆvar'
 
+Add PCRE2_UCP so that \w will include Æ and therefore \b could
+correctly match the beginning of that word.
 
-I had actually forgotten to add the test for "%(signature)", so this
-scenario reminded me to do so.
+This has an impact on performance that has been estimated to be
+between 20% to 40% and that is shown through the added performance
+test.
 
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+ grep.c                              |  2 +-
+ t/perf/p7822-grep-perl-character.sh | 42 +++++++++++++++++++++++++++++
+ 2 files changed, 43 insertions(+), 1 deletion(-)
+ create mode 100755 t/perf/p7822-grep-perl-character.sh
 
-On Mon, Jan 2, 2023 at 7:47 AM NSENGIYUMVA WILBERFORCE
-<nsengiyumvawilberforce@gmail.com> wrote:
->
-> Hi
->>
->> > From: Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
->> >
->> > This only works for commits. Add "signature" atom with `grade`,
->> > `signer`, `key`, `fingerprint`, `primarykeyfingerprint`, `trustlevel`
->> > as arguments. This code and it's documentation are inspired by
->> > how the %GG, %G?, %GS, %GK, %GF, %GP, and %GT pretty formats were
->> > implemented.
->>
->> Lacking motivation.  Without explaining why somebody may want to
->> have the feature and what it would be used for, "only works for
->> commits" would invite a "so what?  does it even have to work?"  as a
->> response, so start with a brief descrioption "with the current set
->> of atoms, $this_useful_thing cannot easily be achieved" before
->> describing its limitation.
->
-> Ok, I will edit the commit message. Thanks
->>
->> > diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
->> > index 6da899c6296..9a0be85368b 100644
->> > --- a/Documentation/git-for-each-ref.txt
->> > +++ b/Documentation/git-for-each-ref.txt
->> > @@ -212,6 +212,33 @@ symref::
->> >       `:lstrip` and `:rstrip` options in the same way as `refname`
->> >       above.
->> >
->> > +signature::
->> > +...
->> > +signature:trustlevel::
->> > +     The Trust level of the GPG signature of a commit. Possible
->> > +     outputs are `ultimate`, `fully`, `marginal`, `never` and `undefined`.
->>
->> A good list.  How do these work for signature made with a tool other
->> than GPG (in other words, when "gpg.format" is set to something
->> other than "openpgp")?
->
-> You mean ssh and X509, right? honestly, I did not check the behavior. I am going to check
->
->> Having said that, wouldn't it be natural to expect that the same
->> code can deal with signed tags?  After all we use the same signature
->> verification machinery at the lowest level in the callchain.
->
-> Very right, it works for signed tags too.
->
->>
->> Handing the !arg case first will make the if/else if/... cascade
->> easier to follow, no?  Also the body of the function may want to
->> become a separate function that returns one of these S_FOO constants.
->>
->>         static enum signatore_option signature_atom_parser(...)
->>         {
->>                 enum signature_option opt = parse_signature_option(arg);
->>                 if (opt < 0)
->>                         return strbuf_addf_ret(err, opt, _("unknown ..."), arg);
->>                 return opt;
->>         }
->>
->> where parse_signature_option() would look like
->>
->>         static enum signature_option parse_signature_option(const char *arg)
->>         {
->>                 if (!arg)
->>                         return S_BARE;
->>                 else if (!strcmp(arg, "signer"))
->>                         return S_SIGNER;
->>                 ...
->>                 else
->>                         return -1;
->>         }
->>
->> or something like that?
->
->  It makes more sense
->>
->> > +{
->> > +     int i;
->> > +     struct commit *commit = (struct commit *) obj;
->>
->> Style?  No SP between cast and value?
->
-> ok, noted
->>
->> > +
->> > +     for (i = 0; i < used_atom_cnt; i++) {
->> > +             struct used_atom *atom = &used_atom[i];
->> > +             const char *name = atom->name;
->> > +             struct atom_value *v = &val[i];
->> > +             struct signature_check sigc = { 0 };
->> > +
->> > +             if (!!deref != (*name == '*'))
->> > +                     continue;
->> > +             if (deref)
->> > +                     name++;
->> > +             if (strcmp(name, "signature") &&
->> > +                     strcmp(name, "signature:signer") &&
->> > +                     strcmp(name, "signature:grade") &&
->> > +                     strcmp(name, "signature:key") &&
->> > +                     strcmp(name, "signature:fingerprint") &&
->> > +                     strcmp(name, "signature:primarykeyfingerprint") &&
->> > +                     strcmp(name, "signature:trustlevel"))
->> > +                     continue;
->>
->> And with the helper above, we can avoid the repetition here that can
->> go out of sync with the parser function.
->
-> I am not sure I have understood this, which helper?
->
->> > +             check_commit_signature(commit, &sigc);
->>
->> If a format asks for signature:signer and signature:key, we
->> shouldn't be running GPG twice.  First check used_atom[] to see if
->> we even need to do _any_ signature processing (and leave if there is
->> not), populate the sigc just once and then enter the loop, perhaps?
->
-> Yeah, I think it was not right calling check_commit_signature() in the loop. Populating sigc at once looks more good to me
->
->
->>
->>  In adddition, a call to check_commit_signature() should have a
->>
->> matching call to signature_check_clear(); otherwise all the
->>
->> resources held by sigc would leak, wouldn't it?
->
-> Yeah, it would.
->
-> On Mon, Dec 26, 2022 at 9:20 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> "nsengaw4c via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->> > From: Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
->> >
->> > This only works for commits. Add "signature" atom with `grade`,
->> > `signer`, `key`, `fingerprint`, `primarykeyfingerprint`, `trustlevel`
->> > as arguments. This code and it's documentation are inspired by
->> > how the %GG, %G?, %GS, %GK, %GF, %GP, and %GT pretty formats were
->> > implemented.
->>
->> Lacking motivation.  Without explaining why somebody may want to
->> have the feature and what it would be used for, "only works for
->> commits" would invite a "so what?  does it even have to work?"  as a
->> response, so start with a brief descrioption "with the current set
->> of atoms, $this_useful_thing cannot easily be achieved" before
->> describing its limitation.
->>
->> Having said that, wouldn't it be natural to expect that the same
->> code can deal with signed tags?  After all we use the same signature
->> verification machinery at the lowest level in the callchain.
->>
->> > diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
->> > index 6da899c6296..9a0be85368b 100644
->> > --- a/Documentation/git-for-each-ref.txt
->> > +++ b/Documentation/git-for-each-ref.txt
->> > @@ -212,6 +212,33 @@ symref::
->> >       `:lstrip` and `:rstrip` options in the same way as `refname`
->> >       above.
->> >
->> > +signature::
->> > +...
->> > +signature:trustlevel::
->> > +     The Trust level of the GPG signature of a commit. Possible
->> > +     outputs are `ultimate`, `fully`, `marginal`, `never` and `undefined`.
->>
->> A good list.  How do these work for signature made with a tool other
->> than GPG (in other words, when "gpg.format" is set to something
->> other than "openpgp")?
->>
->> > @@ -378,6 +383,30 @@ static int subject_atom_parser(struct ref_format *format, struct used_atom *atom
->> >       return 0;
->> >  }
->> >
->> > +static int signature_atom_parser(struct ref_format *format, struct used_atom *atom,
->> > +                            const char *arg, struct strbuf *err)
->> > +{
->> > +     if (arg) {
->> > +             if (!strcmp(arg, "signer"))
->> > +                     atom->u.signature.option = S_SIGNER;
->> > +             else if (!strcmp(arg, "grade"))
->> > +                     atom->u.signature.option = S_GRADE;
->> > +             else if (!strcmp(arg, "key"))
->> > +                     atom->u.signature.option = S_KEY;
->> > +             else if (!strcmp(arg, "fingerprint"))
->> > +                     atom->u.signature.option = S_FINGERPRINT;
->> > +             else if (!strcmp(arg, "primarykeyfingerprint"))
->> > +                     atom->u.signature.option = S_PRI_KEY_FP;
->> > +             else if (!strcmp(arg, "trustlevel"))
->> > +                     atom->u.signature.option = S_TRUST_LEVEL;
->> > +             else
->> > +                     return strbuf_addf_ret(err, -1, _("unknown %%(signature) argument: %s"), arg);
->> > +     }
->> > +     else
->> > +             atom->u.signature.option = S_BARE;
->> > +     return 0;
->> > +}
->>
->> Handing the !arg case first will make the if/else if/... cascade
->> easier to follow, no?  Also the body of the function may want to
->> become a separate function that returns one of these S_FOO constants.
->>
->>         static enum signatore_option signature_atom_parser(...)
->>         {
->>                 enum signature_option opt = parse_signature_option(arg);
->>                 if (opt < 0)
->>                         return strbuf_addf_ret(err, opt, _("unknown ..."), arg);
->>                 return opt;
->>         }
->>
->> where parse_signature_option() would look like
->>
->>         static enum signature_option parse_signature_option(const char *arg)
->>         {
->>                 if (!arg)
->>                         return S_BARE;
->>                 else if (!strcmp(arg, "signer"))
->>                         return S_SIGNER;
->>                 ...
->>                 else
->>                         return -1;
->>         }
->>
->> or something like that?
->>
->> > @@ -1344,6 +1374,69 @@ static void grab_person(const char *who, struct atom_value *val, int deref, void
->> >       }
->> >  }
->> >
->> > +static void grab_signature(struct atom_value *val, int deref, struct object *obj)
->>
->> To be considerate for future developers, perhaps rename this to
->> grab_commit_signature(), so that they can add grab_tag_signature()
->> when they lift the limitation of this implementaiton?
->>
->> > +{
->> > +     int i;
->> > +     struct commit *commit = (struct commit *) obj;
->>
->> Style?  No SP between cast and value?
->>
->> > +
->> > +     for (i = 0; i < used_atom_cnt; i++) {
->> > +             struct used_atom *atom = &used_atom[i];
->> > +             const char *name = atom->name;
->> > +             struct atom_value *v = &val[i];
->> > +             struct signature_check sigc = { 0 };
->> > +
->> > +             if (!!deref != (*name == '*'))
->> > +                     continue;
->> > +             if (deref)
->> > +                     name++;
->> > +             if (strcmp(name, "signature") &&
->> > +                     strcmp(name, "signature:signer") &&
->> > +                     strcmp(name, "signature:grade") &&
->> > +                     strcmp(name, "signature:key") &&
->> > +                     strcmp(name, "signature:fingerprint") &&
->> > +                     strcmp(name, "signature:primarykeyfingerprint") &&
->> > +                     strcmp(name, "signature:trustlevel"))
->> > +                     continue;
->>
->> And with the helper above, we can avoid the repetition here that can
->> go out of sync with the parser function.
->>
->> > +             check_commit_signature(commit, &sigc);
->>
->> If a format asks for signature:signer and signature:key, we
->> shouldn't be running GPG twice.  First check used_atom[] to see if
->> we even need to do _any_ signature processing (and leave if there is
->> not), populate the sigc just once and then enter the loop, perhaps?
->>
->> In adddition, a call to check_commit_signature() should have a
->> matching call to signature_check_clear(); otherwise all the
->> resources held by sigc would leak, wouldn't it?
+diff --git a/grep.c b/grep.c
+index 06eed69493..1687f65b64 100644
+--- a/grep.c
++++ b/grep.c
+@@ -293,7 +293,7 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
+ 		options |= PCRE2_CASELESS;
+ 	}
+ 	if (!opt->ignore_locale && is_utf8_locale() && !literal)
+-		options |= (PCRE2_UTF | PCRE2_MATCH_INVALID_UTF);
++		options |= (PCRE2_UTF | PCRE2_UCP | PCRE2_MATCH_INVALID_UTF);
+ 
+ #ifndef GIT_PCRE2_VERSION_10_36_OR_HIGHER
+ 	/* Work around https://bugs.exim.org/show_bug.cgi?id=2642 fixed in 10.36 */
+diff --git a/t/perf/p7822-grep-perl-character.sh b/t/perf/p7822-grep-perl-character.sh
+new file mode 100755
+index 0000000000..87009c60df
+--- /dev/null
++++ b/t/perf/p7822-grep-perl-character.sh
+@@ -0,0 +1,42 @@
++#!/bin/sh
++
++test_description="git-grep's perl regex
++
++If GIT_PERF_GREP_THREADS is set to a list of threads (e.g. '1 4 8'
++etc.) we will test the patterns under those numbers of threads.
++"
++
++. ./perf-lib.sh
++
++test_perf_large_repo
++test_checkout_worktree
++
++if test -n "$GIT_PERF_GREP_THREADS"
++then
++	test_set_prereq PERF_GREP_ENGINES_THREADS
++fi
++
++for pattern in \
++	'\\bhow' \
++	'\\bÆvar' \
++	'\\d+ \\bÆvar' \
++	'\\bBelón\\b' \
++	'\\w{12}\\b'
++do
++	echo '$pattern' >pat
++	if ! test_have_prereq PERF_GREP_ENGINES_THREADS
++	then
++		test_perf "grep -P '$pattern'" --prereq PCRE "
++			git -P grep -f pat || :
++		"
++	else
++		for threads in $GIT_PERF_GREP_THREADS
++		do
++			test_perf "grep -P '$pattern' with $threads threads" --prereq PTHREADS,PCRE "
++				git -c grep.threads=$threads -P grep -f pat || :
++			"
++		done
++	fi
++done
++
++test_done
+-- 
+2.39.0.199.g555ddd67e6
+
