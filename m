@@ -2,109 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A50ECC53210
-	for <git@archiver.kernel.org>; Sun,  8 Jan 2023 08:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E73C7C53210
+	for <git@archiver.kernel.org>; Sun,  8 Jan 2023 09:35:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231274AbjAHIYG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Jan 2023 03:24:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42394 "EHLO
+        id S231295AbjAHJfk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Jan 2023 04:35:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229716AbjAHIYE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jan 2023 03:24:04 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C296815712
-        for <git@vger.kernel.org>; Sun,  8 Jan 2023 00:24:03 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id w1so5206869wrt.8
-        for <git@vger.kernel.org>; Sun, 08 Jan 2023 00:24:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=GytMGzeU9Ftz/VwQoyMsmg5ZVkFot3TInWqxth3UwvI=;
-        b=YedzKteKgH/zZimZeQrlJK6wPI7hXfKx4W65EvY1Ia4zxipdiSsWnRk5Bdm8B0dwRC
-         zc08UOqE8+9OZGmbDdz7nKrt+/E2yO8m8hBtYibsIpNXu7qknUonYQnoRJQl6QJDpveF
-         akVzHS9LrqSUY/+6nBX6piN6ahLhuMvEni0W44/Sg6R74lnZS0mZ/U0FH+iifTgEnOWp
-         OXsZGhyXfBt62DOqEPYggGNvYYYhp96e2etBAcaKV49I8hJr5IR1wrDZ8XxQifK44po1
-         tHvBwjYsXNoLj1pxUYVmQedqO5CXovCKBJ6e6Bwkjx2HO6J5cDzGa8aDiIdcuWOl0Qy7
-         0TAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GytMGzeU9Ftz/VwQoyMsmg5ZVkFot3TInWqxth3UwvI=;
-        b=roHNj3Ddy1W6OkEzUluPV6c1fL3dePqPeyCzSt/nxN0VENAQ2zxKAsY6fo95r0kAWA
-         i0KWGnSQcOHPVehii5gLGrOq8+quSuCS6EF6J8vKE4/MhqGv8i1TM/hVf3o4zRO9XW+B
-         781uRkEmSbmhKRsGiIGxhKoM8Yc8femBhcqTFjL5BeIcartcCSLGiToYMIOwpMVOBc+q
-         IblFmueXWn3CDg6NDC7WjlefTzOjfLlr9rDqPMLzmh8hBySRDqq7WN0roxFf81/IldbO
-         Nt9irxONkdNfnZ3hycKtwq9ZMffMp/TamYdrR/josm368uF8yUlRdZtE2cULIq1hvZWH
-         ZN9g==
-X-Gm-Message-State: AFqh2kqywO6VTr/bRHbZDOLihTkgBv7YlJoxWsOyZdAI33c00L+dhjBX
-        G2+CpFDwe58pzZzSVYq/s50FWu38Nkg=
-X-Google-Smtp-Source: AMrXdXuQ9Q1IV8XsIU9FNVfMqs67TVrKRUe0F5ADlGUJf/+IpTi3mUXkQ7EREMWeXPPF/JGfUzAVxQ==
-X-Received: by 2002:adf:f402:0:b0:24c:f1ac:9a3 with SMTP id g2-20020adff402000000b0024cf1ac09a3mr34944957wro.27.1673166242220;
-        Sun, 08 Jan 2023 00:24:02 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q11-20020adf9dcb000000b00268aae5fb5bsm5637069wre.3.2023.01.08.00.24.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Jan 2023 00:24:01 -0800 (PST)
-Message-Id: <pull.1422.git.git.1673166241185.gitgitgadget@gmail.com>
-From:   "Yutaro Ohno via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Sun, 08 Jan 2023 08:24:01 +0000
-Subject: [PATCH] doc: use "git switch -c" rather than "git checkout -b"
- consistently
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S229520AbjAHJfh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jan 2023 04:35:37 -0500
+X-Greylist: delayed 475 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 08 Jan 2023 01:35:34 PST
+Received: from denver.dinauz.org (denver.dinauz.org [37.59.56.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7152EFD28
+        for <git@vger.kernel.org>; Sun,  8 Jan 2023 01:35:34 -0800 (PST)
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by denver.dinauz.org (Postfix) with ESMTP id BFED060581
+        for <git@vger.kernel.org>; Sun,  8 Jan 2023 10:27:37 +0100 (CET)
+Received: from denver.dinauz.org ([127.0.0.1])
+        by localhost (denver.dinauz.org [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id MMT8doI7IVQ4 for <git@vger.kernel.org>;
+        Sun,  8 Jan 2023 10:27:37 +0100 (CET)
+Received: from [192.168.1.6] (176.143-2-105.abo.bbox.fr [176.143.2.105])
+        by denver.dinauz.org (Postfix) with ESMTPSA id 97CBE6047E
+        for <git@vger.kernel.org>; Sun,  8 Jan 2023 10:27:37 +0100 (CET)
+Message-ID: <b1051e73-e663-82bf-bda6-015e64102248@trigofacile.com>
+Date:   Sun, 8 Jan 2023 10:27:37 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
 To:     git@vger.kernel.org
-Cc:     Yutaro Ohno <yutaro.ono.418@gmail.com>,
-        Yutaro Ohno <yutaro.ono.418@gmail.com>
+From:   =?UTF-8?Q?Julien_=c3=89LIE?= <julien@trigofacile.com>
+Subject: Ignored commits appearing in git blame
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Yutaro Ohno <yutaro.ono.418@gmail.com>
+Hi all,
 
-In the "DETACHED HEAD" section in the git-checkout doc, it suggests
-using "git checkout -b <branch-name>" to create a new branch on the
-detached head.
+I'm facing an issue with the use of "git blame" which shows commits marked to be ignored.
 
-On the other hand, when you checkout a commit that is not at the tip of
-any named branch (e.g., when you checkout a tag), git suggests using
-"git switch -c <branch-name>".
+We have a .git-blame-ignore-revs file that can be retrievable at <https://github.com/InterNetNews/inn/blob/main/.git-blame-ignore-revs>.
 
-Use "git switch -c" and fix this inconsistency.
+The Git command line I'm using is:
+     git blame --ignore-revs-file .git-blame-ignore-revs radius.c
 
-Signed-off-by: Yutaro Ohno <yutaro.ono.418@gmail.com>
----
-    doc: use "git switch -c" rather than "git checkout -b" consistently
+Here is an extract where commit 36944f2b16 appears at line 59, though it should be ignored (present in .git-blame-ignore-revs):
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1422%2Fohno418%2Fimprove-git-checkout-doc-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1422/ohno418/improve-git-checkout-doc-v1
-Pull-Request: https://github.com/git/git/pull/1422
+8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  50)     int radport;
+8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  51)     char *lochost;
+a9d899ddbe (Russ Allbery       1999-11-29 01:40:47 +0000  52)     int locport;
+8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  53)
+8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  54)     char *prefix, *suffix; /* futz with the username, if necessary */
+9f21a39f37 (Katsuhiro Kondou   1999-06-12 09:33:48 +0000  55)     int ignore_source;
+d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  56)
+d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  57)     struct _rad_config_t *next; /* point to any additional servers */
+8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  58) } rad_config_t;
+36944f2b16 (Julien ÉLIE        2021-10-31 10:04:59 +0100  59)
+d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  60) typedef struct _sending_t {
+d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  61)     auth_req req;
+d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  62)     int reqlen;
 
- Documentation/git-checkout.txt | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 4cb9d555b4b..ba3d6164847 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -477,9 +477,9 @@ before that happens. If we have not yet moved away from commit `f`,
- any of these will create a reference to it:
- 
- ------------
--$ git checkout -b foo   <1>
--$ git branch foo        <2>
--$ git tag foo           <3>
-+$ git switch -c foo   <1>
-+$ git branch foo      <2>
-+$ git tag foo         <3>
- ------------
- 
- <1> creates a new branch `foo`, which refers to commit `f`, and then
+When running git blame without ignoring revisions, commit 36944f2b16 appears at lines 54, 57 and 59:
 
-base-commit: 2b4f5a4e4bb102ac8d967cea653ed753b608193c
+8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  50)     int radport;
+8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  51)     char *lochost;
+a9d899ddbe (Russ Allbery       1999-11-29 01:40:47 +0000  52)     int locport;
+8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  53)
+36944f2b16 (Julien ÉLIE        2021-10-31 10:04:59 +0100  54)     char *prefix, *suffix; /* futz with the username, if necessary */
+9f21a39f37 (Katsuhiro Kondou   1999-06-12 09:33:48 +0000  55)     int ignore_source;
+d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  56)
+36944f2b16 (Julien ÉLIE        2021-10-31 10:04:59 +0100  57)     struct _rad_config_t *next; /* point to any additional servers */
+8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  58) } rad_config_t;
+36944f2b16 (Julien ÉLIE        2021-10-31 10:04:59 +0100  59)
+d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  60) typedef struct _sending_t {
+d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  61)     auth_req req;
+d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  62)     int reqlen;
+
+
+Shouldn't 36944f2b16 have disappeared from the output at line 59?
+
+It should have been d65e228465 which already had that line, as it can be seen in the commit (line 53 at that time):
+   https://github.com/InterNetNews/inn/blob/d65e228465700ff044b75aecacb7062d2a1250f9/authprogs/radius.c
+
+
+The result of that command is the same as the one GitHub shows; you can therefore find the whole ouput here:
+
+     https://github.com/InterNetNews/inn/blame/main/authprogs/radius.c
+
+Commit 36944f2b16 is mentioned at lines 59, 129, 144, 293, etc. though present in .git-blame-ignore-revs.
+Yet, that very commit is correctly ignored at other places of the same file.
+
+Other files and other commits in the project are also affected.  I can give more examples if needed.
+
+
+Is it the expected behaviour of "git blame"?
+Is there a reason for these commits to appear in some portions of the blame output?
+
+
+Thanks beforehand,
+
 -- 
-gitgitgadget
+Julien ÉLIE
+
+« – Cet homme qui est sorti du palais, nous renseignera peut-être sur la
+     façon d'y entrer. Suivons-le.
+   – Mais… Il sait sortir d'accord, mais rien ne prouve qu'il sache
+     entrer, et… » (Astérix)
