@@ -2,64 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F466C54EBD
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 19:56:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5D5CC5479D
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 19:58:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231358AbjAIT4j (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Jan 2023 14:56:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57300 "EHLO
+        id S237072AbjAIT6Z convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 9 Jan 2023 14:58:25 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58096 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234953AbjAIT4i (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2023 14:56:38 -0500
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B812A1142
-        for <git@vger.kernel.org>; Mon,  9 Jan 2023 11:56:37 -0800 (PST)
-Received: by mail-pl1-f182.google.com with SMTP id b17so3223522pld.7
-        for <git@vger.kernel.org>; Mon, 09 Jan 2023 11:56:37 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VleHuEMKm1vsdYJZDZDWVR7UtCmKQQotga8pKSSW43g=;
-        b=b7FC+EmnSBv5qfQRog1XR+B7k+hQvhQtLxFPqTGycVjO7BdY/cQCw6yVf5rBIhZMj0
-         2+VMFmhrfXJbJWKRvHC9BEn1qeMQH5WpMgXUHmrCRzLqNwPb/Yv/PMex6q8U5kIYt8SC
-         Eq6q/SGabJi7Yd8Uzfw5C4cM+YBzrOuel4tF9kZhO5DK2ge1dkjDN6hVd8atHMclIhCo
-         2LTRiIVa+1xYd7k8QEZctUS94h9Vn162LnAN0XU03MMNFEs8DRyDmOziw7cf3eS6LQ+J
-         pbLlljagU6GAjeLFotag00uATwpHdCQvB2ANqenkXnWKBnrrayqB9qzEqauY8/wsRYHT
-         DM+A==
-X-Gm-Message-State: AFqh2kro2BmgZpsINvd2o+HSP+UktJ0eBGZXxznd+C/VIvMfWcN90DzQ
-        bI9t+JVzFjctdaijv0zSacQLoVUnLVBWFp7NxXU=
-X-Google-Smtp-Source: AMrXdXsFi5xdUGq0EOpfQlKUGvht6VquqARuP+iuEEi3zR1CFCR92ydCxN0HJVCB2xzZRI62BCxT/2vEW7bCoCELSa8=
-X-Received: by 2002:a17:90a:9b8c:b0:227:22a6:eff0 with SMTP id
- g12-20020a17090a9b8c00b0022722a6eff0mr272639pjp.64.1673294196918; Mon, 09 Jan
- 2023 11:56:36 -0800 (PST)
+        with ESMTP id S237248AbjAIT6V (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2023 14:58:21 -0500
+Received: from elephants.elehost.com (elephants.elehost.com [216.66.27.132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D400411C36
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 11:58:20 -0800 (PST)
+Received: from Mazikeen (cpebc4dfb928313-cmbc4dfb928310.cpe.net.cable.rogers.com [99.228.251.108] (may be forged))
+        (authenticated bits=0)
+        by elephants.elehost.com (8.16.1/8.16.1) with ESMTPSA id 309JwEVx041408
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 9 Jan 2023 14:58:14 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+Reply-To: <rsbecker@nexbridge.com>
+From:   <rsbecker@nexbridge.com>
+To:     "'Eric Sunshine'" <sunshine@sunshineco.com>
+Cc:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Yutaro Ohno via GitGitGadget'" <gitgitgadget@gmail.com>,
+        <git@vger.kernel.org>, "'Yutaro Ohno'" <yutaro.ono.418@gmail.com>
+References: <pull.1422.git.git.1673166241185.gitgitgadget@gmail.com> <xmqqbkn8wcqo.fsf@gitster.g> <018501d9241b$fe4b1270$fae13750$@nexbridge.com> <CAPig+cQ1PMYhWiwRiq2eOWzHYmqcCC6QfkHCuVTxaeA7fz0ddw@mail.gmail.com>
+In-Reply-To: <CAPig+cQ1PMYhWiwRiq2eOWzHYmqcCC6QfkHCuVTxaeA7fz0ddw@mail.gmail.com>
+Subject: RE: [PATCH] doc: use "git switch -c" rather than "git checkout -b" consistently
+Date:   Mon, 9 Jan 2023 14:58:14 -0500
+Organization: Nexbridge Inc.
+Message-ID: <01ad01d92464$b62492c0$226db840$@nexbridge.com>
 MIME-Version: 1.0
-References: <xmqqlembu551.fsf@gitster.g>
-In-Reply-To: <xmqqlembu551.fsf@gitster.g>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 9 Jan 2023 14:56:26 -0500
-Message-ID: <CAPig+cRZkEY29zDQMbY=FCm2_Apztw6--3VJ3e1NoVxCA3upTg@mail.gmail.com>
-Subject: es/hooks-and-local-env (was "What's cooking in git.git (Jan 2023,
- #03; Mon, 9)")
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+        charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQG+uH7vqNUb9eP923D9hpkMAPjYLQKyPbLAAcOsMxIBEpGt7K6fFFcQ
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 9, 2023 at 10:09 AM Junio C Hamano <gitster@pobox.com> wrote:
-> * es/hooks-and-local-env (2023-01-09) 1 commit
->  - githooks: discuss Git operations in foreign repositories
+On January 9, 2023 2:17 PM, Eric Sunshine wrote:
+>On Mon, Jan 9, 2023 at 6:20 AM <rsbecker@nexbridge.com> wrote:
+>> On January 8, 2023 11:31 PM, Junio C Hamano wrote:
+>> >"Yutaro Ohno via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>> >> Subject: Re: [PATCH] doc: use "git switch -c" rather than "git
+>> >> checkout -b" consistently
+>> >
+>> >Hmph.  When two things work equally well, is it a good idea to
+>> >describe
+>> only one
+>> >"consistently", or mention both that can be used pretty much
+>> interchangeably in
+>> >different places?  I am not 100% sure "consistently" is a good thing here.
+>> >
+>> >Thoughts from others?
+>>
+>> git switch is still marked as EXPERIMENTAL in the online help. I don't
+>> think moving broadly to switch from checkout in the documentation
+>> should happen until the EXPERIMENTAL designation is dropped. After that, then
+>"switch -c"
+>> should be used everywhere instead of checkout (except for in the
+>> checkout documentation).
 >
->  Doc update for environment variables set when hooks are invoked.
->
->  Will merge to 'next'?
->  source: <pull.1457.git.1673171924727.gitgitgadget@gmail.com>
+>Such a point probably should have been raised when 328c6cb853 (doc:
+>promote "git switch", 2019-03-29) was submitted, but since 328c6cb853 was
+>merged nearly four years ago and has been pointing people at git-switch all this
+>time, it's probably too late to use it as an argument now.
 
-I just submitted[1] v2 which incorporates a refined version of your
-suggested improvement[2].
+I agree. Perhaps it is time to drop the "EXPERIMENTAL" notices from 'git switch', in that case.
 
-[1]: https://lore.kernel.org/git/pull.1457.v2.git.1673293508399.gitgitgadget@gmail.com/
-[2]: https://lore.kernel.org/git/xmqqwn5wuwvs.fsf@gitster.g/
