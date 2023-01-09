@@ -2,138 +2,175 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6710C5479D
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 04:39:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E7ADC54EBD
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 04:42:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233961AbjAIEjW (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Jan 2023 23:39:22 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45924 "EHLO
+        id S236397AbjAIEmN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Jan 2023 23:42:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237034AbjAIEio (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jan 2023 23:38:44 -0500
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC39311C3D
-        for <git@vger.kernel.org>; Sun,  8 Jan 2023 20:35:23 -0800 (PST)
-Received: by mail-pj1-x1035.google.com with SMTP id o13so4036991pjg.2
-        for <git@vger.kernel.org>; Sun, 08 Jan 2023 20:35:23 -0800 (PST)
+        with ESMTP id S236593AbjAIEl2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jan 2023 23:41:28 -0500
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9430FC9
+        for <git@vger.kernel.org>; Sun,  8 Jan 2023 20:40:35 -0800 (PST)
+Received: by mail-yb1-xb36.google.com with SMTP id c82so239310ybf.6
+        for <git@vger.kernel.org>; Sun, 08 Jan 2023 20:40:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QE42tp5V7b4S+K11oteQmA5SVwJlaUWQwLHnsBk9kUg=;
-        b=Y7TNV5WXIIXkKivGHAA5aya/frwvnTXMgX1psniCY8pdZApDNL+xuxXuWQ4szimY9D
-         l8LCQWOg9VIjkrMfdlIFqX7Gq4s0z8kiFdtKzzvLauayeO4pJr51kq1R8hBpXNkruxv6
-         +tVu+bDcqqQz7fi8+Mf66qCzhLNEeZya/qHITtrVGWIoicvqkYP+n1QPTzU41Yhts63i
-         LfS0r3IEDmKQ4pEwR4PuRqfSFwuQIW4KCVhcHJcP1iBONBx7cxdNiilArN2zMxL7iK4+
-         MapklX/03J+lgu+EcLLns2uTf7cSQG3pbO6AbEpJq000ZXtYPGLamKL2vK9v5/Wqu2eq
-         OfQw==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+TAGEZ67LoOf5p1kyE8FyWkGcLSIl7K/ezzx+GYjEBk=;
+        b=Nz6l8DdKzvI3xw5S1/OPF+fmcHU39OBug0ZbrJ3OElMd8dpjulVRzENFXBkFB4vdAN
+         sUMO2D3yFKimAS6Hm0gQArkrxDZHTh5auIR9lQ+4vj0fVT3x5tbKTsPz0Ws8r9ak+eJQ
+         bE+4PYK/DZ5abrbSCBpXeJHcCIELe1EAcX5kbmKBvEa1vO+/XGhRtfPjCB9SqxUSIP2e
+         U2gkUhmZoTMhwCyGOiZlBrACYl6ryK0dzFj8xDKn8lKk/KGlrEOkWwlRsQ1T3tO6FcOk
+         SnTR9zl2f7Jxgc0/bOslbDDd6AODncu5HDONfvpLz7sopmQgK8Hxx5xnnQ3IS5IfMtsc
+         79FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QE42tp5V7b4S+K11oteQmA5SVwJlaUWQwLHnsBk9kUg=;
-        b=W5YMm66GR3+Pu2Lih5x4vkRSieOz+pS/QnUoESlmt3NXROmsq4aQouplKy0PRWj7Hs
-         DaSyeUxuYNdRnH2V2FSApvlREQbNGCBZuyaGb1/hVJX+KJaeJ4m9WHZOOoXSLiAKm4oc
-         s5q9vUuJOTmBIBvI4FIjj4OiRDr6RaXc8y+kYp5gyPgf+JEwkCvFJVCK2aN7swdiGP34
-         rJofbbBNpMc85Rw4OFLxuKz1VforjDBbtrAgp3rl2F/fM7OvO6Bd+9xa8CYzmNoA4bn8
-         toam+sWO6i982Lad7n7ptgX6KloW0Lj5kECV88gQP3WR9dTVsHMvTQ3xidtrfDTvpLZe
-         rZeg==
-X-Gm-Message-State: AFqh2korPxdPPVdJKR8swUBXjAWJvleUenzAUmuIkA38O9canH5+i9s6
-        sXaEbvEhctkB2B7tjuPanr4=
-X-Google-Smtp-Source: AMrXdXs8wfeu6wfYmd3K93Gm6wzNSjV6T6KyJkZ8hswwa7wzU8JkEzmzmUWZ47CFwB/ckOGktF2QTw==
-X-Received: by 2002:a17:902:978f:b0:189:6f76:9b61 with SMTP id q15-20020a170902978f00b001896f769b61mr135010plp.39.1673238923243;
-        Sun, 08 Jan 2023 20:35:23 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id u5-20020a170902e80500b00189529ed580sm4980249plg.60.2023.01.08.20.35.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Jan 2023 20:35:22 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Julien =?utf-8?Q?=C3=89LIE?= <julien@trigofacile.com>,
-        Barret Rhoden <brho@google.com>,
-        Michael Platings <michael@platin.gs>
-Cc:     git@vger.kernel.org
-Subject: Re: Ignored commits appearing in git blame
-References: <b1051e73-e663-82bf-bda6-015e64102248@trigofacile.com>
-Date:   Mon, 09 Jan 2023 13:35:22 +0900
-In-Reply-To: <b1051e73-e663-82bf-bda6-015e64102248@trigofacile.com> ("Julien
-        =?utf-8?Q?=C3=89LIE=22's?= message of "Sun, 8 Jan 2023 10:27:37 +0100")
-Message-ID: <xmqq5ydgwcj9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+TAGEZ67LoOf5p1kyE8FyWkGcLSIl7K/ezzx+GYjEBk=;
+        b=XqKfCGXAytjXib6Qvfter5U0xzsqCzNnAwM0tCDUuGIV46TFvCLqWSMNbPjmMfDXOR
+         9a6uKT/+mllDNPRgFyF3Zia5x91/yeoW400p++SBlSEmMR0psrUnUZxAxor6p5JynJXY
+         qNFNexls6/s4KIKrA6BHN6a/uuyneda+ed53kmrBWP0Mya9nzAxTZBftMghW0JEtWIG+
+         37+bh7e54FHfXjpOKIbkUlk2Gkl5u5diBNR+MGJaNzaVfMqxiSFLOKpbZCMtRC+Cm4MO
+         sW9MKaEhzIQhRde3/eAkWbFqXbMzV2biUAClsnXc7x5+0ZNfeL87Ubmbzt6Ip75aZRN1
+         z8Ag==
+X-Gm-Message-State: AFqh2kqPwwpyH/kguV+BF3LrTuQlqyX8rEtNwaYtChDTLUoEPOVmxrLy
+        J1WY7unhaCkh4YsXJyUhQg2FsgMeV7GI6O+Brs+FUu00ufM=
+X-Google-Smtp-Source: AMrXdXuiVYZ6owATJtyEBQHblGBbCv8YQNJDw+6Uc4ome9zCbjXqa6CpXhU5IxYfmdpEVShtRwYS+6y8irAr7MMVgLk=
+X-Received: by 2002:a25:8d10:0:b0:7ba:b57:f639 with SMTP id
+ n16-20020a258d10000000b007ba0b57f639mr580103ybl.103.1673239234713; Sun, 08
+ Jan 2023 20:40:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <CA+PPyiG=+rs_bOQbaNB311_DVdSc2g44SkLzpaqOER7rfxykrQ@mail.gmail.com>
+ <CAP8UFD2huFgTjB1hNGyGnMKPONOG6ZV-wvxWkTaz-iZNfxrhJA@mail.gmail.com>
+In-Reply-To: <CAP8UFD2huFgTjB1hNGyGnMKPONOG6ZV-wvxWkTaz-iZNfxrhJA@mail.gmail.com>
+From:   NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
+Date:   Sun, 8 Jan 2023 23:40:07 -0500
+Message-ID: <CA+PPyiHOLUm87eHuxyhbqqML33Q6g-he_DKRxTEb2fu-2p3NSQ@mail.gmail.com>
+Subject: Re: Github actions failing
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Julien ÉLIE <julien@trigofacile.com> writes:
+> There is the following in the above log:
+>
+> > 2293 error: cannot run gpg: No such file or directory
+>
+> so maybe gpg isn't installed on the test system.
+>
+> It looks like the test you added doesn't have the "GPG" prerequisite. Compare:
+>
+> -> test_expect_success 'test bare signature atom'
+>
+> with:
+>
+> -> test_expect_success GPG 'show good signature with custom format'
+>
+> There is a "GPG" prerequisite in the latter but not the former.
+>
+Thanks, I missed the GPG flag. Now I get the following after forcing
+the push. I have been looking for the problem but I can't figure it
+out. I will be glad for any help
+>
+> git checkout -b signed &&
+> 1840 echo 1 >file && git add file &&
+> 1841 test_tick && git commit -S -m initial &&
+> 1842 git verify-commit signed 2>out &&
+> 1843 head -3 out >expected &&
+> 1844 tail -1 out >>expected &&
+> 1845 echo >>expected &&
+> 1846 git for-each-ref refs/heads/signed --format="%(signature)" >actual &&
+> 1847 test_cmp actual expected
+> 1848
+> 1849 + git checkout -b signed
+> 1850 Switched to a new branch 'signed'
+> 1851 + echo 1
+> 1852 + git add file
+> 1853 + test_tick
+> 1854 + test -z set
+> 1855 + test_tick=1112912113
+> 1856 + GIT_COMMITTER_DATE=1112912113 -0700
+> 1857 + GIT_AUTHOR_DATE=1112912113 -0700
+> 1858 + export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
+> 1859 + git commit -S -m initial
+> 1860 [signed 4dc4b90] initial
+> 1861 Author: A U Thor <author@example.com>
+> 1862 1 file changed, 1 insertion(+)
+> 1863 create mode 100644 file
+> 1864 + git verify-commit signed
+> 1865 + head -3 out
+> 1866 + tail -1 out
+> 1867 + echo
+> 1868 + git for-each-ref refs/heads/signed --format=%(signature)
+> 1869 + test_cmp actual expected
+> 1870 + test 2 -ne 2
+> 1871 + eval diff -u "$@"
+> 1872 + diff -u actual expected
+> 1873 --- actual 2023-01-08 19:40:42.169214115 +0000
+> 1874 +++ expected 2023-01-08 19:40:42.121213837 +0000
+> 1875 @@ -1,4 +1,5 @@
+> 1876 gpg: Signature made Sun Jan 8 19:40:42 2023 UTC
+> 1877 gpg: using DSA key 13B6F51ECDDE430D
+> 1878 +gpg: checking the trustdb
+> 1879 gpg: Good signature from "C O Mitter <committer@example.com>"
+> 1880
+> 1881 error: last command exited with $?=1
+> 1882 not ok 338 - test bare signature atom
 
-[jc: redirecting to those who touched "blame-ignore" topic in the past]
 
-> Hi all,
+
+
+On Sun, Jan 8, 2023 at 1:17 PM Christian Couder
+<christian.couder@gmail.com> wrote:
 >
-> I'm facing an issue with the use of "git blame" which shows commits marked to be ignored.
+> Hi,
 >
-> We have a .git-blame-ignore-revs file that can be retrievable at <https://github.com/InterNetNews/inn/blob/main/.git-blame-ignore-revs>.
+> On Sun, Jan 8, 2023 at 11:07 AM NSENGIYUMVA WILBERFORCE
+> <nsengiyumvawilberforce@gmail.com> wrote:
+> >
+> > Hi,
+> > So I wanted to send the next patch after review.  All the tests pass
+> > when I run them on my PC but I get something like the following error
+> > when I test from my git branch
+> > >
+> > > + git checkout -b signed
+> > > 2283 Switched to a new branch 'signed'
+> > > 2284 + echo 1
+> > > 2285 + git add file
+> > > 2286 + test_tick
+> > > 2287 + test -z set
+> > > 2288 + test_tick=1112912113
+> > > 2289 + GIT_COMMITTER_DATE='1112912113 -0700'
+> > > 2290 + GIT_AUTHOR_DATE='1112912113 -0700'
+> > > 2291 + export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
+> > > 2292 + git commit -S -m initial
+> > > 2293 error: cannot run gpg: No such file or directory
+> > > 2294 error: gpg failed to sign the data
+> > > 2295 fatal: failed to write commit object
+> > > 2296 error: last command exited with $?=128
+> > > 2297 not ok 338 - test bare signature atom
+> > What could be wrong?
 >
-> The Git command line I'm using is:
->     git blame --ignore-revs-file .git-blame-ignore-revs radius.c
+> There is the following in the above log:
 >
-> Here is an extract where commit 36944f2b16 appears at line 59, though it should be ignored (present in .git-blame-ignore-revs):
+> > 2293 error: cannot run gpg: No such file or directory
 >
-> 8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  50)     int radport;
-> 8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  51)     char *lochost;
-> a9d899ddbe (Russ Allbery       1999-11-29 01:40:47 +0000  52)     int locport;
-> 8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  53)
-> 8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  54)     char *prefix, *suffix; /* futz with the username, if necessary */
-> 9f21a39f37 (Katsuhiro Kondou   1999-06-12 09:33:48 +0000  55)     int ignore_source;
-> d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  56)
-> d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  57)     struct _rad_config_t *next; /* point to any additional servers */
-> 8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  58) } rad_config_t;
-> 36944f2b16 (Julien ÉLIE        2021-10-31 10:04:59 +0100  59)
-> d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  60) typedef struct _sending_t {
-> d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  61)     auth_req req;
-> d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  62)     int reqlen;
+> so maybe gpg isn't installed on the test system.
 >
+> It looks like the test you added doesn't have the "GPG" prerequisite. Compare:
 >
-> When running git blame without ignoring revisions, commit 36944f2b16 appears at lines 54, 57 and 59:
+> -> test_expect_success 'test bare signature atom'
 >
-> 8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  50)     int radport;
-> 8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  51)     char *lochost;
-> a9d899ddbe (Russ Allbery       1999-11-29 01:40:47 +0000  52)     int locport;
-> 8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  53)
-> 36944f2b16 (Julien ÉLIE        2021-10-31 10:04:59 +0100  54)     char *prefix, *suffix; /* futz with the username, if necessary */
-> 9f21a39f37 (Katsuhiro Kondou   1999-06-12 09:33:48 +0000  55)     int ignore_source;
-> d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  56)
-> 36944f2b16 (Julien ÉLIE        2021-10-31 10:04:59 +0100  57)     struct _rad_config_t *next; /* point to any additional servers */
-> 8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  58) } rad_config_t;
-> 36944f2b16 (Julien ÉLIE        2021-10-31 10:04:59 +0100  59)
-> d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  60) typedef struct _sending_t {
-> d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  61)     auth_req req;
-> d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  62)     int reqlen;
+> with:
 >
+> -> test_expect_success GPG 'show good signature with custom format'
 >
-> Shouldn't 36944f2b16 have disappeared from the output at line 59?
->
-> It should have been d65e228465 which already had that line, as it can be seen in the commit (line 53 at that time):
->   https://github.com/InterNetNews/inn/blob/d65e228465700ff044b75aecacb7062d2a1250f9/authprogs/radius.c
->
->
-> The result of that command is the same as the one GitHub shows; you can therefore find the whole ouput here:
->
->     https://github.com/InterNetNews/inn/blame/main/authprogs/radius.c
->
-> Commit 36944f2b16 is mentioned at lines 59, 129, 144, 293, etc. though present in .git-blame-ignore-revs.
-> Yet, that very commit is correctly ignored at other places of the same file.
->
-> Other files and other commits in the project are also affected.  I can give more examples if needed.
->
->
-> Is it the expected behaviour of "git blame"?
-> Is there a reason for these commits to appear in some portions of the blame output?
->
->
-> Thanks beforehand,
+> There is a "GPG" prerequisite in the latter but not the former.
