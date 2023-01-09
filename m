@@ -2,128 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6B75AC5479D
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 21:27:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E567C5479D
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 21:41:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235148AbjAIV1f (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Jan 2023 16:27:35 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38196 "EHLO
+        id S238067AbjAIVlj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Jan 2023 16:41:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232599AbjAIV1e (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2023 16:27:34 -0500
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F4A9BCD
-        for <git@vger.kernel.org>; Mon,  9 Jan 2023 13:27:33 -0800 (PST)
-Received: by mail-wr1-x434.google.com with SMTP id e3so436561wru.13
-        for <git@vger.kernel.org>; Mon, 09 Jan 2023 13:27:32 -0800 (PST)
+        with ESMTP id S238143AbjAIVk2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2023 16:40:28 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5242763C0
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 13:39:12 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id ud5so23652788ejc.4
+        for <git@vger.kernel.org>; Mon, 09 Jan 2023 13:39:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=QT44yFAdNF+sYJGCanb/VRQGpUqQCEESq6s0V012RGY=;
-        b=RZlKuz4dCWh+PNMhlz3rNZqZnqNUOe6pL15udJSB0khr6/SDNyQDCOTZ6+S0nG0a1X
-         WxM3OtKkn6mR84zdJF2aSErdnspieLcS/EzDYewf4yLBo/a1sWkjCYqBiMBp65FL6zSI
-         TrW5QZKDLXSWThoMh3UbGoHQUi9hFLwovggFU/XmaELxOTGuHbwdhXaAr8jjY77oFZbM
-         l0XF7TgONfgmIDJnoDhOorUpT4Yl+q2qLybz/ufrlm3drCHblDzWDi2AQWludr+WjAUX
-         1FBDjwxegs+yYzVFDDRf9UHhjW64bPhoATanf7i2IGMvpwYrlnWztfcWH3GDlS6yjlCV
-         RAmQ==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZiV9TwO0x9fUnUdSaT2hIjwlEgKCsQlTI1BUEYucR4w=;
+        b=ERXM3xSBngKFSCZbKRwZy4twL4Wyip9UqGeVH9cYA4SH9pQWHUFz2pSoNfHVY5AWhn
+         zaNHpCrpGToaC8foi/3Kh1q04b+/WfQw3U7mvCQ0X7lnNyaXhXiZ6vjzmjmBOSSGzMF5
+         3SRsBJ9MJtlQSIwkiWER2xsh0xfQ9uNipYKWMiz4gkhgHExtyfiM0Iz85UsnQUIPgArE
+         4tuhtJp3k3squxUycQNajpHRJLv+cQMvcljvXLgsTfUirU4MOM5OgCtp0wHnbFGad7aW
+         t6R+xuRhA51yNcv54kpK1WSkFwlh3R+0ZnT/wpSuRjeTCXTrqHmrH56SoPebJgX8bJiC
+         dJyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QT44yFAdNF+sYJGCanb/VRQGpUqQCEESq6s0V012RGY=;
-        b=vxSP6wMIEFT3/5eKnG+TWaxaIAsiv7AI8mrX2MVrMS0+ktrMfg0ZLHEXC8xrofsJAX
-         RjExHSX6PJaCmZiVwS0VGEZ5WlPKGZTJnFl6BIXlyRnYZw2jSYviB0NPWoENZadJDCgn
-         ttqGSTN697vX9qyj1uc28qUFcmP6HkHSRu9YX4rC6Kxf/sBTyjDf1DzPPO1Y9wDguMIR
-         HAGFnc1+BHIRSyi5Gbg1JK3UkfgC9ZADRmPKIJ3P12mrThm8iXAbnRa9O1gjmBFUCinC
-         gxNH3onxoHqrOeiMM5+Gy398SHPzTAb635J7ocNna82jtXgrjgnq0a18PXG0pX1Xl6hr
-         RS7A==
-X-Gm-Message-State: AFqh2koABcEJ06Or8ve8/gpGsJgBhp8CPYb/9ADJUAEwnIin+/W8YUhj
-        m1HP/Ag1KSP4nuFcjZbU1vs=
-X-Google-Smtp-Source: AMrXdXuC5GGC7MIOQ6q5V0kq+PqHU1uAbTTS1rE6M1LMFLcpMUSeN19L8/xVQyizlTWti6VjKuFBug==
-X-Received: by 2002:a5d:430e:0:b0:279:53e1:5178 with SMTP id h14-20020a5d430e000000b0027953e15178mr33071428wrq.45.1673299651440;
-        Mon, 09 Jan 2023 13:27:31 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id t9-20020a05600c198900b003d9e74dd9b2sm9093025wmq.9.2023.01.09.13.27.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 13:27:30 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pEzg2-000DpA-0f;
-        Mon, 09 Jan 2023 22:27:30 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     rsbecker@nexbridge.com, Junio C Hamano <gitster@pobox.com>,
-        Yutaro Ohno via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Yutaro Ohno <yutaro.ono.418@gmail.com>
-Subject: Re: [PATCH] doc: use "git switch -c" rather than "git checkout -b"
- consistently
-Date:   Mon, 09 Jan 2023 22:24:53 +0100
-References: <pull.1422.git.git.1673166241185.gitgitgadget@gmail.com>
-        <xmqqbkn8wcqo.fsf@gitster.g>
-        <018501d9241b$fe4b1270$fae13750$@nexbridge.com>
-        <CAPig+cQ1PMYhWiwRiq2eOWzHYmqcCC6QfkHCuVTxaeA7fz0ddw@mail.gmail.com>
-        <01ad01d92464$b62492c0$226db840$@nexbridge.com>
-        <CAPig+cTJ7CQpeo6v6j0L1beoTKyKnXcii2vYqRwy40R01vCo+A@mail.gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <CAPig+cTJ7CQpeo6v6j0L1beoTKyKnXcii2vYqRwy40R01vCo+A@mail.gmail.com>
-Message-ID: <230109.861qo31jr1.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZiV9TwO0x9fUnUdSaT2hIjwlEgKCsQlTI1BUEYucR4w=;
+        b=ayLraMk/Vyv64PwjO0pVn4IqoTXLS/pMLLtFeXwycGDwH0HCWtSJLLP1LEHEPvgXc+
+         qxGx3GKP2X3ZLEW38rhke1W9i6XW8nFClVtf7tiQqQz6fa9v6EaLreYLXCskjSETr2N4
+         7Hymz9G0We91pqbMWTSh+LBfbdwgQBwSNeScxhMilqcW6+LSve6NUTwYUt4qhlozTg6c
+         2CcnZaceOkrIylluvsQ+c0bP+4A5UBibNz7N2xNC9kK2rXhJymyEgu8sW198Hze9dvBb
+         kXQ/or54+yspv2PwGrzn+iQbFBer9ZE5AgXSBbjHafGiMOovXIcpUhxc8zF7FdEZAZuD
+         8KWg==
+X-Gm-Message-State: AFqh2kokr3Vht2p+tAzJMQzrniBficYJyCaqq80Mn1P5xAK0skByYcZm
+        7+jdEYTTaBwICWDtFBm1CAQphVc+EyQVwr02MGMahC55Yx7zqQ==
+X-Google-Smtp-Source: AMrXdXvP8jg8SpfG5p9+w+MBEHcUFUcjnewZkSy/cFCJKWoRs9ps4qw/GugqOyvZOySniHhDgPAsudaYsTiTYP9vBYo=
+X-Received: by 2002:a17:906:2896:b0:7ea:5ba6:e773 with SMTP id
+ o22-20020a170906289600b007ea5ba6e773mr6663571ejd.506.1673300350844; Mon, 09
+ Jan 2023 13:39:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <CAEg0tHSLyaewkgGs0dEXfwQhKmbiO65bXZVU8t7Kn4WwJ1p0Fw@mail.gmail.com>
+ <xmqqfsclzlqx.fsf@gitster.g> <CAEg0tHT5PD4K89E3fcNq_WbaLPHozLi-PsJFDsQrzkGi7Na9jg@mail.gmail.com>
+In-Reply-To: <CAEg0tHT5PD4K89E3fcNq_WbaLPHozLi-PsJFDsQrzkGi7Na9jg@mail.gmail.com>
+From:   muzimuzhi Z <muzimuzhi@gmail.com>
+Date:   Tue, 10 Jan 2023 05:38:59 +0800
+Message-ID: <CAEg0tHQtf9G0N24Xfe-gvRM1AFaiS_ApcuQ8hZtsZAeMhhVWAQ@mail.gmail.com>
+Subject: Re: [PATCH] doc: fix non-existing config name
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Clemens Buchacher <drizzd@gmx.net>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Somehow My last mail failed to sent to Clemens Buchacher (drizzd@aon.at):
 
-On Mon, Jan 09 2023, Eric Sunshine wrote:
+> 550 5.7.1 <drizzd@aon.at>: Recipient address rejected: mailbox not found
 
-> On Mon, Jan 9, 2023 at 2:58 PM <rsbecker@nexbridge.com> wrote:
->> On January 9, 2023 2:17 PM, Eric Sunshine wrote:
->> >On Mon, Jan 9, 2023 at 6:20 AM <rsbecker@nexbridge.com> wrote:
->> >> git switch is still marked as EXPERIMENTAL in the online help. I don't
->> >> think moving broadly to switch from checkout in the documentation
->> >> should happen until the EXPERIMENTAL designation is dropped. After th=
-at, then
->> >"switch -c"
->> >> should be used everywhere instead of checkout (except for in the
->> >> checkout documentation).
->> >
->> >Such a point probably should have been raised when 328c6cb853 (doc:
->> >promote "git switch", 2019-03-29) was submitted, but since 328c6cb853 w=
-as
->> >merged nearly four years ago and has been pointing people at git-switch=
- all this
->> >time, it's probably too late to use it as an argument now.
->>
->> I agree. Perhaps it is time to drop the "EXPERIMENTAL" notices from 'git=
- switch', in that case.
+I found two lines about Clemens in `.mailmap` (see below) [1] and
+drizzd@gmx.net was used last time when Clemens mailed to the current
+mailing list in Feb 2019 [2].
+
+    Clemens Buchacher <drizzd@gmx.net> <drizzd@aon.at>
+    Clemens Buchacher <drizzd@gmx.net> <clemens.buchacher@intel.com>
+
+Thus I added drizzd@gmx.net to cc.
+
+yukai
+
+[1] https://github.com/git/git/blob/a38d39a4c50d1275833aba54c4dbdfce9e2e9ca=
+1/.mailmap#L45-L46
+[2] https://lore.kernel.org/git/B168DCB1-7A69-4729-89C7-B513464DD468@gmx.ne=
+t/
+
+muzimuzhi Z <muzimuzhi@gmail.com> =E4=BA=8E2023=E5=B9=B41=E6=9C=889=E6=97=
+=A5=E5=91=A8=E4=B8=80 12:18=E5=86=99=E9=81=93=EF=BC=9A
 >
-> Perhaps. Perhaps not. As I recall, both Felipe and =C3=86var expressed
-> rather serious concerns that git-switch is not yet ready as a proper
-> git-checkout replacement. Samples of their concerns can be found at
-> [1] and [2], for instance.
+> Replace non-existent `branch.<name>.fetch` to `remote.<repository>.fetch`=
+, in
+> the first example in `git-fetch` doc, which was introduced in
+> d504f69 (modernize fetch/merge/pull examples, 2009-10-21).
 >
-> By the way, git-worktree is even older and probably more widely used
-> than git-switch, yet it is still marked "experimental", as well, and
-> perhaps rightly so. As far as I understand, for instance, it still
-> isn't compatible with submodules (though there may have been some
-> recent work from one of the Googlers in that area?).
+> Rename placeholder `<name>` to `<repository>`, to be consistent with all =
+other
+> uses in git docs, except that `git-config.txt` uses `remote.<name>.fetch`=
+ in
+> its "Variables" section.
 >
-> [1]: https://lore.kernel.org/git/211021.86wnm6l1ip.gmgdl@evledraar.gmail.=
-com/
-> [2]: https://lore.kernel.org/git/CAPiPmQnb=3DXMaF2+YkryEbiX8zA=3Djwa5y=3D=
-fbAGk9jpCExpbS4Rw@mail.gmail.com/T/
-
-I think deciding on the "EXPERIMENTAL" would be nice, and it should
-arguably precede wider use of "git switch" in the docs.
-
-But on the other hand we already provide examples of it outside its own
-docs, so perhaps a change such as the one being proposed here is
-something we should just accept.
-
-Discussions such as these might also suggest that thinking we can change
-its fundamental behavior at this point are wishful thinking, i.e. maybe
-too many users rely on it, and didn't read the disclaimer.
+> Also add missing monospace markups.
+>
+> Signed-off-by: muzimuzhi <muzimuzhi@gmail.com>
+> ---
+>  Documentation/git-fetch.txt | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+> index 63d9569..fba66f1 100644
+> --- a/Documentation/git-fetch.txt
+> +++ b/Documentation/git-fetch.txt
+> @@ -251,10 +251,10 @@ EXAMPLES
+>  $ git fetch origin
+>  ------------------------------------------------
+>  +
+> -The above command copies all branches from the remote refs/heads/
+> -namespace and stores them to the local refs/remotes/origin/ namespace,
+> -unless the branch.<name>.fetch option is used to specify a non-default
+> -refspec.
+> +The above command copies all branches from the remote `refs/heads/`
+> +namespace and stores them to the local `refs/remotes/origin/` namespace,
+> +unless the `remote.<repository>.fetch` option is used to specify a
+> +non-default refspec.
+>
+>  * Using refspecs explicitly:
+>  +
+> --
+> 2.39.0
