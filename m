@@ -2,302 +2,389 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id BD110C54EBE
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 12:30:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DF1D3C5479D
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 13:02:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237189AbjAIMaC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Jan 2023 07:30:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57216 "EHLO
+        id S236796AbjAINCu (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Jan 2023 08:02:50 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237119AbjAIM3f (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2023 07:29:35 -0500
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27BF11400A
-        for <git@vger.kernel.org>; Mon,  9 Jan 2023 04:29:34 -0800 (PST)
-Received: by mail-pf1-x431.google.com with SMTP id c26so1534152pfp.10
-        for <git@vger.kernel.org>; Mon, 09 Jan 2023 04:29:34 -0800 (PST)
+        with ESMTP id S236893AbjAINCW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2023 08:02:22 -0500
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56060F2C
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 04:59:55 -0800 (PST)
+Received: by mail-yb1-xb36.google.com with SMTP id l139so8371800ybl.12
+        for <git@vger.kernel.org>; Mon, 09 Jan 2023 04:59:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pQLqYIrT6E/PtGmxwXisuCxOX3reJdfpRuxdh5sB/bg=;
-        b=RVSRNX6ybIsFzzeVnz7yE92ybnpWIg4KYK5SnxuyKgzekclcHxFmVlRuv4TK4AjiWu
-         IFGgE/RPAEDvIVAduXc8zjl61w3p+uUx5VRCDN4xSzFaB3N9mPg4/IWp/pbtOiqDcWnA
-         pRicIEnC9Ba4+KcuYgqdLEUf6Q/SYOTsOI1WtUD/xzgrBNRBi5MfkuYTtdeDyD9nbsWK
-         TjYeleKuwNTDWWPubJG6ExlykyREkeIR4w6Njva5dYPoR3Dc/Idd3sGHBQsYZYQ0+7wd
-         COxzvDFOcYZ/HrcE80V08h7OgeoD/kbLH5Nu47M11QYIcYT/AMEiXg5MXkZSsHUe1T+o
-         vpgg==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=D37ikE3zJFQ5NW+DB6WjXyl3Tn1qqhgkC6a8csaIh30=;
+        b=OHCGjKnl+/zdq4ceRZpRN/k71Ga1yRd3P2YbRnXWpISvLrYeqY20wqzzJRdGV7kDLi
+         XD+R0KDerNvFbcxlZcif0R3PdJ5WEXsw2eRxgucYKPNkn0zkEgQVgqRkCeELhlNYqRaF
+         qNwFo5Ja3LQ2Nlc6onnuaIVzj8VQI/9FQqdfvKmYLf92RE+oHzQGxLgK6a9N5Qwa3dAP
+         fifj7TOTyDCiQYU/CcA4efNSl9/xs33Z/lmxX0+32rPHzpE37/fqdurdWtcqO2JZC9zy
+         hBjj4H3QdJb4p9SsL5bJXhi1BU6cSJRkghX1MCqO/RNFT+rDGEEI5Ka4DeLOB5WSYZ91
+         svjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pQLqYIrT6E/PtGmxwXisuCxOX3reJdfpRuxdh5sB/bg=;
-        b=37XqQQ/V9El4n+/726WaXbo7Ga13UPLLD1oO6pPtEiTzDWI5COBTMRaEpRHJOPRG2L
-         pEvv8Rgt5rqx0L/UWWqVC4Nze79rbBKO1l50iHiZy+tXr/2okUgrwj6YV1KF1/xxQlLS
-         VyrvvYJ4UXBC/ovn/hO5m4cJqkrd8YnC1Ic8IQYzjeWs0rtqTCKufEUM2f5InIBla1o4
-         5Ush6zuPSV02Ftg5z4V7RaQBjs6q9Exgu96+OAH0RrpA/0OYE9xrsOscfQcnNyGUWXmX
-         e27NpUUJLzTpbG1Wyki3JSuKB+8LmKh77+QCK1bYHSmzp06Mq4CMwKrHCqqszXiTvmhS
-         tjVg==
-X-Gm-Message-State: AFqh2kqJ3MkYYwnfFu5YmfY+gt5aTeGjcxwra1v0UC56ypSpE9pdGHWK
-        q5bmp5j1LAPESb/1rv47QGajF8YoAHc=
-X-Google-Smtp-Source: AMrXdXsYb6JFy5F4jP5gdSy5SnI5Ib9p7+j+AtJuFA3Opylb2T9VYjDTj3GGlihwVGOU5uy0QEKmGQ==
-X-Received: by 2002:a62:524d:0:b0:582:cddd:784a with SMTP id g74-20020a62524d000000b00582cddd784amr20179825pfb.5.1673267373089;
-        Mon, 09 Jan 2023 04:29:33 -0800 (PST)
-Received: from localhost.localdomain ([103.156.58.205])
-        by smtp.gmail.com with ESMTPSA id b12-20020aa78ecc000000b00581a156b920sm5933674pfr.132.2023.01.09.04.29.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 04:29:32 -0800 (PST)
-From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>
-To:     git@vger.kernel.org, Phil Hord <phil.hord@gmail.com>,
-        plavarre@purestorage.com, Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>
-Subject: [PATCH] date.c: limit less precision ISO-8601 with its marker
-Date:   Mon,  9 Jan 2023 19:29:15 +0700
-Message-Id: <20230109122915.30973-1-congdanhqx@gmail.com>
-X-Mailer: git-send-email 2.39.0.287.g690a66fa66
-In-Reply-To: <Y7v6jThT9GQ8Oav8@danh.dev>
-References: <Y7v6jThT9GQ8Oav8@danh.dev>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=D37ikE3zJFQ5NW+DB6WjXyl3Tn1qqhgkC6a8csaIh30=;
+        b=nH5+6l6MUw9E+A9/YQ15JDZtjPzDZaOnpiJHlOnrsCWVoRUwpCJwd92oA0yIwQi3YQ
+         f0RYPYpLPvozjUwyzhybQjYvDOFu/mBmZxyN2TyIDZUvETqDogGfL+JuRnW6I7r9gZC7
+         R5+IxM/q580+8QuhHsSgG9vR2CZ6yYuUTmOGrsdjOxHDvKKqSRHK1IlxRnSCtn6oi/9v
+         dJKhQIPw4VaVY0Lc+aInQSN4c95s5JLqbUMBpZMxAJgrJ9TpwergbWOYf5SUaOi1xKkZ
+         TDZPzAoILEsCC/n88tNvISgtE5gjVuv24GoiO+j0g2Ds7zbNKpQwkVdfrQaO3unYg9Kj
+         ABOQ==
+X-Gm-Message-State: AFqh2krQRx7M6Z7fi5k60nVKHpdbTL7VVhsyCrn3HNwHrwlXD37jGUIR
+        xLF2XW4uu/tWnD8QxVZYp8BhO4zX0jZk9PaicRLTycMy+lI=
+X-Google-Smtp-Source: AMrXdXvQT0bxd4+cNpcjDZL9Uaw5Htyl4t+70qxVk5m8F/JYBTHE61FEHtfwPkBRzxHTfHKtvH3LAl0dPb0ZodUb9c0=
+X-Received: by 2002:a25:8d10:0:b0:7ba:b57:f639 with SMTP id
+ n16-20020a258d10000000b007ba0b57f639mr708468ybl.103.1673269194273; Mon, 09
+ Jan 2023 04:59:54 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <pull.1428.git.git.1673254961028.gitgitgadget@gmail.com> <CAP8UFD3cTnesN5SMcDjT3K2tpBOc82+aP=wr+DVzO3GomqwhRA@mail.gmail.com>
+In-Reply-To: <CAP8UFD3cTnesN5SMcDjT3K2tpBOc82+aP=wr+DVzO3GomqwhRA@mail.gmail.com>
+From:   NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
+Date:   Mon, 9 Jan 2023 07:59:42 -0500
+Message-ID: <CA+PPyiEghM+eoA=oM9vJ+=Xyvou+ToV077rA+ty2k3dyUkhLZg@mail.gmail.com>
+Subject: Re: [PATCH] ref-filter: add new atom "signature" atom
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     nsengaw4c via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The newly added heuristic to parse less precision ISO-8601 conflicts
-with other heuristics to parse datetime-strings. E.g.:
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > From: Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
+>
+> This patch should be marked as a V2 in its subject:
+>
+> [PATCH v2] ref-filter: add new atom "signature" atom
+>
+> not sure how to do that using GitGitGadget though.
+>
+> Also "atom" appears twice in the subject, so the following would be even better:
+>
+> [PATCH v2] ref-filter: add new "signature" atom
+>
+> I am not sure how, but GitGitGadget should allow to set the
+> "In-Reply-To:" to the message ID of your previous version of this
+> patch, so that your email with the version 2 of the patch would appear
+> in the same email thread as the email of your previous version of this
+> patch on lore.kernel.org/git:
+>
+> https://lore.kernel.org/git/pull.1452.git.1672102523902.gitgitgadget@gmail.com/
+>
+> (Please don't resend this patch as a v2, but as a v3, if you make any change.)
 
-	Thu, 7 Apr 2005 15:14:13 -0700
+I do not see any option for changing the ID, I think I need some
+directions on how to change the patch version
 
-Let's limit the new heuristic to only datetime string with a 'T'
-followed immediately by some digits, and if we failed to parse the
-upcoming string, rollback the change.
 
-Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
----
 
-Here is a better thought out change, which tried to minimize the impact of
-new heuristics.
-
-While I think it's a fixup, but I still needs explaination, I think I may
-reword it's as a full patch instead.
-Range-diff:
-1:  4036e5a944 ! 1:  b703425a57 fixup! date.c: allow ISO 8601 reduced precision times
-    @@ Metadata
-     Author: Đoàn Trần Công Danh <congdanhqx@gmail.com>
-     
-      ## Commit message ##
-    -    fixup! date.c: allow ISO 8601 reduced precision times
-    +    date.c: limit less precision ISO-8601 with its marker
-    +
-    +    The newly added heuristic to parse less precision ISO-8601 conflicts
-    +    with other heuristics to parse datetime-strings. E.g.:
-    +
-    +            Thu, 7 Apr 2005 15:14:13 -0700
-    +
-    +    Let's limit the new heuristic to only datetime string with a 'T'
-    +    followed immediately by some digits, and if we failed to parse the
-    +    upcoming string, rollback the change.
-     
-         Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
-     
-    @@ date.c: static int match_alpha(const char *date, struct tm *tm, int *offset)
-      	}
-      
-     +	/* ISO-8601 allows yyyymmDD'T'HHMMSS, with less precision */
-    -+	if (*date == 'T' && isdigit(date[1])) {
-    -+		tm->tm_hour = tm->tm_min = tm->tm_sec = 0;
-    -+		return strlen("T");
-    ++	if (*date == 'T' && isdigit(date[1]) && tm->tm_hour == -1) {
-    ++		tm->tm_min = tm->tm_sec = 0;
-    ++		return 1;
-     +	}
-     +
-      	/* BAD CRAP */
-    @@ date.c: static inline int nodate(struct tm *tm)
-     - * We just do a binary 'and' to see if the sign bit
-     - * is set in all the values.
-     + * Have we seen an ISO-8601-alike date, i.e. 20220101T0,
-    -+ * In those special case, those fields have been set to 0
-    ++ * In which, hour is still unset,
-    ++ * and minutes and second has been set to 0.
-       */
-     -static inline int notime(struct tm *tm)
-     +static inline int maybeiso8601(struct tm *tm)
-    @@ date.c: static inline int nodate(struct tm *tm)
-     -	return (tm->tm_hour &
-     -		tm->tm_min &
-     -		tm->tm_sec) < 0;
-    -+	return tm->tm_hour == 0 &&
-    ++	return tm->tm_hour == -1 &&
-     +		tm->tm_min == 0 &&
-     +		tm->tm_sec == 0;
-      }
-      
-      /*
-     @@ date.c: static int match_digit(const char *date, struct tm *tm, int *offset, int *tm_gmt
-    - 	/* 4 digits, compact style of ISO-8601's time: HHMM */
-    - 	/* 2 digits, compact style of ISO-8601's time: HH */
-    - 	if (n == 8 || n == 6 ||
-    + 
-    + 	/* 8 digits, compact style of ISO-8601's date: YYYYmmDD */
-    + 	/* 6 digits, compact style of ISO-8601's time: HHMMSS */
-    +-	/* 4 digits, compact style of ISO-8601's time: HHMM */
-    +-	/* 2 digits, compact style of ISO-8601's time: HH */
-    +-	if (n == 8 || n == 6 ||
-     -		(!nodate(tm) && notime(tm) &&
-    -+		(!nodate(tm) && maybeiso8601(tm) &&
-    - 		(n == 4 || n == 2))) {
-    +-		(n == 4 || n == 2))) {
-    ++	if (n == 8 || n == 6) {
-      		unsigned int num1 = num / 10000;
-      		unsigned int num2 = (num % 10000) / 100;
-    + 		unsigned int num3 = num % 100;
-    +@@ date.c: static int match_digit(const char *date, struct tm *tm, int *offset, int *tm_gmt
-    + 		else if (n == 6 && set_time(num1, num2, num3, tm) == 0 &&
-    + 			 *end == '.' && isdigit(end[1]))
-    + 			strtoul(end + 1, &end, 10);
-    +-		else if (n == 4)
-    +-			set_time(num2, num3, 0, tm);
-    +-		else if (n == 2)
-    +-			set_time(num3, 0, 0, tm);
-    + 		return end - date;
-    + 	}
-    + 
-    ++	/* reduced precision of ISO-8601's time: HHMM or HH */
-    ++	if (maybeiso8601(tm)) {
-    ++		unsigned int num1 = num;
-    ++		unsigned int num2 = 0;
-    ++		if (n == 4) {
-    ++			num1 = num / 100;
-    ++			num2 = num % 100;
-    ++		}
-    ++		if ((n == 4 || n == 2) && !nodate(tm) &&
-    ++		    set_time(num1, num2, 0, tm) == 0)
-    ++			return n;
-    ++		/*
-    ++		 * We thought this is an ISO-8601 time string,
-    ++		 * we set minutes and seconds to 0,
-    ++		 * turn out it isn't, rollback the change.
-    ++		 */
-    ++		tm->tm_min = tm->tm_sec = -1;
-    ++	}
-    ++
-    + 	/* Four-digit year or a timezone? */
-    + 	if (n == 4) {
-    + 		if (num <= 1400 && *offset == -1) {
-     
-      ## t/t0006-date.sh ##
-     @@ t/t0006-date.sh: check_parse '20080214T20:30' '2008-02-14 20:30:00 +0000'
-
- date.c          | 49 +++++++++++++++++++++++++++++++++----------------
- t/t0006-date.sh |  3 ++-
- 2 files changed, 35 insertions(+), 17 deletions(-)
-
-diff --git a/date.c b/date.c
-index b011b9d6b3..6f45eeb356 100644
---- a/date.c
-+++ b/date.c
-@@ -493,6 +493,12 @@ static int match_alpha(const char *date, struct tm *tm, int *offset)
- 		return 2;
- 	}
- 
-+	/* ISO-8601 allows yyyymmDD'T'HHMMSS, with less precision */
-+	if (*date == 'T' && isdigit(date[1]) && tm->tm_hour == -1) {
-+		tm->tm_min = tm->tm_sec = 0;
-+		return 1;
-+	}
-+
- 	/* BAD CRAP */
- 	return skip_alpha(date);
- }
-@@ -639,15 +645,15 @@ static inline int nodate(struct tm *tm)
- }
- 
- /*
-- * Have we filled in any part of the time yet?
-- * We just do a binary 'and' to see if the sign bit
-- * is set in all the values.
-+ * Have we seen an ISO-8601-alike date, i.e. 20220101T0,
-+ * In which, hour is still unset,
-+ * and minutes and second has been set to 0.
-  */
--static inline int notime(struct tm *tm)
-+static inline int maybeiso8601(struct tm *tm)
- {
--	return (tm->tm_hour &
--		tm->tm_min &
--		tm->tm_sec) < 0;
-+	return tm->tm_hour == -1 &&
-+		tm->tm_min == 0 &&
-+		tm->tm_sec == 0;
- }
- 
- /*
-@@ -701,11 +707,7 @@ static int match_digit(const char *date, struct tm *tm, int *offset, int *tm_gmt
- 
- 	/* 8 digits, compact style of ISO-8601's date: YYYYmmDD */
- 	/* 6 digits, compact style of ISO-8601's time: HHMMSS */
--	/* 4 digits, compact style of ISO-8601's time: HHMM */
--	/* 2 digits, compact style of ISO-8601's time: HH */
--	if (n == 8 || n == 6 ||
--		(!nodate(tm) && notime(tm) &&
--		(n == 4 || n == 2))) {
-+	if (n == 8 || n == 6) {
- 		unsigned int num1 = num / 10000;
- 		unsigned int num2 = (num % 10000) / 100;
- 		unsigned int num3 = num % 100;
-@@ -714,13 +716,28 @@ static int match_digit(const char *date, struct tm *tm, int *offset, int *tm_gmt
- 		else if (n == 6 && set_time(num1, num2, num3, tm) == 0 &&
- 			 *end == '.' && isdigit(end[1]))
- 			strtoul(end + 1, &end, 10);
--		else if (n == 4)
--			set_time(num2, num3, 0, tm);
--		else if (n == 2)
--			set_time(num3, 0, 0, tm);
- 		return end - date;
- 	}
- 
-+	/* reduced precision of ISO-8601's time: HHMM or HH */
-+	if (maybeiso8601(tm)) {
-+		unsigned int num1 = num;
-+		unsigned int num2 = 0;
-+		if (n == 4) {
-+			num1 = num / 100;
-+			num2 = num % 100;
-+		}
-+		if ((n == 4 || n == 2) && !nodate(tm) &&
-+		    set_time(num1, num2, 0, tm) == 0)
-+			return n;
-+		/*
-+		 * We thought this is an ISO-8601 time string,
-+		 * we set minutes and seconds to 0,
-+		 * turn out it isn't, rollback the change.
-+		 */
-+		tm->tm_min = tm->tm_sec = -1;
-+	}
-+
- 	/* Four-digit year or a timezone? */
- 	if (n == 4) {
- 		if (num <= 1400 && *offset == -1) {
-diff --git a/t/t0006-date.sh b/t/t0006-date.sh
-index 16fb0bf4bd..130207fc04 100755
---- a/t/t0006-date.sh
-+++ b/t/t0006-date.sh
-@@ -93,7 +93,8 @@ check_parse '20080214T20:30' '2008-02-14 20:30:00 +0000'
- check_parse '20080214T20' '2008-02-14 20:00:00 +0000'
- check_parse '20080214T203045' '2008-02-14 20:30:45 +0000'
- check_parse '20080214T2030' '2008-02-14 20:30:00 +0000'
--check_parse '20080214T20' '2008-02-14 20:00:00 +0000'
-+check_parse '20080214T000000.20' '2008-02-14 00:00:00 +0000'
-+check_parse '20080214T00:00:00.20' '2008-02-14 00:00:00 +0000'
- check_parse '20080214T203045-04:00' '2008-02-14 20:30:45 -0400'
- check_parse '20080214T203045 -04:00' '2008-02-14 20:30:45 -0400'
- check_parse '20080214T203045.019-04:00' '2008-02-14 20:30:45 -0400'
--- 
-2.39.0.287.g690a66fa66
-
+On Mon, Jan 9, 2023 at 4:45 AM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> On Mon, Jan 9, 2023 at 10:15 AM nsengaw4c via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > From: Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
+>
+> This patch should be marked as a V2 in its subject:
+>
+> [PATCH v2] ref-filter: add new atom "signature" atom
+>
+> not sure how to do that using GitGitGadget though.
+>
+> Also "atom" appears twice in the subject, so the following would be even better:
+>
+> [PATCH v2] ref-filter: add new "signature" atom
+>
+> I am not sure how, but GitGitGadget should allow to set the
+> "In-Reply-To:" to the message ID of your previous version of this
+> patch, so that your email with the version 2 of the patch would appear
+> in the same email thread as the email of your previous version of this
+> patch on lore.kernel.org/git:
+>
+> https://lore.kernel.org/git/pull.1452.git.1672102523902.gitgitgadget@gmail.com/
+>
+> (Please don't resend this patch as a v2, but as a v3, if you make any change.)
+>
+> > This commit duplicates the code for `signature` atom from pretty.c
+> > to ref-filter.c. This feature will help to get rid of current duplicate
+> > implementation of `signature` atom when unifying implemenations by
+>
+> s/implemenations/implementations/
+>
+> > using ref-filter logic everywhere when ref-filter can do everything
+> > pretty is doing.
+> >
+> > Add "signature" atom with `grade`, `signer`, `key`,
+> > `fingerprint`, `primarykeyfingerprint`, `trustlevel` as arguments.
+> > This code and its documentation are inspired by how the %GG, %G?,
+> > %GS, %GK, %GF, %GP, and %GT pretty formats were implemented.
+> >
+> > Co-authored-by: Hariom Verma <hariom18599@gmail.com>
+> > Co-authored-by: Jaydeep Das <jaydeepjd.8914@gmail.com>
+> > Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+> > Mentored-by: Hariom Verma <hariom18599@gmail.com>
+> > Signed-off-by: Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
+> > ---
+> >     ref-filter: add new atom "signature" atom
+> >
+> >     This commit duplicates the code for signature atom from pretty.c to
+> >     ref-filter.c. This feature will help to get rid of current duplicate
+> >     implementation of signature atom when unifying implemenations by using
+>
+> s/implemenations/implementations/
+>
+> >     ref-filter logic everywhere when ref-filter can do everything pretty is
+> >     doing.
+> >
+> >     Add "signature" atom with grade, signer, key, fingerprint,
+> >     primarykeyfingerprint, trustlevel as arguments. This code and its
+> >     documentation are inspired by how the %GG, %G?, %GS, %GK, %GF, %GP, and
+> >     %GT pretty formats were implemented.
+> >
+> >     Co-authored-by: Hariom Verma hariom18599@gmail.com Co-authored-by:
+> >     Jaydeep Das jaydeepjd.8914@gmail.com Mentored-by: Christian Couder
+> >     chriscool@tuxfamily.org Mentored-by: Hariom Verma hariom18599@gmail.com
+> >     Signed-off-by: Nsengiyumva Wilberforce nsengiyumvawilberforce@gmail.com
+>
+> Not sure you can do something about it, but the above lines aren't
+> properly wrapped.
+>
+> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1428%2Fnsengiyumva-wilberforce%2Fsignature10-v1
+> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1428/nsengiyumva-wilberforce/signature10-v1
+> > Pull-Request: https://github.com/git/git/pull/1428
+> >
+> >  Documentation/git-for-each-ref.txt |  27 ++++++
+> >  ref-filter.c                       | 101 +++++++++++++++++++++++
+> >  t/t6300-for-each-ref.sh            | 127 +++++++++++++++++++++++++++++
+> >  3 files changed, 255 insertions(+)
+> >
+> > diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+> > index 6da899c6296..9a0be85368b 100644
+> > --- a/Documentation/git-for-each-ref.txt
+> > +++ b/Documentation/git-for-each-ref.txt
+> > @@ -212,6 +212,33 @@ symref::
+> >         `:lstrip` and `:rstrip` options in the same way as `refname`
+> >         above.
+> >
+> > +signature::
+> > +       The GPG signature of a commit.
+> > +
+> > +signature:grade::
+> > +       Show "G" for a good (valid) signature, "B" for a bad
+> > +       signature, "U" for a good signature with unknown validity, "X"
+> > +       for a good signature that has expired, "Y" for a good
+> > +       signature made by an expired key, "R" for a good signature
+> > +       made by a revoked key, "E" if the signature cannot be
+> > +       checked (e.g. missing key) and "N" for no signature.
+> > +
+> > +signature:signer::
+> > +       The signer of the GPG signature of a commit.
+> > +
+> > +signature:key::
+> > +       The key of the GPG signature of a commit.
+> > +
+> > +signature:fingerprint::
+> > +       The fingerprint of the GPG signature of a commit.
+> > +
+> > +signature:primarykeyfingerprint::
+> > +       The Primary Key fingerprint of the GPG signature of a commit.
+> > +
+> > +signature:trustlevel::
+> > +       The Trust level of the GPG signature of a commit. Possible
+> > +       outputs are `ultimate`, `fully`, `marginal`, `never` and `undefined`.
+> > +
+> >  worktreepath::
+> >         The absolute path to the worktree in which the ref is checked
+> >         out, if it is checked out in any linked worktree. Empty string
+> > diff --git a/ref-filter.c b/ref-filter.c
+> > index a24324123e7..0cba756b186 100644
+> > --- a/ref-filter.c
+> > +++ b/ref-filter.c
+> > @@ -144,6 +144,7 @@ enum atom_type {
+> >         ATOM_BODY,
+> >         ATOM_TRAILERS,
+> >         ATOM_CONTENTS,
+> > +       ATOM_SIGNATURE,
+> >         ATOM_RAW,
+> >         ATOM_UPSTREAM,
+> >         ATOM_PUSH,
+> > @@ -208,6 +209,10 @@ static struct used_atom {
+> >                 struct email_option {
+> >                         enum { EO_RAW, EO_TRIM, EO_LOCALPART } option;
+> >                 } email_option;
+> > +               struct {
+> > +                       enum { S_BARE, S_GRADE, S_SIGNER, S_KEY,
+> > +                              S_FINGERPRINT, S_PRI_KEY_FP, S_TRUST_LEVEL} option;
+> > +               } signature;
+> >                 struct refname_atom refname;
+> >                 char *head;
+> >         } u;
+> > @@ -394,6 +399,34 @@ static int subject_atom_parser(struct ref_format *format, struct used_atom *atom
+> >         return 0;
+> >  }
+> >
+> > +static int parse_signature_option(const char *arg)
+> > +{
+> > +       if (!arg)
+> > +               return S_BARE;
+> > +       else if (!strcmp(arg, "signer"))
+> > +               return S_SIGNER;
+> > +       else if (!strcmp(arg, "grade"))
+> > +               return S_GRADE;
+> > +       else if (!strcmp(arg, "key"))
+> > +               return S_KEY;
+> > +       else if (!strcmp(arg, "fingerprint"))
+> > +               return S_FINGERPRINT;
+> > +       else if (!strcmp(arg, "primarykeyfingerprint"))
+> > +               return S_PRI_KEY_FP;
+> > +       else if (!strcmp(arg, "trustlevel"))
+> > +               return S_TRUST_LEVEL;
+> > +       return -1;
+> > +}
+> > +
+> > +static int signature_atom_parser(struct ref_format *format UNUSED, struct used_atom *atom,
+> > +                              const char *arg, struct strbuf *err){
+> > +       int opt = parse_signature_option(arg);
+> > +       if (opt < 0)
+> > +               return err_bad_arg(err, "signature", arg);
+> > +       atom->u.signature.option = opt;
+> > +       return 0;
+> > +}
+> > +
+> >  static int trailers_atom_parser(struct ref_format *format, struct used_atom *atom,
+> >                                 const char *arg, struct strbuf *err)
+> >  {
+> > @@ -631,6 +664,7 @@ static struct {
+> >         [ATOM_BODY] = { "body", SOURCE_OBJ, FIELD_STR, body_atom_parser },
+> >         [ATOM_TRAILERS] = { "trailers", SOURCE_OBJ, FIELD_STR, trailers_atom_parser },
+> >         [ATOM_CONTENTS] = { "contents", SOURCE_OBJ, FIELD_STR, contents_atom_parser },
+> > +       [ATOM_SIGNATURE] = { "signature", SOURCE_OBJ, FIELD_STR, signature_atom_parser },
+> >         [ATOM_RAW] = { "raw", SOURCE_OBJ, FIELD_STR, raw_atom_parser },
+> >         [ATOM_UPSTREAM] = { "upstream", SOURCE_NONE, FIELD_STR, remote_ref_atom_parser },
+> >         [ATOM_PUSH] = { "push", SOURCE_NONE, FIELD_STR, remote_ref_atom_parser },
+> > @@ -1362,6 +1396,72 @@ static void grab_person(const char *who, struct atom_value *val, int deref, void
+> >         }
+> >  }
+> >
+> > +static void grab_signature(struct atom_value *val, int deref, struct object *obj)
+> > +{
+> > +       int i;
+> > +       struct commit *commit = (struct commit *) obj;
+> > +       struct signature_check sigc = { 0 };
+> > +
+> > +       check_commit_signature(commit, &sigc);
+> > +
+> > +       for (i = 0; i < used_atom_cnt; i++) {
+> > +               struct used_atom *atom = &used_atom[i];
+> > +               const char *name = atom->name;
+> > +               struct atom_value *v = &val[i];
+> > +
+> > +               if (!!deref != (*name == '*'))
+> > +                       continue;
+> > +               if (deref)
+> > +                       name++;
+> > +
+> > +               if (!skip_prefix(name, "signature", &name) || (*name &&
+> > +                       *name != ':'))
+> > +                       continue;
+> > +               if (!*name)
+> > +                       name = NULL;
+> > +               else
+> > +                       name++;
+> > +               if (parse_signature_option(name) < 0)
+> > +                       continue;
+> > +
+> > +               if (atom->u.signature.option == S_BARE)
+> > +                       v->s = xstrdup(sigc.output ? sigc.output: "");
+> > +               else if (atom->u.signature.option == S_SIGNER)
+> > +                       v->s = xstrdup(sigc.signer ? sigc.signer : "");
+> > +               else if (atom->u.signature.option == S_GRADE) {
+> > +                       switch (sigc.result) {
+> > +                       case 'G':
+> > +                               switch (sigc.trust_level) {
+> > +                               case TRUST_UNDEFINED:
+> > +                               case TRUST_NEVER:
+> > +                                       v->s = xstrfmt("%c", (char)'U');
+> > +                                       break;
+> > +                               default:
+> > +                                       v->s = xstrfmt("%c", (char)'G');
+> > +                                       break;
+> > +                               }
+> > +                               break;
+> > +                       case 'B':
+> > +                       case 'E':
+> > +                       case 'N':
+> > +                       case 'X':
+> > +                       case 'Y':
+> > +                       case 'R':
+> > +                               v->s = xstrfmt("%c", (char)sigc.result);
+> > +                       }
+> > +               }
+> > +               else if (atom->u.signature.option == S_KEY)
+> > +                       v->s = xstrdup(sigc.key ? sigc.key : "");
+> > +               else if (atom->u.signature.option == S_FINGERPRINT)
+> > +                       v->s = xstrdup(sigc.fingerprint ? sigc.fingerprint : "");
+> > +               else if (atom->u.signature.option == S_PRI_KEY_FP)
+> > +                       v->s = xstrdup(sigc.primary_key_fingerprint ? sigc.primary_key_fingerprint : "");
+> > +               else if (atom->u.signature.option == S_TRUST_LEVEL)
+> > +                       v->s = xstrdup(gpg_trust_level_to_str(sigc.trust_level));
+> > +       }
+> > +       signature_check_clear(&sigc);
+> > +}
+> > +
+> >  static void find_subpos(const char *buf,
+> >                         const char **sub, size_t *sublen,
+> >                         const char **body, size_t *bodylen,
+> > @@ -1555,6 +1655,7 @@ static void grab_values(struct atom_value *val, int deref, struct object *obj, s
+> >                 grab_sub_body_contents(val, deref, data);
+> >                 grab_person("author", val, deref, buf);
+> >                 grab_person("committer", val, deref, buf);
+> > +               grab_signature(val, deref, obj);
+> >                 break;
+> >         case OBJ_TREE:
+> >                 /* grab_tree_values(val, deref, obj, buf, sz); */
+> > diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+> > index 2ae1fc721b1..a8efe6f58ec 100755
+> > --- a/t/t6300-for-each-ref.sh
+> > +++ b/t/t6300-for-each-ref.sh
+> > @@ -6,6 +6,7 @@
+> >  test_description='for-each-ref test'
+> >
+> >  . ./test-lib.sh
+> > +GNUPGHOME_NOT_USED=$GNUPGHOME
+> >  . "$TEST_DIRECTORY"/lib-gpg.sh
+> >  . "$TEST_DIRECTORY"/lib-terminal.sh
+> >
+> > @@ -1464,4 +1465,130 @@ sig_crlf="$(printf "%s" "$sig" | append_cr; echo dummy)"
+> >  sig_crlf=${sig_crlf%dummy}
+> >  test_atom refs/tags/fake-sig-crlf contents:signature "$sig_crlf"
+> >
+> > +GRADE_FORMAT="%(signature:grade)%0a%(signature:key)%0a%(signature:signer)%0a%(signature:fingerprint)%0a%(signature:primarykeyfingerprint)"
+> > +TRUSTLEVEL_FORMAT="%(signature:trustlevel)%0a%(signature:key)%0a%(signature:signer)%0a%(signature:fingerprint)%0a%(signature:primarykeyfingerprint)"
+> > +
+> > +test_expect_success GPG 'test bare signature atom' '
+> > +       git checkout -b signed &&
+> > +       echo 1 >file && git add file &&
+> > +       test_tick && git commit -S -m initial &&
+> > +       git verify-commit signed 2>out &&
+> > +       head -3 out >expected &&
+> > +       tail -1 out >>expected &&
+> > +       echo >>expected &&
+> > +       git for-each-ref refs/heads/signed --format="%(signature)" >actual &&
+> > +       test_cmp actual expected
+> > +'
+>
+> (I already commented about this test in a previous email related to
+> how it fails on GitHub CI.)
