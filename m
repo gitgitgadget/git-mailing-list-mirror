@@ -2,96 +2,442 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2457EC5479D
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 09:01:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 73686C5479D
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 09:09:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233885AbjAIJBv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Jan 2023 04:01:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39386 "EHLO
+        id S233874AbjAIJIq (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Jan 2023 04:08:46 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236914AbjAIJAx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2023 04:00:53 -0500
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2004E183BB
-        for <git@vger.kernel.org>; Mon,  9 Jan 2023 00:52:39 -0800 (PST)
-Received: by mail-pj1-x102b.google.com with SMTP id l1-20020a17090a384100b00226f05b9595so6660753pjf.0
-        for <git@vger.kernel.org>; Mon, 09 Jan 2023 00:52:39 -0800 (PST)
+        with ESMTP id S237010AbjAIJIO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2023 04:08:14 -0500
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C50419000
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 01:02:44 -0800 (PST)
+Received: by mail-wm1-x32b.google.com with SMTP id c4-20020a1c3504000000b003d9e2f72093so3632110wma.1
+        for <git@vger.kernel.org>; Mon, 09 Jan 2023 01:02:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=q6xJgTOaJ8LzAHT3JyBjyPhz/w6cxLZCaeuA8uQcO2g=;
-        b=HfT9FRuu0pY2U4aUdp9Z41ifH6kZjCEzbfa2RccrSBiDKYJqsJ5XkrU6yLp5hutFbb
-         /2yqVUUnQPLefTaGt0M96uOqf0y2U7AEYAtnalnOx0Pj+UjhexTPggiBXcyfo1Rkpgi0
-         ExnbCD/Oqu/95zwRWLGXwwwrTZz1Glw8Q8sPPjNkUv5NeYrFMRJUnqWtJHRv6qZZ54dv
-         7pqd31WFZuhIwLmN0Y6FK80uUeymlv1HxaV+PA098ibQsOGNJsuW4aMmvmDKkKtbjk9H
-         lGufLbTJvLEuNzzFKXXL19/L+Wu4AT0Js88Tu8WIBSG7pgcHos3yttDV7U9imnYtvz1S
-         y8Sw==
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=2mE2jAKWc3rTCa/EBf6IXm7gKndzMZU4ylKzY8xqOUQ=;
+        b=L/TlX+SAMK/uTKGslIcmuWPxGAQFtaWM+fe5tnxfST+Ahpd7bJqj2t781N3uAXopzX
+         vBIp2FShttrSEJybllMGNKQTzrQP0UtgZatM+5dljr0b1dpt48LeNE1g6Z1kIqmHXYl3
+         /DD0yTFg7gCZ8/q3XRCuQrrAHyhM9obGHVGvpZgURHFxL8v35/8DQpiGk8I9/KXVw3Mz
+         sN7FVCeAHR3oNvxds/yDWNezo900Ccv+uTE0hrp+qU3l43KKooWent/JG0M5BJrLW8/j
+         IjWgDHsBShrsMIMI6MYzt82Dq//NSxUT35XIgLW9Uc2QkHm3Acc0zzB1+aNwU7Ngbdvt
+         YXxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=q6xJgTOaJ8LzAHT3JyBjyPhz/w6cxLZCaeuA8uQcO2g=;
-        b=UK11Y6GVgu7pj45voFfT4yfgsFeEaxOerthe3Bxt6bl8RouEa55MyJu1El3ob5gRHd
-         6Q1b0BzX3Ap722eV/6QxzekoSmtNiWYYH0FmHaYPfY3I5scSyPRXJZt/1D/MDAAia2UR
-         Grb6UfMTZxFCOPnMKKNxfhmAdoyv7f9mXuBmnqX5Yg6TWMxH6CV7okT3DmtgGQT5c0VF
-         w0luPxRu/yYbUugqzED3OtltO5D3pF6sIOMiYJ7b0jPjR5VpQrXsAv9YfT3mUleo5Erb
-         F9khQRZIvd7HuxrE/5iLri78SRgb1sHunUwbu09T831jlZ+iwlwvOi3y4CR22O6JvPBb
-         Dfnw==
-X-Gm-Message-State: AFqh2koRXJo9l8dRGjb7U7tvxz3laID0wCsMpuAy6atE1/oUnqK9ZvnG
-        wFsgsepFqVX/G5VgHd4k92A=
-X-Google-Smtp-Source: AMrXdXurmbReUsGdZmnumJTrFJzH4dvbBpTmevj5mF1+94LhuxtjOUvPWWQjrjl/IO1uUzIg0rpPTg==
-X-Received: by 2002:a17:90b:3649:b0:227:e22:4a85 with SMTP id nh9-20020a17090b364900b002270e224a85mr3642388pjb.9.1673254358540;
-        Mon, 09 Jan 2023 00:52:38 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id mm10-20020a17090b358a00b00226daa7b377sm5549471pjb.52.2023.01.09.00.52.38
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2mE2jAKWc3rTCa/EBf6IXm7gKndzMZU4ylKzY8xqOUQ=;
+        b=ctIf4L3fkp3jO9DXGtwh6KfWqyhILR+OaBcLbJBPY9pHCKniyf5GWHMatKthsApcLE
+         zSot7osPx4XeV8H6OQmULIvUZ8EYGNfd/YIgNjQkK+oeGy3ddbFMsOtCIiRTnvjvoKOF
+         xBfSTFEwO33jvnXvZCweaHi1Ax/t0ppcl7KXRQ5lbR46JNCjCFudjZDElrOrAgZmedHY
+         698Ze3NqiJXH7a+xttNfKKrdSP6apeyC+dTKm/nTgDBo8I+GxJnKWu57pzSA2cK0Fa74
+         5rVcBcUh+ar8291gNpdG+Q4/UOX9tIhCBjZbNAJP8ySETcqVxsilP5z1oEZyrhNdh1za
+         Wpaw==
+X-Gm-Message-State: AFqh2krG8Uug+1+t1wVAmGkfyEsxzFm7mnwaDeDv3cgZj9qFj1XZc/QJ
+        vI3e3fkPGsLCXwZHsH1ts+VwwjdqJLM=
+X-Google-Smtp-Source: AMrXdXv08tHCRJuZdDw9nDjQiMOu2GB0/agJ7XjtEStMJCnydPvoHB3hOrNkG2zHTnTY07U5C+xFrA==
+X-Received: by 2002:a05:600c:1f0a:b0:3d9:ed39:8998 with SMTP id bd10-20020a05600c1f0a00b003d9ed398998mr3042952wmb.32.1673254962657;
+        Mon, 09 Jan 2023 01:02:42 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id z25-20020a1c4c19000000b003d1e1f421bfsm14945650wmf.10.2023.01.09.01.02.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 00:52:38 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Harshil-Jani via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Harshil Jani <harshiljani2002@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH 2/2] mingw: remove msysGit/MSYS1 support
-References: <pull.1433.git.1670274213.gitgitgadget@gmail.com>
-        <e6d3d280a4f9216aa6e9c3c83a38b0fb8ba3a8a1.1670274213.git.gitgitgadget@gmail.com>
-        <xmqqsfhdxxyj.fsf@gitster.g> <xmqq4jttxt0u.fsf@gitster.g>
-        <4a2ce224-85e4-5903-44bc-664aa5a59f91@gmx.de>
-Date:   Mon, 09 Jan 2023 17:52:37 +0900
-In-Reply-To: <4a2ce224-85e4-5903-44bc-664aa5a59f91@gmx.de> (Johannes
-        Schindelin's message of "Mon, 9 Jan 2023 08:48:05 +0100 (CET)")
-Message-ID: <xmqq358kum22.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        Mon, 09 Jan 2023 01:02:42 -0800 (PST)
+Message-Id: <pull.1428.git.git.1673254961028.gitgitgadget@gmail.com>
+From:   "nsengaw4c via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 09 Jan 2023 09:02:40 +0000
+Subject: [PATCH] ref-filter: add new atom "signature" atom
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     nsengaw4c <nsengiyumvawilberforce@gmail.com>,
+        Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+From: Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
 
-> It would be good to avoid over-indexing on individual person's
-> preferences. While it seems to be quite common in the Git project, it is
-> obvious how this harms the Git project more than e.g. focusing on users'
-> needs would.
->
-> A more productive line of thought would therefore be:
->
-> 	MSys has long fallen behind MSYS2 in features like Unicode or
-> 	x86_64 support or even security bug fixes, and is therefore no
-> 	longer used by anyone in the Git developer community. The Git for
-> 	Windows project itself started switching from MSys to MSYS2 early
-> 	in 2015, i.e. about eight years ago. Let's drop supporting MSys as
-> 	a development platform.
+This commit duplicates the code for `signature` atom from pretty.c
+to ref-filter.c. This feature will help to get rid of current duplicate
+implementation of `signature` atom when unifying implemenations by
+using ref-filter logic everywhere when ref-filter can do everything
+pretty is doing.
 
-Nicely written.
+Add "signature" atom with `grade`, `signer`, `key`,
+`fingerprint`, `primarykeyfingerprint`, `trustlevel` as arguments.
+This code and its documentation are inspired by how the %GG, %G?,
+%GS, %GK, %GF, %GP, and %GT pretty formats were implemented.
 
-Will expect a reroll with Acked-by: added with updated description,
-hopefully by the end of the week when I'll come back online?
+Co-authored-by: Hariom Verma <hariom18599@gmail.com>
+Co-authored-by: Jaydeep Das <jaydeepjd.8914@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Hariom Verma <hariom18599@gmail.com>
+Signed-off-by: Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
+---
+    ref-filter: add new atom "signature" atom
+    
+    This commit duplicates the code for signature atom from pretty.c to
+    ref-filter.c. This feature will help to get rid of current duplicate
+    implementation of signature atom when unifying implemenations by using
+    ref-filter logic everywhere when ref-filter can do everything pretty is
+    doing.
+    
+    Add "signature" atom with grade, signer, key, fingerprint,
+    primarykeyfingerprint, trustlevel as arguments. This code and its
+    documentation are inspired by how the %GG, %G?, %GS, %GK, %GF, %GP, and
+    %GT pretty formats were implemented.
+    
+    Co-authored-by: Hariom Verma hariom18599@gmail.com Co-authored-by:
+    Jaydeep Das jaydeepjd.8914@gmail.com Mentored-by: Christian Couder
+    chriscool@tuxfamily.org Mentored-by: Hariom Verma hariom18599@gmail.com
+    Signed-off-by: Nsengiyumva Wilberforce nsengiyumvawilberforce@gmail.com
 
-Thanks.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1428%2Fnsengiyumva-wilberforce%2Fsignature10-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1428/nsengiyumva-wilberforce/signature10-v1
+Pull-Request: https://github.com/git/git/pull/1428
 
+ Documentation/git-for-each-ref.txt |  27 ++++++
+ ref-filter.c                       | 101 +++++++++++++++++++++++
+ t/t6300-for-each-ref.sh            | 127 +++++++++++++++++++++++++++++
+ 3 files changed, 255 insertions(+)
+
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index 6da899c6296..9a0be85368b 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -212,6 +212,33 @@ symref::
+ 	`:lstrip` and `:rstrip` options in the same way as `refname`
+ 	above.
+ 
++signature::
++	The GPG signature of a commit.
++
++signature:grade::
++	Show "G" for a good (valid) signature, "B" for a bad
++	signature, "U" for a good signature with unknown validity, "X"
++	for a good signature that has expired, "Y" for a good
++	signature made by an expired key, "R" for a good signature
++	made by a revoked key, "E" if the signature cannot be
++	checked (e.g. missing key) and "N" for no signature.
++
++signature:signer::
++	The signer of the GPG signature of a commit.
++
++signature:key::
++	The key of the GPG signature of a commit.
++
++signature:fingerprint::
++	The fingerprint of the GPG signature of a commit.
++
++signature:primarykeyfingerprint::
++	The Primary Key fingerprint of the GPG signature of a commit.
++
++signature:trustlevel::
++	The Trust level of the GPG signature of a commit. Possible
++	outputs are `ultimate`, `fully`, `marginal`, `never` and `undefined`.
++
+ worktreepath::
+ 	The absolute path to the worktree in which the ref is checked
+ 	out, if it is checked out in any linked worktree. Empty string
+diff --git a/ref-filter.c b/ref-filter.c
+index a24324123e7..0cba756b186 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -144,6 +144,7 @@ enum atom_type {
+ 	ATOM_BODY,
+ 	ATOM_TRAILERS,
+ 	ATOM_CONTENTS,
++	ATOM_SIGNATURE,
+ 	ATOM_RAW,
+ 	ATOM_UPSTREAM,
+ 	ATOM_PUSH,
+@@ -208,6 +209,10 @@ static struct used_atom {
+ 		struct email_option {
+ 			enum { EO_RAW, EO_TRIM, EO_LOCALPART } option;
+ 		} email_option;
++		struct {
++			enum { S_BARE, S_GRADE, S_SIGNER, S_KEY,
++			       S_FINGERPRINT, S_PRI_KEY_FP, S_TRUST_LEVEL} option;
++		} signature;
+ 		struct refname_atom refname;
+ 		char *head;
+ 	} u;
+@@ -394,6 +399,34 @@ static int subject_atom_parser(struct ref_format *format, struct used_atom *atom
+ 	return 0;
+ }
+ 
++static int parse_signature_option(const char *arg)
++{
++	if (!arg)
++		return S_BARE;
++	else if (!strcmp(arg, "signer"))
++		return S_SIGNER;
++	else if (!strcmp(arg, "grade"))
++		return S_GRADE;
++	else if (!strcmp(arg, "key"))
++		return S_KEY;
++	else if (!strcmp(arg, "fingerprint"))
++		return S_FINGERPRINT;
++	else if (!strcmp(arg, "primarykeyfingerprint"))
++		return S_PRI_KEY_FP;
++	else if (!strcmp(arg, "trustlevel"))
++		return S_TRUST_LEVEL;
++	return -1;
++}
++
++static int signature_atom_parser(struct ref_format *format UNUSED, struct used_atom *atom,
++			       const char *arg, struct strbuf *err){
++	int opt = parse_signature_option(arg);
++	if (opt < 0)
++		return err_bad_arg(err, "signature", arg);
++	atom->u.signature.option = opt;
++	return 0;
++}
++
+ static int trailers_atom_parser(struct ref_format *format, struct used_atom *atom,
+ 				const char *arg, struct strbuf *err)
+ {
+@@ -631,6 +664,7 @@ static struct {
+ 	[ATOM_BODY] = { "body", SOURCE_OBJ, FIELD_STR, body_atom_parser },
+ 	[ATOM_TRAILERS] = { "trailers", SOURCE_OBJ, FIELD_STR, trailers_atom_parser },
+ 	[ATOM_CONTENTS] = { "contents", SOURCE_OBJ, FIELD_STR, contents_atom_parser },
++	[ATOM_SIGNATURE] = { "signature", SOURCE_OBJ, FIELD_STR, signature_atom_parser },
+ 	[ATOM_RAW] = { "raw", SOURCE_OBJ, FIELD_STR, raw_atom_parser },
+ 	[ATOM_UPSTREAM] = { "upstream", SOURCE_NONE, FIELD_STR, remote_ref_atom_parser },
+ 	[ATOM_PUSH] = { "push", SOURCE_NONE, FIELD_STR, remote_ref_atom_parser },
+@@ -1362,6 +1396,72 @@ static void grab_person(const char *who, struct atom_value *val, int deref, void
+ 	}
+ }
+ 
++static void grab_signature(struct atom_value *val, int deref, struct object *obj)
++{
++	int i;
++	struct commit *commit = (struct commit *) obj;
++	struct signature_check sigc = { 0 };
++
++	check_commit_signature(commit, &sigc);
++
++	for (i = 0; i < used_atom_cnt; i++) {
++		struct used_atom *atom = &used_atom[i];
++		const char *name = atom->name;
++		struct atom_value *v = &val[i];
++
++		if (!!deref != (*name == '*'))
++			continue;
++		if (deref)
++			name++;
++
++		if (!skip_prefix(name, "signature", &name) || (*name &&
++			*name != ':'))
++			continue;
++		if (!*name)
++			name = NULL;
++		else
++			name++;
++		if (parse_signature_option(name) < 0)
++			continue;
++
++		if (atom->u.signature.option == S_BARE)
++			v->s = xstrdup(sigc.output ? sigc.output: "");
++		else if (atom->u.signature.option == S_SIGNER)
++			v->s = xstrdup(sigc.signer ? sigc.signer : "");
++		else if (atom->u.signature.option == S_GRADE) {
++			switch (sigc.result) {
++			case 'G':
++				switch (sigc.trust_level) {
++				case TRUST_UNDEFINED:
++				case TRUST_NEVER:
++					v->s = xstrfmt("%c", (char)'U');
++					break;
++				default:
++					v->s = xstrfmt("%c", (char)'G');
++					break;
++				}
++				break;
++			case 'B':
++			case 'E':
++			case 'N':
++			case 'X':
++			case 'Y':
++			case 'R':
++				v->s = xstrfmt("%c", (char)sigc.result);
++			}
++		}
++		else if (atom->u.signature.option == S_KEY)
++			v->s = xstrdup(sigc.key ? sigc.key : "");
++		else if (atom->u.signature.option == S_FINGERPRINT)
++			v->s = xstrdup(sigc.fingerprint ? sigc.fingerprint : "");
++		else if (atom->u.signature.option == S_PRI_KEY_FP)
++			v->s = xstrdup(sigc.primary_key_fingerprint ? sigc.primary_key_fingerprint : "");
++		else if (atom->u.signature.option == S_TRUST_LEVEL)
++			v->s = xstrdup(gpg_trust_level_to_str(sigc.trust_level));
++	}
++	signature_check_clear(&sigc);
++}
++
+ static void find_subpos(const char *buf,
+ 			const char **sub, size_t *sublen,
+ 			const char **body, size_t *bodylen,
+@@ -1555,6 +1655,7 @@ static void grab_values(struct atom_value *val, int deref, struct object *obj, s
+ 		grab_sub_body_contents(val, deref, data);
+ 		grab_person("author", val, deref, buf);
+ 		grab_person("committer", val, deref, buf);
++		grab_signature(val, deref, obj);
+ 		break;
+ 	case OBJ_TREE:
+ 		/* grab_tree_values(val, deref, obj, buf, sz); */
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 2ae1fc721b1..a8efe6f58ec 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -6,6 +6,7 @@
+ test_description='for-each-ref test'
+ 
+ . ./test-lib.sh
++GNUPGHOME_NOT_USED=$GNUPGHOME
+ . "$TEST_DIRECTORY"/lib-gpg.sh
+ . "$TEST_DIRECTORY"/lib-terminal.sh
+ 
+@@ -1464,4 +1465,130 @@ sig_crlf="$(printf "%s" "$sig" | append_cr; echo dummy)"
+ sig_crlf=${sig_crlf%dummy}
+ test_atom refs/tags/fake-sig-crlf contents:signature "$sig_crlf"
+ 
++GRADE_FORMAT="%(signature:grade)%0a%(signature:key)%0a%(signature:signer)%0a%(signature:fingerprint)%0a%(signature:primarykeyfingerprint)"
++TRUSTLEVEL_FORMAT="%(signature:trustlevel)%0a%(signature:key)%0a%(signature:signer)%0a%(signature:fingerprint)%0a%(signature:primarykeyfingerprint)"
++
++test_expect_success GPG 'test bare signature atom' '
++	git checkout -b signed &&
++	echo 1 >file && git add file &&
++	test_tick && git commit -S -m initial &&
++	git verify-commit signed 2>out &&
++	head -3 out >expected &&
++	tail -1 out >>expected &&
++	echo >>expected &&
++	git for-each-ref refs/heads/signed --format="%(signature)" >actual &&
++	test_cmp actual expected
++'
++
++test_expect_success GPG 'show good signature with custom format' '
++	echo 2 >file && git add file &&
++	test_tick && git commit -S -m initial &&
++	git verify-commit signed 2>out &&
++	cat >expect <<-\EOF &&
++	G
++	13B6F51ECDDE430D
++	C O Mitter <committer@example.com>
++	73D758744BE721698EC54E8713B6F51ECDDE430D
++	73D758744BE721698EC54E8713B6F51ECDDE430D
++	EOF
++	git for-each-ref refs/heads/signed --format="$GRADE_FORMAT" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success GPG 'test signature atom with grade option and bad signature' '
++	git config commit.gpgsign true &&
++	echo 3 >file && test_tick && git commit -a -m "third" --no-gpg-sign &&
++	git tag third-unsigned &&
++
++	test_tick && git rebase -f HEAD^^ && git tag second-signed HEAD^ &&
++	git tag third-signed &&
++
++	git cat-file commit third-signed >raw &&
++	sed -e "s/^third/3rd forged/" raw >forged1 &&
++	FORGED1=$(git hash-object -w -t commit forged1) &&
++	git update-ref refs/tags/third-signed "$FORGED1" &&
++	test_must_fail git verify-commit "$FORGED1" &&
++
++	cat >expect <<-\EOF &&
++	B
++	13B6F51ECDDE430D
++	C O Mitter <committer@example.com>
++
++
++	EOF
++	git for-each-ref refs/tags/third-signed --format="$GRADE_FORMAT" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success GPG 'show untrusted signature with custom format' '
++	echo 4 >file && test_tick && git commit -a -m fourth -SB7227189 &&
++	git tag signed-fourth &&
++	cat >expect <<-\EOF &&
++	U
++	65A0EEA02E30CAD7
++	Eris Discordia <discord@example.net>
++	F8364A59E07FFE9F4D63005A65A0EEA02E30CAD7
++	D4BE22311AD3131E5EDA29A461092E85B7227189
++	EOF
++	git for-each-ref refs/tags/signed-fourth --format="$GRADE_FORMAT" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success GPG 'show untrusted signature with undefined trust level' '
++	echo 5 >file && test_tick && git commit -a -m fifth -SB7227189 &&
++	git tag fifth-signed &&
++	cat >expect <<-\EOF &&
++	undefined
++	65A0EEA02E30CAD7
++	Eris Discordia <discord@example.net>
++	F8364A59E07FFE9F4D63005A65A0EEA02E30CAD7
++	D4BE22311AD3131E5EDA29A461092E85B7227189
++	EOF
++	git for-each-ref refs/tags/fifth-signed --format="$TRUSTLEVEL_FORMAT" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success GPG 'show untrusted signature with ultimate trust level' '
++	echo 7 >file && test_tick && git commit -a -m "seventh" --no-gpg-sign &&
++	git tag seventh-unsigned &&
++
++	test_tick && git rebase -f HEAD^^ && git tag sixth-signed HEAD^ &&
++	git tag seventh-signed &&
++	cat >expect <<-\EOF &&
++	ultimate
++	13B6F51ECDDE430D
++	C O Mitter <committer@example.com>
++	73D758744BE721698EC54E8713B6F51ECDDE430D
++	73D758744BE721698EC54E8713B6F51ECDDE430D
++	EOF
++	git for-each-ref refs/tags/seventh-signed --format="$TRUSTLEVEL_FORMAT" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success GPG 'show unknown signature with custom format' '
++	cat >expect <<-\EOF &&
++	E
++	65A0EEA02E30CAD7
++
++
++
++	EOF
++	GNUPGHOME="$GNUPGHOME_NOT_USED" git for-each-ref refs/tags/fifth-signed --format="$GRADE_FORMAT" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success GPG 'show lack of signature with custom format' '
++	echo 8 >file && test_tick && git commit -a -m "eigth unsigned" --no-gpg-sign &&
++	git tag eigth-unsigned &&
++	cat >expect <<-\EOF &&
++	N
++
++
++
++
++	EOF
++	git for-each-ref refs/tags/eigth-unsigned --format="$GRADE_FORMAT" >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+
+base-commit: 6bae53b138a1f38d8887f6b46d17661357a1468b
+-- 
+gitgitgadget
