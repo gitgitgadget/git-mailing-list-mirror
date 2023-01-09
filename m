@@ -2,72 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 050CAC677F1
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 06:32:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 81E7EC54EBD
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 06:42:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233129AbjAIGcv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Jan 2023 01:32:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45456 "EHLO
+        id S233652AbjAIGmG (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Jan 2023 01:42:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229988AbjAIGcr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2023 01:32:47 -0500
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8288311810
-        for <git@vger.kernel.org>; Sun,  8 Jan 2023 22:32:46 -0800 (PST)
-Received: by mail-pl1-f169.google.com with SMTP id y1so8492119plb.2
-        for <git@vger.kernel.org>; Sun, 08 Jan 2023 22:32:46 -0800 (PST)
+        with ESMTP id S233339AbjAIGmE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2023 01:42:04 -0500
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD8ECD2DC
+        for <git@vger.kernel.org>; Sun,  8 Jan 2023 22:42:01 -0800 (PST)
+Received: by mail-qt1-x833.google.com with SMTP id g7so7217302qts.1
+        for <git@vger.kernel.org>; Sun, 08 Jan 2023 22:42:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=DhmiG7CZio08j2Iss3EiKa9nAfOc3CNqzAHXjBsmeGM=;
+        b=KqbhhTAlzAHl+E+rd0cvH2Nuamz8AMBii0rRPWknw7xYxfqnJoI/gHidq3AYS608SR
+         fsA56KTTx5pnVGuw0sX8QVR1PRZ3zn1NWF7gKTv3EUIQ9md8sJQwFbgXM+6ouOmIcLrD
+         r/GBXH+Vwc6mR6fgvzTDcvKTGY9224S3MqEFPz+Is6Q8SHHaPA/hgZY5af+qRcS2OMaT
+         yhKu8iGIdE3vLu8hBulHY5P87+qZiSDr3KN/bXE9y0Qrc6DsoQWUc7+QwDZ96HJ0KzNa
+         IIR2p2o/Eij/jaMJhTklTn2Ql5SZR5X6QEEbPgdby9cRR4zG6br0k5hcG6hXJCNEGWF4
+         x25g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=a6oRggZoySZrIMQdLLv55pfNhDblXf/tJ3wRSPstvfo=;
-        b=oVYyuRJglTRfDgtbLDL9+3af1ECYGBSR1FJS9zjmaO5RNdFWjq1Bo4x808mgrKud2z
-         +htqn1t5MTOx99Sf+DqxBEQQRpIdEGmAr89ecpnOoXMaMJymCzInfCHugNQr9VVxti2i
-         fHcw3bzNQEIT4AoQRdMPvvaP3Lpj5HngqBK2He5CZjd/hOkBeVkAsucmVnoxXoO3lXeB
-         WeW7IKBpATsFJLaOsfVvmnyvhs4QmNj8U6KnD0L8C7/eBgD7iCyqGhC0bqvG8PIWoPId
-         B1MbrTBpXpo8sbFB4s9RdR5SxUCFH0pG+5kYLmeQkZ63SkOrY6lEB5KPUcdCwc4G6OIV
-         4krw==
-X-Gm-Message-State: AFqh2koVSN9aQsD5yIvSSxbxsSFj+ELEWIb/unQIDqEIP3cRBBOGwCKB
-        YN9g9V7XZHbCK7kPNSy9WPlsPbKGdKWHf77IOY4=
-X-Google-Smtp-Source: AMrXdXsndlWHiW1YXZ7zxrD3tv13OOVg3Y872quts5l7++Q50cKlbJZUhepIcaU93kWjXXs+5oTkEUHmBcRpCDS6Eck=
-X-Received: by 2002:a17:902:ccc5:b0:191:271f:47a0 with SMTP id
- z5-20020a170902ccc500b00191271f47a0mr4175472ple.120.1673245965925; Sun, 08
- Jan 2023 22:32:45 -0800 (PST)
+        bh=DhmiG7CZio08j2Iss3EiKa9nAfOc3CNqzAHXjBsmeGM=;
+        b=yNfp5ypr6+NeeKcyl788K01fes4mZ4QFNB117GsdCQVle3yxXJrODc3lAcfmqeXVKF
+         8q0LAe9062nslsFFWB5NOM5C12gLjPC2btY9g3L0Eih2jJ/rZhMM0xeQgX9mAARNh4K+
+         IDXcqSC55tFiqIPinGlM7661cUgoJcASuU98TT88yEYLqTAhTHtMzQatCs4EScojbwU4
+         GUC4OzEl6jK6EyENndYHiUQMTDYV0/lpHKSVdQ3A8jPvWT0BICM/iouYUTUhPfmhc+Nt
+         Ut9Wev22MmygPxxVPA1iF7pUWhNTnla2tuh3/N8wSJIoA97PCiC7CnoDMFjBuca5/4cV
+         Z7Sg==
+X-Gm-Message-State: AFqh2kqSLj79lZ4YJIIbWA2Y+fjhFrOl/6kZamE+fQkQhf9n9lxlGW2v
+        9CWGeTbc7lTxlHME9IaoNuCMkZmrzYXMIXuLQHm3/7fhLdA=
+X-Google-Smtp-Source: AMrXdXvF8LhT+wnfNl4m6yQd41Lv7gaMlUuzC42iJL+KjLzzmpUvxyJWvL6l3ljBBlVOlG6Y0AtDgt+tKFmn/y+jMlE=
+X-Received: by 2002:ac8:48cc:0:b0:3ab:71c2:afec with SMTP id
+ l12-20020ac848cc000000b003ab71c2afecmr3040255qtr.476.1673246520880; Sun, 08
+ Jan 2023 22:42:00 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1422.git.git.1673166241185.gitgitgadget@gmail.com>
- <xmqqbkn8wcqo.fsf@gitster.g> <CAPig+cQe_VMW2KV+ZyZwosFw07Q+hePryDVushRJ-jFfD4yzpw@mail.gmail.com>
- <xmqqk01wusmz.fsf@gitster.g>
-In-Reply-To: <xmqqk01wusmz.fsf@gitster.g>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Mon, 9 Jan 2023 01:32:34 -0500
-Message-ID: <CAPig+cTO1jBjcwjX4UpxG813OwrDAaYVvViC_XGWorwbXvOfvw@mail.gmail.com>
-Subject: Re: [PATCH] doc: use "git switch -c" rather than "git checkout -b" consistently
+References: <20221216033638.2582956-1-phil.hord@gmail.com> <xmqq359gnfhe.fsf@gitster.g>
+ <CABURp0pWwfWO3msZ4U=_i3zkEDOq6+CUVT9Tb7KCjeBRK34Miw@mail.gmail.com>
+In-Reply-To: <CABURp0pWwfWO3msZ4U=_i3zkEDOq6+CUVT9Tb7KCjeBRK34Miw@mail.gmail.com>
+From:   Phil Hord <phil.hord@gmail.com>
+Date:   Sun, 8 Jan 2023 22:41:50 -0800
+Message-ID: <CABURp0pqQFiM4+L0sRADTt-jmAsHcMMWLR6xa4NbqrziZjmdOQ@mail.gmail.com>
+Subject: Re: [PATCH] date.c: allow ISO 8601 reduced precision times
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Yutaro Ohno via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Yutaro Ohno <yutaro.ono.418@gmail.com>
+Cc:     git@vger.kernel.org, congdanhqx@gmail.com, plavarre@purestorage.com
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 9, 2023 at 1:30 AM Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> > touches is given merely as examples one might use, then I could see
-> > git-switch being prepended to the list rather than entirely replacing
-> > git-checkout. For instance:
-> >
-> >     $ git switch -c foo     <1>
-> >     $ git checkout -b foo   <1>
-> >     $ git branch foo        <2>
-> >     $ git tag foo           <3>
+> On Thu, Dec 15, 2022 at 8:23 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > All of these may be obvious improvements, but the thing is that
+> > there is nothing in the approxidate parsing code that insists on the
+> > presence of "T" to loosen the rule only for ISO-8601 case.
 >
-> That can invite "do we need to use checkout after doing switch?"
-> confusion.  I would understand if it were
+> I considered making the T an explicit marker, but it didn't seem
+> necessary here. But the looseness of approxidate with regard to spaces
+> is worrisome. That's why I added the date/no-time constraints.
 >
->         $ git checkout -b foo # or "git switch -c foo" <1>
+> > For example, with only 6 digits, do we still recognise our internal
+> > timestamp format (i.e. seconds since epoch) without the
+> > disambiguating '@' prefix?
 >
-> or something that makes it clear either one, but not both, is used
-> there.
+> I don't grok your example.  This change should not affect the
+> interpretation of any 6-digit number.
+>
+> Oh, do you mean if there was _no_ delimiter before the time field?
+> Like 2022-12-132300?  My change will not recognize this format, and I
+> believe it was explicitly rejected by ISO-8601-1:2019.
+>
+> approxidate seems not to recognize fewer than 9 digits as an epoch
+> number, even with the @ prefix.  But this is not because of my change.
+>
+> test-tool date approxidate 123456789 12345678
+> 123456789 -> 1973-11-29 21:33:09 +0000
+> 12345678 -> 2022-12-16 18:34:02 +0000
+>
+> test-tool date approxidate @123456789 @12345678
+> @123456789 -> 1973-11-29 21:33:09 +0000
+> @12345678 -> 2022-12-16 18:36:35 +0000
+>
+> test-tool date parse 123456789 12345678
+> 123456789 -> 1973-11-29 13:33:09 -0800
+> 12345678 -> bad
+>
+> test-tool date parse @123456789 @12345678
+> @123456789 -> 1973-11-29 13:33:09 -0800
+> @12345678 -> bad
 
-That refinement looks good to me.
+
+Do you have any suggestions about how I can better alleviate your
+concerns?  I don't think there are real regressions here and I tried
+to explain why.
