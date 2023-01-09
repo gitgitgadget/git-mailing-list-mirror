@@ -2,195 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C95F3C54EBD
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 13:03:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 41767C54EBE
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 13:26:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237027AbjAINDR (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Jan 2023 08:03:17 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49670 "EHLO
+        id S230005AbjAIN04 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Jan 2023 08:26:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234590AbjAINCk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2023 08:02:40 -0500
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F36866326
-        for <git@vger.kernel.org>; Mon,  9 Jan 2023 05:01:32 -0800 (PST)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-4a2f8ad29d5so111324457b3.8
-        for <git@vger.kernel.org>; Mon, 09 Jan 2023 05:01:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=bHlQU2K7qiExwZa7seerQiWXtU6bZ2cU//uavE99UwA=;
-        b=qul6gKcLbNoEDChRiRjZNVOEkRvc2YrEvZyzZakwAX3024dnOQcemD1yL8Ffp0JzMb
-         X0ugWDGN62tL2QEJxNGlQACtL83yTzdrgp8ReliXZuS7Uwrm1HzcAl5fXJDGiEp4UNWZ
-         5SqU9CYlmBKLoNnbk9Gis3W5siVKOhrDdGXMwAGZfA2ZrzE1LtyU2YTTr8aj38NcZeTq
-         QTR1LBWdYBrqbKzRudDDn9550iTruOLm3381Hmpzsyrsppq0bhPqCTryYjw/J6wjlSB7
-         aHw9eIDvqWf6Um4eBJRxXVQWb9GN7gacI8D0cK3uaFN7QTlKR7szovD3bKaFh19tp/Hs
-         ko0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bHlQU2K7qiExwZa7seerQiWXtU6bZ2cU//uavE99UwA=;
-        b=JLly07MTAwMrMYIh9UbTbN+x5uZhCSGrnbg0G8fzXleKS6I/6tUFTn0KQykkKBGChB
-         2wkL5XqrnuzW6B2BmZS/YouDnaB12bpQW0uA3xAPoFpgyejFsi33fmJ+iw52rsD4zhYz
-         r0+R/qONejxe7PFfg2cgOhuFjR1GiNCQXd+iA/BoVAoijCAluPzEWRiRG0YMt3fV8Neh
-         KtOz5mZ24EBQ+pIxPNcNplFyWfw8fd7whXrqzqO4cz+Wx/u6wGYRIXdT4IDUGrSIqLql
-         ULCWkNRJQdS6WkJciPQo8h4OEhESnbjhEyHgHYtqR8hKJrDWvtgrDVUAMdEtXTWwRNq/
-         P0oA==
-X-Gm-Message-State: AFqh2kpDlErbWXWGC+qetwvXp0Buvsv+Pl24Lv27hcLW1ZtfiHzkzg9Z
-        2By2dmZ7UMSr6tGbQR06oHuqxXn8sUXBAKUrLZc=
-X-Google-Smtp-Source: AMrXdXu5Z6OB4nY1g48IlWqJo1WNWsvIHQp+dNTTTLE55rkb6Osq9rLntJnZqb8q4l/beBLQpwIZAuvpteX89pMtqsU=
-X-Received: by 2002:a05:690c:fc6:b0:4b5:e0bc:19cb with SMTP id
- dg6-20020a05690c0fc600b004b5e0bc19cbmr3321459ywb.454.1673269291483; Mon, 09
- Jan 2023 05:01:31 -0800 (PST)
+        with ESMTP id S231559AbjAIN0z (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2023 08:26:55 -0500
+Received: from relay9-d.mail.gandi.net (relay9-d.mail.gandi.net [217.70.183.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 092C7BC0F
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 05:26:53 -0800 (PST)
+Received: (Authenticated sender: michael@platin.gs)
+        by mail.gandi.net (Postfix) with ESMTPSA id 6CD96FF814
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 13:26:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=platin.gs; s=gm1;
+        t=1673270812;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=wShidO/nWKdVsRvYQ4/PrjLR/x5bW5zV8xnTGONNGFY=;
+        b=XGyA3sYIErugQNYQGDRKVy86gyfFLC7S1uUWVrt8t/zfpinhbOSVfg/wkuBM+dGhTXCMNg
+        /rH686o7WK09D8Kt6a+GuXlO6LeQVSHnuAeA9a/eA0udwiZlxf8Mt6tt0nWmPuw79iVhkX
+        4/Xe/JzqCZ15LJEFohf4g3bLlnesPAfIcgszTVeZFIG9srrVOprhguB8RycTmWcp+j1oCg
+        BcgVRvOPQmevMITVCrQ7kOJZlRJqkRayc3C5zJUchO2kDGN26CYJUXORb/EUNShLXvbTJU
+        opBsy2pRpy1Ic8jjLP1Z0s4aesxTp/z1h5/2hHCph//9Rp+lOjFQZJCVoYE0tA==
+Received: by mail-lj1-f181.google.com with SMTP id s22so8850426ljp.5
+        for <git@vger.kernel.org>; Mon, 09 Jan 2023 05:26:52 -0800 (PST)
+X-Gm-Message-State: AFqh2krInEvDox0sIPTX2iydgRRbhnRQWq8TJcXU+gv++ELuPbQh8i3q
+        urIZxB8+TYDjriDHNppKXG9QQCH2vC2iC62NTXY=
+X-Google-Smtp-Source: AMrXdXu2zXMEoXi5EVDRHlyJJjM+/OI2jgczxoaDxfwG8SJygqLJYKcFplYGcp7VGddxN2wY0HMbHxwNLsfzer58yJQ=
+X-Received: by 2002:a2e:98c3:0:b0:27f:ea44:3efc with SMTP id
+ s3-20020a2e98c3000000b0027fea443efcmr2607953ljj.272.1673270811497; Mon, 09
+ Jan 2023 05:26:51 -0800 (PST)
 MIME-Version: 1.0
-References: <CA+PPyiG=+rs_bOQbaNB311_DVdSc2g44SkLzpaqOER7rfxykrQ@mail.gmail.com>
- <CAP8UFD2huFgTjB1hNGyGnMKPONOG6ZV-wvxWkTaz-iZNfxrhJA@mail.gmail.com>
- <CA+PPyiHOLUm87eHuxyhbqqML33Q6g-he_DKRxTEb2fu-2p3NSQ@mail.gmail.com> <CAP8UFD23ObbQaeQi2WsZ3oy0QTKiBxs3wExaHTU2QzJBPwKOmA@mail.gmail.com>
-In-Reply-To: <CAP8UFD23ObbQaeQi2WsZ3oy0QTKiBxs3wExaHTU2QzJBPwKOmA@mail.gmail.com>
-From:   NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
-Date:   Mon, 9 Jan 2023 08:01:20 -0500
-Message-ID: <CA+PPyiGo=DVwsCxQdKQD=irR1-KiJwpbZZqAz5ib9UB4XxBgwQ@mail.gmail.com>
-Subject: Re: Github actions failing
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     git@vger.kernel.org
+References: <b1051e73-e663-82bf-bda6-015e64102248@trigofacile.com> <xmqq5ydgwcj9.fsf@gitster.g>
+In-Reply-To: <xmqq5ydgwcj9.fsf@gitster.g>
+From:   Michael Platings <michael@platin.gs>
+Date:   Mon, 9 Jan 2023 13:26:41 +0000
+X-Gmail-Original-Message-ID: <CAJDYR9RnWuO66i9aLdACox+GRSpidyWyZkS_2hHWH=1v2cfbtA@mail.gmail.com>
+Message-ID: <CAJDYR9RnWuO66i9aLdACox+GRSpidyWyZkS_2hHWH=1v2cfbtA@mail.gmail.com>
+Subject: Re: Ignored commits appearing in git blame
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?SnVsaWVuIMOJTElF?= <julien@trigofacile.com>,
+        Barret Rhoden <brho@google.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> I think in general we prefer "test_cmp expected actual" over "test_cmp
-> actual expected". I think it's easier to understand what happened with
-> the former.
->
-> Also most of the tests in t6300 are like "test_cmp expected actual":
->
-> $ grep -c 'test_cmp expect' t6300-for-each-ref.sh
-> 67
-> $ grep -c 'test_cmp actual' t6300-for-each-ref.sh
-> 1
->
-> > > 1870 + test 2 -ne 2
-> > > 1871 + eval diff -u "$@"
-> > > 1872 + diff -u actual expected
-> > > 1873 --- actual 2023-01-08 19:40:42.169214115 +0000
-> > > 1874 +++ expected 2023-01-08 19:40:42.121213837 +0000
-> > > 1875 @@ -1,4 +1,5 @@
-> > > 1876 gpg: Signature made Sun Jan 8 19:40:42 2023 UTC
-> > > 1877 gpg: using DSA key 13B6F51ECDDE430D
-> > > 1878 +gpg: checking the trustdb
->
-> The + before "gpg" means that the above line is in what we expect, but
-> not in what we actually get.
->
-> I think the reason might be that gpg's output could have changed
-> between different versions of gpg and it might just not be possible
-> and wise to rely on the exact output it emits.
->
-> In both t7510-signed-commit.sh t7528-signed-commit-ssh.sh for example,
-> we don't test the '%GG' format, and that might be the reason why.
->
-> So I see the following possibilities to overcome this issue:
->
->   - just drop the test you added for the %(signature) format
->   - find a way to require a specific version of gpg for that test
-> (unfortunately I don't think our test framework allows that, so you
-> would have to add custom code to the test, and this is likely to
-> bitrot as time passes and the required gpg version becomes unused)
->   - find a way to make the test independent of the gpg version (this
-> might bitrot too as new gpg versions might further change their
-> output)
-
-From your suggestions, I will consider removing it for now
+(Resending. The anti-HTML filter gets me every time)
+Thanks Junio for forwarding.
+Hi Julien,
+You're right, ideally 36944f2b16 should have disappeared from the
+output at line 5. The way the ignoring algorithm works is that it
+tries to find a line in the previous commit with similar content.
+Since there's so little content to compare I guess the algorithm plays
+it safe and gives up. On the one hand this is annoying because an
+empty line or single curly brace should be trivial for the algorithm
+to deal with. On the other hand "which change caused this empty line
+to be here?" is not a very interesting question so hopefully won't be
+too much of a problem for you in practice.
+Thanks for bringing it to my attention. There are a couple of
+annoyances with the feature I'd like to fix (the main being that
+there's no way to enable it globally) and I'll add this to the list.
+However I'm unlikely to get to it soon. I won't complain if you beat
+me to fixing it :)
+-Michael
 
 
-On Mon, Jan 9, 2023 at 4:22 AM Christian Couder
-<christian.couder@gmail.com> wrote:
+On Mon, 9 Jan 2023 at 04:35, Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On Mon, Jan 9, 2023 at 5:40 AM NSENGIYUMVA WILBERFORCE
-> <nsengiyumvawilberforce@gmail.com> wrote:
+> Julien =C3=89LIE <julien@trigofacile.com> writes:
 >
-> > Thanks, I missed the GPG flag. Now I get the following after forcing
-> > the push. I have been looking for the problem but I can't figure it
-> > out. I will be glad for any help
-> > >
-> > > git checkout -b signed &&
-> > > 1840 echo 1 >file && git add file &&
-> > > 1841 test_tick && git commit -S -m initial &&
-> > > 1842 git verify-commit signed 2>out &&
-> > > 1843 head -3 out >expected &&
-> > > 1844 tail -1 out >>expected &&
-> > > 1845 echo >>expected &&
-> > > 1846 git for-each-ref refs/heads/signed --format="%(signature)" >actual &&
-> > > 1847 test_cmp actual expected
-> > > 1848
-> > > 1849 + git checkout -b signed
-> > > 1850 Switched to a new branch 'signed'
-> > > 1851 + echo 1
-> > > 1852 + git add file
-> > > 1853 + test_tick
-> > > 1854 + test -z set
-> > > 1855 + test_tick=1112912113
-> > > 1856 + GIT_COMMITTER_DATE=1112912113 -0700
-> > > 1857 + GIT_AUTHOR_DATE=1112912113 -0700
-> > > 1858 + export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
-> > > 1859 + git commit -S -m initial
-> > > 1860 [signed 4dc4b90] initial
-> > > 1861 Author: A U Thor <author@example.com>
-> > > 1862 1 file changed, 1 insertion(+)
-> > > 1863 create mode 100644 file
-> > > 1864 + git verify-commit signed
-> > > 1865 + head -3 out
-> > > 1866 + tail -1 out
-> > > 1867 + echo
-> > > 1868 + git for-each-ref refs/heads/signed --format=%(signature)
-> > > 1869 + test_cmp actual expected
+> [jc: redirecting to those who touched "blame-ignore" topic in the past]
 >
-> I think in general we prefer "test_cmp expected actual" over "test_cmp
-> actual expected". I think it's easier to understand what happened with
-> the former.
->
-> Also most of the tests in t6300 are like "test_cmp expected actual":
->
-> $ grep -c 'test_cmp expect' t6300-for-each-ref.sh
-> 67
-> $ grep -c 'test_cmp actual' t6300-for-each-ref.sh
-> 1
->
-> > > 1870 + test 2 -ne 2
-> > > 1871 + eval diff -u "$@"
-> > > 1872 + diff -u actual expected
-> > > 1873 --- actual 2023-01-08 19:40:42.169214115 +0000
-> > > 1874 +++ expected 2023-01-08 19:40:42.121213837 +0000
-> > > 1875 @@ -1,4 +1,5 @@
-> > > 1876 gpg: Signature made Sun Jan 8 19:40:42 2023 UTC
-> > > 1877 gpg: using DSA key 13B6F51ECDDE430D
-> > > 1878 +gpg: checking the trustdb
->
-> The + before "gpg" means that the above line is in what we expect, but
-> not in what we actually get.
->
-> I think the reason might be that gpg's output could have changed
-> between different versions of gpg and it might just not be possible
-> and wise to rely on the exact output it emits.
->
-> In both t7510-signed-commit.sh t7528-signed-commit-ssh.sh for example,
-> we don't test the '%GG' format, and that might be the reason why.
->
-> So I see the following possibilities to overcome this issue:
->
->   - just drop the test you added for the %(signature) format
->   - find a way to require a specific version of gpg for that test
-> (unfortunately I don't think our test framework allows that, so you
-> would have to add custom code to the test, and this is likely to
-> bitrot as time passes and the required gpg version becomes unused)
->   - find a way to make the test independent of the gpg version (this
-> might bitrot too as new gpg versions might further change their
-> output)
->
-> > > 1879 gpg: Good signature from "C O Mitter <committer@example.com>"
-> > > 1880
-> > > 1881 error: last command exited with $?=1
-> > > 1882 not ok 338 - test bare signature atom
+> > Hi all,
+> >
+> > I'm facing an issue with the use of "git blame" which shows commits mar=
+ked to be ignored.
+> >
+> > We have a .git-blame-ignore-revs file that can be retrievable at <https=
+://github.com/InterNetNews/inn/blob/main/.git-blame-ignore-revs>.
+> >
+> > The Git command line I'm using is:
+> >     git blame --ignore-revs-file .git-blame-ignore-revs radius.c
+> >
+> > Here is an extract where commit 36944f2b16 appears at line 59, though i=
+t should be ignored (present in .git-blame-ignore-revs):
+> >
+> > 8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  50)     int r=
+adport;
+> > 8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  51)     char =
+*lochost;
+> > a9d899ddbe (Russ Allbery       1999-11-29 01:40:47 +0000  52)     int l=
+ocport;
+> > 8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  53)
+> > 8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  54)     char =
+*prefix, *suffix; /* futz with the username, if necessary */
+> > 9f21a39f37 (Katsuhiro Kondou   1999-06-12 09:33:48 +0000  55)     int i=
+gnore_source;
+> > d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  56)
+> > d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  57)     struc=
+t _rad_config_t *next; /* point to any additional servers */
+> > 8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  58) } rad_con=
+fig_t;
+> > 36944f2b16 (Julien =C3=89LIE        2021-10-31 10:04:59 +0100  59)
+> > d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  60) typedef s=
+truct _sending_t {
+> > d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  61)     auth_=
+req req;
+> > d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  62)     int r=
+eqlen;
+> >
+> >
+> > When running git blame without ignoring revisions, commit 36944f2b16 ap=
+pears at lines 54, 57 and 59:
+> >
+> > 8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  50)     int r=
+adport;
+> > 8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  51)     char =
+*lochost;
+> > a9d899ddbe (Russ Allbery       1999-11-29 01:40:47 +0000  52)     int l=
+ocport;
+> > 8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  53)
+> > 36944f2b16 (Julien =C3=89LIE        2021-10-31 10:04:59 +0100  54)     =
+char *prefix, *suffix; /* futz with the username, if necessary */
+> > 9f21a39f37 (Katsuhiro Kondou   1999-06-12 09:33:48 +0000  55)     int i=
+gnore_source;
+> > d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  56)
+> > 36944f2b16 (Julien =C3=89LIE        2021-10-31 10:04:59 +0100  57)     =
+struct _rad_config_t *next; /* point to any additional servers */
+> > 8e3e288fec (Marc G. Fournier   1998-12-29 13:19:05 +0000  58) } rad_con=
+fig_t;
+> > 36944f2b16 (Julien =C3=89LIE        2021-10-31 10:04:59 +0100  59)
+> > d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  60) typedef s=
+truct _sending_t {
+> > d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  61)     auth_=
+req req;
+> > d65e228465 (Jeffrey M. Vinocur 2002-03-14 07:27:00 +0000  62)     int r=
+eqlen;
+> >
+> >
+> > Shouldn't 36944f2b16 have disappeared from the output at line 59?
+> >
+> > It should have been d65e228465 which already had that line, as it can b=
+e seen in the commit (line 53 at that time):
+> >   https://github.com/InterNetNews/inn/blob/d65e228465700ff044b75aecacb7=
+062d2a1250f9/authprogs/radius.c
+> >
+> >
+> > The result of that command is the same as the one GitHub shows; you can=
+ therefore find the whole ouput here:
+> >
+> >     https://github.com/InterNetNews/inn/blame/main/authprogs/radius.c
+> >
+> > Commit 36944f2b16 is mentioned at lines 59, 129, 144, 293, etc. though =
+present in .git-blame-ignore-revs.
+> > Yet, that very commit is correctly ignored at other places of the same =
+file.
+> >
+> > Other files and other commits in the project are also affected.  I can =
+give more examples if needed.
+> >
+> >
+> > Is it the expected behaviour of "git blame"?
+> > Is there a reason for these commits to appear in some portions of the b=
+lame output?
+> >
+> >
+> > Thanks beforehand,
