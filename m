@@ -2,130 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EE87C677F1
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 17:05:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C8F6DC5479D
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 17:12:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233916AbjAIRFC (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Jan 2023 12:05:02 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56418 "EHLO
+        id S237311AbjAIRM6 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Jan 2023 12:12:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237231AbjAIREX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2023 12:04:23 -0500
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 630443E841
-        for <git@vger.kernel.org>; Mon,  9 Jan 2023 09:03:21 -0800 (PST)
-Received: by mail-yb1-xb34.google.com with SMTP id t15so9149270ybq.4
-        for <git@vger.kernel.org>; Mon, 09 Jan 2023 09:03:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7ux+KTQg88blzwtYlYP8q9eUAIKnMIEhwrOaqbV/0CM=;
-        b=XhAYDb8kmOq29BiZxd1kmRjd6eXJRpo7sUfQE5h8M30kZANvRW14kTAujzSZY9x58P
-         xzbAHGCh/Fp1g5nuMBjNcuRc/lzaHZLd2ZcGYxgXxbig3QMBKoFGZBuHup0ySNhXMfGF
-         gVPCMMUuku5Wlo1VvNdIjvzU1RCuKrhWOjoCvQmfp+DqIdst/QM6+gbKeShVoZK3WPO1
-         rgiraFXaIzTb7X28pSdIrtLflNbxr9m2o1prM5Vv09exg9mcNQ07PU2MRFqDuiN+gkE7
-         dVDFbLrUkNNl1vRvamQuAEOO8bjTo21FgKzxO819EH89YMbY3Pv5HgFNecDuzG5ABcB7
-         xmEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7ux+KTQg88blzwtYlYP8q9eUAIKnMIEhwrOaqbV/0CM=;
-        b=rG7Ig02ppvn0M94r+jVao1uPvOQsfAiZr23jJTrSc4kqhGs2YXl6BowQpoUA4NKXmN
-         NEOctj9zMrU9fheDo31EXSm4Fop2VI3kmVk5li5TYUDqjrxStv1tEuuoh/6GOpT4rzQH
-         rma+sYalxS+z1xdlAzt+H+6uqLmsSrz7zlhTR5KTCzWv/v4i5Iv7CyhWg37HQlG7yudc
-         7Pk11twQq/D90v64Pr8xIVtnV8CXeescehcC0tDzeWwKBTmZwUteflgjKaXZ/P9RajxF
-         W7WerHTCH7QSpwECQA5s1Ys7txMoX1SrRSFNV90GuaOUyRpGfofGJOMXbFqGk5ygScE+
-         MnwA==
-X-Gm-Message-State: AFqh2kr7OmhpXMyVutKVucJCSUAHpslk/hOnj/HOoVleAaGS6g4ozriY
-        gmpgKWd503OcCuW0J748JAZOgNVZdio9S33EtNnslzU7cE+pvw==
-X-Google-Smtp-Source: AMrXdXs5jFWQq8rTr9RtXIz6gI6cbjSdpaiRovUJ8SwtsjqWkIuZ+M0EgT52D+UeZszQ2yylbfbfb9FYnU7gVsmysIE=
-X-Received: by 2002:a25:4dc4:0:b0:7b9:663d:f68f with SMTP id
- a187-20020a254dc4000000b007b9663df68fmr492991ybb.389.1673283800184; Mon, 09
- Jan 2023 09:03:20 -0800 (PST)
+        with ESMTP id S237345AbjAIRMW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2023 12:12:22 -0500
+Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03AB459D2A
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 09:11:26 -0800 (PST)
+Date:   Mon, 09 Jan 2023 17:11:16 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
+        s=protonmail3; t=1673284284; x=1673543484;
+        bh=gTvu0zsk7RyEZ6B6ZA8nBL5YJEa/eWJxp5VUy8VSnKc=;
+        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+         Message-ID:BIMI-Selector;
+        b=N4rR9boJZcazki691rEXwVX2q346s3CzONWK4pYmIn2ZJS0bXOOBbHaMpCqNMnXr+
+         OHGilWcCMrgzTA4HWQAY3YYlqIUj2heTcZEKbNV6uWErP+d56UtcLlzTgCjqS9Upgp
+         xgMWeQKl/9pup0zzKaFEFljgGKUX5n3R0OOk1/PCOPa7lUD0qlhSFMU7xt+em4zMds
+         kzAaugthICqE5iVzDlvHAEUEbXjsCHDAtjozkVnly7MHSDwpdpvOwkjJ7eUerYEV9r
+         ChAoh9T02qRUuQnYMmr+qOmBLvC+ZXnIm6QoTLNtDDuP299QFyNmknQj6wzT0y4i2W
+         v8wBA/aOuyP+A==
+To:     =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+From:   Jacob Abel <jacobabel@nullpo.dev>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
+Subject: Re: [PATCH v7 0/4] worktree: Support `--orphan` when creating new worktrees
+Message-ID: <20230109171100.6jj65aktyohtykid@phi>
+In-Reply-To: <230109.86r0w328nu.gmgdl@evledraar.gmail.com>
+References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20221104213401.17393-1-jacobabel@nullpo.dev> <20221110233137.10414-1-jacobabel@nullpo.dev> <20221212014003.20290-1-jacobabel@nullpo.dev> <20221220023637.29042-1-jacobabel@nullpo.dev> <20221228061539.13740-1-jacobabel@nullpo.dev> <20230107045757.30037-1-jacobabel@nullpo.dev> <230109.86r0w328nu.gmgdl@evledraar.gmail.com>
+Feedback-ID: 21506737:user:proton
 MIME-Version: 1.0
-From:   =?UTF-8?B?zqPPhM6xz43Pgc6/z4Igzp3PhM6tzr3PhM6/z4I=?= 
-        <stdedos@gmail.com>
-Date:   Mon, 9 Jan 2023 19:02:43 +0200
-Message-ID: <CAHMHMxWta9Q3O9enn_ntAMdQnE2n_2RPA_Tg0psM+4BEE8dpeA@mail.gmail.com>
-Subject: Ambiguity on .gitignore vs pathspec ... pathspec
-To:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello there,
+On 23/01/09 01:26PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+> On Sat, Jan 07 2023, Jacob Abel wrote:
+>
+> > [...]
+>
+> This round looks good to me, except for a small tiny (and new)
+> portability issue that needs fixing:
+>
+> > [...]
+>
+> Good to get rid of this.
+>
+> > [...]
+> >     ++=09=09grep -P "fatal:( options)? .* cannot be used together" actu=
+al
+>
+> This is the new unportable code, the "-P" option is specific to GNU
+> grep, and here you're relying on the "?" syntax along with other
+> ERE-like syntax.
+>
+> It looks like the minimal fix here is to just change -P to -E, which we
+> can use, you're not using any PCRE-syntax, but just syntax that's part
+> of ERE.
 
-I believe I have found a behavior that I cannot explain via the
-manpages https://git-scm.com/docs/gitignore#_pattern_format and
-https://git-scm.com/docs/gitglossary#Documentation/gitglossary.txt-aiddefpa=
-thspecapathspec:
+Understood. I have made the change and prepared a new revision already if t=
+his
+is all that needs to be changed. I can submit it at any time however I was
+unsure of whether it was considered bad etiquette to submit new revisions s=
+o
+close to each other.
 
-For the repo:
-
-```
-$ git-ls-files$ (master +) tree
-.
-=E2=94=9C=E2=94=80=E2=94=80 a
-=E2=94=82   =E2=94=94=E2=94=80=E2=94=80 schemas
-=E2=94=82       =E2=94=9C=E2=94=80=E2=94=80 a_schema.json
-=E2=94=82       =E2=94=9C=E2=94=80=E2=94=80 a_schema.yaml
-=E2=94=82       =E2=94=9C=E2=94=80=E2=94=80 fema.json
-=E2=94=82       =E2=94=94=E2=94=80=E2=94=80 fema.yaml
-=E2=94=9C=E2=94=80=E2=94=80 b
-=E2=94=82   =E2=94=94=E2=94=80=E2=94=80 schemas
-=E2=94=82       =E2=94=9C=E2=94=80=E2=94=80 a_schema.json
-=E2=94=82       =E2=94=9C=E2=94=80=E2=94=80 a_schema.yaml
-=E2=94=82       =E2=94=9C=E2=94=80=E2=94=80 fema.json
-=E2=94=82       =E2=94=94=E2=94=80=E2=94=80 fema.yaml
-=E2=94=94=E2=94=80=E2=94=80 schemas
-    =E2=94=9C=E2=94=80=E2=94=80 a_schema.json
-    =E2=94=9C=E2=94=80=E2=94=80 a_schema.yaml
-    =E2=94=9C=E2=94=80=E2=94=80 fema.json
-    =E2=94=94=E2=94=80=E2=94=80 fema.yaml
-
-5 directories, 12 files
-```
-
-and all YAML files committed, I get:
-
-```
-git-ls-files$ (master +) git status
-On branch master
-Changes to be committed:
-  (use "git restore --staged <file>..." to unstage)
-new file:   .gitignore
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-a/schemas/a_schema.json
-a/schemas/fema.json
-b/schemas/a_schema.json
-b/schemas/fema.json
-
-git-ls-files$ (master +) cat .gitignore
-**schemas/*.json
-git-ls-files$ (master +) git ls-files '**schemas/*.yaml'
-a/schemas/a_schema.yaml
-a/schemas/fema.yaml
-b/schemas/a_schema.yaml
-b/schemas/fema.yaml
-schemas/a_schema.yaml
-schemas/fema.yaml
-git-ls-files$ (master +) git ls-files '**/schemas/*.yaml'
-a/schemas/a_schema.yaml
-a/schemas/fema.yaml
-b/schemas/a_schema.yaml
-b/schemas/fema.yaml
-```
-
-It seems to me that I have to use different pathspec definition in the
-`.gitignore` file, and different on the commands (and they are
-"exactly opposite" :/)
-
-With regards,
-Ntentos Stavros
