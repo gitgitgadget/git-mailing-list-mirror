@@ -2,148 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80243C54EBD
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 09:20:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 787DCC5479D
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 09:24:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237028AbjAIJUD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Jan 2023 04:20:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50608 "EHLO
+        id S236938AbjAIJYJ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Jan 2023 04:24:09 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237046AbjAIJT3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2023 04:19:29 -0500
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B153ADD2
-        for <git@vger.kernel.org>; Mon,  9 Jan 2023 01:16:16 -0800 (PST)
-Received: by mail-pj1-x102f.google.com with SMTP id q64so8094316pjq.4
-        for <git@vger.kernel.org>; Mon, 09 Jan 2023 01:16:16 -0800 (PST)
+        with ESMTP id S237162AbjAIJXp (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2023 04:23:45 -0500
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B5A813DFD
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 01:22:13 -0800 (PST)
+Received: by mail-yb1-xb2c.google.com with SMTP id v19so2051974ybv.1
+        for <git@vger.kernel.org>; Mon, 09 Jan 2023 01:22:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VRWq6rmA+IKG7pen/CGs+GRMjTfHF3nZrgvwU13vGbw=;
-        b=H7aEcU4p/Ttded9ATYIViXlo/8xNw8VCGAVIAgVF7paFS1HW1fVuZ3dSq/c2TLxbRU
-         bIsUM2qAKKLWOEah/VkRAyVU3O5Vh/rsi24MCupCg/lDZMSDzDnOxZiBSkgRNut/gLqM
-         C9djVBXENgBcTDp2200imup9TOQdkSbxP8u8i8OC2jsVj5msCVDqxHLH3EriHZgfxp5x
-         u5HHxVLg+SAHQ153Sc7LU7nh4QE2ZdM+jZUkrtNUpx8ej/UAPBPLnyd8MdI1INVn1RBt
-         7TwrzoBfxl2zhAhg1aRozjqmhKdS2EfxIZxaRL51L18//N5QQuPx11FhYTQ3F5rNXqNB
-         cXOA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+8t9ZOSvUoZXDgmqP8o7XQqUfoCi47prDRh8yPsblTo=;
+        b=V8SmdvueXVMiU7olDEPjoWCJxy01n+847BFCeBkt+ariX86W2HxMjx7u+D3VMc4cyx
+         4/BgeJFE0njCVUJfO7g1IGrkWT0QejrZfYymeZMCuO8ChpMzNhOebrf0VdUClQ1taKaS
+         jmlsSWW7DWzMTPJSsJhf4lYNijiHLq7YL6F2ZlSFKYg3ADvWqQAEV8qp03XtC23sLx6x
+         NiYVp82QOWfoW/dyRjEdjY5eUd/6Jq5kQnMngZ+2jCggmOMfqxtxteMD6FqAY25PjlB7
+         hAK/TRQLJLt74mm/vJjXrqRo/ekrsLU5Rs4hIrHpeq06ZwbfxN9L7EtLeo5T8gJcy8eh
+         rBYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=VRWq6rmA+IKG7pen/CGs+GRMjTfHF3nZrgvwU13vGbw=;
-        b=Aux4vRdflMl4cvIAoica2iIC7rfDpSUFI5wUQ9Tr3zwacmtm7tXVMHqhms48+PXd7T
-         lpk02WCUyFWS/XccJNTOX0pfsxogUEexnRjhk1NGixfNtxy1TUCFGaKiwKZRqbfE9EHG
-         IzamLBcB8xfJqkZgyadf5FdatXdDYjB57o6N4kflSUPs5RWKb37n8ZgvyhWftSX9zT2/
-         5/Wh1May80zDxNrZensxuyVKWXMUDPFof+gQT8K9aFWP/Io2GB9YwRRvVqHP3w5h3Cpx
-         vvO5p2jGhScshdN0lAReGia9dcY1KAkr7+6pw0WasOJ09lv9F/PaH77TpugsrLtAx/Sf
-         nJdA==
-X-Gm-Message-State: AFqh2kobyQKe3aSHBSQMK2hip0jnxU/IdTQBYQ6g3XHWOPA29rggCQze
-        cpi2n5IFG5sgnS7gJWINouU=
-X-Google-Smtp-Source: AMrXdXtc0Kie6saTbU3f7wN5MRGPrUicPBHz+8SWJNQd14nfUtxhFkNwmmAshNqNE+OWTMk8p0rAIQ==
-X-Received: by 2002:a17:902:ec01:b0:192:89f2:e07b with SMTP id l1-20020a170902ec0100b0019289f2e07bmr49430122pld.57.1673255776147;
-        Mon, 09 Jan 2023 01:16:16 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id w13-20020a170902ca0d00b0016d773aae60sm5674179pld.19.2023.01.09.01.16.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 01:16:15 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Phil Hord <phil.hord@gmail.com>
-Cc:     git@vger.kernel.org, congdanhqx@gmail.com, plavarre@purestorage.com
-Subject: Re: [PATCH] date.c: allow ISO 8601 reduced precision times
-References: <20221216033638.2582956-1-phil.hord@gmail.com>
-        <xmqq359gnfhe.fsf@gitster.g>
-        <CABURp0pWwfWO3msZ4U=_i3zkEDOq6+CUVT9Tb7KCjeBRK34Miw@mail.gmail.com>
-        <CABURp0pqQFiM4+L0sRADTt-jmAsHcMMWLR6xa4NbqrziZjmdOQ@mail.gmail.com>
-        <xmqqbkn8um9q.fsf@gitster.g>
-Date:   Mon, 09 Jan 2023 18:16:15 +0900
-In-Reply-To: <xmqqbkn8um9q.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-        09 Jan 2023 17:48:01 +0900")
-Message-ID: <xmqqy1qct6e8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+8t9ZOSvUoZXDgmqP8o7XQqUfoCi47prDRh8yPsblTo=;
+        b=TLBXJ7a9/TtK8gRn5w+ZYM60/oVavpIjhUV7w8/RUA8WHfzXVAfPVgZ3D8DwJYIcPS
+         7ilPz9nVm+8op10D/eig44SQ1gqoCmDzxMum4aTwee49TkJIOshMeZ3YZJ/0//Uz9Fk/
+         1Bv7I+TGzD7oxcy1X1t2bF76jFO/97dISXTFt+xFu3fm7qy+wKNmczq4yqDEuxmUifmY
+         deQzJpAGgkfgWPLiMUgQLdbaE8Qv8t9KktvAJ8ZwACBMvu3SzTQFbI0a7u/DOY+FWx9x
+         geBVSXiAImF6JFZGkyPHdjUEXfBW0AG7Uj5bMIzYjKJ3P1Ma/llEpP9VQfEjMeuw34oc
+         P5ZA==
+X-Gm-Message-State: AFqh2kp1OWdopOTaDjkVLDrFqZOY8+N1nwsgC9C8d55yQAgaSg5aTVYA
+        3oHupDja2gaGYDHW1GFZVwQxIs03D2dBUorvZY8=
+X-Google-Smtp-Source: AMrXdXtG+kbyjxFyASZBSYDIvdTdnbxJIwz2hquNmEOa5X9BNC9BTGhkgSjRIrqIeyAveRctAHpFHfWBOfNG7CTTg58=
+X-Received: by 2002:a25:4ec1:0:b0:6f9:9c61:66df with SMTP id
+ c184-20020a254ec1000000b006f99c6166dfmr7834122ybb.494.1673256132591; Mon, 09
+ Jan 2023 01:22:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CA+PPyiG=+rs_bOQbaNB311_DVdSc2g44SkLzpaqOER7rfxykrQ@mail.gmail.com>
+ <CAP8UFD2huFgTjB1hNGyGnMKPONOG6ZV-wvxWkTaz-iZNfxrhJA@mail.gmail.com> <CA+PPyiHOLUm87eHuxyhbqqML33Q6g-he_DKRxTEb2fu-2p3NSQ@mail.gmail.com>
+In-Reply-To: <CA+PPyiHOLUm87eHuxyhbqqML33Q6g-he_DKRxTEb2fu-2p3NSQ@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 9 Jan 2023 10:22:01 +0100
+Message-ID: <CAP8UFD23ObbQaeQi2WsZ3oy0QTKiBxs3wExaHTU2QzJBPwKOmA@mail.gmail.com>
+Subject: Re: Github actions failing
+To:     NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Mon, Jan 9, 2023 at 5:40 AM NSENGIYUMVA WILBERFORCE
+<nsengiyumvawilberforce@gmail.com> wrote:
 
-> Phil Hord <phil.hord@gmail.com> writes:
->
->> Do you have any suggestions about how I can better alleviate your
->> concerns?  I don't think there are real regressions here and I tried
->> to explain why.
->
-> Other than "including it in a released version and waiting for
-> people to scream", I do not think there is.  The "next" branch was
-> meant to be a test ground for these new features by letting
-> volunteer users to use it in their everyday development, and the
-> hope was that we can catch regressions by cooking risky topics
-> longer than usual in there, but we haven't been very successful, I
-> have to say.
->
-> Thanks.  Let's queue it and see what happens.
+> Thanks, I missed the GPG flag. Now I get the following after forcing
+> the push. I have been looking for the problem but I can't figure it
+> out. I will be glad for any help
+> >
+> > git checkout -b signed &&
+> > 1840 echo 1 >file && git add file &&
+> > 1841 test_tick && git commit -S -m initial &&
+> > 1842 git verify-commit signed 2>out &&
+> > 1843 head -3 out >expected &&
+> > 1844 tail -1 out >>expected &&
+> > 1845 echo >>expected &&
+> > 1846 git for-each-ref refs/heads/signed --format="%(signature)" >actual &&
+> > 1847 test_cmp actual expected
+> > 1848
+> > 1849 + git checkout -b signed
+> > 1850 Switched to a new branch 'signed'
+> > 1851 + echo 1
+> > 1852 + git add file
+> > 1853 + test_tick
+> > 1854 + test -z set
+> > 1855 + test_tick=1112912113
+> > 1856 + GIT_COMMITTER_DATE=1112912113 -0700
+> > 1857 + GIT_AUTHOR_DATE=1112912113 -0700
+> > 1858 + export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
+> > 1859 + git commit -S -m initial
+> > 1860 [signed 4dc4b90] initial
+> > 1861 Author: A U Thor <author@example.com>
+> > 1862 1 file changed, 1 insertion(+)
+> > 1863 create mode 100644 file
+> > 1864 + git verify-commit signed
+> > 1865 + head -3 out
+> > 1866 + tail -1 out
+> > 1867 + echo
+> > 1868 + git for-each-ref refs/heads/signed --format=%(signature)
+> > 1869 + test_cmp actual expected
 
-Actually, let's not queue it as-is, because it seems to break many
-tests for me.  I won't have time to take further look myself before
-later in the week when I come back online again, though.
+I think in general we prefer "test_cmp expected actual" over "test_cmp
+actual expected". I think it's easier to understand what happened with
+the former.
 
-Test Summary Report
--------------------
-t4255-am-submodule.sh                            (Wstat: 256 (exited 1) Tests: 33 Failed: 22)
-  Failed tests:  1-6, 11-13, 15-20, 25-27, 30-33
-  Non-zero exit status: 1
-t4150-am.sh                                      (Wstat: 256 (exited 1) Tests: 87 Failed: 62)
-  Failed tests:  3, 5-7, 11-13, 15-16, 18-22, 24-25, 27-32
-                34-36, 38-46, 48, 50-52, 54, 57-61, 63-65
-                67-77, 82-85
-  Non-zero exit status: 1
-t4014-format-patch.sh                            (Wstat: 256 (exited 1) Tests: 193 Failed: 20)
-  Failed tests:  6-7, 10, 141-157
-  Non-zero exit status: 1
-t7512-status-help.sh                             (Wstat: 256 (exited 1) Tests: 44 Failed: 1)
-  Failed test:  26
-  Non-zero exit status: 1
-t3901-i18n-patch.sh                              (Wstat: 256 (exited 1) Tests: 20 Failed: 5)
-  Failed tests:  16-20
-  Non-zero exit status: 1
-t4151-am-abort.sh                                (Wstat: 256 (exited 1) Tests: 20 Failed: 7)
-  Failed tests:  2-3, 5-6, 15, 19-20
-  Non-zero exit status: 1
-t4153-am-resume-override-opts.sh                 (Wstat: 256 (exited 1) Tests: 5 Failed: 2)
-  Failed tests:  3-4
-  Non-zero exit status: 1
-t5607-clone-bundle.sh                            (Wstat: 256 (exited 1) Tests: 14 Failed: 1)
-  Failed test:  3
-  Non-zero exit status: 1
-t4152-am-subjects.sh                             (Wstat: 256 (exited 1) Tests: 13 Failed: 9)
-  Failed tests:  5-13
-  Non-zero exit status: 1
-t4253-am-keep-cr-dos.sh                          (Wstat: 256 (exited 1) Tests: 7 Failed: 4)
-  Failed tests:  3-4, 6-7
-  Non-zero exit status: 1
-t4257-am-interactive.sh                          (Wstat: 256 (exited 1) Tests: 4 Failed: 3)
-  Failed tests:  2-4
-  Non-zero exit status: 1
-t4258-am-quoted-cr.sh                            (Wstat: 256 (exited 1) Tests: 4 Failed: 2)
-  Failed tests:  3-4
-  Non-zero exit status: 1
-t4254-am-corrupt.sh                              (Wstat: 256 (exited 1) Tests: 4 Failed: 1)
-  Failed test:  3
-  Non-zero exit status: 1
-t0023-crlf-am.sh                                 (Wstat: 256 (exited 1) Tests: 2 Failed: 1)
-  Failed test:  2
-  Non-zero exit status: 1
-t4256-am-format-flowed.sh                        (Wstat: 256 (exited 1) Tests: 2 Failed: 1)
-  Failed test:  2
-  Non-zero exit status: 1
-Files=987, Tests=28346, 137 wallclock secs (12.84 usr  4.19 sys + 799.53 cusr 1017.07 csys = 1833.63 CPU)
-Result: FAIL
-gmake[1]: *** [Makefile:62: prove] Error 1
-gmake[1]: Leaving directory '/home/gitster/w/buildfarm/seen/t'
-gmake: *** [Makefile:3196: test] Error 2
-rmdir: failed to remove '/dev/shm/testpen.2086794': Directory not empty
+Also most of the tests in t6300 are like "test_cmp expected actual":
+
+$ grep -c 'test_cmp expect' t6300-for-each-ref.sh
+67
+$ grep -c 'test_cmp actual' t6300-for-each-ref.sh
+1
+
+> > 1870 + test 2 -ne 2
+> > 1871 + eval diff -u "$@"
+> > 1872 + diff -u actual expected
+> > 1873 --- actual 2023-01-08 19:40:42.169214115 +0000
+> > 1874 +++ expected 2023-01-08 19:40:42.121213837 +0000
+> > 1875 @@ -1,4 +1,5 @@
+> > 1876 gpg: Signature made Sun Jan 8 19:40:42 2023 UTC
+> > 1877 gpg: using DSA key 13B6F51ECDDE430D
+> > 1878 +gpg: checking the trustdb
+
+The + before "gpg" means that the above line is in what we expect, but
+not in what we actually get.
+
+I think the reason might be that gpg's output could have changed
+between different versions of gpg and it might just not be possible
+and wise to rely on the exact output it emits.
+
+In both t7510-signed-commit.sh t7528-signed-commit-ssh.sh for example,
+we don't test the '%GG' format, and that might be the reason why.
+
+So I see the following possibilities to overcome this issue:
+
+  - just drop the test you added for the %(signature) format
+  - find a way to require a specific version of gpg for that test
+(unfortunately I don't think our test framework allows that, so you
+would have to add custom code to the test, and this is likely to
+bitrot as time passes and the required gpg version becomes unused)
+  - find a way to make the test independent of the gpg version (this
+might bitrot too as new gpg versions might further change their
+output)
+
+> > 1879 gpg: Good signature from "C O Mitter <committer@example.com>"
+> > 1880
+> > 1881 error: last command exited with $?=1
+> > 1882 not ok 338 - test bare signature atom
