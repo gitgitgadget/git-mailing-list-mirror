@@ -2,96 +2,158 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 16B26C54EBD
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 14:02:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E66D2C54EBD
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 14:20:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230031AbjAIOCE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Jan 2023 09:02:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41088 "EHLO
+        id S229808AbjAIOU3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Jan 2023 09:20:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237277AbjAIOB3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2023 09:01:29 -0500
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 760A51CB3C
-        for <git@vger.kernel.org>; Mon,  9 Jan 2023 06:00:17 -0800 (PST)
-Received: by mail-qt1-x834.google.com with SMTP id j15so2384366qtv.4
-        for <git@vger.kernel.org>; Mon, 09 Jan 2023 06:00:16 -0800 (PST)
+        with ESMTP id S232796AbjAIOUN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2023 09:20:13 -0500
+Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8AF615721
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 06:20:12 -0800 (PST)
+Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-15027746720so8690569fac.13
+        for <git@vger.kernel.org>; Mon, 09 Jan 2023 06:20:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LckbT8pQnhL4sWis2E5JWRSrAIHvN2mDZt1UOQ/L59g=;
-        b=qXwT1Hbf+oIfFVS93lNCtqIeewP29xdV5HwujvVIGWrISK6NnpuZt0/xTetrZmIRL7
-         wh88oXlyqqNIsx3DMEjN57yRnl6+ftJtuXpjbMQX7ae6CVv1mbPAckcylmqknRUQB1ur
-         djRDrBInyLLs3DnRi9RqG3ATiW/6wyF8zcGQ92LK/PsR9zU4Qmt8jdcj1wdsUGEWRxIp
-         bMvR4K8Mw2vZv91vxh9XE6YLxmdaOa/ZZ1g9yStzf61nimK6q2bwADW+h7UQxyD8J4Yu
-         UpUv6XWtL3aXEEcVZVEVTuyFKQOl9uDBihLj8ZANvcdYofMyd4kmgsp5M4ETt6zRij3k
-         Kcng==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HWg+xwleFAU5zHslnrJxCIWWXTsIRuq+Pv9ktuPt8MA=;
+        b=gy+fs5jm56YV8I0bG5NtbOLIyYEoYgbBkVFCsT1fXIs05XvtOD46edryr/lLatBMUz
+         HRMalR909wURPS0oWwS/+T1oKdZirg2c+NhfhXfen9pryyHPCOu8fNfP9jQ1rls34+Qq
+         +HJFvawkuQRqH5/Y+ljc/NZXIBUNgIqS5PNtIWcHNnfrhwpXN8R725fQ9MrrVL16+HIU
+         YWobprpIF10C4ab2ilApsL3BAc/WWYIPFo616Q/XvAHX8k1LJTtWnDFRywjKLrO6D5T/
+         1VRQxRfuBaH0OBVy2udcMOq914WZ+rBaJB+TY7Rvbzt9laYyVO8TQVNquytHeJYnH5Jj
+         YM7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:content-language:in-reply-to:mime-version
-         :user-agent:date:message-id:from:references:cc:to:subject
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LckbT8pQnhL4sWis2E5JWRSrAIHvN2mDZt1UOQ/L59g=;
-        b=p8Nc8rl81AigwAd1gFW3Ejzc9to3oiEhBqy/DjIwjxHMTVa2PiYCbFuO2h9GAdOgMf
-         0J7+UK+N0+KxPGroXXMYFxpRBfne2lVc4jR+wEvYsZqYoe+BPVGKyfy3WZKo0+m68OnH
-         L69zGG7VdZQ87yRxhs4s4flktZWdocO7O32Xk6zQp9glJA5Db91rgTR57wFAx/Q/OQCL
-         lpWVV1lYIc+3ecRQR6r+r2GlyYjBJ0qcWYSTzpnlULbBT7zj0P4CXiO/X2+TFNC6cp58
-         dNxCgpJpFhVsSGL8VzpCqpenaSlBvfOtAWneaWVJEkjlnQAupCoJLoA6AsvTW8Rh9PCZ
-         1h0w==
-X-Gm-Message-State: AFqh2kpWovyteudCZsOQMjVAQ6nAjj3DTXFuWNizEnsBGC5F+G2Cda8U
-        64RF5zEPSgJKAGrVE7TYv1/WbxZPaHU/SQ==
-X-Google-Smtp-Source: AMrXdXu3YFD16choMvFb9/yvGfmk0gt1eIeKQPCDtR6QvjH3pMdBY2d98ZVSW+jl/UjQCAyfumQ09Q==
-X-Received: by 2002:a05:622a:591b:b0:3ab:6a9a:aa8b with SMTP id ga27-20020a05622a591b00b003ab6a9aaa8bmr96874224qtb.60.1673272813349;
-        Mon, 09 Jan 2023 06:00:13 -0800 (PST)
-Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
-        by smtp.gmail.com with ESMTPSA id m7-20020a05620a24c700b006fc2e2198easm5455879qkn.95.2023.01.09.06.00.12
+        bh=HWg+xwleFAU5zHslnrJxCIWWXTsIRuq+Pv9ktuPt8MA=;
+        b=OntjjMk4M0wG2dO4BMqbqLSQo7Kdk0TnmF8nSwYNB3m6pffBjhGlHFCl4Jm3gtrh9+
+         xyqnmct+Ciu8jHvNN043h1j3QRdutemJh9Cv5RmboMDFoTK7gwJt1eC/rdhE9vM/yQyq
+         qrjMQJnZf7bw7lKQbdxYAEpPBp/Bzz/lH/EZSpWGJeMojeNg2ot1bDPn6tO3iqczJKsN
+         6h2j0TaWDG5nMTdhiyp6FyflLlygruk3b16OM6w2K8AnYFaj4krLQtWz2Xm8VtQy3Or6
+         CoimPBLl5Zg/lXgeJXRYtcmbFVSBpO4Md5aJ+LsCIk9iBkCxonaaEssqCqHpNw8eqTC4
+         /o9w==
+X-Gm-Message-State: AFqh2krSVy3wN3cQ9c+GXO8FzhWTTRjhfrAH8Mgif9OgsKFUJUCHd/D1
+        ENaAVqsYlFxjT2YlFWTfJsNA
+X-Google-Smtp-Source: AMrXdXvpoAWhnskkdZJGmL5jYu+Bse3qj5v6ZewXhnhCygk5qW/F02ZdDnsgf0Q6N4UncRLpX+h6jQ==
+X-Received: by 2002:a05:6870:9e85:b0:150:8c83:b019 with SMTP id pu5-20020a0568709e8500b001508c83b019mr16340630oab.3.1673274012059;
+        Mon, 09 Jan 2023 06:20:12 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:9803:bdc5:6740:d9fa? ([2600:1700:e72:80a0:9803:bdc5:6740:d9fa])
+        by smtp.gmail.com with ESMTPSA id m22-20020a4ac696000000b0049bfbf7c5a8sm4240620ooq.38.2023.01.09.06.20.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Jan 2023 06:00:12 -0800 (PST)
-Subject: Re: [PATCH 4/5] revisions.txt: be explicit about commands writing
- 'ORIG_HEAD'
-To:     Junio C Hamano <gitster@pobox.com>,
-        Philippe Blain via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Erik Cervin Edin <erik@cervined.in>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <pull.1456.git.1673120359.gitgitgadget@gmail.com>
- <302b789a4869c2aa8a0de2f71a2725c6c567685f.1673120359.git.gitgitgadget@gmail.com>
- <xmqqcz7p22x5.fsf@gitster.g>
-From:   Philippe Blain <levraiphilippeblain@gmail.com>
-Message-ID: <530a9dc9-dc16-fe26-954c-27daabf9e9bd@gmail.com>
-Date:   Mon, 9 Jan 2023 09:00:11 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        Mon, 09 Jan 2023 06:20:11 -0800 (PST)
+Message-ID: <35bcfd1f-ff54-fc2a-0477-6454bca03a87@github.com>
+Date:   Mon, 9 Jan 2023 09:20:09 -0500
 MIME-Version: 1.0
-In-Reply-To: <xmqqcz7p22x5.fsf@gitster.g>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 2/8] bundle-uri: parse bundle.heuristic=creationToken
+To:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
+        avarab@gmail.com, steadmon@google.com, chooglen@google.com
+References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
+ <9007249b9488c23f00c2d498ffd520e4af8b37a4.1673037405.git.gitgitgadget@gmail.com>
+ <xmqqilhgxwj4.fsf@gitster.g>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <xmqqilhgxwj4.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-Le 2023-01-07 à 21:08, Junio C Hamano a écrit :
-> "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On 1/8/2023 9:38 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
->> -way, to record the position of the `HEAD` before their operation, so that
->> +way (`git am`, `git merge`, `git rebase`, `git reset`),
+>> +static const char *heuristics[] = {
+>> +	[BUNDLE_HEURISTIC_NONE] = "",
+>> +	[BUNDLE_HEURISTIC_CREATIONTOKEN] = "creationToken",
+>> +};
 > 
-> Let's not commit that these four will forever stay to be the
-> commands that uses ORIG_HEAD.  Perhaps "(e.g. `git am`, ...)"?
+> Ideally it would require the least amount of maintenance if we could
+> define BUNDLE_HEURISTIC__COUNT as ARRAY_SIZE() of this thing, but it
+> being a file scope static, it might not be easy to arrange that.  As
+> a lessor altenative, would it make it safer to size this array more
+> explicitly using BUNDLE_HEURISTIC__COUNT macro?
 > 
->> +to record the position of the `HEAD` before their operation, so that
+> 	static const char *heuristics[BUNDLE_HEURISTIC__COUNT] = {
+> 		...
+> 	};
+
+Yes, I should have used this size indicator.
+ 
+> or is it more-or-less moot point to aim for safety because nobody
+> enforces that these [indices] used to define the contents of this
+> array are dense?
 > 
+> That is ...
+> 
+>> @@ -142,6 +150,19 @@ static int bundle_list_update(const char *key, const char *value,
+>>  			return 0;
+>>  		}
+>>  
+>> +		if (!strcmp(subkey, "heuristic")) {
+>> +			int i;
+>> +			for (i = 0; i < BUNDLE_HEURISTIC__COUNT; i++) {
+>> +				if (!strcmp(value, heuristics[i])) {
+>> +					list->heuristic = i;
+>> +					return 0;
+>> +				}
+>> +			}
+> 
+> ... this strcmp() will segfault if heuristics[] array is sparse, or
+> BUNDLE_HEURISTIC__COUNT is larger than the array (i.e. you add a new
+> heuristic in "enum bundle_heuristic" before the __COUNT sentinel,
+> but forget to add it to the heuristics[] array).
+> 
+> "You are worrying too much.  Our developers would notice a segfault
+> and the current code, which may look risky to you, is something they
+> can live with", is a perfectly acceptable response, but somehow I
+> have this nagging feeling that we should be able to make it easier
+> to maintain without incurring extra runtime cost.
 
-I think I prefer being explicit in the documentation. It's easier for a user
-wanting to learn which commands write that pseudo-ref to have them all listed
-at the same place. If other commands learn to write it, we can update the list 
-here.
+You're right. I was following an established pattern of linking
+enums to values, but I'm not sure that those other examples will
+loop over the array like this looking for a value.
 
-That said, I can live with that patch being tweaked in the next iteration if people
-feel strongly about an explicit list.
+A safer approach would be to have an array of (enum, string) pairs
+that could either be iterated in a loop (fast enough for a small
+number of enum values, such as this case) or used to populate a
+hashmap at runtime if needed for a large number of queries.
 
-Philippe.
+>> diff --git a/bundle-uri.h b/bundle-uri.h
+>> index d5e89f1671c..ad82174112d 100644
+>> --- a/bundle-uri.h
+>> +++ b/bundle-uri.h
+>> @@ -52,6 +52,14 @@ enum bundle_list_mode {
+>>  	BUNDLE_MODE_ANY
+>>  };
+>>  
+>> +enum bundle_list_heuristic {
+>> +	BUNDLE_HEURISTIC_NONE = 0,
+>> +	BUNDLE_HEURISTIC_CREATIONTOKEN,
+>> +
+>> +	/* Must be last. */
+>> +	BUNDLE_HEURISTIC__COUNT,
+>> +};
+> 
+> The only reason to leave a trailing comma is to make it easy to
+> append new values at the end.  By omitting the trailing comma, you
+> can doubly signal "Must be last" here (not suggesting to remove the
+> comment; suggesting to remove the trailing comma).
+
+This is a great example of "doing the typically right thing" but
+without thinking of _why_ we do that thing. Thanks for pointing this
+out.
+
+Thanks,
+-Stolee
