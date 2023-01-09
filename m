@@ -2,169 +2,302 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A6897C5479D
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BD110C54EBE
 	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 12:30:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236884AbjAIMaA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Jan 2023 07:30:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57188 "EHLO
+        id S237189AbjAIMaC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Jan 2023 07:30:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57216 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236961AbjAIM33 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2023 07:29:29 -0500
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ADC11AD8D
-        for <git@vger.kernel.org>; Mon,  9 Jan 2023 04:29:28 -0800 (PST)
-Received: by mail-wr1-x42d.google.com with SMTP id bk16so7966552wrb.11
-        for <git@vger.kernel.org>; Mon, 09 Jan 2023 04:29:28 -0800 (PST)
+        with ESMTP id S237119AbjAIM3f (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2023 07:29:35 -0500
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27BF11400A
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 04:29:34 -0800 (PST)
+Received: by mail-pf1-x431.google.com with SMTP id c26so1534152pfp.10
+        for <git@vger.kernel.org>; Mon, 09 Jan 2023 04:29:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=L9Na4Jt4kdYzYfOQUXmy6+8Z4RtoJsZSfSkO22cYnjc=;
-        b=FcW1RktxvjvYeGatkv8Oh0fETawEqppel9dJUsDuBO9vxixDn7ielsd0pOJZR6M/C5
-         E2asMR6MrDLypvz9XaT05niYNS5uEu/Z3CMD4y9Rhh4EAG4hy0uzEpT91MqakLGefvAK
-         MTpdXYYBXbH7UlJrwFIvq7xt+0j6VQrRYGd6wlpUcQZkn4lJlkBhTw3EcX43ltvFgNCK
-         hGzAA71GvgyZwI/cPfd1I54lX0Gwx9DNycd5aAkEIHCLeyqOqJUO0deA70zWw1CnkDor
-         pgJm3B1V0m5IRqpQoOOjjWySi5aW5/ECaTRhx70j5VM/SPR6A13RVrhyWB//8s9f4xSU
-         jHmA==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pQLqYIrT6E/PtGmxwXisuCxOX3reJdfpRuxdh5sB/bg=;
+        b=RVSRNX6ybIsFzzeVnz7yE92ybnpWIg4KYK5SnxuyKgzekclcHxFmVlRuv4TK4AjiWu
+         IFGgE/RPAEDvIVAduXc8zjl61w3p+uUx5VRCDN4xSzFaB3N9mPg4/IWp/pbtOiqDcWnA
+         pRicIEnC9Ba4+KcuYgqdLEUf6Q/SYOTsOI1WtUD/xzgrBNRBi5MfkuYTtdeDyD9nbsWK
+         TjYeleKuwNTDWWPubJG6ExlykyREkeIR4w6Njva5dYPoR3Dc/Idd3sGHBQsYZYQ0+7wd
+         COxzvDFOcYZ/HrcE80V08h7OgeoD/kbLH5Nu47M11QYIcYT/AMEiXg5MXkZSsHUe1T+o
+         vpgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=L9Na4Jt4kdYzYfOQUXmy6+8Z4RtoJsZSfSkO22cYnjc=;
-        b=P1j+wSnqdRWAjc/rFVzZCt3Tw/f0aNRnW2v0/g/TJSKUM0LDEaSFEhvFEzZTXSR9gp
-         4GAEeezvbtE24K9DAEGV7s/Vr1saXEqpjLJc7K3A90mrohY1CVd5WmeSlPXPIRNW6VMt
-         pyyOXvdg5MxIN3ti8Pcz81iAkBCyVSaosFtDBws/qTZ5kSCWB5S2oDrIcANVl8x+vx6D
-         pY4RPeuHoWGKMNp2Z2kP7zr0UA2fFYIOoLWOLedx/DCQLnUXHBNjKI7nN9kvEv/G1YKb
-         aZwO/uNKyr2Sonq7wVBQWEfIynPJZNXktyllFp0lZ4gEG/97rDoYdnif7njbueV9OcSA
-         8qhw==
-X-Gm-Message-State: AFqh2kopVgZMMsHOnRw/4dMtDJzTIvcjtfHS0Bf16v/KDtf1M8/03Dpe
-        2gQEARPehkpfL5IBKrLpjuk=
-X-Google-Smtp-Source: AMrXdXuOaoKdJ0CbDlvuGzjUOqR2h56PMSWqyfDXD9myv3mn5yNeN+O43AbyeT1w4MnhCq8mH10lBA==
-X-Received: by 2002:adf:fb05:0:b0:242:15d6:1a75 with SMTP id c5-20020adffb05000000b0024215d61a75mr35625644wrr.66.1673267367009;
-        Mon, 09 Jan 2023 04:29:27 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id e10-20020adfe38a000000b002bc7fcf08ddsm1097439wrm.103.2023.01.09.04.29.26
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pQLqYIrT6E/PtGmxwXisuCxOX3reJdfpRuxdh5sB/bg=;
+        b=37XqQQ/V9El4n+/726WaXbo7Ga13UPLLD1oO6pPtEiTzDWI5COBTMRaEpRHJOPRG2L
+         pEvv8Rgt5rqx0L/UWWqVC4Nze79rbBKO1l50iHiZy+tXr/2okUgrwj6YV1KF1/xxQlLS
+         VyrvvYJ4UXBC/ovn/hO5m4cJqkrd8YnC1Ic8IQYzjeWs0rtqTCKufEUM2f5InIBla1o4
+         5Ush6zuPSV02Ftg5z4V7RaQBjs6q9Exgu96+OAH0RrpA/0OYE9xrsOscfQcnNyGUWXmX
+         e27NpUUJLzTpbG1Wyki3JSuKB+8LmKh77+QCK1bYHSmzp06Mq4CMwKrHCqqszXiTvmhS
+         tjVg==
+X-Gm-Message-State: AFqh2kqJ3MkYYwnfFu5YmfY+gt5aTeGjcxwra1v0UC56ypSpE9pdGHWK
+        q5bmp5j1LAPESb/1rv47QGajF8YoAHc=
+X-Google-Smtp-Source: AMrXdXsYb6JFy5F4jP5gdSy5SnI5Ib9p7+j+AtJuFA3Opylb2T9VYjDTj3GGlihwVGOU5uy0QEKmGQ==
+X-Received: by 2002:a62:524d:0:b0:582:cddd:784a with SMTP id g74-20020a62524d000000b00582cddd784amr20179825pfb.5.1673267373089;
+        Mon, 09 Jan 2023 04:29:33 -0800 (PST)
+Received: from localhost.localdomain ([103.156.58.205])
+        by smtp.gmail.com with ESMTPSA id b12-20020aa78ecc000000b00581a156b920sm5933674pfr.132.2023.01.09.04.29.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 04:29:26 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pErHJ-0003i6-2o;
-        Mon, 09 Jan 2023 13:29:25 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jacob Abel <jacobabel@nullpo.dev>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-Subject: Re: [PATCH v7 0/4] worktree: Support `--orphan` when creating new
- worktrees
-Date:   Mon, 09 Jan 2023 13:26:05 +0100
-References: <20221104010242.11555-1-jacobabel@nullpo.dev>
- <20221104213401.17393-1-jacobabel@nullpo.dev>
- <20221110233137.10414-1-jacobabel@nullpo.dev>
- <20221212014003.20290-1-jacobabel@nullpo.dev>
- <20221220023637.29042-1-jacobabel@nullpo.dev>
- <20221228061539.13740-1-jacobabel@nullpo.dev>
- <20230107045757.30037-1-jacobabel@nullpo.dev>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <20230107045757.30037-1-jacobabel@nullpo.dev>
-Message-ID: <230109.86r0w328nu.gmgdl@evledraar.gmail.com>
+        Mon, 09 Jan 2023 04:29:32 -0800 (PST)
+From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+To:     git@vger.kernel.org, Phil Hord <phil.hord@gmail.com>,
+        plavarre@purestorage.com, Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+Subject: [PATCH] date.c: limit less precision ISO-8601 with its marker
+Date:   Mon,  9 Jan 2023 19:29:15 +0700
+Message-Id: <20230109122915.30973-1-congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.39.0.287.g690a66fa66
+In-Reply-To: <Y7v6jThT9GQ8Oav8@danh.dev>
+References: <Y7v6jThT9GQ8Oav8@danh.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+The newly added heuristic to parse less precision ISO-8601 conflicts
+with other heuristics to parse datetime-strings. E.g.:
 
-On Sat, Jan 07 2023, Jacob Abel wrote:
+	Thu, 7 Apr 2005 15:14:13 -0700
 
-> While working with the worktree based git workflow, I realised that setting
-> up a new git repository required switching between the traditional and
-> worktree based workflows. Searching online I found a SO answer [1] which
-> seemed to support this and which indicated that adding support for this should
-> not be technically difficult.
->
-> This patchset has four parts:
->   * adding `-B` to the usage docs (noticed during dev and it seemed too small
->     to justify a separate submission)
->   * adding a helper fn to simplify testing for mutual exclusion of options
->     in `t/t2400-worktree-add.sh`
->   * adding orphan branch functionality (as is present in `git-switch`)
->     to `git-worktree-add`
->   * adding an advise for using --orphan when `git worktree add` fails due to
->     a bad ref.
->
-> Changes from v6:
->   * Removed helper save_param_arr() introduced in v6 from t2400 (2/4) [2].
->   * Reverted changes introduced in v6 to test_wt_add_excl() from t2400 (2/4) [3].
->   * Changed test_wt_add_excl() to use `local opts="$*"` (2/4) [3].
->   * Added check to test_wt_add_excl() to better validate test results (2/4).
->   * Re-add &&-chains to test_wt_add_excl() (2/4) [4].
->   * Reverted changes introduced in v6 to test_wt_add_empty_repo_orphan_hint()
->     from t2400 (4/4) [3].
->   * Changed test_wt_add_empty_repo_orphan_hint() to use `local opts="$*"` (4/4) [3].
->   * Added check to test_wt_add_empty_repo_orphan_hint() to better validate test
->     results (4/4).
->   * Re-add &&-chains to test_wt_add_empty_repo_orphan_hint() (2/4) [4].
+Let's limit the new heuristic to only datetime string with a 'T'
+followed immediately by some digits, and if we failed to parse the
+upcoming string, rollback the change.
 
-This round looks good to me, except for a small tiny (and new)
-portability issue that needs fixing:
+Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+---
 
-> Range-diff against v6:
-> 1:  a9ef3eca7b = 1:  a9ef3eca7b worktree add: include -B in usage docs
-> 2:  c03c112f79 ! 2:  d124cc481c worktree add: refactor opt exclusion tests
->     @@ t/t2400-worktree-add.sh: test_expect_success '"add" no auto-vivify with --detach
->      -test_expect_success '"add" -b/-B mutually exclusive' '
->      -	test_must_fail git worktree add -b poodle -B poodle bamboo main
->      -'
->     -+# Saves parameter sequence/array as a string so they can be safely stored in a
->     -+# variable and restored with `eval "set -- $arr"`. Sourced from
->     -+# https://stackoverflow.com/a/27503158/15064705
->     -+save_param_arr () {
->     -+	local i
->     -+	for i;
->     -+	do
->     -+		# For each argument:
->     -+		# 1. Append "\n" after each entry
->     -+		# 2. Convert "'" into "'\''"
->     -+		# 3. Prepend "'" before each entry
->     -+		# 4. Append " \" after each entry
->     -+		printf "%s\\n" "$i" | sed "
->     -+			s/'/'\\\\''/g
->     -+			1s/^/'/
->     -+			\$s/\$/' \\\\/
->     -+		"
->     -+	done
->     -+	echo " "
->     -+}
->     -
->     +-
->      -test_expect_success '"add" -b/--detach mutually exclusive' '
->      -	test_must_fail git worktree add -b poodle --detach bamboo main
->      -'
+Here is a better thought out change, which tried to minimize the impact of
+new heuristics.
 
-Good to get rid of this.
+While I think it's a fixup, but I still needs explaination, I think I may
+reword it's as a full patch instead.
+Range-diff:
+1:  4036e5a944 ! 1:  b703425a57 fixup! date.c: allow ISO 8601 reduced precision times
+    @@ Metadata
+     Author: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+     
+      ## Commit message ##
+    -    fixup! date.c: allow ISO 8601 reduced precision times
+    +    date.c: limit less precision ISO-8601 with its marker
+    +
+    +    The newly added heuristic to parse less precision ISO-8601 conflicts
+    +    with other heuristics to parse datetime-strings. E.g.:
+    +
+    +            Thu, 7 Apr 2005 15:14:13 -0700
+    +
+    +    Let's limit the new heuristic to only datetime string with a 'T'
+    +    followed immediately by some digits, and if we failed to parse the
+    +    upcoming string, rollback the change.
+     
+         Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+     
+    @@ date.c: static int match_alpha(const char *date, struct tm *tm, int *offset)
+      	}
+      
+     +	/* ISO-8601 allows yyyymmDD'T'HHMMSS, with less precision */
+    -+	if (*date == 'T' && isdigit(date[1])) {
+    -+		tm->tm_hour = tm->tm_min = tm->tm_sec = 0;
+    -+		return strlen("T");
+    ++	if (*date == 'T' && isdigit(date[1]) && tm->tm_hour == -1) {
+    ++		tm->tm_min = tm->tm_sec = 0;
+    ++		return 1;
+     +	}
+     +
+      	/* BAD CRAP */
+    @@ date.c: static inline int nodate(struct tm *tm)
+     - * We just do a binary 'and' to see if the sign bit
+     - * is set in all the values.
+     + * Have we seen an ISO-8601-alike date, i.e. 20220101T0,
+    -+ * In those special case, those fields have been set to 0
+    ++ * In which, hour is still unset,
+    ++ * and minutes and second has been set to 0.
+       */
+     -static inline int notime(struct tm *tm)
+     +static inline int maybeiso8601(struct tm *tm)
+    @@ date.c: static inline int nodate(struct tm *tm)
+     -	return (tm->tm_hour &
+     -		tm->tm_min &
+     -		tm->tm_sec) < 0;
+    -+	return tm->tm_hour == 0 &&
+    ++	return tm->tm_hour == -1 &&
+     +		tm->tm_min == 0 &&
+     +		tm->tm_sec == 0;
+      }
+      
+      /*
+     @@ date.c: static int match_digit(const char *date, struct tm *tm, int *offset, int *tm_gmt
+    - 	/* 4 digits, compact style of ISO-8601's time: HHMM */
+    - 	/* 2 digits, compact style of ISO-8601's time: HH */
+    - 	if (n == 8 || n == 6 ||
+    + 
+    + 	/* 8 digits, compact style of ISO-8601's date: YYYYmmDD */
+    + 	/* 6 digits, compact style of ISO-8601's time: HHMMSS */
+    +-	/* 4 digits, compact style of ISO-8601's time: HHMM */
+    +-	/* 2 digits, compact style of ISO-8601's time: HH */
+    +-	if (n == 8 || n == 6 ||
+     -		(!nodate(tm) && notime(tm) &&
+    -+		(!nodate(tm) && maybeiso8601(tm) &&
+    - 		(n == 4 || n == 2))) {
+    +-		(n == 4 || n == 2))) {
+    ++	if (n == 8 || n == 6) {
+      		unsigned int num1 = num / 10000;
+      		unsigned int num2 = (num % 10000) / 100;
+    + 		unsigned int num3 = num % 100;
+    +@@ date.c: static int match_digit(const char *date, struct tm *tm, int *offset, int *tm_gmt
+    + 		else if (n == 6 && set_time(num1, num2, num3, tm) == 0 &&
+    + 			 *end == '.' && isdigit(end[1]))
+    + 			strtoul(end + 1, &end, 10);
+    +-		else if (n == 4)
+    +-			set_time(num2, num3, 0, tm);
+    +-		else if (n == 2)
+    +-			set_time(num3, 0, 0, tm);
+    + 		return end - date;
+    + 	}
+    + 
+    ++	/* reduced precision of ISO-8601's time: HHMM or HH */
+    ++	if (maybeiso8601(tm)) {
+    ++		unsigned int num1 = num;
+    ++		unsigned int num2 = 0;
+    ++		if (n == 4) {
+    ++			num1 = num / 100;
+    ++			num2 = num % 100;
+    ++		}
+    ++		if ((n == 4 || n == 2) && !nodate(tm) &&
+    ++		    set_time(num1, num2, 0, tm) == 0)
+    ++			return n;
+    ++		/*
+    ++		 * We thought this is an ISO-8601 time string,
+    ++		 * we set minutes and seconds to 0,
+    ++		 * turn out it isn't, rollback the change.
+    ++		 */
+    ++		tm->tm_min = tm->tm_sec = -1;
+    ++	}
+    ++
+    + 	/* Four-digit year or a timezone? */
+    + 	if (n == 4) {
+    + 		if (num <= 1400 && *offset == -1) {
+     
+      ## t/t0006-date.sh ##
+     @@ t/t0006-date.sh: check_parse '20080214T20:30' '2008-02-14 20:30:00 +0000'
 
->      +# Helper function to test mutually exclusive options.
->     ++#
->     ++# Note: Quoted arguments containing spaces are not supported.
->      +test_wt_add_excl () {
->     -+	local arr=$(save_param_arr "$@")
->     -+	test_expect_success "'worktree add' with $* has mutually exclusive options" '
->     -+		eval "set -- $arr" &&
->     -+		test_must_fail git worktree add "$@"
->     ++	local opts="$*" &&
->     ++	test_expect_success "'worktree add' with '$opts' has mutually exclusive options" '
->     ++		test_must_fail git worktree add $opts 2>actual &&
->     ++		grep -P "fatal:( options)? .* cannot be used together" actual
+ date.c          | 49 +++++++++++++++++++++++++++++++++----------------
+ t/t0006-date.sh |  3 ++-
+ 2 files changed, 35 insertions(+), 17 deletions(-)
 
-This is the new unportable code, the "-P" option is specific to GNU
-grep, and here you're relying on the "?" syntax along with other
-ERE-like syntax.
+diff --git a/date.c b/date.c
+index b011b9d6b3..6f45eeb356 100644
+--- a/date.c
++++ b/date.c
+@@ -493,6 +493,12 @@ static int match_alpha(const char *date, struct tm *tm, int *offset)
+ 		return 2;
+ 	}
+ 
++	/* ISO-8601 allows yyyymmDD'T'HHMMSS, with less precision */
++	if (*date == 'T' && isdigit(date[1]) && tm->tm_hour == -1) {
++		tm->tm_min = tm->tm_sec = 0;
++		return 1;
++	}
++
+ 	/* BAD CRAP */
+ 	return skip_alpha(date);
+ }
+@@ -639,15 +645,15 @@ static inline int nodate(struct tm *tm)
+ }
+ 
+ /*
+- * Have we filled in any part of the time yet?
+- * We just do a binary 'and' to see if the sign bit
+- * is set in all the values.
++ * Have we seen an ISO-8601-alike date, i.e. 20220101T0,
++ * In which, hour is still unset,
++ * and minutes and second has been set to 0.
+  */
+-static inline int notime(struct tm *tm)
++static inline int maybeiso8601(struct tm *tm)
+ {
+-	return (tm->tm_hour &
+-		tm->tm_min &
+-		tm->tm_sec) < 0;
++	return tm->tm_hour == -1 &&
++		tm->tm_min == 0 &&
++		tm->tm_sec == 0;
+ }
+ 
+ /*
+@@ -701,11 +707,7 @@ static int match_digit(const char *date, struct tm *tm, int *offset, int *tm_gmt
+ 
+ 	/* 8 digits, compact style of ISO-8601's date: YYYYmmDD */
+ 	/* 6 digits, compact style of ISO-8601's time: HHMMSS */
+-	/* 4 digits, compact style of ISO-8601's time: HHMM */
+-	/* 2 digits, compact style of ISO-8601's time: HH */
+-	if (n == 8 || n == 6 ||
+-		(!nodate(tm) && notime(tm) &&
+-		(n == 4 || n == 2))) {
++	if (n == 8 || n == 6) {
+ 		unsigned int num1 = num / 10000;
+ 		unsigned int num2 = (num % 10000) / 100;
+ 		unsigned int num3 = num % 100;
+@@ -714,13 +716,28 @@ static int match_digit(const char *date, struct tm *tm, int *offset, int *tm_gmt
+ 		else if (n == 6 && set_time(num1, num2, num3, tm) == 0 &&
+ 			 *end == '.' && isdigit(end[1]))
+ 			strtoul(end + 1, &end, 10);
+-		else if (n == 4)
+-			set_time(num2, num3, 0, tm);
+-		else if (n == 2)
+-			set_time(num3, 0, 0, tm);
+ 		return end - date;
+ 	}
+ 
++	/* reduced precision of ISO-8601's time: HHMM or HH */
++	if (maybeiso8601(tm)) {
++		unsigned int num1 = num;
++		unsigned int num2 = 0;
++		if (n == 4) {
++			num1 = num / 100;
++			num2 = num % 100;
++		}
++		if ((n == 4 || n == 2) && !nodate(tm) &&
++		    set_time(num1, num2, 0, tm) == 0)
++			return n;
++		/*
++		 * We thought this is an ISO-8601 time string,
++		 * we set minutes and seconds to 0,
++		 * turn out it isn't, rollback the change.
++		 */
++		tm->tm_min = tm->tm_sec = -1;
++	}
++
+ 	/* Four-digit year or a timezone? */
+ 	if (n == 4) {
+ 		if (num <= 1400 && *offset == -1) {
+diff --git a/t/t0006-date.sh b/t/t0006-date.sh
+index 16fb0bf4bd..130207fc04 100755
+--- a/t/t0006-date.sh
++++ b/t/t0006-date.sh
+@@ -93,7 +93,8 @@ check_parse '20080214T20:30' '2008-02-14 20:30:00 +0000'
+ check_parse '20080214T20' '2008-02-14 20:00:00 +0000'
+ check_parse '20080214T203045' '2008-02-14 20:30:45 +0000'
+ check_parse '20080214T2030' '2008-02-14 20:30:00 +0000'
+-check_parse '20080214T20' '2008-02-14 20:00:00 +0000'
++check_parse '20080214T000000.20' '2008-02-14 00:00:00 +0000'
++check_parse '20080214T00:00:00.20' '2008-02-14 00:00:00 +0000'
+ check_parse '20080214T203045-04:00' '2008-02-14 20:30:45 -0400'
+ check_parse '20080214T203045 -04:00' '2008-02-14 20:30:45 -0400'
+ check_parse '20080214T203045.019-04:00' '2008-02-14 20:30:45 -0400'
+-- 
+2.39.0.287.g690a66fa66
 
-It looks like the minimal fix here is to just change -P to -E, which we
-can use, you're not using any PCRE-syntax, but just syntax that's part
-of ERE.
