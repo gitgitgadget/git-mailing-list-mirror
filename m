@@ -2,96 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7750FC5479D
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 18:45:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 19A01C54EBD
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 18:57:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234827AbjAISpz (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Jan 2023 13:45:55 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35678 "EHLO
+        id S235188AbjAIS5I (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Jan 2023 13:57:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230341AbjAISpx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2023 13:45:53 -0500
-X-Greylist: delayed 329 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 09 Jan 2023 10:45:51 PST
-Received: from zimbra.cs.ucla.edu (zimbra.cs.ucla.edu [131.179.128.68])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26A77290
-        for <git@vger.kernel.org>; Mon,  9 Jan 2023 10:45:50 -0800 (PST)
-Received: from localhost (localhost [127.0.0.1])
-        by zimbra.cs.ucla.edu (Postfix) with ESMTP id 0D99E160043;
-        Mon,  9 Jan 2023 10:40:21 -0800 (PST)
-Received: from zimbra.cs.ucla.edu ([127.0.0.1])
-        by localhost (zimbra.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id ilMecndlWFjy; Mon,  9 Jan 2023 10:40:20 -0800 (PST)
-Received: from localhost (localhost [127.0.0.1])
-        by zimbra.cs.ucla.edu (Postfix) with ESMTP id 38244160048;
-        Mon,  9 Jan 2023 10:40:20 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.9.2 zimbra.cs.ucla.edu 38244160048
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cs.ucla.edu;
-        s=78364E5A-2AF3-11ED-87FA-8298ECA2D365; t=1673289620;
-        bh=sPewYtI2nslfvK5V0TkcNuGYU9M7ggzvuzpTsLpmiW8=;
-        h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type:
-         Content-Transfer-Encoding;
-        b=bEFcX4X9DsSGEwgVJ1w43dcGCKwvpVv0j3FPVy7UOcbDOchs1ajZ7UzGGfznQi0uF
-         DJSbUmvaEVtzzS3N03J+B+qArGHZf5EaPiPO3EtgdQSFtIcI3hgKe5HJmEwwG2DSTj
-         XoUm7xyk5hGPN5K7r32q1LbpVvFNfyWaIVE8LxIA=
-X-Virus-Scanned: amavisd-new at zimbra.cs.ucla.edu
-Received: from zimbra.cs.ucla.edu ([127.0.0.1])
-        by localhost (zimbra.cs.ucla.edu [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id 5dMvSc-VXdfb; Mon,  9 Jan 2023 10:40:20 -0800 (PST)
-Received: from [131.179.64.200] (Penguin.CS.UCLA.EDU [131.179.64.200])
-        by zimbra.cs.ucla.edu (Postfix) with ESMTPSA id 17FEF160043;
-        Mon,  9 Jan 2023 10:40:20 -0800 (PST)
-Message-ID: <d6814350-10a3-55c0-68da-7e691976cd45@cs.ucla.edu>
-Date:   Mon, 9 Jan 2023 10:40:16 -0800
+        with ESMTP id S237305AbjAIS5E (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2023 13:57:04 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 321671C92A
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 10:57:03 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id g19-20020a05600c4ed300b003d9eb1dbc0aso4810512wmq.3
+        for <git@vger.kernel.org>; Mon, 09 Jan 2023 10:57:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=1g4sJ4hwIGwx2bckHl4k2QPwGMn4s+C3A+566tGye0o=;
+        b=m9ervHkyUafCWxSEqO/roQoNb3IBgFDVs63plVbq5H/cdsjbOndBQRKoaGYwAHuXRN
+         pw2m66eC22lVIRymz+uAaP/YbfxCWEOjiTGxBUxPwFutz+jpct7VQwcBNuP57qTV3OD2
+         jOyvuXkxAvss8BmY/A0LIyOTif+voqVk+dm6iTkEpTINQJUO4zndo/SB19YGpZeR3VHp
+         Xo85wp5Dz/MfGPmQ/DmSiSVCp2m5idOtDiFnaMTisZtvt6Cw1d+nrHyMCWWdzkjDocKn
+         O+ce6XAwbh40NMjrGjePJSny450VRsTfcAPW9TPWDukbCSHQ12fVVa5qKPaGX6Iic/fU
+         InlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1g4sJ4hwIGwx2bckHl4k2QPwGMn4s+C3A+566tGye0o=;
+        b=UqpB3ooe2Xb3HXgHhCd6dk6r6VXBAiOHYhv3aEf4POc3VlkbBevCLsxnzXlC+1LnDJ
+         xD3vumtdeVO+ziD73kPeoKuDWCKzuTI6mK3vDB1WLTMNnsNDITL86sSkTITo6Hrdcofj
+         jyGM8z7At6lo9emz8KGqqhQ2nh43moEvzfhp6IuBLGRJCaXMxEp+ynEGPX4rjrrljpbL
+         4d8bwhX2Lqk6GF08WbIijIms/C8RhnxMc1Cs/Xv8Ll/GtpwzhQUecU12XOvKiVMHZQE4
+         V4gSF5noz+rmMcdLC2Dr4R3leAT+8O29KCyWSAYZ6nHwTrEfvN2GJha3txgYKx+EMcMW
+         BWag==
+X-Gm-Message-State: AFqh2krbtzeajhBlFHaSmEN9AWjCU6y5drOSuveiu5c9Ix+g02jKyhnM
+        GNXsw6OgT/0GVK65rkUMUajmio9iyjE=
+X-Google-Smtp-Source: AMrXdXsecVpsjUOhGjX/MSYhBoW9MA6u9LLVdHxMC+8+Wo4sbePyVSITMfNQpjGTdtLc88mD3Wf7mw==
+X-Received: by 2002:a05:600c:22d4:b0:3cf:82b9:2fe6 with SMTP id 20-20020a05600c22d400b003cf82b92fe6mr56589785wmg.8.1673290621512;
+        Mon, 09 Jan 2023 10:57:01 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id v10-20020a05600c444a00b003d998412db6sm18119844wmn.28.2023.01.09.10.57.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 09 Jan 2023 10:57:00 -0800 (PST)
+Message-Id: <pull.1432.git.git.1673290620410.gitgitgadget@gmail.com>
+From:   "Rose via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Mon, 09 Jan 2023 18:57:00 +0000
+Subject: [PATCH] git: replace two checks with one not equal check
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: bug#60690: [PATCH v2] grep: correctly identify utf-8 characters
- with \{b, w} in -P
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=c3=b3n?= <carenas@gmail.com>
-Cc:     demerphq@gmail.com, pcre-dev@exim.org, 60690@debbugs.gnu.org,
-        gitster@pobox.com, git@vger.kernel.org
-References: <20230108062335.72114-1-carenas@gmail.com>
- <20230108155217.2817-1-carenas@gmail.com>
- <230109.86v8lf297g.gmgdl@evledraar.gmail.com>
-From:   Paul Eggert <eggert@cs.ucla.edu>
-Organization: UCLA Computer Science Department
-In-Reply-To: <230109.86v8lf297g.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org
+Cc:     Rose <83477269+AtariDreams@users.noreply.github.com>,
+        Seija Kijin <doremylover123@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/9/23 03:35, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+From: Seija Kijin <doremylover123@gmail.com>
 
-> You almost never want "everything Unicode considers a digit", and if yo=
-u
-> do using e.g. \p{Nd} instead of \d would be better in terms of
-> expressing your intent.
+(version < 2 || version > 2) looks silly
+considering this is an integer.
 
-For GNU grep, PCRE2_UCP is needed because of examples like what Gro-Tsen=20
-and Karl Petterssen supplied. If there's some diagreement about how \d=20
-should behave with UTF-8 data the GNU grep hackers should let the Perl=20
-community decide that; that is, GNU grep can simply follow PCRE2's lead.=20
-But GNU grep does need PCRE2_UCP for \b etc.
+Signed-off-by: Seija Kijin <doremylover123@gmail.com>
+---
+    git: replace two checks with one not equal check
+    
+    (version < 2 || version > 2) looks silly considering this is an integer.
+    
+    Signed-off-by: Seija Kijin doremylover123@gmail.com
 
-> 	$ diff <(git -P grep -P '\d+') <(git -P grep -P '(*UCP)\d')
-> 	53360a53361,53362
-> 	> git-gui/po/ja.po:"- =E7=AC=AC=EF=BC=91=E8=A1=8C: =E4=BD=95=E3=82=92=E3=
-=81=97=E3=81=9F=E3=81=8B=E3=80=81=E3=82=92=EF=BC=91=E8=A1=8C=E3=81=A7=E8=A6=
-=81=E7=B4=84=E3=80=82\n"
-> 	> git-gui/po/ja.po:"- =E7=AC=AC=EF=BC=92=E8=A1=8C: =E7=A9=BA=E7=99=BD\=
-n"
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1432%2FAtariDreams%2Fversion-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1432/AtariDreams/version-v1
+Pull-Request: https://github.com/git/git/pull/1432
 
-Although I don't speak Japanese I have dealt with quite a bit of=20
-Japanese text in a previous job, and personally I would prefer \d to=20
-match those two lines as they do contain digits. So to me this=20
-particular case is not a good argument that git grep should not match=20
-those lines.
+ builtin/show-index.c | 2 +-
+ packfile.c           | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Of course other people might prefer differently, and there are cases=20
-where I want to match only ASCII digits. I've learned in the past to use=20
-[0-9] for that. I hope PCRE2 never changes [0-9] to match anything but=20
-ASCII digits when searching UTF-8 text.
+diff --git a/builtin/show-index.c b/builtin/show-index.c
+index 0e0b9fb95bc..ae5cbfdc407 100644
+--- a/builtin/show-index.c
++++ b/builtin/show-index.c
+@@ -38,7 +38,7 @@ int cmd_show_index(int argc, const char **argv, const char *prefix)
+ 		die("unable to read header");
+ 	if (top_index[0] == htonl(PACK_IDX_SIGNATURE)) {
+ 		version = ntohl(top_index[1]);
+-		if (version < 2 || version > 2)
++		if (version != 2)
+ 			die("unknown index version");
+ 		if (fread(top_index, 256 * 4, 1, stdin) != 1)
+ 			die("unable to read index");
+diff --git a/packfile.c b/packfile.c
+index c0d7dd93f46..428f572a263 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -121,7 +121,7 @@ int load_idx(const char *path, const unsigned int hashsz, void *idx_map,
+ 
+ 	if (hdr->idx_signature == htonl(PACK_IDX_SIGNATURE)) {
+ 		version = ntohl(hdr->idx_version);
+-		if (version < 2 || version > 2)
++		if (version != 2)
+ 			return error("index file %s is version %"PRIu32
+ 				     " and is not supported by this binary"
+ 				     " (try upgrading GIT to a newer version)",
+
+base-commit: a38d39a4c50d1275833aba54c4dbdfce9e2e9ca1
+-- 
+gitgitgadget
