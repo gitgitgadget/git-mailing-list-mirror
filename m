@@ -2,85 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9AF76C54EBD
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 03:54:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 32B1EC54EBD
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 04:33:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234198AbjAIDxu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Jan 2023 22:53:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46316 "EHLO
+        id S236844AbjAIEdS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Jan 2023 23:33:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236687AbjAIDwx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jan 2023 22:52:53 -0500
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EA4011803
-        for <git@vger.kernel.org>; Sun,  8 Jan 2023 19:51:50 -0800 (PST)
-Received: by mail-pj1-x1032.google.com with SMTP id h7-20020a17090aa88700b00225f3e4c992so11499774pjq.1
-        for <git@vger.kernel.org>; Sun, 08 Jan 2023 19:51:50 -0800 (PST)
+        with ESMTP id S236597AbjAIEcW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jan 2023 23:32:22 -0500
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C35BFE0D9
+        for <git@vger.kernel.org>; Sun,  8 Jan 2023 20:18:47 -0800 (PST)
+Received: by mail-ed1-x52b.google.com with SMTP id v30so10794318edb.9
+        for <git@vger.kernel.org>; Sun, 08 Jan 2023 20:18:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3wHWQ3y38CAPZDT1c65qHqrv/RBY6AsyzYbk26aQ+Xg=;
-        b=Y9K6RIYF2AX8ila4nWqzJvVTTXuiza4seEcR+pimYSLsz6BwRJqzJxJwMFOLfaZt0d
-         z9TiYnwkEZXleGg5+S53J6/C7+PCLhtmg9CFMzb1vwbzi1dbLMEgRzvY5N3lcAjOjJve
-         JEjnkOr56C/reNieM1qGYWqoNZ4niEEPPrPPqMtjaK30S2YSnBmf+ld7KIN3CyHt90LN
-         53jZchW8RJjwONS3BCe07Tow3Z/GAx6Hxn6tznzXRrMPNGftiuRrVOot8y+FNVE8PsGZ
-         ym1AlRfUr73C12bJlyURNWfKn/13XCHT5WYTq1c5Sf1KLyL01ijI/FCKWHSasnOtYwvj
-         gUPA==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=A45kSiRSSU+m4DDL2PMCOgqF0CTwxjXZmfkLb/fYh4g=;
+        b=F6JfgJZnZr4LNSm6D31rET3ltlqAutX26DosKac9edLOW75wilNhKHbUBktORposy7
+         dJvgv1JXArjJtcUdENMP0powD1JouNkE1S1wY92NB/rlxerJAfYrDWWi1rzq2miv1MA9
+         mOf10rbIZFyq+LcIqddiBKAVDCzyTvOLUrK0OwSvRxZJIXU/5CgMcvCyrIfcpcMJtQNv
+         l4bwF03B5wQlLpSPv02PD2gS/xhB8/gEQwfbCxG1LMEq4IAa1nIipNffMaWdK1+cdwk/
+         g6nxnc1qGsvfFFiOzSWMXbl0vqJdry/aDaaUugG9U3QLR2O0CbOh2yReg/Is06iYPDj1
+         bSOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=3wHWQ3y38CAPZDT1c65qHqrv/RBY6AsyzYbk26aQ+Xg=;
-        b=xgxNQYhoSIBBtqkZ3lmLe7ebJ+HvFMbIgZyiLmKKO5CXBGYOyCfnfIsCK8Pj1/rlXI
-         jyXqjZZEqJw46AXDPQYbLjj1P+hvkOUKa/f2THCLciAIMkGkCfeLhCl4lY8pzk4Dg24L
-         u+hU61yVwd44Bwvk2llahk+AMnloQx8OQ/c7Ai3l1h/yPTNFuRlsgY9y5iDr5IrhuGtq
-         7k5hACvWKOhJNLn/x6jHcIKLdZTWliAHvjVanUy1irfp0IltpDp3UY+uMRj2o88kAcTy
-         3z5PxNoZTQ48nO1L93wxKqqUp6hbsIbaEgut4g6zpCTLuK3mspXDFB/aWf79ajbAdCaC
-         xSeg==
-X-Gm-Message-State: AFqh2kq5VHAJY6EqS5/+7quPdTsi1oODPeoyMjsH9YYnT0BkYn24ELto
-        RrnCsIC/PO7bXQz6HcmUWPY=
-X-Google-Smtp-Source: AMrXdXu2c9mW/0tAQpgU4D9sOXBGn58hO0eiEZRf7jdq9fA333OGn3AndaDk0Fwc4kp8vnmf0etFag==
-X-Received: by 2002:a05:6a20:2d1f:b0:ac:9d6b:c1f0 with SMTP id g31-20020a056a202d1f00b000ac9d6bc1f0mr83492560pzl.40.1673236296855;
-        Sun, 08 Jan 2023 19:51:36 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id x15-20020a170902ec8f00b00189fd83eb95sm4935697plg.69.2023.01.08.19.51.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Jan 2023 19:51:36 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     demerphq <demerphq@gmail.com>
-Cc:     Git <git@vger.kernel.org>
-Subject: Re: should git rev-parse -q --verify on a range produce output?
-References: <CANgJU+Vo3B=YuqgWVgiRMMiBwTFEh98O0LSJJ+ES6EM=MP4Cew@mail.gmail.com>
-        <xmqqmt6tzrcx.fsf@gitster.g>
-        <CANgJU+UeZJP=tBx7ALd8_X=b25RkAdQ1NkQpueSL-p+kpCO17Q@mail.gmail.com>
-Date:   Mon, 09 Jan 2023 12:51:36 +0900
-In-Reply-To: <CANgJU+UeZJP=tBx7ALd8_X=b25RkAdQ1NkQpueSL-p+kpCO17Q@mail.gmail.com>
-        (demerphq@gmail.com's message of "Sun, 8 Jan 2023 11:45:13 +0100")
-Message-ID: <xmqqpmbowek7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=A45kSiRSSU+m4DDL2PMCOgqF0CTwxjXZmfkLb/fYh4g=;
+        b=X8FuvRQuYEGvYEFyqUxo5tCTzIO2pTTaMRLZmRbj0sge3qxhUzIHWSLrrVCXp2gYHn
+         vJkBYup0XWGKbXmRTINQ7XeW57+5ROxMiAMslXm6fSkKx0iYU/8UpcRi7dlNvxoXA8gw
+         d2KA7P9dF1aYEuk6CVINwPjHGnBNljlNeE66Qz4snTyUtFBdt1r6gWsBCx017OyytHf0
+         O9v+7kYwCkjZVSS6mPH0AqYT+nAJWroyAAn2kbyoFVPgl8AR+c20FpG+8i4J7a7tVKm4
+         ET1VeM1w7vFHL3+ye6vG+CIIAVGB0ItjzzX9Oj4L9mI7N5EbNpppr9RNCHSJ6Hp9HG6I
+         8DDw==
+X-Gm-Message-State: AFqh2krYyi2P8QwHMSco9O+vyVnAwGiVRaQNuxwztjWGD5FkgAmc6lPr
+        GKrSNr3aIgm/9DNj/b+npBGMl4emJgjStKgYVLN334t+zcY=
+X-Google-Smtp-Source: AMrXdXu23jxGw9W/cllKFSVHJryt1gBYB+0tzBcbYdTjSBhTaedNcqBH8q/I7CTjGvN4FWggKBG2J3LGOV1rIy4RIGA=
+X-Received: by 2002:a50:eac2:0:b0:46d:a8f2:93e8 with SMTP id
+ u2-20020a50eac2000000b0046da8f293e8mr7070298edp.423.1673237926264; Sun, 08
+ Jan 2023 20:18:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAEg0tHSLyaewkgGs0dEXfwQhKmbiO65bXZVU8t7Kn4WwJ1p0Fw@mail.gmail.com>
+ <xmqqfsclzlqx.fsf@gitster.g>
+In-Reply-To: <xmqqfsclzlqx.fsf@gitster.g>
+From:   muzimuzhi Z <muzimuzhi@gmail.com>
+Date:   Mon, 9 Jan 2023 12:18:34 +0800
+Message-ID: <CAEg0tHT5PD4K89E3fcNq_WbaLPHozLi-PsJFDsQrzkGi7Na9jg@mail.gmail.com>
+Subject: [PATCH] doc: fix non-existing config name
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-demerphq <demerphq@gmail.com> writes:
+Replace non-existent `branch.<name>.fetch` to `remote.<repository>.fetch`, in
+the first example in `git-fetch` doc, which was introduced in
+d504f69 (modernize fetch/merge/pull examples, 2009-10-21).
 
-> Is this something you think should be fixed? I would give it a go if
-> there was some direction on what it should do in this case. Just error
-> early and produce no output?
+Rename placeholder `<name>` to `<repository>`, to be consistent with all other
+uses in git docs, except that `git-config.txt` uses `remote.<name>.fetch` in
+its "Variables" section.
 
-I do not mind if the error case gets changed to behave differently,
-as long as the updated behaviour is something everybody thinks an
-improvement over the current behaviour.  I do not offhand know what
-the "fixed" behaviour should be.
+Also add missing monospace markups.
 
-I do not mind if nothing changed and documentation gets updated to
-reduce end-user confusion, either.
+Signed-off-by: muzimuzhi <muzimuzhi@gmail.com>
+---
+ Documentation/git-fetch.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Thanks.
+diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+index 63d9569..fba66f1 100644
+--- a/Documentation/git-fetch.txt
++++ b/Documentation/git-fetch.txt
+@@ -251,10 +251,10 @@ EXAMPLES
+ $ git fetch origin
+ ------------------------------------------------
+ +
+-The above command copies all branches from the remote refs/heads/
+-namespace and stores them to the local refs/remotes/origin/ namespace,
+-unless the branch.<name>.fetch option is used to specify a non-default
+-refspec.
++The above command copies all branches from the remote `refs/heads/`
++namespace and stores them to the local `refs/remotes/origin/` namespace,
++unless the `remote.<repository>.fetch` option is used to specify a
++non-default refspec.
 
+ * Using refspecs explicitly:
+ +
+-- 
+2.39.0
