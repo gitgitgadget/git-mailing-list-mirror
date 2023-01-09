@@ -2,208 +2,169 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 56429C5479D
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 12:18:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6897C5479D
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 12:30:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234210AbjAIMRs (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Jan 2023 07:17:48 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51736 "EHLO
+        id S236884AbjAIMaA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Jan 2023 07:30:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236231AbjAIMRq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2023 07:17:46 -0500
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2038F23E
-        for <git@vger.kernel.org>; Mon,  9 Jan 2023 04:17:43 -0800 (PST)
-Received: by mail-wr1-x432.google.com with SMTP id s9so7945289wru.13
-        for <git@vger.kernel.org>; Mon, 09 Jan 2023 04:17:43 -0800 (PST)
+        with ESMTP id S236961AbjAIM33 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2023 07:29:29 -0500
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ADC11AD8D
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 04:29:28 -0800 (PST)
+Received: by mail-wr1-x42d.google.com with SMTP id bk16so7966552wrb.11
+        for <git@vger.kernel.org>; Mon, 09 Jan 2023 04:29:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=6FM4ode4z9XvpMbkwv8gUrDG/eDbYEnqHfmVDyiMfMs=;
-        b=G8sZwJ/QhrGdvyFyUuC0bpLb3Tmz6xNsInXJh0GGNnkfkYM65mqOes0L+zm16fSJxe
-         OU9bMKDTWMuoQ/qM1xS5FzXr+vPmKdYCGhu2qpP2KmaNPv8dfjICXg0rDQJ4H0JE9dso
-         z1GjkmEjSf7ErO5nIWeDJCA26Za12e6V3k1C3CeXcmnTW6It69sT3wH9OSCGD32YONnb
-         qZoOd4PvmvPK1xy3H6uuodcGzA8maPe5oR8LMEOZgMy0svfwxN4P+2MOYGliSSusMCsZ
-         IFpbxK1WENXAAto4xdsHUk2UdZ8jARgYNeHNeJmI0r0MbfgJsUH3PVNuZuDsLgsLAaIR
-         8FUw==
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=L9Na4Jt4kdYzYfOQUXmy6+8Z4RtoJsZSfSkO22cYnjc=;
+        b=FcW1RktxvjvYeGatkv8Oh0fETawEqppel9dJUsDuBO9vxixDn7ielsd0pOJZR6M/C5
+         E2asMR6MrDLypvz9XaT05niYNS5uEu/Z3CMD4y9Rhh4EAG4hy0uzEpT91MqakLGefvAK
+         MTpdXYYBXbH7UlJrwFIvq7xt+0j6VQrRYGd6wlpUcQZkn4lJlkBhTw3EcX43ltvFgNCK
+         hGzAA71GvgyZwI/cPfd1I54lX0Gwx9DNycd5aAkEIHCLeyqOqJUO0deA70zWw1CnkDor
+         pgJm3B1V0m5IRqpQoOOjjWySi5aW5/ECaTRhx70j5VM/SPR6A13RVrhyWB//8s9f4xSU
+         jHmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6FM4ode4z9XvpMbkwv8gUrDG/eDbYEnqHfmVDyiMfMs=;
-        b=cLyemnuYb0PJ/Hx0ZNj06VgZJkMxzXD3hHRn842CXTBrYh7CAjemBCmcdaAXcJ/Ynb
-         9yq0GSgE8UJ0UOJJ8AEcgWCtm2eN5qw0YwDTPVKmZufr2a5VwwwKbKc5BXyu4/HQ8euo
-         4bHBFjESi1lQWEoVVMa/3qn2EC7JU8ryAGjC9NHfasYDhInElne+8oiESnHDkIW0EJPc
-         i9MvFOIDU5A3JIbzGmcaR2UgQ4c4E1PN+pRIMImkE/eeJDh3zQ27BJbqsy0yPT3QGbWb
-         S1Uzyvl+jpdtka5CtSlOtVQH00yBJvGoMawD87RXXOgKsFH5EItqKBS/3FHAlihJ+/jc
-         sTdw==
-X-Gm-Message-State: AFqh2ko9pMjtf2nEpbS6lysMxYonC9AkoQAqFgrWrsyuzh61E9EpNi1e
-        Go3CJwni2miwLJjWWjSzFFcFlHrwG10=
-X-Google-Smtp-Source: AMrXdXuxydozZmGlzg24dWp9mmZ1rdkRLma87wEuyDeIia3LVN0uz1XuTBmCq4sM/JrFiqU8SPVPbg==
-X-Received: by 2002:a5d:5d10:0:b0:242:5b1f:3dcf with SMTP id ch16-20020a5d5d10000000b002425b1f3dcfmr55685723wrb.63.1673266661060;
-        Mon, 09 Jan 2023 04:17:41 -0800 (PST)
+        h=mime-version:message-id:in-reply-to:user-agent:references:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=L9Na4Jt4kdYzYfOQUXmy6+8Z4RtoJsZSfSkO22cYnjc=;
+        b=P1j+wSnqdRWAjc/rFVzZCt3Tw/f0aNRnW2v0/g/TJSKUM0LDEaSFEhvFEzZTXSR9gp
+         4GAEeezvbtE24K9DAEGV7s/Vr1saXEqpjLJc7K3A90mrohY1CVd5WmeSlPXPIRNW6VMt
+         pyyOXvdg5MxIN3ti8Pcz81iAkBCyVSaosFtDBws/qTZ5kSCWB5S2oDrIcANVl8x+vx6D
+         pY4RPeuHoWGKMNp2Z2kP7zr0UA2fFYIOoLWOLedx/DCQLnUXHBNjKI7nN9kvEv/G1YKb
+         aZwO/uNKyr2Sonq7wVBQWEfIynPJZNXktyllFp0lZ4gEG/97rDoYdnif7njbueV9OcSA
+         8qhw==
+X-Gm-Message-State: AFqh2kopVgZMMsHOnRw/4dMtDJzTIvcjtfHS0Bf16v/KDtf1M8/03Dpe
+        2gQEARPehkpfL5IBKrLpjuk=
+X-Google-Smtp-Source: AMrXdXuOaoKdJ0CbDlvuGzjUOqR2h56PMSWqyfDXD9myv3mn5yNeN+O43AbyeT1w4MnhCq8mH10lBA==
+X-Received: by 2002:adf:fb05:0:b0:242:15d6:1a75 with SMTP id c5-20020adffb05000000b0024215d61a75mr35625644wrr.66.1673267367009;
+        Mon, 09 Jan 2023 04:29:27 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id w5-20020a05600018c500b002420dba6447sm8395393wrq.59.2023.01.09.04.17.40
+        by smtp.gmail.com with ESMTPSA id e10-20020adfe38a000000b002bc7fcf08ddsm1097439wrm.103.2023.01.09.04.29.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 04:17:40 -0800 (PST)
+        Mon, 09 Jan 2023 04:29:26 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1pEr5v-0003T0-2o;
-        Mon, 09 Jan 2023 13:17:39 +0100
+        id 1pErHJ-0003i6-2o;
+        Mon, 09 Jan 2023 13:29:25 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, bug-grep@gnu.org,
-        demerphq <demerphq@gmail.com>, pcre-dev@exim.org
-Subject: Re: [PATCH v2] grep: correctly identify utf-8 characters with
- \{b,w} in -P
-Date:   Mon, 09 Jan 2023 12:35:05 +0100
-References: <20230108062335.72114-1-carenas@gmail.com>
- <20230108155217.2817-1-carenas@gmail.com>
+To:     Jacob Abel <jacobabel@nullpo.dev>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood123@gmail.com>,
+        =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
+        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
+Subject: Re: [PATCH v7 0/4] worktree: Support `--orphan` when creating new
+ worktrees
+Date:   Mon, 09 Jan 2023 13:26:05 +0100
+References: <20221104010242.11555-1-jacobabel@nullpo.dev>
+ <20221104213401.17393-1-jacobabel@nullpo.dev>
+ <20221110233137.10414-1-jacobabel@nullpo.dev>
+ <20221212014003.20290-1-jacobabel@nullpo.dev>
+ <20221220023637.29042-1-jacobabel@nullpo.dev>
+ <20221228061539.13740-1-jacobabel@nullpo.dev>
+ <20230107045757.30037-1-jacobabel@nullpo.dev>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <20230108155217.2817-1-carenas@gmail.com>
-Message-ID: <230109.86v8lf297g.gmgdl@evledraar.gmail.com>
+In-reply-to: <20230107045757.30037-1-jacobabel@nullpo.dev>
+Message-ID: <230109.86r0w328nu.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sun, Jan 08 2023, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+On Sat, Jan 07 2023, Jacob Abel wrote:
 
-> When UTF is enabled for a PCRE match, the corresponding flags are
-> added to the pcre2_compile() call, but PCRE2_UCP wasn't included.
+> While working with the worktree based git workflow, I realised that setting
+> up a new git repository required switching between the traditional and
+> worktree based workflows. Searching online I found a SO answer [1] which
+> seemed to support this and which indicated that adding support for this should
+> not be technically difficult.
 >
-> This prevents extending the meaning of the character classes to
-> include those new valid characters and therefore result in failed
-> matches for expressions that rely on that extention, for ex:
+> This patchset has four parts:
+>   * adding `-B` to the usage docs (noticed during dev and it seemed too small
+>     to justify a separate submission)
+>   * adding a helper fn to simplify testing for mutual exclusion of options
+>     in `t/t2400-worktree-add.sh`
+>   * adding orphan branch functionality (as is present in `git-switch`)
+>     to `git-worktree-add`
+>   * adding an advise for using --orphan when `git worktree add` fails due to
+>     a bad ref.
 >
->   $ git grep -P '\b=C3=86var'
->
-> Add PCRE2_UCP so that \w will include =C3=86 and therefore \b could
-> correctly match the beginning of that word.
->
-> This has an impact on performance that has been estimated to be
-> between 20% to 40% and that is shown through the added performance
-> test.
->
-> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
-> ---
->  grep.c                              |  2 +-
->  t/perf/p7822-grep-perl-character.sh | 42 +++++++++++++++++++++++++++++
->  2 files changed, 43 insertions(+), 1 deletion(-)
->  create mode 100755 t/perf/p7822-grep-perl-character.sh
->
-> diff --git a/grep.c b/grep.c
-> index 06eed69493..1687f65b64 100644
-> --- a/grep.c
-> +++ b/grep.c
-> @@ -293,7 +293,7 @@ static void compile_pcre2_pattern(struct grep_pat *p,=
- const struct grep_opt *opt
->  		options |=3D PCRE2_CASELESS;
->  	}
->  	if (!opt->ignore_locale && is_utf8_locale() && !literal)
-> -		options |=3D (PCRE2_UTF | PCRE2_MATCH_INVALID_UTF);
-> +		options |=3D (PCRE2_UTF | PCRE2_UCP | PCRE2_MATCH_INVALID_UTF);
+> Changes from v6:
+>   * Removed helper save_param_arr() introduced in v6 from t2400 (2/4) [2].
+>   * Reverted changes introduced in v6 to test_wt_add_excl() from t2400 (2/4) [3].
+>   * Changed test_wt_add_excl() to use `local opts="$*"` (2/4) [3].
+>   * Added check to test_wt_add_excl() to better validate test results (2/4).
+>   * Re-add &&-chains to test_wt_add_excl() (2/4) [4].
+>   * Reverted changes introduced in v6 to test_wt_add_empty_repo_orphan_hint()
+>     from t2400 (4/4) [3].
+>   * Changed test_wt_add_empty_repo_orphan_hint() to use `local opts="$*"` (4/4) [3].
+>   * Added check to test_wt_add_empty_repo_orphan_hint() to better validate test
+>     results (4/4).
+>   * Re-add &&-chains to test_wt_add_empty_repo_orphan_hint() (2/4) [4].
 
-I have a definite bias towards liking this change, it would help my find
-myself :)
+This round looks good to me, except for a small tiny (and new)
+portability issue that needs fixing:
 
-But I don't think it's safe to change the default behavior "git-grep",
-it's not a mere bug fix, but a major behavior change for existing users
-of grep.patternType=3Dperl. E.g. on git.git:
-=09
-	$ diff <(git -P grep -P '\d+') <(git -P grep -P '(*UCP)\d')
-	53360a53361,53362
-	> git-gui/po/ja.po:"- =E7=AC=AC=EF=BC=91=E8=A1=8C: =E4=BD=95=E3=82=92=E3=
-=81=97=E3=81=9F=E3=81=8B=E3=80=81=E3=82=92=EF=BC=91=E8=A1=8C=E3=81=A7=E8=A6=
-=81=E7=B4=84=E3=80=82\n"
-	> git-gui/po/ja.po:"- =E7=AC=AC=EF=BC=92=E8=A1=8C: =E7=A9=BA=E7=99=BD\n"
+> Range-diff against v6:
+> 1:  a9ef3eca7b = 1:  a9ef3eca7b worktree add: include -B in usage docs
+> 2:  c03c112f79 ! 2:  d124cc481c worktree add: refactor opt exclusion tests
+>     @@ t/t2400-worktree-add.sh: test_expect_success '"add" no auto-vivify with --detach
+>      -test_expect_success '"add" -b/-B mutually exclusive' '
+>      -	test_must_fail git worktree add -b poodle -B poodle bamboo main
+>      -'
+>     -+# Saves parameter sequence/array as a string so they can be safely stored in a
+>     -+# variable and restored with `eval "set -- $arr"`. Sourced from
+>     -+# https://stackoverflow.com/a/27503158/15064705
+>     -+save_param_arr () {
+>     -+	local i
+>     -+	for i;
+>     -+	do
+>     -+		# For each argument:
+>     -+		# 1. Append "\n" after each entry
+>     -+		# 2. Convert "'" into "'\''"
+>     -+		# 3. Prepend "'" before each entry
+>     -+		# 4. Append " \" after each entry
+>     -+		printf "%s\\n" "$i" | sed "
+>     -+			s/'/'\\\\''/g
+>     -+			1s/^/'/
+>     -+			\$s/\$/' \\\\/
+>     -+		"
+>     -+	done
+>     -+	echo " "
+>     -+}
+>     -
+>     +-
+>      -test_expect_success '"add" -b/--detach mutually exclusive' '
+>      -	test_must_fail git worktree add -b poodle --detach bamboo main
+>      -'
 
-So, it will help "do the right thing" on e.g. "\b=C3=86", but it will also
-find e.g. CJK numeric characters for \d etc.
+Good to get rid of this.
 
-I see per the discussion on
-https://github.com/PCRE2Project/pcre2/issues/185 and
-https://lists.gnu.org/archive/html/bug-grep/2023-01/threads.html that
-you submitted similar fixes to GNU grep & PCRE itself.
+>      +# Helper function to test mutually exclusive options.
+>     ++#
+>     ++# Note: Quoted arguments containing spaces are not supported.
+>      +test_wt_add_excl () {
+>     -+	local arr=$(save_param_arr "$@")
+>     -+	test_expect_success "'worktree add' with $* has mutually exclusive options" '
+>     -+		eval "set -- $arr" &&
+>     -+		test_must_fail git worktree add "$@"
+>     ++	local opts="$*" &&
+>     ++	test_expect_success "'worktree add' with '$opts' has mutually exclusive options" '
+>     ++		test_must_fail git worktree add $opts 2>actual &&
+>     ++		grep -P "fatal:( options)? .* cannot be used together" actual
 
-I see that GNU grep integrated it a couple of days ago as
-https://git.savannah.gnu.org/cgit/grep.git/commit/?id=3D5e3b760f65f13856e57=
-17e5b9d935f5b4a615be3
+This is the new unportable code, the "-P" option is specific to GNU
+grep, and here you're relying on the "?" syntax along with other
+ERE-like syntax.
 
-As most discussions about PCRE will eventually devolve into "what does
-Perl do?": "Perl" itself will promiscuously use this behavior by
-default.
-
-E.g. here the same "=EF=BC=91" character (not the ASCII digit "1") will be
-matched from the command-line:
-
-	$ perl -Mre=3Ddebug -CA -wE 'shift =3D~ /\d/' "=EF=BC=91"
-	Compiling REx "\d"
-	Final program:
-	   1: POSIXU[\d] (2)
-	   2: END (0)
-	stclass POSIXU[\d] minlen 1
-	Matching REx "\d" against "%x{ff11}"
-	UTF-8 string...
-	Matching stclass POSIXU[\d] against "%x{ff11}" (3 bytes)
-	   0 <> <%x{ff11}>           |   0| 1:POSIXU[\d](2)
-	   3 <%x{ff11}> <>           |   0| 2:END(0)
-	Match successful!
-	Freeing REx: "\d"
-
-But I don't think it makes sense for "git grep" (or GNU "grep") to
-follow Perl in this particular case.
-
-For those not familiar with its Unicode model it doesn't assume by
-default that strings are Unicode, they have to be explicitly marked as
-such. in the above example I'm declaring that all of "argv" is UTF-8
-(via the "-CA" flag).
-
-If I didn't supply that flag the string wouldn't have the UTF-8 flag,
-and wouldn't match, as the Perl regex engine won't use Unicode semantics
-except on Unicode target strings.
-
-Even for Perl, this behavior has been troublesome. Opinions differ, but
-I think many would agree (and I've CC'd the main authority on Perl's
-regex engine) that doing this by default was *probably* a mistake.
-
-You almost never want "everything Unicode considers a digit", and if you
-do using e.g. \p{Nd} instead of \d would be better in terms of
-expressing your intent. I see you're running into this on the PCRE
-tracker, where you're suggesting that the equivalent of /a (or /aa)
-would be needed.
-
-	https://github.com/PCRE2Project/pcre2/issues/185#issuecomment-1374796393
-
-
-Which brings me home to the seeming digression about "Perl"
-above.
-
-Unlike a programming language where you'll typically "mark" your data as
-it comes in, natural text as UTF-8, binary data as such etc., a "grep"
-utility has to operate on more of an "all or nothing" basis (except in
-the case of "-a"). I.e. we're usually searching through unknown data.
-
-Enabling this by default means that we'll pick up characters most people
-probably wouldn't expect, particularly from near-binary data formats
-(those that won't require "-a", but contain non-Unicode non-ASCII
-sequences).
-
-I don't have some completely holistic view of what we should do in every
-case, e.g. we turned on PCRE2_UTF so that things like "-i" would Just
-Work, but even case-insensitivity has its own unexpected edge cases in
-Unicode.
-
-But I don't think those edge cases are nearly as common as those we'd
-run into by enabling PCRE2_UCP. Rather than trying to opt-out with "/a"
-or "/aa" I think this should be opt-in.
-
-As the example at the start shows you can already do this with "(*UCP)"
-in the pattern, so perhaps we should just link to the pcre2pattern(3)
-manual from git-grep(1)?
+It looks like the minimal fix here is to just change -P to -E, which we
+can use, you're not using any PCRE-syntax, but just syntax that's part
+of ERE.
