@@ -2,104 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 81E7EC54EBD
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 06:42:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 489C1C54EBD
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 07:37:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233652AbjAIGmG (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Jan 2023 01:42:06 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49606 "EHLO
+        id S236413AbjAIHhQ (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Jan 2023 02:37:16 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233339AbjAIGmE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2023 01:42:04 -0500
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD8ECD2DC
-        for <git@vger.kernel.org>; Sun,  8 Jan 2023 22:42:01 -0800 (PST)
-Received: by mail-qt1-x833.google.com with SMTP id g7so7217302qts.1
-        for <git@vger.kernel.org>; Sun, 08 Jan 2023 22:42:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=DhmiG7CZio08j2Iss3EiKa9nAfOc3CNqzAHXjBsmeGM=;
-        b=KqbhhTAlzAHl+E+rd0cvH2Nuamz8AMBii0rRPWknw7xYxfqnJoI/gHidq3AYS608SR
-         fsA56KTTx5pnVGuw0sX8QVR1PRZ3zn1NWF7gKTv3EUIQ9md8sJQwFbgXM+6ouOmIcLrD
-         r/GBXH+Vwc6mR6fgvzTDcvKTGY9224S3MqEFPz+Is6Q8SHHaPA/hgZY5af+qRcS2OMaT
-         yhKu8iGIdE3vLu8hBulHY5P87+qZiSDr3KN/bXE9y0Qrc6DsoQWUc7+QwDZ96HJ0KzNa
-         IIR2p2o/Eij/jaMJhTklTn2Ql5SZR5X6QEEbPgdby9cRR4zG6br0k5hcG6hXJCNEGWF4
-         x25g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DhmiG7CZio08j2Iss3EiKa9nAfOc3CNqzAHXjBsmeGM=;
-        b=yNfp5ypr6+NeeKcyl788K01fes4mZ4QFNB117GsdCQVle3yxXJrODc3lAcfmqeXVKF
-         8q0LAe9062nslsFFWB5NOM5C12gLjPC2btY9g3L0Eih2jJ/rZhMM0xeQgX9mAARNh4K+
-         IDXcqSC55tFiqIPinGlM7661cUgoJcASuU98TT88yEYLqTAhTHtMzQatCs4EScojbwU4
-         GUC4OzEl6jK6EyENndYHiUQMTDYV0/lpHKSVdQ3A8jPvWT0BICM/iouYUTUhPfmhc+Nt
-         Ut9Wev22MmygPxxVPA1iF7pUWhNTnla2tuh3/N8wSJIoA97PCiC7CnoDMFjBuca5/4cV
-         Z7Sg==
-X-Gm-Message-State: AFqh2kqSLj79lZ4YJIIbWA2Y+fjhFrOl/6kZamE+fQkQhf9n9lxlGW2v
-        9CWGeTbc7lTxlHME9IaoNuCMkZmrzYXMIXuLQHm3/7fhLdA=
-X-Google-Smtp-Source: AMrXdXvF8LhT+wnfNl4m6yQd41Lv7gaMlUuzC42iJL+KjLzzmpUvxyJWvL6l3ljBBlVOlG6Y0AtDgt+tKFmn/y+jMlE=
-X-Received: by 2002:ac8:48cc:0:b0:3ab:71c2:afec with SMTP id
- l12-20020ac848cc000000b003ab71c2afecmr3040255qtr.476.1673246520880; Sun, 08
- Jan 2023 22:42:00 -0800 (PST)
-MIME-Version: 1.0
-References: <20221216033638.2582956-1-phil.hord@gmail.com> <xmqq359gnfhe.fsf@gitster.g>
- <CABURp0pWwfWO3msZ4U=_i3zkEDOq6+CUVT9Tb7KCjeBRK34Miw@mail.gmail.com>
-In-Reply-To: <CABURp0pWwfWO3msZ4U=_i3zkEDOq6+CUVT9Tb7KCjeBRK34Miw@mail.gmail.com>
-From:   Phil Hord <phil.hord@gmail.com>
-Date:   Sun, 8 Jan 2023 22:41:50 -0800
-Message-ID: <CABURp0pqQFiM4+L0sRADTt-jmAsHcMMWLR6xa4NbqrziZjmdOQ@mail.gmail.com>
-Subject: Re: [PATCH] date.c: allow ISO 8601 reduced precision times
+        with ESMTP id S236440AbjAIHgw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2023 02:36:52 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1C751114F
+        for <git@vger.kernel.org>; Sun,  8 Jan 2023 23:36:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1673249802; bh=meW36P9mke3FEUTTfHdq960ROxHxM7zyOg4VMCY3Hoo=;
+        h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:References;
+        b=FrHBiuOobtkN/+10E2uVbXiAOEFoD0mPeh+QQpL7lF+Yb+ylKOXbJNr/ITIuVmmBa
+         fGLPXImdG0+JT8QyawYyl7EF601ePIesqtlQxZvR54BieFwgFd470fkP0d53iYpFlC
+         pVjN2i9JL7aP7CeMqLPg45VUpcyRQ687KdP9ll2ViDtdRGoqYdrYdxb6CRXFT3latd
+         cbWHWuFWBpUiFkPGcMlbWIX0AHblsZIC+Kp/onJu3Lk0KE2brdPSfU3fivW6wKH0ck
+         40SNjl/N6KSIGby0CxbtmxR/ajYJsjNtI/rmTXX0/MTDoeim3HdxqdfIY9oxf2qTDw
+         qmfhJ2OK22WqQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.31.64.27] ([89.1.212.243]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MxDou-1oqPGk2DFI-00xZdt; Mon, 09
+ Jan 2023 08:36:42 +0100
+Date:   Mon, 9 Jan 2023 08:36:40 +0100 (CET)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, congdanhqx@gmail.com, plavarre@purestorage.com
-Content-Type: text/plain; charset="UTF-8"
+cc:     Johannes Sixt <j6t@kdbg.org>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Harshil Jani via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Harshil Jani <harshiljani2002@gmail.com>
+Subject: Re: [PATCH 0/2] Remove MSys Support
+In-Reply-To: <xmqqmt7lxxr6.fsf@gitster.g>
+Message-ID: <9933d992-ffd3-b43c-559e-0de819408cda@gmx.de>
+References: <pull.1433.git.1670274213.gitgitgadget@gmail.com> <xmqqmt7lxxr6.fsf@gitster.g>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Dz8lM9zSksFPZaag0XBamhHgdAW0SBLHGiP8LDiOFPIPkN/XRD0
+ 4tIMOQzi52SQ9xNnMXAuiUOvlBhIuftLDx0Dhnou3rqS/P1S01L2AgFvaiT+4RIiqx3ic8F
+ 0J4z1uI79gnAWG7LflAw/nmIZWfodPk8GEtmQtlMQdSic3LY2J5aRDpe4i8pQ4/hBvieDSZ
+ EyvSs5/DYbSo857UrVXKg==
+UI-OutboundReport: notjunk:1;M01:P0:leste/8rpFc=;m8qoJb3y7oKn9b6buNHRGFG1c73
+ yYCgNPY57rOv7994Ic/CTKZXcJq4LFPnWFFJiq9CvFpXbrp0cC7eagnBYzo4MT0wQxfEzbNez
+ PT/BjPASfBNjdRc9rxdtmN08xfkQi/qAAk8zX17PlUVCFO3ccaG6xR0qRQ76u6f7dtofpndhR
+ Lg3AnnJau3UCDIqEoEBUae6MRCECfThv8F8i+PaceUpX91CXHi1jHJjyCwhojFu3DAtgexOm/
+ RBteu/Jw694GPsjyjuZU3dSFi2BaG3Vl4x5FPN9QKlbLrcJ03Ph1ulqToLToX0UR4QDir1VaB
+ u3ictulsm3rar8aaJvwXmZAAIOaS99jjbJylSNUssMn/NnUb3eqU1SxVQWM0MmgaU0ArvtYIH
+ cgddgyR5zwckLWVoQjEPVB05Z6SQQZpJq5CTT+cpmp5xM63UGNtw2MPtG1pNmeZ0Vc7gpAkI2
+ Z+NoWgoujzQgXf9MHxqRHgpU86riDl0XHuHkbgXIjtr9JVkC3ph87YM8jK8IwcoUbcmKj7XEt
+ fsYi54o6BH90bkKDcOzqGGhvEfMJUUyM1f9dmehAn4r1klMHXjKhn3pPiUVKs+eZMKffZlpFo
+ T4UdYQ2D/fPmGh18YtMthGC4vIAndXHFg6OP51NOR2DtvPD46wE3el27otKENLke30JN9SIzQ
+ NDBFSwrehkjoMr3viIj412+ZMhsMV0H4vBhpQWR5g7BDxYSDl4sSQa0hFNuq3oZ3dkeFMm1IY
+ Qu1gjAaUGsm+U61LNHkig3Y1irW61ccNLg/LdOCJ5ND31wlzBJ0JUdjIHPJcJ2Qo7bQAKUIEt
+ Hseapmt7HjnsNoiiaeF/h2qEO2/b4grXrNl5QFJ6ZCO/qZzL/uYGIg/muQyl+KYkpWNHE+IJI
+ Rv3m93wLgr/PaDZu5LQMHaT1X1pqW0zc5HMHW/YlDFd2IeOWX6Hf19ulEqXZFnHBLo5RzoIMc
+ ZoRbTQrCeaeidf6zCO98KHg0vt4=
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> On Thu, Dec 15, 2022 at 8:23 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > All of these may be obvious improvements, but the thing is that
-> > there is nothing in the approxidate parsing code that insists on the
-> > presence of "T" to loosen the rule only for ISO-8601 case.
->
-> I considered making the T an explicit marker, but it didn't seem
-> necessary here. But the looseness of approxidate with regard to spaces
-> is worrisome. That's why I added the date/no-time constraints.
->
-> > For example, with only 6 digits, do we still recognise our internal
-> > timestamp format (i.e. seconds since epoch) without the
-> > disambiguating '@' prefix?
->
-> I don't grok your example.  This change should not affect the
-> interpretation of any 6-digit number.
->
-> Oh, do you mean if there was _no_ delimiter before the time field?
-> Like 2022-12-132300?  My change will not recognize this format, and I
-> believe it was explicitly rejected by ISO-8601-1:2019.
->
-> approxidate seems not to recognize fewer than 9 digits as an epoch
-> number, even with the @ prefix.  But this is not because of my change.
->
-> test-tool date approxidate 123456789 12345678
-> 123456789 -> 1973-11-29 21:33:09 +0000
-> 12345678 -> 2022-12-16 18:34:02 +0000
->
-> test-tool date approxidate @123456789 @12345678
-> @123456789 -> 1973-11-29 21:33:09 +0000
-> @12345678 -> 2022-12-16 18:36:35 +0000
->
-> test-tool date parse 123456789 12345678
-> 123456789 -> 1973-11-29 13:33:09 -0800
-> 12345678 -> bad
->
-> test-tool date parse @123456789 @12345678
-> @123456789 -> 1973-11-29 13:33:09 -0800
-> @12345678 -> bad
+Hi Junio,
 
+On Sun, 18 Dec 2022, Junio C Hamano wrote:
 
-Do you have any suggestions about how I can better alleviate your
-concerns?  I don't think there are real regressions here and I tried
-to explain why.
+> "Harshil Jani via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > The msysGit and the MSys v1.x has been dropped into this patch and the
+> > USE_NED_ALLOCATOR variable was duplicated here in the implementation s=
+o its
+> > deduplication was also made in this patch.
+> >
+> > Signed-off-by: Harshil-Jani harshiljani2002@gmail.com
+>
+> Thanks, Harshil.
+>
+> I do not do Windows, so I sent a few drive-by comments to suggest
+> improvements that may help to make the patch more understandable,
+> but more importantly, I did not see the patch asking input from
+> anybody who have worked on the port of Git to the Window system, so
+> I ran the following
+>
+> $ git shortlog -sn --no-merges v2.39.0 -- compat/win\*\* compat/mingw.\*=
+ | head -5
+>    100	Johannes Schindelin
+>     56	Johannes Sixt
+>     41	Karsten Blees
+>     23	Erik Faye-Lund
+>     13	Jeff Hostetler
+>
+> and then picked those names we still often see on the list to
+> attract their attention.
+
+I need to note that Harshil and I have been communicating about this
+patch before it was submitted. So here is my explicit ACK.
+
+Ciao,
+Johannes
