@@ -2,84 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id A1E95C5479D
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 10:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A7BEC54EBD
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 10:24:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236781AbjAIKM7 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Jan 2023 05:12:59 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32988 "EHLO
+        id S234753AbjAIKYB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Jan 2023 05:24:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42142 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236892AbjAIKMR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2023 05:12:17 -0500
-Received: from mail-out.m-online.net (mail-out.m-online.net [212.18.0.10])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8C491A049
-        for <git@vger.kernel.org>; Mon,  9 Jan 2023 02:10:48 -0800 (PST)
-Received: from frontend03.mail.m-online.net (unknown [192.168.6.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 4Nr8pZ6pSZz1s94p;
-        Mon,  9 Jan 2023 11:10:46 +0100 (CET)
-Received: from localhost (dynscan3.mnet-online.de [192.168.6.84])
-        by mail.m-online.net (Postfix) with ESMTP id 4Nr8pZ6MBvz1qqlR;
-        Mon,  9 Jan 2023 11:10:46 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan3.mail.m-online.net [192.168.6.84]) (amavisd-new, port 10024)
-        with ESMTP id w1L84ulkeTPz; Mon,  9 Jan 2023 11:10:46 +0100 (CET)
-X-Auth-Info: CxfxP41gWryf9nExk+dWoI3em+fpzgdCBl9l4k6hnnXlL6VoqSUaDHAVoNZbzW4L
-Received: from igel.home (aftr-62-216-205-85.dynamic.mnet-online.de [62.216.205.85])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mail.mnet-online.de (Postfix) with ESMTPSA;
-        Mon,  9 Jan 2023 11:10:46 +0100 (CET)
-Received: by igel.home (Postfix, from userid 1000)
-        id BD5122C1385; Mon,  9 Jan 2023 11:10:45 +0100 (CET)
-From:   Andreas Schwab <schwab@linux-m68k.org>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     NSENGIYUMVA WILBERFORCE <nsengiyumvawilberforce@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: Github actions failing
-References: <CA+PPyiG=+rs_bOQbaNB311_DVdSc2g44SkLzpaqOER7rfxykrQ@mail.gmail.com>
-        <CAP8UFD2huFgTjB1hNGyGnMKPONOG6ZV-wvxWkTaz-iZNfxrhJA@mail.gmail.com>
-        <CA+PPyiHOLUm87eHuxyhbqqML33Q6g-he_DKRxTEb2fu-2p3NSQ@mail.gmail.com>
-        <CAP8UFD23ObbQaeQi2WsZ3oy0QTKiBxs3wExaHTU2QzJBPwKOmA@mail.gmail.com>
-X-Yow:  Kids, the seven basic food groups are GUM, PUFF PASTRY, PIZZA,
- PESTICIDES, ANTIBIOTICS, NUTRA-SWEET and MILK DUDS!!
-Date:   Mon, 09 Jan 2023 11:10:45 +0100
-In-Reply-To: <CAP8UFD23ObbQaeQi2WsZ3oy0QTKiBxs3wExaHTU2QzJBPwKOmA@mail.gmail.com>
-        (Christian Couder's message of "Mon, 9 Jan 2023 10:22:01 +0100")
-Message-ID: <87pmbo2f2y.fsf@igel.home>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
+        with ESMTP id S237191AbjAIKXi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2023 05:23:38 -0500
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57727192A9
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 02:22:51 -0800 (PST)
+Received: by mail-pf1-f174.google.com with SMTP id y5so5745404pfe.2
+        for <git@vger.kernel.org>; Mon, 09 Jan 2023 02:22:51 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HsdtcYbQGLp770QsgaPBnFplnrJo57L1dlB9EpjaE60=;
+        b=5BXuhzs3nwUk3CREvaN/llYJFJFSFl8neBZwDoMdjJFM0fz/mXQPrpNpBKJOSNqd+h
+         RuFXbTiOkvWT2OY0vvWUyT06WniVz31pgClGcw06ogjMIaMQRbYXlg62o/54xEzGACMA
+         vGiFGRnK/NksaojGyhmG+Lo336TzTKKdYXrfKbVOsaEfd2r7q4AyofC4AUc0Tm1rfWVw
+         vf08X06QRZMG2LMHJHWoizFrvtWR1C2yr8VZ3+k04UFW7PA8AKc+XJ0l5Fd/LhIZpfFf
+         M1r7KsgKu7MZHVjpfHCPkKVAXToww8VQHCJeP7CBfIUkt6ojnY+Ji/hNraS09LXkUCOj
+         kQQw==
+X-Gm-Message-State: AFqh2kqOqE5CJ5xzcNO+zTVAgpN2JPTkcLalqAufkDkN8OIJawY9Ftsd
+        yGVaFxDW6ovT/RTgTaSBUed7csFwL+Yx2vgUg8Y=
+X-Google-Smtp-Source: AMrXdXvHCASBDLukw/0b9QpaXatko77/UVccDB420LnwyT/7SqzJJ6WrOX35+N1rIv45MX4edX5U4OLvkNRM+iRn/3Q=
+X-Received: by 2002:a62:ae17:0:b0:575:c857:edc0 with SMTP id
+ q23-20020a62ae17000000b00575c857edc0mr4434143pff.22.1673259770774; Mon, 09
+ Jan 2023 02:22:50 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <PH7PR12MB779560B6C003FEE76E4F2471F1FE9@PH7PR12MB7795.namprd12.prod.outlook.com>
+In-Reply-To: <PH7PR12MB779560B6C003FEE76E4F2471F1FE9@PH7PR12MB7795.namprd12.prod.outlook.com>
+From:   Erik Cervin Edin <erik@cervined.in>
+Date:   Mon, 9 Jan 2023 11:22:13 +0100
+Message-ID: <CA+JQ7M--TeqxH3nj95sAvGTPz9FbHkS2eYfe763w05fUZX0XCA@mail.gmail.com>
+Subject: Re: Reducing Git Repository size - git-filter-repo doesn't help
+To:     fawaz ahmed0 <fawazahmed0@hotmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Jan 09 2023, Christian Couder wrote:
-
->> > 1870 + test 2 -ne 2
->> > 1871 + eval diff -u "$@"
->> > 1872 + diff -u actual expected
->> > 1873 --- actual 2023-01-08 19:40:42.169214115 +0000
->> > 1874 +++ expected 2023-01-08 19:40:42.121213837 +0000
->> > 1875 @@ -1,4 +1,5 @@
->> > 1876 gpg: Signature made Sun Jan 8 19:40:42 2023 UTC
->> > 1877 gpg: using DSA key 13B6F51ECDDE430D
->> > 1878 +gpg: checking the trustdb
+On Mon, Jan 9, 2023 at 3:24 AM fawaz ahmed0 <fawazahmed0@hotmail.com> wrote:
+> I have this huge repo: https://github.com/fawazahmed0/currency-api#readme  and I am trying to reduce its size.
 >
-> The + before "gpg" means that the above line is in what we expect, but
-> not in what we actually get.
->
-> I think the reason might be that gpg's output could have changed
-> between different versions of gpg and it might just not be possible
-> and wise to rely on the exact output it emits.
+> I have run filter-repo script on this repo (  https://github.com/fawazahmed0/currency-api/blob/1/.github/workflows/cleanup-repo.yml )
 
-I think the "checking the trustdb" message is time-dependent, as the
-trustdb is normally updated only after some interval has passed.
-According to the gpg manpage, automatic trustdb checking can be
-suppressed with --no-auto-check-trustdb.
+Can you elaborate exactly how you're trying to reduce the repository?
+Looking at the script it seems you're removing /latest? And/or folders
+corresponding to certain years?
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+> The commits were reduced from 1k to 600 , but the space used is still same. (i.e size-pack: 6.47 GiB , https://github.com/fawazahmed95/currency-api/actions/runs/3865919157/jobs/6589710845#step:5:1498 )
+
+The number of commits is actually irrelevant, what matters is really
+only how much of the tree was pruned. And only if what was pruned
+wasn't duplicated.
+
+Say you commit
+  2018/big.json
+  2019/same-identical-big.json
+and then delete 2018, the size of the repository in its packed state
+will be virtually identical.
+
+You can analyze which files and directories are occupying the most
+space by running
+  git filter-repo --analyze
+and checking the output file. (It's somewhere like
+.git/filter-repo/analysis I don't remember exactly)
+
+However, it seems that you're using git in a highly unconventional
+manner and I'd say it's probably worthwhile to consider if it's even
+the appropriate tool for the task at hand.
