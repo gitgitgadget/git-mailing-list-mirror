@@ -2,97 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id AE220C54EBD
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 06:31:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 050CAC677F1
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 06:32:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230455AbjAIGap (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Jan 2023 01:30:45 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44856 "EHLO
+        id S233129AbjAIGcv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Jan 2023 01:32:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229865AbjAIGan (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2023 01:30:43 -0500
-Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8747AB39
-        for <git@vger.kernel.org>; Sun,  8 Jan 2023 22:30:30 -0800 (PST)
-Received: by mail-pl1-x633.google.com with SMTP id jn22so8439948plb.13
-        for <git@vger.kernel.org>; Sun, 08 Jan 2023 22:30:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=s0LsypFAl6U57idq1m8GF52L5IpNRT4LDu8L41E03UY=;
-        b=h+mdmafxZSufR/dJnlhoS+aM3NOksvVKxfhpsgtRK9IsWfeE4K68lEhE5wjYTcs9CU
-         5n7MisJXjlyaFcRvHEbKOy4T15vcTWMxWJRZ+nyTwlzZg9stKMxG6mda5MkZsCiKPqDb
-         z41OkTTUDpQFLkvuO1wMh9cpdCZ7T6av+IOSEDiLT5ZNwjn4cZG6FDhXZ1EYT/fXYNc9
-         Br1B6CoVxS3q3J5XugqTjJR9qp2oXuDOyC7atrIkI6DlnTDmvy01nkxw62BMtEAQobAZ
-         SIpdKQAazpquvb/CQhyxeKsLh7vjKZ1kgo5SMI2opCamz5GUGoMMOvGIW2c9Mz8OzaHK
-         Co6g==
+        with ESMTP id S229988AbjAIGcr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2023 01:32:47 -0500
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8288311810
+        for <git@vger.kernel.org>; Sun,  8 Jan 2023 22:32:46 -0800 (PST)
+Received: by mail-pl1-f169.google.com with SMTP id y1so8492119plb.2
+        for <git@vger.kernel.org>; Sun, 08 Jan 2023 22:32:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=s0LsypFAl6U57idq1m8GF52L5IpNRT4LDu8L41E03UY=;
-        b=1fPb5wyt8mjnmWVcOwrw2MCXEnKePrueJ7rm+dXdlQMVec5cnm/UZUpFSDQghpaMDv
-         GK9KtunX6syA7bzcmSPORIJB3hbsI9LwlrHRdAG7mWbodTZAHKYgRQv2RmpYsmrn/503
-         w1z3DdBCV+gjUSjP4W5lxXSLQkll7lLlwF2MUMSD9Dhx3jqYI8qJB3HpdffwI7WKFw4o
-         wmQo3oikSMsqEAC9ZxIlPNnR8Z7baDgMgMFUtOZpqh7S7tvdi6s8usBSKqtMltAyBU2z
-         canGAlXiO+jCRJUuNs6IQX6gY+OTbEknX4rADsdoFGc50RioNa2PvPTAIX3Lx/oNiuWM
-         pdFw==
-X-Gm-Message-State: AFqh2kq1QDVHUgQx2aD8k+ZkzYRvsqiiRVMNOK4rKM+jPtrIc9FNvcMD
-        rza9g72USNGNII/+5/vHZ3s=
-X-Google-Smtp-Source: AMrXdXu6FXL7RTezqTa2dr0tEgD/XHNs9IavaWE+kFheWroIsHM5bbf6HyGQrtnMus7K0IJiWQp9Hw==
-X-Received: by 2002:a17:90a:558c:b0:226:1189:ad3e with SMTP id c12-20020a17090a558c00b002261189ad3emr42863151pji.27.1673245829813;
-        Sun, 08 Jan 2023 22:30:29 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id p10-20020a17090a348a00b00218d894fac3sm6607966pjb.3.2023.01.08.22.30.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Jan 2023 22:30:28 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=a6oRggZoySZrIMQdLLv55pfNhDblXf/tJ3wRSPstvfo=;
+        b=oVYyuRJglTRfDgtbLDL9+3af1ECYGBSR1FJS9zjmaO5RNdFWjq1Bo4x808mgrKud2z
+         +htqn1t5MTOx99Sf+DqxBEQQRpIdEGmAr89ecpnOoXMaMJymCzInfCHugNQr9VVxti2i
+         fHcw3bzNQEIT4AoQRdMPvvaP3Lpj5HngqBK2He5CZjd/hOkBeVkAsucmVnoxXoO3lXeB
+         WeW7IKBpATsFJLaOsfVvmnyvhs4QmNj8U6KnD0L8C7/eBgD7iCyqGhC0bqvG8PIWoPId
+         B1MbrTBpXpo8sbFB4s9RdR5SxUCFH0pG+5kYLmeQkZ63SkOrY6lEB5KPUcdCwc4G6OIV
+         4krw==
+X-Gm-Message-State: AFqh2koVSN9aQsD5yIvSSxbxsSFj+ELEWIb/unQIDqEIP3cRBBOGwCKB
+        YN9g9V7XZHbCK7kPNSy9WPlsPbKGdKWHf77IOY4=
+X-Google-Smtp-Source: AMrXdXsndlWHiW1YXZ7zxrD3tv13OOVg3Y872quts5l7++Q50cKlbJZUhepIcaU93kWjXXs+5oTkEUHmBcRpCDS6Eck=
+X-Received: by 2002:a17:902:ccc5:b0:191:271f:47a0 with SMTP id
+ z5-20020a170902ccc500b00191271f47a0mr4175472ple.120.1673245965925; Sun, 08
+ Jan 2023 22:32:45 -0800 (PST)
+MIME-Version: 1.0
+References: <pull.1422.git.git.1673166241185.gitgitgadget@gmail.com>
+ <xmqqbkn8wcqo.fsf@gitster.g> <CAPig+cQe_VMW2KV+ZyZwosFw07Q+hePryDVushRJ-jFfD4yzpw@mail.gmail.com>
+ <xmqqk01wusmz.fsf@gitster.g>
+In-Reply-To: <xmqqk01wusmz.fsf@gitster.g>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 9 Jan 2023 01:32:34 -0500
+Message-ID: <CAPig+cTO1jBjcwjX4UpxG813OwrDAaYVvViC_XGWorwbXvOfvw@mail.gmail.com>
+Subject: Re: [PATCH] doc: use "git switch -c" rather than "git checkout -b" consistently
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Yutaro Ohno via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org, Yutaro Ohno <yutaro.ono.418@gmail.com>
-Subject: Re: [PATCH] doc: use "git switch -c" rather than "git checkout -b"
- consistently
-References: <pull.1422.git.git.1673166241185.gitgitgadget@gmail.com>
-        <xmqqbkn8wcqo.fsf@gitster.g>
-        <CAPig+cQe_VMW2KV+ZyZwosFw07Q+hePryDVushRJ-jFfD4yzpw@mail.gmail.com>
-Date:   Mon, 09 Jan 2023 15:30:28 +0900
-In-Reply-To: <CAPig+cQe_VMW2KV+ZyZwosFw07Q+hePryDVushRJ-jFfD4yzpw@mail.gmail.com>
-        (Eric Sunshine's message of "Sun, 8 Jan 2023 23:48:46 -0500")
-Message-ID: <xmqqk01wusmz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
-> touches is given merely as examples one might use, then I could see
-> git-switch being prepended to the list rather than entirely replacing
-> git-checkout. For instance:
+On Mon, Jan 9, 2023 at 1:30 AM Junio C Hamano <gitster@pobox.com> wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> > touches is given merely as examples one might use, then I could see
+> > git-switch being prepended to the list rather than entirely replacing
+> > git-checkout. For instance:
+> >
+> >     $ git switch -c foo     <1>
+> >     $ git checkout -b foo   <1>
+> >     $ git branch foo        <2>
+> >     $ git tag foo           <3>
 >
->     If we have not yet moved away from commit `f`,
->     any of these will create a reference to it:
+> That can invite "do we need to use checkout after doing switch?"
+> confusion.  I would understand if it were
 >
->     ------------
->     $ git switch -c foo     <1>
->     $ git checkout -b foo   <1>
->     $ git branch foo        <2>
->     $ git tag foo           <3>
->     ------------
+>         $ git checkout -b foo # or "git switch -c foo" <1>
+>
+> or something that makes it clear either one, but not both, is used
+> there.
 
-That can invite "do we need to use checkout after doing switch?"
-confusion.  I would understand if it were
-
-	$ git checkout -b foo # or "git switch -c foo" <1>
-
-or something that makes it clear either one, but not both, is used
-there.
-
-Thanks.
-
+That refinement looks good to me.
