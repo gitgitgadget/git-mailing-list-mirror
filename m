@@ -2,31 +2,31 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 19618C5479D
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 17:33:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7EDCAC54EBD
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 17:33:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234555AbjAIRdA (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Jan 2023 12:33:00 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54394 "EHLO
+        id S235856AbjAIRdO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Jan 2023 12:33:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230115AbjAIRcs (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2023 12:32:48 -0500
-Received: from mail-40136.proton.ch (mail-40136.proton.ch [185.70.40.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC3242F4
-        for <git@vger.kernel.org>; Mon,  9 Jan 2023 09:32:46 -0800 (PST)
-Date:   Mon, 09 Jan 2023 17:32:41 +0000
+        with ESMTP id S234944AbjAIRdG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2023 12:33:06 -0500
+Received: from mail-4323.proton.ch (mail-4323.proton.ch [185.70.43.23])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50471B875
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 09:33:05 -0800 (PST)
+Date:   Mon, 09 Jan 2023 17:32:53 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
-        s=protonmail3; t=1673285565; x=1673544765;
-        bh=79l3LjIsNwC94lJDY6yEux3C2rX5+dJjOrDymDDFcrc=;
+        s=protonmail3; t=1673285583; x=1673544783;
+        bh=uOU159f1xBFFudgbruc4Svi6HWCXAyh3kqVg7dmaZcI=;
         h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
          Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
          Message-ID:BIMI-Selector;
-        b=Ohz9rH3PCo//4sjgdcMQH+x96GsvrHxoavFYuNHABRZTC8ZJpcHncGI4I3SEUKois
-         Dr4PdeikZI9luS5dpcqmfWn7UwfRJQnE2SwULiuovc3ywZOTycCHNcKj2tWx38bURU
-         j8XpK5rBa3mT4wzJG4QKStfWNzVcZXTJFpyiLGffLARPeE8piOQmtpTDQdWF4Yj11P
-         Vm+0hctaSUDrR8JZpHDotWOsXRichiDSgnGdLUhJJ1jikYzvjefOtY0qQwyLY9RV1y
-         /tXEnqelZc8SZpKoMcm3cj1Dr3Sht83FNovknYcZjfUSCXXdWS+c6f47fYntO2R9UI
-         LY/KCn1HKDJ5A==
+        b=R9KppROig1dgKaz+zIVgQk/11CgKFQCQqlLzDArfcJCZ17CBcZreLtGVjQc6dBsdQ
+         RZ9mh3XsiysCHSiJDRG7MOxZ1TFjWQcC1To0rYBxXioQb/8FD9mc/Mvv+V6C8cIwVR
+         smg+qgs2S/bRSJAMcxLWvLBemSXsmZ7OTQJd9dbvcMB7HJ/S0y3HPnSY6XpPVC0mRw
+         hlGhSm4P/ajPQr7lyy1gD+tqnFRf/ZSoEwCqiKd9NBOCIbB7KvHlJ8LfXmwval/ay5
+         CcK+EknsBjEvLizCv0vBykWdE8caAQfSsYlAF7xCQnPa7fKdiIOvnFFBsGLDtImefy
+         X8m66faN9zmlQ==
 To:     git@vger.kernel.org
 From:   Jacob Abel <jacobabel@nullpo.dev>
 Cc:     Jacob Abel <jacobabel@nullpo.dev>,
@@ -36,10 +36,10 @@ Cc:     Jacob Abel <jacobabel@nullpo.dev>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
         Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-Subject: [PATCH v8 0/4] worktree: Support `--orphan` when creating new worktrees
-Message-ID: <20230109173227.29264-1-jacobabel@nullpo.dev>
-In-Reply-To: <20230107045757.30037-1-jacobabel@nullpo.dev>
-References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20221104213401.17393-1-jacobabel@nullpo.dev> <20221110233137.10414-1-jacobabel@nullpo.dev> <20221212014003.20290-1-jacobabel@nullpo.dev> <20221220023637.29042-1-jacobabel@nullpo.dev> <20221228061539.13740-1-jacobabel@nullpo.dev> <20230107045757.30037-1-jacobabel@nullpo.dev>
+Subject: [PATCH v8 1/4] worktree add: include -B in usage docs
+Message-ID: <20230109173227.29264-2-jacobabel@nullpo.dev>
+In-Reply-To: <20230109173227.29264-1-jacobabel@nullpo.dev>
+References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20221104213401.17393-1-jacobabel@nullpo.dev> <20221110233137.10414-1-jacobabel@nullpo.dev> <20221212014003.20290-1-jacobabel@nullpo.dev> <20221220023637.29042-1-jacobabel@nullpo.dev> <20221228061539.13740-1-jacobabel@nullpo.dev> <20230107045757.30037-1-jacobabel@nullpo.dev> <20230109173227.29264-1-jacobabel@nullpo.dev>
 Feedback-ID: 21506737:user:proton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -48,64 +48,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-While working with the worktree based git workflow, I realised that setting
-up a new git repository required switching between the traditional and
-worktree based workflows. Searching online I found a SO answer [1] which
-seemed to support this and which indicated that adding support for this sho=
-uld
-not be technically difficult.
+Document `-B` next to where `-b` is already documented to bring the
+usage docs in line with other commands such as git checkout.
 
-This patchset has four parts:
-  * adding `-B` to the usage docs (noticed during dev and it seemed too sma=
-ll
-    to justify a separate submission)
-  * adding a helper fn to simplify testing for mutual exclusion of options
-    in `t/t2400-worktree-add.sh`
-  * adding orphan branch functionality (as is present in `git-switch`)
-    to `git-worktree-add`
-  * adding an advise for using --orphan when `git worktree add` fails due t=
-o
-    a bad ref.
+Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
+---
+ Documentation/git-worktree.txt | 2 +-
+ builtin/worktree.c             | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-Changes from v7:
-  * Changed test_wt_add_excl() to use `grep -E` instead of `grep -P` (2/4) =
-[2][3].
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.tx=
+t
+index 063d6eeb99..b9c12779f1 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git worktree add' [-f] [--detach] [--checkout] [--lock [--reason <string>=
+]]
+-=09=09   [-b <new-branch>] <path> [<commit-ish>]
++=09=09   [(-b | -B) <new-branch>] <path> [<commit-ish>]
+ 'git worktree list' [-v | --porcelain [-z]]
+ 'git worktree lock' [--reason <string>] <worktree>
+ 'git worktree move' <worktree> <new-path>
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 4a24d53be1..ddb33f48a0 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -17,7 +17,7 @@
 
-1. https://stackoverflow.com/a/68717229/15064705/
-2. https://lore.kernel.org/git/xmqq7cxxzefp.fsf@gitster.g/
-3. https://lore.kernel.org/git/230109.86r0w328nu.gmgdl@evledraar.gmail.com/
-
-Jacob Abel (4):
-  worktree add: include -B in usage docs
-  worktree add: refactor opt exclusion tests
-  worktree add: add --orphan flag
-  worktree add: add hint to direct users towards --orphan
-
- Documentation/config/advice.txt |  4 ++
- Documentation/git-worktree.txt  | 17 +++++-
- advice.c                        |  1 +
- advice.h                        |  1 +
- builtin/worktree.c              | 65 ++++++++++++++++++++---
- t/t2400-worktree-add.sh         | 94 +++++++++++++++++++++++++++++----
- 6 files changed, 164 insertions(+), 18 deletions(-)
-
-Range-diff against v7:
-1:  a9ef3eca7b =3D 1:  a9ef3eca7b worktree add: include -B in usage docs
-2:  d124cc481c ! 2:  4b447a597c worktree add: refactor opt exclusion tests
-    @@ t/t2400-worktree-add.sh: test_expect_success '"add" no auto-vivify w=
-ith --detach
-     +=09local opts=3D"$*" &&
-     +=09test_expect_success "'worktree add' with '$opts' has mutually excl=
-usive options" '
-     +=09=09test_must_fail git worktree add $opts 2>actual &&
-    -+=09=09grep -P "fatal:( options)? .* cannot be used together" actual
-    ++=09=09grep -E "fatal:( options)? .* cannot be used together" actual
-     +=09'
-     +}
-
-3:  b66ea4d309 =3D 3:  7574f425f4 worktree add: add --orphan flag
-4:  b779606121 =3D 4:  31ae93ba7a worktree add: add hint to direct users to=
-wards --orphan
+ #define BUILTIN_WORKTREE_ADD_USAGE \
+ =09N_("git worktree add [-f] [--detach] [--checkout] [--lock [--reason <st=
+ring>]]\n" \
+-=09   "                 [-b <new-branch>] <path> [<commit-ish>]")
++=09   "                 [(-b | -B) <new-branch>] <path> [<commit-ish>]")
+ #define BUILTIN_WORKTREE_LIST_USAGE \
+ =09N_("git worktree list [-v | --porcelain [-z]]")
+ #define BUILTIN_WORKTREE_LOCK_USAGE \
 --
 2.38.2
 
