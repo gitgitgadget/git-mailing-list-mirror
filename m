@@ -2,80 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B2739C5479D
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 04:49:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6A1FBC5479D
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 04:58:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235078AbjAIEtD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Jan 2023 23:49:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48662 "EHLO
+        id S233886AbjAIE6x (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Jan 2023 23:58:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229685AbjAIEs7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jan 2023 23:48:59 -0500
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 718A51EF
-        for <git@vger.kernel.org>; Sun,  8 Jan 2023 20:48:58 -0800 (PST)
-Received: by mail-pj1-f53.google.com with SMTP id c8-20020a17090a4d0800b00225c3614161so11538041pjg.5
-        for <git@vger.kernel.org>; Sun, 08 Jan 2023 20:48:58 -0800 (PST)
+        with ESMTP id S233652AbjAIE6t (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jan 2023 23:58:49 -0500
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAB268FFB
+        for <git@vger.kernel.org>; Sun,  8 Jan 2023 20:58:48 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id v23so3388559plo.1
+        for <git@vger.kernel.org>; Sun, 08 Jan 2023 20:58:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=V77BRuE2sFi5/ZNPSXjYxkgs90xQM9KGuIBnlBoZeVI=;
+        b=ILUdLWI/Gtx2CbzJ6xfBNs5l7/3oZ2IG3eq0AW/iIAV1iFt43AAMqpW9KovdLKFm/T
+         mFgFWSMI1RNUXcPkeZnXPbcQvauoAmiDRubit+tJutWIsWWJqFu8cpyHKrahOxc/h2Ti
+         ktjZ9jNKhnrHS1lBYS02t+ongdNrCtRo9I/Izv9LB9/KqN4TVTlMadq6mpaRM3s9XKs5
+         xD7063OOyK5hHaN4ATVKCleG72rYDQo6i4EbptNfnhLul7f+/wMvIx++6QgOdvD0wCCT
+         Zmy9+Ec8Ix9BWtsxO+HA92h0ZSM2YjOAa1nvhO+eWhgloSuUVSook1XhgL7rz5Rm/f3o
+         jLhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Tsen2O5Y9gpALBfRpomjwlMQ0gb74SvgS7y/z/YbRHQ=;
-        b=rTUvOwcHkvGiljQwdQqOLjPlE8tLgrNLy8yi+uEXryO2jSOLQHGctWydFR//xrfWzw
-         ERT11ZzCuGXgWlkx0mXWix4LKx5lDYfXwW64fhHfBCqlFYkYQDe5/R5Z2seEKblT3us0
-         YF7wVK+GMc771Dh8iW3z3YzRJwERBZ1YsqYbXsWEcJMM2oQxbqLP5aM0ThLGdSeEufrv
-         /+X97Y03KWnyiESWnnD/SCGRx4PDpdS2DzlT2C8talCDXDNQefxz81qiqCgESTOnR4zr
-         pNGY1tYqHxX5XpG+uLlMVt9ri5/btbkmC2klfTfnTdZggBQ6gDWMgnPVm+yN6ft9ks8+
-         bKog==
-X-Gm-Message-State: AFqh2kot0AnNvc5dWIv/uLEMewJ+47vgk/5NllZLoF7y2VWJqAK+TOy0
-        uLqg8uHpzijMDSgZKyXwxyxWTiyx+hIz1O4lmk0=
-X-Google-Smtp-Source: AMrXdXtFbVChtnlJVzYu43E8XXQ6Bz2rSqEgYD2mSmoL6qLNpVpwh8JvRJCSRquP9EyR21m391p+grp3jioQL4nJcZM=
-X-Received: by 2002:a17:902:cf08:b0:191:34ee:a3fc with SMTP id
- i8-20020a170902cf0800b0019134eea3fcmr4335924plg.12.1673239737822; Sun, 08 Jan
- 2023 20:48:57 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=V77BRuE2sFi5/ZNPSXjYxkgs90xQM9KGuIBnlBoZeVI=;
+        b=7CJNA5OpKqX1ygWR9c149LE/KRrN64FQ+/ycGQVi4OuNQexcNrdkpILe2+G3eirAC7
+         ThF1ylwAwhRb6boOFDEMwOKZMTQrwVRIUOVuUti34lq/sfIk2QKbixEni78lkEs0DlQA
+         VE9hAPOH8ifob/2r6mqRrw5cV2AgwMpnUCrBGi0cgwUBe9g8yu+i+TaUcRwZcO0OUVJb
+         MD24uF5khOQTPkJeJnV4/ty2cFKPAOplfnE3TkGf1RZVZi3tqMbPKnse+SnWUGqEeatK
+         ABrjU+1p2VlKRio4AEqtXwVaENjNNoBFWt4ZopueQKjO+4B7VmSv3zhInwx73JNBzcpD
+         MIaQ==
+X-Gm-Message-State: AFqh2kpM9NqihcDeOGsofzQzbOYi6bQTp8b80SIA5X4kHgbaCUvZnYLE
+        K9CaqZDaVenRLOXwnSNjgOo=
+X-Google-Smtp-Source: AMrXdXt7gJZnfO5yqXLf+j72/h8nZ+/1PLZKnah+vp0ronQX0yY5VO+y766yyl5GZfjiHs+8HNzOEw==
+X-Received: by 2002:a17:902:b192:b0:193:2d53:3fc9 with SMTP id s18-20020a170902b19200b001932d533fc9mr3058116plr.6.1673240328215;
+        Sun, 08 Jan 2023 20:58:48 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id u5-20020a170902e80500b00189529ed580sm5025138plg.60.2023.01.08.20.58.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Jan 2023 20:58:47 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Preston Tunnell Wilson <prestontunnellwilson@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] githooks: discuss Git operations in foreign repositories
+References: <pull.1457.git.1673171924727.gitgitgadget@gmail.com>
+Date:   Mon, 09 Jan 2023 13:58:47 +0900
+In-Reply-To: <pull.1457.git.1673171924727.gitgitgadget@gmail.com> (Eric
+        Sunshine via GitGitGadget's message of "Sun, 08 Jan 2023 09:58:44
+        +0000")
+Message-ID: <xmqqwn5wuwvs.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1422.git.git.1673166241185.gitgitgadget@gmail.com> <xmqqbkn8wcqo.fsf@gitster.g>
-In-Reply-To: <xmqqbkn8wcqo.fsf@gitster.g>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 8 Jan 2023 23:48:46 -0500
-Message-ID: <CAPig+cQe_VMW2KV+ZyZwosFw07Q+hePryDVushRJ-jFfD4yzpw@mail.gmail.com>
-Subject: Re: [PATCH] doc: use "git switch -c" rather than "git checkout -b" consistently
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Yutaro Ohno via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Yutaro Ohno <yutaro.ono.418@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 8, 2023 at 11:36 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > From: Yutaro Ohno <yutaro.ono.418@gmail.com>
-> > Subject: Re: [PATCH] doc: use "git switch -c" rather than "git checkout -b" consistently
->
-> Hmph.  When two things work equally well, is it a good idea to
-> describe only one "consistently", or mention both that can be used
-> pretty much interchangeably in different places?  I am not 100% sure
-> "consistently" is a good thing here.
->
-> Thoughts from others?
+"Eric Sunshine via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Perhaps if the patch was sold as filling in a gap left by 328c6cb853
-(doc: promote "git switch", 2019-03-29) it would be more palatable.
+> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+> index a16e62bc8c8..6e9a5420b7c 100644
+> --- a/Documentation/githooks.txt
+> +++ b/Documentation/githooks.txt
+> @@ -31,6 +31,17 @@ Hooks can get their arguments via the environment, command-line
+>  arguments, and stdin. See the documentation for each hook below for
+>  details.
+>  
+> +If your hook needs to invoke Git commands in a foreign repository or in a
+> +different working tree of the same repository, then it should clear local Git
+> +environment variables, such as `GIT_DIR`, `GIT_WORK_TREE`, etc., which could
+> +interfere with Git operations in the foreign repository since those variables
+> +will be referencing the local repository and working tree. For example:
+> +
+> +------------
+> +local_desc=$(git describe)
+> +foreign_desc=$(unset $(git rev-parse --local-env-vars); git -C ../foreign-repo describe)
+> +------------
+> +
 
-It does feel a bit strange that within the git-checkout documentation,
-this patch is replacing an example invocation of git-checkout with an
-invocation of git-switch. However, as the list of commands the patch
-touches is given merely as examples one might use, then I could see
-git-switch being prepended to the list rather than entirely replacing
-git-checkout. For instance:
+It is an excellent idea to add the above, but
 
-    If we have not yet moved away from commit `f`,
-    any of these will create a reference to it:
+ * I think adding it one paragraph earlier may make it fit better.
 
-    ------------
-    $ git switch -c foo     <1>
-    $ git checkout -b foo   <1>
-    $ git branch foo        <2>
-    $ git tag foo           <3>
-    ------------
+ * The paragraph, after which the above gets inserted, can use a bit
+   of enhancement.
+
+That is, something like this?
+
+
+
+ Documentation/githooks.txt | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
+
+diff --git c/Documentation/githooks.txt w/Documentation/githooks.txt
+index a16e62bc8c..f3d0404164 100644
+--- c/Documentation/githooks.txt
++++ w/Documentation/githooks.txt
+@@ -25,7 +25,20 @@ Before Git invokes a hook, it changes its working directory to either
+ $GIT_DIR in a bare repository or the root of the working tree in a non-bare
+ repository. An exception are hooks triggered during a push ('pre-receive',
+ 'update', 'post-receive', 'post-update', 'push-to-checkout') which are always
+-executed in $GIT_DIR.
++executed in $GIT_DIR.  Environment variables like GIT_DIR and GIT_WORK_TREE
++are exported so that the hook can easily learn which repository it is
++working with.
++
++If your hook needs to invoke Git commands in a foreign repository or in a
++different working tree of the same repository, then it should clear local Git
++environment variables, such as `GIT_DIR`, `GIT_WORK_TREE`, etc., which could
++interfere with Git operations in the foreign repository since those variables
++will be referencing the local repository and working tree. For example:
++
++------------
++local_desc=$(git describe)
++foreign_desc=$(unset $(git rev-parse --local-env-vars); git -C ../foreign-repo describe)
++------------
+ 
+ Hooks can get their arguments via the environment, command-line
+ arguments, and stdin. See the documentation for each hook below for
