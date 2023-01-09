@@ -2,163 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D0910C54EBC
-	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 02:54:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C5E67C54EBC
+	for <git@archiver.kernel.org>; Mon,  9 Jan 2023 03:08:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233962AbjAICyX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 8 Jan 2023 21:54:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57896 "EHLO
+        id S234215AbjAIDIP (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 8 Jan 2023 22:08:15 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232002AbjAICyW (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 8 Jan 2023 21:54:22 -0500
-Received: from mail-yw1-x1133.google.com (mail-yw1-x1133.google.com [IPv6:2607:f8b0:4864:20::1133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8A9E1114F
-        for <git@vger.kernel.org>; Sun,  8 Jan 2023 18:54:20 -0800 (PST)
-Received: by mail-yw1-x1133.google.com with SMTP id 00721157ae682-4c24993965eso90653347b3.12
-        for <git@vger.kernel.org>; Sun, 08 Jan 2023 18:54:20 -0800 (PST)
+        with ESMTP id S233690AbjAIDIL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 8 Jan 2023 22:08:11 -0500
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24AD3BCA5
+        for <git@vger.kernel.org>; Sun,  8 Jan 2023 19:08:11 -0800 (PST)
+Received: by mail-pf1-x42a.google.com with SMTP id c26so737134pfp.10
+        for <git@vger.kernel.org>; Sun, 08 Jan 2023 19:08:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=z28iaOPqIDSYd4owsnVj6i4FEuYNTm3pXvrp/sfEWHQ=;
-        b=FNuiWM0uulzU10h2aXk0UubjL5q4KYNfDY7w0lvE8yWwZGy+u2cNdywgX+x70Xxefb
-         UX8N2O9jy3jIC3Dhc5/Jux5KYg9SDBF0y3GdYdWeziWT5xxngA/PZmX8PkV5Z+McWrpj
-         cjJpH1+/7dtTUkxK4haMYYbr69b+mgl0rL6BCVoaEUA8dz7Nz1oTMhmL/i7x69FuxJJH
-         O0eOXbqOu46znT9KqG+gTbBnuwBKAXZbdGd6fdDY4OdyIO571YN/U3H7JEAYdjGd9E4A
-         Z3/h5MfYk0nL3JF4kOfvBcOApsTAEcoxu+zNF4Y0zD+twFQPEqRyxyoe8EQbABZWhuz1
-         P23g==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SLDFMwcTHGqipmi7sxmuZg1FSvwd/30iJdVxPUbbVi4=;
+        b=Y9S9M3en5G9RQGDbS5nXc5NBFbO0vI70HUAZk7mFmcy4Davn7Am4Cmr72MGYWizQoq
+         rsoAO2Wl5mjOCsLERUvO/7tp9GZAqIdN+4dUKXQW1TVgUA8oZXzS5jbQzaNpcnks7XaG
+         NGD5vvNWsev4vPBTWN19L9HhDQAawYqDiTSbSF08IicZpvQGvLii9ALkKjdchfosBWQP
+         JtDKj4Ab06AU3Ykbc39kOlwlTO806K01t0Zp2fj4oIHV7wuJkr39ipLYj4SiH9dqqQBO
+         QtfqK0A9DXdJbn2ZJ44HmfvDnYpNPL5h4xlSCUT5IJ2fL6tSCha3v2fDYYP3k7OCvK2I
+         AYyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=z28iaOPqIDSYd4owsnVj6i4FEuYNTm3pXvrp/sfEWHQ=;
-        b=gOEM8Tim2p7Lh+QSPLxy1anzGois/MkmoWY/mZda/mKsQ8e0h1/FUqhlMBm04Z1t3r
-         D0LKMV3pxLz9scpNNaNpKVjDIqleIndXUN+wiWMaVxSbPHgrs/w+t6/ZhgTBS21ERvrF
-         wU0lqFB7dNAA87RWc9mEJyYCMt++3X1gi0zvFXySmmEu+wrvGg2pSxuvfXlxvF8kgsiX
-         nYFjXYmjoGnDP5cGi0mLSMl6ncLTmz19jqLWkIEd4nEPIBqeNdjcQ5XcKiz21gGQCjZb
-         GRPFrajW2SVwNMIJHIRrA0/ArIGqxfYwOHkQR6zWmbZUIHHgrF8heWsa+360gRHemEOS
-         JjAg==
-X-Gm-Message-State: AFqh2kof0XhX2SX7op4Iro8VM0QWj6nFsHnr3vZ/w2ZstSOmK/1sGJkT
-        LduGjhQweX1D3SLG2O6eyBEpSKeqzeaKQnu6gAE=
-X-Google-Smtp-Source: AMrXdXuyc0xlfHVuZhD/3EgL5B8KbrgyIVOYp6pLQlsp0ubHLKw5Ap0LGrOxbbJlNB8S2eIqWX0BAYfxRxXtIGQZIc4=
-X-Received: by 2002:a05:690c:847:b0:391:7188:7454 with SMTP id
- bz7-20020a05690c084700b0039171887454mr523725ywb.212.1673232859922; Sun, 08
- Jan 2023 18:54:19 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=SLDFMwcTHGqipmi7sxmuZg1FSvwd/30iJdVxPUbbVi4=;
+        b=SUf2wydMItVbIsvRyoTH4FB5/rMc8dUIAayPokViDk+PXuDuJfaj+I3pNjwh3tw7Cb
+         owzdZ9VWqUFik8T1Q+yIh5yHjBCXxQe/VDPOxZhK/Egv7ZlIVoZ9SBYCBwxXfI0U4Xj9
+         yodLiCN1TBwrKIWIKoqpwe1YUapnYZb2c5WPvqyKaFMagQozhu6kcrZeVZI9827+PG77
+         AVq9d6Ocdq/9MznMTjtb1Z52QMXwM4l2jLQgRrukia7xp0YQRV1zw38DEzc4MWTxa0RF
+         cIJOkrtWIGOOyUULR07/BkMR4io2ZHPIcheYRZQNIPL8GHZmO/HtGx6jK5QxsmHfNfYF
+         EPAw==
+X-Gm-Message-State: AFqh2kr8OP9iHbcEgBGi9ISqbVQaus1hAG9E3urw48eVgCE4vky2Wg0n
+        PJaDalTqzjinb9BV9hSPfRo=
+X-Google-Smtp-Source: AMrXdXvYAuB6M87NSTldE4TtCxLBtDyLfsTnyBi7p3UDGY9tau2J2yI7+zmeIErIC2skEFPW++/Byw==
+X-Received: by 2002:a05:6a00:3490:b0:581:947a:b701 with SMTP id cp16-20020a056a00349000b00581947ab701mr44670845pfb.17.1673233690411;
+        Sun, 08 Jan 2023 19:08:10 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id w2-20020aa79542000000b0056be4dbd4besm4854531pfq.111.2023.01.08.19.08.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 08 Jan 2023 19:08:09 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, me@ttaylorr.com, vdye@github.com,
+        avarab@gmail.com, steadmon@google.com, chooglen@google.com,
+        Derrick Stolee <derrickstolee@github.com>
+Subject: Re: [PATCH 3/8] bundle-uri: parse bundle.<id>.creationToken values
+References: <pull.1454.git.1673037405.gitgitgadget@gmail.com>
+        <a1808f0b10cfb519613bc292e30b884962a83275.1673037405.git.gitgitgadget@gmail.com>
+Date:   Mon, 09 Jan 2023 12:08:09 +0900
+In-Reply-To: <a1808f0b10cfb519613bc292e30b884962a83275.1673037405.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Fri, 06 Jan 2023
+        20:36:40 +0000")
+Message-ID: <xmqq8ricxv52.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1457.git.1673171924727.gitgitgadget@gmail.com>
- <CAC-j02O6z4sG85LpRNzEZ52Y-McurYDa_VnVXtqFVPBFu9kbug@mail.gmail.com> <CAPig+cS_dXL-Q6NZtUJxDOL4-Q=MJv8fPEPAnEPuONaNF8-sCA@mail.gmail.com>
-In-Reply-To: <CAPig+cS_dXL-Q6NZtUJxDOL4-Q=MJv8fPEPAnEPuONaNF8-sCA@mail.gmail.com>
-From:   Preston Tunnell Wilson <prestontunnellwilson@gmail.com>
-Date:   Sun, 8 Jan 2023 20:54:09 -0600
-Message-ID: <CAC-j02MV+Gv0D8-fpCOu7JGUimxPLF+OP1dy7bxfs7ArX05BYg@mail.gmail.com>
-Subject: Re: [PATCH] githooks: discuss Git operations in foreign repositories
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Eric Sunshine via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> "Best-practice" is context
-> sensitive. It may be best-practice when a hook needs to invoke Git
-> commands in some other repository (or worktree), but clearing those
-> variables automatically would, in some situations, break the much more
-> common case of the hook invoking Git commands in the local repository
-> (or worktree). The fact that those environment variables may have been
-> set manually by the user or automatically by Git further complicates
-> the situation.
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-That makes sense, thank you for your answer!
+> +	if (!strcmp(subkey, "creationtoken")) {
+> +		if (sscanf(value, "%"PRIu64, &bundle->creationToken) != 1)
+> +			warning(_("could not parse bundle list key %s with value '%s'"),
+> +				"creationToken", value);
+> +		return 0;
+> +	}
 
-> So, no, I don't think this qualifies for the BUGS section of
-> git-wortkree, and mentioning this potential gotcha only in
-> git-worktree but not in any other hook-running command doesn't seem
-> ideal either. At present, the best place to discuss it seems to be
-> Documentation/githooks.txt, as this patch does.
+We tend to avoid sscanf() to parse out integral values, as it is a
+bit too permissive to our liking (especially while parsing the
+object header), but here it probably is OK, I guess.
 
-I agree the best place to put it is in Documentation/githooks.txt. I
-also agree the BUGS section doesn't make sense, but I'm still
-wondering if we should call it out in git-worktree.txt in addition to
-githooks.txt. When I ran into this issue, I tried to compare my setup
-to that of my coworkers. The difference was that I was using
-git-worktree, they were not. git-worktree's documentation lists:
+> +	/**
+> +	 * If the bundle is part of a list with the creationToken
+> +	 * heuristic, then we use this member for sorting the bundles.
+> +	 */
+> +	uint64_t creationToken;
+>  };
 
-Within a linked worktree, $GIT_DIR is set to point to this private
-directory (e.g. /path/main/.git/worktrees/test-next in the example)
-and $GIT_COMMON_DIR is set to point back to the main worktree=E2=80=99s
-$GIT_DIR (e.g. /path/main/.git). These settings are made in a .git
-file located at the top directory of the linked worktree.
+Is the idea behind the type is that creationTokens, while we leave
+up to the bundle providers what the actual values (other than zero)
+mean, must be comparable to give them a total order, and uint64
+would be a usable type for bundle providers to come up with such
+values easily?
 
-To me, this is the "other side of the coin" of your patch. (Or maybe
-one of the many other sides of the coin for commands that can run
-git-hooks.) Mentioning a potential collision between git-hooks and
-these variables being set could maybe go in the above snippet, maybe
-in parentheses. It took a lot of working backwards to narrow the issue
-to the interaction between git-worktree and git-hooks rather than the
-package manager I was using or the tool the hook was calling. Putting
-a note in the git-worktree documentation (in addition to the note in
-git-hooks) might help out someone in the future, but I defer to your
-judgement. If it doesn't make sense, doesn't fit, or adding it here
-would detract and make the documentation more confusing, I am happy to
-leave it out.
-
-And thank you for the administrivia!
-
-On Sun, Jan 8, 2023 at 5:25 PM Eric Sunshine <sunshine@sunshineco.com> wrot=
-e:
->
-> [administrivia: please reply inline rather than top-posting]
->
-> On Sun, Jan 8, 2023 at 2:45 PM Preston Tunnell Wilson
-> <prestontunnellwilson@gmail.com> wrote:
-> > Thank you for this wonderful remedy, Eric! I really appreciate the
-> > background context and how you framed the problem that I ran into.
-> >
-> > I have two questions:
-> > 1. Documentation is a great first step in addressing this, but I'm
-> > wondering if this should be automatic? If this is a best practice for
-> > hook authors, could `git` do this for them automatically when running
-> > hooks?
->
-> For the general case, probably not. "Best-practice" is context
-> sensitive. It may be best-practice when a hook needs to invoke Git
-> commands in some other repository (or worktree), but clearing those
-> variables automatically would, in some situations, break the much more
-> common case of the hook invoking Git commands in the local repository
-> (or worktree). The fact that those environment variables may have been
-> set manually by the user or automatically by Git further complicates
-> the situation.
->
-> > 2. Should we add something in the `git-worktree` documentation? In
-> > `Documentation/git-worktree.txt`, it mentions:
-> >
-> > > BUGS
-> > > ----
-> > > Multiple checkout in general is still experimental, and the support
-> > > for submodules is incomplete. ...
-> >
-> > Would it be helpful to plant a flag in the above documentation to
-> > point to this potential issue?
->
-> As noted above, we can't really call this a bug. Git is behaving as
-> intended. Whether the user set the variables manually or whether some
-> parent Git process set them automatically, the child Git respects the
-> variables as it should rather than second-guessing about the user's
-> intentions, and possibly guessing incorrectly.
->
-> So, no, I don't think this qualifies for the BUGS section of
-> git-wortkree, and mentioning this potential gotcha only in
-> git-worktree but not in any other hook-running command doesn't seem
-> ideal either. At present, the best place to discuss it seems to be
-> Documentation/githooks.txt, as this patch does. It may be possible to
-> argue that gitfaq.txt could talk about it, but considering that this
-> issue can manifest in many different ways (various error messages or
-> misbehaviors), it's difficult to come up with any text for the "Q"
-> which people would be likely to find when Googling. That's not to say
-> it shouldn't be mentioned elsewhere in the documentation, but rather
-> that I haven't come up with any better places than githooks.txt
-> itself.
+Thanks.
