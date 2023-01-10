@@ -2,103 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 55FC8C46467
-	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 13:34:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7F428C54EBC
+	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 13:40:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238524AbjAJNdm (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Jan 2023 08:33:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57966 "EHLO
+        id S232023AbjAJNkD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Jan 2023 08:40:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238762AbjAJNde (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2023 08:33:34 -0500
-Received: from ns6.inleed.net (mailout6.inleed.net [IPv6:2a0b:dc80:cafe:106::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CAA13BE9C
-        for <git@vger.kernel.org>; Tue, 10 Jan 2023 05:33:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bakskuru.se
-        ; s=x; h=Content-Transfer-Encoding:Content-Type:Cc:To:Subject:Message-ID:Date
-        :From:In-Reply-To:References:MIME-Version:Sender:Reply-To:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=nh9raGOkaufGhGnHRj+xJrjOFueEkVg4W6oCqftQRmg=; b=LnWFp8dRh9DKEwod3Uh6bZG1+4
-        AJyo6hAL/YGE1/sXUANqYxkUVrUVqKMYmW/vOW6cPERNUjNIMo/D/NSX/Skr+0SneYpedAG0k95xH
-        Ka79zsrpGQblX45y97hn+IQqb6dOZJ2djtO1LhwhFUpHY9rsNBsAUSCdV03fK39MmpL8luYvxCl7l
-        QgHy33lc/2LhVjEYIKR0aDAb0WNG7ufhdlosComEz+A/uistfPGxmjctiw/5NoV0706tPc7sgvQi5
-        keNp6RSApgw4tNp9g9k8UjsPHWe+0ggciVYJ5QhfxSb3ShLR2f1uqRzq52A1AxfyZQscjmY8Cn2M8
-        i0T0JhWw==;
-Received: from mail-pf1-f176.google.com ([209.85.210.176])
-        by ns6.inleed.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.96)
-        (envelope-from <fredrik@bakskuru.se>)
-        id 1pFEkq-00De0A-0Y
-        for git@vger.kernel.org;
-        Tue, 10 Jan 2023 14:33:28 +0100
-Received: by mail-pf1-f176.google.com with SMTP id s3so6298815pfd.12
-        for <git@vger.kernel.org>; Tue, 10 Jan 2023 05:33:27 -0800 (PST)
-X-Gm-Message-State: AFqh2krEodySiIFMKIFZVD5dGAZon/7SyEzTt8/5a2fqcSKmOApfx3vj
-        S6F+O9iiAmoCtgkdp59D4Zmau4mvcTgELsmakRg=
-X-Google-Smtp-Source: AMrXdXs0nybrC1N6VhRqrbzIJ923E36nbqBlM3ncOOybUN0NlDSK+Luw19DFqldctJDOB+YqfQmkO5XRUnQBxv5TzEg=
-X-Received: by 2002:a62:1556:0:b0:58b:87f:9a70 with SMTP id
- 83-20020a621556000000b0058b087f9a70mr100153pfv.1.1673357606187; Tue, 10 Jan
- 2023 05:33:26 -0800 (PST)
+        with ESMTP id S238677AbjAJNjZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2023 08:39:25 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC9747D1ED
+        for <git@vger.kernel.org>; Tue, 10 Jan 2023 05:39:22 -0800 (PST)
+Received: (qmail 17446 invoked by uid 109); 10 Jan 2023 13:39:21 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 10 Jan 2023 13:39:21 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27618 invoked by uid 111); 10 Jan 2023 13:39:21 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 10 Jan 2023 08:39:21 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 10 Jan 2023 08:39:20 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [PATCH] t/interop: allow tests to run "git env--helper"
+Message-ID: <Y71qiCs+oAS2OegH@coredump.intra.peff.net>
 MIME-Version: 1.0
-References: <CALDp=1EVmQE2NZAd7ccAT0z=R=2S8FvyJzsPNrDeXwdJkEW3Lg@mail.gmail.com>
- <CAN0heSprKD35P-D7GTVQ20eRsj0AriYEA7iCDnrA9GuiwX0snw@mail.gmail.com>
- <Y71Xnx2vmznV913I@coredump.intra.peff.net> <CAN0heSqvqnCHPa-RQ3JuxxP7M_k1ORYOAV9aG+8EuXvB1GZukw@mail.gmail.com>
-In-Reply-To: <CAN0heSqvqnCHPa-RQ3JuxxP7M_k1ORYOAV9aG+8EuXvB1GZukw@mail.gmail.com>
-From:   =?UTF-8?Q?Fredrik_=C3=96berg?= <fredrik@bakskuru.se>
-Date:   Tue, 10 Jan 2023 14:33:14 +0100
-X-Gmail-Original-Message-ID: <CALDp=1GBtibTR5SvG8sOX14aODtdEJWhL_PCP1mzTLmX9V0sow@mail.gmail.com>
-Message-ID: <CALDp=1GBtibTR5SvG8sOX14aODtdEJWhL_PCP1mzTLmX9V0sow@mail.gmail.com>
-Subject: Re: Bugreport: Prefix - is ignored when sorting (on committerdate)
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Authenticated-Id: fredrik@bakskuru.se
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for the  quick response! I've been playing with creatordate and
-it seems to work with with both older and newer versions of git.
+The interop test library sets up wrappers "git.a" and "git.b" to
+represent the two versions to be tested. It also wraps vanilla "git" to
+report an error, with the goal of catching tests which accidentally fail
+to use one of the version-specific wrappers (which could invalidate the
+tests in a very subtle way).
 
-I am trying to understand what I did wrong. I guess you are saying
-that I tried to use the field committerdate, which is not available on
-the tags? And that the handling of this situation has changed since
-git/2.23? Hence I got different results?
+As a result, t/interop/i5700 has refused to run since 3b072c577b (tests:
+replace test_tristate with "git env--helper", 2019-06-21). The problem
+is that lib-git-daemon.sh uses "git env--helper" to decide whether to
+run daemon tests, which triggers the vanilla wrapper. That produces an
+error, and we think that the daemon tests are disabled.
 
-/Fredrik
+Let's make our wrapper a little smarter, and allow env--helper
+specifically. It's not an interesting part of Git to test for interop,
+and it's used extensively in test setup. The matching is rudimentary
+(e.g., it would not catch "git --some-arg env--helper", but it's enough
+for our small set of interop tests).
 
-Den tis 10 jan. 2023 kl 14:05 skrev Martin =C3=85gren <martin.agren@gmail.c=
-om>:
->
-> On Tue, 10 Jan 2023 at 13:18, Jeff King <peff@peff.net> wrote:
-> >
-> > On Tue, Jan 10, 2023 at 11:54:16AM +0100, Martin =C3=85gren wrote:
-> >
-> > > I suppose it could be argued that the '-' should be applied to the
-> > > fallback as well, e.g., to uphold some sort of "using '-' should give
-> > > the same result as piping the whole thing through tac" (i.e., respect=
-ing
-> > > `s->reverse` in `compare_refs()`, if you're following along in
-> > > 7c5045fc18). With multiple sort keys, some with '-' and some
-> > > without, we'd grab the '-' from the first key. It seems like that cou=
-ld
-> > > make sense, actually.
-> >
-> > I dunno. Just because you are reverse-sorting on one field doesn't
-> > necessarily imply that you want the tie-breaker to reverse-sort, too. I
-> [...]
->
-> > I could see it depending on exactly what you're trying to do. Which
-> > leads me to think the rule should be as simple as possible. You can
-> > always do:
-> >
-> >   git for-each-ref --sort=3D-refname --sort=3D-committerdate
-> >
-> > to specify exactly what you want.
->
-> Indeed. So probably best to leave it as-is, then.
->
-> Martin
+Let's likewise improve the error message from the wrapper (when it does
+complain) to show the arguments to git. That makes debugging a situation
+like this much easier, since otherwise you are clueless about who is
+calling "git" and why.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+Obviously nobody has run these for a while. I just happened to do so
+today while investigating something else. Maybe they're not worth
+keeping around, and we should consider it all a failed experiment.
+But it's easy enough to fix in the meantime.
+
+Arguably "git env--helper" should be "test-tool", which wouldn't run
+into this problem, but it's probably not worth refactoring it for the
+sake of these tests.
+
+By the way, if you do try to run the whole set of tests, note that Git
+v1.0.0 no longer builds with modern openssl (you can't declare a BIGNUM
+anymore; you have to get it from BN_new()), and thus i5500 fails. You
+can work around it with:
+
+  # this gets baked into GIT-BUILD-OPTIONS
+  make GIT_INTEROP_MAKE_OPTS=NO_OPENSSL=Nope
+
+  # and now interop tests will use it for building other versions
+  cd t/interop
+  make
+
+ t/interop/interop-lib.sh | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
+
+diff --git a/t/interop/interop-lib.sh b/t/interop/interop-lib.sh
+index 3e0a2911d4..f65baa607d 100644
+--- a/t/interop/interop-lib.sh
++++ b/t/interop/interop-lib.sh
+@@ -67,9 +67,18 @@ generate_wrappers () {
+ 	mkdir -p .bin &&
+ 	wrap_git .bin/git.a "$DIR_A" &&
+ 	wrap_git .bin/git.b "$DIR_B" &&
++	GENERIC_GIT="$TEST_DIRECTORY/../bin-wrappers/git" &&
++	export GENERIC_GIT &&
+ 	write_script .bin/git <<-\EOF &&
+-	echo >&2 fatal: test tried to run generic git
+-	exit 1
++	case "$1" in
++	env--helper)
++		exec "$GENERIC_GIT" "$@"
++		;;
++	*)
++		echo >&2 fatal: test tried to run generic git: $*
++		exit 1
++		;;
++	esac
+ 	EOF
+ 	PATH=$(pwd)/.bin:$PATH
+ }
+-- 
+2.39.0.508.g93b13bde48
