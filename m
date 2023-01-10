@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5A46CC46467
-	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 05:45:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3DFFEC54EBE
+	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 05:45:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230286AbjAJFpB (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Jan 2023 00:45:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52546 "EHLO
+        id S230312AbjAJFpE (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Jan 2023 00:45:04 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229960AbjAJFoK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2023 00:44:10 -0500
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60C654084D
-        for <git@vger.kernel.org>; Mon,  9 Jan 2023 21:44:02 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id az20so6730584ejc.1
-        for <git@vger.kernel.org>; Mon, 09 Jan 2023 21:44:02 -0800 (PST)
+        with ESMTP id S229953AbjAJFo3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2023 00:44:29 -0500
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 724DC41A78
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 21:44:04 -0800 (PST)
+Received: by mail-ej1-x62e.google.com with SMTP id az20so6730703ejc.1
+        for <git@vger.kernel.org>; Mon, 09 Jan 2023 21:44:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/g93NVg2PymlFEP0Ee00h8xm1bjSzEbRSGsOcQLkisQ=;
-        b=XkovYGvqoCxkVKj2uAI811q2pVPJLcu3UMN1cD7VTUumAWrk1atnRQhnIYQexHNvgr
-         E8A4iO69wtMHrxEKYlx90VQ7FwVJxf08eQ4rdM/c4ladqz4FQ03giPMGII8XRvCQWjze
-         d3qH3jVkxLdNpcX/9IWat9FNGmqRAAKb80t+T1hsXCPhNRvoEpsr+oXdx0pNX0AKN3dj
-         wYPGb2m33z0N1s7ZcglCha0OlFq/2vcb08oIQuts5Gwz7djQeACg+PuDuAuLXim+s/+3
-         aKvmh+Vi5I8OQWY4gYDnVN2psiEnHnlJGYOKm8et7IDKaxz4oaahsga3Zp3b1LT53wbl
-         1SkA==
+        bh=uvVz6LFCFaVeRms1Rh9TNN0SLNxSr/CyENoT9POliGU=;
+        b=CCOh2MkjItdOF5a7iuMDUzZ01i81c1h7iYjao6eswKMq4f6j0czMpWgvN+mY6G2SsN
+         bIYcPouUYDYTtKe2KV0cxVTZmuv9v0uRO11oO3iwANtDIPIZ5RJAoSgdstZhjGoUM+zD
+         zafC19zaqXtniCkBT5jo8eqS8n+KixRG1Wu0eGZ0nYCSVh107eyd2f55fT48z/0rO0eY
+         9PHdvFkeB/d9UbNsUU/0Bj2zp0TGRCFQtwG2vLyRwEWiF9cH2CBU+8KfaI2e7tywsrr6
+         40nuIsHdDyYjxgnDRr+udtL3YyEYRYQZda5dPo7GxpgTQAU9gqVsCpoPBP9vXDplOQuP
+         Olmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/g93NVg2PymlFEP0Ee00h8xm1bjSzEbRSGsOcQLkisQ=;
-        b=MEKzSTND3YLINStUJf6NQ2rNtCHUkKA5o2rc+Jxl4rOzHnzTOJ36iYvLKcP0+LgWtI
-         2CPeFFxuSsZKttpxeeCexTBKXp00h/Ra/C1al4LPhDJPvwWJDQ+9mYNKu74LfW+Vsf7V
-         dP2ncgaiWoVlRN7B1MT/G9H+rmgNMsrB8V8nXeKRtwZ62wJXoQtddWtTGdqSaMHXKdSg
-         VQ7Pn7ZQpoBBThx1V2mueIe2fIoTx+/3Q+GGSPq6GsH1jXjsm/2SjB9CfJgyMnmgsy3z
-         zQe8v3sEXafeLZxzdFc1T8N93Y/IVdoeEFcKcLyRWa4BB/7NtirLd2AygkLPYx9sXUkK
-         hjrg==
-X-Gm-Message-State: AFqh2kqLElVNn0iK5MQgQqSIBo7MWleHsoe7kgiI1z9e2E7NpNW04CiC
-        RKitsfg/nKFmOB4NtSSFpcDTEhdCKZlGKA==
-X-Google-Smtp-Source: AMrXdXtoMY5OLwT3ELX2AMfK2L9+fBD/PdIG4iD3GzYGbAn7RKL3Kstbk7ejGuSB2W6oMBJ4+b4TuA==
-X-Received: by 2002:a17:906:8d0f:b0:7c1:7c38:f079 with SMTP id rv15-20020a1709068d0f00b007c17c38f079mr41754285ejc.71.1673329440652;
-        Mon, 09 Jan 2023 21:44:00 -0800 (PST)
+        bh=uvVz6LFCFaVeRms1Rh9TNN0SLNxSr/CyENoT9POliGU=;
+        b=gUdircxneotADhViezhkWkStNr/c9osZ/RKuGO1CS7Ssu428TzU0EVZ1yNi/CeXh/9
+         /k97H62xA4tUOC5BbkrfOVg3AB9c+EbRimJjjvjPpEufupphzS5DnKD6Qciiz+qMnsZq
+         CZLcp0raKLkLHvQS3Cj+4dXrNE0AVWIv3zYngzYeuSghLTxQp0D5BR3fWJaGDNuTSH3S
+         xlTzkKxXheLfN5FbDgr5l5Ck1LBDAC75M6CpL7WobdfUNQJCRwEFi+AnA+hPjhz1drwW
+         UDRfCRclTCVxtmT8F4ssy8+kiVP6jD71QIPE9l0prHL1/Ng8X61kJq/+5zxRYmd6uX4T
+         K4Jg==
+X-Gm-Message-State: AFqh2kr3XtEWDYXVQ51v2rVVgePQ557XN7M7Ocw6EmOEltz6c72uVcok
+        cP/Kx8rZvJIf9MfNTbbGGwsIDyk0bz3KXA==
+X-Google-Smtp-Source: AMrXdXu803YhZDgBP9BRhjSEEvbzH8TSpNyukv1N4gReRe8OXle/sAmwIM27vl0VKBsrGlLhJ4drQA==
+X-Received: by 2002:a17:906:8447:b0:7c8:9f04:ae7e with SMTP id e7-20020a170906844700b007c89f04ae7emr56714908ejy.22.1673329442518;
+        Mon, 09 Jan 2023 21:44:02 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id g21-20020a170906869500b0084d36fd208esm3428423ejx.18.2023.01.09.21.43.59
+        by smtp.gmail.com with ESMTPSA id g21-20020a170906869500b0084d36fd208esm3428423ejx.18.2023.01.09.21.44.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 21:43:59 -0800 (PST)
+        Mon, 09 Jan 2023 21:44:01 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 11/19] commit-graph: fix a parse_options_concat() leak
-Date:   Tue, 10 Jan 2023 06:43:31 +0100
-Message-Id: <patch-v3-11.19-dfb52dbd1c4-20230110T054138Z-avarab@gmail.com>
+Subject: [PATCH v3 13/19] builtin/merge.c: always free "struct strbuf msg"
+Date:   Tue, 10 Jan 2023 06:43:33 +0100
+Message-Id: <patch-v3-13.19-6d99fdcc44e-20230110T054138Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.0.1195.gabc92c078c4
 In-Reply-To: <cover-v3-00.19-00000000000-20230110T054138Z-avarab@gmail.com>
 References: <cover-v2-00.20-00000000000-20221230T020341Z-avarab@gmail.com> <cover-v3-00.19-00000000000-20230110T054138Z-avarab@gmail.com>
@@ -70,33 +70,70 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When the parse_options_concat() was added to this file in
-84e4484f128 (commit-graph: use parse_options_concat(), 2021-08-23) we
-wouldn't free() it if we returned early in these cases.
+Follow-up 465028e0e25 (merge: add missing strbuf_release(),
+2021-10-07) and address the "msg" memory leak in this block. We could
+free "&msg" before the "goto done" here, but even better is to avoid
+allocating it in the first place.
 
-Since "result" is 0 by default we can "goto cleanup" in both cases,
-and only need to set "result" if write_commit_graph_reachable() fails.
+By repeating the "Fast-forward" string here we can avoid using a
+"struct strbuf" altogether.
 
+Suggested-by: René Scharfe <l.s.r@web.de>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/commit-graph.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ builtin/merge.c                | 11 ++++-------
+ t/t6439-merge-co-error-msgs.sh |  1 +
+ 2 files changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index 0102ac8540e..93704f95a9d 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -269,8 +269,8 @@ static int graph_write(int argc, const char **argv, const char *prefix)
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 0f093f2a4f2..91dd5435c59 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -1560,7 +1560,9 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			!common->next &&
+ 			oideq(&common->item->object.oid, &head_commit->object.oid)) {
+ 		/* Again the most common case of merging one remote. */
+-		struct strbuf msg = STRBUF_INIT;
++		const char *msg = have_message ?
++			"Fast-forward (no commit created; -m option ignored)" :
++			"Fast-forward";
+ 		struct commit *commit;
  
- 	if (opts.reachable) {
- 		if (write_commit_graph_reachable(odb, flags, &write_opts))
--			return 1;
--		return 0;
-+			result = 1;
-+		goto cleanup;
- 	}
+ 		if (verbosity >= 0) {
+@@ -1570,10 +1572,6 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			       find_unique_abbrev(&remoteheads->item->object.oid,
+ 						  DEFAULT_ABBREV));
+ 		}
+-		strbuf_addstr(&msg, "Fast-forward");
+-		if (have_message)
+-			strbuf_addstr(&msg,
+-				" (no commit created; -m option ignored)");
+ 		commit = remoteheads->item;
+ 		if (!commit) {
+ 			ret = 1;
+@@ -1592,9 +1590,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			goto done;
+ 		}
  
- 	if (opts.stdin_packs) {
+-		finish(head_commit, remoteheads, &commit->object.oid, msg.buf);
++		finish(head_commit, remoteheads, &commit->object.oid, msg);
+ 		remove_merge_branch_state(the_repository);
+-		strbuf_release(&msg);
+ 		goto done;
+ 	} else if (!remoteheads->next && common->next)
+ 		;
+diff --git a/t/t6439-merge-co-error-msgs.sh b/t/t6439-merge-co-error-msgs.sh
+index 52cf0c87690..0cbec57cdab 100755
+--- a/t/t6439-merge-co-error-msgs.sh
++++ b/t/t6439-merge-co-error-msgs.sh
+@@ -5,6 +5,7 @@ test_description='unpack-trees error messages'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ 
 -- 
 2.39.0.1195.gabc92c078c4
 
