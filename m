@@ -2,50 +2,51 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D81DDC46467
-	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 06:17:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id AE152C54EBE
+	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 06:17:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230151AbjAJGRn (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Jan 2023 01:17:43 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42966 "EHLO
+        id S229917AbjAJGRp (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Jan 2023 01:17:45 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42982 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230133AbjAJGRl (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S230161AbjAJGRl (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 10 Jan 2023 01:17:41 -0500
 Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91AD91C13E
-        for <git@vger.kernel.org>; Mon,  9 Jan 2023 22:17:39 -0800 (PST)
-Received: by mail-ed1-x535.google.com with SMTP id z11so16018131ede.1
-        for <git@vger.kernel.org>; Mon, 09 Jan 2023 22:17:39 -0800 (PST)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B240C1C912
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 22:17:40 -0800 (PST)
+Received: by mail-ed1-x535.google.com with SMTP id x10so13081521edd.10
+        for <git@vger.kernel.org>; Mon, 09 Jan 2023 22:17:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ah8+QWrIierlKY284d71fyurJUfW7ar0wGxvxOd7pQo=;
-        b=JC8Gs8PFjA0U9XUSqBDTm/waTMXo67qpLd9g6VS5IWX5lZmY46gMwFAEb/AA8Cw/KY
-         bdIcbiUgVfo1Ev8oUMlHwLW9O1v2goZ50IhusMo244ZyaCFATPoabMCAWasQNxIiUhU5
-         B15vyY36jP+2c31DuLdLfboGcbTmTADNkJR5urA+PaPyfTUyCFLkK5mAHyW+CONE/tqE
-         rU5ijYqbi8R1N2QtOUErGxTTNlVNvF3S3EP/tVZvTYkVyyS6G9q3flAOXmBZKJT/yxt/
-         PFbLWvL5RhqyTYCqW+KsDyBOMJuLnPwT29klU6Mubvz9wNbuUEpOB4pD2ZJ27XQpM+89
-         htwg==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KH8wHgZPT5jUEBRn+r5h7oxAazaP5ARLEm+xQHgqjBs=;
+        b=OFlcLWksUheyjMI58HvbbIs77fP2eMBivyHEfDcmjPHdiRZVOB1pcyrXh6BHGCEUwl
+         5vOr4ycFesGRaSKaf+qUN7k6FlG8f0xcX8GBKUDdZza4lkRDZrUWL/uH/h0AE4DNXGZd
+         Fok7haSq0MzC0nN/bmafUD5c5LOWMWIYWqOkMizwfsq+FIaCUh5BA9BCwQfiQt2dHhzX
+         Tm1JQjfr9qh0Pcjo++KqsjEvT4XhxbLS+YuWm602O8R8cPtgedYg9Kg9C9uGx0lwjMTT
+         T/5nWLOhnKZvkS64R8Z8WPdPXpPelhdyf0Aj3fMiPP+BZNoneYHZocszhGaCd96o/G5J
+         PinQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Ah8+QWrIierlKY284d71fyurJUfW7ar0wGxvxOd7pQo=;
-        b=SPgeCA130MVQqLft7VEeqzcOHBN5T5nIt4dI0J2WyrsxKTufsMDvU/lGEE+XrXgbQi
-         THUYRlVjvG0ov+9Gg6XrJmujXbgvU4JDmBWWL8Oy9RpGjde7cH6SDtnUQ9Ehp2a/2YKP
-         t+297u9UQI8VnzH1Pt+/bpXVao6EwfGL+ZAaKa8PMed5UCDG/oNdVM4jK27jgiA2BTSH
-         YzBDzFEUyYvztkGpnRif1Ld7Q137iI/nkQW8SNM6RvCZskh7UJn+oylUxHFuG1d5ypKo
-         s9jOEbX0MyelGJEJPU7EJ1xtsiY+RZPjYqDdskrb3JfUb20KfJ88QYJk7D9MzZQuF3c5
-         XLrw==
-X-Gm-Message-State: AFqh2kq1TJOrWZgb65M8k+knydXQcQpZ2656myFY2cMZNGxs83chNGz/
-        6Lw1DCUbANk8tfchd4iOzY6sBpYPRgA9/g==
-X-Google-Smtp-Source: AMrXdXuV7ujQwiY07ElHGS6Bk0ZKla9843oVLrNrXsGAM57x5sOJFxdrP/NFx7w/CmRras9iR2CYpA==
-X-Received: by 2002:a05:6402:2409:b0:493:597e:2192 with SMTP id t9-20020a056402240900b00493597e2192mr16649013eda.38.1673331457752;
-        Mon, 09 Jan 2023 22:17:37 -0800 (PST)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KH8wHgZPT5jUEBRn+r5h7oxAazaP5ARLEm+xQHgqjBs=;
+        b=QTj7/7/WE7ud8OZY+nITaIsJf3rS70YCII6EKcG5rc9tY7CjQczlcx4qF+ag/f/nhG
+         OGMGxFBGQwwrAqei+lR7W7e17+wvE2gMmwqSeyuIUnK0iq8k7zYjkvIrRmMSDLkwsh1C
+         H9+HiaS6phFgRPZRfY9/Txv0A7CSwFi2YSQbvcWHEn9GvoL0qBp7LQcujoRYwKt5unqu
+         auSqclDomA1t/Pji1dktXm3z/QqVSNAZ87Q4xKNFRcNrYcwFL6xxlkilPSjzsjhhI4QR
+         I0jwuQEjdxGUWm7tKM0xmxpGyvqUXtefmGF3KwUFX6cC+y4K1MEhHOrEUlDY/qKtO+Ps
+         XI1A==
+X-Gm-Message-State: AFqh2kqXMHtD7vZz8BecTj+jIw0q6+nmmLf5PoLMWAYuXwzB1GpWRMec
+        mLf8iiNfQhXmIFWemOH1s19DcITpkL0aAA==
+X-Google-Smtp-Source: AMrXdXtg/+oADhlDyL54HJNL5UbbMLPqlKIjN2KzA75AqnnpR8WjVfZx/UdPAM3qzNftsYTY7KbBqw==
+X-Received: by 2002:a05:6402:c0e:b0:483:2c00:a851 with SMTP id co14-20020a0564020c0e00b004832c00a851mr45879601edb.31.1673331458750;
+        Mon, 09 Jan 2023 22:17:38 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id k16-20020a05640212d000b0048b4e2aaba0sm4555601edx.34.2023.01.09.22.17.36
+        by smtp.gmail.com with ESMTPSA id k16-20020a05640212d000b0048b4e2aaba0sm4555601edx.34.2023.01.09.22.17.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 09 Jan 2023 22:17:37 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -57,10 +58,12 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff Hostetler <jeffhost@microsoft.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 0/5] cache API: always have a "istate->repo"
-Date:   Tue, 10 Jan 2023 07:17:28 +0100
-Message-Id: <cover-0.5-00000000000-20230110T060340Z-avarab@gmail.com>
+Subject: [PATCH 1/5] builtin/difftool.c: { 0 }-initialize rather than using memset()
+Date:   Tue, 10 Jan 2023 07:17:29 +0100
+Message-Id: <patch-1.5-214fe7d3fc2-20230110T060340Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.0.1195.gabc92c078c4
+In-Reply-To: <cover-0.5-00000000000-20230110T060340Z-avarab@gmail.com>
+References: <cover-0.5-00000000000-20230110T060340Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,55 +71,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The "struct index_state" contains a "repo" member, which should be a
-pointer to the repository for that index, but which due to us
-constructing such structs on an ad-hoc basis in various places wasn't
-always available.
+Refactor an initialization of a variable added in
+03831ef7b50 (difftool: implement the functionality in the builtin,
+2017-01-19). This refactoring makes a subsequent change smaller.
 
-We'd thus end up with code like this, in the recent
-ds/omit-trailing-hash-in-index topic:
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ builtin/difftool.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-	struct repository *r = istate->repo ? istate->repo : the_repository;
-
-Really we should be able to trust the "istate->repo", but were
-carrying those sorts of conditionals because our index might come from
-a manually constructed source, so we'd have to fall back to
-"the_repository".
-
-This series changes the relvant code so the "repo" field is always
-non-NULL, as 5/5 here shows we had various workarounds in place for
-that, which can now go away.
-
-See
-https://github.com/avar/git/tree/avar/do-not-lazy-populate-istate-repo
-for passing CI and a fetchable branch for this topic.
-
-See https://lore.kernel.org/git/xmqqmt6vqo2w.fsf@gitster.g/ for
-previous discussion on this topic.
-
-Ævar Arnfjörð Bjarmason (5):
-  builtin/difftool.c: { 0 }-initialize rather than using memset()
-  sparse-index.c: expand_to_path() can assume non-NULL "istate"
-  sparse-index API: fix TODO, BUG() out on NULL ensure_full_index()
-  read-cache.c: refactor set_new_index_sparsity() for subsequent commit
-  treewide: always have a valid "index_state.repo" member
-
- apply.c                   |  2 +-
- builtin/difftool.c        |  4 +---
- builtin/sparse-checkout.c |  1 +
- builtin/stash.c           |  8 ++++----
- builtin/worktree.c        |  2 +-
- fsmonitor-settings.c      | 14 --------------
- fsmonitor.c               |  2 +-
- merge-recursive.c         |  2 +-
- read-cache.c              | 23 +++++++++--------------
- repository.c              |  2 ++
- revision.c                |  2 +-
- sparse-index.c            | 15 ++++-----------
- split-index.c             |  1 +
- unpack-trees.c            |  4 +++-
- 14 files changed, 30 insertions(+), 52 deletions(-)
-
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index d9b76226f6a..1f9d4324df5 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -361,7 +361,7 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 	struct hashmap symlinks2 = HASHMAP_INIT(pair_cmp, NULL);
+ 	struct hashmap_iter iter;
+ 	struct pair_entry *entry;
+-	struct index_state wtindex;
++	struct index_state wtindex = { 0 };
+ 	struct checkout lstate, rstate;
+ 	int err = 0;
+ 	struct child_process cmd = CHILD_PROCESS_INIT;
+@@ -387,8 +387,6 @@ static int run_dir_diff(const char *extcmd, int symlinks, const char *prefix,
+ 	mkdir(ldir.buf, 0700);
+ 	mkdir(rdir.buf, 0700);
+ 
+-	memset(&wtindex, 0, sizeof(wtindex));
+-
+ 	memset(&lstate, 0, sizeof(lstate));
+ 	lstate.base_dir = lbase_dir = xstrdup(ldir.buf);
+ 	lstate.base_dir_len = ldir.len;
 -- 
 2.39.0.1195.gabc92c078c4
 
