@@ -2,118 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7A1F8C67871
-	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 10:54:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3F4F4C54EBC
+	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 12:20:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237981AbjAJKyy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Jan 2023 05:54:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41044 "EHLO
+        id S238387AbjAJMUf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Jan 2023 07:20:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237833AbjAJKyn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2023 05:54:43 -0500
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF3C16A0E8
-        for <git@vger.kernel.org>; Tue, 10 Jan 2023 02:54:28 -0800 (PST)
-Received: by mail-pj1-x1029.google.com with SMTP id o7-20020a17090a0a0700b00226c9b82c3aso12980034pjo.3
-        for <git@vger.kernel.org>; Tue, 10 Jan 2023 02:54:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=c640ise82ULnVdQIVYp6xtme74FKx+Hhsgd7mWbsu8I=;
-        b=YqbC4oNGhn9F8KCpyHkyzz+XPn107bPGaTuhpGpmfoG4PKY5vveCcJec7MoGCz0rEB
-         Rpk0mEimRYFfNf8FYxr68Wmu4bWZV4gT5O68o+UNIbmbiJq2Bb08H0RLB8FWPUBbEu/3
-         FNJXpINsBRYuhJLK1bK/L6wMIYhSXq03a3y/RF7KLjjzp0YNkCHXCEh9TwEiOUqUmQ5+
-         cQahp0vfPcbSLJle5DXLLSm2jkkEauIpfutdFr8Mf4IIbUzCnN6Z3YT7Cr7jF6UL+8aA
-         0Ksy33SZ2mfL1NtoAFA+ecgI/zOFcNmU6UxwEE+xmakN+nVDzHCk+fcT/KR+WGxSuB65
-         H1Yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=c640ise82ULnVdQIVYp6xtme74FKx+Hhsgd7mWbsu8I=;
-        b=RbRc1k6/1k/ORbMvsGV5s+G84LPmmCkFfrHrYoCZCkTquSlEp/ZBxvaX9IAaxEh4cs
-         fTh7zkYpSAvogt83EHNNWcVe/j1++lesLFuqXqp949Y5Qaa19OIZEuAlSc+rJQfJzXDY
-         39PJhvELtmB8yB1CBzTvbzm1fpU/Ev0oguTkRnL+jsh+FVkblwS/IJOfHC0CBVa9KjZu
-         /IttSsDu0sHrU0ytE/V5P4tMqvNWJ7DlcnTp5WsMZAcGs4SbZdcTiLfi9cuvygnhV9Zk
-         D36BYA8eDylnHb+O0zvpR23Cs3UWYu5uNYG8MSYZmRBVV4tJm4MUk4uFMMaaV13xSrFd
-         CHtA==
-X-Gm-Message-State: AFqh2kq1h+HQSzBPdmc/BKPKxdY3EBwBRjfyT3fZK+ytk/cwRpmG/43/
-        wiI+/38Msbr5DZ8/TPezlx6qaC5BidRcD2UTv9ebZwpfsw6fdg==
-X-Google-Smtp-Source: AMrXdXsAgDrV42t6JVefO2gAYVhz9BLPuJ8w20zN6toXTSgngU2UwXOtErx8plIuYXV6yVLvbRhz241SMQT+/AI/6K8=
-X-Received: by 2002:a17:902:9b93:b0:192:a63d:4fb6 with SMTP id
- y19-20020a1709029b9300b00192a63d4fb6mr3074805plp.116.1673348068366; Tue, 10
- Jan 2023 02:54:28 -0800 (PST)
-MIME-Version: 1.0
-References: <CALDp=1EVmQE2NZAd7ccAT0z=R=2S8FvyJzsPNrDeXwdJkEW3Lg@mail.gmail.com>
-In-Reply-To: <CALDp=1EVmQE2NZAd7ccAT0z=R=2S8FvyJzsPNrDeXwdJkEW3Lg@mail.gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Tue, 10 Jan 2023 11:54:16 +0100
-Message-ID: <CAN0heSprKD35P-D7GTVQ20eRsj0AriYEA7iCDnrA9GuiwX0snw@mail.gmail.com>
+        with ESMTP id S238399AbjAJMUM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2023 07:20:12 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6658186CE
+        for <git@vger.kernel.org>; Tue, 10 Jan 2023 04:18:40 -0800 (PST)
+Received: (qmail 17239 invoked by uid 109); 10 Jan 2023 12:18:39 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 10 Jan 2023 12:18:39 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 26833 invoked by uid 111); 10 Jan 2023 12:18:39 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 10 Jan 2023 07:18:39 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Tue, 10 Jan 2023 07:18:39 -0500
+From:   Jeff King <peff@peff.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     Fredrik =?utf-8?B?w5ZiZXJn?= <fredrik@bakskuru.se>,
+        git@vger.kernel.org
 Subject: Re: Bugreport: Prefix - is ignored when sorting (on committerdate)
-To:     =?UTF-8?Q?Fredrik_=C3=96berg?= <fredrik@bakskuru.se>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <Y71Xnx2vmznV913I@coredump.intra.peff.net>
+References: <CALDp=1EVmQE2NZAd7ccAT0z=R=2S8FvyJzsPNrDeXwdJkEW3Lg@mail.gmail.com>
+ <CAN0heSprKD35P-D7GTVQ20eRsj0AriYEA7iCDnrA9GuiwX0snw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAN0heSprKD35P-D7GTVQ20eRsj0AriYEA7iCDnrA9GuiwX0snw@mail.gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hej Fredrik,
+On Tue, Jan 10, 2023 at 11:54:16AM +0100, Martin Ågren wrote:
 
-On Tue, 10 Jan 2023 at 10:50, Fredrik =C3=96berg <fredrik@bakskuru.se> wrot=
-e:
-> - Create a new repository
-> - Add a new file to the repository and commit
-> - Create a tag
-> $ git tag -a TagOne -m ""
-> - Update the file and commit the change
-> - Create a tag
-> $ git tag -a TagTwo -m ""
-> - List tags by committerdate:
-> $ git tag -l --sort=3Dcommitterdate
-> (oldest tag is listed first)
-> - List tags by reversed committerdate:
-> $ git tag -l --sort=3D-committerdate
-> (oldest tag it still listed first)
+> On Tue, 10 Jan 2023 at 10:50, Fredrik Öberg <fredrik@bakskuru.se> wrote:
+> > - Create a new repository
+> > - Add a new file to the repository and commit
+> > - Create a tag
+> > $ git tag -a TagOne -m ""
+> > - Update the file and commit the change
+> > - Create a tag
+> > $ git tag -a TagTwo -m ""
+> > - List tags by committerdate:
+> > $ git tag -l --sort=committerdate
+> > (oldest tag is listed first)
+> > - List tags by reversed committerdate:
+> > $ git tag -l --sort=-committerdate
+> > (oldest tag it still listed first)
+> [...]
+> 
+> This bisects to 7c5045fc18 ("ref-filter: apply fallback refname sort
+> only after all user sorts", 2020-05-03). I've cc-ed the author. That
+> commit does change the behavior for the kind of test repo you describe.
+> 
+> That said, you're using "committerdate" here. If you use "taggerdate"
+> (or "creatordate") I think you'll get the output you expect, even for
+> newer Git versions. Does that help?
 
-> Anything else you want to add:
-> The correct behaviour (reversing sort-order by using the minus-prefix)
-> has been verified in
-> version 2.11.0, 2.11.1, 2.14.2, 2.19.1, 2.19.2, 2.23.0 on CentOS 7.4
-> version 2.31.1 and 2.35.1 on CentOS 7.4 contains the error
-> version 2.34.1.windows.1 contains the error
+Yes, I think that's the crux of the issue here; there is no date sorting
+happening at all, before or after that patch. Depending on what you want
+to do, I think "creatordate" is probably the most common option (it's
+better than taggerdate in that it handles lightweight tags, too). But if
+you really want committer dates, then "--sort=-=*committerdate" would
+work.
 
-This bisects to 7c5045fc18 ("ref-filter: apply fallback refname sort
-only after all user sorts", 2020-05-03). I've cc-ed the author. That
-commit does change the behavior for the kind of test repo you describe.
+> Since you just have two commits in the reproducer, there's a strong
+> correlation between tag names and the timestamps involved. You actually
+> end up sorting by refname: because there is no committerdate for these
+> tags, the refnames are compared as a fallback. While the old code then
+> applied the reversal ('-') to *that*, the new code first fails to find
+> any difference, so doesn't have anything to reverse, then falls back to
+> comparing the refnames, at which point it doesn't consider reversing the
+> result.
+> 
+> All of this is based on my understanding. I could obviously be wrong.
 
-That said, you're using "committerdate" here. If you use "taggerdate"
-(or "creatordate") I think you'll get the output you expect, even for
-newer Git versions. Does that help?
+I think that explanation is exactly correct. The only difference before
+and after that patch is whether the "-" is applied to the fallback
+refname sort.
 
-Since you just have two commits in the reproducer, there's a strong
-correlation between tag names and the timestamps involved. You actually
-end up sorting by refname: because there is no committerdate for these
-tags, the refnames are compared as a fallback. While the old code then
-applied the reversal ('-') to *that*, the new code first fails to find
-any difference, so doesn't have anything to reverse, then falls back to
-comparing the refnames, at which point it doesn't consider reversing the
-result.
+> I suppose it could be argued that the '-' should be applied to the
+> fallback as well, e.g., to uphold some sort of "using '-' should give
+> the same result as piping the whole thing through tac" (i.e., respecting
+> `s->reverse` in `compare_refs()`, if you're following along in
+> 7c5045fc18). With multiple sort keys, some with '-' and some
+> without, we'd grab the '-' from the first key. It seems like that could
+> make sense, actually.
 
-All of this is based on my understanding. I could obviously be wrong.
+I dunno. Just because you are reverse-sorting on one field doesn't
+necessarily imply that you want the tie-breaker to reverse-sort, too. I
+get that it's kind of a "DWIM" when there's a single sorting key, but I
+think the multi-key behavior is harder to explain. In:
 
-I suppose it could be argued that the '-' should be applied to the
-fallback as well, e.g., to uphold some sort of "using '-' should give
-the same result as piping the whole thing through tac" (i.e., respecting
-`s->reverse` in `compare_refs()`, if you're following along in
-7c5045fc18). With multiple sort keys, some with '-' and some
-without, we'd grab the '-' from the first key. It seems like that could
-make sense, actually.
+  git for-each-ref --sort=committername --sort=-committerdate
 
-I might post such a patch, but as noted above, I think what you really
-want to use is "taggerdate". I hope that helps.
+should a refname tie breaker follow the reverse-chronological sort, or
+the in-order name sort? The date sort is the primary key here, so
+respecting it would be most like "tac". But the inner tie-breaker is
+breaking ties on committername, so should it be most like that?
 
-Martin
+I could see it depending on exactly what you're trying to do. Which
+leads me to think the rule should be as simple as possible. You can
+always do:
+
+  git for-each-ref --sort=-refname --sort=-committerdate
+
+to specify exactly what you want.
+
+-Peff
