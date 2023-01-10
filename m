@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 03A18C46467
-	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 13:16:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D63AC54EBC
+	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 13:16:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238646AbjAJNQD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Jan 2023 08:16:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44994 "EHLO
+        id S238647AbjAJNQI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Jan 2023 08:16:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234206AbjAJNPa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2023 08:15:30 -0500
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25F5A574ED
+        with ESMTP id S238524AbjAJNP3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2023 08:15:29 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E23274881B
         for <git@vger.kernel.org>; Tue, 10 Jan 2023 05:15:28 -0800 (PST)
-Received: by mail-wm1-x335.google.com with SMTP id k22-20020a05600c1c9600b003d1ee3a6289so9881037wms.2
+Received: by mail-wm1-x329.google.com with SMTP id ja17so8758070wmb.3
         for <git@vger.kernel.org>; Tue, 10 Jan 2023 05:15:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JosiX1xP/mchjg1cQDmwxKPcSqzEfpT1h8/Zc0H1rWg=;
-        b=a3imvD8PRJBoMCOIRKVMKg8JqaPXSYajk57M+ek/gB9Z/T7dR13N2YU0PnzCgIgNXl
-         uTGyV75P2S3wl8t1Z3ZtHHZLFQLk1Q6gm58UUtP7mkBTpIQpebUDAe0/IBbqmrtQKrvU
-         mO5GFMstE78XJQ0APOI+dwUHR3ILfxWNgiHt/hcIykH7UCrbsjzql/QW3ngc6facK8lE
-         MVRt6bnHgbbq1O+50KKxVOo8cTZJ+JA8Vs+FGNxlmXkJw9H1+KJPG9wIG75Ypg7j3gOV
-         PYIcjIeggiGOrvcOey4QRhmYvTgFiQb9ihF1VnzNqIILuTSA3vNRshb19Z/XPZnzwaS4
-         WV3A==
+        bh=T6kIbfk9ffQmmT7q9M3iKH6tbpMv0HaJHtXL4461qpo=;
+        b=jx7tCY6k5XqkLFTCcgx/1ilCtjEKGuVQW9T+c4jkkLvb0Ih1vCPma6sf1QO9/GLp3s
+         Xoo7Hi947gGrACoRX6aXyIYOIcHdjh58VyIRJl0KjGPk1ii/Mmhce75WtX/MXHse+Nt9
+         ZY46o9N6AYgyJZm78N3k6u/hvW1RwrY4BWAUborRLImOOmt+s4otQ91WlRfpVxHus6hu
+         dYlpwSw2oi9skJsAxbaq8CBcXtBMbi/r2giPQojRJtqqJZi6J9R9aEKzHIjKepKgRpwV
+         SqNUmgWTPingZjdbDfkaf2LwZ+y/w8ebPK7w8WTXZ3+ZjD4lakcE5TZanHiD3sGNp/mq
+         VAYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JosiX1xP/mchjg1cQDmwxKPcSqzEfpT1h8/Zc0H1rWg=;
-        b=ZAbYi7DLFLLqBfXlXEsDZ/eZNJ0QdF0rsFD81UrZ5fjKZRY8efTTPMQ5igjvW6+8gW
-         WrKCnczTw6kCQT+ZVVMj7EcVqt3TDi2nu8HHFugzg3QDznAcN1IHC9oipsRhXgS7JWZL
-         ayCf6mLtfqbMA/iPYHAe6jAIM0wohNSwj6Fm93q8Wi2zN4PxyQKVR25QRS5LoyTzOXAN
-         2TLIbUsi3Jouz/9YmBCOCHxeQLkwrnr27JwK87yUM5OdQ7tKgVape6rSGdmTaC5AnEIn
-         II6hstMWefgm4QqafXFj4DOVLCFAeqlhNJf3d9kgZICso5apO6zRdqNIHtJmcTYKJn1V
-         OlTQ==
-X-Gm-Message-State: AFqh2koe/mN2WLzy3tYlWqjwEgq9ly45rGp+9IiwzwG3ucwIhQJncXhW
-        4ZEgrwzUrWtunsxfEmw3jBUA/XzV5Yc=
-X-Google-Smtp-Source: AMrXdXu18TLaq05b4HGPjTcwemaAg3nWOsjWfLcAuZYhgZ3MxCNHzL1tUI612oSRvvPY5WvSuQ/kYw==
-X-Received: by 2002:a7b:c8ca:0:b0:3cf:728e:c224 with SMTP id f10-20020a7bc8ca000000b003cf728ec224mr49854612wml.6.1673356526598;
-        Tue, 10 Jan 2023 05:15:26 -0800 (PST)
+        bh=T6kIbfk9ffQmmT7q9M3iKH6tbpMv0HaJHtXL4461qpo=;
+        b=Hfhfa+/4B/DofEGHIsE5ZJKV5Wtgh+q5J2SFRTnJhpK+lTAU3x6tGT4IjPu3K4DhKm
+         YCsl81Lf1F54JRyKHeJ2+LL7+VGPZS7J1GDTR7TWREVU/m5t6tAVOSZhwt8ejbWNtJ6U
+         tyNRA9i92aSiEe0jt2oIdJ9t4Q/iecAwqVwOHPOnrq0GJdmZGR2phOHtvJCuB5CUlsX6
+         Nuth6k0DCEdkP+PhDm7Nlwk1hb2vzSou7m3TXoizs4ST9Bu6VprPs0DDR6gMOlJT3ver
+         KpzIOd4EcdIGtcQtnZNQ+BaMf1u7oM4QCzV6vtMgakuJyGCRFn+9iu9NwTYnNsB215uE
+         hvcA==
+X-Gm-Message-State: AFqh2kqkq2VUKRuXlzDPWG+gP4NFvBLMC2mlsrBDtrIGdMfaZT2pqelx
+        syeWKjRLajcSIxiM741ggukB9fZbfgs=
+X-Google-Smtp-Source: AMrXdXtfzX8K+6Rd3HOiURk+SGFjUlG15OTUt5JxEy6UKEOUsg5NPKO2LJLnC0znCge0A5oET4hJTg==
+X-Received: by 2002:a7b:c414:0:b0:3d6:ecc4:6279 with SMTP id k20-20020a7bc414000000b003d6ecc46279mr49831109wmi.27.1673356527307;
+        Tue, 10 Jan 2023 05:15:27 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id u8-20020a05600c19c800b003d9780466b0sm16574861wmq.31.2023.01.10.05.15.25
+        by smtp.gmail.com with ESMTPSA id o19-20020a05600c511300b003d9862ec435sm2783709wms.20.2023.01.10.05.15.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 10 Jan 2023 05:15:26 -0800 (PST)
-Message-Id: <302b789a4869c2aa8a0de2f71a2725c6c567685f.1673356522.git.gitgitgadget@gmail.com>
+Message-Id: <7eed8f353764774cc7335c51338db6cba14675aa.1673356522.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1456.v2.git.1673356521.gitgitgadget@gmail.com>
 References: <pull.1456.git.1673120359.gitgitgadget@gmail.com>
         <pull.1456.v2.git.1673356521.gitgitgadget@gmail.com>
 From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 10 Jan 2023 13:15:20 +0000
-Subject: [PATCH v2 4/5] revisions.txt: be explicit about commands writing
- 'ORIG_HEAD'
+Date:   Tue, 10 Jan 2023 13:15:21 +0000
+Subject: [PATCH v2 5/5] git-rebase.txt: add a note about 'ORIG_HEAD' being
+ overwritten
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,28 +72,41 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Philippe Blain <levraiphilippeblain@gmail.com>
 
-When mentioning 'ORIG_HEAD', be explicit about which command write that
-pseudo-ref, namely 'git am', 'git merge', 'git rebase' and 'git reset'.
+'ORIG_HEAD' is written at the start of the rebase, but is not guaranteed
+to still point to the original branch tip at the end of the rebase.
 
+Indeed, using other commands that write 'ORIG_HEAD' during the rebase,
+like splitting a commit using 'git reset HEAD^', will lead to 'ORIG_HEAD'
+being overwritten. This causes confusion for some users [1].
+
+Add a note about that in the 'Description' section, and mention the more
+robust alternative of using the branch's reflog.
+
+[1] https://lore.kernel.org/git/28ebf03b-e8bb-3769-556b-c9db17e43dbb@gmail.com/T/#m827179c5adcfb504d67f76d03c8e6942b55e5ed0
+
+Reported-by: Erik Cervin Edin <erik@cervined.in>
 Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
 ---
- Documentation/revisions.txt | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Documentation/git-rebase.txt | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
-index 0d2e55d7819..9aa58052bc7 100644
---- a/Documentation/revisions.txt
-+++ b/Documentation/revisions.txt
-@@ -49,7 +49,8 @@ characters and to avoid word splitting.
- `FETCH_HEAD` records the branch which you fetched from a remote repository
- with your last `git fetch` invocation.
- `ORIG_HEAD` is created by commands that move your `HEAD` in a drastic
--way, to record the position of the `HEAD` before their operation, so that
-+way (`git am`, `git merge`, `git rebase`, `git reset`),
-+to record the position of the `HEAD` before their operation, so that
- you can easily change the tip of the branch back to the state before you ran
- them.
- `MERGE_HEAD` records the commit(s) which you are merging into your branch
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index f9675bd24e6..d811c1cf443 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -38,6 +38,13 @@ The current branch is reset to `<upstream>` or `<newbase>` if the
+ `git reset --hard <upstream>` (or `<newbase>`). `ORIG_HEAD` is set
+ to point at the tip of the branch before the reset.
+ 
++[NOTE]
++`ORIG_HEAD` is not guaranteed to still point to the previous branch tip
++at the end of the rebase if other commands that write that pseudo-ref
++(e.g. `git reset`) are used during the rebase. The previous branch tip,
++however, is accessible using the reflog of the current branch
++(i.e. `@{1}`, see linkgit:gitrevisions[7]).
++
+ The commits that were previously saved into the temporary area are
+ then reapplied to the current branch, one by one, in order. Note that
+ any commits in `HEAD` which introduce the same textual changes as a commit
 -- 
 gitgitgadget
-
