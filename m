@@ -2,111 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5F5DC54EBE
-	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 09:04:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 54391C46467
+	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 09:14:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237664AbjAJJEw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Jan 2023 04:04:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51916 "EHLO
+        id S231517AbjAJJOX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Jan 2023 04:14:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59842 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231396AbjAJJET (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2023 04:04:19 -0500
-Received: from ns6.inleed.net (mailout6.inleed.net [IPv6:2a0b:dc80:cafe:106::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D88AC636D
-        for <git@vger.kernel.org>; Tue, 10 Jan 2023 01:02:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bakskuru.se
-        ; s=x; h=Content-Type:To:Subject:Message-ID:Date:From:MIME-Version:Sender:
-        Reply-To:Cc:Content-Transfer-Encoding:Content-ID:Content-Description:
-        Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:
-        In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-        List-Post:List-Owner:List-Archive;
-        bh=nLRaUKWCNujfix3K+iIGtV5+/mRrj/f3OAr7MDASxHA=; b=LovaM6mV3hkV5oLrHmoVjrtzE/
-        EFcydVIH6KzYhMYY4luaQ/JNudP/bowmXT5f3f7L6zxdwx+6SXDi/5m9oyQXZ+ERC7fsF9tR5Vda9
-        Gmz+L3IT6IFqSkHMIg/+n96DOcYHO6+VP5DMxeHnBUwjQgl3ENrO4bl5qTDTrha8a7cYhzKIIG6Tq
-        DvU+puwAHDu+nGEBEthHFTuDsRAyG4cprkOBwm1dO/9zLWkQme1DvidjvED6Hliv9+BAE9g8C1+Yv
-        xXLiHnrmz7FZFsjYw+3saQwaNQlO0viuuNUMFPqgrfujKLfGvGasRzu4why5cKDg50+vqb8FoL9wL
-        ONul02jw==;
-Received: from mail-pl1-f170.google.com ([209.85.214.170])
-        by ns6.inleed.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
-        (Exim 4.96)
-        (envelope-from <fredrik@bakskuru.se>)
-        id 1pFAWp-00CFqF-37
-        for git@vger.kernel.org;
-        Tue, 10 Jan 2023 10:02:44 +0100
-Received: by mail-pl1-f170.google.com with SMTP id d3so12483373plr.10
-        for <git@vger.kernel.org>; Tue, 10 Jan 2023 01:02:41 -0800 (PST)
-X-Gm-Message-State: AFqh2kqjMMTq8wNkV471Q+7bSW7MDA1n6AfQwn/6mtKdbf+GHBz7GXHA
-        r9LkPA/YBdIP8QwHcqHHsOgPF4EQJldVmNeHY1g=
-X-Google-Smtp-Source: AMrXdXuHEIW3Y/nsvyYMu1vGzmJL3IQqCEPbWz/ErOKz6tHwZgV3GehX48d3gWGcMjLLvM1KRpa86GE/fcPOvxQnLo8=
-X-Received: by 2002:a17:90b:3948:b0:227:22d3:c03d with SMTP id
- oe8-20020a17090b394800b0022722d3c03dmr356175pjb.94.1673341359933; Tue, 10 Jan
- 2023 01:02:39 -0800 (PST)
+        with ESMTP id S238167AbjAJJNk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2023 04:13:40 -0500
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB21F4FD7B
+        for <git@vger.kernel.org>; Tue, 10 Jan 2023 01:13:38 -0800 (PST)
+Received: by mail-yb1-xb2d.google.com with SMTP id t15so11171159ybq.4
+        for <git@vger.kernel.org>; Tue, 10 Jan 2023 01:13:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=QWvmFff1uVMakyO561r3489p8Yeu+RljpVCkrP4q8Mc=;
+        b=MxAw2/5GL1gdrpYykGxdWz0SNVIs5g4tYLoKRmVUjPUkIYL365/XmUB7V8B4E4axhb
+         hvoTUon+hRnzLovbA5amULR6qF6S2IaPPZ8F55QZZ5j7AmrSxnMZczDfygyi2aRfpWld
+         /jbcEECdfibbVM00gJJY/PAUfn3ka5G1Xt6jbDrCyW085CVN/adpNC/lnEuzzNyKTnIy
+         a2KOqXQodtIGamFgYADpJmfqVE3swYwMRqiONfrLvBJjvW4fznUr2lqK2p3MbzO3nG2x
+         HSTacF8OW57PVV3V8JZT88kaO3f1zGx11PczNvW+Yr8qch+kP3UMdWJ1ouoIf93X0zgl
+         liJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QWvmFff1uVMakyO561r3489p8Yeu+RljpVCkrP4q8Mc=;
+        b=4ZzbhMkKslaBg0F4TUoARfT8A29cEu0XlKx5FdLFPSl+0Vu0D8E59iC8a6G5zBmkCG
+         kZyUgHW7GCQASHCaRn2k3UPBdb5iu0oxjyQZ0O2BnDbBPnzAp+udNjIuNU8qk7d7pC9+
+         3z1Cn3jKQbMBov9i9tK4KTA3UG6AInp9tDinWP4C/DhWhebIm+X5XIGfQxlyaYWgKF9C
+         tq78d3bI+N1fzfL6YqcBtmo8I8H9Dx9rXE+ax9fmUHMSY/COkKUvLEm3r1jOMArw/s1m
+         T9pBuytX12zSQhV3mUD6w7xT1YHP7YZys4spHEOG1f9CgyWvsFOXDngSKHTK2LvUxdhY
+         Ygog==
+X-Gm-Message-State: AFqh2kqECSpp8CcnHUm5Ic69xh7MCjJWdY9VbkTPki/5+EKRn0/3VUGL
+        wSkJUEbmqOEGu2Ob4Hx3cMuMMWlZxqlu4/pV6pbvmJROonA=
+X-Google-Smtp-Source: AMrXdXtxU5yOUKboLWda4I8aKFTFZ1EDQRWqczYJ5UdrOAYQ1DLM/yWsdlHHP4mdilOD7KE7fKHfHvqHTVrU1/bRvVk=
+X-Received: by 2002:a25:7414:0:b0:701:6660:4386 with SMTP id
+ p20-20020a257414000000b0070166604386mr5116075ybc.366.1673342017971; Tue, 10
+ Jan 2023 01:13:37 -0800 (PST)
 MIME-Version: 1.0
-From:   =?UTF-8?Q?Fredrik_=C3=96berg?= <fredrik@bakskuru.se>
-Date:   Tue, 10 Jan 2023 10:02:28 +0100
-X-Gmail-Original-Message-ID: <CALDp=1EVmQE2NZAd7ccAT0z=R=2S8FvyJzsPNrDeXwdJkEW3Lg@mail.gmail.com>
-Message-ID: <CALDp=1EVmQE2NZAd7ccAT0z=R=2S8FvyJzsPNrDeXwdJkEW3Lg@mail.gmail.com>
-Subject: Bugreport: Prefix - is ignored when sorting (on committerdate)
-To:     git@vger.kernel.org
+References: <pull.1452.git.1672102523902.gitgitgadget@gmail.com> <20230110005251.10539-1-nsengiyumvawilberforce@gmail.com>
+In-Reply-To: <20230110005251.10539-1-nsengiyumvawilberforce@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 10 Jan 2023 10:13:26 +0100
+Message-ID: <CAP8UFD1A8BofxHZP5cJ-xcQA8rbfoLN50hMc-dfUYUOGKqA65A@mail.gmail.com>
+Subject: Re: [PATCH v3 0/1] ref-filter: add new "signature" atom
+To:     Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
+Cc:     git@vger.kernel.org, Hariom Verma <hariom18599@gmail.com>,
+        Jaydeep Das <jaydeepjd.8914@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Authenticated-Id: fredrik@bakskuru.se
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for filling out a Git bug report!
-Please answer the following questions to help us understand your issue.
+On Tue, Jan 10, 2023 at 1:53 AM Nsengiyumva Wilberforce
+<nsengiyumvawilberforce@gmail.com> wrote:
 
-What did you do before the bug happened? (Steps to reproduce your issue)
-- Create a new repository
-- Add a new file to the repository and commit
-- Create a tag
-$ git tag -a TagOne -m ""
-- Update the file and commit the change
-- Create a tag
-$ git tag -a TagTwo -m ""
-- List tags by committerdate:
-$ git tag -l --sort=committerdate
-(oldest tag is listed first)
-- List tags by reversed committerdate:
-$ git tag -l --sort=-committerdate
-(oldest tag it still listed first)
+>  Documentation/git-for-each-ref.txt |  27 +++++++
+>  ref-filter.c                       | 101 +++++++++++++++++++++++++
+>  t/t6300-for-each-ref.sh            | 116 +++++++++++++++++++++++++++++
+>  3 files changed, 244 insertions(+)
+>
+> Range-diff against v2:
+> 1:  ce51d8e79e = 1:  ce51d8e79e ref-filter: add new "signature" atom
 
-What did you expect to happen? (Expected behavior)
-Using the minus-sign as prefix is supposed to reverse the sorting
-order, listing the newest item first. I expected the newest tag to be
-listed first
+It's strange that it's saying nothing changed compared to v2. I guess
+the v2 it's talking about is not actually the v2 you sent to the list,
+right?
 
-What happened instead? (Actual behavior)
-The minus-sign was ignored, and the oldest tag was still listed first
+Anyway it's better if you can describe a bit with your own words in
+the cover letter what changed, and sometimes even what didn't change,
+since the previous version you sent.
 
-What's different between what you expected and what actually happened?
-I expected the newest tag to be listed first when the minus-sign was
-used as a prefix, but the oldest tag was still listed first.
+For example, here you can say that you decided to actually remove the
+test that checked the %(signature) format and explain a bit the reason
+why you did that.
 
-Anything else you want to add:
-The correct behaviour (reversing sort-order by using the minus-prefix)
-has been verified in
-version 2.11.0, 2.11.1, 2.14.2, 2.19.1, 2.19.2, 2.23.0 on CentOS 7.4
-version 2.31.1 and 2.35.1 on CentOS 7.4 contains the error
-version 2.34.1.windows.1 contains the error
+You can also send links in the cover letter to the branch(es) (on
+GitHub, GitLab or other such platforms) that you used for this and
+previous versions of the patch (or patch series). It can help people
+try it and look at the changes on their own system.
 
-Please review the rest of the bug report below.
-You can delete any lines you don't wish to share.
-
-[System Info]
-git version:
-git version 2.34.1.windows.1
-cpu: x86_64
-built from commit: 2ca94ab318509b3c271e82889938816bad76dfea
-sizeof-long: 4
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-uname: Windows 10.0 19042
-compiler info: gnuc: 11.2
-libc info: no libc information available
-$SHELL (typically, interactive shell): C:\Program Files\Git\usr\bin\bash.exe
-
-
-[Enabled Hooks]
+Thanks.
