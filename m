@@ -2,111 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8D63AC54EBC
-	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 13:16:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 55FC8C46467
+	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 13:34:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238647AbjAJNQI (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Jan 2023 08:16:08 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45050 "EHLO
+        id S238524AbjAJNdm (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Jan 2023 08:33:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238524AbjAJNP3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2023 08:15:29 -0500
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E23274881B
-        for <git@vger.kernel.org>; Tue, 10 Jan 2023 05:15:28 -0800 (PST)
-Received: by mail-wm1-x329.google.com with SMTP id ja17so8758070wmb.3
-        for <git@vger.kernel.org>; Tue, 10 Jan 2023 05:15:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T6kIbfk9ffQmmT7q9M3iKH6tbpMv0HaJHtXL4461qpo=;
-        b=jx7tCY6k5XqkLFTCcgx/1ilCtjEKGuVQW9T+c4jkkLvb0Ih1vCPma6sf1QO9/GLp3s
-         Xoo7Hi947gGrACoRX6aXyIYOIcHdjh58VyIRJl0KjGPk1ii/Mmhce75WtX/MXHse+Nt9
-         ZY46o9N6AYgyJZm78N3k6u/hvW1RwrY4BWAUborRLImOOmt+s4otQ91WlRfpVxHus6hu
-         dYlpwSw2oi9skJsAxbaq8CBcXtBMbi/r2giPQojRJtqqJZi6J9R9aEKzHIjKepKgRpwV
-         SqNUmgWTPingZjdbDfkaf2LwZ+y/w8ebPK7w8WTXZ3+ZjD4lakcE5TZanHiD3sGNp/mq
-         VAYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=T6kIbfk9ffQmmT7q9M3iKH6tbpMv0HaJHtXL4461qpo=;
-        b=Hfhfa+/4B/DofEGHIsE5ZJKV5Wtgh+q5J2SFRTnJhpK+lTAU3x6tGT4IjPu3K4DhKm
-         YCsl81Lf1F54JRyKHeJ2+LL7+VGPZS7J1GDTR7TWREVU/m5t6tAVOSZhwt8ejbWNtJ6U
-         tyNRA9i92aSiEe0jt2oIdJ9t4Q/iecAwqVwOHPOnrq0GJdmZGR2phOHtvJCuB5CUlsX6
-         Nuth6k0DCEdkP+PhDm7Nlwk1hb2vzSou7m3TXoizs4ST9Bu6VprPs0DDR6gMOlJT3ver
-         KpzIOd4EcdIGtcQtnZNQ+BaMf1u7oM4QCzV6vtMgakuJyGCRFn+9iu9NwTYnNsB215uE
-         hvcA==
-X-Gm-Message-State: AFqh2kqkq2VUKRuXlzDPWG+gP4NFvBLMC2mlsrBDtrIGdMfaZT2pqelx
-        syeWKjRLajcSIxiM741ggukB9fZbfgs=
-X-Google-Smtp-Source: AMrXdXtfzX8K+6Rd3HOiURk+SGFjUlG15OTUt5JxEy6UKEOUsg5NPKO2LJLnC0znCge0A5oET4hJTg==
-X-Received: by 2002:a7b:c414:0:b0:3d6:ecc4:6279 with SMTP id k20-20020a7bc414000000b003d6ecc46279mr49831109wmi.27.1673356527307;
-        Tue, 10 Jan 2023 05:15:27 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id o19-20020a05600c511300b003d9862ec435sm2783709wms.20.2023.01.10.05.15.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Jan 2023 05:15:26 -0800 (PST)
-Message-Id: <7eed8f353764774cc7335c51338db6cba14675aa.1673356522.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1456.v2.git.1673356521.gitgitgadget@gmail.com>
-References: <pull.1456.git.1673120359.gitgitgadget@gmail.com>
-        <pull.1456.v2.git.1673356521.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Tue, 10 Jan 2023 13:15:21 +0000
-Subject: [PATCH v2 5/5] git-rebase.txt: add a note about 'ORIG_HEAD' being
- overwritten
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        with ESMTP id S238762AbjAJNde (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2023 08:33:34 -0500
+Received: from ns6.inleed.net (mailout6.inleed.net [IPv6:2a0b:dc80:cafe:106::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CAA13BE9C
+        for <git@vger.kernel.org>; Tue, 10 Jan 2023 05:33:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bakskuru.se
+        ; s=x; h=Content-Transfer-Encoding:Content-Type:Cc:To:Subject:Message-ID:Date
+        :From:In-Reply-To:References:MIME-Version:Sender:Reply-To:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+        List-Post:List-Owner:List-Archive;
+        bh=nh9raGOkaufGhGnHRj+xJrjOFueEkVg4W6oCqftQRmg=; b=LnWFp8dRh9DKEwod3Uh6bZG1+4
+        AJyo6hAL/YGE1/sXUANqYxkUVrUVqKMYmW/vOW6cPERNUjNIMo/D/NSX/Skr+0SneYpedAG0k95xH
+        Ka79zsrpGQblX45y97hn+IQqb6dOZJ2djtO1LhwhFUpHY9rsNBsAUSCdV03fK39MmpL8luYvxCl7l
+        QgHy33lc/2LhVjEYIKR0aDAb0WNG7ufhdlosComEz+A/uistfPGxmjctiw/5NoV0706tPc7sgvQi5
+        keNp6RSApgw4tNp9g9k8UjsPHWe+0ggciVYJ5QhfxSb3ShLR2f1uqRzq52A1AxfyZQscjmY8Cn2M8
+        i0T0JhWw==;
+Received: from mail-pf1-f176.google.com ([209.85.210.176])
+        by ns6.inleed.net with esmtpsa  (TLS1.2) tls TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+        (Exim 4.96)
+        (envelope-from <fredrik@bakskuru.se>)
+        id 1pFEkq-00De0A-0Y
+        for git@vger.kernel.org;
+        Tue, 10 Jan 2023 14:33:28 +0100
+Received: by mail-pf1-f176.google.com with SMTP id s3so6298815pfd.12
+        for <git@vger.kernel.org>; Tue, 10 Jan 2023 05:33:27 -0800 (PST)
+X-Gm-Message-State: AFqh2krEodySiIFMKIFZVD5dGAZon/7SyEzTt8/5a2fqcSKmOApfx3vj
+        S6F+O9iiAmoCtgkdp59D4Zmau4mvcTgELsmakRg=
+X-Google-Smtp-Source: AMrXdXs0nybrC1N6VhRqrbzIJ923E36nbqBlM3ncOOybUN0NlDSK+Luw19DFqldctJDOB+YqfQmkO5XRUnQBxv5TzEg=
+X-Received: by 2002:a62:1556:0:b0:58b:87f:9a70 with SMTP id
+ 83-20020a621556000000b0058b087f9a70mr100153pfv.1.1673357606187; Tue, 10 Jan
+ 2023 05:33:26 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Erik Cervin Edin <erik@cervined.in>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+References: <CALDp=1EVmQE2NZAd7ccAT0z=R=2S8FvyJzsPNrDeXwdJkEW3Lg@mail.gmail.com>
+ <CAN0heSprKD35P-D7GTVQ20eRsj0AriYEA7iCDnrA9GuiwX0snw@mail.gmail.com>
+ <Y71Xnx2vmznV913I@coredump.intra.peff.net> <CAN0heSqvqnCHPa-RQ3JuxxP7M_k1ORYOAV9aG+8EuXvB1GZukw@mail.gmail.com>
+In-Reply-To: <CAN0heSqvqnCHPa-RQ3JuxxP7M_k1ORYOAV9aG+8EuXvB1GZukw@mail.gmail.com>
+From:   =?UTF-8?Q?Fredrik_=C3=96berg?= <fredrik@bakskuru.se>
+Date:   Tue, 10 Jan 2023 14:33:14 +0100
+X-Gmail-Original-Message-ID: <CALDp=1GBtibTR5SvG8sOX14aODtdEJWhL_PCP1mzTLmX9V0sow@mail.gmail.com>
+Message-ID: <CALDp=1GBtibTR5SvG8sOX14aODtdEJWhL_PCP1mzTLmX9V0sow@mail.gmail.com>
+Subject: Re: Bugreport: Prefix - is ignored when sorting (on committerdate)
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Authenticated-Id: fredrik@bakskuru.se
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+Thanks for the  quick response! I've been playing with creatordate and
+it seems to work with with both older and newer versions of git.
 
-'ORIG_HEAD' is written at the start of the rebase, but is not guaranteed
-to still point to the original branch tip at the end of the rebase.
+I am trying to understand what I did wrong. I guess you are saying
+that I tried to use the field committerdate, which is not available on
+the tags? And that the handling of this situation has changed since
+git/2.23? Hence I got different results?
 
-Indeed, using other commands that write 'ORIG_HEAD' during the rebase,
-like splitting a commit using 'git reset HEAD^', will lead to 'ORIG_HEAD'
-being overwritten. This causes confusion for some users [1].
+/Fredrik
 
-Add a note about that in the 'Description' section, and mention the more
-robust alternative of using the branch's reflog.
-
-[1] https://lore.kernel.org/git/28ebf03b-e8bb-3769-556b-c9db17e43dbb@gmail.com/T/#m827179c5adcfb504d67f76d03c8e6942b55e5ed0
-
-Reported-by: Erik Cervin Edin <erik@cervined.in>
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
- Documentation/git-rebase.txt | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index f9675bd24e6..d811c1cf443 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -38,6 +38,13 @@ The current branch is reset to `<upstream>` or `<newbase>` if the
- `git reset --hard <upstream>` (or `<newbase>`). `ORIG_HEAD` is set
- to point at the tip of the branch before the reset.
- 
-+[NOTE]
-+`ORIG_HEAD` is not guaranteed to still point to the previous branch tip
-+at the end of the rebase if other commands that write that pseudo-ref
-+(e.g. `git reset`) are used during the rebase. The previous branch tip,
-+however, is accessible using the reflog of the current branch
-+(i.e. `@{1}`, see linkgit:gitrevisions[7]).
-+
- The commits that were previously saved into the temporary area are
- then reapplied to the current branch, one by one, in order. Note that
- any commits in `HEAD` which introduce the same textual changes as a commit
--- 
-gitgitgadget
+Den tis 10 jan. 2023 kl 14:05 skrev Martin =C3=85gren <martin.agren@gmail.c=
+om>:
+>
+> On Tue, 10 Jan 2023 at 13:18, Jeff King <peff@peff.net> wrote:
+> >
+> > On Tue, Jan 10, 2023 at 11:54:16AM +0100, Martin =C3=85gren wrote:
+> >
+> > > I suppose it could be argued that the '-' should be applied to the
+> > > fallback as well, e.g., to uphold some sort of "using '-' should give
+> > > the same result as piping the whole thing through tac" (i.e., respect=
+ing
+> > > `s->reverse` in `compare_refs()`, if you're following along in
+> > > 7c5045fc18). With multiple sort keys, some with '-' and some
+> > > without, we'd grab the '-' from the first key. It seems like that cou=
+ld
+> > > make sense, actually.
+> >
+> > I dunno. Just because you are reverse-sorting on one field doesn't
+> > necessarily imply that you want the tie-breaker to reverse-sort, too. I
+> [...]
+>
+> > I could see it depending on exactly what you're trying to do. Which
+> > leads me to think the rule should be as simple as possible. You can
+> > always do:
+> >
+> >   git for-each-ref --sort=3D-refname --sort=3D-committerdate
+> >
+> > to specify exactly what you want.
+>
+> Indeed. So probably best to leave it as-is, then.
+>
+> Martin
