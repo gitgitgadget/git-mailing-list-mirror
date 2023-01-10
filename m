@@ -2,126 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 43CCEC5479D
-	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 02:43:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E458FC54EBE
+	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 04:49:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229727AbjAJCnx (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 9 Jan 2023 21:43:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34128 "EHLO
+        id S229540AbjAJEtg (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 9 Jan 2023 23:49:36 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229582AbjAJCnw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 9 Jan 2023 21:43:52 -0500
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACAE92718E
-        for <git@vger.kernel.org>; Mon,  9 Jan 2023 18:43:50 -0800 (PST)
-Received: by mail-lj1-x232.google.com with SMTP id q2so11005242ljp.6
-        for <git@vger.kernel.org>; Mon, 09 Jan 2023 18:43:50 -0800 (PST)
+        with ESMTP id S229546AbjAJEtd (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 9 Jan 2023 23:49:33 -0500
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11ED23FC92
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 20:49:32 -0800 (PST)
+Received: by mail-oi1-x22c.google.com with SMTP id s73so253558oie.10
+        for <git@vger.kernel.org>; Mon, 09 Jan 2023 20:49:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=rRtiURg/peYnt/8M0e62lg4cm8lihAoLnNM0wFQfBnU=;
-        b=UKdy8h0VUPavR+Ku2a3u9D/v/8Rblb7+0+/UQ7/eEXOtj/Khl+59IHRUCESlZ0up4e
-         /Bnayn39sR86mvyAR/5Iba3mIookvDMd5b7/99zkpp0dOTEgFTK8mZEp2OsKAIfPBDjJ
-         wNB8q6DlLud0ng3sewC4STyenj508Se6V4nqccgJy1gHiTVDiebzioEY6MkBHshwSi8O
-         BR2bhRp8uSQdkhQX//xHgvo5s12E5mqTlBzsZPKGCmusftgE7c4vYBwyYGbYO6VEfBgQ
-         Lk30wb5OxYr6VRPFljLeaQhb+D3FEarjAUCPWsqCybaNYeCPOk8o8SIywv50UDGZVXaz
-         tfZw==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pPLk5GEoCVNQFGIy/Bhn62KLBq7CL+fo8/SF5sIBfxw=;
+        b=NfmaqhoAXNLa1Ak8endhh+Mfh27/qGRKdGedinm+6N8NWgJxJ13JYnftVKu0urnHIe
+         XO9JJhb9IEi2ikuraktLjO0eZ20xpjUTj49HSvu2gTbaEv7KE4Iib8C7DTNsny/JU03T
+         NGIFj7ChSTT0tasT3F8EGlQ3FkiKvb40EwUYwxox9GbSI1wT3bDrQRcJHWq8rQioCke/
+         OBGhQR0G+1wVgZFy8p8d8d2w0VLt30TY6mhUWecxtJ5onwR+TNiZpRo3ajsk6hhM43Oq
+         ODEvw4KFQYF9yvFHt2RbjJ5du5lLE2d4fQa01fMKT4b3leLevLp0teaBKpDHlzgzp7Wo
+         huqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rRtiURg/peYnt/8M0e62lg4cm8lihAoLnNM0wFQfBnU=;
-        b=Sa2ugRPktVV15rCsgwi4tk4AHDANREvINRsL/IDcwo4rHBq0cI1uaXyKi2BdLWFta6
-         rtW+r1rNN+dBrocJm+v5a+OeJjtYJvj9wVI02FgGq7VYlxLGlzVjoa8Tjum2bWf4+lm7
-         frbz7AfBEdpTUqabT03h/Do4HPLURYVwgnNRnXRyypdKHSbpUqAN0mMTf4s7moCBOiKA
-         3guchP872YYC7VdImlX5AfwRlI0Imwjb2db6w+bU9xJr4So0YE1ZaZGkSmtZGpT9KX9M
-         TJ9w9vZysfj8ooRh0l+poHBc641W4QkGw2CJWSOOkZuOAKoWx5H5GGj3P6+x2XufiQnR
-         JMIw==
-X-Gm-Message-State: AFqh2kqliWthGP9VELA5Euujn7ADExJyveoFrJRk0T80DBCczOtf5M96
-        38HOl6IJMKIOw8P8D5RzAMJ9Jrxk0IkcATvTIbdDdkuSxBQ=
-X-Google-Smtp-Source: AMrXdXvLUuJfJF2CwSAmjZQFLxTll1Ym0/hcYgYFhHw1TA41qGLq6FNOmSqg6W84aZPBIvfpjsdNIYESYUwE1Szisqo=
-X-Received: by 2002:a05:651c:168d:b0:281:c7e8:cfd3 with SMTP id
- bd13-20020a05651c168d00b00281c7e8cfd3mr882905ljb.521.1673318628846; Mon, 09
- Jan 2023 18:43:48 -0800 (PST)
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pPLk5GEoCVNQFGIy/Bhn62KLBq7CL+fo8/SF5sIBfxw=;
+        b=mYTRuz+hF57yaP6aXb992FFPe0mF0hjhST6dqiry0Ihj2xMyRLI70Q0isVcus+m0BI
+         F7yRVe+jvoRGfpZJRSx6wErG62C5vFZdYUeggjrEiwtGtPZJ13ISI3tnwZ54H61NYwcO
+         VM2IgPt15tzvBuH9SEjTCWGw124E0TXbL8XqU0u0YYMeM0UcF8OCUdsU5qdwbMP306ec
+         wF5H/IhO4wp8tL/W1Ocw60yu/x7TJ9o4DofHJXSeg2BneSR9gkZ4Fvznj+Iu8Zv8MHMg
+         EpwFJecCUwf+QIUSlDbc/GD0o5eOS0+NdajGUSzi4k4lif2nEI84MoMuraK77c09oZB/
+         HF9g==
+X-Gm-Message-State: AFqh2kpcmhYSCYjoIlX/TubZwopaqzQDoSY2V53m7OTNUrPG9deCycXV
+        oLiXB+pSUV/kjfjuqCyw8Z7nLyOXtZ0yFFjGLRU=
+X-Google-Smtp-Source: AMrXdXvYLN4AD1kDp+d/H1mXruc6J/GmS72u7FDBU3Byilx+irrm99vG53ns++MA9PUSyC0LZtRj84gjcpXYYWEOWc8=
+X-Received: by 2002:a05:6808:1d9:b0:359:f10b:5477 with SMTP id
+ x25-20020a05680801d900b00359f10b5477mr3753236oic.277.1673326171306; Mon, 09
+ Jan 2023 20:49:31 -0800 (PST)
 MIME-Version: 1.0
-References: <PH7PR12MB779560B6C003FEE76E4F2471F1FE9@PH7PR12MB7795.namprd12.prod.outlook.com>
-In-Reply-To: <PH7PR12MB779560B6C003FEE76E4F2471F1FE9@PH7PR12MB7795.namprd12.prod.outlook.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 9 Jan 2023 18:42:00 -0800
-Message-ID: <CABPp-BE_FLFL3-s3936zWWfaORBPim14A-oqVNo+8gx+CMduHA@mail.gmail.com>
-Subject: Re: Reducing Git Repository size - git-filter-repo doesn't help
-To:     fawaz ahmed0 <fawazahmed0@hotmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+References: <20230108062335.72114-1-carenas@gmail.com> <20230108155217.2817-1-carenas@gmail.com>
+ <230109.86v8lf297g.gmgdl@evledraar.gmail.com>
+In-Reply-To: <230109.86v8lf297g.gmgdl@evledraar.gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Mon, 9 Jan 2023 20:49:20 -0800
+Message-ID: <CAPUEsphgxU4R6PTEd1N7VwQ+Da1CRRvyNkeas0k2gn0WkDA+2A@mail.gmail.com>
+Subject: Re: [PATCH v2] grep: correctly identify utf-8 characters with \{b,w}
+ in -P
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com,
+        demerphq <demerphq@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Jan 8, 2023 at 6:54 PM fawaz ahmed0 <fawazahmed0@hotmail.com> wrote:
+On Mon, Jan 9, 2023 at 4:17 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
+ab@gmail.com> wrote:
+>Rather than trying to opt-out with "/a" or "/aa" I think this should be op=
+t-in.
 >
-> Hi,
->
-> I have this huge repo: https://github.com/fawazahmed0/currency-api#readme  and I am trying to reduce its size.
->
-> I have run filter-repo script on this repo (  https://github.com/fawazahmed0/currency-api/blob/1/.github/workflows/cleanup-repo.yml )
+> As the example at the start shows you can already do this with "(*UCP)"
+> in the pattern, so perhaps we should just link to the pcre2pattern(3)
+> manual from git-grep(1)?
 
-Why are you cleaning up in a CI task?  filter-repo is intended for a
-one-shot "flag day" type cleanup, not something you repeatedly do.
-Something seems a bit off already.
+Considering that PCRE is used internally even for cases that don't
+specify -P how would that opt-in work?
 
-> The commits were reduced from 1k to 600 , but the space used is still same. (i.e size-pack: 6.47 GiB , https://github.com/fawazahmed95/currency-api/actions/runs/3865919157/jobs/6589710845#step:5:1498 )
+For example, in a repository with code that uses utf identifiers, the
+following will fail:
 
-You show the ending size, but not the starting.  Could you provide
-that number and how you got it, so we can see what you're measuring
-(especially since below it's not at all clear what you're even
-measuring?)
+  $ git grep -w -E motion
+  u.c:  int =C3=A9motion =3D 0;
+  $ git grep -w -E '(*UCP)motion'
+  fatal: command line, '(*UCP)motion': Invalid preceding regular expression
+  $ git -P grep -P -w '(*UCP)motion'
+  u.c:  int =C3=A9motion =3D 0;
 
-The reduction in commits suggests it certainly did do some kind of
-pruning, and you might also want to look at the output of running
-"python3 git-filter-repo --analyze", both before and after filtering,
-to get an idea of what's is/was using lots of space.
+Carlo
 
-Taking a closer look, I suspect you are missing some important
-cleaning.  When there are multiple copies of a file in a repository,
-git only stores one version.  Based on
-https://github.com/fawazahmed0/currency-api/issues/55, all the files
-that are now in directories that you are deleting used to be in the
-root folder under another name.  The files with the old name aren't
-going to be deleted by your pruning since you only requested that the
-new names of the files be deleted.  If I'm understanding your
-structure correctly (I didn't clone your repo or try this out; I'm
-making inferences based on poking around at the links you provided and
-looking at that issue), the upshot of that is that your filtering
-probably won't shrink things much since you are still keeping a copy
-of those files.  Again, "python3 git-filter-repo --analyze" both
-before and after filtering will help you find these kinds of things
-and/or other problems.
-
-> Almost all commits of this repo were applied on partially cloned repository: ( https://github.com/fawazahmed0/currency-api/blob/1/.github/workflows/run.yml )
-> So I guess it had never run any git maintenance task in it's life.
-
-How exactly are you measuring the size, given that you have a partial
-clone?  You don't even have the objects in order to measure, so I
-don't understand how you are measuring.  I'm even suspecting you are
-measuring something else entirely; could you clarify all your size
-measurements and how you got them?
-
-> I am not sure what needs to be done to reduce it's space utilization. ( https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github#:~:text=less%20than%205%20GB%20is%20strongly%20recommended )
-
-Note that git-filter-repo only changes the size of the _local_ repo.
-You made an additional clone within GitHub Actions, and then
-filter-repo shrinks *that* clone.  Even if you had deleted all copies
-of older files you don't want anymore locally (which is suspect as I
-noted above), your force pushing isn't going to shrink the size of the
-repo on the server (i.e. on GitHub) since there are pull requests in
-your repo that GitHub won't allow you to overwrite via force-push, and
-those pull requests still hold on to the old history.
-
-You probably want to read the "DISCUSSION" section of the filter-repo
-manual, and you may also want to see GitHub's documentation on
-shrinking repos, up at
-https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository.
-It appears you've skipped the whole "Fully removing the data from
-GitHub" section of their documentation.
+CC removed gnu and the obsoleted PCRE developer list (if really needed
+would be better to use the documented pcre2-dev@googlegroups.com,
+instead)
