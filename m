@@ -2,178 +2,207 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C93BAC54EBE
-	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 05:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 89C25C54EBE
+	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 05:44:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229692AbjAJFkd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Jan 2023 00:40:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51220 "EHLO
+        id S229889AbjAJFoC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Jan 2023 00:44:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbjAJFk3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2023 00:40:29 -0500
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 835E13F44F
-        for <git@vger.kernel.org>; Mon,  9 Jan 2023 21:40:27 -0800 (PST)
-Received: by mail-wm1-x32e.google.com with SMTP id o15so7940763wmr.4
-        for <git@vger.kernel.org>; Mon, 09 Jan 2023 21:40:27 -0800 (PST)
+        with ESMTP id S229747AbjAJFny (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2023 00:43:54 -0500
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5579641027
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 21:43:52 -0800 (PST)
+Received: by mail-ej1-x629.google.com with SMTP id vm8so25800245ejc.2
+        for <git@vger.kernel.org>; Mon, 09 Jan 2023 21:43:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=MAwg3IGR6/9CMo+0/Wrh3zXVF+F0ISvqnkYgr2kuaWk=;
-        b=cvJTvfGGM5p2126VdXIGS7RaFJCIBCFciZb1hhvU0lneDQyeyi9ru+yr0XMQn72jP4
-         gdDcM41E546lmH30XP7Hvgm36phN4povlbbj3V5kFTHrF4UGazaTNBH1ctHj/AX8FXun
-         K8mTv1iT/MkWP1knwH9EHWWHCLz1bVFQLXu9oGuQsADEViDMgk+kaR1enZY7dLPtDFwj
-         jntcmPYEvtfrKjPZpU7b/Q4zBkR2YOHR5aj3EuvwKccz+GefqLh9tww+XLOCTNS6x876
-         lk58i2V5a01z9beyPGDkXFZbqV4S8qrUfJ2te9dTYu1DY3I+j/TiE/7rRjC8bZauLKHo
-         owtA==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ymo1KbUjIX0G0PqU7miQNpU6f7crkKlp/YySYIUTvRs=;
+        b=RFfRT4O5UYnDwyZtnnYOrQDiqSuTtjj1ZK+wCqkDRdphtDR62fGbU1nyGNiltUxDMV
+         L0YBdN9QN3x+zCz8Ld3F2jz9TcBEcthbWcjF+XxA45X3lzJndxYgdjo1Oa7OOS+CX1h8
+         Ftjg5rn9jRdJye4Zr3D4tFm/7dGKxYNvXL4hQO3G1mZ1QZoB1aju1P7fTUN+VfBBityD
+         qtuJTq1UwmgKTtTwn5g1GO7/v8PJXMwY2mrVhC94wXHq7GQPfDcakO/roTSPS0Y2djrb
+         BDHiOga9NAsMyisg78tn5LkB9CTxTKhlBQGXp+N9dD/tdWCRYMM4s+w1wwtCKJJub4io
+         fw/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MAwg3IGR6/9CMo+0/Wrh3zXVF+F0ISvqnkYgr2kuaWk=;
-        b=bOXw0s91jsNLzvytTEKDoZhcQUELz1LfS/eDNKkjV9RO/NOsvAuefk4s6cMwZSoqGm
-         0oi4RpG0dpPblSfcf6NquI6vJVEJonYZ1jmMxUpdfdrjWHLI682kUPAsudWMvfWTNNZR
-         Qavvc1v8AaZMLPb1rhbxUDl9yysMuqT9EyCK4OPRphy8NgNqoBfG3J2e2HOvkOwM8jcq
-         Vfy2QBhOzFdA0o+a64YKrGWU9m18XptKkgy1Wvx4EtHzsdKOkN5MOqloSS2z/061saXA
-         LZkN5OBJR6vnoZbiPQfukKJ8SuQv4dQLk3dpnnqJnkhN2dG8UKq7lH4ORQMsRpa2D3b3
-         f/LA==
-X-Gm-Message-State: AFqh2ko9QGl5SwDQN/zlsLRO861l/LXTokhPn1nek7h7Ncf48UmlDU+i
-        +vrHLgarabHZIA+fQhkBjzU=
-X-Google-Smtp-Source: AMrXdXu8ImuNI28YcO/wYdt8pdmgyTOlONBBNDjDBFyt58kycjz1hVj+bGlEkjFdnlxoqcwlUZweZw==
-X-Received: by 2002:a05:600c:35d4:b0:3d2:2d2a:d581 with SMTP id r20-20020a05600c35d400b003d22d2ad581mr47374392wmq.30.1673329225903;
-        Mon, 09 Jan 2023 21:40:25 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id g14-20020a05600c4ece00b003d9ea176d54sm11252975wmq.27.2023.01.09.21.40.24
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ymo1KbUjIX0G0PqU7miQNpU6f7crkKlp/YySYIUTvRs=;
+        b=xIG473OpjCgFCqny+osHIINZuFbGwDmNj0Jd1se1DDznomxQ20sRWjEmLHnLbfRNiZ
+         gkXU2jL+0wg4geF8RZC3sHcJUCFB5ig+EaWfe7fZ/Qkj+a4ivQDe2l4e6Gm+S+Q+ZrNt
+         Fnpgg5IK1pYVCBrj0zEy87OwKiEAo7nlnw3YYlaGhyyy/yCJlvkN3WHbMQ8qVKU0IrOc
+         6D7jd8F/nhREefVAU5IGKN8npOhjg1K3rhi/5oHX8yE25E/ye39dr+bgKzhIZfMEMrb6
+         AYk+T1xuVHFGr3CXF/pwpZMXVC9GXMLhSj93cxYbSrksHceAL4lO8eNxPTjxEnn9C6iR
+         2rYA==
+X-Gm-Message-State: AFqh2krqdMbM8qkMnhFmcsWA9akZ/MVaqkK0NFWPOmgowEBwyOm1rTci
+        Zq15rUhKake0aeNtxzQ+cszb2Ga4f6E=
+X-Google-Smtp-Source: AMrXdXtpuoS3ypyEdAuHZUm16cRhSCT2WIKZkQtOZLfDca/d/YlHlF5Ypq6XUBV1nijpa5/PFBtAdA==
+X-Received: by 2002:a17:907:2587:b0:7c0:e7ad:fb0f with SMTP id ad7-20020a170907258700b007c0e7adfb0fmr47570791ejc.20.1673329430396;
+        Mon, 09 Jan 2023 21:43:50 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id g21-20020a170906869500b0084d36fd208esm3428423ejx.18.2023.01.09.21.43.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 21:40:25 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pF7N2-000Gzx-1U;
-        Tue, 10 Jan 2023 06:40:24 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v2 15/20] connected.c: free(new_pack) in check_connected()
-Date:   Tue, 10 Jan 2023 06:39:38 +0100
-References: <cover-00.20-00000000000-20221228T175512Z-avarab@gmail.com>
- <cover-v2-00.20-00000000000-20221230T020341Z-avarab@gmail.com>
- <patch-v2-15.20-d5210017cab-20221230T020341Z-avarab@gmail.com>
- <755d84d5-62f1-4f4e-ff31-4604c0dca0a9@web.de>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <755d84d5-62f1-4f4e-ff31-4604c0dca0a9@web.de>
-Message-ID: <230110.86wn5vymk7.gmgdl@evledraar.gmail.com>
+        Mon, 09 Jan 2023 21:43:49 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3 00/19] leak fixes: various simple leak fixes
+Date:   Tue, 10 Jan 2023 06:43:20 +0100
+Message-Id: <cover-v3-00.19-00000000000-20230110T054138Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.39.0.1195.gabc92c078c4
+In-Reply-To: <cover-v2-00.20-00000000000-20221230T020341Z-avarab@gmail.com>
+References: <cover-v2-00.20-00000000000-20221230T020341Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+A hopefully final version of this collection of simple leak fixes. See
+https://lore.kernel.org/git/cover-v2-00.20-00000000000-20221230T020341Z-avarab@gmail.com/
+for v2.
 
-On Fri, Dec 30 2022, Ren=C3=A9 Scharfe wrote:
+Changes since v2:
 
-> Am 30.12.22 um 03:18 schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->> Fix a memory leak that's been with us since this code was introduced
->> in c6807a40dcd (clone: open a shortcut for connectivity check,
->> 2013-05-26). We'd never free() the "new_pack" that we'd potentially
->> allocate.
->
-> That's obviously not true because the patch removes free() calls for
-> it, so at least some execution paths were already cleaning it up.
->
-> Taking a closer look, though: Is there a leaking execution path
-> without this patch at all?
->
->    $ git grep -n return connected.c
->    connected.c:41:		return err;
->    connected.c:89:		return 0;
->    connected.c:127:		return error(_("Could not run 'git rev-list'"));
->    connected.c:161:	return finish_command(&rev_list) || err;
->
-> So there are four returns before.
->
->> Since it's initialized to "NULL" it's safe to call free()
->> here unconditionally.
->>
->> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> ---
->>  connected.c | 13 +++++++------
->>  1 file changed, 7 insertions(+), 6 deletions(-)
->>
->> diff --git a/connected.c b/connected.c
->> index b90fd61790c..e4d404e10b2 100644
->> --- a/connected.c
->> +++ b/connected.c
->> @@ -38,7 +38,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
->>  	if (!oid) {
->>  		if (opt->err_fd)
->>  			close(opt->err_fd);
->> -		return err;
->> +		goto cleanup;
->
-> Where are we?
->
->    $ git grep -n new_pack.=3D connected.c
->    connected.c:29:	struct packed_git *new_pack =3D NULL;
->    connected.c:53:		new_pack =3D add_packed_git(idx_file.buf, idx_file.le=
-n, 1);
->
-> After new_pack is initialized to NULL, but before it is set to
-> point to some actual pack object.  So no free() is needed here.
->
->>  	}
->>
->>  	if (transport && transport->smart_options &&
->> @@ -85,8 +85,7 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
->>  promisor_pack_found:
->>  			;
->>  		} while ((oid =3D fn(cb_data)) !=3D NULL);
->> -		free(new_pack);
->> -		return 0;
->> +		goto cleanup;
->
-> free() removed, no leak before.
->
->>  	}
->>
->>  no_promisor_pack_found:
->> @@ -123,8 +122,8 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
->>  		rev_list.no_stderr =3D opt->quiet;
->>
->>  	if (start_command(&rev_list)) {
->> -		free(new_pack);
->> -		return error(_("Could not run 'git rev-list'"));
->> +		err =3D error(_("Could not run 'git rev-list'"));
->> +		goto cleanup;
->
-> Same here.
->
->>  	}
->>
->>  	sigchain_push(SIGPIPE, SIG_IGN);
->> @@ -157,6 +156,8 @@ int check_connected(oid_iterate_fn fn, void *cb_data,
->>  		err =3D error_errno(_("failed to close rev-list's stdin"));
->>
->>  	sigchain_pop(SIGPIPE);
->> +	err =3D finish_command(&rev_list) || err;
->> +cleanup:
->>  	free(new_pack);
->> -	return finish_command(&rev_list) || err;
->> +	return err;
->
-> free() kept, no leak before.
->
-> And that's all four returns.
->
-> So there is no leak to begin with here, or am I missing something?
+ * Updated reference to function name in a commit subject, spotted by
+   René.
 
-The commit message was just out of date, this was just the
-post-refactoring for the already landed dd4143e7bf4 (connected.c: free
-the "struct packed_git", 2022-11-08), but I forgot to update it.
+ * Dropped a patch that didn't fix a leak, but just did a post-cleanup
+   of an already fixed leak.
 
-I'll just drop this patch, as this series is meant to be leak fixes, not
-such post-refactorings, sorry.
+Ævar Arnfjörð Bjarmason (19):
+  tests: mark tests as passing with SANITIZE=leak
+  bundle.c: don't leak the "args" in the "struct child_process"
+  commit-graph: use free_commit_graph() instead of UNLEAK()
+  clone: use free() instead of UNLEAK()
+  various: add missing clear_pathspec(), fix leaks
+  name-rev: don't xstrdup() an already dup'd string
+  repack: fix leaks on error with "goto cleanup"
+  worktree: fix a trivial leak in prune_worktrees()
+  http-backend.c: fix "dir" and "cmd_arg" leaks in cmd_main()
+  http-backend.c: fix cmd_main() memory leak, refactor reg{exec,free}()
+  commit-graph: fix a parse_options_concat() leak
+  show-branch: free() allocated "head" before return
+  builtin/merge.c: always free "struct strbuf msg"
+  builtin/merge.c: free "&buf" on "Your local changes..." error
+  object-file.c: release the "tag" in check_tag()
+  grep.c: refactor free_grep_patterns()
+  grep API: plug memory leaks by freeing "header_list"
+  receive-pack: free() the "ref_name" in "struct command"
+  push: free_refs() the "local_refs" in set_refspecs()
+
+ archive.c                                  |  1 +
+ builtin/clean.c                            |  1 +
+ builtin/clone.c                            |  5 +++--
+ builtin/commit-graph.c                     | 10 ++++++----
+ builtin/merge.c                            | 14 ++++++-------
+ builtin/name-rev.c                         | 23 ++++++++++------------
+ builtin/push.c                             |  1 +
+ builtin/receive-pack.c                     | 10 ++++++++++
+ builtin/repack.c                           | 13 ++++++------
+ builtin/reset.c                            | 11 ++++++++---
+ builtin/show-branch.c                      |  1 +
+ builtin/stash.c                            |  7 +++++--
+ builtin/worktree.c                         |  6 +++---
+ bundle.c                                   |  6 ++++--
+ grep.c                                     | 15 +++++++++-----
+ http-backend.c                             |  9 +++++++--
+ object-file.c                              |  1 +
+ t/t0023-crlf-am.sh                         |  1 +
+ t/t1301-shared-repo.sh                     |  1 +
+ t/t1302-repo-version.sh                    |  1 +
+ t/t1304-default-acl.sh                     |  1 +
+ t/t1408-packed-refs.sh                     |  1 +
+ t/t1410-reflog.sh                          |  1 +
+ t/t1416-ref-transaction-hooks.sh           |  1 +
+ t/t2401-worktree-prune.sh                  |  1 +
+ t/t2406-worktree-repair.sh                 |  1 +
+ t/t3210-pack-refs.sh                       |  1 +
+ t/t3800-mktag.sh                           |  1 +
+ t/t4152-am-subjects.sh                     |  2 ++
+ t/t4254-am-corrupt.sh                      |  2 ++
+ t/t4256-am-format-flowed.sh                |  1 +
+ t/t4257-am-interactive.sh                  |  2 ++
+ t/t5001-archive-attr.sh                    |  1 +
+ t/t5004-archive-corner-cases.sh            |  2 ++
+ t/t5302-pack-index.sh                      |  2 ++
+ t/t5317-pack-objects-filter-objects.sh     |  1 +
+ t/t5330-no-lazy-fetch-with-commit-graph.sh |  1 +
+ t/t5403-post-checkout-hook.sh              |  1 +
+ t/t5405-send-pack-rewind.sh                |  1 +
+ t/t5406-remote-rejects.sh                  |  1 +
+ t/t5502-quickfetch.sh                      |  1 +
+ t/t5504-fetch-receive-strict.sh            |  1 +
+ t/t5507-remote-environment.sh              |  2 ++
+ t/t5522-pull-symlink.sh                    |  1 +
+ t/t5523-push-upstream.sh                   |  1 +
+ t/t5527-fetch-odd-refs.sh                  |  1 +
+ t/t5529-push-errors.sh                     |  2 ++
+ t/t5546-receive-limits.sh                  |  2 ++
+ t/t5547-push-quarantine.sh                 |  2 ++
+ t/t5604-clone-reference.sh                 |  1 +
+ t/t5606-clone-options.sh                   |  1 +
+ t/t5613-info-alternate.sh                  |  2 ++
+ t/t5705-session-id-in-capabilities.sh      |  1 +
+ t/t5810-proto-disable-local.sh             |  2 ++
+ t/t5813-proto-disable-ssh.sh               |  2 ++
+ t/t6011-rev-list-with-bad-commit.sh        |  1 +
+ t/t6014-rev-list-all.sh                    |  1 +
+ t/t6021-rev-list-exclude-hidden.sh         |  1 +
+ t/t6439-merge-co-error-msgs.sh             |  1 +
+ t/t7105-reset-patch.sh                     |  2 ++
+ t/t7106-reset-unborn-branch.sh             |  2 ++
+ t/t7107-reset-pathspec-file.sh             |  1 +
+ t/t7301-clean-interactive.sh               |  1 +
+ t/t7403-submodule-sync.sh                  |  1 +
+ t/t7409-submodule-detached-work-tree.sh    |  1 +
+ t/t7416-submodule-dash-url.sh              |  2 ++
+ t/t7450-bad-git-dotfiles.sh                |  2 ++
+ t/t7701-repack-unpack-unreachable.sh       |  1 +
+ 68 files changed, 151 insertions(+), 50 deletions(-)
+
+Range-diff against v2:
+ 1:  3de29c6d75f =  1:  f5b67f44e2d tests: mark tests as passing with SANITIZE=leak
+ 2:  5036712391d =  2:  88c6b66be3c bundle.c: don't leak the "args" in the "struct child_process"
+ 3:  a840a1cb330 !  3:  8cc8060cd92 commit-graph: use free() instead of UNLEAK()
+    @@ Metadata
+     Author: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+      ## Commit message ##
+    -    commit-graph: use free() instead of UNLEAK()
+    +    commit-graph: use free_commit_graph() instead of UNLEAK()
+     
+         In 0bfb48e6723 (builtin/commit-graph.c: UNLEAK variables, 2018-10-03)
+         this was made to UNLEAK(), but we can just as easily invoke the
+ 4:  c05620cef49 =  4:  765d5cbcf81 clone: use free() instead of UNLEAK()
+ 5:  62af6557760 =  5:  5087fb73286 various: add missing clear_pathspec(), fix leaks
+ 6:  7cea3da9fae =  6:  39cb8aefb58 name-rev: don't xstrdup() an already dup'd string
+ 7:  b5978d75c6a =  7:  a3f1e800127 repack: fix leaks on error with "goto cleanup"
+ 8:  468615570f4 =  8:  f918a6f2adc worktree: fix a trivial leak in prune_worktrees()
+ 9:  8c5c964d872 =  9:  56204806dfd http-backend.c: fix "dir" and "cmd_arg" leaks in cmd_main()
+10:  fd34c4817f4 = 10:  5355e0fc60b http-backend.c: fix cmd_main() memory leak, refactor reg{exec,free}()
+11:  f7005f32cc0 = 11:  dfb52dbd1c4 commit-graph: fix a parse_options_concat() leak
+12:  bf0e9bc5fa6 = 12:  e44e74dcc58 show-branch: free() allocated "head" before return
+13:  b157092e8d0 = 13:  6d99fdcc44e builtin/merge.c: always free "struct strbuf msg"
+14:  bdd2bc9a956 = 14:  a3bf3045597 builtin/merge.c: free "&buf" on "Your local changes..." error
+15:  d5210017cab <  -:  ----------- connected.c: free(new_pack) in check_connected()
+16:  2016b4ddd0b = 15:  7c70bbdebc8 object-file.c: release the "tag" in check_tag()
+17:  fa2e8a7d297 = 16:  17537e1393e grep.c: refactor free_grep_patterns()
+18:  3fcf7054708 = 17:  e4bd46a343e grep API: plug memory leaks by freeing "header_list"
+19:  fa5d657312f = 18:  3e4b12cb623 receive-pack: free() the "ref_name" in "struct command"
+20:  e5af27134df = 19:  d51ed239a8a push: free_refs() the "local_refs" in set_refspecs()
+-- 
+2.39.0.1195.gabc92c078c4
+
