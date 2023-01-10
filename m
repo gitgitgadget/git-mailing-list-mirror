@@ -2,53 +2,53 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D5D4EC54EBE
-	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 05:45:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7697FC46467
+	for <git@archiver.kernel.org>; Tue, 10 Jan 2023 05:45:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231181AbjAJFp3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Tue, 10 Jan 2023 00:45:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52408 "EHLO
+        id S231177AbjAJFpd (ORCPT <rfc822;git@archiver.kernel.org>);
+        Tue, 10 Jan 2023 00:45:33 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230032AbjAJFoc (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 10 Jan 2023 00:44:32 -0500
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F8D241D6E
-        for <git@vger.kernel.org>; Mon,  9 Jan 2023 21:44:08 -0800 (PST)
-Received: by mail-ej1-x633.google.com with SMTP id qk9so25816384ejc.3
-        for <git@vger.kernel.org>; Mon, 09 Jan 2023 21:44:07 -0800 (PST)
+        with ESMTP id S230073AbjAJFoe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 10 Jan 2023 00:44:34 -0500
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E22641667
+        for <git@vger.kernel.org>; Mon,  9 Jan 2023 21:44:10 -0800 (PST)
+Received: by mail-ej1-x62a.google.com with SMTP id qk9so25816436ejc.3
+        for <git@vger.kernel.org>; Mon, 09 Jan 2023 21:44:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4uso+ZOOlGJiUguFVqdie08BryGf/LseLSoyR9v5Tzw=;
-        b=JAKEEbPF7pyuxxXyGBFI0LZi6e18nDsjl/N10y/KwvwSAgO48NAewTugeUJsy9z1yH
-         Pc27a1C6eJvPdDLpZvv+87a9G4Gqo9KoEknGDOAvxK9ygh+APsyHYliLXoBQpkJT/VCe
-         OZ9IHFdYYuPp3IIZdLAqdxL5ipyWdPg692cVmuuBBXsKxlzbaoEuncgWRjAg2o/CVXPn
-         jNkzeAnThLf5zfwQzW3/pXS4HvlmH2zC8vGKF/wZx4r+/ma2JZYMTclKYn9SYJL2iPrx
-         9DBwzSRxrJXpkYxHYbfgjAJx4RSjYLyhuqEG3gFQ3/taFjENKk+XH8V6y/QjtPdGZ2QG
-         wGdg==
+        bh=I1zwBX8h2fV2lrJOvsQ4jfSES3qlf0gpExpUdDWDAEY=;
+        b=cRsytfhFfvZZOQIqhJ8lUkotaMzU3hMn5sOlRTQHSguRhdmxLeCkSw4ysDBsoSKFpG
+         MOsDzviTK0pOjD1mFnZUAZMK9X6wUj0t0pklEwMgDjD5U+jIFvmkIdei1H8NtJQbC7OS
+         AsmjyR9D9gLxFW1UiQzn6AHRh/BACJe9503EN44zb9Iwy0dLZRxUc4/el+XWPL0QNJo/
+         qPeySkVXo1FS832D40VZAEnTtWPWyBF1PMxGIT9raEp/uWb8g/xLjqMZItT5Ne/tIIE2
+         Flm1GWpsjCQK9I+JZNri7inWEYXnhnuROqft5P6jT+hyMuK7Q0wyyIgpW0VYcxKI1KdI
+         JW1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4uso+ZOOlGJiUguFVqdie08BryGf/LseLSoyR9v5Tzw=;
-        b=0v/OgAFyECdX4Xx8wbXw6GTa0fB532kExWdAn1RdJ2G69gs7HCgI4/VvGme7lq/jR5
-         F1EWelYE3zKa0QKcGT4F0/tD7TXSb9paZwRd7cYMlUDfEbI1GVYzV6DxGrQEFF/fGd3z
-         dZHVTXfU3gRhQAmS/nvEsgDqf8xRjDEecLQsemyEyHn2uKOnPRkcBnOPX/BqUFgrt/ML
-         fm0wlHTcDu2/fDGBnRjDQlGLdspbktjLjaFHMfQS0B4ahOOy90oOXHZNbhCOaN9aT4HJ
-         H3xTIcZgx0MiQx9Fu+sJurO0fTuOwU5zCpB/yMsaqyfvrrFWae6r+3/K0QuP+CYH01QR
-         IoKQ==
-X-Gm-Message-State: AFqh2kpIMqnWLRaJjvgBnzWnhJjtxxRbANXPIUqzSgR9ORIWAdvFVs28
-        Cb70OwMAxDVYnl0b4VJ9wEhaKH+P2b60YA==
-X-Google-Smtp-Source: AMrXdXuvP5cQaettN5avoRc3y1TrIetz7f2xMd1cpqTNmhGgaboxFc7m5cJvzCzsyPamHL2ZCcn+Cw==
-X-Received: by 2002:a17:907:d004:b0:7c0:f213:4485 with SMTP id va4-20020a170907d00400b007c0f2134485mr57581156ejc.73.1673329447313;
-        Mon, 09 Jan 2023 21:44:07 -0800 (PST)
+        bh=I1zwBX8h2fV2lrJOvsQ4jfSES3qlf0gpExpUdDWDAEY=;
+        b=MATPKFn0J0jLE+HMylTFlTwoje6zzb3+fhzU4UfBwv6ltYV2XzuULH1C/iVSf9uWjc
+         /wg71PsVBUSKx2Sf/ZAFngkCoAoQjZVn6QO7MdRioY6s3hYpZVFwp9gDHTQk1QETnkt9
+         xCbdGNg8IjZR74aK52peFoidPXrSRBMfocQM3m31sCta+CYjTcfP8Vi9QRaqkvVDpVoZ
+         b/7JAoPSKTHtWAGl2SdZFaZyVTNZrcqNAk1yxNdWnDesX49nkxLCN/T8ZKJZGHJz+Dbk
+         8B40PC7T7b+RQaqAfDJWHMZryJBjTUsIeA66n2KHyqzaAbBAo3dVIoASsiXx9onuTfNU
+         QIRw==
+X-Gm-Message-State: AFqh2koPcNnZTGBQMOyzUVINiSwrlkCT0kb9xYb2Ky3LwrD6AGLsHPZT
+        /UDzMSwrf7J+DSaNBfNgdSKGUxfvPRlEHw==
+X-Google-Smtp-Source: AMrXdXsedWT7i+jMnjYP43D0tFffDtnkWBY83Ru9liC4avuPG7K/zMm9txKZXcc2uUUYKU24gF7Hog==
+X-Received: by 2002:a17:906:4cd2:b0:7c0:e5c6:2a74 with SMTP id q18-20020a1709064cd200b007c0e5c62a74mr53546357ejt.34.1673329448238;
+        Mon, 09 Jan 2023 21:44:08 -0800 (PST)
 Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id g21-20020a170906869500b0084d36fd208esm3428423ejx.18.2023.01.09.21.44.06
+        by smtp.gmail.com with ESMTPSA id g21-20020a170906869500b0084d36fd208esm3428423ejx.18.2023.01.09.21.44.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jan 2023 21:44:06 -0800 (PST)
+        Mon, 09 Jan 2023 21:44:07 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 18/19] receive-pack: free() the "ref_name" in "struct command"
-Date:   Tue, 10 Jan 2023 06:43:38 +0100
-Message-Id: <patch-v3-18.19-3e4b12cb623-20230110T054138Z-avarab@gmail.com>
+Subject: [PATCH v3 19/19] push: free_refs() the "local_refs" in set_refspecs()
+Date:   Tue, 10 Jan 2023 06:43:39 +0100
+Message-Id: <patch-v3-19.19-d51ed239a8a-20230110T054138Z-avarab@gmail.com>
 X-Mailer: git-send-email 2.39.0.1195.gabc92c078c4
 In-Reply-To: <cover-v3-00.19-00000000000-20230110T054138Z-avarab@gmail.com>
 References: <cover-v2-00.20-00000000000-20221230T020341Z-avarab@gmail.com> <cover-v3-00.19-00000000000-20230110T054138Z-avarab@gmail.com>
@@ -70,56 +70,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a memory leak that's been with us since this code was introduced
-in 575f497456e (Add first cut at "git-receive-pack", 2005-06-29), see
-eb1af2df0b1 (git-receive-pack: start parsing ref update commands,
-2005-06-29) for the later change that refactored the code to add the
-"ref_name" member.
+Fix a memory leak that's been with us since this code was added in
+ca02465b413 (push: use remote.$name.push as a refmap, 2013-12-03).
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- builtin/receive-pack.c                | 10 ++++++++++
- t/t5405-send-pack-rewind.sh           |  1 +
- t/t5406-remote-rejects.sh             |  1 +
- t/t5507-remote-environment.sh         |  2 ++
- t/t5522-pull-symlink.sh               |  1 +
- t/t5527-fetch-odd-refs.sh             |  1 +
- t/t5705-session-id-in-capabilities.sh |  1 +
- 7 files changed, 17 insertions(+)
+ builtin/push.c                          | 1 +
+ t/t1416-ref-transaction-hooks.sh        | 1 +
+ t/t5504-fetch-receive-strict.sh         | 1 +
+ t/t5523-push-upstream.sh                | 1 +
+ t/t5529-push-errors.sh                  | 2 ++
+ t/t5546-receive-limits.sh               | 2 ++
+ t/t5547-push-quarantine.sh              | 2 ++
+ t/t5606-clone-options.sh                | 1 +
+ t/t5810-proto-disable-local.sh          | 2 ++
+ t/t5813-proto-disable-ssh.sh            | 2 ++
+ t/t7409-submodule-detached-work-tree.sh | 1 +
+ t/t7416-submodule-dash-url.sh           | 2 ++
+ t/t7450-bad-git-dotfiles.sh             | 2 ++
+ 13 files changed, 20 insertions(+)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index a90af303630..451bad776c6 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -2032,6 +2032,15 @@ static struct command **queue_command(struct command **tail,
- 	return &cmd->next;
+diff --git a/builtin/push.c b/builtin/push.c
+index 60ac8017e52..f48e4c6a856 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -129,6 +129,7 @@ static void set_refspecs(const char **refs, int nr, const char *repo)
+ 		} else
+ 			refspec_append(&rs, ref);
+ 	}
++	free_refs(local_refs);
  }
  
-+static void free_commands(struct command *commands)
-+{
-+	while (commands) {
-+		struct command *next = commands->next;
-+		free(commands);
-+		commands = next;
-+	}
-+}
-+
- static void queue_commands_from_cert(struct command **tail,
- 				     struct strbuf *push_cert)
- {
-@@ -2569,6 +2578,7 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
- 		run_receive_hook(commands, "post-receive", 1,
- 				 &push_options);
- 		run_update_post_hook(commands);
-+		free_commands(commands);
- 		string_list_clear(&push_options, 0);
- 		if (auto_gc) {
- 			struct child_process proc = CHILD_PROCESS_INIT;
-diff --git a/t/t5405-send-pack-rewind.sh b/t/t5405-send-pack-rewind.sh
-index 11f03239a06..1686ac13aa6 100755
---- a/t/t5405-send-pack-rewind.sh
-+++ b/t/t5405-send-pack-rewind.sh
-@@ -5,6 +5,7 @@ test_description='forced push to replace commit we do not have'
+ static int push_url_of_remote(struct remote *remote, const char ***url_p)
+diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hooks.sh
+index 27731722a5b..b32ca798f9f 100755
+--- a/t/t1416-ref-transaction-hooks.sh
++++ b/t/t1416-ref-transaction-hooks.sh
+@@ -5,6 +5,7 @@ test_description='reference transaction hooks'
  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
@@ -127,67 +114,145 @@ index 11f03239a06..1686ac13aa6 100755
  . ./test-lib.sh
  
  test_expect_success setup '
-diff --git a/t/t5406-remote-rejects.sh b/t/t5406-remote-rejects.sh
-index dcbeb420827..d6a99466338 100755
---- a/t/t5406-remote-rejects.sh
-+++ b/t/t5406-remote-rejects.sh
-@@ -2,6 +2,7 @@
- 
- test_description='remote push rejects are reported by client'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'setup' '
-diff --git a/t/t5507-remote-environment.sh b/t/t5507-remote-environment.sh
-index e6149295b18..c6a6957c500 100755
---- a/t/t5507-remote-environment.sh
-+++ b/t/t5507-remote-environment.sh
-@@ -1,6 +1,8 @@
- #!/bin/sh
- 
- test_description='check environment showed to remote side of transports'
-+
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- test_expect_success 'set up "remote" push situation' '
-diff --git a/t/t5522-pull-symlink.sh b/t/t5522-pull-symlink.sh
-index bcff460d0a2..394bc60cb8e 100755
---- a/t/t5522-pull-symlink.sh
-+++ b/t/t5522-pull-symlink.sh
-@@ -2,6 +2,7 @@
- 
- test_description='pulling from symlinked subdir'
- 
-+TEST_PASSES_SANITIZE_LEAK=true
- . ./test-lib.sh
- 
- # The scenario we are building:
-diff --git a/t/t5527-fetch-odd-refs.sh b/t/t5527-fetch-odd-refs.sh
-index e2770e4541f..98ece27c6a0 100755
---- a/t/t5527-fetch-odd-refs.sh
-+++ b/t/t5527-fetch-odd-refs.sh
-@@ -4,6 +4,7 @@ test_description='test fetching of oddly-named refs'
+diff --git a/t/t5504-fetch-receive-strict.sh b/t/t5504-fetch-receive-strict.sh
+index ac4099ca893..14e8af1f3b7 100755
+--- a/t/t5504-fetch-receive-strict.sh
++++ b/t/t5504-fetch-receive-strict.sh
+@@ -4,6 +4,7 @@ test_description='fetch/receive strict mode'
  GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
  export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- # afterwards we will have:
-diff --git a/t/t5705-session-id-in-capabilities.sh b/t/t5705-session-id-in-capabilities.sh
-index ed38c76c290..b8a722ec27e 100755
---- a/t/t5705-session-id-in-capabilities.sh
-+++ b/t/t5705-session-id-in-capabilities.sh
-@@ -2,6 +2,7 @@
+ test_expect_success 'setup and inject "corrupt or missing" object' '
+diff --git a/t/t5523-push-upstream.sh b/t/t5523-push-upstream.sh
+index fdb42920564..c9acc076353 100755
+--- a/t/t5523-push-upstream.sh
++++ b/t/t5523-push-upstream.sh
+@@ -4,6 +4,7 @@ test_description='push with --set-upstream'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
- test_description='session ID in capabilities'
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-terminal.sh
+ 
+diff --git a/t/t5529-push-errors.sh b/t/t5529-push-errors.sh
+index ce85fd30ad1..0247137cb36 100755
+--- a/t/t5529-push-errors.sh
++++ b/t/t5529-push-errors.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='detect some push errors early (before contacting remote)'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup commits' '
+diff --git a/t/t5546-receive-limits.sh b/t/t5546-receive-limits.sh
+index 0b0e987fdb7..eed3c9d81ab 100755
+--- a/t/t5546-receive-limits.sh
++++ b/t/t5546-receive-limits.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='check receive input limits'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ # Let's run tests with different unpack limits: 1 and 10000
+diff --git a/t/t5547-push-quarantine.sh b/t/t5547-push-quarantine.sh
+index 1876fb34e51..9f899b8c7d7 100755
+--- a/t/t5547-push-quarantine.sh
++++ b/t/t5547-push-quarantine.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='check quarantine of objects during push'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'create picky dest repo' '
+diff --git a/t/t5606-clone-options.sh b/t/t5606-clone-options.sh
+index cf221e92c4d..27f9f776389 100755
+--- a/t/t5606-clone-options.sh
++++ b/t/t5606-clone-options.sh
+@@ -4,6 +4,7 @@ test_description='basic clone options'
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
  
 +TEST_PASSES_SANITIZE_LEAK=true
  . ./test-lib.sh
  
- REPO="$(pwd)/repo"
+ test_expect_success 'setup' '
+diff --git a/t/t5810-proto-disable-local.sh b/t/t5810-proto-disable-local.sh
+index c1ef99b85c2..862610256fb 100755
+--- a/t/t5810-proto-disable-local.sh
++++ b/t/t5810-proto-disable-local.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='test disabling of local paths in clone/fetch'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY/lib-proto-disable.sh"
+ 
+diff --git a/t/t5813-proto-disable-ssh.sh b/t/t5813-proto-disable-ssh.sh
+index 3f084ee3065..2e975dc70ec 100755
+--- a/t/t5813-proto-disable-ssh.sh
++++ b/t/t5813-proto-disable-ssh.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='test disabling of git-over-ssh in clone/fetch'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY/lib-proto-disable.sh"
+ 
+diff --git a/t/t7409-submodule-detached-work-tree.sh b/t/t7409-submodule-detached-work-tree.sh
+index 374ed481e9c..574a6fc526e 100755
+--- a/t/t7409-submodule-detached-work-tree.sh
++++ b/t/t7409-submodule-detached-work-tree.sh
+@@ -13,6 +13,7 @@ TEST_NO_CREATE_REPO=1
+ GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+diff --git a/t/t7416-submodule-dash-url.sh b/t/t7416-submodule-dash-url.sh
+index 3ebd9859814..7cf72b9a076 100755
+--- a/t/t7416-submodule-dash-url.sh
++++ b/t/t7416-submodule-dash-url.sh
+@@ -1,6 +1,8 @@
+ #!/bin/sh
+ 
+ test_description='check handling of disallowed .gitmodule urls'
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ 
+ test_expect_success 'setup' '
+diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
+index ba1f569bcbb..0d0c3f2c683 100755
+--- a/t/t7450-bad-git-dotfiles.sh
++++ b/t/t7450-bad-git-dotfiles.sh
+@@ -12,6 +12,8 @@ Such as:
+ 
+   - symlinked .gitmodules, etc
+ '
++
++TEST_PASSES_SANITIZE_LEAK=true
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-pack.sh
+ 
 -- 
 2.39.0.1195.gabc92c078c4
 
