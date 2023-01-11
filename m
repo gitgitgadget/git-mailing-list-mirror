@@ -2,128 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F42AC5479D
-	for <git@archiver.kernel.org>; Wed, 11 Jan 2023 23:32:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 92AA9C46467
+	for <git@archiver.kernel.org>; Wed, 11 Jan 2023 23:32:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235346AbjAKXcv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Jan 2023 18:32:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39032 "EHLO
+        id S235548AbjAKXcw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Jan 2023 18:32:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232509AbjAKXct (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S232981AbjAKXct (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 11 Jan 2023 18:32:49 -0500
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0545834D4D
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ABC73632F
         for <git@vger.kernel.org>; Wed, 11 Jan 2023 15:32:47 -0800 (PST)
-Received: by mail-wr1-x436.google.com with SMTP id w1so16539601wrt.8
-        for <git@vger.kernel.org>; Wed, 11 Jan 2023 15:32:46 -0800 (PST)
+Received: by mail-wr1-x435.google.com with SMTP id r2so16536343wrv.7
+        for <git@vger.kernel.org>; Wed, 11 Jan 2023 15:32:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HHcYesznQ1+NgIqJeedEs689owyBw/V6pBwf5+qeZTw=;
-        b=pRR4wiIFEsTpMPCDxoh+PvlWLGsxIDSFDouEYWGZfv7z7LV1H4SyTs/RZ25sLs4plv
-         +40wLXVwV5sGve/+ye0vC6SFNC3+hGEwAhHRxQV8gj5/uKnD+JmQZoUxWHt4NfPk3fyr
-         Ua4u/09B+NsORQcNKXqz6rY0UFWo8NdufIr0eNlXsewEMGZrDhdJESAR0ntuy5KNvQL/
-         oNqY8CuBgY7qREMUnckz+4UrCPeTPEHakLcd5/euyT5LpNIEm0+bqlHeSRcvudOmYka4
-         FkFwuLFYZ0JHqVC7iYj/egueAHwIpzQybxkUFRkkLMtCXCo+kWemgCzcbeX3CmYUxhMQ
-         8CpA==
+        bh=0k7N7ohS0gxiDug/lRh3vyxraxcvAVKVNR9vUKBU/AA=;
+        b=TsQy8ItNABDA7hgG3R5INGtAU5h1LjoJfVH1XRDfKHU/wQ8H0ZgEoSHGvWzZu77GbC
+         hCqIY95mBFus7JgHaA7lUwwRzD0QMMGPMn2pRA3FRheClN/YccpzxoEwk007F+DHcriz
+         g+Clg9ya6HlyU1bVHN+9M8EO0PgyX/DOo1vbEcWeFifUyqexuxsl11nh8pkTc46sDuOC
+         OPC6NCpX7aeGoq/SriHrPLxb3Qs51mtwIWhRrmPK9sUj5N8bQ16x3ufXZ+pyBWfOE+0X
+         Uxe9eL4gX15j/sisoDANGnTvRU9CKj/U0c7xL9xx/9IeMAJASxC730n+FRaDrudX4EeB
+         TsZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HHcYesznQ1+NgIqJeedEs689owyBw/V6pBwf5+qeZTw=;
-        b=dD9rgNudC0svl9wDg1mPu6Eeceem1bXSWFyXtQyo21E1BxMNkD1W4n1sIWKyny02be
-         NKrCGrNeYqFDfS/tCAQDiQr0IimzcDsw7kp3p72vrOpF0nUXWk5e7A5fIM+ggFTONbhV
-         dIsAnYPljfeCFx8OgrLKPqI1Gxh642sudB4JLUbLWBG7TkO8NuSEg1GDthEAQW3TBJNc
-         guj7YDMtJ/BrIg5WfSnT1UhXIrspO/0sFqHekli1sWekzokFDJRCAeswly6rDCIwwMBh
-         9aCiLTT8JwByf8VXWAfB3ZwxNwp/yUt6EWt1VxjIOLI7uvLKL9iZRfdILb/ludLH/rrv
-         5yRw==
-X-Gm-Message-State: AFqh2krRVkzBiP9VDEUoeVoOIdHrWuiT2/ZQqWaIuTF1h8hybcyYif5W
-        wzHooQPnVOTIu1/2Gksf1j1EZsrsPJsZf7xg5/A=
-X-Google-Smtp-Source: AMrXdXtTPj/7wyQuyI6NAUfAkrSroHbeYHmh4bGUvP6GGUfOIN4KMAqUn+RchGTPQGolM/bnN0KOXw==
-X-Received: by 2002:adf:e303:0:b0:242:1926:783c with SMTP id b3-20020adfe303000000b002421926783cmr46592169wrj.58.1673479965213;
+        bh=0k7N7ohS0gxiDug/lRh3vyxraxcvAVKVNR9vUKBU/AA=;
+        b=LC6UIqenT/+PAMNNgjkZUE6YdnaO4FZIQyEP+YPw3VbQzlfaO5q2IWxvegTXkQJNWd
+         WHtNyxkuHUuA+y13Ts8DEikxMBGQcKIJJk3BaFgQf7CPyMnfs0zrLidFbUv2Pl1yy4ZQ
+         CC4vSFVVWCEr2aJQDNEaTGW8sFn4X7mog1HMD2jnolCNh9si/3Q2cLnFOEzWTSnrRgPW
+         mDyy0NbjTjJjmWBN5va0c1ykt2TyJiRxLlATVjupauSWFeJiL+KLzKyHq/+aRtRQQIuU
+         r2MAx7iYVKcvZYGTwvHsEKYgATj2UToAMaCk9qc/CkXVjoU//imXT/J+63DCukXmYQ6g
+         tu6g==
+X-Gm-Message-State: AFqh2kolyOQRmN3fUbtT1vqkCBN8rcHNetF8Lq4xSKVHoQqf6sKuoFJh
+        Ybl34JmAzSmKoZfjv1zYLtRLcfv1H2imwDYZ+Dw=
+X-Google-Smtp-Source: AMrXdXsWcdKN2JlYiiCLFTEdpsq49f0SABxQ4vG6DeNEbbfm8JUToOfv2JAsRMf4Sjnjz1Svm7IGbA==
+X-Received: by 2002:a05:6000:1e11:b0:2bb:366b:d5e1 with SMTP id bj17-20020a0560001e1100b002bb366bd5e1mr16066247wrb.30.1673479965927;
         Wed, 11 Jan 2023 15:32:45 -0800 (PST)
 Received: from titov.fritz.box ([212.102.57.19])
-        by smtp.gmail.com with ESMTPSA id n1-20020a5d67c1000000b002bc7f64efa3sm7679308wrw.29.2023.01.11.15.32.44
+        by smtp.gmail.com with ESMTPSA id n1-20020a5d67c1000000b002bc7f64efa3sm7679308wrw.29.2023.01.11.15.32.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Jan 2023 15:32:44 -0800 (PST)
+        Wed, 11 Jan 2023 15:32:45 -0800 (PST)
 From:   Andrei Rybak <rybak.a.v@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Tim Schumacher <timschumi@gmx.de>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: [PATCH v1 0/3] fixes for commented out code in tests (was "Re: [PATCH] *: fix typos which duplicate a word")
-Date:   Thu, 12 Jan 2023 00:32:39 +0100
-Message-Id: <20230111233242.16870-1-rybak.a.v@gmail.com>
+Cc:     Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH v1 1/3] t6003: uncomment test '--max-age=c3, --topo-order'
+Date:   Thu, 12 Jan 2023 00:32:40 +0100
+Message-Id: <20230111233242.16870-2-rybak.a.v@gmail.com>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: CAPig+cTgUPWxMox_nSka52dML6_GHUUoY4HCtcq7+7J0oEyeNw@mail.gmail.com
-References: 
+In-Reply-To: <20230111233242.16870-1-rybak.a.v@gmail.com>
+References: <20230111233242.16870-1-rybak.a.v@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[ I apologize for some people getting this twice -- I messed up when
-  invoking `git send-email` ]
+Test '--max-age=c3, --topo-order' in t6003-rev-list-topo-order.sh has
+been commented out as failing since its introduction in [1].  However,
+the test is successful at least since commit [2] -- bisecting further is
+harder because of incompatibility of such old Git code with modern
+header file <openssl/bn.h> [3].
 
-On 2023-01-06T19:25, Eric Sunshine wrote:
-> Not related to your patch at all, but I notice in this test that the
-> call to test_when_finished() is commented out:
-> 
->     # test_when_finished "stop_daemon_delete_repo test_insensitive" &&
-> 
-> which makes me wonder if it was commented out while the test was being
-> debugged but then forgotten, and that the script is now potentially
-> leaking a running daemon if something in the test fails after the
-> daemon was started, or if the daemon does not shut down on its own as
-> it's supposed to do. [cc:+Jeff Hostetler]
+Uncomment this test to gain test coverage.
 
-Here's a patch series that fixes some of the commented out test code.
+[1] f573571a21 ([PATCH] Add t/t6003 with some --topo-order tests,
+    2005-07-07)
+[2] 765ac8ec46 (Rip out merge-order and make "git log <paths>..." work
+    again., 2006-02-28)
+[3] BIGNUM used in git's `epoch.c` which was removed in [2] changed
+    significantly between OpenSSL 1.0.2 and OpenSSL 1.1.0
+    See also https://stackoverflow.com/a/42295243/1083697 and
+    https://lore.kernel.org/git/Y71qiCs+oAS2OegH@coredump.intra.peff.net/
 
-I skipped changing the following:
+Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
+---
+ t/t6003-rev-list-topo-order.sh | 23 ++++++++++-------------
+ 1 file changed, 10 insertions(+), 13 deletions(-)
 
-1. a minute-long test_expect_failure is commented out in t0014-alias.sh .
-   Technically, this could be uncommented and marked with `EXPENSIVE`
-   prerequisite, but it doesn't seem worth it for a `test_expect_failure`.
-   [ cc Tim Schumacher, who added this test in fef5f7fc43 (t0014: introduce an
-   alias testing suite, 2018-09-16) ]
-
-2. In t6426-merge-skip-unneeded-updates.sh, second part of the test '2c: Modify
-   b & add c VS rename b->c' is commented out with an explicit "# FIXME:
-   rename/add conflicts are horribly broken right now;" above the commented out
-   part.
-   [ cc Elijah Newren, author of c04ba51739 (t6046: testcases checking whether
-   updates can be skipped in a merge, 2018-04-19) ]
-
-3. I've experimented a bit with commented out test in file
-   t9200-git-cvsexportcommit.sh.  Tests in this file rely on state from previous
-   tests, which complicates more thorough investigation.  Unfortunately,  I
-   didn't have bandwidth to investigate this further.
-   [ cc Robin Rosenberg, who added it in fe142b3a45 (Rework cvsexportcommit to
-   handle binary files for all cases., 2006-11-12) and commented out in
-   e86ad71fe5 (Make cvsexportcommit work with filenames with spaces and
-   non-ascii characters., 2006-12-11) ]
-
-I found these places in tests with:
-
-    git grep -P '^\s*[#]\s*test_' -- 't/t[0-9]*'
-
-The rest of the results of this grep are documentation comments.
-
-Andrei Rybak (3):
-  t6003: uncomment test '--max-age=c3, --topo-order'
-  t6422: drop commented out code
-  t7527: uncomment test_when_finished step in a test
-
- t/t6003-rev-list-topo-order.sh       | 23 ++++++++++-------------
- t/t6422-merge-rename-corner-cases.sh |  2 --
- t/t7527-builtin-fsmonitor.sh         |  2 +-
- 3 files changed, 11 insertions(+), 16 deletions(-)
-
+diff --git a/t/t6003-rev-list-topo-order.sh b/t/t6003-rev-list-topo-order.sh
+index 1f7d7dd20c..5cf2cee74d 100755
+--- a/t/t6003-rev-list-topo-order.sh
++++ b/t/t6003-rev-list-topo-order.sh
+@@ -326,19 +326,16 @@ a2
+ c3
+ EOF
+ 
+-#
+-# this test fails on --topo-order - a fix is required
+-#
+-#test_output_expect_success '--max-age=c3, --topo-order' "git rev-list --topo-order --max-age=$(commit_date c3) l5" <<EOF
+-#l5
+-#l4
+-#l3
+-#a4
+-#c3
+-#b4
+-#a3
+-#a2
+-#EOF
++test_output_expect_success '--max-age=c3, --topo-order' "git rev-list --topo-order --max-age=$(commit_date c3) l5" <<EOF
++l5
++l4
++l3
++a4
++c3
++b4
++a3
++a2
++EOF
+ 
+ test_output_expect_success 'one specified head reachable from another a4, c3, --topo-order' "list_duplicates git rev-list --topo-order a4 c3" <<EOF
+ EOF
 -- 
 2.39.0
 
