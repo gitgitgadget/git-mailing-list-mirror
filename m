@@ -2,60 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E0924C5479D
-	for <git@archiver.kernel.org>; Wed, 11 Jan 2023 22:13:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2FC44C46467
+	for <git@archiver.kernel.org>; Wed, 11 Jan 2023 22:13:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234866AbjAKWNT (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Jan 2023 17:13:19 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33402 "EHLO
+        id S236035AbjAKWNV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Jan 2023 17:13:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235894AbjAKWNQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2023 17:13:16 -0500
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B56636337
+        with ESMTP id S235897AbjAKWNR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2023 17:13:17 -0500
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA2443E0E1
         for <git@vger.kernel.org>; Wed, 11 Jan 2023 14:13:15 -0800 (PST)
-Received: by mail-wm1-x330.google.com with SMTP id k22-20020a05600c1c9600b003d1ee3a6289so13740557wms.2
+Received: by mail-wm1-x335.google.com with SMTP id j16-20020a05600c1c1000b003d9ef8c274bso9380331wms.0
         for <git@vger.kernel.org>; Wed, 11 Jan 2023 14:13:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qZfvZ8RTcDBAofAevq0+3MPqq1v9AIkhChP91QQElkQ=;
-        b=bdRspmaPhoB6Ye3Y5Lgabn4ax77jKUz6Jxv0HUBr1GgQFqwSB6m3glf9+oTKXjpsD3
-         aosy4OyUeYQS8oFSaI5GzdDbSd4V/RCe9fmx7ad3clpJs3m+svj7TfNxijwOOK3zGEI1
-         ystcJII7KkoHchgHxgzM30Hl8o0P0UzHcRPJeWQVaccLRb2zvlEDVmmNhwbizJnroGD9
-         G9m8z8vAPiyssA18ebBAS0f7n7tlX6tqDdgegDHngEr/GXuZpMj9SIIgqQezZaRJSNu9
-         gbANYNNN911KabMaXfr6ifidoX1QvVsaXdKAbLOqHIH4YVEBSZuAny4UJuE+x3AkNkOj
-         ar2Q==
+        bh=Rsb9nNGK6aVNwlCaEC3jjexZfnZ8WeFAlLgzTSFgXug=;
+        b=l7g9Zmx1AhK/bfwzU1c4vfF+xyGFFIsMUoYkDtN7CjbZSH2HsQD2/8Bz5S2TdIzts/
+         My9TnB1JIe/cNfvJMDHv++V++bIO3J96+R0ydCYdhk8zqYXuqD7Yju2fTEBi3k4JWLIL
+         /qFUBeHnGjyGqPhDRcV8pyX3NNWv98yL/iKPPsXySCNz7o3DHbi9OpozrlxTMdxmynTY
+         4YPbh41IkXYVHgGKhBJTUC3TlheSwzRkuNBLFyNSOlt4+9QD3FVZjPhMFDDS5TmKVUZI
+         VrfV6qf9nyk7YsSOg01YNnoVafT47lQNVQVb0ydMG2Sa+HuVknJDoN8ZKeTEXOmahAMv
+         pmVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qZfvZ8RTcDBAofAevq0+3MPqq1v9AIkhChP91QQElkQ=;
-        b=t1xh+kdPwHKQ0qODHzHq8cyeQYgvavj8kRwdSoIgzTkxcVP9OIttq8L5r+lnriEJkY
-         3zS0Vr09eqgoQsqxlktR5dGR27V97W034XJ1dQxUGuFS+epRFRSmMmYLiN1fn8xb+gqr
-         P5SH4v3ys2dcUzfpaann0yCCNAzYFb687WOGnRxJnUU4Qp2oqneHs+mffOqN52zpDEVI
-         CHCZVTPmO64c/uhv3iA4ThzCGmMsedO8a7tY0un+r7XFkjbU3Qmaj4MLFZTpU46WtKfI
-         ganFu4ik664JlZ9b11SxSeUUGZeXtj1emfT83hjtWpymDccEneFvbUy5Ek4WxisBMmde
-         dfOQ==
-X-Gm-Message-State: AFqh2koAhSRVel8DHLU0hL79NkJYX4QNWbpI5EXct6meEwOqvvwPW0cn
-        5qwj2nEIL2tMsFJ+Qlwqt3P0gMUJ+9Q=
-X-Google-Smtp-Source: AMrXdXuQRZgZvWu8JWKXg/RepOsfpvmIAodeN6ms3NuCZP11YLKZRxbWVaoxtCQ3SrCrkzJlF5regQ==
-X-Received: by 2002:a05:600c:6016:b0:3d3:3c93:af5e with SMTP id az22-20020a05600c601600b003d33c93af5emr54130252wmb.35.1673475193434;
-        Wed, 11 Jan 2023 14:13:13 -0800 (PST)
+        bh=Rsb9nNGK6aVNwlCaEC3jjexZfnZ8WeFAlLgzTSFgXug=;
+        b=k0BDqN6uFfrpsnbdM0QNcKz677joYN9b3rM8AEQ4NKRgU6o8+Hrv8Xdq3+tS0LVY4E
+         hzvzrnHLpwsJUkL/bOZiXYVCngvg2PmMCKeG376uUbnRxXz92xy6uiTmqx9eO4dZGrRu
+         D4hVoD9zUtbRoovth9bQvyxairO/1nvhzSId6RJR7yVj4eIAzMze7aw0kc+ABjqk2N5r
+         D2gxMJDNJERxsISNCZws4GSNiezDU7TgBf0FCNlUVjMPGzJvUA75hl+kHoLup0AF1jsY
+         g0UPfd7jqazMcifjUVGRAyFyxqZMafNNlk78LeFkLEsa12+WieE3dSNVfw1WDJXXHyeL
+         iQeQ==
+X-Gm-Message-State: AFqh2kqcVdQE7eiA+v2Mbas8H2XFOWLvsoUNMrA0sxjtXPynI4vR5Xr9
+        GcNEkVV4qna/c1JbfqEag6N+nVHnTJE=
+X-Google-Smtp-Source: AMrXdXsDnJLKgB6zzwIXGoAkVjz8iKCHKMwfBQaTs0z6AJkSsUvQPJLrJQeEYCS8zIgqdX00Xr2yGA==
+X-Received: by 2002:a05:600c:358f:b0:3d9:7847:96e2 with SMTP id p15-20020a05600c358f00b003d9784796e2mr43905081wmq.2.1673475194258;
+        Wed, 11 Jan 2023 14:13:14 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m18-20020a05600c4f5200b003c6b70a4d69sm22415101wmq.42.2023.01.11.14.13.13
+        by smtp.gmail.com with ESMTPSA id o12-20020a05600c4fcc00b003da0b75de94sm3271396wmq.8.2023.01.11.14.13.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 11 Jan 2023 14:13:13 -0800 (PST)
-Message-Id: <74b0de14185120c9d53d7470e59f57fa20a1927f.1673475190.git.gitgitgadget@gmail.com>
+Message-Id: <bc972fc8d3d3a028d3d160aac354d2a13bad37ae.1673475190.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1352.v5.git.1673475190.gitgitgadget@gmail.com>
 References: <pull.1352.v4.git.1670880984.gitgitgadget@gmail.com>
         <pull.1352.v5.git.1673475190.gitgitgadget@gmail.com>
 From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Wed, 11 Jan 2023 22:13:01 +0000
-Subject: [PATCH v5 01/10] daemon: libify socket setup and option functions
+Date:   Wed, 11 Jan 2023 22:13:02 +0000
+Subject: [PATCH v5 02/10] daemon: libify child process handling functions
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -76,532 +76,262 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-Extract functions for setting up listening sockets and keep-alive options
-from `daemon.c` to new `daemon-utils.{c,h}` files. Remove direct
-dependencies on global state by inlining the behaviour at the callsites
-for all libified functions.
+Extract functions and structures for managing child processes started
+from the parent daemon-like process from `daemon.c` to the new shared
+`daemon-utils.{c,h}` files.
 
 Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
 ---
- Makefile       |   1 +
- daemon-utils.c | 209 +++++++++++++++++++++++++++++++++++++++++++++++
- daemon-utils.h |  23 ++++++
- daemon.c       | 214 +------------------------------------------------
- 4 files changed, 237 insertions(+), 210 deletions(-)
- create mode 100644 daemon-utils.c
- create mode 100644 daemon-utils.h
+ daemon-utils.c | 77 ++++++++++++++++++++++++++++++++++++++++++
+ daemon-utils.h | 15 ++++++++
+ daemon.c       | 92 +++-----------------------------------------------
+ 3 files changed, 97 insertions(+), 87 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index b258fdbed86..2654094dbb5 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1003,6 +1003,7 @@ LIB_OBJS += credential.o
- LIB_OBJS += csum-file.o
- LIB_OBJS += ctype.o
- LIB_OBJS += date.o
-+LIB_OBJS += daemon-utils.o
- LIB_OBJS += decorate.o
- LIB_OBJS += delta-islands.o
- LIB_OBJS += diagnose.o
 diff --git a/daemon-utils.c b/daemon-utils.c
-new file mode 100644
-index 00000000000..b96b55962db
---- /dev/null
+index b96b55962db..3804bc60973 100644
+--- a/daemon-utils.c
 +++ b/daemon-utils.c
-@@ -0,0 +1,209 @@
-+#include "cache.h"
-+#include "daemon-utils.h"
+@@ -207,3 +207,80 @@ void socksetup(struct string_list *listen_addr, int listen_port,
+ 		}
+ 	}
+ }
 +
-+void set_keep_alive(int sockfd, log_fn logerror)
++static int addrcmp(const struct sockaddr_storage *s1,
++    const struct sockaddr_storage *s2)
 +{
-+	int ka = 1;
++	const struct sockaddr *sa1 = (const struct sockaddr*) s1;
++	const struct sockaddr *sa2 = (const struct sockaddr*) s2;
 +
-+	if (setsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &ka, sizeof(ka)) < 0) {
-+		if (errno != ENOTSOCK)
-+			logerror("unable to set SO_KEEPALIVE on socket: %s",
-+				strerror(errno));
-+	}
-+}
-+
-+static int set_reuse_addr(int sockfd)
-+{
-+	int on = 1;
-+
-+	return setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR,
-+			  &on, sizeof(on));
-+}
-+
-+static const char *ip2str(int family, struct sockaddr *sin, socklen_t len)
-+{
-+#ifdef NO_IPV6
-+	static char ip[INET_ADDRSTRLEN];
-+#else
-+	static char ip[INET6_ADDRSTRLEN];
-+#endif
-+
-+	switch (family) {
++	if (sa1->sa_family != sa2->sa_family)
++		return sa1->sa_family - sa2->sa_family;
++	if (sa1->sa_family == AF_INET)
++		return memcmp(&((struct sockaddr_in *)s1)->sin_addr,
++		    &((struct sockaddr_in *)s2)->sin_addr,
++		    sizeof(struct in_addr));
 +#ifndef NO_IPV6
-+	case AF_INET6:
-+		inet_ntop(family, &((struct sockaddr_in6*)sin)->sin6_addr, ip, len);
-+		break;
++	if (sa1->sa_family == AF_INET6)
++		return memcmp(&((struct sockaddr_in6 *)s1)->sin6_addr,
++		    &((struct sockaddr_in6 *)s2)->sin6_addr,
++		    sizeof(struct in6_addr));
 +#endif
-+	case AF_INET:
-+		inet_ntop(family, &((struct sockaddr_in*)sin)->sin_addr, ip, len);
-+		break;
-+	default:
-+		xsnprintf(ip, sizeof(ip), "<unknown>");
-+	}
-+	return ip;
++	return 0;
 +}
 +
-+#ifndef NO_IPV6
-+
-+static int setup_named_sock(char *listen_addr, int listen_port,
-+			    struct socketlist *socklist, int reuseaddr,
-+			    log_fn logerror)
++void add_child(struct child_process *cld, struct sockaddr *addr, socklen_t addrlen,
++	       struct child *firstborn , unsigned int *live_children)
 +{
-+	int socknum = 0;
-+	char pbuf[NI_MAXSERV];
-+	struct addrinfo hints, *ai0, *ai;
-+	int gai;
-+	long flags;
++	struct child *newborn, **cradle;
 +
-+	xsnprintf(pbuf, sizeof(pbuf), "%d", listen_port);
-+	memset(&hints, 0, sizeof(hints));
-+	hints.ai_family = AF_UNSPEC;
-+	hints.ai_socktype = SOCK_STREAM;
-+	hints.ai_protocol = IPPROTO_TCP;
-+	hints.ai_flags = AI_PASSIVE;
-+
-+	gai = getaddrinfo(listen_addr, pbuf, &hints, &ai0);
-+	if (gai) {
-+		logerror("getaddrinfo() for %s failed: %s", listen_addr, gai_strerror(gai));
-+		return 0;
-+	}
-+
-+	for (ai = ai0; ai; ai = ai->ai_next) {
-+		int sockfd;
-+
-+		sockfd = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
-+		if (sockfd < 0)
-+			continue;
-+		if (sockfd >= FD_SETSIZE) {
-+			logerror("Socket descriptor too large");
-+			close(sockfd);
-+			continue;
-+		}
-+
-+#ifdef IPV6_V6ONLY
-+		if (ai->ai_family == AF_INET6) {
-+			int on = 1;
-+			setsockopt(sockfd, IPPROTO_IPV6, IPV6_V6ONLY,
-+				   &on, sizeof(on));
-+			/* Note: error is not fatal */
-+		}
-+#endif
-+
-+		if (reuseaddr && set_reuse_addr(sockfd)) {
-+			logerror("Could not set SO_REUSEADDR: %s", strerror(errno));
-+			close(sockfd);
-+			continue;
-+		}
-+
-+		set_keep_alive(sockfd, logerror);
-+
-+		if (bind(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
-+			logerror("Could not bind to %s: %s",
-+				 ip2str(ai->ai_family, ai->ai_addr, ai->ai_addrlen),
-+				 strerror(errno));
-+			close(sockfd);
-+			continue;	/* not fatal */
-+		}
-+		if (listen(sockfd, 5) < 0) {
-+			logerror("Could not listen to %s: %s",
-+				 ip2str(ai->ai_family, ai->ai_addr, ai->ai_addrlen),
-+				 strerror(errno));
-+			close(sockfd);
-+			continue;	/* not fatal */
-+		}
-+
-+		flags = fcntl(sockfd, F_GETFD, 0);
-+		if (flags >= 0)
-+			fcntl(sockfd, F_SETFD, flags | FD_CLOEXEC);
-+
-+		ALLOC_GROW(socklist->list, socklist->nr + 1, socklist->alloc);
-+		socklist->list[socklist->nr++] = sockfd;
-+		socknum++;
-+	}
-+
-+	freeaddrinfo(ai0);
-+
-+	return socknum;
++	CALLOC_ARRAY(newborn, 1);
++	live_children++;
++	memcpy(&newborn->cld, cld, sizeof(*cld));
++	memcpy(&newborn->address, addr, addrlen);
++	for (cradle = &firstborn; *cradle; cradle = &(*cradle)->next)
++		if (!addrcmp(&(*cradle)->address, &newborn->address))
++			break;
++	newborn->next = *cradle;
++	*cradle = newborn;
 +}
 +
-+#else /* NO_IPV6 */
-+
-+static int setup_named_sock(char *listen_addr, int listen_port,
-+			    struct socketlist *socklist, int reuseaddr,
-+			    log_fn logerror)
++void kill_some_child(struct child *firstborn)
 +{
-+	struct sockaddr_in sin;
-+	int sockfd;
-+	long flags;
++	const struct child *blanket, *next;
 +
-+	memset(&sin, 0, sizeof sin);
-+	sin.sin_family = AF_INET;
-+	sin.sin_port = htons(listen_port);
++	if (!(blanket = firstborn))
++		return;
 +
-+	if (listen_addr) {
-+		/* Well, host better be an IP address here. */
-+		if (inet_pton(AF_INET, listen_addr, &sin.sin_addr.s_addr) <= 0)
-+			return 0;
-+	} else {
-+		sin.sin_addr.s_addr = htonl(INADDR_ANY);
-+	}
-+
-+	sockfd = socket(AF_INET, SOCK_STREAM, 0);
-+	if (sockfd < 0)
-+		return 0;
-+
-+	if (reuseaddr && set_reuse_addr(sockfd)) {
-+		logerror("Could not set SO_REUSEADDR: %s", strerror(errno));
-+		close(sockfd);
-+		return 0;
-+	}
-+
-+	set_keep_alive(sockfd, logerror);
-+
-+	if ( bind(sockfd, (struct sockaddr *)&sin, sizeof sin) < 0 ) {
-+		logerror("Could not bind to %s: %s",
-+			 ip2str(AF_INET, (struct sockaddr *)&sin, sizeof(sin)),
-+			 strerror(errno));
-+		close(sockfd);
-+		return 0;
-+	}
-+
-+	if (listen(sockfd, 5) < 0) {
-+		logerror("Could not listen to %s: %s",
-+			 ip2str(AF_INET, (struct sockaddr *)&sin, sizeof(sin)),
-+			 strerror(errno));
-+		close(sockfd);
-+		return 0;
-+	}
-+
-+	flags = fcntl(sockfd, F_GETFD, 0);
-+	if (flags >= 0)
-+		fcntl(sockfd, F_SETFD, flags | FD_CLOEXEC);
-+
-+	ALLOC_GROW(socklist->list, socklist->nr + 1, socklist->alloc);
-+	socklist->list[socklist->nr++] = sockfd;
-+	return 1;
++	for (; (next = blanket->next); blanket = next)
++		if (!addrcmp(&blanket->address, &next->address)) {
++			kill(blanket->cld.pid, SIGTERM);
++			break;
++		}
 +}
 +
-+#endif
-+
-+void socksetup(struct string_list *listen_addr, int listen_port,
-+	       struct socketlist *socklist, int reuseaddr,
-+	       log_fn logerror)
++void check_dead_children(struct child *firstborn, unsigned int *live_children,
++			 log_fn loginfo)
 +{
-+	if (!listen_addr->nr)
-+		setup_named_sock(NULL, listen_port, socklist, reuseaddr,
-+				 logerror);
-+	else {
-+		int i, socknum;
-+		for (i = 0; i < listen_addr->nr; i++) {
-+			socknum = setup_named_sock(listen_addr->items[i].string,
-+						   listen_port, socklist, reuseaddr,
-+						   logerror);
++	int status;
++	pid_t pid;
 +
-+			if (socknum == 0)
-+				logerror("unable to allocate any listen sockets for host %s on port %u",
-+					 listen_addr->items[i].string, listen_port);
-+		}
-+	}
++	struct child **cradle, *blanket;
++	for (cradle = &firstborn; (blanket = *cradle);)
++		if ((pid = waitpid(blanket->cld.pid, &status, WNOHANG)) > 1) {
++			if (loginfo) {
++				const char *dead = "";
++				if (status)
++					dead = " (with error)";
++				loginfo("[%"PRIuMAX"] Disconnected%s",
++					(uintmax_t)pid, dead);
++			}
++
++			/* remove the child */
++			*cradle = blanket->next;
++			live_children--;
++			child_process_clear(&blanket->cld);
++			free(blanket);
++		} else
++			cradle = &blanket->next;
 +}
 diff --git a/daemon-utils.h b/daemon-utils.h
-new file mode 100644
-index 00000000000..6710a2a6dc0
---- /dev/null
+index 6710a2a6dc0..fe8d9d05256 100644
+--- a/daemon-utils.h
 +++ b/daemon-utils.h
-@@ -0,0 +1,23 @@
-+#ifndef DAEMON_UTILS_H
-+#define DAEMON_UTILS_H
-+
-+#include "git-compat-util.h"
-+#include "string-list.h"
-+
-+typedef void (*log_fn)(const char *msg, ...);
-+
-+struct socketlist {
-+	int *list;
-+	size_t nr;
-+	size_t alloc;
+@@ -2,6 +2,7 @@
+ #define DAEMON_UTILS_H
+ 
+ #include "git-compat-util.h"
++#include "run-command.h"
+ #include "string-list.h"
+ 
+ typedef void (*log_fn)(const char *msg, ...);
+@@ -20,4 +21,18 @@ void socksetup(struct string_list *listen_addr, int listen_port,
+ 	       struct socketlist *socklist, int reuseaddr,
+ 	       log_fn logerror);
+ 
++struct child {
++	struct child *next;
++	struct child_process cld;
++	struct sockaddr_storage address;
 +};
 +
-+/* Enable sending of keep-alive messages on the socket. */
-+void set_keep_alive(int sockfd, log_fn logerror);
++void add_child(struct child_process *cld, struct sockaddr *addr, socklen_t addrlen,
++	       struct child *firstborn, unsigned int *live_children);
 +
-+/* Setup a number of sockets to listen on the provided addresses. */
-+void socksetup(struct string_list *listen_addr, int listen_port,
-+	       struct socketlist *socklist, int reuseaddr,
-+	       log_fn logerror);
++void kill_some_child(struct child *firstborn);
 +
-+#endif
++void check_dead_children(struct child *firstborn, unsigned int *live_children,
++			 log_fn loginfo);
++
+ #endif
 diff --git a/daemon.c b/daemon.c
-index 0ae7d12b5c1..1ed4e705680 100644
+index 1ed4e705680..ec3b407ecbc 100644
 --- a/daemon.c
 +++ b/daemon.c
-@@ -1,9 +1,9 @@
- #include "cache.h"
- #include "config.h"
-+#include "daemon-utils.h"
- #include "pkt-line.h"
- #include "run-command.h"
- #include "strbuf.h"
--#include "string-list.h"
- 
- #ifdef NO_INITGROUPS
- #define initgroups(x, y) (0) /* nothing */
-@@ -737,17 +737,6 @@ static void hostinfo_clear(struct hostinfo *hi)
- 	strbuf_release(&hi->tcp_port);
+@@ -785,93 +785,11 @@ static int execute(void)
+ 	return -1;
  }
  
--static void set_keep_alive(int sockfd)
+-static int addrcmp(const struct sockaddr_storage *s1,
+-    const struct sockaddr_storage *s2)
 -{
--	int ka = 1;
+-	const struct sockaddr *sa1 = (const struct sockaddr*) s1;
+-	const struct sockaddr *sa2 = (const struct sockaddr*) s2;
 -
--	if (setsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &ka, sizeof(ka)) < 0) {
--		if (errno != ENOTSOCK)
--			logerror("unable to set SO_KEEPALIVE on socket: %s",
--				strerror(errno));
--	}
+-	if (sa1->sa_family != sa2->sa_family)
+-		return sa1->sa_family - sa2->sa_family;
+-	if (sa1->sa_family == AF_INET)
+-		return memcmp(&((struct sockaddr_in *)s1)->sin_addr,
+-		    &((struct sockaddr_in *)s2)->sin_addr,
+-		    sizeof(struct in_addr));
+-#ifndef NO_IPV6
+-	if (sa1->sa_family == AF_INET6)
+-		return memcmp(&((struct sockaddr_in6 *)s1)->sin6_addr,
+-		    &((struct sockaddr_in6 *)s2)->sin6_addr,
+-		    sizeof(struct in6_addr));
+-#endif
+-	return 0;
 -}
 -
- static int execute(void)
- {
- 	char *line = packet_buffer;
-@@ -759,7 +748,7 @@ static int execute(void)
- 	if (addr)
- 		loginfo("Connection from %s:%s", addr, port);
+ static int max_connections = 32;
  
--	set_keep_alive(0);
-+	set_keep_alive(0, logerror);
- 	alarm(init_timeout ? init_timeout : timeout);
- 	pktlen = packet_read(0, packet_buffer, sizeof(packet_buffer), 0);
- 	alarm(0);
-@@ -938,202 +927,6 @@ static void child_handler(int signo)
- 	signal(SIGCHLD, child_handler);
+ static unsigned int live_children;
+ 
+-static struct child {
+-	struct child *next;
+-	struct child_process cld;
+-	struct sockaddr_storage address;
+-} *firstborn;
+-
+-static void add_child(struct child_process *cld, struct sockaddr *addr, socklen_t addrlen)
+-{
+-	struct child *newborn, **cradle;
+-
+-	CALLOC_ARRAY(newborn, 1);
+-	live_children++;
+-	memcpy(&newborn->cld, cld, sizeof(*cld));
+-	memcpy(&newborn->address, addr, addrlen);
+-	for (cradle = &firstborn; *cradle; cradle = &(*cradle)->next)
+-		if (!addrcmp(&(*cradle)->address, &newborn->address))
+-			break;
+-	newborn->next = *cradle;
+-	*cradle = newborn;
+-}
+-
+-/*
+- * This gets called if the number of connections grows
+- * past "max_connections".
+- *
+- * We kill the newest connection from a duplicate IP.
+- */
+-static void kill_some_child(void)
+-{
+-	const struct child *blanket, *next;
+-
+-	if (!(blanket = firstborn))
+-		return;
+-
+-	for (; (next = blanket->next); blanket = next)
+-		if (!addrcmp(&blanket->address, &next->address)) {
+-			kill(blanket->cld.pid, SIGTERM);
+-			break;
+-		}
+-}
+-
+-static void check_dead_children(void)
+-{
+-	int status;
+-	pid_t pid;
+-
+-	struct child **cradle, *blanket;
+-	for (cradle = &firstborn; (blanket = *cradle);)
+-		if ((pid = waitpid(blanket->cld.pid, &status, WNOHANG)) > 1) {
+-			const char *dead = "";
+-			if (status)
+-				dead = " (with error)";
+-			loginfo("[%"PRIuMAX"] Disconnected%s", (uintmax_t)pid, dead);
+-
+-			/* remove the child */
+-			*cradle = blanket->next;
+-			live_children--;
+-			child_process_clear(&blanket->cld);
+-			free(blanket);
+-		} else
+-			cradle = &blanket->next;
+-}
++static struct child *firstborn;
+ 
+ static struct strvec cld_argv = STRVEC_INIT;
+ static void handle(int incoming, struct sockaddr *addr, socklen_t addrlen)
+@@ -879,9 +797,9 @@ static void handle(int incoming, struct sockaddr *addr, socklen_t addrlen)
+ 	struct child_process cld = CHILD_PROCESS_INIT;
+ 
+ 	if (max_connections && live_children >= max_connections) {
+-		kill_some_child();
++		kill_some_child(firstborn);
+ 		sleep(1);  /* give it some time to die */
+-		check_dead_children();
++		check_dead_children(firstborn, &live_children, loginfo);
+ 		if (live_children >= max_connections) {
+ 			close(incoming);
+ 			logerror("Too many children, dropping connection");
+@@ -914,7 +832,7 @@ static void handle(int incoming, struct sockaddr *addr, socklen_t addrlen)
+ 	if (start_command(&cld))
+ 		logerror("unable to fork");
+ 	else
+-		add_child(&cld, addr, addrlen);
++		add_child(&cld, addr, addrlen, firstborn, &live_children);
  }
  
--static int set_reuse_addr(int sockfd)
--{
--	int on = 1;
--
--	if (!reuseaddr)
--		return 0;
--	return setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR,
--			  &on, sizeof(on));
--}
--
--struct socketlist {
--	int *list;
--	size_t nr;
--	size_t alloc;
--};
--
--static const char *ip2str(int family, struct sockaddr *sin, socklen_t len)
--{
--#ifdef NO_IPV6
--	static char ip[INET_ADDRSTRLEN];
--#else
--	static char ip[INET6_ADDRSTRLEN];
--#endif
--
--	switch (family) {
--#ifndef NO_IPV6
--	case AF_INET6:
--		inet_ntop(family, &((struct sockaddr_in6*)sin)->sin6_addr, ip, len);
--		break;
--#endif
--	case AF_INET:
--		inet_ntop(family, &((struct sockaddr_in*)sin)->sin_addr, ip, len);
--		break;
--	default:
--		xsnprintf(ip, sizeof(ip), "<unknown>");
--	}
--	return ip;
--}
--
--#ifndef NO_IPV6
--
--static int setup_named_sock(char *listen_addr, int listen_port, struct socketlist *socklist)
--{
--	int socknum = 0;
--	char pbuf[NI_MAXSERV];
--	struct addrinfo hints, *ai0, *ai;
--	int gai;
--	long flags;
--
--	xsnprintf(pbuf, sizeof(pbuf), "%d", listen_port);
--	memset(&hints, 0, sizeof(hints));
--	hints.ai_family = AF_UNSPEC;
--	hints.ai_socktype = SOCK_STREAM;
--	hints.ai_protocol = IPPROTO_TCP;
--	hints.ai_flags = AI_PASSIVE;
--
--	gai = getaddrinfo(listen_addr, pbuf, &hints, &ai0);
--	if (gai) {
--		logerror("getaddrinfo() for %s failed: %s", listen_addr, gai_strerror(gai));
--		return 0;
--	}
--
--	for (ai = ai0; ai; ai = ai->ai_next) {
--		int sockfd;
--
--		sockfd = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
--		if (sockfd < 0)
--			continue;
--		if (sockfd >= FD_SETSIZE) {
--			logerror("Socket descriptor too large");
--			close(sockfd);
--			continue;
--		}
--
--#ifdef IPV6_V6ONLY
--		if (ai->ai_family == AF_INET6) {
--			int on = 1;
--			setsockopt(sockfd, IPPROTO_IPV6, IPV6_V6ONLY,
--				   &on, sizeof(on));
--			/* Note: error is not fatal */
--		}
--#endif
--
--		if (set_reuse_addr(sockfd)) {
--			logerror("Could not set SO_REUSEADDR: %s", strerror(errno));
--			close(sockfd);
--			continue;
--		}
--
--		set_keep_alive(sockfd);
--
--		if (bind(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
--			logerror("Could not bind to %s: %s",
--				 ip2str(ai->ai_family, ai->ai_addr, ai->ai_addrlen),
--				 strerror(errno));
--			close(sockfd);
--			continue;	/* not fatal */
--		}
--		if (listen(sockfd, 5) < 0) {
--			logerror("Could not listen to %s: %s",
--				 ip2str(ai->ai_family, ai->ai_addr, ai->ai_addrlen),
--				 strerror(errno));
--			close(sockfd);
--			continue;	/* not fatal */
--		}
--
--		flags = fcntl(sockfd, F_GETFD, 0);
--		if (flags >= 0)
--			fcntl(sockfd, F_SETFD, flags | FD_CLOEXEC);
--
--		ALLOC_GROW(socklist->list, socklist->nr + 1, socklist->alloc);
--		socklist->list[socklist->nr++] = sockfd;
--		socknum++;
--	}
--
--	freeaddrinfo(ai0);
--
--	return socknum;
--}
--
--#else /* NO_IPV6 */
--
--static int setup_named_sock(char *listen_addr, int listen_port, struct socketlist *socklist)
--{
--	struct sockaddr_in sin;
--	int sockfd;
--	long flags;
--
--	memset(&sin, 0, sizeof sin);
--	sin.sin_family = AF_INET;
--	sin.sin_port = htons(listen_port);
--
--	if (listen_addr) {
--		/* Well, host better be an IP address here. */
--		if (inet_pton(AF_INET, listen_addr, &sin.sin_addr.s_addr) <= 0)
--			return 0;
--	} else {
--		sin.sin_addr.s_addr = htonl(INADDR_ANY);
--	}
--
--	sockfd = socket(AF_INET, SOCK_STREAM, 0);
--	if (sockfd < 0)
--		return 0;
--
--	if (set_reuse_addr(sockfd)) {
--		logerror("Could not set SO_REUSEADDR: %s", strerror(errno));
--		close(sockfd);
--		return 0;
--	}
--
--	set_keep_alive(sockfd);
--
--	if ( bind(sockfd, (struct sockaddr *)&sin, sizeof sin) < 0 ) {
--		logerror("Could not bind to %s: %s",
--			 ip2str(AF_INET, (struct sockaddr *)&sin, sizeof(sin)),
--			 strerror(errno));
--		close(sockfd);
--		return 0;
--	}
--
--	if (listen(sockfd, 5) < 0) {
--		logerror("Could not listen to %s: %s",
--			 ip2str(AF_INET, (struct sockaddr *)&sin, sizeof(sin)),
--			 strerror(errno));
--		close(sockfd);
--		return 0;
--	}
--
--	flags = fcntl(sockfd, F_GETFD, 0);
--	if (flags >= 0)
--		fcntl(sockfd, F_SETFD, flags | FD_CLOEXEC);
--
--	ALLOC_GROW(socklist->list, socklist->nr + 1, socklist->alloc);
--	socklist->list[socklist->nr++] = sockfd;
--	return 1;
--}
--
--#endif
--
--static void socksetup(struct string_list *listen_addr, int listen_port, struct socketlist *socklist)
--{
--	if (!listen_addr->nr)
--		setup_named_sock(NULL, listen_port, socklist);
--	else {
--		int i, socknum;
--		for (i = 0; i < listen_addr->nr; i++) {
--			socknum = setup_named_sock(listen_addr->items[i].string,
--						   listen_port, socklist);
--
--			if (socknum == 0)
--				logerror("unable to allocate any listen sockets for host %s on port %u",
--					 listen_addr->items[i].string, listen_port);
--		}
--	}
--}
--
- static int service_loop(struct socketlist *socklist)
- {
- 	struct pollfd *pfd;
-@@ -1246,7 +1039,8 @@ static int serve(struct string_list *listen_addr, int listen_port,
- {
- 	struct socketlist socklist = { NULL, 0, 0 };
+ static void child_handler(int signo)
+@@ -944,7 +862,7 @@ static int service_loop(struct socketlist *socklist)
+ 	for (;;) {
+ 		int i;
  
--	socksetup(listen_addr, listen_port, &socklist);
-+	socksetup(listen_addr, listen_port, &socklist, reuseaddr,
-+		  logerror);
- 	if (socklist.nr == 0)
- 		die("unable to allocate any listen sockets on port %u",
- 		    listen_port);
+-		check_dead_children();
++		check_dead_children(firstborn, &live_children, loginfo);
+ 
+ 		if (poll(pfd, socklist->nr, -1) < 0) {
+ 			if (errno != EINTR) {
 -- 
 gitgitgadget
 
