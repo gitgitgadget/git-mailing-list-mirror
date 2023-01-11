@@ -2,176 +2,248 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7771CC5479D
-	for <git@archiver.kernel.org>; Wed, 11 Jan 2023 12:03:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 996F6C5479D
+	for <git@archiver.kernel.org>; Wed, 11 Jan 2023 13:14:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229501AbjAKMDE (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Jan 2023 07:03:04 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53720 "EHLO
+        id S232243AbjAKNO2 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Jan 2023 08:14:28 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238694AbjAKMCK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2023 07:02:10 -0500
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C3C355A1
-        for <git@vger.kernel.org>; Wed, 11 Jan 2023 03:59:44 -0800 (PST)
-Received: by mail-yb1-xb29.google.com with SMTP id 194so12497293ybf.8
-        for <git@vger.kernel.org>; Wed, 11 Jan 2023 03:59:44 -0800 (PST)
+        with ESMTP id S232741AbjAKNOZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2023 08:14:25 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B45C8167F5
+        for <git@vger.kernel.org>; Wed, 11 Jan 2023 05:14:23 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id k26-20020a05600c1c9a00b003d972646a7dso14307391wms.5
+        for <git@vger.kernel.org>; Wed, 11 Jan 2023 05:14:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Q2Dgrp5TFdaEp/7OGGprGpNt5GVd8WT+IvGIdSj4Erg=;
-        b=E1u2zMBYW7eYqse4RPHTmWoMU5LkVwe3eSWcBxcghjbwp2f7M2kA8tNxMNY31SbtEh
-         D2Ps33TrxYJ4rggl8lr0cCT1ifGDrR/meuLS0LWACSSJuPxiv/+HgeN2TbCG5lJE3Fo4
-         Uf23lIS4+C3qwAUPesEn1/XHknvg3cdBdKjtVjasLpFVBZVF3+zIqkp44afQY5oJ37Bl
-         MmZWAfD6P0iKuDcBeyXWlPPhr1I0KQWrc775fIJ0y7y25AxboNMH46gtpgzN07XYnGcT
-         a6SCOWW/dJug+Qyg8Bm5CLvvY2xQ+bz4EZ2tBTgWm5/HBXyH2stsvjhBW7Pe/o1gS+pZ
-         DgAg==
+        bh=1UiHKhDg+aeZ8pHfDqId/dzizGiEcvGt8wv/vq76Bik=;
+        b=pMqHZAOA4H3TGBMaugJnh9/bHLohgzgZKTZCXES0LkN9w+9VPe55l7v2fVnyrq6vl8
+         DOj6Q5iLmnHNuNd3dKqCXM4iIKQrNPZ0iNuTjxuLjw9R1fQF2AWBgOdkJt3j0zIdeb46
+         uPam+PZch6iMp5R4KpE7sWIyXWit/cx+w1V4Pk+FQIZ5OrwKgEkMMlgF7XQFMRPnvkxC
+         P4owU9V3Lk8tu98F/oRsTkj+5/MSmLCrCuESosZX8h27q2kWiA+1DGXE7Y2eTGBYIEeR
+         Y7nA6WyagZX/STjx3KGz+EmXMwU9V5z568FVHlm+RnZGVWU7pZfO8DipR+ORJ3VvPo7y
+         H8ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Q2Dgrp5TFdaEp/7OGGprGpNt5GVd8WT+IvGIdSj4Erg=;
-        b=dY1BihYOEUqDp6YWcUsz/RuiavDwau1uegEcwtImsCXD7gd3Xr07w0/wyC6UdtD8CX
-         a9+CjmGtZjoWXdrFoVVLxwZ/FSVUaoikQD4cRSSI2BtVHKugxYc0KiBij8Va6kRusdzf
-         7yTe5KH4u/GWGy6tYQq8hS1IO1AEW+QekMZwkLiTrWl3hfAvYJidM3YekMEf37lIjyr0
-         mo5besubohR75/To3+WgL/HQ2p7rcVYpYcEU8dSibBc9qRUMoN9ZEJgczFLUNiD8zZ09
-         uJ5qemFkudGhybYSKkM6+tVlUyHMUt8NgsqGskMIEbxhsGYP5vMoQQ6f5TPyD01eXBD6
-         lnnQ==
-X-Gm-Message-State: AFqh2kpunuMHQ2hmfRtSCkRMqlApXf2wRnWYSNyAW4qaE3Kxbupwbpqc
-        0QxmRMjjtE4vu0V7pBqCDpLwpq1LwJu7pNod8WQ=
-X-Google-Smtp-Source: AMrXdXvcbiVdluYrCfc/z1BySSqZoGxN3u0CZsT3o3AXN/KHLnYqRbxFFEyiZOH6lwKTe1TzNyzYl373SRX0OMOjbHI=
-X-Received: by 2002:a25:5189:0:b0:7bf:d201:60cb with SMTP id
- f131-20020a255189000000b007bfd20160cbmr659988ybb.365.1673438383293; Wed, 11
- Jan 2023 03:59:43 -0800 (PST)
+        bh=1UiHKhDg+aeZ8pHfDqId/dzizGiEcvGt8wv/vq76Bik=;
+        b=bNDJHCKUir0kFVVOUDpspzWd6Luiwkp2zWvvxw0DCToa9ZHagofEj/+oVOVyBTgTyB
+         KrEZ3KGIsrVZpRDK/iKIzoFL+otMbA3x9U1QDwhSRCmmoTj+ZWiBB87dToWNOO9o5gNQ
+         QTNK8WMkHAzyxdb/yLvHj9HsgxQoFKK9DbuwRTuB4yTBfDnu7cilSPuuX3gmcJykb40I
+         k90Op2XC/yeRYJtVZWmo3RHjNOSyZlcJ1v3aAJmwhdopKGiNnMSI2fZhHhjuC9RJMQeQ
+         XQfD82jCtIWxO5yyoy57Ox+vPMHJ1VNRP3ats6Tn0X3ba8tZADhoJX0QSQmJGZciJ0KG
+         F7Rg==
+X-Gm-Message-State: AFqh2koGLaa5V+jU9uvTXAsUXHwA860/1ZmEzLL9Vfzgb2TcODCOyHDp
+        LPTFo7s6onjY0h2OvOLoPj00CXor8hE=
+X-Google-Smtp-Source: AMrXdXvnn6ZiyukqBzkk5ZTotG+rORrTqy6EmG5hDXqebLqGFBQH1GOWlldupENSFDET2weQh4JHzA==
+X-Received: by 2002:a05:600c:4e4f:b0:3cf:9d32:db67 with SMTP id e15-20020a05600c4e4f00b003cf9d32db67mr51861682wmq.3.1673442861966;
+        Wed, 11 Jan 2023 05:14:21 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b1-20020adf9b01000000b0028e55b44a99sm13585738wrc.17.2023.01.11.05.14.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Jan 2023 05:14:21 -0800 (PST)
+Message-Id: <pull.1441.v3.git.1673442860379.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1441.v2.git.1671974986363.gitgitgadget@gmail.com>
+References: <pull.1441.v2.git.1671974986363.gitgitgadget@gmail.com>
+From:   "ZheNing Hu via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 11 Jan 2023 13:14:20 +0000
+Subject: [PATCH v3] scalar: show progress if stderr refer to a terminal
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <pull.1441.git.1670436656379.gitgitgadget@gmail.com>
- <pull.1441.v2.git.1671974986363.gitgitgadget@gmail.com> <1f8493b0-3f96-c616-1e4e-98b6ed33e8c4@github.com>
-In-Reply-To: <1f8493b0-3f96-c616-1e4e-98b6ed33e8c4@github.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Wed, 11 Jan 2023 19:59:31 +0800
-Message-ID: <CAOLTT8Q6sOkDLm7pnkJ6e7mi4MDu6PYKD6vSd0NZbO9qAWkFmw@mail.gmail.com>
-Subject: Re: [PATCH v2] scalar: show progress if stderr refer to a terminal
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>, Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Victoria Dye <vdye@github.com>, Taylor Blau <me@ttaylorr.com>,
+        ZheNing Hu <adlternative@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <derrickstolee@github.com> =E4=BA=8E2023=E5=B9=B41=E6=9C=886=
-=E6=97=A5=E5=91=A8=E4=BA=94 03:19=E5=86=99=E9=81=93=EF=BC=9A
->
-> On 12/25/22 8:29 AM, ZheNing Hu via GitGitGadget wrote:
-> > From: ZheNing Hu <adlternative@gmail.com>
->
-> Sorry for the long wait in getting back to reviewing.
->
+From: ZheNing Hu <adlternative@gmail.com>
 
-Ah, It's okay.
+Sometimes when users use scalar to download a monorepo
+with a long commit history, they want to check the
+progress bar to know how long they still need to wait
+during the fetch process, but scalar suppresses this
+output by default.
 
-> > Sometimes when users use scalar to download a monorepo
-> > with a long commit history, they want to check the
-> > progress bar to know how long they still need to wait
-> > during the fetch process, but scalar suppresses this
-> > output by default.
-> >
-> > So let's check whether scalar stderr refer to a terminal,
-> > if so, show progress, otherwise disable it.
->
-> Thanks for updating to this strategy. I think it's an
-> easier change to swallow. We can consider options like
-> --progress, --verbose, or --quiet later while this
-> change does the good work of showing terminal users
-> helpful progress.
->
+So let's check whether scalar stderr refer to a terminal,
+if so, show progress, otherwise disable it.
 
-Yes, but I think something like `--quiet` is difficult to implement.
-We cannot just add `--no-progress` or `--quiet` to the git checkout
-for suppressing the progress. Because git checkout will not use it
-to suppress the fetch progress, but only the checkout's progress.
+Signed-off-by: ZheNing Hu <adlternative@gmail.com>
+---
+    scalar: show progress if stderr refer to a terminal
+    
+    When users use scalar to download a monorepo with a long commit history
+    (or the client and server network communication is very poor), we often
+    need to spend a long time in the fetch phase of scalar, some users may
+    want to check this progress bar To understand the progress of fetch and
+    how long they have to wait, so we should enable scalar to display fetch
+    progress.
+    
+    v1. add [--verbose| -v] to scalar clone.
+    
+    v2.
+    
+     1. remove --verbose option.
+     2. check if scalar stderr refer to terminal, if so, show progress.
+    
+    v3.
+    
+     1. fix some tests suggested by Derrick Stolee.
+    
+    Note: output look like this:
+    
+    $ scalar clone git@github.com:git/git.git
+    Initialized empty Git repository in /home/adl/test/git/src/.git/
+    remote: Enumerating objects: 208997, done.
+    remote: Counting objects: 100% (870/870), done.
+    remote: Compressing objects: 100% (870/870), done.
+    remote: Total 208991 (delta 0), reused 870 (delta 0), pack-reused 208121
+    remote: Enumerating objects: 470, done.
+    remote: Counting objects: 100% (418/418), done.
+    remote: Compressing objects: 100% (418/418), done.
+    remote: Total 470 (delta 1), reused 0 (delta 0), pack-reused 52
+    Receiving objects: 100% (470/470), 1.96 MiB | 1.64 MiB/s, done.
+    Resolving deltas: 100% (1/1), done.
+    Updating files: 100% (471/471), done.
+    branch 'master' set up to track 'origin/master'.
+    Switched to a new branch 'master'
+    Your branch is up to date with 'origin/master'.
+    
+    
+    "new branch", "new tag" output is a bit annoying, it would be better to
+    suppress them, but keep the progress.
 
-> > +     int full_clone =3D 0, single_branch =3D 0, show_progress =3D isat=
-ty(2);
->
-> > -     if ((res =3D run_git("fetch", "--quiet", "origin", NULL))) {
-> > +     if ((res =3D run_git("fetch", "--quiet",
-> > +                             show_progress ? "--progress" : "--no-prog=
-ress",
-> > +                             "origin", NULL))) {
-> >               warning(_("partial clone failed; attempting full clone"))=
-;
-> >
-> >               if (set_config("remote.origin.promisor") ||
-> > @@ -508,7 +510,9 @@ static int cmd_clone(int argc, const char **argv)
-> >                       goto cleanup;
-> >               }
-> >
-> > -             if ((res =3D run_git("fetch", "--quiet", "origin", NULL))=
-)
-> > +             if ((res =3D run_git("fetch", "--quiet",
-> > +                                     show_progress ? "--progress" : "-=
--no-progress",
-> > +                                     "origin", NULL)))
-> Implementation looks correct.
->
-> > +test_expect_success TTY 'progress with tty' '
-> > +     enlistment=3Dprogress1 &&
-> > +
-> > +     test_config -C to-clone uploadpack.allowfilter true &&
-> > +     test_config -C to-clone uploadpack.allowanysha1inwant true &&
-> > +
-> > +     test_terminal env GIT_PROGRESS_DELAY=3D0 \
-> > +             scalar clone "file://$(pwd)/to-clone" "$enlistment" 2>std=
-err &&
->
-> Thank you for creating this test!
->
-> > +     grep --count "Enumerating objects" stderr >actual &&
-> > +     echo 2 >expected &&
-> > +     test_cmp expected actual &&
->
-> I think you could use "test_line_count =3D 2 actual" here.
->
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1441%2Fadlternative%2Fzh%2Fscalar-verbosity-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1441/adlternative/zh/scalar-verbosity-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1441
 
-Oh, good suggestion. I should also use grep without `--count` too.
+Range-diff vs v2:
 
-> > +     cleanup_clone $enlistment
-> > +'
-> > +
-> > +test_expect_success 'progress without tty' '
-> > +     enlistment=3Dprogress2 &&
-> > +
-> > +     test_config -C to-clone uploadpack.allowfilter true &&
-> > +     test_config -C to-clone uploadpack.allowanysha1inwant true &&
-> > +
-> > +     scalar clone "file://$(pwd)/to-clone" "$enlistment" 2>stderr &&
-> > +     ! grep "Enumerating objects" stderr &&
-> > +     ! grep "Updating files" stderr &&
->
-> Here, it would be good to still have the GIT_PROGRESS_DELAY=3D0
-> environment variable on the 'scalar clone' command to be sure
-> we are not getting these lines because progress is turned off
-> and not because it's running too quickly.
->
+ 1:  2e4c296bd19 ! 1:  38e7e0d44d1 scalar: show progress if stderr refer to a terminal
+     @@ t/t9211-scalar-clone.sh: test_expect_success '--no-single-branch clones all bran
+      +
+      +	test_terminal env GIT_PROGRESS_DELAY=0 \
+      +		scalar clone "file://$(pwd)/to-clone" "$enlistment" 2>stderr &&
+     -+	grep --count "Enumerating objects" stderr >actual &&
+     -+	echo 2 >expected &&
+     -+	test_cmp expected actual &&
+     ++	grep "Enumerating objects" stderr >actual &&
+     ++	test_line_count = 2 actual &&
+      +	cleanup_clone $enlistment
+      +'
+      +
+     -+test_expect_success 'progress without tty' '
+     ++test_expect_success TTY 'progress without tty' '
+      +	enlistment=progress2 &&
+      +
+      +	test_config -C to-clone uploadpack.allowfilter true &&
+      +	test_config -C to-clone uploadpack.allowanysha1inwant true &&
+      +
+     -+	scalar clone "file://$(pwd)/to-clone" "$enlistment" 2>stderr &&
+     ++	GIT_PROGRESS_DELAY=0 scalar clone "file://$(pwd)/to-clone" "$enlistment" 2>stderr &&
+      +	! grep "Enumerating objects" stderr &&
+      +	! grep "Updating files" stderr &&
+      +	cleanup_clone $enlistment
+      +'
+     ++
+       test_done
 
-OK, that makes sense.
 
-> > +     cleanup_clone $enlistment
-> > +'
-> >  test_done
->
-> A nit: there should be an empty line between the end quote of
-> the last test and "test_done".
->
-> Thanks,
-> -Stolee
+ scalar.c                | 10 +++++++---
+ t/t9211-scalar-clone.sh | 26 ++++++++++++++++++++++++++
+ 2 files changed, 33 insertions(+), 3 deletions(-)
 
-Thanks,
--ZheNing Hu
+diff --git a/scalar.c b/scalar.c
+index 6c52243cdf1..e5cc554c537 100644
+--- a/scalar.c
++++ b/scalar.c
+@@ -404,7 +404,7 @@ void load_builtin_commands(const char *prefix, struct cmdnames *cmds)
+ static int cmd_clone(int argc, const char **argv)
+ {
+ 	const char *branch = NULL;
+-	int full_clone = 0, single_branch = 0;
++	int full_clone = 0, single_branch = 0, show_progress = isatty(2);
+ 	struct option clone_options[] = {
+ 		OPT_STRING('b', "branch", &branch, N_("<branch>"),
+ 			   N_("branch to checkout after clone")),
+@@ -499,7 +499,9 @@ static int cmd_clone(int argc, const char **argv)
+ 	if (set_recommended_config(0))
+ 		return error(_("could not configure '%s'"), dir);
+ 
+-	if ((res = run_git("fetch", "--quiet", "origin", NULL))) {
++	if ((res = run_git("fetch", "--quiet",
++				show_progress ? "--progress" : "--no-progress",
++				"origin", NULL))) {
+ 		warning(_("partial clone failed; attempting full clone"));
+ 
+ 		if (set_config("remote.origin.promisor") ||
+@@ -508,7 +510,9 @@ static int cmd_clone(int argc, const char **argv)
+ 			goto cleanup;
+ 		}
+ 
+-		if ((res = run_git("fetch", "--quiet", "origin", NULL)))
++		if ((res = run_git("fetch", "--quiet",
++					show_progress ? "--progress" : "--no-progress",
++					"origin", NULL)))
+ 			goto cleanup;
+ 	}
+ 
+diff --git a/t/t9211-scalar-clone.sh b/t/t9211-scalar-clone.sh
+index dd33d87e9be..2da8ca6f2bb 100755
+--- a/t/t9211-scalar-clone.sh
++++ b/t/t9211-scalar-clone.sh
+@@ -3,6 +3,7 @@
+ test_description='test the `scalar clone` subcommand'
+ 
+ . ./test-lib.sh
++. "${TEST_DIRECTORY}/lib-terminal.sh"
+ 
+ GIT_TEST_MAINT_SCHEDULER="crontab:test-tool crontab cron.txt,launchctl:true,schtasks:true"
+ export GIT_TEST_MAINT_SCHEDULER
+@@ -148,4 +149,29 @@ test_expect_success '--no-single-branch clones all branches' '
+ 	cleanup_clone $enlistment
+ '
+ 
++test_expect_success TTY 'progress with tty' '
++	enlistment=progress1 &&
++
++	test_config -C to-clone uploadpack.allowfilter true &&
++	test_config -C to-clone uploadpack.allowanysha1inwant true &&
++
++	test_terminal env GIT_PROGRESS_DELAY=0 \
++		scalar clone "file://$(pwd)/to-clone" "$enlistment" 2>stderr &&
++	grep "Enumerating objects" stderr >actual &&
++	test_line_count = 2 actual &&
++	cleanup_clone $enlistment
++'
++
++test_expect_success TTY 'progress without tty' '
++	enlistment=progress2 &&
++
++	test_config -C to-clone uploadpack.allowfilter true &&
++	test_config -C to-clone uploadpack.allowanysha1inwant true &&
++
++	GIT_PROGRESS_DELAY=0 scalar clone "file://$(pwd)/to-clone" "$enlistment" 2>stderr &&
++	! grep "Enumerating objects" stderr &&
++	! grep "Updating files" stderr &&
++	cleanup_clone $enlistment
++'
++
+ test_done
+
+base-commit: a38d39a4c50d1275833aba54c4dbdfce9e2e9ca1
+-- 
+gitgitgadget
