@@ -2,50 +2,50 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5894AC46467
-	for <git@archiver.kernel.org>; Wed, 11 Jan 2023 22:09:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F2BEC5479D
+	for <git@archiver.kernel.org>; Wed, 11 Jan 2023 22:11:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235897AbjAKWJ3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Jan 2023 17:09:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59650 "EHLO
+        id S236026AbjAKWLU (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Jan 2023 17:11:20 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230318AbjAKWJZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2023 17:09:25 -0500
-Received: from EUR05-AM6-obe.outbound.protection.outlook.com (mail-am6eur05olkn2040.outbound.protection.outlook.com [40.92.91.40])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05CD3E87
-        for <git@vger.kernel.org>; Wed, 11 Jan 2023 14:09:23 -0800 (PST)
+        with ESMTP id S235894AbjAKWLQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2023 17:11:16 -0500
+Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05olkn2103.outbound.protection.outlook.com [40.92.90.103])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36E0D33D69
+        for <git@vger.kernel.org>; Wed, 11 Jan 2023 14:11:14 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dJ3/8GxhTds8p5juNP+WxTM1SOfTycsHC1KKo6xcIlP+c0t2RbJHShNyZqi/Nh5S7zdueUq0oRJ+8YyO+71qWua+KYF6dn45WPJW616jW4nxVjYxbyZ/M8gfwqNd9YEXohicw2pj/EVUMjKs2oM3EvUT9pL9/3EGnFz9s9yAUOwLe4s4S9JUhfyFITdv9IM+PgO85mm1oxyeQy9SQYxNwaFMHYeRYUzEApQihj+Z7s/yAdAv///90qWwEq+aHhSXRNFItGKNVdKU1uWAcLkS/Vfp3Tt7zo12zH84MeznAFcZQhJ9EWhQG+sFaXxXsrqpffGyyoMJybmSI3Q14is2Qg==
+ b=eT8R8PghgtzzKctoyeP8oH4eFxI0Jpqz3pZmpNAMkxK3OF/08xfkuI02PVZpFDGIqdhgsy1yCZvR1ny+nce0OWKa1PKxg86TY0SW3uwWFPzmParTG4jrm2FfYklG5y1mRz6Ov7ohAXCR44K3wxKLeH2RavSYKaJIIHSCWtBqnMHBp//FdPD9xvTcDEny+V8AnkSKVRIC4L/O7f7ZF3bKlzWJZboBroNB1tUxKK+YO0cQw0n2qQvzUjt/PqPfMCjqV4QWiIpklbLyrjEH5eRx4X2CQGIMmq1dBrbjxXP5ChWOiGpKSVfIyi7od9f3yZMKKz2QrBBPrDbRdqTSEgL+sA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lUOFuMQ43vSzg/ANQD7cSVhKOQE8SLTbtwQbTFdY7Zo=;
- b=NXbIy13HYY1THp0pfwDo62v0fmfQyoLGLXFABOFiH2sV8Hgh1fPsdfi9O84gvYKCi7OhBBzCl9FIPAn/E2KHcjP7pMCgA184v5PLTpP055S83BkM2f0a5jbMMFwNg7gPczRwzwBQ/AU+3THDwHEtLAnAajNIX7g2ULlvg9yHMJ+f6fDiqcrVIKIqWYCOSsmb86l6TyTyLRfuWevW8J0COoJQC1Zd0k1IkQ85YtPaYjEAoIE2e3xuMbIovtFGClZr4EV5QgIi/uiXRq/OfQtfeQMctWDIiC+3obwZlR1FgVNaGeFfrqpW14kMOy+uLtAwXu/wu/D9j/X5qdC8BkHcSg==
+ bh=7R6AQlGiXhFdivc71JqU0BcZSh4Vdghc7IbSzQWEf8c=;
+ b=T4UKMxjmXOy0W0BapNWgJIugZNXfCmBmUgTf51g9/MeNwiDkhjUyqwmTOwdBowwC7tgh85+0+FV+YHFbZtKzMPifHiYJ33IaOH/G+CiwcxkvCYH04UuroasG0Aq5ntj7yC5sOM5ovYJVvke8lhbpFqroFsxhVIiStPzQKNIL36FEBBAmUKRQM2A4jKQP0484wEAGtIA+nGVzYI+dNY+d/Y6mg8/UTwkYPX8VGlMNo38KEk3bZ45O3LUEyVpYqbQAX6+k6/9SbeF/sDIk2TfFfii8nF1NgE/Tpb9GenvbWhv1RapLFWiQdN8aikVOlqxYfVJu79184OUnsoRIpflhRQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lUOFuMQ43vSzg/ANQD7cSVhKOQE8SLTbtwQbTFdY7Zo=;
- b=TjTZ/AFzVGirM+1OwwXVwEWO3+3p+Hjt1cmuBM2WsragqsovT/bxd7mU0/YqfZ1xN3FWi1fu6MZ6vPL7xtYhUwC+V9/TR3fcFfSUHvFY+YEjOoNM+B/Z/NOeKv93TAVUp+OPvIAQtLdwhTf/nPKE7xIFk6ivDtroLvKjo/nZrbbblRGCfU574d+B2SaVBzGQ+eBl2PspXJ5L/7Ez5rDGNcVhTGHdUxf6NY57hpBYodv1sSk0IzLZacdpGsfiU1iEK4xh1OJLhWAUoKPD2pdOBabpWIeJyortXsvqTsitt4NA8bP8s0dFFNX4ERAlCkU2O/9BLXlmmT9qxkbkFNh6Jw==
+ bh=7R6AQlGiXhFdivc71JqU0BcZSh4Vdghc7IbSzQWEf8c=;
+ b=iJZCejaqmGJBGUEpZe127W7B67xgEXYAlZ5brXCRiMo9lvbGXYD0NtBesquhf0KjNdsNGQSFEAzx01cmWJTqaUIdCkgReJLky3yW2TKmGKY1NvabTLf0CDE3H+wImRn9SMgejx9VTKPyaTCB64yhZk554oFdcT7YnBho9EVutYwWCxYp8xPgnUqQWW6NrryyTtkb3RO3Y8+Zjt5EoG+VcJEvXHuVUiNoXPfl+L/5U8C2ix5wLfzGxn5+XxdCfZKa85dJhudbrSS+WUKoUrggeDYK1Aj9f8TYr+7K/qs4adUUAEtTxtS1eC4KTLKENWF/dt1BcBCIYskwaQmIhlGCXQ==
 Received: from AS2PR03MB9815.eurprd03.prod.outlook.com (2603:10a6:20b:609::16)
- by AM9PR03MB7868.eurprd03.prod.outlook.com (2603:10a6:20b:433::11) with
+ by PR3PR03MB6490.eurprd03.prod.outlook.com (2603:10a6:102:7e::19) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6002.12; Wed, 11 Jan
- 2023 22:09:22 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5986.18; Wed, 11 Jan
+ 2023 22:11:12 +0000
 Received: from AS2PR03MB9815.eurprd03.prod.outlook.com
  ([fe80::8428:153c:704f:4519]) by AS2PR03MB9815.eurprd03.prod.outlook.com
  ([fe80::8428:153c:704f:4519%8]) with mapi id 15.20.5986.018; Wed, 11 Jan 2023
- 22:09:21 +0000
-Message-ID: <AS2PR03MB9815234B918C9C566F21FABBC0FC9@AS2PR03MB9815.eurprd03.prod.outlook.com>
-Date:   Wed, 11 Jan 2023 14:09:14 -0800
+ 22:11:12 +0000
+Message-ID: <AS2PR03MB98153C2C0EC082257F091B7DC0FC9@AS2PR03MB9815.eurprd03.prod.outlook.com>
+Date:   Wed, 11 Jan 2023 14:11:04 -0800
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.6.1
 Subject: Re: [PATCH v4 1/8] http: read HTTP WWW-Authenticate response headers
-To:     Victoria Dye <vdye@github.com>,
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Matthew John Cheetham via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
+        <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
         Lessley Dennington <lessleydennington@gmail.com>,
         M Hickford <mirth.hickford@gmail.com>,
         Jeff Hostetler <git@jeffhostetler.com>,
@@ -54,77 +54,101 @@ Cc:     Derrick Stolee <derrickstolee@github.com>,
 References: <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
  <pull.1352.v4.git.1670880984.gitgitgadget@gmail.com>
  <b5b56ccd9419353a4bf5bc9d751a711af07d2197.1670880984.git.gitgitgadget@gmail.com>
- <c255896d-637d-f7b0-8698-10a2112852c1@github.com>
+ <221215.861qp13tfh.gmgdl@evledraar.gmail.com>
 From:   Matthew John Cheetham <mjcheetham@outlook.com>
-In-Reply-To: <c255896d-637d-f7b0-8698-10a2112852c1@github.com>
+In-Reply-To: <221215.861qp13tfh.gmgdl@evledraar.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TMN:  [McuTpW7UuKr4duGr9qU50yCPh1UWRrFi]
-X-ClientProxiedBy: BYAPR07CA0011.namprd07.prod.outlook.com
- (2603:10b6:a02:bc::24) To AS2PR03MB9815.eurprd03.prod.outlook.com
+Content-Transfer-Encoding: 8bit
+X-TMN:  [HXhLuDUFRb7UiFr0nIDc+LNrAiqHxJJ8]
+X-ClientProxiedBy: BYAPR07CA0007.namprd07.prod.outlook.com
+ (2603:10b6:a02:bc::20) To AS2PR03MB9815.eurprd03.prod.outlook.com
  (2603:10a6:20b:609::16)
-X-Microsoft-Original-Message-ID: <2a625fd7-06c3-3f7a-0d11-0227dd20ccfe@outlook.com>
+X-Microsoft-Original-Message-ID: <dc8bb61b-66fb-4b33-0843-8bbbf5559d2d@outlook.com>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AS2PR03MB9815:EE_|AM9PR03MB7868:EE_
-X-MS-Office365-Filtering-Correlation-Id: bef38922-456d-4a26-013c-08daf4207dce
+X-MS-TrafficTypeDiagnostic: AS2PR03MB9815:EE_|PR3PR03MB6490:EE_
+X-MS-Office365-Filtering-Correlation-Id: 45353e97-1434-43b5-d3c5-08daf420bf6a
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: DhWxpa2vaQoeNiiqg9Y+FfaY+U5atwxG0OgI15VD29HpI6DsMJJ2Mskw5lxTqExGJ/IIdSg/iN/5HpbI5OrilcO0XAzM92LSGMOdFBIwCFZGptP6jUmXNo1wJL3325JPWPvvf/gKzaJLwkPkDfmMUhzXisygUjzAUHts/bWUrbaYBuZowwPwfG8/pUpiafR5i6YbFwgZ6w6TZwPke6dHRl/puoLvuO34zwm4FzdZPS39AciV/O2rslXP1TsbOoQYoO13MaHznlJptptwG67dqqiYedLC2rEQGawf4xPSGvSFCf9A6CLSuv6UMgZBVJs3s954NEmBDz3utwpD32oShkkUSzzepuZDzNGNq3Xi6S+0eI0lNohAc7Pj6pfwf3a2SpMVo0kI20NWp0gLjC0oRi7KbLu1+HWu0IOS/iAH2uRN0ZsrojFY+p+P/qdF+5e8KS7LzXpTTXq6BdD1vnw0Pt8kgZF1ggSTTW9E1I61UfkNjZRbxg7BwDKZJQQo35kCadkIvnBAJW4zrb4Uw1DGYIsw79gDh17fpOoRGAz1FR/J89yTdbe+48hWBiTtKATeSZBonKmXFwiCehluxSXKtTl++TlPVfZLvHfJrTHx3GVgm3wTYRQcYQN7tXHCVx7LJmfmZf4jEDopoKQNc8I+uICaPzhNqEMSw2ZXzpQOJthQ6Lg9O+Wq/yVW5G9BUz+n
+X-Microsoft-Antispam-Message-Info: XmgTzG+tJQDvFXuUUzVS5WKO28HH1NA+3dkMy9JKvFWpwNss+1YODfgAmb4lVU4REGR4tiXqukQ07qmvAwttmnyxEopfvQJmX+6hNjrPPpRXONfMNHO7tg68VvlZbx29PXkP2Q3Akhy3RknfBDj8JwV/wiSpa4AnWx5eArg/UMTAI8HPhb9rD/nD+qLmV9fYiBevDIW/kn03uEh+949W+bigL9PcrtSzx2NZyVgZ5vc2N+EtAgCPQHkebdK2wiP3ELXVHzXcQUFPbE51/WtlSM3Gu9RBcV6Fpal+0237je5pecSLuq27vZflm3TYn/TThIdqOlpbEOab1cNblXF3SEkt7XlafNm49Wc+91bFAlXvncI+cJ31sNAe0Svpvzwy1SKg24sU2oh+4kLPeCsNLw6erZguuf1KahfLVzSST4aR8TfzgaFm0rHfrawt29E9GnWXogwkUhZScvg5dRIR39fgeoR5Lso5adSz9Q/IhXpxW2G4Sm0YRVJPvQZeHpaHT02JfzM0W1iv4Xcz7MlXh4r3IAXDj34rcsW51y5fg3S+2UufGZLsHyuSUOtnXpBSeA0J7LBc2obtLIwpmA/yDD0cYlNv3IOtSfk4xc+UjN7+IlBz89pYiyfv1T5ENtxK32mVXhsGS2oq/QVjl0VkNg==
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NkNrK29oZTl6SWF0Tk5oT01HdjJ2YUluUE5rZVFSZmRCR0tyNjJYSHRYeEMv?=
- =?utf-8?B?RzZBZkxwNHhSQ1NqcEV3MHRmdnRhR0hJQUxPYmJTaSsvQ0UzeG9EL0h3eHk2?=
- =?utf-8?B?Q0pFOXlXMmxaRzI5WnYrR0JQM2Q5Um42R3oxUXJXSGcxQW1JSnM4QW9wUWQ1?=
- =?utf-8?B?U1UraXVaSkNISUZyYkswQUVjYksyUmVRa0NxbzRuTGxrT1Y5eWo3dWs5b0ph?=
- =?utf-8?B?bXFaRFhMTDdlODYyZDA4YzZIcDZ0Zi8zOXNXaW9xMW0wbnBZWVBCSWV2OGF2?=
- =?utf-8?B?K2phbmo3R1FjMVJVOU40elRPZ3V6V3Vkck40bDVWN2ZmY3Q5S24yQlBiTTcx?=
- =?utf-8?B?dFd6WGIxL2JBeEpQeTVvdlMyRHVGeUE4bGhkd3NkWE52RFJVSnhGTG9aTS8z?=
- =?utf-8?B?WGtBSFRrTjlaRytXcWlQb1ZmRXBhVDRzZmZTZ0dYcGE5ZFRKQi9mWjlJc1BC?=
- =?utf-8?B?bW40UENnOGdaejdvV1hLUlM2bEhiZDBYVHVtVk1KK2xTN1ZJdVJld01VWWNH?=
- =?utf-8?B?MkZGU3k0a1YxNW1wdmt3VXRJZnZqcDNRTU40QmhKaFlsTjVHUUQ3clRBdk5s?=
- =?utf-8?B?SmtCYW5DMGg0TWxZRXNDYjdyNzFPQmRVY0p0ZFlqejA0d25zL2J2UllQM1U4?=
- =?utf-8?B?RkpKUEdWc0J4VHpzd1FaR0pMODhvT2tJZ3J2VHc5TUdxZGhWMnlCU1RaMGFz?=
- =?utf-8?B?RzJpWEhFTUh6NXI2eGJUcjZBVDBWbVpGV0lCOEx5ZUxwcHBMLzlEbmRyRXh0?=
- =?utf-8?B?WFl1NU1Ib2U0L2pYMkdlWW5hZFVFSVNrNVhpandIb0lVa2IyMFI1dVRFRUh3?=
- =?utf-8?B?by8rL3lyVDV4Ry9nNjA4QTEwd0VoTmJBelA5RVNOdDhXMVhZdFdyR1c5RllW?=
- =?utf-8?B?U05QSU9BV0d4MkxsTDRPbVQ4bjJkc2lINU9oUHR6ckxKWnVwM2xJTmxCakRG?=
- =?utf-8?B?ZFVKYVFVUzdxL2RyS1BkRzRvcktqN29tTWU0MllZZjg2WVVWUzFObk9vTnk2?=
- =?utf-8?B?eEZ6d0xyVHN2K29TdlRJTmY4STRYRlBaUUFaaURYWGZmbW54U0hTdndLT216?=
- =?utf-8?B?Y3hNRkpBdmk5enJBZE9IaTlLM0c5c3FWdDh1T0pobFN1ZXcxREl5Sk5MTktm?=
- =?utf-8?B?eEd0ZU5IbUhKTnUvVVJVUUdsZGJhRVFIUnB2YWpadUtyT0p6bWk1aEppVU00?=
- =?utf-8?B?MWdZZXlyT01LYXBjTGRLcU9FRmFDNU43QnNSQ3BRS2p0N3FKK3U5K0loY3RI?=
- =?utf-8?B?NXdGSGVLMUJhWFJLNVVDOEljZEhoSkhwZnBQVFE1Wmdrck5rU1lvVk5JWXps?=
- =?utf-8?B?bk56SVBlb3BmSGJQZ2h3Z1Z6QlJzNXp5VWFWSUlCd2RDaHQ1ZE9LQ0c2aUJ1?=
- =?utf-8?B?ZGpObkhIdDc3RVFQenlSRnc4ZFdleVJRcVdZbWFsY1AvY1U0U0hPNHZ5NkVi?=
- =?utf-8?B?Vzg2V2xqRmNsSHo2Q2ZySUpMYTQ3Nk5IZ2VPL1RHYytlZm84alZpL1A2T00v?=
- =?utf-8?B?U1F6K01oVnVLYnl2UWtHVG9PRTNCQkRaMU55V2xOdDdZbmJsdEhUYVdsc2h0?=
- =?utf-8?B?TmFOTHFBQU1jSU5aRzJsUXJMaStvd3JzeG9sbW5hQ1RPUktnM01TaHpwM2FY?=
- =?utf-8?B?QTQwZWFTQStmT1FVODM2TithYlhIdXdvZVl3MU5hMkg3RDBMUHI1cTVYTG9F?=
- =?utf-8?B?S25FUTFiZFZqdGNhWVFOU3YraHFSN2ZWNjdib2NySkZCUFRRSXZOSExBPT0=?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UVZEbHB5Si9taTJ4TFVpazdhaVVQcDlSV28wSFZ6WGYrcmdxdG80VFhLN0xQ?=
+ =?utf-8?B?M0RKakxQdEh5QXdubFZCRUhad3BzSWIvbEI5ZUN0RXpSS0gxb2xhYmVXMXJk?=
+ =?utf-8?B?OFgyYW1lSkFpbU5OOGxLQzdtejdRTTE4ZjZqUW54MitYdEZVREc2WlJVWlU1?=
+ =?utf-8?B?b3dMVjMzWVI5T2xhMEY0STQ3aURiWVkzeExTUE9tR251dzFXMU42MFhDbnRn?=
+ =?utf-8?B?TFVDdE9XZVRiV04yUWNVS3NvVGl1cVVLN2hUSEQ2c0JTeXZwVmc3WGhBbGtl?=
+ =?utf-8?B?RmdoZi9pVWJaODBXbmFmUkdHQlN5eU5FQUVPbVZiL3QwdTNQdzRQa2hQemRx?=
+ =?utf-8?B?SVZoeG5VOUdhb3JuWDlkNzZVN3ZoazV3NHhrYjBFdk5uZ1NubTJWNkt1Mm1q?=
+ =?utf-8?B?cytmQS9ONkVBa1pWZUNPMWVEMmt4V3JpS2hYK3g5Tk1laWtwR1RkQ2ZOclVw?=
+ =?utf-8?B?bVJFNzYzV1g2b0RFblQwckNReUFiWEpIS3Q2VWdkMUZQQUZUTEFHUVNjN1hq?=
+ =?utf-8?B?UitIaW9MZFp3S0ptNFhkbGNkbUpOMk15NTB1SCtYRVIwUkJ6aHZHZkR1V01j?=
+ =?utf-8?B?RHU0enRkeDVzS0xKZ2pQMzlYcWljcWJmWFNvUGxZNXY1OTY0SUo3U2VuTWQ5?=
+ =?utf-8?B?Q1ZlRWs4S0xWWkZmWTRJQU5sZldKb2RtajlyVmd2QTZCM3dvYVF5OHVtcDYy?=
+ =?utf-8?B?MmxpMFVmakpmYVgxc3BwWEtBLzcvcGc2MmdjeTJJeXU3ck9HR1hIQi9mZlJo?=
+ =?utf-8?B?LzVSUG8zUGNhb3ZDVHRtOWJtb3JXVFRLa292dTlpbExvUldSM2lBQitlMlhs?=
+ =?utf-8?B?enZFamtFb1lkSHdCUDBDbTgwL1VtVmFCMUdXalY3RWdFOXd0YVNDQ3RqZzEw?=
+ =?utf-8?B?ZXlDTTB6SVdPdDBqNisydjFjRGVpb0Exck9BYWdHaFFLV0pQY3Q3Rzc5elpM?=
+ =?utf-8?B?eUdFeXFVblZrVkhVMS9CYnZxVTluS0JuWStRamlLeEljRzZFT0trRS8wRTZl?=
+ =?utf-8?B?QWt3QjNIK1VwSlZHeDNMTlpwUklRRUtJNERBMFJ0bk5weFhTcGJGVGVHQm1G?=
+ =?utf-8?B?dkk1K0h5RU5QUDJaZFZkTU0zUVRiamtvMGcxU3U1aFB0ZjdJMVpBL1YvNXlo?=
+ =?utf-8?B?RlFtek1tSUh4ejdMT0lMNE1Pc1Bra1hwMmw3VVM2Q3RaTFBPbW9lOUhDVjBT?=
+ =?utf-8?B?OStRQ01DcjMxY0FpdkxrRkxmaTJOeEtuTXRUT2lXcjl4Y01ra3JqaWR1TmdL?=
+ =?utf-8?B?ZWNzeThIMENIVXZTczhocUo3aGZ3MklBdHVpSm04NFRzcHFueVNjYTZVNmlR?=
+ =?utf-8?B?aXUvenBOYk9OOFY4d2c3d0pCSmdNNURHSUk3OHg2UXZsVzNoSVd4NVdCN08y?=
+ =?utf-8?B?VTNhRlpZckN0TS9PZy9tTE4wbHRMUmdkZDB3ZHp0Q0J3SFZKNW4xTXhOL2I2?=
+ =?utf-8?B?UTgwQ1ZNaFdKbnZ6Y3dDUlA0RzRvcG5GNUhwTzFZc0x0a1hYajFiYmU1MWFM?=
+ =?utf-8?B?bDJ4Z2lvL3pHYWRMTjB3alZrSEphY2RFdkZ6YXpYK05jMVk5ZzFKWTFKMkxh?=
+ =?utf-8?B?RDJmcmFVbGhJSzViRCtOMm1jb2dEcTRxaFdJTFMrd3dCWWM5L1crUVlwblpw?=
+ =?utf-8?B?a3FKMUdDcExMYzFmditPZlJmTWY4SFdiT0l4ODJmaTdYL1A4cjR3ZHZ4NzhR?=
+ =?utf-8?B?NUpTUVZ0T1hYdUFrZjR0N0FVMVpvQ0dYdnRxdGtUT2JBa0YrWXhraTFnPT0=?=
 X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bef38922-456d-4a26-013c-08daf4207dce
+X-MS-Exchange-CrossTenant-Network-Message-Id: 45353e97-1434-43b5-d3c5-08daf420bf6a
 X-MS-Exchange-CrossTenant-AuthSource: AS2PR03MB9815.eurprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jan 2023 22:09:21.8466
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jan 2023 22:11:11.9407
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR03MB7868
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR03MB6490
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-12-14 15:15, Victoria Dye wrote:
+On 2022-12-15 01:27, Ævar Arnfjörð Bjarmason wrote:
 
-> Matthew John Cheetham via GitGitGadget wrote:
+> 
+> On Mon, Dec 12 2022, Matthew John Cheetham via GitGitGadget wrote:
+> 
+>> From: Matthew John Cheetham <mjcheetham@outlook.com>
+>> [...]
+>>  /* Initialize a credential structure, setting all fields to empty. */
+>> diff --git a/http.c b/http.c
+>> index 8a5ba3f4776..c4e9cd73e14 100644
+>> --- a/http.c
+>> +++ b/http.c
+>> @@ -183,6 +183,82 @@ size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
+>>  	return nmemb;
+>>  }
+>>  
 >> +static size_t fwrite_wwwauth(char *ptr, size_t eltsize, size_t nmemb, void *p)
 >> +{
 >> +	size_t size = eltsize * nmemb;
+> 
+> Just out of general paranoia: use st_mult() here, not "*" (checks for
+> overflows)?
+
+Sure! Good point.
+
 >> +	struct strvec *values = &http_auth.wwwauth_headers;
 >> +	struct strbuf buf = STRBUF_INIT;
 >> +	const char *val;
 >> +	const char *z = NULL;
+> 
+> Why NULL-init the "z" here, but not the "val"? Both look like they
+> should be un-init'd. We also tend to call a throw-away char pointer "p",
+> not "z", but anyway (more below).... 
+> 
 >> +
 >> +	/*
 >> +	 * Header lines may not come NULL-terminated from libcurl so we must
@@ -156,42 +180,16 @@ On 2022-12-14 15:15, Victoria Dye wrote:
 >> +		while (isspace(*val))
 >> +			val++;
 > 
-> Per the RFC [1]: 
-> 
->> The field value MAY be preceded by any amount of LWS, though a single SP
->> is preferred.
-> 
-> And LWS (linear whitespace) is defined as:
-> 
->> CRLF           = CR LF 
->> LWS            = [CRLF] 1*( SP | HT )
-> 
-> and 'isspace()' includes CR, LF, SP, and HT [2]. 
-> 
-> Looks good!
-> 
-> [1] https://datatracker.ietf.org/doc/html/rfc2616#section-4-2
-> [2] https://linux.die.net/man/3/isspace
+> As we already have a "struct strbuf" here, maybe we can instead
+> consistently use the strbuf functions, e.g. strbuf_ltrim() in this case.
+
+That's a good point. I can move to using strbuf functions entirely.
+
+> I haven't reviewed this in detail, maybe it's not easy or worth it
+> here...
 > 
 >> +
 >> +		strvec_push(values, val);
-> 
-> I had the same question about "what happens with an empty 'val' here?" as
-> Stolee did earlier [3], but I *think* the "zero length" (i.e., single null
-> terminator) will be copied successfully. It's probably worth testing that
-> explicitly, though (I see you set up tests in later patches - ideally a 
-> "www-authenticate:<mix of whitespace>" line could be tested there).
-> 
-> [3] https://lore.kernel.org/git/9fded44b-c503-f8e5-c6a6-93e882d50e27@github.com/
-
-There is a bug here. Empty header values would indeed be appended
-successfully, but this eventually results in empty values for `wwwauth[]`
-being sent over to credential helpers (which should treat the empty value as
-a reset of the existing list!!)
-
-Really, empty values should be ignored.
-My next iteration should hopefully be a bit more careful around these cases.
-
 >> +		http_auth.header_is_last_match = 1;
 >> +		goto exit;
 >> +	}
@@ -203,46 +201,22 @@ My next iteration should hopefully be a bit more careful around these cases.
 >> +	 */
 >> +	if (http_auth.header_is_last_match && isspace(*buf.buf)) {
 >> +		const char **v = values->v + values->nr - 1;
+> 
+> It makes no difference to the compiler, but perhaps using []-indexing
+> here is more idiomatic, for getting the nth member of this strvec?
+
+Sure!
+
 >> +		char *append = xstrfmt("%s%.*s", *v, (int)(size - 1), ptr + 1);
-> 
-> In this case (where the line is a continuation of a 'www-authenticate'
-> header), it looks like the code here expects *exactly* one LWS at the start
-> of the line ('isspace(*buf.buf)' requiring at least one space to append the
-> header, 'ptr + 1' skipping no more than one). But, according to the RFC, it
-> could be more than one:
-> 
->> Header fields can be extended over multiple lines by preceding each extra
->> line with at least one SP or HT.
-> 
-> So I think 'buf.buf' might need to have all preceding spaces removed, like
-> you did in the "Start of a new WWW-Authenticate header" block.
-> 
-> Also, if you're copying 'ptr' into 'buf' to avoid issues from a missing null
-> terminator, wouldn't you want to use 'buf.buf' (instead of 'ptr') in
-> 'xstrfmt()'?
-
-Sure! Good points.
-
 >> +
 >> +		free((void*)*v);
+> 
+> Is this reaching into the strvec & manually memory-managing it
+> unavoidable, or can we use strvec_pop() etc?
+
+Again, good point. I can rework this to pop and push a new, joined value.
+
 >> +		*v = append;
-> 
-> I was about to suggest (optionally) rewriting this to use 'strvec_pop()' and
-> 'strvec_push_nodup()':
-> 
-> 	strvec_pop(values); 
-> 	strvec_push_nodup(values, append);
-> 
-> to maybe make this a bit easier to follow, but unfortunately
-> 'strvec_push_nodup()' isn't available outside of 'strvec.c'. If you did want
-> to use 'strvec' functions, you could remove the 'static' from
-> 'strvec_push_nodup()' and add it to 'strvec.h' it in a later reroll, but I
-> don't consider that change "blocking" or even important enough to warrant
-> its own reroll. 
-
-That wouldn't be too much effort, and would help simplify overall the move
-to using `strbuf_` functions. Check my next iteration for this.
-
 >> +
 >> +		goto exit;
 >> +	}
@@ -258,31 +232,14 @@ to using `strbuf_` functions. Check my next iteration for this.
 >> +	 * the existing array.
 >> +	 */
 >> +	if (skip_iprefix(buf.buf, "http/", &z))
->> +		strvec_clear(values);
 > 
-> The comments describing the intended behavior (as well as the commit
-> message) are clear and explain the somewhat esoteric (at least to my
-> untrained eye ;) ) code. Thanks!
+> ...Don't you want to just skip this "z" variable altogether and use
+> istarts_with() instead? All you seem to care about is whether it starts
+> with it, not what the offset is.
 > 
->> +
->> +exit:
->> +	strbuf_release(&buf);
->> +	return size;
->> +}
->> +
->>  size_t fwrite_null(char *ptr, size_t eltsize, size_t nmemb, void *strbuf)
->>  {
->>  	return nmemb;
->> @@ -1864,6 +1940,8 @@ static int http_request(const char *url,
->>  					 fwrite_buffer);
->>  	}
->>  
->> +	curl_easy_setopt(slot->curl, CURLOPT_HEADERFUNCTION, fwrite_wwwauth);
->> +
->>  	accept_language = http_get_accept_language_header();
->>  
->>  	if (accept_language)
-> 
+
+Again, a good point. Thanks for the suggestions. My next iteration will include
+this.
 
 Thanks,
 Matthew
