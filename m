@@ -2,182 +2,265 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 31F78C46467
-	for <git@archiver.kernel.org>; Wed, 11 Jan 2023 08:42:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 42227C5479D
+	for <git@archiver.kernel.org>; Wed, 11 Jan 2023 11:30:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236274AbjAKImd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Jan 2023 03:42:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54030 "EHLO
+        id S231653AbjAKLaf (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Jan 2023 06:30:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237426AbjAKImB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2023 03:42:01 -0500
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AE976548
-        for <git@vger.kernel.org>; Wed, 11 Jan 2023 00:41:14 -0800 (PST)
-Received: by mail-lj1-x22c.google.com with SMTP id bx6so15307098ljb.3
-        for <git@vger.kernel.org>; Wed, 11 Jan 2023 00:41:14 -0800 (PST)
+        with ESMTP id S229555AbjAKLa2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2023 06:30:28 -0500
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC053101A
+        for <git@vger.kernel.org>; Wed, 11 Jan 2023 03:30:23 -0800 (PST)
+Received: by mail-wm1-x32a.google.com with SMTP id k26-20020a05600c1c9a00b003d972646a7dso14100881wms.5
+        for <git@vger.kernel.org>; Wed, 11 Jan 2023 03:30:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=/xP6EddmTtGuWYbF+Dl4qdOgpvhV8p4y5smA3SA/RTk=;
-        b=aQdMNtyfKGi8UR/lvgAL9VKQi10s0JtYqlGSGj91CnGZwrsSvh1HAAEL+ZQWgxRWGo
-         mq34Df+REUlOPcpLQVMXla+fszi9ed8+4Rpxu40SUtTM+ALVm45S7sxwdolQ0DIAxE3G
-         4uIobABpwqMr23O5QfWECqRAwnZK7ZCj2VASsDkSStgaqwKQGgkICWAd+xNIlujdviGZ
-         zagO2oJOVrTElbAULPxUQ9gfxXmyOzrTTrJMagoygfEVvRw9ZAV2Jq9UjYCzR13TbYov
-         teIikqeOMiU4b0Dzht17S+N4ae0M59gLmfqxXIf9BVSN5SpqVxmr5bH1qrenoeEoST8W
-         cAQA==
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TgIkQMi93pf4G4Z7JzBmNLU+7392XwPD07crHBU5E4Q=;
+        b=UGcSLkflqZkjICEejZr6rfkVsayjeR3nvQVtBwfo5bO7jW3yHZAO16kr7cBre4yB+c
+         JLpTmKjE5V8qNxQ1wiQZMduEcLHB1FE5tu64bN7dR7LLMZBgusgsijIQCYbEAkKvYuPc
+         ThPJtlR0XNKJJgSOtzZL3viVObSF67VZ7xYpiT3UBMCj4ey6/SlUoqD4N+XTug7f9PMN
+         gwKTqsp2jThROHFXSeLXKbUbMOG5hlS0+imTjU4fbBNwGN2+GZX3st5ED9XYbls7R28r
+         8X4v1xZAAqznGlhW2RzZ5nfXi/gnR6sdLUwb4hR2rPaDMfIeITGOwZnXb3PmlGNuLnK8
+         tdzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/xP6EddmTtGuWYbF+Dl4qdOgpvhV8p4y5smA3SA/RTk=;
-        b=deMuSmnDdbdWv3Z34lRzbY3mxMQ26y0x+nbVuNCkNFnpGhhj0+rIFG9AABmHQcc+bE
-         DhHi47JBXxm64LuAnH2TJ9+PffQK31spfoXF+Nr6STxujyYc+g5S9kJ/KLotAv4GIK3m
-         tph3UlSZBrI2oP+4gKmu9TK4XeIGLs3I4zLIui1/E1vo1xFHbjq+2jfmClL/hvNpv6L9
-         LKjl0gy6Uw0ZA/O77ymhOkBcYMtuFnsaVJkFPGck0ci4JoLFcC4dUG2umQR8H766T5kh
-         2X0NhcdUzLqaiMa7Xo6EH4qwOkbs3jtoD64u/lpRmVOCEG+cSDX1ETF9++jeF8rWFfAe
-         osbQ==
-X-Gm-Message-State: AFqh2kp7hS3N9Gri9aSv19ZdoTVVenP8Z9UGl09d485rNaCHvMZXu3tf
-        z4D5QscuGJQzG82Maft+84RrW7mJP+6AmuvGVGY=
-X-Google-Smtp-Source: AMrXdXvgQe+ufgUW3Wm8GpT4jdmgy5puFIgCeqQHboXEUrDJgx179a/kusP6wz97fI+cDvbUTUVbIXbtuu1rGN/KlFI=
-X-Received: by 2002:a2e:b0d5:0:b0:27f:b2a7:1f1a with SMTP id
- g21-20020a2eb0d5000000b0027fb2a71f1amr4919727ljl.325.1673426472617; Wed, 11
- Jan 2023 00:41:12 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TgIkQMi93pf4G4Z7JzBmNLU+7392XwPD07crHBU5E4Q=;
+        b=b0CnqmOqEI31DL22pOczYRk2VN7VELGeVLWZ1Cqpe2M0ifFEXym3R1v2nXhUacBxZq
+         A8/uFdCjLo3GM2AxmEiIAbGKth3UdyonSTqmtKaAU2yNh4CGgXFba+cdq3ZjU16GVUdI
+         dp/m0dieGROFqyU3dsERFL2Wkix+bORvKH6GOfFonxGn71srRkX7xp/swKnB69k5Y1jt
+         +tHlnY84yzALDykd76w3V9oObCZueUOOovfbnGZZlvvOfdE7ucl0uRcLOZVKB5ayLT/X
+         R+EpzyCws5EsQ2RYRJG/9lHgUo5g+FTKEgBAkkJq1GFhxOoQTAgcw6g6jJrizoA/NzyJ
+         oOLg==
+X-Gm-Message-State: AFqh2kqPOpmum3e5UDQ7+iuiglp++Q1TalVgDb4rFQiUlZb9MwwAHgBk
+        s0vJhoZdXA1fCVRpZx5qDdQ=
+X-Google-Smtp-Source: AMrXdXs9bXItT3zQvk+xjUuL0l4+tSuLfw510Jgf04Vr0K1s+BM2PRP3ghWFsNVZk1nks3pdJj60uA==
+X-Received: by 2002:a05:600c:34c2:b0:3cf:7397:c768 with SMTP id d2-20020a05600c34c200b003cf7397c768mr51669228wmq.30.1673436622379;
+        Wed, 11 Jan 2023 03:30:22 -0800 (PST)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id h15-20020a05600c314f00b003d99469ece1sm24172135wmo.24.2023.01.11.03.30.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Jan 2023 03:30:21 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <4fc57003-3f29-2f1c-fe18-94b5f9f1bf2b@dunelm.org.uk>
+Date:   Wed, 11 Jan 2023 11:30:20 +0000
 MIME-Version: 1.0
-References: <PH7PR12MB779560B6C003FEE76E4F2471F1FE9@PH7PR12MB7795.namprd12.prod.outlook.com>
- <CABPp-BE_FLFL3-s3936zWWfaORBPim14A-oqVNo+8gx+CMduHA@mail.gmail.com>
- <PH7PR12MB7795ED45E989E2EDE2364049F1FF9@PH7PR12MB7795.namprd12.prod.outlook.com>
- <CABPp-BGh17pH1DUgPOoaDKBcKay3NAyi4js-HnEKAAyYUBSoYQ@mail.gmail.com>
-In-Reply-To: <CABPp-BGh17pH1DUgPOoaDKBcKay3NAyi4js-HnEKAAyYUBSoYQ@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 11 Jan 2023 00:41:00 -0800
-Message-ID: <CABPp-BHBEng3=_mLgdKu+ZNGfSZdcZUZZCX-p9two+af+GecfQ@mail.gmail.com>
-Subject: Re: Reducing Git Repository size - git-filter-repo doesn't help
-To:     fawaz ahmed0 <fawazahmed0@hotmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        "rsbecker@nexbridge.com" <rsbecker@nexbridge.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v5 2/2] attr: add flag `--source` to work with tree-ish
+Content-Language: en-US
+To:     Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
+Cc:     Toon Claes <toon@iotcl.com>
+References: <https://lore.kernel.org/git/cover.1671630304.git.karthik.188@gmail.com/>
+ <cover.1671793109.git.karthik.188@gmail.com>
+ <23813496fc73b7e5cb9f09b166e05c9a02bac43c.1671793109.git.karthik.188@gmail.com>
+In-Reply-To: <23813496fc73b7e5cb9f09b166e05c9a02bac43c.1671793109.git.karthik.188@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 10, 2023 at 6:18 PM Elijah Newren <newren@gmail.com> wrote:
->
-> On Tue, Jan 10, 2023 at 12:18 AM fawaz ahmed0 <fawazahmed0@hotmail.com> wrote:
-> >
-> >
-> > > Note that git-filter-repo only changes the size of the _local_ repo.
-> >    You made an additional clone within GitHub Actions, and then
-> >    filter-repo shrinks *that* clone.  Even if you had deleted all copies
-> >    of older files you don't want anymore locally (which is suspect as I
-> >    noted above), your force pushing isn't going to shrink the size of the
-> >    repo on the server (i.e. on GitHub) since there are pull requests in
-> >    your repo that GitHub won't allow you to overwrite via force-push, and
-> >    those pull requests still hold on to the old history.
-> >
-> > Thanks for your inputs. Yes, the issue is with the GitHub itself (I have verified it locally), so when I force push this reduced sized repo to Github and reclone it back the size gets back to  4+ GB.
-> > So what do you suggest?
->
-> Well, digging a bit further, I see:
-> ```
-> $ git ls-remote https://github.com/fawazahmed0/currency-api
-> 5536f2096aec71cee6d35772697ce1efc6148521 HEAD
-> 5536f2096aec71cee6d35772697ce1efc6148521 refs/heads/1
-> 7ed955eebe2e5a670566d5fb4e11142bae6afed6 refs/heads/patch-1
-> 0292ec7340ec1ac8cd11d5839b8a25dd0c1db38f refs/pull/1/head
-> fa18a4ae50cc8ad84643d1f1f92da77c35139bbc refs/pull/16/head
-> bca74c53f66681f2d74a98d2f785e1610abeb794 refs/pull/18/head
-> 4da5bcd8c7852bb306059a856f95e9bc1aeaefd3 refs/pull/47/head
-> 5f1408be857734745a7a3349e9d16a8200e993be refs/pull/49/head
-> 00ff16478e95f11347bc3e769e310c1a254579c9 refs/pull/57/head
-> 5e3121acaddc7be810f2b9ad92641a04f9b923fb refs/pull/58/head
-> 8afe04f52b8174c789691b4097c70f95d33c99c4 refs/pull/59/head
-> 55b0d38d156145d8f9726746da7bb4d5ba9d988c refs/pull/60/head
-> bca74c53f66681f2d74a98d2f785e1610abeb794 refs/reviewable/pr18/r1
-> 4da5bcd8c7852bb306059a856f95e9bc1aeaefd3 refs/reviewable/pr47/r1
-> 5f1408be857734745a7a3349e9d16a8200e993be refs/reviewable/pr49/r1
-> 00ff16478e95f11347bc3e769e310c1a254579c9 refs/reviewable/pr57/r1
-> 5e3121acaddc7be810f2b9ad92641a04f9b923fb refs/reviewable/pr58/r1
-> 8afe04f52b8174c789691b4097c70f95d33c99c4 refs/reviewable/pr59/r1
-> 55b0d38d156145d8f9726746da7bb4d5ba9d988c refs/reviewable/pr60/r1
-> ```
->
-> So, you have 19 references.  And according to the output of the job
-> you linked, you only force pushed refs/heads/1.  That means the other
-> branches and refs are holding on to the old history.  You'll either
-> need to delete or rewrite refs/heads/patch-1, and
-> refs/reviewable/pr{18,47,49,57,58,59,60}/r1 as well.  Rewriting the
-> refs/reviewable stuff may confuse and mess up Reviewable if you ever
-> look at those reviews again; it may be that deleting those refs
-> results in a cleaner error message within Reviewable.
->
-> You also need to have refs/pull/{1,16,18,47,49,57,58,59,60}/head all
-> rewritten too, but you don't have access.  You need to get GitHub
-> support to do that.  If they don't ask for the exact filtering you
-> have done, and are only "clearing caches", then it's not going to do
-> anyone any good.  Those references need to be filtered the same way,
-> or else those special refs need to be deleted.  But please do note
-> that you should not ask them to do that until you've already cleaned
-> up all the stuff that you can.
->
-> The steps look roughly as follows:
->
-> 1. Clone the repository.  Since you have refs outside of refs/heads/
-> and refs/tags/ (namely refs/reviewable/), you'll need a mirror clone.
-> Also, make sure to NOT use a partial clone (which would defeat steps 2
-> & 5).
-> 2. Note the size of the *local* clone ('du -hs' should come in handy).
-> 3. Run `python3 git-filter-repo --analyze`, and look at the reports it
-> generates to find out the big files/directories and all the names of
-> those paths.
-> 4. Filter the repository.
-> 5. Verify that the local clone actually shrinks from your filtering
-> operation (not just has fewer commits, but 'du -hs' now reports a much
-> smaller number).  If it does not shrink as much as expected, run
-> `python3 git-filter-repo --analyze` again and see if you missed
-> alternate historical names of some files or whether you only filtered
-> what turned out to be small files or whatever.
->
-> Note that step 3 is important.  Rather than guessing what is big and
-> taking up lots of space, you find out what is big and take action upon
-> it.  For example, you once committed the node_modules/ folder.  I do
-> not know its size (too lazy to do a full clone and find out), but
-> those are often quite large.  Creating a commit that deletes that
-> directory does not remove it from history, only from the current
-> version.  So, expunging that directory from history may be important.
-> There may be other nuggets you find too, such as alternate names of
-> files that also need to be deleted if you've renamed things.
->
-> After you've succeeded with all the above:
-> 6. force push *all* references back to GitHub -- or at least the ones
-> that GitHub will permit you to force push (should be everything other
-> than refs/pull/*).  If you only force push your "1" branch, you still
-> leave every other reference holding on to the old history.
-> 7. Contact GitHub support to ensure they clean up the remaining
-> references (i.e. the refs/pull/* ones) _and_ clear their caches.  They
-> will either have to ask for what filtering you did so they can do it
-> as well, or they'll need to nuke those pull requests.
-> 8. Wait to hear back
-> 9. Check the `git ls-remote
-> https://github.com/fawazahmed0/currency-api` output again.  If the
-> refs/pull/* lines still exist and still have the same hashes at the
-> beginning of their lines, GitHub did not filter those references and
-> they are still holding on to the old history.  Contact them again, and
-> either get them to filter those refs the same way you filtered yours,
-> or get them to delete those pull requests.
+Hi Karthik
 
-I may need to take this partially back.  Since you've already
-contacted GitHub support, they may have already done filtering on
-these references and further filtering of those isn't needed.  It may
-be that after filtering the references and your control and pushing
-those all back, that no further work is needed.
+On 02/01/2023 11:04, Karthik Nayak wrote:
+> The contents of the .gitattributes files may evolve over time, but "git
+> check-attr" always checks attributes against them in the working tree
+> and/or in the index. It may be beneficial to optionally allow the users
+> to check attributes taken from a commit other than HEAD against paths.
+> 
+> Add a new flag `--source` which will allow users to check the
+> attributes against a commit (actually any tree-ish would do). When the
+> user uses this flag, we go through the stack of .gitattributes files but
+> instead of checking the current working tree and/or in the index, we
+> check the blobs from the provided tree-ish object. This allows the
+> command to also be used in bare repositories.
+> 
+> Since we use a tree-ish object, the user can pass "--source
+> HEAD:subdirectory" and all the attributes will be looked up as if
+> subdirectory was the root directory of the repository.
 
-> > I have already contacted Github few days back, and they have cleared the cache etc for this repo.(but that did not reduce any size). ( I will try contacting them again)
->
-> Contacting them now is a waste of their time.  Filter your repo first.
-> Your whole repo (implying you need a mirror clone rather than a
-> regular clone given you have the unusual refs/reviewable/* references
-> that need filtering too).  And push the whole repo back, not just a
-> single branch.
+I think changing to --source is a good idea. I've left a few comments 
+below - the tests are broken at the moment. I didn't look very closely 
+at the implementation beyond scanning the range-diff as it looks like 
+there are not any significant changes there.
+
+> We cannot simply use the `<rev>:<path>` syntax without the `--source`
+> flag, similar to how it is used in `git show` because any non-flag
+> parameter before `--` is treated as an attribute and any parameter after
+> `--` is treated as a pathname.
+> 
+> The change involves creating a new function `read_attr_from_blob`, which
+> given the path reads the blob for the path against the provided source and
+> parses the attributes line by line. This function is plugged into
+> `read_attr()` function wherein we go through the stack of attributes
+> files.
+> 
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> Signed-off-by: Toon Claes <toon@iotcl.com>
+> Co-authored-by: toon@iotcl.com
+> ---
+> -'git check-attr' [-a | --all | <attr>...] [--] <pathname>...
+> -'git check-attr' --stdin [-z] [-a | --all | <attr>...]
+> +'git check-attr' [--source <tree>] [-a | --all | <attr>...] [--] <pathname>...
+> +'git check-attr' --stdin [-z] [--source <tree>] [-a | --all | <attr>...]
+
+I think "<tree>" would be better as "<tree-ish>" (see my comments on the 
+--source option implementation below)
+>   
+>   DESCRIPTION
+>   -----------
+> @@ -36,6 +36,12 @@ OPTIONS
+>   	If `--stdin` is also given, input paths are separated
+>   	with a NUL character instead of a linefeed character.
+>   
+> +--source=<tree>::
+> +	Check attributes against the specified tree-ish. Paths provided as part
+> +	of the revision will be treated as the root directory. It is common to
+> +	specify the source tree by naming a commit, branch or tag associated
+> +	with it.
+
+I think it is confusing to keep the reference to "revision" here, we 
+could just drop that sentence.
+
+> -N_("git check-attr [-a | --all | <attr>...] [--] <pathname>..."),
+> -N_("git check-attr --stdin [-z] [-a | --all | <attr>...]"),
+> +N_("git check-attr [--source <tree>] [-a | --all | <attr>...] [--] <pathname>..."),
+> +N_("git check-attr --stdin [-z] [--source <tree>] [-a | --all | <attr>...]"),
+
+I think we should use "<tree-ish>" rather than "<tree>" so it is clear 
+one can specify a commit or tag. That's what "git restore" does.
+
+> diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+> index b3aabb8aa3..78e9f47dbf 100755
+> --- a/t/t0003-attributes.sh
+> +++ b/t/t0003-attributes.sh
+> @@ -25,7 +25,15 @@ attr_check_quote () {
+>   	git check-attr test -- "$path" >actual &&
+>   	echo "\"$quoted_path\": test: $expect" >expect &&
+>   	test_cmp expect actual
+> +}
+> +
+> +attr_check_source () {
+> +	path="$1" expect="$2" source="$3" git_opts="$4" &&
+>   
+> +	git $git_opts check-attr --source $source test -- "$path" >actual 2>err &&
+> +	echo "$path: test: $expect" >expect &&
+> +	test_cmp expect actual
+
+This is missing && which means we miss some test failures later
+
+> +	test_must_be_empty err
+>   }
+>   
+
+> +test_expect_success 'setup branches' '
+> +	mkdir -p foo/bar &&
+> +	test_commit --printf "add .gitattributes" foo/bar/.gitattribute \
+
+The file should be foo/bar/.gitattributes (not .gitattribute). We're 
+missing failures due to this because of the missing && above
+
+> +		"f test=f\na/i test=n\n" tag-1 &&
+> +
+> +	mkdir -p foo/bar &&
+
+We don't need to make the directory again here
+
+> +	test_commit --printf "add .gitattributes" foo/bar/.gitattribute \
+> +		"g test=g\na/i test=m\n" tag-2
+
+I think it would be worth either removing foo/bar/.gitattributes or 
+donig test_write_lines to change it. That way we can be sure all the 
+--source tests are actually using the tree-ish we give it and not just 
+reading from the filesystem.
+
+Best Wishes
+
+Phillip
+
+> +'
+> +
+>   test_expect_success 'command line checks' '
+>   	test_must_fail git check-attr &&
+>   	test_must_fail git check-attr -- &&
+>   	test_must_fail git check-attr test &&
+>   	test_must_fail git check-attr test -- &&
+>   	test_must_fail git check-attr -- f &&
+> +	test_must_fail git check-attr --source &&
+> +	test_must_fail git check-attr --source not-a-valid-ref &&
+>   	echo "f" | test_must_fail git check-attr --stdin &&
+>   	echo "f" | test_must_fail git check-attr --stdin -- f &&
+>   	echo "f" | test_must_fail git check-attr --stdin test -- f &&
+> @@ -287,6 +306,15 @@ test_expect_success 'using --git-dir and --work-tree' '
+>   	)
+>   '
+>   
+> +test_expect_success 'using --source' '
+> +	attr_check_source foo/bar/f f tag-1 &&
+> +	attr_check_source foo/bar/a/i n tag-1 &&
+> +	attr_check_source foo/bar/f unspecified tag-2 &&
+> +	attr_check_source foo/bar/a/i m tag-2 &&
+> +	attr_check_source foo/bar/g g tag-2 &&
+> +	attr_check_source foo/bar/g unspecified tag-1
+> +'
+> +
+>   test_expect_success 'setup bare' '
+>   	git clone --template= --bare . bare.git
+>   '
+> @@ -306,6 +334,18 @@ test_expect_success 'bare repository: check that .gitattribute is ignored' '
+>   	)
+>   '
+>   
+> +test_expect_success 'bare repository: with --source' '
+> +	(
+> +		cd bare.git &&
+> +		attr_check_source foo/bar/f f tag-1 &&
+> +		attr_check_source foo/bar/a/i n tag-1 &&
+> +		attr_check_source foo/bar/f unspecified tag-2 &&
+> +		attr_check_source foo/bar/a/i m tag-2 &&
+> +		attr_check_source foo/bar/g g tag-2 &&
+> +		attr_check_source foo/bar/g unspecified tag-1
+> +	)
+> +'
+> +
+>   test_expect_success 'bare repository: check that --cached honors index' '
+>   	(
+>   		cd bare.git &&
+> diff --git a/userdiff.c b/userdiff.c
+> index 151d9a5278..b66f090a0b 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -412,7 +412,7 @@ struct userdiff_driver *userdiff_find_by_path(struct index_state *istate,
+>   		check = attr_check_initl("diff", NULL);
+>   	if (!path)
+>   		return NULL;
+> -	git_check_attr(istate, path, check);
+> +	git_check_attr(istate, NULL, path, check);
+>   
+>   	if (ATTR_TRUE(check->items[0].value))
+>   		return &driver_true;
+> diff --git a/ws.c b/ws.c
+> index 6e69877f25..eadbbe5667 100644
+> --- a/ws.c
+> +++ b/ws.c
+> @@ -78,7 +78,7 @@ unsigned whitespace_rule(struct index_state *istate, const char *pathname)
+>   	if (!attr_whitespace_rule)
+>   		attr_whitespace_rule = attr_check_initl("whitespace", NULL);
+>   
+> -	git_check_attr(istate, pathname, attr_whitespace_rule);
+> +	git_check_attr(istate, NULL, pathname, attr_whitespace_rule);
+>   	value = attr_whitespace_rule->items[0].value;
+>   	if (ATTR_TRUE(value)) {
+>   		/* true (whitespace) */
