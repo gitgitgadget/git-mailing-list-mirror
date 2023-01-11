@@ -2,244 +2,606 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8F2BEC5479D
-	for <git@archiver.kernel.org>; Wed, 11 Jan 2023 22:11:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E0924C5479D
+	for <git@archiver.kernel.org>; Wed, 11 Jan 2023 22:13:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236026AbjAKWLU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Jan 2023 17:11:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60422 "EHLO
+        id S234866AbjAKWNT (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Jan 2023 17:13:19 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235894AbjAKWLQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2023 17:11:16 -0500
-Received: from EUR05-VI1-obe.outbound.protection.outlook.com (mail-vi1eur05olkn2103.outbound.protection.outlook.com [40.92.90.103])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36E0D33D69
-        for <git@vger.kernel.org>; Wed, 11 Jan 2023 14:11:14 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=eT8R8PghgtzzKctoyeP8oH4eFxI0Jpqz3pZmpNAMkxK3OF/08xfkuI02PVZpFDGIqdhgsy1yCZvR1ny+nce0OWKa1PKxg86TY0SW3uwWFPzmParTG4jrm2FfYklG5y1mRz6Ov7ohAXCR44K3wxKLeH2RavSYKaJIIHSCWtBqnMHBp//FdPD9xvTcDEny+V8AnkSKVRIC4L/O7f7ZF3bKlzWJZboBroNB1tUxKK+YO0cQw0n2qQvzUjt/PqPfMCjqV4QWiIpklbLyrjEH5eRx4X2CQGIMmq1dBrbjxXP5ChWOiGpKSVfIyi7od9f3yZMKKz2QrBBPrDbRdqTSEgL+sA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=7R6AQlGiXhFdivc71JqU0BcZSh4Vdghc7IbSzQWEf8c=;
- b=T4UKMxjmXOy0W0BapNWgJIugZNXfCmBmUgTf51g9/MeNwiDkhjUyqwmTOwdBowwC7tgh85+0+FV+YHFbZtKzMPifHiYJ33IaOH/G+CiwcxkvCYH04UuroasG0Aq5ntj7yC5sOM5ovYJVvke8lhbpFqroFsxhVIiStPzQKNIL36FEBBAmUKRQM2A4jKQP0484wEAGtIA+nGVzYI+dNY+d/Y6mg8/UTwkYPX8VGlMNo38KEk3bZ45O3LUEyVpYqbQAX6+k6/9SbeF/sDIk2TfFfii8nF1NgE/Tpb9GenvbWhv1RapLFWiQdN8aikVOlqxYfVJu79184OUnsoRIpflhRQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=7R6AQlGiXhFdivc71JqU0BcZSh4Vdghc7IbSzQWEf8c=;
- b=iJZCejaqmGJBGUEpZe127W7B67xgEXYAlZ5brXCRiMo9lvbGXYD0NtBesquhf0KjNdsNGQSFEAzx01cmWJTqaUIdCkgReJLky3yW2TKmGKY1NvabTLf0CDE3H+wImRn9SMgejx9VTKPyaTCB64yhZk554oFdcT7YnBho9EVutYwWCxYp8xPgnUqQWW6NrryyTtkb3RO3Y8+Zjt5EoG+VcJEvXHuVUiNoXPfl+L/5U8C2ix5wLfzGxn5+XxdCfZKa85dJhudbrSS+WUKoUrggeDYK1Aj9f8TYr+7K/qs4adUUAEtTxtS1eC4KTLKENWF/dt1BcBCIYskwaQmIhlGCXQ==
-Received: from AS2PR03MB9815.eurprd03.prod.outlook.com (2603:10a6:20b:609::16)
- by PR3PR03MB6490.eurprd03.prod.outlook.com (2603:10a6:102:7e::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5986.18; Wed, 11 Jan
- 2023 22:11:12 +0000
-Received: from AS2PR03MB9815.eurprd03.prod.outlook.com
- ([fe80::8428:153c:704f:4519]) by AS2PR03MB9815.eurprd03.prod.outlook.com
- ([fe80::8428:153c:704f:4519%8]) with mapi id 15.20.5986.018; Wed, 11 Jan 2023
- 22:11:12 +0000
-Message-ID: <AS2PR03MB98153C2C0EC082257F091B7DC0FC9@AS2PR03MB9815.eurprd03.prod.outlook.com>
-Date:   Wed, 11 Jan 2023 14:11:04 -0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.1
-Subject: Re: [PATCH v4 1/8] http: read HTTP WWW-Authenticate response headers
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Matthew John Cheetham via GitGitGadget 
-        <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        with ESMTP id S235894AbjAKWNQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2023 17:13:16 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B56636337
+        for <git@vger.kernel.org>; Wed, 11 Jan 2023 14:13:15 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id k22-20020a05600c1c9600b003d1ee3a6289so13740557wms.2
+        for <git@vger.kernel.org>; Wed, 11 Jan 2023 14:13:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qZfvZ8RTcDBAofAevq0+3MPqq1v9AIkhChP91QQElkQ=;
+        b=bdRspmaPhoB6Ye3Y5Lgabn4ax77jKUz6Jxv0HUBr1GgQFqwSB6m3glf9+oTKXjpsD3
+         aosy4OyUeYQS8oFSaI5GzdDbSd4V/RCe9fmx7ad3clpJs3m+svj7TfNxijwOOK3zGEI1
+         ystcJII7KkoHchgHxgzM30Hl8o0P0UzHcRPJeWQVaccLRb2zvlEDVmmNhwbizJnroGD9
+         G9m8z8vAPiyssA18ebBAS0f7n7tlX6tqDdgegDHngEr/GXuZpMj9SIIgqQezZaRJSNu9
+         gbANYNNN911KabMaXfr6ifidoX1QvVsaXdKAbLOqHIH4YVEBSZuAny4UJuE+x3AkNkOj
+         ar2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qZfvZ8RTcDBAofAevq0+3MPqq1v9AIkhChP91QQElkQ=;
+        b=t1xh+kdPwHKQ0qODHzHq8cyeQYgvavj8kRwdSoIgzTkxcVP9OIttq8L5r+lnriEJkY
+         3zS0Vr09eqgoQsqxlktR5dGR27V97W034XJ1dQxUGuFS+epRFRSmMmYLiN1fn8xb+gqr
+         P5SH4v3ys2dcUzfpaann0yCCNAzYFb687WOGnRxJnUU4Qp2oqneHs+mffOqN52zpDEVI
+         CHCZVTPmO64c/uhv3iA4ThzCGmMsedO8a7tY0un+r7XFkjbU3Qmaj4MLFZTpU46WtKfI
+         ganFu4ik664JlZ9b11SxSeUUGZeXtj1emfT83hjtWpymDccEneFvbUy5Ek4WxisBMmde
+         dfOQ==
+X-Gm-Message-State: AFqh2koAhSRVel8DHLU0hL79NkJYX4QNWbpI5EXct6meEwOqvvwPW0cn
+        5qwj2nEIL2tMsFJ+Qlwqt3P0gMUJ+9Q=
+X-Google-Smtp-Source: AMrXdXuQRZgZvWu8JWKXg/RepOsfpvmIAodeN6ms3NuCZP11YLKZRxbWVaoxtCQ3SrCrkzJlF5regQ==
+X-Received: by 2002:a05:600c:6016:b0:3d3:3c93:af5e with SMTP id az22-20020a05600c601600b003d33c93af5emr54130252wmb.35.1673475193434;
+        Wed, 11 Jan 2023 14:13:13 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id m18-20020a05600c4f5200b003c6b70a4d69sm22415101wmq.42.2023.01.11.14.13.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Jan 2023 14:13:13 -0800 (PST)
+Message-Id: <74b0de14185120c9d53d7470e59f57fa20a1927f.1673475190.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1352.v5.git.1673475190.gitgitgadget@gmail.com>
+References: <pull.1352.v4.git.1670880984.gitgitgadget@gmail.com>
+        <pull.1352.v5.git.1673475190.gitgitgadget@gmail.com>
+From:   "Matthew John Cheetham via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Wed, 11 Jan 2023 22:13:01 +0000
+Subject: [PATCH v5 01/10] daemon: libify socket setup and option functions
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>,
         Lessley Dennington <lessleydennington@gmail.com>,
+        Matthew John Cheetham <mjcheetham@outlook.com>,
         M Hickford <mirth.hickford@gmail.com>,
         Jeff Hostetler <git@jeffhostetler.com>,
         Glen Choo <chooglen@google.com>,
-        Matthew John Cheetham <mjcheetham@github.com>
-References: <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
- <pull.1352.v4.git.1670880984.gitgitgadget@gmail.com>
- <b5b56ccd9419353a4bf5bc9d751a711af07d2197.1670880984.git.gitgitgadget@gmail.com>
- <221215.861qp13tfh.gmgdl@evledraar.gmail.com>
-From:   Matthew John Cheetham <mjcheetham@outlook.com>
-In-Reply-To: <221215.861qp13tfh.gmgdl@evledraar.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TMN:  [HXhLuDUFRb7UiFr0nIDc+LNrAiqHxJJ8]
-X-ClientProxiedBy: BYAPR07CA0007.namprd07.prod.outlook.com
- (2603:10b6:a02:bc::20) To AS2PR03MB9815.eurprd03.prod.outlook.com
- (2603:10a6:20b:609::16)
-X-Microsoft-Original-Message-ID: <dc8bb61b-66fb-4b33-0843-8bbbf5559d2d@outlook.com>
-MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AS2PR03MB9815:EE_|PR3PR03MB6490:EE_
-X-MS-Office365-Filtering-Correlation-Id: 45353e97-1434-43b5-d3c5-08daf420bf6a
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: XmgTzG+tJQDvFXuUUzVS5WKO28HH1NA+3dkMy9JKvFWpwNss+1YODfgAmb4lVU4REGR4tiXqukQ07qmvAwttmnyxEopfvQJmX+6hNjrPPpRXONfMNHO7tg68VvlZbx29PXkP2Q3Akhy3RknfBDj8JwV/wiSpa4AnWx5eArg/UMTAI8HPhb9rD/nD+qLmV9fYiBevDIW/kn03uEh+949W+bigL9PcrtSzx2NZyVgZ5vc2N+EtAgCPQHkebdK2wiP3ELXVHzXcQUFPbE51/WtlSM3Gu9RBcV6Fpal+0237je5pecSLuq27vZflm3TYn/TThIdqOlpbEOab1cNblXF3SEkt7XlafNm49Wc+91bFAlXvncI+cJ31sNAe0Svpvzwy1SKg24sU2oh+4kLPeCsNLw6erZguuf1KahfLVzSST4aR8TfzgaFm0rHfrawt29E9GnWXogwkUhZScvg5dRIR39fgeoR5Lso5adSz9Q/IhXpxW2G4Sm0YRVJPvQZeHpaHT02JfzM0W1iv4Xcz7MlXh4r3IAXDj34rcsW51y5fg3S+2UufGZLsHyuSUOtnXpBSeA0J7LBc2obtLIwpmA/yDD0cYlNv3IOtSfk4xc+UjN7+IlBz89pYiyfv1T5ENtxK32mVXhsGS2oq/QVjl0VkNg==
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UVZEbHB5Si9taTJ4TFVpazdhaVVQcDlSV28wSFZ6WGYrcmdxdG80VFhLN0xQ?=
- =?utf-8?B?M0RKakxQdEh5QXdubFZCRUhad3BzSWIvbEI5ZUN0RXpSS0gxb2xhYmVXMXJk?=
- =?utf-8?B?OFgyYW1lSkFpbU5OOGxLQzdtejdRTTE4ZjZqUW54MitYdEZVREc2WlJVWlU1?=
- =?utf-8?B?b3dMVjMzWVI5T2xhMEY0STQ3aURiWVkzeExTUE9tR251dzFXMU42MFhDbnRn?=
- =?utf-8?B?TFVDdE9XZVRiV04yUWNVS3NvVGl1cVVLN2hUSEQ2c0JTeXZwVmc3WGhBbGtl?=
- =?utf-8?B?RmdoZi9pVWJaODBXbmFmUkdHQlN5eU5FQUVPbVZiL3QwdTNQdzRQa2hQemRx?=
- =?utf-8?B?SVZoeG5VOUdhb3JuWDlkNzZVN3ZoazV3NHhrYjBFdk5uZ1NubTJWNkt1Mm1q?=
- =?utf-8?B?cytmQS9ONkVBa1pWZUNPMWVEMmt4V3JpS2hYK3g5Tk1laWtwR1RkQ2ZOclVw?=
- =?utf-8?B?bVJFNzYzV1g2b0RFblQwckNReUFiWEpIS3Q2VWdkMUZQQUZUTEFHUVNjN1hq?=
- =?utf-8?B?UitIaW9MZFp3S0ptNFhkbGNkbUpOMk15NTB1SCtYRVIwUkJ6aHZHZkR1V01j?=
- =?utf-8?B?RHU0enRkeDVzS0xKZ2pQMzlYcWljcWJmWFNvUGxZNXY1OTY0SUo3U2VuTWQ5?=
- =?utf-8?B?Q1ZlRWs4S0xWWkZmWTRJQU5sZldKb2RtajlyVmd2QTZCM3dvYVF5OHVtcDYy?=
- =?utf-8?B?MmxpMFVmakpmYVgxc3BwWEtBLzcvcGc2MmdjeTJJeXU3ck9HR1hIQi9mZlJo?=
- =?utf-8?B?LzVSUG8zUGNhb3ZDVHRtOWJtb3JXVFRLa292dTlpbExvUldSM2lBQitlMlhs?=
- =?utf-8?B?enZFamtFb1lkSHdCUDBDbTgwL1VtVmFCMUdXalY3RWdFOXd0YVNDQ3RqZzEw?=
- =?utf-8?B?ZXlDTTB6SVdPdDBqNisydjFjRGVpb0Exck9BYWdHaFFLV0pQY3Q3Rzc5elpM?=
- =?utf-8?B?eUdFeXFVblZrVkhVMS9CYnZxVTluS0JuWStRamlLeEljRzZFT0trRS8wRTZl?=
- =?utf-8?B?QWt3QjNIK1VwSlZHeDNMTlpwUklRRUtJNERBMFJ0bk5weFhTcGJGVGVHQm1G?=
- =?utf-8?B?dkk1K0h5RU5QUDJaZFZkTU0zUVRiamtvMGcxU3U1aFB0ZjdJMVpBL1YvNXlo?=
- =?utf-8?B?RlFtek1tSUh4ejdMT0lMNE1Pc1Bra1hwMmw3VVM2Q3RaTFBPbW9lOUhDVjBT?=
- =?utf-8?B?OStRQ01DcjMxY0FpdkxrRkxmaTJOeEtuTXRUT2lXcjl4Y01ra3JqaWR1TmdL?=
- =?utf-8?B?ZWNzeThIMENIVXZTczhocUo3aGZ3MklBdHVpSm04NFRzcHFueVNjYTZVNmlR?=
- =?utf-8?B?aXUvenBOYk9OOFY4d2c3d0pCSmdNNURHSUk3OHg2UXZsVzNoSVd4NVdCN08y?=
- =?utf-8?B?VTNhRlpZckN0TS9PZy9tTE4wbHRMUmdkZDB3ZHp0Q0J3SFZKNW4xTXhOL2I2?=
- =?utf-8?B?UTgwQ1ZNaFdKbnZ6Y3dDUlA0RzRvcG5GNUhwTzFZc0x0a1hYajFiYmU1MWFM?=
- =?utf-8?B?bDJ4Z2lvL3pHYWRMTjB3alZrSEphY2RFdkZ6YXpYK05jMVk5ZzFKWTFKMkxh?=
- =?utf-8?B?RDJmcmFVbGhJSzViRCtOMm1jb2dEcTRxaFdJTFMrd3dCWWM5L1crUVlwblpw?=
- =?utf-8?B?a3FKMUdDcExMYzFmditPZlJmTWY4SFdiT0l4ODJmaTdYL1A4cjR3ZHZ4NzhR?=
- =?utf-8?B?NUpTUVZ0T1hYdUFrZjR0N0FVMVpvQ0dYdnRxdGtUT2JBa0YrWXhraTFnPT0=?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 45353e97-1434-43b5-d3c5-08daf420bf6a
-X-MS-Exchange-CrossTenant-AuthSource: AS2PR03MB9815.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jan 2023 22:11:11.9407
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR03MB6490
+        Victoria Dye <vdye@github.com>,
+        Matthew John Cheetham <mjcheetham@github.com>,
+        Matthew John Cheetham <mjcheetham@outlook.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-12-15 01:27, Ævar Arnfjörð Bjarmason wrote:
+From: Matthew John Cheetham <mjcheetham@outlook.com>
 
-> 
-> On Mon, Dec 12 2022, Matthew John Cheetham via GitGitGadget wrote:
-> 
->> From: Matthew John Cheetham <mjcheetham@outlook.com>
->> [...]
->>  /* Initialize a credential structure, setting all fields to empty. */
->> diff --git a/http.c b/http.c
->> index 8a5ba3f4776..c4e9cd73e14 100644
->> --- a/http.c
->> +++ b/http.c
->> @@ -183,6 +183,82 @@ size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
->>  	return nmemb;
->>  }
->>  
->> +static size_t fwrite_wwwauth(char *ptr, size_t eltsize, size_t nmemb, void *p)
->> +{
->> +	size_t size = eltsize * nmemb;
-> 
-> Just out of general paranoia: use st_mult() here, not "*" (checks for
-> overflows)?
+Extract functions for setting up listening sockets and keep-alive options
+from `daemon.c` to new `daemon-utils.{c,h}` files. Remove direct
+dependencies on global state by inlining the behaviour at the callsites
+for all libified functions.
 
-Sure! Good point.
+Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
+---
+ Makefile       |   1 +
+ daemon-utils.c | 209 +++++++++++++++++++++++++++++++++++++++++++++++
+ daemon-utils.h |  23 ++++++
+ daemon.c       | 214 +------------------------------------------------
+ 4 files changed, 237 insertions(+), 210 deletions(-)
+ create mode 100644 daemon-utils.c
+ create mode 100644 daemon-utils.h
 
->> +	struct strvec *values = &http_auth.wwwauth_headers;
->> +	struct strbuf buf = STRBUF_INIT;
->> +	const char *val;
->> +	const char *z = NULL;
-> 
-> Why NULL-init the "z" here, but not the "val"? Both look like they
-> should be un-init'd. We also tend to call a throw-away char pointer "p",
-> not "z", but anyway (more below).... 
-> 
->> +
->> +	/*
->> +	 * Header lines may not come NULL-terminated from libcurl so we must
->> +	 * limit all scans to the maximum length of the header line, or leverage
->> +	 * strbufs for all operations.
->> +	 *
->> +	 * In addition, it is possible that header values can be split over
->> +	 * multiple lines as per RFC 2616 (even though this has since been
->> +	 * deprecated in RFC 7230). A continuation header field value is
->> +	 * identified as starting with a space or horizontal tab.
->> +	 *
->> +	 * The formal definition of a header field as given in RFC 2616 is:
->> +	 *
->> +	 *   message-header = field-name ":" [ field-value ]
->> +	 *   field-name     = token
->> +	 *   field-value    = *( field-content | LWS )
->> +	 *   field-content  = <the OCTETs making up the field-value
->> +	 *                    and consisting of either *TEXT or combinations
->> +	 *                    of token, separators, and quoted-string>
->> +	 */
->> +
->> +	strbuf_add(&buf, ptr, size);
->> +
->> +	/* Strip the CRLF that should be present at the end of each field */
->> +	strbuf_trim_trailing_newline(&buf);
->> +
->> +	/* Start of a new WWW-Authenticate header */
->> +	if (skip_iprefix(buf.buf, "www-authenticate:", &val)) {
->> +		while (isspace(*val))
->> +			val++;
-> 
-> As we already have a "struct strbuf" here, maybe we can instead
-> consistently use the strbuf functions, e.g. strbuf_ltrim() in this case.
+diff --git a/Makefile b/Makefile
+index b258fdbed86..2654094dbb5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1003,6 +1003,7 @@ LIB_OBJS += credential.o
+ LIB_OBJS += csum-file.o
+ LIB_OBJS += ctype.o
+ LIB_OBJS += date.o
++LIB_OBJS += daemon-utils.o
+ LIB_OBJS += decorate.o
+ LIB_OBJS += delta-islands.o
+ LIB_OBJS += diagnose.o
+diff --git a/daemon-utils.c b/daemon-utils.c
+new file mode 100644
+index 00000000000..b96b55962db
+--- /dev/null
++++ b/daemon-utils.c
+@@ -0,0 +1,209 @@
++#include "cache.h"
++#include "daemon-utils.h"
++
++void set_keep_alive(int sockfd, log_fn logerror)
++{
++	int ka = 1;
++
++	if (setsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &ka, sizeof(ka)) < 0) {
++		if (errno != ENOTSOCK)
++			logerror("unable to set SO_KEEPALIVE on socket: %s",
++				strerror(errno));
++	}
++}
++
++static int set_reuse_addr(int sockfd)
++{
++	int on = 1;
++
++	return setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR,
++			  &on, sizeof(on));
++}
++
++static const char *ip2str(int family, struct sockaddr *sin, socklen_t len)
++{
++#ifdef NO_IPV6
++	static char ip[INET_ADDRSTRLEN];
++#else
++	static char ip[INET6_ADDRSTRLEN];
++#endif
++
++	switch (family) {
++#ifndef NO_IPV6
++	case AF_INET6:
++		inet_ntop(family, &((struct sockaddr_in6*)sin)->sin6_addr, ip, len);
++		break;
++#endif
++	case AF_INET:
++		inet_ntop(family, &((struct sockaddr_in*)sin)->sin_addr, ip, len);
++		break;
++	default:
++		xsnprintf(ip, sizeof(ip), "<unknown>");
++	}
++	return ip;
++}
++
++#ifndef NO_IPV6
++
++static int setup_named_sock(char *listen_addr, int listen_port,
++			    struct socketlist *socklist, int reuseaddr,
++			    log_fn logerror)
++{
++	int socknum = 0;
++	char pbuf[NI_MAXSERV];
++	struct addrinfo hints, *ai0, *ai;
++	int gai;
++	long flags;
++
++	xsnprintf(pbuf, sizeof(pbuf), "%d", listen_port);
++	memset(&hints, 0, sizeof(hints));
++	hints.ai_family = AF_UNSPEC;
++	hints.ai_socktype = SOCK_STREAM;
++	hints.ai_protocol = IPPROTO_TCP;
++	hints.ai_flags = AI_PASSIVE;
++
++	gai = getaddrinfo(listen_addr, pbuf, &hints, &ai0);
++	if (gai) {
++		logerror("getaddrinfo() for %s failed: %s", listen_addr, gai_strerror(gai));
++		return 0;
++	}
++
++	for (ai = ai0; ai; ai = ai->ai_next) {
++		int sockfd;
++
++		sockfd = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
++		if (sockfd < 0)
++			continue;
++		if (sockfd >= FD_SETSIZE) {
++			logerror("Socket descriptor too large");
++			close(sockfd);
++			continue;
++		}
++
++#ifdef IPV6_V6ONLY
++		if (ai->ai_family == AF_INET6) {
++			int on = 1;
++			setsockopt(sockfd, IPPROTO_IPV6, IPV6_V6ONLY,
++				   &on, sizeof(on));
++			/* Note: error is not fatal */
++		}
++#endif
++
++		if (reuseaddr && set_reuse_addr(sockfd)) {
++			logerror("Could not set SO_REUSEADDR: %s", strerror(errno));
++			close(sockfd);
++			continue;
++		}
++
++		set_keep_alive(sockfd, logerror);
++
++		if (bind(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
++			logerror("Could not bind to %s: %s",
++				 ip2str(ai->ai_family, ai->ai_addr, ai->ai_addrlen),
++				 strerror(errno));
++			close(sockfd);
++			continue;	/* not fatal */
++		}
++		if (listen(sockfd, 5) < 0) {
++			logerror("Could not listen to %s: %s",
++				 ip2str(ai->ai_family, ai->ai_addr, ai->ai_addrlen),
++				 strerror(errno));
++			close(sockfd);
++			continue;	/* not fatal */
++		}
++
++		flags = fcntl(sockfd, F_GETFD, 0);
++		if (flags >= 0)
++			fcntl(sockfd, F_SETFD, flags | FD_CLOEXEC);
++
++		ALLOC_GROW(socklist->list, socklist->nr + 1, socklist->alloc);
++		socklist->list[socklist->nr++] = sockfd;
++		socknum++;
++	}
++
++	freeaddrinfo(ai0);
++
++	return socknum;
++}
++
++#else /* NO_IPV6 */
++
++static int setup_named_sock(char *listen_addr, int listen_port,
++			    struct socketlist *socklist, int reuseaddr,
++			    log_fn logerror)
++{
++	struct sockaddr_in sin;
++	int sockfd;
++	long flags;
++
++	memset(&sin, 0, sizeof sin);
++	sin.sin_family = AF_INET;
++	sin.sin_port = htons(listen_port);
++
++	if (listen_addr) {
++		/* Well, host better be an IP address here. */
++		if (inet_pton(AF_INET, listen_addr, &sin.sin_addr.s_addr) <= 0)
++			return 0;
++	} else {
++		sin.sin_addr.s_addr = htonl(INADDR_ANY);
++	}
++
++	sockfd = socket(AF_INET, SOCK_STREAM, 0);
++	if (sockfd < 0)
++		return 0;
++
++	if (reuseaddr && set_reuse_addr(sockfd)) {
++		logerror("Could not set SO_REUSEADDR: %s", strerror(errno));
++		close(sockfd);
++		return 0;
++	}
++
++	set_keep_alive(sockfd, logerror);
++
++	if ( bind(sockfd, (struct sockaddr *)&sin, sizeof sin) < 0 ) {
++		logerror("Could not bind to %s: %s",
++			 ip2str(AF_INET, (struct sockaddr *)&sin, sizeof(sin)),
++			 strerror(errno));
++		close(sockfd);
++		return 0;
++	}
++
++	if (listen(sockfd, 5) < 0) {
++		logerror("Could not listen to %s: %s",
++			 ip2str(AF_INET, (struct sockaddr *)&sin, sizeof(sin)),
++			 strerror(errno));
++		close(sockfd);
++		return 0;
++	}
++
++	flags = fcntl(sockfd, F_GETFD, 0);
++	if (flags >= 0)
++		fcntl(sockfd, F_SETFD, flags | FD_CLOEXEC);
++
++	ALLOC_GROW(socklist->list, socklist->nr + 1, socklist->alloc);
++	socklist->list[socklist->nr++] = sockfd;
++	return 1;
++}
++
++#endif
++
++void socksetup(struct string_list *listen_addr, int listen_port,
++	       struct socketlist *socklist, int reuseaddr,
++	       log_fn logerror)
++{
++	if (!listen_addr->nr)
++		setup_named_sock(NULL, listen_port, socklist, reuseaddr,
++				 logerror);
++	else {
++		int i, socknum;
++		for (i = 0; i < listen_addr->nr; i++) {
++			socknum = setup_named_sock(listen_addr->items[i].string,
++						   listen_port, socklist, reuseaddr,
++						   logerror);
++
++			if (socknum == 0)
++				logerror("unable to allocate any listen sockets for host %s on port %u",
++					 listen_addr->items[i].string, listen_port);
++		}
++	}
++}
+diff --git a/daemon-utils.h b/daemon-utils.h
+new file mode 100644
+index 00000000000..6710a2a6dc0
+--- /dev/null
++++ b/daemon-utils.h
+@@ -0,0 +1,23 @@
++#ifndef DAEMON_UTILS_H
++#define DAEMON_UTILS_H
++
++#include "git-compat-util.h"
++#include "string-list.h"
++
++typedef void (*log_fn)(const char *msg, ...);
++
++struct socketlist {
++	int *list;
++	size_t nr;
++	size_t alloc;
++};
++
++/* Enable sending of keep-alive messages on the socket. */
++void set_keep_alive(int sockfd, log_fn logerror);
++
++/* Setup a number of sockets to listen on the provided addresses. */
++void socksetup(struct string_list *listen_addr, int listen_port,
++	       struct socketlist *socklist, int reuseaddr,
++	       log_fn logerror);
++
++#endif
+diff --git a/daemon.c b/daemon.c
+index 0ae7d12b5c1..1ed4e705680 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -1,9 +1,9 @@
+ #include "cache.h"
+ #include "config.h"
++#include "daemon-utils.h"
+ #include "pkt-line.h"
+ #include "run-command.h"
+ #include "strbuf.h"
+-#include "string-list.h"
+ 
+ #ifdef NO_INITGROUPS
+ #define initgroups(x, y) (0) /* nothing */
+@@ -737,17 +737,6 @@ static void hostinfo_clear(struct hostinfo *hi)
+ 	strbuf_release(&hi->tcp_port);
+ }
+ 
+-static void set_keep_alive(int sockfd)
+-{
+-	int ka = 1;
+-
+-	if (setsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &ka, sizeof(ka)) < 0) {
+-		if (errno != ENOTSOCK)
+-			logerror("unable to set SO_KEEPALIVE on socket: %s",
+-				strerror(errno));
+-	}
+-}
+-
+ static int execute(void)
+ {
+ 	char *line = packet_buffer;
+@@ -759,7 +748,7 @@ static int execute(void)
+ 	if (addr)
+ 		loginfo("Connection from %s:%s", addr, port);
+ 
+-	set_keep_alive(0);
++	set_keep_alive(0, logerror);
+ 	alarm(init_timeout ? init_timeout : timeout);
+ 	pktlen = packet_read(0, packet_buffer, sizeof(packet_buffer), 0);
+ 	alarm(0);
+@@ -938,202 +927,6 @@ static void child_handler(int signo)
+ 	signal(SIGCHLD, child_handler);
+ }
+ 
+-static int set_reuse_addr(int sockfd)
+-{
+-	int on = 1;
+-
+-	if (!reuseaddr)
+-		return 0;
+-	return setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR,
+-			  &on, sizeof(on));
+-}
+-
+-struct socketlist {
+-	int *list;
+-	size_t nr;
+-	size_t alloc;
+-};
+-
+-static const char *ip2str(int family, struct sockaddr *sin, socklen_t len)
+-{
+-#ifdef NO_IPV6
+-	static char ip[INET_ADDRSTRLEN];
+-#else
+-	static char ip[INET6_ADDRSTRLEN];
+-#endif
+-
+-	switch (family) {
+-#ifndef NO_IPV6
+-	case AF_INET6:
+-		inet_ntop(family, &((struct sockaddr_in6*)sin)->sin6_addr, ip, len);
+-		break;
+-#endif
+-	case AF_INET:
+-		inet_ntop(family, &((struct sockaddr_in*)sin)->sin_addr, ip, len);
+-		break;
+-	default:
+-		xsnprintf(ip, sizeof(ip), "<unknown>");
+-	}
+-	return ip;
+-}
+-
+-#ifndef NO_IPV6
+-
+-static int setup_named_sock(char *listen_addr, int listen_port, struct socketlist *socklist)
+-{
+-	int socknum = 0;
+-	char pbuf[NI_MAXSERV];
+-	struct addrinfo hints, *ai0, *ai;
+-	int gai;
+-	long flags;
+-
+-	xsnprintf(pbuf, sizeof(pbuf), "%d", listen_port);
+-	memset(&hints, 0, sizeof(hints));
+-	hints.ai_family = AF_UNSPEC;
+-	hints.ai_socktype = SOCK_STREAM;
+-	hints.ai_protocol = IPPROTO_TCP;
+-	hints.ai_flags = AI_PASSIVE;
+-
+-	gai = getaddrinfo(listen_addr, pbuf, &hints, &ai0);
+-	if (gai) {
+-		logerror("getaddrinfo() for %s failed: %s", listen_addr, gai_strerror(gai));
+-		return 0;
+-	}
+-
+-	for (ai = ai0; ai; ai = ai->ai_next) {
+-		int sockfd;
+-
+-		sockfd = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
+-		if (sockfd < 0)
+-			continue;
+-		if (sockfd >= FD_SETSIZE) {
+-			logerror("Socket descriptor too large");
+-			close(sockfd);
+-			continue;
+-		}
+-
+-#ifdef IPV6_V6ONLY
+-		if (ai->ai_family == AF_INET6) {
+-			int on = 1;
+-			setsockopt(sockfd, IPPROTO_IPV6, IPV6_V6ONLY,
+-				   &on, sizeof(on));
+-			/* Note: error is not fatal */
+-		}
+-#endif
+-
+-		if (set_reuse_addr(sockfd)) {
+-			logerror("Could not set SO_REUSEADDR: %s", strerror(errno));
+-			close(sockfd);
+-			continue;
+-		}
+-
+-		set_keep_alive(sockfd);
+-
+-		if (bind(sockfd, ai->ai_addr, ai->ai_addrlen) < 0) {
+-			logerror("Could not bind to %s: %s",
+-				 ip2str(ai->ai_family, ai->ai_addr, ai->ai_addrlen),
+-				 strerror(errno));
+-			close(sockfd);
+-			continue;	/* not fatal */
+-		}
+-		if (listen(sockfd, 5) < 0) {
+-			logerror("Could not listen to %s: %s",
+-				 ip2str(ai->ai_family, ai->ai_addr, ai->ai_addrlen),
+-				 strerror(errno));
+-			close(sockfd);
+-			continue;	/* not fatal */
+-		}
+-
+-		flags = fcntl(sockfd, F_GETFD, 0);
+-		if (flags >= 0)
+-			fcntl(sockfd, F_SETFD, flags | FD_CLOEXEC);
+-
+-		ALLOC_GROW(socklist->list, socklist->nr + 1, socklist->alloc);
+-		socklist->list[socklist->nr++] = sockfd;
+-		socknum++;
+-	}
+-
+-	freeaddrinfo(ai0);
+-
+-	return socknum;
+-}
+-
+-#else /* NO_IPV6 */
+-
+-static int setup_named_sock(char *listen_addr, int listen_port, struct socketlist *socklist)
+-{
+-	struct sockaddr_in sin;
+-	int sockfd;
+-	long flags;
+-
+-	memset(&sin, 0, sizeof sin);
+-	sin.sin_family = AF_INET;
+-	sin.sin_port = htons(listen_port);
+-
+-	if (listen_addr) {
+-		/* Well, host better be an IP address here. */
+-		if (inet_pton(AF_INET, listen_addr, &sin.sin_addr.s_addr) <= 0)
+-			return 0;
+-	} else {
+-		sin.sin_addr.s_addr = htonl(INADDR_ANY);
+-	}
+-
+-	sockfd = socket(AF_INET, SOCK_STREAM, 0);
+-	if (sockfd < 0)
+-		return 0;
+-
+-	if (set_reuse_addr(sockfd)) {
+-		logerror("Could not set SO_REUSEADDR: %s", strerror(errno));
+-		close(sockfd);
+-		return 0;
+-	}
+-
+-	set_keep_alive(sockfd);
+-
+-	if ( bind(sockfd, (struct sockaddr *)&sin, sizeof sin) < 0 ) {
+-		logerror("Could not bind to %s: %s",
+-			 ip2str(AF_INET, (struct sockaddr *)&sin, sizeof(sin)),
+-			 strerror(errno));
+-		close(sockfd);
+-		return 0;
+-	}
+-
+-	if (listen(sockfd, 5) < 0) {
+-		logerror("Could not listen to %s: %s",
+-			 ip2str(AF_INET, (struct sockaddr *)&sin, sizeof(sin)),
+-			 strerror(errno));
+-		close(sockfd);
+-		return 0;
+-	}
+-
+-	flags = fcntl(sockfd, F_GETFD, 0);
+-	if (flags >= 0)
+-		fcntl(sockfd, F_SETFD, flags | FD_CLOEXEC);
+-
+-	ALLOC_GROW(socklist->list, socklist->nr + 1, socklist->alloc);
+-	socklist->list[socklist->nr++] = sockfd;
+-	return 1;
+-}
+-
+-#endif
+-
+-static void socksetup(struct string_list *listen_addr, int listen_port, struct socketlist *socklist)
+-{
+-	if (!listen_addr->nr)
+-		setup_named_sock(NULL, listen_port, socklist);
+-	else {
+-		int i, socknum;
+-		for (i = 0; i < listen_addr->nr; i++) {
+-			socknum = setup_named_sock(listen_addr->items[i].string,
+-						   listen_port, socklist);
+-
+-			if (socknum == 0)
+-				logerror("unable to allocate any listen sockets for host %s on port %u",
+-					 listen_addr->items[i].string, listen_port);
+-		}
+-	}
+-}
+-
+ static int service_loop(struct socketlist *socklist)
+ {
+ 	struct pollfd *pfd;
+@@ -1246,7 +1039,8 @@ static int serve(struct string_list *listen_addr, int listen_port,
+ {
+ 	struct socketlist socklist = { NULL, 0, 0 };
+ 
+-	socksetup(listen_addr, listen_port, &socklist);
++	socksetup(listen_addr, listen_port, &socklist, reuseaddr,
++		  logerror);
+ 	if (socklist.nr == 0)
+ 		die("unable to allocate any listen sockets on port %u",
+ 		    listen_port);
+-- 
+gitgitgadget
 
-That's a good point. I can move to using strbuf functions entirely.
-
-> I haven't reviewed this in detail, maybe it's not easy or worth it
-> here...
-> 
->> +
->> +		strvec_push(values, val);
->> +		http_auth.header_is_last_match = 1;
->> +		goto exit;
->> +	}
->> +
->> +	/*
->> +	 * This line could be a continuation of the previously matched header
->> +	 * field. If this is the case then we should append this value to the
->> +	 * end of the previously consumed value.
->> +	 */
->> +	if (http_auth.header_is_last_match && isspace(*buf.buf)) {
->> +		const char **v = values->v + values->nr - 1;
-> 
-> It makes no difference to the compiler, but perhaps using []-indexing
-> here is more idiomatic, for getting the nth member of this strvec?
-
-Sure!
-
->> +		char *append = xstrfmt("%s%.*s", *v, (int)(size - 1), ptr + 1);
->> +
->> +		free((void*)*v);
-> 
-> Is this reaching into the strvec & manually memory-managing it
-> unavoidable, or can we use strvec_pop() etc?
-
-Again, good point. I can rework this to pop and push a new, joined value.
-
->> +		*v = append;
->> +
->> +		goto exit;
->> +	}
->> +
->> +	/* This is the start of a new header we don't care about */
->> +	http_auth.header_is_last_match = 0;
->> +
->> +	/*
->> +	 * If this is a HTTP status line and not a header field, this signals
->> +	 * a different HTTP response. libcurl writes all the output of all
->> +	 * response headers of all responses, including redirects.
->> +	 * We only care about the last HTTP request response's headers so clear
->> +	 * the existing array.
->> +	 */
->> +	if (skip_iprefix(buf.buf, "http/", &z))
-> 
-> ...Don't you want to just skip this "z" variable altogether and use
-> istarts_with() instead? All you seem to care about is whether it starts
-> with it, not what the offset is.
-> 
-
-Again, a good point. Thanks for the suggestions. My next iteration will include
-this.
-
-Thanks,
-Matthew
