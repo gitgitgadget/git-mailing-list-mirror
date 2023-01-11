@@ -2,104 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2DD8DC46467
-	for <git@archiver.kernel.org>; Wed, 11 Jan 2023 14:56:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 633A4C46467
+	for <git@archiver.kernel.org>; Wed, 11 Jan 2023 15:29:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233583AbjAKOzd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Jan 2023 09:55:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60114 "EHLO
+        id S234291AbjAKP3H (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Jan 2023 10:29:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238877AbjAKOzJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2023 09:55:09 -0500
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E50E719C13
-        for <git@vger.kernel.org>; Wed, 11 Jan 2023 06:55:08 -0800 (PST)
-Received: by mail-qt1-x829.google.com with SMTP id e22so1440405qts.1
-        for <git@vger.kernel.org>; Wed, 11 Jan 2023 06:55:08 -0800 (PST)
+        with ESMTP id S238461AbjAKP2k (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2023 10:28:40 -0500
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89C4CFE3
+        for <git@vger.kernel.org>; Wed, 11 Jan 2023 07:28:38 -0800 (PST)
+Received: by mail-pg1-x530.google.com with SMTP id v3so10772707pgh.4
+        for <git@vger.kernel.org>; Wed, 11 Jan 2023 07:28:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Mn6GNxNbSCyJdyGHp+JuWuYBBBLlvxnHGs9KANtRD5M=;
-        b=j0iyn0ytO/f+Khod+/DzBtREBC+4/cx3Gtbel8e7MTw7qNNJcpYj+zeKASczzg4M01
-         87eScqfGXpASNEUEkbNDG+otlvsuJCowgVyvnqGnHktS54amOISyZpJJYhLNgm4xZMni
-         zDVMSvcVHcTbH7qPNLZMjs9reodO458oMmYjNNU08OMJXfY2nQrsxQUXzIGdgmVT9Jyu
-         fXO3/XPce44NWlqG4/j3S1Vp13NtXapRBmkvfW26Cetgp0C684EUpeG9KnYE0W4VDsOa
-         coDdv+S249Li4cFkRRlGOm6MVskTRREFqlc8R0GzRx/2wc4jwN7gu9r9u4jqDp5WdiGj
-         loGA==
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Ulxq/cuLHYd8WQsgNadxWRQYH4Pb4L6yQXCst+jOEUk=;
+        b=O2jwXhNQ0p3tHWoFmckjzZLcss6rpHoS9zplI7jaMxP6Tr2vJ0P3dLWNW5iwVsffKL
+         HcTdEd8IUU7wMyQ1mn5/JqWRdgUdQm+NOpwVaCBcsXMv1GKVle7BVwOFeE+dAIB8IWgc
+         xVZTaskMh4L0ByG9H/xFvQ9/5AlVxaE0OTID0qGrHd6Bj/oe+BlDG7eSyN5eRZ0p13zw
+         vFQY8q8v7EDU5rBw+yh0kKry877UsP2ehA7lZAqngwYt2Ae7Ki3329C0BZJkfPvORhOh
+         L5ySkn09IU7zmTr6MOHmrodfBZ94xDV3iuRKE3SmTDM77tdCPPJ8at/deuEA3Alg63O5
+         nFvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mn6GNxNbSCyJdyGHp+JuWuYBBBLlvxnHGs9KANtRD5M=;
-        b=5Lgag46AxNcz/FlfMjvp0jnkMwU9ou8cKHz2UZpJ7TXGvNHxgnZICXM4YKekAzwxya
-         BMwVC7tmd/PT7Hsz8kkTEzdfv/HFXRQ+LHFwofwWEQD/BiFBjemM7emrqurs7xk0rBdH
-         F8zDylvXa1BXrEBN5AYqblMRVSNveO428sYIgtjtfSVFoy6ReOHHBouGW73G3+RHBeaL
-         Z1TXLwNPKs5WSsU4cvuW41N7w1bGxhy0rH/ZhmfnTfpPXHqWeD9jECXanfF2IKREmqPP
-         OaWvbLjJ1k2lKTZqTfuGyCNth4YDeval7AAc91ku5rmsS8FMQX7/4QInvYiO8UIysSDY
-         it9A==
-X-Gm-Message-State: AFqh2kqRjnjapT1GjfQ/A0I9bGbdWDiBQ636e+5peuZesPJuKwIogxhE
-        pTdrm3I1VhAk1kxO4Lg6pGed
-X-Google-Smtp-Source: AMrXdXuf/giapIQzn9DetSD5UhoqdPCJ2gS+vuDZ9PZFKD3CBxcyXHC2xKXMN8MZTocSTAJsvmy0Sw==
-X-Received: by 2002:ac8:774c:0:b0:3a5:f9f8:3ec4 with SMTP id g12-20020ac8774c000000b003a5f9f83ec4mr9089143qtu.30.1673448907943;
-        Wed, 11 Jan 2023 06:55:07 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:88e6:17dd:15a5:edd9? ([2600:1700:e72:80a0:88e6:17dd:15a5:edd9])
-        by smtp.gmail.com with ESMTPSA id i14-20020ac871ce000000b003a4f22c6507sm7681801qtp.48.2023.01.11.06.55.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Jan 2023 06:55:07 -0800 (PST)
-Message-ID: <9d8e38fd-f001-5aa5-ab78-cc6d314df09a@github.com>
-Date:   Wed, 11 Jan 2023 09:55:05 -0500
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ulxq/cuLHYd8WQsgNadxWRQYH4Pb4L6yQXCst+jOEUk=;
+        b=PLLoDk7BEBsZq80h5PxIl/3NRGEvypLfvIARGFZouto8XVgJJdHB0k9jkrs8EkcRQ1
+         G4EAoCnJ7YBupqOwm3jb0h6Y2TRbT96mnkIKm/M0zilwrnUkA9RMhZptmOCxDPof3uOr
+         j65TeAuThCtqdqQAygPTQiQ1yMTBXp6FD1KElSGj6Hah3SGJdLql6/O+VIhXxZi2G7Fh
+         iJ8FFpId9fDz6HR/CDtX6RTygYtmWKBEaiVGHA/IYrUr+UqbaGqtIPp692v2LI+Ix0ci
+         CQkilHQrOMiP/xCD59wgc5plfCy6ynR4IVwZwkJLCPKDjsDoeeep8D1/BR5tgJ2Izo7+
+         aU9w==
+X-Gm-Message-State: AFqh2kqiUaONwKoS2d6ayu76EDxKf8ez5ViXVhaLV2yaDA6OumyHCkQv
+        jGgES/orCJYanDVDn/sJxowHrusUSbg8C0JJFbBZhGGa6iw=
+X-Google-Smtp-Source: AMrXdXtiKiKwmDTaIi3iaegan+50Aplt7Q2zINHGZ2UyPzKy2godOJluTZLEUkFnuU4byi3xSzf3kNMpaEfMlfK5BSY=
+X-Received: by 2002:a62:6d47:0:b0:581:1417:6ce6 with SMTP id
+ i68-20020a626d47000000b0058114176ce6mr4242084pfc.58.1673450917662; Wed, 11
+ Jan 2023 07:28:37 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v3] scalar: show progress if stderr refer to a terminal
-To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Victoria Dye <vdye@github.com>, Taylor Blau <me@ttaylorr.com>,
-        ZheNing Hu <adlternative@gmail.com>
-References: <pull.1441.v2.git.1671974986363.gitgitgadget@gmail.com>
- <pull.1441.v3.git.1673442860379.gitgitgadget@gmail.com>
-Content-Language: en-US
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <pull.1441.v3.git.1673442860379.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From:   Bhavya Agrawal <bhavyaagrawal1210@gmail.com>
+Date:   Wed, 11 Jan 2023 20:58:26 +0530
+Message-ID: <CABg0hzHzsfP4BsCkwDpAEcYhjUe0w3hiZSx6YW7LBJSBerg86w@mail.gmail.com>
+Subject: Unify ref-filter formats with other pretty formats
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/11/2023 8:14 AM, ZheNing Hu via GitGitGadget wrote:
-> From: ZheNing Hu <adlternative@gmail.com>
+I am writing this mail regarding your patch proposal of "Unify
+ref-filter formats with other pretty formats" on
+https://git.github.io/SoC-2022-Ideas/
 
-> Range-diff vs v2:
+Has the patch is already resolved or working on? If not so, I am
+extensively interested in contributing to this issue.
 
->      -+test_expect_success 'progress without tty' '
->      ++test_expect_success TTY 'progress without tty' '
-
-I think this addition of the TTY prerequisite is not necessary...
-
-> +test_expect_success TTY 'progress without tty' '
-> +	enlistment=progress2 &&
-> +
-> +	test_config -C to-clone uploadpack.allowfilter true &&
-> +	test_config -C to-clone uploadpack.allowanysha1inwant true &&
-> +
-> +	GIT_PROGRESS_DELAY=0 scalar clone "file://$(pwd)/to-clone" "$enlistment" 2>stderr &&
-> +	! grep "Enumerating objects" stderr &&
-> +	! grep "Updating files" stderr &&
-> +	cleanup_clone $enlistment
-> +'
-
-...because the test doesn't use the environment details for
-mimicing a TTY. The point is that stderr is redirected to a
-file and isatty(2) would report false.
-
-I don't think this is worth a re-roll, though, so I'm happy
-with this version.
-
-Thanks,
--Stolee
+Sincerely,
+Bhavya Agrawal
+My Github Account :- https://github.com/Bhavya-official
