@@ -2,50 +2,49 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B39EFC5479D
-	for <git@archiver.kernel.org>; Wed, 11 Jan 2023 22:05:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2BF76C46467
+	for <git@archiver.kernel.org>; Wed, 11 Jan 2023 22:06:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235947AbjAKWFF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Jan 2023 17:05:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56460 "EHLO
+        id S235916AbjAKWGX (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Jan 2023 17:06:23 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57568 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234769AbjAKWE5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2023 17:04:57 -0500
-Received: from EUR05-AM6-obe.outbound.protection.outlook.com (mail-am6eur05olkn2030.outbound.protection.outlook.com [40.92.91.30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE81942E34
-        for <git@vger.kernel.org>; Wed, 11 Jan 2023 14:04:55 -0800 (PST)
+        with ESMTP id S235887AbjAKWGQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2023 17:06:16 -0500
+Received: from EUR01-DB5-obe.outbound.protection.outlook.com (mail-db5eur01olkn2064.outbound.protection.outlook.com [40.92.64.64])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B93125F8
+        for <git@vger.kernel.org>; Wed, 11 Jan 2023 14:06:04 -0800 (PST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=fHATULx4XUNd0JFSn3No2AbdnvQWTgZ8m1i8cP3ZTXyFrwNrhmDznFs6opUZZJzvSqTpqRUI+4rGPany6dx3cpVIpeVMjOrDJbX/W1QK90FnkblK8v04MKC0pf30DfP4gjWTv7lcG400tN4VwoV8QVfYiR3KgC8IIXG0PmcfStEfuoW1SkeDH5QyiwAApz0qd23/glwCvvZGdDRJ5siv3Xz0JUgGls8wB6c6ej2b9Rkj/3gxs6Zf/ZEaar9Z8r9naMT4nP9buURbNHfM16SJffLHxAi6j+vtqkEs+1NBHJc0hfrChCpLUta9Wyc8u3QH5uh9eroIRQLEzJkkYs6kxA==
+ b=Tt6gl2kO91/HTrdfd7TUGDKPA2X+54VYoO+fonXnnjTXB3sm6TIV/T7sqxKsXqdZbq9hTXGyoom7YfdzKsHB2kkxY+5hgNUm4vTVNhXvsobLuT7ncrXApUsg9TlUHVbXkRmlFCQNYZRD/zEpA/NkapUnD5n0M6bWAwwGGQ7Pwx86jGOTZ69Y1ZTPEbdKPrT/Dl4kxMbOYQXMoWjhCXDc0A0DA2tR992oNOj5IjFUbzCPgQU4rwAZwV2WomrdiVNSC8DtS2ppTE/h64F/xI9rGSSbA0mjb76MEGlLyH69xlH+31TbCKH9u79zgin7n3sCmZItXm3FVi6w0kVhasrqHQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9601bNSrrYJ0KdLfF4kI8yOzyp+eQln7GiFn7sBsKmo=;
- b=jRUneRjRCRoci6of9kTIK8csVHJeNGgTJ1cbjry15/F7RL0B8ggfxKibpY1Yeee9YjsjW4VK5hLScOH4I0bU9N9DBjnzCor65fjHBfoADIc7NjQ9WfumFr5MKGudH5W/M+IARnRpCW8kkrDRkKdhnFv2pPKb6AzbLg++DyltY6SIXss75uq98djCizfgYo5Zxz9v2bVfv5uFPS7Hy921svxPj/EbuU5gA3R0b55IbWKhE10bHdRLrNW6ssOS1wIvIBvKCzorlrdF8qgXXfxO1hJtgTcFtbm695oEsy+BveCxHqqQ35uIgBLrIN9y3VHoTPEAqlbGyvm1ys3TCHyAeA==
+ bh=Y2px4lsZloNHl+zck7xkh3kmFLWUgU724Wv8Wr3yIhY=;
+ b=nmVASTjZ7GbkxQdFi8YUhiOo+tvZrCYHt7iDHq7W5zp8W4V1TaH86tL1ej4T+ay5PeknR6pJgb468KJV1obPGGwy6nlltfKldWXaXDfbWm/SeQiJXlkRT2QT82aUAdaiQiBZZVZh0N4iGRlipsr/cvHrc6vUJq/58x/uP56r1E0DLg3RhAHpMZKxL79jQnsFaikCCxTlkifo7Z4bs884Jc5cj8RhuV2K27y6zUDs/LgELJfIn9kYm5/Ci3X+tqD0YRpkcv4vu+MK+PpcrNmpkpnDeVHy/kuaYufYpvaYHf8YgLKa7/qdv5uP45Iwd0lA+tNJH9HQ34prFP65LmJm1A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9601bNSrrYJ0KdLfF4kI8yOzyp+eQln7GiFn7sBsKmo=;
- b=F5kou77FyElk4TgZy+E+eavyCGckzTdZ+ZVyDy5tFOUoCGR387IVF+VriQj9caojHPMxF60F9j3dMw1dapywqKVt740oMYo+rv2ksr/Le5qR3W8QC0f6V/+JKchiagKZutzQVy2HcNzwMxxZbsBQwNecv9q6rxMz1aHezm5jJdw3gpZUXYns9wSlcoFoDnSZyqCAHoPg6rNrCaweGbyrCrdxSHp4MY8XcxFoAxn9ZqGciy9bFWbT0VHRieKT62VUC1uW+Z1Jw1XDRl6mDUDq+1vgrrwgMD9bk8jrbQhHSID3b/cl1Qti8Y+QsPu2GX7SNKHmoaNZWyfcWdxFYi5q0g==
+ bh=Y2px4lsZloNHl+zck7xkh3kmFLWUgU724Wv8Wr3yIhY=;
+ b=CkL5IhAPRgda6MYcWZxaOWNLQR8v1j83uhPhKA06uIWORyUUmVxNIsAgvvbGeJN4Kfp/7aKWjjri+ZATB2juUpBUbFYskmFvxXSUDycMYU+0mmT/pJkTEmD3oXdlF97cQNs4oRoRwqNwsgPSl0b+dBr5eHAC2DWGmQ4YUKjjM3bv9tG1oxUus2ur87V31D6JgYZ/2wS9II8vMs0z4na7FfAT6dpI0DDzmOoQWGeCuO8PvDF/GgR9dDxNMVcRhv2izqW80IaC+Gi/i/FBk2EvsyaP18ob8gMR6Ich8WlQCkddQb0we70WYkUyFBbHap+zUckMACyU4jcXRjkAIr8FWA==
 Received: from AS2PR03MB9815.eurprd03.prod.outlook.com (2603:10a6:20b:609::16)
  by AM9PR03MB7868.eurprd03.prod.outlook.com (2603:10a6:20b:433::11) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6002.12; Wed, 11 Jan
- 2023 22:04:53 +0000
+ 2023 22:06:02 +0000
 Received: from AS2PR03MB9815.eurprd03.prod.outlook.com
  ([fe80::8428:153c:704f:4519]) by AS2PR03MB9815.eurprd03.prod.outlook.com
  ([fe80::8428:153c:704f:4519%8]) with mapi id 15.20.5986.018; Wed, 11 Jan 2023
- 22:04:53 +0000
-Message-ID: <AS2PR03MB981512D8EF6775A9D6D9DEB6C0FC9@AS2PR03MB9815.eurprd03.prod.outlook.com>
-Date:   Wed, 11 Jan 2023 14:04:46 -0800
+ 22:06:02 +0000
+Message-ID: <AS2PR03MB98153051196418108D6CCAEFC0FC9@AS2PR03MB9815.eurprd03.prod.outlook.com>
+Date:   Wed, 11 Jan 2023 14:05:49 -0800
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.6.1
 Subject: Re: [PATCH v4 8/8] t5556: add HTTP authentication tests
-To:     Victoria Dye <vdye@github.com>,
-        Matthew John Cheetham via GitGitGadget 
-        <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc:     Derrick Stolee <derrickstolee@github.com>,
+To:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>
+Cc:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
         Lessley Dennington <lessleydennington@gmail.com>,
         M Hickford <mirth.hickford@gmail.com>,
         Jeff Hostetler <git@jeffhostetler.com>,
@@ -55,57 +54,58 @@ References: <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
  <pull.1352.v4.git.1670880984.gitgitgadget@gmail.com>
  <8ecf63835229676677e3f7e33f634eb5d3a568b7.1670880984.git.gitgitgadget@gmail.com>
  <1dc44716-2550-47de-e666-9972b102905d@github.com>
+ <xmqqpmcltt36.fsf@gitster.g>
 From:   Matthew John Cheetham <mjcheetham@outlook.com>
-In-Reply-To: <1dc44716-2550-47de-e666-9972b102905d@github.com>
+In-Reply-To: <xmqqpmcltt36.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-TMN:  [ljCzXAXW/W9+RazLRWVmdCtMhaptKZaY]
-X-ClientProxiedBy: BYAPR02CA0025.namprd02.prod.outlook.com
- (2603:10b6:a02:ee::38) To AS2PR03MB9815.eurprd03.prod.outlook.com
+X-TMN:  [ph9it+n+cmYkMv1XtrAoWeeoqqPYTtOD]
+X-ClientProxiedBy: BYAPR02CA0034.namprd02.prod.outlook.com
+ (2603:10b6:a02:ee::47) To AS2PR03MB9815.eurprd03.prod.outlook.com
  (2603:10a6:20b:609::16)
-X-Microsoft-Original-Message-ID: <3eada1ec-e725-10a3-8c62-eb013e2ff2da@outlook.com>
+X-Microsoft-Original-Message-ID: <9a0623f1-4ed0-6955-8bcc-bc6a352f4c54@outlook.com>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: AS2PR03MB9815:EE_|AM9PR03MB7868:EE_
-X-MS-Office365-Filtering-Correlation-Id: fc0d3bba-5518-4c1d-9311-08daf41fde04
+X-MS-Office365-Filtering-Correlation-Id: b0b8f846-3a88-4b30-9109-08daf4200720
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: p7g3S7YR/jl3tUUssslYF+z05rjsi0sgzXzCtBwoEIZoDODHhyMlk+nyuqrv/7da7tq84L4EK+6uUqiINpj3k4f13YqfErGhxe+3CuS3zv7cUBndho8gB00HcLv7lGws4K9thNqA4y7PV3wYOtXdInOZAyUJ5SGHrd/Bxo+8RyRRr59s5zYSrv4sCCTBcsw8m3YELMA/WM9rj6hw1s5318W/8cyzVhBE8J8J/pf6uGiywvNc1ygK+5SPBAMOTfSVkfk0+t83WGt7OqtoFVfj+AwsIZAS6YiY3eBiRvbVRCfUClHZ9OBGRhAxoaFT0ZRoUEFOUToAfG1cXVnMQYHOWFlkYJiWKxksUsCLPF9kXjYXtY1d64zwosnbu73FklDMy6eqyNH4CWH0pndBbB/OlusrrOzW0tykoB9oN1uVrtNSF3B9FLQxEmLrNVNN58FsZuTDxWJqnS4urcxkrffDvU35jOciwMGhXJIUWZr2fNCAUsTQy1P81cI5LhE/cQyFb1FdBCkxngwthYhlLKEBi5RwoHLBdwT3CFicNDtT7dM6BWXnSruEWVj3POFASOZe1y6EecXa+slQzIRRfQI97KznzeAhT7rMVqmOXItwvJs/E9Qdp51emB0HNB/ueidosKvwEaE1WvMcREJDh6bQ/R96s0UaV/vSqt/CicHuhrw=
+X-Microsoft-Antispam-Message-Info: 9ARu8nXA8WjRiMtLRnkN7rXJ/zIgkQPZ+V4QBQjHH+8C1rMSFCRqqArsDZHbTKJCPTR1f3WXeK2ti9gGcuxKFrYq5RfbMA2ZxZnVb1BsQm7+vMFZu0t+WGdS8riBQygmHor+4tCI7hiR5qIswFNzKDqi6hsP5WWxCVEHKhI1VUF35crDUhBNjuTlsYoHEt2dUo0G3NH9oUJpXscsWRiGETMb6hhbk+W0WjtFpu29h1AZX+gPTK6psWyal/siWsKM/rhyl1bkX+ly05RlnmHHpy1/TNGBMrHzhacjppK3oAvUBkOMg+L4g33LUW8cZX5WNT4I3dH6tCHY1yOyXYSlSoH3lPfm7Y60av1l5exIZ98zwYT78axBJ+qnMxEQwTBMYkQ370y+MeDgMoyB1lZT/vxVIKwKAB4u/EPWcqoYwAXUyYRUK51fz08kudc5PP/5+iWKHoIrnUCo5m6FyMwK1625R4FjJUnmarNV5NQha4fcem8hwXazNlodxJh8Z2nrkV23hM+JRisRtNipFhwG9JRkqPFzd9Ab4s28bhu1jcyRjgiZWe8nUFMDbMzOy2WApu2/jL5qNCcv3ufUd2ZskUN4mvuw1lDGMhr7DYAOcgcavEu20jX58oQvu4HCiLoQzssIq7n4mEpEeA6EM9o6AlDg51AVIp4KCXkOmLIqSzU=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OUhTc0dTRnp2eEl5YzBHQnFJeG84WFkzdkpwNUtKR2NNRW9XZGFDeGxsMEta?=
- =?utf-8?B?QUNCajFXUnpTbVRQN1hUQkEvdzl4eURpWjhCOU55ZXlraExLMGg4ckRqVHIw?=
- =?utf-8?B?V0VBaEg5bmtYRXYxUXdtUTgveHpNL0JZeHBXbG8xWTBBejhkVDY4MnpGMDYw?=
- =?utf-8?B?WHNtSm9teWxHYlBTTkdkcVpMenkyeXNSQ3REVStvWkhjNEY2SllFcUZXT2RZ?=
- =?utf-8?B?UXIwZWZzMUNHOEp0ZWo1SHZjeDVUUnJ1QmphYk1hN2grVWJYRGg2YnJXUWl4?=
- =?utf-8?B?NVVCSGFuSDFwYloyV1o5K2VZWW9RWmZBalhlWnRVSENxY0EvelZNRW5IeEpx?=
- =?utf-8?B?V0p6ZHhXWTdzY3NqNlRrRmpHUEZFMnV2SjNtNXcxbXRJRUw0SDhMcUNSYWhn?=
- =?utf-8?B?OWVLRDZuNHV1Wm1LNGJJTTNZVElUaXJkbnh5SDArV2RuaEJ6cUNMSkxoWDhI?=
- =?utf-8?B?d3ZTZ1hHOEVsazBXQlRKb09TeHc5L3lGM3YyYlJnTnZoYlI1RDJETXZkTUpV?=
- =?utf-8?B?djBKcGs2QkVsQ2RIRHlBMjhlVlByVHhieWViZVY5MXR4Zm9wU3RCZExibGZa?=
- =?utf-8?B?dXJqcFppaEhiNlRyeXR6MUhrYXk2MGtMQjczUXE5Zm5rSkFISmwwd1NhNVNM?=
- =?utf-8?B?bjZLYUZHbUg4SDE1MmpadHhkVU8zeHpVa2hkRjF0RnUxbGdyWVpxWXhNbUt4?=
- =?utf-8?B?cjFJRiszY2lTWVZlK0JpL3A0elBPQzErdHI5TGpUMW0rTVAzUXlobFgyaEFy?=
- =?utf-8?B?MHBPZzJQYVpkR0dYSFlvb3ptYUFYelFKUEx4c0ZzZmE3cVlkTkhYVEY0R2NU?=
- =?utf-8?B?TmlnV2RvdE9VNURkczZNWm1kQ2FUL0YwWDArd0pUVUNvNldrZ2Q0WkNhNUQr?=
- =?utf-8?B?MDV5Qkx1enVUaGpJRXppV3RZZW1RM2drUkJ5U3A0ZGJQZFU4RWtIMDIrZVFr?=
- =?utf-8?B?aFN1WDZQMXZNVG1rOGZlSzloQnp4Tk1uRVF1QTBtRS9lOGVoRmE1MVNkZjB0?=
- =?utf-8?B?TEVuVkxwUHowOFpSRkRMTERSZC9PUTl6MUUvRFBScWd4RUkyYklxa2k3dVdl?=
- =?utf-8?B?UUtqbWVhV0N3NVdMNFcrODJSMmpsTlZTNHV2OUpxd2d6elBJRk9JTnhQYWlS?=
- =?utf-8?B?OEJMMUVadDlTMjkvVy84VGlWU3ZDeVhuWHNzQk5FcEpFamdRYlRrZmZZQ3pE?=
- =?utf-8?B?NmZGMHMxRHFUUXErTXRKcGtqbUNBdm1XSDIrcEhBYzEzQmIxTndVU0hYVDZa?=
- =?utf-8?B?bXU3dWFkT0t0S2hraWlhQXhZVW1UdzZDZVVwS2ZubEpMOEtUalBXbjZDZUlZ?=
- =?utf-8?B?aTBpRnVuTCtWbEorb0VNTGVmNEZhS3p6bWZ4dzdmT1RRY0JtK0c1dy9MTE9y?=
- =?utf-8?B?Z3EvTFBia3FOK3FEOFk1d0pXMTZQejkvci85ZHdmTkJqU2s0Vi9INEtjVnFv?=
- =?utf-8?B?N1B6RHZjTHJ4ZTR4S3lMTGRxbllCaFhYNkVYRGZOVlE5aC9lRFZpYnBMTU5z?=
- =?utf-8?B?ZVc2S1Z6SXlkREh6ckZrN0RkSHp1Z1krL2l2VUZaVnZVSGtFaHJXTXkwNHZt?=
- =?utf-8?B?eWVESXBjVy9hTDE4ZVZjV2MwdGJUTVVZd1JVWmxyVW1KVWdsUWZOMVA0NlFD?=
- =?utf-8?B?cGxGVUdZWGhDVjU4ckd2ZmRnaUlvMElPeDJZdU9XQjJxR3lQMUd1c2VQVEg1?=
- =?utf-8?B?ZUVQeFhNOHlmbEh4L2M3RlZBWlpNZUJOMDFGUHRiN0VCaWZic2tNU1J3PT0=?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cDhQN1ByYlF4cjhwY0ZSM3NTcHBlM2RFRzk5MjVVZkx5enRkOTR5bXcyTnhC?=
+ =?utf-8?B?NVkyalplVzZwZVlEV1JsWlNBc2lnR2xDRlNGbHlHVHBrZVA3cjVTbUFKK2NE?=
+ =?utf-8?B?cVBwNDlFa2ROVG9HODh6TG1mTTE2QnZpd0RFTUhmZ3hoek1aM3FvVVk5eWha?=
+ =?utf-8?B?aWZubnlIOTV1TDgxRHc3YjhXaHU2QldndHU2UklxMGM0RmFLMGdLcGZwUW11?=
+ =?utf-8?B?YkVJcGdHWVMwbkFsaHR2WXJxRWtyMEd4K292VGhjYlJVaUp5QVZ2dXNhN2Nq?=
+ =?utf-8?B?SVIrMTZYalo1YUQ5OUdnd3diaVdNYUlFeWwxb1JiY01WY05SU0dQZW5RMGRC?=
+ =?utf-8?B?Q2hUenlybXVSYlFsZFVWc3hNcHFsQlpRRTNEb0tHMVZ0VjRHNy9iZloyc3h6?=
+ =?utf-8?B?Vy9jaDJVSUN1UTdFTE1FWTVTNllhS0FnRDFEVzNqTlRpOC9VOENNNC9GYnln?=
+ =?utf-8?B?TnR3RHNVbjE2T2Rza2hKUnFENkJRYitRV1JUNmRucU5YL3oxWURXTDNCN2N2?=
+ =?utf-8?B?bmd3aHM0cmdHbEx2ZXpFdkZ4dWJwOEtJSWpLcXc0Z1h2STY2YjJFZXp0cGVT?=
+ =?utf-8?B?RExhdXpBTCsxUkNTS0tuUWJZdHJuVlFFTnFJODZGeDdTTDEvNjNFcHpjOEYx?=
+ =?utf-8?B?aVk2TVRHTllBRWd4SndpYjlpQktxZzFMZURXcHhHMjNPNVQ0V1hnaWlNYjh3?=
+ =?utf-8?B?K2Y2Ymt2Umg2VGluT2xHK1Vid0VPeTRLMFc5MnBaQ2htb2ltWEpOR2NmK0ZJ?=
+ =?utf-8?B?UFpXWmt0cHZPNkt2cWw4TjU5a2RRcDE4V203alNlTXBWeVFoVCtCSE1zWnZr?=
+ =?utf-8?B?NUhyL2RkaE1EQkV1NTFTWitDY0tlOWpRYitNU1ZnZmxGeklBdXE0VE1sa2Yz?=
+ =?utf-8?B?L0t6UFJidW92OExTeEU5L1hYaW1sbm5IWlg0cm04eThRdFVlMlRiMmZFMHNo?=
+ =?utf-8?B?NUVla3pBZTdzd0NWSmxFSkpUbUVwaEx0aGJWdTFzLzRGM09oUkdIZFF6RVND?=
+ =?utf-8?B?c3pGaUl6eHpjUFZqWFJ6UlpQWk12U0tsanpXRnQwNFBHazlKMk5XSHVXOXlL?=
+ =?utf-8?B?U3ZldVhidHVqK2tkNUM5Z1lYVlVpbW5EbmhWaVdpMlhtR1F0aVYybzhFRERs?=
+ =?utf-8?B?NVN6RHB2YVQxRmFocnhic21MMXhhU3hBaVc4Vmo5bUVHS0pUd1RQRThCQyth?=
+ =?utf-8?B?VjBqckg2NVNVUzBZUXpYR2FZNUFUUVZvdXBzdWROSE9TeVI5UXE3SjdoSDZw?=
+ =?utf-8?B?WGlPdDhRa3gyVjh3NzdDaVpBSEdoeEhGU0xLUTNmUTRHV3B3UlNoajl0eWRo?=
+ =?utf-8?B?eUxXNmVLUjErU1o0NmNFTDcvU29qRzc2V1lvRFNNNFpyeFhsYmJxWHprKy83?=
+ =?utf-8?B?Z21nOHJnNmpVZFRQb2Q1aU82ZWpRUGJmQjZ2cmkySk1KL2ZtVC9WZ01mT1pJ?=
+ =?utf-8?B?djFHNUNLVnQveDdvazNmdFhqNWlsaVlvOVRKMHlZSXZUaitqdlJyK1JuSitW?=
+ =?utf-8?B?V2NsZUR6cngwWEl4SlNmdmw0UVdMWTNCbEgvKzltMjlOdFZuelFkK2I4UWpq?=
+ =?utf-8?B?MHd6Skp2elU2bDYxK3F2U3pXOWM1ZXRRVkd6bGtkbllsRWE3WDlhOEw0MHR3?=
+ =?utf-8?B?eTRkU0ZmNmhIbHlPTVo5emhQdUhrb0JCZGJ0R0xpMzJsdGJYZnMxMGVISTVn?=
+ =?utf-8?B?WkZpZ3F5SzQ3a0d0eTdoTlREVitvQTJyUzg5cjYwZUlBU1ZFdUE4VlFBPT0=?=
 X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fc0d3bba-5518-4c1d-9311-08daf41fde04
+X-MS-Exchange-CrossTenant-Network-Message-Id: b0b8f846-3a88-4b30-9109-08daf4200720
 X-MS-Exchange-CrossTenant-AuthSource: AS2PR03MB9815.eurprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jan 2023 22:04:53.6883
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jan 2023 22:06:02.7689
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
@@ -115,136 +115,26 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2022-12-14 15:48, Victoria Dye wrote:
+On 2022-12-14 16:21, Junio C Hamano wrote:
 
-> Matthew John Cheetham via GitGitGadget wrote:
->> From: Matthew John Cheetham <mjcheetham@outlook.com>
->>
->> Add a series of tests to exercise the HTTP authentication header parsing
->> and the interop with credential helpers. Credential helpers will receive
->> WWW-Authenticate information in credential requests.
+> Victoria Dye <vdye@github.com> writes:
 > 
-> A general comment about this series - the way you have the patches organized
-> means that the "feature" content you're trying to integrate (the first two
-> patches) is contextually separated from these tests. For people that
-> learn/understand code via examples in tests, this makes it really difficult
-> to understand what's going on. To avoid that, I think you could rearrange
-> the patches pretty easily:
+>> A general comment about this series - the way you have the patches organized
+>> means that the "feature" content you're trying to integrate (the first two
+>> patches) is contextually separated from these tests. For people that
+>> learn/understand code via examples in tests, this makes it really difficult
+>> to understand what's going on. To avoid that, I think you could rearrange
+>> the patches pretty easily:
+>> ...
 > 
-> 1. test-http-server: add stub HTTP server test helper (prev. patch 3)
->   - t5556 could be introduced here with the basic "anonymous" test in patch
->     6, but marked 'test_expect_failure'.
-> 2. test-http-server: add HTTP error response function (prev. patch 4)
-> 3. test-http-server: add HTTP request parsing (prev. patch 5)
-> 4. test-http-server: pass Git requests to http-backend (prev. patch 6)
-> 5. test-http-server: add simple authentication (prev. patch 7)
-> 6. http: read HTTP WWW-Authenticate response headers (prev. patch 1)
-> 7. credential: add WWW-Authenticate header to cred requests (prev patch 2)
->   - Some/all of the tests from the current patch (patch 8) could be squashed
->     into this one so that the tests exist directly alongside the new
->     functionality they're testing.
+> Thanks for a thorough review of the entire series, with concrete
+> suggestions for improvements with encouragements sprinkled in.
+> 
+> Very much appreciated.
+> 
 
-
-I think that order make sense - I'll rearrange for my next iteration.
-Thanks!
-
->>
->> Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
->> ---
->>  t/helper/test-credential-helper-replay.sh |  14 +++
->>  t/t5556-http-auth.sh                      | 120 +++++++++++++++++++++-
->>  2 files changed, 133 insertions(+), 1 deletion(-)
->>  create mode 100755 t/helper/test-credential-helper-replay.sh
->>
->> diff --git a/t/helper/test-credential-helper-replay.sh b/t/helper/test-credential-helper-replay.sh
->> new file mode 100755
->> index 00000000000..03e5e63dad6
->> --- /dev/null
->> +++ b/t/helper/test-credential-helper-replay.sh
-> 
-> I'm not sure a 't/helper' file is the right place for this - it's a pretty
-> simple shell script, but it defines a lot of information (namely 'teefile',
-> 'catfile') that is otherwise unexplained in 't5556'. 
-> 
-> What about something like 'lib-rebase.sh' and its 'set_fake_editor()'? You
-> could create a similar test lib ('lib-credential-helper.sh') and wrapper
-> function (' that writes out a custom credential helper. Something like
-> 'set_fake_credential_helper()' could also take 'teefile' and 'catfile' as
-> arguments, making their names more transparent to 't5556'.
-
-The `lib-rebase.sh` script sets the fake editor by setting an environment
-variable (from what I can see). Credential helpers can only be set via config
-or command-line arg. Would it be easier to move writing of the test credential
-helper script to the t5556 test script setup?
-
->> @@ -0,0 +1,14 @@
->> +cmd=$1
->> +teefile=$cmd-actual.cred
->> +catfile=$cmd-response.cred
->> +rm -f $teefile
->> +while read line;
->> +do
->> +	if test -z "$line"; then
->> +		break;
->> +	fi
->> +	echo "$line" >> $teefile
->> +done
->> +if test "$cmd" = "get"; then
->> +	cat $catfile
->> +fi
->> diff --git a/t/t5556-http-auth.sh b/t/t5556-http-auth.sh
->> index 78da151f122..541fa32bd77 100755
->> --- a/t/t5556-http-auth.sh
->> +++ b/t/t5556-http-auth.sh
->> @@ -26,6 +26,8 @@ PID_FILE="$(pwd)"/pid-file.pid
->>  SERVER_LOG="$(pwd)"/OUT.server.log
->>  
->>  PATH="$GIT_BUILD_DIR/t/helper/:$PATH" && export PATH
->> +CREDENTIAL_HELPER="$GIT_BUILD_DIR/t/helper/test-credential-helper-replay.sh" \
->> +	&& export CREDENTIAL_HELPER
-> 
-> I see - this is how you connect the "test" credential helper to the HTTP
-> server and header parsing (as implemented in patches 1 & 2), so that the
-> results can be compared for correctness.
-> 
-> nit: you can just 'export CREDENTIAL_HELPER="..."', rather than breaking it
-> into two lines. You also shouldn't need to 'export' at all - the value will
-> be set in the context of the test.
-
-I tried this originally, but got errors from one of the environments in CI that
-this was not portable.
-
->>  
->>  test_expect_success 'setup repos' '
->>  	test_create_repo "$REPO_DIR" &&
->> @@ -91,7 +93,8 @@ start_http_server () {
->>  
->>  per_test_cleanup () {
->>  	stop_http_server &&
->> -	rm -f OUT.*
->> +	rm -f OUT.* &&
->> +	rm -f *.cred
->>  }
->>  
->>  test_expect_success 'http auth anonymous no challenge' '
->> @@ -102,4 +105,119 @@ test_expect_success 'http auth anonymous no challenge' '
->>  	git ls-remote $ORIGIN_URL
->>  '
->>  
->> +test_expect_success 'http auth www-auth headers to credential helper basic valid' '
-> 
-> ...
-> 
->> +test_expect_success 'http auth www-auth headers to credential helper custom schemes' '
-> 
-> ...
-> 
->> +test_expect_success 'http auth www-auth headers to credential helper invalid' '
-> 
-> These tests all look good. That said, is there any way to test more
-> bizarre/edge cases (headers too long to fit on one line, headers that end
-> with a long string of whitespace, etc.)?
-> 
+Yes! Thank you Victoria for the detailed and thorough review.
+I also too very much appreciate it :-)
 
 Thanks,
 Matthew
