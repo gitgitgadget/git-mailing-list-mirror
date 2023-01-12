@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 66747C5479D
-	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 02:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 428BDC54EBC
+	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 02:48:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234603AbjALCsX (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Jan 2023 21:48:23 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50550 "EHLO
+        id S235842AbjALCs0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Jan 2023 21:48:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234552AbjALCsV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2023 21:48:21 -0500
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 707D76550
-        for <git@vger.kernel.org>; Wed, 11 Jan 2023 18:48:20 -0800 (PST)
-Received: by mail-pl1-x62d.google.com with SMTP id 17so18867782pll.0
-        for <git@vger.kernel.org>; Wed, 11 Jan 2023 18:48:20 -0800 (PST)
+        with ESMTP id S235376AbjALCsX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2023 21:48:23 -0500
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 934401263C
+        for <git@vger.kernel.org>; Wed, 11 Jan 2023 18:48:22 -0800 (PST)
+Received: by mail-pl1-x62f.google.com with SMTP id jn22so18796999plb.13
+        for <git@vger.kernel.org>; Wed, 11 Jan 2023 18:48:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=m4KBBAYFWSgI2TuIMbcVp/NVFdCopRz2u5ggs+RKtDA=;
-        b=TXOgHpXfUbxQWomWvUsVD/Lvo3uX5F70oOAM2TOabfeSf/aPpI2CdwV5zHUk5E+73a
-         7dvWat/lic1alvVdTcIJvCyCDbMjF6a2ekspK9YFzN4fXpxD2EmvdWhRe7YT9brhYIE/
-         YImKzna2j7kyq7w/vKab6342PvhAI2e21e+bIa701FdjbuXG471fNv4d+aUrQuf7ABbK
-         Q1Eb6l9qA+G6Viz6AoemD1+oyg1eekgyBDuQhmprAFY+9ZCUJYWjnaPFz+Aihxp0qsjO
-         PqSbWFcETxz9HiDDZ2BU9KbuwJmp0c6Xbq1NBuSQD4KMYJO2kMbsXpL+BnKi03cV4RTb
-         yScA==
+        bh=3tHRgc9OO4Y10hlN6Yxcn4gGkzb3nGWz5WzS/R7Quuk=;
+        b=e/j86R7cPIBF3UKRZkBMN5+ZJzlBUPfFefOA2WgLf+8RSQLxcJYmW1sJci+6kzyxeY
+         3IQJsisUxwt3yF/SX6xlMMs53oEKFU/RRILQg50Jy92hNdrfbqf+vBcqlDf7F1u0Vryc
+         BVvn3WlmOngHU3Pz8iGMGz2tQQagS/AGJTSCL4kb/F8x92BxRQ6RhE9J2g+F9y4p91S4
+         dAn97WCTri/uZdnZV2WxLhmC/SMdy77bU7D/OQqQsCG/IdzMCBUnu2wOINts2nbIY0pX
+         GF4O55Zlo2rdsl8b7Kz2gmuH9A3zasajzlw8mLTLEtM1O9sIUHhNcV8ExnjZbwu892p7
+         R6rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=m4KBBAYFWSgI2TuIMbcVp/NVFdCopRz2u5ggs+RKtDA=;
-        b=VGVoQXdxyHV05AcCyba9JPxCu6knYIr1JqbrE9YLZghvW+Fgg2ZfJp4x4n2Ml4mstx
-         Z/IEkUOkmh0jEXpz4WiW6ksyAgAdeMdoLId7AK07erq2HuXVf1MYG/mgrRBz9ojOdqTV
-         jVgI0dHc5WFroWblQdl9bpxAjP2xUUHBzmDdZygZhseil7HI7uJjApVieUJKLu2FHGB3
-         aqwbJvfRJRkKN5u7HhaKT3QdH6KBPfthDuI2SwktbGUusVaj2B+X/VTJmLoDfymnZ7p+
-         qzOjPjMBxsfOHBli+3pNnysYEa6fke5uBiE24X67KpMVqV4NBNppXMBxuuBdwEycB4FR
-         KzPg==
-X-Gm-Message-State: AFqh2kpLS6UwhFRi4G3ayedM56Bpiubcn1deoaN8AcSNvWSkiTCIHYP5
-        dE1QsmSUF7ST6tid5nsP7ds=
-X-Google-Smtp-Source: AMrXdXsuslK0pHAwSS+Htws/h1u9LrqB2mwHNDXEVpSIGfZ2PJw4WCRZoM9IZHMvsrTbzTQpnK0Y6w==
-X-Received: by 2002:a17:903:258e:b0:189:38a1:8c04 with SMTP id jb14-20020a170903258e00b0018938a18c04mr4702062plb.50.1673491699936;
-        Wed, 11 Jan 2023 18:48:19 -0800 (PST)
+        bh=3tHRgc9OO4Y10hlN6Yxcn4gGkzb3nGWz5WzS/R7Quuk=;
+        b=TVwgXdk2t63IcVS8DSd9IpMjrsqXdH6AdyxCkMx7EvBFNsib+Fw8WkVveOygWfwzE7
+         7NXZvfohKWJW8oC984sPAPvcMYMO66LCyDpK+2/IatwGF/iD63VTbuKwxDaG4qFi6hU6
+         VSimPvufv4cbVZSAGFtx5GYQTRra6LANSzgBd3PBRYSs4mw04gz8g9w/brrfz5dvVGbV
+         REeCo3HIj21c0/zyB6K64okQ5V+3Sq1Qh+v2PH+BlwG+jVUMsUb9IPiRstCyEPrPj10e
+         s0wJ6GKpyG9JmVdPXVRwqygw1Lb/WrnQ+9nnerE6H71CAjdOAcMNlkLU0L53TDxmJ3ne
+         Dl0g==
+X-Gm-Message-State: AFqh2krZbqA0iCwahut0nm4vO7jlEhErAop4BTKkB5r17HjzADUP2Qqc
+        p5P7w2MD5OJZcZyDyeaWtkQ=
+X-Google-Smtp-Source: AMrXdXsGCKEVNsJsflmes5ZnAFDcna46ASzjL3eqa92ZYNVOPcy34oUdbQvICkXkXPxoHQ4Z4nMSUQ==
+X-Received: by 2002:a17:902:e84d:b0:192:8824:e516 with SMTP id t13-20020a170902e84d00b001928824e516mr72176788plg.51.1673491702069;
+        Wed, 11 Jan 2023 18:48:22 -0800 (PST)
 Received: from localhost.localdomain ([47.246.101.48])
-        by smtp.gmail.com with ESMTPSA id u9-20020a170903124900b001926392adf9sm10855227plh.271.2023.01.11.18.48.18
+        by smtp.gmail.com with ESMTPSA id u9-20020a170903124900b001926392adf9sm10855227plh.271.2023.01.11.18.48.20
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 11 Jan 2023 18:48:19 -0800 (PST)
+        Wed, 11 Jan 2023 18:48:21 -0800 (PST)
 From:   Teng Long <dyroneteng@gmail.com>
 X-Google-Original-From: Teng Long <tenglong.tl@alibaba-inc.com>
 To:     dyroneteng@gmail.com
 Cc:     avarab@gmail.com, git@vger.kernel.org, tenglong.tl@alibaba-inc.com,
         sunshine@sunshineco.com
-Subject: [PATCH v4 1/5] notes.c: cleanup 'strbuf_grow' call in 'append_edit'
-Date:   Thu, 12 Jan 2023 10:48:05 +0800
-Message-Id: <f00a7596587bbf2d055dbf77a19506be1a6350fd.1673490953.git.dyroneteng@gmail.com>
+Subject: [PATCH v4 2/5] notes.c: cleanup for "designated init" and "char ptr init"
+Date:   Thu, 12 Jan 2023 10:48:06 +0800
+Message-Id: <29f7703b06dfecd1daedb72a7027aa953addfa3a.1673490953.git.dyroneteng@gmail.com>
 X-Mailer: git-send-email 2.38.1.386.g6952793f2d9.dirty
 In-Reply-To: <cover.1673490953.git.dyroneteng@gmail.com>
 References: <cover.1673490953.git.dyroneteng@gmail.com>
@@ -68,28 +68,33 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Teng Long <dyroneteng@gmail.com>
 
-Let's cleanup the unnecessary 'strbuf_grow' call in 'append_edit'. This
-"strbuf_grow(&d.buf, size + 1);" is prepared for insert a blank line if
-needed, but actually when inserting, "strbuf_insertstr(&d.buf, 0,
-"\n");" will do the "grow" for us.
+Let's do some cleanup for the following two places in "append_edit()".
+
+The first place is "char *logmsg;" need to be initialized with NULL.
+The second place is "struct note_data d = { 0, 0, NULL, STRBUF_INIT };"
+could be replaced with designated init format.
 
 Signed-off-by: Teng Long <dyroneteng@gmail.com>
 ---
- builtin/notes.c | 1 -
- 1 file changed, 1 deletion(-)
+ builtin/notes.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/notes.c b/builtin/notes.c
-index 80d9dfd25c..e57f024824 100644
+index e57f024824..8ca55ec83e 100644
 --- a/builtin/notes.c
 +++ b/builtin/notes.c
-@@ -618,7 +618,6 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 		enum object_type type;
- 		char *prev_buf = read_object_file(note, &type, &size);
- 
--		strbuf_grow(&d.buf, size + 1);
- 		if (d.buf.len && prev_buf && size)
- 			strbuf_insertstr(&d.buf, 0, "\n");
- 		if (prev_buf && size)
+@@ -566,9 +566,9 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 	struct notes_tree *t;
+ 	struct object_id object, new_note;
+ 	const struct object_id *note;
+-	char *logmsg;
++	char *logmsg = NULL;
+ 	const char * const *usage;
+-	struct note_data d = { 0, 0, NULL, STRBUF_INIT };
++	struct note_data d = { .buf = STRBUF_INIT };
+ 	struct option options[] = {
+ 		OPT_CALLBACK_F('m', "message", &d, N_("message"),
+ 			N_("note contents as a string"), PARSE_OPT_NONEG,
 -- 
 2.38.1.386.g6952793f2d9.dirty
 
