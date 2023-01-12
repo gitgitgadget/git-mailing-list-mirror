@@ -2,176 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B86D3C54EBC
-	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 16:42:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5D601C678D4
+	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 16:53:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232192AbjALQmO (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Jan 2023 11:42:14 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47426 "EHLO
+        id S232750AbjALQxB (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Jan 2023 11:53:01 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240503AbjALQkL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2023 11:40:11 -0500
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB64FE79
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 08:34:57 -0800 (PST)
-Received: by mail-ej1-x62f.google.com with SMTP id u9so46165637ejo.0
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 08:34:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=6nv6MNJ0v1MWehPp/vAhsMPzpcoRzFwrqf10h7siXJc=;
-        b=GX2HEt/TMIywhtRiqRn+X5ltUVEZWWVIiOdGNzed8ikKyrKIVtah5DvbF6B/DddcaV
-         pP6b3VIr6t89KSmQAoHqToOuhGSPe6Hb5fjxoSgT4DSRCy/fXvedzBLjt4cqiqcmXjp2
-         K0LH5EQfXwBZt7ufvqv+47f6RD1o47kx/C3HC1zO55nTb3f7OmyjvkwgrlFB1DbvuIRa
-         6/nZ8cW3ZsQFRmgRJ3P5ViFNJ9YCd44q1+7KiHOhqVFJRef4m0PJ3USTjRVxh5x61huL
-         tY2/cg2wgekHRSLm7ZIb1eyPlvcjwJbq3eUEGdmHE8yuhP+yRjwnXDBvvwSToRlHKHx7
-         0/aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6nv6MNJ0v1MWehPp/vAhsMPzpcoRzFwrqf10h7siXJc=;
-        b=I3dTAnr7oNbpRzEMekecFBiwt0ug+cIv67dCY6uL0/K2VdqALyHwRJpko5BgzpAeA3
-         nQ7EKUjTYGuQDZfIJSy6Y0N+TuMOga98qE8UKWUPCOX/4YYZt6pI5GAtgrQ2mb0GYh03
-         my8xaFCqfgFXUBpQ61AZuiyk6D0Ic14WJcJft82SVrE1wW3Ps4CdEsgD9iCtCw2g3A+v
-         KGT14TBTQYCm3pC6gKQ9h6K4ZjsjhaLznL3kIjlrGxQd54gm4+wooKaZofvBcUwey06y
-         vJ3tWpcUpsyeottBEZ3XrxkaIg/ITQL9ZMRVoZprEcWYea8yCfwLUK0M3CDseKIrV0eK
-         dTXw==
-X-Gm-Message-State: AFqh2koFqj4Zxa14vmcp125GcXQx2xG579nASoSVrG29sFEwK17F6nSf
-        8oweqXodW/QUJ3aTPTI4d5Q=
-X-Google-Smtp-Source: AMrXdXs3C2f0rLCViMisokb9RjqQknvRNQG0D0ua1bvFxgKRoDvpVztUwZ9tMHaxsJ3VNOQB+j7Xyg==
-X-Received: by 2002:a17:906:9f0a:b0:7ad:88f8:7663 with SMTP id fy10-20020a1709069f0a00b007ad88f87663mr87615534ejc.43.1673541296280;
-        Thu, 12 Jan 2023 08:34:56 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id 21-20020a170906301500b007c0985aa6b0sm7656113ejz.191.2023.01.12.08.34.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jan 2023 08:34:55 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pG0XX-000L0J-1H;
-        Thu, 12 Jan 2023 17:34:55 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     phillip.wood@dunelm.org.uk
-Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Olliver Schinagl <oliver@schinagl.nl>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH] rebase -i: allow a comment after a "break" command
-Date:   Thu, 12 Jan 2023 17:28:55 +0100
-References: <pull.1460.git.1673519809510.gitgitgadget@gmail.com>
- <230112.86pmbk0vvj.gmgdl@evledraar.gmail.com>
- <4e2bb2da-0c42-ae9c-2a05-9b23db55c2ce@dunelm.org.uk>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <4e2bb2da-0c42-ae9c-2a05-9b23db55c2ce@dunelm.org.uk>
-Message-ID: <230112.86r0vzzp74.gmgdl@evledraar.gmail.com>
+        with ESMTP id S241993AbjALQwC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2023 11:52:02 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B761669BF
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 08:40:20 -0800 (PST)
+Received: (qmail 5650 invoked by uid 109); 12 Jan 2023 16:39:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 12 Jan 2023 16:39:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16901 invoked by uid 111); 12 Jan 2023 16:39:38 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Jan 2023 11:39:38 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Thu, 12 Jan 2023 11:39:36 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] env-helper: move this built-in to to "test-tool
+ env-helper"
+Message-ID: <Y8A3yGeJl0TCDNqe@coredump.intra.peff.net>
+References: <Y71qiCs+oAS2OegH@coredump.intra.peff.net>
+ <patch-1.1-e662c570f1d-20230112T155226Z-avarab@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <patch-1.1-e662c570f1d-20230112T155226Z-avarab@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Jan 12, 2023 at 05:03:21PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-On Thu, Jan 12 2023, Phillip Wood wrote:
+> > Arguably "git env--helper" should be "test-tool", which wouldn't run
+> > into this problem, but it's probably not worth refactoring it for the
+> > sake of these tests.
+> 
+> I think it's worth doing that, i.e. to take this alternate
+> approach. When I removed the GIT_TEST_GETTEXT_POISON facility I didn't
+> want to make that series any larger, and keeping it a built-in seemed
+> harmless, as there wasn't any practical difference between an
+> undocumented built-in and a test-tool.
+> 
+> But as your patch shows there is, I think we should just pay down that
+> technical debt, rather than adding to it by accumulating workarounds
+> (however small those are...).
 
-> On 12/01/2023 12:25, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Thu, Jan 12 2023, Phillip Wood via GitGitGadget wrote:
->>=20
->>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
->>> index f9675bd24e6..511ace43db0 100644
->>> --- a/Documentation/git-rebase.txt
->>> +++ b/Documentation/git-rebase.txt
->>> @@ -869,7 +869,9 @@ the files and/or the commit message, amend the comm=
-it, and continue
->>>   rebasing.
->>>     To interrupt the rebase (just like an "edit" command would do,
->>> but without
->>> -cherry-picking any commit first), use the "break" command.
->>> +cherry-picking any commit first), use the "break" command. A "break"
->>> +command may be followed by a comment beginning with `#` followed by a
->>> +space.
->> You're missing a corresponding edit here to the help string in
->> append_todo_help(), as you note you're making "break" support what
->> "merge" does, and that help string documents that "merge" accepts a
->> comment, after this we don't do that for "break", but should one way or
->> the other (see below).
->
-> Thanks, Andrei has already mentioned that, I'll update the todo help
-> when I re-roll
->> I like this direction, but I don't see why we need to continue this
->> special-snowflakeness of only allowing specific commands to accept these
->> #-comments.
->> Why not just have them all support it? It started with "merge",
->> which as
->> 4c68e7ddb59 (sequencer: introduce the `merge` command, 2018-04-25) note
->> can be used for:
->> 	merge -C baaabaaa abc # Merge the branch 'abc' into master
->> As Olliver points out we should probably support "#" without the
->> following " ", which seems to be an accident of history &
->> over-strictness.
->
-> It's not an accident, labels and commit names can begin with '#' so we
-> need to support
->
-> 	merge #parent1 #parent2
+Yeah, I am totally fine with this direction. My reservations were:
 
-Ah, I would have told you that '#' was forbidden in refnames, but as
-some trivial experimentation shows I was wrong about that. So yes, we
-need the "# ".
+  1. It was work somebody had to do. But now you've done it.
 
-> For "break" we could just not require '#' at all as we do for "reset
-> <label>" where anything following the label is ignored. That would
-> mean we couldn't add an argument to break in the future though (I'm
-> not sure that is really a problem in practice). If we're going to
-> require '#' then we may as well following the existing rules.
+  2. It's _possible_ that some script somewhere is depending on it. But
+     I think the "--" in the name plus the lack of documentation means
+     that it's unlikely, and that we're morally absolved if somebody's
+     script does break.
 
-I'd think we'd want to parse past the "break" to find a "#", and error
-out unknown stuff still, exactly to support future extensions.
+>  .gitignore                                    |  1 -
+>  Makefile                                      |  2 +-
+>  git.c                                         |  1 -
+>  .../helper/test-env-helper.c                  | 24 +++----
+>  t/helper/test-tool.c                          |  1 +
+>  t/helper/test-tool.h                          |  1 +
+>  t/t0017-env-helper.sh                         | 62 +++++++++----------
+>  t/test-lib-functions.sh                       |  2 +-
+>  t/test-lib.sh                                 |  6 +-
+>  9 files changed, 50 insertions(+), 50 deletions(-)
+>  rename builtin/env--helper.c => t/helper/test-env-helper.c (71%)
 
-I.e. we'd like to close the door on "break# foo", "break # foo" etc, but
-not "break foo", unless I'm misunderstanding you here...
+The patch itself looks obviously correct to me.
 
->> But in this commit you extend it to "break", but we're going out of or
->> way to e.g. extend this to "noop".
->
-> I'm struggling to see why "noop" would need a comment - it only exists
-> to avoid an empty todo list and is not meant for general use (it's not
-> in the help added by append_todo_help() for this reason)
+> -	test_must_fail git env--helper --type=bool --default=false --exit-code MISSING >actual.out 2>actual.err &&
+> +	test_must_fail test-tool env-helper --type=bool --default=false --exit-code MISSING >actual.out 2>actual.err &&
 
-I'm struggling to see why "break" needs a comment, why not just add it
-to the preceding line or something? But it seems some users like it :)
+Long lines like these made me wonder if it should simply be "test-tool
+env", which is shorter. We do not need "helper" to avoid polluting the
+main git-command namespace, and everything in test-tool is a helper
+anyway. But it probably doesn't matter much either way. It's not like
+that line wasn't already overly long. :)
 
-So at that point, it seems easier to both explain & implement something
-that just consistently supports comment syntax, rather than overly
-special-casing it.
+If we do take this, then my t/interop patch can be dropped, though we
+might want to salvage the error message bit:
 
-> For "pick", "edit", "reword", "fixup" & "squash" we don't need a
-> comment mechanism as we ignore everything after the commit name. For
-> "reset" we ignore everything after the label. For "label" we could add
-> support for comments but I'm not sure it is that useful and we'd need
-> to be careful not to interpret a bad label name as a label + comment.
+-- >8 --
+Subject: [PATCH] t/interop: report which vanilla git command failed
 
-I think there's been a couple of request to have changing the "argument"
-actually reword the $subject (I'm pretty such for "reword" that got as
-far as a patch, but I may be misrecalling).
+The interop test library sets up wrappers "git.a" and "git.b" to
+represent the two versions to be tested. It also wraps vanilla "git" to
+report an error, with the goal of catching tests which accidentally fail
+to use one of the version-specific wrappers (which could invalidate the
+tests in a very subtle way).
 
-Of course that's an argument against what I was suggesting of making the
-comment support a bit more general (although we could probably still
-support it for "noop" or whatever).
+But when it catches an invocation of vanilla git, it doesn't give any
+details, which makes it very hard to debug exactly which invocation is
+responsible (especially if it's buried in a function invocation, etc).
+Let's report the arguments passed to git, which helps narrow it down.
 
->> So I'd expect that just like the first for-loop in "parse_insn_line()"
->> we'd check if strchr(bol, '#') returns non-NULL, and if so set eol to
->> that result.
->
-> That would break labels and commit names that contain a '#'
->
-> If we think we're never going to want "break" to take an argument then
-> maybe we should just make it ignore the rest of the line like "reset
-> <label>".
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/interop/interop-lib.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-It's unfortunate that we do that, I think it's almost always better to
-just error out rather that silently ignore data, except for some
-explicit exceptions (such as comment syntax).
+diff --git a/t/interop/interop-lib.sh b/t/interop/interop-lib.sh
+index 3e0a2911d4..62f4481b6e 100644
+--- a/t/interop/interop-lib.sh
++++ b/t/interop/interop-lib.sh
+@@ -68,7 +68,7 @@ generate_wrappers () {
+ 	wrap_git .bin/git.a "$DIR_A" &&
+ 	wrap_git .bin/git.b "$DIR_B" &&
+ 	write_script .bin/git <<-\EOF &&
+-	echo >&2 fatal: test tried to run generic git
++	echo >&2 fatal: test tried to run generic git: $*
+ 	exit 1
+ 	EOF
+ 	PATH=$(pwd)/.bin:$PATH
+-- 
+2.39.0.508.g93b13bde48
