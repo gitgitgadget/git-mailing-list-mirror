@@ -2,117 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C8BB1C54EBD
-	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 16:30:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B86D3C54EBC
+	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 16:42:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239799AbjALQao (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Jan 2023 11:30:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36130 "EHLO
+        id S232192AbjALQmO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Jan 2023 11:42:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233963AbjALQaB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2023 11:30:01 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B25D7DC7
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 08:29:04 -0800 (PST)
-Received: (qmail 5584 invoked by uid 109); 12 Jan 2023 16:29:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 12 Jan 2023 16:29:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16803 invoked by uid 111); 12 Jan 2023 16:29:04 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 12 Jan 2023 11:29:04 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Thu, 12 Jan 2023 11:29:03 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 5/5] packfile: inline custom read_object()
-Message-ID: <Y8A1T5kzgqXV5vKr@coredump.intra.peff.net>
-References: <Y7l4LsEQcDT9HZ21@coredump.intra.peff.net>
- <Y7l4vQwRZzGtxlBB@coredump.intra.peff.net>
- <230112.86o7r42k13.gmgdl@evledraar.gmail.com>
+        with ESMTP id S240503AbjALQkL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2023 11:40:11 -0500
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB64FE79
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 08:34:57 -0800 (PST)
+Received: by mail-ej1-x62f.google.com with SMTP id u9so46165637ejo.0
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 08:34:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=6nv6MNJ0v1MWehPp/vAhsMPzpcoRzFwrqf10h7siXJc=;
+        b=GX2HEt/TMIywhtRiqRn+X5ltUVEZWWVIiOdGNzed8ikKyrKIVtah5DvbF6B/DddcaV
+         pP6b3VIr6t89KSmQAoHqToOuhGSPe6Hb5fjxoSgT4DSRCy/fXvedzBLjt4cqiqcmXjp2
+         K0LH5EQfXwBZt7ufvqv+47f6RD1o47kx/C3HC1zO55nTb3f7OmyjvkwgrlFB1DbvuIRa
+         6/nZ8cW3ZsQFRmgRJ3P5ViFNJ9YCd44q1+7KiHOhqVFJRef4m0PJ3USTjRVxh5x61huL
+         tY2/cg2wgekHRSLm7ZIb1eyPlvcjwJbq3eUEGdmHE8yuhP+yRjwnXDBvvwSToRlHKHx7
+         0/aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6nv6MNJ0v1MWehPp/vAhsMPzpcoRzFwrqf10h7siXJc=;
+        b=I3dTAnr7oNbpRzEMekecFBiwt0ug+cIv67dCY6uL0/K2VdqALyHwRJpko5BgzpAeA3
+         nQ7EKUjTYGuQDZfIJSy6Y0N+TuMOga98qE8UKWUPCOX/4YYZt6pI5GAtgrQ2mb0GYh03
+         my8xaFCqfgFXUBpQ61AZuiyk6D0Ic14WJcJft82SVrE1wW3Ps4CdEsgD9iCtCw2g3A+v
+         KGT14TBTQYCm3pC6gKQ9h6K4ZjsjhaLznL3kIjlrGxQd54gm4+wooKaZofvBcUwey06y
+         vJ3tWpcUpsyeottBEZ3XrxkaIg/ITQL9ZMRVoZprEcWYea8yCfwLUK0M3CDseKIrV0eK
+         dTXw==
+X-Gm-Message-State: AFqh2koFqj4Zxa14vmcp125GcXQx2xG579nASoSVrG29sFEwK17F6nSf
+        8oweqXodW/QUJ3aTPTI4d5Q=
+X-Google-Smtp-Source: AMrXdXs3C2f0rLCViMisokb9RjqQknvRNQG0D0ua1bvFxgKRoDvpVztUwZ9tMHaxsJ3VNOQB+j7Xyg==
+X-Received: by 2002:a17:906:9f0a:b0:7ad:88f8:7663 with SMTP id fy10-20020a1709069f0a00b007ad88f87663mr87615534ejc.43.1673541296280;
+        Thu, 12 Jan 2023 08:34:56 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id 21-20020a170906301500b007c0985aa6b0sm7656113ejz.191.2023.01.12.08.34.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Jan 2023 08:34:55 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1pG0XX-000L0J-1H;
+        Thu, 12 Jan 2023 17:34:55 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Olliver Schinagl <oliver@schinagl.nl>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH] rebase -i: allow a comment after a "break" command
+Date:   Thu, 12 Jan 2023 17:28:55 +0100
+References: <pull.1460.git.1673519809510.gitgitgadget@gmail.com>
+ <230112.86pmbk0vvj.gmgdl@evledraar.gmail.com>
+ <4e2bb2da-0c42-ae9c-2a05-9b23db55c2ce@dunelm.org.uk>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
+In-reply-to: <4e2bb2da-0c42-ae9c-2a05-9b23db55c2ce@dunelm.org.uk>
+Message-ID: <230112.86r0vzzp74.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <230112.86o7r42k13.gmgdl@evledraar.gmail.com>
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 12, 2023 at 10:01:28AM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-> > -				base = read_object(r, &base_oid, &type, &base_size);
-> > +
-> > +				oi.typep = &type;
-> > +				oi.sizep = &base_size;
-> > +				oi.contentp = &base;
-> > +				if (oid_object_info_extended(r, &base_oid, &oi, 0) < 0)
-> > +					base = NULL;
-> > +
-> >  				external_base = base;
-> >  			}
-> >  		}
-> 
-> This isn't introducing a behavior difference, in fact it's diligently
-> bending over backwards to preserve existing behavior, but I don't think
-> we need to do so, and shouldn't have this "base = NULL" line.
-> 
-> Here we're within an "if" block where we tested that "base == NULL"
-> (which is why we're trying to populate it)
-> 
-> Before when we had read_object() re-assigning to "base" here was the
-> obvious thing to do, but now this seems like undue an incomplete
-> paranoia.
+On Thu, Jan 12 2023, Phillip Wood wrote:
 
-I think it's the same paranoia that was in read_object(). There it
-catches the error and returns NULL, rather than the probably-NULL
-"content" (though to be fair, it simply did not initialize the pointer,
-so it would have had to do that to depend on it).
+> On 12/01/2023 12:25, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> On Thu, Jan 12 2023, Phillip Wood via GitGitGadget wrote:
+>>=20
+>>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+>>> index f9675bd24e6..511ace43db0 100644
+>>> --- a/Documentation/git-rebase.txt
+>>> +++ b/Documentation/git-rebase.txt
+>>> @@ -869,7 +869,9 @@ the files and/or the commit message, amend the comm=
+it, and continue
+>>>   rebasing.
+>>>     To interrupt the rebase (just like an "edit" command would do,
+>>> but without
+>>> -cherry-picking any commit first), use the "break" command.
+>>> +cherry-picking any commit first), use the "break" command. A "break"
+>>> +command may be followed by a comment beginning with `#` followed by a
+>>> +space.
+>> You're missing a corresponding edit here to the help string in
+>> append_todo_help(), as you note you're making "break" support what
+>> "merge" does, and that help string documents that "merge" accepts a
+>> comment, after this we don't do that for "break", but should one way or
+>> the other (see below).
+>
+> Thanks, Andrei has already mentioned that, I'll update the todo help
+> when I re-roll
+>> I like this direction, but I don't see why we need to continue this
+>> special-snowflakeness of only allowing specific commands to accept these
+>> #-comments.
+>> Why not just have them all support it? It started with "merge",
+>> which as
+>> 4c68e7ddb59 (sequencer: introduce the `merge` command, 2018-04-25) note
+>> can be used for:
+>> 	merge -C baaabaaa abc # Merge the branch 'abc' into master
+>> As Olliver points out we should probably support "#" without the
+>> following " ", which seems to be an accident of history &
+>> over-strictness.
+>
+> It's not an accident, labels and commit names can begin with '#' so we
+> need to support
+>
+> 	merge #parent1 #parent2
 
-I agree it's probably being overly defensive. But I don't think
-oid_object_info_extended() makes any promises, and it's not completely
-clear to me if packed_object_info() could return a non-NULL entry here
-on an error (e.g., if packed_to_object_type() fails even after we pulled
-out the content).
+Ah, I would have told you that '#' was forbidden in refnames, but as
+some trivial experimentation shows I was wrong about that. So yes, we
+need the "# ".
 
-So probably yes, we could depend on that (and if not, arguably we should
-be fixing oid_object_info_extended(), because we are probably leaking a
-buffer in that case). But we definitely shouldn't be doing it in the
-middle of another patch.
+> For "break" we could just not require '#' at all as we do for "reset
+> <label>" where anything following the label is ignored. That would
+> mean we couldn't add an argument to break in the future though (I'm
+> not sure that is really a problem in practice). If we're going to
+> require '#' then we may as well following the existing rules.
 
-> If oid_object_info_extended() why can't we trust that it didn't touch
-> our "base"? And if we can't trust that, why are we trusting that it left
-> "type" and "base_size" untouched?
+I'd think we'd want to parse past the "break" to find a "#", and error
+out unknown stuff still, exactly to support future extensions.
 
-My assumption is that "base" gated access to "type" and "base_size". So
-as long as "!base", we do not look at the other two.
+I.e. we'd like to close the door on "break# foo", "break # foo" etc, but
+not "break foo", unless I'm misunderstanding you here...
 
-> I think squashing this in would be much better:
-> 	
-> 	diff --git a/packfile.c b/packfile.c
-> 	index 79e21ab18e7..f45017422a1 100644
-> 	--- a/packfile.c
-> 	+++ b/packfile.c
-> 	@@ -1795,10 +1795,8 @@ void *unpack_entry(struct repository *r, struct packed_git *p, off_t obj_offset,
-> 	 				oi.typep = &type;
-> 	 				oi.sizep = &base_size;
-> 	 				oi.contentp = &base;
-> 	-				if (oid_object_info_extended(r, &base_oid, &oi, 0) < 0)
-> 	-					base = NULL;
-> 	-
-> 	-				external_base = base;
-> 	+				if (!oid_object_info_extended(r, &base_oid, &oi, 0))
-> 	+					external_base = base;
-> 	 			}
-> 	 		}
-> 
-> Not only aren't we second-guessing that our "base" was left alone, we're
-> using the return value of oid_object_info_extended() to guard that
-> assignment to "external_base" instead (it's NULL at this point too).
+>> But in this commit you extend it to "break", but we're going out of or
+>> way to e.g. extend this to "noop".
+>
+> I'm struggling to see why "noop" would need a comment - it only exists
+> to avoid an empty todo list and is not meant for general use (it's not
+> in the help added by append_todo_help() for this reason)
 
-I don't think we need to guard the assignment (we know it will be NULL
-if we saw an error). But sure, I don't mind if you want to do that
-simplification, but it should be on top if at all.
+I'm struggling to see why "break" needs a comment, why not just add it
+to the preceding line or something? But it seems some users like it :)
 
--Peff
+So at that point, it seems easier to both explain & implement something
+that just consistently supports comment syntax, rather than overly
+special-casing it.
+
+> For "pick", "edit", "reword", "fixup" & "squash" we don't need a
+> comment mechanism as we ignore everything after the commit name. For
+> "reset" we ignore everything after the label. For "label" we could add
+> support for comments but I'm not sure it is that useful and we'd need
+> to be careful not to interpret a bad label name as a label + comment.
+
+I think there's been a couple of request to have changing the "argument"
+actually reword the $subject (I'm pretty such for "reword" that got as
+far as a patch, but I may be misrecalling).
+
+Of course that's an argument against what I was suggesting of making the
+comment support a bit more general (although we could probably still
+support it for "noop" or whatever).
+
+>> So I'd expect that just like the first for-loop in "parse_insn_line()"
+>> we'd check if strchr(bol, '#') returns non-NULL, and if so set eol to
+>> that result.
+>
+> That would break labels and commit names that contain a '#'
+>
+> If we think we're never going to want "break" to take an argument then
+> maybe we should just make it ignore the rest of the line like "reset
+> <label>".
+
+It's unfortunate that we do that, I think it's almost always better to
+just error out rather that silently ignore data, except for some
+explicit exceptions (such as comment syntax).
