@@ -2,88 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0A4E2C7113B
-	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 20:05:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A6FFBC71148
+	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 20:05:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242012AbjALUFj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Jan 2023 15:05:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44162 "EHLO
+        id S242032AbjALUFl (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Jan 2023 15:05:41 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232138AbjALT6b (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2023 14:58:31 -0500
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA1A728D
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 11:58:03 -0800 (PST)
-Received: by mail-pl1-x634.google.com with SMTP id c6so21304086pls.4
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 11:58:03 -0800 (PST)
+        with ESMTP id S231879AbjALT6Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2023 14:58:25 -0500
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 080CA1CD
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 11:58:00 -0800 (PST)
+Received: by mail-pj1-x102c.google.com with SMTP id n12so20230878pjp.1
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 11:58:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=yEXs8o/bz1T9kST8t2/NeNwS5FQrKbZZ7AY8VGiD3bo=;
-        b=Da5MSzIIpnCbf73P674WpTarnNZgJEgkEM06sjjei84p4pfuh0txsgGnJjqA5afLGj
-         F5eDR/sVihlVrIt2/Bq41vQMWlmfPTVzmFjDlAiv2chJCXBOcXwJyieLYp0flniA2B/z
-         paGxD3mPCKyWqUmix3luz0R6repgFyiagFQtSW4xSy7qvH54b5C2ZTgSBC4RsxZL+Mnm
-         2aVDYwrgohFgFMgw40xAU5DTqHaQcAFU7r8u+xOWbchxNppXBNkJlN0msm/xMdLD6Vwb
-         oXxQjyHZCtcfj6pz1adqGekkJAMYCNR9Gbfy2YfZ8bP/W4/s9rz5usXDrGQ0nKrbO4DS
-         npqQ==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mX6HbSMn29Hq4j0o+dBZ0SbTL0OqDSlhWYWPEzowYt0=;
+        b=V27ne3/Zn7Z7kNgUyoW3L0aJmfnHO8fKbFHQntnm6L3SeSZwabavyGWB3EmrYEmGx3
+         4ozrjhsuJXahS/B6dshWoDKxnJi2HdgXKb2KBzIjW+8NNOLPZcIPeX42XGhJ03joxO0J
+         rodNiOKVSIs3hCSfYC159X5Joe+rAwMSBLApWxsTY+nMexUfbsHI+lTqQpCPBuewYlLG
+         InbS3xK+RZHrBSF49I5Ss4llEIdZ8VGMDJT5w/3UOXSM/QMxohjNf8owlv7LljVnS0nK
+         jn4qVoZtcnYc5onyT+czIjWiyxdHzOdWz36QG51MwgS+50Q/lSYCT7L2EyA9drFepwyR
+         OQOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:date:references:subject:cc:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yEXs8o/bz1T9kST8t2/NeNwS5FQrKbZZ7AY8VGiD3bo=;
-        b=TxPl1bLu9I5mYmAgihzxfJEsSBHK7KjasMCH9duZw7/hk0IAi/GsSnkdNyOBoRXdGm
-         EdzBsNmxEvwfEBxIFd9FyYRXvlHnqSZZTRjplY+i6VW3LbHCjSPnSxv9utubP0llsFhh
-         RtWf4yKRTfUiypZTZjOpPEHZldvh08tBon7pZavH9WCE/D+XVu285ElwS0ZW5yiJARGj
-         k0OyL4N6H6U9+7xIfRS21y20bVI36gbnREvIyjteDN4uwZuQEON549y3y6tKL5jRv2HA
-         ztRb07Zyp8Cdb14jzCq1YsSq2HBiuFGADzj3ZIsdSoVj04a9BMDva304xrYtyWI46SD4
-         ft0A==
-X-Gm-Message-State: AFqh2kpcR/+CWatDR+qn+TR998Db7Pd1xU4MLvIiqothL3M13DOwKMh6
-        YvVcSUeXRZJBjP75CpXqH2Y=
-X-Google-Smtp-Source: AMrXdXtHT2EWUE7ul6UV2f673q79NP9xmLZpyLexpix5PFrIkZg+07+2JkNJ9N6s4HejC9A91235Rw==
-X-Received: by 2002:a05:6a20:7d9a:b0:af:9539:a2c0 with SMTP id v26-20020a056a207d9a00b000af9539a2c0mr115448829pzj.26.1673553483090;
-        Thu, 12 Jan 2023 11:58:03 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id e17-20020aa798d1000000b0058ba98f16a3sm1455207pfm.171.2023.01.12.11.58.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jan 2023 11:58:02 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Victoria Dye <vdye@github.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        ZheNing Hu <adlternative@gmail.com>
-Subject: Re: [PATCH] ls-files: add %(skipworktree) atom to format option
-References: <pull.1458.git.1673451741587.gitgitgadget@gmail.com>
-        <CABPp-BGsD=6PiJtnsuYPsiZJ1rm2X8yTeu-YeP4q5uu5UDw2og@mail.gmail.com>
-Date:   Fri, 13 Jan 2023 04:58:02 +0900
-Message-ID: <xmqqwn5rseyd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mX6HbSMn29Hq4j0o+dBZ0SbTL0OqDSlhWYWPEzowYt0=;
+        b=7RZWzoWtkqaDeiohv+ITOCDg+QBkukWL+k6OG3awsgBPMg5Bj5T71Qo4uRCLDixt7W
+         i1vbSGKWkg8Zi9Heg+K8vrrnQffnpOWOzaBma24PHw0InOkmI+eqEqQzIFWNpO76mS8z
+         BYurkafpI+/jB+ZHnUxPJGY75M53T7e6qekE7oy/cJ1ZnulnD7QaMb3kw9U00rmKPVyQ
+         jmBoF5lvGH68fy4zTAIwC/aouYEKB9xdNC5T2IE3daHgBa2Xzokwp2k8LrbEvJUEK6bQ
+         Gz2YXEP+w0kwh17q5ITPTsGnMTahBIDx/4MzNzAP8And/+WdqQdwGbPErYot87w2Tol8
+         aHJg==
+X-Gm-Message-State: AFqh2kp3Kg2TNDCUiBd/w997VrLoW5rMzfaC4yr9d00gQvmvjFfskFR3
+        x9U9D1RJnsHSYc3Lk+uhxKkm
+X-Google-Smtp-Source: AMrXdXs3IDiNtPYYD2Wgz4oS2ot8buDLx1LhIRYr95Mf/wEVUFo3oHz84L80eC+kvFUGqekBdtXXkA==
+X-Received: by 2002:a05:6a20:d006:b0:af:c491:c7d2 with SMTP id hu6-20020a056a20d00600b000afc491c7d2mr73292954pzb.29.1673553479511;
+        Thu, 12 Jan 2023 11:57:59 -0800 (PST)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id q145-20020a632a97000000b004a4f24fbce9sm10379456pgq.5.2023.01.12.11.57.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Jan 2023 11:57:59 -0800 (PST)
+Message-ID: <b5c0ba73-c1a7-293e-4594-b8ee291152de@github.com>
+Date:   Thu, 12 Jan 2023 11:57:57 -0800
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: [PATCH v5 04/10] test-http-server: add stub HTTP server test
+ helper
+Content-Language: en-US
+To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Matthew John Cheetham <mjcheetham@outlook.com>,
+        M Hickford <mirth.hickford@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Glen Choo <chooglen@google.com>,
+        Matthew John Cheetham <mjcheetham@github.com>
+References: <pull.1352.v4.git.1670880984.gitgitgadget@gmail.com>
+ <pull.1352.v5.git.1673475190.gitgitgadget@gmail.com>
+ <706fb3781bd383380a7b1fd30495eb2da970b5ec.1673475190.git.gitgitgadget@gmail.com>
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <706fb3781bd383380a7b1fd30495eb2da970b5ec.1673475190.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Matthew John Cheetham via GitGitGadget wrote:
+> From: Matthew John Cheetham <mjcheetham@outlook.com>
+> 
+> Introduce a mini HTTP server helper that in the future will be enhanced
+> to provide a frontend for the git-http-backend, with support for
+> arbitrary authentication schemes.
+> 
+> Right now, test-http-server is a pared-down copy of the git-daemon that
+> always returns a 501 Not Implemented response to all callers.
 
-> Given my above comments, I personally don't buy this as justification
-> for adding a new way of reporting on the skip-worktree bit.  It may
-> still make sense to add this feature or something like it, but I
-> personally think it deserves separate justification from "`ls-files
-> -t` is semi-deprecated".
-> ...
-> To be honest, I don't yet see any compelling reason to use this new
-> option.  Even if this patch is accepted, I'd just continue using "git
-> ls-files -t" (both directly and in scripts) in preference to this.
-> However, you have inspired me to try to fix up the ls-files
-> documentation and remove the "semi-deprecated" label for the -t
-> option.
+Between your earlier response [1] and this iteration of the patch, all of
+the comments from my previous review [2] have been addressed. The changes to
+drop the dependency on cURL also look correct to me. Thanks!
 
-Thanks.  I think that would be the better way forward between the
-two (i.e. adding this one-shot new feature vs resurrecting -t).
+[1] https://lore.kernel.org/git/AS2PR03MB98150C33F9704D2CA10A2EF9C0FC9@AS2PR03MB9815.eurprd03.prod.outlook.com/
+[2] https://lore.kernel.org/git/752da6b2-9c75-0f68-e507-cca02bf918ca@github.com/
+
+> 
+> Signed-off-by: Matthew John Cheetham <mjcheetham@outlook.com>
+> ---
+>  Makefile                            |   1 +
+>  contrib/buildsystems/CMakeLists.txt |  11 +-
+>  t/helper/.gitignore                 |   1 +
+>  t/helper/test-http-server.c         | 385 ++++++++++++++++++++++++++++
+>  4 files changed, 396 insertions(+), 2 deletions(-)
+>  create mode 100644 t/helper/test-http-server.c
+
