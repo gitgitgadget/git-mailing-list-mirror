@@ -2,126 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5E9A6C54EBC
-	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 16:23:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2B043C54EBC
+	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 16:24:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236216AbjALQXJ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Jan 2023 11:23:09 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56812 "EHLO
+        id S229835AbjALQYx (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Jan 2023 11:24:53 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32856 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233616AbjALQWj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2023 11:22:39 -0500
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F2AD201F
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 08:19:42 -0800 (PST)
-Received: by mail-ej1-x636.google.com with SMTP id hw16so34152643ejc.10
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 08:19:42 -0800 (PST)
+        with ESMTP id S231200AbjALQY0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2023 11:24:26 -0500
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90857E097
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 08:20:55 -0800 (PST)
+Received: by mail-wr1-x42b.google.com with SMTP id v2so7603369wrw.10
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 08:20:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=eFHCbCSzgoXCfjQuxa9nTRtGaukoGQHNP4mqKbJQZtY=;
-        b=B4u++LlSt/Aa3y/S6Jlreo4Evp1U5O8rJQF7H2KSfozAb1moWAeJtdGmBz6tHPnIcf
-         MYwO6blVJZafhD9omSSpcCioJ3S8AmB2fqnO5WD3Iu5u8SifWhKmJ6ZHcQ7s1DdIzx59
-         4b271NrW1zF3Bnj9azJO2J1Cku5ZPMXlfFCfISx2+ZeeMhxS4nA8rAnIvu8tcPrFHDDR
-         smDwm71zUKikGzl2zsxiIDf/HMQXDtVJ30cWXDjMXAvDHogjb4MEwUMnNbCH+a3+JX6R
-         2iX+wFmcdplNCn/QtNBP4xXSTJmagNMdxR3T4EayZa7zvUmlm2WacajlyWJE+IpwhTUh
-         gNZQ==
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=w9BVdilKvH5OXifeloRhwAbNOF/3NnIdDZZyPL9M6aw=;
+        b=SLZYDFaJp7UkUZfYSIreV8R0+sYsDWdpy5DYFpcGxhFgXrb8Co8en7jfbnw222Ke4E
+         3Yyyb/HGhfc/cOCwSG5S4hn9XUS3mkxvGcd9OYLneyzOaAcTpV8MFDqsZ8MjOm1Liqoq
+         bU+tc6HHr8wR8RQDjz5f8O18E7+kjkNd9EEhYLuH2DTa0Uuz72Fo86ramTkHOyBnD+IL
+         9yP6pif1JJEUeTLSfh6jcU+bnfr62mdZQO5SvgrrL0KT6BsSqRc2r5PkuO6c8WXEFRY2
+         iflUAu/P0Ud4MjJZFFG/GJYK7EP5DrXILdOPGZn5+trtVaRQiA172U2kT9LRZAkIASDC
+         Yuzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=eFHCbCSzgoXCfjQuxa9nTRtGaukoGQHNP4mqKbJQZtY=;
-        b=sl0p1mWhiG6QF+sYP9/+4/JQlNKfAdXV+IU3/Kj9k2f7x4tUnfFpIcUHmqqvDY1gF1
-         wG8mAsjtGXxIX3ZRlk3wUZwWRmGdcuzX34J5res9Y3uGDZX5ycrsfg4TUjINK08YosJ9
-         ud903axpm6PQMLdjs60TNCpan0kkktg0KRzBwCDKOJ2HtHrQqfW9jfO0zgcwphCvRTXv
-         iW76NDNkzq9+y+dmNXF3chC9k3rVf8f/MteMbVpV8x3Clia1HW/iqSe2jU+a8M0c/ame
-         zz2Ng3W1pV3FonHwKAX+7zhr1x0YTIabWCoBdgGnlpJ+Q3Fni16onxJaBEoOI4QEPWlm
-         rjLw==
-X-Gm-Message-State: AFqh2koxLXJiDNZ022HkNQwVhVZm1iLKb23hUKuBiDbj973uiphQqOuK
-        Qw6XYnSgB9YF0x4IZT8EtdAaAdOjmHwNaQ==
-X-Google-Smtp-Source: AMrXdXsc2qABeZ/xkJEJQQ3kE1aqWtnxnds+v5Jllb1FdzT8D3X8dv53ly5D8ncyAxrQq4HaTetZbQ==
-X-Received: by 2002:a17:907:d50e:b0:81f:fc05:2ba0 with SMTP id wb14-20020a170907d50e00b0081ffc052ba0mr67750753ejc.2.1673540380826;
-        Thu, 12 Jan 2023 08:19:40 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id 20-20020a170906101400b0085ff05d5dbdsm2000757ejm.173.2023.01.12.08.19.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jan 2023 08:19:40 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pG0Il-000KNF-3D;
-        Thu, 12 Jan 2023 17:19:39 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <derrickstolee@github.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Victoria Dye <vdye@github.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-Subject: Re: [PATCH v2 5/6] cache API: add a "INDEX_STATE_INIT"
- macro/function, add release_index()
-Date:   Thu, 12 Jan 2023 17:19:20 +0100
-References: <cover-0.5-00000000000-20230110T060340Z-avarab@gmail.com>
- <cover-v2-0.6-00000000000-20230112T124842Z-avarab@gmail.com>
- <patch-v2-5.6-ae256efe94a-20230112T124842Z-avarab@gmail.com>
- <270ef93c-cfdc-d119-5740-f704d7f2a029@github.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <270ef93c-cfdc-d119-5740-f704d7f2a029@github.com>
-Message-ID: <230112.86zganzpwk.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=w9BVdilKvH5OXifeloRhwAbNOF/3NnIdDZZyPL9M6aw=;
+        b=OJV9azkSrmQYmZpVvTDqcTyJjeuqspLV0acKc+Lm01W293Nx9uIBXAEnwDNu0QlVeR
+         c4/IDWws/6sn5N6DestLo3JsAiH3HdyEHhpvIaHdFXGF54wSZOBygDHfHPrcRnzY78iP
+         XkPvFU8mvYIdT6JF70hJHh5c/02ksq8+aYP+5zuhsWjr2Ez2V7fN4kjBM7qAdWQz2Qgv
+         4LrWbrv/sk07LsobcSs5Zzfw7EiT3kXiYleVI0Zzms/8HCyRO/OZo6TYNgUeSvPI0bVL
+         JPKouH6q+fliF5g5dBAvCil1PR3btZ7g9BIJXJtBQ9cB56sXv9zvYwPXT9DUzA9TM4DI
+         cLRg==
+X-Gm-Message-State: AFqh2kp8rNa3/7awAcR2Ik0YPQVR+LkfOMp13H4u66dtVYNNMVlmiDJ4
+        IeTH7U26nczOYUxb2MHyjwc=
+X-Google-Smtp-Source: AMrXdXsWPRcFPJT+Dtsg3ZzWzGeYjIGnaj8VvDmmU+ZcAFlvOU5WiBvpG7xkQzmKBLUFoQ0mTisZAQ==
+X-Received: by 2002:a5d:5a85:0:b0:264:ae8b:7dcd with SMTP id bp5-20020a5d5a85000000b00264ae8b7dcdmr51507170wrb.24.1673540454058;
+        Thu, 12 Jan 2023 08:20:54 -0800 (PST)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id bw28-20020a0560001f9c00b002421888a011sm16524993wrb.69.2023.01.12.08.20.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Jan 2023 08:20:53 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <4e2bb2da-0c42-ae9c-2a05-9b23db55c2ce@dunelm.org.uk>
+Date:   Thu, 12 Jan 2023 16:20:53 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] rebase -i: allow a comment after a "break" command
+Content-Language: en-US
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Olliver Schinagl <oliver@schinagl.nl>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <pull.1460.git.1673519809510.gitgitgadget@gmail.com>
+ <230112.86pmbk0vvj.gmgdl@evledraar.gmail.com>
+In-Reply-To: <230112.86pmbk0vvj.gmgdl@evledraar.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 12/01/2023 12:25, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Thu, Jan 12 2023, Phillip Wood via GitGitGadget wrote:
+> 
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+>> index f9675bd24e6..511ace43db0 100644
+>> --- a/Documentation/git-rebase.txt
+>> +++ b/Documentation/git-rebase.txt
+>> @@ -869,7 +869,9 @@ the files and/or the commit message, amend the commit, and continue
+>>   rebasing.
+>>   
+>>   To interrupt the rebase (just like an "edit" command would do, but without
+>> -cherry-picking any commit first), use the "break" command.
+>> +cherry-picking any commit first), use the "break" command. A "break"
+>> +command may be followed by a comment beginning with `#` followed by a
+>> +space.
+> 
+> You're missing a corresponding edit here to the help string in
+> append_todo_help(), as you note you're making "break" support what
+> "merge" does, and that help string documents that "merge" accepts a
+> comment, after this we don't do that for "break", but should one way or
+> the other (see below).
 
-On Thu, Jan 12 2023, Derrick Stolee wrote:
+Thanks, Andrei has already mentioned that, I'll update the todo help 
+when I re-roll
+> I like this direction, but I don't see why we need to continue this
+> special-snowflakeness of only allowing specific commands to accept these
+> #-comments.
+> 
+> Why not just have them all support it? It started with "merge", which as
+> 4c68e7ddb59 (sequencer: introduce the `merge` command, 2018-04-25) note
+> can be used for:
+> 
+> 	merge -C baaabaaa abc # Merge the branch 'abc' into master
+> 
+> As Olliver points out we should probably support "#" without the
+> following " ", which seems to be an accident of history &
+> over-strictness.
 
-> On 1/12/2023 7:55 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> As we'll see in a subsequent commit we'll get advantages from always
->> initializing the "repo" member of the "struct index_state". To make
->> that easier let's introduce an initialization macro & function.
->>=20
->> The various ad-hoc initialization of the structure can then be changed
->> over to it, and we can remove the various "0" assignments in
->> discard_index() in favor of calling index_state_init() at the end.
->
->> -	memset(&o->result, 0, sizeof(o->result));
->> +	index_state_init(&o->result);
->>  	o->result.initialized =3D 1;
->
-> It's interesting that 'struct index_state' has an 'initialized'
-> member that we aren't setting in index_state_init(). Perhaps it's
-> only being used in special cases like this, and means something
-> more specific than "index_state_init() was run"? Or maybe we
-> could add it to INDEX_STATE_INIT and drop this line?
+It's not an accident, labels and commit names can begin with '#' so we 
+need to support
 
-It's unrelated, and doing that would be a bug. It's a bit unfortunately
-named, a better name might be "read_index_data" or something.
+	merge #parent1 #parent2
 
-It was added in 913e0e99b6a (unpack_trees(): protect the handcrafted
-in-core index from read_cache(), 2008-08-23), which shows the use-case,
-i.e. it's for avoiding re-reading the index file itself (or in that
-case, to trust our hand-crafted faked-up version of it).
+For "break" we could just not require '#' at all as we do for "reset 
+<label>" where anything following the label is ignored. That would mean 
+we couldn't add an argument to break in the future though (I'm not sure 
+that is really a problem in practice). If we're going to require '#' 
+then we may as well following the existing rules.
 
-I opted not to mention it in the commit message, after being
-sufficiently convinced that it was unrelated, which was probably a
-mistake :)
+> But in this commit you extend it to "break", but we're going out of or
+> way to e.g. extend this to "noop".
 
-Just as a sanity check, we do have really good test coverage of the
-difference, at least 1/2 of the tests I bothered to wait for failed when
-I tried this on top:
+I'm struggling to see why "noop" would need a comment - it only exists 
+to avoid an empty todo list and is not meant for general use (it's not 
+in the help added by append_todo_help() for this reason)
 
-diff --git a/cache.h b/cache.h
-index 4bf14e0bd94..1f8e5f4e823 100644
---- a/cache.h
-+++ b/cache.h
-@@ -371,6 +371,7 @@ struct index_state {
-  * "r" argument to index_state_init() in that case.
-  */
- #define INDEX_STATE_INIT(r) { \
-+	.initialized =3D 1, \
- 	.repo =3D (r), \
- }
- void index_state_init(struct index_state *istate, struct repository *r);
+For "pick", "edit", "reword", "fixup" & "squash" we don't need a comment 
+mechanism as we ignore everything after the commit name. For "reset" we 
+ignore everything after the label. For "label" we could add support for 
+comments but I'm not sure it is that useful and we'd need to be careful 
+not to interpret a bad label name as a label + comment.
+
+> So I'd expect that just like the first for-loop in "parse_insn_line()"
+> we'd check if strchr(bol, '#') returns non-NULL, and if so set eol to
+> that result.
+
+That would break labels and commit names that contain a '#'
+
+If we think we're never going to want "break" to take an argument then 
+maybe we should just make it ignore the rest of the line like "reset 
+<label>".
+
+Best Wishes
+
+Phillip
+
+> The "just like" being that we may want to explicitly forbid this or
+> handle it specially for some, e.g. I didn't check but do the "label" and
+> "reset" perhaps support arbitrary non-'\n' (probably by accident, and we
+> could support commments there too).
+> 
+> For "pick" we probably need to explicitly exclude it, although I can't
+> remember if we do anything useful with the part of the line after the
+> OID (maybe not...).
