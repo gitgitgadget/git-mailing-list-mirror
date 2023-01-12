@@ -2,152 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EDDBFC54EBC
-	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 16:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9F7CBC678D5
+	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 16:30:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238687AbjALQ3h (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Jan 2023 11:29:37 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32868 "EHLO
+        id S233861AbjALQak (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Jan 2023 11:30:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240156AbjALQ2w (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2023 11:28:52 -0500
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D460CD58
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 08:27:48 -0800 (PST)
-Received: by mail-ej1-x62b.google.com with SMTP id hw16so34206348ejc.10
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 08:27:48 -0800 (PST)
+        with ESMTP id S233851AbjALQaB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2023 11:30:01 -0500
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A89ADEB
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 08:29:04 -0800 (PST)
+Received: by mail-wm1-x330.google.com with SMTP id z8-20020a05600c220800b003d33b0bda11so4345299wml.0
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 08:29:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=bKccTKcwUyR4IfqjfpjSGJkLKzoV0Iw0YoDiF4oDnbE=;
-        b=IsgcM3Q3URLeU9i+xNsf0jTE1iEh2mC+XsSlwF8rk/zn9EEoxRSqrBUdbKtx2jLgk8
-         YptfaLmNeLx+yVbraopU4Yir2KOjA8fU6Y0meeVj3Q4QPOl/xuNdVB93Hhx9TrGm/EFh
-         lvSmxm25GE/8K+35qbqkZnzImBM+jBY+vGEme+kVyER+ERVmWdpJMDAt/fHSuXTVNiJ9
-         c67Gj5LD/2Fl6oe/EKF0zngJ4OwkmQmoeHZ7bnsctBTguKp0YTcI+dF1ipo70DlwADJR
-         3YhOpuBIISAjcNTVrHX8rrfl3NNEWcaao7hC8YyzwVdZfDOhQGgxPZGJDXQz2/ptk84l
-         obdA==
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xHhx290vcSezBo6nZUvuppJMekzKTy3cEd889kkxmmc=;
+        b=VM35tTVlHpKcKmWiDKSVhYvqT+cJPgo8ACh7LkJwZjg1ZSHbvPzGA759Jvl5YiMPRh
+         t27n5OFRb/zMXMVso0XfCFn+Xr5rFET7OTPQOHPTLKCAi0jRBx7rO/yHeIfeewC2CuwI
+         AzGsAhB+dtgRO/LcnwEULuWxE1e17u6HUSm8qwFf3qtZyFNzGdBaaAQmdrDsHxKNdFxZ
+         yLOw0A1MnkyFc7sPko9mqHs6tsSLlCldfLRBWD+7WJAXoreQWr//lW1X/6dUOp4IOMU9
+         lyhwsin0Os6LgQZnOtZX1++XIkH0pTMF/ks0za25eHWsVPmi3LGNJLn/xFuK+DrvnrXI
+         tUxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to
-         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bKccTKcwUyR4IfqjfpjSGJkLKzoV0Iw0YoDiF4oDnbE=;
-        b=tBTwROnJR8npwbnC2I4cdyOBkQezzTsfpSvaUQAJCk2fHsXfD9LqLEXqbwELxLAEPq
-         OyyPj7yWK4EnRgdqpPdMrghPO5NtwUdTVYRkPtL/B3t7i84X8UGn1DOa4iouU4elxula
-         VEeZZiPDYAKCz0cLftXnJ4fEWltHE+/xgdqHzRqNqhfAsH9B8hKgLAMU+03pqLVID68T
-         UL/nIo7/Ro71sWQWOS4CLEM85inNtBaZUCvWrJgZzY3au4pqTrSwASKaJKcN8KAlO0Q+
-         t/nyopmgrCcUlvO9JllrK6aOkP1w7SOkhw1AxhLHWWrungYvUVfP9GDg2JqUTRchebfV
-         N2kA==
-X-Gm-Message-State: AFqh2kpncgIJcpv2bbNEAnMxQ03dnXr/N4r003zkwIm9nIXBKdd4Jbp1
-        D9gzJFnKGsTnEIf/eJnrq7I=
-X-Google-Smtp-Source: AMrXdXuwU/oheBCiSBRDikHgLBfXbQ+3tqxppFyxIT2a2KaSwjnFbxnIyT2bH7vcsdAM1lGj3XiaAw==
-X-Received: by 2002:a17:907:a707:b0:7c1:75e9:1180 with SMTP id vw7-20020a170907a70700b007c175e91180mr68852145ejc.22.1673540867395;
-        Thu, 12 Jan 2023 08:27:47 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id a20-20020a17090680d400b007c4f32726c4sm7583415ejx.133.2023.01.12.08.27.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jan 2023 08:27:46 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pG0Qc-000KhS-1O;
-        Thu, 12 Jan 2023 17:27:46 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
-        Jonathan Tan <jonathantanmy@google.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH 0/5] cleaning up read_object() family of functions
-Date:   Thu, 12 Jan 2023 17:22:04 +0100
-References: <Y7l4LsEQcDT9HZ21@coredump.intra.peff.net>
- <f1028cba-5fc6-3584-3f21-545550012e9d@github.com>
- <Y77/T8dktee3wOA5@coredump.intra.peff.net>
- <230112.86fscg2jbm.gmgdl@evledraar.gmail.com>
- <Y8AyTE3OS7HCAzKH@coredump.intra.peff.net>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <Y8AyTE3OS7HCAzKH@coredump.intra.peff.net>
-Message-ID: <230112.86v8lbzpj1.gmgdl@evledraar.gmail.com>
+        h=content-transfer-encoding:in-reply-to:references:cc:to
+         :content-language:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xHhx290vcSezBo6nZUvuppJMekzKTy3cEd889kkxmmc=;
+        b=A2h0aSHUER7pyjXXRHk8qXiFX0jP1a52hTenw21lYgpDztvU65RJhWGgSWcofokUex
+         5/1JJWh9hlr8kvS6fEAnCB6KBrU83fi0XChYiVY1mKibvhvbWI+GvHK+oiCXRjLRKuzP
+         MIFJsRSNaHFx+vA5AWYX4GovC/h4I6B7UScyoDZgGNde6yF0674XMoqA0fw4wfaXZG6b
+         w57J2g1suCVsT+o9CZCR8yVVAzWz7bVf9stiATgZ25alvgVPDrL2eVwEx8PHUxFFPhKM
+         l2UIxSjVJR+0lVboeCHnnYdVXTt1vBcavnCl3gXa9Ytamdqc8GxAwdPkq1Okx95Y2/0q
+         NviQ==
+X-Gm-Message-State: AFqh2ko6ybqbXvc1osj9wVsGy2ZY/9pBZpyVZPVocjrTaLwrtbCgitot
+        QO3IsMSKWNmB/mabpaDGn6s=
+X-Google-Smtp-Source: AMrXdXtLiThuvPKJWslvklVYQf7JCryWSthpU7GVJLO9M/y2m6co7qVcfC/nDh6ps8JFU5KgQZ+xtQ==
+X-Received: by 2002:a7b:ce06:0:b0:3cf:a483:3100 with SMTP id m6-20020a7bce06000000b003cfa4833100mr55783756wmc.3.1673540943085;
+        Thu, 12 Jan 2023 08:29:03 -0800 (PST)
+Received: from [192.168.1.74] ([31.185.185.212])
+        by smtp.gmail.com with ESMTPSA id n14-20020a05600c4f8e00b003c6b7f5567csm10461041wmq.0.2023.01.12.08.29.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Jan 2023 08:29:02 -0800 (PST)
+From:   Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+Message-ID: <59bf57cb-fd8b-b814-b45e-c8088e743d5c@dunelm.org.uk>
+Date:   Thu, 12 Jan 2023 16:29:02 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] rebase -i: allow a comment after a "break" command
+Content-Language: en-US
+To:     Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Olliver Schinagl <oliver@schinagl.nl>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <pull.1460.git.1673519809510.gitgitgadget@gmail.com>
+ <xmqq358fu4vr.fsf@gitster.g>
+In-Reply-To: <xmqq358fu4vr.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Junio
 
-On Thu, Jan 12 2023, Jeff King wrote:
-
-> On Thu, Jan 12, 2023 at 10:21:46AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
->
->> I agree that it's probably not worth it here, but I think you're just
->> tying yourself in knots in trying to define these macros in terms of
->> each other. This sort of thing will work if you just do:
->>=20=09
->> 	diff --git a/object-store.h b/object-store.h
->> 	index e894cee61ba..bfcd2482dc5 100644
->> 	--- a/object-store.h
->> 	+++ b/object-store.h
->> 	@@ -418,8 +418,8 @@ struct object_info {
->> 	  * Initializer for a "struct object_info" that wants no items. You may
->> 	  * also memset() the memory to all-zeroes.
->> 	  */
->> 	-#define OBJECT_INFO(...) { 0, __VA_ARGS__ }
->> 	-#define OBJECT_INFO_INIT OBJECT_INFO()
->> 	+#define OBJECT_INFO_INIT { 0 }
->> 	+#define OBJECT_INFO(...) { __VA_ARGS__ }
->
-> Right, that works because the initializer is just "0", which the
-> compiler can do for us implicitly. I agree it works here to omit, but as
-> a general solution, it doesn't.
->
->> Which is just a twist on Ren=C3=A9's suggestion from [1], i.e.:
->>=20
->> 	#define CHILD_PROCESS_INIT_EX(...) { .args =3D STRVEC_INIT, __VA_ARGS__=
- }
+On 12/01/2023 15:52, Junio C Hamano wrote:
+> "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >>
->> In that case we always need to rely on the "args" being init'd, and the
->> GCC warning you note is a feature, its initialization is "private", and
->> you should never override it.
->
-> Right, and it works here because you'd never want to init .args to
-> anything else (which I think is what you mean by "private"). But in the
-> general case the defaults can't set something that the caller might want
-> to override, because the compiler's warning doesn't know the difference
-> between "override" and "oops, you specified this twice".
->
-> It's mostly a non-issue because we tend to prefer 0-initialization when
-> possible, but I think as a general technique this is probably opening a
-> can of worms for little benefit.
+>> When adding a "break" command to a rebase todo list it can be helpful to
+>> add a comment as a reminder as to what the user was planning to do when
+>> the rebase stopped. Anything following the command is interpreted as an
+>> argument to the command and results in an error. Change this so that a
+>> "break command may be followed by "# <comment>" in the same way as
+>> a "merge" command. Requiring the comment to begin with "# " allows the
+>> break command to start taking an argument in the future if that turns
+>> out to be useful.
+> 
+> Why do we special case "break" and not give the same "comment is
+> emitted when the control reaches the insn in the todo list" for
+> others like "exec" or even "pick"?
 
-You're right in the general case, although I think that if we did
-encounter such a use-case a perfectly good solution would be to just
-suppress the GCC-specific warning with the relevant GCC-specific macro
-magic, this being perfectly valid C, just something it (rightly, as it's
-almost always a mistake) complains about.
+I think the break command is a bit different to the others as it stops 
+the rebase and so the user may want a reminder of what they were 
+planning to do when it stopped. The other commands just pick a commit or 
+run a command so I'm not sure what the comment would be for.
 
-But I can't think of a case where this would matter for us in practice.
+> Another comment with devil's advocate hat on is if we are better off
+> not adding "# this comment is emitted" at all, and instead do
+> 
+>      pick ...
+>      pick ...
+>      exec echo this comment is emitted
+>      break
+>      pick ...
 
-We have members like "struct strbuf"'s "buf", which always needs to be
-init'd, but never "maybe by the user", so the pattern above would work
-there.
+That's a neat idea, maybe we should just add some documentation 
+suggesting users do that?
 
-Then we have things like "strdup_strings" which we might imagine that
-the user would override (with a hypothetical "struct string_list" that
-took more arguments, but in those cases we could just add another init
-macro, as "STRING_LIST_INIT_{DUP,NODUP}" does.
+Best Wishes
 
-For any such member we could always just invert its boolean state, if it
-came to that, couldn't we?
+Phillip
 
-Anyway, I agree that it's not worth pursuing this in this case.
-
-But I think it's a neat pattern that we might find use for sooner than
-later for something else.
-
-I don't think it's worth the churn to change it at this point (except
-maybe with a sufficiently clever coccinelle rule), but I think it's
-already "worth it" in the case of the run-command API, if we were adding
-that code today under current constraints (i.e. being able to use C99
-macro features).
+> 
