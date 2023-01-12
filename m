@@ -2,68 +2,68 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2ABF9C54EBC
-	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 09:54:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id B2644C54EBD
+	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 09:56:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239589AbjALJyw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Jan 2023 04:54:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36026 "EHLO
+        id S239134AbjALJ4G (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Jan 2023 04:56:06 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239134AbjALJyN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2023 04:54:13 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E21FDE94
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 01:51:58 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id tz12so43400139ejc.9
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 01:51:58 -0800 (PST)
+        with ESMTP id S232484AbjALJzO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2023 04:55:14 -0500
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F655DF1D
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 01:52:40 -0800 (PST)
+Received: by mail-ej1-x62c.google.com with SMTP id u9so43463092ejo.0
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 01:52:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=S1kaeBIAOxzalBlBpxSg/Dh5yxOb3VUWz6nZ41IaXPo=;
-        b=NOnO8Tt4WdrTBGbBK8hQ1TW3DsM1NoErSZtTxpYhddnlLMNp5LJDdi3Hbfw2rCofph
-         qF4A+YzvaNltZiw0LdRtjScbYWftLE9EB3sRCjEbn5jMIr4WbFYHNDivKK4tkpbNJkoU
-         e6JxOf537kc22aMrgB8ufOSydUAQHWBw4nWwydfigmZyyVKjsgYK/mfwO0/5mWCF2V39
-         wyU+UAsws9jYSBoWIXSsrrv29pMxnzfq+zd+cmuUSktMYvNJUdXW6LuXJIECqAs91ivF
-         jqSJCbN3xnAHCSnkAGOahskXK3YfrtHsq0ozAak0WjZ/RBCl3hIWJwowNA4uQsofV4oi
-         GKGA==
+        bh=nMgTl9j+A8WrwrrRoZLIRAb6KHTE5pAl8JPmqX3bciw=;
+        b=m9GDj8tD1545VtEbjaAay0Aqz1r+ZuFAT1W2GlFopX+uTvb3/vwlIna7Es+ImZO9dW
+         qHIYdaVy9EHtbfAnITpVDWL3PKiBBUjC17tqc17xD/wTg++KlkkLWTLxBe29jE+w0Cx8
+         N0CueYTjz2y3zsJHiLj95zsAoVTW45jaAxyCoIgQzGwZ9XAOh+4vqB5y/H0Pfv2QcJKX
+         Qsxwt6j4iwqFMRGjPE2cw9g1k1A1yJwOaWji5KFvGGQfxwRU0dYJI8kurh5rgchh3f6i
+         0nX8wrFAzrH24FP7lGC9HyW88w6OKvnsYuZ42ckRibNa7fwpqLOqmmYgb/+4+gvtPCa2
+         4quw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=S1kaeBIAOxzalBlBpxSg/Dh5yxOb3VUWz6nZ41IaXPo=;
-        b=B/zJW4xszz6/9Lcr92ZyYmavp0elPaA0gV1TgqctHB01M9+yF6D7jD4Tp8sYbQJBA8
-         ZiIbeIIoXrbT9EJbRIprRZyyf4WhgcLGpbNqDqlSKlZQIB5pi/olp8+zZoRJIk6BSKsM
-         2ab656iShaxNdzW6A74HbPs2OLn2urVCa9/Q+TaeEbn3vew2u+AZRhYTyudud4XbSmYa
-         xvF+0+tvxCB+9CER/RpoxwGbNDsfe2/45NF5J0c15sC7a7Av07SXhzVqSv4s9t/NY2Cy
-         GQKb8JVRfhT4QUIyw/wwSvqOeoSQ2cJwk66MBr1Wxfx9663/YSFn12xuA4t8GJiBA/jp
-         VDKQ==
-X-Gm-Message-State: AFqh2krhIaNOmnbeLUS/cWtLfMFI/XLO/dNW3/QQUlnwtt7vZRFoGdGF
-        +A0fWnUBkKKc6Bpj7SOsx4U=
-X-Google-Smtp-Source: AMrXdXtqQPaCLeM6OCtzff+gX5v/a07Ibw0Qi4gEI/xXpQJ7ZOxdMGu2cYVV5xn1J4Mor11QRm6XHw==
-X-Received: by 2002:a17:907:d48e:b0:862:fc76:6f8e with SMTP id vj14-20020a170907d48e00b00862fc766f8emr3656725ejc.36.1673517117459;
-        Thu, 12 Jan 2023 01:51:57 -0800 (PST)
+        bh=nMgTl9j+A8WrwrrRoZLIRAb6KHTE5pAl8JPmqX3bciw=;
+        b=60UfH0y500Ya8ims5u1T+oPcZihqucOgQyqs+T9FEkzONb9vpT9yim8S9n6IGbNlGL
+         DY5YU0emzWQgm+8EaAEun/5drMU+TCXkmoiNXR7/1lOaYLgJwsjIaLIfHkxf5fYehbNM
+         B9CYbYoRldcYMIgwsjr4EMGqU5mT0C2qz4qVrn+qgbOVNQN/CHQfZONLJNUMqs4OYEzn
+         n+m+YQwCvkjyyxMBNIWDT2WQ8exnCSicFmeTaxZq6FkNgoOAFNqaGRn+YOQFWgIM7kPV
+         IQNhETltUp1cCxMEP493PFmN9VSbeiEYNWr0ANHlenq4Kwxl71c60HeuwfPFObDVaTkf
+         7/GQ==
+X-Gm-Message-State: AFqh2kpDUzmUymFBlCSZxfmvgYhBeRG0hi2UMMc3zHdYfE1EM4tKSalC
+        xmHPKf5kpfNW52Ayvts+N3MtOJHNojA=
+X-Google-Smtp-Source: AMrXdXtkuqjRIsdEoQTLVUeV4qLE2xnMFSRMwbCDm9FrgzrupPLudPShUhkIznbKEHyLWqT8Gn5maw==
+X-Received: by 2002:a17:906:f19a:b0:860:2150:a298 with SMTP id gs26-20020a170906f19a00b008602150a298mr5381055ejb.56.1673517158988;
+        Thu, 12 Jan 2023 01:52:38 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id l15-20020aa7c3cf000000b00467481df198sm6979519edr.48.2023.01.12.01.51.56
+        by smtp.gmail.com with ESMTPSA id ov38-20020a170906fc2600b0084d4733c428sm4772165ejb.88.2023.01.12.01.52.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jan 2023 01:51:56 -0800 (PST)
+        Thu, 12 Jan 2023 01:52:38 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1pFuFY-0006wG-1T;
-        Thu, 12 Jan 2023 10:51:56 +0100
+        id 1pFuGE-0006y6-0H;
+        Thu, 12 Jan 2023 10:52:38 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Teng Long <dyroneteng@gmail.com>
 Cc:     git@vger.kernel.org, tenglong.tl@alibaba-inc.com,
         sunshine@sunshineco.com
-Subject: Re: [PATCH v4 2/5] notes.c: cleanup for "designated init" and "char
- ptr init"
-Date:   Thu, 12 Jan 2023 10:51:02 +0100
+Subject: Re: [PATCH v4 4/5] notes.c: provide tips when target and append
+ note are both empty
+Date:   Thu, 12 Jan 2023 10:52:01 +0100
 References: <cover.1673490953.git.dyroneteng@gmail.com>
- <29f7703b06dfecd1daedb72a7027aa953addfa3a.1673490953.git.dyroneteng@gmail.com>
+ <d41ba140505aa3459330afd652ff6a0f456222a0.1673490953.git.dyroneteng@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <29f7703b06dfecd1daedb72a7027aa953addfa3a.1673490953.git.dyroneteng@gmail.com>
-Message-ID: <230112.867cxs2i83.gmgdl@evledraar.gmail.com>
+In-reply-to: <d41ba140505aa3459330afd652ff6a0f456222a0.1673490953.git.dyroneteng@gmail.com>
+Message-ID: <230112.86358g2i6x.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -75,43 +75,28 @@ On Thu, Jan 12 2023, Teng Long wrote:
 
 > From: Teng Long <dyroneteng@gmail.com>
 >
-> Let's do some cleanup for the following two places in "append_edit()".
->
-> The first place is "char *logmsg;" need to be initialized with NULL.
-> The second place is "struct note_data d = { 0, 0, NULL, STRBUF_INIT };"
-> could be replaced with designated init format.
+> When "git notes append <object>" is executed, if there is no note in
+> the given object and the appended note is empty too, we could print
+> the exact tips to end-user.
 >
 > Signed-off-by: Teng Long <dyroneteng@gmail.com>
 > ---
->  builtin/notes.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+>  builtin/notes.c  | 5 ++++-
+>  t/t3301-notes.sh | 5 +++--
+>  2 files changed, 7 insertions(+), 3 deletions(-)
 >
 > diff --git a/builtin/notes.c b/builtin/notes.c
-> index e57f024824..8ca55ec83e 100644
+> index b71a81bff1..f2efb3736c 100644
 > --- a/builtin/notes.c
 > +++ b/builtin/notes.c
-> @@ -566,9 +566,9 @@ static int append_edit(int argc, const char **argv, const char *prefix)
->  	struct notes_tree *t;
->  	struct object_id object, new_note;
->  	const struct object_id *note;
-> -	char *logmsg;
-> +	char *logmsg = NULL;
+> @@ -631,7 +631,10 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+>  			BUG("combine_notes_overwrite failed");
+>  		logmsg = xstrfmt("Notes added by 'git notes %s'", argv[0]);
+>  		commit_notes(the_repository, t, logmsg);
+> -	}
+> +	} else if (!d.buf.len && !note)
+> +		fprintf(stderr,
+> +			_("Both original and appended notes are empty in %s, do nothing\n"),
+> +			oid_to_hex(&object));
 
-This change isn't needed, and the compiler will check that we have it
-init'd.
-
-It *is* needed when combined with your 3/5, but even then it's the wrong
-solution. In that change you move the commit_notes() into that "if"
-branch that needs the "logmsg", and it's correct that you need to
-NULL-init it to safely pass it to free().
-
-But let's just declare the "logmsg" in that if block then, and move the
-free() over there, that reduces the scope it's in.
-
->  	const char * const *usage;
-> -	struct note_data d = { 0, 0, NULL, STRBUF_INIT };
-> +	struct note_data d = { .buf = STRBUF_INIT };
-
-This change is good, but then let's change the other such case in this
-file to a designated init too, and make the commit message etc. be about
-using designated init here.
+Style: This arm should have {}-braces too, see the CodingGuidelines.
