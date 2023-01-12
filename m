@@ -2,163 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 613FDC54EBD
-	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 16:29:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDDBFC54EBC
+	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 16:29:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232215AbjALQ3B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Jan 2023 11:29:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32914 "EHLO
+        id S238687AbjALQ3h (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Jan 2023 11:29:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233322AbjALQ2H (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2023 11:28:07 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 048A5B7D7
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 08:26:12 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id az7so18620141wrb.5
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 08:26:11 -0800 (PST)
+        with ESMTP id S240156AbjALQ2w (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2023 11:28:52 -0500
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D460CD58
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 08:27:48 -0800 (PST)
+Received: by mail-ej1-x62b.google.com with SMTP id hw16so34206348ejc.10
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 08:27:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=48iWqy31WYW9jWn7PNv54345Lio9cFqwFm1jQTrL4XY=;
-        b=kPumCSax7GY3YHV+ltsAas3pKM1GTK08UUs7aAe4E4530efIDbxY7nDgX9e+f6JRor
-         t10vWR5f3uy1ZUhnLFLJ4RXKcFE+15bLlhlzTcxMraIrzCZlt8NlnHcH5bXCnU/MbWhV
-         qOHjrPL+DZRmTvGPD6t/HJVL0PpEvi5dTT2SkW9ZcPneuNw3D9CHjHl8a0XMDOzyEbXR
-         Y1ILo1k1LIATzWJpjPL/nL3eY+dHiCIAjv4v0z6VUtqq4v0sNt7KmAk6VT6pNutqTzM+
-         2QdmG6d9/iu1yQ4z/fE4gNe+0LryDSFVa61R+LPHB81scypXSGU7M90zGwJY72wJHFZd
-         P7uw==
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=bKccTKcwUyR4IfqjfpjSGJkLKzoV0Iw0YoDiF4oDnbE=;
+        b=IsgcM3Q3URLeU9i+xNsf0jTE1iEh2mC+XsSlwF8rk/zn9EEoxRSqrBUdbKtx2jLgk8
+         YptfaLmNeLx+yVbraopU4Yir2KOjA8fU6Y0meeVj3Q4QPOl/xuNdVB93Hhx9TrGm/EFh
+         lvSmxm25GE/8K+35qbqkZnzImBM+jBY+vGEme+kVyER+ERVmWdpJMDAt/fHSuXTVNiJ9
+         c67Gj5LD/2Fl6oe/EKF0zngJ4OwkmQmoeHZ7bnsctBTguKp0YTcI+dF1ipo70DlwADJR
+         3YhOpuBIISAjcNTVrHX8rrfl3NNEWcaao7hC8YyzwVdZfDOhQGgxPZGJDXQz2/ptk84l
+         obdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=48iWqy31WYW9jWn7PNv54345Lio9cFqwFm1jQTrL4XY=;
-        b=kRi25upWA0fclbv/+g1S5fGVaKtp4HIwL0Tkue54V3r7MqwcoR3Qw0m8a90kcR/uR+
-         WKxj7m7nrHvYYE2ANURsc0Al54LNfo3pqobK/1+ORbeX/aFBBIvXq+l2NVDfRUPwj0aN
-         ffWeqXAAef/SQCnsi2ev/hizUt0975tj3RwR5qGILUfRdlFHoKeadHD87jhsroQJDb9m
-         AEbU3qXxO6q9fbQ3mUADzELTUSqWwYbovxLD/3psZFGjtC0KaElIcuDmqMU98HMYvSPQ
-         ueSQROgUk2jhN5G4xmTAYftquv0/rWgfvx287rL1gIfVfCErCVLOfvQWEN6TamXrZzaV
-         gw6w==
-X-Gm-Message-State: AFqh2koeEaOR/6V2BXSR+y2gDmMgptQNrqLob77KInmWyL/Nc7UivwZa
-        hZrfOVNtWtIDtRNphcIwzXE=
-X-Google-Smtp-Source: AMrXdXubm6NJY+hGAFbqCyRHbhON9ulyesv4dmMhb+szoibxPi0mWvmfexQpBt4fg5ZDkWfPA3pUVA==
-X-Received: by 2002:a05:6000:4004:b0:242:bef:80a1 with SMTP id cy4-20020a056000400400b002420bef80a1mr53550941wrb.2.1673540770591;
-        Thu, 12 Jan 2023 08:26:10 -0800 (PST)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id s7-20020a1cf207000000b003d98438a43asm20954737wmc.34.2023.01.12.08.26.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jan 2023 08:26:10 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <569052f5-1573-f500-25d8-ac893b27dbd0@dunelm.org.uk>
-Date:   Thu, 12 Jan 2023 16:26:09 +0000
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to
+         :user-agent:references:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bKccTKcwUyR4IfqjfpjSGJkLKzoV0Iw0YoDiF4oDnbE=;
+        b=tBTwROnJR8npwbnC2I4cdyOBkQezzTsfpSvaUQAJCk2fHsXfD9LqLEXqbwELxLAEPq
+         OyyPj7yWK4EnRgdqpPdMrghPO5NtwUdTVYRkPtL/B3t7i84X8UGn1DOa4iouU4elxula
+         VEeZZiPDYAKCz0cLftXnJ4fEWltHE+/xgdqHzRqNqhfAsH9B8hKgLAMU+03pqLVID68T
+         UL/nIo7/Ro71sWQWOS4CLEM85inNtBaZUCvWrJgZzY3au4pqTrSwASKaJKcN8KAlO0Q+
+         t/nyopmgrCcUlvO9JllrK6aOkP1w7SOkhw1AxhLHWWrungYvUVfP9GDg2JqUTRchebfV
+         N2kA==
+X-Gm-Message-State: AFqh2kpncgIJcpv2bbNEAnMxQ03dnXr/N4r003zkwIm9nIXBKdd4Jbp1
+        D9gzJFnKGsTnEIf/eJnrq7I=
+X-Google-Smtp-Source: AMrXdXuwU/oheBCiSBRDikHgLBfXbQ+3tqxppFyxIT2a2KaSwjnFbxnIyT2bH7vcsdAM1lGj3XiaAw==
+X-Received: by 2002:a17:907:a707:b0:7c1:75e9:1180 with SMTP id vw7-20020a170907a70700b007c175e91180mr68852145ejc.22.1673540867395;
+        Thu, 12 Jan 2023 08:27:47 -0800 (PST)
+Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
+        by smtp.gmail.com with ESMTPSA id a20-20020a17090680d400b007c4f32726c4sm7583415ejx.133.2023.01.12.08.27.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Jan 2023 08:27:46 -0800 (PST)
+Received: from avar by gmgdl with local (Exim 4.96)
+        (envelope-from <avarab@gmail.com>)
+        id 1pG0Qc-000KhS-1O;
+        Thu, 12 Jan 2023 17:27:46 +0100
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Derrick Stolee <derrickstolee@github.com>, git@vger.kernel.org,
+        Jonathan Tan <jonathantanmy@google.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: [PATCH 0/5] cleaning up read_object() family of functions
+Date:   Thu, 12 Jan 2023 17:22:04 +0100
+References: <Y7l4LsEQcDT9HZ21@coredump.intra.peff.net>
+ <f1028cba-5fc6-3584-3f21-545550012e9d@github.com>
+ <Y77/T8dktee3wOA5@coredump.intra.peff.net>
+ <230112.86fscg2jbm.gmgdl@evledraar.gmail.com>
+ <Y8AyTE3OS7HCAzKH@coredump.intra.peff.net>
+User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
+In-reply-to: <Y8AyTE3OS7HCAzKH@coredump.intra.peff.net>
+Message-ID: <230112.86v8lbzpj1.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] rebase -i: allow a comment after a "break" command
-Content-Language: en-US
-To:     Andrei Rybak <rybak.a.v@gmail.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Olliver Schinagl <oliver@schinagl.nl>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <pull.1460.git.1673519809510.gitgitgadget@gmail.com>
- <eaa80cb6-231b-10f2-74f4-b55d1a8cb1f5@gmail.com>
-In-Reply-To: <eaa80cb6-231b-10f2-74f4-b55d1a8cb1f5@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Andrei
 
-Thanks for taking a look at this
+On Thu, Jan 12 2023, Jeff King wrote:
 
-On 12/01/2023 11:14, Andrei Rybak wrote:
-> On 12/01/2023 11:36, Phillip Wood via GitGitGadget wrote:
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> On Thu, Jan 12, 2023 at 10:21:46AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
+armason wrote:
+>
+>> I agree that it's probably not worth it here, but I think you're just
+>> tying yourself in knots in trying to define these macros in terms of
+>> each other. This sort of thing will work if you just do:
+>>=20=09
+>> 	diff --git a/object-store.h b/object-store.h
+>> 	index e894cee61ba..bfcd2482dc5 100644
+>> 	--- a/object-store.h
+>> 	+++ b/object-store.h
+>> 	@@ -418,8 +418,8 @@ struct object_info {
+>> 	  * Initializer for a "struct object_info" that wants no items. You may
+>> 	  * also memset() the memory to all-zeroes.
+>> 	  */
+>> 	-#define OBJECT_INFO(...) { 0, __VA_ARGS__ }
+>> 	-#define OBJECT_INFO_INIT OBJECT_INFO()
+>> 	+#define OBJECT_INFO_INIT { 0 }
+>> 	+#define OBJECT_INFO(...) { __VA_ARGS__ }
+>
+> Right, that works because the initializer is just "0", which the
+> compiler can do for us implicitly. I agree it works here to omit, but as
+> a general solution, it doesn't.
+>
+>> Which is just a twist on Ren=C3=A9's suggestion from [1], i.e.:
+>>=20
+>> 	#define CHILD_PROCESS_INIT_EX(...) { .args =3D STRVEC_INIT, __VA_ARGS__=
+ }
 >>
->> When adding a "break" command to a rebase todo list it can be helpful to
->> add a comment as a reminder as to what the user was planning to do when
->> the rebase stopped. Anything following the command is interpreted as an
->> argument to the command and results in an error. Change this so that a
->> "break command may be followed by "# <comment>" in the same way as
->> a "merge" command. Requiring the comment to begin with "# " allows the
->> break command to start taking an argument in the future if that turns
->> out to be useful.
->>
->> Reported-by: Olliver Schinagl <oliver@schinagl.nl>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->>      rebase -i: allow a comment after a "break" command
->>      I'm open to suggestions for other ways to handle comments but 
->> copying
->>      what we do to separate merge parents from the merge commit subject
->>      seemed simplest.
->>      Should this print the comment when stopping for a break command?
-> 
-> Technically, the user can look up the command via `git status`, but it
-> would make sense to just give the user this information directly,
-> similar to how exec command prints "Executing: ..." in addition to the
-> existing break command's message "Stopped at ...".
+>> In that case we always need to rely on the "args" being init'd, and the
+>> GCC warning you note is a feature, its initialization is "private", and
+>> you should never override it.
+>
+> Right, and it works here because you'd never want to init .args to
+> anything else (which I think is what you mean by "private"). But in the
+> general case the defaults can't set something that the caller might want
+> to override, because the compiler's warning doesn't know the difference
+> between "override" and "oops, you specified this twice".
+>
+> It's mostly a non-issue because we tend to prefer 0-initialization when
+> possible, but I think as a general technique this is probably opening a
+> can of worms for little benefit.
 
-Yes I think that is probable a good idea.
+You're right in the general case, although I think that if we did
+encounter such a use-case a perfectly good solution would be to just
+suppress the GCC-specific warning with the relevant GCC-specific macro
+magic, this being perfectly valid C, just something it (rightly, as it's
+almost always a mistake) complains about.
 
->> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
->> index f9675bd24e6..511ace43db0 100644
->> --- a/Documentation/git-rebase.txt
->> +++ b/Documentation/git-rebase.txt
->> @@ -869,7 +869,9 @@ the files and/or the commit message, amend the 
->> commit, and continue
->>   rebasing.
->>   To interrupt the rebase (just like an "edit" command would do, but 
->> without
->> -cherry-picking any commit first), use the "break" command.
->> +cherry-picking any commit first), use the "break" command. A "break"
->> +command may be followed by a comment beginning with `#` followed by a
->> +space.
-> 
-> A corresponding update to append_todo_help in rebase-interactive.c
-> would be helpful.
+But I can't think of a case where this would matter for us in practice.
 
-Thanks that's a good suggestion.
+We have members like "struct strbuf"'s "buf", which always needs to be
+init'd, but never "maybe by the user", so the pattern above would work
+there.
 
->> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
->> index 130e2f9b553..18d82869b38 100755
->> --- a/t/t3418-rebase-continue.sh
->> +++ b/t/t3418-rebase-continue.sh
->> @@ -266,6 +266,22 @@ test_expect_success 'the todo command "break" 
->> works' '
->>       test_path_is_file execed
->>   '
->> +test_expect_success 'the todo command "break" accepts a comment' '
->> +    rm -f execed &&
->> +    test_write_lines "break # comment" "break #" "exec >execed" 
->> >expect &&
->> +    write_script cat-todo.sh <<-\EOS &&
->> +    GIT_SEQUENCE_EDITOR="grep ^\[^#\]" git rebase --edit-todo >actual
->> +    EOS
->> +    FAKE_LINES="exec_./cat-todo.sh break_#_comment b_# exec_>execed" \
-> 
-> It seems that helper set_cat_todo_editor could be used here, except that
-> tests in t3418-rebase-continue.sh use a global set_fake_editor at the
-> very top of the file, unlike tests in t3404-rebase-interactive.sh which
-> call set_fake_editor individually.  See also related commits 6a619ca03c
-> (t3404: remove uneeded calls to set_fake_editor, 2019-10-15) and
-> b2dbacbddf (t3404: set $EDITOR in subshell, 2019-10-15).
+Then we have things like "strdup_strings" which we might imagine that
+the user would override (with a hypothetical "struct string_list" that
+took more arguments, but in those cases we could just add another init
+macro, as "STRING_LIST_INIT_{DUP,NODUP}" does.
 
-I did look at using set_cat_todo_editor but it isn't that simple. It 
-cannot be used with set_fake_editor so I'd need to find another way to 
-supply the todo list and it always exits with a failure.
+For any such member we could always just invert its boolean state, if it
+came to that, couldn't we?
 
-As well as checking that "break" accepts a comment this test also checks 
-that the comment is still present when the user re-edits the todo list 
-which is tricky to do with set_cat_todo_editor.
+Anyway, I agree that it's not worth pursuing this in this case.
 
-Best Wishes
+But I think it's a neat pattern that we might find use for sooner than
+later for something else.
 
-Phillip
+I don't think it's worth the churn to change it at this point (except
+maybe with a sufficiently clever coccinelle rule), but I think it's
+already "worth it" in the case of the run-command API, if we were adding
+that code today under current constraints (i.e. being able to use C99
+macro features).
