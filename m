@@ -2,138 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D755CC54EBC
-	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 15:27:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3E4F3C54EBC
+	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 15:29:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240369AbjALP1v (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Jan 2023 10:27:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39248 "EHLO
+        id S240142AbjALP3m (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Jan 2023 10:29:42 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229972AbjALP0O (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2023 10:26:14 -0500
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 361B8C21
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 07:19:22 -0800 (PST)
-Received: by mail-ej1-x635.google.com with SMTP id tz12so45580299ejc.9
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 07:19:22 -0800 (PST)
+        with ESMTP id S231615AbjALP2h (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2023 10:28:37 -0500
+Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF88DA196
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 07:21:19 -0800 (PST)
+Received: by mail-qt1-x833.google.com with SMTP id bp44so16803209qtb.0
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 07:21:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IIkorZCai56vpMQTrRCkObBbdC1VRAPQrjHPRlPXwP4=;
-        b=OeXGA4TCfCne2DvovdWaFCC+VemKHnMoluiQbljvgclFq4WTpdg0hNhfqjoGVCRpag
-         C21QR2MGbMbXb9bZdPAcisZCKErI6tPnvogZtgRXx1Re+m7qZ+/fouIcVz4foz0iOY15
-         8oozKOXQzG6lBsGyj/Jc7vHMTtfgn/rf6E544xnxGIjnn99/eSMAGzbKmzksy7DYKKJj
-         azZsiXiIcRRnaSAt4yWL6JaDxrE9oiniGva4pKq6VuWyTDW46Csfss2nSXAm0nbg98Pf
-         rtutU/xoHmC1Ln4R1/CeXwz4dfHivCcTPHP60O8aYSnYNOOkIauIRB3riZJfx3DyzcMy
-         23EQ==
+        d=github.com; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qpIcfpYVVOkl805LiQJBQ9+LtMi3VswEWiYkNffelSE=;
+        b=XmIY0Scez5qWDSQsT9fPsZu3+r6XcM52qRIe8aNIIYj3piWBbSmlWM12lJ7yRCBpo4
+         bcQLXYxyaaGYweqjvQ/7HFobMCz9rnK5UlcNj73jxk6uh6Ee0RGvrnCdoSl/AGT+t1n9
+         pOsgTYKmz3Jitxads+4duvnpdrigzqrZ1HljscsIdv4wiCYrlXzGn19gAXnKvarS0tpo
+         nw6FXxj5p5jcf5LwLKYHncWKUhMATBxwNsi7EDnlV696lkDOTM4K6hMv2fG7PY63DKNk
+         LYEYyKwYfkEx5qv285y8p+WfgTVMdOvNhDUPRcYavRTvcHCQ+e4SCwCk7r0d+Nf1lHv8
+         3jvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IIkorZCai56vpMQTrRCkObBbdC1VRAPQrjHPRlPXwP4=;
-        b=gOP5CyyBANMvGTIw2cO0d0eGI0Yb3hjXuYGFhozcLUV+EfMcNeCql/uZgpNZvAt1AP
-         /72BJNXIFPbJElIkSsV6YkuQRLdrecmbq0eh3dGe8wcv+2XOddXXBlrroXeg+7jT+1y3
-         4u/a5JrWSdamp6De2QsTLDxZAdZUAjM4vnBiyZAzFCE93GSCASHIvI5Xkx1rv/NswIQS
-         39mKQs/M2ZeUj4JaLWXNMBiR1udCAjBGFXjXkfLGC6Hd5np9Qos6B0LLoXUHAtTRV4JL
-         en+jF9DdUkMLNiUibp6GDUbDfc6GIsaGPWLmAQ0UH8ecrwvJFFSHlO7IHFBg8nl3BPzc
-         kXnQ==
-X-Gm-Message-State: AFqh2kq65aYyFlsnTftP5hsLMmjhfJLZe7irQY2Y9yMrPvSU2lqiXFrM
-        603oYQ2qotsXtrlU6+etHPN6jQZWy4O7aw==
-X-Google-Smtp-Source: AMrXdXu64u2Zia3Kg/yUZ2lazs1ujMaHD7nVAHSksWVSjpAv128MuSAHqqdY1UEHWILxhxfnseksGw==
-X-Received: by 2002:a17:907:8b12:b0:78d:f457:1062 with SMTP id sz18-20020a1709078b1200b0078df4571062mr66745554ejc.31.1673536760392;
-        Thu, 12 Jan 2023 07:19:20 -0800 (PST)
-Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id kr12-20020a1709079a0c00b0084d44553af9sm5493291ejc.215.2023.01.12.07.19.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jan 2023 07:19:19 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
-        <congdanhqx@gmail.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 4/6] bisect run: fix the error message
-Date:   Thu, 12 Jan 2023 16:19:12 +0100
-Message-Id: <patch-v2-4.6-4dda1019767-20230112T151651Z-avarab@gmail.com>
-X-Mailer: git-send-email 2.39.0.1215.g1ba3f685d4f
-In-Reply-To: <cover-v2-0.6-00000000000-20230112T151651Z-avarab@gmail.com>
-References: <cover-0.6-00000000000-20221215T094038Z-avarab@gmail.com> <cover-v2-0.6-00000000000-20230112T151651Z-avarab@gmail.com>
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qpIcfpYVVOkl805LiQJBQ9+LtMi3VswEWiYkNffelSE=;
+        b=LUnDrlS20yVtBNxB1PaftfA1h6UaZjT6SmrYbz7mL2ppSyVSu/30BX2vRYzYpDcZzw
+         YNbUJudH8ju1LO8XayiqB/LRGXMTazWx2K6ChwqOI/bALPSAMfXl8vSj5XAqigBtOK3e
+         CKUZjm8gyVTSOj53iDy270yNtywGfyX5WF/410ofTBTcyzQN389bq6zfgpgnrfMfX/Ug
+         8CKqcs2OA/ex3ZfeYj9NvD6A6tDGtIOHGs+rpNrSvm6Tmi8eErgcRNz94acVbGZW1iRX
+         MGObcJRYNaMiG/seb80WPxQCY/R8fD7G7/wnBGQAO6sqnk9zmpacukDoGH7paH8614Fa
+         Nz2g==
+X-Gm-Message-State: AFqh2kp5w98/k0wLnAMkfHz0hYIaezsYdoo81Tcau+TYAKZQuBt0OqO3
+        XFjtVtBEDVLYwmp68gng1TwmtuqdphV637Q=
+X-Google-Smtp-Source: AMrXdXtTM+okhQ01W9cFGzmFJjosVcV2MQnt7LovEZBVkdHb5KtQp2TDT1f71ub6cgwM2mTPhCYvHw==
+X-Received: by 2002:ac8:1203:0:b0:3ad:ccdb:97e with SMTP id x3-20020ac81203000000b003adccdb097emr16745028qti.51.1673536878855;
+        Thu, 12 Jan 2023 07:21:18 -0800 (PST)
+Received: from ?IPV6:2600:1700:e72:80a0:58df:ae78:2cd7:f615? ([2600:1700:e72:80a0:58df:ae78:2cd7:f615])
+        by smtp.gmail.com with ESMTPSA id d10-20020a05622a100a00b003a526675c07sm6950694qte.52.2023.01.12.07.21.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 12 Jan 2023 07:21:18 -0800 (PST)
+Message-ID: <270ef93c-cfdc-d119-5740-f704d7f2a029@github.com>
+Date:   Thu, 12 Jan 2023 10:21:15 -0500
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v2 5/6] cache API: add a "INDEX_STATE_INIT"
+ macro/function, add release_index()
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
+References: <cover-0.5-00000000000-20230110T060340Z-avarab@gmail.com>
+ <cover-v2-0.6-00000000000-20230112T124842Z-avarab@gmail.com>
+ <patch-v2-5.6-ae256efe94a-20230112T124842Z-avarab@gmail.com>
+Content-Language: en-US
+From:   Derrick Stolee <derrickstolee@github.com>
+In-Reply-To: <patch-v2-5.6-ae256efe94a-20230112T124842Z-avarab@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 1/12/2023 7:55 AM, Ævar Arnfjörð Bjarmason wrote:
+> As we'll see in a subsequent commit we'll get advantages from always
+> initializing the "repo" member of the "struct index_state". To make
+> that easier let's introduce an initialization macro & function.
+> 
+> The various ad-hoc initialization of the structure can then be changed
+> over to it, and we can remove the various "0" assignments in
+> discard_index() in favor of calling index_state_init() at the end.
 
-In d1bbbe45df8 (bisect--helper: reimplement `bisect_run` shell function
-in C, 2021-09-13), we ported the `bisect run` subcommand to C, including
-the part that prints out an error message when the implicit `git bisect
-bad` or `git bisect good` failed.
+> -	memset(&o->result, 0, sizeof(o->result));
+> +	index_state_init(&o->result);
+>  	o->result.initialized = 1;
 
-However, the error message was supposed to print out whether the state
-was "good" or "bad", but used a bogus (because non-populated) `args`
-variable for it. This was fixed in [1], but as of [2] (when
-`bisect--helper` was changed to the present `bisect-state') the error
-message still talks about implementation details that should not
-concern end users.
+It's interesting that 'struct index_state' has an 'initialized'
+member that we aren't setting in index_state_init(). Perhaps it's
+only being used in special cases like this, and means something
+more specific than "index_state_init() was run"? Or maybe we
+could add it to INDEX_STATE_INIT and drop this line?
 
-Fix that, and add a regression test to ensure that the intended form of
-the error message.
-
-1. 80c2e9657f2 (bisect--helper: report actual bisect_state() argument
-   on error, 2022-01-18
-2. f37d0bdd42d (bisect: fix output regressions in v2.30.0, 2022-11-10)
-
-Helped-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/bisect.c            |  2 +-
- t/t6030-bisect-porcelain.sh | 10 ++++++++++
- 2 files changed, 11 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/bisect.c b/builtin/bisect.c
-index 9fc8db06944..0786ebf4012 100644
---- a/builtin/bisect.c
-+++ b/builtin/bisect.c
-@@ -1292,7 +1292,7 @@ static int bisect_run(struct bisect_terms *terms, int argc, const char **argv)
- 			puts(_("bisect found first bad commit"));
- 			res = BISECT_OK;
- 		} else if (res) {
--			error(_("bisect run failed: 'bisect-state %s'"
-+			error(_("bisect run failed: 'git bisect %s'"
- 				" exited with error code %d"), new_state, res);
- 		} else {
- 			continue;
-diff --git a/t/t6030-bisect-porcelain.sh b/t/t6030-bisect-porcelain.sh
-index 9e56b42b5da..0a62ea2b3ce 100755
---- a/t/t6030-bisect-porcelain.sh
-+++ b/t/t6030-bisect-porcelain.sh
-@@ -1221,4 +1221,14 @@ test_expect_success 'bisect state output with bad commit' '
- 	grep -F "waiting for good commit(s), bad commit known" output
- '
- 
-+test_expect_success 'verify correct error message' '
-+	git bisect reset &&
-+	git bisect start $HASH4 $HASH1 &&
-+	write_script test_script.sh <<-\EOF &&
-+	rm .git/BISECT*
-+	EOF
-+	test_must_fail git bisect run ./test_script.sh 2>error &&
-+	grep "git bisect good.*exited with error code" error
-+'
-+
- test_done
--- 
-2.39.0.1215.g1ba3f685d4f
-
+Thanks,
+-Stolee
