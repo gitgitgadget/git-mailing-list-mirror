@@ -2,105 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 33DDAC54EBE
-	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 20:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id F41F2C54EBE
+	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 21:10:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240626AbjALU6B (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Jan 2023 15:58:01 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56342 "EHLO
+        id S240842AbjALVKh (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Jan 2023 16:10:37 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240887AbjALUz5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2023 15:55:57 -0500
-Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF0C3395C1
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 12:41:07 -0800 (PST)
-Received: by mail-qv1-xf2f.google.com with SMTP id o17so13464380qvn.4
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 12:41:07 -0800 (PST)
+        with ESMTP id S234697AbjALVKQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2023 16:10:16 -0500
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 358B26C7CA
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 12:54:34 -0800 (PST)
+Received: by mail-pj1-x102f.google.com with SMTP id m7-20020a17090a730700b00225ebb9cd01so24878084pjk.3
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 12:54:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=jFO0S88z8x3KDPLPwCFSCTQXWBddCBb+1UEnBt7xqE0=;
-        b=JtMSs3EeQQcn70sgT6O2wh6XCzCXYSt2nXLsXqkV6CGVq+xXpcgme/jgKFGDbWKt9k
-         Hlb4HJ19qZIYaBwnZQAFOVJ1UysldI4g1j75D3Z/8OcWQ/Ptdr4tfVWTD/tab+PWMys8
-         tK2vKPqI8dCiuiLeJ7r4opwPF+p3guVHU6D8oRy3KALgRQyYopqu5p9uQzZbc0lMoi8c
-         74xXS7QF6s1JgToI1bQM2s+cgghI67xszTsxljuVxYbY2QsQpz3R6FdFgc1Z5EkeZWb0
-         fENJA0K8XRoyvWSlY+SYuIYL8LW60GM0d+mGSPusuIQzwuysP8zoh7oOwNL0Gy26bQwh
-         PBZg==
+        bh=NwIwaTdZzt9uUy2DsI6/hZjMoR0szfy2mtWzdLIa9/U=;
+        b=AEFyI+EvNhXGgmLOs4yxELSmRBBV/Eqiwm46LPkFEu1W6X2XNM8H6UdmjDCyiJanRD
+         liIIBJaigJBXo/uHi7vmxwmMBHk07wgpkFAcnf/dkNF1+kEA5eex0Hkj0BbLlm7rukiw
+         4RccSQxuQhPLYh/LtfT28M6MmU5VsvDRSNWqO53rP5OzwkF9MFqMEOg1trzQLBs1DbB4
+         4L44ek6u/dS5I9c+XqS3DZ2xKlL+LJ1ro32lDT05zTYagPewt9y3dBh4+vRKrCayn9Aj
+         Ee2T8hC1UDiU4Px+05nBb8R2eCsDChJNKvZ8rwZhCzQl5BI2cRwgZzE8I8fENxo2u12x
+         205A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jFO0S88z8x3KDPLPwCFSCTQXWBddCBb+1UEnBt7xqE0=;
-        b=w4ArlViPzdROddj+JCYv0k9cNqlJ3sqglg64+F9bk+2M497kzCWGP4V/sx5R6XIXFl
-         1Y5tGGdUMQLuSys4f7XcFGywHQB3f0NTndWoN7UNNFmm8FU1QToWNdUd9ilhLxbI9agg
-         cNFgYpLISDJ9mx/P9Ol4oaF7P2eE6EP6sJB+is6Uz46XBJD5MVEGzCcg/mzd1aobiojM
-         Dddune4kMghF5iiSKAfa8EDp3CvBO3SpAbI0J4YLM3ndK7UAGC5NYM5G3upQsqUMwFv+
-         DaY+ykog5u+1PRp9agaz64r5xaFDNaerwrY3cmdcnUyg9AqQNIiDSC1j2HFXNiyTfEdH
-         G0ww==
-X-Gm-Message-State: AFqh2kolybSLpUnwlBo50MrotldOtizyNeIJe2D66p0T8YdzYplZ6Pbe
-        NvJU7m6ABTqPJBNadEdk+huldMHbv2PVpyc=
-X-Google-Smtp-Source: AMrXdXuM8hguNzdHB4gm8wd5VLRv0i9EH440xPRQUQ1qK1vDCJQo7uB2GTpYkm/2Y3ZJbiWwwwiMqg==
-X-Received: by 2002:a05:6214:3909:b0:532:d34:5aa3 with SMTP id nh9-20020a056214390900b005320d345aa3mr43594129qvb.34.1673556066757;
-        Thu, 12 Jan 2023 12:41:06 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:58df:ae78:2cd7:f615? ([2600:1700:e72:80a0:58df:ae78:2cd7:f615])
-        by smtp.gmail.com with ESMTPSA id j9-20020a05620a288900b006f9f714cb6asm11175973qkp.50.2023.01.12.12.41.05
+        bh=NwIwaTdZzt9uUy2DsI6/hZjMoR0szfy2mtWzdLIa9/U=;
+        b=UnoVjwmHdBGPeJBDUUUl7lWp5lNdnoqgjIMs5vP+LE2S+RLtd2rPNkxlCxlgn04xCD
+         vEX+XHmJH8FRKFozKxZAekGrkj2Yq3/OqgR29mz29Gi43cqm9TSHv6ultDP4HVmJg3Gk
+         Kl1PN9WXg6IzESWk6ftGPwOXVGzprm717ZiVpBmEZwlw/uVkkg183mHAXuPkjno4oqTS
+         kJKLGs5gv5qcwsyTv3VzfI/LJ+DV0YpoTTeKSliQrS6ZRhCu7q3MRITy7IQXIyPNebsr
+         fvkcBrzXmuEON3q80JJs3mFFOS/WHcuzxXTpy4duQOxllsfncaRhjyZNc8RekR7Me4Bw
+         maRA==
+X-Gm-Message-State: AFqh2ko3L2qXGN2C97WDQW9O3wmhmwIDe8wySoyp8OWcZqcCgGwkJKc/
+        SaoiykjsBlLRGdj7gjTyPQ0+
+X-Google-Smtp-Source: AMrXdXuVl/F/FmWNNHPdBNAv7kAVanjxc1EMvcAEpyTD6xY3RHgE511vF39f+/qysrFgCsxgNmlLWw==
+X-Received: by 2002:a17:902:ba93:b0:191:282:5d72 with SMTP id k19-20020a170902ba9300b0019102825d72mr6609131pls.51.1673556872835;
+        Thu, 12 Jan 2023 12:54:32 -0800 (PST)
+Received: from [192.168.50.41] (cpe-172-91-184-234.socal.res.rr.com. [172.91.184.234])
+        by smtp.gmail.com with ESMTPSA id bg7-20020a056a02010700b004785c24ffb4sm1504392pgb.26.2023.01.12.12.54.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jan 2023 12:41:06 -0800 (PST)
-Message-ID: <98940e93-c4c5-01ec-54b2-b6015f488ad0@github.com>
-Date:   Thu, 12 Jan 2023 15:41:03 -0500
+        Thu, 12 Jan 2023 12:54:32 -0800 (PST)
+Message-ID: <3858d972-6659-76c5-8d13-b9c803bc32c8@github.com>
+Date:   Thu, 12 Jan 2023 12:54:30 -0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v5 10/10] credential: add WWW-Authenticate header to cred
- requests
-Content-Language: en-US
-To:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Lessley Dennington <lessleydennington@gmail.com>,
-        Matthew John Cheetham <mjcheetham@outlook.com>,
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: [PATCH v4 6/8] test-http-server: pass Git requests to
+ http-backend
+To:     Matthew John Cheetham <mjcheetham@outlook.com>,
+        Matthew John Cheetham via GitGitGadget 
+        <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc:     Derrick Stolee <derrickstolee@github.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
         M Hickford <mirth.hickford@gmail.com>,
         Jeff Hostetler <git@jeffhostetler.com>,
         Glen Choo <chooglen@google.com>,
-        Victoria Dye <vdye@github.com>,
         Matthew John Cheetham <mjcheetham@github.com>
-References: <pull.1352.v4.git.1670880984.gitgitgadget@gmail.com>
- <pull.1352.v5.git.1673475190.gitgitgadget@gmail.com>
- <af66d2d2ede2a502f32d74c86f302598c68d1476.1673475190.git.gitgitgadget@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <af66d2d2ede2a502f32d74c86f302598c68d1476.1673475190.git.gitgitgadget@gmail.com>
+References: <pull.1352.v3.git.1667426969.gitgitgadget@gmail.com>
+ <pull.1352.v4.git.1670880984.gitgitgadget@gmail.com>
+ <0a0f4fd10c8b29f327c35dadc7b17881f22b253a.1670880984.git.gitgitgadget@gmail.com>
+ <f99c381c-1d30-7c95-6158-cecd5321dafd@github.com>
+ <AS2PR03MB9815D6B888AD0E0E12C1C679C0FC9@AS2PR03MB9815.eurprd03.prod.outlook.com>
+Content-Language: en-US
+From:   Victoria Dye <vdye@github.com>
+In-Reply-To: <AS2PR03MB9815D6B888AD0E0E12C1C679C0FC9@AS2PR03MB9815.eurprd03.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/11/2023 5:13 PM, Matthew John Cheetham via GitGitGadget wrote:
+Matthew John Cheetham wrote:
+> 
+> On 2022-12-14 15:20, Victoria Dye wrote:
+>> nit: '$TEST_OUTPUT_DIRECTORY' instead of '$(pwd)' is more consistent with
+>> what I see in other tests. 
+> 
+> I don't see this? In fact I see more usages of `$(pwd)` than your suggestion.
 
-> +static void credential_write_strvec(FILE *fp, const char *key,
-> +				    const struct strvec *vec)
-> +{
-> +	int i = 0;
-> +	const char *full_key = xstrfmt("%s[]", key);
-> +	for (; i < vec->nr; i++) {
+To be honest, I'm not sure how I missed this. '$(pwd)' *is* quite common in
+the tests, although it does seem to be used mostly in individual tests
+rather than file-level variables (although that's not universally true, e.g.
+using it to set 'CURR_DIR' in 't9400-diff-highlight.sh'). 
 
-style nit: use "int i;" and "for (i = 0; ..."
+So, contrary to my earlier comment, this seems best left up to (your)
+personal preference than any concrete rule.
 
->  test_expect_success 'http auth anonymous no challenge' '
->  	test_when_finished "per_test_cleanup" &&
-> -	start_http_server &&
-> +
-> +	cat >auth.config <<-EOF &&
-> +	[auth]
-> +	    allowAnonymous = true
-> +	EOF
-> +
-> +	start_http_server --auth-config="$TRASH_DIRECTORY/auth.config" &&
+> 
+>> Also, if you're creating a repo in its own subdirectory ('repo'), you can
+>> set 'TEST_NO_CREATE_REPO=1' before importing './test-lib' to avoid creating
+>> a repo at the root level of the test output dir - it can help avoid
+>> potential weird/unexpected behavior as a result of being in a repo inside of
+>> another repo.
+> 
+> However.. after setting `TEST_NO_CREATE_REPO=1` I was getting CI failures
+> around a missing PWD, so my next iteration uses the `$TRASH_DIRECTORY` variable
+> explicitly in paths instead :-)
 
-I see that you added auth.allowAnonymous and --auth-config options
-in Patch 6, so perhaps this test change could move to that patch.
+You're right, I was completely misreading the purpose of
+'TEST_OUTPUT_DIRECTORY' in 'test-lib.sh':
 
-Thanks,
--Stolee
+> if test -z "$TEST_OUTPUT_DIRECTORY"
+> then
+> 	# Similarly, override this to store the test-results subdir
+> 	# elsewhere
+> 	TEST_OUTPUT_DIRECTORY=$TEST_DIRECTORY
+> fi
+
+"the test-results subdir" != "the test working directory". As you pointed
+out, '$TRASH_DIRECTORY' would be the variable to use here.
+
