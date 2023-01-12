@@ -2,107 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ABF4BC54EBC
-	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 15:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CFFC5C54EBD
+	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 16:00:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240397AbjALPcr (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Jan 2023 10:32:47 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47298 "EHLO
+        id S237426AbjALQA4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Jan 2023 11:00:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232481AbjALPbz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2023 10:31:55 -0500
-Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B303B5587F
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 07:23:57 -0800 (PST)
-Received: by mail-yb1-xb2f.google.com with SMTP id v19so13174134ybv.1
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 07:23:57 -0800 (PST)
+        with ESMTP id S233471AbjALQAS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2023 11:00:18 -0500
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C70654D83
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 07:52:42 -0800 (PST)
+Received: by mail-pl1-x62f.google.com with SMTP id d9so20626189pll.9
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 07:52:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=github.com; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ybg5lUZPxxRyzG4OFNLUcwFk+oPCBtN+Af0ni12od5o=;
-        b=TTQwp4UWgVwY6ycnghWSMRSpE0tVgK3TD58t0KjvxjOv99JhwdS2A3MDFSHsb3IKhY
-         JPmiqdgFIFlGkTvB7yib8fQbTEs9peim3B8xARsrssC2xWA+SY35pQBitsPnAUH585dT
-         V9IBNPrSMfqAP3h8zMV9Cp2tkwKT3IKgPrnintnFqCCYHB/P/kE3EcM9RuGfc40FlnTX
-         IZjOE7+JhYdhs9++CBAxZ7fUaB/Aq2dd9D0cWYzELduEiDNueJUtTzBeenDS6xmpPO0o
-         KcaxkDoGmHi2TxQYZm3V5eZioPDiP/LLLvPwh6O1oWRaPk4paAmWwNAw7kGK6a3BuenY
-         flGA==
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xP1K2suY5txmBYBeYC2FmAhUKhJJxgSgSoKG44lagbU=;
+        b=Z86IzDGvKTj/cb7NfNkKxozvNDBe60nsB5G8uqy+PZI2loeT7UNsZccHvXfct1LF0M
+         11fuJaWrTECicvbLSOvdvpuUTw/dbqUt3mn/VHYN5Ska6TAR0RCE3lIy2BA/3yowFxrE
+         74wGTzU+bqlF21In+Yk705xkQ7uBms2eVQ0iZgyXqxuiSvfI7EbfTUN9jexx7iusUUv/
+         E2aPPrWJUT3D7adI1vwGNbbi4ik4W08ZdcJFfAaTS4zreR9CIaGIZGoBSz0BsymBwQwY
+         4xMUm2hIzW4+tTyrOpWyAyNZtxAezj+J8BK5DEEVDQfN4IbwwEsSl3Nwl/YVFvkDmTiW
+         pxDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ybg5lUZPxxRyzG4OFNLUcwFk+oPCBtN+Af0ni12od5o=;
-        b=gQmKLHpms4aAxTpt2h24mVC5ui5vELR93/HqEUaD0zajr97vP6KFvd9a2Gf2a0qc+l
-         PX/8zikLh+jYVC/IkLjftebCwDpoiKjPNQcYtG6VTlyS7vglI991BgfkMEeFFYlAe+Wd
-         4xYWX3M0U4/Z844fQ8Xn8RZkBMVulhZq2OTSgYWFB6V+Ib/0MiStIsN2MWMR7D+cRATK
-         fIRLZT0VoT4lrflVu0hrtQOmhrwAiwQ9qg8/uPj+lnS+QdSsxmaq69E4ojBOlDbqmRFd
-         sOrCraoiSrPqyDiXMdRkp5CXuiS2EI7wyJPhsUahpK+cQX3ToTZ4cH61YOgU2gIBAt6O
-         MnIQ==
-X-Gm-Message-State: AFqh2kq+UHDZyMJaxubojeJK2LCcAqShNNUH2lIT0UeEKsjjzfj2GYBT
-        FSBM8Aht7S3f2RKhQAb8sXyPNSYqVJlthq0=
-X-Google-Smtp-Source: AMrXdXuHYcRQvziYirrIMnums9dxm9udoaPVtQ5CYQbz0Th/DvIjY3yKfRzBg1a10pv3naBGPPeQJg==
-X-Received: by 2002:a25:8811:0:b0:712:b4e4:f6d6 with SMTP id c17-20020a258811000000b00712b4e4f6d6mr64301409ybl.14.1673537036875;
-        Thu, 12 Jan 2023 07:23:56 -0800 (PST)
-Received: from ?IPV6:2600:1700:e72:80a0:58df:ae78:2cd7:f615? ([2600:1700:e72:80a0:58df:ae78:2cd7:f615])
-        by smtp.gmail.com with ESMTPSA id m15-20020a05620a24cf00b007055dce4cecsm11159790qkn.97.2023.01.12.07.23.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jan 2023 07:23:56 -0800 (PST)
-Message-ID: <26708e4a-93bf-5dec-2b3e-da8f4ce37571@github.com>
-Date:   Thu, 12 Jan 2023 10:23:54 -0500
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=xP1K2suY5txmBYBeYC2FmAhUKhJJxgSgSoKG44lagbU=;
+        b=JIKAcLems59UmO2brF59NjisE+OF2mC6/FCdgWOE9TxzYFyoL+kG0pv86WcN1AmROL
+         oe3z2QRWnYYi+m+zQgptM1hlULxFTegKu1BoiAMgbkW14W4GSOs4W6g87wqBYoOPSR7g
+         7IeclDoiNv4VX6uaM7caxvp4XDo6c6UgY0g8GJctRRQFQl+j/A3CAYYFcb/2dZJ8S7Th
+         4Mv/BeZISjyxKiqPHk77vxdgDRQGOrhI0AKt0fNq74BJHIE49IFsGYlbMLzC0atgk5b1
+         Lo08MjbWJERl2Z4142W4JC/0TsD796Q5UQ4GQAqpZb9cB4iq/SnzYion2CfJ474SdF0Y
+         4OtA==
+X-Gm-Message-State: AFqh2kpBwYHOWr4Gq122vsgpA8Ibxg7cRa//DG0K3TeWQAGVFj+4kngF
+        pJMCPgcF9DihM+sLUBHbdyTE9N9228k=
+X-Google-Smtp-Source: AMrXdXvhsKv36g2Jik5OwEqab0VIrUEfBXxGP42z42r/QaGFxkVumhb5urZ5EA/lkmS2ftIP/AKz6A==
+X-Received: by 2002:a05:6a20:94c4:b0:aa:806:7b91 with SMTP id ht4-20020a056a2094c400b000aa08067b91mr95644419pzb.39.1673538761498;
+        Thu, 12 Jan 2023 07:52:41 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id j2-20020a170902da8200b00188ea79fae0sm12452391plx.48.2023.01.12.07.52.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Jan 2023 07:52:41 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Olliver Schinagl <oliver@schinagl.nl>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH] rebase -i: allow a comment after a "break" command
+References: <pull.1460.git.1673519809510.gitgitgadget@gmail.com>
+Date:   Fri, 13 Jan 2023 00:52:40 +0900
+In-Reply-To: <pull.1460.git.1673519809510.gitgitgadget@gmail.com> (Phillip
+        Wood via GitGitGadget's message of "Thu, 12 Jan 2023 10:36:49 +0000")
+Message-ID: <xmqq358fu4vr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v2 0/6] cache API: always have a "istate->repo"
-Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Victoria Dye <vdye@github.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>
-References: <cover-0.5-00000000000-20230110T060340Z-avarab@gmail.com>
- <cover-v2-0.6-00000000000-20230112T124842Z-avarab@gmail.com>
-From:   Derrick Stolee <derrickstolee@github.com>
-In-Reply-To: <cover-v2-0.6-00000000000-20230112T124842Z-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/12/2023 7:55 AM, Ævar Arnfjörð Bjarmason wrote:
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->  * Derrick suggested in
->    https://lore.kernel.org/git/6b92fad2-6b74-fddb-679c-8c8735e7103d@github.com/
->    that things might be nicer if we had an explicit initializer, which
->    was also the subject of the previous discussion at
->    https://lore.kernel.org/git/xmqqmt6vqo2w.fsf@gitster.g/; but
->    concluded that it was probably best to leave it for now.
-> 
->    I tried it out, and I think it's worth just doing that now, which
->    is why there's a new 5/6 here: We start by adding an
->    INDEX_STATE_INIT macro, and corresponding function.
-> 
->    There's a bit of churn in 6/6 as all of those now will take a
->    "repo" argument, but I think the end result is worth it, because
->    even if "repo" remains the only thing that we need to initialize
->    we're now able to use ALLOC_ARRAY() instead of CALLOC_ARRAY().
-> 
->    We'll thus be helped by analysis tools (which would show access to
->    un-init'd memory) if we miss properly init-ing not just the "repo"
->    field, but anything in the structure, so our test coverage will be
->    better.
-> 
->    It also makes the code easier to follow and change, as it's now
->    more obvious where we initialize this, and it'll be easier to
->    change it in the future if e.g. we add a new member that has
->    mandatory initialization (e.g. a "struct strbuf").
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> When adding a "break" command to a rebase todo list it can be helpful to
+> add a comment as a reminder as to what the user was planning to do when
+> the rebase stopped. Anything following the command is interpreted as an
+> argument to the command and results in an error. Change this so that a
+> "break command may be followed by "# <comment>" in the same way as
+> a "merge" command. Requiring the comment to begin with "# " allows the
+> break command to start taking an argument in the future if that turns
+> out to be useful.
 
-I wasn't expecting the initializer idea to work as well as it has.
-Now, Patch 5 does all the heavy lifting and Patch 6 is an easy read.
+Why do we special case "break" and not give the same "comment is
+emitted when the control reaches the insn in the todo list" for
+others like "exec" or even "pick"?
 
-Outside of one question about the istate->initialized member (which
-might not need any change) I'm happy with this version.
+Another comment with devil's advocate hat on is if we are better off
+not adding "# this comment is emitted" at all, and instead do
 
-Thanks,
--Stolee
+    pick ...
+    pick ...
+    exec echo this comment is emitted
+    break
+    pick ...
+
+
+
