@@ -2,219 +2,495 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 840E7C54EBD
-	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 12:40:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9DA44C54EBD
+	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 12:46:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230051AbjALMkZ (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Jan 2023 07:40:25 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60776 "EHLO
+        id S229991AbjALMqO (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Jan 2023 07:46:14 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229819AbjALMkF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2023 07:40:05 -0500
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DC524C733
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 04:40:03 -0800 (PST)
-Received: by mail-ed1-x533.google.com with SMTP id m21so26649678edc.3
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 04:40:03 -0800 (PST)
+        with ESMTP id S230245AbjALMqL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2023 07:46:11 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58E6C5F78
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 04:46:07 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id tz12so44471267ejc.9
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 04:46:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=cS0X1ZDSdwBAZKAfua1UimBs8nfxXGxbvHtXJRhvGXw=;
-        b=e2WbzDyDkPSy6dr88wwGodSVC4FeOeNdeNuRTFFScjl7SR348+A+28vhX0sPAsrT69
-         Fxt6yeqm1IThQfW05FiinqOgYltWc8fo9OIk3IAPP2xeFAVGNXq7oDQpEFOK/nYRD3qL
-         zc+jgLESK1fvY+C7rtIbkGqqepkdmnrdwcDy2LbfjylrZKTJMQsLakyx2U1uAYJulkhB
-         +iQadZfYzDjEvPHgMQKlwKM4x4fNTmTxbgRpi9wP8Qu7DEJ7AWrSh2pTl0Nfv4TjDT75
-         QIZ1b4iUeTz/q5B9D3cf9fCWLK132SQyyhCAsQrFe1k25XzggU5N2GHMHRaaQm2Hj1H3
-         ZcbA==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3sWb1D79v3UuP7Q3ZmmaTEqKb49DPB41ZVDPOCVvHNE=;
+        b=bjqWNUWl3HZqJF5AekK/U8Ssnx5IiHzc2IOY8Yv30kakJW0PVbg7yDJhclsYqANWQH
+         OKCHwProzKRSAxfJyBpzFm53nw1K6sJb0fNQiFm+c3GPXkBD/Os9UGnzmbKz8KEP5sHm
+         YVs2w+6hCEqx3sUdGWeiCCczdraJQbwSy5GEcC/kzAblj7y8YL5aIry1pNb6aez8Raxd
+         dJi4AxHJXmW4Og65KFEmN9gazZsq9fWJXdxJ0cIZ+xz/BXj3r7JqhGAZ0ednokwa3AHE
+         9DU+1s3Zfa9E8JHZGUBcV5ZKlCWJvMp3DZxZY/8dsbY08hFcaOKgJBSK90uWAC8bb7Bq
+         DFxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:message-id:in-reply-to:user-agent:references:date
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cS0X1ZDSdwBAZKAfua1UimBs8nfxXGxbvHtXJRhvGXw=;
-        b=wZWKB/S2LoeHpYb6wkrVt+pDFYD66sYtgXpAqSNDqGhIrYt0g6WopDetsfofq+V/S+
-         rKrfBza3Og8WbPrz5sCoshMM5N0XKdF4Tj0GUmgNII6TxzTMwrN0ruHCMfwMoRueUJy5
-         De0fHC27CztT3O2V7pD42SPRZKrXUfch2Cp8tUcTrPmzowAk1+0rUSDe1vvOZCJDxxtb
-         fOGsfNvqvB72JmkFkbFSf45CgG9NtAY/BBX9CyY85OokDU1JDWYm9ajhdqFBHL/i964u
-         zyXckr+MZYOPnwRsZAnpWD65/fISo1hgh323nneAx35d7pUgqrKZc96Sq1MwF4bHExVV
-         2cmg==
-X-Gm-Message-State: AFqh2kqW9OJiBrJ9wQjxciL/U4ZyVx0CqACe7dOMMd/0BbiHWkRqrltQ
-        zNHkaNkxTmhjc/jSVQ68i25hA2B/AX0=
-X-Google-Smtp-Source: AMrXdXtzbgn6o4tCrQD9CmQmk49UMTecRvS5qjNrFDpr5JWkIhHwYIIIGQ0DQ1UAIZYPuvd7ewciOw==
-X-Received: by 2002:a05:6402:538e:b0:48e:bf0d:f3a8 with SMTP id ew14-20020a056402538e00b0048ebf0df3a8mr28095546edb.38.1673527201844;
-        Thu, 12 Jan 2023 04:40:01 -0800 (PST)
-Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id fd7-20020a056402388700b00483dd234ac6sm6967423edb.96.2023.01.12.04.40.00
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3sWb1D79v3UuP7Q3ZmmaTEqKb49DPB41ZVDPOCVvHNE=;
+        b=TZQNpV2Ueb1Lws7drY7ICx8U7Yz+XMqkxxA+NLMTfKD8KeXtSRoqggLyg92U29gB0p
+         sc19VJySNiO8ehKuHJe9r6KM1XYKbb+ST3pVOff+fKKuJqqoCAolEkJ8BcHayihvuZ+R
+         RLlzkfRcJUEzSvzyNDzlWghSkKUSqwfDWoLjftyyGgE9cMVDgiJTdNdkn81xN0ltFSTO
+         Bsrdpw8M7J9fLBjJfun+0xO9WVEQP7fLkgg/YHdZBjpMh3pJZDwpO4IFHK+7yrL4nDaI
+         VtSRi7K3nWlJk8otTtEXCdKgHLf3+y0IthU/DvPBOa1KJgNtANhJx8J62VShEdsLWSoi
+         jfxw==
+X-Gm-Message-State: AFqh2kpBsUvD5XONT8qRvEsi0x1DLT4nbb3iqGE0XAmOLnNvuC5KQiur
+        ZPNAzCU0SVI7AR5IYvVU6C2ZEF1d8qbUag==
+X-Google-Smtp-Source: AMrXdXvfAgtKznl5ldx2t043aV+hOcc+9cFoKmw+Y2i1dsidxf3Km6sFS4WCCTHrOtMLt3tT3gabIw==
+X-Received: by 2002:a17:907:a481:b0:7c0:c1cc:c68 with SMTP id vp1-20020a170907a48100b007c0c1cc0c68mr64603464ejc.6.1673527565100;
+        Thu, 12 Jan 2023 04:46:05 -0800 (PST)
+Received: from vm.nix.is (vm.nix.is. [2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id v17-20020a170906293100b007be301a1d51sm7373523ejd.211.2023.01.12.04.46.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jan 2023 04:40:01 -0800 (PST)
-Received: from avar by gmgdl with local (Exim 4.96)
-        (envelope-from <avarab@gmail.com>)
-        id 1pFwsC-000CbV-1E;
-        Thu, 12 Jan 2023 13:40:00 +0100
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Olliver Schinagl <oliver@schinagl.nl>,
+        Thu, 12 Jan 2023 04:46:04 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH] rebase -i: allow a comment after a "break" command
-Date:   Thu, 12 Jan 2023 13:25:23 +0100
-References: <pull.1460.git.1673519809510.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <pull.1460.git.1673519809510.gitgitgadget@gmail.com>
-Message-ID: <230112.86pmbk0vvj.gmgdl@evledraar.gmail.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/9] sequencer API & users: fix widespread leaks
+Date:   Thu, 12 Jan 2023 13:45:52 +0100
+Message-Id: <cover-v2-0.9-00000000000-20230112T124201Z-avarab@gmail.com>
+X-Mailer: git-send-email 2.39.0.1205.g2ca064edc27
+In-Reply-To: <cover-00.10-00000000000-20221230T071741Z-avarab@gmail.com>
+References: <cover-00.10-00000000000-20221230T071741Z-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This series fixes various widespread leaks in the sequencer and its
+users (rebase, revert, cherry-pick). As a result 18 tests become
+leak-free in their entirety.
 
-On Thu, Jan 12 2023, Phillip Wood via GitGitGadget wrote:
+See the v1 for a longer general summary:
+https://lore.kernel.org/git/cover-00.10-00000000000-20221230T071741Z-avarab@gmail.com/
 
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> When adding a "break" command to a rebase todo list it can be helpful to
-> add a comment as a reminder as to what the user was planning to do when
-> the rebase stopped. Anything following the command is interpreted as an
-> argument to the command and results in an error. Change this so that a
-> "break command may be followed by "# <comment>" in the same way as
-> a "merge" command. Requiring the comment to begin with "# " allows the
-> break command to start taking an argument in the future if that turns
-> out to be useful.
->
-> Reported-by: Olliver Schinagl <oliver@schinagl.nl>
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> ---
->     rebase -i: allow a comment after a "break" command
->     
->     I'm open to suggestions for other ways to handle comments but copying
->     what we do to separate merge parents from the merge commit subject
->     seemed simplest.
->     
->     Should this print the comment when stopping for a break command?
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1460%2Fphillipwood%2Fsequencer-allow-comment-after-break-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1460/phillipwood/sequencer-allow-comment-after-break-v1
-> Pull-Request: https://github.com/gitgitgadget/git/pull/1460
->
->  Documentation/git-rebase.txt |  4 +++-
->  sequencer.c                  |  7 +++++--
->  t/lib-rebase.sh              |  2 +-
->  t/t3418-rebase-continue.sh   | 16 ++++++++++++++++
->  4 files changed, 25 insertions(+), 4 deletions(-)
->
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index f9675bd24e6..511ace43db0 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -869,7 +869,9 @@ the files and/or the commit message, amend the commit, and continue
->  rebasing.
->  
->  To interrupt the rebase (just like an "edit" command would do, but without
-> -cherry-picking any commit first), use the "break" command.
-> +cherry-picking any commit first), use the "break" command. A "break"
-> +command may be followed by a comment beginning with `#` followed by a
-> +space.
+Changes since v1:
 
-You're missing a corresponding edit here to the help string in
-append_todo_help(), as you note you're making "break" support what
-"merge" does, and that help string documents that "merge" accepts a
-comment, after this we don't do that for "break", but should one way or
-the other (see below).
+ * I think this addresses all the outstanding feedback, thanks all.
+ * Most significantly, the replay_opts_release() is now moved out of
+   sequencer_remove_state() as suggested.
+ * There's a prep change for renaming "squash_onto_name", per the
+   discussion in v1.
+ * Just do "goto leave" rather than being paranoid and introdungi
+   "goto cleanup", thanks Phillip!
+ * Various other small changes, see the range-diff.
 
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2509,7 +2509,9 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
->  	padding = strspn(bol, " \t");
->  	bol += padding;
->  
-> -	if (item->command == TODO_NOOP || item->command == TODO_BREAK) {
-> +	if (item->command == TODO_NOOP ||
-> +	    (item->command == TODO_BREAK &&
-> +	     (bol[0] != '#' || (bol[1] && !isspace (bol[1]))))) {
->  		if (bol != eol)
->  			return error(_("%s does not accept arguments: '%s'"),
->  				     command_to_string(item->command), bol);
-> @@ -2524,7 +2526,8 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
->  			     command_to_string(item->command));
->  
->  	if (item->command == TODO_EXEC || item->command == TODO_LABEL ||
-> -	    item->command == TODO_RESET || item->command == TODO_UPDATE_REF) {
-> +	    item->command == TODO_RESET || item->command == TODO_UPDATE_REF ||
-> +	    item->command == TODO_BREAK) {
->  		item->commit = NULL;
->  		item->arg_offset = bol - buf;
->  		item->arg_len = (int)(eol - bol);
-> diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-> index b57541356bd..a648013f299 100644
-> --- a/t/lib-rebase.sh
-> +++ b/t/lib-rebase.sh
-> @@ -51,7 +51,7 @@ set_fake_editor () {
->  		case $line in
->  		pick|p|squash|s|fixup|f|edit|e|reword|r|drop|d|label|l|reset|r|merge|m)
->  			action="$line";;
-> -		exec_*|x_*|break|b)
-> +		exec_*|x_*|break_*|b_*|break|b)
->  			echo "$line" | sed 's/_/ /g' >> "$1";;
->  		merge_*|fixup_*)
->  			action=$(echo "$line" | sed 's/_/ /g');;
-> diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-> index 130e2f9b553..18d82869b38 100755
-> --- a/t/t3418-rebase-continue.sh
-> +++ b/t/t3418-rebase-continue.sh
-> @@ -266,6 +266,22 @@ test_expect_success 'the todo command "break" works' '
->  	test_path_is_file execed
->  '
->  
-> +test_expect_success 'the todo command "break" accepts a comment' '
-> +	rm -f execed &&
-> +	test_write_lines "break # comment" "break #" "exec >execed" >expect &&
-> +	write_script cat-todo.sh <<-\EOS &&
-> +	GIT_SEQUENCE_EDITOR="grep ^\[^#\]" git rebase --edit-todo >actual
-> +	EOS
-> +	FAKE_LINES="exec_./cat-todo.sh break_#_comment b_# exec_>execed" \
-> +		git rebase -i HEAD &&
-> +	test_cmp expect actual &&
-> +	test_path_is_missing execed &&
-> +	git rebase --continue &&
-> +	test_path_is_missing execed &&
-> +	git rebase --continue &&
-> +	test_path_is_file execed
-> +'
-> +
->  test_expect_success '--reschedule-failed-exec' '
->  	test_when_finished "git rebase --abort" &&
->  	test_must_fail git rebase -x false --reschedule-failed-exec HEAD^ &&
->
-> base-commit: 8a4e8f6a67e7fc97048d4666eec38399b88e0e3b
+A branch & passing CI for this are at:
+https://github.com/avar/git/tree/avar/leak-fixes-sequencer-rebase-2
 
-I like this direction, but I don't see why we need to continue this
-special-snowflakeness of only allowing specific commands to accept these
-#-comments.
+Ævar Arnfjörð Bjarmason (9):
+  rebase: use "cleanup" pattern in do_interactive_rebase()
+  sequencer.c: split up sequencer_remove_state()
+  rebase & sequencer API: fix get_replay_opts() leak in "rebase"
+  builtin/revert.c: move free-ing of "revs" to replay_opts_release()
+  builtin/rebase.c: rename "squash_onto_name" to "to_free"
+  builtin/rebase.c: fix "options.onto_name" leak
+  sequencer.c: always free() the "msgbuf" in do_pick_commit()
+  builtin/rebase.c: free() "options.strategy_opts"
+  commit.c: free() revs.commit in get_fork_point()
 
-Why not just have them all support it? It started with "merge", which as
-4c68e7ddb59 (sequencer: introduce the `merge` command, 2018-04-25) note
-can be used for:
+ builtin/rebase.c                       | 27 +++++++++-------
+ builtin/revert.c                       |  8 ++---
+ commit.c                               |  1 +
+ sequencer.c                            | 43 ++++++++++++++++----------
+ sequencer.h                            |  1 +
+ t/t3405-rebase-malformed.sh            |  1 +
+ t/t3412-rebase-root.sh                 |  1 +
+ t/t3416-rebase-onto-threedots.sh       |  1 +
+ t/t3419-rebase-patch-id.sh             |  1 +
+ t/t3423-rebase-reword.sh               |  1 +
+ t/t3425-rebase-topology-merges.sh      |  2 ++
+ t/t3431-rebase-fork-point.sh           |  1 +
+ t/t3432-rebase-fast-forward.sh         |  1 +
+ t/t3437-rebase-fixup-options.sh        |  1 +
+ t/t3438-rebase-broken-files.sh         |  2 ++
+ t/t3501-revert-cherry-pick.sh          |  1 +
+ t/t3502-cherry-pick-merge.sh           |  1 +
+ t/t3503-cherry-pick-root.sh            |  1 +
+ t/t3506-cherry-pick-ff.sh              |  1 +
+ t/t3511-cherry-pick-x.sh               |  1 +
+ t/t7402-submodule-rebase.sh            |  1 +
+ t/t9106-git-svn-commit-diff-clobber.sh |  1 -
+ t/t9164-git-svn-dcommit-concurrent.sh  |  1 -
+ 23 files changed, 64 insertions(+), 36 deletions(-)
 
-	merge -C baaabaaa abc # Merge the branch 'abc' into master
+Range-diff against v1:
+ 1:  f3a4ed79c7d !  1:  d0a0524f3d4 rebase: use "cleanup" pattern in do_interactive_rebase()
+    @@ Commit message
+         rebase: use "cleanup" pattern in do_interactive_rebase()
+     
+         Use a "goto cleanup" pattern in do_interactive_rebase(). This
+    -    eliminates some duplicated free() code added in 0609b741a43 (rebase
+    -    -i: combine rebase--interactive.c with rebase.c, 2019-04-17), and sets
+    -    us up for a subsequent commit which'll make further use of the
+    -    "cleanup" label.
+    +    eliminates some duplicated free() code added in 53bbcfbde7c (rebase
+    +    -i: implement the main part of interactive rebase as a builtin,
+    +    2018-09-27), and sets us up for a subsequent commit which'll make
+    +    further use of the "cleanup" label.
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+ 2:  4994940a0a9 !  2:  c4eaa8dfef4 sequencer.c: split up sequencer_remove_state()
+    @@ Commit message
+         function, which will be adjusted and called independent of the other
+         code in sequencer_remove_state() in a subsequent commit.
+     
+    -    The only functional changes here are:
+    -
+    -     * Changing the "int" to a "size_t", which is the correct type, as
+    -       "xopts_nr" is a "size_t".
+    -
+    -     * Calling the free() before the "if (is_rebase_i(opts) && ...)",
+    -       which is OK, and makes a subsequent change smaller.
+    +    The only functional change here is changing the "int" to a "size_t",
+    +    which is the correct type, as "xopts_nr" is a "size_t".
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+    @@ sequencer.c: static const char *gpg_sign_opt_quoted(struct replay_opts *opts)
+      	struct strbuf buf = STRBUF_INIT;
+     -	int i, ret = 0;
+     +	int ret = 0;
+    -+
+    -+	replay_opts_release(opts);
+      
+      	if (is_rebase_i(opts) &&
+      	    strbuf_read_file(&buf, rebase_path_refs_to_delete(), 0) > 0) {
+    @@ sequencer.c: int sequencer_remove_state(struct replay_opts *opts)
+     -		free(opts->xopts[i]);
+     -	free(opts->xopts);
+     -	strbuf_release(&opts->current_fixups);
+    --
+    ++	replay_opts_release(opts);
+    + 
+      	strbuf_reset(&buf);
+      	strbuf_addstr(&buf, get_dir(opts));
+    - 	if (remove_dir_recursively(&buf, 0))
+ 3:  3e9c4df61fe !  3:  f06f565ceaf rebase & sequencer API: fix get_replay_opts() leak in "rebase"
+    @@ builtin/rebase.c: static int run_sequencer_rebase(struct rebase_options *opts)
+      		break;
+      	}
+      	case ACTION_EDIT_TODO:
+    +@@ builtin/rebase.c: static int finish_rebase(struct rebase_options *opts)
+    + 
+    + 		replay.action = REPLAY_INTERACTIVE_REBASE;
+    + 		ret = sequencer_remove_state(&replay);
+    ++		replay_opts_release(&replay);
+    + 	} else {
+    + 		strbuf_addstr(&dir, opts->state_dir);
+    + 		if (remove_dir_recursively(&dir, 0))
+    +@@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix)
+    + 
+    + 			replay.action = REPLAY_INTERACTIVE_REBASE;
+    + 			ret = sequencer_remove_state(&replay);
+    ++			replay_opts_release(&replay);
+    + 		} else {
+    + 			strbuf_reset(&buf);
+    + 			strbuf_addstr(&buf, options.state_dir);
+    +
+    + ## builtin/revert.c ##
+    +@@ builtin/revert.c: int cmd_revert(int argc, const char **argv, const char *prefix)
+    + 	if (opts.revs)
+    + 		release_revisions(opts.revs);
+    + 	free(opts.revs);
+    ++	replay_opts_release(&opts);
+    + 	return res;
+    + }
+    + 
+    +@@ builtin/revert.c: int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
+    + 	free(opts.revs);
+    + 	if (res < 0)
+    + 		die(_("cherry-pick failed"));
+    ++	replay_opts_release(&opts);
+    + 	return res;
+    + }
+     
+      ## sequencer.c ##
+     @@ sequencer.c: static const char *gpg_sign_opt_quoted(struct replay_opts *opts)
+    @@ sequencer.c: static const char *gpg_sign_opt_quoted(struct replay_opts *opts)
+     -static void replay_opts_release(struct replay_opts *opts)
+     +void replay_opts_release(struct replay_opts *opts)
+      {
+    --	free(opts->gpg_sign);
+    --	free(opts->reflog_action);
+    --	free(opts->default_strategy);
+    --	free(opts->strategy);
+    -+	FREE_AND_NULL(opts->gpg_sign);
+    -+	FREE_AND_NULL(opts->reflog_action);
+    -+	FREE_AND_NULL(opts->default_strategy);
+    -+	FREE_AND_NULL(opts->strategy);
+    + 	free(opts->gpg_sign);
+    + 	free(opts->reflog_action);
+    +@@ sequencer.c: static void replay_opts_release(struct replay_opts *opts)
+    + 	free(opts->strategy);
+      	for (size_t i = 0; i < opts->xopts_nr; i++)
+      		free(opts->xopts[i]);
+    --	free(opts->xopts);
+     +	opts->xopts_nr = 0;
+    -+	FREE_AND_NULL(opts->xopts);
+    + 	free(opts->xopts);
+      	strbuf_release(&opts->current_fixups);
+      }
+    +@@ sequencer.c: int sequencer_remove_state(struct replay_opts *opts)
+    + 		}
+    + 	}
+      
+    +-	replay_opts_release(opts);
+    +-
+    + 	strbuf_reset(&buf);
+    + 	strbuf_addstr(&buf, get_dir(opts));
+    + 	if (remove_dir_recursively(&buf, 0))
+     
+      ## sequencer.h ##
+     @@ sequencer.h: int sequencer_pick_revisions(struct repository *repo,
+    @@ t/t3412-rebase-root.sh: Tests if git rebase --root --onto <newparent> can rebase
+      
+      log_with_names () {
+     
+    + ## t/t3419-rebase-patch-id.sh ##
+    +@@ t/t3419-rebase-patch-id.sh: test_description='git rebase - test patch id computation'
+    + GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+    + export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+    + 
+    ++TEST_PASSES_SANITIZE_LEAK=true
+    + . ./test-lib.sh
+    + 
+    + scramble () {
+    +
+      ## t/t3423-rebase-reword.sh ##
+     @@
+      
+    @@ t/t3423-rebase-reword.sh
+      
+      . "$TEST_DIRECTORY"/lib-rebase.sh
+     
+    + ## t/t3425-rebase-topology-merges.sh ##
+    +@@
+    + #!/bin/sh
+    + 
+    + test_description='rebase topology tests with merges'
+    ++
+    ++TEST_PASSES_SANITIZE_LEAK=true
+    + . ./test-lib.sh
+    + . "$TEST_DIRECTORY"/lib-rebase.sh
+    + 
+    +
+      ## t/t3437-rebase-fixup-options.sh ##
+     @@ t/t3437-rebase-fixup-options.sh: to the "fixup" command that works with "fixup!", "fixup -C" works with
+      "amend!" upon --autosquash.
+    @@ t/t3438-rebase-broken-files.sh
+      
+      test_expect_success 'set up conflicting branches' '
+     
+    + ## t/t3501-revert-cherry-pick.sh ##
+    +@@ t/t3501-revert-cherry-pick.sh: test_description='test cherry-pick and revert with renames
+    + GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+    + export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+    + 
+    ++TEST_PASSES_SANITIZE_LEAK=true
+    + . ./test-lib.sh
+    + 
+    + test_expect_success setup '
+    +
+    + ## t/t3502-cherry-pick-merge.sh ##
+    +@@ t/t3502-cherry-pick-merge.sh: test_description='cherry picking and reverting a merge
+    + GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+    + export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+    + 
+    ++TEST_PASSES_SANITIZE_LEAK=true
+    + . ./test-lib.sh
+    + 
+    + test_expect_success setup '
+    +
+    + ## t/t3503-cherry-pick-root.sh ##
+    +@@ t/t3503-cherry-pick-root.sh: test_description='test cherry-picking (and reverting) a root commit'
+    + GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+    + export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+    + 
+    ++TEST_PASSES_SANITIZE_LEAK=true
+    + . ./test-lib.sh
+    + 
+    + test_expect_success setup '
+    +
+    + ## t/t3506-cherry-pick-ff.sh ##
+    +@@ t/t3506-cherry-pick-ff.sh: test_description='test cherry-picking with --ff option'
+    + GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+    + export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+    + 
+    ++TEST_PASSES_SANITIZE_LEAK=true
+    + . ./test-lib.sh
+    + 
+    + test_expect_success setup '
+    +
+    + ## t/t3511-cherry-pick-x.sh ##
+    +@@
+    + 
+    + test_description='Test cherry-pick -x and -s'
+    + 
+    ++TEST_PASSES_SANITIZE_LEAK=true
+    + . ./test-lib.sh
+    + 
+    + pristine_detach () {
+    +
+      ## t/t7402-submodule-rebase.sh ##
+     @@
+      
+ 4:  1e4e504c533 <  -:  ----------- builtin/revert.c: refactor run_sequencer() return pattern
+ 5:  e2895bb9795 <  -:  ----------- builtin/revert.c: fix common leak by using replay_opts_release()
+ 6:  21eea8eb802 !  4:  e83bdfab046 builtin/revert.c: move free-ing of "revs" to replay_opts_release()
+    @@ builtin/revert.c: int cmd_revert(int argc, const char **argv, const char *prefix
+     -	if (opts.revs)
+     -		release_revisions(opts.revs);
+     -	free(opts.revs);
+    -+	replay_opts_release(&opts);
+    + 	replay_opts_release(&opts);
+      	return res;
+      }
+    - 
+     @@ builtin/revert.c: int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
+      	opts.action = REPLAY_PICK;
+      	sequencer_init_config(&opts);
+    @@ builtin/revert.c: int cmd_cherry_pick(int argc, const char **argv, const char *p
+     -	if (opts.revs)
+     -		release_revisions(opts.revs);
+     -	free(opts.revs);
+    -+	replay_opts_release(&opts);
+      	if (res < 0)
+      		die(_("cherry-pick failed"));
+    - 	return res;
+    + 	replay_opts_release(&opts);
+     
+      ## sequencer.c ##
+     @@ sequencer.c: void replay_opts_release(struct replay_opts *opts)
+      	opts->xopts_nr = 0;
+    - 	FREE_AND_NULL(opts->xopts);
+    + 	free(opts->xopts);
+      	strbuf_release(&opts->current_fixups);
+     +	if (opts->revs)
+     +		release_revisions(opts->revs);
+    -+	FREE_AND_NULL(opts->revs);
+    ++	free(opts->revs);
+      }
+      
+      int sequencer_remove_state(struct replay_opts *opts)
+ -:  ----------- >  5:  4fea2b77c6d builtin/rebase.c: rename "squash_onto_name" to "to_free"
+ 7:  484ebbfd6d1 !  6:  898bb7698fc builtin/rebase.c: fix "options.onto_name" leak
+    @@ Commit message
+     
+         In [1] we started saving away the earlier xstrdup()'d
+         "options.onto_name" assignment to free() it, but when [2] added this
+    -    "keep_base" branch it didn't free() the already assigned
+    -    "squash_onto_name" before re-assigning to "options.onto_name". Let's
+    -    do that, and fix the memory leak.
+    +    "keep_base" branch it didn't free() the already assigned value before
+    +    re-assigning to "options.onto_name". Let's do that, and fix the memory
+    +    leak.
+     
+         1. 9dba809a69a (builtin rebase: support --root, 2018-09-04)
+         2. 414d924beb4 (rebase: teach rebase --keep-base, 2019-08-27)
+    @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix
+      		strbuf_addstr(&buf, "...");
+      		strbuf_addstr(&buf, branch_name);
+     -		options.onto_name = xstrdup(buf.buf);
+    -+		free(squash_onto_name);
+    -+		options.onto_name = squash_onto_name = xstrdup(buf.buf);
+    ++		free(to_free);
+    ++		options.onto_name = to_free = xstrdup(buf.buf);
+      	} else if (!options.onto_name)
+      		options.onto_name = options.upstream_name;
+      	if (strstr(options.onto_name, "...")) {
+ 8:  d607dbac38e !  7:  fb38dc873f9 sequencer.c: always free() the "msgbuf" in do_pick_commit()
+    @@ Commit message
+         we'd return before the strbuf_release(&msgbuf).
+     
+         Then when the "fixup" support was added in [3] this leak got worse, as
+    -    we added another place where we'd "return" before reaching the
+    -    strbuf_release().
+    +    in this error case we added another place where we'd "return" before
+    +    reaching the strbuf_release().
+     
+    -    Let's move it to a "cleanup" label, and use an appropriate "goto". It
+    -    may or may not be safe to combine the existing "leave" and "cleanup"
+    -    labels, but this change doesn't attempt to answer that question. Let's
+    -    instead avoid calling update_abort_safety_file() in these cases, as we
+    -    didn't do so before.
+    +    This changes the behavior so that we'll call
+    +    update_abort_safety_file() in these cases where we'd previously
+    +    "return", but as noted in [4] "update_abort_safety_file() is a no-op
+    +    when rebasing and you're changing code that is only run when
+    +    rebasing.". Here "no-op" refers to the early return in
+    +    update_abort_safety_file() if git_path_seq_dir() doesn't exist.
+     
+         1. 452202c74b8 (sequencer: stop releasing the strbuf in
+            write_message(), 2016-10-21)
+    @@ Commit message
+            2016-07-26)
+         3. 6e98de72c03 (sequencer (rebase -i): add support for the 'fixup' and
+            'squash' commands, 2017-01-02)
+    +    4. https://lore.kernel.org/git/bcace50b-a4c3-c468-94a3-4fe0c62b3671@dunelm.org.uk/
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+    @@ sequencer.c: static int do_pick_commit(struct repository *r,
+     -			return -1;
+     +					   opts, item->flags)) {
+     +			res = -1;
+    -+			goto cleanup;
+    ++			goto leave;
+     +		}
+      		flags |= AMEND_MSG;
+      		if (!final_fixup)
+    @@ sequencer.c: static int do_pick_commit(struct repository *r,
+     +			if (copy_file(dest, rebase_path_squash_msg(), 0666)) {
+     +				res = error(_("could not rename '%s' to '%s'"),
+     +					    rebase_path_squash_msg(), dest);
+    -+				goto cleanup;
+    ++				goto leave;
+     +			}
+      			unlink(git_path_merge_msg(r));
+      			msg_file = dest;
+    @@ sequencer.c: static int do_pick_commit(struct repository *r,
+      	/*
+      	 * If the merge was clean or if it failed due to conflict, we write
+     @@ sequencer.c: static int do_pick_commit(struct repository *r,
+    - 	}
+    - 
+      leave:
+    -+	update_abort_safety_file();
+    -+cleanup:
+      	free_message(commit, &msg);
+      	free(author);
+    --	update_abort_safety_file();
+     +	strbuf_release(&msgbuf);
+    + 	update_abort_safety_file();
+      
+      	return res;
+    - }
+ 9:  cd0489a2384 !  8:  d4b0e2a5c83 builtin/rebase.c: free() "options.strategy_opts"
+    @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix
+      	free(options.strategy);
+     +	free(options.strategy_opts);
+      	strbuf_release(&options.git_format_patch_opt);
+    - 	free(squash_onto_name);
+    + 	free(to_free);
+      	string_list_clear(&exec, 0);
+10:  eb3678b4667 =  9:  fd9c7a5547c commit.c: free() revs.commit in get_fork_point()
+-- 
+2.39.0.1205.g2ca064edc27
 
-As Olliver points out we should probably support "#" without the
-following " ", which seems to be an accident of history &
-over-strictness.
-
-But in this commit you extend it to "break", but we're going out of or
-way to e.g. extend this to "noop".
-
-So I'd expect that just like the first for-loop in "parse_insn_line()"
-we'd check if strchr(bol, '#') returns non-NULL, and if so set eol to
-that result.
-
-The "just like" being that we may want to explicitly forbid this or
-handle it specially for some, e.g. I didn't check but do the "label" and
-"reset" perhaps support arbitrary non-'\n' (probably by accident, and we
-could support commments there too).
-
-For "pick" we probably need to explicitly exclude it, although I can't
-remember if we do anything useful with the part of the line after the
-OID (maybe not...).
