@@ -2,67 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E6F88C54EBC
-	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 10:11:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 3A135C54EBD
+	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 10:16:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231240AbjALKLj (ORCPT <rfc822;git@archiver.kernel.org>);
-        Thu, 12 Jan 2023 05:11:39 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46426 "EHLO
+        id S239937AbjALKP7 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Thu, 12 Jan 2023 05:15:59 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49672 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229485AbjALKLB (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 12 Jan 2023 05:11:01 -0500
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 125A8634B
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 02:07:17 -0800 (PST)
-Received: by mail-ej1-x630.google.com with SMTP id u19so43430541ejm.8
-        for <git@vger.kernel.org>; Thu, 12 Jan 2023 02:07:17 -0800 (PST)
+        with ESMTP id S236799AbjALKPf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 12 Jan 2023 05:15:35 -0500
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16F8821A8
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 02:15:34 -0800 (PST)
+Received: by mail-ej1-x631.google.com with SMTP id ud5so43576075ejc.4
+        for <git@vger.kernel.org>; Thu, 12 Jan 2023 02:15:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=D1gcDEGXvA/gXHNfOSyjn/slg+yYssizWDVPQ9thF+8=;
-        b=YfFa4M3BOfUw1xHZp4MLoZ5JGFsi4udtCTmumUoqYy0zQrqQp6Dmlxtbkws0COGRKn
-         NfiEaEJHahKbUP35+WIVuJNNAoDkPTIC7MGpEGLObXBH42xrPJ+gxTyD3ggtkvITNo4E
-         IyyDFL6Cgl5djr7QvvDLZIo057zn38eOOVUcoqVu8z0vDtmiTK+0filTGd/leL9wja8f
-         jCdXtbEiQSzv5dd36cpdOaxvBdNUGIynBwLOTOZT8dp+1h76dOiI5XrbRxNM1IrZ7wDh
-         lO4jSFVMyT1GLn55fPJbxKk8nzbkk3erTH1QMmoXSe7IDiw/InpmN9m38E31r9qyIeJu
-         lBVg==
+        bh=nq3rbik4jSNJohVn09rBmBHZua/bzWM4F3K+bBJrx98=;
+        b=fVkkE3+B1OVAAgNN8MUr6IZ+IVN3Jmm3GXmQLWeC47wn7rbsi/IoCO1gKtKkze+BG8
+         SRnz/bBo/yf8M/Ml1Q1QypbeQTQTsbUPqNI/3Q8MkElCSFxabPc9cnCHudWucNqtKpGg
+         9YuWqiY4nYade6a0pnK3DC3g+Bb2+yZdS33uSFSybh2lToOyK4mj6BF6fe/eyYxCSVvi
+         aWOkwu9XrXDffuEJ4e0+LDY/lrXzQvtwF3dXQCymWt9MubPEKi5lUTjHFIXFfRyWjolr
+         IWEb7z0o8oI6DdF79biH0Z3NFJMELjV2EE8o/MlthL7mCQLz/yyy+Z5yRdqt8kOHebir
+         HtBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:message-id:in-reply-to:user-agent:references:date
          :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=D1gcDEGXvA/gXHNfOSyjn/slg+yYssizWDVPQ9thF+8=;
-        b=4QITB5Ys3lDLdD7fsElxkXVz9Dv0yHWDpInWQgHptXrx5ET6mT20mPZJAF+gDnry5b
-         eHZzKDbV6rgEkvVFTgngyKVlZ6FNku6Otcu7+ggrmsbDU63QPMrdxBsTmpEJKF2RlI1H
-         wzEELJ9F0TbXc5ZYAaNCk4c1ZBPhN1KWndRvZhaC34vgijzdOH0t41dhqB4bDW/YV3SV
-         zdXLDH4o3Gh9qf0UcbHjh7ZVeueJOpK4vtAeQ20VgRKXLFfns483LN93eQ4FWOoFoHDp
-         aeI/NWLrn81+WS+Or5ELXdeSm7VVQWT2K87YSld8Aun0LMV0wN5DWscciNQKbyGi46bP
-         S/fQ==
-X-Gm-Message-State: AFqh2kpPoBDAieBqBE3vIB+hvYEqAlpX9AezDHyFxhZrTLaVsv5PT2fc
-        W9qpG4bt6XKPiZ+171nO+0A=
-X-Google-Smtp-Source: AMrXdXuqimrsM69li83fDBE3jluowM+0dmuWLoUhhMDvGPR2ElFBylfSldOYHIpvgKORGyc0essDOA==
-X-Received: by 2002:a17:906:184a:b0:78d:f456:1ed0 with SMTP id w10-20020a170906184a00b0078df4561ed0mr73341841eje.33.1673518036388;
-        Thu, 12 Jan 2023 02:07:16 -0800 (PST)
+        bh=nq3rbik4jSNJohVn09rBmBHZua/bzWM4F3K+bBJrx98=;
+        b=Yad0HZh5zHeH9rpeUyIwOM7BIoi3tWYnlOb0Ehiz2wR6wx0Cy+732xC6AMpPgnjpX1
+         QpT8Ikc7pPeK0VdXLyQzURc0ZiBhtLTD1owGTTJWx/I/5gzc7iKkUWTc5I+HUWrxvTOc
+         zH772rolA+dGhWJfk8a9z2I2BILTP3PUD6jp+haVfncAoBx7IoQtTPmbtdyDr5qeM2n3
+         s2Qz2ewRcSuD7XL9rU67mBfUtc9im76v+E6ChYJDvPwDIOHtBXGMApJaYKczLfN4UfiR
+         2wT8zlSZTeXaeS/uLXnWmIXKSAebvUhYe3CQi1IizB1hlX2uAeyoPYVssWK0IRgVYoJt
+         XFvg==
+X-Gm-Message-State: AFqh2ko9A9yDZQflIyHF40qUB8VJ0DYUnak6uI0rVHxQCayA8oiEIf/v
+        r0zwOzC5q5J8BYn7HdgO67HnwLL4RxI=
+X-Google-Smtp-Source: AMrXdXv3UUXVk8QTfaosdksudCc1nD8g5Jx+Wqzp/WbZaWoZ/EAUNLXDmsV4nNm/i6E6WgRnEi6qLg==
+X-Received: by 2002:a17:907:c712:b0:7bd:6372:fdb4 with SMTP id ty18-20020a170907c71200b007bd6372fdb4mr87772584ejc.41.1673518532182;
+        Thu, 12 Jan 2023 02:15:32 -0800 (PST)
 Received: from gmgdl (j84076.upc-j.chello.nl. [24.132.84.76])
-        by smtp.gmail.com with ESMTPSA id o19-20020a17090611d300b008373f9ea148sm7284471eja.71.2023.01.12.02.07.15
+        by smtp.gmail.com with ESMTPSA id d14-20020a170906304e00b0077077c62cadsm7261968ejd.31.2023.01.12.02.15.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jan 2023 02:07:15 -0800 (PST)
+        Thu, 12 Jan 2023 02:15:31 -0800 (PST)
 Received: from avar by gmgdl with local (Exim 4.96)
         (envelope-from <avarab@gmail.com>)
-        id 1pFuUN-0007TU-14;
-        Thu, 12 Jan 2023 11:07:15 +0100
+        id 1pFucN-0007lL-0X;
+        Thu, 12 Jan 2023 11:15:31 +0100
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Teng Long <dyroneteng@gmail.com>
-Cc:     git@vger.kernel.org, tenglong.tl@alibaba-inc.com,
-        sunshine@sunshineco.com
-Subject: Re: [PATCH v4 5/5] notes.c: introduce "--separator" option
-Date:   Thu, 12 Jan 2023 10:53:04 +0100
-References: <cover.1673490953.git.dyroneteng@gmail.com>
- <f7edbd0e508243ab55c13721a21b78bf50278a21.1673490953.git.dyroneteng@gmail.com>
+To:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <derrickstolee@github.com>,
+        Victoria Dye <vdye@github.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        ZheNing Hu <adlternative@gmail.com>
+Subject: Re: [PATCH] ls-files: add %(skipworktree) atom to format option
+Date:   Thu, 12 Jan 2023 11:07:59 +0100
+References: <pull.1458.git.1673451741587.gitgitgadget@gmail.com>
 User-agent: Debian GNU/Linux bookworm/sid; Emacs 28.2; mu4e 1.9.0
-In-reply-to: <f7edbd0e508243ab55c13721a21b78bf50278a21.1673490953.git.dyroneteng@gmail.com>
-Message-ID: <230112.86y1q812y4.gmgdl@evledraar.gmail.com>
+In-reply-to: <pull.1458.git.1673451741587.gitgitgadget@gmail.com>
+Message-ID: <230112.86tu0w12kc.gmgdl@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -70,211 +73,82 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Jan 12 2023, Teng Long wrote:
+On Wed, Jan 11 2023, ZheNing Hu via GitGitGadget wrote:
 
-> From: Teng Long <dyroneteng@gmail.com>
+> From: ZheNing Hu <adlternative@gmail.com>
 >
-> When appending to a given notes object and the appended note is not
-> empty too, we will insert a blank line at first which separates the
-> existing note and the appended one, which as the separator.
+> Because sometimes we want to check if the files in the
+> index match the sparse specification by using
+> `git ls-files -t`, but `-t` option have semi-deprecated,
 >
-> Sometimes, we want to use a specified <text> as the separator. For
-> example, if we specify as:
+> So introduce "%(skipworktree)" atom to git ls-files
+> `--format` option. When we use this option, if the file
+> match the sparse specification and removed from working
+> tree, it will output "yes", othewise, output "no".
+
+Your code says "true" and "false", not "yes" or "no". Which is it ?:)
+
+More generally it's unfortanute that we don't support the ref-filter.c
+formats more generally, then we could just make this 1 or the empty
+string, and you'd do:
+
+	%(if)%(skipworktree)%(then)true%(else)false%(end)
+
+Now, I don't think your change needs to be blocked by generalizing that
+if/else stuff in ref-filter, that would probably be some thousand-line
+series if we're lucky, even though it's a good eventual goal.
+
+But I feel strongly that you should not pick "true", or "false", or
+"yes" or "no", but rather "1" or "", here, as doing so will be
+future-proof when it comes to this format being compatible with using
+the ref-filter.c conditional support.
 >
->     * --separator='------': we will insert "------\n" as the separator,
->     because user do not provide the line break char at last, we will add
->     the trailing '\n' compatibly.
->
->     * --separator='------\n': we will insert as-is because it contains
->     the line break at last.
->
->     * --separator='': we specify an empty separator which means will
->     append the message directly without inserting any separator at
->     first.
->
->     * not specified --separator option: will use '\n' as the separator
->     when do appending and this is the default behavour.
->
-> Signed-off-by: Teng Long <dyroneteng@gmail.com>
+> Signed-off-by: ZheNing Hu <adlternative@gmail.com>
 > ---
->  Documentation/git-notes.txt | 18 +++++++++--
->  builtin/notes.c             | 49 +++++++++++++++++++++++++++---
->  t/t3301-notes.sh            | 59 +++++++++++++++++++++++++++++++++++++
->  3 files changed, 120 insertions(+), 6 deletions(-)
+>     ls-files: add %(skipworktree) atom to format option
+>     
+>     git ls-files -t is semi-deprecated, but in face we need to use -t option
+>     to check if a file in the index match the sparse specification.
+>     
+>     So I think this feature can be migrated to git ls-files --format, add a
+>     %(skipworktree) atom to indicate whether the file in the index match the
+>     sparse specification and is removed from the working tree.
+>     
+>     v1: add %(skipworktree) atom to git ls-files format option.
 >
-> diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-> index efbc10f0f5..227fa88317 100644
-> --- a/Documentation/git-notes.txt
-> +++ b/Documentation/git-notes.txt
-> @@ -11,7 +11,7 @@ SYNOPSIS
->  'git notes' [list [<object>]]
->  'git notes' add [-f] [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
->  'git notes' copy [-f] ( --stdin | <from-object> [<to-object>] )
-> -'git notes' append [--allow-empty] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
-> +'git notes' append [--allow-empty] [--separator] [-F <file> | -m <msg> | (-c | -C) <object>] [<object>]
->  'git notes' edit [--allow-empty] [<object>]
->  'git notes' show [<object>]
->  'git notes' merge [-v | -q] [-s <strategy> ] <notes-ref>
-> @@ -86,7 +86,11 @@ the command can read the input given to the `post-rewrite` hook.)
->  
->  append::
->  	Append to the notes of an existing object (defaults to HEAD).
-> -	Creates a new notes object if needed.
-> +	Creates a new notes object if needed. If the note of the given
-> +	object and the note to be appended are not empty, a blank line
-> +	will be inserted between them as the separator ("blank line" is
-> +	the default behavior, `--separator` option supports to specify
-> +	a customized one).
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1458%2Fadlternative%2Fzh%2Fls-file-format-skipworktree-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1458/adlternative/zh/ls-file-format-skipworktree-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1458
+>
+>  Documentation/git-ls-files.txt |  6 ++++++
+>  builtin/ls-files.c             |  3 +++
+>  t/t3013-ls-files-format.sh     | 22 ++++++++++++++++++++++
+>  3 files changed, 31 insertions(+)
+>
+> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
+> index 440043cdb8e..0e50307121d 100644
+> --- a/Documentation/git-ls-files.txt
+> +++ b/Documentation/git-ls-files.txt
+> @@ -260,6 +260,12 @@ eolattr::
+>  	that applies to the path.
+>  path::
+>  	The pathname of the file which is recorded in the index.
+> +skipworktree::
+> +	If the file in the index marked with SKIP_WORKTREE bit.
+> +	It means the file do not match the sparse specification
+> +	and removed from working tree.
+> +	See link:technical/sparse-checkout.txt[sparse-checkout]
+> +	for more information.
 
-I think this should change to:
+I likewise think this won't need to be blocked, but this is a sign that
+we should probably move these to the main doc namespace. See 1e2320161d2
+(docs: move http-protocol docs to man section 5, 2022-08-04) (and
+commits before that) for prior art.
 
-	[...]will be inserted between them. Use the `--separator` option
-	to insert other delimiters.
+But what we should fix here is that this ling is wrong, as you can see
+in that commit we need to link to the HTML docs for these (confusing as
+that is).
 
-I.e. part of that's fixes for odd grammar, but mainly just offloading
-the explanation to the --separator discussion below.
-
-
->  
->  edit::
->  	Edit the notes for a given object (defaults to HEAD).
-> @@ -159,6 +163,16 @@ OPTIONS
->  	Allow an empty note object to be stored. The default behavior is
->  	to automatically remove empty notes.
->  
-> +--separator <text>::
-> +	Specify the <text> to be inserted between existing note and appended
-> +	message, the <text> acts as a separator.
-
-Maybe let's use '<string>' or '<separator>' here instead? e.g.:
-
-	Specifies the <string> ...
-
-Maybe "<text>" just looks odd to me.
-
-More generally, let's say something like:
-
-	When invoking "git notes append", specify the...
-
-I.e. this is only for "append", but nothing here says so.
-
-> +	If <text> is empty (`--separator=''`), will append the message to
-> +	existing note directly without insert any separator.
-> +	If <text> is nonempty, will use as-is. One thing to notice is if
-> +	the <text> lacks newline charactor, will add the newline automatically.
-> +	If not specify this option, a blank line will be inserted as the
-> +	separator.
-
-
-We're spending a lot of text here on a pretty simple concept if I
-understand it correctly, I.e. just (pseudocode):
-
-	int sep_extra_nl = 0;
-	const char *sep = opt_sep ? opt_sep : "\n";
-	if (!strstr(sep, '\n'))
-		sep_extra_nl = 1;
-	[...]
-
-Except that was written after I read your explanation, but looking at
-the code it's incorrect, it's whether the "*last*" character contains a
-newline or not.
-
-So all in all, I think we should just say:
-
-	--separator <separator>:
-		The '<separator>' inserted between the note and message
-		by 'append', "\n" by default. A custom separator can be
-		provided, if it doesn't end in a "\n" one will be added
-		implicitly .
-
-> +
->  --ref <ref>::
->  	Manipulate the notes tree in <ref>.  This overrides
->  	`GIT_NOTES_REF` and the "core.notesRef" configuration.  The ref
-> diff --git a/builtin/notes.c b/builtin/notes.c
-> index f2efb3736c..6746ad3232 100644
-> --- a/builtin/notes.c
-> +++ b/builtin/notes.c
-> @@ -24,6 +24,8 @@
->  #include "notes-utils.h"
->  #include "worktree.h"
->  
-> +static char *separator = "\n";
-> +
->  static const char * const git_notes_usage[] = {
->  	N_("git notes [--ref <notes-ref>] [list [<object>]]"),
->  	N_("git notes [--ref <notes-ref>] add [-f] [--allow-empty] [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]"),
-> @@ -209,7 +211,7 @@ static void write_note_data(struct note_data *d, struct object_id *oid)
->  	}
->  }
->  
-> -static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
-> +static int parse_msg_arg_add(const struct option *opt, const char *arg, int unset)
->  {
->  	struct note_data *d = opt->value;
->  
-> @@ -225,6 +227,43 @@ static int parse_msg_arg(const struct option *opt, const char *arg, int unset)
->  	return 0;
->  }
->  
-> +static void insert_separator(struct strbuf *message)
-> +{
-> +	const char *insert;
-> +
-> +	if (!separator)
-> +		separator = "\n";
-> +	if (*separator == '\0')
-
-Style: Don't compare to 0, NULL, '\0' etc. Just use !*separator.
-
-> +		/* separator is empty; use as-is (no blank line) */
-> +		return;
-> +	else if (separator[strlen(separator) - 1] == '\n')
-> +		/* user supplied newline; use as-is */
-> +		insert = separator;
-> +	else
-> +		/* separator lacks newline; add it ourselves */
-> +		insert = xstrfmt("%s%s", separator,"\n");
-
-We're leaking memor here, and making it hard to fix that by conflating a
-const "insert" with this allocated version.
-
-I haven't read the whole context, but this seems really complex per the
-doc feedback above. Why can't we just keep track of if we're using the
-default value or not? I.e. just have the "--separator" option default to
-NULL, if it's not set y ou don't need to do this "\n" check, and just
-use the default, otherwise append etc.
-
-> +	strbuf_insertstr(message, 0, insert);
-
-Maybe you were trying to get around using a more complex strbuf_splice()
-here, but let's just avoid teh xstrfmt() and splice() that "\n" in, if
-needed?
-
-> +}
-> +
-> +static int parse_msg_arg_append(const struct option *opt, const char *arg, int unset)
-> +{
-> +	struct note_data *d = opt->value;
-> +	struct strbuf append = STRBUF_INIT;
-> +
-> +	BUG_ON_OPT_NEG(unset);
-> +
-> +	strbuf_addstr(&append, arg);
-> +	if (d->buf.len){
-> +		insert_separator(&append);
-> +	}
-
-Drop the {} here.
-
-> +	strbuf_addbuf(&d->buf, &append);
-> +	strbuf_stripspace(&d->buf, 0);
-> +
-> +	d->given = 1;
-> +	strbuf_release(&append);
-
-Why do we need this other variable, canet'w just append to d.buf
-directly?
-
-Do we mean to strbuf_stripspace() here over the whole buffer, or just
-what we're appending?
+Or (and I didn't check) if we never generate the *.html either for this
+particular one this link will always be broken. I.e. we won't install
+this, nor the HTML docs.
