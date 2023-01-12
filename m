@@ -2,112 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 7C1CBC5479D
-	for <git@archiver.kernel.org>; Wed, 11 Jan 2023 23:32:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 86C40C46467
+	for <git@archiver.kernel.org>; Thu, 12 Jan 2023 00:45:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231493AbjAKXc4 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Wed, 11 Jan 2023 18:32:56 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39042 "EHLO
+        id S234760AbjALApW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Wed, 11 Jan 2023 19:45:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234951AbjAKXcu (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 11 Jan 2023 18:32:50 -0500
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28D8E37245
-        for <git@vger.kernel.org>; Wed, 11 Jan 2023 15:32:49 -0800 (PST)
-Received: by mail-wr1-x431.google.com with SMTP id t5so12129008wrq.1
-        for <git@vger.kernel.org>; Wed, 11 Jan 2023 15:32:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7sXbcH64KXpaIto/069xqUxvkcKj3MsUYqnuXX2r+Xw=;
-        b=YYnEiZBOjRxf3WzW27DrAbryVBjN9DYlJy3mWxDoL4gvB4roUcyF8CSflRgTEX0gBN
-         V83DM2IwdGtxgiQP2aVi0q6XsYYpU6RWqQzkVk7i2TUwuyt9xMszg2uE9eN594rAIL3q
-         JQQ5C8GiMO23w3bVV+oBZkKU80IyaCakL+50Zshbl1u3lomNm7XqwIB1DgK70PPkKU1g
-         FOd39R95CRoCoNh19dsuNy1N7dhAtoNDpr7yRq819lYhHOYRojG2iTiNsYzrCuaEhBBY
-         NwSE7j4WatuUJvNJPj+731XPWqMNAgfEY25cuHCJaxRC1FVqE+v9X+AyEmXJe90m6ICH
-         rhig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7sXbcH64KXpaIto/069xqUxvkcKj3MsUYqnuXX2r+Xw=;
-        b=GKHU82KDtBy54jLfW69RqFy1vEByjMcVWsG7hjz8F9RiOtWLa9KM29mu4P46tzcYZj
-         0Z7aFEXoupMcuLugo1j7zXQ4PNwYrU9X4My30wb1LHRbCM3/220jb8d4Y1Pm1AX/N7Y2
-         Ta5Gq6Ki41MdCIny8ulSyDJ7cAzYuVw36UFmnwYnJm+1XCLBDx1WD0T9EmEAQmRrfHRJ
-         2lJAN8dlwh7iSbO9uwOM5hEV37FIBJgTVXZ9TqmQIkbJc3Nih35eDU/j4M+MCqZUgEWK
-         6+MQl9ddlXuOR55k0W390nqRaHsclxJbPAqtGUBDquiiIDnG8BaWDXbrCx90Ww1DPqJZ
-         5rUw==
-X-Gm-Message-State: AFqh2kr0DduIt+2B5QaIlAiYWX9AQPVGFCwv5tWn1hGavoSsDzTkZOCn
-        rdF0GAFKZUtd4JfhtFKPfq91aBh0JZHD+7dHi9Y=
-X-Google-Smtp-Source: AMrXdXv0sp3ahcL8gKO+yjMOfPCd/U9ZVkxn/l5h8JzvMhFxQ+jT+YwPhyHfQpOd2HgH8SfU6Avcsw==
-X-Received: by 2002:adf:e303:0:b0:242:1926:783c with SMTP id b3-20020adfe303000000b002421926783cmr46592217wrj.58.1673479967502;
-        Wed, 11 Jan 2023 15:32:47 -0800 (PST)
-Received: from titov.fritz.box ([212.102.57.19])
-        by smtp.gmail.com with ESMTPSA id n1-20020a5d67c1000000b002bc7f64efa3sm7679308wrw.29.2023.01.11.15.32.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Jan 2023 15:32:46 -0800 (PST)
-From:   Andrei Rybak <rybak.a.v@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jeff Hostetler <jeffhost@microsoft.com>
-Subject: [PATCH v1 3/3] t7527: use test_when_finished in 'case insensitive+preserving'
-Date:   Thu, 12 Jan 2023 00:32:42 +0100
-Message-Id: <20230111233242.16870-4-rybak.a.v@gmail.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230111233242.16870-1-rybak.a.v@gmail.com>
-References: <20230111233242.16870-1-rybak.a.v@gmail.com>
+        with ESMTP id S236081AbjALApO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 11 Jan 2023 19:45:14 -0500
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E85011DDF2
+        for <git@vger.kernel.org>; Wed, 11 Jan 2023 16:45:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.de; s=s31663417;
+        t=1673484301; bh=TftWP4ndW5yg57/gx9g4U/yYJunNUInhVZOsElKSQ+0=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=Kq7b4ysNzMXLlzdtToTi75jsxffAwfSjpM4NCA1tA20oDevvMTLZ4Prlo6baj/xuO
+         QkW8zCZZIlbYZQNHTKt5CSiULiOfeI8QLRozh/veydUtJ0xhAKzGabGBRzRgs475Re
+         1WeePoRFGPCYS0rdiL89V1uomQsfpkB83MzDK5bhnmCJbI1PGuBNEBDSTwlGcqirsE
+         w/oOg5OzM68duiSQYFUx3Njr+Rt7Fo4+DrjVBSPBb5XOWMvSMDd/3gcxQdwfL3eYNl
+         7NbFu2h+Pu5T72F7YyuAfMoVHkOPJP6nGHx+Z/6fzkFDpUHNzRRR14Azz4ZHKEX4P1
+         Q+FfbekUd58ZA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [10.222.0.4] ([79.195.233.224]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MPXd2-1pSKn03HsI-00MgX5; Thu, 12
+ Jan 2023 01:45:00 +0100
+Message-ID: <df736b4c-3773-9f14-f66b-1325688634ab@gmx.de>
+Date:   Thu, 12 Jan 2023 01:45:00 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v1 0/3] fixes for commented out code in tests (was "Re:
+ [PATCH] *: fix typos which duplicate a word")
+To:     Andrei Rybak <rybak.a.v@gmail.com>, git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Robin Rosenberg <robin.rosenberg@dewire.com>
+References: <20230111233242.16870-1-rybak.a.v@gmail.com>
+Content-Language: en-US
+From:   Tim Schumacher <timschumi@gmx.de>
+In-Reply-To: <20230111233242.16870-1-rybak.a.v@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:GsWVVEq25DQpO75bLjIC5CGkmMAu1bcTE/5bprGawBS2I/jD6YV
+ xFR0VMqnHyOu1Ft/xdkny3jK0SJiu0XW4kWlK1E84Q11HZU4HooTkkqHKoc4/mQy56tX/J+
+ xh2OUatUvk/+4Kz4OyN3KxNDTiPy6/jOYi9H3ZMnAXgc4sfkC/6agIzunApWmZsSpIV8Viv
+ vN+wNOTIma5zykmwkwivw==
+UI-OutboundReport: notjunk:1;M01:P0:6R2Tbt6bEcE=;+kzTfEZYtomRSo35qlIelq0FMHl
+ SdQzxP2e/XzcgKdMCgB1Qe+9Z6aitAaV4wgRMZjPPDyn5JafM2QJHRqdMyKBe8Fl70gX+28Zs
+ ye3vw+W7nDQ7q0RcOMMV2jTcvAn+DMNaIzWekrhZTVbPFPHxs59UZTg+PQvPxBDF6KqwelA9c
+ aVSEmBzE/GTkrEnd1PLI2i/+j5jb+U8vyz5VRZfw/JbTni1aNN27IPdJzftS9kHWQcf6Nqw8N
+ ucIKMatVe16ahGbeR2gVwsBCh+piiuHtwEr1Gyt2pKpY1TvV6O/PXPju4jLH95bXQLKH5zxKP
+ WYd9DpSJ21tyoMt1zLqxZJGj1LFSl1Eh1z94SvrGZGHJiVg/6YLn6YlvtTuCbLkSI1TpX4X2O
+ dY2sEav4oZICHhdXPYe7btOiR831iWiTsZiPeFG8Z/lG6uEbueuqvSCFa2JSSUTr6xU4qBgCh
+ uEUOIJEfKMtDi/R4GbNz5Q9GON6pMVWjyRpI3YPfMUo8urz1FGf32LhXSjhgMs2bDAYI/ZDn3
+ BapRvS4PxuPW7OX8L48jW3YNMCvA4iU0dMbbamw/GWMP1MEbOHLwT3sHc/9AAxtan2G+9f7tL
+ TN6wnWpCKJzqYPmHZZAkluyyB856667RjI3Ok7NcydGMRXqdpaM5sOCFkBaLs4CYjSFZv54O+
+ 6qckJjJqnQBWdURZX83arbROrCAPy+hCtPVnqxi8j5fGquwriPu9EBRWvwMxcjjLM9HOtz5qB
+ PqTlIHMEd7T0DVtjm7IuQmh29mi8MwcAfxlWa/A09Bn5NQPwH4nyESggxgniDqWBsRD0TPIQY
+ KGbhIA510wNuIozsnFTmYK5wM+C4zMhF1yGzMRkJR5KCo0YFFWWwGZHCIPCCTZzDKE8tSYUcR
+ ZFQayNAwfDbTq+B3g+bswNZH1zOxTEfRknzp8+8fSb+zJQ60zIdA2Z8QsD7YfRKG+j7yjmCFU
+ OG/wTLU4kFpvmqI/6R9BJtyNFms=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Most tests in t7527-builtin-fsmonitor.sh that start a daemon, use the
-helper function test_when_finished with stop_daemon_delete_repo.
-Function stop_daemon_delete_repo explicitly stops the daemon.  Calling
-it via test_when_finished is needed for tests that don't check daemon's
-automatic shutdown logic [1] and it is needed to avoid daemons being
-left running in case of breakage of the logic of automatic shutdown of
-the daemon.
+On 12.01.23 00:32, Andrei Rybak wrote:
+> [...]
+>
+> Here's a patch series that fixes some of the commented out test code.
+>
+> I skipped changing the following:
+>
+> 1. a minute-long test_expect_failure is commented out in t0014-alias.sh =
+.
+>     Technically, this could be uncommented and marked with `EXPENSIVE`
+>     prerequisite, but it doesn't seem worth it for a `test_expect_failur=
+e`.
+>     [ cc Tim Schumacher, who added this test in fef5f7fc43 (t0014: intro=
+duce an
+>     alias testing suite, 2018-09-16) ]
 
-Unlike these tests, test 'case insensitive+preserving' added in [2] has
-a call to function test_when_finished commented out.  It was commented
-out in all versions of the patch [2] during development [3].  This seems
-to not be intentional, because neither commit message in [2], nor the
-comment above the test mention this line being commented out.  Compare
-it, for example, to "# unicode_debug=true" which is explicitly described
-by a documentation comment above it.
+The reason why this particular test is commented out (and why it
+mentions a run time of one minute) is because support for detecting
+external alias loops isn't yet implemented. This means that running that
+test would spin the test runner until the test times out due to an
+intentional infinite loop.
 
-Uncomment test_when_finished for stop_daemon_delete_repo in test 'case
-insensitive+preserving' to ensure that daemons are not left running in
-cases when automatic shutdown logic of daemon itself is broken.
+As soon as that is implemented properly, git would ideally detect the
+loop after a few iterations at latest, so the test wouldn't require to
+be marked as 'EXPENSIVE' in the first place.
 
-[1] See documentation in "fsmonitor--daemon.h" for details.
-[2] caa9c37ec0 (t7527: test FSMonitor on case insensitive+preserving
-    file system, 2022-05-26)
-[3] See mailing list thread
-    https://lore.kernel.org/git/41f8cbc2ae45cb86e299eb230ad3cb0319256c37.1653601644.git.gitgitgadget@gmail.com/T/#t
+For the context of your patches, skipping adjusting this test is most
+likely fine, as it references currently unimplemented behavior and it
+presumably would require more adjustments anyways before finally being
+enabled.
 
-Signed-off-by: Andrei Rybak <rybak.a.v@gmail.com>
----
- t/t7527-builtin-fsmonitor.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> [...]
+>
 
-diff --git a/t/t7527-builtin-fsmonitor.sh b/t/t7527-builtin-fsmonitor.sh
-index 76d0220daa..2c271b4d7e 100755
---- a/t/t7527-builtin-fsmonitor.sh
-+++ b/t/t7527-builtin-fsmonitor.sh
-@@ -910,7 +910,7 @@ test_expect_success "submodule absorbgitdirs implicitly starts daemon" '
- # the file/directory.
- #
- test_expect_success CASE_INSENSITIVE_FS 'case insensitive+preserving' '
--#	test_when_finished "stop_daemon_delete_repo test_insensitive" &&
-+	test_when_finished "stop_daemon_delete_repo test_insensitive" &&
- 
- 	git init test_insensitive &&
- 
--- 
-2.39.0
-
+Tim
