@@ -2,67 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA6AFC54EBD
-	for <git@archiver.kernel.org>; Fri, 13 Jan 2023 13:46:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 11B0EC67871
+	for <git@archiver.kernel.org>; Fri, 13 Jan 2023 14:02:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233439AbjAMNqd (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Jan 2023 08:46:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45134 "EHLO
+        id S241860AbjAMOCH (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Jan 2023 09:02:07 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240277AbjAMNqK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2023 08:46:10 -0500
-Received: from mail.turbocat.net (turbocat.net [IPv6:2a01:4f8:c17:6c4b::2])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8877C85CBA
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 05:39:39 -0800 (PST)
-Received: from [10.36.2.145] (unknown [46.212.121.255])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by mail.turbocat.net (Postfix) with ESMTPSA id AA31E26001F
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 14:39:37 +0100 (CET)
-Message-ID: <446984f6-0d2e-04da-11a3-8b1481fac953@selasky.org>
-Date:   Fri, 13 Jan 2023 14:39:37 +0100
+        with ESMTP id S241529AbjAMOB1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2023 09:01:27 -0500
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66702BC20
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 05:58:51 -0800 (PST)
+Received: by mail-qt1-x829.google.com with SMTP id jr10so11803277qtb.7
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 05:58:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3xYcPKIX+Y8m9mLRovZ+w3Y5OC3BgJaJrztwqhNSQ/8=;
+        b=VexR+wvKkyTLOGQBXjEBNxWbNeTzsv6Bhq2b+d2fYmacXFGdaa13RWaej3IUI6Pp1M
+         UmrNQoTW0b8XjxD05+XUUixJxPPrt2BOw+QvlazqkR9F64VL03he8Iy0ciX3LoL1QKH3
+         Q/6MhG7UegX4+YMjlYoJOWxQcLztzUbD/EewPjBANylnUa6KivemjuCiD9ZZBZaCZ1dK
+         eEF9WGCcH5ysm1JKUFARiXs1WvAifMFDKruwI5q8op03vl5XZ3ioMPRhCi2u/IImNlrD
+         tN/16igveIUjdiHNhb0NiM+SnZvQSg79llYKFwNzqytTMtUh40msUjQw0bf2M4mBsp+d
+         W1Jg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3xYcPKIX+Y8m9mLRovZ+w3Y5OC3BgJaJrztwqhNSQ/8=;
+        b=gNysnvaGTQMF94gmO8B+sp+WK7IE4+gwCs2rvrxvwiqxpDM4lbj8THvMjNVbItxA8y
+         p0+v3KhRwr967cl7HSUC2/VfRRznGL+R4B6SXfH3ntxqmvlfP00Zh0rQl2s3rq9ukfRZ
+         MFvK9B2IHrqrwoR2vu7ub5YQP2q+HssGN8DGpR8bo1QGmKSB4eQrEIDA3aldLIDl/ivs
+         +YN+JKj4fiKYM8yUEvWQc2FsjxdhRzAgWxKlgUSbvxOkS3Bqd5+j7GJdaQ5TZsrGCVTW
+         fsETDSAYrThFYeEtRBBSpTW6Q+lsGtwFb4plEQKig9wtCRcjz0YCT1Lp4kicedmAkYcU
+         UDBw==
+X-Gm-Message-State: AFqh2kq68BBdFMDjRwq8YXONzyHv6l6ooPccz8esPB3JXFL8OZnL3pO5
+        TF4TWZFHa/M8S/4W6cWlkQ9LlTcli9c=
+X-Google-Smtp-Source: AMrXdXv75AIvBq4cgRIk5U061QHG2XmGUamKp0MdKsCMvEg0pGXWI5kOkSVwMS9lNDn+QEMoAyz+7w==
+X-Received: by 2002:ac8:568a:0:b0:3a6:348c:5159 with SMTP id h10-20020ac8568a000000b003a6348c5159mr95269743qta.26.1673618330269;
+        Fri, 13 Jan 2023 05:58:50 -0800 (PST)
+Received: from [192.168.1.127] (173-246-5-136.qc.cable.ebox.net. [173.246.5.136])
+        by smtp.gmail.com with ESMTPSA id r3-20020ac84243000000b003a5430ee366sm10539177qtm.60.2023.01.13.05.58.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 13 Jan 2023 05:58:49 -0800 (PST)
+Subject: Re: Bug report: checkout --recurse-submodules failing
+To:     Carlos Gonzalez <carlos.gonzalez@codeplay.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <CWXP265MB3688191D75A56F27A0C4DDB69CFD9@CWXP265MB3688.GBRP265.PROD.OUTLOOK.COM>
+From:   Philippe Blain <levraiphilippeblain@gmail.com>
+Message-ID: <c587b501-494a-bb9c-4789-dc78f4ad655b@gmail.com>
+Date:   Fri, 13 Jan 2023 08:58:48 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; FreeBSD amd64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: Gitorious should use CRC128 / 256 / 512 instead of SHA-1
-Content-Language: en-US
-To:     git@vger.kernel.org
-References: <39dd1a00-786b-acf5-8a40-2425f7dab6cc@selasky.org>
- <20230113133059.snyjblh3sz2wzcnd@carbon>
-From:   Hans Petter Selasky <hps@selasky.org>
-In-Reply-To: <20230113133059.snyjblh3sz2wzcnd@carbon>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <CWXP265MB3688191D75A56F27A0C4DDB69CFD9@CWXP265MB3688.GBRP265.PROD.OUTLOOK.COM>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/13/23 14:30, Konstantin Khomoutov wrote:
-> On Fri, Jan 13, 2023 at 01:59:44PM +0100, Hans Petter Selasky wrote:
+Hi Carlos,
+
+Le 2023-01-12 à 07:17, Carlos Gonzalez a écrit :
+> What did you do before the bug happened? 
 > 
->> Currently GIT only supports cryptographic hashes for its commit tags.
-> [...]
+> Checking out a custom commit or tag using `--recurse-submodules`, where the specific commit contained a submodule
+> not included in the main branch. The checkout command failed. (Detailed steps below)
 > 
-> https://github.com/git/git/blob/9bf691b78cf906751e65d65ba0c6ffdcd9a5a12c/Documentation/technical/hash-function-transition.txt
+> What did you expect to happen? 
 > 
-> It's not clear why are you referring to Gitorious in your mail's subject and
-> then talk about Git.
+> The repository should be checked out to the specified commit and submodules updated, and the one missing in the main 
+> branch, cloned.
+
+It's a reasonable expectation, but the current 'checkout' code does not
+know how to clone missing submodules.
+
 > 
+> What happened instead? 
+> 
+> git checkout --recurse-submodules submodule
+> fatal: not a git repository: ../.git/modules/sycl-blas
+> fatal: could not reset submodule index
+> 
+> What's different between what you expected and what actually happened?
+> 
+> This only fails when the repository was cloned with --recursive flag.
+> 
+> Anything else you want to add:
+> 
+> I wrote these simple steps to reproduce:
+> 
+> mkdir repo1 && cd repo1
+> git init
+> git submodule add --name sycl-blas  https://github.com/codeplaysoftware/sycl-blas.git
+> git commit -m "Adding submodule"
+> git tag -a submodule -m submodule
+> git submodule deinit sycl-blas
+> truncate -s 0 .gitmodules
+> rm -rf sycl-blas/
+> git add .gitmodules
+> git rm sycl-blas
+> git commit -m "Remove submodule"
+> cd ../
+> 
+> # When repository is cloned without `--recursive`, checkout works
+> git clone repo1 cloned-repo1
+> cd cloned-repo1
+> git checkout --recurse-submodules submodule # ok
+> cd ../
+> # When repository is cloned with `--recursive`, checkout fails
+> git clone --recursive repo1 cloned-repo2
+> cd cloned-repo2
+> git checkout --recurse-submodules submodule
+> fatal: not a git repository: ../.git/modules/sycl-blas
+> fatal: could not reset submodule index
 
-Hi,
+Thanks for a complete reproducer. This has been reported before,
+see the threads linked at [1].
 
-I thought that Git was short for Gitorious? My bad.
+I was working on that issue last month, so that at least the checkout fails
+in a clean way, but have not gone back to it yet.
 
-The document you refer to really highlights my concerns, that a strong 
-cryptographic hash algorithm is the highway to hell.
+In the meantime, as you've discovered, a workaround is to clone without
+'--recurse-submodules', then manually run 'git submodule update --init --recursive'
+after switching branches.
 
-Do _not_ use a cryptographic hash for Git. Use plain good old CRC hashes.
+Cheers,
 
-Just imagine the consequences of finding child porn inside a 10-year old 
-firmware binary blob in the Linux kernel. Will you just ignore it, or 
-will you fix it?
+Philippe.
 
-That's why I say, that it must be possible to forge the hashes by default.
-
---HPS
+[1] https://github.com/gitgitgadget/git/issues/752
