@@ -2,506 +2,272 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E06ABC61DB3
-	for <git@archiver.kernel.org>; Fri, 13 Jan 2023 10:49:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id E28F5C54EBE
+	for <git@archiver.kernel.org>; Fri, 13 Jan 2023 10:50:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240698AbjAMKtV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Jan 2023 05:49:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47314 "EHLO
+        id S241264AbjAMKuk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Jan 2023 05:50:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241252AbjAMKqr (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2023 05:46:47 -0500
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8406B77D33
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 02:45:41 -0800 (PST)
-Received: by mail-wm1-x32b.google.com with SMTP id g10so14979051wmo.1
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 02:45:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=dxsmc9IhE/wuYB1GTeSjSYiRLpRH3f51S78xf2fIluo=;
-        b=hKpm76I2Rt1SDZeesxjOAc0nSzzgLSVGJuLQu59eTQc9aPk3io15FmjSa3CG1isiHj
-         klVG/TF95Ue+yrg4o6uJjmKdXPGN7CacWj/rPJeiZu6/dTu+vTMzoWkcnUswKRXTQM9M
-         TmrFyp3OcaeqGLFdsP93XlFW5S68dhXFU9lYemtXMOYSHzwonozdjl/msb781BR9V0Qs
-         hBCMc8VHv1pk9OQynuo8oskkc9YewMMLD9KiB6sj46phzwjxpsi0GrwtaSwHor7wTqnj
-         vm4eSALdxUy0mbM8c8yu3FN63azBy2ScU7KUN9LpsLtSwGisq+IwehR/aIsibe9jfLYP
-         3WyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to
-         :content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dxsmc9IhE/wuYB1GTeSjSYiRLpRH3f51S78xf2fIluo=;
-        b=u6TLL7iu4Dobh3NSqnoJyVlcaPr3t//XIOC82aNCk4EWYShnn3305TdPmWwgPtOlxn
-         CMFwDvqF+PiSwpThO0tntzYPE2hvNDEnNQe+vYHC7SKn4SFsg1vtdNV8XptB2PhppZlM
-         0gGWtsSqYBzFKuUDVOZMk5sI1Q5d8OCRKu2nf+GArh0DSwVFwhtTlLH07R4aEmXax/9S
-         VaTDG4yjW1rbDCQXwbbcqt7vc7W9uGPtSpsKy7+MjOy3vFK+BEUgxA24i+1QGaMxLPuq
-         DF5FW5OX4wuNG2vqK4OEQj6AS8CWZuYR78TAMVc2bNt6oWnLuB7/tnPmUl/fE/NwQboW
-         d69A==
-X-Gm-Message-State: AFqh2kpBW/ugD+YX17cXSpMwEwicGs2obFF6AJfHU34MmNKhAMSV1I0D
-        YlO/SCcc2ks4ZLbSOUeS2f8=
-X-Google-Smtp-Source: AMrXdXuTZp+olawar23cUjQY4A6z8M7Sd2k89jKVffOWhTCNo1EVxitFW4AWErJOQXwfw5w4nbSv+g==
-X-Received: by 2002:a05:600c:1e10:b0:3da:2032:6c0f with SMTP id ay16-20020a05600c1e1000b003da20326c0fmr1677010wmb.31.1673606739947;
-        Fri, 13 Jan 2023 02:45:39 -0800 (PST)
-Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id x14-20020a1c7c0e000000b003d9f15efcd5sm15377100wmc.6.2023.01.13.02.45.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jan 2023 02:45:39 -0800 (PST)
-From:   Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <e1722673-b444-2dcf-4087-46d2d15b9331@dunelm.org.uk>
-Date:   Fri, 13 Jan 2023 10:45:38 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 0/9] sequencer API & users: fix widespread leaks
+        with ESMTP id S231274AbjAMKuZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2023 05:50:25 -0500
+Received: from EUR05-AM6-obe.outbound.protection.outlook.com (mail-am6eur05hn2200.outbound.protection.outlook.com [52.100.174.200])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB615777C0
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 02:49:44 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=LL7j+QTyxvVANNjgMiOEubER2eSv01OjATFFtAXhLOC3SUhW6vVq9m4HnF6OIdi4GsWpwwSgjDeHH1rGCy1lsbucxX8uaiuGzqeWY540+X+4RuQla2PsdytVbbw/9EBT1sS8Mo/X6d/9rq2YcM/kDC90OVXAsb0Z/UeD94IHDWFZnenuvuLyqGturATXe4laymO+0zR3wHrF0pEwblJ8KAl7nRUYcAw5bqodg5f9kRSu5hrA/Ozczg45LrZpBvDuj0RlgizCR/w/PA0mTFeRadxnTxulm0AtJe7NF6GVVXpukJ1fHWIDkQnJL8LluzkBkItW6aENTnCjD2ibUMwryA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lllvniCtDWqW4OYDZkOtueO0Jc/9janYszKt8g+b7ws=;
+ b=Hyr//lybL8c40+KumeqdKBAh4r6GD72bsSa00brrbp1eKKhu/9vgRV+Ivh4/6GPeOYlEAEBjg3pu7G/cA21MaLLE47nkJf6T9RTlyoUXKi1LcSa+RKFZ0hpJatkhgc95+GaAuFxMxUsbdR9dDhXbweN9Qq1+5NGLssQzfT0jW1CMI+ph3+EG3c649R7Dxlj7jg1vyD4tZWh2X88i5E0jTBcZIX/qDqFSsN0saQe4QI1ijyMm/CqAglnbq9gZUn2Uj4gB9ynUFmmt7z5U4MlgfbBqHhMJRsatq4NCrPvDaPT6NPDjURFaqaLTwA6OfsCAFGeJJoJFWD/hYeZdLwOhqw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vitesco.com; dmarc=pass action=none header.from=vitesco.com;
+ dkim=pass header.d=vitesco.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vitesco.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lllvniCtDWqW4OYDZkOtueO0Jc/9janYszKt8g+b7ws=;
+ b=XmE7OKrMwCO41qnWWHzhw7gPIceRtHt+N9nV+qx3jiEGLvRhPgh30SV4Lhbqsefi8t3YeBmoppwEVa8hxS5ZbbngXqFapiJRVRWje80+MPWTe1Tun3MGV7sysw+4dzpfPDQqqWp8tG5fl6JNtzfEFruHQo9MkxMCZapjyndn+Ug=
+Received: from DB5PR02MB10069.eurprd02.prod.outlook.com (2603:10a6:10:3c1::22)
+ by PAWPR02MB9973.eurprd02.prod.outlook.com (2603:10a6:102:2e0::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6002.13; Fri, 13 Jan
+ 2023 10:49:35 +0000
+Received: from DB5PR02MB10069.eurprd02.prod.outlook.com
+ ([fe80::5c77:e086:f988:cad5]) by DB5PR02MB10069.eurprd02.prod.outlook.com
+ ([fe80::5c77:e086:f988:cad5%5]) with mapi id 15.20.6002.013; Fri, 13 Jan 2023
+ 10:49:35 +0000
+From:   "Zitzmann, Christian" <Christian.Zitzmann@vitesco.com>
+To:     "rsbecker@nexbridge.com" <rsbecker@nexbridge.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: RE: Parallelism for submodule update 
+Thread-Topic: Parallelism for submodule update 
+Thread-Index: AdkeucE8zVh8kEwpTW+MtNPu9m+gTQAERy0AAhhoLOA=
+Date:   Fri, 13 Jan 2023 10:49:34 +0000
+Message-ID: <DB5PR02MB10069A5579A25D465DC126F998AC29@DB5PR02MB10069.eurprd02.prod.outlook.com>
+References: <DB5PR02MB100691E6422F5E94228F0E0EC8AF79@DB5PR02MB10069.eurprd02.prod.outlook.com>
+ <009801d91eca$e1646360$a42d2a20$@nexbridge.com>
+In-Reply-To: <009801d91eca$e1646360$a42d2a20$@nexbridge.com>
+Accept-Language: de-DE, en-US
 Content-Language: en-US
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-References: <cover-00.10-00000000000-20221230T071741Z-avarab@gmail.com>
- <cover-v2-0.9-00000000000-20230112T124201Z-avarab@gmail.com>
-In-Reply-To: <cover-v2-0.9-00000000000-20230112T124201Z-avarab@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_3f3ac890-09a1-47d3-8d04-15427d7fec91_ActionId=5b14e3e5-b10a-4a57-8d55-ca2104c50ebd;MSIP_Label_3f3ac890-09a1-47d3-8d04-15427d7fec91_ContentBits=0;MSIP_Label_3f3ac890-09a1-47d3-8d04-15427d7fec91_Enabled=true;MSIP_Label_3f3ac890-09a1-47d3-8d04-15427d7fec91_Method=Standard;MSIP_Label_3f3ac890-09a1-47d3-8d04-15427d7fec91_Name=Internal;MSIP_Label_3f3ac890-09a1-47d3-8d04-15427d7fec91_SetDate=2023-01-13T08:53:24Z;MSIP_Label_3f3ac890-09a1-47d3-8d04-15427d7fec91_SiteId=39b77101-99b7-41c9-8d6a-7794b9d48476;
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=vitesco.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DB5PR02MB10069:EE_|PAWPR02MB9973:EE_
+x-ms-office365-filtering-correlation-id: b390051b-f3fb-400c-e33c-08daf553dc14
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:5;SRV:;IPV:NLI;SFV:SPM;H:DB5PR02MB10069.eurprd02.prod.outlook.com;PTR:;CAT:OSPM;SFS:(13230022)(4636009)(39860400002)(136003)(376002)(396003)(366004)(346002)(451199015)(53546011)(71200400001)(7696005)(6506007)(66556008)(4743002)(64756008)(26005)(66476007)(66946007)(8676002)(66446008)(76116006)(186003)(966005)(9686003)(478600001)(41300700001)(8936002)(52536014)(5660300002)(66574015)(15650500001)(3480700007)(2906002)(38100700002)(122000001)(83380400001)(33656002)(55016003)(82960400001)(38070700005)(86362001)(110136005)(316002)(11215385002);DIR:OUT;SFP:1501;
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: =?Windows-1252?Q?tk9iFXgeubg4aSm2DLPfWWe6ZR8VfHq56aenjbdsIwtPr7RDRPibIQAb?=
+ =?Windows-1252?Q?Ix3+xNluf6jQU0KfQ/zMj539jv7ZfHwwQQ+FpRkDrmEt0t3IoAcdTXRY?=
+ =?Windows-1252?Q?JJbz0C5C1V7PKqZ7GfqDDD6RT2hFZpAlPxYFyZHqZajb5RfZbLG0kUEv?=
+ =?Windows-1252?Q?xrM19C1HpLUON5/b6Pu7m+mS3vzzsr0Y7zR/MUUI1jFwWSzs2xwTleTG?=
+ =?Windows-1252?Q?MJk6bGgq25Kfmh42KMYIYNHEvNp+9ZPyatKz8hgmbCchzKCQEmsbd9O3?=
+ =?Windows-1252?Q?Ocq0WYyBcOlxpeXn2Ee7x2dEyoK4ogXhZqNZsZG7Nh0ouNXCg9wuzUfG?=
+ =?Windows-1252?Q?ZdXi3nZo9Kf1fHKnD+i9CuTb9VAU6moAp6lQJouSRrzVKAOR10sYiDkl?=
+ =?Windows-1252?Q?PFgkDJs7ZnogzZ/39e2p4WslEDWMFSqzmy4rrhVuoUceWnx4j2PNQUt5?=
+ =?Windows-1252?Q?93cbVNx4DcsvKH4LH1ubow8xdZvK31bDoed0YRe9Yk5I3G0smM6tlD/z?=
+ =?Windows-1252?Q?YWNpF/yVwBLJ9yV2W8u4nF+dc/A3dIe33GtiY/STtCkReZVk7yUjb/G3?=
+ =?Windows-1252?Q?Fc7PG9XqnDnkVpIAsqZq4eq/5Fs4HDYnt9bEh0qNJDs4q0CSc76YNpW9?=
+ =?Windows-1252?Q?tkYULwE+RnJC4vFNxk/yqEnEete2Tcwm/WuK4890jDmR5tqHbPo5FLeM?=
+ =?Windows-1252?Q?zClThvSUBgtwd6vN5aUbuUaBl1JlG0s7wKl129BOWP2RpsNCShx+lxNZ?=
+ =?Windows-1252?Q?1f+vS7yCCjglUUcykAh5Jm8UWgRJX486Plx9wVEACNU3eZaHcqKIEh8+?=
+ =?Windows-1252?Q?EMhBAxi4BPlFV5PvJkl9DWUrk3mu9+D970RQ2OLh79PImdYIyMv+H/X0?=
+ =?Windows-1252?Q?zzkdQtF2shPjcXz6XDXUO7Ba9wemdTnReancQy5vzDcMddVUQI59K2Rp?=
+ =?Windows-1252?Q?c4fBnaKXYaIlehklWZYPC9/hyMVu4vV5166Zaj4Xrajb89I/+XheO3ua?=
+ =?Windows-1252?Q?/JhJP74s+m8qmrVwxPt1+a6G5NAFSd1LwQDY53rTjjLUE1hnyWLpuF+t?=
+ =?Windows-1252?Q?lMKfvuJcSyHWc2/hcmw+l/aQq9ghJBEHD6VIt6tIQ2IxX2pS3kuKC8S8?=
+ =?Windows-1252?Q?Ax6aDc4qup2pHKzbOciy1eQCxdk/UckMHbG6xGARGlculHzLWapLH9xw?=
+ =?Windows-1252?Q?V2qBJIIwEZUAWEDj+IgnybsJDKJvy9rG?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?Windows-1252?Q?Ly8P8JJLIntzuwWzvYhHCuWwBjZ6F+mAuGE3/sWNkJ5myblmMIdsfeNM?=
+ =?Windows-1252?Q?OLztffBl0RyRqMPopf8tvYlVt1l36KXNILEsqX56jAPo2Z7UQS2mzyeR?=
+ =?Windows-1252?Q?T7B6xmxYpTNIbIMpTY1EVrGWm5b44hCcS7Dwu78zjvTc3Ol/gWG6+RJJ?=
+ =?Windows-1252?Q?clt5wYSUOy1C5yLhiNQDK6VHR3AnSpJIg5resFwNDzJN4mIliEaqb0WJ?=
+ =?Windows-1252?Q?5+yRvq1D+BjWQHFGGgZLTqQWPB70WekyYZwdKrngTCU1Hc1ZAxXbjXmr?=
+ =?Windows-1252?Q?RTfGtrqX894MNcFA52bEaOEXCqDa6VXK2g/+0HLtKV78jaEZMX1jTd9c?=
+ =?Windows-1252?Q?R2ZkYqFXNK3xFUdVhWjVEpa8INDfuNT9OXAFJq8ZQB2CFyOQvfk6Ysy1?=
+ =?Windows-1252?Q?YLSIY/lpV+fW2a53VctRUVhplDv7e5/dCtH8E4aUUVFe89TOtlr/fc7m?=
+ =?Windows-1252?Q?uVZienI9ESzNtb57rFIoIhDReL6W0Qy5FOWjrMLbGpk6y7KOP2AdHFHh?=
+ =?Windows-1252?Q?qdaDrlegYA3cHhZgF+oDlURJ+C4NOkxi4PzXDWc0UGePumhjDCYSYazL?=
+ =?Windows-1252?Q?NMgWaom0rCnhq4h7uA9arJC0p4QKWQ8RRi66fO91GhxMXeB2kvzdTpbT?=
+ =?Windows-1252?Q?7RMwTVe4rHtM85GvC+nw0TZTYzSX8v4907hXnGu/zxDJC4x3YKw9+QHt?=
+ =?Windows-1252?Q?pkIbDC+gFDtcaXvAqVFaEE9IWkzCqh7+zDv5JCNDidB7zHHoYn0g87kB?=
+ =?Windows-1252?Q?RfU5uWlKj3d/kpkLpi7MCXdVVab5sNxUvXQtgZN+iwNt/Fe8bH5A4FGS?=
+ =?Windows-1252?Q?Ix4HEqeHjgMsEFCBd82/Ras3iZLS8OsgcsSLr8avvf3cBrlHdeh6dLgb?=
+ =?Windows-1252?Q?IRPC0/LPO6Cac23t52Pzxj2h88Hu1sVyomGLyh6W3UHwiWnAOcFFMkxR?=
+ =?Windows-1252?Q?x5VtEKK/GWMHbUuyzXmADXAI0kTGsTwtChKYxMA/lW2J28DDdhgRHheJ?=
+ =?Windows-1252?Q?F7nj7am9eM/eFp/xNVMwz8xL/GAHr4in7nCTlVHy7IbC6XvBwnA2bRyN?=
+ =?Windows-1252?Q?hpTw0JX9eUkM+xPG0Pi2WmEzR5Tm8SHFkvVVUVCrAo/f+5+pnLu06Ztj?=
+ =?Windows-1252?Q?b9I2SbFnVJGqnqOsa+6oo869/AVanKQGFk3ZLQ+NF59/awqO1KPSG3Xp?=
+ =?Windows-1252?Q?eOnIZYpVA1deOrK7VlOReio0Rdc/4Tfn/EiWtnWks8sgRtQLL6GsFte3?=
+ =?Windows-1252?Q?pY2wGxklWIuGtmvMJJltqdzpIl6+L4u3KmyvgS+8BOIF/JtT778tuRYi?=
+ =?Windows-1252?Q?AF17RVuMqUfL/iXOIqsAdLGmi2+nBLiVyK+UzWF+6dhBpnx7aI4DLAy3?=
+ =?Windows-1252?Q?vklbSRMlTWol4hpWH+18SrIi8NyP0KpozON4qlrFGeaBKIJfVLzeqMJn?=
+ =?Windows-1252?Q?O6Zy6cuZcZmW5U42AUYYJMcf+mnulSzOIy7I31L855yRVvYiZ95oM+Lh?=
+ =?Windows-1252?Q?KyiXvdEQLGwIyyHh6M4AG5sEgXDl7CEzJIIVuQICGje+wzl+zieDL40n?=
+ =?Windows-1252?Q?XeaE97JObsCdSoUfFDfYu8MWtEg6l9BfvhizkyoRMqBgp7m4/d8nOc5/?=
+ =?Windows-1252?Q?091+tZO1ygYURftIsOpH5NnOVQgaOkN5yDVliZMRlOYkxt2g4cgE0os6?=
+ =?Windows-1252?Q?h1IPnB2ii0tFvptJyAx2nDWJysg4WtwG?=
+Content-Type: text/plain; charset="Windows-1252"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: vitesco.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DB5PR02MB10069.eurprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b390051b-f3fb-400c-e33c-08daf553dc14
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Jan 2023 10:49:34.9324
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 39b77101-99b7-41c9-8d6a-7794b9d48476
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ADY66b3gReyWMgVz/C9LjY6W1pUuVhzdneOSGuA/1mGv8DPKTJYsafRIvjChtAemaXro70YFh5yQsBu96x7WtA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAWPR02MB9973
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Ævar
+Hello Randall,
+Yes, I guess this is a quite common that the harddisk is much faster than t=
+he Network Services.
+With the scalar strategy (e.g. blobless clones) the checkout phase does not=
+ involve mainly harddisk activity anymore, but includes fetching sources fr=
+om the remote. So it consumes a lot of Network Services.
+Especially with parallelism we would gain a lot of performance here, as net=
+work and harddisk are utilized in parallel.
+This could be even a general strategy (without using blobless clones) to ha=
+ve fetch and checkout done together, but both in an parallel Scheme
 
-The code changes in this version look good modulo a couple of minor 
-comments, however some of the commit messages need to be updated to 
-reflect the (very welcome) changes you've made in v2.
+Currently it's like this:
 
-Thanks again for working on this
+Multithreading (mainly network utilization, only small amount of data - Com=
+mits and Trees -)
+	Thread1: Fetch submodule1                       -> NETWORK
+	Thread2: Fetch submodule2                       -> NETWORK
+	---
+	Thread<x>: Fetch Submodule<n>               -> NETWORK
 
-Phillip
+Sequential (alternating harddisk and network utilization)
+	Loop1
+		Try to Checkout Submodule1 commit                                      ->=
+ HARDDISK
+		Fetch missing objects (e.g. Blobs - big amount of Data)        -> NETWORK
+		Checkout Submodule commit                                                =
+    -> HARDDISK
+	Loop2	=09
+		Try to Checkout Submodule1 commit                                      ->=
+ HARDDISK
+		Fetch missing objects (e.g. Blobs - big amount of Data)        -> NETWORK
+		Checkout Submodule commit                                                =
+    -> HARDDISK
+	=09
+		...
+	Loop<n>
+		Try to Checkout Submodule<n> commit                                  -> H=
+ARDDISK
+		Fetch missing objects (e.g. Blobs - big amount of Data)        -> NETWORK
+		Checkout Submodule commit                                                =
+    -> HARDDISK
 
-On 12/01/2023 12:45, Ævar Arnfjörð Bjarmason wrote:
-> This series fixes various widespread leaks in the sequencer and its
-> users (rebase, revert, cherry-pick). As a result 18 tests become
-> leak-free in their entirety.
-> 
-> See the v1 for a longer general summary:
-> https://lore.kernel.org/git/cover-00.10-00000000000-20221230T071741Z-avarab@gmail.com/
-> 
-> Changes since v1:
-> 
->   * I think this addresses all the outstanding feedback, thanks all.
->   * Most significantly, the replay_opts_release() is now moved out of
->     sequencer_remove_state() as suggested.
->   * There's a prep change for renaming "squash_onto_name", per the
->     discussion in v1.
->   * Just do "goto leave" rather than being paranoid and introdungi
->     "goto cleanup", thanks Phillip!
->   * Various other small changes, see the range-diff.
-> 
-> A branch & passing CI for this are at:
-> https://github.com/avar/git/tree/avar/leak-fixes-sequencer-rebase-2
-> 
-> Ævar Arnfjörð Bjarmason (9):
->    rebase: use "cleanup" pattern in do_interactive_rebase()
->    sequencer.c: split up sequencer_remove_state()
->    rebase & sequencer API: fix get_replay_opts() leak in "rebase"
->    builtin/revert.c: move free-ing of "revs" to replay_opts_release()
->    builtin/rebase.c: rename "squash_onto_name" to "to_free"
->    builtin/rebase.c: fix "options.onto_name" leak
->    sequencer.c: always free() the "msgbuf" in do_pick_commit()
->    builtin/rebase.c: free() "options.strategy_opts"
->    commit.c: free() revs.commit in get_fork_point()
-> 
->   builtin/rebase.c                       | 27 +++++++++-------
->   builtin/revert.c                       |  8 ++---
->   commit.c                               |  1 +
->   sequencer.c                            | 43 ++++++++++++++++----------
->   sequencer.h                            |  1 +
->   t/t3405-rebase-malformed.sh            |  1 +
->   t/t3412-rebase-root.sh                 |  1 +
->   t/t3416-rebase-onto-threedots.sh       |  1 +
->   t/t3419-rebase-patch-id.sh             |  1 +
->   t/t3423-rebase-reword.sh               |  1 +
->   t/t3425-rebase-topology-merges.sh      |  2 ++
->   t/t3431-rebase-fork-point.sh           |  1 +
->   t/t3432-rebase-fast-forward.sh         |  1 +
->   t/t3437-rebase-fixup-options.sh        |  1 +
->   t/t3438-rebase-broken-files.sh         |  2 ++
->   t/t3501-revert-cherry-pick.sh          |  1 +
->   t/t3502-cherry-pick-merge.sh           |  1 +
->   t/t3503-cherry-pick-root.sh            |  1 +
->   t/t3506-cherry-pick-ff.sh              |  1 +
->   t/t3511-cherry-pick-x.sh               |  1 +
->   t/t7402-submodule-rebase.sh            |  1 +
->   t/t9106-git-svn-commit-diff-clobber.sh |  1 -
->   t/t9164-git-svn-dcommit-concurrent.sh  |  1 -
->   23 files changed, 64 insertions(+), 36 deletions(-)
-> 
-> Range-diff against v1:
->   1:  f3a4ed79c7d !  1:  d0a0524f3d4 rebase: use "cleanup" pattern in do_interactive_rebase()
->      @@ Commit message
->           rebase: use "cleanup" pattern in do_interactive_rebase()
->       
->           Use a "goto cleanup" pattern in do_interactive_rebase(). This
->      -    eliminates some duplicated free() code added in 0609b741a43 (rebase
->      -    -i: combine rebase--interactive.c with rebase.c, 2019-04-17), and sets
->      -    us up for a subsequent commit which'll make further use of the
->      -    "cleanup" label.
->      +    eliminates some duplicated free() code added in 53bbcfbde7c (rebase
->      +    -i: implement the main part of interactive rebase as a builtin,
->      +    2018-09-27), and sets us up for a subsequent commit which'll make
->      +    further use of the "cleanup" label.
->       
->           Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->       
->   2:  4994940a0a9 !  2:  c4eaa8dfef4 sequencer.c: split up sequencer_remove_state()
->      @@ Commit message
->           function, which will be adjusted and called independent of the other
->           code in sequencer_remove_state() in a subsequent commit.
->       
->      -    The only functional changes here are:
->      -
->      -     * Changing the "int" to a "size_t", which is the correct type, as
->      -       "xopts_nr" is a "size_t".
->      -
->      -     * Calling the free() before the "if (is_rebase_i(opts) && ...)",
->      -       which is OK, and makes a subsequent change smaller.
->      +    The only functional change here is changing the "int" to a "size_t",
->      +    which is the correct type, as "xopts_nr" is a "size_t".
->       
->           Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->       
->      @@ sequencer.c: static const char *gpg_sign_opt_quoted(struct replay_opts *opts)
->        	struct strbuf buf = STRBUF_INIT;
->       -	int i, ret = 0;
->       +	int ret = 0;
->      -+
->      -+	replay_opts_release(opts);
->        
->        	if (is_rebase_i(opts) &&
->        	    strbuf_read_file(&buf, rebase_path_refs_to_delete(), 0) > 0) {
->      @@ sequencer.c: int sequencer_remove_state(struct replay_opts *opts)
->       -		free(opts->xopts[i]);
->       -	free(opts->xopts);
->       -	strbuf_release(&opts->current_fixups);
->      --
->      ++	replay_opts_release(opts);
->      +
->        	strbuf_reset(&buf);
->        	strbuf_addstr(&buf, get_dir(opts));
->      - 	if (remove_dir_recursively(&buf, 0))
->   3:  3e9c4df61fe !  3:  f06f565ceaf rebase & sequencer API: fix get_replay_opts() leak in "rebase"
->      @@ builtin/rebase.c: static int run_sequencer_rebase(struct rebase_options *opts)
->        		break;
->        	}
->        	case ACTION_EDIT_TODO:
->      +@@ builtin/rebase.c: static int finish_rebase(struct rebase_options *opts)
->      +
->      + 		replay.action = REPLAY_INTERACTIVE_REBASE;
->      + 		ret = sequencer_remove_state(&replay);
->      ++		replay_opts_release(&replay);
->      + 	} else {
->      + 		strbuf_addstr(&dir, opts->state_dir);
->      + 		if (remove_dir_recursively(&dir, 0))
->      +@@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix)
->      +
->      + 			replay.action = REPLAY_INTERACTIVE_REBASE;
->      + 			ret = sequencer_remove_state(&replay);
->      ++			replay_opts_release(&replay);
->      + 		} else {
->      + 			strbuf_reset(&buf);
->      + 			strbuf_addstr(&buf, options.state_dir);
->      +
->      + ## builtin/revert.c ##
->      +@@ builtin/revert.c: int cmd_revert(int argc, const char **argv, const char *prefix)
->      + 	if (opts.revs)
->      + 		release_revisions(opts.revs);
->      + 	free(opts.revs);
->      ++	replay_opts_release(&opts);
->      + 	return res;
->      + }
->      +
->      +@@ builtin/revert.c: int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
->      + 	free(opts.revs);
->      + 	if (res < 0)
->      + 		die(_("cherry-pick failed"));
->      ++	replay_opts_release(&opts);
->      + 	return res;
->      + }
->       
->        ## sequencer.c ##
->       @@ sequencer.c: static const char *gpg_sign_opt_quoted(struct replay_opts *opts)
->      @@ sequencer.c: static const char *gpg_sign_opt_quoted(struct replay_opts *opts)
->       -static void replay_opts_release(struct replay_opts *opts)
->       +void replay_opts_release(struct replay_opts *opts)
->        {
->      --	free(opts->gpg_sign);
->      --	free(opts->reflog_action);
->      --	free(opts->default_strategy);
->      --	free(opts->strategy);
->      -+	FREE_AND_NULL(opts->gpg_sign);
->      -+	FREE_AND_NULL(opts->reflog_action);
->      -+	FREE_AND_NULL(opts->default_strategy);
->      -+	FREE_AND_NULL(opts->strategy);
->      + 	free(opts->gpg_sign);
->      + 	free(opts->reflog_action);
->      +@@ sequencer.c: static void replay_opts_release(struct replay_opts *opts)
->      + 	free(opts->strategy);
->        	for (size_t i = 0; i < opts->xopts_nr; i++)
->        		free(opts->xopts[i]);
->      --	free(opts->xopts);
->       +	opts->xopts_nr = 0;
->      -+	FREE_AND_NULL(opts->xopts);
->      + 	free(opts->xopts);
->        	strbuf_release(&opts->current_fixups);
->        }
->      +@@ sequencer.c: int sequencer_remove_state(struct replay_opts *opts)
->      + 		}
->      + 	}
->        
->      +-	replay_opts_release(opts);
->      +-
->      + 	strbuf_reset(&buf);
->      + 	strbuf_addstr(&buf, get_dir(opts));
->      + 	if (remove_dir_recursively(&buf, 0))
->       
->        ## sequencer.h ##
->       @@ sequencer.h: int sequencer_pick_revisions(struct repository *repo,
->      @@ t/t3412-rebase-root.sh: Tests if git rebase --root --onto <newparent> can rebase
->        
->        log_with_names () {
->       
->      + ## t/t3419-rebase-patch-id.sh ##
->      +@@ t/t3419-rebase-patch-id.sh: test_description='git rebase - test patch id computation'
->      + GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->      + export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->      +
->      ++TEST_PASSES_SANITIZE_LEAK=true
->      + . ./test-lib.sh
->      +
->      + scramble () {
->      +
->        ## t/t3423-rebase-reword.sh ##
->       @@
->        
->      @@ t/t3423-rebase-reword.sh
->        
->        . "$TEST_DIRECTORY"/lib-rebase.sh
->       
->      + ## t/t3425-rebase-topology-merges.sh ##
->      +@@
->      + #!/bin/sh
->      +
->      + test_description='rebase topology tests with merges'
->      ++
->      ++TEST_PASSES_SANITIZE_LEAK=true
->      + . ./test-lib.sh
->      + . "$TEST_DIRECTORY"/lib-rebase.sh
->      +
->      +
->        ## t/t3437-rebase-fixup-options.sh ##
->       @@ t/t3437-rebase-fixup-options.sh: to the "fixup" command that works with "fixup!", "fixup -C" works with
->        "amend!" upon --autosquash.
->      @@ t/t3438-rebase-broken-files.sh
->        
->        test_expect_success 'set up conflicting branches' '
->       
->      + ## t/t3501-revert-cherry-pick.sh ##
->      +@@ t/t3501-revert-cherry-pick.sh: test_description='test cherry-pick and revert with renames
->      + GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->      + export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->      +
->      ++TEST_PASSES_SANITIZE_LEAK=true
->      + . ./test-lib.sh
->      +
->      + test_expect_success setup '
->      +
->      + ## t/t3502-cherry-pick-merge.sh ##
->      +@@ t/t3502-cherry-pick-merge.sh: test_description='cherry picking and reverting a merge
->      + GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->      + export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->      +
->      ++TEST_PASSES_SANITIZE_LEAK=true
->      + . ./test-lib.sh
->      +
->      + test_expect_success setup '
->      +
->      + ## t/t3503-cherry-pick-root.sh ##
->      +@@ t/t3503-cherry-pick-root.sh: test_description='test cherry-picking (and reverting) a root commit'
->      + GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->      + export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->      +
->      ++TEST_PASSES_SANITIZE_LEAK=true
->      + . ./test-lib.sh
->      +
->      + test_expect_success setup '
->      +
->      + ## t/t3506-cherry-pick-ff.sh ##
->      +@@ t/t3506-cherry-pick-ff.sh: test_description='test cherry-picking with --ff option'
->      + GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
->      + export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->      +
->      ++TEST_PASSES_SANITIZE_LEAK=true
->      + . ./test-lib.sh
->      +
->      + test_expect_success setup '
->      +
->      + ## t/t3511-cherry-pick-x.sh ##
->      +@@
->      +
->      + test_description='Test cherry-pick -x and -s'
->      +
->      ++TEST_PASSES_SANITIZE_LEAK=true
->      + . ./test-lib.sh
->      +
->      + pristine_detach () {
->      +
->        ## t/t7402-submodule-rebase.sh ##
->       @@
->        
->   4:  1e4e504c533 <  -:  ----------- builtin/revert.c: refactor run_sequencer() return pattern
->   5:  e2895bb9795 <  -:  ----------- builtin/revert.c: fix common leak by using replay_opts_release()
->   6:  21eea8eb802 !  4:  e83bdfab046 builtin/revert.c: move free-ing of "revs" to replay_opts_release()
->      @@ builtin/revert.c: int cmd_revert(int argc, const char **argv, const char *prefix
->       -	if (opts.revs)
->       -		release_revisions(opts.revs);
->       -	free(opts.revs);
->      -+	replay_opts_release(&opts);
->      + 	replay_opts_release(&opts);
->        	return res;
->        }
->      -
->       @@ builtin/revert.c: int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
->        	opts.action = REPLAY_PICK;
->        	sequencer_init_config(&opts);
->      @@ builtin/revert.c: int cmd_cherry_pick(int argc, const char **argv, const char *p
->       -	if (opts.revs)
->       -		release_revisions(opts.revs);
->       -	free(opts.revs);
->      -+	replay_opts_release(&opts);
->        	if (res < 0)
->        		die(_("cherry-pick failed"));
->      - 	return res;
->      + 	replay_opts_release(&opts);
->       
->        ## sequencer.c ##
->       @@ sequencer.c: void replay_opts_release(struct replay_opts *opts)
->        	opts->xopts_nr = 0;
->      - 	FREE_AND_NULL(opts->xopts);
->      + 	free(opts->xopts);
->        	strbuf_release(&opts->current_fixups);
->       +	if (opts->revs)
->       +		release_revisions(opts->revs);
->      -+	FREE_AND_NULL(opts->revs);
->      ++	free(opts->revs);
->        }
->        
->        int sequencer_remove_state(struct replay_opts *opts)
->   -:  ----------- >  5:  4fea2b77c6d builtin/rebase.c: rename "squash_onto_name" to "to_free"
->   7:  484ebbfd6d1 !  6:  898bb7698fc builtin/rebase.c: fix "options.onto_name" leak
->      @@ Commit message
->       
->           In [1] we started saving away the earlier xstrdup()'d
->           "options.onto_name" assignment to free() it, but when [2] added this
->      -    "keep_base" branch it didn't free() the already assigned
->      -    "squash_onto_name" before re-assigning to "options.onto_name". Let's
->      -    do that, and fix the memory leak.
->      +    "keep_base" branch it didn't free() the already assigned value before
->      +    re-assigning to "options.onto_name". Let's do that, and fix the memory
->      +    leak.
->       
->           1. 9dba809a69a (builtin rebase: support --root, 2018-09-04)
->           2. 414d924beb4 (rebase: teach rebase --keep-base, 2019-08-27)
->      @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix
->        		strbuf_addstr(&buf, "...");
->        		strbuf_addstr(&buf, branch_name);
->       -		options.onto_name = xstrdup(buf.buf);
->      -+		free(squash_onto_name);
->      -+		options.onto_name = squash_onto_name = xstrdup(buf.buf);
->      ++		free(to_free);
->      ++		options.onto_name = to_free = xstrdup(buf.buf);
->        	} else if (!options.onto_name)
->        		options.onto_name = options.upstream_name;
->        	if (strstr(options.onto_name, "...")) {
->   8:  d607dbac38e !  7:  fb38dc873f9 sequencer.c: always free() the "msgbuf" in do_pick_commit()
->      @@ Commit message
->           we'd return before the strbuf_release(&msgbuf).
->       
->           Then when the "fixup" support was added in [3] this leak got worse, as
->      -    we added another place where we'd "return" before reaching the
->      -    strbuf_release().
->      +    in this error case we added another place where we'd "return" before
->      +    reaching the strbuf_release().
->       
->      -    Let's move it to a "cleanup" label, and use an appropriate "goto". It
->      -    may or may not be safe to combine the existing "leave" and "cleanup"
->      -    labels, but this change doesn't attempt to answer that question. Let's
->      -    instead avoid calling update_abort_safety_file() in these cases, as we
->      -    didn't do so before.
->      +    This changes the behavior so that we'll call
->      +    update_abort_safety_file() in these cases where we'd previously
->      +    "return", but as noted in [4] "update_abort_safety_file() is a no-op
->      +    when rebasing and you're changing code that is only run when
->      +    rebasing.". Here "no-op" refers to the early return in
->      +    update_abort_safety_file() if git_path_seq_dir() doesn't exist.
->       
->           1. 452202c74b8 (sequencer: stop releasing the strbuf in
->              write_message(), 2016-10-21)
->      @@ Commit message
->              2016-07-26)
->           3. 6e98de72c03 (sequencer (rebase -i): add support for the 'fixup' and
->              'squash' commands, 2017-01-02)
->      +    4. https://lore.kernel.org/git/bcace50b-a4c3-c468-94a3-4fe0c62b3671@dunelm.org.uk/
->       
->           Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->       
->      @@ sequencer.c: static int do_pick_commit(struct repository *r,
->       -			return -1;
->       +					   opts, item->flags)) {
->       +			res = -1;
->      -+			goto cleanup;
->      ++			goto leave;
->       +		}
->        		flags |= AMEND_MSG;
->        		if (!final_fixup)
->      @@ sequencer.c: static int do_pick_commit(struct repository *r,
->       +			if (copy_file(dest, rebase_path_squash_msg(), 0666)) {
->       +				res = error(_("could not rename '%s' to '%s'"),
->       +					    rebase_path_squash_msg(), dest);
->      -+				goto cleanup;
->      ++				goto leave;
->       +			}
->        			unlink(git_path_merge_msg(r));
->        			msg_file = dest;
->      @@ sequencer.c: static int do_pick_commit(struct repository *r,
->        	/*
->        	 * If the merge was clean or if it failed due to conflict, we write
->       @@ sequencer.c: static int do_pick_commit(struct repository *r,
->      - 	}
->      -
->        leave:
->      -+	update_abort_safety_file();
->      -+cleanup:
->        	free_message(commit, &msg);
->        	free(author);
->      --	update_abort_safety_file();
->       +	strbuf_release(&msgbuf);
->      + 	update_abort_safety_file();
->        
->        	return res;
->      - }
->   9:  cd0489a2384 !  8:  d4b0e2a5c83 builtin/rebase.c: free() "options.strategy_opts"
->      @@ builtin/rebase.c: int cmd_rebase(int argc, const char **argv, const char *prefix
->        	free(options.strategy);
->       +	free(options.strategy_opts);
->        	strbuf_release(&options.git_format_patch_opt);
->      - 	free(squash_onto_name);
->      + 	free(to_free);
->        	string_list_clear(&exec, 0);
-> 10:  eb3678b4667 =  9:  fd9c7a5547c commit.c: free() revs.commit in get_fork_point()
+Here the Network accesses in the sequential part really have significant wa=
+iting times (e.g. name service) with low local resources utilization
+
+
+The proposal is to change it to a full parallel flow!
+
+Multithreading (both network and harddisk are utilized all the time)
+	Thread1:
+		Fetch submodule1 (blobless)               -> NETWORK
+		Try to Checkout Submodule commit   -> HARDDISK
+		Fetch missing objects                            -> NETWORK
+		Checkout Submodule commit              -> HARDDISK
+	Thread2:
+		Fetch submodule2 (blobless)                -> NETWORK
+		Try to Checkout Submodule commit   -> HARDDISK
+		Fetch missing objects                            -> NETWORK
+		Checkout Submodule commit...           -> HARDDISK
+	...
+
+	Thread<x>
+
+The only negative effect I'd see when having very slow harddisks, or disks =
+that suffer significantly from parallel access, the overall performance cou=
+ld also suffer.
+
+In general in the partial clone, but even in the full clone approach, netwo=
+rk and harddisk utilization will be in parallel, and therefore performance =
+can increase.
+
+
+Best regards
+
+Christian
+
+-----Original Message-----
+From: rsbecker@nexbridge.com <rsbecker@nexbridge.com>=20
+Sent: Montag, 2. Januar 2023 17:54
+To: Zitzmann, Christian <Christian.Zitzmann@vitesco.com>; git@vger.kernel.o=
+rg
+Subject: RE: Parallelism for submodule update=20
+
+[Sie erhalten nicht h=E4ufig E-Mails von rsbecker@nexbridge.com. Weitere In=
+formationen, warum dies wichtig ist, finden Sie unter https://aka.ms/LearnA=
+boutSenderIdentification ]
+
+>-----Original Message-----
+>From: <Christian.Zitzmann@vitesco.com>
+On January 2, 2023 11:45 AM Christian Zitzmann wrote:
+>we are using git since many years with also heavily using submodules.
+>
+>When updating the submodules, only the fetching part is done in=20
+>parallel (with config submodule.fetchjobs or --jobs) but the checkout=20
+>is done sequentially
+>
+>What I=92ve recognized when cloning with
+>- scalar clone --full-clone --recurse-submodules <URL> or
+>- git clone --filter=3Dblob:none --also-filter-submodules=20
+>--recurse-submodules <URL>
+>
+>We loose performance, as the fetch of the blobs is done in the=20
+>sequential checkout part, instead of in the parallel part.
+>
+>Furthermore, the utilization - without partial clone - of network and=20
+>harddisk is not always good, as first the network is utilized (fetch)=20
+>and then the harddisk
+>(checkout)
+>
+>As the checkout part is local to the submodule (no shared resources to=20
+>block), it would be great if we could move the checkout into the paralleli=
+zed part.
+>E.g. by doing fetch and checkout (with blob fetching) in one step with e.g=
+.
+>run_processes_parallel_tr2
+>
+>I expect that this significantly improves the performance, especially=20
+>when using partial clones.
+>
+>Do you think this is possible? Do I miss anything in my thoughts?
+
+Since this is a platform-specific request, if it happens, this should be a =
+configuration switch that defaults off. On my platform, the file system its=
+elf is fairly fast, but the name service traversals and resolutions (what h=
+appens in the name service) is a performance problem. Doing the checkout/sw=
+itch in parallel would actually be counter-productive in my case. So I woul=
+d keep it off, but I get that other platforms could benefit.
+
+Regards,
+Randall
+
+--
+Brief whoami: NonStop&UNIX developer since approximately
+UNIX(421664400)
+NonStop(211288444200000000)
+-- In real life, I talk too much.
+
+
+
