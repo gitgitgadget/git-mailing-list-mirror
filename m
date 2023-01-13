@@ -2,70 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id F0B47C3DA78
-	for <git@archiver.kernel.org>; Fri, 13 Jan 2023 20:17:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 27174C6379F
+	for <git@archiver.kernel.org>; Fri, 13 Jan 2023 20:17:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229569AbjAMURc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Jan 2023 15:17:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47602 "EHLO
+        id S231201AbjAMURy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Jan 2023 15:17:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47752 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229996AbjAMURa (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2023 15:17:30 -0500
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FB5F5CF81
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 12:17:29 -0800 (PST)
-Received: by mail-pj1-x1033.google.com with SMTP id o7-20020a17090a0a0700b00226c9b82c3aso25473466pjo.3
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 12:17:29 -0800 (PST)
+        with ESMTP id S229996AbjAMURv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2023 15:17:51 -0500
+Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 029A15E094
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 12:17:49 -0800 (PST)
+Received: by mail-pf1-x42f.google.com with SMTP id s3so14476216pfd.12
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 12:17:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RLfWFtDAWNANuAei9OkHFzBDsaq2w1bk+BmnorFpCjc=;
-        b=Xg7jGZG/6Y5K2/ADpMa3d4iaIuA0Da3vJ0AdYNAsJ9jgsNbmPtq1TZU/Hjit3v2ndO
-         AiXzzTngF/SOdryc4M1XTOM5ggIudNRTLr0OuyfRV+J4hylkB55Ed9pvx5sDHYs3F1uk
-         rQEGuONj3BAFjtljY8BnhD2lo74G1sMJ++Rjc16ifXxv2Dp6sOn73wjvImGb+pgCefX8
-         7kKwpWGamMUUN8Cpyf5PiSWQIwHM0igc9s8qcFfGpQ12cSXCzgzn3oOb+AmRcYYJc5AI
-         Cxkc8303HflenqaBPE0VR1X8lTnooJa5s2eNswetb8u15OCdeA+vX5+e8PDpqJomwbIY
-         1vcQ==
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=i3t37IK+sA57LiOLFTbhdfZd16AJM9nTXxSYnnE7CpY=;
+        b=EMD81Sa4qEx1zmdOQt8gZrJDTP79h/Qx+4Ec9fNygvvPtYILSrthcew33S1lrlB6Xh
+         QYFPJeeq02PVUjUtU/xcsWI/3ZJ0cdlP28nuciHZEl4bw1iJU30hCH0J/DCBJBRHn1AH
+         obCrokBbpMvlSLR9sVxUfpJLkg+TozbOR0IEhTOKffYcwyKnzYF2KUMT0x9Su9q4pmZv
+         OJGfkrCsn2SJ4findF5ATMVDRMHHCzvJHy0qMZqmFMnA3xd9OzunGWDG1HeReiB22Gqm
+         rLkCBvPL//8MkZi2koHoDL6Hh3cl6MvjXCdqAdxkjmYRTKRhp8hAwRdw38C5cAHkFIno
+         /9YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=RLfWFtDAWNANuAei9OkHFzBDsaq2w1bk+BmnorFpCjc=;
-        b=uNleFJj73pqhBThx88QPgoK6wgatPLRxUMMBMMp6V28d5QEBeLxL9Iu1VZywu/pBVz
-         /uvKpr2LusiGKfiGWvShf32tTdAhmT+B0f10XfZG7kwWODsxFvGUDNGPOwbnWEOSfOUK
-         wzIZ//Rqyx1UoYDfp7Eb7SI4Ddoc8vTKhWilQ6SAkV92qnBn/rUlYI0Cl/q7SaVmmuJc
-         eWXgaVmUbdFdScvhjj0yTyt13wL+bHHqRXkC+VS8i3tmlRxgaMCkOG39G1k09XbA6Cnn
-         sFPfO1ZQprf7aadPFsytd9BxDpwwIf6gWYvCYZm4CTtewhmB5aDMaSqX2QNKFwLOd1Xc
-         AUSQ==
-X-Gm-Message-State: AFqh2kq+B5yC1YN/az5bVzmBlGKW3YjcNIAFXjrsJLDqDb0qXTLiCC+n
-        KK7Rcld+b4UGESyUZHRQIRw=
-X-Google-Smtp-Source: AMrXdXsG/CnlzhBfFh5UqfjCLJd3I2FkIVwC5B6xae14MdZ9uVZ0vZ1N8gcTd3hGKcE07WrG+0OvEQ==
-X-Received: by 2002:a17:902:8688:b0:189:e7ea:9ff9 with SMTP id g8-20020a170902868800b00189e7ea9ff9mr71974158plo.42.1673641048406;
-        Fri, 13 Jan 2023 12:17:28 -0800 (PST)
+        h=mime-version:user-agent:message-id:date:references:subject:cc:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=i3t37IK+sA57LiOLFTbhdfZd16AJM9nTXxSYnnE7CpY=;
+        b=UrImdJZ7Ojn+oAWI9HudRPyJFSN2aNWdLSHt39GENFFRDWTfcCOP8l8uVo11eyIGZp
+         jqDuDkbse6H1VaZFWTYuIITeELv7GSvl+GvHsp/3PcgK+HgxkWBjBKwX39k/yY/2A9Ij
+         aZfriCfJUGLT4uD152hY2vWSWp2jkVmmsCSc75tkqvLkeSf6Sa7tyhwgAn7yYv74ypOw
+         pGK4MjrP/Yta2fG4ZeUJlcHbQNegoPYY2bLEZQwZ4d0HyNRaHX5MtFQJggpWU9NFnTBs
+         L0vp1rbIyp33a+osryRfTIh0dGSW0oiVxywSVquZVlbl12A8Pz3ZylSo075i2hkQimLj
+         pF1w==
+X-Gm-Message-State: AFqh2ko3ElIlt00wJqRxq9OnRsP4eOwCfCbFi4zgTpY+1Gckj+wIhFCl
+        gg8irBXo5wyARPOyqfdcFFs=
+X-Google-Smtp-Source: AMrXdXtMQIy3sqNJh7gOzSUlreYjan6BJd8d2Tis2GQRuDcFMaaIaI4Esq7fsz/VEqfTViXJi1qmgA==
+X-Received: by 2002:a62:1c90:0:b0:58b:a309:b7c7 with SMTP id c138-20020a621c90000000b0058ba309b7c7mr7843108pfc.16.1673641068393;
+        Fri, 13 Jan 2023 12:17:48 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id g20-20020a170902e39400b001745662d568sm2754799ple.278.2023.01.13.12.17.27
+        by smtp.gmail.com with ESMTPSA id c132-20020a621c8a000000b00589a7824703sm9022675pfc.194.2023.01.13.12.17.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 12:17:27 -0800 (PST)
+        Fri, 13 Jan 2023 12:17:48 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
+To:     Jeff King <peff@peff.net>
 Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Olliver Schinagl <oliver@schinagl.nl>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH] rebase -i: allow a comment after a "break" command
-References: <pull.1460.git.1673519809510.gitgitgadget@gmail.com>
-        <230112.86pmbk0vvj.gmgdl@evledraar.gmail.com>
-        <CABPp-BFf4pbRAy+Oaghx5d8DZgBjY_OUM-rJZna+JyNwx9WB-Q@mail.gmail.com>
-Date:   Fri, 13 Jan 2023 12:17:27 -0800
-In-Reply-To: <CABPp-BFf4pbRAy+Oaghx5d8DZgBjY_OUM-rJZna+JyNwx9WB-Q@mail.gmail.com>
-        (Elijah Newren's message of "Thu, 12 Jan 2023 09:14:26 -0800")
-Message-ID: <xmqqwn5q1960.fsf@gitster.g>
+        git@vger.kernel.org
+Subject: Re: [PATCH] env-helper: move this built-in to to "test-tool
+ env-helper"
+References: <Y71qiCs+oAS2OegH@coredump.intra.peff.net>
+        <patch-1.1-e662c570f1d-20230112T155226Z-avarab@gmail.com>
+        <Y8A3yGeJl0TCDNqe@coredump.intra.peff.net>
+Date:   Fri, 13 Jan 2023 12:17:47 -0800
+Message-ID: <xmqqpmbi195g.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,42 +67,75 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Of course, the same applies to edit/squash/fixup/reword, though if I
-> could go back in time...(warning, long tangent coming)...I would make
-> it so those four directives did not accept any commit ID argument.
-> Only "pick" and "reset" would accept a commit ID.  Instead, today's
-> "edit X" would be two commands ("pick X" followed by either "break" or
-> "edit"), "fixup X" would be "pick X" + "fixup", and "reword X" would
-> be "pick X" + "reword".  That'd help users understand rebase state
-> much better (it's so easy for users to get confused by whether they
-> should be using `git commit --amend` vs. `git rebase --continue` and I
-> think this is partially to blame, though there's other changes we
-> could make to help with that dichotomy as well).  The separate
-> directives would also make it much easier to figure out how to both
-> fixup and edit a single commit in the same rebase (pick the commit,
-> then add a fixup directive, then an edit directive).  
+> Yeah, I am totally fine with this direction. My reservations were:
+>
+>   1. It was work somebody had to do. But now you've done it.
+>
+>   2. It's _possible_ that some script somewhere is depending on it. But
+>      I think the "--" in the name plus the lack of documentation means
+>      that it's unlikely, and that we're morally absolved if somebody's
+>      script does break.
 
-Intriguing, and I feel sad that it probably is too late for all of
-the above X-<.
+That's how we burned some folks who depend on submodule--helper,
+isn't it? ;-)
 
-> In fact, "squash
-> X" could just be discarded as superfluous, since it's just "pick X" +
-> "fixup" + "reword" (or we could keep squash as an abbreviation for
-> both "fixup" + "reword").
+> The patch itself looks obviously correct to me.
 
-IIUC, your "fixup" is
+>> -	test_must_fail git env--helper --type=bool --default=false --exit-code MISSING >actual.out 2>actual.err &&
+>> +	test_must_fail test-tool env-helper --type=bool --default=false --exit-code MISSING >actual.out 2>actual.err &&
+>
+> Long lines like these made me wonder if it should simply be "test-tool
+> env", which is shorter. We do not need "helper" to avoid polluting the
+> main git-command namespace, and everything in test-tool is a helper
+> anyway. But it probably doesn't matter much either way. It's not like
+> that line wasn't already overly long. :)
 
-	git reset --soft HEAD^
-	git commit --amend --no-edit
+I agree that the "-helper" looks a bit irritating, not because the
+line is long, but because test-tool is by definition about helpers
+used in tests, so the suffix is redundant.
 
-i.e. discard the log message from "fixup" and use only its tree, and
-your "reword" is
+Let's have a small update before queuing it.
 
-	git commit --amend --edit
+> If we do take this, then my t/interop patch can be dropped, though we
+> might want to salvage the error message bit:
 
-so "pick X" + "fixup" + "reword" would not be quite usable as a
-replacement of our "squash X" (or your "pick X" + "squash"), I am
-afraid.  You'd want the log message from "X" as well as "X^" to
-edit the replacement of X^.
+Yup, that does make sense.  Will queue what is below the scissors
+line.
+
+Thanks, both.
+
+>
+> -- >8 --
+> Subject: [PATCH] t/interop: report which vanilla git command failed
+>
+> The interop test library sets up wrappers "git.a" and "git.b" to
+> represent the two versions to be tested. It also wraps vanilla "git" to
+> report an error, with the goal of catching tests which accidentally fail
+> to use one of the version-specific wrappers (which could invalidate the
+> tests in a very subtle way).
+>
+> But when it catches an invocation of vanilla git, it doesn't give any
+> details, which makes it very hard to debug exactly which invocation is
+> responsible (especially if it's buried in a function invocation, etc).
+> Let's report the arguments passed to git, which helps narrow it down.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  t/interop/interop-lib.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/interop/interop-lib.sh b/t/interop/interop-lib.sh
+> index 3e0a2911d4..62f4481b6e 100644
+> --- a/t/interop/interop-lib.sh
+> +++ b/t/interop/interop-lib.sh
+> @@ -68,7 +68,7 @@ generate_wrappers () {
+>  	wrap_git .bin/git.a "$DIR_A" &&
+>  	wrap_git .bin/git.b "$DIR_B" &&
+>  	write_script .bin/git <<-\EOF &&
+> -	echo >&2 fatal: test tried to run generic git
+> +	echo >&2 fatal: test tried to run generic git: $*
+>  	exit 1
+>  	EOF
+>  	PATH=$(pwd)/.bin:$PATH
