@@ -2,202 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18A37C61DB3
-	for <git@archiver.kernel.org>; Fri, 13 Jan 2023 10:28:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C3E1C54EBD
+	for <git@archiver.kernel.org>; Fri, 13 Jan 2023 10:36:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235371AbjAMK2d (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Jan 2023 05:28:33 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60042 "EHLO
+        id S241289AbjAMKgV (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Jan 2023 05:36:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240752AbjAMK14 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2023 05:27:56 -0500
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6EA048CEA
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 02:27:48 -0800 (PST)
-Received: by mail-wr1-x42c.google.com with SMTP id t5so16208856wrq.1
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 02:27:48 -0800 (PST)
+        with ESMTP id S241220AbjAMKf5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2023 05:35:57 -0500
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16F0C78160
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 02:34:39 -0800 (PST)
+Received: by mail-wr1-x430.google.com with SMTP id e10so1058274wri.0
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 02:34:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ubKTqwa17C/cqIQGNRLyUlfoWAQs3vUdw+y6e7tU114=;
-        b=L+hhaB8K7Cm51kMV3z8fpX8w2ToYkx/JpiT6hWklpGHrV2t/OLQf8MMEmleFpoe5lJ
-         MoTpp67X5FknQvkQQOHgn3SSjgy9EQEFWKyh/RT3RC7jGjby198ub3d0kJaoW8USo9Jw
-         3wThXeBixnh0IV9gosveMByZzsA5mIihoytl4NkEPevg9UWCa8cnIUTereq6LxvJgDCN
-         LryH2BVuCvJwlgvhzPvkDtbIoJmgqpH1o3NRVLXY2DDEqKY3GGF3ITCPQkx69vk/QZdL
-         NVmhCgwXP2o5LhnuxwiM9ellJ0ZZ+bgSedZ+kLKvy7X/fw8nHrdKirpBKJYh08Z8hzo8
-         /ROw==
+        bh=6mgdI8Fn6p/GYU4a/CAwGtYsJKWQqPyFtAM+i94nTyM=;
+        b=qM5l/jJB7mnFgSR+74vGlG4i7EMgPzybIxgdm0LgOtZpgMAgMlNzd5dNPkzmvwYmPm
+         9N0wgMJLwnDSkm9NuKcC+XGmG8R9tvD2WIuEE9HDKpZZtHl1Qtj2qvRe2RcJFyf73BHc
+         PL40fEkLdh/phITSj19bMqU1Xm/r6yuZwlWluctyUNlMzWgtNaMfPSygmbj2/kDDGRct
+         xY7CQnVS8QH1gurIVnylGGTyq1liu4ewHvhr23ug2pfQZNEjWYDgGLMy6AC7HGVbrnOD
+         ynaAxA+kee4aDGuNCNWh0qyyj9sv/qlJ1NIZiKl/PFj2L8BsMRpuYnZ1VEbByYYDAFj1
+         QpCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ubKTqwa17C/cqIQGNRLyUlfoWAQs3vUdw+y6e7tU114=;
-        b=VKfU8tE7z5o92bpCgWfhDsa1DPPbbCYPvXX/PUGiaD9pI+0WmVZNzhuJZG6EpeF33u
-         PplyXHSRsY+2jtr94miYQxqye3wyDak7q+2pcyXms2oNCQc6Tt4k9+kCQ1Iws3nTBMYr
-         z4u+uOYBoRaxUSFLKcysCrtOYBS+QgOJHkw01qSxgeHZb2KjU5LaoSt4hLVXXKZUZrfF
-         5qZwllcxUJyQOPyIy1GysAgmQIj58uj8DmG9RLkHYC+rF6aCDzpE3o4icTZ3koxChxVQ
-         HwFIPAlQj7nt6K5k6++QMP75QHnPOC/dWIHypFgRd1qmlfZV0iPn1KV27j5VU+Gpo1O9
-         wucA==
-X-Gm-Message-State: AFqh2kqUfEMkbcZKTVKRjM2tNI22bEcdb99eyaBlQ2yyyC2pF8baiGTw
-        JXdqbHF/6VrkUeGVNeAlNj//UM/DSzc=
-X-Google-Smtp-Source: AMrXdXtVeBb+DbVmFbP5fv4mHqdlVp7MFpzzONeeM/PbqZDjxvOnA5TgDoX74BYKAeyaZRLMz/5iEg==
-X-Received: by 2002:a5d:5049:0:b0:2bd:15c6:a88a with SMTP id h9-20020a5d5049000000b002bd15c6a88amr9420553wrt.54.1673605667235;
-        Fri, 13 Jan 2023 02:27:47 -0800 (PST)
+        bh=6mgdI8Fn6p/GYU4a/CAwGtYsJKWQqPyFtAM+i94nTyM=;
+        b=5Xk2Cf5sGN4xM/GTjUXgqghdvADZjWJqgTljZk5yq92XfhPRZ+kQIQle0epSulGlMM
+         zVP+jm9y4rpX0IV+0/9qUVIEpzvtrxSqKVUFKKpsYv22UHitI5mGgfPnmJQWP5wphrDf
+         DdGtgP6t+yFWr/+mJNNyaEm3pe3Ht4zbyX+R9rkhF9NxZLVqNXb7lEyS6o8iYxxGZwoP
+         Q0ZiCWxmIlq25F7m89+iETmowq25QoO2VXn45FAugTTAO0DIjsFNdIzBvYXpm0TEn4Lg
+         wNlll0dLRdzQm1HACgEFFyaWlCvhjI+emJw3UrLMiMmkzFVXDlW900ayogGnrR0rgqIh
+         OCAg==
+X-Gm-Message-State: AFqh2kqdqxb602krT57nT/Y1Iimh5znfeXwyUIFBYBP+ppyb5/HYdc/8
+        0n0ZhK74yjhw1Ynp7qQM80k=
+X-Google-Smtp-Source: AMrXdXuvUE9N7f+6gUWrXhxpoKc7HIXZVyVaek8pLchYpLa1nwxBV/IT3BEZPOGHwYtXt2HVXad1xw==
+X-Received: by 2002:a05:6000:1e1d:b0:2bd:bb4a:2596 with SMTP id bj29-20020a0560001e1d00b002bdbb4a2596mr8126076wrb.7.1673606075161;
+        Fri, 13 Jan 2023 02:34:35 -0800 (PST)
 Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id f2-20020adfdb42000000b0024274a5db0asm18756516wrj.2.2023.01.13.02.27.46
+        by smtp.gmail.com with ESMTPSA id l14-20020a5d526e000000b0028e55b44a99sm965161wrc.17.2023.01.13.02.34.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jan 2023 02:27:46 -0800 (PST)
+        Fri, 13 Jan 2023 02:34:34 -0800 (PST)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <43f8cc69-1069-f8f9-d0b4-c7d5c330e3c8@dunelm.org.uk>
-Date:   Fri, 13 Jan 2023 10:27:46 +0000
+Message-ID: <44d98c85-d1d7-ed01-20e7-744324e36b13@dunelm.org.uk>
+Date:   Fri, 13 Jan 2023 10:34:34 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v6 0/2] check-attr: add support to work with tree-ish
+Subject: Re: [PATCH v2 3/9] rebase & sequencer API: fix get_replay_opts() leak
+ in "rebase"
 Content-Language: en-US
-To:     Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org
-Cc:     sunshine@sunshineco.com
-References: <https://lore.kernel.org/git/cover.1671793109.git.karthik.188@gmail.com/>
- <cover.1673521102.git.karthik.188@gmail.com>
-In-Reply-To: <cover.1673521102.git.karthik.188@gmail.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Taylor Blau <me@ttaylorr.com>,
+        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+References: <cover-00.10-00000000000-20221230T071741Z-avarab@gmail.com>
+ <cover-v2-0.9-00000000000-20230112T124201Z-avarab@gmail.com>
+ <patch-v2-3.9-f06f565ceaf-20230112T124201Z-avarab@gmail.com>
+In-Reply-To: <patch-v2-3.9-f06f565ceaf-20230112T124201Z-avarab@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Karthik
+Hi Ævar
 
-On 12/01/2023 11:00, Karthik Nayak wrote:
-> v1: https://lore.kernel.org/git/20221206103736.53909-1-karthik.188@gmail.com/
-> v2: https://lore.kernel.org/git/CAOLa=ZSsFGBw3ta1jWN8cmUch2ca=zTEjp1xMA6Linafx9W53g@mail.gmail.com/T/#t
-> v3: https://lore.kernel.org/git/20221216093552.3171319-1-karthik.188@gmail.com/
-> v4: https://lore.kernel.org/git/cover.1671630304.git.karthik.188@gmail.com
-> v5: https://lore.kernel.org/git/cover.1671793109.git.karthik.188@gmail.com/
+On 12/01/2023 12:45, Ævar Arnfjörð Bjarmason wrote:
+> Make the recently added replay_opts_release() function non-static and
+> use it for freeing the "struct replay_opts" constructed by the
+> get_replay_opts() function in "builtin/rebase.c". See [1] for the
+> initial addition of get_replay_opts().
 > 
-> Given a pathname, git-check-attr(1) will list the attributes which apply to that
-> pathname by reading all relevant gitattributes files. Currently there is no way
-> to specify a tree-ish to read the gitattributes from.
+> To safely call our new replay_opts_release() we'll need to change all
+> the free() to a FREE_AND_NULL(), and set "xopts_nr" to "0" after we
+> loop over it and free() it (the free() in the loop doesn't need to be
+> a FREE_AND_NULL()).
 > 
-> This is specifically useful in bare repositories wherein the gitattributes are
-> only present in the git working tree but not available directly on the
-> filesystem.
+> This is because in e.g. do_interactive_rebase() we construct a "struct
+> replay_opts" with "get_replay_opts()", and then call
+> "complete_action()". If we get far enough in that function without
+> encountering errors we'll call "pick_commits()" which (indirectly)
+> calls sequencer_remove_state() at the end.
 > 
-> This series aims to add a new flag `--source` to git-check-attr(1) which
-> allows us to read gitattributes from the specified tree-ish.
+> But if we encounter errors anywhere along the way we'd punt out early,
+> and not free() the memory we allocated. Remembering whether we
+> previously called sequencer_remove_state() would be a hassle, so let's
+> make it safe to re-invoke replay_opts_release() instead.
 > 
-> Changes since v5:
-> - Changed the documentation and helper code to say 'tree-ish' instead of 'tree'
-> - Fixed broken tests because of missing `&&`
+> I experimented with a change to be more paranoid instead, i.e. to
+> exhaustively check our state via an enum. We could make sure that we:
 > 
-> Range-diff against v5:
+> - Only allow calling "replay_opts_release()" after
+>    "sequencer_remove_state()", but not the other way around.
 > 
-> 1:  6224754179 = 1:  6224754179 t0003: move setup for `--all` into new block
-> 2:  d835d989ad ! 2:  57f5957127 attr: add flag `--source` to work with tree-ish
->      @@ Documentation/git-check-attr.txt: git-check-attr - Display gitattributes informa
->        [verse]
->       -'git check-attr' [-a | --all | <attr>...] [--] <pathname>...
->       -'git check-attr' --stdin [-z] [-a | --all | <attr>...]
->      -+'git check-attr' [--source <tree>] [-a | --all | <attr>...] [--] <pathname>...
->      -+'git check-attr' --stdin [-z] [--source <tree>] [-a | --all | <attr>...]
->      ++'git check-attr' [--source <tree-ish>] [-a | --all | <attr>...] [--] <pathname>...
->      ++'git check-attr' --stdin [-z] [--source <tree-ish>] [-a | --all | <attr>...]
->        
->        DESCRIPTION
->        -----------
->      @@ Documentation/git-check-attr.txt: OPTIONS
->        	If `--stdin` is also given, input paths are separated
->        	with a NUL character instead of a linefeed character.
->        
->      -+--source=<tree>::
->      -+	Check attributes against the specified tree-ish. Paths provided as part
->      -+	of the revision will be treated as the root directory. It is common to
->      ++--source=<tree-ish>::
->      ++	Check attributes against the specified tree-ish. It is common to
->       +	specify the source tree by naming a commit, branch or tag associated
->       +	with it.
->       +
->      @@ attr.c: void git_check_attr(struct index_state *istate,
->        		const char *name = check->all_attrs[i].attr->name;
->       
->        ## attr.h ##
->      +@@
->      + #ifndef ATTR_H
->      + #define ATTR_H
->      +
->      ++#include "hash.h"
->      ++
->      + /**
->      +  * gitattributes mechanism gives a uniform way to associate various attributes
->      +  * to set of paths.
->       @@ attr.h: void attr_check_free(struct attr_check *check);
->        const char *git_attr_name(const struct git_attr *);
->        
->      @@ builtin/check-attr.c
->        static const char * const check_attr_usage[] = {
->       -N_("git check-attr [-a | --all | <attr>...] [--] <pathname>..."),
->       -N_("git check-attr --stdin [-z] [-a | --all | <attr>...]"),
->      -+N_("git check-attr [--source <tree>] [-a | --all | <attr>...] [--] <pathname>..."),
->      -+N_("git check-attr --stdin [-z] [--source <tree>] [-a | --all | <attr>...]"),
->      ++N_("git check-attr [--source <tree-ish>] [-a | --all | <attr>...] [--] <pathname>..."),
->      ++N_("git check-attr --stdin [-z] [--source <tree-ish>] [-a | --all | <attr>...]"),
->        NULL
->        };
->        
->      @@ t/t0003-attributes.sh: attr_check_quote () {
->        
->       +	git $git_opts check-attr --source $source test -- "$path" >actual 2>err &&
->       +	echo "$path: test: $expect" >expect &&
->      -+	test_cmp expect actual
->      ++	test_cmp expect actual &&
->       +	test_must_be_empty err
->        }
->        
->      @@ t/t0003-attributes.sh: test_expect_success 'setup' '
->        
->       +test_expect_success 'setup branches' '
->       +	mkdir -p foo/bar &&
->      -+	test_commit --printf "add .gitattributes" foo/bar/.gitattribute \
->      ++	test_commit --printf "add .gitattributes" foo/bar/.gitattributes \
->       +		"f test=f\na/i test=n\n" tag-1 &&
->      -+
->      -+	mkdir -p foo/bar &&
->      -+	test_commit --printf "add .gitattributes" foo/bar/.gitattribute \
->      -+		"g test=g\na/i test=m\n" tag-2
->      ++	test_commit --printf "add .gitattributes" foo/bar/.gitattributes \
->      ++		"g test=g\na/i test=m\n" tag-2 &&
->      ++	rm foo/bar/.gitattributes
->       +'
->       +
->        test_expect_success 'command line checks' '
+> - Forbid invoking either function twice in a row.
+> 
+> But such paranoia isn't warranted here, let's instead take the easy
+> way out and FREE_AND_NULL() this.
 
-The changes in the range-diff look good - this version addresses all of 
-my previous comments - thanks.
+The changes below look good, but this message needs updating to reflect 
+the re-roll.
+
+> @@ -359,6 +359,7 @@ static void replay_opts_release(struct replay_opts *opts)
+>   	free(opts->strategy);
+>   	for (size_t i = 0; i < opts->xopts_nr; i++)
+>   		free(opts->xopts[i]);
+> +	opts->xopts_nr = 0;
+
+I don't think we need this now we're only calling replay_opts_release() 
+once.
 
 Best Wishes
 
 Phillip
-
-> Karthik Nayak (2):
->    t0003: move setup for `--all` into new block
->    attr: add flag `--source` to work with tree-ish
-> 
->   Documentation/git-check-attr.txt |  9 ++-
->   archive.c                        |  2 +-
->   attr.c                           | 97 +++++++++++++++++++++++---------
->   attr.h                           |  7 ++-
->   builtin/check-attr.c             | 35 +++++++-----
->   builtin/pack-objects.c           |  2 +-
->   convert.c                        |  2 +-
->   ll-merge.c                       |  4 +-
->   pathspec.c                       |  2 +-
->   t/t0003-attributes.sh            | 48 +++++++++++++++-
->   userdiff.c                       |  2 +-
->   ws.c                             |  2 +-
->   12 files changed, 157 insertions(+), 55 deletions(-)
-> 
