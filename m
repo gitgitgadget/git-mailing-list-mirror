@@ -2,77 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id D8B44C677F1
-	for <git@archiver.kernel.org>; Fri, 13 Jan 2023 17:46:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6205CC3DA78
+	for <git@archiver.kernel.org>; Fri, 13 Jan 2023 17:49:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229462AbjAMRqa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Jan 2023 12:46:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55334 "EHLO
+        id S230097AbjAMRte (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Jan 2023 12:49:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229614AbjAMRqA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2023 12:46:00 -0500
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B5D193C39
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 09:34:28 -0800 (PST)
-Received: by mail-pg1-x536.google.com with SMTP id r18so15437560pgr.12
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 09:34:28 -0800 (PST)
+        with ESMTP id S229830AbjAMRsy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2023 12:48:54 -0500
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 660608B51B
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 09:40:17 -0800 (PST)
+Received: by mail-pj1-x1031.google.com with SMTP id o1-20020a17090a678100b00219cf69e5f0so27699403pjj.2
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 09:40:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BCy/HoFmqzS4ibei9ugK1Hml0y/t8n6LX6QaXKZ6ql4=;
-        b=C1t9YoLvOvRbezzG3zB5AkRdmEgalFBS42QJVAjSGAlQwsuV8/Hx8UzyxNn2KP3OaA
-         jT0rlic4fVkg2gma0UfCLVsJUxvEYXCaryOU9coEeC0PHzaRBMRUJSRLtvA1CJMr9KDi
-         LVFQ0NNUbKRajdZZ9vw42eWV7464TYNcpYBSzzXoU90XVe0lkR2/xju+AFfajfA634JR
-         uDtUClbf7MTxhSVWNs4Wunv7GAE/vZvJsQ8yLZURZLWI9qx1Tr1nxrgQ8gFhFxGlQxou
-         n4O5cyFmDgDO5HgHw7uf/yhNlSreu6zTcmLdNN9tpp1EXp6db31iT9NOnnrvoD8bjnPV
-         0hoA==
+        bh=YtsiyRycO6jtQnDyqkThi2xVLjSQij+a6CsQwLRlUhI=;
+        b=RK00SPfBWPz5Dx9vv4/QdC0AhPL5EAS6vEsNKpjnKtHngKOcLWRNkaCOjaQHlcPywa
+         9eZ3c4IMrR1KEbZ2hIT1ultg0LfG4kdhYceZx8yIj7ATFt8oAJy2lfuJGiuOrimcvJy5
+         s8AzWrWmPBG6lH3vDTvHOF/7CoAZBbOQKjdk7MhDciTigeZTUSEeAZKx9SM7YVysRAhH
+         te11PsYbarsI8SBEoUKi6LoMP9/uzCHQgOVXQYBV4z9IXkTzwozLG7sUp10LI5WtwGXe
+         ofscbgS5yTt28GSyW3e1Ya9sajqkq352qFDEhzCdbj/MFvpeVHqG/eM1l3d6Wc4ziHB6
+         jnQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:user-agent:message-id
          :in-reply-to:date:references:subject:cc:to:from:sender
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BCy/HoFmqzS4ibei9ugK1Hml0y/t8n6LX6QaXKZ6ql4=;
-        b=sfwwURiZTy8UyEIaTB8Ug6qeMNyDEYC210VF1MTSAvYFpDJTsUUVLiFb7fLIb0ufhH
-         phRGsVc0PZFXjrKERIJNdOTVK8M9aqaqHaMracMEPCwy0VIO9Zs6n8TWBSVK0kLsylcj
-         fX3gA65HYSvKmXCfIUPW5xgvpvhWc9MkHqBNvdg8xeAaBtYgwJ2EIZCIENa6+fS2sUFS
-         fEoBiKPs5vbhJeBh+fuvWy+B+u18xz0aSCFJbXm/U5RnPVadXzaLYGaBMmQQy5nnni/a
-         RuRt7tlq4T+Od+ZV7PUaIohC1QOtF0zs/hi154q/QgfOObfa61deHceGSPJka3axO0mp
-         Drtg==
-X-Gm-Message-State: AFqh2krqASyUSj+pZBMbC0WwuQVJNXseEgqRDH/XWvxRd3BOY2Il85DS
-        pcwZBbbWawYlEJ9GE/0eOH0=
-X-Google-Smtp-Source: AMrXdXtxtbgX018kb+422ZEZXsTtJ6egw0hzamxEg3MJT6gZPL3httwTfoKGH355rsJUUQtOtV7Adw==
-X-Received: by 2002:a05:6a00:4149:b0:576:5a71:454a with SMTP id bv9-20020a056a00414900b005765a71454amr11963292pfb.2.1673631267573;
-        Fri, 13 Jan 2023 09:34:27 -0800 (PST)
+        bh=YtsiyRycO6jtQnDyqkThi2xVLjSQij+a6CsQwLRlUhI=;
+        b=1XVtu1t8yOdoYAOBPweegjg54ma++q7v4hVg63zZV4qQ0aarQOJPGWFodI4wCaPYJD
+         1YFvSlS4VzoQNXNG5lpMcUtkwPGNX40JOfZZq3ogiRW8ymIg1bfKyDQ9iuY3bDJIQJt9
+         dIQOZHDulucHgyyiriZV2VgHCPQCLktaEYMYWGUFRURICZOtay1QYGB+/ZGnHsAx+VSV
+         fqpQlpRAp7jB7C/bz/IvqTe/wPsGlykqB8k4Et5pruhNS4eNBKeATBXn7CuUUcC5iQQj
+         SXyo+AhUEg+XFl0K0jZ7lv3pJsafHV7QuefhtgLlyKbcOc0AXUZkiIdvN+JxRXfLopCa
+         tlXg==
+X-Gm-Message-State: AFqh2kqCNfO2VVqBTTIO0bn9slzLiaUMUQ1HYbDIq2JDTjrTuP43kD3n
+        iIUUJxOy+IFBINo2jlpTZVo=
+X-Google-Smtp-Source: AMrXdXvZxjKgPjeH5haDLdJeMIxS38bCjYHT6r+0CJoc8Pto98+uin0MAULHHFTEEt4d9Qz/kw3Y3Q==
+X-Received: by 2002:a05:6a20:aa9f:b0:a3:7d0b:5dcb with SMTP id ck31-20020a056a20aa9f00b000a37d0b5dcbmr12153220pzb.15.1673631616744;
+        Fri, 13 Jan 2023 09:40:16 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id a7-20020aa795a7000000b00575d1ba0ecfsm4361338pfk.133.2023.01.13.09.34.27
+        by smtp.gmail.com with ESMTPSA id c10-20020a63d14a000000b004468cb97c01sm11916987pgj.56.2023.01.13.09.40.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 09:34:27 -0800 (PST)
+        Fri, 13 Jan 2023 09:40:16 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jacob Abel <jacobabel@nullpo.dev>, git@vger.kernel.org,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Phillip Wood <phillip.wood123@gmail.com>,
-        =?utf-8?Q?Rub=C3=A9n?= Justo <rjusto@gmail.com>,
-        Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-Subject: Re: [PATCH v8 0/4] worktree: Support `--orphan` when creating new
- worktrees
-References: <20221104010242.11555-1-jacobabel@nullpo.dev>
-        <20221104213401.17393-1-jacobabel@nullpo.dev>
-        <20221110233137.10414-1-jacobabel@nullpo.dev>
-        <20221212014003.20290-1-jacobabel@nullpo.dev>
-        <20221220023637.29042-1-jacobabel@nullpo.dev>
-        <20221228061539.13740-1-jacobabel@nullpo.dev>
-        <20230107045757.30037-1-jacobabel@nullpo.dev>
-        <20230109173227.29264-1-jacobabel@nullpo.dev>
-        <230109.86eds31plo.gmgdl@evledraar.gmail.com>
-Date:   Fri, 13 Jan 2023 09:34:27 -0800
-In-Reply-To: <230109.86eds31plo.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH] object-file: fix indent-with-space
+References: <Y7l4LsEQcDT9HZ21@coredump.intra.peff.net>
+        <Y7l4RznPhTr+O8ZP@coredump.intra.peff.net>
+        <230112.86k01s2jzm.gmgdl@evledraar.gmail.com>
+        <Y8AwGdtrsjnBdXN7@coredump.intra.peff.net>
+        <230112.864jsv20r2.gmgdl@evledraar.gmail.com>
+Date:   Fri, 13 Jan 2023 09:40:16 -0800
+In-Reply-To: <230112.864jsv20r2.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
  =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Mon, 09 Jan 2023 20:20:28 +0100")
-Message-ID: <xmqqwn5q49uk.fsf@gitster.g>
+        Bjarmason"'s message of "Thu, 12 Jan 2023 17:08:35 +0100")
+Message-ID: <xmqqsfge49kv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -83,13 +75,30 @@ X-Mailing-List: git@vger.kernel.org
 
 Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> I've looked this & previous iterations over carefully, and this now
-> looks good to me. Thanks for sticking with this so long.
->
-> For what it's worth (if Junio would like to add it):
->
-> Reviewed-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>> diff --git a/object-file.c b/object-file.c
+>> index 80b08fc389..ce9efae994 100644
+>> --- a/object-file.c
+>> +++ b/object-file.c
+>> @@ -1708,7 +1708,7 @@ void *repo_read_object_file(struct repository *r,
+>>  	oi.sizep = size;
+>>  	oi.contentp = &data;
+>>  	if (oid_object_info_extended(r, oid, &oi, flags))
+>> -	    return NULL;
+>> +		return NULL;
+>>  
+>>  	return data;
+>>  }
 
-Thanks, but Phillip's point of -B/-b deserves consideration, I would
-say.  It seems that the required change is just a syntax sugar
-without having to change anything deeper?
+Thanks, both, for being extra careful.
+
+> Thanks, I didn't notice (assuming it was too soon, it being less than a
+> week) that it was in "next" already. This change LGTM, thanks!
+
+It would be surprising if an ordinary topic goes to 'master' without
+spending a week in 'next', but it is something I aim to merge a
+reasonably well-done topic down to 'next' from 'seen' with minimum
+amount of time.  Here minimum usually means 1 wallclock day, just to
+catch silly typos, if the patches are reviewed adequately on list by
+folks (or possibly by me).
+
+Thanks.
