@@ -2,64 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5C3E1C54EBD
-	for <git@archiver.kernel.org>; Fri, 13 Jan 2023 10:36:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 6863AC54EBD
+	for <git@archiver.kernel.org>; Fri, 13 Jan 2023 10:38:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241289AbjAMKgV (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Jan 2023 05:36:21 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38178 "EHLO
+        id S240048AbjAMKiy (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Jan 2023 05:38:54 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241220AbjAMKf5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2023 05:35:57 -0500
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16F0C78160
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 02:34:39 -0800 (PST)
-Received: by mail-wr1-x430.google.com with SMTP id e10so1058274wri.0
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 02:34:38 -0800 (PST)
+        with ESMTP id S241326AbjAMKiC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2023 05:38:02 -0500
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A8BD77AE6
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 02:36:36 -0800 (PST)
+Received: by mail-wm1-x329.google.com with SMTP id m8-20020a05600c3b0800b003d96f801c48so18453114wms.0
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 02:36:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6mgdI8Fn6p/GYU4a/CAwGtYsJKWQqPyFtAM+i94nTyM=;
-        b=qM5l/jJB7mnFgSR+74vGlG4i7EMgPzybIxgdm0LgOtZpgMAgMlNzd5dNPkzmvwYmPm
-         9N0wgMJLwnDSkm9NuKcC+XGmG8R9tvD2WIuEE9HDKpZZtHl1Qtj2qvRe2RcJFyf73BHc
-         PL40fEkLdh/phITSj19bMqU1Xm/r6yuZwlWluctyUNlMzWgtNaMfPSygmbj2/kDDGRct
-         xY7CQnVS8QH1gurIVnylGGTyq1liu4ewHvhr23ug2pfQZNEjWYDgGLMy6AC7HGVbrnOD
-         ynaAxA+kee4aDGuNCNWh0qyyj9sv/qlJ1NIZiKl/PFj2L8BsMRpuYnZ1VEbByYYDAFj1
-         QpCQ==
+        bh=Ia00f/BDEUA5a3NTHRFZLbuGXaluWAYYEyrYdqifWgo=;
+        b=IfuVMNcjfXJ4YVX0K6ifziHlZPY9x9CO7269eC9HhDu4isjcL9nKXwJiaLt7e6beCM
+         I4ZXr+oUFBcugmwJNE3sHRm2p38uu4JaIUC3A4fCBPE74058Rg5OwhTvPK+xGgm6T1f5
+         ucwAv1iagUr52mdq8G2wkb88I+LDWhg0lqEiWw1ZgsCCOi2Xm8Yyapym1EpZznkQyrq+
+         nS+Y3tb8PeWbIVnuD+/vbSVC/Eafdk+gGIrejfBCVy/GKOUYsM2XucYMBKpQK9JfNzat
+         BY+DgoLgZuQONdlTdZe3diZ6qSeUWVuXf8X4K71OspWOqcv2z9qWxqFYeNksuU8gM9m4
+         s09w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6mgdI8Fn6p/GYU4a/CAwGtYsJKWQqPyFtAM+i94nTyM=;
-        b=5Xk2Cf5sGN4xM/GTjUXgqghdvADZjWJqgTljZk5yq92XfhPRZ+kQIQle0epSulGlMM
-         zVP+jm9y4rpX0IV+0/9qUVIEpzvtrxSqKVUFKKpsYv22UHitI5mGgfPnmJQWP5wphrDf
-         DdGtgP6t+yFWr/+mJNNyaEm3pe3Ht4zbyX+R9rkhF9NxZLVqNXb7lEyS6o8iYxxGZwoP
-         Q0ZiCWxmIlq25F7m89+iETmowq25QoO2VXn45FAugTTAO0DIjsFNdIzBvYXpm0TEn4Lg
-         wNlll0dLRdzQm1HACgEFFyaWlCvhjI+emJw3UrLMiMmkzFVXDlW900ayogGnrR0rgqIh
-         OCAg==
-X-Gm-Message-State: AFqh2kqdqxb602krT57nT/Y1Iimh5znfeXwyUIFBYBP+ppyb5/HYdc/8
-        0n0ZhK74yjhw1Ynp7qQM80k=
-X-Google-Smtp-Source: AMrXdXuvUE9N7f+6gUWrXhxpoKc7HIXZVyVaek8pLchYpLa1nwxBV/IT3BEZPOGHwYtXt2HVXad1xw==
-X-Received: by 2002:a05:6000:1e1d:b0:2bd:bb4a:2596 with SMTP id bj29-20020a0560001e1d00b002bdbb4a2596mr8126076wrb.7.1673606075161;
-        Fri, 13 Jan 2023 02:34:35 -0800 (PST)
+        bh=Ia00f/BDEUA5a3NTHRFZLbuGXaluWAYYEyrYdqifWgo=;
+        b=Yb7vLv3JGHUGm6Ljb7qulWczgVinCfpbZIFlfVor+3xBbp5K4pN730iRUVhhUoIdP0
+         FyMkefz8yrGNH+LtoSdZRdc9QQ7KEunmx2rrO0KRUTFEWaOdolpin1nOQyjb5ZrUN4tG
+         T889ucDfMVB9EQ8dHWeOBIheZ9RCYajsGKCPbRKJnNqm8jkjUDOSNcTC5kubRYjf2G2r
+         iYE0j+3cbUyfVkd3FuXSwChmJMy3GbUEwOC+oOIbyUIVMZg6XShUfFwd7RduvlKopz8/
+         0j2VKrh5B0OQFPE5cVLecfh84ky8xKR8eshUzjyuhXx7QEs86c5Nxyk/Db0seMmfWbIv
+         ql7Q==
+X-Gm-Message-State: AFqh2kolT2XM2WQGobJSmCbenxwUUOxDZ6qgmB1ENbsiCVcgTucQeldc
+        DA389o+6CnauuF5WiYtDveU=
+X-Google-Smtp-Source: AMrXdXtfYfNof18en52/6NBhn+4OGGmhZe0qk4HNeERta8eQ7noNCEgvnre4TM2KdJvAu8wcA4pi0w==
+X-Received: by 2002:a05:600c:600a:b0:3d1:ed41:57c0 with SMTP id az10-20020a05600c600a00b003d1ed4157c0mr61851594wmb.30.1673606194589;
+        Fri, 13 Jan 2023 02:36:34 -0800 (PST)
 Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id l14-20020a5d526e000000b0028e55b44a99sm965161wrc.17.2023.01.13.02.34.34
+        by smtp.gmail.com with ESMTPSA id f19-20020a1c6a13000000b003d9fb04f658sm10460055wmc.4.2023.01.13.02.36.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jan 2023 02:34:34 -0800 (PST)
+        Fri, 13 Jan 2023 02:36:34 -0800 (PST)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <44d98c85-d1d7-ed01-20e7-744324e36b13@dunelm.org.uk>
-Date:   Fri, 13 Jan 2023 10:34:34 +0000
+Message-ID: <cef87708-657c-5611-82bd-9d3fa3a4b241@dunelm.org.uk>
+Date:   Fri, 13 Jan 2023 10:36:33 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 3/9] rebase & sequencer API: fix get_replay_opts() leak
- in "rebase"
+Subject: Re: [PATCH v2 4/9] builtin/revert.c: move free-ing of "revs" to
+ replay_opts_release()
 Content-Language: en-US
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         git@vger.kernel.org
@@ -69,8 +69,8 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 References: <cover-00.10-00000000000-20221230T071741Z-avarab@gmail.com>
  <cover-v2-0.9-00000000000-20230112T124201Z-avarab@gmail.com>
- <patch-v2-3.9-f06f565ceaf-20230112T124201Z-avarab@gmail.com>
-In-Reply-To: <patch-v2-3.9-f06f565ceaf-20230112T124201Z-avarab@gmail.com>
+ <patch-v2-4.9-e83bdfab046-20230112T124201Z-avarab@gmail.com>
+In-Reply-To: <patch-v2-4.9-e83bdfab046-20230112T124201Z-avarab@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -80,50 +80,71 @@ X-Mailing-List: git@vger.kernel.org
 Hi Ævar
 
 On 12/01/2023 12:45, Ævar Arnfjörð Bjarmason wrote:
-> Make the recently added replay_opts_release() function non-static and
-> use it for freeing the "struct replay_opts" constructed by the
-> get_replay_opts() function in "builtin/rebase.c". See [1] for the
-> initial addition of get_replay_opts().
-> 
-> To safely call our new replay_opts_release() we'll need to change all
-> the free() to a FREE_AND_NULL(), and set "xopts_nr" to "0" after we
-> loop over it and free() it (the free() in the loop doesn't need to be
-> a FREE_AND_NULL()).
-> 
-> This is because in e.g. do_interactive_rebase() we construct a "struct
-> replay_opts" with "get_replay_opts()", and then call
-> "complete_action()". If we get far enough in that function without
-> encountering errors we'll call "pick_commits()" which (indirectly)
-> calls sequencer_remove_state() at the end.
-> 
-> But if we encounter errors anywhere along the way we'd punt out early,
-> and not free() the memory we allocated. Remembering whether we
-> previously called sequencer_remove_state() would be a hassle, so let's
-> make it safe to re-invoke replay_opts_release() instead.
-> 
-> I experimented with a change to be more paranoid instead, i.e. to
-> exhaustively check our state via an enum. We could make sure that we:
-> 
-> - Only allow calling "replay_opts_release()" after
->    "sequencer_remove_state()", but not the other way around.
-> 
-> - Forbid invoking either function twice in a row.
-> 
-> But such paranoia isn't warranted here, let's instead take the easy
-> way out and FREE_AND_NULL() this.
+> In [1] and [2] I added the code being moved here to cmd_revert() and
+> cmd_cherry_pick(),
 
-The changes below look good, but this message needs updating to reflect 
-the re-roll.
+I'm not sure how relevant this first clause is but the change itself 
+looks good.
 
-> @@ -359,6 +359,7 @@ static void replay_opts_release(struct replay_opts *opts)
->   	free(opts->strategy);
->   	for (size_t i = 0; i < opts->xopts_nr; i++)
->   		free(opts->xopts[i]);
-> +	opts->xopts_nr = 0;
+> now that we've got a "replay_opts_release()" for
+> the "struct replay_opts" it should know how to free these "revs",
+> rather than having these users reach into the struct to free its
+> individual members.
+> 
+> As explained in earlier change we should be using FREE_AND_NULL() in
+> replay_opts_release() rather than free().
 
-I don't think we need this now we're only calling replay_opts_release() 
-once.
+This paragraph is out of date
 
 Best Wishes
 
 Phillip
+
+> 1. d1ec656d68f (cherry-pick: free "struct replay_opts" members,
+>     2022-11-08)
+> 2. fd74ac95ac3 (revert: free "struct replay_opts" members, 2022-07-01)
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>   builtin/revert.c | 6 ------
+>   sequencer.c      | 3 +++
+>   2 files changed, 3 insertions(+), 6 deletions(-)
+> 
+> diff --git a/builtin/revert.c b/builtin/revert.c
+> index 1cab16bf3ed..77d2035616e 100644
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -248,9 +248,6 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+>   	res = run_sequencer(argc, argv, &opts);
+>   	if (res < 0)
+>   		die(_("revert failed"));
+> -	if (opts.revs)
+> -		release_revisions(opts.revs);
+> -	free(opts.revs);
+>   	replay_opts_release(&opts);
+>   	return res;
+>   }
+> @@ -263,9 +260,6 @@ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
+>   	opts.action = REPLAY_PICK;
+>   	sequencer_init_config(&opts);
+>   	res = run_sequencer(argc, argv, &opts);
+> -	if (opts.revs)
+> -		release_revisions(opts.revs);
+> -	free(opts.revs);
+>   	if (res < 0)
+>   		die(_("cherry-pick failed"));
+>   	replay_opts_release(&opts);
+> diff --git a/sequencer.c b/sequencer.c
+> index 5d8c68912a1..c729ce77260 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -362,6 +362,9 @@ void replay_opts_release(struct replay_opts *opts)
+>   	opts->xopts_nr = 0;
+>   	free(opts->xopts);
+>   	strbuf_release(&opts->current_fixups);
+> +	if (opts->revs)
+> +		release_revisions(opts->revs);
+> +	free(opts->revs);
+>   }
+>   
+>   int sequencer_remove_state(struct replay_opts *opts)
