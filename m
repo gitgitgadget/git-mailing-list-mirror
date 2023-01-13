@@ -2,64 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C7E6DC54EBE
-	for <git@archiver.kernel.org>; Fri, 13 Jan 2023 10:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A7C75C54EBE
+	for <git@archiver.kernel.org>; Fri, 13 Jan 2023 10:44:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241126AbjAMKjM (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Jan 2023 05:39:12 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39094 "EHLO
+        id S241334AbjAMKo4 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Jan 2023 05:44:56 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241338AbjAMKiY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2023 05:38:24 -0500
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BF1176AE9
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 02:37:23 -0800 (PST)
-Received: by mail-wm1-x334.google.com with SMTP id bg13-20020a05600c3c8d00b003d9712b29d2so18471728wmb.2
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 02:37:23 -0800 (PST)
+        with ESMTP id S240906AbjAMKoh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2023 05:44:37 -0500
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C6367DE2A
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 02:41:28 -0800 (PST)
+Received: by mail-wm1-x332.google.com with SMTP id j34-20020a05600c1c2200b003da1b054057so2750515wms.5
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 02:41:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=EzG7vr8B/aynB0oI1V+ZkaFYaH5zH2vwZ1x0Ewp42fs=;
-        b=ad0N4O9NXqO0d1ofcgkFzM+nZbe9QYEwmU1NUj8abU9A6ufd97W1nf5ZtjteqAKFHG
-         fdLUNtv1GzpQqSooxZrGwGvd6k0i1ETLOY3suDMD3yo9uSCGpT7B+UlCD+OyrXItjptE
-         kSzbBDOYdT+aTnRqakTsW/8qutzxqCvLgigvOH+A9xIkv+2Ten8+tCDEvg0pPlRHbVdu
-         J+ubi6aIFGh5AA5aa38quByoZ3Mbt9fRNZfvGKOPon94uT/DFj/AVvi+RJlOnULPqcYW
-         3Ypb9W1gstV+e+MGh9GvFk86Or1BkuJktvvgvHfy722Tb+RAxbDGAc70aMNGG+6OoQBd
-         7Rsg==
+        bh=/JXKCSNd59t2oGWHVem8hVrmdCqcFVSxAxbTeYuMkbc=;
+        b=P/sVy3QsQ6suTODYX5k9LU1oh6dSNgJKj/2zKSWjn9Xe3FmDX3wMrFHLs347xBMNmx
+         A3EyX0Wh0RHK3smuzEBx80N1DZzRGBuQTb1iBv/PcaBJcYEdbN1Osc/g8iIY+ktdztf9
+         7zbFPxui4mP6KHKyR/CTwk1l/pJDXh8RSNyEKeSiV4TMDMpLVYHtwR6HlsC7R+F4x+Vp
+         j8Ipkw0OoeBM7X/vctowvbnJwqFBN35RfGUsqIwAwxTCcHTsonmP2+i+3NowT6OPTGBP
+         qFPnj+YY5CM7AyHXVciMgzyoBl9noc0IZ9I4/jLo6f2EmNLlpJ2qEO4pQniPBe7Ch8Zp
+         KaRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:references:cc:to
          :content-language:subject:reply-to:user-agent:mime-version:date
          :message-id:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EzG7vr8B/aynB0oI1V+ZkaFYaH5zH2vwZ1x0Ewp42fs=;
-        b=vkyE8tgvCFzS0GNjlnajdlDgFSvZkXAcv7NFa3aGPJRjr/hgyVg7cpoppTMG2WFIpU
-         QrpHsD2muLLHqb+ICiamVCgd1oTSXSuVK/1AGOzoZc6OIxb2tlakQizugTdg/bmxPOg5
-         6NhC0AzN6XJjVE75X1rgblkaaVJTTCQV3n6Y68In3FgpR+3VM5Xhx+G3o2pYS7BWxQ2g
-         nOXP5MJ2VNzegVhiF+nLjxSvEXYz2hTluUe086EdEXyOyL5bpD+w465SY0BixnW9mnBu
-         i4PC8ULrsg5yMTeEzVN1KxY12z3GwAUlsncImebEec/v5gdt6FPxDPoaNZ6KgsMbFQth
-         nqqw==
-X-Gm-Message-State: AFqh2kqaW/YI4B4aHM209dFy4e2kyMyoGrD6Jlj4pCqCN4/YjCEMPr2/
-        XcuBnkjPRpPG/G0hBS2YdTg=
-X-Google-Smtp-Source: AMrXdXsf6CSUB9MUugQmpZ235UMdO5VuphNYRo35dYK4WN7/MNZsEKoSA8+Ff2WIDa1fgcmCuc2C7w==
-X-Received: by 2002:a05:600c:34d3:b0:3c6:e61e:ae74 with SMTP id d19-20020a05600c34d300b003c6e61eae74mr69539255wmq.4.1673606241946;
-        Fri, 13 Jan 2023 02:37:21 -0800 (PST)
+        bh=/JXKCSNd59t2oGWHVem8hVrmdCqcFVSxAxbTeYuMkbc=;
+        b=IPkwnJgfb6hdFUFmIhXYGO4yMCS5kKglVwQlI09FsNzKZL6wX9SS6/QOMI/cKaDqGn
+         K1GMvEUSL5+e7H/kHmVK1sQO9oeCrF2xrZNXE03FR/qLl2r0CGW5krGhtWoe9i5dawnh
+         skg7t1LKg1LqY8a2l73rul3f/AqwyEL9x9croibVJTJ1DUyDREHiWCsB/966lRVqNA3E
+         kAcSzfRKFMFeeKKrZTQAN4YLH4yeS0zTOBVHVH/5RYl6VgN+PzGYOswpZsJKOlWVkjkd
+         PW09zfWSFTX+Hs8dhrP62O/tdIgscFfoMnb2CbZ2HchNlv3yG0mFAdPcg4gC0S/E5eeb
+         2dXA==
+X-Gm-Message-State: AFqh2kp1d19JcgE8udbAp40DHTuxSpLIueR7DKjhizFcNpCFFzKfBYxZ
+        rjDURCgIOEex/Tx8gLMJO78=
+X-Google-Smtp-Source: AMrXdXsEJrF+yBw7YSxU3awEsvVUc5CAS+mRA0pA+G9wt6Xb0xQtbbAng5xUSvZxc5i9qb8SkAP8zw==
+X-Received: by 2002:a05:600c:1c12:b0:3d3:5841:e8af with SMTP id j18-20020a05600c1c1200b003d35841e8afmr58624715wms.25.1673606486673;
+        Fri, 13 Jan 2023 02:41:26 -0800 (PST)
 Received: from [192.168.1.74] ([31.185.185.212])
-        by smtp.gmail.com with ESMTPSA id p9-20020a05600c358900b003cffd3c3d6csm26841817wmq.12.2023.01.13.02.37.21
+        by smtp.gmail.com with ESMTPSA id o9-20020a05600c510900b003c6f8d30e40sm32969278wms.31.2023.01.13.02.41.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jan 2023 02:37:21 -0800 (PST)
+        Fri, 13 Jan 2023 02:41:26 -0800 (PST)
 From:   Phillip Wood <phillip.wood123@gmail.com>
 X-Google-Original-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Message-ID: <a16db697-1222-c0fd-b210-0eec3c181a5c@dunelm.org.uk>
-Date:   Fri, 13 Jan 2023 10:37:20 +0000
+Message-ID: <b35f4a38-be15-5d43-73bd-3b336dc61ee9@dunelm.org.uk>
+Date:   Fri, 13 Jan 2023 10:41:25 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 5/9] builtin/rebase.c: rename "squash_onto_name" to
- "to_free"
+Subject: Re: [PATCH v2 6/9] builtin/rebase.c: fix "options.onto_name" leak
 Content-Language: en-US
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         git@vger.kernel.org
@@ -69,64 +68,65 @@ Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
 References: <cover-00.10-00000000000-20221230T071741Z-avarab@gmail.com>
  <cover-v2-0.9-00000000000-20230112T124201Z-avarab@gmail.com>
- <patch-v2-5.9-4fea2b77c6d-20230112T124201Z-avarab@gmail.com>
-In-Reply-To: <patch-v2-5.9-4fea2b77c6d-20230112T124201Z-avarab@gmail.com>
+ <patch-v2-6.9-898bb7698fc-20230112T124201Z-avarab@gmail.com>
+In-Reply-To: <patch-v2-6.9-898bb7698fc-20230112T124201Z-avarab@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Ævar
+
 On 12/01/2023 12:45, Ævar Arnfjörð Bjarmason wrote:
-> The real use of the "squash_onto_name" added in [1] is to keep track
-> of a value for later free()-ing, we don't subsequently use it for
-> anything else.
-> 
-> Let's rename it in preparation for re-using it for free()-ing before
-> another assignment to "options.onto_name", which is an outstanding
-> leak that'll be fixed in a subsequent commit.
+> In [1] we started saving away the earlier xstrdup()'d
+> "options.onto_name" assignment to free() it, but when [2] added this
+> "keep_base" branch it didn't free() the already assigned value before
+> re-assigning to "options.onto_name". Let's do that, and fix the memory
+> leak.
 
-This is good
+As I said before I don't think this message makes any sense. It should 
+just say that when --keep-base is given we need to free 
+options.onto_name as it does not come from argv. As I also mentioned you 
+do not need to add "free(to_free)" as it is unused at this point. 
+Freeing it makes the reader wonder what was previously assigned to it.
 
-Thanks
+Best Wishes
 
 Phillip
 
 > 1. 9dba809a69a (builtin rebase: support --root, 2018-09-04)
+> 2. 414d924beb4 (rebase: teach rebase --keep-base, 2019-08-27)
 > 
 > Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 > ---
->   builtin/rebase.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+>   builtin/rebase.c                 | 3 ++-
+>   t/t3416-rebase-onto-threedots.sh | 1 +
+>   2 files changed, 3 insertions(+), 1 deletion(-)
 > 
 > diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 5859a5387d8..0d8c050f6b3 100644
+> index 0d8c050f6b3..b4857b89f19 100644
 > --- a/builtin/rebase.c
 > +++ b/builtin/rebase.c
-> @@ -1036,7 +1036,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   	const char *rebase_merges = NULL;
->   	struct string_list strategy_options = STRING_LIST_INIT_NODUP;
->   	struct object_id squash_onto;
-> -	char *squash_onto_name = NULL;
-> +	char *to_free = NULL;
->   	int reschedule_failed_exec = -1;
->   	int allow_preemptive_ff = 1;
->   	int preserve_merges_selected = 0;
-> @@ -1589,7 +1589,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   					&squash_onto, NULL, NULL) < 0)
->   				die(_("Could not create new root commit"));
->   			options.squash_onto = &squash_onto;
-> -			options.onto_name = squash_onto_name =
-> +			options.onto_name = to_free =
->   				xstrdup(oid_to_hex(&squash_onto));
->   		} else
->   			options.root_with_onto = 1;
-> @@ -1835,7 +1835,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   	free(options.cmd);
->   	free(options.strategy);
->   	strbuf_release(&options.git_format_patch_opt);
-> -	free(squash_onto_name);
-> +	free(to_free);
->   	string_list_clear(&exec, 0);
->   	string_list_clear(&strategy_options, 0);
->   	return !!ret;
+> @@ -1660,7 +1660,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>   		strbuf_addstr(&buf, options.upstream_name);
+>   		strbuf_addstr(&buf, "...");
+>   		strbuf_addstr(&buf, branch_name);
+> -		options.onto_name = xstrdup(buf.buf);
+> +		free(to_free);
+> +		options.onto_name = to_free = xstrdup(buf.buf);
+>   	} else if (!options.onto_name)
+>   		options.onto_name = options.upstream_name;
+>   	if (strstr(options.onto_name, "...")) {
+> diff --git a/t/t3416-rebase-onto-threedots.sh b/t/t3416-rebase-onto-threedots.sh
+> index ea501f2b42b..f8c4ed78c9e 100755
+> --- a/t/t3416-rebase-onto-threedots.sh
+> +++ b/t/t3416-rebase-onto-threedots.sh
+> @@ -5,6 +5,7 @@ test_description='git rebase --onto A...B'
+>   GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+>   export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+>   
+> +TEST_PASSES_SANITIZE_LEAK=true
+>   . ./test-lib.sh
+>   . "$TEST_DIRECTORY/lib-rebase.sh"
+>   
