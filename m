@@ -2,103 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 6205CC3DA78
-	for <git@archiver.kernel.org>; Fri, 13 Jan 2023 17:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 28215C3DA78
+	for <git@archiver.kernel.org>; Fri, 13 Jan 2023 17:52:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230097AbjAMRte (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Jan 2023 12:49:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55244 "EHLO
+        id S229599AbjAMRwC (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Jan 2023 12:52:02 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229830AbjAMRsy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2023 12:48:54 -0500
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 660608B51B
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 09:40:17 -0800 (PST)
-Received: by mail-pj1-x1031.google.com with SMTP id o1-20020a17090a678100b00219cf69e5f0so27699403pjj.2
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 09:40:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=YtsiyRycO6jtQnDyqkThi2xVLjSQij+a6CsQwLRlUhI=;
-        b=RK00SPfBWPz5Dx9vv4/QdC0AhPL5EAS6vEsNKpjnKtHngKOcLWRNkaCOjaQHlcPywa
-         9eZ3c4IMrR1KEbZ2hIT1ultg0LfG4kdhYceZx8yIj7ATFt8oAJy2lfuJGiuOrimcvJy5
-         s8AzWrWmPBG6lH3vDTvHOF/7CoAZBbOQKjdk7MhDciTigeZTUSEeAZKx9SM7YVysRAhH
-         te11PsYbarsI8SBEoUKi6LoMP9/uzCHQgOVXQYBV4z9IXkTzwozLG7sUp10LI5WtwGXe
-         ofscbgS5yTt28GSyW3e1Ya9sajqkq352qFDEhzCdbj/MFvpeVHqG/eM1l3d6Wc4ziHB6
-         jnQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YtsiyRycO6jtQnDyqkThi2xVLjSQij+a6CsQwLRlUhI=;
-        b=1XVtu1t8yOdoYAOBPweegjg54ma++q7v4hVg63zZV4qQ0aarQOJPGWFodI4wCaPYJD
-         1YFvSlS4VzoQNXNG5lpMcUtkwPGNX40JOfZZq3ogiRW8ymIg1bfKyDQ9iuY3bDJIQJt9
-         dIQOZHDulucHgyyiriZV2VgHCPQCLktaEYMYWGUFRURICZOtay1QYGB+/ZGnHsAx+VSV
-         fqpQlpRAp7jB7C/bz/IvqTe/wPsGlykqB8k4Et5pruhNS4eNBKeATBXn7CuUUcC5iQQj
-         SXyo+AhUEg+XFl0K0jZ7lv3pJsafHV7QuefhtgLlyKbcOc0AXUZkiIdvN+JxRXfLopCa
-         tlXg==
-X-Gm-Message-State: AFqh2kqCNfO2VVqBTTIO0bn9slzLiaUMUQ1HYbDIq2JDTjrTuP43kD3n
-        iIUUJxOy+IFBINo2jlpTZVo=
-X-Google-Smtp-Source: AMrXdXvZxjKgPjeH5haDLdJeMIxS38bCjYHT6r+0CJoc8Pto98+uin0MAULHHFTEEt4d9Qz/kw3Y3Q==
-X-Received: by 2002:a05:6a20:aa9f:b0:a3:7d0b:5dcb with SMTP id ck31-20020a056a20aa9f00b000a37d0b5dcbmr12153220pzb.15.1673631616744;
-        Fri, 13 Jan 2023 09:40:16 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id c10-20020a63d14a000000b004468cb97c01sm11916987pgj.56.2023.01.13.09.40.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 09:40:16 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH] object-file: fix indent-with-space
-References: <Y7l4LsEQcDT9HZ21@coredump.intra.peff.net>
-        <Y7l4RznPhTr+O8ZP@coredump.intra.peff.net>
-        <230112.86k01s2jzm.gmgdl@evledraar.gmail.com>
-        <Y8AwGdtrsjnBdXN7@coredump.intra.peff.net>
-        <230112.864jsv20r2.gmgdl@evledraar.gmail.com>
-Date:   Fri, 13 Jan 2023 09:40:16 -0800
-In-Reply-To: <230112.864jsv20r2.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Thu, 12 Jan 2023 17:08:35 +0100")
-Message-ID: <xmqqsfge49kv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        with ESMTP id S229830AbjAMRvh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2023 12:51:37 -0500
+Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66CF58BF38
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 09:44:22 -0800 (PST)
+Received: from 88-110-98-79.dynamic.dsl.as9105.com ([88.110.98.79] helo=[192.168.1.57])
+        by smtp.hosts.co.uk with esmtpa (Exim)
+        (envelope-from <philipoakley@iee.email>)
+        id 1pGO6F-0000Ty-3S;
+        Fri, 13 Jan 2023 17:44:19 +0000
+Message-ID: <5c696705-08f8-3ca4-530d-c2c12abc4593@iee.email>
+Date:   Fri, 13 Jan 2023 17:44:17 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: Gitorious should use CRC128 / 256 / 512 instead of SHA-1
+Content-Language: en-GB
+To:     rsbecker@nexbridge.com, 'Hans Petter Selasky' <hps@selasky.org>,
+        git@vger.kernel.org
+References: <39dd1a00-786b-acf5-8a40-2425f7dab6cc@selasky.org>
+ <20230113133059.snyjblh3sz2wzcnd@carbon>
+ <446984f6-0d2e-04da-11a3-8b1481fac953@selasky.org>
+ <009701d9275a$678416b0$368c4410$@nexbridge.com>
+From:   Philip Oakley <philipoakley@iee.email>
+In-Reply-To: <009701d9275a$678416b0$368c4410$@nexbridge.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+On 13/01/2023 14:21, rsbecker@nexbridge.com wrote:
+> On January 13, 2023 8:40 AM, Hans Petter Selasky wrote:
+>> On 1/13/23 14:30, Konstantin Khomoutov wrote:
+>>> On Fri, Jan 13, 2023 at 01:59:44PM +0100, Hans Petter Selasky wrote:
+>>>
+>>>> Currently GIT only supports cryptographic hashes for its commit tags.
+>>> [...]
+>>>
+>>> https://github.com/git/git/blob/9bf691b78cf906751e65d65ba0c6ffdcd9a5a1
+>>> 2c/Documentation/technical/hash-function-transition.txt
+>>>
+>>> It's not clear why are you referring to Gitorious in your mail's
+>>> subject and then talk about Git.
+>>>
+>> Hi,
+>>
+>> I thought that Git was short for Gitorious? My bad.
+>>
+>> The document you refer to really highlights my concerns, that a strong
+>> cryptographic hash algorithm is the highway to hell.
+>>
+>> Do _not_ use a cryptographic hash for Git. Use plain good old CRC hashes.
+>>
+>> Just imagine the consequences of finding child porn inside a 10-year old firmware
+>> binary blob in the Linux kernel. Will you just ignore it, or will you fix it?
+>>
+>> That's why I say, that it must be possible to forge the hashes by default.
+> I do not understand the goal of this request. 
 
->> diff --git a/object-file.c b/object-file.c
->> index 80b08fc389..ce9efae994 100644
->> --- a/object-file.c
->> +++ b/object-file.c
->> @@ -1708,7 +1708,7 @@ void *repo_read_object_file(struct repository *r,
->>  	oi.sizep = size;
->>  	oi.contentp = &data;
->>  	if (oid_object_info_extended(r, oid, &oi, flags))
->> -	    return NULL;
->> +		return NULL;
->>  
->>  	return data;
->>  }
+I'd agree about the core need for 'absolute' integrity checking.
 
-Thanks, both, for being extra careful.
+However we have been here before, but without a way forward.
 
-> Thanks, I didn't notice (assuming it was too soon, it being less than a
-> week) that it was in "next" already. This change LGTM, thanks!
+It was the "Subject: [TOPIC 3/17] Obliterate" at Git Contributor Summit,
+Los Angeles (April 5, 2020).
+https://lore.kernel.org/git/5B2FEA46-A12F-4DE7-A184-E8856EF66248@jramsay.com.au/
 
-It would be surprising if an ordinary topic goes to 'master' without
-spending a week in 'next', but it is something I aim to merge a
-reasonably well-done topic down to 'next' from 'seen' with minimum
-amount of time.  Here minimum usually means 1 wallclock day, just to
-catch silly typos, if the patches are reviewed adequately on list by
-folks (or possibly by me).
+Discussion at
+https://docs.google.com/document/d/15a_MPnKaEPbC92a4jhprlHvkyirDh2CtTtgOxNbnIbA/edit#heading=h.wljwyo3r1m6l
 
-Thanks.
+The core need I think HPS is referring to is that need to 'obliterate'
+some blob (which contains the en-mass data), and perhaps some trees,
+commits and tags, which may also hold objectionable meta data, at least
+from reference repositories, and at the same time authenticate (if
+that's the right term) the list of such obliterated objects.
+
+It will be a difficult task to carefully cut the fog of misdirection and
+scares in this arena.
+
+It's one of those problem statements whose answer is "42".
+
+> If it is possible to forge hashes, then nothing in a git repository can ever be trusted. Signed content will no longer be verifiable. The whole Merkel Tree representing the commit history becomes easily corruptible by hackers and no upstream remote repository can ever be trusted - or someone's own if someone targets a repo with malware that rewrites hashes. Imagine a scenario when malware replaces a blob in a repo and then forges the hash to pretend that the replacement never occurred. Using git as a supply chain audit trail becomes impossible. This is a potential vector for ransomware invading the git ecosystem. This seems like a really fatal path to take for the product.
+
+The supply chain audit is (would be) a real problem if the presence of a
+specific hash is a punishable criminal offence. I suspect it already is
+in some jurisdictions.
+
+>
+> The advantage of how git functions is that it is possible to mirror or clone repositories, protecting from hardware errors. Repositories exist in distributed form, so there may be hundreds or thousands of copies in case someone's copy is corrupted by a disk or memory write error - so that takes hash reconstruction out of the requirement set. If the git architecture was based on a central repository model only, then this might be a reasonable request, but that is not how git works.
+
+The law works in mysterious ways it's wonderful ways to demonstrate ;-)
+Possession of certain artefacts can be a problem, so it is something
+that is worth careful consideration. We shouldn't let the 'distribution
+of criminal artefacts' be something 'guaranteed' by Git, despite careful
+users.
+
+>  If, for instance, a main GitHub repo is somehow corrupted, it can be repaired by a push --force or a clone from a different instance.
+>
+> Unless I am missing your point.
+> --Randall
+>
+
+The forced replacement of 'redacted' material is already a problem in
+other domains. We should be able to manage a redaction list for a
+repository that needs it.
+
+All that said, CRC isn't any sort of solution!
+
+--
+Philip
