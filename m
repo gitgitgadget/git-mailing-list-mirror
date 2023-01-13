@@ -2,87 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 87E64C3DA78
-	for <git@archiver.kernel.org>; Fri, 13 Jan 2023 20:48:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A4CDC3DA78
+	for <git@archiver.kernel.org>; Fri, 13 Jan 2023 21:06:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231310AbjAMUsu (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Jan 2023 15:48:50 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32890 "EHLO
+        id S230040AbjAMVGN (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Jan 2023 16:06:13 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230526AbjAMUsY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2023 15:48:24 -0500
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5826425F1
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 12:48:01 -0800 (PST)
-Received: by mail-pj1-x102c.google.com with SMTP id u1-20020a17090a450100b0022936a63a21so1673437pjg.4
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 12:48:01 -0800 (PST)
+        with ESMTP id S229819AbjAMVGJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2023 16:06:09 -0500
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B83941A7E
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 13:06:09 -0800 (PST)
+Received: by mail-pj1-x1035.google.com with SMTP id o18so2440753pji.1
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 13:06:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=2RimUk0q3MvEw/1M110drERT/TJVcLG1BnMlE2pYPTs=;
-        b=pxfDLcDoqvPl0pz5ojkADax5F3w/qKknyTV+XNDCNB0AUSYHXvWzvuSSi0fN1jvGXT
-         yqI5Ijd0ikqXXPSX0z3nK/WeiFvVhCwko2Lss3gCHrO/fOTVOxiwVFcikRxcn+Mv1qH1
-         6RXfY4lZKZVKSZ4pQpdRZt8mOH747TRGgFaWr8HTL2ywrnA5FoeFjdjKJnR3PVkhir2P
-         Ay/g9CLpVmlnYUc6Rzp5vunUbrP1arvjp4a8vWKAddP2vI/4+O7vZw6kpddVV4rVrc2E
-         0vA14fLh9Paqnfm//AVRg7ma7F+lVfEBa567OaRspel5q3xXwWr673HAurkWatq7vakY
-         OcFg==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2uG/rkGuGJFakaaB5QQnY9zP0TueR02SAbY9yKjyhaY=;
+        b=EltkhYBe65VnMwH3VDjR+4EqAUMcG0OcF3gmIZg+QkjYOc5icxj6Jh+4mF8ysuy+mS
+         M4ZBHecDwh4kxjB3nqa4nfday2DU0UBB5g7RaEVDTTNar88idqZPiw/RFsFNrklouESn
+         KR6hzaf3HN3viVYR+QRcLzeXKI3PCAsn0zTVLxemAn3hPTrCdmHiGyW1+pEQ4YaypVTS
+         pQQL1QLETGEddAYu58MefdNiu3TimLSXe9L00RkBcBi/lHl29kfSMqWqbxDgkQqxvN9u
+         kNEGiQixI8C5V+CIljEB6pXJ3OEAb8dEnZ43JbPv0ZVV5j48QKGufXom8Sq9dgrgDPs8
+         I6jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2RimUk0q3MvEw/1M110drERT/TJVcLG1BnMlE2pYPTs=;
-        b=JQa92T7EqlYJjzt1vJxQIa0M+QhZdHCXpTL/cm0cgiSwl+deQBaVvnftpZVF1xaaIM
-         Gq+Tnwn7JyduS5OUEzWkCxxyBnVrPDtQ96cVFBy7V1affpVHlmeq1TK4ffXnRWzvemB+
-         LtLcdHjHLmR7WBYKoR+Igv8N0ak3YENPpPjXRh98SoccFSsGV6FaX5OoqoH0D5+xSPpL
-         PYPeVRoehT6WC+dnRsq/3gZQQ29bFVgmoJtzZd89EPZlbmzUrJ/jcEQygx8UYm5e909U
-         Zt39wjIOTcyp8Jo2w29QpODM1+OsA8Ogpbqol7bFTp18ClXtCybvKGPNJxtyiSLF7gkq
-         KAHw==
-X-Gm-Message-State: AFqh2kqYgMTyJzzNl+hMHiCXdkSFaYOu8MSAccs04FVGSRAR2lgIC/9h
-        INujOggP61VTFpt5izrOK5e9ubNR65w=
-X-Google-Smtp-Source: AMrXdXvNtD1PuSXfjPLywZoJFZzN7afrYvGabaWCsjB5f+ZlLCVED+krH8fAP5MJQuhj4pw28fxPnQ==
-X-Received: by 2002:a17:902:8c89:b0:193:62a:80c8 with SMTP id t9-20020a1709028c8900b00193062a80c8mr28110650plo.45.1673642880666;
-        Fri, 13 Jan 2023 12:48:00 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=2uG/rkGuGJFakaaB5QQnY9zP0TueR02SAbY9yKjyhaY=;
+        b=CzsJptT2J6Smq1IZv6XAyDa2Pgtr+q0JJWlJiHz0jn9AlOFcCv3IsktUsz0kOTJa2Y
+         GIXu1aDVuEqVPjdwHtvbEkD2R7ccTyY2k0XZ+R9Lw29hd3O5CVvLKrwps9zywjjD8XG0
+         dqSorZ96i+lnV7gDGSCDIxmdL4lHDFhh3XvV5sYG8bCZ6wfbzOBavy8bBKNfiRXPDqX1
+         YClQbmlam9IBepSGkRCmNDg3XCilIsry0iu1QOrajBEp4PZTHtH9YnZKK03crBTUTcrL
+         iAtQCmruoqZv/avuY0Vlql59eiZeMRzU9UvMYCbbRG8cc0Cz9Zhz9b/KOxNpQ8TOU/Bs
+         jdJg==
+X-Gm-Message-State: AFqh2kpeMKQZexui7MeHiJ35ZcsrEJYSckATNtaWPLVOhkJal8qzo1dA
+        T7g0mearl4y8GJKtC8ERpjY=
+X-Google-Smtp-Source: AMrXdXvLiCCoXndvxFkQuCS5vXiBYrYUwEh+TOc/rxjv1QjYKEja4UEN1/V6G5EZorpdcGHBmGhJVw==
+X-Received: by 2002:a17:902:ee52:b0:194:7771:4eeb with SMTP id 18-20020a170902ee5200b0019477714eebmr1835913plo.40.1673643968449;
+        Fri, 13 Jan 2023 13:06:08 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id s14-20020a170902ea0e00b001926bff074fsm14534660plg.276.2023.01.13.12.48.00
+        by smtp.gmail.com with ESMTPSA id jm23-20020a17090304d700b001944b1285ecsm6046340plb.208.2023.01.13.13.06.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 12:48:00 -0800 (PST)
+        Fri, 13 Jan 2023 13:06:08 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Phillip Wood <phillip.wood123@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Taylor Blau <me@ttaylorr.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: [PATCH v2 0/9] sequencer API & users: fix widespread leaks
-References: <cover-00.10-00000000000-20221230T071741Z-avarab@gmail.com>
-        <cover-v2-0.9-00000000000-20230112T124201Z-avarab@gmail.com>
-        <e1722673-b444-2dcf-4087-46d2d15b9331@dunelm.org.uk>
-Date:   Fri, 13 Jan 2023 12:47:59 -0800
-In-Reply-To: <e1722673-b444-2dcf-4087-46d2d15b9331@dunelm.org.uk> (Phillip
-        Wood's message of "Fri, 13 Jan 2023 10:45:38 +0000")
-Message-ID: <xmqqedry17r4.fsf@gitster.g>
+To:     Victoria Dye <vdye@github.com>
+Cc:     Matthew John Cheetham via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <derrickstolee@github.com>,
+        Lessley Dennington <lessleydennington@gmail.com>,
+        Matthew John Cheetham <mjcheetham@outlook.com>,
+        M Hickford <mirth.hickford@gmail.com>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Glen Choo <chooglen@google.com>,
+        Matthew John Cheetham <mjcheetham@github.com>
+Subject: Re: [PATCH v5 06/10] test-http-server: add simple authentication
+References: <pull.1352.v4.git.1670880984.gitgitgadget@gmail.com>
+        <pull.1352.v5.git.1673475190.gitgitgadget@gmail.com>
+        <c3c3d17a688963acc180e3bb7bbb4deb32a94304.1673475190.git.gitgitgadget@gmail.com>
+        <2a0b5f3f-7ab2-bc9e-76ac-93a52b4d32d0@github.com>
+Date:   Fri, 13 Jan 2023 13:06:07 -0800
+In-Reply-To: <2a0b5f3f-7ab2-bc9e-76ac-93a52b4d32d0@github.com> (Victoria Dye's
+        message of "Fri, 13 Jan 2023 10:10:03 -0800")
+Message-ID: <xmqq8ri616ww.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Victoria Dye <vdye@github.com> writes:
 
-> Hi Ævar
+>> +static int split_auth_param(const char *str, char **scheme, char **val, int required_val)
+>> +{
+>> ...
+>> +}
 >
-> The code changes in this version look good modulo a couple of minor
-> comments, however some of the commit messages need to be updated to
-> reflect the (very welcome) changes you've made in v2.
+> There's nothing really *new* in these functions in this iteration, just code
+> moved from the option parsing/handling in 'cmd_main()' into dedicated
+> functions. Looks good!
+
+> ...
 >
-> Thanks again for working on this
+> I completely missed the "fall-through" comment in my last review [1], as you
+> kindly pointed out [2]. ;) Given that, this makes sense to me.
 
-Thanks, both.  Perhaps third-time a charm, with a bit more care on
-the presentation ;-)
+>> +		*wr = send_http_error(STDOUT_FILENO, 401, "Unauthorized", -1,
+>> +				      &hdrs, *wr);
+>
+> The "extra_headers" configuration is new, and helps make the test server
+> more flexible. 
 
+This is not limited to this single review message, but it is good to
+see "this part of the patch is good because ..." explicitly stated.
+I wish more people did so, in addition to pointing out what needs to
+be improved.
+
+Thanks.
