@@ -2,197 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 80537C46467
-	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 04:06:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0422FC3DA78
+	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 06:44:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229854AbjANEGU (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Jan 2023 23:06:20 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47176 "EHLO
+        id S229662AbjANGo0 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Jan 2023 01:44:26 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229694AbjANEGS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2023 23:06:18 -0500
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B02DAD
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 20:06:17 -0800 (PST)
-Received: by mail-lj1-x22b.google.com with SMTP id e13so24422005ljn.0
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 20:06:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=rVKlqmuJqJ3wZz4JmJ5DOLAIQoFeOncydCYVAhhNxGs=;
-        b=VdGDp+mKgWxKyUmTNrO36FDynNPCrbdmnxEEZa7kw6juE5poKT+h3hygJrG3aeeaLl
-         78QfogQWBWfOwtpH9YIZkpRnz2o8nj4um2FHMAlsJm9wPKd3/ag4+/Zs9o62ZRF/E/Tx
-         XmwlkDbqsl1CZ7loaC5QSMfnvc78wsu02F2Y+2PVM8xCghVAuSBPfd3PMiCI/QYtuC4Y
-         komAQ6rMbcSdU8NgVMqfU0dBsGQv+TI6NQBr7T5477RuLdIIKpmKioimsncZFVeYlFPo
-         vcNF+4ztm65HUlFObXOWWBoakBG9zjWt4dpzQOd/NQZQBJluTI6NkHhcuIbXz0HDD0Xb
-         ECKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rVKlqmuJqJ3wZz4JmJ5DOLAIQoFeOncydCYVAhhNxGs=;
-        b=vK6i2nH/+D3y7WPoshP4ZkbChA7+diQS1GajWWtr+h4BLhviS6ednLYuZC4O6mzDAG
-         jrEVkIRgzFLfvK69tIaknA+6hXRd9IMlxTlG8VWRu2Yqr8DdWbcuF1OZ2nILibWkGzVH
-         BbBQcoU8UIi4J5p04/zGMIGmN4XvJYXIfV0/1b40RUvuqaaXhnzzzcHTFKqEcuLM/kqs
-         968Vi8H3J2TtYUACeLxemMPTg3Cfs3jD5OlX7ywr5kW8rvgwWNPz348/Yqg8kW/fn7fb
-         c04LWUgHnHNx9rA5Z2TajfWjE84VFIgibo+ZQ35uYXAw5rVyYeVQOWGpFzaewQj5O25q
-         saNA==
-X-Gm-Message-State: AFqh2krz/cDczIJvnZHoGgp6n7svrspet40ma3xA4SkQvBcD/LZzUsBl
-        YTCPq642XSJm+XEkPWVcXb0Pu2MMiMmot1ux980=
-X-Google-Smtp-Source: AMrXdXuQaxKcMnVKts59Mmat38l1qtUt8gnj2iVuz/m0j3QjrUQuSFplP8BBLvTlHSccTM/bX0PTZ+kjy1h1C+5CUxs=
-X-Received: by 2002:a2e:9b41:0:b0:27f:e221:293c with SMTP id
- o1-20020a2e9b41000000b0027fe221293cmr4387553ljj.163.1673669175326; Fri, 13
- Jan 2023 20:06:15 -0800 (PST)
+        with ESMTP id S229577AbjANGoX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jan 2023 01:44:23 -0500
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3B6846AC
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 22:44:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1673678647; bh=WtsDtnUO7E0ne2rYMta1WJXX5IvxOfHv/zeM44TKct0=;
+        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
+        b=CwMtc00QX7edGGi3j2vUGRHCaDE0L3uShE1J4KhgapJ0Ht1fjbLdHTNDohItp2dNG
+         uxH8y4uELl6hanbL7+11ujLRwO1KT+gpiNsxNv4TVE5fPu7qUSlwzLl4JUbPPbX9fI
+         VbresRFaaFewlGIrWSb38yBzPnKOQaxkgZn0zqXtMRS6XxdNDNnfCHKeZlBCfcjmnU
+         C2j3jloM/sJXJFN583zs4lw0+B6j/WByrR0hlhV9uO+Kl4eJrfOyzPCRXPFoymnN4v
+         jocqDwDlIda4fANFyPaCYPfilNHSFSSJ91FNxi3jeXpFly2HKmHyQSvQHcR3TxQy1y
+         sXyAlJkPDPGWQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.21.69]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MlL9z-1otv1n3fCv-00limW; Sat, 14
+ Jan 2023 07:44:06 +0100
+Message-ID: <0e25e6b0-2eb8-40ee-7999-f2863a545a15@web.de>
+Date:   Sat, 14 Jan 2023 07:44:05 +0100
 MIME-Version: 1.0
-References: <pull.1462.git.1673584084761.gitgitgadget@gmail.com> <f03094ce-e9e5-9530-7ed7-893a3f291ab0@gmail.com>
-In-Reply-To: <f03094ce-e9e5-9530-7ed7-893a3f291ab0@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 13 Jan 2023 20:06:00 -0800
-Message-ID: <CABPp-BE8O0beOS3=Y5Sh23KMRJGsOqmdHWD=ide4_=Zn5bWSPg@mail.gmail.com>
-Subject: Re: [PATCH] t6426: fix TODO about making test more comprehensive
-To:     Andrei Rybak <rybak.a.v@gmail.com>
-Cc:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: BUG: git grep behave oddly with alternatives
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        Marco Nenciarini <marco.nenciarini@enterprisedb.com>,
         git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+References: <f82ae28a-fb56-8d1f-96c8-550b61439d3a@enterprisedb.com>
+ <634f47a8-b370-81cb-00e7-d93ffc7534a8@web.de>
+ <1f61b660-b2d0-ba93-3182-05a9ab97b00e@enterprisedb.com>
+ <343a891e-d737-0ace-26a9-3839d3bd5583@web.de>
+ <Y7Uu35HwUx2EVfAg@coredump.intra.peff.net>
+ <e5165840-331c-e9b6-b45f-62abab860d79@web.de>
+ <Y7flVcALZQgz0VPl@coredump.intra.peff.net>
+ <26a0d4ca-3d97-ace4-1a1f-92b1ee6715a6@web.de>
+ <Y78GXZvyrOrXhe7n@coredump.intra.peff.net>
+ <4165031d-e7f1-0477-2245-6a8e312de522@web.de>
+ <Y8CBrtmL45tA/N8z@coredump.intra.peff.net>
+ <230113.86ilhazved.gmgdl@evledraar.gmail.com> <xmqq5yda5p4l.fsf@gitster.g>
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <xmqq5yda5p4l.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:EjChn8FEbUMmWOQa7pfhslD0do9cmvNt6awaWsFUENG6fQShe9i
+ afVvFnsRPjs00Sb60Hgj8DNfm1mNcz2YUdhV7Ns+X6t7wXcc3UhY3R1ZA8fdzgSnmdsyFPu
+ AtLsvQkPj1TJGBBHCuPXfaXUBel0Dixr7J9V3R3VTAEpkoUMsxbbL3n7mPQwoXTToBEkeV/
+ R5YFHoJ7cr45DjDeH4tRA==
+UI-OutboundReport: notjunk:1;M01:P0:YFMgrdOsLKs=;Yu/jcRdvCgi92O6hbWR2L+TwJLX
+ OqBpZRD/kqZ9rwxZALiszOi3MMgst3TngD578wZVXE2cbOyM0rV+XIrJ/vh9y0W7vEy5HxAWs
+ fXLRm0oF3OfiQj0O7ofIZEIp+rf5rHXviexBzHegUxz8zvxUw6rm+I6YBqpAD01WtOfSWMnFz
+ JdycbfEmihV9TXuCodviJVdO9AGfx2gqOPCDDBEKeN6eX46ZMDrowKYJitI+e4O0O9xIP6ZTi
+ bRc5aDgqxdfVnd1xwdsSugP+TgBkwgOrLoKDuIauYEB7zfzii2rxSq/qh8IzzcfGf3bDt0Mb1
+ b9+xXv0V4h9hZm4U0z9dEqwmQj5WYmMUWyVMcx+Q1IzYtpiGVleQ4KGLOvA8VB6x/HVYi0GJw
+ X6tVWkICAUYSgF4MyWPsIhzZpGij3VfJKyIaYRKjZQkdEH1SmP3g+YYhlhqLeFKvTFWAoP90v
+ pzTlJZXQNxabvqitRMNMFZnY7L+B5y67BMBf7qTiCBxRSUGDevdw+tBDX1j+4H+AoAqUTNBen
+ P8PLeUds0cwGgWLuudvzhoFacd4KWnlqj0gLMKK5SE/tLD7GkHUM/CeWDbSmlylU7KUwwxIpu
+ KZ+ZpxMbPqVo5WYb1BIDpkbRH9ORd2VL4XFCtK+iJ83brdwm2tZBPE7bUIpgON+964xIK288E
+ lJtLhhZhP6LWRpXDTx/0fVyU9vtCwf9DG9Ak7fZnBw6J1ErG3xs1SG9gB3/kMHwdYWyhyLmxT
+ U1AbuIFQvrqes7bKbj0E9nwgKaLclN+yGZJtjWqT5oxOinHcfwz9K0aK1ssadKH0Fksrsb9+m
+ NdKB/ei/G9CwL6URdDAbAdLOBzOE/fNyVR5cq+OiPsl9oILaVzxjKACJCottAKLT+MZDsRHGk
+ dG703m7tuvKwd5x6Sjq+ifiC87+bbHEuP+VQ10xr0ollgbhkkpB3OxKuiseY5dcQR+83lXnth
+ UsD0RYaHhHB1qRaNEGoSUVwabxE=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 13, 2023 at 2:09 PM Andrei Rybak <rybak.a.v@gmail.com> wrote:
+Am 13.01.23 um 18:19 schrieb Junio C Hamano:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> On 13/01/2023 05:28, Elijah Newren via GitGitGadget wrote:
-> > From: Elijah Newren <newren@gmail.com>
-> >
-> > t6426.7 (a rename/add testcase) long had a TODO/FIXME comment about
-> > how the test could be improved (with some commented out sample code
-> > that had a few small errors), but those improvements were blocked on
-> > other changes still in progress.  The necessary changes were put in
-> > place years ago but the comment was forgotten.  Remove and fix the
-> > commented out code section and finally remove the big TODO/FIXME
-> > comment.
-> >
-> > Signed-off-by: Elijah Newren <newren@gmail.com>
-> > ---
+>> On Thu, Jan 12 2023, Jeff King wrote:
+>>
+>>> So it does seem like all bets are off for what people can and should
+>>> expect here. Which isn't to say we should make things worse. I mostly
+>>> wondered if REG_ENHANCED might take us closer to what glibc was doing =
+by
+>>> default, but it doesn't seem like it.
 >
-> Thank you for taking care of this FIXME.
+> I thought that Ren=C3=A9's "Use enhanced only when doing BRE" was fairly
+> focused, but I am very tempted to accept ...
 >
-> >      t6426: fix TODO about making test more comprehensive
-> >
-> >      See
-> >      https://lore.kernel.org/git/CABPp-BFxK7SGs3wsOfozSw_Uvr-ynr+x8ciPV2Rmfx6Nr4si6g@mail.gmail.com/
-> >
-> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1462%2Fnewren%2Ft6426-fix-todo-v1
-> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1462/newren/t6426-fix-todo-v1
-> > Pull-Request: https://github.com/gitgitgadget/git/pull/1462
-> >
-> >   t/t6426-merge-skip-unneeded-updates.sh | 56 ++++++++++----------------
-> >   1 file changed, 22 insertions(+), 34 deletions(-)
-> >
-> > diff --git a/t/t6426-merge-skip-unneeded-updates.sh b/t/t6426-merge-skip-unneeded-updates.sh
-> > index 2bb8e7f09bb..1fcf5d034ed 100755
-> > --- a/t/t6426-merge-skip-unneeded-updates.sh
-> > +++ b/t/t6426-merge-skip-unneeded-updates.sh
-> > @@ -380,40 +380,28 @@ test_expect_success '2c: Modify b & add c VS rename b->c' '
-> >
-> >               # Make sure c WAS updated
-> >               test-tool chmtime --get c >new-mtime &&
-> > -             test $(cat old-mtime) -lt $(cat new-mtime)
-> > -
-> > -             # FIXME: rename/add conflicts are horribly broken right now;
-> > -             # when I get back to my patch series fixing it and
-> > -             # rename/rename(2to1) conflicts to bring them in line with
-> > -             # how add/add conflicts behave, then checks like the below
-> > -             # could be added.  But that patch series is waiting until
-> > -             # the rename-directory-detection series lands, which this
-> > -             # is part of.  And in the mean time, I do not want to further
-> > -             # enforce broken behavior.  So for now, the main test is the
-> > -             # one above that err is an empty file.
-> > -
-> > -             #git ls-files -s >index_files &&
-> > -             #test_line_count = 2 index_files &&
-> > -
-> > -             #git rev-parse >actual :2:c :3:c &&
-> > -             #git rev-parse >expect A:b  A:c  &&
-> > -             #test_cmp expect actual &&
-> > -
-> > -             #git cat-file -p A:b >>merged &&
-> > -             #git cat-file -p A:c >>merge-me &&
-> > -             #>empty &&
-> > -             #test_must_fail git merge-file \
-> > -             #       -L "Temporary merge branch 1" \
-> > -             #       -L "" \
-> > -             #       -L "Temporary merge branch 2" \
-> > -             #       merged empty merge-me &&
-> > -             #sed -e "s/^\([<=>]\)/\1\1\1/" merged >merged-internal &&
-> > -
-> > -             #git hash-object c               >actual &&
-> > -             #git hash-object merged-internal >expect &&
-> > -             #test_cmp expect actual &&
-> > -
-> > -             #test_path_is_missing b
-> > +             test $(cat old-mtime) -lt $(cat new-mtime) &&
-> > +
-> > +             git ls-files -s >index_files &&
-> > +             test_line_count = 2 index_files &&
-> > +
-> > +             git rev-parse >actual :2:c :3:c &&
-> > +             git rev-parse >expect A:c  A:b  &&
-> > +             test_cmp expect actual &&
-> > +
-> > +             git cat-file -p A:b >>merge-me &&
-> > +             git cat-file -p A:c >>merged &&
-> > +             >empty &&
-> > +             test_must_fail git merge-file \
-> > +                     -L "HEAD" \
-> > +                     -L "" \
-> > +                     -L "B^0" \
-> > +                     merged empty merge-me &&
-> > +             sed -e "s/^\([<=>]\)/\1\1\1/" merged >merged-internal &&
+>> There's a couple of ways out of this that I don't see in this thread:
+>>
+>> - Declare it not a problem: We have -G, -E and -P to map to BRE, ERE an=
+d
+>>   PCRE. One view is to say the first two must match POSIX, another is
+>>   tha whatever the platform thinks they should do is how they should
+>>   act.
 >
-> It seems that this line can be dropped, because merged-internal is not
-> inspected afterwards. None of the other tests in the file do similar
-> calls to `sed`.  Such substitutions with sed are present in
-> t6422-merge-rename-corner-cases.sh and t6406-merge-attr.sh though.
+> ... this view.  The story "BRE and ERE work via what system
+> libraries provide, and 'git grep' matches what system grep' does" is
+> an easy to understand view.
 
-Ah, good catch.  There's no nested conflict, so this is totally unnecessary.
+That was my stance in my first reply as well.  But 3632cfc248 (Use
+compatibility regex library for OSX/Darwin, 2008-09-07) explicitly
+added alternation support for BREs on macOS, and 1819ad327b (grep: fix
+multibyte regex handling under macOS, 2022-08-26) removed it seemingly
+by accident.  And grep(1) does support them on macOS 13.1:
 
-> > +
-> > +             test_cmp merged c &&
-> > +
-> > +             test_path_is_missing b
->
-> Function test_setup_2c() creates commits in order: commit O (create b),
-> commit A (modify b, create c), and then commit B (rename b->c).
-> I would have preferred if "test_path_is_missing b" check was done
-> several lines higher, just before "test_line_count = 2 index_files".
-> It feels more natural with this order of commits in setup to check what
-> happened to file "b" first.  It would also mean that all checking of
-> directory contents is done in one place, before merge conflict in file
-> "c" is inspected.
+   $ uname -rs
+   Darwin 22.2.0
+   $ which grep
+   /usr/bin/grep
+   $ grep --version
+   grep (BSD grep, GNU compatible) 2.6.0-FreeBSD
+   $ grep '\(REG_STARTEND\|NeededForASAN\)' Makefile
+   # Define NO_REGEX if your C library lacks regex support with REG_STARTE=
+ND
+   NO_REGEX =3D NeededForASAN
 
-I'm fine with switching it.  I need to remove the other superfluous line anyway.
+Ren=C3=A9
 
-> I see, however, that all tests in this file follow the pattern of
-> checking missing files at the very end, and consistency might be
-> preferable here.
-
-After dealing with a number of really complicated conflicts (e.g. see
-the mod6, rad, or rrdd testcases in t6422) where trying to go
-file-by-file can just fail due to conflicts and files not being
-one-to-one, I kind of got used to thinking in terms of "what's
-committed", "what's in the index", "what's in the working tree".  But
-there's no particular reason we have to stick to that structure in
-this much simpler testcase.  I'm happy to move it.
-
-> >       )
-> >   '
-> >
-> >
-> > base-commit: 2b4f5a4e4bb102ac8d967cea653ed753b608193c
->
-> Aside from unnecessary call to sed and nitpicking about order of
-> assertions, the patch looks good to me.
-
-Thanks for taking a look!
