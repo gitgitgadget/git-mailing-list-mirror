@@ -2,124 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0422FC3DA78
-	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 06:44:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 57D5AC3DA78
+	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 08:07:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229662AbjANGo0 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Jan 2023 01:44:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44050 "EHLO
+        id S229666AbjANIHv (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Jan 2023 03:07:51 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229577AbjANGoX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jan 2023 01:44:23 -0500
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3B6846AC
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 22:44:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1673678647; bh=WtsDtnUO7E0ne2rYMta1WJXX5IvxOfHv/zeM44TKct0=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=CwMtc00QX7edGGi3j2vUGRHCaDE0L3uShE1J4KhgapJ0Ht1fjbLdHTNDohItp2dNG
-         uxH8y4uELl6hanbL7+11ujLRwO1KT+gpiNsxNv4TVE5fPu7qUSlwzLl4JUbPPbX9fI
-         VbresRFaaFewlGIrWSb38yBzPnKOQaxkgZn0zqXtMRS6XxdNDNnfCHKeZlBCfcjmnU
-         C2j3jloM/sJXJFN583zs4lw0+B6j/WByrR0hlhV9uO+Kl4eJrfOyzPCRXPFoymnN4v
-         jocqDwDlIda4fANFyPaCYPfilNHSFSSJ91FNxi3jeXpFly2HKmHyQSvQHcR3TxQy1y
-         sXyAlJkPDPGWQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([79.203.21.69]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MlL9z-1otv1n3fCv-00limW; Sat, 14
- Jan 2023 07:44:06 +0100
-Message-ID: <0e25e6b0-2eb8-40ee-7999-f2863a545a15@web.de>
-Date:   Sat, 14 Jan 2023 07:44:05 +0100
+        with ESMTP id S229524AbjANIHs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jan 2023 03:07:48 -0500
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 552313AA7
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 00:07:47 -0800 (PST)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-4d4303c9de6so164342937b3.2
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 00:07:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=am9kpXX4Ung85EDfiBAOuyhbL7mkpu2KqopOIrOxJHE=;
+        b=ONo5qszYKldA8buO+UznOnWMP6ifcgwvKifHMIEpLmH6197eKVQ52zYQBCR8wog8UG
+         vtQxua3te8TbFZQR2lQoqpZ0JDPKxFfr+STIQpUf+9Vfclrjmy2rIBozNiWhRQ7fbNQ9
+         Ia0tH/pz33Jm1BAS6OymCAQaDUdv0kL+TTCBUYAAXaGGzS0JcIp8QBdhEyoyU4aoulXz
+         1hDNJDf445XLzl+06ZywYdA/W6dr6/WIxkwAAfr0zhz9X5Ax6l4nrEq3QudQlqOSnoCr
+         Ak+/dZz2gPqA+6ZLolBJS1FB9mXLLRv9frJiDLSfdcgdCrKHxSISjyjNkYTpcQ/SZdXR
+         S+Kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=am9kpXX4Ung85EDfiBAOuyhbL7mkpu2KqopOIrOxJHE=;
+        b=x6FN1VcHH1wspwdHUrIQ4dUrGqEnHm2bbctevvrXbkdaNrXNcj1EQ3gQearmtL0jkH
+         Ca422mvbG00Q6sZyJOPsS3lx0YCUHs+ZU4BdkV2wQpMGm0b3SsOATrBnIseVaYHHvDBL
+         HCJTrPPC9y59b8Jl07rIEhxVCf1KUIu1ZByz+xlCo+GWhc+PKyT43P5sRiwSRF51v8Uq
+         3826J8P86o3p0vg5z+RcJMKTuoMV0RCbJoqqpmupE1bRrUdx88bmgZJ7Sn2GCrRJY/KK
+         yLnNzBHSm70KgGCqHheYsHU8hArCWywK5SIGxZeJ0KafMX6N9pMNWFd4HgpxifzjDZFC
+         6Qtw==
+X-Gm-Message-State: AFqh2kovJLIVsZXM2n3kztp/h5pOiH/pM2DKEVSLGAjnvN5T6ldPrzJM
+        ipdDstPSwrhNpd07d7yVYnHKhiNdKKwX88jFv2s=
+X-Google-Smtp-Source: AMrXdXsDJssH+kVkzGC2r0Ji9MqVnG3i4Z+jBDUntCY0J03b7gZ0D12qnqvigQ8MBtG4HfcaOh3EOgdBOh2OMd30Wtw=
+X-Received: by 2002:a0d:c201:0:b0:488:7800:3b03 with SMTP id
+ e1-20020a0dc201000000b0048878003b03mr1553326ywd.209.1673683666524; Sat, 14
+ Jan 2023 00:07:46 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.6.1
-Subject: Re: BUG: git grep behave oddly with alternatives
-To:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        Marco Nenciarini <marco.nenciarini@enterprisedb.com>,
-        git@vger.kernel.org
-References: <f82ae28a-fb56-8d1f-96c8-550b61439d3a@enterprisedb.com>
- <634f47a8-b370-81cb-00e7-d93ffc7534a8@web.de>
- <1f61b660-b2d0-ba93-3182-05a9ab97b00e@enterprisedb.com>
- <343a891e-d737-0ace-26a9-3839d3bd5583@web.de>
- <Y7Uu35HwUx2EVfAg@coredump.intra.peff.net>
- <e5165840-331c-e9b6-b45f-62abab860d79@web.de>
- <Y7flVcALZQgz0VPl@coredump.intra.peff.net>
- <26a0d4ca-3d97-ace4-1a1f-92b1ee6715a6@web.de>
- <Y78GXZvyrOrXhe7n@coredump.intra.peff.net>
- <4165031d-e7f1-0477-2245-6a8e312de522@web.de>
- <Y8CBrtmL45tA/N8z@coredump.intra.peff.net>
- <230113.86ilhazved.gmgdl@evledraar.gmail.com> <xmqq5yda5p4l.fsf@gitster.g>
-Content-Language: en-US
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqq5yda5p4l.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
+References: <pull.1463.git.1673584914.gitgitgadget@gmail.com> <6bd92c51550c4960ee4de272d3b19451f1e337cc.1673584914.git.gitgitgadget@gmail.com>
+In-Reply-To: <6bd92c51550c4960ee4de272d3b19451f1e337cc.1673584914.git.gitgitgadget@gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Sat, 14 Jan 2023 16:07:35 +0800
+Message-ID: <CAOLTT8TS+8gM0c1WhZJTz22ZV=PzCSTwZTn4jYAgmjoNMVG=Hg@mail.gmail.com>
+Subject: Re: [PATCH 1/4] ls-files: add missing documentation for
+ --resolve-undo option
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:EjChn8FEbUMmWOQa7pfhslD0do9cmvNt6awaWsFUENG6fQShe9i
- afVvFnsRPjs00Sb60Hgj8DNfm1mNcz2YUdhV7Ns+X6t7wXcc3UhY3R1ZA8fdzgSnmdsyFPu
- AtLsvQkPj1TJGBBHCuPXfaXUBel0Dixr7J9V3R3VTAEpkoUMsxbbL3n7mPQwoXTToBEkeV/
- R5YFHoJ7cr45DjDeH4tRA==
-UI-OutboundReport: notjunk:1;M01:P0:YFMgrdOsLKs=;Yu/jcRdvCgi92O6hbWR2L+TwJLX
- OqBpZRD/kqZ9rwxZALiszOi3MMgst3TngD578wZVXE2cbOyM0rV+XIrJ/vh9y0W7vEy5HxAWs
- fXLRm0oF3OfiQj0O7ofIZEIp+rf5rHXviexBzHegUxz8zvxUw6rm+I6YBqpAD01WtOfSWMnFz
- JdycbfEmihV9TXuCodviJVdO9AGfx2gqOPCDDBEKeN6eX46ZMDrowKYJitI+e4O0O9xIP6ZTi
- bRc5aDgqxdfVnd1xwdsSugP+TgBkwgOrLoKDuIauYEB7zfzii2rxSq/qh8IzzcfGf3bDt0Mb1
- b9+xXv0V4h9hZm4U0z9dEqwmQj5WYmMUWyVMcx+Q1IzYtpiGVleQ4KGLOvA8VB6x/HVYi0GJw
- X6tVWkICAUYSgF4MyWPsIhzZpGij3VfJKyIaYRKjZQkdEH1SmP3g+YYhlhqLeFKvTFWAoP90v
- pzTlJZXQNxabvqitRMNMFZnY7L+B5y67BMBf7qTiCBxRSUGDevdw+tBDX1j+4H+AoAqUTNBen
- P8PLeUds0cwGgWLuudvzhoFacd4KWnlqj0gLMKK5SE/tLD7GkHUM/CeWDbSmlylU7KUwwxIpu
- KZ+ZpxMbPqVo5WYb1BIDpkbRH9ORd2VL4XFCtK+iJ83brdwm2tZBPE7bUIpgON+964xIK288E
- lJtLhhZhP6LWRpXDTx/0fVyU9vtCwf9DG9Ak7fZnBw6J1ErG3xs1SG9gB3/kMHwdYWyhyLmxT
- U1AbuIFQvrqes7bKbj0E9nwgKaLclN+yGZJtjWqT5oxOinHcfwz9K0aK1ssadKH0Fksrsb9+m
- NdKB/ei/G9CwL6URdDAbAdLOBzOE/fNyVR5cq+OiPsl9oILaVzxjKACJCottAKLT+MZDsRHGk
- dG703m7tuvKwd5x6Sjq+ifiC87+bbHEuP+VQ10xr0ollgbhkkpB3OxKuiseY5dcQR+83lXnth
- UsD0RYaHhHB1qRaNEGoSUVwabxE=
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 13.01.23 um 18:19 schrieb Junio C Hamano:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> On Thu, Jan 12 2023, Jeff King wrote:
->>
->>> So it does seem like all bets are off for what people can and should
->>> expect here. Which isn't to say we should make things worse. I mostly
->>> wondered if REG_ENHANCED might take us closer to what glibc was doing =
-by
->>> default, but it doesn't seem like it.
->
-> I thought that Ren=C3=A9's "Use enhanced only when doing BRE" was fairly
-> focused, but I am very tempted to accept ...
->
->> There's a couple of ways out of this that I don't see in this thread:
->>
->> - Declare it not a problem: We have -G, -E and -P to map to BRE, ERE an=
-d
->>   PCRE. One view is to say the first two must match POSIX, another is
->>   tha whatever the platform thinks they should do is how they should
->>   act.
->
-> ... this view.  The story "BRE and ERE work via what system
-> libraries provide, and 'git grep' matches what system grep' does" is
-> an easy to understand view.
+Elijah Newren via GitGitGadget <gitgitgadget@gmail.com> =E4=BA=8E2023=E5=B9=
+=B41=E6=9C=8813=E6=97=A5=E5=91=A8=E4=BA=94 12:41=E5=86=99=E9=81=93=EF=BC=9A
 
-That was my stance in my first reply as well.  But 3632cfc248 (Use
-compatibility regex library for OSX/Darwin, 2008-09-07) explicitly
-added alternation support for BREs on macOS, and 1819ad327b (grep: fix
-multibyte regex handling under macOS, 2022-08-26) removed it seemingly
-by accident.  And grep(1) does support them on macOS 13.1:
+>
+> From: Elijah Newren <newren@gmail.com>
+>
+> ls-files' --resolve-undo option has existed ever since 9d9a2f4aba
+> ("resolve-undo: basic tests", 2009-12-25), but was never documented.
+> However, the option has been referred to in the ls-files manual itself
+> ever since ce74de931d ("ls-files: introduce "--format" option",
+> 2022-07-23), making its omission a bit jarring.  Document this option.
+>
 
-   $ uname -rs
-   Darwin 22.2.0
-   $ which grep
-   /usr/bin/grep
-   $ grep --version
-   grep (BSD grep, GNU compatible) 2.6.0-FreeBSD
-   $ grep '\(REG_STARTEND\|NeededForASAN\)' Makefile
-   # Define NO_REGEX if your C library lacks regex support with REG_STARTE=
-ND
-   NO_REGEX =3D NeededForASAN
+I checked this should be the only option that git ls-files forgot to
+document, thanks.
 
-Ren=C3=A9
-
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  Documentation/git-ls-files.txt | 9 +++++++++
+>  1 file changed, 9 insertions(+)
+>
+> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.=
+txt
+> index 440043cdb8e..cb071583f8b 100644
+> --- a/Documentation/git-ls-files.txt
+> +++ b/Documentation/git-ls-files.txt
+> @@ -12,6 +12,7 @@ SYNOPSIS
+>  'git ls-files' [-z] [-t] [-v] [-f]
+>                 [-c|--cached] [-d|--deleted] [-o|--others] [-i|--ignored]
+>                 [-s|--stage] [-u|--unmerged] [-k|--killed] [-m|--modified=
+]
+> +               [--resolve-undo]
+>                 [--directory [--no-empty-directory]] [--eol]
+>                 [--deduplicate]
+>                 [-x <pattern>|--exclude=3D<pattern>]
+> @@ -77,6 +78,13 @@ OPTIONS
+>         to file/directory conflicts for checkout-index to
+>         succeed.
+>
+> +--resolve-undo::
+> +       Show files having resolve-undo information in the index
+> +       together with their resolve-undo information.  (resolve-undo
+> +       information is what is used to implement "git checkout -m
+> +       $PATH", i.e. to recreate merge conflicts that were
+> +       accidentally resolved)
+> +
+>  -z::
+>         \0 line termination on output and do not quote filenames.
+>         See OUTPUT below for more information.
+> @@ -136,6 +144,7 @@ a space) at the start of each line:
+>         C::     modified/changed
+>         K::     to be killed
+>         ?::     other
+> +       U::     resolve-undo
+>  --
+>
+>  -v::
+> --
+> gitgitgadget
+>
