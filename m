@@ -2,85 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F4D3C46467
-	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 08:24:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 68A59C3DA78
+	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 08:27:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229599AbjANIYc (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Jan 2023 03:24:32 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36692 "EHLO
+        id S229722AbjANI1w (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Jan 2023 03:27:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229732AbjANIYN (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jan 2023 03:24:13 -0500
-Received: from mail-oa1-x2c.google.com (mail-oa1-x2c.google.com [IPv6:2001:4860:4864:20::2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA7B95BA5
-        for <git@vger.kernel.org>; Sat, 14 Jan 2023 00:24:12 -0800 (PST)
-Received: by mail-oa1-x2c.google.com with SMTP id 586e51a60fabf-1433ef3b61fso24627771fac.10
-        for <git@vger.kernel.org>; Sat, 14 Jan 2023 00:24:12 -0800 (PST)
+        with ESMTP id S229592AbjANI1t (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jan 2023 03:27:49 -0500
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88A6359DF
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 00:27:48 -0800 (PST)
+Received: by mail-oi1-x229.google.com with SMTP id n8so19435028oih.0
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 00:27:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EDgNCEqMN85sXxC+7trbpwbTRDfDL2Zyf0f1AJIdNqQ=;
-        b=A1zggI1VZwICvbxFW5DqM82eGvX6uEk6mQHA7MeRsv2Eo606FhjaCVXlsx7SHVOlfU
-         xgvufg7kE9a3u75JO+xzHpQdxXmD1MvW0FWur45i9dWheNues4EuLv/6f3Pz434+inOf
-         cZM9RCOdzexMVbsUw8O/mDmoA+5FWfOsZzfgNjBlJKpBplPFXOA7Xg8DGJ74fu0qp929
-         NGJQ9HPzQJHh8DIqukwPNwjjtok14W8Rw4ZVeI88Wlyg/gMtDcfWOljI27C4ktNJaldk
-         RDKpuuSdJhyR/yu5vJvqLwbA7LbR6lM7gDS1LGK6IGDuhLg6KbSipXXNTuxM1MtvomoM
-         a+Kg==
+        bh=cp/wMRgTs1pMus7tU4TCXVOLX7m1k/kuJJKE/fMBuu8=;
+        b=fGx18SFhrBLJyk7NBaT93akFgDkOJECwaJDw2r2hLA6nD8yN1DMgnUZ8l9XFVqOREL
+         4gKpDeXBkuYuuo0l/ePSFt5xFVCLRsn2kgf1Ur/qCU6+FIRZKr7YZCiUUbD5TXww4DR2
+         p1a6iVMQckDZcij1yBhfMzda6ln5we32T0mj6Z8KqJiZdD81uPP2p4SSH2L/bIJykKWi
+         pF/DHR7BY1lAkBilFJ70F1ymTgiCrAxUijC4SvZ0lSDFAEmux7bqUFypmMwdIxT2yeOD
+         uqqOuDvPQRJElnofvVOVCr+vRiNE4Q+z2E3Vz9s7WOY52qyj1d8w4FA/14pMDd2ncQSl
+         wDng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EDgNCEqMN85sXxC+7trbpwbTRDfDL2Zyf0f1AJIdNqQ=;
-        b=JrF1+MBU34cD8qnbKL9dSRDzP32fB01xalvwGLs6+wOmQpLl0N8enHUBN9bW16sFod
-         bH4OjPxX8V1MEE0Y6B7oUMyUJ8znBvR26sStsxFfkHx+ALG3hjVHBpdskk+GKOu8G1C4
-         0zU00PcXi/dZ0aoDSqqUadgyKZswOsacXtrJR2CuMBJY8lj+giklSJESOlmSbF6QJmA3
-         fPHNWjKZIiSz0uUUa7iVSq9P1aNg3EMlVgkZbwTXWNQw0n3YnPTxQCsUG5BhsSfLd+3n
-         u1vzIlaf/Jk/Nd4QmvIwLRQ39i+F6WAm7juDL41gT4oVfdaJHvuBmgvoNbyPA2evuUQH
-         5MpA==
-X-Gm-Message-State: AFqh2krkOD9owcIYS3dlpDkpJIhvhBL3zgxRcd+alWOCtlTm5kJPryjt
-        MZW1qPIXr0tIGmSdbJen1TDhwz9bXqFbtzWacXBdyyw6imc=
-X-Google-Smtp-Source: AMrXdXuP8NCp34aOvzGBRWY3EjP6Pla1xaL8I74rNZ0B+RAAiKRONAjYl7d/Ox0cnWycfE0MeZbb7DXW63cv/Ix3oMc=
-X-Received: by 2002:a05:6870:1c6:b0:15f:564:f796 with SMTP id
- n6-20020a05687001c600b0015f0564f796mr134551oad.270.1673684652154; Sat, 14 Jan
- 2023 00:24:12 -0800 (PST)
+        bh=cp/wMRgTs1pMus7tU4TCXVOLX7m1k/kuJJKE/fMBuu8=;
+        b=TEqAJWvlfGzmRJay2TjFZ7KiuMAZJIG4O3fjVG7ZhEkh28m9JCrwIA0uYTwv0ONTIv
+         ejgpghdmopmECI8+I/amSA1P3xuz3AsJt/o88QvXSmGPp8V5qqCyBwlizJZasmbO3Lf8
+         v8U94kaow1mgWKZXf+3HzaUj1WuoHor/01MjAB2MXqtfc1dSiAZ1+wGmmKDL0mFeP/Q9
+         YEpXWWBdG853q2QLC8dlYJfeGqmyTXDdtC6uH/4mvKaCA3Jiz6t6+AGhFSMXtRA5CVhE
+         VMONKsTCD5cZuMVsPMmLXeTg85Ul7DAhA6AXknfMarv5QubS1r9J7vwh9VHCjuDR4OxL
+         aJqg==
+X-Gm-Message-State: AFqh2kpnUV50F5Zderz9weFxDaSwpf8imhHCe82cpJg0biStX1T0TR0Z
+        kX8J38Jgdn65ApbRe2zIr8iafLdoR3mfQgI5XCU=
+X-Google-Smtp-Source: AMrXdXuNo+DbuZrlRLX2AL07j/6lWOFWXrxIJ+n46KgU8+MlqzHmnQ498iHx8gcE3TECQylN6EO9ei5USRM7psC8eDE=
+X-Received: by 2002:a05:6808:18b:b0:35e:6cbc:bab7 with SMTP id
+ w11-20020a056808018b00b0035e6cbcbab7mr3697604oic.232.1673684791702; Sat, 14
+ Jan 2023 00:26:31 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1673521102.git.karthik.188@gmail.com> <57f5957127ce3be2621445806f2f00857ac8b1aa.1673521102.git.karthik.188@gmail.com>
- <xmqq4jsu13id.fsf@gitster.g>
-In-Reply-To: <xmqq4jsu13id.fsf@gitster.g>
+References: <cover.1671793109.git.karthik.188@gmail.com> <23813496fc73b7e5cb9f09b166e05c9a02bac43c.1671793109.git.karthik.188@gmail.com>
+ <230112.86lem728ig.gmgdl@evledraar.gmail.com>
+In-Reply-To: <230112.86lem728ig.gmgdl@evledraar.gmail.com>
 From:   Karthik Nayak <karthik.188@gmail.com>
-Date:   Sat, 14 Jan 2023 09:23:45 +0100
-Message-ID: <CAOLa=ZRZDKqPq8ChZtD48207GxnjvqKPPvAJaUVOW8oKrRtGMw@mail.gmail.com>
-Subject: Re: [PATCH v6 2/2] attr: add flag `--source` to work with tree-ish
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
+Date:   Sat, 14 Jan 2023 09:26:04 +0100
+Message-ID: <CAOLa=ZQdNy-gQ0-gUdQM8z+k0fpLjXcRY3fAC4v2PnEvSRS2PQ@mail.gmail.com>
+Subject: Re: [PATCH v5 2/2] attr: add flag `--source` to work with tree-ish
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Toon Claes <toon@iotcl.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 13, 2023 at 11:19 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Thu, Jan 12, 2023 at 2:21 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
 >
-> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> > diff --git a/attr.h b/attr.h
-> > index 3fb40cced0..f4a2bedd68 100644
-> > --- a/attr.h
-> > +++ b/attr.h
-> > @@ -1,6 +1,8 @@
-> >  #ifndef ATTR_H
-> >  #define ATTR_H
-> >
-> > +#include "hash.h"
+> On Mon, Jan 02 2023, Karthik Nayak wrote:
 >
-> You only want "struct object_id" declared.  Why include the whole
-> file?
+> > +static struct attr_stack *read_attr_from_blob(struct index_state *ista=
+te,
+> > +                                           const struct object_id *tre=
+e_oid,
+> > +                                           const char *path, unsigned =
+flags)
+> > +{
+> > +     struct object_id oid;
+> > +     unsigned long sz;
+> > +     enum object_type type;
+> > +     void *buf;
+> > +     unsigned short mode;
+> > +
+> > +     if (!tree_oid)
+> > +             return NULL;
+> > +
+> > +     if (get_tree_entry(istate->repo, tree_oid, path, &oid, &mode))
+> > +             return NULL;
+> > +
+> > +     buf =3D read_object_file(&oid, &type, &sz);
+>
+> Here you flip-flop between istate->repo and "the_repository". I think
+> you want to use repo_read_object_file(istate->repo, ...) instead.
 
-I see, I should have just used your patch, will add this and =C3=86var's
-[0] suggestion and do a quick re-roll. Thanks!
-
-[0]: https://lore.kernel.org/git/230112.86lem728ig.gmgdl@evledraar.gmail.co=
-m/
+Let me add this to v7! Thanks
