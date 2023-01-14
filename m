@@ -2,87 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EB27BC3DA78
-	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 14:54:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 72AC5C3DA78
+	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 14:56:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229676AbjANOyw (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Jan 2023 09:54:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35748 "EHLO
+        id S229875AbjANO4z (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Jan 2023 09:56:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbjANOyu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jan 2023 09:54:50 -0500
-Received: from smtp.hosts.co.uk (smtp.hosts.co.uk [85.233.160.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C5EE5274
-        for <git@vger.kernel.org>; Sat, 14 Jan 2023 06:54:48 -0800 (PST)
-Received: from 88-110-98-79.dynamic.dsl.as9105.com ([88.110.98.79] helo=[192.168.1.23])
-        by smtp.hosts.co.uk with esmtpa (Exim)
-        (envelope-from <philipoakley@iee.email>)
-        id 1pGhvi-0001EB-CW;
-        Sat, 14 Jan 2023 14:54:47 +0000
-Message-ID: <bce6ac3a-17a6-beed-43ef-5a1e0dd92a5d@iee.email>
-Date:   Sat, 14 Jan 2023 14:54:45 +0000
+        with ESMTP id S229612AbjANO4x (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jan 2023 09:56:53 -0500
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A99A5B90
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 06:56:52 -0800 (PST)
+Received: (qmail 29676 invoked by uid 109); 14 Jan 2023 14:56:52 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 14 Jan 2023 14:56:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 10449 invoked by uid 111); 14 Jan 2023 14:56:52 -0000
+Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 14 Jan 2023 09:56:52 -0500
+Authentication-Results: peff.net; auth=none
+Date:   Sat, 14 Jan 2023 09:56:51 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Daniel Stenberg <daniel@haxx.se>,
+        Patrick Monnerat <patrick@monnerat.net>, git@vger.kernel.org
+Subject: Re: [PATCH] ci: do not die on deprecated-declarations warning
+Message-ID: <Y8LCsxz8gyTCxFUp@coredump.intra.peff.net>
+References: <xmqqv8l9n5fj.fsf@gitster.g>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Content-Language: en-US
-To:     Git List <git@vger.kernel.org>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-From:   Philip Oakley <philipoakley@iee.email>
-Subject: test_pause giving '__git_ps1: not found' warning
-Cc:     Philip Oakley <philipoakley@iee.email>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqv8l9n5fj.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I was trying to refine a test_expect_failure test [1] and tried 
-inserting a `test_pause &&` test line [2].
+On Fri, Jan 13, 2023 at 07:47:12PM -0800, Junio C Hamano wrote:
 
-I then found, when it paused, I was repeatedly given the warning line
-     /bin/sh: 1: __git_ps1: not found
-in the terminal until I expected the test shell.
+> Like a recent GitHub CI run on linux-musl [1] shows, we seem to be
+> getting a bunch of errors of the form:
+> 
+>   Error: http.c:1002:9: 'CURLOPT_REDIR_PROTOCOLS' is deprecated:
+>   since 7.85.0. Use CURLOPT_REDIR_PROTOCOLS_STR
+>   [-Werror=deprecated-declarations]
 
-my PS1 is working normally in the terminal, but not here.  Is this 
-expected, or do I need to set up anything else?
+By the way, it seemed odd to me that this failed in just the linux-musl
+job, and not elsewhere (nor on my development machine, which has curl
+7.87.0). It looks like there's a bad interaction within curl between the
+typecheck and deprecation macros. Here's a minimal reproduction:
 
-Normally I'm on Git for Windows, but this was on my old laptop (Acer 
-7741 i5 4GB ram..) converted to Ubuntu 20.04, which I use when away.
+-- >8 --
+cat >foo.c <<-\EOF
+#include <curl/curl.h>
+void foo(CURL *c)
+{
+	curl_easy_setopt(c, CURLOPT_PROTOCOLS, 0);
+}
+EOF
 
-The basic sequence was
+# this will complain about deprecated CURLOPT_PROTOCOLS
+gcc -DCURL_DISABLE_TYPECHECK -Wdeprecated-declarations -c foo.c
 
-~$ cd repos/git
-~/repos/git (doctrunc *)$ cd t
-~/repos/git/t (doctrunc *)$ ./t4205-log-pretty-formats.sh  -i -x -v
-Initialized empty Git repository in /home/philip/repos/git/t/trash 
-directory.t4205-log-pretty-formats/.git/
+# this will not
+gcc -Wdeprecated-declarations -c foo.c
+-- 8< --
 
-[... ...]
+I didn't look into why the musl build behaves differently, but
+presumably it has an older compiler or something that causes curl to
+decide not to trigger the typecheck macros.
 
-+ git log --format=%<(5,mtrunc)%s -4
-+ test_pause
-+ PAUSE_TERM=dumb
-+ PAUSE_SHELL=/bin/sh
-+ PAUSE_HOME=/home/philip/repos/git/t/trash 
-directory.t4205-log-pretty-formats
-+ test 0 != 0
-+ TERM=dumb HOME=/home/philip/repos/git/t/trash 
-directory.t4205-log-pretty-formats /bin/sh
-/bin/sh: 1: __git_ps1: not found
-\w$ git status
-On branch source-b
-[...]
-nothing added to commit but untracked files present (use "git add" to track)
-/bin/sh: 1: __git_ps1: not found
+Adding relevant curl folks to the cc (the curl list itself is
+subscriber-only).
 
-I added the gits status to see when/where the warning was emitted.
-
-[1] 
-https://github.com/PhilipOakley/git/blob/doctrunc/t/t4205-log-pretty-formats.sh#L1021-L1046
-[2] https://github.com/git/git/blob/master/t/test-lib-functions.sh#L137-L188
-
-
-Any suggestions as to how to set this up correctly to avoid the warning?
---
-Philip
+-Peff
