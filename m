@@ -2,129 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 2A9E5C54EBE
-	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 01:33:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 665AEC3DA78
+	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 02:48:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231337AbjANBdF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Jan 2023 20:33:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34292 "EHLO
+        id S231199AbjANCsD (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Jan 2023 21:48:03 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230037AbjANBdC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2023 20:33:02 -0500
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 701D81AA1D
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 17:33:01 -0800 (PST)
-Received: by mail-pj1-x102b.google.com with SMTP id o1-20020a17090a678100b00219cf69e5f0so28668098pjj.2
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 17:33:01 -0800 (PST)
+        with ESMTP id S230182AbjANCsB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2023 21:48:01 -0500
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9747481407
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 18:48:00 -0800 (PST)
+Received: by mail-lj1-x231.google.com with SMTP id x37so24274782ljq.1
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 18:48:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GTy7oW9ZCO4pgl7iQosEEW4N4jxircII+ig0KaFV1Gk=;
-        b=X/r4jT+zq6jV0Z2he7BvlFWt0HJqfrsq2F8uN3grVx1bMc1Mup4qH5A6EEMt7VrGKc
-         fj+M7mNsv/m66Qqf+QmTkeQnINPsiJyZdUhT5O1rZL6O4HtYDaEqwceb8K9xkvdFZqur
-         3Qf4ts5foQLurORnoPkLq86dAw41swB3GuwLROu2gjSgvxTC2am4VXm/m58hZe0yWweI
-         T0+5TI6IWg2uHKDOP+Hsqpa3RbrcNLofi03UvJl4xNlTYjnlHw09aqP2NuZ4MF2QRVvw
-         j+DVpPFQzm2lmEyNn+EAQaBDxnzdNuYoft4OLhJxGjwWzsCkr8sjuZ78U6Kcdg03stdR
-         xKAw==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qx4u9tJ7ha1a4pwvspoDgW5lN/JGcV7YD5hkxMRl0XA=;
+        b=n+oFQ1KIHWkyTHiB6ql9bUXa0phorh23TDe2Mg1DuEldIMljxh7NK8w5ePRC6wJVGv
+         Y7xmnbx0wU7Fg6LiVawlObBeVGJTCY8okprHizjMGwbFQd2Mtw8WC5oCXWRjhbcb8bVh
+         XbYtlnZEI5iUFLKpzX8UxJO3u1cpyl21KCk9dXmkgBFCcVZXPIu88BBdQTuzqqg6wB8s
+         zh4FZHcwXzAEWD3GsE3/1fOzIRsFIyMaZZNCjRglSLFCeEYZlv+qMNydkJ+6iCNeqerT
+         z0Jd/I9dUjqzt3HWzhmHCISTRmnGcZCn8WBGG1yjrtEIaL/d5yLx6UbAG5jvQLF+MDD6
+         reGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:user-agent:message-id:in-reply-to:date:references
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=GTy7oW9ZCO4pgl7iQosEEW4N4jxircII+ig0KaFV1Gk=;
-        b=xYHdpcYO6FEJPMRnuF+JtorJ/AULBm8NhQZKQDaIBOJv4yEsGj0nMsTEAsGXZqkTnO
-         2VrPEtnvs8GJo5DOfZc+bHjwb42hMFyL1ik/gZQ79sGc5ESuJ/smXjDB4+/9lLw7hVO4
-         MByB2XZgAWkf9/1q7SQhL/XcUrm7FZRrIrC2HFjgWm2JY7l5TkABnIZpM8EYUOUhdEGC
-         DzsAVrvEUz1G4hqDzjzX3TwtiLQZrtOkMCfdadntQC889yfvf+uNpJvh0JAFtaNZmsF8
-         ktdgVj5hp37HZMJSVbaur6P6zVLMur0UTfAGrJbzGJzcHQqV5vBp4UihoNgWMc5+RtSp
-         rNVQ==
-X-Gm-Message-State: AFqh2kp6NTwvGW5vr/SXDaxeszDNBfDJqKgujDZfunlBfcpLKkOdnGHc
-        b11ynV2rnun9PqD375WUpa6uhT5ie4k=
-X-Google-Smtp-Source: AMrXdXsO49hlFRR0BCWm4lOBNCWS8v0YLcZ9YQmgGJt0/sjLJ3Tgw0eMrYilVo9AB3kqV++H+AIzGQ==
-X-Received: by 2002:a17:903:330b:b0:193:30be:d146 with SMTP id jk11-20020a170903330b00b0019330bed146mr19467744plb.63.1673659980798;
-        Fri, 13 Jan 2023 17:33:00 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id n13-20020a170903110d00b001925ec4664esm14789931plh.172.2023.01.13.17.33.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 17:33:00 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     muzimuzhi Z <muzimuzhi@gmail.com>
-Cc:     Clemens Buchacher <drizzd@gmx.net>, git@vger.kernel.org
-Subject: Re: [PATCH v2] doc: fix non-existent config name
-References: <CAEg0tHSLyaewkgGs0dEXfwQhKmbiO65bXZVU8t7Kn4WwJ1p0Fw@mail.gmail.com>
-        <xmqqfsclzlqx.fsf@gitster.g>
-        <CAEg0tHT5PD4K89E3fcNq_WbaLPHozLi-PsJFDsQrzkGi7Na9jg@mail.gmail.com>
-        <CAEg0tHQtf9G0N24Xfe-gvRM1AFaiS_ApcuQ8hZtsZAeMhhVWAQ@mail.gmail.com>
-        <xmqqo7r248x9.fsf@gitster.g>
-        <CAEg0tHSZi22RUBREJB=Cfy6O72cicv9FTkgo_Z=gvGRdPK1acw@mail.gmail.com>
-Date:   Fri, 13 Jan 2023 17:33:00 -0800
-In-Reply-To: <CAEg0tHSZi22RUBREJB=Cfy6O72cicv9FTkgo_Z=gvGRdPK1acw@mail.gmail.com>
-        (muzimuzhi Z.'s message of "Sat, 14 Jan 2023 09:12:12 +0800")
-Message-ID: <xmqqedrxoq7n.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Qx4u9tJ7ha1a4pwvspoDgW5lN/JGcV7YD5hkxMRl0XA=;
+        b=E2yPLUQO5gcs1R/5S8oPJf9dwIOVt5oq/s93vBBnodoe1DqVfNCI/wXlcgIz68nmIS
+         CM+g4nPhVHZ1ebhL3NOozzLjUwkHdDN8nMWlwox79GLVC0gJBdQwWWMvRauZn7yzih/9
+         /azpHpUBroBv5p49gzaNJvMg+mvjc9wp4pWUBwxu9FtT9hzGX5FMRG9kYs0f/LAY98sR
+         VKHzABjv4mVypbsqPeST3T1LYNBFkcGE67VReYqbfcgA++cO0xKkDuVWhCybq+CxXM1n
+         5MllkTP73j1l/mnIal9WL0qJlmCp0hY/eSJ6RfLMdgXkg72o9hnKyAk5uwp71wyCrMRW
+         i0+A==
+X-Gm-Message-State: AFqh2kq+M/pZucAhY4uQBwbJM1xfcqxsInTE5lm8dHsJOi4uG9Y6Dbah
+        ekrL81nu5TrM84TTqM4oFu0e6NgDmNs4qiLrgBQ=
+X-Google-Smtp-Source: AMrXdXsCRpTcxgaSWPjTRAbY21Z77osVChIgmeVnDVOOEuwhWsLw3dipLc4tPNHPygdcs8uODclBIPeT+S6oW0FNtcU=
+X-Received: by 2002:a2e:700c:0:b0:287:4e8e:2139 with SMTP id
+ l12-20020a2e700c000000b002874e8e2139mr1419995ljc.73.1673664478674; Fri, 13
+ Jan 2023 18:47:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1460.git.1673519809510.gitgitgadget@gmail.com>
+ <230112.86pmbk0vvj.gmgdl@evledraar.gmail.com> <CABPp-BFf4pbRAy+Oaghx5d8DZgBjY_OUM-rJZna+JyNwx9WB-Q@mail.gmail.com>
+ <xmqqwn5q1960.fsf@gitster.g>
+In-Reply-To: <xmqqwn5q1960.fsf@gitster.g>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 13 Jan 2023 18:47:45 -0800
+Message-ID: <CABPp-BFcqXp2XL_4urbXRfdBs59F6cPkLYrdwZOWyQjzeZVRFg@mail.gmail.com>
+Subject: Re: [PATCH] rebase -i: allow a comment after a "break" command
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Phillip Wood via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Olliver Schinagl <oliver@schinagl.nl>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-muzimuzhi Z <muzimuzhi@gmail.com> writes:
-
-> From c879cb10f61afc361c484267f498d5815bc1b932 Mon Sep 17 00:00:00 2001
-> From: muzimuzhi <muzimuzhi@gmail.com>
-
-The "author identity" is taken from this line (or from the e-mail
-header), and it should be identical to your sign-off.
-
-> Date: Mon, 9 Jan 2023 06:37:47 +0800
-> Subject: [PATCH v2] doc: fix non-existent config name
-
-In general, there shouldn't be a reason to include the above four
-lines in your message body.  An exception is "From:" to override the
-author identity when you cannot send your e-mail using the same name
-as what is used on your sign-off.  See Discussion section of "git am"
-manual page.
-
-> Replace non-existent `branch.<name>.fetch` to `remote.<repository>.fetch`, in
-> the first example in `git-fetch` doc, which was introduced in
-> d504f6975d (modernize fetch/merge/pull examples, 2009-10-21).
+On Fri, Jan 13, 2023 at 12:17 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Rename placeholder `<name>` to `<repository>`, to be consistent with all other
-> uses in git docs, except that `git-config.txt` uses `remote.<name>.fetch` in
-> its "Variables" section.
+> Elijah Newren <newren@gmail.com> writes:
 >
-> Also add missing monospace markups.
+> > Of course, the same applies to edit/squash/fixup/reword, though if I
+> > could go back in time...(warning, long tangent coming)...I would make
+> > it so those four directives did not accept any commit ID argument.
+> > Only "pick" and "reset" would accept a commit ID.  Instead, today's
+> > "edit X" would be two commands ("pick X" followed by either "break" or
+> > "edit"), "fixup X" would be "pick X" + "fixup", and "reword X" would
+> > be "pick X" + "reword".  That'd help users understand rebase state
+> > much better (it's so easy for users to get confused by whether they
+> > should be using `git commit --amend` vs. `git rebase --continue` and I
+> > think this is partially to blame, though there's other changes we
+> > could make to help with that dichotomy as well).  The separate
+> > directives would also make it much easier to figure out how to both
+> > fixup and edit a single commit in the same rebase (pick the commit,
+> > then add a fixup directive, then an edit directive).
 >
-> Signed-off-by: Yukai Chou <muzimuzhi@gmail.com>
+> Intriguing, and I feel sad that it probably is too late for all of
+> the above X-<.
 
-Perfect.  Will queue.
+Yeah, I know.  One more thing for the "if we had a time machine" list...
 
-> Changes compared to PATCH v1:
-
->  - Update commit reference in a non-shallow clone, resulting in longer
->    <abbrev-hash>
-
-Great.
-
-> diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
-> index 63d9569e16..fba66f1460 100644
-> --- a/Documentation/git-fetch.txt
-> +++ b/Documentation/git-fetch.txt
-> @@ -251,10 +251,10 @@ EXAMPLES
->  $ git fetch origin
->  ------------------------------------------------
->  +
-> -The above command copies all branches from the remote refs/heads/
-> -namespace and stores them to the local refs/remotes/origin/ namespace,
-> -unless the branch.<name>.fetch option is used to specify a non-default
-> -refspec.
-> +The above command copies all branches from the remote `refs/heads/`
-> +namespace and stores them to the local `refs/remotes/origin/` namespace,
-> +unless the `remote.<repository>.fetch` option is used to specify a
-> +non-default refspec.
+> > In fact, "squash
+> > X" could just be discarded as superfluous, since it's just "pick X" +
+> > "fixup" + "reword" (or we could keep squash as an abbreviation for
+> > both "fixup" + "reword").
 >
->  * Using refspecs explicitly:
->  +
+> IIUC, your "fixup" is
+>
+>         git reset --soft HEAD^
+>         git commit --amend --no-edit
+>
+> i.e. discard the log message from "fixup" and use only its tree, and
+> your "reword" is
+>
+>         git commit --amend --edit
+>
+> so "pick X" + "fixup" + "reword" would not be quite usable as a
+> replacement of our "squash X" (or your "pick X" + "squash"), I am
+> afraid.  You'd want the log message from "X" as well as "X^" to
+> edit the replacement of X^.
+
+Oh, good point.  So, in that alternate world we'd still need a squash directive.
