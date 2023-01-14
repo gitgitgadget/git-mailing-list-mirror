@@ -2,64 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id ED27FC46467
-	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 16:15:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id CF88DC3DA78
+	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 16:35:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230224AbjANQPb (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Jan 2023 11:15:31 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53256 "EHLO
+        id S229807AbjANQfz (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Jan 2023 11:35:55 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230263AbjANQPZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jan 2023 11:15:25 -0500
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D107A5D3
-        for <git@vger.kernel.org>; Sat, 14 Jan 2023 08:15:22 -0800 (PST)
-Received: by mail-pj1-x1035.google.com with SMTP id q64so25268411pjq.4
-        for <git@vger.kernel.org>; Sat, 14 Jan 2023 08:15:22 -0800 (PST)
+        with ESMTP id S229596AbjANQfy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jan 2023 11:35:54 -0500
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 907148A53
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 08:35:53 -0800 (PST)
+Received: by mail-pj1-x1036.google.com with SMTP id w4-20020a17090ac98400b002186f5d7a4cso29996398pjt.0
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 08:35:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ElcWcGRhGZJ4Co2IYZomAd/mhAJGwBm82udjGQnvkuM=;
-        b=PPGatMTps+dCwoSEEaIoc1wwVaQ9HC9ZnFHaoicMeUsi1j5lfh1oGvUJs8MbWSmg1V
-         i7DgTb4/PS7jq1xFMoZbrkIpsQ7JK7pNqXJF1TtZukInEQjHuaArilCOxBXXabtvpzsD
-         JqjbmSwg2mjVIENlHgotXfrdBBRAvQxXjmNKMMs+KPjOfshuTXk/wk/+unJ60BAyS9tC
-         DnmuQsYPIMykj9D4dVszxTZkwJuETFFck240eDAOO24a+FPfnvECj3KyYkOOlOjTbbPN
-         2SThQS5W2Jp/LPwtrGLT1rJx7PBm1B+BoiepytwBz1YvTUiKphSdnnE3j2Zy+XMS1fqu
-         7mpQ==
+        bh=MiwynIsquPh9fsMPYVyV6Wg8Di/FQCRj2x09aAJ1LK8=;
+        b=LXvUnYkN8JxtKn6SrHqgzpGJC0iRyyLV7dhDhodL2KVEavivyIxYbMR98zszDg1v7f
+         +CtCz4C7zqz6jYkxqNCzwVOQsnF+UjqwoQMtJjsnsiD4cJp1cmP25gO55oz3sTKsvlbM
+         AUJ2ryTu7Ebh0PAE9ee3fmhDVI2CDY/QIehEdxFNXD5CNTJQamFMI3JfNZfn/hChi7FL
+         4QFtwtRBuImaDN+ZhsRjsVh4qiRsJXHVKnNPR/0g3foKVYcxRxna87V82xmeRAew6OqQ
+         7veQl75MN1X7TgAUNLkCRng5hPl31RA6zWvXrFOoIboI5P7wR4t8QpwE2TKXdo5BYkaF
+         bQ8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=ElcWcGRhGZJ4Co2IYZomAd/mhAJGwBm82udjGQnvkuM=;
-        b=AdZjW1sh1V5lStKS9W7E3Kb8335vSXy8ESasg945rkOUXZzcPlH9oIIPeZmT3Xu0PS
-         30cu5e6EixFBsroeR5mcOTsRTBUHs3yjJv1N0c23ZcqMhjCG09ARdC5tpXnlAw0qSOAX
-         YKHdx2QswnqJuVfXNIKU/P2AA6xd/Unv6ppTvyFYV5EDJIq8sw25ZQP1bSz2yjrjguWC
-         Nl2LPr2oEznx/aqHvCvasRtnn0UaisCKAy7sGvZmQiq8CiHkO0+T2P9pbP81LWATWi9q
-         BW2EXrBP7pTRx20CU5F1yTaZUlKLCv+BPu5SpSdRfY1Vn7bwOxXbokyiKrdAOSidFWJ+
-         V8Jw==
-X-Gm-Message-State: AFqh2kpb/To34tXr1l6L9VypLtz+XyjF2v+JHlHWJsOUE9BPQZ7cNXfr
-        24a9AP1TVJk8WSnRmQ60ifFpo3Ct7Gg=
-X-Google-Smtp-Source: AMrXdXsu0cPeFdhulFHDwFCIMZxF69grdXxi+qGPIUx4fo3ZO6en/n75KZwYmIRjtjL56fZycbPHsg==
-X-Received: by 2002:a17:902:d101:b0:194:880c:26e1 with SMTP id w1-20020a170902d10100b00194880c26e1mr386982plw.4.1673712921606;
-        Sat, 14 Jan 2023 08:15:21 -0800 (PST)
+        bh=MiwynIsquPh9fsMPYVyV6Wg8Di/FQCRj2x09aAJ1LK8=;
+        b=TC/Gmj98x9R9D6zqjUrOnrxTxbdD0G9gzd+/7NEJhzmXT/f0PBe6AwUXk5djZufSno
+         TEFsuk43uSPOb+IlhizVPY4GkOV1kcSQxNzZEzVq8sqcLgTCgLa+bfvR/ILleU+lrzep
+         R1chx7XLuStaAIjq1OhIBO6R5q0t2z2wPNwmYXp93UQPa2GOOwKMdnr97g2UB+ynlgBZ
+         rpUMqWzjrpqHC66jtFSsAzEI2l1imnT1DND5RZ+2POZFNSsSgZr+klsu5Bpy0gYZK2jz
+         mjOEERSMT+jTLIezXP9/fzrLOQ8qOeELvSgsh3VA5SnIBfooo5kh8kQVlcwWl6LgNO6F
+         qwJA==
+X-Gm-Message-State: AFqh2koOJRbdmkbPllu7QunbDzaYZ2pSFbwB2c52D2SpTQrsASa/lby8
+        2FVLiyCOYjdppE8BOt3hiJ4=
+X-Google-Smtp-Source: AMrXdXuDTGlGHf1jf/kpReWJWC8+qs0nyc1JJuvXxp36Vo9+PYfaWqurAW2k88B10Q6buT8b9yp2sA==
+X-Received: by 2002:a17:902:8d87:b0:192:d58f:e5ff with SMTP id v7-20020a1709028d8700b00192d58fe5ffmr39791274plo.16.1673714152970;
+        Sat, 14 Jan 2023 08:35:52 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id c1-20020a170903234100b0017f48a9e2d6sm16031303plh.292.2023.01.14.08.15.21
+        by smtp.gmail.com with ESMTPSA id e5-20020a17090301c500b00188fadb71ecsm16219430plh.16.2023.01.14.08.35.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Jan 2023 08:15:21 -0800 (PST)
+        Sat, 14 Jan 2023 08:35:52 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
-Subject: Re: [PATCH] ci: do not die on deprecated-declarations warning
-References: <xmqqv8l9n5fj.fsf@gitster.g>
-        <Y8LAim4D3g6qnZdq@coredump.intra.peff.net>
-Date:   Sat, 14 Jan 2023 08:15:21 -0800
-In-Reply-To: <Y8LAim4D3g6qnZdq@coredump.intra.peff.net> (Jeff King's message
-        of "Sat, 14 Jan 2023 09:47:38 -0500")
-Message-ID: <xmqqv8l9ks86.fsf@gitster.g>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2023, #04; Sat, 14)
+References: <xmqqilh9ms1p.fsf@gitster.g>
+        <Y8Kkjswoy3ELmAxR@coredump.intra.peff.net>
+Date:   Sat, 14 Jan 2023 08:35:52 -0800
+In-Reply-To: <Y8Kkjswoy3ELmAxR@coredump.intra.peff.net> (Jeff King's message
+        of "Sat, 14 Jan 2023 07:48:14 -0500")
+Message-ID: <xmqqr0vxkr9z.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,30 +69,17 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
->> +DEVELOPER_CFLAGS += -Wno-error=deprecated-declarations
+> On Sat, Jan 14, 2023 at 12:36:18AM -0800, Junio C Hamano wrote:
 >
-> That's a pretty broad hammer. And I think it may stomp on the hack to
-> rely on deprecated() in the UNUSED macro.
+>> * ab/test-env-helper (2023-01-13) 1 commit
+>>  - env-helper: move this built-in to to "test-tool env-helper"
+>> 
+>>  Remove "git env--helper" and demote it to a test-tool subcommand.
+>> 
+>>  Will merge to 'next'.
+>>  source: <patch-1.1-e662c570f1d-20230112T155226Z-avarab@gmail.com>
 >
-> As Ramsay suggested, we could probably use CURL_DISABLE_DEPRECATION to
-> limit this just to the problematic case.
+> There's a typo in the subject: s/to to/to/. Not a big deal, but since it
+> hasn't quite hit next yet, maybe worth fixing.
 
-Yeah, I like that approach.
-
-But not this one ...
-
-> +	CURL_IGNORE_DEPRECATION(
-> +		curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS,
-> +				 get_curl_allowed_protocols(0));
-> +		curl_easy_setopt(result, CURLOPT_PROTOCOLS,
-> +				 get_curl_allowed_protocols(-1));
-> +	)
->
-> though I think that was introduced only in 7.87.0 along with the
-> deprecation warnings themselves, so we'd need to have a fallback like:
->
->   #ifndef CURL_IGNORE_DEPRECATION(x)
->   #define CURL_IGNORE_DEPRECATION(x) x
->   #endif
-
-... as much.
+Indeed.  Thanks for reminding me.
