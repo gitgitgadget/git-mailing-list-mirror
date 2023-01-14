@@ -2,201 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DA695C3DA78
-	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 08:21:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4F4D3C46467
+	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 08:24:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229767AbjANIV3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Jan 2023 03:21:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35090 "EHLO
+        id S229599AbjANIYc (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Jan 2023 03:24:32 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229584AbjANIV2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jan 2023 03:21:28 -0500
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41C5D4692
-        for <git@vger.kernel.org>; Sat, 14 Jan 2023 00:21:27 -0800 (PST)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-4c131bede4bso315243997b3.5
-        for <git@vger.kernel.org>; Sat, 14 Jan 2023 00:21:27 -0800 (PST)
+        with ESMTP id S229732AbjANIYN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jan 2023 03:24:13 -0500
+Received: from mail-oa1-x2c.google.com (mail-oa1-x2c.google.com [IPv6:2001:4860:4864:20::2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA7B95BA5
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 00:24:12 -0800 (PST)
+Received: by mail-oa1-x2c.google.com with SMTP id 586e51a60fabf-1433ef3b61fso24627771fac.10
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 00:24:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cwlDgwNe00QjRxJ/KFqCI/yX1AcECCUWL7MSZzenkMI=;
-        b=lqfY5RjV5xzT5HHyRrn7Rb6V0nnEezYXGBHaZakoC1zv3sWEEfB1dhE1OUxGlofm5T
-         OCPZBHoNHTGGy5ei+xN+BQjSKTkK07EA0dA/sImBP1BKGXxWtqaSmVQzL+XoEetBX2Ph
-         wKYPEmgUynlLLSOqlGHoStm+URnYENXCy7Q5o8FPijfWC6W8AcwKEfIgjSVMQzwwd2Do
-         Y1s9v5vuV9Iz17tAqBeLnNi+Y6UK49klG9DdmAeZybdWVE3kqTuGAECxm0DQhIj9Gc9e
-         8nNonl2Kjzriur7xt0u7ay+fS6bhwme30dlbdJSHk4CrjULu5+9sBfm30ozLm/e+Avey
-         Snrw==
+        bh=EDgNCEqMN85sXxC+7trbpwbTRDfDL2Zyf0f1AJIdNqQ=;
+        b=A1zggI1VZwICvbxFW5DqM82eGvX6uEk6mQHA7MeRsv2Eo606FhjaCVXlsx7SHVOlfU
+         xgvufg7kE9a3u75JO+xzHpQdxXmD1MvW0FWur45i9dWheNues4EuLv/6f3Pz434+inOf
+         cZM9RCOdzexMVbsUw8O/mDmoA+5FWfOsZzfgNjBlJKpBplPFXOA7Xg8DGJ74fu0qp929
+         NGJQ9HPzQJHh8DIqukwPNwjjtok14W8Rw4ZVeI88Wlyg/gMtDcfWOljI27C4ktNJaldk
+         RDKpuuSdJhyR/yu5vJvqLwbA7LbR6lM7gDS1LGK6IGDuhLg6KbSipXXNTuxM1MtvomoM
+         a+Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cwlDgwNe00QjRxJ/KFqCI/yX1AcECCUWL7MSZzenkMI=;
-        b=0dpGl7ddA9T+nmWf6S6WP6oZCOQfJK5+GBXBnhgjUdakIZLOeHKGtG7vmQ4IDLg+pC
-         ZT0j4d2igvE7Ds1Vho76qC4TvkNuvYI3uqRxRIHEPQiUSxfkz27RPZUWYB0kHCg0LPbm
-         vdfCr+CSog9Nbd/uTfi+OA0hudGKoxyJnfNY4ppTe2uurVbB6ZIOyvjOZ14ffngKJCzb
-         j/64/q/yIF1E4F7ek9CncOwsUgaX4mP5QHUij7QA7lLAkOSZLaSRLi1tj0jcm/FlW3mF
-         B5cqr7oXkKTUpV53kX3ShPxi/dNGrBA5TK+MhPyv+DoGhxVHW7j2WVdPPkVeBqSKXaoW
-         Ykvg==
-X-Gm-Message-State: AFqh2kpkuplHhetb7ncQEavJAa4HSnsKc6U7cOLC78RIMD5NFRZYBok+
-        1juC61FDNqy+f/eouFvIFrYYMamY2MLBoVUXjbM=
-X-Google-Smtp-Source: AMrXdXs+JVL+UuW72heN+TC0R33PGk6SYgmLNgrTVTW2PefGQ28qdbooGgDxJnYCwzA20W5kwh4OeIjmm26qQX5ai4U=
-X-Received: by 2002:a0d:c201:0:b0:488:7800:3b03 with SMTP id
- e1-20020a0dc201000000b0048878003b03mr1557999ywd.209.1673684486431; Sat, 14
- Jan 2023 00:21:26 -0800 (PST)
+        bh=EDgNCEqMN85sXxC+7trbpwbTRDfDL2Zyf0f1AJIdNqQ=;
+        b=JrF1+MBU34cD8qnbKL9dSRDzP32fB01xalvwGLs6+wOmQpLl0N8enHUBN9bW16sFod
+         bH4OjPxX8V1MEE0Y6B7oUMyUJ8znBvR26sStsxFfkHx+ALG3hjVHBpdskk+GKOu8G1C4
+         0zU00PcXi/dZ0aoDSqqUadgyKZswOsacXtrJR2CuMBJY8lj+giklSJESOlmSbF6QJmA3
+         fPHNWjKZIiSz0uUUa7iVSq9P1aNg3EMlVgkZbwTXWNQw0n3YnPTxQCsUG5BhsSfLd+3n
+         u1vzIlaf/Jk/Nd4QmvIwLRQ39i+F6WAm7juDL41gT4oVfdaJHvuBmgvoNbyPA2evuUQH
+         5MpA==
+X-Gm-Message-State: AFqh2krkOD9owcIYS3dlpDkpJIhvhBL3zgxRcd+alWOCtlTm5kJPryjt
+        MZW1qPIXr0tIGmSdbJen1TDhwz9bXqFbtzWacXBdyyw6imc=
+X-Google-Smtp-Source: AMrXdXuP8NCp34aOvzGBRWY3EjP6Pla1xaL8I74rNZ0B+RAAiKRONAjYl7d/Ox0cnWycfE0MeZbb7DXW63cv/Ix3oMc=
+X-Received: by 2002:a05:6870:1c6:b0:15f:564:f796 with SMTP id
+ n6-20020a05687001c600b0015f0564f796mr134551oad.270.1673684652154; Sat, 14 Jan
+ 2023 00:24:12 -0800 (PST)
 MIME-Version: 1.0
-References: <pull.1463.git.1673584914.gitgitgadget@gmail.com> <1d1330243109d499d1c07f6518265b2e163406ef.1673584914.git.gitgitgadget@gmail.com>
-In-Reply-To: <1d1330243109d499d1c07f6518265b2e163406ef.1673584914.git.gitgitgadget@gmail.com>
-From:   ZheNing Hu <adlternative@gmail.com>
-Date:   Sat, 14 Jan 2023 16:21:14 +0800
-Message-ID: <CAOLTT8Qx6chcA7MEY9Hzeq9U5pfR-fC8aOxhZMvYvi8ZtQeVdA@mail.gmail.com>
-Subject: Re: [PATCH 2/4] ls-files: clarify descriptions of file selection options
-To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+References: <cover.1673521102.git.karthik.188@gmail.com> <57f5957127ce3be2621445806f2f00857ac8b1aa.1673521102.git.karthik.188@gmail.com>
+ <xmqq4jsu13id.fsf@gitster.g>
+In-Reply-To: <xmqq4jsu13id.fsf@gitster.g>
+From:   Karthik Nayak <karthik.188@gmail.com>
+Date:   Sat, 14 Jan 2023 09:23:45 +0100
+Message-ID: <CAOLa=ZRZDKqPq8ChZtD48207GxnjvqKPPvAJaUVOW8oKrRtGMw@mail.gmail.com>
+Subject: Re: [PATCH v6 2/2] attr: add flag `--source` to work with tree-ish
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren via GitGitGadget <gitgitgadget@gmail.com> =E4=BA=8E2023=E5=B9=
-=B41=E6=9C=8813=E6=97=A5=E5=91=A8=E4=BA=94 12:41=E5=86=99=E9=81=93=EF=BC=9A
+On Fri, Jan 13, 2023 at 11:19 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> From: Elijah Newren <newren@gmail.com>
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> The previous descriptions of the file selection options were very easy
-> to misunderstand.  For example:
+> > diff --git a/attr.h b/attr.h
+> > index 3fb40cced0..f4a2bedd68 100644
+> > --- a/attr.h
+> > +++ b/attr.h
+> > @@ -1,6 +1,8 @@
+> >  #ifndef ATTR_H
+> >  #define ATTR_H
+> >
+> > +#include "hash.h"
 >
->   * "Show cached files in the output"
->     This could be interpreted as meaning "show files which have been
->     modified and git-add'ed, i.e. files which have cached changes
->     relative to HEAD".
->
->   * "Show deleted files"
->     This could be interpreted as meaning "for each `git rm $FILE` we
->     ran, show me $FILE"
->
->   * "Show modified files"
->     This could be interpreted as meaning "show files which have been
->     modified and git-add'ed" or as "show me files that differ from HEAD"
->     or as "show me undeleted files different from HEAD" (given that
->     --deleted is a separate option), none of which are correct.
->
-> Further, it's not very clear when some options only modify and/or
-> override other options, as was the case with --ignored, --directory, and
-> --unmerged (I've seen folks confused by each of them on the mailing
-> list, sometimes even fellow git developers.)
->
-> Tweak these definitions, and the one for --killed, to try to make them
-> all a bit more clear.  Finally, also clarify early on that duplicate
-> reports for paths are often expected (both when (a) there are multiple
-> entries for the file in the index -- i.e. when there are conflicts, and
-> also (b) when the user specifies options that might pick the same file
-> multiple times, such as `git ls-files --cached --deleted --modified`
-> when there is a file with an unstaged deletion).
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  Documentation/git-ls-files.txt | 37 ++++++++++++++++++++++------------
->  1 file changed, 24 insertions(+), 13 deletions(-)
->
-> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.=
-txt
-> index cb071583f8b..f89ab1bfc98 100644
-> --- a/Documentation/git-ls-files.txt
-> +++ b/Documentation/git-ls-files.txt
-> @@ -29,21 +29,26 @@ This merges the file listing in the index with the ac=
-tual working
->  directory list, and shows different combinations of the two.
->
->  One or more of the options below may be used to determine the files
-> -shown:
-> +shown, and each file may be printed multiple times if there are
-> +multiple entries in the index or multiple statuses are applicable for
-> +the relevant file selection options.
->
+> You only want "struct object_id" declared.  Why include the whole
+> file?
 
-`--deduplicate` option can be used to remove deduped output.
+I see, I should have just used your patch, will add this and =C3=86var's
+[0] suggestion and do a quick re-roll. Thanks!
 
->  OPTIONS
->  -------
->  -c::
->  --cached::
-> -       Show cached files in the output (default)
-> +       Show all files cached in Git's index, i.e. all tracked files.
-> +       (This is the default if no -c/-s/-d/-o/-u/-k/-m/--resolve-undo
-> +       options are specified.)
->
->  -d::
->  --deleted::
-> -       Show deleted files in the output
-> +       Show files with an unstaged deletion
->
-
-This is a nice fix: make it clear to the user that only files in the
-working tree are deleted, not in the index.
-
->  -m::
->  --modified::
-> -       Show modified files in the output
-> +       Show files with an unstaged modification (note that an unstaged
-> +       deletion also counts as an unstaged modification)
->
-
-Good to mention that deleted files are also modified, otherwise no one
-looking at the documentation would know that.
-
->  -o::
->  --others::
-> @@ -51,11 +56,14 @@ OPTIONS
->
->  -i::
->  --ignored::
-> -       Show only ignored files in the output. When showing files in the
-> -       index, print only those matched by an exclude pattern. When
-> -       showing "other" files, show only those matched by an exclude
-> -       pattern. Standard ignore rules are not automatically activated,
-> -       therefore at least one of the `--exclude*` options is required.
-> +       Show only ignored files in the output.  Must be used with
-> +       either an explicit '-c' or '-o'.  When showing files in the
-> +       index (i.e. when used with '-c'), print only those files
-> +       matching an exclude pattern.  When showing "other" files
-> +       (i.e. when used with '-o'), show only those matched by an
-> +       exclude pattern.  Standard ignore rules are not automatically
-> +       activated, therefore at least one of the `--exclude*` options
-> +       is required.
->
->  -s::
->  --stage::
-> @@ -64,19 +72,22 @@ OPTIONS
->  --directory::
->         If a whole directory is classified as "other", show just its
->         name (with a trailing slash) and not its whole contents.
-> +       Has no effect without -o/--others.
->
->  --no-empty-directory::
->         Do not list empty directories. Has no effect without --directory.
->
->  -u::
->  --unmerged::
-> -       Show unmerged files in the output (forces --stage)
-> +       Show information about unmerged files in the output, but do
-> +       not show any other tracked files (forces --stage, overrides
-> +       --cached).
->
->  -k::
->  --killed::
-> -       Show files on the filesystem that need to be removed due
-> -       to file/directory conflicts for checkout-index to
-> -       succeed.
-> +       Show untracked files on the filesystem that need to be removed
-> +       due to file/directory conflicts for tracked files to be able to
-> +       be written to the filesystem.
->
->  --resolve-undo::
->         Show files having resolve-undo information in the index
-> --
-> gitgitgadget
->
+[0]: https://lore.kernel.org/git/230112.86lem728ig.gmgdl@evledraar.gmail.co=
+m/
