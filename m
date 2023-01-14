@@ -2,110 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 67CF1C3DA78
-	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 03:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7B46DC46467
+	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 03:47:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230525AbjANDAt (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Jan 2023 22:00:49 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54962 "EHLO
+        id S231131AbjANDrS (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Jan 2023 22:47:18 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229793AbjANDAs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2023 22:00:48 -0500
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA9476C05B
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 19:00:46 -0800 (PST)
-Received: by mail-lf1-x131.google.com with SMTP id m6so35614502lfj.11
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 19:00:46 -0800 (PST)
+        with ESMTP id S230119AbjANDrP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2023 22:47:15 -0500
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85ADDBCA5
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 19:47:14 -0800 (PST)
+Received: by mail-pf1-x431.google.com with SMTP id 200so11332168pfx.7
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 19:47:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=NxCTQ/I2yUthDGgewJVg1gMYrTEXQ0/UOyAKE3iZbGw=;
-        b=jYu45v/U64bFJG4yfmlQ+I/BBKacE5UPPKxFPByB+LNH3wKSM+6d8QVYoBu7a0eBMU
-         vBZiiZPFowWKgaLUIaXaHa/ID6nQnpa7NO0QfmwxCVF6wJ8d7oy+WmaheTw3cZQRWfFc
-         YyUNBhIbzAmsNlvHE84NuwoK+E5eFSk3oFXxnYsg0nEr7fD2QNFxRKvoXPb26R16Gjeb
-         5VWkDfFVut8mMqw+4qAIx77D8d7U4PFecYXtaeW5uYpEfXzfurmOAA/8pgdJ5FZGfNLp
-         0/KW0USCMkr8iez5MNUVVAn0xopbCqJnSeY15szaOYeLJa31uxe9aSGKqEdFWhT3DaGo
-         8qjw==
+        h=mime-version:user-agent:message-id:date:subject:to:from:sender:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ffgI8We2sPbtu64rMrNRppeZQPx6F8fObKIIk4dvwpY=;
+        b=fUIO1GPcfUMQoQEm/wP9NE6mTMAGmLEIoSUbOO3K67ApsYoqzx6ObgoxJ1Kc9uF3wd
+         iT/DIhICCwj3/wFo3EJHKxjYIXXhkQxPgwFlvtztBttAf1yvqDsH8iNilh1MCchKJoJG
+         NR1sgUVYpM7bLLVIBtdrTENYjJFdcg0l3HoQWrlaPGBu3jK4qiPgHkKcMi3WElXOFMxV
+         gVt1vpVN3+oWNY2J0mvD+AH1LvEi57nKxSPHIdrfz2i/9HhzSzBu3dw5lXmdZKcpwy5R
+         h8Hv5deaKQ7RGxyep0vCROl2Z0J3RmanlkYAuD5gm4Xs60iKSiScx2Bm7OK9QqJuZxVq
+         Ejyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NxCTQ/I2yUthDGgewJVg1gMYrTEXQ0/UOyAKE3iZbGw=;
-        b=aUBwCZAEGFxnGlTNYOMn5C4tPgL/fZuLpAZJnvEIUhg4/JW8SC2Lg7jxu75GFVOtHA
-         S2tqO+YWMK9DGWEAF5rOxsDNKZyzxAvLDam+qeLiD8xv7OQrvBaL9YTSL6f6TfwKO6+8
-         NdUDpra9iOc6CY6kjdnwO/4hD/K/eSC8NQULS9B5KopTmcbQfUBcxqh6rCmM80APm+ZA
-         gVgWorgP1cAV68J2sC2tQn7MzIaUkqdubE5+x1blWgfdb+iqqNerx9YYk32tHxwLIC/S
-         9ezvgEdGgDtf580oDD8sNR+WHlVfqLe2qp2tX863UDjkd9tfDiEN19rRax9wlZ6w3xJq
-         hehg==
-X-Gm-Message-State: AFqh2krthiSM3YzYW4V0OZc4zQWgmtB/CSGf7lJ4+0j17SJnV4RaZQg0
-        toW++403741FfKh3lJE1aNsgsVRg00pPZvXTh9Ur/Dnvg6QLAA==
-X-Google-Smtp-Source: AMrXdXvzZ4LwIhAB8dhe0J5eE1a7Xv3iTX1RNSe4h3WJCuTDBeZwh+mxTtVlweC8+w1AtLe6MB9EuJfNlCu6V8NlYI4=
-X-Received: by 2002:a05:6512:acc:b0:4cb:24a0:27ce with SMTP id
- n12-20020a0565120acc00b004cb24a027cemr5807433lfu.238.1673665245126; Fri, 13
- Jan 2023 19:00:45 -0800 (PST)
+        h=mime-version:user-agent:message-id:date:subject:to:from:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ffgI8We2sPbtu64rMrNRppeZQPx6F8fObKIIk4dvwpY=;
+        b=2WPIj1WZhjgU91p1VMdhNKOAz/f9Mee9/5ggeGelFKNMbxBu7QBBst4GOOTtd1a99B
+         zXXcc+OTJCtZhPBOsQe+X5wPVkkROOl8+/MMEE9emQPtnyKMTV4Xb2Sk7wd9jWA03D5u
+         5WUIpmmskK9SYuEu5wkI3+DyKv9QawzkrOE31dthjaUBtRgyriB+xD+Ozx05+PbrJNOO
+         U9vuwIzZ1+8aEzcO++hgy8X4XZAB0O0/GZdOqAJVlPcHvTupagTSID1acajBdGhUypls
+         LsgsZzYctmO8wb7+HqJuJOiMQAlHXJ32LutgOOzMIeafDGIPNcYw7B2gYWWSu62HURbl
+         psEA==
+X-Gm-Message-State: AFqh2ko1ElzU5vjqib2Iw7KEOTCdIoPgJiqF9KeezgAN9hAgM3qCcISR
+        4i/7ARYAs2DDXwo92zDWjxe8S78z2lI=
+X-Google-Smtp-Source: AMrXdXvoo+UEu2LiQv2BzUt1n79nbli9RX3ZSsIzrzkf7O+sFjuwsNPQX0i9vZ+XPd/UvSkqrPLZMw==
+X-Received: by 2002:a05:6a00:e8d:b0:580:c223:90e9 with SMTP id bo13-20020a056a000e8d00b00580c22390e9mr72712973pfb.6.1673668033623;
+        Fri, 13 Jan 2023 19:47:13 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id 132-20020a62198a000000b00575caf8478dsm14372811pfz.41.2023.01.13.19.47.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Jan 2023 19:47:13 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Subject: [PATCH] ci: do not die on deprecated-declarations warning
+Date:   Fri, 13 Jan 2023 19:47:12 -0800
+Message-ID: <xmqqv8l9n5fj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <pull.1458.git.1673451741587.gitgitgadget@gmail.com>
- <CABPp-BGsD=6PiJtnsuYPsiZJ1rm2X8yTeu-YeP4q5uu5UDw2og@mail.gmail.com> <CAOLTT8RNWJLA_UvoMA_MktkEmLSjJrx7E6Khy97cHhVFXPQD2A@mail.gmail.com>
-In-Reply-To: <CAOLTT8RNWJLA_UvoMA_MktkEmLSjJrx7E6Khy97cHhVFXPQD2A@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 13 Jan 2023 19:00:32 -0800
-Message-ID: <CABPp-BFEKqU2YWEk=NT2xA_cO=rj_EgjqzYsuxDGwPon18dq8Q@mail.gmail.com>
-Subject: Re: [PATCH] ls-files: add %(skipworktree) atom to format option
-To:     ZheNing Hu <adlternative@gmail.com>
-Cc:     ZheNing Hu via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <derrickstolee@github.com>,
-        Victoria Dye <vdye@github.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 13, 2023 at 8:50 AM ZheNing Hu <adlternative@gmail.com> wrote:
->
-> Elijah Newren <newren@gmail.com> =E4=BA=8E2023=E5=B9=B41=E6=9C=8812=E6=97=
-=A5=E5=91=A8=E5=9B=9B 18:00=E5=86=99=E9=81=93=EF=BC=9A
-> >
-> > On Wed, Jan 11, 2023 at 7:42 AM ZheNing Hu via GitGitGadget
-> > <gitgitgadget@gmail.com> wrote:
-> > >
-[...]
-> > The "and removed from working tree" portion of this sentence is
-> > superfluous.  (And actually makes it harder to understand, I had to
-> > try to think through a bunch of cases to try to figure out why you
-> > might be trying to add some extra qualifier.)
-> >
->
-> I just quoted the definition of SKIP_WORKTREE from
-> Documentation/technical/sparse-checkout.txt:
->
->     SKIP_WORKTREE: When tracked files do not match the sparse specificati=
-on and
->       are removed from the working tree, the file in the index is marked
->       with a SKIP_WORKTREE bit.
+Like a recent GitHub CI run on linux-musl [1] shows, we seem to be
+getting a bunch of errors of the form:
 
-Ah, thanks for pointing out the error.  This should probably be reworded to=
-:
+  Error: http.c:1002:9: 'CURLOPT_REDIR_PROTOCOLS' is deprecated:
+  since 7.85.0. Use CURLOPT_REDIR_PROTOCOLS_STR
+  [-Werror=deprecated-declarations]
 
-SKIP_WORKTREE: When a tracked file which is unmodified does not match
-        the sparsity patterns, it is removed from the working tree and
-        the file in the index is marked with a SKIP_WORKTREE bit (to
-        distinguish the missing file from an unstaged deletion).
+For some of them, it may be reasonable to follow the deprecation
+notice and update the code, but some symbols like the above is not.
 
-[...]
-> To be honest, right now I think %(skipworktree) just refines the
-> --format option's ability to read the index entry SKIP_WORKTREE
-> flag bits. It is probably still worth keeping.
+According to the release table [2], 7.85.0 that deprecates
+CURLOPT_REDIR_PROTOCOLS was released on 2022-08-31, less than a year
+ago, and according to the symbols-in-versions table [3],
+CURLOPT_REDIR_PROTOCOLS_STR was introduced in 7.85.0, so it will
+make us incompatible with anything older than a year if we rewrote
+the call as the message suggests.
 
-I'm not opposed to the idea of a special skipworktree formatting in
-conjunction with ls-files' --format option, so long as it has
-alternate rationale and isn't worded to suggest it supersedes `git
-ls-files -t` for all sparse-checkout uses.
+Make sure that we won't break the build when -Wdeprecated-declarations
+triggers.
+
+[1] https://github.com/git/git/actions/runs/3915509922/jobs/6693756050
+[2] https://curl.se/docs/releases.html
+[3] https://github.com/curl/curl/blob/master/docs/libcurl/symbols-in-versions
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ config.mak.dev | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/config.mak.dev b/config.mak.dev
+index 981304727c..afcffa6a04 100644
+--- a/config.mak.dev
++++ b/config.mak.dev
+@@ -69,6 +69,15 @@ DEVELOPER_CFLAGS += -Wno-missing-braces
+ endif
+ endif
+ 
++# Libraries deprecate symbols while retaining them for a long time to
++# keep software working with both older and newer versions of them.
++# Getting warnings does help the developers' awareness, but we cannot
++# afford to update too aggressively.  E.g. CURLOPT_REDIR_PROTOCOLS_STR
++# is only available in 7.85.0 that deprecates CURLOPT_REDIR_PROTOCOLS
++# but we cannot rewrite the uses of the latter with the former until
++# 7.85.0, which was released in August 2022, becomes ubiquitous.
++DEVELOPER_CFLAGS += -Wno-error=deprecated-declarations
++
+ # Old versions of clang complain about initializaing a
+ # struct-within-a-struct using just "{0}" rather than "{{0}}".  This
+ # error is considered a false-positive and not worth fixing, because
+-- 
+2.39.0-198-ga38d39a4c5
+
