@@ -2,115 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id DF581C3DA78
-	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 15:14:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EDDBAC46467
+	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 16:04:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230098AbjANPOv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Jan 2023 10:14:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40452 "EHLO
+        id S230151AbjANQEA (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Jan 2023 11:04:00 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230089AbjANPOt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jan 2023 10:14:49 -0500
-Received: from avasout-peh-003.plus.net (avasout-peh-003.plus.net [212.159.14.19])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E650CA6
-        for <git@vger.kernel.org>; Sat, 14 Jan 2023 07:14:47 -0800 (PST)
-Received: from [10.0.2.15] ([147.147.167.102])
-        by smtp with ESMTPA
-        id GiF2pGkuxbPhbGiF3p7V7i; Sat, 14 Jan 2023 15:14:46 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1673709286; bh=Vzi7TFFOFCq7+E46sgtYagdlpXPrldDTWVCkDVXMFCE=;
-        h=Date:Subject:From:To:References:In-Reply-To;
-        b=FYUqf22Kj04cnJuWlBgVSz7OgExVLVAaDJ2g4pXE8L0+CDGLBMBBBGirUJecFQxNF
-         Vkwe95OmUMtxElDSRHaPzI0VXegHk2PihibnF096LP7HqlOVY6jHXazDJZBs3EFGyL
-         MXU8GHWN4MUrvafF+1ZRvmgu5wePEKZkXP5cOpAYyeTvrzb84GN3YFFb8pxihxPzba
-         zBlvk+2strYCDYvKc+xFSQQFigTbGAV9XqDZGa0z2Enxn/kgMHgIiRg9IXgorI3E/E
-         WOh4kelrm0LnsndIz4oOppIr96mesBdHhBVkv3RownRUHTHHGHgoj0oksjzqPKO7Or
-         i+dCUtRx69GFw==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=U+qBsMnu c=1 sm=1 tr=0 ts=63c2c6e6
- a=O4HnXJxpn4bBnFCb4s/IkQ==:117 a=O4HnXJxpn4bBnFCb4s/IkQ==:17
- a=IkcTkHD0fZMA:10 a=xey63x3kfdnjHwDfML0A:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <7498bff0-782f-8c81-5817-ed841f12dbba@ramsayjones.plus.com>
-Date:   Sat, 14 Jan 2023 15:14:44 +0000
+        with ESMTP id S229918AbjANQD7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jan 2023 11:03:59 -0500
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52DCA9019
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 08:03:58 -0800 (PST)
+Received: by mail-pj1-x102a.google.com with SMTP id gz9-20020a17090b0ec900b002290bda1b07so3362085pjb.1
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 08:03:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BzEG66rfThPlbXF45FxsFVETOW+clINROKaxEX5/kTs=;
+        b=OFHnXXzmrY6fS495cPlKMfzYutNVQISDSVOcIyQSZguHOjhSLQHsvnh41Y0Wd+f883
+         39HxgfuwOQSjo8Yzx+Ue8x77ruov+ICUzy5pLNmly8S7Wkv23FIMnzbXjWppo29xatOg
+         UShq9zS/H3TBWZXYf0IvBM+pvFAsHymLNtgqRqLXE0PGX++0X61MK1byBhiNbHfwLEH5
+         w9cHhnh8OQqjJEJhtDvxLpON2q3CwfyXv/hLZujsO8NwOpHuoYX46csDRBfazqQIH9qy
+         QA8DURjScJZ6v03Q1UFuG9/WXrT1XRRfGdFTYKsjJxz7+8E8iAEgzhboMrxDg/Oe9iTV
+         Uq1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=BzEG66rfThPlbXF45FxsFVETOW+clINROKaxEX5/kTs=;
+        b=tfbBLYxx7FnVzjuG/DNZ2L22CNk4aRVujUnm6/hbO0ZYuTQoXLzggLCF/c0UCU5DiI
+         OgSkcugchDaXjNx9YhzZGMJcxSuJVjDT5GtYRaW22kljfTNPl0ohNPnHIjcuNXtA9XF9
+         8+O0kjo5ZTTmUUcGq5gJ0s2R0eDOjGl4LxwCSEvLnkyA1idqNyLYLq1j8F6fQvhXriWT
+         2wA1tnRa/6aWcLAkjv1LxRJFKT7LJGjMa/cz0zvDRTLTtclTmcjgeGSNL0W1SeAmx/3d
+         Twk+2hrHZRlL+/KnGEM/sxDBdJ/zTg4ZPvnwqYiH/H2yNCqgejVk8WbMSuhI6ZP4KjsA
+         r4Nw==
+X-Gm-Message-State: AFqh2krQrXP300M5077Fjpho4ATc1eav4+E/q3ffrJJ5nq4Fv8JR/LRf
+        si9MdJHv8DwLBWWRRI9SfGs=
+X-Google-Smtp-Source: AMrXdXuOm52vB62MmRvaZOXODKtTzkZxVZQSzl3qqBbSi6OktQh+pG9xKbM+1nELqhOTpcwPkxlevw==
+X-Received: by 2002:a17:902:8304:b0:194:828d:62b0 with SMTP id bd4-20020a170902830400b00194828d62b0mr1351955plb.48.1673712237708;
+        Sat, 14 Jan 2023 08:03:57 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id q3-20020a17090311c300b001911e0af95dsm16067847plh.240.2023.01.14.08.03.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Jan 2023 08:03:57 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Strawbridge, Michael" <Michael.Strawbridge@amd.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Tuikov, Luben" <Luben.Tuikov@amd.com>
+Subject: Re: [PATCH v5 2/2] send-email: expose header information to
+ git-send-email's sendemail-validate hook
+References: <20230110211452.2568535-1-michael.strawbridge@amd.com>
+        <20230110211452.2568535-3-michael.strawbridge@amd.com>
+Date:   Sat, 14 Jan 2023 08:03:56 -0800
+In-Reply-To: <20230110211452.2568535-3-michael.strawbridge@amd.com> (Michael
+        Strawbridge's message of "Tue, 10 Jan 2023 21:16:28 +0000")
+Message-ID: <xmqqedrxm7bn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH] ci: do not die on deprecated-declarations warning
-Content-Language: en-GB
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqv8l9n5fj.fsf@gitster.g>
- <11dccdea-0e33-6669-9554-19f064df6010@ramsayjones.plus.com>
-In-Reply-To: <11dccdea-0e33-6669-9554-19f064df6010@ramsayjones.plus.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfNpOstGOyCMITMGkH0kQLVjGqc/lVa9gFM5wgOB1hC3X7hhA8D7Emo15sGFEw/XK9nDZ552ICduWQozyVFOC0JiPqfNWeK3fm3og4P3ZE7rHDOFXQmW+
- qEXx8FDw2vnuDXFjBtljTmjB0NVvnWOBJxngI9BLwpvCc8JCGqVUsOnlLl+lJ78Ogg238nbAARxhgkg5Gcl2OHNgWqD29x24qQw=
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"Strawbridge, Michael" <Michael.Strawbridge@amd.com> writes:
 
+> +test_expect_success $PREREQ "--validate hook supports header argument" '
+> +	test_when_finished "rm my-hooks.ran" &&
+> +	write_script my-hooks/sendemail-validate <<-\EOF &&
+> +	filesize=$(stat -c%s "$2")
 
-On 14/01/2023 14:29, Ramsay Jones wrote:
-> Hi Junio,
-[snip]
+That "stat -c" is a GNU-ism, I think.  macOS CI jobs at GitHub do
+not seem to like it.
 
-> Sorry for not looking into this (and notifying the list) sooner.
+> +	if [ "$filesize" != "0" ]; then
 
-Ah, that reminds me...
+Also, please see Documentation/CodingGuidelines to learn the subset
+of shell script syntax and style we adopted for this project.
 
-When I updated to Linux Mint v21.0 (based on latest Ubuntu LTS) last
-year, sparse started failing. This was due to a change to the 'regex.h'
-header file (the libc6-dev package version was updated from 2.31 to
-2.35), where (among other things) the diff looked like:
-
-..
-
-524a525,548
-> #ifndef _REGEX_NELTS
-> # if (defined __STDC_VERSION__ && 199901L <= __STDC_VERSION__ \
->       && !defined __STDC_NO_VLA__)
-> #  define _REGEX_NELTS(n) n
-> # else
-> #  define _REGEX_NELTS(n)
-> # endif
-> #endif
-> 
-
-..
-
-645c681,682
-<                   regmatch_t __pmatch[_Restrict_arr_],
----
->                   regmatch_t __pmatch[_Restrict_arr_
->                                       _REGEX_NELTS (__nmatch)],
-
-..
-
-The last hunk is the declaration of regexec(), thus:
-
-extern int regexec (const regex_t *_Restrict_ __preg,
-                    const char *_Restrict_ __String, size_t __nmatch,
-                    regmatch_t __pmatch[_Restrict_arr_
-                                        _REGEX_NELTS (__nmatch)],
-                    int __eflags);
-
-So, sparse falls over on the '__nmatch' as part of the __pmatch
-argument declaration. [Actually, it doesn't bomb out on the
-declaration, but at each regexec() call site].
-
-To fix my build, I added the following to my config.mak file on linux:
-
-    SPARSE_FLAGS += -D__STDC_NO_VLA__
-
-.. and forgot about it! :)
-
-I need to fix this sometime.
-
-ATB,
-Ramsay Jones
-
-
+Thanks.
