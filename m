@@ -2,663 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id EAC55C3DA78
-	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 08:30:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id A3B0BC3DA78
+	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 08:32:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229746AbjANIax (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Jan 2023 03:30:53 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38510 "EHLO
+        id S229767AbjANIcI (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Jan 2023 03:32:08 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229722AbjANIas (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jan 2023 03:30:48 -0500
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 002125B8A
-        for <git@vger.kernel.org>; Sat, 14 Jan 2023 00:30:45 -0800 (PST)
-Received: by mail-ej1-x62c.google.com with SMTP id az20so38223927ejc.1
-        for <git@vger.kernel.org>; Sat, 14 Jan 2023 00:30:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=10CeJi7rmbLGtcBFfVTe7eLaCYkOR6ylR8nepd2Ifxc=;
-        b=BoKY+zzZEHnXggh8RwveS3k/Spz4nELQhAEup/IXhC17ywJokoLHHVP71lHl8+EY60
-         BoLA/GchsbW9FSHEh0Mtcio7LaaD7oarpWruN19CHP1yVUkM4wjR1/MEiC+l6vN0BD+0
-         ws2eLrWEPAPmjFIUqwWOG/TZzzTlzCotNxcYjIBkEupW0HOzFQnnEbf5ZsWat1COXzPf
-         yuWa/O7pK3qx8ny1i7Fcwnwk8HbZ+nwZ9hLMkVrNH3qbmEMxLeiepk/sQ/xHS10qjBoA
-         oMnPDs5SyYC6TAzAGELxF0YA3P+msINPMtcvJzNH9V6s21wIwuWw6Dn5xpJST/stTAMl
-         Jatg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=10CeJi7rmbLGtcBFfVTe7eLaCYkOR6ylR8nepd2Ifxc=;
-        b=5EEBY1mqTqVy/wRpadJUWhwOZVad5twELDxT/itOdfAr8tE7SIsO5sXwmQDCBmptcV
-         wS74r2o5QqYG+RY9TKrzL1k3xm8ENBPlX6uvaFxLEgNkfe4UiXlL1RFuz90A+U7bEL1a
-         Ol7qw85JoNLDTn6EXulp2LdCnWcbnAYRFmp3fn00zHkoLqSYhF0BW0a1BKTxDwDXihi8
-         k0Ps/ftZbyo+vZM0+S7nrfX2NxV1HCvmgUAg5bDGKFBT8FIw/Q+duUIvQVrwn1orL2+J
-         x4+6jhT3W6DZu4HCnLIYKupu5ScOx36cUB1nQmKb5CgvGfCtrhK4ko12Ab/3qlR7+HxO
-         MSFg==
-X-Gm-Message-State: AFqh2kqGBgLzQhVqzMHcATyCXE+Og08ptiNkr2proEUff5WkN/ULoTUp
-        dNQoIIxRCW3g2m5OjRiTz7eh9bj6Ijc=
-X-Google-Smtp-Source: AMrXdXu+Dh7ey7Rb8MO4Jisj9+sFdNc4fc7h/f+z0UyuLKz1VFdzyI4x6M/0PewSUFjxgRdjSBB9WQ==
-X-Received: by 2002:a17:906:a853:b0:84d:4325:7f7a with SMTP id dx19-20020a170906a85300b0084d43257f7amr5479925ejb.65.1673685043906;
-        Sat, 14 Jan 2023 00:30:43 -0800 (PST)
-Received: from archlinux.fritz.box ([2a02:2454:574:5100:bfcd:791:c83b:983c])
-        by smtp.gmail.com with ESMTPSA id e20-20020a170906249400b0084d4cb00f0csm6519089ejb.99.2023.01.14.00.30.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Jan 2023 00:30:43 -0800 (PST)
-From:   Karthik Nayak <karthik.188@gmail.com>
-To:     git@vger.kernel.org
-Cc:     phillip.wood@dunelm.org.uk, sunshine@sunshineco.com,
-        Karthik Nayak <karthik.188@gmail.com>,
-        Toon Claes <toon@iotcl.com>
-Subject: [PATCH v7 2/2] attr: add flag `--source` to work with tree-ish
-Date:   Sat, 14 Jan 2023 09:30:38 +0100
-Message-Id: <0ca8b2458921fc40269b0c43b5ec86eba77d6b54.1673684790.git.karthik.188@gmail.com>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <cover.1673684790.git.karthik.188@gmail.com>
-References: <https://lore.kernel.org/git/cover.1673521102.git.karthik.188@gmail.com/> <cover.1673684790.git.karthik.188@gmail.com>
+        with ESMTP id S229735AbjANIcD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jan 2023 03:32:03 -0500
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2F3B59C4
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 00:32:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1673685106; bh=BNhQBD/wsqWO3UadfPhc+q62mcIENy/fJ6JbUfn3DMk=;
+        h=X-UI-Sender-Class:Date:Subject:From:To:Cc:References:In-Reply-To;
+        b=cc/lSso0IxMtyACheYa+jPalERJ+IFgOBLEek4ptqd4U8+NUmAwiI19eYLO1JqM01
+         +4tsuftjwyQl841imi1lvyVg0NOQ9JywB44AQqwWpuPPzzIh1PrMkHZORQsq/hjygh
+         Brnz4C6mw2awo7JBeOnhIKaEZFg42/wnq2O2piM+zYfB+22Km3UbnqoCg4mnF1i3zQ
+         zqNYGaSTAz91jp8UMDCmq4nkWQSOc0wqYpegC7gehQKDcNvib9Pwwe57n6A9ain4+S
+         IeIAiLeO55qet4kZCyv1RrRSq7YZhBTqBB596PhjhbwR5XYfoi0XqDv2myCARFDfXg
+         CuaTZALXU307g==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([79.203.21.69]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MrOdp-1ovZ8H0LtH-00oTos; Sat, 14
+ Jan 2023 09:31:46 +0100
+Message-ID: <b2e597aa-044d-e136-43b9-afc84a1e3794@web.de>
+Date:   Sat, 14 Jan 2023 09:31:44 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: BUG: git grep behave oddly with alternatives
+Content-Language: en-US
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+To:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        Marco Nenciarini <marco.nenciarini@enterprisedb.com>,
+        git@vger.kernel.org, Diomidis Spinellis <dds@aueb.gr>
+References: <f82ae28a-fb56-8d1f-96c8-550b61439d3a@enterprisedb.com>
+ <634f47a8-b370-81cb-00e7-d93ffc7534a8@web.de>
+ <1f61b660-b2d0-ba93-3182-05a9ab97b00e@enterprisedb.com>
+ <343a891e-d737-0ace-26a9-3839d3bd5583@web.de>
+ <Y7Uu35HwUx2EVfAg@coredump.intra.peff.net>
+ <e5165840-331c-e9b6-b45f-62abab860d79@web.de>
+ <Y7flVcALZQgz0VPl@coredump.intra.peff.net>
+ <26a0d4ca-3d97-ace4-1a1f-92b1ee6715a6@web.de>
+ <Y78GXZvyrOrXhe7n@coredump.intra.peff.net>
+ <4165031d-e7f1-0477-2245-6a8e312de522@web.de>
+ <Y8CBrtmL45tA/N8z@coredump.intra.peff.net>
+ <230113.86ilhazved.gmgdl@evledraar.gmail.com> <xmqq5yda5p4l.fsf@gitster.g>
+ <0e25e6b0-2eb8-40ee-7999-f2863a545a15@web.de>
+In-Reply-To: <0e25e6b0-2eb8-40ee-7999-f2863a545a15@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:C3k4NeiEawRMC3+WiYEookrDchiJlC9LPiBVW9ZnI/KT1FFAm5x
+ zLGxkf8ldXdM3lLt8xDqmROj0zPqxBCV8f3ZZxyDy/ehVE/F88nPkXMVH+F2zkwBmcRgG4y
+ o70H6lyREhWb+a7DVLPmbFrJuAv8oEjoepBDO9ONxLEIRz0LgmM0qHDIndFLhFFCElocIdh
+ ulYnSMs68gU/nz71xloTg==
+UI-OutboundReport: notjunk:1;M01:P0:G4Jn8ARPbe8=;8LE++muyaN+XoDv8RV56JLYIWTL
+ QSTtzY2ZZq1XWe2NXjexQ75syEFvrNAcnB+6CSZfdFx+NsQEb4E/CxcAuBKL4UnT5efDCByo2
+ 8xpH5wWfJQXusjQ68FzApBwG+XRRldDSgVHLiKH4eJRUp/QT5RL/K/SdbXEs7fdP7SBK2bDnu
+ RIW+WLW1xokLntcAvWyjhhG3MN1hzqsS+fPln25PhgyBu2r+4oQRBDzdVGUmlOeQn1Y4uHpke
+ iH8rx0RZTr96WyGJwwC9LjWaS1wnotn46ra4c6xQ1Y2gQipDiuzZwV6FG0Jori3+tjqFTxVbZ
+ QSXFf43D2XKaQIccIs60S8jTXmkKdBkCPInNRxWPZXAUYxgW4VGza7Gcrva8GzTzjIsJfGYyC
+ YjlEFQ92Ae/KjIgFPOPjQG9EtMq6AXESRP6UDUIA+RxrMZJoUyIDa0in/7/RvCykLhmhPWQMl
+ IK5KbPK/jJ2U78nGY/oSSUUnOaO/bjSEK/q9SrHVH5S3XEeTUJl6TD88IEm/QkNr2d9Zp2b3e
+ 78Gx82oVcX38V4Wehjx8mKrPt0hngFPmPyFkKs6k+1OEjjn1BYVMVves/SXWi0PxH57P2e9vB
+ MAtXZg7vsdm9HBGhJWPJWyzFF9ogDDzy1xtNTPQn+97dqpTib8hfcKB+u+oiPnN8AXzgQpeHb
+ 6bHt3kktwxxYu7R0jxQn85A3qaRNDvXsnAyAPMVCjf3iJr+c0CTih3Sg26ikVdAEVSVx4nxHb
+ 2yG/8RSgmGJ4Bpt5Yqz+MospR9y1kh8hRgCdbjHNO00bMwetUDVqjynbYo1K09ZqUFOHItqbl
+ l30iyNP9Uj8umlKEZ4la7MPEnTCYYovjHKEfX3xX2vCYdrEx82FVohMtp3CGrDiZ4p8Z8nv0L
+ myA0xpeQYLoIxe6e/0ie/Ujpd56DtmWektQU1f7wrBuWW1NnxTAxPVBP12rtBlLrnbU3FJROJ
+ /2fNGw==
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The contents of the .gitattributes files may evolve over time, but "git
-check-attr" always checks attributes against them in the working tree
-and/or in the index. It may be beneficial to optionally allow the users
-to check attributes taken from a commit other than HEAD against paths.
+Am 14.01.23 um 07:44 schrieb Ren=C3=A9 Scharfe:
+> Am 13.01.23 um 18:19 schrieb Junio C Hamano:
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>>
+>>> On Thu, Jan 12 2023, Jeff King wrote:
+>>>
+>>>> So it does seem like all bets are off for what people can and should
+>>>> expect here. Which isn't to say we should make things worse. I mostly
+>>>> wondered if REG_ENHANCED might take us closer to what glibc was doing=
+ by
+>>>> default, but it doesn't seem like it.
+>>
+>> I thought that Ren=C3=A9's "Use enhanced only when doing BRE" was fairl=
+y
+>> focused, but I am very tempted to accept ...
+>>
+>>> There's a couple of ways out of this that I don't see in this thread:
+>>>
+>>> - Declare it not a problem: We have -G, -E and -P to map to BRE, ERE a=
+nd
+>>>   PCRE. One view is to say the first two must match POSIX, another is
+>>>   tha whatever the platform thinks they should do is how they should
+>>>   act.
+>>
+>> ... this view.  The story "BRE and ERE work via what system
+>> libraries provide, and 'git grep' matches what system grep' does" is
+>> an easy to understand view.
+>
+> That was my stance in my first reply as well.  But 3632cfc248 (Use
+> compatibility regex library for OSX/Darwin, 2008-09-07) explicitly
+> added alternation support for BREs on macOS, and 1819ad327b (grep: fix
+> multibyte regex handling under macOS, 2022-08-26) removed it seemingly
+> by accident.  And grep(1) does support them on macOS 13.1:
+>
+>    $ uname -rs
+>    Darwin 22.2.0
+>    $ which grep
+>    /usr/bin/grep
+>    $ grep --version
+>    grep (BSD grep, GNU compatible) 2.6.0-FreeBSD
+>    $ grep '\(REG_STARTEND\|NeededForASAN\)' Makefile
+>    # Define NO_REGEX if your C library lacks regex support with REG_STAR=
+TEND
+>    NO_REGEX =3D NeededForASAN
 
-Add a new flag `--source` which will allow users to check the
-attributes against a commit (actually any tree-ish would do). When the
-user uses this flag, we go through the stack of .gitattributes files but
-instead of checking the current working tree and/or in the index, we
-check the blobs from the provided tree-ish object. This allows the
-command to also be used in bare repositories.
+And I neglected to copy the author of 1819ad327b until now. :-|
 
-Since we use a tree-ish object, the user can pass "--source
-HEAD:subdirectory" and all the attributes will be looked up as if
-subdirectory was the root directory of the repository.
+@Diomidis: Here's a link to the start of this thread:
+https://lore.kernel.org/git/f82ae28a-fb56-8d1f-96c8-550b61439d3a@enterpris=
+edb.com/
 
-We cannot simply use the `<rev>:<path>` syntax without the `--source`
-flag, similar to how it is used in `git show` because any non-flag
-parameter before `--` is treated as an attribute and any parameter after
-`--` is treated as a pathname.
-
-The change involves creating a new function `read_attr_from_blob`, which
-given the path reads the blob for the path against the provided source and
-parses the attributes line by line. This function is plugged into
-`read_attr()` function wherein we go through the stack of attributes
-files.
-
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-Signed-off-by: Toon Claes <toon@iotcl.com>
-Co-authored-by: toon@iotcl.com
----
- Documentation/git-check-attr.txt |  9 ++-
- archive.c                        |  2 +-
- attr.c                           | 97 +++++++++++++++++++++++---------
- attr.h                           |  6 +-
- builtin/check-attr.c             | 35 +++++++-----
- builtin/pack-objects.c           |  2 +-
- convert.c                        |  2 +-
- ll-merge.c                       |  4 +-
- pathspec.c                       |  2 +-
- t/t0003-attributes.sh            | 41 +++++++++++++-
- userdiff.c                       |  2 +-
- ws.c                             |  2 +-
- 12 files changed, 151 insertions(+), 53 deletions(-)
-
-diff --git a/Documentation/git-check-attr.txt b/Documentation/git-check-attr.txt
-index 84f41a8e82..6e4f3aaf34 100644
---- a/Documentation/git-check-attr.txt
-+++ b/Documentation/git-check-attr.txt
-@@ -9,8 +9,8 @@ git-check-attr - Display gitattributes information
- SYNOPSIS
- --------
- [verse]
--'git check-attr' [-a | --all | <attr>...] [--] <pathname>...
--'git check-attr' --stdin [-z] [-a | --all | <attr>...]
-+'git check-attr' [--source <tree-ish>] [-a | --all | <attr>...] [--] <pathname>...
-+'git check-attr' --stdin [-z] [--source <tree-ish>] [-a | --all | <attr>...]
- 
- DESCRIPTION
- -----------
-@@ -36,6 +36,11 @@ OPTIONS
- 	If `--stdin` is also given, input paths are separated
- 	with a NUL character instead of a linefeed character.
- 
-+--source=<tree-ish>::
-+	Check attributes against the specified tree-ish. It is common to
-+	specify the source tree by naming a commit, branch or tag associated
-+	with it.
-+
- \--::
- 	Interpret all preceding arguments as attributes and all following
- 	arguments as path names.
-diff --git a/archive.c b/archive.c
-index 941495f5d7..81ff76fce9 100644
---- a/archive.c
-+++ b/archive.c
-@@ -120,7 +120,7 @@ static const struct attr_check *get_archive_attrs(struct index_state *istate,
- 	static struct attr_check *check;
- 	if (!check)
- 		check = attr_check_initl("export-ignore", "export-subst", NULL);
--	git_check_attr(istate, path, check);
-+	git_check_attr(istate, NULL, path, check);
- 	return check;
- }
- 
-diff --git a/attr.c b/attr.c
-index 42ad6de8c7..9a1dcac470 100644
---- a/attr.c
-+++ b/attr.c
-@@ -13,6 +13,8 @@
- #include "dir.h"
- #include "utf8.h"
- #include "quote.h"
-+#include "revision.h"
-+#include "object-store.h"
- #include "thread-utils.h"
- 
- const char git_attr__true[] = "(builtin)true";
-@@ -729,14 +731,62 @@ static struct attr_stack *read_attr_from_file(const char *path, unsigned flags)
- 	return res;
- }
- 
--static struct attr_stack *read_attr_from_index(struct index_state *istate,
--					       const char *path,
--					       unsigned flags)
-+static struct attr_stack *read_attr_from_buf(char *buf, const char *path,
-+					     unsigned flags)
- {
- 	struct attr_stack *res;
--	char *buf, *sp;
-+	char *sp;
- 	int lineno = 0;
- 
-+	if (!buf)
-+		return NULL;
-+
-+	CALLOC_ARRAY(res, 1);
-+	for (sp = buf; *sp;) {
-+		char *ep;
-+		int more;
-+
-+		ep = strchrnul(sp, '\n');
-+		more = (*ep == '\n');
-+		*ep = '\0';
-+		handle_attr_line(res, sp, path, ++lineno, flags);
-+		sp = ep + more;
-+	}
-+	free(buf);
-+
-+	return res;
-+}
-+
-+static struct attr_stack *read_attr_from_blob(struct index_state *istate,
-+					      const struct object_id *tree_oid,
-+					      const char *path, unsigned flags)
-+{
-+	struct object_id oid;
-+	unsigned long sz;
-+	enum object_type type;
-+	void *buf;
-+	unsigned short mode;
-+
-+	if (!tree_oid)
-+		return NULL;
-+
-+	if (get_tree_entry(istate->repo, tree_oid, path, &oid, &mode))
-+		return NULL;
-+
-+	buf = repo_read_object_file(istate->repo, &oid, &type, &sz);
-+	if (!buf || type != OBJ_BLOB) {
-+		free(buf);
-+		return NULL;
-+	}
-+
-+	return read_attr_from_buf(buf, path, flags);
-+}
-+
-+static struct attr_stack *read_attr_from_index(struct index_state *istate,
-+					       const char *path, unsigned flags)
-+{
-+	char *buf;
-+
- 	if (!istate)
- 		return NULL;
- 
-@@ -758,28 +808,19 @@ static struct attr_stack *read_attr_from_index(struct index_state *istate,
- 	if (!buf)
- 		return NULL;
- 
--	CALLOC_ARRAY(res, 1);
--	for (sp = buf; *sp; ) {
--		char *ep;
--		int more;
--
--		ep = strchrnul(sp, '\n');
--		more = (*ep == '\n');
--		*ep = '\0';
--		handle_attr_line(res, sp, path, ++lineno, flags);
--		sp = ep + more;
--	}
--	free(buf);
--	return res;
-+	return read_attr_from_buf(buf, path, flags);
- }
- 
- static struct attr_stack *read_attr(struct index_state *istate,
-+				    const struct object_id *tree_oid,
- 				    const char *path, unsigned flags)
- {
- 	struct attr_stack *res = NULL;
- 
- 	if (direction == GIT_ATTR_INDEX) {
- 		res = read_attr_from_index(istate, path, flags);
-+	} else if (tree_oid) {
-+		res = read_attr_from_blob(istate, tree_oid, path, flags);
- 	} else if (!is_bare_repository()) {
- 		if (direction == GIT_ATTR_CHECKOUT) {
- 			res = read_attr_from_index(istate, path, flags);
-@@ -839,6 +880,7 @@ static void push_stack(struct attr_stack **attr_stack_p,
- }
- 
- static void bootstrap_attr_stack(struct index_state *istate,
-+				 const struct object_id *tree_oid,
- 				 struct attr_stack **stack)
- {
- 	struct attr_stack *e;
-@@ -864,7 +906,7 @@ static void bootstrap_attr_stack(struct index_state *istate,
- 	}
- 
- 	/* root directory */
--	e = read_attr(istate, GITATTRIBUTES_FILE, flags | READ_ATTR_NOFOLLOW);
-+	e = read_attr(istate, tree_oid, GITATTRIBUTES_FILE, flags | READ_ATTR_NOFOLLOW);
- 	push_stack(stack, e, xstrdup(""), 0);
- 
- 	/* info frame */
-@@ -878,6 +920,7 @@ static void bootstrap_attr_stack(struct index_state *istate,
- }
- 
- static void prepare_attr_stack(struct index_state *istate,
-+			       const struct object_id *tree_oid,
- 			       const char *path, int dirlen,
- 			       struct attr_stack **stack)
- {
-@@ -899,7 +942,7 @@ static void prepare_attr_stack(struct index_state *istate,
- 	 * .gitattributes in deeper directories to shallower ones,
- 	 * and finally use the built-in set as the default.
- 	 */
--	bootstrap_attr_stack(istate, stack);
-+	bootstrap_attr_stack(istate, tree_oid, stack);
- 
- 	/*
- 	 * Pop the "info" one that is always at the top of the stack.
-@@ -954,7 +997,7 @@ static void prepare_attr_stack(struct index_state *istate,
- 		strbuf_add(&pathbuf, path + pathbuf.len, (len - pathbuf.len));
- 		strbuf_addf(&pathbuf, "/%s", GITATTRIBUTES_FILE);
- 
--		next = read_attr(istate, pathbuf.buf, READ_ATTR_NOFOLLOW);
-+		next = read_attr(istate, tree_oid, pathbuf.buf, READ_ATTR_NOFOLLOW);
- 
- 		/* reset the pathbuf to not include "/.gitattributes" */
- 		strbuf_setlen(&pathbuf, len);
-@@ -1074,8 +1117,8 @@ static void determine_macros(struct all_attrs_item *all_attrs,
-  * Otherwise all attributes are collected.
-  */
- static void collect_some_attrs(struct index_state *istate,
--			       const char *path,
--			       struct attr_check *check)
-+			       const struct object_id *tree_oid,
-+			       const char *path, struct attr_check *check)
- {
- 	int pathlen, rem, dirlen;
- 	const char *cp, *last_slash = NULL;
-@@ -1094,7 +1137,7 @@ static void collect_some_attrs(struct index_state *istate,
- 		dirlen = 0;
- 	}
- 
--	prepare_attr_stack(istate, path, dirlen, &check->stack);
-+	prepare_attr_stack(istate, tree_oid, path, dirlen, &check->stack);
- 	all_attrs_init(&g_attr_hashmap, check);
- 	determine_macros(check->all_attrs, check->stack);
- 
-@@ -1103,12 +1146,12 @@ static void collect_some_attrs(struct index_state *istate,
- }
- 
- void git_check_attr(struct index_state *istate,
--		    const char *path,
-+		    const struct object_id *tree_oid, const char *path,
- 		    struct attr_check *check)
- {
- 	int i;
- 
--	collect_some_attrs(istate, path, check);
-+	collect_some_attrs(istate, tree_oid, path, check);
- 
- 	for (i = 0; i < check->nr; i++) {
- 		size_t n = check->items[i].attr->attr_nr;
-@@ -1119,13 +1162,13 @@ void git_check_attr(struct index_state *istate,
- 	}
- }
- 
--void git_all_attrs(struct index_state *istate,
-+void git_all_attrs(struct index_state *istate, const struct object_id *tree_oid,
- 		   const char *path, struct attr_check *check)
- {
- 	int i;
- 
- 	attr_check_reset(check);
--	collect_some_attrs(istate, path, check);
-+	collect_some_attrs(istate, tree_oid, path, check);
- 
- 	for (i = 0; i < check->all_attrs_nr; i++) {
- 		const char *name = check->all_attrs[i].attr->name;
-diff --git a/attr.h b/attr.h
-index 3fb40cced0..fca6c30430 100644
---- a/attr.h
-+++ b/attr.h
-@@ -108,6 +108,7 @@
-  */
- 
- struct index_state;
-+struct object_id;
- 
- /**
-  * An attribute is an opaque object that is identified by its name. Pass the
-@@ -190,13 +191,14 @@ void attr_check_free(struct attr_check *check);
- const char *git_attr_name(const struct git_attr *);
- 
- void git_check_attr(struct index_state *istate,
--		    const char *path, struct attr_check *check);
-+		    const struct object_id *tree_oid, const char *path,
-+		    struct attr_check *check);
- 
- /*
-  * Retrieve all attributes that apply to the specified path.
-  * check holds the attributes and their values.
-  */
--void git_all_attrs(struct index_state *istate,
-+void git_all_attrs(struct index_state *istate, const struct object_id *tree_oid,
- 		   const char *path, struct attr_check *check);
- 
- enum git_attr_direction {
-diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-index 0fef10eb6b..d7a40e674c 100644
---- a/builtin/check-attr.c
-+++ b/builtin/check-attr.c
-@@ -9,9 +9,10 @@
- static int all_attrs;
- static int cached_attrs;
- static int stdin_paths;
-+static char *source;
- static const char * const check_attr_usage[] = {
--N_("git check-attr [-a | --all | <attr>...] [--] <pathname>..."),
--N_("git check-attr --stdin [-z] [-a | --all | <attr>...]"),
-+N_("git check-attr [--source <tree-ish>] [-a | --all | <attr>...] [--] <pathname>..."),
-+N_("git check-attr --stdin [-z] [--source <tree-ish>] [-a | --all | <attr>...]"),
- NULL
- };
- 
-@@ -23,6 +24,7 @@ static const struct option check_attr_options[] = {
- 	OPT_BOOL(0 , "stdin", &stdin_paths, N_("read file names from stdin")),
- 	OPT_BOOL('z', NULL, &nul_term_line,
- 		 N_("terminate input and output records by a NUL character")),
-+	OPT_STRING(0, "source", &source, N_("<tree-ish>"), N_("which tree-ish to check attributes at")),
- 	OPT_END()
- };
- 
-@@ -55,27 +57,26 @@ static void output_attr(struct attr_check *check, const char *file)
- 	}
- }
- 
--static void check_attr(const char *prefix,
--		       struct attr_check *check,
--		       int collect_all,
-+static void check_attr(const char *prefix, struct attr_check *check,
-+		       const struct object_id *tree_oid, int collect_all,
- 		       const char *file)
-+
- {
- 	char *full_path =
- 		prefix_path(prefix, prefix ? strlen(prefix) : 0, file);
- 
- 	if (collect_all) {
--		git_all_attrs(&the_index, full_path, check);
-+		git_all_attrs(&the_index, tree_oid, full_path, check);
- 	} else {
--		git_check_attr(&the_index, full_path, check);
-+		git_check_attr(&the_index, tree_oid, full_path, check);
- 	}
- 	output_attr(check, file);
- 
- 	free(full_path);
- }
- 
--static void check_attr_stdin_paths(const char *prefix,
--				   struct attr_check *check,
--				   int collect_all)
-+static void check_attr_stdin_paths(const char *prefix, struct attr_check *check,
-+				   const struct object_id *tree_oid, int collect_all)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct strbuf unquoted = STRBUF_INIT;
-@@ -89,7 +90,7 @@ static void check_attr_stdin_paths(const char *prefix,
- 				die("line is badly quoted");
- 			strbuf_swap(&buf, &unquoted);
- 		}
--		check_attr(prefix, check, collect_all, buf.buf);
-+		check_attr(prefix, check, tree_oid, collect_all, buf.buf);
- 		maybe_flush_or_die(stdout, "attribute to stdout");
- 	}
- 	strbuf_release(&buf);
-@@ -105,6 +106,8 @@ static NORETURN void error_with_usage(const char *msg)
- int cmd_check_attr(int argc, const char **argv, const char *prefix)
- {
- 	struct attr_check *check;
-+	struct object_id *tree_oid = NULL;
-+	struct object_id initialized_oid;
- 	int cnt, i, doubledash, filei;
- 
- 	if (!is_bare_repository())
-@@ -176,11 +179,17 @@ int cmd_check_attr(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
-+	if (source) {
-+		if (repo_get_oid_tree(the_repository, source, &initialized_oid))
-+			die("%s: not a valid tree-ish source", source);
-+		tree_oid = &initialized_oid;
-+	}
-+
- 	if (stdin_paths)
--		check_attr_stdin_paths(prefix, check, all_attrs);
-+		check_attr_stdin_paths(prefix, check, tree_oid, all_attrs);
- 	else {
- 		for (i = filei; i < argc; i++)
--			check_attr(prefix, check, all_attrs, argv[i]);
-+			check_attr(prefix, check, tree_oid, all_attrs, argv[i]);
- 		maybe_flush_or_die(stdout, "attribute to stdout");
- 	}
- 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 573d0b20b7..89535cfa6a 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -1318,7 +1318,7 @@ static int no_try_delta(const char *path)
- 
- 	if (!check)
- 		check = attr_check_initl("delta", NULL);
--	git_check_attr(the_repository->index, path, check);
-+	git_check_attr(the_repository->index, NULL, path, check);
- 	if (ATTR_FALSE(check->items[0].value))
- 		return 1;
- 	return 0;
-diff --git a/convert.c b/convert.c
-index 9b67649032..a54d1690c0 100644
---- a/convert.c
-+++ b/convert.c
-@@ -1308,7 +1308,7 @@ void convert_attrs(struct index_state *istate,
- 		git_config(read_convert_config, NULL);
- 	}
- 
--	git_check_attr(istate, path, check);
-+	git_check_attr(istate, NULL, path, check);
- 	ccheck = check->items;
- 	ca->crlf_action = git_path_check_crlf(ccheck + 4);
- 	if (ca->crlf_action == CRLF_UNDEFINED)
-diff --git a/ll-merge.c b/ll-merge.c
-index 22a603e8af..130d26501c 100644
---- a/ll-merge.c
-+++ b/ll-merge.c
-@@ -391,7 +391,7 @@ enum ll_merge_result ll_merge(mmbuffer_t *result_buf,
- 		normalize_file(theirs, path, istate);
- 	}
- 
--	git_check_attr(istate, path, check);
-+	git_check_attr(istate, NULL, path, check);
- 	ll_driver_name = check->items[0].value;
- 	if (check->items[1].value) {
- 		marker_size = atoi(check->items[1].value);
-@@ -419,7 +419,7 @@ int ll_merge_marker_size(struct index_state *istate, const char *path)
- 
- 	if (!check)
- 		check = attr_check_initl("conflict-marker-size", NULL);
--	git_check_attr(istate, path, check);
-+	git_check_attr(istate, NULL, path, check);
- 	if (check->items[0].value) {
- 		marker_size = atoi(check->items[0].value);
- 		if (marker_size <= 0)
-diff --git a/pathspec.c b/pathspec.c
-index 46e77a85fe..48dec2c709 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -732,7 +732,7 @@ int match_pathspec_attrs(struct index_state *istate,
- 	if (name[namelen])
- 		name = to_free = xmemdupz(name, namelen);
- 
--	git_check_attr(istate, name, item->attr_check);
-+	git_check_attr(istate, NULL, name, item->attr_check);
- 
- 	free(to_free);
- 
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index b3aabb8aa3..6ae30ab080 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -25,7 +25,15 @@ attr_check_quote () {
- 	git check-attr test -- "$path" >actual &&
- 	echo "\"$quoted_path\": test: $expect" >expect &&
- 	test_cmp expect actual
-+}
-+
-+attr_check_source () {
-+	path="$1" expect="$2" source="$3" git_opts="$4" &&
- 
-+	git $git_opts check-attr --source $source test -- "$path" >actual 2>err &&
-+	echo "$path: test: $expect" >expect &&
-+	test_cmp expect actual &&
-+	test_must_be_empty err
- }
- 
- test_expect_success 'open-quoted pathname' '
-@@ -33,7 +41,6 @@ test_expect_success 'open-quoted pathname' '
- 	attr_check a unspecified
- '
- 
--
- test_expect_success 'setup' '
- 	mkdir -p a/b/d a/c b &&
- 	(
-@@ -80,12 +87,23 @@ test_expect_success 'setup' '
- 	EOF
- '
- 
-+test_expect_success 'setup branches' '
-+	mkdir -p foo/bar &&
-+	test_commit --printf "add .gitattributes" foo/bar/.gitattributes \
-+		"f test=f\na/i test=n\n" tag-1 &&
-+	test_commit --printf "add .gitattributes" foo/bar/.gitattributes \
-+		"g test=g\na/i test=m\n" tag-2 &&
-+	rm foo/bar/.gitattributes
-+'
-+
- test_expect_success 'command line checks' '
- 	test_must_fail git check-attr &&
- 	test_must_fail git check-attr -- &&
- 	test_must_fail git check-attr test &&
- 	test_must_fail git check-attr test -- &&
- 	test_must_fail git check-attr -- f &&
-+	test_must_fail git check-attr --source &&
-+	test_must_fail git check-attr --source not-a-valid-ref &&
- 	echo "f" | test_must_fail git check-attr --stdin &&
- 	echo "f" | test_must_fail git check-attr --stdin -- f &&
- 	echo "f" | test_must_fail git check-attr --stdin test -- f &&
-@@ -287,6 +305,15 @@ test_expect_success 'using --git-dir and --work-tree' '
- 	)
- '
- 
-+test_expect_success 'using --source' '
-+	attr_check_source foo/bar/f f tag-1 &&
-+	attr_check_source foo/bar/a/i n tag-1 &&
-+	attr_check_source foo/bar/f unspecified tag-2 &&
-+	attr_check_source foo/bar/a/i m tag-2 &&
-+	attr_check_source foo/bar/g g tag-2 &&
-+	attr_check_source foo/bar/g unspecified tag-1
-+'
-+
- test_expect_success 'setup bare' '
- 	git clone --template= --bare . bare.git
- '
-@@ -306,6 +333,18 @@ test_expect_success 'bare repository: check that .gitattribute is ignored' '
- 	)
- '
- 
-+test_expect_success 'bare repository: with --source' '
-+	(
-+		cd bare.git &&
-+		attr_check_source foo/bar/f f tag-1 &&
-+		attr_check_source foo/bar/a/i n tag-1 &&
-+		attr_check_source foo/bar/f unspecified tag-2 &&
-+		attr_check_source foo/bar/a/i m tag-2 &&
-+		attr_check_source foo/bar/g g tag-2 &&
-+		attr_check_source foo/bar/g unspecified tag-1
-+	)
-+'
-+
- test_expect_success 'bare repository: check that --cached honors index' '
- 	(
- 		cd bare.git &&
-diff --git a/userdiff.c b/userdiff.c
-index 151d9a5278..b66f090a0b 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -412,7 +412,7 @@ struct userdiff_driver *userdiff_find_by_path(struct index_state *istate,
- 		check = attr_check_initl("diff", NULL);
- 	if (!path)
- 		return NULL;
--	git_check_attr(istate, path, check);
-+	git_check_attr(istate, NULL, path, check);
- 
- 	if (ATTR_TRUE(check->items[0].value))
- 		return &driver_true;
-diff --git a/ws.c b/ws.c
-index 6e69877f25..eadbbe5667 100644
---- a/ws.c
-+++ b/ws.c
-@@ -78,7 +78,7 @@ unsigned whitespace_rule(struct index_state *istate, const char *pathname)
- 	if (!attr_whitespace_rule)
- 		attr_whitespace_rule = attr_check_initl("whitespace", NULL);
- 
--	git_check_attr(istate, pathname, attr_whitespace_rule);
-+	git_check_attr(istate, NULL, pathname, attr_whitespace_rule);
- 	value = attr_whitespace_rule->items[0].value;
- 	if (ATTR_TRUE(value)) {
- 		/* true (whitespace) */
--- 
-2.39.0
-
+Ren=C3=A9
