@@ -2,129 +2,220 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C6A30C3DA78
-	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 18:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 1FA87C3DA78
+	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 18:49:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230417AbjANSYa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Jan 2023 13:24:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53544 "EHLO
+        id S230193AbjANStw (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Jan 2023 13:49:52 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230354AbjANSYZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jan 2023 13:24:25 -0500
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F77FE3A8
-        for <git@vger.kernel.org>; Sat, 14 Jan 2023 10:24:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
-        t=1673720653; bh=LI+9l327uNXfH66YYs84Avl9lTVZLncNpLJdHFxbpKI=;
-        h=X-UI-Sender-Class:Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=S3yv2lqgDQ2+Q/p8z1wd3c+aHwiIUBb08nF+MH6ppi1cXz1RY5ElFoqJxm8S5uT1G
-         x/bRMLs4eAkwnNYHWka1fQnZRB5kLsErYpe4wXGHHd52SA20/iPvmjjI4J8j+bpAbo
-         Fcaldd/F2soBwOHnvKHxBLCb5YIkzNkxoEUsGxsNaR0bn+dqX3VVJuwULl0OgMeHpi
-         7IhiWuULoD7vWFE83UviptE5LpvEd2VdTeIz6WA/mtMIryRDo0jegEYsYAqV8RLNpP
-         Tv6rtdFb+/Qi00cEhCQ598X9D0wVPVixR5lreVH97G+Y5aQbqFA8K/iFR0QVl4mZaZ
-         Binbs/dpPSTuQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.34] ([79.203.21.69]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MVaYi-1p8xh32GsW-00RcUD; Sat, 14
- Jan 2023 19:24:13 +0100
-Message-ID: <442edda0-6988-a326-a25f-a84969dbb2c7@web.de>
-Date:   Sat, 14 Jan 2023 19:24:12 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH] ls-tree: fix expansion of repeated %(path)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFy?= =?UTF-8?Q?mason?= 
-        <avarab@gmail.com>
-References: <59f0a3f8-2dae-db47-5075-0cf50aada335@web.de>
- <xmqqmt6lkqrp.fsf@gitster.g>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqmt6lkqrp.fsf@gitster.g>
+        with ESMTP id S229918AbjANStv (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jan 2023 13:49:51 -0500
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF72786BA
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 10:49:49 -0800 (PST)
+Received: by mail-wr1-x433.google.com with SMTP id k8so9397044wrc.9
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 10:49:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ySQTtnaB1Jit2q+r091eeZBJCiM4GEV2fU/LrqvN6Nk=;
+        b=EB7/rqM5XKSizAQTidjGFbQizgNedEiMHMBrttSRjst38E0qkVvhrAdhksFzaz45P0
+         wzEwENyk1aizlkf/LqurnrArMK8t4SWRhBuI7FZvT7TLidN5q/fUoIWMnXlCSTk/RUGl
+         VP7LgF3q4PfnLXNczwYpXs5zXF8Dgav2ukV3IFvoAC0I3bO/YIzxKuAVSx+4xYUoOsNm
+         P9PpW5POUOPwdjwhfnQNFd9fSryEwFfcxCateUEzZOX1hhOFSOmBQ0bGWmSxkEyQDcEh
+         PaLr8EpjDEKPzpaQvpEZGp+fV33cv+svvQX0PYOLML3NG30U+Kumo49yRkNtjWMT20El
+         PLpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ySQTtnaB1Jit2q+r091eeZBJCiM4GEV2fU/LrqvN6Nk=;
+        b=sa5ewm4VqwftNMZg5MuljmHbOknUXSye4OYeLTH68+EZ12Fq0vHs6g7NT3okoPTTX0
+         jL9B97tWObZnpGUeBx3qsdLfgNQ6TukRx/m3vHCESFj6MCGwoifM2wZBybDHIYUDjDdk
+         WwKhwR5zLZ6yJuKc7Fhe0ptRQIy9B9khfamGBM3GYqyRUjEGznYNAUSC8b/AAAHCrL4k
+         W1hpOHf6M7AjX54UPCE727cFUWP0n9ecAwRumeKgkp4i5YiJ5AJfawNogV7unAeLffQ5
+         WcYbiVyIyjr+IAzKkB5W03I+VnRGfnhW2kfqbwdqGk3Q2RvkPXDTHXPA7UiFt+VN6OhV
+         R3Yg==
+X-Gm-Message-State: AFqh2kpv5BlrlklEOKpTNOXeLKG0M6FydBOAR1Bi/UOlqXlCR/41PL6z
+        Mbvy+LMuXzBTB7/dY8zlCxUz6qAjWhI=
+X-Google-Smtp-Source: AMrXdXsuU9/bwzzc2IQv53B6mU8Q181nzF2Sc5GXlRbHQHHocUAjHcycqpVOWqcrwv9KylqHwuwpNQ==
+X-Received: by 2002:a5d:52c1:0:b0:242:5d8e:6c35 with SMTP id r1-20020a5d52c1000000b002425d8e6c35mr52327062wrv.28.1673722188011;
+        Sat, 14 Jan 2023 10:49:48 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g2-20020a5d4882000000b00286ad197346sm22117515wrq.70.2023.01.14.10.49.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 14 Jan 2023 10:49:47 -0800 (PST)
+Message-Id: <pull.1462.v2.git.1673722187025.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1462.git.1673584084761.gitgitgadget@gmail.com>
+References: <pull.1462.git.1673584084761.gitgitgadget@gmail.com>
+From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date:   Sat, 14 Jan 2023 18:49:46 +0000
+Subject: [PATCH v2] t6426: fix TODO about making test more comprehensive
+Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:FOngYVN10s9+Ag9bhV3aQgLFye+dcBPYXETMEuG4l8HJaoAHxLr
- Pzbft4YTTLVW8BEmo5OBYV4raAmanJ5ruAyTTOAbahrZUEKIp2tetDBsM6V8eEMjHLf3a7L
- Zl1j4I9u78jnyHJKoX+c/MRS00bL5ivgX+ow+5rAdruEg2+d5uXAm4A4DTC3eNfl9fCiHh2
- dPOuzKpHYyCdNAVwjjJdQ==
-UI-OutboundReport: notjunk:1;M01:P0:YcJeWvbSDnc=;mancRlJbYv8GPJhGWya+/wpx7rs
- lwzO8FP1W8DVRGkLaBk2wQsXvRPEKtHVmEBs4W/vWW2BYM3Oeedpl9Z8jK5yOpLYzOGgkgPLN
- GbUhwnOEv6EQos/XW3h3i9EOEomncHm9k02nHK68riaAJ0VEw0h5X6xYPF3dhG25Efh2hRD9o
- 0s9uowE8hqtjAydlOVKiJE2wRGrQnHKgnqwFVy8XTEO/rj/um8oRhye0K/csmrWaRcRCMU5cr
- LKkXOMdKUAtqgUw0vHmjQVQ5axQtKEYZqsVwRO034S8Tk8kBeeJ1BpFpb81uEEhgSKxKew+15
- eExwdfys4IGeQeXlqvUqzr2MiLE0j+uziJ97CS5wyuYsNmkI3qVqIeURlho7Jr9ss4PdM9WbC
- NYBaeozOMMmGYN19bQ6OcFJpVATxOIm7zyUlM7pRgmMoQzHC7CjDthiHteWjQRNg+yBEvovCp
- hvGqmqzlNORoa1JNU6RyVSuWWMsJmyJ5GJVO8ugDhL5J0au6WJAbo272jzDKdjG8Vtt0kjNec
- nXIR1eVqCufigCcWrs6anEc2KSlzKUJCPMj8DkEwfvjO8v5CATR/pb+yUz+k+8vNkIZy9qKSG
- ChFyESP4yTzyGkSU3DheSFAWStStdlwti970NjCRpNQcdNhAiXufqzWTaSFNDU2YbFAvXs3+n
- tuVURtQFko/hUXuaT0fgKj5ms9J2JPMum6wLjSPivwSxah7Gm6g9+/4yd+SKALxgu4B6Fo/Kw
- ZNeqmN69eVYL1vKl1O/sLrWOmgeKMqtxsB7aPfOVARaJoITI5RcAZob7ZTXfebg8pCh5JU5iM
- amqu0LFRDzzsyKhw9ePGaq2rukTyi7j8rnyBN/C7S4UFYXdCD51G9hTiE0NsSJVrm4jGAr46y
- h91jok5lBcOP3F+b39fk2hSfPnR4liFVGWSz+P9/k1FI67LGrjeA77HMC+3K0ndwHjXZ/Npfs
- HcqogsHAZxAWKPcuSBqco8v3MS4=
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Andrei Rybak <rybak.a.v@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Elijah Newren <newren@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 14.01.2023 um 17:46 schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->
->> expand_show_tree() borrows the base strbuf given to us by read_tree() t=
-o
->> build the full path of the current entry when handling %(path).  Only
->> its indirect caller, show_tree_fmt(), removes the added entry name.
->> That works fine as long as %(path) is only included once in the format
->> string, but accumulates duplicates if it's repeated:
->>
->>    $ git ls-tree --format=3D'%(path) %(path) %(path)' HEAD M*
->>    Makefile MakefileMakefile MakefileMakefileMakefile
->>
->> Reset the length after each use to get the same expansion every time;
->> here's the behavior with this patch:
->>
->>    $ ./git ls-tree --format=3D'%(path) %(path) %(path)' HEAD M*
->>    Makefile Makefile Makefile
->>
->> Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
->> ---
->>  builtin/ls-tree.c | 5 ++---
->>  1 file changed, 2 insertions(+), 3 deletions(-)
->
-> I wonder if this was broken from its introduction at 455923e0
-> (ls-tree: introduce "--format" option, 2022-03-23)?
+From: Elijah Newren <newren@gmail.com>
 
-Yes.
+t6426.7 (a rename/add testcase) long had a TODO/FIXME comment about
+how the test could be improved (with some commented out sample code
+that had a few small errors), but those improvements were blocked on
+other changes still in progress.  The necessary changes were put in
+place years ago but the comment was forgotten.  Remove and fix the
+commented out code section and finally remove the big TODO/FIXME
+comment.
 
-> It seems to be the case.  With the following applied on top of
-> 455923e0, the new test fails as expected, and your patch fixes
-> the breakage, so I am tempted to squash the tests in ;-)
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    t6426: fix TODO about making test more comprehensive
+    
+    See
+    https://lore.kernel.org/git/CABPp-BFxK7SGs3wsOfozSw_Uvr-ynr+x8ciPV2Rmfx6Nr4si6g@mail.gmail.com/
+    
+    Changes since v1:
+    
+     * Removed spurious line, rearranged some lines so that checks on file
+       "b" come before file "c".
 
-I didn't include a test because it's an odd bug which I didn't expect to
-ever return.  But its current existence proves that it can happen.  So I
-don't mind this addition.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1462%2Fnewren%2Ft6426-fix-todo-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1462/newren/t6426-fix-todo-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1462
 
->
-> Thanks.
->
->  t/t3104-ls-tree-format.sh | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git c/t/t3104-ls-tree-format.sh w/t/t3104-ls-tree-format.sh
-> index 7f1eb699d3..7e6c4dc5da 100755
-> --- c/t/t3104-ls-tree-format.sh
-> +++ w/t/t3104-ls-tree-format.sh
-> @@ -37,6 +37,12 @@ test_ls_tree_format () {
->  	'
->  }
->
-> +test_expect_success "ls-tree --format=3D'%(path) %(path) %(path)' HEAD =
-top-file" '
-> +	git ls-tree --format=3D"%(path) %(path) %(path)" HEAD top-file.t >actu=
-al &&
-> +	echo top-file.t top-file.t top-file.t >expect &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_ls_tree_format \
->  	"%(objectmode) %(objecttype) %(objectname)%x09%(path)" \
->  	""
+Range-diff vs v1:
+
+ 1:  6de47daaeeb ! 1:  68fd28e2547 t6426: fix TODO about making test more comprehensive
+     @@ Commit message
+      
+       ## t/t6426-merge-skip-unneeded-updates.sh ##
+      @@ t/t6426-merge-skip-unneeded-updates.sh: test_expect_success '2c: Modify b & add c VS rename b->c' '
+     + 		test_i18ngrep "CONFLICT (.*/add):" out &&
+     + 		test_must_be_empty err &&
+       
+     - 		# Make sure c WAS updated
+     +-		# Make sure c WAS updated
+     ++		git ls-files -s >index_files &&
+     ++		test_line_count = 2 index_files &&
+     ++
+     ++		# Ensure b was removed
+     ++		test_path_is_missing b &&
+     ++
+     ++		# Make sure c WAS updated...
+       		test-tool chmtime --get c >new-mtime &&
+      -		test $(cat old-mtime) -lt $(cat new-mtime)
+      -
+     @@ t/t6426-merge-skip-unneeded-updates.sh: test_expect_success '2c: Modify b & add
+      -		#test_path_is_missing b
+      +		test $(cat old-mtime) -lt $(cat new-mtime) &&
+      +
+     -+		git ls-files -s >index_files &&
+     -+		test_line_count = 2 index_files &&
+     -+
+     ++		# ...and has correct index entries and working tree contents
+      +		git rev-parse >actual :2:c :3:c &&
+      +		git rev-parse >expect A:c  A:b  &&
+      +		test_cmp expect actual &&
+     @@ t/t6426-merge-skip-unneeded-updates.sh: test_expect_success '2c: Modify b & add
+      +			-L "" \
+      +			-L "B^0" \
+      +			merged empty merge-me &&
+     -+		sed -e "s/^\([<=>]\)/\1\1\1/" merged >merged-internal &&
+     -+
+     -+		test_cmp merged c &&
+     -+
+     -+		test_path_is_missing b
+     ++		test_cmp merged c
+       	)
+       '
+       
+
+
+ t/t6426-merge-skip-unneeded-updates.sh | 58 ++++++++++----------------
+ 1 file changed, 23 insertions(+), 35 deletions(-)
+
+diff --git a/t/t6426-merge-skip-unneeded-updates.sh b/t/t6426-merge-skip-unneeded-updates.sh
+index 2bb8e7f09bb..fd21c1a4863 100755
+--- a/t/t6426-merge-skip-unneeded-updates.sh
++++ b/t/t6426-merge-skip-unneeded-updates.sh
+@@ -378,42 +378,30 @@ test_expect_success '2c: Modify b & add c VS rename b->c' '
+ 		test_i18ngrep "CONFLICT (.*/add):" out &&
+ 		test_must_be_empty err &&
+ 
+-		# Make sure c WAS updated
++		git ls-files -s >index_files &&
++		test_line_count = 2 index_files &&
++
++		# Ensure b was removed
++		test_path_is_missing b &&
++
++		# Make sure c WAS updated...
+ 		test-tool chmtime --get c >new-mtime &&
+-		test $(cat old-mtime) -lt $(cat new-mtime)
+-
+-		# FIXME: rename/add conflicts are horribly broken right now;
+-		# when I get back to my patch series fixing it and
+-		# rename/rename(2to1) conflicts to bring them in line with
+-		# how add/add conflicts behave, then checks like the below
+-		# could be added.  But that patch series is waiting until
+-		# the rename-directory-detection series lands, which this
+-		# is part of.  And in the mean time, I do not want to further
+-		# enforce broken behavior.  So for now, the main test is the
+-		# one above that err is an empty file.
+-
+-		#git ls-files -s >index_files &&
+-		#test_line_count = 2 index_files &&
+-
+-		#git rev-parse >actual :2:c :3:c &&
+-		#git rev-parse >expect A:b  A:c  &&
+-		#test_cmp expect actual &&
+-
+-		#git cat-file -p A:b >>merged &&
+-		#git cat-file -p A:c >>merge-me &&
+-		#>empty &&
+-		#test_must_fail git merge-file \
+-		#	-L "Temporary merge branch 1" \
+-		#	-L "" \
+-		#	-L "Temporary merge branch 2" \
+-		#	merged empty merge-me &&
+-		#sed -e "s/^\([<=>]\)/\1\1\1/" merged >merged-internal &&
+-
+-		#git hash-object c               >actual &&
+-		#git hash-object merged-internal >expect &&
+-		#test_cmp expect actual &&
+-
+-		#test_path_is_missing b
++		test $(cat old-mtime) -lt $(cat new-mtime) &&
++
++		# ...and has correct index entries and working tree contents
++		git rev-parse >actual :2:c :3:c &&
++		git rev-parse >expect A:c  A:b  &&
++		test_cmp expect actual &&
++
++		git cat-file -p A:b >>merge-me &&
++		git cat-file -p A:c >>merged &&
++		>empty &&
++		test_must_fail git merge-file \
++			-L "HEAD" \
++			-L "" \
++			-L "B^0" \
++			merged empty merge-me &&
++		test_cmp merged c
+ 	)
+ '
+ 
+
+base-commit: 2b4f5a4e4bb102ac8d967cea653ed753b608193c
+-- 
+gitgitgadget
