@@ -2,44 +2,41 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1C90CC3DA78
-	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 22:47:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 40D7AC46467
+	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 22:50:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230281AbjANWro (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Jan 2023 17:47:44 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36522 "EHLO
+        id S229676AbjANWuk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Jan 2023 17:50:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230336AbjANWrn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jan 2023 17:47:43 -0500
-Received: from mail-4022.proton.ch (mail-4022.proton.ch [185.70.40.22])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F8BD9EF4
-        for <git@vger.kernel.org>; Sat, 14 Jan 2023 14:47:40 -0800 (PST)
-Date:   Sat, 14 Jan 2023 22:47:31 +0000
+        with ESMTP id S230260AbjANWui (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jan 2023 17:50:38 -0500
+Received: from mail-4317.proton.ch (mail-4317.proton.ch [185.70.43.17])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45181E3B3
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 14:50:37 -0800 (PST)
+Date:   Sat, 14 Jan 2023 22:50:25 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nullpo.dev;
-        s=protonmail3; t=1673736457; x=1673995657;
-        bh=6zJadpb808QIr7Cr4nq9xm50TLQqgELyW2DAsPCdd00=;
-        h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-         Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-         Message-ID:BIMI-Selector;
-        b=mQpkTcD6evap6U4wiOesMi6GElIgGp1vCIYfZLHnq81XOLw3/URr/TwUysvSYDpkn
-         7RqimDU/iZJvlT6j6B2K7XIDky3IaIoUGLPDIERSIH+UMKOwDGwGA6DBf4zfyuLSdh
-         B74mAMBKAvYPotW6VAbxaHEvdDid0iMY1dUvm5Uy+Xt/jum8pk9CXNJ/QeXLzRNIDQ
-         VKDQvSfbwfDiXJ+J+igtFAje57Lh4UHGL7HIlp/uzoZbBNZtGMPW1D/QxRlTnYCyKE
-         gGlHfX3IB19a6EbUR/ux48y55EfDoFYZtYTSebnMaV7HkSvOVbKWm0WS/sEPp+Xz4d
-         dyCjz2iYO8dvg==
-To:     phillip.wood@dunelm.org.uk
+        s=protonmail3; t=1673736635; x=1673995835;
+        bh=DK0Zzm0i7NSnV8hbEp/I+6dlkOy6RQi4tItEC/sm/UY=;
+        h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+         Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+        b=N0Hi+Q8DXKlVB3wmMir3vijPhVNvCI0wU8GX6C+NluXsju44ztT4mFsPZHnAb5uGG
+         Iu5hiD5nYCEBUBRgBziMyZ1vEZxTGADRqPZ5SW08Rf0gHMHbQ8U8PZzw6Mwdyknrco
+         ZgSX47SKqEpVkhMu/1VOxI5Sck21GhVZp/pT/1NUcSAvRhgnC42TzpOdrQeoLiDSkY
+         OyvMVPZ5PWinyXib7hSew2AZ8t3D7cPi0c0+xzbMyN5govOqKCrWIJ+Keg9q2Hw4Hp
+         IzZdvHBgSmwoPKAdQjmnMnTY5uN+dcS+71WyqcC0dlyaFVu64BpWxUXNk/YdPcwt1r
+         v7Z57tKQXegkA==
+To:     git@vger.kernel.org
 From:   Jacob Abel <jacobabel@nullpo.dev>
-Cc:     git@vger.kernel.org,
+Cc:     Jacob Abel <jacobabel@nullpo.dev>,
         =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
         Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood123@gmail.com>,
         =?utf-8?Q?Rub=C3=A9n_Justo?= <rjusto@gmail.com>,
         Taylor Blau <me@ttaylorr.com>, rsbecker@nexbridge.com
-Subject: Re: [PATCH v8 3/4] worktree add: add --orphan flag
-Message-ID: <20230114224715.ewec6sz5h3q3iijs@phi>
-In-Reply-To: <e5aadd5d-9b85-4dc9-e9f7-117892b4b283@dunelm.org.uk>
-References: <20221104010242.11555-1-jacobabel@nullpo.dev> <20221104213401.17393-1-jacobabel@nullpo.dev> <20221110233137.10414-1-jacobabel@nullpo.dev> <20221212014003.20290-1-jacobabel@nullpo.dev> <20221220023637.29042-1-jacobabel@nullpo.dev> <20221228061539.13740-1-jacobabel@nullpo.dev> <20230107045757.30037-1-jacobabel@nullpo.dev> <20230109173227.29264-1-jacobabel@nullpo.dev> <20230109173227.29264-4-jacobabel@nullpo.dev> <e5aadd5d-9b85-4dc9-e9f7-117892b4b283@dunelm.org.uk>
+Subject: [PATCH] worktree add: introduce basic DWYM for --orphan
+Message-ID: <20230114224956.24801-1-jacobabel@nullpo.dev>
 Feedback-ID: 21506737:user:proton
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -48,99 +45,175 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 23/01/13 10:20AM, Phillip Wood wrote:
-> Hi Jacob
->
-> On 09/01/2023 17:33, Jacob Abel wrote:
-> > [...]
->
-> It's perhaps a bit late to bring this up but I've only just realized
-> that it is unfortunate that --orphan takes a branch name rather than
-> working in conjunction with -b/-B. It means that in the common case
-> where the branch name is the same as the worktree the user has to repeat
-> it on the command line as shown above. It also means there is no way to
-> force an orphan branch (that's admittedly quite niche). If instead
-> --orphan did not take an argument we could have
->
-> =09git worktree add --orphan main
-> =09git worktree add --orphan -b topic main
-> =09git worktree add --orphan -B topic main
->
-> Best Wishes
->
-> Phillip
->
-> > [...]
+Introduces a DWYM shorthand of --orphan for when the worktree directory
+and the to-be-created branch share the same name.
 
-I think this is a good idea and something similar was brought up previously
-however I originally wanted to handle this and a common --orphan DWYM in a =
-later
-patch.
+Current Behavior:
+    % git worktree list
+    /path/to/git/repo        a38d39a4c5 [main]
+    % git worktree add --orphan new_branch ../new_branch/
+    Preparing worktree (new branch 'new_branch')
+    % git worktree add --orphan ../new_branch2/
+    usage: git worktree add [<options>] <path> [<commit-ish>]
+       or: git worktree list [<options>]
+    [...]
+    %
 
-> =09git worktree add --orphan main
+New Behavior:
 
-I am OK implementing this option and have been workshopping it prior to
-responding. I think I have it worked out now as an additional patch which c=
-an be
-be applied on top of the v8 patchset.
+    % git worktree list
+    /path/to/git/repo        a38d39a4c5 [main]
+    % git worktree add --orphan new_branch ../new_branch/
+    Preparing worktree (new branch 'new_branch')
+    % git worktree list
+    /path/to/git/repo        a38d39a4c5 [main]
+    /path/to/git/new_branch  a38d39a4c5 [new_branch]
+    % git worktree add --orphan ../new_branch2/
+    Preparing worktree (new branch 'new_branch2')
+    % git worktree list
+    /path/to/git/repo        a38d39a4c5 [main]
+    /path/to/git/new_branch  a38d39a4c5 [new_branch]
+    /path/to/git/new_branch2 a38d39a4c5 [new_branch2]
+    %
 
-I'll reply to this message with the one-off patch to get feedback. Since th=
-is is
-essentially a discrete change on top of v8, I can either keep it as a separ=
-ate
-patch or reroll depending on how much needs to be changed (and what would b=
-e
-easier for everyone).
+Signed-off-by: Jacob Abel <jacobabel@nullpo.dev>
+---
+ Documentation/git-worktree.txt | 13 +++++++++----
+ builtin/worktree.c             | 21 +++++++++++++++------
+ t/t2400-worktree-add.sh        | 10 ++++++++++
+ 3 files changed, 34 insertions(+), 10 deletions(-)
 
-> =09git worktree add --orphan -b topic main
-> =09git worktree add --orphan -B topic main
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.tx=
+t
+index d78460c29c..a56ddb0185 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 'git worktree add' [-f] [--detach] [--checkout] [--lock [--reason <string>=
+]]
+ =09=09   [(-b | -B) <new-branch>] <path> [<commit-ish>]
+ 'git worktree add' [-f] [--lock [--reason <string>]]
+-=09=09   --orphan <new-branch> <path>
++=09=09   --orphan [<new-branch>] <path>
+ 'git worktree list' [-v | --porcelain [-z]]
+ 'git worktree lock' [--reason <string>] <worktree>
+ 'git worktree move' <worktree> <new-path>
+@@ -99,13 +99,16 @@ in the new worktree, if it's not checked out anywhere e=
+lse, otherwise the
+ command will refuse to create the worktree (unless `--force` is used).
+ +
+ ------------
+-$ git worktree add --orphan <branch> <path>
++$ git worktree add --orphan [<branch>] <path>
+ ------------
+ +
+ Create a worktree containing no files, with an empty index, and associated
+ with a new orphan branch named `<branch>`. The first commit made on this n=
+ew
+ branch will have no parents and will be the root of a new history disconne=
+cted
+ from any other branches.
+++
++If a branch name `<branch>` is not supplied, the name is derived from the
++supplied path `<path>`.
 
-I am hesitant to add these as they break away from the syntax used in
-`git switch` and `git checkout`.
+ list::
 
-Also apologies for the tangent but while researching this path, I noticed t=
-hat
---orphan behaves unexpectedly on both `git switch` and `git checkout` when =
-mixed
-with `-c` and `-b` respectively.
+@@ -233,9 +236,11 @@ This can also be set up as the default behaviour by us=
+ing the
+ =09With `prune`, do not remove anything; just report what it would
+ =09remove.
 
-    % git switch --orphan -c foobar
-    fatal: invalid reference: foobar
+---orphan <new-branch>::
++--orphan [<new-branch>]::
+ =09With `add`, make the new worktree and index empty, associating
+-=09the worktree with a new orphan branch named `<new-branch>`.
++=09the worktree with a new orphan branch named `<new-branch>`. If
++=09`<new-branch>` is not supplied, the new branch name is derived
++=09from `<path>`.
 
-    % git switch -c --orphan foobar
-    fatal: invalid reference: foobar
+ --porcelain::
+ =09With `list`, output in an easy-to-parse format for scripts.
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index d975628353..481f895075 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -19,7 +19,7 @@
+ =09N_("git worktree add [-f] [--detach] [--checkout] [--lock [--reason <st=
+ring>]]\n" \
+ =09   "                 [(-b | -B) <new-branch>] <path> [<commit-ish>]"), =
+\
+ =09N_("git worktree add [-f] [--lock [--reason <string>]]\n" \
+-=09   "                 --orphan <new-branch> <path>")
++=09   "                 --orphan [<new-branch>] <path>")
 
-    % git checkout -b --orphan foobar
-    fatal: 'foobar' is not a commit and a branch '--orphan' cannot be creat=
-ed from it
+ #define BUILTIN_WORKTREE_LIST_USAGE \
+ =09N_("git worktree list [-v | --porcelain [-z]]")
+@@ -681,10 +681,13 @@ static int add(int ac, const char **av, const char *p=
+refix)
+ =09else if (keep_locked)
+ =09=09opts.keep_locked =3D _("added with --lock");
 
-    % git checkout --orphan -b foobar
-    fatal: 'foobar' is not a commit and a branch '-b' cannot be created fro=
-m it
+-=09if (ac < 1 || ac > 2)
++=09if (ac < 1 && opts.orphan) {
++=09=09path =3D prefix_filename(prefix, orphan_branch);
++=09} else if (ac >=3D 1 && ac <=3D 2) {
++=09=09path =3D prefix_filename(prefix, av[0]);
++=09} else {
+ =09=09usage_with_options(git_worktree_add_usage, options);
+-
+-=09path =3D prefix_filename(prefix, av[0]);
++=09}
+ =09branch =3D ac < 2 ? "HEAD" : av[1];
 
-I tried this on my system install as well as from a fresh fetch of next FWI=
-W.
+ =09if (!strcmp(branch, "-"))
+@@ -702,14 +705,20 @@ static int add(int ac, const char **av, const char *p=
+refix)
+ =09=09strbuf_release(&symref);
+ =09}
 
-[Info: fresh build from next]
-git version 2.39.0.287.g8cbeef4abd
-cpu: x86_64
-built from commit: 8cbeef4abda4907dd68ea144d9dcb85f0b49c3e6
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
+-=09if (opts.orphan) {
+-=09=09new_branch =3D orphan_branch;
++=09if (ac < 1 && opts.orphan) {
++=09=09const char *s =3D dwim_branch(path, &orphan_branch);
++=09=09if (s)
++=09=09=09orphan_branch =3D s;
+ =09} else if (ac < 2 && !new_branch && !opts.detach) {
+ =09=09const char *s =3D dwim_branch(path, &new_branch);
+ =09=09if (s)
+ =09=09=09branch =3D s;
+ =09}
 
-[Info: system install]
-git version 2.38.2
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
++=09if (opts.orphan) {
++=09=09new_branch =3D orphan_branch;
++=09}
++
+ =09if (ac =3D=3D 2 && !new_branch && !opts.detach) {
+ =09=09struct object_id oid;
+ =09=09struct commit *commit;
+diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+index 1bf8d619e2..c3de277738 100755
+--- a/t/t2400-worktree-add.sh
++++ b/t/t2400-worktree-add.sh
+@@ -354,6 +354,16 @@ test_expect_success '"add --orphan" fails if the branc=
+h already exists' '
+ =09test_path_is_missing orphandir2
+ '
 
-If this bug is something that needs to be addressed, I can dig a bit deeper=
- and
-put together a patch for it in the next few days.
++test_expect_success '"add --orphan" with basic DWYM' '
++=09test_when_finished "rm -rf empty_repo" &&
++=09echo refs/heads/worktreedir >expected &&
++=09GIT_DIR=3D"empty_repo" git init --bare &&
++=09# Use non-trivial path to verify it DWYMs properly.
++=09git -C empty_repo worktree add --orphan ../empty_repo/worktreedir &&
++=09git -C empty_repo/worktreedir symbolic-ref HEAD >actual &&
++=09test_cmp expected actual
++'
++
+ test_expect_success '"add --orphan" with empty repository' '
+ =09test_when_finished "rm -rf empty_repo" &&
+ =09echo refs/heads/newbranch >expected &&
+--
+2.38.2
 
-VR,
-Abel
 
