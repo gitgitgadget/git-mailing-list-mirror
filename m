@@ -2,94 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 68A59C3DA78
-	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 08:27:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 2E4E3C3DA78
+	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 08:28:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229722AbjANI1w (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sat, 14 Jan 2023 03:27:52 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37764 "EHLO
+        id S229735AbjANI16 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sat, 14 Jan 2023 03:27:58 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37810 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229592AbjANI1t (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 14 Jan 2023 03:27:49 -0500
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88A6359DF
-        for <git@vger.kernel.org>; Sat, 14 Jan 2023 00:27:48 -0800 (PST)
-Received: by mail-oi1-x229.google.com with SMTP id n8so19435028oih.0
-        for <git@vger.kernel.org>; Sat, 14 Jan 2023 00:27:48 -0800 (PST)
+        with ESMTP id S229720AbjANI1y (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 14 Jan 2023 03:27:54 -0500
+Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BE6259F1
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 00:27:51 -0800 (PST)
+Received: by mail-yb1-xb2d.google.com with SMTP id a9so8313187ybb.3
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 00:27:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cp/wMRgTs1pMus7tU4TCXVOLX7m1k/kuJJKE/fMBuu8=;
-        b=fGx18SFhrBLJyk7NBaT93akFgDkOJECwaJDw2r2hLA6nD8yN1DMgnUZ8l9XFVqOREL
-         4gKpDeXBkuYuuo0l/ePSFt5xFVCLRsn2kgf1Ur/qCU6+FIRZKr7YZCiUUbD5TXww4DR2
-         p1a6iVMQckDZcij1yBhfMzda6ln5we32T0mj6Z8KqJiZdD81uPP2p4SSH2L/bIJykKWi
-         pF/DHR7BY1lAkBilFJ70F1ymTgiCrAxUijC4SvZ0lSDFAEmux7bqUFypmMwdIxT2yeOD
-         uqqOuDvPQRJElnofvVOVCr+vRiNE4Q+z2E3Vz9s7WOY52qyj1d8w4FA/14pMDd2ncQSl
-         wDng==
+        bh=VOuBE5qFBiM/KiVzc6EAeaQjcgtBUdEP4gtRQ2ixl3g=;
+        b=SMhTDrpFXt11JY7XfHdX4vjm9ydPmmglvRqS3JlB7/39jXK2CX9WCArJURn8fF0/TJ
+         uiqEPXk5tA3M8EuXHutimmeAonKbuYJk5eGdxINsRVC4UAKBRjlQ9T4Z86NH4JjLl39s
+         RpPmJRq7WpLWWeGXIraKveo+f3Qgg2zXGNG0i+SS8FrtOL4QTQyl7pB7KFK4Fu58OoE7
+         TzxuIAiTEDbldzVgnmUUmI2KfiN4lC+PH61whuzOZinTNCldA8r6CjmteLs/OiaQfR1h
+         25nhtbTMYY351iW/zDqTCfir+vG2NCtKEdg2S3lYH4Y1BVjONK8AxN/GbFAitZ2dn80P
+         LC9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cp/wMRgTs1pMus7tU4TCXVOLX7m1k/kuJJKE/fMBuu8=;
-        b=TEqAJWvlfGzmRJay2TjFZ7KiuMAZJIG4O3fjVG7ZhEkh28m9JCrwIA0uYTwv0ONTIv
-         ejgpghdmopmECI8+I/amSA1P3xuz3AsJt/o88QvXSmGPp8V5qqCyBwlizJZasmbO3Lf8
-         v8U94kaow1mgWKZXf+3HzaUj1WuoHor/01MjAB2MXqtfc1dSiAZ1+wGmmKDL0mFeP/Q9
-         YEpXWWBdG853q2QLC8dlYJfeGqmyTXDdtC6uH/4mvKaCA3Jiz6t6+AGhFSMXtRA5CVhE
-         VMONKsTCD5cZuMVsPMmLXeTg85Ul7DAhA6AXknfMarv5QubS1r9J7vwh9VHCjuDR4OxL
-         aJqg==
-X-Gm-Message-State: AFqh2kpnUV50F5Zderz9weFxDaSwpf8imhHCe82cpJg0biStX1T0TR0Z
-        kX8J38Jgdn65ApbRe2zIr8iafLdoR3mfQgI5XCU=
-X-Google-Smtp-Source: AMrXdXuNo+DbuZrlRLX2AL07j/6lWOFWXrxIJ+n46KgU8+MlqzHmnQ498iHx8gcE3TECQylN6EO9ei5USRM7psC8eDE=
-X-Received: by 2002:a05:6808:18b:b0:35e:6cbc:bab7 with SMTP id
- w11-20020a056808018b00b0035e6cbcbab7mr3697604oic.232.1673684791702; Sat, 14
- Jan 2023 00:26:31 -0800 (PST)
+        bh=VOuBE5qFBiM/KiVzc6EAeaQjcgtBUdEP4gtRQ2ixl3g=;
+        b=JWZ0ZFuZgpC5GbwMry1294jMmQr19T3lb7G973EHalizjzeuaaHTc/xEDEbE5T+sUL
+         NDRtGRwI615jr1tpl1EO/OsSTgeRpcwVEVMkiK1B/ld3xxYcvyp32mgD5JCwQWVxw0Hn
+         KPG9O+ciO0T2b5RdSa/4aIrVJSpvr9mHYLaqUFxocc+jM/zZdQN1XISVfDRJhDQFbzS9
+         yL4tv/l8kSS6PkpG9NynYgHvrRa7ZVy+lSRTGTJ6RuBVxZLFpvLRJchHoNX1LWLXqFJT
+         9sBIH319RkHU7qdGQcXxrNhFfq0UbUg+eFhzXX4OM8op54jJYlpdgrIfKvNuFaODzzsf
+         HCtw==
+X-Gm-Message-State: AFqh2kr9mjQ6KUMa9eLPgqx8g3CqKh01czK3zjrzsMjaGkj4v0BdBem+
+        CKFWWxOKDRDInUA4qjW/MuE0tzlFWTHI9riwQ7rGYUlOTvM=
+X-Google-Smtp-Source: AMrXdXu76IG1aTup9GZAArqN1quy7UCslM+pVR8oTgqa+PirWAxJzShmrBPGopc+vEaUaOd+i0bkKhXNElQlm8VrGe0=
+X-Received: by 2002:a25:f408:0:b0:7b1:e4c5:fd37 with SMTP id
+ q8-20020a25f408000000b007b1e4c5fd37mr2889201ybd.561.1673684827241; Sat, 14
+ Jan 2023 00:27:07 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1671793109.git.karthik.188@gmail.com> <23813496fc73b7e5cb9f09b166e05c9a02bac43c.1671793109.git.karthik.188@gmail.com>
- <230112.86lem728ig.gmgdl@evledraar.gmail.com>
-In-Reply-To: <230112.86lem728ig.gmgdl@evledraar.gmail.com>
-From:   Karthik Nayak <karthik.188@gmail.com>
-Date:   Sat, 14 Jan 2023 09:26:04 +0100
-Message-ID: <CAOLa=ZQdNy-gQ0-gUdQM8z+k0fpLjXcRY3fAC4v2PnEvSRS2PQ@mail.gmail.com>
-Subject: Re: [PATCH v5 2/2] attr: add flag `--source` to work with tree-ish
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Toon Claes <toon@iotcl.com>
+References: <pull.1463.git.1673584914.gitgitgadget@gmail.com> <26406a4d8797e68f0ba4fe097cf0973f60d67114.1673584914.git.gitgitgadget@gmail.com>
+In-Reply-To: <26406a4d8797e68f0ba4fe097cf0973f60d67114.1673584914.git.gitgitgadget@gmail.com>
+From:   ZheNing Hu <adlternative@gmail.com>
+Date:   Sat, 14 Jan 2023 16:26:55 +0800
+Message-ID: <CAOLTT8RXgw0CC7TBUunCPnnk1=5gKkyYZcFQyWu29QM9bn9s9w@mail.gmail.com>
+Subject: Re: [PATCH 3/4] ls-files: clarify descriptions of status tags for -t
+To:     Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 12, 2023 at 2:21 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+Elijah Newren via GitGitGadget <gitgitgadget@gmail.com> =E4=BA=8E2023=E5=B9=
+=B41=E6=9C=8813=E6=97=A5=E5=91=A8=E4=BA=94 12:41=E5=86=99=E9=81=93=EF=BC=9A
 >
+> From: Elijah Newren <newren@gmail.com>
 >
-> On Mon, Jan 02 2023, Karthik Nayak wrote:
+> Much like the file selection options we tweaked in the last commit, the
+> status tags printed with -t had descriptions that were easy to
+> misunderstand, and for many of the same reasons.  Clarify them.
 >
-> > +static struct attr_stack *read_attr_from_blob(struct index_state *ista=
-te,
-> > +                                           const struct object_id *tre=
-e_oid,
-> > +                                           const char *path, unsigned =
-flags)
-> > +{
-> > +     struct object_id oid;
-> > +     unsigned long sz;
-> > +     enum object_type type;
-> > +     void *buf;
-> > +     unsigned short mode;
-> > +
-> > +     if (!tree_oid)
-> > +             return NULL;
-> > +
-> > +     if (get_tree_entry(istate->repo, tree_oid, path, &oid, &mode))
-> > +             return NULL;
-> > +
-> > +     buf =3D read_object_file(&oid, &type, &sz);
+> Also, while at it, remove the "semi-deprecated" comment for "git
+> ls-files -t".  The -t option was marked as semi-deprecated in 5bc0e247c4
+> ("Document ls-files -t as semi-obsolete.", 2010-07-28) because:
 >
-> Here you flip-flop between istate->repo and "the_repository". I think
-> you want to use repo_read_object_file(istate->repo, ...) instead.
+>     "git ls-files -t" is [...] badly documented, hence we point the
+>     users to superior alternatives.
+>     The feature is marked as "semi-obsolete" but not "scheduled for remov=
+al"
+>     since it's a plumbing command, scripts might use it, and Git testsuit=
+e
+>     already uses it to test the state of the index.
+>
+> Marking it as obsolete because it was easily misunderstood, which I
+> think was primarily due to documentation problems, is one strategy, but
+> I think fixing the documentation is a better option.  Especially since
+> in the intervening time, "git ls-files -t" has become heavily used by
+> sparse-checkout users where the same confusion just doesn't apply.
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  Documentation/git-ls-files.txt | 28 +++++++++++++++-------------
+>  1 file changed, 15 insertions(+), 13 deletions(-)
+>
+> diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.=
+txt
+> index f89ab1bfc98..3886d58d178 100644
+> --- a/Documentation/git-ls-files.txt
+> +++ b/Documentation/git-ls-files.txt
+> @@ -137,25 +137,27 @@ OPTIONS
+>         with `-s` or `-u` options does not make any sense.
+>
+>  -t::
+> -       This feature is semi-deprecated. For scripting purpose,
+> -       linkgit:git-status[1] `--porcelain` and
+> +       Show status tags together with filenames.  Note that for
+> +       scripting purposes, linkgit:git-status[1] `--porcelain` and
+>         linkgit:git-diff-files[1] `--name-status` are almost always
+>         superior alternatives, and users should look at
+>         linkgit:git-status[1] `--short` or linkgit:git-diff[1]
+>         `--name-status` for more user-friendly alternatives.
+>  +
+>  --
+> -This option identifies the file status with the following tags (followed=
+ by
+> -a space) at the start of each line:
+> -
+> -       H::     cached
+> -       S::     skip-worktree
+> -       M::     unmerged
+> -       R::     removed/deleted
+> -       C::     modified/changed
+> -       K::     to be killed
+> -       ?::     other
+> -       U::     resolve-undo
+> +This option provides a reason for showing each filename, in the form
+> +of a status tag (which is followed by a space and then the filename).
+> +The status tags are all single characters from the following list:
+> +
+> +       H::     tracked file that is not either unmerged or skip-worktree
+> +       S::     tracked file that is skip-worktree
+> +       M::     tracked file that is unmerged
+> +       R::     tracked file with unstaged removal/deletion
+> +       C::     tracked file with unstaged modification/change
+> +       K::     untracked paths which are part of file/directory conflict=
+s
+> +               which prevent checking out tracked files
+> +       ?::     untracked file
+> +       U::     file with resolve-undo information
+>  --
+>
 
-Let me add this to v7! Thanks
+Good to see these tags describe are changed, especially "K" (reader
+don't know what is "to be killed")
+
+Maybe we should mention which option will output these tags?
+e.g. default -> "H"/"S" ,`--other` -> "?", `--modified` -> "C",
+`--killed` -> "K"...
+
+>  -v::
+> --
+> gitgitgadget
+>
