@@ -2,111 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0D31BC3DA78
-	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 01:12:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 312F1C3DA78
+	for <git@archiver.kernel.org>; Sat, 14 Jan 2023 01:17:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229797AbjANBM3 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Fri, 13 Jan 2023 20:12:29 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53574 "EHLO
+        id S229883AbjANBRe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Fri, 13 Jan 2023 20:17:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229837AbjANBM1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 13 Jan 2023 20:12:27 -0500
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDE337EC84
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 17:12:25 -0800 (PST)
-Received: by mail-ej1-x634.google.com with SMTP id u9so56161500ejo.0
-        for <git@vger.kernel.org>; Fri, 13 Jan 2023 17:12:25 -0800 (PST)
+        with ESMTP id S229996AbjANBRc (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 13 Jan 2023 20:17:32 -0500
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFB327EC9B
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 17:17:30 -0800 (PST)
+Received: by mail-pl1-x62e.google.com with SMTP id d15so25106767pls.6
+        for <git@vger.kernel.org>; Fri, 13 Jan 2023 17:17:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=JuOAKUwsklx6EGLQWkYj5KMRYfl2CCWqj2FWV6dpVgo=;
-        b=BAA/pve74KT3MSnvN/OInLj1KhQrKMWGEhpMi5fgldxI5WBlcGMERAzl7B8LZi49rk
-         YpkwefiWZfdJ0c+2dIMLm0OFSuq2T2vwHO6B8n5S61OQTzU4FAiJzycD8ex1v8dvhNbd
-         cQkJkFGN2BsJhLa6/So/lWSooHRiJz++6lCYIJlTsG3THcZUBDh3wNODm7NcP+rzmcO5
-         bohW+oFlEQB8fgqaOrTOQtMGr67uhIQADvbHarYcrCxxuacIqgNsa7O9Nw6k5qFzb7jj
-         GD3goL92qwP///H+d18sshq0pigIfTJCC6JkXd0pEAjxHaqhrh1s6PTuP/6BdkakYcQJ
-         aafg==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dpO+0G10fVQRsEQsZmqmwYByizXIiUIqEfC2p86dFDY=;
+        b=StIELdJGYeWXqMnd3A4vBZOE7DheKMNdO/zFwuDyggnx+pS19eS4169aG05ik0T3Ab
+         GMadh/Hto+mUfD+eKY1kWOZjzrBRW3UsxpvqJh2+fZooQxK7WmXz8PaNzAfxl4iwi/gO
+         bAFYCZgQG2mSDGtXo+jX+fggSn0T/C3dE2LQGrWCpdrynuRf1roVtNVgFPrzqOEn7iWN
+         HTBEWPiy98DAtQ/pAMJOnTLAEymuNgLGHRWt4EfzJLMOtLSHnz/54eR8pZmmzuMnOmF/
+         +QheBSTJlqoQ/XzKDyIaMciqwnuHEKpM/s7h+owfACNCTP8KV3lYijnhCxNDvJlGr4Ha
+         09ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JuOAKUwsklx6EGLQWkYj5KMRYfl2CCWqj2FWV6dpVgo=;
-        b=Pk0vAEg2RSzisOAw1Ac9GwkIcRu3fm79wQy3ZjTNfw64jmLMLKM8sIrcxHGvMZfhoA
-         FcJo6iw+A+AwKQgDxZQLlHvaN15RqjsAJ+8eQIw4FUmByeA/lxrWmQe3XRDShuEELy/K
-         o3x/3iM0M/5L9cgDK/hgSXWFii9yqxlFStPEronrQhzpiUM/av4njTBj06ilODBKYa0W
-         WwCPX3OAvFhIaRFq0mq6OB8PpbjdSJPyxm3Wv08dfX0bnXjt11+vaiMh+05DQLXJYJBU
-         G+NKWcRvK3WYuy7pdhUuD4e+8GIujqtoTCtXJN6Swn5c6ixRemeJihgrROhS0XtZjuiT
-         e4KA==
-X-Gm-Message-State: AFqh2kr5SjnrRMXB9rJZmf40DD6ZrQeK/kuS5n+SbLbRCj/ancAcsweF
-        c+xNGJH/SP/+iCXdwa5U4O0W8sslIwU/FBmakvhEaEkjsDc=
-X-Google-Smtp-Source: AMrXdXtPnxQ5H2tjUKI2yabupI+rDZG/sDX0BJkq64fOEpKzz2Zt48pKfdSyNxHCA8W1scWZLqywK8fe38PO08OZk/g=
-X-Received: by 2002:a17:907:6294:b0:85e:ed5:6b60 with SMTP id
- nd20-20020a170907629400b0085e0ed56b60mr1429732ejc.761.1673658744450; Fri, 13
- Jan 2023 17:12:24 -0800 (PST)
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=dpO+0G10fVQRsEQsZmqmwYByizXIiUIqEfC2p86dFDY=;
+        b=FwuvAbEEoTJ0vMY9HmpkyC+NDVxt6GtUdGz00TSggRCVCmsMS1WQM9YyKs2UOFXtcQ
+         Txyotk4+diCA8NIbLiBIjB5GHwcN/T/wAOkhytpht6KqgIaejwVBQFIxyBV0Wpm0p3xQ
+         S2YaOE3fbEyGBLrxWWNgqIB1SMw4ujb/dzbAYFRERpkfklETVOkcU0O9wxByuU8EOl4O
+         EjtU1kIlh9fytXAslbkPxHm+VcTjMjybAwM/2Bmuvt4Tgd0DUqScHG4HzXMEe8Vw1cuL
+         91nhxpORcvZpxdVWADSD/SAjkK1j+KnQosJyt+/XL1x4IexPzXjGhmw6xOcfZusf5JNz
+         C9xw==
+X-Gm-Message-State: AFqh2kpKGMOu/cuA/h7dduM71GQZ7Zv8SN8F8oLig3JYZPbEFOxUnQJ/
+        9w0Q8LAQhqxC+Tv5TKenSM9loGx3nx0=
+X-Google-Smtp-Source: AMrXdXvsZmAp+uS+xpa8pkGhvbIQa1/QI2osNpABuMux5wrycm+ZarvsH+TqwnPmzqoftvRXm3ApxA==
+X-Received: by 2002:a17:90a:4882:b0:225:b3db:aaee with SMTP id b2-20020a17090a488200b00225b3dbaaeemr78056827pjh.0.1673659050253;
+        Fri, 13 Jan 2023 17:17:30 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id t10-20020a17090a3e4a00b00217090ece49sm13056710pjm.31.2023.01.13.17.17.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Jan 2023 17:17:29 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Strawbridge, Michael" <Michael.Strawbridge@amd.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        "Tuikov, Luben" <Luben.Tuikov@amd.com>
+Subject: Re: [PATCH v5 2/2] send-email: expose header information to
+ git-send-email's sendemail-validate hook
+References: <20230110211452.2568535-1-michael.strawbridge@amd.com>
+        <20230110211452.2568535-3-michael.strawbridge@amd.com>
+Date:   Fri, 13 Jan 2023 17:17:29 -0800
+In-Reply-To: <20230110211452.2568535-3-michael.strawbridge@amd.com> (Michael
+        Strawbridge's message of "Tue, 10 Jan 2023 21:16:28 +0000")
+Message-ID: <xmqqmt6loqxi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CAEg0tHSLyaewkgGs0dEXfwQhKmbiO65bXZVU8t7Kn4WwJ1p0Fw@mail.gmail.com>
- <xmqqfsclzlqx.fsf@gitster.g> <CAEg0tHT5PD4K89E3fcNq_WbaLPHozLi-PsJFDsQrzkGi7Na9jg@mail.gmail.com>
- <CAEg0tHQtf9G0N24Xfe-gvRM1AFaiS_ApcuQ8hZtsZAeMhhVWAQ@mail.gmail.com> <xmqqo7r248x9.fsf@gitster.g>
-In-Reply-To: <xmqqo7r248x9.fsf@gitster.g>
-From:   muzimuzhi Z <muzimuzhi@gmail.com>
-Date:   Sat, 14 Jan 2023 09:12:12 +0800
-Message-ID: <CAEg0tHSZi22RUBREJB=Cfy6O72cicv9FTkgo_Z=gvGRdPK1acw@mail.gmail.com>
-Subject: [PATCH v2] doc: fix non-existent config name
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Clemens Buchacher <drizzd@gmx.net>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From c879cb10f61afc361c484267f498d5815bc1b932 Mon Sep 17 00:00:00 2001
-From: muzimuzhi <muzimuzhi@gmail.com>
-Date: Mon, 9 Jan 2023 06:37:47 +0800
-Subject: [PATCH v2] doc: fix non-existent config name
+"Strawbridge, Michael" <Michael.Strawbridge@amd.com> writes:
 
-Replace non-existent `branch.<name>.fetch` to `remote.<repository>.fetch`, in
-the first example in `git-fetch` doc, which was introduced in
-d504f6975d (modernize fetch/merge/pull examples, 2009-10-21).
+> +It takes these command line arguments:
+> +1. the name of the file that holds the e-mail to be sent.
+> +2. the name of the file that holds the SMTP headers to be used.
+> +
+> +The hook doesn't need to support multiple header names (for example only Cc
+> +is passed).
 
-Rename placeholder `<name>` to `<repository>`, to be consistent with all other
-uses in git docs, except that `git-config.txt` uses `remote.<name>.fetch` in
-its "Variables" section.
+I think you meant, by "multiple header names", "header names spelled
+in different cases".
 
-Also add missing monospace markups.
+That may be a correct statement, but is more or less a useless one
+that does not help hook writers.  Different people spell these
+headers in different capitalization (for example, your message came
+with "CC:" to various people, not "Cc:"), so the hook MUST know
+which case the feature adds to its input, if it chooses not to
+support different cases like "Cc:", "cc:", and "CC:".  IOW, "only Cc
+is passed" is not something they need to hear as a mear example.
+They need to be told what headers are given to them and in what
+capitalization for all headers in the input to them.
 
-Signed-off-by: Yukai Chou <muzimuzhi@gmail.com>
----
+> However, it does need to understand that lines beginning with
+> +whitespace belong to the previous header.  The header information follows
+> +the same format as the confirmation given at the end of send-email.
 
-Changes compared to PATCH v1:
- - Use real name in sign-off
- - Update commit reference in a non-shallow clone, resulting in longer
-   <abbrev-hash>
- - Use word "non-existent" in commit message uniformly
- - Rebase to latest master a38d39a4c5 (The sixth batch, 2023-01-08)
+I suspect that many people (including me) disable the confirmation
+and to them, the above description would not help.
 
- Documentation/git-fetch.txt | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+In general, documentation should not depend on the reader having an
+access to an environment where they can readily run commands and see
+their output.
 
-diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
-index 63d9569e16..fba66f1460 100644
---- a/Documentation/git-fetch.txt
-+++ b/Documentation/git-fetch.txt
-@@ -251,10 +251,10 @@ EXAMPLES
- $ git fetch origin
- ------------------------------------------------
- +
--The above command copies all branches from the remote refs/heads/
--namespace and stores them to the local refs/remotes/origin/ namespace,
--unless the branch.<name>.fetch option is used to specify a non-default
--refspec.
-+The above command copies all branches from the remote `refs/heads/`
-+namespace and stores them to the local `refs/remotes/origin/` namespace,
-+unless the `remote.<repository>.fetch` option is used to specify a
-+non-default refspec.
-
- * Using refspecs explicitly:
- +
--- 
-2.39.0
+Thanks.
