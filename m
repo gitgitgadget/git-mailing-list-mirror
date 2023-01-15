@@ -2,84 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id E4852C63797
-	for <git@archiver.kernel.org>; Sun, 15 Jan 2023 20:08:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id D5EC0C63797
+	for <git@archiver.kernel.org>; Sun, 15 Jan 2023 20:09:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230501AbjAOUIa (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Jan 2023 15:08:30 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50926 "EHLO
+        id S231451AbjAOUJ3 (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Jan 2023 15:09:29 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231315AbjAOUI3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Jan 2023 15:08:29 -0500
+        with ESMTP id S231154AbjAOUJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Jan 2023 15:09:28 -0500
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 018B2C64E
-        for <git@vger.kernel.org>; Sun, 15 Jan 2023 12:08:27 -0800 (PST)
-Received: (qmail 8534 invoked by uid 109); 15 Jan 2023 20:08:27 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5EACEC65A
+        for <git@vger.kernel.org>; Sun, 15 Jan 2023 12:09:27 -0800 (PST)
+Received: (qmail 8545 invoked by uid 109); 15 Jan 2023 20:09:26 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 15 Jan 2023 20:08:27 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 15 Jan 2023 20:09:26 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23476 invoked by uid 111); 15 Jan 2023 20:08:28 -0000
+Received: (qmail 23481 invoked by uid 111); 15 Jan 2023 20:09:28 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 15 Jan 2023 15:08:28 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 15 Jan 2023 15:09:28 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Sun, 15 Jan 2023 15:08:26 -0500
+Date:   Sun, 15 Jan 2023 15:09:25 -0500
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
+Cc:     git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>
 Subject: Re: [PATCH] ci: do not die on deprecated-declarations warning
-Message-ID: <Y8RdOt02JTvDnLiX@coredump.intra.peff.net>
+Message-ID: <Y8RddcM9Vr71ljp4@coredump.intra.peff.net>
 References: <xmqqv8l9n5fj.fsf@gitster.g>
  <Y8LAim4D3g6qnZdq@coredump.intra.peff.net>
- <xmqqv8l9ks86.fsf@gitster.g>
- <Y8LjTYhTycp/tTBn@coredump.intra.peff.net>
- <xmqq4jssi8qh.fsf@gitster.g>
+ <xmqqilh9kqdy.fsf@gitster.g>
+ <xmqqzgakgu0n.fsf@gitster.g>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqq4jssi8qh.fsf@gitster.g>
+In-Reply-To: <xmqqzgakgu0n.fsf@gitster.g>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 14, 2023 at 10:59:18PM -0800, Junio C Hamano wrote:
+On Sat, Jan 14, 2023 at 11:02:32PM -0800, Junio C Hamano wrote:
 
-> Jeff King <peff@peff.net> writes:
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> > On the other hand, I don't know how useful those deprecations are going
-> > to be, as it depends on the timeframe. If the deprecation is added for
-> > the same version of libcurl that implements the alternative (which is
-> > roughly the case here), then we'd always be stuck supporting the old and
-> > new forms (old for backwards compatibility, and new to silence the
-> > deprecation warning).
+> > But anyway, let's use CURL_DISABLE_DEPRECATION first to see how it
+> > goes.
 > 
-> ... or just keep the warning without promoting, with "-Wno-error=...".
-
-I'm pretty strongly against that solution for anything long-term. Having
-to see those warnings is not only ugly, but it's confusing and trains
-people to ignore them (and many times I've noticed ugly warnings
-floating by and realized that oops, I had temporarily disabled -Werror
-because I had been working with some older code).
-
-> > We care a lot more about the deprecation once the
-> > alternative has been around for a while, and/or the old way of doing
-> > things is about to be removed. And if we just wait until that removal,
-> > then we do not have to rely on deprecation warnings. The build will
-> > break just fine on its own. :)
+> The "DEVELOPER_CFLAGS += -Wno-error=deprecated-declarations" version
+> was merged to 'next', only because I wanted to see the commit
+> cleanly pass the tests (and it does), but I do think in the longer
+> term (like, before the topic hits 'master'), it probably is better
+> to do this for everybody, not just for those who use DEVELOPER=Yes.
 > 
-> Yes and no.  It is not always like "this symbol is now known under
-> this different name", which is trivial to adjust.  I briefly tried
-> to see how IOCTL -> SEEK change should look like until I realized
-> that the new way was invented too recently and stopped looking, but
-> it would involve changes to the function logic in the callback
-> functions, as the function signature---both parameters and its
-> return values---of the callback changes.  I do not want to see us
-> scrambling to make such adjustments to the code at the last minute,
-> so some sort of advance warning is a good thing to have.
+> So, further patches on top are very much welcomed.
 
-True.
+So I took a look at just dropping the deprecated bits, and it wasn't
+_too_ bad. Here's that series. The first two I hope are obviously good.
+The third one is _ugly_, but at least it punts on the whole "how should
+we silence this" argument, and it takes us in the direction we'd
+ultimately want to go.
 
-I do think the IOCTL/SEEK one is old enough that we can do, though. The
-deprecation is newer, but the SEEK interface was added in an old enough
-version.
+  [1/3]: http-push: prefer CURLOPT_UPLOAD to CURLOPT_PUT
+  [2/3]: http: prefer CURLOPT_SEEKFUNCTION to CURLOPT_IOCTLFUNCTION
+  [3/3]: http: support CURLOPT_PROTOCOLS_STR
 
--Peff
+ git-curl-compat.h |  8 +++++++
+ http-push.c       |  6 ++---
+ http.c            | 61 +++++++++++++++++++++++++++++++++--------------
+ http.h            |  2 +-
+ remote-curl.c     | 28 ++++++++++------------
+ 5 files changed, 68 insertions(+), 37 deletions(-)
+
