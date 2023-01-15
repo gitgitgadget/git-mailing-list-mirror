@@ -2,92 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1F104C3DA78
-	for <git@archiver.kernel.org>; Sun, 15 Jan 2023 20:58:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 23AF3C3DA78
+	for <git@archiver.kernel.org>; Sun, 15 Jan 2023 20:59:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231610AbjAOU6H (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Jan 2023 15:58:07 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34836 "EHLO
+        id S231150AbjAOU7f (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Jan 2023 15:59:35 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231150AbjAOU6G (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Jan 2023 15:58:06 -0500
-X-Greylist: delayed 181 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 15 Jan 2023 12:58:04 PST
-Received: from avasout-ptp-004.plus.net (avasout-ptp-004.plus.net [84.93.230.250])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C38D13511
-        for <git@vger.kernel.org>; Sun, 15 Jan 2023 12:58:04 -0800 (PST)
-Received: from [10.0.2.15] ([147.147.167.102])
-        by smtp with ESMTPA
-        id HA1rpc8fBG2OpHA1spiAYc; Sun, 15 Jan 2023 20:55:01 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-        t=1673816101; bh=sZqM/ovBTVowdkzpwpNNSYUgHk1vNE6Aa7VR9grhl5A=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=jkiAzLwBP7HrO6RmuGZrZmbg0L38vvgeNJo6N9iA1kTULeDHBb3fP6jwbcKJBJNJo
-         8Hn3QQ81hZ+2Gd8dQchfTzYHiYn1e4ZAGE91nyXjyyGsx4odR1bFoVDgWEev8ZAM8h
-         gWX9NrTPSCNoLzYh0DkpL4Qr12F9p45C66ANR5dFkig3CZ66yfX/YI0tCnx6i3pKcw
-         DyS1JHXpFYbf6ax8+wUF8ueXwP6tW/zb/Bi++oPXZeTDl3WTnQIMW7UtrDnNMjgBXC
-         qCZSf4MkntCevvV2vgnJxvzw8Q4zBpXcIS07rRXvwoceB2QNUXhoRe+552TaZDpfIW
-         LlDhRWnWlK9bA==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=Lo2Bd1Rc c=1 sm=1 tr=0 ts=63c46825
- a=O4HnXJxpn4bBnFCb4s/IkQ==:117 a=O4HnXJxpn4bBnFCb4s/IkQ==:17
- a=IkcTkHD0fZMA:10 a=PKzvZo6CAAAA:8 a=lEYq4Q8YialkbmfdOZwA:9 a=QEXdDO2ut3YA:10
- a=q92HNjYiIAC_jH7JDaYf:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <c77892ba-e5cd-1192-ceba-d49edcb95da8@ramsayjones.plus.com>
-Date:   Sun, 15 Jan 2023 20:54:59 +0000
+        with ESMTP id S231612AbjAOU7c (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Jan 2023 15:59:32 -0500
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D010F13519
+        for <git@vger.kernel.org>; Sun, 15 Jan 2023 12:59:31 -0800 (PST)
+Received: by mail-pj1-f48.google.com with SMTP id z9-20020a17090a468900b00226b6e7aeeaso29291904pjf.1
+        for <git@vger.kernel.org>; Sun, 15 Jan 2023 12:59:31 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+AIs0oILo2xj2Br8xN4IX/peFBbF/gsTuD2yMSn+JVM=;
+        b=UU5oLJUPwIhNqfIeR3jKo/NHITiNTOJAxN6VGMt8WHKrnIvUxj2ffkmcD+g+u6ynwo
+         3gqBcUxn/Mvs1jhtePSxYjJoODlWu/u+f/h+ev/zfmekOv3rmiskQcYnZcAdFjQo8ZHq
+         jStN3M/tSFqeKXTad1cAtXHX3tRfFJcv9XQpOwK2kalzu6Cm22tIevp06HlaY7j/vXj0
+         92lI2o6TPmdbJBsoSVvPjlxf/AL4SHWFy9ovX5xff/AljwjlJYwpA5vmrj/OJSQZWY8z
+         nR8gXx4c2aGIqm4KSJvfQwFQ889u+Pgp7CxJWbs+Hiaf1dKePE3CvJ/bhDDC34Yo5qmX
+         GJbQ==
+X-Gm-Message-State: AFqh2koP6PsXfAXki79Cew2A65B32S8R6M2cq6M2YchuzWu3mHK6LZpF
+        Gil/a5eabc2gAl5ZOGY08TDbOqnc8kMzKqCkCpTYL7za
+X-Google-Smtp-Source: AMrXdXvsyrMboSSOtR4f7BnwveOGOSkHElT7SB5WZ6mrs6RVlY9izTLby4Su/oWAPPK4CEuoyvPLz0uO7R7dwN1UFPw=
+X-Received: by 2002:a17:903:26d4:b0:194:706c:d074 with SMTP id
+ jg20-20020a17090326d400b00194706cd074mr426410plb.94.1673816371256; Sun, 15
+ Jan 2023 12:59:31 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 1/3] http-push: prefer CURLOPT_UPLOAD to CURLOPT_PUT
-To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <Y8RddcM9Vr71ljp4@coredump.intra.peff.net>
- <Y8RduNqadAfaOgs1@coredump.intra.peff.net>
-Content-Language: en-GB
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <Y8RduNqadAfaOgs1@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfDIoHQH1NL0G9dtXIh/t1qXXKPU5kqlz/4tPgALNsNVWHgDhd307nl6EF2cYvNIqFVWh0SRh7ZPaALtkTXmvYZY4kr+XISRTUIAsxqhmC4Spovv7CDQa
- Exzhx0rIitQGXRE1huTS7hwrZ181gsthXahXKlUdWCzfrf4dt/Rj/mP+DBBjUnFJx+cBjA1y7ZRD522+Id5STimCX2N6xV7HBdY=
+References: <cover.1673490953.git.dyroneteng@gmail.com> <7b756b4c605e148f6938fee74882091661382173.1673490953.git.dyroneteng@gmail.com>
+In-Reply-To: <7b756b4c605e148f6938fee74882091661382173.1673490953.git.dyroneteng@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Sun, 15 Jan 2023 15:59:20 -0500
+Message-ID: <CAPig+cR5s3XzmY+L_jDW2g_PEgi5E791x0GuV+VPkxFA_6sB7A@mail.gmail.com>
+Subject: Re: [PATCH v4 3/5] notes.c: drop unreachable code in 'append_edit()'
+To:     Teng Long <dyroneteng@gmail.com>
+Cc:     avarab@gmail.com, git@vger.kernel.org, tenglong.tl@alibaba-inc.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 15/01/2023 20:10, Jeff King wrote:
-> The two options do exactly the same thing, but the latter has been
-> deprecated and in recent versions of curl may produce a compiler
-> warning. Since the UPLOAD form is available everywhere (it was
-> introduced in the year 2000 by curl 7.1), we can just switch to it.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
+On Wed, Jan 11, 2023 at 9:48 PM Teng Long <dyroneteng@gmail.com> wrote:
+> Situation of note "removing" shouldn't happen in 'append_edit()',
+> unless it's a bug. So, let's drop the unreachable "else" code
+> in "append_edit()".
+>
+> The notes operation "append" is different with "add", the latter
+> supports to overwrite the existing note then let the "removing"
+> happen (e.g. execute `git notes add -f -F /dev/null` on an existing
+> note), but the former will not because it only does "appends" but
+> not doing "overwrites".
+>
+> Signed-off-by: Teng Long <dyroneteng@gmail.com>
 > ---
->  http-push.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/http-push.c b/http-push.c
-> index 5f4340a36e..1b18e775d0 100644
-> --- a/http-push.c
-> +++ b/http-push.c
-> @@ -198,7 +198,7 @@ static void curl_setup_http(CURL *curl, const char *url,
->  		const char *custom_req, struct buffer *buffer,
->  		curl_write_callback write_fn)
->  {
-> -	curl_easy_setopt(curl, CURLOPT_PUT, 1);
-> +	curl_easy_setopt(curl, CURLOPT_UPLOAD, 1);
+> diff --git a/builtin/notes.c b/builtin/notes.c
+> @@ -630,13 +630,8 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+>                 if (add_note(t, &object, &new_note, combine_notes_overwrite))
+>                         BUG("combine_notes_overwrite failed");
+>                 logmsg = xstrfmt("Notes added by 'git notes %s'", argv[0]);
+> -       } else {
+> -               fprintf(stderr, _("Removing note for object %s\n"),
+> -                       oid_to_hex(&object));
+> -               remove_note(t, object.hash);
+> -               logmsg = xstrfmt("Notes removed by 'git notes %s'", argv[0]);
+> +               commit_notes(the_repository, t, logmsg);
+>         }
+> -       commit_notes(the_repository, t, logmsg);
 
-My version of this patch had '1L' rather than just '1' - but it
-doesn't really matter (and was probably because all the curl
-examples did so!).
+This change breaks removal of notes using "git notes edit". Prior to
+this change, if you delete the content of a note using "git notes
+edit", then the note is removed. Following this change, the note
+remains, which contradicts documented[1] behavior.
 
-LGTM
-
-ATB,
-Ramsay Jones
-
->  	curl_easy_setopt(curl, CURLOPT_URL, url);
->  	curl_easy_setopt(curl, CURLOPT_INFILE, buffer);
->  	curl_easy_setopt(curl, CURLOPT_INFILESIZE, buffer->buf.len);
+[1]: Unfortunately, perhaps, this behavior is documented under the
+"remove" subcommand rather than the "edit" subcommand, but it is
+nevertheless documented and has worked this way for ages, so this
+patch causes a regression.
