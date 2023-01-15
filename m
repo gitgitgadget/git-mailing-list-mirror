@@ -2,33 +2,32 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 897C2C3DA78
-	for <git@archiver.kernel.org>; Sun, 15 Jan 2023 20:11:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 4BA6DC3DA78
+	for <git@archiver.kernel.org>; Sun, 15 Jan 2023 20:12:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231315AbjAOULD (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Jan 2023 15:11:03 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51396 "EHLO
+        id S231487AbjAOUMR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Jan 2023 15:12:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231487AbjAOUK7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Jan 2023 15:10:59 -0500
+        with ESMTP id S230354AbjAOUMP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Jan 2023 15:12:15 -0500
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 980086E98
-        for <git@vger.kernel.org>; Sun, 15 Jan 2023 12:10:57 -0800 (PST)
-Received: (qmail 8573 invoked by uid 109); 15 Jan 2023 20:10:57 -0000
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0626F8A57
+        for <git@vger.kernel.org>; Sun, 15 Jan 2023 12:12:14 -0800 (PST)
+Received: (qmail 8594 invoked by uid 109); 15 Jan 2023 20:12:14 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 15 Jan 2023 20:10:57 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 15 Jan 2023 20:12:14 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23525 invoked by uid 111); 15 Jan 2023 20:10:58 -0000
+Received: (qmail 23531 invoked by uid 111); 15 Jan 2023 20:12:15 -0000
 Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 15 Jan 2023 15:10:58 -0500
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 15 Jan 2023 15:12:15 -0500
 Authentication-Results: peff.net; auth=none
-Date:   Sun, 15 Jan 2023 15:10:56 -0500
+Date:   Sun, 15 Jan 2023 15:12:13 -0500
 From:   Jeff King <peff@peff.net>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH 2/3] http: prefer CURLOPT_SEEKFUNCTION to
- CURLOPT_IOCTLFUNCTION
-Message-ID: <Y8Rd0KXYcHKykvjq@coredump.intra.peff.net>
+Subject: [PATCH 3/3] http: support CURLOPT_PROTOCOLS_STR
+Message-ID: <Y8ReHbGWetJHQcI1@coredump.intra.peff.net>
 References: <Y8RddcM9Vr71ljp4@coredump.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -38,148 +37,133 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The IOCTLFUNCTION option has been deprecated, and generates a compiler
-warning in recent versions of curl. We can switch to using SEEKFUNCTION
-instead. It was added in 2008 via curl 7.18.0; our INSTALL file already
-indicates we require at least curl 7.19.4.
+The CURLOPT_PROTOCOLS (and matching CURLOPT_REDIR_PROTOCOLS) flag was
+deprecated in curl 7.85.0, and using it generate compiler warnings as of
+curl 7.87.0. The path forward is to use CURLOPT_PROTOCOLS_STR, but we
+can't just do so unilaterally, as it was only introduced less than a
+year ago in 7.85.0.
 
-We have to rewrite the ioctl functions into seek functions. In some ways
-they are simpler (seeking is the only operation), but in some ways more
-complex (the ioctl allowed only a full rewind, but now we can seek to
-arbitrary offsets).
+Until that version becomes ubiquitous, we have to either disable the
+deprecation warning or conditionally use the "STR" variant on newer
+versions of libcurl. This patch switches to the new variant, which is
+nice for two reasons:
 
-Curl will only ever use SEEK_SET (per their documentation), so I didn't
-bother implementing anything else, since it would naturally be
-completely untested. This seems unlikely to change, but I added an
-assertion just in case.
+  - we don't have to worry that silencing curl's deprecation warnings
+    might cause us to miss other more useful ones
 
-Likewise, I doubt curl will ever try to seek outside of the buffer sizes
-we've told it, but I erred on the defensive side here, rather than do an
-out-of-bounds read.
+  - we'd eventually want to move to the new variant anyway, so this gets
+    us set up (albeit with some extra ugly boilerplate for the
+    conditional)
+
+There are a lot of ways to split up the two cases. One way would be to
+abstract the storage type (strbuf versus a long), how to append
+(strbuf_addstr vs bitwise OR), how to initialize, which CURLOPT to use,
+and so on. But the resulting code looks pretty magical:
+
+  GIT_CURL_PROTOCOL_TYPE allowed = GIT_CURL_PROTOCOL_TYPE_INIT;
+  if (...http is allowed...)
+	GIT_CURL_PROTOCOL_APPEND(&allowed, "http", CURLOPT_HTTP);
+
+and you end up with more "#define GIT_CURL_PROTOCOL_TYPE" macros than
+actual code.
+
+On the other end of the spectrum, we could just implement two separate
+functions, one that handles a string list and one that handles bits. But
+then we end up repeating our list of protocols (http, https, ftp, ftp).
+
+This patch takes the middle ground. The run-time code is always there to
+handle both types, and we just choose which one to feed to curl.
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- http-push.c   |  4 ++--
- http.c        | 20 +++++++++-----------
- http.h        |  2 +-
- remote-curl.c | 28 +++++++++++++---------------
- 4 files changed, 25 insertions(+), 29 deletions(-)
+ git-curl-compat.h |  8 ++++++++
+ http.c            | 41 ++++++++++++++++++++++++++++++++++-------
+ 2 files changed, 42 insertions(+), 7 deletions(-)
 
-diff --git a/http-push.c b/http-push.c
-index 1b18e775d0..7f71316456 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -203,8 +203,8 @@ static void curl_setup_http(CURL *curl, const char *url,
- 	curl_easy_setopt(curl, CURLOPT_INFILE, buffer);
- 	curl_easy_setopt(curl, CURLOPT_INFILESIZE, buffer->buf.len);
- 	curl_easy_setopt(curl, CURLOPT_READFUNCTION, fread_buffer);
--	curl_easy_setopt(curl, CURLOPT_IOCTLFUNCTION, ioctl_buffer);
--	curl_easy_setopt(curl, CURLOPT_IOCTLDATA, buffer);
-+	curl_easy_setopt(curl, CURLOPT_SEEKFUNCTION, seek_buffer);
-+	curl_easy_setopt(curl, CURLOPT_SEEKDATA, buffer);
- 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_fn);
- 	curl_easy_setopt(curl, CURLOPT_NOBODY, 0);
- 	curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, custom_req);
+diff --git a/git-curl-compat.h b/git-curl-compat.h
+index 56a83b6bbd..fd96b3cdff 100644
+--- a/git-curl-compat.h
++++ b/git-curl-compat.h
+@@ -126,4 +126,12 @@
+ #define GIT_CURL_HAVE_CURLSSLSET_NO_BACKENDS
+ #endif
+ 
++/**
++ * CURLOPT_PROTOCOLS_STR and CURLOPT_REDIR_PROTOCOLS_STR were added in 7.85.0,
++ * released in August 2022.
++ */
++#if LIBCURL_VERSION_NUM >= 0x075500
++#define GIT_CURL_HAVE_CURLOPT_PROTOCOLS_STR 1
++#endif
++
+ #endif
 diff --git a/http.c b/http.c
-index 8a5ba3f477..ca0fe80ddb 100644
+index ca0fe80ddb..e529ebc993 100644
 --- a/http.c
 +++ b/http.c
-@@ -157,21 +157,19 @@ size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
- 	return size / eltsize;
+@@ -764,18 +764,29 @@ void setup_curl_trace(CURL *handle)
+ 	curl_easy_setopt(handle, CURLOPT_DEBUGDATA, NULL);
  }
  
--curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp)
-+int seek_buffer(void *clientp, curl_off_t offset, int origin)
- {
- 	struct buffer *buffer = clientp;
- 
--	switch (cmd) {
--	case CURLIOCMD_NOP:
--		return CURLIOE_OK;
--
--	case CURLIOCMD_RESTARTREAD:
--		buffer->posn = 0;
--		return CURLIOE_OK;
--
--	default:
--		return CURLIOE_UNKNOWNCMD;
-+	if (origin != SEEK_SET)
-+		BUG("seek_buffer only handles SEEK_SET");
-+	if (offset < 0 || offset >= buffer->buf.len) {
-+		error("curl seek would be outside of buffer");
-+		return CURL_SEEKFUNC_FAIL;
- 	}
+-static long get_curl_allowed_protocols(int from_user)
++static void proto_list_append(struct strbuf *list_str, const char *proto_str,
++			      long *list_bits, long proto_bits)
++{
++	*list_bits |= proto_bits;
++	if (list_str) {
++		if (list_str->len)
++			strbuf_addch(list_str, ',');
++		strbuf_addstr(list_str, proto_str);
++	}
++}
 +
-+	buffer->posn = offset;
-+	return CURL_SEEKFUNC_OK;
- }
- 
- size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *buffer_)
-diff --git a/http.h b/http.h
-index 3c94c47910..77c042706c 100644
---- a/http.h
-+++ b/http.h
-@@ -40,7 +40,7 @@ struct buffer {
- size_t fread_buffer(char *ptr, size_t eltsize, size_t nmemb, void *strbuf);
- size_t fwrite_buffer(char *ptr, size_t eltsize, size_t nmemb, void *strbuf);
- size_t fwrite_null(char *ptr, size_t eltsize, size_t nmemb, void *strbuf);
--curlioerr ioctl_buffer(CURL *handle, int cmd, void *clientp);
-+int seek_buffer(void *clientp, curl_off_t offset, int origin);
- 
- /* Slot lifecycle functions */
- struct active_request_slot *get_active_slot(void);
-diff --git a/remote-curl.c b/remote-curl.c
-index 72dfb8fb86..a76b6405eb 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -717,25 +717,23 @@ static size_t rpc_out(void *ptr, size_t eltsize,
- 	return avail;
- }
- 
--static curlioerr rpc_ioctl(CURL *handle, int cmd, void *clientp)
-+static int rpc_seek(void *clientp, curl_off_t offset, int origin)
++static long get_curl_allowed_protocols(int from_user, struct strbuf *list)
  {
- 	struct rpc_state *rpc = clientp;
+ 	long allowed_protocols = 0;
  
--	switch (cmd) {
--	case CURLIOCMD_NOP:
--		return CURLIOE_OK;
-+	if (origin != SEEK_SET)
-+		BUG("rpc_seek only handles SEEK_SET, not %d", origin);
+ 	if (is_transport_allowed("http", from_user))
+-		allowed_protocols |= CURLPROTO_HTTP;
++		proto_list_append(list, "http", &allowed_protocols, CURLPROTO_HTTP);
+ 	if (is_transport_allowed("https", from_user))
+-		allowed_protocols |= CURLPROTO_HTTPS;
++		proto_list_append(list, "https", &allowed_protocols, CURLPROTO_HTTPS);
+ 	if (is_transport_allowed("ftp", from_user))
+-		allowed_protocols |= CURLPROTO_FTP;
++		proto_list_append(list, "ftp", &allowed_protocols, CURLPROTO_FTP);
+ 	if (is_transport_allowed("ftps", from_user))
+-		allowed_protocols |= CURLPROTO_FTPS;
++		proto_list_append(list, "ftps", &allowed_protocols, CURLPROTO_FTPS);
  
--	case CURLIOCMD_RESTARTREAD:
--		if (rpc->initial_buffer) {
--			rpc->pos = 0;
--			return CURLIOE_OK;
-+	if (rpc->initial_buffer) {
-+		if (offset < 0 || offset > rpc->len) {
-+			error("curl seek would be outside of rpc buffer");
-+			return CURL_SEEKFUNC_FAIL;
- 		}
--		error(_("unable to rewind rpc post data - try increasing http.postBuffer"));
--		return CURLIOE_FAILRESTART;
--
--	default:
--		return CURLIOE_UNKNOWNCMD;
-+		rpc->pos = offset;
-+		return CURL_SEEKFUNC_OK;
- 	}
-+	error(_("unable to rewind rpc post data - try increasing http.postBuffer"));
-+	return CURL_SEEKFUNC_FAIL;
+ 	return allowed_protocols;
  }
+@@ -921,10 +932,26 @@ static CURL *get_curl_handle(void)
  
- struct check_pktline_state {
-@@ -959,8 +957,8 @@ static int post_rpc(struct rpc_state *rpc, int stateless_connect, int flush_rece
- 		rpc->initial_buffer = 1;
- 		curl_easy_setopt(slot->curl, CURLOPT_READFUNCTION, rpc_out);
- 		curl_easy_setopt(slot->curl, CURLOPT_INFILE, rpc);
--		curl_easy_setopt(slot->curl, CURLOPT_IOCTLFUNCTION, rpc_ioctl);
--		curl_easy_setopt(slot->curl, CURLOPT_IOCTLDATA, rpc);
-+		curl_easy_setopt(slot->curl, CURLOPT_SEEKFUNCTION, rpc_seek);
-+		curl_easy_setopt(slot->curl, CURLOPT_SEEKDATA, rpc);
- 		if (options.verbosity > 1) {
- 			fprintf(stderr, "POST %s (chunked)\n", rpc->service_name);
- 			fflush(stderr);
+ 	curl_easy_setopt(result, CURLOPT_MAXREDIRS, 20);
+ 	curl_easy_setopt(result, CURLOPT_POSTREDIR, CURL_REDIR_POST_ALL);
++
++#ifdef GIT_CURL_HAVE_CURLOPT_PROTOCOLS_STR
++	{
++		struct strbuf buf = STRBUF_INIT;
++
++		get_curl_allowed_protocols(0, &buf);
++		curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS_STR, buf.buf);
++		strbuf_reset(&buf);
++
++		get_curl_allowed_protocols(-1, &buf);
++		curl_easy_setopt(result, CURLOPT_PROTOCOLS_STR, buf.buf);
++		strbuf_release(&buf);
++	}
++#else
+ 	curl_easy_setopt(result, CURLOPT_REDIR_PROTOCOLS,
+-			 get_curl_allowed_protocols(0));
++			 get_curl_allowed_protocols(0, NULL));
+ 	curl_easy_setopt(result, CURLOPT_PROTOCOLS,
+-			 get_curl_allowed_protocols(-1));
++			 get_curl_allowed_protocols(-1, NULL));
++#endif
++
+ 	if (getenv("GIT_CURL_VERBOSE"))
+ 		http_trace_curl_no_data();
+ 	setup_curl_trace(result);
 -- 
 2.39.0.513.g00e40dbe01
-
