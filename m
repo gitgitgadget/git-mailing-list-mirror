@@ -2,112 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C2ADCC46467
-	for <git@archiver.kernel.org>; Sun, 15 Jan 2023 13:53:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 47D25C63797
+	for <git@archiver.kernel.org>; Sun, 15 Jan 2023 15:46:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230137AbjAONxP (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Jan 2023 08:53:15 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60910 "EHLO
+        id S231433AbjAOPqW (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Jan 2023 10:46:22 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57802 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229941AbjAONxO (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Jan 2023 08:53:14 -0500
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [IPv6:2001:67c:2178:6::1d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63853113C9
-        for <git@vger.kernel.org>; Sun, 15 Jan 2023 05:53:13 -0800 (PST)
-Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
-        by smtp-out2.suse.de (Postfix) with ESMTP id DA71A66EC8;
-        Sun, 15 Jan 2023 13:53:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1673790790; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=nPGwlM49yDefZKoVUcFOJrzkyqnqAUkjaHC1IM1buL4=;
-        b=QV4aabWBLjJtCBdN/Rr24B/ZqZE1aezMY7GhogN3Y+yEJx7AJpWWv7QWTRhiMluvWSd4OM
-        RgFV3kVJ35sBXR+uXsi+jMJKeCr9qXhXNTnQQ38WS0u4J3BumgSx8j4RpjEYImZH/cQ2op
-        NnG5uefjlheyUEmleSImLOQkYOn/eDo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1673790790;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=nPGwlM49yDefZKoVUcFOJrzkyqnqAUkjaHC1IM1buL4=;
-        b=xsPE6yFKQzQdQ2qD9h95Bnyi+nBlzlE638Q3ZXtprcMTbt2xBl8gfL6SutiCHQ5nHsncEa
-        xJEKqpFucK4i10CA==
-Received: from kitsune.suse.cz (kitsune.suse.cz [10.100.12.127])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by relay2.suse.de (Postfix) with ESMTPS id C8C432C142;
-        Sun, 15 Jan 2023 13:53:10 +0000 (UTC)
-Date:   Sun, 15 Jan 2023 14:53:09 +0100
-From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To:     Hans Petter Selasky <hps@selasky.org>
+        with ESMTP id S231179AbjAOPqU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Jan 2023 10:46:20 -0500
+Received: from outgoing.mit.edu (outgoing-auth-1.mit.edu [18.9.28.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3954EB473
+        for <git@vger.kernel.org>; Sun, 15 Jan 2023 07:46:19 -0800 (PST)
+Received: from letrec.thunk.org ([172.102.8.163])
+        (authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+        by outgoing.mit.edu (8.14.7/8.12.4) with ESMTP id 30FFkB3S021523
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 15 Jan 2023 10:46:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mit.edu; s=outgoing;
+        t=1673797574; bh=LmvViCc2EiDB0mBt906+GfhzUk4dB/UxvJuUUH5JRBM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=CMbh1QRNrsNvA9T3ibQkMAPdp0gbgvBpU+wnRDpIPnbWN2UbBLsSH9nAz44Ep622y
+         C1p80pIUEDe1kEtx1kbP7V0ba1eS9F9TzdkXeGBKG1MYLJb/tdIrvDFbulkj0iunk2
+         WtNKNd3YScupqDrGtpuAISi6KTlz7ZXUJOcBRyYwmwU4/fNBh2dL5sEICq3we1AyEP
+         DO1P/um+MwJ7KhWQwff47pE5KzFcZbNJUxXADqMiyDwXXav6m/SMCjkMFFB377Ysr9
+         hSpmDh4T0IUDcSw9G7g6mea3gtnp+SYK0NLCeZwAgYhEKV4DPd9JZlL5fLFYmycFvk
+         +peP+J+Xi9XBw==
+Received: by letrec.thunk.org (Postfix, from userid 15806)
+        id 7FCC78C04BE; Sun, 15 Jan 2023 10:45:19 -0500 (EST)
+Date:   Sun, 15 Jan 2023 10:45:19 -0500
+From:   "Theodore Ts'o" <tytso@mit.edu>
+To:     Crls <kaploceh@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: Gitorious should use CRC128 / 256 / 512 instead of SHA-1
-Message-ID: <20230115135245.GB16547@kitsune.suse.cz>
-References: <9c0fda42-67ab-f406-489b-38a2d9bbcfc2@selasky.org>
+Subject: Re: ctrl-z ignored by git; creates blobs from non-existent repos
+Message-ID: <Y8Qfj32h89hq5UD6@mit.edu>
+References: <632d051b-d81b-b35d-0641-c2488a124810@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <9c0fda42-67ab-f406-489b-38a2d9bbcfc2@selasky.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <632d051b-d81b-b35d-0641-c2488a124810@gmail.com>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
-
-On Fri, Jan 13, 2023 at 02:23:59PM +0100, Hans Petter Selasky wrote:
-> Hi,
+On Fri, Jan 13, 2023 at 05:01:01PM -0500, Crls wrote:
+> Ctrl-Z is ignored by git; Git-clone injects blobs even with non-existent
+> repos
 > 
-> Currently GIT only supports cryptographic hashes for its commit tags.
-> 
-> That means:
-> 
-> 1) It's very difficult to edit the history without also recomputing the hash
-> tags for all commits after the needed change-point, which then means
-> references to a repository is broken.
+> Steps to reproduce 1- git clone github whateverrepo/whatevernonexistentrepo
+> or 1- git clone gitlab whateverrepo/whatevernonexistentrepo 2= Git prompts
+> for a username
 
-That also makes it difficult to alter the repository intentionally
-without anyone noticing. With SHA1 being somewhat weak it may be
-possible to alter repository content although I am not aware of any
-practical attacks shown so far. For that reason using stronger hashes is
-planned in the future.
+% git clone github whateverrepo/whatevernonexistentrepo
+fatal: repository 'github' does not exist
 
-> 2) Only a single bit error in the main repository can break everything!
-> 
-> 3) Illicit contents may be present in binary blobs, which in the future may
-> be need to be removed without warrant and the only way to do that is by
-> rebasing and force pushing, which will break "everything". It can be
-> everything from child-porn to expired distribution licenses.
+I think what you meant was:
 
-It's good to avoid spam getting into your repository. If you really need
-to alter it long into the past you still can. Everyone will notice that
-you did, and that's an intentional feature. In some situations it is
-understandably an annoyance but there's so much you can do. At least
-tags should remain stable.
+% git clone https://github.com/whateverrepo/whatevernonexistentrepo
+Cloning into 'whatevernonexistentrepo'...
+Username for 'https://github.com': 
 
-> Many people think that bit errors cannot happen because the memory uses ECC
-> and the file system uses cryptographic hashes to verify the integrity of the
-> data. But what many people forget about is that when copying data from
-> memory to disk, typically using a DMA channel data is copied w/o any kind of
-> integrity protection, because the integrity protection is not end-to-end.
-> The integrity protection is only per-link.
+> 3- Press Ctrl-Z to stop *git* from running either on the virtual console/tty
+> *git* automatically creates blobs with directories and disregards
 
-So long as all links have integrity protection it's end-to-end.
+So it's not that Control-Z is being ignored.  It's that by the time
+you see the prompt for "Username for 'https://github.com': ", the
+directories already exist.  Try looking at
+whatevernonexistentrepo/.git as soon as the prompt shows up.  You'll
+see that the .git directory has been greated.
 
-Integrity checks for CPU chaches, buses, and IO protocols do exist.
+Now, when you type ^Z, the git processes are stopped --- but the
+objects are created already.
 
-It's not that errors cannot happen, they are very unlikely.
+Username for 'https://github.com': ^Z
+[1]+  Stopped                 git clone https://github.com/whateverrepo/whatevernonexistentrepo
+% ps aux | grep git
+tytso       5097  0.0  0.0   9736  4480 pts/0    T    10:41   0:00 git clone https://github.com/wha
+tytso       5098  0.0  0.0   9736  3992 pts/0    T    10:41   0:00 /usr/lib/git-core/git remote-htt
+tytso       5099  0.0  0.1 102332 16104 pts/0    T    10:41   0:00 /usr/lib/git-core/git-remote-htt
+tytso       5140  0.0  0.0   6332  2072 pts/0    S+   10:43   0:00 grep git
 
-In the very rare case that such error happens so long as non-corrupted
-version of the object can be supplied by anyone who has a copy of the
-repository it is recoverable.
 
-For old objects this should be your backup system.
+The 'T' means that the processes are stopped.
 
-For new objects the worst case is that the history is rolled back so the
-missing object is not needed.
+> Expected: The same issue does not happen with other non-existent repos e.g.,
+> git clone git.zx2c4/ it returns the message of fatal repo not found
 
-Thanks
+So what's going on is that github.com is not returning a non-existent
+repo error; it's prompting for a username/password, as _if_ the
+repository exists.  That's presumably to prevent disclosing
+information as to whether or not a private repository exists or not.
 
-Michal
+Once the authentication fails, git will remove the partially created
+repro, so it's really not a problem in practice.
+
+Cheers,
+
+						- Ted
