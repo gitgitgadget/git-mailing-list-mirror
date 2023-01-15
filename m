@@ -2,66 +2,66 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 5B312C67871
-	for <git@archiver.kernel.org>; Sun, 15 Jan 2023 06:59:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DE56AC3DA78
+	for <git@archiver.kernel.org>; Sun, 15 Jan 2023 07:02:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229593AbjAOG70 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Jan 2023 01:59:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52992 "EHLO
+        id S229599AbjAOHCj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Jan 2023 02:02:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229650AbjAOG7W (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Jan 2023 01:59:22 -0500
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C3528A76
-        for <git@vger.kernel.org>; Sat, 14 Jan 2023 22:59:20 -0800 (PST)
-Received: by mail-pf1-x430.google.com with SMTP id i1so3847960pfk.3
-        for <git@vger.kernel.org>; Sat, 14 Jan 2023 22:59:20 -0800 (PST)
+        with ESMTP id S229454AbjAOHCe (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Jan 2023 02:02:34 -0500
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6A2BA272
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 23:02:33 -0800 (PST)
+Received: by mail-pj1-x102b.google.com with SMTP id q5so96264pjh.1
+        for <git@vger.kernel.org>; Sat, 14 Jan 2023 23:02:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=TjDUIuWF/HO1WbeOYgNRlfcRXUEh/5TLCWqHxd5cXR0=;
-        b=EHTVCE9ZW4CQZqZ6Q8xM3DSRdj0RxuMLyfQKoeGSXQgCCKe6qjQQtP2spd6+IZepLQ
-         +jj00pAdkr9CXg376nzbJ6t0KCoVlsBGMhB/WlQrEy42/3HWZj62tnvzQJyN2tAhWpdi
-         lCmEnbhnVMgMflN0SjJDa0ratG1nEHwX0j52+9uZeX9NvFp6IZorAOMH2cUNVnEKY4p3
-         GGXv+oOi+BM2rwERpxd9sBYFjI5A5Yqq4Gehv/8eVxrM51sJHCHWGzGYKrxV9kQwdMqq
-         25vh7LSZ7TBgwuJfAdiDDnHcV4vXzB+bMa+T3NwlwTGy5zWgojb9mZTeeCdEcX4zgzuC
-         rZyA==
+        bh=RYN0n7y4qVwNWwNMUOKnjpL8ibe6BvT4aswa3Kf9Zb8=;
+        b=d58bt2w8Kj8/UvYcTBSGtX5BGkfMbazvx0uGfk9i7rnVn/d/i44LvPN9fYjBySlb43
+         PYy/UAulE81z321HJshN6CJzKmPbMDqYWRMJCrwPjQNQxEM0xaL4zvLF5jh2ZArNYpsJ
+         THB05D2U5yTa/ZEu9sj5m9zGqmJN3+ffVhDpgCP+JZk04XFGbIr+zwbyFA+hScoh5yvd
+         chYIfypP2FTOoBZjzziJ5CyIhnJMeQl8EhahRZ8M5TTJWvJEFO7QjfGk+BZsVhSM+JeA
+         ttIdVA4s6I5r7/LunvNd3/aJ1cfzbGIeszFLCf5ih5vt/aKos0KtrhZ0aex07E8uvq/G
+         1Ajw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=mime-version:user-agent:message-id:in-reply-to:date:references
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=TjDUIuWF/HO1WbeOYgNRlfcRXUEh/5TLCWqHxd5cXR0=;
-        b=nZJfH6jXqJtVpD4ED0K6UK1jMUGpBh99WmS2FRCdhi6EoQptXd9mYFRfWRHVbkPqTF
-         /lg9o7SPXi4Q7ih0cwmnwSw3p+dbn/jyvMU+oGyAkGRXpKSGmPzLcyuKo4B89D532QDV
-         S0xqnfBGZmNobgymQnxXLz6Xlm/aI42ftx/ppQLUbemw9XIJHR0XUDLWyz92KuY5lxM0
-         2lk/JteK6SYLI3epcO4L39kOBIjNVXRx43xLWPKWL7eBSzXF/GVOSqUxJdAchRZLgoDZ
-         YKc0/6/n/ya7nfOwCJBXhhppUJVTYzufvpMd1q5UgKUgUnCzEljS5QYhKrFsZi2/a8i+
-         gKcw==
-X-Gm-Message-State: AFqh2krL1WBxSoD+xj9iw5tk8nYr3rV4PniQ3pFyuqOI9ui/NkDWaJht
-        KZUiuYA5+Ix9YAbb5UT34AOyA4/1lSU=
-X-Google-Smtp-Source: AMrXdXuI3S932cKHjD99KxgRwvlcld4IucWH+1Wfb5jSj2bAvpxEzmkcqLNQ8f4zMwjrOEG2AQ9lng==
-X-Received: by 2002:a62:1ad6:0:b0:58b:b29c:50c2 with SMTP id a205-20020a621ad6000000b0058bb29c50c2mr10046912pfa.26.1673765959713;
-        Sat, 14 Jan 2023 22:59:19 -0800 (PST)
+        bh=RYN0n7y4qVwNWwNMUOKnjpL8ibe6BvT4aswa3Kf9Zb8=;
+        b=2J355mbDkBKzwvoODGIHLeMrBGs5fVFXaAkjGkcC7ft+T4icpes0pJcTq6AvtR06rV
+         YSbT81w6lw11iFl2EPanz0lCCyKSX5/wlJRFhqWbFEAq6YxR6cZ6+vUM3s6wSARGjteS
+         LzN9ZSpQdLyhjBwx2PtaOO8XGtlLOSztJ/bqMAAiiWMKohhBsKW7cFBY/6oMlZc/QyUX
+         IMhIqJHpKtmakukug5PgVevtTDikcqSLg+iAuE2iWtzCZQN6NQ1oOoN/kFiYFoXEJhGb
+         PG+NJxI8lBqRkydi0JMAp+nWPKoMN08+qWhJgnpzuiHUYlVdTJqDkyv4GF6zjWqkk3Mm
+         fBag==
+X-Gm-Message-State: AFqh2kqGLbXE8cC3KJwgCTna5syZr1q0AUMoP+nfCJLrTZcR8RtzDbUu
+        B+E5FdRO/CYNBYeEpQFvklIvrOt/g8I=
+X-Google-Smtp-Source: AMrXdXujSIqUYzbxwlWXxUBKK5in/444UvcexAct9RXZUKoApGtMHxTY8kzwTJ9ocnuCsVqnSJ+7lw==
+X-Received: by 2002:a05:6a20:d38c:b0:af:a276:2f94 with SMTP id iq12-20020a056a20d38c00b000afa2762f94mr107293271pzb.35.1673766153112;
+        Sat, 14 Jan 2023 23:02:33 -0800 (PST)
 Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id m3-20020a62a203000000b005768b4f2d0dsm15992048pff.64.2023.01.14.22.59.19
+        by smtp.gmail.com with ESMTPSA id s32-20020a635260000000b004b1fef0bf16sm11346074pgl.73.2023.01.14.23.02.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Jan 2023 22:59:19 -0800 (PST)
+        Sat, 14 Jan 2023 23:02:32 -0800 (PST)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
+To:     git@vger.kernel.org
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jeff King <peff@peff.net>
 Subject: Re: [PATCH] ci: do not die on deprecated-declarations warning
 References: <xmqqv8l9n5fj.fsf@gitster.g>
         <Y8LAim4D3g6qnZdq@coredump.intra.peff.net>
-        <xmqqv8l9ks86.fsf@gitster.g>
-        <Y8LjTYhTycp/tTBn@coredump.intra.peff.net>
-Date:   Sat, 14 Jan 2023 22:59:18 -0800
-In-Reply-To: <Y8LjTYhTycp/tTBn@coredump.intra.peff.net> (Jeff King's message
-        of "Sat, 14 Jan 2023 12:15:57 -0500")
-Message-ID: <xmqq4jssi8qh.fsf@gitster.g>
+        <xmqqilh9kqdy.fsf@gitster.g>
+Date:   Sat, 14 Jan 2023 23:02:32 -0800
+In-Reply-To: <xmqqilh9kqdy.fsf@gitster.g> (Junio C. Hamano's message of "Sat,
+        14 Jan 2023 08:55:05 -0800")
+Message-ID: <xmqqzgakgu0n.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,32 +69,19 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On the other hand, I don't know how useful those deprecations are going
-> to be, as it depends on the timeframe. If the deprecation is added for
-> the same version of libcurl that implements the alternative (which is
-> roughly the case here), then we'd always be stuck supporting the old and
-> new forms (old for backwards compatibility, and new to silence the
-> deprecation warning).
+> But anyway, let's use CURL_DISABLE_DEPRECATION first to see how it
+> goes.
 
-... or just keep the warning without promoting, with "-Wno-error=...".
+The "DEVELOPER_CFLAGS += -Wno-error=deprecated-declarations" version
+was merged to 'next', only because I wanted to see the commit
+cleanly pass the tests (and it does), but I do think in the longer
+term (like, before the topic hits 'master'), it probably is better
+to do this for everybody, not just for those who use DEVELOPER=Yes.
 
-> We care a lot more about the deprecation once the
-> alternative has been around for a while, and/or the old way of doing
-> things is about to be removed. And if we just wait until that removal,
-> then we do not have to rely on deprecation warnings. The build will
-> break just fine on its own. :)
-
-Yes and no.  It is not always like "this symbol is now known under
-this different name", which is trivial to adjust.  I briefly tried
-to see how IOCTL -> SEEK change should look like until I realized
-that the new way was invented too recently and stopped looking, but
-it would involve changes to the function logic in the callback
-functions, as the function signature---both parameters and its
-return values---of the callback changes.  I do not want to see us
-scrambling to make such adjustments to the code at the last minute,
-so some sort of advance warning is a good thing to have.
+So, further patches on top are very much welcomed.
 
 Thanks.
+
 
