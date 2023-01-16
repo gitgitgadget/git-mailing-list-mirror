@@ -2,136 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 8DF42C46467
-	for <git@archiver.kernel.org>; Mon, 16 Jan 2023 19:08:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 0142DC54EBE
+	for <git@archiver.kernel.org>; Mon, 16 Jan 2023 19:08:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232656AbjAPTIF (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Jan 2023 14:08:05 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34230 "EHLO
+        id S232509AbjAPTIR (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Jan 2023 14:08:17 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230509AbjAPTID (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jan 2023 14:08:03 -0500
-Received: from mx-out1.startmail.com (mx-out1.startmail.com [145.131.90.139])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A65D274BF
-        for <git@vger.kernel.org>; Mon, 16 Jan 2023 11:08:02 -0800 (PST)
-From:   Toon Claes <toon@iotcl.com>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=startmail.com;
-        s=2020-07; t=1673896081;
-        bh=2g/f1OsUPrxZRqWVup/kGvShit7MvugavLOu8TBOmfw=;
-        h=From:To:Subject:Date:Message-Id:In-Reply-To:References:
-         Mime-Version:Content-Transfer-Encoding:From:Subject:To:Date:Sender:
-         Content-Type:Content-Transfer-Encoding:Content-Disposition:
-         Mime-Version:Reply-To:In-Reply-To:References:Message-Id:Autocrypt;
-        b=C4SULXHguvkXCMyi0OkZG+1iQI+0PgIbFU5E612Zme3LhHG7Y4G47bbq7XHEOhNT2
-         72tKLJKQL+uRzddo8278ATGh14O4Ac9tYU5gNcMOCRfc0IW+4nCC0SwBE+P1fXmY3R
-         egUkmw29lar6UHENxWQzchMaptUDv39Rc8fTqfXBKDakRaJYiaLgcV5hAQEPsAiOtZ
-         CKiaebJiKAZgeHccUkCSgrDLpfpvLFlh2t74OB1AumLIXb0GCF0GgJcWB2nh1KNWgz
-         B9mx/YTkun84CAEZ8O/EcYXKgwKzo3FmUmm9FU5BvFrwvQ34ACsMj68Po6PXTontmz
-         a1rJBqFRmEl3g==
-To:     git@vger.kernel.org
-Cc:     Toon Claes <toon@iotcl.com>,
-        Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v3 1/1] cat-file: quote-format name in error when using -z
-Date:   Mon, 16 Jan 2023 20:07:49 +0100
-Message-Id: <20230116190749.4141516-2-toon@iotcl.com>
-In-Reply-To: <20230116190749.4141516-1-toon@iotcl.com>
-References: <20230105062447.2943709-1-toon@iotcl.com>
- <20230116190749.4141516-1-toon@iotcl.com>
-Mime-Version: 1.0
+        with ESMTP id S233766AbjAPTIM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jan 2023 14:08:12 -0500
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [IPv6:2001:67c:2178:6::1d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69E3D2A145
+        for <git@vger.kernel.org>; Mon, 16 Jan 2023 11:08:10 -0800 (PST)
+Received: from relay2.suse.de (relay2.suse.de [149.44.160.134])
+        by smtp-out2.suse.de (Postfix) with ESMTP id 144A360C20;
+        Mon, 16 Jan 2023 19:08:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1673896089; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=GoRjl25TrlkeJegQmMAFiNbLuGvDyDX1x4ESS7iX7/E=;
+        b=Amm8XtT3FAeqWzzpwoLXsVu54CsPrnmUBD4RQzcCgP7h6F2yGH0PET07r9ZJysRKce8WfM
+        m0G1yX1EQ9H64ky8ogG8baJEPaYaq2rEeGYKMjy7IXTXxvAJso6dzleraA/bWj0ZDlj1Fx
+        YG1e5rR5Qg+Xhwh6DmzFKp69fyjXboo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1673896089;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=GoRjl25TrlkeJegQmMAFiNbLuGvDyDX1x4ESS7iX7/E=;
+        b=vzxz2yYexFG+8OfTur+WKNP2e/tEYiEv2859fDSlzqtc9z5UqxDkjLPJeqIdGb6wB2nKoX
+        YgDham/YjnvM2zDw==
+Received: from kitsune.suse.cz (kitsune.suse.cz [10.100.12.127])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by relay2.suse.de (Postfix) with ESMTPS id F37762C141;
+        Mon, 16 Jan 2023 19:08:08 +0000 (UTC)
+Date:   Mon, 16 Jan 2023 20:08:07 +0100
+From:   Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To:     Hans Petter Selasky <hps@selasky.org>
+Cc:     git@vger.kernel.org
+Subject: Re: Gitorious should use CRC128 / 256 / 512 instead of SHA-1
+Message-ID: <20230116190807.GF16547@kitsune.suse.cz>
+References: <9c0fda42-67ab-f406-489b-38a2d9bbcfc2@selasky.org>
+ <20230115135245.GB16547@kitsune.suse.cz>
+ <b1984123-569a-c290-8048-158c1c5e08b4@selasky.org>
+ <20230116091346.GC16547@kitsune.suse.cz>
+ <6a398405-e5f8-0b78-e463-41d79e49e78b@selasky.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <6a398405-e5f8-0b78-e463-41d79e49e78b@selasky.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since it's supported to have NUL-delimited input, introduced in
-db9d67f2e9 (builtin/cat-file.c: support NUL-delimited input with `-z`,
-2022-07-22), it's possible to pass paths that contain newlines. This
-works great when the object is found, but when it's not, the input path
-is returned in the error message. Because this can contain newlines, the
-error message might get spread over multiple lines, making it harder to
-machine-parse this error message.
+On Mon, Jan 16, 2023 at 10:55:34AM +0100, Hans Petter Selasky wrote:
+> On 1/16/23 10:13, Michal Suchánek wrote:
+> > when that data is copied to a new location a new
+> > CRC is calculated that can detect an error in that location.
+> 
+> Yes, that is correct, but what is "copying data"? Are you saying that
+> copying data is always error free?
 
-With this change, the input is quote-formatted in the error message, if
-needed. This ensures the error message is always on a single line and
-makes parsing the error more straightforward.
+Maybe you should not cut out the answer to your qestion?
 
-Signed-off-by: Toon Claes <toon@iotcl.com>
----
- builtin/cat-file.c  | 19 +++++++++++++++++++
- t/t1006-cat-file.sh |  8 ++++++++
- 2 files changed, 27 insertions(+)
+Thanks
 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index cc17635e76..b678f69773 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -14,6 +14,7 @@
- #include "tree-walk.h"
- #include "oid-array.h"
- #include "packfile.h"
-+#include "quote.h"
- #include "object-store.h"
- #include "promisor-remote.h"
- #include "mailmap.h"
-@@ -455,8 +456,17 @@ static void batch_object_write(const char *obj_name,
- 						       &data->oid, &data->info,
- 						       OBJECT_INFO_LOOKUP_REPLACE);
- 		if (ret < 0) {
-+			struct strbuf quoted = STRBUF_INIT;
-+
-+			if (opt->nul_terminated &&
-+			    obj_name) {
-+				quote_c_style(obj_name, &quoted, NULL, 0);
-+				obj_name = quoted.buf;
-+			}
-+
- 			printf("%s missing\n",
- 			       obj_name ? obj_name : oid_to_hex(&data->oid));
-+			strbuf_release(&quoted);
- 			fflush(stdout);
- 			return;
- 		}
-@@ -503,6 +513,13 @@ static void batch_one_object(const char *obj_name,
- 	result = get_oid_with_context(the_repository, obj_name,
- 				      flags, &data->oid, &ctx);
- 	if (result != FOUND) {
-+		struct strbuf quoted = STRBUF_INIT;
-+
-+		if (opt->nul_terminated) {
-+			quote_c_style(obj_name, &quoted, NULL, 0);
-+			obj_name = quoted.buf;
-+		}
-+
- 		switch (result) {
- 		case MISSING_OBJECT:
- 			printf("%s missing\n", obj_name);
-@@ -527,6 +544,8 @@ static void batch_one_object(const char *obj_name,
- 			       result);
- 			break;
- 		}
-+
-+		strbuf_release(&quoted);
- 		fflush(stdout);
- 		return;
- 	}
-diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 23b8942edb..e8ce20e739 100755
---- a/t/t1006-cat-file.sh
-+++ b/t/t1006-cat-file.sh
-@@ -447,6 +447,14 @@ test_expect_success FUNNYNAMES '--batch-check, -z with newline in input' '
- 	test_cmp expect actual
- '
-
-+test_expect_success '--batch-check, -z with newline in non-existent named object' '
-+	printf "HEAD:newline${LF}missing" >in &&
-+	git cat-file --batch-check -z <in >actual &&
-+
-+	printf "\"HEAD:newline\\\\nmissing\" missing\n" >expect &&
-+	test_cmp expect actual
-+'
-+
- batch_command_multiple_info="info $hello_sha1
- info $tree_sha1
- info $commit_sha1
---
-2.39.0.rc0.57.g2e71cbbddd.dirty
+Michal
