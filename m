@@ -2,116 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 34F52C677F1
-	for <git@archiver.kernel.org>; Mon, 16 Jan 2023 17:59:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 9ECD8C46467
+	for <git@archiver.kernel.org>; Mon, 16 Jan 2023 18:42:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232999AbjAPR7m (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Jan 2023 12:59:42 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43294 "EHLO
+        id S233024AbjAPSmk (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Jan 2023 13:42:40 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235169AbjAPR6p (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jan 2023 12:58:45 -0500
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB0A825E3F
-        for <git@vger.kernel.org>; Mon, 16 Jan 2023 09:41:50 -0800 (PST)
-Received: by mail-wm1-x32f.google.com with SMTP id j16-20020a05600c1c1000b003d9ef8c274bso18383571wms.0
-        for <git@vger.kernel.org>; Mon, 16 Jan 2023 09:41:50 -0800 (PST)
+        with ESMTP id S234952AbjAPSmH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jan 2023 13:42:07 -0500
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0B24298F8
+        for <git@vger.kernel.org>; Mon, 16 Jan 2023 10:35:54 -0800 (PST)
+Received: by mail-pl1-x634.google.com with SMTP id jn22so31108080plb.13
+        for <git@vger.kernel.org>; Mon, 16 Jan 2023 10:35:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=IdUj7nF775Z77tkBkChdAuUqGNjbijlQNF6bHr72EVA=;
-        b=kGXZpzjsN86wQT/92Iwi4gbJpEWwsPf3MrxAjBWoylylso4zfKhP0m8+JcbN9T2MIC
-         xblB4Y1lyVXTFtuvNFkOscyhs3VSIs5/CFS+piLfJ3Zapmm39Z6+Xgmwt/+JG0gR5H0r
-         uAbuVD6jw3nDkY7ibI6+nynuquRrhT1rTODSBjXXpytPsmtlpoNUqWprSacB56IRVReL
-         BU46+iIfZdUEbGyY9c+B27RDgCYZTfR7eQiVAdtKfjFvzZVipS9eD5tWUJYue7mIe9Ys
-         AK9pAHRuUWZI3XhuMr84GpQA3NLQZeyZuC1lHLySBjM7aBxTeChUwejs/1278Wm/WjrR
-         LM9w==
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Y8abCDpS7EZvDRBi4o6EbsdOWD88SJ8Vq4/Fngl3QaY=;
+        b=I4T6oCfv1kuduxOcwFjMMRcQE8SXuvwpMv2NZT4yO8qwcPCaGvXwjAOMnajriOHmw5
+         Vs5lkbeTR/ddPc2bZxP+RSn5jA0HRCwJx7Zb0oiKuGeZcXo3ZzriwDL+Rb3KJN0kawCk
+         mLC1mNyGAZEf8I1DDevBGuJzJQI3xECh2vLo1KgbwmcIsKE6kPkpeopHxe25cgfToJcb
+         YTpnQi0o6e/CHZ4952mE4j1fOh1vyExiz2ujuukp9ecrzfAr62vQWADgmEUIp4ZlD/GZ
+         jlxSsdsBEAD6xAJLPUCpXpfZJdH8YxnHxoavmYfzM7wP2K044JlKKdTNkc7vT83og9bD
+         q39g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IdUj7nF775Z77tkBkChdAuUqGNjbijlQNF6bHr72EVA=;
-        b=ooSdjPUBPEiHNN0tMF5bUdKwuqQoeF4gtYs+JdoRIb9XFmnLX292g5kNy8mKOSxJ78
-         B9FXcjaHVF2y8RGEfbGztlXPhYx7UohkXMEOldKa/nHj/h4K1b3hHGEaJE6xP8FTvB5s
-         0J5NYOsQOJ9h2PoIjevrsLoA18IYXYTDJ6u0mC7lnZTCFxACG3EUW8eXSA1RxHgO8Ss8
-         1SaZgCuRt7041h1+yuyspHlbmaLDtOTPI4ZLLfg7h0wfSClxRoUwZ4lvkWqS1KqHEIq6
-         gPfFQUsSPPeL1xTlPJTMu7iR8n8PTJkd4gBVPpmGFUZKkLXYsqY3IRCMCGxt4+HL8Fhf
-         Dm+Q==
-X-Gm-Message-State: AFqh2koW7LzmhrE/U+DKRKVD1HO2d3nKLwF7pX1yZ9PVHOzko84Ua3f6
-        SIi5RJhQX68pO4eckAY+ZULsYO/QUz8=
-X-Google-Smtp-Source: AMrXdXsi2veAtgT6h3uQxqCPfDLR6m7FUSHjAzBReUcqWySgrKKZnA0PKVYdbZiswXkFm31n4jCPbQ==
-X-Received: by 2002:a05:600c:3c83:b0:3d9:e5d3:bf with SMTP id bg3-20020a05600c3c8300b003d9e5d300bfmr277005wmb.32.1673890909250;
-        Mon, 16 Jan 2023 09:41:49 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id bq14-20020a5d5a0e000000b002bdf2739cabsm6965141wrb.1.2023.01.16.09.41.48
+        h=mime-version:user-agent:message-id:in-reply-to:date:references
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Y8abCDpS7EZvDRBi4o6EbsdOWD88SJ8Vq4/Fngl3QaY=;
+        b=s+JK95Smbjf3DFnexAxVbK8yL4B6ZE9zILm4YIDo8Rvw3qLjMwpPVb2NrwhN5oDiH4
+         SRb12vLGoLbtHSXpHdmAF9EUXCnytgzKN2SMrMoka6XMA+xbLxgdQbf19XNlc2BTPApd
+         Lz6VapvHBQ8K2s6f25aiey9fCMRTQnAAYDjQri39AVTvVdxkL0O1Z6N1+PCO4GmHGndP
+         gFbjxICUaWNfZ7VOug3ZJl5JbAmZTjrb74lYOiP6gVYvXiTX/v/bXRPUEMxxFsyq/qto
+         iXE1dy2yykE0UrSxpQxWRA1h2rWUQaVMWMidQE+4PMAcGbAoNDBHHjoT78FZJYAqNp1F
+         8Eww==
+X-Gm-Message-State: AFqh2kp+zcfVLHfNSJGkwQ+6799vEQ/OUd+CGI9hy23YNEcoBA7QCAbt
+        vM0xLaSrAb53gczgiH2E21c=
+X-Google-Smtp-Source: AMrXdXvCKhi7JXJu/6HHHYD/Do3k4757t+5vUl97vjKMIiQBwmA7ot+7BP/rvhM2TRQPNzeLXlZBog==
+X-Received: by 2002:a17:903:40c4:b0:194:7ca9:70a7 with SMTP id t4-20020a17090340c400b001947ca970a7mr742287pld.3.1673894154129;
+        Mon, 16 Jan 2023 10:35:54 -0800 (PST)
+Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
+        by smtp.gmail.com with ESMTPSA id j1-20020a170902da8100b00192fdd3af5dsm19625767plx.181.2023.01.16.10.35.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Jan 2023 09:41:48 -0800 (PST)
-Message-Id: <pull.1464.git.1673890908453.gitgitgadget@gmail.com>
-From:   "Philippe Blain via GitGitGadget" <gitgitgadget@gmail.com>
-Date:   Mon, 16 Jan 2023 17:41:48 +0000
-Subject: [PATCH] branch: improve advice when --recurse-submodules fails
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Mon, 16 Jan 2023 10:35:53 -0800 (PST)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] format-patch: unleak "-v <num>"
+References: <xmqqv8l8gr6s.fsf@gitster.g>
+        <Y8WJnGHs5nM5GwBM@coredump.intra.peff.net>
+Date:   Mon, 16 Jan 2023 10:35:53 -0800
+In-Reply-To: <Y8WJnGHs5nM5GwBM@coredump.intra.peff.net> (Jeff King's message
+        of "Mon, 16 Jan 2023 12:30:04 -0500")
+Message-ID: <xmqqpmbecoom.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Glen Choo <chooglen@google.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Philippe Blain <levraiphilippeblain@gmail.com>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Philippe Blain <levraiphilippeblain@gmail.com>
+Jeff King <peff@peff.net> writes:
 
-'git branch --recurse-submodules start from-here' fails if any submodule
-present in 'from-here' is not yet cloned (under
-submodule.propagateBranches=true). We then give this advice:
+> On Sun, Jan 15, 2023 at 12:03:39AM -0800, Junio C Hamano wrote:
+>
+>> The "subject_prefix" member of "struct revision" usually is always
+>> set to a borrowed string (either a string literal like "PATCH" that
+>> appear in the program text as a hardcoded default, or the value of
+>> "format.subjectprefix") and is never freed when the containing
+>> revision structure is released.  The "-v <num>" codepath however
+>> violates this rule and stores a pointer to an allocated string to
+>> this member, relinquishing the responsibility to free it when it is
+>> done using the revision structure, leading to a small one-time leak.
+>> 
+>> Instead, keep track of the string it allocates to let the revision
+>> structure borrow, and clean it up when it is done.
+>
+> FWIW, this looks obviously correct to me.
+>
+> The word "unleak" in the subject made me think about UNLEAK(), so this
+> is a small tangent. This is exactly the kind of case that I designed
+> UNLEAK() for, because the solution really is "while you are assigning to
+> X, also keep a copy of the pointer in Y to be freed later".
 
-   "You may try updating the submodules using 'git checkout from-here && git submodule update --init'"
+Yup.  I was originally planning to use UNLEAK(), but it felt ugly to
+UNLEAK(rev.subject_prefix), as it stores borrowed pointer sometimes
+and owned pointer some other times, which is the exact reason why I
+started looking for a clean way to plug this leak.  So I ended up
+with declaring that the member should only store a borrowed pointer.
 
-If 'submodule.recurse' is set, 'git checkout from-here' will also fail since
-it will try to recursively checkout the submodules.
+> And UNLEAK() is just "keep a copy of the pointer in Y to know that we
+> _could_ free it later". And of course "do nothing if we are not
+> leak-detecting". But since we seem to be moving away from UNLEAK(), and
+> since it would not even save any lines here, I'm perfectly happy with
+> this solution.
 
-Improve the advice by adding '--no-recurse-submodules' to the checkout
-command.
+The first sentence needs to be rephrased, as it does not make much
+sense to have something usually be X and always be X at the same
+time (I'd just remove "always" from there).
 
-Signed-off-by: Philippe Blain <levraiphilippeblain@gmail.com>
----
-    branch: improve advice when --recurse-submodules fails
-    
-    Hi Glen,
-    
-    This is a small improvement I thought about when looking at that code
-    recently.
-    
-    Cheers,
-    
-    Philippe.
+Thanks.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1464%2Fphil-blain%2Fbranch-recurse-improve-advice-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1464/phil-blain/branch-recurse-improve-advice-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1464
-
- branch.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/branch.c b/branch.c
-index d182756827f..e5614b53b36 100644
---- a/branch.c
-+++ b/branch.c
-@@ -756,7 +756,7 @@ void create_branches_recursively(struct repository *r, const char *name,
- 				_("submodule '%s': unable to find submodule"),
- 				submodule_entry_list.entries[i].submodule->name);
- 			if (advice_enabled(ADVICE_SUBMODULES_NOT_UPDATED))
--				advise(_("You may try updating the submodules using 'git checkout %s && git submodule update --init'"),
-+				advise(_("You may try updating the submodules using 'git checkout --no-recurse-submodules %s && git submodule update --init'"),
- 				       start_commitish);
- 			exit(code);
- 		}
-
-base-commit: 4dbebc36b0893f5094668ddea077d0e235560b16
--- 
-gitgitgadget
