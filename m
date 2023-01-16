@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 60E58C3DA78
-	for <git@archiver.kernel.org>; Mon, 16 Jan 2023 00:02:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 79914C46467
+	for <git@archiver.kernel.org>; Mon, 16 Jan 2023 00:04:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231743AbjAPACv (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Jan 2023 19:02:51 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38062 "EHLO
+        id S231806AbjAPAEe (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Jan 2023 19:04:34 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231747AbjAPACt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Jan 2023 19:02:49 -0500
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 132453C04
-        for <git@vger.kernel.org>; Sun, 15 Jan 2023 16:02:48 -0800 (PST)
-Received: by mail-wr1-x42e.google.com with SMTP id h16so25956673wrz.12
-        for <git@vger.kernel.org>; Sun, 15 Jan 2023 16:02:48 -0800 (PST)
+        with ESMTP id S231803AbjAPAEa (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Jan 2023 19:04:30 -0500
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F5B33C08
+        for <git@vger.kernel.org>; Sun, 15 Jan 2023 16:04:29 -0800 (PST)
+Received: by mail-wm1-x331.google.com with SMTP id q8so7126397wmo.5
+        for <git@vger.kernel.org>; Sun, 15 Jan 2023 16:04:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:cc:to:from:subject:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7QeWmDjGbA9//gmhZhBC1lEEcZtNuQUCVJnU8ORPTPA=;
-        b=AbZI1EjBkBFat+1jWLjwFBCeZ2fxwaEM1oXUh+yVTgETAdut0hI/9Z5bzK9qg7aCCD
-         aE+MIA96bOuXdKOwBaOch0HwWiHJKGgL3ecq5WwZj+OK4rvB6oxt1O/66K7Bxb52e9jZ
-         sDRt1jVTe8X3ykf7zlBKybPZqkURj/Go6sYbGdwMFXcVM0WzrzV0HMlPto6nhdH2JBzz
-         q+GLOcpsxcGQxZHNETDYNhK9dYcF6tUv65i2OuzIEKenap7V0EcFQnxy/c9W189HmCi+
-         U1rzCAQTAKOXXvUCCgE1UNu1dRJAogn6qGLTt+El37DluHYxmIBj3HUqTeppaPkm9NPx
-         jWHw==
+        bh=rXI1bGYPQ45Alos3FcjXnRfoMg3pCfn62OLefjH9Q0w=;
+        b=UR8UrnZNgVDt0O8vmU30vwdksRhUGgFlaH+wwq02n0K6XRP/yOIGAZgz2C7hL+h3LT
+         jttHmzuvZagIvWxAATy4hAWcm7vN/wUcnqp6seXEQz9pVi5xCo97ynwA9T/O1XJfSWX2
+         6p4XUTSYQV4utGroYI5uXtSw+uK4Chcai0hBqD1cDpAq7khKrtozCjSWXK0fyWI77GJd
+         4NcGijbGrX1P1BCBeTu7PDKHNGsoeasILZkUK2Aar2etLjfzdAyXHjvWwVp+qXBrGHOG
+         5ImIpWH6RYtX0hjbT/wpNk4q2ZXb83IQuwmljBT//OHJuReE7GbGArhvV9gbJ3Pk+k4d
+         hoFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:cc:to:from:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7QeWmDjGbA9//gmhZhBC1lEEcZtNuQUCVJnU8ORPTPA=;
-        b=43C4ksLrkgghLTdQspGx+l/tZ6sENba2EUPeD6kJUD6OkZRitZGht3VPjc6Rhw1XNT
-         1oiVUs/p6G/CSMb4AD/BfFCO9pCk+4v0P9obknhkIq7VerHlbtTBLkuuSDijBheZn5g/
-         hTpROLPYRdDs6Xcgj6uoyApUX5angsVWarXxobH7fxiZQWSmKzWnVczSOAKomMEEJT+7
-         Lsr4eMzfofKH6bwyh1awr/2BLWgEoRKicndlXVd/ACW/fDXMqrM61B/6WYmjMkq6pESR
-         R4thgELziKxxN2CW2IZRzsYDdwhScT6dYjRISFMNbzAYeevt2Fh7cjZYWgyJc+E/Ejnr
-         8pTQ==
-X-Gm-Message-State: AFqh2kpE38g6BocUmFIHyhyIuIFn9zxdnxZmgfTNDtpNsmO+59BYYq9+
-        QuuxdPzoF1JCQvDNE+KsRG+cZL1GcF4=
-X-Google-Smtp-Source: AMrXdXt2l3c2MhRaV5GQg5FepYYhJ7aBBPbwBpPWahoooYtndfvyJFOaSoqMiZwco1BRaDcBa4IXwA==
-X-Received: by 2002:adf:fbc7:0:b0:2bd:befd:2061 with SMTP id d7-20020adffbc7000000b002bdbefd2061mr9920397wrs.21.1673827366388;
-        Sun, 15 Jan 2023 16:02:46 -0800 (PST)
+        bh=rXI1bGYPQ45Alos3FcjXnRfoMg3pCfn62OLefjH9Q0w=;
+        b=j1paPKrW/OjV2CvC/OCz3ewkwvL2MJ67wPEmRLnWR65lD9k3fnWP1EhT3b8S0Ev+ij
+         y+0b/mjZ4RPLht6IGe6GPeRFh04DYRge//5go/wCZyXrhYLalrc5MhjQpx1ySfECTt5U
+         5csrhSjH6LT7oEcqHtkpKqFJzdhEIpW25ORcFdz9E0lTCpmPerrodnbI4VHY0BCsOOot
+         BbHsOogm9NTt85wQAEWy6ouwJFt56CmeCwFK9abOlM+JX3ceGVusR9Tl5ikBkw+Ckiv1
+         UknwYh6dTZl9I5L0iCho29aOlMuzWP2JOHBd9i8UF1TTdgpgV8Cd1P+Y1Q3Aq5WNeizV
+         u0OA==
+X-Gm-Message-State: AFqh2kpXkfAEFzWdS6tJCTnXirFaZyU7GinEbAMw6Aj8ZY2RkFIQdkSX
+        +zMUr8nwsPzxK7YqR8VNm/FsJ2aV7sg=
+X-Google-Smtp-Source: AMrXdXuX/17Tz4x97Gfm1o6WnXRMB+A9ylp9WEt7IMjMse7ckhJ1PCKN3e2pNcKyJfHLnOfy2bDCLw==
+X-Received: by 2002:a7b:cb59:0:b0:3d3:5709:68e8 with SMTP id v25-20020a7bcb59000000b003d3570968e8mr65494469wmj.36.1673827467851;
+        Sun, 15 Jan 2023 16:04:27 -0800 (PST)
 Received: from [192.168.2.52] (94.red-88-14-213.dynamicip.rima-tde.net. [88.14.213.94])
-        by smtp.gmail.com with ESMTPSA id s1-20020a5d4ec1000000b002882600e8a0sm24909012wrv.12.2023.01.15.16.02.45
+        by smtp.gmail.com with ESMTPSA id t14-20020adfeb8e000000b002baa780f0fasm24552934wrn.111.2023.01.15.16.04.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 15 Jan 2023 16:02:46 -0800 (PST)
-Subject: [PATCH v2 2/3] branch: description for orphan branch errors
+        Sun, 15 Jan 2023 16:04:27 -0800 (PST)
+Subject: [PATCH 3/3] branch: rename orphan branches in any worktree
 From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
 References: <ffd675e9-8a64-ae05-fc3b-36ae99092735@gmail.com>
  <34a58449-4f2e-66ef-ea01-119186aebd23@gmail.com>
-Message-ID: <1d866847-7535-8905-a8ad-a1feb158fa36@gmail.com>
-Date:   Mon, 16 Jan 2023 01:02:45 +0100
+Message-ID: <a47ff192-db67-dc4c-ded3-cd1e7c197726@gmail.com>
+Date:   Mon, 16 Jan 2023 01:04:26 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
@@ -68,128 +68,72 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In bcfc82bd48 (branch: description for non-existent branch errors,
-2022-10-08) we check the current HEAD to detect if the branch to operate
-with is an orphan branch, to avoid the confusing error: "No branch
-named...".
+In cfaff3aac (branch -m: allow renaming a yet-unborn branch, 2020-12-13)
+we added support for renaming an orphan branch, skipping rename_ref() if
+the branch to rename is an orphan branch, checking the current HEAD.
 
-If we are asked to operate with an orphan branch in a different working
-tree than the current one, we need to check the HEAD in that different
-working tree.
+But the orphan branch to be renamed can be an orphan branch in a
+different working tree than the current one, i.e. not the current HEAD.
 
-Let's extend the check we did in bcfc82db48, to all HEADs in the
-repository, using the helper introduced in 31ad6b61bd (branch: add
-branch_checked_out() helper, 2022-06-15)
-
-"ishead_reject_rebase_or_bised_branch()" already returns whether the
-branch to operate with is HEAD in any working tree in the repository.
-Let's use this information in "copy_or_rename_branch()", instead of the
-helper.
-
-Note that we now call reject_rebase_or_bisect_branch() earlier, which
-introduces a change in the error displayed when a combination of
-unsupported conditions occur simultaneously: the desired destination
-name is invalid, and the branch to operate on is being overrun or
-bisected.  With "foo" being rebased or bisected, this:
-
-	$ git branch -m foo HEAD
-	fatal: 'HEAD' is not a valid branch name.
-
-... becomes:
-
-	$ git branch -m foo HEAD
-	fatal: Branch refs/heads/foo is being ...
+Let's make "ishead_reject_rebase_or_bisect_branch()" return a flag
+indicating if the returned value refers to an orphan branch, and use it
+to extend what we did in cfaff3aac, to all HEADs in the repository.
 
 Signed-off-by: Rubén Justo <rjusto@gmail.com>
 ---
- builtin/branch.c       | 25 +++++++++++--------------
- t/t3202-show-branch.sh | 18 ++++++++++++++++++
- 2 files changed, 29 insertions(+), 14 deletions(-)
+ builtin/branch.c  |  5 ++---
+ t/t3200-branch.sh | 16 ++++++++++++++++
+ 2 files changed, 18 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index a1ee728ca3..6bb5f50950 100644
+index 6bb5f50950..7e6baa291a 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -532,12 +532,12 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
- 			die(_("Invalid branch name: '%s'"), oldname);
- 	}
+@@ -495,7 +495,7 @@ static int ishead_and_reject_rebase_or_bisect_branch(const char *target)
+ 		struct worktree *wt = worktrees[i];
  
--	if ((copy || strcmp(head, oldname)) && !ref_exists(oldref.buf)) {
--		if (copy && !strcmp(head, oldname))
--			die(_("No commit on branch '%s' yet."), oldname);
--		else
--			die(_("No branch named '%s'."), oldname);
--	}
-+	ishead = ishead_and_reject_rebase_or_bisect_branch(oldref.buf);
-+
-+	if ((copy || !ishead) && !ref_exists(oldref.buf))
-+		die(ishead
-+		    ? _("No commit on branch '%s' yet.")
-+		    : _("No branch named '%s'."), oldname);
+ 		if (wt->head_ref && !strcmp(target, wt->head_ref))
+-			ret = 1;
++			ret = 1 + (is_null_oid(&wt->head_oid) ? 1 : 0);
  
- 	/*
- 	 * A command like "git branch -M currentbranch currentbranch" cannot
-@@ -548,8 +548,6 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
- 	else
- 		validate_new_branchname(newname, &newref, force);
+ 		if (!wt->is_detached)
+ 			continue;
+@@ -560,8 +560,7 @@ static void copy_or_rename_branch(const char *oldname, const char *newname, int
+ 		strbuf_addf(&logmsg, "Branch: renamed %s to %s",
+ 			    oldref.buf, newref.buf);
  
--	ishead = ishead_and_reject_rebase_or_bisect_branch(oldref.buf);
--
- 	if (!skip_prefix(oldref.buf, "refs/heads/", &interpreted_oldname) ||
- 	    !skip_prefix(newref.buf, "refs/heads/", &interpreted_newname)) {
- 		BUG("expected prefix missing for refs");
-@@ -810,7 +808,7 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 
- 		strbuf_addf(&branch_ref, "refs/heads/%s", branch_name);
- 		if (!ref_exists(branch_ref.buf))
--			error((!argc || !strcmp(head, branch_name))
-+			error((!argc || branch_checked_out(branch_ref.buf))
- 			      ? _("No commit on branch '%s' yet.")
- 			      : _("No branch named '%s'."),
- 			      branch_name);
-@@ -854,11 +852,10 @@ int cmd_branch(int argc, const char **argv, const char *prefix)
- 			die(_("no such branch '%s'"), argv[0]);
- 		}
- 
--		if (!ref_exists(branch->refname)) {
--			if (!argc || !strcmp(head, branch->name))
--				die(_("No commit on branch '%s' yet."), branch->name);
--			die(_("branch '%s' does not exist"), branch->name);
--		}
-+		if (!ref_exists(branch->refname))
-+			die((!argc || branch_checked_out(branch->refname))
-+			    ? _("No commit on branch '%s' yet.")
-+			    : _("branch '%s' does not exist"), branch->name);
- 
- 		dwim_and_setup_tracking(the_repository, branch->name,
- 					new_upstream, BRANCH_TRACK_OVERRIDE,
-diff --git a/t/t3202-show-branch.sh b/t/t3202-show-branch.sh
-index ea7cfd1951..be20ebe1d5 100755
---- a/t/t3202-show-branch.sh
-+++ b/t/t3202-show-branch.sh
-@@ -221,4 +221,22 @@ test_expect_success 'fatal descriptions on non-existent branch' '
- 	test_cmp expect actual
+-	if (!copy &&
+-	    (!head || strcmp(oldname, head) || !is_null_oid(&head_oid)) &&
++	if (!copy && !(ishead > 1) &&
+ 	    rename_ref(oldref.buf, newref.buf, logmsg.buf))
+ 		die(_("Branch rename failed"));
+ 	if (copy && copy_existing_ref(oldref.buf, newref.buf, logmsg.buf))
+diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
+index 5a169b68d6..966583dc7d 100755
+--- a/t/t3200-branch.sh
++++ b/t/t3200-branch.sh
+@@ -279,6 +279,22 @@ test_expect_success 'git branch -M and -C fail on detached HEAD' '
+ 	test_cmp expect err
  '
  
-+test_expect_success 'error descriptions on orphan branch' '
++test_expect_success 'git branch -m should work with orphan branches' '
++	test_when_finished git checkout - &&
 +	test_when_finished git worktree remove -f wt &&
 +	git worktree add wt --detach &&
-+	git -C wt checkout --orphan orphan-branch &&
-+	test_branch_op_in_wt() {
-+		test_orphan_error() {
-+			test_must_fail git $* 2>actual &&
-+			test_i18ngrep "No commit on branch .orphan-branch. yet.$" actual
-+		} &&
-+		test_orphan_error -C wt branch $1 $2 &&                # implicit branch
-+		test_orphan_error -C wt branch $1 orphan-branch $2 &&  # explicit branch
-+		test_orphan_error branch $1 orphan-branch $2           # different worktree
-+	} &&
-+	test_branch_op_in_wt --edit-description &&
-+	test_branch_op_in_wt --set-upstream-to=ne &&
-+	test_branch_op_in_wt -c new-branch
++
++	# rename orphan in another worktreee
++	git -C wt checkout --orphan orphan-foo-wt &&
++	git branch -m orphan-foo-wt orphan-bar-wt &&
++	test orphan-bar-wt=$(git -C orphan-worktree branch --show-current) &&
++
++	# rename orphan in the current worktree
++	git checkout --orphan orphan-foo &&
++	git branch -m orphan-foo orphan-bar &&
++	test orphan-bar=$(git branch --show-current)
 +'
 +
- test_done
+ test_expect_success 'git branch -d on orphan HEAD (merged)' '
+ 	test_when_finished git checkout main &&
+ 	git checkout --orphan orphan &&
 -- 
 2.39.0
-
