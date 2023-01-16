@@ -2,93 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9637BC46467
-	for <git@archiver.kernel.org>; Mon, 16 Jan 2023 20:48:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id EEDEDC54EBE
+	for <git@archiver.kernel.org>; Mon, 16 Jan 2023 22:18:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233878AbjAPUsy (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Jan 2023 15:48:54 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45868 "EHLO
+        id S232656AbjAPWSV convert rfc822-to-8bit (ORCPT
+        <rfc822;git@archiver.kernel.org>); Mon, 16 Jan 2023 17:18:21 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233889AbjAPUsj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jan 2023 15:48:39 -0500
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B16452B09F
-        for <git@vger.kernel.org>; Mon, 16 Jan 2023 12:48:38 -0800 (PST)
-Received: by mail-pj1-x102d.google.com with SMTP id v13-20020a17090a6b0d00b00219c3be9830so32128794pjj.4
-        for <git@vger.kernel.org>; Mon, 16 Jan 2023 12:48:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uzjEHAKA9QiMPHZj0V2rs8OnxPX+P065sqZUseLBJUs=;
-        b=Rswk+biqRKbpGwSkgfcmGrL0SWxdyB691BCKujCbEunaBNdRRft4lpYwcRdNwhzdzc
-         z9xuMBf+c/rRtUZYuZfCozbkEDoEACID9oG8ryR6tkl5GiVrQ17XOgrOqwOiai4WPt4Z
-         csGRjP83Iek99uzG8O8t3yPXfAG28gesMIY1GrJdJpgnqPxwT1i10RKPPK9L15tg5IUC
-         3NBwouSBgjlefgVb2rGuEvRUEjrG3V6UatUBd1nuB+ZarCT9muTzoLXHqJryPyUBqgt1
-         NdXSDVePt8dkoZCmsyk27lcbNdM8gbEok5E6VmsOZTEtkdVZNWlli/TOe7ZSu43KIgXe
-         CdDQ==
+        with ESMTP id S231158AbjAPWSR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jan 2023 17:18:17 -0500
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B6FEC657
+        for <git@vger.kernel.org>; Mon, 16 Jan 2023 14:18:16 -0800 (PST)
+Received: by mail-pf1-f174.google.com with SMTP id s3so19455737pfd.12
+        for <git@vger.kernel.org>; Mon, 16 Jan 2023 14:18:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:user-agent:message-id
-         :in-reply-to:date:references:subject:cc:to:from:sender
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uzjEHAKA9QiMPHZj0V2rs8OnxPX+P065sqZUseLBJUs=;
-        b=timq842k9F1+Fk/DZT6wjwmCkJfZwp3tL/cZSrsACFaWZXDiN0lXLpqV2ARUvIG9Wj
-         FvcWI9ukLE2aKgYAuvVV9V6nxPzb89CQ72KL8DDA208bsromFBlsUYrNUyPT7qGuiSsG
-         JN5S1R7bYEIb2gK+FObssW29Wrh1KQSpcD99r29y6d4lP6hjmKEn2mtkQtGIQK7GoddL
-         m54McyCbToACT49sD7w2acyghndja3/EQQZGUMWCZMkQ6OLeF9eKLcOOyKPPF/qO2v3T
-         I3iYRcUqfi/gRwbhMGd5Ys0C0VUEbEXVUcuCofyGenu1UZbiz4qEsNfZkB254kJUZ5El
-         7JOA==
-X-Gm-Message-State: AFqh2kr2vt4ykucDE9LDZpENQLxlPYzzQ0bgWM6tQ3j2VaBGDWa29lUV
-        8sWk8oYHDzN3QCgmNjkYilaXxatOCwg=
-X-Google-Smtp-Source: AMrXdXtKf/I/ktFlJLDsBB05xPQD1mvXAfuXQ6w+0gbt54pskvDxzTcnVbIurdAkbMBS44PlFWvDfw==
-X-Received: by 2002:a17:90a:f198:b0:229:98a2:1b9c with SMTP id bv24-20020a17090af19800b0022998a21b9cmr500891pjb.39.1673902118122;
-        Mon, 16 Jan 2023 12:48:38 -0800 (PST)
-Received: from localhost (33.5.83.34.bc.googleusercontent.com. [34.83.5.33])
-        by smtp.gmail.com with ESMTPSA id p6-20020a17090a4f0600b00218f7c1a7d4sm18792128pjh.56.2023.01.16.12.48.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Jan 2023 12:48:37 -0800 (PST)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2] grep: correctly identify utf-8 characters with
- \{b,w} in -P
-References: <20230108062335.72114-1-carenas@gmail.com>
-        <20230108155217.2817-1-carenas@gmail.com>
-        <230109.86v8lf297g.gmgdl@evledraar.gmail.com>
-Date:   Mon, 16 Jan 2023 12:48:37 -0800
-In-Reply-To: <230109.86v8lf297g.gmgdl@evledraar.gmail.com> (=?utf-8?B?IsOG?=
- =?utf-8?B?dmFyIEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Mon, 09 Jan 2023 12:35:05 +0100")
-Message-ID: <xmqqr0vub3yy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.1 (gnu/linux)
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=v24yeBnBW+SVFbnRRBSaPMbPtoN0w+Ye4/XuFs9RAmE=;
+        b=sRCebMPcTp8xFc7XwZpJHd3T+pFVVwm+MVslhLRXw1TUoFS3pxWdERSPykkNQgSrlK
+         me8HPtvKnI6YLmmIa98gYDoKifrqc6pXAlVFiHtEg0c4pOAnFoSMCvk7FASphe+YeDBs
+         piV0nkdnZaYqMo2lHEyMMt9ZE3K490S5fEOIJeoFGOzW0AwQs+vxrhtqaHeRw2vXjjYR
+         xjD0gHbVDByPM5p8d/0YNPhEwNckAHNC5mMMiN6l02XyPWDMvoIyNTxgd6CuF6JaLm+6
+         Ff1gXGi9Wkd2p5w5QHQrM5X/jc/+d7MeNWqLkRPnS5z3U4SWpf189p2qjXo+VeCR/Yqv
+         N9XA==
+X-Gm-Message-State: AFqh2kotXqDdkEP+tl42+O1tsisFwXg8nOu3rw3sNGr0dOY8ls7hsSKK
+        rZNACca9+ssw5bt4Xyeh2ZeMe2EwjnmfamLV0uycVYxIN+Y=
+X-Google-Smtp-Source: AMrXdXvo5XgC5IZGnGgWTsa9B5aXHNhkHepNaGWvNtAaRdqd7cF7m2FFf6QKRQD/JSvHG/MmfgeAzwBcyEgMKKCkjUc=
+X-Received: by 2002:a63:9dc5:0:b0:478:fbfd:5278 with SMTP id
+ i188-20020a639dc5000000b00478fbfd5278mr37998pgd.268.1673907495401; Mon, 16
+ Jan 2023 14:18:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <20230116172824.93218-1-carenas@gmail.com>
+In-Reply-To: <20230116172824.93218-1-carenas@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 16 Jan 2023 17:18:04 -0500
+Message-ID: <CAPig+cR3=wDFJPr8ViUTVFDx-AvaJUGWNUnqndJ2edQPL5smVw@mail.gmail.com>
+Subject: Re: [PATCH] builtin/checkout: check the branch used in -B with worktrees
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, vustthat@gmail.com, pclouds@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+On Mon, Jan 16, 2023 at 12:30 PM Carlo Marcelo Arenas Belón
+<carenas@gmail.com> wrote:
+> builtin/checkout: check the branch used in -B with worktrees
 
-> But I don't think it's safe to change the default behavior "git-grep",
-> it's not a mere bug fix, but a major behavior change for existing users
-> of grep.patternType=perl.
-> ...
-> Even for Perl, this behavior has been troublesome. Opinions differ, but
-> I think many would agree (and I've CC'd the main authority on Perl's
-> regex engine) that doing this by default was *probably* a mistake.
-> ...
-> As the example at the start shows you can already do this with "(*UCP)"
-> in the pattern, so perhaps we should just link to the pcre2pattern(3)
-> manual from git-grep(1)?
+Thanks for working on this and coming up with a fix. As mentioned
+earlier, I had started looking into it[1], but lacked the time to
+disentangle the logic, so I'm glad to see a patch arrive so quickly.
 
-So, now do we have a final verdict on this patch?  If we are not
-taking the "unconditonally enable ucp" patch (which I tend to agree
-with a safer choice for now), it may make sense to mention (*UCP) in
-our documentation somewhere, perhaps?
+> When multiple worktrees are being used, checkout/switch check
+> that the target branch is not already checked out with code that
+> evolved from 8d9fdd7087 (worktree.c: check whether branch is rebased
+> in another worktree, 2016-04-22), but that logic wasn't valid for
+> -B/-C
+>
+> Avoid reusing the same `branch_info` structure for the checks and
+> assumming that it will be rejected later if is a new branch that
+> already exists as that doesn't apply to -B/-C.
 
+Even though I'm familiar with the bug report[2] which sparked this
+patch, I find the above description somewhat hard to digest; the
+high-level problem it is addressing doesn't jump off the page at me.
+Perhaps it can be rewritten something like this:
 
+    checkout/switch: disallow checking out same branch in multiple worktrees
+
+    Commands `git switch -C` and `git checkout -B` neglect to check
+    whether the branch being forcibly created is already checked out
+    in some other worktree, which can result in the undesirable
+    situation of the same branch being checked out in multiple
+    worktrees. For instance:
+
+        $ git worktree list
+        .../foo    beefb00f [main]
+        $ git worktree add ../other
+        Preparing worktree (new branch 'other')
+        HEAD is now at beefb00f first
+        $ cd ../other
+        $ git switch -C main
+        Switched to and reset branch 'main'
+        $ git worktree list
+        .../foo    beefb00f [main]
+        .../other  beefb00f [main]
+        $
+
+    Fix this problem by teaching `git switch -C` and `git checkout -B`
+    to check whether the branch in question is already checked out
+    elsewhere.
+
+after which you might include some details which you wrote about initially.
+
+> Reported-by: Jinwook Jeong <vustthat@gmail.com>
+> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+> ---
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> @@ -1533,13 +1534,12 @@ static int checkout_branch(struct checkout_opts *opts,
+> -       if (new_branch_info->path && !opts->force_detach && !opts->new_branch &&
+> -           !opts->ignore_other_worktrees) {
+> +       if (check_branch_info->path && !opts->force_detach && !opts->ignore_other_worktrees) {
+>                 int flag;
+>                 char *head_ref = resolve_refdup("HEAD", 0, NULL, &flag);
+>                 if (head_ref &&
+> -                   (!(flag & REF_ISSYMREF) || strcmp(head_ref, new_branch_info->path)))
+> -                       die_if_checked_out(new_branch_info->path, 1);
+> +                   (!(flag & REF_ISSYMREF) || strcmp(head_ref, check_branch_info->path)))
+> +                       die_if_checked_out(check_branch_info->path, 1);
+
+This variable name change (`new_branch_info` => `check_branch_info`)
+helps make the code clearer. Good. (I had found it more than a little
+confusing to have similar named variables `new_branch_info` and
+`opts->new_branch` even though they are unrelated and have very
+different purposes.)
+
+> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+> @@ -125,6 +125,13 @@ test_expect_success 'die the same branch is already checked out' '
+> +test_expect_success 'die the same branch is already checked out (checkout -B)' '
+> +       (
+> +               cd here &&
+> +               test_must_fail git checkout -B newmain
+> +       )
+> +'
+
+Although `git switch` and `git checkout` currently share
+implementation, that might not always be the case going forward. As
+such, this test could be made a bit more robust by testing both
+commands rather than just `git-checkout`. So, perhaps:
+
+    test_expect_success 'die the same branch is already checked out' '
+        (
+            cd here &&
+            test_must_fail git checkout -B newmain &&
+            test_must_fail git switch -C newmain
+        )
+    '
+
+> +test_expect_success 'not die on re-checking out current branch (checkout -B)' '
+> +       (
+> +               cd there &&
+> +               git checkout -B newmain
+> +       )
+> +'
+
+Good to see you considered this case too. (I had tested it myself
+manually when trying out your patch.)
+
+[1]: https://lore.kernel.org/git/CAPig+cQc1+D9gH7BAC-r03bGKWx3a9jpPyLuP-ehH-X2P+fV6Q@mail.gmail.com/
+[2]: https://lore.kernel.org/git/CAA3Q-aaO=vcZd9VLFr8UP-g06be80eUWN_GjygfyGkYmrLx9yQ@mail.gmail.com/
