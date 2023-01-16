@@ -2,61 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 79914C46467
-	for <git@archiver.kernel.org>; Mon, 16 Jan 2023 00:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTP id ECC27C46467
+	for <git@archiver.kernel.org>; Mon, 16 Jan 2023 00:06:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231806AbjAPAEe (ORCPT <rfc822;git@archiver.kernel.org>);
-        Sun, 15 Jan 2023 19:04:34 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39170 "EHLO
+        id S231648AbjAPAGj (ORCPT <rfc822;git@archiver.kernel.org>);
+        Sun, 15 Jan 2023 19:06:39 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40162 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231803AbjAPAEa (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 15 Jan 2023 19:04:30 -0500
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F5B33C08
-        for <git@vger.kernel.org>; Sun, 15 Jan 2023 16:04:29 -0800 (PST)
-Received: by mail-wm1-x331.google.com with SMTP id q8so7126397wmo.5
-        for <git@vger.kernel.org>; Sun, 15 Jan 2023 16:04:29 -0800 (PST)
+        with ESMTP id S231670AbjAPAGh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 15 Jan 2023 19:06:37 -0500
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03BDE3A92
+        for <git@vger.kernel.org>; Sun, 15 Jan 2023 16:06:36 -0800 (PST)
+Received: by mail-wr1-x432.google.com with SMTP id h16so25960975wrz.12
+        for <git@vger.kernel.org>; Sun, 15 Jan 2023 16:06:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:cc:to:from:subject:from:to:cc
          :subject:date:message-id:reply-to;
         bh=rXI1bGYPQ45Alos3FcjXnRfoMg3pCfn62OLefjH9Q0w=;
-        b=UR8UrnZNgVDt0O8vmU30vwdksRhUGgFlaH+wwq02n0K6XRP/yOIGAZgz2C7hL+h3LT
-         jttHmzuvZagIvWxAATy4hAWcm7vN/wUcnqp6seXEQz9pVi5xCo97ynwA9T/O1XJfSWX2
-         6p4XUTSYQV4utGroYI5uXtSw+uK4Chcai0hBqD1cDpAq7khKrtozCjSWXK0fyWI77GJd
-         4NcGijbGrX1P1BCBeTu7PDKHNGsoeasILZkUK2Aar2etLjfzdAyXHjvWwVp+qXBrGHOG
-         5ImIpWH6RYtX0hjbT/wpNk4q2ZXb83IQuwmljBT//OHJuReE7GbGArhvV9gbJ3Pk+k4d
-         hoFA==
+        b=myUrxdMeMN96iBZUtlH7dKJ0BgT9yvcSdgR3aBomGSdK5AYpu8bjFPgCf44UvW4I0A
+         1fq+H46c5/XTicweOYlKLO3ZNzPKcs/vYZ4xPHCYACtUtc5OrMp7TWKnAA2rhidU4b0U
+         eWCXlzngkl2LvMCTPq1j1sPZGk2GuMKWDKR109WsOmY6G9ZUUao9eCgbLnwrbnxkN4pc
+         ra2EgUvDLlMHgZWnYVVcWVB+P1Qd+pcU2F7NkwBjNIYUgAjAhiRWBVpgZQKoqHDTlYrU
+         nwYb9vk6iQu5/SdPlw6A5hnWTCmOL/erneUoHVbYbqyGjTDxidqd3gKzTuEB3MlG6nzQ
+         uUQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:content-language:in-reply-to:mime-version
          :user-agent:date:message-id:references:cc:to:from:subject
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
         bh=rXI1bGYPQ45Alos3FcjXnRfoMg3pCfn62OLefjH9Q0w=;
-        b=j1paPKrW/OjV2CvC/OCz3ewkwvL2MJ67wPEmRLnWR65lD9k3fnWP1EhT3b8S0Ev+ij
-         y+0b/mjZ4RPLht6IGe6GPeRFh04DYRge//5go/wCZyXrhYLalrc5MhjQpx1ySfECTt5U
-         5csrhSjH6LT7oEcqHtkpKqFJzdhEIpW25ORcFdz9E0lTCpmPerrodnbI4VHY0BCsOOot
-         BbHsOogm9NTt85wQAEWy6ouwJFt56CmeCwFK9abOlM+JX3ceGVusR9Tl5ikBkw+Ckiv1
-         UknwYh6dTZl9I5L0iCho29aOlMuzWP2JOHBd9i8UF1TTdgpgV8Cd1P+Y1Q3Aq5WNeizV
-         u0OA==
-X-Gm-Message-State: AFqh2kpXkfAEFzWdS6tJCTnXirFaZyU7GinEbAMw6Aj8ZY2RkFIQdkSX
-        +zMUr8nwsPzxK7YqR8VNm/FsJ2aV7sg=
-X-Google-Smtp-Source: AMrXdXuX/17Tz4x97Gfm1o6WnXRMB+A9ylp9WEt7IMjMse7ckhJ1PCKN3e2pNcKyJfHLnOfy2bDCLw==
-X-Received: by 2002:a7b:cb59:0:b0:3d3:5709:68e8 with SMTP id v25-20020a7bcb59000000b003d3570968e8mr65494469wmj.36.1673827467851;
-        Sun, 15 Jan 2023 16:04:27 -0800 (PST)
+        b=ffTZ4hnH27OybribUul/rPCBG8r8MqixVJVTBNNDDZg9tLpOR+vSzE10MG1dDc3r8x
+         CJfVXRqxFxi+V7WcD+wDAxqDNFvg/v8GpPLaaZhBE9dvk5+BKkPFhPpLQE6rZBZmFJ09
+         ks+CQZaZB43RySmILZtqdQ8zLSq8y1CxAo5wZsmIIlmezZgrEN51r4s8FOrfZOx+3JrY
+         okErYmdCxGj75GtcD+eYFcZl63Q8QVrLeCkMFzVybS9Jhzg4K0vJHjZ/OrXkE4/4IsWH
+         xqDpssPkS7dqI+fTugWyPPJncx3jEd6nK560XkNklN1hi3x/RGZN+x77MlZDSNIdsUia
+         fHxw==
+X-Gm-Message-State: AFqh2koYlbqypN5iOC2futojvcIlIo59PnXhD6FPj6Vsq2WJBI+vuwcK
+        ximsCPMrWWwX48c3WcPfoLY=
+X-Google-Smtp-Source: AMrXdXuHU4JCxVR3iQjN+d0HH3ws9RnTzLzSyzoQZx7rnYdPZmwgRS+B6nh2UMInGBYTYpDwHXTbtw==
+X-Received: by 2002:a5d:448c:0:b0:2bb:dd87:3488 with SMTP id j12-20020a5d448c000000b002bbdd873488mr23016221wrq.39.1673827594585;
+        Sun, 15 Jan 2023 16:06:34 -0800 (PST)
 Received: from [192.168.2.52] (94.red-88-14-213.dynamicip.rima-tde.net. [88.14.213.94])
-        by smtp.gmail.com with ESMTPSA id t14-20020adfeb8e000000b002baa780f0fasm24552934wrn.111.2023.01.15.16.04.27
+        by smtp.gmail.com with ESMTPSA id p8-20020a5d4588000000b002bdfb97e029sm2640896wrq.19.2023.01.15.16.06.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 15 Jan 2023 16:04:27 -0800 (PST)
-Subject: [PATCH 3/3] branch: rename orphan branches in any worktree
+        Sun, 15 Jan 2023 16:06:34 -0800 (PST)
+Subject: [PATCH v2 3/3] branch: rename orphan branches in any worktree
 From:   =?UTF-8?Q?Rub=c3=a9n_Justo?= <rjusto@gmail.com>
 To:     Git List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>
 References: <ffd675e9-8a64-ae05-fc3b-36ae99092735@gmail.com>
  <34a58449-4f2e-66ef-ea01-119186aebd23@gmail.com>
-Message-ID: <a47ff192-db67-dc4c-ded3-cd1e7c197726@gmail.com>
-Date:   Mon, 16 Jan 2023 01:04:26 +0100
+Message-ID: <4601f80b-e504-c5a2-6374-7a2609236a27@gmail.com>
+Date:   Mon, 16 Jan 2023 01:06:33 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
