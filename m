@@ -2,89 +2,411 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 	aws-us-west-2-korg-lkml-1.web.codeaurora.org
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 46867C54EBE
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7986BC677F1
 	for <git@archiver.kernel.org>; Mon, 16 Jan 2023 17:58:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234253AbjAPR60 (ORCPT <rfc822;git@archiver.kernel.org>);
-        Mon, 16 Jan 2023 12:58:26 -0500
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44084 "EHLO
+        id S232443AbjAPR6a (ORCPT <rfc822;git@archiver.kernel.org>);
+        Mon, 16 Jan 2023 12:58:30 -0500
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44148 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232546AbjAPR6B (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 16 Jan 2023 12:58:01 -0500
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EF5B305C7
-        for <git@vger.kernel.org>; Mon, 16 Jan 2023 09:38:36 -0800 (PST)
-Received: (qmail 15622 invoked by uid 109); 16 Jan 2023 17:38:35 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 16 Jan 2023 17:38:35 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31808 invoked by uid 111); 16 Jan 2023 17:38:36 -0000
-Received: from coredump.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 16 Jan 2023 12:38:36 -0500
-Authentication-Results: peff.net; auth=none
-Date:   Mon, 16 Jan 2023 12:38:34 -0500
-From:   Jeff King <peff@peff.net>
-To:     Philip Oakley <philipoakley@iee.email>
-Cc:     Git List <git@vger.kernel.org>,
-        Philippe Blain <levraiphilippeblain@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: test_pause giving '__git_ps1: not found' warning
-Message-ID: <Y8WLmmjL2HH2szGs@coredump.intra.peff.net>
-References: <bce6ac3a-17a6-beed-43ef-5a1e0dd92a5d@iee.email>
- <8355f48b-dbf9-7cfe-c85c-0d6ca5926c8c@iee.email>
+        with ESMTP id S234148AbjAPR6C (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 16 Jan 2023 12:58:02 -0500
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EB60305D4
+        for <git@vger.kernel.org>; Mon, 16 Jan 2023 09:38:40 -0800 (PST)
+Received: by mail-wr1-x434.google.com with SMTP id r30so3783212wrr.10
+        for <git@vger.kernel.org>; Mon, 16 Jan 2023 09:38:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WzbNRRZ4/bsH91j7D8IljxaWcRo9XOuoja8k912tODQ=;
+        b=dqkTSTHQFTjTnAHFPOqNRlQzKgPx2LzZzMllCTCqwxw+0TMmy3rTKY7Ma+UHus+8um
+         QjehHyg46I+uAHAZVshWebdx0ZAabG6QGozjE26eshUpzTJsjtAzeIJK5i2FZKsd1h9U
+         +5Io897pV76DXmyFd1w0AothUMzGbC8KNslF+7O+1IQaDvJS0x6nP6kQ4Y/44JDXyRm7
+         ekjk+vmJiMzqgiaFxTWSJfTAj/4/6Ck6TesAMPJeNq0QReZoE9cTLs0Db3cQmu/WgOHo
+         GpStE4zdrsKdzTu6qCKtq9KccDgcXCM5k19jWPyMOFCJk6TG6ddxNJdLasng023G3s8o
+         QWsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WzbNRRZ4/bsH91j7D8IljxaWcRo9XOuoja8k912tODQ=;
+        b=q7atwajITjOcBjjZzg6dWuofkJ7Pyz4NkUzLEzSJLhvfYLyZKHO1aCkPPZ8syMVCIL
+         3j/yhvPbeWz754dI1Mr6aiP92q0rNJKVNy3X7WFCsqwGH2H8ufw/RkSwXdKkfbGuFzxw
+         yXJXerIbW2rkAWQS3gOCh3alsbsbOpZm9cRgzPcQ/6n0M5P487vC1Ie9uI4Qwmu5p5Ce
+         M2bBjQZlL3mOg9kxOESsEEKgnICKlRF/gh7RU/QDYi3b/S+wbR3E6iPhHAwRIo6rKjN/
+         30pexz3S977JwkBOhzqh4VD8YxyUrQp8XjuKt8wkVZEZ6fK70lP/Ll4xMBbkkBMj4Ox4
+         8onQ==
+X-Gm-Message-State: AFqh2kriCOJ70w8IoXanMz5VBa2oY9Izq72Bc8d0OYtOu+QyDIP/vwCO
+        HqRtE/Ec99hKBykgEPfpwA2Jxy9OibmEtA==
+X-Google-Smtp-Source: AMrXdXsXB6cxhFoVIS50bnb1WqCA5bzg8IZ76iDq4v2wlVyJnQvP5itYzdLCvWVyrG0JgCuaOEFhVA==
+X-Received: by 2002:adf:e9d2:0:b0:257:15b9:8b66 with SMTP id l18-20020adfe9d2000000b0025715b98b66mr241470wrn.62.1673890718414;
+        Mon, 16 Jan 2023 09:38:38 -0800 (PST)
+Received: from wilber4c.. ([197.239.4.129])
+        by smtp.gmail.com with ESMTPSA id q18-20020adfdfd2000000b002bdc129c8f6sm15343245wrn.43.2023.01.16.09.38.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Jan 2023 09:38:38 -0800 (PST)
+From:   Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>,
+        Hariom Verma <hariom18599@gmail.com>,
+        Jaydeep Das <jaydeepjd.8914@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v4 1/1] ref-filter: add new "signature" atom
+Date:   Mon, 16 Jan 2023 12:38:14 -0500
+Message-Id: <20230116173814.11338-2-nsengiyumvawilberforce@gmail.com>
+X-Mailer: git-send-email 2.39.0.138.gb334f1a8b9
+In-Reply-To: <20230116173814.11338-1-nsengiyumvawilberforce@gmail.com>
+References: <20230110005251.10539-2-nsengiyumvawilberforce@gmail.com>
+ <20230116173814.11338-1-nsengiyumvawilberforce@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <8355f48b-dbf9-7cfe-c85c-0d6ca5926c8c@iee.email>
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 14, 2023 at 05:49:15PM +0000, Philip Oakley wrote:
+This commit duplicates the code for `signature` atom from pretty.c
+to ref-filter.c. This feature will help to get rid of current duplicate
+implementation of `signature` atom when unifying implementations by
+using ref-filter logic everywhere when ref-filter can do everything
+pretty is doing.
 
-> On 14/01/2023 14:54, Philip Oakley wrote:
-> > I was trying to refine a test_expect_failure test [1] and tried
-> > inserting a `test_pause &&` test line [2].
-> > 
-> > I then found, when it paused, I was repeatedly given the warning line
-> >     /bin/sh: 1: __git_ps1: not found
-> > in the terminal until I expected the test shell.
-> > 
-> > my PS1 is working normally in the terminal, but not here.  Is this
-> > expected, or do I need to set up anything else?
-> > 
-> > Normally I'm on Git for Windows, but this was on my old laptop (Acer
-> > 7741 i5 4GB ram..) converted to Ubuntu 20.04, which I use when away.
+Add "signature" atom with `grade`, `signer`, `key`,
+`fingerprint`, `primarykeyfingerprint`, `trustlevel` as arguments.
+This code and its documentation are inspired by how the %GG, %G?,
+%GS, %GK, %GF, %GP, and %GT pretty formats were implemented.
 
-On Ubuntu, your /bin/sh is likely to be dash. And unless you've set
-TEST_SHELL_PATH, that's what test_pause will use.
+Co-authored-by: Hariom Verma <hariom18599@gmail.com>
+Co-authored-by: Jaydeep Das <jaydeepjd.8914@gmail.com>
+Mentored-by: Christian Couder <chriscool@tuxfamily.org>
+Mentored-by: Hariom Verma <hariom18599@gmail.com>
+Signed-off-by: Nsengiyumva Wilberforce <nsengiyumvawilberforce@gmail.com>
+---
+ Documentation/git-for-each-ref.txt |  27 +++++++
+ ref-filter.c                       | 101 +++++++++++++++++++++++++
+ t/t6300-for-each-ref.sh            | 116 +++++++++++++++++++++++++++++
+ 3 files changed, 244 insertions(+)
 
-> My local .bashrc has
-> 
->     . /home/philip/git-completion.bash
->     . ~/git-prompt.sh
->     export GIT_PS1_SHOWDIRTYSTATE=1
->     export PS1='\w$(__git_ps1 " (%s)")\$ '
+diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
+index 6da899c629..9a0be85368 100644
+--- a/Documentation/git-for-each-ref.txt
++++ b/Documentation/git-for-each-ref.txt
+@@ -212,6 +212,33 @@ symref::
+ 	`:lstrip` and `:rstrip` options in the same way as `refname`
+ 	above.
+ 
++signature::
++	The GPG signature of a commit.
++
++signature:grade::
++	Show "G" for a good (valid) signature, "B" for a bad
++	signature, "U" for a good signature with unknown validity, "X"
++	for a good signature that has expired, "Y" for a good
++	signature made by an expired key, "R" for a good signature
++	made by a revoked key, "E" if the signature cannot be
++	checked (e.g. missing key) and "N" for no signature.
++
++signature:signer::
++	The signer of the GPG signature of a commit.
++
++signature:key::
++	The key of the GPG signature of a commit.
++
++signature:fingerprint::
++	The fingerprint of the GPG signature of a commit.
++
++signature:primarykeyfingerprint::
++	The Primary Key fingerprint of the GPG signature of a commit.
++
++signature:trustlevel::
++	The Trust level of the GPG signature of a commit. Possible
++	outputs are `ultimate`, `fully`, `marginal`, `never` and `undefined`.
++
+ worktreepath::
+ 	The absolute path to the worktree in which the ref is checked
+ 	out, if it is checked out in any linked worktree. Empty string
+diff --git a/ref-filter.c b/ref-filter.c
+index a24324123e..0cba756b18 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -144,6 +144,7 @@ enum atom_type {
+ 	ATOM_BODY,
+ 	ATOM_TRAILERS,
+ 	ATOM_CONTENTS,
++	ATOM_SIGNATURE,
+ 	ATOM_RAW,
+ 	ATOM_UPSTREAM,
+ 	ATOM_PUSH,
+@@ -208,6 +209,10 @@ static struct used_atom {
+ 		struct email_option {
+ 			enum { EO_RAW, EO_TRIM, EO_LOCALPART } option;
+ 		} email_option;
++		struct {
++			enum { S_BARE, S_GRADE, S_SIGNER, S_KEY,
++			       S_FINGERPRINT, S_PRI_KEY_FP, S_TRUST_LEVEL} option;
++		} signature;
+ 		struct refname_atom refname;
+ 		char *head;
+ 	} u;
+@@ -394,6 +399,34 @@ static int subject_atom_parser(struct ref_format *format, struct used_atom *atom
+ 	return 0;
+ }
+ 
++static int parse_signature_option(const char *arg)
++{
++	if (!arg)
++		return S_BARE;
++	else if (!strcmp(arg, "signer"))
++		return S_SIGNER;
++	else if (!strcmp(arg, "grade"))
++		return S_GRADE;
++	else if (!strcmp(arg, "key"))
++		return S_KEY;
++	else if (!strcmp(arg, "fingerprint"))
++		return S_FINGERPRINT;
++	else if (!strcmp(arg, "primarykeyfingerprint"))
++		return S_PRI_KEY_FP;
++	else if (!strcmp(arg, "trustlevel"))
++		return S_TRUST_LEVEL;
++	return -1;
++}
++
++static int signature_atom_parser(struct ref_format *format UNUSED, struct used_atom *atom,
++			       const char *arg, struct strbuf *err){
++	int opt = parse_signature_option(arg);
++	if (opt < 0)
++		return err_bad_arg(err, "signature", arg);
++	atom->u.signature.option = opt;
++	return 0;
++}
++
+ static int trailers_atom_parser(struct ref_format *format, struct used_atom *atom,
+ 				const char *arg, struct strbuf *err)
+ {
+@@ -631,6 +664,7 @@ static struct {
+ 	[ATOM_BODY] = { "body", SOURCE_OBJ, FIELD_STR, body_atom_parser },
+ 	[ATOM_TRAILERS] = { "trailers", SOURCE_OBJ, FIELD_STR, trailers_atom_parser },
+ 	[ATOM_CONTENTS] = { "contents", SOURCE_OBJ, FIELD_STR, contents_atom_parser },
++	[ATOM_SIGNATURE] = { "signature", SOURCE_OBJ, FIELD_STR, signature_atom_parser },
+ 	[ATOM_RAW] = { "raw", SOURCE_OBJ, FIELD_STR, raw_atom_parser },
+ 	[ATOM_UPSTREAM] = { "upstream", SOURCE_NONE, FIELD_STR, remote_ref_atom_parser },
+ 	[ATOM_PUSH] = { "push", SOURCE_NONE, FIELD_STR, remote_ref_atom_parser },
+@@ -1362,6 +1396,72 @@ static void grab_person(const char *who, struct atom_value *val, int deref, void
+ 	}
+ }
+ 
++static void grab_signature(struct atom_value *val, int deref, struct object *obj)
++{
++	int i;
++	struct commit *commit = (struct commit *) obj;
++	struct signature_check sigc = { 0 };
++
++	check_commit_signature(commit, &sigc);
++
++	for (i = 0; i < used_atom_cnt; i++) {
++		struct used_atom *atom = &used_atom[i];
++		const char *name = atom->name;
++		struct atom_value *v = &val[i];
++
++		if (!!deref != (*name == '*'))
++			continue;
++		if (deref)
++			name++;
++
++		if (!skip_prefix(name, "signature", &name) || (*name &&
++			*name != ':'))
++			continue;
++		if (!*name)
++			name = NULL;
++		else
++			name++;
++		if (parse_signature_option(name) < 0)
++			continue;
++
++		if (atom->u.signature.option == S_BARE)
++			v->s = xstrdup(sigc.output ? sigc.output: "");
++		else if (atom->u.signature.option == S_SIGNER)
++			v->s = xstrdup(sigc.signer ? sigc.signer : "");
++		else if (atom->u.signature.option == S_GRADE) {
++			switch (sigc.result) {
++			case 'G':
++				switch (sigc.trust_level) {
++				case TRUST_UNDEFINED:
++				case TRUST_NEVER:
++					v->s = xstrfmt("%c", (char)'U');
++					break;
++				default:
++					v->s = xstrfmt("%c", (char)'G');
++					break;
++				}
++				break;
++			case 'B':
++			case 'E':
++			case 'N':
++			case 'X':
++			case 'Y':
++			case 'R':
++				v->s = xstrfmt("%c", (char)sigc.result);
++			}
++		}
++		else if (atom->u.signature.option == S_KEY)
++			v->s = xstrdup(sigc.key ? sigc.key : "");
++		else if (atom->u.signature.option == S_FINGERPRINT)
++			v->s = xstrdup(sigc.fingerprint ? sigc.fingerprint : "");
++		else if (atom->u.signature.option == S_PRI_KEY_FP)
++			v->s = xstrdup(sigc.primary_key_fingerprint ? sigc.primary_key_fingerprint : "");
++		else if (atom->u.signature.option == S_TRUST_LEVEL)
++			v->s = xstrdup(gpg_trust_level_to_str(sigc.trust_level));
++	}
++	signature_check_clear(&sigc);
++}
++
+ static void find_subpos(const char *buf,
+ 			const char **sub, size_t *sublen,
+ 			const char **body, size_t *bodylen,
+@@ -1555,6 +1655,7 @@ static void grab_values(struct atom_value *val, int deref, struct object *obj, s
+ 		grab_sub_body_contents(val, deref, data);
+ 		grab_person("author", val, deref, buf);
+ 		grab_person("committer", val, deref, buf);
++		grab_signature(val, deref, obj);
+ 		break;
+ 	case OBJ_TREE:
+ 		/* grab_tree_values(val, deref, obj, buf, sz); */
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 2ae1fc721b..47def9549d 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -6,6 +6,7 @@
+ test_description='for-each-ref test'
+ 
+ . ./test-lib.sh
++GNUPGHOME_NOT_USED=$GNUPGHOME
+ . "$TEST_DIRECTORY"/lib-gpg.sh
+ . "$TEST_DIRECTORY"/lib-terminal.sh
+ 
+@@ -1464,4 +1465,119 @@ sig_crlf="$(printf "%s" "$sig" | append_cr; echo dummy)"
+ sig_crlf=${sig_crlf%dummy}
+ test_atom refs/tags/fake-sig-crlf contents:signature "$sig_crlf"
+ 
++GRADE_FORMAT="%(signature:grade)%0a%(signature:key)%0a%(signature:signer)%0a%(signature:fingerprint)%0a%(signature:primarykeyfingerprint)"
++TRUSTLEVEL_FORMAT="%(signature:trustlevel)%0a%(signature:key)%0a%(signature:signer)%0a%(signature:fingerprint)%0a%(signature:primarykeyfingerprint)"
++
++test_expect_success GPG 'show good signature with custom format' '
++	git checkout -b signed &&
++	echo 2 >file && git add file &&
++	test_tick && git commit -S -m initial &&
++	git verify-commit signed 2>out &&
++	cat >expect <<-\EOF &&
++	G
++	13B6F51ECDDE430D
++	C O Mitter <committer@example.com>
++	73D758744BE721698EC54E8713B6F51ECDDE430D
++	73D758744BE721698EC54E8713B6F51ECDDE430D
++	EOF
++	git for-each-ref refs/heads/signed --format="$GRADE_FORMAT" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success GPG 'test signature atom with grade option and bad signature' '
++	git config commit.gpgsign true &&
++	echo 3 >file && test_tick && git commit -a -m "third" --no-gpg-sign &&
++	git tag third-unsigned &&
++
++	test_tick && git rebase -f HEAD^^ && git tag second-signed HEAD^ &&
++	git tag third-signed &&
++
++	git cat-file commit third-signed >raw &&
++	sed -e "s/^third/3rd forged/" raw >forged1 &&
++	FORGED1=$(git hash-object -w -t commit forged1) &&
++	git update-ref refs/tags/third-signed "$FORGED1" &&
++	test_must_fail git verify-commit "$FORGED1" &&
++
++	cat >expect <<-\EOF &&
++	B
++	13B6F51ECDDE430D
++	C O Mitter <committer@example.com>
++
++
++	EOF
++	git for-each-ref refs/tags/third-signed --format="$GRADE_FORMAT" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success GPG 'show untrusted signature with custom format' '
++	echo 4 >file && test_tick && git commit -a -m fourth -SB7227189 &&
++	git tag signed-fourth &&
++	cat >expect <<-\EOF &&
++	U
++	65A0EEA02E30CAD7
++	Eris Discordia <discord@example.net>
++	F8364A59E07FFE9F4D63005A65A0EEA02E30CAD7
++	D4BE22311AD3131E5EDA29A461092E85B7227189
++	EOF
++	git for-each-ref refs/tags/signed-fourth --format="$GRADE_FORMAT" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success GPG 'show untrusted signature with undefined trust level' '
++	echo 5 >file && test_tick && git commit -a -m fifth -SB7227189 &&
++	git tag fifth-signed &&
++	cat >expect <<-\EOF &&
++	undefined
++	65A0EEA02E30CAD7
++	Eris Discordia <discord@example.net>
++	F8364A59E07FFE9F4D63005A65A0EEA02E30CAD7
++	D4BE22311AD3131E5EDA29A461092E85B7227189
++	EOF
++	git for-each-ref refs/tags/fifth-signed --format="$TRUSTLEVEL_FORMAT" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success GPG 'show untrusted signature with ultimate trust level' '
++	echo 7 >file && test_tick && git commit -a -m "seventh" --no-gpg-sign &&
++	git tag seventh-unsigned &&
++
++	test_tick && git rebase -f HEAD^^ && git tag sixth-signed HEAD^ &&
++	git tag seventh-signed &&
++	cat >expect <<-\EOF &&
++	ultimate
++	13B6F51ECDDE430D
++	C O Mitter <committer@example.com>
++	73D758744BE721698EC54E8713B6F51ECDDE430D
++	73D758744BE721698EC54E8713B6F51ECDDE430D
++	EOF
++	git for-each-ref refs/tags/seventh-signed --format="$TRUSTLEVEL_FORMAT" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success GPG 'show unknown signature with custom format' '
++	cat >expect <<-\EOF &&
++	E
++	65A0EEA02E30CAD7
++
++
++
++	EOF
++	GNUPGHOME="$GNUPGHOME_NOT_USED" git for-each-ref refs/tags/fifth-signed --format="$GRADE_FORMAT" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success GPG 'show lack of signature with custom format' '
++	echo 8 >file && test_tick && git commit -a -m "eigth unsigned" --no-gpg-sign &&
++	git tag eigth-unsigned &&
++	cat >expect <<-\EOF &&
++	N
++
++
++
++
++	EOF
++	git for-each-ref refs/tags/eigth-unsigned --format="$GRADE_FORMAT" >actual &&
++	test_cmp expect actual
++'
++
+ test_done
+-- 
+2.39.0.138.gb334f1a8b9
 
-It's unusual to export PS1. Only the shell needs it. But by exporting
-it, the child "dash" will see it, but of course doesn't have the
-__git_ps1() function defined. And thus the complaint.
-
-If you stop exporting it, then you'd see dash's regular prompt. Which
-fixes the "whoops, __git_ps1() is not defined" problem, but probably is
-not quite what you want, if you really wanted a nice prompt.
-
-> Not sure why I have a relative and an absolute path but... ,  so I'll try
-> updating the git-prompt.sh to an absolute path, and if that works, maybe
-> think about adding an extra comment to the `test-lib-functions.sh` to note
-> the change of HOME and potential '__git_ps1' problem
-
-It looks like test_pause() has various options for retaining shell,
-term, home, etc, and includes documentation. I haven't played with them
-myself, though. Usually I just use "-i" to stop the test, and then
-investigate the result in one of my regular shells (and in the rare case
-of "oops, it succeeds when I expect it to fail, I insert "false &&" as
-appropriate).
-
--Peff
